@@ -1,5 +1,5 @@
 <?
-	# $Id: watch_list.php,v 1.1.2.5 2002-12-16 13:31:01 dan Exp $
+	# $Id: watch_list.php,v 1.1.2.6 2002-12-16 16:19:00 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -75,13 +75,17 @@ GROUP BY users.max_number_watch_lists";
 		
 	}
 
-	function Delete($WatchListID) {
+	function Delete($UserID, $WatchListID) {
 		#
 		# Delete a watch list
 		#
 		unset($return);
 
-		$query  = 'DELETE FROM watch_list WHERE id = ' . AddSlashes($WatchListID);
+		$query  = '
+DELETE FROM watch_list 
+ WHERE id = ' . AddSlashes($WatchListID) .'
+   AND user_id = ' . $UserID;
+
 		if ($Debug) echo $query;
 		$result = pg_query($this->dbh, $query);
 
@@ -93,14 +97,19 @@ GROUP BY users.max_number_watch_lists";
 		return $return;
 	}
 
-	function EmptyTheList($WatchListID) {
+	function EmptyTheList($UserID, $WatchListID) {
 		#
 		# Empty a watch list (couldn't use empty, as that's reserved)
 		#
 		unset($return);
 		$Debug = 0;
 
-		$query  = 'DELETE FROM watch_list_element WHERE watch_list_id = ' . AddSlashes($WatchListID);
+		$query = "
+DELETE FROM watch_list_element
+ WHERE watch_list.id                    = $WatchListID
+   AND watch_list.user_id               = $UserID
+   AND watch_list_element.watch_list_id = watch_list.id";
+
 		if ($Debug) echo $query;
 		$result = pg_query($this->dbh, $query);
 
@@ -112,13 +121,17 @@ GROUP BY users.max_number_watch_lists";
 		return $return;
 	}
 
-	function Rename($WatchListID, $NewName) {
+	function Rename($UserID, $WatchListID, $NewName) {
 		#
 		# Delete a watch list
 		#
 		unset($return);
 
-		$query  = 'UPDATE watch_list SET name = \'' . AddSlashes($NewName) . '\' WHERE id = ' . AddSlashes($WatchListID);
+		$query  = '
+UPDATE watch_list 
+   SET name = \'' . AddSlashes($NewName) . '\' 
+ WHERE id = ' . AddSlashes($WatchListID) . '
+   AND watch_list.user_id = ' . $UserID;
 		if ($Debug) echo $query;
 		$result = pg_query($this->dbh, $query);
 
@@ -131,14 +144,15 @@ GROUP BY users.max_number_watch_lists";
 	}
 
 	
-	function Fetch($ID) {
+	function Fetch($UserID, $ID) {
 		$sql = "
 		SELECT id,
 		       user_id,
 		       name,
 		       in_service
 		  FROM watch_list
-		 WHERE id = $ID";
+		 WHERE id      = $ID
+		   AND user_id = $UserID";
 
 #		echo '<pre>' . $sql . '</pre>';
 

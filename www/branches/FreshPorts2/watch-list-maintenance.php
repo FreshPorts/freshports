@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-list-maintenance.php,v 1.1.2.17 2002-12-16 13:35:58 dan Exp $
+	# $Id: watch-list-maintenance.php,v 1.1.2.18 2002-12-16 16:19:17 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -127,7 +127,7 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 			if (count($_POST['wlid']) == 1) {
 				list($key, $WatchListIDToRename) = each($_POST['wlid']);
 				$WatchList = new WatchList($db);
-				$NewName = $WatchList->Rename($WatchListIDToRename, $_POST['rename_name']);
+				$NewName = $WatchList->Rename($User->id, $WatchListIDToRename, $_POST['rename_name']);
 				if ($Debug) echo 'I have renamed your list to \'' . AddSlashes($_POST['rename_name']) . '\'';
 			} else {
 				$ErrorMessage = 'Select exactly one watch list to be renamed.  I can\'t handle zero or more than one.';
@@ -140,7 +140,7 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 			$WatchList = new WatchList($db);
 			while (list($key, $WatchListIDToDelete) = each($_POST['wlid'])) {
 				if ($Debug) echo "\$key='$key' \$WatchListIDToDelete='$WatchListIDToDelete'<br>";
-				$DeletedWatchListID = $WatchList->Delete(AddSlashes($WatchListIDToDelete));
+				$DeletedWatchListID = $WatchList->Delete($User->id, AddSlashes($WatchListIDToDelete));
 				if ($DeletedWatchListID != $WatchListIDToDelete) {
 					die("Failed to deleted '$WatchListIDToDelete' (return value '$DeletedWatchListID')" . pg_last_error());
 				}
@@ -156,7 +156,7 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 			$WatchList = new WatchList($db);
 			while (list($key, $WatchListIDToEmpty) = each($_POST['wlid'])) {
 				if ($Debug) echo "\$key='$key' \$WatchListIDToEmpty='$WatchListIDToEmpty'<br>";
-				$EmptydWatchListID = $WatchList->EmptyTheList(AddSlashes($WatchListIDToEmpty));
+				$EmptydWatchListID = $WatchList->EmptyTheList($User->id, AddSlashes($WatchListIDToEmpty));
 				if ($EmptydWatchListID != $WatchListIDToEmpty) {
 					die("Failed to Empty '$WatchListIDToEmpty' (return value '$EmptydWatchListID')" . pg_last_error());
 				}

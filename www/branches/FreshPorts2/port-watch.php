@@ -1,5 +1,5 @@
 <?
-	# $Id: port-watch.php,v 1.1.2.25 2002-12-16 13:36:56 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.26 2002-12-16 16:19:16 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -49,7 +49,7 @@ if ($submit) {
 	pg_exec($db, "BEGIN");
 
 	$WatchList = new WatchList($db);
-	$WatchList->EmptyTheList($wlid);
+	$WatchList->EmptyTheList($User->id, $wlid);
 
    $ports = $_POST["ports"];
    if ($ports) {

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports-new.php,v 1.1.2.27 2003-04-28 16:25:14 dan Exp $
+	# $Id: ports-new.php,v 1.1.2.28 2003-04-29 15:14:29 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -155,7 +155,7 @@ select TEMP.id,
 	}
 	
 	$sql .= "
- WHERE ports.date_added  > (SELECT now() - interval '$IntervalAdjust' - SystemTimeAdjust())) AS
+ WHERE ports.date_added  > (SELECT now() - interval '$IntervalAdjust')) AS
 TEMP, element, categories
  WHERE TEMP.category_id = categories.id
    and element.status   = 'A'

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.95 2004-11-29 02:41:01 dan Exp $
+	# $Id: index.php,v 1.1.2.96 2004-12-07 00:34:02 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -121,6 +121,9 @@ if ($db) {
 applications, whatever term you want to use.
 <p>
 A port is marked as new for 10 days.
+
+<p>
+If you want to see more try <a href="/commits.php">here</a>.
 <?php
 	echo PortsFreezeStatus();
 ?>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports_page_list_ports.php,v 1.1.2.6 2005-01-23 03:59:48 dan Exp $
+	# $Id: freshports_page_list_ports.php,v 1.1.2.7 2005-01-26 21:06:11 dan Exp $
 	#
 	# Copyright (c) 2005 DVL Software Limited
 	#
@@ -66,6 +66,8 @@ SELECT ports.id,
        broken,
        forbidden,
        ignore,
+       pv.current as vulnerable_current,
+       pv.past    as vulnerable_past,
        latest_link ";
 
 	if ($UserID) {
@@ -74,7 +76,7 @@ SELECT ports.id,
    }
 
 	$this->_sql .= "
-from element, categories, ports ";
+from element, categories, ports_vulnerable PV right outer join ports on PV.port_id = ports.id ";
 
 	if ($UserID) {
 			$this->_sql .= '
@@ -87,7 +89,6 @@ from element, categories, ports ";
   GROUP BY wle_element_id) AS TEMP
        ON TEMP.wle_element_id = ports.element_id';
 	}
-	
 
 	$this->_sql .= "
 WHERE ports.element_id  = element.id

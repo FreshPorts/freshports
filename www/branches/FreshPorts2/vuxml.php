@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: vuxml.php,v 1.1.2.10 2005-01-05 23:14:39 dan Exp $
+	# $Id: vuxml.php,v 1.1.2.11 2005-01-06 04:25:22 dan Exp $
 	#
 	# Copyright (c) 2004 DVL Software Limited
 	#
@@ -42,17 +42,18 @@ This page displays <a href="<?php echo VUXMLURL; ?>">vulnerability information</
 		require_once(VUXMLREVISION);
 		echo '</pre>';
 	}
-?>
-<?php
+
+	if (!IsSet($_REQUEST['list'])) {
+		echo '<p><a href="' . $_SERVER["PHP_SELF"] . '?list">List all Vulnerabilities</a></p>';
+	}
+
+
+
 	if (IsSet($_REQUEST['vuln']) || IsSet($_REQUEST['vid'])) {
 
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/vuxml.php');
 
 ?>
-
-<p>
-Hi.  Thanks for checking, but this part of the FreshPorts - VuXML system is still
-being designed.
 
 <p>
 These are the vulnerabilities relating to the commit you have selected:
@@ -86,22 +87,24 @@ These are the vulnerabilities relating to the commit you have selected:
 }
 	if (IsSet($_REQUEST['list'])) {
 
-	function vuxml_name_link($VID, $Name, $Count) {
-		$HTML = '<tr><td>';
+		function vuxml_name_link($VID, $Name, $Count) {
+			$HTML = '<tr><td>';
 
-		$HTML .= '<a href="/vuxml.php?vid=' . $VID . '">' . $Name . '</a></td><td align="center">';
-		if ($Count > 1) {
-			$HTML .= ' (' . $Count . ')';
-		} else {
-			$HTML .= '&nbsp;';
+			$HTML .= '<a href="/vuxml.php?vid=' . $VID . '">' . $Name . '</a></td><td align="center">';
+			if ($Count > 1) {
+				$HTML .= ' (' . $Count . ')';
+			} else {
+				$HTML .= '&nbsp;';
+			}
+
+			$HTML .= '</td><td align="center">';
+			$HTML .= '<a href="/?package=' . $Name . '">port</a>';
+			$HTML .= '</td></tr>' . "\n";
+
+			return $HTML;
 		}
 
-		$HTML .= '</td><td align="center">';
-		$HTML .= '<a href="/?package=' . $Name . '">port</a>';
-		$HTML .= '</td></tr>' . "\n";
-
-		return $HTML;
-	}
+	
 
 
 		$sql = "
@@ -123,7 +126,11 @@ ORDER BY lower(VN.name), V.vid
 			$NumPackages = 0;
 			$VIDs        = array();
 			echo '<table border="1">' . "\n";
-			echo '<tr><td><b>package</b></td><td align="center"><b>vuln count</b></td><td align="center"><b>Port(s)</b></td></tr>' . "\n";
+			echo '<tr><td><b>';
+			echo 'package';
+			echo '</b></td><td align="center"><b>';
+			echo 'vuln count';
+			echo '</b></td><td align="center"><b>Port(s)</b></td></tr>' . "\n";
 			for ($i = 0; $i < $numrows; $i++) {
 				$myrow = pg_fetch_array ($result, $i);
 

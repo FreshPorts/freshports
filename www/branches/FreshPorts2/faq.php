@@ -1,5 +1,5 @@
 <?
-	# $Id: faq.php,v 1.1.2.6 2002-04-06 14:58:44 dan Exp $
+	# $Id: faq.php,v 1.1.2.7 2002-04-06 15:08:54 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -149,7 +149,7 @@
 	used to implement for forums.
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
-<? freshports_PageBannerText("What does these symbols mean??"); ?>
+<? freshports_PageBannerText("What do these symbols mean?"); ?>
 	<TR><TD>
 	There are a few symbols you will see in this website:
 	<BLOCKQUOTE>

@@ -1,5 +1,5 @@
 <?
-	# $Id: ports.php,v 1.1.2.4 2002-01-01 07:22:20 dan Exp $
+	# $Id: ports.php,v 1.1.2.5 2002-01-03 03:05:27 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -41,7 +41,7 @@ class Port {
 
 
 	// needed for fetch by category
-	var $CategoryResult;
+	var $LocalResult;
 
 	function Port($dbh) {
 		$this->dbh	= $dbh;
@@ -176,12 +176,12 @@ class Port {
 			   "  and commit_log.id        = commit_log_ports.commit_log_id " .
 			   "  and categories.id        = $CategoryID";
 
-        $this->CategoryResult = pg_exec($this->dbh, $sql);
-		if ($this->CategoryResult) {
-			$numrows = pg_numrows($this->CategoryResult);
+        $this->LocalResult = pg_exec($this->dbh, $sql);
+		if ($this->LocalResult) {
+			$numrows = pg_numrows($this->LocalResult);
 			if ($numrows == 1) {
 #				echo "fetched by ID succeeded<BR>";
-				$myrow = pg_fetch_array ($this->CategoryResult, 0);
+				$myrow = pg_fetch_array ($this->LocalResult, 0);
 				$this->_PopulateValues($myrow);
 
 			}
@@ -199,7 +199,7 @@ class Port {
 		# returned by FetchByCategoryInitialise
 		#
 
-		$myrow = pg_fetch_array($this->CategoryResult, $N);
+		$myrow = pg_fetch_array($this->LocalResult, $N);
 		$this->_PopulateValues($myrow);
 	}
 }

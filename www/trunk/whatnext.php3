@@ -30,9 +30,6 @@ I will not necessarily do them in that order, but at least I'll know what you wa
        category in which you find them on your disk) which must be a physical category.  But a port can also reside
        in other categories, which may be virtual.  Virtual categories appear to be a convenient method for viewing
        similar ports)</li>
-   <li><font size="+1">store more than just the most recent commit</font> (at present, freshports records only the last commit for a port.
-       if two commmits occur in the same day, and you visit only once per day, you'll miss one of the commits.  Changes
-       are under way to display all changes.)</li>
    <li><font size="+1">page customization</font> (allow users to specify page customization features such as * number of ports on main page * 
        number of days a brand new port is marked as <img src="/images/new.gif" width=28 height=11 alt="new!" hspace=2 align=absmiddle> 
        * when listing all ports in a category, max number of ports to show per page * user specified date format)</li>

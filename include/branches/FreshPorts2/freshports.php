@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.14 2001-12-31 01:58:17 dan Exp $
+   # $Id: freshports.php,v 1.4.2.15 2002-01-02 02:53:56 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -337,7 +337,7 @@ function freshports_CategoryIDFromCategory($category, $db) {
 
 function freshports_SideBarHTML($Self, $URL, $Title) {
 //  echo "PHP_SELF = $Self and URL=$URL";
-   if ($Self == $URL || ($Self == '/index.php3' && $URL == '/')) {
+   if ($Self == $URL || ($Self == '/index.php' && $URL == '/')) {
       $HTML = $Title;
    } else {
       $HTML = '<a href="' . $URL . '">' . $Title . '</a>';
@@ -348,7 +348,7 @@ function freshports_SideBarHTML($Self, $URL, $Title) {
 
 function freshports_SideBarHTMLParm($Self, $URL, $Parm, $Title) {
 //   echo "PHP_SELF = $Self and URL=$URL";
-   if ($Self == $URL || ($Self == '/index.php3' && $URL == '/')) {
+   if ($Self == $URL || ($Self == '/index.php' && $URL == '/')) {
       $HTML = $Title;
    } else {
       $HTML = '<a href="' . $URL . $Parm . '">' . $Title . '</a>';
@@ -481,7 +481,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
             $CategoryID = freshports_CategoryIDFromCategory($Category, $db);
             if ($CategoryID) {
                // this is a real category
-               $HTML .= '<a href="category.php3?category=' . $CategoryID . '">' . $Category . '</a>';
+               $HTML .= '<a href="/' . $Category . '/">' . $Category . '</a>';
             } else {
                $HTML .= $Category;
             }
@@ -704,7 +704,7 @@ function freshports_PortCommitPrint($commit) {
 	# print a single commit for a port
 	echo "<tr><td valign='top'><font size='-1'>" . $commit->commit_date        . "</font></td>\n";
 	echo '    <td valign="top">';
-    echo $commit->committer . '<BR><a href="/files.php3?id=' . $commit->id;
+    echo $commit->committer . '<BR><a href="/files.php?id=' . $commit->id;
 	echo '"><img src="/images/logs.gif" alt="Files within this port affected by this commit" border="0" WIDTH="17" HEIGHT="20" hspace="2"></a>'. "</td>\n";
 	echo '    <td valign="top" WIDTH="*"><PRE>' . convertAllLinks(htmlspecialchars($commit->description)) . "</PRE></td>\n";
 	echo "</tr>\n";

@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-port.php,v 1.1.2.4 2001-12-31 01:58:18 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.5 2002-01-02 02:53:44 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
@@ -51,10 +51,10 @@ function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 		}
 
 		if (IsSet($CategoryID)) {
-#			echo "<A HREF=\"/category.php3?category=$CategoryID\">this link</A> should take you to the category details<BR>";
+#			echo "<A HREF=\"/category.php?category=$CategoryID\">this link</A> should take you to the category details<BR>";
 			if (IsSet($port->id)) {
 #				echo "This is where you'd see details for port = '$port->id'<BR>";
-#				echo "<A HREF=\"/port-description.php3?port=$port->id\">this link</A> should take you to the port details<BR>";
+#				echo "<A HREF=\"/port-description.php?port=$port->id\">this link</A> should take you to the port details<BR>";
 #				echo "and short_description = $port->short_description";
 
 				freshports_PortDescription($port);
@@ -98,7 +98,7 @@ function freshports_PortDescription($port) {
 
 <p>I've just added <i>Also listed in</i>.  Some ports appear in more than one category.  
 If there is no link to a category, that is because that category
-is a virtual category, and I haven't catered for those yet. But <a href="changes.php3">I plan to</a></p>
+is a virtual category, and I haven't catered for those yet. But <a href="changes.php">I plan to</a></p>
 <p>
 Click on 
 <img src="/images/logs.gif" alt="Files within this port affected by this commit" border="0" WIDTH="17" HEIGHT="20" hspace="2"> 

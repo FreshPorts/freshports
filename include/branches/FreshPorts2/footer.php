@@ -14,8 +14,8 @@ alt="powered by FreeBSD" border="0" width="171" height="64"></a>
 <a href="http://www.mysql.com/"><img src="/images/mysql.gif"
 alt="powered by mysql" border="0" width="88" height="46"></a>
 
-<a href="http://www.php3.org/"><img src="/images/php3.gif"
-alt="powered by php3" border="0" width="88" height="31"></a>
+<a href="http://www.php.net/"><img src="/images/php3.gif"
+alt="powered by php" border="0" width="88" height="31"></a>
 
 </td></tr>
 <tr><td align="center">
@@ -31,7 +31,7 @@ alt="powered by phorum" border="0" width="88" height="31"></a>
 }
 ?>
 <tr><td align="right">
-<small><a href="../legal.php3" target="_top">Copyright</a> 2000,2001 <a href="http://www.dvl-software.com/">DVL Software Limited</a>.
+<small><a href="../legal.php" target="_top">Copyright</a> 2000,2001 <a href="http://www.dvl-software.com/">DVL Software Limited</a>.
 All rights reserved.</small></p>
 </td></tr>
 </table>

@@ -5,8 +5,8 @@
    require("./include/freshports.php");
    require("./include/databaselogin.php");
 
-#require( "./include/commonlogin.php3");
-#require( "./include/getvalues.php3");
+#require( "./include/commonlogin.php");
+#require( "./include/getvalues.php");
 
 $MaxGraph = 3;
 

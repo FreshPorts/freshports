@@ -1,6 +1,6 @@
 <?
 //
-// This php3 fragment does the basic port information for a single port.
+// This php fragment does the basic port information for a single port.
 // I'd show you what code is expected in $myrow, but I can't be bothered
 // right now
 //
@@ -27,8 +27,7 @@
    }
 
    if (!$HideCategory) {
-      $URL_Category = "category.php3?category=" . $myrow["category_id"];
-      $HTML .= ' <font size="-1"><a href="' . $URL_Category . '">' . $myrow["category"] . '</a></font>';
+      $HTML .= ' <font size="-1"><a href="/' . $$myrow["category"] . '/">' . $myrow["category"] . '</a></font>';
    }
 
 //   $HTML .= $myrow["date_created_formatted"] ."::". $myrow["updated"] ."--". $DaysMarkedAsNew;
@@ -105,7 +104,7 @@
             $CategoryID = freshports_CategoryIDFromCategory($Category, $db);
             if ($CategoryID) {
                // this is a real category
-               $HTML .= '<a href="category.php3?category=' . $CategoryID . '">' . $Category . '</a>';
+               $HTML .= '<a href="/' . $Category . '/">' . $Category . '</a>';
             } else {
                $HTML .= $Category;
             }
@@ -143,7 +142,7 @@ if ($ShowDepends) {
           $CategoryPortArray = explode('/', $CategoryPort);
 #          $DependsPortID = freshports_PortIDFromPortCategory($CategoryPortArray[0], $CategoryPortArray[1], $db);
 
-          $HTML .= '<a href="port-description.php3?port=' . $DependsPortID . '">' . $CategoryPortArray[1]. '</a>';
+          $HTML .= '<a href="/' . $CategoryPortArray[0] . '/' . $CategoryPortArray[1] . '/">' . $CategoryPortArray[1]. '</a>';
           if ($i < $Count - 1) {
              $HTML .= ", ";
           }
@@ -169,7 +168,7 @@ if ($ShowDepends) {
           $CategoryPortArray = explode('/', $CategoryPort);
           $DependsPortID = freshports_PortIDFromPortCategory($CategoryPortArray[0], $CategoryPortArray[1], $db);
 
-          $HTML .= '<a href="port-description.php3?port=' . $DependsPortID . '">' . $CategoryPortArray[1]. '</a>';
+          $HTML .= '<a href="/ . $CategoryPortArray[0] . '/' . $CategoryPortArray[1] . '">' . $CategoryPortArray[1]. '</a>';
           if ($i < $Count - 1) {
              $HTML .= ", ";
           }
@@ -181,7 +180,7 @@ if ($ShowDepends) {
 
    if (!$HideDescription && ($ShowDescriptionLink == "Y" || $ShowEverything)) {
       // Long descripion
-      $HTML .= '<a HREF="port-description.php3?port=' . $myrow["id"] .'">Description</a>';
+      $HTML .= '<a HREF="/' . $myrow["category"] . '/' .  $myrow["port"] . '/">Description</a>';
 
       $HTML .= ' <b>:</b> ';
    }

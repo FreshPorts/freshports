@@ -1,5 +1,5 @@
 <?
-	# $Id: files.php,v 1.1.2.3 2002-04-02 02:43:02 dan Exp $
+	# $Id: files.php,v 1.1.2.4 2002-04-02 04:45:13 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -30,10 +30,10 @@ function freshports_Files($PortID, $CommitID, $db) {
 	$sql = "
 	select element_pathname(element.id) as pathname, commit_log_port_elements.commit_log_id, 
 		   commit_log_port_elements.port_id, 
-		   to_char(commit_log.commit_date - SystemTimeAdjust()', 'DD Mon YYYY')  as commit_date,
-		   to_char(commit_log.commit_date - SystemTimeAdjust()', 'HH24:MI')      as commit_time,
+		   to_char(commit_log.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')  as commit_date,
+		   to_char(commit_log.commit_date - SystemTimeAdjust(), 'HH24:MI')      as commit_time,
 		   commit_log_elements.change_type, element.name as filename, categories.name as category, commit_log.committer, 
-		   ports.short_description,
+		   ports.short_description, commit_log.message_id,
 		   commit_log.description, B.name as port, commit_log_elements.revision_name as revision_name 
 		   from commit_log, ports, categories, element, commit_log_port_elements, commit_log_elements, 
 			    element B, commit_log_ports
@@ -49,7 +49,7 @@ function freshports_Files($PortID, $CommitID, $db) {
 	   and ports.id                                       = $PortID
 	 order by 1";
 
-	if ($Debug) echo $sql;
+	if ($Debug) echo '<PRE>' . $sql . '</PRE>';
 
 	$result = pg_exec($db, $sql);
 
@@ -92,14 +92,14 @@ function freshports_Files($PortID, $CommitID, $db) {
 
 		echo ' - <CODE CLASS="code">' . $myrow["short_description"] . '</CODE>';
 
-		echo  '<BR>' . $myrow["commit_date"] . ' ' . $myrow["commit_time"];
-
 		echo '</TD></TR>';
 
 		echo "<TR><TD WIDTH='15'><B>Date</B></TD><TD><B>Committer</B></TD><TD><b>Description</b></TD></TR>\n";      
 
 		echo "<TR>";
-		echo '    <TD VALIGN="top">' . $myrow["commit_date"] . ' ' . $myrow["commit_time"] . "</TD>\n";
+		echo '    <TD VALIGN="top">' . $myrow["commit_date"] . ' ' . $myrow["commit_time"];
+		echo '&nbsp;' . freshports_Email_Link($myrow["message_id"]);
+		echo "</TD>\n";
 		echo '    <TD VALIGN="top">' . $myrow["committer"]         . "</TD>\n";
 		echo '    <TD VALIGN="top"><PRE CLASS="code">' . $myrow["description"] . "</CODE></TD>\n";
 		echo "</TR>";

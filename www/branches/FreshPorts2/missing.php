@@ -1,5 +1,5 @@
 <?
-	# $Id: missing.php,v 1.1.2.7 2002-02-25 15:48:12 dan Exp $
+	# $Id: missing.php,v 1.1.2.8 2002-04-01 21:02:40 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
@@ -23,7 +23,6 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 
 	return $result;
 }
-
 
 $result = freshports_Parse404URI($REQUEST_URI, $db);
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.65 2004-11-18 21:24:41 dan Exp $
+	# $Id: search.php,v 1.1.2.66 2004-11-18 21:52:51 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -547,10 +547,8 @@ Search for:<BR>
 </form>
 
 <p>
-NOTE: Case sensitivity is ignored for "sounding like".<BR>
-NOTE: When searching on 'Message ID' only exact matches will succeed.<br>
-NOTE: Short description is obtained from <code class="code">COMMENT</code> (was <code class="code">pkg-comment</code>).<br>
-NOTE: Long description is obtained from <code class="code">pkg-descr</code>).
+Case sensitivity is ignored for "sounding like".<BR>
+When searching on 'Message ID' only exact matches will succeed.<br>
 </p>
 
 <?php

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.55 2004-11-18 01:48:27 dan Exp $
+	# $Id: faq.php,v 1.1.2.56 2004-11-18 21:52:51 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -599,6 +599,45 @@ they allow you to bookmark your favorite search.  That is why a GET is used
 instead of a POST.
 
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
+
+<TR>
+<? echo freshports_PageBannerText('What are all those fields I can search on?'); ?>
+</TR>
+
+   <TR><TD>
+   <P>
+	For those familiar with the FreeBSD ports structure, the following fields indicate their origin:
+
+<table cellpadding="5" cellspacing="0" border="0">
+<tr><td><b>Field</b></td><td><b>Origin</b></td></tr>
+<tr><td>Port Name</td><td><code class="code">PORTNAME</code></td></tr>
+<tr><td>Package Name</td><td><code class="code">PKGNAME</code></td></tr>
+<tr><td>Latest Link</td><td><code class="code">PKGNAME</code></td></tr>
+<tr><td>Maintainer</td><td><code class="code">MAINTAINER</code></td></tr>
+<tr><td>Short Description</td><td><code class="code">COMMENT</code></td></tr>
+<tr><td>Long Description</td><td><code class="code">pkg-descr<sup>1</sup></code></td></tr>
+<tr><td>Depends Build</td><td><code class="code">BUILD_DEPENDS</code></td></tr>
+<tr><td>Depends Lib</td><td><code class="code">LIB_DEPENDS</code></td></tr>
+<tr><td>Depends Run</td><td><code class="code">RUN_DEPENDS</code></td></tr>
+<tr><td>Message ID</td><td>The message id in the original commit email</td></tr>
+</table>
+
+	For all of the above origins, you can obtain the value using 
+	<a href="http://www.freebsd.org/cgi/man.cgi?query=make&apropos=0&sektion=0&manpath=FreeBSD+5.3-RELEASE+and+Ports&format=html"><code class="code">make</code></a>.
+	For example:
+
+<blockquote><code class="code">
+$ cd /usr/ports/sysutils/bacula/<br>
+$ make -V PORTNAME<br>
+bacula<br>
+$
+</code></blockquote>
+
+<sup>1</sup> This value is obtained from a file in the port directory.  For
+example <code class="code">/usr/ports/sysutils/bacula/pkg-descr</code>.
+
+	</TD></TR><TR><TD>&nbsp;</TD></TR>
+
 
 </table>
 </td>

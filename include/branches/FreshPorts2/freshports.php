@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.77 2002-04-15 16:08:02 dan Exp $
+   # $Id: freshports.php,v 1.4.2.78 2002-04-15 16:11:44 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -636,7 +636,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 	}
 
 	if ($WatchListID) {
-		if ($port->{watch}) {
+		if ($port->{onwatchlist}) {
 			$HTML .= ' '. freshports_Watch_Link_Remove($port->{element_id});
 		} else {
 			$HTML .= ' '. freshports_Watch_Link_Add($port->{element_id});

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.169 2004-01-04 00:59:26 dan Exp $
+	# $Id: freshports.php,v 1.4.2.170 2004-01-31 12:03:28 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -1341,7 +1341,7 @@ function freshports_UserSendToken($UserID, $dbh) {
 
 	if (IsSet($token)) {
 		OpenLog("FreshPorts", LOG_PID, LOG_SYSLOG);
-		SysLog(LOG_NOTICE, "User Creation: UID=$UserID, email=$email");
+		SysLog(LOG_NOTICE, "User Token Sent: UID=$UserID, email=$email");
 		CloseLog();
 
 		$message =  "Someone, perhaps you, supplied your email address as their\n".

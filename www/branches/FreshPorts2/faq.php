@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.45 2004-02-22 14:54:53 dan Exp $
+	# $Id: faq.php,v 1.1.2.46 2004-02-22 15:56:37 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -429,6 +429,22 @@ Here are a few examples:
 	<p>
 	The date should be of the format YYYY/MM/DD but I'm sure different formats
 	will work.  If the code has trouble figuring out what date you mean, it will guess and let you know it adjusted the date.
+
+	</TD></TR><TR><TD>&nbsp;</TD></TR>
+
+<TR>
+<? echo freshports_PageBannerText("Why can't I add a port to my watch list?"); ?>
+</TR>
+
+   <TR><TD>
+   <P>
+	You have clicked on the <?php echo freshports_Watch_Icon_Add(); ?> icon and 
+	it doesn't change to a <?php echo freshports_Watch_Icon(); ?>.  Yes, I've
+	had that happen too.  What you need to do is check your 
+	<a href="/watch-list-maintenance.php">watch list settings</a>.  You have 
+	probably selected "default watch list[s]" when you don't have any default watch
+	list[s] set.  To mark a watch list as a default, select it in the list, then click on
+	the Set Default button.
 
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 

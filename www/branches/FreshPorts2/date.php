@@ -1,5 +1,5 @@
 <?
-	# $Id: date.php,v 1.1.2.6 2002-11-28 05:09:00 dan Exp $
+	# $Id: date.php,v 1.1.2.7 2002-11-28 05:18:36 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -25,7 +25,7 @@
 <body>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<TR><TD>
+<TR><TD VALIGN="top">
 
 <?php
 
@@ -35,24 +35,30 @@
 $commits = new Commits($db);
 $NumRows = $commits->Fetch($Date, $WatchListID);
 
+
 #echo '<br>NumRows = ' . $NumRows;
 
 echo '<TABLE WIDTH="100%" BORDER="1" CELLSPACING="0" CELLPADDING="5">';
+
 $HTML = "";
+
+if ($NumRows == 0) {
+	$HTML .= '<TR><TD COLSPAN="3" BGCOLOR="#AD0040" HEIGHT="0">' . "\n";
+	$HTML .= '   <FONT COLOR="#FFFFFF"><BIG>' . FormatTime($Date, 0, "D, j M Y") . '</BIG></FONT>' . "\n";
+	$HTML .= '</TD></TR>' . "\n\n";
+	$HTML .= '<TR><TD>No commits found for that date</TD></TR>';
+}
+
 unset($ThisCommitLogID);
 for ($i = 0; $i < $NumRows; $i++) {
 	$commit = $commits->FetchNth($i);
-#	echo 'now processing ' . $i . ' ' . $commit->message_id . '<br>';
 	$ThisCommitLogID = $commit->commit_log_id;
 
 	if ($LastDate <> $commit->commit_date) {
-#		echo 'we have a new date ' . $commit->commit_date . '<br>';
 		$LastDate = $commit->commit_date;
 		$HTML .= '<TR><TD COLSPAN="3" BGCOLOR="#AD0040" HEIGHT="0">' . "\n";
 		$HTML .= '   <FONT COLOR="#FFFFFF"><BIG>' . FormatTime($commit->commit_date, 0, "D, j M Y") . ' : ' . $NumRows . ' commits today</BIG></FONT>' . "\n";
 		$HTML .= '</TD></TR>' . "\n\n";
-	} else {
-#		echo 'we have the same old date';
 	}
 
 	$j = $i;

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.149 2003-07-30 12:19:22 dan Exp $
+	# $Id: freshports.php,v 1.4.2.150 2003-09-04 15:05:31 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -336,6 +336,39 @@ echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 ';
 }
 
+function freshports_HEAD_charset() {
+	return '
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+';
+}
+
+function freshports_HEAD_main_items() {
+	return '
+	<LINK REL="SHORTCUT ICON" HREF="/favicon.ico">
+	<meta name="MSSmartTagsPreventParsing" content="TRUE">
+
+	<META http-equiv="Pragma"              CONTENT="no-cache">
+	<META HTTP-EQUIV="Cache-Control"       CONTENT="no-cache">
+	<META HTTP-EQUIV="Pragma-directive"    CONTENT="no-cache">
+	<META HTTP-EQUIV="cache-directive"     CONTENT="no-cache">
+	<META HTTP-EQUIV="Expires"             CONTENT="0">
+	<META NAME="ROBOTS"                    CONTENT="NOARCHIVE">
+';
+}
+
+
+
+function freshports_HEAD_Title($ArticleTitle) {
+	echo "
+	<TITLE>FreshPorts";
+
+	if ($ArticleTitle) {
+		echo " -- $ArticleTitle";
+	}
+
+	echo "</TITLE>
+	";
+}
 
 
 function freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum=0) {
@@ -352,7 +385,6 @@ function freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum=0) {
 			GLOBAL $ForumName;
 
 			if(isset($ForumName)) echo " - $ForumName";
-			echo initvar("title");
 		}
 	}
 
@@ -360,9 +392,10 @@ function freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum=0) {
 ";
 
 	freshports_style($Phorum);
+	
+	echo freshports_HEAD_charset();
 
 	echo "
-	<meta http-equiv=\"Content-Type\" content=\"text/html; charset=ISO-8859-1\">
 	<META NAME=\"description\" CONTENT=\"";
 
 	if ($Description) {
@@ -375,19 +408,7 @@ function freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum=0) {
 	<META NAME=\"keywords\"    CONTENT=\"$Keywords\">
 ";
 
-?>
-
-	<LINK REL="SHORTCUT ICON" HREF="/favicon.ico">
-	<meta name="MSSmartTagsPreventParsing" content="TRUE">
-
-	<META http-equiv="Pragma"              CONTENT="no-cache">
-	<META HTTP-EQUIV="Cache-Control"       CONTENT="no-cache">
-	<META HTTP-EQUIV="Pragma-directive"    CONTENT="no-cache">
-	<META HTTP-EQUIV="cache-directive"     CONTENT="no-cache">
-	<META HTTP-EQUIV="Expires"             CONTENT="0">
-	<META NAME="ROBOTS"                    CONTENT="NOARCHIVE">
-
-<?php
+	echo freshports_HEAD_main_items();
 
 if ($Phorum) {
 	GLOBAL $phorumver;
@@ -438,6 +459,21 @@ BODY, TD, TR, P, UL, OL, LI, INPUT, SELECT, DL, DD, DT, FONT
                 A.white { color: white; text-decoration: none; font-size: smaller; }
                 A.black { color: black; text-decoration: none; font-size: smaller; }
                 A.white:hover { text-decoration: underline; }
+
+div.section {
+	padding          : 0.25em;
+	background-color : #FFCC33;
+	border           : 2px outset #333;
+	font-size        : 120%;
+	font-weight      : bold;
+	text-align       : left;
+}
+
+div.section .left {
+	float : left;
+}
+
+
         </STYLE>\n";
 
 }

@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.101 2002-06-24 14:56:06 dan Exp $
+	# $Id: freshports.php,v 1.4.2.102 2002-06-27 13:41:36 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -792,16 +792,6 @@ function freshports_navigation_bar_top() {
 function freshports_copyright() {
 	return '<SMALL><A HREF="/legal.php" target="_top">Copyright</A> &copy; 2000-2002 <A HREF="http://www.dvl-software.com/">DVL Software Limited</A>. All rights reserved.</SMALL>';
 }
-
-function diary_ads_Random() {
-
-echo '  <P ALIGN="center">
-        <a href="http://magazine.daemonnews.org/" target="_top"><img src="/ads/daemonnews.gif" width="468" height="60" border="0" alt="Daemon News - Bringing BSD Together"></a>
-        </P>
-';
-
-}
-
 
 function FormatTime($Time, $Adjustment, $Format) {
 #echo "$Time<BR>";

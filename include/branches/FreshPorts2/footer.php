@@ -1,5 +1,5 @@
 <?
-	# $Id: footer.php,v 1.5.2.7 2002-05-10 23:21:29 dan Exp $
+	# $Id: footer.php,v 1.5.2.8 2002-06-27 13:41:36 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 ?>
@@ -39,6 +39,8 @@ ALT="powered by PostgreSQL" BORDER="0" WIDTH="182" HEIGHT="41"></A>
 <A HREF="http://www.apache.org/"><IMG SRC="/images/apache_pb.gif" 
 ALT="powered by apache" BORDER="0" WIDTH="259" HEIGHT="32"></A>
 
+<HR>
+
 </TR>
 
 <?
@@ -52,5 +54,5 @@ ALT="powered by apache" BORDER="0" WIDTH="259" HEIGHT="32"></A>
 </TABLE>
 
 <?
-	diary_ads_Random();
+	Burst_468x60_Below();
 ?>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.9 2004-03-22 20:34:05 dan Exp $
+	# $Id: commit.php,v 1.1.2.10 2004-04-07 21:01:50 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -35,6 +35,7 @@ class Commit {
 	var $element_id;
 	var $short_description;
 	var $onwatchlist;
+	var $security_notice_id;
 
 	function Commit($dbh) {
 		$this->dbh	= $dbh;
@@ -65,6 +66,7 @@ class Commit {
 		$this->element_id			= $myrow["element_id"];
 		$this->short_description	= $myrow["short_description"];
 		$this->onwatchlist			= $myrow["onwatchlist"];
+		$this->security_notice_id	= $myrow["security_notice_id"];
 	}
 
 	function FetchByMessageId($message_id) {

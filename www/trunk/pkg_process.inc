@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_process.inc,v 1.4 2002-01-06 23:19:31 dan Exp $
+	# $Id: pkg_process.inc,v 1.5 2002-02-11 03:23:11 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -142,7 +142,7 @@ function ProcessPackages($filename, $userID, $clean) {
 		return false;
 	}
 
-echo "obtained WatchID of '$watchID'<BR>\n";
+#echo "obtained WatchID of '$watchID'<BR>\n";
 
 	if ($clean) {
 		$ok = CleanPorts($watchID);

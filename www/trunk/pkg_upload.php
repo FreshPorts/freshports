@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_upload.php,v 1.5 2002-02-11 03:05:04 dan Exp $
+	# $Id: pkg_upload.php,v 1.6 2002-02-11 03:23:12 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -69,15 +69,45 @@ $Debug=0;
 		?>
 
 			<P>
-			You can update your watch lists from the packges database on your computer.  Use
-			the pkg_info command to output.
+			You can update your watch lists from the packges database on your computer.  Use the output
+			from the <CODE CLASS="code">pkg_info</CODE> command as the input for this page.  FreshPorts
+			will take this information, analyze it, and use that data to update your watch list.
 			</P>
+
+			<P>Here are the steps you should perform:</P>
+
+			<OL>
+
+			<LI>
+			<P>
+			You should first issue this command on your FreeBSD computer:
+			</P>
+
+			<BLOCKQUOTE>
+				<CODE CLASS="code">pkg_info > mypkg_info.txt</CODE>
+			</BLOCKQUOTE>
+
+			</LI>
+
+			<LI>
+			<P>
+			Then click on the browse button and select the file you created in the previous step.
+			<P>
+			</LI>
+
+			<LI>
+			Then click on upload.
+			</LI>
+
+			</OL>
+
+
 			<FORM action='pkg_upload.php?file=1' method='post' enctype='multipart/form-data'>
 				<TABLE>
 					<!-- <TR><TD>Enter Your Username</TD></TR>  -->
 					<!-- <TR><TD><INPUT type="text" name="user" value"" size=20></TD></TR> -->
 					<!-- <TR><TD>&nbsp;</TD></TR> -->
-					<TR><TD>Upload the output from pkg_info:</TD></TR>
+					<TR><TD>The file name containing the output from <CODE CLASS="code">pkg_info</CODE>:</TD></TR>
 					<TR><TD><INPUT type="file" name="pkg_info" size=40></TD></TR>
 					<TR><TD><INPUT type="submit" name="upload" value="Upload" size=20></TD></TR>
 				</TABLE>

@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_utils.inc,v 1.4 2002-01-06 23:19:30 dan Exp $
+	# $Id: pkg_utils.inc,v 1.5 2002-02-11 03:23:12 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -194,9 +194,11 @@ function AddPortsToList($ports, $userID) {
 	else {
 		echo "Error:  No Connection";
 	}
+
+	echo "<P>Your pkg_info data has been uploaded and your watch list has been updated as follows:</P>";
 	echo "Added $successful new ports<BR>\n";
 	if ($dups) {
-		echo "$dups ports were duplicate and are still registered<BR>\n";
+		echo "$dups ports in your update were already on your watch list.<BR>\n";
 	}
 	if (count($errorLog) > 0) {
 		epp("<pre>");

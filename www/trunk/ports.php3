@@ -118,9 +118,6 @@ $HTML = "</tr></td><tr>";
 
 $HTML .= '<tr><td>';
 
-// get the list of topics, which we need to modify the order
-$NumTopics=0;
-
 while ($myrow = mysql_fetch_array($result)) {
    include("/www/freshports.org/_private/port-basics.inc");
 }

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: side-bars.php,v 1.4.2.48 2003-05-15 18:32:46 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.49 2003-06-05 13:27:19 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -93,7 +93,7 @@ if ($visitor) {
 	<TR>
 
 	<TD>
-	<FORM ACTION="/search.php" METHOD="post" NAME="f">
+	<FORM ACTION="/search.php" NAME="f">
 	Enter Keywords:<BR>
 	<INPUT NAME="query"  TYPE="text" SIZE="8">&nbsp;<INPUT TYPE="submit" VALUE="go">
 	<INPUT NAME="num"    TYPE="hidden" value="10">

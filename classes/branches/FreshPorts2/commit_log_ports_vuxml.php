@@ -1,5 +1,5 @@
 <?php
-	# $Id: commit_log_ports_vuxml.php,v 1.1.2.5 2004-12-19 16:40:29 dan Exp $
+	# $Id: commit_log_ports_vuxml.php,v 1.1.2.6 2005-01-20 00:07:20 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -67,7 +67,7 @@ select CLPV.id,
 	}
 
 	function VuXML_List_Get($port_id) {
-		$VID = '';
+		unset($VID);
 
 		$numrows = $this->FetchInitialise($port_id);
 		for ($i = 0; $i < $numrows; $i++) {

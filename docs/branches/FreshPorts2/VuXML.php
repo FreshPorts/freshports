@@ -221,6 +221,53 @@ with their values.  This allows us to determine if a given
 <b>PackageVersion</b> is affected by a VuXML entry.
 
 <li>4 - the test is done by invoking pkg_version -t and examining the result.
+
+<p>
+Here is a short extract from some sample code output:
+
+<blockquote><pre class="code">
+We have a new package name: 'DarwinStreamingServer'
+*** Working on le 4.1.3g
+'8347', '4.1.1', '0', '0'
+'/usr/local/sbin/pkg_version -t 4.1.1 4.1.3g' gives '<'
+'8347', '4.1.2', '0', '0'
+'/usr/local/sbin/pkg_version -t 4.1.2 4.1.3g' gives '<'
+'8347', '4.1.2', '1', '0'
+'/usr/local/sbin/pkg_version -t 4.1.2_1 4.1.3g' gives '<'
+'8347', '4.1.3', '0', '0'
+'/usr/local/sbin/pkg_version -t 4.1.3 4.1.3g' gives '<'
+'8347', '4.1.3g', '0', '0'
+'/usr/local/sbin/pkg_version -t 4.1.3g 4.1.3g' gives '='
+'8347', '5.0', '0', '0'
+'/usr/local/sbin/pkg_version -t 5.0 4.1.3g' gives '>'
+'8347', '5.0', '1', '0'
+'/usr/local/sbin/pkg_version -t 5.0_1 4.1.3g' gives '>'
+'8347', '5.0.1.1', '0', '0'
+'/usr/local/sbin/pkg_version -t 5.0.1.1 4.1.3g' gives '>'
+'8347', '5.0.1.1', '1', '0'
+'/usr/local/sbin/pkg_version -t 5.0.1.1_1 4.1.3g' gives '>'
+We have a new package name: 'ImageMagick'
+*** Working on lt 6.0.4.2
+</pre></blockquote>
+
+<p>
+We are checking for all versions that are <= 4.1.3.g.  In this case,
+affected versions will have result '<' or '='.
+
+<p>
+The steps involved in testing the versions are:
+
+<ol>
+<li>compare op1/v1
+<li>if available, compare op2/v2
+</ol>
+
+<p>
+The available operators are: <, <=, =, >, and >=.
+
+<p>
+"pkg_version -t" returns one of <, =, or >.
+
 <li>5 - store each vuxml id affecting this <b>PackageVersion</b>.
 <li>7 - when updating commit_log_ports_vuxml, something like this might be
 useful:

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch_list.php,v 1.1.2.12 2003-03-05 21:40:48 dan Exp $
+	# $Id: watch_list.php,v 1.1.2.13 2003-04-27 20:33:36 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -186,6 +186,10 @@ UPDATE watch_list
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {
 			$numrows = pg_numrows($this->LocalResult);
+			if ($numrows > 0) {
+				$myrow = pg_fetch_array($this->LocalResult, 0);
+				$this->PopulateValues($myrow);
+			}
 #			echo "That would give us $numrows rows";
 		} else {
 			$numrows = -1;

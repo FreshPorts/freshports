@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.104 2002-08-19 17:58:04 dan Exp $
+	# $Id: freshports.php,v 1.4.2.105 2002-09-26 16:10:16 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -799,34 +799,8 @@ function FormatTime($Time, $Adjustment, $Format) {
 	return date($Format, strtotime($Time) + $Adjustment);
 }
 
-
-
-
 #
-# The following code was obtained from http://www.zend.com/codex.php?id=199&single=1
-# 
-#
-
-function convertURLS($text) {
-	$text = eregi_replace("((ht|f)tp://www\.|www\.)([a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})((/|\?)[a-z0-9~#%&\\/'_\+=:\?\.-]*)*)", "http://www.\\3", $text);
-	$text = eregi_replace("((ht|f)tp://)((([a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3}))|(([0-9]{1,3}\.){3}([0-9]{1,3})))((/|\?)[a-z0-9~#%&'_\+=:\?\.-]*)*)", "<A HREF=\"\\0\">\\0</A>", $text);
-	return $text;
-}
-
-function convertMail($text) {
-	# see also freshports_IsEmailValid
-	$text = eregi_replace("([+_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3}))", "<A HREF='mailto:\\0'>\\0</A>", $text);
-	return $text;
-}
-
-function convertAllLinks($text) {
-	$text = convertURLS($text);
-	$text = convertMail($text);
-	return $text;
-}
-
-#
-# The code above was donated by Steve Kacsmark <stevek@guide.chi.il.us>.
+# The code below was donated by Steve Kacsmark <stevek@guide.chi.il.us>.
 # With modifications by Marcin Gryszkalis <mgryszkalis@cerint.pl>.
 #
 

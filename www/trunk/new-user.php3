@@ -15,7 +15,7 @@ if ($submit) {
 
   $errors = "";
 
-  if ($UserName == '') {
+  if ($UserLogin == '') {
     $errors .= "Please enter a user id.<BR>";
     $OK = 0;
   }
@@ -50,7 +50,7 @@ if ($submit) {
 
   $UserCreated = 0;
   if ($OK) {
-    $Cookie = UserToCookie($UserName);
+    $Cookie = UserToCookie($UserLogin);
 //    echo "checking database\n";
 
     // test for existance of user id
@@ -71,12 +71,12 @@ if ($submit) {
       }
 
       $email     = addslashes($email);
-      $UserName  = addslashes($UserName);
+      $UserLogin = addslashes($UserLogin);
       $Password1 = addslashes($Password1);
 
       $sql = "insert into users (username, password, cookie, firstlogin, lastlogin, email, " . 
              "watchnotifyfrequency, emailsitenotices_yn) values (";
-      $sql .= "'$UserName', '$Password1', '$Cookie', Now(), Now(), '$email', " .
+      $sql .= "'$UserLogin', '$Password1', '$Cookie', Now(), Now(), '$email', " .
               "'$watchnotifyfrequency', '$emailsitenotices_yn_value')";
 
 	$errors .= "<br>sql=" . $sql;
@@ -87,7 +87,7 @@ if ($submit) {
       } else {
 	$errors .= 'Something went terribly wrong there.<br>';
 /*
-	$errors .= 'UserName	= '.$UserName	  . '<br>';
+	$errors .= 'UserLogin	= '.$UserLogin	  . '<br>';
 	$errors .= 'Password	= '.$Password1	  . '<br>';
 	$errors .= 'DaysToShow	= '.$DaysToShow   . '<br>';
 	$errors .= 'MaxArticles = '.$MaxArticles  . '<br>';
@@ -103,16 +103,15 @@ if ($submit) {
   if ($UserCreated) {
 //	echo "Ummm, I think I created that login.";
 	SetCookie("visitor", $Cookie, time() + 60*60*24*120, '/');  // good for three months.
-	header("Location: welcome.php3");  /* Redirect browser to PHP web site */
+	header("Location: welcome.php3?origin=" . $origin);  /* Redirect browser to PHP web site */
 	exit;  /* Make sure that code below does not get executed when we redirect. */
  }
 } else {
 // not submit
 
-// we can't do this if we are submitting because it overwrites the incoming values
-require( "./_private/getvalues.php3");
-
-$emailsitenotices_yn = "ON";
+   // we can't do this if we are submitting because it overwrites the incoming values
+   require( "./_private/getvalues.php3");
+   $emailsitenotices_yn = "ON";
 }
 ?>
 
@@ -123,9 +122,16 @@ $emailsitenotices_yn = "ON";
 <meta name="description" content="freshports - new ports, applications">
 <meta name="keywords" content="FreeBSD, index, applications, ports">  
 <!--// DVL Software is a New Zealand company specializing in database applications. //-->
+<script>
+<!--
+function setfocus() { document.f.UserLogin.focus(); }
+// -->
+</script>
 </head>
 
- <? include("./_private/header.inc") ?>
+ <? //include("./_private/header.inc") ?>
+
+<body onLoad=setfocus()>
 <table width="100%"  border="0">
 <tr><td valign="top" width="100%">
 <table width="100%" border="0">

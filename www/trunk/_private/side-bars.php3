@@ -15,11 +15,11 @@
 //         break;
 
       default:
-         $OriginLocal = $PHP_SELF;
+         $OriginLocal = rawurlencode($HTTP_SERVER_VARS["REQUEST_URI"]);
          break;
    }
 
-//if ($UserName) {
+//echo "OriginLocal = '$OriginLocal'<br>\n";
 if ($UserID) {
    echo '<font SIZE="-1">Logged in as ', $UserName, "</font><br>";
 
@@ -34,8 +34,8 @@ if ($UserID) {
    echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/watch-categories.php3", "watch list - Categories") . '</font><br>';
    echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/watch.php3", "your watched ports") . '</font><br>';
   } else {
-   echo '<font SIZE="-1">' . freshports_SideBarHTMLParm($PHP_SELF, "/login.php3", "?origin=$PHP_SELF", "User Login") . '</font><br>';
-   echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/new-user.php3", "Create account") . '</font><br>';
+   echo '<font SIZE="-1">' . freshports_SideBarHTMLParm($PHP_SELF, "/login.php3", "?origin=$OriginLocal", "User Login") . '</font><br>';
+   echo '<font SIZE="-1">' . freshports_SideBarHTMLParm($PHP_SELF, "/new-user.php3", "?origin=$OriginLocal", "Create account") . '</font><br>';
   }
 ?>
    </td>

@@ -3,6 +3,11 @@
 require( "./_private/commonlogin.php3");
 require( "./_private/freshports.php3");
 
+//$Debug=1;
+if ($Debug) echo 'origin = ' . rawurlencode($origin) . "'<br>\n";
+
+$origin=rawurlencode($origin);
+
 if ($submit) {
 //   $Debug=1;
    // process form
@@ -12,6 +17,7 @@ if ($submit) {
          echo "$name = $value<br>\n";
       }
    }
+
 
    $OK = 1;
 
@@ -47,7 +53,7 @@ if ($submit) {
          if ($origin == "/index.php3") {
             $origin = "/";
          }
-         header("Location: $origin");
+         header("Location: " . rawurldecode($origin));
          // Make sure that code below does not get executed when we redirect.
          exit;
       }
@@ -62,9 +68,16 @@ if ($submit) {
 <meta name="description" content="freshports - new ports, applications">
 <meta name="keywords" content="FreeBSD, index, applications, ports">  
 <!--// DVL Software is a New Zealand company specializing in database applications. //-->
+<script>
+<!--
+function setfocus() { document.f.UserID.focus(); }
+// -->
+</script>
 </head>
 
- <? include("./_private/header.inc") ?>
+<body bgcolor="#ffffff" link="#0000cc"  onLoad=setfocus()>
+
+ <? //include("./_private/header.inc") ?>
 <table width="100%" border=0>
  <tr>
     <td>

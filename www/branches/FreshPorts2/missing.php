@@ -1,5 +1,5 @@
 <?
-	# $Id: missing.php,v 1.1.2.2 2001-12-29 19:03:06 dan Exp $
+	# $Id: missing.php,v 1.1.2.3 2001-12-30 23:27:04 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
@@ -21,22 +21,63 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 
 	require("missing-port.php");
 
-	if (freshports_Parse404CategoryPort($REQUEST_URI, $db)) {
-#		echo "freshports_Parse404Port found something";
-		return 1;
-	}
+	$result = freshports_Parse404CategoryPort($REQUEST_URI, $db);
 
-	return 0;
+	return $result;
 }
 
 
-if (!freshports_Parse404URI($REQUEST_URI, $db)) {
+$result = freshports_Parse404URI($REQUEST_URI, $db);
+
+if ($result) {
+
 	#
 	# this is a true 404
-}
+
+	$Title = "Document not found";
+	freshports_Start($Title,
+					"$FreshPortsTitle - new ports, applications",
+					"FreeBSD, index, applications, ports");
 
 ?>
 
-<? include("./include/footer.php") ?>
+<TABLE WIDTH="<? echo $TableWidth ?>" BORDER="0" ALIGN="center">
+<TR>
+    <TD COLSPAN="3" BGCOLOR="#AD0040" HEIGHT="29"><FONT COLOR="#FFFFFF" size="+2"> 
+<?
+   echo "$FreshPortsTitle -- $Title";
+?> 
+</FONT></TD>
+</TR>
+<TR>
+<TD>
+<P>
+Sorry, but I don't know anything about that.
+</P>
+
+<P>
+<? echo $result ?>
+</P>
+
+<P>
+Perhaps a <A HREF="/categories.php3">list of categories</A> for <A HREF="/search.php3">the search page</A> might be helpful.
+</P>
+
+</TD>
+</TR>
+
+<TR><TD>
+
+<?
+	include("./include/footer.php");
+?>
+
+</TD></TR>
+</TABLE>
 </body>
 </html>
+
+<?
+}
+
+?>

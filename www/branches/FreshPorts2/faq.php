@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.57 2004-11-21 14:56:19 dan Exp $
+	# $Id: faq.php,v 1.1.2.58 2004-11-24 18:48:58 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -108,7 +108,7 @@ down you must read to find something you didn't already know.</P>
 
 
 <TR>
-<? echo freshports_PageBannerText("What is a port"); ?>
+<? echo freshports_PageBannerText("What is a port?"); ?>
 </TR>
 
 	<TR><TD>

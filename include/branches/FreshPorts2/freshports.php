@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.198 2004-12-08 11:03:07 dan Exp $
+	# $Id: freshports.php,v 1.4.2.199 2004-12-19 16:44:52 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -1079,7 +1079,7 @@ if ($ShowDepends) {
 		# Display our master port
 		#
 
-		if ($port->master_port != '') {
+		if ($port->IsSlavePort()) {
 			$HTML .= '<dl><dt><b>Master port:</b> ';
 			list($MyCategory, $MyPort) = explode('/', $port->master_port);
 			$HTML .= freshports_link_to_port($MyCategory, $MyPort);
@@ -1197,6 +1197,30 @@ function freshports_PackageVersion($PortVersion, $PortRevision, $PortEpoch) {
 	return $PackageVersion;
 }
 
+function freshports_CheckForOutdatedVulnClaim($commit, $port, $VuXMLList) {
+	# This is a situation where the most recent commit listed
+	# for a port may not accurately reflect the current state
+	# of the port.  It is thought this would happen only for slave ports
+	# where the master port has been updated.  Such a commit would not
+	# appear under the slave port, thereby giving a false impression
+	# that the slave port was still vulnerable.
+	#
+	if (IsSet($VuXMLList[$commit->id])) {
+		# yes, the most recent commit has been marked as vulnerable
+		if ($port->IsSlavePort()) {
+			# Yes, we have a slave port here
+			# is the version for this commit, the same as the port?
+			$CommitVersion = freshports_PackageVersion($commit->{'port_version'},  $commit->{'port_revision'},  $commit->{'port_epoch'});
+			$PortVersion   = freshports_PackageVersion($port->{'version'},         $port->{'revision'},         $port->{'epoch'});
+
+			if ($CommitVersion != PortVersion) {
+				echo "<p><b>NOTE</b>: This slave port may no longer be vulnerable to issues shown below because the ";
+				echo '<a href="/' . $port->master_port . '/">master port</a>' . " has been updated.</p>\n";
+			}
+		}
+	}
+}
+
 function freshports_PortCommits($port) {
 	# print all the commits for this port
 
@@ -1206,13 +1230,17 @@ function freshports_PortCommits($port) {
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user_tasks.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit_log_ports_vuxml.php');
 
-	freshports_PortCommitsHeader($port);
-
 	$Commits = new Commit_Log_Ports($port->dbh);
 	$NumRows = $Commits->FetchInitialise($port->id);
 
 	$VuXML = new Commit_Log_Ports_VuXML($port->dbh);
 	$VuXMLList = $VuXML->VuXML_List_Get($port->id);
+
+	$Commits->FetchNthCommit(0);
+
+	freshports_CheckForOutdatedVulnClaim($Commits, $port, $VuXMLList);
+
+	freshports_PortCommitsHeader($port);
 
 	$LastVersion = '';
 	for ($i = 0; $i < $NumRows; $i++) {

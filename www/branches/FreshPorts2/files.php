@@ -1,5 +1,5 @@
 <?
-	# $Id: files.php,v 1.1.2.5 2002-02-13 22:58:31 dan Exp $
+	# $Id: files.php,v 1.1.2.6 2002-02-15 00:17:56 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -68,7 +68,7 @@ if (!$result) {
 	echo 'Commit Details</FONT></TD></TR>' . "\n";
 	echo '<TR><TD COLSPAN="3">';
 	echo '<FONT size="+1"><A HREF="' . $myrow["category"] . '">' . $myrow["category"] . '</A>';
-	echo '/<A HREF="' . $myrow["category"] . '/' . $myrow["port"] . '">' . $myrow["port"] . '</A>';
+	echo '/<A HREF="' . $myrow["category"] . '/' . $myrow["port"] . '/">' . $myrow["port"] . '</A>';
 	echo '</FONT>';
 
 	echo ' - <CODE CLASS="code">' . $myrow["short_description"] . '</CODE>';

@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: sidebar.php,v 1.1.2.17 2003-07-30 12:24:56 dan Exp $
+	# $Id: sidebar.php,v 1.1.2.18 2004-02-22 15:56:59 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2004 DVL Software Limited
 	#
 
 	DEFINE('MAX_PORTS', 40);
@@ -78,6 +78,7 @@ FROM (
 SELECT LCPCLLCP.*,
        ports.forbidden,
        ports.broken,
+       ports.deprecated,
        ports.element_id                     AS element_id,
        CASE when clp_version  IS NULL then ports.version  else clp_version  END as version,
        CASE when clp_revision IS NULL then ports.revision else clp_revision END AS revision,

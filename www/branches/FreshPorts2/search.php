@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.51 2004-02-05 20:27:57 dan Exp $
+	# $Id: search.php,v 1.1.2.52 2004-02-22 15:56:59 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2004 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
@@ -170,6 +170,7 @@ $sql = "
          element.status, 
          ports.element_id, 
          ports.broken, 
+         ports.deprecated, 
          ports.forbidden ";
 
 	if ($User->id) {

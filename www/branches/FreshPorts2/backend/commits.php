@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: commits.php,v 1.1.2.11 2003-11-21 14:35:43 dan Exp $
+	# $Id: commits.php,v 1.1.2.12 2004-02-22 15:57:00 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2004 DVL Software Limited
 	#
 
 	require($_SERVER["DOCUMENT_ROOT"] . "/include/common.php");
@@ -24,8 +24,6 @@
 	} else {
 		$MaxCommits = MAXROWS;
 	}
-
-	$Title = "Broken ports";
 
 	$sql = "SELECT message_id, 
 				   to_char(message_date - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as message_date, 

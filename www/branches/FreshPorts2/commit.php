@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.36 2004-02-04 16:20:04 dan Exp $
+	# $Id: commit.php,v 1.1.2.37 2004-02-22 15:56:59 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2004 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
@@ -211,6 +211,10 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 
 					if ($myrow["broken"]) {
 						$HTML .= '&nbsp;' . freshports_Broken_Icon() . "\n";
+					}
+
+					if ($myrow["deprecated"]) {
+						$HTML .= '&nbsp;' . freshports_Deprecated_Icon() . "\n";
 					}
 
 					if ($IsPort) {

@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.172 2004-02-22 14:54:43 dan Exp $
+	# $Id: freshports.php,v 1.4.2.173 2004-02-22 15:57:02 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2004 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/constants.php');
@@ -747,6 +747,10 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 
 	if ($port->broken) {
 		$HTML .= freshports_Broken_Icon() . ' BROKEN: ' . htmlify(htmlspecialchars($port->broken)) . "<br>"; ;
+	}
+
+	if ($port->deprecated) {
+		$HTML .= freshports_Deprecated_Icon() . ' DEPRECATED: ' . htmlify(htmlspecialchars($port->deprecated)) . "<br>"; ;
 	}
 
    // description

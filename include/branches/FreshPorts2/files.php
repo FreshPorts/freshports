@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: files.php,v 1.1.2.30 2003-09-26 12:42:16 dan Exp $
+	# $Id: files.php,v 1.1.2.31 2004-02-22 15:57:02 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2004 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
@@ -54,6 +54,7 @@ select element_pathname(element.id) as pathname,
        ports.date_added, 
        ports.forbidden, 
        ports.broken,
+       ports.deprecated,
        security_notice.id  AS security_notice_id";
 
 	if ($User->id) {
@@ -180,6 +181,10 @@ select element_pathname(element.id) as pathname,
 
 		if ($myrow["broken"]) {
 			$HTML .= freshports_Broken_Icon() . "\n";
+		}
+
+		if ($myrow["deprecated"]) {
+			$HTML .= freshports_Deprecated_Icon() . "\n";
 		}
 
 		echo $HTML;

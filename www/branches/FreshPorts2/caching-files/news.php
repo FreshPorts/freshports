@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: news.php,v 1.1.2.1 2003-11-21 15:01:26 dan Exp $
+	# $Id: news.php,v 1.1.2.2 2004-02-22 15:57:01 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2004 DVL Software Limited
 	#
 	
 	DEFINE('MAX_PORTS', 20);
@@ -93,6 +93,7 @@ FROM (
 SELECT LCPCLLCP.*,
        ports.forbidden,
        ports.broken,
+       ports.deprecated,
        ports.element_id                     AS element_id,
        CASE when clp_version  IS NULL then ports.version  else clp_version  END as version,
        CASE when clp_revision IS NULL then ports.revision else clp_revision END AS revision,

@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: date.php,v 1.1.2.20 2003-09-25 14:02:46 dan Exp $
+	# $Id: date.php,v 1.1.2.21 2004-02-22 15:56:59 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2004 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
@@ -190,6 +190,10 @@
 		
 					if ($commit->broken) {
 						$HTML .= ' '. freshports_Broken_Icon() . "\n";
+					}
+		
+					if ($commit->deprecated) {
+						$HTML .= ' '. freshports_Deprecated_Icon() . "\n";
 					}
 		
 					$HTML .= freshports_CommitFilesLink($commit->message_id, $commit->category, $commit->port);

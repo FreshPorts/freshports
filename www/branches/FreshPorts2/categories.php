@@ -1,5 +1,5 @@
 <?
-	# $Id: categories.php,v 1.1.2.6 2002-05-18 19:27:10 dan Exp $
+	# $Id: categories.php,v 1.1.2.7 2002-05-20 20:33:17 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -62,7 +62,7 @@ switch ($sort) {
       $cache_file .= ".category";
 }
 
-$sql = "select max(commit_log.commit_date) - INTERVAL '10800 seconds' as updated, count(ports.id) as count, " .
+$sql = "select to_char(max(commit_log.commit_date) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as updated, count(ports.id) as count, " .
        "categories.id as category_id, categories.name as category, categories.description as description ".
        "from categories, element, ports left outer join commit_log on ( ports.last_commit_id = commit_log.id ) ".
        "WHERE ports.category_id    = categories.id " .

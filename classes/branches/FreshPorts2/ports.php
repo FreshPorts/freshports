@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports.php,v 1.1.2.47 2004-12-19 16:40:08 dan Exp $
+	# $Id: ports.php,v 1.1.2.48 2005-01-18 23:56:04 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -61,6 +61,9 @@ class Port {
 	// so far used by ports-deleted.php and include/list-of-ports.php
 	var $message_id;
 	var $encoding_losses;
+
+	// for any vulnerabilities
+	var $VuXML_List;
 
 	// needed for fetch by category
 	var $LocalResult;
@@ -511,4 +514,15 @@ LEFT OUTER JOIN
 		return $this->master_port != '';
 	}
 
+	function LoadVulnerabilities() {
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit_log_ports_vuxml.php');
+
+		$VuXML = new Commit_Log_Ports_VuXML($this->dbh);
+		$this->VuXML_List = $VuXML->VuXML_List_Get($this->id);
+
+		return count($this->VuXML_List);
+	}
+
 }
+
+?>

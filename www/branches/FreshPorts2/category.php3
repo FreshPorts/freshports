@@ -1,5 +1,5 @@
 <?
-   # $Id: category.php3,v 1.21.2.2 2001-11-26 06:43:37 dan Exp $
+   # $Id: category.php3,v 1.21.2.3 2001-11-29 05:39:29 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -91,7 +91,8 @@ $sql = "select ports.id, element.name as port, ports.id as ports_id, commit_log.
        "commit_log.description as update_description, " .
        "ports.maintainer, ports.short_description, " .
        "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, element.status, " .
-       "ports.broken, ports.forbidden " .
+       "ports.broken, ports.forbidden, " .
+	   "date_part('epoch', ports.date_created) - 10800 as date_created " .
        "from ports, categories, element, commit_log  ".
        "WHERE ports.category_id    = categories.id " .
        "  and categories.id        = $category " .
@@ -99,9 +100,6 @@ $sql = "select ports.id, element.name as port, ports.id as ports_id, commit_log.
        "  and ports.last_commit_id = commit_log.id ";
 
 /*
-       "date_format(date_created, '$FormatDate $FormatTime') as date_created_formatted, " .
-UNIX_TIMESTAMP(ports.date_created) as date_created, ".
-
 if ($next) {
    $sql .= "and ports.name > '$next' ";
 }

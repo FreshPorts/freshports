@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.5 2001-11-29 04:08:16 dan Exp $
+   # $Id: freshports.php,v 1.4.2.6 2001-11-29 05:39:30 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -410,15 +410,15 @@ function freshports_PortDetails($myrow, $db, $ShowDeletedDate, $DaysMarkedAsNew,
       $HTML .= ' <font size="-1"><a href="' . $URL_Category . '">' . $myrow["category"] . '</a></font>';
    }
 
-//   $HTML .= $myrow["date_created_formatted"] ."::". $myrow["updated"] ."--". $DaysMarkedAsNew;
+//   $HTML .= $myrow["date_created"] ."::". $myrow["updated"] ."--". $DaysMarkedAsNew;
    if ($myrow["date_created"] > Time() - 3600 * 24 * $DaysMarkedAsNew) {
       $MarkedAsNew = "Y";
       $HTML .= " <img src=\"/images/new.gif\" width=28 height=11 alt=\"new!\" hspace=2 align=absmiddle>";
    }
 
    if ($MarkedAsNew == "Y" || $ShowPortCreationDate) {
-      if ($myrow["date_created_formatted"] != $myrow["updated"] || !($ShowLastChange == "Y" || $ShowEverything) || $ShowPortCreationDate) {
-         $HTML .= ' <font size="-1">(' . $myrow["date_created_formatted"] . ")</font>";
+      if ($myrow["date_created"] != $myrow["updated"] || !($ShowLastChange == "Y" || $ShowEverything) || $ShowPortCreationDate) {
+         $HTML .= ' <font size="-1">(' . date("j M Y H:i", $myrow["date_created"]) . ")</font>";
       }
    }
 

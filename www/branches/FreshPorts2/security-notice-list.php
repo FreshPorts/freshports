@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: security-notice-list.php,v 1.1.2.6 2004-02-13 17:51:14 dan Exp $
+	# $Id: security-notice-list.php,v 1.1.2.7 2004-02-13 17:53:08 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -148,6 +148,8 @@ function MassageStatus($InStatus) {
   </td>
 </TR>
 </TABLE>
+</td></tr>
+</table>
 
 <?
 freshports_ShowFooter();

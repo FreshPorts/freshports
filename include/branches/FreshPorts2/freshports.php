@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.44 2002-02-23 21:32:43 dan Exp $
+   # $Id: freshports.php,v 1.4.2.45 2002-02-24 00:24:56 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -24,7 +24,7 @@ $TimeFormatDefault		= "H:i:s";
 
 $FreshPortsTitle		= "FreshPorts";
 
-$UserStatusEnabled	   = "E";
+$UserStatusActive	   = "A";
 $UserStatusDisabled    = "D";
 $UserStatusUnconfirmed = "U";
 
@@ -160,6 +160,7 @@ function freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum=0) {
 
 	echo "\">
 	<META NAME=\"keywords\"    CONTENT=\"$Keywords\">
+	<META http-equiv=\"Pragma\"              content=\"no-cache\">
 ";
 
 	echo '	<meta name="MSSmartTagsPreventParsing" content="TRUE">' . "\n";
@@ -915,6 +916,7 @@ function freshports_UserSendToken($UserID, $dbh) {
 
 	GLOBAL	$REMOTE_ADDR;
 	GLOBAL	$REMOTE_PORT;
+	GLOBAL	$HTTP_HOST;
 
 	$sql = "select email, token 
 	          from users, user_confirmations
@@ -936,21 +938,21 @@ function freshports_UserSendToken($UserID, $dbh) {
 	if (IsSet($token)) {
 		$message =  "Someone, perhaps you, supplied your email address as their\n".
 					"FreshPorts login. If that wasn't you, and this message becomes\n".
-				    "a nuisance, please forward this message to webmaster@freshports.org\n".
+				    "a nuisance, please forward this message to webmaster@$HTTP_HOST\n".
 					"and we will take care of it for you.\n".
                     " \n".
 	                "Your token is: $token\n".
     	            "\n".
         	        "Please point your browser at\n".
-					"http://www.FreshPorts.org/user-confirmation.php?token=$token\n" .
+					"http://$HTTP_HOST/confirmation.php?token=$token\n" .
 	                "\n".
     	            "the request came from $REMOTE_ADDR:$REMOTE_PORT\n".
 					"\n".
 					"-- \n".
-					"FreshPorts - http://www.FreshPorts.org/ - the place for ports";
+					"FreshPorts - http://$HTTP_HOST/ - the place for ports";
 
 		$result = mail($email, "FreshPorts - user registration", $message,
-					"From: webmaster@freshports.org\nReply-To: webmaster@freshports.org\nX-Mailer: PHP/" . phpversion());
+					"From: webmaster@$HTTP_HOST\nReply-To: webmaster@$HTTP_HOST\nX-Mailer: PHP/" . phpversion());
 	} else {
 		$result = 0;
 	}

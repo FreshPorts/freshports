@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.44 2003-09-09 19:25:13 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.45 2003-09-24 17:47:41 dan Exp $
 	#
 	# Copyright (c) 2001-2003 DVL Software Limited
 	#
@@ -12,140 +12,12 @@ DEFINE('COMMIT_DETAILS', 'files.php');
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/include/files.php');
 
-
-function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
-	GLOBAL $User;
-
-	$Debug = 0;
-
-	unset($CategoryName);
-	unset($PortName);
-	unset($FileName);
-
-	if ($Debug) echo "you asked for $REQUEST_URI<BR>";
-
-	$result = "";
-	$url_Array = explode('/', $REQUEST_URI);
-	if ($Debug) echo "count(\$url_Array) = '" . sizeof($url_Array) .  "' : '" . $url_Array[4] . "'<BR>";
-	if (count($url_Array) >= 1) {
-		$CategoryName = AddSlashes($url_Array[1]);
-		$CategoryID   = freshports_CategoryId($CategoryName, $db);
-		if ($CategoryID == '') {
-			Unset($CategoryID);
-		}
-
-		if ($Debug) {
-			echo "\$CategoryID='$CategoryID'";
-			if (IsSet($CategoryID)) {
-				echo ' great!, category is found';
-			} else {
-				echo ' damn!, category not found';
-			}
-			echo "<br>\n";
-		}
-
-		if (count($url_Array) >= 3) {
-			$url_Item2 = AddSlashes($url_Array[2]);
-			if (substr($url_Item2, 0, 1) == '?') {
-				$Parms = $url_Item2;
-			} else {
-				$PortName = $url_Item2;
-			}
-		}
-
-		if (count($url_Array) >= 4) {
-			if ($Debug) echo "getting FileName<BR>";
-			$FileName = AddSlashes($url_Array[3]);
-		}
-
-		if ($Debug) {
-			echo "\$CategoryName = '$CategoryName'<BR>";
-			echo "\$PortName     = '$PortName'<BR>";
-			echo "\$FileName     = '$FileName'<BR>";
-			echo "\$Parms        = '$Parms'<BR>";
-		}
-
-		if ($Debug) {
-			echo "\$CategoryName = '$CategoryName' ($CategoryID)<BR>";
-			echo "\$PortName     = '$PortName'<BR>";
-		}
-
-		if (IsSet($PortName) && $PortName != '') {
-			$port = new Port($db);
-			GLOBAL $User;
-
-			$port->Fetch($CategoryName, $PortName, $User->id);
-
-			if ($Debug) {
-				if (IsSet($port->id)) {
-					echo "port was found with id = $port->id<BR>";
-				} else {
-					echo "that port was not found<BR>";
-				}
-			}
-		}
-
-		if (IsSet($CategoryID)) {
-#			echo "<A HREF=\"/category.php?category=$CategoryID\">this link</A> should take you to the category details<BR>";
-			if (IsSet($port->id)) {
-				if (IsSet($FileName) && $FileName != '') {
-					if (substr($FileName, 0, strlen(COMMIT_DETAILS)) == COMMIT_DETAILS) {
-						if ($Debug) echo '$_SERVER["REDIRECT_QUERY_STRING"]="' . $_SERVER["REDIRECT_QUERY_STRING"] . '"<BR>';
-						parse_str($_SERVER["REDIRECT_QUERY_STRING"], $query_parts);
-						$message_id = $query_parts['message_id'];
-
-						if ($Debug) echo '$message_id="' . $message_id . '"<br>';
-
-						freshports_Files($User, $port->id, $message_id, $db);
-					} else {
-						$result = 'The category and port you specified both exist, but that extra bit I don\'t recognize: \'' . $FileName . '\'';
-					}
-				} else {
-					freshports_PortDescription($port);
-				}
-
-			} else {
-				if (IsSet($PortName) && $PortName != '' && !IsSet($port->id)) {
-					$result = "The category <A HREF=\"/$CategoryName/\"><b>$CategoryName</b></A> exists but not the port <b>$PortName</b>.";
-				} else {
-					if (In_Array("REDIRECT_QUERY_STRING", $_SERVER)) {
-						if (IsSet($_SERVER["REDIRECT_QUERY_STRING"])) {
-							parse_str($_SERVER['REDIRECT_QUERY_STRING'], $query_parts);
-							if (IsSet($query_parts['page']))      $page      = $query_parts['page'];
-							if (IsSet($query_parts['page_size'])) $page_size = $query_parts['page_size'];
-						}
-					}
-
-					if (!IsSet($page) || $page == '') {
-						$page = 1;
-					}
-
-					if (!IsSet($page_size) || $page_size == '') {
-						$page_size = $User->page_size;
-					}
-
-					if ($Debug) {
-						echo "\$page      = '$page'<br>\n";
-						echo "\$page_size = '$page_size'<br>\n";
-					}
-					
-					require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-category.php');
-					freshports_Category($db, $CategoryName, $page, $page_size);
-				}
-			}
-		} else {
-#			echo "no category '$CategoryName' found";
-			$result = "There is no document by that name ('$REQUEST_URI')";
-		}
-	}
-
-	return $result;
-}
-
-
-function freshports_PortDescription($port) {
+function freshports_PortDescription($db, $element_id) {
 	GLOBAL $TableWidth;
 	GLOBAL $FreshPortsTitle;
+
+	$port = new Port($db);
+	$port->FetchByElementID($element_id);
 
 	header("HTTP/1.1 200 OK");
 	$Title = $port->category . "/" . $port->port;

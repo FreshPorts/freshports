@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-category.php,v 1.1.2.27 2003-09-08 13:54:23 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.28 2003-09-24 17:47:41 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -42,13 +42,34 @@ function str_is_int($str) {
 }
 
 
-function freshports_Category($db, $CategoryName, $PageNo = 1, $PageSize = 25) {
+function freshports_Category($db, $element_id, $PageNo = 1, $PageSize = 25) {
 
 	GLOBAL $TableWidth;
 	header('HTTP/1.1 200 OK');
 
 	$Debug = 0;
 
+	if (In_Array("REDIRECT_QUERY_STRING", $_SERVER)) {
+		if (IsSet($_SERVER["REDIRECT_QUERY_STRING"])) {
+			parse_str($_SERVER['REDIRECT_QUERY_STRING'], $query_parts);
+			if (IsSet($query_parts['page']))      $PageNo   = $query_parts['page'];
+			if (IsSet($query_parts['page_size'])) $PageSize = $query_parts['page_size'];
+		}
+	}
+
+	if (!IsSet($page) || $page == '') {
+		$page = 1;
+	}
+
+	if (!IsSet($page_size) || $page_size == '') {
+		$page_size = $User->page_size;
+	}
+
+	if ($Debug) {
+		echo "\$page      = '$page'<br>\n";
+		echo "\$page_size = '$page_size'<br>\n";
+	}
+					
 	SetType($PageNo,   "integer");
 	SetType($PageSize, "integer"); 
 
@@ -65,16 +86,14 @@ function freshports_Category($db, $CategoryName, $PageNo = 1, $PageSize = 25) {
 		echo "\$PageSize = '$PageSize'<br>\n";
 	}
 
-	
-
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
 
 	$category = new Category($db);
-	$category->FetchByName($CategoryName);
+	$category->FetchByElementID($element_id);
 	$title = $category->{'name'};
 
 	# find out how many ports are in this category
-	$PortCount = $category->PortCount($CategoryName);
+	$PortCount = $category->PortCount($category->name);
 
 	GLOBAL $User;
 	if ($Debug) echo "\$User->id='$User->id'";
@@ -87,7 +106,7 @@ function freshports_Category($db, $CategoryName, $PageNo = 1, $PageSize = 25) {
 
 	$port = new Port($db);
 
-	$numrows = $port->FetchByCategoryInitialise($CategoryName, $User->id, $PageSize, $PageNo);
+	$numrows = $port->FetchByCategoryInitialise($category->name, $User->id, $PageSize, $PageNo);
 
 	?>
 
@@ -112,7 +131,7 @@ echo $PortCount;
 
 <?php
 echo '<div align="center"><br>';
-freshports_CategoryNextPreviousPage($CategoryName, $PortCount, $PageNo, $PageSize);
+freshports_CategoryNextPreviousPage($category->name, $PortCount, $PageNo, $PageSize);
 echo '</div>';
 
 ?>
@@ -156,7 +175,7 @@ $ShowDescriptionLink  = "N";
 <TR><TD>
 <div align="center"><br>
 <?php 
-freshports_CategoryNextPreviousPage($CategoryName, $PortCount, $PageNo, $PageSize);
+freshports_CategoryNextPreviousPage($category->name, $PortCount, $PageNo, $PageSize);
 ?>
 </div> 
 </TD></TR>

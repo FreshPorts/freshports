@@ -1,5 +1,5 @@
 <?
-   # $Id: index.php3,v 1.34.4.2 2001-12-23 02:05:59 dan Exp $
+   # $Id: index.php3,v 1.34.4.3 2001-12-23 02:06:49 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -187,8 +187,7 @@ $sql = "select ports.id, ports.name as port, change_log.commit_date as updated_r
 
 $sql .= " order by $sort ";
 
-$sql .= " limit 3";
-#$sql .= " limit $MaxNumberOfPorts ";
+$sql .= " limit $MaxNumberOfPorts ";
 
 if ($Debug) echo $sql;
 

@@ -1,5 +1,5 @@
 <?
-	# $Id: date.php,v 1.1.2.3 2002-11-28 04:44:21 dan Exp $
+	# $Id: date.php,v 1.1.2.4 2002-11-28 04:47:37 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -82,7 +82,7 @@ for ($i = 0; $i < $NumRows; $i++) {
 
 			$HTML .= "<BR>\n";
 
-			$HTML .= $j . '<BIG><B>';
+			$HTML .= '<BIG><B>';
 			$HTML .= '<A HREF="/' . $commit->category . '/' . $commit->port . '/">';
 			$HTML .= $commit->port;
 		

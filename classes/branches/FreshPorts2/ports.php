@@ -1,5 +1,5 @@
 <?
-	# $Id: ports.php,v 1.1.2.17 2002-05-21 02:11:00 dan Exp $
+	# $Id: ports.php,v 1.1.2.18 2002-05-21 14:06:03 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -120,7 +120,7 @@ class Port {
 			       "ports.revision as revision, ports.maintainer, ".
 			       "ports.homepage, ports.master_sites, ports.extract_suffix, ports.package_exists, " .
 			       "ports.depends_build, ports.depends_run, ports.last_commit_id, ports.found_in_index, " .
-			       "ports.forbidden, ports.broken, to_char(max(ports.date_added) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, " .
+			       "ports.forbidden, ports.broken, to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, " .
 			       "ports.categories as categories, ".
 				   "element.name as port, categories.name as category," .
 				   "element.status ";
@@ -191,7 +191,7 @@ class Port {
 		       "ports.revision as revision, ports.maintainer, ".
 		       "ports.homepage, ports.master_sites, ports.extract_suffix, ports.package_exists, " .
 		       "ports.depends_build, ports.depends_run, ports.last_commit_id, ports.found_in_index, " .
-		       "ports.forbidden, ports.broken, to_char(max(ports.date_added) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, " .
+		       "ports.forbidden, ports.broken, to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, " .
 		       "ports.categories as categories, ".
 			   "element.name as port, categories.name as category," .
 			   "element.status ";
@@ -239,13 +239,17 @@ class Port {
 
 	function FetchByID($id) {
 		# fetch a single port based on id
+		# I don't think this is actually used.
+
+		echo "classes/ports.php::FetchByID has been invoked. Who called it?<BR>";
+		exit;
 
 		$sql = "select ports.id, ports.element_id, ports.category_id as category_id, " .
 		       "ports.short_description as short_description, ports.long_description, ports.version as version, ".
 		       "ports.revision as revision, ports.maintainer, ".
 		       "ports.homepage, ports.master_sites, ports.extract_suffix, ports.package_exists, " .
 		       "ports.depends_build, ports.depends_run, ports.last_commit_id, ports.found_in_index, " .
-		       "ports.forbidden, ports.broken, to_char(max(ports.date_added) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, " .
+		       "ports.forbidden, ports.broken, to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, " .
 		       "ports.categories as categories, ".
 			   "element.name as port, categories.name as category, commit_log_ports.needs_refresh, " .
 			   "element.status, to_char(max(commit_log.commit_date) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as updated ";
@@ -340,7 +344,7 @@ class Port {
 				"GROUP BY ports.id, ports.element_id, category_id, short_description, ports.long_description,
 				          version, revision, ports.maintainer, ports.homepage, ports.master_sites, ports.extract_suffix, 
 						  ports.package_exists, ports.depends_build, ports.depends_run, ports.last_commit_id, 
-						  ports.found_in_index, ports.forbidden, ports.broken, to_char(max(ports.date_added) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, 
+						  ports.found_in_index, ports.forbidden, ports.broken, ports.date_added, 
 						  categories, port, category, element.status " .
 				" ORDER by port ";
 

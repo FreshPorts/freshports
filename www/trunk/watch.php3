@@ -105,6 +105,10 @@ if (!file_exists($cache_file)) {
 
 $UpdateCache = 1;
 
+if ($WatchID == '') {
+   echo "<tr><td>Your watch list is empty.</td></tr>";
+} else {
+
 if ($UpdateCache == 1) {
 //   echo 'time to update the cache';
 
@@ -113,7 +117,7 @@ $sql = "select ports.id, ports.name as port, ports.id as ports_id, ports.last_up
        "categories.name as category, categories.id as category_id, ports.version as version, ".
        "ports.committer, ports.last_update_description as update_description, " .
        "ports.maintainer, ports.short_description, ".
-       "ports.package_exists, ports.extract_suffix, ports.needs_refresh " .
+       "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage " .
        "from ports, categories, watch_port  ".
        "WHERE ports.system = 'FreeBSD' ".
        "and ports.primary_category_id = categories.id " .
@@ -127,22 +131,7 @@ $sql .= "order by $sort";
 
 $result = mysql_query($sql, $db);
 
-$HTML = "</tr></td><tr>";
-
-//$HTML .= '<tr><td>';
-
-//$HTML .= '<table width="100%" border="0">';
-//$HTML .= '<td><a href="ports.php3?sort=port">Port</a></td>';
-/*
-$HTML .= '<td>Port</td>';
-$HTML .= '<td>Description</td>';
-$HTML .= '<td>Committer</td>';
-$HTML .= '<td>Category</td>';
-//$HTML .= '<td><a href="ports.php3?sort=updated">Updated</a></td>';
-$HTML .= '<td>Updated</td>';
-$HTML .= '</tr>';
-$HTML .= "\n";
-*/
+//$HTML = "</tr></td><tr>";
 
 $HTML .= '<tr><td>';
 
@@ -168,7 +157,6 @@ while ($myrow = mysql_fetch_array($result)) {
 
 mysql_free_result($result);
 
-
 //$HTML .= '</table>';
 //$HTML .= '</td></tr>';
 
@@ -190,6 +178,7 @@ echo $HTML;
       include($cache_file);
    }
 }
+} // end if no WatchID
 }
 
 </script>

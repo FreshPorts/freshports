@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: files.php,v 1.1.2.39 2005-02-01 13:58:57 dan Exp $
+	# $Id: files.php,v 1.1.2.40 2005-02-16 23:56:30 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -56,6 +56,8 @@ select element_pathname(element.id) as pathname,
        ports.broken,
        ports.deprecated,
        ports.ignore,
+       ports.restricted,
+       ports.no_cdrom,
        security_notice.id  AS security_notice_id,
        ports_vulnerable.current as vulnerable_current,
        ports_vulnerable.past    as vulnerable_past ";
@@ -197,6 +199,16 @@ select element_pathname(element.id) as pathname,
 				$HTML .= '&nbsp;' . freshports_VuXML_Icon_Faded();
 			}
 		}
+
+		if ($myrow['restricted']) {
+			$HTML .= freshports_Restricted_Icon_Link($myrow['restricted']) . ' IGNORE: '     . htmlify(htmlspecialchars($myrow['restricted'])) . "<br>"; ;
+		}
+
+		if ($myrow['no_cdrom']) {
+			$HTML .= freshports_NoCDROM_Icon_Link($myrow['no_cdrom'])      . ' IGNORE: '     . htmlify(htmlspecialchars($myrow['no_cdrom']))   . "<br>"; ;
+		}
+
+
 		echo $HTML;
 
 		echo ' <CODE CLASS="code">' . $myrow["short_description"] . '</CODE>';

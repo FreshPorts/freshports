@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.210 2005-01-29 03:37:23 dan Exp $
+	# $Id: freshports.php,v 1.4.2.211 2005-02-16 23:56:30 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -218,6 +218,32 @@ function freshports_Deprecated_Icon($HoverText = '') {
 function freshports_Deprecated_Icon_Link($HoverText = '') {
 	return '<a href="/' . FAQLINK . '#deprecated">' . freshports_Deprecated_Icon($HoverText) . '</a>';
 }
+
+function freshports_Restricted_Icon($HoverText = '') {
+	$Alt       = "Restricted";
+	$HoverText = freshports_HoverTextCleaner($Alt, $HoverText);
+
+	return '<IMG SRC="/images/restricted.gif" ALT="' . $Alt . '" TITLE="' . $HoverText . '" WIDTH="18" HEIGHT="18">';
+}
+
+function freshports_Restricted_Icon_Link($HoverText = '') {
+	return '<a href="/' . FAQLINK . '#deprecated">' . freshports_Restricted_Icon($HoverText) . '</a>';
+}
+
+function freshports_NoCDROM_Icon($HoverText = '') {
+	$Alt       = "NO CDROM";
+	$HoverText = freshports_HoverTextCleaner($Alt, $HoverText);
+
+	return '<IMG SRC="/images/nocdrom.gif" ALT="' . $Alt . '" TITLE="' . $HoverText . '" WIDTH="18" HEIGHT="18">';
+}
+
+function freshports_NoCDROM_Icon_Link($HoverText = '') {
+	return '<a href="/' . FAQLINK . '#deprecated">' . freshports_NoCDROM_Icon($HoverText) . '</a>';
+}
+
+
+
+
 
 function freshports_Ignore_Icon($HoverText = '') {
 	$Alt       = "Ignore";
@@ -937,6 +963,22 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 
 	if ($port->ignore) {
 		$HTML .= freshports_Ignore_Icon_Link($port->ignore)         . ' IGNORE: '     . htmlify(htmlspecialchars($port->ignore))     . "<br>"; ;
+	}
+
+	if ($port->vulnerable_current) {
+		$HTML .= '&nbsp;' . freshports_VuXML_Icon();
+	} else {
+		if ($port->vulnerable_past) {
+			$HTML .= '&nbsp;' . freshports_VuXML_Icon_Faded();
+		}
+	}
+
+	if ($port->restricted) {
+		$HTML .= freshports_Restricted_Icon_Link($port->restricted) . ' IGNORE: '     . htmlify(htmlspecialchars($port->restricted)) . "<br>"; ;
+	}
+
+	if ($port->no_cdrom) {
+		$HTML .= freshports_NoCDROM_Icon_Link($port->no_cdrom)      . ' IGNORE: '     . htmlify(htmlspecialchars($port->no_cdrom))   . "<br>"; ;
 	}
 
    // description
@@ -1871,9 +1913,14 @@ function freshports_SideBar() {
 	<TD VALIGN="top">
 
 ' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/graphs.php",        "Graphs", "Everyone loves statistics!")   . '<BR>
-' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/stats/",            "Traffic", "Traffic to this website")     . '<BR>
+' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/stats/",            "Traffic", "Traffic to this website");
 
-' . file_get_contents($_SERVER["DOCUMENT_ROOT"] . "/../dynamic/stats.html") . '
+	if (file_exists($_SERVER["DOCUMENT_ROOT"] . "/../dynamic/stats.html")) {
+		$HTML .= '<BR>
+' . file_get_contents($_SERVER["DOCUMENT_ROOT"] . "/../dynamic/stats.html") . "\n";
+	}
+
+	$HTML .= '
 	</TD>
 	</TR>
 </TABLE>

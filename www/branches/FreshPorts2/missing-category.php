@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-category.php,v 1.1.2.3 2002-01-05 23:01:16 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.4 2002-02-13 00:27:48 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -10,32 +10,7 @@ function freshports_Category($category, $db) {
 	header("HTTP/1.1 200 OK");
 
 
-	#$Debug=1;
-
-	#
-	# if no category provided or category is not numeric, try
-	# category zero.  inval returns zero if non-numeric
-	#
-	#echo $category         . "<br>";
-	#echo intval($category) . "<br>";
-
-	#if (!$category) {                          
-	#   $category = 0;
-	#}
-
-	if (!$category || $category != strval(intval($category))) {
-		$category = 0;
-	} else {
-	$category = intval($category);
-	}
-
-	#echo "<br>";
-	#echo 'intval($category)     = ' . intval($category)     . "<br>";
-
-	#
-	# append the category id to the cache_file
-	#
-	$cache_file .= "." . $category;
+	$Debug=0;
 
 	$title = freshports_Category_Name($category, $db);
 
@@ -59,44 +34,19 @@ function freshports_Category($category, $db) {
 
 	$DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
 
-	// make sure the value for $sort is valid
-
-	$LimitRows	= 100;
-
-	if (!$start) {
-		$start = 1;
-	}
-
-	if ($start < 1) {
-	   $start = 1;
-	}
-
-	if ($start > 1) {
-		$cache_file .= ".$start";
-
-		// echo "adding $start to $cache_file";
-	}
-
-	if ($start > $end) {
-		$end = $start + $LimitRows -1;
-	}
-
-	if (!$end) {
-		$end = $start + $LimitRows - 1;
-	}
-
-	$sort ="port";
-
 	$port = new Port($db);
 
 	$numrows = $port->FetchByCategoryInitialise($category);
 
 	if ($Debug) {
-		echo $sql . '<BR>';
-		echo "GlobalHideLastChange = $GlobalHideLastChange\n";
+		echo "\$category = '$category'<BR>\n";;
+		echo "GlobalHideLastChange = $GlobalHideLastChange<BR>\n";
+		echo "\$numrows = $numrows<BR>\n";
 	}
 
 	$ShowShortDescription	= "Y";
+
+	echo "<TR><TD><P>Number of ports in this category: $numrows</P></TD></TR>";
 
 	$HTML .= freshports_echo_HTML("<TR>\n<TD>\n");
 
@@ -133,6 +83,13 @@ $ShowDescriptionLink  = "N";
 	</td>
 	</tr>
 	</table>
+
+<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<TR><TD>
+<? include("./include/footer.php") ?>
+</TD></TR>
+</TABLE>
+
 	</body>
 	</html>
 

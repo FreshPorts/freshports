@@ -157,7 +157,7 @@ $HTML .= freshports_echo_HTML('</table>');
 
 freshports_echo_HTML_flush();
 
-//echo $HTML;                                                   
+echo $HTML;                                                   
                           
    $fpwrite = fopen($cache_file, 'w');
    if(!$fpwrite) {                                          

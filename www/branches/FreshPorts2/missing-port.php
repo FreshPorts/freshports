@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.52 2004-08-09 22:37:46 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.53 2004-10-21 03:37:27 dan Exp $
 	#
 	# Copyright (c) 2001-2003 DVL Software Limited
 	#
@@ -122,18 +122,20 @@ GLOBAL $ShowWatchListCount;
 
 	for ($i = 0; $i < $NumRowsFrom; $i++) {
 		$PortsMovedFrom->FetchNth($i);
-		echo '<li>' . freshports_PortsMoved($port, $PortsMovedFrom) . "</li>\n";
+		echo '<li>' . freshports_PortsMoved($port, $PortsMovedFrom);
 		if ($i + 1 != $NumRowsFrom) {
 			echo '<br>';
 		}
+		echo "</li>\n";
 	}
 
 	for ($i = 0; $i < $NumRowsTo; $i++) {
 		$PortsMovedTo->FetchNth($i);
-		echo '<li>' . freshports_PortsMoved($port, $PortsMovedTo) . "</li>\n";
+		echo '<li>' . freshports_PortsMoved($port, $PortsMovedTo);
 		if ($i + 1 != $NumRowsTo) {
 			echo '<br>';
 		}
+		echo "</li>\n";
 	}
 	
 	if ($NumRowsFrom + $NumRowsTo > 0) {

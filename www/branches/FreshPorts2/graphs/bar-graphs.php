@@ -1,6 +1,6 @@
-<?
+<?php
 	#
-	# $Id: bar-graphs.php,v 1.1.2.5 2002-12-11 04:38:02 dan Exp $
+	# $Id: bar-graphs.php,v 1.1.2.6 2003-03-29 13:51:10 dan Exp $
 	#
 
 
@@ -318,7 +318,7 @@ class dg_BarGraph {
 		// bars
 		$x = $this->margin_t;
 		for ($i = 0; $i < count($this->values); $i++) {
-			if ($this->values[$i] > 0) {
+			if ($this->values[$i] >= 0) {
 			
 				$v = ($this->values[$i] * $field_width)/$rmax;
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.217 2005-02-22 00:28:50 dan Exp $
+	# $Id: freshports.php,v 1.4.2.218 2005-03-13 10:59:48 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -74,6 +74,7 @@ function PortsFreezeStatus($ColSpan=1) {
 
 function freshports_link_to_port($CategoryName, $PortName) {
 
+	$HTML = '';
 	$HTML .= '<a href="/' . $CategoryName . '/">' . $CategoryName . '</a>/';
 	$HTML .= '<a href="/' . $CategoryName . '/' . $PortName . '/">' 
 	            . $PortName . '</a>';
@@ -1995,6 +1996,7 @@ function DisplayAnnouncements($Announcement) {
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/announcements.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/htmlify.php');
 
+	$HTML = '';
 	$HTML .= '<table width="100%"cellpadding="4" cellspacing="0" border="0">' . "\n";
 
 	$NumRows = $Announcement->NumRows();

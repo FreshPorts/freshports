@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: fraud.php,v 1.1.2.1 2003-12-04 23:33:41 dan Exp $
+	# $Id: fraud.php,v 1.1.2.2 2003-12-06 11:12:29 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -24,7 +24,7 @@ Someone is trying to scam you.  Please note the URL you are at and compare it to
 you want to be.  I suspect you may be at freshports.net, not FreshPorts.org.  
 
 <p>
-Please read <a href="/fraud/">this</a> for more information about how freshports.org
+Please read <a href="/fraud/">this</a> for more information about how freshports.net
 tries to scam money from unsuspecting people.
 </TD></TR>
 </TABLE>

@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.66 2002-04-11 21:17:27 dan Exp $
+   # $Id: freshports.php,v 1.4.2.67 2002-04-11 22:03:35 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -933,8 +933,8 @@ function url2link($Arr) {
 
 #	echo "url2link is passed: $html";
  
-	if ($url2link_cutoff_level > 0 && strlen($html) > $url2link_cutoff_level - 5) {
-		$vhtml = substr($html, 0, $url2link_cutoff_level)."(...)";
+	if ($url2link_cutoff_level > 0 && strlen($html) > $url2link_cutoff_level) {
+		$vhtml = substr($html, 0, $url2link_cutoff_level - 5) . "(...)";
 	} else { 
 		$vhtml = $html;
 	}
@@ -1035,7 +1035,7 @@ function freshports_PortCommitsFooter($port) {
 function freshports_PortDescriptionPrint($description) {
 	$HTML .= '<PRE CLASS="code">';
 
-	$HTML .= pr2html(htmlspecialchars(freshports_wrap($description)));
+	$HTML .= pr2html((freshports_wrap($description)));
 
 	$HTML .= '</PRE>';
 

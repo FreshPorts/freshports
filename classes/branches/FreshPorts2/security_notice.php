@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: security_notice.php,v 1.1.2.4 2003-03-08 13:31:41 dan Exp $
+	# $Id: security_notice.php,v 1.1.2.5 2003-03-08 16:22:03 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -47,7 +47,7 @@ class SecurityNotice {
 		                                      '" . $this->ip_address  . "',
 		                                      '" . $this->description . "',
 		                                      '" . $message_id        . "')";
-		echo "<pre>$query</pre>";
+#		echo "<pre>$query</pre>";
 
 		$this->LocalResult = pg_query($this->dbh, $query);
 		if ($this->LocalResult) {

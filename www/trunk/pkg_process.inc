@@ -58,11 +58,13 @@ function ReadINDEX() {
 * @return	an array of ports
 *
 */
-function ProcessPackages($filename,$userID) {
+function ProcessPackages($filename,$userID,$clean) {
 	// profiling info {{{
 	$starttime = time();
 	// }}}
+	global $gDBG;
 
+	$ok = true;
 	$indexArray = ReadINDEX();
 	if (!$indexArray) { return false; }
 	$gMyPorts = array();
@@ -87,16 +89,18 @@ function ProcessPackages($filename,$userID) {
 		$base = $rv[1];
 			
 		// if our package is in the INDEX and we haven't already found it
-		if ($indexArray[$pkg] && !in_array($indexArray[$pkg]['PORT'],$gMyPorts)) {
-			$gMyPorts[] = 'ports/' . $indexArray[$pkg]['PORT'];
+		$port = 'ports/' . $indexArray[$pkg]['PORT'];
+		if ($indexArray[$pkg] && !in_array($port,$gMyPorts)) {
+			$gMyPorts[] = $port;
 		} elseif ($base && $indexArray[$base]) {
 			// The package is not in the INDEX.  Maybe our version is out dated.
 			// Check for the basename in the INDEX.
 	
 			// If there is only one base match, then assume that's what they want
 			if (count($indexArray[$base]) == 1 ) {
-				if (!in_array($indexArray[$base][0]['PORT'],$gMyPorts)) {
-					$gMyPorts[] = 'ports/' . $indexArray[$base][0]['PORT'];
+				$port = 'ports/' . $indexArray[$base][0]['PORT'];
+				if (!in_array($port,$gMyPorts)) {
+					$gMyPorts[] = $port;
 				}
 			} else {
 				// There are multiple ports with the same basename, add them to the guess list
@@ -111,23 +115,30 @@ function ProcessPackages($filename,$userID) {
 
 	// Now remove duplicates from the tempArray
 	foreach ($tempArray as $port) {
+		$port = 'ports/' . $port;
 		if ( !in_array($port, $gMyPorts) ) {
-			$guessPorts[] = 'ports/' . $port;
+			$guessPorts[] = $port;
 		}
 	}
 	asort($gMyPorts);
 	asort($guessPorts);
 	$returnArray['FOUND'] = $gMyPorts;
 	$returnArray['GUESS'] = $guessPorts;
-	//$watchID = GetWatchID($userID);
-	//if (!$watchID) {
-	//	echo "Could not find watch_id for user $userID\n";
-	//	return false;
-	//}
-	$rv = AddPortsToList(array_merge($gMyPorts,$guessPorts),$userID);
-	if (!$rv) {
+
+	$ok = GetWatchID($userID,$watchID);
+	if (!$ok) {
+		echo "Could not find watch_id for user $userID\n";
+		return false;
+	}
+
+	if ($clean) {
+		$ok = CleanPorts($watchID);
+	}
+
+	$ok = $ok && AddPortsToList(array_merge($gMyPorts,$guessPorts),$userID);
+	if (!$ok) {
 		echo "Error adding ports.\n";
-	  	if (DEBUG != 1) {
+	  	if ($gDBG != 1) {
 			echo "Rerun with the '-d' option for details.\n";
 		}
 	}

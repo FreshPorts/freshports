@@ -1,4 +1,24 @@
 <?
+function dbgonly($s) {
+	global $gDBG;
+	return ($gDBG) ? $s : '';
+}
+//function pp($r) {
+//    return print_r($r);
+//}
+//function ppp($r) {
+//    return  dbgonly("<pre>DBG: " . pp($r) . "</pre>");
+//}
+function eppp($r) {
+	global $gDBG;
+	if ($gDBG) {
+		print_r($r);
+	}
+}
+function epp($s) {
+	echo dbgonly("<pre>DBG: $s</pre>");
+}
+
 // function &DBConnect() {{{
 /**
 *
@@ -22,7 +42,7 @@ function Cleanup() {
 	}
 }
 //}}}
-// function IsLoginValid($user,$pw) {{{
+// function IsLoginValid($user,$pw,&$retval) {{{
 /**
 *
 * @param
@@ -48,14 +68,14 @@ function IsLoginValid($user,$pw,&$retval) {
 	return $retval;
 }
 // }}}
-// function GetWatchID($userID) {{{
+// function GetWatchID($userID,&$watchID) {{{
 /**
 *
 * @param
 * @return
 *
 */
-function GetWatchID($userID) {
+function GetWatchID($userID,&$watchID) {
 	$retval = false;
 	$query = "select id from watch_list where user_id = $userID";
 	$database =& DBConnect();
@@ -64,12 +84,42 @@ function GetWatchID($userID) {
 		$result = pg_exec($database,$query);
 
 		if ($result && pg_numrows($result)) {
+			$retval = true;
 			$row = pg_fetch_array($result,0);
-			$retval = $row[0];
+			$watchID = $row[0];
 		}
 	}
 	else {
 		echo "Error:  No Connection";
+	}
+	return $retval;
+}
+// }}}
+// function CleanPorts($watchID) {{{
+/**
+*
+* @param
+* @return
+*
+*/
+function CleanPorts($watchID) {
+	$retval = true;
+	$query = "delete from watch_list_element where watch_list_id = $watchID";
+	$database =& DBConnect();
+
+	echo "Cleaning out old ports\n";
+	if ($database) {
+		$result = pg_exec($database,$query);
+
+		if (!$result) {
+			$error = pg_errormessage($database);
+			echo "$error\n";
+			$retval = false;
+		}
+	}
+	else {
+		echo "Error:  No Connection";
+		$retval = false;
 	}
 	return $retval;
 }
@@ -84,6 +134,7 @@ function GetWatchID($userID) {
 function AddPortsToList($ports,$userID) {
 	$source = "AddPortsToList";
 	$successful = 0;
+	$dups = 0;
 	// Connect and add the ports
 	$database =& DBConnect();
 	if ($database) {
@@ -98,7 +149,13 @@ function AddPortsToList($ports,$userID) {
 			$result = @pg_exec($database,$query);
 
 			if (!$result) {
-				$errorLog[$port] = pg_errormessage($database);
+				$errorMsg = pg_errormessage($database);
+				if (strpos($errorMsg,'Cannot insert a duplicate key')) {
+					$dups++;
+				}
+				else {
+					$errorLog[$port] = $errorMsg;
+				}
 			}
 			else {
 				$successful++;
@@ -108,13 +165,15 @@ function AddPortsToList($ports,$userID) {
 	else {
 		echo "Error:  No Connection";
 	}
-	echo "Added $successful Ports\n";
-
-	if (DEBUG && count($errorLog) > 0) {
-		echo("<pre>");
-		echo "ERROR LOG";
+	echo "Added $successful new ports\n";
+	if ($dups) {
+		echo "$dups ports were duplicate and are still registered\n";
+	}
+	if (count($errorLog) > 0) {
+		epp("<pre>");
+		epp("ERROR LOG");
 		print_r($errorLog);
-   		echo("</pre>");
+   		epp("</pre>");
 	}
 	if (count($errorLog) > 0) {
 		return false;

@@ -3,11 +3,16 @@
 		<?
 		// make sure the POST vars are ok. 
 		// check for funny stuff
-		if ($dbg) {
-			define("DEBUG",1);
-		}
-		if($file && trim($pkg_info) != '') {
+
+
+		global $gDBG;
+		$gDBG = false;
+		$clean = false;
+		if(trim($pkg_info) != '') {
 			require_once "pkg_utils.inc";
+			$clean = (strpos($mode,"c") === false) ? false : true;
+			$gDBG = (strpos($mode,"d") === false) ? false : true;
+
 			$retid = -1;
 			if (IsLoginValid($user,$pw,$ret_id)) {
 				$filename = "/tmp/tmp_pkg_output.$user";
@@ -16,16 +21,13 @@
 					exit();
 				}
 				require_once "pkg_process.inc";
-				$result = ProcessPackages($filename,$ret_id);
+				$result = ProcessPackages($filename,$ret_id,$clean);
 
-				if ($result && DEBUG) {
-					?> <pre> <?= "$user " ?> Your Ports Are: <? 
-						print_r($result['FOUND']);
-						echo("<PRE>We were unable to be 100% certain about the following ports.");
-			  			echo("It is most likely that you will want them, but you may with to review.</PRE>");
-						print_r($result['GUESS']);
-					?> </pre> <?  
-				}
+				epp("$user Your Ports Are: ");
+				eppp($result['FOUND']);
+				epp("<PRE>We were unable to be 100% certain about the following ports.");
+			  	epp("It is most likely that you will want them, but you may wish to review.</PRE>");
+				eppp($result['GUESS']);
 			} else { ?>
 				<pre>
 					Invalid Username and/or Password

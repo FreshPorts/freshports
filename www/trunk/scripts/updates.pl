@@ -1,0 +1,141 @@
+#!/usr/bin/perl
+
+use DBI;
+
+#sub GetPortCategory($category, $dbh) {
+sub GetPortCategory($;$) {
+   my $category = shift;
+   my $dbh = shift;
+
+   $sql = "select id from categories where lower(name) = lower('" . $category . "')";
+
+   $sth = $dbh->prepare($sql);
+
+   $sth->execute ||
+        die "Could not execute SQL statement ... maybe invalid?";
+
+
+   @row=$sth->fetchrow_array;
+
+   print "\nGetPortCategory = $sql which gives ", @row[0], "\n";
+
+
+   return @row[0];
+}
+
+#PortUpdate ($committer, $timestamp, $action, $description, $category, $port, $entry, $dbh) {
+sub PortUpdate($;$;$;$;$;$;$;$) {
+   my $committer   = shift;
+   my $timestamp   = shift;
+   my $action      = shift;
+   my $description = shift;
+   my $category    = shift;
+   my $port        = shift;
+   my $entry       = shift;
+   my $dbh         = shift;
+
+   $categoryid = GetPortCategory($category, $dbh);
+
+   # update the port, creating it if necessary
+
+   $sql = "select id from ports where lower(name) = lower('" . $port . "') and primary_category_id = $categoryid";
+   print $sql, "\n";
+   $sth = $dbh->prepare($sql);
+   
+   $sth->execute ||
+      die "Could not execute SQL statement ... maybe invalid?";
+
+   @row=$sth->fetchrow_array;
+
+   if (@row) {
+      print "something found\n";
+   } else {
+      print "nothing found\n";
+   }
+
+   print @row[0];
+
+
+   if (!@row) {
+      # no such port.  create it.
+      $sql = "insert into ports (name, description, last_update, primary_category_id, last_update_description, committer, version, date_created) values (";
+
+      # we don't get a version when inserting, so we must fake it by supplying a name.
+      $sql .= "'$port', '*** no description ***', '$timestamp', $categoryid, '$description', '$committer', '$port', CurDate())";
+
+      print "$sql\n";
+
+      $sth = $dbh->prepare($sql);
+
+      $sth->execute ||
+         die "Could not execute SQL statement ... maybe invalid?";
+
+      $sql = "insert into newports (name, primary_category_id) values ('$port', $categoryid)";
+
+      $sth = $dbh->prepare($sql);
+
+      $sth->execute ||
+         die "Could not execute SQL statement ... maybe invalid?";
+
+   } else {
+      # update the time on the port
+      $sql = "update ports set last_update = '$timestamp', committer = '$committer', last_update_description = '$description' where id = " . @row[0];
+
+      print "$sql\n";
+
+      $sth = $dbh->prepare($sql);
+
+      $sth->execute ||
+         die "Could not execute SQL statement ... maybe invalid?";
+   }
+}
+
+
+$dbh = DBI->connect('dbi:mysql:freshports','updater','xyzzy');
+
+$inputfile = 'data.txt';
+$inputfile = 'sample.txt';
+#$inputfile = 'abacus.txt';
+$inputfile =  '/www/freshports.org/work/msgs-awk/20000421-13:30:45-NZST.39927.munged';
+$ignoredirs = "Attic|distfiles|Mk|Tools|Templates";
+
+#open (STDIN, $inputfile) || die "error opening";
+@file=<STDIN>;
+close(STDIN);
+chomp(@file);
+
+for($i=0; $i<=$#file; $i++) {
+   $id = $i + 1;
+
+   $line = $file[$i];
+
+   ($committer, $timestamp, $action, $filename, $description, $extra)=split/\|/,$line;
+
+#  these bits might have quotes.
+   $committer   =~ s/\'/\\'/g;
+   $description =~ s/\'/\\'/g;
+
+   print "committer=", $committer, "\ntimestamp=", $timestamp, "\naction=",  $action, "\nfilename=", $filename, "\ndescription=", $description, "\n";
+
+   ($category, $port, $entry, $extra2) = split/\//,$filename;
+
+  print "category=$category\nport=$port\nentry=$entry\n";
+#  exit;
+
+  if ($entry) {
+      if ($category !~ /$ignoredirs/) {
+         #print '  ***';
+         # we have a file in this port which is actually being updated.  Let's update the port.
+     
+         PortUpdate ($committer, $timestamp, $action, $description, $category, $port, $entry, $dbh)
+      } else {
+         print "ignoring $category\n";
+      }
+   }
+   if ($i > 10) {
+#      exit;
+   }
+# exit;
+}
+
+`touch /usr/local/etc/freshports/msgs/lastupdate`;

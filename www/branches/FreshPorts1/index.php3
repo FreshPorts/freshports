@@ -1,5 +1,5 @@
 <?
-   # $Id: index.php3,v 1.34 2001-11-24 22:59:25 dan Exp $
+   # $Id: index.php3,v 1.34.4.1 2001-12-23 02:00:35 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -74,7 +74,7 @@ if ($Debug) {
 ?>
 
 <table width="100%" border="0" ALIGN="center">
-<tr><td colspan="2">Welcome to FreshPorts, where you can find the latest information on your favourite
+<tr><td colspan="2">Welcome to FreshPorts.  Find the latest information on your favourite
 ports. A port is marked as new for 10 days.
 </td></tr>
 
@@ -183,11 +183,12 @@ $sql = "select ports.id, ports.name as port, change_log.commit_date as updated_r
        "  and ports.primary_category_id       = categories.id " .
        "  and change_log_port.port_id         = ports.id " .
        "  and change_log.id                   = change_log_port.change_log_id " .
-       "  and change_log.commit_date          > '" . date("Y-m-d", time() - 60*60*24*14) . "' ";
+       "  and change_log.commit_date          > '" . date("Y-m-d", time() - 60*60*24*95) . "' ";
 
 $sql .= " order by $sort ";
 
-$sql .= " limit $MaxNumberOfPorts ";
+$sql .= " limit 3";
+#$sql .= " limit $MaxNumberOfPorts ";
 
 if ($Debug) echo $sql;
 
@@ -206,7 +207,7 @@ while ($myrow = mysql_fetch_array($result)) {
    $i++;
 //   echo "$i, ";
 }
-
+echo mysql_errno().": ".mysql_error()."<BR>";
 $NumRows = $i;
 $LastDate = '';
 if ($NumRows > 1) {

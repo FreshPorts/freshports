@@ -1,5 +1,5 @@
 <?php
-	# $Id: watch_lists.php,v 1.1.2.2 2002-12-08 03:27:43 dan Exp $
+	# $Id: watch_lists.php,v 1.1.2.3 2002-12-09 20:21:16 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 	#
@@ -17,15 +17,31 @@ class WatchLists {
 		$this->dbh	= $dbh;
 	}
 
-	function Fetch($UserID) {
-		$sql = "
-		SELECT id,
-		       user_id,
-		       name,
-		       in_service
-		  FROM watch_list
-		 WHERE user_id = $UserID
-	 ORDER BY name";
+	function Fetch($UserID, $element_id = 0) {
+		if ($element_id) {
+			$sql = "
+			SELECT id,
+			       user_id,
+			       name,
+			       in_service,
+			       count(element_id) as watch_list_count
+			  FROM watch_list LEFT OUTER JOIN watch_list_element
+			    ON watch_list_element.watch_list_id = watch_list.id
+			   AND watch_list_element.element_id    = $element_id
+			 WHERE user_id = $UserID
+		 GROUP BY id, user_id, name, in_service, element_id
+		   HAVING count(element_id) > 0
+		 ORDER BY name";
+		} else {
+			$sql = "
+			SELECT id,
+			       user_id,
+			       name,
+			       in_service
+			  FROM watch_list
+			 WHERE user_id = $UserID
+		 ORDER BY name";
+		}
 
 #		echo '<pre>' . $sql . '</pre>';
 

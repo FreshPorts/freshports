@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.25 2005-01-05 23:14:36 dan Exp $
+	# $Id: categories.php,v 1.1.2.26 2005-01-06 04:21:53 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -35,9 +35,9 @@
 
 <?php echo freshports_MainTable(); ?>
 
-<tr><td valign="top" width="100%">
+<tr><td colspan="<?php echo $ColSpan; ?>" valign="top" width="100%">
 
-<?php echo freshports_MainContentTable(); ?>
+<?php echo freshports_MainContentTable(BORDER, 6); ?>
 
   <tr>
 	<? echo freshports_PageBannerText("$FreshPortsTitle - list of categories", $ColSpan); ?>
@@ -189,9 +189,9 @@ if ($AllowedToEdit) {
 	$HTML .= freshports_echo_HTML('<td>&nbsp;</td>');
 }
 
-$HTML .= freshports_echo_HTML("<td ALIGN=\"right\"><b>$NumPorts</b></td><td>($CategoryCount categories)</td><td>&nbsp;</td></tr>");
+$HTML .= freshports_echo_HTML("<td ALIGN=\"right\"><b>$NumPorts</b></td><td colspan=\"2\">($CategoryCount categories)</td></tr>");
 
-$HTML .= freshports_echo_HTML("<tr><td colspan=\"4\">Hmmm, I'm not so sure this port count is accurate. Dan Langille 27 April 2003</td></tr>");
+$HTML .= freshports_echo_HTML("<tr><td colspan=\"5\">Hmmm, I'm not so sure this port count is accurate. Dan Langille 27 April 2003</td></tr>");
 
 $HTML .= freshports_echo_HTML('</table>');
 

@@ -51,7 +51,7 @@ if (!file_exists($cache_file)) {
 $CreateImage = 1;
 if ($CreateImage) {
    require("./_phpgraph/phpgraph.php");
-   require("./include/statistics.php3");
+   require("./include/statistics.php");
    switch ($graph) {
       case 1:
          $data = freshports_stats_watched_ports($db, 20);

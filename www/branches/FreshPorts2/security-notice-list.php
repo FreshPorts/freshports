@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: security-notice-list.php,v 1.1.2.4 2004-02-13 17:44:05 dan Exp $
+	# $Id: security-notice-list.php,v 1.1.2.5 2004-02-13 17:45:29 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -128,7 +128,6 @@ function MassageStatus($InStatus) {
 
 	echo $HTML;
 ?>
-</tr>
 <?php
 	}  // end for
 ?>

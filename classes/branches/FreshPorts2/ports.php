@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports.php,v 1.1.2.37 2003-09-23 13:25:20 dan Exp $
+	# $Id: ports.php,v 1.1.2.38 2003-09-24 17:54:44 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -102,33 +102,18 @@ class Port {
 		$this->category_looking_at= $myrow["category_looking_at"];
 	}
 
-	function FetchByPartialName($pathname, $UserID = 0) {
-
-		# I THINK THIS FUNCTION IS NOT REQUIRED.
+	function FetchByElementID($element_id, $UserID = 0) {
 
 		$Debug = 0;
 
-		# fetch a single port based on pathname.
+		# fetch a single port based on element_id.
 		# e.g. net/samba
 		#
 		# It will not bring back any commit information.
 
-		#
-		# first, we get the element relating to this port
-		#
-		$element = new Element($this->dbh);
-      $element->FetchByName($pathname);
-      
-      # * * * * * * * * * * * * * * * * * * * * * * * * *
-      # Now that we have the ID, we should call FetchByID!
-      # * * * * * * * * * * * * * * * * * * * * * * * * *
+		$this->element_id = $element_id;
 
-		if ($Debug) echo "into FetchByPartialName with $pathname<BR>";
-
-		if (IsSet($element->id)) {
-			$this->element_id = $element->id;
-
-			$sql = "
+		$sql = "
 select ports.id,
        ports.element_id,
        ports.category_id       as category_id, 
@@ -153,16 +138,16 @@ select ports.id,
 	    categories.name  as category,
 	    element.status ";
 
-			if ($UserID) {
-				$sql .= ",
+		if ($UserID) {
+			$sql .= ",
 	        TEMP.onwatchlist";
-	      }
+		}
 
-	      $sql .= "
+		$sql .= "
        from categories, element, ports ";
 
-			if ($UserID) {
-				$sql .= "
+		if ($UserID) {
+			$sql .= "
 	      LEFT OUTER JOIN
 	 (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
 	    FROM watch_list JOIN watch_list_element 
@@ -170,33 +155,30 @@ select ports.id,
 	       AND watch_list.user_id = $UserID
 	  GROUP BY element_id) AS TEMP
 	       ON TEMP.wle_element_id = ports.element_id";
-	      }
+		}
 	
 
-			$sql .= " WHERE element.id        = $this->element_id 
-			            and ports.category_id = categories.id 
-			            and ports.element_id  = element.id ";
+		$sql .= " WHERE element.id        = $this->element_id 
+			        and ports.category_id = categories.id 
+			        and ports.element_id  = element.id ";
 
 
-			if ($Debug) {
-				echo "<pre>$sql</pre>";
-			}
+		if ($Debug) {
+			echo "<pre>$sql</pre>";
+		}
 
-	      $result = pg_exec($this->dbh, $sql);
-			if ($result) {
-				$numrows = pg_numrows($result);
-				if ($numrows == 1) {
-					if ($Debug) echo "fetched by ID succeeded<BR>";
-					$myrow = pg_fetch_array ($result);
-					$this->_PopulateValues($myrow);
-				} else {
-					echo "Ports::FetchByPartialName I'm concerned I got $numrows from that.<BR>$sql<BR>";
-				}
+		$result = pg_exec($this->dbh, $sql);
+		if ($result) {
+			$numrows = pg_numrows($result);
+			if ($numrows == 1) {
+				if ($Debug) echo "fetched by ID succeeded<BR>";
+				$myrow = pg_fetch_array ($result);
+				$this->_PopulateValues($myrow);
 			} else {
-				echo 'pg_exec failed: ' . $sql;
+				echo "Ports::FetchByPartialName I'm concerned I got $numrows from that.<BR>$sql<BR>";
 			}
 		} else {
-			echo 'ports FetchByPartialName for $path failed';
+			echo 'pg_exec failed: ' . $sql;
 		}
 	}
 

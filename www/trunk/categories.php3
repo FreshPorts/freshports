@@ -25,8 +25,9 @@ You can sort each column by clicking on the header.  e.g. click on <b>Category</
 
 $DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
 
-require( "_private/commonlogin.php3");
-require( "_private/getvalues.php3");
+require( "/www/freshports.org/_private/commonlogin.php3");
+require( "/www/freshports.org/_private/getvalues.php3");
+require( "/www/freshports.org/_private/freshports.php3");
 
 $cache_file     =       "/tmp/freshports.org.cache.categories";
 $LastUpdateFile =       "/www/freshports.org/work/msgs/lastupdate";
@@ -43,9 +44,14 @@ switch ($sort) {
       $cache_file .= ".$sort";
       break;
 
-   default:
+   case "lastupdate":
       $sort ="updated desc";
       $cache_file .= ".updated";
+      break;
+
+   default:
+      $sort = "category";
+      $cache_file .= ".category";
 }
 
 srand((double)microtime()*1000000);
@@ -83,23 +89,23 @@ $sql = "select max(ports.last_update) as updated, count(ports.id) as count, " .
        "and ports.primary_category_id = categories.id " .
        "group by categories.id ";
 
-//$sql .=  " order by $sort";
+$sql .=  " order by $sort";
 
 //echo $sql, "\n";
 //echo $sort, "\n";
 
 $result = mysql_query($sql, $db);
 
-$HTML .= '<tr><td>';
+$HTML .= freshports_echo_HTML('<tr><td>');
 
-$HTML .= '<table width="100%" border=1><tr>';
-$HTML .= '<td><a href="categories.php3?sort=category"><b>Category<b></a></b></td>';
-$HTML .= '<td><a href="categories.php3?sort=count"><b>Count</b></a></td>';
-$HTML .= '<td><a href="categories.php3?sort=description"><b>Description</b></a></td>';
-$HTML .= '<td><a href="categories.php3?sort=updated desc"><b>Last Update</b></a></td>';
-$HTML .= '</tr>';
+$HTML .= freshports_echo_HTML('<table width="100%" border=1><tr>');
+$HTML .= freshports_echo_HTML('<td><a href="categories.php3?sort=category"><b>Category<b></a></b></td>');
+$HTML .= freshports_echo_HTML('<td><a href="categories.php3?sort=count"><b>Count</b></a></td>');
+$HTML .= freshports_echo_HTML('<td><a href="categories.php3?sort=description"><b>Description</b></a></td>');
+$HTML .= freshports_echo_HTML('<td><a href="categories.php3?sort=lastupdate"><b>Last Update</b></a></td>');
+$HTML .= freshports_echo_HTML('</tr>');
 
-$HTML .= '<tr>';
+$HTML .= freshports_echo_HTML('<tr>');
 // get the list of topics, which we need to modify the order
 
 
@@ -109,22 +115,25 @@ while ($myrow = mysql_fetch_array($result)) {
 //        $URL_Category = "http://www.freebsd.org/ports/" . $myrow["category"];
         $URL_Category = "category.php3?category=" . $myrow["category_id"];
 
-	$HTML .= '<td valign="top"><a href="' . $URL_Category . '">' . $myrow["category"] . '</a></td>';
-	$HTML .= '<td valign="top">' . $myrow["count"] . '</td>';
-	$HTML .= '<td valign="top">' . $myrow["description"] . '</td>';
-        $HTML .= '<td valign="top"><font size="-1">' . $myrow["updated"] . '</font></td>';
-	$HTML .= "</tr>\n";
+	$HTML .= freshports_echo_HTML('<td valign="top"><a href="' . $URL_Category . '">' . $myrow["category"] . '</a></td>');
+	$HTML .= freshports_echo_HTML('<td valign="top">' . $myrow["count"] . '</td>');
+	$HTML .= freshports_echo_HTML('<td valign="top">' . $myrow["description"] . '</td>');
+        $HTML .= freshports_echo_HTML('<td valign="top"><font size="-1">' . $myrow["updated"] . '</font></td>');
+	$HTML .= freshports_echo_HTML("</tr>\n");
 }
 
-$HTML .= '</tr>';
+$HTML .= freshports_echo_HTML('</tr>');
 
 mysql_free_result($result);
 
 
-$HTML .= '</table>';
-$HTML .= '</td></tr>';
+$HTML .= freshports_echo_HTML('</table>');
+$HTML .= freshports_echo_HTML('</td></tr>');
 
-echo $HTML;                                                   
+
+freshports_echo_HTML_flush();
+
+//echo $HTML;                                                   
                           
    $fpwrite = fopen($cache_file, 'w');
    if(!$fpwrite) {                                          

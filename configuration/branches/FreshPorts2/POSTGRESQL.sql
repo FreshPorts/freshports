@@ -1,5 +1,5 @@
 --
--- $Id: POSTGRESQL.sql,v 1.1.2.12 2002-06-12 03:18:28 dan Exp $
+-- $Id: POSTGRESQL.sql,v 1.1.2.13 2002-06-13 17:23:00 dan Exp $
 --
 -- Copyright (c) 1998-2002 DVL Software Limited
 --
@@ -154,3 +154,8 @@ grant select, insert, delete         on daily_refreshes                to group 
 grant select                         on daily_stats                    to group commits;
 grant insert                         on daily_stats_data               to group commits;
 grant update                         on daily_stats_data_seq           to group commits;
+
+grant select                         on report_frequency               to group commits;
+grant select                         on reports                        to group commits;
+grant select                         on report_subscriptions           to group commits;
+grant select, insert                 on report_log                     to group commits;

@@ -1,5 +1,5 @@
 <?
-	# $Id: authors.php,v 1.1.2.6 2002-04-20 14:20:15 dan Exp $
+	# $Id: authors.php,v 1.1.2.7 2002-05-08 03:28:26 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -26,7 +26,7 @@ do it alone.</p>
 
 <H2>FreshPorts 2</H2>
 
-<P>I apologise as I have not been keeping this list up to date and therefore I fear I have
+<P>I apologize as I have not been keeping this list up to date and therefore I fear I have
    missed people but I don't know who.  Please let me know if you should be here.</P>
 
 <UL>
@@ -39,7 +39,7 @@ do it alone.</p>
 <LI>Dan Peterson showed me the wonders of <A HREF="http://cr.yp.to/daemontools.html">Daemon Tools</A>
     which handles the processing of incoming messages and refreshes the main web page.</A></LI>
 
-<LI>Josef Karthauser for helping me thruogh the cvs-all log format and for greatly simplifying the
+<LI>Josef Karthauser for helping me through the cvs-all log format and for greatly simplifying the
 	job of FP2.</LI>
 
 <LI>Titus Manea again always has great ideas.  His knowledge base of *nix far exceeds my own.</LI>
@@ -65,7 +65,7 @@ do it alone.</p>
 <LI>John Polstra and Satoshi Asami provided insight into cvs and ports as well
 as encouragement.</LI>
 
-<LI>Laz hung around, criticized, and suggested security improvments.</LI>
+<LI>Laz hung around, criticized, and suggested security improvements.</LI>
 
 <LI>halflife did some prototype coding for me.</LI>
 

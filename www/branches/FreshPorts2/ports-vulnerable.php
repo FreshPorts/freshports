@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports-vulnerable.php,v 1.1.2.1 2005-03-18 02:16:26 dan Exp $
+	# $Id: ports-vulnerable.php,v 1.1.2.2 2005-03-18 03:40:12 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -11,7 +11,6 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports_page_list_ports.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports_page_list_ports_vulnerable.php');
 
 	$page = new freshports_page_list_ports();
 

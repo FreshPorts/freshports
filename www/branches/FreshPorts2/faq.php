@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.52 2004-09-22 23:04:31 dan Exp $
+	# $Id: faq.php,v 1.1.2.53 2004-10-24 21:40:24 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -573,6 +573,11 @@ pkg_add -r XFree86-clients
 	<p>
 	This normally isn't a problem, but for the 1900 or so ports which are different,
 	this information is very useful.
+
+	<p>
+	If the <code class="code">pkg_add</code> information does not appear,
+	you'll be told why there is no package.  This is controlled by the
+	<code class="code">NO_PACKAGE</code> variable in the port's Makefile.
 	
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 </table>

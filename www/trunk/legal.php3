@@ -27,8 +27,7 @@ require( "./_private/freshports.php3");
           these things, but given the nature of some people, I must.  For the rest of you,
           if you respect my work and my right to it, you'll have no problem.  Thanks.
   </td></tr>
-  <tr>
-    <td height="20"></td>
+  <tr><td height="20"></td></tr>
   <tr>
     <td bgcolor="#AD0040" height="32"><font color="#FFFFFF" size="+1">COPYRIGHT</font></td>
   </tr>
@@ -45,9 +44,7 @@ require( "./_private/freshports.php3");
   subject of other Intellectual Property rights reserved by DVL Software Limited and are not
   licensed hereunder.</p>
   </td><tr>
-  <tr>
-    <td height="20"></td>
-  <tr>
+  <tr><td height="20"></td></tr>
   <tr>
     <td bgcolor="#AD0040" height="32"><font color="#FFFFFF" size="+1">CONTENT AND LIABILITY DISCLAIMER</font></td>     
   </tr>
@@ -66,9 +63,7 @@ require( "./_private/freshports.php3");
   contained in it, whether such damages arise in contract, negligence, tort, under statute,
   in equity, at law or otherwise. </p>
   </td></tr>
-  <tr>
-    <td height="20"></td>
-  <tr>
+  <tr><td height="20"></td></tr>
   <tr>
     <td bgcolor="#AD0040" height="32"><font color="#FFFFFF" size="+1">FEEDBACK INFORMATION</font></td>
   </tr>
@@ -78,9 +73,7 @@ require( "./_private/freshports.php3");
   on a non-confidential basis. DVL Software Limited shall be free to use such information on
   an unrestricted basis. </p>
   </td></tr>
-  <tr>
-    <td height="20"></td>
-  <tr>
+  <tr><td height="20"></td></tr>
   <tr>
     <td bgcolor="#AD0040" height="32"><font color="#FFFFFF" size="+1">TRADEMARKS</font></td>
   </tr>

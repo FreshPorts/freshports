@@ -1,5 +1,5 @@
 <?
-	# $Id: faq.php,v 1.1.2.22 2002-11-29 15:26:51 dan Exp $
+	# $Id: faq.php,v 1.1.2.23 2002-12-02 18:32:08 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -313,13 +313,46 @@ Try this URL: <a href="http://<?php echo $ServerName ?>/index.php?num=30&days=0"
 
 <ul>
 <li>
-num - number of ports to show (regardless of commits so the last 
+<b>num</b> - number of ports to show (regardless of commits so the last 
 commit may not list fully). The valid values are 10..100.
 
 <li>
-days - number of summary days (in the right hand column) to display.
+<b>days</b> - number of summary days (in the right hand column) to display.
 The valid values are 0..9.
+
+<li>
+<b>dailysummary</b> - similar to days, but displays a summary of the days instead
+of a link to a page of commits for that day.
 </ul>
+
+Here are a few examples:
+
+<blockquote>
+
+<table BORDER="1" CELLSPACING="0" CELLPADDING="5">
+<tr>
+<td><b>Description</b></td>
+<td nowrap valign="top"><b>URL</td>
+</tr>
+
+<tr>
+<td>The last ten ports</td>
+<td nowrap valign="top"><a href="http://<?php echo $ServerName ?>/index.php?num=10">http://<?php echo $ServerName ?>/index.php?num=10</b></a><br></td>
+</tr>
+
+<tr>
+<td>Same as above, but show only two days of previous commits</td>
+<td nowrap valign="top"><a href="http://<?php echo $ServerName ?>/index.php?num=10&days=2">http://<?php echo $ServerName ?>/index.php?num=10&<b>days=2</b></a><br></td>
+</tr>
+
+<tr>
+<td>Same as above, but show summaries instead of a link to another page</td>
+<td nowrap valign="top"><a href="http://<?php echo $ServerName ?>/index.php?num=10&dailysummary=2">http://<?php echo $ServerName ?>/index.php?num=10&<b>dailysummary=2</b></a></td>
+</tr>
+
+</table>
+</blockquote>
+
 BTW: I've found a way to improve the outer joins I've been doing in 
 SQL and I'll be implementing that gradually.
 </TD></TR><TR><TD>&nbsp;</TD></TR>

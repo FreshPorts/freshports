@@ -1,6 +1,6 @@
 <?
-require( "/www/freshports.org/_private/commonlogin.php3");
-require( "/www/freshports.org/_private/getvalues.php3");
+require( "../_private/commonlogin.php3");
+require( "../_private/getvalues.php3");
 ?>
 
 <HTML>
@@ -11,7 +11,7 @@ require( "/www/freshports.org/_private/getvalues.php3");
 <TITLE>phorum - <?PHP if(isset($ForumName)) echo $ForumName; ?><?PHP echo $title; ?></TITLE>
 </HEAD>
 <BODY BGCOLOR="#FFFFFF" LINK="#0000CC">
-<? include("/www/freshports.org/_private/header.inc") ?>
+<? include("../_private/header.inc") ?>
 <table width="100%" border="0">
 <tr><td colspan="2">
 <font size="+2">forum

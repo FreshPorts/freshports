@@ -1,12 +1,12 @@
 <?
-	# $Id: missing-port.php,v 1.1.2.5 2002-01-02 02:53:44 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.6 2002-01-05 21:14:23 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
 
 function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 
-#$Debug=1;
+$Debug=0;
 
 
 	if ($Debug) echo "you asked for $REQUEST_URI<BR>";
@@ -32,7 +32,7 @@ function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 			echo "\$PortName     = '$PortName'<BR>";
 		}
 
-		if (IsSet($PortName)) {
+		if (IsSet($PortName) && $PortName != '') {
 			$element = new Element($db);
 			$element->FetchByName("/ports/$CategoryName/$PortName");
 

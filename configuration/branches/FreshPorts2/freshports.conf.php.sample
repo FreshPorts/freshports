@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.conf.php.sample,v 1.1.2.3 2003-04-22 17:28:56 dan Exp $
+	# $Id: freshports.conf.php.sample,v 1.1.2.4 2003-04-26 16:46:42 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -50,5 +50,7 @@ $HeaderAdsBurst120x160	= 1;
 $UsePHPAdsNew				= 0;
 
 $RejectExternalSearches	= 0;
+
+$AllowUserChanges			= 1;
 
 ?>

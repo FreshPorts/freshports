@@ -1,5 +1,5 @@
 <?
-	# $Id: privacy.php,v 1.1.2.3 2002-02-16 23:52:52 dan Exp $
+	# $Id: privacy.php,v 1.1.2.4 2002-04-19 19:50:41 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -14,13 +14,13 @@
 
 ?>
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<tr><td valign="top" width="100%">
-<table width="100%" border="0">
+<TR><TD VALIGN="top" WIDTH="100%">
+<TABLE WIDTH="100%" BORDER="0">
 
-<tr>
+<TR>
 	<? freshports_PageBannerText("Privacy statement"); ?>
-</tr>
-</tr><td>
+</TR>
+<TR><TD>
 <P>All the information we
     gather is for our own use.  We do not release it to anyone else.</P>
     <P>For example, when you subscribe to our mailing list, we
@@ -30,16 +30,16 @@
       We do this.  This means your IP address, or the IP address of your proxy will
     be recorded in our access logs.  We do not release this information to anyone.  
     It wouldn't be much use to anyone anyway.</P>
-    <P>The New Zealand Privacy Commissioner has some interesting reading at <A href="http://www.knowledge-basket.co.nz/privacy/top.html">http://www.knowledge-basket.co.nz/privacy/top.html</A>.</TD>
-
-</td></tr>
-</table>
-</td>
-  <td valign="top" width="*">
+    <P>The New Zealand Privacy Commissioner has some interesting reading at 
+		<A href="http://www.knowledge-basket.co.nz/privacy/top.html">http://www.knowledge-basket.co.nz/privacy/top.html</A>.
+</TD></TR>
+</TABLE>
+</TD>
+<TD>
     <? include("./include/side-bars.php") ?>
- </td>
-</tr>
-</table>
+</TD>
+</TR>
+</TABLE>
 <? include("./include/footer.php") ?>
 </body>
 </html>

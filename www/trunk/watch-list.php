@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-list.php,v 1.1 2002-02-12 22:58:04 dan Exp $
+	# $Id: watch-list.php,v 1.2 2002-02-12 23:06:15 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 

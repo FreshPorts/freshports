@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.186 2004-10-02 18:49:49 dan Exp $
+	# $Id: freshports.php,v 1.4.2.187 2004-10-21 03:29:44 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -904,7 +904,11 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 		$HTML .= '</font><BR>' . "\n";
 	}
 
-	$HTML .= '<p><b>To add the package:</b> <code class="code">pkg_add -r ' . $port->latest_link . '</code></p>';
+	if (IsSet($port->no_package) && $port->no_package != '') {
+		$HTML .= '<p><b>No package is available: ' . $port->no_package . '</p>';
+	} else {
+		$HTML .= '<p><b>To add the package:</b> <code class="code">pkg_add -r ' . $port->latest_link . '</code></p>';
+	}
 
    if ($port->categories) {
       // remove the primary category and remove any double spaces or trailing/leading spaces

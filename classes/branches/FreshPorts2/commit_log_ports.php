@@ -1,5 +1,5 @@
 <?
-	# $Id: commit_log_ports.php,v 1.1.2.10 2003-02-21 19:13:52 dan Exp $
+	# $Id: commit_log_ports.php,v 1.1.2.11 2003-02-25 15:16:17 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -19,6 +19,7 @@ class Commit_Log_Ports {
 	var $port_version;
 	var $port_revision;
 	var $security_notice_id;
+	var $needs_refresh;
 
 	var $result;
 
@@ -41,7 +42,8 @@ select commit_log.id,
        encoding_losses,
        port_version,
        port_revision,
-       security_notice.id as security_notice_id
+       security_notice.id as security_notice_id,
+       needs_refresh
   from commit_log, commit_log_ports LEFT OUTER JOIN security_notice
        ON commit_log_ports.commit_log_id = security_notice.commit_log_id
  where commit_log.id            = commit_log_ports.commit_log_id
@@ -77,6 +79,10 @@ select commit_log.id,
 		$this->port_version			= $myrow["port_version"];
 		$this->port_revision			= $myrow["port_revision"];
 		$this->security_notice_id	= $myrow["security_notice_id"];
+		$this->needs_refresh			= $myrow["needs_refresh"];
+	}
+
+	function SetNeedsRefresh() {
 	}
 
 }

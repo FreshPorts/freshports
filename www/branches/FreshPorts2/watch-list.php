@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-list.php,v 1.2.2.21 2003-04-27 14:48:18 dan Exp $
+	# $Id: watch-list.php,v 1.2.2.22 2003-04-28 16:23:22 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -37,8 +37,6 @@ function RemoveElementFromWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 }
 
 function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
-	$Debug = 0;
-
 	if ($Debug) echo "I'm adding $ElementID\n<BR>";
 	$WatchListElement = new WatchListElement($db);
 	while (list($key, $WatchListID) = each($WatchListsIDs)) {
@@ -172,11 +170,26 @@ freshports_ShowFooter();
 			$ElementID = AddSlashes($_REQUEST['Update']);
 			$WatchListElement = new WatchListElement($db);
 
+			if ($Debug) echo "userid = $User->id and ElementID = $ElementID<br>";
+
 			if ($WatchListElement->DeleteElementFromWatchLists($User->id, $ElementID) == -1) {
 				$Error = 'removing element failed : Please try again, and if the problem persists, please contact the webmaster: ' . pg_last_error();
 			}
-			if ($Error == '' && IsSet($_REQUEST['watch_list_id'])) {
-				if (AddElementToWatchLists($db, $User->id, $ElementID, $_REQUEST['watch_list_id']) == -1) {
+			if ($Debug) {
+				echo "Error is '$Error'<br>";
+
+				if (IsSet($_REQUEST['wlid'])) {
+					echo 'yes, it is set<br>';
+				} else {
+					echo 'no, there is nothing set!<br>';
+					phpinfo();
+				}
+			}
+
+			if ($Error == '' && IsSet($_REQUEST['wlid'])) {
+
+				if ($Debug) echo "userid = $User->id and ElementID = $ElementID <br>";
+				if (AddElementToWatchLists($db, $User->id, $ElementID, $_REQUEST['wlid']) == -1) {
 					$Error = 'adding element failed : Please try again, and if the problem persists, please contact the webmaster: ' . pg_last_error();
 				}
 			}

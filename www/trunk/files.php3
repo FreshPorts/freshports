@@ -97,7 +97,7 @@ This page shows the files associated with one port within a given commit.
 
       echo "  <td>" . $Change_Type . "</td>";
       echo '  <td colspan="2"><a href="' . $freshports_CVS_URL . $myrow["category"] . '/' . $myrow["port"] . '/' . $myrow["details"] . '">' .
-              '<img src="images/logs.gif" alt="Changes to this file" border="0" WIDTH="15" HEIGHT="22" hspace="2"></a>' . 
+              '<img src="images/logs.gif" alt="Changes to this file" border="0" WIDTH="17" HEIGHT="20" hspace="2"></a>' . 
                $myrow["details"] . "</td>";
       echo "</tr>\n";
    }

@@ -60,7 +60,7 @@ If there is no link to a category, that is because that category
 is a virtual category, and I haven't catered for those yet. But <a href="changes.php3">I plan to</a></p>
 <p>
 <img src="images/new.gif"  alt="new feature" border="0" width="28" height="11" hspace="2">Click on 
-<img src="images/logs.gif" alt="Files within thie port affected by this commit" border="0" WIDTH="15" HEIGHT="22" hspace="2"> 
+<img src="images/logs.gif" alt="Files within thie port affected by this commit" border="0" WIDTH="17" HEIGHT="20" hspace="2"> 
 to see what files changed for this port in that commit.</p>
 </td>
 </tr>
@@ -104,7 +104,7 @@ while ($myrow = mysql_fetch_array($result)) {
    echo "<tr><td valign='top'><font size='-1'>" . $myrow["commit_date"]        . "</font></td>\n";
    echo "    <td valign='top'>" . $myrow["committer"]          . "</td>\n";
    echo '    <td valign="top"><a href="files.php3?id=' . $myrow["id"] .
-                   '"><img src="images/logs.gif" alt="Files within thie port affected by this commit" border="0" WIDTH="15" HEIGHT="22" hspace="2"></a>' . 
+                   '"><img src="images/logs.gif" alt="Files within thie port affected by this commit" border="0" WIDTH="17" HEIGHT="20" hspace="2"></a>' . 
                     $myrow["update_description"] . "</td>\n";
    echo "</tr>\n";
 }

@@ -1,5 +1,5 @@
 <?
-	# $Id: categories.php,v 1.1.2.4 2003-02-10 16:54:30 dan Exp $
+	# $Id: categories.php,v 1.1.2.5 2003-03-06 14:20:34 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -67,5 +67,29 @@ class Category {
 
 		return $this->name;
 	}
+
+	function PortCount($Name) {
+		$Count = 0;
+		$Debug = 0;
+
+		if (IsSet($Name)) {
+			$this->name = $Name;
+		}
+		$sql = "select CategoryPortCount('$this->name')";
+		if ($Debug) echo "sql = '$sql'<BR>";
+
+		$result = pg_exec($this->dbh, $sql);
+		if ($result) {
+			$numrows = pg_numrows($result);
+			if ($numrows == 1) {
+				if ($Debug) echo "PortCount succeeded<BR>";
+				$myrow = pg_fetch_array ($result, 0);
+				$Count = $myrow[0];
+			}
+		}
+
+		return $Count;
+	}
+		
 
 }

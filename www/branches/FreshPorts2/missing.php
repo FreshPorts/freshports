@@ -1,7 +1,9 @@
-<?
-	# $Id: missing.php,v 1.1.2.14 2003-01-05 13:14:13 dan Exp $
+<?php
 	#
-	# Copyright (c) 2001 DVL Software Limited
+	# $Id: missing.php,v 1.1.2.15 2003-03-06 14:20:44 dan Exp $
+	#
+	# Copyright (c) 2001-2003 DVL Software Limited
+	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');

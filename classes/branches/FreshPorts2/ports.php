@@ -1,7 +1,8 @@
-<?
-	# $Id: ports.php,v 1.1.2.29 2003-03-05 21:05:48 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: ports.php,v 1.1.2.30 2003-03-06 14:20:35 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
 
@@ -356,7 +357,7 @@ ON TEMP.wle_element_id = ports.element_id";
 		}
 	}
 
-	function FetchByCategoryInitialise($CategoryName, $UserID = 0) {
+	function FetchByCategoryInitialise($CategoryName, $UserID = 0, $PageSize = 0, $PageNo = 0) {
 		# fetch all ports based on category
 		# e.g. id for net
 		
@@ -421,6 +422,14 @@ LEFT OUTER JOIN
 
 		$sql .= " ORDER by port ";
 		
+#echo "\$PageSize='$PageSize'\n";
+		if ($PageSize) {
+			$sql .= " LIMIT $PageSize";
+			if ($PageNo) {
+				$sql .= ' OFFSET ' . ($PageNo - 1 ) * $PageSize;
+			}
+		}
+
 		if ($Debug) echo "<pre>$sql</pre>";
 
 		$this->LocalResult = pg_exec($this->dbh, $sql);

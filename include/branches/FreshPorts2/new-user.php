@@ -1,7 +1,9 @@
-<?
-	# $Id: new-user.php,v 1.1.2.9 2002-12-11 04:35:51 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2002 DVL Software Limited
+	# $Id: new-user.php,v 1.1.2.10 2003-03-06 14:20:45 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
 
 	$origin = $_REQUEST["origin"];
 ?>
@@ -37,6 +39,16 @@ Number of Days to show in side-bar:
     <OPTION <? if ($numberofdays == "7") echo "selected " ?> VALUE="7">7</OPTION>
     <OPTION <? if ($numberofdays == "8") echo "selected " ?> VALUE="8">8</OPTION>
     <OPTION <? if ($numberofdays == "9") echo "selected " ?> VALUE="9">9</OPTION>
+</SELECT>
+<br><br><BR>
+
+Number of ports to display per page per category:
+<SELECT NAME="page_size" size="1">
+    <OPTION <? if ($page_size == 25)  echo "selected " ?> VALUE="25">25</OPTION>
+    <OPTION <? if ($page_size == 50)  echo "selected " ?> VALUE="50">50</OPTION>
+    <OPTION <? if ($page_size == 100) echo "selected " ?> VALUE="100">100</OPTION>
+    <OPTION <? if ($page_size == 150) echo "selected " ?> VALUE="150">150</OPTION>
+    <OPTION <? if ($page_size == 250) echo "selected " ?> VALUE="250">250</OPTION>
 </SELECT>
 <br><br><BR>
             <INPUT TYPE="submit" VALUE="<? if ($Customize) { echo "update";} else { echo "create";} ?> account" NAME="submit">

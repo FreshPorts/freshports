@@ -1,11 +1,14 @@
 <?
-	# $Id: customize.php,v 1.1.2.24 2003-01-06 14:14:37 dan Exp $
+	# $Id: customize.php,v 1.1.2.25 2003-03-06 14:20:43 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+
+	GLOBAL $User;
 
 $origin	= $_REQUEST['origin'];
 $submit 	= $_REQUEST['submit'];
@@ -30,6 +33,7 @@ if ($submit) {
    $Password1				= AddSlashes($_POST['Password1']);
    $Password2				= AddSlashes($_POST['Password2']);
    $numberofdays			= AddSlashes($_POST['numberofdays']);
+	$page_size				= AddSlashes($_POST['page_size']);
 
    if (!is_numeric($numberofdays) || $numberofdays < 0 || $numberofdays > 9) {
       $numberofdays = 9;
@@ -66,9 +70,11 @@ if ($submit) {
 		$WatchNotice = new WatchNotice($db);
 		$WatchNotice->FetchByFrequency($watchnotifyfrequency);
 
-         $sql = "update users set ";
-         $sql .= "email			= '$email', ";
-         $sql .= "number_of_days      = $numberofdays ";
+         $sql = "
+UPDATE users
+   SET email          = '$email',
+       number_of_days = $numberofdays,
+       page_size      = $page_size";
 
          // if they are changing the email, reset the bouncecount.
          if ($myrow["email"] != $email) {
@@ -105,9 +111,13 @@ if ($submit) {
       }
    }
 } else {
+
    $email			= $User->email;
    $numberofdays	= $User->numberofdays;
+	$page_size		= $User->page_size;
 }
+
+echo '<br>the page size is ' . $page_size . ' : ' . $email;
 
    freshports_Start('Customize User Account',
                'freshports - new ports, applications',
@@ -120,11 +130,6 @@ if ($submit) {
   <TR>
     <TD height="20"><script language="php">
 
-if (!$submit) {
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
-	$numberofdays	= $User->number_of_days;
-   $email			= $User->email;
-}
 
 if ($errors) {
 echo '<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="#AD0040" width="100%">

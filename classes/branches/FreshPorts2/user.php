@@ -1,7 +1,8 @@
-<?
-	# $Id: user.php,v 1.1.2.7 2003-03-04 22:19:37 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: user.php,v 1.1.2.8 2003-03-06 14:20:35 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
 $Debug = 0;
@@ -31,12 +32,18 @@ class User {
 	var $number_of_days;
 	var $watch_list_add_remove;
 	var $last_watch_list_chosen;
+	var $page_size;
 
 	var $LocalResult;
 
 
 	function User($dbh) {
-		$this->dbh	= $dbh;
+		GLOBAL $DefaultPageSize;	# from configuration/freshports.conf.php
+
+		$this->dbh	     = $dbh;
+		$this->id        = 0;
+		$this->page_size = 100;
+#echo 'page size = .' . $this->page_size . '.';
 	}
 	
 
@@ -117,6 +124,14 @@ class User {
 		$this->number_of_days			= $myrow["number_of_days"];
 		$this->watch_list_add_remove	= $myrow["watch_list_add_remove"];
 		$this->last_watch_list_chosen	= $myrow["last_watch_list_chosen"];
+
+		$this->page_size					= $myrow["page_size"];
+		if (!IsSet($this->page_size) || $this->page_size == '') {
+			GLOBAL $DefaultPageSize;	# from configuration/freshports.conf.php
+												# and also set in include/getvalues.php
+
+			$this->page_size = $DefaultPageSize;
+		}
 	}
 	
 	function SetWatchListAddRemove($WatchListAddRemove) {
@@ -124,7 +139,7 @@ class User {
 		$sql = 'UPDATE users 
 		          set watch_list_add_remove = \'' . AddSlashes($WatchListAddRemove) . '\'
 		        WHERE id                    =   ' . $this->id;
-		
+
 		if ($Debug)	echo "Users::Fetch sql = '$sql'<BR>";
 
 		$this->LocalResult = pg_exec($this->dbh, $sql);

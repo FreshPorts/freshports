@@ -1,7 +1,9 @@
-<?
-	# $Id: missing-port.php,v 1.1.2.36 2003-03-05 21:07:34 dan Exp $
+<?php
 	#
-	# Copyright (c) 2001 DVL Software Limited
+	# $Id: missing-port.php,v 1.1.2.37 2003-03-06 14:20:44 dan Exp $
+	#
+	# Copyright (c) 2001-2003 DVL Software Limited
+	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
 
@@ -11,13 +13,13 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/include/files.php');
 
 
 function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
+	GLOBAL $User;
 
 	$Debug = 0;
 
 	unset($CategoryName);
 	unset($PortName);
 	unset($FileName);
-
 
 	if ($Debug) echo "you asked for $REQUEST_URI<BR>";
 
@@ -26,8 +28,25 @@ function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 	if ($Debug) echo "count(\$url_Array) = '" . sizeof($url_Array) .  "' : '" . $url_Array[4] . "'<BR>";
 	if (count($url_Array) >= 1) {
 		$CategoryName = AddSlashes($url_Array[1]);
+		$CategoryID   = freshports_CategoryId($CategoryName, $db);
+
+		if ($Debug) {
+			echo "\$CategoryID='$CategoryID'";
+			if (IsSet($CategoryID)) {
+				echo ' great!, category is found';
+			} else {
+				echo ' damn!, category not found';
+			}
+			echo "<br>\n";
+		}
+
 		if (array_count_values($url_Array) >= 2) {
-			$PortName = AddSlashes($url_Array[2]);
+			$url_Item2 = AddSlashes($url_Array[2]);
+			if (substr($url_Item2, 0, 1) == '?') {
+				$Parms = $url_Item2;
+			} else {
+				$PortName = $url_Item2;
+			}
 		}
 
 		if (count($url_Array) >= 3) {
@@ -39,10 +58,8 @@ function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 			echo "\$CategoryName = '$CategoryName'<BR>";
 			echo "\$PortName     = '$PortName'<BR>";
 			echo "\$FileName     = '$FileName'<BR>";
+			echo "\$Parms        = '$Parms'<BR>";
 		}
-
-
-		$CategoryID = freshports_CategoryId($CategoryName, $db);
 
 		if ($Debug) {
 			echo "\$CategoryName = '$CategoryName' ($CategoryID)<BR>";
@@ -89,8 +106,28 @@ function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 				if ($PortName != '' && !IsSet($port->id)) {
 					$result = "The <A HREF=\"/$CategoryName/\">category you specified</A> exists but not the port <I>$PortName</I>.";
 				} else {
+					if ($Debug) echo '$_SERVER["REDIRECT_QUERY_STRING"]="' . $_SERVER["REDIRECT_QUERY_STRING"] . '"<BR>';
+					if ($_SERVER['REDIRECT_QUERY_STRING'] != '') {
+						parse_str($_SERVER['REDIRECT_QUERY_STRING'], $query_parts);
+						$page      = $query_parts['page'];
+						$page_size = $query_parts['page_size'];
+					}
+
+					if (!IsSet($page) || $page == '') {
+						$page = 1;
+					}
+
+					if (!IsSet($page_size) || $page_size == '') {
+						$page_size = $User->page_size;
+					}
+
+					if ($Debug) {
+						echo "\$page      = '$page'<br>\n";
+						echo "\$page_size = '$page_size'<br>\n";
+					}
+					
 					require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-category.php');
-					freshports_Category($CategoryName, $db);
+					freshports_Category($db, $CategoryName, $page, $page_size);
 				}
 			}
 		} else {

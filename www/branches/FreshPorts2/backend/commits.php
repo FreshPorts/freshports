@@ -1,5 +1,5 @@
 <?
-	# $Id: commits.php,v 1.1.2.1 2002-05-22 01:34:15 dan Exp $
+	# $Id: commits.php,v 1.1.2.2 2002-05-22 01:38:26 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -12,7 +12,11 @@
 
 	$Title    = "Broken ports";
 
-	$sql = "SELECT message_id, message_date, commit_date, committer, system_id
+	$sql = "SELECT message_id, 
+				   to_char(message_date - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS'), 
+				   to_char(commit_date  - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS'), 
+				   committer,
+				   system_id
 			  FROM commit_log
 			 WHERE date_added < now() - INTERVAL '5 minutes'
 		  ORDER BY commit_date desc, message_date desc, message_id, committer

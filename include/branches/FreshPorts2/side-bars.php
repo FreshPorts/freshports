@@ -1,5 +1,5 @@
 <?
-	# $Id: side-bars.php,v 1.4.2.25 2002-05-19 17:51:15 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.26 2002-05-19 18:45:08 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -68,7 +68,7 @@ if ($visitor) {
 	<A HREF="/phorum/">Forums</A>
    </TD>
    </TR>
-   </table>
+   </TABLE>
 
 <BR>
 
@@ -92,6 +92,25 @@ if ($visitor) {
 
 <BR>
 
+<TABLE WIDTH="<? echo $ColumnWidth ?>" BORDER="1" CELLSPACING="0" CELLPADDING="5">
+	<TR>
+		<TD COLSPAN="2" BGCOLOR="#AD0040" height="30"><FONT COLOR="#FFFFFF"><BIG><B>Statistics</B></BIG></FONT></TD>
+	</TR>
+	<TR>
+	<TD VALIGN="top">
+
+<?php
+	echo freshports_SideBarHTML($_SERVER["PHP_SELF"], "/graphs.php",        "Graphs")      . '<BR>';
+	echo freshports_SideBarHTML($_SERVER["PHP_SELF"], "/stats/",            "Traffic")     . '<BR>';
+	echo '<BR>Caculated hourly:<BR>';
+	
+	@readfile($_SERVER["DOCUMENT_ROOT"] . "/../configuration/stats.html");
+?>
+	</TD>
+	</TR>
+</TABLE>
+
+
 <BR>
 
 <TABLE WIDTH="<? echo $ColumnWidth ?>" BORDER="1" CELLSPACING="0" CELLPADDING="5">
@@ -101,37 +120,35 @@ if ($visitor) {
 	<TR>
 	<TD VALIGN="top">
 <?
-       echo '<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/",                   "Home")           . '</FONT><BR>';
-       echo '<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/categories.php",    "Categories")      . '</FONT><BR>';
-       echo '<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/ports-deleted.php", "Deleted ports")   . '</FONT><BR>';
-       echo '<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/ports-new.php",     "New ports")       . '</FONT><BR>';
-       echo '<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/search.php",        "Search")          . '</FONT><BR>';
-       echo '<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/graphs.php",        "Graphs")          . '</FONT><BR>';
+	echo '<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/",                  "Home")            . '</FONT><BR>';
+	echo '<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/categories.php",    "Categories")      . '</FONT><BR>';
+	echo '<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/ports-deleted.php", "Deleted ports")   . '</FONT><BR>';
+	echo '<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/ports-new.php",     "New ports")       . '</FONT><BR>';
+	echo '<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/search.php",        "Search")          . '</FONT><BR>';
 ?>
-   </TD>
-   </TR>
-   </table>
+	</TD>
+	</TR>
+</TABLE>
 
 
 
 <BR>
 
- <TABLE WIDTH="<? echo $ColumnWidth ?>" BORDER="1" CELLSPACING="0" CELLPADDING="5">
-        <TR>
-         <TD BGCOLOR="#AD0040" height="30"><FONT COLOR="#FFFFFF"><BIG><B>This site</B></BIG></FONT></TD>
-        </TR>
-        <TR>
-    <TD VALIGN="top">
+<TABLE WIDTH="<? echo $ColumnWidth ?>" BORDER="1" CELLSPACING="0" CELLPADDING="5">
+	<TR>
+		<TD BGCOLOR="#AD0040" height="30"><FONT COLOR="#FFFFFF"><BIG><B>This site</B></BIG></FONT></TD>
+	</TR>
+	<TR>
+	<TD VALIGN="top">
 <?
-        echo '<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/about.php",          "What is freshports?") . '</FONT><BR>';
-        echo '<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/authors.php",        "About the Authors")   . '</FONT><BR>';
-        echo '<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/faq.php",            "FAQ")                 . '</FONT><BR>';
-        echo '<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/stats/",             "Traffic")             . '</FONT><BR>';
-        echo '<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/privacy.php",        "Privacy")             . '</FONT><BR>';
+	echo '<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/about.php",          "What is freshports?") . '</FONT><BR>';
+	echo '<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/authors.php",        "About the Authors")   . '</FONT><BR>';
+	echo '<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/faq.php",            "FAQ")                 . '</FONT><BR>';
+	echo '<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/privacy.php",        "Privacy")             . '</FONT><BR>';
 ?>
-    </TD>
-   </TR>
-   </table>
+	</TD>
+	</TR>
+</TABLE>
 
 
 <BR>

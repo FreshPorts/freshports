@@ -37,5 +37,5 @@ All rights reserved.</small></p>
 </table>
 
 <?
-	diary_ads_Random();
+	freshports_ads_Random();
 ?>

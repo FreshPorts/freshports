@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.4.3 2002-02-15 17:49:54 dan Exp $
+   # $Id: freshports.php,v 1.4.4.4 2002-04-11 19:46:14 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -41,7 +41,8 @@ GLOBAL $BannerAd;
    if ($ShowAds) {
       freshports_BurstMediaCode();
       if ($BannerAd) {
-         freshports_BurstMediaAd();
+#         freshports_BurstMediaAd();
+		  freshports_ads_Random();
       }
    }
 
@@ -628,10 +629,10 @@ function freshports_copyright() {
 
 }
 
-function diary_ads_Random() {
+function freshports_ads_Random() {
 
 echo '  <P ALIGN="center">
-        <a href="http://magazine.daemonnews.org/" target="_top"><img src="/ads/daemonnews.gif" width="468" height="60" border="0" alt="Daemon News - Bringing BSD Together"></a>
+	<A HREF="http://store.yahoo.com/cgi-bin/clink?bsdmall+f47ggU+freebsd45.html" TARGET="_top"><IMG SRC="/ads/bsdmall-genie-ad.gif" WIDTH="468" HEIGHT="60" BORDER="0" ALT="FreeBSD 4.5 at BSD Mall"></a>
         </noscript>
         <!-- END BURST CODE -->
         </P>

@@ -1,5 +1,4 @@
 <P ALIGN="left">
-<BIG>CASH WANTED!</BIG> The domain is up for renewal.  As such I am asking for those among you who can afford to
-donate cash, to please transfer via paypal to my account (donations@freebsddiary.org).  Any excess payment
-will be applied to the running of other domains (e.g. the FreeBSD Diary) and running expenses.  Thank you.
-</P>
+<BIG><BIG>Shop at the <A HREF="http://store.yahoo.com/cgi-bin/clink?bsdmall+f47ggU+freebsd45.html">BSD Mall</A>
+and help support the Diary at the same time.  We get 5% on any sales you make through our BSD Mall links.  Thanks.</BIG></BIG>
+

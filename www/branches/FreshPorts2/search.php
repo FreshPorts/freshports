@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.53 2004-03-22 20:28:45 dan Exp $
+	# $Id: search.php,v 1.1.2.54 2004-06-01 16:50:15 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -372,28 +372,56 @@ Search for:<BR>
 		<OPTION VALUE="500" <?if ($num == 500) echo 'SELECTED' ?>>500 results
 	</SELECT> 
 
-	<BR>
+	<BR><br>
 
+<table cellpadding="5" cellspacing="0" border="0">
+<tr>
+<td>
 	<INPUT TYPE=radio <? if ($deleted == "excludedeleted") echo 'CHECKED'; ?> VALUE=excludedeleted NAME=deleted> Do not include deleted ports
+</td><td colspan="2">
 	<INPUT TYPE=radio <? if ($deleted == "includedeleted") echo 'CHECKED'; ?> VALUE=includedeleted NAME=deleted> Include deleted ports
 
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-	<INPUT TYPE="submit" VALUE="Search" NAME="search">
-
-	<BR>
-
+</td>
+</tr><tr>
+<td>
 	<INPUT TYPE=radio <? if ($casesensitivity == "casesensitive")   echo 'CHECKED'; ?> VALUE=casesensitive   NAME=casesensitivity> Case sensitive search
+</td><td>
 	<INPUT TYPE=radio <? if ($casesensitivity == "caseinsensitive") echo 'CHECKED'; ?> VALUE=caseinsensitive NAME=casesensitivity> Case insensitive search
-
-	<BR><BR>
-	NOTE: Case sensitivity is ignored for "sounding like".<BR>
-	NOTE: When searching on 'Message ID' only exact matches will succeed.
-
+</td><td>
+	<INPUT TYPE="submit" VALUE="Search" NAME="search">
+</td></tr>
+</table>
 </form>
 
-&nbsp;
+<p>
+NOTE: Case sensitivity is ignored for "sounding like".<BR>
+NOTE: When searching on 'Message ID' only exact matches will succeed.
+</p>
 
+<?php
+
+if ($User->id != '') {
+?>
+<p>
+Special searches:
+</p>
+<ul>
+<li>	<FORM ACTION="/search.php" NAME="f">
+	<INPUT NAME="query"           TYPE="hidden" value="<?php GLOBAL $User; echo $User->email; ?>">
+	<INPUT NAME="num"             TYPE="hidden" value="10">
+	<INPUT NAME="stype"           TYPE="hidden" value="maintainer">
+	<INPUT NAME="method"          TYPE="hidden" value="match">
+	<INPUT NAME="deleted"         TYPE="hidden" value="excludedeleted">
+	<INPUT NAME="start"           TYPE="hidden" value="1">
+  	<INPUT NAME="casesensitivity" TYPE="hidden" value="caseinsensitive">
+    <INPUT TYPE="submit" VALUE="Ports I Maintain" NAME="search">
+	</FORM>
+
+</ul>
+<?php
+}
+?>
+<hr>
 </td></tr>
 <?
 if ($search) {

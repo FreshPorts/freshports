@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: committer-opt-in.php,v 1.1.2.11 2003-04-27 14:47:36 dan Exp $
+	# $Id: committer-opt-in.php,v 1.1.2.12 2003-12-19 17:12:19 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -127,6 +127,7 @@ if (!empty($visitor)) {
 			}
 		} else {
 			echo 'not subscribed';
+			$committer = preg_replace('|^(.*)@FreeBSD\.org|i', '\\1', $User->email);
 		}
 	}
 
@@ -137,7 +138,7 @@ if (!empty($visitor)) {
 ?>
 
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
-               committer id:
+               your freefall login:
                <INPUT SIZE="35" NAME="email" VALUE="<?echo $committer ?>"><BR><BR>
 <?
 			if ($numrows) {

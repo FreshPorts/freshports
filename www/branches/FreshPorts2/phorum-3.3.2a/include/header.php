@@ -1,12 +1,26 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "XHTML1-t.dtd">
-<html>
-<head>
-<meta name="Phorum Version" content="<?php echo $phorumver; ?>" />
-<meta name="Phorum DB" content="<?php echo $DB->type; ?>" />
-<meta name="PHP Version" content="<?php echo phpversion(); ?>" />
-<title>phorum<?php if(isset($ForumName)) echo " - $ForumName"; ?><?php echo initvar("title"); ?></title>
-<link rel="STYLESHEET" type="text/css" href="<?php echo phorum_get_file_name("css"); ?>" />
-</head>
-<body bgcolor="<?php echo (empty($ForumBodyColor)) ? $default_body_color : $ForumBodyColor; ?>" link="<?php echo (empty($ForumBodyLinkColor)) ? $default_body_link_color : $ForumBodyLinkColor; ?>" alink="<?php echo (empty($ForumBodyALinkColor)) ? $default_body_alink_color : $ForumBodyALinkColor; ?>" vlink="<?php echo (empty($ForumBodyVLinkColor)) ? $default_body_vlink_color : $ForumBodyVLinkColor; ?>">
+<?
+	# $Id: header.php,v 1.1.2.2 2002-02-16 23:51:20 dan Exp $
+	#
+	# Copyright (c) 1998-2002 DVL Software Limited
+
+	require("../include/common.php");
+	require("../include/freshports.php");
+	require("../include/databaselogin.php");
+
+	require("../include/getvalues.php");
+
+	freshports_Start("the place for ports",
+					"$FreshPortsName - new ports, applications",
+					"FreeBSD, index, applications, ports",
+					1);
+
+?>
+
+<TABLE VALIGN="top" ALIGN="center" WIDTH="<? echo $TableWidth; ?>" CELLPADDING="<? echo $BannerCellPadding; ?>" CELLSPACING="<? echo $BannerCellSpacing; ?>" BORDER="0">
+<TR>
+    <!-- first column in body -->
+    <TD WIDTH="100%" VALIGN="top" ALIGN="center">
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" ALIGN="center">
+<TR><TD VALIGN="top">
+
 <div class="PhorumForumTitle"><b><?php echo $ForumName; ?></b></div>
-<br>

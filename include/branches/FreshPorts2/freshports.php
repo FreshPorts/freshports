@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.82 2002-04-20 03:42:16 dan Exp $
+	# $Id: freshports.php,v 1.4.2.83 2002-04-21 18:22:20 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -8,9 +8,6 @@
 	require_once($DOCUMENT_ROOT . "/include/burstmedia.php");
 
 
-#
-# colours for the banners (not really banners, but headings)
-#
 if ($Debug) echo "'" . $DOCUMENT_ROOT . "/../classes/watchnotice.php'<BR>";
 
 require_once($DOCUMENT_ROOT . "/../classes/watchnotice.php");
@@ -107,6 +104,22 @@ function freshports_Commit_Link($message_id, $LinkText = '') {
 		$HTML .= $LinkText;
 	}
 	$HTML .= '</A>';
+
+	return $HTML;
+}
+
+function freshports_MorePortsToShow($message_id, $NumberOfPortsInThisCommit, $MaxNumberPortsToShow) {
+	$HTML .= "(Only the first $MaxNumberPortsToShow of $NumberOfPortsInThisCommit commits are shown above ";
+	$HTML .= freshports_Commit_Link($message_id, '<IMG SRC="/images/play.gif" ALT="View all ports for this commit" BORDER="0" WIDTH="13" HEIGHT="13">');
+	$HTML .= ")";
+
+	return $HTML;
+}
+
+function freshports_MoreCommitMsgToShow($message_id, $NumberOfLinesShown) {
+	$HTML .= "(Only the first $NumberOfLinesShown lines of the commit message are shown above ";
+	$HTML .= freshports_Commit_Link($message_id, '<IMG SRC="/images/play.gif" ALT="View all ports for this commit" BORDER="0" WIDTH="13" HEIGHT="13">');
+	$HTML .= ")";
 
 	return $HTML;
 }
@@ -914,12 +927,39 @@ function freshports_PortCommitsFooter($port) {
 	echo "</TABLE>\n";
 }
 
-function freshports_PortDescriptionPrint($description, $encoding_losses) {
+function freshports_Head($string, $n) {
+	if (!is_int($n) || $n <= 0) {
+		return $string;
+	}
+	$pos = -1;
+	for ($i = 0; $i < $n ; $i++) {
+		$pos = strpos($string, "\n", $pos+1);
+		if ($pos === false) {
+#			echo 'break';
+			break;
+		}
+#		echo "$pos='$pos'<BR>";
+	}
+	if ($pos === false) {
+		# not found
+	} else {
+		$string = substr($string, 0, $pos);
+	}
+
+	return $string;
+}
+
+function freshports_PortDescriptionPrint($description, $encoding_losses, $maxnumlines=0, $URL='') {
+	$shortened = freshports_Head($description, $maxnumlines);
 	$HTML .= '<PRE CLASS="code">';
 
-	$HTML .= htmlify(htmlspecialchars(freshports_wrap($description)));
+	$HTML .= htmlify(htmlspecialchars(freshports_wrap($shortened)));
 
 	$HTML .= '</PRE>';
+
+	if (strlen($shortened) < strlen($description)) {
+		$HTML .= $URL;
+	}
 
 	return $HTML;
 }

@@ -1,5 +1,5 @@
 <?
-   # $Id: watch.php3,v 1.25 2001-10-20 21:50:41 dan Exp $
+   # $Id: watch.php3,v 1.25.2.1 2001-11-26 06:40:14 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -165,7 +165,7 @@ while ($myrow = mysql_fetch_array($result)) {
       }
    }
 
-   $HTML .= freshports_PortDetails($myrow, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription);
+   $HTML .= freshports_PortDetails($myrow, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription);
 //   include("./include/port-basics.php");
 }
 

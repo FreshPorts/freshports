@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.58 2004-11-24 18:48:58 dan Exp $
+	# $Id: faq.php,v 1.1.2.59 2004-11-30 13:02:07 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -638,6 +638,33 @@ example <code class="code">/usr/ports/sysutils/bacula/pkg-descr</code>.
 
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
+
+<TR>
+<? echo freshports_PageBannerText('Where did this "People watching this port, also watch" feature come from?'); ?>
+</TR>
+
+   <TR><TD>
+   <P>
+Like many FreshPorts features, this idea came from someone else.  Florent 
+Thoumie mentioned something about extending the ports system to include 
+recommendations from maintainers/committers.  Such a feature would allow
+a committer/maintainer to suggest, for example, that if you install Firefox,
+that you also install linuxflashplugin.
+
+<p>
+It was from this concept that I came up with "People watching this port...".
+This information is obtained by:
+<ol>
+<li>FreshPorts takes the port you are looking at
+<li>It finds all the watch lists that this port appears on
+<li>It finds the top 5 most popular ports on those lists
+<li>FreshPorts shows you the results
+</ol>
+
+<p>
+All of this takes about 55ms.
+
+	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 </table>
 </td>

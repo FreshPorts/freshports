@@ -1,5 +1,5 @@
 <?
-	# $Id: watch.php,v 1.1.2.9 2002-02-23 21:32:41 dan Exp $
+	# $Id: watch.php,v 1.1.2.10 2002-02-24 00:26:06 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -8,7 +8,7 @@
 	require("./include/databaselogin.php");
 	require("./include/getvalues.php");
 
-$Debug = 1;
+$Debug = 0;
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {

@@ -1,5 +1,5 @@
 <?
-   # $Id: files.php3,v 1.10.2.2 2001-11-25 21:41:52 dan Exp $
+   # $Id: files.php3,v 1.10.2.3 2001-12-30 23:24:34 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -13,17 +13,18 @@ if (!$id || $id != strval(intval($id))) {
   $id = 0;
 }
 
-$sql = "select element_pathname(element.id) as pathname, commit_log_port.commit_log_id, commit_log_port.port_id, " .
+$sql = "select element_pathname(element.id) as pathname, commit_log_port_elements.commit_log_id, " .
+	   "commit_log_port_elements.port_id, " .
        "commit_log_elements.change_type, element.name as filename, categories.name as category, commit_log.committer, commit_log.commit_date, " .
-       "commit_log.description, B.name as port " .
-       "from commit_log, commit_log_port, ports, categories, element, commit_log_elements, element B " .
-       "where commit_log_port.commit_log_id         = $id " .
-       "  and commit_log_port.commit_log_element_id = commit_log_elements.id ".
-       "  and commit_log_elements.element_id        = element.id " .
-       "  and commit_log_port.port_id               = ports.id " .
-       "  and ports.category_id                     = categories.id " .
-       "  and commit_log.id                         = commit_log_port.commit_log_id " .
-       "  and ports.element_id                      = B.id " .
+       "commit_log.description, B.name as port, commit_log_elements.revision_name as revision_name " .
+       "from commit_log, ports, categories, element, commit_log_port_elements, commit_log_elements, element B " .
+       "where commit_log.id                                  = $id " .
+	   "  and commit_log_port_elements.commit_log_id         = commit_log.id " .
+	   "  and commit_log_port_elements.commit_log_element_id = commit_log_elements.id " .
+       "  and commit_log_elements.element_id                 = element.id " .
+       "  and commit_log_port_elements.port_id               = ports.id " .
+       "  and ports.category_id                              = categories.id " .
+       "  and ports.element_id                               = B.id " .
        "order by 1 limit 30";
 
 #echo $sql;
@@ -55,12 +56,12 @@ if (!$result) {
 
 ?>
 
-<table width="100%" border="0">
+<table width="<? echo $TableWidth ?>" border="0" ALIGN="center">
 <tr><td colspan="2">Welcome to the freshports.org where you can find the latest information on your favourite
 ports.
 </td></tr>
   <tr>
-    <td colspan="2">
+    <td colspan="3">
 This page shows the files associated with one port for a given commit.
     </td>
   </tr>
@@ -102,7 +103,7 @@ This page shows the files associated with one port for a given commit.
 	echo  '</font></td></tr>';
    ?>
    <tr>
-     <td><b>Action</b></td><td colspan="2"><b>File</b></td>
+     <td><b>Action</b></td><TD><B>Revision</B></TD><td colspan="2"><b>File</b></td>
    </tr>
    <?
 
@@ -130,6 +131,7 @@ This page shows the files associated with one port for a given commit.
 		}
 
 		echo "  <td>" . $Change_Type . "</td>";
+		echo "  <TD>" . $myrow["revision_name"] . "</TD>";
 		echo '  <td colspan="2"><a href="' . $freshports_CVS_URL . $myrow["pathname"] . '">' .
               '<img src="images/logs.gif" alt="Changes to this file" border="0" WIDTH="17" HEIGHT="20" hspace="2"></a>';
 

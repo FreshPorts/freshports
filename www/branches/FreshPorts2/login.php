@@ -1,5 +1,5 @@
 <?
-	# $Id: login.php,v 1.1.2.9 2002-02-21 23:13:53 dan Exp $
+	# $Id: login.php,v 1.1.2.10 2002-02-23 21:32:41 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -43,23 +43,36 @@ if ($submit) {
 	if (!pg_numrows($result)) {
 		$LoginFailed = 1;
 	} else {
-
 		if ($Debug) {
 			echo "well, debug was on, so I would have taken you to '$origin'<br>\n";
 		} else {
-			$Cookie = UserToCookie($UserID);
+			$row    = pg_fetch_array($result,0);
+			$status = $row["status"];
 
-			if ($Debug) {
-				echo "Cookie = $Cookie<br>\n";
+			switch ($status) {
+				case $UserStatusEnabled:
+					if ($Debug) {
+						echo "Cookie = $Cookie<br>\n";
+					}
+					SetCookie("visitor", $Cookie, time() + 60*60*24*120, '/');
+					// Redirect browser to PHP web site
+					if ($origin == "/index.php") {
+						$origin = "/";
+					}
+					header("Location: " . rawurldecode($origin));
+					// Make sure that code below does not get executed when we redirect.
+					exit;
+					break;	// not needed because of the exit, but here anyway
+
+				case $UserStatusDisabled:
+					$error .= "Your account has been disabled.  Please contact $ProblemSolverEmailAddress.";
+					break;
+
+				case $UserStatusUnconfirmed:
+					$error .= "Your account needs to be enabled by following the directions in the email we have sent to you.";
+					break;
+			
 			}
-			SetCookie("visitor", $Cookie, time() + 60*60*24*120, '/');
-			// Redirect browser to PHP web site
-			if ($origin == "/index.php") {
-				$origin = "/";
-			}
-			header("Location: " . rawurldecode($origin));
-			// Make sure that code below does not get executed when we redirect.
-			exit;
 		}
 	}
 }
@@ -80,8 +93,8 @@ echo '<table cellpadding=1 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>
 <tr>
 <td>
 <table width=100% border=0 cellpadding=1>
-<tr bgcolor="#AD0040">
-<? freshports_PageBannerText("Login Failed!"); ?>
+<tr> ' .
+freshports_PageBannerText("Login Failed!") . '
 </tr>
 <tr bgcolor="#ffffff">
 <td>
@@ -108,11 +121,36 @@ echo '<table cellpadding=1 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>
 <br>';
 }
 
+if ($error) {
+?>
+<TABLE WIDTH="100%" BORDER="1" ALIGN="center" cellpadding=1 cellspacing=0 BORDER="1">
+<tr><td VALIGN=TOP>
+<TABLE WIDTH="100%">
+<TR>
+    <? freshports_PageBannerText("NOTICE"); ?>
+</TR>
 
-#echo '<table cellpadding=1 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>
-#echo '<table cellpadding=0 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>
-#<tr>
-#<td>';
+<tr bgcolor="#ffffff">
+<td>
+  <table width=100% cellpadding=0 cellspacing=0 border=0>
+  <tr valign=top>
+   <td><img src="/images/warning.gif"></td>
+   <td width=100%>
+<? echo $error ?>
+ </td>
+ </tr>
+ </table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<br>
+<?
+}
+
+
 
 
 echo '<table width=100% border=1 cellpadding=1 cellspacing=0 bgcolor="#AD0040">';

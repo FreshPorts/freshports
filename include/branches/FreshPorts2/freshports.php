@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.43 2002-02-22 03:58:43 dan Exp $
+   # $Id: freshports.php,v 1.4.2.44 2002-02-23 21:32:43 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -24,6 +24,11 @@ $TimeFormatDefault		= "H:i:s";
 
 $FreshPortsTitle		= "FreshPorts";
 
+$UserStatusEnabled	   = "E";
+$UserStatusDisabled    = "D";
+$UserStatusUnconfirmed = "U";
+
+$ProblemSolverEmailAddress	= "webmaster@freshports.org";
 
 #
 # These values are used when specifying add/remove on a port
@@ -46,6 +51,7 @@ $FreshPortsWatchedPortNotSuffix	= "\">Add</A></SMALL>";
 #
 
 $Sequence_Watch_List_ID	= 'watch_list_id_seq';
+$Sequence_User_ID		= 'users_id_seq';
 
 // path to the CVS repository
 $freshports_CVS_URL = "http://www.FreeBSD.org/cgi/cvsweb.cgi";
@@ -891,6 +897,65 @@ function freshports_wrap($text, $length = 80) {
 
 function freshports_PageBannerText($Text, $ColSpan=1) {
 	echo '<TD BGCOLOR="#AD0040" HEIGHT="29" COLSPAN="' . $ColSpan . ' "><FONT COLOR="#FFFFFF"><BIG><BIG>' . $Text . '</BIG></BIG></FONT></TD>' . "\n";
+}
+
+function freshports_IsEmailValid($email) {
+	if (eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,3}$", $email)) {
+		return TRUE;
+	} else {
+		return FALSE;
+	}
+}
+
+
+function freshports_UserSendToken($UserID, $dbh) {
+	#
+	# send the confirmation token to the user
+	#
+
+	GLOBAL	$REMOTE_ADDR;
+	GLOBAL	$REMOTE_PORT;
+
+	$sql = "select email, token 
+	          from users, user_confirmations
+	         where users.id = $UserID
+	           and users.id = user_confirmations.user_id";
+
+#	echo "\$sql = '$sql'<BR>";
+
+	$result = pg_exec($dbh, $sql);
+	if ($result && pg_numrows($result)) {
+		$retval	= true;
+		$row	= pg_fetch_array($result,0);
+		$email	= $row[0];
+		$token	= $row[1];
+	} else {
+		pg_errormessage() . ' sql = $sql';
+	}
+
+	if (IsSet($token)) {
+		$message =  "Someone, perhaps you, supplied your email address as their\n".
+					"FreshPorts login. If that wasn't you, and this message becomes\n".
+				    "a nuisance, please forward this message to webmaster@freshports.org\n".
+					"and we will take care of it for you.\n".
+                    " \n".
+	                "Your token is: $token\n".
+    	            "\n".
+        	        "Please point your browser at\n".
+					"http://www.FreshPorts.org/user-confirmation.php?token=$token\n" .
+	                "\n".
+    	            "the request came from $REMOTE_ADDR:$REMOTE_PORT\n".
+					"\n".
+					"-- \n".
+					"FreshPorts - http://www.FreshPorts.org/ - the place for ports";
+
+		$result = mail($email, "FreshPorts - user registration", $message,
+					"From: webmaster@freshports.org\nReply-To: webmaster@freshports.org\nX-Mailer: PHP/" . phpversion());
+	} else {
+		$result = 0;
+	}
+
+	return $result;
 }
 
 ?>

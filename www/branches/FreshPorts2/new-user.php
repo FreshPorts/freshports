@@ -1,5 +1,5 @@
 <?
-	# $Id: new-user.php,v 1.1.2.7 2002-02-21 23:13:54 dan Exp $
+	# $Id: new-user.php,v 1.1.2.8 2002-02-23 21:32:41 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -9,47 +9,53 @@
 
 if ($submit) {
 
-// process form
+	// process form
 
-/*
- while (list($name, $value) = each($HTTP_POST_VARS)) {
-   echo "$name = $value<br>\n";
- }
-*/
-  $OK = 1;
+	/*
+	while (list($name, $value) = each($HTTP_POST_VARS)) {
+		echo "$name = $value<br>\n";
+	}
+	*/
 
-  $errors = "";
 
-  if ($UserLogin == '') {
-    $errors .= "Please enter a user id.<BR>";
-    $OK = 0;
-  }
+	$OK = 1;
 
-  if ($Password1 != $Password2) {
-    $errors .= "The password was not confirmed.  It must be entered twice.<BR>";
-    $OK = 0;
-  } else {
-    if ($Password1 == '') {
-      $errors .= 'A password must be supplied<BR>';
-    }
-  }
+	$errors = "";
 
-   #
-   # make sure we have valid values in this variable.
-   # by default, they don't get notified.
-   #
+	if ($UserLogin == '') {
+		$errors .= "Please enter a user id.<BR>";
+		$OK = 0;
+	}
 
-   switch ($watchnotifyfrequency) {
-      case "Z":
-      case "D":
-      case "W":
-      case "F":
-      case "M":
-         break;
+	if (!freshports_IsEmailValid($email)) {
+		$errors .= "That email address doesn't look right to me<BR>";
+	}
 
-      default:
-         $watchnotifyfrequency = "Z";
-   }
+	if ($Password1 != $Password2) {
+		$errors .= "The password was not confirmed.  It must be entered twice.<BR>";
+		$OK = 0;
+	} else {
+		if ($Password1 == '') {
+			$errors .= 'A password must be supplied<BR>';
+		}
+	}
+
+	#
+	# make sure we have valid values in this variable.
+	# by default, they don't get notified.
+	#
+
+	switch ($watchnotifyfrequency) {
+		case "Z":
+		case "D":
+		case "W":
+		case "F":
+		case "M":
+			break;
+
+		default:
+			$watchnotifyfrequency = "Z";
+	}
 
 	$WatchNotice = new WatchNotice($db);
 	$WatchNotice->FetchByFrequency($watchnotifyfrequency);
@@ -59,65 +65,70 @@ if ($submit) {
 	}
 
 
-  $UserCreated = 0;
-  if ($OK) {
-    $Cookie = UserToCookie($UserLogin);
-//    echo "checking database\n";
+	$UserCreated = 0;
+	if ($OK) {
+		$Cookie = UserToCookie($UserLogin);
+//		echo "checking database\n";
 
-    // test for existance of user id
+		// test for existance of user id
 
-    $sql = "select * from users where cookie = '$Cookie'";
+		$sql = "select * from users where cookie = '$Cookie'";
 
-	$result = pg_exec($db, $sql) or die('query failed');
+		$result = pg_exec($db, $sql) or die('query failed');
 
+		// create user id if not found
+		if(!pg_numrows($result)) {
+ //			echo "confirmed: user id is new\n";
 
-    // create user id if not found
-    if(!pg_numrows($result)) {
- //   echo "confirmed: user id is new\n";
+			# no need to validate that value as it's not put directly into the db.
+			if ($emailsitenotices_yn == "ON") {
+				$emailsitenotices_yn_value = "Y";
+			} else {
+				$emailsitenotices_yn_value = "N";
+			}
 
-      # no need to validate that value as it's not put directly into the db.
-      if ($emailsitenotices_yn == "ON") {
-         $emailsitenotices_yn_value = "Y";
-      } else {
-         $emailsitenotices_yn_value = "N";
-      }
+			$email     = addslashes($email);
+			$UserLogin = addslashes($UserLogin);
+			$Password1 = addslashes($Password1);
 
-      $email     = addslashes($email);
-      $UserLogin = addslashes($UserLogin);
-      $Password1 = addslashes($Password1);
+			$UserID = freshports_GetNextValue($Sequence_User_ID, $db);
+			if (IsSet($UserID)) {			
+				$sql = "insert into users (id, name, password, cookie, email, " . 
+						"watch_notice_id, emailsitenotices_yn, type, ip_address) values (";
+				$sql .= "$UserID, '$UserLogin', '$Password1', '$Cookie', '$email', " .
+						"'$WatchNotice->id', '$emailsitenotices_yn_value', 'S', '$REMOTE_ADDR')";
 
-      $sql = "insert into users (name, password, cookie, email, " . 
-             "watch_notice_id, emailsitenotices_yn, type) values (";
-      $sql .= "'$UserLogin', '$Password1', '$Cookie', '$email', " .
-              "'$WatchNotice->id', '$emailsitenotices_yn_value', 'S')";
+				$errors .= "<br>sql=" . $sql;
 
-      $errors .= "<br>sql=" . $sql;
+				$result = pg_exec($db, $sql);
+				if ($result) {
+					pg_exec ($db, "commit");
+					$UserCreated = 1;
 
-	  $result = pg_exec($db, $sql);
-      if ($result) {
-	$UserCreated = 1;
-      } else {
-	$errors .= 'Something went terribly wrong there. <br>' . pg_errormessage();
-/*
-	$errors .= 'UserLogin	= '.$UserLogin	  . '<br>';
-	$errors .= 'Password	= '.$Password1	  . '<br>';
-	$errors .= 'DaysToShow	= '.$DaysToShow   . '<br>';
-	$errors .= 'MaxArticles = '.$MaxArticles  . '<br>';
-	$errors .= 'DaysNew	= '.$DaysNew	  . '<br>';
-*/
-      }
+					# if the mail out fails, we aren't handling it properly here.
+					# we will.  eventually.
+					#
+					freshports_UserSendToken($UserID, $db);
+				} else {
+					$errors .= "OUCH! I couldn't add you to the database\n";
+					$OK = 0;
+				}
+			} else {
+				$errors .= "OUCH! I couldn't assign you a new UserID\n";
+				$OK = 0;
+			}
 
-    } else {
-      $errors .= 'That User ID is already in use.  Please select a different  User ID.<BR>';
-    }
-  }
+	    } else {
+			$errors .= 'That User ID is already in use.  Please select a different  User ID.<BR>';
+    	}
+	}
 
-  if ($UserCreated) {
-//	echo "Ummm, I think I created that login.";
-	SetCookie("visitor", $Cookie, time() + 60*60*24*120, '/');  // good for three months.
-	header("Location: welcome.php?origin=" . $origin);  /* Redirect browser to PHP web site */
-	exit;  /* Make sure that code below does not get executed when we redirect. */
- }
+	if ($UserCreated) {
+//		echo "Ummm, I think I created that login.";
+#		SetCookie("visitor", $Cookie, time() + 60*60*24*120, '/');  // good for three months.
+		header("Location: welcome.php?origin=" . $origin);  /* Redirect browser to PHP web site */
+		exit;  /* Make sure that code below does not get executed when we redirect. */
+	}
 } else {
 // not submit
 
@@ -191,6 +202,10 @@ if (!$submit && !$errors) {
       </tr>
       <tr>
         <td>
+
+<P><BIG><BIG>NOTE:</BIG>You must supply a valid email address.<BR>Instructions to enable your account 
+will be emailed to you at that address.</BIG></P>
+<P>&nbsp;</P>
 
 <? include("./include/new-user.php"); ?>
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.167 2003-12-31 16:50:20 dan Exp $
+	# $Id: freshports.php,v 1.4.2.168 2004-01-01 14:00:01 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -16,7 +16,7 @@
 # special HTMLified mailto to foil spam harvesters
 #
 DEFINE('MAILTO',                '&#109;&#97;&#105;&#108;&#116;&#111;');
-DEFINE('COPYRIGHTYEARS',        '2000-2003');
+DEFINE('COPYRIGHTYEARS',        '2000-2004');
 DEFINE('URL2LINK_CUTOFF_LEVEL', 0);
 
 

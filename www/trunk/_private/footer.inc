@@ -24,7 +24,7 @@ alt="powered by phorum" border="0" width="88" height="31"></a>
 
 </tr>
 <tr><td align="right">
-<a href="../legal.html" target="_top">Copyright</a> 2000 <a href="http://www.dvl-software.com/">DVL Software Limited</a>.
+<a href="../legal.php3" target="_top">Copyright</a> 2000 <a href="http://www.dvl-software.com/">DVL Software Limited</a>.
 All rights reserved.</font></p>
 </td></tr>
 </table>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.62 2004-11-17 13:39:49 dan Exp $
+	# $Id: search.php,v 1.1.2.63 2004-11-18 01:48:47 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -246,6 +246,14 @@ switch ($method) {
 				}
 				break;
       
+			case 'longdescription':
+				if ($casesensitivity == 'casesensitive') {
+					$sql .= "\n     and ports.long_description like '%$query%'";
+				} else {
+					$sql .= "\n     and lower(ports.long_description) like lower('%$query%')";
+				}
+				break;
+      
 			case 'maintainer':
 				if ($casesensitivity == 'casesensitive') {
 					$sql .= "\n     and ports.maintainer like '%$query%'";
@@ -290,6 +298,14 @@ switch ($method) {
 				}
 				break;
       
+			case 'longdescription':
+				if ($casesensitivity == 'casesensitive') {
+					$sql .= "\n     and ports.long_description = '$query'";
+				} else {
+					$sql .= "\n     and lower(ports.long_description) = lower('$query')";
+				}
+				break;
+      
 			case 'maintainer':
 				if ($casesensitivity == 'casesensitive') {
 					$sql .= "\n     and ports.maintainer = '$query'";
@@ -317,6 +333,10 @@ switch ($method) {
 
 			case 'shortdescription':
 				$sql .= "\n     and levenshtein(ports.short_description, '$query') < 4";
+				break;
+      
+			case 'longdescription':
+				$sql .= "\n     and levenshtein(ports.long_description, '$query') < 4";
 				break;
       
 			case 'maintainer':
@@ -430,6 +450,7 @@ Search for:<BR>
 		<OPTION VALUE="latest_link"      <? if ($stype == "latest_link")      echo 'SELECTED'?>>Latest Link</OPTION>
 		<OPTION VALUE="maintainer"       <? if ($stype == "maintainer")       echo 'SELECTED'?>>Maintainer</OPTION>
 		<OPTION VALUE="shortdescription" <? if ($stype == "shortdescription") echo 'SELECTED'?>>Short Description</OPTION>
+		<OPTION VALUE="longdescription"  <? if ($stype == "longdescription")  echo 'SELECTED'?>>Long Description</OPTION>
 		<OPTION VALUE="messageid"        <? if ($stype == "messageid")        echo 'SELECTED'?>>Message ID</OPTION>
 	</SELECT> 
 
@@ -454,17 +475,12 @@ Search for:<BR>
 
 <table cellpadding="5" cellspacing="0" border="0">
 <tr>
-<td>
-	<INPUT TYPE=radio <? if ($deleted == "excludedeleted") echo 'CHECKED'; ?> VALUE=excludedeleted NAME=deleted> Do not include deleted ports
-</td><td colspan="2">
-	<INPUT TYPE=radio <? if ($deleted == "includedeleted") echo 'CHECKED'; ?> VALUE=includedeleted NAME=deleted> Include deleted ports
-
+<td colspan="2">
+	<INPUT TYPE=checkbox <? if ($deleted == "includedeleted") echo 'CHECKED'; ?> VALUE=includedeleted NAME=deleted> Include deleted ports
 </td>
 </tr><tr>
 <td>
-	<INPUT TYPE=radio <? if ($casesensitivity == "casesensitive")   echo 'CHECKED'; ?> VALUE=casesensitive   NAME=casesensitivity> Case sensitive search
-</td><td>
-	<INPUT TYPE=radio <? if ($casesensitivity == "caseinsensitive") echo 'CHECKED'; ?> VALUE=caseinsensitive NAME=casesensitivity> Case insensitive search
+	<INPUT TYPE=checkbox <? if ($casesensitivity == "casesensitive")   echo 'CHECKED'; ?> VALUE=casesensitive   NAME=casesensitivity> Case sensitive search
 </td><td>
 	<INPUT TYPE="submit" VALUE="Search" NAME="search">
 </td></tr><tr><td colspan="3">
@@ -483,7 +499,9 @@ Search for:<BR>
 
 <p>
 NOTE: Case sensitivity is ignored for "sounding like".<BR>
-NOTE: When searching on 'Message ID' only exact matches will succeed.
+NOTE: When searching on 'Message ID' only exact matches will succeed.<br>
+NOTE: Short description is obtained from <code class="code">COMMENT</code> (was <code class="code">pkg-comment</code>).<br>
+NOTE: Long description is obtained from <code class="code">pkg-descr</code>).
 </p>
 
 <?php

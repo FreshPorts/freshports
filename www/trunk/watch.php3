@@ -112,8 +112,8 @@ $sql = "";
 $sql = "select ports.id, ports.name as port, ports.id as ports_id, ports.last_update as updated, " .
        "categories.name as category, categories.id as category_id, ports.version as version, ".
        "ports.committer, ports.last_update_description as update_description, " .
-       "ports.description as description, ports.maintainer, ports.short_description, ". 
-       "ports.package_exists, ports.extract_suffix " .
+       "ports.maintainer, ports.short_description, ".
+       "ports.package_exists, ports.extract_suffix, ports.needs_refresh " .
        "from ports, categories, watch_port  ".
        "WHERE ports.system = 'FreeBSD' ".
        "and ports.primary_category_id = categories.id " .
@@ -159,68 +159,8 @@ while ($myrow = mysql_fetch_array($result)) {
       $URL_Category = "category.php3?category=" . $myrow["category_id"];
       $HTML .= '<h3><a href="' . $URL_Category . '">Category ' . $myrow["category"] . '</a></h3>';
    }
-   $HTML .= "<dl>";
 
-//   $HTML .= '<dt><b><a href="' . $DESC_URL . '/' . $myrow["category"] . '/' . $myrow["port"] . '/pkg/DESCR">';
-
-//     $HTML .= '<dt><b><a href="port-description.php3?port=' . $myrow["id"] . '">';
-
-//   if ($myrow["version"]) {
-//      $HTML .= $myrow["version"];
-//   } else {
-//      $HTML .= $myrow["name"];                                          
-//   }
-
-   $HTML .= "<b>" . $myrow["port"];
-   if (strlen($myrow["version"]) > 0) {
-      $HTML .= '-' . $myrow["version"];
-   }
-
-   $HTML .= "</b>";
-
-//   $HTML .= "</a></b></dt>";
-
-   $HTML .= '<dd>';
-                
-   // description   
-   $HTML .= $myrow["short_description"] . "<br>";
-
-   // maintainer
-   $HTML .= 'Maintained by:<a href="mailto:' . $myrow["maintainer"];
-   $HTML .= '?cc=ports@FreeBSD.org&amp;subject=FreeBSD%20Port:%20' . $myrow["port"] . "-" . $myrow["version"] . '">';
-   $HTML .= $myrow["maintainer"] . '</a></br>';
-
-   $HTML .= 'last change committed by ' . $myrow["committer"];  // separate lines in case committer is null                   
-                   
-   $HTML .= ' on <font size="-1">' . $myrow["updated"] . '</font><br>';
-
-   $HTML .= $myrow["update_description"] . "<br>";
-
-   // Long descripion
-   $HTML .= '<a HREF="port-description.php3?port=' . $myrow["id"] .'">Description</a>';
-
-   $HTML .= ' <b>:</b> ';
-
-   // changes
-   $HTML .= '<a HREF="http://www.FreeBSD.org/cgi/cvsweb.cgi/ports/' . 
-            $myrow["category"] . '/' .  $myrow["port"] . '">Changes</a>';
-   $HTML .= ' <b>:</b> ';
-
-   // download
-   $HTML .= '<a HREF="ftp://ftp.FreeBSD.org/pub/FreeBSD/branches/-current/ports/' . 
-            $myrow["category"] . '/' .  $myrow["port"] . '.tar">Download Port</a>';
-
-//   if ($myrow["package_exists"] eq "Y") {
-      // package
-    //  $HTML .= ' <b>:</b> ';
-  //    $HTML .= '<a HREF="ftp://ftp.FreeBSD.org/pub/FreeBSD/FreeBSD-stable/packages/' .
-//               $myrow["category"] . '/' .  $myrow["port"] . "-" . $myrow["version"] . $myrow["extract_suffix"] . '">Package</a><p></p>';
-    //  $HTML .= "</dd>";
-  //    $HTML .= "</dl>";
-//   }
-
-     $HTML .= "</dd>";
-     $HTML .= "</dl>";
+   include("/www/freshports.org/_private/port-basics.inc");
 }
 
   $HTML .= "</td></tr>\n";

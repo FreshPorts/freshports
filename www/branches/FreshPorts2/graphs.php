@@ -1,5 +1,5 @@
 <?
-	# $Id: graphs.php,v 1.5.2.9 2002-05-18 18:07:35 dan Exp $
+	# $Id: graphs.php,v 1.5.2.10 2002-05-19 21:39:31 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -38,6 +38,7 @@ If you have suggestions for graphs, please submit them via the forum.
 <TR>
 <TD WIDTH="300" VALIGN="top">
 <?
+	$id = $_GET["id"];
 	$sql = "select id, title, is_clickable from graphs order by title";
 	$result = pg_exec($db, $sql);
     if ($result) {
@@ -64,7 +65,6 @@ If you have suggestions for graphs, please submit them via the forum.
 </TD>
 <TD>
 <?
-	$id = $_GET["id"];
 	if ($id) {
 		if ($is_clickable == "t" ) {
 			?>

@@ -1,5 +1,5 @@
 <?
-	# $Id: fp2-announcement.php,v 1.1.2.11 2003-04-27 14:48:11 dan Exp $
+	# $Id: fp2-announcement.php,v 1.1.2.12 2003-04-28 23:19:09 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -8,7 +8,9 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 
-	freshports_Start('Announcement',
+	$Title = "New Release - 22 February 2002";
+
+	freshports_Start($Title,
 					'freshports - new ports, applications',
 					'FreeBSD, index, applications, ports');
 
@@ -18,7 +20,7 @@
 <TABLE WIDTH="100%" BORDER="0">
 
 <TR>
-	<? echo freshports_PageBannerText("Announcement"); ?>
+	<? echo freshports_PageBannerText($Title); ?>
 </TR>
 <TR><TD>
 

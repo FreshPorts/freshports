@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.10 2003-09-24 17:53:49 dan Exp $
+	# $Id: categories.php,v 1.1.2.11 2003-09-25 14:00:41 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -125,6 +125,10 @@ class Category {
 		$result = pg_exec($this->dbh, $sql);
 
 		return  pg_affected_rows($result);
+	}
+
+	function IsPrimary() {
+		return $this->is_primary == 't';
 	}
 
 }

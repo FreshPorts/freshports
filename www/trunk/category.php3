@@ -1,4 +1,4 @@
-	<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
 <html>
 
 <head>
@@ -25,7 +25,7 @@ $title = freshports_Category_Name($category, $db);
 <body bgcolor="#ffffff" link="#0000cc">
 
 <table width="100%">
-<tr><rd>Welcome to the freshports.org test page. This site is not yet in production. We are still
+<tr><td>Welcome to the freshports.org test page. This site is not yet in production. We are still
 testing. Information found here may be widely out of date and/or inaccurate.  Use at your own risk.       
 </td></tr>
   <tr>
@@ -41,9 +41,29 @@ $DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
 
 $cache_file     =       "/tmp/freshports.org.cache.category." . $category;
 $LastUpdateFile =       "/www/freshports.org/work/msgs/lastupdate";
+$LimitRows	= 7;
+
+if (!$start) {
+   $start = 0;
+}
+
+if ($start < 0) {
+   $start = 0;
+}
+
+if ($start > 0) {
+   $cach_file .= ".$start";
+}
+
+if ($start > $end) {
+   $end = $start + $LimitRows;
+}
+
+if (!$end) {
+   $end = $start + $LimitRows - 1;
+}
 
 $sort ="port";
-$LimitRows = 20;
 
 srand((double)microtime()*1000000);
 $cache_time_rnd =       300 - rand(0, 600);
@@ -85,35 +105,56 @@ $sql = "select ports.id, ports.name as port, ports.id as ports_id, ports.last_up
        "and ports.primary_category_id = categories.id " .
        "and categories.id = $category ";
 
+/*
 if ($next) {
    $sql .= "and ports.name > '$next' ";
 }
+*/
 
 $sql .= "order by $sort";
 
-$sql .= " limit $LimitRows";
+//$sql .= " limit $LimitRows";
 
 //echo $sql;
 
 $result = mysql_query($sql, $db);
 $NumRows = mysql_num_rows($result);
+if ($end > $NumRows) {
+   $end = $NumRows - 1;
+}
+
+if ($NumRows == 0) {
+   echo " no results found<br>\n";
+} else {
+
+for ($i = 0; $i < $NumRows; $i++) {
+   $myrow = mysql_fetch_array($result);
+   $rows[$i]=$myrow;
+}
 
 $HTML .= freshports_echo_HTML('<tr><td>');
 
 $HTML .= freshports_echo_HTML('<table width="*" border=1>');
 
 // get the list of topics, which we need to modify the order
-$NumTopics=0;
 $LastPort = '';
-while ($myrow = mysql_fetch_array($result)) {
-   $NumTopics++;
+
+echo "showing ";
+if ($start == 0 and $end == $NumRows - 1) {
+   echo "all";
+} else {
+   echo ($start+1) . " to " . ($end+1);
+}
+
+echo " of $NumRows ports";
+for ($i = $start; $i <= $end; $i++) {
+   $myrow = $rows[$i];
+
    $HideCategory = 1;
-   if ($NumTopics == 1) {
+   if ($i == 0) {
       $FirstPort = $myrow["port"];
    }
 
-//   echo "$NumTopics<br>";
-//   require("/www/freshports.org/_private/port-basics.inc");
    $HTML .= freshports_echo_HTML("<dl>");
 
    $HTML .= freshports_echo_HTML("<b>" . $myrow["port"]);
@@ -185,30 +226,27 @@ while ($myrow = mysql_fetch_array($result)) {
    $HTML .= freshports_echo_HTML("</dl>" . "\n");
 
    $LastPort = $myrow["port"];
-}
+} // end for
 
 $HTML .= freshports_echo_HTML('</tr>');
 
-mysql_free_result($result);
-
-$HTML .= freshports_echo_HTML("<p>$NumTopics ports found</p>\n");
+$HTML .= freshports_echo_HTML("<p>$NumRows ports found</p>\n");
 
 $HTML .= freshports_echo_HTML('</td></tr>');
 
 $HTML .= freshports_echo_HTML('</table>');
-if ($NumRows == $LimitRows) {
-   $HTML .= freshports_echo_HTML('</td></tr><tr><td><a href=' . basename($PHP_SELF) . "?category=$category&begin=$LastPort");
-//   if ($previous) {
-      $HTML .= freshports_echo_HTML("&end=$FirstPort");
-//   }
 
+} // results found
+
+if ($i < $NumRows) {
+   $HTML .= freshports_echo_HTML('</td></tr><tr><td><a href=' . basename($PHP_SELF) . "?category=$category&start=". ($end+1));
    $HTML .= freshports_echo_HTML(">next page</a></td></tr>");
 }
 
-if ($next) {
+if ($start > 0) {
    $HTML .= freshports_echo_HTML('</td></tr><tr><td><a href=' . basename($PHP_SELF) . "?category=$category");
-   if ($previous) {
-      $HTML .= freshports_echo_HTML("&next=$previous");
+   if ($start) {
+      $HTML .= freshports_echo_HTML("&start=" . ($Start - $LimitRows));
    }
    $HTML .= freshports_echo_HTML(">previous page</a></td></tr>"); 
 }
@@ -231,7 +269,7 @@ $HTML .= freshports_echo_HTML('</td></tr>');
    if (file_exists($cache_file)) {                            
       include($cache_file);
    }          
-}      
+}
 
 </script>
   <tr>

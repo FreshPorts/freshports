@@ -65,13 +65,12 @@ if ($Debug) {
 <title>freshports - the place for ports</title>
 </head>
 
-<body bgcolor="#ffffff" link="#0000cc">
   <? include("./_private/header.inc") ?>
 <table width="100%" border="0">
 <tr><td colspan="2">Welcome to FreshPorts, where you can find the latest information on your favourite
 ports.
 </td></tr>
-<tr><td colspan="2">Please report any bugs via the <a href="phorum/list.php?f=3">phorum</a>.
+<tr><td colspan="2">Please report any bugs via the <a href="phorum/list.php?f=3">phorum</a>.  A port is marked as new for 10 days.
 </td></tr>
 <?
 if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {

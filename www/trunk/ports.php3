@@ -14,7 +14,6 @@ require( "/www/freshports.org/_private/freshports.php3");
 <title>freshports</title>
 </head>
 
-<body bgcolor="#ffffff" link="#0000cc">
  <? include("/www/freshports.org/_private/header.inc") ?>
 <table width="100%" border="0">
 <tr><td colspan="2">Welcome to the freshports.org where you can find the latest information on your favourite

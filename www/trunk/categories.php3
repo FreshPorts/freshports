@@ -8,7 +8,6 @@
 <title>freshports</title>
 </head>
 
-<body bgcolor="#ffffff" link="#0000cc">
  <? include("./_private/header.inc") ?>
 <table width="100%" border="0">
 </tr><tr><td colspan="2">This page lists the categories sorted by various categories.

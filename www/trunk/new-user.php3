@@ -125,7 +125,6 @@ $emailsitenotices_yn = "ON";
 <!--// DVL Software is a New Zealand company specializing in database applications. //-->
 </head>
 
-<body bgcolor="#ffffff" link="#0000cc">
  <? include("./_private/header.inc") ?>
 <table width="100%"  border="0">
 <tr><td valign="top" width="100%">

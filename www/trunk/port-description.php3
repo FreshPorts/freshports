@@ -60,7 +60,6 @@ $NumRows = mysql_num_rows($result);
 </title>
 </head>
 
-<body bgcolor="#ffffff" link="#0000cc">
  <? include("./_private/header.inc") ?>
 <table width="100%" border="0">
 <tr>

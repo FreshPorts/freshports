@@ -14,7 +14,6 @@ require( "./_private/freshports.php3");
 <title>freshports - recently deleted ports</title>
 </head>
 
-<body bgcolor="#ffffff" link="#0000cc">
  <? include("./_private/header.inc") ?>
 <table width="100%" border="0">
 <tr><td colspan="2">

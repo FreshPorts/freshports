@@ -3,6 +3,7 @@ require( "./_private/commonlogin.php3");
 require( "./_private/getvalues.php3");
 require( "./_private/freshports.php3");
 ?>
+<html>
 
 <head>
 <meta name="description" content="freshports - new ports, applications">
@@ -11,10 +12,6 @@ require( "./_private/freshports.php3");
 <title>freshports - what do you want done next?</title>
 </head>
 
-<body bgcolor="#ffffff" link="#0000cc">
-
-<html>
-<body>
 <? include("./_private/header.inc") ?>
 <table width="100%">
 <tr><td valign="top" width="100%">

@@ -6,7 +6,7 @@
 <meta name="keywords" content="FreeBSD, index, applications, ports">  
 
 <?
-$Debug=1;
+//$Debug=1;
 require( "./_private/commonlogin.php3");
 require( "./_private/getvalues.php3");
 require( "./_private/freshports.php3");
@@ -18,25 +18,12 @@ require( "./_private/freshports.php3");
 #echo $category         . "<br>";
 #echo intval($category) . "<br>";
 
-#if (!$category) {                          
-#   $category = 0;
-#}
-
-if (!$category || $category != strval(intval($category))) {
-   $category = 0;
-} else {
-   $category = intval($category);
-}
-
-#echo "<br>";
-#echo 'intval($category)     = ' . intval($category)     . "<br>";
-
 #
 # append the category id to the cache_file
 #
 $cache_file .= "." . $category;
 
-$title = freshports_Category_Name($category, $db);
+$title = "Ports not in latest /usr/ports/INDEX";
 ?>
 
 <!--// DVL Software is a New Zealand company specializing in database applications. //-->
@@ -47,7 +34,9 @@ $title = freshports_Category_Name($category, $db);
 
 <table width="100%" border="0">
 <tr><td>
-This page lists all the ports in a given category.
+From time to time, a new /usr/ports/INDEX is issued.  This file represents a snapshot at a given point in time.
+This page lists the ports which are not found in that file (i.e. those ports which were added after that snapshot
+was taken).  The date shown is the date the port was created.
 </td></tr>
 <tr><td valign="top" width="100%">
 <table width="100%" border="0">
@@ -123,11 +112,13 @@ $sql = "select ports.id, ports.name as port, ports.id as ports_id, ports.last_up
        "ports.committer, ports.last_update_description as update_description, " .
        "ports.maintainer, ports.short_description, UNIX_TIMESTAMP(ports.date_created) as date_created, ".
        "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, ports.status, " .
+       "date_format(date_created, '$FormatDate $FormatTime') as date_created_formatted, ".
        "ports.broken, ports.forbidden " .
        "from ports, categories  ".
-       "WHERE ports.system = 'FreeBSD' ".
+       "WHERE            ports.system = 'FreeBSD' ".
        "and ports.primary_category_id = categories.id " .
-       "and categories.id = $category ";
+       "and ports.found_in_index      = 0 " .
+       "and ports.status              = 'A'";
 
 /*
 if ($next) {
@@ -179,6 +170,7 @@ $HTML .= freshports_echo_HTML(" of $NumRows ports</td></tr>\n");
 //$HTML .= freshports_echo_HTML("<tr><td>");
 //$HTML .= freshports_echo_HTML("<br>start = $start, end = $end, LimitRows = $LimitRows<br>\n");
 
+$ShowPortCreationDate = 1;
 for ($i = $start; $i <= $end; $i++) {
    $myrow = $rows[$i-1];
 

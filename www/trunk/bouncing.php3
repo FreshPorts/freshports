@@ -27,7 +27,7 @@ if ($submit) {
 }
 
 ?>
-
+<html>
 <head>
 <meta name="description" content="freshports - new ports, applications">
 <meta name="keywords" content="FreeBSD, index, applications, ports">
@@ -35,10 +35,6 @@ if ($submit) {
 <title>freshports - your email is bouncing</title>
 </head>
 
-<body bgcolor="#ffffff" link="#0000cc">
-
-<html>
-<body>
 <? include("./_private/header.inc") ?>
 <table width="100%" border="0">
 <tr><td colspan="2">

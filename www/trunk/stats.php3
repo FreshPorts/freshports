@@ -14,7 +14,6 @@ require( "./_private/freshports.php3");
 <title>freshports</title>
 </head>
 
-<body bgcolor="#ffffff" link="#0000cc">
  <? include("/www/freshports.org/_private/header.inc") ?>
 <table width="100%" border="0">
 <tr><td colspan="2">Eventually, I'd like to modify these graphs so you can click on a port and be taken to

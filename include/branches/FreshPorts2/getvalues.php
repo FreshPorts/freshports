@@ -1,10 +1,11 @@
 <?php
 
-	# $Id: getvalues.php,v 1.1.2.18 2002-12-06 14:33:14 dan Exp $
+	# $Id: getvalues.php,v 1.1.2.19 2002-12-08 03:20:11 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
 $Debug = 0;
+
 
 $FormatDateDefault	= "%W, %b %e";
 $FormatTimeDefault	= "%H:%i";
@@ -39,6 +40,7 @@ GLOBAL $visitor;
 GLOBAL $db;
 GLOBAL $WatchListID;
 GLOBAL $NumberOfDays;
+GLOBAL $WatchListAsk;
 
 $MaxNumberOfPorts		= 100;
 $ShowShortDescription	= "Y";
@@ -60,6 +62,7 @@ $CVSTimeAdjustment		= -10800;	# this is number of seconds the web server is rela
 $LocalTimeAdjustment	= 0;		# This can be used to display the time the webpage was loaded.
 $WatchListID			= 0;
 $NumberOfDays			= 9;
+$WatchListAsk			= 1;
 
 #
 # flags for showing various port parts.

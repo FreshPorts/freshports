@@ -69,7 +69,7 @@
       }
       $HTML .= ' by:</i> <a href="mailto:' . $myrow["maintainer"];
       $HTML .= '?cc=ports@FreeBSD.org&amp;subject=FreeBSD%20Port:%20' . $myrow["port"] . "-" . $myrow["version"] . '">';
-      $HTML .= $myrow["maintainer"] . '</a></br>' . "\n";
+      $HTML .= $myrow["maintainer"] . '</a><br>' . "\n";
   }
 
    // there are only a few places we want to show the last change.

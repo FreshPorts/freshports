@@ -1,7 +1,9 @@
-<?
-	# $Id: committer-opt-in.php,v 1.1.2.10 2003-01-06 23:59:28 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: committer-opt-in.php,v 1.1.2.11 2003-04-27 14:47:36 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
@@ -12,7 +14,7 @@
 					'freshports - new ports, applications',
 					'FreeBSD, index, applications, ports');
 
-	if (!eregi(".*@FreeBSD.org", $email)) {
+	if (!eregi(".*@FreeBSD.org", $User->email)) {
 		echo 'Why are you here?';
 		exit;
    }
@@ -152,15 +154,16 @@ if (!empty($visitor)) {
 
 </FORM>
 
-</P>
 </TD></TR>
 
 </TABLE>
 </TD>
 
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
 	freshports_SideBar();
 	?>
+  </td>
 
 </TABLE>
 

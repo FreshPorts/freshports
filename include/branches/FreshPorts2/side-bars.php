@@ -1,7 +1,8 @@
-<?
-	# $Id: side-bars.php,v 1.4.2.44 2002-12-11 04:36:21 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: side-bars.php,v 1.4.2.45 2003-04-27 14:47:58 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
 	$ColumnWidth = 155;
@@ -44,7 +45,7 @@ if ($visitor) {
    }
    echo '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/customize.php',        "?origin=$OriginLocal", "Customize"              ) . '</FONT><BR>';
 
-   if (eregi(".*@FreeBSD.org", $email)) {
+   if (eregi(".*@FreeBSD.org", $User->email)) {
       echo '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/committer-opt-in.php', '', "Committer Opt-in"       ) . '</FONT><BR>';
    }
 
@@ -181,8 +182,6 @@ if ($visitor) {
 <BR>
 
 <SCRIPT TYPE="text/javascript">
-
-
    function addNetscapePanel() {
       if ((typeof window.sidebar == "object") && (typeof window.sidebar.addPanel == "function"))
       {

@@ -1,6 +1,21 @@
 <?
-require( "/www/freshports.org/_private/commonlogin.php3");
-require( "/www/freshports.org/_private/getvalues.php3");
+   # $Id: category-watch.php3,v 1.7 2001-09-28 00:05:36 dan Exp $
+   #
+   # Copyright (c) 1998-2001 DVL Software Limited
+
+   require("./include/common.php");
+   require("./include/freshports.php");
+   require("./include/databaselogin.php");
+
+
+   freshports_Start("title",
+               "freshports - new ports, applications",
+               "FreeBSD, index, applications, ports");
+
+?>
+<?
+require( "/www/freshports.org/include/commonlogin.php3");
+require( "/www/freshports.org/include/getvalues.php3");
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">

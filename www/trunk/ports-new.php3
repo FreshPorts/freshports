@@ -1,8 +1,23 @@
 <?
+   # $Id: ports-new.php3,v 1.15 2001-09-28 00:05:39 dan Exp $
+   #
+   # Copyright (c) 1998-2001 DVL Software Limited
+
+   require("./include/common.php");
+   require("./include/freshports.php");
+   require("./include/databaselogin.php");
+
+
+   freshports_Start("title",
+               "freshports - new ports, applications",
+               "FreeBSD, index, applications, ports");
+
+?>
+<?
 $Debug=1;
-require( "./_private/commonlogin.php3");
-require( "./_private/getvalues.php3");
-require( "./_private/freshports.php3");
+#require( "./include/commonlogin.php3");
+#require( "./include/getvalues.php3");
+#require( "./include/freshports.php3");
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
@@ -15,7 +30,7 @@ require( "./_private/freshports.php3");
 <title>freshports - recently added ports</title>
 </head>
 
- <? include("./_private/header.inc") ?>
+ <? include("./include/header.php") ?>
 <table width="100%" border="0">
 <tr><td colspan="2">
 This page shows the ports which have been recently added to the ports tree.  As such, some information
@@ -106,7 +121,7 @@ $result = mysql_query($sql, $db);
 $NumTopics=0;
 $ShowLastChange="N";
 while ($myrow = mysql_fetch_array($result)) {
-   include("./_private/port-basics.inc");
+   include("./include/port-basics.php");
 }
 
 //$HTML .= '</tr>';
@@ -141,10 +156,10 @@ echo '<tr><td>Sorry, but we\'ve disabled this page. Sorry about that. With luck,
 </table>
 </td>
   <td valign="top" width="*">
-   <? include("./_private/side-bars.php3") ?>
+   <? include("./include/side-bars.php") ?>
  </td>
 </tr>
 </table>
-<? include("./_private/footer.inc") ?>
+<? include("./include/footer.php") ?>
 </body>
 </html>

@@ -1,6 +1,19 @@
 <?
-require( "./_private/commonlogin.php3");
+   # $Id: watch.php3,v 1.22 2001-09-28 00:05:40 dan Exp $
+   #
+   # Copyright (c) 1998-2001 DVL Software Limited
 
+   require("./include/common.php");
+   require("./include/freshports.php");
+   require("./include/databaselogin.php");
+
+
+   freshports_Start("title",
+               "freshports - new ports, applications",
+               "FreeBSD, index, applications, ports");
+
+?>
+<?
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {
         header("Location: login.php3?origin=" . $PHP_SELF);  /* Redirect browser to PHP web site */
@@ -19,7 +32,7 @@ if (!$visitor) {
 <title>freshports</title>
 </head>
 
- <? include("./_private/header.inc") ?>
+ <? include("./include/header.php") ?>
 <table width="100%" border="0">
 
 <tr><td colspan="2">
@@ -34,9 +47,6 @@ This page lists the ports which are on your watch list. To modify the contents o
 <script language="php">
 
 $DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
-
-require( "./_private/getvalues.php3");
-require( "./_private/freshports.php3");
 
 if ($UserID == '') {
    echo '<tr><td>';
@@ -170,7 +180,7 @@ while ($myrow = mysql_fetch_array($result)) {
    }
 
    $HTML .= freshports_PortDetails($myrow, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink);
-//   include("./_private/port-basics.inc");
+//   include("./include/port-basics.php");
 }
 
 }
@@ -186,10 +196,10 @@ echo $HTML;
 </table>
 </td>
   <td valign="top" width="*">
-<? include("./_private/side-bars.php3") ?>
+<? include("./include/side-bars.php") ?>
 </td>
 </tr>
 </table>
-<? include("./_private/footer.inc") ?>
+<? include("./include/footer.php") ?>
 </body>
 </html>

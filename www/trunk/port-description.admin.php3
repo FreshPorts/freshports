@@ -1,4 +1,19 @@
 <?
+   # $Id: port-description.admin.php3,v 1.3 2001-09-28 00:05:38 dan Exp $
+   #
+   # Copyright (c) 1998-2001 DVL Software Limited
+
+   require("./include/common.php");
+   require("./include/freshports.php");
+   require("./include/databaselogin.php");
+
+
+   freshports_Start("title",
+               "freshports - new ports, applications",
+               "FreeBSD, index, applications, ports");
+
+?>
+<?
 
 function freshports_Change_Log_Port_Delete($Change_Log_Port_ID, $db) {
    // delete everything from change_log_details which 
@@ -66,10 +81,6 @@ function freshports_Change_Log_Delete($Change_Log_ID, $db) {
 
 }
 
-
-require( "./_private/commonlogin.php3");
-require( "./_private/getvalues.php3");
-require( "./_private/freshports.php3");
 
 if ($HTTP_HOST = "admin.freshports.org") {
    $Admin = 1;
@@ -154,7 +165,7 @@ $NumRows = mysql_num_rows($result);
 </head>
 
 <body bgcolor="#ffffff" link="#0000cc">
- <? include("./_private/header.inc") ?>
+ <? include("./include/header.php") ?>
 <table width="100%" border="0">
 <tr>
   <td>
@@ -186,7 +197,7 @@ if ($NumRows) {
    $HideDescription=1;
    $ShowCategories=1;
    $ShowDepends=1;
-   include("./_private/port-basics.inc");
+   include("./include/port-basics.php");
 
    echo $HTML;
 
@@ -262,11 +273,11 @@ if ($NumRows) {
 </td>
 <td valign="top">
 
-<? include("./_private/side-bars.php3") ?>
+<? include("./include/side-bars.php") ?>
 
 </td>
 </tr>
 </table>
- <? include("./_private/footer.inc") ?>
+ <? include("./include/footer.php") ?>
 </body>
 </html>

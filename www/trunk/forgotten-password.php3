@@ -1,11 +1,26 @@
 <?
-require( "./_private/commonlogin.php3");
-require( "./_private/freshports.php3");
+   # $Id: forgotten-password.php3,v 1.7 2001-09-28 00:05:37 dan Exp $
+   #
+   # Copyright (c) 1998-2001 DVL Software Limited
+
+   require("./include/common.php");
+   require("./include/freshports.php");
+   require("./include/databaselogin.php");
+
+
+   freshports_Start("title",
+               "freshports - new ports, applications",
+               "FreeBSD, index, applications, ports");
+
+?>
+<?
+#require( "./include/commonlogin.php3");
+#require( "./include/freshports.php3");
 
 $MailSent = 0;
 
 #if (!$submit) {
-#   require( "./_private/getvalues.php3");
+#   require( "./include/getvalues.php3");
 ##   echo 'not submit';
 #   #
 #   # if they are logged in, put them over to customize, they shouldn't be here...
@@ -124,7 +139,7 @@ if ($submit) {
 <!--// DVL Software is a New Zealand company specializing in database applications. //-->
 </head>
 
- <? include("./_private/header.inc") ?>
+ <? include("./include/header.php") ?>
 <table width="100%" border=0>
  <tr>
     <td>
@@ -258,14 +273,14 @@ we're only dealing with your FreshPorts login, not a financial transaction....</
   <td valign="top" width="*">
     <? 
        unset($UserID);
-       include("./_private/side-bars.php3");
+       include("./include/side-bars.php");
     ?>
  </td>
 </tr>
 </table> 
 </td></tr>
 </table>
-<? include("./_private/footer.inc") ?>
+<? include("./include/footer.php") ?>
 </body>
 </html>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">

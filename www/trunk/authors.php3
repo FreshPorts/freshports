@@ -1,8 +1,23 @@
+<?
+   # $Id: authors.php3,v 1.11 2001-09-28 00:05:35 dan Exp $
+   #
+   # Copyright (c) 1998-2001 DVL Software Limited
+
+   require("./include/common.php");
+   require("./include/freshports.php");
+   require("./include/databaselogin.php");
+
+
+   freshports_Start("title",
+               "freshports - new ports, applications",
+               "FreeBSD, index, applications, ports");
+
+?>
 <html>
 <?
-require( "./_private/commonlogin.php3");      
-require( "./_private/getvalues.php3");      
-require( "./_private/freshports.php3");    
+#require( "./include/commonlogin.php3");      
+#require( "./include/getvalues.php3");      
+#require( "./include/freshports.php3");    
 ?>
 
 <head>
@@ -13,7 +28,7 @@ require( "./_private/freshports.php3");
 <title>freshports - authors</title>
 
 </head>
-<? include("./_private/header.inc") ?>
+<? include("./include/header.php") ?>
 
 <table width="100%">
 <tr><td>
@@ -57,10 +72,10 @@ name just so it stays a secret.</p>
 <p>I can usually be found via IRC in #freebsd and #freshports on undernet.</p>
 </td>
   <td valign="top" width="*">
-    <? include("./_private/side-bars.php3") ?>
+    <? include("./include/side-bars.php") ?>
  </td>
 </tr>
 </table>
-<? include("./_private/footer.inc") ?>
+<? include("./include/footer.php") ?>
 </body>
 </html>

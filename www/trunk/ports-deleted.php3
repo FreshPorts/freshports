@@ -1,7 +1,22 @@
 <?
-require( "./_private/commonlogin.php3");
-require( "./_private/getvalues.php3");
-require( "./_private/freshports.php3");
+   # $Id: ports-deleted.php3,v 1.11 2001-09-28 00:05:39 dan Exp $
+   #
+   # Copyright (c) 1998-2001 DVL Software Limited
+
+   require("./include/common.php");
+   require("./include/freshports.php");
+   require("./include/databaselogin.php");
+
+
+   freshports_Start("title",
+               "freshports - new ports, applications",
+               "FreeBSD, index, applications, ports");
+
+?>
+<?
+#require( "./include/commonlogin.php3");
+#require( "./include/getvalues.php3");
+#require( "./include/freshports.php3");
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
@@ -14,7 +29,7 @@ require( "./_private/freshports.php3");
 <title>freshports - recently deleted ports</title>
 </head>
 
- <? include("./_private/header.inc") ?>
+ <? include("./include/header.php") ?>
 <table width="100%" border="0">
 <tr><td colspan="2">
 This page shows the last <? echo $MaxNumberOfPorts ?> ports to be removed the ports tree.
@@ -30,10 +45,10 @@ Sorry, but we've disabled this page.  Sorry about that.  With luck, it will be b
 </table>
 </td>
   <td valign="top" width="*">
-   <? include("./_private/side-bars.php3") ?>
+   <? include("./include/side-bars.php") ?>
  </td>
 </tr>
 </table>
-<? include("./_private/footer.inc") ?>
+<? include("./include/footer.php") ?>
 </body>
 </html>

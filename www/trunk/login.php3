@@ -1,9 +1,20 @@
 <?
-//$Debug=1;
-require( "./_private/commonlogin.php3");
-require( "./_private/freshports.php3");
+   # $Id: login.php3,v 1.19 2001-09-28 00:05:38 dan Exp $
+   #
+   # Copyright (c) 1998-2001 DVL Software Limited
+
+//echo "UserID = $UserID";
+   require("./include/common.php");
+   require("./include/freshports.php");
+   require("./include/databaselogin.php");
+//   require("./include/getvalues.php");
+
+   freshports_Start("title",
+               "freshports - new ports, applications",
+               "FreeBSD, index, applications, ports");
 
 //$Debug=1;
+
 if ($Debug) echo 'origin = ' . rawurlencode($origin) . "'<br>\n";
 
 $origin=rawurlencode($origin);
@@ -77,7 +88,7 @@ function setfocus() { document.f.UserID.focus(); }
 
 <body bgcolor="#ffffff" link="#0000cc"  onLoad=setfocus()>
 
- <? //include("./_private/header.inc") ?>
+ <? //include("./include/header.php") ?>
 <table width="100%" border=0>
  <tr>
     <td>
@@ -127,7 +138,7 @@ echo '<table width=100% border=0 cellpadding=1 bgcolor="#AD0040">';
 echo '<tr bgcolor="#AD0040"><td bgcolor="#AD0040"><font color="#ffffff" size="+2">Login Details</font></td></tr>';
 
 echo '<tr><td bgcolor="#ffffff">';
-include ("./_private/login.inc.php3");
+include ("./include/login.php");
 
 echo "</td>";
 
@@ -143,13 +154,13 @@ echo '<br><a href="forgotten-password.php3">Forgotten your password?</a>';
 ?></td>
 </td>
   <td valign="top" width="*">
-    <? include("./_private/side-bars.php3") ?>
+    <? include("./include/side-bars.php") ?>
  </td>
 </tr>
 </table> 
 </td></tr>
 </table>
-<? include("./_private/footer.inc") ?>
+<? include("./include/footer.php") ?>
 </body>
 </html>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">

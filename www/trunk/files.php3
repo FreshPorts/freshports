@@ -1,7 +1,22 @@
 <?
-require( "./_private/commonlogin.php3");
-require( "./_private/getvalues.php3");
-require( "./_private/freshports.php3");
+   # $Id: files.php3,v 1.8 2001-09-28 00:05:37 dan Exp $
+   #
+   # Copyright (c) 1998-2001 DVL Software Limited
+
+   require("./include/common.php");
+   require("./include/freshports.php");
+   require("./include/databaselogin.php");
+
+
+   freshports_Start("title",
+               "freshports - new ports, applications",
+               "FreeBSD, index, applications, ports");
+
+?>
+<?
+#require( "./include/commonlogin.php3");
+#require( "./include/getvalues.php3");
+#require( "./include/freshports.php3");
 
 if (!$id || $id != strval(intval($id))) {
   $id = 0;
@@ -46,7 +61,7 @@ if (!$result) {
 <title>freshports - <? echo $myrow["category"] . '/' . $myrow["port"] ?> - commit details</title>
 </head>
 
- <? include("./_private/header.inc") ?>
+ <? include("./include/header.php") ?>
 <table width="100%" border="0">
 <tr><td colspan="2">Welcome to the freshports.org where you can find the latest information on your favourite
 ports.
@@ -110,12 +125,12 @@ This page shows the files associated with one port within a given commit.
 </table>
 </td>
   <td valign="top" width="*">
-   <? include("./_private/side-bars.php3") ?>
+   <? include("./include/side-bars.php") ?>
  </td>
 </tr>
 </table>
 </tr>
 </table>
-<? include("./_private/footer.inc") ?>
+<? include("./include/footer.php") ?>
 </body>
 </html>

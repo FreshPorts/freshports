@@ -1,14 +1,25 @@
 <?
+   # $Id: port-watch.php3,v 1.16 2001-09-28 00:05:39 dan Exp $
+   #
+   # Copyright (c) 1998-2001 DVL Software Limited
+
+   require("./include/common.php");
+   require("./include/freshports.php");
+   require("./include/databaselogin.php");
+
+
+   freshports_Start("title",
+               "freshports - new ports, applications",
+               "FreeBSD, index, applications, ports");
+
+?>
+<?
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {
         header("Location: login.php3?origin=" . $PHP_SELF);  /* Redirect browser to PHP web site */
         exit;  /* Make sure that code below does not get executed when we redirect. */
 }
-
-require( "./_private/commonlogin.php3");
-require( "./_private/getvalues.php3");
-require( "./_private/freshports.php3");
 
 if (!$category || $category != strval(intval($category))) {
    $category = 0;                                     
@@ -147,7 +158,7 @@ if ($submit) {
 <title>freshports - watch categories</title>
 </head>
 
- <? include("./_private/header.inc") ?>
+ <? include("./include/header.php") ?>
 <table width="100%" border="0">
 </tr>
 <tr><td colspan="2">This page shows the ports within a specific category which are in your watch list.
@@ -320,7 +331,7 @@ if ($UserID) {
 
 </td>
   <td valign="top" width="*">
-    <? include("./_private/side-bars.php3") ?>
+    <? include("./include/side-bars.php") ?>
  </td>
 </tr>
 </table>

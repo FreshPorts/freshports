@@ -1,3 +1,18 @@
+<?
+   # $Id: ports-not-in-latest-index.php3,v 1.3 2001-09-28 00:05:39 dan Exp $
+   #
+   # Copyright (c) 1998-2001 DVL Software Limited
+
+   require("./include/common.php");
+   require("./include/freshports.php");
+   require("./include/databaselogin.php");
+
+
+   freshports_Start("title",
+               "freshports - new ports, applications",
+               "FreeBSD, index, applications, ports");
+
+?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
 <html>
 
@@ -7,9 +22,6 @@
 
 <?
 //$Debug=1;
-require( "./_private/commonlogin.php3");
-require( "./_private/getvalues.php3");
-require( "./_private/freshports.php3");
 
 #
 # if no category provided or category is not numeric, try
@@ -30,7 +42,7 @@ $title = "Ports not in latest /usr/ports/INDEX";
 <title>freshports - <? echo $title ?></title>
 </head>
 
- <? include("./_private/header.inc") ?>
+ <? include("./include/header.php") ?>
 
 <table width="100%" border="0">
 <tr><td>
@@ -174,7 +186,7 @@ $ShowPortCreationDate = 1;
 for ($i = $start; $i <= $end; $i++) {
    $myrow = $rows[$i-1];
 
-   include("./_private/port-basics.inc");
+   include("./include/port-basics.php");
    $LastPort = $myrow["port"];
 } // end for
 
@@ -229,7 +241,7 @@ echo $HTML;
 </table>
 </td>
   <td valign="top" width="*">
-   <? include("./_private/side-bars.php3") ?>
+   <? include("./include/side-bars.php") ?>
  </td>
 </tr>
 </table>

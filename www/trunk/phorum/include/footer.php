@@ -1,8 +1,8 @@
 </td><td valign="top" align="right">
-<? include("../_private/side-bars.php3") ?>
+<? include("../include/side-bars.php3") ?>
 </td>
 </tr>
 </table>
-<? include("../_private/footer.inc") ?>
+<? include("../include/footer.inc") ?>
 </body>
 </html>

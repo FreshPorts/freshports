@@ -1,3 +1,18 @@
+<?
+   # $Id: category.php3,v 1.19 2001-09-28 00:05:36 dan Exp $
+   #
+   # Copyright (c) 1998-2001 DVL Software Limited
+
+   require("./include/common.php");
+   require("./include/freshports.php");
+   require("./include/databaselogin.php");
+
+
+   freshports_Start("title",
+               "freshports - new ports, applications",
+               "FreeBSD, index, applications, ports");
+
+?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
 <html>
 
@@ -7,9 +22,6 @@
 
 <?
 $Debug=1;
-require( "./_private/commonlogin.php3");
-require( "./_private/getvalues.php3");
-require( "./_private/freshports.php3");
 
 #
 # if no category provided or category is not numeric, try
@@ -43,7 +55,7 @@ $title = freshports_Category_Name($category, $db);
 <title>freshports - <? echo $title ?></title>
 </head>
 
- <? include("./_private/header.inc") ?>
+ <? include("./include/header.php") ?>
 
 <table width="100%" border="0">
 <tr><td>
@@ -115,7 +127,7 @@ if (!file_exists($cache_file)) {
 
 //$UpdateCache = 1;
 
-if ($UpdateCache == 1) {
+#if ($UpdateCache == 1) {
 //   echo 'time to update the cache';
 
 $sql = "select ports.id, ports.name as port, ports.id as ports_id, ports.last_update as updated, " .
@@ -182,9 +194,9 @@ $HTML .= freshports_echo_HTML(" of $NumRows ports</td></tr>\n");
 for ($i = $start; $i <= $end; $i++) {
    $myrow = $rows[$i-1];
 
-//   include("./_private/port-basics.inc");
+//   include("./include/port-basics.php");
 
-    $HTML .= freshports_PortDetails($myrow, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink);
+   $HTML .= freshports_PortDetails($myrow, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink);
 
    $LastPort = $myrow["port"];
 } // end for
@@ -217,30 +229,30 @@ if ($start > 1) {
 $HTML .= freshports_echo_HTML('</td></tr>');
 echo $HTML;      
 
-   if ($NumRows != 0) {
-      $fpwrite = fopen($cache_file, 'w');
-      if(!$fpwrite) {                      
-         echo 'error on open<br>';
-         echo "$errstr ($errno)<br>\n";
-         exit;                  
-      } else {                            
-//         echo 'written<br>';             
-         fputs($fpwrite, $HTML);         
-         fclose($fpwrite);
-      }
-   }
-} else {                                
-//   echo 'looks like I\'ll read from cache this time';                             
-   if (file_exists($cache_file)) {                            
-      include($cache_file);
-   }          
-}
+#   if ($NumRows != 0) {
+#      $fpwrite = fopen($cache_file, 'w');
+#      if(!$fpwrite) {                      
+#         echo 'error on open<br>';
+#         echo "$errstr ($errno)<br>\n";
+#         exit;                  
+#      } else {                            
+#//         echo 'written<br>';             
+#         fputs($fpwrite, $HTML);         
+#         fclose($fpwrite);
+#      }
+#   }
+#} else {                                
+#//   echo 'looks like I\'ll read from cache this time';                             
+#   if (file_exists($cache_file)) {                            
+#      include($cache_file);
+#   }          
+#}
 
 </script>
 </table>
 </td>
   <td valign="top" width="*">
-   <? include("./_private/side-bars.php3") ?>
+   <? include("./include/side-bars.php") ?>
  </td>
 </tr>
 </table>

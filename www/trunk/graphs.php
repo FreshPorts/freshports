@@ -1,8 +1,8 @@
 <?
 // sample graph
 
-require( "./_private/commonlogin.php3");
-require( "./_private/getvalues.php3");
+require( "./include/commonlogin.php3");
+require( "./include/getvalues.php3");
 
 $MaxGraph = 3;
 
@@ -47,7 +47,7 @@ if (!file_exists($cache_file)) {
 //$CreateImage = 1;
 if ($CreateImage) {
    require("./_phpgraph/phpgraph.php");
-   require("./_private/statistics.php3");
+   require("./include/statistics.php3");
    switch ($graph) {
       case 1:
          $data = freshports_stats_watched_ports($db, 20);

@@ -1,6 +1,16 @@
 <?
-require( "./_private/commonlogin.php3");
-require( "./_private/freshports.php3");
+   # $Id: new-user.php3,v 1.9 2001-09-28 00:05:38 dan Exp $
+   #
+   # Copyright (c) 1998-2001 DVL Software Limited
+
+   require("./include/common.php");
+   require("./include/freshports.php");
+   require("./include/databaselogin.php");
+
+
+   freshports_Start("title",
+               "freshports - new ports, applications",
+               "FreeBSD, index, applications, ports");
 
 if ($submit) {
 
@@ -110,7 +120,7 @@ if ($submit) {
 // not submit
 
    // we can't do this if we are submitting because it overwrites the incoming values
-   require( "./_private/getvalues.php3");
+   require( "./include/getvalues.php");
    $emailsitenotices_yn = "ON";
 }
 ?>
@@ -129,7 +139,7 @@ function setfocus() { document.f.UserLogin.focus(); }
 </script>
 </head>
 
- <? //include("./_private/header.inc") ?>
+ <? //include("./include/header.php") ?>
 
 <body onLoad=setfocus()>
 <table width="100%"  border="0">
@@ -174,7 +184,7 @@ echo '<p>If you need help, please post a message on the forum. </p>
 
 if (!$submit && !$errors) {
   // provide default values for an empy form.
-  require( "./_private/getvalues.php3");
+  require( "./include/getvalues.php");
 }
 
 </script>
@@ -187,7 +197,7 @@ if (!$submit && !$errors) {
       <tr>
         <td>
 
-<? include("./_private/new-user.inc"); ?>
+<? include("./include/new-user.php"); ?>
 
         </td>
       </tr>
@@ -198,11 +208,11 @@ if (!$submit && !$errors) {
 </table>
 </td>
   <td valign="top" width="*">
-   <? include("./_private/side-bars.php3") ?>
+   <? include("./include/side-bars.php") ?>
  </td>
 </tr>
 </table>
 </a>
-<? include("./_private/footer.inc") ?>
+<? include("./include/footer.php") ?>
 </body>
 </html>

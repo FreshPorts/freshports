@@ -1,7 +1,7 @@
 <?
-require( "../_private/commonlogin.php3");
-require( "../_private/getvalues.php3");
-require( "../_private/freshports.php3");
+require( "../include/commonlogin.php3");
+require( "../include/getvalues.php3");
+require( "../include/freshports.php3");
 ?>
 
 <HTML>
@@ -12,7 +12,7 @@ require( "../_private/freshports.php3");
 <TITLE>phorum - <?PHP if(isset($ForumName)) echo $ForumName; ?><?PHP echo $title; ?></TITLE>
 </HEAD>
 <BODY BGCOLOR="#FFFFFF" LINK="#0000CC">
-<? include("../_private/header.inc") ?>
+<? include("../include/header.inc") ?>
 <table width="100%" border="0">
 <tr><td colspan="2">
 <font size="+2">forum

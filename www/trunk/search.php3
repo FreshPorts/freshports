@@ -1,7 +1,22 @@
 <?
-require( "./_private/commonlogin.php3");
-require( "./_private/getvalues.php3");
-require( "./_private/freshports.php3");
+   # $Id: search.php3,v 1.10 2001-09-28 00:05:39 dan Exp $
+   #
+   # Copyright (c) 1998-2001 DVL Software Limited
+
+   require("./include/common.php");
+   require("./include/freshports.php");
+   require("./include/databaselogin.php");
+
+
+   freshports_Start("title",
+               "freshports - new ports, applications",
+               "FreeBSD, index, applications, ports");
+
+?>
+<?
+#require( "./include/commonlogin.php3");
+#require( "./include/getvalues.php3");
+#require( "./include/freshports.php3");
 ?>
 <html>
 
@@ -11,7 +26,7 @@ require( "./_private/freshports.php3");
 <!--// DVL Software is a New Zealand company specializing in database applications. //-->
 <title>freshports - search</title>
 </head>
-<? include("./_private/header.inc") ?>
+<? include("./include/header.php") ?>
 <table width="100%">
 <tr><td valign="top" td colspan="2">
 OK, we have just a very simple search.  Eventually this will be extended. If you find any bugs, please
@@ -117,7 +132,7 @@ if ($NumRows == 0) {
 //      echo "displaying row $i<br>\n";
       $myrow = $rows[$i];
 
-      include("./_private/port-basics.inc");
+      include("./include/port-basics.php");
    }
 
 }
@@ -129,10 +144,10 @@ echo "</td></tr>\n";
 
 </td>
   <td valign="top" width="*">
-    <? include("./_private/side-bars.php3") ?>
+    <? include("./include/side-bars.php") ?>
  </td>
 </tr>
 </table>
-<? include("./_private/footer.inc") ?>
+<? include("./include/footer.php") ?>
 </body>
 </html>

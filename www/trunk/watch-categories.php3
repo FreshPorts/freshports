@@ -1,6 +1,19 @@
 <?
-require( "./_private/commonlogin.php3");
+   # $Id: watch-categories.php3,v 1.11 2001-09-28 00:05:40 dan Exp $
+   #
+   # Copyright (c) 1998-2001 DVL Software Limited
 
+   require("./include/common.php");
+   require("./include/freshports.php");
+   require("./include/databaselogin.php");
+
+
+   freshports_Start("title",
+               "freshports - new ports, applications",
+               "FreeBSD, index, applications, ports");
+
+?>
+<?
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {
         header("Location: login.php3?origin=" . $PHP_SELF);  /* Redirect browser to PHP web site */
@@ -8,12 +21,6 @@ if (!$visitor) {
 }
 
 ?>
-
-<?
-require( "./_private/getvalues.php3");
-require( "./_private/freshports.php3");
-?>
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
 <html>
 
@@ -24,7 +31,7 @@ require( "./_private/freshports.php3");
 <title>freshports - watch categories</title>
 </head>
 
- <? include("./_private/header.inc") ?>
+ <? include("./include/header.php") ?>
 <table width="100%" border="0">
 </tr>
 <tr><td colspan="2">
@@ -198,10 +205,10 @@ echo "</table>\n";
 </table>
 </td>
   <td valign="top" width="*">
-   <? include("./_private/side-bars.php3") ?>
+   <? include("./include/side-bars.php") ?>
  </td>
 </tr>
 </table>
 </body>
-<? include("./_private/footer.inc") ?>
+<? include("./include/footer.php") ?>
 </html>

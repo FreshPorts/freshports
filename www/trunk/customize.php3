@@ -1,9 +1,19 @@
+<?
+   # $Id: customize.php3,v 1.14 2001-09-28 00:05:37 dan Exp $
+   #
+   # Copyright (c) 1998-2001 DVL Software Limited
+
+   require("./include/common.php");
+   require("./include/freshports.php");
+   require("./include/databaselogin.php");
+
+
+   freshports_Start("title",
+               "freshports - new ports, applications",
+               "FreeBSD, index, applications, ports");
+
+?>
 <script language="php">
-
-require( "./_private/commonlogin.php3");
-require( "./_private/freshports.php3");
-
-//require( "_private/getvalues.php3");
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {
@@ -117,7 +127,7 @@ if ($submit) {
 <!--// DVL Software is a New Zealand company specializing in database applications. //-->
 </head>
 
- <? include("./_private/header.inc") ?>
+ <? include("./include/header.php") ?>
 
 <table width="100%" border="0">
   <tr><td valign="top" width="100%">
@@ -128,7 +138,7 @@ if ($submit) {
     <td height="20"><script language="php">
 
 if (!$submit) {
- require( "./_private/getvalues.php3");
+ require( "./include/getvalues.php");
 }
 
 if ($errors) {
@@ -167,7 +177,7 @@ if ($AccountModified) {
 //  $daystoshow = 20;
 //  $maxarticles = 40;
 //  $daysnew = 20;
-//   require( "./_private/commonphp3.inc");
+//   require( "./include/commonphp3.inc");
 //	echo $DaysToShow,  '= days to show';
 
 echo '<table cellpadding=1 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>
@@ -181,10 +191,10 @@ echo '<table cellpadding=1 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>
 <td>';
 
 echo 'If you wish to change your password, supply your new password twice.  Otherwise, leave it blank.<br>';
-include("./_private/getvalues.php3");
+include("./include/getvalues.php");
 
 $Customize=1;
-include("./_private/new-user.inc");
+include("./include/new-user.php");
 
 echo "</td>
 </tr>
@@ -199,12 +209,12 @@ echo "</td>
 </table>
 </td>
   <td valign="top" width="*">
-   <? include("./_private/side-bars.php3") ?>
+   <? include("./include/side-bars.php") ?>
  </td>
 </tr>
   </tr>
 </table>
 </body>
-<? include("./_private/footer.inc") ?>
+<? include("./include/footer.php") ?>
 </html>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">

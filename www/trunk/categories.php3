@@ -1,3 +1,18 @@
+<?
+   # $Id: categories.php3,v 1.13 2001-09-28 00:05:35 dan Exp $
+   #
+   # Copyright (c) 1998-2001 DVL Software Limited
+
+   require("./include/common.php");
+   require("./include/freshports.php");
+   require("./include/databaselogin.php");
+
+
+   freshports_Start("title",
+               "freshports - new ports, applications",
+               "FreeBSD, index, applications, ports");
+
+?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
 <html>
 
@@ -8,7 +23,7 @@
 <title>freshports</title>
 </head>
 
- <? include("./_private/header.inc") ?>
+ <? include("./include/header.php") ?>
 <table width="100%" border="0">
 </tr><tr><td colspan="2">This page lists the categories sorted by various categories.
 </td></tr>
@@ -24,9 +39,9 @@ You can sort each column by clicking on the header.  e.g. click on <b>Category</
 
 $DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
 
-require( "./_private/commonlogin.php3");
-require( "./_private/getvalues.php3");
-require( "./_private/freshports.php3");
+//require( "./include/commonlogin.php3");
+//require( "./include/getvalues.php3");
+//require( "./include/freshports.php3");
 
 // make sure the value for $sort is valid
 
@@ -76,7 +91,7 @@ if (!file_exists($cache_file)) {
 }
 
 //$UpdateCache = 1;
-if ($UpdateCache == 1) {
+#if ($UpdateCache == 1) {
 //   echo 'time to update the cache';
 
 $sql = "select max(ports.last_update) as updated, count(ports.id) as count, " .
@@ -152,33 +167,35 @@ $HTML .= freshports_echo_HTML('</table>');
 freshports_echo_HTML_flush();
 
 echo $HTML;                                                   
+
                           
-   $fpwrite = fopen($cache_file, 'w');
-   if(!$fpwrite) {                                          
-      echo 'error on open<br>';
-      echo "$errstr ($errno)<br>\n";
-      exit;
-   } else {
-//      echo 'written<br>';
-      fputs($fpwrite, $HTML);        
-      fclose($fpwrite);
-   }                                                                                      
-} else {                                                                                       
-//   echo 'looks like I\'ll read from cache this time';                  
-   if (file_exists($cache_file)) {
-      include($cache_file);              
-   }                                                     
-}
+#   $fpwrite = fopen($cache_file, 'w');
+#   if(!$fpwrite) {                                          
+#      echo 'error on open<br>';
+#      echo "$errstr ($errno)<br>\n";
+#      exit;
+#   } else {
+#//      echo 'written<br>';
+#      fputs($fpwrite, $HTML);        
+#      fclose($fpwrite);
+#   }                                                                                      
+#} else {                                                                                       
+#//   echo 'looks like I\'ll read from cache this time';                  
+#   if (file_exists($cache_file)) {
+#      include($cache_file);              
+#   }                                                     
+#}
+
          
 </script>
 </td>
   <td valign="top" width="*">
-    <? include("./_private/side-bars.php3") ?>
+    <? include("./include/side-bars.php") ?>
  </td>
 </tr>
 </table>
 
-<? include("./_private/footer.inc") ?>
+<? include("./include/footer.php") ?>
 
 </body>
 </html>

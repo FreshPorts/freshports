@@ -1,7 +1,22 @@
 <?
-require( "./_private/commonlogin.php3");
-require( "./_private/getvalues.php3");
-require( "./_private/freshports.php3");
+   # $Id: stats.php3,v 1.7 2001-09-28 00:05:39 dan Exp $
+   #
+   # Copyright (c) 1998-2001 DVL Software Limited
+
+   require("./include/common.php");
+   require("./include/freshports.php");
+   require("./include/databaselogin.php");
+
+
+   freshports_Start("title",
+               "freshports - new ports, applications",
+               "FreeBSD, index, applications, ports");
+
+?>
+<?
+#require( "./include/commonlogin.php3");
+#require( "./include/getvalues.php3");
+#require( "./include/freshports.php3");
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
@@ -14,7 +29,7 @@ require( "./_private/freshports.php3");
 <title>freshports</title>
 </head>
 
- <? include("/www/freshports.org/_private/header.inc") ?>
+ <? include("./include/header.php") ?>
 <table width="100%" border="0">
 <tr><td colspan="2">Eventually, I'd like to modify these graphs so you can click on a port and be taken to
 its description.  Anyone willing to do that should let me know.  Note: these stats only cover the period
@@ -41,12 +56,12 @@ if ($graph) {
 </table>
 </td>
   <td valign="top" width="*">
-   <? include("/www/freshports.org/_private/side-bars.php3") ?>
+   <? include("./include/side-bars.php") ?>
  </td>
 </tr>
 </table>
 </tr>
 </table>
-<? include("/www/freshports.org/_private/footer.inc") ?>
+<? include("./include/footer.php") ?>
 </body>
 </html>

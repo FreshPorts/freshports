@@ -1,14 +1,34 @@
 <?
+   # $Id: index.php3,v 1.23 2001-09-28 00:05:37 dan Exp $
+   #
+   # Copyright (c) 1998-2001 DVL Software Limited
+
+   require("./include/common.php");
+   require("./include/freshports.php");
+   require("./include/databaselogin.php");
+
+   require("./include/getvalues.php");
+
+   freshports_Start("title",
+               "freshports - new ports, applications",
+               "FreeBSD, index, applications, ports");
+#$Debug=1;
+
 #
-# $Author: dan $ $Date: 2001-03-27 01:01:02 $
-# $Header: /home/dan/repositories/freshports-1/www/Attic/index.php3,v 1.22 2001-03-27 01:01:02 dan Exp $
+# $Author: dan $ $Date: 2001-09-28 00:05:37 $
+# $Header: /home/dan/repositories/freshports-1/www/Attic/index.php3,v 1.23 2001-09-28 00:05:37 dan Exp $
 # $Log: not supported by cvs2svn $
+# Revision 1.22  2001/03/27 01:01:02  dan
+# put a <br> \n at the end of a debugging line
+#
 # Revision 1.21  2001/03/23 04:36:57  dan
 # Add some headers
 #
 # $Name: not supported by cvs2svn $
-# $Revision: 1.22 $
+# $Revision: 1.23 $
 #
+
+//echo "UserID='$UserID'";
 
 function freshports_SummaryForDay($MinusN) {          
    $BaseDirectory = "./archives";                     
@@ -35,9 +55,9 @@ function freshports_SummaryForDay($MinusN) {
 
 
 //$Debug = 1;
-require( "./_private/commonlogin.php3");
-require( "./_private/getvalues.php3");
-require( "./_private/freshports.php3");
+#require( "./include/commonlogin.php3");
+#require( "./include/getvalues.php3");
+#require( "./include/freshports.php3");
 
 if (!$StartAt) {
    if ($Debug) {
@@ -76,7 +96,7 @@ if ($Debug) {
 <title>freshports - the place for ports</title>
 </head>
 
-  <? include("./_private/header.inc") ?>
+  <? include("./include/header.php") ?>
 <table width="100%" border="0">
 <tr><td colspan="2">Welcome to FreshPorts, where you can find the latest information on your favourite
 ports.
@@ -238,7 +258,7 @@ for ($i = 0; $i < $NumRows; $i++) {
    while ($j < $NumRows && $rows[$j]["change_log_id"] == $ThisChangeLogID) {
    $myrow = $rows[$j];
 
-//   include("./_private/port-basics.inc");
+//   include("./include/port-basics.inc");
 
 
    if ($MultiplePortsThisCommit) {
@@ -296,7 +316,7 @@ for ($i = 0; $i < $NumRows; $i++) {
 
 
 echo $HTML;
-
+/*
    $fpwrite = fopen($cache_file, 'w');
    if(!$fpwrite) {
       echo 'error on open<br>';
@@ -307,7 +327,7 @@ echo $HTML;
       fputs($fpwrite, $HTML);
       fclose($fpwrite);
    }
-
+*/
 } else {
 //   echo 'looks like I\'ll read from cache this time';
    if (file_exists($cache_file)) {
@@ -337,7 +357,7 @@ echo '</td></tr>';
 </table>
 </td>
   <td valign="top" width="*">
-   <? include("./_private/side-bars.php3") ?>
+   <? include("./include/side-bars.php") ?>
 <?
 freshports_SummaryForDay(0);
 freshports_SummaryForDay(1);
@@ -347,6 +367,6 @@ freshports_SummaryForDay(3);
  </td>
 </tr>
 </table>
-<? include("./_private/footer.inc") ?>
+<? include("./include/footer.php") ?>
 </body>
 </html>

@@ -1,8 +1,23 @@
+<?
+   # $Id: news.php3,v 1.10 2001-09-28 00:05:38 dan Exp $
+   #
+   # Copyright (c) 1998-2001 DVL Software Limited
+
+   require("./include/common.php");
+   require("./include/freshports.php");
+   require("./include/databaselogin.php");
+
+
+   freshports_Start("title",
+               "freshports - new ports, applications",
+               "FreeBSD, index, applications, ports");
+
+?>
 <?php
 
 $text_file	=	"./news.txt";
 
-require("./_private/commonlogin.php3");
+require("./include/commonlogin.php3");
 $Debug=0;
 
 $MyMaxArticles = 10;

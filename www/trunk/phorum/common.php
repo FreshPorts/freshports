@@ -8,12 +8,12 @@
   $pho_main = "forums";
 
   // location where the configuration information is stored
-  $inf_path="./_includes";  // no ending slash
+  $inf_path="./include";  // no ending slash
   $inf_file="$inf_path/forums.php";
   $inf_back="$inf_path/forums.bak.php";
 
   // path to include files
-  $include_path="./_includes";  // no ending slash
+  $include_path="./include";  // no ending slash
 
   // relative path to the admin pages
   $admindir="_icq";

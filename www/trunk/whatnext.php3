@@ -1,7 +1,17 @@
 <?
-require( "./_private/commonlogin.php3");
-require( "./_private/getvalues.php3");
-require( "./_private/freshports.php3");
+   # $Id: whatnext.php3,v 1.4 2001-09-28 00:05:40 dan Exp $
+   #
+   # Copyright (c) 1998-2001 DVL Software Limited
+
+   require("./include/common.php");
+   require("./include/freshports.php");
+   require("./include/databaselogin.php");
+
+
+   freshports_Start("title",
+               "freshports - new ports, applications",
+               "FreeBSD, index, applications, ports");
+
 ?>
 <html>
 
@@ -11,7 +21,7 @@ require( "./_private/freshports.php3");
 <!--// DVL Software is a New Zealand company specializing in database applications. //-->
 <title>freshports - what do you want done next?</title>
 </head>
-<? include("./_private/header.inc") ?>
+<? include("./include/header.php") ?>
 <table width="100%">
 <tr><td valign="top" width="100%">
 <h2>What do you want done next?</h2>
@@ -47,10 +57,10 @@ What do you want done next?
 </blockquote>
 </td>
 <td valign="top">
-    <? include("./_private/side-bars.php3") ?>
+    <? include("./include/side-bars.php") ?>
  </td>
 </tr>
 </table>
-<? include("./_private/footer.inc") ?>
+<? include("./include/footer.php") ?>
 </body>
 </html>

@@ -1,9 +1,13 @@
-<?
-	# $Id: user_tasks.php,v 1.1.2.1 2003-01-10 16:03:25 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: user_tasks.php,v 1.1.2.2 2003-03-06 22:03:09 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
+
+DEFINE('FRESHPORTS_TASKS_SECURITY_NOTICE_ADD',              'SecurityNoticeAdd');
+DEFINE('FRESHPORTS_TASKS_CATEGORY_VIRTUAL_DESCRIPTION_SET', 'CategoryVirtualDescriptionSet');
 
 // base class for user tasks
 class UserTasks {
@@ -28,9 +32,8 @@ class UserTasks {
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
 			$numrows = pg_numrows($result);
-			if ($numrows == 1) {
-#				echo "fetched by ID succeeded<BR>";
-				$myrow = pg_fetch_array ($result, 0);
+			for ($i = 0; $i < $numrows; $i++) {
+				$myrow = pg_fetch_array ($result, $i);
 				$this->tasks{$myrow[name]} = $myrow[id];
 #				echo "\$myrow[name]='$myrow[name]' = $myrow[id]<br>\n";
 #				echo "\$this->tasks{$myrow[name]} = '$this->tasks{$myrow[name]}'<br>\n";

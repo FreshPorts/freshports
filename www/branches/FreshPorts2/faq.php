@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.54 2004-11-17 13:22:28 dan Exp $
+	# $Id: faq.php,v 1.1.2.55 2004-11-18 01:48:27 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -420,7 +420,7 @@ Here are a few examples:
 </blockquote>
 
 <P>
-<b>NOTE:</b> Effictive 13 November 2003, these parameters are no longer available.
+<b>NOTE:</b> Effective 13 November 2003, these parameters are no longer available.
 </P>
 
 </TD></TR><TR><TD>&nbsp;</TD></TR>
@@ -582,6 +582,24 @@ pkg_add -r XFree86-clients
 	<code class="code">NO_PACKAGE</code> variable in the port's Makefile.
 	
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
+
+<TR>
+<? echo freshports_PageBannerText('Why does the search page use GET and not POST?'); ?>
+</TR>
+
+   <TR><TD>
+   <P>
+If you visit the <a href="/search.php">search</a> page, and you run a search,
+you'll find that the URL becomes very long.  For example, 
+<a href="/search.php?query=bacula&search=go&num=10&stype=name&method=match&deleted=excludedeleted&start=1&casesensitivity=caseinsensitive">this really long link</a>.
+<p>
+Long URLs occur like that because the search form uses a GET.  A long URL
+would not occur if it was using a POST.  The long URLs are useful because
+they allow you to bookmark your favorite search.  That is why a GET is used
+instead of a POST.
+
+	</TD></TR><TR><TD>&nbsp;</TD></TR>
+
 </table>
 </td>
 

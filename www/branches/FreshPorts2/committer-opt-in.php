@@ -1,5 +1,5 @@
 <?
-	# $Id: committer-opt-in.php,v 1.1.2.1 2002-08-12 03:22:35 dan Exp $
+	# $Id: committer-opt-in.php,v 1.1.2.2 2002-08-23 21:48:28 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -82,6 +82,10 @@ Mistakes happen.  And when they do, they are best corrected quickly.  To that en
 provides an opt-in service for all FreeBSD committers.  If you subscribe to this service,
 FreshPorts will notify you of any problems it encounters when processing a port change
 which you committed.  In the past, such problems are related to syntax errors in the Makefile.
+</P>
+
+<P>
+One committer referred to this service as a automated nagging mentor...
 </P>
 </TD></TR>
 

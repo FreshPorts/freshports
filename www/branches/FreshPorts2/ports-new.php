@@ -1,7 +1,7 @@
 <?
-	# $Id: ports-new.php,v 1.1.2.8 2002-05-18 19:27:10 dan Exp $
+	# $Id: ports-new.php,v 1.1.2.9 2002-05-19 21:00:12 dan Exp $
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# Copyright (c) 1998-2002 DVL Software Limited
 
 	require("./include/common.php");
 	require("./include/freshports.php");
@@ -10,8 +10,35 @@
 
 	$Debug = 0;
 
-	$Interval = '3 months';
-	$Title    = "New ports - past " . $Interval;
+	# we allow the following intervals: today, yesterday, this past week, past 3 months
+
+	$interval = AddSlashes($_GET["interval"]);
+
+	switch ($interval) {
+		case 'today':
+			$IntervalAdjust = '1 day';
+			$Interval       = 'past 24 hours';
+			break;
+
+		case 'yesterday':
+			$IntervalAdjust = '2 days';
+			$Interval       = 'past 48 hours';
+			break;
+
+		case 'week':
+			$IntervalAdjust = '7 days';
+			$Interval       = 'past 7 days';
+			break;
+
+		case '3months':
+		default:
+			$interval       = '3months';
+			$IntervalAdjust = '3 months';
+			$Interval       = 'past 3 months';
+	}
+
+
+	$Title    = "New ports - " . $Interval;
 
 	freshports_Start($Title,
 					"freshports - new ports, applications",
@@ -48,13 +75,13 @@ These are the recently added ports.
 		switch ($sort) {
 			case "dateadded":
 				$sort = "ports.date_added desc, category, port";
-				echo 'sorted by date added.  but you can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=category">category</a>';
+				echo 'sorted by date added.  <A HREF="' . $_SERVER["PHP_SELF"] . '?interval=' . $interval . '&sort=category">Sort by category</A>';
 				$ShowCategoryHeaders = 0;
 				break;
 
 			default:
 				$sort ="category, port";
-				echo 'sorted by category.  but you can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=dateadded">date added</a>';
+				echo 'sorted by category.  <A HREF="' . $_SERVER["PHP_SELF"] . '?interval=' . $interval . '&sort=dateadded">Sort by date added</A>';
 				$ShowCategoryHeaders = 1;
 		}
 
@@ -86,7 +113,7 @@ These are the recently added ports.
 			$sql .= "WHERE ports.element_id = element.id
 					   and ports.category_id = categories.id 
                        and status = 'A' 
-					   and ports.date_added > (now() - interval '$Interval') ";
+					   and ports.date_added > (now() - interval '$IntervalAdjust' - SystemTimeAdjust()) ";
 
 			$sql .= " order by $sort ";
 #			$sql .= " limit 20";

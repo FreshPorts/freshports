@@ -51,7 +51,7 @@ switch ($sort) {
       break;
 */
    default:
-      $sort ="updated desc, port";
+      $sort ="port";
       $cache_file .= ".updated";
 }
 
@@ -84,9 +84,11 @@ if (!file_exists($cache_file)) {
 if ($UpdateCache == 1) {
    echo 'time to update the cache';
 
-$sql = "select ports.name as port, ports.id as ports_id, ports.last_update as updated, " .
+$sql = "select ports.id, ports.name as port, ports.id as ports_id, ports.last_update as updated, " .
        "categories.name as category, categories.id as category_id, ports.version as version, ".
-       "ports.committer, ports.last_update_description as description " .
+       "ports.committer, ports.last_update_description as update_description, " .
+       "ports.maintainer, ports.short_description, ".
+       "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage  " .
        "from ports, categories  ".
        "WHERE ports.system = 'FreeBSD' ".
        "and ports.primary_category_id = categories.id " .
@@ -101,43 +103,22 @@ $result = mysql_query($sql, $db);
 $HTML .= '<tr><td>';
 
 $HTML .= '<table width="*" border=1>';
-$HTML .= '<tr>';
-$HTML .= '<td><a href="category.php3?category=' . $category . '&sort=port">Port</a></td>';
-$HTML .= '<td>Description</td>';
-$HTML .= '<td>Committer</td>';
-$HTML .= '<td>Category</td>';
-$HTML .= '<td><a href="category.php3?category=' . $category . '&sort=updated">Updated</a></td>';
-$HTML .= '</tr>';
+
 // get the list of topics, which we need to modify the order
 $NumTopics=0;
 while ($myrow = mysql_fetch_array($result)) {
-	$NumTopics++;
-	$HTML .= '<tr><td VALIGN="top"><A href="' . $DESC_URL . '/' . $myrow["category"] . '/' . $myrow["port"] . '/pkg/DESCR">';
+   $NumTopics++;
 
-        $URL_Category = "http://www.freebsd.org/ports/" . $myrow["category"];
-
-        $HTML .= $myrow["version"] . '</a></td>';
-
-        $HTML .= '<td VALIGN="top">';
-        $HTML .= $myrow["description"];  // separate lines in case description is null
-        $HTML .= '</td>';
-
-        $HTML .= '<td VALIGN="top"><font size="-1">';
-        $HTML .= $myrow["committer"];  // separate lines in case committer is null           
-        $HTML .= '</font></td>';                                      
-       
-        $HTML .= '<td VALIGN="top"><font size="-1"><a href="' . $URL_Category . '">' . $myrow["category"] . '</a></td>';
-
-        $HTML .= '<td VALIGN="top"><font size="-1">' . $myrow["updated"] . '</font></td>';
-
-        $HTML .= "</tr>\n";
+   include("/www/freshports.org/_private/port-basics.inc");
 }
 
 $HTML .= '</tr>';
 
 mysql_free_result($result);
 
-$HTML .= '<tr><td colspan="5" align="center">' . $NumTopics . ' ports found</td></tr>' . "\n";
+$HTML .= "<p>$NumTopics ports found</p>\n";
+
+$HTML .= '</td></tr>';
 
 $HTML .= '</table>';
 $HTML .= '</td></tr>';

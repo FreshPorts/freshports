@@ -1,5 +1,5 @@
 <?
-	# $Id: port-description.admin.php,v 1.1.2.6 2002-05-18 08:25:06 dan Exp $
+	# $Id: port-description.admin.php,v 1.1.2.7 2002-05-18 18:30:17 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -77,7 +77,7 @@ function freshports_Change_Log_Delete($Change_Log_ID, $db) {
 }
 
 
-if ($HTTP_HOST = "admin.freshports.org") {
+if ($_SERVER["HTTP_HOST"] = "admin.freshports.org") {
    $Admin = 1;
 } else {
    $Admin = 0;

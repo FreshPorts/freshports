@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.94 2002-05-18 15:33:28 dan Exp $
+	# $Id: freshports.php,v 1.4.2.95 2002-05-18 18:30:17 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -1126,7 +1126,7 @@ function freshports_UserSendToken($UserID, $dbh) {
 
 		$message =  "Someone, perhaps you, supplied your email address as their\n".
 					"FreshPorts login. If that wasn't you, and this message becomes\n".
-				    "a nuisance, please forward this message to webmaster@$HTTP_HOST\n".
+				    "a nuisance, please forward this message to webmaster@$_SERVER["HTTP_HOST"]\n".
 					"and we will take care of it for you.\n".
                     " \n".
 	                "Your token is: $token\n".
@@ -1134,7 +1134,7 @@ function freshports_UserSendToken($UserID, $dbh) {
         	        "Please point your browser at\n".
 					"http://$HTTP_HOST/confirmation.php?token=$token\n" .
 	                "\n".
-    	            "the request came from $REMOTE_ADDR:$REMOTE_PORT\n".
+    	            "the request came from " . $_SERVER["REMOTE_ADDR"] . ":" . $_SERVER["REMOTE_PORT"] ."\n".
 					"\n".
 					"-- \n".
 					"FreshPorts - http://$HTTP_HOST/ - the place for ports";

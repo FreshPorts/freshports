@@ -1,5 +1,5 @@
 <?
-	# $Id: files.php,v 1.1.2.6 2002-04-08 17:06:06 dan Exp $
+	# $Id: files.php,v 1.1.2.7 2002-04-10 20:48:18 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -103,7 +103,7 @@ function freshports_Files($PortID, $CommitID, $db) {
 		echo '&nbsp;&nbsp;'. freshports_Commit_Link($myrow["message_id"]);
 		echo "</TD>\n";
 		echo '    <TD VALIGN="top">' . $myrow["committer"]         . "</TD>\n";
-		echo '    <TD VALIGN="top"><PRE CLASS="code">' . $myrow["description"] . "</CODE></TD>\n";
+		echo '    <TD VALIGN="top">' . freshports_PortDescriptionPrint($myrow["description"]) . "</CODE></TD>\n";
 		echo "</TR>";
 		?>
 

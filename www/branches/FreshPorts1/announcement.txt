@@ -1,22 +1,8 @@
 <P ALIGN="left">
 <BIG>
-Here is the data migration plan for moving to FreshPorts2!
+Data migration is now in progress.  Any changes you make to your data will be lost.  New website should
+be live by 10 PM EST today (28 May 2002).
 </BIG>
-</P>
 
-<P>
-
-Here is the plan:
-
-<OL>
-<LI>All users accounts have been copied to <A HREF="http://test.freshports.org/">the test website</A>.</LI>
-<LI>Please go to the above URL and verify that you can log in and that your watch list is intact</A>.</LI>
-<LI>Please acknowledge that all is well with your data via 
-<A HREF="http://test.freshports.org/phorum/list.php?f=1">the feedback forum</A>.</LI>
-<LI>Once I have had a few positive and the negatives have been resolved, another data migration will occur
-to pick up any user account modifications which have occured since step 1</LI>
-<LI>Any data changes you make at http://test.freshports.org/ will be lost.</LI>
-</OL>
-
-Dan Langille 25 May 2002 - 9:53 PM
+Dan Langille 28 May 2002 - 2:58 PM
 </P>

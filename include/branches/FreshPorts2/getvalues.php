@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: getvalues.php,v 1.1.2.30 2003-09-16 12:22:49 dan Exp $
+	# $Id: getvalues.php,v 1.1.2.31 2004-06-29 18:55:49 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -53,8 +53,8 @@ $WatchListAsk			= 1;
 $ShowEverything			= 0;
 $ShowPortCreationDate	= 0;
 
-$User->name	= "";
-$User->id	= "";
+$User->name	= '';
+$User->id	= 0;
 
 // This is used to determine whether or not the cach can be used.
 $DefaultMaxArticles = $MaxArticles;

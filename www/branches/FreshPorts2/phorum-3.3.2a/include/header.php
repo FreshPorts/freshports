@@ -1,5 +1,5 @@
 <?
-	# $Id: header.php,v 1.1.2.4 2002-02-22 00:02:16 dan Exp $
+	# $Id: header.php,v 1.1.2.5 2002-04-06 15:01:43 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -24,5 +24,5 @@
 <TR>
     <? freshports_PageBannerText($ForumName); ?>
 </TR>
-<TR><TD VALIGN="top">
+<TR><TD VALIGN="top" ALIGN="center">
 

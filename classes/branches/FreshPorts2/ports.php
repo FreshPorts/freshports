@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports.php,v 1.1.2.46 2004-10-25 00:22:34 dan Exp $
+	# $Id: ports.php,v 1.1.2.47 2004-12-19 16:40:08 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -505,6 +505,10 @@ LEFT OUTER JOIN
 
 	function EncodingLosses() {
 		return $this->encoding_losses == 't';
+	}
+
+	function IsSlavePort() {
+		return $this->master_port != '';
 	}
 
 }

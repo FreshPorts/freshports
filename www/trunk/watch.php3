@@ -1,5 +1,5 @@
 <?
-   # $Id: watch.php3,v 1.24 2001-10-02 17:36:01 dan Exp $
+   # $Id: watch.php3,v 1.25 2001-10-20 21:50:41 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -9,31 +9,16 @@
    require("./include/getvalues.php");
 
 
-   freshports_Start("title",
-               "freshports - new ports, applications",
-               "FreeBSD, index, applications, ports");
-
-?>
-<?
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {
         header("Location: login.php3?origin=" . $PHP_SELF);  /* Redirect browser to PHP web site */
         exit;  /* Make sure that code below does not get executed when we redirect. */
 }
 
+   freshports_Start("your watched ports",
+               "freshports - new ports, applications",
+               "FreeBSD, index, applications, ports");
 ?>
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
-<html>
-
-<head>
-<meta name="description" content="freshports - new ports, applications">
-<meta name="keywords" content="FreeBSD, index, applications, ports">  
-<!--// DVL Software is a New Zealand company specializing in database applications. //-->
-<title>freshports</title>
-</head>
-
- <? include("./include/header.php") ?>
 <table width="100%" border="0">
 
 <tr><td colspan="2">

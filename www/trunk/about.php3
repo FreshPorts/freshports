@@ -1,5 +1,5 @@
 <?
-   # $Id: about.php3,v 1.11 2001-10-02 17:51:54 dan Exp $
+   # $Id: about.php3,v 1.12 2001-10-20 21:50:37 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -9,22 +9,11 @@
    require("./include/getvalues.php");
 
 
-   freshports_Start("title",
+   freshports_Start("About",
                "freshports - new ports, applications",
                "FreeBSD, index, applications, ports");
 
 ?>
-<?
-?>
-<html>
-<head>
-<meta name="description" content="freshports - new ports, applications">
-<meta name="keywords" content="FreeBSD, index, applications, ports">
-<!--// DVL Software is a New Zealand company specializing in database applications. //-->
-<title>freshports - about</title>
-</head>
-
-<? include("./include/header.php") ?>
 <table width="100%" border="0">
 <tr><td colspan="2">
 <font size="+2">about this site</font>

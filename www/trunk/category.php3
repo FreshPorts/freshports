@@ -1,5 +1,5 @@
 <?
-   # $Id: category.php3,v 1.20 2001-10-02 17:14:12 dan Exp $
+   # $Id: category.php3,v 1.21 2001-10-20 21:50:38 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -8,19 +8,6 @@
    require("./include/databaselogin.php");
    require("./include/getvalues.php");
 
-   freshports_Start("title",
-               "freshports - new ports, applications",
-               "FreeBSD, index, applications, ports");
-
-?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
-<html>
-
-<head>
-<meta name="description" content="freshports - new ports, applications">
-<meta name="keywords" content="FreeBSD, index, applications, ports">  
-
-<?
 #$Debug=1;
 
 #
@@ -49,13 +36,12 @@ if (!$category || $category != strval(intval($category))) {
 $cache_file .= "." . $category;
 
 $title = freshports_Category_Name($category, $db);
+
+   freshports_Start($title,
+               "freshports - new ports, applications",
+               "FreeBSD, index, applications, ports");
 ?>
 
-<!--// DVL Software is a New Zealand company specializing in database applications. //-->
-<title>freshports - <? echo $title ?></title>
-</head>
-
- <? include("./include/header.php") ?>
 
 <table width="100%" border="0">
 <tr><td>

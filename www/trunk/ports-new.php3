@@ -1,5 +1,5 @@
 <?
-   # $Id: ports-new.php3,v 1.16 2001-10-02 17:36:00 dan Exp $
+   # $Id: ports-new.php3,v 1.17 2001-10-20 21:50:40 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -9,29 +9,13 @@
    require("./include/getvalues.php");
 
 
-   freshports_Start("title",
+   freshports_Start("recently added ports",
                "freshports - new ports, applications",
                "FreeBSD, index, applications, ports");
 
-?>
-<?
 $Debug=1;
-#require( "./include/commonlogin.php3");
-#require( "./include/getvalues.php3");
-#require( "./include/freshports.php3");
 ?>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
-<html>
-
-<head>
-<meta name="description" content="freshports - new ports, applications">
-<meta name="keywords" content="FreeBSD, index, applications, ports">  
-<!--// DVL Software is a New Zealand company specializing in database applications. //-->
-<title>freshports - recently added ports</title>
-</head>
-
- <? include("./include/header.php") ?>
 <table width="100%" border="0">
 <tr><td colspan="2">
 This page shows the ports which have been recently added to the ports tree.  As such, some information

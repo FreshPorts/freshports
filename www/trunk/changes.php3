@@ -1,5 +1,5 @@
 <?
-   # $Id: changes.php3,v 1.14 2001-10-02 17:35:58 dan Exp $
+   # $Id: changes.php3,v 1.15 2001-10-20 21:50:38 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -8,25 +8,11 @@
    require("./include/databaselogin.php");
    require("./include/getvalues.php");
 
-   freshports_Start("title",
+   freshports_Start("Changes",
                "freshports - new ports, applications",
                "FreeBSD, index, applications, ports");
 
 ?>
-<?
-#require( "./include/commonlogin.php3");
-#require( "./include/getvalues.php3");
-#require( "./include/freshports.php3");
-?>
-
-<head>
-<meta name="description" content="freshports - new ports, applications">
-<meta name="keywords" content="FreeBSD, index, applications, ports">  
-<!--// DVL Software is a New Zealand company specializing in database applications. //-->
-<title>freshports - changes</title>
-</head>
-
-<? include("./include/header.php") ?>
 <table width="100%" border="0">
 <tr><td valign="top">
 <table width="100%" border="0" CELLSPACING="0" CELLPADDING="5"

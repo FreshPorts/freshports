@@ -36,3 +36,6 @@ All rights reserved.</small></p>
 </td></tr>
 </table>
 
+<?
+	diary_ads_Random();
+?>

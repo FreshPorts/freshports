@@ -1,16 +1,11 @@
 <?
-   # $Id: customize.php3,v 1.14 2001-09-28 00:05:37 dan Exp $
+   # $Id: customize.php3,v 1.15 2001-10-20 21:50:38 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
    require("./include/common.php");
    require("./include/freshports.php");
    require("./include/databaselogin.php");
-
-
-   freshports_Start("title",
-               "freshports - new ports, applications",
-               "FreeBSD, index, applications, ports");
 
 ?>
 <script language="php">
@@ -116,18 +111,11 @@ if ($submit) {
       }
    }
 }
+
+   freshports_Start("Customize User Account",
+               "freshports - new ports, applications",
+               "FreeBSD, index, applications, ports");
 </script>
-
-<html>
-
-<head>
-<title>freshports -- Customize User Account</title>
-<meta name="description" content="freshports - new ports, applications">
-<meta name="keywords" content="FreeBSD, index, applications, ports">  
-<!--// DVL Software is a New Zealand company specializing in database applications. //-->
-</head>
-
- <? include("./include/header.php") ?>
 
 <table width="100%" border="0">
   <tr><td valign="top" width="100%">

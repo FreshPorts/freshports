@@ -1,5 +1,5 @@
 <?
-   # $Id: port-description.admin.php3,v 1.4 2001-10-02 17:35:59 dan Exp $
+   # $Id: port-description.admin.php3,v 1.5 2001-10-20 21:50:40 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -8,13 +8,6 @@
    require("./include/databaselogin.php");
    require("./include/getvalues.php");
 
-
-   freshports_Start("title",
-               "freshports - new ports, applications",
-               "FreeBSD, index, applications, ports");
-
-?>
-<?
 
 function freshports_Change_Log_Port_Delete($Change_Log_Port_ID, $db) {
    // delete everything from change_log_details which 
@@ -142,31 +135,19 @@ if (!$result) {
 $myrow = mysql_fetch_array($result);
 
 $NumRows = mysql_num_rows($result);
-?>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
-<html>
 
-<head>
-<meta name="description" content="freshports - new ports, applications">
-<meta name="keywords" content="FreeBSD, index, applications, ports">  
-<!--// DVL Software is a New Zealand company specializing in database applications. //-->
-<title>freshports - 
-
-<?
    if ($NumRows) {
       $Title = $myrow["category"] . "/" . $myrow["port"];
    } else {
       $Title = "error - nothing found";
    }
 
-   echo $Title;
+   freshports_Start($Title,
+               "freshports - new ports, applications",
+               "FreeBSD, index, applications, ports");
 ?>
-</title>
-</head>
 
-<body bgcolor="#ffffff" link="#0000cc">
- <? include("./include/header.php") ?>
 <table width="100%" border="0">
 <tr>
   <td>

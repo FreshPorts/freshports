@@ -1,5 +1,5 @@
 <?
-   # $Id: privacy.php3,v 1.4 2001-10-02 17:36:00 dan Exp $
+   # $Id: privacy.php3,v 1.5 2001-10-20 21:50:40 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -9,26 +9,11 @@
    require("./include/getvalues.php");
 
 
-   freshports_Start("title",
+   freshports_Start("Privacy Policy",
                "freshports - new ports, applications",
                "FreeBSD, index, applications, ports");
 
 ?>
-<?
-#require( "./include/commonlogin.php3");
-#require( "./include/getvalues.php3");
-#require( "./include/freshports.php3");
-?>
-<html>
-
-<head>
-<meta name="description" content="freshports - new ports, applications, privacy">
-<meta name="keywords" content="FreeBSD, index, applications, ports, privacy">
-<!--// DVL Software is a New Zealand company specializing in database applications. //-->
-<title>freshports - privacy statement</title>
-</head>
-
-<? include("./include/header.php") ?>
 <table width="100%" border="0">
 <tr>
 <td valign="top" width="100%">

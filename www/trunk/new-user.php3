@@ -1,5 +1,5 @@
 <?
-   # $Id: new-user.php3,v 1.9 2001-09-28 00:05:38 dan Exp $
+   # $Id: new-user.php3,v 1.10 2001-10-20 21:50:39 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -7,10 +7,6 @@
    require("./include/freshports.php");
    require("./include/databaselogin.php");
 
-
-   freshports_Start("title",
-               "freshports - new ports, applications",
-               "FreeBSD, index, applications, ports");
 
 if ($submit) {
 
@@ -123,25 +119,18 @@ if ($submit) {
    require( "./include/getvalues.php");
    $emailsitenotices_yn = "ON";
 }
+
+   freshports_Start("New User",
+               "freshports - new ports, applications",
+               "FreeBSD, index, applications, ports");
 ?>
 
-<html>
-
-<head>
-<title>freshports -- New User</title>
-<meta name="description" content="freshports - new ports, applications">
-<meta name="keywords" content="FreeBSD, index, applications, ports">  
-<!--// DVL Software is a New Zealand company specializing in database applications. //-->
 <script>
 <!--
 function setfocus() { document.f.UserLogin.focus(); }
 // -->
 </script>
-</head>
 
- <? //include("./include/header.php") ?>
-
-<body onLoad=setfocus()>
 <table width="100%"  border="0">
 <tr><td valign="top" width="100%">
 <table width="100%" border="0">

@@ -1,5 +1,5 @@
 <?
-   # $Id: port-watch.php3,v 1.17 2001-10-02 17:35:59 dan Exp $
+   # $Id: port-watch.php3,v 1.18 2001-10-20 21:50:40 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -8,13 +8,6 @@
    require("./include/databaselogin.php");
    require("./include/getvalues.php");
 
-
-   freshports_Start("title",
-               "freshports - new ports, applications",
-               "FreeBSD, index, applications, ports");
-
-?>
-<?
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {
@@ -145,21 +138,14 @@ if ($submit) {
       ${"port_".$myrow["port_id"]} = 1;
    }
    }
+
+   freshports_Start($categoryname,
+               "freshports - new ports, applications",
+               "FreeBSD, index, applications, ports");
 }
 
 ?>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
-<html>
-
-<head>
-<meta name="description" content="freshports - new ports, applications">
-<meta name="keywords" content="FreeBSD, index, applications, ports">  
-<!--// DVL Software is a New Zealand company specializing in database applications. //-->
-<title>freshports - watch categories</title>
-</head>
-
- <? include("./include/header.php") ?>
 <table width="100%" border="0">
 </tr>
 <tr><td colspan="2">This page shows the ports within a specific category which are in your watch list.

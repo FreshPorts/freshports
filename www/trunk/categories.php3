@@ -1,5 +1,5 @@
 <?
-   # $Id: categories.php3,v 1.14 2001-10-02 17:35:58 dan Exp $
+   # $Id: categories.php3,v 1.15 2001-10-20 21:50:37 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -9,22 +9,12 @@
    require("./include/getvalues.php");
 
 
-   freshports_Start("title",
+   freshports_Start("Categories",
                "freshports - new ports, applications",
                "FreeBSD, index, applications, ports");
 
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
-<html>
 
-<head>
-<meta name="description" content="freshports - new ports, applications">
-<meta name="keywords" content="FreeBSD, index, applications, ports">  
-<!--// DVL Software is a New Zealand company specializing in database applications. //-->
-<title>freshports</title>
-</head>
-
- <? include("./include/header.php") ?>
 <table width="100%" border="0">
 </tr><tr><td colspan="2">This page lists the categories sorted by various categories.
 </td></tr>

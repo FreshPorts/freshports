@@ -1,5 +1,5 @@
 <?
-   # $Id: watch-categories.php3,v 1.12 2001-10-02 17:36:01 dan Exp $
+   # $Id: watch-categories.php3,v 1.13 2001-10-20 21:50:41 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -9,7 +9,7 @@
    require("./include/getvalues.php");
 
 
-   freshports_Start("title",
+   freshports_Start("Watch categories",
                "freshports - new ports, applications",
                "FreeBSD, index, applications, ports");
 
@@ -22,17 +22,6 @@ if (!$visitor) {
 }
 
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
-<html>
-
-<head>
-<meta name="description" content="freshports - new ports, applications">
-<meta name="keywords" content="FreeBSD, index, applications, ports">  
-<!--// DVL Software is a New Zealand company specializing in database applications. //-->
-<title>freshports - watch categories</title>
-</head>
-
- <? include("./include/header.php") ?>
 <table width="100%" border="0">
 </tr>
 <tr><td colspan="2">

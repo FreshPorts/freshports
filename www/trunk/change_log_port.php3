@@ -1,5 +1,5 @@
 <?
-   # $Id: change_log_port.php3,v 1.4 2001-10-02 17:35:58 dan Exp $
+   # $Id: change_log_port.php3,v 1.5 2001-10-20 21:50:38 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -9,22 +9,11 @@
    require("./include/getvalues.php");
 
 
-   freshports_Start("title",
+   freshports_Start("Ports changed by a commmit",
                "freshports - new ports, applications",
                "FreeBSD, index, applications, ports");
 
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
-<html>
-
-<head>
-<meta name="description" content="freshports - new ports, applications">
-<meta name="keywords" content="FreeBSD, index, applications, ports">  
-<!--// DVL Software is a New Zealand company specializing in database applications. //-->
-<title>freshports</title>
-</head>
-
- <? include("./include/header.php") ?>
 <table width="100%" border="0">
 <tr><td colspan="2">Welcome to the freshports.org where you can find the latest information on your favourite
 ports.

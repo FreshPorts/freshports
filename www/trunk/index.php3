@@ -1,5 +1,5 @@
 <?
-   # $Id: index.php3,v 1.31 2001-10-11 20:54:16 dan Exp $
+   # $Id: index.php3,v 1.32 2001-10-20 21:50:39 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -9,48 +9,11 @@
 
    require("./include/getvalues.php");
 
-   freshports_Start("title",
+   freshports_Start("FreshPorts - the place for ports",
                "FreshPorts - new ports, applications",
                "FreeBSD, index, applications, ports");
 #$Debug=1;
 
-#
-# $Author: dan $ $Date: 2001-10-11 20:54:16 $
-# $Header: /home/dan/repositories/freshports-1/www/Attic/index.php3,v 1.31 2001-10-11 20:54:16 dan Exp $
-# $Log: not supported by cvs2svn $
-# Revision 1.30  2001/10/11 04:54:39  dan
-# Ask for a disk
-#
-# Revision 1.29  2001/10/10 03:27:04  dan
-# Add the HEADS UP to the website and newsfeed
-#
-# Revision 1.28  2001/10/09 20:41:54  dan
-# how about we fix the right code here.
-#
-# Revision 1.27  2001/10/09 20:40:57  dan
-# FreshPorts not freshports
-#
-# Revision 1.26  2001/10/06 15:08:38  dan
-# welcome to the new box
-#
-# Revision 1.25  2001/10/03 19:42:18  dan
-# add note about new box and old website
-#
-# Revision 1.24  2001/10/03 01:56:33  dan
-# don't mention the phorum
-#
-# Revision 1.23  2001/09/28 00:05:37  dan
-# Ready to deploy.  I think.
-#
-# Revision 1.22  2001/03/27 01:01:02  dan
-# put a <br> \n at the end of a debugging line
-#
-# Revision 1.21  2001/03/23 04:36:57  dan
-# Add some headers
-#
-# $Name: not supported by cvs2svn $
-# $Revision: 1.31 $
-#
 
 //echo "UserID='$UserID'";
 
@@ -110,17 +73,8 @@ if ($Debug) {
 
 ?>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
-<html>
-
-<head>
-<meta name="description" content="freshports - new ports, applications">
-<meta name="keywords" content="FreeBSD, index, applications, ports">  
-<!--// DVL Software is a New Zealand company specializing in database applications. //-->
-<title>FreshPorts - the place for ports</title>
-</head>
-
-  <? include("./include/header.php") ?>
+<TABLE WIDTH="<? echo $TableWidth ?> " CELLPADDING="3" CELLSPACING="0" BORDER="0">
+<TR><TD>
 
 <H1>Welcome to the new database server!</H1>
 <P>
@@ -146,6 +100,9 @@ notice.  And a short description of the change.<P>
 <P ALIGN="left">
 <BIG><BIG>DISK WANTED: </BIG></BIG>Thanks for the reponses folks. I have enough now.
 </P>
+
+</TD></TR>
+</TABLE>
 
 <table width="100%" border="0">
 <tr><td colspan="2">Welcome to FreshPorts, where you can find the latest information on your favourite

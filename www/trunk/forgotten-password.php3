@@ -1,5 +1,5 @@
 <?
-   # $Id: forgotten-password.php3,v 1.8 2001-10-02 17:35:59 dan Exp $
+   # $Id: forgotten-password.php3,v 1.9 2001-10-20 21:50:39 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -9,12 +9,6 @@
 #   require("./include/getvalues.php");
 
 
-   freshports_Start("title",
-               "freshports - new ports, applications",
-               "FreeBSD, index, applications, ports");
-
-?>
-<?
 #$Debug=1;
 #require( "./include/commonlogin.php3");
 #require( "./include/freshports.php3");
@@ -130,18 +124,12 @@ if ($submit) {
       }
    }
 }
+
+   freshports_Start("Forgotten password",
+               "freshports - new ports, applications",
+               "FreeBSD, index, applications, ports");
 ?>
 
-<html>
-
-<head>
-<title>freshports -- Forgotten password</title>
-<meta name="description" content="freshports - new ports, applications">
-<meta name="keywords" content="FreeBSD, index, applications, ports">  
-<!--// DVL Software is a New Zealand company specializing in database applications. //-->
-</head>
-
- <? include("./include/header.php") ?>
 <table width="100%" border=0>
  <tr>
     <td>

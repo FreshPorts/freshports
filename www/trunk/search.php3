@@ -1,5 +1,5 @@
 <?
-   # $Id: search.php3,v 1.13 2001-10-07 15:26:25 dan Exp $
+   # $Id: search.php3,v 1.14 2001-10-20 21:50:41 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -9,25 +9,11 @@
    require("./include/getvalues.php");
 
 
-   freshports_Start("title",
+   freshports_Start("Search",
                "freshports - new ports, applications",
                "FreeBSD, index, applications, ports");
 
 ?>
-<?
-#require( "./include/commonlogin.php3");
-#require( "./include/getvalues.php3");
-#require( "./include/freshports.php3");
-?>
-<html>
-
-<head>
-<meta name="description" content="freshports - new ports, applications">
-<meta name="keywords" content="FreeBSD, index, applications, ports">  
-<!--// DVL Software is a New Zealand company specializing in database applications. //-->
-<title>freshports - search</title>
-</head>
-<? include("./include/header.php") ?>
 <table width="100%">
 <tr><td valign="top" td colspan="2">
 OK, we have just a very simple search.  Eventually this will be extended. If you find any bugs, please

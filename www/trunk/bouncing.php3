@@ -1,5 +1,5 @@
 <?
-   # $Id: bouncing.php3,v 1.5 2001-10-02 17:35:58 dan Exp $
+   # $Id: bouncing.php3,v 1.6 2001-10-20 21:50:37 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -8,13 +8,6 @@
    require("./include/databaselogin.php");
    require("./include/getvalues.php");
 
-
-   freshports_Start("title",
-               "freshports - new ports, applications",
-               "FreeBSD, index, applications, ports");
-
-?>
-<?
 
 if ($submit) {
    $sql = "update users set emailbouncecount = 0 where cookie = '$visitor'";
@@ -38,17 +31,11 @@ if ($submit) {
       $errors .= 'Something went terribly wrong there.<br>';
    }
 }
+   freshports_Start("your email is bouncing",
+               "freshports - new ports, applications",
+               "FreeBSD, index, applications, ports");
 
 ?>
-<html>
-<head>
-<meta name="description" content="freshports - new ports, applications">
-<meta name="keywords" content="FreeBSD, index, applications, ports">
-<!--// DVL Software is a New Zealand company specializing in database applications. //-->
-<title>freshports - your email is bouncing</title>
-</head>
-
-<? include("./include/header.php") ?>
 <table width="100%" border="0">
 <tr><td colspan="2">
 <font size="+2">your email is bouncing</font>

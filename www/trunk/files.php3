@@ -1,5 +1,5 @@
 <?
-   # $Id: files.php3,v 1.9 2001-10-02 17:35:59 dan Exp $
+   # $Id: files.php3,v 1.10 2001-10-20 21:50:38 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -8,16 +8,6 @@
    require("./include/databaselogin.php");
    require("./include/getvalues.php");
 
-
-   freshports_Start("title",
-               "freshports - new ports, applications",
-               "FreeBSD, index, applications, ports");
-
-?>
-<?
-#require( "./include/commonlogin.php3");
-#require( "./include/getvalues.php3");
-#require( "./include/freshports.php3");
 
 if (!$id || $id != strval(intval($id))) {
   $id = 0;
@@ -50,19 +40,12 @@ if (!$result) {
 
    $myrow = $rows[0];
 
+   freshports_Start($myrow["category"] . '/' . $myrow["port"] . " - commit details",
+               "freshports - new ports, applications",
+               "FreeBSD, index, applications, ports");
+
 ?>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
-<html>
-
-<head>
-<meta name="description" content="freshports - new ports, applications">
-<meta name="keywords" content="FreeBSD, index, applications, ports">
-<!--// DVL Software is a New Zealand company specializing in database applications. //-->
-<title>freshports - <? echo $myrow["category"] . '/' . $myrow["port"] ?> - commit details</title>
-</head>
-
- <? include("./include/header.php") ?>
 <table width="100%" border="0">
 <tr><td colspan="2">Welcome to the freshports.org where you can find the latest information on your favourite
 ports.

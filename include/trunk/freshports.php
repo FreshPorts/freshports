@@ -1,5 +1,24 @@
 <?
 
+   # $Id: freshports.php,v 1.3 2001-10-20 21:50:54 dan Exp $
+   #
+   # Copyright (c) 1998-2001 DVL Software Limited
+
+#
+# colours for the banners (not really banners, but headings)
+#
+
+$BannerBackgroundColour = "#FFCC33";
+$BannerTextColour       = "#000000";
+$BannerCellSpacing      = "0";
+$BannerCellPadding      = "2";
+$BannerBorder           = "1";
+$BannerFontSize         = "+1";
+
+$BannerWidth            = "100%";
+$TableWidth             = "98%";
+$DateFormatDefault      = "j F Y";
+
 // path to the CVS repository
 $freshports_CVS_URL = "http://www.FreeBSD.org/cgi/cvsweb.cgi/ports/";
 
@@ -7,8 +26,218 @@ $freshports_CVS_URL = "http://www.FreeBSD.org/cgi/cvsweb.cgi/ports/";
 // common things needs for all freshports php3 pages
 
 function freshports_Start($ArticleTitle, $Description, $Keywords) {
+
+GLOBAL $ShowAds;
+GLOBAL $BannerAd;
+
+   freshports_HTML_Start();
+   freshports_Header($ArticleTitle, $Description, $Keywords);
+
+   freshports_body();
+
+   echo '<CENTER>
+';
+
+   if ($ShowAds) {
+      freshports_BurstMediaCode();
+      if ($BannerAd) {
+         freshports_BurstMediaAd();
+      }
+   }
+
+   echo '</CENTER>
+';
+   freshports_Logo();
+   freshports_navigation_bar_top();
 }
 
+function freshports_Logo() {
+GLOBAL $TableWidth;
+
+echo '<BR>
+<TABLE WIDTH="' . $TableWidth . '" CELLPADDING="0" CELLSPACING="0" BORDER="0">
+<TR>
+        <TD><A HREF="/"><IMG SRC="/images/freshports.jpg" ALT="FreshPorts.org - the place for ports" WIDTH="512" HEIGHT="110" BORDER="0"></A></TD>
+        <TD ALIGN="right" CLASS="sans" VALIGN="bottom">' . date("D, j M Y g:i A T") . '</TD>
+</TR>
+</TABLE>
+';
+
+
+}
+
+
+function freshports_HTML_start() {
+GLOBAL $Debug;
+
+echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+';
+}
+
+function freshports_Header($ArticleTitle, $Description, $Keywords) {
+
+	echo "<HEAD>
+	<TITLE>FreshPorts";
+
+	if ($ArticleTitle) {
+		echo " -- $ArticleTitle";
+	}
+
+	echo "</TITLE>
+";
+
+//	freshports_style();
+
+echo "
+	<META NAME=\"description\" CONTENT=\"";
+
+	if ($Description) {
+		echo $Description;
+	} else {
+		echo $ArticleTitle;
+	}
+
+echo "\">
+	<META NAME=\"keywords\"    CONTENT=\"$Keywords\">
+";
+
+echo '	<meta name="MSSmartTagsPreventParsing" content="TRUE">
+</HEAD>
+';
+
+}
+
+function freshports_BurstMediaCode() {
+#
+# This is required on all pages which contain Burst Ads.  It's the base code.
+#
+
+echo '
+<!-- BEGIN RICH-MEDIA BURST! CODE -->
+<script language="JavaScript">
+<!-- /* © 1997-2001 BURST! Media, LLC. All Rights Reserved.*/
+function ShowBurstAd(adcode, width, height) {
+ var bN = navigator.appName;
+ var bV = parseInt(navigator.appVersion);
+ var base=\'http://www.burstnet.com/\';
+ var Tv=\'\';
+ var agt=navigator.userAgent.toLowerCase();
+ if (bV>=4)
+ {ts=window.location.pathname+window.location.search;
+  i=0; Tv=0; while (i< ts.length)
+    { Tv=Tv+ts.charCodeAt(i); i=i+1; } Tv="/"+Tv;}
+  else   {Tv=escape(window.location.pathname);
+  if( Tv.charAt(0)!=\'/\' ) Tv="/"+Tv;
+    else if (Tv.charAt(1)=="/")
+ Tv="";
+ if( Tv.charAt(Tv.length-1) == "/")
+   Tv = Tv + "_";}
+ if (bN==\'Netscape\'){
+  if ((bV>=4)&&(agt.indexOf("mac")==-1))
+ { document.write(\'<s\'+\'cript src="\'+
+  base+\'cgi-bin/ads/\'+adcode+\'.cgi/RETURN-CODE/JS\'
+  +Tv+\'">\');
+  document.write(\'</\'+\'script>\');
+ }
+   else if (bV>=3) {document.write(\'<\'+\'a href="\'+base+\'ads/\' +
+  adcode + \'-map.cgi\'+Tv+\'"target=_top>\');
+  document.write(\'<img src="\' + base + \'cgi-bin/ads/\' +
+  adcode + \'.cgi\' + Tv + \'" width="\' + width + \'" height="\' + height + \'"\' +
+  \' border="0" alt="Click Here"></a>\');}
+}
+if (bN==\'Microsoft Internet Explorer\')
+document.write(\'<ifr\'+\'ame id="BURST" src="\'+base+\'cgi-bin/ads/\'
++
+adcode + \'.cgi\' + Tv + \'/RETURN-CODE" width="\' + width + \'" height="\' + height + \'"\' +
+\'marginwidth="0" marginheight="0" hspace="0" vspace="0" \' +
+\'frameborder="0" scrolling="no"></ifr\'+\'ame>\');
+}
+//-->
+</script>
+<!-- END BURST CODE -->
+';
+}
+
+function freshports_BurstMediaAd() {
+#
+# This goes at the top of each article and show the ad, the graphic, and the links
+#
+GLOBAL $AddressForAds;
+
+echo '
+        <!-- BEGIN RICH-MEDIA BURST! CODE -->
+        <script language="JavaScript">
+        <!--
+        ShowBurstAd(\'ad4556a\',\'468\',\'60\');
+        // --></script>
+        <noscript><a href="http://www.burstnet.com/ads/ad4556a-
+        map.cgi/ns" target="_top"><img src="http://www.burstnet.com/cgi-
+        bin/ads/ad4556a.cgi/ns" <width="468" height="60"
+        border="0" alt="Click Here"></a>
+        </noscript>
+        <!-- END BURST CODE -->
+';
+
+#<BR>
+#
+#<small>Your ad here.&nbsp; Please <a href="mailto:" . $AddressForAds . "?subject=your ad here">contact us</A> for deta
+
+}
+
+
+function freshports_body() {
+
+GLOBAL $OnLoad;
+GLOBAL $Debug;
+
+echo '
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000" LEFTMARGIN="0" TOPMARGIN="0" MARGINWIDTH="0" MARGINHEIGHT="0"';
+
+# should we have an onload?
+if ($OnLoad) {
+	echo ' onLoad="' . $OnLoad . '"';
+}
+
+echo '>';
+#<CENTER>
+#';
+
+
+	if ($Debug) {
+		GLOBAL $ShowAds;
+		GLOBAL $BannerAd;
+		GLOBAL $BannerAdUnder;
+		GLOBAL $BurstFrontPage120x160;
+		GLOBAL $BurstFrontPage125x125;
+		GLOBAL $FrontPageAdsPayPal;
+		GLOBAL $FrontPageAdsAmazon;
+		GLOBAL $FrontPageDaemonNews;
+		GLOBAL $ShowHeaderAds;
+		GLOBAL $HeaderAdsPayPal;
+		GLOBAL $HeaderAdAmazon;
+		GLOBAL $HeaderAdsBurst125x125;
+		GLOBAL $HeaderAdsBurst120x160;
+
+		if ($BannerAd == 1) echo 'banner is on';
+
+		echo '<TABLE BORDER="1">';
+		echo '<TR><TD>ShowAds</TD><TD>'               . $ShowAds               . '</TD></TR>';
+		echo '<TR><TD>BannerAd</TD><TD>'              . $BannerAd              . '</TD></TR>';
+		echo '<TR><TD>BannerAdUnder</TD><TD>'         . $BannerAdUnder         . '</TD></TR>';
+		echo '<TR><TD>BurstFrontPage120x160</TD><TD>' . $BurstFrontPage120x160 . '</TD></TR>';
+		echo '<TR><TD>BurstFrontPage125x125</TD><TD>' . $BurstFrontPage125x125 . '</TD></TR>';
+		echo '<TR><TD>FrontPageAdsPayPal</TD><TD>'    . $FrontPageAdsPayPal    . '</TD></TR>';
+		echo '<TR><TD>FrontPageAdsAmazon</TD><TD>'    . $FrontPageAdsAmazon    . '</TD></TR>';
+		echo '<TR><TD>FrontPageDaemonNews</TD><TD>'   . $FrontPageDaemonNews   . '</TD></TR>';
+		echo '<TR><TD>ShowHeaderAds</TD><TD>'         . $ShowHeaderAds         . '</TD></TR>';
+		echo '<TR><TD>HeaderAdsPayPal</TD><TD>'       . $HeaderAdsPayPal       . '</TD></TR>';
+		echo '<TR><TD>HeaderAdAmazon</TD><TD>'        . $HeaderAdAmazon        . '</TD></TR>';
+		echo '<TR><TD>HeaderAdsBurst125x125</TD><TD>' . $HeaderAdsBurst125x125 . '</TD></TR>';
+		echo '<TR><TD>HeaderAdsBurst120x160</TD><TD>' . $HeaderAdsBurst120x160 . '</TD></TR>';
+		echo '</TABLE>';
+	}
+}
 
 function freshports_Category_Name($CategoryID, $db) {
    $sql = "select name from categories where id = $CategoryID";
@@ -362,5 +591,44 @@ if ($ShowDepends) {
 
    return $HTML;
 }
+
+function freshports_navigation_bar_top() {
+#GLOBAL $TableWidth;
+#
+#echo '<TABLE BGCOLOR="#663333" WIDTH="' . $TableWidth . '" CELLPADDING="3" CELLSPACING="0" BORDER="1">
+#<TR>
+#        <TD ALIGN="center"><P CLASS="yellow">[ <A CLASS="white" HREF="/">HOME</A> | <A CLASS="white" HREF="/topics.php">TOPICS</A> | <A CLASS="white" HREF="/chronological.php">INDEX</A> | <A CLASS="white" HREF="/help.php">WEB RESOURCES</A> | <A CLASS="white" HREF="/booksmags.php">BOOKS/MAGS</A> | <A CLASS="white" HREF="/contribute.php">CONTRIBUTE</A> | <A CLASS="white" HREF="/search.php">SEARCH</A> | <A CLASS="white" HREF="/feedback.php">FEEDBACK</A> | <A CLASS="white" HREF="/faq.php">FAQ</A> | <A CLASS="white" HREF="/phorum/">FORUMS</A> ]</P>
+#</TD>
+#</TR>
+#</TABLE>
+#';
+
+}
+
+
+function freshports_copyright() {
+
+#GLOBAL $TableWidth;
+#
+#echo '<TABLE WIDTH="' . $TableWidth . '" CELLPADDING="3" CELLSPACING="0">
+#<TR>
+#<TD ALIGN="right"><SMALL><A HREF="/legal.php">&copy;</A> 1997 - 2001 <A HREF="http://www.dvl-software.com/">DVL Software Ltd.</A><BR>All rights reserved.<SMALL></TD>
+#</TR>
+#</TABLE>
+#';
+
+}
+
+function diary_ads_Random() {
+
+echo '  <P ALIGN="center">
+        <a href="http://magazine.daemonnews.org/" target="_top"><img src="/ads/daemonnews.gif" width="468" height="60" border="0" alt="Daemon News - Bringing BSD Together"></a>
+        </noscript>
+        <!-- END BURST CODE -->
+        </P>
+';
+
+}
+
 
 ?>

@@ -1,5 +1,5 @@
 <?
-   # $Id: port-description.php3,v 1.24 2001-10-02 17:35:59 dan Exp $
+   # $Id: port-description.php3,v 1.25 2001-10-20 21:50:40 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -7,14 +7,6 @@
    require("./include/freshports.php");
    require("./include/databaselogin.php");
    require("./include/getvalues.php");
-
-
-   freshports_Start("title",
-               "freshports - new ports, applications",
-               "FreeBSD, index, applications, ports");
-
-?>
-<?
 
 $ShowEverything=1;
 
@@ -50,30 +42,19 @@ if (!$result) {
 $myrow = mysql_fetch_array($result);
 
 $NumRows = mysql_num_rows($result);
-?>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
-<html>
-
-<head>
-<meta name="description" content="freshports - new ports, applications">
-<meta name="keywords" content="FreeBSD, index, applications, ports">  
-<!--// DVL Software is a New Zealand company specializing in database applications. //-->
-<title>FreshPorts - 
-
-<?
    if ($NumRows) {
       $Title = $myrow["category"] . "/" . $myrow["port"];
    } else {
       $Title = "error - nothing found";
    }
 
-   echo $Title;
-?>
-</title>
-</head>
+   freshports_Start($Title,
+               "freshports - new ports, applications",
+               "FreeBSD, index, applications, ports");
 
- <? include("./include/header.php") ?>
+?>
+
 <table width="100%" border="0">
 <tr>
   <td>

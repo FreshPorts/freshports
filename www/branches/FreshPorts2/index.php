@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.96 2004-12-07 00:34:02 dan Exp $
+	# $Id: index.php,v 1.1.2.97 2005-01-02 00:52:28 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -124,9 +124,6 @@ A port is marked as new for 10 days.
 
 <p>
 If you want to see more try <a href="/commits.php">here</a>.
-<?php
-	echo PortsFreezeStatus();
-?>
 </TD></TR>
 <?php
 

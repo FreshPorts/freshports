@@ -1,5 +1,5 @@
 <?
-	# $Id: report-subscriptions.php,v 1.1.2.10 2002-09-09 19:32:24 dan Exp $
+	# $Id: report-subscriptions.php,v 1.1.2.11 2002-09-09 19:46:36 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -175,16 +175,20 @@ This page allows you to select the reports you wish to receive and the frequency
 	</TABLE>
 
 <BIG><BIG>SPAM FILTERS:</BIG></BIG> If you are using spam filters which require confirmation
-of incoming email, these reports will be coming from the following addresses in the <CODE CLASS="code">freshports.org</CODE>
-domain:
+of incoming email, these reports will be coming from the following addresses:
 
 <BLOCKQUOTE><CODE CLASS="code">
-freshports-announce
+<TABLE CELLSPACING="0" CELLPADDING="5" BORDER="1">
+<TR><TD>user</TD><TD>domain</TD></TR>
+<TR><TD NOWRAP><CODE CLASS="code">freshports-announce</CODE></TD><TD><CODE CLASS="code">freshports.org</CODE></TD></TR>
+<TR><TD NOWRAP><CODE CLASS="code">listsfp</CODE></TD><TD><CODE CLASS="code">nezlok.unixathomeo.org</CODE></TD></TR>
+</TABLE>
 </CODE></BLOCKQUOTE>
 
 
 Ensure that you update your spam filters to allow such incoming messages.  All replies to the
-above addresses are ignored.
+above addresses are ignored.  If your spam tools require that a confirmation be sent, you'll have
+to modify things as no confirmations will be sent for FreshPorts messages.
 
 <BR><BR>
 	&nbsp;&nbsp;<INPUT TYPE="submit" VALUE="update" NAME="submit">

@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_process.inc,v 1.5.2.9 2002-03-02 21:11:50 dan Exp $
+	# $Id: pkg_process.inc,v 1.5.2.10 2002-03-19 02:54:51 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 	#
@@ -41,7 +41,7 @@ function HandleFileUpload($FormFileName, $Destination) {
 		copy($HTTP_POST_FILES[$FormFileName]['tmp_name'], $Destination);
 		$result = 1;
 	} else {
-		DisplayError("No file was uploaded.  Make sure the file name is correct and that the 
+		DisplayError("No file was uploaded.  Make sure the file name is correct, that the file is non-empty, and that the 
 			file size is less than 40KB (this should be sufficient for any
 			installation).  Verify you have correctly followed the instructions.<P>Please click back, check the file, and try again.");
 		$result = 0;

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: getvalues.php,v 1.1.2.28 2003-09-08 16:25:19 dan Exp $
+	# $Id: getvalues.php,v 1.1.2.29 2003-09-16 12:22:00 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -85,38 +85,6 @@ if (!empty($visitor)) {
 			echo 'You have been logged out.';
 			exit;
 		}
-/*
-		$User->name					= $myrow["name"];
-		$User->id					= $myrow["id"];
-		$emailsitenotices_yn		= $myrow["emailsitenotices_yn"];
-		$email						= $myrow["email"];
-
-		$WatchNotice = new WatchNotice($db);
-		$WatchNotice->FetchByID($myrow["watch_notice_id"]);
-
-		$watchnotifyfrequency	= $WatchNotice->frequency;
-
-
-//		$MaxNumberOfPorts			= $myrow["max_number_of_ports"];
-		$ShowShortDescription	= $myrow["show_short_description"];
-		$ShowMaintainedBy			= $myrow["show_maintained_by"];
-		$ShowLastChange			= $myrow["show_last_change"];
-		$ShowDescriptionLink		= $myrow["show_description_link"];
-		$ShowChangesLink			= $myrow["show_changes_link"];
-		$ShowDownloadPortLink	= $myrow["show_download_port_link"];
-		$ShowPackageLink			= $myrow["show_package_link"];
-		$ShowHomepageLink			= $myrow["show_homepage_link"];
-
-		if ($emailsitenotices_yn == "t") {
-			$emailsitenotices_yn = "ON";
-		} else {
-			$emailsitenotices_yn = "";
-		}
-
-		$EmailBounceCount	= $myrow["emailbouncecount"];
-
-		$NumberOfDays		= $myrow["number_of_days"];
-*/
 
 		if ($Debug) echo "we found a row there...\n<br>";
 		// record their last login

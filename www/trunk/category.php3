@@ -104,8 +104,8 @@ if ($UpdateCache == 1) {
 $sql = "select ports.id, ports.name as port, ports.id as ports_id, ports.last_update as updated, " .
        "categories.name as category, categories.id as category_id, ports.version as version, ".
        "ports.committer, ports.last_update_description as update_description, " .
-       "ports.maintainer, ports.short_description, ".
-       "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage  " .
+       "ports.maintainer, ports.short_description, UNIX_TIMESTAMP(ports.date_created) as date_created, ".
+       "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, ports.status  " .
        "from ports, categories  ".
        "WHERE ports.system = 'FreeBSD' ".
        "and ports.primary_category_id = categories.id " .
@@ -155,86 +155,13 @@ if ($start == 1 and $end == $NumRows) {
 
 $HTML .= freshports_echo_HTML(" of $NumRows ports</td></tr>\n");
 
-$HTML .= freshports_echo_HTML("<tr><td>");
+//$HTML .= freshports_echo_HTML("<tr><td>");
 //$HTML .= freshports_echo_HTML("<br>start = $start, end = $end, LimitRows = $LimitRows<br>\n");
 
 for ($i = $start; $i <= $end; $i++) {
    $myrow = $rows[$i-1];
 
-   $HideCategory = 1;
-   if ($i == 0) {
-      $FirstPort = $myrow["port"];
-   }
-
-   $HTML .= freshports_echo_HTML("<dl>");
-
-   $HTML .= freshports_echo_HTML("<b>" . $myrow["port"]);
-   if (strlen($myrow["version"]) > 0) {
-      $HTML .= freshports_echo_HTML('-' . $myrow["version"]);
-   }
-
-   $HTML .= freshports_echo_HTML("</b>");
-
-   // indicate if this port needs refreshing from CVS
-   if ($myrow["needs_refresh"] == "Y") {
-      $HTML .= freshports_echo_HTML(' <font size="-1">[refresh]</font>');
-   }
-
-   if (!$HideCategory) {
-      $URL_Category = "category.php3?category=" . $myrow["category_id"];
-      $HTML .= freshports_echo_HTML(' <font size="-1"><a href="' . $URL_Category . '">' . $myrow["category"] . '</a></font>');
-   }
-
-   $HTML .= freshports_echo_HTML("<dd>");
-
-   // description
-   $HTML .= freshports_echo_HTML($myrow["short_description"] . "<br>\n");
-
-   // maintainer
-   $HTML .= freshports_echo_HTML('Maintained by: <a href="mailto:' . $myrow["maintainer"]);
-   $HTML .= freshports_echo_HTML('?cc=ports@FreeBSD.org&amp;subject=FreeBSD%20Port:%20' . $myrow["port"] . "-" . $myrow["version"] . '">');
-   $HTML .= freshports_echo_HTML($myrow["maintainer"] . '</a></br>' . "\n");
-
-   if ($myrow["committer"]) {
-      $HTML .= freshports_echo_HTML('last change committed by ' . $myrow["committer"]);  // separate lines in case committer is null
-
-      $HTML .= freshports_echo_HTML(' on <font size="-1">' . $myrow["updated"] . '</font><br>' . "\n");
-
-      $HTML .= freshports_echo_HTML($myrow["update_description"] . "<br>" . "\n");
-   } else {
-      $HTML .= freshports_echo_HTML("no changes recorded in FreshPorts<br>\n");
-   }
-
-   if (!$HideDescription) {
-      // Long descripion
-      $HTML .= freshports_echo_HTML('<a HREF="port-description.php3?port=' . $myrow["id"] .'">Description</a>');
-
-      $HTML .= freshports_echo_HTML(' <b>:</b> ');
-   }
-
-   // changes
-   $HTML .= freshports_echo_HTML('<a HREF="http://www.FreeBSD.org/cgi/cvsweb.cgi/ports/' .
-            $myrow["category"] . '/' .  $myrow["port"] . '">Changes</a>');
-   $HTML .= freshports_echo_HTML(' <b>:</b> ');
-
-   // download
-   $HTML .= freshports_echo_HTML('<a HREF="ftp://ftp.FreeBSD.org/pub/FreeBSD/branches/-current/ports/' .
-            $myrow["category"] . '/' .  $myrow["port"] . '.tar">Download Port</a>');
-
-   if ($myrow["package_exists"] == "Y") {
-      // package
-      $HTML .= freshports_echo_HTML(' <b>:</b> ');
-      $HTML .= freshports_echo_HTML('<a HREF="ftp://ftp.FreeBSD.org/pub/FreeBSD/FreeBSD-stable/packages/' .
-               $myrow["category"] . '/' .  $myrow["port"] . "-" . $myrow["version"] . '.tgz">Package</a>');
-   }
-
-   if ($myrow["homepage"]) {
-      $HTML .= freshports_echo_HTML(' <b>:</b> ');
-      $HTML .= freshports_echo_HTML('<a HREF="' . $myrow["homepage"] . '">Homepage</a>');
-   }
-
-   $HTML .= freshports_echo_HTML("<p></p></dd>");
-   $HTML .= freshports_echo_HTML("</dl>" . "\n");
+   include("/www/freshports.org/_private/port-basics.inc");
 
    $LastPort = $myrow["port"];
 } // end for
@@ -265,8 +192,8 @@ if ($start > 1) {
 }
 
 $HTML .= freshports_echo_HTML('</td></tr>');
-//echo $HTML;      
-                                
+echo $HTML;      
+
    $fpwrite = fopen($cache_file, 'w');
    if(!$fpwrite) {                      
       echo 'error on open<br>';
@@ -276,7 +203,7 @@ $HTML .= freshports_echo_HTML('</td></tr>');
 //      echo 'written<br>';             
       fputs($fpwrite, $HTML);         
       fclose($fpwrite);
-   }                           
+   }
 } else {                                
 //   echo 'looks like I\'ll read from cache this time';                             
    if (file_exists($cache_file)) {                            

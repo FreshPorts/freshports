@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: announcements.php,v 1.1.2.3 2003-05-10 04:29:30 dan Exp $
+	# $Id: announcements.php,v 1.1.2.4 2003-05-16 02:37:33 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -201,7 +201,7 @@ SELECT *
              start_date,
              end_date
         FROM announcements
-    ORDER BY start_date, end_date";
+   ORDER BY end_date, start_date";
 
 #		echo '<pre>' . $sql . '</pre>';
 

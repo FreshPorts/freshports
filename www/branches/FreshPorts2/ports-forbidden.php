@@ -1,5 +1,5 @@
 <?
-	# $Id: ports-forbidden.php,v 1.1.2.11 2003-01-06 14:14:42 dan Exp $
+	# $Id: ports-forbidden.php,v 1.1.2.12 2003-03-06 13:51:57 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -87,7 +87,7 @@ select ports.id,
     FROM watch_list JOIN watch_list_element
         ON watch_list.id      = watch_list_element.watch_list_id
        AND watch_list.user_id = $User->id
-  GROUP BY watch_list_element.element_id) AS TEMP
+  GROUP BY wle_element_id) AS TEMP
        ON TEMP.wle_element_id = ports.element_id";
 	}
 

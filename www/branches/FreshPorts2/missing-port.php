@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-port.php,v 1.1.2.6 2002-01-05 21:14:23 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.7 2002-02-11 02:42:18 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
@@ -41,7 +41,7 @@ $Debug=0;
 				$port->FetchByPartialName("/ports/$CategoryName/$PortName");
 
 				if ($Debug) {
-					if (defined($port->id)) {
+					if (IsSet($port->id)) {
 						echo "port was found with id = $port->id<BR>";
 					} else {
 						echo "that port not found<BR>";

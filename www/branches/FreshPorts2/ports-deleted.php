@@ -1,5 +1,5 @@
 <?
-	# $Id: ports-deleted.php,v 1.1.2.5 2002-04-22 01:15:56 dan Exp $
+	# $Id: ports-deleted.php,v 1.1.2.6 2002-04-22 03:33:13 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -14,7 +14,7 @@
 	$Title    = "Deleted ports - past " . $Interval;
 
 	freshports_Start($Title,
-					"freshports - new ports, applications",
+					"freshports - deleted ports, applications",
 					"FreeBSD, index, applications, ports");
 
 ?>
@@ -104,7 +104,7 @@ These are the latest deleted ports.
 
 			require("./include/list-of-ports.php");
 
-			echo freshports_ListOfPorts($result, $db);
+			echo freshports_ListOfPorts($result, $db, "N", $ShowCategoryHeaders);
 ?>
 
 </TABLE>

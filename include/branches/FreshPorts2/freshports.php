@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.196 2004-12-03 01:42:25 dan Exp $
+	# $Id: freshports.php,v 1.4.2.197 2004-12-07 00:35:23 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -1070,7 +1070,7 @@ if ($ShowDepends) {
       $HTML .= '<a HREF="' . htmlspecialchars($port->homepage) . '" TITLE="Main web site for this port">Main Web Site</a>';
    }
 
-   $HTML .= ' <b>:</b> ' . freshports_PortsMonitorURL($port->category, $port->port);
+#   $HTML .= ' <b>:</b> ' . freshports_PortsMonitorURL($port->category, $port->port);
 
 	if ($ShowMasterSlave) {
 		#

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: htmlify.php,v 1.1.2.4 2003-09-27 14:50:07 dan Exp $
+	# $Id: htmlify.php,v 1.1.2.5 2003-11-28 16:26:05 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -107,7 +107,7 @@ function htmlify($String) {
 	$String = preg_replace_callback("/((http|ftp|https):\/\/.*?)($delimiters)/i",                    'url2link',    $String);
 	$String = preg_replace_callback("/(<a href=(\"|')(http|ftp|https):\/\/.*?)(\">|'>)(.*?)<\/a>/i", 'url_shorten', $String);
 	$String = preg_replace_callback("/([\w+=\-.!]+@[\w\-]+(\.[\w\-]+)+)/",                           'mail2link',   $String);
-	$String = preg_replace_callback("/\bPR[:\#]\s*(\d+)([,\s\n]*(\d+))*/",                           'pr2link',     $String);
+	$String = preg_replace_callback("/\bPR[:\#]?\s*(\d+)([,\s\n]*(\d+))*/",                           'pr2link',     $String);
 	$String = preg_replace_callback("/[\b]?((advocacy|alpha|bin|conf|docs|gnu|i386|ia64|java|kern|misc|ports|powerpc|sparc64|standards|www)\/\d+)/", 'pr2link', $String);
 
 	return $String;

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports_page_list_ports.php,v 1.1.2.4 2005-01-23 03:40:57 dan Exp $
+	# $Id: freshports_page_list_ports.php,v 1.1.2.5 2005-01-23 03:44:48 dan Exp $
 	#
 	# Copyright (c) 2005 DVL Software Limited
 	#
@@ -48,6 +48,7 @@ SELECT ports.id,
        status,
        broken,
        forbidden,
+       ignore,
        latest_link ";
 
 	if ($UserID) {

@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.97 2002-05-28 00:47:52 dan Exp $
+	# $Id: freshports.php,v 1.4.2.98 2002-06-12 03:06:16 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -1145,6 +1145,34 @@ function freshports_UserSendToken($UserID, $dbh) {
 	}
 
 	return $result;
+}
+
+function freshports_ShowFooter() {
+GLOBAL $TableWidth;
+
+echo '<TABLE WIDTH="' . $TableWidth . '" BORDER="0" ALIGN="center">
+<TR><TD>
+';
+
+include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php");
+
+echo '
+</TD></TR>
+</TABLE>
+';
+}
+
+function freshports_SideBar() {
+
+echo '
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
+';
+
+include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php");
+
+echo '
+</TD>
+';
 }
 
 ?>

@@ -22,8 +22,8 @@
     $q->query($DB, $sSQL);
     $rec=$q->getrow();
     if($rec["folder"]==0){
-      header("Location: $forum_url/$list_page.$ext?f=$rec[id]$GetVars");
-      exit();
+#      header("Location: $forum_url/$list_page.$ext?f=$rec[id]$GetVars");
+#      exit();
     }
   }
 

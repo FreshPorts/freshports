@@ -20,6 +20,7 @@
   $thread=$t;
   $action=$a;
 
+
   if($num==0 || $ForumName==''){
     Header("Location: $forum_url?$GetVars");
     exit;
@@ -153,7 +154,7 @@
   $rec=$thread_list->getrow();
 
   if(empty($rec["thread"]) && $action!=0){
-    Header("Location: $forum_url/$list_page.$ext?f=$num$GetVars");
+#    Header("Location: $forum_url/$list_page.$ext?f=$num$GetVars");
     exit();
   }
 

@@ -8,15 +8,15 @@
   $pho_main = "forums";
 
   // location where the configuration information is stored
-  $inf_path="./include";  // no ending slash
+  $inf_path="/home/freshports.org/configuration/phorum/include";  // no ending slash
   $inf_file="$inf_path/forums.php";
   $inf_back="$inf_path/forums.bak.php";
 
   // path to include files
-  $include_path="./include";  // no ending slash
+  $include_path="/home/freshports.org/configuration/phorum/include";  // no ending slash
 
   // relative path to the admin pages
-  $admindir="_icq";
+  $admindir="/home/freshports.org/configuration/phorum/admin";
   $admin_page="index.php";
 
   // Path to database abstraction file:
@@ -347,7 +347,8 @@
       }
     }
     else{
-      header("Location: $forum_url/$forum_page.$ext");
+echo 'common.php is bootig you out';
+#      header("Location: $forum_url/$forum_page.$ext");
     }
   }
   else {

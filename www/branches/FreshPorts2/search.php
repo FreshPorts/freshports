@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.68 2004-12-02 01:04:30 dan Exp $
+	# $Id: search.php,v 1.1.2.69 2004-12-14 01:46:44 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -182,7 +182,12 @@ $sql = "
          ports.deprecated, 
          ports.ignore, 
          ports.forbidden,
-         ports.latest_link  ";
+         ports.latest_link,
+         ports.master_port,
+         ports.latest_link,
+         ports.no_package,
+         ports.package_name,
+         ports.no_package  ";
 
 	if ($User->id) {
 		$sql .= ",

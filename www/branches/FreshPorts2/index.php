@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.86 2003-11-21 15:03:08 dan Exp $
+	# $Id: index.php,v 1.1.2.87 2004-01-06 13:46:21 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -117,7 +117,12 @@ ports. A port is marked as new for 10 days.
 	} else {
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/latest_commits.php');
 
-		$LatestCommits = new LatestCommits($db, $MaxNumberOfPorts);
+		$LatestCommits = new LatestCommits($db);
+		$LatestCommits->SetMaxNumberOfPorts($MaxNumberOfPorts);
+		$LatestCommits->SetDaysMarkedAsNew ($DaysMarkedAsNew);
+		$LatestCommits->SetUserID($User->id);
+		$LatestCommits->SetWatchListAsk($User->watch_list_add_remove);
+		$LatestCommits->CreateHTML();
 
 		echo $LatestCommits->HTML;
 	}

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.1 2003-11-20 14:33:05 dan Exp $
+	# $Id: index.php,v 1.1.2.2 2004-01-06 13:45:53 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -15,7 +15,10 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/latest_commits.php');
 
-	$LatestCommits = new LatestCommits($db, $MaxNumberOfPorts);
+	$LatestCommits = new LatestCommits($db);
+	$LatestCommits->SetMaxNumberOfPorts($MaxNumberOfPorts);
+	$LatestCommits->SetDaysMarkedAsNew ($DaysMarkedAsNew);
+	$LatestCommits->CreateHTML();
 
 	echo $LatestCommits->HTML;
 	$Statistics->Save();

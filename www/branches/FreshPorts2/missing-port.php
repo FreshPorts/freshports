@@ -1,14 +1,17 @@
 <?
-	# $Id: missing-port.php,v 1.1.2.2 2001-12-29 20:37:23 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.3 2001-12-30 23:26:39 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
 
 function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 
-#	echo "you asked for $REQUEST_URI<BR>";
+#$Debug=1;
 
-	$result = 0;
+
+	if ($Debug) echo "you asked for $REQUEST_URI<BR>";
+
+	$result = "";
 	$url_Array = explode('/', $REQUEST_URI);
 	if (array_count_values($url_Array) >= 1) {
 		$CategoryName = $url_Array[1];
@@ -16,14 +19,18 @@ function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 			$PortName = $url_Array[2];
 		}
 
-#		echo "\$CategoryName = '$CategoryName'<BR>";
-#		echo "\$PortName     = '$PortName'<BR>";
+		if ($Debug) {
+			echo "\$CategoryName = '$CategoryName'<BR>";
+			echo "\$PortName     = '$PortName'<BR>";
+		}
 
 
 		$CategoryID = freshports_CategoryId($CategoryName, $db);
 
-#		echo "\$CategoryName = '$CategoryName' ($CategoryID)<BR>";
-#		echo "\$PortName     = '$PortName'<BR>";
+		if ($Debug) {
+			echo "\$CategoryName = '$CategoryName' ($CategoryID)<BR>";
+			echo "\$PortName     = '$PortName'<BR>";
+		}
 
 		if (IsSet($PortName)) {
 			$element = new Element($db);
@@ -33,9 +40,15 @@ function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 				$port = new Port($db);
 				$port->FetchByPartialName("/ports/$CategoryName/$PortName");
 
+				if ($Debug) {
+					if (defined($port->id)) {
+						echo "port was found with id = $port->id<BR>";
+					} else {
+						echo "that port not found<BR>";
+					}
+				}
 			}
 		}
-
 
 		if (IsSet($CategoryID)) {
 #			echo "<A HREF=\"/category.php3?category=$CategoryID\">this link</A> should take you to the category details<BR>";
@@ -45,18 +58,20 @@ function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 #				echo "and short_description = $port->short_description";
 
 				freshports_PortDescription($port);
-				$result = 1;
 
 			} else {
 #				if (IsSet($PortName)) {
 #					echo "no port found like that in this category";
 #				}
-
-				require("missing-category.php");
-				freshports_Category($CategoryID, $db);
+				if ($PortName != '' && !IsSet($port->id)) {
+					$result = "The <A HREF=\"/$CategoryName/\">category you specified</A> exists but not the port <I>$PortName</I>.";
+				} else {
+					require("missing-category.php");
+					freshports_Category($CategoryID, $db);
+				}
 			}
 		} else {
-			echo "no category '$CategoryName' found";
+#			echo "no category '$CategoryName' found";
 		}
 	}
 
@@ -65,6 +80,8 @@ function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 
 
 function freshports_PortDescription($port) {
+	GLOBAL $TableWidth;
+
 	header("HTTP/1.1 200 OK");
 	$Title = $port->category . "/" . $port->port;
 	freshports_Start($Title,
@@ -73,7 +90,7 @@ function freshports_PortDescription($port) {
 
 ?>
 
-<TABLE WIDTH="100%" BORDER="0">
+<TABLE WIDTH="<? echo $TableWidth ?>" BORDER="0" ALIGN="center">
 <tr>
   <td>
 <p>This page contains the description of a single port.</p>
@@ -88,7 +105,7 @@ to see what files changed for this port in that commit.</p>
 </td>
 </tr>
 <tr><td valign="top" width="100%">
-<TABLE WIDTH="100%" BORDER="0">
+<TABLE WIDTH="100%" BORDER="0" ALIGN="centre">
 <tr>
     <td colspan="3" bgcolor="#AD0040" height="29"><font color="#FFFFFF" size="+2">freshports - 
 <?
@@ -132,9 +149,18 @@ $ShowDescriptionLink  = "N";
 
 </TD>
 </TR>
-</TABLE>
-<?
+<TR><TD>
 
+<?
+	include("./include/footer.php");
+?>
+
+</TD></TR>
+</TABLE>
+</body>
+</html>
+
+<?
 }
 
 function freshports_CategoryId($category, $database) {
@@ -156,7 +182,5 @@ function freshports_CategoryId($category, $database) {
 
 	return $CategoryID;
 }
-
-
 
 ?>

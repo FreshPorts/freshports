@@ -33,7 +33,7 @@ class graph {
 		$this->bar_space = 0;
 
 #		$def_font = "/usr/X11R6/lib/X11/fonts/TrueType/arial.ttf";
-		$def_font = "/home/freshports.org/configuration/ttf/arial.ttf";
+		$def_font = "/home/freshports.org/configuration/fonts/arial.ttf";
 
 		$this->title = new text($title_text);
 		$this->title->font = $def_font;

@@ -1,5 +1,5 @@
 <?
-   # $Id: index.php3,v 1.34.2.4 2001-11-26 06:50:48 dan Exp $
+   # $Id: index.php3,v 1.34.2.5 2001-11-27 06:34:05 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -279,7 +279,7 @@ order by commit_log.commit_date desc,
             echo "read from test failed";
          }
 
-         pg_exec ($database, "end");
+#         pg_exec ($database, "end");
       } else {
          echo "no connection";
       }

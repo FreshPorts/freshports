@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.212 2005-02-17 01:53:25 dan Exp $
+	# $Id: freshports.php,v 1.4.2.213 2005-02-17 02:32:47 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -234,7 +234,7 @@ function freshports_No_CDROM_Icon($HoverText = '') {
 	$Alt       = "NO CDROM";
 	$HoverText = freshports_HoverTextCleaner($Alt, $HoverText);
 
-	return '<IMG SRC="/images/cdrom.jpg" ALT="' . $Alt . '" TITLE="' . $HoverText . '" WIDTH="16" HEIGHT="16">';
+	return '<IMG SRC="/images/no_cdrom.jpg" ALT="' . $Alt . '" TITLE="' . $HoverText . '" WIDTH="16" HEIGHT="16">';
 }
 
 function freshports_No_CDROM_Icon_Link($HoverText = '') {

@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.11 2001-12-29 22:02:05 dan Exp $
+   # $Id: freshports.php,v 1.4.2.12 2001-12-29 22:15:27 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -407,8 +407,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
    }
 
    if (!$HideCategory) {
-      $URL_Category = "category.php3?category=" . $port->category_id;
-      $HTML .= ' <font size="-1"><a href="' . $URL_Category . '">' . $port->category . '</a></font>';
+      $HTML .= ' <font size="-1"><a href="/' . $port->category . '/">' . $port->category . '</a></font>';
    }
 
    if ($port->date_created > Time() - 3600 * 24 * $DaysMarkedAsNew) {

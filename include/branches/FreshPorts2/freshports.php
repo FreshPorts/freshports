@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.183 2004-09-27 00:30:41 dan Exp $
+	# $Id: freshports.php,v 1.4.2.184 2004-10-02 14:19:54 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -1048,7 +1048,7 @@ function freshports_PortsMoved($port, $PortsMoved) {
 }
 
 function freshports_PortsUpdating($port, $PortsUpdating) {
-	$HTML .=                    htmlspecialchars($PortsUpdating->date);
+	$HTML  =                    htmlspecialchars($PortsUpdating->date);
 	$HTML .= '<pre>Affects: ' . htmlspecialchars($PortsUpdating->affects) . '</pre>';
 	$HTML .= '<pre>Author: '  . htmlspecialchars($PortsUpdating->author)  . '</pre>';
 	$HTML .= '<pre>Reason: '  . htmlspecialchars($PortsUpdating->reason)  . '</pre>';

@@ -1,5 +1,5 @@
 --
--- $Id: POSTGRESQL.sql,v 1.1.2.11 2002-05-25 22:50:06 dan Exp $
+-- $Id: POSTGRESQL.sql,v 1.1.2.12 2002-06-12 03:18:28 dan Exp $
 --
 -- Copyright (c) 1998-2002 DVL Software Limited
 --
@@ -78,6 +78,11 @@ grant select                         on watch_notice                   to group 
 grant select                         on graphs                         to group www;
 grant select                         on daily_stats                    to group www;
 grant select                         on daily_stats_data               to group www;
+
+grant select                         on report_frequency               to group www;
+grant select                         on reports                        to group www;
+grant select, update, delete, insert on report_subscriptions           to group www;
+grant select                         on report_log                     to group www;
 
 --
 -- no access

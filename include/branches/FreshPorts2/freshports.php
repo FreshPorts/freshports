@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.110 2002-12-03 16:01:14 dan Exp $
+	# $Id: freshports.php,v 1.4.2.111 2002-12-03 16:18:18 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -1164,8 +1164,17 @@ echo '
 ';
 }
 
-function freshports_LinkToDate($Date) {
-	return '<a href="/date.php?date=' . date("Y/n/j", $Date) . '">' . date("D, j M Y", $Date) . "<br>\n";
+function freshports_LinkToDate($Date, $Text = '') {
+	$URL = '<a href="/date.php?date=' . date("Y/n/j", $Date) . '">';
+	if ($Text != '') {
+		$URL .= $Text;
+	} else {
+		$URL .= date("D, j M Y", $Date);
+	}
+	
+	$URL .= '</a>';
+
+	return $URL;
 }
 
 openlog('FreshPorts', LOG_PID | LOG_PERROR, LOG_LOCAL0);

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports.php,v 1.1.2.34 2003-07-04 14:45:08 dan Exp $
+	# $Id: ports.php,v 1.1.2.35 2003-09-08 13:50:59 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -95,6 +95,11 @@ class Port {
 		if (In_Array('message_id',         $myrow)) $this->message_id         = $myrow["message_id"];
 		if (In_Array('encoding_losses',    $myrow)) $this->encoding_losses    = $myrow["encoding_losses"];
 		if (In_Array('committer',          $myrow)) $this->committer          = $myrow["committer"];
+
+		// We might be looking at category lang.  japanese/gawk is listed in both japanese and lang.
+		// So when looking at lang, we don't want to say, Also listed in lang...  
+		//
+		$this->category_looking_at= $myrow["category_looking_at"];
 	}
 
 	function FetchByPartialName($pathname, $UserID = 0) {
@@ -323,12 +328,14 @@ SELECT P.*, element.name    as port,
         ports.forbidden,
         ports.broken,
         to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added,
-        ports.categories as categories,
-        categories.name  as category
-   FROM ports, categories, ports_categories
+        ports.categories      as categories,
+        categories.name       as category_looking_at,
+        PRIMARY_CATEGORY.name as category
+   FROM ports, categories, ports_categories, categories PRIMARY_CATEGORY
   WHERE ports_categories.port_id     = ports.id
     AND ports_categories.category_id = categories.id
-    AND categories.name              = '$CategoryName' ) AS P
+    AND categories.name              = '$CategoryName'
+    AND PRIMARY_CATEGORY.id          = ports.category_id ) AS P
    ON (P.element_id     = element.id
    AND element.status   = 'A')";
 

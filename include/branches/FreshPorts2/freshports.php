@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.215 2005-02-17 04:27:23 dan Exp $
+	# $Id: freshports.php,v 1.4.2.216 2005-02-21 01:18:01 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -642,47 +642,10 @@ function freshports_style($Phorum=0) {
 		<LINK REL="STYLESHEET" TYPE="text/css" HREF="<?php echo phorum_get_file_name("css"); ?>">
 		<?
 	}
-	echo "\n        <STYLE TYPE=\"text/css\">\n";
 
-if (2==2) {
-?>
-BODY, TD, TR, P, UL, OL, LI, INPUT, SELECT, DL, DD, DT, FONT
-{
-    font-family: Helvetica, Verdana, Arial, Clean, sans-serif;
-    font-size: 12px;
-}
-<?
-}
-	echo "
-                CODE.code { color: #461b7e}
-                PRE.code {  color: #461b7e}
-                BLOCKQUOTE.code { color: #461b7e}
-                TD.sans { font-size: smaller; }
-                P.white { color: white; }
-                P.blackhead { color: black; font-weight: 900; }
-                P.whitehead { color: white; font-weight: 900; }
-                P.yellow { color: #FFCC33; }
-                A:hover { color: #666666; }
-                A.white { color: white; text-decoration: none; font-size: smaller; }
-                A.black { color: black; text-decoration: none; font-size: smaller; }
-                A.white:hover { text-decoration: underline; }
-
-div.section {
-	padding          : 0.25em;
-	background-color : #FFCC33;
-	border           : 2px outset #333;
-	font-size        : 120%;
-	font-weight      : bold;
-	text-align       : left;
-}
-
-div.section .left {
-	float : left;
-}
-
-
-        </STYLE>\n";
-
+	if (2==2) {
+		echo '	<link rel="stylesheet" href="/css/freshports.css" type="text/css">' . "\n";
+	}
 }
 
 function freshports_body() {

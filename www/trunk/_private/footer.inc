@@ -7,7 +7,7 @@
 <a href="http://www.freebsd.org/"><img src="/images/pbfbsd2.gif"
 alt="powered by FreeBSD" border="0" width="171" height="64"></a>
 
-<a href="http://www.mysql.org/"><img src="/images/mysql.gif"
+<a href="http://www.mysql.com/"><img src="/images/mysql.gif"
 alt="powered by mysql" border="0" width="88" height="46"></a>
 
 <a href="http://www.php3.org/"><img src="/images/php3.gif"

@@ -1,5 +1,5 @@
 <?
-	# $Id: report-subscriptions.php,v 1.1.2.7 2002-08-17 14:53:08 dan Exp $
+	# $Id: report-subscriptions.php,v 1.1.2.8 2002-09-09 17:26:54 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -44,7 +44,7 @@
 	}
 
 	function freshports_ReportNames($dbh) {
-		$sql = "select id, name, needs_frequency from reports order by id";
+		$sql = "select id, name, description, needs_frequency from reports order by name";
 		$result = pg_exec($dbh, $sql);
 		if ($result) {
 			$numrows = pg_numrows($result);
@@ -52,6 +52,7 @@
 				$myrow = pg_fetch_array ($result, $i);
 				$Values["name"]				= $myrow["name"];
 				$Values["needs_frequency"]	= $myrow["needs_frequency"];
+				$Values["description"]		= $myrow["description"];
 				$Reports[$myrow["id"]] = $Values;
 			}
 		}
@@ -153,22 +154,22 @@ This page allows you to select the reports you wish to receive and the frequency
 		while (list($report_id, $Values) = each($Reports)) {
 			$name				= $Values["name"];
 			$needs_frequency	= $Values["needs_frequency"];
-			echo '<TR><TD>';
+			$description		= $Values["description"];
+			echo '<TR><TD VALIGN="top">';
 			echo '<INPUT TYPE="checkbox" NAME="reports[]" value="' . $report_id . '"';
 			if (${"reports_" . $report_id}) {
 				echo ' checked';
 			}
 			echo '> ' . $name;
-			echo '</TD><TD>';
-			echo '<A HREF="/show-help.php?type=report&id=' . $report_id . '">?</A>';
-			echo '</TD><TD>';
-#			echo "\$needs_frequency='$needs_frequency'<BR>\n";
+			echo '</TD><TD VALIGN="top">';
+			echo '</TD><TD VALIGN="top">';
 			if ($needs_frequency == 't') {
 				echo freshports_ReportFrequenciesDDLB($Frequencies, ${"frequencies_" . $report_id});
 			} else {
 				echo 'N/A';
 			}
-			echo "</TD></TR>\n";
+			echo "</TD><TD>" . $description . " </TD>";
+			echo "</TR>\n";
 		}
 
 	?>

@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.9 2002-02-10 03:05:02 dan Exp $
+	# $Id: index.php,v 1.1.2.10 2002-02-11 01:44:24 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -104,11 +104,11 @@ function GetPortNameFromFileName($file_name) {
       $numrows = $MaxNumberOfPorts;
       $database=$db;
       if ($database) {
-
 #
 # we limit the select to recent things by using a date
 # otherwise, it joins the whole table and that takes quite a while
 #
+$numrows=400;
 $sql = " 
 select DISTINCT commit_log.commit_date as commit_date_raw,
        commit_log.id as commit_log_id,
@@ -266,21 +266,11 @@ ports. A port is marked as new for 10 days.
 					$i = $j - 1;
 
 					$HTML .= '<BLOCKQUOTE>';
-					if ($myrow["commit_date"] > $FP1MigrationCutoffDate) {
-						$HTML .= '<PRE CLASS="code">';
-					} else {
-						$HTML .= '<CODE CLASS="code">';
-					}
-					$HTML .= convertAllLinks(htmlspecialchars($myrow["commit_description"]));
+					$HTML .= '<PRE CLASS="code">';
 
-					if ($myrow["commit_date"] > $FP1MigrationCutoffDate) {
-						$HTML .= '</PRE>';
-					} else {
-						$HTML .= '</CODE>';
-					}
+					$HTML .= convertAllLinks(htmlspecialchars(freshports_wrap($myrow["commit_description"])));
 
-					
-					$HTML .= "</PRE></BLOCKQUOTE></td>\n";
+					$HTML .= '</PRE>';
 
 					$HTML .= "</tr>\n";
 				}

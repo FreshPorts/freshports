@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.24 2002-02-10 03:05:03 dan Exp $
+   # $Id: freshports.php,v 1.4.2.25 2002-02-11 01:44:24 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -22,8 +22,6 @@ $TableWidth             = "98%";
 $DateFormatDefault      = "j F Y";
 
 $FreshPortsTitle		= "FreshPorts";
-
-$FP1MigrationCutoffDate	= "2002-02-08";
 
 #
 # SEQUENCES
@@ -780,5 +778,24 @@ function freshports_GetNextValue($sequence, $dbh) {
 	return $NextValue;
 }
 
+function freshports_wrap($text, $length = 72) {
+	#
+	# split the text into lines based on \n
+	#
+	$lines = explode("\n", $text);
+
+	#
+	# for each line, wrap them at 72 chars...
+	#
+	for ($i = 0; $i < count($lines); $i++) {
+		$lines[$i] = wordwrap($lines[$i], $length, "\n");
+	}
+
+	#
+	# put the array back into a single text string with \n
+	# as the glue.
+	#
+	return implode("\n", $lines);
+}
 
 ?>

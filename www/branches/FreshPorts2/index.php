@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.83 2003-09-26 12:03:52 dan Exp $
+	# $Id: index.php,v 1.1.2.84 2003-10-06 17:09:41 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -89,7 +89,7 @@ if (Is_Numeric($dailysummary)) {
 $database=$db;
 if ($database) {
 
-$sql = "select * from LastestCommits($MaxNumberOfPorts, ";
+$sql = "select * from LatestCommits($MaxNumberOfPorts, ";
 if ($User->id) {
 	$sql .= $User->id;
 } else {
@@ -102,19 +102,19 @@ if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 
 $result = pg_exec($database, $sql);
 if ($result) {
-	$numrows = pg_numrows($result);
-	if ($numrows) { 
+	$NumRows = pg_numrows($result);
+	if ($Debug) echo "Number of rows = $NumRows<br>";
+	if ($NumRows) { 
 	
 		$i=0;
 		$GlobalHideLastChange = "N";
-		for ($i = 0; $i < $numrows; $i++) {
+		for ($i = 0; $i < $NumRows; $i++) {
 			$myrow = pg_fetch_array ($result, $i);
 			$mycommit = new CommitRecord($database);
 			$mycommit->PopulateValues($myrow);
 			$commits[$i] = $mycommit;
 		}
 	
-		$NumRows = $numrows;
 		$LastDate = '';
 ?>
 
@@ -154,8 +154,9 @@ ports. A port is marked as new for 10 days.
 
 					# count the number of ports in this commit
 					$NumberOfPortsInThisCommit = 0;
-					$MaxNumberPortsToShow = 10;
+					$MaxNumberPortsToShow      = 10;
 					while ($j < $NumRows && $commits[$j]->commit_log_id == $ThisCommitLogID) {
+#echo "in NumberOfPortsInThisCommit loop $i, $j<br>";
 						$NumberOfPortsInThisCommit++;
 						$mycommit = $commits[$j];
 
@@ -236,6 +237,7 @@ ports. A port is marked as new for 10 days.
 								$HTML .= "&nbsp;";
 
 							} else {
+#echo 'no category found!<br>';
 								$HTML .= '<BIG><B>';
 								$PathName = preg_replace('|^/?ports/|', '', $mycommit->element_pathname);
 								$HTML .= '<a href="/' . $PathName . '">' . $PathName . '</a>';
@@ -254,6 +256,7 @@ ports. A port is marked as new for 10 days.
 					$i = $j - 1;
 
 					$HTML .= "\n<BLOCKQUOTE>";
+#echo "freshports_PortDescriptionPrint called $i<br>";
 
 					$HTML .= freshports_PortDescriptionPrint($mycommit->commit_description, $mycommit->encoding_losses, $freshports_CommitMsgMaxNumOfLinesToShow, freshports_MoreCommitMsgToShow($mycommit->message_id, $freshports_CommitMsgMaxNumOfLinesToShow));
 

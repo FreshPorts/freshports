@@ -1,5 +1,7 @@
 <P>
-<BIG><BIG>HEADS UP: changes to notification mail headers</BIG></BIG> - please read <a href="http://www.freshports.org/phorum/read.php?f=1&i=410&t=410">the notice</a>
+<BIG><BIG>HEADS UP: serious problem with watch list notifications</BIG></BIG> - please read <a href="http://www.freshports.org/phorum/read.php?f=1&i=413&t=413">the details.</a>
+<P>
+<BIG><BIG>HEADS UP: changes to notification mail headers</BIG></BIG> - please read <a href="http://www.freshports.org/phorum/read.php?f=1&i=410&t=410">the notice.</a>
 </P>
 <P>
 

@@ -2,6 +2,31 @@
 require( "./_private/commonlogin.php3");
 require( "./_private/getvalues.php3");
 require( "./_private/freshports.php3");
+
+if (!$StartAt) {
+   if ($Debug) {
+      echo "setting StartAt to zero<br>\n";
+   }
+   $StartAt = 0;
+} else {
+   $NewStart = floor($StartAt / 20) * 20;
+   if ($NewStart != $StartAt) {
+      $URL = basename($PHP_SELF);
+      if ($NewStart > 0) {
+         $URL .= "?StartAt=$NewStart";
+      } else {
+         $URL = "/";
+      }
+      header("Location: " . $URL );
+      // Make sure that code below does not get executed when we redirect.
+      exit;
+   }
+}
+
+if ($Debug) {
+   echo "StartAt = $StartAt<br>\n";
+}
+
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
@@ -28,7 +53,9 @@ ports.
 <tr><td valign="top" width="100%">
 <table width="100%" border="0">
 <tr>
-    <td colspan="5" bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">freshports - last 20 ports</font></td>
+    <td colspan="5" bgcolor="#AD0040" height="30">
+        <font color="#FFFFFF" size="+1">freshports - most recent commits
+        <? echo ($StartAt + 1) . " - " . ($StartAt + 20) ?></font></td>
   </tr>
 <tr>
 <script language="php">
@@ -52,6 +79,8 @@ switch ($sort) {
       $sort ="updated desc, category, version";
       $cache_file .= ".updated";
 }
+
+$cache_file .= "." . $StartAt;
 
 srand((double)microtime()*1000000);
 $cache_time_rnd =       300 - rand(0, 600);
@@ -91,7 +120,7 @@ if (!file_exists($cache_file)) {
    }
 }
 
-$UpdateCache = 1;
+//$UpdateCache = 1;
 
 if ($UpdateCache == 1) {
 //   echo 'time to update the cache';
@@ -105,11 +134,17 @@ $sql = "select ports.id, ports.name as port, ports.last_update as updated, " .
        "WHERE ports.system = 'FreeBSD' ".
        "and ports.primary_category_id = categories.id ";
 
-$sql .= "order by $sort limit 20";
+$sql .= "order by $sort ";
+
+$sql .= "limit $StartAt, 20";
 
 echo $sql;
 
 $result = mysql_query($sql, $db);
+
+if (!$result) {
+   echo mysql_errno().": ".mysql_error()."<BR>";
+}
 
 $HTML = "</tr></td><tr>";
 
@@ -148,7 +183,23 @@ echo $HTML;
    }
 }
 
-$HTML .= "</table>\n";
+echo '<tr><td height="40" colspan="2" valign="bottom">';
+
+if ($StartAt == 0) {
+   echo 'Previous 20';
+} else {
+   echo '<a href="' . basename($PHP_SELF);
+   if ($StartAt > 20) {
+      echo '?StartAt=' . ($Start + 20);
+   }
+   echo '">Previous 20</a>';
+}
+
+echo '  <a href="' . basename($PHP_SELF) . "?StartAt=" . ($StartAt + 20) . '">Next 20</a>';
+
+echo '</td></tr>';
+
+//$HTML .= "</table>\n";
 </script>
 </table>
 </td>

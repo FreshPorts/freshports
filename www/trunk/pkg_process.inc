@@ -1,4 +1,11 @@
 <?
+	# $Id: pkg_process.inc,v 1.4 2002-01-06 23:19:31 dan Exp $
+	#
+	# Copyright (c) 1998-2001 DVL Software Limited
+
+$Debug=0;
+
+
 // {{{ function SplitPackage($pkg,$arr)
 /**
 * Take a package name (basename-version) and split it 
@@ -24,7 +31,10 @@ function SplitPackage($pkg,&$arr) {
 function ReadINDEX() {
 	# Get the latest from fetch ftp://ftp.freebsd.org/pub/FreeBSD/ports/ports/INDEX
 	# as needed
-	$gIndexFile = "./INDEX";
+
+	GLOBAL $DOCUMENT_ROOT;
+
+	$gIndexFile = $DOCUMENT_ROOT . "/../configuration/INDEX";
 	$iFid = fopen($gIndexFile,'r');
 	if (!$iFid) { return false; }
 	while(!feof($iFid)) {
@@ -59,7 +69,7 @@ function ReadINDEX() {
 * @return	an array of ports
 *
 */
-function ProcessPackages($filename,$userID,$clean) {
+function ProcessPackages($filename, $userID, $clean) {
 	// profiling info {{{
 	$starttime = time();
 	// }}}
@@ -126,28 +136,30 @@ function ProcessPackages($filename,$userID,$clean) {
 	$returnArray['FOUND'] = $gMyPorts;
 	$returnArray['GUESS'] = $guessPorts;
 
-	$ok = GetWatchID($userID,$watchID);
+	$ok = GetWatchID($userID, $watchID);
 	if (!$ok) {
-		echo "Could not find watch_id for user $userID\n";
+		echo "Could not find watch_id for user $userID<BR>\n";
 		return false;
 	}
+
+echo "obtained WatchID of '$watchID'<BR>\n";
 
 	if ($clean) {
 		$ok = CleanPorts($watchID);
 	}
 
-	$ok = $ok && AddPortsToList(array_merge($gMyPorts,$guessPorts),$userID);
+	$ok = $ok && AddPortsToList(array_merge($gMyPorts,$guessPorts), $watchID);
 	if (!$ok) {
-		echo "Error adding ports.\n";
+		echo "Error adding ports.<BR>\n";
 	  	if ($gDBG != 1) {
-			echo "Rerun with the '-d' option for details.\n";
+			echo "Rerun with the '-d' option for details.<BR>\n";
 		}
 	}
 
 	// profiling info {{{
 	$endtime = time();
 	$total = $endtime - $starttime;
-	print("Total Time Processing:  $total seconds");
+	print("Total Time Processing:  $total seconds<BR>\n");
 	// }}}
 	return $returnArray;
 }

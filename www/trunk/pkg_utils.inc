@@ -1,4 +1,10 @@
 <?
+	# $Id: pkg_utils.inc,v 1.4 2002-01-06 23:19:30 dan Exp $
+	#
+	# Copyright (c) 1998-2001 DVL Software Limited
+
+$Debug=0;
+
 function dbgonly($s) {
 	global $gDBG;
 	return ($gDBG) ? $s : '';
@@ -27,19 +33,13 @@ function epp($s) {
 *
 */
 function &DBConnect() {
-	global $database;
-	if (!$database) {
-		$database = pg_connect("dbname=FreshPorts2 user=jcampbell password=manuka");
-	}
-	return $database;
+	global $db;
+
+	return $db;
 }
 // }}}
 // {{{ function Cleanup()
 function Cleanup() {
-	global $database;
-	if ($database) {
-		pg_exec ($database, "end");
-	}
 }
 //}}}
 // {{{ function IsLoginValid($user,$pw,&$retval)
@@ -68,30 +68,59 @@ function IsLoginValid($user,$pw,&$retval) {
 	return $retval;
 }
 // }}}
-// {{{ function GetWatchID($userID,&$watchID)
+// {{{ function GetWatchID($userID, &$watchID)
 /**
 *
 * @param
 * @return
 *
 */
-function GetWatchID($userID,&$watchID) {
-	$retval = false;
-	$query = "select id from watch_list where user_id = $userID";
+function GetWatchID($userID, &$watchID) {
+	$retval   = false;
+	$query    = "select id from watch_list where user_id = $userID";
 	$database =& DBConnect();
 
 	if ($database) {
-		$result = pg_exec($database,$query);
-
+		$result = pg_exec($database, $query);
+	
 		if ($result && pg_numrows($result)) {
-			$retval = true;
-			$row = pg_fetch_array($result,0);
+			$retval  = true;
+			$row     = pg_fetch_array($result,0);
 			$watchID = $row[0];
+		} else {
+			# let's assume they have no watch list id yet.  so we'll create one for them
+			#
+			GLOBAL $Sequence_Watch_List_ID;
+
+			$NextValue = freshports_GetNextValue($Sequence_Watch_List_ID, $database);
+			$query     = "insert into watch_list (id, user_id, name) values ($NextValue, $userID, 'main')";
+			$result    = pg_exec($database, $query);
+
+/*
+if ($result) {
+	echo "got a result";
+} else {
+	echo "no result";
+}
+
+echo '<BR>';
+
+echo 'rows affected ' . pg_cmdtuples($result) . '<BR>';
+*/
+			if ($result && pg_cmdtuples($result)) {
+				$watchID = $NextValue;
+				$retval  = true;
+			} else {
+				pg_errormessage($database) . " sql = $query";
+			}
 		}
 	}
 	else {
 		echo "Error:  No Connection";
 	}
+
+#	echo "GetWatchID return value = '$retval'<BR>";
+
 	return $retval;
 }
 // }}}
@@ -107,13 +136,13 @@ function CleanPorts($watchID) {
 	$query = "delete from watch_list_element where watch_list_id = $watchID";
 	$database =& DBConnect();
 
-	echo "Cleaning out old ports\n";
+	echo "Cleaning out old ports<BR>\n";
 	if ($database) {
-		$result = pg_exec($database,$query);
+		$result = pg_exec($database, $query);
 
 		if (!$result) {
 			$error = pg_errormessage($database);
-			echo "$error\n";
+			echo "$error<BR>\n";
 			$retval = false;
 		}
 	}
@@ -131,7 +160,7 @@ function CleanPorts($watchID) {
 * @return
 *
 */
-function AddPortsToList($ports,$userID) {
+function AddPortsToList($ports, $userID) {
 	$source = "AddPortsToList";
 	$successful = 0;
 	$dups = 0;
@@ -145,12 +174,12 @@ function AddPortsToList($ports,$userID) {
 		}
 		// optimize this
 		foreach ($ports as $port) {
-			$query = "select WatchListAdd($userID,'$port')";
-			$result = @pg_exec($database,$query);
+			$query = "select WatchListAdd($userID, '$port')";
+			$result = @pg_exec($database, $query);
 
 			if (!$result) {
 				$errorMsg = pg_errormessage($database);
-				if (strpos($errorMsg,'Cannot insert a duplicate key')) {
+				if (strpos($errorMsg, 'Cannot insert a duplicate key')) {
 					$dups++;
 				}
 				else {
@@ -165,14 +194,17 @@ function AddPortsToList($ports,$userID) {
 	else {
 		echo "Error:  No Connection";
 	}
-	echo "Added $successful new ports\n";
+	echo "Added $successful new ports<BR>\n";
 	if ($dups) {
-		echo "$dups ports were duplicate and are still registered\n";
+		echo "$dups ports were duplicate and are still registered<BR>\n";
 	}
 	if (count($errorLog) > 0) {
 		epp("<pre>");
 		epp("ERROR LOG");
-		print_r($errorLog);
+		foreach ($errorLog as $error) {
+			echo $error . "<BR>\n";
+		}
+#		print_r($errorLog);
    		epp("</pre>");
 	}
 	if (count($errorLog) > 0) {

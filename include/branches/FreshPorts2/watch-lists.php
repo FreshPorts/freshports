@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-lists.php,v 1.1.2.11 2003-04-28 00:05:56 dan Exp $
+	# $Id: watch-lists.php,v 1.1.2.12 2004-10-25 00:23:44 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -56,7 +56,7 @@ function freshports_WatchListDDLB($dbh, $UserID, $selected = '', $size = 0, $mul
 			if ($element_id && $WatchList->watch_list_count) {
 				$HTML .= " +";
 			}
-			$HRML .= "</option>\n";
+			$HTML .= "</option>\n";
 		}
 	}
 

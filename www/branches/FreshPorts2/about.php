@@ -1,5 +1,5 @@
 <?
-	# $Id: about.php,v 1.1.2.12 2002-12-12 02:45:18 dan Exp $
+	# $Id: about.php,v 1.1.2.13 2003-01-06 14:15:30 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -15,7 +15,7 @@
 ?>
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><td VALIGN=TOP>
-<TABLE>
+<TABLE WIDTH="100%" ALIGN="left" border=1>
 <TR>
 	<? echo freshports_PageBannerText("About this site"); ?>
 </TR>
@@ -27,11 +27,12 @@ We have here a few notes about this website.
 </TD></TR>
 
 <TR>
-<td valign="top" width="100%">
+<td align="left" valign="top" width="100%"></td>
+</tr>
 
 <TR>
 	<? 
-	freshports_BannerSpace();
+#	freshports_BannerSpace();
 	echo freshports_PageBannerText("What is a port?"); 
 	?>
 </TR>
@@ -91,12 +92,11 @@ About the Authors</A> for details of who else helped.</P>
 
 </TABLE>
 </TD>
-  <TD VALIGN="top" WIDTH="*" ALIGN="center">
-    <?
-       $ShowPoweredBy = 1;
-       require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php');
-    ?>
- </TD>
+
+	<?
+	freshports_SideBar();
+	?>
+
 </TABLE>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: spam-filter-information.php,v 1.1.2.2 2003-04-27 14:48:21 dan Exp $
+	# $Id: spam-filter-information.php,v 1.1.2.3 2003-05-02 18:33:37 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -14,7 +14,7 @@ of incoming email, these reports will be coming from the following domains:
 <TABLE CELLSPACING="0" CELLPADDING="5" BORDER="1">
 <TR><TD>domain</TD><TD>reason</TD></TR>
 <TR><TD NOWRAP><CODE CLASS="code">freshports.org</CODE></TD><TD>All reports originate from that domain.</TD></TR>
-<TR><TD NOWRAP><CODE CLASS="code">unixathome.org</CODE></TD><TD>The websites is hosted on a box in that domain.</TD></TR>
+<TR><TD NOWRAP><CODE CLASS="code">unixathome.org</CODE></TD><TD>The websites are hosted on a box in that domain.</TD></TR>
 <TR><TD NOWRAP><CODE CLASS="code">langille.org</CODE></TD><TD>If I need to write to you, it will come from that domain.</TD></TR>
 </TABLE>
 

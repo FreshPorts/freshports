@@ -1,5 +1,5 @@
 <?
-   # $Id: port-description.php3,v 1.25.2.1 2001-11-25 17:33:41 dan Exp $
+   # $Id: port-description.php3,v 1.25.2.2 2001-11-25 21:42:02 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -53,7 +53,7 @@ $NumRows = pg_numrows($result);
 
 ?>
 
-<table width="100%" border="0">
+<TABLE WIDTH="100%" BORDER="0">
 <tr>
   <td>
 <p>This page contains the description of a single port.</p>
@@ -68,7 +68,7 @@ to see what files changed for this port in that commit.</p>
 </td>
 </tr>
 <tr><td valign="top" width="100%">
-<table width="100%" border="0">
+<TABLE WIDTH="100%" BORDER="0">
 <tr>
     <td colspan="3" bgcolor="#AD0040" height="29"><font color="#FFFFFF" size="+2">freshports - 
 <?
@@ -84,17 +84,22 @@ if ($NumRows) {
    $HideDescription=1;
    $ShowCategories=1;
    $ShowDepends=1;
-   include("./include/port-basics.php");
+#	include("./include/port-basics.php");
+
+	$HTML .= freshports_PortDetails($myrow, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription);
+
 
    echo $HTML;
 
-   echo "<dl><dd><pre>";
+   echo "<DL><DD><PRE>";
    echo $myrow["long_description"];
-   echo "</pre></dd></dl>\n";
+   echo "</PRE>\n</DD>\n</DL>\n</TD>\n</TR>";
 
-   echo '<tr height="20"><td colspan="3"></td></tr>' . "\n";
+#   echo '<tr height="20"><td colspan="3"></td></tr>' . "\n";
 
-   echo '<tr><td><table border="1" width="100%" CELLSPACING="0" CELLPADDING="5"bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">' . "\n";
+	
+
+   echo '<tr><td><TABLE BORDER="1" width="100%" CELLSPACING="0" CELLPADDING="5"bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">' . "\n";
    echo '<tr height="20"><td colspan="3" bgcolor="#AD0040"><font color="#FFFFFF"><font size="+1">Commit History</font> (may be incomplete: see Changes link above for full details)</font></td></tr>' . "\n";
    echo "<tr><td><b>Date</b></td><td><b>Committer</b></td><td><b>Description</b></td></tr>\n";
 
@@ -116,27 +121,27 @@ if ($NumRows) {
       echo "    <td valign='top'>" . $myrow["committer"]          . "</td>\n";
       echo '    <td valign="top"><a href="files.php3?id=' . $myrow["id"] .
                       '"><img src="images/logs.gif" alt="Files within this port affected by this commit" border="0" WIDTH="17" HEIGHT="20" hspace="2"></a>' . 
-                       htmlspecialchars($myrow["description"]) . "</td>\n";
+                       "<PRE>" . htmlspecialchars($myrow["description"]) . "</PRE></td>\n";
       echo "</tr>\n";
 		if ($i >  $numrows - 1) {
 			break;
 		}
 	}
 
-   echo "</table></td></tr>\n";
+   echo "</TABLE>\n</TD>\n</TR>\n";
 }
 
 ?>
 
-</table>
-</td>
-<td valign="top">
+</TABLE>
+</TD>
+<TD VALIGN="top">
 
 <? include("./include/side-bars.php") ?>
 
-</td>
-</tr>
-</table>
+</TD>
+</TR>
+</TABLE>
  <? include("./include/footer.php") ?>
-</body>
-</html>
+</BODY>
+</HTML>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing.php,v 1.1.2.22 2003-11-26 17:29:04 dan Exp $
+	# $Id: missing.php,v 1.1.2.23 2004-08-26 11:28:20 dan Exp $
 	#
 	# Copyright (c) 2001-2003 DVL Software Limited
 	#
@@ -18,13 +18,14 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	# if we can parse it, then do so and return 1;
 	# otherwise, return 0.
 
-	$Debug = 0;
+	$Debug  = 0;
+	$result = '';
 
 	$pathname = $REQUEST_URI;
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/element_record.php');
 
-	UnSet($result);
+#	UnSet($result);
 
 	$ElementRecord = new ElementRecord($db);
 

@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.41 2002-04-19 21:52:34 dan Exp $
+	# $Id: index.php,v 1.1.2.42 2002-04-21 18:22:10 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -36,14 +36,6 @@ function freshports_SummaryForDay($MinusN) {
       echo '   </TR>';
       echo '   </TABLE>';
    }
-}
-
-function freshports_MorePortsToShow($message_id, $NumberOfPortsInThisCommit, $MaxNumberPortsToShow) {
-	$HTML .= "(Only the first $MaxNumberPortsToShow of $NumberOfPortsInThisCommit commits are shown above ";
-	$HTML .= freshports_Commit_Link($message_id, '<IMG SRC="/images/play.gif" ALT="View all ports for this commit" BORDER="0" WIDTH="13" HEIGHT="13">');
-	$HTML .= ")";
-
-	return $HTML;
 }
 
 
@@ -287,8 +279,7 @@ ports. A port is marked as new for 10 days.
 
 					$HTML .= "\n<BLOCKQUOTE>";
 
-					$HTML .= freshports_PortDescriptionPrint($myrow["commit_description"], $myrow["encoding_losses"]);
-
+					$HTML .= freshports_PortDescriptionPrint($myrow["commit_description"], $myrow["encoding_losses"], $freshports_CommitMsgMaxNumOfLinesToShow, freshports_MoreCommitMsgToShow($myrow["message_id"], $freshports_CommitMsgMaxNumOfLinesToShow));
 
 					$HTML .= "\n</BLOCKQUOTE>\n</TD></TR>\n\n\n";
 				}

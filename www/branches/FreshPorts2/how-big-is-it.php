@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: how-big-is-it.php,v 1.1.2.11 2003-04-27 14:48:12 dan Exp $
+	# $Id: how-big-is-it.php,v 1.1.2.12 2003-10-26 23:30:38 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -58,7 +58,7 @@ It was a few days ago that I was thinking about search engines crawling through 
 I began to wonder just how many web pages there are here.  To calculate this total, it's not 
 just a simple matter of counting files on disk.  Most of the web pages are created from entries
 in the database.  One recent evening, I started to design a formula to find out how many web pages
-there are.  Roughly.  This will not be a 100% accurate forumla, but it will be close.
+there are.  Roughly.  This will not be 100% accurate, but it will be close.
 </P>
 </TD></TR>
 

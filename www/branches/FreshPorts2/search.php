@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.46 2003-09-13 11:11:55 dan Exp $
+	# $Id: search.php,v 1.1.2.47 2003-09-13 11:15:53 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -42,15 +42,15 @@
 	$casesensitivity	= '';
 	$start				= '';
 
-	if (IsSet($_REQUEST['query']))           $query				= AddSlashes($_REQUEST['query']);
-	if (IsSet($_REQUEST['stype']))           $stype				= AddSlashes($_REQUEST['stype']);
-	if (IsSet($_REQUEST['num']))             $num				= AddSlashes($_REQUEST['num']);
-	if (IsSet($_REQUEST['category']))        $category			= AddSlashes($_REQUEST['category']);
-	if (IsSet($_REQUEST['port']))            $port				= AddSlashes($_REQUEST['port']);
-	if (IsSet($_REQUEST['method']))          $method			= AddSlashes($_REQUEST['method']);
-	if (IsSet($_REQUEST['deleted']))         $deleted			= AddSlashes($_REQUEST['deleted']);
-	if (IsSet($_REQUEST['casesensitivity'])) $casesensitivity	= AddSlashes($_REQUEST['casesensitivity']);
-	if (IsSet($_REQUEST['start']))           $start				= intval(AddSlashes($_REQUEST['start']));
+	if (IsSet($_REQUEST['query']))           $query				= AddSlashes(trim($_REQUEST['query']));
+	if (IsSet($_REQUEST['stype']))           $stype				= AddSlashes(trim($_REQUEST['stype']));
+	if (IsSet($_REQUEST['num']))             $num				= AddSlashes(trim($_REQUEST['num']));
+	if (IsSet($_REQUEST['category']))        $category			= AddSlashes(trim($_REQUEST['category']));
+	if (IsSet($_REQUEST['port']))            $port				= AddSlashes(trim($_REQUEST['port']));
+	if (IsSet($_REQUEST['method']))          $method			= AddSlashes(trim($_REQUEST['method']));
+	if (IsSet($_REQUEST['deleted']))         $deleted			= AddSlashes(trim($_REQUEST['deleted']));
+	if (IsSet($_REQUEST['casesensitivity'])) $casesensitivity	= AddSlashes(trim($_REQUEST['casesensitivity']));
+	if (IsSet($_REQUEST['start']))           $start				= intval(AddSlashes(trim($_REQUEST['start'])));
 
 	if ($stype == 'messageid') {
 		header('Location: http://' . $_SERVER['HTTP_HOST'] . "/commit.php?message_id=$query");

@@ -28,14 +28,13 @@ if ($UserID) {
       echo '<font SIZE="-1">your email is <a href="bouncing.php3?origin=' . $OriginLocal. '">bouncing</a></font><br>';
       echo '<img src="/images/warning.gif"><img src="/images/warning.gif"><img src="/images/warning.gif"><br>';
    }
-   echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/customize.php3?origin=$OriginLocal", "Customize") . '</font><br>';
-
-   echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/logout.php3?origin=$OriginLocal", "Logout") . '</font><br>';
-   echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/watch-categories.php3", "watch list - Categories") . '</font><br>';
-   echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/watch.php3", "your watched ports") . '</font><br>';
+   echo '<font SIZE="-1">' . freshports_SideBarHTMLParm($PHP_SELF, '/customize.php3',        "?origin=$OriginLocal", "Customize"              ) . '</font><br>';
+   echo '<font SIZE="-1">' . freshports_SideBarHTMLParm($PHP_SELF, '/logout.php3',           "?origin=$OriginLocal", "Logout"                 ) . '</font><br>';
+   echo '<font SIZE="-1">' . freshports_SideBarHTMLParm($PHP_SELF, '/watch-categories.php3', '',                     "watch list - Categories") . '</font><br>';
+   echo '<font SIZE="-1">' . freshports_SideBarHTMLParm($PHP_SELF, '/watch.php3',            '',                     "your watched ports"     ) . '</font><br>';
   } else {
-   echo '<font SIZE="-1">' . freshports_SideBarHTMLParm($PHP_SELF, "/login.php3", "?origin=$OriginLocal", "User Login") . '</font><br>';
-   echo '<font SIZE="-1">' . freshports_SideBarHTMLParm($PHP_SELF, "/new-user.php3", "?origin=$OriginLocal", "Create account") . '</font><br>';
+   echo '<font SIZE="-1">' . freshports_SideBarHTMLParm($PHP_SELF, '/login.php3',            "?origin=$OriginLocal", "User Login"             ) . '</font><br>';
+   echo '<font SIZE="-1">' . freshports_SideBarHTMLParm($PHP_SELF, '/new-user.php3',         "?origin=$OriginLocal", "Create account"         ) . '</font><br>';
   }
 ?>
    </td>

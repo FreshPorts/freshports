@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.20 2003-03-10 14:35:46 dan Exp $
+	# $Id: categories.php,v 1.1.2.21 2003-04-27 14:45:56 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -72,18 +72,17 @@ switch ($sort) {
 }
 
 $sql = "
-  SELECT to_char(max(commit_log.commit_date) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as updated,
-         count(ports.id) as count,
-         max(commit_log.commit_date) - SystemTimeAdjust() as updated_raw,
-         categories.id as category_id,
-         categories.name as category,
-         categories.description as description 
-    FROM ports_categories, categories, element, ports left outer join commit_log on ( ports.last_commit_id = commit_log.id )
-   WHERE ports.id             = ports_categories.port_id
-     AND categories.id        = ports_categories.category_id
-     AND ports.element_id     = element.id 
-     AND element.status       = 'A'
-GROUP BY categories.id, categories.name, categories.description ";
+  SELECT to_char(max(commit_log.commit_date) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') AS updated,
+         count(ports_active.id)        AS count,
+         max(commit_log.commit_date) - SystemTimeAdjust() AS updated_raw,
+         categories.id          AS category_id,
+         categories.name        AS category,
+         categories.description AS description,
+         categories.is_primary  AS is_primary
+    FROM ports_categories, categories, ports_active left outer join commit_log on ( ports_active.last_commit_id = commit_log.id )
+   WHERE ports_active.id = ports_categories.port_id
+     AND categories.id   = ports_categories.category_id
+GROUP BY categories.id, categories.name, categories.description, is_primary ";
 
 $sql .=  " ORDER BY $sort";
 
@@ -130,13 +129,14 @@ if (!$result) {
    print pg_errormessage() . "<br>\n";
    exit;
 } else {
-	$NumTopics	= 0;
-	$NumPorts	= 0;
-	$i			= 0;
+	$NumTopics	   = 0;
+	$NumPorts      = 0;
+	$i			      = 0;
+	$CategoryCount = 0;
 	$NumRows = pg_numrows($result);
 	while ($myrow = pg_fetch_array($result, $i)) {
 		$HTML .= freshports_echo_HTML('<tr>');
-		$HTML .= freshports_echo_HTML('<td valign="top"><a href="/' . $myrow["category"] . '/">' . $myrow["category"] . '</a></td>');
+		$HTML .= freshports_echo_HTML('<td valign="top"><a href="/' . $myrow["category"] . '/">' . $myrow["category"] . ' ' . $myrow["is_primary"] . '</a></td>');
 
 		if ($AllowedToEdit) {
 			$HTML .= freshports_echo_HTML('<td valign="top"><a href="/category-maintenance.php?category=' . $myrow["category"] . '">update</a></td>');
@@ -148,7 +148,13 @@ if (!$result) {
 		$HTML .= freshports_echo_HTML("</tr>\n");
 
 
-		$NumPorts += $myrow["count"];
+		# count only the ports in primary categories
+		# as non-primary categories contain only ports which appear in primary categories.
+		if ($myrow["is_primary"] == 't') {
+			$NumPorts += $myrow["count"];
+			$CategoryCount++;
+		}
+
 		$i++;
 		if ($i >  $NumRows - 1) {
 			break;
@@ -160,7 +166,10 @@ $HTML .= freshports_echo_HTML('<tr><td><b>port count:</b></td>');
 if ($AllowedToEdit) {
 	$HTML .= freshports_echo_HTML('<td>&nbsp;</td>');
 }
-$HTML .= freshports_echo_HTML("<td ALIGN=\"right\"><b>$NumPorts</b></td><td>($NumRows categories)</td><td>&nbsp;</td></tr>");
+
+$HTML .= freshports_echo_HTML("<td ALIGN=\"right\"><b>$NumPorts</b></td><td>($CategoryCount categories)</td><td>&nbsp;</td></tr>");
+
+$HTML .= freshports_echo_HTML("<tr><td colspan=\"4\">Hmmm, I'm not so sure this port count is accurate. Dan Langille 27 April 2003</td></tr>");
 
 $HTML .= freshports_echo_HTML('</table>');
 
@@ -171,9 +180,11 @@ echo $HTML;
 </script>
 </td>
 
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
 	freshports_SideBar();
 	?>
+  </td>
 
 </tr>
 </table>

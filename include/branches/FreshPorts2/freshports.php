@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.106 2002-11-01 20:23:38 dan Exp $
+	# $Id: freshports.php,v 1.4.2.107 2002-11-22 19:29:52 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -582,23 +582,19 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 		$HTML .= freshports_New_Icon() . "\n";
 	}
 
-	if ($port->{forbidden}) {
-		$HTML .= freshports_Forbidden_Icon() . "\n";
-	}
-
 	$HTML .= "</DT>\n<DD>";
 	# show forbidden and broken
 	if ($port->forbidden) {
-		$HTML .= freshports_Forbidden_Icon() . 'FORBIDDEN: ' . $port->forbidden . "<br>";
+		$HTML .= freshports_Forbidden_Icon() . ' FORBIDDEN: ' . htmlify(htmlspecialchars($port->forbidden)) . "<br>";
 	}
 
 	if ($port->broken) {
-		$HTML .= freshports_Broken_Icon() . ' BROKEN: ' . $port->broken . "<br>"; ;
+		$HTML .= freshports_Broken_Icon() . ' BROKEN: ' . htmlify(htmlspecialchars($port->broken)) . "<br>"; ;
 	}
 
    // description
    if ($port->short_description && ($ShowShortDescription == "Y" || $ShowEverything)) {
-      $HTML .= htmlspecialchars($port->short_description);
+      $HTML .= htmlify(htmlspecialchars($port->short_description));
       $HTML .= "<br>\n";
    }
 
@@ -695,9 +691,9 @@ if ($ShowDepends) {
           $DependsArray = explode(':', $depends[$i]);
 
           // now extract the port and category from this port name
-          $CategoryPort = str_replace('/usr/ports/', '', $DependsArray[1]) ;
+          $CategoryPort      = str_replace('/usr/ports/', '', $DependsArray[1]) ;
           $CategoryPortArray = explode('/', $CategoryPort);
-          $DependsPortID = freshports_PortIDFromPortCategory($CategoryPortArray[0], $CategoryPortArray[1], $db);
+          $DependsPortID     = freshports_PortIDFromPortCategory($CategoryPortArray[0], $CategoryPortArray[1], $db);
 
           $HTML .= '<A HREF="/' . $CategoryPortArray[0] . '/' . $CategoryPortArray[1] . '/">' . $CategoryPortArray[0] . '/' . $CategoryPortArray[1]. '</a>';
           if ($i < $Count - 1) {
@@ -721,9 +717,9 @@ if ($ShowDepends) {
           $DependsArray = explode(':', $depends[$i]);
 
           // now extract the port and category from this port name
-          $CategoryPort = str_replace('/usr/ports/', '', $DependsArray[1]) ;
+          $CategoryPort      = str_replace('/usr/ports/', '', $DependsArray[1]) ;
           $CategoryPortArray = explode('/', $CategoryPort);
-          $DependsPortID = freshports_PortIDFromPortCategory($CategoryPortArray[0], $CategoryPortArray[1], $db);
+          $DependsPortID     = freshports_PortIDFromPortCategory($CategoryPortArray[0], $CategoryPortArray[1], $db);
 
           $HTML .= '<A HREF="/' . $CategoryPortArray[0] . '/' . $CategoryPortArray[1] . '/">' . $CategoryPortArray[0] . '/' . $CategoryPortArray[1]. '</a>';
           if ($i < $Count - 1) {

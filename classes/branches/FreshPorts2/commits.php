@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits.php,v 1.1.2.14 2004-03-22 20:34:06 dan Exp $
+	# $Id: commits.php,v 1.1.2.15 2004-04-07 21:02:44 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -21,36 +21,39 @@ class Commits {
 	function Fetch($Date, $UserID) {
 		$sql = "
 		SELECT DISTINCT
-			commit_log.commit_date - SystemTimeAdjust()														AS commit_date_raw,
-			commit_log.id																								AS commit_log_id,
-			commit_log.encoding_losses																				AS encoding_losses,
-			commit_log.message_id																					AS message_id,
-			commit_log.committer																						AS committer,
-			commit_log.description																					AS commit_description,
-			to_char(commit_log.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')						AS commit_date,
-			to_char(commit_log.commit_date - SystemTimeAdjust(), 'HH24:MI')							AS commit_time,
-			commit_log_ports.port_id																				AS port_id,
-			categories.name																							AS category,
-			categories.id																								AS category_id,
-			element.name																								AS port,
-			CASE when commit_log_ports.port_version IS NULL then ports.version  else commit_log_ports.port_version  END as version,
+			commit_log.commit_date - SystemTimeAdjust()                                                                 AS commit_date_raw,
+			commit_log.id                                                                                               AS commit_log_id,
+			commit_log.encoding_losses                                                                                  AS encoding_losses,
+			commit_log.message_id                                                                                       AS message_id,
+			commit_log.committer                                                                                        AS committer,
+			commit_log.description                                                                                      AS commit_description,
+			to_char(commit_log.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')                                         AS commit_date,
+			to_char(commit_log.commit_date - SystemTimeAdjust(), 'HH24:MI')                                             AS commit_time,
+			commit_log_ports.port_id                                                                                    AS port_id,
+			categories.name                                                                                             AS category,
+			categories.id                                                                                               AS category_id,
+			element.name                                                                                                AS port,
+			CASE when commit_log_ports.port_version IS NULL then ports.version  else commit_log_ports.port_version  END AS version,
 			CASE when commit_log_ports.port_version is NULL then ports.revision else commit_log_ports.port_revision END AS revision,
-			element.status																								AS status,
-			commit_log_ports.needs_refresh																		AS needs_refresh,
-			ports.forbidden																							AS forbidden,
-			ports.broken																								AS broken,
-			ports.deprecated																								AS deprecated,
-			ports.ignore																								AS ignore,
-			date_part('epoch', ports.date_added)																AS date_added,
-			ports.element_id																							AS element_id,
-			ports.short_description 																				AS short_description";
+			element.status                                                                                              AS status,
+			commit_log_ports.needs_refresh                                                                              AS needs_refresh,
+			ports.forbidden                                                                                             AS forbidden,
+			ports.broken                                                                                                AS broken,
+			ports.deprecated                                                                                            AS deprecated,
+			ports.ignore                                                                                                AS ignore,
+			date_part('epoch', ports.date_added)                                                                        AS date_added,
+			ports.element_id                                                                                            AS element_id,
+			ports.short_description                                                                                     AS short_description,
+			security_notice.id                                                                                          AS security_notice_id";
 		if ($UserID) {
 				$sql .= ",
 	        onwatchlist ";
 		}
 
 		$sql .= "
-    FROM commit_log_ports, commit_log, categories, ports, element ";
+    FROM commit_log_ports LEFT OUTER JOIN security_notice
+       ON commit_log_ports.commit_log_id = security_notice.commit_log_id
+          AND security_notice.security_notice_status_id = 'A', commit_log, categories, ports, element ";
 
 		if ($UserID) {
 				$sql .= "

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-list-maintenance.php,v 1.1.2.24 2003-05-02 12:34:30 dan Exp $
+	# $Id: watch-list-maintenance.php,v 1.1.2.25 2003-05-02 12:49:50 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -216,12 +216,12 @@ if ($Debug) echo 'add remove = ' . $User->watch_list_add_remove;
 ?>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<TR><td VALIGN=TOP>
+<TR><td VALIGN="top">
 <TABLE border="0" width="100%">
 <TR>
 	<? echo freshports_PageBannerText("Watch list maintenance"); ?>
 </TR>
-<TR><TD>
+<TR><TD valign="top">
 
 <?php
 	if ($ErrorMessage != '') {
@@ -229,13 +229,14 @@ if ($Debug) echo 'add remove = ' . $User->watch_list_add_remove;
 	}
 ?>
 
+<table WIDTH="100%" BORDER="0">
+<tr><td valign="top">
+
+<form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
 <TABLE WIDTH="100%" BORDER="1" CELLSPACING="0" CELLPADDING="5">
-<TR><td nowrap><BIG><b>Watch Lists</b></BIG></td><td><BIG><b>Actions</b></BIG> (scroll down for instructions)</td><td><BIG><b>Options</b></BIG></td></tr>
+<TR><td nowrap><BIG><b>Watch Lists</b></BIG></td><td><BIG><b>Actions</b></BIG> (scroll down for instructions)</td></tr>
   <TR>
     <TD valign="top">
-<form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
-<table width="100%">
-<tr><td valign="top">
 <?php
 	echo freshports_WatchListDDLB($db, $User->id, '', 10, TRUE);
 ?>
@@ -257,8 +258,15 @@ if ($Debug) echo 'add remove = ' . $User->watch_list_add_remove;
 
     Confirm : <INPUT id=confirm name=confirm size=10>&nbsp;(case sensitive)
     </TD>
-</tr></table>
+</tr>
+</table>
 </form>
+
+</td><td valign="top">
+
+<TABLE WIDTH="100%" BORDER="1" CELLSPACING="0" CELLPADDING="5">
+<TR><td><BIG><b>Options</b></BIG></td></tr>
+  <TR>
 <td valign="top" nowrap>
 When clicking on Add/Remove for a port,<br> the action should affect
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
@@ -269,7 +277,10 @@ When clicking on Add/Remove for a port,<br> the action should affect
 </td>
     </TR>
 </TABLE>
-</TABLE>
+
+</td></tr>
+
+</table>
 
 <H2>Information</H2>
 <ul>
@@ -339,6 +350,8 @@ When clicking on Add/Remove for a port,<br> the action should affect
 <?
 freshports_ShowFooter();
 ?>
+
+</table>
 
 </BODY>
 </HTML>

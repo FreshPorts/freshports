@@ -1,5 +1,5 @@
 <?
-	# $Id: files.php,v 1.1.2.15 2002-11-01 20:23:38 dan Exp $
+	# $Id: files.php,v 1.1.2.16 2002-12-06 23:20:12 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -129,9 +129,9 @@ function freshports_Files($PortID, $MessageID, $WatchListID, $db) {
 		$HTML = '';
 		if ($WatchListID) {
 			if ($myrow["watch"]) {
-				$HTML .= ' '. freshports_Watch_Link_Remove($myrow["element_id"]);
+				$HTML .= ' '. freshports_Watch_Link_Remove($WatchListID, $myrow["element_id"]);
 			} else {
-				$HTML .= ' '. freshports_Watch_Link_Add($myrow["element_id"]);
+				$HTML .= ' '. freshports_Watch_Link_Add   ($WatchListID, $myrow["element_id"]);
 			}
 		}
 

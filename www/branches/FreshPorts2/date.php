@@ -1,5 +1,5 @@
 <?
-	# $Id: date.php,v 1.1.2.11 2002-12-03 16:18:57 dan Exp $
+	# $Id: date.php,v 1.1.2.12 2002-12-06 23:20:11 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -158,9 +158,9 @@
 		
 					if ($WatchListID) {
 						if ($commit->watch) {
-							$HTML .= ' '. freshports_Watch_Link_Remove($commit->element_id) . ' ';
+							$HTML .= ' '. freshports_Watch_Link_Remove($WatchListID, $commit->element_id) . ' ';
 						} else {
-							$HTML .= ' '. freshports_Watch_Link_Add($commit->element_id) . ' ';
+							$HTML .= ' '. freshports_Watch_Link_Add   ($WatchListID, $commit->element_id) . ' ';
 						}
 					}
 		

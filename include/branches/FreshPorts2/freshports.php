@@ -1,12 +1,13 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.160 2003-09-30 11:50:29 dan Exp $
+	# $Id: freshports.php,v 1.4.2.161 2003-11-05 03:49:00 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/constants.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/burstmedia.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../configuration/freshports.conf.php');
 
 	if (IsSet($ShowAnnouncements)) {
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/announcements.php');

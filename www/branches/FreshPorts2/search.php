@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.49 2003-11-05 17:02:41 dan Exp $
+	# $Id: search.php,v 1.1.2.50 2003-11-08 16:20:51 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -178,7 +178,7 @@ $sql = "
    }
 
 	$sql .= "
-    from ports, categories, commit_log, commit_log_ports, element  ";
+    from ports, categories, commit_log, commit_log_ports_elements, element  ";
 
 	if ($User->id) {
 			$sql .= "
@@ -194,9 +194,9 @@ $sql = "
 	
 	$sql .= '
 	WHERE ports.category_id  = categories.id
-     and ports.element_id   = element.id 
-     and commit_log.id      = commit_log_ports.commit_log_id
-     and commit_log_ports.port_id = ports.id  ' ;
+      and ports.element_id   = element.id 
+      and commit_log.id      = commit_log_ports_elements.commit_log_id
+      and ports.element_id   = commit_log_ports_elements.element_id ' ;
 
 
 switch ($method) {

@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.96 2002-05-18 18:33:28 dan Exp $
+	# $Id: freshports.php,v 1.4.2.97 2002-05-28 00:47:52 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -891,6 +891,9 @@ function url2link($Arr) {
 	} else {
 		$vhtml = $html;
 	}
+
+	$html  = preg_replace("/@/", "&#64", $html);
+	$vhtml = preg_replace("/@/", "&#64", $vhtml);
 	
 	return "<A HREF=\"$html\">$vhtml</A>" . $Arr[3];
 }

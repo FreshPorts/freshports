@@ -23,6 +23,15 @@ require( "/www/freshports.org/_private/getvalues.php3");
 <p>This is where I will attempt to list the changes to the freshports website.  Please put your wish 
 lists in the <a href="http://freshports.org/phorum/list.php?f=3">feedback phorum</a>.
 </p>
+<p>May 13
+
+<ul>
+  <li>Added a simple <a href="search.php3">search</a> screen.</li>
+<li>mark deleted ports as deleted</li>
+</ul>
+</p>
+
+
 <p>May 12
 
 <ul>
@@ -35,17 +44,17 @@ lists in the <a href="http://freshports.org/phorum/list.php?f=3">feedback phorum
 <hr>
 <p>These are the planned changes</p>
 
-<p>Add a search</p>
-
-<p>Cater for virtual categories.  You'll no doubt notice that some ports are listed in multple categories
+<ul>
+<li>Cater for virtual categories.  You'll no doubt notice that some ports are listed in multple categories
 but those categories aren't listed in your /usr/ports/ directory.  Why is that?  That is because those
 categories aren't real;  they are virutal.  One day, freshports will cater for virtual categories.  The data
-is all there in the database.  I just have to code it.</p>
+is all there in the database.  I just have to code it.</li>
 
-<p>oh oh, I've found some ports which have PORTNAME values in common.  For example /usr/ports/www/netscape4-communicator.us
-Now this may be a big problem which needs to be overcome.  Damn.</p>
+<li>oh oh, I've found some ports which have PORTNAME values in common.  For example /usr/ports/www/netscape4-communicator.us. 
+Now this may be a big problem which needs to be overcome.  Damn.</li>
 
-<p>mark deleted ports as deleted</p>
+<li>remember to grab packages.exists when that changes</li>
+</ul>
 
 </td>
   <td valign="top" width="*">

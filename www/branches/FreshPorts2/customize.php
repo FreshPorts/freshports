@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: customize.php,v 1.1.2.31 2003-09-09 19:28:54 dan Exp $
+	# $Id: customize.php,v 1.1.2.32 2003-12-29 13:53:25 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -192,6 +192,12 @@ echo "</TD>
 }
 
 </script>
+
+<p>
+<b><a href="http://www.chello.com/">Chello</a></b> refuses to accept
+email from our mail server.  They have never responded to questions 
+regarding this denial of service.  Please do not use a <b>Chello</b>
+email address.
 
 <p>
 

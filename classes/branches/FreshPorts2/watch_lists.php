@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch_lists.php,v 1.1.2.15 2004-01-01 14:21:53 dan Exp $
+	# $Id: watch_lists.php,v 1.1.2.16 2004-10-25 00:20:52 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -90,7 +90,7 @@ DELETE FROM watch_list
 
 #		echo "fetching row $N<br>";
 
-		$WatchList = new WatchList($db);
+		$WatchList = new WatchList($this->dbh);
 
 		$myrow = pg_fetch_array($this->LocalResult, $N);
 		$WatchList->PopulateValues($myrow);

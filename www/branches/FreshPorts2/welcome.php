@@ -1,5 +1,5 @@
 <?
-	# $Id: welcome.php,v 1.1.2.3 2002-02-23 21:32:42 dan Exp $
+	# $Id: welcome.php,v 1.1.2.4 2002-02-23 22:19:33 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -23,7 +23,7 @@
 	<tr>
 	<td>
 	<P>
-	Your account '<? echo $UserName ?>'has been created.
+	Your account has been created.
 	</P>
 
 	<P>

@@ -1,5 +1,5 @@
 <?
-	# $Id: commit_log_ports.php,v 1.1.2.9 2003-01-10 15:50:33 dan Exp $
+	# $Id: commit_log_ports.php,v 1.1.2.10 2003-02-21 19:13:52 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -31,21 +31,22 @@ class Commit_Log_Ports {
 		# get ready to fetch all the commit_log_ports for this port
 		# return the number of commits found
 
-		$sql = "select	commit_log.id, 
-						port_id,
-						message_id,
-					    to_char(commit_date - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS')  as commit_date,
-						commit_log.description,
-						committer,
-						encoding_losses,
-						port_version,
-						port_revision,
-						security_notice.id as security_notice_id
-				   from commit_log, commit_log_ports LEFT OUTER JOIN security_notice
-                                     ON commit_log_ports.commit_log_id = security_notice.commit_log_id
-				  where commit_log.id             = commit_log_ports.commit_log_id
-					and commit_log_ports.port_id  =  $port_id
-				  order by commit_log.commit_date desc ";
+		$sql = "
+select commit_log.id, 
+       port_id,
+       message_id,
+       to_char(commit_date - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS')  as commit_date,
+       commit_log.description,
+       committer,
+       encoding_losses,
+       port_version,
+       port_revision,
+       security_notice.id as security_notice_id
+  from commit_log, commit_log_ports LEFT OUTER JOIN security_notice
+       ON commit_log_ports.commit_log_id = security_notice.commit_log_id
+ where commit_log.id            = commit_log_ports.commit_log_id
+   and commit_log_ports.port_id = $port_id
+ order by commit_log.commit_date desc ";
 
 #		echo "\$sql='<pre>$sql</pre><br>\n";
 		$this->result = pg_exec($this->dbh, $sql);

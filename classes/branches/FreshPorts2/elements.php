@@ -1,5 +1,5 @@
 <?
-	# $Id: elements.php,v 1.1.2.2 2002-01-05 03:26:15 dan Exp $
+	# $Id: elements.php,v 1.1.2.3 2003-02-21 19:13:12 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -45,7 +45,7 @@ class Element {
 			}
 		}
 
-        return $this->id;
+		return $this->id;
 	}
 
 	

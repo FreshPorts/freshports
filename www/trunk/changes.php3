@@ -16,14 +16,23 @@ require( "./_private/freshports.php3");
 <html>
 <body>
 <? include("./_private/header.inc") ?>
-<table width="100%">
+<table width="100%" border="0">
 <tr><td valign="top">
-<h2>changes</h2>
-
-<p>This is where I will attempt to list the changes to the freshports website.  Please put your wish 
+<table width="100%" border="0" CELLSPACING="0" CELLPADDING="5"
+            bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">
+  <tr>
+    <td bgcolor="#AD0040" height="22"><font color="#FFFFFF" size="+1">changes</font></td>
+  </tr>
+<tr><td>
+This page contains the changes made and the changes planned.  Please put your wish 
 lists in the <a href="http://freshports.org/phorum/list.php?f=3">feedback phorum</a>.
-</p>
-<p>July 25<p>
+</td></tr>
+<tr><td height="20"></td></tr>
+<tr><td>
+  <tr>
+    <td bgcolor="#AD0040" ><font color="#FFFFFF" size="+1">July 25</font></td>
+  </tr>
+<tr><td>
 <ul>
    <li>Added in the legal notice page.  It got lost somewhere.</li>
    <li>Change the user entry screens to prevent silly buggers from playing silly buggers with the new-user,
@@ -32,20 +41,34 @@ lists in the <a href="http://freshports.org/phorum/list.php?f=3">feedback phorum
        was the commit which prompt this problem to my attention [again, I had noticed it once before, but 
        thought I had already dealt with it].</li>
 </ul>
-
-<p>July 24<p>
+</td></tr>
+<tr><td height="20"></td></tr>
+<tr><td>
+  <tr>       
+    <td bgcolor="#AD0040" ><font color="#FFFFFF" size="+1">July 24</font></td>
+  </tr>
+<tr><td>
 <ul>
    <li>Added a facility to tell you if email to you from FreshPorts is bouncing.</li>
    <li>I've neglected this page for too long.   I missed out the upgrade to FreshPorts 1.1...</li>
 </ul>
-
-
-<p>May 16<p>
+</td></tr>
+<tr><td height="20"></td></tr>
+<tr><td>
+  <tr>       
+    <td bgcolor="#AD0040" ><font color="#FFFFFF" size="+1">May 16</font></td>
+  </tr>
+<tr><td>
 <ul>
    <li>Added <img src="/images/new.gif" width=28 height=11 alt="new!" hspace=2 align=absmiddle> to each port which is new to the tree.</li>
 </ul>
-
-<p>May 15<p>
+</td></tr>
+<tr><td height="20"></td></tr>
+<tr><td>
+  <tr>
+    <td bgcolor="#AD0040" ><font color="#FFFFFF" size="+1">May 15</font></td>
+  </tr>
+<tr><td>
 <ul>
    <li>Change the link in the side bar so Delete ports points to the 
    <a href="ports-deleted.php3">deleted ports page</a> and not the
@@ -54,7 +77,13 @@ lists in the <a href="http://freshports.org/phorum/list.php?f=3">feedback phorum
    <li>Fixed a problem with the watch ports page which displayed an error
        but correctly updated your watch list.  Sorry about that.</li>
 </ul>
-<p>May 14</p>
+</td></tr>
+<tr><td height="20"></td></tr>
+<tr><td>
+  <tr>       
+    <td bgcolor="#AD0040" ><font color="#FFFFFF" size="+1">May 14</font></td>
+  </tr>
+<tr><td>
 
 <ul>
   <li>Added a <a href="ports-deleted.php3">deleted ports page</a>.</li>
@@ -67,7 +96,13 @@ lists in the <a href="http://freshports.org/phorum/list.php?f=3">feedback phorum
       login screen, then take you back after you successfully login.</li>
 </ul>
 </p>
-<p>May 13</p>
+</td></tr>
+<tr><td height="20"></td></tr>    
+<tr><td>
+  <tr>       
+    <td bgcolor="#AD0040" ><font color="#FFFFFF" size="+1">May 13</font></td>
+  </tr>
+<tr><td>
 
 <ul>
   <li>Added a simple <a href="search.php3">search</a> screen.</li>
@@ -75,8 +110,13 @@ lists in the <a href="http://freshports.org/phorum/list.php?f=3">feedback phorum
 </ul>
 </p>
 
-
-<p>May 12</p>
+</td></tr>
+<tr><td height="20"></td></tr>    
+<tr><td>
+  <tr>       
+    <td bgcolor="#AD0040" ><font color="#FFFFFF" size="+1">May 12</font></td>
+  </tr>
+<tr><td>
 
 <ul>
   <li>Login/Logout should now take you back to the page from which they were invoked</li>
@@ -85,23 +125,23 @@ lists in the <a href="http://freshports.org/phorum/list.php?f=3">feedback phorum
 </ul>
 </p>
 
-<hr>
-<p>These are the planned changes</p>
-
+</td></tr>
+<tr><td height="20"></td></tr>    
+<tr><td>
+  <tr>       
+    <td bgcolor="#AD0040" ><font color="#FFFFFF" size="+1">These are the planned changes</font></td>
+  </tr>
+<tr><td>
 <ul>
-<li>Fix outgoing email. It appears the mail server isn't sending out messages. Gotta fix that</li>
 <li>Cater for virtual categories.  You'll no doubt notice that some ports are listed in multple categories
 but those categories aren't listed in your /usr/ports/ directory.  Why is that?  That is because those
 categories aren't real;  they are virutal.  One day, freshports will cater for virtual categories.  The data
 is all there in the database.  I just have to code it.</li>
-
-<li>oh oh, I've found some ports which have PORTNAME values in common.  For example /usr/ports/www/netscape4-communicator.us. 
-Now this may be a big problem which needs to be overcome.  Damn.</li>
-
 <li>remember to grab packages.exists when that changes</li>
 <li>allow ports to be {added to [and/or] removed from} personal watch lists from any page</li>
 </ul>
-
+</td></tr>
+</table>
 </td>
   <td valign="top" width="*">
     <? include("./_private/side-bars.php3") ?>

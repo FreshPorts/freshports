@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.20 2002-02-21 23:13:53 dan Exp $
+	# $Id: index.php,v 1.1.2.21 2002-03-02 22:20:49 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -113,60 +113,6 @@ function GetPortNameFromFileName($file_name) {
 if ($Debug) {
 	echo "\$WatchListID = '$WatchListID'\n";
 }
-
-$sql = " 
-	select DISTINCT
-	commit_log.commit_date					as commit_date_raw,
-	commit_log.id							as commit_log_id,
-	commit_log.description					as commit_description,
-	to_char(commit_log.commit_date + INTERVAL '$CVSTimeAdjustment seconds', 'DD Mon YYYY')	as commit_date,
-	to_char(commit_log.commit_date + INTERVAL '$CVSTimeAdjustment seconds', 'HH24:MI')		as commit_time,
-	commit_log_ports.port_id				as port_id,
-	categories.name							as category,
-	categories.id							as category_id,
-	element.name							as port,
-	commit_log_ports.port_version			as version,
-	element.status							as status,
-	commit_log_ports.needs_refresh 			as needs_refresh,
-	ports.forbidden							as forbidden,
-	ports.broken							as broken,
-	date_part('epoch', ports.date_added)	as date_added,
-	ports.element_id						as element_id,
-	ports.short_description ";
-
-if ($WatchListID) {
-	$sql .= ",
-       CASE when watch_list_element.element_id is null
-          then 0
-          else 1
-       END as onwatchlist ";
-}
-
-$sql .= "
-  from commit_log_ports, commit_log, element, categories, ports ";
-
-#
-# if the watch list id is provided (i.e. they are logged in and have a watch list id...)
-#
-if ($WatchListID) {
-	$sql .="
-            left outer join watch_list_element
-			on ports.element_id                 = watch_list_element.element_id 
-		   and watch_list_element.watch_list_id = $WatchListID ";
-}
-
-
-$sql .= "
- where commit_log.commit_date         > '2002-01-01'
-   and commit_log_ports.commit_log_id = commit_log.id
-   and commit_log_ports.port_id       = ports.id
-   and categories.id                  = ports.category_id
-   and element.id                     = ports.element_id
-order by commit_log.commit_date desc,
-         commit_log_id,
-         category, 
-         port
-         limit $numrows";
 
 if ($WatchListID) {
 	$sql = " SELECT	commits_latest.*, 

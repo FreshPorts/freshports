@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.32 2002-04-12 05:11:32 dan Exp $
+	# $Id: index.php,v 1.1.2.33 2002-04-12 14:28:37 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -264,7 +264,7 @@ ports. A port is marked as new for 10 days.
 
 						// indicate if this port needs refreshing from CVS
 						if ($myrow["needs_refresh"]) {
-							$HTML .= " " . freshports_Refresh_Icon() . "\n";
+							$HTML .= " " . freshports_Deleted_Icon() . "\n";
 						}
 
 						if ($myrow["date_added"] > Time() - 3600 * 24 * $DaysMarkedAsNew) {

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.19 2003-03-06 22:09:32 dan Exp $
+	# $Id: categories.php,v 1.1.2.20 2003-03-10 14:35:46 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -47,9 +47,6 @@ You can sort each column by clicking on the header.  e.g. click on <b>Category</
 </td></tr>
 <script language="php">
 
-$DESC_URL = 'ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports';
-
-
 // make sure the value for $sort is valid
 
 //echo "sort is $sort\n";
@@ -64,17 +61,14 @@ switch ($sort) {
    case 'count':
    case 'description':
       $sort = $sort;
-      $cache_file .= ".$sort";
       break;
 
    case 'lastupdate':
       $sort ='updated_raw desc';
-      $cache_file .= '.updated';
       break;
 
    default:
       $sort = 'category';
-      $cache_file .= '.category';
 }
 
 $sql = "

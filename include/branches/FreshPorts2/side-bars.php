@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: side-bars.php,v 1.4.2.46 2003-04-29 15:20:22 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.47 2003-05-02 12:09:42 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -105,8 +105,10 @@ if ($visitor) {
 <BR>
 
 <?
+	GLOBAL $ShowAds;
+
 	if ($ShowAds) {
-		echo '<TABLE BORDER="0" CELLPADDING=5">
+		echo '<TABLE BORDER="0" CELLPADDING="5">
 		  <TR><TD ALIGN="center">
 		 ';
 

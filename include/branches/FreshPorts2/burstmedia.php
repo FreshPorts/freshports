@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: burstmedia.php,v 1.1.2.8 2003-04-27 14:48:20 dan Exp $
+	# $Id: burstmedia.php,v 1.1.2.9 2003-05-02 12:09:42 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -15,7 +15,7 @@ function BurstMediaCode() {
 #
 
 echo '<!-- BEGIN RICH-MEDIA BURST! CODE --> 
-<SCRIPT TYPE="text/javascript"> 
+<script language="JavaScript" type="text/javascript">
 <!-- /* © 1997-2001 BURST! Media, LLC. All Rights Reserved.*/ 
 function ShowBurstAd(adcode, width, height) {
  var bN = navigator.appName;
@@ -66,7 +66,7 @@ function BurstMediaAd() {
 GLOBAL $AddressForAds;
 
 echo '	<!-- BEGIN RICH-MEDIA BURST! CODE --> 
-	<SCRIPT TYPE="text/javascript" >
+	<script language="JavaScript" type="text/javascript">
 	<!--
 	ShowBurstAd(\'ad4556a\',\'468\',\'60\');
 	// --></script>
@@ -86,19 +86,16 @@ echo '	<!-- BEGIN RICH-MEDIA BURST! CODE -->
 
 function BurstSkyscraperAd() {
 
-GLOBAL	$DiaryBGCOLOR;
-GLOBAL	$DiaryTEXT;
-
 echo '
-<SCRIPT TYPE="text/javascript">
+<script language="JavaScript" type="text/javascript">
 <!-- /* © 1997-2002 BURST! Media, LLC. All Rights Reserved.*/
 var TheAdcode = \'sk4556a\';
 var bN = navigator.appName;
 var bV = parseInt(navigator.appVersion);
 var base=\'http://www.burstnet.com/\';
 var Tv=\'\';
-var backColor=\'' . str_replace('#', '', $DiaryBGCOLOR) . '\';
-var fontColor=\'' . str_replace('#', '', $DiaryTEXT)    . '\';
+var backColor=\'' . str_replace('#', '', FRESHPORTS_BGCOLOR)   . '\';
+var fontColor=\'' . str_replace('#', '', FRESHPORTS_TEXTCOLOR) . '\';
 var agt=navigator.userAgent.toLowerCase();
 if (bV>=4)
   {ts=window.location.pathname+window.location.search;
@@ -109,7 +106,9 @@ if (bV>=4)
           else if (Tv.charAt(1)=="/")
 Tv="";
   if( Tv.charAt(Tv.length-1) == "/")
-    Tv = Tv + "_";}   document.write(\'<ifr\'+\'ame id=BURST src="\'+base+\'cgi-bin/ads/\' +
+    Tv = Tv + "_";}
+
+  document.write(\'<ifr\'+\'ame id=BURST src="\'+base+\'cgi-bin/ads/\' +
   TheAdcode + \'.cgi\' + Tv +  \'/zg\' + backColor + \'x\' + fontColor + \'l\' + fontColor + 
   fontColor + \'k\' + fontColor + \'/RETURN-CODE" width=165 height=600\' +
   \'v\' +\'marginwidth=0 marginheight=0 hspace=0 vspace=0 \' +
@@ -159,7 +158,7 @@ echo '  <!-- BEGIN BURST! CODE -->
 function Burst_468x60_Below() {
 echo '	<div ALIGN="center">
 	<!-- BEGIN RICH-MEDIA BURST! CODE --> 
-	<SCRIPT TYPE="text/javascript">
+	<script language="JavaScript" type="text/javascript">
 	<!--
 	ShowBurstAd(\'ba4556a\',\'468\',\'60\');
 	// --></script>

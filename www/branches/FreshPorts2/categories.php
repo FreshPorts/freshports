@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.23 2003-04-29 14:02:08 dan Exp $
+	# $Id: categories.php,v 1.1.2.24 2003-05-02 12:09:41 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -155,7 +155,7 @@ if (!$result) {
 	$NumRows = pg_numrows($result);
 	while ($myrow = pg_fetch_array($result, $i)) {
 		$HTML .= freshports_echo_HTML('<tr>');
-		$HTML .= freshports_echo_HTML('<td valign="top"><a href="/' . $myrow["category"] . '/">' . $myrow["category"] . $Primary[$myrow["is_primary"]] . '</a></td>');
+		$HTML .= freshports_echo_HTML('<td valign="top"><a href="/' . $myrow["category"] . '/">' . $myrow["category"] . '</a>' . $Primary[$myrow["is_primary"]] . '</td>');
 
 		if ($AllowedToEdit) {
 			$HTML .= freshports_echo_HTML('<td valign="top"><a href="/category-maintenance.php?category=' . $myrow["category"] . '">update</a></td>');

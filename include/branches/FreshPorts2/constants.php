@@ -1,7 +1,9 @@
-<?
-	# $Id: constants.php,v 1.1.2.7 2003-03-06 22:05:17 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2002 DVL Software Limited
+	# $Id: constants.php,v 1.1.2.8 2003-05-02 12:09:42 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
 
 #
 # colours for the banners (not really banners, but headings)
@@ -22,12 +24,12 @@ $TimeFormatDefault		= "H:i:s";
 $FreshPortsTitle		= "FreshPorts";
 
 $WatchNoticeFrequencyDaily			= "D";
-$WatchNoticeFrequencyWeekly			= "W";
+$WatchNoticeFrequencyWeekly		= "W";
 $WatchNoticeFrequencyFortnightly	= "F";
 $WatchNoticeFrequencyMonthly		= "M";
 $WatchNoticeFrequencyNever			= "Z";
 
-$UserStatusActive	   = "A";
+$UserStatusActive      = "A";
 $UserStatusDisabled    = "D";
 $UserStatusUnconfirmed = "U";
 
@@ -75,5 +77,8 @@ $freshports_mail_archive = "http://www.freebsd.org/cgi/mid.cgi?db=mid&id=";
 # max number of lines to show in a commit
 #
 $freshports_CommitMsgMaxNumOfLinesToShow = 15;
+
+define('FRESHPORTS_BGCOLOR',   '#FFFFFF');
+define('FRESHPORTS_TEXTCOLOR', '#000000');
 
 ?>

@@ -1,5 +1,5 @@
 <?
-	# $Id: commits.php,v 1.1.2.5 2002-12-03 19:26:08 dan Exp $
+	# $Id: commits.php,v 1.1.2.6 2002-12-03 19:27:37 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -93,9 +93,9 @@ class Commits {
 
 	function FetchNth($N) {
 		#
-		# call FetchByCategoryInitialise first.
+		# call Fetch first.
 		# then call this function N times, where N is the number
-		# returned by FetchByCategoryInitialise
+		# returned by Fetch
 		#
 
 #		echo "fetching row $N<br>";

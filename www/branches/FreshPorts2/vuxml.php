@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: vuxml.php,v 1.1.2.8 2004-12-19 16:48:42 dan Exp $
+	# $Id: vuxml.php,v 1.1.2.9 2005-01-03 21:34:40 dan Exp $
 	#
 	# Copyright (c) 2004 DVL Software Limited
 	#
@@ -9,7 +9,9 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
-	define('VUXMLURL', 'http://www.vuxml.org/freebsd/');
+
+	define('VUXMLURL',     'http://www.vuxml.org/freebsd/');
+	define('VUXMLREVISION', $_SERVER['DOCUMENT_ROOT'] . '/../dynamic/vuxml_revision');
 
 	if (IsSet($_REQUEST['vid'])) {
 		$vid = $_REQUEST['vid'];
@@ -25,6 +27,20 @@
 <html>
 <body>
 
+<h1>FreshPorts - VuXML</h1>
+
+<p>
+This page displays <a href="<?php echo VUXMLURL; ?>">vulnerability information</a> about FreeBSD Ports.
+</p>
+
+<?php
+	if (file_exists(VUXMLREVISION) && is_readable(VUXMLREVISION)) {
+		echo '<p>The last vuln.xml file processed by FreshPorts is:</p>';
+		echo '<pre>';
+		require_once(VUXMLREVISION);
+		echo '</pre>';
+	}
+?>
 <?php
 	if (IsSet($_REQUEST['vuln']) || IsSet($_REQUEST['vid'])) {
 

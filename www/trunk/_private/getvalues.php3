@@ -6,6 +6,11 @@ $FormatDateDefault	= "%Y/%m/%d";
 $FormatTimeDefault	= "%T";
 $DaysMarkedAsNewDefault	= 21;
 
+
+// there are only a few places we want to show the last change.
+// such places set $GlobalHideLastChange == "Y"   
+$GlobalHideLastChange   = "Y";
+
 $DaysToShow  = 20;
 $MaxArticles = 40;
 $DaysNew     = 20;
@@ -79,7 +84,6 @@ if (!empty($visitor)) {
         $SampleFormatDate	= $myrow["sample_date"];
         $SampleFormatTime       = $myrow["sample_time"];
  
-//        echo "UserID = $UserID<br>";
 //        echo "visitor = $visitor<br>";
 
         // record their last login

@@ -54,15 +54,19 @@
       $HTML .= $myrow["maintainer"] . '</a></br>' . "\n";
   }
 
-   if ($ShowLastChange == "Y" || $ShowEverything) {
-      if ($myrow["last_change_log_detail_id"] != 0) {
-         $HTML .= 'last change committed by ' . $myrow["committer"];  // separate lines in case committer is null
-
-         $HTML .= ' on <font size="-1">' . $myrow["updated"] . '</font><br>' . "\n";
-
-         $HTML .= $myrow["update_description"] . "<br>" . "\n";
-      } else {
-         $HTML .= "no changes recorded in FreshPorts<br>\n";
+   // there are only a few places we want to show the last change.
+   // such places set $GlobalHideLastChange == "Y"
+   if ($GlobalHideLastChange != "Y") {
+      if ($ShowLastChange == "Y" || $ShowEverything) {
+         if ($myrow["last_change_log_detail_id"] != 0) {
+            $HTML .= 'last change committed by ' . $myrow["committer"];  // separate lines in case committer is null
+ 
+            $HTML .= ' on <font size="-1">' . $myrow["updated"] . '</font><br>' . "\n";
+ 
+            $HTML .= $myrow["update_description"] . "<br>" . "\n";
+         } else {
+            $HTML .= "no changes recorded in FreshPorts<br>\n";
+         }
       }
    }
 

@@ -1,6 +1,7 @@
 <?
 
-//$Debug=1;
+$cache_file     =       "/tmp/change.freshports.org.cache." . basename($PHP_SELF);
+$LastUpdateFile =       "/www/change.freshports.org/lastupdate";
 
 $Debug=0;
 
@@ -22,6 +23,10 @@ if (strtolower(substr($host, 0, 7)) == "develop") {
 } else {
    if (strtolower(substr($host, 0, 4)) == "test") {
       $database = "freshportstest";
+   } else {
+      if (strtolower(substr($host, 0, 6)) == "change") {
+         $database = "freshportschange";
+      }
    }
 }
 

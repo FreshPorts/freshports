@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.127 2003-01-10 15:55:02 dan Exp $
+	# $Id: freshports.php,v 1.4.2.128 2003-01-10 17:12:22 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -103,7 +103,7 @@ function freshports_Watch_Icon_Add() {
 }
 
 function freshports_Security_Icon() {
-	return '<IMG SRC="/images/security.gif"  ALT="This commit addresses a security issue" TITLE="This commit addresses a security issue" WIDTH="20" HEIGHT="20">';
+	return '<IMG SRC="/images/security.gif"  ALT="This commit addresses a security issue" TITLE="This commit addresses a security issue" WIDTH="20" HEIGHT="20" BORDER="0">';
 }
 
 function freshports_Encoding_Errors() {

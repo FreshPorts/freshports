@@ -1,6 +1,6 @@
 <?php
 
-$cache_file     =       "/tmp/freshports.org.news.cache";
+$cache_file     =       "/tmp/freshports.org.cache.news";
 $cache_time     =       3600;
 
 $text_file	=	"/www/freshports.org/news.txt";
@@ -71,12 +71,12 @@ $sql .= "order by $sort limit 20";
    while ($myrow = mysql_fetch_array($result)) {
       $HTML .= '  <item>' . "\n";
       $HTML .= '    <title>' . $myrow["category"] . "/" . $myrow["port"] . '</title>' . "\n";
-      $HTML .= '    <link>http://freshports.org/' . '</link>' . "\n";
+      $HTML .= '    <link>http://freshports.org/port-description.php3?port=' . $myrow["id"] . '</link>' . "\n";
       $HTML .= '    <description>' . trim($myrow["update_description"]) . '</description>' . "\n";
       $HTML .= '  </item>' . "\n";
 
       $TEXT .= $myrow["category"] . "/" . $myrow["port"] . "\n";
-      $TEXT .= 'http://freshports.org/' . "\n";
+      $TEXT .= 'http://freshports.org/port-description.php3?port=' . $myrow["id"] . "\n";
    }
 
    $HTML .= '</channel>' . "\n";

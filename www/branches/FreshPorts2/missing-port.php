@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-port.php,v 1.1.2.12 2002-02-21 06:33:47 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.13 2002-02-21 19:43:44 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
@@ -38,7 +38,8 @@ $Debug=0;
 
 			if (IsSet($element->id)) {
 				$port = new Port($db);
-				$port->FetchByPartialName("/ports/$CategoryName/$PortName");
+				GLOBAL $WatchListID;
+				$port->FetchByPartialName("/ports/$CategoryName/$PortName", $WatchListID);
 
 				if ($Debug) {
 					if (IsSet($port->id)) {
@@ -135,14 +136,14 @@ $ShowDescriptionLink	= "N";
 </TD>
 </TR>
 
+</TABLE>
+
+<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-
-<?
-	include("./include/footer.php");
-?>
-
+<? include("./include/footer.php") ?>
 </TD></TR>
 </TABLE>
+
 </body>
 </html>
 

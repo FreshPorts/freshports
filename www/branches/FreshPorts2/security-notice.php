@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: security-notice.php,v 1.1.2.12 2004-02-13 15:13:40 dan Exp $
+	# $Id: security-notice.php,v 1.1.2.13 2004-02-13 16:41:19 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -170,19 +170,17 @@ Please enter your reasoning for marking the above commit as a security issue.
 	}
 
 	if (IsSet($SecurityNotice->id) && $UserCanEdit) {
-		$UserAlt = new User($db);
-		$UserAlt->Fetch($SecurityNotice->user_id);
 ?>
 <h2>Audit trail</h2>
 <table border=1 CELLSPACING="0" CELLPADDING="5">
 <tr><td><b>Date marked</b></td><td><b>Notification Reaason</b></td><td><b>User Name</b></td><td><b>IP Address</b></td><td><b>e-mail</b></td><td><b>status</b></td></tr>
 <tr>
-<td><?php echo $SecurityNotice->date_added;  ?></td>
-<td><?php echo $SecurityNotice->description; ?></td>
-<td><?php echo $SecurityNotice->user_name;   ?></td>
-<td><?php echo $SecurityNotice->ip_address;  ?></td>
-<td><?php echo $SecurityNotice->user_email;  ?></td>
-<td><?php echo $SecurityNotice->status;      ?></td>
+<td nowrap><?php echo $SecurityNotice->date_added;  ?></td>
+<td nowrap><?php echo $SecurityNotice->description; ?></td>
+<td nowrap><?php echo $SecurityNotice->user_name;   ?></td>
+<td nowrap><?php echo $SecurityNotice->ip_address;  ?></td>
+<td nowrap><?php echo $SecurityNotice->user_email;  ?></td>
+<td nowrap><?php echo $SecurityNotice->status;      ?></td>
 </tr>
 
 <?php
@@ -193,12 +191,12 @@ Please enter your reasoning for marking the above commit as a security issue.
 		$SecurityNoticeAudit->FetchNth($i);
 ?>
 <tr>
-<td><?php echo $SecurityNoticeAudit->date_added;  ?></td>
-<td><?php echo $SecurityNoticeAudit->description; ?></td>
-<td><?php echo $SecurityNoticeAudit->user_name;   ?></td>
-<td><?php echo $SecurityNoticeAudit->ip_address;  ?></td>
-<td><?php echo $SecurityNoticeAudit->user_email;  ?></td>
-<td><?php echo $SecurityNoticeAudit->status;      ?></td>
+<td nowrap><?php echo $SecurityNoticeAudit->date_added;  ?></td>
+<td nowrap><?php echo $SecurityNoticeAudit->description; ?></td>
+<td nowrap><?php echo $SecurityNoticeAudit->user_name;   ?></td>
+<td nowrap><?php echo $SecurityNoticeAudit->ip_address;  ?></td>
+<td nowrap><?php echo $SecurityNoticeAudit->user_email;  ?></td>
+<td nowrap><?php echo $SecurityNoticeAudit->status;      ?></td>
 </tr>
 <?php
 	}  // end for

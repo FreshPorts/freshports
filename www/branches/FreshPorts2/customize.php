@@ -1,23 +1,23 @@
 <?
-	# $Id: customize.php,v 1.1.2.21 2002-12-10 05:13:23 dan Exp $
+	# $Id: customize.php,v 1.1.2.22 2002-12-11 04:42:46 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
 
-$origin	= $_GET["origin"];
-$submit 	= $_POST["submit"];
-$visitor	= $_COOKIE["visitor"];
+$origin	= $_REQUEST['origin'];
+$submit 	= $_REQUEST['submit'];
+$visitor	= $_COOKIE['visitor'];
 
-if ($origin == "/index.php" || $origin == "") {
-	$origin = "/";
+if ($origin == '/index.php' || $origin == '') {
+	$origin = '/';
 }
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {
-	header("Location: login.php?origin=" . $_SERVER["PHP_SELF"]);  /* Redirect browser to PHP web site */
+	header('Location: login.php?origin=' . $_SERVER['PHP_SELF']);  /* Redirect browser to PHP web site */
 	exit;  /* Make sure that code below does not get executed when we redirect. */
 }
 
@@ -26,11 +26,10 @@ if ($submit) {
 
 // process form
 
-   $email					= AddSlashes($_POST["email"]);
-   $Password1				= AddSlashes($_POST["Password1"]);
-   $Password2				= AddSlashes($_POST["Password2"]);
-   $numberofdays			= AddSlashes($_POST["numberofdays"]);
-
+   $email					= AddSlashes($_POST['email']);
+   $Password1				= AddSlashes($_POST['Password1']);
+   $Password2				= AddSlashes($_POST['Password2']);
+   $numberofdays			= AddSlashes($_POST['numberofdays']);
 
    if (!is_numeric($numberofdays) || $numberofdays < 0 || $numberofdays > 9) {
       $numberofdays = 9;
@@ -44,15 +43,15 @@ if ($submit) {
 
    $OK = 1;
 
-   $errors = "";
+   $errors = '';
 
 	if (!freshports_IsEmailValid($email)) {
-		$errors .= "That email address doesn't look right to me<BR>";
+		$errors .= 'That email address doesn\'t look right to me<BR>';
 		$OK = 0;
 	}
 
    if ($Password1 != $Password2) {
-      $errors .= "The password was not confirmed.  It must be entered twice.<BR>";
+      $errors .= 'The password was not confirmed.  It must be entered twice.<BR>';
       $OK = 0;
    }
 
@@ -106,11 +105,13 @@ if ($submit) {
       }
    }
 } else {
+   $email			= $User->email;
+   $numberofdays	= $User->numberofdays;
 }
 
-   freshports_Start("Customize User Account",
-               "freshports - new ports, applications",
-               "FreeBSD, index, applications, ports");
+   freshports_Start('Customize User Account',
+               'freshports - new ports, applications',
+               'FreeBSD, index, applications, ports');
 ?>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
@@ -120,8 +121,9 @@ if ($submit) {
     <TD height="20"><script language="php">
 
 if (!$submit) {
-	require_once( $_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
-    $numberofdays = $NumberOfDays;
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+	$numberofdays	= $User->number_of_days;
+   $email			= $User->email;
 }
 
 if ($errors) {
@@ -156,12 +158,6 @@ echo '<p>If you need help, please post a message on the forum. </p>
 if ($AccountModified) {
    echo "Your account details were successfully updated.";
 } else {
-  // provide default values for an empy form.
-//  $daystoshow = 20;
-//  $maxarticles = 40;
-//  $daysnew = 20;
-//   require_once($_SERVER['DOCUMENT_ROOT'] . "/include/commonphp3.inc");
-//	echo $DaysToShow,  '= days to show';
 
 echo '<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="#AD0040" WIDTH="100%">
 <TR>
@@ -174,10 +170,10 @@ echo '<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="#AD0040" WIDTH="100%">
 <TD>';
 
 echo 'If you wish to change your password, supply your new password twice.  Otherwise, leave it blank.<br>';
-require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 
 $Customize=1;
-require_once($_SERVER['DOCUMENT_ROOT'] . "/include/new-user.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . '/include/new-user.php');
 
 echo "</TD>
 </TR>
@@ -191,14 +187,14 @@ echo "</TD>
 </TABLE>
 </TD>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
-   <? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
+   <? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php') ?>
  </TD>
 </TR>
 </TABLE>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
 </TD></TR>
 </TABLE>
 

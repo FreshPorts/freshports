@@ -81,7 +81,7 @@ ports.
             bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">
 <tr>
     <td colspan="3" bgcolor="#AD0040" height="30">
-        <font color="#FFFFFF" size="+1">freshports - 50 most recent commits
+        <font color="#FFFFFF" size="+1">freshports - 100 most recent commits
         <? //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPorts) ?></font>
     </td>
 </tr>
@@ -173,7 +173,7 @@ $sql = "select ports.id, ports.name as port, change_log.commit_date as updated_r
 
 $sql .= " order by $sort ";
 
-$sql .= " limit 50 ";
+$sql .= " limit 100 ";
 
 //echo $sql;
 

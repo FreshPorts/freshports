@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.16 2002-02-17 19:58:23 dan Exp $
+	# $Id: index.php,v 1.1.2.17 2002-02-17 23:24:40 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -14,7 +14,7 @@
 					"FreeBSD, index, applications, ports");
 $Debug=0;
 
-//echo "UserID='$UserID'";
+if ($Debug) echo "UserID='$UserID'";
 
 function freshports_SummaryForDay($MinusN) {          
    $BaseDirectory = "./archives";                     

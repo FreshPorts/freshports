@@ -1,5 +1,5 @@
 <?
-	# $Id: customize.php,v 1.1.2.4 2002-01-05 23:01:14 dan Exp $
+	# $Id: customize.php,v 1.1.2.5 2002-02-21 23:13:52 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -122,8 +122,6 @@ if ($submit) {
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <tr><td valign="top" width="100%">
 <table width="100%" border="0">
-    <td bgcolor="#AD0040"><font color="#FFFFFF" size="+2">Customize User Account</font></td>
-  </tr>
   <tr>
     <td height="20"><script language="php">
 
@@ -174,8 +172,7 @@ echo '<table cellpadding=1 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>
 <tr>
 <td valign="top">
 <table width=100% border=0 cellpadding=1>
-
-<tr bgcolor="#AD0040"><td><font color="#ffffff">Use this form to customize your account.</font></td>
+<TD BGCOLOR="#AD0040" HEIGHT="29" COLSPAN="1"><FONT COLOR="#FFFFFF"><BIG><BIG>Customize</BIG></BIG></FONT></TD>
 </tr>
 <tr bgcolor="#ffffff">
 <td>';

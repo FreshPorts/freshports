@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.19 2002-02-21 19:44:32 dan Exp $
+	# $Id: index.php,v 1.1.2.20 2002-02-21 23:13:53 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -111,8 +111,6 @@ function GetPortNameFromFileName($file_name) {
 #$numrows=400;
 
 if ($Debug) {
-	echo "\$FreshPortsWatchedPortNot = '$FreshPortsWatchedPortNot'<BR>\n";
-	echo "\$FreshPortsWatchedPort    = '$FreshPortsWatchedPort'<BR>\n";
 	echo "\$WatchListID = '$WatchListID'\n";
 }
 
@@ -173,8 +171,8 @@ order by commit_log.commit_date desc,
 if ($WatchListID) {
 	$sql = " SELECT	commits_latest.*, 
 				 	CASE when watch_list_element.element_id is null
-						then '$FreshPortsWatchedPortNot'
-						else '$FreshPortsWatchedPort'
+						then 0
+						else 1
 					END as watch
 			   FROM	commits_latest left outer join watch_list_element
 					 ON commits_latest.element_id        = watch_list_element.element_id
@@ -226,10 +224,8 @@ if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 <table width="<? echo $TableWidth ?>" border="1" CELLSPACING="0" CELLPADDING="8"
             bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">
 <tr>
-    <td colspan="3" bgcolor="#AD0040" height="30">
-        <font color="#FFFFFF"><B><BIG><? echo $MaxNumberOfPorts ?> most recent commits
+		<? freshports_PageBannerText("$MaxNumberOfPorts most recent commits", 3); ?>
         <? //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPorts) ?></BIG></B></font>
-    </td>
 </tr>
 <TR><TD>
 <P>
@@ -266,8 +262,11 @@ ports. A port is marked as new for 10 days.
 							$HTML .= '<BR>';
 						}
 
+						$HTML .= '<BIG><B><A HREF="/' . $myrow["category"] . '/">';
+						$HTML .= $myrow["category"]. "</A>";
+						$HTML .= "/";
 						$HTML .= '<A HREF="/' . $myrow["category"] . '/' . $myrow["port"] . '/">';
-						$HTML .= '<FONT SIZE="+1">' . $myrow["category"] . '/' . $myrow["port"];
+						$HTML .= $myrow["port"];
 						
 						if (strlen($myrow["version"]) > 0) {
 							$HTML .= ' ' . $myrow["version"];
@@ -276,7 +275,7 @@ ports. A port is marked as new for 10 days.
 							}
 						}
 
-						$HTML .= "</FONT></A>";
+						$HTML .= "</B></BIG></A>";
 
 						// indicate if this port needs refreshing from CVS
 						if ($myrow["status"] == "D") {
@@ -306,7 +305,14 @@ ports. A port is marked as new for 10 days.
 							$HTML .= '</FONT>';
 						}
 
-						$HTML .= ' ' . $myrow["watch"];
+						if ($WatchListID) {
+							if ($myrow["watch"]) {
+								$HTML .= ' ' . $FreshPortsWatchedPortPrefix    . $myrow["element_id"] . $FreshPortsWatchedPortSuffix;
+							} else {
+								$HTML .= ' ' . $FreshPortsWatchedPortNotPrefix . $myrow["element_id"] . $FreshPortsWatchedPortNotSuffix;
+							}
+						}
+
 
 						$HTML .= ' <A HREF="/files.php?id=' . $myrow["commit_log_id"] . 
 									'"><IMG SRC="/images/logs.gif" ALT="files touched by this commit" BORDER="0" WIDTH="17" HEIGHT="20" HSPACE="2"></A>';

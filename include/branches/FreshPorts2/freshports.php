@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.41 2002-02-21 19:46:00 dan Exp $
+   # $Id: freshports.php,v 1.4.2.42 2002-02-21 23:13:56 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -36,8 +36,8 @@ $FreshPortsWatchedPortNotSuffix	= "\">Add</A></SMALL>";
 #
 # These are similar to the above but are using in SQL queries
 #
-$FreshPortsWatchedPort		= "<SMALL><A HREF=\"/watch-list.php?remove=' || commits_latest.element_id || '\">Remove</A></SMALL>";
-$FreshPortsWatchedPortNot	= "<SMALL><A HREF=\"/watch-list.php?add='    || commits_latest.element_id || '\">Add</A></SMALL>";
+#$FreshPortsWatchedPort		= "<SMALL><A HREF=\"/watch-list.php?remove=' || commits_latest.element_id || '\">Remove</A></SMALL>";
+#$FreshPortsWatchedPortNot	= "<SMALL><A HREF=\"/watch-list.php?add='    || commits_latest.element_id || '\">Add</A></SMALL>";
 
 
 
@@ -533,10 +533,12 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 #   }
 
 #	$HTML .= "onwatchlist = '" . $port->{onwatchlist} . "'";
-	if ($WatchListID && $port->{onwatchlist}) {
-		$HTML .= ' ' . $FreshPortsWatchedPortPrefix    . $port->{element_id} . $AddRemoveExtra . $FreshPortsWatchedPortSuffix;
-	} else {
-		$HTML .= ' ' . $FreshPortsWatchedPortNotPrefix . $port->{element_id} . $AddRemoveExtra . $FreshPortsWatchedPortNotSuffix;
+	if ($WatchListID) {
+		if ($port->{onwatchlist}) {
+			$HTML .= ' ' . $FreshPortsWatchedPortPrefix    . $port->{element_id} . $AddRemoveExtra . $FreshPortsWatchedPortSuffix;
+		} else {
+			$HTML .= ' ' . $FreshPortsWatchedPortNotPrefix . $port->{element_id} . $AddRemoveExtra . $FreshPortsWatchedPortNotSuffix;
+		}
 	}
 
    $HTML .= "</DT>\n<DD>";
@@ -786,19 +788,19 @@ function convertAllLinks($text) {
 function freshports_PortCommitsHeader($port) {
 	# print the header for the commits for a port
 
-	echo '<DL><DD>';
-    echo '<PRE CLASS="code">' . convertAllLinks(htmlspecialchars($port->long_description)) . '</PRE>';
-	echo "\n</DD>\n</DL>\n</TD>\n</TR>";
+	echo '<TABLE BORDER="1" width="100%" CELLSPACING="0" CELLPADDING="5"bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">' . "\n";
+#	echo '<tr height="20"><td colspan="3" bgcolor="#AD0040"><font color="#FFFFFF"><font size="+1">Commit History</font> (may be incomplete: see Changes link above for full details)</font></td></tr>' . "\n";
 
-	echo '<tr><td><TABLE BORDER="1" width="100%" CELLSPACING="0" CELLPADDING="5"bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">' . "\n";
-	echo '<tr height="20"><td colspan="3" bgcolor="#AD0040"><font color="#FFFFFF"><font size="+1">Commit History</font> (may be incomplete: see Changes link above for full details)</font></td></tr>' . "\n";
+	freshports_PageBannerText("Commit History - (may be incomplete: see Changes link above for full details)", 3);
+
 	echo "<TR><TD WIDTH=\"180\"><b>Date</b></td><td><b>Committer</b></td><td><b>Description</b></td></tr>\n";
 }
 
 function freshports_PortCommits($port) {
 	# print all the commits for this port
+	GLOBAL $DOCUMENT_ROOT;
 
-	require("../classes/commit_log_ports.php");
+	require($DOCUMENT_ROOT . "/../classes/commit_log_ports.php");
 
 #	echo ' *************** into freshports_PortCommits ***************';
 	freshports_PortCommitsHeader($port);
@@ -822,8 +824,8 @@ function freshports_PortCommitPrint($commit) {
 	GLOBAL  $TimeFormatDefault;
 
 	# print a single commit for a port
-#	echo "<TR><TD VALIGN='top'><FONT SIZE='-1'>" . date("$DateFormatDefault $TimeFormatDefault", $commit->commit_date)        . "</FONT></TD>\n";
-	echo "<TR><TD VALIGN='top'><FONT SIZE='-1'>" . $commit->commit_date        . "</FONT></TD>\n";
+#	echo "<TR><TD VALIGN='top'><xSMALL>" . date("$DateFormatDefault $TimeFormatDefault", $commit->commit_date)        . "</SMALL></TD>\n";
+	echo "<TR><TD VALIGN='top'><xSMALL>" . $commit->commit_date        . "</SMALL></TD>\n";
 	echo '    <TD VALIGN="top">';
     echo $commit->committer . '<BR><A HREF="/files.php?id=' . $commit->id;
 	echo '"><IMG SRC="/images/logs.gif" ALT="Files within this port affected by this commit" BORDER="0" WIDTH="17" HEIGHT="20" HSPACE="2"></A>'. "</TD>\n";
@@ -837,7 +839,7 @@ function freshports_PortCommitPrint($commit) {
 
 function freshports_PortCommitsFooter($port) {
 	# print the footer for the commits for a port
-	echo "</TABLE>\n</TD>\n</TR>\n";
+	echo "</TABLE>\n";
 }
 
 function freshports_PortDescriptionPrint($description) {

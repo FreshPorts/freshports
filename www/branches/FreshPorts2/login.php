@@ -1,5 +1,5 @@
 <?
-	# $Id: login.php,v 1.1.2.8 2002-02-17 23:50:40 dan Exp $
+	# $Id: login.php,v 1.1.2.9 2002-02-21 23:13:53 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -115,11 +115,11 @@ echo '<table cellpadding=1 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>
 #<td>';
 
 
-echo '<table width=100% border=0 cellpadding=4 cellspacing=4 bgcolor="#AD0040">';
+echo '<table width=100% border=1 cellpadding=1 cellspacing=0 bgcolor="#AD0040">';
 
 echo '<tr bgcolor="#AD0040">';
 
-freshports_PageBannerText("Login Details");
+freshports_PageBannerText("Login");
 echo '</tr>';
 
 echo '<tr><td bgcolor="#ffffff">';

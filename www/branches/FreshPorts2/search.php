@@ -1,5 +1,5 @@
 <?
-	# $Id: search.php,v 1.1.2.6 2002-02-21 19:46:00 dan Exp $
+	# $Id: search.php,v 1.1.2.7 2002-02-21 23:13:55 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -20,7 +20,7 @@
 <tr><td valign="top" width="100%">                    
 <table width="100%" border="0">                       
   <tr>
-	<? freshports_PageBannerText("search"); ?>
+	<? freshports_PageBannerText("Search"); ?>
   </tr>
 <tr><td valign="top">
 OK, we have just a very simple search.  Eventually this will be extended. If you find any bugs, please
@@ -119,8 +119,8 @@ switch ($stype) {
 
 $sql .= " order by categories.name, element.name";
 
-if ($num < 1 or $num > 100) {
-	$num = 100;
+if ($num < 1 or $num > 500) {
+	$num = 10;
 }
 
 $sql .= " limit $num";
@@ -163,6 +163,7 @@ $Port->LocalResult = $result;
 		<option value="30"  <?if ($num == 30)  echo 'selected' ?>>30 results
 		<option value="50"  <?if ($num == 50)  echo 'selected' ?>>50 results
 		<option value="100" <?if ($num == 100) echo 'selected' ?>>100 results
+		<option value="500" <?if ($num == 500) echo 'selected' ?>>500 results
 	</SELECT> 
 
 	<input TYPE="submit" VALUE="search"> </p>
@@ -213,6 +214,12 @@ echo "</td></tr>\n";
  </td>
 </tr>
 </table>
-<? include("./include/footer.php"); phpinfo() ?>
+
+<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<TR><TD>
+<? include("./include/footer.php") ?>
+</TD></TR>
+</TABLE>
+
 </body>
 </html>

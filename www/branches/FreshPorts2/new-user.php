@@ -1,5 +1,5 @@
 <?
-	# $Id: new-user.php,v 1.1.2.6 2002-02-17 23:51:10 dan Exp $
+	# $Id: new-user.php,v 1.1.2.7 2002-02-21 23:13:54 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -137,7 +137,7 @@ function setfocus() { document.f.UserLogin.focus(); }
 // -->
 </script>
 
-<table width="100%"  border="0">
+<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <tr><td valign="top" width="100%">
 <table width="100%" border="0">
   <tr>

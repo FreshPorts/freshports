@@ -1,5 +1,5 @@
 <?
-	# $Id: port-watch.php,v 1.1.2.4 2002-02-17 23:45:00 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.5 2002-02-21 23:13:54 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -7,6 +7,9 @@
 	require("./include/freshports.php");
 	require("./include/databaselogin.php");
 	require("./include/getvalues.php");
+
+    GLOBAL  $DOCUMENT_ROOT;
+    require($DOCUMENT_ROOT . "/../classes/categories.php");
 
 
 // if we don't know who they are, we'll make sure they login first
@@ -21,7 +24,14 @@ if (!$category || $category != strval(intval($category))) {
    $category = intval($category);                     
 }
 
-$categoryname = freshports_Category_Name($category, $db);
+$CategoryID = $category;
+
+#$categoryname = freshports_Category_Name($category, $db);
+
+	$category = new Category($db);
+	$category->FetchByID($CategoryID);
+	$title = $category->{name};
+
 
 // find out the watch id for this user's main watch list
 $sql_get_watch_ID = "select watch_list.id ".
@@ -80,7 +90,7 @@ if ($submit) {
 	         where watch_list_element.watch_list_id = $WatchID 
 	           and watch_list_element.element_id    = element.id 
 	           and ports.element_id                 = element.id 
-	           and ports.category_id                = $category)";
+	           and ports.category_id                = $CategoryID)";
 
 
 	$result = pg_exec ($db, $sql);
@@ -128,7 +138,7 @@ if ($submit) {
 	}
    }
 
-   freshports_Start($categoryname,
+   freshports_Start($category->{name},
                "freshports - new ports, applications",
                "FreeBSD, index, applications, ports");
 }
@@ -136,14 +146,12 @@ if ($submit) {
 ?>
 
 <table width="100%" border="0">
-</tr>
-<tr><td colspan="2">This page shows the ports within a specific category which are in your watch list.
-</td></tr>
 <tr><td valign="top" width="100%">
 <table width="100%" border="0">
   <tr>
-     <td bgcolor="#AD0040" height="29"><font color="#FFFFFF" size="+2">freshports - watch ports (<em><? echo $categoryname ?>)</em></font></td>
+	<? freshports_PageBannerText("Watch List - " . $category->{name}) ?>
   </tr>
+
 <tr><td>
 <?
 if (!$UserID) {
@@ -151,15 +159,16 @@ echo '<font size="+1">You are not logged in, perhaps you should <a href="login.p
 echo '</td></tr><tr><td>';
 } else {
 ?>
-<p>
-This screen contains a list of the ports in category <em><?echo $categoryname ?></em>. 
-The ports with a tick beside them are already in your watch list. 
-When one of the ports in your watch list changes, you will be notified by email if
+<UL>
+<LI>This page shows you the ports in category <em><?echo $category->{name} ?></em>
+that are on your watch list.</LI>
+<LI>The entries with a tick beside them are your watch list.</LI>
+<LI>When one of the ports in your watch list changes, you will be notified by email if
 you have selected a notification frequency within your <a href="customize.php">personal preferences</a>.
-</p>
-<p>
-[D] indicates a port which has been removed from the tree.
-</p>
+</LI>
+<LI>[D] indicates a port which has been removed from the tree.</LI>
+</UL>
+</TD></TR>
 <? } ?>
 <script language="php">
 
@@ -167,15 +176,15 @@ $DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
 
 //echo "UserID=$UserID";
 
-echo '<tr><td>' . "\n";
-
-echo "\n</td></tr>\n<tr><td>";
+#echo '<tr><td>' . "\n";
+#
+#echo "&nbsp;</td></tr>\n";
 
 //   echo 'time to update the cache';
 
 $sql = "select element.id, element.name as port, element.status, categories.name as category  ".
        "  from ports, element, categories ".
-       " WHERE ports.category_id = $category " .
+       " WHERE ports.category_id = $CategoryID " .
 	   "   and ports.element_id  = element.id " .
 	   "   and ports.category_id = categories.id " .
        " order by element.name";
@@ -190,7 +199,7 @@ $numrows = pg_numrows($result);
 if ($numrows) {
 
    if ($UserID) {
-      $HTML .= '<form action="' . $PHP_SELF . "?category=$category". '" method="POST">';
+      $HTML .= '<form action="' . $PHP_SELF . "?category=$CategoryID". '" method="POST">';
    }
 
    $HTML .= "\n" . '<table cellpadding=12 border=1>' . "\n";
@@ -253,6 +262,7 @@ $HTML .= '</td></tr>';
 echo $HTML;                                                   
 
 </script>
+<TR><TD>&nbsp;</TD></TR>
 <tr><td ALIGN="center">
 
 <input TYPE="submit" VALUE="update watch list" name="submit">

@@ -1,5 +1,5 @@
 <?
-	# $Id: bouncing.php,v 1.1.2.3 2002-01-05 23:01:12 dan Exp $
+	# $Id: bouncing.php,v 1.1.2.4 2002-02-21 23:13:52 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -38,17 +38,13 @@ if ($submit) {
                "FreeBSD, index, applications, ports");
 
 ?>
-<table width="100%" border="0">
-<tr><td colspan="2">
-<font size="+2">your email is bouncing</font>
-</td></tr>
+<table width="<? echo $TableWidth; ?>" border="0" ALIGN="center">
 <tr>
 <td valign="top" width="100%">
 <table width="100%" border="0">
 
-<tr><td bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">
-bouncing?  what do you mean?
-</font></td>
+<tr>
+<? freshports_PageBannerText("Bouncing?  What do you mean?"); ?>
 </tr>
 </tr><td>
 
@@ -62,9 +58,8 @@ messages, you should update your email address on the customization page.</p>
 </tr><td>
 <TR><TD HEIGHT="20">
 </TD></TR>
-<tr><td bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">
-How to fix the problem
-</font></td>
+<tr>
+<? freshports_PageBannerText("How to fix the problem"); ?>
 </tr>
 <tr><td>
 <p>There are two things which might have caused your email to bounce:</p>

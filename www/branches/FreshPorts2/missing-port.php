@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-port.php,v 1.1.2.13 2002-02-21 19:43:44 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.14 2002-02-21 23:13:54 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
@@ -95,15 +95,12 @@ function freshports_PortDescription($port) {
 
 <TABLE WIDTH="<? echo $TableWidth ?>" BORDER="0" ALIGN="center" VALIGN="top">
 <tr><TD VALIGN="top" width="100%">
-<TABLE WIDTH="100%" BORDER="0" ALIGN="centre">
-<tr>
-    <td colspan="3" bgcolor="#AD0040" height="29"><font color="#FFFFFF"><BIG><BIG>
-<?
-   echo $Title;
-?> 
- </BIG></BIG></font></td>
-</tr>
-<tr><td colspan="3" valign="top" width="100%">
+<TABLE BORDER="1" WIDTH="100%" CELLSPACING="0" CELLPADDING="5" BORDERCOLOR="#a2a2a2" BORDERCOLORDARK="#a2a2a2" BORDERCOLORLIGHT="#a2a2a2">
+
+
+<? freshports_PageBannerText("Port details"); ?>
+
+<tr><td valign="top" width="100%">
 
 <?
 	GLOBAL $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription;
@@ -123,13 +120,17 @@ $ShowDescriptionLink	= "N";
 	$HTML .= freshports_PortDetails($port, $port->dbh, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription);
 	echo $HTML;
 
+	echo '<DL><DD>';
+    echo '<PRE CLASS="code">' . convertAllLinks(htmlspecialchars($port->long_description)) . '</PRE>';
+	echo "\n</DD>\n</DL>\n";
+
+	echo '</TD></TR></TABLE>';
 #	echo 'about to call freshports_PortCommits #############################';
 
 	freshports_PortCommits($port);
 
 ?>
 
-</TABLE>
 </TD>
 <TD>
    <? include("./include/side-bars.php") ?>

@@ -1,5 +1,5 @@
 <?
-	# $Id: authors.php,v 1.1.2.3 2002-02-16 23:52:49 dan Exp $
+	# $Id: authors.php,v 1.1.2.4 2002-02-21 23:13:52 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -60,7 +60,7 @@ name just so it stays a secret.</LI>
 
 </UL>
 
-And I haven't updated the list of people who helped with FreshPorts2...
+<P>And I haven't updated the list of people who helped with FreshPorts2...</P>
 
 </TD>
 </TR>
@@ -71,6 +71,12 @@ And I haven't updated the list of people who helped with FreshPorts2...
  </td>
 </tr>
 </table>
+
+<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<TR><TD>
 <? include("./include/footer.php") ?>
+</TD></TR>
+</TABLE>
+
 </body>
 </html>

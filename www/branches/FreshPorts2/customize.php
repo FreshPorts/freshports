@@ -1,5 +1,5 @@
 <?
-	# $Id: customize.php,v 1.1.2.6 2002-03-25 02:09:28 dan Exp $
+	# $Id: customize.php,v 1.1.2.7 2002-04-20 02:39:36 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -125,42 +125,42 @@ if ($submit) {
 </script>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<tr><td valign="top" width="100%">
-<table width="100%" border="0">
-  <tr>
-    <td height="20"><script language="php">
+<TR><TD VALIGN="top" width="100%">
+<TABLE width="100%" border="0">
+  <TR>
+    <TD height="20"><script language="php">
 
 if (!$submit) {
 	include( "./include/getvalues.php");
 }
 
 if ($errors) {
-echo '<table cellpadding=1 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>
-<tr>
-<td>
-<table width=100% border=0 cellpadding=1>
-<tr bgcolor="#AD0040"><td><b><font color="#ffffff" size=+0>Access Code Failed!</font></b></td>
-</tr>
-<tr bgcolor="#ffffff">
-<td>
-  <table width=100% cellpadding=3 cellspacing=0 border=0>
-  <tr valign=top>
-   <td><img src="/images/warning.gif"></td>
-   <td width=100%>
+echo '<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="#AD0040" width="100%">
+<TR>
+<TD>
+<TABLE width="100%" BORDER="0" CELLPADDING="1">
+<TR BGCOLOR="#AD0040"><TD><b><font color="#ffffff" size=+0>Access Code Failed!</font></b></TD>
+</TR>
+<TR BGCOLOR="#ffffff">
+<TD>
+  <TABLE width="100%" CELLPADDING="3" BORDER="0">
+  <TR VALIGN=top>
+   <TD><img src="/images/warning.gif"></TD>
+   <TD width="100%">
   <p>Some errors have occurred which must be corrected before your login can be created.</p>';
 
 echo $errors;
 
 echo '<p>If you need help, please post a message on the forum. </p>
- </td>
- </tr>
- </table>
-</td>
-</tr>
-</table>
-</td>
-</tr>
-</table>
+ </TD>
+ </TR>
+ </TABLE>
+</TD>
+</TR>
+</TABLE>
+</TD>
+</TR>
+</TABLE>
 <br>';
 }
 if ($AccountModified) {
@@ -173,14 +173,15 @@ if ($AccountModified) {
 //   require( "./include/commonphp3.inc");
 //	echo $DaysToShow,  '= days to show';
 
-echo '<table cellpadding=1 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>
-<tr>
-<td valign="top">
-<table width=100% border=0 cellpadding=1>
+echo '<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="#AD0040" WIDTH="100%">
+<TR>
+<TD VALIGN="top">
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="1">
+<TR>
 <TD BGCOLOR="#AD0040" HEIGHT="29" COLSPAN="1"><FONT COLOR="#FFFFFF"><BIG><BIG>Customize</BIG></BIG></FONT></TD>
-</tr>
-<tr bgcolor="#ffffff">
-<td>';
+</TR>
+<TR BGCOLOR="#ffffff">
+<TD>';
 
 echo 'If you wish to change your password, supply your new password twice.  Otherwise, leave it blank.<br>';
 include("./include/getvalues.php");
@@ -188,24 +189,22 @@ include("./include/getvalues.php");
 $Customize=1;
 include("./include/new-user.php");
 
-echo "</td>
-</tr>
-</table>
-</form>
-</td>
-</tr>
-</table>";
+echo "</TD>
+</TR>
+</TABLE>
+</TD>
+</TR>
+</TABLE>";
 }
 
-</script></td>
-</table>
-</td>
-  <td valign="top" width="*">
+</script></TD>
+</TABLE>
+</TD>
+  <TD VALIGN="top" WIDTH="*">
    <? include("./include/side-bars.php") ?>
- </td>
-</tr>
-  </tr>
-</table>
+ </TD>
+</TR>
+</TABLE>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>

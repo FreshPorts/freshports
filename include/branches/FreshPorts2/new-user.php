@@ -1,39 +1,40 @@
 <?
-	# $Id: new-user.php,v 1.1.2.3 2002-02-25 15:48:13 dan Exp $
+	# $Id: new-user.php,v 1.1.2.4 2002-04-20 02:39:36 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
 ?>
 
-<table width="*" border="0" cellpadding="1">
-<form action="<?php echo $PHP_SELF . "?origin=" . $origin ?>" method="POST" name=f>
-          <tr>
-            <td valign="top">
+<form action="<?php echo $PHP_SELF . "?origin=" . $origin ?>" method="POST" NAME=f>
+<TABLE width="*" border="0" cellpadding="1">
+          <TR>
+            <TD VALIGN="top">
 <? if (!$Customize) { ?>
-              <input type="hidden" name="ADD" value="1">
+              <INPUT TYPE="hidden" NAME="ADD" VALUE="1">
               User ID:<br>
-              <input SIZE="15" NAME="UserLogin" VALUE="<? echo $UserLogin ?>"><br><br>
+              <INPUT SIZE="15" NAME="UserLogin" VALUE="<? echo $UserLogin ?>"><br><br>
 <? } ?>
                Password:<br>
-               <input TYPE="PASSWORD" NAME="Password1" VALUE="<?echo $Password1 ?>" size="20"><br><br>
+               <INPUT TYPE="PASSWORD" NAME="Password1" VALUE="<?echo $Password1 ?>" size="20"><br><br>
                Confirm Password:<br>
-               <input TYPE="PASSWORD" NAME="Password2" VALUE="<?echo $Password2 ?>" size="20">
-            </td>
-            <td valign="top">
+               <INPUT TYPE="PASSWORD" NAME="Password2" VALUE="<?echo $Password2 ?>" size="20">
+            </TD>
+            <TD VALIGN="top">
                email address (required):<br>
-               <input SIZE="35" NAME="email" VALUE="<?echo $email ?>"><br><br>
-               <input type="checkbox" name="emailsitenotices_yn" value="ON" <? if ($emailsitenotices_yn == "ON") {echo " checked";}?>>Put me on the announcement mailing list (low volume)<br>
+               <INPUT SIZE="35" NAME="email" VALUE="<?echo $email ?>"><br><br>
+               <INPUT TYPE="checkbox" NAME="emailsitenotices_yn" VALUE="ON" <? if ($emailsitenotices_yn == "ON") {echo " checked";}?>>Put me on the announcement mailing list (low volume)<br>
 <br>
 We can send you an email when something on your watch list changes.<br>
-Send me, at most, one message per: <select name="watchnotifyfrequency" size="1">
-    <option <? if ($watchnotifyfrequency == "Z") echo "selected " ?> value="Z">Don't notify me</option>
-    <option <? if ($watchnotifyfrequency == "D") echo "selected " ?> value="D">Day</option>
-    <option <? if ($watchnotifyfrequency == "W") echo "selected " ?> value="W">Week (on Tuesdays)</option>
-    <option <? if ($watchnotifyfrequency == "F") echo "selected " ?> value="F">Fortnight (9th and 23rd)</option>
-    <option <? if ($watchnotifyfrequency == "M") echo "selected " ?> value="M">Month (23rd)</option>  </select>
+Send me, at most, one message per: <SELECT NAME="watchnotifyfrequency" size="1">
+    <OPTION <? if ($watchnotifyfrequency == "Z") echo "selected " ?> VALUE="Z">Don't notify me</OPTION>
+    <OPTION <? if ($watchnotifyfrequency == "D") echo "selected " ?> VALUE="D">Day</OPTION>
+    <OPTION <? if ($watchnotifyfrequency == "W") echo "selected " ?> VALUE="W">Week (on Tuesdays)</OPTION>
+    <OPTION <? if ($watchnotifyfrequency == "F") echo "selected " ?> VALUE="F">Fortnight (9th and 23rd)</OPTION>
+    <OPTION <? if ($watchnotifyfrequency == "M") echo "selected " ?> VALUE="M">Month (23rd)</OPTION>  </SELECT>
 <br><br>
-            <input TYPE="submit" VALUE="<? if ($Customize) { echo "update";} else { echo "create";} ?> account" name="submit">
-            <input TYPE="reset"  VALUE="reset form">
-            </td>
-          </tr>
-        </table>
+            <INPUT TYPE="submit" VALUE="<? if ($Customize) { echo "update";} else { echo "create";} ?> account" NAME="submit">
+            <INPUT TYPE="reset"  VALUE="reset form">
+            </TD>
+          </TR>
+</TABLE>
+</FORM>

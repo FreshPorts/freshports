@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.8 2001-12-23 00:28:05 dan Exp $
+   # $Id: freshports.php,v 1.4.2.9 2001-12-29 19:03:07 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -377,102 +377,99 @@ function freshports_ONToYN($Value) {
 }
 
 
-function freshports_PortDetails($myrow, $db, $ShowDeletedDate, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription) {
+function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription) {
 //
 // This php3 fragment does the basic port information for a single port.
-// I'd show you what code is expected in $myrow, but I can't be bothered
-// right now
 //
    GLOBAL $freshports_CVS_URL;
-	GLOBAL	$ShowDepends;
+   GLOBAL $ShowDepends;
 
    $MarkedAsNew = "N";
    $HTML .= "<DL>\n";
 
-   $HTML .= "<DT><b>" . $myrow["port"];
-   if (strlen($myrow["version"]) > 0) {
-      $HTML .= ' ' . $myrow["version"];
+   $HTML .= "<DT><b>" . $port->port;
+   if (strlen($port->version) > 0) {
+      $HTML .= ' ' . $port->version;
    }
 
    $HTML .= "</b>";
 
    // indicate if this port needs refreshing from CVS
-   if ($myrow["status"] == "D") {
+   if ($port->status == "D") {
       $HTML .= ' <font size="-1">[deleted - port removed from ports tree]';
       if ($ShowDeletedDate == "Y") {
-         $HTML .= ' on ' . $myrow["updated"];
+         $HTML .= ' on ' . $port->updated;
       }
       $HTML .= '</font>';
    }
-   if ($myrow["needs_refresh"]) {
+   if ($port->needs_refresh) {
       $HTML .= ' <font size="-1">[refresh]</font>';
    }
 
    if (!$HideCategory) {
-      $URL_Category = "category.php3?category=" . $myrow["category_id"];
-      $HTML .= ' <font size="-1"><a href="' . $URL_Category . '">' . $myrow["category"] . '</a></font>';
+      $URL_Category = "category.php3?category=" . $port->category_id;
+      $HTML .= ' <font size="-1"><a href="' . $URL_Category . '">' . $port->category . '</a></font>';
    }
 
-//   $HTML .= $myrow["date_created"] ."::". $myrow["updated"] ."--". $DaysMarkedAsNew;
-   if ($myrow["date_created"] > Time() - 3600 * 24 * $DaysMarkedAsNew) {
+   if ($port->date_created > Time() - 3600 * 24 * $DaysMarkedAsNew) {
       $MarkedAsNew = "Y";
       $HTML .= " <img src=\"/images/new.gif\" width=28 height=11 alt=\"new!\" hspace=2 align=absmiddle>";
    }
 
    if ($MarkedAsNew == "Y" || $ShowPortCreationDate) {
-      if ($myrow["date_created"] != $myrow["updated"] || !($ShowLastChange == "Y" || $ShowEverything) || $ShowPortCreationDate) {
-         $HTML .= ' <font size="-1">(' . date("j M Y H:i", $myrow["date_created"]) . ")</font>";
+      if ($port->date_created != $port->updated || !($ShowLastChange == "Y" || $ShowEverything) || $ShowPortCreationDate) {
+         $HTML .= ' <font size="-1">(' . date("j M Y H:i", $port->date_created) . ")</font>";
       }
    }
 
    $HTML .= "</DT>\n<DD>";
    # show forbidden and broken
-   if ($myrow["forbidden"]) {
-      $HTML .= '<img src="images/forbidden.gif" alt="Forbidden" width="20" height="20" hspace="2">' . $myrow["forbidden"] . "<br><br>";
+   if ($port->forbidden) {
+      $HTML .= '<img src="images/forbidden.gif" alt="Forbidden" width="20" height="20" hspace="2">' . $port->forbidden . "<br><br>";
 
    }
-   if ($myrow["broken"]) {
-      $HTML .= '<img src="images/broken.gif" alt="Broken" width="17" height="16" hspace="2">' . $myrow["broken"] . "<br><br>"; ;
+   if ($port->broken) {
+      $HTML .= '<img src="images/broken.gif" alt="Broken" width="17" height="16" hspace="2">' . $port->broken . "<br><br>"; ;
    }
 
    // description
-   if ($myrow["short_description"] && ($ShowShortDescription == "Y" || $ShowEverything)) {
-      $HTML .= $myrow["short_description"];
+   if ($port->short_description && ($ShowShortDescription == "Y" || $ShowEverything)) {
+      $HTML .= $port->short_description;
       $HTML .= "<br>\n";
    }
 
    // maintainer
-   if ($myrow["maintainer"] && ($ShowMaintainedBy == "Y" || $ShowEverything)) {
+   if ($port->maintainer && ($ShowMaintainedBy == "Y" || $ShowEverything)) {
       $HTML .= '<i>';
-      if ($myrow["status"] == 'A') {
+      if ($port->status == 'A') {
          $HTML .= 'Maintained';
       } else {
          $HTML .= 'was maintained'; 
       }
-      $HTML .= ' by:</i> <A HREF="mailto:' . $myrow["maintainer"];
-      $HTML .= htmlspecialchars('?cc=ports@FreeBSD.org?subject=FreeBSD%20Port:%20' . $myrow["port"] . '-' . $myrow["version"]) . '">';
-      $HTML .= $myrow["maintainer"] . "</A><BR>";
+      $HTML .= ' by:</i> <A HREF="mailto:' . $port->maintainer;
+      $HTML .= htmlspecialchars('?cc=ports@FreeBSD.org?subject=FreeBSD%20Port:%20' . $port->port . '-' . $port->version) . '">';
+      $HTML .= $port->maintainer . "</A><BR>";
   }
 
    // there are only a few places we want to show the last change.
    // such places set $GlobalHideLastChange == "Y"
    if ($GlobalHideLastChange != "Y") {
       if ($ShowLastChange == "Y" || $ShowEverything) {
-         if ($myrow["last_change_log_id"] != 0) {
-            $HTML .= 'last change committed by ' . $myrow["committer"];  // separate lines in case committer is null
+         if ($port->updated != 0) {
+            $HTML .= 'last change committed by ' . $port->committer;  // separate lines in case committer is null
  
-            $HTML .= ' on <font size="-1">' . $myrow["updated"] . '</font><br>' . "\n";
+            $HTML .= ' on <font size="-1">' . $port->updated . '</font><br>' . "\n";
  
-            $HTML .= $myrow["update_description"] . "<br>" . "\n";
+            $HTML .= $port->update_description . "<br>" . "\n";
          } else {
             $HTML .= "no changes recorded in FreshPorts<br>\n";
          }
       }
    }
 
-   if ($myrow["categories"]) {
+   if ($port->categories) {
       // remove the primary category
-      $Categories = str_replace($myrow["category"], '', $myrow["categories"]);
+      $Categories = str_replace($port->category, '', $port->categories);
       $Categories = str_replace('  ', ' ', $Categories);
       if ($Categories) {
          $HTML .= "<i>Also listed in:</i> ";
@@ -496,16 +493,16 @@ function freshports_PortDetails($myrow, $db, $ShowDeletedDate, $DaysMarkedAsNew,
    }
 
 /*
-echo 'build = ' . $myrow["depends_build"] . "<br>\n";
-echo 'run   = ' . $myrow["depends_run"] . "<br>\n";
+echo 'build = ' . $port->depends_build . "<br>\n";
+echo 'run   = ' . $port->depends_run . "<br>\n";
 */
 
 if ($ShowDepends) {
-   if ($myrow["depends_build"]) {
-      $HTML .= "<BR><i>required to build:</i> ";
+   if ($port->depends_build) {
+      $HTML .= "<i>required to build:</i> ";
 
       // sometimes they have multiple spaces in the data...
-      $temp = str_replace('  ', ' ', $myrow["depends_build"]);
+      $temp = str_replace('  ', ' ', $port->depends_build);
       
       // split each depends up into different bits
       $depends = explode(' ', $temp);
@@ -528,10 +525,10 @@ if ($ShowDepends) {
       $HTML .= "<br>\n";
    }
 
-   if ($myrow["depends_run"]) {
+   if ($port->depends_run) {
       $HTML .= "<i>required to run:</i> ";
       // sometimes they have multiple spaces in the data...
-      $temp = str_replace('  ', ' ', $myrow["depends_run"]);
+      $temp = str_replace('  ', ' ', $port->depends_run);
 
       // split each depends up into different bits
       $depends = explode(' ', $temp);
@@ -558,7 +555,7 @@ if ($ShowDepends) {
 
    if (!$HideDescription && ($ShowDescriptionLink == "Y" || $ShowEverything)) {
       // Long descripion
-      $HTML .= '<A HREF="port-description.php3?port=' . $myrow["id"] .'">Description</a>';
+      $HTML .= '<A HREF="port-description.php3?port=' . $port->id .'">Description</a>';
 
       $HTML .= ' <b>:</b> ';
    }
@@ -566,26 +563,26 @@ if ($ShowDepends) {
    if ($ShowChangesLink == "Y" || $ShowEverything) {
       // changes
       $HTML .= '<a HREF="' . $freshports_CVS_URL . '/ports/' .
-               $myrow["category"] . '/' .  $myrow["port"] . '">Changes</a>';
+               $port->category . '/' .  $port->port . '">Changes</a>';
    }
 
    // download
-   if ($myrow["status"] == "A" && ($ShowDownloadPortLink == "Y" || $ShowEverything)) {
+   if ($port->status == "A" && ($ShowDownloadPortLink == "Y" || $ShowEverything)) {
       $HTML .= ' <b>:</b> ';
       $HTML .= '<a HREF="http://www.freebsd.org/cgi/pds.cgi?ports/' .
-               $myrow["category"] . '/' .  $myrow["port"] . '">Sources</a>';
+               $port->category . '/' .  $port->port . '">Sources</a>';
    }
 
-   if ($myrow["package_exists"] == "Y" && ($ShowPackageLink == "Y" || $ShowEverything)) {
+   if ($port->package_exists == "Y" && ($ShowPackageLink == "Y" || $ShowEverything)) {
       // package
       $HTML .= ' <b>:</b> ';
       $HTML .= '<a HREF="ftp://ftp5.FreeBSD.org/pub/FreeBSD/FreeBSD-stable/packages/' .
-               $myrow["category"] . '/' .  $myrow["port"] . "-" . $myrow["version"] . '.tgz">Package</a>';
+               $port->category . '/' .  $port->port . "-" . $port->version . '.tgz">Package</a>';
    }
 
-   if ($myrow["homepage"] && ($ShowHomepageLink == "Y" || $ShowEverything)) {
+   if ($port->homepage && ($ShowHomepageLink == "Y" || $ShowEverything)) {
       $HTML .= ' <b>:</b> ';
-      $HTML .= '<a HREF="' . $myrow["homepage"] . '">Homepage</a>';
+      $HTML .= '<a HREF="' . $port->homepage . '">Homepage</a>';
    }
 
    $HTML .= "\n</DD>\n</DL>\n";
@@ -667,5 +664,54 @@ function convertAllLinks($text) {
 #
 # The above code was obtained from http://www.zend.com/codex.php?id=199&single=1
 #
+
+function freshports_PortCommitsHeader($port) {
+	# print the header for the commits for a port
+
+	echo '<DL><DD>';
+	echo nl2br(convertAllLinks(htmlspecialchars($myrow["long_description"])));
+	echo "\n</DD>\n</DL>\n</TD>\n</TR>";
+
+	echo '<tr><td><TABLE BORDER="1" width="100%" CELLSPACING="0" CELLPADDING="5"bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">' . "\n";
+	echo '<tr height="20"><td colspan="3" bgcolor="#AD0040"><font color="#FFFFFF"><font size="+1">Commit History</font> (may be incomplete: see Changes link above for full details)</font></td></tr>' . "\n";
+	echo "<tr><td><b>Date</b></td><td><b>Committer</b></td><td><b>Description</b></td></tr>\n";
+}
+
+function freshports_PortCommits($port) {
+	# print all the commits for this port
+
+	require("../classes/commit_log_ports.php");
+
+#	echo ' *************** into freshports_PortCommits ***************';
+	freshports_PortCommitsHeader($port);
+
+	$Commits = new Commit_Log_Ports($port->dbh);
+	$NumRows = $Commits->FetchInitialise($port->id);
+
+#	echo "freshports_PortCommits \$NumRows='$NumRows'";
+
+	$i = 0;
+	for ($i = 0; $i < $NumRows; $i++) {
+		$Commits->FetchNthCommit($i);
+		freshports_PortCommitPrint($Commits);
+	}
+
+	freshports_PortCommitsFooter($port);
+}
+
+function freshports_PortCommitPrint($commit) {
+	# print a single commit for a port
+	echo "<tr><td valign='top'><font size='-1'>" . $commit->commit_date        . "</font></td>\n";
+	echo '    <td valign="top">';
+    echo $commit->committer . '<BR><a href="/files.php3?id=' . $commit->id;
+	echo '"><img src="/images/logs.gif" alt="Files within this port affected by this commit" border="0" WIDTH="17" HEIGHT="20" hspace="2"></a>'. "</td>\n";
+	echo '    <td valign="top" WIDTH="*"><PRE>' . convertAllLinks(htmlspecialchars($commit->description)) . "</PRE></td>\n";
+	echo "</tr>\n";
+}
+
+function freshports_PortCommitsFooter($port) {
+	# print the footer for the commits for a port
+	echo "</TABLE>\n</TD>\n</TR>\n";
+}
 
 ?>

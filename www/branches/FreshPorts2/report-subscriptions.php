@@ -1,5 +1,5 @@
 <?
-	# $Id: report-subscriptions.php,v 1.1.2.9 2002-09-09 18:09:13 dan Exp $
+	# $Id: report-subscriptions.php,v 1.1.2.10 2002-09-09 19:32:24 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -174,12 +174,26 @@ This page allows you to select the reports you wish to receive and the frequency
 	?>
 	</TABLE>
 
+<BIG><BIG>SPAM FILTERS:</BIG></BIG> If you are using spam filters which require confirmation
+of incoming email, these reports will be coming from the following addresses in the <CODE CLASS="code">freshports.org</CODE>
+domain:
+
+<BLOCKQUOTE><CODE CLASS="code">
+freshports-announce
+</CODE></BLOCKQUOTE>
+
+
+Ensure that you update your spam filters to allow such incoming messages.  All replies to the
+above addresses are ignored.
+
+<BR><BR>
 	&nbsp;&nbsp;<INPUT TYPE="submit" VALUE="update" NAME="submit">
 </FORM>
 
 </TD>
 </TR>
 </TABLE>
+
 	</TD>
 
   <?

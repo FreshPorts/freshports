@@ -1,5 +1,5 @@
 <?
-	# $Id: sidebar.php,v 1.1.2.7 2002-05-26 05:02:44 dan Exp $
+	# $Id: sidebar.php,v 1.1.2.8 2002-05-26 05:06:08 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -74,6 +74,7 @@
 		echo '	<LI><SMALL><A HREF="http://' . $ServerName . '/' . $myrow["category"] . '/' . $myrow["port"] . '/" TARGET="_content">';
 		echo $myrow["category"] . '/' . $myrow["port"] . '</A>';
 		echo '</SMALL></LI>';
+		echo "\n";
 	}
 ?>
 	</UL>

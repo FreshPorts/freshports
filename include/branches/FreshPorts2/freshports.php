@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.27 2002-02-12 23:40:54 dan Exp $
+   # $Id: freshports.php,v 1.4.2.28 2002-02-13 00:34:06 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -60,7 +60,9 @@ GLOBAL $BannerAd;
    if ($ShowAds) {
       freshports_BurstMediaCode();
       if ($BannerAd) {
-         freshports_BurstMediaAd();
+		echo '<CENTER>';
+		freshports_BurstMediaAd();
+		echo '</CENTER>';
       }
    }
 

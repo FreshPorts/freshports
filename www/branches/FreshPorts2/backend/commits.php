@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits.php,v 1.1.2.8 2003-05-16 02:33:47 dan Exp $
+	# $Id: commits.php,v 1.1.2.9 2003-07-04 14:58:40 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -14,7 +14,9 @@
 
 	$Debug = 0;
 
-	$MaxCommits = AddSlashes($_REQUEST['n']);
+	if (In_Array('n', $_REQUEST)) {
+		$MaxCommits = AddSlashes($_REQUEST['n']);
+	}
 	if (IsSet($MaxCommits)) {
 		if ($MaxCommits < 1 or $MaxCommits > MAXROWS) {
 			$MaxCommits = MAXROWS;
@@ -26,8 +28,8 @@
 	$Title = "Broken ports";
 
 	$sql = "SELECT message_id, 
-				   to_char(message_date - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS'), 
-				   to_char(commit_date  - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS'), 
+				   to_char(message_date - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as message_date, 
+				   to_char(commit_date  - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as commit_date, 
 				   committer,
 				   system_id
 			  FROM commit_log

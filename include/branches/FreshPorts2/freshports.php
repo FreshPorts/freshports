@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.170 2004-01-31 12:03:28 dan Exp $
+	# $Id: freshports.php,v 1.4.2.171 2004-02-13 15:15:47 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -287,6 +287,7 @@ function freshports_Start($ArticleTitle, $Description, $Keywords, $Phorum=0) {
 
 GLOBAL $ShowAds;
 GLOBAL $BannerAd;
+GLOBAL $ShowAnnouncements;
 
    freshports_HTML_Start();
    freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum);
@@ -1291,6 +1292,10 @@ function freshports_GetNextValue($sequence, $dbh) {
 	return $NextValue;
 }
 
+if (!defined(WRAPCOMMITSATCOLUMN)) {
+	define('WRAPCOMMITSATCOLUMN', 80);
+}
+
 function freshports_wrap($text, $length = WRAPCOMMITSATCOLUMN) {
 	#
 	# split the text into lines based on \n
@@ -1439,6 +1444,7 @@ function freshports_ErrorMessage($Title, $ErrorMessage) {
 
 function DisplayAnnouncements($Announcement) {
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/announcements.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/htmlify.php');
 
 	$HTML .= '<table width="100%"cellpadding="4" cellspacing="0" border="0">' . "\n";
 
@@ -1447,7 +1453,7 @@ function DisplayAnnouncements($Announcement) {
 	for ($i = 0; $i < $NumRows; $i++) {
 		$Announcement->FetchNth($i);
 		$HTML .= '<tr>' . "\n";
-		$HTML .= '<td>' . $Announcement->TextGet()      . '</td>';
+		$HTML .= '<td>' . htmlify(htmlspecialchars($Announcement->TextGet()))      . '</td>';
       $HTML .= '</tr>' . "\n";
 	}
 	$HTML .= '</table>' . "\n";

@@ -15,13 +15,8 @@ require( "/www/freshports.org/_private/getvalues.php3");
 </head>
 
 <body bgcolor="#ffffff" link="#0000cc">
-
-<table width="100%" border="0">
-<tr>
- <td colspan="2">
  <? include("/www/freshports.org/_private/header.inc") ?>
- </td>
-</tr>
+<table width="100%" border="0">
 <tr><td colspan="2">
 This page shows the ports which have been recently added to the ports tree.  As such, some information
 may be missing (such as description, maintainer, etc.). This information will be obtained during the

@@ -1,5 +1,5 @@
 --
--- $Id: POSTGRESQL.sql,v 1.1.2.21 2002-12-01 19:43:22 dan Exp $
+-- $Id: POSTGRESQL.sql,v 1.1.2.22 2002-12-06 14:32:14 dan Exp $
 --
 -- Copyright (c) 1998-2002 DVL Software Limited
 --
@@ -47,7 +47,6 @@ grant select on security_notice_log            to group www;
 grant select on system                         to group www;
 grant select on system_branch                  to group www;
 grant select on system_branch_element_revision to group www;
-grant select on watch_list                     to group www;
 
 --
 -- select, insert, update
@@ -57,6 +56,7 @@ grant select,         update on users_id_seq   to group www;
 grant select, insert         on watch_list     to group www;
 
 grant select, insert, delete, update on committer_notify           to group www;
+grant select, insert, delete, update on watch_list                 to group www;
 grant select, insert, delete, update on watch_list_staging         to group www;
 grant select,                 update on watch_list_staging_id_seq  to group www;
 

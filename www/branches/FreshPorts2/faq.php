@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.40 2003-07-04 18:14:59 dan Exp $
+	# $Id: faq.php,v 1.1.2.41 2003-09-25 15:49:49 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -271,6 +271,10 @@ down you must read to find something you didn't already know.</P>
 
 	<P><? echo freshports_WatchListCount_Icon(); ?> Watch List Count (WLC): This is the number of watch lists which are watching 
 	this port.  This might give you an idea of the popularity of the port.
+	</P>
+
+	<P><? echo freshports_CVS_Icon(); ?> CVS Repository: This link will take you to the CVS Repository entry
+	for this version of the file.
 	</P>
 
 	</BLOCKQUOTE>

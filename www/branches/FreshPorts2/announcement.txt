@@ -1,5 +1,6 @@
-<P>
-<BIG><BIG>They're here......!</BIG></BIG>
-The website has been <a href="/release-2003-04-29.php">upgraded</a>.
-</P>
+<BIG><BIG>
+BSDCan 2004 is coming!
+</big></big>
+See the <a href="http://www.bsdcan.org/">website</a> for details. Also, we could use a logo for BSDCan!
+</p>
 

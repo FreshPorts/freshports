@@ -1,5 +1,5 @@
 <?
-	# $Id: security-notice.php,v 1.1.2.1 2003-01-10 15:56:14 dan Exp $
+	# $Id: security-notice.php,v 1.1.2.2 2003-01-10 19:12:04 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -20,50 +20,58 @@
 	$Debug = 0;
 #	phpinfo();
 
-	// if we don't know who they are, we'll make sure they login first
-	if (!$visitor) {
-		header("Location: login.php?origin=" . $_SERVER["PHP_SELF"]);  /* Redirect browser to PHP web site */
-		exit;  /* Make sure that code below does not get executed when we redirect. */
-	}
-
 	$message_id = AddSlashes($_REQUEST[message_id]);
 
 	$SecurityNotice = new SecurityNotice($db);
 
+
 	if (IsSet($_REQUEST[submit])) {
+		$result = "ROLLBACK";
+		pg_exec($db, "BEGIN");
 		$description = AddSlashes($_REQUEST[description]);
-		$SecurityNotice->Create($User->id, $message_id, $description, $_SERVER[REMOTE_ADDR]);
+		if ($SecurityNotice->Create($User->id, $message_id, $description, $_SERVER[REMOTE_ADDR])) {
+			if ($SecurityNotice->FetchByMessageID($message_id)) {
+				if (pg_exec($db, 'UPDATE housekeeping SET refresh_now = 2')) {
+					$result = "COMMIT";
+				}
+			}
+		}
+
+		pg_exec($db, $result);
+		if ($result == "ROLLBACK") {
+			unset($SecurityNotice->id);
+		}
+	} else {
+		$SecurityNotice->FetchByMessageID($message_id);
 	}
 
-	$SecurityNotice->FetchByMessageID($message_id);
+	GLOBAL $freshports_Tasks_SecurityNoticeAdd;
 ?>
 
 <TABLE width="<? echo $TableWidth ?>" border="0" ALIGN="center">
-<TR><TD VALIGN=TOP>
+<TR><TD VALIGN=TOP WIDTH="100%">
 <TABLE WIDTH="100%" border="0">
 <TR>
 	<? echo freshports_PageBannerText($PageTitle); ?>
 <TR><TD>
-This page allows you to mark a commit as being security related.  Such commits will be included on the Security Notification report
-mailed out to users and marked with a <a href="/faq.php">security lock</a> whereever that commit appears.
-<?
+<?php
+	if (IsSet($SecurityNotice->id)) {
+		echo '<p>' . freshports_Security_Icon() . ' This commit has been marked as security related</p>';
+	} else {
+		if ($User->IsTaskAllowed($freshports_Tasks_SecurityNoticeAdd)) {
+			echo 'This page allows you to mark a commit as being security related.  Such commits will be included on the Security Notification report' . "\n";
+			echo 'mailed out to users and marked with a <a href="/faq.php">security lock</a> whereever that commit appears.';
+		} else {
+			echo 'This commit is not security related.';
+		}
+	}
 ?>
-</TD><TR>
-<TR><TD>
+</TD></TR>
 	<?
 	$Debug = 0;
 
-	# you can only be here if you are logged in!
-	$visitor = $_COOKIE["visitor"];
-	if (!$visitor) {
-		?>
-		<P>
-		You must <A HREF="login.php?origin=<?echo $_SERVER["PHP_SELF"] ?>">login</A> before you can come here.
-		</P>
-		<?
- 	} else {
-		$Commit = new Commit($db);
-		$Commit->FetchByMessageId($message_id);
+	$Commit = new Commit($db);
+	if ($Commit->FetchByMessageId($message_id) == $message_id) {
 
 		$HTML .= '<TR><TD COLSPAN="3" BGCOLOR="#AD0040" HEIGHT="0">' . "\n";
 		$HTML .= '   <FONT COLOR="#FFFFFF"><BIG>' . FormatTime($Commit->commit_date, 0, "D, j M Y") . '</BIG></FONT>' . "\n";
@@ -81,20 +89,36 @@ mailed out to users and marked with a <a href="/faq.php">security lock</a> where
 		$HTML .= freshports_PortDescriptionPrint($Commit->commit_description, $Commit->encoding_losses);
 		$HTML .= "\n</BLOCKQUOTE>\n</TD></TR>\n\n\n";
 
-		echo $HTML;
+		$HTML .= '<tr><td height=20><hr width="97%" align="center"></tr></td>';
+	} else {
+		$HTML = '<TR><TD>I did not find that commit</TD></TR>';
+	}
+
+	echo $HTML;
 ?>
-<tr><td height=20>
-<hr width="97%" align="center">
-</tr></td>
 
 <tr><td>
+<?php
+	GLOBAL $freshports_Tasks_SecuritydNoticeAdd;
+
+	if (IsSet($SecurityNotice->id)) {
+		echo '<h2>Notification reason</h2>';
+	} else {
+		if ($User->IsTaskAllowed($freshports_Tasks_SecurityNoticeAdd)) {
+?>
 <p>
 Please enter your reasoning for marking the above commit as a security issue.
 </p>
+<?php
+		}
+	}
+
+	if (IsSet($SecurityNotice->id) || $User->IsTaskAllowed($freshports_Tasks_SecurityNoticeAdd)) {
+?>
 
 <FORM ACTION="<? echo $_SERVER["PHP_SELF"]; ?>" method="POST">
 	<TEXTAREA NAME="description" ROWS="10" COLS=60"<?php
-	if (IsSet($SecurityNotice->description)) echo ' readonly'; ?>><?php
+	if (IsSet($SecurityNotice->description) || !$User->IsTaskAllowed($freshports_Tasks_SecurityNoticeAdd)) echo ' readonly'; ?>><?php
 	if (IsSet($SecurityNotice->description)) {
 		echo $SecurityNotice->description;
 	} else {
@@ -103,7 +127,7 @@ Please enter your reasoning for marking the above commit as a security issue.
 ?></TEXTAREA>
 	<BR>
 <?php
-	if (!IsSet($SecurityNotice->id)) {
+	if (!IsSet($SecurityNotice->id) && $User->IsTaskAllowed($freshports_Tasks_SecurityNoticeAdd)) {
 ?>
 	<INPUT TYPE="submit" VALUE="Save Security Info" NAME="submit">
 <?php
@@ -112,13 +136,33 @@ Please enter your reasoning for marking the above commit as a security issue.
 	<INPUT TYPE="hidden" NAME="message_id" VALUE="<? echo $message_id; ?>">
 </FORM>
 <?php
+	}
+
 	if (IsSet($SecurityNotice->id)) {
+		if ($User->IsTaskAllowed($freshports_Tasks_SecurityNoticeAdd)) {
+			$UserAlt = new User($db);
+			$UserAlt->Fetch($SecurityNotice->user_id);
+?>
+<h2>Audit trail</h2>
+<table border=1 CELLSPACING="0" CELLPADDING="5">
+<tr><td><b>Date marked</b></td><td><b>User Name</b></td><td><b>IP Address</b></td><td><b>e-mail</b></td><td><b>status</b></td></tr>
+<tr>
+<td><?php echo $SecurityNotice->date_added; ?></td>
+<td><?php echo $UserAlt->name; ?></td>
+<td><?php echo $SecurityNotice->ip_address; ?></td>
+<td><?php echo $UserAlt->email; ?></td>
+<td><?php echo $SecurityNotice->status; ?></td>
+</tr>
+</td>
+</table>
+
+<?php
+		}
 		echo freshports_Security_Icon() . 'This commit is set as security related';
 	}
 ?>
 </td></tr>
 <?php
-	}
 	?>
 </TD>
 </TR>

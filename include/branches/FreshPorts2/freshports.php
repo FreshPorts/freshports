@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.177 2004-07-13 13:50:31 dan Exp $
+	# $Id: freshports.php,v 1.4.2.178 2004-08-09 22:36:36 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -53,6 +53,7 @@ function freshports_IndexFollow($URI) {
 	$NOFOLLOW['/ports-deleted.php']		= 1;
 	$NOFOLLOW['/graphs.php']			= 1;
 	$NOFOLLOW['/ports-deleted.php']		= 1;
+	$NOFOLLOW['/commit.php']		= 1;
 
 	# well, OK, so it may not be a URI... but it's close
 
@@ -752,7 +753,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 	if (strlen($port->{'version'}) > 0) {
     	$HTML .= ' ' . $port->{'version'};
 		if (strlen($port->{'revision'}) > 0 && $port->{'revision'} != "0") {
-    		$HTML .= '-' . $port->{'revision'};
+    		$HTML .= FRESHPORTS_VERSION_REVISION_JOINER . $port->{'revision'};
 		}
 	}
 
@@ -968,7 +969,7 @@ if ($ShowDepends) {
 		$HTML .= ' <b>:</b> ';
 		$HTML .= '<A HREF="' . FRESHPORTS_FREEBSD_FTP_URL . '/' . $port->port . '-' . $port->version;
 		if ($port->revision != '' and $port->revision != '0') {
-			$HTML .= '_' . $port->revision;
+			$HTML .= FRESHPORTS_VERSION_REVISION_JOINER . $port->revision;
 		}
 		$HTML .= '.tgz">Package</A>';
 	}
@@ -1035,6 +1036,15 @@ function freshports_PortsMoved($port, $PortsMoved) {
 
 	$HTML .= 'on ' . $PortsMoved->date . "<br>";
 	$HTML .= 'REASON: ' . $PortsMoved->reason . '<br>';
+
+	return $HTML;
+}
+
+function freshports_PortsUpdating($port, $PortsUpdating) {
+	$HTML .=                    htmlspecialchars($PortsUpdating->date);
+	$HTML .= '<pre>Affects: ' . htmlspecialchars($PortsUpdating->affects) . '</pre>';
+	$HTML .= '<pre>Author: '  . htmlspecialchars($PortsUpdating->author)  . '</pre>';
+	$HTML .= '<pre>Reason: '  . htmlspecialchars($PortsUpdating->reason)  . '</pre>';
 
 	return $HTML;
 }
@@ -1141,7 +1151,7 @@ function freshports_PortCommitPrint($commit, $category, $port) {
 	if (strlen($commit->{'port_version'}) > 0) {
     	echo '&nbsp;&nbsp;&nbsp;<BIG><B>' . $commit->{'port_version'};
 		if (strlen($commit->{'port_revision'}) > 0 && $commit->{'port_revision'} != "0") {
-    		echo '-' . $commit->{'port_revision'};
+    		echo FRESHPORTS_VERSION_REVISION_JOINER . $commit->{'port_revision'};
 		}
 		echo '</B></BIG>';
 	}

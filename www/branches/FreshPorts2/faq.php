@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.53 2004-10-24 21:40:24 dan Exp $
+	# $Id: faq.php,v 1.1.2.54 2004-11-17 13:22:28 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -70,7 +70,9 @@ down you must read to find something you didn't already know.</P>
 	<TR><TD>
 	There are three easy ways to modify your watch list:
 	<OL>
-	<LI>Wherever you see a port, you can click on the Add/Remove
+	<LI>Wherever you see a port, you can click on the Add 
+		(<? echo freshports_Watch_Icon_Add(); ?>) /
+		Remove (<? echo freshports_Watch_Icon(); ?>
 		link as necessary (i.e. one-click watch list maintenance).</LI>
 	<LI>The 'watch list categories' link provides you with a list
 		of categories.  Select the category, and then the ports within

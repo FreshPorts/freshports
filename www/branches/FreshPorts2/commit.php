@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.30 2003-09-25 20:15:55 dan Exp $
+	# $Id: commit.php,v 1.1.2.31 2003-09-25 23:11:51 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -203,24 +203,31 @@ SELECT ports.id as port_id,
 						$HTML .= "<BR>\n";
 					}
 
-					$HTML .= '<BIG><B>';
 
 					if ($IsPort) {
+						$HTML .= '<BIG><B>';
 						$HTML .= '<A HREF="/' . $myrow["category"] . '/' . $myrow["port"] . '/">';
 						$HTML .= $myrow["port"];
 					
+						$HTML .= '</A>';
+
 						if (strlen($myrow["version"]) > 0) {
 							$HTML .= ' ' . $myrow["version"];
 							if (strlen($myrow["revision"]) > 0 && $myrow["revision"] != "0") {
 				    			$HTML .= '-' . $myrow["revision"];
 							}
 						}
+						$HTML .= "</B></BIG>\n";
+
 					} else {
+						$HTML .= '<BIG><B>';
 						$ElementPathname = preg_replace('|^/?ports/|', '', $myrow['element_pathname']);
 						$HTML .= '<A HREF="/' . $ElementPathname . '">';
 						$HTML .= $ElementPathname;
+						$HTML .= '</A>';
+						$HTML .= ' ' . $myrow["revision"];
+						$HTML .= "</B></BIG>\n";
 					}
-					$HTML .= "</A></B></BIG>\n";
 
 					$HTML .= '<A HREF="/' . $myrow["category"] . '/">';
 					$HTML .= $myrow["category"]. "</A>";

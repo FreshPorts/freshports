@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: authors.php,v 1.1.2.17 2003-04-27 14:48:09 dan Exp $
+	# $Id: authors.php,v 1.1.2.18 2004-06-30 15:01:47 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -40,7 +40,7 @@ do it alone.</p>
     things out of CVS.</LI>
 
 <LI>Dan Peterson showed me the wonders of <A HREF="http://cr.yp.to/daemontools.html">Daemon Tools</A>
-    which handles the processing of incoming messages and refreshes the main web page.</A></LI>
+    which handles the processing of incoming messages and refreshes the main web page.</LI>
 
 <LI>Josef Karthauser for helping me through the cvs-all log format and for greatly simplifying the
 	job of FP2.</LI>

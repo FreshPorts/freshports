@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports.php,v 1.1.2.32 2003-04-28 16:21:13 dan Exp $
+	# $Id: ports.php,v 1.1.2.33 2003-05-16 02:38:56 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -439,4 +439,28 @@ LEFT OUTER JOIN
 
 		return $result;
 	}
+
+	function WatchListCount() {
+		#
+		# return the number of watch lists upon which this port appears
+		#
+
+		$result = 0;
+
+		$sql = 'select watch_list_count(' . $this->element_id . ')';
+
+		$result = pg_exec($this->dbh, $sql);
+		if ($result) {
+			$numrows = pg_numrows($result);
+			if ($numrows >= 1) {
+				$myrow = pg_fetch_row($result);
+				$result = $myrow[0];
+			}
+		} else {
+			echo 'pg_exec failed: ' . $sql;
+		}
+
+		return $result;
+	}
+
 }

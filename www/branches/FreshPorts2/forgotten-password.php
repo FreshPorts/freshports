@@ -1,5 +1,5 @@
 <?
-	# $Id: forgotten-password.php,v 1.1.2.2 2002-01-02 04:35:03 dan Exp $
+	# $Id: forgotten-password.php,v 1.1.2.3 2002-01-02 04:38:02 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -107,7 +107,7 @@ if ($submit) {
                     "care of it for you.\n" .
                     " \n" .
                     "Your User ID is:\n" .
-                    $myrow["username"] . "\n" .
+                    $myrow["name"] . "\n" .
                     "\n" .
                     "Your password is:\n" .
                     $myrow["password"] . "\n" .

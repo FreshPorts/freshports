@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.163 2003-11-11 16:44:39 dan Exp $
+	# $Id: freshports.php,v 1.4.2.164 2003-11-14 04:42:49 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -1347,6 +1347,7 @@ function freshports_UserSendToken($UserID, $dbh) {
 
 function freshports_ShowFooter() {
 GLOBAL $TableWidth;
+GLOBAL $Statistics;
 
 echo '<TABLE WIDTH="' . $TableWidth . '" BORDER="0" ALIGN="center">
 <TR><TD>
@@ -1358,6 +1359,8 @@ echo '
 </TD></TR>
 </TABLE>
 ';
+
+	$Statistics->Save();
 }
 
 function freshports_SideBar() {

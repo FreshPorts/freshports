@@ -1,5 +1,5 @@
 <?
-	# $Id: bouncing.php,v 1.1.2.4 2002-02-21 23:13:52 dan Exp $
+	# $Id: bouncing.php,v 1.1.2.5 2002-04-20 02:12:13 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -46,7 +46,7 @@ if ($submit) {
 <tr>
 <? freshports_PageBannerText("Bouncing?  What do you mean?"); ?>
 </tr>
-</tr><td>
+<tr><td>
 
 <p>You are a registered user. You have indicted that we can send you email.  This will either
 be part of your watch list notifications or as an announcement.  You can view these settings
@@ -55,7 +55,7 @@ on the customization page (see the link on the right hand side of the page).</p>
 <p>The problem is that the email we are sending you is not getting to you.  It is bouncing back
 to us.  So we have stopped sending out messages to you.  If you wish to continue to receive such
 messages, you should update your email address on the customization page.</p>
-</tr><td>
+</td></tr>
 <TR><TD HEIGHT="20">
 </TD></TR>
 <tr>
@@ -75,11 +75,11 @@ tell FreshPorts that you want it to start using your email address again by pres
 the button below.</p>
 
 </td></tr>
-<tr><td><center>
+<tr><td><CENTER>
 <form action="<?php echo $PHP_SELF . "?origin=" . $origin ?>" method="POST">
 <input TYPE="submit" VALUE="There was a problem, but it's fixed now" name="submit">
 </form>
-</centre>
+</CENTER>
 </td></tr>
 </table>
 </td>

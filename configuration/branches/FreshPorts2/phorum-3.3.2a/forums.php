@@ -9,7 +9,7 @@
 // Global Settings
   $PHORUM['started']=1;
   $PHORUM['DefaultDisplay']='90';
-  $PHORUM['DefaultEmail']='dan@langille.org';
+  $PHORUM['DefaultEmail']='webmaster@FreshPorts.org';
   $PHORUM['PhorumMailCode']='';
   $PHORUM['UseCookies']='1';
   $PHORUM['SortForums']='1';

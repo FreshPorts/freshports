@@ -3,5 +3,5 @@
 and help support the Diary at the same time.  We get 5% on any sales you make through our BSD Mall links.  Thanks.</BIG></BIG>
 
 <P ALIGN="left">
-<BIG><BIG><A HREF="http://www.ocuug.on.ca/">Ottawa Unix Users Group</A></BIG></BIG> next meeting, Tuesday May 14th</BIG></BIG>
+<BIG><BIG><A HREF="http://www.ocuug.on.ca/">Ottawa Unix Users Group</A></BIG></BIG> next meeting, Tuesday May 14th - a talk on FreeBSD</BIG></BIG>
 </P>

@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.4 2002-01-06 06:33:59 dan Exp $
+	# $Id: index.php,v 1.1.2.5 2002-01-06 23:17:31 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -13,7 +13,6 @@
 					"$FreshPortsName - new ports, applications",
 					"FreeBSD, index, applications, ports");
 $Debug=0;
-
 
 //echo "UserID='$UserID'";
 

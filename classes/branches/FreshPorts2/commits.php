@@ -1,7 +1,8 @@
-<?
-	# $Id: commits.php,v 1.1.2.10 2003-03-06 13:51:42 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: commits.php,v 1.1.2.11 2003-04-28 16:21:52 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
 
@@ -56,6 +57,7 @@ class Commits {
 	    FROM watch_list JOIN watch_list_element 
 	        ON watch_list.id      = watch_list_element.watch_list_id
 	       AND watch_list.user_id = $UserID
+	       AND watch_list.in_service		
 	  GROUP BY wle_element_id) AS TEMP
 	       ON TEMP.wle_element_id = element.id";
 		}

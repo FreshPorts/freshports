@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.56 2004-11-18 21:52:51 dan Exp $
+	# $Id: faq.php,v 1.1.2.57 2004-11-21 14:56:19 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -72,7 +72,7 @@ down you must read to find something you didn't already know.</P>
 	<OL>
 	<LI>Wherever you see a port, you can click on the Add 
 		(<? echo freshports_Watch_Icon_Add(); ?>) /
-		Remove (<? echo freshports_Watch_Icon(); ?>
+		Remove (<? echo freshports_Watch_Icon(); ?>)
 		link as necessary (i.e. one-click watch list maintenance).</LI>
 	<LI>The 'watch list categories' link provides you with a list
 		of categories.  Select the category, and then the ports within
@@ -591,7 +591,7 @@ pkg_add -r XFree86-clients
    <P>
 If you visit the <a href="/search.php">search</a> page, and you run a search,
 you'll find that the URL becomes very long.  For example, 
-<a href="/search.php?query=bacula&search=go&num=10&stype=name&method=match&deleted=excludedeleted&start=1&casesensitivity=caseinsensitive">this really long link</a>.
+<a href="/search.php?query=bacula&amp;search=go&amp;num=10&amp;stype=name&amp;method=match&amp;deleted=excludedeleted&amp;start=1&amp;casesensitivity=caseinsensitive">this really long link</a>.
 <p>
 Long URLs occur like that because the search form uses a GET.  A long URL
 would not occur if it was using a POST.  The long URLs are useful because
@@ -623,7 +623,7 @@ instead of a POST.
 </table>
 
 	For all of the above origins, you can obtain the value using 
-	<a href="http://www.freebsd.org/cgi/man.cgi?query=make&apropos=0&sektion=0&manpath=FreeBSD+5.3-RELEASE+and+Ports&format=html"><code class="code">make</code></a>.
+	<a href="http://www.freebsd.org/cgi/man.cgi?query=make&amp;apropos=0&amp;sektion=0&amp;manpath=FreeBSD+5.3-RELEASE+and+Ports&amp;format=html"><code class="code">make</code></a>.
 	For example:
 
 <blockquote><code class="code">

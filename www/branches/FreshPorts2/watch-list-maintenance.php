@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-list-maintenance.php,v 1.1.2.3 2002-12-04 21:39:51 dan Exp $
+	# $Id: watch-list-maintenance.php,v 1.1.2.4 2002-12-05 13:47:12 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -206,7 +206,7 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 ?>
 
 <TABLE WIDTH="100%" BORDER="1" CELLSPACING="0" CELLPADDING="5">
-<TR><td><b>Watch Lists</b></td><td><b>Actions</b></td><td><b>Options</b></td></tr>
+<TR><td nowrap><BIG><b>Watch Lists</b></BIG></td><td><BIG><b>Actions</b></BIG></td><td><BIG><b>Options</b></BIG></td></tr>
   <TR>
     <TD valign="top">
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>

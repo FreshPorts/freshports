@@ -29,7 +29,7 @@
    $HTML .= $myrow["short_description"] . "<br>\n";
 
    // maintainer
-   $HTML .= 'Maintained by: <a href="mailto:' . $myrow["maintainer"];
+   $HTML .= '<i>Maintained by:</i> <a href="mailto:' . $myrow["maintainer"];
    $HTML .= '?cc=ports@FreeBSD.org&amp;subject=FreeBSD%20Port:%20' . $myrow["port"] . "-" . $myrow["version"] . '">';
    $HTML .= $myrow["maintainer"] . '</a></br>' . "\n";
 
@@ -42,6 +42,97 @@
    } else {
       $HTML .= "no changes recorded in FreshPorts<br>\n";
    }
+
+if ($ShowCategories) {
+
+   if ($myrow["categories"]) {
+//      $HTML .= "Also listed in: ";
+
+      // remove the primary category
+      $Categories = str_replace($myrow["category"], '', $myrow["categories"]);
+      $Categories = str_replace('  ', ' ', $Categories);
+      if ($Categories) {
+         $HTML .= "<i>Also listed in:</i> ";
+         $CategoriesArray = explode(" ", $Categories);
+         $Count = count($CategoriesArray);
+         for ($i = 0; $i < $Count; $i++) {
+            $Category = $CategoriesArray[$i];
+            $CategoryID = freshports_CategoryIDFromCategory($Category, $db);
+            if ($CategoryID) {
+               // this is a real category
+               $HTML .= '<a href="category.php3?category=' . $CategoryID . '">' . $Category . '</a>';
+            } else {
+               $HTML .= $Category;
+            }
+            if ($i < $Count - 1) {
+               $HTML .= " ";
+            }
+         }
+      $HTML .= "<br>\n";
+      }
+   }
+}
+
+/*
+echo 'build = ' . $myrow["depends_build"] . "<br>\n";
+echo 'run   = ' . $myrow["depends_run"] . "<br>\n";
+*/
+
+if ($ShowDepends) {
+   if ($myrow["depends_build"]) {
+      $HTML .= "<i>required to build:</i> ";
+
+      // sometimes they have multiple spaces in the data...
+      $temp = str_replace('  ', ' ', $myrow["depends_build"]);
+      
+      // split each depends up into different bits
+      $depends = explode(' ', $temp);
+      $Count = count($depends);
+      for ($i = 0; $i < $Count; $i++) {
+          // split one depends into the library and the port name (/usr/ports/<category>/<port>)
+
+          $DependsArray = explode(':', $depends[$i]);
+
+          // now extract the port and category from this port name
+          $CategoryPort = str_replace('/usr/ports/', '', $DependsArray[1]) ;
+          $CategoryPortArray = explode('/', $CategoryPort);
+          $DependsPortID = freshports_PortIDFromPortCategory($CategoryPortArray[0], $CategoryPortArray[1], $db);
+
+          $HTML .= '<a href="port-description.php3?port=' . $DependsPortID . '">' . $CategoryPortArray[1]. '</a>';
+          if ($i < $Count - 1) {
+             $HTML .= ", ";
+          }
+      }
+      $HTML .= "<br>\n";
+   }
+
+   if ($myrow["depends_run"]) {
+      $HTML .= "<i>required to run:</i> ";
+      // sometimes they have multiple spaces in the data...
+      $temp = str_replace('  ', ' ', $myrow["depends_run"]);
+
+      // split each depends up into different bits
+      $depends = explode(' ', $temp);
+      $Count = count($depends);
+      for ($i = 0; $i < $Count; $i++) {
+          // split one depends into the library and the port name (/usr/ports/<category>/<port>)
+
+          $DependsArray = explode(':', $depends[$i]);
+
+          // now extract the port and category from this port name
+          $CategoryPort = str_replace('/usr/ports/', '', $DependsArray[1]) ;
+          $CategoryPortArray = explode('/', $CategoryPort);
+          $DependsPortID = freshports_PortIDFromPortCategory($CategoryPortArray[0], $CategoryPortArray[1], $db);
+
+          $HTML .= '<a href="port-description.php3?port=' . $DependsPortID . '">' . $CategoryPortArray[1]. '</a>';
+          if ($i < $Count - 1) {
+             $HTML .= ", ";
+          }
+      }
+      $HTML .= "<br>\n";
+   }
+
+}
 
    if (!$HideDescription) {
       // Long descripion

@@ -35,7 +35,13 @@
 
    // maintainer
    if ($myrow["maintainer"]) {
-      $HTML .= '<i>Maintained by:</i> <a href="mailto:' . $myrow["maintainer"];
+      $HTML .= '<i>';
+      if ($myrow["status"] == 'A') {
+         $HTML .= 'Maintained';
+      } else {
+         $HTML .= 'was maintained'; 
+      }
+      $HTML .= ' by:</i> <a href="mailto:' . $myrow["maintainer"];
       $HTML .= '?cc=ports@FreeBSD.org&amp;subject=FreeBSD%20Port:%20' . $myrow["port"] . "-" . $myrow["version"] . '">';
       $HTML .= $myrow["maintainer"] . '</a></br>' . "\n";
    }
@@ -151,11 +157,13 @@ if ($ShowDepends) {
    // changes
    $HTML .= '<a HREF="http://www.FreeBSD.org/cgi/cvsweb.cgi/ports/' .
             $myrow["category"] . '/' .  $myrow["port"] . '">Changes</a>';
-   $HTML .= ' <b>:</b> ';
 
    // download
-   $HTML .= '<a HREF="ftp://ftp.FreeBSD.org/pub/FreeBSD/branches/-current/ports/' .
-            $myrow["category"] . '/' .  $myrow["port"] . '.tar">Download Port</a>';
+   if ($myrow["status"] == "A") {
+      $HTML .= ' <b>:</b> ';
+      $HTML .= '<a HREF="ftp://ftp.FreeBSD.org/pub/FreeBSD/branches/-current/ports/' .
+               $myrow["category"] . '/' .  $myrow["port"] . '.tar">Download Port</a>';
+   }
 
    if ($myrow["package_exists"] == "Y") {
       // package

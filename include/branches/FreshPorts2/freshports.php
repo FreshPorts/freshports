@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.81 2002-04-19 17:06:21 dan Exp $
+	# $Id: freshports.php,v 1.4.2.82 2002-04-20 03:42:16 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -227,9 +227,9 @@ if ($Phorum) {
 	GLOBAL $ForumName;
 
 ?>
-	<meta name="Phorum Version" content="<?php echo $phorumver; ?>" />
-	<meta name="Phorum DB" content="<?php echo $DB->type; ?>" />
-	<meta name="PHP Version" content="<?php echo phpversion(); ?>" />
+	<meta name="Phorum Version" content="<?php echo $phorumver; ?>">
+	<meta name="Phorum DB" content="<?php echo $DB->type; ?>">
+	<meta name="PHP Version" content="<?php echo phpversion(); ?>">
 <?
 }
 
@@ -239,6 +239,11 @@ if ($Phorum) {
 
 function freshports_style($Phorum=0) {
 
+	if ($Phorum) {
+		?>
+		<LINK REL="STYLESHEET" TYPE="text/css" HREF="<?php echo phorum_get_file_name("css"); ?>">
+		<?
+	}
 	echo "\n        <STYLE TYPE=\"text/css\">\n";
 
 if (2==2) {
@@ -265,11 +270,6 @@ BODY, TD, TR, P, UL, OL, LI, INPUT, SELECT, DL, DD, DT, FONT
                 A.white:hover { text-decoration: underline; }
         </STYLE>\n";
 
-	if ($Phorum) {
-		?>
-		<link rel="STYLESHEET" type="text/css" href="<?php echo phorum_get_file_name("css"); ?>" />
-		<?
-	}
 }
 
 function freshports_body() {

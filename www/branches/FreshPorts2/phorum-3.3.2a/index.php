@@ -149,7 +149,7 @@
   <TD nowrap bgcolor="<?php echo $table_body_color_1; ?>">&nbsp;&nbsp;<?php echo $last; ?></TD>
 </TR>
 <TR>
-  <TD colspan=3 bgcolor="<?php echo $table_body_color_1; ?>"><FONT color="<?php echo $table_body_font_color_1; ?>"><blockquote><br><?php echo $description; ?></blockquote></font></TD>
+  <TD colspan=3 bgcolor="<?php echo $table_body_color_1; ?>"><BLOCKQUOTE><FONT color="<?php echo $table_body_font_color_1; ?>"><br><?php echo $description; ?></font></blockquote></TD>
 </TR>
 <?php
       $rec=$q->getrow();

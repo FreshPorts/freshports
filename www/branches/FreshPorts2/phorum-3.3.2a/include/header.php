@@ -1,5 +1,5 @@
 <?
-	# $Id: header.php,v 1.1.2.5 2002-04-06 15:01:43 dan Exp $
+	# $Id: header.php,v 1.1.2.6 2002-04-20 03:41:42 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -16,7 +16,7 @@
 
 ?>
 
-<TABLE VALIGN="top" ALIGN="center" WIDTH="<? echo $TableWidth; ?>" CELLPADDING="<? echo $BannerCellPadding; ?>" CELLSPACING="<? echo $BannerCellSpacing; ?>" BORDER="0">
+<TABLE ALIGN="center" WIDTH="<? echo $TableWidth; ?>" CELLPADDING="<? echo $BannerCellPadding; ?>" CELLSPACING="<? echo $BannerCellSpacing; ?>" BORDER="0">
 <TR>
     <!-- first column in body -->
     <TD WIDTH="100%" VALIGN="top" ALIGN="center">

@@ -1,5 +1,5 @@
 <?
-   # $Id: news.php3,v 1.10 2001-09-28 00:05:38 dan Exp $
+   # $Id: news.php3,v 1.11 2001-10-03 02:16:17 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -15,10 +15,13 @@
 ?>
 <?php
 
+#echo 'stuff';
+#exit;
+
 $text_file	=	"./news.txt";
 
-require("./include/commonlogin.php3");
-$Debug=0;
+#require("./include/commonlogin.php3");
+#$Debug=1;
 
 $MyMaxArticles = 10;
 
@@ -32,6 +35,7 @@ if ($MaxArticles == $MyMaxArticles) {
    $OutputFromCach = 0;
 }
 
+/*
 if ($OutputFromCach) {
    $time           =       split(" ", microtime());
 
@@ -51,6 +55,7 @@ if ($OutputFromCach) {
    $BuildTable     = 1;
    $OutputFromCach = 0;
 }
+*/
 
 if ($Debug) {
 echo '<br>';
@@ -69,7 +74,7 @@ if ($Debug) {
 
 }
 
-if ($BuildTable == 1) {
+#if ($BuildTable == 1) {
    $HTML .= '<!DOCTYPE rss PUBLIC "-//Netscape Communications//DTD RSS 0.91//EN"' . "\n";
    $HTML .= '        "http://my.netscape.com/publish/formats/rss-0.91.dtd">' . "\n";
    $HTML .= '<rss version="0.91">' . "\n";
@@ -98,8 +103,9 @@ $sql = "select ports.id, ports.name as port, change_log.commit_date as updated_r
        "  and ports.primary_category_id       = categories.id " .
        "  and change_log_port.port_id         = ports.id " .
        "  and change_log.id                   = change_log_port.change_log_id " .
-       "  and change_log.commit_date          > '" . date("Y-m-d", time() - 60*60*24*7) . "' ";
+       "  and change_log.commit_date          > '" . date("Y-m-d", time() - 60*60*24*14) . "' ";
 
+/*
 $AnnounceFile = "news.announcement.txt";
 if (file_exists($AnnounceFile) && filesize($AnnounceFile) > 4) {
    $sql .= " order by $sort limit 19";
@@ -111,9 +117,9 @@ if (file_exists($AnnounceFile) && filesize($AnnounceFile) > 4) {
 
    $TEXT .= 'Please take our survey' . "\n";
    $TEXT .= 'http://freshports.org/survey/' . "\n";
-} else {
+} else { */
    $sql .= " order by $sort limit 20";
-}
+#}
 
 if ($Debug) {
    echo $sql;
@@ -137,8 +143,9 @@ if ($Debug) {
    $HTML .= '</channel>' . "\n";
    $HTML .= '</rss>' . "\n";
    
-}
+#}
 
+/*
 if ($UpdateCache == 1) {
    // output $HTML the cache
    $fpwrite = fopen($cache_file, 'w');
@@ -159,6 +166,7 @@ if ($UpdateCache == 1) {
        fputs($fpwrite, $TEXT);
        fclose($fpwrite);
    }
+
 }
 
 if ($OutputFromCach == 1) {
@@ -176,8 +184,10 @@ if ($OutputFromCach == 1) {
       echo "giving them the HTML", "<br>\n";
    }
    // give them the custom output
+*/
    echo '<?xml version="1.0"?>', "\n";
    echo $HTML;
-}
+#}
+
 
 ?>

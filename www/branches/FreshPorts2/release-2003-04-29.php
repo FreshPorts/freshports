@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: release-2003-04-29.php,v 1.1.2.1 2003-04-28 23:19:30 dan Exp $
+	# $Id: release-2003-04-29.php,v 1.1.2.2 2003-04-28 23:43:54 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -34,6 +34,10 @@ watch lists.  I have no doubt that once people start using
 more than one watch list, they'll come up with new ideas as to 
 how to use FreshPorts... which will lead to a new release.
 </P>
+
+<p>
+My thanks to the people who contributed code, ideas, and time
+to this new version.
 </TD></TR>
 
 <TR>
@@ -56,7 +60,8 @@ how to use FreshPorts... which will lead to a new release.
 When FreshPorts started, a watch list was a single entity.  That was to 
 keep things simple.  The underlying data structures were designed with
 multiple watch lists in mind.  However, the user interface was the biggest
-issue.
+issue.  Now we have an interface which will allow you to have more than one
+watch list.
 
 <p>
 For the time being, you are restricted to five watch lists per user.  Let's see

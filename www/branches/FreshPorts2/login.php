@@ -1,5 +1,5 @@
 <?
-   # $Id: login.php,v 1.1.2.1 2002-01-02 02:53:43 dan Exp $
+   # $Id: login.php,v 1.1.2.2 2002-01-02 04:15:10 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -32,29 +32,29 @@ if ($submit) {
    $UserID = addslashes($UserID);
 
    // test for existance of user id
-   $Cookie = UserToCookie($UserID);
 
-   if ($Debug) {
-      echo "Cookie = $Cookie<br>\n";
-   }
-
-   $sql = "select * from users where username = '$UserID'".
+   $sql = "select * from users where name = '$UserID'".
 	  " and password = '$Password' ";
 
    if ($Debug) {
       echo "$sql<br>\n";
    }
 
-   $result = mysql_query($sql, $db) or die('query failed ' . mysql_error());
+   $result = pg_exec($db, $sql) or die('query failed ' . mysql_error());
 
 
-   if (!mysql_numrows($result)) {
+   if (!pg_numrows($result)) {
       $LoginFailed = 1;
    } else {
 
       if ($Debug) {
          echo "well, debug was on, so I would have taken you to '$origin'<br>\n";
       } else {
+		$Cookie = UserToCookie($UserID);
+
+		if ($Debug) {
+			echo "Cookie = $Cookie<br>\n";
+		}
          SetCookie("visitor", $Cookie, time() + 60*60*24*120, '/');
          // Redirect browser to PHP web site
          if ($origin == "/index.php") {

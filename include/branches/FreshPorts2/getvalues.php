@@ -1,6 +1,6 @@
 <script language="php">
 
-//$Debug=1;
+#$Debug=1;
 
 $FormatDateDefault	= "%W, %b %e";
 $FormatTimeDefault	= "%H:%i";
@@ -55,14 +55,14 @@ if (!empty($visitor)) {
       echo "sql=$sql<br>\n";
    }
 
-   $result = mysql_query($sql, $db) or die("getvalues query failed " . mysql_error());
+   $result = pg_exec($db, $sql) or die("getvalues query failed " . mysql_error());
 
    if ($result) {
       if ($Debug) echo "we found a result there...\n<br>";
-      $myrow = mysql_fetch_array($result);
+      $myrow = $myrow = pg_fetch_array ($result, 0);
       if ($myrow) {
          if ($Debug) echo "we found a row there...\n<br>";
-         $UserName		= $myrow["username"];
+         $UserName				= $myrow["name"];
          $UserID		= $myrow["id"];
          $emailsitenotices_yn	= $myrow["emailsitenotices_yn"];
          $email			= $myrow["email"];
@@ -113,7 +113,7 @@ if (!empty($visitor)) {
          $sql = "update users set lastlogin = '" . date("Y/m/d", time()) . "'" .
                 " where id = $UserID";
 //        echo $sql, "<br>";
-         $result = mysql_query($sql, $db);
+		$result = pg_exec($db, $sql);
       } else {
          if ($Debug) echo "we didn't find anyone with that login... " . mysql_error() . "\n<br>";
          $errors = "Sorry, but that login doesn't exist according to me.";

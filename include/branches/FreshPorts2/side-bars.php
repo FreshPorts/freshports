@@ -20,7 +20,7 @@
    }
 
 //echo "OriginLocal = '$OriginLocal'<br>\n";
-if ($UserID) {
+if ($visitor) {
    echo '<font SIZE="-1">Logged in as ', $UserName, "</font><br>";
 
    if ($EmailBounceCount > 0) {

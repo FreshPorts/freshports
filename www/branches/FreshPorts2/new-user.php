@@ -1,11 +1,12 @@
 <?
-   # $Id: new-user.php,v 1.1.2.1 2002-01-02 02:53:44 dan Exp $
-   #
-   # Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: new-user.php,v 1.1.2.2 2002-01-02 04:15:10 dan Exp $
+	#
+	# Copyright (c) 1998-2001 DVL Software Limited
 
-   require("./include/common.php");
-   require("./include/freshports.php");
-   require("./include/databaselogin.php");
+	require("./include/common.php");
+	require("./include/freshports.php");
+	require("./include/databaselogin.php");
+	require("../classes/watchnotice.php");
 
 
 if ($submit) {
@@ -52,6 +53,8 @@ if ($submit) {
          $watchnotifyfrequency = "Z";
    }
 
+	$WatchNotice = new WatchNotice($db);
+	$WatchNotice->FetchByFrequency($watchnotifyfrequency);
 
 
   $UserCreated = 0;
@@ -62,11 +65,12 @@ if ($submit) {
     // test for existance of user id
 
     $sql = "select * from users where cookie = '$Cookie'";
-    $result = mysql_query($sql, $db) or die('query failed');
+
+	$result = pg_exec($db, $sql) or die('query failed');
 
 
     // create user id if not found
-    if(!mysql_numrows($result)) {
+    if(!pg_numrows($result)) {
  //   echo "confirmed: user id is new\n";
 
       # no need to validate that value as it's not put directly into the db.
@@ -80,18 +84,18 @@ if ($submit) {
       $UserLogin = addslashes($UserLogin);
       $Password1 = addslashes($Password1);
 
-      $sql = "insert into users (username, password, cookie, firstlogin, lastlogin, email, " . 
-             "watchnotifyfrequency, emailsitenotices_yn) values (";
-      $sql .= "'$UserLogin', '$Password1', '$Cookie', Now(), Now(), '$email', " .
-              "'$watchnotifyfrequency', '$emailsitenotices_yn_value')";
+      $sql = "insert into users (name, password, cookie, email, " . 
+             "watch_notice_id, emailsitenotices_yn, type) values (";
+      $sql .= "'$UserLogin', '$Password1', '$Cookie', '$email', " .
+              "'$WatchNotice->id', '$emailsitenotices_yn_value', 'S')";
 
 	$errors .= "<br>sql=" . $sql;
 
-      $result = mysql_query($sql);
+	  $result = pg_exec($db, $sql);
       if ($result) {
 	$UserCreated = 1;
       } else {
-	$errors .= 'Something went terribly wrong there.<br>';
+	$errors .= 'Something went terribly wrong there. <br>' . pg_errormessage();
 /*
 	$errors .= 'UserLogin	= '.$UserLogin	  . '<br>';
 	$errors .= 'Password	= '.$Password1	  . '<br>';

@@ -1,5 +1,5 @@
 <?
-	# $Id: how-big-is-it.php,v 1.1.2.9 2003-01-06 23:59:28 dan Exp $
+	# $Id: how-big-is-it.php,v 1.1.2.10 2003-02-10 16:54:08 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 

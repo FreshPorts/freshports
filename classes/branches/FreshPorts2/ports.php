@@ -1,5 +1,5 @@
 <?
-	# $Id: ports.php,v 1.1.2.23 2003-01-30 02:52:47 dan Exp $
+	# $Id: ports.php,v 1.1.2.24 2003-02-10 16:54:30 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -350,11 +350,11 @@ select ports.id,
 		}
 	}
 
-	function FetchByCategoryInitialise($CategoryID, $UserID = 0) {
+	function FetchByCategoryInitialise($CategoryName, $UserID = 0) {
 		# fetch all ports based on category
 		# e.g. id for net
 		
-		$Debug = 0;
+		$Debug = 1;
 
 		$sql = "";
 		if ($UserID) {
@@ -388,7 +388,7 @@ SELECT P.*, element.name    as port,
         to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added,
         ports.categories as categories
    FROM ports
-  WHERE ports.category_id = $CategoryID ) AS P
+  WHERE ports.categories_tsearch @@ '$CategoryName' ) AS P
    ON (P.element_id     = element.id
    AND element.status   = 'A')";
 

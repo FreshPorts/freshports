@@ -1,5 +1,5 @@
 <?
-	# $Id: news.php,v 1.1.2.9 2002-12-11 04:44:38 dan Exp $
+	# $Id: news.php,v 1.1.2.10 2003-02-10 16:54:09 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 

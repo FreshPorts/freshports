@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch_lists.php,v 1.1.2.8 2003-01-04 17:20:14 dan Exp $
+	# $Id: watch_lists.php,v 1.1.2.9 2003-02-10 16:54:31 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#

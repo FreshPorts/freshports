@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-port.php,v 1.1.2.30 2003-01-05 13:14:46 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.31 2003-02-10 16:54:09 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
@@ -15,7 +15,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/include/files.php');
 
 function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 
-	$Debug = 0;
+	$Debug = 1;
 
 	unset($CategoryName);
 	unset($PortName);
@@ -98,7 +98,7 @@ function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 					$result = "The <A HREF=\"/$CategoryName/\">category you specified</A> exists but not the port <I>$PortName</I>.";
 				} else {
 					require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-category.php');
-					freshports_Category($CategoryID, $db);
+					freshports_Category($CategoryName, $db);
 				}
 			}
 		} else {

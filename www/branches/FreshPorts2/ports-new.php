@@ -1,5 +1,5 @@
 <?
-	# $Id: ports-new.php,v 1.1.2.22 2003-01-06 14:14:43 dan Exp $
+	# $Id: ports-new.php,v 1.1.2.23 2003-02-10 16:54:09 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 

@@ -1,11 +1,11 @@
 <?
-	# $Id: missing-category.php,v 1.1.2.20 2003-01-05 13:14:57 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.21 2003-02-10 16:54:08 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
 
-function freshports_Category($CategoryID, $db) {
+function freshports_Category($CategoryName, $db) {
 
 	GLOBAL $TableWidth;
 	header('HTTP/1.1 200 OK');
@@ -16,7 +16,7 @@ function freshports_Category($CategoryID, $db) {
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
 
 	$category = new Category($db);
-	$category->FetchByID($CategoryID);
+	$category->FetchByName($CategoryName);
 	$title = $category->{name};
 
 	GLOBAL $User;
@@ -30,7 +30,7 @@ function freshports_Category($CategoryID, $db) {
 
 	$port = new Port($db);
 
-	$numrows = $port->FetchByCategoryInitialise($CategoryID, $User->id);
+	$numrows = $port->FetchByCategoryInitialise($CategoryName, $User->id);
 
 	?>
 

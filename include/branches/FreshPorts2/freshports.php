@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.62 2002-04-08 16:55:13 dan Exp $
+   # $Id: freshports.php,v 1.4.2.63 2002-04-10 14:26:19 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -74,34 +74,34 @@ $freshports_FTP_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports
 $freshports_mail_archive = " http://www.freebsd.org/cgi/mid.cgi?db=mid&id=";
 
 function freshports_Files_Icon() {
-	return '<IMG SRC="/images/logs.gif" ALT="files touched by this commit" BORDER="0" WIDTH="17" HEIGHT="20" HSPACE="2">';
+	return '<IMG SRC="/images/logs.gif" ALT="files touched by this commit" TITLE="files touched by this commit" BORDER="0" WIDTH="17" HEIGHT="20" HSPACE="2">';
 }
 function freshports_Refresh_Icon() {
-	return '<IMG SRC="/images/refresh.gif" ALT="Refresh" BORDER="0" WIDTH="15" HEIGHT="18" HSPACE="2">';
+	return '<IMG SRC="/images/refresh.gif" ALT="Refresh" TITLE="Refresh" BORDER="0" WIDTH="15" HEIGHT="18" HSPACE="2">';
 }
 
 function freshports_Deleted_Icon() {
-	return '<IMG SRC="/images/deleted.gif" ALT="Deleted" BORDER="0" WIDTH="15" HEIGHT="15">';
+	return '<IMG SRC="/images/deleted.gif" ALT="Deleted" TITLE="Deleted" BORDER="0" WIDTH="15" HEIGHT="15">';
 }
 
 function freshports_Forbidden_Icon() {
-	return '<IMG SRC="/images/forbidden.gif" alt="Forbidden" WIDTH="20" HEIGHT="20" HSPACE="2">';
+	return '<IMG SRC="/images/forbidden.gif" ALT="Forbidden" TITLE="Forbidden" WIDTH="20" HEIGHT="20" HSPACE="2">';
 }
 
 function freshports_Broken_Icon() {
-	return '<IMG SRC="/images/broken.gif" alt="Broken" WIDTH="17" HEIGHT="16" HSPACE="2">';
+	return '<IMG SRC="/images/broken.gif" ALT="Broken" TITLE="Broken" WIDTH="17" HEIGHT="16" HSPACE="2">';
 }
 
 function freshports_New_Icon() {
-	return '<IMG SRC="/images/new.gif" WIDTH=28 HEIGHT=11 alt="new!" HSPACE=2>';
+	return '<IMG SRC="/images/new.gif" ALT="new!" TITLE="new!" WIDTH=28 HEIGHT=11 HSPACE=2>';
 }
 
 function freshports_Mail_Icon() {
-	return '<IMG SRC="/images/envelope10.gif" ALT="Original commit message" BORDER="0" WIDTH="25" HEIGHT="14">';
+	return '<IMG SRC="/images/envelope10.gif" ALT="Original commit message" TITLE="Original commit message" BORDER="0" WIDTH="25" HEIGHT="14">';
 }
 
 function freshports_Commit_Icon() {
-	return '<IMG SRC="/images/copy.gif" ALT="FreshPorts commit message" BORDER="0" WIDTH="16" HEIGHT="16">';
+	return '<IMG SRC="/images/copy.gif" ALT="FreshPorts commit message" TITLE="FreshPorts commit message" BORDER="0" WIDTH="16" HEIGHT="16">';
 }
 
 function freshports_Email_Link($message_id) {
@@ -886,6 +886,21 @@ function convertAllLinks($text) {
 	return $text;
 }
 
+function pr2link($Arr) {
+	return preg_replace("/((\w+\/)?\d+)/", "<A HREF=\"http://www.FreeBSD.org/cgi/query-pr.cgi?pr=\\1\">\\1</A>", $Arr[0]);
+}
+
+function pr2html($String) {
+#	$String = addslashes($String);
+
+	$Match   = array("/((http|ftp|https):\/\/\S+)/i", "/([\w+=\-.!]+@[\w\-]+(\.[\w\-]+)+)/");
+	$Replace = array("<A HREF=\"\\1\">\\1</A>", "<A HREF=\"mailto:\\1\">\\1</A>");
+
+	$String =  preg_replace($Match, $Replace, $String);
+	return preg_replace_callback("/(\bPR[:\#]?)\s*(((\w+\/)?\d+)(,\s*((\w+\/)?\d+))*)/", pr2link, $String);
+}
+
+
 #
 #
 # The above code was obtained from http://www.zend.com/codex.php?id=199&single=1
@@ -967,7 +982,7 @@ function freshports_PortCommitsFooter($port) {
 function freshports_PortDescriptionPrint($description) {
 	$HTML .= '<PRE CLASS="code">';
 
-	$HTML .= convertAllLinks(htmlspecialchars(freshports_wrap($description)));
+	$HTML .= pr2html(htmlspecialchars(freshports_wrap($description)));
 
 	$HTML .= '</PRE>';
 

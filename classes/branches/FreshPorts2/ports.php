@@ -1,5 +1,5 @@
 <?
-	# $Id: ports.php,v 1.1.2.15 2002-05-09 22:00:15 dan Exp $
+	# $Id: ports.php,v 1.1.2.16 2002-05-20 20:41:24 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -307,7 +307,7 @@ class Port {
 		       "       ports.revision as revision, ports.maintainer, ".
 		       "       ports.homepage, ports.master_sites, ports.extract_suffix, ports.package_exists, " .
 		       "       ports.depends_build, ports.depends_run, ports.last_commit_id, ports.found_in_index, " .
-		       "       ports.forbidden, ports.broken, ports.date_added, " .
+		       "       ports.forbidden, ports.broken, to_char(max(ports.date_added) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, " .
 		       "       ports.categories as categories, ".
 			   "       element.name as port, categories.name as category, " .
 			   "       element.status ";
@@ -337,6 +337,11 @@ class Port {
 		        "  and ports.element_id     = element.id " .
 				"  and categories.id        = $CategoryID " .
 				"  and element.status       = 'A' " .
+				"GROUP BY ports.id, ports.element_id, category_id, short_description, ports.long_description,
+				          version, revision, ports.maintainer, ports.homepage, ports.master_sites, ports.extract_suffix, 
+						  ports.package_exists, ports.depends_build, ports.depends_run, ports.last_commit_id, 
+						  ports.found_in_index, ports.forbidden, ports.broken, date_added, 
+						  categories, port, category, element.status " .
 				" ORDER by port ";
 
         $this->LocalResult = pg_exec($this->dbh, $sql);

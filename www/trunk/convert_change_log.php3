@@ -68,7 +68,7 @@ if (!$result) {
       if ($result) {
          $ChangePortID = mysql_insert_id($result);
          echo "$ChangePortID";
-         $sql = "update change_log_details set change_port_id = $ChangePortID ".
+         $sql = "update change_log_details set change_log_port_id = $ChangePortID ".
                 "where change_log_id = " . $myrow["change_log_id"] . 
                 "  and port_id       = " . $myrow["port_id"];
 

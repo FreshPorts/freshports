@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_process.inc,v 1.5.2.13 2002-12-06 14:39:52 dan Exp $
+	# $Id: pkg_process.inc,v 1.5.2.14 2002-12-06 21:24:55 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 	#
@@ -166,18 +166,18 @@ function ProcessPackages($UserID, $filename, $dbh) {
 }
 // }}}
 
-function UploadDisplayStagingResultsMatches($UserID, $dbh) {
+function UploadDisplayStagingResultsMatches($UserID, $WatchListID, $dbh) {
 
 	$begintime = time();
 	$sql = " SELECT	category, port, item_count, from_pkg_info, from_watch_list, watch_list_staging.element_id, 
 					watch_list_element.element_id AS onwatchlist
 			   FROM	watch_list_staging LEFT OUTER JOIN watch_list_element
 						ON  watch_list_staging.element_id    = watch_list_element.element_id
-						AND watch_list_staging.watch_list_id = watch_list_element.watch_list_id
+						AND $WatchListID                     = watch_list_element.watch_list_id
 			  WHERE $UserID    = watch_list_staging.user_id
 			    AND item_count = 1
 				AND watch_list_staging.element_id IS NOT NULL
-			  ORDER BY port, category";
+			  ORDER BY category, port";
 
 #	echo $sql;
 
@@ -220,7 +220,7 @@ function UploadDisplayStagingResultsMatches($UserID, $dbh) {
 			echo "Nothing you uploaded was found within our database.";
 		}
 	} else {
-		echo "nothing found!";
+		echo "<pre>$sql</pre>";
 	}
 
 }
@@ -229,12 +229,12 @@ function UploadDisplayStagingResultsMatchesNo($UserID, $dbh) {
 
 	$begintime = time();
 	$begintime = time();
-	$sql = " SELECT	category, port, item_count, from_pkg_info, from_watch_list, watch_list_staging.element_id
-			   FROM	watch_list_staging
-			  WHERE $UserID    = watch_list_staging.user_id
-			    AND item_count = 1
-				AND watch_list_staging.element_id IS NULL
-			  ORDER BY port, category";
+	$sql = " SELECT category, port, item_count, from_pkg_info, from_watch_list, watch_list_staging.element_id
+			     FROM watch_list_staging
+			    WHERE $UserID    = watch_list_staging.user_id
+			      AND item_count = 1
+				   AND watch_list_staging.element_id IS NULL
+			 ORDER BY category, port";
 
 #	echo $sql;
 
@@ -268,17 +268,17 @@ function UploadDisplayStagingResultsMatchesNo($UserID, $dbh) {
 
 }
 
-function UploadDisplayStagingResultsMatchesDuplicates($UserID, $dbh) {
+function UploadDisplayStagingResultsMatchesDuplicates($UserID, $WatchListID, $dbh) {
 
 	$begintime = time();
-	$sql = " SELECT	category, port, item_count, from_pkg_info, from_watch_list, watch_list_staging.element_id
-			   FROM	watch_list_staging LEFT OUTER JOIN watch_list_element
-						ON  watch_list_staging.element_id    = watch_list_element.element_id
-						AND watch_list_staging.watch_list_id = watch_list_element.watch_list_id
-			  WHERE $UserID    = watch_list_staging.user_id
-			    AND item_count > 1
-				AND watch_list_staging.element_id IS NOT NULL
-			  ORDER BY port, category";
+	$sql = " SELECT category, port, item_count, from_pkg_info, from_watch_list, watch_list_staging.element_id
+			     FROM watch_list_staging LEFT OUTER JOIN watch_list_element
+					     	 ON  watch_list_staging.element_id    = watch_list_element.element_id
+						    AND $WatchListID                     = watch_list_element.watch_list_id
+			    WHERE $UserID    = watch_list_staging.user_id
+			      AND item_count > 1
+				   AND watch_list_staging.element_id IS NOT NULL
+			 ORDER BY category, port";
 
 #	echo $sql;
 
@@ -322,12 +322,12 @@ function UploadDisplayStagingResultsMatchesDuplicates($UserID, $dbh) {
 
 }
 
-function UploadDisplayWatchListItemsNotInStagingArea($UserID, $dbh) {
+function UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $dbh) {
 
 	$begintime = time();
 	$sql = " SELECT categories.name as category, element.name as port, ports.element_id
 			     FROM ports, categories, watch_list_element, element
-			    WHERE $UserID          = watch_list_element.user_id
+			    WHERE $WatchListID     = watch_list_element.watch_list_id
 				   AND ports.element_id = watch_list_element.element_id
 				   AND ports.element_id = element.id
 				   AND categories.id    = ports.category_id
@@ -366,7 +366,7 @@ function UploadDisplayWatchListItemsNotInStagingArea($UserID, $dbh) {
 
 #			echo 'that took '. (time() - $begintime) . ' seconds to process ' . $numrows . ' rows';
 		} else {
-			echo "Every item on your watch list is accounted for on your pkg_info list.";
+			echo "There is nothing on this watch list which does not appear in your staging area.";
 		}
 	} else {
 		echo "nothing found!";
@@ -375,19 +375,9 @@ function UploadDisplayWatchListItemsNotInStagingArea($UserID, $dbh) {
 }
 
 
-function MoveStagingToWatchList($WatchListID, $ports, $dbh) {
+function MoveStagingToWatchList($UserID, $WatchListID, $ports, $dbh) {
 	$ok  = TRUE;
 	
-	$sql = "SELECT WatchListUserID($WatchListID)";
-	$result = pg_exec($dbh, $sql);
-	if ($result) {
-		$row = pg_fetch_array($result, 0);
-		$UserID = $row[0];
-	} else {
-		$ok = FALSE;
-	}	
-	
-
 	$sql = "BEGIN";
 	$result = pg_exec($dbh, $sql);
 	if (!$result) {

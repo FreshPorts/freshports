@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.14 2002-02-16 20:52:37 dan Exp $
+	# $Id: index.php,v 1.1.2.15 2002-02-16 23:52:50 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -227,18 +227,14 @@ if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
             bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">
 <tr>
     <td colspan="3" bgcolor="#AD0040" height="30">
-        <font color="#FFFFFF" size="+1"><? echo $FreshPortsName . ' - ' . $MaxNumberOfPorts ?> most recent commits
-        <? //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPorts) ?></font>
+        <font color="#FFFFFF"><B><BIG><? echo $MaxNumberOfPorts ?> most recent commits
+        <? //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPorts) ?></BIG></B></font>
     </td>
 </tr>
 <TR><TD>
 <P>
 Welcome to FreshPorts, where you can find the latest information on your favourite
 ports. A port is marked as new for 10 days.
-</P>
-
-<P>
-<B>Unless stated otherwise, everything should work now.</B>
 </P>
 
 </TR></TD>
@@ -254,7 +250,7 @@ ports. A port is marked as new for 10 days.
 
 					if ($LastDate <> $myrow["commit_date"]) {
 						$LastDate = $myrow["commit_date"];
-						$HTML .= '<TR><TD COLSPAN="3" BGCOLOR="#AD0040" HEIGHT="0"><FONT COLOR="#FFFFFF" SIZE="+1">' . FormatTime($myrow["commit_date"], 0, "D, j M") . '</FONT></TD></TR>';
+						$HTML .= '<TR><TD COLSPAN="3" BGCOLOR="#AD0040" HEIGHT="0"><FONT COLOR="#FFFFFF"><BIG>' . FormatTime($myrow["commit_date"], 0, "D, j M") . '</BIG></FONT></TD></TR>';
 					}
 
 					$j = $i;

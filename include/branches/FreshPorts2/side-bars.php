@@ -1,14 +1,16 @@
 <?
-	# $Id: side-bars.php,v 1.4.2.4 2002-01-06 23:49:38 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.5 2002-02-16 23:52:53 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
+
+	$ColumnWidth = 155;
 ?>
 
 
-  <table WIDTH="152" BORDER="1" CELLSPACING="0" CELLPADDING="5"
+  <table WIDTH="<? echo $ColumnWidth ?>" BORDER="1" CELLSPACING="0" CELLPADDING="5"
             bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">
         <tr>
-         <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" SIZE="+1">Login</font></td>
+         <td bgcolor="#AD0040" height="30"><font color="#FFFFFF"><BIG><B>Login</B></BIG></font></td>
         </tr>
         <tr>
 
@@ -66,9 +68,9 @@ if ($visitor) {
    </table>
 <br>
 
-<table WIDTH="152" BORDER="1" CELLSPACING="0" CELLPADDING="5"
+<table WIDTH="<? echo $ColumnWidth ?>" BORDER="1" CELLSPACING="0" CELLPADDING="5"
             bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">        <tr>
-         <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" SIZE="+1">Ports</font></td>
+         <td bgcolor="#AD0040" height="30"><font color="#FFFFFF"><BIG><B>Ports</B></BIG></font></td>
         </tr>
         <tr>
     <td valign="top">
@@ -84,9 +86,9 @@ if ($visitor) {
    </tr>
    </table>
 <br>
- <table WIDTH="152" BORDER="1" CELLSPACING="0" CELLPADDING="5"
+ <table WIDTH="<? echo $ColumnWidth ?>" BORDER="1" CELLSPACING="0" CELLPADDING="5"
             bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">        <tr>
-         <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" SIZE="+1">This site</font></td>
+         <td bgcolor="#AD0040" height="30"><font color="#FFFFFF"><BIG><B>This site</B></BIG></font></td>
         </tr>
         <tr>
     <td valign="top">

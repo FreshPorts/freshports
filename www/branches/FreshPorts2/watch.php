@@ -1,5 +1,5 @@
 <?
-	# $Id: watch.php,v 1.1.2.4 2002-02-09 19:42:42 dan Exp $
+	# $Id: watch.php,v 1.1.2.5 2002-02-16 23:53:46 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -25,11 +25,11 @@ if (!$visitor) {
 <tr><td valign="top" width="100%">
 <table width="100%" border="0">
 <tr>
-    <td colspan="5" bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1"><? echo $FreshPortsTitle; ?> - your watch list</font></td>
-  </tr>
+	<? freshports_PageBannerText("your watch list"); ?>
+</tr>
 <tr><td>
-This page lists the ports which are on your watch list. To modify the contents of this list, click on 
-<a href="watch-categories.php">watch list - Categories</a> at the right.
+These are the which are on your <a href="watch-categories.php">watch list</A>. 
+That link also occurs on the right hand side of this page, under Login.
 </td></tr>
 <script language="php">
 
@@ -46,7 +46,7 @@ $WatchID = freshports_MainWatchID($UserID, $db);
 
 // make sure the value for $sort is valid
 
-echo "<tr><td>\n";
+echo "<tr><td>\nThis page is ";
 
 switch ($sort) {
 /* sorting by port is disabled. Doesn't make sense to do this

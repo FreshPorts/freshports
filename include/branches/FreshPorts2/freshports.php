@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.32 2002-02-16 20:54:44 dan Exp $
+   # $Id: freshports.php,v 1.4.2.33 2002-02-16 23:52:53 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -154,8 +154,18 @@ if ($Phorum) {
 
 function freshports_style($Phorum=0) {
 
+	echo "\n        <STYLE>\n";
+
+if (2==2) {
+?>
+BODY, TD, TR, P, UL, OL, LI, INPUT, SELECT, DL, DD, DT, FONT
+{
+    font-family: Verdana, Arial, Clean, Helvetica, sans-serif;
+    font-size: 12px;
+}
+<?
+}
 	echo "
-        <STYLE>
                 CODE.code { color: #461b7e}
                 PRE.code {  color: #461b7e}
                 BLOCKQUOTE.code { color: #461b7e}
@@ -521,8 +531,9 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
             $HTML .= 'last change committed by ' . $port->committer;  // separate lines in case committer is null
  
             $HTML .= ' on <font size="-1">' . $port->updated . '</font>' . "\n";
+
+			$HTML .= freshports_PortDescriptionPrint($port->update_description);
  
-            $HTML .= '<PRE CLASS="code">' . $port->update_description . '</PRE>' . "\n";
          } else {
             $HTML .= "no changes recorded in FreshPorts<br>\n";
          }
@@ -736,7 +747,7 @@ function freshports_PortCommitsHeader($port) {
 
 	echo '<tr><td><TABLE BORDER="1" width="100%" CELLSPACING="0" CELLPADDING="5"bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">' . "\n";
 	echo '<tr height="20"><td colspan="3" bgcolor="#AD0040"><font color="#FFFFFF"><font size="+1">Commit History</font> (may be incomplete: see Changes link above for full details)</font></td></tr>' . "\n";
-	echo "<tr><td><b>Date</b></td><td><b>Committer</b></td><td><b>Description</b></td></tr>\n";
+	echo "<TR><TD WIDTH=\"180\"><b>Date</b></td><td><b>Committer</b></td><td><b>Description</b></td></tr>\n";
 }
 
 function freshports_PortCommits($port) {
@@ -825,6 +836,10 @@ function freshports_wrap($text, $length = 72) {
 	# as the glue.
 	#
 	return implode("\n", $lines);
+}
+
+function freshports_PageBannerText($Text, $ColSpan=1) {
+	echo '<TD BGCOLOR="#AD0040" HEIGHT="29" COLSPAN="' . $ColSpan . ' "><FONT COLOR="#FFFFFF"><BIG><BIG>' . $Text . '</BIG></BIG></FONT></TD>' . "\n";
 }
 
 ?>

@@ -1,5 +1,5 @@
 <?
-	# $Id: stats.php,v 1.2.2.2 2002-01-05 23:01:18 dan Exp $
+	# $Id: stats.php,v 1.2.2.3 2002-02-16 23:53:45 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -17,7 +17,7 @@
 <tr><td valign="top" width="100%">
 <table width="100%" border="0">
   <tr>
-    <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">About the authors</font></td>
+	<? freshports_PageBannerText("Statistics", 4); ?>
   </tr>
 <tr><td>
 <B>The graphs are broken.  A hazard of the move. I'll work on it later.</B>

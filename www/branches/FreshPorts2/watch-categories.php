@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-categories.php,v 1.1.2.5 2002-01-06 06:25:41 dan Exp $
+	# $Id: watch-categories.php,v 1.1.2.6 2002-02-16 23:53:45 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -26,7 +26,7 @@ if (!$visitor) {
 <table width="<? echo $TableWidth ?>" border="0" ALIGN="center">
 <td valign="top"><table width="100%">
   <tr>
-    <td bgcolor="#AD0040" height="29"><font color="#FFFFFF" size="+2"><? echo $FreshPortsTitle; ?> - watch categories</font></td>
+	<? freshports_PageBannerText("watch list categories"); ?>
   </tr>
 <tr><td valign="top" width="100%">
 
@@ -38,8 +38,8 @@ if (!$UserID) {
 echo '<font size="+1">You are not logged in, perhaps you should <a href="login.php">do that</a> first.</font>';
 } else {
 ?>
-This screen contains a list of the port categories. The categories on your watch list are those with a tick beside 
-them. When a port changes in one of your watch categories, you will be notified by email if you have selected a 
+This screen contains a list of the port categories. The categories with a * beside them contain ports which are
+on your watch list. When a port changes in one of your watch categories, you will be notified by email if you have selected a 
 notification frequency within your <a href="customize.php">personal preferences</a>.
 <? } ?>
 

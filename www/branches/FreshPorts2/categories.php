@@ -1,5 +1,5 @@
 <?
-	# $Id: categories.php,v 1.1.2.3 2002-01-05 23:01:13 dan Exp $
+	# $Id: categories.php,v 1.1.2.4 2002-02-16 23:52:50 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -18,7 +18,7 @@
 <tr><td valign="top" width="100%">
 <table width="100%" border="0" CELLPADDING="5">
   <tr>
-    <td colspan="4" bgcolor="#AD0040" height="29"><font color="#FFFFFF" size="+2"><? echo $FreshPortsTitle ?> - list of categories</font></td>
+	<? freshports_PageBannerText("$FreshPortsTitle - list of categories", 4); ?>
   </tr>
 <tr><td COLSPAN="4">
 <P>

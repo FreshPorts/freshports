@@ -1,5 +1,5 @@
 <?
-	# $Id: legal.php,v 1.1.2.2 2002-01-05 23:01:15 dan Exp $
+	# $Id: legal.php,v 1.1.2.3 2002-02-16 23:52:51 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -14,7 +14,7 @@
 
 ?>
 
-<table width="100%" border="0">
+<table width="<? echo $TableWidth ?>" border="0" ALIGN="center">
 <tr><td valign="top">
 <table width="100%" border="0" CELLSPACING="0" CELLPADDING="5"
             bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">

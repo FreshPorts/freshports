@@ -1,5 +1,5 @@
 <?
-	# $Id: footer.php,v 1.5.2.2 2002-01-06 07:29:27 dan Exp $
+	# $Id: footer.php,v 1.5.2.3 2002-02-16 23:52:53 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 ?>
@@ -36,7 +36,7 @@ alt="powered by phorum" border="0" width="88" height="31"></a>
 }
 ?>
 <tr><td align="right">
-<small><a href="../legal.php" target="_top">Copyright</a> 2000,2001 <a href="http://www.dvl-software.com/">DVL Software Limited</a>.
+<small><a href="/legal.php" target="_top">Copyright</a> 2000,2001 <a href="http://www.dvl-software.com/">DVL Software Limited</a>.
 All rights reserved.</small></p>
 </td></tr>
 </table>

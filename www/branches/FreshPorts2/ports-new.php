@@ -1,5 +1,5 @@
 <?
-	# $Id: ports-new.php,v 1.1.2.3 2002-02-09 19:42:42 dan Exp $
+	# $Id: ports-new.php,v 1.1.2.4 2002-02-16 23:52:51 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -19,7 +19,7 @@ $Debug=1;
 <tr><td valign="top" width="100%">
 <table width="100%" border="0">
 <tr>
-    <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">freshports - recently added ports</font></td>
+	<? freshports_PageBannerText("$FreshPortsTitle - recently added ports", 4); ?>
   </tr>
 <tr><td colspan="2">
 This page shows the ports which have been recently added to the ports tree.  As such, some information

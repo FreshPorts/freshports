@@ -1,5 +1,5 @@
 <?
-	# $Id: about.php,v 1.1.2.2 2002-01-05 23:01:12 dan Exp $
+	# $Id: about.php,v 1.1.2.3 2002-02-16 23:52:49 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -16,9 +16,9 @@
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <tr><td VALIGN=TOP>
 <TABLE>
-<TR><TD bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">
-<? echo $FreshPortsTitle; ?> -- About this site
-</font></td>
+<TR>
+	<? freshports_PageBannerText("About this site"); ?>
+</TR>
 
 <TR><TD>
 <P>
@@ -29,9 +29,8 @@ We have here a few notes about this website.
 <tr>
 <td valign="top" width="100%">
 
-<tr><td bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">
-What is a port?
-</font></td>
+<tr>
+	<? freshports_PageBannerText("What is a port?"); ?>
 </tr>
 </tr><td>
 
@@ -48,10 +47,8 @@ we come in.</p>
 <p>For more information about the Ports tree, see <a href="http://www.freebsd.org/ports/">http://www.freebsd.org/ports/</a>.</p>
 
 </td></tr>
-<tr><td height="10"></td></tr>
-<tr><td bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">
-What is <? echo $FreshPortsTitle; ?>?
-</font></td>
+<tr>
+	<? freshports_PageBannerText("What is $FreshPortsTitle"); ?>
 </tr>
 </tr><td>
 
@@ -66,9 +63,8 @@ create ports.  We do not fix ports.  We just tell you what others have been doin
 </P>
 
 </td></tr>
-<tr><td height="10"></td></tr><tr><td bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">
-OK, whose bright idea was this?
-</font></td>
+<tr>
+	<? freshports_PageBannerText("OK, whose bright idea was this?"); ?>
 </tr>
 </tr><td>
 <p>This site was created by Dan Langille.  His other web feats include 

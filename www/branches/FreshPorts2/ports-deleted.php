@@ -1,5 +1,5 @@
 <?
-	# $Id: ports-deleted.php,v 1.1.2.2 2002-01-05 23:01:17 dan Exp $
+	# $Id: ports-deleted.php,v 1.1.2.3 2002-02-16 23:52:51 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -18,7 +18,7 @@
 <tr><td COLSPAN="2" valign="top" width="100%">
 <table width="100%" border="0">
 <tr>
-    <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">freshports - recently removed ports</font></td>
+	<? freshports_PageBannerText("recently removed ports"); ?>
   </tr>
 <tr><td colspan="2">
 This page shows the last <? echo $MaxNumberOfPorts ?> ports to be removed the ports tree.

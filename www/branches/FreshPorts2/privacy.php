@@ -1,5 +1,5 @@
 <?
-	# $Id: privacy.php,v 1.1.2.2 2002-01-05 23:01:18 dan Exp $
+	# $Id: privacy.php,v 1.1.2.3 2002-02-16 23:52:52 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -17,9 +17,8 @@
 <tr><td valign="top" width="100%">
 <table width="100%" border="0">
 
-<tr><td bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">
-Privacy statement
-</font></td>
+<tr>
+	<? freshports_PageBannerText("Privacy statement"); ?>
 </tr>
 </tr><td>
 <P>All the information we

@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-port.php,v 1.1.2.9 2002-02-13 22:54:43 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.10 2002-02-16 23:52:51 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
@@ -96,11 +96,11 @@ function freshports_PortDescription($port) {
 <tr><TD VALIGN="top" width="100%">
 <TABLE WIDTH="100%" BORDER="0" ALIGN="centre">
 <tr>
-    <td colspan="3" bgcolor="#AD0040" height="29"><font color="#FFFFFF" size="+2">
+    <td colspan="3" bgcolor="#AD0040" height="29"><font color="#FFFFFF"><BIG><BIG>
 <?
    echo $Title;
 ?> 
- </font></td>
+ </BIG></BIG></font></td>
 </tr>
 <tr><td colspan="3" valign="top" width="100%">
 

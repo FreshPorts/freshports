@@ -1,5 +1,5 @@
 <?
-	# $Id: authors.php,v 1.1.2.2 2002-01-05 23:01:12 dan Exp $
+	# $Id: authors.php,v 1.1.2.3 2002-02-16 23:52:49 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -17,44 +17,50 @@
 <tr><td valign="top">
 <table width="100%" border="0">
   <tr>
-    <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">About the authors</font></td>
+	<? freshports_PageBannerText("About the authors"); ?>
   </tr>
 <TR><TD>
 <p>Dan Langille thought up the idea, found the data sources, bugged people to 
 write scripts, and did the html and database work. But he certainly didn't 
 do it alone.</p>
 
-<p>Olaf wrote did the perl script for the log catcher.</p>
+<UL>
 
-<p>icmpecho wrote the awk code for the log catcher and the log munger.</p>
+<LI>Olaf wrote did the perl script for the log catcher.</LI>
 
-<p>Adriel helped me with perl syntax.</p>
+<LI>icmpecho wrote the awk code for the log catcher and the log munger.</LI>
 
-<p>Acme talked over data sources with me.</p>
+<LI>Adriel helped me with perl syntax.</LI>
 
-<p>John Polstra and Satoshi Asami provided insight into cvs and ports as well
-as encouragement.</p>
+<LI>Acme talked over data sources with me.</LI>
 
-<p>Laz hung around, criticized, and suggested security improvments.</p>
+<LI>John Polstra and Satoshi Asami provided insight into cvs and ports as well
+as encouragement.</LI>
 
-<p>halflife did some prototype coding for me.</p>
+<LI>Laz hung around, criticized, and suggested security improvments.</LI>
 
-<p>David Bushong did a FreshBSD site which is a freshmeat-look site.</p>
+<LI>halflife did some prototype coding for me.</LI>
 
-<p>lzh on undernet #perl helped me with my perl knowledge.  Some of his examples 
+<LI>David Bushong did a FreshBSD site which is a freshmeat-look site.</LI>
+
+<LI>lzh on undernet #perl helped me with my perl knowledge.  Some of his examples 
 form the basis for some of the most important parts of the system.  Aquitaine
-also showed me the PERL dbi->quote() function.</p>
+also showed me the PERL dbi->quote() function.</LI>
 
-<p>John Beige did the logo you see at the top of the page.<p>
+<LI>John Beige did the logo you see at the top of the page.</LI>
 
-</p>Wolfram Schneider's <a href="http://www.freebsd.org/cgi/ports.cgi">FreeBSD Ports Changes</a>
-page provided much of the basis for this site.</p>
+<LI>Wolfram Schneider's <a href="http://www.freebsd.org/cgi/ports.cgi">FreeBSD Ports Changes</a>
+page provided much of the basis for this site.</LI>
 
-<p>Jay gave me the box on which FreshPorts runs.  Thanks.</p>
+<LI>Jay gave me the box on which FreshPorts runs.  Thanks.</LI>
 
-<p>And various people on undernet's #nz.general and #freebsd helped me with 
+<LI>And various people on undernet's #nz.general and #freebsd helped me with 
 scripts and ideas.  That's not to mention that channel on efnet which I won't 
-name just so it stays a secret.</p>
+name just so it stays a secret.</LI>
+
+</UL>
+
+And I haven't updated the list of people who helped with FreshPorts2...
 
 </TD>
 </TR>

@@ -1,5 +1,5 @@
 <?
-	# $Id: search.php,v 1.1.2.3 2002-01-05 23:01:18 dan Exp $
+	# $Id: search.php,v 1.1.2.4 2002-02-16 23:52:52 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -18,8 +18,8 @@
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <tr><td valign="top" width="100%">                    
 <table width="100%" border="0">                       
-  <tr>                                                
-    <td colspan="2" bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+2"><? echo $FreshPortsTitle; ?> - search</font></td>
+  <tr>
+	<? freshports_PageBannerText("search"); ?>
   </tr>
 <tr><td valign="top">
 OK, we have just a very simple search.  Eventually this will be extended. If you find any bugs, please

@@ -24,6 +24,8 @@ if ($submit) {
 //   $Debug=1;
    // process form
 
+   $error = '';
+
    if ($Debug) {
       while (list($name, $value) = each($HTTP_POST_VARS)) {
          echo "$name = $value<br>\n";
@@ -57,18 +59,13 @@ if ($submit) {
          $errors = "";
          $eMail = addslashes($eMail);
 
-         if ($Debug) {
-            echo $eMail . "<br>\n";
-         }
+         if ($Debug) echo $eMail . "<br>\n";
 
          $sql = "select * from users where email = '$eMail'";
 
-         if ($Debug) {
-            echo "$sql<br>\n";
-         }
+         if ($Debug) echo "$sql<br>\n";
 
          $result = mysql_query($sql, $db) or die('query failed ' . mysql_error());
-
 
          if (!mysql_numrows($result)) {
             $eMailFailed = 1;
@@ -77,22 +74,40 @@ if ($submit) {
    }
 
    if (mysql_numrows($result)) {
-      # send out email
+      // there is a result.  Let's fetch it.
       $myrow = mysql_fetch_array($result);
-      $message = "Someone, perhaps you, requested that you be emailed your password.\n".
-                 "If that wasn't you, and this message becomes a nuisance, please\n".
-                 "forward this message to webmaster@freshports.org and we will take\n". 
-                 "care of it for you.\n" .
-                 " \n" .
-                 "Your password is:\n" .
-                 $myrow["password"] . "\n" .
-                 "\n" . 
-                 "the request came from $REMOTE_ADDR:$REMOTE_PORT";
 
-      mail($myrow["email"], "FreshPorts - password", $message,
-     "From: webmaster@freshports.org\nReply-To: webmaster@freshports.org\nX-Mailer: PHP/" . phpversion());
+      $OKToMail = 1;
+      if ($myrow["emailbouncecount"] > 0) {
+         $error = "Sorry, but previous email to you has bounced, so we're not going to try sending it out.  Please contact " .
+                  'the <a href="mailto:webmaster@freshports.org?subject=I forgot my password">webmaster</a> for help.';
+         $OKToMail = 0;
+      } else {
+         if ($myrow["email"] == "") {
+             $error = 'Guess what?  You never gave us an email address.  So I guess you must ' . 
+                      'contact the <a href="mailto:webmaster@freshports.org?subject=I forgot my password">webmaster</a> for help.';
+             $OKToMail = 0;
+         }
+      }
 
-      $MailSent = 1;
+      if ($OKToMail) {
+         # send out email
+         $myrow = mysql_fetch_array($result);
+         $message = "Someone, perhaps you, requested that you be emailed your password.\n".
+                    "If that wasn't you, and this message becomes a nuisance, please\n".
+                    "forward this message to webmaster@freshports.org and we will take\n". 
+                    "care of it for you.\n" .
+                    " \n" .
+                    "Your password is:\n" .
+                    $myrow["password"] . "\n" .
+                    "\n" . 
+                    "the request came from $REMOTE_ADDR:$REMOTE_PORT";
+
+         mail($myrow["email"], "FreshPorts - password", $message,
+         "From: webmaster@freshports.org\nReply-To: webmaster@freshports.org\nX-Mailer: PHP/" . phpversion());
+
+         $MailSent = 1;
+      }
    }
 }
 ?>
@@ -114,46 +129,75 @@ if ($submit) {
 <table width="100%" border=0>
 <tr><td valign="top" width="100%">
 <?
-if ($LoginFailed || $eMailFailed) {
-echo '<table cellpadding=1 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>
-<tr>
-<td>
-<table width=100% border=0 cellpadding=1>
-<tr bgcolor="#AD0040"><td><b><font color="#ffffff" size=+0>UserID not found!</font></b></td>
-</tr>
-<tr bgcolor="#ffffff">
-<td>
-  <table width=100% cellpadding=3 cellspacing=0 border=0>
-  <tr valign=top>
-   <td><img src="/images/warning.gif"></td>
-   <td width=100%>
-  <p>The ';
-if ($LoginFailed) {
-   echo "User ID";
-} else {
-   echo "email";
-}
 
-echo ' you supplied could not be found.  Perhaps try your ';
-if ($LoginFailed) {
-   echo "email";
+if ($error) {
+      echo '<table cellpadding=1 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>
+            <tr>
+            <td>
+               <table width=100% border=0 cellpadding=1>
+                  <tr bgcolor="#AD0040"><td><b><font color="#ffffff" size=+0>We have a problem!</font></b></td>
+                 </tr> 
+                 <tr bgcolor="#ffffff">
+            <td>
+              <table width=100% cellpadding=3 cellspacing=0 border=0>
+              <tr valign=top>
+               <td><img src="/images/warning.gif"></td>
+               <td width=100%>
+            <p>';
+      echo $error;     
+      echo '</td>
+       </tr>
+       </table>
+      </td>
+      </tr>
+      </table>
+      </td>
+      </tr>
+      </table>
+      <br>';
 } else {
-   echo "User ID";
-}
-echo ' instead?</p>
- <p>If you need help, please ask in the forum. </p>
- </td>
- </tr>
- </table>
-</td>
-</tr>
-</table>
-</td>
-</tr>
-</table>
-<br>';
-}
 
+   if ($LoginFailed || $eMailFailed) {
+      echo '<table cellpadding=1 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>
+            <tr>
+            <td>
+               <table width=100% border=0 cellpadding=1>
+                  <tr bgcolor="#AD0040"><td><b><font color="#ffffff" size=+0>UserID not found!</font></b></td>
+                 </tr>
+                 <tr bgcolor="#ffffff">
+            <td>
+              <table width=100% cellpadding=3 cellspacing=0 border=0>
+              <tr valign=top>
+               <td><img src="/images/warning.gif"></td>
+               <td width=100%>
+              <p>The ';
+
+      if ($LoginFailed) {
+         echo "User ID";
+      } else {
+         echo "email";
+      }
+
+      echo ' you supplied could not be found.  Perhaps try your ';
+      if ($LoginFailed) {
+         echo "email";
+      } else {
+         echo "User ID";
+      }
+      echo ' instead?</p>
+       <p>If you need help, please ask in the forum. </p>
+       </td>
+       </tr>
+       </table>
+      </td>
+      </tr>
+      </table>
+      </td>
+      </tr>
+      </table>
+      <br>';
+      }
+}
 ?>
 
 <table cellpadding=1 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>

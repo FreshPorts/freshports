@@ -1,7 +1,3 @@
 <P ALIGN="left">
-<BIG>Toronto InstallFest:</BIG> Feburary 23rd, 2002, Starting at 11am, 
-Powersmiths International, 10 Devon Road, Brampton, ON  L6T 5B5, 
-(905) 791-1493 - Voice, <A HREF="http://www.powersmiths.com/">http://www.powersmiths.com/</A>.
-map <A HREF="http://www.powersmiths.com/map.pdf">here</A>.  
-Organized by <A HREF="http://www.gtabug.ca/">GTABUG</A>.
+<BIG>FreshPorts2:</BIG> We're getting close... Watch this space.
 </P>

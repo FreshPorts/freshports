@@ -1,5 +1,5 @@
 <?
-	# $Id: graphs.php,v 1.5.2.19 2003-01-06 14:14:39 dan Exp $
+	# $Id: graphs.php,v 1.5.2.20 2003-03-29 14:03:14 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -87,7 +87,7 @@ If you have suggestions for graphs, please submit them via the forum.
 </TABLE>
 
 
-</TD</TR>
+</TD></TR>
 
 </TABLE>
 </TD>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-category.php,v 1.1.2.26 2003-07-04 14:59:17 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.27 2003-09-08 13:54:23 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -105,6 +105,12 @@ echo $category->{'description'}
 ?></B></BIG></BIG> - Number of ports in this category: <?php
 echo $PortCount;
 
+?>
+<p>
+	Ports marked with a <sup>*</sup> actually reside within another category but
+	have <b><?php echo $category->{'name'}; ?></b> listed as a secondary category.
+
+<?php
 echo '<div align="center"><br>';
 freshports_CategoryNextPreviousPage($CategoryName, $PortCount, $PageNo, $PageSize);
 echo '</div>';

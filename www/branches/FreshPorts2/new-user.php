@@ -1,5 +1,5 @@
 <?
-	# $Id: new-user.php,v 1.1.2.12 2002-02-28 21:56:53 dan Exp $
+	# $Id: new-user.php,v 1.1.2.13 2002-03-22 00:43:05 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -145,9 +145,7 @@ function setfocus() { document.f.UserLogin.focus(); }
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <tr><td valign="top" width="100%">
-<table width="100%" border="0">
-  <tr>
-    <td><script language="php">
+<script language="php">
 if ($errors) {
 echo '<table cellpadding=1 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>
 <tr>
@@ -190,7 +188,7 @@ if (!$submit && !$errors) {
 
 </script>
 
-<table cellpadding="1" cellspacing="0" border="1" bordercolor="#A2A2A2"
+<table cellpadding="1" cellspacing="0" border="0" bordercolor="#A2A2A2"
             bordercolordark="#A2A2A2" bordercolorlight="#A2A2A2" width="100%" cellpadding="5">
       <tr>
 		<? freshports_PageBannerText("New User Details"); ?>
@@ -205,9 +203,6 @@ will be emailed to you at that address.</BIG></P>
 
 <? include("./include/new-user.php"); ?>
 
-        </td>
-      </tr>
-    </table>
     </td>
   </tr>
 </form>

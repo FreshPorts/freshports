@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.72 2003-04-24 15:09:43 dan Exp $
+	# $Id: index.php,v 1.1.2.73 2003-04-26 14:50:23 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -339,7 +339,7 @@ ports. A port is marked as new for 10 days.
 ?>
 </TD>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
-   <? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php') ?>
+   <? freshports_SideBar(); ?>
 <?
 
 	if ($dailysummary) {

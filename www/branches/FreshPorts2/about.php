@@ -1,5 +1,5 @@
 <?
-	# $Id: about.php,v 1.1.2.14 2003-01-06 23:59:28 dan Exp $
+	# $Id: about.php,v 1.1.2.15 2003-04-26 14:50:23 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -110,7 +110,7 @@ About the Authors</A> for details of who else helped.</P>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
+<? freshports_ShowFooter(); ?>
 </TD></TR>
 </TABLE>
 

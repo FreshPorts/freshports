@@ -1,6 +1,6 @@
 <script language="php">
 
-$Debug=0;
+//$Debug=1;
 
 $FormatDateDefault	= "%W, %b %e";
 $FormatTimeDefault	= "%H:%i";
@@ -52,8 +52,10 @@ if (!empty($visitor)) {
    $result = mysql_query($sql, $db) or die("getvalues query failed " . mysql_error());
 
    if ($result) {
+      if ($Debug) echo "we found a result there...\n<br>";
       $myrow = mysql_fetch_array($result);
       if ($myrow) {
+         if ($Debug) echo "we found a row there...\n<br>";
          $UserName		= $myrow["username"];
          $UserID		= $myrow["id"];
          $emailsitenotices_yn	= $myrow["emailsitenotices_yn"];
@@ -107,11 +109,12 @@ if (!empty($visitor)) {
 //        echo $sql, "<br>";
          $result = mysql_query($sql, $db);
       } else {
+         if ($Debug) echo "we didn't find anyone with that login... " . mysql_error() . "\n<br>";
          $errors = "Sorry, but that login doesn't exist according to me.";
       }
    }
    if ($Debug) {
-      echo "UserName = $UserName\nUserID=$UserID\n";
+      echo "UserName = $UserName\n<br>UserID=$UserID<br>\n";
    }
 }
 </script>

@@ -1,5 +1,5 @@
 <?
-	# $Id: ports.php,v 1.1.2.21 2002-12-09 20:22:49 dan Exp $
+	# $Id: ports.php,v 1.1.2.22 2003-01-30 02:51:58 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -354,59 +354,55 @@ select ports.id,
 		# fetch all ports based on category
 		# e.g. id for net
 		
-		$Debug = 0;
+		$Debug = 1;
 
-		$sql = "
- SELECT ports.id, 
-        ports.element_id, 
-        ports.category_id as category_id, 
-        ports.short_description as short_description, 
-        ports.long_description, 
-        ports.version as version,
-        ports.revision as revision, 
+		$sql = "";
+		if ($UserID) {
+			$sql .= "SELECT PE.*, onwatchlist
+FROM
+ (";
+     	}
+
+		$sql .= "
+SELECT P.*, element.name    as port,
+        element.status  as status
+   FROM element JOIN
+ (SELECT ports.id,
+        ports.element_id        as element_id,
+        ports.category_id       as category_id,
+        ports.short_description as short_description,
+        ports.long_description,
+        ports.version           as version,
+        ports.revision          as revision,
         ports.maintainer,
-        ports.homepage, 
-        ports.master_sites, 
-        ports.extract_suffix, 
-        ports.package_exists, 
-        ports.depends_build, 
-        ports.depends_run, 
-        ports.last_commit_id, 
-        ports.found_in_index, 
-        ports.forbidden, 
-        ports.broken, to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, 
-        ports.categories as categories, 
-        element.name as port, 
-        categories.name as category, 
-        element.status";
+        ports.homepage,
+        ports.master_sites,
+        ports.extract_suffix,
+        ports.package_exists,
+        ports.depends_build,
+        ports.depends_run,
+        ports.last_commit_id,
+        ports.found_in_index,
+        ports.forbidden,
+        ports.broken,
+        to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added,
+        ports.categories as categories
+   FROM ports
+  WHERE ports.category_id = $CategoryID ) AS P
+   ON (P.element_id     = element.id
+   AND element.status   = 'A')";
 
 		if ($UserID) {
-			$sql .= ",
-        onwatchlist";
-      }
-      $sql .= "
-   FROM categories, element, ports ";
-
-		if ($UserID) {
-			$sql .= "
-      LEFT OUTER JOIN
- (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
-    FROM watch_list JOIN watch_list_element 
+			$sql .= ") AS PE
+LEFT OUTER JOIN
+ (SELECT element_id           as wle_element_id,
+         COUNT(watch_list_id) as onwatchlist
+    FROM watch_list JOIN watch_list_element
         ON watch_list.id      = watch_list_element.watch_list_id
        AND watch_list.user_id = $UserID
   GROUP BY watch_list_element.element_id) AS TEMP
-       ON TEMP.wle_element_id = ports.element_id ";
-      }
-
-		$sql .= " WHERE ports.category_id    = categories.id 
-		            and ports.element_id     = element.id 
-				      and categories.id        = $CategoryID 
-				      and element.status       = 'A' 
-";
-
-		if ($User->id) {
-			$sql .= ", wle_element_id, watch";
-		}
+       ON TEMP.wle_element_id = PE.element_id";
+    	}
 
 		$sql .= " ORDER by port ";
 		

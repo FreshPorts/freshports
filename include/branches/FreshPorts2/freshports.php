@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.46 2002-02-25 15:48:13 dan Exp $
+   # $Id: freshports.php,v 1.4.2.47 2002-02-27 20:12:53 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -546,6 +546,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 #   }
 
 #	$HTML .= "onwatchlist = '" . $port->{onwatchlist} . "'";
+
 	if ($WatchListID) {
 		if ($port->{onwatchlist}) {
 			$HTML .= ' ' . $FreshPortsWatchedPortPrefix    . $port->{element_id} . $AddRemoveExtra . $FreshPortsWatchedPortSuffix;
@@ -563,6 +564,8 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
    if ($port->broken) {
       $HTML .= '<img src="/images/broken.gif" alt="Broken" width="17" height="16" hspace="2"> BROKEN: ' . $port->broken . "<br>"; ;
    }
+
+
 
    // description
    if ($port->short_description && ($ShowShortDescription == "Y" || $ShowEverything)) {

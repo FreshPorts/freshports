@@ -1,6 +1,6 @@
 <?php
 
-	# $Id: getvalues.php,v 1.1.2.11 2002-02-26 00:31:18 dan Exp $
+	# $Id: getvalues.php,v 1.1.2.12 2002-02-27 20:12:53 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -37,7 +37,7 @@ GLOBAL $UserName;
 GLOBAL $UserID;
 GLOBAL $visitor;
 GLOBAL $db;
-#GLOBAL $WatchListID;
+GLOBAL $WatchListID;
 
 $MaxNumberOfPorts		= 100;
 $ShowShortDescription	= "Y";

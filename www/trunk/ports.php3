@@ -106,7 +106,7 @@ $sql = "select ports.name as port, ports.id as ports_id, ports.last_update as up
        "WHERE ports.system = 'FreeBSD' ".
        "and ports.primary_category_id = categories.id ";
 
-$sql .= "order by $sort limit 40";
+$sql .= "order by $sort limit 20";
 
 //echo $sql;
 

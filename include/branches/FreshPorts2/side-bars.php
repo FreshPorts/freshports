@@ -1,5 +1,5 @@
 <?
-	# $Id: side-bars.php,v 1.4.2.32 2002-06-24 19:09:03 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.33 2002-06-24 19:18:30 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -180,7 +180,7 @@ if ($visitor) {
       if ((typeof window.sidebar == "object") && (typeof window.sidebar.addPanel == "function"))
       {
          window.sidebar.addPanel ("FreshPorts",
-         "http://test.freshports.org/sidebar.php","");
+         "http://www.FreshPorts.org/sidebar.php","");
       }
       else
       {

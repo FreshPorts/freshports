@@ -1,6 +1,6 @@
 <?
 	#
-	# $Id: index.php,v 1.1.2.63 2002-12-12 02:45:21 dan Exp $
+	# $Id: index.php,v 1.1.2.64 2003-01-06 14:17:00 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -90,7 +90,7 @@ if ($User->id) {
   FROM commits_latest_ports
       LEFT OUTER JOIN
  (SELECT element_id as wle_element_id, COUNT(watch_list_id) as watch
-    FROM watch_list JOIN watch_list_element 
+    FROM watch_list JOIN watch_list_element
         ON watch_list.id      = watch_list_element.watch_list_id
        AND watch_list.user_id = $User->id
   GROUP BY watch_list_element.element_id) AS TEMP
@@ -307,12 +307,9 @@ ports. A port is marked as new for 10 days.
 
 <BR>
 
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<TR><TD>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
-</TD></TR>
-</TABLE>
-
+<?
+freshports_ShowFooter();
+?>
 
 </body>
 </html>

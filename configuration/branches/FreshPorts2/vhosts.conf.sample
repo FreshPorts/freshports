@@ -1,5 +1,5 @@
 #
-# $Id: vhosts.conf.sample,v 1.3.2.10 2003-05-16 01:09:07 dan Exp $
+# $Id: vhosts.conf.sample,v 1.3.2.11 2003-06-01 15:36:55 dan Exp $
 #
 # Copyright (c) 1998-2003 DVL Software Limited
 #
@@ -25,4 +25,29 @@
 	CustomLog       /usr/websites/log/freshports.org-access.log combined
 
 	ErrorDocument   404 /missing.php
+
+	<Location /docs>
+		IndexOptions	FancyIndexing NameWidth=* DescriptionWidth=*
+		Options			Indexes FollowSymLinks
+		AddDescription	"Using 404 errors to serve up virtual pages and virtual categories"			404-for-virtual-pages.php
+		AddDescription	"sample xml file for a commit message from FreeBSD's cvs-all mailing list"	commits.xml
+		AddDescription	"another samle xml file"																	commits_2.xml
+		AddDescription	"The data definition document for the FreshPorts/FreshSource XML"				fp-updates.dtd
+		AddDescription	"FreshPorts/FreshSource database diagram"												physical_database.gif
+		AddDescription	"A sample email"																				sample_message.1
+		AddDescription	"The xml produced from sample_message.1 by code in the scripts directory"	sample_message.1.xml
+		AddDescription	"Sample scripts for FreshPorts"															scripts
+	</Location>
+
+	<Location /docs>
+		IndexOptions	FancyIndexing NameWidth=* DescriptionWidth=*
+		Options			Indexes FollowSymLinks
+		AddDescription	"more information about this directory"		README.txt
+		AddDescription	"perl module needed by process_cvs_mail.pl"	constants.pm
+		AddDescription	"raw email to be used as sample input"			email.txt
+		AddDescription	"xml output by process_cvs_mail.pl"				email.xml
+		AddDescription	"the perl code used to convert email to xml"	process_cvs_mail.pl
+	</Location>
+
+
 </VirtualHost>

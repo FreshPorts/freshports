@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.47 2004-03-22 20:28:44 dan Exp $
+	# $Id: faq.php,v 1.1.2.48 2004-06-29 18:54:52 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -474,6 +474,81 @@ Here are a few examples:
 
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
+<TR>
+<? echo freshports_PageBannerText("What are Master/Slave ports?"); ?>
+</TR>
+
+   <TR><TD>
+   <P>
+	Some ports are so similar to another port that it makes sense to maintain just one port
+	and specify the differences in the other port.  This is slightly similar to the way 
+	<code class="code">/etc/defaults/rc.conf</code> is related to 
+	<code class="code">/etc/rc.conf</code>.
+
+	<p>
+	A good example is <a href="/www/">www</a>/<a href="/www/mod_php4">mod_php4</a>. You 
+	can see that the <b>master port</b> for that is <a href="/lang/">lang</a>/<a href="/lang/php4/">php4</a>.
+	Conversely, <a href="/lang/">lang</a>/<a href="/lang/php4/">php4</a> lists several
+	<b>slave ports</b>.
+
+	<p>
+	The ability to add this feature is because of this patch:
+
+<blockquote><pre class="code">
+--- bsd.port.mk	10 Jun 2004 07:30:19 -0000	1.491
++++ bsd.port.mk	22 Jun 2004 13:48:33 -0000
+@@ -913,6 +913,16 @@
+ 
+ MASTERDIR?=	${.CURDIR}
+ 
++# Try to determine if we are a slave port.  These variables are used by
++# FreshPorts and portsmon, but not yet by the ports framework itself.
++.if ${MASTERDIR} != ${.CURDIR}
++IS_SLAVE_PORT?=	yes
++MASTERPORT?=	${MASTERDIR:C/[^\/]+\/\.\.\///:C/[^\/]+\/\.\.\///:C/^.*\/([^\/]+\/[^\/]+)$/\\1/}
++.else
++IS_SLAVE_PORT?=	no
++MASTERPORT?=
++.endif
++
+ # If they exist, include Makefile.inc, then architecture/operating
+ # system specific Makefiles, then local Makefile.local.
+ 
+</pre></blockquote>
+
+	<p>
+	The FreeBSD tree has no defined method for handling master/slave ports.
+	It is because of this that FreshPorts never attempted to refresh slave ports
+	when a master port was updated.  Now that we have a mostly-reliable method,
+	all slave ports are refreshed when the master port is updated.
+
+	<p>
+	This method works for all but 40 ports which are involved in a master/slave relationship.
+	It is hoped that those 40 are fixed soon.  It is also hoped that the above patch
+	is comitted to the tree.
+
+	</TD></TR><TR><TD>&nbsp;</TD></TR>
+
+<TR>
+<? echo freshports_PageBannerText('What is this "to add the package" stuff?'); ?>
+</TR>
+
+	<TR><TD>
+	<P>
+	Included within the port description is the instruction for adding the package.
+	This information can be important when the package name does not match the
+	port name.  A good example is <a href="/x11/">x11</a>/<a href="/x11/XFree86-4-clients/">XFree86-4-clients</a>.
+	The command to add this package is:
+
+<blockquote><code class="code">
+pkg_add -r XFree86-clients
+</code></blockquote>
+
+	<p>
+	This normally isn't a problem, but for the 1900 or so ports which are different,
+	this information is very useful.
+	
+	</TD></TR><TR><TD>&nbsp;</TD></TR>
 </table>
 </td>
 

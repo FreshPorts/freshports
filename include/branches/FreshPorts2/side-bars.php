@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: side-bars.php,v 1.4.2.53 2004-08-23 19:10:13 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.54 2004-08-25 20:33:04 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -98,6 +98,8 @@ if (IsSet($visitor)) {
 
 	<TD>
 <?php
+	GLOBAL $dbh;
+
 	$Searches = new Searches($dbh);
 	echo $Searches->GetFormSimple('&nbsp;');
 ?>

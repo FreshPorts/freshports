@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.67 2004-11-19 13:32:43 dan Exp $
+	# $Id: search.php,v 1.1.2.68 2004-12-02 01:04:30 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -540,7 +540,7 @@ Search for:<BR>
 		<OPTION VALUE="<?php echo ORDERBYDESCENDING; ?>" <?if ($orderbyupdown == ORDERBYDESCENDING ) echo 'SELECTED' ?>>descending
 	</SELECT>
 </td>
-</td><td>
+<td>
 	<INPUT TYPE="submit" VALUE="Search" NAME="search">
 </td>
 </tr>

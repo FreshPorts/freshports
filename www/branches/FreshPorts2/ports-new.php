@@ -1,5 +1,5 @@
 <?
-	# $Id: ports-new.php,v 1.1.2.11 2002-05-22 04:30:28 dan Exp $
+	# $Id: ports-new.php,v 1.1.2.12 2002-05-28 22:27:55 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -26,8 +26,18 @@
 			break;
 
 		case 'week':
-			$IntervalAdjust = '7 days';
+			$IntervalAdjust = '1 week';
 			$Interval       = 'past 7 days';
+			break;
+
+		case 'fortnight':
+			$IntervalAdjust = '2 weeks';
+			$Interval       = 'past 2 weeks';
+			break;
+
+		case 'month':
+			$IntervalAdjust = '1 month';
+			$Interval       = 'past month';
 			break;
 
 		case '3months':

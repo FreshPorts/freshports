@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.21 2002-03-02 22:20:49 dan Exp $
+	# $Id: index.php,v 1.1.2.22 2002-03-05 06:48:23 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -192,12 +192,14 @@ ports. A port is marked as new for 10 days.
 
 					if ($LastDate <> $myrow["commit_date"]) {
 						$LastDate = $myrow["commit_date"];
-						$HTML .= '<TR><TD COLSPAN="3" BGCOLOR="#AD0040" HEIGHT="0"><FONT COLOR="#FFFFFF"><BIG>' . FormatTime($myrow["commit_date"], 0, "D, j M") . '</BIG></FONT></TD></TR>';
+						$HTML .= '<TR><TD COLSPAN="3" BGCOLOR="#AD0040" HEIGHT="0">' . "\n";
+						$HTML .= '   <FONT COLOR="#FFFFFF"><BIG>' . FormatTime($myrow["commit_date"], 0, "D, j M") . '</BIG></FONT>' . "\n";
+						$HTML .= '</TD></TR>' . "\n\n";
 					}
 
 					$j = $i;
 
-					$HTML .= '<TR><TD>';
+					$HTML .= "<TR><TD>\n";
 
 					// OK, while we have the log change log, let's put the port details here.
 					$MultiplePortsThisCommit = 0;
@@ -221,46 +223,48 @@ ports. A port is marked as new for 10 days.
 							}
 						}
 
-						$HTML .= "</B></BIG></A>";
+						$HTML .= "</A></B></BIG>\n";
 
 						// indicate if this port needs refreshing from CVS
 						if ($myrow["status"] == "D") {
-							$HTML .= '<font size="-1"> [deleted]</font>';
+							$HTML .= "<SMALL> [deleted]</SMALL>\n";
 						}
 						if ($myrow["needs_refresh"]) {
-							$HTML .= ' <font size="-1"> [refresh]</font>';
+							$HTML .= "<SMALL> [refresh]</SMALL>\n";
 						}
 
 						if ($myrow["date_added"] > Time() - 3600 * 24 * $DaysMarkedAsNew) {
 							$MarkedAsNew = "Y";
-							$HTML .= "<img src=\"/images/new.gif\" width=28 height=11 alt=\"new!\" hspace=2 > ";
+							$HTML .= "<img src=\"/images/new.gif\" width=28 height=11 alt=\"new!\" hspace=2>\n";
 						}
 
 						if ($myrow["forbidden"]) {
-							$HTML .= '<img src="images/forbidden.gif" alt="Forbidden" width="20" height="20" hspace="2">';
+							$HTML .= '<img src="images/forbidden.gif" alt="Forbidden" width="20" height="20" hspace="2">' . "\n";
 						}
 						if ($myrow["broken"]) {
-							$HTML .= '<img src="images/broken.gif" alt="Broken" width="17" height="16" hspace="2">';
+							$HTML .= '<img src="images/broken.gif" alt="Broken" width="17" height="16" hspace="2">' . "\n";
 						}
 
-						$HTML .= '&nbsp;&nbsp;' . $myrow["short_description"] . '&nbsp;&nbsp;';
+						$HTML .= $myrow["short_description"] . "\n";
 
 						if (!$MultiplePortsThisCommit) {
-							$HTML .= '<FONT SIZE="-1">';
+							$HTML .= '<SMALL>';
 							$HTML .= '[ ' . $myrow["commit_time"] . ' ]';
-							$HTML .= '</FONT>';
+							$HTML .= '</SMALL>' . "\n";
 						}
 
 						if ($WatchListID) {
 							if ($myrow["watch"]) {
-								$HTML .= ' ' . $FreshPortsWatchedPortPrefix    . $myrow["element_id"] . $FreshPortsWatchedPortSuffix;
+								$HTML .= $FreshPortsWatchedPortPrefix    . $myrow["element_id"] . $FreshPortsWatchedPortSuffix;
 							} else {
-								$HTML .= ' ' . $FreshPortsWatchedPortNotPrefix . $myrow["element_id"] . $FreshPortsWatchedPortNotSuffix;
+								$HTML .= $FreshPortsWatchedPortNotPrefix . $myrow["element_id"] . $FreshPortsWatchedPortNotSuffix;
 							}
 						}
 
+						$HTML .= "\n";
 
-						$HTML .= ' <A HREF="/files.php?id=' . $myrow["commit_log_id"] . 
+
+						$HTML .= '<A HREF="/files.php?id=' . $myrow["commit_log_id"] . 
 									'"><IMG SRC="/images/logs.gif" ALT="files touched by this commit" BORDER="0" WIDTH="17" HEIGHT="20" HSPACE="2"></A>';
 
 						$j++;
@@ -269,15 +273,15 @@ ports. A port is marked as new for 10 days.
 
 					$i = $j - 1;
 
-					$HTML .= '<BLOCKQUOTE>';
+					$HTML .= "\n<BLOCKQUOTE>";
 
 					$HTML .= freshports_PortDescriptionPrint($myrow["commit_description"]);
 
 
-					$HTML .= "</BLOCKQUOTE></TR>\n";
+					$HTML .= "\n</BLOCKQUOTE>\n</TD></TR>\n\n\n";
 				}
 
-				$HTML .= "</td></tr>\n";
+				$HTML .= "</td></tr>\n\n";
 
 				echo $HTML;
 

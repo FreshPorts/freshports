@@ -1,7 +1,9 @@
-<?
-	# $Id: database.php.sample,v 1.1.2.3 2003-11-14 04:40:44 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# $Id: database.php.sample,v 1.1.2.4 2004-01-07 12:47:50 dan Exp $
+	#
+	# Copyright (c) 1998-2004 DVL Software Limited
+	#
 
 	$db = pg_connect("dbname=FreshPorts2 user=main password=AmerTrash");
 	if ($db) {

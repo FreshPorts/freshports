@@ -1,5 +1,5 @@
 <?
-	# $Id: watch_list.php,v 1.1.2.6 2002-12-16 16:19:00 dan Exp $
+	# $Id: watch_list.php,v 1.1.2.7 2003-01-04 17:10:45 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -35,10 +35,10 @@ class WatchList {
 		AddSlashes($Name);
 		
 		$query = "
-  SELECT count(*), users.max_number_watch_lists
-    FROM watch_list, users
+SELECT count(watch_list.id), users.max_number_watch_lists
+    FROM users LEFT OUTER JOIN watch_list
+               ON users.id = watch_list.user_id
    WHERE users.id = $UserID
-     AND users.id = watch_list.user_id
 GROUP BY users.max_number_watch_lists";
 
 		$this->LocalResult = pg_query($this->dbh, $query);

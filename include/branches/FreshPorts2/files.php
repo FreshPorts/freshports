@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: files.php,v 1.1.2.27 2003-04-28 16:25:15 dan Exp $
+	# $Id: files.php,v 1.1.2.28 2003-07-04 14:59:18 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -19,6 +19,7 @@ function freshports_Files($User, $PortID, $MessageID, $db) {
 	GLOBAL $TableWidth;
 	GLOBAL $freshports_CVS_URL;
 	GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;
+	GLOBAL $DaysMarkedAsNew;
 
 	$Debug = 0;
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: new-user.php,v 1.1.2.33 2003-05-16 02:33:45 dan Exp $
+	# $Id: new-user.php,v 1.1.2.34 2003-07-04 14:59:17 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -9,14 +9,16 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
 
-	$origin = $_GET['origin'];
-	$submit = $_POST['submit'];
+	if (IsSet($_REQUEST['origin'])) $origin = $_REQUEST['origin'];
+	if (IsSet($_REQUEST['submit'])) $submit = $_REQUEST['submit'];
+
+	$errors = 0;
 
 if ($origin == '/index.php' || $origin == '') {
 	$origin = '/';
 }
 
-if ($submit) {
+if (IsSet($submit)) {
 
 	// process form
 
@@ -169,7 +171,7 @@ echo '<p>If you need help, please post a message on the forum. </p>
 <BR>';
 }
 
-if (!$submit && !$errors) {
+if (!IsSet($submit) && !$errors) {
   // provide default values for an empy form.
   require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 }
@@ -183,7 +185,7 @@ if (!$submit && !$errors) {
       <TR>
         <TD>
 
-<P><BIG><BIG>Please observe the following points:</BIG>
+<P><BIG><BIG>Please observe the following points:</BIG></BIG>
 
 <ul>
 <li>
@@ -191,7 +193,7 @@ You must supply a valid email address. Instructions to enable your account
 will be emailed to you at that address.
 
 <li>If you have a spam filter, please allow all
-mail from <CODE CLASS="code">unixathome.org</CODE> and <CODE CLASS="code">freshports.org</CODE>.</BIG>
+mail from <CODE CLASS="code">unixathome.org</CODE> and <CODE CLASS="code">freshports.org</CODE>.
 
 <li>Please disable any auto-responders for the above domains.  I get enough email
 without being told when you'll be back from holiday or who else I can contact...
@@ -213,6 +215,7 @@ Your cooperation with the above will make my life easier.  Thank you.
   </TR>
 </TABLE>
 </TD>
+<td>
 
 	<?
 	freshports_SideBar();

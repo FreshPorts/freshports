@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-category.php,v 1.1.2.25 2003-04-27 14:48:13 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.26 2003-07-04 14:59:17 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -71,7 +71,7 @@ function freshports_Category($db, $CategoryName, $PageNo = 1, $PageSize = 25) {
 
 	$category = new Category($db);
 	$category->FetchByName($CategoryName);
-	$title = $category->{name};
+	$title = $category->{'name'};
 
 	# find out how many ports are in this category
 	$PortCount = $category->PortCount($CategoryName);
@@ -96,12 +96,12 @@ function freshports_Category($db, $CategoryName, $PageNo = 1, $PageSize = 25) {
 	<tr><td valign="top" width="100%">
 	<table width="100%" border="0">
 		<tr>
-		 <? echo freshports_PageBannerText('Category listing - ' . $category->{name}); ?>
+		 <? echo freshports_PageBannerText('Category listing - ' . $category->{'name'}); ?>
 		</tr>
 
 	<tr><td>
 	<BIG><BIG><B><?php
-echo $category->{description} 
+echo $category->{'description'} 
 ?></B></BIG></BIG> - Number of ports in this category: <?php
 echo $PortCount;
 
@@ -122,7 +122,7 @@ echo '</div>';
 	$ShowShortDescription	= "Y";
 
 
-	$HTML .= freshports_echo_HTML("<TR>\n<TD>\n");
+	$HTML = freshports_echo_HTML("<TR>\n<TD>\n");
 
 
 $DaysMarkedAsNew= $DaysMarkedAsNew= $GlobalHideLastChange= $ShowChangesLink= $ShowDescriptionLink= $ShowDownloadPortLink= $ShowHomepageLink= $ShowLastChange= $ShowMaintainedBy= $ShowPortCreationDate= $ShowPackageLink= $ShowShortDescription =1;

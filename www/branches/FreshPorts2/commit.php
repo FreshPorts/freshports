@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.26 2003-04-28 16:25:13 dan Exp $
+	# $Id: commit.php,v 1.1.2.27 2003-07-04 14:59:15 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -11,8 +11,9 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 
-	$message_id = AddSlashes($_GET['message_id']);
-	$commit_id  = AddSlashes($_GET['commit_id']);
+	if (IsSet($_GET['message_id'])) $message_id = AddSlashes($_GET['message_id']);
+	if (IsSet($_GET['commit_id']))  $commit_id  = AddSlashes($_GET['commit_id']);
+
 	$Title = 'Commit found by ';
 	if ($message_id) {
 		$Title .= 'message id';
@@ -28,7 +29,7 @@ if ($Debug) echo "UserID='$User->id'";
 
 ?>
 
-<TABLE WIDTH="<? echo $TableWidth ?>" BORDER="1" ALIGN="center">
+<TABLE WIDTH="<? echo $TableWidth ?>" BORDER="0" ALIGN="center">
 
 <?
 if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
@@ -75,6 +76,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 	         commit_log.message_id,
 	         commit_log.encoding_losses,
 	         element.name as port,
+				element.status as status,
 	         commit_log.id as commit_log_id,
 	         commit_log_ports.needs_refresh,
             security_notice.id  AS security_notice_id";

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: news.php,v 1.1.2.13 2003-04-28 21:13:04 dan Exp $
+	# $Id: news.php,v 1.1.2.14 2003-07-04 14:59:17 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -13,7 +13,7 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 
-	$Debug = 0;
+	$Debug = 1;
 
 	GLOBAL $FreshPortsSlogan;
 	GLOBAL $FreshPortsName;
@@ -116,7 +116,8 @@ on LCPCLLCP.port_id = ports.id) AS LCPPORTS JOIN element
 on LCPPORTS.element_id = element.id) AS PORTELEMENT JOIN categories
 on PORTELEMENT.category_id = categories.id) AS PEC LEFT OUTER JOIN security_notice
 ON PEC.commit_log_id = security_notice.commit_log_id
-order by commit_date_raw desc, category, port ";
+order by commit_date_raw desc, category, port 
+limit 30";
 
 	if ($Debug) {
 		echo $sql;

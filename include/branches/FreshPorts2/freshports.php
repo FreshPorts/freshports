@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.147 2003-05-21 01:25:33 dan Exp $
+	# $Id: freshports.php,v 1.4.2.148 2003-07-04 14:59:19 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -8,7 +8,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/constants.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/burstmedia.php');
 
-	if ($ShowAnnouncements) {
+	if (IsSet($ShowAnnouncements)) {
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/announcements.php');
 	}
 #
@@ -16,7 +16,7 @@
 #
 DEFINE('MAILTO',                '&#109;&#97;&#105;&#108;&#116;&#111;');
 DEFINE('COPYRIGHTYEARS',        '2000-2003');
-DEFINE('URL2LINK_CUTOFF_LEVEL', 70);
+DEFINE('URL2LINK_CUTOFF_LEVEL', 0);
 
 
 if ($Debug) echo "'" . $_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php<BR>';
@@ -40,7 +40,7 @@ function freshports_IndexFollow($URI) {
 
 	# well, OK, so it may not be a URI... but it's close
 
-	if ($NOINDEX{$URI} || $NOFOLLOW{$URI}) {
+	if (In_Array($URI, $NOINDEX) || In_Array($URI, $NOFOLLOW)) {
 		echo '	<meta name="robots" content="';
 		if ($NOINDEX{$URI}) {
 			echo 'noindex';
@@ -166,9 +166,9 @@ function freshports_Email_Link($message_id) {
 	# a valid message id which can be found in the mailing list archive.
 	#
 	if (strpos($message_id, "@freshports.org")) {
-		$HTML .= '';
+		$HTML = '';
 	} else {
-		$HTML .= '<A HREF="' . htmlentities($freshports_mail_archive . $message_id) . '">';
+		$HTML  = '<A HREF="' . htmlentities($freshports_mail_archive . $message_id) . '">';
 		$HTML .= freshports_Mail_Icon();
 		$HTML .= '</A>';
 	}
@@ -181,7 +181,7 @@ function freshports_Commit_Link($message_id, $LinkText = '') {
 	# produce a link to the commit.  by default, we provide the graphic link.
 	#
 
-	$HTML .= '<A HREF="/commit.php?message_id=' . $message_id . '">';
+	$HTML = '<A HREF="/commit.php?message_id=' . $message_id . '">';
 	if ($LinkText == '') {
 		$HTML .= freshports_Commit_Icon();
 	} else {
@@ -193,7 +193,7 @@ function freshports_Commit_Link($message_id, $LinkText = '') {
 }
 
 function freshports_MorePortsToShow($message_id, $NumberOfPortsInThisCommit, $MaxNumberPortsToShow) {
-	$HTML .= "(Only the first $MaxNumberPortsToShow of $NumberOfPortsInThisCommit ports in this commit are shown above. ";
+	$HTML  = "(Only the first $MaxNumberPortsToShow of $NumberOfPortsInThisCommit ports in this commit are shown above. ";
 	$HTML .= freshports_Commit_Link($message_id, '<IMG SRC="/images/play.gif" ALT="View all ports for this commit" BORDER="0" WIDTH="13" HEIGHT="13">');
 	$HTML .= ")";
 
@@ -201,7 +201,7 @@ function freshports_MorePortsToShow($message_id, $NumberOfPortsInThisCommit, $Ma
 }
 
 function freshports_MoreCommitMsgToShow($message_id, $NumberOfLinesShown) {
-	$HTML .= "(Only the first $NumberOfLinesShown lines of the commit message are shown above ";
+	$HTML  = "(Only the first $NumberOfLinesShown lines of the commit message are shown above ";
 	$HTML .= freshports_Commit_Link($message_id, '<IMG SRC="/images/play.gif" ALT="View all ports for this commit" BORDER="0" WIDTH="13" HEIGHT="13">');
 	$HTML .= ")";
 
@@ -214,6 +214,7 @@ function freshports_CookieClear() {
 }
 
 function freshportsObscureHTML($HTML) {
+	$new_HTML = '';
 	for ($i = 0; $i <strlen($HTML); $i++) {
 		$new_HTML .= ("&#".ord($HTML[$i]).";");
 	}
@@ -285,7 +286,7 @@ GLOBAL $BannerAd;
    freshports_Logo();
    freshports_navigation_bar_top();
 
-	if ($ShowAnnouncements) {
+	if (IsSet($ShowAnnouncements)) {
 
 		GLOBAL $db;
 		$Announcement = new Announcement($db);
@@ -614,7 +615,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 	GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;
 
 	$MarkedAsNew = "N";
-	$HTML .= "<DL>\n";
+	$HTML  = "<DL>\n";
 
 	$HTML .= "<DT>";
 
@@ -626,10 +627,10 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 		$HTML .= $port->port;
 	}
 
-	if (strlen($port->{version}) > 0) {
-    	$HTML .= ' ' . $port->{version};
-		if (strlen($port->{revision}) > 0 && $port->{revision} != "0") {
-    		$HTML .= '-' . $port->{revision};
+	if (strlen($port->{'version'}) > 0) {
+    	$HTML .= ' ' . $port->{'version'};
+		if (strlen($port->{'revision'}) > 0 && $port->{'revision'} != "0") {
+    		$HTML .= '-' . $port->{'revision'};
 		}
 	}
 
@@ -652,16 +653,16 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 	}
 
 	// indicate if this port has been removed from cvs
-	if ($port->{status} == "D") {
+	if ($port->{'status'} == "D") {
 		$HTML .= " " . freshports_Deleted_Icon() . "\n";
 	}
 
 	// indicate if this port needs refreshing from CVS
-	if ($port->{needs_refresh}) {
+	if ($port->{'needs_refresh'}) {
 		$HTML .= " " . freshports_Refresh_Icon() . "\n";
 	}
 
-	if ($port->{date_added} > Time() - 3600 * 24 * $DaysMarkedAsNew) {
+	if ($port->{'date_added'} > Time() - 3600 * 24 * $DaysMarkedAsNew) {
 		$MarkedAsNew = "Y";
 		$HTML .= freshports_New_Icon() . "\n";
 	}
@@ -742,9 +743,11 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 	}
 
    if ($port->categories) {
-      // remove the primary category
+      // remove the primary category and remove any double spaces or trailing/leading spaces
+		// this ensures that explode gives us the right stuff
       $Categories = str_replace($port->category, '', $port->categories);
       $Categories = str_replace('  ', ' ', $Categories);
+		$Categories = trim($Categories);
       if ($Categories) {
          $HTML .= "<i>Also listed in:</i> ";
          $CategoriesArray = explode(" ", $Categories);
@@ -948,13 +951,8 @@ function url2link($Arr) {
 	# URLs will be truncated if they are too long. But only
 	# the visible part
 	#
-	$html = $Arr[1];
-
-#	if (URL2LINK_CUTOFF_LEVEL > 0 && strlen($html) > URL2LINK_CUTOFF_LEVEL) {
-#		$vhtml = substr($html, 0, URL2LINK_CUTOFF_LEVEL - 5) . "(...)";
-#	} else {
-		$vhtml = $html;
-#	}
+	$html  = $Arr[1];
+	$vhtml = $html;
 
 	$html  = preg_replace("/@/", "&#64", $html);
 	$vhtml = preg_replace("/@/", "&#64", $vhtml);
@@ -990,10 +988,10 @@ function htmlify($String) {
 	$del_t = array("&quot;","&#34;","&gt;","&#62;","\/\.\s","\)","'","\s","$");
 	$delimiters = "(".join("|",$del_t).")";
 
-	$String = preg_replace_callback("/((http|ftp|https):\/\/.*?)($delimiters)/i",                    url2link,    $String);
-	$String = preg_replace_callback("/(<a href=(\"|')(http|ftp|https):\/\/.*?)(\">|'>)(.*?)<\/a>/i", url_shorten, $String);
-	$String = preg_replace_callback("/([\w+=\-.!]+@[\w\-]+(\.[\w\-]+)+)/",                           mail2link,   $String);
-	$String = preg_replace_callback("/(\bPR[:\#]?)\s*(((\w+\/)?\d+)(,\s*((\w+\/)?\d+))*)/",          pr2link,     $String);
+	$String = preg_replace_callback("/((http|ftp|https):\/\/.*?)($delimiters)/i",                    'url2link',    $String);
+	$String = preg_replace_callback("/(<a href=(\"|')(http|ftp|https):\/\/.*?)(\">|'>)(.*?)<\/a>/i", 'url_shorten', $String);
+	$String = preg_replace_callback("/([\w+=\-.!]+@[\w\-]+(\.[\w\-]+)+)/",                           'mail2link',   $String);
+	$String = preg_replace_callback("/(\bPR[:\#]?)\s*(((\w+\/)?\d+)(,\s*((\w+\/)?\d+))*)/",          'pr2link',     $String);
  
 	return $String;
 }
@@ -1056,7 +1054,7 @@ function freshports_CommitFilesLink($MessageID, $Category, $Port) {
 
 #	echo "freshports_CommitFilesLink gets $MesssageID, $Category, $Port<BR>";
 
-	$HTML .= '<A HREF="/' . $Category . '/' . $Port . '/files.php?message_id=' . $MessageID . '">';
+	$HTML  = '<A HREF="/' . $Category . '/' . $Port . '/files.php?message_id=' . $MessageID . '">';
 	$HTML .= freshports_Files_Icon();
 	$HTML .= '</A>';
 
@@ -1075,7 +1073,7 @@ function freshports_PortCommitPrint($commit, $category, $port) {
 
 	echo $commit->commit_date . '<BR>';
 	// indicate if this port needs refreshing from CVS
-	if ($commit->{needs_refresh}) {
+	if ($commit->{'needs_refresh'}) {
 		echo " " . freshports_Refresh_Icon() . "\n";
 	}
 	echo freshports_Email_Link($commit->message_id);
@@ -1094,10 +1092,10 @@ function freshports_PortCommitPrint($commit, $category, $port) {
 	}
 
 	# ouput the VERSION and REVISION
-	if (strlen($commit->{port_version}) > 0) {
-    	echo '&nbsp;&nbsp;&nbsp;<BIG><B>' . $commit->{port_version};
-		if (strlen($commit->{port_revision}) > 0 && $commit->{port_revision} != "0") {
-    		echo '-' . $commit->{port_revision};
+	if (strlen($commit->{'port_version'}) > 0) {
+    	echo '&nbsp;&nbsp;&nbsp;<BIG><B>' . $commit->{'port_version'};
+		if (strlen($commit->{'port_revision'}) > 0 && $commit->{'port_revision'} != "0") {
+    		echo '-' . $commit->{'port_revision'};
 		}
 		echo '</B></BIG>';
 	}
@@ -1149,7 +1147,7 @@ function freshports_Head($string, $n) {
 
 function freshports_PortDescriptionPrint($description, $encoding_losses, $maxnumlines=0, $URL='') {
 	$shortened = freshports_Head($description, $maxnumlines);
-	$HTML .= '<PRE CLASS="code">';
+	$HTML  = '<PRE CLASS="code">';
 
 	$HTML .= htmlify(htmlspecialchars(freshports_wrap($shortened)));
 
@@ -1179,7 +1177,7 @@ function freshports_GetNextValue($sequence, $dbh) {
 	return $NextValue;
 }
 
-function freshports_wrap($text, $length = 80) {
+function freshports_wrap($text, $length = 70) {
 	#
 	# split the text into lines based on \n
 	#

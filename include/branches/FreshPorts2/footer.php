@@ -1,13 +1,14 @@
 <?
-	# $Id: footer.php,v 1.5.2.15 2003-06-02 21:34:02 dan Exp $
+	# $Id: footer.php,v 1.5.2.16 2003-07-04 14:59:18 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 ?>
 <HR>
 <TABLE WIDTH="98%" BORDER="0">
 <?
+GLOBAL $ShowPoweredBy;
 
-if ($ShowPoweredBy) {
+if (IsSet($ShowPoweredBy)) {
 ?>
 <TR>
 

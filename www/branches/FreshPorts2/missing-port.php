@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.41 2003-05-21 00:52:26 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.42 2003-07-04 14:59:17 dan Exp $
 	#
 	# Copyright (c) 2001-2003 DVL Software Limited
 	#
@@ -29,6 +29,9 @@ function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 	if (count($url_Array) >= 1) {
 		$CategoryName = AddSlashes($url_Array[1]);
 		$CategoryID   = freshports_CategoryId($CategoryName, $db);
+		if ($CategoryID == '') {
+			Unset($CategoryID);
+		}
 
 		if ($Debug) {
 			echo "\$CategoryID='$CategoryID'";
@@ -40,7 +43,7 @@ function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 			echo "<br>\n";
 		}
 
-		if (array_count_values($url_Array) >= 2) {
+		if (count($url_Array) >= 3) {
 			$url_Item2 = AddSlashes($url_Array[2]);
 			if (substr($url_Item2, 0, 1) == '?') {
 				$Parms = $url_Item2;
@@ -49,7 +52,7 @@ function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 			}
 		}
 
-		if (count($url_Array) >= 3) {
+		if (count($url_Array) >= 4) {
 			if ($Debug) echo "getting FileName<BR>";
 			$FileName = AddSlashes($url_Array[3]);
 		}
@@ -88,7 +91,7 @@ function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 					if (substr($FileName, 0, strlen(COMMIT_DETAILS)) == COMMIT_DETAILS) {
 						if ($Debug) echo '$_SERVER["REDIRECT_QUERY_STRING"]="' . $_SERVER["REDIRECT_QUERY_STRING"] . '"<BR>';
 						parse_str($_SERVER["REDIRECT_QUERY_STRING"], $query_parts);
-						$message_id = $query_parts[message_id];
+						$message_id = $query_parts['message_id'];
 
 						if ($Debug) echo '$message_id="' . $message_id . '"<br>';
 
@@ -101,17 +104,15 @@ function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 				}
 
 			} else {
-#				if (IsSet($PortName)) {
-#					echo "no port found like that in this category";
-#				}
-				if ($PortName != '' && !IsSet($port->id)) {
+				if (IsSet($PortName) && $PortName != '' && !IsSet($port->id)) {
 					$result = "The category <A HREF=\"/$CategoryName/\"><b>$CategoryName</b></A> exists but not the port <b>$PortName</b>.";
 				} else {
-					if ($Debug) echo '$_SERVER["REDIRECT_QUERY_STRING"]="' . $_SERVER["REDIRECT_QUERY_STRING"] . '"<BR>';
-					if ($_SERVER['REDIRECT_QUERY_STRING'] != '') {
-						parse_str($_SERVER['REDIRECT_QUERY_STRING'], $query_parts);
-						$page      = $query_parts['page'];
-						$page_size = $query_parts['page_size'];
+					if (In_Array("REDIRECT_QUERY_STRING", $_SERVER)) {
+						if (IsSet($_SERVER["REDIRECT_QUERY_STRING"])) {
+							parse_str($_SERVER['REDIRECT_QUERY_STRING'], $query_parts);
+							if (IsSet($query_parts['page']))      $page      = $query_parts['page'];
+							if (IsSet($query_parts['page_size'])) $page_size = $query_parts['page_size'];
+						}
 					}
 
 					if (!IsSet($page) || $page == '') {
@@ -182,7 +183,7 @@ $ShowDescriptionLink		= "N";
 
 GLOBAL $ShowWatchListCount;
 
-	$HTML .= freshports_PortDetails($port, $port->dbh, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 0, '', 1, "N", 1, 1, $ShowWatchListCount);
+	$HTML = freshports_PortDetails($port, $port->dbh, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 0, '', 1, "N", 1, 1, $ShowWatchListCount);
 	echo $HTML;
 
 	echo '<DL><DD>';
@@ -221,6 +222,8 @@ function freshports_CategoryId($category, $database) {
 	# we could improve efficiency here with a cache
 	# if we had need...
 	#
+	$CategoryID = '';
+
 	$sql = "select * from categories where name = '$category'";
 	$result = pg_exec($database, $sql);
 	if ($result) {

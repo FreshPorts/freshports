@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: about.php,v 1.1.2.17 2003-05-06 11:33:27 dan Exp $
+	# $Id: about.php,v 1.1.2.18 2003-07-04 14:59:15 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -111,6 +111,11 @@ About the Authors</A> for details of who else helped.</P>
   </td>
 
 </TABLE>
+
+<?php
+	GLOBAL $ShowPoweredBy;
+	$ShowPoweredBy = 1;
+?>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>

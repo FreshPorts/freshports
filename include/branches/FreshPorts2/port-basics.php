@@ -1,5 +1,5 @@
 <?
-	# $Id: port-basics.php,v 1.1.2.8 2003-05-16 02:31:21 dan Exp $
+	# $Id: port-basics.php,v 1.1.2.9 2003-07-04 14:59:20 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 //
@@ -95,9 +95,11 @@
    if ($myrow["categories"]) {
 //      $HTML .= "Also listed in: ";
 
-      // remove the primary category
+      // remove the primary category and remove any double spaces or trailing/leading spaces
+		// this ensures that explode gives us the right stuff
       $Categories = str_replace($myrow["category"], '', $myrow["categories"]);
       $Categories = str_replace('  ', ' ', $Categories);
+		$Categories = trim($Categories);
       if ($Categories) {
          $HTML .= "<i>Also listed in:</i> ";
          $CategoriesArray = explode(" ", $Categories);

@@ -1,5 +1,5 @@
 <?
-	# $Id: logout.php,v 1.1.2.11 2003-05-16 02:33:44 dan Exp $
+	# $Id: logout.php,v 1.1.2.12 2003-07-04 14:59:16 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 
@@ -9,7 +9,11 @@
 
 	freshports_CookieClear();
 
-	$origin = $_GET['origin'];
+	if (IsSet($_GET['origin'])) {
+		$origin = $_GET['origin'];
+	} else {
+		$origin = '/';
+	}
 
 	if ($origin == '/index.php') {                   
 		$origin = '/';                                 

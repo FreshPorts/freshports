@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: getvalues.php,v 1.1.2.25 2003-04-27 20:33:21 dan Exp $
+	# $Id: getvalues.php,v 1.1.2.26 2003-07-04 14:59:19 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -81,7 +81,9 @@ $User->id	= "";
 // This is used to determine whether or not the cach can be used.
 $DefaultMaxArticles = $MaxArticles;
 
-$visitor = $_COOKIE["visitor"];
+if (In_Array('visitor', $_COOKIE)) {
+	$visitor = $_COOKIE["visitor"];
+}
 if (!empty($visitor)) {
 	
 	if ($User->FetchByCookie($visitor) != 1) {

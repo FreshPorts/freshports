@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: login.php,v 1.1.2.31 2003-05-08 12:22:57 dan Exp $
+	# $Id: login.php,v 1.1.2.32 2003-07-04 14:59:16 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -11,7 +11,11 @@
 
 #$Debug=1;
 
-$origin = $_GET['origin'];
+$LoginFailed = 0;
+$error       = 0;
+$origin      = '/';
+
+if (IsSet($_GET['origin'])) $origin = $_GET['origin'];
 if ($origin == '/index.php' || $origin == '') {
 	$origin = '/';
 }
@@ -22,7 +26,7 @@ if ($Debug) phpinfo();
 
 $origin = rawurlencode($origin);
 
-if ($_POST['LOGIN'] && $_POST['UserID']) {
+if (IsSet($_POST['LOGIN']) && $_POST['UserID']) {
    // process form
 
    if ($Debug) {
@@ -69,7 +73,7 @@ if ($_POST['LOGIN'] && $_POST['UserID']) {
 			} else {
 				SetCookie("visitor", $Cookie, time() + 60*60*24*120, '/');
 				// Redirect browser to PHP web site
-				if ($origin == "/index.php" || origin == "") {
+				if ($origin == "/index.php" || $origin == "") {
 					$origin = "/";
 				}
 				header("Location: " . rawurldecode($origin));
@@ -96,7 +100,7 @@ if ($_POST['LOGIN'] && $_POST['UserID']) {
 	}
 }
 
-if ($_GET["resend"]) {
+if (IsSet($_GET["resend"])) {
 	$User = addslashes($_GET["user"]);
 
 	// get user id for that name

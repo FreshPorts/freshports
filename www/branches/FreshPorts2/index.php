@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.75 2003-04-28 16:24:38 dan Exp $
+	# $Id: index.php,v 1.1.2.76 2003-07-04 14:59:16 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -57,10 +57,13 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 ?>
 
 <?php
+$num          = $MaxNumberOfPorts;;
+$days         = $NumberOfDays;
+$dailysummary = 7;
 
-$num				= AddSlashes($_GET["num"]);
-$dailysummary	= AddSlashes($_GET["dailysummary"]);
-$days				= AddSlashes($_GET["days"]);
+if (In_Array('num',          $_GET)) $num				= AddSlashes($_GET["num"]);
+if (In_Array('dailysummary', $_GET)) $dailysummary	= AddSlashes($_GET["dailysummary"]);
+if (In_Array('days',         $_GET)) $days			= AddSlashes($_GET["days"]);
 
 
 if (Is_Numeric($num)) {
@@ -93,7 +96,7 @@ FROM (
 ";
 }
 
-$sql .= "
+$sql = "
 SELECT PEC.*,
        security_notice.id  AS security_notice_id
 FROM (
@@ -180,11 +183,6 @@ if ($result) {
 	
 		$NumRows = $numrows;
 		$LastDate = '';
-		if ($NumRows > 1) {
-			$LastChangeLogID = $rows[$i]["change_log_id"];
-			$LastChangeLogID = -1;
-		}
-
 ?>
 
 <TR><TD VALIGN="top" WIDTH="100%">

@@ -1,30 +1,32 @@
 <?php
 	#
-	# $Id: new-user.php,v 1.1.2.10 2003-03-06 14:20:45 dan Exp $
+	# $Id: new-user.php,v 1.1.2.11 2003-07-04 14:59:19 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
-	$origin = $_REQUEST["origin"];
+	if (IsSet($_REQUEST["origin"])) $origin = $_REQUEST["origin"];
+	GLOBAL $numberofdays;
+	GLOBAL $page_size;
 ?>
 
 <form action="<?php echo $_SERVER["PHP_SELF"] . "?origin=" . $origin ?>" method="POST" NAME=f>
 <TABLE width="*" border="0" cellpadding="1">
           <TR>
             <TD VALIGN="top">
-<? if (!$Customize) { ?>
+<? if (!IsSet($Customize)) { ?>
               <INPUT TYPE="hidden" NAME="ADD" VALUE="1">
               User ID:<br>
-              <INPUT SIZE="15" NAME="UserLogin" VALUE="<? echo $UserLogin ?>"><br><br>
+              <INPUT SIZE="15" NAME="UserLogin" VALUE="<? if (IsSet($UserLogin)) echo $UserLogin ?>"><br><br>
 <? } ?>
                Password:<br>
-               <INPUT TYPE="PASSWORD" NAME="Password1" VALUE="<?echo $Password1 ?>" size="20"><br><br>
+               <INPUT TYPE="PASSWORD" NAME="Password1" VALUE="<? if (IsSet($Password1)) echo $Password1 ?>" size="20"><br><br>
                Confirm Password:<br>
-               <INPUT TYPE="PASSWORD" NAME="Password2" VALUE="<?echo $Password2 ?>" size="20">
+               <INPUT TYPE="PASSWORD" NAME="Password2" VALUE="<? if (IsSet($Password2)) echo $Password2 ?>" size="20">
             </TD>
             <TD VALIGN="top">
                email address (required):<br>
-               <INPUT SIZE="35" NAME="email" VALUE="<?echo $email ?>">
+               <INPUT SIZE="35" NAME="email" VALUE="<? if (IsSet($email)) echo $email ?>">
 
 Number of Days to show in side-bar: 
 
@@ -51,7 +53,7 @@ Number of ports to display per page per category:
     <OPTION <? if ($page_size == 250) echo "selected " ?> VALUE="250">250</OPTION>
 </SELECT>
 <br><br><BR>
-            <INPUT TYPE="submit" VALUE="<? if ($Customize) { echo "update";} else { echo "create";} ?> account" NAME="submit">
+            <INPUT TYPE="submit" VALUE="<? if (IsSet($Customize)) { echo "update";} else { echo "create";} ?> account" NAME="submit">
             <INPUT TYPE="reset"  VALUE="reset form">
             </TD>
           </TR>

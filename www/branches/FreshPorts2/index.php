@@ -1,7 +1,6 @@
 <?php
-$Starting =  microtime();
 	#
-	# $Id: index.php,v 1.1.2.71 2003-04-23 14:30:18 dan Exp $
+	# $Id: index.php,v 1.1.2.72 2003-04-24 15:09:43 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -376,7 +375,6 @@ ports. A port is marked as new for 10 days.
 
 <?
 freshports_ShowFooter();
-echo microtime() - $starting;
 ?>
 
 </body>

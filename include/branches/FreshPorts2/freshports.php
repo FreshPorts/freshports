@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.3 2001-11-25 21:37:13 dan Exp $
+   # $Id: freshports.php,v 1.4.2.4 2001-11-26 06:39:07 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -374,13 +374,14 @@ function freshports_ONToYN($Value) {
 }
 
 
-function freshports_PortDetails($myrow, $ShowDeletedDate, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription) {
+function freshports_PortDetails($myrow, $db, $ShowDeletedDate, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription) {
 //
 // This php3 fragment does the basic port information for a single port.
 // I'd show you what code is expected in $myrow, but I can't be bothered
 // right now
 //
    GLOBAL $freshports_CVS_URL;
+	GLOBAL	$ShowDepends;
 
    $MarkedAsNew = "N";
    $HTML .= "<DL>\n";
@@ -445,9 +446,9 @@ function freshports_PortDetails($myrow, $ShowDeletedDate, $DaysMarkedAsNew, $Glo
       } else {
          $HTML .= 'was maintained'; 
       }
-      $HTML .= ' by:</i> <a href="mailto:' . $myrow["maintainer"];
-      $HTML .= '?cc=ports@FreeBSD.org&amp;subject=FreeBSD%20Port:%20' . $myrow["port"] . "-" . $myrow["version"] . '">';
-      $HTML .= $myrow["maintainer"] . '</a></br>' . "\n";
+      $HTML .= ' by:</i> <A HREF="mailto:' . $myrow["maintainer"];
+      $HTML .= htmlspecialchars('?cc=ports@FreeBSD.org?subject=FreeBSD%20Port:%20' . $myrow["port"] . '-' . $myrow["version"]) . '">';
+      $HTML .= $myrow["maintainer"] . "</A><BR>";
   }
 
    // there are only a few places we want to show the last change.
@@ -498,7 +499,7 @@ echo 'run   = ' . $myrow["depends_run"] . "<br>\n";
 
 if ($ShowDepends) {
    if ($myrow["depends_build"]) {
-      $HTML .= "<i>required to build:</i> ";
+      $HTML .= "<BR><i>required to build:</i> ";
 
       // sometimes they have multiple spaces in the data...
       $temp = str_replace('  ', ' ', $myrow["depends_build"]);
@@ -547,29 +548,29 @@ if ($ShowDepends) {
              $HTML .= ", ";
           }
       }
-      $HTML .= "<br>\n";
+      $HTML .= "<BR>\n";
    }
 
 }
 
    if (!$HideDescription && ($ShowDescriptionLink == "Y" || $ShowEverything)) {
       // Long descripion
-      $HTML .= '<a HREF="port-description.php3?port=' . $myrow["id"] .'">Description</a>';
+      $HTML .= '<A HREF="port-description.php3?port=' . $myrow["id"] .'">Description</a>';
 
       $HTML .= ' <b>:</b> ';
    }
 
    if ($ShowChangesLink == "Y" || $ShowEverything) {
       // changes
-      $HTML .= '<a HREF="' . $freshports_CVS_URL .
+      $HTML .= '<a HREF="' . $freshports_CVS_URL . '/ports/' .
                $myrow["category"] . '/' .  $myrow["port"] . '">Changes</a>';
    }
 
    // download
    if ($myrow["status"] == "A" && ($ShowDownloadPortLink == "Y" || $ShowEverything)) {
       $HTML .= ' <b>:</b> ';
-      $HTML .= '<a HREF="ftp://ftp5.FreeBSD.org/pub/FreeBSD/branches/-current/ports/' .
-               $myrow["category"] . '/' .  $myrow["port"] . '">Download Port</a>';
+      $HTML .= '<a HREF="http://www.freebsd.org/cgi/pds.cgi?ports/' .
+               $myrow["category"] . '/' .  $myrow["port"] . '">Sources</a>';
    }
 
    if ($myrow["package_exists"] == "Y" && ($ShowPackageLink == "Y" || $ShowEverything)) {
@@ -627,5 +628,32 @@ echo '  <P ALIGN="center">
 
 }
 
+
+#
+# The following code was obtained from http://www.zend.com/codex.php?id=199&single=1
+# 
+#
+
+function convertURLS($text) {
+	$text = eregi_replace("((ht|f)tp://www\.|www\.)([a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})((/|\?)[a-z0-9~#%&\\/'_\+=:\?\.-]*)*)", "http://www.\\3", $text);
+	$text = eregi_replace("((ht|f)tp://)((([a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3}))|(([0-9]{1,3}\.){3}([0-9]{1,3})))((/|\?)[a-z0-9~#%&'_\+=:\?\.-]*)*)", "<a href=\"\\0\">\\0</a>", $text);
+	return $text;
+}
+
+function convertMail($text) {
+	$text = eregi_replace("([_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3}))", "<a href='mailto:\\0'>\\0</a>", $text);
+	return $text;
+}
+
+function convertAllLinks($text) {
+	$text = convertURLS($text);
+	$text= convertMail($text);
+	return $text;
+}
+
+#
+#
+# The above code was obtained from http://www.zend.com/codex.php?id=199&single=1
+#
 
 ?>

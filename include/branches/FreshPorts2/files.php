@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: files.php,v 1.1.2.34 2004-09-22 23:03:06 dan Exp $
+	# $Id: files.php,v 1.1.2.35 2004-10-24 19:59:47 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -211,7 +211,7 @@ select element_pathname(element.id) as pathname,
 
 		echo "</TD>\n";
 		echo '    <TD VALIGN="top">' . $myrow["committer"]         . "</TD>\n";
-		echo '    <TD VALIGN="top" WIDTH="100%">' . freshports_PortDescriptionPrint($myrow["description"], $myrow["encoding_losses"], $freshports_CommitMsgMaxNumOfLinesToShow, freshports_MoreCommitMsgToShow($myrow["message_id"], $freshports_CommitMsgMaxNumOfLinesToShow)) . "</TD>\n";
+		echo '    <TD VALIGN="top" WIDTH="100%">' . freshports_PortDescriptionPrint($myrow["description"], $myrow["encoding_losses"]) . "</TD>\n";
 		echo "</TR>";
 		?>
 

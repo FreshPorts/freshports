@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: security-notice.php,v 1.1.2.5 2003-03-08 13:30:33 dan Exp $
+	# $Id: security-notice.php,v 1.1.2.6 2003-03-08 16:21:42 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -13,8 +13,11 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/watch-lists.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/security_notice.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user_tasks.php');
 
 	$PageTitle = 'Security Notice';
+
+	$UserCanEdit = $User->IsTaskAllowed(FRESHPORTS_TASKS_SECURITY_NOTICE_ADD);
 
 	freshports_Start($PageTitle,
 					$FreshPortsName . ' - new ports, applications',
@@ -57,15 +60,16 @@
 	<? echo freshports_PageBannerText($PageTitle); ?>
 <TR><TD>
 <?php
+	if ($UserCanEdit) {
+		echo "<p>\n";
+		echo 'This page allows you to mark a commit as being security related.  Such commits will be included on the Security Notification report' . "\n";
+		echo 'mailed out to users and marked with a <a href="/faq.php">security lock</a> whereever that commit appears.';
+		echo "</p>\n";
+	}
 	if (IsSet($SecurityNotice->id)) {
 		echo '<p>' . freshports_Security_Icon() . ' This commit has been marked as security related</p>';
 	} else {
-		if ($User->IsTaskAllowed(FRESHPORTS_TASKS_SECURITY_NOTICE_ADD)) {
-			echo 'This page allows you to mark a commit as being security related.  Such commits will be included on the Security Notification report' . "\n";
-			echo 'mailed out to users and marked with a <a href="/faq.php">security lock</a> whereever that commit appears.';
-		} else {
-			echo 'This commit is not security related.';
-		}
+		echo 'This commit is not security related.';
 	}
 ?>
 </TD></TR>
@@ -107,22 +111,16 @@
 
 	if (IsSet($SecurityNotice->id)) {
 		echo '<h2>Notification reason</h2>';
-	} else {
-		if ($User->IsTaskAllowed(FRESHPORTS_TASKS_SECURITY_NOTICE_ADD)) {
+	}
+
+	if ($UserCanEdit) {
 ?>
 <p>
 Please enter your reasoning for marking the above commit as a security issue.
 </p>
-<?php
-		}
-	}
-
-	if (IsSet($SecurityNotice->id) || $User->IsTaskAllowed(FRESHPORTS_TASKS_SECURITY_NOTICE_ADD)) {
-?>
 
 <FORM ACTION="<? echo $_SERVER["PHP_SELF"]; ?>" method="POST">
-	<TEXTAREA NAME="description" ROWS="10" COLS=60"<?php
-	if (IsSet($SecurityNotice->description) || !$User->IsTaskAllowed(FRESHPORTS_TASKS_SECURITY_NOTICE_ADD)) echo ' readonly'; ?>><?php
+	<TEXTAREA NAME="description" ROWS="10" COLS=60"><?php
 	if (IsSet($SecurityNotice->description)) {
 		echo $SecurityNotice->description;
 	} else {
@@ -130,22 +128,17 @@ Please enter your reasoning for marking the above commit as a security issue.
 	}
 ?></TEXTAREA>
 	<BR>
-<?php
-	if (!IsSet($SecurityNotice->id) && $User->IsTaskAllowed(FRESHPORTS_TASKS_SECURITY_NOTICE_ADD)) {
-?>
 	<INPUT TYPE="submit" VALUE="Save Security Info" NAME="submit">
-<?php
-	}
-?>
 	<INPUT TYPE="hidden" NAME="message_id" VALUE="<? echo $message_id; ?>">
 </FORM>
 <?php
+	} else {
+		echo htmlify(htmlspecialchars($SecurityNotice->description));
 	}
 
-	if (IsSet($SecurityNotice->id)) {
-		if ($User->IsTaskAllowed(FRESHPORTS_TASKS_SECURITY_NOTICE_ADD)) {
-			$UserAlt = new User($db);
-			$UserAlt->Fetch($SecurityNotice->user_id);
+	if (IsSet($SecurityNotice->id) && $UserCanEdit) {
+		$UserAlt = new User($db);
+		$UserAlt->Fetch($SecurityNotice->user_id);
 ?>
 <h2>Audit trail</h2>
 <table border=1 CELLSPACING="0" CELLPADDING="5">
@@ -161,7 +154,7 @@ Please enter your reasoning for marking the above commit as a security issue.
 </table>
 
 <?php
-		}
+
 		echo freshports_Security_Icon() . 'This commit is set as security related';
 	}
 ?>

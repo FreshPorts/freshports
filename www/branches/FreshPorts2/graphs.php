@@ -1,5 +1,5 @@
 <?
-	# $Id: graphs.php,v 1.5.2.3 2002-04-19 20:22:04 dan Exp $
+	# $Id: graphs.php,v 1.5.2.4 2002-04-19 21:00:00 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -22,8 +22,15 @@
 
 <TR><TD>
 <P>
+All graphs are at most 4 hours old.  The data used in these graphs are compiled by a large team of 
+trained worms.  As such, they are liable to be filled with errors and riddled with castings.  You
+are advised not to make life decisions based on this information.
+</P>
+<P>
 If you have suggestions for graphs, please submit them via the forum.
 </P>
+
+<HR>
 </TD></TR>
 
 <TR><TD>

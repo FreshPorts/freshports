@@ -1,5 +1,5 @@
 <?
-	# $Id: ports.php,v 1.1.2.8 2002-02-09 19:38:53 dan Exp $
+	# $Id: ports.php,v 1.1.2.9 2002-02-13 00:24:27 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -169,21 +169,20 @@ class Port {
 		# e.g. id for net
 
 		$sql = "select ports.id, ports.element_id, ports.id as id, ports.category_id as category_id, " .
-		       "ports.short_description as short_description, ports.long_description, ports.version as version, ".
-		       "ports.revision as revision, ports.maintainer, ".
-		       "ports.homepage, ports.master_sites, ports.extract_suffix, ports.package_exists, " .
-		       "ports.depends_build, ports.depends_run, ports.last_commit_id, ports.found_in_index, " .
-		       "ports.forbidden, ports.broken, ports.date_added, " .
-		       "ports.categories as categories, ".
-			   "element.name as port, categories.name as category, commit_log_ports.needs_refresh, " .
-			   "element.status, commit_log.commit_date as updated " .
-		       "from ports, categories, element, commit_log_ports, commit_log ".
-		       "WHERE ports.category_id    = categories.id " .
-		       "  and ports.element_id     = element.id " .
-			   "  and ports.last_commit_id = commit_log_ports.commit_log_id " .
-			   "  and ports.id             = commit_log_ports.port_id " .
-			   "  and commit_log.id        = commit_log_ports.commit_log_id " .
-			   "  and categories.id        = $CategoryID";
+		       "       ports.short_description as short_description, ports.long_description, ports.version as version, ".
+		       "       ports.revision as revision, ports.maintainer, ".
+		       "       ports.homepage, ports.master_sites, ports.extract_suffix, ports.package_exists, " .
+		       "       ports.depends_build, ports.depends_run, ports.last_commit_id, ports.found_in_index, " .
+		       "       ports.forbidden, ports.broken, ports.date_added, " .
+		       "       ports.categories as categories, ".
+			   "       element.name as port, categories.name as category, " .
+			   "       element.status " .
+		       "  from ports, categories, element ".
+		       " WHERE ports.category_id    = categories.id " .
+		       "   and ports.element_id     = element.id " .
+			   "   and categories.id        = $CategoryID " .
+			   "   and element.status       = 'A' " .
+			   " ORDER by port ";
 
         $this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {

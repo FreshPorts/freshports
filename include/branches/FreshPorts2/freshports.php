@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.159 2003-09-30 00:02:29 dan Exp $
+	# $Id: freshports.php,v 1.4.2.160 2003-09-30 11:50:29 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -1268,15 +1268,7 @@ function freshports_wrap($text, $length = WRAPCOMMITSATCOLUMN) {
 	#
 	# for each line, wrap them at 72 chars...
 	#
-/*
-GLOBAL $DiaryConfigFile;
-#die("\$DiaryConfigFile='$DiaryConfigFile'");
-if (file_exists($DiaryConfigFile)) {
-   require_once($DiaryConfigFile);
-}
-*/
 	for ($i = 0; $i < count($lines); $i++) {
-#die("\$length='$length'");
 		$lines[$i] = wordwrap($lines[$i], $length, "\n");
 	}
 

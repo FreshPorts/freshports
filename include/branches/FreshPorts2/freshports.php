@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.28 2002-02-13 00:34:06 dan Exp $
+   # $Id: freshports.php,v 1.4.2.29 2002-02-13 22:56:50 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -739,30 +739,31 @@ function freshports_PortCommits($port) {
 
 function freshports_PortCommitPrint($commit) {
 	# print a single commit for a port
-	echo "<tr><td valign='top'><font size='-1'>" . $commit->commit_date        . "</font></td>\n";
-	echo '    <td valign="top">';
-    echo $commit->committer . '<BR><a href="/files.php?id=' . $commit->id;
-	echo '"><img src="/images/logs.gif" alt="Files within this port affected by this commit" border="0" WIDTH="17" HEIGHT="20" hspace="2"></a>'. "</td>\n";
-	echo '    <td valign="top" WIDTH="*">';
+	echo "<TR><TD VALIGN='top'><FONT SIZE='-1'>" . $commit->commit_date        . "</FONT></TD>\n";
+	echo '    <TD VALIGN="top">';
+    echo $commit->committer . '<BR><A HREF="/files.php?id=' . $commit->id;
+	echo '"><IMG SRC="/images/logs.gif" ALT="Files within this port affected by this commit" BORDER="0" WIDTH="17" HEIGHT="20" HSPACE="2"></A>'. "</TD>\n";
+	echo '    <TD VALIGN="top" WIDTH="*">';
 
-	if ($commit->commit_date > $FP1MigrationCutoffDate) {
-		echo '<PRE CLASS="code">';
-	} else {
-		echo '<CODE CLASS="code">';
-	}
-	echo convertAllLinks(htmlspecialchars($commit->description));
 
-	if ($commit->commit_date > $FP1MigrationCutoffDate) {
-		echo "</PRE></td>\n";
-	} else {
-		echo "</CODE></td>\n";
-	}
-	echo "</tr>\n";
+	echo freshports_PortDescriptionPrint($commit->description);
+
+	echo "</TD></TR>\n";
 }
 
 function freshports_PortCommitsFooter($port) {
 	# print the footer for the commits for a port
 	echo "</TABLE>\n</TD>\n</TR>\n";
+}
+
+function freshports_PortDescriptionPrint($description) {
+	$HTML .= '<PRE CLASS="code">';
+
+	$HTML .= convertAllLinks(htmlspecialchars(freshports_wrap($description)));
+
+	$HTML .= '</PRE>';
+
+	return $HTML;
 }
 
 function freshports_GetNextValue($sequence, $dbh) {

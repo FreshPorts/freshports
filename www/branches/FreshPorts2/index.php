@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.42 2002-04-21 18:22:10 dan Exp $
+	# $Id: index.php,v 1.1.2.43 2002-05-09 20:55:23 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -199,7 +199,7 @@ ports. A port is marked as new for 10 days.
 							GLOBAL $freshports_mail_archive;
 
 							$HTML .= '<SMALL>';
-							$HTML .= '[ ' . $myrow["commit_time"] . ' ' . $myrow["committer"] . ' ]';
+							$HTML .= '[ ' . $myrow["commit_time"] . ' ' . freshports_CommitterEmailLink($myrow["committer"]) . ' ]';
 							$HTML .= '</SMALL>';
 							$HTML .= '&nbsp;';
 							$HTML .= freshports_Email_Link($myrow["message_id"]);
@@ -302,15 +302,10 @@ ports. A port is marked as new for 10 days.
   <TD VALIGN="top" WIDTH="*">
    <? include("./include/side-bars.php") ?>
 <?
-	freshports_SummaryForDay(0);
-	freshports_SummaryForDay(1);
-	freshports_SummaryForDay(2);
-	freshports_SummaryForDay(3);
-	freshports_SummaryForDay(4);
-	freshports_SummaryForDay(5);
-	freshports_SummaryForDay(6);
-	freshports_SummaryForDay(7);
-	freshports_SummaryForDay(8);
+
+	for ($i = 0; $i < $NumberOfDays; $i++) {
+		freshports_SummaryForDay($i);
+	}
 ?>
  </TD>
 </TR>

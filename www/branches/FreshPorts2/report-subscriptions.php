@@ -1,7 +1,8 @@
 <?
-	# $Id: report-subscriptions.php,v 1.1.2.17 2002-12-11 05:07:57 dan Exp $
+	# $Id: report-subscriptions.php,v 1.1.2.18 2002-12-11 14:58:56 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
+	#
 
 	if (!$_COOKIE['visitor']) {
 		header('Location: login.php?origin=' . $_SERVER['PHP_SELF']);  /* Redirect browser to PHP web site */
@@ -203,21 +204,7 @@ This page allows you to select the reports you wish to receive and the frequency
 	?>
 	</TABLE>
 
-<BIG><BIG>SPAM FILTERS:</BIG></BIG> If you are using spam filters which require confirmation
-of incoming email, these reports will be coming from the following addresses:
-
-<BLOCKQUOTE><CODE CLASS="code">
-<TABLE CELLSPACING="0" CELLPADDING="5" BORDER="1">
-<TR><TD>user</TD><TD>domain</TD></TR>
-<TR><TD NOWRAP><CODE CLASS="code">freshports-announce</CODE></TD><TD><CODE CLASS="code">freshports.org</CODE></TD></TR>
-<TR><TD NOWRAP><CODE CLASS="code">listsfp</CODE></TD><TD><CODE CLASS="code">nezlok.unixathome.org</CODE></TD></TR>
-</TABLE>
-</CODE></BLOCKQUOTE>
-
-
-Ensure that you update your spam filters to allow such incoming messages.  All replies to the
-above addresses are ignored.  If your spam tools require that a confirmation be sent, you'll have
-to modify things as no confirmations will be sent for FreshPorts messages.
+<?php require_once($_SERVER['DOCUMENT_ROOT'] . '/include/spam-filter-information.php'); ?>
 
 <BR><BR>
 	&nbsp;&nbsp;<INPUT TYPE="submit" VALUE="update" NAME="submit">

@@ -1,5 +1,5 @@
 <?
-	# $Id: customize.php,v 1.1.2.22 2002-12-11 04:42:46 dan Exp $
+	# $Id: customize.php,v 1.1.2.23 2002-12-11 14:58:56 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -183,7 +183,15 @@ echo "</TD>
 </TABLE>";
 }
 
-</script></TD>
+</script>
+
+<p>
+
+<?php require_once($_SERVER['DOCUMENT_ROOT'] . '/include/spam-filter-information.php'); ?>
+
+</p>
+
+</TD>
 </TABLE>
 </TD>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">

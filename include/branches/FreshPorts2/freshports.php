@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.166 2003-12-31 16:42:43 dan Exp $
+	# $Id: freshports.php,v 1.4.2.167 2003-12-31 16:50:20 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -952,7 +952,7 @@ function freshports_PortsMoved($port, $PortsMoved) {
 	if ($PortsMoved->port == '') {
 		$HTML .= "port deleted ";
 	} else {
-		if ($PortsMoved->from_port_id = $PortsMoved->to_port_id) {
+		if ($PortsMoved->from_port_id == $PortsMoved->to_port_id) {
 			$HTML .= ' resurrected ';
 		} else {
 			$HTML .= "port moved to ";

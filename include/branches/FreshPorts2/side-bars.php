@@ -1,5 +1,5 @@
 <?
-	# $Id: side-bars.php,v 1.4.2.9 2002-02-25 15:48:14 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.10 2002-03-19 12:56:39 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -81,9 +81,10 @@ if ($visitor) {
 	<FORM action="/search.php" METHOD="post" NAME="f">
 	<TD>
 	Enter Keywords:<BR>
-	<INPUT NAME="query" TYPE="text" SIZE="13">&nbsp;<INPUT TYPE="submit" VALUE="go">
-	<INPUT NAME="num"   TYPE="hidden" value="10">
-	<INPUT NAME="stype" TYPE="hidden" value="name">
+	<INPUT NAME="query"  TYPE="text" SIZE="8">&nbsp;<INPUT TYPE="submit" VALUE="go">
+	<INPUT NAME="num"    TYPE="hidden" value="10">
+	<INPUT NAME="stype"  TYPE="hidden" value="name">
+	<INPUT NAME="method" TYPE="hidden" value="match">
 	</TD>
 	</FORM>
 </TR>

@@ -1,5 +1,5 @@
 <?
-	# $Id: search.php,v 1.1.2.8 2002-03-01 17:52:06 dan Exp $
+	# $Id: search.php,v 1.1.2.9 2002-03-19 12:56:39 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -27,7 +27,7 @@
 <?
 
 if ($Debug) {
-	echo "$query && $stype && $num\n<BR>";
+	echo "$query && $stype && $num && $method\n<BR>";
 
 	if ($query && $stype && $num) {
 		echo "yes, we have parameters\n<BR>";

@@ -15,19 +15,25 @@ $DaysToShow  = 20;
 $MaxArticles = 40;
 $DaysNew     = 10;
 
-$MaxNumberOfPorts	= 100;
+$MaxNumberOfPorts		= 100;
 $ShowShortDescription	= "Y";
-$ShowMaintainedBy	= "Y";
-$ShowLastChange		= "Y";
+$ShowMaintainedBy		= "Y";
+$ShowLastChange			= "Y";
 $ShowDescriptionLink	= "Y";
-$ShowChangesLink	= "Y";
+$ShowChangesLink		= "Y";
 $ShowDownloadPortLink	= "Y";
-$ShowPackageLink	= "Y";
-$ShowHomepageLink	= "Y";
-$FormatDate		= $FormatDateDefault;
-$FormatTime		= $FormatTimeDefault;
-$DaysMarkedAsNew	= $DaysMarkedAsNewDefault;
-$EmailBounceCount	= 0;
+$ShowPackageLink		= "Y";
+$ShowHomepageLink		= "Y";
+$FormatDate				= $FormatDateDefault;
+$FormatTime				= $FormatTimeDefault;
+$DaysMarkedAsNew		= $DaysMarkedAsNewDefault;
+$EmailBounceCount		= 0;
+$CVSTimeAdjustment		= -10800;	# this is number of seconds the web server is relative to the cvs server.
+									# a value of -10800 means the web server is three hours east of the cvs server.
+									# we can override that for a particular user.
+
+$LocalTimeAdjustment	= 0;		# This can be used to display the time the webpage was loaded.
+
 
 #
 # flags for showing various port parts.

@@ -1,5 +1,5 @@
 <?
-	# $Id: report-subscriptions.php,v 1.1.2.8 2002-09-09 17:26:54 dan Exp $
+	# $Id: report-subscriptions.php,v 1.1.2.9 2002-09-09 18:09:13 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -145,7 +145,7 @@ This page allows you to select the reports you wish to receive and the frequency
 
 <FORM ACTION="<?php echo $_SERVER["PHP_SELF"] ;?>" METHOD="POST" NAME=f>
 	<TABLE CELLPADDING="3" CELLSPACING="6" BORDER="0">
-	<TR><TD COLSPAN="2"><BIG><B>Report Name</B></BIG></TD><TD><BIG><B>Frequency</B></BIG></TD></TR>
+	<TR><TD><BIG><B>Report Name</B></BIG></TD><TD><BIG><B>Frequency</B></BIG></TD><TD><BIG><B>Description</B></BIG></TD></TR>
 	<?
 
 
@@ -155,14 +155,13 @@ This page allows you to select the reports you wish to receive and the frequency
 			$name				= $Values["name"];
 			$needs_frequency	= $Values["needs_frequency"];
 			$description		= $Values["description"];
-			echo '<TR><TD VALIGN="top">';
+			echo '<TR><TD VALIGN="top" NOWRAP>';
 			echo '<INPUT TYPE="checkbox" NAME="reports[]" value="' . $report_id . '"';
 			if (${"reports_" . $report_id}) {
 				echo ' checked';
 			}
 			echo '> ' . $name;
-			echo '</TD><TD VALIGN="top">';
-			echo '</TD><TD VALIGN="top">';
+			echo '</TD><TD VALIGN="top" NOWRAP>';
 			if ($needs_frequency == 't') {
 				echo freshports_ReportFrequenciesDDLB($Frequencies, ${"frequencies_" . $report_id});
 			} else {

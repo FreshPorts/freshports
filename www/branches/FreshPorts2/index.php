@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.12 2002-02-12 23:40:53 dan Exp $
+	# $Id: index.php,v 1.1.2.13 2002-02-13 22:58:46 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -304,13 +304,11 @@ ports. A port is marked as new for 10 days.
 					$i = $j - 1;
 
 					$HTML .= '<BLOCKQUOTE>';
-					$HTML .= '<PRE CLASS="code">';
 
-					$HTML .= convertAllLinks(htmlspecialchars(freshports_wrap($myrow["commit_description"])));
+					$HTML .= freshports_PortDescriptionPrint($myrow["commit_description"]);
 
-					$HTML .= '</PRE>';
 
-					$HTML .= "</tr>\n";
+					$HTML .= "</BLOCKQUOTE></TR>\n";
 				}
 
 				$HTML .= "</td></tr>\n";

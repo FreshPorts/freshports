@@ -1,5 +1,5 @@
 <?
-	# $Id: search.php,v 1.1.2.17 2002-05-18 08:07:38 dan Exp $
+	# $Id: search.php,v 1.1.2.18 2002-05-18 18:16:29 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -10,12 +10,14 @@
 
 	require("../classes/ports.php");
 
+	phpinfo();
+
 	// avoid nasty problems by adding slashes
-	$query		= AddSlashes($query);
-	$stype		= AddSlashes($stype);
-	$num		= AddSlashes($num);
-	$category	= AddSlashes($category);
-	$port		= AddSlashes($port);
+	$query		= AddSlashes($_POST["query"]);
+	$stype		= AddSlashes($_POST["stype"]);
+	$num		= AddSlashes($_POST["num"]);
+	$category	= AddSlashes($_POST["category"]);
+	$port		= AddSlashes($_POST["port"]);
 
 	if ($stype == 'messageid') {
 		header("Location: http://$HTTP_HOST/commit.php?message_id=$query");

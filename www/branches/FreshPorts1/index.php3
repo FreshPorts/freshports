@@ -1,5 +1,5 @@
 <?
-   # $Id: index.php3,v 1.34.4.1 2001-12-23 02:00:35 dan Exp $
+   # $Id: index.php3,v 1.34.4.2 2001-12-23 02:05:59 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -207,7 +207,7 @@ while ($myrow = mysql_fetch_array($result)) {
    $i++;
 //   echo "$i, ";
 }
-echo mysql_errno().": ".mysql_error()."<BR>";
+
 $NumRows = $i;
 $LastDate = '';
 if ($NumRows > 1) {

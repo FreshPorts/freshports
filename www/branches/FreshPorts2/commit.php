@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.52 2005-02-16 23:56:30 dan Exp $
+	# $Id: commit.php,v 1.1.2.53 2005-02-17 01:50:00 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -328,11 +328,12 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 						}
 
 						if ($myrow['restricted']) {
-							$HTML .= freshports_Restricted_Icon_Link($myrow['restricted']) . ' IGNORE: '     . htmlify(htmlspecialchars($myrow['restricted'])) . "<br>"; ;
+							# the restricted icon is wide enough to not need a leading spacer
+							$HTML .= freshports_Restricted_Icon_Link($myrow['restricted']);
 						}
 
 						if ($myrow['no_cdrom']) {
-							$HTML .= freshports_NoCDROM_Icon_Link($myrow['no_cdrom'])      . ' IGNORE: '     . htmlify(htmlspecialchars($myrow['no_cdrom']))   . "<br>"; ;
+							$HTML .= '&nbsp;' . freshports_No_CDROM_Icon_Link($myrow['no_cdrom']);
 						}
 
 						$HTML .= ' ' . htmlspecialchars($myrow["short_description"]) . "\n";

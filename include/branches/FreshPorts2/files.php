@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: files.php,v 1.1.2.40 2005-02-16 23:56:30 dan Exp $
+	# $Id: files.php,v 1.1.2.41 2005-02-17 01:50:50 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -201,11 +201,11 @@ select element_pathname(element.id) as pathname,
 		}
 
 		if ($myrow['restricted']) {
-			$HTML .= freshports_Restricted_Icon_Link($myrow['restricted']) . ' IGNORE: '     . htmlify(htmlspecialchars($myrow['restricted'])) . "<br>"; ;
+			$HTML .=  freshports_Restricted_Icon_Link($myrow['restricted']);
 		}
 
 		if ($myrow['no_cdrom']) {
-			$HTML .= freshports_NoCDROM_Icon_Link($myrow['no_cdrom'])      . ' IGNORE: '     . htmlify(htmlspecialchars($myrow['no_cdrom']))   . "<br>"; ;
+			$HTML .=  '&nbsp;' . freshports_No_CDROM_Icon_Link($myrow['no_cdrom']);
 		}
 
 

@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.51 2002-03-25 02:10:41 dan Exp $
+   # $Id: freshports.php,v 1.4.2.52 2002-03-30 08:43:42 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -817,7 +817,7 @@ function freshports_PortCommitsHeader($port) {
 	# print the header for the commits for a port
 
 	echo '<TABLE BORDER="1" width="100%" CELLSPACING="0" CELLPADDING="5"bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">' . "\n";
-#	echo '<tr height="20"><td colspan="3" bgcolor="#AD0040"><font color="#FFFFFF"><font size="+1">Commit History</font> (may be incomplete: see Changes link above for full details)</font></td></tr>' . "\n";
+#	echo '<tr height="20"><td colspan="3" bgcolor="#AD0040"><font color="#FFFFFF"><font size="+1">Commit History</font> (may be incomplete: see CVSWeb link above for full details)</font></td></tr>' . "\n";
 
 	freshports_PageBannerText("Commit History - (may be incomplete: see Changes link above for full details)", 3);
 

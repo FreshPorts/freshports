@@ -1,5 +1,5 @@
 <?
-	# $Id: files.php,v 1.1.2.16 2002-12-06 23:20:12 dan Exp $
+	# $Id: files.php,v 1.1.2.17 2002-12-09 20:31:15 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -7,12 +7,11 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
 	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
 	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
-
-function freshports_Files($PortID, $MessageID, $WatchListID, $db) {
+	
+function freshports_Files($User, $PortID, $MessageID, $db) {
 	#
 	# $PortId      == ports.id
 	# $MessageID   == commit_log.message_id
-	# $WatchListID == watch_list.id
 	#
 
 	GLOBAL $TableWidth;
@@ -30,22 +29,34 @@ function freshports_Files($PortID, $MessageID, $WatchListID, $db) {
 	}
 
 	$sql = "
-	select element_pathname(element.id) as pathname, commit_log_port_elements.commit_log_id, 
-		   commit_log_port_elements.port_id, ports.version as version, ports.revision as revision,
-		   to_char(commit_log.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')  as commit_date,
-		   to_char(commit_log.commit_date - SystemTimeAdjust(), 'HH24:MI:SS')   as commit_time,
-		   commit_log_elements.change_type, element.name as filename, categories.name as category, commit_log.committer, 
-		   ports.short_description, commit_log.message_id, commit_log.encoding_losses, 
-		   commit_log.description, B.name as port, commit_log_elements.revision_name as revision_name,
-		   element.status, commit_log_ports.needs_refresh, ports.date_added, ports.forbidden, ports.broken ";
+select element_pathname(element.id) as pathname, 
+       commit_log_port_elements.commit_log_id,
+       commit_log_port_elements.port_id, 
+       ports.element_id,
+       ports.version as version, 
+       ports.revision as revision,
+       to_char(commit_log.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')  as commit_date,
+       to_char(commit_log.commit_date - SystemTimeAdjust(), 'HH24:MI:SS')   as commit_time,
+       commit_log_elements.change_type, 
+       element.name as filename, 
+       categories.name as category, 
+       commit_log.committer, 
+       ports.short_description, 
+       commit_log.message_id, 
+       commit_log.encoding_losses, 
+       commit_log.description, 
+       B.name as port, 
+       commit_log_elements.revision_name as revision_name,
+       element.status, 
+       commit_log_ports.needs_refresh, 
+       ports.date_added, 
+       ports.forbidden, 
+       ports.broken ";
 
-	if ($WatchListID) {
+	if ($User->id) {
 		$sql .= ",
-	       CASE when watch_list_element.element_id is null
-    	      then 0
-        	  else 1
-	       END as watch ";
-	}
+     onwatchlist";
+   }
 
 
 	$sql .="
@@ -55,12 +66,16 @@ function freshports_Files($PortID, $MessageID, $WatchListID, $db) {
 	#
 	# if the watch list id is provided (i.e. they are logged in and have a watch list id...)
 	#
-	if ($WatchListID) {
-		$sql .="
-	            left outer join watch_list_element
-				on (ports.element_id                 = watch_list_element.element_id 
-			   and  watch_list_element.watch_list_id = $WatchListID) ";
-	}
+	if ($User->id) {
+				$sql .= "
+	      LEFT OUTER JOIN
+	 (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
+	    FROM watch_list JOIN watch_list_element 
+	        ON watch_list.id      = watch_list_element.watch_list_id
+	       AND watch_list.user_id = $User->id
+	  GROUP BY watch_list_element.element_id) AS TEMP
+	       ON TEMP.wle_element_id = ports.element_id";
+	      }
 
 	$sql .= "
 	 where commit_log.message_id                          = '" . AddSlashes($MessageID) . "'
@@ -80,7 +95,7 @@ function freshports_Files($PortID, $MessageID, $WatchListID, $db) {
 	$result = pg_exec($db, $sql);
 
 	if (!$result) {
-		print pg_errormessage() . "<br>\n";
+		print pg_errormessage() . "<br><pre>$sql</pre>\n";
 		exit;
 	} else {
 
@@ -88,7 +103,7 @@ function freshports_Files($PortID, $MessageID, $WatchListID, $db) {
 		$NumRows = pg_numrows($result);
 		if (!$NumRows) {
 			echo 'No such commit found';
-			syslog(LOG_NOTICE, 'No such commit found: $PortID="' . $PortID . '" $MessageID="' . $MessageID . '" $WatchListID="' . $WatchListID . '"');
+			syslog(LOG_NOTICE, 'No such commit found: $PortID="' . $PortID . '" $MessageID="' . $MessageID . '"');
 			exit;
 		}
 		for ($i = 0; $i < $NumRows; $i++) {
@@ -127,11 +142,11 @@ function freshports_Files($PortID, $MessageID, $WatchListID, $db) {
 		echo '</B></BIG>';
 
 		$HTML = '';
-		if ($WatchListID) {
-			if ($myrow["watch"]) {
-				$HTML .= ' '. freshports_Watch_Link_Remove($WatchListID, $myrow["element_id"]);
+		if ($User->id) {
+			if ($myrow["onwatchlist"]) {
+				$HTML .= ' '. freshports_Watch_Link_Remove($User->watch_list_add_remove, $myrow["onwatchlist"], $myrow["element_id"]);
 			} else {
-				$HTML .= ' '. freshports_Watch_Link_Add   ($WatchListID, $myrow["element_id"]);
+				$HTML .= ' '. freshports_Watch_Link_Add   ($User->watch_list_add_remove, $myrow["onwatchlist"], $myrow["element_id"]);
 			}
 		}
 

@@ -1,5 +1,5 @@
 <?
-	# $Id: ports.php,v 1.1.2.14 2002-05-09 19:33:41 dan Exp $
+	# $Id: ports.php,v 1.1.2.15 2002-05-09 22:00:15 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -52,6 +52,8 @@ class Port {
 
 	// needed for fetch by category
 	var $LocalResult;
+
+	var $committer; 
 
 	function Port($dbh) {
 		$this->dbh	= $dbh;
@@ -297,10 +299,9 @@ class Port {
 		}
 	}
 
-	function FetchByCategoryInitialise($CategoryID) {
+	function FetchByCategoryInitialise($CategoryID, $WatchListID=0) {
 		# fetch all ports based on category
 		# e.g. id for net
-
 		$sql = "select ports.id, ports.element_id, ports.category_id as category_id, " .
 		       "       ports.short_description as short_description, ports.long_description, ports.version as version, ".
 		       "       ports.revision as revision, ports.maintainer, ".
@@ -309,13 +310,34 @@ class Port {
 		       "       ports.forbidden, ports.broken, ports.date_added, " .
 		       "       ports.categories as categories, ".
 			   "       element.name as port, categories.name as category, " .
-			   "       element.status " .
-		       "  from ports, categories, element ".
-		       " WHERE ports.category_id    = categories.id " .
-		       "   and ports.element_id     = element.id " .
-			   "   and categories.id        = $CategoryID " .
-			   "   and element.status       = 'A' " .
-			   " ORDER by port ";
+			   "       element.status ";
+
+		if ($WatchListID) {
+			$sql .= ",
+		       CASE when watch_list_element.element_id is null
+		          then 0
+		          else 1
+		       END as onwatchlist ";
+		}
+
+
+		$sql .=" from categories, element, ports ";
+
+		#
+		# if the watch list id is provided (i.e. they are logged in and have a watch list id...)
+		#
+		if ($WatchListID) {
+			$sql .="
+		            left outer join watch_list_element
+					on watch_list_element.element_id    = ports.element_id 
+				   and watch_list_element.watch_list_id = $WatchListID ";
+		}
+
+		$sql .= "WHERE ports.category_id    = categories.id " .
+		        "  and ports.element_id     = element.id " .
+				"  and categories.id        = $CategoryID " .
+				"  and element.status       = 'A' " .
+				" ORDER by port ";
 
         $this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {

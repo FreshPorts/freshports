@@ -11,10 +11,13 @@
 <body bgcolor="#ffffff" link="#0000cc">
 
 <table width="100%">
-<tr><rd>Welcome to the freshports.org test page. This site is not yet in production. We are still
+<tr><td>Welcome to the freshports.org test page. This site is not yet in production. We are still
 testing. Information found here may be widely out of date and/or inaccurate.  Use at your own risk. 
 See also <a href="ports.php3">freshports by ports</a>.
 </td></tr>
+<tr><td>
+You can sort each column by clicking on the header.  e.g. click on <b>Category</b> to sort by category.
+</td></td>
   <tr>
     <td bgcolor="#AD0040" height="29"><big><big><font color="#FFFFFF">freshports</font></big></big></td>
   </tr>
@@ -30,16 +33,16 @@ $LastUpdateFile =       "/www/freshports.org/work/msgs/lastupdate";
 
 // make sure the value for $sort is valid
 
+//echo "sort is $sort\n";
+
 switch ($sort) {
    case "category":
    case "count":
    case "description":
+      $sort = $sort;
       $cache_file .= ".$sort";
-
-/*
-   case "updated desc":
       break;
-*/
+
    default:
       $sort ="updated desc";
       $cache_file .= ".updated";
@@ -80,20 +83,20 @@ $sql = "select max(ports.last_update) as updated, count(ports.id) as count, " .
        "and ports.primary_category_id = categories.id " .
        "group by categories.id ";
 
-$sql .=  " order by $sort";
+//$sql .=  " order by $sort";
 
-#echo $sql, "\n";
-#echo $sort, "\n";
+//echo $sql, "\n";
+//echo $sort, "\n";
 
 $result = mysql_query($sql, $db);
 
 $HTML .= '<tr><td>';
 
 $HTML .= '<table width="100%" border=1><tr>';
-$HTML .= '<td><a href="categories.php3?sort=category">Category</a></td>';
-$HTML .= '<td><a href="categories.php3?sort=count">Count</a></td>';
-$HTML .= '<td><a href="categories.php3?sort=description">Description</a></td>';
-$HTML .= '<td><a href="categories.php3?sort=updated desc">Last Update</a></td>';
+$HTML .= '<td><a href="categories.php3?sort=category"><b>Category<b></a></b></td>';
+$HTML .= '<td><a href="categories.php3?sort=count"><b>Count</b></a></td>';
+$HTML .= '<td><a href="categories.php3?sort=description"><b>Description</b></a></td>';
+$HTML .= '<td><a href="categories.php3?sort=updated desc"><b>Last Update</b></a></td>';
 $HTML .= '</tr>';
 
 $HTML .= '<tr>';

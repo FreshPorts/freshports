@@ -1,5 +1,5 @@
 <?
-	# $Id: logout.php,v 1.1.2.12 2003-07-04 14:59:16 dan Exp $
+	# $Id: logout.php,v 1.1.2.13 2003-09-25 10:46:14 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 
@@ -12,14 +12,14 @@
 	if (IsSet($_GET['origin'])) {
 		$origin = $_GET['origin'];
 	} else {
-		$origin = '/';
+		$origin = '';
 	}
 
 	if ($origin == '/index.php') {                   
-		$origin = '/';                                 
+		$origin = '';                                 
 	}
 
-	header('Location: http://' . $_SERVER['HTTP_HOST'] . "/$origin");  /* Redirect browser to PHP web site */
+	header("Location: /$origin");  /* Redirect browser to PHP web site */
 	exit;  /* Make sure that code below does not get executed when we redirect. */
 ?>
 

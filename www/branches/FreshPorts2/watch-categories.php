@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-categories.php,v 1.1.2.17 2002-12-12 02:45:25 dan Exp $
+	# $Id: watch-categories.php,v 1.1.2.18 2002-12-13 20:35:27 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -7,6 +7,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/watch-lists.php');
 
 	freshports_Start('Watch categories',
 					'freshports - new ports, applications',
@@ -14,8 +15,6 @@
 
 $Debug = 0;
 
-?>
-<?
 $visitor = $_COOKIE["visitor"];
 
 // if we don't know who they are, we'll make sure they login first
@@ -26,7 +25,7 @@ if (!$visitor) {
 
 ?>
 <table width="<? echo $TableWidth ?>" border="0" ALIGN="center">
-<td valign="top"><table width="100%">
+<td valign="top"><table width="100%" border="0">
   <tr>
 	<? echo freshports_PageBannerText("Watch List - categories"); ?>
   </tr>
@@ -34,7 +33,7 @@ if (!$visitor) {
 
 
 <table width="100%" border="0">
-<tr><td>
+<tr><td colspan="2">
 <?
 if (!$User->id) {
 echo '<font size="+1">You are not logged in, perhaps you should <a href="login.php">do that</a> first.</font>';
@@ -46,7 +45,9 @@ notification frequency within your <a href="customize.php">personal preferences<
 <? } ?>
 
 </tr></td>
-
+<tr><td>
+&nbsp;
+</tr></td>
 <?php
 
 
@@ -104,7 +105,7 @@ for ($i = 0; $i < $NumCategories; $i++) {
       $HTML .= '<td valign="top">';
    }
 
-   $HTML .= ' <a href="/port-watch.php?category=' . $rows[$i]["category_id"] . '">' . $rows[$i]["category"] . '</a>';
+   $HTML .= ' <a href="/port-watch.php?category=' . $rows[$i]["category"] . '">' . $rows[$i]["category"] . '</a>';
 
    $HTML .= $WatchedCategories{$rows[$i]["category_id"]};
    $HTML .= "<br>\n";
@@ -119,9 +120,20 @@ echo $HTML;
 echo "</table>\n";
 
 </script>
+<td valign="top">
+<table border="0">
+<tr><td>Select...</td></tr>
+<tr><td align="left">
 
+<?php
 
+echo freshports_WatchListDDLBForm($db, $User->id, $WatchListID);
+
+?>
+</td></tr></table>
+</td></tr>
 </table>
+</td></tr>
 </table>
 </td>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">

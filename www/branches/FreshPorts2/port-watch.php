@@ -1,5 +1,5 @@
 <?
-	# $Id: port-watch.php,v 1.1.2.23 2002-12-13 19:40:24 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.24 2002-12-13 20:35:26 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -7,8 +7,9 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/watch-lists.php');
 
-    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
 
 	$submit	= $_POST['submit'];
 	$visitor	= $_COOKIE['visitor'];
@@ -21,22 +22,6 @@ if (!$visitor) {
 
 $category = $_REQUEST['category'];
 
-/*
-if (!$category || $category != strval(intval($category))) {
-   $category = 0;                                     
-} else {                                              
-   $category = intval($category);                     
-}
-*/
-$CategoryID = $category;
-
-#$categoryname = freshports_Category_Name($category, $db);
-
-/*
-	$category = new Category($db);
-	$category->FetchByID($CategoryID);
-	$title = $category->{name};
-*/
 
 // find out the watch id for this user's main watch list
 $sql_get_watch_ID = "select watch_list.id ".
@@ -45,46 +30,21 @@ $sql_get_watch_ID = "select watch_list.id ".
                     "   and watch_list.name    = 'main'";
 
 if ($submit) {
-/*    
-   while (list($name, $value) = each($HTTP_POST_VARS)) {
-      echo "$name = $value<br>\n";
-   }    
-  
-   if ($ports) {
-     $PortCount = count($ports);
-     echo "PortCount= $PortCount<br>\n";
-     while (list($key, $value) = each($ports)) {
-        echo "element $key = '$value'<br>\n";
-     }
-   }
-
-   echo "submitting<br>\n";
-       
-   echo "$sql_get_watch_ID<br>\n";
-*/
    $result = pg_exec($db, $sql_get_watch_ID);
    $numrows = pg_numrows($result);
    if($numrows) {
-//      echo "results were found for that<br>\n";
       $myrow = pg_fetch_array ($result, 0);
       $WatchID = $myrow["id"];
    } else {
       // create their main list for them
       $sql_create = "insert into watch_list (name, owner_user_id) values ('main', $User->id)";
-//      echo "creating new watch: $sql_create<br>\n";
       $result = pg_exec($db, $sql_create);
-//      if ($result) {
-//         echo "created<br>";       
-//      } else {
-//         echo "failed<br>";
-//      }
 
       // refetch our watch id
       $result = pg_exec ($db, $sql_get_watch_ID);
 
       $myrow = pg_fetch_array ($result, 0);
       $WatchID = $myrow["id"];
-//      echo "watchid is $WatchID<br>\n";
 
    }
 
@@ -100,8 +60,6 @@ if ($submit) {
 
 	$result = pg_exec($db, $sql);
      
-// insert new stuff
-//   echo "inserting new stuff now<br>\n";
     
    $ports = $_POST["ports"];
    if ($ports) {
@@ -111,7 +69,6 @@ if ($submit) {
          $sql = "insert into watch_list_element (watch_list_id, element_id) ".
                 "values ($WatchID, $value)";
    
-//      echo "port $value has been selected<br>\n";
 
          $result = pg_exec ($db, $sql);
          ${"port_".$value} = 1;
@@ -125,25 +82,25 @@ if ($submit) {
          
    if ($User->id != '') {
          
-   // read the users current watch information from the database
-
-   $sql = "select watch_list_element.element_id " .
-          "  from watch_list_element, watch_list, ports " .
-          " where watch_list_element.watch_list_id = watch_list.id " . 
-          "   and watch_list.user_id               = $User->id " .
-		  "   and watch_list_element.element_id    = ports.element_id";
-      
-	$result = pg_exec($db, $sql);
-	$numrows = pg_numrows($result);      
-   // read each value and set the variable accordingly
-	for ($i = 0; $i < $numrows; $i++) {
-		$myrow = pg_fetch_array($result, $i);
-		// we use these to see if a particular port is selected
-		${"port_".$myrow["element_id"]} = 1;
-	}
+	   // read the users current watch information from the database
+	
+	   $sql = "select watch_list_element.element_id " .
+	          "  from watch_list_element, watch_list, ports " .
+	          " where watch_list_element.watch_list_id = watch_list.id " . 
+	          "   and watch_list.user_id               = $User->id " .
+			  "   and watch_list_element.element_id    = ports.element_id";
+	      
+		$result = pg_exec($db, $sql);
+		$numrows = pg_numrows($result);      
+	   // read each value and set the variable accordingly
+		for ($i = 0; $i < $numrows; $i++) {
+			$myrow = pg_fetch_array($result, $i);
+			// we use these to see if a particular port is selected
+			${"port_".$myrow["element_id"]} = 1;
+		}
    }
 
-   freshports_Start($category->{name},
+   freshports_Start($category,
                "freshports - new ports, applications",
                "FreeBSD, index, applications, ports");
 }
@@ -154,16 +111,10 @@ if ($submit) {
 <tr><td valign="top" width="100%">
 <table width="100%" border="0">
   <tr>
-	<? echo freshports_PageBannerText("Watch List - " . $category->{name}) ?>
+	<? echo freshports_PageBannerText("Watch List - " . $category) ?>
   </tr>
 
-<tr><td>
-<?
-if (!$User->id) {
-echo '<font size="+1">You are not logged in, perhaps you should <a href="login.php">do that</a> first.</font>';
-echo '</td></tr><tr><td>';
-} else {
-?>
+<tr><td valign="top">
 <UL>
 <LI>This page shows you the ports in a category (<em><?echo $category->{name} ?></em>)
 that are on your watch list.</LI>
@@ -173,9 +124,7 @@ you have selected a notification frequency within your <a href="customize.php">p
 </LI>
 <LI>[D] indicates a port which has been removed from the tree.</LI>
 </UL>
-</TD></TR>
-<? } ?>
-<script language="php">
+<?php
 
 $DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
 
@@ -194,10 +143,13 @@ if ($Debug) echo "<pre>$sql</pre>\n";
 
 $result = pg_exec($db, $sql);
 
-$HTML .= '<tr><td ALIGN="center">' . "\n";
+$HTML .= '<tr><td valign="top" ALIGN="center">' . "\n";
 
 $numrows = pg_numrows($result);
 if ($numrows) {
+	
+	$HTML .= '<table border="0"><tr><td>';
+	$HTML .= '<table border="0"><tr><td>';
 
 	$HTML .= '<form action="' . $_SERVER["PHP_SELF"] . "?category=$CategoryID". '" method="POST">';
 
@@ -261,9 +213,19 @@ if ($numrows) {
 <input TYPE="reset"  VALUE="reset form">
 </td></tr>
 </form>
+</table>
+
+<td valign="top">
+<table border="0"><tr><td>Select...</td></tr><tr><td>
+   
 <?php
+	$Extra = '<input type="hidden" name="category" value="' . $category . '">';
+	echo freshports_WatchListDDLBForm($db, $User->id, $WatchListID, $Extra);
+?>
+  </td></tr></table>
+  </td></tr></table>
 
-
+<?php
 } else {
 	echo '<tr><td ALIGN="center">' . "\n";
    echo "No ports found.  perhaps this is an invalid category id.";
@@ -271,7 +233,7 @@ if ($numrows) {
 }
 
 
-</script>
+?>
 </table>
 
 </td>

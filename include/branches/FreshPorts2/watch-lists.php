@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-lists.php,v 1.1.2.7 2002-12-11 04:36:21 dan Exp $
+	# $Id: watch-lists.php,v 1.1.2.8 2002-12-13 20:35:27 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 	#
@@ -68,7 +68,7 @@ function freshports_WatchListSelectGoButton($name = 'watch_list_select') {
 	return '	<input type="image" border="0" name="' . $name . '" value="GO" src="/images/go.gif" alt="Go" width="30" height="20" align="middle" title="Display the selected watch list">';
 }
 
-function freshports_WatchListDDLBForm($db, $UserID, $WatchListID) {
+function freshports_WatchListDDLBForm($db, $UserID, $WatchListID, $Extra = '') {
 	
 	$HTML = '
 <form action="' . $_SERVER["PHP_SELF"] . '" method="POST" NAME=f>
@@ -83,9 +83,8 @@ $HTML .=  '
 </td><td valign="top" nowrap align="left">
 '  . freshports_WatchListSelectGoButton() . '
 </td>
-
-
-</form>
+' . $Extra . 
+'</form>
 ';
 
 	return $HTML;

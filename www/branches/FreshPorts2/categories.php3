@@ -1,5 +1,5 @@
 <?
-   # $Id: categories.php3,v 1.15 2001-10-20 21:50:37 dan Exp $
+   # $Id: categories.php3,v 1.15.2.1 2001-11-25 19:48:10 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -85,20 +85,21 @@ if (!file_exists($cache_file)) {
 #if ($UpdateCache == 1) {
 //   echo 'time to update the cache';
 
-$sql = "select max(ports.last_update) as updated, count(ports.id) as count, " .
+$sql = "select max(commit_log.commit_date) - INTERVAL '10800 seconds' as updated, count(ports.id) as count, " .
        "categories.id as category_id, categories.name as category, categories.description as description ".
-       "from ports, categories ".
-       "WHERE ports.system = 'FreeBSD' ".
-       "and ports.primary_category_id = categories.id " .
-       "and ports.status = 'A' " .
-       "group by categories.id ";
+       "from ports, categories, commit_log, element ".
+       "WHERE ports.category_id    = categories.id " .
+       "  and ports.last_commit_id = commit_log.id " .
+       "  and ports.element_id     = element.id " .
+       "  and element.status       = 'A' " .
+       "group by categories.id, categories.name, categories.description ";
 
 $sql .=  " order by $sort";
 
 //echo $sql, "\n";
 //echo $sort, "\n";
 
-$result = mysql_query($sql, $db);
+$result = pg_exec($db, $sql);
 
 $HTML .= freshports_echo_HTML('<tr><td>');
 
@@ -132,23 +133,34 @@ if ($sort == "updated desc") {
 
 $HTML .= freshports_echo_HTML('</tr>');
 
-$NumTopics=0;
-$NumPorts=0;
-while ($myrow = mysql_fetch_array($result)) {
-   $URL_Category = "category.php3?category=" . $myrow["category_id"];
+if (!$result) {
+   print pg_errormessage() . "<br>\n";
+   exit;
+} else {
+	$NumTopics	= 0;
+	$NumPorts	= 0;
+	$i			= 0;
+	$NumRows = pg_numrows($result);
+	while ($myrow = pg_fetch_array($result, $i)) {
+		$URL_Category = "category.php3?category=" . $myrow["category_id"];
 
-   $HTML .= freshports_echo_HTML('<tr>');
-   $HTML .= freshports_echo_HTML('<td valign="top"><a href="' . $URL_Category . '">' . $myrow["category"] . '</a></td>');
-   $HTML .= freshports_echo_HTML('<td valign="top">' . $myrow["count"] . '</td>');
-   $HTML .= freshports_echo_HTML('<td valign="top">' . $myrow["description"] . '</td>');
-   $HTML .= freshports_echo_HTML('<td valign="top"><font size="-1">' . $myrow["updated"] . '</font></td>');
-   $HTML .= freshports_echo_HTML("</tr>\n");
-   $NumPorts += $myrow["count"];
+		$HTML .= freshports_echo_HTML('<tr>');
+		$HTML .= freshports_echo_HTML('<td valign="top"><a href="' . $URL_Category . '">' . $myrow["category"] . '</a></td>');
+		$HTML .= freshports_echo_HTML('<td valign="top">' . $myrow["count"] . '</td>');
+		$HTML .= freshports_echo_HTML('<td valign="top">' . $myrow["description"] . '</td>');
+		$HTML .= freshports_echo_HTML('<td valign="top"><font size="-1">' . $myrow["updated"] . '</font></td>');
+		$HTML .= freshports_echo_HTML("</tr>\n");
+		$NumPorts += $myrow["count"];
+		$i++;
+		if ($i >  $NumRows - 1) {
+			break;
+		}
+	}
 }
 
 $HTML .= freshports_echo_HTML("<tr><td><b>port count:</b></td><td><b>$NumPorts</b></td></tr>");
 
-mysql_free_result($result);
+#mysql_free_result($result);
 
 
 $HTML .= freshports_echo_HTML('</table>');

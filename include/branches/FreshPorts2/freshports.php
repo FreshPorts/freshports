@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.107 2002-11-22 19:29:52 dan Exp $
+	# $Id: freshports.php,v 1.4.2.108 2002-11-28 18:05:45 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -124,7 +124,7 @@ function freshports_Commit_Link($message_id, $LinkText = '') {
 }
 
 function freshports_MorePortsToShow($message_id, $NumberOfPortsInThisCommit, $MaxNumberPortsToShow) {
-	$HTML .= "(Only the first $MaxNumberPortsToShow of $NumberOfPortsInThisCommit commits are shown above ";
+	$HTML .= "(Only the first $MaxNumberPortsToShow of $NumberOfPortsInThisCommit ports in this commit are shown above. ";
 	$HTML .= freshports_Commit_Link($message_id, '<IMG SRC="/images/play.gif" ALT="View all ports for this commit" BORDER="0" WIDTH="13" HEIGHT="13">');
 	$HTML .= ")";
 
@@ -927,8 +927,9 @@ function freshports_CommitFilesLink($MessageID, $Category, $Port) {
 }
 
 function freshports_PortCommitPrint($commit, $category, $port) {
-	GLOBAL  $DateFormatDefault;
-	GLOBAL  $TimeFormatDefault;
+	GLOBAL	$DateFormatDefault;
+	GLOBAL	$TimeFormatDefault;
+	GLOBAL	$freshports_CommitMsgMaxNumOfLinesToShow;
 
 	# print a single commit for a port
 	echo "<TR><TD VALIGN='top'>";
@@ -957,8 +958,7 @@ function freshports_PortCommitPrint($commit, $category, $port) {
 	echo "</TD>\n";
 	echo '    <TD VALIGN="top" WIDTH="*">';
 
-
-	echo freshports_PortDescriptionPrint($commit->description, $commit->encoding_losses);
+	echo freshports_PortDescriptionPrint($commit->description, $commit->encoding_losses, $freshports_CommitMsgMaxNumOfLinesToShow, freshports_MoreCommitMsgToShow($commit->message_id, $freshports_CommitMsgMaxNumOfLinesToShow));
 
 	echo "</TD></TR>\n";
 }

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.33 2003-04-27 14:48:11 dan Exp $
+	# $Id: faq.php,v 1.1.2.34 2003-04-28 22:25:10 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -49,10 +49,18 @@ down you must read to find something you didn't already know.</P>
 </TR>
 
 	<TR><TD>
-	Your primary FreshPorts tool is your watch list.  This is the
+	<p>
+	Your primary FreshPorts tool is your <b>watch list</b>.  This is the
 	collection of ports which you have selected for FreshPorts to
 	keep track of.  You will be emailed when a change is found
 	for one of your watched ports.
+
+	<p>
+	You can have more than one watch list.  Most people would have
+	one watch list for each machine they administer.  I suggest giving
+	the watch list the same name as the machine.  Email notifications
+	will contain headers with the list name.  You can use that for any
+	filtering you may want to do (e.g. procmail).
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
@@ -63,13 +71,17 @@ down you must read to find something you didn't already know.</P>
 	There are three easy ways to modify your watch list:
 	<OL>
 	<LI>Wherever you see a port, you can click on the Add/Remove
-		link as necessary.</LI>
+		link as necessary (i.e. one-click watch list maintenance).</LI>
 	<LI>The 'watch list categories' link provides you with a list
 		of categories.  Select the category, and then the ports within
 		that category.</LI>
 	<LI>Use the 'upload' link to upload your pkg_info data into your
 		watch list staging area and then into your watch list.</LI>
 	</OL>
+
+	<p>
+	One-click watch list maintenance operates only upon your default
+	watch lists.  You can set one or more watch lists as being default.
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
@@ -77,7 +89,9 @@ down you must read to find something you didn't already know.</P>
 </TR>
 
 	<TR><TD>
-	There is no way to do this in one click.  Sorry.  But a solution is planned (I wrote this on 5 Nov 2002).
+	Via <a href="/watch-list-maintenance.php">Watch List Maintenance</a>.
+	Select the watch lists you wish to emtpy, and follow the instructions
+	provided.
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
@@ -241,10 +255,10 @@ down you must read to find something you didn't already know.</P>
 		message and allow you to see all other ports which were affected by this commit.   This link will not appear
         for commit messages before 3 March 2002 (which is the date FreshPorts started to store the message-id).</P>
 
-	<P><? echo freshports_Watch_Icon(); ?> Item is on one of your default watch lists: This port is on one of your watch lists.  Click
+	<P><? echo freshports_Watch_Icon(); ?> Item is on one of your default watch lists: This port is on one of your default watch lists.  Click
 		this icon to remove the port from your default watch lists.  This icon appears only if you are logged in.</P>
 
-	<P><? echo freshports_Watch_Icon_Add(); ?> Add item to your default watch lists: This port is not on your default watch lists.  Click
+	<P><? echo freshports_Watch_Icon_Add(); ?> Add item to your default watch lists: This port is not on any of your  default watch lists.  Click
 		this icon to add the port to your default watch lists.  This icon appears only if you are logged in.</P>
 
 	<P><? echo freshports_Encoding_Errors(); ?> Encoding Errors (not all of the commit message was ASCII): Some of the

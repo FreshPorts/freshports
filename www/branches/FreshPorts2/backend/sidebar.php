@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: sidebar.php,v 1.1.2.15 2003-04-28 20:45:42 dan Exp $
+	# $Id: sidebar.php,v 1.1.2.16 2003-07-30 12:10:10 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -12,6 +12,10 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+
+	$date        = AddSlashes($_REQUEST['date']);
+	$committer   = AddSlashes($_REQUEST['committer']);
+	$time        = AddSlashes($_REQUEST['time']);
 
 	freshports_HTML_Start();
 
@@ -28,12 +32,8 @@
 	}
 	ul { padding-left: 20px;}
 	</STYLE>
-<?
-	freshports_body();
-	$ServerName = str_replace("freshports", "FreshPorts", $_SERVER["SERVER_NAME"]);
-	GLOBAL $FreshPortsSlogan;
-	GLOBAL $FreshPortsName;
-?>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
 	<META HTTP-EQUIV="Refresh" CONTENT="1200; URL=http://<?php echo $ServerName . $_SERVER["PHP_SELF"]; ?>">
 	<META http-equiv="Pragma"              content="no-cache">
@@ -41,13 +41,20 @@
 
 </HEAD>
 
+<?
+	freshports_body();
+	$ServerName = str_replace("freshports", "FreshPorts", $_SERVER["SERVER_NAME"]);
+	GLOBAL $FreshPortsSlogan;
+	GLOBAL $FreshPortsName;
+?>
+
 	<CENTER>
 	<A HREF="http://<? echo $ServerName; ?>/" TARGET="_content"><IMG SRC="/images/freshports_mini.jpg" ALT="<?php echo "$FreshPortsName -- $FreshPortsSlogan"; ?>" TITLE="<?php echo "FreshPorts -- $FreshPortsSlogan"; ?>" WIDTH="128" HEIGHT="28" BORDER="0"></A>
 
 	<BR>
 
 	<SMALL>
-	<script LANGUAGE="JavaScript">
+	<script LANGUAGE="JavaScript" type="text/javascript">
 		var d = new Date();  // today's date and time.
 	    document.write(d.toLocaleString());
 	</script>
@@ -125,13 +132,39 @@ order by commit_date_raw desc, category, port ";
 	$numrows = pg_numrows($result);
 	for ($i = 0; $i < $numrows; $i++) {
 		$myrow = pg_fetch_array ($result, $i);
-		echo '	<LI><SMALL><A HREF="http://' . $ServerName . '/' . $myrow["category"] . '/' . $myrow["port"] . '/" TARGET="_content">';
+		echo '	<LI><SMALL>';
+		if ($date == 1) {
+			echo '[' . $myrow['commit_date'] . '] ';
+		}
+
+		if ($time == 1) {
+			echo '[' . $myrow['commit_time'];
+		}
+
+		if ($committer == 1) {
+			if ($time != 1) {
+				echo '[';
+			} else {
+				echo ' ';
+			}
+
+			echo $myrow['committer'];
+		}
+
+		if ($time == 1 || $committer == 1) {
+			echo '] ';
+		}
+
+		echo '<A HREF="http://' . $ServerName . '/' . $myrow["category"] . '/' . $myrow["port"] . '/" TARGET="_content">';
 		echo $myrow["category"] . '/' . $myrow["port"] . '</A>';
 		echo '</SMALL></LI>';
 		echo "\n";
 	}
 ?>
 	</UL>
+
+<SMALL>Server and bandwidth provided by <A HREF="http://www.bchosting.com/" TARGET="_new">BChosting.com</A></SMALL>
+
 
 <P ALIGN="right">
 <? echo freshports_copyright(); ?>

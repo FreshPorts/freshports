@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: announcements.php,v 1.1.2.2 2003-05-09 21:33:00 dan Exp $
+	# $Id: announcements.php,v 1.1.2.3 2003-05-10 04:29:40 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -33,31 +33,46 @@ if (!$User->IsTaskAllowed(FRESHPORTS_TASKS_ANNOUNCEMENTS_MAINTAIN)) {
 	die("I'm sorry, but you're not allowed to be here.  The police have been notified.  Please leave now.");
 }
 
-$Announcement = new Announcement($db);
 
-phpinfo();
-die();
-if (IsSet($_REQUEST['Add'])) {
-	$Announcement->TextSet     (AddSlashes($_REQUEST['announcement']));
-	$Announcement->StartDateSet(AddSlashes($_REQUEST['start_date']));
-	$Announcement->EndDateSet  (AddSlashes($_REQUEST['end_date']));
+#phpinfo();
+#die();
+if (IsSet($_REQUEST['add'])) {
+	$Announcement = new Announcement($db);
+
+	$Announcement->TextSet     ($_REQUEST['announcement']);
+	$Announcement->StartDateSet($_REQUEST['start_date']);
+	$Announcement->EndDateSet  ($_REQUEST['end_date']);
 
 	$Announcement->Insert();
+	Unset($Announcement);
 }
 
-if (IsSet($_REQUEST['Update'])) {
-	$Announcement->TextSet     (AddSlashes($_REQUEST['announcement']));
-	$Announcement->StartDateSet(AddSlashes($_REQUEST['start_date']));
-	$Announcement->EndDateSet  (AddSlashes($_REQUEST['end_date']));
+if (IsSet($_REQUEST['update'])) {
+	$Announcement = new Announcement($db);
+
+	$Announcement->TextSet     ($_REQUEST['announcement']);
+	$Announcement->StartDateSet($_REQUEST['start_date']);
+	$Announcement->EndDateSet  ($_REQUEST['end_date']);
+	$Announcement->IDSet       ($_REQUEST['id']);
 
 	$Announcement->Update();
+	Unset($Announcement);
 }
 
-# create another new one so after a save, we don't redisplay the old one.
+if (IsSet($_REQUEST['delete'])) {
+	$Announcement = new Announcement($db);
+
+	$Announcement->IDSet($_REQUEST['delete']);
+
+	$Announcement->Delete();
+	Unset($Announcement);
+}
+
+# create another new one
 $Announcement = new Announcement($db);
 
-if (IsSet($_REQUEST['id'])) {
-	$Announcement->Fetch(AddSlashes($_REQUEST['id']));
+if (IsSet($_REQUEST['edit'])) {
+	$Announcement->Fetch($_REQUEST['edit']);
 }
 
 	#echo '<br>the page size is ' . $page_size . ' : ' . $email;
@@ -108,22 +123,22 @@ $HTML .= '<tr>'  . "\n";
 
 $HTML .= '<td>'  . "\n";
 $HTML .= '<TEXTAREA NAME="announcement" ROWS="10" COLS="60">'          . "\n";
-$HTML .= $Announcement->TextGet();
+$HTML .= htmlspecialchars($Announcement->TextGet());
 $HTML .= '</TEXTAREA>';
 $HTML .= '</td>'  . "\n";
 
 $HTML .= '<td valign="top">'  . "\n";
-$HTML .= '<INPUT id="start_date" name="start_date" value="' . $Announcement->StartDateGet() . '" size=10>' . "\n";
+$HTML .= '<INPUT id="start_date" name="start_date" value="' . $Announcement->StartDateGet() . '" size=25>' . "\n";
 $HTML .= '</td>'  . "\n";
 
 $HTML .= '<td valign="top">'  . "\n";
-$HTML .= '<INPUT id="end_date"   name="end_date"   value="' . $Announcement->EndDateGet()   . '" size=10>' . "\n";
+$HTML .= '<INPUT id="end_date"   name="end_date"   value="' . $Announcement->EndDateGet()   . '" size=25>' . "\n";
 $HTML .= '</td>'  . "\n";
 
 $HTML .= '</tr>'  . "\n";
 
-$ControlName  = IsSet($_REQUEST['id']) ? 'update' : 'add';
-$ControlValue = IsSet($_REQUEST['id']) ? 'Update' : 'Add';
+$ControlName  = IsSet($_REQUEST['edit']) ? 'update' : 'add';
+$ControlValue = IsSet($_REQUEST['edit']) ? 'Update' : 'Add';
 
 $HTML .= '<tr><td colspan="3">'  . "\n";
 $HTML .= '<div align="center"><INPUT id="' . $ControlName . '" style="WIDTH: 85px; HEIGHT: 24px" type="submit" size="29" value="' . $ControlValue . '"';
@@ -131,6 +146,8 @@ $HTML .= ' name="' . $ControlName . '"></div>' . "\n";
 $HTML .= '</tr>'  . "\n";
 
 $HTML .= '</table>' . "\n";
+
+$HTML .= '<INPUT NAME="id" TYPE="hidden" value="' . $Announcement->IDGet(). '">' . "\n";
 
 $HTML .= '</form>';
 
@@ -140,26 +157,49 @@ echo "<p></blockquote></TD>
 </TR>
 </TABLE>";
 
-$NumRows = $Announcement->FetchAllActive();
+function DisplayAnnouncements($Announcement) {
+	$HTML .= '<table cellpadding="4" cellspacing="0" border="1">' . "\n";
+	$HTML .= '<tr><td><b>Announcement Text</b></td><td><b>Start Date</b></td><td><b>End Date</b></td><td><b>Edit</b></td><td><b>Delete</b</td></tr>' . "\n";
 
-if ($NumRows > 0) {
-	echo '<blockquote>' . "\n";
-	echo '<h2>Existing Announcements</h2>' . "\n";
-	echo '<table cellpadding="4" cellspacing="0" border="1">' . "\n";
-	echo '<tr><td><b>Announcement Text</b></td><td><b>Start Date</b></td><td><b>End Date</b></td><td><b>Edit</b></td></tr>' . "\n";
+	$NumRows = $Announcement->NumRows();
+
 	for ($i = 0; $i < $NumRows; $i++) {
 		$Announcement->FetchNth($i);
-		echo '<tr>' . "\n";
-		echo '<td>' . $Announcement->TextGet()      . '</td>';
-		echo '<td>' . ($Announcement->StartDateGet() != '' ? $Announcement->StartDateGet() : '&nbsp') . '</td>';
-		echo '<td>' . ($Announcement->EndDateGet()   != '' ? $Announcement->EndDateGet()   : '&nbsp') . '</td>';
-		echo '<td><a href="' . $_SERVER['PHP_SELF']  . '?id=' . $Announcement->IDGet() . '">Edit</a></td>';
-      echo '</tr>' . "\n";
+		$HTML .= '<tr>' . "\n";
+		$HTML .= '<td>' . $Announcement->TextGet()      . '</td>';
+		$HTML .= '<td>' . ($Announcement->StartDateGet() != '' ? $Announcement->StartDateGet() : '&nbsp') . '</td>';
+		$HTML .= '<td>' . ($Announcement->EndDateGet()   != '' ? $Announcement->EndDateGet()   : '&nbsp') . '</td>';
+		$HTML .= '<td><a href="' . $_SERVER['PHP_SELF']  . '?edit='   . $Announcement->IDGet() . '">Edit</a></td>';
+		$HTML .= '<td><a href="' . $_SERVER['PHP_SELF']  . '?delete=' . $Announcement->IDGet() . '">Delete</a></td>';
+      $HTML .= '</tr>' . "\n";
 	}
-	echo '</table>' . "\n";
+	$HTML .= '</table>' . "\n";
+
+	return $HTML;
+}
+
+$NumRows = $Announcement->FetchAll();
+
+if ($NumRows > 0) {
+	echo '<blockquote>'  . "\n";
+	echo '<h2>Existing Announcements</h2>' . "\n";
+	echo DisplayAnnouncements($Announcement);
 	echo '</blockquote>' . "\n";
+
+	$NumRows = $Announcement->FetchAllActive();
+	if ($NumRows > 0) {
+		echo '<blockquote>'  . "\n";
+		echo '<h2>Active Announcements</h2>' . "\n";
+		echo DisplayAnnouncements($Announcement);
+		echo '</blockquote>' . "\n";
+
+
+	} else {
+		echo '<p>There are no active announcements.</p>';
+	}
+
 } else {
-	echo 'There are no active announcements';
+	echo '<p>There are no announcements.</p>';
 }
 
 

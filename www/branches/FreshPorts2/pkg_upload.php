@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_upload.php,v 1.5.2.7 2002-02-28 21:37:43 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.8 2002-03-01 17:52:06 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -91,6 +91,12 @@ function DisplayStagingArea($WatchListID, $db) {
 
 	echo '<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5" 
 					bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2"><TR>';
+?>
+
+	<TR><TD COLSPAN="4"><BIG>The following information is in your Staging Area.  To save it to your Watch List, please click on the
+			"Update watch list" button.</BIG></TD></TR>
+
+<?
 
 	echo '<TD VALIGN="top"><B>Ports found from your uploaded data.</B><BR>Those marked with a W are already on your watch list.</TD>' . "\n";
 	echo '<TD VALIGN="top"><B>Ports not found.</B><BR>These ports are installed on your system but could not be located within FreshPorts.  Perhaps they have

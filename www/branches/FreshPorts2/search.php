@@ -1,5 +1,5 @@
 <?
-	# $Id: search.php,v 1.1.2.7 2002-02-21 23:13:55 dan Exp $
+	# $Id: search.php,v 1.1.2.8 2002-03-01 17:52:06 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -23,9 +23,6 @@
 	<? freshports_PageBannerText("Search"); ?>
   </tr>
 <tr><td valign="top">
-OK, we have just a very simple search.  Eventually this will be extended. If you find any bugs, please
-let <a href="http://freshports.org/phorum/list.php?f=3">me know</a>.
-</td></tr>
 <tr><td>
 <?
 
@@ -37,8 +34,14 @@ if ($Debug) {
 	}
 }
 
+#
+# we can take parameters.  if so, make it look like a post
+#
+if (!$search && ($query && $stype && $num && $method)) {
+	$search = TRUE;
+}
 
-if ($search || ($query && $stype && $num)) {
+if ($search) {
 
 	if ($Debug) echo "into search stuff<BR>\n";
 
@@ -52,19 +55,26 @@ if ($search || ($query && $stype && $num)) {
 
 $logfile = $DOCUMENT_ROOT . "/../configuration/searchlog.txt";
 
+	// avoid nasty problems by adding slashes
+	$query		= AddSlashes($query);
+	$stype		= AddSlashes($stype);
+	$num		= AddSlashes($num);
+	$category	= AddSlashes($category);
+	$port		= AddSlashes($port);
+
 $fp = fopen($logfile, "a");
 if ($fp) {
-	fwrite($fp, date("Y-m-d H:i:s") . " " . $stype . ':' . $query . "\n");
+	if ($method == 'match') {
+		fwrite($fp, date("Y-m-d H:i:s") . " " . $stype    . ':' . $query . "\n");
+	} else {
+		fwrite($fp, date("Y-m-d H:i:s") . " " . $category . '/' . $port  . "\n");
+	}
 	fclose($fp);
 } else {
 	print "Please let postmaster@freshports.org know that the search log could not be opened.  This does not affect the search results.\n";
 	define_syslog_variables();
 	syslog(LOG_ERR, "FreshPorts could not open the search log file: $logfile");
 }
-
-
-
-	$query = addslashes($query);
 
 $sql = "select ports.id, element.name as port, " .
        "categories.name as category, categories.id as category_id, ports.version as version, ".
@@ -95,26 +105,34 @@ if ($WatchListID) {
 	$sql .= "WHERE ports.category_id = categories.id " .
 	        "  and ports.element_id  = element.id " ;
 
-switch ($stype) {
-   case "name":
-      $sql .= "and element.name like '%$query%'";
-      break;
+if ($method == 'match') {
+	switch ($stype) {
+		case "name":
+			$sql .= "and element.name like '%$query%'";
+			break;
 
-   case "longdescription":
-      $sql .= "and ports.long_description like '%$query%'";
-      break;
-
-   case "shortdescription":
-      $sql .= "and ports.short_description like '%$query%'";
-      break;
+		case "shortdescription":
+			$sql .= "and ports.short_description like '%$query%'";
+			break;
       
-   case "maintainer":
-      $sql .= "and ports.maintainer like '%$query%'";
-      break;
+		case "maintainer":
+			$sql .= "and ports.maintainer like '%$query%'";
+			break;
+	}
+} else {
+	switch ($stype) {
+		case "name":
+			$sql .= "and levenshtein(element.name, '$query') < 4";
+			break;
 
-   case "requires":
-      $sql .= "and (ports.depends_build like '%$query%' or ports.depends_run like '%$query%')";
-      break;
+		case "shortdescription":
+			$sql .= "and evenshtein(ports.short_description, '$query') < 4";
+			break;
+      
+		case "maintainer":
+			$sql .= "and evenshtein(ports.maintainer, '$query') < 4";
+			break;
+	}
 }
 
 $sql .= " order by categories.name, element.name";
@@ -125,7 +143,7 @@ if ($num < 1 or $num > 500) {
 
 $sql .= " limit $num";
 
-$AddRemoveExtra  = "&&origin=$SCRIPT_NAME?query=" . $query. "+stype=$stype+num=$num";
+$AddRemoveExtra  = "&&origin=$SCRIPT_NAME?query=" . $query. "+stype=$stype+num=$num+method=$method";
 if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<BR>";
 $AddRemoveExtra = AddSlashes($AddRemoveExtra);
 if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<BR>";
@@ -140,7 +158,7 @@ if ($Debug) {
 
 $result  = pg_exec($db, $sql);
 if (!$result) {
-	echo pg_errormessage();
+	echo pg_errormessage() . $sql;
 	exit;
 }
 $NumRows = pg_numrows($result);
@@ -151,19 +169,27 @@ $Port->LocalResult = $result;
 }
 ?>
 <form METHOD="POST" ACTION="<? echo $PHP_SELF ?>">
-  <p>Search for: <input NAME="query" size="20"  value="<? echo stripslashes($query)?>"> <SELECT NAME="stype" size="1">
-    <option VALUE="name"             <? if ($stype == "name")             echo 'selectd'?>>Port Name</option>
-    <option VALUE="maintainer"       <? if ($stype == "maintainer")       echo 'selected'?>>Maintainer</option>
-    <option VALUE="shortdescription" <? if ($stype == "shortdescription") echo 'selected'?>>Short Description</option>
-  </SELECT> 
+Search for:<BR>
+	<SELECT NAME="stype" size="1">
+		<option VALUE="name"             <? if ($stype == "name")             echo 'SELECTED'?>>Port Name</option>
+		<option VALUE="maintainer"       <? if ($stype == "maintainer")       echo 'SELECTED'?>>Maintainer</option>
+		<option VALUE="shortdescription" <? if ($stype == "shortdescription") echo 'SELECTED'?>>Short Description</option>
+	</SELECT> 
+
+	<SELECT name=method>
+		<OPTION value="match"   <?if ($method == "match"  ) echo 'SELECTED' ?>>containing
+		<OPTION value="soundex" <?if ($method == "soundex") echo 'SELECTED' ?>>sounding like
+	</SELECT>
+
+	<input NAME="query" size="20"  value="<? echo stripslashes($query)?>">
 
 	<SELECT name=num>
-		<option value="10"  <?if ($num == 10)  echo 'selected' ?>>10 results
-		<option value="20"  <?if ($num == 20)  echo 'selected' ?>>20 results
-		<option value="30"  <?if ($num == 30)  echo 'selected' ?>>30 results
-		<option value="50"  <?if ($num == 50)  echo 'selected' ?>>50 results
-		<option value="100" <?if ($num == 100) echo 'selected' ?>>100 results
-		<option value="500" <?if ($num == 500) echo 'selected' ?>>500 results
+		<option value="10"  <?if ($num == 10)  echo 'SELECTED' ?>>10 results
+		<option value="20"  <?if ($num == 20)  echo 'SELECTED' ?>>20 results
+		<option value="30"  <?if ($num == 30)  echo 'SELECTED' ?>>30 results
+		<option value="50"  <?if ($num == 50)  echo 'SELECTED' ?>>50 results
+		<option value="100" <?if ($num == 100) echo 'SELECTED' ?>>100 results
+		<option value="500" <?if ($num == 500) echo 'SELECTED' ?>>500 results
 	</SELECT> 
 
 	<input TYPE="submit" VALUE="search"> </p>
@@ -172,7 +198,7 @@ $Port->LocalResult = $result;
 
 </td></tr>
 <?
-if ($search || ($query && $stype && $num)) {
+if ($search) {
 echo "<tr><td>\n";
 if ($NumRows == 0) {
    $HTML .= " no results found<br>\n";

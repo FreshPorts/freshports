@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_process.inc,v 1.5.2.6 2002-02-28 21:37:43 dan Exp $
+	# $Id: pkg_process.inc,v 1.5.2.7 2002-03-01 17:52:06 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 	#
@@ -255,12 +255,15 @@ function UploadDisplayStagingResultsMatchesNo($WatchListID, $dbh) {
 			?>
 
 			<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5" BORDERCOLOR="#a2a2a2" BORDERCOLORDARK="#a2a2a2" BORDERCOLORLIGHT="#a2a2a2">
-			<TR><TD COLSPAN="2"><B>Port name</B> <SMALL>(<? echo $numrows ?> ports)</SMALL></TD></TR>
+			<TR><TD><B>Port name</B> <SMALL>(<? echo $numrows ?> ports)</SMALL></TD><TD><SMALL>search</SMALL></TD></TR>
 
 			<?
 			for ($i = 0; $i < $numrows; $i++) {
 				$row = pg_fetch_array($result, $i);
-				echo '<TR><TD><FONT COLOR="red">' . $row["category"] . '/' . $row["port"] . '</FONT></TD></TR>';
+				echo '<TR>';
+				echo '<TD><FONT COLOR="red">' . $row["category"] . '/' . $row["port"] . '</FONT></TD>';
+				echo '<TD ALIGN="center"><A HREF="/search.php?query=' . $row["port"] . '&stype=name&num=10&method=soundex&staging=1">?</A></TD>';
+				echo '</TR>';
 			}
 			echo '</TABLE>';
 
@@ -296,7 +299,7 @@ function UploadDisplayStagingResultsMatchesDuplicates($WatchListID, $dbh) {
 			?>
 
 			<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5" BORDERCOLOR="#a2a2a2" BORDERCOLORDARK="#a2a2a2" BORDERCOLORLIGHT="#a2a2a2">
-			<TR><TD><B>Port name</B></TD><TD><B>Count</B></TD></TR>
+			<TR><TD><B>Port name</B></TD><TD><B>Count</B></TD><TD ALIGN="center"><SMALL>Add</SMALL></TD></TR>
 
 			<?
 			for ($i = 0; $i < $numrows; $i++) {
@@ -310,6 +313,8 @@ function UploadDisplayStagingResultsMatchesDuplicates($WatchListID, $dbh) {
 				echo '<TD ALIGN="center">';
 				echo $row["item_count"];
 				echo '</TD>';
+
+				echo '<TD ALIGN="center"><INPUT TYPE="checkbox" NAME="ports[]" VALUE="' . $row["element_id"] . '" CHECKED></TD>';
 
 				echo '</TR>';
 			

@@ -1,7 +1,8 @@
-<?
-	# $Id: watch-list-maintenance.php,v 1.1.2.20 2003-01-04 17:11:44 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: watch-list-maintenance.php,v 1.1.2.21 2003-01-04 17:20:39 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');

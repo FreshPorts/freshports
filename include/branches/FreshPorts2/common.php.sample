@@ -1,5 +1,5 @@
 <?
-	# $Id: common.php.sample,v 1.1.2.1 2001-11-25 00:42:16 dan Exp $
+	# $Id: common.php.sample,v 1.1.2.2 2001-12-18 22:00:14 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -25,7 +25,7 @@ $HeaderAdAmazon			= 1;
 $HeaderAdsBurst125x125	= 1;
 $HeaderAdsBurst120x160	= 1;
 
-$DiaryConfigFile = "/home/freshports.org/configuration/freshports.conf.php";
+$DiaryConfigFile = $DOCUMENT_ROOT . "/../configuration/freshports.conf.php";
 
 if (file_exists($DiaryConfigFile)) {
    require($DiaryConfigFile);
@@ -35,7 +35,7 @@ if (file_exists($DiaryConfigFile)) {
 # This should reside somewhere outside the document root.
 # This will always protect the contents from any possible httpd access.
 #
-$PathToDatabaseConfigFile	= "/home/freshports.org/configuration"; # no trailing slash
+$PathToDatabaseConfigFile	= $DOCUMENT_ROOT . "/../configuration"; # no trailing slash
 
 $FreshPortsName				= "FreshPorts";
 ?>

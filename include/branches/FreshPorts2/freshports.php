@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.69 2002-04-12 14:17:44 dan Exp $
+   # $Id: freshports.php,v 1.4.2.70 2002-04-12 14:29:42 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -949,7 +949,6 @@ function url2link($Arr) {
 function pr2html($String) {
 	$del_t = array("&quot;","&#34;","&gt;","&#62;","\/\.\s","\)","'","\s");
 	$delimiters = "(".join("|",$del_t).")";
-#	$String = addslashes($String);
 
 	$String = preg_replace_callback("/((http|ftp|https):\/\/.*?)($delimiters)/i",           url2link,  $String);
 	$String = preg_replace_callback("/([\w+=\-.!]+@[\w\-]+(\.[\w\-]+)+)/",                  mail2link, $String);

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch_lists.php,v 1.1.2.11 2003-12-15 13:20:52 dan Exp $
+	# $Id: watch_lists.php,v 1.1.2.12 2003-12-15 13:53:27 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -162,6 +162,7 @@ DELETE FROM watch_list
 		if ($result) {
 			$numrows = pg_numrows($result);
 			if ($numrows == 1) {
+				$myrow = pg_fetch_array($result, 0);
 				$WatchListID = $myrow["id"];
 			} else {
 				for ($i = 0; $i < $numrows; $i++) {

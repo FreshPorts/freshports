@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.69 2005-01-26 21:04:39 dan Exp $
+	# $Id: faq.php,v 1.1.2.70 2005-02-17 02:17:30 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -309,6 +309,12 @@ make: fatal errors encountered -- cannot continue
 	</P>
 
 	<P><?php echo freshports_VuXML_Icon_Faded(); ?> A past <a href="http://www.vuxml.org/freebsd/">VuXML</a> vulnerability.  Click icon for details.
+	</P>
+
+	<P><?php echo freshports_Restricted_Icon(); ?> This port has some restrictions on it.
+	</P>
+
+	<P><?php echo freshports_No_CDROM_Icon(); ?> This port has some restrictions with respect to being included on a CD-ROM.
 	</P>
 
 	<P><?php echo freshports_Revision_Icon(); ?> Revision details.  Click on the Files icon in the commit history and

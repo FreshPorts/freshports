@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports.php,v 1.1.2.50 2005-01-26 21:03:15 dan Exp $
+	# $Id: ports.php,v 1.1.2.51 2005-02-02 01:06:50 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -174,7 +174,9 @@ select ports.id,
        ports.categories as categories,
 	    element.name     as port, 
 	    categories.name  as category,
-	    element.status ";
+	    element.status,
+       ports_vulnerable.current as vulnerable_current,
+       ports_vulnerable.past    as vulnerable_past ";
 
 		if ($UserID) {
 			$sql .= ",
@@ -182,7 +184,8 @@ select ports.id,
 		}
 
 		$sql .= "
-       from categories, element, ports ";
+       from categories, element, ports_vulnerable right outer join ports 
+                       on (ports_vulnerable.port_id = ports.id)";
 
 		if ($UserID) {
 			$sql .= "
@@ -217,7 +220,7 @@ select ports.id,
 				echo "Ports::FetchByPartialName I'm concerned I got $numrows from that.<BR>$sql<BR>";
 			}
 		} else {
-			echo 'pg_exec failed: ' . $sql;
+			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
 		}
 	}
 
@@ -258,7 +261,9 @@ select ports.id,
 		               ports.categories as categories,
 			           element.name     as port, 
 			           categories.name  as category,
-			           element.status ";
+			           element.status,
+                       ports_vulnerable.current as vulnerable_current,
+                       ports_vulnerable.past    as vulnerable_past ";
 
 		if ($UserID) {
 			$sql .= ', 
@@ -268,7 +273,8 @@ END as onwatchlist';
 		}
 
 
-		$sql .= " from categories, element, ports ";
+		$sql .= " from categories, element, ports_vulnerable right outer join ports
+                       on (ports_vulnerable.port_id = ports.id)";
 
 		#
 		# if the watch list id is provided (i.e. they are logged in and have a watch list id...)
@@ -313,7 +319,7 @@ ON TEMP.wle_element_id = ports.element_id";
 
 			}
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre>';
+			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
 		}
 	}
 
@@ -369,8 +375,12 @@ SELECT P.*, element.name    as port,
         ports.package_name,
         ports.categories      as categories,
         categories.name       as category_looking_at,
-        PRIMARY_CATEGORY.name as category
-   FROM ports, categories, ports_categories, categories PRIMARY_CATEGORY
+        PRIMARY_CATEGORY.name as category,
+        ports_vulnerable.current as vulnerable_current,
+        ports_vulnerable.past    as vulnerable_past 
+
+   FROM ports_vulnerable right outer join ports on (ports_vulnerable.port_id = ports.id),
+        categories, ports_categories, categories PRIMARY_CATEGORY
   WHERE ports_categories.port_id     = ports.id
     AND ports_categories.category_id = categories.id
     AND categories.name              = '$CategoryName'
@@ -451,7 +461,7 @@ LEFT OUTER JOIN
 				$result = 1;
 			}
 		} else {
-			echo 'pg_exec failed: ' . $sql;
+			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
 		}
 
 		return $result;
@@ -480,7 +490,7 @@ LEFT OUTER JOIN
 				echo 'that port was not found:' . $Category . '/' . $Port;
 			}
 		} else {
-			echo 'pg_exec failed: ' . $sql;
+			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
 		}
 
 		return $result;
@@ -503,7 +513,7 @@ LEFT OUTER JOIN
 				$result = $myrow[0];
 			}
 		} else {
-			echo 'pg_exec failed: ' . $sql;
+			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
 		}
 
 		return $result;

@@ -56,7 +56,7 @@
       $HTML .= $myrow["maintainer"] . '</a></br>' . "\n";
    }
 
-   if ($myrow["committer"]) {
+   if ($myrow["last_change_log_detail_id"] != 0) {
       $HTML .= 'last change committed by ' . $myrow["committer"];  // separate lines in case committer is null
 
       $HTML .= ' on <font size="-1">' . $myrow["updated"] . '</font><br>' . "\n";

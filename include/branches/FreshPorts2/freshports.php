@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.184 2004-10-02 14:19:54 dan Exp $
+	# $Id: freshports.php,v 1.4.2.185 2004-10-02 18:18:08 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -1240,7 +1240,7 @@ function freshports_CommitsHeader($element_record) {
 	echo "</tr>\n";
 }
 
-function freshports_CommitsFooter($port) {
+function freshports_CommitsFooter($element_record) {
 	# print the footer for the commits for a port
 	echo "</TABLE>\n";
 }
@@ -1266,7 +1266,7 @@ function freshports_Commits($element_record) {
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/element_record.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user_tasks.php');
 
-	freshports_CommitsHeader($port);
+	freshports_CommitsHeader($element_record);
 
 	$Commits = new Commit_Log_Elements($element_record->dbh);
 	$NumRows = $Commits->FetchInitialise($element_record->id);
@@ -1277,7 +1277,7 @@ function freshports_Commits($element_record) {
 		freshports_CommitPrint($element_record, $Commits);
 	}
 
-	freshports_CommitsFooter($port);
+	freshports_CommitsFooter($element_record);
 }
 
 

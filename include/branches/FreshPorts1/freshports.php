@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.4.2 2002-02-07 22:06:51 dan Exp $
+   # $Id: freshports.php,v 1.4.4.3 2002-02-15 17:49:54 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -53,13 +53,14 @@ GLOBAL $BannerAd;
 
 function freshports_Logo() {
 GLOBAL $TableWidth;
+GLOBAL $PHP_SELF;
 
 echo '<BR>
 <TABLE WIDTH="' . $TableWidth . '" CELLPADDING="0" CELLSPACING="0" BORDER="0">
 <TR>
         <TD><A HREF="';
 
-if ($PHP_SELF = "index.php") {
+if ($PHP_SELF == "/index.php3") {
 	echo 'other-copyrights.php';
 } else {
 	echo '/';

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: user.php,v 1.1.2.12 2003-10-02 12:16:12 dan Exp $
+	# $Id: user.php,v 1.1.2.13 2003-12-01 16:58:29 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -89,7 +89,10 @@ class User {
 				$myrow = pg_fetch_array($this->LocalResult, 0);
 				$this->PopulateValues($myrow);
 			} else {
-				die('user details not found');
+				freshports_CookieClear();
+				syslog(LOG_ERR, "Could not find user details for '$Cookie' from '" . 
+				        $_SERVER['REMOTE_ADDR'] . "' for '". $SERVER['REQUEST_URI'] . "'.");
+				die('Your user details were not found.  You have been logged out.  Please reload this page.');
 			}
 		} else {
 			$numrows = -1;

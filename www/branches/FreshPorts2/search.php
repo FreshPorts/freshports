@@ -1,7 +1,9 @@
-<?
-	# $Id: search.php,v 1.1.2.39 2003-01-24 17:41:12 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: search.php,v 1.1.2.40 2003-03-06 13:36:58 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
@@ -161,7 +163,7 @@ $sql = "
     FROM watch_list JOIN watch_list_element
         ON watch_list.id      = watch_list_element.watch_list_id
        AND watch_list.user_id = $User->id
-  GROUP BY watch_list_element.element_id) AS TEMP
+  GROUP BY wle_element_id) AS TEMP
        ON TEMP.wle_element_id = element.id";
 	}
 	

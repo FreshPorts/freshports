@@ -1,7 +1,7 @@
   <table WIDTH="152" BORDER="1" CELLSPACING="0" CELLPADDING="5"
             bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">
         <tr>
-         <td bgcolor="#AD0040" height="30"><font color="#FFFFFF">Login</font></td>
+         <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" SIZE="+1">Login</font></td>
         </tr>
         <tr>
          <td><script language="php">
@@ -23,7 +23,7 @@
 <br>
 <table WIDTH="152" BORDER="1" BORDER="1" CELLSPACING="0" CELLPADDING="5"
             bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">        <tr>
-         <td bgcolor="#AD0040" height="30"><font color="#FFFFFF">Ports</font></td>
+         <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" SIZE="+1">Ports</font></td>
         </tr>
         <tr>
     <td valign="top">
@@ -39,7 +39,7 @@
 <br>
  <table WIDTH="152" BORDER="1" BORDER="1" CELLSPACING="0" CELLPADDING="5"
             bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">        <tr>
-         <td bgcolor="#AD0040" height="30"><font color="#FFFFFF">This site</font></td>
+         <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" SIZE="+1">This site</font></td>
         </tr>
         <tr>
     <td valign="top">

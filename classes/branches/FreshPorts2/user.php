@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: user.php,v 1.1.2.11 2003-07-29 20:44:12 dan Exp $
+	# $Id: user.php,v 1.1.2.12 2003-10-02 12:16:12 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -77,7 +77,7 @@ class User {
 	function FetchByCookie($Cookie) {
 		$sql = "SELECT users.*
 		          FROM users
-				   WHERE cookie = '$Cookie'";
+				 WHERE cookie = '$Cookie'";
 
 #		echo "Users::Fetch sql = '$sql'<BR>";
 
@@ -107,28 +107,28 @@ class User {
 		# returned by Fetch.
 		#
 
-		$this->id							= $myrow["id"];
-		$this->name							= $myrow["name"];
+		$this->id						= $myrow["id"];
+		$this->name						= $myrow["name"];
 		$this->password					= $myrow["password"];
-		$this->cookie						= $myrow["cookie"];
-		$this->firstlogin					= $myrow["firstlogin"];
-		$this->lastlogin					= $myrow["lastlogin"];
-		$this->email						= $myrow["email"];
+		$this->cookie					= $myrow["cookie"];
+		$this->firstlogin				= $myrow["firstlogin"];
+		$this->lastlogin				= $myrow["lastlogin"];
+		$this->email					= $myrow["email"];
 		$this->watch_notice_id			= $myrow["watch_notice_id"];
 		$this->emailsitenotices_yn		= $myrow["emailsitenotices_yn"];
 		$this->emailbouncecount			= $myrow["emailbouncecount"];
-		$this->type							= $myrow["type"];
-		$this->status						= $myrow["status"];
-		$this->ip_address					= $myrow["ip_address"];
+		$this->type						= $myrow["type"];
+		$this->status					= $myrow["status"];
+		$this->ip_address				= $myrow["ip_address"];
 		$this->number_of_commits		= $myrow["number_of_commits"];
 		$this->number_of_days			= $myrow["number_of_days"];
 		$this->watch_list_add_remove	= $myrow["watch_list_add_remove"];
 		$this->last_watch_list_chosen	= $myrow["last_watch_list_chosen"];
 
-		$this->page_size					= $myrow["page_size"];
+		$this->page_size				= $myrow["page_size"];
 		if (!IsSet($this->page_size) || $this->page_size == '') {
 			GLOBAL $DefaultPageSize;	# from configuration/freshports.conf.php
-												# and also set in include/getvalues.php
+										# and also set in include/getvalues.php
 
 			$this->page_size = $DefaultPageSize;
 		}
@@ -140,7 +140,7 @@ class User {
 		          set watch_list_add_remove = \'' . AddSlashes($WatchListAddRemove) . '\'
 		        WHERE id                    =   ' . $this->id;
 
-		if ($Debug)	echo "Users::Fetch sql = '$sql'<BR>";
+#		if ($Debug)	echo "Users::Fetch sql = '$sql'<BR>";
 
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {

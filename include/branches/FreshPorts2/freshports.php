@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.48 2002-03-11 20:51:44 dan Exp $
+   # $Id: freshports.php,v 1.4.2.49 2002-03-19 14:12:34 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -52,6 +52,7 @@ $FreshPortsWatchedPortNotSuffix	= "\">Add</A></SMALL>";
 
 
 
+
 #
 # SEQUENCES
 #
@@ -61,6 +62,9 @@ $Sequence_User_ID		= 'users_id_seq';
 
 // path to the CVS repository
 $freshports_CVS_URL = "http://www.FreeBSD.org/cgi/cvsweb.cgi";
+
+// path to the ftp server
+$freshports_FTP_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports/";
 
 
 function freshports_CookieClear() {
@@ -492,6 +496,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 // This php3 fragment does the basic port information for a single port.
 //
 	GLOBAL $freshports_CVS_URL;
+	GLOBAL $freshports_FTP_URL;
 	GLOBAL $ShowDepends;
 	GLOBAL $FreshPortsWatchedPortPrefix;
 	GLOBAL $FreshPortsWatchedPortSuffix;
@@ -699,7 +704,7 @@ if ($ShowDepends) {
    if ($ShowChangesLink == "Y" || $ShowEverything) {
       // changes
       $HTML .= '<a HREF="' . $freshports_CVS_URL . '/ports/' .
-               $port->category . '/' .  $port->port . '">Changes</a>';
+               $port->category . '/' .  $port->port . '/">CVSWeb</a>';
    }
 
    // download
@@ -720,6 +725,9 @@ if ($ShowDepends) {
       $HTML .= ' <b>:</b> ';
       $HTML .= '<a HREF="' . $port->homepage . '">Homepage</a>';
    }
+
+	$HTML .= ' <b>:</b> ';
+	$HTML .= '<A HREF="' . $freshports_FTP_URL . $port->category . '/' . $port->port . '/">' . 'FTP</A>';
 
    $HTML .= "\n</DD>\n</DL>\n";
 

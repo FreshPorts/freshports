@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports_page_list_ports.php,v 1.1.2.3 2005-01-23 03:32:18 dan Exp $
+	# $Id: freshports_page_list_ports.php,v 1.1.2.4 2005-01-23 03:40:57 dan Exp $
 	#
 	# Copyright (c) 2005 DVL Software Limited
 	#
@@ -11,9 +11,18 @@
 class freshports_page_list_ports extends freshports_page {
 
 	var $_sql;
+	var $_description;
 
     function freshports_page_list_ports($attributes = array()) {
 		$this->freshports_page($attributes);
+	}
+
+	function setDescription($Description) {
+		$this->_description = $Description;
+	}
+
+	function getDescription() {
+		return $this->_description;
 	}
 
 	function getSQL() {
@@ -166,19 +175,19 @@ WHERE ports.element_id  = element.id
 
 	function toHTML() {
 
-		$this->addBodyContent('<TR><TD>
-These are the broken ports.
-</TD></TR>');
+		$this->addBodyContent('<TR><TD>' . $this->getDescription() . '</TD></TR>');
 
 		// make sure the value for $sort is valid
 
-		$HTML = "<TR><TD>\nThis page is " . $this->getSortedbyHTML();
+		$SortStatement = "<TR><TD>\nThis page is " . $this->getSortedbyHTML() . "</TD></TR>\n";
 
-		$HTML .= "</TD></TR>\n";
+		$this->addBodyContent($SortStatement); 
 
 		$this->addBodyContent($HTML);
 
 		$this->addBodyContent($this->getPorts());
+
+		$this->addBodyContent($SortStatement); 
 
 		return parent::toHTML();
 	}

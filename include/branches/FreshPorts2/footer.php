@@ -1,5 +1,5 @@
 <?
-	# $Id: footer.php,v 1.5.2.17 2003-07-08 19:38:22 dan Exp $
+	# $Id: footer.php,v 1.5.2.18 2003-07-30 12:11:40 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 ?>
@@ -50,25 +50,14 @@ ALT="powered by apache" BORDER="0" WIDTH="259" HEIGHT="32"></A>
 
 <TR><TD>
 <table width="100%">
-<tr><td align="left">
-<p>
-
-<a href="http://validator.w3.org/check/referer"><img border="0" 
-src="/images/valid-html401" alt="Valid HTML 4.01!" height="31" width="88"></a>
-
-&nbsp;
-
-<a href="http://jigsaw.w3.org/css-validator/check/referer"><img style="border:0;width:88px;height:31px"
-src="/images/vcss" alt="Valid CSS!"></a>
-
-&nbsp;
-
-<a href="http://feeds.archive.org/validator/check?url=http://<?php echo $_SERVER['HTTP_HOST']; ?>/news.php"><img 
-src="/images/valid-rss-dylan4.gif" alt="[Valid RSS]" title="Validate my RSS feed" width="88" height="31" border="0"></a>
-
-</p>
-</td><td align="right" valign="top">
-
+<tr><td align="right" valign="top">
+<small>
+Valid 
+<a href="http://validator.w3.org/check/referer">HTML</a>, 
+<a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a>, and
+<a href="http://feeds.archive.org/validator/check?url=http://<?php echo $_SERVER['HTTP_HOST']; ?>/news.php">RSS</a>.
+</small>
+<BR>
 <? echo freshports_copyright(); ?>
 
 </td></tr>

@@ -1,5 +1,5 @@
 <?
-	# $Id: legal.php,v 1.1.2.9 2002-12-11 04:44:36 dan Exp $
+	# $Id: legal.php,v 1.1.2.10 2003-01-06 14:14:40 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -81,11 +81,17 @@
   </TD></TR>
 </TABLE>
 </TD>
-  <TD VALIGN="top" WIDTH="*" ALIGN="center">
-    <? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php') ?>
- </TD>
+
+	<?
+	freshports_SideBar();
+	?>
+
 </TR>
 </TABLE>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
+
+<?
+freshports_ShowFooter();
+?>
+
 </body>
 </html>

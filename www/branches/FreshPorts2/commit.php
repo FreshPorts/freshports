@@ -1,5 +1,5 @@
 <?
-	# $Id: commit.php,v 1.1.2.20 2002-12-12 02:45:19 dan Exp $
+	# $Id: commit.php,v 1.1.2.21 2003-01-06 14:14:36 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -310,19 +310,19 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 
 </script>
 </TD>
-  <TD VALIGN="top" WIDTH="*" ALIGN="center">
-   <? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php') ?>
- </TD>
+
+	<?
+	freshports_SideBar();
+	?>
+
 </TR>
 </TABLE>
 
 <BR>
 
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<TR><TD>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
-</TD></TR>
-</TABLE>
+<?
+freshports_ShowFooter();
+?>
 
 </body>
 </html>

@@ -1,5 +1,5 @@
 <?
-	# $Id: search.php,v 1.1.2.36 2002-12-12 02:45:24 dan Exp $
+	# $Id: search.php,v 1.1.2.37 2003-01-06 14:14:43 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -394,17 +394,17 @@ echo "</td></tr>\n";
 </table>
 
 </td>
-  <TD VALIGN="top" WIDTH="*" ALIGN="center">
-    <? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php') ?>
- </td>
+
+  <?
+  freshports_SideBar();
+  ?>
+
 </tr>
 </table>
 
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<TR><TD>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
-</TD></TR>
-</TABLE>
+<?
+freshports_ShowFooter();
+?>
 
 </body>
 </html>

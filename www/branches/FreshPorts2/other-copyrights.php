@@ -1,5 +1,5 @@
 <?
-	# $Id: other-copyrights.php,v 1.1.4.8 2002-12-11 04:44:38 dan Exp $
+	# $Id: other-copyrights.php,v 1.1.4.9 2003-01-06 14:14:41 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -39,18 +39,17 @@
 </BLOCKQUOTE>
 	</TD>
 
-  <TD VALIGN="top" WIDTH="*" ALIGN="center">
-   <? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php') ?>
-  </TD>
+	<?
+	freshports_SideBar();
+	?>
+
   </TR>
 
 </TABLE>
 
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<TR><TD>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
-</TD></TR>
-</TABLE>
+<?
+freshports_ShowFooter();
+?>
 
 </BODY>
 </HTML>

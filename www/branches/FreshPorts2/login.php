@@ -1,5 +1,5 @@
 <?
-	# $Id: login.php,v 1.1.2.28 2002-12-16 13:39:44 dan Exp $
+	# $Id: login.php,v 1.1.2.29 2003-01-06 14:14:40 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -229,17 +229,17 @@ echo '<BR><A HREF="forgotten-password.php">Forgotten your password?</a>';
 
 ?>
 </TD>
-  <TD VALIGN="top" WIDTH="*" ALIGN="center">
-    <? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php') ?>
- </TD>
+
+	<?
+	freshports_SideBar();
+	?>
+
 </TR>
 </TABLE> 
 
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<TR><TD>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
-</TD></TR>
-</TABLE>
+<?
+freshports_ShowFooter();
+?>
 
 </body>
 </html>

@@ -1,14 +1,12 @@
 <?
-	# $Id: watch-list.php,v 1.2.2.18 2002-12-12 02:45:25 dan Exp $
+	# $Id: watch-list.php,v 1.2.2.19 2003-01-06 14:14:44 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
-
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
-
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_list_element.php');
 
 	$Debug = 0;
@@ -148,20 +146,14 @@ NOTES
 </TD>
 </tr>
 </table>
-  <TD VALIGN="top" WIDTH="*" ALIGN="center">
-    <?
-       require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php');
-    ?>
- </TD>
+  <?
+  freshports_SideBar();
+  ?>
 </TABLE>
 
-
-
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<TR><TD>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
-</TD></TR>
-</TABLE>
+<?
+freshports_ShowFooter();
+?>
 
 </BODY>
 </HTML>

@@ -1,5 +1,5 @@
 <?
-	# $Id: authors.php,v 1.1.2.14 2002-12-12 02:45:19 dan Exp $
+	# $Id: authors.php,v 1.1.2.15 2003-01-06 14:14:36 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -93,17 +93,17 @@ name just so it stays a secret.</LI>
 </TR>
 </TABLE>
 </td>
-  <TD VALIGN="top" WIDTH="*" ALIGN="center">
-    <? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php') ?>
- </td>
+
+	<?
+	freshports_SideBar();
+	?>
+
 </tr>
 </table>
 
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<TR><TD>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
-</TD></TR>
-</TABLE>
+<?
+freshports_ShowFooter();
+?>
 
 </body>
 </html>

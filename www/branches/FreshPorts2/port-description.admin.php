@@ -1,5 +1,5 @@
 <?
-	# $Id: port-description.admin.php,v 1.1.2.12 2002-12-11 04:44:39 dan Exp $
+	# $Id: port-description.admin.php,v 1.1.2.13 2003-01-06 14:14:41 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -254,13 +254,17 @@ if ($NumRows) {
 
 </table>
 </td>
-<td valign="top">
 
-<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php') ?>
+	<?
+	freshports_SideBar();
+	?>
 
-</td>
 </tr>
 </table>
- <? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
+
+<?
+freshports_ShowFooter();
+?>
+
 </body>
 </html>

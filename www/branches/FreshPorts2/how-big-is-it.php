@@ -1,5 +1,5 @@
 <?
-	# $Id: how-big-is-it.php,v 1.1.2.7 2002-12-12 02:45:21 dan Exp $
+	# $Id: how-big-is-it.php,v 1.1.2.8 2003-01-06 14:14:39 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -320,18 +320,16 @@ web pages on <a href="http://www.Google.com/">Google</a><small><sup><a href="#1"
 
 </TABLE>
 </TD>
-  <TD VALIGN="top" WIDTH="*" ALIGN="center">
-    <?
-       require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php');
-    ?>
- </TD>
+
+	<?
+	freshports_SideBar();
+	?>
+
 </TABLE>
 
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<TR><TD>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
-</TD></TR>
-</TABLE>
+<?
+freshports_ShowFooter();
+?>
 
 </BODY>
 </HTML>

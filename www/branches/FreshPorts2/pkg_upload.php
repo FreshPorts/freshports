@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_upload.php,v 1.5.2.28 2002-12-18 17:44:29 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.29 2003-01-06 14:14:41 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -295,19 +295,17 @@ function ChooseWatchLists($UserID, $db) {
 </TR>
 </TABLE>
 </TD>
-  <TD VALIGN="top" WIDTH="*" ALIGN="center">
-    <?
-		require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php');
-    ?>
- </TD>
+
+	<?
+	freshports_SideBar();
+	?>
+
 </TR>
 </TABLE>
 
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<TR><TD>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
-</TD></TR>
-</TABLE>
+<?
+freshports_ShowFooter();
+?>
 
 </BODY>
 </HTML>

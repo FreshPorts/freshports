@@ -1,5 +1,5 @@
 <?
-	# $Id: date.php,v 1.1.2.16 2002-12-11 04:44:34 dan Exp $
+	# $Id: date.php,v 1.1.2.17 2003-01-06 14:14:38 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -245,22 +245,17 @@ echo '</table>';
 
 ?>
 
-</TD>
-  <TD VALIGN="top" WIDTH="*" ALIGN="center">
-   <? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php') ?>
-</TD>
+</td>
 
+	<?
+	freshports_SideBar();
+	?>
+</tr>
+</table>
 
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<TR><TD>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
-</TD></TR>
-</TABLE>
-
-
-</body>
-</html>
-
+<?
+freshports_ShowFooter();
+?>
 
 </body>
 </html>

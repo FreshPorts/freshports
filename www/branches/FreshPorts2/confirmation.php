@@ -1,5 +1,5 @@
 <?
-	# $Id: confirmation.php,v 1.1.2.9 2002-12-12 02:45:20 dan Exp $
+	# $Id: confirmation.php,v 1.1.2.10 2003-01-06 14:14:37 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -74,19 +74,17 @@
 
 </table>
 </td>
-  <TD VALIGN="top" WIDTH="*" ALIGN="center">
-    <?
-       require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php');
-    ?>
- </td>
+
+	<?
+	freshports_SideBar();
+	?>
+
 </tr>
 </table>
 
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<TR><TD>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
-</TD></TR>
-</TABLE>
+<?
+freshports_ShowFooter();
+?>
 
 </body>
 </html>

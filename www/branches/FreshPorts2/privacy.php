@@ -1,5 +1,5 @@
 <?
-	# $Id: privacy.php,v 1.1.2.10 2002-12-12 02:45:24 dan Exp $
+	# $Id: privacy.php,v 1.1.2.11 2003-01-06 14:14:43 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -35,11 +35,17 @@
 </TD></TR>
 </TABLE>
 </TD>
-<TD VALIGN="top" WIDTH="*" ALIGN="center">
-    <? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php') ?>
-</TD>
+
+  <?
+  freshports_SideBar();
+  ?>
+
 </TR>
 </TABLE>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
+
+<?
+freshports_ShowFooter();
+?>
+
 </body>
 </html>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-list-maintenance.php,v 1.1.2.21 2003-01-04 17:20:39 dan Exp $
+	# $Id: watch-list-maintenance.php,v 1.1.2.22 2003-01-06 14:14:44 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -312,18 +312,16 @@ When clicking on Add/Remove for a port,<br> the action should affect
 
 </p>
 </TD>
-  <TD VALIGN="top" WIDTH="*" ALIGN="center">
-    <?
-       require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php');
-    ?>
- </TD>
+
+	<?
+	freshports_SideBar();
+	?>
+
 </TABLE>
 
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<TR><TD>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
-</TD></TR>
-</TABLE>
+<?
+freshports_ShowFooter();
+?>
 
 </BODY>
 </HTML>

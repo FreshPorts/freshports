@@ -18,8 +18,7 @@ require( "/www/freshports.org/_private/getvalues.php3");
 <? include("/www/freshports.org/_private/header.inc") ?>
 <table width="100%">
 <tr><td valign="top">
-<h2>in the news</h2>
-
+<font size="+2">in the news</font> 
 <p>This page is just a place for me to record the freshports articles which appear
 on other sites.  Links are recorded in reverse chronological order (i.e. newest first).  If you spot an article which 
 is not listed here, please <a href="http://freshports.org/phorum/list.php?f=3">let me know</a>.

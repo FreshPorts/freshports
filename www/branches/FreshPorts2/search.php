@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.54 2004-06-01 16:50:15 dan Exp $
+	# $Id: search.php,v 1.1.2.55 2004-06-02 12:34:52 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -12,6 +12,9 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/htmlify.php');
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
+	
+	define('ORDERBYPORT',     'port');
+	define('ORDERBYCATEGORY', 'category');
 
 	$Debug = 0;
 #	if ($Debug) phpinfo();
@@ -54,6 +57,7 @@
 	if (IsSet($_REQUEST['deleted']))         $deleted			= AddSlashes(trim($_REQUEST['deleted']));
 	if (IsSet($_REQUEST['casesensitivity'])) $casesensitivity	= AddSlashes(trim($_REQUEST['casesensitivity']));
 	if (IsSet($_REQUEST['start']))           $start				= intval(AddSlashes(trim($_REQUEST['start'])));
+	if (IsSet($_REQUEST['orderby']))         $orderby			= AddSlashes(trim($_REQUEST['orderby']));
 
 	if ($stype == 'messageid') {
 		header('Location: http://' . $_SERVER['HTTP_HOST'] . "/commit.php?message_id=$query");
@@ -292,8 +296,16 @@ switch ($deleted) {
 		$sql .= " and element.status = 'A' ";
 }
 
-$sql .= "\n order by categories.name, element.name";
+switch ($orderby) {
+	case ORDERBYCATEGORY:
+		$sql .= "\n order by categories.name, element.name";
+		break;
 
+	case ORDERBYPORT:
+	default:
+		$sql .= "\n order by element.name, categories.name";
+		break;
+}
 
 #$sql .= "\n limit $num";
 
@@ -389,6 +401,11 @@ Search for:<BR>
 	<INPUT TYPE=radio <? if ($casesensitivity == "caseinsensitive") echo 'CHECKED'; ?> VALUE=caseinsensitive NAME=casesensitivity> Case insensitive search
 </td><td>
 	<INPUT TYPE="submit" VALUE="Search" NAME="search">
+</td></tr><td><td><tdcolspan="3">
+	Sort by: <SELECT name="orderby">
+		<OPTION VALUE="<?php echo ORDERBYPORT;     ?>" <?if ($orderby == ORDERBYPORT        ) echo 'SELECTED' ?>>Port
+		<OPTION VALUE="<?php echo ORDERBYCATEGORY; ?>" <?if ($orderby == ORDERBYCATEGORY    ) echo 'SELECTED' ?>>Category
+	</SELECT>
 </td></tr>
 </table>
 </form>

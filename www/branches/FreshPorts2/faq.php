@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.49 2004-07-02 14:01:43 dan Exp $
+	# $Id: faq.php,v 1.1.2.50 2004-08-09 22:37:14 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -471,6 +471,24 @@ Here are a few examples:
 	<p>
 	This new feature was added on 31 December 2003.
 
+
+	</TD></TR><TR><TD>&nbsp;</TD></TR>
+
+<TR>
+<? echo freshports_PageBannerText("What is /usr/ports/UPDATING?"); ?>
+</TR>
+
+   <TR><TD>
+   <P>
+<code class="code">/usr/ports/UPDATING</code> is similar to
+<code class="code">/usr/src/UPDATING</code>, but for ports,
+not for the source tree.
+
+<p>
+FreshPorts parses this file and attempts to relate the entries to any ports
+it can find.  Such relations are not always possible.  We do the best we can.
+The <a href="/net/openldap22-client/">net/openldap22-client</a> port is a good
+example of what to expect.
 
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 

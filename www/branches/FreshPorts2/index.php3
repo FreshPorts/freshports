@@ -1,5 +1,5 @@
 <?
-   # $Id: index.php3,v 1.34.2.9 2001-12-05 01:40:28 dan Exp $
+   # $Id: index.php3,v 1.34.2.10 2001-12-07 18:01:56 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -190,7 +190,7 @@ order by commit_log.commit_date desc,
 
 ?>
 
-<tr><td>
+<tr><td VALIGN="top">
 <table width="100%" border="1" CELLSPACING="0" CELLPADDING="5"
             bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">
 <tr>

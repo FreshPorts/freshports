@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-category.php,v 1.1.2.4 2002-02-13 00:27:48 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.5 2002-02-21 06:29:41 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -27,7 +27,7 @@ function freshports_Category($category, $db) {
 	<tr><td valign="top" width="100%">
 	<table width="100%" border="0">
 		<tr>
-	    <td bgcolor="#AD0040" height="29"><font color="#FFFFFF" size="+2">freshports - <? echo $title ?></font></td>
+		 <? freshports_PageBannerText($title); ?>
 		</tr>
 
 	<?
@@ -69,22 +69,28 @@ $ShowDescriptionLink  = "N";
 		$HTML .= freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription);
 	} // end for
 
-	$HTML .= freshports_echo_HTML('</tr>');
-
-	$HTML .= freshports_echo_HTML('</td></tr>');
-
-	$HTML .= freshports_echo_HTML('</table>');
-
-	$HTML .= freshports_echo_HTML('</td></tr>');
+#	$HTML .= freshports_echo_HTML('</tr>');
+#
+#	$HTML .= freshports_echo_HTML('</td></tr>');
+#
+#	$HTML .= freshports_echo_HTML('</table>');
+#
+#	$HTML .= freshports_echo_HTML('</td></tr>');
 	echo $HTML;      
 
 	?>
-
+</TD>
+</TABLE>
+<TD VALIGN="top">
+   <? include("./include/side-bars.php") ?>
+</TD>
+</TR>
+</TABLE>
 	</td>
 	</tr>
 	</table>
 
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="1" ALIGN="center">
 <TR><TD>
 <? include("./include/footer.php") ?>
 </TD></TR>

@@ -1,5 +1,5 @@
 <?
-	# $Id: forgotten-password.php,v 1.1.2.9 2002-05-18 08:25:05 dan Exp $
+	# $Id: forgotten-password.php,v 1.1.2.10 2002-05-18 19:05:31 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -114,7 +114,7 @@ if ($submit) {
                     "Your password is:\n" .
                     $myrow["password"] . "\n" .
                     "\n" .
-                    "the request came from $REMOTE_ADDR:$REMOTE_PORT";
+                    "the request came from " . $_SERVER["REMOTE_ADDR"] . ':' . $_SERVER["REMOTE_PORT"];
 
          mail($myrow["email"], "FreshPorts - password", $message,
          "From: webmaster@freshports.org\nReply-To: webmaster@freshports.org\nX-Mailer: PHP/" . phpversion());

@@ -1,5 +1,5 @@
 <?
-	# $Id: side-bars.php,v 1.4.2.28 2002-05-28 22:47:48 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.29 2002-06-02 14:05:31 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -103,7 +103,7 @@ if ($visitor) {
 	echo freshports_SideBarHTML($_SERVER["PHP_SELF"], "/graphs.php",        "Graphs")      . '<BR>';
 	echo freshports_SideBarHTML($_SERVER["PHP_SELF"], "/stats/",            "Traffic")     . '<BR>';
 
-	@readfile($_SERVER["DOCUMENT_ROOT"] . "/../configuration/stats.html");
+	@readfile($_SERVER["DOCUMENT_ROOT"] . "/../dynamic/stats.html");
 ?>
 	</TD>
 	</TR>

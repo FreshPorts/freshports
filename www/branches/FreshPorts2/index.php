@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.33 2002-04-12 14:28:37 dan Exp $
+	# $Id: index.php,v 1.1.2.34 2002-04-12 18:22:21 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -37,6 +37,13 @@ function freshports_SummaryForDay($MinusN) {
       echo '   </tr>';
       echo '   </table>';
    }
+}
+
+function freshports_MorePortsToShow($message_id, $NumberOfPortsInThisCommit, $MaxNumberPortsToShow) {
+	$HTML .= "<BR>Only the first $MaxNumberPortsToShow of $NumberOfPortsInThisCommit commits are shown above: ";
+	$HTML .= freshports_Commit_Link($message_id);
+
+	return $HTML;
 }
 
 
@@ -135,26 +142,14 @@ if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
          $result = pg_exec($database, $sql);
          if ($result) {
             $numrows = pg_numrows($result);
-#            echo $numrows . " rows to fetch\n";
+#			echo $numrows . " rows to fetch\n";
 			if ($numrows) { 
 
 				$i=0;
 				$GlobalHideLastChange = "N";
-#				unset($ThisChangeLogID);
-				while ($myrow = pg_fetch_array ($result, $i)) {
+				for ($i = 0; $i < $numrows; $i++) {
+					$myrow = pg_fetch_array ($result, $i);
 					$rows[$i] = $myrow;
-
-					#
-					# if we do a limit, it applies to the big result set
-					# not the resulting set if we also do a DISTINCT
-					# thus, count the commit id's ourselves.
-					#
-#					if ($ThisChangeLogID <> $myrow["commit_log_id"]) {
-#						$ThisChangeLogID  = $myrow["commit_log_id"];
-						$i++;
-#					}
-#					echo "$i, ";
-					if ($i >= $numrows) break;
 				}
 
 				$NumRows = $numrows;
@@ -184,11 +179,10 @@ ports. A port is marked as new for 10 days.
 <?
 #				print "NumRows = $NumRows\n<BR>";
 				$HTML = "";
-				unset($ThisChangeLogID);
+				unset($ThisCommitLogID);
 				for ($i = 0; $i < $NumRows; $i++) {
 					$myrow = $rows[$i];
-					$ThisChangeLogID = $myrow["commit_log_id"];
-
+					$ThisCommitLogID = $myrow["commit_log_id"];
 
 					if ($LastDate <> $myrow["commit_date"]) {
 						$LastDate = $myrow["commit_date"];
@@ -202,15 +196,15 @@ ports. A port is marked as new for 10 days.
 					$HTML .= "<TR><TD>\n";
 
 					// OK, while we have the log change log, let's put the port details here.
-					$MultiplePortsThisCommit = 0;
-					while ($j < $NumRows && $rows[$j]["commit_log_id"] == $ThisChangeLogID) {
+
+					# count the number of ports in this commit
+					$NumberOfPortsInThisCommit = 0;
+					$MaxNumberPortsToShow = 10;
+					while ($j < $NumRows && $rows[$j]["commit_log_id"] == $ThisCommitLogID) {
+						$NumberOfPortsInThisCommit++;
 						$myrow = $rows[$j];
 
-						if ($MultiplePortsThisCommit) {
-							$HTML .= '<BR>';
-						}
-
-						if (!$MultiplePortsThisCommit) {
+						if ($NumberOfPortsInThisCommit == 1) {
 							GLOBAL $freshports_mail_archive;
 
 							$HTML .= '<SMALL>';
@@ -222,69 +216,75 @@ ports. A port is marked as new for 10 days.
 							if ($myrow["encoding_losses"] == 't') {
 								$HTML .= '&nbsp;' . freshports_Encoding_Errors();
 							}
+						}
 
+						if ($NumberOfPortsInThisCommit <= $MaxNumberPortsToShow) {
 
 							$HTML .= "<BR>\n";
-						}
 
-						$HTML .= '<BIG><B>';
-						$HTML .= '<A HREF="/' . $myrow["category"] . '/' . $myrow["port"] . '/">';
-						$HTML .= $myrow["port"];
+							$HTML .= '<BIG><B>';
+							$HTML .= '<A HREF="/' . $myrow["category"] . '/' . $myrow["port"] . '/">';
+							$HTML .= $myrow["port"];
 						
-						if (strlen($myrow["version"]) > 0) {
-							$HTML .= ' ' . $myrow["version"];
-							if (strlen($myrow["revision"]) > 0 && $myrow["revision"] != "0") {
-					    		$HTML .= '-' . $myrow["revision"];
+							if (strlen($myrow["version"]) > 0) {
+								$HTML .= ' ' . $myrow["version"];
+								if (strlen($myrow["revision"]) > 0 && $myrow["revision"] != "0") {
+						    		$HTML .= '-' . $myrow["revision"];
+								}
 							}
-						}
 
-						$HTML .= "</A></B></BIG>\n";
+							$HTML .= "</A></B></BIG>\n";
 
-						$HTML .= '<A HREF="/' . $myrow["category"] . '/">';
-						$HTML .= $myrow["category"]. "</A>";
-						$HTML .= '&nbsp;';
+							$HTML .= '<A HREF="/' . $myrow["category"] . '/">';
+							$HTML .= $myrow["category"]. "</A>";
+							$HTML .= '&nbsp;';
 
-						if ($WatchListID) {
-							if ($myrow["watch"]) {
-								$HTML .= ' '. freshports_Watch_Link_Remove($myrow["element_id"]);
-							} else {
-								$HTML .= ' '. freshports_Watch_Link_Add($myrow["element_id"]);
+							if ($WatchListID) {
+								if ($myrow["watch"]) {
+									$HTML .= ' '. freshports_Watch_Link_Remove($myrow["element_id"]);
+								} else {
+									$HTML .= ' '. freshports_Watch_Link_Add($myrow["element_id"]);
+								}
 							}
+
+							$HTML .= "\n&nbsp;";
+
+							$HTML .= freshports_CommitFilesLink($myrow["commit_log_id"], $myrow["category"], $myrow["port"]);
+							$HTML .= "&nbsp;";
+
+							// indicate if this port has been removed from cvs
+							if ($myrow["status"] == "D") {
+								$HTML .= " " . freshports_Refresh_Icon() . "\n";
+							}
+
+							// indicate if this port needs refreshing from CVS
+							if ($myrow["needs_refresh"]) {
+								$HTML .= " " . freshports_Deleted_Icon() . "\n";
+							}
+
+							if ($myrow["date_added"] > Time() - 3600 * 24 * $DaysMarkedAsNew) {
+								$MarkedAsNew = "Y";
+								$HTML .= freshports_New_Icon() . "\n";
+							}
+
+							if ($myrow["forbidden"]) {
+								$HTML .= freshports_Forbidden_Icon() . "\n";
+							}
+
+							if ($myrow["broken"]) {
+								$HTML .= freshports_Broken_Icon() . "\n";
+							}
+
+							$HTML .= $myrow["short_description"] . "\n";
 						}
-
-						$HTML .= "\n&nbsp;";
-
-						$HTML .= freshports_CommitFilesLink($myrow["commit_log_id"], $myrow["category"], $myrow["port"]);
-						$HTML .= "&nbsp;";
-
-						// indicate if this port has been removed from cvs
-						if ($myrow["status"] == "D") {
-							$HTML .= " " . freshports_Refresh_Icon() . "\n";
-						}
-
-						// indicate if this port needs refreshing from CVS
-						if ($myrow["needs_refresh"]) {
-							$HTML .= " " . freshports_Deleted_Icon() . "\n";
-						}
-
-						if ($myrow["date_added"] > Time() - 3600 * 24 * $DaysMarkedAsNew) {
-							$MarkedAsNew = "Y";
-							$HTML .= freshports_New_Icon() . "\n";
-						}
-
-						if ($myrow["forbidden"]) {
-							$HTML .= freshports_Forbidden_Icon() . "\n";
-						}
-
-						if ($myrow["broken"]) {
-							$HTML .= freshports_Broken_Icon() . "\n";
-						}
-
-						$HTML .= $myrow["short_description"] . "\n";
 
 						$j++;
-						$MultiplePortsThisCommit = 1;
 					} // end while
+
+
+					if ($NumberOfPortsInThisCommit > $MaxNumberPortsToShow) {
+						$HTML .= '<BR>' . freshports_MorePortsToShow($myrow["message_id"], $NumberOfPortsInThisCommit, $MaxNumberPortsToShow);
+					}
 
 					$i = $j - 1;
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit_log_elements.php,v 1.1.2.3 2003-09-25 15:46:58 dan Exp $
+	# $Id: commit_log_elements.php,v 1.1.2.4 2004-02-13 15:07:54 dan Exp $
 	#
 	# Copyright (c) 2003 DVL Software Limited
 	#
@@ -42,6 +42,7 @@ select $element_id,
        security_notice.id as security_notice_id
   from commit_log, commit_log_elements LEFT OUTER JOIN security_notice
        ON commit_log_elements.commit_log_id = security_notice.commit_log_id
+          AND security_notice.status        = 'A'
  where commit_log.id                  = commit_log_elements.commit_log_id
    and commit_log_elements.element_id = $element_id
  order by commit_log.commit_date desc ";

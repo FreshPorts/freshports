@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: 404-for-virtual-pages.php,v 1.1.2.2 2003-02-03 13:11:02 dan Exp $
+	# $Id: 404-for-virtual-pages.php,v 1.1.2.3 2003-03-04 17:38:43 dan Exp $
 	#
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
@@ -207,7 +207,7 @@ will look similar to this:
 </table>
 </blockquote>
 
-<b>
+<p>
 For databases/zpygresqlda, there will be three entries in this table, one for each category.
 
 <p>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: forgotten-password.php,v 1.1.2.22 2003-05-06 11:33:13 dan Exp $
+	# $Id: forgotten-password.php,v 1.1.2.23 2003-05-23 12:32:49 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -78,16 +78,20 @@ if ($submit) {
 
       $OKToMail = 1;
       if ($myrow["emailbouncecount"] > 0) {
-         $error = "Sorry, but previous email to you has bounced, so we're not going to try sending it out.  Please contact " .
-                  'the <A HREF="' . MAILTO . ':webmaster&#64;freshports.org?subject=I forgot my password">webmaster</A> for help.';
-         $OKToMail = 0;
-      } else {
-         if ($myrow["email"] == "") {
-             $error = 'Guess what?  You never gave us an email address.  So I guess you must ' . 
-                      'contact the <A HREF="' . MAILTO . ':webmaster&#64;freshports.org?subject=I forgot my password">webmaster</A> for help.';
-             $OKToMail = 0;
-         }
+         $error = "Sorry, but previous email to you has bounced, so we're not sure it's going to get to you.  But we sent it out
+						anyway.  Please contact " .
+                  'the <A HREF="' . MAILTO . ':webmaster&#64;freshports.org?subject=I forgot my password">webmaster</A> for help
+                  if it doesn\'t arrive.';
+         $OKToMail = 1;
+			syslog(LOG_NOTICE, "Forgotten password: previous email to '" . $myrow['email'] . "' bounced");
       }
+
+		if ($myrow["email"] == "") {
+			$error = 'Guess what?  You never gave us an email address.  So I guess you must ' . 
+						'contact the <A HREF="' . MAILTO . ':webmaster&#64;freshports.org?subject=I forgot my password">webmaster</A> for help.';
+			$OKToMail = 0;
+			syslog(LOG_NOTICE, "Forgotten password: '" . $myrow['name'] . "' never supplied an email.");
+		}
 
       if ($OKToMail) {
          # send out email
@@ -108,6 +112,7 @@ if ($submit) {
          "From: webmaster@freshports.org\nReply-To: webmaster@freshports.org\nX-Mailer: PHP/" . phpversion());
 
          $MailSent = 1;
+			syslog(LOG_NOTICE, "Forgotten password: email for '" . $myrow['name'] . "' sent to '" . $myrow['email'] . "'.");
       }
    }
 }

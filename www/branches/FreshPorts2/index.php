@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.74 2003-04-27 14:48:12 dan Exp $
+	# $Id: index.php,v 1.1.2.75 2003-04-28 16:24:38 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -151,8 +151,9 @@ if ($User->id) {
 ) AS SECURITY LEFT OUTER JOIN
 (SELECT element_id as wle_element_id, COUNT(watch_list_id) as watch
   FROM watch_list JOIN watch_list_element
-    ON watch_list.id      = watch_list_element.watch_list_id
-       AND watch_list.user_id = 1
+        ON watch_list.id      = watch_list_element.watch_list_id
+       AND watch_list.user_id = $User->id
+       AND watch_list.in_service
 GROUP BY element_id) AS W
 ON        W.wle_element_id = SECURITY.element_id
 ";

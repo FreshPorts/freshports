@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.21 2003-04-27 14:45:56 dan Exp $
+	# $Id: categories.php,v 1.1.2.22 2003-04-28 23:43:34 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -18,6 +18,10 @@
 					'FreeBSD, index, applications, ports');
 					
 	$Debug = 0;
+
+	DEFINE('VIRTUAL', '<sup>*</sup>'); 
+	$Primary['t'] = '';
+   $Primary['f'] = VIRTUAL;
 
 	$AllowedToEdit = $User->IsTaskAllowed(FRESHPORTS_TASKS_CATEGORY_VIRTUAL_DESCRIPTION_SET);
 
@@ -37,7 +41,8 @@
   </tr>
 <tr><td COLSPAN="<?php echo $ColSpan; ?>">
 <P>
-This page lists the categories sorted by various categories.
+This page lists the categories and can be sorted by various criteria.  Virtual
+categories are indicated by <?php echo VIRTUAL; ?>.
 </P>
 
 <P>
@@ -136,7 +141,7 @@ if (!$result) {
 	$NumRows = pg_numrows($result);
 	while ($myrow = pg_fetch_array($result, $i)) {
 		$HTML .= freshports_echo_HTML('<tr>');
-		$HTML .= freshports_echo_HTML('<td valign="top"><a href="/' . $myrow["category"] . '/">' . $myrow["category"] . ' ' . $myrow["is_primary"] . '</a></td>');
+		$HTML .= freshports_echo_HTML('<td valign="top"><a href="/' . $myrow["category"] . '/">' . $myrow["category"] . $Primary[$myrow["is_primary"]] . '</a></td>');
 
 		if ($AllowedToEdit) {
 			$HTML .= freshports_echo_HTML('<td valign="top"><a href="/category-maintenance.php?category=' . $myrow["category"] . '">update</a></td>');

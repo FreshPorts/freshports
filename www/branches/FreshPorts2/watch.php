@@ -1,5 +1,5 @@
 <?
-	# $Id: watch.php,v 1.1.2.18 2002-05-22 04:30:30 dan Exp $
+	# $Id: watch.php,v 1.1.2.19 2002-05-26 12:46:07 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -50,6 +50,8 @@ $WatchID = freshports_MainWatchID($UserID, $db);
 // make sure the value for $sort is valid
 
 echo "<tr><td>\nThis page is ";
+
+$sort = $_GET["sort"];
 
 switch ($sort) {
 /* sorting by port is disabled. Doesn't make sense to do this

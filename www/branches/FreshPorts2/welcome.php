@@ -1,5 +1,5 @@
 <?
-	# $Id: welcome.php,v 1.1.2.4 2002-02-23 22:19:33 dan Exp $
+	# $Id: welcome.php,v 1.1.2.5 2002-02-23 23:27:42 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -13,7 +13,7 @@
 					"FreeBSD, index, applications, ports");
 
 ?>
-<table width="100%" border="0">
+<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <tr><td valign="top">
 <table width="100%" border="0" CELLSPACING="0" CELLPADDING="5"
             bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">

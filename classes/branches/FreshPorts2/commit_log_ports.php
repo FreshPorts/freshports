@@ -1,5 +1,5 @@
 <?
-	# $Id: commit_log_ports.php,v 1.1.2.15 2004-02-13 15:08:37 dan Exp $
+	# $Id: commit_log_ports.php,v 1.1.2.16 2004-02-13 17:24:18 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -54,7 +54,7 @@ select commit_log.id,
        needs_refresh
   from commit_log, commit_log_ports LEFT OUTER JOIN security_notice
        ON commit_log_ports.commit_log_id = security_notice.commit_log_id
-          AND security_notice.status = 'A'
+          AND security_notice.security_notice_status_id = 'A'
  where commit_log.id            = commit_log_ports.commit_log_id
    and commit_log_ports.port_id = $port_id
  order by commit_log.commit_date desc ";

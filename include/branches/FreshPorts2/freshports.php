@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.83 2002-04-21 18:22:20 dan Exp $
+	# $Id: freshports.php,v 1.4.2.84 2002-04-22 01:16:43 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -541,18 +541,15 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 		$HTML .= freshports_Forbidden_Icon() . "\n";
 	}
 
-   $HTML .= "</DT>\n<DD>";
-   # show forbidden and broken
-   if ($port->forbidden) {
-      $HTML .= freshports_Forbidden_Icon() . 'FORBIDDEN: ' . $port->forbidden . "<br>";
+	$HTML .= "</DT>\n<DD>";
+	# show forbidden and broken
+	if ($port->forbidden) {
+		$HTML .= freshports_Forbidden_Icon() . 'FORBIDDEN: ' . $port->forbidden . "<br>";
+	}
 
-   }
-
-   if ($port->broken) {
-      $HTML .= freshports_Broken_Icon() . ' BROKEN: ' . $port->broken . "<br>"; ;
-   }
-
-
+	if ($port->broken) {
+		$HTML .= freshports_Broken_Icon() . ' BROKEN: ' . $port->broken . "<br>"; ;
+	}
 
    // description
    if ($port->short_description && ($ShowShortDescription == "Y" || $ShowEverything)) {
@@ -581,6 +578,16 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
             $HTML .= 'last change committed by ' . $port->committer;  // separate lines in case committer is null
  
             $HTML .= ' on <font size="-1">' . $port->updated . '</font>' . "\n";
+
+			$HTML .= freshports_Email_Link($port->message_id);
+
+			if ($port->encoding_losses == 't') {
+					$HTML .= '&nbsp;' . freshports_Encoding_Errors();
+			}
+
+			$HTML .= ' ' . freshports_Commit_Link($port->last_commit_id);
+			$HTML .= ' ' . freshports_CommitFilesLink($port->last_commit_id, $port->category, $port->name);
+
 
 			$HTML .= freshports_PortDescriptionPrint($port->update_description, $port->encoding_losses);
  

@@ -1,5 +1,5 @@
 <?
-	# $Id: help.php,v 1.1.2.1 2002-03-01 02:13:10 dan Exp $
+	# $Id: help.php,v 1.1.2.2 2002-03-02 14:36:46 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -15,9 +15,9 @@
 ?>
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD VALIGN=TOP>
-<TABLE>
+<TABLE BORDER="0">
 <TR>
-	<? freshports_PageBannerText("pkg_info >> watch_list "); ?>
+	<? freshports_PageBannerText("pkg_info and your watch list "); ?>
 </TR>
 
 <TR><TD>
@@ -33,16 +33,10 @@ stage process:
 <LI>choose the elements from your staging area and save them to your
 	watch list</LI>
 </OL>
-</P>
-</TD></TR>
 
-<TR>
-<TD VALIGN="top" width="100%">
+The rest of this page should answer everything.
 
-<TR>
-	<? freshports_PageBannerText("pkg_info >> watch list"); ?>
-</TR>
-
+</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
 	<? freshports_PageBannerText("How does pkg_upload work?"); ?>
@@ -57,10 +51,10 @@ In brief, FreshPorts uses the basic information
 available on your system.  It's pretty basic.  And easy.
 </P>
 
-</TD></TR>
+</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-	<? freshports_PageBannerText("How does pkg_upload work?"); ?>
+	<? freshports_PageBannerText("How does pkg_upload really work?"); ?>
 </TR>
 
 <TR><TD>
@@ -102,7 +96,7 @@ The
 The output from this command is uploaded and saved into the FreshPorts 
 database in your personal staging area.
 
-</TD></TR>
+</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
 	<? freshports_PageBannerText("What is a staging area?"); ?>
@@ -111,7 +105,7 @@ database in your personal staging area.
 The watch list staging area is a temporary storage area
 for your upload pkg_info output.  It serves as an area in which you
 can compare the new and old watch lists before saving any changes.
-</TD></TR>
+</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
 	<? freshports_PageBannerText("What are the different sections in my staging area?"); ?>
@@ -137,7 +131,10 @@ left to right.
 <LI>Watch List - This section contains the ports which are on your watch list
 	which did not appear in your pkg_info upload.</LI>
 </OL>
-</TD></TR>
+
+You should inspect that information carefully before saving it to your watch list.
+
+</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
 	<? freshports_PageBannerText("What are these check boxes in my staging area?"); ?>
@@ -146,7 +143,7 @@ left to right.
 Your staging area is just a temporary situation.  You must save this information
 to your watch list.  You can choose the ports you wish to watch using the
 check boxes.  Only selected ports will be saved to your watch list.
-</TD></TR>
+</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
 	<? freshports_PageBannerText("Why would I want to clear my staging area?"); ?>
@@ -155,7 +152,7 @@ check boxes.  Only selected ports will be saved to your watch list.
 You cannot upload anything to your staging area unless it is empty.  If you 
 don't wish to save the data to your watch list, you must first clear
 your staging area before uploading again.
-</TD>/TR>
+</TD></TR>
 
 
 	
@@ -163,7 +160,6 @@ your staging area before uploading again.
 </TD>
   <TD VALIGN="top" width="*">
     <?
-       $ShowPoweredBy = 1;
        include("./include/side-bars.php");
     ?>
  </TD>

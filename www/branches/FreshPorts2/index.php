@@ -1,6 +1,6 @@
 <?
 	#
-	# $Id: index.php,v 1.1.2.64 2003-01-06 14:17:00 dan Exp $
+	# $Id: index.php,v 1.1.2.65 2003-01-10 17:07:03 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -180,6 +180,11 @@ ports. A port is marked as new for 10 days.
 							if ($myrow["encoding_losses"] == 't') {
 								$HTML .= '&nbsp;' . freshports_Encoding_Errors();
 							}
+
+							if (IsSet($myrow["security_notice_id"])) {
+								$HTML .= ' <a href="/security-notice.php?message_id=' . $myrow["message_id"] . '">' . freshports_Security_Icon() . '</a>';
+							}
+
 						}
 
 						if ($NumberOfPortsInThisCommit <= $MaxNumberPortsToShow) {

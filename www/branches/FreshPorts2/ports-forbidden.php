@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: ports-forbidden.php,v 1.1.2.15 2003-09-30 00:00:37 dan Exp $
+	# $Id: ports-forbidden.php,v 1.1.2.16 2004-06-30 15:46:47 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2004 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
@@ -28,7 +28,7 @@
 	<? echo freshports_PageBannerText($Title); ?>
 </TR>
 <TR><TD>
-These are the recently added ports.
+These are the forbidden ports.
 </TD></TR>
 <?
 
@@ -71,7 +71,8 @@ select ports.id,
        homepage,
        status,
        broken,
-       forbidden ";
+       forbidden,
+       latest_link ";
 
 	if ($User->id) {
 		$sql .= ",

@@ -1,7 +1,12 @@
 <?
-	# $Id: report-subscriptions.php,v 1.1.2.3 2002-06-12 03:28:39 dan Exp $
+	# $Id: report-subscriptions.php,v 1.1.2.4 2002-06-13 16:29:26 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
+
+	if (!$_COOKIE["visitor"]) {
+		header("Location: login.php?origin=" . $_SERVER["PHP_SELF"]);  /* Redirect browser to PHP web site */
+		exit;  /* Make sure that code below does not get executed when we redirect. */
+	}
 
 	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
 	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
@@ -17,11 +22,6 @@
 
 	$Debug = 0;
 	if ($Debug) phpinfo();
-
-	if (!$_COOKIE["visitor"]) {
-		header("Location: login.php?origin=" . $_SERVER["PHP_SELF"]);  /* Redirect browser to PHP web site */
-		exit;  /* Make sure that code below does not get executed when we redirect. */
-	}
 
 	function freshports_ReportFrequencies($dbh) {
 		$sql = "select id, description from report_frequency order by id";

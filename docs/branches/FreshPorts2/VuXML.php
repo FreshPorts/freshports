@@ -2,63 +2,56 @@
 <head>
 <title>FreshPorts - VuXML strategy</title>
 <body>
+
+<h1>FreshPorts - VuXML strategy</h1>
+
 <p>
 This page documents the strategy used when processing 
 <a href="http://www.vuxml.org/freebsd/">VuXML</a> data.
 
 <p>
-The goal is to flag records [within the Commit History for a given port] that
+<h2>Major Goal</h2>
+The major goal is to flag records [within the Commit History for a given port] that
 are affected by a VuXML entry.  The key to this is the ability to parse the XML
-provided in <a href="http://cvsweb.freebsd.org/ports/security/vuxml/vuln.xml?rev=.">ports/security/vuxml/vuln.xml</a>.
+provided in <a href="http://cvsweb.freebsd.org/ports/security/vuxml/vuln.xml?rev=.">ports/security/vuxml/vuln.xml</a>
+and then associate that information with a given commit.
+
+<h2>Processing Strategy</h2>
+
+<p>
+Storing all of the relevant VuXML data within FreshPorts gives us the most
+flexibility and also divides up the process into two distinct stages:
+
+<ol>
+<li>Parse the VuXML data and load it into FreshPorts
+<li>Find commits that are affected by a given VuXML entry and mark it as 
+affected.
+</ol>
+
+<h2>Parsing the XML</h2>
+
+<p>
 Matthew Seaman has written a script (scripts/vuxml_parsing.pm) that provides us
 with the information we need.
 
 <p>
 The data within the VuXML file is parsed only for package information. We do
-not collected operating system information.
+not collect operating system information.
 
 <p>
 We have taken the initial approach that we will delete all previous VuXML
 information when processing a newly committed vuln.xml file.  This simplifies
 the code.  We may wish to rethink this approach at a later date.
 
+<h2>Marking the commits</h2>
+
+<p>
+Technically speaking, we are not marking the commits.  We are marking the 
+commit history of parts that have been affected by a given VuXML entry.
+
 <p>
 Once the data is loaded into FreshPorts, we can obtain the names and ranges
 like this:
-
-<blockquote><pre class="code">
-freshports.org=# SELECT V.vid,
-freshports.org-#        VN.name,
-freshports.org-#        VR.range_version_start  AS v1,
-freshports.org-#        VR.range_operator_start AS op1,
-freshports.org-#        VR.range_operator_end   AS v2,
-freshports.org-#        VR.range_version_end    AS op2
-freshports.org-#   FROM vuxml_ranges VR, vuxml_names VN, vuxml_affected VA, vuxml V
-freshports.org-#  WHERE V.id                 = VA.vuxml_id
-freshports.org-#    AND VN.vuxml_affected_id = VA.id
-freshports.org-#    AND VR.vuxml_name_id     = VN.ID
-freshports.org-#  ORDER BY V.ID, VN.name;
-                 vid                  |            name             |    v1     | op1 | v2 |          op2
---------------------------------------+-----------------------------+-----------+-----+----+-----------------------
- 253ea131-bd12-11d8-b071-00e08110b673 | gallery                     |           |     | lt | 1.4.3.2
- 6f955451-ba54-11d8-b88c-000d610a3b12 | squid                       |           |     | lt | 2.5.5_9
- f7a3b18c-624c-4703-9756-b6b27429e5b0 | leafnode                    | 1.9.20    | ge  | lt | 1.9.30
- 7b0208ff-3f65-4e16-8d4d-48fd9851f085 | leafnode                    | 1.9.3     | ge  | le | 1.9.41
- a051a4ec-3aa1-4dd1-9bdc-a61eb5700153 | leafnode                    |           |     | le | 1.9.47
- 5d36ef32-a9cf-11d8-9c6d-0020ed76ef5a | subversion                  |           |     | lt | 1.0.2_1
- 8d075001-a9ce-11d8-9c6d-0020ed76ef5a | neon                        |           |     | lt | 0.24.5_1...
-</pre></blockquote>
-
-<p>
-There are about 230 such rows at the time of writing.
-
-<p>
-The approach we will take to flagging commit history records will be to read
-the above rows into a script, then, for each name found, read all the relevant
-commit history entries, test the version, and mark the commits as necessary.
-
-<p>
-The psuedo code for this might be:
 
 <blockquote><pre class="code">
 1 - for each range record
@@ -76,8 +69,8 @@ There is room for optimization here.  Some notes based upon first impressions.
 
 <ul>
 <li>The combination of port_version, port_revision, and port_epoch will be 
-known as the package version.
-<li>2 - Select distinct on package version.  This will
+known as the <b>PackageVersion</b>.
+<li>2 - Select distinct on <b>PackageVersion</b>.  This will
 reduce the number of rows fetched and thereby the number of calls to 
 pkg_version.
 <p>
@@ -87,21 +80,62 @@ Here is the basic data for one package:
 freshports.org=# SELECT *
 freshports.org-#   FROM commit_log_ports
 freshports.org-#  WHERE port_id = (SELECT id
-freshports.org(#                     FROM ports
-freshports.org(#                    WHERE package_name = 'tnftpd');
+freshports.org(#   FROM ports
+freshports.org(#  WHERE package_name = 'leafnode');
  commit_log_id | port_id | needs_refresh | port_version | port_revision | port_epoch | package_name
 ---------------+---------+---------------+--------------+---------------+------------+--------------
-        108327 |   11386 |             0 | 2.0b3        | 0             |            |
-        111249 |   11386 |             0 | 2.0b3        | 1             |            |
-        111250 |   11386 |             0 | 2.0b3        | 1             |            |
-        111673 |   11386 |             0 | 2.0b3        | 1             |            |
-        113007 |   11386 |             0 | 20031217     | 0             |            |
-        120146 |   11386 |             0 | 20031217     | 0             |            |
-        127931 |   11386 |             0 | 20031217     | 1             |            |
-        139235 |   11386 |             0 | 20031217     | 1             |            |
-        140506 |   11386 |             0 | 20031217     | 1             |            |
-        140776 |   11386 |             0 | 20040810     | 0             |            |
-(10 rows)
+         24968 |     334 |             0 |              |               | 0          |
+         16694 |     334 |             0 |              |               | 0          |
+         13070 |     334 |             0 |              |               | 0          |
+          6675 |     334 |             0 |              |               | 0          |
+          4403 |     334 |             0 |              |               | 0          |
+           387 |     334 |             0 |              |               | 0          |
+         32745 |     334 |             0 | 1.9.22       | 0             | 0          |
+         30477 |     334 |             0 | 1.9.21       | 0             | 0          |
+         42376 |     334 |             0 | 1.9.24       | 0             | 0          |
+         50748 |     334 |             0 | 1.9.26       | 0             | 0          |
+         47813 |     334 |             0 | 1.9.25       | 0             | 0          |
+         47864 |     334 |             0 | 1.9.25       | 0             | 0          |
+         47866 |     334 |             0 | 1.9.25       | 0             | 0          |
+         51127 |     334 |             0 | 1.9.27       | 0             | 0          |
+         57455 |     334 |             0 | 1.9.29       | 0             | 0          |
+         61982 |     334 |             0 | 1.9.31       | 0             | 0          |
+         68185 |     334 |             0 | 1.9.33       | 1             | 0          |
+         68220 |     334 |             0 | 1.9.33       | 1             | 0          |
+         67873 |     334 |             0 | 1.9.33       | 0             | 0          |
+         69092 |     334 |             0 | 1.9.34       | 0             | 0          |
+         69481 |     334 |             0 | 1.9.34       | 0             | 0          |
+         69666 |     334 |             0 | 1.9.35       | 0             | 0          |
+         70534 |     334 |             0 | 1.9.36       | 0             | 0          |
+         76142 |     334 |             0 | 1.9.37       | 0             | 0          |
+         76703 |     334 |             0 | 1.9.38       | 0             | 0          |
+         78226 |     334 |             0 | 1.9.39       | 0             | 0          |
+         78720 |     334 |             0 | 1.9.40       | 0             | 0          |
+         80775 |     334 |             0 | 1.9.41       | 0             | 0          |
+         85050 |     334 |             0 | 1.9.42       | 0             | 0          |
+         93590 |     334 |             0 | 1.9.43       | 0             | 0          |
+        100888 |     334 |             0 | 1.9.45       | 0             | 0          |
+        105183 |     334 |             0 | 1.9.46       | 0             | 0          |
+        108885 |     334 |             0 | 1.9.47       | 0             | 0          |
+        109162 |     334 |             0 | 1.9.48       | 0             | 0          |
+        109250 |     334 |             0 | 1.9.49       | 0             | 0          |
+        115340 |     334 |             0 | 1.9.50       | 0             | 0          |
+        115537 |     334 |             0 | 1.9.51       | 0             | 0          |
+        122575 |     334 |             0 | 1.9.52       | 0             | 0          |
+        124505 |     334 |             0 | 1.9.52       | 1             | 0          |
+        126058 |     334 |             0 | 1.9.53       | 0             | 0          |
+        127860 |     334 |             0 | 1.9.54       | 0             | 0          |
+        127905 |     334 |             0 | 1.9.54       | 0             | 0          |
+        128426 |     334 |             0 | 1.9.54       | 1             | 0          |
+        130595 |     334 |             0 | 1.10.0       | 0             | 0          |
+        132193 |     334 |             0 | 1.10.1       | 0             | 0          |
+        136422 |     334 |             0 | 1.10.2       | 0             | 0          |
+        137625 |     334 |             0 | 1.10.3       | 0             | 0          |
+        140096 |     334 |             0 | 1.10.4       | 0             | 0          |
+        141873 |     334 |             0 | 1.10.5       | 0             | 0          |
+(49 rows)
+
+freshports.org=#
 </pre></blockquote>
 
 <p>
@@ -112,35 +146,73 @@ freshports.org=# SELECT distinct port_id, port_version, port_revision, port_epoc
 freshports.org-#   FROM commit_log_ports
 freshports.org-#  WHERE port_id = (SELECT id
 freshports.org(#                     FROM ports
-freshports.org(#                    WHERE package_name = 'tnftpd');
+freshports.org(#                    WHERE package_name = 'leafnode');
  port_id | port_version | port_revision | port_epoch
 ---------+--------------+---------------+------------
-   11386 | 2.0b3        | 0             | 0
-   11386 | 2.0b3        | 1             | 0
-   11386 | 20031217     | 0             | 0
-   11386 | 20031217     | 1             | 0
-   11386 | 20040810     | 0             | 0
-(5 rows)
+     334 | 1.10.0       | 0             | 0
+     334 | 1.10.1       | 0             | 0
+     334 | 1.10.2       | 0             | 0
+     334 | 1.10.3       | 0             | 0
+     334 | 1.10.4       | 0             | 0
+     334 | 1.10.5       | 0             | 0
+     334 | 1.9.21       | 0             | 0
+     334 | 1.9.22       | 0             | 0
+     334 | 1.9.24       | 0             | 0
+     334 | 1.9.25       | 0             | 0
+     334 | 1.9.26       | 0             | 0
+     334 | 1.9.27       | 0             | 0
+     334 | 1.9.29       | 0             | 0
+     334 | 1.9.31       | 0             | 0
+     334 | 1.9.33       | 0             | 0
+     334 | 1.9.33       | 1             | 0
+     334 | 1.9.34       | 0             | 0
+     334 | 1.9.35       | 0             | 0
+     334 | 1.9.36       | 0             | 0
+     334 | 1.9.37       | 0             | 0
+     334 | 1.9.38       | 0             | 0
+     334 | 1.9.39       | 0             | 0
+     334 | 1.9.40       | 0             | 0
+     334 | 1.9.41       | 0             | 0
+     334 | 1.9.42       | 0             | 0
+     334 | 1.9.43       | 0             | 0
+     334 | 1.9.45       | 0             | 0
+     334 | 1.9.46       | 0             | 0
+     334 | 1.9.47       | 0             | 0
+     334 | 1.9.48       | 0             | 0
+     334 | 1.9.49       | 0             | 0
+     334 | 1.9.50       | 0             | 0
+     334 | 1.9.51       | 0             | 0
+     334 | 1.9.52       | 0             | 0
+     334 | 1.9.52       | 1             | 0
+     334 | 1.9.53       | 0             | 0
+     334 | 1.9.54       | 0             | 0
+     334 | 1.9.54       | 1             | 0
+     334 |              |               | 0
+(39 rows)
 </pre></blockquote>
 
 <li>4 - the test is done by invoking pkg_version -t and testing the result.
-<li>5 - store each vid affecting this package version.
+<li>5 - store each vuxml id affecting this <b>PackageVersion</b>.
 <li>7 - when updating commit_log_ports_vuxml, something like this might be
 useful:
 <blockquote><pre class="code">
 INSERT INTO commit_log_ports_vuxml (commit_log_id, port_id, vuxml_id)
 SELECT commit_log_id,
        port_id,
-       VUXML_ID
+       659 as vuxml_id
   FROM commit_log_ports
- WHERE port_id       = PORT_ID
-   AND port_version  = PORT_VERSION
-   AND port_revision = PORT_REVISION
-   AND port_epoch    = PORT_EPOCH;
+ WHERE port_id       = 334
+   AND port_version  = '1.9.25'
+   AND port_revision = '0'
+   AND port_epoch    = '0';
 </pre></blockquote>
+
+<p>
+This will need to be repeated for each <b>PackageVersion</b>.
 </ul>
 
-
+<p>
+That's it.  Sounds simple.  Right?
 
 </body>
 </html>

@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.65 2002-04-11 21:15:02 dan Exp $
+   # $Id: freshports.php,v 1.4.2.66 2002-04-11 21:17:27 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -931,7 +931,7 @@ function url2link($Arr) {
 	GLOBAL $url2link_cutoff_level;
 	$html = $Arr[0];
 
-	echo "url2link is passed: $html";
+#	echo "url2link is passed: $html";
  
 	if ($url2link_cutoff_level > 0 && strlen($html) > $url2link_cutoff_level - 5) {
 		$vhtml = substr($html, 0, $url2link_cutoff_level)."(...)";

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.44 2003-12-31 17:00:32 dan Exp $
+	# $Id: faq.php,v 1.1.2.45 2004-02-22 14:54:53 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -235,6 +235,10 @@ down you must read to find something you didn't already know.</P>
 		Broken: The port is marked as broken.  Perhaps it won't compile.  Maybe
 		it doesn't work under FreeBSD right now.  If you view the port details,
 		you will see the reason why.</P>
+
+	<P><? echo freshports_Deprecated_Icon() ?>
+		Deprecated: The port is marked as deprecated.  Perhaps it has exceeded
+		its lifetime or is obselete.</P>
 
 	<P><? echo freshports_Files_Icon(); ?>
 		Files: If you click on this graphic, you will be taken to the list of files

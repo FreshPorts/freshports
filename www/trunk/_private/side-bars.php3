@@ -45,11 +45,12 @@ if ($UserID) {
 
 <table WIDTH="152" BORDER="1" CELLSPACING="0" CELLPADDING="5"
             bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">        <tr>
-         <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" SIZE="+1">Vote now!</font></td>
+         <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" SIZE="+1">Various things</font></td>
         </tr>
         <tr>
     <td valign="top">
        <font SIZE="-1"><? echo freshports_SideBarHTML($PHP_SELF, "/whatnext.php3", "Vote for change") ?><font><br>
+       <font SIZE="-1"><? echo freshports_SideBarHTML($PHP_SELF, "/stats.php3", "Port stats") ?><font><br>
    </td>
    </tr>
    </table>

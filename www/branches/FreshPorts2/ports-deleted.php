@@ -1,21 +1,21 @@
 <?
-	# $Id: ports-deleted.php,v 1.1.2.15 2002-12-10 05:13:28 dan Exp $
+	# $Id: ports-deleted.php,v 1.1.2.16 2002-12-11 04:37:02 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 
 	$Debug = 0;
 
 	$Interval = '3 months';
-	$Title    = "Deleted ports - past " . $Interval;
+	$Title    = 'Deleted ports - past ' . $Interval;
 
 	freshports_Start($Title,
-					"freshports - deleted ports, applications",
-					"FreeBSD, index, applications, ports");
+					'freshports - deleted ports, applications',
+					'FreeBSD, index, applications, ports');
 
 ?>
 
@@ -34,105 +34,136 @@ These are the latest deleted ports.
 	$DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
 
 	$visitor = $_COOKIE["visitor"];
-	$sort    = $_GET["sort"];
+	$sort    = $_REQUEST["sort"];
 	if ($visitor) {
 		$WatchID = freshports_MainWatchID($User->id, $db);
 	} else {
 		unset ($WatchID);
 	}
 
-		// make sure the value for $sort is valid
+	// make sure the value for $sort is valid
 
-		echo "<TR><TD>\nThis page is ";
+	echo "<TR><TD>\nThis page is ";
 
-		switch ($sort) {
-		case "updated":
-			$sort = "updated desc, category, port";
+	switch ($sort) {
+		case 'updated':
+			$sort = 'updated desc, category, port';
 			echo 'sorted by last update date.  but you can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=category">category</a>';
 			$ShowCategoryHeaders = 0;
 			break;
 
 		default:
-			$sort ="category, port";
+			$sort ='category, port';
 			echo 'sorted by category.  but you can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=updated">last update</a>';
 			$ShowCategoryHeaders = 1;
-			$cache_file .= ".updated";
 		}
 
-		echo "</TD></TR>\n";
+	echo "</TD></TR>\n";
 
-			$sql = "select ports.id, element.name as port, to_char(max(commit_log.commit_date) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as updated, " .
-			       "categories.name as category, ports.category_id, version as version, revision as revision, ".
-			       "commit_log.committer, commit_log.description as update_description, ports.element_id, " .
-			       "maintainer, short_description, to_char(max(ports.date_added) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, commit_log.message_id, ".
-			       "last_commit_id as last_change_log_id, " .
-			       "package_exists, extract_suffix, homepage, status, " .
-			       "broken, forbidden ";
+	$sql = "
+select ports.id,
+       element.name as port, 
+       to_char(max(commit_log.commit_date) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as updated,
+       categories.name as category,
+       ports.category_id,
+       version as version,
+       revision as revision,
+       commit_log.committer,
+       commit_log.description as update_description,
+       ports.element_id,
+       maintainer,
+       short_description,
+       to_char(max(ports.date_added) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, 
+       commit_log.message_id,
+       last_commit_id as last_change_log_id,
+       package_exists,
+       extract_suffix,
+       homepage,
+       status,
+       broken,
+       forbidden ";
 
-			if ($WatchListID) {
-				$sql .= ", CASE when watch_list_element.element_id is null
-								then 0
-								else 1
-							END as watch ";
-			}
+	if ($User->id) {
+		$sql .= ",
+       onwatchlist";
+   }
 
-			$sql .= " from commit_log, element, categories, ports   ";
+	$sql .= " from commit_log, element, categories, ports   ";
 
-			if ($WatchListID) {
-					$sql .= " left outer join watch_list_element
-							 ON (ports.element_id        = watch_list_element.element_id
-							AND watch_list_element.watch_list_id = $WatchListID) ";
-			}
-			$sql .= "WHERE ports.element_id = element.id
-					   and ports.category_id = categories.id 
-                       and status = 'D' 
-					   and commit_log.commit_date > (now() - interval '$Interval') 
-					   and ports.last_commit_id = commit_log.id ";
+	if ($User->id) {
+			$sql .= "
+      LEFT OUTER JOIN
+ (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
+    FROM watch_list JOIN watch_list_element
+        ON watch_list.id      = watch_list_element.watch_list_id
+       AND watch_list.user_id = $User->id
+  GROUP BY watch_list_element.element_id) AS TEMP
+       ON TEMP.wle_element_id = ports.element_id";
+	}
 
-			$sql .= "GROUP BY ports.id, element.name, commit_log.commit_date, " .
-			        "categories.name, ports.category_id, version, revision, ".
-			        "commit_log.committer, commit_log.description, ports.element_id, " .
-			        "maintainer, short_description, ports.date_added, commit_log.message_id, ".
-			        "last_commit_id, " .
-			        "package_exists, extract_suffix, homepage, status, " .
-			        "broken, forbidden ";
+	$sql .= "
+WHERE ports.element_id      = element.id
+  and ports.category_id     = categories.id 
+  and status                = 'D' 
+  and commit_log.commit_date > (now() - interval '$Interval') 
+  and ports.last_commit_id   = commit_log.id ";
 
-			if ($WatchListID) {
-				$sql .= " , watch_list_element.element_id ";
-			}
+	$sql .= "
+GROUP BY ports.id,
+         element.name,
+         commit_log.commit_date,
+         categories.name,
+         ports.category_id,
+         version,
+         revision,
+         commit_log.committer,
+         commit_log.description,
+         ports.element_id,
+         maintainer,
+         short_description,
+         ports.date_added,
+         commit_log.message_id,
+         last_commit_id,
+         package_exists,
+         extract_suffix,
+         homepage,
+         status,
+         broken,
+         forbidden,
+         onwatchlist ";
 
-			$sql .= " order by $sort ";
-#			$sql .= " limit 20";
+	$sql .= "\norder by $sort ";
+#	$sql .= "\nlimit 20";
 
-			if ($Debug) {
-				echo $sql;
-			}
+	if ($Debug) {
+		echo "<pre>$sql</pre>";
+	}
 
-			$result = pg_exec($db, $sql);
-			if (!$result) {
-				echo pg_errormessage();
-			} else {
-				$numrows = pg_numrows($result);
-#				echo "There are $numrows to fetch<BR>\n";
-			}
+	$result = pg_exec($db, $sql);
+	if (!$result) {
+		echo pg_errormessage();
+	} else {
+		$numrows = pg_numrows($result);
+#		echo "There are $numrows to fetch<BR>\n";
+	}
 
-			require_once($_SERVER['DOCUMENT_ROOT'] . "/include/list-of-ports.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/list-of-ports.php');
 
-			echo freshports_ListOfPorts($result, $db, "N", $ShowCategoryHeaders);
+	echo freshports_ListOfPorts($result, $db, 'N', $ShowCategoryHeaders);
 ?>
 
 </TABLE>
 
 </TD>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
-<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php') ?>
 </TD>
 </TR>
 </TABLE>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
 </TD></TR>
 </TABLE>
 

@@ -6,9 +6,9 @@
 <meta name="keywords" content="FreeBSD, index, applications, ports">  
 
 <?
-require( "/www/freshports.org/_private/commonlogin.php3");
-require( "/www/freshports.org/_private/getvalues.php3");
-require( "/www/freshports.org/_private/freshports.php3");
+require( "./_private/commonlogin.php3");
+require( "./_private/getvalues.php3");
+require( "./_private/freshports.php3");
 
 if (!$category) {                        
    $category = 1;
@@ -24,7 +24,7 @@ $title = freshports_Category_Name($category, $db);
 
 <body bgcolor="#ffffff" link="#0000cc">
 
- <? include("/www/freshports.org/_private/header.inc") ?>
+ <? include("./_private/header.inc") ?>
 
 <table width="100%" border="0">
 <tr><td>
@@ -43,8 +43,6 @@ $DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
 
 // make sure the value for $sort is valid
 
-$cache_file     =       "/tmp/freshports.org.cache.category." . $category;
-$LastUpdateFile =       "/www/freshports.org/work/msgs/lastupdate";
 $LimitRows	= 50;
 
 if (!$start) {
@@ -162,7 +160,6 @@ for ($i = $start; $i <= $end; $i++) {
    $myrow = $rows[$i-1];
 
    include("/www/freshports.org/_private/port-basics.inc");
-
    $LastPort = $myrow["port"];
 } // end for
 
@@ -215,7 +212,7 @@ echo $HTML;
 </table>
 </td>
   <td valign="top" width="*">
-   <? include("/www/freshports.org/_private/side-bars.php3") ?>
+   <? include("./_private/side-bars.php3") ?>
  </td>
 </tr>
 </table>

@@ -1,7 +1,7 @@
 <?
-   
-require( "/www/freshports.org/_private/commonlogin.php3");
-require( "/www/freshports.org/_private/getvalues.php3");
+require( "./_private/commonlogin.php3");
+require( "./_private/getvalues.php3");
+require( "./_private/freshports.php3");
 ?>
 
 <head>
@@ -15,14 +15,13 @@ require( "/www/freshports.org/_private/getvalues.php3");
 
 <html>
 <body>
-<? include("/www/freshports.org/_private/header.inc") ?>
+<? include("./_private/header.inc") ?>
 <table width="100%">
 <tr><td valign="top">
 <h2>changes</h2>
 
 <p>This is where I will attempt to list the changes to the freshports website.  Please put your wish 
 lists in the <a href="http://freshports.org/phorum/list.php?f=3">feedback phorum</a>.
-<<<<<<< changes.php3
 </p>
 
 <p>May 16<p>
@@ -89,10 +88,10 @@ Now this may be a big problem which needs to be overcome.  Damn.</li>
 
 </td>
   <td valign="top" width="*">
-    <? include("/www/freshports.org/_private/side-bars.php3") ?>
+    <? include("./_private/side-bars.php3") ?>
  </td>
 </tr>
 </table>
-<? include("/www/freshports.org/_private/footer.inc") ?>
+<? include("./_private/footer.inc") ?>
 </body>
 </html>

@@ -1,27 +1,22 @@
 <?
-require( "/www/freshports.org/_private/commonlogin.php3");
-require( "/www/freshports.org/_private/getvalues.php3");
-require( "/www/freshports.org/_private/freshports.php3");
+require( "./_private/commonlogin.php3");
+require( "./_private/getvalues.php3");
+require( "./_private/freshports.php3");
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
 <html>
 
 <head>
-<meta name="description" content="freshport">
-<meta name="keywords" content="FreeBSD, topics, index">
+<meta name="description" content="freshports - new ports, applications">
+<meta name="keywords" content="FreeBSD, index, applications, ports">  
 <!--// DVL Software is a New Zealand company specializing in database applications. //-->
 <title>freshports</title>
 </head>
 
 <body bgcolor="#ffffff" link="#0000cc">
-
+ <? include("./_private/header.inc") ?>
 <table width="100%" border="0">
-<tr>
- <td colspan="2">
- <font size="+4">freshports</font>
- </td>
-</tr>
 <tr><td colspan="2">Welcome to the freshports.org where you can find the latest information on your favourite
 ports.
 </td></tr>
@@ -39,9 +34,6 @@ ports.
 <script language="php">
 
 $DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
-
-$cache_file     =       "/tmp/freshports.org.cache." . basename($PHP_SELF);
-$LastUpdateFile =       "/www/freshports.org/work/msgs/lastupdate";
 
 // make sure the value for $sort is valid
 
@@ -64,7 +56,7 @@ switch ($sort) {
 srand((double)microtime()*1000000);
 $cache_time_rnd =       300 - rand(0, 600);
 
-
+//$Debug=1;
 if ($Debug) {
 echo '<br>';
 echo '$cache_file=', $cache_file, '<br>';
@@ -99,7 +91,7 @@ if (!file_exists($cache_file)) {
    }
 }
 
-//$UpdateCache = 1;
+$UpdateCache = 1;
 
 if ($UpdateCache == 1) {
 //   echo 'time to update the cache';
@@ -107,15 +99,15 @@ if ($UpdateCache == 1) {
 $sql = "select ports.id, ports.name as port, ports.last_update as updated, " .
        "categories.name as category, categories.id as category_id, ports.version as version, ".
        "ports.committer, ports.last_update_description as update_description, " .
-       "ports.maintainer, ports.short_description, ".
-       "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage " .
+       "ports.maintainer, ports.short_description, UNIX_TIMESTAMP(ports.date_created) as date_created, ".
+       "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, ports.status " .
        "from ports, categories  ".
        "WHERE ports.system = 'FreeBSD' ".
        "and ports.primary_category_id = categories.id ";
 
 $sql .= "order by $sort limit 20";
 
-//echo $sql;
+echo $sql;
 
 $result = mysql_query($sql, $db);
 
@@ -123,11 +115,8 @@ $HTML = "</tr></td><tr>";
 
 $HTML .= '<tr><td>';
 
-// get the list of topics, which we need to modify the order
-$NumTopics=0;
-
 while ($myrow = mysql_fetch_array($result)) {
-   include("/www/freshports.org/_private/port-basics.inc");
+   include("./_private/port-basics.inc");
 }
 
   $HTML .= "</td></tr>\n";
@@ -164,11 +153,12 @@ $HTML .= "</table>\n";
 </table>
 </td>
   <td valign="top" width="*">
-   <? include("/www/freshports.org/_private/side-bars.php3") ?>
+   <? include("./_private/side-bars.php3") ?>
  </td>
 </tr>
 </table>
 </tr>
 </table>
+<? include("./_private/footer.inc") ?>
 </body>
 </html>

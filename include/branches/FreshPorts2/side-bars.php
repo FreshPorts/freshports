@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: side-bars.php,v 1.4.2.50 2003-07-04 14:45:55 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.51 2003-09-14 14:02:04 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -98,7 +98,7 @@ if (IsSet($visitor)) {
 	<TD>
 	<FORM ACTION="/search.php" NAME="f">
 	Enter Keywords:<BR>
-	<INPUT NAME="query"  TYPE="text" SIZE="8">&nbsp;<INPUT TYPE="submit" VALUE="go">
+	<INPUT NAME="query"  TYPE="text" SIZE="8">&nbsp;<INPUT TYPE="submit" VALUE="go" NAME="search">
 	<INPUT NAME="num"    TYPE="hidden" value="10">
 	<INPUT NAME="stype"  TYPE="hidden" value="name">
 	<INPUT NAME="method" TYPE="hidden" value="match">

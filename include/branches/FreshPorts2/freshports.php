@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.144 2003-05-09 19:42:59 dan Exp $
+	# $Id: freshports.php,v 1.4.2.145 2003-05-16 02:44:13 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -8,6 +8,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/constants.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/burstmedia.php');
 
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/announcements.php');
 #
 # special HTMLified mailto to foil spam harvesters
 #
@@ -277,6 +278,14 @@ GLOBAL $BannerAd;
 
    freshports_Logo();
    freshports_navigation_bar_top();
+
+	GLOBAL $db;
+	$Announcement = new Announcement($db);
+
+	$NumRows = $Announcement->FetchAllActive();
+	if ($NumRows > 0) {
+		echo DisplayAnnouncements($Announcement);
+	}
 }
 
 function freshports_Logo() {
@@ -580,7 +589,7 @@ function freshports_ONToYN($Value) {
 }
 
 
-function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, $LinkToPort = 0, $AddRemoveExtra = '', $ShowCategory = 1, $ShowDateAdded = "N", $IndicateWatchListStatus = 1, $ShowMasterSites = 0) {
+function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, $LinkToPort = 0, $AddRemoveExtra = '', $ShowCategory = 1, $ShowDateAdded = "N", $IndicateWatchListStatus = 1, $ShowMasterSites = 0, $ShowWatchListCount = 0) {
 //
 // This fragment does the basic port information for a single port.
 // It really needs to be fixed up.
@@ -647,6 +656,10 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 		$MarkedAsNew = "Y";
 		$HTML .= freshports_New_Icon() . "\n";
 	}
+
+#	if ($ShowWatchListCount) {
+		$HTML .= ' <a href="/faq.php">WLC</a>=' . $port->WatchListCount() . '<br>';
+#	}
 
 	$HTML .= "</DT>\n<DD>";
 	# show forbidden and broken
@@ -1300,6 +1313,26 @@ function freshports_ErrorMessage($Title, $ErrorMessage) {
 
 	return $HTML;
 }
+
+function DisplayAnnouncements($Announcement) {
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/announcements.php');
+
+	$HTML .= '<table width="100%"cellpadding="4" cellspacing="0" border="0">' . "\n";
+
+	$NumRows = $Announcement->NumRows();
+
+	for ($i = 0; $i < $NumRows; $i++) {
+		$Announcement->FetchNth($i);
+		$HTML .= '<tr>' . "\n";
+		$HTML .= '<td>' . $Announcement->TextGet()      . '</td>';
+      $HTML .= '</tr>' . "\n";
+	}
+	$HTML .= '</table>' . "\n";
+
+	return $HTML;
+}
+
+
 
 openlog('FreshPorts', LOG_PID | LOG_PERROR, LOG_LOCAL0);
 

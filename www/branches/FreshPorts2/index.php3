@@ -1,5 +1,5 @@
 <?
-   # $Id: index.php3,v 1.34.2.17 2001-12-29 22:15:27 dan Exp $
+   # $Id: index.php3,v 1.34.2.18 2001-12-30 23:25:37 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -70,7 +70,7 @@ if ($Debug) {
 
 ?>
 
-<table width="100%" border="0" ALIGN="center">
+<table width="<? echo $TableWidth ?>" border="0" ALIGN="center">
 <tr><td colspan="2">Welcome to FreshPorts, where you can find the latest information on your favourite
 ports. A port is marked as new for 10 days.
 </td></tr>
@@ -187,7 +187,7 @@ order by commit_log.commit_date desc,
 ?>
 
 <tr><td VALIGN="top">
-<table width="100%" border="1" CELLSPACING="0" CELLPADDING="5"
+<table width="<? echo $TableWidth ?>" border="1" CELLSPACING="0" CELLPADDING="5"
             bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">
 <tr>
     <td colspan="3" bgcolor="#AD0040" height="30">
@@ -223,7 +223,7 @@ order by commit_log.commit_date desc,
 							$HTML .= '<br>';
 						}
 
-						$HTML .= '<a href="/' . $myrow["category"] . '/' . $myrow["port"] . '">';
+						$HTML .= '<a href="/' . $myrow["category"] . '/' . $myrow["port"] . '/">';
 						$HTML .= "<B>" . $myrow["port"];
 						
 						if (strlen($myrow["version"]) > 0) {
@@ -232,8 +232,6 @@ order by commit_log.commit_date desc,
 
 						$HTML .= "</b></a>";
 
-
-						$URL_Category = "category.php3?category=" . $myrow["category_id"];
 						$HTML .= ' <font size="-1"><a href="/' . $myrow["category"] . '/">' . $myrow["category"] . '</a></font>';
 
 						// indicate if this port needs refreshing from CVS

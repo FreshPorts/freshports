@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+	<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
 <html>
 
 <head>
@@ -33,6 +33,8 @@ testing. Information found here may be widely out of date and/or inaccurate.  Us
   </tr>
 <script language="php">
 
+
+
 $DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
 
 // make sure the value for $sort is valid
@@ -40,21 +42,8 @@ $DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
 $cache_file     =       "/tmp/freshports.org.cache.category." . $category;
 $LastUpdateFile =       "/www/freshports.org/work/msgs/lastupdate";
 
-switch ($sort) {
-   case "port":
-      $sort = "port, updated desc";
-      $cache_file .= ".port";
-      break;
-/*
-   case "updated":
-      $sort = "updated desc, port";
-      break;
-*/
-   default:
-      $sort ="port";
-      $cache_file .= ".updated";
-}
-
+$sort ="port";
+$LimitRows = 20;
 
 srand((double)microtime()*1000000);
 $cache_time_rnd =       300 - rand(0, 600);
@@ -81,8 +70,10 @@ if (!file_exists($cache_file)) {
    }
 }
 
+$UpdateCache = 1;
+
 if ($UpdateCache == 1) {
-   echo 'time to update the cache';
+//   echo 'time to update the cache';
 
 $sql = "select ports.id, ports.name as port, ports.id as ports_id, ports.last_update as updated, " .
        "categories.name as category, categories.id as category_id, ports.version as version, ".
@@ -94,35 +85,136 @@ $sql = "select ports.id, ports.name as port, ports.id as ports_id, ports.last_up
        "and ports.primary_category_id = categories.id " .
        "and categories.id = $category ";
 
+if ($next) {
+   $sql .= "and ports.name > '$next' ";
+}
+
 $sql .= "order by $sort";
+
+$sql .= " limit $LimitRows";
 
 //echo $sql;
 
 $result = mysql_query($sql, $db);
+$NumRows = mysql_num_rows($result);
 
-$HTML .= '<tr><td>';
+$HTML .= freshports_echo_HTML('<tr><td>');
 
-$HTML .= '<table width="*" border=1>';
+$HTML .= freshports_echo_HTML('<table width="*" border=1>');
 
 // get the list of topics, which we need to modify the order
 $NumTopics=0;
+$LastPort = '';
 while ($myrow = mysql_fetch_array($result)) {
    $NumTopics++;
+   $HideCategory = 1;
+   if ($NumTopics == 1) {
+      $FirstPort = $myrow["port"];
+   }
 
-   include("/www/freshports.org/_private/port-basics.inc");
+//   echo "$NumTopics<br>";
+//   require("/www/freshports.org/_private/port-basics.inc");
+   $HTML .= freshports_echo_HTML("<dl>");
+
+   $HTML .= freshports_echo_HTML("<b>" . $myrow["port"]);
+   if (strlen($myrow["version"]) > 0) {
+      $HTML .= freshports_echo_HTML('-' . $myrow["version"]);
+   }
+
+   $HTML .= freshports_echo_HTML("</b>");
+
+   // indicate if this port needs refreshing from CVS
+   if ($myrow["needs_refresh"] == "Y") {
+      $HTML .= freshports_echo_HTML(' <font size="-1">[refresh]</font>');
+   }
+
+   if (!$HideCategory) {
+      $URL_Category = "category.php3?category=" . $myrow["category_id"];
+      $HTML .= freshports_echo_HTML(' <font size="-1"><a href="' . $URL_Category . '">' . $myrow["category"] . '</a></font>');
+   }
+
+   $HTML .= freshports_echo_HTML("<dd>");
+
+   // description
+   $HTML .= freshports_echo_HTML($myrow["short_description"] . "<br>\n");
+
+   // maintainer
+   $HTML .= freshports_echo_HTML('Maintained by: <a href="mailto:' . $myrow["maintainer"]);
+   $HTML .= freshports_echo_HTML('?cc=ports@FreeBSD.org&amp;subject=FreeBSD%20Port:%20' . $myrow["port"] . "-" . $myrow["version"] . '">');
+   $HTML .= freshports_echo_HTML($myrow["maintainer"] . '</a></br>' . "\n");
+
+   if ($myrow["committer"]) {
+      $HTML .= freshports_echo_HTML('last change committed by ' . $myrow["committer"]);  // separate lines in case committer is null
+
+      $HTML .= freshports_echo_HTML(' on <font size="-1">' . $myrow["updated"] . '</font><br>' . "\n");
+
+      $HTML .= freshports_echo_HTML($myrow["update_description"] . "<br>" . "\n");
+   } else {
+      $HTML .= freshports_echo_HTML("no changes recorded in FreshPorts<br>\n");
+   }
+
+   if (!$HideDescription) {
+      // Long descripion
+      $HTML .= freshports_echo_HTML('<a HREF="port-description.php3?port=' . $myrow["id"] .'">Description</a>');
+
+      $HTML .= freshports_echo_HTML(' <b>:</b> ');
+   }
+
+   // changes
+   $HTML .= freshports_echo_HTML('<a HREF="http://www.FreeBSD.org/cgi/cvsweb.cgi/ports/' .
+            $myrow["category"] . '/' .  $myrow["port"] . '">Changes</a>');
+   $HTML .= freshports_echo_HTML(' <b>:</b> ');
+
+   // download
+   $HTML .= freshports_echo_HTML('<a HREF="ftp://ftp.FreeBSD.org/pub/FreeBSD/branches/-current/ports/' .
+            $myrow["category"] . '/' .  $myrow["port"] . '.tar">Download Port</a>');
+
+   if ($myrow["package_exists"] == "Y") {
+      // package
+      $HTML .= freshports_echo_HTML(' <b>:</b> ');
+      $HTML .= freshports_echo_HTML('<a HREF="ftp://ftp.FreeBSD.org/pub/FreeBSD/FreeBSD-stable/packages/' .
+               $myrow["category"] . '/' .  $myrow["port"] . "-" . $myrow["version"] . '.tgz">Package</a>');
+   }
+
+   if ($myrow["homepage"]) {
+      $HTML .= freshports_echo_HTML(' <b>:</b> ');
+      $HTML .= freshports_echo_HTML('<a HREF="' . $myrow["homepage"] . '">Homepage</a>');
+   }
+
+   $HTML .= freshports_echo_HTML("<p></p></dd>");
+   $HTML .= freshports_echo_HTML("</dl>" . "\n");
+
+   $LastPort = $myrow["port"];
 }
 
-$HTML .= '</tr>';
+$HTML .= freshports_echo_HTML('</tr>');
 
 mysql_free_result($result);
 
-$HTML .= "<p>$NumTopics ports found</p>\n";
+$HTML .= freshports_echo_HTML("<p>$NumTopics ports found</p>\n");
 
-$HTML .= '</td></tr>';
+$HTML .= freshports_echo_HTML('</td></tr>');
 
-$HTML .= '</table>';
-$HTML .= '</td></tr>';
-echo $HTML;      
+$HTML .= freshports_echo_HTML('</table>');
+if ($NumRows == $LimitRows) {
+   $HTML .= freshports_echo_HTML('</td></tr><tr><td><a href=' . basename($PHP_SELF) . "?category=$category&begin=$LastPort");
+//   if ($previous) {
+      $HTML .= freshports_echo_HTML("&end=$FirstPort");
+//   }
+
+   $HTML .= freshports_echo_HTML(">next page</a></td></tr>");
+}
+
+if ($next) {
+   $HTML .= freshports_echo_HTML('</td></tr><tr><td><a href=' . basename($PHP_SELF) . "?category=$category");
+   if ($previous) {
+      $HTML .= freshports_echo_HTML("&next=$previous");
+   }
+   $HTML .= freshports_echo_HTML(">previous page</a></td></tr>"); 
+}
+
+$HTML .= freshports_echo_HTML('</td></tr>');
+//echo $HTML;      
                                 
    $fpwrite = fopen($cache_file, 'w');
    if(!$fpwrite) {                      
@@ -144,13 +236,6 @@ echo $HTML;
 </script>
   <tr>
     <td height="21"></td>
-  </tr>
-  <tr>
-    <td height="35" valign="bottom" align="center">[ <a href>Home</a> | Topics | <a
-    href="chronological.php3">Index</a> | <a href="help.html">Web Resources</a> | <a
-    href="booksmags.html">Books/Mags</a>&nbsp;| <a href="topology.html">Topology</a> | <a
-    href="search.html">Search</a> | <a href="feedback.html">Feedback</a> | <a href="faq.html">FAQ</a>
-    | <a href="phorum/list.php3?num=1">Forum</a> ]</td>
   </tr>
 </table>
 </body>

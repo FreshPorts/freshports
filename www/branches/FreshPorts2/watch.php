@@ -1,5 +1,5 @@
 <?
-	# $Id: watch.php,v 1.1.2.23 2002-06-09 21:42:42 dan Exp $
+	# $Id: watch.php,v 1.1.2.24 2002-07-30 15:15:48 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -31,7 +31,7 @@ if (!$visitor) {
 	<? freshports_PageBannerText("your watch list"); ?>
 </tr>
 <tr><td>
-These are the which are on your <a href="watch-categories.php">watch list</A>. 
+These are the ports which are on your <a href="watch-categories.php">watch list</A>. 
 That link also occurs on the right hand side of this page, under Login.
 </td></tr>
 <script language="php">

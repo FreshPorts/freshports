@@ -1,5 +1,5 @@
 <?
-	# $Id: ports.php,v 1.1.2.28 2003-03-05 13:46:40 dan Exp $
+	# $Id: ports.php,v 1.1.2.29 2003-03-05 21:05:48 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -147,7 +147,7 @@ select ports.id,
 
 			if ($UserID) {
 				$sql .= ",
-	        onwatchlist";
+	        TEMP.onwatchlist";
 	      }
 
 	      $sql .= "
@@ -273,6 +273,8 @@ select ports.id,
 		# fetch a single port based on id
 		# used by missing-port.php
 
+		$Debug = 0;
+
 		$sql = "select ports.id, 
 		               ports.element_id, 
 		               ports.category_id       as category_id,
@@ -298,24 +300,30 @@ select ports.id,
 			            element.status ";
 
 		if ($UserID) {
-			$sql .= ",
-		       CASE when watch_list_element.element_id is null
-	    	      then 0
-	        	  else 1
-		       END as onwatchlist ";
+			$sql .= ', 
+CASE WHEN TEMP.onwatchlist IS NULL
+THEN 0 ELSE 1
+END as onwatchlist';
 		}
 
 
-		$sql .= "from categories, element, ports ";
+		$sql .= " from categories, element, ports ";
 
 		#
 		# if the watch list id is provided (i.e. they are logged in and have a watch list id...)
 		#
-		if ($WatchListID) {
+		if ($UserID) {
 			$sql .="
-		            left outer join watch_list_element
-					on (ports.element_id                 = watch_list_element.element_id 
-				   and watch_list_element.watch_list_id = $WatchListID) ";
+LEFT OUTER JOIN (
+SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
+    FROM watch_list JOIN watch_list_element
+        ON watch_list.id      = watch_list_element.watch_list_id
+       AND watch_list.user_id = $UserID
+       AND watch_list.in_service
+  GROUP BY element_id
+) AS TEMP
+ON TEMP.wle_element_id = ports.element_id";
+
 		}
 
 		$sql .= "\nWHERE ports.id        = $id 
@@ -356,7 +364,12 @@ select ports.id,
 
 		$sql = "";
 		if ($UserID) {
-			$sql .= "SELECT PE.*, onwatchlist
+			$sql .= "SELECT PE.*,
+
+CASE WHEN watchlistcount IS NULL
+THEN 0 ELSE 1
+END as onwatchlist
+
 FROM
  (";
      	}
@@ -397,10 +410,11 @@ SELECT P.*, element.name    as port,
 			$sql .= ") AS PE
 LEFT OUTER JOIN
  (SELECT element_id           as wle_element_id,
-         COUNT(watch_list_id) as onwatchlist
+         COUNT(watch_list_id) as watchlistcount
     FROM watch_list JOIN watch_list_element
       ON watch_list.id      = watch_list_element.watch_list_id
      AND watch_list.user_id = $UserID
+     AND watch_list.in_service
  GROUP BY wle_element_id) AS TEMP
   ON TEMP.wle_element_id = PE.element_id";
     	}
@@ -475,8 +489,9 @@ LEFT OUTER JOIN
 		if ($result) {
 			$numrows = pg_numrows($result);
 			if ($numrows == 1) {
-				$myrow = pg_fetch_array ($result);
-				$result = $this->FetchByID($myrow["port_id"], $UserID);
+				$myrow = pg_fetch_row($result);
+#die("port::Fetch id = " . $myrow[0]);
+				$result = $this->FetchByID($myrow[0], $UserID);
 			}
 		} else {
 			echo 'pg_exec failed: ' . $sql;

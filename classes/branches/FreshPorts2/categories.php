@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.11 2003-09-25 14:00:41 dan Exp $
+	# $Id: categories.php,v 1.1.2.12 2003-10-16 03:02:17 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -22,10 +22,10 @@ class Category {
 	}
 	
 	function Populate($myrow) {
-		$this->id					= $myrow["id"];
-		$this->is_primary			= $myrow["is_primary"];
-		$this->element_id			= $myrow["element_id"];
-		$this->name					= $myrow["name"];
+		$this->id				= $myrow["id"];
+		$this->is_primary		= $myrow["is_primary"];
+		$this->element_id		= $myrow["element_id"];
+		$this->name				= $myrow["name"];
 		$this->description		= $myrow["description"];
 	}
 
@@ -50,6 +50,9 @@ class Category {
 	}
 
 	function FetchByElementID($element_id) {
+
+		$Debug = 0;
+
 		if (IsSet($element_id)) {
 			$this->element_id = $element_id;
 		}

@@ -106,8 +106,8 @@ $sql = "select distinct(primary_category_id) as category_id ".
 $result = mysql_query($sql, $db);
 $i = 0;
 while ($myrow = mysql_fetch_array($result)) {
-   $i++;
    $WatchedCategories[$i] = $myrow["category_id"];
+   $i++;
 }
 
 

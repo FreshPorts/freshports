@@ -1,5 +1,5 @@
 --
--- $Id: POSTGRESQL.sql,v 1.1.2.41 2003-12-31 16:08:04 dan Exp $
+-- $Id: POSTGRESQL.sql,v 1.1.2.42 2004-01-12 21:29:14 dan Exp $
 --
 -- Copyright (c) 1998-2003 DVL Software Limited
 --
@@ -208,3 +208,8 @@ grant select                         on users                          to group 
 --
 grant insert                         on page_load_detail               to group www;
 grant update                         on page_load_detail_id_seq        to group www;
+
+grant select, delete                 on page_load_detail               to group commits;
+
+grant insert                         on page_load_summary              to group commits;
+grant update                         on page_load_summary_id_seq       to group commits;

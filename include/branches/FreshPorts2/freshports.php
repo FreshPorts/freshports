@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.164 2003-11-14 04:42:49 dan Exp $
+	# $Id: freshports.php,v 1.4.2.165 2003-12-31 16:06:03 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -674,6 +674,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 	GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/htmlify.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports_moved.php');
 
 	$MarkedAsNew = "N";
 	$HTML  = "<DL>\n";
@@ -943,10 +944,25 @@ if ($ShowDepends) {
       $HTML .= '<a HREF="' . $port->homepage . '">Main Web Site</a>';
    }
 
-
    $HTML .= "\n</DD>\n</DL>\n";
 
    return $HTML;
+}
+
+function freshports_PortsMoved($port, $PortsMoved) {
+	if ($PortsMoved->port == '') {
+		$HTML .= "port deleted ";
+	} else {
+		$HTML .= "port moved to ";
+		$HTML .= '<a href="/' . $PortsMoved->category . '/">' . $PortsMoved->category . '</a>';
+		$HTML .= '/';
+		$HTML .= '<a href="/' . $PortsMoved->category . '/' . $PortsMoved->port     . '/">' . $PortsMoved->port     . '</a> ';
+	}
+
+	$HTML .= 'on ' . $PortsMoved->date . "<br>";
+	$HTML .= 'REASON: ' . $PortsMoved->reason . '<br>';
+
+	return $HTML;
 }
 
 function freshports_navigation_bar_top() {

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.7 2003-03-06 22:03:22 dan Exp $
+	# $Id: categories.php,v 1.1.2.8 2003-04-29 01:48:09 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -95,8 +95,13 @@ class Category {
 		
 
 	function UpdateDescription() {
+		GLOBAL $User;
+
 		$Debug = 0;
 		$sql = "UPDATE categories SET description = '" . $this->description . "' WHERE id = " . $this->id . ' AND is_primary = FALSE';
+		syslog(LOG_NOTICE, 'User \'' . $User->name . '\' at '
+			. AddSlashes($_SERVER[REMOTE_ADDR]) . ' is changing category \'' 
+			. $this->name . '\' to \'' . $this->description . '\'.');
 		if ($Debug) echo "sql = '$sql'<BR>";
 
 		$result = pg_exec($this->dbh, $sql);

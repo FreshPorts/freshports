@@ -58,40 +58,52 @@ if ($submit) {
         }
       }
 
-     $sql = "update users set ";
-     $sql .= "email			= '$email', ";
-     $sql .= "emailsitenotices_yn	= '$emailsitenotices_yn_value',";
-     $sql .= "watchnotifyfrequency	= '$watchnotifyfrequency' ";
+      // get the existing email in case we need to reset the bounce count
+      $sql = "select email from users where cookie = '$visitor'";
+      $result = mysql_query($sql);
+      if ($result) {
+         $myrow = mysql_fetch_array($result);
 
-     if ($Password1 != '') {
-       $sql .= ", password = '$Password1'";
-     }
 
-     $sql .= " where cookie = '$visitor'";
+         $sql = "update users set ";
+         $sql .= "email			= '$email', ";
+         $sql .= "emailsitenotices_yn	= '$emailsitenotices_yn_value',";
+         $sql .= "watchnotifyfrequency	= '$watchnotifyfrequency' ";
 
-     if ($Debug) {
-        echo $sql;
-     }
+         // if they are changing the email, reset the bouncecount.
+         if ($myrow["email"] != $email) {
+            $sql .= ", emailbouncecount = 0 ";
+         }
 
-     $result = mysql_query($sql);
-     if ($result) {
-//	if (mysql_affected_rows() == 1) {
-	   $AccountModified = 1;
-//	}
-     }
+         if ($Password1 != '') {
+            $sql .= ", password = '$Password1'";
+         }
 
-     if ($AccountModified == 1) {
-        if ($Debug) {
-           echo "I would have taken you to '$origin' now, but debugging is on<br>\n";
-        } else {
-           header("Location: $origin");
-           exit;  /* Make sure that code below does not get executed when we redirect. */
-        }
-     } else {
-	$errors .= 'Something went terribly wrong there.<br>';
-	$errors .= $sql . "<br>\n";
-        $errors .= mysql_error();
-     }
+         $sql .= " where cookie = '$visitor'";
+
+         if ($Debug) {
+            echo $sql;
+         }
+
+         $result = mysql_query($sql);
+         if ($result) {
+//	    if (mysql_affected_rows() == 1) {
+               $AccountModified = 1;
+//	    }
+         }
+      }
+      if ($AccountModified == 1) {
+         if ($Debug) {
+            echo "I would have taken you to '$origin' now, but debugging is on<br>\n";
+         } else {
+            header("Location: $origin");
+            exit;  /* Make sure that code below does not get executed when we redirect. */
+         }
+      } else {
+         $errors .= 'Something went terribly wrong there.<br>';
+         $errors .= $sql . "<br>\n";
+         $errors .= mysql_error();
+      }
    }
 }
 </script>

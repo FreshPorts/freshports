@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_upload.php,v 1.5.2.10 2002-03-02 14:38:20 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.11 2002-03-02 21:11:50 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -97,6 +97,15 @@ function DisplayStagingArea($WatchListID, $db) {
 	<TR><TD COLSPAN="4"><BIG>The following information is in your Staging Area.  To save it to your Watch List, please click on the
 			"Update watch list" button.</BIG> <SMALL><A HREF="/help.php">help</A></SMALL></TD></TR>
 
+	<TR><TD COLSPAN="4">
+			<FORM ACTION="<? GLOBAL $PHP_SELF; echo $PHP_SELF; ?>" method="POST">
+			<P ALIGN="center">
+			<INPUT TYPE="submit" VALUE="Update watch list"  NAME="submit" SIZE="40">
+			&nbsp;&nbsp;&nbsp;
+ 			<INPUT TYPE="submit" VALUE="Empty staging area" NAME="clear">
+			</P>
+
+	</TD></TR>
 <?
 
 	echo '<TD VALIGN="top"><B>Ports found from your uploaded data.</B><BR>Those marked with a W are already on your watch list.</TD>' . "\n";
@@ -126,6 +135,7 @@ function DisplayStagingArea($WatchListID, $db) {
 	echo '<TD VALIGN="top">' . "\n";
 	UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $db);
 	echo '</TD>';
+			echo '</FORM>';
 
 	echo '</TABLE>';
 }
@@ -197,7 +207,7 @@ function DisplayStagingArea($WatchListID, $db) {
 		#
 		if ($DisplayStagingArea) {
 			if ($WatchListUpdated) {
-				DisplayError("Your watch list has been updated.");
+				DisplayError("<BIG>Your watch list has been updated. You may wish to empty your staging area now.</BIG>");
 			}
 			DisplayStagingArea($WatchListID, $db);
 		} else {

@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_process.inc,v 1.5.2.8 2002-03-01 18:00:10 dan Exp $
+	# $Id: pkg_process.inc,v 1.5.2.9 2002-03-02 21:11:50 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 	#
@@ -188,14 +188,6 @@ function UploadDisplayStagingResultsMatches($WatchListID, $dbh) {
 		if ($numrows) {
 			?>
 
-			<FORM ACTION="<? GLOBAL $PHP_SELF; echo $PHP_SELF; ?>" method="POST">
-			<P ALIGN="center">
-			<INPUT TYPE="submit" VALUE="Update watch list"  NAME="submit" SIZE="40">
-			</P>
-
-			<P ALIGN="center">
-			<INPUT TYPE="submit" VALUE="Empty staging area" NAME="clear">
-			</P>
 			<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5" BORDERCOLOR="#a2a2a2" BORDERCOLORDARK="#a2a2a2" BORDERCOLORLIGHT="#a2a2a2">
 			<TR><TD COLSPAN="2"><B>Port name</B> <SMALL>(<? echo $numrows ?> ports)</SMALL></TD><TD ALIGN="center"><SMALL>Add</SMALL></TD></TR>
 
@@ -222,7 +214,6 @@ function UploadDisplayStagingResultsMatches($WatchListID, $dbh) {
 			}
 			
 			echo '</TABLE>';
-			echo '</FORM>';
 
 #			echo 'that took '. (time() - $begintime) . ' seconds to process ' . $numrows . ' rows';
 		} else {
@@ -375,7 +366,7 @@ function UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $dbh) {
 
 #			echo 'that took '. (time() - $begintime) . ' seconds to process ' . $numrows . ' rows';
 		} else {
-			echo "Every thing on your watch list is accounted for on your pkg_info list.";
+			echo "Every item on your watch list is accounted for on your pkg_info list.";
 		}
 	} else {
 		echo "nothing found!";
@@ -385,38 +376,56 @@ function UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $dbh) {
 
 
 function MoveStagingToWatchList($WatchListID, $ports, $dbh) {
-	$ok  = true;
+	$ok  = TRUE;
 
 	$sql = "BEGIN";
 	$result = pg_exec($dbh, $sql);
-	if ($result) {
+	if (!$result) {
+		$ok = FALSE;
+	}
+
+	if ($ok) {
 		$sql = "select WatchListDeleteAllElements($WatchListID)";
 		$result = pg_exec($dbh, $sql);
-		if ($result) {
-			if ($ports) {
-				reset($ports);
-				while (list($key, $value) = each($ports)) {
-
-#					echo "\$key='$key', \$value='$value'<BR>\n";
-
-					$sql = "insert into watch_list_element (watch_list_id, element_id)
-								values ($WatchListID, $value)";
-
-#					echo "\$sql='$sql'<BR>\n";
-
-					$result = pg_exec($dbh, $sql);
-					${"port_".$value} = 1;
-
-					if (!$result) {
-						$ok = FALSE;
-						break;
-					}				
-				}
-			}
+		if (!$result) {
+			$ok = FALSE;
 		}
 	}
 
-	if ($result && $ok) {
+	if ($ok && $ports) {
+		reset($ports);
+		$PortCount = 0;
+		while (list($key, $value) = each($ports)) {
+			$PortCount++;
+
+#			echo "\$key='$key', \$value='$value'<BR>\n";
+
+			$sql = "insert into watch_list_element (watch_list_id, element_id)
+						values ($WatchListID, $value)";
+
+#			echo "\$sql='$sql'<BR>\n";
+
+			$result = pg_exec($dbh, $sql);
+			${"port_".$value} = 1;
+
+			if (!$result) {
+				echo 'ouch, that failed';
+				$ok = FALSE;
+				break;
+			}				
+		}
+	}
+
+	if ($ok) {
+		reset($ports);
+		$sql = "select WatchListStagingLogWatch($WatchListID, $PortCount)";
+		$result = pg_exec($dbh, $sql);
+		if (!$result) {
+			$ok = FALSE;
+		}
+	}			
+			
+	if ($ok) {
 		pg_exec($dbh, "COMMIT");
 	} else {
 		echo pg_errormessage() . " sql = $sql";
@@ -427,15 +436,17 @@ function MoveStagingToWatchList($WatchListID, $ports, $dbh) {
 }
 
 function StagingAreaClear($WatchListID, $dbh) {
-	$ok = FALSE;
+	$ok = TRUE;
 
 	$result = pg_exec($dbh, "BEGIN");
 	if ($result) {
-		$sql = "DELETE FROM watch_list_staging WHERE watch_list_id = $WatchListID";
+		$sql = "select WatchListStagingClear($WatchListID)";
 		$result = pg_exec($dbh, $sql);
-		if ($result) {
-			$ok = TRUE;
+		if (!$result) {
+			$ok = FALSE;
 		}
+	} else {
+		$ok = FALSE;
 	}
 
 	if ($result && $ok) {

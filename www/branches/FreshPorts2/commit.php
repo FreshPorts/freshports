@@ -1,7 +1,9 @@
-<?
-	# $Id: commit.php,v 1.1.2.23 2003-03-06 13:51:56 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2002 DVL Software Limited
+	# $Id: commit.php,v 1.1.2.24 2003-04-26 13:15:47 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
@@ -66,7 +68,8 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 	         commit_log.encoding_losses,
 	         element.name as port,
 	         commit_log.id as commit_log_id,
-	         commit_log_ports.needs_refresh ";
+	         commit_log_ports.needs_refresh,
+            security_notice.id  AS security_notice_id";
 
 	if ($User->id) {
 		$sql .= ",
@@ -74,7 +77,8 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
    }
 
    $sql .= "
-	    FROM commit_log, commit_log_ports, ports, categories, element ";
+	    FROM commit_log LEFT OUTER JOIN security_notice ON commit_log.id = security_notice.commit_log_id, 
+            commit_log_ports, ports, categories, element ";
 
 	if ($User->id) {
 				$sql .= "
@@ -186,6 +190,10 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 
 						if ($myrow["encoding_losses"] == 't') {
 							$HTML .= '&nbsp;' . freshports_Encoding_Errors();
+						}
+
+						if (IsSet($myrow["security_notice_id"])) {
+							$HTML .= ' <a href="/security-notice.php?message_id=' . $myrow["message_id"] . '">' . freshports_Security_Icon() . '</a>';
 						}
 
 						$HTML .= "<BR>\n";

@@ -1,7 +1,9 @@
-<?
-	# $Id: files.php,v 1.1.2.25 2003-04-24 15:43:30 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: files.php,v 1.1.2.26 2003-04-26 13:13:18 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
@@ -52,7 +54,8 @@ select element_pathname(element.id) as pathname,
        commit_log_ports.needs_refresh, 
        ports.date_added, 
        ports.forbidden, 
-       ports.broken ";
+       ports.broken,
+       security_notice.id  AS security_notice_id";
 
 	if ($User->id) {
 		$sql .= ",
@@ -61,7 +64,8 @@ select element_pathname(element.id) as pathname,
 
 
 	$sql .="
-		   from commit_log, categories, element, commit_log_port_elements, commit_log_elements, 
+		   from commit_log LEFT OUTER JOIN security_notice ON commit_log.id = security_notice.commit_log_id,
+			    categories, element, commit_log_port_elements, commit_log_elements, 
 			    element B, commit_log_ports, ports ";
 
 	#
@@ -76,7 +80,7 @@ select element_pathname(element.id) as pathname,
 	       AND watch_list.user_id = $User->id
 	  GROUP BY wle_element_id) AS TEMP
 	       ON TEMP.wle_element_id = ports.element_id";
-	      }
+	}
 
 	$sql .= "
 	 where commit_log.message_id                          = '" . AddSlashes($MessageID) . "'
@@ -194,6 +198,10 @@ select element_pathname(element.id) as pathname,
 
 		if ($myrow["encoding_losses"] == 't') {
 			echo '&nbsp;' . freshports_Encoding_Errors();
+		}
+
+		if (IsSet($myrow["security_notice_id"])) {
+			echo ' <a href="/security-notice.php?message_id=' . $myrow["message_id"] . '">' . freshports_Security_Icon() . '</a>';
 		}
 
 		echo "</TD>\n";

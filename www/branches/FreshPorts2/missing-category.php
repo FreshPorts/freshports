@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-category.php,v 1.1.2.5 2002-02-21 06:29:41 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.6 2002-02-21 06:39:37 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -90,7 +90,7 @@ $ShowDescriptionLink  = "N";
 	</tr>
 	</table>
 
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="1" ALIGN="center">
+<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
 <? include("./include/footer.php") ?>
 </TD></TR>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: security-notice.php,v 1.1.2.7 2003-04-23 16:39:05 dan Exp $
+	# $Id: security-notice.php,v 1.1.2.8 2003-04-26 14:33:20 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -13,6 +13,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/watch-lists.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/security_notice.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/security_notice_audit.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user_tasks.php');
 
 	$PageTitle = 'Security Notice';
@@ -140,15 +141,35 @@ Please enter your reasoning for marking the above commit as a security issue.
 ?>
 <h2>Audit trail</h2>
 <table border=1 CELLSPACING="0" CELLPADDING="5">
-<tr><td><b>Date marked</b></td><td><b>User Name</b></td><td><b>IP Address</b></td><td><b>e-mail</b></td><td><b>status</b></td></tr>
+<tr><td><b>Date marked</b></td><td><b>Notification Reaason</b></td><td><b>User Name</b></td><td><b>IP Address</b></td><td><b>e-mail</b></td><td><b>status</b></td></tr>
 <tr>
-<td><?php echo $SecurityNotice->date_added; ?></td>
-<td><?php echo $UserAlt->name; ?></td>
-<td><?php echo $SecurityNotice->ip_address; ?></td>
-<td><?php echo $UserAlt->email; ?></td>
-<td><?php echo $SecurityNotice->status; ?></td>
+<td><?php echo $SecurityNotice->date_added;  ?></td>
+<td><?php echo $SecurityNotice->description; ?></td>
+<td><?php echo $UserAlt->name;               ?></td>
+<td><?php echo $SecurityNotice->ip_address;  ?></td>
+<td><?php echo $UserAlt->email;              ?></td>
+<td><?php echo $SecurityNotice->status;      ?></td>
 </tr>
-</td>
+
+<?php
+	# now get all the changed values from before...
+	$SecurityNoticeAudit = new SecurityNoticeAudit($db);
+	$numrows = $SecurityNoticeAudit->FetchByMessageID($message_id);
+	for ($i = 0; $i < $numrows; $i++) {
+		$SecurityNoticeAudit->FetchNth($i);
+?>
+<tr>
+<td><?php echo $SecurityNoticeAudit->date_added;  ?></td>
+<td><?php echo $SecurityNoticeAudit->description; ?></td>
+<td><?php echo $SecurityNoticeAudit->user_name;   ?></td>
+<td><?php echo $SecurityNoticeAudit->ip_address;  ?></td>
+<td><?php echo $SecurityNoticeAudit->user_email;  ?></td>
+<td><?php echo $SecurityNoticeAudit->status;      ?></td>
+</tr>
+<?php	
+	}
+?>
+
 </table>
 
 <?php

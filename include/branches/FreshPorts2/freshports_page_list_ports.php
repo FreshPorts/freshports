@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports_page_list_ports.php,v 1.1.2.8 2005-02-17 04:23:30 dan Exp $
+	# $Id: freshports_page_list_ports.php,v 1.1.2.9 2005-03-18 03:39:35 dan Exp $
 	#
 	# Copyright (c) 2005 DVL Software Limited
 	#
@@ -66,8 +66,8 @@ SELECT ports.id,
        broken,
        forbidden,
        ignore,
-       pv.current as vulnerable_current,
-       pv.past    as vulnerable_past,
+       PV.current as vulnerable_current,
+       PV.past    as vulnerable_past,
        restricted,
        no_cdrom,
        latest_link ";
@@ -104,6 +104,8 @@ WHERE ports.element_id  = element.id
 
 	$this->_sql .= " order by " . $this->getSort();
 #	$this->_sql .= " limit 20";
+
+#	echo '<pre>' . $this->_sql . '</pre>';
 
 	}
 

@@ -1,7 +1,7 @@
 <?
-	# $Id: port-basics.php,v 1.1.2.7 2002-04-06 22:51:57 dan Exp $
+	# $Id: port-basics.php,v 1.1.2.8 2003-05-16 02:31:21 dan Exp $
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# Copyright (c) 1998-2003 DVL Software Limited
 //
 // This php fragment does the basic port information for a single port.
 // I'd show you what code is expected in $myrow, but I can't be bothered

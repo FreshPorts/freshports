@@ -1,7 +1,7 @@
 <?
-	# $Id: list-of-ports.php,v 1.1.2.5 2002-12-11 04:36:21 dan Exp $
+	# $Id: list-of-ports.php,v 1.1.2.6 2003-05-16 02:31:21 dan Exp $
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
 function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeaders) {

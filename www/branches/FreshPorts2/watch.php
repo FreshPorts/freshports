@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch.php,v 1.1.2.41 2003-04-28 00:05:55 dan Exp $
+	# $Id: watch.php,v 1.1.2.42 2003-05-08 13:07:09 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -15,21 +15,15 @@
 
 	// if we don't know who they are, we'll make sure they login first
 	if (!$visitor) {
-		header("Location: login.php?origin=" . $_SERVER["PHP_SELF"]);  /* Redirect browser to PHP web site */
+		header("Location: /login.php?origin=" . $_SERVER["PHP_SELF"]);  /* Redirect browser to PHP web site */
 		exit;  /* Make sure that code below does not get executed when we redirect. */
 	}
 
-$Debug = 0;
+	$Debug = 0;
 
-if ($Debug) phpinfo();
+	if ($Debug) phpinfo();
 
-$visitor = $_COOKIE['visitor'];
-
-// if we don't know who they are, we'll make sure they login first
-if (!$visitor) {
-        header("Location: login.php?origin=" . $_SERVER["PHP_SELF"]);  /* Redirect browser to PHP web site */
-        exit;  /* Make sure that code below does not get executed when we redirect. */
-}
+	$visitor = $_COOKIE['visitor'];
 
 	if ($_POST["watch_list_select_x"] && $_POST["watch_list_select_y"]) {
 		# they clicked on the GO button and we have to apply the 

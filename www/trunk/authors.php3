@@ -20,7 +20,7 @@ require( "/www/freshports.org/_private/getvalues.php3");
 
 <table width="100%">
 <tr><td>
-
+<h2>about the authors</h2>
 <p>Dan Langille thought up the idea, found the data sources, bugged people to 
 write scripts, and did the html and database work. But he certainly didn't 
 do it alone.</p>
@@ -47,7 +47,7 @@ form the basis for some of the most important parts of the system,</p>
 
 <p>John Beige did the logo you see at the top of the page.<p>
 
-<p>And various people on undernet's #nz.general ad #freebsd helped me with 
+<p>And various people on undernet's #nz.general and #freebsd helped me with 
 scripts and ideas.  That's not to mention that channel on efnet which I won't 
 name just so it stays a secret.</p>
 </td>

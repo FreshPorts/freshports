@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_upload.php,v 1.5.2.26 2002-12-12 02:45:23 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.27 2002-12-18 17:33:27 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -13,7 +13,7 @@
 	freshports_Start('Uploading pkg_info',
 					$FreshPortsName . ' - new ports, applications',
 					'FreeBSD, index, applications, ports');
-$Debug=0;
+$Debug = 0;
 #phpinfo();
 
 function StagingAlreadyInUse($UserID, $dbh) {
@@ -25,7 +25,7 @@ function StagingAlreadyInUse($UserID, $dbh) {
 	$result = pg_exec($dbh, $sql);
 	if ($result && pg_numrows($result)) {
 		$row = pg_fetch_array($result, 0);
-		if (!$row[0]) {
+		if ($row[0] == 0) {
 			$Result = 0;
 		}
 	} else {
@@ -188,10 +188,12 @@ function ChooseWatchLists($UserID, $db) {
 <TR>
 	<? echo freshports_PageBannerText("Uploading pkg_info"); ?>
 <TR><TD>
-<BIG>WARNING</BIG>: The system will clear out your staging areas from time to time.
+<BIG>WARNING</BIG>: The system will clear out your staging area from time to time.
 </TD><TR>
 <TR><TD>
 	<?
+	$Debug = 0;
+
 	# you can only be here if you are logged in!
 	$visitor = $_COOKIE["visitor"];
 	if (!$visitor) {
@@ -213,21 +215,22 @@ function ChooseWatchLists($UserID, $db) {
 		#
 
 		if ($StagingInUse) {
+			if ($Debug) echo 'staging area is in use<br>';
 			$DisplayStagingArea = TRUE;
 			if ($_POST["update_watch_list"]) {
 				$ports = $_POST["ports"];
 				# save these things to the watch list
 				# and clear out part of the staging area.
-				$WatchListID = AddSlashes($_POST["watch_list_id"]);
-#				echo ' you clicked on update_watch_list';
+				$WatchListID = AddSlashes($_POST["wlid"]);
+				if ($Debug) echo ' you clicked on update_watch_list';
 				if (MoveStagingToWatchList($User->id, $WatchListID, $ports, $db)) {
-#					$DisplayStagingArea = FALSE;
+					$DisplayStagingArea = FALSE;
 					$StagingInUse       = FALSE;
 					$WatchListUpdated   = TRUE;
 				}
 			}
 			if ($_POST["clear"]) {
-#				echo " you pressed clear!";
+				if ($Debug) echo " you pressed clear!<br>";
 				if (StagingAreaClear($User->id, $db)) {
 					$StagingInUse			= FALSE;
 					$DisplayStagingArea	= FALSE;
@@ -235,10 +238,11 @@ function ChooseWatchLists($UserID, $db) {
 				}
 			}
 			
-			if ($_POST["watch_list_select_x"] && $_POST["watch_list_select_y"]) {
+			if ($_REQUEST["wlid"]) {
+				if ($Debug) echo 'you selected a list<br>';
 				# they clicked on the GO button and we have to apply the 
 				# watch staging area against the watch list.
-				$WatchListID = AddSlashes($_POST["watch_list_id"]);
+				$WatchListID = AddSlashes($_POST["wlid"]);
 			}
 		} else {
 			$DisplayStagingArea = FALSE;

@@ -1,5 +1,5 @@
 <?
-	# $Id: files.php,v 1.1.2.24 2003-04-24 15:03:04 dan Exp $
+	# $Id: files.php,v 1.1.2.25 2003-04-24 15:43:30 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -115,6 +115,8 @@ select element_pathname(element.id) as pathname,
 
 		$myrow = $rows[0];
 		$PathNamePrefixToRemove = '/ports/' . $myrow["category"] . '/' . $myrow["port"] . '/';
+
+		header("HTTP/1.1 200 OK");
 
 		freshports_Start($myrow["category"] . '/' . $myrow["port"] . " - commit details",
     	           "freshports - new ports, applications",

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit_record.php,v 1.1.2.1 2003-09-23 13:25:00 dan Exp $
+	# $Id: commit_record.php,v 1.1.2.2 2003-09-24 13:45:02 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -35,6 +35,7 @@ class CommitRecord {
 	var $category;
 	var $security_notice_id;
 	var $watch;
+	var $element_pathname;
 
 	function CommitRecord($dbh) {
 		$this->dbh = $dbh;
@@ -65,5 +66,6 @@ class CommitRecord {
 		$this->category				= $myrow['category'];
 		$this->security_notice_id	= $myrow['security_notice_id'];
 		$this->watch				= $myrow['watch'];
+		$this->element_pathname		= $myrow['element_pathname'];
 	}
 }

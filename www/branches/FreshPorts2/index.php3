@@ -1,5 +1,5 @@
 <?
-   # $Id: index.php3,v 1.34.2.7 2001-11-29 04:09:46 dan Exp $
+   # $Id: index.php3,v 1.34.2.8 2001-12-05 00:16:55 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -254,10 +254,10 @@ order by commit_log.commit_date desc,
 						}
 
 						if ($myrow["forbidden"]) {
-							$HTML .= '<img src="images/forbidden.gif" alt="' . StripQuotes($myrow["forbidden"]) . '" width="20" height="20" hspace="2">';
+							$HTML .= '<img src="images/forbidden.gif" alt="Forbidden" width="20" height="20" hspace="2">';:
 						}
 						if ($myrow["broken"]) {
-							$HTML .= '<img src="images/broken.gif" alt="' . StripQuotes($myrow["broken"]) . '" width="17" height="16" hspace="2">';
+							$HTML .= '<img src="images/broken.gif" alt="Broken" width="17" height="16" hspace="2">';
 						}
 
 						$j++;
@@ -272,7 +272,7 @@ order by commit_log.commit_date desc,
 #					$HTML .= '<BR><font size="-1">' . $myrow["commit_date_raw"] . '</font>';
 
 					$HTML .= "</td><td valign='top'>";
-					$HTML .= nl2br(convertAllLinks(htmlspecialchars($myrow["commit_description"]))) . "</PRE></td>\n";
+					$HTML .= "<PRE>" . convertAllLinks(htmlspecialchars($myrow["commit_description"])) . "</PRE></td>\n";
 
 					$HTML .= "</tr>\n";
 				}

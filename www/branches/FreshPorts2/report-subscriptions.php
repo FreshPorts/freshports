@@ -1,5 +1,5 @@
 <?
-	# $Id: report-subscriptions.php,v 1.1.2.6 2002-08-17 14:47:51 dan Exp $
+	# $Id: report-subscriptions.php,v 1.1.2.7 2002-08-17 14:53:08 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -165,6 +165,8 @@ This page allows you to select the reports you wish to receive and the frequency
 #			echo "\$needs_frequency='$needs_frequency'<BR>\n";
 			if ($needs_frequency == 't') {
 				echo freshports_ReportFrequenciesDDLB($Frequencies, ${"frequencies_" . $report_id});
+			} else {
+				echo 'N/A';
 			}
 			echo "</TD></TR>\n";
 		}

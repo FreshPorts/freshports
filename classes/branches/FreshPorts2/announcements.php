@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: announcements.php,v 1.1.2.5 2004-02-13 15:06:51 dan Exp $
+	# $Id: announcements.php,v 1.1.2.6 2004-08-25 20:32:10 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -16,6 +16,8 @@ class Announcement {
 	var $text;
 	var $start_date;
 	var $end_date;
+
+	var $Debug = 0;
 
 	function Announcement($dbh) {
 		$this->dbh = $dbh;
@@ -159,7 +161,7 @@ SELECT *
 		if ($result) {
 			$numrows = pg_numrows($result);
 			if ($numrows == 1) {
-				if ($Debug) echo "fetched by ID succeeded<BR>";
+				if ($this->Debug) echo "fetched by ID succeeded<BR>";
 				$myrow = pg_fetch_array ($result, 0);
 				$this->PopulateValues($myrow);
 			}
@@ -180,7 +182,7 @@ SELECT *
 
 #		echo '<pre>' . $sql . '</pre>';
 
-		if ($Debug)	echo "commits::Fetch sql = '$sql'<BR>";
+		if ($this->Debug)	echo "commits::Fetch sql = '$sql'<BR>";
 
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {
@@ -205,7 +207,7 @@ SELECT *
 
 #		echo '<pre>' . $sql . '</pre>';
 
-		if ($Debug)	echo "commits::Fetch sql = '$sql'<BR>";
+		if ($this->Debug)	echo "commits::Fetch sql = '$sql'<BR>";
 
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {
@@ -245,7 +247,7 @@ SELECT *
 
 #		echo '<pre>' . $sql . '</pre>';
 
-		if ($Debug)	echo "commits::Fetch sql = '$sql'<BR>";
+		if ($this->Debug) echo "commits::Fetch sql = '$sql'<BR>";
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {

@@ -1,5 +1,5 @@
 <?
-	# $Id: commit.php,v 1.1.2.5 2002-04-19 17:06:18 dan Exp $
+	# $Id: commit.php,v 1.1.2.6 2002-04-20 02:19:10 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -58,11 +58,11 @@ if ($Debug) {
 <?
 if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 ?>
-  <tr>
-    <td colspan="2">
+  <TR>
+    <TD colspan="2">
        <? include ("announcement.txt"); ?>
-    </td>
-  </tr>
+    </TD>
+  </TR>
 <?
 }
 ?>
@@ -176,15 +176,14 @@ if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 
 ?>
 
-<tr><td VALIGN="top" WIDTH="100%">
-<table width="100%" border="1" CELLSPACING="0" CELLPADDING="8"
-            bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">
-<tr>
+<TR><TD VALIGN="top" WIDTH="100%">
+<TABLE WIDTH="100%" border="1" CELLSPACING="0" CELLPADDING="8">
+<TR>
 		<? 
 		freshports_PageBannerText($Title, 3);
 		?>
-        <? //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPorts) ?></BIG></B></font>
-</tr>
+        <? //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPorts) ?>
+</TR>
 
 <?
 #				print "NumRows = $NumRows\n<BR>";
@@ -291,7 +290,7 @@ if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 
 					$i = $j - 1;
 
-					$HTML .= "\n<BLOCKQUOTE>";
+					$HTML .= "\n<BLOCKQUOTE>\n";
 
 					$HTML .= freshports_PortDescriptionPrint($myrow["commit_description"], $myrow["encoding_losses"]);
 
@@ -299,17 +298,14 @@ if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 					$HTML .= "\n</BLOCKQUOTE>\n</TD></TR>\n\n\n";
 				}
 
-				$HTML .= "</td></tr>\n\n";
-
 				echo $HTML;
 
-	            echo "</table>\n";
+	            echo "</TABLE>\n";
 			} else {
 			?>
-<tr><td VALIGN="top" WIDTH="100%">
-<table width="100%" border="1" CELLSPACING="0" CELLPADDING="8"
-            bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">
-<tr>
+<TR><TD VALIGN="top" WIDTH="100%">
+<TABLE WIDTH="100%" border="1" CELLSPACING="0" CELLPADDING="8">
+<TR>
 <? freshports_PageBannerText($Title, 3); ?>
 </TR>
 <TR>
@@ -328,12 +324,12 @@ if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
       }
 
 </script>
-</td>
-  <td valign="top" width="*">
+</TD>
+  <TD VALIGN="top" WIDTH="*">
    <? include("./include/side-bars.php") ?>
- </td>
-</tr>
-</table>
+ </TD>
+</TR>
+</TABLE>
 
 <BR>
 

@@ -1,5 +1,5 @@
 <?
-	# $Id: search.php,v 1.1.2.13 2002-04-30 13:45:04 dan Exp $
+	# $Id: search.php,v 1.1.2.14 2002-05-09 20:02:00 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -228,15 +228,22 @@ GLOBAL	$ShowDepends;
 $ShowDepends		= 1;
 $DaysMarkedAsNew= $DaysMarkedAsNew= $GlobalHideLastChange= $ShowChangesLink= $ShowDescriptionLink= $ShowDownloadPortLink= $ShowHomepageLink= $ShowLastChange= $ShowMaintainedBy= $ShowPortCreationDate= $ShowPackageLink= $ShowShortDescription =1;
 $HideDescription = 1;
-$ShowEverything  = 1;
+$ShowEverything  = 0;
 $ShowShortDescription = "Y";
 $ShowMaintainedBy     = "Y";
 $GlobalHideLastChange = "Y";
 $ShowDescriptionLink  = "N";
+$ShowChangesLink      = "Y";
+$ShowDescriptionLink  = "Y";
+$ShowHomepageLink     = "Y";
+$ShowDownloadPortLink = "Y";
 
 	for ($i = 0; $i < $NumRows; $i++) {
 		$Port->FetchNth($i);
-		$HTML .= freshports_PortDetails($Port, $Port->dbh, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 1, $AddRemoveExtra);
+		$HTML .= freshports_PortDetails($Port, $Port->dbh, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, 
+                     $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, 
+                     $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, 
+                     $ShowPackageLink, $ShowShortDescription, 1, $AddRemoveExtra, 1);
    }
 
 }

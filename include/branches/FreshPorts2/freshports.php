@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.114 2002-12-08 03:21:51 dan Exp $
+	# $Id: freshports.php,v 1.4.2.115 2002-12-08 16:46:06 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -569,7 +569,7 @@ function freshports_ONToYN($Value) {
 }
 
 
-function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, $LinkToPort=0, $AddRemoveExtra='', $ShowCategory=1, $ShowDateAdded="N") {
+function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, $LinkToPort = 0, $AddRemoveExtra = '', $ShowCategory = 1, $ShowDateAdded = "N", $IndicateWatchListStatus = 1) {
 //
 // This php3 fragment does the basic port information for a single port.
 //
@@ -612,7 +612,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 		$HTML .= ' / <A HREF="/' . $port->category . '/">' . $port->category . '</A>';
 	}
 
-	if ($WatchListID) {
+	if ($WatchListID && $IndicateWatchListStatus) {
 		if ($port->{onwatchlist}) {
 			$HTML .= ' '. freshports_Watch_Link_Remove($WatchListID, $port->{element_id});
 		} else {

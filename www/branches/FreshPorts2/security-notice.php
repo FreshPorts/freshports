@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: security-notice.php,v 1.1.2.9 2003-04-27 14:48:17 dan Exp $
+	# $Id: security-notice.php,v 1.1.2.10 2003-05-08 13:18:57 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -106,7 +106,6 @@
 
 <tr><td>
 <?php
-	GLOBAL $freshports_Tasks_SecuritydNoticeAdd;
 
 	if (IsSet($SecurityNotice->id)) {
 		echo '<h2>Notification reason</h2>' . "\n";

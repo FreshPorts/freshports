@@ -1,5 +1,5 @@
 <?
-	# $Id: customize.php,v 1.1.2.15 2002-05-22 04:30:21 dan Exp $
+	# $Id: customize.php,v 1.1.2.16 2002-06-09 21:42:34 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -199,7 +199,7 @@ echo "</TD>
 </script></TD>
 </TABLE>
 </TD>
-  <TD VALIGN="top" WIDTH="*">
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
    <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
  </TD>
 </TR>

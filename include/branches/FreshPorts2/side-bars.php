@@ -1,9 +1,11 @@
 <?
-	# $Id: side-bars.php,v 1.4.2.30 2002-06-03 18:51:47 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.31 2002-06-09 21:42:44 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
 	$ColumnWidth = 155;
+
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/burstmedia.php");
 
 ?>
 
@@ -69,6 +71,23 @@ if ($visitor) {
    </TD>
    </TR>
    </TABLE>
+
+<BR>
+
+<?
+
+	BurstMediaCode();
+	echo '<TABLE BORDER="0" CELLPADDING=5">
+		  <TR><TD ALIGN="center">
+		 ';
+
+	BurstSkyscraperAd();
+	echo '</TD></TR>
+		  </TABLE>
+		 ';
+
+?>
+
 
 <BR>
 

@@ -1,5 +1,5 @@
 <?
-	# $Id: port-watch.php,v 1.1.2.15 2002-05-22 04:30:27 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.16 2002-06-09 21:42:39 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -280,7 +280,7 @@ if ($UserID) {
 </table>
 
 </td>
-  <td valign="top" width="*">
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
     <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
  </td>
 </tr>

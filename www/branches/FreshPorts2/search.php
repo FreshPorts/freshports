@@ -1,5 +1,5 @@
 <?
-	# $Id: search.php,v 1.1.2.27 2002-06-02 14:01:13 dan Exp $
+	# $Id: search.php,v 1.1.2.28 2002-06-09 21:42:41 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -347,7 +347,7 @@ echo "</td></tr>\n";
 </table>
 
 </td>
-  <td valign="top" width="*">
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
     <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
  </td>
 </tr>

@@ -1,5 +1,5 @@
 <?
-	# $Id: login.php,v 1.1.2.18 2002-05-22 04:30:24 dan Exp $
+	# $Id: login.php,v 1.1.2.19 2002-06-09 21:42:37 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -183,7 +183,7 @@ echo '<BR><A HREF="forgotten-password.php">Forgotten your password?</a>';
 
 ?>
 </TD>
-  <TD valign="top" WIDTH="*">
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
     <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
  </TD>
 </TR>

@@ -1,5 +1,5 @@
 <?
-	# $Id: watch.php,v 1.1.2.22 2002-06-03 02:09:01 dan Exp $
+	# $Id: watch.php,v 1.1.2.23 2002-06-09 21:42:42 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -197,7 +197,7 @@ echo $HTML;
 </script>
 </table>
 </td>
-  <td valign="top" width="*">
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
 <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
 </td>
 </tr>

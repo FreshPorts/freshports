@@ -1,5 +1,5 @@
 <?
-	# $Id: faq.php,v 1.1.2.17 2002-05-26 05:00:54 dan Exp $
+	# $Id: faq.php,v 1.1.2.18 2002-06-09 21:42:35 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -282,7 +282,7 @@ down you must read to find something you didn't already know.</P>
 
 </table>
 </td>
-  <td valign="top" WIDTH="*">
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
     <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
  </td>
 </tr>

@@ -1,5 +1,5 @@
 <?
-	# $Id: welcome.php,v 1.1.2.8 2002-05-22 04:30:30 dan Exp $
+	# $Id: welcome.php,v 1.1.2.9 2002-06-09 21:42:42 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -39,7 +39,7 @@
 </TD></TR>
 </TABLE>
 </TD>
-  <TD VALIGN="top" WIDTH="*">
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
     <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
  </TD>
 </TR>

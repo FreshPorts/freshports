@@ -1,5 +1,5 @@
 <?
-	# $Id: help.php,v 1.1.2.4 2002-05-22 04:30:23 dan Exp $
+	# $Id: help.php,v 1.1.2.5 2002-06-09 21:42:36 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -158,7 +158,7 @@ your staging area before uploading again.
 	
 </TABLE>
 </TD>
-  <TD VALIGN="top" width="*">
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
     <?
        include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php");
     ?>

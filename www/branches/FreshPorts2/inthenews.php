@@ -1,5 +1,5 @@
 <?
-	# $Id: inthenews.php,v 1.1.2.6 2002-05-22 04:30:23 dan Exp $
+	# $Id: inthenews.php,v 1.1.2.7 2002-06-09 21:42:37 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -38,7 +38,7 @@ Daily Daemon News - <a href="http://daily.daemonnews.org/view_story.php3?story_i
 </TR>
 </TABLE>
 </td>
-  <td valign="top" width="*">
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
     <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
  </td>
 </tr>

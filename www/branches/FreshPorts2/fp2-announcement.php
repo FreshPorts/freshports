@@ -1,5 +1,5 @@
 <?
-	# $Id: fp2-announcement.php,v 1.1.2.4 2002-05-26 05:03:42 dan Exp $
+	# $Id: fp2-announcement.php,v 1.1.2.5 2002-06-09 21:42:35 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -112,7 +112,7 @@ The following items deal with the technical changes which have occurred.
 </TD></TR>
 </TABLE>
 </TD>
-  <TD VALIGN="top" WIDTH="*">
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
     <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
  </TD>
 </TR>

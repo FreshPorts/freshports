@@ -1,5 +1,5 @@
 <?
-	# $Id: privacy.php,v 1.1.2.5 2002-05-22 04:30:28 dan Exp $
+	# $Id: privacy.php,v 1.1.2.6 2002-06-09 21:42:41 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -35,7 +35,7 @@
 </TD></TR>
 </TABLE>
 </TD>
-<TD>
+<TD VALIGN="top" WIDTH="*" ALIGN="center">
     <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
 </TD>
 </TR>

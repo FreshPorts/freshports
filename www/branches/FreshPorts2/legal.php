@@ -1,5 +1,5 @@
 <?
-	# $Id: legal.php,v 1.1.2.5 2002-05-22 04:30:24 dan Exp $
+	# $Id: legal.php,v 1.1.2.6 2002-06-09 21:42:37 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -81,7 +81,7 @@
   </TD></TR>
 </TABLE>
 </TD>
-  <TD VALIGN="top" WIDTH="*">
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
     <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
  </TD>
 </TR>

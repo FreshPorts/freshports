@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-category.php,v 1.1.2.13 2002-05-22 04:30:24 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.14 2002-06-09 21:42:38 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -82,7 +82,7 @@ $ShowDescriptionLink  = "N";
 	?>
 </TD>
 </TABLE>
-<TD VALIGN="top">
+<TD VALIGN="top" WIDTH="*" ALIGN="center">
    <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
 </TD>
 </TR>

@@ -1,5 +1,5 @@
 <?
-	# $Id: ports-deleted.php,v 1.1.2.11 2002-05-22 04:30:27 dan Exp $
+	# $Id: ports-deleted.php,v 1.1.2.12 2002-06-09 21:42:40 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -124,7 +124,7 @@ These are the latest deleted ports.
 </TABLE>
 
 </TD>
-  <TD valign="top" width="*">
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
 <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
 </TD>
 </TR>

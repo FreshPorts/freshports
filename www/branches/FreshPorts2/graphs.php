@@ -1,5 +1,5 @@
 <?
-	# $Id: graphs.php,v 1.5.2.11 2002-05-22 04:30:22 dan Exp $
+	# $Id: graphs.php,v 1.5.2.12 2002-06-09 21:42:36 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -89,7 +89,7 @@ If you have suggestions for graphs, please submit them via the forum.
 
 </TABLE>
 </TD>
-  <TD valign="top">
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
     <?
        include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php");
     ?>

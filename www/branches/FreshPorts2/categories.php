@@ -1,5 +1,5 @@
 <?
-	# $Id: categories.php,v 1.1.2.8 2002-05-22 04:30:20 dan Exp $
+	# $Id: categories.php,v 1.1.2.9 2002-06-09 21:42:32 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -141,7 +141,7 @@ echo $HTML;
 
 </script>
 </td>
-  <td valign="top" width="*">
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
     <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
  </td>
 </tr>

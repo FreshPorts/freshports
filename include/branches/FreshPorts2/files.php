@@ -1,5 +1,5 @@
 <?
-	# $Id: files.php,v 1.1.2.13 2002-05-22 04:33:38 dan Exp $
+	# $Id: files.php,v 1.1.2.14 2002-06-09 21:42:44 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -205,7 +205,7 @@ function freshports_Files($PortID, $CommitID, $WatchListID, $db) {
 
 		?>
 		<TR>
-			<TD><b>Action</b></TD><TD><B>Revision</B></TD><TD colspan="2"><b>File</b></TD>
+			<TD><b>Action</b></TD><TD><B>Revision</B></TD><TD><b>File</b></TD>
 		</TR>
 		<?
 
@@ -244,7 +244,7 @@ function freshports_Files($PortID, $CommitID, $WatchListID, $db) {
 	</script>
 	</table>
 	</TD>
-		<TD VALIGN="top" width="*">
+		<TD VALIGN="top" WIDTH="*" ALIGN="center">
 		<? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
 		</TD>
 	</TR>

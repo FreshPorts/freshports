@@ -1,5 +1,5 @@
 <?
-	# $Id: new-user.php,v 1.1.2.19 2002-05-22 04:30:25 dan Exp $
+	# $Id: new-user.php,v 1.1.2.20 2002-06-09 21:42:38 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -215,7 +215,7 @@ will be emailed to you at that address.</BIG></P>
   </TR>
 </TABLE>
 </TD>
-  <TD VALIGN="top" WIDTH="*">
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
    <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
  </TD>
 </TR>

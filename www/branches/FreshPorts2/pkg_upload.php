@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_upload.php,v 1.5.2.17 2002-05-28 15:45:29 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.18 2002-06-09 21:42:39 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -222,7 +222,7 @@ function DisplayStagingArea($WatchListID, $db) {
 </TR>
 </TABLE>
 </TD>
-  <TD valign="top" width="*">
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
     <?
 		include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php");
     ?>

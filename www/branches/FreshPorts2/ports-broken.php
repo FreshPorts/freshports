@@ -1,5 +1,5 @@
 <?
-	# $Id: ports-broken.php,v 1.1.2.2 2002-05-22 04:30:27 dan Exp $
+	# $Id: ports-broken.php,v 1.1.2.3 2002-06-09 21:42:39 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -110,7 +110,7 @@ These are the recently added ports.
 </TABLE>
 
 </TD>
-  <TD valign="top" width="*">
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
 <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
 </TD>
 </TR>

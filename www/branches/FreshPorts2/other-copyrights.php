@@ -1,5 +1,5 @@
 <?
-	# $Id: other-copyrights.php,v 1.1.4.4 2002-05-22 04:30:26 dan Exp $
+	# $Id: other-copyrights.php,v 1.1.4.5 2002-06-09 21:42:38 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -15,9 +15,9 @@
 
 ?>
 
-<TABLE WIDTH="<? echo $TableWidth; ?>%" ALIGN="center" BORDER="0">
+<TABLE WIDTH="<? echo $TableWidth; ?>" ALIGN="center" BORDER="0">
   <TR>
-	<TD VALIGN="top">
+	<TD VALIGN="top" WIDTH="100%">
 	<P>
 	The copyright on the daemon you see in the website logo is as follows:
 	</P>
@@ -39,7 +39,7 @@
 </BLOCKQUOTE>
 	</TD>
 
-  <td valign="top" width="*">
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
    <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
   </TD>
   </TR>
@@ -52,6 +52,6 @@
 </TD></TR>
 </TABLE>
 
-</body>
-</html>
+</BODY>
+</HTML>
 

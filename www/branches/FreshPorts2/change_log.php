@@ -1,5 +1,5 @@
 <?
-	# $Id: change_log.php,v 1.1.2.3 2002-05-22 04:30:20 dan Exp $
+	# $Id: change_log.php,v 1.1.2.4 2002-06-09 21:42:32 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -66,7 +66,7 @@ if (!$result) {
 </script>
 </table>
 </td>
-  <td valign="top" width="*">
+ <TD VALIGN="top" WIDTH="*" ALIGN="center">
    <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
  </td>
 </tr>

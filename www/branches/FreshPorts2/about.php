@@ -1,5 +1,5 @@
 <?
-	# $Id: about.php,v 1.1.2.7 2002-05-22 04:30:19 dan Exp $
+	# $Id: about.php,v 1.1.2.8 2002-06-09 21:42:31 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -91,7 +91,7 @@ About the Authors</A> for details of who else helped.</P>
 
 </TABLE>
 </TD>
-  <TD ALIGN="top">
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
     <?
        $ShowPoweredBy = 1;
        include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php");

@@ -1,5 +1,5 @@
 <?
-	# $Id: commit.php,v 1.1.2.10 2002-05-22 04:30:21 dan Exp $
+	# $Id: commit.php,v 1.1.2.11 2002-06-09 21:42:34 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -325,7 +325,7 @@ if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 
 </script>
 </TD>
-  <TD VALIGN="top" WIDTH="*">
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
    <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
  </TD>
 </TR>

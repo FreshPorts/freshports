@@ -1,5 +1,5 @@
 <?
-	# $Id: bar-graphs.php,v 1.1.2.3 2002-05-29 03:44:42 dan Exp $
+	# $Id: bar-graphs.php,v 1.1.2.4 2002-05-29 12:22:43 dan Exp $
 	#
 
 
@@ -282,7 +282,7 @@ class dg_BarGraph {
 		$max = max($this->values);
 		$t = 1000000000;
 		while ($t>0.5) {
-			if ($max > $t) {
+			if ($max >= $t) {
 				$rmax = ceil($max/$t)*$t; // take first point above max
 				break;
 			}
@@ -290,8 +290,9 @@ class dg_BarGraph {
 		}
 		
 		if ($rmax==0) { // just for sanity 
-			$rmax=1;
-			$max=0;
+			$rmax = 1;
+			$max  = 0;
+			$t    = 1;
 		}
 		
 		$steps = ($rmax/$t); // how many ticks

@@ -1,12 +1,17 @@
-<?
-	# $Id: categories.php,v 1.1.2.18 2003-03-04 22:10:20 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: categories.php,v 1.1.2.19 2003-03-06 22:09:32 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user_tasks.php');
+
 
 	freshports_Start('Categories',
 					'freshports - new ports, applications',
@@ -14,15 +19,23 @@
 					
 	$Debug = 0;
 
+	$AllowedToEdit = $User->IsTaskAllowed(FRESHPORTS_TASKS_CATEGORY_VIRTUAL_DESCRIPTION_SET);
+
+	if ($AllowedToEdit) {
+		$ColSpan = 5;
+	} else {
+   	$ColSpan = 4;
+	}
+
 ?>
 
 <table width="<? echo $TableWidth ?>" border="0" ALIGN="center">
 <tr><td valign="top" width="100%">
 <table width="100%" border="0" CELLPADDING="5">
   <tr>
-	<? echo freshports_PageBannerText("$FreshPortsTitle - list of categories", 4); ?>
+	<? echo freshports_PageBannerText("$FreshPortsTitle - list of categories", $ColSpan); ?>
   </tr>
-<tr><td COLSPAN="4">
+<tr><td COLSPAN="<?php echo $ColSpan; ?>">
 <P>
 This page lists the categories sorted by various categories.
 </P>
@@ -94,6 +107,11 @@ if ($sort == "category") {
 }
 
 
+if ($AllowedToEdit) {
+	$HTML .= freshports_echo_HTML('<td><b>Action</b></td>');
+}
+	
+
 if ($sort == "count") {
    $HTML .= freshports_echo_HTML('<td align="center"><b>Count</b></td>');
 } else {
@@ -125,10 +143,17 @@ if (!$result) {
 	while ($myrow = pg_fetch_array($result, $i)) {
 		$HTML .= freshports_echo_HTML('<tr>');
 		$HTML .= freshports_echo_HTML('<td valign="top"><a href="/' . $myrow["category"] . '/">' . $myrow["category"] . '</a></td>');
+
+		if ($AllowedToEdit) {
+			$HTML .= freshports_echo_HTML('<td valign="top"><a href="/category-maintenance.php?category=' . $myrow["category"] . '">update</a></td>');
+		}
+
 		$HTML .= freshports_echo_HTML('<td valign="top" ALIGN="right">' . $myrow["count"] . '</td>');
 		$HTML .= freshports_echo_HTML('<td valign="top">' . $myrow["description"] . '</td>');
 		$HTML .= freshports_echo_HTML('<td valign="top" nowrap><font size="-1">' . $myrow["updated"] . '</font></td>');
 		$HTML .= freshports_echo_HTML("</tr>\n");
+
+
 		$NumPorts += $myrow["count"];
 		$i++;
 		if ($i >  $NumRows - 1) {
@@ -137,7 +162,11 @@ if (!$result) {
 	}
 }
 
-$HTML .= freshports_echo_HTML("<tr><td><b>port count:</b></td><td ALIGN=\"right\"><b>$NumPorts</b></td><td>($NumRows categories)</td><td align=\"center\">-</td></tr>");
+$HTML .= freshports_echo_HTML('<tr><td><b>port count:</b></td>');
+if ($AllowedToEdit) {
+	$HTML .= freshports_echo_HTML('<td>&nbsp;</td>');
+}
+$HTML .= freshports_echo_HTML("<td ALIGN=\"right\"><b>$NumPorts</b></td><td>($NumRows categories)</td><td>&nbsp;</td></tr>");
 
 $HTML .= freshports_echo_HTML('</table>');
 

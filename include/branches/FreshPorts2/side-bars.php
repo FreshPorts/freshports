@@ -1,5 +1,5 @@
 <?
-	# $Id: side-bars.php,v 1.4.2.17 2002-04-19 17:06:21 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.18 2002-04-19 17:16:37 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -108,6 +108,28 @@ if ($visitor) {
    </tr>
    </table>
 
+
+
+<br>
+
+ <table WIDTH="<? echo $ColumnWidth ?>" BORDER="1" CELLSPACING="0" CELLPADDING="5">
+        <tr>
+         <td bgcolor="#AD0040" height="30"><font color="#FFFFFF"><BIG><B>This site</B></BIG></font></td>
+        </tr>
+        <tr>
+    <td valign="top">
+<?
+        echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/about.php",          "What is freshports?") . '</font><br>';
+        echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/authors.php",        "About the Authors")   . '</font><br>';
+        echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/faq.php",            "FAQ")                 . '</font><br>';
+        echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/stats/",             "Traffic")                 . '</font><br>';
+        echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/privacy.php",        "Privacy")             . '</font><br>';
+?>
+    </td>
+   </tr>
+   </table>
+
+
 <BR>
 
 <SCRIPT TYPE="text/javascript">
@@ -134,23 +156,3 @@ if ($visitor) {
 <A NAME="button_image"></A><A HREF="javascript:addNetscapePanel();"><IMG SRC="/images/sidebar-add-button.gif" BORDER="0" HEIGHT="45" WIDTH="100" ALT="Add tab to Netscape 6"></A>
 </CENTER>
 
-
-
-<br>
-
- <table WIDTH="<? echo $ColumnWidth ?>" BORDER="1" CELLSPACING="0" CELLPADDING="5">
-        <tr>
-         <td bgcolor="#AD0040" height="30"><font color="#FFFFFF"><BIG><B>This site</B></BIG></font></td>
-        </tr>
-        <tr>
-    <td valign="top">
-<?
-        echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/about.php",          "What is freshports?") . '</font><br>';
-        echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/authors.php",        "About the Authors")   . '</font><br>';
-        echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/faq.php",            "FAQ")                 . '</font><br>';
-        echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/stats/",             "Traffic")                 . '</font><br>';
-        echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/privacy.php",        "Privacy")             . '</font><br>';
-?>
-    </td>
-   </tr>
-   </table>

@@ -1,7 +1,8 @@
 These permissions may be overly permissive.
 
-grant usage on freshportschange.* to freshports@localhost;
-grant select on freshportschange.* to freshports@localhost;
-grant select, update, insert on freshportschange.users to freshports@localhost;
-grant select, update, delete, insert on freshportschange.watch_port to freshports@localhost;
-grant select, insert on freshportschange.change_log_port to freshports@localhost;
+grant usage on freshports.* to freshports@localhost;
+grant select on freshports.* to freshports@localhost;
+grant select, update, insert on freshports.users to freshports@localhost;
+grant select, update, delete, insert on freshports.watch_port to freshports@localhost;
+grant select, insert on freshports.change_log_port to freshports@localhost;
+grant update on freshports.change_log_details  to freshports@localhost;

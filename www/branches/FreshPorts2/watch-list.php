@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-list.php,v 1.2.2.23 2003-11-27 16:06:33 dan Exp $
+	# $Id: watch-list.php,v 1.2.2.24 2003-11-27 19:54:30 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -95,6 +95,10 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 				die("I don't know whether you are removing or adding, so I'll just stop here shall I?");
 			}
 		}
+
+		if ($Object == '') {
+			die('I have no idea what I\'m supposed to add or remove here...');
+		}
 		$ShowCategories			= 1;
 
 		GLOBAL $ShowDepends;
@@ -116,10 +120,7 @@ Please select the watch lists which should contain this port:
 <blockquote>
 		<form action="<?php echo $PostURL; ?>" method="POST" NAME=f>
 		<?php
-#		if ($Action == 'add') {
-#			echo freshports_WatchListDDLB($db, $User->id, '', 10, TRUE, TRUE);
-#		} else {
-			echo freshports_WatchListDDLB($db, $User->id, '', 10, TRUE, TRUE, $Object);
+		echo freshports_WatchListDDLB($db, $User->id, '', 10, TRUE, TRUE, $Object);
 		?>
 		<br><br>
 		<INPUT id=submit style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29 
@@ -173,7 +174,7 @@ freshports_ShowFooter();
 			$ElementID = AddSlashes($_REQUEST['Update']);
 			$WatchListElement = new WatchListElement($db);
 
-			if ($Debug) echo "userid = $User->id and ElementID = $ElementID<br>";
+			if ($Debug) echo "userid = '$User->id' and ElementID = '$ElementID'<br>";
 
 			if ($WatchListElement->DeleteElementFromWatchLists($User->id, $ElementID) == -1) {
 				$Error = 'removing element failed : Please try again, and if the problem persists, please contact the webmaster: ' . pg_last_error();
@@ -208,6 +209,9 @@ freshports_ShowFooter();
 				pg_exec($db, 'BEGIN');
 				$Error = '';
 				$ElementID = AddSlashes($_REQUEST['add']);
+				if ($ElementID == '') {
+					die('The target for addition was not supplied');
+				}
 	
 				$WatchListElement = new WatchListElement($db);
 				if ($WatchListElement->AddToDefault($User->id, $ElementID) == 1) {
@@ -220,6 +224,10 @@ freshports_ShowFooter();
 				if (IsSet($_REQUEST['remove'])) {
 					pg_exec($db, 'BEGIN');
 					$ElementID = AddSlashes($_REQUEST['remove']);
+					if ($ElementID == '') {
+						die('The target for removal was not supplied');
+					}
+
 					$WatchListElement = new WatchListElement($db);
 					if ($WatchListElement->DeleteFromDefault($User->id, $ElementID) >= 0) {
 						pg_exec('COMMIT');

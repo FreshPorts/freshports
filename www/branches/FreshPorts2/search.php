@@ -1,5 +1,5 @@
 <?
-	# $Id: search.php,v 1.1.2.4 2002-02-16 23:52:52 dan Exp $
+	# $Id: search.php,v 1.1.2.5 2002-02-21 03:54:29 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -56,7 +56,7 @@ if ($fp) {
 $sql = "select ports.id, element.name as port, " .
        "categories.name as category, categories.id as category_id, ports.version as version, ".
        "ports.maintainer, ports.short_description, ".
-       "ports.package_exists, ports.extract_suffix, ports.homepage, element.status, " .
+       "ports.package_exists, ports.extract_suffix, ports.homepage, element.status, ports.element_id, " .
        "ports.broken, ports.forbidden " .
        "from ports, categories, element  ".
        "WHERE ports.category_id = categories.id " .

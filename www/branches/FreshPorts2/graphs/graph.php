@@ -1,11 +1,11 @@
 <?
-	# $Id: graph.php,v 1.1.2.8 2002-05-18 18:09:07 dan Exp $
+	# $Id: graph.php,v 1.1.2.9 2002-05-18 18:13:57 dan Exp $
 	#
 
-	require($DOCUMENT_ROOT . "/include/common.php");
-	require($DOCUMENT_ROOT ."/include/freshports.php");
-	require($DOCUMENT_ROOT ."/include/databaselogin.php");
-	require($DOCUMENT_ROOT ."/include/getvalues.php");
+	require($_SERVER["DOCUMENT_ROOT"] . "/include/common.php");
+	require($_SERVER["DOCUMENT_ROOT"] ."/include/freshports.php");
+	require($_SERVER["DOCUMENT_ROOT"] ."/include/databaselogin.php");
+	require($_SERVER["DOCUMENT_ROOT"] ."/include/getvalues.php");
 
 // parameters: graph id
 require("bar-graphs.php");

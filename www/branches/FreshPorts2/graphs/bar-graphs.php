@@ -1,5 +1,5 @@
 <?
-	# $Id: bar-graphs.php,v 1.1.2.1 2002-04-19 18:54:34 dan Exp $
+	# $Id: bar-graphs.php,v 1.1.2.2 2002-05-18 18:13:57 dan Exp $
 	#
 
 
@@ -61,8 +61,6 @@ class dg_BarGraph {
 	
 	// main constructor
 	function dg_BarGraph() {
-		GLOBAL $DOCUMENT_ROOT;
-
 		$this->width = 400;
 
 		$this->gradient1 = array(0,100,210);
@@ -93,8 +91,8 @@ class dg_BarGraph {
 		$this->margin_l = 200;
 		$this->margin_r = 16;
 
-		$this->font_name      = $DOCUMENT_ROOT . "/graphs/tahoma.ttf";
-		$this->font_name_bold = $DOCUMENT_ROOT . "/graphs/tahomabd.ttf";
+		$this->font_name      = $_SERVER["DOCUMENT_ROOT"] . "/graphs/tahoma.ttf";
+		$this->font_name_bold = $_SERVER["DOCUMENT_ROOT"] . "/graphs/tahomabd.ttf";
 
 		$this->label_size  = 12;
 		$this->label_color = array(0,0,0);

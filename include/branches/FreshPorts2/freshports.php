@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.40 2002-02-21 06:28:22 dan Exp $
+   # $Id: freshports.php,v 1.4.2.41 2002-02-21 19:46:00 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -24,11 +24,18 @@ $TimeFormatDefault		= "H:i:s";
 
 $FreshPortsTitle		= "FreshPorts";
 
+
+#
+# These values are used when specifying add/remove on a port
+#
 $FreshPortsWatchedPortPrefix	= "<SMALL><A HREF=\"/watch-list.php?remove=";
 $FreshPortsWatchedPortSuffix	= "\">Remove</A></SMALL>";
 $FreshPortsWatchedPortNotPrefix	= "<SMALL><A HREF=\"/watch-list.php?add=";
 $FreshPortsWatchedPortNotSuffix	= "\">Add</A></SMALL>";
 
+#
+# These are similar to the above but are using in SQL queries
+#
 $FreshPortsWatchedPort		= "<SMALL><A HREF=\"/watch-list.php?remove=' || commits_latest.element_id || '\">Remove</A></SMALL>";
 $FreshPortsWatchedPortNot	= "<SMALL><A HREF=\"/watch-list.php?add='    || commits_latest.element_id || '\">Add</A></SMALL>";
 
@@ -467,7 +474,7 @@ function freshports_ONToYN($Value) {
 }
 
 
-function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, $LinkToPort=0) {
+function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, $LinkToPort=0, $AddRemoveExtra='') {
 //
 // This php3 fragment does the basic port information for a single port.
 //
@@ -525,10 +532,11 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 #      }
 #   }
 
-	if ($WatchListID && $port->IsOnWatchList($WatchListID)) {
-		$HTML .= ' ' . $FreshPortsWatchedPortPrefix    . $port->{element_id} . $FreshPortsWatchedPortSuffix;
+#	$HTML .= "onwatchlist = '" . $port->{onwatchlist} . "'";
+	if ($WatchListID && $port->{onwatchlist}) {
+		$HTML .= ' ' . $FreshPortsWatchedPortPrefix    . $port->{element_id} . $AddRemoveExtra . $FreshPortsWatchedPortSuffix;
 	} else {
-		$HTML .= ' ' . $FreshPortsWatchedPortNotPrefix . $port->{element_id} . $FreshPortsWatchedPortNotSuffix;
+		$HTML .= ' ' . $FreshPortsWatchedPortNotPrefix . $port->{element_id} . $AddRemoveExtra . $FreshPortsWatchedPortNotSuffix;
 	}
 
    $HTML .= "</DT>\n<DD>";

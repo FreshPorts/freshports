@@ -1,15 +1,12 @@
 <?
-	# $Id: missing-port.php,v 1.1.2.34 2003-02-25 15:17:58 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.35 2003-03-04 22:10:21 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/elements.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
 
-#	phpinfo();
+DEFINE('COMMIT_DETAILS', 'files.php');
 
-
-$CommitDetails = 'files.php';
 require_once($_SERVER['DOCUMENT_ROOT'] . '/include/files.php');
 
 
@@ -53,20 +50,15 @@ function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 		}
 
 		if (IsSet($PortName) && $PortName != '') {
-			$element = new Element($db);
-			$element->FetchByName("/ports/$CategoryName/$PortName");
+			$port = new Port($db);
+			GLOBAL $User;
+			$port->Fetch($CategoryName, $PortName, $User->id);
 
-			if (IsSet($element->id)) {
-				$port = new Port($db);
-				GLOBAL $User;
-				$port->FetchByPartialName("/ports/$CategoryName/$PortName", $User->id);
-
-				if ($Debug) {
-					if (IsSet($port->id)) {
-						echo "port was found with id = $port->id<BR>";
-					} else {
-						echo "that port not found<BR>";
-					}
+			if ($Debug) {
+				if (IsSet($port->id)) {
+					echo "port was found with id = $port->id<BR>";
+				} else {
+					echo "that port not found<BR>";
 				}
 			}
 		}
@@ -75,7 +67,7 @@ function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 #			echo "<A HREF=\"/category.php?category=$CategoryID\">this link</A> should take you to the category details<BR>";
 			if (IsSet($port->id)) {
 				if ($FileName != '') {
-					if (substr($FileName, 0, strlen($CommitDetails)) == $CommitDetails) {
+					if (substr($FileName, 0, strlen(COMMIT_DETAILS)) == COMMIT_DETAILS) {
 						if ($Debug) echo '$_SERVER["REDIRECT_QUERY_STRING"]="' . $_SERVER["REDIRECT_QUERY_STRING"] . '"<BR>';
 						parse_str($_SERVER["REDIRECT_QUERY_STRING"], $query_parts);
 						$message_id = $query_parts[message_id];

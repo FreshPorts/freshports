@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-categories.php,v 1.1.2.20 2003-01-06 14:14:44 dan Exp $
+	# $Id: watch-categories.php,v 1.1.2.21 2003-03-04 22:10:21 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -94,12 +94,13 @@ echo freshports_WatchListDDLBForm($db, $User->id, $wlid);
 
 if ($wlid != '') {
 $sql = "
-   select distinct(category_id) as category_id
-     from watch_list, watch_list_element, ports
+   select distinct(ports_categories.category_id) as category_id
+     from watch_list, watch_list_element, ports, ports_categories
     WHERE watch_list.id      = " . $wlid . "
       and watch_list.user_id = $User->id
       and watch_list.id      = watch_list_element.watch_list_id
-      and ports.element_id   = watch_list_element.element_id";
+      and ports.element_id   = watch_list_element.element_id
+      AND ports_categories.port_id = ports.id";
 
 if ($Debug) echo "<pre>$sql</pre>";
 

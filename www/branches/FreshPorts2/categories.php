@@ -1,5 +1,5 @@
 <?
-	# $Id: categories.php,v 1.1.2.17 2003-01-06 14:14:36 dan Exp $
+	# $Id: categories.php,v 1.1.2.18 2003-03-04 22:10:20 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -65,19 +65,20 @@ switch ($sort) {
 }
 
 $sql = "
-  select to_char(max(commit_log.commit_date) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as updated,
+  SELECT to_char(max(commit_log.commit_date) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as updated,
          count(ports.id) as count,
          max(commit_log.commit_date) - SystemTimeAdjust() as updated_raw,
          categories.id as category_id,
          categories.name as category,
          categories.description as description 
-    from categories, element, ports left outer join commit_log on ( ports.last_commit_id = commit_log.id )
-   WHERE ports.category_id    = categories.id 
-     and ports.element_id     = element.id 
-     and element.status       = 'A' 
-group by categories.id, categories.name, categories.description ";
+    FROM ports_categories, categories, element, ports left outer join commit_log on ( ports.last_commit_id = commit_log.id )
+   WHERE ports.id             = ports_categories.port_id
+     AND categories.id        = ports_categories.category_id
+     AND ports.element_id     = element.id 
+     AND element.status       = 'A'
+GROUP BY categories.id, categories.name, categories.description ";
 
-$sql .=  " order by $sort";
+$sql .=  " ORDER BY $sort";
 
 if ($Debug) echo '<pre>' . $sql, "</pre>\n";
 //echo $sort, "\n";

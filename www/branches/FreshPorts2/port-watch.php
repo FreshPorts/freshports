@@ -1,5 +1,5 @@
 <?
-	# $Id: port-watch.php,v 1.1.2.28 2003-02-10 16:54:09 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.29 2003-03-04 22:10:21 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -12,6 +12,8 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_list.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_list_element.php');
+
+	$Debug = 0;
 
 	$submit	= AddSlashes($_POST['submit']);
 	$visitor	= $_COOKIE['visitor'];
@@ -39,11 +41,8 @@ if ($_REQUEST['wlid']) {
 	}
 }
 
-
-
 $category = AddSlashes($_REQUEST['category']);
 $wlid     = AddSlashes($_REQUEST['wlid']);
-
 
 if ($submit) {
 	pg_exec($db, "BEGIN");
@@ -116,15 +115,16 @@ if ($submit) {
 $DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
 
 $sql = "
-  select element.id, 
-         element.name as port, 
+  SELECT element.id, 
+         element.name    AS port, 
          element.status, 
-         categories.name as category
-    from ports, element, categories
-   WHERE categories.name   = '$category'
-     and ports.element_id  = element.id 
-     and ports.category_id = categories.id 
-order by element.name";
+         categories.name AS category
+    FROM ports, ports_categories, element, categories
+   WHERE categories.name              = '$category'
+     AND ports_categories.category_id = categories.id
+     AND ports_categories.port_id     = ports.id
+     AND ports.element_id             = element.id 
+ORDER BY element.name";
 
 if ($Debug) echo "<pre>$sql</pre>\n";
 

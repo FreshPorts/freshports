@@ -1,6 +1,6 @@
 .<?php
 	#
-	# $Id: search.php,v 1.1.2.74 2005-02-16 23:56:30 dan Exp $
+	# $Id: search.php,v 1.1.2.75 2005-02-20 14:57:46 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -190,7 +190,7 @@ $sql = "
          ports.no_package,
          ports.package_name,
          ports.restricted,
-         ports.nocdrom,
+         ports.no_cdrom,
          ports.no_package  ";
 
 	if ($User->id) {

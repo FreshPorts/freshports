@@ -1,5 +1,5 @@
 <?
-	# $Id: how-big-is-it.php,v 1.1.2.2 2002-12-04 16:23:13 dan Exp $
+	# $Id: how-big-is-it.php,v 1.1.2.3 2002-12-05 14:23:54 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -301,10 +301,21 @@ echo format_number($Value) . '<br>';
 <TR><TD>
 
 <P>
+<?php $GooglePages = 3083324652; ?>
 That gives a grand total of <?php echo number_format($Total) ?> pages.  On my last count, that's 
-about <?php echo number_format($Total / 3083324652 * 100, 6) ?>% of the
-web pages on <a href="http://www.Google.com/">Google</a>
+about <?php echo number_format($Total / $GooglePages * 100, 6) ?>% of the
+web pages on <a href="http://www.Google.com/">Google</a><small><sup><a href="#1">1</a></sup></small>
 </P>
+
+<p>
+<h2>Notes</h2>
+<ul>
+<li>These statistics are updated daily.
+<li><a name="1"></a>The number of Google pages used in this calculation is <?php echo number_format($GooglePages) ?>.
+</ul>
+</p>
+
+</td></tr>
 
 
 </TABLE>

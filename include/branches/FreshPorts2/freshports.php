@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.133 2003-02-21 19:16:30 dan Exp $
+	# $Id: freshports.php,v 1.4.2.134 2003-02-25 15:18:15 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -1029,7 +1029,15 @@ function freshports_PortCommitPrint($commit, $category, $port) {
 
 	# print a single commit for a port
 	echo "<TR><TD VALIGN='top' NOWRAP>";
-	echo $commit->commit_date . '<BR>' . freshports_Email_Link($commit->message_id);
+	
+
+	echo $commit->commit_date . '<BR>';
+	// indicate if this port needs refreshing from CVS
+	if ($commit->{needs_refresh}) {
+		echo " " . freshports_Refresh_Icon() . "\n";
+	}
+	echo freshports_Email_Link($commit->message_id);
+
 	echo '&nbsp;&nbsp;'. freshports_Commit_Link($commit->message_id);
 
 	if ($commit->encoding_losses == 't') {

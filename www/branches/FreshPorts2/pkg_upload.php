@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_upload.php,v 1.5.2.22 2002-12-10 04:00:15 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.23 2002-12-10 04:05:21 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -35,7 +35,7 @@ function StagingAlreadyInUse($UserID, $dbh) {
 	return $Result;
 }
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/pkg_process.inc";
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/pkg_process.inc");
 
 function DisplayUploadForm($pkg_info) {
 	?>

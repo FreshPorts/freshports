@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: files.php,v 1.1.2.29 2003-09-25 14:04:58 dan Exp $
+	# $Id: files.php,v 1.1.2.30 2003-09-26 12:42:16 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -10,7 +10,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 	
-function freshports_Files($User, $PortID, $MessageID, $db) {
+function freshports_Files($User, $ElementID, $MessageID, $db) {
 	#
 	# $PortId      == ports.id
 	# $MessageID   == commit_log.message_id
@@ -22,11 +22,10 @@ function freshports_Files($User, $PortID, $MessageID, $db) {
 
 	$Debug = 0;
 
+	if ($Debug) echo "\$MessageID = '$MessageID', \$ElementID = '$ElementID'<BR>";
 
-	if ($Debug) echo "\$MessageID = '$MessageID', \$PortID = '$PortID'<BR>";
-
-	if (!$PortID || $PortID != strval(intval($PortID))) {
-		$PortID = 0;
+	if (!$ElementID || $ElementID != strval(intval($ElementID))) {
+		$ElementID = 0;
 		exit;
 	}
 
@@ -93,7 +92,7 @@ select element_pathname(element.id) as pathname,
 	   and ports.element_id                               = B.id 
 	   and commit_log.id                                  = commit_log_ports.commit_log_id
 	   and ports.id                                       = commit_log_ports.port_id
-	   and ports.id                                       = $PortID
+	   and ports.element_id                               = $ElementID
 	 order by 1";
 
 	if ($Debug) echo '<PRE>' . $sql . '</PRE>';
@@ -109,7 +108,7 @@ select element_pathname(element.id) as pathname,
 		$NumRows = pg_numrows($result);
 		if (!$NumRows) {
 			echo 'No such commit found';
-			syslog(LOG_NOTICE, 'No such commit found: $PortID="' . $PortID . '" $MessageID="' . $MessageID . '"');
+			syslog(LOG_NOTICE, 'No such commit found: $ElementID="' . $ElementID . '" $MessageID="' . $MessageID . '"');
 			exit;
 		}
 		for ($i = 0; $i < $NumRows; $i++) {

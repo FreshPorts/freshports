@@ -1,5 +1,5 @@
 <?
-	# $Id: constants.php,v 1.1.2.4 2002-07-26 15:08:49 dan Exp $
+	# $Id: constants.php,v 1.1.2.5 2003-01-10 15:55:17 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -54,8 +54,9 @@ $FreshPortsWatchedPortNotSuffix	= '">' . freshports_Watch_Icon_Add() . '</A></SM
 # SEQUENCES
 #
 
-$Sequence_Watch_List_ID	= 'watch_list_id_seq';
-$Sequence_User_ID		= 'users_id_seq';
+$Sequence_Watch_List_ID			= 'watch_list_id_seq';
+$Sequence_User_ID					= 'users_id_seq';
+$Sequence_Security_Notice_ID	= 'security_notice_id_seq';
 
 #
 # external URLs

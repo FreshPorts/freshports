@@ -1,5 +1,5 @@
 <?
-	# $Id: side-bars.php,v 1.4.2.5 2002-02-16 23:52:53 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.6 2002-02-17 20:02:14 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -63,6 +63,7 @@ if ($visitor) {
    echo '<font SIZE="-1">' . freshports_SideBarHTMLParm($PHP_SELF, '/new-user.php',         "?origin=$OriginLocal", "Create account"         ) . '</font><br>';
   }
 ?>
+	<A HREF="/phorum/">Forums</A>
    </td>
    </tr>
    </table>

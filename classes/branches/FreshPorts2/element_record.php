@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: element_record.php,v 1.1.2.1 2003-09-24 16:43:29 dan Exp $
+	# $Id: element_record.php,v 1.1.2.2 2003-09-24 17:53:23 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -51,4 +51,13 @@ class ElementRecord {
 
 		return $this->id;
 	}
+
+	function IsPort() {
+		return $this->isport == 't';
+	}
+
+	function IsCategory() {
+		return $this->iscategory == 't';
+	}
+
 }

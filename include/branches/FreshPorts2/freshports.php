@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.146 2003-05-16 02:56:43 dan Exp $
+	# $Id: freshports.php,v 1.4.2.147 2003-05-21 01:25:33 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -68,6 +68,10 @@ return "
 
 }
 
+
+function freshports_WatchListCount_Icon() {
+	return '<IMG SRC="/images/sum.gif" ALT="on this many watch lists" TITLE="on this many watch lists" BORDER="0" WIDTH="12" HEIGHT="17" ALIGN="middle">';
+}
 
 function freshports_Files_Icon() {
 	return '<IMG SRC="/images/logs.gif" ALT="files touched by this commit" TITLE="files touched by this commit" BORDER="0" WIDTH="17" HEIGHT="20">';
@@ -663,7 +667,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 	}
 
 	if ($ShowWatchListCount) {
-		$HTML .= '&nbsp; <a href="/faq.php"><img src="/images/sum.gif" width="12" height="17" alt="WLC" title="watch list count" align="center"></a>' . $port->WatchListCount() . '</a><br>';
+		$HTML .= '&nbsp; <a href="/faq.php">' . freshPorts_WatchListCount_Icon() . '</a>=' . $port->WatchListCount() . '</a><br>';
 	}
 
 	$HTML .= "</DT>\n<DD>";

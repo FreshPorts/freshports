@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.35 2003-05-16 02:48:41 dan Exp $
+	# $Id: faq.php,v 1.1.2.36 2003-05-21 01:25:32 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -409,7 +409,7 @@ SQL and I'll be implementing that gradually.
 
    <TR><TD>
    <P>
-	Watch List Count.  This is the number of watch lists which are watching 
+	<? echo freshports_WatchListCount_Icon(); ?> Watch List Count.  This is the number of watch lists which are watching 
 	this port.  This might give you an idea of how popular the port it.
 
 	</TD></TR><TR><TD>&nbsp;</TD></TR>

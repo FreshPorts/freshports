@@ -1,5 +1,5 @@
 <?
-	# $Id: faq.php,v 1.1.2.18 2002-06-09 21:42:35 dan Exp $
+	# $Id: faq.php,v 1.1.2.19 2002-07-29 00:37:10 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -223,7 +223,7 @@ down you must read to find something you didn't already know.</P>
 
 	<P><? echo freshports_Encoding_Errors(); ?> Encoding Errors (not all of the commit message was ASCII): Some of the
 		commit message may be altered because of character conversion problems.  We display only UTF-8 and remove
-		the offending characters.</P>
+		the offending characters.  These errors may occur in the log message or elsewhere in the commit email.</P>
 
 	</BLOCKQUOTE>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>

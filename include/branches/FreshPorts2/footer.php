@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: footer.php,v 1.5.2.24 2005-01-17 00:03:02 dan Exp $
+	# $Id: footer.php,v 1.5.2.25 2005-01-22 14:44:43 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -82,7 +82,7 @@ Valid
 	if ($ShowAds) {
 		echo "<div align=\"center\">\n";
 		echo '<br>';
-		Burst_468x60_Below();
+		echo Burst_468x60_Below();
 		echo "</div>\n";
 	}
 ?>

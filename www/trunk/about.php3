@@ -36,6 +36,8 @@ the port is the Way To Go(TM)</p>
 And you love that new application.  And you want to know when the port is updated.  That's where
 we come in.</p>
 
+<p>For more information about the Ports tree, see <a href="http://www.freebsd.org/ports/">http://www.freebsd.org/ports/</a>.</p>
+
 </td></tr>
 <tr><td height="10"></td></tr>
 <tr><td bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">

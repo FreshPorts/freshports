@@ -1,5 +1,5 @@
 --
--- $Id: POSTGRESQL.sql,v 1.1.2.9 2002-05-19 17:12:28 dan Exp $
+-- $Id: POSTGRESQL.sql,v 1.1.2.10 2002-05-19 22:23:26 dan Exp $
 --
 -- Copyright (c) 1998-2002 DVL Software Limited
 --
@@ -145,3 +145,7 @@ grant ALL on ports_check           to group commits;
 grant update on ports_check_id_seq to group commits;
 
 grant select, insert, delete         on daily_refreshes                to group commits;
+
+grant insert                         on daily_stats                    to group commits;
+grant insert                         on daily_stats_data               to group commits;
+grant update                         on daily_stats_data_seq           to group commits;

@@ -74,6 +74,7 @@ ports.
                   pkg/DESC, or pkg/COMMENT has changed and has not yet been updated within FreshPorts.
     </td>
   </tr>
+<tr><td colspan="2"><b>please ignore the STOP signs (if you see any). I'm just playing with graphics.</td></tr>
 
 <tr><td valign="top" width="100%">
 <table width="100%" border="1" CELLSPACING="0" CELLPADDING="5"
@@ -248,6 +249,8 @@ for ($i = 0; $i < $NumRows; $i++) {
       $MarkedAsNew = "Y";
       $HTML .= "<img src=\"/images/new.gif\" width=28 height=11 alt=\"new!\" hspace=2 > ";
    }
+
+//   $HTML .= "<img src=\"/images/stop.gif\" width=16 height=16 alt=\"stop!\" hspace=2 > ";
 
    $j++;
    $MultiplePortsThisCommit = 1;

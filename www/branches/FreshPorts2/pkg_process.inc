@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: pkg_process.inc,v 1.5.2.16 2003-04-28 00:54:23 dan Exp $
+	# $Id: pkg_process.inc,v 1.5.2.17 2003-04-28 15:11:47 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -52,8 +52,8 @@ function DisplayError($error) {
 				<TD>
 					<TABLE WIDTH="100%" CELLPADDING="0" CELLSPACING="0" BORDER="0">
 						<TR VALIGN="top">
-							<TD><IMG SRC="/images/warning.gif"></TD>
-							<TD width=100%>
+							<TD VALIGN="middle"><IMG SRC="/images/warning.gif"></TD>
+							<TD VALIGN="middle" width="100%">
 							<? echo $error ?>
 							</TD>
 						</TR>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.44 2003-06-03 13:30:53 dan Exp $
+	# $Id: search.php,v 1.1.2.45 2003-07-30 12:06:38 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -28,16 +28,29 @@
 		}
 	}
 
+	$search = FALSE;
+	$HTML   = '';
+
 	// avoid nasty problems by adding slashes
-	$query				= AddSlashes($_REQUEST['query']);
-	$stype				= AddSlashes($_REQUEST['stype']);
-	$num					= AddSlashes($_REQUEST['num']);
-	$category			= AddSlashes($_REQUEST['category']);
-	$port					= AddSlashes($_REQUEST['port']);
-	$method				= AddSlashes($_REQUEST['method']);
-	$deleted				= AddSlashes($_REQUEST['deleted']);
-	$casesensitivity	= AddSlashes($_REQUEST['casesensitivity']);
-	$start				= intval(AddSlashes($_REQUEST['start']));
+	$query				= '';
+	$stype				= '';
+	$num					= '';
+	$category			= '';
+	$port					= '';
+	$method				= '';
+	$deleted				= '';
+	$casesensitivity	= '';
+	$start				= '';
+
+	if (IsSet($_REQUEST['query']))           $query					= AddSlashes($_REQUEST['query']);
+	if (IsSet($_REQUEST['stype']))           $stype					= AddSlashes($_REQUEST['stype']);
+	if (IsSet($_REQUEST['num']))             $num					= AddSlashes($_REQUEST['num']);
+	if (IsSet($_REQUEST['category']))        $category				= AddSlashes($_REQUEST['category']);
+	if (IsSet($_REQUEST['port']))            $port					= AddSlashes($_REQUEST['port']);
+	if (IsSet($_REQUEST['method']))          $method				= AddSlashes($_REQUEST['method']);
+	if (IsSet($_REQUEST['deleted']))         $deleted				= AddSlashes($_REQUEST['deleted']);
+	if (IsSet($_REQUEST['casesensitivity'])) $casesensitivity	= AddSlashes($_REQUEST['casesensitivity']);
+	if (IsSet($_REQUEST['start']))           $start					= intval(AddSlashes($_REQUEST['start']));
 
 	if ($stype == 'messageid') {
 		header('Location: http://' . $_SERVER['HTTP_HOST'] . "/commit.php?message_id=$query");
@@ -115,8 +128,10 @@ if ($Debug) {
 #
 # we can take parameters.  if so, make it look like a post
 #
-$search = $_REQUEST["search"];
-if (!$search && ($query && $stype && $num && $method)) {
+if (IsSet($_REQUEST['search'])) {
+	$search = $_REQUEST['search'];
+}
+if (!IsSet($search) && ($query && $stype && $num && $method)) {
 	$search = TRUE;
 }
 
@@ -280,7 +295,7 @@ if ($start > 1) {
 	$sql .= "\n OFFSET " . ($start - 1);
 }
 
-$AddRemoveExtra  = "&&origin=$SCRIPT_NAME?query=" . $query. "+stype=$stype+num=$num+method=$method";
+$AddRemoveExtra  = "&&origin=" . $_SERVER['SCRIPT_NAME'] . "?query=" . $query. "+stype=$stype+num=$num+method=$method";
 if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<BR>";
 $AddRemoveExtra = AddSlashes($AddRemoveExtra);
 if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<BR>";
@@ -424,6 +439,7 @@ $ShowChangesLink      = "Y";
 $ShowDescriptionLink  = "Y";
 $ShowHomepageLink     = "Y";
 $ShowDownloadPortLink = "Y";
+$HideCategory         = 'N';
 
 	for ($i = 0; $i < $NumFetches; $i++) {
 		$Port->FetchNth($i);
@@ -433,9 +449,9 @@ $ShowDownloadPortLink = "Y";
                      $ShowPackageLink, $ShowShortDescription, 1, $AddRemoveExtra, 1);
    }
 
+	$HTML .= $NumPortsFound;
 }
 
-	$HTML .= $NumPortsFound;
 
 echo $HTML;
 echo "</td></tr>\n";

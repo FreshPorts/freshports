@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.76 2003-07-04 14:59:16 dan Exp $
+	# $Id: index.php,v 1.1.2.77 2003-07-30 12:06:08 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -88,15 +88,17 @@ if (Is_Numeric($dailysummary)) {
 $database=$db;
 if ($database) {
 
+$sql = '';
+
 if ($User->id) {
-	$sql = "
+	$sql .= "
 SELECT SECURITY.*,
        W.*
 FROM (
 ";
 }
 
-$sql = "
+$sql .= "
 SELECT PEC.*,
        security_notice.id  AS security_notice_id
 FROM (
@@ -157,7 +159,7 @@ if ($User->id) {
         ON watch_list.id      = watch_list_element.watch_list_id
        AND watch_list.user_id = $User->id
        AND watch_list.in_service
-GROUP BY element_id) AS W
+GROUP BY wle_element_id) AS W
 ON        W.wle_element_id = SECURITY.element_id
 ";
 }

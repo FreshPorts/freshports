@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.8 2003-04-29 01:48:09 dan Exp $
+	# $Id: categories.php,v 1.1.2.9 2003-07-04 14:45:07 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -55,13 +55,11 @@ class Category {
 			UnSet($this->id);
 		}
 		$sql = "select * from categories where name = '$this->name'";
-		if ($Debug) echo "sql = '$sql'<BR>";
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
 			$numrows = pg_numrows($result);
 			if ($numrows == 1) {
-				if ($Debug) echo "FetchByName succeeded<BR>";
 				$myrow = pg_fetch_array ($result, 0);
 				$this->Populate($myrow);
 			}

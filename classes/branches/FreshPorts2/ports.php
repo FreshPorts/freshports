@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports.php,v 1.1.2.33 2003-05-16 02:38:56 dan Exp $
+	# $Id: ports.php,v 1.1.2.34 2003-07-04 14:45:08 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -85,16 +85,16 @@ class Port {
 
 		$this->port               = $myrow["port"];
 		$this->category           = $myrow["category"];
-		$this->needs_refresh      = $myrow["needs_refresh"];
+		if (In_Array('needs_refresh', $myrow)) $this->needs_refresh      = $myrow["needs_refresh"];
 		$this->status             = $myrow["status"];
-		$this->updated            = $myrow["updated"];
+		if (In_Array('updated',       $myrow)) $this->updated            = $myrow["updated"];
 
-		$this->onwatchlist        = $myrow["onwatchlist"];
+		if (In_Array('onwatchlist',   $myrow)) $this->onwatchlist        = $myrow["onwatchlist"];
 
-		$this->update_description = $myrow["update_description"];
-		$this->message_id         = $myrow["message_id"];
-		$this->encoding_losses    = $myrow["encoding_losses"];
-		$this->committer          = $myrow["committer"];
+		if (In_Array('update_description', $myrow)) $this->update_description = $myrow["update_description"];
+		if (In_Array('message_id',         $myrow)) $this->message_id         = $myrow["message_id"];
+		if (In_Array('encoding_losses',    $myrow)) $this->encoding_losses    = $myrow["encoding_losses"];
+		if (In_Array('committer',          $myrow)) $this->committer          = $myrow["committer"];
 	}
 
 	function FetchByPartialName($pathname, $UserID = 0) {
@@ -272,7 +272,7 @@ ON TEMP.wle_element_id = ports.element_id";
 				#
 				# I had considered including an OUTER JOIN in the above SQL
 				# but didn't.  I figured the above was
-				if ($WatchListID) {
+				if (IsSet($WatchListID)) {
 					$this->onwatchlist = IsOnWatchList($WatchListID);
 				}
 

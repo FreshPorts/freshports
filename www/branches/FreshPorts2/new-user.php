@@ -1,5 +1,5 @@
 <?
-	# $Id: new-user.php,v 1.1.2.9 2002-02-23 22:19:14 dan Exp $
+	# $Id: new-user.php,v 1.1.2.10 2002-02-24 00:25:53 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -103,7 +103,6 @@ if ($submit) {
 
 				$result = pg_exec($db, $sql);
 				if ($result) {
-					pg_exec ($db, "commit");
 					$UserCreated = 1;
 
 					# if the mail out fails, we aren't handling it properly here.

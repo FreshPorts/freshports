@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.116 2002-12-09 20:30:31 dan Exp $
+	# $Id: freshports.php,v 1.4.2.117 2002-12-10 05:06:01 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -959,7 +959,7 @@ function freshports_PortCommitsHeader($port) {
 function freshports_PortCommits($port) {
 	# print all the commits for this port
 
-	require($_SERVER["DOCUMENT_ROOT"] . "/../classes/commit_log_ports.php");
+	require_once($_SERVER["DOCUMENT_ROOT"] . "/../classes/commit_log_ports.php");
 
 #	echo ' *************** into freshports_PortCommits ***************';
 	freshports_PortCommitsHeader($port);

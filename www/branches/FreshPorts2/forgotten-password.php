@@ -1,5 +1,5 @@
 <?
-	# $Id: forgotten-password.php,v 1.1.2.14 2002-06-09 21:42:35 dan Exp $
+	# $Id: forgotten-password.php,v 1.1.2.15 2002-09-11 14:38:43 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -99,7 +99,7 @@ if ($submit) {
       } else {
          if ($myrow["email"] == "") {
              $error = 'Guess what?  You never gave us an email address.  So I guess you must ' . 
-                      'contact the <A HREF="' . $mailto . ':webmaster@freshports.org?subject=I forgot my password">webmaster</A> for help.';
+                      'contact the <A HREF="' . $mailto . ':webmaster&#64;freshports.org?subject=I forgot my password">webmaster</A> for help.';
              $OKToMail = 0;
          }
       }
@@ -232,7 +232,7 @@ GLOBAL $mailto;
 ?>
 <p>
 Your password has been sent to the address we have on file.  If you still can't get logged in
-please contact <A HREF="<? echo $mailto; ?>:webmaster&#63;freshports.org?subject=I forgot my password">the webmaster</A>
+please contact <A HREF="<? echo $mailto; ?>:webmaster&#64;freshports.org?subject=I forgot my password">the webmaster</A>
 and we'll see what we can do.
 </p>
 <? } else {  ?>

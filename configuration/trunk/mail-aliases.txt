@@ -56,6 +56,21 @@ chmod g+w msgs
 
 cd /home/freshports.org/scripts/updates
 chmod g+x updates.pl
-sudo chgrp lists ports.pm updates.pl
+chgrp lists ports.pm updates.pl
+
+cd /home/freshports.org/scripts
+chgrp lists *.pl *.sh *.pl *.awk lastupdate
+chmod g+x *.pl *.sh *.pl *.awk lastupdate
+chmod -R o-r *
+chmod g+w lastupdate
+
+chgrp lists /home/freshports.org/scripts/updates
+chgrp lists /home/freshports.org/scripts
+
+cd /usr/ports
+chown -R lists:lists *
+
+cd /home/freshports.org/www
+ln -s /usr/local/etc/freshports/archives archives
 
 Remember to create logins on the database for the updater to use.

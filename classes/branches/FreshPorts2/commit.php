@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.6 2003-05-09 21:31:30 dan Exp $
+	# $Id: commit.php,v 1.1.2.7 2003-09-25 14:01:07 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -39,26 +39,26 @@ class Commit {
 	}
 
 	function PopulateValues($myrow) {
-		$this->commit_log_id			= $myrow["commit_log_id"];
+		$this->commit_log_id		= $myrow["commit_log_id"];
 		$this->commit_date_raw		= $myrow["commit_date_raw"];
 		$this->encoding_losses		= $myrow["encoding_losses"];
-		$this->message_id				= $myrow["message_id"];
-		$this->committer				= $myrow["committer"];
+		$this->message_id			= $myrow["message_id"];
+		$this->committer			= $myrow["committer"];
 		$this->commit_description	= $myrow["commit_description"];
 		$this->commit_date			= $myrow["commit_date"];
 		$this->commit_time			= $myrow["commit_time"];
-		$this->port_id					= $myrow["port_id"];
+		$this->port_id				= $myrow["port_id"];
 		$this->category				= $myrow["category"];
 		$this->category_id			= $myrow["category_id"];
-		$this->port						= $myrow["port"];
-		$this->version					= $myrow["version"];
+		$this->port					= $myrow["port"];
+		$this->version				= $myrow["version"];
 		$this->revision				= $myrow["revision"];
-		$this->status					= $myrow["status"];
-		$this->needs_refresh			= $myrow["needs_refresh"];
-		$this->forbidden				= $myrow["forbidden"];
-		$this->broken					= $myrow["broken"];
-		$this->date_added				= $myrow["date_added"];
-		$this->element_id				= $myrow["element_id"];
+		$this->status				= $myrow["status"];
+		$this->needs_refresh		= $myrow["needs_refresh"];
+		$this->forbidden			= $myrow["forbidden"];
+		$this->broken				= $myrow["broken"];
+		$this->date_added			= $myrow["date_added"];
+		$this->element_id			= $myrow["element_id"];
 		$this->short_description	= $myrow["short_description"];
 		$this->onwatchlist			= $myrow["onwatchlist"];
 	}
@@ -94,4 +94,9 @@ SELECT id as commit_log_id,
 
 		return $this->message_id;
 	}
+
+	function EncodingLosses() {
+		return $this->encoding_losses == 't';
+	}
+
 }

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.11 2003-12-11 19:58:45 dan Exp $
+	# $Id: index.php,v 1.1.2.12 2003-12-12 13:03:09 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -72,6 +72,20 @@ See also <a href="http://www.freebsddiary.org/freshports-fraud.php">this FreeBSD
 <p>On Dec 8, I noticed the DNS had stopped working for the fraudster's domain.
 I saved the <a href="/fraud/whois-dec-9.php">whois output</a>.  As you can see,
 the status is REGISTRAR-LOCK.
+
+<h2>An apology arrives - 12 Dec 2003</h2>
+
+<p>
+I received an email from Gabriel Medina today.  He apologized.
+
+<p>
+I also received email from the owner of the colo box on which 
+Gabriel Medina has an account and from which the freshports.net
+website was served.  The domain is forever banned from that server.
+
+<p>
+I have asked Gabriel Medina to transfer freshports.net to me.  For
+what it's worth, at one time I owned it.
 
 </td></tr>
 

@@ -1,5 +1,5 @@
 <?
-	# $Id: security-notice.php,v 1.1.2.2 2003-01-10 19:12:04 dan Exp $
+	# $Id: security-notice.php,v 1.1.2.3 2003-03-06 22:04:48 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -44,8 +44,6 @@
 	} else {
 		$SecurityNotice->FetchByMessageID($message_id);
 	}
-
-	GLOBAL $freshports_Tasks_SecurityNoticeAdd;
 ?>
 
 <TABLE width="<? echo $TableWidth ?>" border="0" ALIGN="center">
@@ -58,7 +56,7 @@
 	if (IsSet($SecurityNotice->id)) {
 		echo '<p>' . freshports_Security_Icon() . ' This commit has been marked as security related</p>';
 	} else {
-		if ($User->IsTaskAllowed($freshports_Tasks_SecurityNoticeAdd)) {
+		if ($User->IsTaskAllowed(FRESHPORTS_TASKS_SECURITY_NOTICE_ADD)) {
 			echo 'This page allows you to mark a commit as being security related.  Such commits will be included on the Security Notification report' . "\n";
 			echo 'mailed out to users and marked with a <a href="/faq.php">security lock</a> whereever that commit appears.';
 		} else {
@@ -104,7 +102,7 @@
 	if (IsSet($SecurityNotice->id)) {
 		echo '<h2>Notification reason</h2>';
 	} else {
-		if ($User->IsTaskAllowed($freshports_Tasks_SecurityNoticeAdd)) {
+		if ($User->IsTaskAllowed(FRESHPORTS_TASKS_SECURITY_NOTICE_ADD)) {
 ?>
 <p>
 Please enter your reasoning for marking the above commit as a security issue.
@@ -113,12 +111,12 @@ Please enter your reasoning for marking the above commit as a security issue.
 		}
 	}
 
-	if (IsSet($SecurityNotice->id) || $User->IsTaskAllowed($freshports_Tasks_SecurityNoticeAdd)) {
+	if (IsSet($SecurityNotice->id) || $User->IsTaskAllowed(FRESHPORTS_TASKS_SECURITY_NOTICE_ADD)) {
 ?>
 
 <FORM ACTION="<? echo $_SERVER["PHP_SELF"]; ?>" method="POST">
 	<TEXTAREA NAME="description" ROWS="10" COLS=60"<?php
-	if (IsSet($SecurityNotice->description) || !$User->IsTaskAllowed($freshports_Tasks_SecurityNoticeAdd)) echo ' readonly'; ?>><?php
+	if (IsSet($SecurityNotice->description) || !$User->IsTaskAllowed(FRESHPORTS_TASKS_SECURITY_NOTICE_ADD)) echo ' readonly'; ?>><?php
 	if (IsSet($SecurityNotice->description)) {
 		echo $SecurityNotice->description;
 	} else {
@@ -127,7 +125,7 @@ Please enter your reasoning for marking the above commit as a security issue.
 ?></TEXTAREA>
 	<BR>
 <?php
-	if (!IsSet($SecurityNotice->id) && $User->IsTaskAllowed($freshports_Tasks_SecurityNoticeAdd)) {
+	if (!IsSet($SecurityNotice->id) && $User->IsTaskAllowed(FRESHPORTS_TASKS_SECURITY_NOTICE_ADD)) {
 ?>
 	<INPUT TYPE="submit" VALUE="Save Security Info" NAME="submit">
 <?php
@@ -139,7 +137,7 @@ Please enter your reasoning for marking the above commit as a security issue.
 	}
 
 	if (IsSet($SecurityNotice->id)) {
-		if ($User->IsTaskAllowed($freshports_Tasks_SecurityNoticeAdd)) {
+		if ($User->IsTaskAllowed(FRESHPORTS_TASKS_SECURITY_NOTICE_ADD)) {
 			$UserAlt = new User($db);
 			$UserAlt->Fetch($SecurityNotice->user_id);
 ?>

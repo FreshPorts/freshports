@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.136 2003-03-05 21:37:26 dan Exp $
+	# $Id: freshports.php,v 1.4.2.137 2003-03-06 22:05:03 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -965,19 +965,18 @@ function freshports_PortCommitsHeader($port) {
 	# print the header for the commits for a port
 
 	GLOBAL $User;
-	GLOBAL $freshports_Tasks_SecurityNoticeAdd;
 
 	echo '<TABLE BORDER="1" width="100%" CELLSPACING="0" CELLPADDING="5">' . "\n";
 	echo "<TR>\n";
 
 	$Columns = 3;
-	if ($User->IsTaskAllowed($freshports_Tasks_SecurityNoticeAdd)) {
+	if ($User->IsTaskAllowed(FRESHPORTS_TASKS_SECURITY_NOTICE_ADD)) {
 		$Columns++;
 	}
 	echo freshports_PageBannerText("Commit History - (may be incomplete: see CVSWeb link above for full details)", $Columns);
 
 	echo '<TR><TD WIDTH="180"><b>Date</b></td><td><b>By</b></td><td><b>Description</b></td>';
-	if ($User->IsTaskAllowed($freshports_Tasks_SecurityNoticeAdd)) {
+	if ($User->IsTaskAllowed(FRESHPORTS_TASKS_SECURITY_NOTICE_ADD)) {
 		echo '<td><b>Security</b></td>';
 	}
 
@@ -1025,7 +1024,6 @@ function freshports_PortCommitPrint($commit, $category, $port) {
 	GLOBAL $TimeFormatDefault;
 	GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;
 	GLOBAL $User;
-	GLOBAL $freshports_Tasks_SecurityNoticeAdd;
 
 	# print a single commit for a port
 	echo "<TR><TD VALIGN='top' NOWRAP>";
@@ -1071,7 +1069,7 @@ function freshports_PortCommitPrint($commit, $category, $port) {
 
 	echo "</TD>\n";
 
-	if ($User->IsTaskAllowed($freshports_Tasks_SecurityNoticeAdd)) {
+	if ($User->IsTaskAllowed(FRESHPORTS_TASKS_SECURITY_NOTICE_ADD)) {
 		echo '<TD ALIGN="center" VALIGN="top"><a href="/security-notice.php?message_id=' . $commit->message_id . '">Edit</a></td>';
 	}
 

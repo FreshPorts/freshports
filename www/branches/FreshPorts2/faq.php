@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.63 2004-12-02 01:07:20 dan Exp $
+	# $Id: faq.php,v 1.1.2.64 2004-12-19 16:42:06 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -683,6 +683,32 @@ This information is obtained by:
 
 <p>
 All of this takes about 55ms.
+
+	</TD></TR><TR><TD>&nbsp;</TD></TR>
+
+<TR>
+<?php echo freshports_PageBannerText('What do you mean, the master port has been updated?'); ?>
+</TR>
+
+   <TR><TD>
+   <P>
+For some slave ports, you may see a message like this, just above the <b>Commit History</b>:
+
+<blockquote>
+NOTE: This slave port may no longer be vulnerable to issues shown below because the master port has been updated.
+</blockquote>
+
+<p>
+Slave ports can be updated with a commit against the master port.  A commit
+against the master port will affect any slave ports.  If a
+<a href="http://www.vuxml.org/freebsd/">VuXML</a> vulnerability has been recorded
+against a slave port, any fix would be applied to the master port.
+However, the commit to the master port would not appear under the slave port,
+thereby giving a false impression
+that the slave port was still vulnerable.
+
+<p>
+The above notice serves as a reminder that the slave port may no longer be vulnerable.
 
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 

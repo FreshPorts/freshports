@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.55 2002-04-02 03:06:20 dan Exp $
+   # $Id: freshports.php,v 1.4.2.56 2002-04-02 04:45:24 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -70,6 +70,21 @@ $freshports_CVS_URL = "http://www.FreeBSD.org/cgi/cvsweb.cgi";
 // path to the ftp server
 $freshports_FTP_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports/";
 
+// path to the cvs-all mailing list archive
+$freshports_mail_archive = " http://www.freebsd.org/cgi/mid.cgi?db=mid&id=";
+
+function freshports_Email_Link($message_id) {
+	#
+	# produce a link to the email
+	#
+	GLOBAL $freshports_mail_archive;
+
+	$HTML .= '<A HREF="' . $freshports_mail_archive . $message_id . '">';
+	$HTML .= '<IMG SRC="/images/envelope10.gif" ALT="Original commit message" BORDER="0" WIDTH="25" HEIGHT="14">';
+	$HMTL .= '</A>';
+
+	return $HTML;
+}
 
 function freshports_CookieClear() {
 #	echo " clearing the cookie";
@@ -866,7 +881,8 @@ function freshports_PortCommitPrint($commit, $category, $port) {
 	GLOBAL  $TimeFormatDefault;
 
 	# print a single commit for a port
-	echo "<TR><TD VALIGN='top'>" . $commit->commit_date . "</TD>\n";
+	echo "<TR><TD VALIGN='top'>" . $commit->commit_date . '<BR>' . freshports_Email_Link($commit->message_id);
+	echo "</TD>\n";
 	echo '    <TD VALIGN="top">';
     echo $commit->committer;
 	echo '<BR>';

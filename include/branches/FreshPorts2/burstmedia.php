@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: burstmedia.php,v 1.1.2.13 2004-09-22 23:08:20 dan Exp $
+	# $Id: burstmedia.php,v 1.1.2.14 2005-01-22 14:41:54 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -11,7 +11,7 @@
 
 function BurstMediaAd() {
 
-echo '
+return '
 
 <!-- BEGIN RICH-MEDIA BURST! CODE -->
 <script language="JavaScript" type="text/javascript">
@@ -32,7 +32,7 @@ document.write(\'<scr\'+\'ipt src="http://www.burstnet.com/cgi-bin/ads/ad4556a.c
 
 function BurstSkyscraperAd() {
 
-echo '
+return '
 
 <!-- BEGIN RICH-MEDIA BURST! CODE -->
 <script language="JavaScript" type="text/javascript">
@@ -53,7 +53,7 @@ document.write(\'<scr\'+\'ipt src="http://www.burstnet.com/cgi-bin/ads/sk4556a.c
 
 function Burst_125x125() {
 
-echo '
+return '
 
 <!-- BEGIN RICH-MEDIA BURST! CODE -->
 <script language="JavaScript" type="text/javascript">
@@ -70,7 +70,7 @@ document.write(\'<scr\'+\'ipt src="http://www.burstnet.com/cgi-bin/ads/cb4556a.c
 }
 
 function Burst_468x60_Below() {
-echo '
+return '
 
 <!-- BEGIN RICH-MEDIA BURST! CODE -->
 <script language="JavaScript" type="text/javascript">
@@ -90,7 +90,7 @@ function Burst_300x250() {
 GLOBAL $ShowAds;
 
 	if ($ShowAds) {
-echo '
+return '
 
 <!-- BEGIN RICH-MEDIA BURST! CODE -->
 <script language="JavaScript" type="text/javascript">
@@ -109,9 +109,9 @@ document.write(\'<scr\'+\'ipt src="http://www.burstnet.com/cgi-bin/ads/ad4556a.c
 
 function Burst_300x250_table() {
 
-	echo '<table border="0" cellpadding="8" cellspacing="0" align="right"><tr><td>' . "\n";
-	echo Burst_300x250();
-	echo '</td></tr></table>' ."\n";
+	return '<table border="0" cellpadding="8" cellspacing="0" align="right"><tr><td>' . "\n" . 
+	        Burst_300x250() .
+	        '</td></tr></table>' ."\n";
 
 }
 

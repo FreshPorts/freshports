@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: vuxml.php,v 1.1.2.6 2004-09-28 03:27:31 dan Exp $
+	# $Id: vuxml.php,v 1.1.2.7 2004-10-03 14:01:56 dan Exp $
 	#
 	# Copyright (c) 2004 DVL Software Limited
 	#
@@ -27,26 +27,34 @@
 
 <?php
 	if (IsSet($_REQUEST['vid'])) {
+
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/vuxml.php');
+
 ?>
 
 <p>
 Hi.  Thanks for checking, but this part of the FreshPorts - VuXML system is still
 being designed.
+
 <p>
+These are the vulnerabilities relating to the commit you have selected:
+</p>
 
-These are the vulnerabilities relating to the commit you have selected
-
-<ul>
+<table cellpadding="5" border="1" cellspacing="0">
+<tr><th align="left"><b>VuXML ID</b></th><th align="left"><b>Description</b></th></tr>
 <?php
+	$VuXML = new VuXML($db);
 
 	while (list($key, $value) = each($vidArray)) {
+		$VuXML->FetchByVID($value);
+
 		$URL = VUXMLURL . $value . '.html';
-		echo '<li><a href="' . $URL . '">' . $URL . '</a>' . "\n";
+		echo '<tr><td valign="top" nowrap><a href="' . $URL . '">' . $value . '</a></td><td>' . $VuXML->description . "</td></tr>\n";
 	}
 
 ?>
 
-</ul>
+</table>
 <?php
 }
 	if (IsSet($_REQUEST['list'])) {

@@ -1,11 +1,11 @@
 <?
-	# $Id: commits.php,v 1.1.2.7 2002-12-09 20:23:42 dan Exp $
+	# $Id: commits.php,v 1.1.2.8 2002-12-10 05:04:39 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
 
 
-	require($_SERVER['DOCUMENT_ROOT'] . "/../classes/commit.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/commit.php");
 
 // base class for fetching commits
 class Commits {

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: side-bars.php,v 1.4.2.58 2005-01-05 23:14:41 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.59 2005-01-22 14:44:15 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -118,7 +118,7 @@ if (IsSet($visitor)) {
 		  <TR><TD ALIGN="center">
 		 ';
 
-		BurstSkyscraperAd();
+		echo BurstSkyscraperAd();
 		echo '</TD></TR>
 		  </TABLE>
 		 ';

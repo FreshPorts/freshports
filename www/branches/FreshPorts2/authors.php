@@ -1,5 +1,5 @@
 <?
-	# $Id: authors.php,v 1.1.2.5 2002-04-19 21:47:09 dan Exp $
+	# $Id: authors.php,v 1.1.2.6 2002-04-20 14:20:15 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -87,8 +87,6 @@ scripts and ideas.  That's not to mention that channel on efnet which I won't
 name just so it stays a secret.</LI>
 
 </UL>
-
-<P>And I haven't updated the list of people who helped with FreshPorts2...</P>
 
 </TD>
 </TR>

@@ -1,5 +1,5 @@
 <?
-	# $Id: files.php,v 1.1.2.4 2002-04-02 04:45:13 dan Exp $
+	# $Id: files.php,v 1.1.2.5 2002-04-06 23:01:59 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -11,6 +11,7 @@
 
 function freshports_Files($PortID, $CommitID, $db) {
 	GLOBAL $TableWidth;
+	GLOBAL $freshports_CVS_URL;
 
 	$Debug=0;
 

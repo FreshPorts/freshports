@@ -1,3 +1,7 @@
+<html><body>
+Thanks, but the phorum has been put on hold for a while
+</body></html>
+<? exit; ?>
 <?PHP
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //

@@ -16,7 +16,7 @@
   $include_path="/home/freshports.org/configuration/phorum/include";  // no ending slash
 
   // relative path to the admin pages
-  $admindir="/home/freshports.org/configuration/phorum/admin";
+  $admindir="admin";
   $admin_page="index.php";
 
   // Path to database abstraction file:

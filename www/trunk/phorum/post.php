@@ -15,8 +15,11 @@
 //   along with this program.                                                 //
 ////////////////////////////////////////////////////////////////////////////////
 
+echo 'before common<BR>';
   require "./common.php";
+echo 'after common<BR>';
   require "$include_path/post.php";
+echo 'after post.php<BR>';
 
   $thread=$t;
   $action=$a;
@@ -58,7 +61,7 @@
     $attachment="";
     $attachment_name="";
   }
-  
+
   if($IsError || !$action){
     if(file_exists("$include_path/header_$ForumConfigSuffix.php")){
       include "$include_path/header_$ForumConfigSuffix.php";
@@ -154,6 +157,7 @@
     $msgid="<".md5(uniqid(rand())).".$ForumModEmail>";
     // This will add the message to the database, and email the
     // moderator if required.
+echo 'therecc<BR>';
     $error = post_to_database();
     if (!empty($error)) {
       echo $error;

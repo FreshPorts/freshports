@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.143 2003-04-29 12:45:11 dan Exp $
+	# $Id: freshports.php,v 1.4.2.144 2003-05-09 19:42:59 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -11,10 +11,9 @@
 #
 # special HTMLified mailto to foil spam harvesters
 #
-DEFINE('MAILTO',                 '&#109;&#97;&#105;&#108;&#116;&#111;');
+DEFINE('MAILTO',                '&#109;&#97;&#105;&#108;&#116;&#111;');
 DEFINE('COPYRIGHTYEARS',        '2000-2003');
 DEFINE('URL2LINK_CUTOFF_LEVEL', 70);
-
 
 
 if ($Debug) echo "'" . $_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php<BR>';

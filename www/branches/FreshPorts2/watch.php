@@ -1,5 +1,5 @@
 <?
-	# $Id: watch.php,v 1.1.2.12 2002-03-25 19:52:56 dan Exp $
+	# $Id: watch.php,v 1.1.2.13 2002-03-25 20:54:50 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -160,7 +160,8 @@ for ($i = 0; $i < $numrows; $i++) {
 		}
 	}
 
-	$HTML .= freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 1);
+	$HTML .= freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 1, '', 0);
+	$HTML .= '<BR>';
 }
 
 if ($ShowCategoryHeaders) {

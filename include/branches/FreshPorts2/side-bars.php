@@ -1,5 +1,5 @@
 <?
-	# $Id: side-bars.php,v 1.4.2.36 2002-10-28 16:18:57 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.37 2002-11-18 17:38:35 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -26,7 +26,7 @@
 //         break;
 
       default:
-         $OriginLocal = rawurlencode($HTTP_SERVER_VARS["REQUEST_URI"]);
+         $OriginLocal = rawurlencode($_SERVER["REQUEST_URI"]);
          break;
    }
 

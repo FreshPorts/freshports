@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.9 2003-12-05 16:54:38 dan Exp $
+	# $Id: index.php,v 1.1.2.10 2003-12-10 13:31:04 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -67,6 +67,12 @@ Here a few supporting documents:
 </ul>
 
 See also <a href="http://www.freebsddiary.org/freshports-fraud.php">this FreeBSD Diary article</a>.
+
+<h2>DNS stops working - 8 Dec 2003</h2>
+
+<p>On Dec 8, I noticed the DNS had stopped working for the fraudster's domain.
+I saved the <a href="/fraud/whois-dec-9.php">whois output</a>.  As you can see,
+the status is REGISTRAR-LOCK.
 
 </td></tr>
 

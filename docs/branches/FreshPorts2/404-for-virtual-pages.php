@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: 404-for-virtual-pages.php,v 1.1.2.3 2003-03-04 17:38:43 dan Exp $
+	# $Id: 404-for-virtual-pages.php,v 1.1.2.4 2003-03-04 19:05:50 dan Exp $
 	#
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
@@ -39,7 +39,7 @@ download, compile, and installed software from source.  For ease of use, these p
 into different directories called categories.
 
 <p>
-FreshPorts uses the <a href="http://www.PostgreSQL.org/">PostgreSQL</a> RDMS.
+FreshPorts uses the <a href="http://www.PostgreSQL.org/">PostgreSQL</a> RDBMS.
 
 <p>
 FreshPorts allows a user to broswe through the website in much the same way as they might

@@ -1,5 +1,5 @@
 <?
-	# $Id: search.php,v 1.1.2.21 2002-05-18 18:27:13 dan Exp $
+	# $Id: search.php,v 1.1.2.22 2002-05-19 22:47:54 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -115,40 +115,62 @@ if ($WatchListID) {
 	           and commit_log.id      = commit_log_ports.commit_log_id
                and commit_log_ports.port_id = ports.id    " ;
 
-if ($method == 'match') {
-	switch ($stype) {
-		case "name":
-			$sql .= "and element.name like '%$query%'";
-			break;
+switch ($method) {
+	case 'match':
+		switch ($stype) {
+			case "name":
+				$sql .= "and element.name like '%$query%'";
+				break;
 
-		case "shortdescription":
-			$sql .= "and ports.short_description like '%$query%'";
-			break;
+			case "shortdescription":
+				$sql .= "and ports.short_description like '%$query%'";
+				break;
       
-		case "maintainer":
-			$sql .= "and ports.maintainer like '%$query%'";
-			break;
+			case "maintainer":
+				$sql .= "and ports.maintainer like '%$query%'";
+				break;
 
-		case "messageid":
-			$sql .= "and commit_log.message_id = '$query'";
-	}
-} else {
-	switch ($stype) {
-		case "name":
-			$sql .= "and levenshtein(element.name, '$query') < 4";
-			break;
+			case "messageid":
+				$sql .= "and commit_log.message_id = '$query'";
+		}
+		break;
 
-		case "shortdescription":
-			$sql .= "and levenshtein(ports.short_description, '$query') < 4";
-			break;
+	case 'exact':
+		switch ($stype) {
+			case "name":
+				$sql .= "and element.name = '$query'";
+				break;
+
+			case "shortdescription":
+				$sql .= "and ports.short_description = '$query'";
+				break;
       
-		case "maintainer":
-			$sql .= "and levenshtein(ports.maintainer, '$query') < 4";
-			break;
+			case "maintainer":
+				$sql .= "and ports.maintainer = '$query'";
+				break;
 
-		case "messageid":
-			$sql .= "and commit_log.message_id = '$query'";
-	}
+			case "messageid":
+				$sql .= "and commit_log.message_id = '$query'";
+		}
+		break;
+
+	default:
+		switch ($stype) {
+			case "name":
+				$sql .= "and levenshtein(element.name, '$query') < 4";
+				break;
+
+			case "shortdescription":
+				$sql .= "and levenshtein(ports.short_description, '$query') < 4";
+				break;
+      
+			case "maintainer":
+				$sql .= "and levenshtein(ports.maintainer, '$query') < 4";
+				break;
+
+			case "messageid":
+				$sql .= "and commit_log.message_id = '$query'";
+		}
 }
 
 $sql .= " order by categories.name, element.name";
@@ -185,6 +207,7 @@ $Port->LocalResult = $result;
 }
 ?>
 <form METHOD="POST" ACTION="<? echo $_SERVER["PHP_SELF"] ?>">
+NOTE: All searches are case sensitive.<BR>
 Search for:<BR>
 	<SELECT NAME="stype" size="1">
 		<OPTION VALUE="name"             <? if ($stype == "name")             echo 'SELECTED'?>>Port Name</OPTION>
@@ -194,6 +217,7 @@ Search for:<BR>
 	</SELECT> 
 
 	<SELECT name=method>
+		<OPTION VALUE="exact"   <?if ($method == "exact"  ) echo 'SELECTED' ?>>equal to
 		<OPTION VALUE="match"   <?if ($method == "match"  ) echo 'SELECTED' ?>>containing
 		<OPTION VALUE="soundex" <?if ($method == "soundex") echo 'SELECTED' ?>>sounding like
 	</SELECT>

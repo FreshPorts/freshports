@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: latest_commits.php,v 1.1.2.1 2003-11-20 14:26:14 dan Exp $
+	# $Id: latest_commits.php,v 1.1.2.2 2004-01-06 13:45:07 dan Exp $
 	#
-	# Copyright (c) 2003 DVL Software Limited
+	# Copyright (c) 2003-2004 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit_record.php');
@@ -14,20 +14,34 @@ class LatestCommits {
 	var $dbh;
 	var $MaxNumberOfPorts;
 
+	var $WatchListAsk    = '';	// either default or ask.  the watch list to which add/remove works.
+	var $UserID          = 0;
+	var $DaysMarkedAsNew = 10;
 	var $LocalResult;
 	var $HTML;
 
-	function LatestCommits($dbh, $MaxNumberOfPorts) {
+	function LatestCommits($dbh) {
 		$this->dbh = $dbh;
-		$this->MaxNumberOfPorts = $MaxNumberOfPorts;
+	}
 
-		$sql = "select * from LatestCommits($MaxNumberOfPorts, ";
-		if ($User->id) {
-			$sql .= $User->id;
-		} else {
-			$sql .= 0;
-		}
-		$sql .= ');';
+	function SetMaxNumberOfPorts($MaxNumberOfPorts) {
+		$this->MaxNumberOfPorts = $MaxNumberOfPorts;
+	}
+
+	function SetDaysMarkedAsNew($DaysMarkedAsNew) {
+		$this->DaysMarkedAsNew = $DaysMarkedAsNew;
+	}
+
+	function SetUserID($UserID) {
+		$this->UserID = $UserID;
+	}
+
+	function SetWatchListAsk($WatchListAsk) {
+		$this->WatchListAsk = $WatchListAsk;
+	}
+
+	function CreateHTML() {
+		$sql = "select * from LatestCommits($this->MaxNumberOfPorts, $this->UserID)";
 
 		if ($this->Debug) echo "\n<pre>sql=$sql</pre>\n";
 
@@ -78,7 +92,6 @@ class LatestCommits {
 			$NumberOfPortsInThisCommit = 0;
 			$MaxNumberPortsToShow      = 10;
 			while ($j < $NumRows && $commits[$j]->commit_log_id == $ThisCommitLogID) {
-#echo "in NumberOfPortsInThisCommit loop $i, $j<br>";
 				$NumberOfPortsInThisCommit++;
 				$mycommit = $commits[$j];
 
@@ -124,11 +137,11 @@ class LatestCommits {
 						$this->HTML .= $mycommit->category. "</A>";
 						$this->HTML .= '&nbsp;';
 
-						if ($User->id) {
+						if ($this->UserID) {
 							if ($mycommit->watch) {
-								$this->HTML .= ' '. freshports_Watch_Link_Remove($User->watch_list_add_remove, $mycommit->watch, $mycommit->element_id) . ' ';
+								$this->HTML .= ' '. freshports_Watch_Link_Remove($this->WatchListAsk, $mycommit->watch, $mycommit->element_id) . ' ';
 							} else {
-								$this->HTML .= ' '. freshports_Watch_Link_Add   ($User->watch_list_add_remove, $mycommit->watch, $mycommit->element_id) . ' ';
+								$this->HTML .= ' '. freshports_Watch_Link_Add   ($this->WatchListAsk, $mycommit->watch, $mycommit->element_id) . ' ';
 							}
 						}
 
@@ -141,8 +154,7 @@ class LatestCommits {
 						if ($mycommit->needs_refresh) {
 							$this->HTML .= " " . freshports_Refresh_Icon() . "\n";
 						}
-
-						if ($mycommit->date_added > Time() - 3600 * 24 * $DaysMarkedAsNew) {
+						if ($mycommit->date_added > Time() - 3600 * 24 * $this->DaysMarkedAsNew) {
 							$MarkedAsNew = "Y";
 							$this->HTML .= freshports_New_Icon() . "\n";
 						}
@@ -159,7 +171,6 @@ class LatestCommits {
 						$this->HTML .= "&nbsp;";
 
 					} else {
-#echo 'no category found!<br>';
 						$this->HTML .= '<BIG><B>';
 						$PathName = preg_replace('|^/?ports/|', '', $mycommit->element_pathname);
 						$this->HTML .= '<a href="/' . $PathName . '">' . $PathName . '</a>';
@@ -177,7 +188,6 @@ class LatestCommits {
 			$i = $j - 1;
 
 			$this->HTML .= "\n<BLOCKQUOTE>";
-#echo "freshports_PortDescriptionPrint called $i<br>";
 
 			$this->HTML .= freshports_PortDescriptionPrint($mycommit->commit_description, $mycommit->encoding_losses, $freshports_CommitMsgMaxNumOfLinesToShow, freshports_MoreCommitMsgToShow($mycommit->message_id, $freshports_CommitMsgMaxNumOfLinesToShow));
 

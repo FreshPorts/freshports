@@ -12,6 +12,10 @@ function freshports_Category_Name($CategoryID, $db) {
 //echo $sql;
 
    $result = mysql_query($sql, $db);
+   if (!$result) {
+      echo "error " . mysql_error();
+      exit;
+   }
 
    $myrow = mysql_fetch_array($result);
 

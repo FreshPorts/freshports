@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.40 2004-04-03 01:40:15 dan Exp $
+	# $Id: commit.php,v 1.1.2.41 2004-08-09 22:31:45 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -251,7 +251,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 						if (strlen($myrow["port_version"]) > 0) {
 							$HTML .= ' ' . $myrow["port_version"];
 							if (strlen($myrow["port_revision"]) > 0 && $myrow["port_revision"] != "0") {
-				    			$HTML .= '-' . $myrow["port_revision"];
+				    			$HTML .= FRESHPORTS_VERSION_REVISION_JOINER . $myrow["port_revision"];
 							}
 						}
 						$HTML .= "</B></BIG>\n";

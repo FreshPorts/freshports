@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: date.php,v 1.1.2.23 2004-04-07 21:00:49 dan Exp $
+	# $Id: date.php,v 1.1.2.24 2004-08-09 22:31:45 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -154,7 +154,7 @@
 					if (strlen($commit->version) > 0) {
 						$HTML .= ' ' . $commit->version;
 						if (strlen($commit->revision) > 0 && $commit->revision != "0") {
-				    		$HTML .= '-' . $commit->revision;
+				    		$HTML .= FRESHPORTS_VERSION_REVISION_JOINER . $commit->revision;
 						}
 					}
 		

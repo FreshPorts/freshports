@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: latest_commits.php,v 1.1.2.5 2004-07-13 13:44:29 dan Exp $
+	# $Id: latest_commits.php,v 1.1.2.6 2004-08-09 22:32:07 dan Exp $
 	#
 	# Copyright (c) 2003-2004 DVL Software Limited
 	#
@@ -130,7 +130,7 @@ class LatestCommits {
 						if (strlen($mycommit->version) > 0) {
 							$this->HTML .= ' ' . $mycommit->version;
 							if (strlen($mycommit->revision) > 0 && $mycommit->revision != "0") {
-								$this->HTML .= '-' . $mycommit->revision;
+								$this->HTML .= FRESHPORTS_VERSION_REVISION_JOINER . $mycommit->revision;
 							}
 						}
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: files.php,v 1.1.2.32 2004-03-22 20:28:47 dan Exp $
+	# $Id: files.php,v 1.1.2.33 2004-08-09 22:30:41 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -144,7 +144,7 @@ select element_pathname(element.id) as pathname,
 		if (strlen($myrow["version"]) > 0) {
 			echo ' ' . $myrow["version"];
 			if (strlen($myrow["revision"]) > 0 && $myrow["revision"] != "0") {
-	    		echo'-' . $myrow["revision"];
+	    		echo FRESHPORTS_VERSION_REVISION_JOINER . $myrow["revision"];
 			}
 		}
 

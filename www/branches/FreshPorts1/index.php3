@@ -1,5 +1,5 @@
 <?
-   # $Id: index.php3,v 1.34.4.3 2001-12-23 02:06:49 dan Exp $
+   # $Id: index.php3,v 1.34.4.4 2002-01-11 13:19:59 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -9,7 +9,7 @@
 
    require("./include/getvalues.php");
 
-   freshports_Start("FreshPorts - the place for ports",
+   freshports_Start("the place for ports",
                "FreshPorts - new ports, applications",
                "FreeBSD, index, applications, ports");
 #$Debug=1;

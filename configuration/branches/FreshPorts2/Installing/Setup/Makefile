@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.1.2.4 2003-05-16 01:09:08 dan Exp $
+# $Id: Makefile,v 1.1.2.5 2004-04-01 18:26:05 dan Exp $
 #
 # Install the ports needed by FreshPorts
 #
@@ -13,6 +13,7 @@ MASTER_SITES=   # none
 DISTFILES=      # none
 
 MAINTAINER=		ports@freebsddiary.org
+COMMENT=	For use by Dan Langille only
 
 RUN_DEPENDS=	svstat:${PORTSDIR}/sysutils/daemontools \
 				/usr/local/lib/perl5/site_perl/5.005/XML/Writer.pm:${PORTSDIR}/textproc/p5-XML-Writer \

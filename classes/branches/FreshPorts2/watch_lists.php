@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch_lists.php,v 1.1.2.10 2003-12-01 18:26:23 dan Exp $
+	# $Id: watch_lists.php,v 1.1.2.11 2003-12-15 13:20:52 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -138,13 +138,15 @@ DELETE FROM watch_list
 		return $numrows;
 	}
 
-	function	GetDefaultWatchListID($UserID) {
+	function GetDefaultWatchListID($UserID) {
 		#
 		# If the user has just one watch list, return that.
-		# If the user has more than one watch list, but
-		# only one is set to default, use that.
+		# If the user has more than one watch list, take
+		# the first one which is in_service.
 		# otherwise, return an empty string.
 		#
+
+		$Debug = 0;
 
 		$sql = "
    SELECT id,
@@ -153,26 +155,22 @@ DELETE FROM watch_list
     WHERE user_id = $UserID
  ORDER BY name";
 
+		if ($Debug) echo "<pre>$sql</pre>";
 
 		$WatchListID = '';
-		if ($Debug) echo "<pre>$sql</pre>";
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
 			$numrows = pg_numrows($result);
-			for ($i = 0; $i < $numrows; $i++) {
-				$myrow = pg_fetch_array($result, 0);
-				if ($myrow["in_service"] == 't') {
-					if ($WatchListID == '') {
+			if ($numrows == 1) {
+				$WatchListID = $myrow["id"];
+			} else {
+				for ($i = 0; $i < $numrows; $i++) {
+					$myrow = pg_fetch_array($result, $i);
+					if ($myrow["in_service"] == 't') {
 						$WatchListID = $myrow["id"];
-					} else {
-						$WatchListID = '';
 						break;
 					}
 				}
-			}
-
-			if ($numrows == 1) {
-				$WatchListID = $myrow["id"];
 			}
 		} else {
 			die(pg_lasterror . '<pre>' . $sql . '</pre>');

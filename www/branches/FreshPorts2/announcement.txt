@@ -2,7 +2,7 @@
 
 <BIG>NOTE: FP2 is now live.  </BIG>
 
-Please read the <A HREF="faq.php">FAQ</A> and the <A HREF="fp2-announcement.php">site annoucement</A>.  Please do not publish details on any news sites yet.</P>
+Please read the <A HREF="faq.php">FAQ</A> and the <A HREF="fp2-announcement.php">site annoucement</A>.</P>
 
 <BIG><A HREF="http://www.ocuug.on.ca/">Ottawa-Carleton Unix Users Group</A> meeting: Tuesday June 11, 6:30-8:00pm:
 IPv6: The Future of the Internet</BIG>

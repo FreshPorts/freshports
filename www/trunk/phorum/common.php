@@ -1,41 +1,70 @@
 <?PHP
-
   if ( !defined( "_COMMON_PHP" ) ){
     define("_COMMON_PHP", 1 );
 
-  error_reporting(1023); 
+  // These variables may be altered as needed:
 
-  $phorumver="3.1 RC3";
+  // table name that Phorum uses to access meta-information on forums.
+  $pho_main = "forums";
 
-  // set some paths and file names.
-
-  $inf_path="/home/dan/freshports.org";  // no ending slash
-  
+  // location where the configuration information is stored
+  $inf_path="./_includes";  // no ending slash
   $inf_file="$inf_path/forums.php";
   $inf_back="$inf_path/forums.bak.php";
 
-  $include_path="./include";  // no ending slash
+  // path to include files
+  $include_path="./_includes";  // no ending slash
 
+  // relative path to the admin pages
   $admindir="_icq";
   $admin_page="index.php";
-    
-  // DB support vars.
 
-  $dbsupport["mysql"]="MySQL 3.21.x or Higher";
-  $dbsupport["postgresql65"]="PostgreSQL 6.5 or higher";  
-  $dbsupport["postgresql"]="PostgreSQL 6.4.1 or higher";  
-  
+  // Path to database abstraction file:
+
+  // MySQL 3.21.x or Higher (default setting)
+  $db_file = './db/mysql.php';
+
+  // PostgreSQL 6.4.1 to 6.5
+  // $db_file = './db/postgresql.php';
+
+  // PostgreSQL version 6.5 and higher
+  // $db_file = './db/postgresql65.php';
+
+  // SYBASE
+  // $db_file = './db/sybase.php';
+
+  // MSSQL 6
+  // $db_file = './db/mssql6x.php';
+
+  // MSSQL 7
+  // $db_file = './db/mssql.php';
+
   // If you have dynamic vars for GET and POST to pass on:
-  // AddGetVar("dummy", $dummy);  
-  // AddPostVar("session", $session);  
+  // AddGetVar("dummy", $dummy);
+  // AddPostVar("session", $session);
+
+  // End of normally user-defined variables
+
+  // See the FAQ on what this does.  Normally not important.
+  $cutoff = 800;
+
+  // For purists, enable this to find any coding errors.
+  // error_reporting(E_ALL);
+
+  $phorumver="3.2.10";
+
+  // handle stupid configs that have REGISTER_GLOBALS turned off.
+  if(!isset($PHP_SELF)) {
+     include ($include_path."/register_globals.php");
+  }
 
   function undo_htmlspecialchars($string){
 
-    str_replace("&amp;", "&", $string);
-    str_replace("&quot;", "\"", $string);
-    str_replace("&lt;", "<", $string);
-    str_replace("&gt;", ">", $string);
- 
+    $string = str_replace("&amp;", "&", $string);
+    $string = str_replace("&quot;", "\"", $string);
+    $string = str_replace("&lt;", "<", $string);
+    $string = str_replace("&gt;", ">", $string);
+
     return $string;
   }
 
@@ -48,7 +77,7 @@
     }
     return $ret_string;
   }
-  
+
   function htmldecode($string){
     $ret_string="";
     $arr=explode("&#", $string);
@@ -59,12 +88,13 @@
       $chr = chr($asc);
       $ret_string .= $chr;
       $x++;
-    }    
+    }
     return $ret_string;
   }
 
   function my_nl2br($str){
-    return ereg_replace("([^>]\n)","\\1<BR>",$str);
+    $str=nl2br($str);
+    return str_replace("><br>", ">", $str);
   }
 
   function bgcolor($color){
@@ -91,96 +121,98 @@
     $GetVars.="&";
     $GetVars.="$var=$value";
   }
-  
+
   function AddPostVar($var, $value){
     GLOBAL $PostVars;
-    $PostVars.="<input type=\"hidden\" name=\"$var\" value=\"$value\">\n";        
+    $PostVars.="<input type=\"hidden\" name=\"$var\" value=\"$value\">\n";
   }
 
-  function fastwrap ($body, $breaksAt = 78, $breakStr = "\n") {
+  function textwrap ($String, $breaksAt = 78, $breakStr = "\n", $padStr="") {
 
-  //***********************************************************
-  //
-  // Wraps a string, inserting line break characters.
-  //
-  // If you need to break on something other than space 
-  // (e.g.  chr(10)  or  chr(13) ) you'll need to do a
-  // str_replace on the string either within this function
-  // or before passing the string in.
-  // 
-  //***********************************************************
-
-    $lenBody = strlen($body);
-    $pos = strpos($body,' ');
-    if (($pos > 0) && ($lenBody > $breaksAt)) {
-      $wrapBody = '';
-      $charBase = 0;
-      while ($pos > 0) {
-        $nextPos = strpos($body,' ',$pos + 1);
-        if ( (( $nextPos - $charBase ) > $breaksAt ) || (( $nextPos - $pos ) > $breaksAt )  ) {
-          if ( !empty($wrapBody)) $wrapBody .= $breakStr;
-          $wrapBody .= trim(substr($body,$charBase,($pos - $charBase)));
-          $charBase = $pos + 1;
-     		}
-     		elseif ( empty ($nextPos )){
-     		  if (!empty($wrapBody)) $wrapBody .= $breakStr;
-          $wrapBody .= trim(substr($body,$charBase,($pos - $charBase)));
-          if ( ((($lenBody - $charBase) + $pos) > $breaksAt) && (($lenBody - $charBase) > $breaksAt) ) {
-            $wrapBody .= $breakStr.trim(substr($body,$pos,($lenBody - $pos)));
+    $newString="";
+    $lines=explode($breakStr, $String);
+    $cnt=count($lines);
+    for($x=0;$x<$cnt;$x++){
+      if(strlen($lines[$x])>$breaksAt){
+        $str=$lines[$x];
+        while(strlen($str)>$breaksAt){
+          $pos=strrpos(chop(substr($str, 0, $breaksAt)), " ");
+          if ($pos == false) {
+            break;
           }
-          else{
-            $wrapBody .= ' '.trim(substr($body,$pos,($lenBody - $pos)));
-          }
+          $newString.=$padStr.substr($str, 0, $pos).$breakStr;
+          $str=trim(substr($str, $pos));
         }
-        $pos = $nextPos ;
+        $newString.=$padStr.$str.$breakStr;
       }
-      return $wrapBody;
+      else{
+        $newString.=$padStr.$lines[$x].$breakStr;
+      }
     }
-    else{
-      return $body;
-    }
-  }
+    return $newString;
+
+  } // end textwrap()
 
   function is_email($email){
     $ret=false;
-    if(strstr($email, '@') && strstr($email, '.')){
-      if(eregi("^([_a-z0-9]+([\\._a-z0-9-]+)*)@([a-z0-9]{2,}(\\.[a-z0-9-]{2,})*\\.[a-z]{2,3})$", $email)){
-        $ret=true;
-      }
+    $name="";
+    $domain="";
+    @list($name, $domain)=@explode("@", $email);
+    if(!strstr($email, " ") && @strstr($domain, ".")){
+      $ret=true;
     }
     return $ret;
   }
 
-  function hexserialize($object){
-    $hstr="";
-    $str=serialize($object);
-    for($t=0;$t<strlen($str);$t++){
-      $hstr=$hstr.dechex(ord(substr($str,$t,1)));
-    }
-    return $hstr;
+  function explode_haveread($var){
+    GLOBAL $haveread;
+    $haveread[$var]=true;
   }
 
-  function unhexserialize($hstr){
-    $str="";
-    for($t=0;$t<strlen($hstr);$t=$t+2){
-      $str=$str.chr(hexdec(substr($hstr,$t,2)));
+
+  // Don't even ask me how this works.  Apparently it creates a register for the filenme
+  // by xoring the characters into a number from right to left.  The top six bits and the
+  // bottom six bits are returned as the path name.  I didn't write it though, I just
+  // converted it from a perl function that I found in the pair Networks private newsgroups.
+  // - Jason
+
+  function hash_file ($strFilename) {
+    $n = 0;
+    for ($posFilename = strlen($strFilename) -1; $posFilename >= 0; $posFilename-- ) {
+      $n *= 2;
+      if ($n & 4096) { $n |= 1; }
+      $n ^= (ord($strFilename[$posFilename])*11);
+      $n &= 4095;
     }
-    $objekt=unserialize($str);
-    return $objekt;
+    return sprintf ("%02o/%02o", ($n/64) & 63 , $n&63);
+  }
+
+  // This function exists in PHP 4.0.3 and up.
+  
+  if(!function_exists("is_uploaded_file")){
+    function is_uploaded_file($filename) {
+      $ret=false;
+      if(dirname($filename)==dirname(tempnam(get_cfg_var("upload_tmp_dir"), ''))){
+        $ret=true;
+      }
+      return $ret;
+    }
   }
 
   // variable initialization
-  
+
   initvar("a", 0);
   initvar("action");
   initvar("admin");
   initvar("admview");
+  initvar("attachment_name");
   initvar("body");
   initvar("bodies");
   initvar("BodiesTable");
   initvar("check_dup");
   initvar("collapsed", 1);
   initvar("Collapsed");
+  initvar("config_suffix");
   initvar("dbType");
   initvar("description");
   initvar("Description");
@@ -188,6 +220,7 @@
   initvar("down");
   initvar("email_list");
   initvar("email_return");
+  initvar("email_tag");
   initvar("emails");
   initvar("email_reply");
   initvar("EmailModerator");
@@ -196,6 +229,7 @@
   initvar("first_active");
   initvar("folder");
   initvar("forum");
+  initvar("ForumConfigSuffix");
   initvar("ForumLang");
   initvar("ForumModEmail");
   initvar("ForumName");
@@ -214,14 +248,15 @@
   initvar("i", 0);
   initvar("id");
   initvar("inclause");
+  initvar("inreplyto");
   initvar("is_image");
   initvar("IsError");
   initvar("key");
   initvar("lang");
+  initvar("last_thread");
   initvar("limitApproved");
   initvar("loc");
   initvar("MagicQuotes");
-  initvar("match");
   initvar("max");
   initvar("message");
   initvar("min");
@@ -232,6 +267,7 @@
   initvar("Moderation");
   initvar("ModPass");
   initvar("more");
+  initvar("msgid");
   initvar("multi_level", 1);
   initvar("MultiLevel");
   initvar("name");
@@ -260,12 +296,12 @@
   initvar("qsubject");
   initvar("quote");
   initvar("quote_button");
+  initvar("r", 0);
   initvar("read");
   initvar("rflat", 1);
   initvar("sortforums");
   initvar("staff_host");
   initvar("StaffHost");
-  initvar("start_num");
   initvar("step");
   initvar("subject");
   initvar("t", 0);
@@ -290,36 +326,41 @@
   initvar("thread");
   initvar("threadtotal");
   initvar("title");
-  initvar("type");  
+  initvar("type");
   initvar("UseCookies", 1);
 
 // include abstraction layer.
 
-  require './db/mysql.php';
+  require ($db_file);
 
   // include forums.php
-  
-  require "$inf_file";
+
+  require ($inf_file);
 
   if($num || $f){
     if($f) $num=$f;
+    $num=(int) $num;
     if(file_exists("$admindir/forums/$num.php")){
       include "$admindir/forums/$num.php";
+      if($ForumLang!=""){
+        include ("./".$ForumLang);
+      }
     }
     else{
       header("Location: $forum_url/$forum_page.$ext");
     }
   }
+  else {
+    include ("./".$default_lang);
+    include ($include_path."/blankset.php");
+  }
 
-  if($ForumLang!=""){
-    include "./$ForumLang";
-  }
-  else{
-    include "./$default_lang";
-  }
+  require ("./plugin/plugin.php");
 
 //  include "$include_path/auth.php";
 //  include "$include_path/auth_db.php";
 
+
   }  //close define
+
 ?>

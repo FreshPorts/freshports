@@ -17,8 +17,8 @@
 
   $sTitle=" sorry :(";
   require "./common.php";
-  if(file_exists("$include_path/header_$TableName.php")){
-    include "$include_path/header_$TableName.php";
+  if(file_exists("$include_path/header_$ForumConfigSuffix.php")){
+    include "$include_path/header_$ForumConfigSuffix.php";
   }
   else{
     include "$include_path/header.php";
@@ -36,8 +36,8 @@
 </table>
 <?PHP
 
-  if(file_exists("$include_path/footer_$TableName.php")){
-    include "$include_path/footer_$TableName.php";    
+  if(file_exists("$include_path/footer_$ForumConfigSuffix.php")){
+    include "$include_path/footer_$ForumConfigSuffix.php";    
   }
   else{
     include "$include_path/footer.php";

@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.59 2002-04-06 14:58:46 dan Exp $
+   # $Id: freshports.php,v 1.4.2.60 2002-04-06 22:51:56 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -586,7 +586,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 
 	// indicate if this port needs refreshing from CVS
 	if ($port->status == "D") {
-		$HTML .= ' <font size="-1">[deleted - port removed from ports tree]';
+		$HTML .= ' ' . freshports_Deleted_Icon();
 		if ($ShowDeletedDate == "Y") {
 			$HTML .= ' on ' . $port->updated;
 		}

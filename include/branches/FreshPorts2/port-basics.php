@@ -1,5 +1,5 @@
 <?
-	# $Id: port-basics.php,v 1.1.2.6 2002-02-09 19:42:43 dan Exp $
+	# $Id: port-basics.php,v 1.1.2.7 2002-04-06 22:51:57 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 //
@@ -19,7 +19,7 @@
 
    // indicate if this port needs refreshing from CVS
    if ($myrow["status"] == "D") {
-      $HTML .= ' <font size="-1">[deleted - port removed from ports tree]';
+      $HTML .= ' ' . freshports_Refresh_Icon()';
       if ($ShowDeletedDate == "Y") {
          $HTML .= ' on ' . $myrow["updated"];
       }

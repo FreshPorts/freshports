@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.conf.php.sample,v 1.1.2.5 2003-05-16 02:45:53 dan Exp $
+	# $Id: freshports.conf.php.sample,v 1.1.2.6 2003-05-16 02:55:56 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -53,5 +53,6 @@ $RejectExternalSearches	= 0;
 
 $AllowUserChanges			= 1;
 $ShowAnnouncements		= 1;
+$ShowWatchListCount		= 1
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.156 2003-09-25 15:01:12 dan Exp $
+	# $Id: freshports.php,v 1.4.2.157 2003-09-25 15:11:54 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -923,24 +923,21 @@ if ($ShowDepends) {
                $port->category . '/' .  $port->port . '">Sources</a>';
    }
 
-   if ($port->PackageExists() && ($ShowPackageLink == "Y" || $ShowEverything)) {
-      // package
-      $HTML .= ' <b>:</b> ';
-      $HTML .= '<a HREF="ftp://ftp5.FreeBSD.org/pub/FreeBSD/FreeBSD-stable/packages/' .
-               $port->category . '/' .  $port->port . "-" . $port->version . '.tgz">Package</a>';
-   }
+	if ($port->PackageExists() && ($ShowPackageLink == "Y" || $ShowEverything)) {
+		// package
+		$HTML .= ' <b>:</b> ';
+		$HTML .= '<A HREF="' . FRESHPORTS_FREEBSD_FTP_URL . '/' . $port->port . '-' . $port->version;
+		if ($port->revision != '' and $port->revision != '0') {
+			$HTML .= '_' . $port->revision;
+		}
+		$HTML .= '.tgz">Package</A>';
+	}
 
    if ($port->homepage && ($ShowHomepageLink == "Y" || $ShowEverything)) {
       $HTML .= ' <b>:</b> ';
       $HTML .= '<a HREF="' . $port->homepage . '">Main Web Site</a>';
    }
 
-	$HTML .= ' <b>:</b> ';
-	$HTML .= '<A HREF="' . FRESHPORTS_FREEBSD_FTP_URL . '/' . $port->port . '-' . $port->version;
-	if ($port->revision != '' and $port->revision != '0') {
-		$HTML .= '_' . $port->revision;
-	}
-	$HTML .= '.tgz">Package</A>';
 
    $HTML .= "\n</DD>\n</DL>\n";
 

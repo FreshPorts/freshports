@@ -1,13 +1,13 @@
 <?php
 	#
-	# $Id: header.php,v 1.1.2.3 2003-11-11 16:28:39 dan Exp $
+	# $Id: header.php,v 1.1.2.4 2003-11-11 16:29:16 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 ?>
 <body bgcolor="#ffffff" link="#0000cc">
 <?
-# get the minutes (well, actualy it's seconds now...)
+# get the minutes (well, actually it's seconds now...)
 $Minutes = date("s");
 if ($Minutes >= 0 and $Minutes < 20) {
    $Image = "bsdcon-banner1.gif";

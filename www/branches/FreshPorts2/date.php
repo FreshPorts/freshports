@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: date.php,v 1.1.2.22 2004-03-22 20:28:44 dan Exp $
+	# $Id: date.php,v 1.1.2.23 2004-04-07 21:00:49 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -136,6 +136,11 @@
 					if ($commit->EncodingLosses()) {
 						$HTML .= '&nbsp;' . freshports_Encoding_Errors();
 					}
+
+					if (IsSet($commit->security_notice_id)) {
+						$HTML .= ' <a href="/security-notice.php?message_id=' . $commit->message_id . '">' . freshports_Security_Icon() . '</a>';
+					}
+
 				}
 		
 				if ($NumberOfPortsInThisCommit <= $MaxNumberPortsToShow) {

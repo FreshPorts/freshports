@@ -1,5 +1,5 @@
 <?
-	# $Id: search.php,v 1.1.2.25 2002-05-22 04:30:29 dan Exp $
+	# $Id: search.php,v 1.1.2.26 2002-05-28 16:01:56 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -103,20 +103,6 @@ if ($search) {
 
 $logfile = $_SERVER["DOCUMENT_ROOT"] . "/../configuration/searchlog.txt";
 
-
-$fp = fopen($logfile, "a");
-if ($fp) {
-	if ($method == 'match') {
-		fwrite($fp, date("Y-m-d H:i:s") . " " . $stype    . ':' . $query . "\n");
-	} else {
-		fwrite($fp, date("Y-m-d H:i:s") . " " . $category . '/' . $port  . "\n");
-	}
-	fclose($fp);
-} else {
-	print "Please let postmaster@freshports.org know that the search log could not be opened.  This does not affect the search results.\n";
-	define_syslog_variables();
-	syslog(LOG_ERR, "FreshPorts could not open the search log file: $logfile");
-}
 
 $sql = "select distinct ports.id, element.name as port, " .
        "categories.name as category, categories.id as category_id, ports.version as version, ports.revision as revision, ".
@@ -251,6 +237,26 @@ if (!$result) {
 	exit;
 }
 $NumRows = pg_numrows($result);
+
+$fp = fopen($logfile, "a");
+if ($fp) {
+	switch ($method) {
+		case "match":
+		case "exact":
+		case "soundex":
+			fwrite($fp, date("Y-m-d H:i:s") . " $stype : $method : $query : $num : $NumRows : $deleted\n");
+			break;
+
+		default: 
+			fwrite($fp, date("Y-m-d H:i:s") . " $stype : $method : $category/$port : $num : $NumRows : $deleted\n");
+	}
+	fclose($fp);
+} else {
+	print "Please let postmaster@freshports.org know that the search log could not be opened.  This does not affect the search results.\n";
+	define_syslog_variables();
+	syslog(LOG_ERR, "FreshPorts could not open the search log file: $logfile");
+}
+
 
 $Port = new Port($db);
 $Port->LocalResult = $result;

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: constants.php,v 1.1.2.10 2003-09-25 15:30:02 dan Exp $
+	# $Id: constants.php,v 1.1.2.11 2004-08-09 22:30:04 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -81,5 +81,8 @@ $freshports_CommitMsgMaxNumOfLinesToShow = 15;
 
 define('FRESHPORTS_BGCOLOR',   '#FFFFFF');
 define('FRESHPORTS_TEXTCOLOR', '#000000');
+
+define('FRESHPORTS_VERSION_REVISION_JOINER', '_');
+
 
 ?>

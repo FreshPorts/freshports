@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.74 2002-04-12 19:02:14 dan Exp $
+   # $Id: freshports.php,v 1.4.2.75 2002-04-12 19:45:24 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -74,11 +74,11 @@ $freshports_FTP_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports
 $freshports_mail_archive = " http://www.freebsd.org/cgi/mid.cgi?db=mid&id=";
 
 function freshports_Files_Icon() {
-	return '<IMG SRC="/images/logs.gif" ALT="files touched by this commit" BORDER="0" WIDTH="17" HEIGHT="20" HSPACE="2">';
+	return '<IMG SRC="/images/logs.gif" ALT="files touched by this commit" BORDER="0" WIDTH="17" HEIGHT="20">';
 }
 
 function freshports_Refresh_Icon() {
-	return '<IMG SRC="/images/refresh.gif" ALT="Refresh" BORDER="0" WIDTH="15" HEIGHT="18" HSPACE="2">';
+	return '<IMG SRC="/images/refresh.gif" ALT="Refresh" BORDER="0" WIDTH="15" HEIGHT="18">';
 }
 
 function freshports_Deleted_Icon() {
@@ -86,11 +86,11 @@ function freshports_Deleted_Icon() {
 }
 
 function freshports_Forbidden_Icon() {
-	return '<IMG SRC="/images/forbidden.gif" ALT="Forbidden" TITLE="Forbidden" WIDTH="20" HEIGHT="20" HSPACE="2">';
+	return '<IMG SRC="/images/forbidden.gif" ALT="Forbidden" TITLE="Forbidden" WIDTH="20" HEIGHT="20">';
 }
 
 function freshports_Broken_Icon() {
-	return '<IMG SRC="/images/broken.gif" ALT="Broken" TITLE="Broken" WIDTH="17" HEIGHT="16" HSPACE="2">';
+	return '<IMG SRC="/images/broken.gif" ALT="Broken" TITLE="Broken" WIDTH="17" HEIGHT="16">';
 }
 
 function freshports_New_Icon() {
@@ -631,38 +631,35 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 
 	$HTML .= "</B></BIG>";
 
-	// indicate if this port needs refreshing from CVS
-	if ($port->status == "D") {
-		$HTML .= ' ' . freshports_Deleted_Icon();
-		if ($ShowDeletedDate == "Y") {
-			$HTML .= ' on ' . $port->updated;
+	if ($WatchListID) {
+		if ($port->{watch}) {
+			$HTML .= ' '. freshports_Watch_Link_Remove($myrow["element_id"]);
+		} else {
+			$HTML .= ' '. freshports_Watch_Link_Add($myrow["element_id"]);
 		}
-		$HTML .= '</font>';
 	}
 
-   if ($port->needs_refresh) {
-      $HTML .= ' <font size="-1">[refresh]</font>';
-   }
+	// indicate if this port has been removed from cvs
+	if ($port->{status} == "D") {
+		$HTML .= " " . freshports_Deleted_Icon() . "\n";
+	}
 
-   if ($port->date_added > Time() - 3600 * 24 * $DaysMarkedAsNew) {
-      $MarkedAsNew = "Y";
-      $HTML .= " <img src=\"/images/new.gif\" width=28 height=11 alt=\"new!\" hspace=2 align=absmiddle>";
-   }
+	// indicate if this port needs refreshing from CVS
+	if ($port->{needs_refresh}) {
+		$HTML .= " " . freshports_Refresh_Icon() . "\n";
+	}
 
-#   if ($MarkedAsNew == "Y" || $ShowPortCreationDate) {
-#      if ($port->date_added != $port->updated || !($ShowLastChange == "Y" || $ShowEverything) || $ShowPortCreationDate) {
-#         $HTML .= ' <font size="-1">(' . date("j M Y H:i", $port->date_added) . ")</font>";
-#      }
-#   }
+	if ($port->{date_added} > Time() - 3600 * 24 * $DaysMarkedAsNew) {
+		$MarkedAsNew = "Y";
+		$HTML .= freshports_New_Icon() . "\n";
+	}
 
-#	$HTML .= "onwatchlist = '" . $port->{onwatchlist} . "'";
+	if ($port->{forbidden}) {
+		$HTML .= freshports_Forbidden_Icon() . "\n";
+	}
 
-	if ($WatchListID) {
-		if ($port->{onwatchlist}) {
-			$HTML .= ' ' . $FreshPortsWatchedPortPrefix    . $port->{element_id} . $AddRemoveExtra . $FreshPortsWatchedPortSuffix;
-		} else {
-			$HTML .= ' ' . $FreshPortsWatchedPortNotPrefix . $port->{element_id} . $AddRemoveExtra . $FreshPortsWatchedPortNotSuffix;
-		}
+	if ($port->{broken}) {
+		$HTML .= freshports_Broken_Icon() . "\n";
 	}
 
    $HTML .= "</DT>\n<DD>";

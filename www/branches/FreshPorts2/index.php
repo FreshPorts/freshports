@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.35 2002-04-12 19:02:14 dan Exp $
+	# $Id: index.php,v 1.1.2.36 2002-04-12 19:45:24 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -247,19 +247,14 @@ ports. A port is marked as new for 10 days.
 								}
 							}
 
-							$HTML .= "\n&nbsp;";
-
-							$HTML .= freshports_CommitFilesLink($myrow["commit_log_id"], $myrow["category"], $myrow["port"]);
-							$HTML .= "&nbsp;";
-
 							// indicate if this port has been removed from cvs
 							if ($myrow["status"] == "D") {
-								$HTML .= " " . freshports_Refresh_Icon() . "\n";
+								$HTML .= " " . freshports_Deleted_Icon() . "\n";
 							}
 
 							// indicate if this port needs refreshing from CVS
 							if ($myrow["needs_refresh"]) {
-								$HTML .= " " . freshports_Deleted_Icon() . "\n";
+								$HTML .= " " . freshports_Refresh_Icon() . "\n";
 							}
 
 							if ($myrow["date_added"] > Time() - 3600 * 24 * $DaysMarkedAsNew) {
@@ -274,6 +269,10 @@ ports. A port is marked as new for 10 days.
 							if ($myrow["broken"]) {
 								$HTML .= freshports_Broken_Icon() . "\n";
 							}
+
+							$HTML .= "&nbsp;";
+							$HTML .= freshports_CommitFilesLink($myrow["commit_log_id"], $myrow["category"], $myrow["port"]);
+							$HTML .= "&nbsp;";
 
 							$HTML .= $myrow["short_description"] . "\n";
 						}

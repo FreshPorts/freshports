@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: news.php,v 1.1.2.14 2003-07-04 14:59:17 dan Exp $
+	# $Id: news.php,v 1.1.2.15 2003-07-04 15:19:09 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -13,14 +13,14 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 
-	$Debug = 1;
+	$Debug = 0;
 
 	GLOBAL $FreshPortsSlogan;
 	GLOBAL $FreshPortsName;
 
 	$ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['SERVER_NAME']);
 
-	$HTML .= '<!DOCTYPE rss PUBLIC "-//Netscape Communications//DTD RSS 0.91//EN"' . "\n";
+	$HTML  = '<!DOCTYPE rss PUBLIC "-//Netscape Communications//DTD RSS 0.91//EN"' . "\n";
 	$HTML .= '        "http://my.netscape.com/publish/formats/rss-0.91.dtd">'      . "\n";
 	$HTML .= '<rss version="0.91">'                                                . "\n";
 
@@ -45,6 +45,19 @@
 	$HTML .= '  </image>'                                                                      . "\n";
 
 	$sort ="commit_log.commit_date desc, commit_log.id asc, element.name, category, version";
+
+	$MaxArticles = MAX_PORTS;
+	$date        = 0;
+	$committer   = 0;
+	$time        = 0;
+
+	if (IsSet($_REQUEST['MaxArticles'])) $MaxArticles = AddSlashes($_REQUEST['MaxArticles']);
+	if (IsSet($_REQUEST['date']))        $date        = AddSlashes($_REQUEST['date']);
+	if (IsSet($_REQUEST['committer']))   $committer   = AddSlashes($_REQUEST['committer']);
+	if (IsSet($_REQUEST['time']))        $time        = AddSlashes($_REQUEST['time']);
+
+#	phpinfo();
+#	exit;
 
 	if (!$MaxArticles || $MaxArticles < 1 || $MaxArticles > MAX_PORTS) {
 		$MaxArticles = MAX_PORTS;
@@ -101,8 +114,8 @@ FROM (
            message_id,
            committer,
            description       AS commit_description,
-           to_char(commit_log.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')  AS commit_date,
-           to_char(commit_log.commit_date - SystemTimeAdjust(), 'HH24:MI')      AS commit_time,
+           to_char(commit_log.commit_date - SystemTimeAdjust(), 'DD Mon')  AS commit_date,
+           to_char(commit_log.commit_date - SystemTimeAdjust(), 'HH24:MI') AS commit_time,
            encoding_losses
      FROM commit_log JOIN
                (SELECT latest_commits_ports.commit_log_id
@@ -135,7 +148,30 @@ limit 30";
 		$HTML .= "\n";
 		$HTML .= '  <item>' . "\n";
 
-		$HTML .= '    <title>' . $myrow["category"] . '/' . $myrow["port"] . ' - ' . $myrow["version"];
+		$HTML .= '    <title>';
+		if ($date == 1) {
+			$HTML .= '[' . $myrow['commit_date'] . '] ';
+		}
+
+		if ($time == 1) {
+			$HTML .= '[' . $myrow['commit_time'];
+		}
+
+		if ($committer == 1) {
+			if ($time != 1) {
+				$HTML .= '[';
+			} else {
+				$HTML .= ' ';
+			}
+
+			$HTML .= $myrow['committer'];
+		}
+
+		if ($time == 1 || $committer == 1) {
+			$HTML .= '] ';
+		}
+
+		$HTML .= $myrow["category"] . '/' . $myrow["port"] . ' - ' . $myrow["version"];
 		if ($myrow["revision"] != 0) {
 			$HTML .= '-' . $myrow["revision"];
 		}

@@ -29,6 +29,25 @@ if ($submit) {
     }
   }
 
+   #
+   # make sure we have valid values in this variable.
+   # by default, they don't get notified.
+   #
+
+   switch ($watchnotifyfrequency) {
+      case "Z":
+      case "D":
+      case "W":
+      case "F":
+      case "M":
+         break;
+
+      default:
+         $watchnotifyfrequency = "Z";
+   }
+
+
+
   $UserCreated = 0;
   if ($OK) {
     $Cookie = UserToCookie($UserName);
@@ -44,11 +63,16 @@ if ($submit) {
     if(!mysql_numrows($result)) {
  //   echo "confirmed: user id is new\n";
 
+      # no need to validate that value as it's not put directly into the db.
       if ($emailsitenotices_yn == "ON") {
          $emailsitenotices_yn_value = "Y";
       } else {
          $emailsitenotices_yn_value = "N";
       }
+
+      $email     = addslashes($email);
+      $UserName  = addslashes($UserName);
+      $Password1 = addslashes($Password1);
 
       $sql = "insert into users (username, password, cookie, firstlogin, lastlogin, email, " . 
              "watchnotifyfrequency, emailsitenotices_yn) values (";

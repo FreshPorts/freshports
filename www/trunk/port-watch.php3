@@ -1,4 +1,5 @@
 <?
+
 require( "/www/freshports.org/_private/commonlogin.php3");
 require( "/www/freshports.org/_private/getvalues.php3");
 require( "/www/freshports.org/_private/freshports.php3");
@@ -8,6 +9,120 @@ if (!$category) {
 }
 
 $categoryname = freshports_Category_Name($category, $db);
+
+// find out the watch id for this user's main watch list
+$sql_get_watch_ID = "select watch.id ".
+                    "from watch ".
+                    "where watch.owner_user_id = $UserID ".
+                    "and   watch.system        = 'FreeBSD' ".
+                    "and   watch.name          = 'main'";
+
+if ($submit) {
+/*    
+   while (list($name, $value) = each($HTTP_POST_VARS)) {
+      echo "$name = $value<br>\n";
+   }    
+  
+   if ($ports) {
+     $PortCount = count($ports);
+     echo "PortCount= $PortCount<br>\n";
+     while (list($key, $value) = each($ports)) {
+        echo "element $key = '$value'<br>\n";
+     }
+   }
+
+   echo "submitting<br>\n";
+       
+   echo "$sql_get_watch_ID<br>\n";
+*/
+   $result = mysql_query($sql_get_watch_ID, $db);
+   if(mysql_numrows($result)) {
+//      echo "results were found for that<br>\n";
+      $myrow = mysql_fetch_array($result);
+      $WatchID = $myrow["id"];
+   } else {
+      // create their main list for them
+      $sql_create = "insert into watch (name, system, owner_user_id) values ('main', 'FreeBSD', $UserID)";
+//      echo "creating new watch: $sql_create<br>\n";
+      $result = mysql_query($sql_create, $db);
+//      if ($result) {
+//         echo "created<br>";       
+//      } else {
+//         echo "failed<br>";
+//      }
+
+      // refetch our watch id
+      $result = mysql_query($sql_get_watch_ID, $db);
+
+      $myrow = mysql_fetch_array($result);
+      $WatchID = $myrow["id"];
+//      echo "watchid is $WatchID<br>\n";
+
+      $sql_insert = "insert into user_watch (user_id, watch_id) values ($UserID, $WatchID)";
+      $result = mysql_query($sql_insert, $db);
+
+//      echo "creating user_watch entry: $sql_insert<br>\n";
+   }
+
+// delete existing watch_category entries for this watch
+   $sql = "select watch_port.port_id as id " .
+          "from watch_port, ports " .
+          "where watch_port.port_id = ports.id " .
+          "and ports.primary_category_id = $category";
+
+//   echo "$sql<br>\n";
+
+   $result = mysql_query($sql, $db);
+   $NumPorts = 0;
+   while ($myrow = mysql_fetch_array($result)) {
+      $NumPorts++;
+      $rows[$NumPorts-1]=$myrow;
+   }  
+   
+//   echo "deleting<br>\n";       
+   for ($i = 0; $i < $NumPorts; $i++) {
+      $sql = "delete from watch_port where watch_id = $WatchID and port_id = " . $rows[$i]["id"];
+//      echo "$sql<br>\n";
+      $result = mysql_query($sql, $db);
+   }
+     
+// insert new stuff
+//   echo "inserting new stuff now<br>\n";
+    
+   // make sure we are pointing at the start of the array.
+   reset($ports);
+   while (list($key, $value) = each($ports)) {
+      $sql = "insert into watch_port (watch_id, port_id, changes_new, changes_modify, changes_delete) ".
+                "values ($WatchID, $value, 'Y', 'Y', 'Y')";
+   
+//      echo "port $value has been selected<br>\n";
+
+      $result = mysql_query($sql, $db);   
+      ${"port_".$value} = 1;  
+   }       
+      
+   header("Location: watch-categories.php3");  /* Redirect browser to PHP web site */
+   exit;  /* Make sure that code below does not get executed when we redirect. */
+      
+} else {
+         
+   if ($UserID != '') {
+         
+   // read the users current watch information from the database
+   $sql = "select watch_port.port_id " .
+          "from watch_port, watch " .
+          "where watch_port.watch_id = watch.id " . 
+          "  and watch.owner_user_id = $UserID";
+      
+   $result = mysql_query($sql, $db);
+      
+   // read each value and set the variable accordingly
+   while ($myrow = mysql_fetch_array($result)) {
+      // we use these to see if a particular port is selected
+      ${"port_".$myrow["port_id"]} = 1;
+   }
+   }
+}
 
 ?>
 
@@ -82,118 +197,6 @@ if (!file_exists($cache_file)) {
 }
 
 echo '<tr><td>' . "\n";
-
-// find out the watch id for this user's main watch list
-$sql_get_watch_ID = "select watch.id ".
-                    "from watch ".
-                    "where watch.owner_user_id = $UserID ".
-                    "and   watch.system        = 'FreeBSD' ".
-                    "and   watch.name          = 'main'";
-
-if ($submit) {
-/*
-   while (list($name, $value) = each($HTTP_POST_VARS)) {
-      echo "$name = $value<br>\n";
-   }
-
-   if ($ports) {
-     $PortCount = count($ports);
-     echo "PortCount= $PortCount<br>\n";
-     while (list($key, $value) = each($ports)) { 
-        echo "element $key = '$value'<br>\n";
-     }
-   }
-
-   echo "submitting<br>\n";
-
-   echo "$sql_get_watch_ID<br>\n";
-*/
-   $result = mysql_query($sql_get_watch_ID, $db);
-   if(mysql_numrows($result)) {
-//      echo "results were found for that<br>\n";
-      $myrow = mysql_fetch_array($result);
-      $WatchID = $myrow["id"];
-   } else {
-      // create their main list for them
-      $sql_create = "insert into watch (name, system, owner_user_id) values ('main', 'FreeBSD', $UserID)";
-//      echo "creating new watch: $sql_create<br>\n";
-      $result = mysql_query($sql_create, $db);
-      if ($result) {
-         echo "created<br>";
-      } else {
-         echo "failed<br>";
-      }
-
-      // refetch our watch id
-      $result = mysql_query($sql_get_watch_ID, $db);
-
-      $myrow = mysql_fetch_array($result);
-      $WatchID = $myrow["id"];
-      echo "watchid is $WatchID<br>\n";
-
-      $sql_insert = "insert into user_watch (user_id, watch_id) values ($UserID, $WatchID)";
-      $result = mysql_query($sql_insert, $db);
-
-//      echo "creating user_watch entry: $sql_insert<br>\n";
-   }
-
-// delete existing watch_category entries for this watch
-   $sql = "select watch_port.port_id as id " .
-          "from watch_port, ports " . 
-          "where watch_port.port_id = ports.id " . 
-          "and ports.primary_category_id = $category";
-
-//   echo "$sql<br>\n";
-
-   $result = mysql_query($sql, $db); 
-   $NumPorts = 0;
-   while ($myrow = mysql_fetch_array($result)) {
-      $NumPorts++;
-      $rows[$NumPorts-1]=$myrow;
-   }
-
-//   echo "deleting<br>\n";
-   for ($i = 0; $i < $NumPorts; $i++) {
-      $sql = "delete from watch_port where watch_id = $WatchID and port_id = " . $rows[$i]["id"];
-//      echo "$sql<br>\n";
-      $result = mysql_query($sql, $db);
-   }
-
-// insert new stuff
-//   echo "inserting new stuff now<br>\n";
-
-   // make sure we are pointing at the start of the array.
-   reset($ports);
-   while (list($key, $value) = each($ports)) {
-      $sql = "insert into watch_port (watch_id, port_id, changes_new, changes_modify, changes_delete) ". 
-                "values ($WatchID, $value, 'Y', 'Y', 'Y')";
-
-//      echo "port $value has been selected<br>\n";
-
-      $result = mysql_query($sql, $db); 
-      ${"port_".$value} = 1;
-   }
-
-
-} else {
-
-   if ($UserID != '') {
-
-   // read the users current watch information from the database
-   $sql = "select watch_port.port_id " .
-          "from watch_port, watch " .
-          "where watch_port.watch_id = watch.id " .
-          "  and watch.owner_user_id = $UserID";
-
-   $result = mysql_query($sql, $db);
-
-   // read each value and set the variable accordingly
-   while ($myrow = mysql_fetch_array($result)) {
-      // we use these to see if a particular port is selected
-      ${"port_".$myrow["port_id"]} = 1;
-   }
-   }
-}
 
 echo "\n</td></tr>\n<tr><td>";
 

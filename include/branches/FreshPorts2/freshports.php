@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.190 2004-11-12 20:34:46 dan Exp $
+	# $Id: freshports.php,v 1.4.2.191 2004-11-30 12:50:09 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -910,6 +910,9 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 		$HTML .= '<p><b>To add the package:</b> <code class="code">pkg_add -r ' . $port->latest_link . '</code></p>';
 	}
 
+
+	$HTML .= PeopleWatchingThisPortAlsoWatch($db, $port->element_id);
+
    if ($port->categories) {
       // remove the primary category and remove any double spaces or trailing/leading spaces
 		// this ensures that explode gives us the right stuff
@@ -1622,7 +1625,28 @@ function DisplayAnnouncements($Announcement) {
 	return $HTML;
 }
 
+function PeopleWatchingThisPortAlsoWatch($dbh, $element_id) {
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_list_also_watched.php');
 
+	$HTML = '';
+
+	$AlsoWatched = new WatchListAlsoWatched($dbh);
+	$numrows = $AlsoWatched->WatchersAlsoWatch($element_id);
+	if ($numrows) {
+		$HTML .= '<p><b>People watching this port, also watch:</b> ';
+		for ($i = 0; $i < $numrows; $i++) {
+			$AlsoWatched->FetchNth($i);
+			$HTML .= $AlsoWatched->URL;
+			if (($i + 1) < $numrows) {
+				$HTML .= ', ';
+			}
+		}
+		$HTML .= '</p>';
+	}
+
+	return $HTML;
+
+}
 
 openlog('FreshPorts', LOG_PID | LOG_PERROR, LOG_LOCAL0);
 

@@ -1,5 +1,5 @@
 <?
-	# $Id: footer.php,v 1.5.2.18 2003-07-30 12:11:40 dan Exp $
+	# $Id: footer.php,v 1.5.2.19 2003-07-30 12:24:24 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 ?>
@@ -50,7 +50,11 @@ ALT="powered by apache" BORDER="0" WIDTH="259" HEIGHT="32"></A>
 
 <TR><TD>
 <table width="100%">
-<tr><td align="right" valign="top">
+<tr>
+<td align="left"  valign="top">
+<SMALL>Server and bandwidth provided by <A HREF="http://www.bchosting.com/" TARGET="_new">BChosting.com</A></SMALL>
+</td>
+<td align="right" valign="top">
 <small>
 Valid 
 <a href="http://validator.w3.org/check/referer">HTML</a>, 

@@ -1,5 +1,5 @@
 <?
-	# $Id: categories.php,v 1.1.2.11 2002-11-28 23:30:36 dan Exp $
+	# $Id: categories.php,v 1.1.2.12 2002-12-09 20:42:48 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -11,6 +11,8 @@
 	freshports_Start("Categories",
 					"freshports - new ports, applications",
 					"FreeBSD, index, applications, ports");
+					
+	$Debug = 0;
 
 ?>
 
@@ -73,7 +75,7 @@ $sql = "select to_char(max(commit_log.commit_date) - SystemTimeAdjust(), 'DD Mon
 
 $sql .=  " order by $sort";
 
-#echo '<pre>' . $sql, "</pre>\n";
+if ($Debug) echo '<pre>' . $sql, "</pre>\n";
 //echo $sort, "\n";
 
 $result = pg_exec($db, $sql);

@@ -1,5 +1,5 @@
 <?
-	# $Id: watch.php,v 1.1.2.24 2002-07-30 15:15:48 dan Exp $
+	# $Id: watch.php,v 1.1.2.25 2002-11-01 20:23:37 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -91,7 +91,7 @@ $sql = "select ports.id, element.name as port, ports.id as ports_id, to_char(max
        "categories.name as category, categories.id as category_id, ports.version as version, ports.revision as revision, ".
        "commit_log.committer, commit_log.description as update_description, element.id as element_id, " .
        "ports.maintainer, ports.short_description, to_char(max(commit_log.date_added) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, ".
-       "ports.last_commit_id as last_change_log_id, max(commit_log.commit_date) as commit_date_sort_field, " .
+       "ports.last_commit_id, commit_log.message_id, max(commit_log.commit_date) as commit_date_sort_field, " .
        "ports.package_exists, ports.extract_suffix, ports.homepage, element.status, " .
        "ports.broken, ports.forbidden, 1 as onwatchlist ".
        "from watch_list_element, element, categories, ports LEFT OUTER JOIN commit_log on (ports.last_commit_id = commit_log.id) " .
@@ -104,7 +104,7 @@ $sql .= "GROUP BY ports.id, port, ports_id, " .
         "         category, categories.id, version, revision, ".
         "         commit_log.committer, update_description, element.id, " .
         "         ports.maintainer, ports.short_description, ports.date_added, ".
-        "         last_change_log_id, " .
+        "         last_commit_id, commit_log.message_id, " .
         "         ports.package_exists, ports.extract_suffix, ports.homepage, element.status, " .
         "         ports.broken, ports.forbidden, onwatchlist ";
 

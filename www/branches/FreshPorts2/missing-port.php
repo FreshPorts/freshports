@@ -1,7 +1,8 @@
 <?
-	# $Id: missing-port.php,v 1.1.2.24 2002-09-26 16:08:52 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.25 2002-11-01 20:23:37 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
+
 
 #	phpinfo();
 
@@ -73,8 +74,13 @@ function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 			if (IsSet($port->id)) {
 				if ($FileName != '') {
 					if (substr($FileName, 0, strlen($CommitDetails)) == $CommitDetails) {
-						$commit_id = $_SERVER["REDIRECT_QUERY_STRING"];
-						freshports_Files($port->id, $commit_id, $WatchListID, $db);
+						if ($Debug) echo '$_SERVER["REDIRECT_QUERY_STRING"]="' . $_SERVER["REDIRECT_QUERY_STRING"] . '"<BR>';
+						parse_str($_SERVER["REDIRECT_QUERY_STRING"], $query_parts);
+						$message_id = $query_parts[message_id];
+
+						if ($Debug) echo '$message_id="' . $message_id . '"<br>';
+
+						freshports_Files($port->id, $message_id, $WatchListID, $db);
 					} else {
 						$result = 'The category and port you specified both exist, but that extra bit I don\'t recognize: \'' . $FileName . '\'';
 					}

@@ -1,5 +1,5 @@
 <?
-	# $Id: commit.php,v 1.1.2.12 2002-09-05 17:45:59 dan Exp $
+	# $Id: commit.php,v 1.1.2.13 2002-11-01 20:23:36 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -258,7 +258,7 @@ if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 
 						$HTML .= "\n";
 
-						$HTML .= freshports_CommitFilesLink($myrow["commit_log_id"], $myrow["category"], $myrow["port"]);
+						$HTML .= freshports_CommitFilesLink($myrow["message_id"], $myrow["category"], $myrow["port"]);
 
 						// indicate if this port has been removed from cvs
 						if ($myrow["status"] == "D") {

@@ -1,5 +1,5 @@
 <?
-	# $Id: files.php,v 1.1.2.14 2002-06-09 21:42:44 dan Exp $
+	# $Id: files.php,v 1.1.2.15 2002-11-01 20:23:38 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -8,7 +8,13 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
 	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 
-function freshports_Files($PortID, $CommitID, $WatchListID, $db) {
+function freshports_Files($PortID, $MessageID, $WatchListID, $db) {
+	#
+	# $PortId      == ports.id
+	# $MessageID   == commit_log.message_id
+	# $WatchListID == watch_list.id
+	#
+
 	GLOBAL $TableWidth;
 	GLOBAL $freshports_CVS_URL;
 	GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;
@@ -16,12 +22,7 @@ function freshports_Files($PortID, $CommitID, $WatchListID, $db) {
 	$Debug = 0;
 
 
-	if ($Debug) echo "\$CommitID = '$CommitID', \$PortID = '$PortID'<BR>";
-
-	if (!$CommitID || $CommitID != strval(intval($CommitID))) {
-		$CommitID = 0;
-		exit;
-	}
+	if ($Debug) echo "\$MessageID = '$MessageID', \$PortID = '$PortID'<BR>";
 
 	if (!$PortID || $PortID != strval(intval($PortID))) {
 		$PortID = 0;
@@ -62,7 +63,7 @@ function freshports_Files($PortID, $CommitID, $WatchListID, $db) {
 	}
 
 	$sql .= "
-	 where commit_log.id                                  = $CommitID
+	 where commit_log.message_id                          = '" . AddSlashes($MessageID) . "'
 	   and commit_log_port_elements.commit_log_id         = commit_log.id 
 	   and commit_log_port_elements.commit_log_element_id = commit_log_elements.id 
 	   and commit_log_elements.element_id                 = element.id 
@@ -85,13 +86,15 @@ function freshports_Files($PortID, $CommitID, $WatchListID, $db) {
 
 		$i = 0;
 		$NumRows = pg_numrows($result);
-		while ($myrow = pg_fetch_array($result, $i)) {
+		if (!$NumRows) {
+			echo 'No such commit found';
+			syslog(LOG_NOTICE, 'No such commit found: $PortID="' . $PortID . '" $MessageID="' . $MessageID . '" $WatchListID="' . $WatchListID . '"');
+			exit;
+		}
+		for ($i = 0; $i < $NumRows; $i++) {
+			$myrow = pg_fetch_array($result, $i);
 //			echo "<TR><TD>" . $myrow["port_id"] . "</TD><TD>" . $myrow["port"] . "</TD></TR>";
 			$rows[$i] = $myrow;
-			$i++;
-    	    if ($i >  $NumRows - 1) {
-        	    break;
-			}
 		}
 
 		$myrow = $rows[0];

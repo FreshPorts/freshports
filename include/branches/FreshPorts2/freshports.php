@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.105 2002-09-26 16:10:16 dan Exp $
+	# $Id: freshports.php,v 1.4.2.106 2002-11-01 20:23:38 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -631,8 +631,8 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 					$HTML .= '&nbsp;' . freshports_Encoding_Errors();
 			}
 
-			$HTML .= ' ' . freshports_Commit_Link($port->last_commit_id);
-			$HTML .= ' ' . freshports_CommitFilesLink($port->last_commit_id, $port->category, $port->name);
+			$HTML .= ' ' . freshports_Commit_Link($port->message_id);
+			$HTML .= ' ' . freshports_CommitFilesLink($port->message_id, $port->category, $port->port);
 
 
 			$HTML .= freshports_PortDescriptionPrint($port->update_description, $port->encoding_losses);
@@ -919,22 +919,11 @@ function freshports_PortCommits($port) {
 	freshports_PortCommitsFooter($port);
 }
 
-function freshports_CommitFilesLink($CommitID, $Category, $Port) {
+function freshports_CommitFilesLink($MessageID, $Category, $Port) {
 
-#	echo "freshports_CommitFilesLink gets $CommitID, $Category, $Port<BR>";
+#	echo "freshports_CommitFilesLink gets $MesssageID, $Category, $Port<BR>";
 
-	$HTML .= '<A HREF="/' . $Category . '/' . $Port . '/files.php?' . $CommitID . '">';
-	$HTML .= freshports_Files_Icon();
-	$HTML .= '</A>';
-
-	return $HTML;
-}
-
-function freshports_CommitFilesLinkIDOnly($CommitID) {
-
-#	echo "freshports_CommitFilesLink gets $CommitID, $Category, $Port<BR>";
-
-	$HTML .= '<A HREF="/files.php?' . $CommitID . '">';
+	$HTML .= '<A HREF="/' . $Category . '/' . $Port . '/files.php?message_id=' . $MessageID . '">';
 	$HTML .= freshports_Files_Icon();
 	$HTML .= '</A>';
 
@@ -968,8 +957,7 @@ function freshports_PortCommitPrint($commit, $category, $port) {
     echo freshports_CommitterEmailLink($commit->committer);
 	echo '<BR>';
 
-	$CommitID = $commit->id;
-	echo freshports_CommitFilesLink($CommitID, $category, $port);
+	echo freshports_CommitFilesLink($commit->message_id, $category, $port);
 	echo "</TD>\n";
 	echo '    <TD VALIGN="top" WIDTH="*">';
 
@@ -1143,5 +1131,7 @@ echo '
 </TD>
 ';
 }
+
+openlog('FreshPorts', LOG_PID | LOG_PERROR, LOG_LOCAL0);
 
 ?>

@@ -1,5 +1,5 @@
 <?
-	# $Id: login.php,v 1.1.2.27 2002-12-12 02:45:22 dan Exp $
+	# $Id: login.php,v 1.1.2.28 2002-12-16 13:39:44 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -119,11 +119,23 @@ if ($_GET["resend"]) {
 		$error .= "Hmmm, I know nothing about you.  That can't be right.  Please contact $ProblemSolverEmailAddress.";
 	}
 }
+?>
+
+<script>
+<!--
+function setfocus() { document.f.UserID.focus(); }
+// -->
+</script>
+
+
+<?php
+	$OnLoad = 'setfocus()';
    freshports_Start('Login',
                'freshports - new ports, applications',
                'FreeBSD, index, applications, ports');
 
 ?>
+
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
  <TR>

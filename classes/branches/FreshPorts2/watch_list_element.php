@@ -1,5 +1,5 @@
 <?
-	# $Id: watch_list_element.php,v 1.1.2.1 2002-12-09 20:20:44 dan Exp $
+	# $Id: watch_list_element.php,v 1.1.2.2 2002-12-09 21:03:30 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -99,8 +99,7 @@ class WatchListElement {
 INSERT INTO watch_list_element 
 select $WatchListID, $ElementID
   from watch_list 
- where in_service = TRUE 
-   and user_id = $UserID
+ where user_id = $UserID
    and id      = $WatchListID
    and not exists (
     SELECT watch_list_element.watch_list_id, watch_list_element.element_id

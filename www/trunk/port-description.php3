@@ -1,5 +1,5 @@
 <?
-   # $Id: port-description.php3,v 1.22 2001-09-28 00:05:38 dan Exp $
+   # $Id: port-description.php3,v 1.23 2001-09-30 20:47:57 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -58,7 +58,7 @@ $NumRows = mysql_num_rows($result);
 <meta name="description" content="freshports - new ports, applications">
 <meta name="keywords" content="FreeBSD, index, applications, ports">  
 <!--// DVL Software is a New Zealand company specializing in database applications. //-->
-<title>freshports - 
+<title>FreshPorts - 
 
 <?
    if ($NumRows) {
@@ -132,7 +132,7 @@ if ($NumRows) {
       echo "    <td valign='top'>" . $myrow["committer"]          . "</td>\n";
       echo '    <td valign="top"><a href="files.php3?id=' . $myrow["id"] .
                       '"><img src="images/logs.gif" alt="Files within this port affected by this commit" border="0" WIDTH="17" HEIGHT="20" hspace="2"></a>' . 
-                       $myrow["update_description"] . "</td>\n";
+                       htmlspecialchars($myrow["update_description"]) . "</td>\n";
       echo "</tr>\n";
    }
    echo "</table></td></tr>\n";

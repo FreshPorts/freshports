@@ -1,12 +1,12 @@
 <?
-   # $Id: watch.php,v 1.1.2.1 2002-01-02 02:53:52 dan Exp $
-   #
-   # Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: watch.php,v 1.1.2.2 2002-01-05 20:13:04 dan Exp $
+	#
+	# Copyright (c) 1998-2001 DVL Software Limited
 
-   require("./include/common.php");
-   require("./include/freshports.php");
-   require("./include/databaselogin.php");
-   require("./include/getvalues.php");
+	require("./include/common.php");
+	require("./include/freshports.php");
+	require("./include/databaselogin.php");
+	require("./include/getvalues.php");
 
 
 // if we don't know who they are, we'll make sure they login first
@@ -15,10 +15,11 @@ if (!$visitor) {
         exit;  /* Make sure that code below does not get executed when we redirect. */
 }
 
-   freshports_Start("your watched ports",
-               "freshports - new ports, applications",
-               "FreeBSD, index, applications, ports");
+	freshports_Start("your watched ports",
+					"freshports - new ports, applications",
+					"FreeBSD, index, applications, ports");
 ?>
+
 <table width="100%" border="0">
 
 <tr><td colspan="2">
@@ -28,7 +29,7 @@ This page lists the ports which are on your watch list. To modify the contents o
 <tr><td valign="top" width="100%">
 <table width="100%" border="0">
 <tr>
-    <td colspan="5" bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">freshports - your watch list</font></td>
+    <td colspan="5" bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1"><? echo $FreshPortsTitle; ?> - your watch list</font></td>
   </tr>
 <script language="php">
 
@@ -117,20 +118,17 @@ if ($UpdateCache == 1) {
 //   echo 'time to update the cache';
 
 $sql = "";
-$sql = "select ports.id, ports.name as port, ports.id as ports_id, change_log.commit_date as updated, " .
+$sql = "select ports.id, element.name as port, ports.id as ports_id, commit_log.commit_date as updated, " .
        "categories.name as category, categories.id as category_id, ports.version as version, ".
-       "change_log.committer, change_log.update_description as update_description, " .
-       "ports.maintainer, ports.short_description, UNIX_TIMESTAMP(ports.date_created) as date_created, ".
-       "date_format(date_created, '$FormatDate $FormatTime') as date_created_formatted, ".
-       "ports.last_change_log_id as last_change_log_id, " .
-       "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, ports.status, " .
+       "commit_log.committer, commit_log.description as update_description, " .
+       "ports.maintainer, ports.short_description, ports.date_created as date_created, ".
+       "ports.last_commit_id as last_change_log_id, " .
+       "ports.package_exists, ports.extract_suffix, ports.homepage, element.status, " .
        "ports.broken, ports.forbidden ".
-       "from ports, categories, watch_port, change_log " .
-       "WHERE ports.system				= 'FreeBSD' ".
-       "  and ports.primary_category_id			= categories.id " .
-       "  and ports.id					= watch_port.port_id " .
-       "  and watch_port.watch_id			= $WatchID " .
-       "  and ports.last_change_log_id 			= change_log.id ";
+       "from watch_list_element, element, categories, ports LEFT OUTER JOIN commit_log on (ports.last_commit_id = commit_log.id) " .
+       "WHERE ports.category_id             = categories.id " .
+	   "  and watch_list_element.element_id = ports.element_id " .
+	   "  and ports.element_id              = element.id ";
 
 $sql .= " order by $sort ";
 //$sql .= " limit 20";
@@ -140,9 +138,9 @@ if ($Debug) {
    echo $sql;
 }
 
-$result = mysql_query($sql, $db);
+$result = pg_exec($db, $sql);
 if (!$result) {
-   echo mysql_error();
+	echo pg_errormessage();
 }
 //$HTML = "</tr></td><tr>";
 
@@ -151,27 +149,47 @@ $HTML .= '<tr><td>';
 // get the list of topics, which we need to modify the order
 $NumPorts=0;
 
+require("../classes/ports.php");
+$port = new Port($db);
+$port->LocalResult = $result;
+
 $LastCategory='';
 $GlobalHideLastChange = "N";
-while ($myrow = mysql_fetch_array($result)) {
-   $NumPorts++;
-   if ($ShowCategoryHeaders) {
-      $Category = $myrow["category"];
+$numrows = pg_numrows($result);
 
-      if ($LastCategory != $Category) {
-         $LastCategory = $Category;
-         $HTML .= '<h3><a href="/' . $myrow["category"]' . '/">Category ' . $myrow["category"] . '</a></h3>';
-      }
-   }
+$DaysMarkedAsNew= $DaysMarkedAsNew= $GlobalHideLastChange= $ShowChangesLink= $ShowDescriptionLink= $ShowDownloadPortLink= $ShowHomepageLink= $ShowLastChange= $ShowMaintainedBy= $ShowPortCreationDate= $ShowPackageLink= $ShowShortDescription =1;
+$ShowPortCreationDate = 0;
+$HideCategory = 1;
+$ShowCategories		= 1;
+GLOBAL	$ShowDepends;
+$ShowDepends		= 1;
+#$HideDescription = 1;
+$ShowEverything  = 1;
+$ShowShortDescription = "Y";
+$ShowMaintainedBy     = "Y";
+#$GlobalHideLastChange = "Y";
+$ShowDescriptionLink  = "N";
 
-   $HTML .= freshports_PortDetails($myrow, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription);
-//   include("./include/port-basics.php");
+for ($i = 0; $i < $numrows; $i++) {
+	$port->FetchNth($i);
+	if ($ShowCategoryHeaders) {
+		$Category = $port->category;
+
+		if ($LastCategory != $Category) {
+			$LastCategory = $Category;
+			$HTML .= '<h3><a href="/' . $Category . '/">Category ' . $Category . '</a></h3>';
+		}
+	}
+
+	$HTML .= freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription);
 }
 
 }
-  $HTML .= "</td></tr>\n";
 
-   $HTML .= "<tr><td>$NumPorts ports found</td></tr>\n";
+$HTML .= "</td></tr>\n";
+
+$HTML .= "<tr><td>$numrows ports found</td></tr>\n";
+
 echo $HTML;
 
 } // end if no WatchID

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.39 2004-04-01 18:23:53 dan Exp $
+	# $Id: commit.php,v 1.1.2.40 2004-04-03 01:40:15 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -277,7 +277,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 							$HTML .= freshports_Watch_Link_Add   ($User->watch_list_add_remove, $myrow["onwatchlist"], $myrow["element_id"]);
 						}
 					}
-					
+
 					$HTML .= "\n";
 
 					if ($IsPort) {

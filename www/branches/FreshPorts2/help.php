@@ -1,5 +1,5 @@
 <?
-	# $Id: help.php,v 1.1.2.2 2002-03-02 14:36:46 dan Exp $
+	# $Id: help.php,v 1.1.2.3 2002-04-20 02:56:54 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -89,7 +89,7 @@ sysutils/daemontools
 devel/ruby-optparse
 security/sudo
 misc/xtail
-</CODE></BLOCKQUOTE>
+</PRE></BLOCKQUOTE>
 
 <P>
 The 

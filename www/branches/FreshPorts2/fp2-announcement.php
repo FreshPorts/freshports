@@ -1,5 +1,5 @@
 <?
-	# $Id: fp2-announcement.php,v 1.1.2.1 2002-02-22 03:37:51 dan Exp $
+	# $Id: fp2-announcement.php,v 1.1.2.2 2002-04-20 02:54:38 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -14,13 +14,13 @@
 
 ?>
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<tr><td valign="top" width="100%">
-<table width="100%" border="0">
+<TR><TD VALIGN="top" WIDTH="100%">
+<TABLE WIDTH="100%" BORDER="0">
 
-<tr>
+<TR>
 	<? freshports_PageBannerText("Announcement"); ?>
-</tr>
-</tr><td>
+</TR>
+<TR><TD>
 
 FreshPorts 2 has been a long time in the making.  I think I've been working
 on it for almost two years (not full time of course...).  I think you'll
@@ -37,35 +37,47 @@ direct.  The following are the changes you can see:
 	not so much a huge change as it is evolution.
 	</TD></TR>
 
+<TR>
 <TD NOWRAP VALIGN="top" ALIGN="right"><B>full commit messages</B></TD>
     <TD>The switch to XML input allows us to capture more data</TD></TR>
 
+<TR>
 <TD NOWRAP VALIGN="top" ALIGN="right"><B>directory structure</B></TD>
     <TD>You know the path to your favourite ports via /usr/ports.  Use the
         same path in FreshPorts (e.g <A HREF="/sysutils/portupgrade/">sysutils/portupgrade</A>).
     </TD></TR>
 
+<TR>
 <TD NOWRAP VALIGN="top" ALIGN="right"><B>one-click add/remove</B></TD>
     <TD>See a port you like? You can add it to your watch list with
         a single click.
     </TD></TR>
+
+<TR>
 <TD NOWRAP VALIGN="top" ALIGN="right"><B>link to commit details</B></TD>
     <TD>Want to know what files were changed in this commit?  It's now
     just one click away.  One more click will take to you the FreeBSD
     CVS repository.</TD></TR>
 
+<TR>
 <TD NOWRAP VALIGN="top" ALIGN="right"><B>Forums are back!</B></TD>
     <TD>The <A HREF="/phorum/">support forums</A> are back, better than ever</TD></TR>
 
+<TR>
 <TD NOWRAP VALIGN="top" ALIGN="right"><B>pkg_info == watch list</B></TD>
     <TD>pkg_info displays list of the ports installed
         on your system.  Now you can use <A HREF="/pkg_upload.php">our scripts</A>
         to use this data to upgrade your watch list!
     </TD></TR>
 
-<TD NOWRAP VALIGN="top" ALIGN="right" ALIGN="right"><B>Search</B></TD>
+<TR>
+<TD NOWRAP VALIGN="top" ALIGN="right"><B>Search</B></TD>
     <TD>There is now a search on the front page.. in fact, it should be on every page!</TD></TR>
-</DL>
+
+<TR>
+<TD NOWRAP VALIGN="top" ALIGN="right"><B>Graphs are back</B></TD>
+    <TD>We've improved the <A HREF="/graphs.php">graphs</A>.  They are now data driven.  All we need to do is
+		add the SQL to the database, and your query is there.  Just ask us for what you want.!</TD></TR>
 </TABLE>
 
 <H2>Technical changes</H2>
@@ -80,6 +92,7 @@ The following items deal with the technical changes which have occurred.
 	didn't when we started this...).
 	</TD></TR>
 
+<TR>
 <TD NOWRAP VALIGN="top" ALIGN="right"><B>XML</B></TD>
 	<TD>
 	Input for FreshPorts is first converted to XML, then processed.  This will be of great
@@ -89,14 +102,14 @@ The following items deal with the technical changes which have occurred.
 
 </TABLE>
 
-</td></tr>
-</table>
-</td>
-  <td valign="top" width="*">
+</TD></TR>
+</TABLE>
+</TD>
+  <TD VALIGN="top" WIDTH="*">
     <? include("./include/side-bars.php") ?>
- </td>
-</tr>
-</table>
+ </TD>
+</TR>
+</TABLE>
 <? include("./include/footer.php") ?>
-</body>
-</html>
+</BODY>
+</HTML>

@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.68 2002-04-12 05:11:34 dan Exp $
+   # $Id: freshports.php,v 1.4.2.69 2002-04-12 14:17:44 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -74,10 +74,11 @@ $freshports_FTP_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports
 $freshports_mail_archive = " http://www.freebsd.org/cgi/mid.cgi?db=mid&id=";
 
 function freshports_Files_Icon() {
-	return '<IMG SRC="/images/logs.gif" ALT="files touched by this commit" TITLE="files touched by this commit" BORDER="0" WIDTH="17" HEIGHT="20" HSPACE="2">';
+	return '<IMG SRC="/images/logs.gif" ALT="files touched by this commit" BORDER="0" WIDTH="17" HEIGHT="20" HSPACE="2">';
 }
+
 function freshports_Refresh_Icon() {
-	return '<IMG SRC="/images/refresh.gif" ALT="Refresh" TITLE="Refresh" BORDER="0" WIDTH="15" HEIGHT="18" HSPACE="2">';
+	return '<IMG SRC="/images/refresh.gif" ALT="Refresh" BORDER="0" WIDTH="15" HEIGHT="18" HSPACE="2">';
 }
 
 function freshports_Deleted_Icon() {
@@ -97,19 +98,19 @@ function freshports_New_Icon() {
 }
 
 function freshports_Mail_Icon() {
-	return '<IMG SRC="/images/envelope10.gif" ALT="Original commit message" TITLE="Original commit message" BORDER="0" WIDTH="25" HEIGHT="14">';
+	return '<IMG SRC="/images/envelope10.gif" ALT="Original commit message" BORDER="0" WIDTH="25" HEIGHT="14">';
 }
 
 function freshports_Commit_Icon() {
-	return '<IMG SRC="/images/copy.gif" ALT="FreshPorts commit message" TITLE="FreshPorts commit message" BORDER="0" WIDTH="16" HEIGHT="16">';
+	return '<IMG SRC="/images/copy.gif" ALT="FreshPorts commit message" BORDER="0" WIDTH="16" HEIGHT="16">';
 }
 
 function freshports_Watch_Icon() {
-	return '<IMG SRC="/images/watch.gif" ALT="Item is on your watch list" TITLE="Item is on your watch list" BORDER="0" WIDTH="23" HEIGHT="22">';
+	return '<IMG SRC="/images/watch.gif" ALT="Item is on your watch list" BORDER="0" WIDTH="23" HEIGHT="22">';
 }
 
 function freshports_Watch_Icon_Add() {
-	return '<IMG SRC="/images/watch-add.gif" ALT="Add item to your watch list" TITLE="Add item to your watch list" BORDER="0" WIDTH="13" HEIGHT="13">';
+	return '<IMG SRC="/images/watch-add.gif" ALT="Add item to your watch list" BORDER="0" WIDTH="13" HEIGHT="13">';
 }
 
 function freshports_Encoding_Errors() {
@@ -897,12 +898,12 @@ function FormatTime($Time, $Adjustment, $Format) {
 
 function convertURLS($text) {
 	$text = eregi_replace("((ht|f)tp://www\.|www\.)([a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})((/|\?)[a-z0-9~#%&\\/'_\+=:\?\.-]*)*)", "http://www.\\3", $text);
-	$text = eregi_replace("((ht|f)tp://)((([a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3}))|(([0-9]{1,3}\.){3}([0-9]{1,3})))((/|\?)[a-z0-9~#%&'_\+=:\?\.-]*)*)", "<a href=\"\\0\">\\0</a>", $text);
+	$text = eregi_replace("((ht|f)tp://)((([a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3}))|(([0-9]{1,3}\.){3}([0-9]{1,3})))((/|\?)[a-z0-9~#%&'_\+=:\?\.-]*)*)", "<A HREF=\"\\0\">\\0</A>", $text);
 	return $text;
 }
 
 function convertMail($text) {
-	$text = eregi_replace("([_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3}))", "<a href='mailto:\\0'>\\0</a>", $text);
+	$text = eregi_replace("([_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3}))", "<A HREF='mailto:\\0'>\\0</A>", $text);
 	return $text;
 }
 
@@ -913,9 +914,9 @@ function convertAllLinks($text) {
 }
 
 function pr2link($Arr) {
-  return preg_replace("/((\w+\/)?\d+)/", 
-						"<A HREF=\"http://www.FreeBSD.org/cgi/query-pr.cgi?pr=\\1\">\\1</A>",
-						$Arr[0]);  
+	return preg_replace("/((\w+\/)?\d+)/", 
+					"<A HREF=\"http://www.FreeBSD.org/cgi/query-pr.cgi?pr=\\1\">\\1</A>",
+					$Arr[0]);  
 }
 
 function mail2link($Arr) {
@@ -928,28 +929,29 @@ function mail2link($Arr) {
 	}
 
 	$addr = "<A HREF='$mailto:$new_addr'>$new_addr</A>";
+
 	return $addr;
 }
 
 function url2link($Arr) {
 	GLOBAL $url2link_cutoff_level;
-	$html = $Arr[0];
+	$html = $Arr[1];
 
-#	echo "url2link is passed: $html";
- 
 	if ($url2link_cutoff_level > 0 && strlen($html) > $url2link_cutoff_level) {
 		$vhtml = substr($html, 0, $url2link_cutoff_level - 5) . "(...)";
-	} else { 
+	} else {
 		$vhtml = $html;
 	}
 	
-	return "<A HREF=\"$html\">$vhtml</A>";
+	return "<A HREF=\"$html\">$vhtml</A>" . $Arr[3];
 }
 
 function pr2html($String) {
+	$del_t = array("&quot;","&#34;","&gt;","&#62;","\/\.\s","\)","'","\s");
+	$delimiters = "(".join("|",$del_t).")";
 #	$String = addslashes($String);
 
-	$String = preg_replace_callback("/((http|ftp|https):\/\/([^\s>])+)/i",                  url2link,  $String);
+	$String = preg_replace_callback("/((http|ftp|https):\/\/.*?)($delimiters)/i",           url2link,  $String);
 	$String = preg_replace_callback("/([\w+=\-.!]+@[\w\-]+(\.[\w\-]+)+)/",                  mail2link, $String);
 	$String = preg_replace_callback("/(\bPR[:\#]?)\s*(((\w+\/)?\d+)(,\s*((\w+\/)?\d+))*)/", pr2link,   $String);
  

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.70 2005-01-05 23:14:39 dan Exp $
+	# $Id: search.php,v 1.1.2.71 2005-01-20 00:08:38 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -640,6 +640,7 @@ $HideCategory         = 'N';
 
 	for ($i = 0; $i < $NumFetches; $i++) {
 		$Port->FetchNth($i);
+		$Port->LoadVulnerabilities();
 		$HTML .= freshports_PortDetails($Port, $Port->dbh, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, 
                      $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, 
                      $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, 

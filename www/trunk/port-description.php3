@@ -24,6 +24,11 @@ $sql = "select ports.id, ports.name as port, ports.id as ports_id, " .
 
 $result = mysql_query($sql, $db);
 
+if (!$result) {
+   print mysql_error() . "<br>\n";
+   exit;
+}
+
 $myrow = mysql_fetch_array($result);
 ?>
 

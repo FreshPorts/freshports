@@ -1,4 +1,7 @@
+These permissions may be overly permissive.
+
 grant usage on freshportschange.* to freshports@localhost;
 grant select on freshportschange.* to freshports@localhost;
 grant select, update, insert on freshportschange.users to freshports@localhost;
 grant select, update, delete, insert on freshportschange.watch_port to freshports@localhost;
+grant select, insert on freshportschange.change_log_port to freshports@localhost;

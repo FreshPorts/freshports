@@ -30,20 +30,8 @@ if ($submit) {
       $OK = 0;
    }
 
-   if ($MaxNumberOfPorts < 1 || $MaxNumberOfPorts > 99) {
-      $errors .= "The maximum number of ports per page must be in the range 1..99.<BR>";
-      $OK = 0;
-   }
-
-   if ($DaysMarkedAsNew < 1 || $DaysMarkedAsNew > 99) {
-      $errors .= "Number of days marked as new must be in the range 1..99.<BR>";
-      $OK = 0;
-   }
-
    $AccountModified = 0;
    if ($OK) {
-
-
       if ($emailsitenotices_yn == "ON") {
           $emailsitenotices_yn_value = "Y";
       } else {
@@ -70,23 +58,10 @@ if ($submit) {
         }
       }
 
-
      $sql = "update users set ";
      $sql .= "email			= '$email', ";
      $sql .= "emailsitenotices_yn	= '$emailsitenotices_yn_value',";
-     $sql .= "watchnotifyfrequency	= '$watchnotifyfrequency', ";
-     $sql .= "max_number_of_ports	= " . $MaxNumberOfPorts . ",";
-     $sql .= "show_short_description 	= '" . freshports_ONToYN($ShowShortDescription	) . "', ";
-     $sql .= "show_maintained_by	= '" . freshports_ONToYN($ShowMaintainedBy	) . "', ";
-     $sql .= "show_last_change		= '" . freshports_ONToYN($ShowLastChange	) . "', ";
-     $sql .= "show_description_link	= '" . freshports_ONToYN($ShowDescriptionLink	) . "', ";
-     $sql .= "show_changes_link		= '" . freshports_ONToYN($ShowChangesLink	) . "', ";
-     $sql .= "show_download_port_link	= '" . freshports_ONToYN($ShowDownloadPortLink	) . "', ";
-     $sql .= "show_package_link		= '" . freshports_ONToYN($ShowPackageLink	) . "', ";
-     $sql .= "show_homepage_link	= '" . freshports_ONToYN($ShowHomepageLink	) . "', ";
-     $sql .= "format_date		= '" . $FormatDate . "', ";
-     $sql .= "format_time		= '" . $FormatTime . "', ";
-     $sql .= "days_marked_as_new	= $DaysMarkedAsNew";
+     $sql .= "watchnotifyfrequency	= '$watchnotifyfrequency' ";
 
      if ($Password1 != '') {
        $sql .= ", password = '$Password1'";
@@ -182,7 +157,7 @@ if ($AccountModified) {
 //  $daystoshow = 20;
 //  $maxarticles = 40;
 //  $daysnew = 20;
-//   require( "_private/commonphp3.inc");
+//   require( "./_private/commonphp3.inc");
 //	echo $DaysToShow,  '= days to show';
 
 echo '<table cellpadding=1 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>

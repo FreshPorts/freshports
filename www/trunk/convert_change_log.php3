@@ -76,8 +76,7 @@ if (!$result) {
 
          $result = mysql_query($sql);
          if ($result) {
-
-           echo " gives " . mysql_num_rows() . " rows changed";
+//           echo " gives " . mysql_num_rows($result) . " rows changed";
          } else {
             echo mysql_error();
             exit;

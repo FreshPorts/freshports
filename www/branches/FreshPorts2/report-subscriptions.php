@@ -1,5 +1,5 @@
 <?
-	# $Id: report-subscriptions.php,v 1.1.2.4 2002-06-13 16:29:26 dan Exp $
+	# $Id: report-subscriptions.php,v 1.1.2.5 2002-06-13 16:36:56 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -24,13 +24,16 @@
 	if ($Debug) phpinfo();
 
 	function freshports_ReportFrequencies($dbh) {
-		$sql = "select id, description from report_frequency order by id";
+		$sql = "select id, frequency, description from report_frequency order by id";
 		$result = pg_exec($dbh, $sql);
 		if ($result) {
 			$numrows = pg_numrows($result);
 			for ($i = 0; $i < $numrows; $i++) {
 				$myrow = pg_fetch_array ($result, $i);
-				$Frequencies[$myrow["id"]] = $myrow["description"];
+				# we don't include don't notify me.
+				if ($myrow["frequency"] != 'Z') {
+					$Frequencies[$myrow["id"]] = $myrow["description"];
+				}
 			}
 		}
 

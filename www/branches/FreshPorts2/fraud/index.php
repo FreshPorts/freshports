@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.3 2003-12-05 00:09:34 dan Exp $
+	# $Id: index.php,v 1.1.2.4 2003-12-05 00:15:20 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -40,12 +40,25 @@ Please let any and all FreshPorts users know about this incident.
 <p>
 Here a few supporting documents:
 
+
+<h3>Screen shots and code</h3>
+
 <ul>
 <li><a href="/fraud/freshports.net.jpg">Their fake page</a>
 <li><a href="/fraud/freshports.net.code.php">Source code for their page</a>
 <li><a href="/fraud/freshports.net.paypal.jpg">Their paypal page</a>
+<li><a href="/fraud/freshports.net.adminforum.se.jpg">Adminforum.se</a>
+<li><a href="/fraud/freshports.net.openbsdinstead.jpg">OpenBSD instead</a>
+</ul>
+
+<h3>Misc</h3>
+<ul>
 <li><a href="/fraud/freshports.net.mozilla.cache.php">Mozilla cache</a>
 <li><a href="/fraud/whois.freshports.net.php">whois freshports.net</a>
+</ul>
+
+<h3>Correspondence</h3>
+<ul>
 <li><a href="/fraud/first-email.php">My request to them</a>
 <li><a href="/fraud/their-reply.php">Their reply<a/>
 </ul>

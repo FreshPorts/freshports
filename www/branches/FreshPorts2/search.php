@@ -1,5 +1,5 @@
 <?
-	# $Id: search.php,v 1.1.2.29 2002-08-12 14:13:22 dan Exp $
+	# $Id: search.php,v 1.1.2.30 2002-08-13 04:05:52 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -277,7 +277,7 @@ if ($fp) {
 		case "match":
 		case "exact":
 		case "soundex":
-			fwrite($fp, date("Y-m-d H:i:s") . " $stype : $method : $query : $num : $NumRows : $deleted\n");
+			fwrite($fp, date("Y-m-d H:i:s") . " $stype : $method : $query : $num : $NumRows : $deleted : $casesensitivity\n");
 			break;
 
 		default: 

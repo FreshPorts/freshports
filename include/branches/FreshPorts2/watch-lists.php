@@ -1,12 +1,12 @@
 <?
-	# $Id: watch-lists.php,v 1.1.2.2 2002-12-06 16:49:23 dan Exp $
+	# $Id: watch-lists.php,v 1.1.2.3 2002-12-08 03:19:55 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/watch_lists.php");
 
-function freshports_WatchListDDLB($dbh, $UserID, $selected = '', $size = 0, $multiple = 0) {
+function freshports_WatchListDDLB($dbh, $UserID, $selected = '', $size = 0, $multiple = 0, $show_active = 1) {
 	# return the HTML which forms a dropdown list box.
 	# optionally, select the item identified by $selected.
 
@@ -35,7 +35,11 @@ function freshports_WatchListDDLB($dbh, $UserID, $selected = '', $size = 0, $mul
 			$WatchList = $WatchLists->FetchNth($i);
 			$HTML .= '<option value="' . htmlspecialchars(AddSlashes($WatchList->id)) . '"';
 			if ($WatchList->id == $selected) $HTML .= ' selected';
-			$HTML .= '>' . htmlspecialchars(AddSlashes($WatchList->name)) . "</option>\n";
+			$HTML .= '>' . htmlspecialchars(AddSlashes($WatchList->name));
+			if ($show_active && $WatchList->in_service == 't') {
+				$HTML .= '*';
+			}
+			$HRML .= "</option>\n";
 		}
 	}
 

@@ -1,5 +1,5 @@
 --
--- $Id: POSTGRESQL.sql,v 1.1.2.26 2003-03-04 22:24:21 dan Exp $
+-- $Id: POSTGRESQL.sql,v 1.1.2.27 2003-03-05 18:42:32 dan Exp $
 --
 -- Copyright (c) 1998-2002 DVL Software Limited
 --
@@ -38,6 +38,7 @@ grant select on element                        to group www;
 grant select on element_pathnames              to group www;
 grant select on element_revision               to group www;
 grant select on ports                          to group www;
+grant select on ports_categories               to group www;
 grant select on ports_active                   to group www;
 grant select on ports_all                      to group www;
 grant select on system                         to group www;
@@ -72,7 +73,6 @@ grant select,                 update on watch_list_staging_id_seq  to group www;
 
 grant select, insert, update, delete on watch_list_element             to group www;
 grant select,         update         on watch_list_id_seq              to group www;
-grant select, insert, update, delete on commit_log_ports_ignore        to group www;
 
 --
 -- select, delete
@@ -140,10 +140,13 @@ grant select, update                 on element_id_seq                 to group 
 grant select, insert, update, delete on element_revision               to group commits;
 
 grant select, insert, update, delete on ports                          to group commits;
+
+--
+-- mostly for use only by ~/scripts/ports_categories-populate.pl
+--
+grant insert                         on ports_categories               to group commits;
 grant select                         on ports_active                   to group commits;
 grant select, update                 on ports_id_seq                   to group commits;
-grant select, insert                 on commit_log_ports_ignore        to group commits;
-
 grant select, update                 on housekeeping                   to group commits;
 
 grant select, insert, update, delete on system                         to group commits;

@@ -1,5 +1,5 @@
 <?
-	# $Id: date.php,v 1.1.2.10 2002-12-02 17:34:56 dan Exp $
+	# $Id: date.php,v 1.1.2.11 2002-12-03 16:18:57 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -83,9 +83,8 @@
 
 		#echo '<br>NumRows = ' . $NumRows;
 
-
 		$HTML = "";
-		
+
 		if ($NumRows == 0) {
 			$HTML .= '<TR><TD COLSPAN="3" BGCOLOR="#AD0040" HEIGHT="0">' . "\n";
 			$HTML .= '   <FONT COLOR="#FFFFFF"><BIG>' . FormatTime($Date, 0, "D, j M Y") . '</BIG></FONT>' . "\n";
@@ -105,6 +104,7 @@
 				if ($DateMessage) {
 					$HTML .= ' (' . $DateMessage . ')';
 				}
+				
 				$HTML .= '</FONT>' . "\n";
 				$HTML .= '</TD></TR>' . "\n\n";
 			}
@@ -221,13 +221,20 @@
 <html>
 <body>
 
+<?php
+#echo "That date is " . $Date . '<br>';
+#echo 'which is ' . strtotime($Date) . '<br>';
+
+$Yesterday = freshports_LinkToDate(strtotime($Date) - 86400, "Previous day");
+$Tomorrow  = freshports_LinkToDate(strtotime($Date) + 86400, "Following day");
+
+echo "<center>$Yesterday $Tomorrow</center>";
+?>
+
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD VALIGN="top">
 
 <?php
-
-#echo "That date is " . $Date . '<br>';
-#echo 'which is ' . strtotime($Date) . '<br>';
 
 echo '<TABLE WIDTH="100%" BORDER="1" CELLSPACING="0" CELLPADDING="5">';
 

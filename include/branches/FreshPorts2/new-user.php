@@ -1,4 +1,4 @@
- <table width="*" border="0" cellpadding="1">
+<table width="*" border="0" cellpadding="1">
 <form action="<?php echo $PHP_SELF . "?origin=" . $origin ?>" method="POST" name=f>
           <tr>
             <td valign="top">

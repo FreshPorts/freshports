@@ -73,4 +73,12 @@ chown -R lists:lists *
 cd /home/freshports.org/www
 ln -s /usr/local/etc/freshports/archives archives
 
+need this:
+http://search.cpan.org/search?dist=Text-Wrapper
+http://search.cpan.org/doc/CJM/Text-Wrapper-1.000/Wrapper.pm
+http://www.cpan.org/authors/id/CJM/Text-Wrapper-1.000.tar.gz
+or
+http://cpan.noris.de/modules/by-category/17_Archiving_and_Compression/AppleII/CJM/Text-Wrapper-1.000.tar.gz
+
+
 Remember to create logins on the database for the updater to use.

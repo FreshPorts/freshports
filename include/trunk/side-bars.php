@@ -85,7 +85,7 @@ if ($UserID) {
 <?
         echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/about.php3",          "What is freshports?") . '</font><br>';
         echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/authors.php3",        "About the Authors")   . '</font><br>';
-        echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/phorum/list.php?f=3", "Feedback Phorum")     . '</font><br>';
+#        echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/phorum/list.php?f=3", "Feedback Phorum")     . '</font><br>';
         echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/inthenews.php3",      "In the news")         . '</font><br>';
         echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/changes.php3",        "Changes")             . '</font><br>';
         echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/privacy.php3",        "Privacy")             . '</font><br>';

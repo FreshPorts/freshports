@@ -1,5 +1,5 @@
 <?
-   # $Id: index.php3,v 1.23 2001-09-28 00:05:37 dan Exp $
+   # $Id: index.php3,v 1.24 2001-10-03 01:56:33 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -15,9 +15,12 @@
 #$Debug=1;
 
 #
-# $Author: dan $ $Date: 2001-09-28 00:05:37 $
-# $Header: /home/dan/repositories/freshports-1/www/Attic/index.php3,v 1.23 2001-09-28 00:05:37 dan Exp $
+# $Author: dan $ $Date: 2001-10-03 01:56:33 $
+# $Header: /home/dan/repositories/freshports-1/www/Attic/index.php3,v 1.24 2001-10-03 01:56:33 dan Exp $
 # $Log: not supported by cvs2svn $
+# Revision 1.23  2001/09/28 00:05:37  dan
+# Ready to deploy.  I think.
+#
 # Revision 1.22  2001/03/27 01:01:02  dan
 # put a <br> \n at the end of a debugging line
 #
@@ -25,7 +28,7 @@
 # Add some headers
 #
 # $Name: not supported by cvs2svn $
-# $Revision: 1.23 $
+# $Revision: 1.24 $
 #
 
 //echo "UserID='$UserID'";
@@ -101,7 +104,7 @@ if ($Debug) {
 <tr><td colspan="2">Welcome to FreshPorts, where you can find the latest information on your favourite
 ports.
 </td></tr>
-<tr><td colspan="2">Please report any bugs via the <a href="phorum/list.php?f=3">phorum</a>.  A port is marked as new for 10 days.
+<tr><td colspan="2">A port is marked as new for 10 days.
 </td></tr>
 <?
 if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {

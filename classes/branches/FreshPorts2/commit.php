@@ -1,5 +1,5 @@
 <?
-	# $Id: commit.php,v 1.1.2.1 2002-11-28 04:46:03 dan Exp $
+	# $Id: commit.php,v 1.1.2.2 2002-12-09 20:24:03 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -31,7 +31,7 @@ class Commit {
 	var $date_added;
 	var $element_id;
 	var $short_description;
-	var $watch;
+	var $onwatchlist;
 
 	function Commit($dbh) {
 		$this->dbh	= $dbh;
@@ -65,6 +65,6 @@ class Commit {
 		$this->date_added				= $myrow["date_added"];
 		$this->element_id				= $myrow["element_id"];
 		$this->short_description	= $myrow["short_description"];
-		$this->watch					= $myrow["watch"];
+		$this->onwatchlist			= $myrow["onwatchlist"];
 	}
 }

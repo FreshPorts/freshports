@@ -1,5 +1,5 @@
 <?
-	# $Id: graph.php,v 1.1.2.3 2002-04-19 20:26:23 dan Exp $
+	# $Id: graph.php,v 1.1.2.4 2002-04-19 20:35:43 dan Exp $
 	#
 
 // parameters: graph id
@@ -37,11 +37,15 @@ $cache_dir = "/tmp/";
 $period = 14400; // in seconds
 
 $filename = $cache_dir.$fid.".png";
-if (!file_exists($filename) || filemtime($filename)+$period<time())	
-{
+if (!file_exists($filename) || filemtime($filename)+$period<time())	{
 	// get graph information
-	$conn = @pg_connect("dbname=fp2migration")
-		or die("PGERR: cannot connect");
+	
+	if (IsSet($db)) {
+		$conn = $db;
+	} else {
+		$conn = @pg_connect("dbname=fp2migration")
+			or die("PGERR: cannot connect");
+	}
 
 	// XXX CHANGE THE QUERY XXX
 	$data = @pg_exec($conn,"select query, title, title from graphs where id=$id")

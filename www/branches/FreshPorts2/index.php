@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.13 2002-02-13 22:58:46 dan Exp $
+	# $Id: index.php,v 1.1.2.14 2002-02-16 20:52:37 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -138,7 +138,6 @@ $sql = "
 
 if ($WatchListID) {
 	$sql .= ",
-       watch_list_element.element_id,
        CASE when watch_list_element.element_id is null
           then '$FreshPortsWatchedPortNot'
           else '$FreshPortsWatchedPort'
@@ -171,7 +170,23 @@ order by commit_log.commit_date desc,
          port
          limit $numrows";
 
+if ($WatchListID) {
+	$sql = " SELECT	commits_latest.*, 
+				 	CASE when watch_list_element.element_id is null
+						then '$FreshPortsWatchedPortNot'
+						else '$FreshPortsWatchedPort'
+					END as watch
+			   FROM	commits_latest left outer join watch_list_element
+					 ON commits_latest.element_id        = watch_list_element.element_id
+					AND watch_list_element.watch_list_id = $WatchListID
+		   ORDER BY commit_date_raw desc, category, port";
+} else {
+	$sql = "select * from commits_latest order by commit_date_raw desc, category, port";
+}
+
 if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
+
+#exit;
 
          $result = pg_exec($database, $sql);
          if ($result) {
@@ -191,7 +206,7 @@ if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 					# thus, count the commit id's ourselves.
 					#
 #					if ($ThisChangeLogID <> $myrow["commit_log_id"]) {
-#						$ThisChangeLogID = $myrow["commit_log_id"];
+#						$ThisChangeLogID  = $myrow["commit_log_id"];
 						$i++;
 #					}
 #					echo "$i, ";
@@ -333,10 +348,10 @@ ports. A port is marked as new for 10 days.
   <td valign="top" width="*">
    <? include("./include/side-bars.php") ?>
 <?
-	freshports_SummaryForDay(0);
-	freshports_SummaryForDay(1);
-	freshports_SummaryForDay(2);
-	freshports_SummaryForDay(3);
+#	freshports_SummaryForDay(0);
+#	freshports_SummaryForDay(1);
+#	freshports_SummaryForDay(2);
+#	freshports_SummaryForDay(3);
 ?>
  </td>
 </tr>

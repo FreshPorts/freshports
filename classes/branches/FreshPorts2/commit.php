@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.5 2003-04-28 16:20:32 dan Exp $
+	# $Id: commit.php,v 1.1.2.6 2003-05-09 21:31:30 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -39,12 +39,6 @@ class Commit {
 	}
 
 	function PopulateValues($myrow) {
-		#
-		# call FetchInitialise first.
-		# then call this function N times, where N is the number
-		# returned by FetchInitialise.
-		#
-
 		$this->commit_log_id			= $myrow["commit_log_id"];
 		$this->commit_date_raw		= $myrow["commit_date_raw"];
 		$this->encoding_losses		= $myrow["encoding_losses"];

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-list-maintenance.php,v 1.1.2.22 2003-01-06 14:14:44 dan Exp $
+	# $Id: watch-list-maintenance.php,v 1.1.2.23 2003-03-05 21:32:53 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -162,7 +162,6 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 			break;
 
 		case 'empty':
-		case 'empty_all':
 			pg_query($db, 'BEGIN');
 			$WatchList = new WatchList($db);
 			while (list($key, $WatchListIDToEmpty) = each($_POST['wlid'])) {
@@ -173,6 +172,18 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 				}
 				if ($Debug) echo 'I have emptied watch list id = ' . $WatchListIDToEmpty . '<br>';
 			}
+			pg_query($db, 'COMMIT');
+			break;
+
+		case 'empty_all':
+			pg_query($db, 'BEGIN');
+			$WatchList = new WatchList($db);
+			$NumRows = $WatchList->EmptyAllLists($User->id, AddSlashes($WatchListIDToEmpty));
+			if (!IsSet($NumRows)) {
+				die("Failed to Empty '$WatchListIDToEmpty' (return value '$EmptydWatchListID')" . pg_last_error());
+			}
+			if ($Debug) echo 'I have emptied all the watch lists.<br>';
+
 			pg_query($db, 'COMMIT');
 			break;
 

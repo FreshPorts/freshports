@@ -1,7 +1,9 @@
-<?
-	# $Id: watch.php,v 1.1.2.37 2003-02-10 16:54:10 dan Exp $
+<?php
+	#
+	# $Id: watch.php,v 1.1.2.38 2003-03-21 15:35:08 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
+	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
@@ -151,27 +153,27 @@ if ($wlid == '') {
 	) as TEMP
 	on (TEMP.last_commit_id = commit_log.id) 
 	
-	GROUP BY port,
-				ports_id, 
-	         category, 
-	         category_id, 
-	         version, 
-	         revision, 
+	GROUP BY temp.port,
+				temp.ports_id, 
+	         temp.category, 
+	         temp.category_id, 
+	         temp.version, 
+	         temp.revision, 
 	         commit_log.committer, 
 	         update_description, 
-	         element_id, 
-	         maintainer, 
-	         short_description, 
+	         temp.element_id, 
+	         temp.maintainer, 
+	         temp.short_description, 
 	         date_added, 
-	         last_commit_id, 
+	         temp.last_commit_id, 
 	         commit_log.message_id, 
-	         package_exists, 
-	         extract_suffix, 
-	         homepage, 
-	         status, 
-	         broken, 
-	         forbidden, 
-	         onwatchlist  
+	         temp.package_exists, 
+	         temp.extract_suffix, 
+	         temp.homepage, 
+	         temp.status, 
+	         temp.broken, 
+	         temp.forbidden, 
+	         temp.onwatchlist  
 	";
 	
 	$sql .= " order by $sort ";

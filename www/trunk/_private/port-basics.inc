@@ -29,10 +29,10 @@
 /*
    $HTML .= $myrow["date_created"];
    $HTML .= "--";
-   $HTML .= Time() - 3600*24*30;
+   $HTML .= Time() - 3600*24*10;
 */
 
-   if ($myrow["date_created"] > Time() - 3600*24*30) {
+   if ($myrow["date_created"] > Time() - 3600*24*10) {
       $HTML .= " <img src=\"/images/new.gif\" width=28 height=11 alt=\"new!\" hspace=2 align=absmiddle>";
    }
 

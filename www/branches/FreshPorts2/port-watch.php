@@ -1,22 +1,22 @@
 <?
-	# $Id: port-watch.php,v 1.1.2.18 2002-12-09 20:35:20 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.19 2002-12-10 04:00:16 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require($_SERVER['DOCUMENT_ROOT'] ."/include/databaselogin.php");
-	require($_SERVER['DOCUMENT_ROOT'] ."/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] ."/include/databaselogin.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] ."/include/getvalues.php");
 
-    require($_SERVER["DOCUMENT_ROOT"] . "/../classes/categories.php");
+    require_once($_SERVER["DOCUMENT_ROOT"] . "/../classes/categories.php");
 
-	$submit		= $_POST["submit"];
+	$submit	= $_POST["submit"];
 	$visitor	= $_COOKIE["visitor"];
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {
-        header("Location: login.php?origin=" . $_SERVER["PHP_SELF"]);  /* Redirect browser to PHP web site */
-        exit;  /* Make sure that code below does not get executed when we redirect. */
+	header("Location: login.php?origin=" . $_SERVER["PHP_SELF"]);  /* Redirect browser to PHP web site */
+	exit;  /* Make sure that code below does not get executed when we redirect. */
 }
 
 $category = $_GET["category"];

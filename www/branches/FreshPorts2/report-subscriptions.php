@@ -1,5 +1,5 @@
 <?
-	# $Id: report-subscriptions.php,v 1.1.2.14 2002-12-09 20:35:19 dan Exp $
+	# $Id: report-subscriptions.php,v 1.1.2.15 2002-12-10 04:00:17 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -8,11 +8,11 @@
 		exit;  /* Make sure that code below does not get executed when we redirect. */
 	}
 
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
 
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 
 	$ArticleTitle = "Report subscriptions";
 

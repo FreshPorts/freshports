@@ -1,12 +1,12 @@
 <?
-	# $Id: port-description.admin.php,v 1.1.2.9 2002-05-22 04:30:26 dan Exp $
+	# $Id: port-description.admin.php,v 1.1.2.10 2002-12-10 04:00:15 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 
 	$submit = $_POST["submit"];
 

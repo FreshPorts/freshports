@@ -1,12 +1,12 @@
 <?
-	# $Id: privacy.php,v 1.1.2.6 2002-06-09 21:42:41 dan Exp $
+	# $Id: privacy.php,v 1.1.2.7 2002-12-10 04:00:17 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 
 	freshports_Start("Privacy Policy",
 					"freshports - new ports, applications",

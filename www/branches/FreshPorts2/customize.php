@@ -1,11 +1,11 @@
 <?
-	# $Id: customize.php,v 1.1.2.19 2002-11-18 18:02:28 dan Exp $
+	# $Id: customize.php,v 1.1.2.20 2002-12-10 04:00:12 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
 
 $origin	= $_GET["origin"];
 $submit 	= $_POST["submit"];
@@ -160,7 +160,7 @@ if ($AccountModified) {
 //  $daystoshow = 20;
 //  $maxarticles = 40;
 //  $daysnew = 20;
-//   require($_SERVER['DOCUMENT_ROOT'] . "/include/commonphp3.inc");
+//   require_once($_SERVER['DOCUMENT_ROOT'] . "/include/commonphp3.inc");
 //	echo $DaysToShow,  '= days to show';
 
 echo '<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="#AD0040" WIDTH="100%">

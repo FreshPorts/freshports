@@ -1,12 +1,12 @@
 <?
-	# $Id: graphs.php,v 1.5.2.14 2002-12-05 13:58:20 dan Exp $
+	# $Id: graphs.php,v 1.5.2.15 2002-12-10 04:00:12 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 
 	freshports_Start("Statistics - everyone loves a graph",
 					"freshports - new ports, applications",

@@ -1,11 +1,11 @@
 <?
-	# $Id: new-user.php,v 1.1.2.24 2002-11-18 18:02:28 dan Exp $
+	# $Id: new-user.php,v 1.1.2.25 2002-12-10 04:00:15 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
 
 	$origin = $_GET["origin"];
 	$submit = $_POST["submit"];
@@ -115,7 +115,7 @@ if ($submit) {
 	// not submit
 
 	// we can't do this if we are submitting because it overwrites the incoming values
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 }
 
    freshports_Start("New User",
@@ -169,7 +169,7 @@ echo '<p>If you need help, please post a message on the forum. </p>
 
 if (!$submit && !$errors) {
   // provide default values for an empy form.
-  require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+  require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 }
 
 </script>

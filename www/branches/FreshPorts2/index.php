@@ -1,14 +1,14 @@
 <?
 	#
-	# $Id: index.php,v 1.1.2.59 2002-12-09 20:36:44 dan Exp $
+	# $Id: index.php,v 1.1.2.60 2002-12-10 04:00:13 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
 
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 
 	freshports_Start($FreshPortsSlogan,
 					"$FreshPortsName - new ports, applications",

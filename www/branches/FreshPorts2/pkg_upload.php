@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_upload.php,v 1.5.2.21 2002-12-09 20:35:20 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.22 2002-12-10 04:00:15 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -35,7 +35,7 @@ function StagingAlreadyInUse($UserID, $dbh) {
 	return $Result;
 }
 
-	require_once "pkg_process.inc";
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/pkg_process.inc";
 
 function DisplayUploadForm($pkg_info) {
 	?>
@@ -245,7 +245,7 @@ function ChooseWatchLists($UserID, $db) {
 			if (trim($_FILES["pkg_info"]) != '') {
 				$Destination = "/tmp/FreshPorts.tmp_pkg_output.$UserName";
 				if (HandleFileUpload("pkg_info", $Destination)) {
-					require_once $_SERVER['DOCUMENT_ROOT'] . "/pkg_utils.inc";
+					require_once($_SERVER['DOCUMENT_ROOT'] . "/pkg_utils.inc");
 					if (ProcessPackages($User->id, $Destination, $db)) {
 						$DisplayStagingArea = TRUE;
 					}

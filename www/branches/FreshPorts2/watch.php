@@ -1,5 +1,5 @@
 <?
-	# $Id: watch.php,v 1.1.2.30 2002-12-09 20:32:22 dan Exp $
+	# $Id: watch.php,v 1.1.2.31 2002-12-10 04:00:18 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -182,7 +182,7 @@ if ($WatchListID == '') {
 	// get the list of topics, which we need to modify the order
 	$NumPorts=0;
 
-	require($_SERVER['DOCUMENT_ROOT'] . "/../classes/ports.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/ports.php");
 	$port = new Port($db);
 	$port->LocalResult = $result;
 

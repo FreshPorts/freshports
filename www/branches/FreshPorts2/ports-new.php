@@ -1,12 +1,12 @@
 <?
-	# $Id: ports-new.php,v 1.1.2.14 2002-12-09 20:35:19 dan Exp $
+	# $Id: ports-new.php,v 1.1.2.15 2002-12-10 04:00:17 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 
 	$Debug = 0;
 
@@ -140,7 +140,7 @@ These are the recently added ports.
 #				echo "There are $numrows to fetch<BR>\n";
 			}
 
-			require($_SERVER['DOCUMENT_ROOT'] . "/include/list-of-ports.php");
+			require_once($_SERVER['DOCUMENT_ROOT'] . "/include/list-of-ports.php");
 
 			echo freshports_ListOfPorts($result, $db, "Y", $ShowCategoryHeaders);
 ?>

@@ -1,14 +1,14 @@
 <?
-	# $Id: search.php,v 1.1.2.31 2002-08-14 18:51:51 dan Exp $
+	# $Id: search.php,v 1.1.2.32 2002-12-10 04:00:18 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 
-	require($_SERVER['DOCUMENT_ROOT'] . "/../classes/ports.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/ports.php");
 
 	switch ($_SERVER["REQUEST_METHOD"]) {
 		case "POST":

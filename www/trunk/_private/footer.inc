@@ -19,7 +19,7 @@ alt="powered by php3" border="0" width="88" height="31"></a>
 <a href="http://www.apache.org/"><img src="http://freshports.org/images/apache_pb.gif"
 alt="powered by apache" border="0" width="259" height="32"></a>
 
-<a href="http://www.phorum.org/"><img src="http://www.freshports.org/phorum/images/phorum.gif"
+<a href="http://www.phorum.org/"><img src="http://freshports.org/phorum/images/phorum.gif"
 alt="powered by phorum" border="0" width="88" height="31"></a>
 
 </tr>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: committer-opt-in.php,v 1.1.2.12 2003-12-19 17:12:19 dan Exp $
+	# $Id: committer-opt-in.php,v 1.1.2.13 2005-01-05 23:14:37 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -71,9 +71,11 @@
 	}
 
 ?>
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<TR><td VALIGN=TOP>
-<TABLE>
+	<?php echo freshports_MainTable(); ?>
+
+	<tr><td valign="top" width="100%">
+
+	<?php echo freshports_MainContentTable(NOBORDER); ?>
 <TR>
 	<? echo freshports_PageBannerText("Committer opt-in"); ?>
 </TR>

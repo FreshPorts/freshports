@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-categories.php,v 1.1.2.24 2003-05-08 13:07:45 dan Exp $
+	# $Id: watch-categories.php,v 1.1.2.25 2005-01-05 23:14:39 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -47,10 +47,11 @@ if ($_REQUEST['wlid']) {
 
 
 ?>
-<?php # main table start ?>
-<table width="<? echo $TableWidth ?>" border="0" ALIGN="center">
-<tr>
-<td valign="top"><table width="100%" border="0">
+	<?php echo freshports_MainTable(); ?>
+
+	<tr><td valign="top" width="100%">
+
+	<?php echo freshports_MainContentTable(NOBORDER); ?>
 <?php # article table start ?>
   <tr>
 	<? echo freshports_PageBannerText("Watch List - categories"); ?>

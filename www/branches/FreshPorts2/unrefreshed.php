@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: unrefreshed.php,v 1.1.2.4 2003-04-27 14:48:18 dan Exp $
+	# $Id: unrefreshed.php,v 1.1.2.5 2005-01-05 23:14:39 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -178,9 +178,11 @@ if (IsSet($_POST['port_id']) && $User->type == SUPER_USER ) {
 }
 
 ?>
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<TR><td VALIGN=TOP>
-<TABLE WIDTH="100%" ALIGN="left" border="0">
+	<?php echo freshports_MainTable(); ?>
+
+	<tr><td valign="top" width="100%">
+
+	<?php echo freshports_MainContentTable(); ?>
 <TR>
 	<? echo freshports_PageBannerText("Unrefreshed ports"); ?>
 </TR>

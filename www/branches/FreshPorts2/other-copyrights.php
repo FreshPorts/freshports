@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: other-copyrights.php,v 1.1.4.10 2003-04-27 14:48:14 dan Exp $
+	# $Id: other-copyrights.php,v 1.1.4.11 2005-01-05 23:14:38 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -17,7 +17,8 @@
 
 ?>
 
-<TABLE WIDTH="<? echo $TableWidth; ?>" ALIGN="center" BORDER="0">
+	<?php echo freshports_MainTable(); ?>
+
   <TR>
 	<TD VALIGN="top" WIDTH="100%">
 	<P>

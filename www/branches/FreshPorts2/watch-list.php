@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-list.php,v 1.2.2.24 2003-11-27 19:54:30 dan Exp $
+	# $Id: watch-list.php,v 1.2.2.25 2005-01-05 23:14:39 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -65,9 +65,11 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 						'FreeBSD, index, applications, ports');
 		?>
 
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<TR><td VALIGN=TOP>
-<TABLE border="0" width="100%">
+	<?php echo freshports_MainTable(); ?>
+
+	<tr><td valign="top" width="100%">
+
+	<?php echo freshports_MainContentTable(); ?>
 <TR>
 	<? echo freshports_PageBannerText("Watch list maintenance"); ?>
 </TR>

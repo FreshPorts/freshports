@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports-forbidden.php,v 1.1.2.16 2004-06-30 15:46:47 dan Exp $
+	# $Id: ports-forbidden.php,v 1.1.2.17 2005-01-05 23:14:38 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -20,10 +20,11 @@
 
 ?>
 
-<TABLE width="<? echo $TableWidth ?>" border="0" ALIGN="center">
+	<?php echo freshports_MainTable(); ?>
 
-<TR><TD valign="top" width="100%">
-<TABLE width="100%" border="0">
+	<tr><td valign="top" width="100%">
+
+	<?php echo freshports_MainContentTable(); ?>
 <TR>
 	<? echo freshports_PageBannerText($Title); ?>
 </TR>

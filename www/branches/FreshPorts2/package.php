@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: package.php,v 1.1.2.2 2004-11-17 22:37:27 dan Exp $
+	# $Id: package.php,v 1.1.2.3 2005-01-05 23:14:38 dan Exp $
 	#
 	# Copyright (c) 2004 DVL Software Limited
 	#
@@ -25,9 +25,12 @@
 	$Searches = new Searches($dbh);
 
 ?>
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<TR><td VALIGN=TOP width="100%">
-<TABLE WIDTH="100%" ALIGN="left" border="0">
+	<?php echo freshports_MainTable(); ?>
+
+	<tr><td valign="top" width="100%">
+
+	<?php echo freshports_MainContentTable(); ?>
+
 <TR>
 	<? echo freshports_PageBannerText($Title); ?>
 </TR>

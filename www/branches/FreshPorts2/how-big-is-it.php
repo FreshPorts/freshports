@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: how-big-is-it.php,v 1.1.2.15 2004-11-12 20:49:24 dan Exp $
+	# $Id: how-big-is-it.php,v 1.1.2.16 2005-01-05 23:14:37 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -45,9 +45,12 @@ function StatsSQL($db, $Title, $Date) {
 }
 
 ?>
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<TR><td VALIGN=TOP>
-<TABLE width="100%" border="0">
+	<?php echo freshports_MainTable(); ?>
+
+	<tr><td valign="top" width="100%">
+
+	<?php echo freshports_MainContentTable(NOBORDER); ?>
+
 <TR>
 	<? echo freshports_PageBannerText("How big is it"); ?>
 </TR>

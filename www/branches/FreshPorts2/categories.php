@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.24 2003-05-02 12:09:41 dan Exp $
+	# $Id: categories.php,v 1.1.2.25 2005-01-05 23:14:36 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -33,9 +33,12 @@
 
 ?>
 
-<table width="<? echo $TableWidth ?>" border="0" ALIGN="center">
+<?php echo freshports_MainTable(); ?>
+
 <tr><td valign="top" width="100%">
-<table width="100%" border="0" CELLPADDING="5">
+
+<?php echo freshports_MainContentTable(); ?>
+
   <tr>
 	<? echo freshports_PageBannerText("$FreshPortsTitle - list of categories", $ColSpan); ?>
   </tr>

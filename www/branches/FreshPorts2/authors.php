@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: authors.php,v 1.1.2.19 2004-11-20 03:42:17 dan Exp $
+	# $Id: authors.php,v 1.1.2.20 2005-01-05 23:14:36 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -15,9 +15,12 @@
 					'FreeBSD, index, applications, ports');
 
 ?>
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<tr><td valign="top">
-<table width="100%" border="0">
+	<?php echo freshports_MainTable(); ?>
+
+	<tr><td valign="top" width="100%">
+
+	<?php echo freshports_MainContentTable(); ?>
+
   <tr>
 	<? echo freshports_PageBannerText("About the authors"); ?>
   </tr>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: graphs.php,v 1.5.2.21 2003-04-27 14:48:12 dan Exp $
+	# $Id: graphs.php,v 1.5.2.22 2005-01-05 23:14:37 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -14,9 +14,12 @@
 					'freshports - new ports, applications',
 					'FreeBSD, index, applications, ports');
 ?>
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<TR><TD VALIGN=TOP WIDTH="100%">
-<TABLE WIDTH="100%" BORDER="0">
+	<?php echo freshports_MainTable(); ?>
+
+	<tr><td valign="top" width="100%">
+
+	<?php echo freshports_MainContentTable(); ?>
+
 <TR>
 	<? echo freshports_PageBannerText("Statistics - everyone loves a graph"); ?>
 </TR>

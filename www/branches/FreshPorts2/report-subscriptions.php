@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: report-subscriptions.php,v 1.1.2.23 2003-10-16 19:49:30 dan Exp $
+	# $Id: report-subscriptions.php,v 1.1.2.24 2005-01-05 23:14:39 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -132,7 +132,8 @@
 	$Frequencies = freshports_ReportFrequencies($db);
 ?>
 
-<TABLE WIDTH="<? echo $TableWidth; ?>" ALIGN="center" BORDER="0">
+<?php echo freshports_MainTable(); ?>
+
   <TR>
 
 <TD WIDTH="100%" VALIGN="top">

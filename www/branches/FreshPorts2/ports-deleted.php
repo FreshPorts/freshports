@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports-deleted.php,v 1.1.2.24 2004-06-30 15:44:00 dan Exp $
+	# $Id: ports-deleted.php,v 1.1.2.25 2005-01-05 23:14:38 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -21,10 +21,13 @@
 
 ?>
 
-<TABLE width="<? echo $TableWidth ?>" border="0" ALIGN="center">
 
-<TR><TD valign="top" width="100%">
-<TABLE width="100%" border="0">
+	<?php echo freshports_MainTable(); ?>
+
+	<tr><td valign="top" width="100%">
+
+	<?php echo freshports_MainContentTable(); ?>
+
 <TR>
 	<? echo freshports_PageBannerText($Title); ?>
 </TR>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.66 2005-01-03 04:16:25 dan Exp $
+	# $Id: faq.php,v 1.1.2.67 2005-01-05 23:14:37 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -20,9 +20,12 @@
 	GLOBAL $FreshPortsSlogan;
 
 ?>
-<TABLE WIDTH="<?php echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<tr><td valign="top" width="100%">
-<table width="100%" border="0">
+	<?php echo freshports_MainTable(); ?>
+
+	<tr><td valign="top" width="100%">
+
+	<?php echo freshports_MainContentTable(NOBORDER); ?>
+
 
 <tr>
 	<?php echo freshports_PageBannerText("FAQ"); ?>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: new-user.php,v 1.1.2.37 2004-01-31 13:07:06 dan Exp $
+	# $Id: new-user.php,v 1.1.2.38 2005-01-05 23:14:38 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -134,7 +134,7 @@ function setfocus() { document.f.UserLogin.focus(); }
 // -->
 </SCRIPT>
 
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<?php echo freshports_MainTable(); ?>
 <TR><TD VALIGN="top" WIDTH="100%">
 <script language="php">
 if ($errors) {
@@ -179,7 +179,7 @@ if (!IsSet($submit) && !$errors) {
 
 </script>
 
-<TABLE CELLSPACING="0" BORDER="0" WIDTH="100%" CELLPADDING="5">
+<?php echo freshports_MainContentTable(); ?>
       <TR>
 		<? echo freshports_PageBannerText("New User Details"); ?>
       </TR>

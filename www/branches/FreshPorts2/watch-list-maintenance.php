@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-list-maintenance.php,v 1.1.2.28 2003-05-08 13:07:45 dan Exp $
+	# $Id: watch-list-maintenance.php,v 1.1.2.29 2005-01-05 23:14:39 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -215,20 +215,21 @@ if ($Debug) echo 'add remove = ' . $User->watch_list_add_remove;
 
 ?>
 
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<TR><td VALIGN="top">
-<TABLE border="0" width="100%">
+	<?php echo freshports_MainTable(); ?>
+
+	<tr><td valign="top" width="100%">
+
+	<?php echo freshports_MainContentTable(); ?>
 <TR>
 	<? echo freshports_PageBannerText("Watch list maintenance"); ?>
 </TR>
-<TR><TD valign="top">
 
 <?php
 	if ($ErrorMessage != '') {
 		echo freshports_ErrorMessage("Let's try that again!", $ErrorMessage);
 	}
 ?>
-
+<tr><td>
 <table WIDTH="100%" BORDER="0">
 <tr><td valign="top">
 
@@ -341,16 +342,12 @@ When clicking on Add/Remove for a port,<br> the action should affect
     to be completed). This is case sensitive.<br>
 
 </p>
-</TD>
-<td>
-</table>
+</td></tr></table>
 </td>
-<td>
-
+<td valign="top">
 	<?
 	freshports_SideBar();
 	?>
-
 </td>
 </tr>
 </table>

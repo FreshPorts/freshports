@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: security-notice.php,v 1.1.2.13 2004-02-13 16:41:19 dan Exp $
+	# $Id: security-notice.php,v 1.1.2.14 2005-01-05 23:14:39 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -72,9 +72,12 @@ function MassageStatus($InStatus) {
 	}
 ?>
 
-<TABLE width="<? echo $TableWidth ?>" border="0" ALIGN="center">
-<TR><TD VALIGN=TOP WIDTH="100%">
-<TABLE WIDTH="100%" border="0">
+	<?php echo freshports_MainTable(); ?>
+
+	<tr><td valign="top" width="100%">
+
+	<?php echo freshports_MainContentTable(); ?>
+
 <TR>
 	<? echo freshports_PageBannerText($PageTitle); ?>
 <TR><TD>
@@ -127,8 +130,6 @@ function MassageStatus($InStatus) {
 		$HTML .= "\n<BLOCKQUOTE>\n";
 		$HTML .= freshports_PortDescriptionPrint($Commit->commit_description, $Commit->encoding_losses);
 		$HTML .= "\n</BLOCKQUOTE>\n</TD></TR>\n\n\n";
-
-		$HTML .= '<tr><td><hr width="97%" align="center"></td></tr>';
 	} else {
 		$HTML = '<TR><TD>I did not find that commit</TD></TR>';
 	}

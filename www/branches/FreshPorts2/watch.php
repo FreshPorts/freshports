@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch.php,v 1.1.2.51 2004-03-22 20:28:45 dan Exp $
+	# $Id: watch.php,v 1.1.2.52 2005-01-05 23:14:39 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -59,7 +59,7 @@
 
 ?>
 
-<table width="<? echo $TableWidth ?>" border="0" ALIGN="center">
+<?php echo freshports_MainTable(); ?>
 
 <tr><td valign="top" width="100%">
 <table width="100%" border="0">

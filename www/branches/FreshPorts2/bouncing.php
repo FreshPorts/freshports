@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: bouncing.php,v 1.1.2.18 2003-04-27 14:48:09 dan Exp $
+	# $Id: bouncing.php,v 1.1.2.19 2005-01-05 23:14:36 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -47,10 +47,11 @@ if ($submit) {
                "FreeBSD, index, applications, ports");
 
 ?>
-<table width="<? echo $TableWidth; ?>" border="0" ALIGN="center">
-<tr>
-<td valign="top" width="100%">
-<table width="100%" border="0">
+	<?php echo freshports_MainTable(); ?>
+
+	<tr><td valign="top" width="100%">
+
+	<?php echo freshports_MainContentTable(NOBORDER); ?>
 
 <tr>
 <? echo freshports_PageBannerText("Bouncing?  What do you mean?"); ?>

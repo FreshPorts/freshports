@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: confirmation.php,v 1.1.2.12 2003-07-04 14:59:16 dan Exp $
+	# $Id: confirmation.php,v 1.1.2.13 2005-01-05 23:14:37 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -34,7 +34,7 @@
 ?>
 
 
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<?php echo freshports_MainTable(); ?>
 <tr><td VALIGN=TOP width="100%">
 <TABLE WIDTH="100%">
 <TR>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-category.php,v 1.1.2.31 2004-10-24 14:41:35 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.32 2005-01-05 23:14:37 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -121,10 +121,12 @@ function freshports_CategoryDisplay($db, $category, $PageNo = 1, $PageSize = 25)
 
 	?>
 
+	<?php echo freshports_MainTable(); ?>
 
-	<table width="<? echo $TableWidth ?>" border="0" ALIGN="center">
 	<tr><td valign="top" width="100%">
-	<table width="100%" border="0">
+
+	<?php echo freshports_MainContentTable(); ?>
+
 		<tr>
 		 <? echo freshports_PageBannerText('Category listing - ' . $category->{'name'}); ?>
 		</tr>

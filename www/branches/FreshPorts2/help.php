@@ -1,5 +1,5 @@
 <?
-	# $Id: help.php,v 1.1.2.13 2003-11-24 00:32:35 dan Exp $
+	# $Id: help.php,v 1.1.2.14 2005-01-05 23:14:37 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 
@@ -13,9 +13,11 @@
 					'FreeBSD, index, applications, ports');
 
 ?>
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<TR><TD VALIGN=TOP>
-<TABLE BORDER="0">
+	<?php echo freshports_MainTable(); ?>
+
+	<tr><td valign="top" width="100%">
+
+	<?php echo freshports_MainContentTable(NOBORDER); ?>
 <TR>
 	<? echo freshports_PageBannerText("pkg_info and your watch list "); ?>
 </TR>

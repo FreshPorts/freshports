@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.69 2004-12-14 01:46:44 dan Exp $
+	# $Id: search.php,v 1.1.2.70 2005-01-05 23:14:39 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -108,14 +108,14 @@
 					'FreeBSD, index, applications, ports');
 
 ?>
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<tr><td valign="top" width="100%">                    
-<table width="100%" border="0">                       
+
+<?php echo freshports_MainTable(); ?>
+<tr><td valign="top" width="100%">
+<?php echo freshports_MainContentTable(); ?>
   <tr>
 	<? echo freshports_PageBannerText("Search"); ?>
   </tr>
 <tr><td valign="top">
-<tr><td>
 <?
 
 #
@@ -579,7 +579,6 @@ Special searches:
 <?php
 }
 ?>
-<hr>
 </td></tr>
 <?
 if ($search) {

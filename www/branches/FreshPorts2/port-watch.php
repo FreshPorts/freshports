@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-watch.php,v 1.1.2.42 2003-09-30 00:00:36 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.43 2005-01-05 23:14:38 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -110,9 +110,11 @@ if ($submit) {
 }
 ?>
 
-<table width="100%" border="0">
-<tr><td valign="top" width="100%">
-<table width="100%" border="0">
+	<?php echo freshports_MainTable(); ?>
+
+	<tr><td valign="top" width="100%">
+
+	<?php echo freshports_MainContentTable(); ?>
   <tr>
 	<? echo freshports_PageBannerText("Watch List - " . $category) ?>
   </tr>
@@ -218,6 +220,7 @@ if ($numrows) {
 ?>
 
 <div align="center">
+<br>
 <input TYPE="submit" VALUE="update watch list" name="submit">
 <input TYPE="reset"  VALUE="reset form">
 <input type="hidden" name="watch_list_id" value="<?php echo $wlid; ?>">

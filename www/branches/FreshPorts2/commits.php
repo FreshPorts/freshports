@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits.php,v 1.1.2.3 2005-01-03 21:34:07 dan Exp $
+	# $Id: commits.php,v 1.1.2.4 2005-01-05 23:14:36 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -75,11 +75,8 @@ function freshports_SummaryForDay($MinusN) {
    }
 }
 
-?>
+echo freshports_MainTable();
 
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-
-<?php
 $num          = $MaxNumberOfPortsLong;
 $days         = $NumberOfDays;
 $dailysummary = 7;
@@ -111,10 +108,9 @@ if (Is_Numeric($dailysummary)) {
 if ($db) {
 ?>
 <TR><TD VALIGN="top" WIDTH="100%">
-<TABLE WIDTH="100%" border="1" CELLSPACING="0" CELLPADDING="8">
-<?php
-	echo PortsFreezeStatus();
-?>
+
+<?php echo freshports_MainContentTable(); ?>
+
 <TR>
 <? echo freshports_PageBannerText("$MaxNumberOfPortsLong most recently changed ports", 3); ?>
         <? //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPortsLong) ?>

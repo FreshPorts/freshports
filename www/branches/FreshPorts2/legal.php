@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: legal.php,v 1.1.2.12 2004-01-01 13:59:52 dan Exp $
+	# $Id: legal.php,v 1.1.2.13 2005-01-05 23:14:37 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -16,9 +16,11 @@
 
 ?>
 
-<TABLE WIDTH="<? echo $TableWidth ?>" BORDER="0" ALIGN="center">
-<TR><TD VALIGN="top">
-<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="5">
+	<?php echo freshports_MainTable(); ?>
+
+	<tr><td valign="top" width="100%">
+
+	<?php echo freshports_MainContentTable(NOBORDER); ?>
   <TR>
     <TD bgcolor="#AD0040" height="32"><FONT COLOR="#FFFFFF" SIZE="+1">LEGAL NOTICE</FONT></TD>
   </TR>

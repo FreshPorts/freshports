@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: vuxml.php,v 1.1.2.9 2005-01-03 21:34:40 dan Exp $
+	# $Id: vuxml.php,v 1.1.2.10 2005-01-05 23:14:39 dan Exp $
 	#
 	# Copyright (c) 2004 DVL Software Limited
 	#
@@ -26,6 +26,8 @@
 
 <html>
 <body>
+
+<?php echo freshports_MainTable(); ?>
 
 <h1>FreshPorts - VuXML</h1>
 

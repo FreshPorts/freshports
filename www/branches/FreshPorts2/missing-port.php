@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.54 2005-01-03 21:34:08 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.55 2005-01-05 23:14:38 dan Exp $
 	#
 	# Copyright (c) 2001-2003 DVL Software Limited
 	#
@@ -40,12 +40,13 @@ function freshports_PortDescription($db, $element_id) {
 
 ?>
 
-<TABLE WIDTH="<? echo $TableWidth ?>" BORDER="0" ALIGN="center">
+
+<?php echo freshports_MainTable(); ?>
+
 <tr><TD VALIGN="top" width="100%">
-<TABLE WIDTH="100%" border="1" CELLSPACING="0" CELLPADDING="8">
-<?php
-	echo PortsFreezeStatus();
-?>
+
+<?php echo freshports_MainContentTable(); ?>
+
 <TR>
 <? echo freshports_PageBannerText("Port details"); ?>
 </TR>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: pkg_upload.php,v 1.5.2.39 2004-11-03 23:46:01 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.40 2005-01-05 23:14:38 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -195,9 +195,11 @@ function ChooseWatchLists($UserID, $db) {
 
 ?>
 
-<TABLE width="<? echo $TableWidth ?>" border="0" ALIGN="center">
-<TR><TD VALIGN=TOP>
-<TABLE WIDTH="100%" border="0">
+	<?php echo freshports_MainTable(); ?>
+
+	<tr><td valign="top" width="100%">
+
+	<?php echo freshports_MainContentTable(); ?>
 <TR>
 	<? echo freshports_PageBannerText("Uploading pkg_info"); ?>
 <TR><TD>

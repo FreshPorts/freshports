@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.202 2005-01-03 21:34:08 dan Exp $
+	# $Id: freshports.php,v 1.4.2.203 2005-01-05 23:14:40 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -20,10 +20,27 @@ DEFINE('COPYRIGHTYEARS',        '2000-2005');
 DEFINE('URL2LINK_CUTOFF_LEVEL', 0);
 DEFINE('FAQLINK',               'faq.php');
 DEFINE('PORTSMONURL',			'http://portsmon.firepipe.net/portoverview.py');
+DEFINE('NOBORDER',              '0');
 
 if ($Debug) echo "'" . $_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php<BR>';
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php');
+
+function freshports_MainTable() {
+	echo '<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+';
+}
+
+function freshports_MainContentTable($Border=1) {
+	echo '<TABLE WIDTH="100%" border="' . $Border . '" CELLSPACING="0" CELLPADDING="8">
+';
+}
+
+function  freshports_ErrorContentTable() {
+	echo '<TABLE WIDTH="100%" BORDER="1" ALIGN="center" CELLPADDING="1" CELLSPACING="0">
+';
+}
+
 
 function PortsFreezeStatus() {
 	#

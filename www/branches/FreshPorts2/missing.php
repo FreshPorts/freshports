@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing.php,v 1.1.2.23 2004-08-26 11:28:20 dan Exp $
+	# $Id: missing.php,v 1.1.2.24 2005-01-05 23:14:38 dan Exp $
 	#
 	# Copyright (c) 2001-2003 DVL Software Limited
 	#
@@ -117,10 +117,10 @@ if ($result) {
 
 ?>
 
-<TABLE WIDTH="<? echo $TableWidth ?>" BORDER="0" ALIGN="center">
+<?php echo freshports_MainTable(); ?>
 <TR>
 <TD WIDTH="100%" VALIGN="top">
-<TABLE WIDTH="100%" BORDER="0" CELLPADDING="1">
+<?php echo freshports_MainContentTable(); ?>
 <TR>
     <TD BGCOLOR="#AD0040" HEIGHT="29"><FONT COLOR="#FFFFFF"><BIG><BIG>
 <?

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: welcome.php,v 1.1.2.17 2003-04-27 14:48:19 dan Exp $
+	# $Id: welcome.php,v 1.1.2.18 2005-01-05 23:14:39 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -17,9 +17,11 @@
 	$origin = $_GET["origin"];
 
 ?>
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<TR><TD VALIGN="top">
-<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="5">
+	<?php echo freshports_MainTable(); ?>
+
+	<tr><td valign="top" width="100%">
+
+	<?php echo freshports_MainContentTable(); ?>
   <TR>
 	<? echo freshports_PageBannerText("Account created"); ?>
   </TR>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: release-2003-04-29.php,v 1.1.2.5 2004-10-24 21:39:24 dan Exp $
+	# $Id: release-2003-04-29.php,v 1.1.2.6 2005-01-05 23:14:38 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -17,9 +17,12 @@
 					"FreeBSD, index, applications, ports");
 
 ?>
-<TABLE WIDTH="<?php echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<TR><td VALIGN=TOP>
-<TABLE WIDTH="100%" ALIGN="left" border="0">
+	<?php echo freshports_MainTable(); ?>
+
+	<tr><td valign="top" width="100%">
+
+	<?php echo freshports_MainContentTable(NOBORDER); ?>
+
 <TR>
 	<?php echo freshports_PageBannerText($Title); ?>
 </TR>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: date.php,v 1.1.2.27 2004-12-03 00:56:56 dan Exp $
+	# $Id: date.php,v 1.1.2.28 2005-01-05 23:14:37 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -242,12 +242,13 @@ $Tomorrow  = freshports_LinkToDate(strtotime($Date) + 86400, "Following day");
 echo "<center>$Yesterday $Tomorrow</center>";
 ?>
 
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<?php freshports_MainTable(); ?>
+
 <TR><TD VALIGN="top" WIDTH="100%">
 
 <?php
 
-echo '<TABLE WIDTH="100%" BORDER="1" CELLSPACING="0" CELLPADDING="8">';
+echo freshports_MainContentTable();
 
 $HTML = ArchiveCreate($Date, $DateMessage, $db, $User);
 

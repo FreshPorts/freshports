@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.48 2004-12-03 00:56:55 dan Exp $
+	# $Id: commit.php,v 1.1.2.49 2005-01-05 23:14:36 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -110,7 +110,11 @@ if ($Debug) echo "UserID='$User->id'";
 
 ?>
 
-<TABLE WIDTH="<? echo $TableWidth ?>" BORDER="0" ALIGN="center">
+	<?php echo freshports_MainTable(); ?>
+
+	<tr><td valign="top" width="100%">
+
+	<?php echo freshports_MainContentTable(NOBORDER); ?>
 
 <?
 if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
@@ -126,7 +130,6 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 	
 ?>
 
-<TR><TD VALIGN="top" WIDTH="100%">
 <TABLE WIDTH="100%" border="1" CELLSPACING="0" CELLPADDING="8">
 <TR>
 	<? echo freshports_PageBannerText($Title, 3); ?>

@@ -125,7 +125,7 @@
         $convfunc="FROM_UNIXTIME";
       }
       else{
-        $convfunc="datetime";
+        $convfunc="abstime";
       }
       $SQL = "SELECT thread, modifystamp, count(id) AS tcount, $convfunc(modifystamp) AS latest, max(id) as maxid FROM $ForumTableName WHERE approved='Y' $myflag GROUP BY thread, modifystamp ORDER BY modifystamp desc, thread desc".$limit;
     }

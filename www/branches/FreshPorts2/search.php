@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.47 2003-09-13 11:15:53 dan Exp $
+	# $Id: search.php,v 1.1.2.48 2003-10-02 14:23:34 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -9,6 +9,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/htmlify.php');
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
 
@@ -411,15 +412,14 @@ if ($NumRows == 0) {
 	}
 
 	if ($start > 1) {
-		$QueryString = $_SERVER['QUERY_STRING'];
 		$QueryString = preg_replace("/start=(\d+)/e", "'start=' . max(1, ($start - $num))", $QueryString);
-		$NumPortsFound .= ' <a href="' . $_SERVER['PHP_SELF'] . '?' . $QueryString . '">Previous page</a>';
+		$NumPortsFound .= ' <a href="' . $_SERVER['PHP_SELF'] . '?' . htmlify(htmlspecialchars($QueryString)) . '">Previous page</a>';
 	}
 
 	if ($MoreToShow) {
 		$QueryString = $_SERVER['QUERY_STRING'];
 		$QueryString = preg_replace("/start=(\d+)/e", "'start=' . ($start + $num)", $QueryString);
-		$NumPortsFound .= ' <a href="' . $_SERVER['PHP_SELF'] . '?' . $QueryString . '">Next page</a>';
+		$NumPortsFound .= ' <a href="' . $_SERVER['PHP_SELF'] . '?' . htmlify(htmlspecialchars($QueryString)) . '">Next page</a>';
 	}
 
 	

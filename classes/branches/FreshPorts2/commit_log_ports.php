@@ -1,7 +1,8 @@
 <?php
-	# $Id: commit_log_ports.php,v 1.1.2.18 2004-09-22 13:58:17 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# $Id: commit_log_ports.php,v 1.1.2.19 2004-09-22 14:00:55 dan Exp $
+	#
+	# Copyright (c) 1998-2004 DVL Software Limited
 	#
 
 

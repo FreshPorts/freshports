@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.95 2002-05-18 18:30:17 dan Exp $
+	# $Id: freshports.php,v 1.4.2.96 2002-05-18 18:33:28 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -1098,10 +1098,6 @@ function freshports_UserSendToken($UserID, $dbh) {
 	# send the confirmation token to the user
 	#
 
-	GLOBAL	$REMOTE_ADDR;
-	GLOBAL	$REMOTE_PORT;
-	GLOBAL	$HTTP_HOST;
-
 	$sql = "select email, token 
 	          from users, user_confirmations
 	         where users.id = $UserID
@@ -1126,21 +1122,21 @@ function freshports_UserSendToken($UserID, $dbh) {
 
 		$message =  "Someone, perhaps you, supplied your email address as their\n".
 					"FreshPorts login. If that wasn't you, and this message becomes\n".
-				    "a nuisance, please forward this message to webmaster@$_SERVER["HTTP_HOST"]\n".
+				    "a nuisance, please forward this message to webmaster@" . $_SERVER["HTTP_HOST"] . "\n".
 					"and we will take care of it for you.\n".
                     " \n".
 	                "Your token is: $token\n".
     	            "\n".
         	        "Please point your browser at\n".
-					"http://$HTTP_HOST/confirmation.php?token=$token\n" .
+					"http://" . $_SERVER["HTTP_HOST"] . "/confirmation.php?token=$token\n" .
 	                "\n".
     	            "the request came from " . $_SERVER["REMOTE_ADDR"] . ":" . $_SERVER["REMOTE_PORT"] ."\n".
 					"\n".
 					"-- \n".
-					"FreshPorts - http://$HTTP_HOST/ - the place for ports";
+					"FreshPorts - http://" . $_SERVER["HTTP_HOST"] . "/ - the place for ports";
 
 		$result = mail($email, "FreshPorts - user registration", $message,
-					"From: webmaster@$HTTP_HOST\nReply-To: webmaster@$HTTP_HOST\nX-Mailer: PHP/" . phpversion());
+					"From: webmaster@" . $_SERVER["HTTP_HOST"] . "\nReply-To: webmaster@" . $_SERVER["HTTP_HOST"] . "\nX-Mailer: PHP/" . phpversion());
 	} else {
 		$result = 0;
 	}

@@ -1,5 +1,5 @@
 <?
-	# $Id: commit_log_ports.php,v 1.1.2.4 2002-02-20 23:13:53 dan Exp $
+	# $Id: commit_log_ports.php,v 1.1.2.5 2002-02-21 00:28:53 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -31,7 +31,7 @@ class Commit_Log_Ports {
 
 		$sql = "select	commit_log.id, 
 						message_id,
-					    to_char(commit_date + INTERVAL '$CVSTimeAdjustment seconds', 'DD Mon YYYY HH:MI:SS')  as commit_date,
+					    to_char(commit_date + INTERVAL '$CVSTimeAdjustment seconds', 'DD Mon YYYY HH24:MI:SS')  as commit_date,
 						description,
 						committer 
 				   from commit_log, commit_log_ports

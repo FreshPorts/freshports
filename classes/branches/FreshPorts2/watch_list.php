@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch_list.php,v 1.1.2.11 2003-03-05 21:33:05 dan Exp $
+	# $Id: watch_list.php,v 1.1.2.12 2003-03-05 21:40:48 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -127,7 +127,7 @@ DELETE FROM watch_list_element
 		# Empty all watch lists
 		#
 		unset($return);
-		$Debug = 1;
+		$Debug = 0;
 
 		$query = "
 DELETE FROM watch_list_element

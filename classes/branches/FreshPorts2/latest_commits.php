@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: latest_commits.php,v 1.1.2.7 2004-09-22 13:57:58 dan Exp $
+	# $Id: latest_commits.php,v 1.1.2.8 2004-12-19 16:41:26 dan Exp $
 	#
 	# Copyright (c) 2003-2004 DVL Software Limited
 	#
@@ -148,12 +148,12 @@ class LatestCommits {
 
 						// indicate if this port has been removed from cvs
 						if ($mycommit->status == "D") {
-							$this->HTML .= " " . freshports_Deleted_Icon() . "\n";
+							$this->HTML .= " " . freshports_Deleted_Icon_Link() . "\n";
 						}
 
 						// indicate if this port needs refreshing from CVS
 						if ($mycommit->needs_refresh) {
-							$this->HTML .= " " . freshports_Refresh_Icon() . "\n";
+							$this->HTML .= " " . freshports_Refresh_Icon_Link() . "\n";
 						}
 						if ($mycommit->date_added > Time() - 3600 * 24 * $this->DaysMarkedAsNew) {
 							$MarkedAsNew = "Y";
@@ -161,19 +161,19 @@ class LatestCommits {
 						}
 
 						if ($mycommit->forbidden) {
-							$this->HTML .= ' ' . freshports_Forbidden_Icon() . "\n";
+							$this->HTML .= ' ' . freshports_Forbidden_Icon_Link() . "\n";
 						}
 
 						if ($mycommit->broken) {
-							$this->HTML .= ' '. freshports_Broken_Icon() . "\n";
+							$this->HTML .= ' '. freshports_Broken_Icon_Link() . "\n";
 						}
 
 						if ($mycommit->deprecated) {
-							$this->HTML .= ' '. freshports_Deprecated_Icon() . "\n";
+							$this->HTML .= ' '. freshports_Deprecated_Icon_Link() . "\n";
 						}
 
 						if ($mycommit->ignore) {
-							$this->HTML .= ' '. freshports_Ignore_Icon() . "\n";
+							$this->HTML .= ' '. freshports_Ignore_Icon_Link() . "\n";
 						}
 
 						$this->HTML .= freshports_CommitFilesLink($mycommit->message_id, $mycommit->category, $mycommit->port);

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.10 2003-12-10 13:31:04 dan Exp $
+	# $Id: index.php,v 1.1.2.11 2003-12-11 19:58:45 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -47,7 +47,6 @@ Here a few supporting documents:
 <li><a href="/fraud/freshports.net.jpg">Their fake page</a>
 <li><a href="/fraud/freshports.net.code.php">Source code for their page</a>
 <li><a href="/fraud/freshports.net.paypal.jpg">Their paypal page</a>
-<li><a href="/fraud/freshports.net.adminforum.se.jpg">Adminforum.se</a>
 <li><a href="/fraud/freshports.net.openbsdinstead.jpg">OpenBSD instead</a>
 <li><a href="/fraud/freshports.net.search.msn.com.jpg">What MSN says about freshports.net</a> (see for <a href="http://search.msn.com/results.aspx?q=freshports.net&FORM=SMCRT">yourself</a>)
 </ul>

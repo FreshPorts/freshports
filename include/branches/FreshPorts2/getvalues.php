@@ -1,6 +1,6 @@
 <?php
 
-	# $Id: getvalues.php,v 1.1.2.17 2002-12-04 18:57:24 dan Exp $
+	# $Id: getvalues.php,v 1.1.2.18 2002-12-06 14:33:14 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -171,8 +171,8 @@ if (!empty($visitor)) {
 				$result = pg_exec($db, $sql);
 
 				if (!$WatchListID) {
-					echo "OUCH, sorry, I don't know what your watch list ID is.\n";
-					exit;
+#					echo "OUCH, sorry, I don't know what your watch list ID is.\n";
+#					exit;
 				}
 			}
 		} else {

@@ -1,5 +1,5 @@
 <?
-	# $Id: footer.php,v 1.5.2.6 2002-04-18 20:59:33 dan Exp $
+	# $Id: footer.php,v 1.5.2.7 2002-05-10 23:21:29 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 ?>
@@ -18,8 +18,8 @@ ALT="powered by FreeBSD" BORDER="0" WIDTH="171" HEIGHT="64"></A>
 
 &nbsp;
 
-<A HREF="http://www.postgresql.org/"><IMG SRC="/images/postgresql-powered_button4.gif"
-ALT="powered by PostgreSQL" BORDER="0" WIDTH="182" HEIGHT="41"></A>
+<A HREF="http://www.phorum.org/"><IMG SRC="/phorum/images/phorum.gif"
+ALT="powered by phorum" BORDER="0" WIDTH="200" HEIGHT="50"></A>
 
 &nbsp;
 
@@ -29,13 +29,15 @@ ALT="powered by php" BORDER="0" WIDTH="95" HEIGHT="50"></A>
 </TD></TR>
 <TR><TD align="center">
 
-<A HREF="http://www.apache.org/"><IMG SRC="/images/apache_pb.gif" 
-ALT="powered by apache" BORDER="0" WIDTH="259" HEIGHT="32"></A>
+
+<A HREF="http://www.postgresql.org/"><IMG SRC="/images/postgresql-powered_button4.gif"
+ALT="powered by PostgreSQL" BORDER="0" WIDTH="182" HEIGHT="41"></A>
+
 
 &nbsp;&nbsp;&nbsp;
 
-<A HREF="http://www.phorum.org/"><IMG SRC="/phorum/images/phorum.gif"
-ALT="powered by phorum" BORDER="0" WIDTH="88" HEIGHT="31"></A>
+<A HREF="http://www.apache.org/"><IMG SRC="/images/apache_pb.gif" 
+ALT="powered by apache" BORDER="0" WIDTH="259" HEIGHT="32"></A>
 
 </TR>
 

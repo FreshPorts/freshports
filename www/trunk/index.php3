@@ -61,7 +61,7 @@ if ($Debug) {
 <meta name="description" content="freshports - new ports, applications">
 <meta name="keywords" content="FreeBSD, index, applications, ports">  
 <!--// DVL Software is a New Zealand company specializing in database applications. //-->
-<title>freshports</title>
+<title>freshports - the place for ports</title>
 </head>
 
 <body bgcolor="#ffffff" link="#0000cc">
@@ -83,7 +83,7 @@ ports.
             bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">
 <tr>
     <td colspan="3" bgcolor="#AD0040" height="30">
-        <font color="#FFFFFF" size="+1">freshports - 100 most recent commits
+        <font color="#FFFFFF" size="+1">freshports - <? echo $MaxNumberOfPorts ?> most recent commits
         <? //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPorts) ?></font>
     </td>
 </tr>
@@ -131,23 +131,23 @@ echo 'filectime($cache_file) - filectime($LastUpdateFile) + $cache_time_rnd =', 
 
 $UpdateCache = 0;
 if (!file_exists($cache_file)) {
-//   echo 'cache does not exist<br>';
+   if ($Debug) echo 'cache does not exist<br>';
    // cache does not exist, we create it
    $UpdateCache = 1;
 } else {
-//   echo 'cache exists<br>';
+   if ($Debug) echo 'cache exists<br>';
    if (!file_exists($LastUpdateFile)) {
       // no updates, so cache is fine.
-//      echo 'but no update file<br>';
+      if ($Debug) echo 'but no update file<br>';
       $UpdateCache = 1;
    } else {
-//      echo 'cache file was ';
+      if ($Debug) echo 'cache file was ';
       // is the cache older than the db?
       if ((filectime($cache_file) + $cache_time_rnd) < filectime($LastUpdateFile)) {
-//         echo 'created before the last database update<br>';
+         if ($Debug) echo 'created before the last database update<br>';
          $UpdateCache = 1;
       } else {
-//         echo 'created after the last database update<br>';
+         if ($Debug)  echo 'created after the last database update<br>';
       }
    }
 }
@@ -155,7 +155,7 @@ if (!file_exists($cache_file)) {
 //$UpdateCache = 1;
 
 if ($UpdateCache == 1) {
-//   echo 'time to update the cache';
+   if ($Debug) echo 'time to update the cache';
 
 $sql = "select ports.id, ports.name as port, change_log.commit_date as updated_raw, categories.name as category, " .
        "ports.committer, ports.last_update_description as update_description, ports.version as version, " .
@@ -176,7 +176,7 @@ $sql = "select ports.id, ports.name as port, change_log.commit_date as updated_r
 
 $sql .= " order by $sort ";
 
-$sql .= " limit 100 ";
+$sql .= " limit $MaxNumberOfPorts ";
 
 //echo $sql;
 

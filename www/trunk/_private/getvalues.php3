@@ -15,7 +15,7 @@ $DaysToShow  = 20;
 $MaxArticles = 40;
 $DaysNew     = 10;
 
-$MaxNumberOfPorts	= 20;
+$MaxNumberOfPorts	= 200;
 $ShowShortDescription	= "Y";
 $ShowMaintainedBy	= "Y";
 $ShowLastChange		= "Y";
@@ -62,7 +62,7 @@ if (!empty($visitor)) {
          $email			= $myrow["email"];
          $watchnotifyfrequency	= $myrow["watchnotifyfrequency"];
 
-         $MaxNumberOfPorts	= $myrow["max_number_of_ports"];
+//         $MaxNumberOfPorts	= $myrow["max_number_of_ports"];
          $ShowShortDescription	= $myrow["show_short_description"];
          $ShowMaintainedBy	= $myrow["show_maintained_by"];
          $ShowLastChange	= $myrow["show_last_change"];

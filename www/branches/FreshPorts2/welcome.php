@@ -1,5 +1,5 @@
 <?
-	# $Id: welcome.php,v 1.1.2.5 2002-02-23 23:27:42 dan Exp $
+	# $Id: welcome.php,v 1.1.2.6 2002-04-20 03:23:36 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -14,14 +14,13 @@
 
 ?>
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<tr><td valign="top">
-<table width="100%" border="0" CELLSPACING="0" CELLPADDING="5"
-            bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">
-  <tr>
+<TR><TD VALIGN="top">
+<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="5">
+  <TR>
 	<? freshports_PageBannerText("Account created"); ?>
-  </tr>
-	<tr>
-	<td>
+  </TR>
+	<TR>
+	<TD>
 	<P>
 	Your account has been created.
 	</P>
@@ -35,14 +34,14 @@
 	Click <a href="<? echo $origin?>">here</a> to return to your previous page.
 	</P>
 
-</td></tr>
-</table>
-</td>
-  <td valign="top" width="*">
+</TD></TR>
+</TABLE>
+</TD>
+  <TD VALIGN="top" WIDTH="*">
     <? include("./include/side-bars.php") ?>
- </td>
-</tr>
-</table>
+ </TD>
+</TR>
+</TABLE>
 <? include("./include/footer.php") ?>
-</body>
-</html>
+</BODY>
+</HTML>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: constants.php,v 1.1.2.8 2003-05-02 12:09:42 dan Exp $
+	# $Id: constants.php,v 1.1.2.9 2003-09-25 12:58:33 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -65,10 +65,10 @@ $Sequence_Security_Notice_ID	= 'security_notice_id_seq';
 #
 
 // path to the CVS repository
-$freshports_CVS_URL = "http://www.FreeBSD.org/cgi/cvsweb.cgi";
+define('FRESHPORTS_FREEBSD_CVS_URL' , 'http://www.FreeBSD.org/cgi/cvsweb.cgi');
 
 // path to the ftp server
-$freshports_FTP_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports/";
+define('FRESHPORTS_FREEBSD_FTP_URL', 'ftp://ftp.freebsd.org/pub/FreeBSD/ports/i386/packages-stable/All');
 
 // path to the cvs-all mailing list archive
 $freshports_mail_archive = "http://www.freebsd.org/cgi/mid.cgi?db=mid&id=";

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: htmlify.php,v 1.1.2.2 2003-09-12 14:02:04 dan Exp $
+	# $Id: htmlify.php,v 1.1.2.3 2003-09-12 14:23:28 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -47,6 +47,17 @@ function mail2link($Arr) {
 	return $addr;
 }
 
+function entity($Arr) {
+	$o = ord($Arr[0]);
+	if ($o < 65) {
+		$result = "&#$o";
+	} else {
+		$result = $Arr[0];
+	}
+
+	return $result;
+}
+
 function url2link($Arr) {
 	#
 	# URLs will be truncated if they are too long. But only
@@ -55,8 +66,8 @@ function url2link($Arr) {
 	$html  = $Arr[1];
 	$vhtml = $html;
 
-	$html  = preg_replace("/@/", "&#64", $html);
-	$vhtml = preg_replace("/@/", "&#64", $vhtml);
+    $html  = preg_replace_callback("/(.)/", 'entity', $html);
+    $vhtml = preg_replace_callback("/(.)/", 'entity', $vhtml);
 	
 	return "<A HREF=\"$html\">$vhtml</A>" . $Arr[3];
 }
@@ -96,8 +107,9 @@ function htmlify($String) {
 	$String = preg_replace_callback("/((http|ftp|https):\/\/.*?)($delimiters)/i",                    'url2link',    $String);
 	$String = preg_replace_callback("/(<a href=(\"|')(http|ftp|https):\/\/.*?)(\">|'>)(.*?)<\/a>/i", 'url_shorten', $String);
 	$String = preg_replace_callback("/([\w+=\-.!]+@[\w\-]+(\.[\w\-]+)+)/",                           'mail2link',   $String);
-	$String = preg_replace_callback("/(\bPR[:\#]?)\s*(((\w+\/)?\d+)(,?[\s\n]*((\w+\/)?\d+))*)/",     'pr2link',     $String);
- 
+	$String = preg_replace_callback("/\bPR[:\#]\s*(\d+)([,\s\n]*(\d+))*/",                           'pr2link',     $String);
+	$String = preg_replace_callback("/[\b]?((advocacy|alpha|bin|conf|docs|gnu|i386|ia64|java|kern|misc|ports|powerpc|sparc64|standards|www)\/\d+)/", 'pr2link', $String);
+
 	return $String;
 }
 

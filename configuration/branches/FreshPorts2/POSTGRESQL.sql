@@ -1,5 +1,5 @@
 --
--- $Id: POSTGRESQL.sql,v 1.1.2.42 2004-01-12 21:29:14 dan Exp $
+-- $Id: POSTGRESQL.sql,v 1.1.2.43 2004-01-29 15:53:23 dan Exp $
 --
 -- Copyright (c) 1998-2003 DVL Software Limited
 --
@@ -120,6 +120,7 @@ alter group commits add user commits;
 --
 -- select access only
 --
+grant select                         on announcements                  to group commits;
 grant select, insert, update         on categories                     to group commits;
 grant select, update                 on categories_id_seq              to group commits;
 grant select, insert, update, delete on commit_log                     to group commits;
@@ -201,6 +202,7 @@ alter group reading add user reading;
 
 grant select                         on report_subscriptions           to group reading;
 grant select                         on users                          to group reading;
+
 
 
 --

@@ -80,14 +80,14 @@ sub PortUpdate($;$;$;$;$;$;$;$) {
 
    if (!@row) {
       # no such port.  create it.
-      $sql = "insert into ports (name, description, last_update, primary_category_id, " .
-             "last_update_description, committer, version, date_created, needs_refresh, " .
-             "status, package_exists) values (";
+      $sql = "insert into ports (name, last_update, primary_category_id, " .
+             "last_update_description, committer, date_created, needs_refresh, " .
+             "status, package_exists, short_description) values (";
       # we assume above that the package does not exist until we are told otherwise.
 
       # we don't get a version when inserting, so we must fake it by supplying a name.
-      $sql .= "'$port', '*** no description ***', '$timestamp', $categoryid, '$description', " . 
-              "'$committer', '$port', CurDate(), 'Y', 'N', 'N')";
+      $sql .= "'$port', '$timestamp', $categoryid, '$description', " . 
+              "'$committer', current_timestamp, 'Y', 'N', 'N', '-- waiting for description --')";
 
       print "$sql\n";
 

@@ -5,8 +5,10 @@ require( "./_private/freshports.php3");
 
 $ShowEverything=1;
 
-if (!$port) {
-   $port = 1;
+if (!$port || $port != strval(intval($port))) {
+   $port = 0;                                     
+} else {                                              
+   $port = intval($port);                     
 }
 
 $sql = "select ports.id, ports.name as port, ports.id as ports_id, " .
@@ -21,7 +23,9 @@ $sql = "select ports.id, ports.name as port, ports.id as ports_id, " .
        "WHERE ports.id = $port ".
        "  and ports.primary_category_id       = categories.id ";
 
-//echo "\nsql = $sql\n";
+if ($Debug) {
+   echo "\nsql = $sql\n";
+}
 
 $result = mysql_query($sql, $db);
 
@@ -31,6 +35,8 @@ if (!$result) {
 }
 
 $myrow = mysql_fetch_array($result);
+
+$NumRows = mysql_num_rows($result);
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
@@ -43,8 +49,13 @@ $myrow = mysql_fetch_array($result);
 <title>freshports - 
 
 <?
-   echo $myrow["category"] . "/";
-   echo $myrow["port"];
+   if ($NumRows) {
+      $Title = $myrow["category"] . "/" . $myrow["port"];
+   } else {
+      $Title = "error - nothing found";
+   }
+
+   echo $Title;
 ?>
 </title>
 </head>
@@ -61,7 +72,7 @@ If there is no link to a category, that is because that category
 is a virtual category, and I haven't catered for those yet. But <a href="changes.php3">I plan to</a></p>
 <p>
 <img src="images/new.gif"  alt="new feature" border="0" width="28" height="11" hspace="2">Click on 
-<img src="images/logs.gif" alt="Files within thie port affected by this commit" border="0" WIDTH="17" HEIGHT="20" hspace="2"> 
+<img src="images/logs.gif" alt="Files within this port affected by this commit" border="0" WIDTH="17" HEIGHT="20" hspace="2"> 
 to see what files changed for this port in that commit.</p>
 </td>
 </tr>
@@ -70,47 +81,51 @@ to see what files changed for this port in that commit.</p>
 <tr>
     <td colspan="3" bgcolor="#AD0040" height="29"><font color="#FFFFFF" size="+2">freshports - 
 <?
-   echo $myrow["category"] . "/";
-   echo $myrow["port"];
+   echo $Title;
 ?> 
  </font></td>
 </tr>
 <tr><td colspan="3" valign="top" width="100%">
 <?
-$HideDescription=1;
-$ShowCategories=1;
-$ShowDepends=1;
-include("./_private/port-basics.inc");
 
-echo $HTML;
+if ($NumRows) {
 
-echo "<dl><dd><pre>";
-echo $myrow["long_description"];
-echo "</pre></dd></dl>\n";
+   $HideDescription=1;
+   $ShowCategories=1;
+   $ShowDepends=1;
+   include("./_private/port-basics.inc");
 
-echo '<tr height="20"><td colspan="3"></td></tr>' . "\n";
+   echo $HTML;
 
-echo '<tr><td><table border="1" width="100%" CELLSPACING="0" CELLPADDING="5"bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">' . "\n";
-echo '<tr height="20"><td colspan="3" bgcolor="#AD0040"><font color="#FFFFFF"><font size="+1">Commit History</font> (may be incomplete: see Changes link above for full details)</font></td></tr>' . "\n";
-echo "<tr><td><b>Date</b></td><td><b>Committer</b></td><td><b>Description</b></td></tr>\n";
+   echo "<dl><dd><pre>";
+   echo $myrow["long_description"];
+   echo "</pre></dd></dl>\n";
 
-$sql = "select change_log_port.id, commit_date, update_description, committer " .
-       "  from change_log, change_log_port " .
-       " where change_log.id                     = change_log_port.change_log_id ".
-       "   and change_log_port.port_id           =  $port". 
-       " order by commit_date desc ";
+   echo '<tr height="20"><td colspan="3"></td></tr>' . "\n";
 
-$result = mysql_query($sql, $db);
-while ($myrow = mysql_fetch_array($result)) {
-   echo "<tr><td valign='top'><font size='-1'>" . $myrow["commit_date"]        . "</font></td>\n";
-   echo "    <td valign='top'>" . $myrow["committer"]          . "</td>\n";
-   echo '    <td valign="top"><a href="files.php3?id=' . $myrow["id"] .
-                   '"><img src="images/logs.gif" alt="Files within thie port affected by this commit" border="0" WIDTH="17" HEIGHT="20" hspace="2"></a>' . 
-                    $myrow["update_description"] . "</td>\n";
-   echo "</tr>\n";
+   echo '<tr><td><table border="1" width="100%" CELLSPACING="0" CELLPADDING="5"bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">' . "\n";
+   echo '<tr height="20"><td colspan="3" bgcolor="#AD0040"><font color="#FFFFFF"><font size="+1">Commit History</font> (may be incomplete: see Changes link above for full details)</font></td></tr>' . "\n";
+   echo "<tr><td><b>Date</b></td><td><b>Committer</b></td><td><b>Description</b></td></tr>\n";
+
+   $sql = "select change_log_port.id, commit_date, update_description, committer " .
+          "  from change_log, change_log_port " .
+          " where change_log.id                     = change_log_port.change_log_id ".
+          "   and change_log_port.port_id           =  $port". 
+          " order by commit_date desc ";
+
+   $result = mysql_query($sql, $db);
+   $numrows = 0;
+   while ($myrow = mysql_fetch_array($result)) {
+      $numrow++;
+      echo "<tr><td valign='top'><font size='-1'>" . $myrow["commit_date"]        . "</font></td>\n";
+      echo "    <td valign='top'>" . $myrow["committer"]          . "</td>\n";
+      echo '    <td valign="top"><a href="files.php3?id=' . $myrow["id"] .
+                      '"><img src="images/logs.gif" alt="Files within this port affected by this commit" border="0" WIDTH="17" HEIGHT="20" hspace="2"></a>' . 
+                       $myrow["update_description"] . "</td>\n";
+      echo "</tr>\n";
+   }
+   echo "</table></td></tr>\n";
 }
-
-echo "</table></td></tr>\n";
 
 ?>
 

@@ -10,8 +10,10 @@ require( "./_private/commonlogin.php3");
 require( "./_private/getvalues.php3");
 require( "./_private/freshports.php3");
 
-if (!$category) {
-   $category = 1;
+if (!$category || $category != strval(intval($category))) {
+   $category = 0;                                     
+} else {                                              
+   $category = intval($category);                     
 }
 
 $categoryname = freshports_Category_Name($category, $db);
@@ -227,59 +229,67 @@ $result = mysql_query($sql, $db);
 
 $HTML .= '<tr><td>' . "\n";
 
-if ($UserID) {
-  $HTML .= '<form action="' . $PHP_SELF . "?category=$category". '" method="POST">';
-}
+if (mysql_num_rows($result)) {
 
-$HTML .= "\n" . '<table cellpadding=12 border=1>' . "\n";
-
-// get the list of topics, which we need to modify the order
-
-$NumPorts = 0;
-while ($myrow = mysql_fetch_array($result)) {
-   $NumPorts++;
-   $rows[$NumPorts-1]=$myrow;
-}
-
-// save the number of categories for when we submit
-$HTML .= '<input type="hidden" name="NumPorts" value="' . $NumPorts . '">';
-
-$RowCount = ceil($NumPorts / (double) 4);
-$Row = 0;
-for ($i = 0; $i < $NumPorts; $i++) {
-//while ($myrow = mysql_fetch_array($result)) {
-   $Row++;
-
-   if ($Row > $RowCount) {
-      $HTML .= "</td>\n";
-      $Row = 1;
+   if ($UserID) {
+      $HTML .= '<form action="' . $PHP_SELF . "?category=$category". '" method="POST">';
    }
 
-   if ($Row == 1) {
-      $HTML .= '<td valign="top">';
+   $HTML .= "\n" . '<table cellpadding=12 border=1>' . "\n";
+
+   // get the list of topics, which we need to modify the order
+
+   $NumPorts = 0;
+   while ($myrow = mysql_fetch_array($result)) {
+      $NumPorts++;
+      $rows[$NumPorts-1]=$myrow;
    }
 
-   $HTML .= '<input type="checkbox" name="ports[]" value="'. $rows[$i]["id"] .'"';
+   // save the number of categories for when we submit
+   $HTML .= '<input type="hidden" name="NumPorts" value="' . $NumPorts . '">';
 
-   if (${"port_".$rows[$i]["id"]}) $HTML .= " checked ";
+   $RowCount = ceil($NumPorts / (double) 4);
+   $Row = 0;
+   for ($i = 0; $i < $NumPorts; $i++) {
+      $Row++;
 
-   $HTML .= '>';
+      if ($Row > $RowCount) {
+         $HTML .= "</td>\n";
+         $Row = 1;
+      }
 
-   $URL_Category = "port-description.php3?port=" . $rows[$i]["id"];
+      if ($Row == 1) {
+         $HTML .= '<td valign="top">';
+      }
 
-   $HTML .= ' <a href="' . $URL_Category . '">' . $rows[$i]["name"] . '</a>';
+      $HTML .= '<input type="checkbox" name="ports[]" value="'. $rows[$i]["id"] .'"';
 
-   if ($rows[$i]["status"] == 'D') $HTML .= " [D]";
+      if (${"port_".$rows[$i]["id"]}) {
+         $HTML .= " checked ";
+      }
 
-//   $HTML .= '</a>';
-   $HTML .= "<br>\n";
+      $HTML .= '>';
+
+      $URL_Category = "port-description.php3?port=" . $rows[$i]["id"];
+
+      $HTML .= ' <a href="' . $URL_Category . '">' . $rows[$i]["name"] . '</a>';
+
+      if ($rows[$i]["status"] == 'D') {
+         $HTML .= " [D]";
+      }
+
+      $HTML .= "<br>\n";
+   }
+
+   if ($Row != 1) {
+      $HTML .= "</td></tr>\n";
+   }
+
+   $HTML .= "</table>\n";
+
+} else {
+   echo "no ports found.  perhaps this is an invalid category id.";
 }
-
-if ($Row != 1) {
-   $HTML .= "</td></tr>\n";
-}
-
-$HTML .= "</table>\n";
 
 mysql_free_result($result);
 

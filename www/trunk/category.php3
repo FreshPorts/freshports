@@ -11,12 +11,32 @@ require( "./_private/commonlogin.php3");
 require( "./_private/getvalues.php3");
 require( "./_private/freshports.php3");
 
-if (!$category) {                        
-   $category = 1;
+#
+# if no category provided or category is not numeric, try
+# category zero.  inval returns zero if non-numeric
+#
+#echo $category         . "<br>";
+#echo intval($category) . "<br>";
+
+#if (!$category) {                          
+#   $category = 0;
+#}
+
+if (!$category || $category != strval(intval($category))) {
+   $category = 0;
+} else {
+   $category = intval($category);
 }
 
-$title = freshports_Category_Name($category, $db);
+#echo "<br>";
+#echo 'intval($category)     = ' . intval($category)     . "<br>";
 
+#
+# append the category id to the cache_file
+#
+$cache_file .= "." . $category;
+
+$title = freshports_Category_Name($category, $db) . $category;
 ?>
 
 <!--// DVL Software is a New Zealand company specializing in database applications. //-->
@@ -95,7 +115,7 @@ if (!file_exists($cache_file)) {
    }
 }
 
-$UpdateCache = 1;
+//$UpdateCache = 1;
 
 if ($UpdateCache == 1) {
 //   echo 'time to update the cache';
@@ -134,7 +154,7 @@ if ($end > $NumRows) {
 }
 
 if ($NumRows == 0) {
-   $HTML .= freshports_echo_HTML(" no results found<br>\n");
+   $HTML .= freshports_echo_HTML("no results found.  Is this a valid category id?<br>\n");
 } else {
 
 for ($i = 0; $i < $NumRows; $i++) {
@@ -196,15 +216,17 @@ if ($start > 1) {
 $HTML .= freshports_echo_HTML('</td></tr>');
 echo $HTML;      
 
-   $fpwrite = fopen($cache_file, 'w');
-   if(!$fpwrite) {                      
-      echo 'error on open<br>';
-      echo "$errstr ($errno)<br>\n";
-      exit;                  
-   } else {                            
-//      echo 'written<br>';             
-      fputs($fpwrite, $HTML);         
-      fclose($fpwrite);
+   if ($NumRows != 0) {
+      $fpwrite = fopen($cache_file, 'w');
+      if(!$fpwrite) {                      
+         echo 'error on open<br>';
+         echo "$errstr ($errno)<br>\n";
+         exit;                  
+      } else {                            
+//         echo 'written<br>';             
+         fputs($fpwrite, $HTML);         
+         fclose($fpwrite);
+      }
    }
 } else {                                
 //   echo 'looks like I\'ll read from cache this time';                             

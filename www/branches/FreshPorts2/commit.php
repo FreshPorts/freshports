@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.29 2003-09-25 20:00:30 dan Exp $
+	# $Id: commit.php,v 1.1.2.30 2003-09-25 20:15:55 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -66,8 +66,8 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 
 	$sql .= "
 SELECT ports.id as port_id,
+       ports.short_description,
        categories.name as category,
-       element.name as name,
        commit_log.message_id as message_id,
        case when ports.element_id IS NOT NULL THEN element_pathname(ports.element_id) ELSE element_pathname(E.id) END as element_pathname,
        commit_log.committer,
@@ -76,6 +76,16 @@ SELECT ports.id as port_id,
        COALESCE(commit_log_ports.port_revision, commit_log_elements.revision_name) as revision,
        element.name as port,
        commit_log.id as commit_log_id,
+
+       to_char(commit_log.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')  as commit_date,
+       to_char(commit_log.commit_date - SystemTimeAdjust(), 'HH24:MI:SS')   as commit_time,
+       commit_log.encoding_losses,
+       element.name as port,
+       element.status as status,
+       commit_log.id as commit_log_id,
+       commit_log_ports.needs_refresh,
+
+       security_notice.id  AS security_no,
        commit_log_elements.element_id ";
 
 	if ($User->id) {
@@ -111,7 +121,7 @@ SELECT ports.id as port_id,
 		$sql .= "\n         WHERE commit_log.id         = $commit_id \n";
 	}
 	
-	$sql .= "ORDER BY category, name";
+	$sql .= "ORDER BY category, port, element_pathname";
 
 
 	if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
@@ -150,6 +160,7 @@ SELECT ports.id as port_id,
 			for ($i = 0; $i < $NumRows; $i++) {
 				$myrow = $rows[$i];
 				$ThisChangeLogID = $myrow["commit_log_id"];
+                $IsPort = $myrow['port_id'] != '';
 
 
 				if ($LastDate <> $myrow["commit_date"]) {
@@ -194,7 +205,7 @@ SELECT ports.id as port_id,
 
 					$HTML .= '<BIG><B>';
 
-					if ($myrow['port_id'] != '') {
+					if ($IsPort) {
 						$HTML .= '<A HREF="/' . $myrow["category"] . '/' . $myrow["port"] . '/">';
 						$HTML .= $myrow["port"];
 					
@@ -215,7 +226,7 @@ SELECT ports.id as port_id,
 					$HTML .= $myrow["category"]. "</A>";
 					$HTML .= '&nbsp;';
 
-					if ($User->id) {
+					if ($User->id && $IsPort) {
 						if ($myrow["onwatchlist"]) {
 							$HTML .= freshports_Watch_Link_Remove($User->watch_list_add_remove, $myrow["onwatchlist"], $myrow["element_id"]);
 						} else {
@@ -225,7 +236,7 @@ SELECT ports.id as port_id,
 					
 					$HTML .= "\n";
 
-					if ($myrow['port_id'] != '') {
+					if ($IsPort) {
 						$HTML .= freshports_CommitFilesLink($myrow["message_id"], $myrow["category"], $myrow["port"]);
 					}
 

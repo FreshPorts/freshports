@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.27 2003-07-04 14:59:15 dan Exp $
+	# $Id: commit.php,v 1.1.2.28 2003-07-29 20:52:48 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -149,10 +149,6 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 
 			$NumRows = $numrows;
 			$LastDate = '';
-			if ($NumRows > 1) {
-				$LastChangeLogID = $rows[$i]["change_log_id"];
-				$LastChangeLogID = -1;
-			}
 
 #			print "NumRows = $NumRows\n<BR>";
 			$HTML = "";

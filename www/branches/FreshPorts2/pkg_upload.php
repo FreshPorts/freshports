@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: pkg_upload.php,v 1.5.2.41 2005-01-06 04:23:22 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.42 2005-01-12 21:24:25 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -245,7 +245,13 @@ function ChooseWatchLists($UserID, $db) {
 				$ports = $_POST["ports"];
 				# save these things to the watch list
 				# and clear out part of the staging area.
-				$WatchListID = AddSlashes($_POST['wlid']);
+				$WatchListID = AddSlashes($_REQUEST['wlid']);
+				if (!IsSet($WatchListID) || $WatchListID === '') {
+					syslog(LOG_NOTICE, "No watch list ID was supplied.  I cannot continue.  pkg_upload.php::250 " .
+						"User id = " . $User->id);
+					die('No watch list ID was supplied.  I cannot continue.');
+				} 
+
 				if ($Debug) echo ' you clicked on update_watch_list';
 				if (MoveStagingToWatchList($User->id, $WatchListID, $ports, $db)) {
 					$DisplayStagingArea = FALSE;
@@ -296,6 +302,12 @@ function ChooseWatchLists($UserID, $db) {
 							} else {
 								$Overwrite = FALSE;
 							}
+
+							if (!IsSet($WatchListID) || $WatchListID === '') {
+								syslog(LOG_NOTICE, "No watch list ID was supplied.  I cannot continue.  pkg_upload.php::250 " .
+									"User id = " . $User->id);
+								die('No watch list ID was supplied.  I cannot continue.');
+							} 
 
 							if (CopyStagingToWatchList($db, $User->id, $WatchListID, $Overwrite)) {
 								$DisplayStagingArea = FALSE;

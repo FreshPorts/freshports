@@ -1,9 +1,0 @@
-install Phorum 3.1 has per readme.txt.
-copy forums.inf to another location
-point to that location in upgrade.php
-comment out all the $DB lines.
-comment out the $q line.
-comment out the include lines.
-run upgrade.txt
-clean up any errors with the SQL.
-rebuild inf files using the admin.

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: pkg_process.inc,v 1.5.2.19 2003-09-03 23:22:54 dan Exp $
+	# $Id: pkg_process.inc,v 1.5.2.20 2003-12-07 20:10:50 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -395,10 +395,13 @@ function MoveStagingToWatchList($UserID, $WatchListID, $ports, $dbh) {
 		}
 	}
 
+	$PortCount = 0;
 	if ($ok && $ports) {
-#		syslog(LOG_NOTICE, 'reset ports');
-		reset($ports);
-		$PortCount = 0;
+		if (IsSet($ports)) {
+			reset($ports);
+		} else {
+			syslog(LOG_NOTICE, 'FreshPorts: pkg_process.inc line 403 - cannot reset ports');
+		}
 		while (list($key, $value) = each($ports)) {
 			$PortCount++;
 
@@ -421,8 +424,11 @@ function MoveStagingToWatchList($UserID, $WatchListID, $ports, $dbh) {
 	}
 
 	if ($ok) {
-#		syslog(LOG_NOTICE, 'reset ports');
-		reset($ports);
+		if (IsSet($ports)) {
+			reset($ports);
+		} else {
+			syslog(LOG_NOTICE, 'FreshPorts: pkg_process.inc line 430 - cannot reset ports');
+		}
 		$sql = "select WatchListStagingLogWatch($UserID, $PortCount)";
 		$result = pg_exec($dbh, $sql);
 		if (!$result) {

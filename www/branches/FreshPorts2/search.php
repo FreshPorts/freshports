@@ -1,5 +1,5 @@
 <?
-	# $Id: search.php,v 1.1.2.33 2002-12-10 05:13:30 dan Exp $
+	# $Id: search.php,v 1.1.2.34 2002-12-10 20:51:01 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -10,16 +10,18 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/ports.php");
 
+	$Debug = 0;
+
 	switch ($_SERVER["REQUEST_METHOD"]) {
 		case "POST":
 			// avoid nasty problems by adding slashes
 			$query				= AddSlashes($_POST["query"]);
 			$stype				= AddSlashes($_POST["stype"]);
-			$num				= AddSlashes($_POST["num"]);
+			$num					= AddSlashes($_POST["num"]);
 			$category			= AddSlashes($_POST["category"]);
-			$port				= AddSlashes($_POST["port"]);
+			$port					= AddSlashes($_POST["port"]);
 			$method				= AddSlashes($_POST["method"]);
-			$deleted			= AddSlashes($_POST["deleted"]);
+			$deleted				= AddSlashes($_POST["deleted"]);
 			$casesensitivity	= AddSlashes($_POST["casesensitivity"]);
 			break;
 
@@ -27,17 +29,15 @@
 			// avoid nasty problems by adding slashes
 			$query				= AddSlashes($_GET["query"]);
 			$stype				= AddSlashes($_GET["stype"]);
-			$num				= AddSlashes($_GET["num"]);
+			$num					= AddSlashes($_GET["num"]);
 			$category			= AddSlashes($_GET["category"]);
-			$port				= AddSlashes($_GET["port"]);
+			$port					= AddSlashes($_GET["port"]);
 			$method				= AddSlashes($_GET["method"]);
-			$deleted			= AddSlashes($_GET["deleted"]);
+			$deleted				= AddSlashes($_GET["deleted"]);
 			$casesensitivity	= AddSlashes($_GET["casesensitivity"]);
 			break;
 
 	}
-
-	$Debug = 0;
 
 	if ($stype == 'messageid') {
 		header("Location: http://" . $_SERVER["HTTP_HOST"] . "/commit.php?message_id=$query");
@@ -131,62 +131,75 @@ if ($search) {
 $logfile = $_SERVER["DOCUMENT_ROOT"] . "/../dynamic/searchlog.txt";
 
 
-$sql = "select distinct ports.id, element.name as port, " .
-       "categories.name as category, categories.id as category_id, ports.version as version, ports.revision as revision, ".
-       "ports.maintainer, ports.short_description, ".
-       "ports.package_exists, ports.extract_suffix, ports.homepage, element.status, ports.element_id, " .
-       "ports.broken, ports.forbidden ";
+$sql = "
+  select distinct 
+         ports.id, 
+         element.name as port,
+         categories.name as category, 
+         categories.id as category_id, 
+         ports.version as version, 
+         ports.revision as revision, 
+         ports.maintainer, 
+         ports.short_description, 
+         ports.package_exists, 
+         ports.extract_suffix, 
+         ports.homepage, 
+         element.status, 
+         ports.element_id, 
+         ports.broken, 
+         ports.forbidden ";
 
-if ($WatchListID) {
-    $sql .= ",
-       CASE when watch_list_element.element_id is null
-          then 0
-          else 1
-       END as onwatchlist ";
-}
-
-	$sql .= "from ports, categories, commit_log, commit_log_ports, element  ";
-
-if ($WatchListID) {
-    $sql .="
-            left outer join watch_list_element
-            on element.id                       = watch_list_element.element_id
-           and watch_list_element.watch_list_id = $WatchListID ";
-}
-
-
+	if ($User->id) {
+		$sql .= ",
+         onwatchlist";
+   }
 
 
-	$sql .= "WHERE ports.category_id  = categories.id
-	           and ports.element_id   = element.id 
-	           and commit_log.id      = commit_log_ports.commit_log_id
-               and commit_log_ports.port_id = ports.id  " ;
+	$sql .= "
+    from ports, categories, commit_log, commit_log_ports, element  ";
+
+	if ($User->id) {
+			$sql .= "
+      LEFT OUTER JOIN
+ (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
+    FROM watch_list JOIN watch_list_element 
+        ON watch_list.id      = watch_list_element.watch_list_id
+       AND watch_list.user_id = $User->id
+  GROUP BY watch_list_element.element_id) AS TEMP
+       ON TEMP.wle_element_id = element.id";
+	}
+	
+	$sql .= '
+	WHERE ports.category_id  = categories.id
+     and ports.element_id   = element.id 
+     and commit_log.id      = commit_log_ports.commit_log_id
+     and commit_log_ports.port_id = ports.id  ' ;
 
 
 switch ($method) {
 	case 'match':
 		switch ($stype) {
-			case "name":
-				if ($casesensitivity == "casesensitive") {
-					$sql .= "and element.name like '%$query%'";
+			case 'name':
+				if ($casesensitivity == 'casesensitive') {
+					$sql .= "\n     and element.name like '%$query%'";
 				} else {
-					$sql .= "and lower(element.name) like lower('%$query%')";
+					$sql .= "\n     and lower(element.name) like lower('%$query%')";
 				}
 				break;
 
-			case "shortdescription":
-				if ($casesensitivity == "casesensitive") {
-					$sql .= "and ports.short_description like '%$query%'";
+			case 'shortdescription':
+				if ($casesensitivity == 'casesensitive') {
+					$sql .= "\n     and ports.short_description like '%$query%'";
 				} else {
-					$sql .= "and lower(ports.short_description) like lower('%$query%')";
+					$sql .= "\n     and lower(ports.short_description) like lower('%$query%')";
 				}
 				break;
       
-			case "maintainer":
-				if ($casesensitivity == "casesensitive") {
-					$sql .= "and ports.maintainer like '%$query%'";
+			case 'maintainer':
+				if ($casesensitivity == 'casesensitive') {
+					$sql .= "\n     and ports.maintainer like '%$query%'";
 				} else {
-					$sql .= "and lower(ports.maintainer) like lower('%$query%')";
+					$sql .= "\n     and lower(ports.maintainer) like lower('%$query%')";
 				}
 				break;
 		}
@@ -194,27 +207,27 @@ switch ($method) {
 
 	case 'exact':
 		switch ($stype) {
-			case "name":
-				if ($casesensitivity == "casesensitive") {
-					$sql .= "and element.name = '$query'";
+			case 'name':
+				if ($casesensitivity == 'casesensitive') {
+					$sql .= "\n     and element.name = '$query'";
 				} else {
-					$sql .= "and lower(element.name) = lower('$query')";
+					$sql .= "\n     and lower(element.name) = lower('$query')";
 				}
 				break;
 
-			case "shortdescription":
-				if ($casesensitivity == "casesensitive") {
-					$sql .= "and ports.short_description = '$query'";
+			case 'shortdescription':
+				if ($casesensitivity == 'casesensitive') {
+					$sql .= "\n     and ports.short_description = '$query'";
 				} else {
-					$sql .= "and lower(ports.short_description) = lower('$query')";
+					$sql .= "\n     and lower(ports.short_description) = lower('$query')";
 				}
 				break;
       
-			case "maintainer":
-				if ($casesensitivity == "casesensitive") {
-					$sql .= "and ports.maintainer = '$query'";
+			case 'maintainer':
+				if ($casesensitivity == 'casesensitive') {
+					$sql .= "\n     and ports.maintainer = '$query'";
 				} else {
-					$sql .= "and lower(ports.maintainer) = lower('$query')";
+					$sql .= "\n     and lower(ports.maintainer) = lower('$query')";
 				}
 				break;
 
@@ -223,16 +236,16 @@ switch ($method) {
 
 	default:
 		switch ($stype) {
-			case "name":
-				$sql .= "and levenshtein(element.name, '$query') < 4";
+			case 'name':
+				$sql .= "\n     and levenshtein(element.name, '$query') < 4";
 				break;
 
-			case "shortdescription":
-				$sql .= "and levenshtein(ports.short_description, '$query') < 4";
+			case 'shortdescription':
+				$sql .= "\n     and levenshtein(ports.short_description, '$query') < 4";
 				break;
       
-			case "maintainer":
-				$sql .= "and levenshtein(ports.maintainer, '$query') < 4";
+			case 'maintainer':
+				$sql .= "\n     and levenshtein(ports.maintainer, '$query') < 4";
 				break;
 
 		}
@@ -242,22 +255,22 @@ switch ($method) {
 # include/exclude deleted ports
 #
 switch ($deleted) {
-	case "includedeleted":
+	case 'includedeleted':
 		# do nothing
 		break;
 
 	default:
-		$deleted = "excludedeleted";
+		$deleted = 'excludedeleted';
 		# do not break here...
 
-	case "excludedeleted":
+	case 'excludedeleted':
 		$sql .= " and element.status = 'A' ";
 }
 
-$sql .= " order by categories.name, element.name";
+$sql .= "\n order by categories.name, element.name";
 
 
-$sql .= " limit $num";
+$sql .= "\n limit $num";
 
 $AddRemoveExtra  = "&&origin=$SCRIPT_NAME?query=" . $query. "+stype=$stype+num=$num+method=$method";
 if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<BR>";
@@ -265,7 +278,7 @@ $AddRemoveExtra = AddSlashes($AddRemoveExtra);
 if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<BR>";
 
 if ($Debug) {
-	echo "$sql<br>\n";
+	echo "<pre>$sql<pre>\n";
 
 #	print "now exitting....";
 #	exit;

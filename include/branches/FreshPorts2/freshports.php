@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.213 2005-02-17 02:32:47 dan Exp $
+	# $Id: freshports.php,v 1.4.2.214 2005-02-17 04:22:41 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -190,7 +190,7 @@ function freshports_Forbidden_Icon($HoverText = '') {
 	$Alt       = "Forbidden";
 	$HoverText = freshports_HoverTextCleaner($Alt, $HoverText);
 
-	return '<IMG SRC="/images/forbidden.gif" ALT="' . $Alt . '" TITLE="' . $HoverText . '" WIDTH="20" HEIGHT="20">';
+	return '<IMG SRC="/images/forbidden.gif" ALT="' . $Alt . '" TITLE="' . $HoverText . '" BORDER="0" WIDTH="20" HEIGHT="20">';
 }
 
 function freshports_Forbidden_Icon_Link($HoverText = '') {
@@ -201,7 +201,7 @@ function freshports_Broken_Icon($HoverText = '') {
 	$Alt       = "Broken";
 	$HoverText = freshports_HoverTextCleaner($Alt, $HoverText);
 
-	return '<IMG SRC="/images/broken.gif" ALT="' . $Alt . '" TITLE="' . $HoverText . '" WIDTH="17" HEIGHT="16">';
+	return '<IMG SRC="/images/broken.gif" ALT="' . $Alt . '" TITLE="' . $HoverText . '" BORDER="0" WIDTH="17" HEIGHT="16">';
 }
 
 function freshports_Broken_Icon_Link($HoverText = '') {
@@ -212,7 +212,7 @@ function freshports_Deprecated_Icon($HoverText = '') {
 	$Alt       = "Deprecated";
 	$HoverText = freshports_HoverTextCleaner($Alt, $HoverText);
 
-	return '<IMG SRC="/images/deprecated.gif" ALT="' . $Alt . '" TITLE="' . $HoverText . '" WIDTH="18" HEIGHT="18">';
+	return '<IMG SRC="/images/deprecated.gif" ALT="' . $Alt . '" TITLE="' . $HoverText . '" BORDER="0" WIDTH="18" HEIGHT="18">';
 }
 
 function freshports_Deprecated_Icon_Link($HoverText = '') {
@@ -223,7 +223,7 @@ function freshports_Restricted_Icon($HoverText = '') {
 	$Alt       = "Restricted";
 	$HoverText = freshports_HoverTextCleaner($Alt, $HoverText);
 
-	return '<IMG SRC="/images/restricted.jpg" ALT="' . $Alt . '" TITLE="' . $HoverText . '" WIDTH="16" HEIGHT="16">';
+	return '<IMG SRC="/images/restricted.jpg" ALT="' . $Alt . '" TITLE="' . $HoverText . '" BORDER="0" WIDTH="16" HEIGHT="16">';
 }
 
 function freshports_Restricted_Icon_Link($HoverText = '') {
@@ -234,7 +234,7 @@ function freshports_No_CDROM_Icon($HoverText = '') {
 	$Alt       = "NO CDROM";
 	$HoverText = freshports_HoverTextCleaner($Alt, $HoverText);
 
-	return '<IMG SRC="/images/no_cdrom.jpg" ALT="' . $Alt . '" TITLE="' . $HoverText . '" WIDTH="16" HEIGHT="16">';
+	return '<IMG SRC="/images/no_cdrom.jpg" ALT="' . $Alt . '" TITLE="' . $HoverText . '" BORDER="0" WIDTH="16" HEIGHT="16">';
 }
 
 function freshports_No_CDROM_Icon_Link($HoverText = '') {
@@ -249,7 +249,7 @@ function freshports_Ignore_Icon($HoverText = '') {
 	$Alt       = "Ignore";
 	$HoverText = freshports_HoverTextCleaner($Alt, $HoverText);
 
-	return '<IMG SRC="/images/ignored.png" ALT="' . $Alt . '" TITLE="' . $HoverText . '" WIDTH="20" HEIGHT="21;">';
+	return '<IMG SRC="/images/ignored.png" ALT="' . $Alt . '" TITLE="' . $HoverText . '" BORDER="0" WIDTH="20" HEIGHT="21;">';
 }
 
 function freshports_Ignore_Icon_Link($HoverText = '') {
@@ -257,7 +257,7 @@ function freshports_Ignore_Icon_Link($HoverText = '') {
 }
 
 function freshports_New_Icon() {
-	return '<IMG SRC="/images/new.gif" ALT="new!" TITLE="new!" WIDTH=28 HEIGHT=11 HSPACE=2>';
+	return '<IMG SRC="/images/new.gif" ALT="new!" TITLE="new!" BORDER="0" WIDTH="28" HEIGHT="11" HSPACE="2">';
 }
 
 function freshports_Mail_Icon() {
@@ -281,7 +281,7 @@ function freshports_Watch_Icon_Add() {
 }
 
 function freshports_Security_Icon() {
-	return '<IMG SRC="/images/security.gif"  ALT="This commit addresses a security issue" TITLE="This commit addresses a security issue" WIDTH="20" HEIGHT="20" BORDER="0">';
+	return '<IMG SRC="/images/security.gif"  ALT="This commit addresses a security issue" TITLE="This commit addresses a security issue" BORDER="0" WIDTH="20" HEIGHT="20">';
 }
 
 function freshports_Encoding_Errors() {
@@ -293,11 +293,11 @@ function freshports_Encoding_Errors_Link() {
 }
 
 function freshports_VuXML_Icon() {
-	return '<IMG SRC="/images/vuxml.gif" ALT="Vulnerability" TITLE="Vulnerability" BORDER="0" WIDTH="13" HEIGHT="16">';
+	return '<IMG SRC="/images/vuxml.gif" ALT="This port version is marked as vulnerable." TITLE="This port version is marked as vulnerable." BORDER="0" WIDTH="13" HEIGHT="16">';
 }
 
 function freshports_VuXML_Icon_Faded() {
-	return '<IMG SRC="/images/vuxml-faded.gif" ALT="Past Vulnerability" TITLE="Past Vulnerability" BORDER="0" WIDTH="13" HEIGHT="16">';
+	return '<IMG SRC="/images/vuxml-faded.gif" ALT="An older version of this port was marked as vulnerable." TITLE="An older version of this port was marked as vulnerable." BORDER="0" WIDTH="13" HEIGHT="16">';
 }
 
 function freshports_Revision_Icon() {
@@ -1820,9 +1820,9 @@ function freshports_SideBar() {
 		$HTML .= '<FONT SIZE="-1">Logged in as ' . $User->name . "</FONT><BR>";
 
 		if ($User->emailbouncecount > 0) {
-			$HTML .= '<IMG SRC="/images/warning.gif"><IMG SRC="/images/warning.gif"><IMG SRC="/images/warning.gif"><BR>';
+			$HTML .= '<IMG SRC="/images/warning.gif" BORDER="0" HEIGHT="32" WIDTH="32"><IMG SRC="/images/warning.gif"  BORDER="0" HEIGHT="32" WIDTH="32"><IMG SRC="/images/warning.gif" BORDER="0"HEIGHT="32" WIDTH="32"><BR>';
 			$HTML .= '<FONT SIZE="-1">your email is <A HREF="bouncing.php?origin=' . $OriginLocal. '">bouncing</A></FONT><BR>';
-			$HTML .= '<IMG SRC="/images/warning.gif"><IMG SRC="/images/warning.gif"><IMG SRC="/images/warning.gif"><BR>';
+			$HTML .= '<IMG SRC="/images/warning.gif" BORDER="0" HEIGHT="32" WIDTH="32"><IMG SRC="/images/warning.gif" BORDER="0" HEIGHT="32" WIDTH="32"><IMG SRC="/images/warning.gif" BORDER="0" HEIGHT="32" WIDTH="32"><BR>';
 		}
 		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/customize.php',        "?origin=$OriginLocal", "Customize", "Customize your settings"              ) . '</FONT><BR>';
 

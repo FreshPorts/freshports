@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_upload.php,v 1.4 2002-01-06 23:49:37 dan Exp $
+	# $Id: pkg_upload.php,v 1.5 2002-02-11 03:05:04 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -20,17 +20,12 @@ $Debug=0;
 <tr><td VALIGN=TOP>
 <TABLE WIDTH="100%">
 <TR><TD bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">
-<? echo $FreshPortsTitle; ?> -- Package registration
+<? echo $FreshPortsTitle; ?> -- Update your watch lists based on installed packages
 </font></td>
 <TR><TD>
 			<?
 		// make sure the POST vars are ok. 
 		// check for funny stuff
-
-#echo "DOCUMENT_ROOT = '$DOCUMENT_ROOT'<BR>";
-#$gIndexFile = $DOCUMENT_ROOT . "/../configuration/INDEX";
-#echo "\$gIndexFile = '$gIndexFile'<BR>";
-
 
 		global $gDBG;
 		$gDBG  = false;
@@ -72,6 +67,11 @@ $Debug=0;
 		} else {
 			if ($visitor) {
 		?>
+
+			<P>
+			You can update your watch lists from the packges database on your computer.  Use
+			the pkg_info command to output.
+			</P>
 			<FORM action='pkg_upload.php?file=1' method='post' enctype='multipart/form-data'>
 				<TABLE>
 					<!-- <TR><TD>Enter Your Username</TD></TR>  -->

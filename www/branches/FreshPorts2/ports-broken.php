@@ -1,7 +1,9 @@
-<?
-	# $Id: ports-broken.php,v 1.1.2.12 2003-04-27 14:48:15 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: ports-broken.php,v 1.1.2.13 2003-04-28 01:37:21 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.141 2003-04-27 14:48:20 dan Exp $
+	# $Id: freshports.php,v 1.4.2.142 2003-04-28 21:12:23 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -12,6 +12,8 @@
 # special HTMLified mailto to foil spam harvesters
 #
 DEFINE('MAILTO', '&#109;&#97;&#105;&#108;&#116;&#111;');
+
+DEFINE('COPYRIGHTYEARS', '2000-2003');
 
 
 if ($Debug) echo "'" . $_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php<BR>';
@@ -867,9 +869,8 @@ function freshports_navigation_bar_top() {
 
 }
 
-
 function freshports_copyright() {
-	return '<SMALL><A HREF="/legal.php" target="_top">Copyright</A> &copy; 2000-2003 <A HREF="http://www.dvl-software.com/">DVL Software Limited</A>. All rights reserved.</SMALL>';
+	return '<SMALL><A HREF="/legal.php" target="_top">Copyright</A> &copy; ' . COPYRIGHTYEARS . ' <A HREF="http://www.dvl-software.com/">DVL Software Limited</A>. All rights reserved.</SMALL>';
 }
 
 function FormatTime($Time, $Adjustment, $Format) {
@@ -882,6 +883,9 @@ function FormatTime($Time, $Adjustment, $Format) {
 # The code below was donated by Steve Kacsmark <stevek@guide.chi.il.us>.
 # With modifications by Marcin Gryszkalis <mgryszkalis@cerint.pl>.
 #
+
+DEFINE('URL2LINK_CUTOFF_LEVEL', 70);
+
 
 function freshports_IsEmailValid($email) {
 	# see also convertMail
@@ -924,15 +928,13 @@ function url2link($Arr) {
 	# URLs will be truncated if they are too long. But only
 	# the visible part
 	#
-
-	GLOBAL $url2link_cutoff_level;
 	$html = $Arr[1];
 
-	if ($url2link_cutoff_level > 0 && strlen($html) > $url2link_cutoff_level) {
-		$vhtml = substr($html, 0, $url2link_cutoff_level - 5) . "(...)";
-	} else {
+#	if (URL2LINK_CUTOFF_LEVEL > 0 && strlen($html) > URL2LINK_CUTOFF_LEVEL) {
+#		$vhtml = substr($html, 0, URL2LINK_CUTOFF_LEVEL - 5) . "(...)";
+#	} else {
 		$vhtml = $html;
-	}
+#	}
 
 	$html  = preg_replace("/@/", "&#64", $html);
 	$vhtml = preg_replace("/@/", "&#64", $vhtml);
@@ -940,29 +942,48 @@ function url2link($Arr) {
 	return "<A HREF=\"$html\">$vhtml</A>" . $Arr[3];
 }
 
+function url_shorten($Arr) {
+	#
+	# URLs will be truncated if they are too long. But only
+	# the visible part
+	#
+	$html = $Arr[1];
+#	syslog(LOG_NOTICE, "start");
+#	syslog(LOG_NOTICE, "0 - $Arr[0]");
+#	syslog(LOG_NOTICE, "1 - $Arr[1]");
+#	syslog(LOG_NOTICE, "2 - $Arr[2]");
+#	syslog(LOG_NOTICE, "3 - $Arr[3]");
+#	syslog(LOG_NOTICE, "4 - $Arr[4]");
+#	syslog(LOG_NOTICE, "5 - $Arr[5]");
+#	syslog(LOG_NOTICE, "6 - $Arr[6]");
+#	syslog(LOG_NOTICE, "finish");
+
+	$URL = $Arr[5];
+	if (strlen($URL) > 10) {
+		$URL = substr($URL, 0, 10 - 5) . "(...)";
+	}
+
+	return $Arr[1] . '">' . $URL . '</a>';
+}
+
 function htmlify($String) {
 	$del_t = array("&quot;","&#34;","&gt;","&#62;","\/\.\s","\)","'","\s","$");
 	$delimiters = "(".join("|",$del_t).")";
 
-	$String = preg_replace_callback("/((http|ftp|https):\/\/.*?)($delimiters)/i",           url2link,  $String);
-	$String = preg_replace_callback("/([\w+=\-.!]+@[\w\-]+(\.[\w\-]+)+)/",                  mail2link, $String);
-	$String = preg_replace_callback("/(\bPR[:\#]?)\s*(((\w+\/)?\d+)(,\s*((\w+\/)?\d+))*)/", pr2link,   $String);
+	$String = preg_replace_callback("/((http|ftp|https):\/\/.*?)($delimiters)/i",           url2link,    $String);
+	$String = preg_replace_callback("/(<a href=(\"|')(http|ftp|https):\/\/.*?)(\">|'>)(.*?)<\/a>/i",      url_shorten, $String);
+	$String = preg_replace_callback("/([\w+=\-.!]+@[\w\-]+(\.[\w\-]+)+)/",                  mail2link,   $String);
+	$String = preg_replace_callback("/(\bPR[:\#]?)\s*(((\w+\/)?\d+)(,\s*((\w+\/)?\d+))*)/", pr2link,     $String);
  
 	return $String;
 }
 
-$url2link_cutoff_level = 70;
 
 #
 # The code above was donated by Steve Kacsmark <stevek@guide.chi.il.us>.
 # With modifications by Marcin Gryszkalis <mgryszkalis@cerint.pl>.
 #
 
-
-#
-#
-# The above code was obtained from http://www.zend.com/codex.php?id=199&single=1
-#
 
 function freshports_PortCommitsHeader($port) {
 	# print the header for the commits for a port

@@ -1,5 +1,5 @@
 <?
-   # $Id: index.php3,v 1.34.2.12 2001-12-21 06:13:28 dan Exp $
+   # $Id: index.php3,v 1.34.2.13 2001-12-23 00:28:04 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -102,12 +102,6 @@ function StripQuotes($string) {
 	$string = str_replace('"', '', $string);
 
 	return $string;
-}
-
-function FormatTime($Time, $Adjustment, $Format) {
-#echo "$Time<BR>";
-#echo time() . "<BR>";
-	return date($Format, strtotime($Time) + $Adjustment);
 }
 
 

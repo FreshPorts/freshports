@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.7 2001-12-21 06:14:08 dan Exp $
+   # $Id: freshports.php,v 1.4.2.8 2001-12-23 00:28:05 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -630,6 +630,15 @@ echo '  <P ALIGN="center">
 ';
 
 }
+
+
+function FormatTime($Time, $Adjustment, $Format) {
+#echo "$Time<BR>";
+#echo time() . "<BR>";
+	return date($Format, strtotime($Time) + $Adjustment);
+}
+
+
 
 
 #

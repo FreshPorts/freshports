@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-port.php,v 1.1.2.11 2002-02-17 23:24:06 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.12 2002-02-21 06:33:47 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
@@ -14,9 +14,9 @@ $Debug=0;
 	$result = "";
 	$url_Array = explode('/', $REQUEST_URI);
 	if (array_count_values($url_Array) >= 1) {
-		$CategoryName = $url_Array[1];
+		$CategoryName = AddSlashes($url_Array[1]);
 		if (array_count_values($url_Array) >= 2) {
-			$PortName = $url_Array[2];
+			$PortName = AddSlashes($url_Array[2]);
 		}
 
 		if ($Debug) {

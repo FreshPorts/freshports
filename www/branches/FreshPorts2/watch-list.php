@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-list.php,v 1.2.2.2 2002-02-21 06:30:28 dan Exp $
+	# $Id: watch-list.php,v 1.2.2.3 2002-02-21 06:33:48 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -20,10 +20,8 @@
 		exit;  /* Make sure that code below does not get executed when we redirect. */
 	}
 
-	AddSlashes($remove);
-
 	if (IsSet($remove)) {
-		AddSlashes($remove);
+		$remove = AddSlashes($remove);
 		if ($Debug) echo "I'm removing $remove";
 		$sql = "delete from watch_list_element
 			     where watch_list_id = $WatchListID
@@ -37,7 +35,7 @@
 	}
 
 	if (IsSet($add)) {
-		AddSlashes($add);
+		$add = AddSlashes($add);
 		if ($Debug) echo "I'm adding $add";
 		$sql = "insert into watch_list_element (watch_list_id, element_id) values
 								($WatchListID, $add)";

@@ -14,6 +14,10 @@ if ($submit) {
       if ($Debug) {
          echo "I would have taken you to '$origin' now, but debugging is on<br>\n";
       } else {
+         // Redirect browser to PHP web site
+         if ($origin == "/index.php3") {
+            $origin = "/";
+         }
          header("Location: $origin");
          exit;  /* Make sure that code below does not get executed when we redirect. */
       }

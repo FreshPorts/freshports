@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: news.php,v 1.1.2.2 2004-02-22 15:57:01 dan Exp $
+	# $Id: news.php,v 1.1.2.3 2004-08-09 22:38:05 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -174,7 +174,7 @@ limit 30";
 
 		$HTML .= $myrow["category"] . '/' . $myrow["port"] . ' - ' . $myrow["version"];
 		if ($myrow["revision"] != 0) {
-			$HTML .= '-' . $myrow["revision"];
+			$HTML .= FRESHPORTS_VERSION_REVISION_JOINER . $myrow["revision"];
 		}
 		if (IsSet($myrow["security_notice_id"])) {
 			$HTML .= ' - Security Alert!';

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.50 2003-11-08 16:20:51 dan Exp $
+	# $Id: search.php,v 1.1.2.51 2004-02-05 20:27:57 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -132,8 +132,8 @@ if ($Debug) {
 # we can take parameters.  if so, make it look like a post
 #
 
-if (IsSet($_REQUEST['search'])) {
-	$search = $_REQUEST['search'];
+if (IsSet($_REQUEST['query'])) {
+	$search = $_REQUEST['query'];
 }
 if (!IsSet($search) && ($query && $stype && $num && $method)) {
 	$search = TRUE;

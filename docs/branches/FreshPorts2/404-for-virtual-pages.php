@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: 404-for-virtual-pages.php,v 1.1.2.1 2003-01-31 05:24:15 dan Exp $
+	# $Id: 404-for-virtual-pages.php,v 1.1.2.2 2003-02-03 13:11:02 dan Exp $
 	#
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
@@ -98,7 +98,7 @@ ksh93           sash
 None of the above directories actually appear on the webserver.
 The website takes advantage of the 
 <a href="http://httpd.apache.org/docs/mod/core.html#errordocument">ErrorDocument</a>
-directive in the <a href="http://httpd.apache.org/">Apache<a/> webserver.  This is
+directive in the <a href="http://httpd.apache.org/">Apache</a> webserver.  This is
 the entry found within the FreshPorts website definition:
 
 <blockquote><pre class="code">ErrorDocument   404 /missing.php</pre></blockquote>

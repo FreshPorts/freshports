@@ -29,7 +29,23 @@ if ($UserID) {
       echo '<img src="/images/warning.gif"><img src="/images/warning.gif"><img src="/images/warning.gif"><br>';
    }
    echo '<font SIZE="-1">' . freshports_SideBarHTMLParm($PHP_SELF, '/customize.php3',        "?origin=$OriginLocal", "Customize"              ) . '</font><br>';
-   echo '<font SIZE="-1">' . freshports_SideBarHTMLParm($PHP_SELF, '/logout.php3',           "?origin=$OriginLocal", "Logout"                 ) . '</font><br>';
+
+
+   # for a logout, where we go depends on where we are now
+   #
+   switch ($PHP_SELF) {
+      case "customize.php3":
+      case "watch-categories.php3":
+      case "watch.php3":
+         $args = "?origin=$OriginLocal";
+         break;
+
+      default:
+         $args = '';
+   }
+   echo '<font SIZE="-1">' . freshports_SideBarHTMLParm($PHP_SELF, '/logout.php3',           $args,                  "Logout"                 ) . '</font><br>';
+
+
    echo '<font SIZE="-1">' . freshports_SideBarHTMLParm($PHP_SELF, '/watch-categories.php3', '',                     "watch list - Categories") . '</font><br>';
    echo '<font SIZE="-1">' . freshports_SideBarHTMLParm($PHP_SELF, '/watch.php3',            '',                     "your watched ports"     ) . '</font><br>';
   } else {

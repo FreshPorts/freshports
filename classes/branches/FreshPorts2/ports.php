@@ -1,5 +1,5 @@
 <?
-	# $Id: ports.php,v 1.1.2.7 2002-01-05 20:14:08 dan Exp $
+	# $Id: ports.php,v 1.1.2.8 2002-02-09 19:38:53 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -29,7 +29,7 @@ class Port {
 	var $found_in_index;
 	var $forbidden;
 	var $broken;
-	var $date_created;
+	var $date_added;
 	var $categories;
 
 	// derived or from other tables
@@ -69,7 +69,7 @@ class Port {
 		$this->found_in_index     = $myrow["found_in_index"];
 		$this->forbidden          = $myrow["forbidden"];
 		$this->broken             = $myrow["broken"];
-		$this->date_created       = $myrow["date_created"];
+		$this->date_added         = $myrow["date_added"];
 		$this->categories         = $myrow["categories"];
 
 		$this->port               = $myrow["port"];
@@ -103,7 +103,7 @@ class Port {
 			       "ports.revision as revision, ports.maintainer, ".
 			       "ports.homepage, ports.master_sites, ports.extract_suffix, ports.package_exists, " .
 			       "ports.depends_build, ports.depends_run, ports.last_commit_id, ports.found_in_index, " .
-			       "ports.forbidden, ports.broken, ports.date_created, " .
+			       "ports.forbidden, ports.broken, ports.date_added, " .
 			       "ports.categories as categories, ".
 				   "element.name as port, categories.name as category, " .
 				   "element.status " .
@@ -138,7 +138,7 @@ class Port {
 		       "ports.revision as revision, ports.maintainer, ".
 		       "ports.homepage, ports.master_sites, ports.extract_suffix, ports.package_exists, " .
 		       "ports.depends_build, ports.depends_run, ports.last_commit_id, ports.found_in_index, " .
-		       "ports.forbidden, ports.broken, ports.date_created, " .
+		       "ports.forbidden, ports.broken, ports.date_added, " .
 		       "ports.categories as categories, ".
 			   "element.name as port, categories.name as category, commit_log_ports.needs_refresh, " .
 			   "element.status, commit_log.commit_date as updated " .
@@ -173,7 +173,7 @@ class Port {
 		       "ports.revision as revision, ports.maintainer, ".
 		       "ports.homepage, ports.master_sites, ports.extract_suffix, ports.package_exists, " .
 		       "ports.depends_build, ports.depends_run, ports.last_commit_id, ports.found_in_index, " .
-		       "ports.forbidden, ports.broken, ports.date_created, " .
+		       "ports.forbidden, ports.broken, ports.date_added, " .
 		       "ports.categories as categories, ".
 			   "element.name as port, categories.name as category, commit_log_ports.needs_refresh, " .
 			   "element.status, commit_log.commit_date as updated " .

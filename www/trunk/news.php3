@@ -1,8 +1,5 @@
 <?php
 
-#$cache_file     =       "/tmp/freshports.org.cache.news";
-#$cache_time     =       3600;
-
 $text_file	=	"./news.txt";
 
 require("./_private/commonlogin.php3");
@@ -65,7 +62,7 @@ if ($BuildTable == 1) {
    $HTML .= "\n";
 
    $HTML .= '<channel>' . "\n";
-   $HTML .= '  <title>freshports - the place for ports</title>' . "\n";
+   $HTML .= '  <title>FreshPorts - the place for ports</title>' . "\n";
    $HTML .= '  <link>http://freshports.org/</link>' . "\n";
    $HTML .= '  <description>The easiest place to find ports</description>' . "\n";
    $HTML .= '  <language>en-us</language>' . "\n";

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: constants.php,v 1.1.2.9 2003-09-25 12:58:33 dan Exp $
+	# $Id: constants.php,v 1.1.2.10 2003-09-25 15:30:02 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -24,7 +24,7 @@ $TimeFormatDefault		= "H:i:s";
 $FreshPortsTitle		= "FreshPorts";
 
 $WatchNoticeFrequencyDaily			= "D";
-$WatchNoticeFrequencyWeekly		= "W";
+$WatchNoticeFrequencyWeekly			= "W";
 $WatchNoticeFrequencyFortnightly	= "F";
 $WatchNoticeFrequencyMonthly		= "M";
 $WatchNoticeFrequencyNever			= "Z";
@@ -57,7 +57,7 @@ $FreshPortsWatchedPortNotSuffix	= '">' . freshports_Watch_Icon_Add() . '</A></SM
 #
 
 $Sequence_Watch_List_ID			= 'watch_list_id_seq';
-$Sequence_User_ID					= 'users_id_seq';
+$Sequence_User_ID				= 'users_id_seq';
 $Sequence_Security_Notice_ID	= 'security_notice_id_seq';
 
 #
@@ -68,7 +68,8 @@ $Sequence_Security_Notice_ID	= 'security_notice_id_seq';
 define('FRESHPORTS_FREEBSD_CVS_URL' , 'http://www.FreeBSD.org/cgi/cvsweb.cgi');
 
 // path to the ftp server
-define('FRESHPORTS_FREEBSD_FTP_URL', 'ftp://ftp.freebsd.org/pub/FreeBSD/ports/i386/packages-stable/All');
+define('FRESHPORTS_FREEBSD_FTP_URL', 'ftp://ftp.freebsd.org/pub/FreeBSD/ports/i386/packages/All/');
+
 
 // path to the cvs-all mailing list archive
 $freshports_mail_archive = "http://www.freebsd.org/cgi/mid.cgi?db=mid&id=";

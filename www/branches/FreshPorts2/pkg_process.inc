@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: pkg_process.inc,v 1.5.2.17 2003-04-28 15:11:47 dan Exp $
+	# $Id: pkg_process.inc,v 1.5.2.18 2003-05-16 02:32:23 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -319,7 +319,7 @@ function UploadDisplayStagingResultsMatchesDuplicates($UserID, $WatchListID, $db
 }
 
 function UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $dbh) {
-	syslog(LOG_NOTICE, "UploadDisplayWatchListItemsNotInStagingArea for WatchListID: $WatchListID");
+#	syslog(LOG_NOTICE, "UploadDisplayWatchListItemsNotInStagingArea for WatchListID: $WatchListID");
 
 	$begintime = time();
 	$sql = " SELECT categories.name as category, 
@@ -337,10 +337,10 @@ function UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $dbh) {
 				)
 			  ORDER BY port, category";
 
-	syslog(LOG_NOTICE, $sql);
+#	syslog(LOG_NOTICE, $sql);
 
 	$result = pg_exec($dbh, $sql);
-	syslog(LOG_NOTICE, "UploadDisplayWatchListItemsNotInStagingArea for WatchListID: $WatchListID");
+#	syslog(LOG_NOTICE, "UploadDisplayWatchListItemsNotInStagingArea for WatchListID: $WatchListID");
 
 	if ($result) {
 		$numrows = pg_numrows($result);
@@ -378,7 +378,7 @@ function UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $dbh) {
 function MoveStagingToWatchList($UserID, $WatchListID, $ports, $dbh) {
 	$ok  = TRUE;
 
-	syslog(LOG_NOTICE, 'begin');
+#	syslog(LOG_NOTICE, 'begin');
 	$result = pg_exec($dbh, 'BEGIN');
 	if (!$result) {
 		$ok = FALSE;
@@ -393,7 +393,7 @@ function MoveStagingToWatchList($UserID, $WatchListID, $ports, $dbh) {
 	}
 
 	if ($ok && $ports) {
-		syslog(LOG_NOTICE, 'reset ports');
+#		syslog(LOG_NOTICE, 'reset ports');
 		reset($ports);
 		$PortCount = 0;
 		while (list($key, $value) = each($ports)) {
@@ -403,7 +403,7 @@ function MoveStagingToWatchList($UserID, $WatchListID, $ports, $dbh) {
 
 			$sql = 'insert into watch_list_element (watch_list_id, element_id)
 						values (' . AddSlashes($WatchListID) . ' , ' . AddSlashes($value) . ')';
-			syslog(LOG_NOTICE, $sql);
+#			syslog(LOG_NOTICE, $sql);
 #			echo "\$sql='$sql'<BR>\n";
 
 			$result = pg_exec($dbh, $sql);
@@ -418,7 +418,7 @@ function MoveStagingToWatchList($UserID, $WatchListID, $ports, $dbh) {
 	}
 
 	if ($ok) {
-		syslog(LOG_NOTICE, 'reset ports');
+#		syslog(LOG_NOTICE, 'reset ports');
 		reset($ports);
 		$sql = "select WatchListStagingLogWatch($UserID, $PortCount)";
 		$result = pg_exec($dbh, $sql);
@@ -428,7 +428,7 @@ function MoveStagingToWatchList($UserID, $WatchListID, $ports, $dbh) {
 	}			
 			
 	if ($ok) {
-		syslog(LOG_NOTICE, 'commit');
+#		syslog(LOG_NOTICE, 'commit');
 		pg_exec($dbh, "COMMIT");
 	} else {
 		echo pg_errormessage() . " sql = $sql";

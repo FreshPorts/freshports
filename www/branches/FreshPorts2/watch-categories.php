@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-categories.php,v 1.1.2.4 2002-01-05 23:01:19 dan Exp $
+	# $Id: watch-categories.php,v 1.1.2.5 2002-01-06 06:25:41 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -23,7 +23,7 @@ if (!$visitor) {
 }
 
 ?>
-<table width="100%" border="0">
+<table width="<? echo $TableWidth ?>" border="0" ALIGN="center">
 <td valign="top"><table width="100%">
   <tr>
     <td bgcolor="#AD0040" height="29"><font color="#FFFFFF" size="+2"><? echo $FreshPortsTitle; ?> - watch categories</font></td>

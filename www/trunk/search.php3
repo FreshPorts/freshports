@@ -1,5 +1,5 @@
 <?
-   # $Id: search.php3,v 1.12 2001-10-07 15:23:39 dan Exp $
+   # $Id: search.php3,v 1.13 2001-10-07 15:26:25 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -51,7 +51,7 @@ if ($search) {
 
    echo "</td></tr>\n<tr><td>";
 
-$fp = fopen("/www/freshports.org/logs/searchlog.txt", "a");
+$fp = fopen("/home/freshports.org/logs/searchlog.txt", "a");
 if ($fp) {
    fwrite($fp, date("Y-m-d H:i:s") . " " . $stype . ':' . $query . "\n");
    fclose($fp);

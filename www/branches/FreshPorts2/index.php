@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.36 2002-04-12 19:45:24 dan Exp $
+	# $Id: index.php,v 1.1.2.37 2002-04-13 17:52:50 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -40,8 +40,8 @@ function freshports_SummaryForDay($MinusN) {
 }
 
 function freshports_MorePortsToShow($message_id, $NumberOfPortsInThisCommit, $MaxNumberPortsToShow) {
-	$HTML .= freshports_Commit_Link($message_id, '<BIG><BIG><B>...</B></BIG></BIG>');
-	$HTML .= "<BIG> (Only the first $MaxNumberPortsToShow of $NumberOfPortsInThisCommit commits are shown above)</BIG>";
+	$HTML .= freshports_Commit_Link($message_id, '<IMG SRC="/images/bullet14x10.gif" ALT="dot" BORDER="0" WIDTH="14" HEIGHT="10"><IMG SRC="/images/bullet14x10.gif" ALT="dot" BORDER="0" WIDTH="14" HEIGHT="10"><IMG SRC="/images/bullet14x10.gif" ALT="dot" BORDER="0" WIDTH="14" HEIGHT="10">');
+	$HTML .= " (Only the first $MaxNumberPortsToShow of $NumberOfPortsInThisCommit commits are shown above)";
 
 	return $HTML;
 }
@@ -282,7 +282,7 @@ ports. A port is marked as new for 10 days.
 
 
 					if ($NumberOfPortsInThisCommit > $MaxNumberPortsToShow) {
-						$HTML .= '<BR>' . freshports_MorePortsToShow($myrow["message_id"], $NumberOfPortsInThisCommit, $MaxNumberPortsToShow);
+						$HTML .= '<P>' . freshports_MorePortsToShow($myrow["message_id"], $NumberOfPortsInThisCommit, $MaxNumberPortsToShow) . '</P>';
 					}
 
 					$i = $j - 1;

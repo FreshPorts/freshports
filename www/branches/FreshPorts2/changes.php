@@ -1,5 +1,5 @@
 <?
-   # $Id: changes.php,v 1.1.2.1 2002-01-02 02:53:38 dan Exp $
+   # $Id: changes.php,v 1.1.2.2 2002-01-05 21:24:28 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -87,8 +87,8 @@ lists in the <a href="http://freshports.org/phorum/list.php?f=3">feedback phorum
   <li>Mail notifications should now be working. The daily mailout had it's first run about an hour ago.
       Weekly notices go out on the 9th.  Fortnightly notices go out on the 9th and 23rd.  And monthly
       notices go out on the 23rd.</li>
-  <li>A news feed is available at <a href="http://freshports.org/news.php">http://freshports.org/news.php</a>.
-      And a simplified version is at <a href="http://freshports.org/news.txt">http://freshports.org/news.txt</a>.</li>
+  <li>A news feed is available at <a href="http://freshports.org/news.php">http://FreshPorts.org/news.php</a>.
+      And a simplified version is at <a href="http://freshports.org/news.txt">http://FreshPorts.org/news.txt</a>.</li>
   <li>if someone goes to watch.php, watch-categories.php, or customize.php, it should redirect you to the
       login screen, then take you back after you successfully login.</li>
 </ul>
@@ -132,7 +132,7 @@ lists in the <a href="http://freshports.org/phorum/list.php?f=3">feedback phorum
 <ul>
 <li>Cater for virtual categories.  You'll no doubt notice that some ports are listed in multple categories
 but those categories aren't listed in your /usr/ports/ directory.  Why is that?  That is because those
-categories aren't real;  they are virutal.  One day, freshports will cater for virtual categories.  The data
+categories aren't real;  they are virutal.  One day, <? echo $FreshPortsTitle; ?> will cater for virtual categories.  The data
 is all there in the database.  I just have to code it.</li>
 <li>remember to grab packages.exists when that changes</li>
 <li>allow ports to be {added to [and/or] removed from} personal watch lists from any page</li>

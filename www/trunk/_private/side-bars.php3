@@ -4,12 +4,26 @@
          <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" SIZE="+1">Login</font></td>
         </tr>
         <tr>
-         <td><script language="php">
 
+         <td><script language="php">
   if ($UserName) {
    echo '<font SIZE="-1">Logged in as ', $UserName, "</font><br>";
    echo '<font SIZE="-1"><a href="http://freshports.org/customize.php3">Customize</a></font><br>';
-   echo '<font SIZE="-1"><a href="http://freshports.org/logout.php3?origin=' . $PHP_SELF . ' ">Logout</a></font><br>';  
+   echo '<font SIZE="-1"><a href="http://freshports.org/logout.php3?origin=';
+   switch (basename($PHP_SELF)) {
+      case "watch.php3":
+      case "watch-categories.php3":
+      case "customize.php3":
+      case "port-watch.php3":
+         echo '/';
+         break;
+
+      default:
+         echo $PHP_SELF;
+         break;
+   }
+
+   echo '">Logout</a></font><br>';  
    echo '<font SIZE="-1"><a href="http://freshports.org/watch-categories.php3">watch list - Categories</a></font><br>';
    echo '<font SIZE="-1"><a href="http://freshports.org/watch.php3">your watched ports</a></font><br>';
   } else {

@@ -440,6 +440,18 @@ the commit_log_ports records accordingly.  Something like this:
 
 <p>
 That's a first crack at how to solve the historical PORTEPOCH issue.
+
+<p>
+We might also want to adjust only those ports which have PORTEPOCH != 0 and that have a
+vuln entry:
+
+<blockquote><pre class="code">
+select distinct name
+  from ports_active PA, commit_log_ports_vuxml CLPV
+ WHERE PA.id = CLPV.port_id
+   AND PA.portepoch != '0';
+</pre></blockquote>
+
 <hr>
 <p align="right">
 <small>Last amended: 22 September 2004</small>

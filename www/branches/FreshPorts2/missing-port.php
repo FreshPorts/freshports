@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.48 2003-12-31 16:06:20 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.49 2003-12-31 16:43:03 dan Exp $
 	#
 	# Copyright (c) 2001-2003 DVL Software Limited
 	#
@@ -66,10 +66,15 @@ GLOBAL $ShowWatchListCount;
 
 	echo "</TD></TR>\n</TABLE>\n\n";
 
-	$PortsMoved = new PortsMoved($port->dbh);
-	$numrows = $PortsMoved->FetchInitialiseTo($port->id);
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports_moved.php');
 
-	if ($numrows > 0) {
+	$PortsMovedFrom = new PortsMoved($port->dbh);
+	$NumRowsFrom    = $PortsMovedFrom->FetchInitialiseFrom($port->id);
+
+	$PortsMovedTo   = new PortsMoved($port->dbh);
+	$NumRowsTo      = $PortsMovedTo->FetchInitialiseTo($port->id);
+
+	if ($NumRowsFrom + $NumRowsTo > 0) {
 		echo '<TABLE BORDER="1" width="100%" CELLSPACING="0" CELLPADDING="5">' . "\n";
 		echo "<TR>\n";
 		echo freshports_PageBannerText("Port Moves", 1);
@@ -77,15 +82,23 @@ GLOBAL $ShowWatchListCount;
 		echo "<ul>\n";
 	}
 
-	for ($i = 0; $i < $numrows; $i++) {
-		$PortsMoved->FetchNth($i);
-		echo '<li>' . freshports_PortsMoved($port, $PortsMoved) . "</li>\n";
-		if ($i + 1 != $numrows) {
+	for ($i = 0; $i < $NumRowsFrom; $i++) {
+		$PortsMovedFrom->FetchNth($i);
+		echo '<li>' . freshports_PortsMoved($port, $PortsMovedFrom) . "</li>\n";
+		if ($i + 1 != $NumRowsFrom) {
+			echo '<br>';
+		}
+	}
+
+	for ($i = 0; $i < $NumRowsTo; $i++) {
+		$PortsMovedTo->FetchNth($i);
+		echo '<li>' . freshports_PortsMoved($port, $PortsMovedTo) . "</li>\n";
+		if ($i + 1 != $NumRowsTo) {
 			echo '<br>';
 		}
 	}
 	
-	if ($numrows > 0) {
+	if ($NumRowsFrom + $NumRowsTo > 0) {
 		echo "</ul>\n";
 		echo "</td></tr>\n";
 		echo "</table>\n";

@@ -21,9 +21,15 @@ update ports set needs_refresh = needs_refresh_tmp;
 alter table ports drop column needs_refresh_tmp;
 alter table ports modify needs_refresh tinyint unsigned not null default 0;
 
+create new directory /usr/local/etc/freshports.new
+chown dan:daemon freshports.new 
+
+cvs co -d . freshports-log
+modify log-catcher.awk and fix patsh.
+
 modify outfile and infil paths in log-catcher.awk
 create msgs directory according to above paths
-chmod daemon +x on msgs directory
+chmod g+w msgs
 
 in updates.pl, change the login id accordingly
 
@@ -34,6 +40,9 @@ I changed the above to use lib '/usr/local/etc/freshports.test/updates';
 /usr/local/etc/freshports.changes/archives
 I changed the above to /www/test.freshports.org/archives
 and copied the archives directory from elsewhere.
+chown dan:daemon archives
+
+cp portschange.pm to /usr/local/etc/freshports.new
 
 
 
@@ -45,4 +54,7 @@ grant insert on change_log to updater@localhost;
 grant insert,select on change_log_port to updater@localhost;
 grant insert on change_log_details to updater@localhost;
 grant select on categories to updater@localhost;
+
+allow user to connect:
+grant usage to updater on freshportsnew.*;
 

@@ -1,5 +1,5 @@
 <?
-	# $Id: search.php,v 1.1.2.9 2002-03-19 12:56:39 dan Exp $
+	# $Id: search.php,v 1.1.2.10 2002-04-08 16:20:54 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -9,6 +9,19 @@
 	require("./include/getvalues.php");
 
 	require("../classes/ports.php");
+
+	// avoid nasty problems by adding slashes
+	$query		= AddSlashes($query);
+	$stype		= AddSlashes($stype);
+	$num		= AddSlashes($num);
+	$category	= AddSlashes($category);
+	$port		= AddSlashes($port);
+
+	if ($stype == 'messageid') {
+		AddSlashes($query);
+		header("Location: http://$HTTP_HOST/commit.php?message_id=$query");
+		exit;
+	}
 
 	freshports_Start("Search",
 					"freshports - new ports, applications",
@@ -55,12 +68,6 @@ if ($search) {
 
 $logfile = $DOCUMENT_ROOT . "/../configuration/searchlog.txt";
 
-	// avoid nasty problems by adding slashes
-	$query		= AddSlashes($query);
-	$stype		= AddSlashes($stype);
-	$num		= AddSlashes($num);
-	$category	= AddSlashes($category);
-	$port		= AddSlashes($port);
 
 $fp = fopen($logfile, "a");
 if ($fp) {
@@ -76,7 +83,7 @@ if ($fp) {
 	syslog(LOG_ERR, "FreshPorts could not open the search log file: $logfile");
 }
 
-$sql = "select ports.id, element.name as port, " .
+$sql = "select distinct ports.id, element.name as port, " .
        "categories.name as category, categories.id as category_id, ports.version as version, ".
        "ports.maintainer, ports.short_description, ".
        "ports.package_exists, ports.extract_suffix, ports.homepage, element.status, ports.element_id, " .
@@ -90,7 +97,7 @@ if ($WatchListID) {
        END as onwatchlist ";
 }
 
-	$sql .= "from ports, categories, element  ";
+	$sql .= "from ports, categories, commit_log, commit_log_ports, element  ";
 
 if ($WatchListID) {
     $sql .="
@@ -102,8 +109,10 @@ if ($WatchListID) {
 
 
 
-	$sql .= "WHERE ports.category_id = categories.id " .
-	        "  and ports.element_id  = element.id " ;
+	$sql .= "WHERE ports.category_id  = categories.id
+	           and ports.element_id   = element.id 
+	           and commit_log.id      = commit_log_ports.commit_log_id
+               and commit_log_ports.port_id = ports.id    " ;
 
 if ($method == 'match') {
 	switch ($stype) {
@@ -118,6 +127,9 @@ if ($method == 'match') {
 		case "maintainer":
 			$sql .= "and ports.maintainer like '%$query%'";
 			break;
+
+		case "messageid":
+			$sql .= "and commit_log.message_id = '$query'";
 	}
 } else {
 	switch ($stype) {
@@ -132,6 +144,9 @@ if ($method == 'match') {
 		case "maintainer":
 			$sql .= "and evenshtein(ports.maintainer, '$query') < 4";
 			break;
+
+		case "messageid":
+			$sql .= "and commit_log.message_id = '$query'";
 	}
 }
 
@@ -171,29 +186,30 @@ $Port->LocalResult = $result;
 <form METHOD="POST" ACTION="<? echo $PHP_SELF ?>">
 Search for:<BR>
 	<SELECT NAME="stype" size="1">
-		<option VALUE="name"             <? if ($stype == "name")             echo 'SELECTED'?>>Port Name</option>
-		<option VALUE="maintainer"       <? if ($stype == "maintainer")       echo 'SELECTED'?>>Maintainer</option>
-		<option VALUE="shortdescription" <? if ($stype == "shortdescription") echo 'SELECTED'?>>Short Description</option>
+		<OPTION VALUE="name"             <? if ($stype == "name")             echo 'SELECTED'?>>Port Name</OPTION>
+		<OPTION VALUE="maintainer"       <? if ($stype == "maintainer")       echo 'SELECTED'?>>Maintainer</OPTION>
+		<OPTION VALUE="shortdescription" <? if ($stype == "shortdescription") echo 'SELECTED'?>>Short Description</OPTION>
+		<OPTION VALUE="messageid"        <? if ($stype == "messageid")        echo 'SELECTED'?>>Message ID</OPTION>
 	</SELECT> 
 
 	<SELECT name=method>
-		<OPTION value="match"   <?if ($method == "match"  ) echo 'SELECTED' ?>>containing
-		<OPTION value="soundex" <?if ($method == "soundex") echo 'SELECTED' ?>>sounding like
+		<OPTION VALUE="match"   <?if ($method == "match"  ) echo 'SELECTED' ?>>containing
+		<OPTION VALUE="soundex" <?if ($method == "soundex") echo 'SELECTED' ?>>sounding like
 	</SELECT>
 
-	<input NAME="query" size="20"  value="<? echo stripslashes($query)?>">
+	<INPUT NAME="query" size="20"  VALUE="<? echo stripslashes($query)?>">
 
 	<SELECT name=num>
-		<option value="10"  <?if ($num == 10)  echo 'SELECTED' ?>>10 results
-		<option value="20"  <?if ($num == 20)  echo 'SELECTED' ?>>20 results
-		<option value="30"  <?if ($num == 30)  echo 'SELECTED' ?>>30 results
-		<option value="50"  <?if ($num == 50)  echo 'SELECTED' ?>>50 results
-		<option value="100" <?if ($num == 100) echo 'SELECTED' ?>>100 results
-		<option value="500" <?if ($num == 500) echo 'SELECTED' ?>>500 results
+		<OPTION VALUE="10"  <?if ($num == 10)  echo 'SELECTED' ?>>10 results
+		<OPTION VALUE="20"  <?if ($num == 20)  echo 'SELECTED' ?>>20 results
+		<OPTION VALUE="30"  <?if ($num == 30)  echo 'SELECTED' ?>>30 results
+		<OPTION VALUE="50"  <?if ($num == 50)  echo 'SELECTED' ?>>50 results
+		<OPTION VALUE="100" <?if ($num == 100) echo 'SELECTED' ?>>100 results
+		<OPTION VALUE="500" <?if ($num == 500) echo 'SELECTED' ?>>500 results
 	</SELECT> 
 
-	<input TYPE="submit" VALUE="search"> </p>
-  <input type="hidden" name="search" value="1">
+	<INPUT TYPE="submit" VALUE="search"> </p>
+  <INPUT TYPE="hidden" NAME="search" VALUE="1">
 </form>
 
 </td></tr>

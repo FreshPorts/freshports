@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: user.php,v 1.1.2.9 2003-03-06 22:03:41 dan Exp $
+	# $Id: user.php,v 1.1.2.10 2003-03-10 14:36:16 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -40,7 +40,7 @@ class User {
 
 
 	function User($dbh) {
-		GLOBAL $DefaultPageSize;	# from configuration/freshports.conf.php
+		GLOBAL $DefaultPageSize;	# from include/getvalues.php
 
 		$this->dbh	     = $dbh;
 		$this->id        = 0;

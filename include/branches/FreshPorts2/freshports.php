@@ -1,14 +1,18 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.53 2002-03-30 08:45:40 dan Exp $
+   # $Id: freshports.php,v 1.4.2.54 2002-04-01 21:03:51 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
+
+GLOBAL $DOCUMENT_ROOT;
+
 
 #
 # colours for the banners (not really banners, but headings)
 #
+if ($Debug) echo "'" . $DOCUMENT_ROOT . "/../classes/watchnotice.php'<BR>";
 
-require($DOCUMENT_ROOT . "/../classes/watchnotice.php");
+require_once($DOCUMENT_ROOT . "/../classes/watchnotice.php");
 
 $BannerBackgroundColour = "#FFCC33";
 $BannerTextColour       = "#000000";
@@ -840,22 +844,37 @@ function freshports_PortCommits($port) {
 	$i = 0;
 	for ($i = 0; $i < $NumRows; $i++) {
 		$Commits->FetchNthCommit($i);
-		freshports_PortCommitPrint($Commits);
+		freshports_PortCommitPrint($Commits, $port->category, $port->port);
 	}
 
 	freshports_PortCommitsFooter($port);
 }
 
-function freshports_PortCommitPrint($commit) {
+function freshports_CommitFilesLink($CommitID, $Category, $Port) {
+
+#	echo "freshports_CommitFilesLink gets $CommitID, $Category, $Port<BR>";
+
+	$HTML .= '<A HREF="/' . $Category . '/' . $Port . '/files.php?' . $CommitID . '">';
+	$HTML .= '<IMG SRC="/images/logs.gif" ALT="Files within this port affected by this commit" ';
+	$HTML .= 'BORDER="0" WIDTH="17" HEIGHT="20" HSPACE="2"></A>';
+
+	return $HTML;
+}
+
+function freshports_PortCommitPrint($commit, $category, $port) {
 	GLOBAL  $DateFormatDefault;
 	GLOBAL  $TimeFormatDefault;
 
 	# print a single commit for a port
 #	echo "<TR><TD VALIGN='top'><xSMALL>" . date("$DateFormatDefault $TimeFormatDefault", $commit->commit_date)        . "</SMALL></TD>\n";
-	echo "<TR><TD VALIGN='top'><xSMALL>" . $commit->commit_date        . "</SMALL></TD>\n";
+	echo "<TR><TD VALIGN='top'><xSMALL>" . $commit->commit_date . "</SMALL></TD>\n";
 	echo '    <TD VALIGN="top">';
-    echo $commit->committer . '<BR><A HREF="/files.php?id=' . $commit->id;
-	echo '"><IMG SRC="/images/logs.gif" ALT="Files within this port affected by this commit" BORDER="0" WIDTH="17" HEIGHT="20" HSPACE="2"></A>'. "</TD>\n";
+    echo $commit->committer;
+	echo '<BR>';
+
+	$CommitID = $commit->id;
+	echo freshports_CommitFilesLink($CommitID, $category, $port);
+	echo "</TD>\n";
 	echo '    <TD VALIGN="top" WIDTH="*">';
 
 

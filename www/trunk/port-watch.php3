@@ -137,12 +137,8 @@ if ($submit) {
 </head>
 
 <body bgcolor="#ffffff" link="#0000cc">
-
+ <? include("/www/freshports.org/_private/header.inc") ?>
 <table width="100%" border="0">
-<tr>
- <td colspan="2">
- <font size="+4">freshports</font>
- </td>
 </tr>
 <tr><td colspan="2">This page shows the ports within a specific category which are in your watch list.
 </td></tr>

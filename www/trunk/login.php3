@@ -52,11 +52,8 @@ if ($submit) {
 </head>
 
 <body bgcolor="#ffffff" link="#0000cc">
-
+ <? include("/www/freshports.org/_private/header.inc") ?>
 <table width="100%">
-<tr><td>
-<? include("/www/freshports.org/_private/header.inc") ?>
-</td></tr>
   <tr>
     <td><p align="center">
 <?

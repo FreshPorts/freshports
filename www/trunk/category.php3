@@ -24,12 +24,9 @@ $title = freshports_Category_Name($category, $db);
 
 <body bgcolor="#ffffff" link="#0000cc">
 
+ <? include("/www/freshports.org/_private/header.inc") ?>
+
 <table width="100%" border="0">
-<tr>
- <td colspan="2">
- <font size="+4">freshports</font>
- </td>
-</tr>
 <tr><td>
 This page lists all the ports in a given category.
 </td></tr>

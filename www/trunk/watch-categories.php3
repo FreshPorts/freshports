@@ -16,11 +16,8 @@ require( "/www/freshports.org/_private/freshports.php3");
 
 <body bgcolor="#ffffff" link="#0000cc">
 
+ <? include("/www/freshports.org/_private/header.inc") ?>
 <table width="100%" border="0">
-<tr>
- <td colspan="2">
-<? include("/www/freshports.org/_private/header.inc") ?>
- </td>
 </tr>
 <tr><td colspan="2">
 This page shows the various categories and indicates which ones contains ports which are on your watch list.

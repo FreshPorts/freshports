@@ -90,16 +90,19 @@ if ($submit) {
 //   echo "inserting new stuff now<br>\n";
     
    // make sure we are pointing at the start of the array.
-   reset($ports);
-   while (list($key, $value) = each($ports)) {
-      $sql = "insert into watch_port (watch_id, port_id, changes_new, changes_modify, changes_delete) ".
+   
+   if ($ports) {
+      reset($ports);
+      while (list($key, $value) = each($ports)) {
+         $sql = "insert into watch_port (watch_id, port_id, changes_new, changes_modify, changes_delete) ".
                 "values ($WatchID, $value, 'Y', 'Y', 'Y')";
    
 //      echo "port $value has been selected<br>\n";
 
-      $result = mysql_query($sql, $db);   
-      ${"port_".$value} = 1;  
-   }       
+         $result = mysql_query($sql, $db);
+         ${"port_".$value} = 1;
+      }
+   }
       
    header("Location: watch-categories.php3");  /* Redirect browser to PHP web site */
    exit;  /* Make sure that code below does not get executed when we redirect. */
@@ -154,10 +157,15 @@ echo '<font size="+1">You are not logged in, perhaps you should <a href="login.p
 echo '</td></tr><tr><td>';
 } else {
 ?>
+<p>
 This screen contains a list of the ports in category <em><?echo $categoryname ?></em>. 
 The ports with a tick beside them are already in your watch list. 
 When one of the ports in your watch list changes, you will be notified by email if
 you have selected a notification frequency within your <a href="customize.php3">personal preferences</a>.
+</p>
+<p>
+[D] indicates a port which has been removed from the tree.
+</p>
 <? } ?>
 <script language="php">
 
@@ -205,10 +213,9 @@ echo "\n</td></tr>\n<tr><td>";
 if ($UpdateCache == 1 && $UserID) {
 //   echo 'time to update the cache';
 
-$sql = "select id, name  ".
+$sql = "select id, name, status  ".
        "from ports ".
        "WHERE primary_category_id = $category " .
-       "  and status              = 'A' " .
        "order by name";
 
 //echo $sql, "<br>\n";
@@ -258,6 +265,10 @@ for ($i = 0; $i < $NumPorts; $i++) {
    $URL_Category = "port-description.php3?port=" . $rows[$i]["id"];
 
    $HTML .= ' <a href="' . $URL_Category . '">' . $rows[$i]["name"] . '</a>';
+
+   if ($rows[$i]["status"] == 'D') $HTML .= " [D]";
+
+//   $HTML .= '</a>';
    $HTML .= "<br>\n";
 }
 

@@ -24,7 +24,7 @@ if (strtolower(substr($host, 0, 7)) == "develop") {
    if (strtolower(substr($host, 0, 4)) == "test") {
       $database = "freshportstest";
    } else {
-      if (strtolower(substr($host, 0, 6)) == "change") {
+      if (strtolower(substr($host, 0, 6)) == "change" || strtolower(substr($host, 0, 6)) == "public") {
          $database = "freshportschange";
       }
    }

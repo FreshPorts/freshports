@@ -9,7 +9,7 @@
 
    $HTML .= "<b>" . $myrow["port"];
    if (strlen($myrow["version"]) > 0) {
-      $HTML .= '-' . $myrow["version"];
+      $HTML .= ' ' . $myrow["version"];
    }
 
    $HTML .= "</b>";
@@ -18,7 +18,7 @@
    if ($myrow["status"] == "D") {
       $HTML .= ' <font size="-1">[deleted - port removed from ports tree]</font>';
    }
-   if ($myrow["needs_refresh"] == "Y") {
+   if ($myrow["needs_refresh"]) {
       $HTML .= ' <font size="-1">[refresh]</font>';
    }
 
@@ -31,22 +31,17 @@
    if ($myrow["date_created"] > Time() - 3600 * 24 * $DaysMarkedAsNew) {
       $MarkedAsNew = "Y";
       $HTML .= " <img src=\"/images/new.gif\" width=28 height=11 alt=\"new!\" hspace=2 align=absmiddle>";
-      $HTML .= ' <font size="-1">(' . $myrow["date_created_formatted"] . ")</font>";
+
+      if ($myrow["date_created_formatted"] != $myrow["updated"] || !($ShowLastChange == "Y" || $ShowEverything)) {
+         $HTML .= ' <font size="-1">(' . $myrow["date_created_formatted"] . ")</font>";
+      }
    }
 
    $HTML .= "<dd>";
 
    // description
    if ($myrow["short_description"] && ($ShowShortDescription == "Y" || $ShowEverything)) {
-      if ($MarkedAsNew == "Y") {
-         $HTML .= " -- waiting for description --";
-         if ($GlobalHideLastChange != "N") {
-           $HTML .= " <br><i>commit message was:</i> ";
-           $HTML .= $myrow["short_description"];
-         }
-      } else {
-         $HTML .= $myrow["short_description"];
-      }
+      $HTML .= $myrow["short_description"];
       $HTML .= "<br>\n";
    }
 

@@ -1,4 +1,4 @@
-  <table WIDTH="152" BORDER="1" CELLSPACING="0" CELLPADDING="5"
+  <table WIDTH="192" BORDER="1" CELLSPACING="0" CELLPADDING="5"
             bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">
         <tr>
          <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" SIZE="+1">Login</font></td>
@@ -6,23 +6,24 @@
         <tr>
 
          <td><script language="php">
-  if ($UserName) {
-   echo '<font SIZE="-1">Logged in as ', $UserName, "</font><br>";
-   echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/customize.php3", "Customize") . '</font><br>';
-
    switch (basename($PHP_SELF)) {
       case "watch.php3":
       case "watch-categories.php3":
-      case "customize.php3":
+//      case "customize.php3":
       case "port-watch.php3":
-         $origin = '/';
+         $OriginLocal = '/';
          break;
 
       default:
-         $origin = $PHP_SELF;
+         $OriginLocal = $PHP_SELF;
          break;
    }
-   echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/logout.php3?origin=$origin", "Logout") . '</font><br>';
+
+   if ($UserName) {
+   echo '<font SIZE="-1">Logged in as ', $UserName, "</font><br>";
+   echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/customize.php3?origin=$OriginLocal", "Customize") . '</font><br>';
+
+   echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/logout.php3?origin=$OriginLocal", "Logout") . '</font><br>';
    echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/watch-categories.php3", "watch list - Categories") . '</font><br>';
    echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/watch.php3", "your watched ports") . '</font><br>';
   } else {
@@ -35,7 +36,7 @@
    </table>
 <br>
 
-<table WIDTH="152" BORDER="1" BORDER="1" CELLSPACING="0" CELLPADDING="5"
+<table WIDTH="192" BORDER="1" CELLSPACING="0" CELLPADDING="5"
             bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">        <tr>
          <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" SIZE="+1">Vote now!</font></td>
         </tr>
@@ -48,7 +49,7 @@
 <br>
 
 
-<table WIDTH="152" BORDER="1" BORDER="1" CELLSPACING="0" CELLPADDING="5"
+<table WIDTH="192" BORDER="1" CELLSPACING="0" CELLPADDING="5"
             bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">        <tr>
          <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" SIZE="+1">Ports</font></td>
         </tr>
@@ -65,7 +66,7 @@
    </tr>
    </table>
 <br>
- <table WIDTH="152" BORDER="1" BORDER="1" CELLSPACING="0" CELLPADDING="5"
+ <table WIDTH="192" BORDER="1" CELLSPACING="0" CELLPADDING="5"
             bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">        <tr>
          <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" SIZE="+1">This site</font></td>
         </tr>

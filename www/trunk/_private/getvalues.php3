@@ -2,8 +2,8 @@
 
 //$Debug=1;
 
-$FormatDateDefault	= "%Y/%m/%d";
-$FormatTimeDefault	= "%T";
+$FormatDateDefault	= "%m/%d";
+$FormatTimeDefault	= "%H:%i";
 $DaysMarkedAsNewDefault	= 21;
 
 

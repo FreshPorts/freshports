@@ -1,5 +1,5 @@
 <table width="100%" border="0" cellpadding="5" cellspacing="4">
-<form action="<?php echo $PHP_SELF?>" method="POST">
+<form action="<?php echo $PHP_SELF . "?origin=" . $origin ?>" method="POST">
           <tr>
             <td valign="top">
 <? if (!$Customize) { ?>

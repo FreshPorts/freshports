@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.22 2002-03-05 06:48:23 dan Exp $
+	# $Id: index.php,v 1.1.2.23 2002-03-22 00:45:18 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -166,7 +166,7 @@ if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 
 ?>
 
-<tr><td VALIGN="top">
+<tr><td VALIGN="top" WIDTH="100%">
 <table width="<? echo $TableWidth ?>" border="1" CELLSPACING="0" CELLPADDING="8"
             bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">
 <tr>

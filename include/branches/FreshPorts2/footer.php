@@ -1,5 +1,5 @@
 <?
-	# $Id: footer.php,v 1.5.2.19 2003-07-30 12:24:24 dan Exp $
+	# $Id: footer.php,v 1.5.2.20 2004-01-13 12:51:52 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 ?>
@@ -19,20 +19,19 @@ ALT="powered by FreeBSD" BORDER="0" WIDTH="171" HEIGHT="64"></A>
 
 &nbsp;
 
-<A HREF="http://www.phorum.org/"><IMG SRC="/phorum/images/phorum.gif"
-ALT="powered by phorum" BORDER="0" WIDTH="200" HEIGHT="50"></A>
-
-&nbsp;
-
 <A HREF="http://www.php.net/"><IMG SRC="/images/php-med-trans-light.gif"
 ALT="powered by php" BORDER="0" WIDTH="95" HEIGHT="50"></A>
+&nbsp;
+
+<A HREF="http://www.postgresql.org/"><IMG SRC="/images/pg-power.jpg"
+ALT="powered by PostgreSQL" BORDER="0" WIDTH="164" HEIGHT="59"></A>
+
 
 </TD></TR>
 <TR><TD align="center">
 
-
-<A HREF="http://www.postgresql.org/"><IMG SRC="/images/postgresql-powered_button4.gif"
-ALT="powered by PostgreSQL" BORDER="0" WIDTH="182" HEIGHT="41"></A>
+<A HREF="http://www.phorum.org/"><IMG SRC="/phorum/images/phorum.gif"
+ALT="powered by phorum" BORDER="0" WIDTH="200" HEIGHT="50"></A>
 
 
 &nbsp;&nbsp;&nbsp;

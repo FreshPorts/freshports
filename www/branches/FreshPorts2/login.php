@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: login.php,v 1.1.2.34 2003-11-27 16:55:49 dan Exp $
+	# $Id: login.php,v 1.1.2.35 2003-12-01 18:27:17 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -12,7 +12,7 @@
 $Debug = 0;
 
 $LoginFailed = 0;
-$error       = 0;
+$error       = '';
 $origin      = '/';
 
 if (IsSet($_GET['origin'])) $origin = $_GET['origin'];
@@ -26,7 +26,7 @@ if ($Debug) phpinfo();
 
 $origin = rawurlencode($origin);
 
-if (IsSet($_POST['LOGIN']) && $_POST['UserID']) {
+if (IsSet($_REQUEST['LOGIN']) && $_REQUEST['UserID']) {
    // process form
 
    if ($Debug) {
@@ -37,9 +37,8 @@ if (IsSet($_POST['LOGIN']) && $_POST['UserID']) {
 
    $OK = 1;
 
-   $errors = '';
-   $UserID   = AddSlashes($_POST['UserID']);
-   $Password = AddSlashes($_POST['Password']);
+   $UserID    = AddSlashes($_REQUEST['UserID']);
+   $Password  = AddSlashes($_REQUEST['Password']);
 
    // test for existance of user id
 

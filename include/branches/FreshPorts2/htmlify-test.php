@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: htmlify-test.php,v 1.1.2.1 2003-09-12 14:23:53 dan Exp $
+	# $Id: htmlify-test.php,v 1.1.2.2 2003-09-12 14:45:08 dan Exp $
 	#
 	# Copyright (c) 2003 DVL Software Limited
 	#
@@ -60,7 +60,10 @@ EOD;
 
 <h2>	Other links to check</h2>
 
-Ensure all PRs are HTMLified: <a href="/databases/postgresql7/files.php?message_id=200302062046.h16KkqNv024036@repoman.freebsd.org">/databases/postgresql7/files.php?message_id=200302062046.h16KkqNv024036@repoman.freebsd.org</a>
+<ul>
+<li>Ensure all PRs are HTMLified: <a href="/databases/postgresql7/files.php?message_id=200302062046.h16KkqNv024036@repoman.freebsd.org">/databases/postgresql7/files.php?message_id=200302062046.h16KkqNv024036@repoman.freebsd.org</a>
+<li>Good test page: <a href="/lang/php4/">/lang/php4/</a>
+</ul>
 
 </body>
 </html>

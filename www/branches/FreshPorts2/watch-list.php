@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-list.php,v 1.2.2.13 2002-12-10 03:58:19 dan Exp $
+	# $Id: watch-list.php,v 1.2.2.14 2002-12-10 04:42:36 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -140,6 +140,7 @@ NOTES
 <ul>
 <li>'+' indicates that the port is on this watch list.
 <li>'*' indicates a default watch list.
+<li>the watch lists which are selected are those upon which the port appears
 </ul>
 <?php
 		}

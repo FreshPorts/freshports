@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.43 2003-05-23 17:32:25 dan Exp $
+	# $Id: search.php,v 1.1.2.44 2003-06-03 13:30:53 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -44,7 +44,7 @@
 		exit;
 	}
 
-	if ($start < 0 || $start > 20000) {
+	if ($start < 1 || $start > 20000) {
 		$start = 1;
 	}
 
@@ -76,7 +76,7 @@
 	}
 
 
-	if ($Debug) phpinfo();
+#	if ($Debug) phpinfo();
 
 	freshports_Start('Search',
 					'freshports - new ports, applications',
@@ -276,7 +276,9 @@ $sql .= "\n order by categories.name, element.name";
 
 #$sql .= "\n limit $num";
 
-$sql .= "\n OFFSET $start";
+if ($start > 1) {
+	$sql .= "\n OFFSET " . ($start - 1);
+}
 
 $AddRemoveExtra  = "&&origin=$SCRIPT_NAME?query=" . $query. "+stype=$stype+num=$num+method=$method";
 if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<BR>";
@@ -368,7 +370,7 @@ Search for:<BR>
 	NOTE: When searching on 'Message ID' only exact matches will succeed.
 
   <INPUT TYPE="hidden" NAME="search" VALUE="1">
-  <INPUT TYPE="hidden" NAME="start"  VALUE="1">
+  <INPUT TYPE="hidden" NAME="start"  VALUE="<? echo $start; ?>">
 </form>
 
 &nbsp;

@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.119 2002-12-11 04:35:24 dan Exp $
+	# $Id: freshports.php,v 1.4.2.120 2002-12-11 16:33:42 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -469,23 +469,6 @@ function freshports_Category_Name($CategoryID, $db) {
 	return $myrow["name"];
 }
 
-
-function freshports_MainWatchID($UserID, $db) {
-
-	$sql = "select watch_list.id ".
-	       "  from watch_list ".
-	       " where watch_list.user_id = $UserID ".
-	       "   and watch_list.name    = 'main'";
-
-	$result = pg_exec ($db, $sql);
-
-	if(pg_numrows($result)) {
-		$myrow = pg_fetch_array ($result, 0);
-		$WatchID = $myrow["id"];
-	}
-
-	return $WatchID;
-}
 
 function freshports_echo_HTML($text) {
 //   echo $text;

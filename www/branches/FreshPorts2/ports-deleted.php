@@ -1,5 +1,5 @@
 <?
-	# $Id: ports-deleted.php,v 1.1.2.16 2002-12-11 04:37:02 dan Exp $
+	# $Id: ports-deleted.php,v 1.1.2.17 2002-12-11 16:33:41 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -35,11 +35,6 @@ These are the latest deleted ports.
 
 	$visitor = $_COOKIE["visitor"];
 	$sort    = $_REQUEST["sort"];
-	if ($visitor) {
-		$WatchID = freshports_MainWatchID($User->id, $db);
-	} else {
-		unset ($WatchID);
-	}
 
 	// make sure the value for $sort is valid
 

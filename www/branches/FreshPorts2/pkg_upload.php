@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: pkg_upload.php,v 1.5.2.38 2004-10-25 00:23:13 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.39 2004-11-03 23:46:01 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -39,7 +39,7 @@ function StagingAlreadyInUse($UserID, $dbh) {
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/pkg_process.inc');
 
-function DisplayUploadForm() {
+function DisplayUploadForm($db, $UserID) {
 	?>
 
 	<P>
@@ -71,17 +71,30 @@ function DisplayUploadForm() {
 	</LI>
 
 	<LI>
-	Then click on <B>Upload</B>.
+	Then click on either <b>Staging</b> or <B>Upload</B>.
 	</LI>
 
 	</OL>
+
+	<hr>
 
 
 	<FORM ACTION="<? echo $_SERVER["PHP_SELF"]; ?>" METHOD="post" enctype="multipart/form-data">
 		<TABLE>
 			<TR><TD>The file name containing the output from step 1:</TD></TR>
 			<TR><TD><INPUT TYPE="file"   NAME="pkg_info" SIZE="40" ></TD></TR>
-			<TR><TD><INPUT TYPE="submit" NAME="upload"   SIZE="20" VALUE="Upload"></TD></TR>
+			<TR><TD><INPUT TYPE="submit" NAME="staging"  SIZE="20" VALUE="Staging"> <= Click here to go to staging area</TD></TR>
+			<tr><td><hr></td></tr>
+
+			<tr><td>Use this Watch List: 
+			<?php
+echo freshports_WatchListDDLB($db, $UserID); 
+
+?>
+</td></tr>
+			<tr><td><input type="radio" name="replaceappend" value="replace" checked>Replace list contents<br>
+                    <input type="radio" name="replaceappend" value="append" >Append to list (duplicates will be removed)</td></tr>
+			<tr><td><input type="submit" name="upload" size="40" value="Upload"> <= Click here here to avoid staging area</td></tr>
 		</TABLE>
 	</FORM>
 
@@ -208,7 +221,19 @@ function ChooseWatchLists($UserID, $db) {
 
 		$StagingInUse       = StagingAlreadyInUse($User->id, $db);
 		$DisplayStagingArea = FALSE;
-		$WatchListUpdated	  = FALSE;
+		$WatchListUpdated   = FALSE;
+
+		# if the staging area is occupied, but they are doing a straight
+		# upload, then clear out the staging area!
+		#
+
+		if (IsSet($_REQUEST["upload"]) && $StagingInUse) {
+			if (StagingAreaClear($User->id, $db)) {
+				$StagingInUse = FALSE;
+			} else {
+				DisplayError("I was unable to empty your staging area before proceeding.");
+			}
+		}
 
 		#
 		# is a file name supplied?
@@ -232,7 +257,7 @@ function ChooseWatchLists($UserID, $db) {
 			if ($_POST["clear"]) {
 				if ($Debug) echo " you pressed clear!<br>";
 				if (StagingAreaClear($User->id, $db)) {
-					$StagingInUse			= FALSE;
+					$StagingInUse		= FALSE;
 					$DisplayStagingArea	= FALSE;
 					DisplayError("Your staging area has been cleared.");
 				}
@@ -260,14 +285,42 @@ function ChooseWatchLists($UserID, $db) {
 				$Destination = "/tmp/FreshPorts.tmp_pkg_output." . $User->name;
 				if (HandleFileUpload("pkg_info", $Destination)) {
 					require_once($_SERVER['DOCUMENT_ROOT'] . '/pkg_utils.inc');
-					if (ProcessPackages($User->id, $Destination, $db)) {
-						$DisplayStagingArea = TRUE;
-						$WatchListID = $User->last_watch_list_chosen;
-						if ($Debug) echo "\$WatchListID='$WatchListID'";
-						if ($WatchListID == '') {
-							$WatchLists = new WatchLists($db);
-							$WatchListID = $WatchLists->GetDefaultWatchListID($User->id);
-							if ($Debug) echo "GetDefaultWatchListID => \$WatchListID='$WatchListID'";
+					if (IsSet($_REQUEST["upload"])) {
+						StagingAreaClear($User->id, $db);
+						if (ProcessPackages($User->id, $Destination, $db)) {
+							# we are not using the staging list
+							$WatchListID = AddSlashes($_POST['wlid']);
+							if ($Debug) echo ' you clicked on update_watch_list';
+
+							if ($_REQUEST['replaceappend'] == 'replace') {
+								$Overwrite = TRUE;
+							} else {
+								$Overwrite = FALSE;
+							}
+
+							if (CopyStagingToWatchList($db, $User->id, $WatchListID, $Overwrite)) {
+								$DisplayStagingArea = FALSE;
+								$StagingInUse       = FALSE;
+								$WatchListUpdated   = TRUE;
+								if (StagingAreaClear($User->id, $db)) {
+									DisplayError("Your watch list has been updated.");
+								} else {
+									DisplayError("Your staging area was not cleared.");
+								}
+							} else {
+								DisplayError('OH NO! CopyStagingToWatchList failed!');
+							}
+						}
+					} else {
+						if (ProcessPackages($User->id, $Destination, $db)) {
+							$DisplayStagingArea = TRUE;
+							$WatchListID = $User->last_watch_list_chosen;
+							if ($Debug) echo "\$WatchListID='$WatchListID'";
+							if ($WatchListID == '') {
+								$WatchLists = new WatchLists($db);
+								$WatchListID = $WatchLists->GetDefaultWatchListID($User->id);
+								if ($Debug) echo "GetDefaultWatchListID => \$WatchListID='$WatchListID'";
+							}
 						}
 					}
 				}
@@ -289,7 +342,7 @@ function ChooseWatchLists($UserID, $db) {
 				ChooseWatchLists($User->id, $db);
 			}
 		} else {
-			DisplayUploadForm();
+			DisplayUploadForm($db, $User->id);
 		}
 	}
 	?>

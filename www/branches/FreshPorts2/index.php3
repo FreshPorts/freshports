@@ -1,5 +1,5 @@
 <?
-   # $Id: index.php3,v 1.34.2.5 2001-11-27 06:34:05 dan Exp $
+   # $Id: index.php3,v 1.34.2.6 2001-11-27 19:23:50 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -109,7 +109,7 @@ function GetPortNameFromFileName($file_name) {
 
 }
 
-      $numrows = 500;
+      $numrows = 100;
       $database=$db;
       if ($database) {
 

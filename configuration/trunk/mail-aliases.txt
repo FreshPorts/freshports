@@ -53,3 +53,9 @@ mkdir /usr/local/etc/freshports/msgs
 chgrp lists msgs
 chmod g+w msgs
 
+
+cd /home/freshports.org/scripts/updates
+chmod g+x updates.pl
+sudo chgrp lists ports.pm updates.pl
+
+Remember to create logins on the database for the updater to use.

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: release-2003-04-29.php,v 1.1.2.2 2003-04-28 23:43:54 dan Exp $
+	# $Id: release-2003-04-29.php,v 1.1.2.3 2004-06-30 14:59:29 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -106,12 +106,9 @@ description for the new category.
 
 </TD></TR>
 
-	<? 
-	echo freshports_BannerSpace();
-	?>
-
 <TR>
 	<?
+	echo freshports_BannerSpace();
 	echo freshports_PageBannerText("Newsfeed changes");
 	?>
 </TR>
@@ -125,6 +122,7 @@ For more information on news feeds, please read the <a href="/faq.php">FAQ</a>.
 
 <TR>
 	<?
+	echo freshports_BannerSpace();
 	echo freshports_PageBannerText("Security Notifications");
 	?>
 </TR>
@@ -149,6 +147,7 @@ to subscribe to the announcements list for whatever software you use.
 
 <TR>
 	<?
+	echo freshports_BannerSpace();
 	echo freshports_PageBannerText("Master websites");
 	?>
 </TR>
@@ -164,6 +163,7 @@ it's never been available until now.
 
 <TR>
 	<?
+	echo freshports_BannerSpace();
 	echo freshports_PageBannerText("Category paging");
 	?>
 </TR>
@@ -182,6 +182,7 @@ You can set the paging length via the
 
 <TR>
 	<?
+	echo freshports_BannerSpace();
 	echo freshports_PageBannerText("Faster pages");
 	?>
 </TR>

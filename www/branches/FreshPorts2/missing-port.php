@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.45 2003-09-24 17:47:41 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.46 2003-09-25 03:02:19 dan Exp $
 	#
 	# Copyright (c) 2001-2003 DVL Software Limited
 	#
@@ -88,28 +88,6 @@ GLOBAL $ShowWatchListCount;
 </html>
 
 <?
-}
-
-function freshports_CategoryId($category, $database) {
-	#
-	# we could improve efficiency here with a cache
-	# if we had need...
-	#
-	$CategoryID = '';
-
-	$sql = "select * from categories where name = '$category'";
-	$result = pg_exec($database, $sql);
-	if ($result) {
-		$numrows = pg_numrows($result);
-		if ($numrows == 1) {
-			$myrow = pg_fetch_array ($result, 0);
-			$CategoryID = $myrow["id"];
-		}
-	} else {
-		echo 'pg_exec failed: ' . $sql;
-	}
-
-	return $CategoryID;
 }
 
 ?>

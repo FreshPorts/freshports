@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.168 2004-01-01 14:00:01 dan Exp $
+	# $Id: freshports.php,v 1.4.2.169 2004-01-04 00:59:26 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -955,10 +955,14 @@ function freshports_PortsMoved($port, $PortsMoved) {
 		if ($PortsMoved->from_port_id == $PortsMoved->to_port_id) {
 			$HTML .= ' resurrected ';
 		} else {
-			$HTML .= "port moved to ";
-			$HTML .= '<a href="/' . $PortsMoved->category . '/">' . $PortsMoved->category . '</a>';
+			if ($PortsMoved->from_port_id == $port->id) {
+				$HTML .= "port moved to ";
+			} else {
+				$HTML .= "port moved here from ";
+			}
+			$HTML .= '<a href="/' . $PortsMoved->category .                                 '/">' . $PortsMoved->category . '</a>';
 			$HTML .= '/';
-			$HTML .= '<a href="/' . $PortsMoved->category . '/' . $PortsMoved->port     . '/">' . $PortsMoved->port     . '</a> ';
+			$HTML .= '<a href="/' . $PortsMoved->category . '/'   . $PortsMoved->port     . '/">' . $PortsMoved->port     . '</a> ';
 		}
 	}
 

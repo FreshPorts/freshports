@@ -1,5 +1,5 @@
 <?
-	# $Id: new-user.php,v 1.1.2.4 2002-04-20 02:39:36 dan Exp $
+	# $Id: new-user.php,v 1.1.2.5 2002-05-09 21:24:46 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -21,7 +21,23 @@
             </TD>
             <TD VALIGN="top">
                email address (required):<br>
-               <INPUT SIZE="35" NAME="email" VALUE="<?echo $email ?>"><br><br>
+               <INPUT SIZE="35" NAME="email" VALUE="<?echo $email ?>">
+
+Number of Days to show in side-bar: 
+
+<SELECT NAME="numberofdays" size="1">
+    <OPTION <? if ($numberofdays == "0") echo "selected " ?> VALUE="0">0</OPTION>
+    <OPTION <? if ($numberofdays == "1") echo "selected " ?> VALUE="1">1</OPTION>
+    <OPTION <? if ($numberofdays == "2") echo "selected " ?> VALUE="2">2</OPTION>
+    <OPTION <? if ($numberofdays == "3") echo "selected " ?> VALUE="3">3</OPTION>
+    <OPTION <? if ($numberofdays == "4") echo "selected " ?> VALUE="4">4</OPTION>
+    <OPTION <? if ($numberofdays == "5") echo "selected " ?> VALUE="5">5</OPTION>
+    <OPTION <? if ($numberofdays == "6") echo "selected " ?> VALUE="6">6</OPTION>
+    <OPTION <? if ($numberofdays == "7") echo "selected " ?> VALUE="7">7</OPTION>
+    <OPTION <? if ($numberofdays == "8") echo "selected " ?> VALUE="8">8</OPTION>
+    <OPTION <? if ($numberofdays == "9") echo "selected " ?> VALUE="9">9</OPTION>
+</SELECT>
+               <br><br>
                <INPUT TYPE="checkbox" NAME="emailsitenotices_yn" VALUE="ON" <? if ($emailsitenotices_yn == "ON") {echo " checked";}?>>Put me on the announcement mailing list (low volume)<br>
 <br>
 We can send you an email when something on your watch list changes.<br>

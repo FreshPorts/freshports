@@ -1,5 +1,5 @@
 <?
-	# $Id: new-user.php,v 1.1.2.30 2003-03-06 17:57:36 dan Exp $
+	# $Id: new-user.php,v 1.1.2.31 2003-03-17 16:07:24 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -182,7 +182,7 @@ if (!$submit && !$errors) {
         <TD>
 
 <P><BIG><BIG>NOTE:</BIG>You must supply a valid email address.<BR>Instructions to enable your account 
-will be emailed to you at that address.  If you have are using a spam filter, please allow all
+will be emailed to you at that address.  If you have a spam filter, please allow all
 mail from <CODE CLASS="code">unixathome.org</CODE> and <CODE CLASS="code">freshports.org</CODE>.</BIG></P>
 <P>Your browser must allow cookies for the login to work.</P>
 <P>&nbsp;</P>

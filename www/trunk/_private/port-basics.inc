@@ -38,6 +38,14 @@
    }
 
    $HTML .= "<dd>";
+   # show forbidden and broken
+   if ($myrow["forbidden"]) {
+      $HTML .= '<img src="images/forbidden.gif" alt="Forbidden" width="20" height="20" hspace="2">' . $myrow["forbidden"] . "<br><br>";
+
+   }
+   if ($myrow["broken"]) {
+      $HTML .= '<img src="images/broken.gif" alt="Broken" width="17" height="16" hspace="2">' . $myrow["broken"] . "<br><br>"; ;
+   }
 
    // description
    if ($myrow["short_description"] && ($ShowShortDescription == "Y" || $ShowEverything)) {

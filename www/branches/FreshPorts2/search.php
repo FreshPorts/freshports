@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.58 2004-08-26 18:38:42 dan Exp $
+	# $Id: search.php,v 1.1.2.59 2004-08-27 14:02:52 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -13,8 +13,8 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
 	
-	define('ORDERBYPORT',     'port');
-	define('ORDERBYCATEGORY', 'category');
+	define('ORDERBYPORT',       'port');
+	define('ORDERBYCATEGORY',   'category');
 	define('ORDERBYASCENDING',  'asc');
 	define('ORDERBYDESCENDING', 'desc');
 

@@ -1,5 +1,5 @@
 <?
-	# $Id: search.php,v 1.1.2.26 2002-05-28 16:01:56 dan Exp $
+	# $Id: search.php,v 1.1.2.27 2002-06-02 14:01:13 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -101,7 +101,7 @@ if ($search) {
    echo "you submitted<br>\n";
 */
 
-$logfile = $_SERVER["DOCUMENT_ROOT"] . "/../configuration/searchlog.txt";
+$logfile = $_SERVER["DOCUMENT_ROOT"] . "/../dynamic/searchlog.txt";
 
 
 $sql = "select distinct ports.id, element.name as port, " .

@@ -1,21 +1,5 @@
 <P>
-
 <BIG><BIG>Please verify your <A HREF="/report-subscriptions.php">report subscriptions!</A></BIG></BIG> - we had a bug! <small>- 20 September 2002</small>
-<BR><BR>
-<BIG><BIG>
-Any Oracle 9 users out there?
-</BIG></BIG>
-<P ALIGN="left">
-I need this run:
-<PRE ALIGN="left">
-        BEGIN;
-        SELECT CURRENT_TIMESTAMP;
-        -- wait 5 seconds
-        SELECT CURRENT_TIMESTAMP;
-</PRE>
-<P ALIGN="left">
-Are those two timestamps the same?  Please email results to danl at freebsddiary in the .org domain.
-
 </P>
 <P>
 

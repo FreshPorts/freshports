@@ -1,5 +1,5 @@
 <?
-	# $Id: commit_log_ports.php,v 1.1.2.11 2003-02-25 15:16:17 dan Exp $
+	# $Id: commit_log_ports.php,v 1.1.2.12 2003-02-25 19:09:57 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -25,6 +25,14 @@ class Commit_Log_Ports {
 
 	function Commit_Log_Ports($dbh) {
 		$this->dbh	= $dbh;
+	}
+	
+	function CommitLogIDSet($commit_log_id) {
+		$this->commit_log_id = $commit_log_id;
+	}
+
+	function PortIDSet($port_id) {
+		$this->port_id = $port_id;
 	}
 
 	function FetchInitialise($port_id) {
@@ -82,7 +90,29 @@ select commit_log.id,
 		$this->needs_refresh			= $myrow["needs_refresh"];
 	}
 
-	function SetNeedsRefresh() {
+	function NeedsRefreshClear() {
+		# Clear the needs_refresh flag for this commit/port combination
+
+		$sql = "
+UPDATE commit_log_ports
+   SET needs_refresh = 0
+ WHERE commit_log_id = $this->commit_log_id
+   AND port_id       = $this->port_id";
+
+#		echo "\$sql='<pre>$sql</pre><br>\n";
+		
+		$this->result = pg_exec($this->dbh, $sql);
+		if (!$this->result) {
+			echo pg_errormessage() . " $sql";
+		} else {
+			$this->needs_refresh = 0;
+		}
+		$numrows = pg_affected_rows($this->result);
+
+		return $numrows;
+		
 	}
+	
+	
 
 }

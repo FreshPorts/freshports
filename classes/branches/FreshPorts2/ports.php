@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports.php,v 1.1.2.42 2004-02-22 15:57:20 dan Exp $
+	# $Id: ports.php,v 1.1.2.43 2004-03-22 20:34:06 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -32,6 +32,7 @@ class Port {
 	var $forbidden;
 	var $broken;
 	var $deprecated;
+	var $ignore;
 	var $date_added;
 	var $categories;
 
@@ -82,6 +83,7 @@ class Port {
 		$this->forbidden          = $myrow["forbidden"];
 		$this->broken             = $myrow["broken"];
 		$this->deprecated         = $myrow["deprecated"];
+		$this->ignore             = $myrow["ignore"];
 		$this->date_added         = $myrow["date_added"];
 		$this->categories         = $myrow["categories"];
 
@@ -135,6 +137,7 @@ select ports.id,
        ports.forbidden, 
        ports.broken, 
        ports.deprecated, 
+       ports.ignore, 
        to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, 
        ports.categories as categories,
 	    element.name     as port, 
@@ -211,6 +214,7 @@ select ports.id,
 		               ports.forbidden, 
 		               ports.broken, 
 		               ports.deprecated, 
+		               ports.ignore, 
 		               to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added,
 		               ports.categories as categories,
 			           element.name     as port, 
@@ -315,6 +319,7 @@ SELECT P.*, element.name    as port,
         ports.forbidden,
         ports.broken,
         ports.deprecated,
+        ports.ignore,
         to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added,
         ports.categories      as categories,
         categories.name       as category_looking_at,

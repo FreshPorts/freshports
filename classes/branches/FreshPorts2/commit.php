@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.8 2004-02-22 15:57:19 dan Exp $
+	# $Id: commit.php,v 1.1.2.9 2004-03-22 20:34:05 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -30,6 +30,7 @@ class Commit {
 	var $forbidden;
 	var $broken;
 	var $deprecated;
+	var $ignore;
 	var $date_added;
 	var $element_id;
 	var $short_description;
@@ -59,6 +60,7 @@ class Commit {
 		$this->forbidden			= $myrow["forbidden"];
 		$this->broken				= $myrow["broken"];
 		$this->deprecated			= $myrow["deprecated"];
+		$this->ignore				= $myrow["ignore"];
 		$this->date_added			= $myrow["date_added"];
 		$this->element_id			= $myrow["element_id"];
 		$this->short_description	= $myrow["short_description"];

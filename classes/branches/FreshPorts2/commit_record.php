@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit_record.php,v 1.1.2.5 2004-02-22 15:57:20 dan Exp $
+	# $Id: commit_record.php,v 1.1.2.6 2004-03-22 20:34:05 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -25,6 +25,7 @@ class CommitRecord {
 	var $forbidden;
 	var $broken;
 	var $deprecated;
+	var $ignore;
 	var $element_id;
 	var $version;
 	var $revision;
@@ -57,6 +58,7 @@ class CommitRecord {
 		$this->forbidden			= $myrow['forbidden'];
 		$this->broken				= $myrow['broken'];
 		$this->deprecated			= $myrow['deprecated'];
+		$this->ignore				= $myrow['ignore'];
 		$this->element_id			= $myrow['element_id'];
 		$this->version				= $myrow['version'];
 		$this->revision				= $myrow['revision'];

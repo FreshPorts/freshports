@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.58 2002-04-06 13:35:17 dan Exp $
+   # $Id: freshports.php,v 1.4.2.59 2002-04-06 14:58:46 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -73,6 +73,33 @@ $freshports_FTP_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports
 // path to the cvs-all mailing list archive
 $freshports_mail_archive = " http://www.freebsd.org/cgi/mid.cgi?db=mid&id=";
 
+function freshports_Files_Icon() {
+	return '<IMG SRC="/images/logs.gif" ALT="files touched by this commit" BORDER="0" WIDTH="17" HEIGHT="20" HSPACE="2">';
+}
+function freshports_Refresh_Icon() {
+	return '<IMG SRC="/images/refresh.gif" ALT="Refresh" BORDER="0" WIDTH="15" HEIGHT="18" HSPACE="2">';
+}
+
+function freshports_Deleted_Icon() {
+	return '<IMG SRC="/images/deleted.gif" ALT="Deleted" BORDER="0" WIDTH="15" HEIGHT="15">';
+}
+
+function freshports_Forbidden_Icon() {
+	return '<IMG SRC="/images/forbidden.gif" alt="Forbidden" WIDTH="20" HEIGHT="20" HSPACE="2">';
+}
+
+function freshports_Broken_Icon() {
+	return '<IMG SRC="/images/broken.gif" alt="Broken" WIDTH="17" HEIGHT="16" HSPACE="2">';
+}
+
+function freshports_New_Icon() {
+	return '<IMG SRC="/images/new.gif" WIDTH=28 HEIGHT=11 alt="new!" HSPACE=2>';
+}
+
+function freshports_Mail_Icon() {
+	return '<IMG SRC="images/envelope10.gif" ALT="Original commit message" BORDER="0" WIDTH="25" HEIGHT="14">';
+}
+
 function freshports_Email_Link($message_id) {
 	#
 	# produce a link to the email
@@ -87,7 +114,7 @@ function freshports_Email_Link($message_id) {
 		$HTML .= '';
 	} else {
 		$HTML .= '<A HREF="' . $freshports_mail_archive . $message_id . '">';
-		$HTML .= '<IMG SRC="/images/envelope10.gif" ALT="Original commit message" BORDER="0" WIDTH="25" HEIGHT="14">';
+		$HTML .= freshports_Mail_Icon();
 		$HTML .= '</A>';
 	}
 
@@ -594,11 +621,11 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
    $HTML .= "</DT>\n<DD>";
    # show forbidden and broken
    if ($port->forbidden) {
-      $HTML .= '<img src="/images/forbidden.gif" alt="Forbidden" width="20" height="20" hspace="2"> FORBIDDEN: ' . $port->forbidden . "<br>";
+      $HTML .= freshports_Forbidden_Icon() . 'FORBIDDEN: ' . $port->forbidden . "<br>";
 
    }
    if ($port->broken) {
-      $HTML .= '<img src="/images/broken.gif" alt="Broken" width="17" height="16" hspace="2"> BROKEN: ' . $port->broken . "<br>"; ;
+      $HTML .= freshports_Broken_Icon() . 'BROKEN: ' . $port->broken . "<br>"; ;
    }
 
 
@@ -878,8 +905,8 @@ function freshports_CommitFilesLink($CommitID, $Category, $Port) {
 #	echo "freshports_CommitFilesLink gets $CommitID, $Category, $Port<BR>";
 
 	$HTML .= '<A HREF="/' . $Category . '/' . $Port . '/files.php?' . $CommitID . '">';
-	$HTML .= '<IMG SRC="/images/logs.gif" ALT="Files within this port affected by this commit" ';
-	$HTML .= 'BORDER="0" WIDTH="17" HEIGHT="20" HSPACE="2"></A>';
+	$HTML .= freshports_Files_Icon();
+	$HTML .= '</A>';
 
 	return $HTML;
 }

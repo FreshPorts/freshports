@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.28 2002-04-02 04:45:32 dan Exp $
+	# $Id: index.php,v 1.1.2.29 2002-04-06 14:58:45 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -250,24 +250,27 @@ ports. A port is marked as new for 10 days.
 
 						$HTML .= freshports_CommitFilesLink($myrow["commit_log_id"], $myrow["category"], $myrow["port"]);
 
-						// indicate if this port needs refreshing from CVS
+						// indicate if this port has been removed from cvs
 						if ($myrow["status"] == "D") {
-							$HTML .= "<SMALL> [deleted]</SMALL>\n";
+							$HTML .= " " . freshports_Refresh_Icon() . "\n";
 						}
+
+						// indicate if this port needs refreshing from CVS
 						if ($myrow["needs_refresh"]) {
-							$HTML .= "<SMALL> [refresh]</SMALL>\n";
+							$HTML .= " " . freshports_Refresh_Icon() . "\n";
 						}
 
 						if ($myrow["date_added"] > Time() - 3600 * 24 * $DaysMarkedAsNew) {
 							$MarkedAsNew = "Y";
-							$HTML .= "<img src=\"/images/new.gif\" width=28 height=11 alt=\"new!\" hspace=2>\n";
+							$HTML .= freshports_New_Icon() . "\n";
 						}
 
 						if ($myrow["forbidden"]) {
-							$HTML .= '<img src="images/forbidden.gif" alt="Forbidden" width="20" height="20" hspace="2">' . "\n";
+							$HTML .= freshports_Forbidden_Icon() . "\n";
 						}
+
 						if ($myrow["broken"]) {
-							$HTML .= '<img src="images/broken.gif" alt="Broken" width="17" height="16" hspace="2">' . "\n";
+							$HTML .= freshports_Broken_Icon() . "\n";
 						}
 
 						$HTML .= $myrow["short_description"] . "\n";

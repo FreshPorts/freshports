@@ -1,5 +1,5 @@
 <?
-	# $Id: faq.php,v 1.1.2.5 2002-03-01 03:13:27 dan Exp $
+	# $Id: faq.php,v 1.1.2.6 2002-04-06 14:58:44 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -153,24 +153,32 @@
 	<TR><TD>
 	There are a few symbols you will see in this website:
 	<BLOCKQUOTE>
-	<P><img src="/images/new.gif" width=28 height=11 alt="new!" hspace=2>
+	<P><? echo freshports_New_Icon() ?>
 		New: This port has been recently added.  A port is marked as new for 10 days.</P>
 
-	<P><img src="images/forbidden.gif" alt="Forbidden" width="20" height="20" hspace="2">
+	<P><? echo freshports_Forbidden_Icon() ?>
 		Forbidden: The port is marked as forbidden.  If you view the port details,
 		you will see why.  Most often, it is because of a security exploit.</P>
 
-	<P><img src="images/broken.gif" alt="Broken" width="17" height="16" hspace="2">
+	<P><? echo freshports_Broken_Icon() ?>
 		Broken: The port is marked as broken.  Perhaps it won't compile.  Maybe
 		it doesn't work under FreeBSD right now.  If you view the port details,
 		you will see the reason why.</P>
 
-	<P><IMG SRC="/images/logs.gif" ALT="files touched by this commit" BORDER="0" WIDTH="17" HEIGHT="20" HSPACE="2">
+	<P><? echo freshports_Files_Icon(); ?>
 		Files: If you click on this graphic, you will be taken to the list of files
 		touched by the commit in question.</P>
 
-	<P>[Refresh] - The system is in the process of refreshing that port by inspecting
+	<P><? echo freshports_Refresh_Icon(); ?> Refresh: 
+		The system is in the process of refreshing that port by inspecting
 		the ports tree.  You should rarely see this.</P>
+
+	<P><? echo freshports_Deleted_Icon(); ?> Deleted:  This port has been removed from the ports tree.</P>
+
+	<P><? echo freshports_Mail_Icon(); ?>
+		Commit message: This link will take you to the original cvs-all message in the FreeBSD mailing list archives.
+		Note that it can take a view minutes for the message to appear in the archives.  This link will not appear
+		for commit messages before 3 March 2002 (which is the date FreshPorts started to store the message-id).
 	</BLOCKQUOTE>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
@@ -195,7 +203,7 @@
 
 </table>
 </td>
-  <td valign="top" width="*">
+  <td valign="top" WIDTH="*">
     <? include("./include/side-bars.php") ?>
  </td>
 </tr>

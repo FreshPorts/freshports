@@ -1,5 +1,5 @@
 <?
-	# $Id: side-bars.php,v 1.4.2.35 2002-09-09 18:14:06 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.36 2002-10-28 16:18:57 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -79,23 +79,6 @@ if ($visitor) {
 
 <BR>
 
-<?
-
-	BurstMediaCode();
-	echo '<TABLE BORDER="0" CELLPADDING=5">
-		  <TR><TD ALIGN="center">
-		 ';
-
-	BurstSkyscraperAd();
-	echo '</TD></TR>
-		  </TABLE>
-		 ';
-
-?>
-
-
-<BR>
-
 <TABLE WIDTH="<? echo $ColumnWidth ?>" BORDER="1" CELLSPACING="0" CELLPADDING="5">
 	<TR>
 		<TD BGCOLOR="#AD0040" height="30"><FONT COLOR="#FFFFFF"><BIG><B>Search</B></BIG></FONT></TD>
@@ -115,6 +98,23 @@ if ($visitor) {
 	</TD>
 </TR>
 </TABLE>
+
+<BR>
+
+<?
+
+	BurstMediaCode();
+	echo '<TABLE BORDER="0" CELLPADDING=5">
+		  <TR><TD ALIGN="center">
+		 ';
+
+	BurstSkyscraperAd();
+	echo '</TD></TR>
+		  </TABLE>
+		 ';
+
+?>
+
 
 <BR>
 

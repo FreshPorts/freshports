@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-category.php,v 1.1.2.23 2003-03-06 15:02:39 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.24 2003-03-06 18:18:07 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -96,7 +96,7 @@ function freshports_Category($db, $CategoryName, $PageNo = 1, $PageSize = 25) {
 	<tr><td valign="top" width="100%">
 	<table width="100%" border="0">
 		<tr>
-		 <? echo freshports_PageBannerText("Category listing"); ?>
+		 <? echo freshports_PageBannerText('Category listing - ' . $category->{name}); ?>
 		</tr>
 
 	<tr><td>

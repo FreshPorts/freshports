@@ -29,6 +29,7 @@ $FormatTime		= $FormatTimeDefault;
 $DaysMarkedAsNew	= 21;
 
 $UserName		= "";
+$UserID			= "";
 
 // This is used to determine whether or not the cach can be used.
 $DefaultMaxArticles = $MaxArticles;

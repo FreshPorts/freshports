@@ -19,7 +19,8 @@
          break;
    }
 
-   if ($UserName) {
+//if ($UserName) {
+if ($UserID) {
    echo '<font SIZE="-1">Logged in as ', $UserName, "</font><br>";
    echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/customize.php3?origin=$OriginLocal", "Customize") . '</font><br>';
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.179 2004-08-25 20:32:44 dan Exp $
+	# $Id: freshports.php,v 1.4.2.180 2004-08-27 14:32:51 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -111,7 +111,7 @@ function freshports_Refresh_Icon() {
 }
 
 function freshports_Deleted_Icon() {
-	return '<IMG SRC="/images/deleted.gif" ALT="Deleted" TITLE="Deleted" BORDER="0" WIDTH="15" HEIGHT="15">';
+	return '<IMG SRC="/images/deleted.gif" ALT="Deleted" TITLE="Deleted" BORDER="0" WIDTH="21" HEIGHT="18">';
 }
 
 function freshports_Forbidden_Icon() {
@@ -160,6 +160,10 @@ function freshports_Security_Icon() {
 
 function freshports_Encoding_Errors() {
 	return '<IMG SRC="/images/error.gif" ALT="Encoding Errors (not all of the commit message was ASCII)" TITLE="Encoding Errors (not all of the commit message was ASCII)" BORDER="0" WIDTH="16" HEIGHT="16">';
+}
+
+function freshports_VuXML_Icon() {
+	return '<IMG SRC="/images/vuxml.gif" ALT="Vulnerability" TITLE="Vulnerability" BORDER="0" WIDTH="13" HEIGHT="16">';
 }
 
 function freshports_Watch_Link_Add($WatchListAsk, $WatchListCount, $ElementID) {
@@ -1020,6 +1024,8 @@ if ($ShowDepends) {
 }
 
 function freshports_PortsMoved($port, $PortsMoved) {
+	$HTML = '';
+
 	if ($PortsMoved->port == '') {
 		$HTML .= "port deleted ";
 	} else {
@@ -1094,16 +1100,20 @@ function freshports_PortCommits($port) {
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit_log_ports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user_tasks.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit_log_ports_vuxml.php');
 
 	freshports_PortCommitsHeader($port);
 
 	$Commits = new Commit_Log_Ports($port->dbh);
 	$NumRows = $Commits->FetchInitialise($port->id);
 
+	$VuXML = new Commit_Log_Ports_VuXML($port->dbh);
+	$VuXMLList = $VuXML->VuXML_List_Get($port->id);
+
 	$LastVersion = '';
 	for ($i = 0; $i < $NumRows; $i++) {
 		$Commits->FetchNthCommit($i);
-		freshports_PortCommitPrint($Commits, $port->category, $port->port);
+		freshports_PortCommitPrint($Commits, $port->category, $port->port, $VuXMLList);
 	}
 
 	freshports_PortCommitsFooter($port);
@@ -1120,7 +1130,7 @@ function freshports_CommitFilesLink($MessageID, $Category, $Port) {
 	return $HTML;
 }
 
-function freshports_PortCommitPrint($commit, $category, $port) {
+function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	GLOBAL $DateFormatDefault;
 	GLOBAL $TimeFormatDefault;
 	GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;
@@ -1157,6 +1167,10 @@ function freshports_PortCommitPrint($commit, $category, $port) {
     		echo FRESHPORTS_VERSION_REVISION_JOINER . $commit->{'port_revision'};
 		}
 		echo '</B></BIG>';
+	}
+
+	if (IsSet($VuXMLList[$commit->id])) {
+		echo '&nbsp;<a href="/vuxml.php?vid=' . $VuXMLList[$commit->id] . '">' . freshports_VuXML_Icon() . '</a>';
 	}
 
 	echo "</TD>\n";

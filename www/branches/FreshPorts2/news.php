@@ -1,7 +1,11 @@
-<?
-	# $Id: news.php,v 1.1.2.10 2003-02-10 16:54:09 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: news.php,v 1.1.2.11 2003-04-13 19:48:07 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
+	
+	DEFINE('MAX_PORTS', 20);
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
@@ -9,24 +13,12 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 
-	$Debug=0;
+	$Debug = 0;
 
 	GLOBAL $FreshPortsSlogan;
 	GLOBAL $FreshPortsName;
 
 	$ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['SERVER_NAME']);
-
-	$MyMaxArticles = 10;
-
-	if (!$MaxArticles || $MaxArticles < 1 || $MaxArticles > $MyMaxArticles) {
-		$MaxArticles = $MyMaxArticles;
-	}
-
-	if ($MaxArticles == $MyMaxArticles) {
-		$OutputFromCach = 1;
-	} else {
-		$OutputFromCach = 0;
-	}
 
 	$HTML .= '<!DOCTYPE rss PUBLIC "-//Netscape Communications//DTD RSS 0.91//EN"' . "\n";
 	$HTML .= '        "http://my.netscape.com/publish/formats/rss-0.91.dtd">' . "\n";
@@ -42,7 +34,11 @@
 
 	$sort ="commit_log.commit_date desc, commit_log.id asc, element.name, category, version";
 
-	$sql = "select * from commits_latest_ports order by commit_date_raw desc, category, port";
+	if (!$MaxArticles || $MaxArticles < 1 || $MaxArticles > MAX_PORTS) {
+		$MaxArticles = MAX_PORTS;
+	}
+	
+	$MaxNumberOfPorts = $MaxArticles;
 
 	$NewsAddenda = $_SERVER['DOCUMENT_ROOT'] . "/news.addenda";
 	if (file_exists($NewsAddenda)) {
@@ -53,18 +49,70 @@
 			fclose($fp);
 		}
 		$HTML .= $NewsAddendaContents;
-		$sql .= " limit 19";
-	} else {
-		$sql .= " limit 20";
+		$MaxNumberOfPorts--;
 	}
+
+
+$sql = "
+SELECT PEC.*,
+       security_notice.id  AS security_notice_id
+FROM (
+SELECT PORTELEMENT.*,
+       categories.name AS category
+FROM (
+SELECT LCPPORTS.*,
+       element.name    AS port,
+       element.status  AS status
+
+FROM (
+SELECT LCPCLLCP.*,
+       ports.forbidden,
+       ports.broken,
+       ports.element_id                     AS element_id,
+       CASE when clp_version  IS NULL then ports.version  else clp_version  END as version,
+       CASE when clp_revision IS NULL then ports.revision else clp_revision END AS revision,
+       ports.version                        AS ports_version,
+       ports.revision                       AS ports_revision,
+       date_part('epoch', ports.date_added) AS date_added,
+       ports.short_description              AS short_description,
+       ports.category_id
+FROM (
+ SELECT LCPCL.*, 
+         port_id,
+         commit_log_ports.port_version  AS clp_version,
+         commit_log_ports.port_revision AS clp_revision,
+         commit_log_ports.needs_refresh AS needs_refresh
+    FROM 
+   (SELECT commit_log.id     AS commit_log_id, 
+           commit_date       AS commit_date_raw,
+           message_subject,
+           message_id,
+           committer,
+           description       AS commit_description,
+           to_char(commit_log.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')  AS commit_date,
+           to_char(commit_log.commit_date - SystemTimeAdjust(), 'HH24:MI')      AS commit_time,
+           encoding_losses
+     FROM commit_log JOIN
+               (SELECT latest_commits_ports.commit_log_id
+                   FROM latest_commits_ports
+               ORDER BY latest_commits_ports.commit_date DESC
+                 LIMIT $MaxNumberOfPorts) AS LCP
+           ON commit_log.id = LCP.commit_log_id) AS LCPCL JOIN commit_log_ports
+                         ON commit_log_ports.commit_log_id = LCPCL.commit_log_id
+                         AND commit_log_ports.commit_log_id > Anchor_CLID()) AS LCPCLLCP JOIN ports
+on LCPCLLCP.port_id = ports.id) AS LCPPORTS JOIN element
+on LCPPORTS.element_id = element.id) AS PORTELEMENT JOIN categories
+on PORTELEMENT.category_id = categories.id) AS PEC LEFT OUTER JOIN security_notice
+ON PEC.commit_log_id = security_notice.commit_log_id
+order by commit_date_raw desc, category, port ";
 
 	if ($Debug) {
 		echo $sql;
-		}
+	}
 
 	$result = pg_exec ($db, $sql);
 	if (!$result) {
-		echo $sql . 'error = ' . pg_errormessage();
+		echo '<pre>' . $sql . '</pre>error = ' . pg_errormessage();
 		exit;
 	}
 
@@ -72,7 +120,14 @@
 	for ($i = 0; $i < $numrows; $i++) {
 		$myrow = pg_fetch_array ($result, $i);
 		$HTML .= '  <item>' . "\n";
-		$HTML .= '    <title>' . $myrow["category"] . '/' . $myrow["port"] . '</title>' . "\n";
+		$HTML .= '    <title>' . $myrow["category"] . '/' . $myrow["port"] . ' - ' . $myrow["version"];
+		if ($myrow["revision"] != 0) {
+			$HTML .= '-' . $myrow["revision"];
+		}
+		if (IsSet($myrow["security_notice_id"])) {
+			$HTML .= ' - Security Alert!';
+		}
+		$HTML .= '</title>' . "\n";
 		$HTML .= '    <link>http://' . $ServerName . '/' . $myrow["category"] . '/' . $myrow["port"] . '/</link>' . "\n";
 		$HTML .= '    <description>' . htmlspecialchars(trim($myrow["commit_description"])) . '</description>' . "\n";
 		$HTML .= '  </item>' . "\n";
@@ -84,3 +139,4 @@
 	echo '<?xml version="1.0"?>', "\n";
 	echo $HTML;
 ?>
+ 	

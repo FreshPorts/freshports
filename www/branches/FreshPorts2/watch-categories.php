@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-categories.php,v 1.1.2.18 2002-12-13 20:35:27 dan Exp $
+	# $Id: watch-categories.php,v 1.1.2.19 2002-12-16 13:36:41 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -15,17 +15,41 @@
 
 $Debug = 0;
 
+if ($Debug) # phpinfo();
+
 $visitor = $_COOKIE["visitor"];
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {
-        header("Location: login.php?origin=" . $_SERVER["PHP_SELF"]);  /* Redirect browser to PHP web site */
-        exit;  /* Make sure that code below does not get executed when we redirect. */
+#	header("Location: login.php?origin=" . $_SERVER["PHP_SELF"]);  /* Redirect browser to PHP web site */
+#	exit;  /* Make sure that code below does not get executed when we redirect. */
 }
 
+if ($_REQUEST['wlid']) {
+		# they clicked on the GO button and we have to apply the 
+		# watch staging area against the watch list.
+		$wlid = AddSlashes($_REQUEST["wlid"]);
+		if ($Debug) echo "setting SetLastWatchListChosen => \$wlid='$wlid'";
+		$User->SetLastWatchListChosen($wlid);
+		if ($Debug) echo "\$wlid='$wlid'";
+} else {
+	$wlid = $User->last_watch_list_chosen;
+	if ($Debug) echo "\$wlid='$wlid'";
+	if ($wlid == '') {
+		$WatchLists = new WatchLists($db);
+		$wlid = $WatchLists->GetDefaultWatchListID($User->id);
+		if ($Debug) echo "GetDefaultWatchListID => \$wlid='$wlid'";
+	}
+}
+
+
+
 ?>
+<?php # main table start ?>
 <table width="<? echo $TableWidth ?>" border="0" ALIGN="center">
+<tr>
 <td valign="top"><table width="100%" border="0">
+<?php # article table start ?>
   <tr>
 	<? echo freshports_PageBannerText("Watch List - categories"); ?>
   </tr>
@@ -33,34 +57,54 @@ if (!$visitor) {
 
 
 <table width="100%" border="0">
-<tr><td colspan="2">
-<?
-if (!$User->id) {
-echo '<font size="+1">You are not logged in, perhaps you should <a href="login.php">do that</a> first.</font>';
-} else {
-?>
+<?php # list of categories table start ?>
+<tr><td>
 This screen contains a list of the port categories. The categories with a * beside them contain ports which are
 on your watch list. When a port changes in one of your watch categories, you will be notified by email if you have selected a 
 notification frequency within your <a href="customize.php">personal preferences</a>.
-<? } ?>
+</td>
 
-</tr></td>
-<tr><td>
-&nbsp;
-</tr></td>
+<td valign="top">
+<table border="0">
+<?php # ddlb start ?>
+<tr><td>Select...</td></tr>
+<tr><td align="left">
+
 <?php
+if ($Debug) echo 'when calling freshports_WatchListDDLBForm, $wlid = \'' . $wlid . '\'';
+echo freshports_WatchListDDLBForm($db, $User->id, $wlid);
+
+?>
+</tr></table>
+
+<?php # ddlb finish ?>
+
+</td></tr>
+</table>
+<?php # list of categories table finish ?>
+
+</td></tr>
+
+
+</tr>
+<tr><td colspan="2">
+&nbsp;
+</td></tr>
+<?php
+
+if ($wlid != '') {
+$sql = "
+   select distinct(category_id) as category_id
+     from watch_list, watch_list_element, ports
+    WHERE watch_list.id      = " . $wlid . "
+      and watch_list.user_id = $User->id
+      and watch_list.id      = watch_list_element.watch_list_id
+      and ports.element_id   = watch_list_element.element_id";
+
+if ($Debug) echo "<pre>$sql</pre>";
 
 
 echo '<tr><td align="center">' . "\n";
-
-$sql = "select distinct(category_id) as category_id ".
-       "from watch_list, watch_list_element, ports ".
-       "WHERE watch_list.name    = 'main' ".
-       "  and watch_list.user_id = $User->id ".
-       "  and watch_list.id      = watch_list_element.watch_list_id ".
-       "  and ports.element_id   = watch_list_element.element_id";
-
-if ($Debug) echo $sql, "<br>\n";
 
 $result  = pg_exec ($db, $sql);
 $numrows = pg_numrows($result);
@@ -73,13 +117,17 @@ for ($i = 0; $i < $numrows; $i++) {
 	if ($Debug) echo "category " . $myrow["category_id"] . " = " . $WatchedCategories{$myrow["category_id"]} . '<BR>';
 }
 
+# categories list start
 
 $HTML .= "\n" . '<TABLE BORDER="1" CELLSPACING="0" CELLPADDING="5" BORDERCOLOR="#a2a2a2" BORDERCOLORDARK="#a2a2a2" BORDERCOLORLIGHT="#a2a2a2">' . "\n";
-
+$HTML .= '<tr>';
 // get the list of categories to display
-$sql = "select categories.id as category_id, categories.name as category, categories.description as description ".
-       "from categories ".
-       "order by category";
+$sql = "
+    select categories.id          as category_id, 
+           categories.name        as category, 
+           categories.description as description
+      from categories
+  order by category";
 
 $result  = pg_exec($db, $sql);  
 $numrows = pg_numrows($result);
@@ -105,7 +153,7 @@ for ($i = 0; $i < $NumCategories; $i++) {
       $HTML .= '<td valign="top">';
    }
 
-   $HTML .= ' <a href="/port-watch.php?category=' . $rows[$i]["category"] . '">' . $rows[$i]["category"] . '</a>';
+   $HTML .= ' <a href="/port-watch.php?category=' . $rows[$i]["category"] . '&wlid=' . $wlid . '">' . $rows[$i]["category"] . '</a>';
 
    $HTML .= $WatchedCategories{$rows[$i]["category_id"]};
    $HTML .= "<br>\n";
@@ -118,29 +166,21 @@ if ($Row != 1) {
 echo $HTML;                                                   
 
 echo "</table>\n";
+# categories list finish
 
-</script>
-<td valign="top">
-<table border="0">
-<tr><td>Select...</td></tr>
-<tr><td align="left">
-
-<?php
-
-echo freshports_WatchListDDLBForm($db, $User->id, $WatchListID);
-
+} else {
+	echo '<tr>';
+} // if wlid
 ?>
-</td></tr></table>
-</td></tr>
 </table>
-</td></tr>
-</table>
+<?php # main article table finish ?>
 </td>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
    <? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php') ?>
  </td>
 </tr>
 </table>
+<?php # main table finish ?>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.22 2003-04-28 23:43:34 dan Exp $
+	# $Id: categories.php,v 1.1.2.23 2003-04-29 14:02:08 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -77,6 +77,18 @@ switch ($sort) {
 }
 
 $sql = "
+SELECT to_char(max(commit_log.commit_date) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') AS updated,
+         count(ports_active.id)        AS count,
+         max(commit_log.commit_date) - SystemTimeAdjust() AS updated_raw,
+         categories.id          AS category_id,
+         categories.name        AS category,
+         categories.description AS description,
+         categories.is_primary  AS is_primary
+    FROM categories, ports_active left outer join commit_log on ( ports_active.last_commit_id = commit_log.id )
+   WHERE categories.id   = ports_active.category_id
+     AND categories.is_primary
+GROUP BY categories.id, categories.name, categories.description, is_primary
+UNION
   SELECT to_char(max(commit_log.commit_date) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') AS updated,
          count(ports_active.id)        AS count,
          max(commit_log.commit_date) - SystemTimeAdjust() AS updated_raw,
@@ -87,7 +99,9 @@ $sql = "
     FROM ports_categories, categories, ports_active left outer join commit_log on ( ports_active.last_commit_id = commit_log.id )
    WHERE ports_active.id = ports_categories.port_id
      AND categories.id   = ports_categories.category_id
-GROUP BY categories.id, categories.name, categories.description, is_primary ";
+     AND NOT categories.is_primary
+GROUP BY categories.id, categories.name, categories.description, is_primary
+";
 
 $sql .=  " ORDER BY $sort";
 

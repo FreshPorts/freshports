@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.100 2002-06-20 17:34:25 dan Exp $
+	# $Id: freshports.php,v 1.4.2.101 2002-06-24 14:56:06 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -218,6 +218,10 @@ GLOBAL $BannerAd;
 function freshports_Logo() {
 GLOBAL $TableWidth;
 GLOBAL $LocalTimeAdjustment;
+GLOBAL $FreshPortsLogo;
+GLOBAL $FreshPortsSlogan;
+GLOBAL $FreshPortsLogoWidth;
+GLOBAL $FreshPortsLogoHeight;
 
 #echo "$LocalTimeAdjustment<BR>";
 
@@ -231,7 +235,7 @@ echo '<BR>
 	} else {
 		echo '/';
 	}
-        echo '"><IMG SRC="/images/freshports.jpg" ALT="FreshPorts.org - the place for ports" WIDTH="512" HEIGHT="110" BORDER="0"></A></TD>
+        echo '"><IMG SRC="' . $FreshPortsLogo . '" ALT="' . $FreshPortsSlogan . ' " WIDTH="' . $FreshPortsLogoWidth . '" HEIGHT="' . $FreshPortsLogoHeight . '" BORDER="0"></A></TD>
         <TD ALIGN="right" CLASS="sans" VALIGN="bottom">' . FormatTime(Date("D, j M Y g:i A T"), $LocalTimeAdjustment, "D, j M Y g:i A T") . '</TD>
 </TR>
 </TABLE>
@@ -251,8 +255,10 @@ echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 
 function freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum=0) {
 
+	GLOBAL $FreshPortsName;
+
 	echo "<HEAD>
-	<TITLE>FreshPorts";
+	<TITLE>" . $FreshPortsName;
 
 	if ($ArticleTitle) {
 		echo " -- $ArticleTitle";
@@ -942,6 +948,17 @@ function freshports_CommitFilesLink($CommitID, $Category, $Port) {
 #	echo "freshports_CommitFilesLink gets $CommitID, $Category, $Port<BR>";
 
 	$HTML .= '<A HREF="/' . $Category . '/' . $Port . '/files.php?' . $CommitID . '">';
+	$HTML .= freshports_Files_Icon();
+	$HTML .= '</A>';
+
+	return $HTML;
+}
+
+function freshports_CommitFilesLinkIDOnly($CommitID) {
+
+#	echo "freshports_CommitFilesLink gets $CommitID, $Category, $Port<BR>";
+
+	$HTML .= '<A HREF="/files.php?' . $CommitID . '">';
 	$HTML .= freshports_Files_Icon();
 	$HTML .= '</A>';
 

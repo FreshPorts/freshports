@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: user.php,v 1.1.2.8 2003-03-06 14:20:35 dan Exp $
+	# $Id: user.php,v 1.1.2.9 2003-03-06 22:03:41 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -33,6 +33,8 @@ class User {
 	var $watch_list_add_remove;
 	var $last_watch_list_chosen;
 	var $page_size;
+
+	var $UserTasks;
 
 	var $LocalResult;
 
@@ -186,11 +188,13 @@ class User {
 	}
 
 	function IsTaskAllowed($task) {
-#		echo "class::user \$this->id='$this->id'<br>\n";
+#		echo "class::user \$this->id='$this->id' and task '$task'<br>\n";
 		if (IsSet($this->id) && $this->id != '' && !IsSet($this->UserTasks)) {
 			$this->GetTasks();
 #			die('getting the tasks now');
 		}
+
+#		echo 'looking for ' . $task . ' which gives ' . $this->UserTasks{$task};
 
 		if (IsSet($this->UserTasks{$task})) {
 			return TRUE;

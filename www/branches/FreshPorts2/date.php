@@ -1,5 +1,5 @@
 <?
-	# $Id: date.php,v 1.1.2.9 2002-11-29 15:26:16 dan Exp $
+	# $Id: date.php,v 1.1.2.10 2002-12-02 17:34:56 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -13,7 +13,7 @@
 	freshports_Start("the place for ports",
 					"$FreshPortsName - new ports, applications",
 					"FreeBSD, index, applications, ports");
-	$Debug=0;
+	$Debug = 0;
 
 	$ArchiveBaseDirectory = $_SERVER['DOCUMENT_ROOT'] . "/archives";
 

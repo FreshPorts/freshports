@@ -85,6 +85,7 @@ $sql = "select max(ports.last_update) as updated, count(ports.id) as count, " .
        "from ports, categories ".
        "WHERE ports.system = 'FreeBSD' ".
        "and ports.primary_category_id = categories.id " .
+       "and ports.status = 'A' " .
        "group by categories.id ";
 
 $sql .=  " order by $sort";
@@ -126,24 +127,21 @@ if ($sort == "updated desc") {
 
 $HTML .= freshports_echo_HTML('</tr>');
 
-$HTML .= freshports_echo_HTML('<tr>');
-// get the list of topics, which we need to modify the order
-
-
-
 $NumTopics=0;
+$NumPorts=0;
 while ($myrow = mysql_fetch_array($result)) {
-//        $URL_Category = "http://www.freebsd.org/ports/" . $myrow["category"];
-        $URL_Category = "category.php3?category=" . $myrow["category_id"];
+   $URL_Category = "category.php3?category=" . $myrow["category_id"];
 
-	$HTML .= freshports_echo_HTML('<td valign="top"><a href="' . $URL_Category . '">' . $myrow["category"] . '</a></td>');
-	$HTML .= freshports_echo_HTML('<td valign="top">' . $myrow["count"] . '</td>');
-	$HTML .= freshports_echo_HTML('<td valign="top">' . $myrow["description"] . '</td>');
-        $HTML .= freshports_echo_HTML('<td valign="top"><font size="-1">' . $myrow["updated"] . '</font></td>');
-	$HTML .= freshports_echo_HTML("</tr>\n");
+   $HTML .= freshports_echo_HTML('<tr>');
+   $HTML .= freshports_echo_HTML('<td valign="top"><a href="' . $URL_Category . '">' . $myrow["category"] . '</a></td>');
+   $HTML .= freshports_echo_HTML('<td valign="top">' . $myrow["count"] . '</td>');
+   $HTML .= freshports_echo_HTML('<td valign="top">' . $myrow["description"] . '</td>');
+   $HTML .= freshports_echo_HTML('<td valign="top"><font size="-1">' . $myrow["updated"] . '</font></td>');
+   $HTML .= freshports_echo_HTML("</tr>\n");
+   $NumPorts += $myrow["count"];
 }
 
-$HTML .= freshports_echo_HTML('</tr>');
+$HTML .= freshports_echo_HTML("<tr><td><b>port count:</b></td><td><b>$NumPorts</b></td></tr>");
 
 mysql_free_result($result);
 

@@ -1,5 +1,5 @@
 #
-# $Id: vhosts.conf.sample,v 1.3.2.8 2003-03-05 13:57:30 dan Exp $
+# $Id: vhosts.conf.sample,v 1.3.2.9 2003-04-26 21:58:14 dan Exp $
 #
 # Copyright (c) 1998-2002 DVL Software Limited
 #
@@ -7,10 +7,11 @@
 <VirtualHost *>
 	ServerAdmin	dan@langille.org
 	ServerName	freshports.org
+
 	Redirect		permanent / http://www.freshports.org/
+
 	ErrorLog		/usr/websites/log/freshports.org-error.log
 	CustomLog	/usr/websites/log/freshports.org-access.log combined
-
 </VirtualHost>
 
 <VirtualHost *>
@@ -18,7 +19,7 @@
 
 	DocumentRoot    /usr/websites/freshports.org/www
 
-	ServerName      wwww.freshports.org
+	ServerName      www.freshports.org
 
 	ErrorLog        /usr/websites/log/freshports.org-error.log
 	CustomLog       /usr/websites/log/freshports.org-access.log combined

@@ -68,17 +68,22 @@ if ($Debug) {
 <body bgcolor="#ffffff" link="#0000cc">
   <? include("./_private/header.inc") ?>
 <table width="100%" border="0">
-<tr><td colspan="2">Welcome to the freshports.org where you can find the latest information on your favourite
+<tr><td colspan="2">Welcome to FreshPorts, where you can find the latest information on your favourite
 ports.
 </td></tr>
-<tr><td colspan="2">I'm pleased to annouce FreshPorts 1.1 is now running.  Please report any bugs via the <a href="phorum/list.php?f=3">phorum</a>.
+<tr><td colspan="2">Please report any bugs via the <a href="phorum/list.php?f=3">phorum</a>.
 </td></tr>
-
+<?
+if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
+?>
   <tr>
-    <td colspan="2">Note: <font size="-1">[refresh]</font> indicates a port for which the Makefile, 
-                  pkg-descr, or pkg-comment has changed and has not yet been updated within FreshPorts.
+    <td colspan="2">
+       <? include ("announcement.txt"); ?>
     </td>
   </tr>
+<?
+}
+?>
 <tr><td valign="top" width="100%">
 <table width="100%" border="1" CELLSPACING="0" CELLPADDING="5"
             bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.48 2004-06-29 18:54:52 dan Exp $
+	# $Id: faq.php,v 1.1.2.49 2004-07-02 14:01:43 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -296,7 +296,7 @@ down you must read to find something you didn't already know.</P>
 	Many things changed between FP1 and FP2. The most major change
 	was in the underlying database schema.  Not only did we move
 	from <A HREF="http://www.mysql.org/">mySQL</A> to
-	<A HREF="http://www.postgresql.org/">PortgreSQL</A>, we made major
+	<A HREF="http://www.postgresql.org/">PostgreSQL</A>, we made major
 	changes to the tables and the way in which the ports are stored
 	in the database.  As a result of these changes, many internal IDs
 	and values are no longer valid.  Therefore, URLs such as

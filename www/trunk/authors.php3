@@ -53,6 +53,8 @@ page provided much of the basis for this site.</p>
 <p>And various people on undernet's #nz.general and #freebsd helped me with 
 scripts and ideas.  That's not to mention that channel on efnet which I won't 
 name just so it stays a secret.</p>
+
+<p>I can usually be found via IRC in #freebsd and #freshports on undernet.</p>
 </td>
   <td valign="top" width="*">
     <? include("/www/freshports.org/_private/side-bars.php3") ?>

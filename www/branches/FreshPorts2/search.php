@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.59 2004-08-27 14:02:52 dan Exp $
+	# $Id: search.php,v 1.1.2.60 2004-09-12 10:44:45 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -425,7 +425,7 @@ Search for:<BR>
 	<INPUT TYPE=radio <? if ($casesensitivity == "caseinsensitive") echo 'CHECKED'; ?> VALUE=caseinsensitive NAME=casesensitivity> Case insensitive search
 </td><td>
 	<INPUT TYPE="submit" VALUE="Search" NAME="search">
-</td></tr><td><td><tdcolspan="3">
+</td></tr><tr><td colspan="3">
 	Sort by: <SELECT name="orderby">
 		<OPTION VALUE="<?php echo ORDERBYPORT;     ?>" <?if ($orderby == ORDERBYPORT        ) echo 'SELECTED' ?>>Port
 		<OPTION VALUE="<?php echo ORDERBYCATEGORY; ?>" <?if ($orderby == ORDERBYCATEGORY    ) echo 'SELECTED' ?>>Category

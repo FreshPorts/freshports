@@ -1,5 +1,5 @@
 <?
-	# $Id: commit.php,v 1.1.2.2 2002-04-08 17:06:22 dan Exp $
+	# $Id: commit.php,v 1.1.2.3 2002-04-12 07:15:48 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -103,7 +103,9 @@ function GetPortNameFromFileName($file_name) {
 	
 
 	$sql = " SELECT	ports_all.*, commit_log.committer, commit_log.description as commit_description, 
-					commit_log.message_id, ports_all.name as port, commit_log.id as commit_log_id ";
+					to_char(commit_log.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')  as commit_date,
+					to_char(commit_log.commit_date - SystemTimeAdjust(), 'HH24:MI:SS')   as commit_time,
+					commit_log.message_id, commit_log.encoding_losses, ports_all.name as port, commit_log.id as commit_log_id ";
 
 	if ($WatchListID) {
 		$sql .= " ,
@@ -196,7 +198,7 @@ if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 					if ($LastDate <> $myrow["commit_date"]) {
 						$LastDate = $myrow["commit_date"];
 						$HTML .= '<TR><TD COLSPAN="3" BGCOLOR="#AD0040" HEIGHT="0">' . "\n";
-						$HTML .= '   <FONT COLOR="#FFFFFF"><BIG>' . FormatTime($myrow["commit_date"], 0, "D, j M") . '</BIG></FONT>' . "\n";
+						$HTML .= '   <FONT COLOR="#FFFFFF"><BIG>' . FormatTime($myrow["commit_date"], 0, "D, j M Y") . '</BIG></FONT>' . "\n";
 						$HTML .= '</TD></TR>' . "\n\n";
 					}
 
@@ -221,6 +223,11 @@ if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 							$HTML .= '</SMALL>';
 							$HTML .= '&nbsp;';
 							$HTML .= freshports_Email_Link($myrow["message_id"]);
+
+							if ($myrow["encoding_losses"] == 't') {
+								$HTML .= '&nbsp;' . freshports_Encoding_Errors();
+							}
+
 							$HTML .= "<BR>\n";
 						}
 
@@ -286,7 +293,7 @@ if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 
 					$HTML .= "\n<BLOCKQUOTE>";
 
-					$HTML .= freshports_PortDescriptionPrint($myrow["commit_description"]);
+					$HTML .= freshports_PortDescriptionPrint($myrow["commit_description"], $myrow["encoding_losses"]);
 
 
 					$HTML .= "\n</BLOCKQUOTE>\n</TD></TR>\n\n\n";

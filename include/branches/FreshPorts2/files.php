@@ -1,5 +1,5 @@
 <?
-	# $Id: files.php,v 1.1.2.8 2002-04-12 05:11:34 dan Exp $
+	# $Id: files.php,v 1.1.2.9 2002-04-12 07:15:50 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -32,7 +32,7 @@ function freshports_Files($PortID, $CommitID, $db) {
 	select element_pathname(element.id) as pathname, commit_log_port_elements.commit_log_id, 
 		   commit_log_port_elements.port_id, 
 		   to_char(commit_log.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')  as commit_date,
-		   to_char(commit_log.commit_date - SystemTimeAdjust(), 'HH24:MI')      as commit_time,
+		   to_char(commit_log.commit_date - SystemTimeAdjust(), 'HH24:MI:SS')   as commit_time,
 		   commit_log_elements.change_type, element.name as filename, categories.name as category, commit_log.committer, 
 		   ports.short_description, commit_log.message_id, commit_log.encoding_losses, 
 		   commit_log.description, B.name as port, commit_log_elements.revision_name as revision_name 
@@ -109,7 +109,7 @@ function freshports_Files($PortID, $CommitID, $db) {
 
 		echo "</TD>\n";
 		echo '    <TD VALIGN="top">' . $myrow["committer"]         . "</TD>\n";
-		echo '    <TD VALIGN="top">' . freshports_PortDescriptionPrint($myrow["description"]) . "</CODE></TD>\n";
+		echo '    <TD VALIGN="top">' . freshports_PortDescriptionPrint($myrow["description"], $myrow["encoding_losses"]) . "</CODE></TD>\n";
 		echo "</TR>";
 		?>
 

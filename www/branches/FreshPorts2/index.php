@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.99 2005-01-05 23:14:37 dan Exp $
+	# $Id: index.php,v 1.1.2.100 2005-01-06 04:22:18 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -109,7 +109,6 @@ if ($db) {
 	echo 
 ?>
 <TR><TD VALIGN="top" WIDTH="100%">
-<<<<<<< index.php
 
 <?php echo freshports_MainContentTable(); ?>
 

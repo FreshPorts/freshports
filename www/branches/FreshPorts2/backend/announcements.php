@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: announcements.php,v 1.1.2.3 2003-05-10 04:29:40 dan Exp $
+	# $Id: announcements.php,v 1.1.2.4 2003-05-16 02:43:28 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -33,9 +33,6 @@ if (!$User->IsTaskAllowed(FRESHPORTS_TASKS_ANNOUNCEMENTS_MAINTAIN)) {
 	die("I'm sorry, but you're not allowed to be here.  The police have been notified.  Please leave now.");
 }
 
-
-#phpinfo();
-#die();
 if (IsSet($_REQUEST['add'])) {
 	$Announcement = new Announcement($db);
 
@@ -157,7 +154,7 @@ echo "<p></blockquote></TD>
 </TR>
 </TABLE>";
 
-function DisplayAnnouncements($Announcement) {
+function MyDisplayAnnouncements($Announcement) {
 	$HTML .= '<table cellpadding="4" cellspacing="0" border="1">' . "\n";
 	$HTML .= '<tr><td><b>Announcement Text</b></td><td><b>Start Date</b></td><td><b>End Date</b></td><td><b>Edit</b></td><td><b>Delete</b</td></tr>' . "\n";
 
@@ -180,17 +177,19 @@ function DisplayAnnouncements($Announcement) {
 
 $NumRows = $Announcement->FetchAll();
 
+echo DisplayAnnouncements($Announcement);
+
 if ($NumRows > 0) {
 	echo '<blockquote>'  . "\n";
 	echo '<h2>Existing Announcements</h2>' . "\n";
-	echo DisplayAnnouncements($Announcement);
+	echo MyDisplayAnnouncements($Announcement);
 	echo '</blockquote>' . "\n";
 
 	$NumRows = $Announcement->FetchAllActive();
 	if ($NumRows > 0) {
 		echo '<blockquote>'  . "\n";
 		echo '<h2>Active Announcements</h2>' . "\n";
-		echo DisplayAnnouncements($Announcement);
+		echo MyDisplayAnnouncements($Announcement);
 		echo '</blockquote>' . "\n";
 
 

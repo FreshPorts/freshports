@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.49 2002-11-28 04:45:25 dan Exp $
+	# $Id: index.php,v 1.1.2.50 2002-11-28 21:16:48 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -12,7 +12,7 @@
 	freshports_Start("the place for ports",
 					"$FreshPortsName - new ports, applications",
 					"FreeBSD, index, applications, ports");
-$Debug=0;
+$Debug = 0;
 
 if ($Debug) echo "UserID='$UserID'";
 
@@ -126,6 +126,31 @@ if ($WatchListID) {
 } else {
 	$sql = "select * from commits_latest_ports order by commit_date_raw desc, category, port";
 }
+
+$sql = '';
+if ($WatchListID) {
+	$sql .= '	  SELECT *,
+         CASE when WLE.element_id is null
+            then 0
+            else 1
+         END as watch
+    FROM watch_list_element WLE RIGHT OUTER JOIN
+           (';
+}
+
+$sql .= '
+           select * from commits_latest_ports';
+
+if ($WatchListID) {
+	$sql .= '
+           ) AS TEMP
+       
+                ON WLE.watch_list_id = ' . $WatchListID . '
+               AND WLE.element_id    = TEMP.element_id ' . "\n";
+}
+
+$sql .= '         ORDER BY commit_date_raw desc, category, port';
+
 
 if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 

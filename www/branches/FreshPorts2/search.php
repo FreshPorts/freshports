@@ -1,5 +1,5 @@
 <?
-	# $Id: search.php,v 1.1.2.28 2002-06-09 21:42:41 dan Exp $
+	# $Id: search.php,v 1.1.2.29 2002-08-12 14:13:22 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -13,27 +13,31 @@
 	switch ($_SERVER["REQUEST_METHOD"]) {
 		case "POST":
 			// avoid nasty problems by adding slashes
-			$query		= AddSlashes($_POST["query"]);
-			$stype		= AddSlashes($_POST["stype"]);
-			$num		= AddSlashes($_POST["num"]);
-			$category	= AddSlashes($_POST["category"]);
-			$port		= AddSlashes($_POST["port"]);
-			$method		= AddSlashes($_POST["method"]);
-			$deleted	= AddSlashes($_POST["deleted"]);
+			$query				= AddSlashes($_POST["query"]);
+			$stype				= AddSlashes($_POST["stype"]);
+			$num				= AddSlashes($_POST["num"]);
+			$category			= AddSlashes($_POST["category"]);
+			$port				= AddSlashes($_POST["port"]);
+			$method				= AddSlashes($_POST["method"]);
+			$deleted			= AddSlashes($_POST["deleted"]);
+			$casesensitivity	= AddSlashes($_POST["casesensitivity"]);
 			break;
 
 		case "GET":
 			// avoid nasty problems by adding slashes
-			$query		= AddSlashes($_GET["query"]);
-			$stype		= AddSlashes($_GET["stype"]);
-			$num		= AddSlashes($_GET["num"]);
-			$category	= AddSlashes($_GET["category"]);
-			$port		= AddSlashes($_GET["port"]);
-			$method		= AddSlashes($_GET["method"]);
-			$deleted	= AddSlashes($_GET["deleted"]);
+			$query				= AddSlashes($_GET["query"]);
+			$stype				= AddSlashes($_GET["stype"]);
+			$num				= AddSlashes($_GET["num"]);
+			$category			= AddSlashes($_GET["category"]);
+			$port				= AddSlashes($_GET["port"]);
+			$method				= AddSlashes($_GET["method"]);
+			$deleted			= AddSlashes($_GET["deleted"]);
+			$casesensitivity	= AddSlashes($_GET["casesensitivity"]);
 			break;
 
 	}
+
+	$Debug=0;
 
 	if ($stype == 'messageid') {
 		header("Location: http://" . $_SERVER["HTTP_HOST"] . "/commit.php?message_id=$query");
@@ -54,14 +58,26 @@
 	}
 
 
+	#
+	# ensure casesensitivity has an appropriate value
+	#
+	switch ($casesensitivity) {
+		case "casesensitive":
+			# do nothing
+			break;
 
-#phpinfo();
+		default:
+			$casesensitivity = "caseinsensitive";
+			# do not break here...
+	}
+
+
+	if ($Debug) phpinfo();
 
 	freshports_Start("Search",
 					"freshports - new ports, applications",
 					"FreeBSD, index, applications, ports");
 
-	$Debug = 0;
 ?>
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <tr><td valign="top" width="100%">                    
@@ -140,38 +156,57 @@ switch ($method) {
 	case 'match':
 		switch ($stype) {
 			case "name":
-				$sql .= "and element.name like '%$query%'";
+				if ($casesensitivity == "casesensitive") {
+					$sql .= "and element.name like '%$query%'";
+				} else {
+					$sql .= "and lower(element.name) like lower('%$query%')";
+				}
 				break;
 
 			case "shortdescription":
-				$sql .= "and ports.short_description like '%$query%'";
+				if ($casesensitivity == "casesensitive") {
+					$sql .= "and ports.short_description like '%$query%'";
+				} else {
+					$sql .= "and lower(ports.short_description) like lower('%$query%')";
+				}
 				break;
       
 			case "maintainer":
-				$sql .= "and ports.maintainer like '%$query%'";
+				if ($casesensitivity == "casesensitive") {
+					$sql .= "and ports.maintainer like '%$query%'";
+				} else {
+					$sql .= "and lower(ports.maintainer) like lower('%$query%')";
+				}
 				break;
-
-			case "messageid":
-				$sql .= "and commit_log.message_id = '$query'";
 		}
 		break;
 
 	case 'exact':
 		switch ($stype) {
 			case "name":
-				$sql .= "and element.name = '$query'";
+				if ($casesensitivity == "casesensitive") {
+					$sql .= "and element.name = '$query'";
+				} else {
+					$sql .= "and lower(element.name) = lower('$query')";
+				}
 				break;
 
 			case "shortdescription":
-				$sql .= "and ports.short_description = '$query'";
+				if ($casesensitivity == "casesensitive") {
+					$sql .= "and ports.short_description = '$query'";
+				} else {
+					$sql .= "and lower(ports.short_description) = lower('$query')";
+				}
 				break;
       
 			case "maintainer":
-				$sql .= "and ports.maintainer = '$query'";
+				if ($casesensitivity == "casesensitive") {
+					$sql .= "and ports.maintainer = '$query'";
+				} else {
+					$sql .= "and lower(ports.maintainer) = lower('$query')";
+				}
 				break;
 
-			case "messageid":
-				$sql .= "and commit_log.message_id = '$query'";
 		}
 		break;
 
@@ -189,8 +224,6 @@ switch ($method) {
 				$sql .= "and levenshtein(ports.maintainer, '$query') < 4";
 				break;
 
-			case "messageid":
-				$sql .= "and commit_log.message_id = '$query'";
 		}
 }
 
@@ -264,7 +297,6 @@ $Port->LocalResult = $result;
 }
 ?>
 <form METHOD="POST" ACTION="<? echo $_SERVER["PHP_SELF"] ?>">
-NOTE: All searches are case sensitive.<BR>
 Search for:<BR>
 	<SELECT NAME="stype" size="1">
 		<OPTION VALUE="name"             <? if ($stype == "name")             echo 'SELECTED'?>>Port Name</OPTION>
@@ -279,7 +311,7 @@ Search for:<BR>
 		<OPTION VALUE="soundex" <?if ($method == "soundex") echo 'SELECTED' ?>>sounding like
 	</SELECT>
 
-	<INPUT NAME="query" size="20"  VALUE="<? echo stripslashes($query)?>">
+	<INPUT NAME="query" size="40"  VALUE="<? echo stripslashes($query)?>">
 
 	<SELECT name=num>
 		<OPTION VALUE="10"  <?if ($num == 10)  echo 'SELECTED' ?>>10 results
@@ -298,8 +330,20 @@ Search for:<BR>
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 	<INPUT TYPE="submit" VALUE="search">
+
+	<BR>
+
+	<INPUT TYPE=radio <? if ($casesensitivity == "casesensitive")   echo 'CHECKED'; ?> VALUE=casesensitive   NAME=casesensitivity> Case sensitive search
+	<INPUT TYPE=radio <? if ($casesensitivity == "caseinsensitive") echo 'CHECKED'; ?> VALUE=caseinsensitive NAME=casesensitivity> Case insensitive search
+
+	<BR><BR>
+	NOTE: Case sensitivity is ignored for "sounding like".<BR>
+	NOTE: When searching on 'Message ID' only exact matches will succeeed.
+
   <INPUT TYPE="hidden" NAME="search" VALUE="1">
 </form>
+
+&nbsp;
 
 </td></tr>
 <?

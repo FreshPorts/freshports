@@ -1,5 +1,5 @@
 <?
-	# $Id: faq.php,v 1.1.2.8 2002-04-06 15:10:55 dan Exp $
+	# $Id: faq.php,v 1.1.2.9 2002-04-06 15:15:10 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -196,7 +196,7 @@
 	work.
 	</P>
 	<P>
-	If it is any consolation, the new URLs will be much more transparent
+	If it is any consolation, the new URLs are transparent
 	and permanent.  They are of the form &lt;category&gt;/&lt;port&gt;.
 	</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>

@@ -1,4 +1,4 @@
-<?php
+<?
 
 $db = mysql_connect("localhost","freshports", "marlboro");
 mysql_select_db("freshports",$db);

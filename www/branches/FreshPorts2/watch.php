@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch.php,v 1.1.2.39 2003-04-27 14:48:18 dan Exp $
+	# $Id: watch.php,v 1.1.2.40 2003-04-27 20:33:58 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -10,6 +10,8 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/watch-lists.php');
+
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_list.php');
 
 	// if we don't know who they are, we'll make sure they login first
 	if (!$visitor) {
@@ -29,10 +31,6 @@ if (!$visitor) {
         exit;  /* Make sure that code below does not get executed when we redirect. */
 }
 
-	freshports_Start('your watched ports',
-					'freshports - new ports, applications',
-					'FreeBSD, index, applications, ports');
-					
 	if ($_POST["watch_list_select_x"] && $_POST["watch_list_select_y"]) {
 		# they clicked on the GO button and we have to apply the 
 		# watch staging area against the watch list.
@@ -49,6 +47,14 @@ if (!$visitor) {
 			if ($Debug) echo "GetDefaultWatchListID => \$wlid='$wlid'";
 		}
 	}
+	
+	$WatchList = new WatchList($db);
+	$WatchList->Fetch($User->id, $wlid);
+
+	$Title = "Watch List - " . $WatchList->name;
+	freshports_Start($Title,
+					'freshports - new ports, applications',
+					'FreeBSD, index, applications, ports');
 
 ?>
 
@@ -57,7 +63,7 @@ if (!$visitor) {
 <tr><td valign="top" width="100%">
 <table width="100%" border="0">
 <tr>
-	<? echo freshports_PageBannerText("your watch list - PERHAPS the watch list name[s] should go here?"); ?>
+	<? echo freshports_PageBannerText($Title); ?>
 </tr>
 <tr><td>
 <table border=0 width="100%">

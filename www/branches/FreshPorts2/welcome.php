@@ -1,5 +1,5 @@
 <?
-	# $Id: welcome.php,v 1.1.2.9 2002-06-09 21:42:42 dan Exp $
+	# $Id: welcome.php,v 1.1.2.10 2002-08-19 17:25:15 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -28,7 +28,7 @@
 	</P>
 
 	<P>
-	You should soon received an email at the mail address you supplied.
+	You should soon receive an email at the mail address you supplied.
 	It will contain instructions to enable your account.
 	</P>
 

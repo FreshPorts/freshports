@@ -1,5 +1,5 @@
 <?
-	# $Id: user.php,v 1.1.2.3 2002-12-11 04:32:52 dan Exp $
+	# $Id: user.php,v 1.1.2.4 2002-12-16 13:31:22 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -27,6 +27,7 @@ class User {
 	var $number_of_commits;
 	var $number_of_days;
 	var $watch_list_add_remove;
+	var $last_watch_list_chosen;
 
 	var $LocalResult;
 
@@ -131,13 +132,14 @@ class User {
 		$this->number_of_commits		= $myrow["number_of_commits"];
 		$this->number_of_days			= $myrow["number_of_days"];
 		$this->watch_list_add_remove	= $myrow["watch_list_add_remove"];
+		$this->last_watch_list_chosen	= $myrow["last_watch_list_chosen"];
 	}
 	
-	function SetWatchListAddRemove($UserID, $WatchListAddRemove) {
+	function SetWatchListAddRemove($WatchListAddRemove) {
 		
 		$sql = 'UPDATE users 
 		          set watch_list_add_remove = \'' . AddSlashes($WatchListAddRemove) . '\'
-		        WHERE id                    =   ' . AddSlashes($UserID);
+		        WHERE id                    =   ' . $this->id;
 		
 		if ($Debug)	echo "Users::Fetch sql = '$sql'<BR>";
 
@@ -153,5 +155,26 @@ class User {
 
 		return $numrows;
 	}
-	
+
+	function SetLastWatchListChosen($WatchListID) {
+		
+		$sql = 'UPDATE users 
+		          set last_watch_list_chosen = \'' . AddSlashes($WatchListID) . '\'
+		        WHERE id                     =   ' . $this->id;
+		
+		if ($Debug)	echo "Users::Fetch sql = '$sql'<BR>";
+
+		$this->LocalResult = pg_exec($this->dbh, $sql);
+		if ($this->LocalResult) {
+			$numrows = pg_affected_rows($this->LocalResult);
+#			echo "That would give us $numrows rows";
+			$this->last_watch_list_chosen = AddSlashes($last_watch_list_chosen);
+		} else {
+			$numrows = -1;
+			echo 'pg_exec failed: ' . $sql;
+		}
+
+		return $numrows;
+	}
+
 }

@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.122 2002-12-12 02:45:27 dan Exp $
+	# $Id: freshports.php,v 1.4.2.123 2002-12-12 05:28:11 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -349,6 +349,18 @@ function freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum=0) {
 
 	echo '	<meta name="MSSmartTagsPreventParsing" content="TRUE">' . "\n";
 
+?>
+
+	<LINK REL="SHORTCUT ICON" HREF="http://www.freshports.org/favicon.ico">
+	<meta name="MSSmartTagsPreventParsing" content="TRUE">
+	<META http-equiv="Pragma"              CONTENT="no-cache">
+	<META HTTP-EQUIV="Expires"             CONTENT="0">
+	<META HTTP-EQUIV="Cache-Control"       CONTENT="no-cache">
+	<META HTTP-EQUIV="Pragma-directive"    CONTENT="no-cache">
+	<META HTTP-EQUIV="cache-directive"     CONTENT="no-cache">
+	<META NAME="ROBOTS"                    CONTENT="NOARCHIVE">
+
+<?php
 
 if ($Phorum) {
 	GLOBAL $phorumver;
@@ -359,6 +371,7 @@ if ($Phorum) {
 	<meta name="Phorum Version" content="<?php echo $phorumver; ?>">
 	<meta name="Phorum DB" content="<?php echo $DB->type; ?>">
 	<meta name="PHP Version" content="<?php echo phpversion(); ?>">
+	
 <?
 }
 

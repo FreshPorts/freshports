@@ -1,5 +1,5 @@
 <?
-   # $Id: category.php3,v 1.21.2.1 2001-11-25 20:50:58 dan Exp $
+   # $Id: category.php3,v 1.21.2.2 2001-11-26 06:43:37 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -161,7 +161,7 @@ $HTML .= freshports_echo_HTML("<TR>\n<TD>\n");
 for ($i = $start; $i <= $end; $i++) {
 	$myrow = $rows[$i-1];
 
-	$HTML .= freshports_PortDetails($myrow, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription);
+	$HTML .= freshports_PortDetails($myrow, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription);
 
 	$LastPort = $myrow["port"];
 } // end for
@@ -191,25 +191,6 @@ if ($start > 1) {
 
 $HTML .= freshports_echo_HTML('</td></tr>');
 echo $HTML;      
-
-#   if ($NumRows != 0) {
-#      $fpwrite = fopen($cache_file, 'w');
-#      if(!$fpwrite) {                      
-#         echo 'error on open<br>';
-#         echo "$errstr ($errno)<br>\n";
-#         exit;                  
-#      } else {                            
-#//         echo 'written<br>';             
-#         fputs($fpwrite, $HTML);         
-#         fclose($fpwrite);
-#      }
-#   }
-#} else {                                
-#//   echo 'looks like I\'ll read from cache this time';                             
-#   if (file_exists($cache_file)) {                            
-#      include($cache_file);
-#   }          
-#}
 
 </script>
 </table>

@@ -1,5 +1,9 @@
 <hr>
 <table width="100%" border="0">
+<?
+
+if ($ShowPoweredBy) {
+?>
 <tr>
 
 <td align="center">
@@ -23,6 +27,9 @@ alt="powered by apache" border="0" width="259" height="32"></a>
 alt="powered by phorum" border="0" width="88" height="31"></a>
 
 </tr>
+<?
+}
+?>
 <tr><td align="right">
 <a href="../legal.php3" target="_top">Copyright</a> 2000,2001 <a href="http://www.dvl-software.com/">DVL Software Limited</a>.
 All rights reserved.</font></p>

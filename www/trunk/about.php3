@@ -1,5 +1,5 @@
 <?
-   # $Id: about.php3,v 1.10 2001-10-02 17:35:57 dan Exp $
+   # $Id: about.php3,v 1.11 2001-10-02 17:51:54 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -77,7 +77,10 @@ About the Authors</a> for details of who else helped.</p>
 </table>
 </td>
   <td valign="top" width="*">
-    <? include("./include/side-bars.php") ?>
+    <?
+       $ShowPoweredBy = 1;
+       include("./include/side-bars.php");
+    ?>
  </td>
 </tr>
 </table>

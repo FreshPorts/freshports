@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.89 2004-03-22 18:42:33 dan Exp $
+	# $Id: index.php,v 1.1.2.90 2004-08-23 19:10:59 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2004 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
@@ -10,6 +10,33 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+
+
+	#
+	# If they supply a package name, go for it.
+	$package = AddSlashes($_REQUEST['package']);
+	if ($package != '') {
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/packages.php');
+
+		$Packages = new Packages($db);
+
+		$CategoryPort = $Packages->GetCategoryPortFromPackageName($package);
+		switch ($CategoryPort) {
+			case "0":
+#				echo 'no such port found ' . $CategoryPort;
+				header('Location: /package.php?package=' . $package . '&notfound');
+				exit;
+
+			case "-1":
+#				echo 'multiple ports have that package name ' . $CategoryPort;
+				header('Location: /package.php?package=' . $package . '&multiple');
+				exit;
+
+			default:
+				header('Location: /' . $CategoryPort . '/');  /* Redirect browser to the real webpage */
+				exit;
+		}
+	}
 
 	freshports_Start($FreshPortsSlogan,
 					$FreshPortsName . ' - new ports, applications',

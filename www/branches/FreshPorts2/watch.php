@@ -1,5 +1,5 @@
 <?
-	# $Id: watch.php,v 1.1.2.25 2002-11-01 20:23:37 dan Exp $
+	# $Id: watch.php,v 1.1.2.26 2002-12-03 20:21:18 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -86,34 +86,73 @@ if ($WatchID == '') {
 if ($UpdateCache == 1) {
 //   echo 'time to update the cache';
 
-$sql = "";
-$sql = "select ports.id, element.name as port, ports.id as ports_id, to_char(max(commit_log.commit_date) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as updated, " .
-       "categories.name as category, categories.id as category_id, ports.version as version, ports.revision as revision, ".
-       "commit_log.committer, commit_log.description as update_description, element.id as element_id, " .
-       "ports.maintainer, ports.short_description, to_char(max(commit_log.date_added) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, ".
-       "ports.last_commit_id, commit_log.message_id, max(commit_log.commit_date) as commit_date_sort_field, " .
-       "ports.package_exists, ports.extract_suffix, ports.homepage, element.status, " .
-       "ports.broken, ports.forbidden, 1 as onwatchlist ".
-       "from watch_list_element, element, categories, ports LEFT OUTER JOIN commit_log on (ports.last_commit_id = commit_log.id) " .
-       "WHERE ports.category_id             = categories.id " .
-	   "  and watch_list_element.element_id = ports.element_id " .
-	   "  and ports.element_id              = element.id
-          and watch_list_element.watch_list_id = $WatchListID ";
+$sql = "
+SELECT temp.*,
+	to_char(max(commit_log.commit_date) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') 	as updated,
+	commit_log.committer, commit_log.description 														as update_description, 
+	to_char(max(commit_log.date_added) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') 		as date_added, 
+	commit_log.message_id, max(commit_log.commit_date) 												as commit_date_sort_field,
+	commit_log.committer
+from commit_log
+	RIGHT OUTER JOIN
+(
 
-$sql .= "GROUP BY ports.id, port, ports_id, " .
-        "         category, categories.id, version, revision, ".
-        "         commit_log.committer, update_description, element.id, " .
-        "         ports.maintainer, ports.short_description, ports.date_added, ".
-        "         last_commit_id, commit_log.message_id, " .
-        "         ports.package_exists, ports.extract_suffix, ports.homepage, element.status, " .
-        "         ports.broken, ports.forbidden, onwatchlist ";
+select element.name 			as port, 
+		 ports.id 				as ports_id, 
+       categories.name 		as category, 
+       categories.id 		as category_id, 
+       ports.version 		as version, 
+       ports.revision 		as revision, 
+       element.id 			as element_id, 
+       ports.maintainer, 
+       ports.short_description, 
+       ports.last_commit_id, 
+       ports.package_exists, 
+       ports.extract_suffix, 
+       ports.homepage, 
+       element.status, 
+       ports.broken, 
+       ports.forbidden, 
+       1 as onwatchlist 
+       from watch_list_element, element, categories, ports
+ WHERE ports.category_id                = categories.id 
+   and watch_list_element.element_id    = ports.element_id 
+	and ports.element_id                 = element.id
+   and watch_list_element.watch_list_id = $WatchListID
+
+
+) as TEMP
+on (TEMP.last_commit_id = commit_log.id) 
+
+GROUP BY port,
+			ports_id, 
+         category, 
+         category_id, 
+         version, 
+         revision, 
+         commit_log.committer, 
+         update_description, 
+         element_id, 
+         maintainer, 
+         short_description, 
+         date_added, 
+         last_commit_id, 
+         commit_log.message_id, 
+         package_exists, 
+         extract_suffix, 
+         homepage, 
+         status, 
+         broken, 
+         forbidden, 
+         onwatchlist  
+";
 
 $sql .= " order by $sort ";
 //$sql .= " limit 20";
 
 //$Debug=1;
 if ($Debug) {
-   echo $sql;
+   echo "<pre>$sql</pre>";
 }
 
 $result = pg_exec($db, $sql);

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.36 2003-05-21 01:25:32 dan Exp $
+	# $Id: faq.php,v 1.1.2.37 2003-05-21 11:18:05 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -269,7 +269,9 @@ down you must read to find something you didn't already know.</P>
 		as a security issue by trusted FreshPorts users.  If you'd like to help with this task, please contact us.
 	</P>
 
-
+	<P><? echo freshports_WatchListCount_Icon(); ?> Watch List Count (WLC): This is the number of watch lists which are watching 
+	this port.  This might give you an idea of how popular the port it.
+	</P>
 
 	</BLOCKQUOTE>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
@@ -402,18 +404,6 @@ SQL and I'll be implementing that gradually.
 	will work.  If the code has trouble figuring out what date you mean, it will guess and let you know it adjusted the date.
 
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
-
-<TR>
-<? echo freshports_PageBannerText("What does WLC mean?"); ?>
-</TR>
-
-   <TR><TD>
-   <P>
-	<? echo freshports_WatchListCount_Icon(); ?> Watch List Count.  This is the number of watch lists which are watching 
-	this port.  This might give you an idea of how popular the port it.
-
-	</TD></TR><TR><TD>&nbsp;</TD></TR>
-
 
 </table>
 </td>

@@ -1,5 +1,5 @@
 <?
-	# $Id: forgotten-password.php,v 1.1.2.5 2002-01-03 01:22:03 dan Exp $
+	# $Id: forgotten-password.php,v 1.1.2.6 2002-04-20 02:47:57 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -127,54 +127,54 @@ if ($submit) {
                "FreeBSD, index, applications, ports");
 ?>
 
-<table width="100%" border=0>
- <tr>
-    <td>
-<table width="100%" border=0>
-<tr><td valign="top" width="100%">
+<TABLE WIDTH="100%" BORDER="0">
+ <TR>
+    <TD>
+<TABLE WIDTH="100%" BORDER="0">
+<TR><TD VALIGN="top" WIDTH="100%">
 <?
 $Debug=1;
 
 if ($error) {
-      echo '<table cellpadding=1 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>
-            <tr>
-            <td>
-               <table width=100% border=0 cellpadding=1>
-                  <tr bgcolor="#AD0040"><td><b><font color="#ffffff" size=+0>We have a problem!</font></b></td>
-                 </tr> 
-                 <tr bgcolor="#ffffff">
-            <td>
-              <table width=100% cellpadding=3 cellspacing=0 border=0>
-              <tr valign=top>
-               <td><img src="/images/warning.gif"></td>
-               <td width=100%>
+      echo '<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="#AD0040" WIDTH="100%">
+            <TR>
+            <TD>
+               <TABLE WIDTH="100%" BORDER="0" CELLPADDING="1">
+                  <TR BGCOLOR="#AD0040"><TD><b><FONT COLOR="#ffffff" SIZE=+0>We have a problem!</FONT></b></TD>
+                 </TR> 
+                 <TR BGCOLOR="#ffffff">
+            <TD>
+              <TABLE WIDTH="100%" CELLPADDING="3" BORDER="0">
+              <TR VALIGN=top>
+               <TD><img src="/images/warning.gif"></TD>
+               <TD WIDTH="100%">
             <p>';
       echo $error;     
-      echo '</td>
-       </tr>
-       </table>
-      </td>
-      </tr>
-      </table>
-      </td>
-      </tr>
-      </table>
+      echo '</TD>
+       </TR>
+       </TABLE>
+      </TD>
+      </TR>
+      </TABLE>
+      </TD>
+      </TR>
+      </TABLE>
       <br>';
 } else {
 
    if ($LoginFailed || $eMailFailed) {
-      echo '<table cellpadding=1 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>
-            <tr>
-            <td>
-               <table width=100% border=0 cellpadding=1>
-                  <tr bgcolor="#AD0040"><td><b><font color="#ffffff" size=+0>UserID not found!</font></b></td>
-                 </tr>
-                 <tr bgcolor="#ffffff">
-            <td>
-              <table width=100% cellpadding=3 cellspacing=0 border=0>
-              <tr valign=top>
-               <td><img src="/images/warning.gif"></td>
-               <td width=100%>
+      echo '<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="#AD0040" WIDTH="100%">
+            <TR>
+            <TD>
+               <TABLE WIDTH="100%" BORDER="0" CELLPADDING="1">
+                  <TR BGCOLOR="#AD0040"><TD><b><FONT COLOR="#ffffff" SIZE=+0>UserID not found!</FONT></b></TD>
+                 </TR>
+                 <TR BGCOLOR="#ffffff">
+            <TD>
+              <TABLE WIDTH="100%" CELLPADDING="3" BORDER="0">
+              <TR VALIGN=top>
+               <TD><img src="/images/warning.gif"></TD>
+               <TD WIDTH="100%">
               <p>The ';
 
       if ($LoginFailed) {
@@ -191,28 +191,26 @@ if ($error) {
       }
       echo ' instead?</p>
        <p>If you need help, please ask in the forum. </p>
-       </td>
-       </tr>
-       </table>
-      </td>
-      </tr>
-      </table>
-      </td>
-      </tr>
-      </table>
+       </TD>
+       </TR>
+       </TABLE>
+      </TD>
+      </TR>
+      </TABLE>
+      </TD>
+      </TR>
+      </TABLE>
       <br>';
       }
 }
 ?>
 
-<table cellpadding=1 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>
-<tr>
-<td>
+<TABLE CELLPADDING="0" BORDER="0" BGCOLOR="#AD0040" WIDTH="100%"> <TR> <TD>
 
 
-<table width=100% border=0 cellpadding=1 bgcolor="#AD0040">
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="1" BGCOLOR="#AD0040">
 
-<tr bgcolor="#AD0040"><td bgcolor="#AD0040"><font color="#ffffff" size="+2">
+<TR BGCOLOR="#AD0040"><TD BGCOLOR="#AD0040"><FONT COLOR="#ffffff" SIZE="+2">
 <?
 if ($MailSent) {
    echo "Mail sent to your address";
@@ -220,9 +218,9 @@ if ($MailSent) {
    echo "Forgotten your password?";
 }
 ?>
-</font></td></tr>
+</FONT></TD></TR>
 
-<tr><td bgcolor="#ffffff">
+<TR><TD BGCOLOR="#ffffff">
 <?
 if ($MailSent) {
 ?>
@@ -246,28 +244,28 @@ we're only dealing with your FreshPorts login, not a financial transaction....</
       <p>User ID:<br>
       <input SIZE="15" NAME="UserID" value="<? echo $UserID ?>"></p>
       <p>email address:<br>
-      <input NAME="eMail" VALUE = "<? echo $eMail ?>" size="20"></p>
+      <input NAME="eMail" VALUE = "<? echo $eMail ?>" SIZE="20"></p>
       <p><input TYPE="submit" VALUE="eMail Me!" name=submit> &nbsp;&nbsp;&nbsp;&nbsp; <input TYPE="reset" VALUE="reset form">
 </form>
 <? } ?>
-</td>
+</TD>
 
-</tr>
-</table>
-</td>
-</tr>
-</table>
-</td>
-  <td valign="top" width="*">
+</TR>
+</TABLE>
+</TD>
+</TR>
+</TABLE>
+</TD>
+  <TD VALIGN="top" WIDTH="*">
     <? 
        unset($UserID);
        include("./include/side-bars.php");
     ?>
- </td>
-</tr>
-</table> 
-</td></tr>
-</table>
+ </TD>
+</TR>
+</TABLE> 
+</TD></TR>
+</TABLE>
 <? include("./include/footer.php") ?>
 </body>
 </html>

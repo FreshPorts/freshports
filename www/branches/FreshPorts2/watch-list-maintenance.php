@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-list-maintenance.php,v 1.1.2.26 2003-05-02 12:53:02 dan Exp $
+	# $Id: watch-list-maintenance.php,v 1.1.2.27 2003-05-02 13:28:29 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -243,9 +243,12 @@ if ($Debug) echo 'add remove = ' . $User->watch_list_add_remove;
     </TD>
     <TD>
     <INPUT id=add         style="WIDTH: 85px; HEIGHT: 24px" type=submit size=48 value="Add"          name=add>&nbsp;&nbsp;&nbsp; 
-    <INPUT id=add_name    name=add_name    <?php if (IsSet($add_name))    echo 'value="' . $add_name    . '" '; ?>size=10><?php echo "&nbsp;(only $ValidCharacters)" ?><BR>
+    <INPUT id=add_name    name=add_name    <?php if (IsSet($add_name))    echo 'value="' . $add_name    . '" '; ?>size=10><small><sup>(1)</sup></small><BR>
     <INPUT id=rename      style="WIDTH: 85px; HEIGHT: 24px" type=submit size=23 value="Rename"       name=rename>&nbsp;&nbsp;&nbsp; 
-    <INPUT id=rename_name name=rename_name <?php if (IsSet($rename_name)) echo 'value="' . $rename_name . '" '; ?>size=10><?php echo "&nbsp;(only $ValidCharacters)" ?><BR>
+    <INPUT id=rename_name name=rename_name <?php if (IsSet($rename_name)) echo 'value="' . $rename_name . '" '; ?>size=10><small><sup>(1)</sup></small><BR>
+    <?php echo "&nbsp;<small>(1) - only $ValidCharacters</small>" ?>
+		<br>
+
     <br>
     <INPUT id=delete      style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29 value="Delete"       name=delete><br>
     <INPUT id=delete_all  style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29 value="Delete All"   name=delete_all><br>
@@ -256,7 +259,9 @@ if ($Debug) echo 'add remove = ' . $User->watch_list_add_remove;
     <INPUT id=default     style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29 value="Set Default"  name=set_default><br>
     <br>
 
-    Confirm : <INPUT id=confirm name=confirm size=10>&nbsp;(case sensitive)
+    Confirm: <INPUT id=confirm name=confirm size=10>
+	 <br>(case sensitive)
+
     </TD>
 </tr>
 </table>

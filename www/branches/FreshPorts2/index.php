@@ -1,6 +1,6 @@
 <?
 	#
-	# $Id: index.php,v 1.1.2.55 2002-12-03 16:01:13 dan Exp $
+	# $Id: index.php,v 1.1.2.56 2002-12-03 16:18:44 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -366,7 +366,7 @@ ports. A port is marked as new for 10 days.
 	<TR><TD>
 ';
 			for ($i = 1; $i <= $NumberOfDays; $i++) {
-				echo freshports_LinkToDate($Today - $i * 86400);
+				echo freshports_LinkToDate($Today - $i * 86400) . "<br>\n";
 			}
 			echo '
 	</TD></TR>

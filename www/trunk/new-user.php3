@@ -1,6 +1,5 @@
 <?
 require( "./_private/commonlogin.php3");
-require( "./_private/getvalues.php3");
 require( "./_private/freshports.php3");
 
 if ($submit) {
@@ -85,6 +84,10 @@ if ($submit) {
  }
 } else {
 // not submit
+
+// we can't do this if we are submitting because it overwrites the incoming values
+require( "./_private/getvalues.php3");
+
 $emailsitenotices_yn = "ON";
 }
 ?>

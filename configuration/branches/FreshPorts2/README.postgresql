@@ -1,0 +1,99 @@
+--
+-- Copyright (c) 1998-2001 DVL Software Limited
+--
+
++------------------------+
+|PostgreSQL Configuration|
++------------------------+
+
+After installing postgresql, you need to to these things:
+
+1. Initialise the database system:
+
+   su -l pgsql /usr/local/bin/initdb /usr/local/pgsql/data
+
+2. Create yourself a user
+
+   # su pgsql
+   $ createuser dan
+   Shall the new user be allowed to create databases? (y/n) y
+   Shall the new user be allowed to create more new users? (y/n) y
+   CREATE USER
+
+1. Install the crypto
+
+   cd /usr/ports/databases/postgresql7/work/postgresql-7.2/contrib/pgcrypto
+   edit Makefile and specify cryptolib = openssl
+   gmake
+   gmake install
+
+
+2. Add crypto to the database
+
+   psql db_name < /usr/local/share/postgresql/contrib/pgcrypto.sql 
+
+
+3. Test
+
+   select DIGEST('adfsd', 'md5');
+
+
++--------------------+
+|Database permissions|
++--------------------+
+
+-- users, groups, permissions for postgresql
+--
+
+create group www;
+create user www with password 'password';
+
+alter group www add user www;
+
+--
+-- select access only
+--
+grant select on categories                     to group www;
+grant select on commit_log                     to group www;
+grant select on commit_log_elements            to group www;
+grant select on commit_log_id_seq              to group www;
+grant select on commit_log_port_elements       to group www;
+grant select on commit_log_ports               to group www;
+grant select on commits_latest                 to group www;
+grant select on element                        to group www;
+grant select on element_revision               to group www;
+grant select on housekeeping                   to group www;
+grant select on ports                          to group www;
+grant select on security_notice                to group www;
+grant select on security_notice_elements       to group www;
+grant select on security_notice_log            to group www;
+grant select on system                         to group www;
+grant select on system_branch                  to group www;
+grant select on system_branch_element_revision to group www;
+grant select on watch_list                     to group www;
+
+--
+-- select, insert, update
+--
+grant select, insert, update on users          to group www;
+grant select,         update on users_id_seq   to group www;
+
+--
+-- select, insert, update, delete
+--
+
+grant select, insert, update, delete on watch_list_element  to group www;
+grant select,         update         on watch_list_id_seq   to group www;
+
+--
+-- select, delete
+--
+grant select, delete on user_confirmations      to group www;
+
+--
+-- no access
+--
+-- watch_notice                   to group www;
+-- watch_notice_id_seq            to group www;
+-- watch_notice_log               to group www;
+-- watch_notice_log_id_seq        to group www;

@@ -1,5 +1,5 @@
 <?
-   # $Id: category.php3,v 1.21 2001-10-20 21:50:38 dan Exp $
+   # $Id: category.php3,v 1.21.2.1 2001-11-25 20:50:58 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -44,7 +44,7 @@ $title = freshports_Category_Name($category, $db);
 
 
 <table width="100%" border="0">
-<tr><td>
+<tr><td COLSPAN="2">
 This page lists all the ports in a given category.
 </td></tr>
 <tr><td valign="top" width="100%">
@@ -86,55 +86,30 @@ if (!$end) {
 
 $sort ="port";
 
-srand((double)microtime()*1000000);
-$cache_time_rnd =       300 - rand(0, 600);
-
-$UpdateCache = 0;
-if (!file_exists($cache_file)) {
-//   echo 'cache does not exist<br>';
-   // cache does not exist, we create it
-   $UpdateCache = 1;
-} else {
-//   echo "cache exists and is compared to $LastUpdateFile<br>";
-   if (!file_exists($LastUpdateFile)) {
-      // no updates, so cache is fine.
-//      echo 'but no update file<br>';
-   } else {
-//      echo 'cache file was ';
-      // is the cache older than the db?
-      if ((filectime($cache_file) + $cache_time_rnd) < filectime($LastUpdateFile)) {
-//         echo 'created before the last database update<br>';
-         $UpdateCache = 1;
-      } else {
-//         echo 'crated after the last database update<br>';
-      }
-   }
-}
-
-//$UpdateCache = 1;
-
-#if ($UpdateCache == 1) {
-//   echo 'time to update the cache';
-
-$sql = "select ports.id, ports.name as port, ports.id as ports_id, ports.last_update as updated, " .
+$sql = "select ports.id, element.name as port, ports.id as ports_id, commit_log.commit_date as updated, " .
        "categories.name as category, categories.id as category_id, ports.version as version, ".
-       "ports.last_update_description as update_description, " .
-       "ports.maintainer, ports.short_description, UNIX_TIMESTAMP(ports.date_created) as date_created, ".
-       "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, ports.status, " .
-       "date_format(date_created, '$FormatDate $FormatTime') as date_created_formatted, " .
+       "commit_log.description as update_description, " .
+       "ports.maintainer, ports.short_description, " .
+       "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, element.status, " .
        "ports.broken, ports.forbidden " .
-       "from ports, categories  ".
-       "WHERE ports.system = 'FreeBSD' ".
-       "and ports.primary_category_id = categories.id " .
-       "and categories.id = $category ";
+       "from ports, categories, element, commit_log  ".
+       "WHERE ports.category_id    = categories.id " .
+       "  and categories.id        = $category " .
+       "  and ports.element_id     = element.id " .
+       "  and ports.last_commit_id = commit_log.id ";
 
 /*
+       "date_format(date_created, '$FormatDate $FormatTime') as date_created_formatted, " .
+UNIX_TIMESTAMP(ports.date_created) as date_created, ".
+
 if ($next) {
    $sql .= "and ports.name > '$next' ";
 }
 */
 
 $sql .= "order by $sort";
+
+#echo $sql;
 
 //$sql .= " limit $LimitRows";
 
@@ -143,8 +118,12 @@ if ($Debug) {
    echo "GlobalHideLastChange = $GlobalHideLastChange\n";
 }
 
-$result = mysql_query($sql, $db);
-$NumRows = mysql_num_rows($result);
+$result = pg_exec($db, $sql);
+if (!$result) {
+   print pg_errormessage() . "<br>\n";
+   exit;
+}
+$NumRows = pg_numrows($result);
 if ($end > $NumRows) {
 //   echo "end was $end and is now $NumRows";
    $end = $NumRows;
@@ -155,13 +134,13 @@ if ($NumRows == 0) {
 } else {
 
 for ($i = 0; $i < $NumRows; $i++) {
-   $myrow = mysql_fetch_array($result);
+   $myrow = pg_fetch_array($result, $i);
    $rows[$i]=$myrow;
 }
 
 $HTML .= freshports_echo_HTML('<tr><td>');
 
-$HTML .= freshports_echo_HTML('<table width="*" border=0>');
+$HTML .= freshports_echo_HTML('<table width="100%" border="0">');
 
 // get the list of topics, which we need to modify the order
 $LastPort = '';
@@ -175,25 +154,19 @@ if ($start == 1 and $end == $NumRows) {
 
 $HTML .= freshports_echo_HTML(" of $NumRows ports</td></tr>\n");
 
-//$HTML .= freshports_echo_HTML("<tr><td>");
-//$HTML .= freshports_echo_HTML("<br>start = $start, end = $end, LimitRows = $LimitRows<br>\n");
-
-
 $ShowShortDescription	= "Y";
 
+$HTML .= freshports_echo_HTML("<TR>\n<TD>\n");
+
 for ($i = $start; $i <= $end; $i++) {
-   $myrow = $rows[$i-1];
+	$myrow = $rows[$i-1];
 
-//   include("./include/port-basics.php");
+	$HTML .= freshports_PortDetails($myrow, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription);
 
-   $HTML .= freshports_PortDetails($myrow, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription);
-
-   $LastPort = $myrow["port"];
+	$LastPort = $myrow["port"];
 } // end for
 
 $HTML .= freshports_echo_HTML('</tr>');
-
-//$HTML .= freshports_echo_HTML("<p>$NumRows ports found</p>\n");
 
 $HTML .= freshports_echo_HTML('</td></tr>');
 

@@ -141,7 +141,7 @@ if ($ShowDepends) {
           // now extract the port and category from this port name
           $CategoryPort = str_replace('/usr/ports/', '', $DependsArray[1]) ;
           $CategoryPortArray = explode('/', $CategoryPort);
-          $DependsPortID = freshports_PortIDFromPortCategory($CategoryPortArray[0], $CategoryPortArray[1], $db);
+#          $DependsPortID = freshports_PortIDFromPortCategory($CategoryPortArray[0], $CategoryPortArray[1], $db);
 
           $HTML .= '<a href="port-description.php3?port=' . $DependsPortID . '">' . $CategoryPortArray[1]. '</a>';
           if ($i < $Count - 1) {

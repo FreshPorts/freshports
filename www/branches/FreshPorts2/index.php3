@@ -1,5 +1,5 @@
 <?
-   # $Id: index.php3,v 1.34.2.1 2001-11-25 00:40:22 dan Exp $
+   # $Id: index.php3,v 1.34.2.2 2001-11-25 20:50:59 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -110,7 +110,7 @@ function GetPortNameFromFileName($file_name) {
 }
 
       $numrows = 500;
-      $database=pg_connect("dbname=FreshPorts2Test user=dan");
+      $database=$db;
       if ($database) {
 
 #

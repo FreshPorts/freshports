@@ -1,5 +1,5 @@
 <?
-   # $Id: files.php3,v 1.10 2001-10-20 21:50:38 dan Exp $
+   # $Id: files.php3,v 1.10.2.1 2001-11-25 20:50:58 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -13,29 +13,36 @@ if (!$id || $id != strval(intval($id))) {
   $id = 0;
 }
 
-$sql = "select change_log_port.change_log_id, change_log_port.id, change_log_port.port_id, details, " .
-       "change_type, ports.name as port, categories.name as category, change_log.committer, change_log.commit_date, " .
-       "change_log.update_description " .
-       "from change_log_details, change_log_port, ports, categories, change_log " .
-       "where change_log_details.change_log_port_id = $id " .
-       "  and change_log_port.id                    = change_log_details.change_log_port_id " .
-       "  and change_log_port.port_id               = ports.id " .
-       "  and ports.primary_category_id             = categories.id " .
-       "  and change_log.id                         = change_log_port.change_log_id " .
-       "order by id desc limit 30";
+$sql = "select commit_log_port.commit_log_id, commit_log_port.port_id, " .
+       "commit_log_elements.change_type, element.name as filename, categories.name as category, commit_log.committer, commit_log.commit_date, " .
+       "commit_log.description, element_pathname(element.id) as pathname " .
+       "from commit_log, commit_log_port, ports, categories, element, commit_log_elements " .
+       "where commit_log_port.commit_log_id         = $id " .
+       "  and commit_log_port.commit_log_element_id = commit_log_elements.id ".
+       "  and commit_log_elements.element_id        = element.id " .
+       "  and commit_log_port.port_id               = ports.id " .
+       "  and ports.category_id                     = categories.id " .
+       "  and commit_log.id                         = commit_log_port.commit_log_id " .
+       "order by commit_log_elements.id desc limit 30";
 
-//echo $sql;
+#echo $sql;
 
-$result = mysql_query($sql, $db);
+$result = pg_exec($db, $sql);
 
 if (!$result) {
-   echo mysql_errno().": ".mysql_error()."<BR>";
+   print pg_errormessage() . "<br>\n";
+   exit;
 } else {
+
    $i = 0;
-   while ($myrow = mysql_fetch_array($result)) {
+   $NumRows = pg_numrows($result);
+   while ($myrow = pg_fetch_array($result, $i)) {
 //      echo "<tr><td>" . $myrow["port_id"] . "</td><td>" . $myrow["port"] . "</td></tr>";
       $rows[$i] = $myrow;
       $i++;
+        if ($i >  $numrows - 1) {
+            break;
+        }
    }
 
    $myrow = $rows[0];
@@ -52,7 +59,7 @@ ports.
 </td></tr>
   <tr>
     <td colspan="2">
-This page shows the files associated with one port within a given commit.
+This page shows the files associated with one port for a given commit.
     </td>
   </tr>
 <tr><td valign="top" width="100%">
@@ -64,10 +71,33 @@ This page shows the files associated with one port within a given commit.
    echo "<tr>";
    echo "    <td valign='top'><font size='-1'>" . $myrow["commit_date"]        . "</font></td>\n";
    echo "    <td valign='top'>" . $myrow["committer"]          . "</td>\n";
-   echo '    <td valign="top">' . $myrow["update_description"] . "</td>\n";
+   echo '    <td valign="top">' . $myrow["description"] . "</td>\n";
    echo "</tr>";
+?>
 
-   echo '<tr height="20"><td colspan="3" bgcolor="#AD0040"><font color="#FFFFFF"><font size="+1">' . "$i files found" . '</font></td></tr>';
+</TABLE>
+
+<BR>
+
+<table border="1" width="100%" CELLSPACING="0" CELLPADDING="5"bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">
+<?
+
+   echo '<tr height="20"><td colspan="3" bgcolor="#AD0040"><font color="#FFFFFF"><font size="+1">';
+
+	switch ($NumRows) {
+		case 0:
+			echo 'no files found';
+			break;
+
+		case 1:
+			echo '1 file found';
+			break;
+
+		default:
+			echo $i . ' files found';
+	}
+
+	echo  '</font></td></tr>';
    ?>
    <tr>
      <td><b>Action</b></td><td colspan="2"><b>File</b></td>
@@ -98,9 +128,9 @@ This page shows the files associated with one port within a given commit.
       }
 
       echo "  <td>" . $Change_Type . "</td>";
-      echo '  <td colspan="2"><a href="' . $freshports_CVS_URL . $myrow["category"] . '/' . $myrow["port"] . '/' . $myrow["details"] . '">' .
+      echo '  <td colspan="2"><a href="' . $freshports_CVS_URL . $myrow["pathname"] . '">' .
               '<img src="images/logs.gif" alt="Changes to this file" border="0" WIDTH="17" HEIGHT="20" hspace="2"></a>' . 
-               $myrow["details"] . "</td>";
+               $myrow["filename"] . "</td>";
       echo "</tr>\n";
    }
 }

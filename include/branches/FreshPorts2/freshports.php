@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4 2001-10-24 15:10:46 dan Exp $
+   # $Id: freshports.php,v 1.4.2.1 2001-11-25 20:50:59 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -20,7 +20,7 @@ $TableWidth             = "98%";
 $DateFormatDefault      = "j F Y";
 
 // path to the CVS repository
-$freshports_CVS_URL = "http://www.FreeBSD.org/cgi/cvsweb.cgi/ports/";
+$freshports_CVS_URL = "http://www.FreeBSD.org/cgi/cvsweb.cgi";
 
 
 // common things needs for all freshports php3 pages
@@ -240,21 +240,21 @@ echo '>';
 }
 
 function freshports_Category_Name($CategoryID, $db) {
-   $sql = "select name from categories where id = $CategoryID";
+	$sql = "select name from categories where id = $CategoryID";
 
-//echo $sql;
+//	echo $sql;
 
-   $result = mysql_query($sql, $db);
-   if (!$result) {
-      echo "error " . mysql_error();
-      exit;
-   }
+	$result = pg_exec($db, $sql);
+	if (!$result) {
+		echo "error " . pg_errormessage();
+		exit;
+	}
 
-   $myrow = mysql_fetch_array($result);
+	$myrow = pg_fetch_array($result, 0);
 
-//echo $myrow["name"];
+//	echo $myrow["name"];
 
-   return $myrow["name"];
+	return $myrow["name"];
 }
 
 
@@ -302,22 +302,20 @@ function freshports_in_array($value, $array) {
 
 function freshports_PortIDFromPortCategory($category, $port, $db) {
 /*
-   echo "category = $category<br>\n";
-   echo "port     = $port<br>\n";
+	echo "category = $category<br>\n";
+	echo "port     = $port<br>\n";
 */
-   $sql = "select ports.id " . 
-          "from ports, categories ".
-          "where ports.primary_category_id = categories.id " .
-          "  and ports.name                = '$port' " .
-          "  and categories.name           = '$category'";
+	$sql = "select pathname_id('ports/$category/$port') as id";
 
-   $result = mysql_query($sql, $db);
-   if(mysql_numrows($result)) {
-      $myrow = mysql_fetch_array($result);
-      $PortID = $myrow["id"];
-   }
+	echo "freshports_PortIDFromPortCategory SQL = $sql<BR>\n";
+	$result = pg_exec($db, $sql);
+	if (pg_numrows($result)) {
+		$myrow = pg_fetch_array($result, 0);
+		$PortID = $myrow["id"];
+		echo 'freshports_PortIDFromPortCategory = ' . $PortID . "<BR>\n";
+	}
 
-   return $PortID;
+	return $PortID;
 }
 
 function freshports_CategoryIDFromCategory($category, $db) {
@@ -385,9 +383,9 @@ function freshports_PortDetails($myrow, $ShowDeletedDate, $DaysMarkedAsNew, $Glo
    GLOBAL $freshports_CVS_URL;
 
    $MarkedAsNew = "N";
-   $HTML .= "<dl>";
+   $HTML .= "<DL>\n";
 
-   $HTML .= "<b>" . $myrow["port"];
+   $HTML .= "<DT><b>" . $myrow["port"];
    if (strlen($myrow["version"]) > 0) {
       $HTML .= ' ' . $myrow["version"];
    }
@@ -423,7 +421,7 @@ function freshports_PortDetails($myrow, $ShowDeletedDate, $DaysMarkedAsNew, $Glo
       }
    }
 
-   $HTML .= "<dd>";
+   $HTML .= "</DT>\n<DD>";
    # show forbidden and broken
    if ($myrow["forbidden"]) {
       $HTML .= '<img src="images/forbidden.gif" alt="Forbidden" width="20" height="20" hspace="2">' . $myrow["forbidden"] . "<br><br>";
@@ -586,8 +584,7 @@ if ($ShowDepends) {
       $HTML .= '<a HREF="' . $myrow["homepage"] . '">Homepage</a>';
    }
 
-   $HTML .= "<p></p></dd>";
-   $HTML .= "</dl>" . "\n";
+   $HTML .= "</DD></DL>\n";
 
    return $HTML;
 }

@@ -1,6 +1,6 @@
 <?php
 
-	# $Id: getvalues.php,v 1.1.2.12 2002-02-27 20:12:53 dan Exp $
+	# $Id: getvalues.php,v 1.1.2.13 2002-05-09 20:57:35 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -38,6 +38,7 @@ GLOBAL $UserID;
 GLOBAL $visitor;
 GLOBAL $db;
 GLOBAL $WatchListID;
+GLOBAL $NumberOfDays;
 
 $MaxNumberOfPorts		= 100;
 $ShowShortDescription	= "Y";
@@ -58,6 +59,7 @@ $CVSTimeAdjustment		= -10800;	# this is number of seconds the web server is rela
 
 $LocalTimeAdjustment	= 0;		# This can be used to display the time the webpage was loaded.
 $WatchListID			= 0;
+$NumberOfDays			= 9;
 
 #
 # flags for showing various port parts.
@@ -156,6 +158,9 @@ if (!empty($visitor)) {
 */
 
 				$EmailBounceCount	= $myrow["emailbouncecount"];
+
+				$NumberOfDays		= $myrow["number_of_days"];
+
  
 //				echo "visitor = $visitor<br>";
 

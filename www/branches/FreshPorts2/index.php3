@@ -1,5 +1,5 @@
 <?
-   # $Id: index.php3,v 1.34.2.14 2001-12-28 22:50:39 dan Exp $
+   # $Id: index.php3,v 1.34.2.15 2001-12-29 19:00:42 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -134,7 +134,7 @@ select DISTINCT commit_log.commit_date as commit_date_raw,
 	   element.name    as port,
 	   commit_log_ports.port_version   as version,
 	   element.status    as status,
-	   ports.needs_refresh  as needs_refresh,
+	   commit_log_ports.needs_refresh  as needs_refresh,
 	   ports.forbidden      as forbidden,
 	   ports.broken         as broken,
 	   date_part('epoch', ports.date_created) as date_created

@@ -1,5 +1,5 @@
 <?
-	# $Id: faq.php,v 1.1.2.31 2003-01-10 15:56:29 dan Exp $
+	# $Id: faq.php,v 1.1.2.32 2003-03-05 21:37:26 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -239,11 +239,11 @@ down you must read to find something you didn't already know.</P>
 		message and allow you to see all other ports which were affected by this commit.   This link will not appear
         for commit messages before 3 March 2002 (which is the date FreshPorts started to store the message-id).</P>
 
-	<P><? echo freshports_Watch_Icon(); ?> Item is on your watch list: This port is on your watch list.  Click
-		this icon to remove the port from your watch list.  This icon appears only if you are logged in.</P>
+	<P><? echo freshports_Watch_Icon(); ?> Item is on one of your default watch lists: This port is on one of your watch lists.  Click
+		this icon to remove the port from your default watch lists.  This icon appears only if you are logged in.</P>
 
-	<P><? echo freshports_Watch_Icon_Add(); ?> Add item to your watch list: This port is not on your watch list.  Click
-		this icon to add the port to your watch list.  This icon appears only if you are logged in.</P>
+	<P><? echo freshports_Watch_Icon_Add(); ?> Add item to your default watch lists: This port is not on your default watch lists.  Click
+		this icon to add the port to your default watch lists.  This icon appears only if you are logged in.</P>
 
 	<P><? echo freshports_Encoding_Errors(); ?> Encoding Errors (not all of the commit message was ASCII): Some of the
 		commit message may be altered because of character conversion problems.  We display only UTF-8 and remove

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.135 2003-02-26 16:17:27 dan Exp $
+	# $Id: freshports.php,v 1.4.2.136 2003-03-05 21:37:26 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -95,11 +95,11 @@ function freshports_Commit_Icon() {
 }
 
 function freshports_Watch_Icon() {
-	return '<IMG SRC="/images/watch.gif" ALT="Item is on your watch list" TITLE="Item is on your watch list" BORDER="0" WIDTH="23" HEIGHT="22">';
+	return '<IMG SRC="/images/watch.gif" ALT="Item is on one of your default watch lists" TITLE="Item is on one of your default watch lists" BORDER="0" WIDTH="23" HEIGHT="22">';
 }
 
 function freshports_Watch_Icon_Add() {
-	return '<IMG SRC="/images/watch-add.gif" ALT="Add item to your watch list" TITLE="Add item to your watch list" BORDER="0" WIDTH="13" HEIGHT="13">';
+	return '<IMG SRC="/images/watch-add.gif" ALT="Add item to your default watch lists" TITLE="Add item to your default watch lists" BORDER="0" WIDTH="13" HEIGHT="13">';
 }
 
 function freshports_Security_Icon() {

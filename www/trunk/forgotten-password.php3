@@ -98,9 +98,12 @@ if ($submit) {
                     "forward this message to webmaster@freshports.org and we will take\n". 
                     "care of it for you.\n" .
                     " \n" .
+                    "Your User ID is:\n" .
+                    $myrow["username"] . "\n" .
+                    "\n" .
                     "Your password is:\n" .
                     $myrow["password"] . "\n" .
-                    "\n" . 
+                    "\n" .
                     "the request came from $REMOTE_ADDR:$REMOTE_PORT";
 
          mail($myrow["email"], "FreshPorts - password", $message,

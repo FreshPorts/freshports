@@ -1,5 +1,5 @@
 <?
-	# $Id: files.php,v 1.1.2.9 2002-04-12 07:15:50 dan Exp $
+	# $Id: files.php,v 1.1.2.10 2002-04-12 14:27:56 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -9,11 +9,11 @@
 	require_once("./include/getvalues.php");
 
 
-function freshports_Files($PortID, $CommitID, $db) {
+function freshports_Files($PortID, $CommitID, $WatchListID, $db) {
 	GLOBAL $TableWidth;
 	GLOBAL $freshports_CVS_URL;
 
-	$Debug=0;
+	$Debug = 0;
 
 
 	if ($Debug) echo "\$CommitID = '$CommitID', \$PortID = '$PortID'<BR>";
@@ -30,14 +30,38 @@ function freshports_Files($PortID, $CommitID, $db) {
 
 	$sql = "
 	select element_pathname(element.id) as pathname, commit_log_port_elements.commit_log_id, 
-		   commit_log_port_elements.port_id, 
+		   commit_log_port_elements.port_id, ports.version as version, ports.revision as revision,
 		   to_char(commit_log.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')  as commit_date,
 		   to_char(commit_log.commit_date - SystemTimeAdjust(), 'HH24:MI:SS')   as commit_time,
 		   commit_log_elements.change_type, element.name as filename, categories.name as category, commit_log.committer, 
 		   ports.short_description, commit_log.message_id, commit_log.encoding_losses, 
-		   commit_log.description, B.name as port, commit_log_elements.revision_name as revision_name 
-		   from commit_log, ports, categories, element, commit_log_port_elements, commit_log_elements, 
-			    element B, commit_log_ports
+		   commit_log.description, B.name as port, commit_log_elements.revision_name as revision_name,
+		   element.status, commit_log_ports.needs_refresh, ports.date_added, ports.forbidden, ports.broken ";
+
+	if ($WatchListID) {
+		$sql .= ",
+	       CASE when watch_list_element.element_id is null
+    	      then 0
+        	  else 1
+	       END as watch ";
+	}
+
+
+	$sql .="
+		   from commit_log, categories, element, commit_log_port_elements, commit_log_elements, 
+			    element B, commit_log_ports, ports ";
+
+	#
+	# if the watch list id is provided (i.e. they are logged in and have a watch list id...)
+	#
+	if ($WatchListID) {
+		$sql .="
+	            left outer join watch_list_element
+				on (ports.element_id                 = watch_list_element.element_id 
+			   and  watch_list_element.watch_list_id = $WatchListID) ";
+	}
+
+	$sql .= "
 	 where commit_log.id                                  = $CommitID
 	   and commit_log_port_elements.commit_log_id         = commit_log.id 
 	   and commit_log_port_elements.commit_log_element_id = commit_log_elements.id 
@@ -87,11 +111,55 @@ function freshports_Files($PortID, $CommitID, $db) {
 		freshports_PageBannerText("Commit Details", 3);
 
 		echo '<TR><TD COLSPAN="3">';
-		echo '<BIG><B><A HREF="' . $myrow["category"] . '">' . $myrow["category"] . '</A>';
-		echo '/<A HREF="' . $myrow["category"] . '/' . $myrow["port"] . '/">' . $myrow["port"] . '</A>';
+		echo '<BIG><B><A HREF="/' . $myrow["category"] . '/">' . $myrow["category"] . '</A>';
+		echo '/<A HREF="/' . $myrow["category"] . '/' . $myrow["port"] . '/">' . $myrow["port"] . '</A>';
+
+		if (strlen($myrow["version"]) > 0) {
+			echo ' ' . $myrow["version"];
+			if (strlen($myrow["revision"]) > 0 && $myrow["revision"] != "0") {
+	    		echo'-' . $myrow["revision"];
+			}
+		}
+
 		echo '</B></BIG>';
 
-		echo ' - <CODE CLASS="code">' . $myrow["short_description"] . '</CODE>';
+		$HTML = '';
+		if ($WatchListID) {
+			if ($myrow["watch"]) {
+				$HTML .= ' '. freshports_Watch_Link_Remove($myrow["element_id"]);
+			} else {
+				$HTML .= ' '. freshports_Watch_Link_Add($myrow["element_id"]);
+			}
+		}
+
+		$HTML .= "\n&nbsp;";
+
+		// indicate if this port has been removed from cvs
+		if ($myrow["status"] == "D") {
+			$HTML .= " " . freshports_Refresh_Icon() . "\n";
+		}
+
+		// indicate if this port needs refreshing from CVS
+		if ($myrow["needs_refresh"]) {
+			$HTML .= " " . freshports_Refresh_Icon() . "\n";
+		}
+
+		if ($myrow["date_added"] > Time() - 3600 * 24 * $DaysMarkedAsNew) {
+			$MarkedAsNew = "Y";
+			$HTML .= freshports_New_Icon() . "\n";
+		}
+
+		if ($myrow["forbidden"]) {
+			$HTML .= freshports_Forbidden_Icon() . "\n";
+		}
+
+		if ($myrow["broken"]) {
+			$HTML .= freshports_Broken_Icon() . "\n";
+		}
+
+		echo $HTML;
+
+		echo ' <CODE CLASS="code">' . $myrow["short_description"] . '</CODE>';
 
 		echo '</TD></TR>';
 

@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_process.inc,v 1.5.2.4 2002-02-27 04:11:41 dan Exp $
+	# $Id: pkg_process.inc,v 1.5.2.5 2002-02-27 20:13:24 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 	#
@@ -49,6 +49,7 @@ function ProcessPackages($WatchListID, $filename, $userID, $clean, $dbh) {
 	$gFid = fopen($filename,'r');
 	if (!$gFid) { return false; }
 
+	$starttime = time();
 	$portcount = 0;
 	while (!feof($gFid)) {
 		$buffer = fgets($gFid,4096);
@@ -57,32 +58,35 @@ function ProcessPackages($WatchListID, $filename, $userID, $clean, $dbh) {
 		}
 
 		$portcount++;
-		$starttime = time();
 		// Get the package name
-		$pkg = array_shift(preg_split("/[\s]+/",$buffer,2));
-	
-		$rv = array();
-		SplitPackage($pkg,$rv);
-		if (count($rv) == 0) {
-			return false;
-		}
-		$base = $rv[1];
 
 
-		if (IsSet($PortArray[$base])) {
-			$PortArray[$base] = $PortArray[$base] + 1;
+		$buffer = trim($buffer);
+		if (IsSet($PortArray[$buffer])) {
+			$PortArray[$buffer] = $PortArray[$buffer] + 1;
 		} else {
-			$PortArray[$base] = 1;
+			$PortArray[$buffer] = 1;
 		}
 
 	}
 
 	pg_exec ($dbh, "begin");
 
-	while (list ($port_name, $count) = each ($PortArray)) {
+	while (list ($key, $count) = each ($PortArray)) {
 
-		$sql = "select WatchListStagingAddItem($WatchListID, '$port_name', $count)";
-#		echo "\$sql = '$sql'\n<BR>";
+		echo "$key<BR>\n";
+		# trimming, just in case...
+		$CategoryPort = explode("/", trim($key));
+		if (count($CategoryPort) != 2) {
+			echo "OUCH, more than two values found (" . count($CategoryPort) . ")...";
+			print $CategoryPort . "<BR>\n";
+		}
+
+		$Category = $CategoryPort[0];
+		$Port     = $CategoryPort[1];
+
+		$sql = "select WatchListStagingAddItem($WatchListID, '$Category', '$Port', $count)";
+		echo "\$sql = '$sql'\n<BR>";
 		$result = pg_exec($dbh, $sql);
 		if ($result && pg_numrows($result)) {
 			# do nothing
@@ -107,16 +111,16 @@ function ProcessPackages($WatchListID, $filename, $userID, $clean, $dbh) {
 		exit;
 	}
 
-	# now add in the stuff from the watch list which isn't in the pkg_info
-	$sql = "select WatchListStagingMergeWatchList($WatchListID)";
-	$result = pg_exec($dbh, $sql);
-	if ($result && pg_numrows($result)) {
-		# all is well, do nothing
-	} else {
-		pg_errormessage() . ' sql = $sql';
-		exit;
-	}
-
+#	# now add in the stuff from the watch list which isn't in the pkg_info
+#	$sql = "select WatchListStagingMergeWatchList($WatchListID)";
+#	$result = pg_exec($dbh, $sql);
+#	if ($result && pg_numrows($result)) {
+#		# all is well, do nothing
+#	} else {
+#		pg_errormessage() . ' sql = $sql';
+#		exit;
+#	}
+#
 	pg_exec ($dbh, "commit");
 
 	return false;  #***********************************
@@ -133,277 +137,196 @@ function ProcessPackages($WatchListID, $filename, $userID, $clean, $dbh) {
 function UploadDisplayStagingResultsMatches($WatchListID, $dbh) {
 
 	$begintime = time();
-	$sql = " SELECT	port_name                             as port, 
-					watch_list_staging_results.element_id as element_id, 
-					from_pkg_info,
-					count_on_pkg_info,
-					from_watch_list,
-					categories.name                       AS category
-			   FROM	watch_list_staging, watch_list_staging_results, ports, categories
-			  WHERE $WatchListID          = watch_list_staging.watch_list_id
-			    AND watch_list_staging.id = watch_list_staging_results.watch_list_staging_id
-			    AND count_on_pkg_info     = 1
-				AND ports.element_id      = watch_list_staging_results.element_id
-				AND ports.category_id     = categories.id
-			    AND (
-					SELECT count(element_id) 
-					  FROM watch_list_staging_results
-					 WHERE $WatchListID          = watch_list_staging.watch_list_id
-					   AND watch_list_staging.id = watch_list_staging_results.watch_list_staging_id
-					 GROUP BY port_name
-					) = 1
-			  ORDER BY port";
+	$sql = " SELECT	category, port, item_count, from_pkg_info, from_watch_list, watch_list_staging.element_id, 
+					watch_list_element.element_id AS onwatchlist
+			   FROM	watch_list_staging LEFT OUTER JOIN watch_list_element
+						ON  watch_list_staging.element_id    = watch_list_element.element_id
+						AND watch_list_staging.watch_list_id = watch_list_element.watch_list_id
+			  WHERE $WatchListID = watch_list_staging.watch_list_id
+			    AND item_count   = 1
+				AND watch_list_staging.element_id IS NOT NULL
+			  ORDER BY port, category";
 
 #	echo $sql;
 
 	$result = pg_exec($dbh, $sql);
 
-	?>
-
-	<TABLE ALIGN="center" BORDER="1" CELLSPACING="2" CELLSPADDING="3">
-	<TR><TD NOWRAP><B>Port name</B></TD><TD><B>Category</B></TD><TD COLSPAN="2"><B>Source</B></TD></TR>
-
-	<?
 	if ($result) {
 		$numrows = pg_numrows($result);
-		for ($i = 0; $i < $numrows; $i++) {
-			$row = pg_fetch_array($result, $i);
-			echo '<TR><TD NOWRAP>' . $row["port"] . '</TD>';
+		if ($numrows) {
+			?>
 
-			echo '<TD NOWRAP>';
-			echo $row["category"];
-			echo '</TD>';
+			<TABLE ALIGN="center" BORDER="1" CELLSPACING="2" CELLSPADDING="3">
+			<TR><TD NOWRAP><B>Port name</B></TD><TD><B>Category</B></TD><TD COLSPAN="2"><B>Source</B></TD></TR>
 
-			echo '<TD ALIGN="center">';
-			if ($row["from_pkg_info"]   == 't') {
-				echo 'P';
-			} else {
-				echo '&nbsp;';
+			<?
+			for ($i = 0; $i < $numrows; $i++) {
+				$row = pg_fetch_array($result, $i);
+				echo '<TR><TD NOWRAP>';
+				echo '<A HREF="/' . $row["category"] . '/' . $row["port"] . '">' . $row["category"] . '/' . $row["port"] . '</A></TD>';
+
+				echo '<TD ALIGN="center">';
+				if ($row["from_pkg_info"]   == 't') {
+					echo 'P';
+				} else {
+					echo '&nbsp;';
+				}
+				echo '</TD>';
+
+
+				echo '<TD ALIGN="center">';
+				if ($row["onwatchlist"]) {
+					echo 'W';
+				} else {
+					echo '&nbsp;';
+				}
+				echo '</TD>';
+
+				echo '</TR>';
 			}
-			echo '</TD>';
-
-
-			echo '<TD ALIGN="center">';
-			if ($row["from_watch_list"] == 't') {
-				echo 'W';
-			} else {
-				echo '&nbsp;';
-			}
-			echo '</TD>';
-
-			echo '</TR>';
 			
+			echo '</TABLE>';
+
+			echo 'that took '. (time() - $begintime) . ' seconds to process ' . $numrows . ' rows';
+		} else {
+			echo "Nothing you uploaded was found within our database.";
 		}
 	} else {
 		echo "nothing found!";
 	}
 
-	echo '</TABLE>';
-
-	echo 'that took '. (time() - $begintime) . ' seconds to process ' . $numrows . ' rows';
-}
-
-function UploadDisplayStagingResultsMatchesMultiple($WatchListID, $dbh) {
-
-	$begintime = time();
-	$sql = " SELECT	port_name                             as port, 
-					watch_list_staging_results.element_id as element_id, 
-					from_pkg_info,
-					count_on_pkg_info,
-					from_watch_list,
-					categories.name                       AS category
-			   FROM	watch_list_staging, watch_list_staging_results, ports, categories
-			  WHERE $WatchListID          = watch_list_staging.watch_list_id
-			    AND watch_list_staging.id = watch_list_staging_results.watch_list_staging_id
-			    AND count_on_pkg_info     = 1
-				AND ports.element_id      = watch_list_staging_results.element_id
-				AND ports.category_id     = categories.id
-			    AND (
-					SELECT count(element_id) 
-					  FROM watch_list_staging_results
-					 WHERE $WatchListID          = watch_list_staging.watch_list_id
-					   AND watch_list_staging.id = watch_list_staging_results.watch_list_staging_id
-					 GROUP BY port_name
-					) > 1
-			  ORDER BY port";
-
-#	echo $sql;
-
-	$result = pg_exec($dbh, $sql);
-
-	?>
-
-	<TABLE ALIGN="center" BORDER="1" CELLSPACING="2" CELLSPADDING="3">
-	<TR><TD><B>Port name</B></TD><TD><B>Category</B></TD><TD COLSPAN="2"><B>Source</B></TD></TR>
-
-	<?
-	if ($result) {
-		$numrows = pg_numrows($result);
-		for ($i = 0; $i < $numrows; $i++) {
-			$row = pg_fetch_array($result, $i);
-			echo '<TR><TD NOWRAP>' . $row["port"] . '</TD>';
-
-			echo '<TD NOWRAP>';
-			echo $row["category"];
-			echo '</TD>';
-
-			echo '<TD ALIGN="center">';
-			if ($row["from_pkg_info"]   == 't') {
-				echo 'P';
-			} else {
-				echo '&nbsp;';
-			}
-			echo '</TD>';
-
-
-			echo '<TD ALIGN="center">';
-			if ($row["from_watch_list"] == 't') {
-				echo 'W';
-			} else {
-				echo '&nbsp;';
-			}
-			echo '</TD>';
-
-			echo '</TR>';
-			
-		}
-	} else {
-		echo "nothing found!";
-	}
-
-	echo '</TABLE>';
-
-	echo 'that took '. (time() - $begintime) . ' seconds to process ' . $numrows . ' rows';
 }
 
 function UploadDisplayStagingResultsMatchesNo($WatchListID, $dbh) {
 
 	$begintime = time();
-	$sql = " SELECT	port_name                             as port, 
-					watch_list_staging_results.element_id as element_id, 
-					from_pkg_info,
-					count_on_pkg_info,
-					from_watch_list
-			   FROM	watch_list_staging LEFT OUTER JOIN watch_list_staging_results
-										ON watch_list_staging.id = watch_list_staging_results.watch_list_staging_id
+	$begintime = time();
+	$sql = " SELECT	category, port, item_count, from_pkg_info, from_watch_list, watch_list_staging.element_id
+			   FROM	watch_list_staging
 			  WHERE $WatchListID = watch_list_staging.watch_list_id
-			    AND watch_list_staging_results.element_id IS NULL
-			  ORDER BY port";
+			    AND item_count   = 1
+				AND watch_list_staging.element_id IS NULL
+			  ORDER BY port, category";
 
 #	echo $sql;
 
 	$result = pg_exec($dbh, $sql);
 
-	?>
-
-	<TABLE ALIGN="center" BORDER="1" CELLSPACING="2" CELLSPADDING="3">
-	<TR><TD><B>Port name</B></TD><TD><B>Status</B></TD><TD COLSPAN="2"><B>Source</B></TD></TR>
-
-	<?
 	if ($result) {
 		$numrows = pg_numrows($result);
-		for ($i = 0; $i < $numrows; $i++) {
-			$row = pg_fetch_array($result, $i);
-			echo '<TR><TD>' . $row["port"] . '</TD>';
+		if ($numrows) {
+			?>
 
-			echo '<TD>';
-			if ($row["element_id"] == '') {
-				echo '<FONT COLOR="red">not found</FONT>';
-			} else {
-				echo '&nbsp;';
+			<TABLE ALIGN="center" BORDER="1" CELLSPACING="2" CELLSPADDING="3">
+			<TR><TD><B>Port name</B></TD><TD><B>Status</B></TD><TD COLSPAN="2"><B>Source</B></TD></TR>
+
+			<?
+			for ($i = 0; $i < $numrows; $i++) {
+				$row = pg_fetch_array($result, $i);
+				echo '<TR><TD>' . $row["port"] . '</TD>';
+
+				echo '<TD>';
+				if ($row["element_id"] == '') {
+					echo '<FONT COLOR="red">not found</FONT>';
+				} else {
+					echo '&nbsp;';
+				}
+				echo '</TD>';
+
+				echo '<TD ALIGN="center">';
+				if ($row["from_pkg_info"]   == 't') {
+					echo 'P';
+				} else {
+					echo '&nbsp;';
+				}
+				echo '</TD>';
+
+
+				echo '<TD ALIGN="center">';
+				if ($row["from_watch_list"] == 't') {
+					echo 'W';
+				} else {
+					echo '&nbsp;';
+				}
+				echo '</TD>';
+
+				echo '</TR>';
 			}
-			echo '</TD>';
+			echo '</TABLE>';
 
-			echo '<TD ALIGN="center">';
-			if ($row["from_pkg_info"]   == 't') {
-				echo 'P';
-			} else {
-				echo '&nbsp;';
-			}
-			echo '</TD>';
-
-
-			echo '<TD ALIGN="center">';
-			if ($row["from_watch_list"] == 't') {
-				echo 'W';
-			} else {
-				echo '&nbsp;';
-			}
-			echo '</TD>';
-
-			echo '</TR>';
-			
+			echo 'that took '. (time() - $begintime) . ' seconds to process ' . $numrows . ' rows';
+		} else {
+			echo "Everything in your uploaded list was located within our database.";
 		}
 	} else {
 		echo "nothing found!";
 	}
 
-	echo '</TABLE>';
-
-	echo 'that took '. (time() - $begintime) . ' seconds to process ' . $numrows . ' rows';
 }
 
 function UploadDisplayStagingResultsMatchesDuplicates($WatchListID, $dbh) {
 
 	$begintime = time();
-	$sql = " SELECT	port_name                             as port, 
-					watch_list_staging_results.element_id as element_id, 
-					from_pkg_info,
-					count_on_pkg_info,
-					from_watch_list
-			   FROM	watch_list_staging, watch_list_staging_results
-			  WHERE $WatchListID          = watch_list_staging.watch_list_id
-			    AND watch_list_staging.id = watch_list_staging_results.watch_list_staging_id
-			    AND count_on_pkg_info     > 1
-			  ORDER BY port";
+	$sql = " SELECT	category, port, item_count, from_pkg_info, from_watch_list, watch_list_staging.element_id
+			   FROM	watch_list_staging LEFT OUTER JOIN watch_list_element
+						ON  watch_list_staging.element_id    = watch_list_element.element_id
+						AND watch_list_staging.watch_list_id = watch_list_element.watch_list_id
+			  WHERE $WatchListID = watch_list_staging.watch_list_id
+			    AND item_count   > 1
+				AND watch_list_staging.element_id IS NOT NULL
+			  ORDER BY port, category";
 
 #	echo $sql;
 
 	$result = pg_exec($dbh, $sql);
 
-	?>
-
-	<TABLE ALIGN="center" BORDER="1" CELLSPACING="2" CELLSPADDING="3">
-	<TR><TD><B>Port name</B></TD><TD><B>Count</B></TD><TD COLSPAN="2"><B>Source</B></TD></TR>
-
-	<?
 	if ($result) {
 		$numrows = pg_numrows($result);
-		for ($i = 0; $i < $numrows; $i++) {
-			$row = pg_fetch_array($result, $i);
-			echo '<TR><TD>' . $row["port"] . '</TD>';
+		if ($numrows) {
+			?>
 
-			echo '<TD ALIGN="center">';
-			echo $row["count_on_pkg_info"];
-			echo '</TD>';
+			<TABLE ALIGN="center" BORDER="1" CELLSPACING="2" CELLSPADDING="3">
+			<TR><TD><B>Port name</B></TD><TD><B>Count</B></TD><TD COLSPAN="2"><B>Source</B></TD></TR>
 
-			echo '<TD ALIGN="center">';
-			if ($row["from_pkg_info"]   == 't') {
-				echo 'P';
-			} else {
-				echo '&nbsp;';
-			}
-			echo '</TD>';
+			<?
+			for ($i = 0; $i < $numrows; $i++) {
+				$row = pg_fetch_array($result, $i);
+				echo '<TR><TD>' . $row["port"] . '</TD>';
+
+				echo '<TD ALIGN="center">';
+				echo $row["count_on_pkg_info"];
+				echo '</TD>';
+
+				echo '<TD ALIGN="center">';
+				if ($row["from_pkg_info"]   == 't') {
+					echo 'P';
+				} else {
+					echo '&nbsp;';
+				}
+				echo '</TD>';
 
 
-			echo '<TD ALIGN="center">';
-			if ($row["from_watch_list"] == 't') {
-				echo 'W';
-			} else {
-				echo '&nbsp;';
-			}
-			echo '</TD>';
+				echo '<TD ALIGN="center">';
+				if ($row["from_watch_list"] == 't') {
+					echo 'W';
+				} else {
+					echo '&nbsp;';
+				}
+				echo '</TD>';
 
-			echo '</TR>';
+				echo '</TR>';
 			
+			}
+			echo '</TABLE>';
+
+			echo 'that took '. (time() - $begintime) . ' seconds to process ' . $numrows . ' rows';
+		} else {
+			echo "no Duplicates found";
 		}
 	} else {
 		echo "nothing found!";
 	}
 
-	echo '</TABLE>';
-
-	echo 'that took '. (time() - $begintime) . ' seconds to process ' . $numrows . ' rows';
 }
 
 ?>

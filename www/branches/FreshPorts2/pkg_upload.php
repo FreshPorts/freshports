@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_upload.php,v 1.5.2.5 2002-02-27 04:11:41 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.6 2002-02-27 20:13:24 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -119,7 +119,7 @@ function StagingAlreadyInUse($WatchListID, $dbh) {
 				</P>
 
 				<BLOCKQUOTE>
-					<CODE CLASS="code">pkg_info > mypkg_info.txt</CODE>
+					<CODE CLASS="code">pkg_info -qoa > mypkg_info.txt</CODE>
 				</BLOCKQUOTE>
 
 				</LI>
@@ -165,7 +165,6 @@ function StagingAlreadyInUse($WatchListID, $dbh) {
 		echo '<TABLE ALIGN="center" BORDER="10"><TR>';
 
 		echo '<TD VALIGN="top"><B>Ports found</B></TD>' . "\n";
-		echo '<TD VALIGN="top"><B>Ports with multiple matches</B></TD>' . "\n";
 		echo '<TD VALIGN="top"><B>These ports are installed on your system but could not be located within FreshPorts.  Perhaps they have
 									either been renamed or removed from the ports tree.</B></TD>' . "\n";
 		echo '<TD VALIGN="top"><B>The following ports have been installed multiple times, most definitely with different versions on
@@ -176,10 +175,6 @@ function StagingAlreadyInUse($WatchListID, $dbh) {
 	
 		echo '<TD VALIGN="top">' . "\n";
 		UploadDisplayStagingResultsMatches($WatchListID, $db);
-		echo '</TD>';
-
-		echo '<TD VALIGN="top">' . "\n";
-		UploadDisplayStagingResultsMatchesMultiple($WatchListID, $db);
 		echo '</TD>';
 
 		echo '<TD VALIGN="top">' . "\n";

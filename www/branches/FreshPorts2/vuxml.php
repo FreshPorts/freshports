@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: vuxml.php,v 1.1.2.12 2005-01-08 14:12:42 dan Exp $
+	# $Id: vuxml.php,v 1.1.2.13 2005-01-23 20:55:59 dan Exp $
 	#
 	# Copyright (c) 2004 DVL Software Limited
 	#
@@ -130,7 +130,7 @@ ORDER BY lower(VN.name), V.vid
 			echo '<tr><td><b>';
 			echo 'package';
 			echo '</b></td><td align="center"><b>';
-			echo 'vuln count';
+			echo 'vuln count<br>[blank means (1)]';
 			echo '</b></td><td align="center"><b>Port(s)</b></td></tr>' . "\n";
 			for ($i = 0; $i < $numrows; $i++) {
 				$myrow = pg_fetch_array ($result, $i);

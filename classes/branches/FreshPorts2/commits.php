@@ -1,5 +1,5 @@
 <?
-	# $Id: commits.php,v 1.1.2.6 2002-12-03 19:27:37 dan Exp $
+	# $Id: commits.php,v 1.1.2.7 2002-12-09 20:23:42 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -17,7 +17,7 @@ class Commits {
 		$this->dbh	= $dbh;
 	}
 
-	function Fetch($Date, $WatchListID) {
+	function Fetch($Date, $UserID) {
 		$sql = "
 		SELECT DISTINCT
 			commit_log.commit_date - SystemTimeAdjust()														AS commit_date_raw,
@@ -41,24 +41,23 @@ class Commits {
 			date_part('epoch', ports.date_added)																AS date_added,
 			ports.element_id																							AS element_id,
 			ports.short_description 																				AS short_description";
-
-		if ($WatchListID) {
-			$sql .= ",
-					CASE when watch_list_element.element_id is null
-						then 0
-						else 1
-					END as watch ";
+		if ($UserID) {
+				$sql .= ",
+	        onwatchlist ";
 		}
 
+		$sql .= "
+    FROM commit_log_ports, commit_log, categories, ports, element ";
 
-	   $sql .= "
-		FROM commit_log_ports, commit_log, categories, ports, element";
-
-		if ($WatchListID) {
-			$sql .= " left outer join watch_list_element
-					 ON watch_list_element.element_id    = element.id
-					AND watch_list_element.watch_list_id = $WatchListID ";
-
+		if ($UserID) {
+				$sql .= "
+	      LEFT OUTER JOIN
+	 (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
+	    FROM watch_list JOIN watch_list_element 
+	        ON watch_list.id      = watch_list_element.watch_list_id
+	       AND watch_list.user_id = $UserID
+	  GROUP BY watch_list_element.element_id) AS TEMP
+	       ON TEMP.wle_element_id = element.id";
 		}
 
 		$sql .= "

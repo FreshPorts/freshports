@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.47 2002-02-27 20:12:53 dan Exp $
+   # $Id: freshports.php,v 1.4.2.48 2002-03-11 20:51:44 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -653,7 +653,7 @@ if ($ShowDepends) {
           $CategoryPortArray = explode('/', $CategoryPort);
           $DependsPortID = freshports_PortIDFromPortCategory($CategoryPortArray[0], $CategoryPortArray[1], $db);
 
-          $HTML .= '<a href="/' . $CategoryPortArray[0] . '/' . $CategoryPortArray[1] . '">' . $CategoryPortArray[1]. '</a>';
+          $HTML .= '<A HREF="/' . $CategoryPortArray[0] . '/' . $CategoryPortArray[1] . '/">' . $CategoryPortArray[0] . '/' . $CategoryPortArray[1]. '</a>';
           if ($i < $Count - 1) {
              $HTML .= ", ";
           }
@@ -679,7 +679,7 @@ if ($ShowDepends) {
           $CategoryPortArray = explode('/', $CategoryPort);
           $DependsPortID = freshports_PortIDFromPortCategory($CategoryPortArray[0], $CategoryPortArray[1], $db);
 
-          $HTML .= '<a href="/' . $CategoryPortArray[0] . '/' . $CategoryPortArray[1] . '">' . $CategoryPortArray[1]. '</a>';
+          $HTML .= '<A HREF="/' . $CategoryPortArray[0] . '/' . $CategoryPortArray[1] . '/">' . $CategoryPortArray[0] . '/' . $CategoryPortArray[1]. '</a>';
           if ($i < $Count - 1) {
              $HTML .= ", ";
           }

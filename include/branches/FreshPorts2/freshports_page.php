@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports_page.php,v 1.1.2.3 2005-01-23 03:11:21 dan Exp $
+	# $Id: freshports_page.php,v 1.1.2.4 2005-01-23 04:50:47 dan Exp $
 	#
 	# Copyright (c) 2005 DVL Software Limited
 	#
@@ -37,6 +37,8 @@ class freshports_page extends HTML_Page2 {
 		$this->setMetaData('robots', 'noindex');
 
 		$this->addStyleSheet('/css/freshports.css');
+
+		$this->addFavicon('/favicon.ico');
 
 		$this->setBodyAttributes(array('BGCOLOR' => '#FFFFFF', 'TEXT' => '#000000'));
 	}

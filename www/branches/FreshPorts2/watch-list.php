@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-list.php,v 1.2.2.22 2003-04-28 16:23:22 dan Exp $
+	# $Id: watch-list.php,v 1.2.2.23 2003-11-27 16:06:33 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -89,24 +89,27 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 				$ButtonName = "Update";
 				$Action     = "add";
 				$Verb       = 'added';
-				$FromTo      = 'to';
+				$FromTo     = 'to';
 				$Object     = AddSlashes($_REQUEST["add"]);
 			} else {
 				die("I don't know whether you are removing or adding, so I'll just stop here shall I?");
 			}
 		}
 		$ShowCategories			= 1;
+
 		GLOBAL $ShowDepends;
-		$ShowDepends				= 1;
-		$DaysMarkedAsNew			= $DaysMarkedAsNew = $GlobalHideLastChange = $ShowChangesLink = $ShowDescriptionLink = $ShowDownloadPortLink = $ShowHomepageLink = $ShowLastChange = $ShowMaintainedBy = $ShowPortCreationDate = $ShowPackageLink = $ShowShortDescription = 1;
-		$HideDescription			= 1;
+		$ShowDepends			= 1;
+		$DaysMarkedAsNew		= $DaysMarkedAsNew = $GlobalHideLastChange = $ShowChangesLink = $ShowDescriptionLink = $ShowDownloadPortLink = $ShowHomepageLink = $ShowLastChange = $ShowMaintainedBy = $ShowPortCreationDate = $ShowPackageLink = $ShowShortDescription = 1;
+		$HideDescription		= 1;
 		$ShowEverything			= 1;
 		$ShowShortDescription	= "Y";
-		$ShowMaintainedBy			= "Y";
+		$ShowMaintainedBy		= "Y";
 		$GlobalHideLastChange	= "Y";
-		$ShowDescriptionLink		= "N";
+		$ShowDescriptionLink	= "N";
+
 		$port = new Port($db);
-		$port->FetchByID($Object);
+		$port->FetchByElementID($Object, $User->id);
+
 		echo freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 1, '', 1, "N", 0);
 ?>
 Please select the watch lists which should contain this port:

@@ -1,5 +1,5 @@
 <?
-	# $Id: new-user.php,v 1.1.2.25 2002-12-10 04:00:15 dan Exp $
+	# $Id: new-user.php,v 1.1.2.26 2002-12-10 05:13:27 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -187,17 +187,17 @@ mail from <CODE CLASS="code">unixathome.org</CODE> and <CODE CLASS="code">freshp
 <P>Your browser must allow cookies for the login to work.</P>
 <P>&nbsp;</P>
 
-<? include($_SERVER['DOCUMENT_ROOT'] . "/include/new-user.php"); ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/new-user.php"); ?>
 
     </TD>
   </TR>
 </TABLE>
 </TD>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
-   <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
+   <? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
  </TD>
 </TR>
 </TABLE>
-<? include("./include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
 </BODY>
 </HTML>

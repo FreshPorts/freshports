@@ -1,5 +1,5 @@
 <?
-	# $Id: committer-opt-in.php,v 1.1.2.5 2002-12-10 04:00:11 dan Exp $
+	# $Id: committer-opt-in.php,v 1.1.2.6 2002-12-10 05:13:22 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -157,14 +157,14 @@ if (!empty($visitor)) {
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
     <?
        $ShowPoweredBy = 1;
-       include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php");
+       require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php");
     ?>
  </TD>
 </TABLE>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
 </TD></TR>
 </TABLE>
 

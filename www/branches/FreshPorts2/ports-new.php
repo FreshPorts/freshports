@@ -1,5 +1,5 @@
 <?
-	# $Id: ports-new.php,v 1.1.2.15 2002-12-10 04:00:17 dan Exp $
+	# $Id: ports-new.php,v 1.1.2.16 2002-12-10 05:13:29 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -149,14 +149,14 @@ These are the recently added ports.
 
 </TD>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
-<? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
 </TD>
 </TR>
 </TABLE>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
 </TD></TR>
 </TABLE>
 

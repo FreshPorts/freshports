@@ -1,5 +1,5 @@
 <?
-	# $Id: commit.php,v 1.1.2.17 2002-12-09 20:38:12 dan Exp $
+	# $Id: commit.php,v 1.1.2.18 2002-12-10 05:13:22 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -313,7 +313,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 </script>
 </TD>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
-   <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
+   <? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
  </TD>
 </TR>
 </TABLE>
@@ -322,7 +322,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
 </TD></TR>
 </TABLE>
 

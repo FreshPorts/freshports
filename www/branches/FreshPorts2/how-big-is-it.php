@@ -1,5 +1,5 @@
 <?
-	# $Id: how-big-is-it.php,v 1.1.2.4 2002-12-10 04:00:13 dan Exp $
+	# $Id: how-big-is-it.php,v 1.1.2.5 2002-12-10 05:13:24 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -322,14 +322,14 @@ web pages on <a href="http://www.Google.com/">Google</a><small><sup><a href="#1"
 </TD>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
     <?
-       include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php");
+       require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php");
     ?>
  </TD>
 </TABLE>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
 </TD></TR>
 </TABLE>
 

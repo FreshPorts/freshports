@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-port.php,v 1.1.2.26 2002-12-09 20:36:18 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.27 2002-12-10 05:13:27 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
@@ -166,7 +166,7 @@ $ShowDescriptionLink	= "N";
 
 </TD>
 <TD VALIGN="top" WIDTH="*" ALIGN="center">
-   <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
+   <? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
 </TD>
 </TR>
 
@@ -174,7 +174,7 @@ $ShowDescriptionLink	= "N";
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
 </TD></TR>
 </TABLE>
 

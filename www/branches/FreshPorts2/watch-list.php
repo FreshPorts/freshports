@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-list.php,v 1.2.2.14 2002-12-10 04:42:36 dan Exp $
+	# $Id: watch-list.php,v 1.2.2.15 2002-12-10 05:13:31 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -150,7 +150,7 @@ NOTES
 </table>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
     <?
-       include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php");
+       require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php");
     ?>
  </TD>
 </TABLE>
@@ -159,7 +159,7 @@ NOTES
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
 </TD></TR>
 </TABLE>
 

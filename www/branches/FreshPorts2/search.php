@@ -1,5 +1,5 @@
 <?
-	# $Id: search.php,v 1.1.2.32 2002-12-10 04:00:18 dan Exp $
+	# $Id: search.php,v 1.1.2.33 2002-12-10 05:13:30 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -400,14 +400,14 @@ echo "</td></tr>\n";
 
 </td>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
-    <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
+    <? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
  </td>
 </tr>
 </table>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
 </TD></TR>
 </TABLE>
 

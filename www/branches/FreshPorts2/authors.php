@@ -1,5 +1,5 @@
 <?
-	# $Id: authors.php,v 1.1.2.11 2002-12-10 04:00:10 dan Exp $
+	# $Id: authors.php,v 1.1.2.12 2002-12-10 05:13:21 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -94,14 +94,14 @@ name just so it stays a secret.</LI>
 </TABLE>
 </td>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
-    <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
+    <? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
  </td>
 </tr>
 </table>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
 </TD></TR>
 </TABLE>
 

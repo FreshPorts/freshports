@@ -1,6 +1,6 @@
 <?
 	#
-	# $Id: index.php,v 1.1.2.60 2002-12-10 04:00:13 dan Exp $
+	# $Id: index.php,v 1.1.2.61 2002-12-10 05:13:25 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -273,7 +273,7 @@ ports. A port is marked as new for 10 days.
 ?>
 </TD>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
-   <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
+   <? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
 <?
 
 	if ($dailysummary) {
@@ -309,7 +309,7 @@ ports. A port is marked as new for 10 days.
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
 </TD></TR>
 </TABLE>
 

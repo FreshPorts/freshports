@@ -1,5 +1,5 @@
 <?
-	# $Id: graphs.php,v 1.5.2.15 2002-12-10 04:00:12 dan Exp $
+	# $Id: graphs.php,v 1.5.2.16 2002-12-10 05:13:24 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -93,7 +93,7 @@ If you have suggestions for graphs, please submit them via the forum.
 </TD>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
     <?
-       include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php");
+       require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php");
     ?>
  </TD>
 </TR>
@@ -101,7 +101,7 @@ If you have suggestions for graphs, please submit them via the forum.
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
 </TD></TR>
 </TABLE>
 

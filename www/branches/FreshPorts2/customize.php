@@ -1,5 +1,5 @@
 <?
-	# $Id: customize.php,v 1.1.2.20 2002-12-10 04:00:12 dan Exp $
+	# $Id: customize.php,v 1.1.2.21 2002-12-10 05:13:23 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -120,7 +120,7 @@ if ($submit) {
     <TD height="20"><script language="php">
 
 if (!$submit) {
-	include( $_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require_once( $_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
     $numberofdays = $NumberOfDays;
 }
 
@@ -174,10 +174,10 @@ echo '<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="#AD0040" WIDTH="100%">
 <TD>';
 
 echo 'If you wish to change your password, supply your new password twice.  Otherwise, leave it blank.<br>';
-include($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 
 $Customize=1;
-include($_SERVER['DOCUMENT_ROOT'] . "/include/new-user.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/include/new-user.php");
 
 echo "</TD>
 </TR>
@@ -191,14 +191,14 @@ echo "</TD>
 </TABLE>
 </TD>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
-   <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
+   <? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
  </TD>
 </TR>
 </TABLE>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
 </TD></TR>
 </TABLE>
 

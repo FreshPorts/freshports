@@ -1,5 +1,5 @@
 <?
-	# $Id: change_log.php,v 1.1.2.5 2002-12-10 04:00:10 dan Exp $
+	# $Id: change_log.php,v 1.1.2.6 2002-12-10 05:13:21 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -67,12 +67,12 @@ if (!$result) {
 </table>
 </td>
  <TD VALIGN="top" WIDTH="*" ALIGN="center">
-   <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
+   <? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
  </td>
 </tr>
 </table>
 </tr>
 </table>
-<? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
 </body>
 </html>

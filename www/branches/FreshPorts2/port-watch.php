@@ -1,5 +1,5 @@
 <?
-	# $Id: port-watch.php,v 1.1.2.19 2002-12-10 04:00:16 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.20 2002-12-10 05:13:28 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -281,14 +281,14 @@ if ($User->id) {
 
 </td>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
-    <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
+    <? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
  </td>
 </tr>
 </table>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
 </TD></TR>
 </TABLE>
 

@@ -1,5 +1,5 @@
 <?
-	# $Id: port-description.admin.php,v 1.1.2.10 2002-12-10 04:00:15 dan Exp $
+	# $Id: port-description.admin.php,v 1.1.2.11 2002-12-10 05:13:28 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -180,7 +180,7 @@ if ($NumRows) {
    $HideDescription=1;
    $ShowCategories=1;
    $ShowDepends=1;
-   include("./include/port-basics.php");
+   require_once($_SERVER['DOCUMENT_ROOT'] . "/include/port-basics.php");
 
    echo $HTML;
 
@@ -256,11 +256,11 @@ if ($NumRows) {
 </td>
 <td valign="top">
 
-<? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
 
 </td>
 </tr>
 </table>
- <? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+ <? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
 </body>
 </html>

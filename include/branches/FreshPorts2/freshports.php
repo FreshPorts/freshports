@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.117 2002-12-10 05:06:01 dan Exp $
+	# $Id: freshports.php,v 1.4.2.118 2002-12-10 05:13:33 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -1170,7 +1170,7 @@ echo '<TABLE WIDTH="' . $TableWidth . '" BORDER="0" ALIGN="center">
 <TR><TD>
 ';
 
-include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php");
 
 echo '
 </TD></TR>
@@ -1186,7 +1186,7 @@ echo '
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
 ';
 
-include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php");
 
 echo '
 </TD>

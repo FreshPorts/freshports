@@ -1,5 +1,5 @@
 <?
-	# $Id: watch.php,v 1.1.2.10 2002-02-24 00:26:06 dan Exp $
+	# $Id: watch.php,v 1.1.2.11 2002-03-19 12:45:26 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -144,10 +144,15 @@ for ($i = 0; $i < $numrows; $i++) {
 		$Category = $port->category;
 
 		if ($LastCategory != $Category) {
+			if ($i > 0) {
+				$HTML .= "\n</DD>\n";
+			}
+
 			$LastCategory = $Category;
 			if ($ShowCategoryHeaders) {
 				$HTML .= '<DT>';
 			}
+
 			$HTML .= '<BIG><BIG><B><a href="/' . $Category . '/">' . $Category . '</a><B></BIG></BIG>';
 			if ($ShowCategoryHeaders) {
 				$HTML .= "</DT>\n<DD>";
@@ -156,15 +161,10 @@ for ($i = 0; $i < $numrows; $i++) {
 	}
 
 	$HTML .= freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 1);
-
-	if ($ShowCategoryHeaders) {
-		$HTML .= "\n</DD>\n";
-	}
-
 }
 
 if ($ShowCategoryHeaders) {
-	$HTML .= "\n</DL>\n";
+	$HTML .= "\n</DD>\n</DL>\n";
 }
 
 }

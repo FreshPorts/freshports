@@ -1,5 +1,6 @@
-<?
-	# $Id: report-subscriptions.php,v 1.1.2.21 2003-05-16 02:33:46 dan Exp $
+<?php
+	#
+	# $Id: report-subscriptions.php,v 1.1.2.22 2003-10-16 16:27:39 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -205,6 +206,27 @@ This page allows you to select the reports you wish to receive and the frequency
 	</TABLE>
 
 <?php require_once($_SERVER['DOCUMENT_ROOT'] . '/include/spam-filter-information.php'); ?>
+
+<hr>
+<p>
+<big><big>Beta mailing list</big></big>
+<p>
+You may wish to help me test new FreshPorts features or even just get a sneak
+peek at them.  If so, I urge you to join the new Beta mailing list.  This
+will be a low volume list which broadcasts details of new features which
+you can try out before they hit the main website.  To subscribe, send
+an email to majordomo at lists.unxiathome.org, with this in the body of the
+message:
+
+<blockquote><pre class="code">
+subscribe beta
+</pre></blockquote>
+
+<p>
+Please remember to follow the instructions in the confirmation email which
+you will receive in reply.
+
+<hr>
 
 <BR><BR>
 	&nbsp;&nbsp;<INPUT TYPE="submit" VALUE="update" NAME="submit">

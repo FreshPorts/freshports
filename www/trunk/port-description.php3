@@ -40,19 +40,20 @@ $myrow = mysql_fetch_array($result);
 </head>
 
 <body bgcolor="#ffffff" link="#0000cc">
-
-<table width="100%">
-<tr><td>This page contains the description of a single port.
-</td></tr>
-  <tr>
-    <td bgcolor="#AD0040" height="29"><big><big><font color="#FFFFFF">freshports - 
+ <? include("/www/freshports.org/_private/header.inc") ?>
+<table width="100%" border="0">
+<tr>
+  <td colspan="2">This page contains the description of a single port.</td>
+</tr>
+<tr>
+    <td colspan="2" bgcolor="#AD0040" height="29"><font color="#FFFFFF" size="+2">freshports - 
 <?
    echo $myrow["category"] . "/";
    echo $myrow["port"];
 ?> 
- </font></big></big></td>
-  </tr>
-<tr><td>
+ </font></td>
+</tr>
+<tr><td valign="top" width="100%">
 <?
 $HideDescription=1;
 include("/www/freshports.org/_private/port-basics.inc");
@@ -64,7 +65,14 @@ echo $myrow["long_description"];
 echo "</pre></dd></dl>";
 ?>
 
-</td></tr></table>
+</td>
+<td>
 
+<? include("/www/freshports.org/_private/side-bars.php3") ?>
+
+</td>
+</tr>
+</table>
+ <? include("/www/freshports.org/_private/footer.inc") ?>
 </body>
 </html>

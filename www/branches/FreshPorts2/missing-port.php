@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-port.php,v 1.1.2.7 2002-02-11 02:42:18 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.8 2002-02-11 13:17:19 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
@@ -72,6 +72,7 @@ $Debug=0;
 			}
 		} else {
 #			echo "no category '$CategoryName' found";
+			$result = "There is no document by that name ('$REQUEST_URI')";
 		}
 	}
 

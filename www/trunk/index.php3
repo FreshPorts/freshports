@@ -1,5 +1,5 @@
 <?
-   # $Id: index.php3,v 1.32 2001-10-20 21:50:39 dan Exp $
+   # $Id: index.php3,v 1.33 2001-10-28 13:51:18 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -73,7 +73,7 @@ if ($Debug) {
 
 ?>
 
-<TABLE WIDTH="<? echo $TableWidth ?> " CELLPADDING="3" CELLSPACING="0" BORDER="0">
+<TABLE WIDTH="<? echo $TableWidth ?>" CELLPADDING="3" CELLSPACING="0" BORDER="0" ALIGN="center">
 <TR><TD>
 
 <H1>Welcome to the new database server!</H1>
@@ -104,7 +104,7 @@ notice.  And a short description of the change.<P>
 </TD></TR>
 </TABLE>
 
-<table width="100%" border="0">
+<table width="100%" border="0" ALIGN="center">
 <tr><td colspan="2">Welcome to FreshPorts, where you can find the latest information on your favourite
 ports. A port is marked as new for 10 days.
 </td></tr>

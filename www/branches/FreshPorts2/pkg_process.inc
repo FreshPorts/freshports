@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: pkg_process.inc,v 1.5.2.18 2003-05-16 02:32:23 dan Exp $
+	# $Id: pkg_process.inc,v 1.5.2.19 2003-09-03 23:22:54 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -101,6 +101,9 @@ function ProcessPackages($UserID, $filename, $dbh) {
 		// Get the package name
 
 		$buffer = trim($buffer);
+		if ($buffer == '') {
+			continue;
+		}
 		if (IsSet($PortArray[$buffer])) {
 			$PortArray[$buffer] = $PortArray[$buffer] + 1;
 		} else {

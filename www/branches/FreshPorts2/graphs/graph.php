@@ -1,6 +1,7 @@
-<?
+<?php
 	#
-	# $Id: graph.php,v 1.1.2.12 2002-12-11 04:38:02 dan Exp $
+	#
+	# $Id: graph.php,v 1.1.2.13 2003-03-29 13:39:33 dan Exp $
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');

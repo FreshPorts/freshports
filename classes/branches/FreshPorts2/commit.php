@@ -1,7 +1,8 @@
-<?
-	# $Id: commit.php,v 1.1.2.4 2003-01-10 19:10:04 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: commit.php,v 1.1.2.5 2003-04-28 16:20:32 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
 

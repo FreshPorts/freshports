@@ -1,5 +1,5 @@
 --
--- $Id: POSTGRESQL.sql,v 1.1.2.20 2002-11-24 05:18:01 dan Exp $
+-- $Id: POSTGRESQL.sql,v 1.1.2.21 2002-12-01 19:43:22 dan Exp $
 --
 -- Copyright (c) 1998-2002 DVL Software Limited
 --
@@ -171,9 +171,9 @@ grant select, insert                 on report_log                     to group 
 grant update                         on report_log_id_seq              to group commits;
 grant select                         on report_log_latest              to group commits;
 
-#
-# the READING group only needs to read some things.
-#
+--
+-- the READING group only needs to read some things.
+--
 
 create group reading;
 create user  reading with password 'Bifrost1718';

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch_list.php,v 1.1.2.17 2004-10-25 00:20:21 dan Exp $
+	# $Id: watch_list.php,v 1.1.2.18 2004-11-17 13:23:28 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -197,6 +197,8 @@ UPDATE watch_list
 
 	
 	function Fetch($UserID, $ID) {
+		$Debug = 0;
+
 		$sql = "
 		SELECT id,
 		       user_id,

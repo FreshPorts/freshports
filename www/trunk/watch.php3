@@ -1,6 +1,6 @@
 <?
 
-require( "/www/freshports.org/_private/commonlogin.php3");
+require( "./_private/commonlogin.php3");
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {
@@ -21,7 +21,7 @@ if (!$visitor) {
 </head>
 
 <body bgcolor="#ffffff" link="#0000cc">
- <? include("/www/freshports.org/_private/header.inc") ?>
+ <? include("./_private/header.inc") ?>
 <table width="100%" border="0">
 
 <tr><td colspan="2">
@@ -37,8 +37,8 @@ This page lists the ports which are on your watch list. To modify the contents o
 
 $DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
 
-require( "/www/freshports.org/_private/getvalues.php3");
-require( "/www/freshports.org/_private/freshports.php3");
+require( "./_private/getvalues.php3");
+require( "./_private/freshports.php3");
 
 if ($UserID == '') {
    echo '<tr><td>';
@@ -48,9 +48,6 @@ if ($UserID == '') {
 
 
 $WatchID = freshports_MainWatchID($UserID, $db);
-
-$cache_file     =       "/tmp/freshports.org.cache." . basename($PHP_SELF);
-$LastUpdateFile =       "/www/freshports.org/work/msgs/lastupdate";
 
 // make sure the value for $sort is valid
 
@@ -164,7 +161,8 @@ while ($myrow = mysql_fetch_array($result)) {
       }
    }
 
-   include("/www/freshports.org/_private/port-basics.inc");
+   include("./_private/port-basics.inc");
+}
 
 }
   $HTML .= "</td></tr>\n";
@@ -200,10 +198,10 @@ echo $HTML;
 </table>
 </td>
   <td valign="top" width="*">
-<? include("/www/freshports.org/_private/side-bars.php3") ?>
+<? include("./_private/side-bars.php3") ?>
 </td>
 </tr>
 </table>
-<? include("/www/freshports.org/_private/footer.inc") ?>
+<? include("./_private/footer.inc") ?>
 </body>
 </html>

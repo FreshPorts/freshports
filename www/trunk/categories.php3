@@ -9,9 +9,9 @@
 </head>
 
 <body bgcolor="#ffffff" link="#0000cc">
- <? include("/www/freshports.org/_private/header.inc") ?>
+ <? include("./_private/header.inc") ?>
 <table width="100%" border="0">
-</tr><tr><td colspan="2">This page lists the categories sorted by various categories.  See also <a href="ports.php3">freshports by ports</a>.
+</tr><tr><td colspan="2">This page lists the categories sorted by various categories.
 </td></tr>
 <tr><td colspan="2">
 You can sort each column by clicking on the header.  e.g. click on <b>Category</b> to sort by category.
@@ -25,12 +25,9 @@ You can sort each column by clicking on the header.  e.g. click on <b>Category</
 
 $DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
 
-require( "/www/freshports.org/_private/commonlogin.php3");
-require( "/www/freshports.org/_private/getvalues.php3");
-require( "/www/freshports.org/_private/freshports.php3");
-
-$cache_file     =       "/tmp/freshports.org.cache.categories";
-$LastUpdateFile =       "/www/freshports.org/work/msgs/lastupdate";
+require( "./_private/commonlogin.php3");
+require( "./_private/getvalues.php3");
+require( "./_private/freshports.php3");
 
 // make sure the value for $sort is valid
 
@@ -179,12 +176,12 @@ echo $HTML;
 </script>
 </td>
   <td valign="top" width="*">
-    <? include("/www/freshports.org/_private/side-bars.php3") ?>
+    <? include("./_private/side-bars.php3") ?>
  </td>
 </tr>
 </table>
 
-<? include("/www/freshports.org/_private/footer.inc") ?>
+<? include("./_private/footer.inc") ?>
 
 </body>
 </html>

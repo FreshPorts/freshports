@@ -1,8 +1,7 @@
 <?
-   
-require( "/www/freshports.org/_private/commonlogin.php3");
-require( "/www/freshports.org/_private/getvalues.php3");
-
+require( "./_private/commonlogin.php3");
+require( "./_private/getvalues.php3");
+require( "./_private/freshports.php3");
 ?>
 
 <head>
@@ -16,7 +15,7 @@ require( "/www/freshports.org/_private/getvalues.php3");
 
 <html>
 <body>
-<? include("/www/freshports.org/_private/header.inc") ?>
+<? include("./_private/header.inc") ?>
 <table width="100%">
 <tr><td valign="top" td colspan="2">
 OK, we have just a very simple search.  Eventually this will be extended. If you find any bugs, please
@@ -107,7 +106,7 @@ if ($NumRows == 0) {
 //      echo "displaying row $i<br>\n";
       $myrow = $rows[$i];
 
-      include("/www/freshports.org/_private/port-basics.inc");
+      include("./_private/port-basics.inc");
    }
 
 }
@@ -119,10 +118,10 @@ echo "</td></tr>\n";
 
 </td>
   <td valign="top" width="*">
-    <? include("/www/freshports.org/_private/side-bars.php3") ?>
+    <? include("./_private/side-bars.php3") ?>
  </td>
 </tr>
 </table>
-<? include("/www/freshports.org/_private/footer.inc") ?>
+<? include("./_private/footer.inc") ?>
 </body>
 </html>

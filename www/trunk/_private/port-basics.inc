@@ -195,14 +195,14 @@ if ($ShowDepends) {
    // download
    if ($myrow["status"] == "A" && ($ShowDownloadPortLink == "Y" || $ShowEverything)) {
       $HTML .= ' <b>:</b> ';
-      $HTML .= '<a HREF="ftp://ftp.FreeBSD.org/pub/FreeBSD/branches/-current/ports/' .
-               $myrow["category"] . '/' .  $myrow["port"] . '.tar">Download Port</a>';
+      $HTML .= '<a HREF="ftp://ftp5.FreeBSD.org/pub/FreeBSD/branches/-current/ports/' .
+               $myrow["category"] . '/' .  $myrow["port"] . '">Download Port</a>';
    }
 
    if ($myrow["package_exists"] == "Y" && ($ShowPackageLink == "Y" || $ShowEverything)) {
       // package
       $HTML .= ' <b>:</b> ';
-      $HTML .= '<a HREF="ftp://ftp.FreeBSD.org/pub/FreeBSD/FreeBSD-stable/packages/' .
+      $HTML .= '<a HREF="ftp://ftp5.FreeBSD.org/pub/FreeBSD/FreeBSD-stable/packages/' .
                $myrow["category"] . '/' .  $myrow["port"] . "-" . $myrow["version"] . '.tgz">Package</a>';
    }
 

@@ -610,6 +610,32 @@ order by C.commit_date;
 <p>
 Now we can parse that, fetching the Makefile we need.
 
+<p>
+Points to consider:
+
+<ul>
+<li>Master ports:
+<blockquote><pre class="code">
+freshports.org=# select count(*) from ports where portepoch != '0';
+ count
+-------
+   246
+(1 row)
+
+freshports.org=# select count(*) from ports where portepoch != '0' and master_port != '';
+ count
+-------
+    27
+(1 row)
+
+freshports.org=#
+</pre></blockquote>
+
+PORTEPOCH may be set in the master port.
+
+<li>I dunno, there might be something else I've not thought of yet.
+</ul>
+
 <hr>
 <p align="right">
 <small>Last amended: 22 September 2004</small>

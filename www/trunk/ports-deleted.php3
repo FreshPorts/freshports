@@ -17,7 +17,7 @@ require( "./_private/freshports.php3");
  <? include("./_private/header.inc") ?>
 <table width="100%" border="0">
 <tr><td colspan="2">
-This page shows the ports which have been recently removed the ports tree.
+This page shows the last <? echo $MaxNumberOfPorts ?> ports to be removed the ports tree.
 </td></tr>
 <tr><td valign="top" width="100%">
 <table width="100%" border="0">
@@ -73,7 +73,7 @@ if (!file_exists($cache_file)) {
    }
 }
 
-$UpdateCache = 1;
+//$UpdateCache = 1;
 
 if ($UpdateCache == 1) {
 //   echo 'time to update the cache';
@@ -93,7 +93,7 @@ $sql = "select ports.id, ports.name as port, change_log.commit_date as updated,"
        "  and change_log_port.change_log_id = change_log.id ";
 
 $sql .= " order by $sort ";
-//$sql .= " limit $MaxNumberOfPorts ";
+$sql .= " limit $MaxNumberOfPorts ";
 
 if ($Debug) {
    echo $sql;
@@ -108,7 +108,8 @@ echo "<br>\n" . mysql_error() . "<br>\n";
 
 // get the list of topics, which we need to modify the order
 //$HideDownloadPort=1;
-$ShowLastChange = "N";
+$ShowLastChange  = "N";
+$ShowDeletedDate = "Y";
 while ($myrow = mysql_fetch_array($result)) {
    include("./_private/port-basics.inc");
 }

@@ -16,7 +16,11 @@
 
    // indicate if this port needs refreshing from CVS
    if ($myrow["status"] == "D") {
-      $HTML .= ' <font size="-1">[deleted - port removed from ports tree]</font>';
+      $HTML .= ' <font size="-1">[deleted - port removed from ports tree]';
+      if ($ShowDeletedDate == "Y") {
+         $HTML .= ' on ' . $myrow["updated"];
+      }
+      $HTML .= '</font>';
    }
    if ($myrow["needs_refresh"]) {
       $HTML .= ' <font size="-1">[refresh]</font>';

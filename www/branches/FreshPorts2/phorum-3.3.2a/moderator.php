@@ -241,13 +241,13 @@ if($PHORUM['AllowAttachments'] && $PHORUM['ForumAllowUploads'] == 'Y') {
 ?>
 <tr>
 
-    <td <?php echo bgcolor($ForumTableBodyColor1); ?> colspan=2 width="100%" nowrap align="left"><table cellpadding="5" cellspacing="0" border="0"><tr><td align="CENTER" valign="TOP"><font face="courier"><textarea class="PhorumBodyArea" name="body" cols="45" rows="20" wrap="VIRTUAL"><?php echo htmlspecialchars($mtext["body"]); ?></textarea></font></td></tr></table></td>
+    <td <?php echo bgcolor($ForumTableBodyColor1); ?> colspan=2 width="100%" nowrap align="left"><table cellpadding="5" cellspacing="0" border="0"><tr><td align="CENTER" valign="TOP"><font face="courier"><textarea class="PhorumBodyArea" name="body" cols="45" rows="20"><?php echo htmlspecialchars($mtext["body"]); ?></textarea></font></td></tr></table></td>
 </tr>
 </td>
 </tr>
 <tr>
 <td <?php echo bgcolor($ForumTableBodyColor1); ?> colspan="2" align="RIGHT">
-    <input type="Submit" name="post" value=" <?php echo $lFormUpdate;?> ">&nbsp;<br><img src="images/trans.gif" width=3 height=3 border=0></td>
+    <input type="Submit" name="post" value=" <?php echo $lFormUpdate;?> ">&nbsp;<br><img src="images/trans.gif" width=3 height=3 border=0 alt=""></td>
     </tr>
     </table>
   </td>

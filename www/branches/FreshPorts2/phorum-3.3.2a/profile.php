@@ -234,7 +234,7 @@ if(empty($phorum_auth) || ($UserName!=$phorum_user["username"])){
   if(!empty($EditError))
     echo "<p><b>$EditError</b>";
 ?>
-<SCRIPT LANGUAGE="JavaScript">
+<SCRIPT LANGUAGE="JavaScript" type="text/javascript">
     function textlimit(field, limit) {
         if (field.value.length > limit)
             field.value = field.value.substring(0, limit);
@@ -311,7 +311,7 @@ if(empty($phorum_auth) || ($UserName!=$phorum_user["username"])){
         </tr>
         <tr>
             <td <?php echo bgcolor($table_body_color_1); ?> nowrap>&nbsp;</td>
-            <td <?php echo bgcolor($table_body_color_1); ?>><input type="submit" value="<?php echo $lUpdateProfile; ?>">&nbsp;<br><img src="images/trans.gif" width=3 height=3 border=0></td>
+            <td <?php echo bgcolor($table_body_color_1); ?>><input type="submit" value="<?php echo $lUpdateProfile; ?>">&nbsp;<br><img src="images/trans.gif" width=3 height=3 border=0 alt="trans"></td>
         </tr>
         </table>
     </td>
@@ -399,7 +399,7 @@ if(empty($phorum_auth) || ($UserName!=$phorum_user["username"])){
                 if($rec['icq']){ ?>
                 <tr>
                     <td <?php echo bgcolor($table_body_color_1); ?> nowrap><font color="<?php echo $table_body_font_color_1; ?>">&nbsp;<img src="images/icon_icq.gif" alt="ICQ" border="0" width="16" height="16" />&nbsp;ICQ:&nbsp;&nbsp;</font></td>
-                    <td <?php echo bgcolor($table_body_color_1); ?>><font color="<?php echo $table_body_font_color_1; ?>"><?php echo $rec['icq']; ?>&nbsp;<img align="absmiddle" src="http://wwp.icq.com/scripts/online.dll?icq=<?php echo $rec['icq']; ?>&img=7" alt="ICQ Status" border="0"></font></td>
+                    <td <?php echo bgcolor($table_body_color_1); ?>><font color="<?php echo $table_body_font_color_1; ?>"><?php echo $rec['icq']; ?>&nbsp;<img align="middle" src="http://wwp.icq.com/scripts/online.dll?icq=<?php echo $rec['icq']; ?>&img=7" alt="ICQ Status" border="0"></font></td>
                 </tr>
                 <?php }
                 if($rec['aol']){ ?>

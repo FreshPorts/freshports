@@ -1,11 +1,11 @@
-<?php
+
   if (!isset($$phcollapse)) {
     $$phcollapse=0;
   }
 ?>
 <table class="PhorumListTable" width="<?php echo $ForumTableWidth; ?>" cellspacing="0" cellpadding="0" border="0">
 <tr>
-    <td class="PhorumListHeader" <?php echo bgcolor($ForumTableHeaderColor); ?>><FONT color="<?php echo $ForumTableHeaderFontColor; ?>">&nbsp;<?php echo $lTopics;?><img src="images/trans.gif" border=0 width=1 height=24 align="absmiddle"></font></td>
+    <td class="PhorumListHeader" <?php echo bgcolor($ForumTableHeaderColor); ?>><FONT color="<?php echo $ForumTableHeaderFontColor; ?>">&nbsp;<?php echo $lTopics;?><img src="images/trans.gif" border=0 width=1 height=24 align="middle" alt="trans"></font></td>
     <td class="PhorumListHeader" <?php echo bgcolor($ForumTableHeaderColor); ?> width="150" nowrap><FONT color="<?php echo $ForumTableHeaderFontColor; ?>"><?php echo $lAuthor;?>&nbsp;</font></td>
 <?php if ( !initvar("read") && $$phcollapse != 0) { ?>
     <td class="PhorumListHeader" align="center" <?php echo bgcolor($ForumTableHeaderColor); ?> width="80" nowrap><FONT color="<?php echo $ForumTableHeaderFontColor; ?>"><?php echo $lReplies;?>&nbsp;</font></td>
@@ -61,7 +61,7 @@
       }
     }
     else{
-      $img="<img src=\"images/trans.gif\" border=0 width=1 height=21 align=\"absmiddle\">";
+      $img="<img src=\"images/trans.gif\" border=0 width=1 height=21 align=\"middle\" alt=\"trans\">";
       $loc=0;
     }
 

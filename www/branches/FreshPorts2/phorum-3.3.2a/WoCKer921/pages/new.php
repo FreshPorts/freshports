@@ -17,7 +17,7 @@
 </tr>
 <tr>
   <th valign="middle">Description:</th>
-  <td valign="middle"><textarea name="description" cols="60" rows="3" wrap="VIRTUAL" style="width: 300px;"><?php echo $description; ?></textarea></td>
+  <td valign="middle"><textarea name="description" cols="60" rows="3" style="width: 300px;"><?php echo $description; ?></textarea></td>
 </tr>
 <tr>
   <th valign="middle">Config Suffix:</th>

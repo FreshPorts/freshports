@@ -243,7 +243,7 @@
   }
 ?>
 <tr>
-    <td width="100%" colspan="2" align="RIGHT" <?php echo bgcolor($ForumTableBodyColor1); ?>><input type="Submit" name="post" value=" <?php echo $lFormPost;?> ">&nbsp;<br><img src="images/trans.gif" width=3 height=3 border=0></td>
+    <td width="100%" colspan="2" align="RIGHT" <?php echo bgcolor($ForumTableBodyColor1); ?>><input type="Submit" name="post" value=" <?php echo $lFormPost;?> ">&nbsp;<br><img src="images/trans.gif" width=3 height=3 border=0 alt=""></td>
 </tr>
 </table>
 </form>

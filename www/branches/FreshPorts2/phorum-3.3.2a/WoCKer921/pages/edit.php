@@ -77,7 +77,7 @@ if($PHORUM['AllowAttachments'] && $PHORUM['ForumAllowUploads'] == 'Y') {
   }
 ?>
 <tr>
-    <td colspan=2><textarea name="body" cols="60" rows="20" wrap="VIRTUAL"><?php echo $mtext["body"]; ?></textarea></td>
+    <td colspan=2><textarea name="body" cols="60" rows="20"><?php echo $mtext["body"]; ?></textarea></td>
 </tr>
 </td>
 </tr>

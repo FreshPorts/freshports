@@ -142,7 +142,7 @@
     if(count($ActiveForums)>1){
       addnav($menu, $lForumList, "$forum_page.$ext?f=$ForumParent$GetVars");
     }
-    addnav($menu, $lLoginLink, "$login_page.$ext?f=$f&target=$target$GetVars");
+    addnav($menu, $lLoginLink, "$login_page.$ext?f=$f&amp;target=$target$GetVars");
     $nav=getnav($menu);
 
   //////////////////////////
@@ -151,7 +151,7 @@
   if($Error)
     echo "<p><b>$Error</b>";
   if(!$done){ ?>
-<SCRIPT LANGUAGE="JavaScript">
+<SCRIPT LANGUAGE="JavaScript" type="text/javascript">
     function textlimit(field, limit) {
         if (field.value.length > limit)
             field.value = field.value.substring(0, limit);
@@ -232,7 +232,7 @@
         </tr>
         <tr>
             <td <?php echo bgcolor($table_body_color_1); ?> nowrap>&nbsp;</td>
-            <td <?php echo bgcolor($table_body_color_1); ?>><input type="submit" value="<?php echo $lRegister; ?>">&nbsp;<br><img src="images/trans.gif" width=3 height=3 border=0></td>
+            <td <?php echo bgcolor($table_body_color_1); ?>><input type="submit" value="<?php echo $lRegister; ?>">&nbsp;<br><img src="images/trans.gif" width=3 height=3 border=0 alt=""></td>
         </tr>
         </table>
         <?php echo $lRequiredFields; ?>

@@ -326,23 +326,23 @@
 
     // Collapse/View Threads
     if($$phcollapse==0){
-      addnav($menu2, $lCollapseThreads, "$list_page.$ext?f=$num&collapse=1$GetVars");
+      addnav($menu2, $lCollapseThreads, "$list_page.$ext?f=$num&amp;collapse=1$GetVars");
     }
     else{
-      addnav($menu2, $lViewThreads, "$list_page.$ext?f=$num&collapse=0$GetVars");
+      addnav($menu2, $lViewThreads, "$list_page.$ext?f=$num&amp;collapse=0$GetVars");
     }
 
     // Search
     addnav($menu1, $lSearch, "$search_page.$ext?f=$num$GetVars");
 
     // Mark all read
-    addnav($menu2, $lMarkRead, "$list_page.$ext?f=$num$GetVars&r=1");
+    addnav($menu2, $lMarkRead, "$list_page.$ext?f=$num$GetVars&amp;r=1");
 
     // Log Out/Log In
     if($ForumSecurity){
       if(!empty($phorum_auth)){
-        addnav($menu2, $lLogOut, "login.$ext?logout=1&f=$f$GetVars");
-        addnav($menu2, $lMyProfile, "profile.$ext?f=$f&id=$phorum_user[id]$GetVars");
+        addnav($menu2, $lLogOut, "login.$ext?logout=1&amp;f=$f$GetVars");
+        addnav($menu2, $lMyProfile, "profile.$ext?f=$f&amp;id=$phorum_user[id]$GetVars");
       }
       else{
         addnav($menu1, $lLogIn, "login.$ext?f=$f$GetVars");
@@ -360,14 +360,14 @@
     if ($ForumMultiLevel==2) {
       if($action!=0) {
         // Newer
-        addnav($menu, $lNewerMessages, "$list_page.$ext?f=$num&t=$max&a=1$GetVars");
+        addnav($menu, $lNewerMessages, "$list_page.$ext?f=$num&amp;t=$max&amp;a=1$GetVars");
       }
     } elseif ($action!=0) {
       // Newer
-      addnav($menu, $lNewerMessages, "$list_page.$ext?f=$num&t=$max&a=1$GetVars");
+      addnav($menu, $lNewerMessages, "$list_page.$ext?f=$num&amp;t=$max&amp;a=1$GetVars");
     }
     // Older
-    addnav($menu, $lOlderMessages, "$list_page.$ext?f=$num&t=$min&a=2$GetVars");
+    addnav($menu, $lOlderMessages, "$list_page.$ext?f=$num&amp;t=$min&amp;a=2$GetVars");
     $nav=getnav($menu);
     $TopRightNav=$nav;
     $LowRightNav=$nav;

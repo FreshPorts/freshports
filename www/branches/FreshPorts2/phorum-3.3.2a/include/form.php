@@ -52,7 +52,7 @@
       $quote = "$qauthor $lWrote:\n";
       $quote .= textwrap("\n$qbody", 63, "\n", "> ") . "\n";
       $quote = htmlspecialchars($quote);
-      $quote_button="<input type=\"Hidden\" name=\"hide\" value=\"".$quote."\"><script language=\"JavaScript\"><!--\nthis.document.writeln('<input tabindex=\"100\" type=\"Button\" name=\"quote\" value=\"$lQuote\" onClick=\"this.form.body.value=this.form.body.value + this.form.hide.value; this.form.hide.value='+\"''\"+';\">');\n//--></script>";
+      $quote_button="<input type=\"Hidden\" name=\"hide\" value=\"".$quote."\"><script language=\"JavaScript\" type=\"text/javascript\"><!--\nthis.document.writeln('<input tabindex=\"100\" type=\"Button\" name=\"quote\" value=\"$lQuote\" onClick=\"this.form.body.value=this.form.body.value + this.form.hide.value; this.form.hide.value='+\"''\"+';\">');\n//--></script>";
     }
     $p_body="";
   }
@@ -133,7 +133,7 @@
       }
     ?>
     <tr>
-        <td <?php echo bgcolor($ForumTableBodyColor1); ?> colspan=2 width="100%" nowrap align="left"><table cellpadding="5" cellspacing="0" border="0"><tr><td align="CENTER" valign="TOP"><font face="courier"><textarea class="PhorumBodyArea" name="body" cols="45" rows="20" wrap="VIRTUAL"><?php echo $p_body; ?></textarea></font></td></tr></table></td>
+        <td <?php echo bgcolor($ForumTableBodyColor1); ?> colspan=2 width="100%" nowrap align="left"><table cellpadding="5" cellspacing="0" border="0"><tr><td align="CENTER" valign="TOP"><font face="courier"><textarea class="PhorumBodyArea" name="body" cols="45" rows="20"><?php echo $p_body; ?></textarea></font></td></tr></table></td>
     </tr>
     <?php if(!empty($phorum_user["signature"])){ ?>
     <tr>
@@ -150,7 +150,7 @@
     <?php  if ($AllowAttachments && $ForumAllowUploads == 'Y' && $ForumMaxUploads>3) { ?>
         <input type="Submit" name="attach" value=" <?php echo $lFormAttach;?> ">&nbsp;
     <?php } ?>
-    <input type="Submit" name="post" value=" <?php echo $lFormPost;?> ">&nbsp;<br><img src="images/trans.gif" width=3 height=3 border=0></td>
+    <input type="Submit" name="post" value=" <?php echo $lFormPost;?> ">&nbsp;<br><img src="images/trans.gif" width=3 height=3 border=0 alt=""></td>
     </tr>
     </table>
   </td>

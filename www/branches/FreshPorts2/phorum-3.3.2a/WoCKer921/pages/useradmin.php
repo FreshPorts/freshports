@@ -102,7 +102,7 @@ $i++;
           $sig=$rec['signature'];
     }
 ?>
-<SCRIPT LANGUAGE="JavaScript">
+<SCRIPT LANGUAGE="JavaScript" type="text/javascript">
     function textlimit(field, limit) {
         if (field.value.length > limit)
             field.value = field.value.substring(0, limit);

@@ -15,7 +15,7 @@
 //   You should have received a copy of the Phorum License                    //
 //   along with this program.                                                 //
 ////////////////////////////////////////////////////////////////////////////////
-// $Id: read.php,v 1.1.2.1 2002-02-16 20:47:33 dan Exp $
+// $Id: read.php,v 1.1.2.2 2003-05-11 13:33:30 dan Exp $
 
   $read=true;
 
@@ -139,7 +139,7 @@
     }
 
     $tres=$msg->getrow();
-    Header("Location: $read_page.$ext?f=$num&i=$tres[id]&t=$tres[thread]$GetVars");
+    Header("Location: $read_page.$ext?f=$num&amp;i=$tres[id]&amp;t=$tres[thread]$GetVars");
     exit();
 
   }
@@ -198,8 +198,8 @@
   $header_rows=count($headers);
   $body_rows=count($bodies);
 
-  $next_thread = "f=$num&t=$thread&a=2$GetVars";
-  $prev_thread = "f=$num&t=$thread&a=1$GetVars";
+  $next_thread = "f=$num&amp;t=$thread&amp;a=2$GetVars";
+  $prev_thread = "f=$num&amp;t=$thread&amp;a=1$GetVars";
 
   if(!$$phflat){
 
@@ -209,7 +209,7 @@
     else{
       $next_loc = $loc+1;
       $next_id = $headers[$next_loc]["id"];
-      $next_link = "f=$num&i=$next_id&t=$thread$GetVars";
+      $next_link = "f=$num&amp;i=$next_id&amp;t=$thread$GetVars";
     }
 
     if($loc==0){
@@ -218,7 +218,7 @@
     else{
       $prev_loc = $loc-1;
       $prev_id = $headers[$prev_loc]["id"];
-      $prev_link = "f=$num&i=$prev_id&t=$thread$GetVars";
+      $prev_link = "f=$num&amp;i=$prev_id&amp;t=$thread$GetVars";
     }
 
     if(empty($haveread[$id]) && $UseCookies && $id > $old_message){
@@ -286,7 +286,7 @@
     $menu=array();
 
     if(!$$phflat)
-      addnav($menu2, $lReplyMessage, "$read_page.$ext?f=$f&i=$id&t=$t$GetVars#REPLY");
+      addnav($menu2, $lReplyMessage, "$read_page.$ext?f=$f&amp;i=$id&amp;t=$t$GetVars#REPLY");
 
     if($ActiveForums>1)
       // Forum List
@@ -298,16 +298,16 @@
     // Go To Topic
     if ($ForumMultiLevel==2) {
       // Float to Top
-      addnav($menu1, $lGoToTopic, "$list_page.$ext?f=$num&t=".$headers[0]["modifystamp"]."&a=3$GetVars");
+      addnav($menu1, $lGoToTopic, "$list_page.$ext?f=$num&amp;t=".$headers[0]["modifystamp"]."&amp;a=3$GetVars");
     } else {
-      addnav($menu1, $lGoToTopic, "$list_page.$ext?f=$num&t=$toThread&a=3$GetVars");
+      addnav($menu1, $lGoToTopic, "$list_page.$ext?f=$num&amp;t=$toThread&amp;a=3$GetVars");
     }
     if($$phflat==0){
       // Flat View
-      addnav($menu2, $lReadFlat, "$read_page.$ext?f=$num&i=$id&t=$thread&v=f$GetVars");
+      addnav($menu2, $lReadFlat, "$read_page.$ext?f=$num&amp;i=$id&amp;t=$thread&amp;v=f$GetVars");
     } else {
       // Threaded View
-      addnav($menu2, $lReadThreads, "$read_page.$ext?f=$num&i=$id&t=$thread&v=t$GetVars");
+      addnav($menu2, $lReadThreads, "$read_page.$ext?f=$num&amp;i=$id&amp;t=$thread&amp;v=t$GetVars");
     }
     // Search
     addnav($menu1, $lSearch, "$search_page.$ext?f=$num$GetVars");
@@ -316,7 +316,7 @@
     if($ForumSecurity){
       if(!empty($phorum_auth)){
         addnav($menu2, $lLogOut, "login.$ext?logout=1$GetVars");
-        addnav($menu2, $lMyProfile, "profile.$ext?f=$f&id=$phorum_user[id]$GetVars");
+        addnav($menu2, $lMyProfile, "profile.$ext?f=$f&amp;id=$phorum_user[id]$GetVars");
       }
       else{
         addnav($menu1, $lLogIn, "login.$ext?f=$num$GetVars");
@@ -391,14 +391,14 @@ ans=window.confirm("<?php echo $lDelMessageWarning; ?>");
       $host="";
       $profile_link="";
       $sig="";
-      $reply_url="$read_page.$ext?f=$f&i=$rec_id&t=$t$GetVars#REPLY";
+      $reply_url="$read_page.$ext?f=$f&amp;i=$rec_id&amp;t=$t$GetVars#REPLY";
 
       if($head_row["userid"]>0 && isset($users[$head_row["userid"]])){
         $user=$users[$head_row["userid"]];
         $author=$qauthor=$user["name"];
         $email=$user["email"];
         $host="";
-        $author = "<a href=\"$forum_url/profile.$ext?f=$ForumId&id=$head_row[userid]$GetVars\">$author</a>";
+        $author = "<a href=\"$forum_url/profile.$ext?f=$ForumId&amp;id=$head_row[userid]$GetVars\">$author</a>";
         // replace sig
         $sig=$user["signature"];
       }
@@ -486,8 +486,8 @@ ans=window.confirm("<?php echo $lDelMessageWarning; ?>");
 <tr>
 <td valign="TOP" width="100%" align="LEFT" <?php echo bgcolor($ForumTableBodyColor2); ?>>
 <FONT color='<?php echo $ForumTableBodyFontColor1; ?>' class="PhorumNav"><?php echo $lModerators; ?></font>
-<br><?php echo "<a href=\"$forum_url/moderator.$ext?mod=edit&f=$ForumId&i=$id&t=$thread$GetVars\">";?><FONT color='<?php echo $ForumTableBodyFontColor1; ?>' class="PhorumNav"><?php echo $lModEdit; ?></a></font>
-<br><a href="javascript:delmsg('<?php echo "$forum_url/moderator.$ext?mod=delete&f=$ForumId&i=$rec_id&t=$thread$GetVars";?>')"><FONT color='<?php echo $ForumTableBodyFontColor1; ?>' class="PhorumNav"><?php echo $lModDelete; ?></a></font>
+<br><?php echo "<a href=\"$forum_url/moderator.$ext?mod=edit&amp;f=$ForumId&amp;i=$id&amp;t=$thread$GetVars\">";?><FONT color='<?php echo $ForumTableBodyFontColor1; ?>' class="PhorumNav"><?php echo $lModEdit; ?></a></font>
+<br><a href="javascript:delmsg('<?php echo "$forum_url/moderator.$ext?mod=delete&amp;f=$ForumId&amp;i=$rec_id&amp;t=$thread$GetVars";?>')"><FONT color='<?php echo $ForumTableBodyFontColor1; ?>' class="PhorumNav"><?php echo $lModDelete; ?></a></font>
 </td>
 </tr>
 </table>
@@ -498,7 +498,7 @@ ans=window.confirm("<?php echo $lDelMessageWarning; ?>");
 </table>
 <table width="<?php echo $ForumTableWidth; ?>" cellspacing="0" cellpadding="3" border="0">
 <tr>
-    <td valign="TOP" width=100% <?php echo bgcolor($ForumNavColor); ?>><FONT color='<?php echo $ForumNavFontColor; ?>' class="PhorumNav"><?php echo $LowLeftNav; ?></font></td>
+    <td valign="TOP" width="100%" <?php echo bgcolor($ForumNavColor); ?>><FONT color='<?php echo $ForumNavFontColor; ?>' class="PhorumNav"><?php echo $LowLeftNav; ?></font></td>
     <td valign="TOP" align="RIGHT" nowrap <?php echo bgcolor($ForumNavColor); ?>><?php echo $ThreadNav; ?></td>
 </tr>
 </table>
@@ -511,8 +511,8 @@ ans=window.confirm("<?php echo $lDelMessageWarning; ?>");
 <tr>
 <td valign="TOP" width="100%" align="LEFT" <?php echo bgcolor($ForumTableBodyColor2); ?>>
 <FONT color='<?php echo $ForumTableBodyFontColor1; ?>' class="PhorumNav"><?php echo $lModerators; ?></font>
-<br><?php echo "<a href=\"$forum_url/moderator.$ext?mod=edit&f=$ForumId&i=$rec_id&t=$thread$GetVars\">";?><FONT color='<?php echo $ForumTableBodyFontColor1; ?>' class="PhorumNav"><?php echo $lModEdit; ?></a></font>
-<br><a href="javascript:delmsg('<?php echo "$forum_url/moderator.$ext?mod=delete&f=$ForumId&i=$rec_id&t=$thread$GetVars";?>')"><FONT color='<?php echo $ForumTableBodyFontColor1; ?>' class="PhorumNav"><?php echo $lModDelete; ?></a></font>
+<br><?php echo "<a href=\"$forum_url/moderator.$ext?mod=edit&amp;f=$ForumId&amp;i=$rec_id&amp;t=$thread$GetVars\">";?><FONT color='<?php echo $ForumTableBodyFontColor1; ?>' class="PhorumNav"><?php echo $lModEdit; ?></a></font>
+<br><a href="javascript:delmsg('<?php echo "$forum_url/moderator.$ext?mod=delete&amp;f=$ForumId&amp;i=$rec_id&amp;t=$thread$GetVars";?>')"><FONT color='<?php echo $ForumTableBodyFontColor1; ?>' class="PhorumNav"><?php echo $lModDelete; ?></a></font>
 </td>
 </tr>
 </table>

@@ -394,7 +394,7 @@
     <td><font color="<?php echo $ForumTableBodyFontColor2; ?>"><input type="checkbox" name="fldauthor" value="1" <?php if($fldauthor==1)  echo "checked"; ?>> <?php echo $lAuthor; ?>&nbsp;&nbsp;&nbsp;<input type="checkbox" name="fldsubject" value="1" <?php if($fldsubject==1)  echo "checked"; ?>> <?php echo $lFormSubject; ?>&nbsp;&nbsp;&nbsp;<input type="checkbox" name="fldbody" value="1" <?php if($fldbody==1)  echo "checked"; ?>> <?php echo $lMessageBodies; ?>&nbsp;&nbsp;&nbsp;</font></td>
 </tr>
 </table>
-</font><br></td>
+<br>
 </td>
 </tr>
 </table>

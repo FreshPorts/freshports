@@ -1,14 +1,14 @@
 <?php
 
-  $t_gif="<img src=\"$forum_url/images/t.gif\" width=\"12\" height=\"21\" border=\"0\">";
-  $l_gif="<img src=\"$forum_url/images/l.gif\" width=\"12\" height=\"21\" border=\"0\">";
-  $p_gif="<img src=\"$forum_url/images/p.gif\" width=\"9\" height=\"21\" border=\"0\">";
-  $m_gif="<img src=\"$forum_url/images/m.gif\" width=\"9\" height=\"21\" border=\"0\">";
-  $c_gif="<img src=\"$forum_url/images/c.gif\" width=\"9\" height=\"21\" border=\"0\">";
-  $i_gif="<img src=\"$forum_url/images/i.gif\" width=\"12\" height=\"21\" border=\"0\">";
-  $n_gif="<img src=\"$forum_url/images/n.gif\" width=\"9\" height=\"21\" border=\"0\">";
-  $space_gif="<img src=\"$forum_url/images/trans.gif\" width=\"5\" height=\"21\" border=\"0\">";
-  $trans_gif="<img src=\"$forum_url/images/trans.gif\" width=\"12\" height=\"21\" border=\"0\">";
+  $t_gif="<img src=\"$forum_url/images/t.gif\" width=\"12\" height=\"21\" border=\"0\" alt=\"\">";
+  $l_gif="<img src=\"$forum_url/images/l.gif\" width=\"12\" height=\"21\" border=\"0\" alt=\"\">";
+  $p_gif="<img src=\"$forum_url/images/p.gif\" width=\"9\"  height=\"21\" border=\"0\" alt=\"\">";
+  $m_gif="<img src=\"$forum_url/images/m.gif\" width=\"9\"  height=\"21\" border=\"0\" alt=\"\">";
+  $c_gif="<img src=\"$forum_url/images/c.gif\" width=\"9\"  height=\"21\" border=\"0\" alt=\"\">";
+  $i_gif="<img src=\"$forum_url/images/i.gif\" width=\"12\" height=\"21\" border=\"0\" alt=\"\">";
+  $n_gif="<img src=\"$forum_url/images/n.gif\" width=\"9\"  height=\"21\" border=\"0\" alt=\"\">";
+  $space_gif="<img src=\"$forum_url/images/trans.gif\" width=\"5\"  height=\"21\" border=\"0\" alt=\"\">";
+  $trans_gif="<img src=\"$forum_url/images/trans.gif\" width=\"12\" height=\"21\" border=\"0\" alt=\"\">";
 
   function echo_data($image, $topic, $row_color){
     global $ForumTableWidth,$ForumTableHeaderColor,$ForumTableHeaderFontColor;
@@ -49,12 +49,12 @@
         $datestamp = "<b>".$datestamp."</b>";
     }
     else{
-        $subject.="<a href=\"$read_page.$ext?f=$num&i=".$topic["id"];
+        $subject.="<a href=\"$read_page.$ext?f=$num&amp;i=".$topic["id"];
 	$reply_name='';
 	if ($$phflat) {
 	  $reply_name="#reply_".$topic["id"];
 	}
-        $subject.="&t=".$topic["thread"]."$GetVars$reply_name\">".$topic["subject"]."</a>";
+        $subject.="&amp;t=".$topic["thread"]."$GetVars$reply_name\">".$topic["subject"]."</a>";
     }
 
     $subject.="&nbsp;&nbsp;</font>";
@@ -191,7 +191,7 @@
 ?>
 <table class="PhorumListTable" width="<?php echo $ForumTableWidth;?>" cellspacing="0" cellpadding="0" border="0">
 <tr>
-    <td class="PhorumListHeader"<?php echo bgcolor($ForumTableHeaderColor);?>><font color="<?php echo $ForumTableHeaderFontColor; ?>">&nbsp;<?php echo $lTopics;?><img src="images/trans.gif" border="0" width=1 height=24 align="absmiddle"></font></td>
+    <td class="PhorumListHeader"<?php echo bgcolor($ForumTableHeaderColor);?>><font color="<?php echo $ForumTableHeaderFontColor; ?>">&nbsp;<?php echo $lTopics;?><img src="images/trans.gif" border="0" width=1 height=24 align="middle" alt="trans"></font></td>
     <td class="PhorumListHeader"<?php echo bgcolor($ForumTableHeaderColor);?> nowrap width=150><font color="<?php echo $ForumTableHeaderFontColor; ?>"><?php echo $lAuthor;?>&nbsp;</font></td>
     <td class="PhorumListHeader"<?php echo bgcolor($ForumTableHeaderColor);?> nowrap width=150><font color="<?php echo $ForumTableHeaderFontColor; ?>"><?php echo $lDate;?></font></td>
 </tr>

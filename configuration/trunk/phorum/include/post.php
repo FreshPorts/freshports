@@ -260,6 +260,7 @@
       }
     }
 
+echo 'spot 1<BR>';
     if($thread==0){
       $thread=$id;
     }
@@ -285,6 +286,7 @@
       }
     }
 
+echo 'spot 3<BR>';
     if($thread!=$id){
       $more = $thread+1;
       $more = "&a=2&t=$more";

@@ -19,6 +19,7 @@
   $use_security=1;
 
 /////////////////////////////////////////////////////////
+
   $admin=1;
   $fullaccess=true;
   if(!isset($login)) $login=0;
@@ -32,7 +33,7 @@
     $num=0;
   }
 
-  chdir("../");
+  chdir("/home/freshports.org/www/phorum");
   include "common.php";
   $myname=$admin_page;
 

@@ -1,6 +1,6 @@
 <?
 	#
-	# $Id: index.php,v 1.1.2.65 2003-01-10 17:07:03 dan Exp $
+	# $Id: index.php,v 1.1.2.66 2003-02-25 15:18:51 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -93,7 +93,7 @@ if ($User->id) {
     FROM watch_list JOIN watch_list_element
         ON watch_list.id      = watch_list_element.watch_list_id
        AND watch_list.user_id = $User->id
-  GROUP BY watch_list_element.element_id) AS TEMP
+  GROUP BY element_id) AS TEMP
        ON TEMP.wle_element_id = commits_latest_ports.element_id
 ORDER BY commit_date_raw desc, category, port";
 } else {

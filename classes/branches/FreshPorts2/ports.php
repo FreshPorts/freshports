@@ -1,5 +1,5 @@
 <?
-	# $Id: ports.php,v 1.1.2.22 2003-01-30 02:51:58 dan Exp $
+	# $Id: ports.php,v 1.1.2.23 2003-01-30 02:52:47 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -354,7 +354,7 @@ select ports.id,
 		# fetch all ports based on category
 		# e.g. id for net
 		
-		$Debug = 1;
+		$Debug = 0;
 
 		$sql = "";
 		if ($UserID) {

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: list-of-ports.php,v 1.1.2.7 2004-06-30 15:22:22 dan Exp $
+	# $Id: list-of-ports.php,v 1.1.2.8 2005-01-06 04:24:05 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -40,7 +40,7 @@ function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeade
 
 	$HTML .= "<TR><TD>\n";
 
-	if ($ShowCategoryHeaders) {
+	if ($numrows > 0 && $ShowCategoryHeaders) {
 		$HTML .= '<DL>';
 	}
 
@@ -69,7 +69,7 @@ function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeade
 		$HTML .= '<BR>';
 	}
 
-	if ($ShowCategoryHeaders) {
+	if ($numrows && $ShowCategoryHeaders) {
 		$HTML .= "\n</DD>\n</DL>\n";
 	}
 

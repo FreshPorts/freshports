@@ -1,4 +1,4 @@
-
+<?php
   if (!isset($$phcollapse)) {
     $$phcollapse=0;
   }

@@ -1,5 +1,5 @@
 <?
-	# $Id: sidebar.php,v 1.1.2.10 2002-07-26 15:08:50 dan Exp $
+	# $Id: sidebar.php,v 1.1.2.11 2002-12-08 03:24:24 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -24,20 +24,21 @@
 	}
 	ul { padding-left: 20px;}
 	</STYLE>
+<?
+	freshports_body();
+	$ServerName = str_replace("freshports", "FreshPorts", $_SERVER["SERVER_NAME"]);
+	GLOBAL $FreshPortsSlogan;
+	GLOBAL $FreshPortsName;
+?>
 
-	<META HTTP-EQUIV="Refresh" CONTENT="1200; URL=http://www.FreshPorts.org/sidebar.php">
+	<META HTTP-EQUIV="Refresh" CONTENT="1200; URL=http://<?php echo $ServerName . $_SERVER["PHP_SELF"]; ?>">
 	<META http-equiv="Pragma"              content="no-cache">
 	<META NAME="MSSmartTagsPreventParsing" content="TRUE">
 
 </HEAD>
 
-<?
-	freshports_body();
-	$ServerName = str_replace("freshports", "FreshPorts", $_SERVER["SERVER_NAME"]);
-?>
-
 	<CENTER>
-	<A HREF="http://<? echo $ServerName; ?>/" TARGET="_content"><IMG SRC="/images/freshports_mini.jpg" ALT="FreshPorts.org - the place for ports" WIDTH="128" HEIGHT="28" BORDER="0"></A>
+	<A HREF="http://<? echo $ServerName; ?>/" TARGET="_content"><IMG SRC="/images/freshports_mini.jpg" ALT="<?php echo "$FreshPortsName -- $FreshPortsSlogan"; ?>" TITLE="<?php echo "FreshPorts -- $FreshPortsSlogan"; ?>" WIDTH="128" HEIGHT="28" BORDER="0"></A>
 
 	<BR>
 

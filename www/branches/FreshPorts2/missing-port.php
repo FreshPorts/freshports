@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.46 2003-09-25 03:02:19 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.47 2003-11-27 16:03:24 dan Exp $
 	#
 	# Copyright (c) 2001-2003 DVL Software Limited
 	#
@@ -15,9 +15,10 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/include/files.php');
 function freshports_PortDescription($db, $element_id) {
 	GLOBAL $TableWidth;
 	GLOBAL $FreshPortsTitle;
+	GLOBAL $User;
 
 	$port = new Port($db);
-	$port->FetchByElementID($element_id);
+	$port->FetchByElementID($element_id, $User->id);
 
 	header("HTTP/1.1 200 OK");
 	$Title = $port->category . "/" . $port->port;

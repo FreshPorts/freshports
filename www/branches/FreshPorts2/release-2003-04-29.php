@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: release-2003-04-29.php,v 1.1.2.4 2004-10-24 21:38:55 dan Exp $
+	# $Id: release-2003-04-29.php,v 1.1.2.5 2004-10-24 21:39:24 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -17,11 +17,11 @@
 					"FreeBSD, index, applications, ports");
 
 ?>
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<TABLE WIDTH="<?php echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><td VALIGN=TOP>
 <TABLE WIDTH="100%" ALIGN="left" border="0">
 <TR>
-	<? echo freshports_PageBannerText($Title); ?>
+	<?php echo freshports_PageBannerText($Title); ?>
 </TR>
 
 <TR><TD>
@@ -44,7 +44,7 @@ to this new version.
 <td align="left" valign="top" width="100%"></td>
 </tr>
 
-	<? 
+	<?php 
 	echo freshports_BannerSpace();
 	?>
 
@@ -71,7 +71,7 @@ me.
 
 </TD></TR>
 
-	<? 
+	<?php 
 	echo freshports_BannerSpace();
 	?>
 
@@ -206,9 +206,9 @@ needed.
 
 </TABLE>
 
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<TABLE WIDTH="<?php echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? freshports_ShowFooter(); ?>
+<?php freshports_ShowFooter(); ?>
 </TD></TR>
 </TABLE>
 

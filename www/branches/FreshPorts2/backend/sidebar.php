@@ -1,5 +1,5 @@
 <?
-	# $Id: sidebar.php,v 1.1.2.2 2002-04-18 20:59:45 dan Exp $
+	# $Id: sidebar.php,v 1.1.2.3 2002-04-19 02:40:33 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -33,6 +33,15 @@
 
 	<CENTER>
 	<A HREF="http://<? echo $ServerName; ?>/" TARGET="_content"><IMG SRC="/images/freshports_mini.jpg" ALT="FreshPorts.org - the place for ports" WIDTH="128" HEIGHT="28" BORDER="0"></A>
+
+	<BR>
+
+	<SMALL>
+	<script LANGUAGE="JavaScript">
+		var d = new Date();  // today's date and time.
+	    document.write(d.toLocaleString());
+	</script>
+	</SMALL>
 	</CENTER>
 
 <?

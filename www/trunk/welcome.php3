@@ -12,7 +12,7 @@
 <table width="100%">
   <tr>
   <tr>
-    <td bgcolor="#AD0040"><big><big><font color="#FFFFFF">Account created</font></big></big></td>
+    <td bgcolor="#AD0040"><font color="#FFFFFF" size="+2">Account created</font></td>
   </tr>
   <tr>
     <td height="20">Your account 

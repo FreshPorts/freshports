@@ -24,7 +24,7 @@ This page shows the various categories and indicates which ones contains ports w
 </td></tr>
 <td valign="top"><table width="100%">
   <tr>
-    <td bgcolor="#AD0040" height="29"><big><big><font color="#FFFFFF">freshports - watch categories</font></big></big></td>
+    <td bgcolor="#AD0040" height="29"><font color="#FFFFFF" size="+2">freshports - watch categories</font></td>
   </tr>
 <tr><td valign="top" width="100%">
 

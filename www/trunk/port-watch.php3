@@ -145,7 +145,7 @@ if ($submit) {
 <tr><td valign="top" width="100%">
 <table width="100%" border="0">
   <tr>
-     <td bgcolor="#AD0040" height="29"><big><big><font color="#FFFFFF">freshports - watch ports (<em><? echo $categoryname ?>)</em></font></big></big></td>
+     <td bgcolor="#AD0040" height="29"><font color="#FFFFFF" size="+2">freshports - watch ports (<em><? echo $categoryname ?>)</em></font></td>
   </tr>
 <tr><td>
 <?

@@ -97,7 +97,7 @@ echo '<table cellpadding=1 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>
 
 echo '<table width=100% border=0 cellpadding=1 bgcolor="#AD0040">';
 
-echo '<tr bgcolor="#AD0040"><td bgcolor="#AD0040"><font color="#ffffff"><big><big>Login Details</big></big></font></td></tr>';
+echo '<tr bgcolor="#AD0040"><td bgcolor="#AD0040"><font color="#ffffff" size="+2">Login Details</font></td></tr>';
 
 echo '<tr><td bgcolor="#ffffff">';
 include ("/www/freshports.org/_private/login.inc.php3");

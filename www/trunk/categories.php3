@@ -15,11 +15,11 @@
 </td></tr>
 <tr><td colspan="2">
 You can sort each column by clicking on the header.  e.g. click on <b>Category</b> to sort by category.
-</td></td>
+</td></tr>
 <tr><td valign="top" width="100%">
 <table width="100%" border="0">
   <tr>
-    <td colspan="4" bgcolor="#AD0040" height="29"><big><big><font color="#FFFFFF">freshports - list of categories</font></big></big></td>
+    <td colspan="4" bgcolor="#AD0040" height="29"><font color="#FFFFFF" size="+2">freshports - list of categories</font></td>
   </tr>
 <script language="php">
 

@@ -19,7 +19,7 @@ require( "/www/freshports.org/_private/getvalues.php3");
 <tr><td>Welcome to freshports.org. See also <a href="ports.php3">freshports by ports</a>.
 </td></tr>
   <tr>
-    <td bgcolor="#AD0040" height="29"><big><big><font color="#FFFFFF">freshports - watch categories</font></big></big></td>
+    <td bgcolor="#AD0040" height="29"><font color="#FFFFFF" size="+2">freshports - watch categories</font></td>
   </tr>
 <tr><td>
 <?

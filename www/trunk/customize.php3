@@ -86,7 +86,7 @@ if ($submit) {
 <table width="100%" border="0">
   <tr><td valign="top" width="100%">
 <table width="100%" border="0">
-    <td bgcolor="#AD0040"><big><big><font color="#FFFFFF">Customize User Account</font></big></big></td>
+    <td bgcolor="#AD0040"><font color="#FFFFFF" size="+2">Customize User Account</font></td>
   </tr>
   <tr>
     <td height="20"><script language="php">

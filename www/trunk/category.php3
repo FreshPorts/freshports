@@ -33,7 +33,7 @@ This page lists all the ports in a given category.
 <tr><td valign="top" width="100%">
 <table width="100%" border="0">
   <tr>
-    <td bgcolor="#AD0040" height="29"><big><big><font color="#FFFFFF">freshports - <? echo $title ?></font></big></big></td>
+    <td bgcolor="#AD0040" height="29"><font color="#FFFFFF" size="+2">freshports - <? echo $title ?></font></td>
   </tr>
 <script language="php">
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-category.php,v 1.1.2.30 2003-10-16 03:04:53 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.31 2004-10-24 14:41:35 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -45,7 +45,8 @@ function freshports_CategoryByID($db, $category_id, $PageNo = 1, $PageSize = 25)
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
 	$category = new Category($db);
 	$category->FetchByID($category_id);
-	freshports_CategoryDisplay($db, $category, $PageNo, $PageSize);}
+	freshports_CategoryDisplay($db, $category, $PageNo, $PageSize);
+}
 
 
 function freshports_CategoryByElementID($db, $element_id, $PageNo = 1, $PageSize = 25) {
@@ -63,7 +64,7 @@ function freshports_CategoryDisplay($db, $category, $PageNo = 1, $PageSize = 25)
 
 	$Debug = 0;
 
-	if (In_Array("REDIRECT_QUERY_STRING", $_SERVER)) {
+	if (IsSet($_SERVER['REDIRECT_QUERY_STRING'])) {
 		if (IsSet($_SERVER["REDIRECT_QUERY_STRING"])) {
 			parse_str($_SERVER['REDIRECT_QUERY_STRING'], $query_parts);
 			if (IsSet($query_parts['page']))      $PageNo   = $query_parts['page'];

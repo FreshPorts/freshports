@@ -1,10 +1,11 @@
 <?php
 	#
-	# $Id: latest_commits.php,v 1.1.2.4 2004-03-22 20:34:06 dan Exp $
+	# $Id: latest_commits.php,v 1.1.2.5 2004-07-13 13:44:29 dan Exp $
 	#
 	# Copyright (c) 2003-2004 DVL Software Limited
 	#
 
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/constants.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit_record.php');
 
 // base class for keeping statistics on page rendering issues
@@ -41,6 +42,8 @@ class LatestCommits {
 	}
 
 	function CreateHTML() {
+		GLOBAL	$freshports_CommitMsgMaxNumOfLinesToShow;
+
 		$sql = "select * from LatestCommits($this->MaxNumberOfPorts, $this->UserID)";
 
 		if ($this->Debug) echo "\n<pre>sql=$sql</pre>\n";

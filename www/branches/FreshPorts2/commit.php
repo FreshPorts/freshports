@@ -1,5 +1,5 @@
 <?
-	# $Id: commit.php,v 1.1.2.6 2002-04-20 02:19:10 dan Exp $
+	# $Id: commit.php,v 1.1.2.7 2002-04-20 05:17:35 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -261,7 +261,7 @@ if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 
 						// indicate if this port has been removed from cvs
 						if ($myrow["status"] == "D") {
-							$HTML .= " " . freshports_Refresh_Icon() . "\n";
+							$HTML .= " " . freshports_Deleted_Icon() . "\n";
 						}
 
 						// indicate if this port needs refreshing from CVS
@@ -282,7 +282,7 @@ if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 							$HTML .= '&nbsp;' . freshports_Broken_Icon() . "\n";
 						}
 
-						$HTML .= $myrow["short_description"] . "\n";
+						$HTML .= ' ' . htmlspecialchars($myrow["short_description"]) . "\n";
 
 						$j++;
 						$MultiplePortsThisCommit = 1;

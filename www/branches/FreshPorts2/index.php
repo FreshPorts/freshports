@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.29 2002-04-06 14:58:45 dan Exp $
+	# $Id: index.php,v 1.1.2.30 2002-04-09 13:01:22 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -167,7 +167,7 @@ if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 ?>
 
 <tr><td VALIGN="top" WIDTH="100%">
-<table width="<? echo $TableWidth ?>" border="1" CELLSPACING="0" CELLPADDING="8"
+<table width="100%" border="1" CELLSPACING="0" CELLPADDING="8"
             bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">
 <tr>
 		<? freshports_PageBannerText("$MaxNumberOfPorts most recent commits", 3); ?>

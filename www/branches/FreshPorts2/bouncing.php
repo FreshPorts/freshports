@@ -1,5 +1,5 @@
 <?
-   # $Id: bouncing.php,v 1.1.2.1 2002-01-02 02:53:34 dan Exp $
+   # $Id: bouncing.php,v 1.1.2.2 2002-01-05 03:50:52 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -8,6 +8,8 @@
    require("./include/databaselogin.php");
    require("./include/getvalues.php");
 
+#$Debug = 1;
+
 
 if ($submit) {
    $sql = "update users set emailbouncecount = 0 where cookie = '$visitor'";
@@ -15,20 +17,20 @@ if ($submit) {
       echo $sql;
    }
       
-   $result = mysql_query($sql);    
+   $result = pg_exec($db, $sql);
    if ($result) {
       if ($Debug) {
          echo "I would have taken you to '$origin' now, but debugging is on<br>\n";
       } else {
          // Redirect browser to PHP web site
-         if ($origin == "/index.php") {
+         if ($origin == "/index.php" || $origin == '') {
             $origin = "/";
          }
          header("Location: $origin");
          exit;  /* Make sure that code below does not get executed when we redirect. */
       }
    } else {
-      $errors .= 'Something went terribly wrong there.<br>';
+      echo 'Something went terribly wrong there.<br>';
    }
 }
    freshports_Start("your email is bouncing",
@@ -58,6 +60,8 @@ on the customization page (see the link on the right hand side of the page).</p>
 to us.  So we have stopped sending out messages to you.  If you wish to continue to receive such
 messages, you should update your email address on the customization page.</p>
 </tr><td>
+<TR><TD HEIGHT="20">
+</TD></TR>
 <tr><td bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">
 How to fix the problem
 </font></td>

@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_upload.php,v 1.5.2.1 2002-02-16 23:58:49 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.2 2002-02-24 17:13:26 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -29,12 +29,16 @@ $Debug=0;
 		global $gDBG;
 		$gDBG  = false;
 		$clean = false;
+
+		#
+		# is a file name supplied?
+		#
 		if (trim($pkg_info) != '') {
 
 			require_once "pkg_utils.inc";
 
-			$clean = (strpos($mode,"c") === false) ? false : true;
-			$gDBG  = (strpos($mode,"d") === false) ? false : true;
+			$clean = (strpos($mode, "c") === false) ? false : true;
+			$gDBG  = (strpos($mode, "d") === false) ? false : true;
 
 			$retid = -1;
 			if (IsLoginValid($user, $pw, $ret_id) || $visitor) {
@@ -51,7 +55,7 @@ $Debug=0;
 				#
 				if ($visitor) $ret_id = $UserID;
 
-				$result = ProcessPackages($filename, $ret_id, $clean);
+				$result = ProcessPackages($filename, $ret_id, $clean, $db);
 
 				epp("$user Your Ports Are: ");
 				eppp($result['FOUND']);

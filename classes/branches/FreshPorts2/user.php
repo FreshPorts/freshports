@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: user.php,v 1.1.2.13 2003-12-01 16:58:29 dan Exp $
+	# $Id: user.php,v 1.1.2.14 2004-10-25 00:21:36 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -159,6 +159,8 @@ class User {
 	}
 
 	function SetLastWatchListChosen($WatchListID) {
+
+		$Debug = 0;
 		
 		$sql = 'UPDATE users 
 		          set last_watch_list_chosen = \'' . AddSlashes($WatchListID) . '\'
@@ -170,7 +172,7 @@ class User {
 		if ($this->LocalResult) {
 			$numrows = pg_affected_rows($this->LocalResult);
 #			echo "That would give us $numrows rows";
-			$this->last_watch_list_chosen = AddSlashes($last_watch_list_chosen);
+			$this->last_watch_list_chosen = AddSlashes($WatchListID);
 		} else {
 			$numrows = -1;
 			echo 'pg_exec failed: ' . $sql;

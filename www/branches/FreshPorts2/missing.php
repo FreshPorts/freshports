@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing.php,v 1.1.2.15 2003-03-06 14:20:44 dan Exp $
+	# $Id: missing.php,v 1.1.2.16 2003-03-24 12:13:43 dan Exp $
 	#
 	# Copyright (c) 2001-2003 DVL Software Limited
 	#
@@ -62,7 +62,7 @@ Sorry, but I don't know anything about that.
 </P>
 
 <P>
-Perhaps a <A HREF="/categories.php">list of categories</A> for <A HREF="/search.php">the search page</A> might be helpful.
+Perhaps a <A HREF="/categories.php">list of categories</A> or <A HREF="/search.php">the search page</A> might be helpful.
 </P>
 
 </TD>

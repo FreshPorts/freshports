@@ -1,5 +1,5 @@
 --
--- $Id: POSTGRESQL.sql,v 1.1.2.44 2004-08-11 14:44:05 dan Exp $
+-- $Id: POSTGRESQL.sql,v 1.1.2.45 2004-09-13 12:16:16 dan Exp $
 --
 -- Copyright (c) 1998-2003 DVL Software Limited
 --
@@ -48,6 +48,9 @@ grant select on system_branch                  to group www;
 grant select on system_branch_element_revision to group www;
 grant select on tasks                          to group www;
 grant select on user_tasks                     to group www;
+
+grant select on commit_log_ports_vuxml         to group www;
+grant select on vuxml                          to group www;
 
 --
 -- select, update

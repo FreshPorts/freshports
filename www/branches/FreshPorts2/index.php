@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.11 2002-02-12 22:58:04 dan Exp $
+	# $Id: index.php,v 1.1.2.12 2002-02-12 23:40:53 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -293,6 +293,9 @@ ports. A port is marked as new for 10 days.
 						}
 
 						$HTML .= ' ' . $myrow["watch"];
+
+						$HTML .= ' <A HREF="/files.php?id=' . $myrow["commit_log_id"] . 
+									'"><IMG SRC="/images/logs.gif" ALT="files touched by this commit" BORDER="0" WIDTH="17" HEIGHT="20" HSPACE="2"></A>';
 
 						$j++;
 						$MultiplePortsThisCommit = 1;

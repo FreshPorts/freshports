@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.26 2002-02-12 22:58:05 dan Exp $
+   # $Id: freshports.php,v 1.4.2.27 2002-02-12 23:40:54 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -419,33 +419,32 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 //
 // This php3 fragment does the basic port information for a single port.
 //
-   GLOBAL $freshports_CVS_URL;
-   GLOBAL $ShowDepends;
+	GLOBAL $freshports_CVS_URL;
+	GLOBAL $ShowDepends;
 
-   $MarkedAsNew = "N";
-   $HTML .= "<DL>\n";
+	$MarkedAsNew = "N";
+	$HTML .= "<DL>\n";
 
-   $HTML .= "<DT><b>" . $port->port;
-   if (strlen($port->version) > 0) {
-      $HTML .= ' ' . $port->version;
-   }
+	$HTML .= "<DT>";
 
-   $HTML .= "</b>";
+	$HTML .= '<FONT SIZE="+1"><A HREF="/' . $port->category . '/">' . $port->category . '</A>/' . $port->port;
+	if (strlen($myrow["version"]) > 0) {
+    	$HTML .= ' ' . $myrow["version"];
+	}
 
-   // indicate if this port needs refreshing from CVS
-   if ($port->status == "D") {
-      $HTML .= ' <font size="-1">[deleted - port removed from ports tree]';
-      if ($ShowDeletedDate == "Y") {
-         $HTML .= ' on ' . $port->updated;
-      }
-      $HTML .= '</font>';
-   }
+	$HTML .= "</FONT>";
+
+	// indicate if this port needs refreshing from CVS
+	if ($port->status == "D") {
+		$HTML .= ' <font size="-1">[deleted - port removed from ports tree]';
+		if ($ShowDeletedDate == "Y") {
+			$HTML .= ' on ' . $port->updated;
+		}
+		$HTML .= '</font>';
+	}
+
    if ($port->needs_refresh) {
       $HTML .= ' <font size="-1">[refresh]</font>';
-   }
-
-   if (!$HideCategory) {
-      $HTML .= ' <font size="-1"><a href="/' . $port->category . '/">' . $port->category . '</a></font>';
    }
 
    if ($port->date_added > Time() - 3600 * 24 * $DaysMarkedAsNew) {
@@ -453,11 +452,11 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
       $HTML .= " <img src=\"/images/new.gif\" width=28 height=11 alt=\"new!\" hspace=2 align=absmiddle>";
    }
 
-   if ($MarkedAsNew == "Y" || $ShowPortCreationDate) {
-      if ($port->date_added != $port->updated || !($ShowLastChange == "Y" || $ShowEverything) || $ShowPortCreationDate) {
-         $HTML .= ' <font size="-1">(' . date("j M Y H:i", $port->date_added) . ")</font>";
-      }
-   }
+#   if ($MarkedAsNew == "Y" || $ShowPortCreationDate) {
+#      if ($port->date_added != $port->updated || !($ShowLastChange == "Y" || $ShowEverything) || $ShowPortCreationDate) {
+#         $HTML .= ' <font size="-1">(' . date("j M Y H:i", $port->date_added) . ")</font>";
+#      }
+#   }
 
    $HTML .= "</DT>\n<DD>";
    # show forbidden and broken

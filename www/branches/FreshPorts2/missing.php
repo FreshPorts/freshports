@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing.php,v 1.1.2.18 2003-09-24 17:47:41 dan Exp $
+	# $Id: missing.php,v 1.1.2.19 2003-09-25 03:01:53 dan Exp $
 	#
 	# Copyright (c) 2001-2003 DVL Software Limited
 	#
@@ -20,22 +20,24 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 
 	$Debug = 0;
 
+	$pathname = $REQUEST_URI;
+
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/element_record.php');
 
 	UnSet($result);
 
 	$ElementRecord = new ElementRecord($db);
 
-	if (substr($REQUEST_URI, 0, 1) != '/') {
-		$REQUEST_URI = '/' . $REQUEST_URI;
+	if (substr($pathname, 0, 1) != '/') {
+		$pathname = '/' . $pathname;
 	}
 
-	if (!preg_match('|^/?ports/|', $REQUEST_URI)) {
-		$REQUEST_URI = '/ports' . $REQUEST_URI;
+	if (!preg_match('|^/?ports/|', $pathname)) {
+		$pathname = '/ports' . $pathname;
 	}
 
 
-	if ($ElementRecord->FetchByName($REQUEST_URI)) {
+	if ($ElementRecord->FetchByName($pathname)) {
 		if ($ElementRecord->IsPort()) {
 
 			require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-port.php');
@@ -48,10 +50,12 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 				freshports_Category($db, $ElementRecord->id);
 
 			} else {
-				if ($Debug) echo "\$ElementRecord->element_id='$ElementRecord->element_id'<br>";
-				freshports_Commits($ElementRecord);
+				require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-non-port.php');
+				freshports_NonPortDescription($db, $ElementRecord);
 			}
 		}
+	} else {
+		$result = $REQUEST_URI;
 	}
 
 	if ($Debug) {

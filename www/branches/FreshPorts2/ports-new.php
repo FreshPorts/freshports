@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports-new.php,v 1.1.2.31 2005-01-05 23:14:38 dan Exp $
+	# $Id: ports-new.php,v 1.1.2.32 2005-01-06 04:23:41 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -199,4 +199,3 @@ freshports_ShowFooter();
 
 </body>
 </html>
-

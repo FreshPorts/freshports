@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.173 2004-02-22 15:57:02 dan Exp $
+	# $Id: freshports.php,v 1.4.2.174 2004-03-22 18:58:22 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -30,33 +30,49 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php');
 
 
 function freshports_IndexFollow($URI) {
-	$NOINDEX{'/index.php'}				= 1;
-	$NOINDEX{'/date.php'}				= 1;
-	$NOINDEX{'/ports-deleted.php'}		= 1;
-	$NOINDEX{'/ports-new.php'}			= 1;
-	$NOINDEX{'/ports-forbidden.php'}	= 1;
-	$NOFOLLOW{'/date.php'}				= 1;
-	$NOFOLLOW{'/graphs.php'}			= 1;
-	$NOFOLLOW{'/ports-deleted.php'}		= 1;
+	$NOINDEX["/index.php"]				= 1;
+	$NOINDEX["/date.php"]				= 1;
+
+	$NOINDEX['/ports-broken.php']		= 1;
+	$NOINDEX['/ports-deleted.php']		= 1;
+	$NOINDEX['/ports-forbidden.php']	= 1;
+	$NOINDEX['/ports-deprecated.php']	= 1;
+	$NOINDEX['/ports-ignore.php']		= 1;
+	$NOINDEX['/ports-new.php']			= 1;
+
+	$NOFOLLOW["/date.php"]				= 1;
+	$NOFOLLOW['/ports-deleted.php']		= 1;
+	$NOFOLLOW['/graphs.php']			= 1;
+	$NOFOLLOW['/ports-deleted.php']		= 1;
 
 	# well, OK, so it may not be a URI... but it's close
 
-	if (In_Array($URI, $NOINDEX) || In_Array($URI, $NOFOLLOW)) {
-		echo '	<meta name="robots" content="';
-		if ($NOINDEX{$URI}) {
-			echo 'noindex';
-			if ($NOFOLLOW{$URI}) {
-				echo ',';
+	$HTML = '';
+
+	GLOBAL $g_NOFOLLOW;
+	GLOBAL $g_NOINDEX;
+
+
+	if (IsSet($NOFOLLOW[$URI]) || $g_NOFOLLOW) $l_NoFollow = 1;
+	if (IsSet($NOINDEX[$URI])  || $g_NOINDEX)  $l_NoIndex  = 1;
+
+	if ($l_NoFollow || $l_NoIndex) {
+		$HTML .= '	<meta name="robots" content="';
+		if ($l_NoIndex) {
+			$HTML .= 'noindex';
+			if ($l_NoFollow) {
+				$HTML .= ',';
 			}
 		}
 
-		if ($NOFOLLOW{$URI}) {
-			echo 'nofollow';
+		if ($l_NoFollow) {
+			$HTML .= 'nofollow';
 		}
 
-		echo '">' . "\n";
+		$HTML .= '">' . "\n";
 	}
 
+	return $HTML;
 }
 
 function freshports_BannerSpace() {

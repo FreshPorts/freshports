@@ -112,7 +112,7 @@ if ($Debug) {
       $HTML .= '  <item>' . "\n";
       $HTML .= '    <title>' . $myrow["category"] . "/" . $myrow["port"] . '</title>' . "\n";
       $HTML .= '    <link>http://freshports.org/port-description.php3?port=' . $myrow["id"] . '</link>' . "\n";
-      $HTML .= '    <description>' . trim($myrow["update_description"]) . '</description>' . "\n";
+      $HTML .= '    <description>' . htmlspecialchars(trim($myrow["update_description"])) . '</description>' . "\n";
       $HTML .= '  </item>' . "\n";
 
       $TEXT .= $myrow["category"] . "/" . $myrow["port"] . "\n";

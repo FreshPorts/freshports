@@ -1,8 +1,10 @@
 <?
-	# $Id: new-user.php,v 1.1.2.2 2002-01-06 07:29:28 dan Exp $
+	# $Id: new-user.php,v 1.1.2.3 2002-02-25 15:48:13 dan Exp $
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# Copyright (c) 1998-2002 DVL Software Limited
+
 ?>
+
 <table width="*" border="0" cellpadding="1">
 <form action="<?php echo $PHP_SELF . "?origin=" . $origin ?>" method="POST" name=f>
           <tr>
@@ -18,7 +20,7 @@
                <input TYPE="PASSWORD" NAME="Password2" VALUE="<?echo $Password2 ?>" size="20">
             </td>
             <td valign="top">
-               email address (optional):<br>
+               email address (required):<br>
                <input SIZE="35" NAME="email" VALUE="<?echo $email ?>"><br><br>
                <input type="checkbox" name="emailsitenotices_yn" value="ON" <? if ($emailsitenotices_yn == "ON") {echo " checked";}?>>Put me on the announcement mailing list (low volume)<br>
 <br>

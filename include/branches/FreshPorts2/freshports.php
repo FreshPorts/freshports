@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.45 2002-02-24 00:24:56 dan Exp $
+   # $Id: freshports.php,v 1.4.2.46 2002-02-25 15:48:13 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -23,6 +23,12 @@ $DateFormatDefault      = "j M Y";
 $TimeFormatDefault		= "H:i:s";
 
 $FreshPortsTitle		= "FreshPorts";
+
+$WatchNoticeFrequencyDaily			= "D";
+$WatchNoticeFrequencyWeekly			= "W";
+$WatchNoticeFrequencyFortnightly	= "F";
+$WatchNoticeFrequencyMonthly		= "M";
+$WatchNoticeFrequencyNever			= "Z";
 
 $UserStatusActive	   = "A";
 $UserStatusDisabled    = "D";

@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-category.php,v 1.1.2.7 2002-02-21 23:13:54 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.8 2002-02-25 15:48:11 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -18,6 +18,8 @@ function freshports_Category($CategoryID, $db) {
 	$category = new Category($db);
 	$category->FetchByID($CategoryID);
 	$title = $category->{name};
+
+	require("./include/getvalues.php");
 
 	freshports_Start($title,
 					"freshports - new ports, applications",

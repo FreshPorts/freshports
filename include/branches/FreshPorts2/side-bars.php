@@ -1,9 +1,10 @@
 <?
-	# $Id: side-bars.php,v 1.4.2.8 2002-02-22 00:34:19 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.9 2002-02-25 15:48:14 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
 	$ColumnWidth = 155;
+
 ?>
 
 

@@ -1,6 +1,6 @@
 <?php
 
-	# $Id: getvalues.php,v 1.1.2.9 2002-02-24 00:25:29 dan Exp $
+	# $Id: getvalues.php,v 1.1.2.10 2002-02-25 15:48:13 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -18,6 +18,25 @@ $GlobalHideLastChange   = "Y";
 $DaysToShow  = 20;
 $MaxArticles = 40;
 $DaysNew     = 10;
+
+GLOBAL $MaxNumberOfPorts;
+GLOBAL $ShowShortDescription;
+GLOBAL $ShowMaintainedBy;
+GLOBAL $ShowLastChange;
+GLOBAL $ShowDescriptionLink;
+GLOBAL $ShowChangesLink;
+GLOBAL $ShowDownloadPortLink;
+GLOBAL $ShowPackageLink;
+GLOBAL $ShowHomepageLink;
+GLOBAL $FormatDate;
+GLOBAL $FormatTime;
+GLOBAL $DaysMarkedAsNew;
+GLOBAL $EmailBounceCount;
+GLOBAL $CVSTimeAdjustment;
+GLOBAL $UserName;
+GLOBAL $UserID;
+GLOBAL $visitor;
+GLOBAL $db;
 
 $MaxNumberOfPorts		= 100;
 $ShowShortDescription	= "Y";
@@ -71,6 +90,19 @@ if (!empty($visitor)) {
 		if ($numrows) {
 			$myrow = pg_fetch_array ($result, 0);
 			if ($myrow) {
+				if ($myrow["status"] == $UserStatusDisabled) {
+					#
+					# the account has become disabled after they have
+					# logged in.  Let's just leave them a simple
+					# message for them to contact us.
+					#
+
+					freshports_CookieClear();
+					echo 'Database error: Account details corrupted.  Please contact ' . $ProblemSolverEmailAddress . '.<BR>';
+					echo 'You have been logged out.';
+					exit;
+				}
+
 				if ($Debug) echo "we found a row there...\n<br>";
 
 				$UserName				= $myrow["name"];

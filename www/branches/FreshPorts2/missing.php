@@ -1,13 +1,11 @@
 <?
-	# $Id: missing.php,v 1.1.2.6 2002-02-13 00:28:33 dan Exp $
+	# $Id: missing.php,v 1.1.2.7 2002-02-25 15:48:12 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
 	require("./include/common.php");
 	require("./include/freshports.php");
 	require("./include/databaselogin.php");
-
-	require("./include/getvalues.php");
 
 	require("../classes/elements.php");
 	require("../classes/ports.php");

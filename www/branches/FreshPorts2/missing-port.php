@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-port.php,v 1.1.2.14 2002-02-21 23:13:54 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.15 2002-02-25 15:48:11 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
@@ -87,6 +87,9 @@ function freshports_PortDescription($port) {
 
 	header("HTTP/1.1 200 OK");
 	$Title = $port->category . "/" . $port->port;
+
+	require("./include/getvalues.php");
+
 	freshports_Start($Title,
 	        		"$FreshPortsTitle - new ports, applications",
 					"FreeBSD, index, applications, ports");

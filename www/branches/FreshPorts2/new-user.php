@@ -1,5 +1,5 @@
 <?
-	# $Id: new-user.php,v 1.1.2.10 2002-02-24 00:25:53 dan Exp $
+	# $Id: new-user.php,v 1.1.2.11 2002-02-25 15:48:12 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -46,16 +46,11 @@ if ($submit) {
 	# by default, they don't get notified.
 	#
 
-	switch ($watchnotifyfrequency) {
-		case "Z":
-		case "D":
-		case "W":
-		case "F":
-		case "M":
-			break;
-
-		default:
-			$watchnotifyfrequency = "Z";
+	if ($watchnotifyfrequency == $WatchNoticeFrequencyNever       || $watchnotifyfrequency == $WatchNoticeFrequencyWeekly  ||
+	    $watchnotifyfrequency == $WatchNoticeFrequencyFortnightly || $watchnotifyfrequency == $WatchNoticeFrequencyMonthly) {
+		# do nothing
+	} else {
+		$watchnotifyfrequency == $WatchNoticeFrequencyDaily;
 	}
 
 	$WatchNotice = new WatchNotice($db);
@@ -124,17 +119,17 @@ if ($submit) {
 	}
 
 	if ($UserCreated) {
-//		echo "Ummm, I think I created that login.";
-#		SetCookie("visitor", $Cookie, time() + 60*60*24*120, '/');  // good for three months.
 		header("Location: welcome.php?origin=" . $origin);  /* Redirect browser to PHP web site */
 		exit;  /* Make sure that code below does not get executed when we redirect. */
 	}
 } else {
-// not submit
+	// not submit
 
-   // we can't do this if we are submitting because it overwrites the incoming values
-   require( "./include/getvalues.php");
-   $emailsitenotices_yn = "ON";
+	$watchnotifyfrequency = $WatchNoticeFrequencyDaily;
+
+	// we can't do this if we are submitting because it overwrites the incoming values
+	require( "./include/getvalues.php");
+	$emailsitenotices_yn = "ON";
 }
 
    freshports_Start("New User",

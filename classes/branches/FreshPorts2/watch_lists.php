@@ -1,5 +1,5 @@
 <?php
-	# $Id: watch_lists.php,v 1.1.2.6 2002-12-16 13:32:06 dan Exp $
+	# $Id: watch_lists.php,v 1.1.2.7 2003-01-04 17:11:02 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 	#
@@ -15,6 +15,27 @@ class WatchLists {
 
 	function WatchLists($dbh) {
 		$this->dbh	= $dbh;
+	}
+
+	function DeleteAllLists($UserID) {
+		#
+		# Delete a watch list
+		#
+		unset($return);
+
+		$query  = '
+DELETE FROM watch_list 
+ WHERE user_id = ' . $UserID;
+
+		if ($Debug) echo $query;
+		$result = pg_query($this->dbh, $query);
+
+		# that worked and we updated exactly one row
+		if ($result) {
+			$return = 1;
+		}
+
+		return $return;
 	}
 
 	function Fetch($UserID, $element_id = 0) {

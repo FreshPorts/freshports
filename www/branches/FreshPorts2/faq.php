@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.51 2004-08-27 14:05:41 dan Exp $
+	# $Id: faq.php,v 1.1.2.52 2004-09-22 23:04:31 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -285,6 +285,11 @@ down you must read to find something you didn't already know.</P>
 	</P>
 
 	<P><? echo freshports_VuXML_Icon(); ?> <a href="http://www.vuxml.org/freebsd/">VuXML</a> vulnerability.  Click icon for details.
+	</P>
+
+	<P><? echo freshports_Revision_Icon(); ?> Revision details.  Click on the Files icon in the commit history and
+	you'll see what files in this port were touched by this commit.  Click on the Revision details to view the
+	revision of the file associated this commit.
 	</P>
 
 	</BLOCKQUOTE>

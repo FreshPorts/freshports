@@ -229,7 +229,7 @@
 <table width="<?PHP echo $ForumTableWidth; ?>" cellspacing="0" cellpadding="3" border="0">
 <tr>
     <td width="60%" align="left" <?PHP echo bgcolor($ForumNavColor); ?>><?PHP echo $nav; ?></td>
-    <td width="40%" align="right" <?PHP echo bgcolor($ForumNavColor); ?>><div class=nav>&nbsp;<a href="<?PHP echo  "$read_page.$ext?$prev_link"; ?>"><FONT color='<?PHP echo $ForumNavFontColor; ?>'><?PHP echo $lPreviousMessage;?></a></font>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="<?PHP echo "$read_page.$ext?$next_link"; ?>"><FONT color='<?PHP echo $ForumNavFontColor; ?>'><?PHP echo $lNextMessage;?></font></a></div></td>
+    <td width="40%" align="right" <?PHP echo bgcolor($ForumNavColor); ?>><div class=nav>&nbsp;<a href="<?PHP echo  "$read_page.$ext?$prev_link"; ?>"><FONT color='<?PHP echo $ForumNavFontColor; ?>'><?PHP echo $lPreviousMessage;?></a></font>&nbsp;&nbsp;<FONT color='<?PHP echo $ForumNavFontColor; ?>'>|</font>&nbsp;&nbsp;<a href="<?PHP echo "$read_page.$ext?$next_link"; ?>"><FONT color='<?PHP echo $ForumNavFontColor; ?>'><?PHP echo $lNextMessage;?></font></a></div></td>
 </tr>
 </table>
 <?PHP if ($rows==0 || $bodyrows==0) { ?>

@@ -1,5 +1,5 @@
 <?
-	# $Id: constants.php,v 1.1.2.1 2002-04-19 17:05:24 dan Exp $
+	# $Id: constants.php,v 1.1.2.2 2002-04-19 21:52:35 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -11,7 +11,7 @@ $BannerBorder           = "1";
 $BannerFontSize         = "+1";
 
 $BannerWidth            = "100%";
-$TableWidth             = "98%";
+$TableWidth             = "100%";
 $DateFormatDefault      = "j M Y";
 $TimeFormatDefault		= "H:i:s";
 

@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.40 2002-04-19 17:06:19 dan Exp $
+	# $Id: index.php,v 1.1.2.41 2002-04-19 21:52:34 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -76,7 +76,7 @@ if ($Debug) {
 
 ?>
 
-<TABLE WIDTH="100%" BORDER="0" ALIGN="center">
+<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 
 <?
 if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {

@@ -13,7 +13,7 @@ $GlobalHideLastChange   = "Y";
 
 $DaysToShow  = 20;
 $MaxArticles = 40;
-$DaysNew     = 20;
+$DaysNew     = 10;
 
 $MaxNumberOfPorts	= 20;
 $ShowShortDescription	= "Y";
@@ -26,7 +26,8 @@ $ShowPackageLink	= "Y";
 $ShowHomepageLink	= "Y";
 $FormatDate		= $FormatDateDefault;
 $FormatTime		= $FormatTimeDefault;
-$DaysMarkedAsNew	= 21;
+$DaysMarkedAsNew	= $DaysMarkedAsNewDefault;
+$EmailBounceCount	= 0;
 
 $UserName		= "";
 $UserID			= "";
@@ -63,11 +64,14 @@ if (!empty($visitor)) {
          $ShowPackageLink	= $myrow["show_package_link"];
          $ShowHomepageLink	= $myrow["show_homepage_link"];
 
+/*
          if ($myrow["days_marked_as_new"]) {
             $DaysMarkedAsNew	= $myrow["days_marked_as_new"];
          } else {
             $DaysMarkedAsNew	= $DaysMarkedAsNewDefault;
          }
+*/
+
 /*
          if ($myrow["format_date"]) {
             $FormatDate		= $myrow["format_date"];
@@ -86,6 +90,8 @@ if (!empty($visitor)) {
          $SampleFormatDate	= $myrow["sample_date"];
          $SampleFormatTime	= $myrow["sample_time"];
 */
+
+         $EmailBounceCount	= $myrow["emailbouncecount"];
  
 //        echo "visitor = $visitor<br>";
 

@@ -22,6 +22,12 @@
 //if ($UserName) {
 if ($UserID) {
    echo '<font SIZE="-1">Logged in as ', $UserName, "</font><br>";
+
+   if ($EmailBounceCount > 0) {
+      echo '<img src="/images/warning.gif"><img src="/images/warning.gif"><img src="/images/warning.gif"><br>';
+      echo '<font SIZE="-1">your email is <a href="bouncing.php3?origin=' . $OriginLocal. '">bouncing</a></font><br>';
+      echo '<img src="/images/warning.gif"><img src="/images/warning.gif"><img src="/images/warning.gif"><br>';
+   }
    echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/customize.php3?origin=$OriginLocal", "Customize") . '</font><br>';
 
    echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/logout.php3?origin=$OriginLocal", "Logout") . '</font><br>';

@@ -1,5 +1,5 @@
 <?
-   # $Id: index.php3,v 1.29 2001-10-10 03:27:04 dan Exp $
+   # $Id: index.php3,v 1.30 2001-10-11 04:54:39 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -15,9 +15,12 @@
 #$Debug=1;
 
 #
-# $Author: dan $ $Date: 2001-10-10 03:27:04 $
-# $Header: /home/dan/repositories/freshports-1/www/Attic/index.php3,v 1.29 2001-10-10 03:27:04 dan Exp $
+# $Author: dan $ $Date: 2001-10-11 04:54:39 $
+# $Header: /home/dan/repositories/freshports-1/www/Attic/index.php3,v 1.30 2001-10-11 04:54:39 dan Exp $
 # $Log: not supported by cvs2svn $
+# Revision 1.29  2001/10/10 03:27:04  dan
+# Add the HEADS UP to the website and newsfeed
+#
 # Revision 1.28  2001/10/09 20:41:54  dan
 # how about we fix the right code here.
 #
@@ -43,7 +46,7 @@
 # Add some headers
 #
 # $Name: not supported by cvs2svn $
-# $Revision: 1.29 $
+# $Revision: 1.30 $
 #
 
 //echo "UserID='$UserID'";
@@ -136,6 +139,13 @@ ports on your watch list which have changed since your last
 notice.  And a short description of the change.<P>
 
 <P>Enjoy</P>
+
+<P ALIGN="left">
+<BIG><BIG>DISK WANTED: </BIG></BIG>I need a hard drive please.  At least 500MB.  I'm trying
+to set up a development box so people can work on FreshPorts2.  Either SCSI or IDE is fine.
+Please contact me on <A HREF="mailto:donations@freebsddiary.org">donations@freebsddiary.org</A>.
+Unless you say otherwise, your kind contribution will be acknowledged here.  Thanks
+</P>
 
 <table width="100%" border="0">
 <tr><td colspan="2">Welcome to FreshPorts, where you can find the latest information on your favourite

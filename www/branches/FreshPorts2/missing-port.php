@@ -1,11 +1,12 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.50 2004-03-22 19:01:08 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.51 2004-07-06 03:25:18 dan Exp $
 	#
 	# Copyright (c) 2001-2003 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/master_slave.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/htmlify.php');
 
 #
@@ -62,10 +63,11 @@ $ShowShortDescription	= "Y";
 $ShowMaintainedBy			= "Y";
 $GlobalHideLastChange	= "Y";
 $ShowDescriptionLink		= "N";
+$ShowMasterSlave		= 1;
 
 GLOBAL $ShowWatchListCount;
 
-	$HTML = freshports_PortDetails($port, $port->dbh, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 0, '', 1, "N", 1, 1, $ShowWatchListCount);
+	$HTML = freshports_PortDetails($port, $port->dbh, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 0, '', 1, "N", 1, 1, $ShowWatchListCount, $ShowMasterSlave);
 	echo $HTML;
 
 	echo '<DL><DD>';

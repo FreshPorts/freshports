@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.148 2003-07-04 14:59:19 dan Exp $
+	# $Id: freshports.php,v 1.4.2.149 2003-07-30 12:19:22 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -209,7 +209,6 @@ function freshports_MoreCommitMsgToShow($message_id, $NumberOfLinesShown) {
 }
 
 function freshports_CookieClear() {
-#	echo " clearing the cookie";
 	SetCookie("visitor", '', 0, '/');
 }
 
@@ -374,20 +373,18 @@ function freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum=0) {
 
 	echo "\">
 	<META NAME=\"keywords\"    CONTENT=\"$Keywords\">
-	<META http-equiv=\"Pragma\"              content=\"no-cache\">
 ";
-
-	echo '	<meta name="MSSmartTagsPreventParsing" content="TRUE">' . "\n";
 
 ?>
 
-	<LINK REL="SHORTCUT ICON" HREF="http://www.freshports.org/favicon.ico">
+	<LINK REL="SHORTCUT ICON" HREF="/favicon.ico">
 	<meta name="MSSmartTagsPreventParsing" content="TRUE">
+
 	<META http-equiv="Pragma"              CONTENT="no-cache">
-	<META HTTP-EQUIV="Expires"             CONTENT="0">
 	<META HTTP-EQUIV="Cache-Control"       CONTENT="no-cache">
 	<META HTTP-EQUIV="Pragma-directive"    CONTENT="no-cache">
 	<META HTTP-EQUIV="cache-directive"     CONTENT="no-cache">
+	<META HTTP-EQUIV="Expires"             CONTENT="0">
 	<META NAME="ROBOTS"                    CONTENT="NOARCHIVE">
 
 <?php
@@ -719,7 +716,6 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 				$HTML .= ' ' . freshports_Commit_Link($port->message_id);
 				$HTML .= ' ' . freshports_CommitFilesLink($port->message_id, $port->category, $port->port);
 
-#				$HTML .= freshports_PortDescriptionPrint($port->update_description, $port->encoding_losses);
  				$HTML .= freshports_PortDescriptionPrint($port->update_description, $port->encoding_losses, 
  				 				$freshports_CommitMsgMaxNumOfLinesToShow, 
  				 				freshports_MoreCommitMsgToShow($port->message_id,
@@ -882,16 +878,6 @@ if ($ShowDepends) {
 }
 
 function freshports_navigation_bar_top() {
-#GLOBAL $TableWidth;
-#
-#echo '<TABLE BGCOLOR="#663333" WIDTH="' . $TableWidth . '" CELLPADDING="3" CELLSPACING="0" BORDER="1">
-#<TR>
-#        <TD ALIGN="center"><P CLASS="yellow">[ <A CLASS="white" HREF="/">HOME</A> | <A CLASS="white" HREF="/topics.php">TOPICS</A> | <A CLASS="white" HREF="/chronological.php">INDEX</A> | <A CLASS="white" HREF="/help.php">WEB RESOURCES</A> | <A CLASS="white" HREF="/booksmags.php">BOOKS/MAGS</A> | <A CLASS="white" HREF="/contribute.php">CONTRIBUTE</A> | <A CLASS="white" HREF="/search.php">SEARCH</A> | <A CLASS="white" HREF="/feedback.php">FEEDBACK</A> | <A CLASS="white" HREF="/faq.php">FAQ</A> | <A CLASS="white" HREF="/phorum/">FORUMS</A> ]</P>
-#</TD>
-#</TR>
-#</TABLE>
-#';
-
 }
 
 function freshports_copyright() {
@@ -1167,7 +1153,6 @@ function freshports_GetNextValue($sequence, $dbh) {
 
 	$result = pg_exec($dbh, $sql);
 	if ($result && pg_numrows($result)) {
-		$retval    = true;
 		$row       = pg_fetch_array($result,0);
 		$NextValue = $row[0];
 	} else {
@@ -1218,10 +1203,9 @@ function freshports_UserSendToken($UserID, $dbh) {
 
 	$result = pg_exec($dbh, $sql);
 	if ($result && pg_numrows($result)) {
-		$retval	= true;
-		$row	= pg_fetch_array($result,0);
-		$email	= $row[0];
-		$token	= $row[1];
+		$row   = pg_fetch_array($result,0);
+		$email = $row[0];
+		$token = $row[1];
 	} else {
 		pg_errormessage() . ' sql = $sql';
 	}

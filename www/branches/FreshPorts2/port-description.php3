@@ -1,5 +1,5 @@
 <?
-   # $Id: port-description.php3,v 1.25 2001-10-20 21:50:40 dan Exp $
+   # $Id: port-description.php3,v 1.25.2.1 2001-11-25 17:33:41 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -16,32 +16,30 @@ if (!$port || $port != strval(intval($port))) {
    $port = intval($port);                     
 }
 
-$sql = "select ports.id, ports.name as port, ports.id as ports_id, " .
+$sql = "select ports.id, element.name as port, ports.id as ports_id, " .
        "categories.name as category, categories.id as category_id, ports.version as version, ".
-       "ports.last_update_description as update_description, " .
-       "ports.maintainer, ports.short_description, ports.long_description, UNIX_TIMESTAMP(ports.date_created) as date_created, ".
-       "date_format(date_created, '$FormatDate $FormatTime') as date_created_formatted, ".
+       "ports.maintainer, ports.short_description, ports.long_description, ".
        "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, " .
-       "ports.depends_run, ports.depends_build, ports.categories, ports.status, " .
+       "ports.depends_run, ports.depends_build, element.status, " .
        "ports.broken, ports.forbidden " .
-       "from ports, categories  ".
+       "from ports, categories, element  ".
        "WHERE ports.id = $port ".
-       "  and ports.primary_category_id       = categories.id ";
+       "  and ports.category_id	= categories.id " .
+       "  and ports.element_id	= element.id";
 
 if ($Debug) {
    echo "\nsql = $sql\n";
 }
 
-$result = mysql_query($sql, $db);
+$result = pg_exec($db, $sql);
 
 if (!$result) {
-   print mysql_error() . "<br>\n";
+   print pg_errormessage() . "<br>\n";
    exit;
 }
 
-$myrow = mysql_fetch_array($result);
-
-$NumRows = mysql_num_rows($result);
+$myrow = pg_fetch_array ($result, 0);
+$NumRows = pg_numrows($result);
 
    if ($NumRows) {
       $Title = $myrow["category"] . "/" . $myrow["port"];
@@ -100,23 +98,31 @@ if ($NumRows) {
    echo '<tr height="20"><td colspan="3" bgcolor="#AD0040"><font color="#FFFFFF"><font size="+1">Commit History</font> (may be incomplete: see Changes link above for full details)</font></td></tr>' . "\n";
    echo "<tr><td><b>Date</b></td><td><b>Committer</b></td><td><b>Description</b></td></tr>\n";
 
-   $sql = "select change_log_port.id, commit_date, update_description, committer " .
-          "  from change_log, change_log_port " .
-          " where change_log.id                     = change_log_port.change_log_id ".
-          "   and change_log_port.port_id           =  $port". 
+   $sql = "select distinct commit_log.id, commit_date, description, committer " .
+          "  from commit_log, commit_log_port " .
+          " where commit_log.id            = commit_log_port.commit_log_id ".
+          "   and commit_log_port.port_id  =  $port". 
           " order by commit_date desc ";
 
-   $result = mysql_query($sql, $db);
-   $numrows = 0;
-   while ($myrow = mysql_fetch_array($result)) {
-      $numrow++;
+	$result = pg_exec($db, $sql);
+	$numrows = pg_numrows($result);
+#echo "sql = $sql\n";
+#echo "that's $numrows rows\n";
+
+   $i = 0;
+   while ($myrow = pg_fetch_array($result, $i)) {
+      $i++;
       echo "<tr><td valign='top'><font size='-1'>" . $myrow["commit_date"]        . "</font></td>\n";
       echo "    <td valign='top'>" . $myrow["committer"]          . "</td>\n";
       echo '    <td valign="top"><a href="files.php3?id=' . $myrow["id"] .
                       '"><img src="images/logs.gif" alt="Files within this port affected by this commit" border="0" WIDTH="17" HEIGHT="20" hspace="2"></a>' . 
-                       htmlspecialchars($myrow["update_description"]) . "</td>\n";
+                       htmlspecialchars($myrow["description"]) . "</td>\n";
       echo "</tr>\n";
-   }
+		if ($i >  $numrows - 1) {
+			break;
+		}
+	}
+
    echo "</table></td></tr>\n";
 }
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: status.php,v 1.1.2.2 2003-09-30 11:38:21 dan Exp $
+	# $Id: status.php,v 1.1.2.3 2003-10-17 21:17:33 dan Exp $
 	#
 	# Copyright (c) 2003 DVL Software Limited
 	#
@@ -46,7 +46,16 @@ echo "</tr>\n";
 foreach ($queues as $queue => $pattern) {
 	echo '<tr><td><b>' . $queue_names[$queue] . '</b></td>';
 	foreach ($sites as $site) {
-		$count = exec("ls $base/$site/msgs/FreeBSD/$queue/$pattern | wc -l");
+		$command = "find $base/$site/msgs/FreeBSD/$queue/";
+		if ($pattern) {
+			$command .= " -name \"$pattern\"";
+		}
+		$command .= ' | wc -l';
+
+		# the above command will return 1 for an empty directory.
+		# so adjust appropriately
+
+		$count = exec($command) - 1;
 		echo '<td align="right">' . $count . '</td>';
 	}
 	echo "</tr>\n";

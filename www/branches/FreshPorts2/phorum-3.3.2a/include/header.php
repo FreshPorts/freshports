@@ -1,5 +1,5 @@
 <?
-	# $Id: header.php,v 1.1.2.2 2002-02-16 23:51:20 dan Exp $
+	# $Id: header.php,v 1.1.2.3 2002-02-21 06:18:42 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -20,7 +20,7 @@
 <TR>
     <!-- first column in body -->
     <TD WIDTH="100%" VALIGN="top" ALIGN="center">
+<div class="PhorumForumTitle" ALIGN="left"><b><?php echo $ForumName; ?></b></div>
 <TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" ALIGN="center">
 <TR><TD VALIGN="top">
 
-<div class="PhorumForumTitle"><b><?php echo $ForumName; ?></b></div>

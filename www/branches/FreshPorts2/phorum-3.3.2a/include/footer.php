@@ -1,6 +1,11 @@
 </td><td valign="top" align="right">
 &nbsp;
 </td>
+
+<TD VALIGN="top" WIDTH="*">
+   <? include($DOCUMENT_ROOT . "/include/side-bars.php") ?>
+</TD>
+
 </tr>
 </table>
 <? include("../include/footer.php") ?>

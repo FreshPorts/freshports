@@ -1,5 +1,5 @@
 <?
-	# $Id: side-bars.php,v 1.4.2.34 2002-08-12 03:22:36 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.35 2002-09-09 18:14:06 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -16,7 +16,7 @@
         </TR>
         <TR>
 
-         <TD><?php
+         <TD NOWRAP><?php
    switch (basename($_SERVER["PHP_SELF"])) {
 //      case "watch.php":
 //      case "watch-categories.php":
@@ -63,9 +63,10 @@ if ($visitor) {
    echo '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/logout.php',           $args,                  "Logout"                 ) . '</FONT><BR>';
 
 
-   echo '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/pkg_upload.php',       '',                     "watch list - upload") . '</FONT><BR>';
-   echo '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/watch-categories.php', '',                     "watch list - Categories") . '</FONT><BR>';
-   echo '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/watch.php',            '',                     "your watched ports"     ) . '</FONT><BR>';
+   echo '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/pkg_upload.php',           '',                     "Watch list - upload") . '</FONT><BR>';
+   echo '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/watch-categories.php',     '',                     "Watch list - Categories") . '</FONT><BR>';
+   echo '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/watch.php',                '',                     "Your watched ports"     ) . '</FONT><BR>';
+   echo '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/report-subscriptions.php', '',                     "Report Subscriptions"   ) . '</FONT><BR>';
   } else {
    echo '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/login.php',            "?origin=$OriginLocal", "User Login"             ) . '</FONT><BR>';
    echo '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/new-user.php',         "?origin=$OriginLocal", "Create account"         ) . '</FONT><BR>';

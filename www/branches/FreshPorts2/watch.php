@@ -1,5 +1,5 @@
 <?
-	# $Id: watch.php,v 1.1.2.34 2002-12-12 02:45:25 dan Exp $
+	# $Id: watch.php,v 1.1.2.35 2002-12-16 13:35:43 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -34,10 +34,18 @@ if (!$visitor) {
 	if ($_POST["watch_list_select_x"] && $_POST["watch_list_select_y"]) {
 		# they clicked on the GO button and we have to apply the 
 		# watch staging area against the watch list.
-		$WatchListID = AddSlashes($_POST["watch_list_id"]);
-		if ($Debug) echo "\$WatchListID='$WatchListID'";
+		$wlid = AddSlashes($_POST["wlid"]);
+		if ($Debug) echo "setting SetLastWatchListChosen => \$wlid='$wlid'";
+		$User->SetLastWatchListChosen($wlid);
+		if ($Debug) echo "\$wlid='$wlid'";
 	} else {
-		$WatchListID = '';
+		$wlid = $User->last_watch_list_chosen;
+		if ($Debug) echo "\$wlid='$wlid'";
+		if ($wlid == '') {
+			$WatchLists = new WatchLists($db);
+			$wlid = $WatchLists->GetDefaultWatchListID($User->id);
+			if ($Debug) echo "GetDefaultWatchListID => \$wlid='$wlid'";
+		}
 	}
 
 ?>
@@ -58,7 +66,7 @@ That link also occurs on the right hand side of this page, under Login.
 
 <?php
 
-echo freshports_WatchListDDLBForm($db, $User->id, $WatchListID);
+echo freshports_WatchListDDLBForm($db, $User->id, $wlid);
 
 ?>
 
@@ -101,7 +109,7 @@ switch ($sort) {
 echo "</td></tr>\n";
 
 
-if ($WatchListID == '') {
+if ($wlid == '') {
 	echo '<tr><td align="right"><BIG>Please select a watch list.</BIG><p>eventually, if you have just one watch list, this will default.</td></tr>';
 } else {
 	
@@ -137,7 +145,7 @@ if ($WatchListID == '') {
 	 WHERE ports.category_id                = categories.id 
 	   and watch_list_element.element_id    = ports.element_id 
 		and ports.element_id                 = element.id
-	   and watch_list_element.watch_list_id = $WatchListID
+	   and watch_list_element.watch_list_id = $wlid
 	
 	
 	) as TEMP
@@ -244,7 +252,7 @@ if ($WatchListID == '') {
 
 	echo $HTML;
 
-} // end if no WatchListID
+} // end if no wlid
 
 </script>
 </table>

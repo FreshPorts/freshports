@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-list-maintenance.php,v 1.1.2.16 2002-12-15 15:55:53 dan Exp $
+	# $Id: watch-list-maintenance.php,v 1.1.2.17 2002-12-16 13:35:58 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -124,8 +124,8 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 		case 'rename':
 			# check valid new name
 			# check only one watch list supplied
-			if (count($_POST['watch_list_id']) == 1) {
-				list($key, $WatchListIDToRename) = each($_POST['watch_list_id']);
+			if (count($_POST['wlid']) == 1) {
+				list($key, $WatchListIDToRename) = each($_POST['wlid']);
 				$WatchList = new WatchList($db);
 				$NewName = $WatchList->Rename($WatchListIDToRename, $_POST['rename_name']);
 				if ($Debug) echo 'I have renamed your list to \'' . AddSlashes($_POST['rename_name']) . '\'';
@@ -138,7 +138,7 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 		case 'delete':
 			pg_query($db, 'BEGIN');
 			$WatchList = new WatchList($db);
-			while (list($key, $WatchListIDToDelete) = each($_POST['watch_list_id'])) {
+			while (list($key, $WatchListIDToDelete) = each($_POST['wlid'])) {
 				if ($Debug) echo "\$key='$key' \$WatchListIDToDelete='$WatchListIDToDelete'<br>";
 				$DeletedWatchListID = $WatchList->Delete(AddSlashes($WatchListIDToDelete));
 				if ($DeletedWatchListID != $WatchListIDToDelete) {
@@ -154,7 +154,7 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 		case 'empty_all':
 			pg_query($db, 'BEGIN');
 			$WatchList = new WatchList($db);
-			while (list($key, $WatchListIDToEmpty) = each($_POST['watch_list_id'])) {
+			while (list($key, $WatchListIDToEmpty) = each($_POST['wlid'])) {
 				if ($Debug) echo "\$key='$key' \$WatchListIDToEmpty='$WatchListIDToEmpty'<br>";
 				$EmptydWatchListID = $WatchList->EmptyTheList(AddSlashes($WatchListIDToEmpty));
 				if ($EmptydWatchListID != $WatchListIDToEmpty) {
@@ -169,7 +169,7 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 			if ($Debug) echo 'I have set your default lists.<br>';
 			pg_query($db, 'BEGIN');
 			$WatchLists = new WatchLists($db);
-			$numrows = $WatchLists->In_Service_Set($User->id, $_POST['watch_list_id']);
+			$numrows = $WatchLists->In_Service_Set($User->id, $_POST['wlid']);
 			if ($Debug) echo "$numrows watchlists were affected by that action";
 			if ($numrows >= 0) {
 				pg_query($db, 'COMMIT');

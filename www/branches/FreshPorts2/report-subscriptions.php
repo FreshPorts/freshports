@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: report-subscriptions.php,v 1.1.2.22 2003-10-16 16:27:39 dan Exp $
+	# $Id: report-subscriptions.php,v 1.1.2.23 2003-10-16 19:49:30 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -215,7 +215,7 @@ You may wish to help me test new FreshPorts features or even just get a sneak
 peek at them.  If so, I urge you to join the new Beta mailing list.  This
 will be a low volume list which broadcasts details of new features which
 you can try out before they hit the main website.  To subscribe, send
-an email to majordomo at lists.unxiathome.org, with this in the body of the
+an email to majordomo at lists.freshports.org, with this in the body of the
 message:
 
 <blockquote><pre class="code">

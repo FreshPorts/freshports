@@ -4,7 +4,7 @@
 	if (IsSet($_REQUEST['vid'])) {
 		$vid = $_REQUEST['vid'];
 
-		$vidArray = split('|', $vid);
+		$vidArray = explode('|', $vid);
 
 		if (count($vidArray) == 1) {
 			header('Location: ' . VUXMLURL . $_REQUEST['vid'] . '.html');

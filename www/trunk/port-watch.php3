@@ -29,7 +29,7 @@ testing. Information found here may be widely out of date and/or inaccurate.  Us
 See also <a href="ports.php3">freshports by ports</a>.
 </td></tr>
   <tr>
-    <td bgcolor="#AD0040" height="29"><big><big><font color="#FFFFFF">freshports - watch ports (<em><? echo $categoryname ?>)</em></font></big></big></td>
+	<td bgcolor="#AD0040" height="29"><big><big><font color="#FFFFFF">freshports - watch ports (<em><? echo $categoryname ?>)</em></font></big></big></td>
   </tr>
 <tr><td>
 <?
@@ -216,19 +216,7 @@ if ($UserID) {
   $HTML .= '<form action="' . $PHP_SELF . "?category=$category". '" method="POST">';
 }
 
-$HTML .= "\n" . '<table width="100%" border=1>' . "\n";
-
-/*
-
-$HTML .= "<tr>";
-if ($UserID) {                  
-   $HTML .= '<td valign="bottom" width="40" valign="top" align="center"><b>Add to Watch List</b></td>';
-} 
-$HTML .= '<td valign="bottom" width="*"><b>Category</b></td>';
-$HTML .= '<td valign="bottom" width="300"><b>Description</b></td>';
-
-$HTML .= '</tr>' . "\n";
-*/
+$HTML .= "\n" . '<table cellpadding=12 border=1>' . "\n";
 
 // get the list of topics, which we need to modify the order
 
@@ -256,14 +244,15 @@ for ($i = 0; $i < $NumPorts; $i++) {
       $HTML .= '<td valign="top">';
    }
 
-//   $HTML .= '<input type="checkbox" name="port_' . $rows[$i]["id"] . '" value="ON"';
    $HTML .= '<input type="checkbox" name="ports[]" value="'. $rows[$i]["id"] .'"';
 
    if (${"port_".$rows[$i]["id"]}) $HTML .= " checked ";
 
    $HTML .= '>';
 
-   $HTML .= $rows[$i]["name"];
+   $URL_Category = "port-description.php3?port=" . $rows[$i]["id"];
+
+   $HTML .= ' <a href="' . $URL_Category . '">' . $rows[$i]["name"] . '</a>';
    $HTML .= "<br>\n";
 }
 

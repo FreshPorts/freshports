@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: security-notice.php,v 1.1.2.11 2003-09-09 19:25:13 dan Exp $
+	# $Id: security-notice.php,v 1.1.2.12 2004-02-13 15:13:40 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -13,9 +13,26 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/watch-lists.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/security_notice.php');
+
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/security_notice_audit.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user_tasks.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/htmlify.php');
+
+function MassageStatus($InStatus) {
+	$OutStatus = '';
+	switch ($InStatus) {
+		case SECURITY_NOTICE_STATUS_ACTIVE:
+		case SECURITY_NOTICE_STATUS_CANDIDATE:
+		case SECURITY_NOTICE_STATUS_IGNORE:
+			$OutStatus = $InStatus;
+			break;
+
+		default:
+			die("unexpected value for Status: '$InStatus'");
+	}
+
+	return $OutStatus;	
+}
 
 	$PageTitle = 'Security Notice';
 
@@ -31,13 +48,15 @@
 
 	$SecurityNotice = new SecurityNotice($db);
 
-
 	if (IsSet($_REQUEST[submit])) {
 		$result = "ROLLBACK";
-		pg_exec($db, "BEGIN");
+
 		$SecurityNotice->user_id     = $User->id;
-		$SecurityNotice->ip_address  = AddSlashes($_SERVER[REMOTE_ADDR]);
-		$SecurityNotice->description = AddSlashes($_REQUEST[description]);
+		$SecurityNotice->ip_address  = AddSlashes($_SERVER['REMOTE_ADDR']);
+		$SecurityNotice->description = AddSlashes($_REQUEST['description']);
+		$SecurityNotice->status      = MassageStatus(AddSlashes($_REQUEST['status']));
+
+		pg_exec($db, "BEGIN");
 		if ($SecurityNotice->Create($message_id)) {
 			if ($SecurityNotice->FetchByMessageID($message_id)) {
 				$result = "COMMIT";
@@ -66,14 +85,26 @@
 		echo 'mailed out to users and marked with a <a href="/faq.php">security lock</a> whereever that commit appears.';
 		echo "</p>\n";
 	}
-	if (IsSet($SecurityNotice->id)) {
-		echo '<p>' . freshports_Security_Icon() . ' This commit has been marked as security related</p>';
-	} else {
-		echo 'This commit is not security related.';
-	}
 ?>
+<p>
+<?php
+
+	if ($SecurityNotice->status == SECURITY_NOTICE_STATUS_ACTIVE) {
+		$SecurityFlag = freshports_Security_Icon() . '<b>This commit is set as security related.</b>';
+	} else {
+		if ($SecurityNotice->status == SECURITY_NOTICE_STATUS_CANDIDATE) {
+			$SecurityFlag = '<b>This commit is a security notice candidate.</b>';
+		} else {
+			$SecurityFlag = '<b>This commit is not security related.</b>';
+		}
+	}
+
+	echo $SecurityFlag;
+
+?>
+</p>
 </TD></TR>
-	<?
+<?php
 	$Debug = 0;
 
 	$Commit = new Commit($db);
@@ -118,7 +149,7 @@
 Please enter your reasoning for marking the above commit as a security issue.
 </p>
 
-<FORM ACTION="<? echo $_SERVER["PHP_SELF"]; ?>" method="POST">
+<FORM ACTION="<? echo $_SERVER["PHP_SELF"] . '?message_id=' . $message_id; ?>" method="POST">
 	<TEXTAREA NAME="description" ROWS="10" COLS="60"><?php
 	if (IsSet($SecurityNotice->description)) {
 		echo $SecurityNotice->description;
@@ -127,12 +158,15 @@ Please enter your reasoning for marking the above commit as a security issue.
 	}
 ?></TEXTAREA>
 	<BR>
+	<INPUT TYPE="radio" <? if ($SecurityNotice->status == SECURITY_NOTICE_STATUS_ACTIVE)    echo 'CHECKED'; ?> VALUE=<?php echo SECURITY_NOTICE_STATUS_ACTIVE;    ?> NAME=status> Security related<br>
+	<INPUT TYPE="radio" <? if ($SecurityNotice->status == SECURITY_NOTICE_STATUS_CANDIDATE) echo 'CHECKED'; ?> VALUE=<?php echo SECURITY_NOTICE_STATUS_CANDIDATE; ?> NAME=status> Candidate<br>
+	<INPUT TYPE="radio" <? if ($SecurityNotice->status == SECURITY_NOTICE_STATUS_IGNORE)    echo 'CHECKED'; ?> VALUE=<?php echo SECURITY_NOTICE_STATUS_IGNORE;    ?> NAME=status> Ignore<br>
 	<INPUT TYPE="submit" VALUE="Save Security Info" NAME="submit">
 	<INPUT TYPE="hidden" NAME="message_id" VALUE="<? echo $message_id; ?>">
 </FORM>
 <?php
 	} else {
-		echo htmlify(htmlspecialchars($SecurityNotice->description)) . "\n";
+		echo htmlify(htmlspecialchars($SecurityNotice->commit_description)) . "\n";
 	}
 
 	if (IsSet($SecurityNotice->id) && $UserCanEdit) {
@@ -145,9 +179,9 @@ Please enter your reasoning for marking the above commit as a security issue.
 <tr>
 <td><?php echo $SecurityNotice->date_added;  ?></td>
 <td><?php echo $SecurityNotice->description; ?></td>
-<td><?php echo $UserAlt->name;               ?></td>
+<td><?php echo $SecurityNotice->user_name;   ?></td>
 <td><?php echo $SecurityNotice->ip_address;  ?></td>
-<td><?php echo $UserAlt->email;              ?></td>
+<td><?php echo $SecurityNotice->user_email;  ?></td>
 <td><?php echo $SecurityNotice->status;      ?></td>
 </tr>
 
@@ -166,17 +200,19 @@ Please enter your reasoning for marking the above commit as a security issue.
 <td><?php echo $SecurityNoticeAudit->user_email;  ?></td>
 <td><?php echo $SecurityNoticeAudit->status;      ?></td>
 </tr>
-<?php	
-	}
+<?php
+	}  // end for
 ?>
 
 </table>
 
 <?php
-
-		echo freshports_Security_Icon() . 'This commit is set as security related';
-	}
+} // User Can Edit
 ?>
+
+<p>
+<?php echo $SecurityFlag; ?>
+</p>
 </TD>
 </TR>
 </TABLE>

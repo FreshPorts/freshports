@@ -1,4 +1,5 @@
 <P ALIGN="left">
-<BIG>FreshPorts2:</BIG> Have you been to the <A HREF="http://test.FreshPorts.org/">beta test site yet</A>?  Please have 
-a look around, read the FAQ, and check the forum there for details on new features and how you can help with the testing.
+<BIG>CASH WANTED!</BIG> The domain is up for renewal.  As such I am asking for those among you who can afford to
+donate cash, to please transfer via paypal to my account (donations@freebsddiary.org).  Any excess payment
+will be applied to the running of other domains (e.g. the FreeBSD Diary) and running expenses.  Thank you.
 </P>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.43 2004-08-27 13:47:22 dan Exp $
+	# $Id: commit.php,v 1.1.2.44 2004-08-27 13:49:45 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -15,6 +15,11 @@ DEFINE('MAX_PAGE_SIZE',     1000);
 DEFINE('DEFAULT_PAGE_SIZE', 500);
 
 DEFINE('NEXT_PAGE',		'Next');
+
+	$message_id = '';
+	$commit_id  = '';
+	$page       = '';
+	$page_size  = '';
 
 	if (IsSet($_GET['message_id'])) $message_id = AddSlashes($_GET['message_id']);
 	if (IsSet($_GET['commit_id']))  $commit_id  = AddSlashes($_GET['commit_id']);

@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.109 2002-12-02 17:31:12 dan Exp $
+	# $Id: freshports.php,v 1.4.2.110 2002-12-03 16:01:14 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -1162,6 +1162,10 @@ include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php");
 echo '
 </TD>
 ';
+}
+
+function freshports_LinkToDate($Date) {
+	return '<a href="/date.php?date=' . date("Y/n/j", $Date) . '">' . date("D, j M Y", $Date) . "<br>\n";
 }
 
 openlog('FreshPorts', LOG_PID | LOG_PERROR, LOG_LOCAL0);

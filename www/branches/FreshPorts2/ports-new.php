@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports-new.php,v 1.1.2.29 2003-09-30 00:00:37 dan Exp $
+	# $Id: ports-new.php,v 1.1.2.30 2004-06-30 15:11:53 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -109,7 +109,8 @@ select TEMP.id,
        TEMP.homepage,
        element.status,
        TEMP.broken,
-       TEMP.forbidden ";
+       TEMP.forbidden,
+       TEMP.latest_link ";
 
 	if ($User->id) {
 		$sql .= ",
@@ -131,7 +132,8 @@ select TEMP.id,
           extract_suffix,
           homepage,
           broken,
-          forbidden 
+          forbidden,
+          latest_link
 ";
 	if ($User->id) {
 		$sql .= ",

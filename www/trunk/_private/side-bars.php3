@@ -7,12 +7,12 @@
 
          <td><script language="php">
    switch (basename($PHP_SELF)) {
-      case "watch.php3":
-      case "watch-categories.php3":
+//      case "watch.php3":
+//      case "watch-categories.php3":
 //      case "customize.php3":
-      case "port-watch.php3":
-         $OriginLocal = '/';
-         break;
+//      case "port-watch.php3":
+//         $OriginLocal = '/';
+//         break;
 
       default:
          $OriginLocal = $PHP_SELF;

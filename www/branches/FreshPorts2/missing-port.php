@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-port.php,v 1.1.2.33 2003-02-21 19:23:23 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.34 2003-02-25 15:17:58 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
@@ -141,14 +141,14 @@ function freshports_PortDescription($port) {
 
 $ShowCategories			= 1;
 GLOBAL	$ShowDepends;
-$ShowDepends			= 1;
+$ShowDepends				= 1;
 $DaysMarkedAsNew= $DaysMarkedAsNew= $GlobalHideLastChange= $ShowChangesLink= $ShowDescriptionLink= $ShowDownloadPortLink= $ShowHomepageLink= $ShowLastChange= $ShowMaintainedBy= $ShowPortCreationDate= $ShowPackageLink= $ShowShortDescription =1;
-$HideDescription		= 1;
+$HideDescription			= 1;
 $ShowEverything			= 1;
 $ShowShortDescription	= "Y";
-$ShowMaintainedBy		= "Y";
+$ShowMaintainedBy			= "Y";
 $GlobalHideLastChange	= "Y";
-$ShowDescriptionLink	= "N";
+$ShowDescriptionLink		= "N";
 
 	$HTML .= freshports_PortDetails($port, $port->dbh, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 0, '', 1, "N", 1, 1);
 	echo $HTML;

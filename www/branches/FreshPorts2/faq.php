@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.60 2004-12-01 03:29:07 dan Exp $
+	# $Id: faq.php,v 1.1.2.61 2004-12-01 22:56:47 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -233,23 +233,23 @@ down you must read to find something you didn't already know.</P>
 		Forbidden: The port is marked as forbidden.  If you view the port details,
 		you will see why.  Most often, it is because of a security exploit.</P>
 
-	<P><?php echo freshports_Broken_Icon() ?>
+	<P><a name="broken"><?php echo freshports_Broken_Icon() ?></a>
 		Broken: The port is marked as broken.  Perhaps it won't compile.  Maybe
 		it doesn't work under FreeBSD right now.  If you view the port details,
 		you will see the reason why.</P>
 
-	<P><?php echo freshports_Deprecated_Icon() ?>
+	<P><a name="deprecated"><?php echo freshports_Deprecated_Icon() ?></a>
 		Deprecated: The port is marked as deprecated.  Perhaps it has exceeded
 		its lifetime or is obselete.</P>
 
-	<P><?php echo freshports_Ignore_Icon() ?>
+	<P><a name="ignore"><?php echo freshports_Ignore_Icon() ?></a>
 		Ignore: The port is marked as ignore.  It probably does not build.</P>
 
 	<P><?php echo freshports_Files_Icon(); ?>
 		Files: If you click on this graphic, you will be taken to the list of files
 		touched by the commit in question.</P>
 
-	<P><?php echo freshports_Refresh_Icon(); ?> Refresh: 
+	<P><a name="refresh"><?php echo freshports_Refresh_Icon(); ?></a> Refresh: 
 		The system is in the process of refreshing that port by inspecting
 		the ports tree.  You should rarely see this.</P>
 		<p>If you do see one, chances are that the port contains an error
@@ -269,7 +269,7 @@ make: fatal errors encountered -- cannot continue
 		then the problem has been fixed. The refresh icons will go away after
 		FreshPorts has dealt with the old commits.  This may take a few hours.
 
-	<P><?php echo freshports_Deleted_Icon(); ?> Deleted:  This port has been removed from the ports tree.</P>
+	<P><a name="deleted"><?php echo freshports_Deleted_Icon(); ?></a> Deleted:  This port has been removed from the ports tree.</P>
 
 	<P><?php echo freshports_Mail_Icon(); ?>
 		Commit message: This link will take you to the original cvs-all message in the FreeBSD mailing list archives.
@@ -286,7 +286,7 @@ make: fatal errors encountered -- cannot continue
 	<P><?php echo freshports_Watch_Icon_Add(); ?> Add item to your default watch lists: This port is not on any of your  default watch lists.  Click
 		this icon to add the port to your default watch lists.  This icon appears only if you are logged in.</P>
 
-	<P><?php echo freshports_Encoding_Errors(); ?> Encoding Errors (not all of the commit message was ASCII): Some of the
+	<P><a name="encodingerrors"><?php echo freshports_Encoding_Errors(); ?></a> Encoding Errors (not all of the commit message was ASCII): Some of the
 		commit message may be altered because of character conversion problems.  We display only UTF-8 and remove
 		the offending characters.  These errors may occur in the log message or elsewhere in the commit email.</P>
 
@@ -294,7 +294,7 @@ make: fatal errors encountered -- cannot continue
 		as a security issue by trusted FreshPorts users.  If you'd like to help with this task, please contact us.
 	</P>
 
-	<P><?php echo freshports_WatchListCount_Icon(); ?> Watch List Count (WLC): This is the number of watch lists which are watching 
+	<P><a name="watchlistcount"><?php echo freshports_WatchListCount_Icon(); ?></a> Watch List Count (WLC): This is the number of watch lists which are watching 
 	this port.  This might give you an idea of the popularity of the port.
 	</P>
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.192 2004-12-01 03:28:39 dan Exp $
+	# $Id: freshports.php,v 1.4.2.193 2004-12-01 22:56:47 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -18,7 +18,7 @@
 DEFINE('MAILTO',                '&#109;&#97;&#105;&#108;&#116;&#111;');
 DEFINE('COPYRIGHTYEARS',        '2000-2004');
 DEFINE('URL2LINK_CUTOFF_LEVEL', 0);
-
+DEFINE('FAQLINK',               'faq.php');
 
 if ($Debug) echo "'" . $_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php<BR>';
 
@@ -122,6 +122,10 @@ function freshports_WatchListCount_Icon() {
 	return '<IMG SRC="/images/sum.gif" ALT="on this many watch lists" TITLE="on this many watch lists" BORDER="0" WIDTH="12" HEIGHT="17" ALIGN="middle">';
 }
 
+function freshports_WatchListCount_Icon_Link() {
+	return '<a href="/' . FAQLINK . '#watchlistcount">' . freshports_WatchListCount_Icon() . '</a>';
+}
+
 function freshports_Files_Icon() {
 	return '<IMG SRC="/images/logs.gif" ALT="files touched by this commit" TITLE="files touched by this commit" BORDER="0" WIDTH="17" HEIGHT="20">';
 }
@@ -130,24 +134,48 @@ function freshports_Refresh_Icon() {
 	return '<IMG SRC="/images/refresh.gif" ALT="Refresh" TITLE="Refresh - this port is being refreshed, or make failed to run error-free." BORDER="0" WIDTH="15" HEIGHT="18">';
 }
 
+function freshports_Refresh_Icon_Link() {
+	return '<a href="/' . FAQLINK . '#refresh">' . freshports_Refresh_Icon() . '</a>';
+}
+
 function freshports_Deleted_Icon() {
 	return '<IMG SRC="/images/deleted.gif" ALT="Deleted" TITLE="Deleted" BORDER="0" WIDTH="21" HEIGHT="18">';
+}
+
+function freshports_Deleted_Icon_Link() {
+	return '<a href="/' . FAQLINK . '#deleted">' . freshports_Deleted_Icon() . '</a>';
 }
 
 function freshports_Forbidden_Icon() {
 	return '<IMG SRC="/images/forbidden.gif" ALT="Forbidden" TITLE="Forbidden" WIDTH="20" HEIGHT="20">';
 }
 
+function freshports_Forbidden_Icon_Link() {
+	return '<a href="/' . FAQLINK . '#forbidden">' . freshports_Forbidden_Icon() . '</a>';
+}
+
 function freshports_Broken_Icon() {
 	return '<IMG SRC="/images/broken.gif" ALT="Broken" TITLE="Broken" WIDTH="17" HEIGHT="16">';
+}
+
+function freshports_Broken_Icon_Link() {
+	return '<a href="/' . FAQLINK . '#broken">' . freshports_Broken_Icon() . '</a>';
 }
 
 function freshports_Deprecated_Icon() {
 	return '<IMG SRC="/images/deprecated.gif" ALT="Deprecated" TITLE="Deprecated" WIDTH="18" HEIGHT="18">';
 }
 
+function freshports_Deprecated_Icon_Link() {
+	return '<a href="/' . FAQLINK . '#deprecated">' . freshports_Deprecated_Icon() . '</a>';
+}
+
 function freshports_Ignore_Icon() {
 	return '<IMG SRC="/images/ignored.png" ALT="Ignore" TITLE="Ignore" WIDTH="20" HEIGHT="21;">';
+}
+
+function freshports_Ignore_Icon_Link() {
+	return '<a href="/' . FAQLINK . '#ignore">' . freshports_Ignore_Icon() . '</a>';
 }
 
 function freshports_New_Icon() {
@@ -180,6 +208,10 @@ function freshports_Security_Icon() {
 
 function freshports_Encoding_Errors() {
 	return '<IMG SRC="/images/error.gif" ALT="Encoding Errors (not all of the commit message was ASCII)" TITLE="Encoding Errors (not all of the commit message was ASCII)" BORDER="0" WIDTH="16" HEIGHT="16">';
+}
+
+function freshports_Encoding_Errors_Link() {
+	return '<a href="/' . FAQLINK . '#encodingerrors">' . freshports_Encoding_Errors() . '<a>';
 }
 
 function freshports_VuXML_Icon() {
@@ -809,12 +841,12 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 
 	// indicate if this port has been removed from cvs
 	if ($port->{'status'} == "D") {
-		$HTML .= " " . freshports_Deleted_Icon() . "\n";
+		$HTML .= " " . freshports_Deleted_Icon_Link() . "\n";
 	}
 
 	// indicate if this port needs refreshing from CVS
 	if ($port->{'needs_refresh'}) {
-		$HTML .= " " . freshports_Refresh_Icon() . "\n";
+		$HTML .= " " . freshports_Refresh_Icon_Link() . "\n";
 	}
 
 	if ($port->{'date_added'} > Time() - 3600 * 24 * $DaysMarkedAsNew) {
@@ -823,7 +855,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 	}
 
 	if ($ShowWatchListCount) {
-		$HTML .= '&nbsp; <a href="/faq.php">' . freshPorts_WatchListCount_Icon() . '</a>=' . $port->WatchListCount() . '<br>';
+		$HTML .= '&nbsp; ' . freshPorts_WatchListCount_Icon_Link() . '=' . $port->WatchListCount() . '<br>';
 	}
 
 	$HTML .= "</DT>\n<DD>";
@@ -833,15 +865,15 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 	}
 
 	if ($port->broken) {
-		$HTML .= freshports_Broken_Icon() . ' BROKEN: ' . htmlify(htmlspecialchars($port->broken)) . "<br>"; ;
+		$HTML .= freshports_Broken_Icon_Link() . ' BROKEN: ' . htmlify(htmlspecialchars($port->broken)) . "<br>"; ;
 	}
 
 	if ($port->deprecated) {
-		$HTML .= freshports_Deprecated_Icon() . ' DEPRECATED: ' . htmlify(htmlspecialchars($port->deprecated)) . "<br>"; ;
+		$HTML .= freshports_Deprecated_Icon_Link() . ' DEPRECATED: ' . htmlify(htmlspecialchars($port->deprecated)) . "<br>"; ;
 	}
 
 	if ($port->ignore) {
-		$HTML .= freshports_Ignore_Icon() . ' IGNORE: ' . htmlify(htmlspecialchars($port->ignore)) . "<br>"; ;
+		$HTML .= freshports_Ignore_Icon_Link() . ' IGNORE: ' . htmlify(htmlspecialchars($port->ignore)) . "<br>"; ;
 	}
 
    // description
@@ -876,7 +908,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 				$HTML .= freshports_Email_Link($port->message_id);
 
 				if ($port->EncodingLosses()) {
-					$HTML .= '&nbsp;' . freshports_Encoding_Errors();
+					$HTML .= '&nbsp;' . freshports_Encoding_Errors_Link();
 				}
 
 				$HTML .= ' ' . freshports_Commit_Link($port->message_id);
@@ -1194,7 +1226,7 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	echo '&nbsp;&nbsp;'. freshports_Commit_Link($commit->message_id);
 
 	if ($commit->EncodingLosses()) {
-		echo '&nbsp;'. freshports_Encoding_Errors();
+		echo '&nbsp;'. freshports_Encoding_Errors_Link();
 	}
 
 	echo ' ';
@@ -1328,7 +1360,7 @@ function freshports_CommitPrint($element_record, $commit) {
 	echo '&nbsp;&nbsp;'. freshports_Commit_Link($commit->message_id);
 
 	if ($commit->EncodingLosses()) {
-		echo '&nbsp;'. freshports_Encoding_Errors();
+		echo '&nbsp;'. freshports_Encoding_Errors_Link();
 	}
 
 	echo ' ';

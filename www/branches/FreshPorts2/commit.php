@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.46 2004-10-02 18:49:13 dan Exp $
+	# $Id: commit.php,v 1.1.2.47 2004-12-01 22:56:47 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -286,13 +286,13 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 
 					// indicate if this port has been removed from cvs
 					if ($myrow["status"] == "D") {
-						$HTML .= " " . freshports_Deleted_Icon() . "\n";
+						$HTML .= " " . freshports_Deleted_Icon_Link() . "\n";
 					}
 
 					if ($IsPort) {
 						// indicate if this port needs refreshing from CVS
 						if ($myrow["needs_refresh"]) {
-							$HTML .= " " . freshports_Refresh_Icon() . "\n";
+							$HTML .= " " . freshports_Refresh_Icon_Link() . "\n";
 						}
 
 						if ($myrow["date_added"] > Time() - 3600 * 24 * $DaysMarkedAsNew) {
@@ -301,19 +301,19 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 						}
 
 						if ($myrow["forbidden"]) {
-							$HTML .= ' ' . freshports_Forbidden_Icon() . "\n";
+							$HTML .= ' ' . freshports_Forbidden_Icon_Link() . "\n";
 						}
 
 						if ($myrow["broken"]) {
-							$HTML .= '&nbsp;' . freshports_Broken_Icon() . "\n";
+							$HTML .= '&nbsp;' . freshports_Broken_Icon_Link() . "\n";
 						}
 
 						if ($myrow["deprecated"]) {
-							$HTML .= '&nbsp;' . freshports_Deprecated_Icon() . "\n";
+							$HTML .= '&nbsp;' . freshports_Deprecated_Icon_Link() . "\n";
 						}
 
 						if ($myrow["ignore"]) {
-							$HTML .= '&nbsp;' . freshports_Ignore_Icon() . "\n";
+							$HTML .= '&nbsp;' . freshports_Ignore_Icon_Link() . "\n";
 						}
 
 						$HTML .= ' ' . htmlspecialchars($myrow["short_description"]) . "\n";

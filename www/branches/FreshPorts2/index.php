@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.24 2002-03-25 20:33:38 dan Exp $
+	# $Id: index.php,v 1.1.2.25 2002-03-25 20:36:28 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -216,9 +216,7 @@ ports. A port is marked as new for 10 days.
 							$HTML .= '</SMALL>' . "<BR>\n";
 						}
 
-						$HTML .= '<BIG><B><A HREF="/' . $myrow["category"] . '/">';
-						$HTML .= $myrow["category"]. "</A>";
-						$HTML .= "/";
+						$HTML .= '<BIG><B>';
 						$HTML .= '<A HREF="/' . $myrow["category"] . '/' . $myrow["port"] . '/">';
 						$HTML .= $myrow["port"];
 						
@@ -230,6 +228,10 @@ ports. A port is marked as new for 10 days.
 						}
 
 						$HTML .= "</A></B></BIG>\n";
+
+						$HTML .= '<A HREF="/' . $myrow["category"] . '/">';
+						$HTML .= $myrow["category"]. "</A>";
+						$HTML .= '&nbsp;';
 
 						if ($WatchListID) {
 							if ($myrow["watch"]) {

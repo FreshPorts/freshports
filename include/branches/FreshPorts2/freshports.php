@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.214 2005-02-17 04:22:41 dan Exp $
+	# $Id: freshports.php,v 1.4.2.215 2005-02-17 04:27:23 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -965,13 +965,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 		$HTML .= freshports_Ignore_Icon_Link($port->ignore)         . ' IGNORE: '     . htmlify(htmlspecialchars($port->ignore))     . "<br>"; ;
 	}
 
-	if ($port->vulnerable_current) {
-		$HTML .= '&nbsp;' . freshports_VuXML_Icon();
-	} else {
-		if ($port->vulnerable_past) {
-			$HTML .= '&nbsp;' . freshports_VuXML_Icon_Faded();
-		}
-	}
+	# we do not show vulnerabilities here.  We are showing detail.
 
 	if ($port->restricted) {
 		$HTML .= freshports_Restricted_Icon_Link($port->restricted) . ' RESTRICTED: '     . htmlify(htmlspecialchars($port->restricted)) . "<br>"; ;

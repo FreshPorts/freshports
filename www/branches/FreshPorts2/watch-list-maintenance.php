@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-list-maintenance.php,v 1.1.2.18 2002-12-16 16:19:17 dan Exp $
+	# $Id: watch-list-maintenance.php,v 1.1.2.19 2002-12-18 17:55:24 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -14,6 +14,8 @@ $visitor = $_COOKIE['visitor'];
 
 unset($add_name);
 unset($rename_name);
+
+$ValidCharacters = 'a-z, A-Z, and 0-9';
 
 $WatchListNameMessage = 'Watch list names must contain only A..Z, a..z, or 0..9.';
 
@@ -208,7 +210,7 @@ if ($Debug) echo 'add remove = ' . $User->watch_list_add_remove;
 ?>
 
 <TABLE WIDTH="100%" BORDER="1" CELLSPACING="0" CELLPADDING="5">
-<TR><td nowrap><BIG><b>Watch Lists</b></BIG></td><td><BIG><b>Actions</b></BIG></td><td><BIG><b>Options</b></BIG></td></tr>
+<TR><td nowrap><BIG><b>Watch Lists</b></BIG></td><td><BIG><b>Actions</b></BIG> (scroll down for instructions)</td><td><BIG><b>Options</b></BIG></td></tr>
   <TR>
     <TD valign="top">
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
@@ -218,9 +220,9 @@ if ($Debug) echo 'add remove = ' . $User->watch_list_add_remove;
     </TD>
     <TD>
     <INPUT id=add         style="WIDTH: 85px; HEIGHT: 24px" type=submit size=48 value="Add"          name=add>&nbsp;&nbsp;&nbsp; 
-    <INPUT id=add_name    name=add_name    <?php if (IsSet($add_name))    echo 'value="' . $add_name     . '" '; ?>size=10><BR>
+    <INPUT id=add_name    name=add_name    <?php if (IsSet($add_name))    echo 'value="' . $add_name    . '" '; ?>size=10><?php echo "&nbsp;(only $ValidCharacters)" ?><BR>
     <INPUT id=rename      style="WIDTH: 85px; HEIGHT: 24px" type=submit size=23 value="Rename"       name=rename>&nbsp;&nbsp;&nbsp; 
-    <INPUT id=rename_name name=rename_name <?php if (IsSet($rename_name)) echo 'value="' . $rename_name . '" '; ?>size=10><BR>
+    <INPUT id=rename_name name=rename_name <?php if (IsSet($rename_name)) echo 'value="' . $rename_name . '" '; ?>size=10><?php echo "&nbsp;(only $ValidCharacters)" ?><BR>
     <br>
     <INPUT id=delete      style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29 value="Delete"       name=delete><br>
     <INPUT id=delete_all  style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29 value="Delete All"   name=delete_all><br>
@@ -231,7 +233,7 @@ if ($Debug) echo 'add remove = ' . $User->watch_list_add_remove;
     <INPUT id=default     style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29 value="Set Default"  name=set_default><br>
     <br>
 
-    Confirm : <INPUT id=confirm name=confirm size=10>
+    Confirm : <INPUT id=confirm name=confirm size=10>&nbsp;(case sensitive)
     </TD>
 </form>
 <td valign="top" nowrap>
@@ -249,7 +251,7 @@ When clicking on Add/Remove for a port,<br> the action should affect
 <H2>Information</H2>
 <ul>
 <li>Names do not have to unique but it is advisable.
-<li>Valid characters are: a-z, A-Z, and 0-9
+<li>Valid characters are: <?php echo $ValidCharacters; ?>
 <li>Please contact the webmaster if you want more than 5 lists.
 </ul>
 
@@ -258,7 +260,7 @@ When clicking on Add/Remove for a port,<br> the action should affect
 <ul>
 <li><b>Watch Lists</b> - this is what it's all about
 	<ul>
-	<li>These are your existing watch lists.[^a-zA-Z0-9]
+	<li>These are your existing watch lists.
 	</ul>
 	<br>
 <li><b>Actions</b> - what you can do to your watch lists
@@ -297,7 +299,7 @@ When clicking on Add/Remove for a port,<br> the action should affect
     For example, when deleting or emptying a row, you must confirm your action by typing
     the button name into this field (e.g. if you click on <b>Empty All</b>",
     you must type <b>Empty All</b> into the box below in order for the action
-    to be completed).<br>
+    to be completed). This is case sensitive.<br>
 
 </p>
 </TD>

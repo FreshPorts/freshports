@@ -1,5 +1,5 @@
 <?
-   # $Id: index.php3,v 1.33 2001-10-28 13:51:18 dan Exp $
+   # $Id: index.php3,v 1.34 2001-11-24 22:59:25 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -72,37 +72,6 @@ if ($Debug) {
 }
 
 ?>
-
-<TABLE WIDTH="<? echo $TableWidth ?>" CELLPADDING="3" CELLSPACING="0" BORDER="0" ALIGN="center">
-<TR><TD>
-
-<H1>Welcome to the new database server!</H1>
-<P>
-The database has been transferred to this webserver from the old webserver.
- Enjoy.
-</P>
-
-<P>
-We are now hosted on the same box as <A HREF="http://www.freebsddiary.org/">The FreeBSD Diary</A>.
-Please keep an eye on this website and the <A HREF="http://old.freshports.org/">old one</A> to make sure they
-are in sync.  Yes, I am doing that, but I don't want to miss anything.  The more eyes the better...
-</P>
-
-<P><BIG><BIG><B>HEADS UP: </B></BIG></BIG>Now that the new site has been running flawlessly for a few days,
-it's time to warn you not to automatically delete your FreshPorts
-notifications any more.  They actually contain a list of the ports
-which have changed.  Yes, you read correctly.  A list of the
-ports on your watch list which have changed since your last
-notice.  And a short description of the change.<P>
-
-<P>Enjoy</P>
-
-<P ALIGN="left">
-<BIG><BIG>DISK WANTED: </BIG></BIG>Thanks for the reponses folks. I have enough now.
-</P>
-
-</TD></TR>
-</TABLE>
 
 <table width="100%" border="0" ALIGN="center">
 <tr><td colspan="2">Welcome to FreshPorts, where you can find the latest information on your favourite

@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-list-maintenance.php,v 1.1.2.12 2002-12-11 16:18:08 dan Exp $
+	# $Id: watch-list-maintenance.php,v 1.1.2.13 2002-12-11 22:42:50 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -11,6 +11,11 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/watch-lists.php');
 
 $visitor = $_COOKIE['visitor'];
+
+unset($add_name);
+unset($rename_name);
+
+$WatchListNameMessage = 'Watch list names must contain only A..Z, a..z, or 0..9.';
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {
@@ -83,14 +88,26 @@ if ($UserClickedOn) {
 			case 'add':
 				if (AddSlashes($_POST['add_name']) == '') {
 					$ErrorMessage = 'When creating a new list, you must supply a name.';
-				}
 					break;
+				}
+				if (preg_match("/[^a-zA-Z0-9]/", $_POST['add_name'])) {
+					$ErrorMessage = $WatchListNameMessage;
+					$add_name     = $_POST['add_name'];
+					break;
+				}
+				break;
 
 			case 'rename':
 				if (AddSlashes($_POST['rename_name']) == '') {
 					$ErrorMessage = 'When renaming an existing list, you must supply a name.';
-				}
 					break;
+				}
+				if (preg_match("/[^a-zA-Z0-9]/", $_POST['rename_name'])) {
+					$ErrorMessage = $WatchListNameMessage;
+					$rename_name  = $_POST['rename_name'];
+					break;
+				}
+				break;
 		}
 	}
 	
@@ -182,7 +199,7 @@ if ($Debug) echo 'add remove = ' . $User->watch_list_add_remove;
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><td VALIGN=TOP>
-<TABLE border="0">
+<TABLE border="0" width="100%">
 <TR>
 	<? freshports_PageBannerText("Watch list maintenance"); ?>
 </TR>
@@ -204,9 +221,9 @@ if ($Debug) echo 'add remove = ' . $User->watch_list_add_remove;
     </TD>
     <TD>
     <INPUT id=add         style="WIDTH: 85px; HEIGHT: 24px" type=submit size=48 value="Add"          name=add>&nbsp;&nbsp;&nbsp; 
-    <INPUT id=add_name    name=add_name    size=10><BR>
+    <INPUT id=add_name    name=add_name    <?php if (IsSet($add_name))   echo 'value=' . $add_name     . '" '; ?>size=10><BR>
     <INPUT id=rename      style="WIDTH: 85px; HEIGHT: 24px" type=submit size=23 value="Rename"       name=rename>&nbsp;&nbsp;&nbsp; 
-    <INPUT id=rename_name name=rename_name size=10><BR>
+    <INPUT id=rename_name name=rename_name <?php if (IsSet($rename_name)) echo 'value=' . $rename_name . '" '; ?>size=10><BR>
     <br>
     <INPUT id=delete      style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29 value="Delete"       name=delete><br>
     <INPUT id=delete_all  style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29 value="Delete All"   name=delete_all><br>
@@ -216,10 +233,7 @@ if ($Debug) echo 'add remove = ' . $User->watch_list_add_remove;
     <br>
     <INPUT id=default     style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29 value="Set Default"  name=set_default><br>
     <br>
-    When deleting or emptying a row, you must confirm your action by typing
-    the button name into this field (e.g. if you click on <b>Empty All</b>",
-    you must type <b>Empty All</b> into the box below in order for the action
-    to be completed).<br>
+
     Confirm : <INPUT id=confirm name=confirm size=10>
     </TD>
 </form>
@@ -234,44 +248,60 @@ When clicking on Add/Remove for a port,<br> the action should affect
     </TR>
 </TABLE>
 </TABLE>
+
+<H2>Information</H2>
+<ul>
+<li>Names do not have to unique but it is advisable.
+<li>Valid characters are: a-z, A-Z, and 0-9
+<li>Please contact the webmaster if you want more than 5 lists.
+</ul>
+
 <H2>Help</H2>
+
 <ul>
 <li><b>Watch Lists</b> - this is what it's all about
 	<ul>
-	<li>These are your existing watch lists.
+	<li>These are your existing watch lists.[^a-zA-Z0-9]
 	</ul>
 	<br>
 <li><b>Actions</b> - what you can do to your watch lists
 	<ul>
 	<li><b>Add</b> - add a new watch list.  Supply the name in the space provided.  This name will be supplied
-			in any mail notification messages for this watch lists.  Names do not have to unique but it is advisable.
-			Valid characters are: TBA.   Please contact the webmaster if you want more than 5 lists.
+			in any mail notification messages for this watch lists.  
 	
 	<li><b>Rename</b> - rename a new watch list.  Select the watch list and supply the new name.
 	
-	<li><b>Delete</b> - Deletes the selected watch lists.  Confirmation of this action must be supplied in the 
-			confirmation text box.  Be careful: this action cannot be undone.
+		
+	<li><b>Delete<sup>*</sup></b> - Deletes the selected watch lists.
 	
-	<li><b>Delete All</b> - Deletes all of your watch lists.  Confirmation of this action must be supplied in the 
-			confirmation text box.  Be careful: this action cannot be undone.
+	<li><b>Delete All<sup>*</sup></b> - Deletes all of your watch lists.
 	
-	<li><b>Empty</b> - Empties the selected watch lists. Confirmation of this action must be supplied in the 
-			confirmation text box.  Be careful: this action cannot be undone.
+	<li><b>Empty<sup>*</sup></b> - Empties the selected watch lists.
 	
-	<li><b>Empty All</b> - Empties all of your watch lists.  Confirmation of this action must be supplied in the 
-			confirmation text box.  Be careful: this action cannot be undone.
+	<li><b>Empty All<sup>*</sup></b> - Empties all of your watch lists.
+
 	<li><b>Set Default</b> - Sets the default watch list[s].  The default watch list[s] is/are used when:
 			<ul>
 			<li>you click on the add/remove links
 			<li>when displaying a port, the add/remove link reflects whether or not  
 			</ul>
 	</ul>
+	
 	<br>
 <li><b>Options</b> - this affects the display/actions on other pages
 	<ul>
 	<li><b>Set Options</b> - Set the options to be used when clicking on Add/Remove for a port.
 	</ul>
 </ul>
+
+<p>
+		<sup>*</sup>These items confirmation by typing the button name in the 
+			confirmation text box (case sensitive).  Be careful: these actions cannot be undone.
+    For example, when deleting or emptying a row, you must confirm your action by typing
+    the button name into this field (e.g. if you click on <b>Empty All</b>",
+    you must type <b>Empty All</b> into the box below in order for the action
+    to be completed).<br>
+
 </p>
 </TD>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">

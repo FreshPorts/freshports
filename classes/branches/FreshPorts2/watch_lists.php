@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch_lists.php,v 1.1.2.9 2003-02-10 16:54:31 dan Exp $
+	# $Id: watch_lists.php,v 1.1.2.10 2003-12-01 18:26:23 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -39,6 +39,8 @@ DELETE FROM watch_list
 	}
 
 	function Fetch($UserID, $element_id = 0) {
+		$Debug = 0;
+
 		if ($element_id) {
 			$sql = "
 			SELECT id,
@@ -64,10 +66,8 @@ DELETE FROM watch_list
 		}
 
 		if ($Debug) {
-			echo '<pre>' . $sql . '</pre>';
+			echo 'WatchLists::Fetch sql = <pre>' . $sql . '</pre>';
 		}
-
-		if ($Debug)	echo "WatchLists::Fetch sql = '$sql'<BR>";
 
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.176 2004-06-29 18:58:16 dan Exp $
+	# $Id: freshports.php,v 1.4.2.177 2004-07-13 13:50:31 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -164,7 +164,7 @@ function freshports_Watch_Link_Add($WatchListAsk, $WatchListCount, $ElementID) {
 	$HTML .= 'add='  . $ElementID;
 
 	if ($WatchListAsk == 'ask') {
-		$HTML .= '&ask=1';
+		$HTML .= '&amp;ask=1';
 	}
 
 	$HTML .= '"';
@@ -180,7 +180,7 @@ function freshports_Watch_Link_Remove($WatchListAsk, $WatchListCount, $ElementID
 	$HTML .= 'remove=' . $ElementID;
 
 	if ($WatchListAsk == 'ask') {
-		$HTML .= '&ask=1';
+		$HTML .= '&amp;ask=1';
 	}
 
 	$HTML .= '"';
@@ -223,7 +223,7 @@ function freshports_CVS_Link($element_name, $revision) {
 	if (substr($element_name, 0, 1) != '/') {
 		$element_name = '/' . $element_name;
 	}
-	$HTML  = '<A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $element_name . '?rev=' . $revision . '&content-type=text/x-cvsweb-markup">';
+	$HTML  = '<A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $element_name . '?rev=' . $revision . '&amp;content-type=text/x-cvsweb-markup">';
 	$HTML .= freshports_CVS_Icon();
 	$HTML .= '</A>';
 
@@ -247,7 +247,7 @@ function freshports_Commit_Link($message_id, $LinkText = '') {
 
 function freshports_MorePortsToShow($message_id, $NumberOfPortsInThisCommit, $MaxNumberPortsToShow) {
 	$HTML  = "(Only the first $MaxNumberPortsToShow of $NumberOfPortsInThisCommit ports in this commit are shown above. ";
-	$HTML .= freshports_Commit_Link($message_id, '<IMG SRC="/images/play.gif" ALT="View all ports for this commit" BORDER="0" WIDTH="13" HEIGHT="13">');
+	$HTML .= freshports_Commit_Link($message_id, '<IMG SRC="/images/play.gif" ALT="View all ports for this commit" TITLE="View all ports for this commit" BORDER="0" WIDTH="13" HEIGHT="13">');
 	$HTML .= ")";
 
 	return $HTML;
@@ -255,7 +255,7 @@ function freshports_MorePortsToShow($message_id, $NumberOfPortsInThisCommit, $Ma
 
 function freshports_MoreCommitMsgToShow($message_id, $NumberOfLinesShown) {
 	$HTML  = "(Only the first $NumberOfLinesShown lines of the commit message are shown above ";
-	$HTML .= freshports_Commit_Link($message_id, '<IMG SRC="/images/play.gif" ALT="View all ports for this commit" BORDER="0" WIDTH="13" HEIGHT="13">');
+	$HTML .= freshports_Commit_Link($message_id, '<IMG SRC="/images/play.gif" ALT="View all of this commit message" TITLE="View all of this commit message" BORDER="0" WIDTH="13" HEIGHT="13">');
 	$HTML .= ")";
 
 	return $HTML;
@@ -792,7 +792,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 	}
 
 	if ($ShowWatchListCount) {
-		$HTML .= '&nbsp; <a href="/faq.php">' . freshPorts_WatchListCount_Icon() . '</a>=' . $port->WatchListCount() . '</a><br>';
+		$HTML .= '&nbsp; <a href="/faq.php">' . freshPorts_WatchListCount_Icon() . '</a>=' . $port->WatchListCount() . '<br>';
 	}
 
 	$HTML .= "</DT>\n<DD>";
@@ -829,7 +829,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
       }
 
       $HTML .= ' by:</i> <A HREF="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);
-      $HTML .= freshportsObscureHTML('?cc=ports@FreeBSD.org&subject=FreeBSD%20Port:%20' . $port->port . '-' . $port->version) . '">';
+      $HTML .= freshportsObscureHTML('?cc=ports@FreeBSD.org&amp;subject=FreeBSD%20Port:%20' . $port->port . '-' . $port->version) . '">';
       $HTML .= freshportsObscureHTML($port->maintainer) . "</A><BR>";
   }
 
@@ -907,11 +907,6 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
       }
    }
 
-/*
-echo 'build = ' . $port->depends_build . "<br>\n";
-echo 'run   = ' . $port->depends_run . "<br>\n";
-*/
-
 if ($ShowDepends) {
    if ($port->depends_build) {
       $HTML .= "<i>required to build:</i> ";
@@ -944,9 +939,9 @@ if ($ShowDepends) {
 		}
 
 		$HTML .= "</dl>\n";
-	}
 
-	$HTML .= '<br>';
+		$HTML .= '<br>';
+	}
 
    if (!$HideDescription && ($ShowDescriptionLink == "Y" || $ShowEverything)) {
       // Long descripion
@@ -980,10 +975,9 @@ if ($ShowDepends) {
 
    if ($port->homepage && ($ShowHomepageLink == "Y" || $ShowEverything)) {
       $HTML .= ' <b>:</b> ';
-      $HTML .= '<a HREF="' . $port->homepage . '">Main Web Site</a>';
+      $HTML .= '<a HREF="' . htmlspecialchars($port->homepage) . '">Main Web Site</a>';
    }
 
-	$HTML .= '<br><br>';
 
 	if ($ShowMasterSlave) {
 		#
@@ -1014,7 +1008,6 @@ if ($ShowDepends) {
 			$HTML .= "</dl>\n";
 		}
 	}
-	
 	
    $HTML .= "\n</DD>\n";
    $HTML .= "</DL>\n";
@@ -1309,23 +1302,53 @@ function freshports_CommitPrint($element_record, $commit) {
 
 
 
-function freshports_Head($string, $n) {
-	if (!is_int($n) || $n <= 0) {
+function freshports_Head($string, $n, $FudgeFactor = 10) {
+	#
+	# We don't want to display very long commit messages or very long lists of
+	# ports.  So we use this function to shorten things.
+	#
+	# return the first $n lines of $string, but only if the entire string
+	# is within $FudgeFactor.  
+	#
+
+	#
+	# ensure valid parameters
+	#
+	if (!is_int($n) || $n <= 0 || !is_int($FudgeFactor) || $FudgeFactor < 0) {
 		return $string;
 	}
+
 	$pos = -1;
 	for ($i = 0; $i < $n ; $i++) {
 		$pos = strpos($string, "\n", $pos+1);
 		if ($pos === false) {
-#			echo 'break';
 			break;
 		}
-#		echo "$pos='$pos'<BR>";
 	}
+
 	if ($pos === false) {
-		# not found
+		# we got to the end of the string before we found
+		# $n lines.
 	} else {
-		$string = substr($string, 0, $pos);
+		#
+		# we know we have at least $n lines.
+		# but if we wind up saving only a few lines, let's show them all.
+		#
+		$ShortVersion = $pos;
+
+		for ($i = $n; $i < ($n + $FudgeFactor); $i++) {
+			$pos = strpos($string, "\n", $pos+1);
+			if ($pos === false) {
+				break;
+			}
+		}
+
+		if ($pos == false) {
+			# hmmm, the string is shorter than our fudge factor
+		} else {
+			# ahh, the string is longer than our fudge factor allows
+			$string = substr($string, 0, $ShortVersion);
+		}
 	}
 
 	return $string;
@@ -1365,8 +1388,8 @@ function freshports_GetNextValue($sequence, $dbh) {
 	return $NextValue;
 }
 
-if (!defined(WRAPCOMMITSATCOLUMN)) {
-	define('WRAPCOMMITSATCOLUMN', 80);
+if (!defined('WRAPCOMMITSATCOLUMN')) {
+	  define('WRAPCOMMITSATCOLUMN', 80);
 }
 
 function freshports_wrap($text, $length = WRAPCOMMITSATCOLUMN) {

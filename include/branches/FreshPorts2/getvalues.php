@@ -1,6 +1,6 @@
 <script language="php">
 
-	# $Id: getvalues.php,v 1.1.2.5 2002-01-06 07:29:28 dan Exp $
+	# $Id: getvalues.php,v 1.1.2.6 2002-01-06 16:48:53 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -64,69 +64,75 @@ if (!empty($visitor)) {
 
 	if ($result) {
 		if ($Debug) echo "we found a result there...\n<br>";
-		$myrow = pg_fetch_array ($result, 0);
-		if ($myrow) {
-			if ($Debug) echo "we found a row there...\n<br>";
+		$numrows = pg_numrows($result);
+		if ($numrows) {
+			$myrow = pg_fetch_array ($result, 0);
+			if ($myrow) {
+				if ($Debug) echo "we found a row there...\n<br>";
 
-			$UserName				= $myrow["name"];
-			$UserID					= $myrow["id"];
-			$emailsitenotices_yn	= $myrow["emailsitenotices_yn"];
-			$email					= $myrow["email"];
+				$UserName				= $myrow["name"];
+				$UserID					= $myrow["id"];
+				$emailsitenotices_yn	= $myrow["emailsitenotices_yn"];
+				$email					= $myrow["email"];
 
-			$WatchNotice = new WatchNotice($db);
-			$WatchNotice->FetchByID($myrow["watch_notice_id"]);
+				$WatchNotice = new WatchNotice($db);
+				$WatchNotice->FetchByID($myrow["watch_notice_id"]);
 
-			$watchnotifyfrequency	= $WatchNotice->frequency;
+				$watchnotifyfrequency	= $WatchNotice->frequency;
 
-//			$MaxNumberOfPorts		= $myrow["max_number_of_ports"];
-			$ShowShortDescription	= $myrow["show_short_description"];
-			$ShowMaintainedBy		= $myrow["show_maintained_by"];
-			$ShowLastChange			= $myrow["show_last_change"];
-			$ShowDescriptionLink	= $myrow["show_description_link"];
-			$ShowChangesLink		= $myrow["show_changes_link"];
-			$ShowDownloadPortLink	= $myrow["show_download_port_link"];
-			$ShowPackageLink		= $myrow["show_package_link"];
-			$ShowHomepageLink		= $myrow["show_homepage_link"];
+//				$MaxNumberOfPorts		= $myrow["max_number_of_ports"];
+				$ShowShortDescription	= $myrow["show_short_description"];
+				$ShowMaintainedBy		= $myrow["show_maintained_by"];
+				$ShowLastChange			= $myrow["show_last_change"];
+				$ShowDescriptionLink	= $myrow["show_description_link"];
+				$ShowChangesLink		= $myrow["show_changes_link"];
+				$ShowDownloadPortLink	= $myrow["show_download_port_link"];
+				$ShowPackageLink		= $myrow["show_package_link"];
+				$ShowHomepageLink		= $myrow["show_homepage_link"];
 
 /*
-			if ($myrow["days_marked_as_new"]) {
-				$DaysMarkedAsNew	= $myrow["days_marked_as_new"];
-			} else {
-				$DaysMarkedAsNew	= $DaysMarkedAsNewDefault;
-			}
+				if ($myrow["days_marked_as_new"]) {
+					$DaysMarkedAsNew	= $myrow["days_marked_as_new"];
+				} else {
+					$DaysMarkedAsNew	= $DaysMarkedAsNewDefault;
+				}
 */
 
 /*
-			if ($myrow["format_date"]) {
-				$FormatDate			= $myrow["format_date"];
-			}
+				if ($myrow["format_date"]) {
+					$FormatDate			= $myrow["format_date"];
+				}
 
-			if ($myrow["format_time"]) {
-				$FormatTime			= $myrow["format_time"];
-			}
+				if ($myrow["format_time"]) {
+					$FormatTime			= $myrow["format_time"];
+				}
 */
-			if ($emailsitenotices_yn == "t") {
-				$emailsitenotices_yn = "ON";
-			} else {
-				$emailsitenotices_yn = "";
-			}
+				if ($emailsitenotices_yn == "t") {
+					$emailsitenotices_yn = "ON";
+				} else {
+					$emailsitenotices_yn = "";
+				}
 /*
-			$SampleFormatDate	= $myrow["sample_date"];
-			$SampleFormatTime	= $myrow["sample_time"];
+				$SampleFormatDate	= $myrow["sample_date"];
+				$SampleFormatTime	= $myrow["sample_time"];
 */
 
-			$EmailBounceCount	= $myrow["emailbouncecount"];
+				$EmailBounceCount	= $myrow["emailbouncecount"];
  
-//			echo "visitor = $visitor<br>";
+//				echo "visitor = $visitor<br>";
 
-			// record their last login
-			$sql = "update users set lastlogin = '" . date("Y/m/d", time()) . "'" .
-				" where id = $UserID";
-//			echo $sql, "<br>";
-			$result = pg_exec($db, $sql);
+				// record their last login
+				$sql = "update users set lastlogin = '" . date("Y/m/d", time()) . "'" .
+					" where id = $UserID";
+//				echo $sql, "<br>";
+				$result = pg_exec($db, $sql);
+			}
 		} else {
 			if ($Debug) echo "we didn't find anyone with that login... " . pg_errormessage() . "\n<br>";
-			$errors = "Sorry, but that login doesn't exist according to me.";
+			if ($Debug) echo ' no cookie found for that person ';
+			# we were given a cookie which didn't refer to a cookie we found.
+			freshports_CookieClear();
+			unset($visitor);
 		}
 	}
 	if ($Debug) {

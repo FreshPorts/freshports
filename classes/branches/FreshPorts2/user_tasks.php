@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: user_tasks.php,v 1.1.2.2 2003-03-06 22:03:09 dan Exp $
+	# $Id: user_tasks.php,v 1.1.2.3 2003-05-09 19:39:55 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -8,6 +8,7 @@
 
 DEFINE('FRESHPORTS_TASKS_SECURITY_NOTICE_ADD',              'SecurityNoticeAdd');
 DEFINE('FRESHPORTS_TASKS_CATEGORY_VIRTUAL_DESCRIPTION_SET', 'CategoryVirtualDescriptionSet');
+DEFINE('FRESHPORTS_TASKS_ANNOUNCEMENTS_MAINTAIN',           'AnnouncementsUpdate');
 
 // base class for user tasks
 class UserTasks {

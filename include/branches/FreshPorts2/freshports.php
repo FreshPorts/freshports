@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.37 2002-02-18 00:09:06 dan Exp $
+   # $Id: freshports.php,v 1.4.2.38 2002-02-20 20:33:33 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -19,7 +19,8 @@ $BannerFontSize         = "+1";
 
 $BannerWidth            = "100%";
 $TableWidth             = "98%";
-$DateFormatDefault      = "j F Y";
+$DateFormatDefault      = "j M Y";
+$TimeFormatDefault		= "H:i:s";
 
 $FreshPortsTitle		= "FreshPorts";
 
@@ -792,8 +793,11 @@ function freshports_PortCommits($port) {
 }
 
 function freshports_PortCommitPrint($commit) {
+	GLOBAL  $DateFormatDefault;
+	GLOBAL  $TimeFormatDefault;
+
 	# print a single commit for a port
-	echo "<TR><TD VALIGN='top'><FONT SIZE='-1'>" . $commit->commit_date        . "</FONT></TD>\n";
+	echo "<TR><TD VALIGN='top'><FONT SIZE='-1'>" . date("$DateFormatDefault $TimeFormatDefault", $commit->commit_date)        . "</FONT></TD>\n";
 	echo '    <TD VALIGN="top">';
     echo $commit->committer . '<BR><A HREF="/files.php?id=' . $commit->id;
 	echo '"><IMG SRC="/images/logs.gif" ALT="Files within this port affected by this commit" BORDER="0" WIDTH="17" HEIGHT="20" HSPACE="2"></A>'. "</TD>\n";

@@ -11,6 +11,7 @@ function freshports_SummaryForDay($MinusN) {
       echo '  <tr>';
       echo '<td bgcolor="#AD0040" height="30"><font color="#FFFFFF" SIZE="+1">';
       echo date("l", $Now - 60*60*24*$MinusN);
+      echo '</font></td>';
       echo '       </tr>';
       echo '        <tr>';
       echo '         <td>';
@@ -75,7 +76,7 @@ ports.
 
   <tr>
     <td colspan="2">Note: <font size="-1">[refresh]</font> indicates a port for which the Makefile, 
-                  pkg/DESC, or pkg/COMMENT has changed and has not yet been updated within FreshPorts.
+                  pkg-descr, or pkg-comment has changed and has not yet been updated within FreshPorts.
     </td>
   </tr>
 <tr><td valign="top" width="100%">

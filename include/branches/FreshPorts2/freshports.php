@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.151 2003-09-05 12:50:28 dan Exp $
+	# $Id: freshports.php,v 1.4.2.152 2003-09-08 13:53:02 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -671,6 +671,12 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 		$HTML .= '</A>';
 	}
 
+	if (IsSet($port->category_looking_at)) {
+		if ($port->category_looking_at != $port->category) {
+			$HTML .= '<sup>*</sup>';
+		}
+	}
+
 	$HTML .= "</B></BIG>";
 
 	if ($ShowCategory) {
@@ -777,7 +783,12 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
    if ($port->categories) {
       // remove the primary category and remove any double spaces or trailing/leading spaces
 		// this ensures that explode gives us the right stuff
-      $Categories = str_replace($port->category, '', $port->categories);
+      if (IsSet($port->category_looking_at)) {
+         $CategoryToRemove = $port->category_looking_at;
+      } else {
+         $CategoryToRemove = $port->category;
+      }
+      $Categories = str_replace($CategoryToRemove, '', $port->categories);
       $Categories = str_replace('  ', ' ', $Categories);
 		$Categories = trim($Categories);
       if ($Categories) {

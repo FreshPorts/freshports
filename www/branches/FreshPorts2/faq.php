@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.70 2005-02-17 02:17:30 dan Exp $
+	# $Id: faq.php,v 1.1.2.71 2005-03-24 05:19:34 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -353,7 +353,7 @@ make: fatal errors encountered -- cannot continue
 
 	<TR><TD>
 	<P>
-	Of course.  We have two:
+	We have THREE:
 	</P>
 
 	<?php
@@ -387,6 +387,14 @@ make: fatal errors encountered -- cannot continue
 
 	<LI>A Netscape 6, SideBar type feed : <?php echo $HREF; ?>.  This can be added
 		to your browser using the button in the right hand column of this page.</LI>
+
+
+	<?php
+	$URL  = "http://$ServerName/rss/ports-new.php";
+	$HREF = "<A HREF=\"$URL\">$URL</A>";
+	?>
+
+	<li><p>An RSS feed that lists only new ports:  <?php echo $HREF; ?></p></li>
 
 	</OL>
 

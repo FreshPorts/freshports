@@ -1,5 +1,5 @@
 <?
-	# $Id: graphs.php,v 1.5.2.12 2002-06-09 21:42:36 dan Exp $
+	# $Id: graphs.php,v 1.5.2.13 2002-10-21 22:19:39 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -28,6 +28,8 @@ are advised not to make life decisions based on this information.
 <P>
 If you have suggestions for graphs, please submit them via the forum.
 </P>
+
+<h3>NOTE that many graphs are clickable and will take you to the category, port, etc.</h3>
 
 <HR>
 </TD></TR>

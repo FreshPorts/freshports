@@ -1,5 +1,5 @@
 <?
-	# $Id: customize.php,v 1.1.2.12 2002-05-18 18:46:33 dan Exp $
+	# $Id: customize.php,v 1.1.2.13 2002-05-18 18:50:07 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -24,9 +24,9 @@ if ($submit) {
 
 // process form
 
+   $email					= AddSlashes($_POST["email"]);
    $Password1				= AddSlashes($_POST["$Password1"]);
    $Password2				= AddSlashes($_POST["Password2"]);
-   $email					= AddSlashes($_POST["email"]);
    $emailsitenotices_yn		= AddSlashes($_POST["emailsitenotices_yn"]);
    $watchnotifyfrequency	= AddSlashes($_POST["watchnotifyfrequency"]);
    $numberofdays			= AddSlashes($_POST["numberofdays"]);

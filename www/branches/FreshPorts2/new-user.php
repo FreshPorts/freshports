@@ -1,5 +1,5 @@
 <?
-	# $Id: new-user.php,v 1.1.2.17 2002-05-18 18:46:33 dan Exp $
+	# $Id: new-user.php,v 1.1.2.18 2002-05-18 18:50:08 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -30,6 +30,7 @@ if ($submit) {
 	$Password1				= AddSlashes($_POST["Password1"]);
 	$Password2				= AddSlashes($_POST["Password2"]);
 	$emailsitenotices_yn	= AddSlashes($_POST["emailsitenotices_yn"]);
+	$watchnotifyfrequency	= AddSlashes($_POST["watchnotifyfrequency"]);
 	$numberofdays			= AddSlashes($_POST["numberofdays"]);
 
 	if ($UserLogin == '') {

@@ -1,5 +1,5 @@
 <?
-	# $Id: port-watch.php,v 1.1.2.16 2002-06-09 21:42:39 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.17 2002-06-12 03:05:07 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -96,14 +96,14 @@ if ($submit) {
 	           and ports.category_id                = $CategoryID)";
 
 
-	$result = pg_exec ($db, $sql);
+	$result = pg_exec($db, $sql);
      
 // insert new stuff
 //   echo "inserting new stuff now<br>\n";
     
-   // make sure we are pointing at the start of the array.
    $ports = $_POST["ports"];
    if ($ports) {
+      // make sure we are pointing at the start of the array.
       reset($ports);
       while (list($key, $value) = each($ports)) {
          $sql = "insert into watch_list_element (watch_list_id, element_id) ".

@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.120 2002-12-11 16:33:42 dan Exp $
+	# $Id: freshports.php,v 1.4.2.121 2002-12-12 02:23:12 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -1207,7 +1207,7 @@ function freshports_ErrorMessage($Title, $ErrorMessage) {
   <TR valign=top>
    <TD><img src="/images/warning.gif"></TD>
    <TD WIDTH="100%">
-  <p><?php		echo "WARNING: $ErrorMessage"; ?></p>
+  <p>' .  "WARNING: $ErrorMessage" . '</p>
  <p>If you need help, please ask in the forum. </p>
  </TD>
  </TR>

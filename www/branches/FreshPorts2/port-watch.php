@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-watch.php,v 1.1.2.40 2003-09-08 14:19:03 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.41 2003-09-08 14:21:23 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -134,7 +134,7 @@ $sql = "
      AND ports.element_id             = element.id
      AND element.status               = 'A'
      AND PRIMARY_CATEGORY.id          = ports.category_id
-ORDER BY element.name";
+ORDER BY port, primary_category";
 
 if ($Debug) echo "<pre>$sql</pre>\n";
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: htmlify-test.php,v 1.1.2.2 2003-09-12 14:45:08 dan Exp $
+	# $Id: htmlify-test.php,v 1.1.2.3 2003-10-02 14:23:56 dan Exp $
 	#
 	# Copyright (c) 2003 DVL Software Limited
 	#
@@ -46,6 +46,8 @@ double match test:
 http://this.is.link/x.php?email=somebody@host.com&anotheremail=other@other.org&x=1 !
 http://this.is.link.with/test?PR:123/qweeq
 http://www.freebsd.org/cgi/query-pr.cgi?pr=ports/39731
+
+Does it handle great then (>) and less than (<) and ampersand (&)?
 
 EOD;
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: files.php,v 1.1.2.41 2005-02-17 01:50:50 dan Exp $
+	# $Id: files.php,v 1.1.2.42 2005-03-15 18:09:25 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -305,7 +305,7 @@ select element_pathname(element.id) as pathname,
 	</table>
 	</TD>
 		<TD VALIGN="top" WIDTH="*" ALIGN="center">
-		<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php') ?>
+		<? echo freshports_SideBar(); ?>
 		</TD>
 	</TR>
 	</table>

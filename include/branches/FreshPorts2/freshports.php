@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.218 2005-03-13 10:59:48 dan Exp $
+	# $Id: freshports.php,v 1.4.2.219 2005-03-15 18:09:25 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -1755,8 +1755,6 @@ function freshports_SideBar() {
 
 	GLOBAL $User;
 	$ColumnWidth = 155;
-
-#	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php');
 
 	$OriginLocal = rawurlencode($_SERVER["REQUEST_URI"]);
 

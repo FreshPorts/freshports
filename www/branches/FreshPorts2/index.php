@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.92 2004-09-17 03:15:22 dan Exp $
+	# $Id: index.php,v 1.1.2.93 2004-10-02 18:50:11 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -117,17 +117,8 @@ if ($db) {
 Welcome to FreshPorts, where you can find the latest information on your favourite
 ports. A port is marked as new for 10 days.
 <?php
-if (file_exists($_SERVER["DOCUMENT_ROOT"] . "/../dynamic/PortsFreezeIsOn")) {
+	echo PortsFreezeStatus();
 ?>
-<p>
-<BIG><BIG>There is a ports freeze in effect!</big></big>  That means that
-commits will be few and far between and only by approval.
-</p>
-<?php
-}
-?>
-</P>
-
 </TD></TR>
 <?php
 

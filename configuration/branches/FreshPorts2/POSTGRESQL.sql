@@ -1,5 +1,5 @@
 --
--- $Id: POSTGRESQL.sql,v 1.1.2.33 2003-04-23 22:42:59 dan Exp $
+-- $Id: POSTGRESQL.sql,v 1.1.2.34 2003-04-27 14:44:29 dan Exp $
 --
 -- Copyright (c) 1998-2002 DVL Software Limited
 --
@@ -31,6 +31,7 @@ grant select on commit_log                     to group www;
 grant select on commit_log_elements            to group www;
 grant select on commit_log_port_elements       to group www;
 grant select on commit_log_ports               to group www;
+grant select on commit_log_ports_ignore        to group www;
 grant select on commits_latest                 to group www;
 grant select on latest_commits_ports           to group www;
 grant select on element                        to group www;

@@ -1,5 +1,5 @@
 --
--- $Id: POSTGRESQL.sql,v 1.1.2.8 2002-04-20 03:42:40 dan Exp $
+-- $Id: POSTGRESQL.sql,v 1.1.2.9 2002-05-19 17:12:28 dan Exp $
 --
 -- Copyright (c) 1998-2002 DVL Software Limited
 --
@@ -76,6 +76,8 @@ grant update                         on watch_list_staging_log_id_seq  to group 
 grant select                         on watch_notice                   to group www;
 
 grant select                         on graphs                         to group www;
+grant select                         on daily_stats                    to group www;
+grant select                         on daily_stats_data               to group www;
 
 --
 -- no access

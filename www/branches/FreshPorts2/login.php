@@ -1,5 +1,5 @@
 <?
-	# $Id: login.php,v 1.1.2.20 2002-08-28 12:17:23 dan Exp $
+	# $Id: login.php,v 1.1.2.21 2002-09-11 14:19:05 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -7,15 +7,16 @@
    require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
    require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
 
-$Debug=0;
+#$Debug=1;
 
 $origin = $_GET["origin"];
 
 if ($Debug) echo "origin = '" . rawurlencode($origin) . "'<BR>\n";
+if ($Debug) phpinfo();
 
 $origin=rawurlencode($origin);
 
-if ($_POST["UserID"]) {
+if ($_POST["LOGIN"] && $_POST["UserID"]) {
    // process form
 
    if ($Debug) {
@@ -76,13 +77,44 @@ if ($_POST["UserID"]) {
 				$error .= "Your account has been disabled.  Please contact $ProblemSolverEmailAddress.";
 			} else {
 				if ($status == $UserStatusUnconfirmed) {
-					$error .= "Your account needs to be enabled by following the directions in the email we have sent to you.";
+					$error .= 'Your account needs to be enabled by following the directions in the email we have sent to you.' . "<BR>\n";
+					$error .= 'To have your activation details resent to the email address you supplied, click on the resend button' . "<BR>\n";
+					$error .= '<form action="' . $_SERVER["PHP_SELF"] . "?origin=$origin" . ' method="POST">' . "\n";
+					$error .= '<input type="hidden" name="user" value="' . $UserID . '">' . "\n";
+					$error .= '<input TYPE="submit" VALUE="Resend" name=resend>' . "\n";
+					$error .= '</form>' . "\n";
 				} else {
 					$error .= "I have no idea what your account status is.";
 				}
 			}
 		
 		}
+	}
+}
+
+if ($_GET["resend"]) {
+	$User = addslashes($_GET["user"]);
+
+	// get user id for that name
+
+	$sql = "select id from users where lower(name) = lower('$User')";
+
+	if ($Debug) {
+		echo "$sql<BR>\n";
+	}
+
+	$result = pg_exec($db, $sql) or die('query failed ' . pg_errormessage());
+
+	if (pg_numrows($result)) {
+		$row    = pg_fetch_array($result,0);
+		$ID		= $row["id"];
+		if (freshports_UserSendToken($ID, $db)) {
+			$error .= 'You should soon receive an email at the mail address you supplied. It will contain instructions to enable your account.';
+		} else {
+			$error .= 'I\'m sorry but I couldn\'t send your token.  Please contact ' . $ProblemSolverEmailAddress . '.';
+		}
+	} else {
+		$error .= "Hmmm, I know nothing about you.  That can't be right.  Please contact $ProblemSolverEmailAddress.";
 	}
 }
    freshports_Start("Login",

@@ -1,5 +1,5 @@
 <?
-	# $Id: categories.php,v 1.1.2.1 2002-02-22 00:28:22 dan Exp $
+	# $Id: categories.php,v 1.1.2.2 2002-12-16 13:31:50 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -19,6 +19,14 @@ class Category {
 	function Category($dbh) {
 		$this->dbh	= $dbh;
 	}
+	
+	function Populate($myrow) {
+		$this->id					= $myrow["id"];
+		$this->is_primary			= $myrow["is_primary"];
+		$this->element_id			= $myrow["element_id"];
+		$this->name					= $myrow["name"];
+		$this->description		= $myrow["description"];
+	}
 
 	function FetchByID($id) {
 		if (IsSet($id)) {
@@ -33,15 +41,31 @@ class Category {
 			if ($numrows == 1) {
 				if ($Debug) echo "fetched by ID succeeded<BR>";
 				$myrow = pg_fetch_array ($result, 0);
-				$this->id					= $myrow["id"];
-				$this->is_primary			= $myrow["is_primary"];
-				$this->element_id			= $myrow["element_id"];
-				$this->name					= $myrow["name"];
-				$this->description			= $myrow["description"];
+				$this->Populate($myrow);
 			}
 		}
 
         return $this->id;
+	}
+
+	function FetchByName($Name) {
+		if (IsSet($Name)) {
+			$this->name = $Name;
+		}
+		$sql = "select * from categories where name = $this->name";
+		if ($Debug) echo "sql = '$sql'<BR>";
+
+        $result = pg_exec($this->dbh, $sql);
+		if ($result) {
+			$numrows = pg_numrows($result);
+			if ($numrows == 1) {
+				if ($Debug) echo "fetched by ID succeeded<BR>";
+				$myrow = pg_fetch_array ($result, 0);
+				$this->Populate($myrow);
+			}
+		}
+
+		return $this->name;
 	}
 
 }

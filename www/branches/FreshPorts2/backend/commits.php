@@ -1,5 +1,5 @@
 <?
-	# $Id: commits.php,v 1.1.2.2 2002-05-22 01:38:26 dan Exp $
+	# $Id: commits.php,v 1.1.2.3 2002-06-21 18:59:46 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -18,7 +18,7 @@
 				   committer,
 				   system_id
 			  FROM commit_log
-			 WHERE date_added < now() - INTERVAL '5 minutes'
+			 WHERE date_added < now() - INTERVAL '10 minutes'
 		  ORDER BY commit_date desc, message_date desc, message_id, committer
 			 LIMIT 100";
 

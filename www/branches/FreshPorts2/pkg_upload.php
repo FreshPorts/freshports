@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_upload.php,v 1.5.2.13 2002-05-18 08:07:37 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.14 2002-05-18 18:00:34 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -172,6 +172,7 @@ function DisplayStagingArea($WatchListID, $db) {
 		if ($StagingInUse) {
 			$DisplayStagingArea = TRUE;
 			if ($_POST["submit"]) {
+				$ports = $_POST["ports"];
 				# save these things to the watch list
 				# and clear out part of the staging area.
 #				echo ' you clicked on submit';

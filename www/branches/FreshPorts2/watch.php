@@ -1,5 +1,5 @@
 <?
-	# $Id: watch.php,v 1.1.2.28 2002-12-06 16:51:11 dan Exp $
+	# $Id: watch.php,v 1.1.2.29 2002-12-06 21:25:33 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -8,6 +8,12 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
 	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/watch-lists.php");
+
+	// if we don't know who they are, we'll make sure they login first
+	if (!$visitor) {
+		header("Location: login.php?origin=" . $_SERVER["PHP_SELF"]);  /* Redirect browser to PHP web site */
+		exit;  /* Make sure that code below does not get executed when we redirect. */
+	}
 
 $Debug = 0;
 
@@ -30,6 +36,8 @@ if (!$visitor) {
 		# watch staging area against the watch list.
 		$WatchListID = AddSlashes($_POST["watch_list_id"]);
 		if ($Debug) echo "\$WatchListID='$WatchListID'";
+	} else {
+		$WatchListID = '';
 	}
 
 ?>
@@ -61,14 +69,6 @@ echo freshports_WatchListDDLBForm($db, $UserID, $WatchListID);
 
 $DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
 
-if ($UserID == '') {
-   echo '<tr><td>';
-   echo 'You must be logged in order to view your watch lists.';
-   echo '</td></tr>';
-} else {
-
-
-$WatchID = freshports_MainWatchID($UserID, $db);
 
 // make sure the value for $sort is valid
 
@@ -100,161 +100,151 @@ switch ($sort) {
 
 echo "</td></tr>\n";
 
-$UpdateCache = 1;
 
-if ($WatchID == '') {
-   echo "<tr><td>Your watch list is empty.</td></tr>";
+if ($WatchListID == '') {
+	echo '<tr><td align="right"><BIG>Please select a watch list.</BIG><p>eventually, if you have just one watch list, this will default.</td></tr>';
 } else {
-
-if ($UpdateCache == 1) {
-//   echo 'time to update the cache';
-
-$sql = "
-SELECT temp.*,
-	to_char(max(commit_log.commit_date) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') 	as updated,
-	commit_log.committer, commit_log.description 														as update_description, 
-	to_char(max(commit_log.date_added) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') 		as date_added, 
-	commit_log.message_id, max(commit_log.commit_date) 												as commit_date_sort_field,
-	commit_log.committer
-from commit_log
-	RIGHT OUTER JOIN
-(
-
-select element.name 			as port, 
-		 ports.id 				as ports_id, 
-       categories.name 		as category, 
-       categories.id 		as category_id, 
-       ports.version 		as version, 
-       ports.revision 		as revision, 
-       element.id 			as element_id, 
-       ports.maintainer, 
-       ports.short_description, 
-       ports.last_commit_id, 
-       ports.package_exists, 
-       ports.extract_suffix, 
-       ports.homepage, 
-       element.status, 
-       ports.broken, 
-       ports.forbidden, 
-       1 as onwatchlist 
-       from watch_list_element, element, categories, ports
- WHERE ports.category_id                = categories.id 
-   and watch_list_element.element_id    = ports.element_id 
-	and ports.element_id                 = element.id
-   and watch_list_element.watch_list_id = $WatchListID
-
-
-) as TEMP
-on (TEMP.last_commit_id = commit_log.id) 
-
-GROUP BY port,
-			ports_id, 
-         category, 
-         category_id, 
-         version, 
-         revision, 
-         commit_log.committer, 
-         update_description, 
-         element_id, 
-         maintainer, 
-         short_description, 
-         date_added, 
-         last_commit_id, 
-         commit_log.message_id, 
-         package_exists, 
-         extract_suffix, 
-         homepage, 
-         status, 
-         broken, 
-         forbidden, 
-         onwatchlist  
-";
-
-$sql .= " order by $sort ";
-//$sql .= " limit 20";
-
-//$Debug=1;
-if ($Debug) {
-   echo "<pre>$sql</pre>";
-}
-
-$result = pg_exec($db, $sql);
-if (!$result) {
-	echo pg_errormessage();
-}
-//$HTML = "</tr></td><tr>";
-
-$HTML .= '<tr><td>';
-
-// get the list of topics, which we need to modify the order
-$NumPorts=0;
-
-require($_SERVER['DOCUMENT_ROOT'] . "/../classes/ports.php");
-$port = new Port($db);
-$port->LocalResult = $result;
-
-$LastCategory='';
-$GlobalHideLastChange = "N";
-$numrows = pg_numrows($result);
-
-$ShowDescriptionLink = 0;
-$DaysMarkedAsNew= $DaysMarkedAsNew= $GlobalHideLastChange= $ShowChangesLink = $ShowDownloadPortLink= $ShowHomepageLink= $ShowLastChange= $ShowMaintainedBy= $ShowPortCreationDate= $ShowPackageLink= $ShowShortDescription =1;
-$ShowPortCreationDate = 0;
-$HideCategory = 1;
-$ShowCategories		= 1;
-GLOBAL	$ShowDepends;
-$ShowDepends		= 1;
-$HideDescription = 1;
-$ShowEverything  = 1;
-$ShowShortDescription = "Y";
-$ShowMaintainedBy     = "Y";
-#$GlobalHideLastChange = "Y";
-$ShowDescriptionLink  = "N";
-
-if ($ShowCategoryHeaders) {
-	$HTML .= '<DL>';
-}
-
-for ($i = 0; $i < $numrows; $i++) {
-	$port->FetchNth($i);
-	if ($ShowCategoryHeaders) {
-		$Category = $port->category;
-
-		if ($LastCategory != $Category) {
-			if ($i > 0) {
-				$HTML .= "\n</DD>\n";
-			}
-
-			$LastCategory = $Category;
-			if ($ShowCategoryHeaders) {
-				$HTML .= '<DT>';
-			}
-
-			$HTML .= '<BIG><BIG><B><a href="/' . $Category . '/">' . $Category . '</a></B></BIG></BIG>';
-			if ($ShowCategoryHeaders) {
-				$HTML .= "</DT>\n<DD>";
-			}
-		}
+	
+	$sql = "
+	SELECT temp.*,
+		to_char(max(commit_log.commit_date) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') 	as updated,
+		commit_log.committer, commit_log.description 														as update_description, 
+		to_char(max(commit_log.date_added) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') 		as date_added, 
+		commit_log.message_id, max(commit_log.commit_date) 												as commit_date_sort_field,
+		commit_log.committer
+	from commit_log
+		RIGHT OUTER JOIN
+	(
+	
+	select element.name 			as port, 
+			 ports.id 				as ports_id, 
+	       categories.name 		as category, 
+	       categories.id 		as category_id, 
+	       ports.version 		as version, 
+	       ports.revision 		as revision, 
+	       element.id 			as element_id, 
+	       ports.maintainer, 
+	       ports.short_description, 
+	       ports.last_commit_id, 
+	       ports.package_exists, 
+	       ports.extract_suffix, 
+	       ports.homepage, 
+	       element.status, 
+	       ports.broken, 
+	       ports.forbidden, 
+	       1 as onwatchlist 
+	       from watch_list_element, element, categories, ports
+	 WHERE ports.category_id                = categories.id 
+	   and watch_list_element.element_id    = ports.element_id 
+		and ports.element_id                 = element.id
+	   and watch_list_element.watch_list_id = $WatchListID
+	
+	
+	) as TEMP
+	on (TEMP.last_commit_id = commit_log.id) 
+	
+	GROUP BY port,
+				ports_id, 
+	         category, 
+	         category_id, 
+	         version, 
+	         revision, 
+	         commit_log.committer, 
+	         update_description, 
+	         element_id, 
+	         maintainer, 
+	         short_description, 
+	         date_added, 
+	         last_commit_id, 
+	         commit_log.message_id, 
+	         package_exists, 
+	         extract_suffix, 
+	         homepage, 
+	         status, 
+	         broken, 
+	         forbidden, 
+	         onwatchlist  
+	";
+	
+	$sql .= " order by $sort ";
+	
+	if ($Debug) {
+	   echo "<pre>$sql</pre>";
+	}
+	
+	$result = pg_exec($db, $sql);
+	if (!$result) {
+		echo pg_errormessage();
 	}
 
-	$HTML .= freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 1, '', 0);
-	$HTML .= '<BR>';
-}
+	$HTML .= '<tr><td>';
 
-if ($ShowCategoryHeaders) {
-	$HTML .= "\n</DD>\n</DL>\n";
-}
+	// get the list of topics, which we need to modify the order
+	$NumPorts=0;
 
-}
+	require($_SERVER['DOCUMENT_ROOT'] . "/../classes/ports.php");
+	$port = new Port($db);
+	$port->LocalResult = $result;
 
-$HTML .= "</td></tr>\n";
+	$LastCategory='';
+	$GlobalHideLastChange = "N";
+	$numrows = pg_numrows($result);
 
-$HTML .= "<tr><td>$numrows ports found</td></tr>\n";
+	$ShowDescriptionLink = 0;
+	$DaysMarkedAsNew= $DaysMarkedAsNew= $GlobalHideLastChange= $ShowChangesLink = $ShowDownloadPortLink= $ShowHomepageLink= $ShowLastChange= $ShowMaintainedBy= $ShowPortCreationDate= $ShowPackageLink= $ShowShortDescription =1;
+	$ShowPortCreationDate = 0;
+	$HideCategory = 1;
+	$ShowCategories		= 1;
+	GLOBAL	$ShowDepends;
+	$ShowDepends		= 1;
+	$HideDescription = 1;
+	$ShowEverything  = 1;
+	$ShowShortDescription = "Y";
+	$ShowMaintainedBy     = "Y";
+	#$GlobalHideLastChange = "Y";
+	$ShowDescriptionLink  = "N";
 
-echo $HTML;
+	if ($ShowCategoryHeaders) {
+		$HTML .= '<DL>';
+	}
 
-} // end if no WatchID
-}
+	for ($i = 0; $i < $numrows; $i++) {
+		$port->FetchNth($i);
+		if ($ShowCategoryHeaders) {
+			$Category = $port->category;
+	
+			if ($LastCategory != $Category) {
+				if ($i > 0) {
+					$HTML .= "\n</DD>\n";
+				}
+
+				$LastCategory = $Category;
+				if ($ShowCategoryHeaders) {
+					$HTML .= '<DT>';
+				}
+
+				$HTML .= '<BIG><BIG><B><a href="/' . $Category . '/">' . $Category . '</a></B></BIG></BIG>';
+				if ($ShowCategoryHeaders) {
+					$HTML .= "</DT>\n<DD>";
+				}
+			}
+		}
+
+		$HTML .= freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 1, '', 0);
+		$HTML .= '<BR>';
+	}
+
+	if ($ShowCategoryHeaders) {
+		$HTML .= "\n</DD>\n</DL>\n";
+	}
+
+	$HTML .= "</td></tr>\n";
+
+	$HTML .= "<tr><td>$numrows ports found</td></tr>\n";
+
+	echo $HTML;
+
+} // end if no WatchListID
 
 </script>
 </table>

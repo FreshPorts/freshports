@@ -1,19 +1,21 @@
 <?
-	# $Id: pkg_upload.php,v 1.5.2.19 2002-12-06 14:39:53 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.20 2002-12-06 21:25:33 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
 
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/watch-lists.php");
 
 	freshports_Start("Uploading pkg_info",
 					"$FreshPortsName - new ports, applications",
 					"FreeBSD, index, applications, ports");
 $Debug=0;
 #phpinfo();
+
 function StagingAlreadyInUse($UserID, $dbh) {
 
 	$Result = 1;	// yes, already in progress.
@@ -88,22 +90,31 @@ function DisplayUploadForm($pkg_info) {
 #	</P>
 }
 
-function DisplayStagingArea($UserID, $db) {
+function DisplayStagingArea($UserID, $WatchListID, $db) {
 
 	echo '<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5" 
 					bordercolor="#a2a2a2" BORDERCOLORDARK="#a2a2a2" BORDERCOLORLIGHT="#a2a2a2"><TR>';
 ?>
 
-	<TR><TD COLSPAN="4"><BIG>The following information is in your Staging Area.  To save it to your Watch List, please click on the
+	<TR><TD COLSPAN="4"><BIG>The following information is in your Staging Area.  To save it to a Watch List, 
+		please click on the
 			"Update watch list" button.</BIG> <SMALL><A HREF="/help.php">help</A></SMALL></TD></TR>
 
 	<TR><TD COLSPAN="4">
+	<table width="100%" border="0"><tr><td>
 			<FORM ACTION="<? echo $_SERVER["PHP_SELF"]; ?>" method="POST">
 			<P ALIGN="center">
-			<INPUT TYPE="submit" VALUE="Update watch list"  NAME="submit" SIZE="40">
+			<INPUT TYPE="submit" VALUE="Update watch list"  NAME="update_watch_list" SIZE="40">
 			&nbsp;&nbsp;&nbsp;
  			<INPUT TYPE="submit" VALUE="Empty staging area" NAME="clear">
 			</P>
+			<td align="right">
+			<?php echo freshports_WatchListDDLB($db, $UserID, $WatchListID); ?>
+			</td>
+			<td>
+	<?php echo freshports_WatchListSelectGoButton() ?>
+</tr></table>
+</td>
 
 	</TD></TR>
 <?
@@ -119,9 +130,9 @@ function DisplayStagingArea($UserID, $db) {
 
 	echo '</TR><TR>';
 
-	
+
 	echo '<TD VALIGN="top">' . "\n";
-	UploadDisplayStagingResultsMatches($UserID, $db);
+	UploadDisplayStagingResultsMatches($UserID, $WatchListID, $db);
 	echo '</TD>';
 
 	echo '<TD VALIGN="top">' . "\n";
@@ -129,24 +140,51 @@ function DisplayStagingArea($UserID, $db) {
 	echo '</TD>';
 
 	echo '<TD VALIGN="top">' . "\n";
-	UploadDisplayStagingResultsMatchesDuplicates($UserID, $db);
+	UploadDisplayStagingResultsMatchesDuplicates($UserID, $WatchListID, $db);
 	echo '</TD>';
 
 	echo '<TD VALIGN="top">' . "\n";
-	UploadDisplayWatchListItemsNotInStagingArea($UserID, $db);
+	UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $db);
 	echo '</TD>';
-			echo '</FORM>';
+
+	echo '</FORM>';
 
 	echo '</TABLE>';
 }
 
+function ChooseWatchLists($UserID, $db) {
 
+	echo '<TABLE width="100%" ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5" 
+					bordercolor="#a2a2a2" BORDERCOLORDARK="#a2a2a2" BORDERCOLORLIGHT="#a2a2a2"><TR>';
+?>
+
+	<TR><TD colspan="3"><BIG>Your staging area contains your uploaded information.  Please choose a watch list, and click on Go.
+		 <SMALL><A HREF="/help.php">help</A></SMALL></TD></TR>
+
+	<TR><TD>
+	<table width="100%" border="0"><tr><td>
+			<FORM ACTION="<? echo $_SERVER["PHP_SELF"]; ?>" method="POST">
+			<P ALIGN="center">
+ 			<INPUT TYPE="submit" VALUE="Empty staging area" NAME="clear">
+ 			</td><td align="right">
+			<?php echo freshports_WatchListDDLB($db, $UserID); ?>
+			</td>
+			<td>
+	<?php echo freshports_WatchListSelectGoButton() ?>
+
+</td></tr></table>
+	</TD></TR>
+<?
+	echo '</FORM>';
+
+	echo '</TABLE>';
+}
 
 ?>
 
 <TABLE width="<? echo $TableWidth ?>" border="0" ALIGN="center">
 <TR><TD VALIGN=TOP>
-<TABLE WIDTH="100%">
+<TABLE WIDTH="100%" border="0">
 <TR>
 	<? freshports_PageBannerText("Uploading pkg_info"); ?>
 <TR><TD>
@@ -176,12 +214,13 @@ function DisplayStagingArea($UserID, $db) {
 
 		if ($StagingInUse) {
 			$DisplayStagingArea = TRUE;
-			if ($_POST["submit"]) {
+			if ($_POST["update_watch_list"]) {
 				$ports = $_POST["ports"];
 				# save these things to the watch list
 				# and clear out part of the staging area.
-#				echo ' you clicked on submit';
-				if (MoveStagingToWatchList($UserID, $ports, $db)) {
+				$WatchListID = AddSlashes($_POST["watch_list_id"]);
+#				echo ' you clicked on update_watch_list';
+				if (MoveStagingToWatchList($UserID, $WatchListID, $ports, $db)) {
 #					$DisplayStagingArea = FALSE;
 					$StagingInUse       = FALSE;
 					$WatchListUpdated   = TRUE;
@@ -194,6 +233,12 @@ function DisplayStagingArea($UserID, $db) {
 					$DisplayStagingArea	= FALSE;
 					DisplayError("Your staging area has been cleared.");
 				}
+			}
+			
+			if ($_POST["watch_list_select_x"] && $_POST["watch_list_select_y"]) {
+				# they clicked on the GO button and we have to apply the 
+				# watch staging area against the watch list.
+				$WatchListID = AddSlashes($_POST["watch_list_id"]);
 			}
 		} else {
 			$DisplayStagingArea = FALSE;
@@ -215,7 +260,11 @@ function DisplayStagingArea($UserID, $db) {
 			if ($WatchListUpdated) {
 				DisplayError("<BIG>Your watch list has been updated. You may wish to empty your staging area now.</BIG>");
 			}
-			DisplayStagingArea($UserID, $db);
+			if ($WatchListID) {
+				DisplayStagingArea($UserID, $WatchListID, $db);
+			} else {
+				ChooseWatchLists($UserID, $db);
+			}
 		} else {
 			DisplayUploadForm($pkg_info);
 		}

@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.111 2002-12-03 16:18:18 dan Exp $
+	# $Id: freshports.php,v 1.4.2.112 2002-12-06 21:25:34 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -105,18 +105,30 @@ function freshports_Encoding_Errors() {
 	return '<IMG SRC="/images/error.gif" ALT="Encoding Errors (not all of the commit message was ASCII)" TITLE="Encoding Errors (not all of the commit message was ASCII)" BORDER="0" WIDTH="16" HEIGHT="16">';
 }
 
-function freshports_Watch_Link_Add($element_id) {
+function freshports_Watch_Link_Add($WatchListID, $ElementID) {
 	GLOBAL	$FreshPortsWatchedPortNotPrefix;
 	GLOBAL	$FreshPortsWatchedPortNotSuffix;
 
-	return $FreshPortsWatchedPortNotPrefix    . $element_id . $FreshPortsWatchedPortNotSuffix;
+	$HTML = '<SMALL><A HREF="/watch-list.php?';
+	$HTML .= 'add=' . $ElementID;
+	$HTML .= '&';
+	$HTML .= 'wlid='   . $WatchListID;
+	$HTML .= '">' . freshports_Watch_Icon_Add() . '</A></SMALL>';
+
+	return $HTML;
 }
 
-function freshports_Watch_Link_Remove($element_id) {
+function freshports_Watch_Link_Remove($WatchListID, $ElementID) {
 	GLOBAL	$FreshPortsWatchedPortPrefix;
 	GLOBAL	$FreshPortsWatchedPortSuffix;
-
-	return $FreshPortsWatchedPortPrefix    . $element_id . $FreshPortsWatchedPortSuffix;
+	
+	$HTML = '<SMALL><A HREF="/watch-list.php?';
+	$HTML .= 'remove=' . $ElementID;
+	$HTML .= '&';
+	$HTML .= 'wlid='   . $WatchListID;
+	$HTML .= '">' . freshports_Watch_Icon() . '</A></SMALL>';
+	
+	return $HTML;
 }
 
 function freshports_Email_Link($message_id) {
@@ -597,9 +609,9 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 
 	if ($WatchListID) {
 		if ($port->{onwatchlist}) {
-			$HTML .= ' '. freshports_Watch_Link_Remove($port->{element_id});
+			$HTML .= ' '. freshports_Watch_Link_Remove($WatchListID, $port->{element_id});
 		} else {
-			$HTML .= ' '. freshports_Watch_Link_Add($port->{element_id});
+			$HTML .= ' '. freshports_Watch_Link_Add($WatchListID, $port->{element_id});
 		}
 	}
 

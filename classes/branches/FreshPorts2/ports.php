@@ -1,5 +1,5 @@
 <?
-	# $Id: ports.php,v 1.1.2.27 2003-03-04 22:00:21 dan Exp $
+	# $Id: ports.php,v 1.1.2.28 2003-03-05 13:46:40 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -399,10 +399,10 @@ LEFT OUTER JOIN
  (SELECT element_id           as wle_element_id,
          COUNT(watch_list_id) as onwatchlist
     FROM watch_list JOIN watch_list_element
-        ON watch_list.id      = watch_list_element.watch_list_id
-       AND watch_list.user_id = $UserID
-  GROUP BY watch_list_element.element_id) AS TEMP
-       ON TEMP.wle_element_id = PE.element_id";
+      ON watch_list.id      = watch_list_element.watch_list_id
+     AND watch_list.user_id = $UserID
+ GROUP BY wle_element_id) AS TEMP
+  ON TEMP.wle_element_id = PE.element_id";
     	}
 
 		$sql .= " ORDER by port ";

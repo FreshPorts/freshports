@@ -1,5 +1,5 @@
 --
--- $Id: POSTGRESQL.sql,v 1.1.2.2 2002-03-14 20:29:29 dan Exp $
+-- $Id: POSTGRESQL.sql,v 1.1.2.3 2002-03-18 04:23:47 dan Exp $
 --
 -- Copyright (c) 1998-2002 DVL Software Limited
 --
@@ -71,10 +71,13 @@ grant insert                         on watch_list_staging_log               to 
 grant update                         on watch_list_staging_log_id_seq        to group www;
 
 
+grant select                         on watch_notice                   to group www;
+grant insert                         on user_confirmations             to group www;
+
 --
 -- no access
 --
--- watch_notice                   to group www;
+
 -- watch_notice_id_seq            to group www;
 -- watch_notice_log               to group www;
 -- watch_notice_log_id_seq        to group www;
@@ -132,4 +135,5 @@ grant select, insert, update on watch_notice     to group commits;
 grant insert                         on watch_notice_log               to group commits;
 grant update                         on watch_notice_log_id_seq        to group commits;
 
-grant ALL on ports_check to group commits;
+grant ALL on ports_check           to group commits;
+grant update on ports_check_id_seq to group commits;

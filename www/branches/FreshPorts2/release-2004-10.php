@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: release-2004-10.php,v 1.1.2.1 2004-10-24 21:40:50 dan Exp $
+	# $Id: release-2004-10.php,v 1.1.2.2 2004-11-19 17:34:59 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -145,6 +145,34 @@ echo '/www/firefox/</a>';
 If you click on the Files icon (<?php echo freshports_Files_Icon(); ?>) in the
 Commit History for any port, you'll see a new link.  This link is represented
 by the Revision Details icon (<?php echo freshports_Revision_Icon(); ?>).
+</P>
+</TD></TR>
+
+<?	echo freshports_BannerSpace(); ?>
+<TR>
+<?	echo freshports_PageBannerText('Expanded search options'); ?>
+</TR>
+
+<TR><TD>
+<P>
+The <a href="/search.php">search page</a> now allows you to search by 
+the following fields.
+<blockquote>
+<table cellpadding="5" cellspacing="0" border="0">
+<tr><td><b>Field</b></td><td><b>Origin</b></td></tr>
+<tr><td>Port Name</td><td><code class="code">PORTNAME</code></td></tr>
+<tr><td>Package Name</td><td><code class="code">PKGNAME</code></td></tr>
+<tr><td>Latest Link</td><td><code class="code">PKGNAME</code></td></tr>
+<tr><td>Maintainer</td><td><code class="code">MAINTAINER</code></td></tr>
+<tr><td>Short Description</td><td><code class="code">COMMENT</code></td></tr>
+<tr><td>Long Description</td><td><code class="code">pkg-descr<sup>1</sup></code></td></tr>
+<tr><td>Depends Build</td><td><code class="code">BUILD_DEPENDS</code></td></tr>
+<tr><td>Depends Lib</td><td><code class="code">LIB_DEPENDS</code></td></tr>
+<tr><td>Depends Run</td><td><code class="code">RUN_DEPENDS</code></td></tr>
+<tr><td>Message ID</td><td>The message id in the original commit email</td></tr>
+</table>
+</blockquote>
+
 </P>
 </TD></TR>
 

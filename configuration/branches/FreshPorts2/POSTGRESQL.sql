@@ -1,5 +1,5 @@
 --
--- $Id: POSTGRESQL.sql,v 1.1.2.16 2002-07-26 15:51:44 dan Exp $
+-- $Id: POSTGRESQL.sql,v 1.1.2.17 2002-08-12 03:50:55 dan Exp $
 --
 -- Copyright (c) 1998-2002 DVL Software Limited
 --
@@ -55,6 +55,7 @@ grant select, insert, update on users          to group www;
 grant select,         update on users_id_seq   to group www;
 grant select, insert         on watch_list     to group www;
 
+grant select, insert, delete, update on committer_notify           to group www;
 grant select, insert, delete, update on watch_list_staging         to group www;
 grant select,                 update on watch_list_staging_id_seq  to group www;
 
@@ -120,6 +121,8 @@ grant select, insert,         delete on commits_latest                 to group 
 grant select, insert,         delete on commits_latest_ports           to group commits;
 grant select                         on commits_recent                 to group commits;
 grant select                         on commits_recent_ports           to group commits;
+
+grant select                         on committer_notify               to group commits;
 
 grant select, insert, update, delete on element                        to group commits;
 grant select, update                 on element_id_seq                 to group commits;

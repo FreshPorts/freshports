@@ -4,6 +4,7 @@
 // I'd show you what code is expected in $myrow, but I can't be bothered
 // right now
 //
+   $MarkedAsNew = "N";
    $HTML .= "<dl>";
 
    $HTML .= "<b>" . $myrow["port"];
@@ -28,17 +29,25 @@
 
 //   $HTML .= $myrow["date_created_formatted"] ."::". $myrow["updated"] ."--". $DaysMarkedAsNew;
    if ($myrow["date_created"] > Time() - 3600 * 24 * $DaysMarkedAsNew) {
+      $MarkedAsNew = "Y";
       $HTML .= " <img src=\"/images/new.gif\" width=28 height=11 alt=\"new!\" hspace=2 align=absmiddle>";
-//      if ($myrow["date_created_formatted"] != $myrow["updated"]) {
-          $HTML .= ' <font size="-1">(' . $myrow["date_created_formatted"] . ")</font>";
-//      }
+      $HTML .= ' <font size="-1">(' . $myrow["date_created_formatted"] . ")</font>";
    }
 
    $HTML .= "<dd>";
 
    // description
    if ($myrow["short_description"] && ($ShowShortDescription == "Y" || $ShowEverything)) {
-      $HTML .= $myrow["short_description"] . "<br>\n";
+      if ($MarkedAsNew == "Y") {
+         $HTML .= " -- waiting for description --";
+         if ($GlobalHideLastChange != "N") {
+           $HTML .= " <br><i>commit message was:</i> ";
+           $HTML .= $myrow["short_description"];
+         }
+      } else {
+         $HTML .= $myrow["short_description"];
+      }
+      $HTML .= "<br>\n";
    }
 
    // maintainer
@@ -58,7 +67,7 @@
    // such places set $GlobalHideLastChange == "Y"
    if ($GlobalHideLastChange != "Y") {
       if ($ShowLastChange == "Y" || $ShowEverything) {
-         if ($myrow["last_change_log_detail_id"] != 0) {
+         if ($myrow["last_change_log_id"] != 0) {
             $HTML .= 'last change committed by ' . $myrow["committer"];  // separate lines in case committer is null
  
             $HTML .= ' on <font size="-1">' . $myrow["updated"] . '</font><br>' . "\n";

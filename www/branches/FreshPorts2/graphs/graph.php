@@ -1,5 +1,5 @@
 <?
-	# $Id: graph.php,v 1.1.2.2 2002-04-19 20:22:05 dan Exp $
+	# $Id: graph.php,v 1.1.2.3 2002-04-19 20:26:23 dan Exp $
 	#
 
 // parameters: graph id
@@ -32,7 +32,7 @@ function FreshPortsChart($title, $axislabel, $values, $labels, $urls, $file = "-
 // assume that we always have graph of id=0
 if (!isset($id)) $id=0;
 
-$fid = "graph$id";
+$fid = "FreshPorts.graph$id";
 $cache_dir = "/tmp/";
 $period = 14400; // in seconds
 

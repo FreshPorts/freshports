@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: new-user.php,v 1.1.2.36 2003-12-29 13:53:26 dan Exp $
+	# $Id: new-user.php,v 1.1.2.37 2004-01-31 13:07:06 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2004 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
@@ -192,11 +192,6 @@ if (!IsSet($submit) && !$errors) {
 <li>
 You must supply a valid email address. Instructions to enable your account 
 will be emailed to you at that address.
-
-<li><b><a href="http://www.chello.com/">Chello</a></b> refuses to accept
-email from our mail server.  They have never responded to questions 
-regarding this denial of service.  Please do not use a <b>Chello</b>
-email address.
 
 <li>If you have a spam filter, please allow all
 mail from <CODE CLASS="code">unixathome.org</CODE> and <CODE CLASS="code">freshports.org</CODE>.

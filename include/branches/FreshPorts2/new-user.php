@@ -1,5 +1,5 @@
 <?
-	# $Id: new-user.php,v 1.1.2.7 2002-05-18 08:25:09 dan Exp $
+	# $Id: new-user.php,v 1.1.2.8 2002-09-09 18:11:19 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -39,20 +39,12 @@ Number of Days to show in side-bar:
     <OPTION <? if ($numberofdays == "8") echo "selected " ?> VALUE="8">8</OPTION>
     <OPTION <? if ($numberofdays == "9") echo "selected " ?> VALUE="9">9</OPTION>
 </SELECT>
-               <br><br>
-               <INPUT TYPE="checkbox" NAME="emailsitenotices_yn" VALUE="ON" <? if ($emailsitenotices_yn == "ON") {echo " checked";}?>>Put me on the announcement mailing list (low volume)<br>
-<br>
-We can send you an email when something on your watch list changes.<br>
-Send me, at most, one message per: <SELECT NAME="watchnotifyfrequency" size="1">
-    <OPTION <? if ($watchnotifyfrequency == "Z") echo "selected " ?> VALUE="Z">Don't notify me</OPTION>
-    <OPTION <? if ($watchnotifyfrequency == "D") echo "selected " ?> VALUE="D">Day</OPTION>
-    <OPTION <? if ($watchnotifyfrequency == "W") echo "selected " ?> VALUE="W">Week (on Tuesdays)</OPTION>
-    <OPTION <? if ($watchnotifyfrequency == "F") echo "selected " ?> VALUE="F">Fortnight (9th and 23rd)</OPTION>
-    <OPTION <? if ($watchnotifyfrequency == "M") echo "selected " ?> VALUE="M">Month (23rd)</OPTION>  </SELECT>
-<br><br>
+<br><br><BR>
             <INPUT TYPE="submit" VALUE="<? if ($Customize) { echo "update";} else { echo "create";} ?> account" NAME="submit">
             <INPUT TYPE="reset"  VALUE="reset form">
             </TD>
           </TR>
 </TABLE>
 </FORM>
+
+For your reporting needs, please visit <A HREF="/report-subscriptions.php">Report Subscriptions</A>.

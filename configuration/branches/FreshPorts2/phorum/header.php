@@ -1,9 +1,9 @@
 <?php if ( !defined( "_COMMON_PHP" ) ) return; ?>
 <?php
 	#
-	# $Id: header.php,v 1.1.2.1 2003-09-04 15:01:59 dan Exp $
+	# $Id: header.php,v 1.1.2.2 2004-01-10 15:32:14 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2004 DVL Software Limited
 	#
 
 	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
@@ -23,10 +23,6 @@
 	echo '	<link rel="STYLESHEET" type="text/css" href="' . phorum_get_file_name("css") . '">';
 
 	echo freshports_HEAD_main_items();
-#	freshports_Start("the place for ports",
-#					"$FreshPortsName - new ports, applications",
-#					"FreeBSD, index, applications, ports",
-#					1);
 
 function custom_BannerForum($ForumName, $article_id) {
 	$TableWidth = "100%";

@@ -1,5 +1,5 @@
 <?
-	# $Id: commit_log_ports.php,v 1.1.2.7 2002-04-12 05:11:47 dan Exp $
+	# $Id: commit_log_ports.php,v 1.1.2.8 2002-05-18 15:33:53 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -16,6 +16,8 @@ class Commit_Log_Ports {
     var $description;
 	var $committer;
 	var $encoding_losses;
+	var $port_version;
+	var $port_revision;
 
 	var $result;
 
@@ -34,7 +36,9 @@ class Commit_Log_Ports {
 					    to_char(commit_date - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS')  as commit_date,
 						description,
 						committer,
-						encoding_losses
+						encoding_losses,
+						port_version,
+						port_revision
 				   from commit_log, commit_log_ports
 				  where commit_log.id             = commit_log_ports.commit_log_id
 					and commit_log_ports.port_id  =  $port_id
@@ -65,6 +69,8 @@ class Commit_Log_Ports {
 		$this->description		= $myrow["description"];
 		$this->committer		= $myrow["committer"];
 		$this->encoding_losses	= $myrow["encoding_losses"];
+		$this->port_version		= $myrow["port_version"];
+		$this->port_revision	= $myrow["port_revision"];
 	}
 
 }

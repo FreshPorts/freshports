@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.18 2002-02-20 22:06:02 dan Exp $
+	# $Id: index.php,v 1.1.2.19 2002-02-21 19:44:32 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -139,9 +139,9 @@ $sql = "
 if ($WatchListID) {
 	$sql .= ",
        CASE when watch_list_element.element_id is null
-          then '$FreshPortsWatchedPortNot'
-          else '$FreshPortsWatchedPort'
-       END as watch ";
+          then 0
+          else 1
+       END as onwatchlist ";
 }
 
 $sql .= "

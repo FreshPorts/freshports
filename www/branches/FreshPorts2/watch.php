@@ -1,5 +1,5 @@
 <?
-	# $Id: watch.php,v 1.1.2.7 2002-02-21 03:17:19 dan Exp $
+	# $Id: watch.php,v 1.1.2.8 2002-02-21 19:44:32 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -87,7 +87,7 @@ $sql = "select ports.id, element.name as port, ports.id as ports_id, commit_log.
        "ports.maintainer, ports.short_description, ports.date_added as date_added, ".
        "ports.last_commit_id as last_change_log_id, " .
        "ports.package_exists, ports.extract_suffix, ports.homepage, element.status, " .
-       "ports.broken, ports.forbidden ".
+       "ports.broken, ports.forbidden, 1 as onwatchlist ".
        "from watch_list_element, element, categories, ports LEFT OUTER JOIN commit_log on (ports.last_commit_id = commit_log.id) " .
        "WHERE ports.category_id             = categories.id " .
 	   "  and watch_list_element.element_id = ports.element_id " .

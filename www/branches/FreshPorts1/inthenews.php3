@@ -1,5 +1,5 @@
 <?
-   # $Id: inthenews.php3,v 1.9 2001-10-20 21:50:39 dan Exp $
+   # $Id: inthenews.php3,v 1.9.4.1 2002-04-17 17:07:00 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -18,8 +18,7 @@
 <tr><td valign="top">
 <font size="+2">in the news</font> 
 <p>This page is just a place for me to record the freshports articles which appear
-on other sites.  Links are recorded in reverse chronological order (i.e. newest first).  If you spot an article which 
-is not listed here, please <a href="http://freshports.org/phorum/list.php?f=3">let me know</a>.
+on other sites.  Links are recorded in reverse chronological order (i.e. newest first).
 </p>
 <p>
 BSD Today - <a href="http://www.bsdtoday.com/2000/May/News146.html">Keeping track of your favorite ports</a>

@@ -1,5 +1,5 @@
 <?
-   # $Id: search.php3,v 1.14 2001-10-20 21:50:41 dan Exp $
+   # $Id: search.php3,v 1.14.4.1 2002-04-17 17:07:01 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -15,10 +15,6 @@
 
 ?>
 <table width="100%">
-<tr><td valign="top" td colspan="2">
-OK, we have just a very simple search.  Eventually this will be extended. If you find any bugs, please
-let <a href="http://freshports.org/phorum/list.php?f=3">me know</a>.
-</td></tr>
 <tr><td valign="top" width="100%">                    
 <table width="100%" border="0">                       
   <tr>                                                

@@ -1,5 +1,5 @@
 <?
-   # $Id: news.php3,v 1.13 2001-10-10 03:27:04 dan Exp $
+   # $Id: news.php3,v 1.14 2001-10-11 20:57:57 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -110,7 +110,7 @@ $sql = "select ports.id, ports.name as port, change_log.commit_date as updated_r
 #if (file_exists($AnnounceFile) && filesize($AnnounceFile) > 4) {
    $sql .= " order by $sort limit 19";
    $HTML .= '  <item>' . "\n";
-   $HTML .= '    <title>FreshPorts HEADS UP - click here!</title>' . "\n";
+   $HTML .= '    <title>FreshPorts HEADS UP!</title>' . "\n";
    $HTML .= '    <link>http://www.FreshPorts.org/</link>' . "\n";
    $HTML .= '    <description>the place for ports - same great content; far faster delivery</description>' . "\n";
    $HTML .= '  </item>' . "\n";

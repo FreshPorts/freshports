@@ -1,5 +1,5 @@
 <?
-	# $Id: side-bars.php,v 1.4.2.10 2002-03-19 12:56:39 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.11 2002-03-21 22:22:56 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -101,11 +101,8 @@ if ($visitor) {
 	<td valign="top">
 <?
        echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/",                   "Home")            . '</font><br>';
-       echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/ports-new.php",     "Brand new ports") . '</font><br>';
-       echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/ports-deleted.php", "Deleted ports")   . '</font><br>';
        echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/categories.php",    "Categories")      . '</font><br>';
        echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/search.php",        "Search")          . '</font><br>';
-       echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/stats.php",         "Port statistics") . '</font><br>';
 ?>
    </td>
    </tr>
@@ -121,8 +118,6 @@ if ($visitor) {
         echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/about.php",          "What is freshports?") . '</font><br>';
         echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/authors.php",        "About the Authors")   . '</font><br>';
         echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/faq.php",            "FAQ")                 . '</font><br>';
-        echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/inthenews.php",      "In the news")         . '</font><br>';
-        echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/changes.php",        "Changes")             . '</font><br>';
         echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/privacy.php",        "Privacy")             . '</font><br>';
 ?>
     </td>

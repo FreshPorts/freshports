@@ -1,5 +1,5 @@
 <?
-	# $Id: ports-broken.php,v 1.1.2.3 2002-06-09 21:42:39 dan Exp $
+	# $Id: ports-broken.php,v 1.1.2.4 2002-12-09 20:35:20 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -35,7 +35,7 @@ These are the recently added ports.
 	$visitor = $_COOKIE["visitor"];
 	$sort    = $_GET["sort"];
 	if ($visitor) {
-		$WatchID = freshports_MainWatchID($UserID, $db);
+		$WatchID = freshports_MainWatchID($User->id, $db);
 	} else {
 		unset ($WatchID);
 	}

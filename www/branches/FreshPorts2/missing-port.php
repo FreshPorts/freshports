@@ -1,8 +1,10 @@
 <?
-	# $Id: missing-port.php,v 1.1.2.25 2002-11-01 20:23:37 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.26 2002-12-09 20:36:18 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/elements.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/ports.php");
 
 #	phpinfo();
 
@@ -13,7 +15,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/include/files.php");
 
 function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 
-	$Debug=0;
+	$Debug = 0;
 
 	unset($CategoryName);
 	unset($PortName);
@@ -56,8 +58,8 @@ function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 
 			if (IsSet($element->id)) {
 				$port = new Port($db);
-				GLOBAL $WatchListID;
-				$port->FetchByPartialName("/ports/$CategoryName/$PortName", $WatchListID);
+				GLOBAL $User;
+				$port->FetchByPartialName("/ports/$CategoryName/$PortName", $User->id);
 
 				if ($Debug) {
 					if (IsSet($port->id)) {
@@ -80,7 +82,7 @@ function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 
 						if ($Debug) echo '$message_id="' . $message_id . '"<br>';
 
-						freshports_Files($port->id, $message_id, $WatchListID, $db);
+						freshports_Files($User, $port->id, $message_id, $db);
 					} else {
 						$result = 'The category and port you specified both exist, but that extra bit I don\'t recognize: \'' . $FileName . '\'';
 					}
@@ -95,7 +97,7 @@ function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 				if ($PortName != '' && !IsSet($port->id)) {
 					$result = "The <A HREF=\"/$CategoryName/\">category you specified</A> exists but not the port <I>$PortName</I>.";
 				} else {
-					require($_SERVER['DOCUMENT_ROOT'] . "/missing-category.php");
+					require_once($_SERVER['DOCUMENT_ROOT'] . "/missing-category.php");
 					freshports_Category($CategoryID, $db);
 				}
 			}
@@ -116,7 +118,7 @@ function freshports_PortDescription($port) {
 	header("HTTP/1.1 200 OK");
 	$Title = $port->category . "/" . $port->port;
 
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 
 	freshports_Start($Title,
 	        		"$FreshPortsTitle - new ports, applications",

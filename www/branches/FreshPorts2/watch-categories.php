@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-categories.php,v 1.1.2.12 2002-06-09 21:42:42 dan Exp $
+	# $Id: watch-categories.php,v 1.1.2.13 2002-12-09 20:33:53 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -36,7 +36,7 @@ if (!$visitor) {
 <table width="100%" border="0">
 <tr><td>
 <?
-if (!$UserID) {
+if (!$User->id) {
 echo '<font size="+1">You are not logged in, perhaps you should <a href="login.php">do that</a> first.</font>';
 } else {
 ?>
@@ -55,7 +55,7 @@ echo '<tr><td align="center">' . "\n";
 $sql = "select distinct(category_id) as category_id ".
        "from watch_list, watch_list_element, ports ".
        "WHERE watch_list.name    = 'main' ".
-       "  and watch_list.user_id = $UserID ".
+       "  and watch_list.user_id = $User->id ".
        "  and watch_list.id      = watch_list_element.watch_list_id ".
        "  and ports.element_id   = watch_list_element.element_id";
 

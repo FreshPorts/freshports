@@ -1,14 +1,14 @@
 <?
-	# $Id: date.php,v 1.1.2.13 2002-12-08 03:26:43 dan Exp $
+	# $Id: date.php,v 1.1.2.14 2002-12-09 20:37:47 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
 
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/../classes/commits.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/commits.php");
 
 	freshports_Start($FreshPortsSlogan,
 					"$FreshPortsName - new ports, applications",
@@ -74,13 +74,12 @@
 		
 	}
 
-	function ArchiveCreate($Date, $DateMessage, $db, $WatchListID) {
-		GLOBAL	$freshports_CommitMsgMaxNumOfLinesToShow;
-		
+	function ArchiveCreate($Date, $DateMessage, $db, $User) {
+		GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;
+
 		$commits = new Commits($db);
-		$NumRows = $commits->Fetch($Date, $WatchListID);
-
-
+		$NumRows = $commits->Fetch($Date, $User->id);
+	
 		#echo '<br>NumRows = ' . $NumRows;
 
 		$HTML = "";
@@ -156,11 +155,13 @@
 					$HTML .= $commit->category. "</A>";
 					$HTML .= '&nbsp;';
 		
-					if ($WatchListID) {
-						if ($commit->watch) {
-							$HTML .= ' '. freshports_Watch_Link_Remove($WatchListID, $commit->element_id) . ' ';
+					if ($User->id) {
+#						echo '$User->watch_list_add_remove=\'' . $User->watch_list_add_remove . '\'';
+
+						if ($commit->onwatchlist) {
+							$HTML .= ' '. freshports_Watch_Link_Remove($User->watch_list_add_remove, $commit->onwatchlist, $commit->element_id) . ' ';
 						} else {
-							$HTML .= ' '. freshports_Watch_Link_Add   ($WatchListID, $commit->element_id) . ' ';
+							$HTML .= ' '. freshports_Watch_Link_Add   ($User->watch_list_add_remove, $commit->onwatchlist, $commit->element_id) . ' ';
 						}
 					}
 		
@@ -238,7 +239,7 @@ echo "<center>$Yesterday $Tomorrow</center>";
 
 echo '<TABLE WIDTH="100%" BORDER="1" CELLSPACING="0" CELLPADDING="5">';
 
-$HTML = ArchiveCreate($Date, $DateMessage, $db, $WatchListID);
+$HTML = ArchiveCreate($Date, $DateMessage, $db, $User);
 
 echo $HTML;
 

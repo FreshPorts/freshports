@@ -1,6 +1,6 @@
 <?
 	#
-	# $Id: index.php,v 1.1.2.58 2002-12-08 03:25:45 dan Exp $
+	# $Id: index.php,v 1.1.2.59 2002-12-09 20:36:44 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -15,8 +15,7 @@
 					"FreeBSD, index, applications, ports");
 $Debug = 0;
 
-
-if ($Debug) echo "UserID='$UserID'";
+if ($Debug) echo "\$User->id='$User->id'";
 
 function freshports_SummaryForDay($MinusN) {          
    $BaseDirectory = "./archives";                     
@@ -40,34 +39,6 @@ function freshports_SummaryForDay($MinusN) {
    }
 }
 
-
-//$Debug = 1;
-
-if (!$StartAt) {
-   if ($Debug) {
-      echo "setting StartAt to zero<br>\n";
-      echo "UserID = $UserID<br>\n";
-   }
-   $StartAt = 0;
-} else {
-   $NewStart = floor($StartAt / $MaxNumberOfPorts) * $MaxNumberOfPorts;
-   if ($NewStart != $StartAt) {
-      $URL = basename($_SERVER["PHP_SELF"]);
-      if ($NewStart > 0) {
-         $URL .= "?StartAt=$NewStart";
-      } else {
-         $URL = "/";
-      }
-      header("Location: " . $URL );
-      // Make sure that code below does not get executed when we redirect.
-      exit;
-   }
-}
-
-if ($Debug) {
-   echo "StartAt = $StartAt<br>\n";
-}
-
 ?>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
@@ -86,25 +57,9 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 
 <?php
 
-function StripQuotes($string) {
-	$string = str_replace('"', '', $string);
-
-	return $string;
-}
-
-
-function GetPortNameFromFileName($file_name) {
-
-	list($fake, $subtree, $category, $port, $extra) = split('/', $file_name, 4);
-
-#	return $subtree;
-	return "$category/$port";
-
-}
-
-$num			= AddSlashes($_GET["num"]);
+$num				= AddSlashes($_GET["num"]);
 $dailysummary	= AddSlashes($_GET["dailysummary"]);
-$days			= AddSlashes($_GET["days"]);
+$days				= AddSlashes($_GET["days"]);
 
 
 if (Is_Numeric($num)) {
@@ -126,78 +81,48 @@ if (Is_Numeric($dailysummary)) {
 }
 
 
-#phpinfo();
-#exit;
+$database=$db;
+if ($database) {
 
-      $database=$db;
-      if ($database) {
-
-if ($Debug) {
-	echo "\$WatchListID = '$WatchListID'\n";
-}
-
-if ($WatchListID) {
-	$sql = " SELECT	commits_latest_ports.*, 
-				 	CASE when watch_list_element.element_id is null
-						then 0
-						else 1
-					END as watch
-			   FROM	commits_latest_ports left outer join watch_list_element
-					 ON commits_latest_ports.element_id        = watch_list_element.element_id
-					AND watch_list_element.watch_list_id = $WatchListID
-		   ORDER BY commit_date_raw desc, category, port";
+if ($User->id) {
+	$sql = "
+ SELECT *
+  FROM commits_latest_ports
+      LEFT OUTER JOIN
+ (SELECT element_id as wle_element_id, COUNT(watch_list_id) as watch
+    FROM watch_list JOIN watch_list_element 
+        ON watch_list.id      = watch_list_element.watch_list_id
+       AND watch_list.user_id = $User->id
+  GROUP BY watch_list_element.element_id) AS TEMP
+       ON TEMP.wle_element_id = commits_latest_ports.element_id
+ORDER BY commit_date_raw desc, category, port";
 } else {
 	$sql = "select * from commits_latest_ports order by commit_date_raw desc, category, port";
 }
 
-$sql = '';
-if ($WatchListID) {
-	$sql .= '	  SELECT *,
-         CASE when WLE.element_id is null
-            then 0
-            else 1
-         END as watch
-    FROM watch_list_element WLE RIGHT OUTER JOIN
-           (';
-}
-
-$sql .= '
-           select * from commits_latest_ports';
-
-if ($WatchListID) {
-	$sql .= '
-           ) AS TEMP
-       
-                ON WLE.watch_list_id = ' . $WatchListID . '
-               AND WLE.element_id    = TEMP.element_id ' . "\n";
-}
-
-$sql .= '         ORDER BY commit_date_raw desc, category, port ' . " limit $MaxNumberOfPorts";
-
+$sql .= " limit $MaxNumberOfPorts";
 
 if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 
-#exit;
 
-         $result = pg_exec($database, $sql);
-         if ($result) {
-            $numrows = pg_numrows($result);
-#			echo $numrows . " rows to fetch\n";
-			if ($numrows) { 
-
-				$i=0;
-				$GlobalHideLastChange = "N";
-				for ($i = 0; $i < $numrows; $i++) {
-					$myrow = pg_fetch_array ($result, $i);
-					$rows[$i] = $myrow;
-				}
-
-				$NumRows = $numrows;
-				$LastDate = '';
-				if ($NumRows > 1) {
-					$LastChangeLogID = $rows[$i]["change_log_id"];
-					$LastChangeLogID = -1;
-				}
+$result = pg_exec($database, $sql);
+if ($result) {
+   $numrows = pg_numrows($result);
+	if ($numrows) { 
+	
+		$i=0;
+		$GlobalHideLastChange = "N";
+		for ($i = 0; $i < $numrows; $i++) {
+			$myrow = pg_fetch_array ($result, $i);
+			$rows[$i] = $myrow;
+		}
+	
+		$NumRows = $numrows;
+		$LastDate = '';
+		if ($NumRows > 1) {
+			$LastChangeLogID = $rows[$i]["change_log_id"];
+			$LastChangeLogID = -1;
+		}
 
 ?>
 
@@ -278,11 +203,11 @@ ports. A port is marked as new for 10 days.
 							$HTML .= $myrow["category"]. "</A>";
 							$HTML .= '&nbsp;';
 
-							if ($WatchListID) {
+							if ($User->id) {
 								if ($myrow["watch"]) {
-									$HTML .= ' '. freshports_Watch_Link_Remove($WatchListID, $myrow["element_id"]) . ' ';
+									$HTML .= ' '. freshports_Watch_Link_Remove($User->watch_list_add_remove, $myrow["watch"], $myrow["element_id"]) . ' ';
 								} else {
-									$HTML .= ' '. freshports_Watch_Link_Add   ($WatchListID, $myrow["element_id"]) . ' ';
+									$HTML .= ' '. freshports_Watch_Link_Add   ($User->watch_list_add_remove, $myrow["watch"], $myrow["element_id"]) . ' ';
 								}
 							}
 

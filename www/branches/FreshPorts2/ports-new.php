@@ -1,5 +1,5 @@
 <?
-	# $Id: ports-new.php,v 1.1.2.13 2002-06-09 21:42:40 dan Exp $
+	# $Id: ports-new.php,v 1.1.2.14 2002-12-09 20:35:19 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -73,7 +73,7 @@ These are the recently added ports.
 	$visitor = AddSlashes($_COOKIE["visitor"]);
 	$sort    = AddSlashes($_GET["sort"]);
 	if ($visitor) {
-		$WatchID = freshports_MainWatchID($UserID, $db);
+		$WatchID = freshports_MainWatchID($User->id, $db);
 	} else {
 		unset ($WatchID);
 	}

@@ -1,5 +1,5 @@
 <?
-	# $Id: port-watch.php,v 1.1.2.17 2002-06-12 03:05:07 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.18 2002-12-09 20:35:20 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -39,7 +39,7 @@ $CategoryID = $category;
 // find out the watch id for this user's main watch list
 $sql_get_watch_ID = "select watch_list.id ".
                     "  from watch_list ".
-                    " where watch_list.user_id = $UserID ".
+                    " where watch_list.user_id = $User->id ".
                     "   and watch_list.name    = 'main'";
 
 if ($submit) {
@@ -68,7 +68,7 @@ if ($submit) {
       $WatchID = $myrow["id"];
    } else {
       // create their main list for them
-      $sql_create = "insert into watch_list (name, owner_user_id) values ('main', $UserID)";
+      $sql_create = "insert into watch_list (name, owner_user_id) values ('main', $User->id)";
 //      echo "creating new watch: $sql_create<br>\n";
       $result = pg_exec($db, $sql_create);
 //      if ($result) {
@@ -121,14 +121,14 @@ if ($submit) {
       
 } else {
          
-   if ($UserID != '') {
+   if ($User->id != '') {
          
    // read the users current watch information from the database
 
    $sql = "select watch_list_element.element_id " .
           "  from watch_list_element, watch_list, ports " .
           " where watch_list_element.watch_list_id = watch_list.id " . 
-          "   and watch_list.user_id               = $UserID " .
+          "   and watch_list.user_id               = $User->id " .
 		  "   and watch_list_element.element_id    = ports.element_id";
       
 	$result = pg_exec($db, $sql);
@@ -157,7 +157,7 @@ if ($submit) {
 
 <tr><td>
 <?
-if (!$UserID) {
+if (!$User->id) {
 echo '<font size="+1">You are not logged in, perhaps you should <a href="login.php">do that</a> first.</font>';
 echo '</td></tr><tr><td>';
 } else {
@@ -177,7 +177,7 @@ you have selected a notification frequency within your <a href="customize.php">p
 
 $DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
 
-//echo "UserID=$UserID";
+//echo "UserID=$User->id";
 
 #echo '<tr><td>' . "\n";
 #
@@ -201,7 +201,7 @@ $HTML .= '<tr><td ALIGN="center">' . "\n";
 $numrows = pg_numrows($result);
 if ($numrows) {
 
-   if ($UserID) {
+   if ($User->id) {
       $HTML .= '<form action="' . $_SERVER["PHP_SELF"] . "?category=$CategoryID". '" method="POST">';
    }
 
@@ -272,7 +272,7 @@ echo $HTML;
 <input TYPE="reset"  VALUE="reset form">
 </td></tr>
 <?
-if ($UserID) {
+if ($User->id) {
    echo '</form>';
 }
 ?>

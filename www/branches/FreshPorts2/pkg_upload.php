@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_upload.php,v 1.5.2.20 2002-12-06 21:25:33 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.21 2002-12-09 20:35:20 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -204,7 +204,7 @@ function ChooseWatchLists($UserID, $db) {
 		global $gDBG;
 		$gDBG  = false;
 
-		$StagingInUse       = StagingAlreadyInUse($UserID, $db);
+		$StagingInUse       = StagingAlreadyInUse($User->id, $db);
 		$DisplayStagingArea = FALSE;
 		$WatchListUpdated	  = FALSE;
 
@@ -220,7 +220,7 @@ function ChooseWatchLists($UserID, $db) {
 				# and clear out part of the staging area.
 				$WatchListID = AddSlashes($_POST["watch_list_id"]);
 #				echo ' you clicked on update_watch_list';
-				if (MoveStagingToWatchList($UserID, $WatchListID, $ports, $db)) {
+				if (MoveStagingToWatchList($User->id, $WatchListID, $ports, $db)) {
 #					$DisplayStagingArea = FALSE;
 					$StagingInUse       = FALSE;
 					$WatchListUpdated   = TRUE;
@@ -228,7 +228,7 @@ function ChooseWatchLists($UserID, $db) {
 			}
 			if ($_POST["clear"]) {
 #				echo " you pressed clear!";
-				if (StagingAreaClear($UserID, $db)) {
+				if (StagingAreaClear($User->id, $db)) {
 					$StagingInUse			= FALSE;
 					$DisplayStagingArea	= FALSE;
 					DisplayError("Your staging area has been cleared.");
@@ -246,7 +246,7 @@ function ChooseWatchLists($UserID, $db) {
 				$Destination = "/tmp/FreshPorts.tmp_pkg_output.$UserName";
 				if (HandleFileUpload("pkg_info", $Destination)) {
 					require_once $_SERVER['DOCUMENT_ROOT'] . "/pkg_utils.inc";
-					if (ProcessPackages($UserID, $Destination, $db)) {
+					if (ProcessPackages($User->id, $Destination, $db)) {
 						$DisplayStagingArea = TRUE;
 					}
 				}
@@ -261,9 +261,9 @@ function ChooseWatchLists($UserID, $db) {
 				DisplayError("<BIG>Your watch list has been updated. You may wish to empty your staging area now.</BIG>");
 			}
 			if ($WatchListID) {
-				DisplayStagingArea($UserID, $WatchListID, $db);
+				DisplayStagingArea($User->id, $WatchListID, $db);
 			} else {
-				ChooseWatchLists($UserID, $db);
+				ChooseWatchLists($User->id, $db);
 			}
 		} else {
 			DisplayUploadForm($pkg_info);

@@ -1,8 +1,9 @@
 <?
-	# $Id: missing-category.php,v 1.1.2.14 2002-06-09 21:42:38 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.15 2002-12-09 20:36:18 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/ports.php");
 
 function freshports_Category($CategoryID, $db) {
 
@@ -12,15 +13,16 @@ function freshports_Category($CategoryID, $db) {
 	header("HTTP/1.1 200 OK");
 
 
-	$Debug=0;
+	$Debug = 0;
 
-	require($_SERVER["DOCUMENT_ROOT"] . "/../classes/categories.php");
+	require_once($_SERVER["DOCUMENT_ROOT"] . "/../classes/categories.php");
 
 	$category = new Category($db);
 	$category->FetchByID($CategoryID);
 	$title = $category->{name};
 
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	GLOBAL $User;
+	if ($Debug) echo "\$User->id='$User->id'";
 
 	freshports_Start($title,
 					"freshports - new ports, applications",
@@ -30,7 +32,7 @@ function freshports_Category($CategoryID, $db) {
 
 	$port = new Port($db);
 
-	$numrows = $port->FetchByCategoryInitialise($CategoryID, $WatchListID);
+	$numrows = $port->FetchByCategoryInitialise($CategoryID, $User->id);
 
 	?>
 

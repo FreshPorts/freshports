@@ -1,5 +1,5 @@
 <?
-	# $Id: committer-opt-in.php,v 1.1.2.3 2002-11-18 18:03:13 dan Exp $
+	# $Id: committer-opt-in.php,v 1.1.2.4 2002-12-09 20:37:47 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -20,7 +20,7 @@
 	if ($_POST["subscribe"] && !empty($visitor)) {
 		$committer = AddSlashes($_POST["email"]);
 		$sql = "insert into committer_notify (user_id, committer, status)
-				values ($UserID, '$committer', 'A')";
+				values ($User->id, '$committer', 'A')";
 
 		if ($Debug) {
 			echo "sql=$sql<br>\n";
@@ -35,7 +35,7 @@
 
 	if ($_POST["unsubscribe"] && !empty($visitor)) {
 		$committer = AddSlashes($_POST["email"]);
-		$sql = "delete from committer_notify where user_id = $UserID";
+		$sql = "delete from committer_notify where user_id = $User->id";
 
 		if ($Debug) {
 			echo "sql=$sql<br>\n";
@@ -55,7 +55,7 @@
 		$committer = AddSlashes($_POST["email"]);
 		$sql = "update committer_notify 
                    set committer = '$committer'
-                 where user_id   = $UserID";
+                 where user_id   = $User->id";
 
 		if ($Debug) {
 			echo "sql=$sql<br>\n";
@@ -102,7 +102,7 @@ One committer referred to this service as a automated nagging mentor...
 if (!empty($visitor)) {
 	$sql = "select committer
 			  from committer_notify
-			 where user_id = $UserID";
+			 where user_id = $User->id";
 
 	if ($Debug) {
 		echo "sql=$sql<br>\n";

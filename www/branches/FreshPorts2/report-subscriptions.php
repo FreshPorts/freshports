@@ -1,5 +1,5 @@
 <?
-	# $Id: report-subscriptions.php,v 1.1.2.13 2002-09-17 16:34:49 dan Exp $
+	# $Id: report-subscriptions.php,v 1.1.2.14 2002-12-09 20:35:19 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -64,7 +64,7 @@
 	if ($_POST["submit"] == 'update') {
 		pg_exec($db, "begin");
 		$sql = "DELETE from report_subscriptions
-    	         WHERE user_id = $UserID";
+    	         WHERE user_id = $User->id";
 
 		$result = pg_exec($db, $sql);
 
@@ -75,11 +75,11 @@
 		while (list($key, $value) = each($reports)) {
 			$TheFrequency = $_POST["reportfrequency_" . $value];
 			if ($Debug) echo '$TheFrequency=\'' . $TheFrequency . '\'';
-			if ($Debug) echo "\$key='$key' \$value='$value' \$UserID='$UserID' \$frequencies[\$key]=" . $TheFrequency . '<BR>';
+			if ($Debug) echo "\$key='$key' \$value='$value' \$User->id='$User->id' \$frequencies[\$key]=" . $TheFrequency . '<BR>';
 			if (IsSet($TheFrequency) && $TheFrequency <> '') {
-				$sql = "INSERT INTO report_subscriptions(report_id, user_id, report_frequency_id) values ($value, $UserID, $TheFrequency)";
+				$sql = "INSERT INTO report_subscriptions(report_id, user_id, report_frequency_id) values ($value, $User->id, $TheFrequency)";
 			} else {
-				$sql = "INSERT INTO report_subscriptions(report_id, user_id) values ($value, $UserID)";
+				$sql = "INSERT INTO report_subscriptions(report_id, user_id) values ($value, $User->id)";
 			}
 			if ($Debug) echo "\$sql='$sql'<BR>\n";
 			$result = pg_exec ($db, $sql);
@@ -107,7 +107,7 @@
 		# read the values from the db
 		$sql = "SELECT report_id, report_frequency_id
 				  FROM report_subscriptions
-				 WHERE user_id = $UserID
+				 WHERE user_id = $User->id
 				 ORDER BY report_id ";
 		$result = pg_exec ($db, $sql);
 		$numrows = pg_numrows($result);

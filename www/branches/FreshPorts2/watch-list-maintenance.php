@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-list-maintenance.php,v 1.1.2.8 2002-12-09 15:03:06 dan Exp $
+	# $Id: watch-list-maintenance.php,v 1.1.2.9 2002-12-09 20:33:33 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -103,7 +103,7 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 	switch ($UserClickedOn) {
 		case "add":
 			$WatchList = new WatchList($db);
-			$NewWatchListID = $WatchList->Create($UserID, AddSlashes($_POST["add_name"]));
+			$NewWatchListID = $WatchList->Create($User->id, AddSlashes($_POST["add_name"]));
 			if ($Debug) echo 'I just created \'' . AddSlashes($_POST["add_name"]) . '\' with ID = \'' . $NewWatchListID . '\'';
 			break;
 
@@ -155,7 +155,7 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 			if ($Debug) echo 'I have set your default lists.<br>';
 			pg_query($db, "BEGIN");
 			$WatchLists = new WatchLists($db);
-			$numrows = $WatchLists->In_Service_Set($UserID, $_POST["watch_list_id"]);
+			$numrows = $WatchLists->In_Service_Set($User->id, $_POST["watch_list_id"]);
 			if ($Debug) echo "$numrows watchlists were affected by that action";
 			if ($numrows >= 0) {
 				pg_query($db, "COMMIT");
@@ -165,20 +165,15 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 			break;
 
 		case "set_options":
-			if ($Debug) echo 'I would have set options to: ' . AddSlashes($_POST["addremove"]);
-			require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/user.php");
+			if ($Debug) echo 'I have set options to: ' . AddSlashes($_POST["addremove"]);
 
-			$User = new User($db);
-			$User->SetWatchListAddRemove($UserID, AddSlashes($_POST["addremove"]));
+			$User->SetWatchListAddRemove($User->id, AddSlashes($_POST["addremove"]));
 			break;
 
 		default:
 			echo 'Hmmm, I have no idea what you asked me to do';
 	}
 }
-
-$User = new User($db);
-$User->Fetch($UserID);
 
 if ($Debug) echo 'add remove = ' . $User->watch_list_add_remove;
 
@@ -203,7 +198,7 @@ if ($Debug) echo 'add remove = ' . $User->watch_list_add_remove;
     <TD valign="top">
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
 <?php
-	echo freshports_WatchListDDLB($db, $UserID, '', 10, TRUE);
+	echo freshports_WatchListDDLB($db, $User->id, '', 10, TRUE);
 ?>
     </TD>
     <TD>

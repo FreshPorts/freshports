@@ -1,5 +1,5 @@
 <?
-	# $Id: categories.php,v 1.1.2.5 2002-04-24 00:08:51 dan Exp $
+	# $Id: categories.php,v 1.1.2.6 2002-05-18 19:27:10 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -34,9 +34,15 @@ You can sort each column by clicking on the header.  e.g. click on <b>Category</
 
 $DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
 
+
 // make sure the value for $sort is valid
 
 //echo "sort is $sort\n";
+
+$sort			= AddSlashes($_GET["sort"]);
+$category		= AddSlashes($_GET["category"]);
+$count			= AddSlashes($_GET["count"]);
+$description	= AddSlashes($_GET["description"]);
 
 switch ($sort) {
    case "category":

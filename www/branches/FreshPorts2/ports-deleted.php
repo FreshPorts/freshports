@@ -1,5 +1,5 @@
 <?
-	# $Id: ports-deleted.php,v 1.1.2.8 2002-05-18 19:04:15 dan Exp $
+	# $Id: ports-deleted.php,v 1.1.2.9 2002-05-18 19:27:10 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -34,6 +34,7 @@ These are the latest deleted ports.
 	$DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
 
 	$visitor = $_COOKIE["visitor"];
+	$sort    = $_GET["sort"];
 	if ($visitor) {
 		$WatchID = freshports_MainWatchID($UserID, $db);
 	} else {

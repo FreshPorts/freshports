@@ -1,5 +1,5 @@
 <?
-	# $Id: side-bars.php,v 1.4.2.40 2002-12-04 22:05:42 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.41 2002-12-05 13:43:41 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -60,16 +60,17 @@ if ($visitor) {
       default:
          $args = '';
    }
-   echo '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/logout.php',           $args,                  "Logout"                 ) . '</FONT><BR>';
+   echo '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/logout.php',                 $args,                  "Logout"                  ) . '</FONT><BR>';
 
 
-   echo '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/pkg_upload.php',           '',                     "Watch list - upload") . '</FONT><BR>';
-   echo '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/watch-categories.php',     '',                     "Watch list - Categories") . '</FONT><BR>';
-   echo '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/watch.php',                '',                     "Your watched ports"     ) . '</FONT><BR>';
-   echo '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/report-subscriptions.php', '',                     "Report Subscriptions"   ) . '</FONT><BR>';
+   echo '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/pkg_upload.php',             '',                     "Watch list - upload"     ) . '</FONT><BR>';
+   echo '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/watch-categories.php',       '',                     "Watch list - Categories" ) . '</FONT><BR>';
+   echo '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/watch-list-maintenance.php', '',                     "Watch lists - Maintain"  ) . '</FONT><BR>';
+   echo '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/watch.php',                  '',                     "Your watched ports"      ) . '</FONT><BR>';
+   echo '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/report-subscriptions.php',   '',                     "Report Subscriptions"    ) . '</FONT><BR>';
   } else {
-   echo '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/login.php',            "?origin=$OriginLocal", "User Login"             ) . '</FONT><BR>';
-   echo '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/new-user.php',         "?origin=$OriginLocal", "Create account"         ) . '</FONT><BR>';
+   echo '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/login.php',                  "?origin=$OriginLocal", "User Login"              ) . '</FONT><BR>';
+   echo '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/new-user.php',               "?origin=$OriginLocal", "Create account"          ) . '</FONT><BR>';
   }
 ?>
 	<A HREF="/phorum/">Forums</A>

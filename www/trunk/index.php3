@@ -1,5 +1,5 @@
 <?
-   # $Id: index.php3,v 1.28 2001-10-09 20:41:54 dan Exp $
+   # $Id: index.php3,v 1.29 2001-10-10 03:27:04 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -15,9 +15,12 @@
 #$Debug=1;
 
 #
-# $Author: dan $ $Date: 2001-10-09 20:41:54 $
-# $Header: /home/dan/repositories/freshports-1/www/Attic/index.php3,v 1.28 2001-10-09 20:41:54 dan Exp $
+# $Author: dan $ $Date: 2001-10-10 03:27:04 $
+# $Header: /home/dan/repositories/freshports-1/www/Attic/index.php3,v 1.29 2001-10-10 03:27:04 dan Exp $
 # $Log: not supported by cvs2svn $
+# Revision 1.28  2001/10/09 20:41:54  dan
+# how about we fix the right code here.
+#
 # Revision 1.27  2001/10/09 20:40:57  dan
 # FreshPorts not freshports
 #
@@ -40,7 +43,7 @@
 # Add some headers
 #
 # $Name: not supported by cvs2svn $
-# $Revision: 1.28 $
+# $Revision: 1.29 $
 #
 
 //echo "UserID='$UserID'";
@@ -124,6 +127,15 @@ We are now hosted on the same box as <A HREF="http://www.freebsddiary.org/">The 
 Please keep an eye on this website and the <A HREF="http://old.freshports.org/">old one</A> to make sure they
 are in sync.  Yes, I am doing that, but I don't want to miss anything.  The more eyes the better...
 </P>
+
+<P><BIG><BIG><B>HEADS UP: </B></BIG></BIG>Now that the new site has been running flawlessly for a few days,
+it's time to warn you not to automatically delete your FreshPorts
+notifications any more.  They actually contain a list of the ports
+which have changed.  Yes, you read correctly.  A list of the
+ports on your watch list which have changed since your last
+notice.  And a short description of the change.<P>
+
+<P>Enjoy</P>
 
 <table width="100%" border="0">
 <tr><td colspan="2">Welcome to FreshPorts, where you can find the latest information on your favourite

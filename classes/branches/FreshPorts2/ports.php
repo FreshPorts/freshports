@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports.php,v 1.1.2.49 2005-01-22 14:37:02 dan Exp $
+	# $Id: ports.php,v 1.1.2.50 2005-01-26 21:03:15 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -55,6 +55,9 @@ class Port {
 						// not actually fetched directly by this class.
 						// normally used only if you've specified it in your own SQL.
 
+	var $vulnerable_current;
+	var $vulnerable_past;
+
 	// not always present/set
 	var $update_description;
 
@@ -71,7 +74,8 @@ class Port {
 	var $committer; 
 
 	function Port($dbh) {
-		$this->dbh	= $dbh;
+		$this->dbh = $dbh;
+		unset($this->VuXML_List);
 	}
 
 	function _PopulateValues($myrow) {
@@ -117,6 +121,9 @@ class Port {
 		$this->message_id         = $myrow["message_id"];
 		$this->encoding_losses    = $myrow["encoding_losses"];
 		$this->committer          = $myrow["committer"];
+
+		$this->vulnerable_current = $myrow["vulnerable_current"];
+		$this->vulnerable_past    = $myrow["vulnerable_past"];
 
 		// We might be looking at category lang.  japanese/gawk is listed in both japanese and lang.
 		// So when looking at lang, we don't want to say, Also listed in lang...  
@@ -517,6 +524,8 @@ LEFT OUTER JOIN
 	function LoadVulnerabilities() {
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit_log_ports_vuxml.php');
 
+		$this->VuXML_List = array();
+
 		$VuXML = new Commit_Log_Ports_VuXML($this->dbh);
 		$this->VuXML_List = $VuXML->VuXML_List_Get($this->id);
 
@@ -527,9 +536,14 @@ LEFT OUTER JOIN
 		return 1;
 	}
 
-	function VulnerabilityCount() {
-		return count($this->VuXML_List);
+	function IsVulnerable() {
+		return $this->vulnerable_current > 0;
 	}
+
+	function WasVulnerable() {
+		return $this->vulnerable_past > 0;
+	}
+
 }
 
 ?>

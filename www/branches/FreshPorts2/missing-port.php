@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-port.php,v 1.1.2.3 2001-12-30 23:26:39 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.4 2001-12-31 01:58:18 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
@@ -81,11 +81,12 @@ function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 
 function freshports_PortDescription($port) {
 	GLOBAL $TableWidth;
+	GLOBAL $FreshPortsTitle;
 
 	header("HTTP/1.1 200 OK");
 	$Title = $port->category . "/" . $port->port;
 	freshports_Start($Title,
-	        		"freshports - new ports, applications",
+	        		"$FreshPortsTitle - new ports, applications",
 					"FreeBSD, index, applications, ports");
 
 ?>
@@ -99,15 +100,15 @@ function freshports_PortDescription($port) {
 If there is no link to a category, that is because that category
 is a virtual category, and I haven't catered for those yet. But <a href="changes.php3">I plan to</a></p>
 <p>
-<img src="/images/new.gif"  alt="new feature" border="0" width="28" height="11" hspace="2">Click on 
+Click on 
 <img src="/images/logs.gif" alt="Files within this port affected by this commit" border="0" WIDTH="17" HEIGHT="20" hspace="2"> 
 to see what files changed for this port in that commit.</p>
 </td>
 </tr>
-<tr><td valign="top" width="100%">
+<tr><TD VALIGN="top" width="100%">
 <TABLE WIDTH="100%" BORDER="0" ALIGN="centre">
 <tr>
-    <td colspan="3" bgcolor="#AD0040" height="29"><font color="#FFFFFF" size="+2">freshports - 
+    <td colspan="3" bgcolor="#AD0040" height="29"><font color="#FFFFFF" size="+2">
 <?
    echo $Title;
 ?> 
@@ -133,11 +134,6 @@ $ShowDescriptionLink  = "N";
 	$HTML .= freshports_PortDetails($port, $port->dbh, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription);
 	echo $HTML;
 
-   echo '<DL><DD>';
-   echo '<PRE>' . convertAllLinks(htmlspecialchars($port->long_description)) . '</PRE>';
-   echo "\n</DD>\n</DL>\n</TD>\n</TR>";
-
-
 #	echo 'about to call freshports_PortCommits #############################';
 
 	freshports_PortCommits($port);
@@ -146,9 +142,8 @@ $ShowDescriptionLink  = "N";
 
 </TABLE>
 </TD>
-
-</TD>
 </TR>
+
 <TR><TD>
 
 <?

@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.13 2001-12-30 23:27:29 dan Exp $
+   # $Id: freshports.php,v 1.4.2.14 2001-12-31 01:58:17 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -670,7 +670,7 @@ function freshports_PortCommitsHeader($port) {
 	# print the header for the commits for a port
 
 	echo '<DL><DD>';
-	echo nl2br(convertAllLinks(htmlspecialchars($myrow["long_description"])));
+    echo '<PRE>' . convertAllLinks(htmlspecialchars($port->long_description)) . '</PRE>';
 	echo "\n</DD>\n</DL>\n</TD>\n</TR>";
 
 	echo '<tr><td><TABLE BORDER="1" width="100%" CELLSPACING="0" CELLPADDING="5"bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">' . "\n";

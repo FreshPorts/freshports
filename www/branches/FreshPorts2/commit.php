@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.45 2004-09-22 15:24:21 dan Exp $
+	# $Id: commit.php,v 1.1.2.46 2004-10-02 18:49:13 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -267,7 +267,6 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 						$HTML .= '<A HREF="/' . $ElementPathname . '">';
 						$HTML .= $ElementPathname;
 						$HTML .= '</A>';
-						$HTML .= ' ' . $myrow["revision"];
 						$HTML .= "</B></BIG>\n";
 					}
 
@@ -290,33 +289,33 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 						$HTML .= " " . freshports_Deleted_Icon() . "\n";
 					}
 
-					// indicate if this port needs refreshing from CVS
-					if ($myrow["needs_refresh"]) {
-						$HTML .= " " . freshports_Refresh_Icon() . "\n";
-					}
-
-					if ($myrow["date_added"] > Time() - 3600 * 24 * $DaysMarkedAsNew) {
-						$MarkedAsNew = "Y";
-						$HTML .= freshports_New_Icon() . "\n";
-					}
-
-					if ($myrow["forbidden"]) {
-						$HTML .= ' ' . freshports_Forbidden_Icon() . "\n";
-					}
-
-					if ($myrow["broken"]) {
-						$HTML .= '&nbsp;' . freshports_Broken_Icon() . "\n";
-					}
-
-					if ($myrow["deprecated"]) {
-						$HTML .= '&nbsp;' . freshports_Deprecated_Icon() . "\n";
-					}
-
-					if ($myrow["ignore"]) {
-						$HTML .= '&nbsp;' . freshports_Ignore_Icon() . "\n";
-					}
-
 					if ($IsPort) {
+						// indicate if this port needs refreshing from CVS
+						if ($myrow["needs_refresh"]) {
+							$HTML .= " " . freshports_Refresh_Icon() . "\n";
+						}
+
+						if ($myrow["date_added"] > Time() - 3600 * 24 * $DaysMarkedAsNew) {
+							$MarkedAsNew = "Y";
+							$HTML .= freshports_New_Icon() . "\n";
+						}
+
+						if ($myrow["forbidden"]) {
+							$HTML .= ' ' . freshports_Forbidden_Icon() . "\n";
+						}
+
+						if ($myrow["broken"]) {
+							$HTML .= '&nbsp;' . freshports_Broken_Icon() . "\n";
+						}
+
+						if ($myrow["deprecated"]) {
+							$HTML .= '&nbsp;' . freshports_Deprecated_Icon() . "\n";
+						}
+
+						if ($myrow["ignore"]) {
+							$HTML .= '&nbsp;' . freshports_Ignore_Icon() . "\n";
+						}
+
 						$HTML .= ' ' . htmlspecialchars($myrow["short_description"]) . "\n";
 					}
 

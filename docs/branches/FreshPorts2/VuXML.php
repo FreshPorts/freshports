@@ -291,9 +291,158 @@ This will need to be repeated for each <b>PackageVersion</b>.
 <p>
 That's it.  Sounds simple.  Right?
 
+<h2>Historical EPOCH</h2>
+
+<p>
+I'll tell what's up.  PORTEPOCH on historical commits.  Now that we have the code written
+that updates commit_log_ports_vuxml, we are running into a problem with 'pkg_version -t'
+being supplied with the wrong data, which causes the code to mark the wrong commits 
+as being affected.  This problem appears to occur only on ports that have a non-zero
+PORTEPOCH.
+
+<h3>The plan</h3>
+<p>
+We know what ports have PORTEPOCH:
+
+<blockquote><pre class="code">
+freshports.org=# select count(*) from ports where portepoch != '0';
+ count
+-------
+   246
+(1 row)
+
+freshports.org=#
+</pre></blockquote>
+
+<p>
+For a given port, we can see where the PORTVERSIONs have gone backwards:
+
+<blockquote><pre class="code">
+freshports.org=#  select CLP.*
+freshports.org-#    from commit_log_ports CLP, commit_log CL
+freshports.org-#   where port_id = (select id from ports_active where name = 'scrollkeeper')
+freshports.org-#     AND CLP.commit_log_id = CL.id
+freshports.org-#  ORDER BY CL.commit_date desc;
+ commit_log_id | port_id | needs_refresh | port_version | port_revision | port_epoch | package_name
+---------------+---------+---------------+--------------+---------------+------------+--------------
+        136719 |    5173 |             0 | 0.3.14       | 1             | 0          |
+        134479 |    5173 |             0 | 0.3.14       | 1             | 0          |
+        120086 |    5173 |             0 | 0.3.14       | 1             | 0          |
+        119323 |    5173 |             0 | 0.3.14       | 1             | 0          |
+        113057 |    5173 |             0 | 0.3.14       | 1             | 0          |
+        111215 |    5173 |             0 | 0.3.14       | 0             | 0          |
+        111840 |    5173 |             0 | 0.3.14       | 0             | 0          |
+        105035 |    5173 |             0 | 0.3.14       | 0             | 0          |
+        102907 |    5173 |             0 | 0.3.12       | 4             | 0          |
+        101412 |    5173 |             0 | 0.3.12       | 4             | 0          |
+        101380 |    5173 |             0 | 0.3.12       | 3             | 0          |
+         92391 |    5173 |             0 | 0.3.12       | 2             | 0          |
+         92221 |    5173 |             0 | 0.3.12       | 1             | 0          |
+         83303 |    5173 |             0 | 0.3.12       | 1             | 0          |
+         77278 |    5173 |             0 | 0.3.12       | 1             | 0          |
+         77135 |    5173 |             0 | 0.3.12       | 1             | 0          |
+         76924 |    5173 |             0 | 0.3.12       | 0             | 0          |
+         76520 |    5173 |             0 | 0.3.12       | 0             | 0          |
+         76228 |    5173 |             0 | 0.3.11       | 8             | 0          |
+         71534 |    5173 |             0 | 0.3.11       | 8             | 0          |
+         66305 |    5173 |             0 | 0.3.11       | 8             | 0          |
+         65348 |    5173 |             0 | 0.3.11       | 7             | 0          |
+         65013 |    5173 |             0 | 0.3.11       | 6             | 0          |
+         64703 |    5173 |             0 | 0.3.11       | 6             | 0          |
+         63626 |    5173 |             0 | 0.3.11       | 5             | 0          |
+         52718 |    5173 |             0 | 0.3.11       | 4             | 0          |
+         52705 |    5173 |             0 | 0.3.11       | 3             | 0          |
+         50551 |    5173 |             0 | 0.3.11       | 2             | 0          |
+         49410 |    5173 |             0 | 0.3.11       | 2             | 0          |
+         48239 |    5173 |             0 | 0.3.11       | 1             | 0          |
+         47310 |    5173 |             0 | 0.3.11       | 1             | 0          |
+         45848 |    5173 |             0 | 0.3.11       | 1             | 0          |
+         45510 |    5173 |             0 | 0.3.11       | 0             | 0          |
+         44355 |    5173 |             0 | 0.3.11       | 0             | 0          |
+         43795 |    5173 |             0 | 0.3.11       | 0             | 0          |
+         43479 |    5173 |             0 | 0.3.11       | 0             | 0          |
+         41741 |    5173 |             0 | 0.3.9        |               | 0          |
+         40451 |    5173 |             0 | 0.3.9        | 0             | 0          |
+         39869 |    5173 |             0 | 0.3.9        | 0             | 0          |
+         38883 |    5173 |             0 | 0.3.9        | 0             | 0          |
+         38822 |    5173 |             0 | 0.3.9        | 0             | 0          |
+         37805 |    5173 |             0 | 0.2          | 0             | 0          |
+         37804 |    5173 |             0 | 0.2          | 0             | 0          |
+<b>         36042 |    5173 |             0 | 0.2          | 0             | 0          |</b>
+         35969 |    5173 |             0 | 0.3.6        | 0             | 0          |
+         15736 |    5173 |             0 |              |               | 0          |
+         13030 |    5173 |             0 |              |               | 0          |
+         12799 |    5173 |             0 |              |               | 0          |
+         12147 |    5173 |             0 |              |               | 0          |
+         12145 |    5173 |             0 |              |               | 0          |
+         12060 |    5173 |             0 |              |               | 0          |
+(51 rows)
+
+freshports.org=#
+</pre></blockquote>
+
+<p>
+The bold line indicates where the version went down from the previous commit.  Commits after
+that one should have a PORTEPOCH != '0'.  It is important to scan upwards here, not down.
+If we scan up, we find the first change.  By comparing that PORTEPOCH to the current PORTEPOCH,
+we can detect if there has been more than one PORTEPOCH change.
+<p>
+Here is how we can track down the PORTEPOCH value:
+
+<blockquote><pre class="code">
+freshports.org=# select category from ports_active where name = 'scrollkeeper';
+ category
+----------
+ textproc
+(1 row)
+</pre></blockquote>
+
+<p>
+We now know the category.
+
+<blockquote><pre class="code">
+freshports.org=# select pathname_id('ports/textproc/scrollkeeper/Makefile');
+ pathname_id
+-------------
+       58214
+(1 row)
+</pre></blockquote>
+
+<p>
+We now know the element id for the Makefile for this port.
+
+<blockquote><pre class="code">
+freshports.org=# select * from commit_log_elements where commit_log_id = 36042 and element_id = 58214;
+   id   | commit_log_id | element_id | revision_name | change_type
+--------+---------------+------------+---------------+-------------
+ 145950 |         36042 |      58214 | 1.7           | M
+(1 row)
+</pre></blockquote>
+
+<p>
+And now we know the CVS revision for the Makefile which was created by this commit.
+
+<p>
+This URL gets us that revision:
+
+<a href="http://www.freebsd.org/cgi/cvsweb.cgi/~checkout~/ports/textproc/scrollkeeper/Makefile?rev=1.7&amp;content-type=text/plain">http://www.freebsd.org/cgi/cvsweb.cgi/~checkout~/ports/textproc/scrollkeeper/Makefile?rev=1.7&amp;content-type=text/plain</a>
+
+<p>
+From that, we can get PORTEPOCH.  If that is not equal to the current value of 
+ports.port_epoch, we know there has been more
+than one change of PORTEPOCH, and we need to keep scanning.  If not, we can set
+the commit_log_ports records accordingly.  Something like this:
+
+<blockquote><pre class="code">
+  update commit_log_ports set port_epoch='1' where port_id = 7366 and
+   commit_log_id >= 57525;
+</pre></blockquote>
+
+<p>
+That's a first crack at how to solve the historical PORTEPOCH issue.
 <hr>
 <p align="right">
-<small>Last amended: 14 September 2004</small>
+<small>Last amended: 22 September 2004</small>
 
 </body>
 </html>

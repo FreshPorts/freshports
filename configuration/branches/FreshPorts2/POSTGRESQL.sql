@@ -1,5 +1,5 @@
 --
--- $Id: POSTGRESQL.sql,v 1.1.2.32 2003-04-23 14:27:12 dan Exp $
+-- $Id: POSTGRESQL.sql,v 1.1.2.33 2003-04-23 22:42:59 dan Exp $
 --
 -- Copyright (c) 1998-2002 DVL Software Limited
 --
@@ -127,6 +127,7 @@ grant select, update                 on commit_log_elements_id_seq     to group 
 grant select, update                 on commit_log_id_seq              to group commits;
 grant select, insert, update, delete on commit_log_port_elements       to group commits;
 grant select, insert, update, delete on commit_log_ports               to group commits;
+grant select, insert                 on commit_log_ports_ignore        to group commits;
 
 grant select, insert,         delete on commits_latest                 to group commits;
 grant select, insert,         delete on latest_commits_ports           to group commits;
@@ -146,7 +147,6 @@ grant select, insert, update, delete on ports_categories               to group 
 --
 -- mostly for use only by ~/scripts/ports_categories-populate.pl
 --
-grant insert                         on ports_categories               to group commits;
 grant select                         on ports_active                   to group commits;
 grant select, update                 on ports_id_seq                   to group commits;
 grant select, update                 on housekeeping                   to group commits;

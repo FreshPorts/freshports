@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: files.php,v 1.1.2.33 2004-08-09 22:30:41 dan Exp $
+	# $Id: files.php,v 1.1.2.34 2004-09-22 23:03:06 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -141,12 +141,7 @@ select element_pathname(element.id) as pathname,
 		echo '<BIG><B><A HREF="/' . $myrow["category"] . '/">' . $myrow["category"] . '</A>';
 		echo '/<A HREF="/' . $myrow["category"] . '/' . $myrow["port"] . '/">' . $myrow["port"] . '</A>';
 
-		if (strlen($myrow["version"]) > 0) {
-			echo ' ' . $myrow["version"];
-			if (strlen($myrow["revision"]) > 0 && $myrow["revision"] != "0") {
-	    		echo FRESHPORTS_VERSION_REVISION_JOINER . $myrow["revision"];
-			}
-		}
+		echo ' ' . freshports_PackageVersion($myrow["version"], $myrow["revision"], $myrow["epoch"]);
 
 		echo '</B></BIG>';
 
@@ -272,7 +267,10 @@ select element_pathname(element.id) as pathname,
 
 			echo "  <TD>" . $Change_Type . "</TD>";
 			echo "  <TD>" . $myrow["revision_name"] . "</TD>";
-			echo '  <TD WIDTH="100%"><A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $myrow["pathname"] . '">';
+			echo '  <TD WIDTH="100%" VALIGN="middle">';
+			echo '<A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $myrow["pathname"] . '?annotate=' . $myrow["revision_name"] . '">';
+			echo freshports_Revision_Icon() . '</a> ';
+			echo '<A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $myrow["pathname"] . '">';
 
 			echo '<CODE CLASS="code">' . str_replace($PathNamePrefixToRemove, '', $myrow["pathname"]) . "</CODE></A></TD>";
 			echo "</TR>\n";
@@ -288,7 +286,12 @@ select element_pathname(element.id) as pathname,
 		</TD>
 	</TR>
 	</table>
-	<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
+
+
+<?
+freshports_ShowFooter();
+?>
+
 	</body>
 	</html>
 

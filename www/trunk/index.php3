@@ -1,13 +1,12 @@
 <?
-
 function freshports_SummaryForDay($MinusN) {          
    $BaseDirectory = "./archives";                     
-    $Now = time();                                    
-//   echo $MinusN; 
+   $Now = time();                                    
+//   echo "$MinusN<br>\n"; 
    $File = $BaseDirectory . "/" . date("Y/m/d", $Now - 60*60*24*$MinusN) . ".inc";  
-//   echo $File;
+//   echo "$File<br>\n";
    if (file_exists($File)) {
-      echo '<br><table WIDTH="192" BORDER="1" CELLSPACING="0" CELLPADDING="5"';
+      echo '<br><table WIDTH="152" BORDER="1" CELLSPACING="0" CELLPADDING="5"';
       echo '      bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">';
       echo '  <tr>';
       echo '<td bgcolor="#AD0040" height="30"><font color="#FFFFFF" SIZE="+1">';
@@ -96,7 +95,8 @@ switch ($sort) {
 /* sorting by port is disabled. Doesn't make sense to do this
    case "port":
       $sort = "version, commit_date desc";
-      $cache_file .= ".port";
+      $
+cache_file .= ".port";
       break;
 */
 //   case "updated":
@@ -104,7 +104,7 @@ switch ($sort) {
 //      break;
 
    default:
-      $sort ="change_log.commit_date desc, category, version";
+      $sort ="change_log.commit_date desc, change_log.id asc, ports.name, category, version";
       $cache_file .= ".updated";
 }
 
@@ -136,6 +136,7 @@ if (!file_exists($cache_file)) {
    if (!file_exists($LastUpdateFile)) {
       // no updates, so cache is fine.
 //      echo 'but no update file<br>';
+      $UpdateCache = 1;
    } else {
 //      echo 'cache file was ';
       // is the cache older than the db?
@@ -159,7 +160,7 @@ $sql = "select ports.id, ports.name as port, change_log.commit_date as updated_r
        "date_format(date_created, '$FormatDate $FormatTime') as date_created_formatted, categories.id as category_id, ".
        "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, ports.status, " .
        "date_format(change_log.commit_date, '$FormatDate') as updated_date, change_log.committer, " .
-       "date_format(change_log.commit_date, '$FormatTime') as updated_time, " .
+       "date_format(change_log.commit_date, '$FormatTime') as updated_time, change_log.id as change_log_id," .
        "change_log.update_description, date_format(change_log.commit_date, '%Y-%m-%d') as commit_date, " .
        "ports.last_change_log_id, date_format(change_log.commit_date, '%T') as commit_time " .
        "from ports, categories, change_log, change_log_port  ".
@@ -193,18 +194,36 @@ while ($myrow = mysql_fetch_array($result)) {
 
 $NumRows = $i;
 $LastDate = '';
+if ($NumRows > 1) {
+   $LastChangeLogID = $rows[$i]["change_log_id"];
+   $LastChangeLogID = -1;
+}
+
 for ($i = 0; $i < $NumRows; $i++) {
    $myrow = $rows[$i];
+
+   $ThisChangeLogID = $myrow["change_log_id"];
 
    if ($LastDate <> $myrow["commit_date"]) {
       $LastDate = $myrow["commit_date"];
       $HTML .= "<tr><td colspan='3'><font size='+1'>" . $myrow["updated_date"] . "</font></td></tr>";
    }
 
+   $j = $i;
+
+   $HTML .= "<tr><td valign='top' width='150'>";
+
+   // OK, while we have the log change log, let's put the port details here.
+   $MultiplePortsThisCommit = 0;
+   while ($j < $NumRows && $rows[$j]["change_log_id"] == $ThisChangeLogID) {
+   $myrow = $rows[$j];
+
 //   include("./_private/port-basics.inc");
 
 
-   $HTML .= "<tr><td valign='top' width='150'>";
+   if ($MultiplePortsThisCommit) {
+      $HTML .= '<br>';
+   }
    $HTML .= '<a href="port-description.php3?port=' . $myrow["id"]  . '">';
    $HTML .= "<b>" . $myrow["port"];
    if (strlen($myrow["version"]) > 0) {
@@ -224,12 +243,18 @@ for ($i = 0; $i < $NumRows; $i++) {
       $HTML .= ' <font size="-1">[refresh]</font>';
    }
 
-//   $HTML .= "<br>";
 
    if ($myrow["date_created"] > Time() - 3600 * 24 * $DaysMarkedAsNew) {
       $MarkedAsNew = "Y";
       $HTML .= "<img src=\"/images/new.gif\" width=28 height=11 alt=\"new!\" hspace=2 > ";
    }
+
+   $j++;
+   $MultiplePortsThisCommit = 1;
+   } // end while
+
+   $i = $j - 1;
+
    $HTML .= "</td><td valign='top'>";
    $HTML .= '<font size="-1">' . $myrow["updated_time"] . '</font>';
 

@@ -6,3 +6,4 @@ grant select, update, insert on freshports.users to freshports@localhost;
 grant select, update, delete, insert on freshports.watch_port to freshports@localhost;
 grant select, insert on freshports.change_log_port to freshports@localhost;
 grant update on freshports.change_log_details  to freshports@localhost;
+

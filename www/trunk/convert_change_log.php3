@@ -72,7 +72,7 @@ if (!$result) {
                 "where change_log_id = " . $myrow["change_log_id"] . 
                 "  and port_id       = " . $myrow["port_id"];
 
-         echo "<td>". $sql . "<td>";
+//         echo "<td>". $sql . "<td>";
 
          $result = mysql_query($sql);
          if ($result) {

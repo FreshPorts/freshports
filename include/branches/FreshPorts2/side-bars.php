@@ -1,5 +1,5 @@
 <?
-	# $Id: side-bars.php,v 1.4.2.29 2002-06-02 14:05:31 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.30 2002-06-03 18:51:47 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -86,6 +86,8 @@ if ($visitor) {
 	<INPUT NAME="stype"  TYPE="hidden" value="name">
 	<INPUT NAME="method" TYPE="hidden" value="match">
 	</FORM>
+
+	<? echo '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/search.php', '', "more...") . '</FONT><BR>'; ?>
 	</TD>
 </TR>
 </TABLE>
@@ -123,7 +125,6 @@ if ($visitor) {
 	echo '<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/categories.php",    "Categories")      . '</FONT><BR>';
 	echo '<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/ports-deleted.php", "Deleted ports")   . '</FONT><BR>';
 	echo '<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/ports-new.php",     "New ports")       . '</FONT><BR>';
-	echo '<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/search.php",        "Search")          . '</FONT><BR>';
 ?>
 	</TD>
 	</TR>

@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.8 2002-02-09 19:42:41 dan Exp $
+	# $Id: index.php,v 1.1.2.9 2002-02-10 03:05:02 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -265,7 +265,22 @@ ports. A port is marked as new for 10 days.
 
 					$i = $j - 1;
 
-					$HTML .= '<BLOCKQUOTE><PRE CLASS="code">' . convertAllLinks(htmlspecialchars($myrow["commit_description"])) . "</PRE></BLOCKQUOTE></td>\n";
+					$HTML .= '<BLOCKQUOTE>';
+					if ($myrow["commit_date"] > $FP1MigrationCutoffDate) {
+						$HTML .= '<PRE CLASS="code">';
+					} else {
+						$HTML .= '<CODE CLASS="code">';
+					}
+					$HTML .= convertAllLinks(htmlspecialchars($myrow["commit_description"]));
+
+					if ($myrow["commit_date"] > $FP1MigrationCutoffDate) {
+						$HTML .= '</PRE>';
+					} else {
+						$HTML .= '</CODE>';
+					}
+
+					
+					$HTML .= "</PRE></BLOCKQUOTE></td>\n";
 
 					$HTML .= "</tr>\n";
 				}

@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.23 2002-02-09 19:42:43 dan Exp $
+   # $Id: freshports.php,v 1.4.2.24 2002-02-10 03:05:03 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -22,6 +22,8 @@ $TableWidth             = "98%";
 $DateFormatDefault      = "j F Y";
 
 $FreshPortsTitle		= "FreshPorts";
+
+$FP1MigrationCutoffDate	= "2002-02-08";
 
 #
 # SEQUENCES
@@ -739,7 +741,20 @@ function freshports_PortCommitPrint($commit) {
 	echo '    <td valign="top">';
     echo $commit->committer . '<BR><a href="/files.php?id=' . $commit->id;
 	echo '"><img src="/images/logs.gif" alt="Files within this port affected by this commit" border="0" WIDTH="17" HEIGHT="20" hspace="2"></a>'. "</td>\n";
-	echo '    <td valign="top" WIDTH="*"><PRE CLASS="code">' . convertAllLinks(htmlspecialchars($commit->description)) . "</PRE></td>\n";
+	echo '    <td valign="top" WIDTH="*">';
+
+	if ($commit->commit_date > $FP1MigrationCutoffDate) {
+		echo '<PRE CLASS="code">';
+	} else {
+		echo '<CODE CLASS="code">';
+	}
+	echo convertAllLinks(htmlspecialchars($commit->description));
+
+	if ($commit->commit_date > $FP1MigrationCutoffDate) {
+		echo "</PRE></td>\n";
+	} else {
+		echo "</CODE></td>\n";
+	}
 	echo "</tr>\n";
 }
 

@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-list.php,v 1.2.2.1 2002-02-12 23:44:48 dan Exp $
+	# $Id: watch-list.php,v 1.2.2.2 2002-02-21 06:30:28 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -8,6 +8,8 @@
     require("./include/databaselogin.php");
 
     require("./include/getvalues.php");
+
+	$Debug = 0;
 
 	$Origin = $HTTP_SERVER_VARS["HTTP_REFERER"];
 	$Redirect = 1;
@@ -18,8 +20,11 @@
 		exit;  /* Make sure that code below does not get executed when we redirect. */
 	}
 
+	AddSlashes($remove);
+
 	if (IsSet($remove)) {
-#		echo "I'm removing $remove";
+		AddSlashes($remove);
+		if ($Debug) echo "I'm removing $remove";
 		$sql = "delete from watch_list_element
 			     where watch_list_id = $WatchListID
 				   and element_id    = $remove";
@@ -32,7 +37,8 @@
 	}
 
 	if (IsSet($add)) {
-#		echo "I'm adding $add";
+		AddSlashes($add);
+		if ($Debug) echo "I'm adding $add";
 		$sql = "insert into watch_list_element (watch_list_id, element_id) values
 								($WatchListID, $add)";
 		$result = pg_exec($db, $sql);

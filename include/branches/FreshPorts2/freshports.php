@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.138 2003-04-23 14:16:45 dan Exp $
+	# $Id: freshports.php,v 1.4.2.139 2003-04-24 15:03:04 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -811,7 +811,7 @@ if ($ShowDepends) {
 			$HTML .= '<dd>' . htmlify(htmlspecialchars($Site)) . "</dd>\n";
 		}
 
-		$HTML .= "</dt></dl>\n";
+		$HTML .= "</dl>\n";
 	}
 
    if (!$HideDescription && ($ShowDescriptionLink == "Y" || $ShowEverything)) {

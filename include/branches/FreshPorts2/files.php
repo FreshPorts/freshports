@@ -1,5 +1,5 @@
 <?
-	# $Id: files.php,v 1.1.2.23 2003-03-06 13:51:58 dan Exp $
+	# $Id: files.php,v 1.1.2.24 2003-04-24 15:03:04 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -125,7 +125,7 @@ select element_pathname(element.id) as pathname,
 		<table width="<? echo $TableWidth ?>" border="0" ALIGN="center">
 		<TR><TD VALIGN="top" width="100%">
 		<?
- 		echo '<TABLE BORDER="1" WIDTH="100%" CELLSPACING="0" CELLPADDING="5" BORDERCOLOR="#a2a2a2" BORDERCOLORDARK="#a2a2a2" BORDERCOLORLIGHT="#a2a2a2">' . "\n";
+ 		echo '<TABLE BORDER="1" WIDTH="100%" CELLSPACING="0" CELLPADDING="5">' . "\n<tr>\n";
 
 		echo freshports_PageBannerText("Commit Details", 3);
 
@@ -196,7 +196,7 @@ select element_pathname(element.id) as pathname,
 
 		echo "</TD>\n";
 		echo '    <TD VALIGN="top">' . $myrow["committer"]         . "</TD>\n";
-		echo '    <TD VALIGN="top" WIDTH="100%">' . freshports_PortDescriptionPrint($myrow["description"], $myrow["encoding_losses"], $freshports_CommitMsgMaxNumOfLinesToShow, freshports_MoreCommitMsgToShow($myrow["message_id"], $freshports_CommitMsgMaxNumOfLinesToShow)) . "</CODE></TD>\n";
+		echo '    <TD VALIGN="top" WIDTH="100%">' . freshports_PortDescriptionPrint($myrow["description"], $myrow["encoding_losses"], $freshports_CommitMsgMaxNumOfLinesToShow, freshports_MoreCommitMsgToShow($myrow["message_id"], $freshports_CommitMsgMaxNumOfLinesToShow)) . "</TD>\n";
 		echo "</TR>";
 		?>
 
@@ -205,6 +205,7 @@ select element_pathname(element.id) as pathname,
 		<BR>
 
 		<table border="1" width="100%" CELLSPACING="0" CELLPADDING="5">
+		<TR>
 		<?
 
 		switch ($NumRows) {
@@ -260,14 +261,11 @@ select element_pathname(element.id) as pathname,
 
 	?>
 
-	</script>
 	</table>
 	</TD>
 		<TD VALIGN="top" WIDTH="*" ALIGN="center">
 		<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php') ?>
 		</TD>
-	</TR>
-	</table>
 	</TR>
 	</table>
 	<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>

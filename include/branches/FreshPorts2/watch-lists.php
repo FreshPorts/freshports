@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-lists.php,v 1.1.2.10 2003-04-27 14:48:21 dan Exp $
+	# $Id: watch-lists.php,v 1.1.2.11 2003-04-28 00:05:56 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -66,14 +66,16 @@ function freshports_WatchListDDLB($dbh, $UserID, $selected = '', $size = 0, $mul
 }
 
 function freshports_WatchListSelectGoButton($name = 'watch_list_select') {
-	return '	<input type="image" border="0" name="' . $name . '" value="GO" src="/images/go.gif" alt="Go" width="30" height="20" align="middle" title="Display the selected watch list">';
+	return '	<input type="image" name="' . $name . '" value="GO" src="/images/go.gif" alt="Go" align="middle" title="Display the selected watch list">';
 }
 
 function freshports_WatchListDDLBForm($db, $UserID, $WatchListID, $Extra = '') {
 	
 	$HTML = '
 <form action="' . $_SERVER["PHP_SELF"] . '" method="POST" NAME=f>
-
+<table border="0">
+<tr>
+<td valign="top" nowrap align="right">
 <small>
 ';
 
@@ -81,11 +83,10 @@ function freshports_WatchListDDLBForm($db, $UserID, $WatchListID, $Extra = '') {
 
 $HTML .=  '
 </small>
-</td><td valign="top" nowrap align="left">
-'  . freshports_WatchListSelectGoButton() . '
 </td>
-' . $Extra . 
-'</form>
+<td valign="top" nowrap align="left">
+'  . freshports_WatchListSelectGoButton() . $Extra .
+'</td></tr></table></form>
 ';
 
 	return $HTML;

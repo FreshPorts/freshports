@@ -1,5 +1,5 @@
 <?
-	# $Id: footer.php,v 1.5.2.10 2003-04-24 15:06:17 dan Exp $
+	# $Id: footer.php,v 1.5.2.11 2003-04-28 00:05:55 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 ?>
@@ -51,8 +51,13 @@ ALT="powered by apache" BORDER="0" WIDTH="259" HEIGHT="32"></A>
 <table width="100%">
 <tr><td align="left">
 <p>
+
 <a href="http://validator.w3.org/check/referer"><img border="0" 
 src="/images/valid-html401" alt="Valid HTML 4.01!" height="31" width="88"></a>
+
+<a href="http://jigsaw.w3.org/css-validator/"><img style="border:0;width:88px;height:31px"
+src="/images/vcss" alt="Valid CSS!"></a>
+
 </p>
 </td><td align="right" valign="top">
 

@@ -1,11 +1,7 @@
 BODY, TD, TR, P, UL, OL, LI, INPUT, SELECT, DL, DD, DT, FONT
 {
-    font-family: Helvetica, Verdana, Arial, Clean, sans-serif;
     font-size: 12px;
 }
-<?
-}
-	echo "
                 CODE.code { color: #461b7e}
                 PRE.code {  color: #461b7e}
                 BLOCKQUOTE.code { color: #461b7e}

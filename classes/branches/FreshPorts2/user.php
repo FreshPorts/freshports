@@ -1,5 +1,5 @@
 <?
-	# $Id: user.php,v 1.1.2.4 2002-12-16 13:31:22 dan Exp $
+	# $Id: user.php,v 1.1.2.5 2003-01-10 15:49:45 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -175,6 +175,15 @@ class User {
 		}
 
 		return $numrows;
+	}
+
+	function GetTasks() {
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user_tasks.php');
+
+		$UserTasks = new UserTasks($this->dbh);
+		$UserTasks->FetchByID($this->id);
+
+		$this->UserTasks = $UserTasks->tasks;
 	}
 
 }

@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.73 2002-04-12 17:46:56 dan Exp $
+   # $Id: freshports.php,v 1.4.2.74 2002-04-12 19:02:14 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -152,22 +152,18 @@ function freshports_Email_Link($message_id) {
 	return $HTML;
 }
 
-function freshports_Commit_Link($message_id) {
+function freshports_Commit_Link($message_id, $LinkText = '') {
 	#
-	# produce a link to the commit
+	# produce a link to the commit.  by default, we provide the graphic link.
 	#
 
-	#
-	# if the message id is for freshports, then it's an old message which does not contain
-	# a valid message id which can be found in the mailing list archive.
-	#
-	if (strpos($message_id, "@freshports.org")) {
-		$HTML .= '';
-	} else {
-		$HTML .= '<A HREF="/commit.php?message_id=' . $message_id . '">';
+	$HTML .= '<A HREF="/commit.php?message_id=' . $message_id . '">';
+	if ($LinkText == '') {
 		$HTML .= freshports_Commit_Icon();
-		$HTML .= '</A>';
+	} else {
+		$HTML .= $LinkText;
 	}
+	$HTML .= '</A>';
 
 	return $HTML;
 }
@@ -913,9 +909,9 @@ function convertAllLinks($text) {
 	return $text;
 }
 
-
 #
-# The code below was donated by Marcin Gryszkalis
+# The code above was donated by Steve Kacsmark <stevek@guide.chi.il.us>.
+# With modifications by Marcin Gryszkalis <mgryszkalis@cerint.pl>.
 #
 
 function pr2link($Arr) {
@@ -976,7 +972,8 @@ function htmlify($String) {
 $url2link_cutoff_level = 70;
 
 #
-# The code above was donated by Marcin Gryszkalis
+# The code above was donated by Steve Kacsmark <stevek@guide.chi.il.us>.
+# With modifications by Marcin Gryszkalis <mgryszkalis@cerint.pl>.
 #
 
 

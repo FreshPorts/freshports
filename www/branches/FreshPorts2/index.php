@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.34 2002-04-12 18:22:21 dan Exp $
+	# $Id: index.php,v 1.1.2.35 2002-04-12 19:02:14 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -40,8 +40,8 @@ function freshports_SummaryForDay($MinusN) {
 }
 
 function freshports_MorePortsToShow($message_id, $NumberOfPortsInThisCommit, $MaxNumberPortsToShow) {
-	$HTML .= "<BR>Only the first $MaxNumberPortsToShow of $NumberOfPortsInThisCommit commits are shown above: ";
-	$HTML .= freshports_Commit_Link($message_id);
+	$HTML .= freshports_Commit_Link($message_id, '<BIG><BIG><B>...</B></BIG></BIG>');
+	$HTML .= "<BIG> (Only the first $MaxNumberPortsToShow of $NumberOfPortsInThisCommit commits are shown above)</BIG>";
 
 	return $HTML;
 }

@@ -1,5 +1,5 @@
 <?
-	# $Id: port-watch.php,v 1.1.2.8 2002-05-18 05:55:53 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.9 2002-05-18 08:07:38 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -13,7 +13,7 @@
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {
-        header("Location: login.php?origin=" . $PHP_SELF);  /* Redirect browser to PHP web site */
+        header("Location: login.php?origin=" . $_SERVER["PHP_SELF"]);  /* Redirect browser to PHP web site */
         exit;  /* Make sure that code below does not get executed when we redirect. */
 }
 
@@ -198,7 +198,7 @@ $numrows = pg_numrows($result);
 if ($numrows) {
 
    if ($UserID) {
-      $HTML .= '<form action="' . $PHP_SELF . "?category=$CategoryID". '" method="POST">';
+      $HTML .= '<form action="' . $_SERVER["PHP_SELF"] . "?category=$CategoryID". '" method="POST">';
    }
 
    $HTML .= "\n" . '<TABLE BORDER="1" CELLSPACING="0" CELLPADDING="5" BORDERCOLOR="#a2a2a2" BORDERCOLORDARK="#a2a2a2" BORDERCOLORLIGHT="#a2a2a2">' . "\n";

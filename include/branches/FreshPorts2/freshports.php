@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.92 2002-05-18 05:54:20 dan Exp $
+	# $Id: freshports.php,v 1.4.2.93 2002-05-18 08:03:00 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -227,7 +227,6 @@ GLOBAL $BannerAd;
 function freshports_Logo() {
 GLOBAL $TableWidth;
 GLOBAL $LocalTimeAdjustment;
-GLOBAL $PHP_SELF;
 
 #echo "$LocalTimeAdjustment<BR>";
 
@@ -236,7 +235,7 @@ echo '<BR>
 <TR>
 	<TD><A HREF="';
 
-	if ($PHP_SELF == "/index.php") {
+	if ($_SERVER["PHP_SELF"] == "/index.php") {
 		echo 'other-copyrights.php';
 	} else {
 		echo '/';
@@ -492,7 +491,6 @@ function freshports_CategoryIDFromCategory($category, $db) {
 }
 
 function freshports_SideBarHTML($Self, $URL, $Title) {
-//  echo "PHP_SELF = $Self and URL=$URL";
    if ($Self == $URL || ($Self == '/index.php' && $URL == '/')) {
       $HTML = $Title;
    } else {
@@ -503,7 +501,6 @@ function freshports_SideBarHTML($Self, $URL, $Title) {
 }
 
 function freshports_SideBarHTMLParm($Self, $URL, $Parm, $Title) {
-//   echo "PHP_SELF = $Self and URL=$URL";
    if ($Self == $URL || ($Self == '/index.php' && $URL == '/')) {
       $HTML = $Title;
    } else {

@@ -1,5 +1,5 @@
 <?
-	# $Id: ports-deleted.php,v 1.1.2.6 2002-04-22 03:33:13 dan Exp $
+	# $Id: ports-deleted.php,v 1.1.2.7 2002-05-18 08:07:38 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -46,13 +46,13 @@ These are the latest deleted ports.
 		switch ($sort) {
 		case "updated":
 			$sort = "updated desc, category, port";
-			echo 'sorted by last update date.  but you can sort by <a href="' . $PHP_SELF . '?sort=category">category</a>';
+			echo 'sorted by last update date.  but you can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=category">category</a>';
 			$ShowCategoryHeaders = 0;
 			break;
 
 		default:
 			$sort ="category, port";
-			echo 'sorted by category.  but you can sort by <a href="' . $PHP_SELF . '?sort=updated">last update</a>';
+			echo 'sorted by category.  but you can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=updated">last update</a>';
 			$ShowCategoryHeaders = 1;
 			$cache_file .= ".updated";
 		}

@@ -1,5 +1,5 @@
 <?
-	# $Id: commit.php,v 1.1.2.8 2002-05-18 06:48:28 dan Exp $
+	# $Id: commit.php,v 1.1.2.9 2002-05-18 08:07:36 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -35,7 +35,7 @@ if (!$StartAt) {
 } else {
    $NewStart = floor($StartAt / $MaxNumberOfPorts) * $MaxNumberOfPorts;
    if ($NewStart != $StartAt) {
-      $URL = basename($PHP_SELF);
+      $URL = basename($_SERVER["PHP_SELF"]);
       if ($NewStart > 0) {
          $URL .= "?StartAt=$NewStart";
       } else {

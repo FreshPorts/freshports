@@ -1,5 +1,5 @@
 <?
-	# $Id: ports-new.php,v 1.1.2.5 2002-04-22 03:32:50 dan Exp $
+	# $Id: ports-new.php,v 1.1.2.6 2002-05-18 08:07:38 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -46,13 +46,13 @@ These are the recently added ports.
 		switch ($sort) {
 			case "dateadded":
 				$sort = "ports.date_added desc, category, port";
-				echo 'sorted by date added.  but you can sort by <a href="' . $PHP_SELF . '?sort=category">category</a>';
+				echo 'sorted by date added.  but you can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=category">category</a>';
 				$ShowCategoryHeaders = 0;
 				break;
 
 			default:
 				$sort ="category, port";
-				echo 'sorted by category.  but you can sort by <a href="' . $PHP_SELF . '?sort=dateadded">date added</a>';
+				echo 'sorted by category.  but you can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=dateadded">date added</a>';
 				$ShowCategoryHeaders = 1;
 		}
 

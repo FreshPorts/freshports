@@ -1,11 +1,11 @@
 <?
-	# $Id: new-user.php,v 1.1.2.5 2002-05-09 21:24:46 dan Exp $
+	# $Id: new-user.php,v 1.1.2.6 2002-05-18 08:02:59 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
 ?>
 
-<form action="<?php echo $PHP_SELF . "?origin=" . $origin ?>" method="POST" NAME=f>
+<form action="<?php echo $_SERVER["PHP_SELF"] . "?origin=" . $origin ?>" method="POST" NAME=f>
 <TABLE width="*" border="0" cellpadding="1">
           <TR>
             <TD VALIGN="top">

@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.43 2002-05-09 20:55:23 dan Exp $
+	# $Id: index.php,v 1.1.2.44 2002-05-18 08:07:37 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -50,7 +50,7 @@ if (!$StartAt) {
 } else {
    $NewStart = floor($StartAt / $MaxNumberOfPorts) * $MaxNumberOfPorts;
    if ($NewStart != $StartAt) {
-      $URL = basename($PHP_SELF);
+      $URL = basename($_SERVER["PHP_SELF"]);
       if ($NewStart > 0) {
          $URL .= "?StartAt=$NewStart";
       } else {

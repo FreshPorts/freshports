@@ -1,5 +1,5 @@
 <?
-	# $Id: port-description.admin.php,v 1.1.2.4 2002-02-09 19:42:41 dan Exp $
+	# $Id: port-description.admin.php,v 1.1.2.5 2002-05-18 08:07:37 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -197,7 +197,7 @@ if ($NumRows) {
    echo '<tr><td>';
 
    if ($Admin) {
-      echo '<form action="' . $PHP_SELF . '?port=' . $port. '" method="POST">';
+      echo '<form action="' . $_SERVER["PHP_SELF"] . '?port=' . $port. '" method="POST">';
    }
 
    echo '<table border="1" width="100%" CELLSPACING="0" CELLPADDING="5"bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">' . "\n";

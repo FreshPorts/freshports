@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_upload.php,v 1.5.2.12 2002-04-20 03:15:58 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.13 2002-05-18 08:07:37 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -73,7 +73,7 @@ function DisplayUploadForm($pkg_info) {
 	</OL>
 
 
-	<FORM ACTION="<? GLOBAL $PHP_SELF; echo $PHP_SELF; ?>" METHOD="post" enctype="multipart/form-data">
+	<FORM ACTION="<? echo $_SERVER["PHP_SELF"]; ?>" METHOD="post" enctype="multipart/form-data">
 		<TABLE>
 			<TR><TD>The file name containing the output from step 1:</TD></TR>
 			<TR><TD><INPUT TYPE="file"   NAME="pkg_info" SIZE="40" ></TD></TR>
@@ -98,7 +98,7 @@ function DisplayStagingArea($WatchListID, $db) {
 			"Update watch list" button.</BIG> <SMALL><A HREF="/help.php">help</A></SMALL></TD></TR>
 
 	<TR><TD COLSPAN="4">
-			<FORM ACTION="<? GLOBAL $PHP_SELF; echo $PHP_SELF; ?>" method="POST">
+			<FORM ACTION="<? echo $_SERVER["PHP_SELF"]; ?>" method="POST">
 			<P ALIGN="center">
 			<INPUT TYPE="submit" VALUE="Update watch list"  NAME="submit" SIZE="40">
 			&nbsp;&nbsp;&nbsp;
@@ -155,7 +155,7 @@ function DisplayStagingArea($WatchListID, $db) {
 	if (!$visitor) {
 		?>
 		<P>
-		You must <A HREF="login.php?origin=<?echo $PHP_SELF ?>">login</A> before you can upload your package information.
+		You must <A HREF="login.php?origin=<?echo $_SERVER["PHP_SELF"] ?>">login</A> before you can upload your package information.
 		</P>
 		<?
  	} else {

@@ -1,5 +1,5 @@
 <?
-	# $Id: watch.php,v 1.1.2.14 2002-04-14 18:52:14 dan Exp $
+	# $Id: watch.php,v 1.1.2.15 2002-05-18 08:07:39 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -12,7 +12,7 @@ $Debug = 0;
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {
-        header("Location: login.php?origin=" . $PHP_SELF);  /* Redirect browser to PHP web site */
+        header("Location: login.php?origin=" . $_SERVER["PHP_SELF"]);  /* Redirect browser to PHP web site */
         exit;  /* Make sure that code below does not get executed when we redirect. */
 }
 
@@ -58,13 +58,13 @@ switch ($sort) {
 */
    case "updated":
       $sort = "updated desc, port";
-      echo 'sorted by last update date.  but you can sort by <a href="' . $PHP_SELF . '?sort=category">category</a>';
+      echo 'sorted by last update date.  but you can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=category">category</a>';
       $ShowCategoryHeaders = 0;
       break;
 
    default:
       $sort ="category, port";
-      echo 'sorted by category.  but you can sort by <a href="' . $PHP_SELF . '?sort=updated">last update</a>';
+      echo 'sorted by category.  but you can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=updated">last update</a>';
       $ShowCategoryHeaders = 1;
       $cache_file .= ".updated";
 }

@@ -1,5 +1,5 @@
 <?
-	# $Id: bouncing.php,v 1.1.2.5 2002-04-20 02:12:13 dan Exp $
+	# $Id: bouncing.php,v 1.1.2.6 2002-05-18 08:07:35 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -76,7 +76,7 @@ the button below.</p>
 
 </td></tr>
 <tr><td><CENTER>
-<form action="<?php echo $PHP_SELF . "?origin=" . $origin ?>" method="POST">
+<form action="<?php echo $_SERVER["PHP_SELF"] . "?origin=" . $origin ?>" method="POST">
 <input TYPE="submit" VALUE="There was a problem, but it's fixed now" name="submit">
 </form>
 </CENTER>

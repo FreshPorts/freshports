@@ -1,5 +1,5 @@
 <?
-	# $Id: search.php,v 1.1.2.16 2002-05-18 05:55:53 dan Exp $
+	# $Id: search.php,v 1.1.2.17 2002-05-18 08:07:38 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -182,7 +182,7 @@ $Port->LocalResult = $result;
 
 }
 ?>
-<form METHOD="POST" ACTION="<? echo $PHP_SELF ?>">
+<form METHOD="POST" ACTION="<? echo $_SERVER["PHP_SELF"] ?>">
 Search for:<BR>
 	<SELECT NAME="stype" size="1">
 		<OPTION VALUE="name"             <? if ($stype == "name")             echo 'SELECTED'?>>Port Name</OPTION>

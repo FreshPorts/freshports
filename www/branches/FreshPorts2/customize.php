@@ -1,5 +1,5 @@
 <?
-	# $Id: customize.php,v 1.1.2.9 2002-05-09 21:24:33 dan Exp $
+	# $Id: customize.php,v 1.1.2.10 2002-05-18 08:07:36 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -12,7 +12,7 @@
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {
-	header("Location: login.php?origin=" . $PHP_SELF);  /* Redirect browser to PHP web site */
+	header("Location: login.php?origin=" . $_SERVER["PHP_SELF"]);  /* Redirect browser to PHP web site */
 	exit;  /* Make sure that code below does not get executed when we redirect. */
 }
 

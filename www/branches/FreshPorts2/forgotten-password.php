@@ -1,5 +1,5 @@
 <?
-	# $Id: forgotten-password.php,v 1.1.2.7 2002-04-24 00:08:51 dan Exp $
+	# $Id: forgotten-password.php,v 1.1.2.8 2002-05-18 08:07:36 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -87,13 +87,14 @@ if ($submit) {
 
       $OKToMail = 1;
       if ($myrow["emailbouncecount"] > 0) {
+         GLOBAL $mailto;
          $error = "Sorry, but previous email to you has bounced, so we're not going to try sending it out.  Please contact " .
-                  'the <a href="mailto:webmaster@freshports.org?subject=I forgot my password">webmaster</a> for help.';
+                  'the <A HREF="' . $mailto . ':webmaster&#64;freshports.org?subject=I forgot my password">webmaster</A> for help.';
          $OKToMail = 0;
       } else {
          if ($myrow["email"] == "") {
              $error = 'Guess what?  You never gave us an email address.  So I guess you must ' . 
-                      'contact the <a href="mailto:webmaster@freshports.org?subject=I forgot my password">webmaster</a> for help.';
+                      'contact the <A HREF="' . $mailto . ':webmaster@freshports.org?subject=I forgot my password">webmaster</A> for help.';
              $OKToMail = 0;
          }
       }
@@ -222,10 +223,11 @@ if ($MailSent) {
 <TR><TD BGCOLOR="#ffffff">
 <?
 if ($MailSent) {
+GLOBAL $mailto;
 ?>
 <p>
 Your password has been sent to the address we have on file.  If you still can't get logged in
-please contact <a href="mailto:webmaster@freshports.org?subject=I forgot my password">the webmaster</a>
+please contact <A HREF="<? echo $mailto; ?>:webmaster&#63;freshports.org?subject=I forgot my password">the webmaster</A>
 and we'll see what we can do.
 </p>
 <? } else {  ?>
@@ -238,7 +240,7 @@ and we'll see what we can do.
 <p>We'll forward your password via clear text to your email account.  This isn't exactly totally secure, but then
 we're only dealing with your FreshPorts login, not a financial transaction....</p>
 
-<form action="<?php echo $PHP_SELF ?>" method="POST">
+<form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST">
       <input type="hidden" name="custom_settings" value="1"><input type="hidden" name="LOGIN" value="1">
       <p>User ID:<br>
       <input SIZE="15" NAME="UserID" value="<? echo $UserID ?>"></p>

@@ -1,5 +1,5 @@
 <?
-	# $Id: graphs.php,v 1.5.2.7 2002-04-23 17:09:41 dan Exp $
+	# $Id: graphs.php,v 1.5.2.8 2002-05-18 08:07:36 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -47,7 +47,7 @@ If you have suggestions for graphs, please submit them via the forum.
 			echo '<UL>';
 			for ($i = 0; $i < $numrows; $i++) {
 				$myrow = pg_fetch_array ($result, $i);
-				echo '<LI><A HREF="' . $PHP_SELF . '?id=' . $myrow["id"] . '">' . $myrow["title"] . '</A></LI>';
+				echo '<LI><A HREF="' . $_SERVER["PHP_SELF"] . '?id=' . $myrow["id"] . '">' . $myrow["title"] . '</A></LI>';
 				if ($myrow["id"] == $id) {
 					$is_clickable = $myrow["is_clickable"];
 				}

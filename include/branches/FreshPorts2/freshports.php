@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.99 2002-06-14 16:36:18 dan Exp $
+	# $Id: freshports.php,v 1.4.2.100 2002-06-20 17:34:25 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -1145,6 +1145,8 @@ echo '
 }
 
 function freshports_SideBar() {
+
+	GLOBAL $UserName;
 
 echo '
   <TD VALIGN="top" WIDTH="*" ALIGN="center">

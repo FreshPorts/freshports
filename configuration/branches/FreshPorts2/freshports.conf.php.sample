@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.conf.php.sample,v 1.1.2.7 2003-05-21 00:48:25 dan Exp $
+	# $Id: freshports.conf.php.sample,v 1.1.2.8 2003-09-08 11:28:54 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -54,5 +54,7 @@ $RejectExternalSearches	= 0;
 $AllowUserChanges			= 1;
 $ShowAnnouncements		= 1;
 $ShowWatchListCount		= 1;
+
+define('WRAPCOMMITSATCOLUMN', 80);	# when we wrap long lines, where do we start?
 
 ?>

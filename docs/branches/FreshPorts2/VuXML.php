@@ -452,6 +452,164 @@ select distinct name
    AND PA.portepoch != '0';
 </pre></blockquote>
 
+<h2>A better idea</h2>
+
+<p>
+What we need is a list of all the commits, and the Makefile revision that goes along with that commit.
+We can then fetch the Makefile, extract PortEpoch, and assign the value to the database.
+
+<p>
+A list of all the commits for port 1277:
+
+<blockquote><pre class="code">
+--
+-- Gives you all the commits for a port
+--
+
+    SELECT P.id,
+           CLP.commit_log_id,
+           CLP.port_id,
+           CLP.port_version,
+           CLP.port_revision,
+           CLP.port_epoch,
+           CL.commit_date,
+           element_pathname(P.element_id)
+      FROM ports               P,
+           commit_log_ports    CLP,
+           commit_log          CL
+     WHERE P.id              = 1277
+       AND P.id              = CLP.port_id
+       AND CLP.port_version != ''
+       AND CLP.commit_log_id = CL.id;
+
+  id  | commit_log_id | port_id | port_version | port_revision | port_epoch |      commit_date       |       element_pathname
+------+---------------+---------+--------------+---------------+------------+------------------------+-------------------------------
+ 1277 |         62162 |    1277 | 1.2          | 0             | 0          | 2003-01-02 13:24:08-05 | /ports/devel/mingw-bin-msvcrt
+ 1277 |         74202 |    1277 | 1.2          | 0             | 0          | 2003-04-05 00:09:40-05 | /ports/devel/mingw-bin-msvcrt
+ 1277 |         69460 |    1277 | 1.2          | 0             | 0          | 2003-02-21 06:23:04-05 | /ports/devel/mingw-bin-msvcrt
+ 1277 |         98320 |    1277 | 1.2          | 0             | 0          | 2003-10-15 12:51:15-04 | /ports/devel/mingw-bin-msvcrt
+ 1277 |        112146 |    1277 | 1.2          | 0             | 0          | 2004-01-29 02:24:56-05 | /ports/devel/mingw-bin-msvcrt
+ 1277 |         97881 |    1277 | 1.2          | 0             | 0          | 2003-10-13 01:44:08-04 | /ports/devel/mingw-bin-msvcrt
+(6 rows)
+</pre></blockquote>
+
+<p>
+This will give you all the commits that affect a Makefile:
+
+<blockquote><pre class="code">
+--
+-- Gives you all commits that touch Makefiles
+--
+  SELECT P.id,
+         CLP.commit_log_id,
+         CLP.port_id,
+         CLP.port_version,
+         CLP.port_revision,
+         CLP.port_epoch,
+         CL.commit_date,
+         element_pathname(CLE.element_id),
+         CLE.revision_name
+    FROM ports               P, 
+         commit_log_ports    CLP,
+         element             E,
+         commit_log_elements CLE,
+         commit_log          CL
+   WHERE P.id              = 1277
+     AND P.id              = CLP.port_id
+     AND CLE.commit_log_id = CLP.commit_log_id
+     AND CLE.element_id    = E.id
+     AND E.name            = 'Makefile'
+     AND E.parent_id       = P.element_id
+     AND CLP.commit_log_id = CL.id
+     AND CLP.port_version != ''
+ORDER BY CL.commit_date;
+
+  id  | commit_log_id | port_id | port_version | port_revision | port_epoch |      commit_date       |            element_pathname            | revision_name
+------+---------------+---------+--------------+---------------+------------+------------------------+----------------------------------------+---------------
+ 1277 |         62162 |    1277 | 1.2          | 0             | 0          | 2003-01-02 13:24:08-05 | /ports/devel/mingw-bin-msvcrt/Makefile | 1.5
+ 1277 |         69460 |    1277 | 1.2          | 0             | 0          | 2003-02-21 06:23:04-05 | /ports/devel/mingw-bin-msvcrt/Makefile | 1.6
+ 1277 |         97881 |    1277 | 1.2          | 0             | 0          | 2003-10-13 01:44:08-04 | /ports/devel/mingw-bin-msvcrt/Makefile | 1.7
+ 1277 |         98320 |    1277 | 1.2          | 0             | 0          | 2003-10-15 12:51:15-04 | /ports/devel/mingw-bin-msvcrt/Makefile | 1.8
+</pre></blockquote>
+
+<p>
+What we need is a join of the two result sets:
+
+<blockquote><pre class="code">
+--
+-- Gives you all commits and mentions makefile revisions
+--
+
+--
+-- Gives you all the commits for a port
+--
+
+    SELECT C.commit_log_id,
+           C.port_id,
+           C.port_version,
+           C.port_revision,
+           C.port_epoch,
+           C.commit_date,
+           C.pathname,
+           M.revision_name
+FROM
+    (SELECT P.id,
+           CLP.commit_log_id,
+           CLP.port_id,
+           CLP.port_version,
+           CLP.port_revision,
+           CLP.port_epoch,
+           CL.commit_date,
+           element_pathname(P.element_id) as pathname
+      FROM ports               P,
+           commit_log_ports    CLP,
+           commit_log          CL
+     WHERE P.id              = 1277
+       AND P.id              = CLP.port_id
+       AND CLP.port_version != ''
+       AND CLP.commit_log_id = CL.id) AS C left outer join
+
+(  SELECT P.id,
+         CLP.commit_log_id,
+         CLP.port_id,
+         CLP.port_version,
+         CLP.port_revision,
+         CLP.port_epoch,
+         CL.commit_date,
+         element_pathname(CLE.element_id),
+         CLE.revision_name
+    FROM ports               P, 
+         commit_log_ports    CLP,
+         element             E,
+         commit_log_elements CLE,
+         commit_log          CL
+   WHERE P.id              = 1277
+     AND P.id              = CLP.port_id
+     AND CLE.commit_log_id = CLP.commit_log_id
+     AND CLE.element_id    = E.id
+     AND E.name            = 'Makefile'
+     AND E.parent_id       = P.element_id
+     AND CLP.commit_log_id = CL.id
+     AND CLP.port_version != '') AS M
+
+on (M.commit_log_id = C.commit_log_id)
+
+order by C.commit_date;
+
+ commit_log_id | port_id | port_version | port_revision | port_epoch |      commit_date       |           pathname            | revision_name
+---------------+---------+--------------+---------------+------------+------------------------+-------------------------------+---------------
+         62162 |    1277 | 1.2          | 0             | 0          | 2003-01-02 13:24:08-05 | /ports/devel/mingw-bin-msvcrt | 1.5
+         69460 |    1277 | 1.2          | 0             | 0          | 2003-02-21 06:23:04-05 | /ports/devel/mingw-bin-msvcrt | 1.6
+         74202 |    1277 | 1.2          | 0             | 0          | 2003-04-05 00:09:40-05 | /ports/devel/mingw-bin-msvcrt |
+         97881 |    1277 | 1.2          | 0             | 0          | 2003-10-13 01:44:08-04 | /ports/devel/mingw-bin-msvcrt | 1.7
+         98320 |    1277 | 1.2          | 0             | 0          | 2003-10-15 12:51:15-04 | /ports/devel/mingw-bin-msvcrt | 1.8
+        112146 |    1277 | 1.2          | 0             | 0          | 2004-01-29 02:24:56-05 | /ports/devel/mingw-bin-msvcrt |
+(6 rows)
+</pre></blockquote>
+
+<p>
+Now we can parse that, fetching the Makefile we need.
+
 <hr>
 <p align="right">
 <small>Last amended: 22 September 2004</small>

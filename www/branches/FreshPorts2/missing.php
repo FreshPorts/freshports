@@ -1,5 +1,5 @@
 <?
-	# $Id: missing.php,v 1.1.2.10 2002-05-22 04:30:25 dan Exp $
+	# $Id: missing.php,v 1.1.2.11 2002-06-12 03:16:52 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
@@ -40,14 +40,18 @@ if ($result) {
 
 <TABLE WIDTH="<? echo $TableWidth ?>" BORDER="0" ALIGN="center">
 <TR>
-    <TD COLSPAN="3" BGCOLOR="#AD0040" HEIGHT="29"><FONT COLOR="#FFFFFF" size="+2"> 
+<TD WIDTH="100%" VALIGN="top">
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="1">
+<TR>
+    <TD BGCOLOR="#AD0040" HEIGHT="29"><FONT COLOR="#FFFFFF"><BIG><BIG>
 <?
    echo "$FreshPortsTitle -- $Title";
-?> 
-</FONT></TD>
+?>
+</BIG></BIG></FONT></TD>
 </TR>
+
 <TR>
-<TD>
+<TD WIDTH="100%" VALIGN="top">
 <P>
 Sorry, but I don't know anything about that.
 </P>
@@ -62,15 +66,21 @@ Perhaps a <A HREF="/categories.php">list of categories</A> for <A HREF="/search.
 
 </TD>
 </TR>
+</TABLE>
+</TD>
 
-<TR><TD>
+  <?
+  freshports_SideBar();
+  ?>
+
+</TR>
+
+</TABLE>
 
 <?
-	include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php");
+freshports_ShowFooter();
 ?>
 
-</TD></TR>
-</TABLE>
 </body>
 </html>
 

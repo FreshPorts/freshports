@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports.php,v 1.1.2.39 2003-09-25 14:02:02 dan Exp $
+	# $Id: ports.php,v 1.1.2.40 2003-09-25 15:00:55 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -452,7 +452,7 @@ LEFT OUTER JOIN
 		return $result;
 	}
 
-	function PackagesExists() {
+	function PackageExists() {
 		return $this->package_exists == 't';
 	}
 

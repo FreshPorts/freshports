@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.155 2003-09-25 14:13:40 dan Exp $
+	# $Id: freshports.php,v 1.4.2.156 2003-09-25 15:01:12 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -923,7 +923,7 @@ if ($ShowDepends) {
                $port->category . '/' .  $port->port . '">Sources</a>';
    }
 
-   if ($port->PackagesExists() && ($ShowPackageLink == "Y" || $ShowEverything)) {
+   if ($port->PackageExists() && ($ShowPackageLink == "Y" || $ShowEverything)) {
       // package
       $HTML .= ' <b>:</b> ';
       $HTML .= '<a HREF="ftp://ftp5.FreeBSD.org/pub/FreeBSD/FreeBSD-stable/packages/' .

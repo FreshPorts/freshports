@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.46 2002-06-09 21:42:36 dan Exp $
+	# $Id: index.php,v 1.1.2.47 2002-07-26 15:08:50 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -114,17 +114,17 @@ if ($Debug) {
 }
 
 if ($WatchListID) {
-	$sql = " SELECT	commits_latest.*, 
+	$sql = " SELECT	commits_latest_ports.*, 
 				 	CASE when watch_list_element.element_id is null
 						then 0
 						else 1
 					END as watch
-			   FROM	commits_latest left outer join watch_list_element
-					 ON commits_latest.element_id        = watch_list_element.element_id
+			   FROM	commits_latest_ports left outer join watch_list_element
+					 ON commits_latest_ports.element_id        = watch_list_element.element_id
 					AND watch_list_element.watch_list_id = $WatchListID
 		   ORDER BY commit_date_raw desc, category, port";
 } else {
-	$sql = "select * from commits_latest order by commit_date_raw desc, category, port";
+	$sql = "select * from commits_latest_ports order by commit_date_raw desc, category, port";
 }
 
 if ($Debug) echo "\n<pre>sql=$sql</pre>\n";

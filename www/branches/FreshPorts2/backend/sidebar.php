@@ -1,5 +1,5 @@
 <?
-	# $Id: sidebar.php,v 1.1.2.9 2002-06-24 19:25:34 dan Exp $
+	# $Id: sidebar.php,v 1.1.2.10 2002-07-26 15:08:50 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -51,7 +51,7 @@
 
 <?
 
-	$sql = "select * from commits_latest order by commit_date_raw desc, category, port";
+	$sql = "select * from commits_latest_ports order by commit_date_raw desc, category, port";
 
 	$sql .= " limit 40";
 

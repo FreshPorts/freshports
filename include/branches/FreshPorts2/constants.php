@@ -1,5 +1,5 @@
 <?
-	# $Id: constants.php,v 1.1.2.3 2002-04-21 18:22:01 dan Exp $
+	# $Id: constants.php,v 1.1.2.4 2002-07-26 15:08:49 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -44,8 +44,8 @@ $FreshPortsWatchedPortNotSuffix	= '">' . freshports_Watch_Icon_Add() . '</A></SM
 #
 # These are similar to the above but are using in SQL queries
 #
-#$FreshPortsWatchedPort		= "<SMALL><A HREF=\"/watch-list.php?remove=' || commits_latest.element_id || '\">Remove</A></SMALL>";
-#$FreshPortsWatchedPortNot	= "<SMALL><A HREF=\"/watch-list.php?add='    || commits_latest.element_id || '\">Add</A></SMALL>";
+#$FreshPortsWatchedPort		= "<SMALL><A HREF=\"/watch-list.php?remove=' || commits_latest_ports.element_id || '\">Remove</A></SMALL>";
+#$FreshPortsWatchedPortNot	= "<SMALL><A HREF=\"/watch-list.php?add='    || commits_latest_ports.element_id || '\">Add</A></SMALL>";
 
 
 

@@ -1,5 +1,5 @@
 <?
-	# $Id: news.php,v 1.1.2.5 2002-05-26 05:02:44 dan Exp $
+	# $Id: news.php,v 1.1.2.6 2002-07-26 15:08:50 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -39,7 +39,7 @@
 
 	$sort ="commit_log.commit_date desc, commit_log.id asc, element.name, category, version";
 
-	$sql = "select * from commits_latest order by commit_date_raw desc, category, port";
+	$sql = "select * from commits_latest_ports order by commit_date_raw desc, category, port";
 
 	$sql .= " limit 20";
 

@@ -1,5 +1,5 @@
 <?
-	# $Id: commit.php,v 1.1.2.14 2002-11-28 16:53:44 dan Exp $
+	# $Id: commit.php,v 1.1.2.15 2002-11-28 20:59:07 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -20,11 +20,9 @@
 	freshports_Start($Title,
 					"$FreshPortsName - new ports, applications",
 					"FreeBSD, index, applications, ports");
-$Debug=0;
+$Debug = 0;
 
 if ($Debug) echo "UserID='$UserID'";
-
-$Debug = 0;
 
 if (!$StartAt) {
    if ($Debug) {
@@ -100,44 +98,53 @@ function GetPortNameFromFileName($file_name) {
 
 #	$message_id = '200204081321.g38DLJL09396@freefall.freebsd.org';
 #	$commit_id  = '
+
+	$sql = '';
 	
-
-	$sql = " SELECT	ports_all.*, commit_log.committer, commit_log.description as commit_description, 
-					commit_log_ports.port_version as version, commit_log_ports.port_revision as revision,
-					to_char(commit_log.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')  as commit_date,
-					to_char(commit_log.commit_date - SystemTimeAdjust(), 'HH24:MI:SS')   as commit_time,
-					commit_log.message_id, commit_log.encoding_losses, ports_all.name as port, commit_log.id as commit_log_id,
-					commit_log_ports.needs_refresh ";
-
 	if ($WatchListID) {
-		$sql .= " ,
-				 	CASE when watch_list_element.element_id is null
-						then 0
-						else 1
-					END as watch
-				";
+		$sql .= '	  SELECT *,
+         CASE when WLE.element_id is null
+            then 0
+            else 1
+         END as watch
+    FROM watch_list_element WLE RIGHT OUTER JOIN
+	 (';
 	}
 
-	$sql .= "FROM	commit_log, commit_log_ports, ports_all ";
-
-	if ($WatchListID) {
-		$sql .= " left outer join watch_list_element
-					 ON ports_all.element_id             = watch_list_element.element_id
-			        AND watch_list_element.watch_list_id = $WatchListID";
-	}
-
-	$sql .="
-			  WHERE	commit_log.id                    = commit_log_ports.commit_log_id
-				AND commit_log_ports.port_id         = ports_all.id";
-
+	$sql .= "SELECT ports.*, 
+	         categories.name as category, 
+	         element.name as name, 
+	         commit_log.committer, 
+	         commit_log.description as commit_description, 
+	         commit_log_ports.port_version as version, 
+	         commit_log_ports.port_revision as revision,
+	         to_char(commit_log.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')  as commit_date,
+	         to_char(commit_log.commit_date - SystemTimeAdjust(), 'HH24:MI:SS')   as commit_time,
+	         commit_log.message_id, 
+	         commit_log.encoding_losses, 
+	         element.name as port, 
+	         commit_log.id as commit_log_id,
+	         commit_log_ports.needs_refresh
+	    FROM commit_log, commit_log_ports, ports, categories, element
+	   WHERE commit_log.id            = commit_log_ports.commit_log_id
+	     AND commit_log_ports.port_id = ports.id ";
 
 	if ($message_id) {
-		$sql .= " and commit_log.message_id = '$message_id' ";
+		$sql .= "\n           AND commit_log.message_id = '$message_id' \n";
 	} else {
-		$sql .= " and commit_log.id = $commit_id ";
+		$sql .= "\n           AND commit_log.id         = $commit_id \n";
+	}
+	
+	$sql .= '           AND ports.element_id      = element.id
+           AND ports.category_id     = categories.id' ."\n";
+
+	if ($WatchListID) {
+		$sql .= '	 ) AS TEMP
+  ON WLE.element_id    = TEMP.element_id
+ AND WLE.watch_list_id = ' . $WatchListID . "\n";
 	}
 
-	$sql .= " ORDER BY category, name";
+	$sql .= "ORDER BY category, name";
 
 
 if ($Debug) echo "\n<pre>sql=$sql</pre>\n";

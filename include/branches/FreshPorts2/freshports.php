@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.142 2003-04-28 21:12:23 dan Exp $
+	# $Id: freshports.php,v 1.4.2.143 2003-04-29 12:45:11 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -11,9 +11,10 @@
 #
 # special HTMLified mailto to foil spam harvesters
 #
-DEFINE('MAILTO', '&#109;&#97;&#105;&#108;&#116;&#111;');
+DEFINE('MAILTO',                 '&#109;&#97;&#105;&#108;&#116;&#111;');
+DEFINE('COPYRIGHTYEARS',        '2000-2003');
+DEFINE('URL2LINK_CUTOFF_LEVEL', 70);
 
-DEFINE('COPYRIGHTYEARS', '2000-2003');
 
 
 if ($Debug) echo "'" . $_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php<BR>';
@@ -884,8 +885,6 @@ function FormatTime($Time, $Adjustment, $Format) {
 # With modifications by Marcin Gryszkalis <mgryszkalis@cerint.pl>.
 #
 
-DEFINE('URL2LINK_CUTOFF_LEVEL', 70);
-
 
 function freshports_IsEmailValid($email) {
 	# see also convertMail
@@ -959,8 +958,8 @@ function url_shorten($Arr) {
 #	syslog(LOG_NOTICE, "finish");
 
 	$URL = $Arr[5];
-	if (strlen($URL) > 10) {
-		$URL = substr($URL, 0, 10 - 5) . "(...)";
+	if (URL2LINK_CUTOFF_LEVEL > 0 && strlen($URL) > URL2LINK_CUTOFF_LEVEL) {
+		$URL = substr($URL, 0, URL2LINK_CUTOFF_LEVEL - 5) . "(...)";
 	}
 
 	return $Arr[1] . '">' . $URL . '</a>';
@@ -970,10 +969,10 @@ function htmlify($String) {
 	$del_t = array("&quot;","&#34;","&gt;","&#62;","\/\.\s","\)","'","\s","$");
 	$delimiters = "(".join("|",$del_t).")";
 
-	$String = preg_replace_callback("/((http|ftp|https):\/\/.*?)($delimiters)/i",           url2link,    $String);
-	$String = preg_replace_callback("/(<a href=(\"|')(http|ftp|https):\/\/.*?)(\">|'>)(.*?)<\/a>/i",      url_shorten, $String);
-	$String = preg_replace_callback("/([\w+=\-.!]+@[\w\-]+(\.[\w\-]+)+)/",                  mail2link,   $String);
-	$String = preg_replace_callback("/(\bPR[:\#]?)\s*(((\w+\/)?\d+)(,\s*((\w+\/)?\d+))*)/", pr2link,     $String);
+	$String = preg_replace_callback("/((http|ftp|https):\/\/.*?)($delimiters)/i",                    url2link,    $String);
+	$String = preg_replace_callback("/(<a href=(\"|')(http|ftp|https):\/\/.*?)(\">|'>)(.*?)<\/a>/i", url_shorten, $String);
+	$String = preg_replace_callback("/([\w+=\-.!]+@[\w\-]+(\.[\w\-]+)+)/",                           mail2link,   $String);
+	$String = preg_replace_callback("/(\bPR[:\#]?)\s*(((\w+\/)?\d+)(,\s*((\w+\/)?\d+))*)/",          pr2link,     $String);
  
 	return $String;
 }

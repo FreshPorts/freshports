@@ -34,7 +34,7 @@ if ($submit) {
   } else {
     SetCookie("visitor", $Cookie, time() + 60*60*24*120, '/');
     // Redirect browser to PHP web site
-    if ($origin  = "/index.php3") {
+    if ($origin == "/index.php3") {
        $origin = "/";
     }
     header("Location: $origin");

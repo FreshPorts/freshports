@@ -5,7 +5,7 @@ require( "/www/freshports.org/_private/commonlogin.php3");
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {
-	header("Location: login.php3");  /* Redirect browser to PHP web site */
+	header("Location: login.php3?origin=" . $PHP_SELF);  /* Redirect browser to PHP web site */
 	exit;  /* Make sure that code below does not get executed when we redirect. */
 }
 

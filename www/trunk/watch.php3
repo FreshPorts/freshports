@@ -1,3 +1,15 @@
+<?
+
+require( "/www/freshports.org/_private/commonlogin.php3");
+
+// if we don't know who they are, we'll make sure they login first
+if (!$visitor) {
+        header("Location: login.php3?origin=" . $PHP_SELF);  /* Redirect browser to PHP web site */
+        exit;  /* Make sure that code below does not get executed when we redirect. */
+}
+
+?>
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
 <html>
 
@@ -25,7 +37,6 @@ This page lists the ports which are on your watch list. To modify the contents o
 
 $DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
 
-require( "/www/freshports.org/_private/commonlogin.php3");
 require( "/www/freshports.org/_private/getvalues.php3");
 require( "/www/freshports.org/_private/freshports.php3");
 

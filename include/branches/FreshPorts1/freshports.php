@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.4.1 2002-01-01 17:02:58 dan Exp $
+   # $Id: freshports.php,v 1.4.4.2 2002-02-07 22:06:51 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -57,7 +57,15 @@ GLOBAL $TableWidth;
 echo '<BR>
 <TABLE WIDTH="' . $TableWidth . '" CELLPADDING="0" CELLSPACING="0" BORDER="0">
 <TR>
-        <TD><A HREF="/"><IMG SRC="/images/freshports.jpg" ALT="FreshPorts.org - the place for ports" WIDTH="512" HEIGHT="110" BORDER="0"></A></TD>
+        <TD><A HREF="';
+
+if ($PHP_SELF = "index.php") {
+	echo 'other-copyrights.php';
+} else {
+	echo '/';
+}
+
+echo '"><IMG SRC="/images/freshports.jpg" ALT="FreshPorts.org - the place for ports" WIDTH="512" HEIGHT="110" BORDER="0"></A></TD>
         <TD ALIGN="right" CLASS="sans" VALIGN="bottom"><small>' . date("D, j M Y g:i A T") . '</small></TD>
 </TR>
 </TABLE>

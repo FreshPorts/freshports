@@ -1,5 +1,5 @@
 <?
-	# $Id: customize.php,v 1.1.2.8 2002-05-08 02:21:07 dan Exp $
+	# $Id: customize.php,v 1.1.2.9 2002-05-09 21:24:33 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -17,7 +17,7 @@ if (!$visitor) {
 }
 
 if ($submit) {
-//$Debug = 1;
+   $Debug = 0;
 
 // process form
 
@@ -26,6 +26,12 @@ if ($submit) {
    $email                = AddSlashes($email);
    $emailsitenotices_yn  = AddSlashes($emailsitenotices_yn);
    $watchnotifyfrequency = AddSlashes($watchnotifyfrequency);
+   $numberofdays         = AddSlashes($numberofdays);
+
+
+   if (!is_numeric($numberofdays) || $numberofdays < 0 || $numberofdays > 9) {
+      $numberofdays = 9;
+   }
 
    if ($Debug) {
       while (list($name, $value) = each($HTTP_POST_VARS)) {
@@ -67,7 +73,8 @@ if ($submit) {
          $sql = "update users set ";
          $sql .= "email			= '$email', ";
          $sql .= "emailsitenotices_yn = '$emailsitenotices_yn_value',";
-         $sql .= "watch_notice_id     = $w$WatchNotice->id ";
+         $sql .= "watch_notice_id     = $w$WatchNotice->id, ";
+         $sql .= "number_of_days      = $numberofdays ";
 
          // if they are changing the email, reset the bouncecount.
          if ($myrow["email"] != $email) {
@@ -119,6 +126,7 @@ if ($submit) {
 
 if (!$submit) {
 	include( "./include/getvalues.php");
+    $numberofdays = $NumberOfDays;
 }
 
 if ($errors) {

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits.php,v 1.1.2.15 2004-04-07 21:02:44 dan Exp $
+	# $Id: commits.php,v 1.1.2.16 2004-09-22 15:34:35 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -35,6 +35,7 @@ class Commits {
 			element.name                                                                                                AS port,
 			CASE when commit_log_ports.port_version IS NULL then ports.version  else commit_log_ports.port_version  END AS version,
 			CASE when commit_log_ports.port_version is NULL then ports.revision else commit_log_ports.port_revision END AS revision,
+			CASE when commit_log_ports.port_epoch   is NULL then ports.portepoch else commit_log_ports.port_epoch   END AS epoch,
 			element.status                                                                                              AS status,
 			commit_log_ports.needs_refresh                                                                              AS needs_refresh,
 			ports.forbidden                                                                                             AS forbidden,

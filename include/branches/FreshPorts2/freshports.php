@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.2 2001-11-25 21:20:50 dan Exp $
+   # $Id: freshports.php,v 1.4.2.3 2001-11-25 21:37:13 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -584,7 +584,7 @@ if ($ShowDepends) {
       $HTML .= '<a HREF="' . $myrow["homepage"] . '">Homepage</a>';
    }
 
-   $HTML .= "</DD></DL>\n";
+   $HTML .= "\n</DD>\n</DL>\n";
 
    return $HTML;
 }

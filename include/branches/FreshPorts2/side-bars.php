@@ -1,5 +1,5 @@
 <?
-	# $Id: side-bars.php,v 1.4.2.6 2002-02-17 20:02:14 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.7 2002-02-21 23:25:01 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -67,14 +67,36 @@ if ($visitor) {
    </td>
    </tr>
    </table>
+
+<BR>
+
+<table WIDTH="<? echo $ColumnWidth ?>" BORDER="1" CELLSPACING="0" CELLPADDING="5"
+            bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">
+	<tr>
+		<td bgcolor="#AD0040" height="30"><font color="#FFFFFF"><BIG><B>Search</B></BIG></font></td>
+	</tr>
+	<tr>
+
+	<FORM action="/search.php" METHOD="post" NAME="f">
+	<TD>
+	Enter Keywords:<BR>
+	<INPUT NAME="query" TYPE="text" SIZE="13">&nbsp;<INPUT TYPE="submit" VALUE="go">
+	<INPUT NAME="num"   TYPE="hidden" value="10">
+	<INPUT NAME="stype" TYPE="hidden" value="name">
+	</TD>
+	</FORM>
+</TR>
+</TABLE>
+
 <br>
 
 <table WIDTH="<? echo $ColumnWidth ?>" BORDER="1" CELLSPACING="0" CELLPADDING="5"
-            bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">        <tr>
-         <td bgcolor="#AD0040" height="30"><font color="#FFFFFF"><BIG><B>Ports</B></BIG></font></td>
-        </tr>
-        <tr>
-    <td valign="top">
+            bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">
+	<tr>
+		<td bgcolor="#AD0040" height="30"><font color="#FFFFFF"><BIG><B>Ports</B></BIG></font></td>
+	</tr>
+	<tr>
+	<td valign="top">
 <?
        echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/",                   "Home")            . '</font><br>';
        echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/ports-new.php",     "Brand new ports") . '</font><br>';

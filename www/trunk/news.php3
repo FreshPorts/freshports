@@ -3,9 +3,9 @@
 $cache_file     =       "/tmp/freshports.org.cache.news";
 $cache_time     =       3600;
 
-$text_file	=	"/www/freshports.org/news.txt";
+$text_file	=	"./news.txt";
 
-require("/www/freshports.org/_private/commonlogin.php3");
+require("./_private/commonlogin.php3");
 
 $MyMaxArticles = 10;
 

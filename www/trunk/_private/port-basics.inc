@@ -14,6 +14,9 @@
    $HTML .= "</b>";
 
    // indicate if this port needs refreshing from CVS
+   if ($myrow["status"] == "D") {
+      $HTML .= ' <font size="-1">[deleted - port removed from ports tree]</font>';
+   }
    if ($myrow["needs_refresh"] == "Y") {
       $HTML .= ' <font size="-1">[refresh]</font>';
    }
@@ -26,12 +29,16 @@
    $HTML .= "<dd>";
 
    // description
-   $HTML .= $myrow["short_description"] . "<br>\n";
+   if ($myrow["short_description"]) {
+      $HTML .= $myrow["short_description"] . "<br>\n";
+   }
 
    // maintainer
-   $HTML .= '<i>Maintained by:</i> <a href="mailto:' . $myrow["maintainer"];
-   $HTML .= '?cc=ports@FreeBSD.org&amp;subject=FreeBSD%20Port:%20' . $myrow["port"] . "-" . $myrow["version"] . '">';
-   $HTML .= $myrow["maintainer"] . '</a></br>' . "\n";
+   if ($myrow["maintainer"]) {
+      $HTML .= '<i>Maintained by:</i> <a href="mailto:' . $myrow["maintainer"];
+      $HTML .= '?cc=ports@FreeBSD.org&amp;subject=FreeBSD%20Port:%20' . $myrow["port"] . "-" . $myrow["version"] . '">';
+      $HTML .= $myrow["maintainer"] . '</a></br>' . "\n";
+   }
 
    if ($myrow["committer"]) {
       $HTML .= 'last change committed by ' . $myrow["committer"];  // separate lines in case committer is null

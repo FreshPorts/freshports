@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.28 2003-07-29 20:52:48 dan Exp $
+	# $Id: commit.php,v 1.1.2.29 2003-09-25 20:00:30 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -64,31 +64,34 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 
 	$sql = '';
 
-	$sql .= "SELECT ports.*,
-	         categories.name as category,
-	         element.name as name,
-	         commit_log.committer,
-	         commit_log.description as commit_description,
-	         commit_log_ports.port_version as version,
-	         commit_log_ports.port_revision as revision,
-	         to_char(commit_log.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')  as commit_date,
-	         to_char(commit_log.commit_date - SystemTimeAdjust(), 'HH24:MI:SS')   as commit_time,
-	         commit_log.message_id,
-	         commit_log.encoding_losses,
-	         element.name as port,
-				element.status as status,
-	         commit_log.id as commit_log_id,
-	         commit_log_ports.needs_refresh,
-            security_notice.id  AS security_notice_id";
+	$sql .= "
+SELECT ports.id as port_id,
+       categories.name as category,
+       element.name as name,
+       commit_log.message_id as message_id,
+       case when ports.element_id IS NOT NULL THEN element_pathname(ports.element_id) ELSE element_pathname(E.id) END as element_pathname,
+       commit_log.committer,
+       commit_log.description as commit_description,
+       commit_log_ports.port_version as version,
+       COALESCE(commit_log_ports.port_revision, commit_log_elements.revision_name) as revision,
+       element.name as port,
+       commit_log.id as commit_log_id,
+       commit_log_elements.element_id ";
 
 	if ($User->id) {
 		$sql .= ",
-     onwatchlist";
+       onwatchlist";
    }
 
    $sql .= "
-	    FROM commit_log LEFT OUTER JOIN security_notice ON commit_log.id = security_notice.commit_log_id, 
-            commit_log_ports, ports, categories, element ";
+  FROM (commit_log LEFT OUTER JOIN security_notice ON (commit_log.id = security_notice.commit_log_id))
+              LEFT OUTER JOIN commit_log_ports     ON (commit_log.id = commit_log_ports.commit_log_id)
+              LEFT OUTER JOIN ports                ON commit_log_ports.port_id = ports.id
+              LEFT OUTER JOIN element              ON ports.element_id         = element.id
+              LEFT OUTER JOIN categories           ON ports.category_id        = categories.id
+              LEFT OUTER JOIN commit_log_elements  ON commit_log.id                  = commit_log_elements.commit_log_id
+              LEFT OUTER JOIN element E            ON commit_log_elements.element_id = E.id 
+";
 
 	if ($User->id) {
 				$sql .= "
@@ -102,20 +105,12 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 	       ON TEMP.wle_element_id = element.id";
 	      }
 	
-	      $sql .= "
-	   WHERE commit_log.id            = commit_log_ports.commit_log_id
-	     AND commit_log_ports.port_id = ports.id ";
-
 	if ($message_id) {
-		$sql .= "\n           AND commit_log.message_id = '$message_id' \n";
+		$sql .= "\n         WHERE commit_log.message_id = '$message_id' \n";
 	} else {
-		$sql .= "\n           AND commit_log.id         = $commit_id \n";
+		$sql .= "\n         WHERE commit_log.id         = $commit_id \n";
 	}
 	
-	$sql .= '
-           AND ports.element_id      = element.id
-           AND ports.category_id     = categories.id' ."\n";
-
 	$sql .= "ORDER BY category, name";
 
 
@@ -133,7 +128,6 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 #			unset($ThisChangeLogID);
 			while ($myrow = pg_fetch_array ($result, $i)) {
 				$rows[$i] = $myrow;
-
 				#
 				# if we do a limit, it applies to the big result set
 				# not the resulting set if we also do a DISTINCT
@@ -199,16 +193,22 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 					}
 
 					$HTML .= '<BIG><B>';
-					$HTML .= '<A HREF="/' . $myrow["category"] . '/' . $myrow["port"] . '/">';
-					$HTML .= $myrow["port"];
-					
-					if (strlen($myrow["version"]) > 0) {
-						$HTML .= ' ' . $myrow["version"];
-						if (strlen($myrow["revision"]) > 0 && $myrow["revision"] != "0") {
-				    		$HTML .= '-' . $myrow["revision"];
-						}
-					}
 
+					if ($myrow['port_id'] != '') {
+						$HTML .= '<A HREF="/' . $myrow["category"] . '/' . $myrow["port"] . '/">';
+						$HTML .= $myrow["port"];
+					
+						if (strlen($myrow["version"]) > 0) {
+							$HTML .= ' ' . $myrow["version"];
+							if (strlen($myrow["revision"]) > 0 && $myrow["revision"] != "0") {
+				    			$HTML .= '-' . $myrow["revision"];
+							}
+						}
+					} else {
+						$ElementPathname = preg_replace('|^/?ports/|', '', $myrow['element_pathname']);
+						$HTML .= '<A HREF="/' . $ElementPathname . '">';
+						$HTML .= $ElementPathname;
+					}
 					$HTML .= "</A></B></BIG>\n";
 
 					$HTML .= '<A HREF="/' . $myrow["category"] . '/">';
@@ -225,7 +225,9 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 					
 					$HTML .= "\n";
 
-					$HTML .= freshports_CommitFilesLink($myrow["message_id"], $myrow["category"], $myrow["port"]);
+					if ($myrow['port_id'] != '') {
+						$HTML .= freshports_CommitFilesLink($myrow["message_id"], $myrow["category"], $myrow["port"]);
+					}
 
 					// indicate if this port has been removed from cvs
 					if ($myrow["status"] == "D") {

@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.90 2002-05-09 20:58:41 dan Exp $
+	# $Id: freshports.php,v 1.4.2.91 2002-05-09 20:59:27 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -156,7 +156,7 @@ function freshports_CommitterEmailLink($committer) {
 #
 # this function not yet used
 #
-function freshports_CommitterEmailLink($committer, $extrabits) {
+function freshports_CommitterEmailLinkExtra($committer, $extrabits) {
 	#
 	# in an attempt to reduce spam, encode the mailto
 	# so the spambots get rubbish, but it works OK in

@@ -2,7 +2,7 @@
 </TABLE>
 </TD>
 
-<TD VALIGN="top" WIDTH="*">
+<TD VALIGN="top" WIDTH="*" ALIGN="center">
    <? include($DOCUMENT_ROOT . "/include/side-bars.php") ?>
 </TD>
 

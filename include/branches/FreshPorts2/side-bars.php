@@ -1,5 +1,5 @@
 <?
-	# $Id: side-bars.php,v 1.4.2.33 2002-06-24 19:18:30 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.34 2002-08-12 03:22:36 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -42,6 +42,10 @@ if ($visitor) {
       echo '<IMG SRC="/images/warning.gif"><IMG SRC="/images/warning.gif"><IMG SRC="/images/warning.gif"><BR>';
    }
    echo '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/customize.php',        "?origin=$OriginLocal", "Customize"              ) . '</FONT><BR>';
+
+   if (eregi(".*@FreeBSD.org", $email)) {
+      echo '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/committer-opt-in.php', "?origin=$OriginLocal", "Committer Opt-in"       ) . '</FONT><BR>';
+   }
 
 
    # for a logout, where we go depends on where we are now

@@ -1,5 +1,5 @@
 <?
-require( "/www/freshports.org/_private/commonlogin.php3");
+require( "./_private/commonlogin.php3");
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {
@@ -10,8 +10,8 @@ if (!$visitor) {
 ?>
 
 <?
-require( "/www/freshports.org/_private/getvalues.php3");
-require( "/www/freshports.org/_private/freshports.php3");
+require( "./_private/getvalues.php3");
+require( "./_private/freshports.php3");
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
@@ -26,7 +26,7 @@ require( "/www/freshports.org/_private/freshports.php3");
 
 <body bgcolor="#ffffff" link="#0000cc">
 
- <? include("/www/freshports.org/_private/header.inc") ?>
+ <? include("./_private/header.inc") ?>
 <table width="100%" border="0">
 </tr>
 <tr><td colspan="2">
@@ -58,9 +58,6 @@ notification frequency within your <a href="customize.php3">personal preferences
 $DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
 
 //echo "UserID=$UserID";
-
-$cache_file     =       "/tmp/freshports.org.cache." . basename($PHP_SELF);
-$LastUpdateFile =       "/www/freshports.org/work/msgs/lastupdate";
 
 if ($UserID) {
   $cache_file .= ".user";
@@ -168,6 +165,8 @@ if ($Row != 1) {
    $HTML .= "</td></tr>\n";
 }
 
+//echo phpinfo();
+
 //$HTML .= "</table>\n";
 
 mysql_free_result($result);
@@ -201,10 +200,10 @@ echo "</table>\n";
 </table>
 </td>
   <td valign="top" width="*">
-   <? include("/www/freshports.org/_private/side-bars.php3") ?>
+   <? include("./_private/side-bars.php3") ?>
  </td>
 </tr>
 </table>
 </body>
-<? include("/www/freshports.org/_private/footer.inc") ?>
+<? include("./_private/footer.inc") ?>
 </html>

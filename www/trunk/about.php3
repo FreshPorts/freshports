@@ -1,8 +1,7 @@
 <?
-   
-require( "/www/freshports.org/_private/commonlogin.php3");
-require( "/www/freshports.org/_private/getvalues.php3");
-//require( "/www/freshports.org/_private/freshports.php3");
+require( "./_private/commonlogin.php3");
+require( "./_private/getvalues.php3");
+require( "./_private/freshports.php3");
 ?>
 
 <head>
@@ -16,7 +15,7 @@ require( "/www/freshports.org/_private/getvalues.php3");
 
 <html>
 <body>
-<? include("/www/freshports.org/_private/header.inc") ?>
+<? include("./_private/header.inc") ?>
 <table width="100%" border="0">
 <tr><td colspan="2">
 <font size="+2">about this site</font>
@@ -67,10 +66,10 @@ About the Authors</a> for details of who else helped.</p>
 </table>
 </td>
   <td valign="top" width="*">
-    <? include("/www/freshports.org/_private/side-bars.php3") ?>
+    <? include("./_private/side-bars.php3") ?>
  </td>
 </tr>
 </table>
-<? include("/www/freshports.org/_private/footer.inc") ?>
+<? include("./_private/footer.inc") ?>
 </body>
 </html>

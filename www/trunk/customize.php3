@@ -1,6 +1,8 @@
 <script language="php">
 
-require( "/www/freshports.org/_private/commonlogin.php3");
+require( "./_private/commonlogin.php3");
+require( "./_private/freshports.php3");
+
 //require( "_private/getvalues.php3");
 
 // if we don't know who they are, we'll make sure they login first
@@ -81,7 +83,7 @@ if ($submit) {
 
 <body bgcolor="#ffffff" link="#0000cc">
 
- <? include("/www/freshports.org/_private/header.inc") ?>
+ <? include("./_private/header.inc") ?>
 
 <table width="100%" border="0">
   <tr><td valign="top" width="100%">
@@ -92,7 +94,7 @@ if ($submit) {
     <td height="20"><script language="php">
 
 if (!$submit) {
- require( "/www/freshports.org/_private/getvalues.php3");
+ require( "./_private/getvalues.php3");
 }
 
 if ($errors) {
@@ -145,10 +147,10 @@ echo '<table cellpadding=1 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>
 <td>';
 
 echo 'If you wish to change your password, supply your new password twice.  Otherwise, leave it blank.<br>';
-include("/www/freshports.org/_private/getvalues.php3");
+include("./_private/getvalues.php3");
 
 $Customize=1;
-include("/www/freshports.org/_private/new-user.inc");
+include("./_private/new-user.inc");
 
 echo "</td>
 </tr>
@@ -163,12 +165,12 @@ echo "</td>
 </table>
 </td>
   <td valign="top" width="*">
-   <? include("/www/freshports.org/_private/side-bars.php3") ?>
+   <? include("./_private/side-bars.php3") ?>
  </td>
 </tr>
   </tr>
 </table>
 </body>
-<? include("/www/freshports.org/_private/footer.inc") ?>
+<? include("./_private/footer.inc") ?>
 </html>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">

@@ -8,7 +8,7 @@
 </head>
 
 <body bgcolor="#ffffff" link="#0000cc">
- <? include("/www/freshports.org/_private/header.inc") ?>
+ <? include("./_private/header.inc") ?>
 <table width="100%">
   <tr>
   <tr>
@@ -17,8 +17,8 @@
   <tr>
     <td height="20">Your account 
 <script language="php">
-require( "/www/freshports.org/_private/commonlogin.php3");
-require( "/www/freshports.org/_private/getvalues.php3");
+require( "./_private/commonlogin.php3");
+require( "./_private/getvalues.php3");
 echo '"' . $UserName . '"'; </script> has been
     created. &nbsp; If you wish to change your settings, please follow the link on the <a
     href="">home page</a>.</td>

@@ -1,7 +1,7 @@
 <?
-require( "/www/freshports.org/_private/commonlogin.php3");
-require( "/www/freshports.org/_private/getvalues.php3");
-
+require( "./_private/commonlogin.php3");
+require( "./_private/getvalues.php3");
+require( "./_private/freshports.php3");
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
@@ -15,7 +15,7 @@ require( "/www/freshports.org/_private/getvalues.php3");
 </head>
 
 <body bgcolor="#ffffff" link="#0000cc">
- <? include("/www/freshports.org/_private/header.inc") ?>
+ <? include("./_private/header.inc") ?>
 <table width="100%" border="0">
 <tr><td colspan="2">
 This page shows the ports which have been recently removed the ports tree.
@@ -29,9 +29,6 @@ This page shows the ports which have been recently removed the ports tree.
 <?
 
 $DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
-
-$cache_file     =       "/tmp/freshports.org.cache." . basename($PHP_SELF);
-$LastUpdateFile =       "/www/freshports.org/work/msgs/lastupdate";
 
 // make sure the value for $sort is valid
 
@@ -103,7 +100,7 @@ $result = mysql_query($sql, $db);
 // get the list of topics, which we need to modify the order
 //$HideDownloadPort=1;
 while ($myrow = mysql_fetch_array($result)) {
-   include("/www/freshports.org/_private/port-basics.inc");
+   include("./_private/port-basics.inc");
 }
 
 //$HTML .= '</tr>';
@@ -136,10 +133,10 @@ echo $HTML;
 </table>
 </td>
   <td valign="top" width="*">
-   <? include("/www/freshports.org/_private/side-bars.php3") ?>
+   <? include("./_private/side-bars.php3") ?>
  </td>
 </tr>
 </table>
-<? include("/www/freshports.org/_private/footer.inc") ?>
+<? include("./_private/footer.inc") ?>
 </body>
 </html>

@@ -6,9 +6,9 @@ if (!$visitor) {
         exit;  /* Make sure that code below does not get executed when we redirect. */
 }
 
-require( "/www/freshports.org/_private/commonlogin.php3");
-require( "/www/freshports.org/_private/getvalues.php3");
-require( "/www/freshports.org/_private/freshports.php3");
+require( "./_private/commonlogin.php3");
+require( "./_private/getvalues.php3");
+require( "./_private/freshports.php3");
 
 if (!$category) {
    $category = 1;
@@ -146,7 +146,7 @@ if ($submit) {
 </head>
 
 <body bgcolor="#ffffff" link="#0000cc">
- <? include("/www/freshports.org/_private/header.inc") ?>
+ <? include("./_private/header.inc") ?>
 <table width="100%" border="0">
 </tr>
 <tr><td colspan="2">This page shows the ports within a specific category which are in your watch list.
@@ -178,9 +178,6 @@ you have selected a notification frequency within your <a href="customize.php3">
 $DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
 
 //echo "UserID=$UserID";
-
-$cache_file     =       "/tmp/freshports.org.cache." . basename($PHP_SELF);
-$LastUpdateFile =       "/www/freshports.org/work/msgs/lastupdate";
 
 if ($UserID) {
   $cache_file .= ".user";
@@ -314,7 +311,7 @@ if ($UserID) {
 
 </td>
   <td valign="top" width="*">
-    <? include("/www/freshports.org/_private/side-bars.php3") ?>
+    <? include("./_private/side-bars.php3") ?>
  </td>
 </tr>
 </table>

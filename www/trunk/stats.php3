@@ -138,7 +138,7 @@ while ($myrow = mysql_fetch_array($result)) {
       $HTML .= ' <font size="-1">[deleted - port removed from ports tree]</font>';
    } else {
       // no sense saying they need a refresh if they've been deleted.
-      if ($myrow["needs_refresh"] == "Y") {
+      if ($myrow["needs_refresh"]) {
          $HTML .= ' <font size="-1">[refresh]</font>';
       }
    }

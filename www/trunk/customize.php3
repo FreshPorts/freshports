@@ -106,8 +106,10 @@ if ($submit) {
      }
 
      if ($AccountModified == 1) {
-        if (!$Debug) {
-           header("Location: ../../");  /* Redirect browser to PHP web site */
+        if ($Debug) {
+           echo "I would have taken you to '$origin' now, but debugging is on<br>\n";
+        } else {
+           header("Location: $origin");
            exit;  /* Make sure that code below does not get executed when we redirect. */
         }
      } else {

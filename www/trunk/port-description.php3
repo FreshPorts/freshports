@@ -47,7 +47,7 @@ $myrow = mysql_fetch_array($result);
  <? include("./_private/header.inc") ?>
 <table width="100%" border="0">
 <tr>
-  <td colspan="2">
+  <td>
 <p>This page contains the description of a single port.</p>
 
 <p>I've just added <i>Also listed in</i>.  Some ports appear in more than one category.  
@@ -59,14 +59,14 @@ is a virtual category, and I haven't catered for those yet. But <a href="changes
 <tr><td valign="top" width="100%">
 <table width="100%" border="0">
 <tr>
-    <td colspan="2" bgcolor="#AD0040" height="29"><font color="#FFFFFF" size="+2">freshports - 
+    <td colspan="3" bgcolor="#AD0040" height="29"><font color="#FFFFFF" size="+2">freshports - 
 <?
    echo $myrow["category"] . "/";
    echo $myrow["port"];
 ?> 
  </font></td>
 </tr>
-<tr><td valign="top" width="100%">
+<tr><td colspan="3" valign="top" width="100%">
 <?
 $HideDescription=1;
 $ShowCategories=1;
@@ -77,7 +77,30 @@ echo $HTML;
 
 echo "<dl><dd><pre>";
 echo $myrow["long_description"];
-echo "</pre></dd></dl>";
+echo "</pre></dd></dl>\n";
+
+echo '<tr height="20"><td colspan="3"></td></tr>' . "\n";
+
+echo '<tr><td><table border="1" width="100%" CELLSPACING="0" CELLPADDING="5"bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">' . "\n";
+echo '<tr height="20"><td colspan="3" bgcolor="#AD0040"><font color="#FFFFFF"><font size="+1">Commit History</font> (may be incomplete: see Changes link above for full details)</font></td></tr>' . "\n";
+echo "<tr><td><b>Date</b></td><td><b>Committer</b></td><td><b>Description</b></td></tr>\n";
+
+$sql = "select commit_date, update_description, committer " .
+       "  from change_log, change_log_port " .
+       " where change_log.id                     = change_log_port.change_log_id ".
+       "   and change_log_port.port_id           =  $port". 
+       " order by commit_date desc ";
+
+$result = mysql_query($sql, $db);
+while ($myrow = mysql_fetch_array($result)) {
+   echo "<tr><td valign='top'><font size='-1'>" . $myrow["commit_date"]        . "</font></td>\n";
+   echo "    <td valign='top'>" . $myrow["committer"]          . "</td>\n";
+   echo "    <td valign='top'>" . $myrow["update_description"] . "</td>\n";
+   echo "</tr>\n";
+}
+
+echo "</table></td></tr>\n";
+
 ?>
 
 </table>

@@ -139,7 +139,7 @@ $sql = "select ports.id, ports.name as port, ports.id as ports_id, ports.last_up
 $sql .= " order by $sort ";
 //$sql .= " limit 20";
 
-$Debug=1;
+//$Debug=1;
 if ($Debug) {
    echo $sql;
 }

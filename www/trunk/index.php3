@@ -76,7 +76,7 @@ switch ($sort) {
 //      break;
 
    default:
-      $sort ="updated desc, category, version";
+      $sort ="change_log.commit_date desc, category, version";
       $cache_file .= ".updated";
 }
 
@@ -125,8 +125,9 @@ $UpdateCache = 1;
 if ($UpdateCache == 1) {
 //   echo 'time to update the cache';
 
-$sql = "select ports.id, ports.name as port, change_log.commit_date as updated, categories.name as category, " .
-       "ports.committer, ports.last_update_description as update_description, " .
+$sql = "select ports.id, ports.name as port, categories.id as category_id, " .
+       "date_format(change_log.commit_date, '$FormatDate $FormatTime') as updated, categories.name as category, " .
+       "ports.committer, ports.last_update_description as update_description, ports.version as version, " .
        "ports.maintainer, ports.short_description, UNIX_TIMESTAMP(ports.date_created) as date_created, " .
        "date_format(date_created, '$FormatDate $FormatTime') as date_created_formatted, ".
        "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, ports.status, " .
@@ -143,7 +144,9 @@ $sql .= " order by $sort ";
 
 $sql .= " limit 20 ";
 
-echo $sql;
+if ($Debug) {
+   echo $sql;
+}
 
 $result = mysql_query($sql, $db);
 

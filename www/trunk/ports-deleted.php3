@@ -95,7 +95,9 @@ $sql = "select ports.id, ports.name as port, change_log.commit_date as updated,"
 $sql .= " order by $sort ";
 //$sql .= " limit $MaxNumberOfPorts ";
 
-echo $sql;
+if ($Debug) {
+   echo $sql;
+}
 
 $result = mysql_query($sql, $db);
 if(!$result) {

@@ -13,7 +13,7 @@
   $PHORUM['PhorumMailCode']='';
   $PHORUM['UseCookies']='1';
   $PHORUM['SortForums']='1';
-  $PHORUM['ActiveForums']='1';
+  $PHORUM['ActiveForums']='2';
   $PHORUM['TimezoneOffset']='0';
 
   $PHORUM['forum_url']='http://' . $_SERVER["HTTP_HOST"] . '/phorum';

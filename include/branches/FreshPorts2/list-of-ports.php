@@ -1,17 +1,18 @@
 <?
-	# $Id: list-of-ports.php,v 1.1.2.4 2002-12-10 04:00:20 dan Exp $
+	# $Id: list-of-ports.php,v 1.1.2.5 2002-12-11 04:36:21 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
+	#
 
 function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeaders) {
 
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
 
-	require_once($_SERVER["DOCUMENT_ROOT"] . "/../classes/ports.php");
 	$port = new Port($db);
 	$port->LocalResult = $result;
 
-	$LastCategory='';
-	$GlobalHideLastChange = "N";
+	$LastCategory         = '';
+	$GlobalHideLastChange = 'N';
 	$numrows = pg_numrows($result);
 
 	$HTML .= "<TR><TD>$numrows ports found</TD></TR>\n";
@@ -67,8 +68,9 @@ function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeade
 				}
 			}
 		}
-
+#echo 'before freshports_PortDetails<br>';
 		$HTML .= freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 1, '', 1, $ShowDateAdded);
+#echo 'after freshports_PortDetails<br>';
 #		$HTML .= '<BR>';
 	}
 

@@ -1,12 +1,12 @@
 <?
-	# $Id: files.php,v 1.1.2.19 2002-12-10 17:56:10 dan Exp $
+	# $Id: files.php,v 1.1.2.20 2002-12-11 04:36:20 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 	
 function freshports_Files($User, $PortID, $MessageID, $db) {
 	#
@@ -264,13 +264,13 @@ select element_pathname(element.id) as pathname,
 	</table>
 	</TD>
 		<TD VALIGN="top" WIDTH="*" ALIGN="center">
-		<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
+		<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php') ?>
 		</TD>
 	</TR>
 	</table>
 	</TR>
 	</table>
-	<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+	<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
 	</body>
 	</html>
 

@@ -1,11 +1,12 @@
 <?
-	# $Id: side-bars.php,v 1.4.2.43 2002-12-09 20:28:13 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.44 2002-12-11 04:36:21 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
+	#
 
 	$ColumnWidth = 155;
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/burstmedia.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/burstmedia.php');
 
 ?>
 

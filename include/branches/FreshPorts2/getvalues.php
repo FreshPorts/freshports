@@ -1,10 +1,11 @@
 <?php
 
-	# $Id: getvalues.php,v 1.1.2.21 2002-12-10 20:48:58 dan Exp $
+	# $Id: getvalues.php,v 1.1.2.22 2002-12-11 04:36:21 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
+	#
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/user.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user.php');
 	
 GLOBAL $User;
 $User = new User($db);

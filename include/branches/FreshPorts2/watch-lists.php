@@ -1,10 +1,10 @@
 <?
-	# $Id: watch-lists.php,v 1.1.2.6 2002-12-10 04:42:06 dan Exp $
+	# $Id: watch-lists.php,v 1.1.2.7 2002-12-11 04:36:21 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 	#
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/watch_lists.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_lists.php');
 
 function freshports_WatchListDDLB($dbh, $UserID, $selected = '', $size = 0, $multiple = 0, $show_active = 1, $element_id = 0) {
 	# return the HTML which forms a dropdown list box.

@@ -1,11 +1,11 @@
 <?php
-	# $Id: watch_lists.php,v 1.1.2.4 2002-12-10 03:56:26 dan Exp $
+	# $Id: watch_lists.php,v 1.1.2.5 2002-12-11 04:32:22 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 	#
 
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/watch_list.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_list.php');
 
 // base class for fetching watch lists
 class WatchLists {

@@ -18,6 +18,7 @@
 
   require "./common.php";
 
+
   settype($Error, "string");
 
   //Thats for all those ppl who likes to use different colors in different forums
@@ -101,6 +102,9 @@
 
   // hack
   $signup_page="register";
+
+	echo '<P>This is a different login from the main website.</P>';
+
 
   //////////////////////////
   // START NAVIGATION     //

@@ -62,7 +62,7 @@ $DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
 
 // make sure the value for $sort is valid
 
-$LimitRows	= 50;
+$LimitRows	= 100;
 
 if (!$start) {
    $start = 1;
@@ -182,7 +182,10 @@ $HTML .= freshports_echo_HTML(" of $NumRows ports</td></tr>\n");
 for ($i = $start; $i <= $end; $i++) {
    $myrow = $rows[$i-1];
 
-   include("./_private/port-basics.inc");
+//   include("./_private/port-basics.inc");
+
+    $HTML .= freshports_PortDetails($myrow, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink);
+
    $LastPort = $myrow["port"];
 } // end for
 

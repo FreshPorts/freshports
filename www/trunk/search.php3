@@ -1,5 +1,5 @@
 <?
-   # $Id: search.php3,v 1.11 2001-10-02 17:36:00 dan Exp $
+   # $Id: search.php3,v 1.12 2001-10-07 15:23:39 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -51,12 +51,12 @@ if ($search) {
 
    echo "</td></tr>\n<tr><td>";
 
-$fp = fopen("/www/freshports.org/searchlog.txt", "a");
+$fp = fopen("/www/freshports.org/logs/searchlog.txt", "a");
 if ($fp) {
    fwrite($fp, date("Y-m-d H:i:s") . " " . $stype . ':' . $query . "\n");
    fclose($fp);
 } else {
-   print "could not open search log\n";
+   print "Please let postmaster@freshports.org know that the search log could not be opened.  This does not affect the search results.\n";
 }
 
 

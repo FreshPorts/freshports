@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: files.php,v 1.1.2.38 2005-01-22 14:48:56 dan Exp $
+	# $Id: files.php,v 1.1.2.39 2005-02-01 13:58:57 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -56,7 +56,9 @@ select element_pathname(element.id) as pathname,
        ports.broken,
        ports.deprecated,
        ports.ignore,
-       security_notice.id  AS security_notice_id";
+       security_notice.id  AS security_notice_id,
+       ports_vulnerable.current as vulnerable_current,
+       ports_vulnerable.past    as vulnerable_past ";
 
 	if ($User->id) {
 		$sql .= ",
@@ -67,7 +69,8 @@ select element_pathname(element.id) as pathname,
 	$sql .="
 		   from commit_log LEFT OUTER JOIN security_notice ON commit_log.id = security_notice.commit_log_id,
 			    categories, element, commit_log_port_elements, commit_log_elements, 
-			    element B, commit_log_ports, ports ";
+			    element B, commit_log_ports, ports_vulnerable right outer join ports
+                on (ports_vulnerable.port_id = ports.id) ";
 
 	#
 	# if the watch list id is provided (i.e. they are logged in and have a watch list id...)
@@ -187,6 +190,13 @@ select element_pathname(element.id) as pathname,
 			$HTML .= freshports_Ignore_Icon_Link($myrow["ignore"]) . "\n";
 		}
 
+		if ($myrow['vulnerable_current']) {
+			$HTML .= '&nbsp;' . freshports_VuXML_Icon();
+		} else {
+			if ($myrow['vulnerable_past']) {
+				$HTML .= '&nbsp;' . freshports_VuXML_Icon_Faded();
+			}
+		}
 		echo $HTML;
 
 		echo ' <CODE CLASS="code">' . $myrow["short_description"] . '</CODE>';
@@ -208,6 +218,7 @@ select element_pathname(element.id) as pathname,
 		if (IsSet($myrow["security_notice_id"])) {
 			echo ' <a href="/security-notice.php?message_id=' . $myrow["message_id"] . '">' . freshports_Security_Icon() . '</a>';
 		}
+
 
 		echo "</TD>\n";
 		echo '    <TD VALIGN="top">' . $myrow["committer"]         . "</TD>\n";

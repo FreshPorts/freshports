@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.50 2005-01-22 14:48:50 dan Exp $
+	# $Id: commit.php,v 1.1.2.51 2005-02-01 13:58:57 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -317,6 +317,14 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 
 						if ($myrow["ignore"]) {
 							$HTML .= '&nbsp;' . freshports_Ignore_Icon_Link($myrow["ignore"]) . "\n";
+						}
+
+						if ($myrow['vulnerable_current']) {
+							$HTML .= '&nbsp;' . freshports_VuXML_Icon();
+						} else {
+							if ($myrow['vulnerable_past']) {
+								$HTML .= '&nbsp;' . freshports_VuXML_Icon_Faded();
+							}
 						}
 
 						$HTML .= ' ' . htmlspecialchars($myrow["short_description"]) . "\n";

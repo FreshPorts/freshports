@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: latest_commits.php,v 1.1.2.8 2004-12-19 16:41:26 dan Exp $
+	# $Id: latest_commits.php,v 1.1.2.9 2005-02-01 13:56:54 dan Exp $
 	#
 	# Copyright (c) 2003-2004 DVL Software Limited
 	#
@@ -178,6 +178,14 @@ class LatestCommits {
 
 						$this->HTML .= freshports_CommitFilesLink($mycommit->message_id, $mycommit->category, $mycommit->port);
 						$this->HTML .= "&nbsp;";
+
+						if ($mycommit->vulnerable_current) {
+							$this->HTML .= '&nbsp;' . freshports_VuXML_Icon() . '&nbsp;';
+						} else {
+							if ($mycommit->vulnerable_past) {
+								$this->HTML .= '&nbsp;' . freshports_VuXML_Icon_Faded() . '&nbsp;';
+							}
+						}
 
 					} else {
 						$this->HTML .= '<BIG><B>';

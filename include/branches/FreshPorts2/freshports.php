@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.129 2003-01-10 19:12:51 dan Exp $
+	# $Id: freshports.php,v 1.4.2.130 2003-02-10 16:52:14 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -798,6 +798,15 @@ if ($ShowDepends) {
    }
 
 }
+
+	$HTML .= '<dl><dt><i>master sites:</i></dt>' . "\n";
+
+	$MasterSites = explode(' ', $port->master_sites);
+	foreach ($MasterSites as $Site) {
+		$HTML .= '<dd>' . htmlify(htmlspecialchars($Site)) . "</dd>\n";
+	}
+
+	$HTML .= "</dt></dl>\n";
 
    if (!$HideDescription && ($ShowDescriptionLink == "Y" || $ShowEverything)) {
       // Long descripion

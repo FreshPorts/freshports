@@ -1,5 +1,5 @@
 --
--- $Id: POSTGRESQL.sql,v 1.1.2.6 2002-04-01 22:57:26 dan Exp $
+-- $Id: POSTGRESQL.sql,v 1.1.2.7 2002-04-08 17:07:30 dan Exp $
 --
 -- Copyright (c) 1998-2002 DVL Software Limited
 --
@@ -38,6 +38,7 @@ grant select on element_revision               to group www;
 grant select on housekeeping                   to group www;
 grant select on ports                          to group www;
 grant select on ports_active                   to group www;
+grant select on ports_all                      to group www;
 grant select on security_notice                to group www;
 grant select on security_notice_elements       to group www;
 grant select on security_notice_log            to group www;

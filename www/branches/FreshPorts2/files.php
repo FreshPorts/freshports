@@ -1,5 +1,5 @@
 <?
-	# $Id: files.php,v 1.1.2.3 2002-01-07 13:08:40 dan Exp $
+	# $Id: files.php,v 1.1.2.4 2002-01-08 06:23:58 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -73,7 +73,7 @@ This page shows the files associated with one port for a given commit.
    echo "<tr>";
    echo "    <td valign='top'><font size='-1'>" . $myrow["commit_date"]        . "</font></td>\n";
    echo "    <td valign='top'>" . $myrow["committer"]          . "</td>\n";
-   echo '    <td valign="top">' . $myrow["description"] . "</td>\n";
+   echo '    <td valign="top"><PRE CLASS="code">' . $myrow["description"] . "</CODE></td>\n";
    echo "</tr>";
 ?>
 
@@ -128,12 +128,11 @@ This page shows the files associated with one port for a given commit.
 				$Change_Type = $myrow["change_type"] ; 
 		}
 
-		echo "  <td>" . $Change_Type . "</td>";
+		echo "  <TD>" . $Change_Type . "</TD>";
 		echo "  <TD>" . $myrow["revision_name"] . "</TD>";
-		echo '  <td colspan="2"><a href="' . $freshports_CVS_URL . $myrow["pathname"] . '">' .
-              '<img src="/images/logs.gif" alt="Changes to this file" border="0" WIDTH="17" HEIGHT="20" hspace="2"></a>';
+		echo '  <TD><A HREF="' . $freshports_CVS_URL . $myrow["pathname"] . '">';
 
-		echo str_replace($PathNamePrefixToRemove, '', $myrow["pathname"]) . "</td>";
+		echo '<CODE CLASS="code">' . str_replace($PathNamePrefixToRemove, '', $myrow["pathname"]) . "</CODE></A></TD>";
 		echo "</tr>\n";
 	}
 }

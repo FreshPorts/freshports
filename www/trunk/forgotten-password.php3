@@ -1,11 +1,12 @@
 <?
-   # $Id: forgotten-password.php3,v 1.7 2001-09-28 00:05:37 dan Exp $
+   # $Id: forgotten-password.php3,v 1.8 2001-10-02 17:35:59 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
    require("./include/common.php");
    require("./include/freshports.php");
    require("./include/databaselogin.php");
+#   require("./include/getvalues.php");
 
 
    freshports_Start("title",
@@ -14,6 +15,7 @@
 
 ?>
 <?
+#$Debug=1;
 #require( "./include/commonlogin.php3");
 #require( "./include/freshports.php3");
 
@@ -146,6 +148,7 @@ if ($submit) {
 <table width="100%" border=0>
 <tr><td valign="top" width="100%">
 <?
+$Debug=1;
 
 if ($error) {
       echo '<table cellpadding=1 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>

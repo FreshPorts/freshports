@@ -1,12 +1,12 @@
 <?
-   # $Id: changes.php3,v 1.13 2001-09-28 00:05:36 dan Exp $
+   # $Id: changes.php3,v 1.14 2001-10-02 17:35:58 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
    require("./include/common.php");
    require("./include/freshports.php");
    require("./include/databaselogin.php");
-
+   require("./include/getvalues.php");
 
    freshports_Start("title",
                "freshports - new ports, applications",

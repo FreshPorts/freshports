@@ -1,11 +1,12 @@
 <?
-   # $Id: whatnext.php3,v 1.4 2001-09-28 00:05:40 dan Exp $
+   # $Id: whatnext.php3,v 1.5 2001-10-02 17:36:02 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
    require("./include/common.php");
    require("./include/freshports.php");
    require("./include/databaselogin.php");
+   require("./include/getvalues.php");
 
 
    freshports_Start("title",

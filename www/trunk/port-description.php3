@@ -1,11 +1,12 @@
 <?
-   # $Id: port-description.php3,v 1.23 2001-09-30 20:47:57 dan Exp $
+   # $Id: port-description.php3,v 1.24 2001-10-02 17:35:59 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
    require("./include/common.php");
    require("./include/freshports.php");
    require("./include/databaselogin.php");
+   require("./include/getvalues.php");
 
 
    freshports_Start("title",

@@ -1,11 +1,12 @@
 <?
-   # $Id: about.php3,v 1.9 2001-09-28 00:05:35 dan Exp $
+   # $Id: about.php3,v 1.10 2001-10-02 17:35:57 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
    require("./include/common.php");
    require("./include/freshports.php");
    require("./include/databaselogin.php");
+   require("./include/getvalues.php");
 
 
    freshports_Start("title",
@@ -14,9 +15,6 @@
 
 ?>
 <?
-//require( "./include/commonlogin.php3");
-//require( "./include/getvalues.php3");
-//require( "./include/freshports.php3");
 ?>
 <html>
 <head>

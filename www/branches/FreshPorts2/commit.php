@@ -1,5 +1,5 @@
 <?
-	# $Id: commit.php,v 1.1.2.1 2002-04-08 16:20:54 dan Exp $
+	# $Id: commit.php,v 1.1.2.2 2002-04-08 17:06:22 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -102,16 +102,27 @@ function GetPortNameFromFileName($file_name) {
 #	$commit_id  = '
 	
 
-if ($WatchListID) {
 	$sql = " SELECT	ports_all.*, commit_log.committer, commit_log.description as commit_description, 
-					commit_log.message_id, ports_all.name as port, commit_log.id as commit_log_id, 
+					commit_log.message_id, ports_all.name as port, commit_log.id as commit_log_id ";
+
+	if ($WatchListID) {
+		$sql .= " ,
 				 	CASE when watch_list_element.element_id is null
 						then 0
 						else 1
 					END as watch
-			   FROM	commit_log, commit_log_ports, ports_all left outer join watch_list_element
+				";
+	}
+
+	$sql .= "FROM	commit_log, commit_log_ports, ports_all ";
+
+	if ($WatchListID) {
+		$sql .= " left outer join watch_list_element
 					 ON ports_all.element_id             = watch_list_element.element_id
-			        AND watch_list_element.watch_list_id = $WatchListID
+			        AND watch_list_element.watch_list_id = $WatchListID";
+	}
+
+	$sql .="
 			  WHERE	commit_log.id                    = commit_log_ports.commit_log_id
 				AND commit_log_ports.port_id         = ports_all.id";
 
@@ -124,9 +135,6 @@ if ($WatchListID) {
 
 	$sql .= " ORDER BY category, name";
 
-} else {
-	$sql = "select * from ports_all order by commit_date_raw desc, category, port";
-}
 
 if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 

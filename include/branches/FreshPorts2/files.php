@@ -1,5 +1,5 @@
 <?
-	# $Id: files.php,v 1.1.2.18 2002-12-10 05:07:22 dan Exp $
+	# $Id: files.php,v 1.1.2.19 2002-12-10 17:56:10 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -46,6 +46,7 @@ select element_pathname(element.id) as pathname,
        commit_log.encoding_losses, 
        commit_log.description, 
        B.name as port, 
+       B.status as port_status,
        commit_log_elements.revision_name as revision_name,
        element.status, 
        commit_log_ports.needs_refresh, 
@@ -150,11 +151,11 @@ select element_pathname(element.id) as pathname,
 			}
 		}
 
-		$HTML .= "\n&nbsp;";
+		$HTML .= "\n";
 
 		// indicate if this port has been removed from cvs
-		if ($myrow["status"] == "D") {
-			$HTML .= " " . freshports_Refresh_Icon() . "\n";
+		if ($myrow["port_status"] == "D") {
+			$HTML .= " " . freshports_Deleted_Icon() . "\n";
 		}
 
 		// indicate if this port needs refreshing from CVS
@@ -181,10 +182,10 @@ select element_pathname(element.id) as pathname,
 
 		echo '</TD></TR>';
 
-		echo "<TR><TD WIDTH='15'><B>Date</B></TD><TD><B>Committer</B></TD><TD><b>Description</b></TD></TR>\n";      
+		echo "<TR><TD nowrap><B>Date</B></TD><TD><B>Committer</B></TD><TD><b>Description</b></TD></TR>\n";      
 
 		echo "<TR>";
-		echo '    <TD VALIGN="top">' . $myrow["commit_date"] . ' ' . $myrow["commit_time"];
+		echo '    <TD VALIGN="top" nowrap>' . $myrow["commit_date"] . ' ' . $myrow["commit_time"];
 		echo '&nbsp;' . freshports_Email_Link($myrow["message_id"]);
 
 		echo '&nbsp;&nbsp;'. freshports_Commit_Link($myrow["message_id"]);
@@ -195,7 +196,7 @@ select element_pathname(element.id) as pathname,
 
 		echo "</TD>\n";
 		echo '    <TD VALIGN="top">' . $myrow["committer"]         . "</TD>\n";
-		echo '    <TD VALIGN="top">' . freshports_PortDescriptionPrint($myrow["description"], $myrow["encoding_losses"], $freshports_CommitMsgMaxNumOfLinesToShow, freshports_MoreCommitMsgToShow($myrow["message_id"], $freshports_CommitMsgMaxNumOfLinesToShow)) . "</CODE></TD>\n";
+		echo '    <TD VALIGN="top" WIDTH="100%">' . freshports_PortDescriptionPrint($myrow["description"], $myrow["encoding_losses"], $freshports_CommitMsgMaxNumOfLinesToShow, freshports_MoreCommitMsgToShow($myrow["message_id"], $freshports_CommitMsgMaxNumOfLinesToShow)) . "</CODE></TD>\n";
 		echo "</TR>";
 		?>
 
@@ -250,7 +251,7 @@ select element_pathname(element.id) as pathname,
 
 			echo "  <TD>" . $Change_Type . "</TD>";
 			echo "  <TD>" . $myrow["revision_name"] . "</TD>";
-			echo '  <TD><A HREF="' . $freshports_CVS_URL . $myrow["pathname"] . '">';
+			echo '  <TD WIDTH="100%"><A HREF="' . $freshports_CVS_URL . $myrow["pathname"] . '">';
 
 			echo '<CODE CLASS="code">' . str_replace($PathNamePrefixToRemove, '', $myrow["pathname"]) . "</CODE></A></TD>";
 			echo "</TR>\n";

@@ -1,6 +1,6 @@
 <script language="php">
 
-	# $Id: getvalues.php,v 1.1.2.6 2002-01-06 16:48:53 dan Exp $
+	# $Id: getvalues.php,v 1.1.2.7 2002-01-06 16:58:45 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -122,8 +122,7 @@ if (!empty($visitor)) {
 //				echo "visitor = $visitor<br>";
 
 				// record their last login
-				$sql = "update users set lastlogin = '" . date("Y/m/d", time()) . "'" .
-					" where id = $UserID";
+				$sql = "update users set lastlogin = current_timestamp where id = $UserID";
 //				echo $sql, "<br>";
 				$result = pg_exec($db, $sql);
 			}

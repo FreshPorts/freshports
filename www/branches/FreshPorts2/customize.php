@@ -1,5 +1,5 @@
 <?
-	# $Id: customize.php,v 1.1.2.5 2002-02-21 23:13:52 dan Exp $
+	# $Id: customize.php,v 1.1.2.6 2002-03-25 02:09:28 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -29,6 +29,11 @@ if ($submit) {
    $OK = 1;
 
    $errors = "";
+
+	if (!freshports_IsEmailValid($email)) {
+		$errors .= "That email address doesn't look right to me<BR>";
+		$OK = 0;
+	}
 
    if ($Password1 != $Password2) {
       $errors .= "The password was not confirmed.  It must be entered twice.<BR>";

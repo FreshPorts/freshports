@@ -1,5 +1,5 @@
 <?
-	# $Id: ports.php,v 1.1.2.20 2002-12-08 16:48:47 dan Exp $
+	# $Id: ports.php,v 1.1.2.21 2002-12-09 20:22:49 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -35,13 +35,14 @@ class Port {
 
 	// derived or from other tables
 	var $category;
-    var $port;
+	var $port;
 	var $needs_refresh;
 	var $status;
 	var $updated;	// timestamp of last update
 
-	var $onwatchlist;	// 0 or 1 if set. not actually fetched directly by this classe.
-						// normally used only if you've specified it in your own SQL.
+	var $onwatchlist;	// count of how many watch lists is this port on for this user. 
+							// not actually fetched directly by this class.
+							// normally used only if you've specified it in your own SQL.
 
 	// not always present/set
 	var $update_description;
@@ -95,7 +96,7 @@ class Port {
 		$this->committer          = $myrow["committer"];
 	}
 
-	function FetchByPartialName($pathname, $WatchListID=0) {
+	function FetchByPartialName($pathname, $UserID = 0) {
 
 		$Debug = 0;
 
@@ -119,45 +120,58 @@ class Port {
 		if (IsSet($element->id)) {
 			$this->element_id = $element->id;
 
-			$sql = "select ports.id, ports.element_id, ports.category_id as category_id, 
-			        ports.short_description as short_description, ports.long_description, ports.version as version, 
-			        ports.revision as revision, ports.maintainer, 
-			        ports.homepage, ports.master_sites, ports.extract_suffix, ports.package_exists, 
-			        ports.depends_build, ports.depends_run, ports.last_commit_id, ports.found_in_index, 
-			        ports.forbidden, ports.broken, to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, 
-			        ports.categories as categories,
-				     element.name as port, categories.name as category,
-				     element.status ";
+			$sql = "
+select ports.id,
+       ports.element_id,
+       ports.category_id       as category_id, 
+       ports.short_description as short_description, 
+       ports.long_description, 
+       ports.version           as version, 
+       ports.revision          as revision, 
+       ports.maintainer, 
+       ports.homepage, 
+       ports.master_sites, 
+       ports.extract_suffix, 
+       ports.package_exists, 
+       ports.depends_build, 
+       ports.depends_run, 
+       ports.last_commit_id, 
+       ports.found_in_index, 
+       ports.forbidden, 
+       ports.broken, 
+       to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, 
+       ports.categories as categories,
+	    element.name     as port, 
+	    categories.name  as category,
+	    element.status ";
 
-			if ($WatchListID) {
+			if ($UserID) {
 				$sql .= ",
-			       CASE when watch_list_element.element_id is null
-		    	      then 0
-		        	  else 1
-			       END as onwatchlist ";
-			}
+	        onwatchlist";
+	      }
 
+	      $sql .= "
+       from categories, element, ports ";
 
-			$sql .="from categories, element, ports ";
+			if ($UserID) {
+				$sql .= "
+	      LEFT OUTER JOIN
+	 (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
+	    FROM watch_list JOIN watch_list_element 
+	        ON watch_list.id      = watch_list_element.watch_list_id
+	       AND watch_list.user_id = $UserID
+	  GROUP BY watch_list_element.element_id) AS TEMP
+	       ON TEMP.wle_element_id = ports.element_id";
+	      }
+	
 
-			#
-			# if the watch list id is provided (i.e. they are logged in and have a watch list id...)
-			#
-			if ($WatchListID) {
-				$sql .="
-			            left outer join watch_list_element
-						on (ports.element_id                 = watch_list_element.element_id 
-					   and  watch_list_element.watch_list_id = $WatchListID) ";
-			}
-
-			$sql .="WHERE element.id        = $this->element_id 
-			          and ports.category_id = categories.id 
-			          and ports.element_id  = element.id ";
+			$sql .= " WHERE element.id        = $this->element_id 
+			            and ports.category_id = categories.id 
+			            and ports.element_id  = element.id ";
 
 
 			if ($Debug) {
-				echo $sql;
-				exit;
+				echo "<pre>$sql</pre>";
 			}
 
 	      $result = pg_exec($this->dbh, $sql);
@@ -255,7 +269,7 @@ class Port {
 		return $numrows;
 	}
 
-	function FetchByID($id) {
+	function FetchByID($id, $UserID = 0) {
 		# fetch a single port based on id
 		# I don't think this is actually used.
 
@@ -285,7 +299,7 @@ class Port {
 			            categories.name  as category,
 			            element.status ";
 
-		if ($WatchListID) {
+		if ($UserID) {
 			$sql .= ",
 		       CASE when watch_list_element.element_id is null
 	    	      then 0
@@ -336,57 +350,69 @@ class Port {
 		}
 	}
 
-	function FetchByCategoryInitialise($CategoryID, $WatchListID=0) {
+	function FetchByCategoryInitialise($CategoryID, $UserID = 0) {
 		# fetch all ports based on category
 		# e.g. id for net
-		$sql = "select ports.id, ports.element_id, ports.category_id as category_id, 
-		               ports.short_description as short_description, ports.long_description, ports.version as version,
-		               ports.revision as revision, ports.maintainer,
-		               ports.homepage, ports.master_sites, ports.extract_suffix, ports.package_exists, 
-		               ports.depends_build, ports.depends_run, ports.last_commit_id, ports.found_in_index, 
-		               ports.forbidden, ports.broken, to_char(max(ports.date_added) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, 
-		               ports.categories as categories, 
-			            element.name as port, categories.name as category, 
-			            element.status ";
+		
+		$Debug = 0;
 
-		if ($WatchListID) {
+		$sql = "
+ SELECT ports.id, 
+        ports.element_id, 
+        ports.category_id as category_id, 
+        ports.short_description as short_description, 
+        ports.long_description, 
+        ports.version as version,
+        ports.revision as revision, 
+        ports.maintainer,
+        ports.homepage, 
+        ports.master_sites, 
+        ports.extract_suffix, 
+        ports.package_exists, 
+        ports.depends_build, 
+        ports.depends_run, 
+        ports.last_commit_id, 
+        ports.found_in_index, 
+        ports.forbidden, 
+        ports.broken, to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, 
+        ports.categories as categories, 
+        element.name as port, 
+        categories.name as category, 
+        element.status";
+
+		if ($UserID) {
 			$sql .= ",
-		       CASE when watch_list_element.element_id is null
-		          then 0
-		          else 1
-		       END as onwatchlist ";
-		}
+        onwatchlist";
+      }
+      $sql .= "
+   FROM categories, element, ports ";
 
+		if ($UserID) {
+			$sql .= "
+      LEFT OUTER JOIN
+ (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
+    FROM watch_list JOIN watch_list_element 
+        ON watch_list.id      = watch_list_element.watch_list_id
+       AND watch_list.user_id = $UserID
+  GROUP BY watch_list_element.element_id) AS TEMP
+       ON TEMP.wle_element_id = ports.element_id ";
+      }
 
-		$sql .=" from categories, element, ports ";
+		$sql .= " WHERE ports.category_id    = categories.id 
+		            and ports.element_id     = element.id 
+				      and categories.id        = $CategoryID 
+				      and element.status       = 'A' 
+";
 
-		#
-		# if the watch list id is provided (i.e. they are logged in and have a watch list id...)
-		#
-		if ($WatchListID) {
-			$sql .="
-		            left outer join watch_list_element
-					on watch_list_element.element_id    = ports.element_id 
-				   and watch_list_element.watch_list_id = $WatchListID ";
-		}
-
-		$sql .= "WHERE ports.category_id    = categories.id 
-		           and ports.element_id     = element.id 
-				     and categories.id        = $CategoryID 
-				     and element.status       = 'A' 
-			   GROUP BY ports.id, ports.element_id, category_id, short_description, ports.long_description,
-				         version, revision, ports.maintainer, ports.homepage, ports.master_sites, ports.extract_suffix, 
-						   ports.package_exists, ports.depends_build, ports.depends_run, ports.last_commit_id, 
-						   ports.found_in_index, ports.forbidden, ports.broken, ports.date_added, 
-						   categories, port, category, element.status ";
-
-		if ($WatchListID) {
-			$sql .= ", watch_list_element.element_id";
+		if ($User->id) {
+			$sql .= ", wle_element_id, watch";
 		}
 
 		$sql .= " ORDER by port ";
+		
+		if ($Debug) echo "<pre>$sql</pre>";
 
-        $this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {
 			$numrows = pg_numrows($this->LocalResult);
 			if ($numrows == 1) {
@@ -396,7 +422,7 @@ class Port {
 
 			}
 		} else {
-			echo 'pg_exec failed: ' . $sql . ' : ' . pg_errormessage();
+			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
 		}
 
 		return $numrows;

@@ -40,10 +40,8 @@ echo '</td></tr><tr><td>';
 ?>
 This screen contains a list of the ports in category <em><?echo $categoryname ?></em>. 
 The ports with a tick beside them are already in your watch list. 
-When one of the port in your watch list changes, you will be notified by email.<br><br>
-You must select 
-a notification frequency within your <a href="customize.php3">personal preferences</a> before these messages will be sent 
-out.
+When one of the ports in your watch list changes, you will be notified by email if
+you have selected a notification frequency within your <a href="customize.php3">personal preferences</a>.
 <? } ?>
 <script language="php">
 

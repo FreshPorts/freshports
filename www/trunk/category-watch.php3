@@ -31,10 +31,8 @@ echo '</td></tr><tr><td>';
 } else {
 ?>
 This screen contains a list of the port categories. The categories on your watch list are those with a tick beside 
-them. When a port changes in one of your watch categories, you will be notified by email.<br><br>
-You must select 
-a notification frequency within your <a href="customize.php3">personal preferences</a> before these messages will be sent 
-out.
+them. When a port changes in one of your watch categories, you will be notified by email if you have selected a 
+notification frequency within your <a href="customize.php3">personal preferences</a>.
 <? } ?>
 <script language="php">
 

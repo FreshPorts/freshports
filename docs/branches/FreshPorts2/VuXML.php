@@ -677,6 +677,11 @@ WHERE E.id = P.element_id
   AND P.category_id  = C.id;
 </pre></blockquote>
 
+<p>
+Some of those ports in the sub select will
+have EPOCH set in their own Makefile.  I found three.  See
+<a href="http://beta.freshports.org/tmp/epoch-masters.txt">http://beta.freshports.org/tmp/epoch-masters.txt</a>.
+
 
 <p>
 I'm not yet sure how I'm going to cope with these master ports.  The others

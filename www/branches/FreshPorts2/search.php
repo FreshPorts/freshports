@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.66 2004-11-18 21:52:51 dan Exp $
+	# $Id: search.php,v 1.1.2.67 2004-11-19 13:32:43 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -524,15 +524,12 @@ Search for:<BR>
 
 <table cellpadding="5" cellspacing="0" border="0">
 <tr>
-<td colspan="2">
+<td>
 	<INPUT TYPE=checkbox <? if ($deleted == "includedeleted") echo 'CHECKED'; ?> VALUE=includedeleted NAME=deleted> Include deleted ports
 </td>
-</tr><tr>
 <td>
 	<INPUT TYPE=checkbox <? if ($casesensitivity == "casesensitive")   echo 'CHECKED'; ?> VALUE=casesensitive   NAME=casesensitivity> Case sensitive search
-</td><td>
-	<INPUT TYPE="submit" VALUE="Search" NAME="search">
-</td></tr><tr><td colspan="3">
+<td>
 	Sort by: <SELECT name="orderby">
 		<OPTION VALUE="<?php echo ORDERBYPORT;     ?>" <?if ($orderby == ORDERBYPORT        ) echo 'SELECTED' ?>>Port
 		<OPTION VALUE="<?php echo ORDERBYCATEGORY; ?>" <?if ($orderby == ORDERBYCATEGORY    ) echo 'SELECTED' ?>>Category
@@ -542,15 +539,18 @@ Search for:<BR>
 		<OPTION VALUE="<?php echo ORDERBYASCENDING;  ?>" <?if ($orderbyupdown == ORDERBYASCENDING  ) echo 'SELECTED' ?>>ascending
 		<OPTION VALUE="<?php echo ORDERBYDESCENDING; ?>" <?if ($orderbyupdown == ORDERBYDESCENDING ) echo 'SELECTED' ?>>descending
 	</SELECT>
-</td></tr>
+</td>
+</td><td>
+	<INPUT TYPE="submit" VALUE="Search" NAME="search">
+</td>
+</tr>
 </table>
 </form>
 
 <p>
-Case sensitivity is ignored for "sounding like".<BR>
-When searching on 'Message ID' only exact matches will succeed.<br>
+<small>Case sensitivity is ignored for "sounding like".<BR>
+When searching on 'Message ID' only exact matches will succeed.</small>
 </p>
-
 <?php
 
 if ($User->id != '') {

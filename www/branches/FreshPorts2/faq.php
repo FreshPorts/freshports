@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.41 2003-09-25 15:49:49 dan Exp $
+	# $Id: faq.php,v 1.1.2.42 2003-11-26 17:29:56 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -328,6 +328,11 @@ down you must read to find something you didn't already know.</P>
 	<p>
 	A sample URL is <? echo $URL; ?>?MaxArticles=10&amp;committer=1&amp;time=1&amp;date=1
 	</p>
+
+	<P>
+	<B>NOTE:</B> - As of 13 November 2003, these parameters are no longer available.  The
+	values they obtained are now supplied by default.
+	</P>
 	</LI>
 
 	<?
@@ -394,7 +399,12 @@ Here are a few examples:
 </tr>
 
 </table>
+
 </blockquote>
+
+<P>
+<b>NOTE:</b> Effictive 13 November 2003, these parameters are no longer available.
+</P>
 
 </TD></TR><TR><TD>&nbsp;</TD></TR>
 

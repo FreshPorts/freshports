@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-watch.php,v 1.1.2.36 2003-06-05 13:37:47 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.37 2003-06-05 13:39:03 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -161,7 +161,7 @@ if ($numrows) {
 
 $HTML .= '<tr><td><b>' . $numrows . ' ports found (';
 if ($NumVirtual != 0) {
-	$HTML .=  ($numrows - $NumVirtual) . ' real, ' . $NumVirtual . ' virtual)</b></td></tr>';
+	$HTML .=  ($numrows - $NumVirtual) . ' primary, ' . $NumVirtual . ' secondary)</b></td></tr>';
 }
 $HTML .= '<tr><td valign="top" ALIGN="center">' . "\n";
 

@@ -1,5 +1,5 @@
 <?
-	# $Id: port-watch.php,v 1.1.2.5 2002-02-21 23:13:54 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.6 2002-02-28 17:45:39 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -202,9 +202,9 @@ if ($numrows) {
       $HTML .= '<form action="' . $PHP_SELF . "?category=$CategoryID". '" method="POST">';
    }
 
-   $HTML .= "\n" . '<table cellpadding=12 border=1>' . "\n";
+   $HTML .= "\n" . '<TABLE BORDER="1" CELLSPACING="0" CELLPADDING="5" BORDERCOLOR="#a2a2a2" BORDERCOLORDARK="#a2a2a2" BORDERCOLORLIGHT="#a2a2a2">' . "\n";
 
-   // get the list of topics, which we need to modify the order
+   // get the list of ports
 
 	$NumPorts = 0;
 	for ($i = 0; $i < $numrows; $i++) {

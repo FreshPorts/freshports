@@ -1,5 +1,5 @@
 <?
-	# $Id: categories.php,v 1.1.2.5 2003-03-06 14:20:34 dan Exp $
+	# $Id: categories.php,v 1.1.2.6 2003-03-06 21:26:43 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -51,6 +51,7 @@ class Category {
 	function FetchByName($Name) {
 		if (IsSet($Name)) {
 			$this->name = $Name;
+			UnSet($this->id);
 		}
 		$sql = "select * from categories where name = '$this->name'";
 		if ($Debug) echo "sql = '$sql'<BR>";
@@ -59,13 +60,13 @@ class Category {
 		if ($result) {
 			$numrows = pg_numrows($result);
 			if ($numrows == 1) {
-				if ($Debug) echo "fetched by ID succeeded<BR>";
+				if ($Debug) echo "FetchByName succeeded<BR>";
 				$myrow = pg_fetch_array ($result, 0);
 				$this->Populate($myrow);
 			}
 		}
 
-		return $this->name;
+		return $this->id;
 	}
 
 	function PortCount($Name) {
@@ -91,5 +92,15 @@ class Category {
 		return $Count;
 	}
 		
+
+	function UpdateDescription() {
+		$Debug = 1;
+		$sql = "UPDATE categories SET description = '" . $this->description . "' WHERE id = " . $this->id . ' AND is_primary = FALSE';
+		if ($Debug) echo "sql = '$sql'<BR>";
+
+		$result = pg_exec($this->dbh, $sql);
+
+		return  pg_affected_rows($result);
+	}
 
 }

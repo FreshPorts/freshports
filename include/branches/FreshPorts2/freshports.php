@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.21 2002-01-07 13:08:42 dan Exp $
+   # $Id: freshports.php,v 1.4.2.22 2002-01-27 20:23:16 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -74,7 +74,7 @@ GLOBAL $LocalTimeAdjustment;
 #echo "$LocalTimeAdjustment<BR>";
 
 echo '<BR>
-<TABLE WIDTH="' . $TableWidth . '" CELLPADDING="0" CELLSPACING="0" BORDER="0">
+<TABLE WIDTH="' . $TableWidth . '" BORDER="0" ALIGN="center">
 <TR>
         <TD><A HREF="/"><IMG SRC="/images/freshports.jpg" ALT="FreshPorts.org - the place for ports" WIDTH="512" HEIGHT="110" BORDER="0"></A></TD>
         <TD ALIGN="right" CLASS="sans" VALIGN="bottom">' . FormatTime(Date("D, j M Y g:i A T"), $LocalTimeAdjustment, "D, j M Y g:i A T") . '</TD>

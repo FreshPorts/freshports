@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-list-maintenance.php,v 1.1.2.13 2002-12-11 22:42:50 dan Exp $
+	# $Id: watch-list-maintenance.php,v 1.1.2.14 2002-12-12 02:21:39 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -88,24 +88,20 @@ if ($UserClickedOn) {
 			case 'add':
 				if (AddSlashes($_POST['add_name']) == '') {
 					$ErrorMessage = 'When creating a new list, you must supply a name.';
-					break;
 				}
 				if (preg_match("/[^a-zA-Z0-9]/", $_POST['add_name'])) {
 					$ErrorMessage = $WatchListNameMessage;
 					$add_name     = $_POST['add_name'];
-					break;
-				}
+				} else { echo 'that name is ok';}
 				break;
 
 			case 'rename':
 				if (AddSlashes($_POST['rename_name']) == '') {
 					$ErrorMessage = 'When renaming an existing list, you must supply a name.';
-					break;
 				}
 				if (preg_match("/[^a-zA-Z0-9]/", $_POST['rename_name'])) {
 					$ErrorMessage = $WatchListNameMessage;
 					$rename_name  = $_POST['rename_name'];
-					break;
 				}
 				break;
 		}
@@ -204,9 +200,10 @@ if ($Debug) echo 'add remove = ' . $User->watch_list_add_remove;
 	<? freshports_PageBannerText("Watch list maintenance"); ?>
 </TR>
 <TR><TD>
+Adding or renaming watch list is broken. The DB isn't up to date.  I will fix this tonight.
 <?php
-	if ($ErrorMessage) {
-		freshports_ErrorMessage("Let\'s try that again!", $ErrorMessage);
+	if ($ErrorMessage != '') {
+		echo freshports_ErrorMessage("Let\'s try that again!", $ErrorMessage);
 	}
 ?>
 
@@ -221,9 +218,9 @@ if ($Debug) echo 'add remove = ' . $User->watch_list_add_remove;
     </TD>
     <TD>
     <INPUT id=add         style="WIDTH: 85px; HEIGHT: 24px" type=submit size=48 value="Add"          name=add>&nbsp;&nbsp;&nbsp; 
-    <INPUT id=add_name    name=add_name    <?php if (IsSet($add_name))   echo 'value=' . $add_name     . '" '; ?>size=10><BR>
+    <INPUT id=add_name    name=add_name    <?php if (IsSet($add_name))    echo 'value="' . $add_name     . '" '; ?>size=10><BR>
     <INPUT id=rename      style="WIDTH: 85px; HEIGHT: 24px" type=submit size=23 value="Rename"       name=rename>&nbsp;&nbsp;&nbsp; 
-    <INPUT id=rename_name name=rename_name <?php if (IsSet($rename_name)) echo 'value=' . $rename_name . '" '; ?>size=10><BR>
+    <INPUT id=rename_name name=rename_name <?php if (IsSet($rename_name)) echo 'value="' . $rename_name . '" '; ?>size=10><BR>
     <br>
     <INPUT id=delete      style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29 value="Delete"       name=delete><br>
     <INPUT id=delete_all  style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29 value="Delete All"   name=delete_all><br>

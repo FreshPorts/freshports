@@ -1,10 +1,13 @@
 <?
-	# $Id: user.php,v 1.1.2.6 2003-01-10 19:09:33 dan Exp $
+	# $Id: user.php,v 1.1.2.7 2003-03-04 22:19:37 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
 
 $Debug = 0;
+
+DEFINE('SUPER_USER', 'S');
+DEFINE('USER',       'U');
 
 // base class for a single User
 class User {

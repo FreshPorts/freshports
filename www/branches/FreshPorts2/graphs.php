@@ -1,5 +1,5 @@
 <?
-	# $Id: graphs.php,v 1.5.2.6 2002-04-20 04:34:13 dan Exp $
+	# $Id: graphs.php,v 1.5.2.7 2002-04-23 17:09:41 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -39,7 +39,7 @@ If you have suggestions for graphs, please submit them via the forum.
 <TR>
 <TD WIDTH="300" VALIGN="top">
 <?
-	$sql = "select id, title from graphs order by title";
+	$sql = "select id, title, is_clickable from graphs order by title";
 	$result = pg_exec($db, $sql);
     if ($result) {
     	$numrows = pg_numrows($result);
@@ -48,6 +48,10 @@ If you have suggestions for graphs, please submit them via the forum.
 			for ($i = 0; $i < $numrows; $i++) {
 				$myrow = pg_fetch_array ($result, $i);
 				echo '<LI><A HREF="' . $PHP_SELF . '?id=' . $myrow["id"] . '">' . $myrow["title"] . '</A></LI>';
+				if ($myrow["id"] == $id) {
+					$is_clickable = $myrow["is_clickable"];
+				}
+#				echo $myrow["id"] .  ' '  . $myrow["is_clickable"] . '<BR>';
 			}
 			echo '</UL>';
 		} else {
@@ -62,13 +66,19 @@ If you have suggestions for graphs, please submit them via the forum.
 <TD>
 <?
 	if ($id) {
-?>
-<FORM ACTION="/graphs/graphclick.php" METHOD="get">
-<INPUT TYPE="hidden" NAME="id"    VALUE="<? echo $id; ?>">
-<INPUT NAME="graph"  TYPE="image" SRC="/graphs/graph.php?id=<? echo $id; ?>">
-</FORM>
-<?
-}
+		if ($is_clickable == "t" ) {
+			?>
+			<FORM ACTION="/graphs/graphclick.php" METHOD="get">
+			<INPUT TYPE="hidden" NAME="id"    VALUE="<? echo $id; ?>">
+			<INPUT NAME="graph"  TYPE="image" SRC="/graphs/graph.php?id=<? echo $id; ?>">
+			</FORM>
+			<?
+		} else {
+			?>
+			<IMG SRC="/graphs/graph.php?id=<? echo $id; ?>">
+			<?
+		}
+	}
 ?>
 </TD>
 </TR>

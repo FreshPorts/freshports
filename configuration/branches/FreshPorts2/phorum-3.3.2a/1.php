@@ -8,7 +8,7 @@
   $PHORUM['ForumFolder']='0';
   $PHORUM['ForumParent']='0';
   $PHORUM['ForumLang']='lang/english.php';
-  $PHORUM['ForumDisplay']='90';
+  $PHORUM['ForumDisplay']='20';
   $PHORUM['ForumTableName']='feedback';
   $PHORUM['ForumModeration']='n';
   $PHORUM['ForumSecurity']='1';

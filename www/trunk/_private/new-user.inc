@@ -1,11 +1,11 @@
  <table width="*" border="0" cellpadding="1">
-<form action="<?php echo $PHP_SELF . "?origin=" . $origin ?>" method="POST">
+<form action="<?php echo $PHP_SELF . "?origin=" . $origin ?>" method="POST" name=f>
           <tr>
             <td valign="top">
 <? if (!$Customize) { ?>
               <input type="hidden" name="ADD" value="1">
               User ID:<br>
-              <input SIZE="15" NAME="UserName" VALUE="<? echo $UserName ?>"><br><br>
+              <input SIZE="15" NAME="UserLogin" VALUE="<? echo $UserLogin ?>"><br><br>
 <? } ?>
                Password:<br>
                <input TYPE="PASSWORD" NAME="Password1" VALUE="<?echo $Password1 ?>" size="20"><br><br>

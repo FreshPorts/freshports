@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.17 2002-02-17 23:24:40 dan Exp $
+	# $Id: index.php,v 1.1.2.18 2002-02-20 22:06:02 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -113,9 +113,9 @@ function GetPortNameFromFileName($file_name) {
 if ($Debug) {
 	echo "\$FreshPortsWatchedPortNot = '$FreshPortsWatchedPortNot'<BR>\n";
 	echo "\$FreshPortsWatchedPort    = '$FreshPortsWatchedPort'<BR>\n";
+	echo "\$WatchListID = '$WatchListID'\n";
 }
 
-#echo "\$WatchListID = '$WatchListID'\n";
 $sql = " 
 	select DISTINCT
 	commit_log.commit_date					as commit_date_raw,

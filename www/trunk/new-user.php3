@@ -1,6 +1,7 @@
-<script language="php">
-
-require( "/www/freshports.org/_private/commonlogin.php3");
+<?
+require( "./_private/commonlogin.php3");
+require( "./_private/getvalues.php3");
+require( "./_private/freshports.php3");
 
 if ($submit) {
 
@@ -86,7 +87,7 @@ if ($submit) {
 // not submit
 $emailsitenotices_yn = "ON";
 }
-</script>
+?>
 
 <html>
 
@@ -98,8 +99,10 @@ $emailsitenotices_yn = "ON";
 </head>
 
 <body bgcolor="#ffffff" link="#0000cc">
-
-<table width="100%">
+ <? include("./_private/header.inc") ?>
+<table width="100%"  border="0">
+<tr><td valign="top" width="100%">
+<table width="100%" border="0">
   <tr>
     <td><script language="php">
 if ($errors) {
@@ -139,7 +142,7 @@ echo '<p>If you need help, please post a message on the forum. </p>
 
 if (!$submit && !$errors) {
   // provide default values for an empy form.
-  require( "/www/freshports.org/_private/getvalues.php3");
+  require( "./_private/getvalues.php3");
 }
 
 </script>
@@ -152,7 +155,7 @@ if (!$submit && !$errors) {
       <tr>
         <td>
 
-<? include("/www/freshports.org/_private/new-user.inc"); ?>
+<? include("./_private/new-user.inc"); ?>
 
         </td>
       </tr>
@@ -161,6 +164,13 @@ if (!$submit && !$errors) {
   </tr>
 </form>
 </table>
+</td>
+  <td valign="top" width="*">
+   <? include("./_private/side-bars.php3") ?>
+ </td>
+</tr>
+</table>
 </a>
+<? include("./_private/footer.inc") ?>
 </body>
 </html>

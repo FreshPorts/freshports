@@ -1,5 +1,5 @@
 <?
-	# $Id: side-bars.php,v 1.4.2.13 2002-04-01 21:02:01 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.14 2002-04-18 21:29:23 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -71,6 +71,32 @@ if ($visitor) {
    </td>
    </tr>
    </table>
+
+<BR>
+
+<SCRIPT LANGUAGE="JavaScript">
+
+
+   function addNetscapePanel() {
+      if ((typeof window.sidebar == "object") && (typeof window.sidebar.addPanel == "function"))
+      {
+         window.sidebar.addPanel ("FreshPorts",
+         "http://test.freshports.org/sidebar.php","");
+      }
+      else
+      {
+         var rv = window.confirm ("This page is enhanced for use with Netscape 6.  " + "Would you like to upgrade now?");
+         if (rv)
+            document.location.href = "http://home.netscape.com/download/index.html";
+      }
+   }
+//-->
+
+</SCRIPT>
+
+<CENTER>
+<a NAME="button_image"></a><a href="javascript:addNetscapePanel();"><img SRC="images/sidebar-add-button.gif" BORDER=0 height=45 width=100>
+</CENTER>
 
 <BR>
 

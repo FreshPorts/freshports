@@ -1,5 +1,5 @@
 <?
-	# $Id: ports.php,v 1.1.2.9 2002-02-13 00:24:27 dan Exp $
+	# $Id: ports.php,v 1.1.2.10 2002-02-20 22:10:28 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -209,5 +209,32 @@ class Port {
 
 		$myrow = pg_fetch_array($this->LocalResult, $N);
 		$this->_PopulateValues($myrow);
+	}
+
+	function IsOnWatchList($WatchListID) {
+		#
+		# return non-zero if this port is on the supplied watch list ID.
+		# zero otherwise.
+		#
+
+		$result = 0;
+
+		$sql = "	select element_id
+					  from watch_list_element
+					 where watch_list_id = $WatchListID
+					   and element_id    = $this->element_id";
+
+        $result = pg_exec($this->dbh, $sql);
+		if ($result) {
+			$numrows = pg_numrows($result);
+			if ($numrows == 1) {
+				if ($Debug) echo "IsOnWatchList succeeded<BR>";
+				$result = 1;
+			}
+		} else {
+			echo 'pg_exec failed: ' . $sql;
+		}
+
+		return $result;
 	}
 }

@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.30 2002-02-16 19:51:43 dan Exp $
+   # $Id: freshports.php,v 1.4.2.31 2002-02-16 20:47:28 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -44,13 +44,13 @@ function freshports_CookieClear() {
 
 // common things needs for all freshports php3 pages
 
-function freshports_Start($ArticleTitle, $Description, $Keywords) {
+function freshports_Start($ArticleTitle, $Description, $Keywords, $Phorum=0) {
 
 GLOBAL $ShowAds;
 GLOBAL $BannerAd;
 
    freshports_HTML_Start();
-   freshports_Header($ArticleTitle, $Description, $Keywords);
+   freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum);
 
    freshports_body();
 
@@ -99,21 +99,28 @@ echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
 ';
 }
 
-function freshports_Header($ArticleTitle, $Description, $Keywords) {
+function freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum=0) {
 
 	echo "<HEAD>
 	<TITLE>FreshPorts";
 
 	if ($ArticleTitle) {
 		echo " -- $ArticleTitle";
+
+		if ($Phorum) {
+			GLOBAL $ForumName;
+
+			if(isset($ForumName)) echo " - $ForumName";
+			echo initvar("title");
+		}
 	}
 
 	echo "</TITLE>
 ";
 
-	freshports_style();
+	freshports_style($Phorum);
 
-echo "
+	echo "
 	<META NAME=\"description\" CONTENT=\"";
 
 	if ($Description) {
@@ -122,19 +129,32 @@ echo "
 		echo $ArticleTitle;
 	}
 
-echo "\">
+	echo "\">
 	<META NAME=\"keywords\"    CONTENT=\"$Keywords\">
 ";
 
-echo '	<meta name="MSSmartTagsPreventParsing" content="TRUE">
-</HEAD>
-';
+	echo '	<meta name="MSSmartTagsPreventParsing" content="TRUE">' . "\n";
+
+
+if ($Phorum) {
+	GLOBAL $phorumver;
+	GLOBAL $DB;
+	GLOBAL $ForumName;
+
+?>
+	<meta name="Phorum Version" content="<?php echo $phorumver; ?>" />
+	<meta name="Phorum DB" content="<?php echo $DB->type; ?>" />
+	<meta name="PHP Version" content="<?php echo phpversion(); ?>" />
+<?
+}
+
+	echo "</HEAD>\n";
 
 }
 
-function freshports_style() {
+function freshports_style($Phorum=0) {
 
-echo "
+	echo "
         <STYLE>
                 CODE.code { color: #461b7e}
                 PRE.code {  color: #461b7e}
@@ -148,9 +168,13 @@ echo "
                 A.white { color: white; text-decoration: none; font-size: smaller; }
                 A.black { color: black; text-decoration: none; font-size: smaller; }
                 A.white:hover { text-decoration: underline; }
-        </STYLE>
-";
+        </STYLE>\n";
 
+	if ($Phorum) {
+		?>
+		<link rel="STYLESHEET" type="text/css" href="<?php echo phorum_get_file_name("css"); ?>" />
+		<?
+	}
 }
 
 function freshports_BurstMediaCode() {

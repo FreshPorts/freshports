@@ -1,12 +1,12 @@
 <?
-	# $Id: files.php,v 1.1.2.12 2002-04-21 18:22:53 dan Exp $
+	# $Id: files.php,v 1.1.2.13 2002-05-22 04:33:38 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require_once("./include/common.php");
-	require_once("./include/freshports.php");
-	require_once("./include/databaselogin.php");
-	require_once("./include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 
 function freshports_Files($PortID, $CommitID, $WatchListID, $db) {
 	GLOBAL $TableWidth;
@@ -245,13 +245,13 @@ function freshports_Files($PortID, $CommitID, $WatchListID, $db) {
 	</table>
 	</TD>
 		<TD VALIGN="top" width="*">
-		<? include("./include/side-bars.php") ?>
+		<? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
 		</TD>
 	</TR>
 	</table>
 	</TR>
 	</table>
-	<? include("./include/footer.php") ?>
+	<? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
 	</body>
 	</html>
 

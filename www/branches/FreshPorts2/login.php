@@ -1,5 +1,5 @@
 <?
-	# $Id: login.php,v 1.1.2.19 2002-06-09 21:42:37 dan Exp $
+	# $Id: login.php,v 1.1.2.20 2002-08-28 12:17:23 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -46,9 +46,9 @@ if ($_POST["UserID"]) {
 	if (!pg_numrows($result)) {
 		$LoginFailed = 1;
 	} else {
-		$Cookie = UserToCookie($UserID);
 		$row    = pg_fetch_array($result,0);
 		$status = $row["status"];
+		$Cookie = $row["cookie"];
 		if ($Debug) echo "\$status = $status\n<BR>";
 
 		GLOBAL $UserStatusActive;

@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-list.php,v 1.2.2.11 2002-12-09 20:33:03 dan Exp $
+	# $Id: watch-list.php,v 1.2.2.12 2002-12-09 21:01:15 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -22,6 +22,8 @@
 #phpinfo();
 
 function RemoveElementFromWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
+	$Debug = 0;
+
 	if ($Debug) echo "I'm removing $ElementID\n<BR>";
 	$WatchListElement = new WatchListElement($db);
 	while (list($key, $WatchListID) = each($WatchListsIDs)) {

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.64 2004-11-18 03:43:39 dan Exp $
+	# $Id: search.php,v 1.1.2.65 2004-11-18 21:24:41 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -213,77 +213,50 @@ $sql = "
 
 switch ($method) {
 	case 'match':
+		if ($casesensitivity == 'casesensitive') {
+			$Like = 'LIKE';
+		} else {
+			$Like = 'ILIKE';
+		}
 		switch ($stype) {
 			case 'name':
-				if ($casesensitivity == 'casesensitive') {
-					$sql .= "\n     and element.name like '%$query%'";
-				} else {
-					$sql .= "\n     and lower(element.name) like lower('%$query%')";
-				}
+				$sql .= "\n     and element.name $Like '%$query%'";
 				break;
 
 			case 'package':
-				if ($casesensitivity == 'casesensitive') {
-					$sql .= "\n     and ports.package_name like '%$query%'";
-				} else {
-					$sql .= "\n     and lower(ports.package_name) like lower('%$query%')";
-				}
+				$sql .= "\n     and ports.package_name $Like '%$query%'";
 				break;
 
 			case 'latest_link':
-				if ($casesensitivity == 'casesensitive') {
-					$sql .= "\n     and ports.latest_link like '%$query%'";
-				} else {
-					$sql .= "\n     and lower(ports.latest_link) like lower('%$query%')";
-				}
+				$sql .= "\n     and ports.latest_link $Like '%$query%'";
 				break;
 
 			case 'shortdescription':
-				if ($casesensitivity == 'casesensitive') {
-					$sql .= "\n     and ports.short_description like '%$query%'";
-				} else {
-					$sql .= "\n     and lower(ports.short_description) like lower('%$query%')";
-				}
+				$sql .= "\n     and ports.short_description $Like '%$query%'";
 				break;
       
 			case 'longdescription':
-				if ($casesensitivity == 'casesensitive') {
-					$sql .= "\n     and ports.long_description like '%$query%'";
-				} else {
-					$sql .= "\n     and lower(ports.long_description) like lower('%$query%')";
-				}
+				$sql .= "\n     and ports.long_description $Like '%$query%'";
 				break;
       
 			case 'depends_build':
-				if ($casesensitivity == 'casesensitive') {
-					$sql .= "\n     and ports.depends_build like '%$query%'";
-				} else {
-					$sql .= "\n     and lower(ports.depends_build) like lower('%$query%')";
-				}
+				$sql .= "\n     and ports.depends_build $Like '%$query%'";
 				break;
       
-			case 'depends_run':
-				if ($casesensitivity == 'casesensitive') {
-					$sql .= "\n     and ports.depends_run like '%$query%'";
-				} else {
-					$sql .= "\n     and lower(ports.depends_run) like lower('%$query%')";
-				}
+			case 'depends_lib':
+				$sql .= "\n     and ports.depends_lib $Like '%$query%'";
 				break;
 
-			case 'depends_lib':
-				if ($casesensitivity == 'casesensitive') {
-					$sql .= "\n     and ports.depends_lib like '%$query%'";
-				} else {
-					$sql .= "\n     and lower(ports.depends_lib) like lower('%$query%')";
-				}
+			case 'depends_run':
+				$sql .= "\n     and ports.depends_run $Like '%$query%'";
+				break;
+
+			case 'depends_all':
+				$sql .= "\n     and (ports.depends_build $Like '%$query%' OR ports.depends_lib $Like '%$query%' OR ports.depends_run $Like '%$query%')";
 				break;
 
 			case 'maintainer':
-				if ($casesensitivity == 'casesensitive') {
-					$sql .= "\n     and ports.maintainer like '%$query%'";
-				} else {
-					$sql .= "\n     and lower(ports.maintainer) like lower('%$query%')";
-				}
+				$sql .= "\n     and ports.maintainer $Like '%$query%'";
 				break;
 		}
 		break;
@@ -338,6 +311,14 @@ switch ($method) {
 				}
 				break;
 
+			case 'depends_lib':
+				if ($casesensitivity == 'casesensitive') {
+					$sql .= "\n     and ports.depends_lib = '$query'";
+				} else {
+					$sql .= "\n     and lower(ports.depends_lib) = lower('$query')";
+				}
+				break;
+
 			case 'depends_run':
 				if ($casesensitivity == 'casesensitive') {
 					$sql .= "\n     and ports.depends_run = '$query'";
@@ -346,11 +327,11 @@ switch ($method) {
 				}
 				break;
 
-			case 'depends_lib':
+			case 'depends_all':
 				if ($casesensitivity == 'casesensitive') {
-					$sql .= "\n     and ports.depends_lib = '$query'";
+					$sql .= "\n     and (ports.depends_build = '$query' OR ports.depends_lib = '$query' OR ports.depends_run = '$query')";
 				} else {
-					$sql .= "\n     and lower(ports.depends_lib) = lower('$query')";
+					$sql .= "\n     and (lower(ports.depends_build) = lower('$query') OR lower(ports.depends_lib) = lower('$query') OR lower(ports.depends_run) = lower('$query'))";
 				}
 				break;
 
@@ -382,23 +363,27 @@ switch ($method) {
 			case 'shortdescription':
 				$sql .= "\n     and levenshtein(ports.short_description, '$query') < 4";
 				break;
-      
+
 			case 'longdescription':
 				$sql .= "\n     and levenshtein(ports.long_description, '$query') < 4";
 				break;
-      
+
 			case 'depends_build':
 				$sql .= "\n     and levenshtein(ports.depends_build, '$query') < 4";
 				break;
-      
-			case 'depends_run':
-				$sql .= "\n     and levenshtein(ports.depends_run, '$query') < 4";
-				break;
-      
+
 			case 'depends_lib':
 				$sql .= "\n     and levenshtein(ports.depends_lib, '$query') < 4";
 				break;
-      
+
+			case 'depends_run':
+				$sql .= "\n     and (levenshtein(ports.depends_build, '$query') < 4";
+				break;
+
+			case 'depends_all':
+				$sql .= "\n     and (levenshtein(ports.depends_build, '$query') < 4 OR levenshtein(ports.depends_lib, '$query') < 4 OR levenshtein(ports.depends_run, '$query') < 4)";
+				break;
+
 			case 'maintainer':
 				$sql .= "\n     and levenshtein(ports.maintainer, '$query') < 4";
 				break;
@@ -472,7 +457,7 @@ if ($Debug) {
 
 $result  = pg_exec($db, $sql);
 if (!$result) {
-	echo pg_errormessage() . $sql;
+	echo pg_errormessage() . '<pre>' . $sql . '</pre>';
 	exit;
 }
 $NumRows = pg_numrows($result);
@@ -514,6 +499,7 @@ Search for:<BR>
 		<OPTION VALUE="depends_build"    <? if ($stype == "depends_build")    echo 'SELECTED'?>>Depends Build</OPTION>
 		<OPTION VALUE="depends_lib"      <? if ($stype == "depends_lib")      echo 'SELECTED'?>>Depends Lib</OPTION>
 		<OPTION VALUE="depends_run"      <? if ($stype == "depends_run")      echo 'SELECTED'?>>Depends Run</OPTION>
+		<OPTION VALUE="depends_all"      <? if ($stype == "depends_all")      echo 'SELECTED'?>>Depends Build/Lib/Run</OPTION>
 		<OPTION VALUE="messageid"        <? if ($stype == "messageid")        echo 'SELECTED'?>>Message ID</OPTION>
 	</SELECT> 
 

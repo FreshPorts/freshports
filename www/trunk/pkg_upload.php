@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_upload.php,v 1.6 2002-02-11 03:23:12 dan Exp $
+	# $Id: pkg_upload.php,v 1.7 2002-02-16 23:57:16 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -19,9 +19,8 @@ $Debug=0;
 <table width="<? echo $TableWidth ?>" border="0" ALIGN="center">
 <tr><td VALIGN=TOP>
 <TABLE WIDTH="100%">
-<TR><TD bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">
-<? echo $FreshPortsTitle; ?> -- Update your watch lists based on installed packages
-</font></td>
+<TR>
+	<? freshports_PageBannerText("Update your watch list based on your installed packages"); ?>
 <TR><TD>
 			<?
 		// make sure the POST vars are ok. 

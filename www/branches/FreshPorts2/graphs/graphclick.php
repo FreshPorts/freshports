@@ -1,12 +1,12 @@
 <?
-	# $Id: graphclick.php,v 1.1.2.1 2002-04-19 20:26:05 dan Exp $
+	# $Id: graphclick.php,v 1.1.2.2 2002-04-20 04:55:50 dan Exp $
 	#
 
 $cache_dir = "/tmp/";
 
 if (!isset($id)) $id=0;
 
-$map = file($cache_dir."graph".$id.".map");
+$map = file($cache_dir."FreshPorts.graph".$id.".map");
 if (count($map) == 0) {
 	die("GRAPH: invalid id");
 }

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.150 2003-09-04 15:05:31 dan Exp $
+	# $Id: freshports.php,v 1.4.2.151 2003-09-05 12:50:28 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -1007,13 +1007,17 @@ function url_shorten($Arr) {
 }
 
 function htmlify($String) {
+
+#
+# URLs to test with: http://www.freshports.org/commit.php?message_id=200206232029.g5NKT1O13181@freefall.freebsd.org
+#
 	$del_t = array("&quot;","&#34;","&gt;","&#62;","\/\.\s","\)","'","\s","$");
 	$delimiters = "(".join("|",$del_t).")";
 
 	$String = preg_replace_callback("/((http|ftp|https):\/\/.*?)($delimiters)/i",                    'url2link',    $String);
 	$String = preg_replace_callback("/(<a href=(\"|')(http|ftp|https):\/\/.*?)(\">|'>)(.*?)<\/a>/i", 'url_shorten', $String);
 	$String = preg_replace_callback("/([\w+=\-.!]+@[\w\-]+(\.[\w\-]+)+)/",                           'mail2link',   $String);
-	$String = preg_replace_callback("/(\bPR[:\#]?)\s*(((\w+\/)?\d+)(,\s*((\w+\/)?\d+))*)/",          'pr2link',     $String);
+	$String = preg_replace_callback("/(\bPR[:\#]?)\s*(((\w+\/)?\d+)(,?[\s\n]*((\w+\/)?\d+))*)/",     'pr2link',     $String);
  
 	return $String;
 }
@@ -1198,7 +1202,7 @@ function freshports_GetNextValue($sequence, $dbh) {
 	return $NextValue;
 }
 
-function freshports_wrap($text, $length = 70) {
+function freshports_wrap($text, $length = WRAPCOMMITSATCOLUMN) {
 	#
 	# split the text into lines based on \n
 	#

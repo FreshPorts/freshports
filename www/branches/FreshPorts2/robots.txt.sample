@@ -4,7 +4,15 @@
 User-agent: *
 Disallow: /login.php
 Disallow: /new-user.php
+Disallow: /ports-broken.php
+Disallow: /ports-deleted.php
+Disallow: /ports-forbidden.php
+Disallow: /ports-deprecated.php
+Disallow: /ports-ignore.php
+Disallow: /ports-new.php
+Disallow: /date.php
 Disallow: /stats
 Disallow: /stats/
 Disallow: /stats/*
 Disallow: /commit.php
+Disallow: /commits.php

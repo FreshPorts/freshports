@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits.php,v 1.1.2.9 2003-07-04 14:58:40 dan Exp $
+	# $Id: commits.php,v 1.1.2.10 2003-09-08 21:21:30 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -34,7 +34,10 @@
 				   system_id
 			  FROM commit_log
 			 WHERE date_added < now() - INTERVAL '1 minutes'
-		  ORDER BY commit_date desc, message_date desc, message_id, committer
+		  ORDER BY commit_log.commit_date  desc,
+                   commit_log.message_date desc,
+                   message_id, 
+                   committer
 			 LIMIT $MaxCommits";
 
 

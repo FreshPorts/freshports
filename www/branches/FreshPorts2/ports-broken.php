@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: ports-broken.php,v 1.1.2.15 2003-09-30 00:00:36 dan Exp $
+	# $Id: ports-broken.php,v 1.1.2.16 2004-06-30 15:43:15 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2004 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
@@ -71,7 +71,8 @@ SELECT ports.id,
        homepage,
        status,
        broken,
-       forbidden ";
+       forbidden,
+       latest_link ";
 
 	if ($User->id) {
 		$sql .= ",

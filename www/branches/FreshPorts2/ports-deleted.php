@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: ports-deleted.php,v 1.1.2.23 2003-09-30 00:00:37 dan Exp $
+	# $Id: ports-deleted.php,v 1.1.2.24 2004-06-30 15:44:00 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2004 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
@@ -76,7 +76,8 @@ select ports.id,
        homepage,
        status,
        broken,
-       forbidden ";
+       forbidden,
+       latest_link ";
 
 	if ($User->id) {
 		$sql .= ",
@@ -125,7 +126,8 @@ GROUP BY ports.id,
          homepage,
          status,
          broken,
-         forbidden";
+         forbidden,
+         latest_link ";
 
 	if ($User->id) {
 		$sql .= ",
@@ -133,7 +135,6 @@ GROUP BY ports.id,
 	}
 
 	$sql .= "\norder by $sort ";
-#	$sql .= "\nlimit 20";
 
 	if ($Debug) {
 		echo "<pre>$sql</pre>";
@@ -144,7 +145,6 @@ GROUP BY ports.id,
 		echo pg_errormessage();
 	} else {
 		$numrows = pg_numrows($result);
-#		echo "There are $numrows to fetch<BR>\n";
 	}
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/list-of-ports.php');

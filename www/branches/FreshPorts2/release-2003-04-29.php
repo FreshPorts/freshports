@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: release-2003-04-29.php,v 1.1.2.3 2004-06-30 14:59:29 dan Exp $
+	# $Id: release-2003-04-29.php,v 1.1.2.4 2004-10-24 21:38:55 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -106,11 +106,9 @@ description for the new category.
 
 </TD></TR>
 
+<?php echo freshports_BannerSpace(); ?>
 <TR>
-	<?
-	echo freshports_BannerSpace();
-	echo freshports_PageBannerText("Newsfeed changes");
-	?>
+<?php echo freshports_PageBannerText("Newsfeed changes"); ?>
 </TR>
 
 <TR><TD>
@@ -120,11 +118,9 @@ For more information on news feeds, please read the <a href="/faq.php">FAQ</a>.
 </P>
 </TD></TR>
 
+<?php echo freshports_BannerSpace(); ?>
 <TR>
-	<?
-	echo freshports_BannerSpace();
-	echo freshports_PageBannerText("Security Notifications");
-	?>
+<?php echo freshports_PageBannerText("Security Notifications"); ?>
 </TR>
 
 <TR><TD>
@@ -145,11 +141,9 @@ to subscribe to the announcements list for whatever software you use.
 </P>
 </TD></TR>
 
+<?php echo freshports_BannerSpace(); ?>
 <TR>
-	<?
-	echo freshports_BannerSpace();
-	echo freshports_PageBannerText("Master websites");
-	?>
+<?php echo freshports_PageBannerText("Master websites"); ?>
 </TR>
 
 <TR><TD>
@@ -161,11 +155,9 @@ it's never been available until now.
 </P>
 </TD></TR>
 
+<?php echo freshports_BannerSpace(); ?>
 <TR>
-	<?
-	echo freshports_BannerSpace();
-	echo freshports_PageBannerText("Category paging");
-	?>
+<?php echo freshports_PageBannerText("Category paging"); ?>
 </TR>
 
 <TR><TD>
@@ -180,11 +172,9 @@ You can set the paging length via the
 </P>
 </TD></TR>
 
+<?php echo freshports_BannerSpace(); ?>
 <TR>
-	<?
-	echo freshports_BannerSpace();
-	echo freshports_PageBannerText("Faster pages");
-	?>
+<?php echo freshports_PageBannerText("Faster pages"); ?>
 </TR>
 
 <TR><TD>

@@ -1,5 +1,5 @@
 <?
-	# $Id: faq.php,v 1.1.2.2 2002-02-22 01:49:37 dan Exp $
+	# $Id: faq.php,v 1.1.2.3 2002-02-22 03:59:12 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -96,11 +96,26 @@
 
 	<TR><TD>Yes, thank you, you can.  No need to ask us.  Just go ahead and do it.
 		We prefer the name FreshPorts (one word, mixed case). The following 
-		HTML is a good place to start:<BR><BR>
+		HTML is a good place to start:
 
 		<BLOCKQUOTE>
 		<CODE CLASS="code">&lt;A HREF="http://www.freshports.org/"&gt;FreshPorts&lt;/A&gt;</CODE>
 		</BLOCKQUOTE>
+
+		<P>Here is a banner which you are free to use to link to this site:</P>
+
+		<P ALIGN="center">
+		<img src="images/freshports-banner.gif" alt="FreshPorts - the place for ports" width="468" height="60">
+		</P>
+
+		Here is the HTML for that graphic.
+
+		<BLOCKQUOTE>
+		<CODE CLASS="code">&lt;img src="images/freshports-banner.gif" alt="FreshPorts - the place for ports" width="468" height="60"&gt;</CODE>
+		</BLOCKQUOTE>
+
+
+		<P>Please save this graphic on your website.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <? freshports_PageBannerText("Why do I need a different login for the Forums?"); ?>
@@ -116,6 +131,9 @@
 	<TR><TD>
 	There are a few symbols you will see in this website:
 	<BLOCKQUOTE>
+	<P><img src="/images/new.gif" width=28 height=11 alt="new!" hspace=2>
+		New: This port has been recently added.  A port is marked as new for 10 days.</P>
+
 	<P><img src="images/forbidden.gif" alt="Forbidden" width="20" height="20" hspace="2">
 		Forbidden: The port is marked as forbidden.  If you view the port details,
 		you will see why.  Most often, it is because of a security exploit.</P>
@@ -128,6 +146,9 @@
 	<P><IMG SRC="/images/logs.gif" ALT="files touched by this commit" BORDER="0" WIDTH="17" HEIGHT="20" HSPACE="2">
 		Files: If you click on this graphic, you will be taken to the list of files
 		touched by the commit in question.</P>
+
+	<P>[Refresh] - The system is in the process of refreshing that port by inspecting
+		the ports tree.  You should rarely see this.</P>
 	</BLOCKQUOTE>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 

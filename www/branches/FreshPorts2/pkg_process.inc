@@ -1,13 +1,10 @@
 <?
-	# $Id: pkg_process.inc,v 1.5.2.10 2002-03-19 02:54:51 dan Exp $
+	# $Id: pkg_process.inc,v 1.5.2.11 2002-05-18 05:55:53 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 	#
 
-#	require($DOCUMENT_ROOT . "/include/common.php");
-#	require($DOCUMENT_ROOT . "/include/freshports.php");
-#	require($DOCUMENT_ROOT . "/include/databaselogin.php");	
-	require($DOCUMENT_ROOT . "/../classes/ports.php");	
+	require($_SERVER["DOCUMENT_ROOT"] . "/../classes/ports.php");	
 
 $Debug=0;
 

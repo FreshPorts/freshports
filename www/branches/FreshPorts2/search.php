@@ -1,5 +1,5 @@
 <?
-	# $Id: search.php,v 1.1.2.15 2002-05-09 20:06:25 dan Exp $
+	# $Id: search.php,v 1.1.2.16 2002-05-18 05:55:53 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -65,7 +65,7 @@ if ($search) {
    echo "you submitted<br>\n";
 */
 
-$logfile = $DOCUMENT_ROOT . "/../configuration/searchlog.txt";
+$logfile = $_SERVER["DOCUMENT_ROOT"] . "/../configuration/searchlog.txt";
 
 
 $fp = fopen($logfile, "a");

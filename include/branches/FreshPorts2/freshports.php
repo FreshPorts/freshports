@@ -1,16 +1,27 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.91 2002-05-09 20:59:27 dan Exp $
+	# $Id: freshports.php,v 1.4.2.92 2002-05-18 05:54:20 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
-	require_once($DOCUMENT_ROOT . "/include/constants.php");
-	require_once($DOCUMENT_ROOT . "/include/burstmedia.php");
+	require_once($_SERVER["DOCUMENT_ROOT"] . "/include/constants.php");
+	require_once($_SERVER["DOCUMENT_ROOT"] . "/include/burstmedia.php");
 
 
-if ($Debug) echo "'" . $DOCUMENT_ROOT . "/../classes/watchnotice.php'<BR>";
+if ($Debug) echo "'" . $_SERVER["DOCUMENT_ROOT"] . "/../classes/watchnotice.php'<BR>";
 
-require_once($DOCUMENT_ROOT . "/../classes/watchnotice.php");
+require_once($_SERVER["DOCUMENT_ROOT"] . "/../classes/watchnotice.php");
+
+
+function freshports_BannerSpace() {
+
+echo "
+  <TR>
+    <TD height=\"10\"></TD>
+  </TR>
+";
+
+}
 
 #
 # special HTMLified mailto to foil spam harvesters
@@ -928,9 +939,8 @@ function freshports_PortCommitsHeader($port) {
 
 function freshports_PortCommits($port) {
 	# print all the commits for this port
-	GLOBAL $DOCUMENT_ROOT;
 
-	require($DOCUMENT_ROOT . "/../classes/commit_log_ports.php");
+	require($_SERVER["DOCUMENT_ROOT"] . "/../classes/commit_log_ports.php");
 
 #	echo ' *************** into freshports_PortCommits ***************';
 	freshports_PortCommitsHeader($port);

@@ -1,5 +1,5 @@
 <?
-	# $Id: port-watch.php,v 1.1.2.7 2002-04-20 03:21:14 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.8 2002-05-18 05:55:53 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -8,8 +8,7 @@
 	require("./include/databaselogin.php");
 	require("./include/getvalues.php");
 
-    GLOBAL  $DOCUMENT_ROOT;
-    require($DOCUMENT_ROOT . "/../classes/categories.php");
+    require($_SERVER["DOCUMENT_ROOT"] . "/../classes/categories.php");
 
 
 // if we don't know who they are, we'll make sure they login first

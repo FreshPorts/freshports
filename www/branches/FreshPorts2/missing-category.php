@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-category.php,v 1.1.2.11 2002-05-09 22:00:48 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.12 2002-05-18 05:55:52 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -14,8 +14,7 @@ function freshports_Category($CategoryID, $db) {
 
 	$Debug=0;
 
-	GLOBAL	$DOCUMENT_ROOT;
-	require($DOCUMENT_ROOT . "/../classes/categories.php");
+	require($_SERVER["DOCUMENT_ROOT"] . "/../classes/categories.php");
 
 	$category = new Category($db);
 	$category->FetchByID($CategoryID);

@@ -1,5 +1,5 @@
 <?
-   # $Id: index.php3,v 1.26 2001-10-06 15:08:38 dan Exp $
+   # $Id: index.php3,v 1.27 2001-10-09 20:40:57 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -10,14 +10,17 @@
    require("./include/getvalues.php");
 
    freshports_Start("title",
-               "freshports - new ports, applications",
+               "FreshPorts - new ports, applications",
                "FreeBSD, index, applications, ports");
 #$Debug=1;
 
 #
-# $Author: dan $ $Date: 2001-10-06 15:08:38 $
-# $Header: /home/dan/repositories/freshports-1/www/Attic/index.php3,v 1.26 2001-10-06 15:08:38 dan Exp $
+# $Author: dan $ $Date: 2001-10-09 20:40:57 $
+# $Header: /home/dan/repositories/freshports-1/www/Attic/index.php3,v 1.27 2001-10-09 20:40:57 dan Exp $
 # $Log: not supported by cvs2svn $
+# Revision 1.26  2001/10/06 15:08:38  dan
+# welcome to the new box
+#
 # Revision 1.25  2001/10/03 19:42:18  dan
 # add note about new box and old website
 #
@@ -34,7 +37,7 @@
 # Add some headers
 #
 # $Name: not supported by cvs2svn $
-# $Revision: 1.26 $
+# $Revision: 1.27 $
 #
 
 //echo "UserID='$UserID'";

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: footer.php,v 1.5.2.22 2004-09-22 23:13:58 dan Exp $
+	# $Id: footer.php,v 1.5.2.23 2004-12-03 01:42:25 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -53,14 +53,14 @@ ALT="powered by apache" BORDER="0" WIDTH="259" HEIGHT="32"></A>
 <table width="100%">
 <tr>
 <td align="left"  valign="top">
-<SMALL>Server and bandwidth provided by <A HREF="http://www.bchosting.com/" TARGET="_new">BChosting.com</A></SMALL>
+<SMALL>Server and bandwidth provided by <A HREF="http://www.bchosting.com/" TARGET="_new" TITLE="Our major sponsor">BChosting.com</A></SMALL>
 </td>
 <td align="right" valign="top">
 <small>
 Valid 
-<a href="http://validator.w3.org/check/referer">HTML</a>, 
-<a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a>, and
-<a href="http://feeds.archive.org/validator/check?url=http://<?php echo $_SERVER['HTTP_HOST']; ?>/news.php">RSS</a>.
+<a href="http://validator.w3.org/check/referer" TITLE="We like to keep our HTML valid">HTML</a>, 
+<a href="http://jigsaw.w3.org/css-validator/check/referer" TITLE="We like to have valid CSS">CSS</a>, and
+<a href="http://feeds.archive.org/validator/check?url=http://<?php echo $_SERVER['HTTP_HOST']; ?>/news.php" TITLE="Valid RSS is good too">RSS</a>.
 </small>
 <BR>
 <? echo freshports_copyright(); ?>

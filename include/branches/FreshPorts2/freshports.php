@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.195 2004-12-03 00:56:56 dan Exp $
+	# $Id: freshports.php,v 1.4.2.196 2004-12-03 01:42:25 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -374,7 +374,7 @@ function freshports_CommitterEmailLink($committer) {
 
 	$new_addr = freshportsObscureHTML($addr);
 
-	$HTML = "<A HREF=\"" . MAILTO . ":$new_addr\">$committer</A>";
+	$HTML = '<A HREF="' . MAILTO . ':' . $new_addr . '" TITLE="committed by this person">' . $committer . '</A>';
 
 	return $HTML;
 }
@@ -741,21 +741,21 @@ function freshports_CategoryIDFromCategory($category, $db) {
    return $CategoryID;
 }
 
-function freshports_SideBarHTML($Self, $URL, $Title) {
+function freshports_SideBarHTML($Self, $URL, $Label, $Title) {
    if ($Self == $URL || ($Self == '/index.php' && $URL == '/')) {
       $HTML = $Title;
    } else {
-      $HTML = '<a href="' . $URL . '">' . $Title . '</a>';
+      $HTML = '<a href="' . $URL . '" TITLE="' . $Title . '">' . $Label . '</a>';
    }
 
    return $HTML;
 }
 
-function freshports_SideBarHTMLParm($Self, $URL, $Parm, $Title) {
+function freshports_SideBarHTMLParm($Self, $URL, $Parm, $Label, $Title) {
    if ($Self == $URL || ($Self == '/index.php' && $URL == '/')) {
-      $HTML = $Title;
+      $HTML = $Label;
    } else {
-      $HTML = '<a href="' . $URL . $Parm . '">' . $Title . '</a>';
+      $HTML = '<a href="' . $URL . $Parm . '" TITLE="' . $Title . '">' . $Label . '</a>';
    }
       
    return $HTML;
@@ -853,7 +853,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 	$HTML .= "</B></BIG>";
 
 	if ($ShowCategory) {
-		$HTML .= ' / <A HREF="/' . $port->category . '/">' . $port->category . '</A>';
+		$HTML .= ' / <A HREF="/' . $port->category . '/" TITLE="The category for this port">' . $port->category . '</A>';
 	}
 
 	if ($User->id && $IndicateWatchListStatus) {
@@ -917,7 +917,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
       }
 
       $HTML .= ' by:</i> <A HREF="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);
-      $HTML .= freshportsObscureHTML('?cc=ports@FreeBSD.org') . '&amp;subject=FreeBSD%20Port:%20' . $port->port . '-' . freshports_PackageVersion($port->version, $port->revision, $port->epoch) . '">';
+      $HTML .= freshportsObscureHTML('?cc=ports@FreeBSD.org') . '&amp;subject=FreeBSD%20Port:%20' . $port->port . '-' . freshports_PackageVersion($port->version, $port->revision, $port->epoch) . '" TITLE="email the maintainer">';
       $HTML .= freshportsObscureHTML($port->maintainer) . "</A><BR>";
   }
 
@@ -1048,14 +1048,14 @@ if ($ShowDepends) {
    if ($ShowChangesLink == "Y" || $ShowEverything) {
       // changes
       $HTML .= '<a HREF="' . FRESHPORTS_FREEBSD_CVS_URL . '/ports/' .
-               $port->category . '/' .  $port->port . '/">CVSWeb</a>';
+               $port->category . '/' .  $port->port . '/" TITLE="The CVS Repository">CVSWeb</a>';
    }
 
    // download
    if ($port->status == "A" && ($ShowDownloadPortLink == "Y" || $ShowEverything)) {
       $HTML .= ' <b>:</b> ';
       $HTML .= '<a HREF="http://www.freebsd.org/cgi/pds.cgi?ports/' .
-               $port->category . '/' .  $port->port . '">Sources</a>';
+               $port->category . '/' .  $port->port . '" TITLE="The source code">Sources</a>';
    }
 
 	if ($port->PackageExists() && ($ShowPackageLink == "Y" || $ShowEverything)) {
@@ -1067,10 +1067,10 @@ if ($ShowDepends) {
 
    if ($port->homepage && ($ShowHomepageLink == "Y" || $ShowEverything)) {
       $HTML .= ' <b>:</b> ';
-      $HTML .= '<a HREF="' . htmlspecialchars($port->homepage) . '">Main Web Site</a>';
+      $HTML .= '<a HREF="' . htmlspecialchars($port->homepage) . '" TITLE="Main web site for this port">Main Web Site</a>';
    }
 
-#   $HTML .= ' <b>:</b> ' . freshports_PortsMonitorURL($port->category, $port->port);
+   $HTML .= ' <b>:</b> ' . freshports_PortsMonitorURL($port->category, $port->port);
 
 	if ($ShowMasterSlave) {
 		#
@@ -1147,7 +1147,7 @@ function freshports_navigation_bar_top() {
 }
 
 function freshports_copyright() {
-	return '<SMALL><A HREF="/legal.php" target="_top">Copyright</A> &copy; ' . COPYRIGHTYEARS . ' <A HREF="http://www.dvl-software.com/">DVL Software Limited</A>. All rights reserved.</SMALL>';
+	return '<SMALL><A HREF="/legal.php" target="_top" TITLE="This material is copyrighted">Copyright</A> &copy; ' . COPYRIGHTYEARS . ' <A HREF="http://www.dvl-software.com/">DVL Software Limited</A>. All rights reserved.</SMALL>';
 }
 
 function FormatTime($Time, $Adjustment, $Format) {
@@ -1706,10 +1706,8 @@ function PeopleWatchingThisPortAlsoWatch($dbh, $element_id) {
 
 }
 
-
-
 function freshports_PortsMonitorURL($Category, $Port) {
-	return '<a href="' . PORTSMONURL . '?category=' . $Category . '&amp;portname=' . $Port . '">PortsMon</a>';
+	return '<a href="' . PORTSMONURL . '?category=' . $Category . '&amp;portname=' . $Port . '" TITLE="Ports Monitor">PortsMon</a>';
 }
 
 openlog('FreshPorts', LOG_PID | LOG_PERROR, LOG_LOCAL0);

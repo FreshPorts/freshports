@@ -50,7 +50,6 @@ if ($UserID) {
         <tr>
     <td valign="top">
        <font SIZE="-1"><? echo freshports_SideBarHTML($PHP_SELF, "/whatnext.php3", "Vote for change") ?><font><br>
-       <font SIZE="-1"><? echo freshports_SideBarHTML($PHP_SELF, "/stats.php3", "Port stats") ?><font><br>
    </td>
    </tr>
    </table>
@@ -69,6 +68,7 @@ if ($UserID) {
        echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/ports-deleted.php3", "Deleted ports")   . '</font><br>';
        echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/categories.php3",    "Categories")      . '</font><br>';
        echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/search.php3",        "Search")          . '</font><br>';
+       echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/stats.php3",         "Port statistics") . '</font><br>';
 ?>
    </td>
    </tr>

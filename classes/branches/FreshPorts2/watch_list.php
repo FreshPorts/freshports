@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch_list.php,v 1.1.2.8 2003-01-04 17:20:14 dan Exp $
+	# $Id: watch_list.php,v 1.1.2.9 2003-01-10 15:49:31 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -33,7 +33,7 @@ class WatchList {
 
 		$return = 0;
 
-		AddSlashes($Name);
+		$Name = AddSlashes($Name);
 		
 		$query = "
 SELECT count(watch_list.id), users.max_number_watch_lists

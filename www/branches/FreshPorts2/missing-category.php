@@ -1,10 +1,12 @@
 <?
-   # $Id: missing-category.php,v 1.1.2.1 2001-12-29 20:37:24 dan Exp $
+   # $Id: missing-category.php,v 1.1.2.2 2001-12-30 23:25:56 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
 
 function freshports_Category($category, $db) {
+
+	GLOBAL $TableWidth;
 	header("HTTP/1.1 200 OK");
 
 
@@ -43,7 +45,7 @@ function freshports_Category($category, $db) {
 	?>
 
 
-	<table width="100%" border="0">
+	<table width="<? echo $TableWidth ?>" border="0" ALIGN="center">
 	<tr><td COLSPAN="2">
 	This page lists all the ports in a given category.
 	</td></tr>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: side-bars.php,v 1.4.2.52 2003-11-05 15:54:23 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.53 2004-08-23 19:10:13 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -8,6 +8,7 @@
 	$ColumnWidth = 155;
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/burstmedia.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/searches.php');
 
 ?>
 
@@ -96,17 +97,10 @@ if (IsSet($visitor)) {
 	<TR>
 
 	<TD>
-	<FORM ACTION="/search.php" NAME="f">
-	Enter Keywords:<BR>
-	<INPUT NAME="query"  TYPE="text" SIZE="8">&nbsp;<INPUT TYPE="submit" VALUE="go" NAME="search">
-	<INPUT NAME="num"             TYPE="hidden" value="10">
-	<INPUT NAME="stype"           TYPE="hidden" value="name">
-	<INPUT NAME="method"          TYPE="hidden" value="match">
-	<INPUT NAME="deleted"         TYPE="hidden" value="excludedeleted">
-	<INPUT NAME="start"           TYPE="hidden" value="1">
-  	<INPUT NAME="casesensitivity" TYPE="hidden" value="caseinsensitive">
-	</FORM>
-
+<?php
+	$Searches = new Searches($dbh);
+	echo $Searches->GetFormSimple('&nbsp;');
+?>
 	<? echo '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/search.php', '', "more...") . '</FONT><BR>'; ?>
 	</TD>
 </TR>

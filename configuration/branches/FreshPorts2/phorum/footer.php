@@ -1,16 +1,11 @@
 
-<TD VALIGN="top" WIDTH="*" ALIGN="center">
-   <? include($DOCUMENT_ROOT . "/include/side-bars.php") ?>
-</TD>
+</TABLE>
 
-</tr>
-</table>
-
-<? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
-
-<br>
-
-<div align="center"><a href="http://phorum.org"><img src="images/button.gif" width="90" height="30" alt="phorum.org" border="0" /></a></div>
+<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<TR><TD>
+<? echo freshports_ShowFooter(); ?>
+</TD></TR>
+</TABLE>
 
 </body>
 </html>

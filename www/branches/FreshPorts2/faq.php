@@ -1,5 +1,5 @@
 <?
-	# $Id: faq.php,v 1.1.2.4 2002-03-01 02:13:10 dan Exp $
+	# $Id: faq.php,v 1.1.2.5 2002-03-01 03:13:27 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -172,6 +172,25 @@
 	<P>[Refresh] - The system is in the process of refreshing that port by inspecting
 		the ports tree.  You should rarely see this.</P>
 	</BLOCKQUOTE>
+	</TD></TR><TR><TD>&nbsp;</TD></TR>
+
+<? freshports_PageBannerText("Why don't my old bookmarks work?"); ?>
+	<TR><TD>
+	<P>
+	Many things changed between FP1 and FP2. The most major change
+	was in the underlying database schema.  Not only did we move
+	from <A HREF="http://www.mysql.org/">mySQL</A> to
+	<A HREF="http://www.postgresql.org/">PortgreSQL</A>, we made major
+	changes to the tables and the way in which the ports are stored
+	in the database.  As a result of these changes, many internal IDs
+	and values are no longer valid.  Therefore, URLs such as
+	<CODE CLASS="code">/port-description.php3?port=1234</CODE> no longer
+	work.
+	</P>
+	<P>
+	If it is any consolation, the new URLs will be much more transparent
+	and permanent.  They are of the form &lt;category&gt;/&lt;port&gt;.
+	</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 </table>

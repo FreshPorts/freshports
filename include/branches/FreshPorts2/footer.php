@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: footer.php,v 1.5.2.23 2004-12-03 01:42:25 dan Exp $
+	# $Id: footer.php,v 1.5.2.24 2005-01-17 00:03:02 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -54,6 +54,12 @@ ALT="powered by apache" BORDER="0" WIDTH="259" HEIGHT="32"></A>
 <tr>
 <td align="left"  valign="top">
 <SMALL>Server and bandwidth provided by <A HREF="http://www.bchosting.com/" TARGET="_new" TITLE="Our major sponsor">BChosting.com</A></SMALL>
+<br>
+<small>This page created in <?php
+GLOBAL $Statistics;
+
+echo round($Statistics->ElapsedTime(), 3);
+?> seconds.</small>
 </td>
 <td align="right" valign="top">
 <small>

@@ -1,5 +1,5 @@
 <?
-	# $Id: footer.php,v 1.5.2.8 2002-06-27 13:41:36 dan Exp $
+	# $Id: footer.php,v 1.5.2.9 2002-12-16 13:34:41 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 ?>
@@ -54,5 +54,7 @@ ALT="powered by apache" BORDER="0" WIDTH="259" HEIGHT="32"></A>
 </TABLE>
 
 <?
-	Burst_468x60_Below();
+	if ($ShowAds) {
+		Burst_468x60_Below();
+	}
 ?>

@@ -39,6 +39,15 @@ if ($search) {
 
    echo "</td></tr>\n<tr><td>";
 
+$fp = fopen("/www/freshports.org/searchlog.txt", "a");
+if ($fp) {
+   fwrite($fp, date("Y-m-d H:i:s") . " " . $stype . ':' . $query . "\n");
+   fclose($fp);
+} else {
+   print "could not open search log\n";
+}
+
+
    $query = addslashes($query);
 
 $sql = "select ports.id, ports.name as port, ports.last_update as updated, " .
@@ -87,9 +96,7 @@ $NumRows = mysql_num_rows($result);
   <p>Search for: <input NAME="query" size="20"  value="<? echo stripslashes($query)?>"> <select NAME="stype" size="1">
     <option VALUE="name"             <? if ($stype == "name")             echo 'selected'?>>Port Name</option>
     <option VALUE="maintainer"       <? if ($stype == "maintainer")       echo 'selected'?>>Maintainer</option>
-    <option VALUE="requires"         <? if ($stype == "requires")         echo 'selected'?>>Requires</option>
     <option VALUE="shortdescription" <? if ($stype == "shortdescription") echo 'selected'?>>Short Description</option>
-    <option VALUE="longdescription"  <? if ($stype == "longdescription")  echo 'selected'?>>Long Description</option>
   </select> <input TYPE="submit" VALUE="search"> </p>
   <input type="hidden" name="search" value="1">
 </form>

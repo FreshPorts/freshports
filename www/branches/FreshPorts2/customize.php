@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: customize.php,v 1.1.2.28 2003-05-08 13:07:44 dan Exp $
+	# $Id: customize.php,v 1.1.2.29 2003-07-04 14:56:20 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -12,8 +12,12 @@
 
 	GLOBAL $User;
 
-$origin	= $_REQUEST['origin'];
-$submit 	= $_REQUEST['submit'];
+	$origin = '/';
+	$errors = 0;
+   $AccountModified = 0;
+
+if (IsSet($_REQUEST['origin'])) $origin	= $_REQUEST['origin'];
+if (IsSet($_REQUEST['submit'])) $submit 	= $_REQUEST['submit'];
 $visitor	= $_COOKIE['visitor'];
 
 if ($origin == '/index.php' || $origin == '') {
@@ -26,7 +30,7 @@ if (!$visitor) {
 	exit;  /* Make sure that code below does not get executed when we redirect. */
 }
 
-if ($submit) {
+if (IsSet($submit)) {
    $Debug = 0;
 
 // process form
@@ -61,16 +65,12 @@ if ($submit) {
       $OK = 0;
    }
 
-   $AccountModified = 0;
    if ($OK) {
       // get the existing email in case we need to reset the bounce count
       $sql = "select email from users where cookie = '$visitor'";
       $result = pg_exec($db, $sql);
       if ($result) {
          $myrow = pg_fetch_array ($result, 0);
-
-		$WatchNotice = new WatchNotice($db);
-		$WatchNotice->FetchByFrequency($watchnotifyfrequency);
 
          $sql = "
 UPDATE users
@@ -115,7 +115,7 @@ UPDATE users
 } else {
 
    $email			= $User->email;
-   $numberofdays	= $User->numberofdays;
+   $numberofdays	= $User->number_of_days;
 	$page_size		= $User->page_size;
 }
 

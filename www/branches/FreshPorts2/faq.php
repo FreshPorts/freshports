@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.64 2004-12-19 16:42:06 dan Exp $
+	# $Id: faq.php,v 1.1.2.65 2004-12-21 12:31:29 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -709,6 +709,23 @@ that the slave port was still vulnerable.
 
 <p>
 The above notice serves as a reminder that the slave port may no longer be vulnerable.
+
+	</TD></TR><TR><TD>&nbsp;</TD></TR>
+
+<TR>
+<?php echo freshports_PageBannerText('How does FreshPorts determine the master sites?'); ?>
+</TR>
+
+   <TR><TD>
+   <P>
+Each port displays the master sites from which its distfiles can be downloaded.  This
+information is obtained from "make master-sites-all".  However, this is not the only
+list of master sites that a port knows about.  Edwin Groothuis explains it in this
+<a href="http://docs.freebsd.org/cgi/mid.cgi?20041219204057.GE63708">email</a>.
+
+<p>
+In short, FreshPorts displays the list of master sites that should contain all
+the distfiles.  That is why we use that value, and not one of the other options.
 
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 

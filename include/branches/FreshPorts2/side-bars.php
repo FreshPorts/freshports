@@ -1,5 +1,5 @@
 <?
-	# $Id: side-bars.php,v 1.4.2.37 2002-11-18 17:38:35 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.38 2002-11-18 18:01:46 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -44,7 +44,7 @@ if ($visitor) {
    echo '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/customize.php',        "?origin=$OriginLocal", "Customize"              ) . '</FONT><BR>';
 
    if (eregi(".*@FreeBSD.org", $email)) {
-      echo '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/committer-opt-in.php', "?origin=$OriginLocal", "Committer Opt-in"       ) . '</FONT><BR>';
+      echo '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/committer-opt-in.php', '', "Committer Opt-in"       ) . '</FONT><BR>';
    }
 
 

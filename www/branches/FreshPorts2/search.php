@@ -1,6 +1,6 @@
 .<?php
 	#
-	# $Id: search.php,v 1.1.2.72 2005-01-22 14:48:53 dan Exp $
+	# $Id: search.php,v 1.1.2.73 2005-01-26 21:05:35 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -181,6 +181,8 @@ $sql = "
          ports.broken, 
          ports.deprecated, 
          ports.ignore, 
+         ports_vulnerable.current as vulnerable_current,
+         ports_vulnerable.past    as vulnerable_past,
          ports.forbidden,
          ports.latest_link,
          ports.master_port,
@@ -195,7 +197,7 @@ $sql = "
    }
 
 	$sql .= "
-    from ports, categories, commit_log, commit_log_ports_elements, element  ";
+    from ports LEFT OUTER JOIN ports_vulnerable on ports_vulnerable.port_id = ports.id , categories, commit_log, commit_log_ports_elements, element  ";
 
 	if ($User->id) {
 			$sql .= "
@@ -208,7 +210,7 @@ $sql = "
   GROUP BY wle_element_id) AS TEMP
        ON TEMP.wle_element_id = element.id";
 	}
-	
+
 	$sql .= '
 	WHERE ports.category_id  = categories.id
       and ports.element_id   = element.id 
@@ -640,7 +642,6 @@ $HideCategory         = 'N';
 
 	for ($i = 0; $i < $NumFetches; $i++) {
 		$Port->FetchNth($i);
-		$Port->LoadVulnerabilities();
 		$HTML .= freshports_PortDetails($Port, $Port->dbh, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, 
                      $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, 
                      $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, 

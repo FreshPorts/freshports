@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_process.inc,v 1.5.2.1 2002-02-24 17:13:25 dan Exp $
+	# $Id: pkg_process.inc,v 1.5.2.2 2002-02-26 00:31:17 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 	#
@@ -11,8 +11,7 @@
 
 $Debug=0;
 
-
-// {{{ function SplitPackage($pkg,$arr)
+// {{{ function SplitPackage($pkg, $arr)
 /**
 * Take a package name (basename-version) and split it 
 * @param
@@ -28,47 +27,7 @@ function SplitPackage($pkg, &$arr) {
 	$arr[] = $pkg;
 	return $arr;
 }
-//}}}
-// {{{ function ReadINDEX()
-/**
-* Read in the INDEX file
-*
-* @return The index array
-*
-*/
-function ReadINDEX() {
-	# Get the latest from fetch ftp://ftp.freebsd.org/pub/FreeBSD/ports/ports/INDEX
-	# as needed
 
-	GLOBAL $DOCUMENT_ROOT;
-
-	$gIndexFile = $DOCUMENT_ROOT . "/../configuration/INDEX";
-	$iFid = fopen($gIndexFile,'r');
-	if (!$iFid) { return false; }
-	while(!feof($iFid)) {
-		$buffer = fgets($iFid,4096);
-		list ($pkg,$port,$rest) = preg_split("/\|/",$buffer,3);
-		if (!$pkg) { 
-			continue;
-		}
-
-		$rv = array();
-		SplitPackage($pkg, $rv);
-		if (count($rv) == 0) {
-			echo ("Error Parsing INDEX file");
-			return false;
-		}
-
-		$pkg  = strtoupper($pkg);
-		$base = strtoupper($rv[1]);
-	
-		$indexArray[$pkg]['PORT'] = substr($port,11);
-		//$indexArray[$pkg]['BASE'] = $base;
-		// Also index the basename of the port for use when versions do not match
-		$indexArray[$base][] = $indexArray[$pkg];
-	}
-	return $indexArray;
-}
 // }}}
 // {{{ function ProcessPackages
 /**
@@ -78,28 +37,22 @@ function ReadINDEX() {
 * @return	an array of ports
 *
 */
-function ProcessPackages($filename, $userID, $clean, $dbh) {
+function ProcessPackages($WatchListID, $filename, $userID, $clean, $dbh) {
 	// profiling info {{{
 	$starttime = time();
 	// }}}
 	global $gDBG;
 
-	$ok = true;
-#	$indexArray = ReadINDEX();
-#	if (!$indexArray) { return false; }
-	$gMyPorts = array();
-	$tempArray = array();
+	$ok			= true;
+	$gMyPorts	= array();
+	$tempArray	= array();
 
 	$gFid = fopen($filename,'r');
 	if (!$gFid) { return false; }
 
-    $port = new Port($dbh);
-
-	echo '<TABLE>';
-
 	$begintime = time();
-	$portcount=0;
-	while(!feof($gFid)) {
+	$portcount = 0;
+	while (!feof($gFid)) {
 		$buffer = fgets($gFid,4096);
 		if (!$buffer) {
 			continue;
@@ -117,89 +70,70 @@ function ProcessPackages($filename, $userID, $clean, $dbh) {
 		}
 		$base = $rv[1];
 
-		echo "<TR><TD>\$pkg = '$pkg'</TD><TD>\$base = '$base'</TD><TD>";
-
-		$numports = $port->FetchByName("'$base'");
-
-		echo "\$numports='$numports' ";
-		switch ($numports) {
-			case 0:
-				echo 'no port found';
-				break;
-
-			case 1:
-				$port->FetchNth(0);
-				echo 'found port id = ' . $port->{id};
-				break;
-
-			default:
-				echo 'lots found';
+		$sql = "select WatchListStagingAddItem($WatchListID, '$pkg', '$base')";
+#		echo "\$sql = '$sql'\n<BR>";
+		$result = pg_exec($dbh, $sql);
+		if ($result && pg_numrows($result)) {
+			# do nothing.  All is well
+		} else {
+			pg_errormessage() . ' sql = $sql';
+			exit;
 		}
-
-		echo '</TD><TD>' . $starttime . '</TD><TD>' . time() . '</TD><TD>' . (time() - $starttime) . '</TD></TR>';
-			
-		// if our package is in the INDEX and we haven't already found it
-###		$port = 'ports/' . $indexArray[$pkg]['PORT'];
-###		if ($indexArray[$pkg] && !in_array($port,$gMyPorts)) {
-#			$gMyPorts[] = $port;
-###		} elseif ($base && $indexArray[$base]) {
-#			// The package is not in the INDEX.  Maybe our version is out dated.
-#			// Check for the basename in the INDEX.
-#	
-#			// If there is only one base match, then assume that's what they want
-###			if (count($indexArray[$base]) == 1 ) {
-###				$port = 'ports/' . $indexArray[$base][0]['PORT'];
-#				if (!in_array($port,$gMyPorts)) {
-#					$gMyPorts[] = $port;
-#				}
-#			} else {
-#				// There are multiple ports with the same basename, add them to the guess list
-###				foreach($indexArray[$base] as $port) {
-#					if(!in_array($port['PORT'],$gMyPorts) && !in_array($port['PORT'],$tempArray)) {
-#						$tempArray[] = $port['PORT'];
-#					}
-#				}
-#			}
-#		}
-
 	}
+
+	$sql = "select WatchListStagingProcess($WatchListID)";
+	$result = pg_exec($dbh, $sql);
+	if ($result && pg_numrows($result)) {
+		# do nothing.  All is well
+	} else {
+		pg_errormessage() . ' sql = $sql';
+		exit;
+	}
+
+
+	
+	$sql = " SELECT	port_name                             as port, 
+					watch_list_staging_results.element_id as element_id, 
+					categories.name                       as category,
+					CASE when watch_list_element.element_id is null
+						then 0
+						else 1
+					END as onwatchlist
+			   FROM	watch_list_staging, watch_list_staging_results, categories, 
+					ports LEFT OUTER JOIN watch_list_element on ports.element_id = watch_list_element.element_id
+			  WHERE watch_list_staging.id = watch_list_staging_results.watch_list_staging_id
+			    AND ports.element_id      = watch_list_staging_results.element_id
+			    AND ports.category_id     = categories.id
+			    AND $WatchListID          = watch_list_staging.watch_list_id
+			  ORDER BY port_name, categories.name";
+
+#	echo $sql;
+
+	$result = pg_exec($dbh, $sql);
+	echo '<TABLE>';
+	if ($result) {
+		$numrows = pg_numrows($result);
+		for ($i = 0; $i < $numrows; $i++) {
+			$row = pg_fetch_array($result, $i);
+			echo '<TR><TD>' . $row["port"] . '</TD><TD>' . $row["category"] . '</TD><TD>';
+
+#			echo $row["onwatchlist"];
+			if ($row["onwatchlist"]) {
+				echo 'on watch list already';
+			}
+
+			echo '</TD></TR>';
+			
+		}
+	} else {
+		echo "nothing found!";
+	}
+
 	echo '</TABLE>';
 
 	echo 'that took '. (time() - $begintime) . ' seconds to process ' . $portcount . ' ports';
 
 	return false;  #***********************************
-
-	// Now remove duplicates from the tempArray
-	foreach ($tempArray as $port) {
-		$port = 'ports/' . $port;
-		if ( !in_array($port, $gMyPorts) ) {
-			$guessPorts[] = $port;
-		}
-	}
-	asort($gMyPorts);
-	asort($guessPorts);
-	$returnArray['FOUND'] = $gMyPorts;
-	$returnArray['GUESS'] = $guessPorts;
-
-	$ok = GetWatchID($userID, $watchID);
-	if (!$ok) {
-		echo "Could not find watch_id for user $userID<BR>\n";
-		return false;
-	}
-
-#echo "obtained WatchID of '$watchID'<BR>\n";
-
-	if ($clean) {
-		$ok = CleanPorts($watchID);
-	}
-
-	$ok = $ok && AddPortsToList(array_merge($gMyPorts,$guessPorts), $watchID);
-	if (!$ok) {
-		echo "Error adding ports.<BR>\n";
-	  	if ($gDBG != 1) {
-			echo "Rerun with the '-d' option for details.<BR>\n";
-		}
-	}
 
 	// profiling info {{{
 	$endtime = time();

@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_upload.php,v 1.5.2.2 2002-02-24 17:13:26 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.3 2002-02-26 00:31:18 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -14,6 +14,34 @@
 					"FreeBSD, index, applications, ports");
 $Debug=0;
 
+function StagingAlreadyInUse($WatchListID, $dbh) {
+
+	$Result = 1;	// yes, already in progress.
+
+	$sql = "select WatchListStagingExists($WatchListID)";
+
+#	echo "\$sql = '$sql'<BR>";
+
+	$result = pg_exec($dbh, $sql);
+	if ($result && pg_numrows($result)) {
+		$row = pg_fetch_array($result, 0);
+#		echo "\$row[0] = $row[0]<BR>";
+		if (!$row[0]) {
+			$Result = 0;
+#			echo 'nope, nothing there...<BR>';
+		}
+	} else {
+		pg_errormessage() . ' sql = $sql';
+	}
+
+#	echo "StagingAlreadyInProgress = '$Result'<BR>";
+
+	return $Result;
+}
+
+
+
+
 ?>
 
 <table width="<? echo $TableWidth ?>" border="0" ALIGN="center">
@@ -22,7 +50,14 @@ $Debug=0;
 <TR>
 	<? freshports_PageBannerText("Update your watch list based on your installed packages"); ?>
 <TR><TD>
-			<?
+	<?
+#	GLOBAL $WatchListID;
+
+#	echo "WatchListID = $WatchListID<BR>";
+
+	if (StagingAlreadyInUse($WatchListID, $db)) {
+		echo "OUCH, there is already something in your staging area.  That should not happen.";
+	} else {
 		// make sure the POST vars are ok. 
 		// check for funny stuff
 
@@ -55,7 +90,7 @@ $Debug=0;
 				#
 				if ($visitor) $ret_id = $UserID;
 
-				$result = ProcessPackages($filename, $ret_id, $clean, $db);
+				$result = ProcessPackages($WatchListID, $filename, $ret_id, $clean, $db);
 
 				epp("$user Your Ports Are: ");
 				eppp($result['FOUND']);
@@ -127,7 +162,8 @@ $Debug=0;
 		<?
 		 	} 
 		}
-		?>
+	}
+	?>
 </TD>
 </TR>
 </TABLE>

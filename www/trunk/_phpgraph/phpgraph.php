@@ -32,7 +32,8 @@ class graph {
 		$this->margin['bottom'] = 15;
 		$this->bar_space = 0;
 
-		$def_font = "/usr/X11R6/lib/X11/fonts/TrueType/arial.ttf";
+#		$def_font = "/usr/X11R6/lib/X11/fonts/TrueType/arial.ttf";
+		$def_font = "/usr/local/etc/freshports/ttf/arial.ttf";
 
 		$this->title = new text($title_text);
 		$this->title->font = $def_font;

@@ -1,5 +1,5 @@
-<?
-	# $Id: elements.php,v 1.1.2.4 2003-05-16 01:06:59 dan Exp $
+<?php
+	# $Id: elements.php,v 1.1.2.5 2004-06-10 15:21:07 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#

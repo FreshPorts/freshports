@@ -1,5 +1,5 @@
-<?
-	# $Id: commit_log_ports.php,v 1.1.2.16 2004-02-13 17:24:18 dan Exp $
+<?php
+	# $Id: commit_log_ports.php,v 1.1.2.17 2004-06-10 15:21:06 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#

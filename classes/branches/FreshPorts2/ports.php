@@ -1,5 +1,5 @@
 <?
-	# $Id: ports.php,v 1.1.2.2 2001-12-29 04:09:02 dan Exp $
+	# $Id: ports.php,v 1.1.2.3 2001-12-29 19:06:26 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -7,28 +7,37 @@
 
 // base class for Port
 class Port {
-
+	// set on new
 	var $dbh;
 
+	// from the ports table
 	var $id;
 	var $element_id;
-    var $port;
-	var $category;
 	var $category_id;
-	var $version;
-	var $maintainer;
 	var $short_description;
 	var $long_description;
-	var $package_exists;
-	var $extract_suffix;
-	var $needs_refresh;
+	var $version;
+	var $revision;
+	var $maintainer;
 	var $homepage;
-	var $depends_run;
+	var $master_sites;
+	var $extract_suffix;
+	var $package_exists;
 	var $depends_build;
-	var $status;
-	var $broken;
+	var $depends_run;
+	var $last_commit_id;
+	var $found_in_index;
 	var $forbidden;
+	var $broken;
+	var $date_created;
 	var $categories;
+
+	// derived or from other tables
+	var $category;
+    var $port;
+	var $needs_refresh;
+	var $status;
+	var $updated;	// timestamp of last update
 
 	function Port($dbh) {
 		$this->dbh	= $dbh;
@@ -47,19 +56,22 @@ class Port {
 		if (IsSet($element->id)) {
 			$this->element_id = $element->id;
 
-			$sql = "select ports.id, element.name as port, ports.id as id, " .
-			       "categories.name as category, categories.id as category_id, ports.version as version, ".
-			       "ports.maintainer, ports.short_description, ports.long_description, ".
-			       "ports.package_exists, ports.extract_suffix, commit_log_ports.needs_refresh, ports.homepage, " .
-			       "ports.depends_run, ports.depends_build, element.status, " .
-			       "ports.broken, ports.forbidden, " .
-			       "ports.categories as categories ".
-			       "from ports, categories, element, commit_log_ports  ".
+			$sql = "select ports.id, ports.element_id, ports.id as id, ports.category_id as category_id, " .
+			       "ports.short_description as short_description, ports.long_description, commit_log_ports.port_version as version, ".
+			       "commit_log_ports.revision as revision, ports.maintainer, ".
+			       "ports.homepage, ports.master_sites, ports.extract_suffix, ports.package_exists, " .
+			       "ports.depends_build, ports.depends_run, ports.last_commit_id, ports.found_in_index, " .
+			       "ports.forbidden, ports.broken, ports.date_created, " .
+			       "ports.categories as categories, ".
+				   "element.name as port, categories.name as category, commit_log_ports.needs_refresh, " .
+				   "element.status, commit_log.commit_date as updated " .
+			       "from ports, categories, element, commit_log_ports, commit_log ".
 			       "WHERE ports.element_id  = $this->element_id ".
 			       "  and ports.category_id = categories.id " .
 			       "  and ports.element_id  = element.id " .
-				   "  and ports.last_commit_id = commit_log_ports.id " .
-				   "  and ports.id             = commit_log_ports.port_id";
+				   "  and ports.last_commit_id = commit_log_ports.commit_log_id " .
+				   "  and ports.id             = commit_log_ports.port_id " .
+				   "  and commit_log.id        = commit_log_ports.commit_log_id ";
 
 	        $result = pg_exec($this->dbh, $sql);
 			if ($result) {
@@ -67,29 +79,38 @@ class Port {
 				if ($numrows == 1) {
 #					echo "fetched by ID succeeded<BR>";
 					$myrow = pg_fetch_array ($result, 0);
-					$this->id = $myrow["id"];
+					$this->id                = $myrow["id"];
+					$this->element_id        = $myrow["element_id"];
+					$this->category_id       = $myrow["category_id"];
+					$this->short_description = $myrow["short_description"];
+					$this->long_description  = $myrow["long_description"];
+					$this->version           = $myrow["version"];
+					$this->revision          = $myrow["revision"];
+					$this->maintainer        = $myrow["maintainer"];
+					$this->homepage          = $myrow["homepage"];
+					$this->master_sites      = $myrow["master_sites"];
+					$this->extract_suffix    = $myrow["extract_suffix"];
+					$this->package_exists    = $myrow["package_exists"];
+					$this->depends_build     = $myrow["depends_build"];
+					$this->depends_run       = $myrow["depends_run"];
+					$this->last_commit_id    = $myrow["last_commit_id"];
+					$this->found_in_index    = $myrow["found_in_index"];
+					$this->forbidden         = $myrow["forbidden"];
+					$this->broken            = $myrow["broken"];
+					$this->date_created      = $myrow["date_created"];
+					$this->categories        = $myrow["categories"];
 
 					$this->port              = $myrow["port"];
 					$this->category          = $myrow["category"];
-					$this->category_id       = $myrow["category_id"];
-					$this->version           = $myrow["version"];
-					$this->maintainer        = $myrow["maintainer"];
-					$this->short_description = $myrow["short_description"];
-					$this->long_description  = $myrow["long_description"];
-					$this->package_exists    = $myrow["package_exists"];
-					$this->extract_suffix    = $myrow["extract_suffix"];
 					$this->needs_refresh     = $myrow["needs_refresh"];
-					$this->homepage          = $myrow["homepage"];
-					$this->depends_run       = $myrow["depends_run"];
-					$this->depends_build     = $myrow["depends_build"];
 					$this->status            = $myrow["status"];
-					$this->broken            = $myrow["broken"];
-					$this->forbidden         = $myrow["forbidden"];
-					$this->categories        = $myrow["categories"];
+					$this->updated           = $myrow["updated"];
+
 				}
 			} else {
 #				echo 'pg_exec failed: ' . $sql;
 			}
 		}
 	}
+
 }

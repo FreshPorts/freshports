@@ -1,5 +1,5 @@
 <?
-	# $Id: port-watch.php,v 1.1.2.3 2002-01-05 23:01:17 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.4 2002-02-17 23:45:00 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -184,7 +184,7 @@ $sql = "select element.id, element.name as port, element.status, categories.name
 
 $result = pg_exec($db, $sql);
 
-$HTML .= '<tr><td>' . "\n";
+$HTML .= '<tr><td ALIGN="center">' . "\n";
 
 $numrows = pg_numrows($result);
 if ($numrows) {
@@ -253,7 +253,7 @@ $HTML .= '</td></tr>';
 echo $HTML;                                                   
 
 </script>
-<tr><td>
+<tr><td ALIGN="center">
 
 <input TYPE="submit" VALUE="update watch list" name="submit">
 <input TYPE="reset"  VALUE="reset form">

@@ -1,4 +1,12 @@
 <?
+#
+# $Author: dan $ $Date: 2001-03-23 04:36:57 $
+# $Header: /home/dan/repositories/freshports-1/www/Attic/index.php3,v 1.21 2001-03-23 04:36:57 dan Exp $
+# $Log: not supported by cvs2svn $
+# $Name: not supported by cvs2svn $
+# $Revision: 1.21 $
+#
+
 function freshports_SummaryForDay($MinusN) {          
    $BaseDirectory = "./archives";                     
    $Now = time();                                    

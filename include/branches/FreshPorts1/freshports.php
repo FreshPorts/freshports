@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4 2001-10-24 15:10:46 dan Exp $
+   # $Id: freshports.php,v 1.4.4.1 2002-01-01 17:02:58 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -612,7 +612,7 @@ function freshports_copyright() {
 #
 #echo '<TABLE WIDTH="' . $TableWidth . '" CELLPADDING="3" CELLSPACING="0">
 #<TR>
-#<TD ALIGN="right"><SMALL><A HREF="/legal.php">&copy;</A> 1997 - 2001 <A HREF="http://www.dvl-software.com/">DVL Software Ltd.</A><BR>All rights reserved.<SMALL></TD>
+#<TD ALIGN="right"><SMALL><A HREF="/legal.php">&copy;</A> 1997 - 2002 <A HREF="http://www.dvl-software.com/">DVL Software Ltd.</A><BR>All rights reserved.<SMALL></TD>
 #</TR>
 #</TABLE>
 #';

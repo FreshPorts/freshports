@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: vuxml.php,v 1.1.2.7 2004-10-03 14:01:56 dan Exp $
+	# $Id: vuxml.php,v 1.1.2.8 2004-12-19 16:48:42 dan Exp $
 	#
 	# Copyright (c) 2004 DVL Software Limited
 	#
@@ -26,7 +26,7 @@
 <body>
 
 <?php
-	if (IsSet($_REQUEST['vid'])) {
+	if (IsSet($_REQUEST['vuln']) || IsSet($_REQUEST['vid'])) {
 
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/vuxml.php');
 
@@ -43,13 +43,22 @@ These are the vulnerabilities relating to the commit you have selected:
 <table cellpadding="5" border="1" cellspacing="0">
 <tr><th align="left"><b>VuXML ID</b></th><th align="left"><b>Description</b></th></tr>
 <?php
+	if (!IsSet($vidArray)) {
+		$vuln = $_REQUEST['vuln'];
+
+        $vidArray = explode('|', $vuln);
+	}
+
 	$VuXML = new VuXML($db);
 
 	while (list($key, $value) = each($vidArray)) {
 		$VuXML->FetchByVID($value);
 
 		$URL = VUXMLURL . $value . '.html';
-		echo '<tr><td valign="top" nowrap><a href="' . $URL . '">' . $value . '</a></td><td>' . $VuXML->description . "</td></tr>\n";
+		echo '<tr><td valign="top" nowrap><a href="' . $URL . '">' . $value . '</a></td><td>';
+		$VuXML->display();
+		
+		echo "</td></tr>\n";
 	}
 
 ?>

@@ -1,5 +1,5 @@
 <?
-	# $Id: port-watch.php,v 1.1.2.12 2002-05-18 17:43:08 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.13 2002-05-18 17:46:12 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -11,7 +11,6 @@
     require($_SERVER["DOCUMENT_ROOT"] . "/../classes/categories.php");
 
 	$submit = $_POST["submit"];
-
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {
@@ -102,7 +101,7 @@ if ($submit) {
 //   echo "inserting new stuff now<br>\n";
     
    // make sure we are pointing at the start of the array.
-   
+   $ports = $_POST["ports"];
    if ($ports) {
       reset($ports);
       while (list($key, $value) = each($ports)) {

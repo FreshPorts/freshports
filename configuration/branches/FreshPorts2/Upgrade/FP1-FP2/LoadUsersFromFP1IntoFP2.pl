@@ -1,8 +1,8 @@
 #!/usr/bin/perl -w
 #
-# $Id: LoadUsersFromFP1IntoFP2.pl,v 1.1.2.1 2002-05-26 01:07:16 dan Exp $
+# $Id: LoadUsersFromFP1IntoFP2.pl,v 1.1.2.2 2003-05-16 01:09:09 dan Exp $
 #
-# Copyright (c) 2001-2002 DVL Software
+# Copyright (c) 2001-2003 DVL Software
 #
 
 use strict;

@@ -1,7 +1,7 @@
 --
--- $Id: POSTGRESQL.sql,v 1.1.2.35 2003-05-09 19:39:37 dan Exp $
+-- $Id: POSTGRESQL.sql,v 1.1.2.36 2003-05-16 01:09:06 dan Exp $
 --
--- Copyright (c) 1998-2002 DVL Software Limited
+-- Copyright (c) 1998-2003 DVL Software Limited
 --
 
 --

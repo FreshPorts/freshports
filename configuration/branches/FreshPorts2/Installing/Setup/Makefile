@@ -1,9 +1,9 @@
 #
-# $Id: Makefile,v 1.1.2.3 2003-01-10 15:52:53 dan Exp $
+# $Id: Makefile,v 1.1.2.4 2003-05-16 01:09:08 dan Exp $
 #
 # Install the ports needed by FreshPorts
 #
-# Copyright (c) 2002 DVL Software Limited
+# Copyright (c) 2002-2003 DVL Software Limited
 
 PORTNAME=		FreshPorts-ports
 PORTVERSION=	1.0

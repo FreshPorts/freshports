@@ -1,8 +1,8 @@
 #!/usr/bin/perl -w
 #
-# $Id: LoadWatchListPortsFromFP1IntoFP2.pl,v 1.1.2.2 2002-07-26 15:51:05 dan Exp $
+# $Id: LoadWatchListPortsFromFP1IntoFP2.pl,v 1.1.2.3 2003-05-16 01:09:09 dan Exp $
 #
-# Copyright (c) 2001-2002 DVL Software
+# Copyright (c) 2001-2003 DVL Software
 #
 
 use strict;

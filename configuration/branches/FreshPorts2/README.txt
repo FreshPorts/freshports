@@ -1,7 +1,7 @@
 #
-# $Id: README.txt,v 1.1.2.4 2002-02-23 02:12:26 dan Exp $
+# $Id: README.txt,v 1.1.2.5 2003-05-16 01:09:06 dan Exp $
 #
-# Copyright (c) 1998-2002 DVL Software Limited
+# Copyright (c) 1998-2003 DVL Software Limited
 #
 
 You need to do this:

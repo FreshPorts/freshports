@@ -1,5 +1,5 @@
 <?
-	# $Id: faq.php,v 1.1.2.21 2002-11-05 15:21:54 dan Exp $
+	# $Id: faq.php,v 1.1.2.22 2002-11-29 15:26:51 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -12,6 +12,7 @@
 					"freshports - new ports, applications",
 					"FreeBSD, index, applications, ports");
 
+	$ServerName = str_replace("freshports", "FreshPorts", $_SERVER["SERVER_NAME"]);
 ?>
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <tr><td valign="top" width="100%">
@@ -279,7 +280,6 @@ down you must read to find something you didn't already know.</P>
 	</P>
 
 	<?
-	$ServerName = str_replace("freshports", "FreshPorts", $_SERVER["SERVER_NAME"]);
 	$URL  = "http://$ServerName/news.php";
 	$HREF = "<A HREF=\"$URL\">$URL</A>";
 	?>
@@ -298,6 +298,52 @@ down you must read to find something you didn't already know.</P>
 	</OL>
 
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
+
+<TR>
+<? freshports_PageBannerText("Can the main page load any faster?"); ?>
+</TR>
+
+	<TR><TD>
+	<P>
+<a href="http://<?php echo $ServerName ?>/">http://<?php echo $ServerName ?>/</a> is the main page of 
+this website.  It contains a lot of information.  You can trim this information by using parameters.
+
+<p>
+Try this URL: <a href="http://<?php echo $ServerName ?>/index.php?num=30&days=0">http://<?php echo $ServerName ?>/index.php?num=30&days=0</a>
+
+<ul>
+<li>
+num - number of ports to show (regardless of commits so the last 
+commit may not list fully). The valid values are 10..100.
+
+<li>
+days - number of summary days (in the right hand column) to display.
+The valid values are 0..9.
+</ul>
+BTW: I've found a way to improve the outer joins I've been doing in 
+SQL and I'll be implementing that gradually.
+</TD></TR><TR><TD>&nbsp;</TD></TR>
+
+<TR>
+<? freshports_PageBannerText("How can I view the commits for a particular day?"); ?>
+</TR>
+
+   <TR><TD>
+   <P>
+	Yes, you can.  <a href="http://<?php echo $ServerName ?>/date.php">http://<?php echo $ServerName ?>/date.php</a>
+	displays all the commits for today (relative to the current server time).  
+
+	<p>
+	You can also pass a parameter and view the commits for a given day.  For example, 
+	<a href="http://<?php echo $ServerName ?>/date.php?date=2002/11/19">http://<?php echo $ServerName ?>/date.php?date=2002/11/19</a>
+	will show all the commits for 19 November 2002
+
+	<p>
+	The date should be of the format YYYY/MM/DD but I'm sure different formats
+	will work.  If the code has trouble figuring out what date you mean, it will guess and let you know it adjusted the date.
+
+	</TD></TR><TR><TD>&nbsp;</TD></TR>
+
 
 </table>
 </td>

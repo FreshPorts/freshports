@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.36 2002-02-17 23:42:27 dan Exp $
+   # $Id: freshports.php,v 1.4.2.37 2002-02-18 00:09:06 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -23,8 +23,8 @@ $DateFormatDefault      = "j F Y";
 
 $FreshPortsTitle		= "FreshPorts";
 
-$FreshPortsWatchedPort		= "<A HREF=\"/watch-list.php?remove=' || commits_latest.element_id || '\">Remove</A>";
-$FreshPortsWatchedPortNot	= "<A HREF=\"/watch-list.php?add='    || commits_latest.element_id || '\">Add</A>";
+$FreshPortsWatchedPort		= "<SMALL><A HREF=\"/watch-list.php?remove=' || commits_latest.element_id || '\">Remove</A></SMALL>";
+$FreshPortsWatchedPortNot	= "<SMALL><A HREF=\"/watch-list.php?add='    || commits_latest.element_id || '\">Add</A></SMALL>";
 
 #
 # SEQUENCES

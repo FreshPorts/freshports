@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.47 2004-12-01 22:56:47 dan Exp $
+	# $Id: commit.php,v 1.1.2.48 2004-12-03 00:56:55 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -301,19 +301,19 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 						}
 
 						if ($myrow["forbidden"]) {
-							$HTML .= ' ' . freshports_Forbidden_Icon_Link() . "\n";
+							$HTML .= ' ' . freshports_Forbidden_Icon_Link($myrow["forbidden"]) . "\n";
 						}
 
 						if ($myrow["broken"]) {
-							$HTML .= '&nbsp;' . freshports_Broken_Icon_Link() . "\n";
+							$HTML .= '&nbsp;' . freshports_Broken_Icon_Link($myrow["broken"]) . "\n";
 						}
 
 						if ($myrow["deprecated"]) {
-							$HTML .= '&nbsp;' . freshports_Deprecated_Icon_Link() . "\n";
+							$HTML .= '&nbsp;' . freshports_Deprecated_Icon_Link($myrow["deprecated"]) . "\n";
 						}
 
 						if ($myrow["ignore"]) {
-							$HTML .= '&nbsp;' . freshports_Ignore_Icon_Link() . "\n";
+							$HTML .= '&nbsp;' . freshports_Ignore_Icon_Link($myrow["ignore"]) . "\n";
 						}
 
 						$HTML .= ' ' . htmlspecialchars($myrow["short_description"]) . "\n";

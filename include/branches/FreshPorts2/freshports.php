@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.194 2004-12-02 00:01:04 dan Exp $
+	# $Id: freshports.php,v 1.4.2.195 2004-12-03 00:56:56 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -19,6 +19,7 @@ DEFINE('MAILTO',                '&#109;&#97;&#105;&#108;&#116;&#111;');
 DEFINE('COPYRIGHTYEARS',        '2000-2004');
 DEFINE('URL2LINK_CUTOFF_LEVEL', 0);
 DEFINE('FAQLINK',               'faq.php');
+DEFINE('PORTSMONURL',			'http://portsmon.firepipe.net/portoverview.py');
 
 if ($Debug) echo "'" . $_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php<BR>';
 
@@ -146,36 +147,60 @@ function freshports_Deleted_Icon_Link() {
 	return '<a href="/' . FAQLINK . '#deleted">' . freshports_Deleted_Icon() . '</a>';
 }
 
-function freshports_Forbidden_Icon() {
-	return '<IMG SRC="/images/forbidden.gif" ALT="Forbidden" TITLE="Forbidden" WIDTH="20" HEIGHT="20">';
+function freshports_HoverTextCleaner($Prefix, $HoverText) {
+	if ($HoverText == '') {
+		$HoverText = $Prefix;
+	} else {
+		# use the text provided, but remove any quotes,
+		# which will mess up the HTML
+		$HoverText = $Prefix . ': ' . htmlspecialchars($HoverText);
+	}
+
+	return $HoverText;
 }
 
-function freshports_Forbidden_Icon_Link() {
-	return '<a href="/' . FAQLINK . '#forbidden">' . freshports_Forbidden_Icon() . '</a>';
+function freshports_Forbidden_Icon($HoverText = '') {
+	$Alt       = "Forbidden";
+	$HoverText = freshports_HoverTextCleaner($Alt, $HoverText);
+
+	return '<IMG SRC="/images/forbidden.gif" ALT="' . $Alt . '" TITLE="' . $HoverText . '" WIDTH="20" HEIGHT="20">';
 }
 
-function freshports_Broken_Icon() {
-	return '<IMG SRC="/images/broken.gif" ALT="Broken" TITLE="Broken" WIDTH="17" HEIGHT="16">';
+function freshports_Forbidden_Icon_Link($HoverText = '') {
+	return '<a href="/' . FAQLINK . '#forbidden">' . freshports_Forbidden_Icon($HoverText) . '</a>';
 }
 
-function freshports_Broken_Icon_Link() {
-	return '<a href="/' . FAQLINK . '#broken">' . freshports_Broken_Icon() . '</a>';
+function freshports_Broken_Icon($HoverText = '') {
+	$Alt       = "Broken";
+	$HoverText = freshports_HoverTextCleaner($Alt, $HoverText);
+
+	return '<IMG SRC="/images/broken.gif" ALT="' . $Alt . '" TITLE="' . $HoverText . '" WIDTH="17" HEIGHT="16">';
 }
 
-function freshports_Deprecated_Icon() {
-	return '<IMG SRC="/images/deprecated.gif" ALT="Deprecated" TITLE="Deprecated" WIDTH="18" HEIGHT="18">';
+function freshports_Broken_Icon_Link($HoverText = '') {
+	return '<a href="/' . FAQLINK . '#broken">' . freshports_Broken_Icon($HoverText) . '</a>';
 }
 
-function freshports_Deprecated_Icon_Link() {
-	return '<a href="/' . FAQLINK . '#deprecated">' . freshports_Deprecated_Icon() . '</a>';
+function freshports_Deprecated_Icon($HoverText = '') {
+	$Alt       = "Deprecated";
+	$HoverText = freshports_HoverTextCleaner($Alt, $HoverText);
+
+	return '<IMG SRC="/images/deprecated.gif"' . $Alt . '" TITLE="' . $HoverText . '" WIDTH="18" HEIGHT="18">';
 }
 
-function freshports_Ignore_Icon() {
-	return '<IMG SRC="/images/ignored.png" ALT="Ignore" TITLE="Ignore" WIDTH="20" HEIGHT="21;">';
+function freshports_Deprecated_Icon_Link($HoverText = '') {
+	return '<a href="/' . FAQLINK . '#deprecated">' . freshports_Deprecated_Icon($HoverText) . '</a>';
 }
 
-function freshports_Ignore_Icon_Link() {
-	return '<a href="/' . FAQLINK . '#ignore">' . freshports_Ignore_Icon() . '</a>';
+function freshports_Ignore_Icon($HoverText = '') {
+	$Alt       = "Ignore";
+	$HoverText = freshports_HoverTextCleaner($Alt, $HoverText);
+
+	return '<IMG SRC="/images/ignored.png" ALT="' . $Alt . '" TITLE="' . $HoverText . '" WIDTH="20" HEIGHT="21;">';
+}
+
+function freshports_Ignore_Icon_Link($HoverText = '') {
+	return '<a href="/' . FAQLINK . '#ignore">' . freshports_Ignore_Icon($HoverText) . '</a>';
 }
 
 function freshports_New_Icon() {
@@ -861,19 +886,19 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 	$HTML .= "</DT>\n<DD>";
 	# show forbidden and broken
 	if ($port->forbidden) {
-		$HTML .= freshports_Forbidden_Icon_Link() . ' FORBIDDEN: ' . htmlify(htmlspecialchars($port->forbidden)) . "<br>";
+		$HTML .= freshports_Forbidden_Icon_Link($port->forbidden)   . ' FORBIDDEN: '  . htmlify(htmlspecialchars($port->forbidden))  . "<br>";
 	}
 
 	if ($port->broken) {
-		$HTML .= freshports_Broken_Icon_Link() . ' BROKEN: ' . htmlify(htmlspecialchars($port->broken)) . "<br>"; ;
+		$HTML .= freshports_Broken_Icon_Link($port->broken)         . ' BROKEN: '     . htmlify(htmlspecialchars($port->broken))     . "<br>"; ;
 	}
 
 	if ($port->deprecated) {
-		$HTML .= freshports_Deprecated_Icon_Link() . ' DEPRECATED: ' . htmlify(htmlspecialchars($port->deprecated)) . "<br>"; ;
+		$HTML .= freshports_Deprecated_Icon_Link($port->deprecated) . ' DEPRECATED: ' . htmlify(htmlspecialchars($port->deprecated)) . "<br>"; ;
 	}
 
 	if ($port->ignore) {
-		$HTML .= freshports_Ignore_Icon_Link() . ' IGNORE: ' . htmlify(htmlspecialchars($port->ignore)) . "<br>"; ;
+		$HTML .= freshports_Ignore_Icon_Link($port->ignore)         . ' IGNORE: '     . htmlify(htmlspecialchars($port->ignore))     . "<br>"; ;
 	}
 
    // description
@@ -1045,6 +1070,7 @@ if ($ShowDepends) {
       $HTML .= '<a HREF="' . htmlspecialchars($port->homepage) . '">Main Web Site</a>';
    }
 
+#   $HTML .= ' <b>:</b> ' . freshports_PortsMonitorURL($port->category, $port->port);
 
 	if ($ShowMasterSlave) {
 		#
@@ -1678,6 +1704,12 @@ function PeopleWatchingThisPortAlsoWatch($dbh, $element_id) {
 
 	return $HTML;
 
+}
+
+
+
+function freshports_PortsMonitorURL($Category, $Port) {
+	return '<a href="' . PORTSMONURL . '?category=' . $Category . '&amp;portname=' . $Port . '">PortsMon</a>';
 }
 
 openlog('FreshPorts', LOG_PID | LOG_PERROR, LOG_LOCAL0);

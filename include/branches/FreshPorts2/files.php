@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: files.php,v 1.1.2.36 2004-12-01 22:56:47 dan Exp $
+	# $Id: files.php,v 1.1.2.37 2004-12-03 00:56:56 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -172,19 +172,19 @@ select element_pathname(element.id) as pathname,
 		}
 
 		if ($myrow["forbidden"]) {
-			$HTML .= freshports_Forbidden_Icon_Link() . "\n";
+			$HTML .= freshports_Forbidden_Icon_Link($myrow["forbidden"]) . "\n";
 		}
 
 		if ($myrow["broken"]) {
-			$HTML .= freshports_Broken_Icon_Link() . "\n";
+			$HTML .= freshports_Broken_Icon_Link($myrow["broken"]) . "\n";
 		}
 
 		if ($myrow["deprecated"]) {
-			$HTML .= freshports_Deprecated_Icon_Link() . "\n";
+			$HTML .= freshports_Deprecated_Icon_Link($myrow["deprecated"]) . "\n";
 		}
 
 		if ($myrow["ignore"]) {
-			$HTML .= freshports_Ignore_Icon_Link() . "\n";
+			$HTML .= freshports_Ignore_Icon_Link($myrow["ignore"]) . "\n";
 		}
 
 		echo $HTML;

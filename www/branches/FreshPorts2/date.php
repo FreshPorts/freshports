@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: date.php,v 1.1.2.26 2004-12-01 22:56:47 dan Exp $
+	# $Id: date.php,v 1.1.2.27 2004-12-03 00:56:56 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -185,19 +185,19 @@
 					}
 		
 					if ($commit->forbidden) {
-						$HTML .= ' ' . freshports_Forbidden_Icon_Link() . "\n";
+						$HTML .= ' ' . freshports_Forbidden_Icon_Link($commit->forbidden) . "\n";
 					}
 		
 					if ($commit->broken) {
-						$HTML .= ' '. freshports_Broken_Icon_Link() . "\n";
+						$HTML .= ' '. freshports_Broken_Icon_Link($commit->broken) . "\n";
 					}
 		
 					if ($commit->deprecated) {
-						$HTML .= ' '. freshports_Deprecated_Icon_Link() . "\n";
+						$HTML .= ' '. freshports_Deprecated_Icon_Link($commit->deprecated) . "\n";
 					}
 		
 					if ($commit->ignore) {
-						$HTML .= ' '. freshports_Ignore_Icon_Link() . "\n";
+						$HTML .= ' '. freshports_Ignore_Icon_Link($commit->ignore) . "\n";
 					}
 		
 					$HTML .= freshports_CommitFilesLink($commit->message_id, $commit->category, $commit->port);

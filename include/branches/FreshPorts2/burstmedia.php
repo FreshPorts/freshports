@@ -1,5 +1,5 @@
 <?
-	# $Id: burstmedia.php,v 1.1.2.4 2002-06-14 16:36:18 dan Exp $
+	# $Id: burstmedia.php,v 1.1.2.5 2002-06-27 13:40:53 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -155,7 +155,6 @@ echo '  <!-- BEGIN BURST! CODE -->
 }
 
 function Burst_468x60_Below() {
-	if (rand(1, 100) <= 50) {
 echo '	<P ALIGN="center">
 	<!-- BEGIN RICH-MEDIA BURST! CODE --> 
 	<SCRIPT TYPE="text/javascript">
@@ -167,10 +166,6 @@ echo '	<P ALIGN="center">
 	<!-- END BURST CODE -->
 	</P>
 ';
-	} else {
-		echo '<a href="http://magazine.daemonnews.org/" target="_top"><img src="/ads/daemonnews.gif" width="468" height="60"
-		border="0" alt="Daemon News - Bringing BSD Together"></a>';
-	}
 }
 
 

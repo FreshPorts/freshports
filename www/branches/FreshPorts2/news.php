@@ -1,5 +1,5 @@
 <?
-	# $Id: news.php,v 1.1.2.7 2002-12-04 22:35:08 dan Exp $
+	# $Id: news.php,v 1.1.2.8 2002-12-08 03:25:01 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -10,6 +10,9 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 
 	$Debug=0;
+
+	GLOBAL $FreshPortsSlogan;
+	GLOBAL $FreshPortsName;
 
 	$ServerName = str_replace("freshports", "FreshPorts", $_SERVER["SERVER_NAME"]);
 
@@ -32,7 +35,7 @@
 	$HTML .= "\n";
 
 	$HTML .= '<channel>' . "\n";
-	$HTML .= '  <title>FreshPorts - the place for ports</title>' . "\n";
+	$HTML .= '  <title>' . "$FreshPortsName -- $FreshPortsSlogan" . '</title>' . "\n";
 	$HTML .= '  <link>http://' . $ServerName . '/</link>' . "\n";
 	$HTML .= '  <description>The easiest place to find ports</description>' . "\n";
 	$HTML .= '  <language>en-us</language>' . "\n";
@@ -52,7 +55,6 @@
 		$HTML .= $NewsAddendaContents;
 		$sql .= " limit 19";
 	} else {
-		echo 'not doing it';
 		$sql .= " limit 20";
 	}
 

@@ -16,6 +16,7 @@ if ($submit) {
    $OK = 1;
 
    $errors = "";
+   $UserID = addslashes($UserID);
 
    // test for existance of user id
    $Cookie = UserToCookie($UserID);

@@ -39,6 +39,8 @@ if ($search) {
 
    echo "</td></tr>\n<tr><td>";
 
+   $query = addslashes($query);
+
 $sql = "select ports.id, ports.name as port, ports.last_update as updated, " .
        "categories.name as category, categories.id as category_id, ports.version as version, ".
        "ports.committer, ports.last_update_description as update_description, " .
@@ -81,7 +83,7 @@ $NumRows = mysql_num_rows($result);
 }
 ?>
 <form METHOD="POST" ACTION="<? echo $PHP_SELF ?>">
-  <p>Search for: <input NAME="query" size="20"  value="<? echo $query?>"> <select NAME="stype" size="1">
+  <p>Search for: <input NAME="query" size="20"  value="<? echo stripslashes($query)?>"> <select NAME="stype" size="1">
     <option VALUE="name"             <? if ($stype == "name")             echo 'selected'?>>Port Name</option>
     <option VALUE="maintainer"       <? if ($stype == "maintainer")       echo 'selected'?>>Maintainer</option>
     <option VALUE="requires"         <? if ($stype == "requires")         echo 'selected'?>>Requires</option>

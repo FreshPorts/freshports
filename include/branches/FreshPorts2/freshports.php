@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.39 2002-02-20 23:14:48 dan Exp $
+   # $Id: freshports.php,v 1.4.2.40 2002-02-21 06:28:22 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -24,8 +24,15 @@ $TimeFormatDefault		= "H:i:s";
 
 $FreshPortsTitle		= "FreshPorts";
 
+$FreshPortsWatchedPortPrefix	= "<SMALL><A HREF=\"/watch-list.php?remove=";
+$FreshPortsWatchedPortSuffix	= "\">Remove</A></SMALL>";
+$FreshPortsWatchedPortNotPrefix	= "<SMALL><A HREF=\"/watch-list.php?add=";
+$FreshPortsWatchedPortNotSuffix	= "\">Add</A></SMALL>";
+
 $FreshPortsWatchedPort		= "<SMALL><A HREF=\"/watch-list.php?remove=' || commits_latest.element_id || '\">Remove</A></SMALL>";
 $FreshPortsWatchedPortNot	= "<SMALL><A HREF=\"/watch-list.php?add='    || commits_latest.element_id || '\">Add</A></SMALL>";
+
+
 
 #
 # SEQUENCES
@@ -76,13 +83,21 @@ GLOBAL $BannerAd;
 function freshports_Logo() {
 GLOBAL $TableWidth;
 GLOBAL $LocalTimeAdjustment;
+GLOBAL $PHP_SELF;
 
 #echo "$LocalTimeAdjustment<BR>";
 
 echo '<BR>
 <TABLE WIDTH="' . $TableWidth . '" BORDER="0" ALIGN="center">
 <TR>
-        <TD><A HREF="/"><IMG SRC="/images/freshports.jpg" ALT="FreshPorts.org - the place for ports" WIDTH="512" HEIGHT="110" BORDER="0"></A></TD>
+	<TD><A HREF="';
+
+	if ($PHP_SELF == "/index.php") {
+		echo 'other-copyrights.php';
+	} else {
+		echo '/';
+	}
+        echo '"><IMG SRC="/images/freshports.jpg" ALT="FreshPorts.org - the place for ports" WIDTH="512" HEIGHT="110" BORDER="0"></A></TD>
         <TD ALIGN="right" CLASS="sans" VALIGN="bottom">' . FormatTime(Date("D, j M Y g:i A T"), $LocalTimeAdjustment, "D, j M Y g:i A T") . '</TD>
 </TR>
 </TABLE>
@@ -458,8 +473,10 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 //
 	GLOBAL $freshports_CVS_URL;
 	GLOBAL $ShowDepends;
-	GLOBAL $FreshPortsWatchedPort;
-	GLOBAL $FreshPortsWatchedPortNot;
+	GLOBAL $FreshPortsWatchedPortPrefix;
+	GLOBAL $FreshPortsWatchedPortSuffix;
+	GLOBAL $FreshPortsWatchedPortNotPrefix;
+	GLOBAL $FreshPortsWatchedPortNotSuffix;
 	GLOBAL $WatchListID;
 
 	$MarkedAsNew = "N";
@@ -509,9 +526,9 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 #   }
 
 	if ($WatchListID && $port->IsOnWatchList($WatchListID)) {
-		$HTML .= ' ' . $FreshPortsWatchedPort;
+		$HTML .= ' ' . $FreshPortsWatchedPortPrefix    . $port->{element_id} . $FreshPortsWatchedPortSuffix;
 	} else {
-		$HTML .= ' ' . $FreshPortsWatchedPortNot;
+		$HTML .= ' ' . $FreshPortsWatchedPortNotPrefix . $port->{element_id} . $FreshPortsWatchedPortNotSuffix;
 	}
 
    $HTML .= "</DT>\n<DD>";

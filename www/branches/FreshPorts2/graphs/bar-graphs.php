@@ -1,5 +1,6 @@
 <?
-	# $Id: bar-graphs.php,v 1.1.2.4 2002-05-29 12:22:43 dan Exp $
+	#
+	# $Id: bar-graphs.php,v 1.1.2.5 2002-12-11 04:38:02 dan Exp $
 	#
 
 
@@ -20,7 +21,7 @@ class dg_BarGraph {
 	var $bar_width;
 	var $bar_space_width; // space above and below bar
 
-	var $title;			// title text
+	var $title;				// title text
 	var $title_size;
 	var $title_color;
 	var $title_bgcolor;
@@ -69,33 +70,33 @@ class dg_BarGraph {
 		$this->bar_width       = 20;
 		$this->bar_space_width = 5;
 
-		$this->title         = "default title";
-		$this->title_size    = 18;
-		$this->title_color   = array(255,255,255);
-		$this->title_bgcolor = array(160,0,0);
-		$this->title_margin  = 4;
+		$this->title	         = "default title";
+		$this->title_size       = 18;
+		$this->title_color      = array(255,255,255);
+		$this->title_bgcolor    = array(160,0,0);
+		$this->title_margin     = 4;
 
-		$this->footer         = "default footer";
-		$this->footer_size    = 10;
-		$this->footer_color   = array(255,255,255);
-		$this->footer_bgcolor = array(160,0,0);
-		$this->footer_margin  = 1;
+		$this->footer           = "default footer";
+		$this->footer_size      = 10;
+		$this->footer_color     = array(255,255,255);
+		$this->footer_bgcolor   = array(160,0,0);
+		$this->footer_margin    = 1;
 
 		$this->background_color = array(233,233,233);
 		$this->ticks_color      = array(200,200,200);
 
-		$this->x_ticks_num = 5;
+		$this->x_ticks_num      = 5;
 
-		$this->margin_t = 4;
-		$this->margin_b = 4;
-		$this->margin_l = 200;
-		$this->margin_r = 16;
+		$this->margin_t         = 4;
+		$this->margin_b         = 4;
+		$this->margin_l         = 200;
+		$this->margin_r         = 16;
 
-		$this->font_name      = $_SERVER["DOCUMENT_ROOT"] . "/graphs/tahoma.ttf";
-		$this->font_name_bold = $_SERVER["DOCUMENT_ROOT"] . "/graphs/tahomabd.ttf";
+		$this->font_name        = $_SERVER['DOCUMENT_ROOT'] . '/graphs/tahoma.ttf';
+		$this->font_name_bold   = $_SERVER['DOCUMENT_ROOT'] . '/graphs/tahomabd.ttf';
 
-		$this->label_size  = 12;
-		$this->label_color = array(0,0,0);
+		$this->label_size       = 12;
+		$this->label_color      = array(0,0,0);
 
 		$this->axis_height      = 30;
 		$this->axis_color       = array(0,0,0);
@@ -103,12 +104,11 @@ class dg_BarGraph {
 		$this->axis_grid_color  = array(140,140,140);
 		$this->axis_size        = 1; // font number!
 
-		$this->axis_label = "height of the tree :)";
+		$this->axis_label = 'height of the tree :)';
 		
 		// two sets of data, values must be numeric
 		$this->values = array(0);
-		$this->labels = array("default");
-	
+		$this->labels = array('default');
 	}
 
 	function calculate_gradients() {
@@ -121,7 +121,6 @@ class dg_BarGraph {
 			$this->gradient_map_g[$i] = $this->gradient1[1] + $i * $dg;
 			$this->gradient_map_b[$i] = $this->gradient1[2] + $i * $db;
 		}
-		
 	}
 
 	function _allocate_color($im, $colorarray) {
@@ -132,9 +131,9 @@ class dg_BarGraph {
 	}
 	// ------------ MAIN SHOW METHOD -----------------
 
-	function show($file = "-") {
-		$map = "";
-		header("Content-type: image/png");
+	function show($file = '-') {
+		$map = '';
+		header('Content-type: image/png');
 
 		$this->calculate_gradients();
 
@@ -160,13 +159,9 @@ class dg_BarGraph {
 		// [END OF NEW PIECE OF CODE]
 
 		// calculate sizes
-		$field_width = 
-			$this->width 
-			- $this->margin_l 
-			- $this->margin_r;
+		$field_width = $this->width - $this->margin_l - $this->margin_r;
 				
-		$field_height = 
-			count($this->values)
+		$field_height = count($this->values)
 			* ($this->bar_width + 2 * $this->bar_space_width);
 
 		// calc title height
@@ -201,17 +196,17 @@ class dg_BarGraph {
 		$im = imagecreate($this->width,$height);
 
 		// colors
-		$c_bg =			$this->_allocate_color($im,$this->background_color);
-		$c_g1 =			$this->_allocate_color($im,$this->gradient1);
-		$c_titlebg =	$this->_allocate_color($im,$this->title_bgcolor);
-		$c_title =		$this->_allocate_color($im,$this->title_color);
-		$c_footerbg =	$this->_allocate_color($im,$this->footer_bgcolor);
-		$c_footer =		$this->_allocate_color($im,$this->footer_color);
-		$c_label =		$this->_allocate_color($im,$this->label_color);
-		$c_axis =		$this->_allocate_color($im,$this->axis_color);
-		$c_axisgr =		$this->_allocate_color($im,$this->axis_grid_color);
-		$c_axislbl =	$this->_allocate_color($im,$this->axis_label_color);
-		$c_black =		$this->_allocate_color($im,array(0,0,0));
+		$c_bg       = $this->_allocate_color($im, $this->background_color);
+		$c_g1       = $this->_allocate_color($im, $this->gradient1);
+		$c_titlebg  = $this->_allocate_color($im, $this->title_bgcolor);
+		$c_title    = $this->_allocate_color($im, $this->title_color);
+		$c_footerbg = $this->_allocate_color($im, $this->footer_bgcolor);
+		$c_footer   = $this->_allocate_color($im, $this->footer_color);
+		$c_label    = $this->_allocate_color($im, $this->label_color);
+		$c_axis     = $this->_allocate_color($im, $this->axis_color);
+		$c_axisgr   = $this->_allocate_color($im, $this->axis_grid_color);
+		$c_axislbl  = $this->_allocate_color($im, $this->axis_label_color);
+		$c_black    = $this->_allocate_color($im, array(0,0,0));
 
 		for ($i=0; $i<64; $i++) {
 			$c_gradient[$i] 
@@ -336,8 +331,7 @@ class dg_BarGraph {
 					+ $i * (2 * $this->bar_space_width + $this->bar_width)
 					+ $this->bar_space_width;
 			
-				$x2 = $this->margin_l 
-					+ $v;
+				$x2 = $this->margin_l + $v;
 			
 				$y2 = $this->margin_t 
 					+ $title_height
@@ -353,8 +347,7 @@ class dg_BarGraph {
 						$c_gradient[$gd*$j]);
 				}
 
-				imagerectangle($im,
-					$x1, $y1, $x2, $y2,	$c_black);
+				imagerectangle($im, $x1, $y1, $x2, $y2,	$c_black);
 
 			}
 

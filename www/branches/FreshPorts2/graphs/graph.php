@@ -1,14 +1,15 @@
 <?
-	# $Id: graph.php,v 1.1.2.11 2002-12-04 16:53:40 dan Exp $
+	#
+	# $Id: graph.php,v 1.1.2.12 2002-12-11 04:38:02 dan Exp $
 	#
 
-	require($_SERVER["DOCUMENT_ROOT"] . "/include/common.php");
-	require($_SERVER["DOCUMENT_ROOT"] ."/include/freshports.php");
-	require($_SERVER["DOCUMENT_ROOT"] ."/include/databaselogin.php");
-	require($_SERVER["DOCUMENT_ROOT"] ."/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 
-// parameters: graph id
-require("bar-graphs.php");
+	// parameters: graph id
+	require_once('bar-graphs.php');
 
 if (!function_exists('imagettfbbox'))
 	die("Fatal error: this version of PHP does not support GD.\n");
@@ -76,8 +77,8 @@ if (!file_exists($filename) || filemtime($filename)+$period<time())	{
 	$u = array();
 
 	for ($i=0; $i<pg_numrows($data); $i++) {
-       	$r = pg_fetch_row($data, $i);
-	    array_push($v, $r[1]);
+		$r = pg_fetch_row($data, $i);
+		array_push($v, $r[1]);
 		array_push($l, $r[0]."  ");
 		array_push($u, $r[2]);
 	}

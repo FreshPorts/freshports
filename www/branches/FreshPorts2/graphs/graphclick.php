@@ -1,12 +1,13 @@
 <?
-    # $Id: graphclick.php,v 1.1.2.4 2002-05-19 22:03:56 dan Exp $
-    #
+	#
+	# $Id: graphclick.php,v 1.1.2.5 2002-12-11 04:38:02 dan Exp $
+	#
 
 	$cache_dir = "/tmp/";
 
-    $id      = $_GET["id"];
-    $graph_x = $_GET["graph_x"];
-    $graph_y = $_GET["graph_y"];
+	$id      = $_GET["id"];
+	$graph_x = $_GET["graph_x"];
+	$graph_y = $_GET["graph_y"];
 
 
 	if (!isset($id)) $id=0;
@@ -17,9 +18,9 @@
 	}
 
 	foreach ($map as $m) {
-    	list($y,$p) = split(":",$m);
-	    $map_y[] = $y;
-    	$map_p[] = $p;
+		list($y,$p) = split(":",$m);
+		$map_y[] = $y;
+		$map_p[] = $p;
 	}
 
 	$i = 0;
@@ -29,12 +30,12 @@
 
 	// click out of bars (too high or too low)
 	if ($i==0 || $i==count($map)) {
-    	if (!isset($_SERVER["HTTP_REFERER"]) || $_SERVER["HTTP_REFERER"] == '') {
-        	header("Location: http://".$_SERVER['HTTP_HOST']);
-	    } else {
-    	    header("Location: $HTTP_REFERER");
+		if (!isset($_SERVER["HTTP_REFERER"]) || $_SERVER["HTTP_REFERER"] == '') {
+			header("Location: http://".$_SERVER['HTTP_HOST']);
+		} else {
+			header("Location: $HTTP_REFERER");
 	    }
-    	exit;
+		exit;
 	}
 
 	$URL = $map_p[$i-1];

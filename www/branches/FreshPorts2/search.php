@@ -1,5 +1,5 @@
 <?
-	# $Id: search.php,v 1.1.2.10 2002-04-08 16:20:54 dan Exp $
+	# $Id: search.php,v 1.1.2.11 2002-04-19 19:52:10 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -208,7 +208,7 @@ Search for:<BR>
 		<OPTION VALUE="500" <?if ($num == 500) echo 'SELECTED' ?>>500 results
 	</SELECT> 
 
-	<INPUT TYPE="submit" VALUE="search"> </p>
+	<INPUT TYPE="submit" VALUE="search">
   <INPUT TYPE="hidden" NAME="search" VALUE="1">
 </form>
 

@@ -1,11 +1,13 @@
 <?
-	# $Id: other-copyrights.php,v 1.1.4.1 2002-02-21 06:28:23 dan Exp $
+	# $Id: other-copyrights.php,v 1.1.4.2 2002-02-21 06:42:20 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
 	require("./include/common.php");
 	require("./include/freshports.php");
 	require("./include/databaselogin.php");
+
+	require("./include/getvalues.php");
 
 	freshports_Start(	$ArticleTitle,
 					"",

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.79 2003-09-09 19:30:50 dan Exp $
+	# $Id: index.php,v 1.1.2.80 2003-09-23 13:24:33 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -11,6 +11,7 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit_record.php');
 	freshports_Start($FreshPortsSlogan,
 					$FreshPortsName . ' - new ports, applications',
 					'FreeBSD, index, applications, ports');
@@ -57,11 +58,11 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 ?>
 
 <?php
-$num          = $MaxNumberOfPorts;;
+$num          = $MaxNumberOfPorts;
 $days         = $NumberOfDays;
 $dailysummary = 7;
 
-if (In_Array('num',          $_GET)) $num				= AddSlashes($_GET["num"]);
+if (In_Array('num',          $_GET)) $num			= AddSlashes($_GET["num"]);
 if (In_Array('dailysummary', $_GET)) $dailysummary	= AddSlashes($_GET["dailysummary"]);
 if (In_Array('days',         $_GET)) $days			= AddSlashes($_GET["days"]);
 
@@ -88,99 +89,24 @@ if (Is_Numeric($dailysummary)) {
 $database=$db;
 if ($database) {
 
-$sql = '';
-
-if ($User->id) {
-	$sql .= "
-SELECT SECURITY.*,
-       W.*
-FROM (
-";
-}
-
-$sql .= "
-SELECT PEC.*,
-       security_notice.id  AS security_notice_id
-FROM (
-SELECT PORTELEMENT.*,
-       categories.name AS category
-FROM (
-SELECT LCPPORTS.*,
-       element.name    AS port,
-       element.status  AS status
-
-FROM (
-SELECT LCPCLLCP.*,
-       ports.forbidden,
-       ports.broken,
-       ports.element_id                     AS element_id,
-       CASE when clp_version  IS NULL then ports.version  else clp_version  END as version,
-       CASE when clp_revision IS NULL then ports.revision else clp_revision END AS revision,
-       ports.version                        AS ports_version,
-       ports.revision                       AS ports_revision,
-       date_part('epoch', ports.date_added) AS date_added,
-       ports.short_description              AS short_description,
-       ports.category_id
-FROM (
- SELECT LCPCL.*, 
-         port_id,
-         commit_log_ports.port_version  AS clp_version,
-         commit_log_ports.port_revision AS clp_revision,
-         commit_log_ports.needs_refresh AS needs_refresh
-    FROM 
-   (SELECT commit_log.id     AS commit_log_id, 
-           commit_date       AS commit_date_raw,
-           message_subject,
-           message_id,
-           committer,
-           description       AS commit_description,
-           to_char(commit_log.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')  AS commit_date,
-           to_char(commit_log.commit_date - SystemTimeAdjust(), 'HH24:MI')      AS commit_time,
-           encoding_losses
-     FROM commit_log JOIN
-               (SELECT latest_commits_ports.commit_log_id
-                   FROM latest_commits_ports
-               ORDER BY latest_commits_ports.commit_date DESC
-                 LIMIT $MaxNumberOfPorts) AS LCP
-           ON commit_log.id = LCP.commit_log_id) AS LCPCL JOIN commit_log_ports
-                         ON commit_log_ports.commit_log_id = LCPCL.commit_log_id
-                         AND commit_log_ports.commit_log_id > latest_commits_ports_anchor()) AS LCPCLLCP JOIN ports
-on LCPCLLCP.port_id = ports.id) AS LCPPORTS JOIN element
-on LCPPORTS.element_id = element.id) AS PORTELEMENT JOIN categories
-on PORTELEMENT.category_id = categories.id) AS PEC LEFT OUTER JOIN security_notice
-ON PEC.commit_log_id = security_notice.commit_log_id
-";
-
-if ($User->id) {
-   $sql .= "
-) AS SECURITY LEFT OUTER JOIN
-(SELECT element_id as wle_element_id, COUNT(watch_list_id) as watch
-  FROM watch_list JOIN watch_list_element
-        ON watch_list.id      = watch_list_element.watch_list_id
-       AND watch_list.user_id = $User->id
-       AND watch_list.in_service
-GROUP BY wle_element_id) AS W
-ON        W.wle_element_id = SECURITY.element_id
-";
-}
-
-$sql .= "order by commit_date_raw desc, category, port ";
-
-#$sql .= " limit $MaxNumberOfPorts";
+$sql = "select * from LastestCommits($MaxNumberOfPorts, $User->id)";
 
 if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 
 
 $result = pg_exec($database, $sql);
 if ($result) {
-   $numrows = pg_numrows($result);
+	$numrows = pg_numrows($result);
 	if ($numrows) { 
 	
 		$i=0;
 		$GlobalHideLastChange = "N";
 		for ($i = 0; $i < $numrows; $i++) {
 			$myrow = pg_fetch_array ($result, $i);
-			$rows[$i] = $myrow;
+			$mycommit = new CommitRecord($database);
+			$mycommit->PopulateValues($myrow);
+#echo "'$mycommit->element_id' '" . $myrow['element_id'] . '\'<br>';
+			$commits[$i] = $mycommit;
 		}
 	
 		$NumRows = $numrows;
@@ -202,18 +128,16 @@ ports. A port is marked as new for 10 days.
 </TD></TR>
 
 <?
-#				print "NumRows = $NumRows\n<BR>";
-				$HTML = "";
 				unset($ThisCommitLogID);
 				for ($i = 0; $i < $NumRows; $i++) {
-#echo 'commit_log_id=' . $myrow["commit_log_id"] . '<br>';
-					$myrow = $rows[$i];
-					$ThisCommitLogID = $myrow["commit_log_id"];
+					$HTML = "";
+					$mycommit = $commits[$i];
+					$ThisCommitLogID = $mycommit->commit_log_id;
 
-					if ($LastDate <> $myrow["commit_date"]) {
-						$LastDate = $myrow["commit_date"];
+					if ($LastDate <> $mycommit->commit_date) {
+						$LastDate = $mycommit->commit_date;
 						$HTML .= '<TR><TD COLSPAN="3" BGCOLOR="#AD0040" HEIGHT="0">' . "\n";
-						$HTML .= '   <FONT COLOR="#FFFFFF"><BIG>' . FormatTime($myrow["commit_date"], 0, "D, j M Y") . '</BIG></FONT>' . "\n";
+						$HTML .= '   <FONT COLOR="#FFFFFF"><BIG>' . FormatTime($mycommit->commit_date, 0, "D, j M Y") . '</BIG></FONT>' . "\n";
 						$HTML .= '</TD></TR>' . "\n\n";
 					}
 
@@ -226,25 +150,25 @@ ports. A port is marked as new for 10 days.
 					# count the number of ports in this commit
 					$NumberOfPortsInThisCommit = 0;
 					$MaxNumberPortsToShow = 10;
-					while ($j < $NumRows && $rows[$j]["commit_log_id"] == $ThisCommitLogID) {
+					while ($j < $NumRows && $commits[$j]->commit_log_id == $ThisCommitLogID) {
 						$NumberOfPortsInThisCommit++;
-						$myrow = $rows[$j];
+						$mycommit = $commits[$j];
 
 						if ($NumberOfPortsInThisCommit == 1) {
 							GLOBAL $freshports_mail_archive;
 
 							$HTML .= '<SMALL>';
-							$HTML .= '[ ' . $myrow["commit_time"] . ' ' . freshports_CommitterEmailLink($myrow["committer"]) . ' ]';
+							$HTML .= '[ ' . $mycommit->commit_time . ' ' . freshports_CommitterEmailLink($mycommit->committer) . ' ]';
 							$HTML .= '</SMALL>';
 							$HTML .= '&nbsp;';
-							$HTML .= freshports_Email_Link($myrow["message_id"]);
+							$HTML .= freshports_Email_Link($mycommit->message_id);
 
-							if ($myrow["encoding_losses"] == 't') {
+							if ($mycommit->encoding_losses == 't') {
 								$HTML .= '&nbsp;' . freshports_Encoding_Errors();
 							}
 
-							if (IsSet($myrow["security_notice_id"])) {
-								$HTML .= ' <a href="/security-notice.php?message_id=' . $myrow["message_id"] . '">' . freshports_Security_Icon() . '</a>';
+							if (IsSet($mycommit->security_notice_id)) {
+								$HTML .= ' <a href="/security-notice.php?message_id=' . $mycommit->message_id . '">' . freshports_Security_Icon() . '</a>';
 							}
 
 						}
@@ -254,57 +178,57 @@ ports. A port is marked as new for 10 days.
 							$HTML .= "<BR>\n";
 
 							$HTML .= '<BIG><B>';
-							$HTML .= '<A HREF="/' . $myrow["category"] . '/' . $myrow["port"] . '/">';
-							$HTML .= $myrow["port"];
+							$HTML .= '<A HREF="/' . $mycommit->category . '/' . $mycommit->port . '/">';
+							$HTML .= $mycommit->port;
 						
-							if (strlen($myrow["version"]) > 0) {
-								$HTML .= ' ' . $myrow["version"];
-								if (strlen($myrow["revision"]) > 0 && $myrow["revision"] != "0") {
-						    		$HTML .= '-' . $myrow["revision"];
+							if (strlen($mycommit->version) > 0) {
+								$HTML .= ' ' . $mycommit->version;
+								if (strlen($mycommit->revision) > 0 && $mycommit->revision != "0") {
+						    		$HTML .= '-' . $mycommit->revision;
 								}
 							}
 
 							$HTML .= "</A></B></BIG>\n";
 
-							$HTML .= '<A HREF="/' . $myrow["category"] . '/">';
-							$HTML .= $myrow["category"]. "</A>";
+							$HTML .= '<A HREF="/' . $mycommit->category . '/">';
+							$HTML .= $mycommit->category. "</A>";
 							$HTML .= '&nbsp;';
 
 							if ($User->id) {
-								if ($myrow["watch"]) {
-									$HTML .= ' '. freshports_Watch_Link_Remove($User->watch_list_add_remove, $myrow["watch"], $myrow["element_id"]) . ' ';
+								if ($mycommit->watch) {
+									$HTML .= ' '. freshports_Watch_Link_Remove($User->watch_list_add_remove, $mycommit->watch, $mycommit->element_id) . ' ';
 								} else {
-									$HTML .= ' '. freshports_Watch_Link_Add   ($User->watch_list_add_remove, $myrow["watch"], $myrow["element_id"]) . ' ';
+									$HTML .= ' '. freshports_Watch_Link_Add   ($User->watch_list_add_remove, $mycommit->watch, $mycommit->element_id) . ' ';
 								}
 							}
 
 							// indicate if this port has been removed from cvs
-							if ($myrow["status"] == "D") {
+							if ($mycommit->status == "D") {
 								$HTML .= " " . freshports_Deleted_Icon() . "\n";
 							}
 
 							// indicate if this port needs refreshing from CVS
-							if ($myrow["needs_refresh"]) {
+							if ($mycommit->needs_refresh) {
 								$HTML .= " " . freshports_Refresh_Icon() . "\n";
 							}
 
-							if ($myrow["date_added"] > Time() - 3600 * 24 * $DaysMarkedAsNew) {
+							if ($mycommit->date_added > Time() - 3600 * 24 * $DaysMarkedAsNew) {
 								$MarkedAsNew = "Y";
 								$HTML .= freshports_New_Icon() . "\n";
 							}
 
-							if ($myrow["forbidden"]) {
+							if ($mycommit->forbidden) {
 								$HTML .= ' ' . freshports_Forbidden_Icon() . "\n";
 							}
 
-							if ($myrow["broken"]) {
+							if ($mycommit->broken) {
 								$HTML .= ' '. freshports_Broken_Icon() . "\n";
 							}
 
-							$HTML .= freshports_CommitFilesLink($myrow["message_id"], $myrow["category"], $myrow["port"]);
+							$HTML .= freshports_CommitFilesLink($mycommit->message_id, $mycommit->category, $mycommit->port);
 							$HTML .= "&nbsp;";
 
-							$HTML .= htmlspecialchars($myrow["short_description"]) . "\n";
+							$HTML .= htmlspecialchars($mycommit->short_description) . "\n";
 						}
 
 						$j++;
@@ -312,21 +236,20 @@ ports. A port is marked as new for 10 days.
 
 
 					if ($NumberOfPortsInThisCommit > $MaxNumberPortsToShow) {
-						$HTML .= '<BR>' . freshports_MorePortsToShow($myrow["message_id"], $NumberOfPortsInThisCommit, $MaxNumberPortsToShow);
+						$HTML .= '<BR>' . freshports_MorePortsToShow($mycommit->message_id, $NumberOfPortsInThisCommit, $MaxNumberPortsToShow);
 					}
-
 					$i = $j - 1;
 
 					$HTML .= "\n<BLOCKQUOTE>";
 
-					$HTML .= freshports_PortDescriptionPrint($myrow["commit_description"], $myrow["encoding_losses"], $freshports_CommitMsgMaxNumOfLinesToShow, freshports_MoreCommitMsgToShow($myrow["message_id"], $freshports_CommitMsgMaxNumOfLinesToShow));
+					$HTML .= freshports_PortDescriptionPrint($mycommit->commit_description, $mycommit->encoding_losses, $freshports_CommitMsgMaxNumOfLinesToShow, freshports_MoreCommitMsgToShow($mycommit->message_id, $freshports_CommitMsgMaxNumOfLinesToShow));
 
 					$HTML .= "\n</BLOCKQUOTE>\n</TD></TR>\n\n\n";
+
+					echo $HTML;
 				}
 
-				echo $HTML;
-
-	            echo "</TABLE>\n";
+	           echo "</TABLE>\n";
 			} else {
 				echo "<P>Sorry, nothing found in the database....</P>\n";
 			}

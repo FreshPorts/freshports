@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-list-maintenance.php,v 1.1.2.2 2002-12-04 21:32:52 dan Exp $
+	# $Id: watch-list-maintenance.php,v 1.1.2.3 2002-12-04 21:39:51 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -176,11 +176,36 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 <TR><TD>
 <?php
 	if ($ErrorMessage) {
-		echo "WARNING: $ErrorMessage<br>";
-   }
+?>
+<TABLE WIDTH="100%" BORDER="1" ALIGN="center" CELLPADDING=1 CELLSPACING=0 BORDER="1">
+<TR><TD VALIGN=TOP>
+<TABLE WIDTH="100%">
+<TR>
+	<? freshports_PageBannerText("Let's try that again!") ?>
+</TR>
+<TR BGCOLOR="#ffffff">
+<TD>
+  <TABLE WIDTH="100%" CELLPADDING=0 CELLSPACING=0 BORDER=0>
+  <TR valign=top>
+   <TD><img src="/images/warning.gif"></TD>
+   <TD WIDTH="100%">
+  <p><?php		echo "WARNING: $ErrorMessage"; ?></p>
+ <p>If you need help, please ask in the forum. </p>
+ </TD>
+ </TR>
+ </TABLE>
+</TD>
+</TR>
+</TABLE>
+</TD>
+</TR>
+</TABLE>
+<BR>
+<?php
+}
 ?>
 
-<TABLE WIDTH="100%" BORDER="10" CELLSPACING="0" CELLPADDING="5">
+<TABLE WIDTH="100%" BORDER="1" CELLSPACING="0" CELLPADDING="5">
 <TR><td><b>Watch Lists</b></td><td><b>Actions</b></td><td><b>Options</b></td></tr>
   <TR>
     <TD valign="top">
@@ -222,7 +247,7 @@ When clicking on Add/Remove for a port,<br> the action should affect
     </TR>
 </TABLE>
 </TABLE>
-<p>
+<H2>Help</H2>
 <ul>
 <li><b>Watch Lists</b> - this is what it's all about
 	<ul>

@@ -95,8 +95,20 @@ $sql = "select ports.id, ports.name as port, change_log.commit_date as updated_r
        "  and change_log.id                   = change_log_port.change_log_id " .
        "  and change_log.commit_date          > '" . date("Y-m-d", time() - 60*60*24*7) . "' ";
 
+$AnnounceFile = "news.announcement.txt";
+if (file_exists($AnnounceFile) && filesize($AnnounceFile) > 4) {
+   $sql .= " order by $sort limit 19";
+   $HTML .= '  <item>' . "\n";
+   $HTML .= '    <title>Please take our survey</title>' . "\n";
+   $HTML .= '    <link>http://freshports.org/survey/</link>' . "\n";
+   $HTML .= '    <description>Help us design FreshPorts2</description>' . "\n";
+   $HTML .= '  </item>' . "\n";
 
-$sql .= " order by $sort limit 20";
+   $TEXT .= 'Please take our survey' . "\n";
+   $TEXT .= 'http://freshports.org/survey/' . "\n";
+} else {
+   $sql .= " order by $sort limit 20";
+}
 
 if ($Debug) {
    echo $sql;

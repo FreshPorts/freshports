@@ -1,5 +1,5 @@
 <?
-   # $Id: categories.php,v 1.1.2.1 2002-01-02 02:53:35 dan Exp $
+   # $Id: categories.php,v 1.1.2.2 2002-01-05 02:00:13 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -22,9 +22,9 @@
 You can sort each column by clicking on the header.  e.g. click on <b>Category</b> to sort by category.
 </td></tr>
 <tr><td valign="top" width="100%">
-<table width="100%" border="0">
+<table width="100%" border="0" CELLPADDING="5">
   <tr>
-    <td colspan="4" bgcolor="#AD0040" height="29"><font color="#FFFFFF" size="+2">freshports - list of categories</font></td>
+    <td colspan="4" bgcolor="#AD0040" height="29"><font color="#FFFFFF" size="+2"><? echo $FreshPortsTitle ?> - list of categories</font></td>
   </tr>
 <script language="php">
 
@@ -83,9 +83,8 @@ if (!file_exists($cache_file)) {
 
 $sql = "select max(commit_log.commit_date) - INTERVAL '10800 seconds' as updated, count(ports.id) as count, " .
        "categories.id as category_id, categories.name as category, categories.description as description ".
-       "from ports, categories, commit_log, element ".
+       "from categories, element, ports left outer join commit_log on ( ports.last_commit_id = commit_log.id ) ".
        "WHERE ports.category_id    = categories.id " .
-       "  and ports.last_commit_id = commit_log.id " .
        "  and ports.element_id     = element.id " .
        "  and element.status       = 'A' " .
        "group by categories.id, categories.name, categories.description ";
@@ -139,7 +138,7 @@ if (!$result) {
 	while ($myrow = pg_fetch_array($result, $i)) {
 		$HTML .= freshports_echo_HTML('<tr>');
 		$HTML .= freshports_echo_HTML('<td valign="top"><a href="/' . $myrow["category"] . '/">' . $myrow["category"] . '</a></td>');
-		$HTML .= freshports_echo_HTML('<td valign="top">' . $myrow["count"] . '</td>');
+		$HTML .= freshports_echo_HTML('<td valign="top" ALIGN="right">' . $myrow["count"] . '</td>');
 		$HTML .= freshports_echo_HTML('<td valign="top">' . $myrow["description"] . '</td>');
 		$HTML .= freshports_echo_HTML('<td valign="top"><font size="-1">' . $myrow["updated"] . '</font></td>');
 		$HTML .= freshports_echo_HTML("</tr>\n");

@@ -1,45 +1,53 @@
 <?
-	# $Id: footer.php,v 1.5.2.3 2002-02-16 23:52:53 dan Exp $
+	# $Id: footer.php,v 1.5.2.4 2002-02-21 14:53:17 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 ?>
-<hr>
-<table width="100%" border="0">
+<HR>
+<TABLE WIDTH="98%" BORDER="0">
 <?
 
 if ($ShowPoweredBy) {
 ?>
-<tr>
+<TR>
 
-<td align="center">
+<TD align="center">
 
-<a href="http://www.freebsd.org/"><img src="/images/pbfbsd2.gif"
-alt="powered by FreeBSD" border="0" width="171" height="64"></a>
+<A HREF="http://www.freebsd.org/"><IMG SRC="/images/pbfbsd2.gif"
+ALT="powered by FreeBSD" BORDER="0" WIDTH="171" HEIGHT="64"></A>
 
-<a href="http://www.mysql.com/"><img src="/images/mysql.gif"
-alt="powered by mysql" border="0" width="88" height="46"></a>
+&nbsp;
 
-<a href="http://www.php.net/"><img src="/images/php3.gif"
-alt="powered by php" border="0" width="88" height="31"></a>
+<A HREF="http://www.postgresql.org/"><IMG SRC="/images/postgresql-powered_button4.gif"
+ALT="powered by PostgreSQL" BORDER="0" WIDTH="182" HEIGHT="41"></A>
 
-</td></tr>
-<tr><td align="center">
+&nbsp;
 
-<a href="http://www.apache.org/"><img src="/images/apache_pb.gif"
-alt="powered by apache" border="0" width="259" height="32"></a>
+<A HREF="http://www.php.net/"><IMG SRC="/images/php-med-trans-light.gif"
+ALT="powered by php" BORDER="0" WIDTH="95" HEIGHT="50"></A>
 
-<a href="http://www.phorum.org/"><img src="/phorum/images/phorum.gif"
-alt="powered by phorum" border="0" width="88" height="31"></a>
+</TD></TR>
+<TR><TD align="center">
 
-</tr>
+<A HREF="http://www.apache.org/"><IMG SRC="/images/apache_pb.gif" 
+ALT="powered by apache" BORDER="0" WIDTH="259" HEIGHT="32"></A>
+
+&nbsp;&nbsp;&nbsp;
+
+<A HREF="http://www.phorum.org/"><IMG SRC="/phorum/images/phorum.gif"
+ALT="powered by phorum" BORDER="0" WIDTH="88" HEIGHT="31"></A>
+
+</TR>
+
 <?
 }
 ?>
-<tr><td align="right">
-<small><a href="/legal.php" target="_top">Copyright</a> 2000,2001 <a href="http://www.dvl-software.com/">DVL Software Limited</a>.
-All rights reserved.</small></p>
-</td></tr>
-</table>
+
+<TR><TD align="right">
+<SMALL><A HREF="/legal.php" target="_top">Copyright</A> 2000,2001 <A HREF="http://www.dvl-software.com/">DVL Software Limited</A>.
+All rights reserved.</SMALL>
+</TD></TR>
+</TABLE>
 
 <?
 	diary_ads_Random();

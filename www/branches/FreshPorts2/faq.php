@@ -1,5 +1,5 @@
 <?
-	# $Id: faq.php,v 1.1.2.7 2002-04-06 15:08:54 dan Exp $
+	# $Id: faq.php,v 1.1.2.8 2002-04-06 15:10:55 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -30,7 +30,7 @@
 
 	<TR><TD>
 	This website will help you keep up with the latest releases of your
-	favourite software.  When a new version of the software is available,
+	favorite software.  When a new version of the software is available,
 	FreshPorts will send you an email telling you about the change.
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
@@ -60,10 +60,10 @@
 	<TR><TD>
 	A port is a simple easy way to install an application.
 	A port is a collection of files.  These files contain the location
-	of the source file, any patches which must be appplied,
+	of the source file, any patches which must be applied,
 	instructions for building the application, and the installation
 	procedure.  Removing an installed port is also easy.  For full
-	details on how to use ports, please refer to the offical port
+	details on how to use ports, please refer to the official port
 	documents in the <A HREF="http://www.FreeBSD.org/handbook/">FreeBSD
 	Handbook</A>.
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
@@ -87,8 +87,8 @@
 
 <? freshports_PageBannerText("How do I get these ports?"); ?>
 	<TR><TD>For full information on how to obtain the ports which appear on
-	this webite, please see <A HREF="http://www.FreeBSD.org/ports/">FreeBSD Ports</A>.
-	The easist way to get a port is via cvsup.  An abbreviated example is
+	this website, please see <A HREF="http://www.FreeBSD.org/ports/">FreeBSD Ports</A>.
+	The easiest way to get a port is via cvsup.  An abbreviated example is
 
 	<BLOCKQUOTE>
 	<CODE CLASS="code">cvsup -h cvsup.your.fav.server /usr/share/examples/cvsup/ports-supfile</CODE>
@@ -108,7 +108,7 @@
 	arrives.
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
-<? freshports_PageBannerText("What does unknown mean for a revsion number?"); ?>
+<? freshports_PageBannerText("What does unknown mean for a revision number?"); ?>
 
 	<TR><TD>It means the data has been converted from an earlier
 		version of the FreshPorts database that did not record this information.

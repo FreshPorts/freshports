@@ -1,5 +1,5 @@
 <?
-	# $Id: port-watch.php,v 1.1.2.22 2002-12-12 02:45:23 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.23 2002-12-13 19:40:24 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -19,22 +19,24 @@ if (!$visitor) {
 	exit;  /* Make sure that code below does not get executed when we redirect. */
 }
 
-$category = $_GET['category'];
+$category = $_REQUEST['category'];
 
+/*
 if (!$category || $category != strval(intval($category))) {
    $category = 0;                                     
 } else {                                              
    $category = intval($category);                     
 }
-
+*/
 $CategoryID = $category;
 
 #$categoryname = freshports_Category_Name($category, $db);
 
+/*
 	$category = new Category($db);
 	$category->FetchByID($CategoryID);
 	$title = $category->{name};
-
+*/
 
 // find out the watch id for this user's main watch list
 $sql_get_watch_ID = "select watch_list.id ".
@@ -177,22 +179,18 @@ you have selected a notification frequency within your <a href="customize.php">p
 
 $DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
 
-//echo "UserID=$User->id";
+$sql = "
+  select element.id, 
+         element.name as port, 
+         element.status, 
+         categories.name as category
+    from ports, element, categories
+   WHERE categories.name   = '$category'
+     and ports.element_id  = element.id 
+     and ports.category_id = categories.id 
+order by element.name";
 
-#echo '<tr><td>' . "\n";
-#
-#echo "&nbsp;</td></tr>\n";
-
-//   echo 'time to update the cache';
-
-$sql = "select element.id, element.name as port, element.status, categories.name as category  ".
-       "  from ports, element, categories ".
-       " WHERE ports.category_id = $CategoryID " .
-	   "   and ports.element_id  = element.id " .
-	   "   and ports.category_id = categories.id " .
-       " order by element.name";
-
-//echo $sql, "<br>\n";
+if ($Debug) echo "<pre>$sql</pre>\n";
 
 $result = pg_exec($db, $sql);
 
@@ -201,9 +199,7 @@ $HTML .= '<tr><td ALIGN="center">' . "\n";
 $numrows = pg_numrows($result);
 if ($numrows) {
 
-   if ($User->id) {
-      $HTML .= '<form action="' . $_SERVER["PHP_SELF"] . "?category=$CategoryID". '" method="POST">';
-   }
+	$HTML .= '<form action="' . $_SERVER["PHP_SELF"] . "?category=$CategoryID". '" method="POST">';
 
    $HTML .= "\n" . '<TABLE BORDER="1" CELLSPACING="0" CELLPADDING="5" BORDERCOLOR="#a2a2a2" BORDERCOLORDARK="#a2a2a2" BORDERCOLORLIGHT="#a2a2a2">' . "\n";
 
@@ -255,28 +251,27 @@ if ($numrows) {
    }
 
    $HTML .= "</table>\n";
-
-} else {
-   echo "no ports found.  perhaps this is an invalid category id.";
-}
-
-$HTML .= '</td></tr>';
-
-echo $HTML;                                                   
-
-</script>
+   
+   echo $HTML;
+?>
 <TR><TD>&nbsp;</TD></TR>
 <tr><td ALIGN="center">
 
 <input TYPE="submit" VALUE="update watch list" name="submit">
 <input TYPE="reset"  VALUE="reset form">
 </td></tr>
-<?
-if ($User->id) {
-   echo '</form>';
-}
-?>
+</form>
+<?php
 
+
+} else {
+	echo '<tr><td ALIGN="center">' . "\n";
+   echo "No ports found.  perhaps this is an invalid category id.";
+	echo "</td></tr>\n";
+}
+
+
+</script>
 </table>
 
 </td>

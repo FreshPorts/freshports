@@ -1,5 +1,5 @@
 <?
-	# $Id: search.php,v 1.1.2.19 2002-05-18 18:17:45 dan Exp $
+	# $Id: search.php,v 1.1.2.20 2002-05-18 18:22:36 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -16,6 +16,7 @@
 	$num		= AddSlashes($_POST["num"]);
 	$category	= AddSlashes($_POST["category"]);
 	$port		= AddSlashes($_POST["port"]);
+	$method		= AddSlashes($_POST["method"]);
 
 	if ($stype == 'messageid') {
 		header("Location: http://$HTTP_HOST/commit.php?message_id=$query");

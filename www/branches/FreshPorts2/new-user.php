@@ -1,7 +1,9 @@
-<?
-	# $Id: new-user.php,v 1.1.2.31 2003-03-17 16:07:24 dan Exp $
+<?php
+	#
+	# $Id: new-user.php,v 1.1.2.32 2003-03-20 02:22:20 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
+	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
@@ -181,13 +183,31 @@ if (!$submit && !$errors) {
       <TR>
         <TD>
 
-<P><BIG><BIG>NOTE:</BIG>You must supply a valid email address.<BR>Instructions to enable your account 
-will be emailed to you at that address.  If you have a spam filter, please allow all
-mail from <CODE CLASS="code">unixathome.org</CODE> and <CODE CLASS="code">freshports.org</CODE>.</BIG></P>
-<P>Your browser must allow cookies for the login to work.</P>
-<P>&nbsp;</P>
+<P><BIG><BIG>Please observe the following points:</BIG>
+
+<ul>
+<li>
+You must supply a valid email address. Instructions to enable your account 
+will be emailed to you at that address.
+
+<li>If you have a spam filter, please allow all
+mail from <CODE CLASS="code">unixathome.org</CODE> and <CODE CLASS="code">freshports.org</CODE>.</BIG>
+
+<li>Please disable any auto-responders for the above domains.  I get enough email
+without being told when you'll be back from holiday or who else I can contact...
+
+<li>Your browser must allow cookies for the login to work.
+
+</ul>
+
+<P>
+Your cooperation with the above will make my life easier.  Thank you.
+
+<hr>
 
 <? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/new-user.php'); ?>
+
+	<hr>
 
     </TD>
   </TR>

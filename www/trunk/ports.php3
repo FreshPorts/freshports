@@ -25,6 +25,9 @@ ports.
                   pkg/DESC, or pkg/COMMENT has changed and has not yet been updated within FreshPorts.
     </td>
   </tr>
+<tr><td colspan="2">
+<font size="+1">If you want to help decide what gets implemented next, have a look at the Vote for change link at the right.</font>
+</td></tr>
 <tr><td valign="top" width="100%">
 <table width="100%" border="0">
 <tr>
@@ -99,10 +102,10 @@ if (!file_exists($cache_file)) {
 if ($UpdateCache == 1) {
 //   echo 'time to update the cache';
 
-$sql = "select ports.id, ports.name as port, ports.last_update as updated, " .
+$sql = "select ports.id, ports.name as port, ports.id as ports_id, ports.last_update as updated, " .
        "categories.name as category, categories.id as category_id, ports.version as version, ".
        "ports.committer, ports.last_update_description as update_description, " .
-       "ports.maintainer, ports.short_description, ".
+       "ports.maintainer, ports.short_description, UNIX_TIMESTAMP(ports.date_created) as date_created, ".
        "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, ports.status " .
        "from ports, categories  ".
        "WHERE ports.system = 'FreeBSD' ".

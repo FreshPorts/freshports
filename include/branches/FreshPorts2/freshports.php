@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.19 2002-01-06 16:48:13 dan Exp $
+   # $Id: freshports.php,v 1.4.2.20 2002-01-06 23:20:03 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -23,11 +23,18 @@ $DateFormatDefault      = "j F Y";
 
 $FreshPortsTitle		= "FreshPorts";
 
+#
+# SEQUENCES
+#
+
+$Sequence_Watch_List_ID	= 'watch_list_id_seq';
+
 // path to the CVS repository
 $freshports_CVS_URL = "http://www.FreeBSD.org/cgi/cvsweb.cgi";
 
 
 function freshports_CookieClear() {
+#	echo " clearing the cookie";
 	SetCookie("visitor", '', 0, '/');
 }
 
@@ -719,5 +726,23 @@ function freshports_PortCommitsFooter($port) {
 	# print the footer for the commits for a port
 	echo "</TABLE>\n</TD>\n</TR>\n";
 }
+
+function freshports_GetNextValue($sequence, $dbh) {
+	$sql = "select nextval('$sequence')";
+
+#	echo "\$sql = '$sql'<BR>";
+
+	$result = pg_exec($dbh, $sql);
+	if ($result && pg_numrows($result)) {
+		$retval    = true;
+		$row       = pg_fetch_array($result,0);
+		$NextValue = $row[0];
+	} else {
+		pg_errormessage() . ' sql = $sql';
+	}
+
+	return $NextValue;
+}
+
 
 ?>

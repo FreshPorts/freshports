@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.33 2003-10-24 16:24:02 dan Exp $
+	# $Id: commit.php,v 1.1.2.34 2003-11-26 15:56:14 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -232,7 +232,6 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 		} else {
 			echo "read from test failed <pre>$sql</pre>";
 		}
-		pg_exec ($database, "end");
 	} else {
 		echo "no connection";
 	}

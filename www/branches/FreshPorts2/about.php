@@ -1,5 +1,5 @@
 <?
-	# $Id: about.php,v 1.1.2.4 2002-04-19 17:06:18 dan Exp $
+	# $Id: about.php,v 1.1.2.5 2002-04-19 19:46:43 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -78,14 +78,12 @@ But Dan didn't create the site all by himself.  Have a look at <a href="authors.
 About the Authors</a> for details of who else helped.</p>
 </table>
 </td>
-  <TR>
-  <td valign="top" width="100%">
+  <td valign="top">
     <?
        $ShowPoweredBy = 1;
        include("./include/side-bars.php");
     ?>
  </td>
-</tr>
 </table>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">

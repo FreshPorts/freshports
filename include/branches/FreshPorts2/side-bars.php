@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: side-bars.php,v 1.4.2.47 2003-05-02 12:09:42 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.48 2003-05-15 18:32:46 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -80,7 +80,11 @@ if ($visitor) {
    </TR>
    </TABLE>
 
-<BR>
+<P>
+
+<SMALL>Server and bandwidth provided by <A HREF="http://www.bchosting.com/" TARGET="_new">BChosting.com</A></SMALL>
+
+</P>
 
 <TABLE WIDTH="<? echo $ColumnWidth ?>" BORDER="1" CELLSPACING="0" CELLPADDING="5">
 	<TR>

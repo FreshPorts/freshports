@@ -1,5 +1,5 @@
 <?
-	# $Id: commits.php,v 1.1.2.4 2002-11-28 05:05:01 dan Exp $
+	# $Id: commits.php,v 1.1.2.5 2002-12-03 19:26:08 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -77,7 +77,7 @@ class Commits {
 
 #		echo '<pre>' . $sql . '</pre>';
 
-		if ($Debug)	echo "Element::FetchByName sql = '$sql'<BR>";
+		if ($Debug)	echo "commits::Fetch sql = '$sql'<BR>";
 
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {

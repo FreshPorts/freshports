@@ -31,6 +31,7 @@
        <font SIZE="-1"><a href="http://freshports.org/ports-new.php3">Brand new ports</a></font><br>
        <font SIZE="-1"><a href="http://freshports.org/ports.php3">Updated ports</a></font><br>
        <font SIZE="-1"><a href="http://freshports.org/categories.php3">Categories</a></font><br>
+       <font SIZE="-1"><a href="http://freshports.org/search.php3">Search</a></font><br>
    </td>
    </tr>
    </table>

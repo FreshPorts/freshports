@@ -1,5 +1,5 @@
 <?
-	# $Id: watch.php,v 1.1.2.13 2002-03-25 20:54:50 dan Exp $
+	# $Id: watch.php,v 1.1.2.14 2002-04-14 18:52:14 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -121,13 +121,14 @@ $LastCategory='';
 $GlobalHideLastChange = "N";
 $numrows = pg_numrows($result);
 
-$DaysMarkedAsNew= $DaysMarkedAsNew= $GlobalHideLastChange= $ShowChangesLink= $ShowDescriptionLink= $ShowDownloadPortLink= $ShowHomepageLink= $ShowLastChange= $ShowMaintainedBy= $ShowPortCreationDate= $ShowPackageLink= $ShowShortDescription =1;
+$ShowDescriptionLink = 0;
+$DaysMarkedAsNew= $DaysMarkedAsNew= $GlobalHideLastChange= $ShowChangesLink = $ShowDownloadPortLink= $ShowHomepageLink= $ShowLastChange= $ShowMaintainedBy= $ShowPortCreationDate= $ShowPackageLink= $ShowShortDescription =1;
 $ShowPortCreationDate = 0;
 $HideCategory = 1;
 $ShowCategories		= 1;
 GLOBAL	$ShowDepends;
 $ShowDepends		= 1;
-#$HideDescription = 1;
+$HideDescription = 1;
 $ShowEverything  = 1;
 $ShowShortDescription = "Y";
 $ShowMaintainedBy     = "Y";

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.94 2004-11-17 22:37:27 dan Exp $
+	# $Id: index.php,v 1.1.2.95 2004-11-29 02:41:01 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -117,9 +117,10 @@ if ($db) {
         <? //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPorts) ?>
 </TR>
 <TR><TD>
-<P>
-Welcome to FreshPorts, where you can find the latest information on your favourite
-ports. A port is marked as new for 10 days.
+<p>FreshPorts has everything you want to know about FreeBSD software, ports, packages,
+applications, whatever term you want to use.
+<p>
+A port is marked as new for 10 days.
 <?php
 	echo PortsFreezeStatus();
 ?>

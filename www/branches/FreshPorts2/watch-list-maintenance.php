@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-list-maintenance.php,v 1.1.2.29 2005-01-05 23:14:39 dan Exp $
+	# $Id: watch-list-maintenance.php,v 1.1.2.30 2005-01-13 22:15:08 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -212,6 +212,23 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 }
 
 if ($Debug) echo 'add remove = ' . $User->watch_list_add_remove;
+
+function CheckForNoDefaultAndAddToDefault($db, $User) {
+	$Message = '';
+
+	if (freshports_WatchListCountDefault($db, $User->id) == 0) {
+		if ($User->watch_list_add_remove == 'default') {
+			$Message = 'You have no default watch lists.  You have chosen to act ' .
+				'upon the default watch list[s].  With this combination, you will be unable to add ' .
+				'ports using the one-click method.  It is suggested that you set at least one watch list ' .
+				'to be the default watch list.';
+		}
+	}
+
+	return $Message;
+}
+
+$ErrorMessage .= CheckForNoDefaultAndAddToDefault($db, $User);
 
 ?>
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.42 2003-04-28 16:25:14 dan Exp $
+	# $Id: search.php,v 1.1.2.43 2003-05-23 17:32:25 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -37,10 +37,15 @@
 	$method				= AddSlashes($_REQUEST['method']);
 	$deleted				= AddSlashes($_REQUEST['deleted']);
 	$casesensitivity	= AddSlashes($_REQUEST['casesensitivity']);
+	$start				= intval(AddSlashes($_REQUEST['start']));
 
 	if ($stype == 'messageid') {
 		header('Location: http://' . $_SERVER['HTTP_HOST'] . "/commit.php?message_id=$query");
 		exit;
+	}
+
+	if ($start < 0 || $start > 20000) {
+		$start = 1;
 	}
 
 	#
@@ -269,7 +274,9 @@ switch ($deleted) {
 $sql .= "\n order by categories.name, element.name";
 
 
-$sql .= "\n limit $num";
+#$sql .= "\n limit $num";
+
+$sql .= "\n OFFSET $start";
 
 $AddRemoveExtra  = "&&origin=$SCRIPT_NAME?query=" . $query. "+stype=$stype+num=$num+method=$method";
 if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<BR>";
@@ -316,7 +323,7 @@ $Port->LocalResult = $result;
 
 }
 ?>
-<form METHOD="POST" ACTION="<? echo $_SERVER["PHP_SELF"] ?>">
+<form ACTION="<? echo $_SERVER["PHP_SELF"] ?>">
 Search for:<BR>
 	<SELECT NAME="stype" size="1">
 		<OPTION VALUE="name"             <? if ($stype == "name")             echo 'SELECTED'?>>Port Name</OPTION>
@@ -361,6 +368,7 @@ Search for:<BR>
 	NOTE: When searching on 'Message ID' only exact matches will succeed.
 
   <INPUT TYPE="hidden" NAME="search" VALUE="1">
+  <INPUT TYPE="hidden" NAME="start"  VALUE="1">
 </form>
 
 &nbsp;
@@ -373,9 +381,32 @@ if ($NumRows == 0) {
    $HTML .= " no results found<br>\n";
 } else {
 
-//   echo "retrieving $NumRows rows<br>\n";
+	$NumFetches = min($num, $NumRows);
+	if ($NumFetches != $NumRows) {
+		$MoreToShow = 1;
+	} else {
+		$MoreToShow = 0;
+	}
 
-	$HTML .= "Number of ports found: $NumRows<BR>";
+	$NumPortsFound = 'Number of matches: ' . ($start + $NumRows - 1);
+	if ($MoreToShow || $start > 1) {
+		$NumPortsFound .= " (showing only $start - " . ($start + $NumFetches - 1) . ')';
+	}
+
+	if ($start > 1) {
+		$QueryString = $_SERVER['QUERY_STRING'];
+		$QueryString = preg_replace("/start=(\d+)/e", "'start=' . max(1, ($start - $num))", $QueryString);
+		$NumPortsFound .= ' <a href="' . $_SERVER['PHP_SELF'] . '?' . $QueryString . '">Previous page</a>';
+	}
+
+	if ($MoreToShow) {
+		$QueryString = $_SERVER['QUERY_STRING'];
+		$QueryString = preg_replace("/start=(\d+)/e", "'start=' . ($start + $num)", $QueryString);
+		$NumPortsFound .= ' <a href="' . $_SERVER['PHP_SELF'] . '?' . $QueryString . '">Next page</a>';
+	}
+
+	
+	$HTML .= $NumPortsFound;
 
 $ShowCategories		= 1;
 GLOBAL	$ShowDepends;
@@ -392,7 +423,7 @@ $ShowDescriptionLink  = "Y";
 $ShowHomepageLink     = "Y";
 $ShowDownloadPortLink = "Y";
 
-	for ($i = 0; $i < $NumRows; $i++) {
+	for ($i = 0; $i < $NumFetches; $i++) {
 		$Port->FetchNth($i);
 		$HTML .= freshports_PortDetails($Port, $Port->dbh, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, 
                      $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, 
@@ -402,7 +433,7 @@ $ShowDownloadPortLink = "Y";
 
 }
 
-$HTML .= "Number of ports found: $NumRows<BR>";
+	$HTML .= $NumPortsFound;
 
 echo $HTML;
 echo "</td></tr>\n";

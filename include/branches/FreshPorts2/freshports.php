@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.207 2005-01-22 14:59:59 dan Exp $
+	# $Id: freshports.php,v 1.4.2.208 2005-01-23 03:11:28 dan Exp $
 	#
-	# Copyright (c) 1998-2004 DVL Software Limited
+	# Copyright (c) 1998-2005 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/constants.php');

@@ -1,7 +1,9 @@
-<?
-	# $Id: forgotten-password.php,v 1.1.2.21 2003-04-27 14:48:11 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: forgotten-password.php,v 1.1.2.22 2003-05-06 11:33:13 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
@@ -55,8 +57,10 @@ if ($submit) {
          if ($Debug) echo $eMail . "<br>\n";
 
          $sql = "select * from users where email = '$eMail'";
-echo "<pre>This is the \$sql='$sql'</pre>\n";
-echo "<pre>$sql</pre>\n";
+			if ($Debug) {
+				echo "<pre>This is the \$sql='$sql'</pre>\n";
+				echo "<pre>$sql</pre>\n";
+			}
 
          if ($Debug) echo "$sql<br>\n";
 
@@ -74,14 +78,13 @@ echo "<pre>$sql</pre>\n";
 
       $OKToMail = 1;
       if ($myrow["emailbouncecount"] > 0) {
-         GLOBAL $mailto;
          $error = "Sorry, but previous email to you has bounced, so we're not going to try sending it out.  Please contact " .
-                  'the <A HREF="' . $mailto . ':webmaster&#64;freshports.org?subject=I forgot my password">webmaster</A> for help.';
+                  'the <A HREF="' . MAILTO . ':webmaster&#64;freshports.org?subject=I forgot my password">webmaster</A> for help.';
          $OKToMail = 0;
       } else {
          if ($myrow["email"] == "") {
              $error = 'Guess what?  You never gave us an email address.  So I guess you must ' . 
-                      'contact the <A HREF="' . $mailto . ':webmaster&#64;freshports.org?subject=I forgot my password">webmaster</A> for help.';
+                      'contact the <A HREF="' . MAILTO . ':webmaster&#64;freshports.org?subject=I forgot my password">webmaster</A> for help.';
              $OKToMail = 0;
          }
       }
@@ -126,13 +129,13 @@ if ($error) {
             <TR>
             <TD>
                <TABLE WIDTH="100%" BORDER="0" CELLPADDING="1">
-                  <TR BGCOLOR="#AD0040"><TD><b><FONT COLOR="#ffffff" SIZE=+0>We have a problem!</FONT></b></TD>
+                  <TR BGCOLOR="#AD0040"><TD><b><FONT COLOR="#ffffff" SIZE="+2">We have a problem!</FONT></b></TD>
                  </TR> 
                  <TR BGCOLOR="#ffffff">
             <TD>
               <TABLE WIDTH="100%" CELLPADDING="3" BORDER="0">
-              <TR VALIGN=top>
-               <TD><img src="/images/warning.gif"></TD>
+              <TR VALIGN="middle">
+               <TD><img src="/images/warning.gif" ALT="warning!"></TD>
                <TD WIDTH="100%">
             <p>';
       echo $error;     
@@ -153,13 +156,13 @@ if ($error) {
             <TR>
             <TD>
                <TABLE WIDTH="100%" BORDER="0" CELLPADDING="1">
-                  <TR BGCOLOR="#AD0040"><TD><b><FONT COLOR="#ffffff" SIZE=+0>UserID not found!</FONT></b></TD>
+                  <TR BGCOLOR="#AD0040"><TD><b><FONT COLOR="#ffffff" SIZE="+2">UserID not found!</FONT></b></TD>
                  </TR>
                  <TR BGCOLOR="#ffffff">
             <TD>
               <TABLE WIDTH="100%" CELLPADDING="3" BORDER="0">
               <TR VALIGN=top>
-               <TD><img src="/images/warning.gif"></TD>
+               <TD><img src="/images/warning.gif" ALT="warning!"></TD>
                <TD WIDTH="100%">
               <p>The ';
 
@@ -191,10 +194,10 @@ if ($error) {
 }
 ?>
 
-<TABLE CELLPADDING="0" BORDER="0" BGCOLOR="#AD0040" WIDTH="100%"> <TR> <TD>
+<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="#AD0040" WIDTH="100%"> <TR> <TD>
 
 
-<TABLE WIDTH="100%" BORDER="0" CELLPADDING="1" BGCOLOR="#AD0040">
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="5" BGCOLOR="#AD0040">
 
 <TR BGCOLOR="#AD0040"><TD BGCOLOR="#AD0040"><FONT COLOR="#ffffff" SIZE="+2">
 <?
@@ -209,11 +212,10 @@ if ($MailSent) {
 <TR><TD BGCOLOR="#ffffff">
 <?
 if ($MailSent) {
-GLOBAL $mailto;
 ?>
 <p>
 Your password has been sent to the address we have on file.  If you still can't get logged in
-please contact <A HREF="<? echo $mailto; ?>:webmaster&#64;freshports.org?subject=I forgot my password">the webmaster</A>
+please contact <A HREF="<? echo MAILTO; ?>:webmaster&#64;freshports.org?subject=I forgot my password">the webmaster</A>
 and we'll see what we can do.
 </p>
 <? } else {  ?>

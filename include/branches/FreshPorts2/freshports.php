@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.115 2002-12-08 16:46:06 dan Exp $
+	# $Id: freshports.php,v 1.4.2.116 2002-12-09 20:30:31 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -105,30 +105,34 @@ function freshports_Encoding_Errors() {
 	return '<IMG SRC="/images/error.gif" ALT="Encoding Errors (not all of the commit message was ASCII)" TITLE="Encoding Errors (not all of the commit message was ASCII)" BORDER="0" WIDTH="16" HEIGHT="16">';
 }
 
-function freshports_Watch_Link_Add($WatchListID, $ElementID) {
-	GLOBAL $WatchListAsk;
-
+function freshports_Watch_Link_Add($WatchListAsk, $WatchListCount, $ElementID) {
 	$HTML = '<SMALL><A HREF="/watch-list.php?';
 	$HTML .= 'add='  . $ElementID;
-	$HTML .= '&';
-	$HTML .= 'wlid=' . $WatchListID;
-	if ($WatchListAsk) {
+
+	if ($WatchListAsk == 'ask') {
 		$HTML .= '&ask=1';
 	}
+
+	$HTML .= '"';
+	$HTML .= ' TITLE="add to watch list';
+
 	$HTML .= '">' . freshports_Watch_Icon_Add() . '</A></SMALL>';
 
 	return $HTML;
 }
 
-function freshports_Watch_Link_Remove($WatchListID, $ElementID) {
-	GLOBAL $WatchListAsk;
-
+function freshports_Watch_Link_Remove($WatchListAsk, $WatchListCount, $ElementID) {
 	$HTML = '<SMALL><A HREF="/watch-list.php?';
 	$HTML .= 'remove=' . $ElementID;
-	$HTML .= '&';
-	$HTML .= 'wlid='   . $WatchListID;
-	if ($WatchListAsk) {
+
+	if ($WatchListAsk == 'ask') {
 		$HTML .= '&ask=1';
+	}
+
+	$HTML .= '"';
+	$HTML .= ' TITLE="on ' . $WatchListCount . ' watch list';
+	if ($WatchListCount > 1) {
+		$HTML .= 's';
 	}
 	$HTML .= '">' . freshports_Watch_Icon() . '</A></SMALL>';
 	
@@ -580,7 +584,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 	GLOBAL $FreshPortsWatchedPortSuffix;
 	GLOBAL $FreshPortsWatchedPortNotPrefix;
 	GLOBAL $FreshPortsWatchedPortNotSuffix;
-	GLOBAL $WatchListID;
+	GLOBAL $User;
 
 	$MarkedAsNew = "N";
 	$HTML .= "<DL>\n";
@@ -612,11 +616,11 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 		$HTML .= ' / <A HREF="/' . $port->category . '/">' . $port->category . '</A>';
 	}
 
-	if ($WatchListID && $IndicateWatchListStatus) {
+	if ($User->id && $IndicateWatchListStatus) {
 		if ($port->{onwatchlist}) {
-			$HTML .= ' '. freshports_Watch_Link_Remove($WatchListID, $port->{element_id});
+			$HTML .= ' '. freshports_Watch_Link_Remove($User->watch_list_add_remove, $port->onwatchlist, $port->{element_id});
 		} else {
-			$HTML .= ' '. freshports_Watch_Link_Add($WatchListID, $port->{element_id});
+			$HTML .= ' '. freshports_Watch_Link_Add   ($User->watch_list_add_remove, $port->onwatchlist, $port->{element_id});
 		}
 	}
 
@@ -695,7 +699,13 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 	# show the date added, if asked
 
 	if ($ShowDateAdded == "Y" || $ShowEverything) {
-		$HTML .= 'port added on <font size="-1">' . $port->date_added . '</font><BR>' . "\n";
+		$HTML .= 'port added: <font size="-1">';
+		if ($port->date_added) {
+			$HTML .= $port->date_added;
+		} else {
+			$HTML .= "unknown";
+		}
+		$HTML .= '</font><BR>' . "\n";
 	}
 
    if ($port->categories) {

@@ -1,5 +1,5 @@
 <?
-	# $Id: forgotten-password.php,v 1.1.2.11 2002-05-18 19:10:41 dan Exp $
+	# $Id: forgotten-password.php,v 1.1.2.12 2002-05-18 19:14:15 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -31,7 +31,7 @@ $MailSent = 0;
 
 if ($submit) {
 //   echo "UserID = $UserID\n";
-//   $Debug=1;
+	$Debug=0;
    // process form
 
    $error = '';
@@ -43,6 +43,9 @@ if ($submit) {
    }
 
    $OK = 1;
+
+	$UserID	= AddSlashes($_POST["UserID"]);
+	$eMail	= AddSlashes($_POST["eMail"]);
 
    if ($UserID) {
       $errors = "";

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.38 2004-03-22 20:28:44 dan Exp $
+	# $Id: commit.php,v 1.1.2.39 2004-04-01 18:23:53 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -11,8 +11,52 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 
+DEFINE('MAX_PAGE_SIZE',     1000);
+DEFINE('DEFAULT_PAGE_SIZE', 500);
+
+DEFINE('NEXT_PAGE',		'Next');
+
 	if (IsSet($_GET['message_id'])) $message_id = AddSlashes($_GET['message_id']);
 	if (IsSet($_GET['commit_id']))  $commit_id  = AddSlashes($_GET['commit_id']);
+
+	if (IsSet($_REQUEST['page']))      $PageNo   = $_REQUEST['page'];
+	if (IsSet($_REQUEST['page_size'])) $PageSize = $_REQUEST['page_size'];
+
+	if ($Debug) {
+		echo "\$page      = '$page'<br>\n";
+		echo "\$page_size = '$page_size'<br>\n";
+	}
+
+	if (!IsSet($page) || $page == '') {
+		$page = 1;
+	}
+
+	if (!IsSet($page_size) || $page_size == '') {
+		$page_size = $User->page_size;
+	}
+
+	if ($Debug) {
+		echo "\$page      = '$page'<br>\n";
+		echo "\$page_size = '$page_size'<br>\n";
+	}
+
+	SetType($PageNo,   "integer");
+	SetType($PageSize, "integer"); 
+
+	if (!IsSet($PageNo)   || !str_is_int("$PageNo")   || $PageNo   < 1) {
+		$PageNo = 1;
+	}
+
+	if (!IsSet($PageSize) || !str_is_int("$PageSize") || $PageSize < 1 || $PageSize > MAX_PAGE_SIZE) {	
+		$PageSize = DEFAULT_PAGE_SIZE;
+	}
+
+	if ($Debug) {
+		echo "\$PageNo   = '$PageNo'<br>\n";
+		echo "\$PageSize = '$PageSize'<br>\n";
+	}
+
+
 
 	$Title = 'Commit found by ';
 	if ($message_id) {
@@ -23,6 +67,38 @@
 	freshports_Start($Title,
 					$FreshPortsName . ' - new ports, applications',
 					'FreeBSD, index, applications, ports');
+
+function str_is_int($str) {
+	$var = intval($str);
+	return ($str == $var);
+}
+
+function freshports_CommitNextPreviousPage($URL, $NumRowsTotal, $PageNo, $PageSize) {
+
+	$HTML .= "Result Page:";
+
+	$NumPages = ceil($NumRowsTotal / $PageSize);
+
+	for ($i = 1; $i <= $NumPages; $i++) {
+		if ($i == $PageNo) {
+			$HTML .= "&nbsp;<b>$i</b>";
+			$HTML .= "\n";
+		} else {
+			$HTML .= '&nbsp;<a href="' . $URL . '&page=' . $i .  '">' . $i . '</a>';
+			$HTML .= "\n";
+		}
+	}
+
+	if ($PageNo == $NumPages) {
+		$HTML .= '&nbsp; ' . NEXT_PAGE;
+	} else {
+		$HTML .= '&nbsp;<a href="' . $URL . '&page=' . ($PageNo + 1) .  '">' . NEXT_PAGE . '</a>';
+		$HTML .= "\n";
+	}
+
+	return $HTML;
+}
+
 $Debug = 0;
 
 if ($Debug) echo "UserID='$User->id'";
@@ -62,13 +138,28 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 #
 #$numrows=400;
 
-	$sql = "select * from freshports_commit('$message_id')";
+	$sql = "select freshports_commit_count_elements('$message_id') as count";
 
 	if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 
-   $result = pg_exec($database, $sql);
+	$result = pg_exec($database, $sql);
+	if ($result) {
+		$numrows = pg_numrows($result);
+		if ($numrows == 1) { 
+			$myrow = pg_fetch_array ($result, 0);
+		} else {
+			die('could not determine the number of commit elements');
+		}
 
-   if ($result) {
+		$NumRowsTotal = $myrow['count'];
+	}
+
+	$sql = "select * from freshports_commit('$message_id', $PageSize, ($PageNo - 1 ) * $PageSize)";
+	if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
+
+	$result = pg_exec($database, $sql);
+
+	if ($result) {
 		$numrows = pg_numrows($result);
 		if ($numrows) { 
 
@@ -94,8 +185,9 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 			$LastDate = '';
 
 #			print "NumRows = $NumRows\n<BR>";
-			$HTML = "";
+			$URL = $_SERVER["PHP_SELF"] . '?message_id=' . $message_id;
 			unset($ThisChangeLogID);
+			$HTML = '';
 			for ($i = 0; $i < $NumRows; $i++) {
 				$myrow = $rows[$i];
 				$ThisChangeLogID = $myrow["commit_log_id"];
@@ -104,7 +196,9 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 					$HTML .= '<TR><TD COLSPAN="3" BGCOLOR="#AD0040" HEIGHT="0">' . "\n";
 					$HTML .= '   <FONT COLOR="#FFFFFF"><BIG>' . FormatTime($myrow["commit_date"], 0, "D, j M Y") . '</BIG></FONT>' . "\n";
 					$HTML .= '</TD></TR>' . "\n\n";
-
+					if ($NumRowsTotal > $PageSize) {
+						$HTML .= '<tr><td>' . freshports_CommitNextPreviousPage($URL, $NumRowsTotal, $PageNo, $PageSize) . '</td></tr>';
+					}
 				}
 
 				$j = $i;
@@ -140,7 +234,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 						}
 
 						if ($NumRows > 7) {
-							$HTML .= " <small>$NumRows ports touched by this commit</small>\n";
+							$HTML .= " <small>$NumRowsTotal ports touched by this commit</small>\n";
 						}
 
 						$HTML .= "<BR>\n";

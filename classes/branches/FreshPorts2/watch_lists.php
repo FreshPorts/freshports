@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch_lists.php,v 1.1.2.12 2003-12-15 13:53:27 dan Exp $
+	# $Id: watch_lists.php,v 1.1.2.13 2003-12-21 14:12:52 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -143,6 +143,7 @@ DELETE FROM watch_list
 		# If the user has just one watch list, return that.
 		# If the user has more than one watch list, take
 		# the first one which is in_service.
+		# if none are in service, return the first one.
 		# otherwise, return an empty string.
 		#
 
@@ -171,6 +172,10 @@ DELETE FROM watch_list
 						$WatchListID = $myrow["id"];
 						break;
 					}
+				}
+				if ($WatchListID == '') {
+					$myrow = pg_fetch_array($result, 0);
+					$WatchListID = $myrow["id"];
 				}
 			}
 		} else {

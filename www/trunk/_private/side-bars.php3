@@ -8,13 +8,13 @@
 
   if ($UserName) {
    echo '<font SIZE="-1">Logged in as ', $UserName, "</font><br>";
-   echo '<font SIZE="-1"><a href="customize.php3">Customize</a></font><br>';
-   echo '<font SIZE="-1"><a href="logout.php3">Logout</a></font><br>';  
-   echo '<font SIZE="-1"><a href="watch-categories.php3">watch list - Categories</a></font><br>';
-   echo '<font SIZE="-1"><a href="watch.php3">your watched ports</a></font><br>';
+   echo '<font SIZE="-1"><a href="http://freshports.org/customize.php3">Customize</a></font><br>';
+   echo '<font SIZE="-1"><a href="http://freshports.org/logout.php3?origin=' . $PHP_SELF . ' ">Logout</a></font><br>';  
+   echo '<font SIZE="-1"><a href="http://freshports.org/watch-categories.php3">watch list - Categories</a></font><br>';
+   echo '<font SIZE="-1"><a href="http://freshports.org/watch.php3">your watched ports</a></font><br>';
   } else {
-   echo '<font SIZE="-1"><a href="login.php3">User Login</a></font><br>';
-   echo '<font SIZE="-1"><a href="new-user.php3">Create account</a></font><br>';
+   echo '<font SIZE="-1"><a href="http://freshports.org/login.php3?origin=' . $PHP_SELF . ' ">User Login</a></font><br>';
+   echo '<font SIZE="-1"><a href="http://freshports.org/new-user.php3">Create account</a></font><br>';
   }
         </script>
    </td>
@@ -27,10 +27,10 @@
         </tr>
         <tr>
     <td valign="top">
-       <font SIZE="-1"><a href="/">home</a></font><br>
-       <font SIZE="-1"><a href="ports-new.php3">Brand new ports</a></font><br>
-       <font SIZE="-1"><a href="ports.php3">Updated ports</a></font><br>
-       <font SIZE="-1"><a href="categories.php3">Categories</a></font><br>
+       <font SIZE="-1"><a href="http://freshports.org/">home</a></font><br>
+       <font SIZE="-1"><a href="http://freshports.org/ports-new.php3">Brand new ports</a></font><br>
+       <font SIZE="-1"><a href="http://freshports.org/ports.php3">Updated ports</a></font><br>
+       <font SIZE="-1"><a href="http://freshports.org/categories.php3">Categories</a></font><br>
    </td>
    </tr>
    </table>
@@ -40,8 +40,12 @@
          <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" SIZE="+1">This site</font></td>
         </tr>
         <tr>
-    <td valign="top"><font SIZE="-1"><a href="about.php3">What is freshports?</a></font><br>
-                <font SIZE="-1"><a href="authors.php3">About the Authors</a></font><br>
-   </td>
+    <td valign="top">
+        <font SIZE="-1"><a href="http://freshports.org/about.php3">What is freshports?</a></font><br>
+        <font SIZE="-1"><a href="http://freshports.org/authors.php3">About the Authors</a></font><br>
+        <font SIZE="-1"><a href="http://freshports.org/phorum/list.php?f=3">Feedback Phorum</a></font><br>
+        <font SIZE="-1"><a href="http://freshports.org/inthenews.php3">in the news</a></font><br>
+        <font SIZE="-1"><a href="http://freshports.org/changes.php3">changes</a></font><br>
+    </td>
    </tr>
    </table>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: pkg_process.inc,v 1.5.2.21 2004-11-02 02:19:18 dan Exp $
+	# $Id: pkg_process.inc,v 1.5.2.22 2004-11-03 23:44:44 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -446,6 +446,61 @@ function MoveStagingToWatchList($UserID, $WatchListID, $ports, $dbh) {
 
 	return $ok;
 }
+
+function CopyStagingToWatchList($dbh, $UserID, $WatchListID, $Overwrite = TRUE) {
+	$ok  = TRUE;
+	$begintime = time();
+
+	$result = pg_exec($dbh, 'BEGIN');
+	if (!$result) {
+		$ok = FALSE;
+	}
+
+	if ($ok && $Overwrite) {
+		$sql = "select WatchListDeleteAllElements($WatchListID)";
+		$result = pg_exec($dbh, $sql);
+		if (!$result) {
+			$ok = FALSE;
+		}
+	}
+
+	if ($ok) {
+		$sql = " INSERT INTO watch_list_element
+                 SELECT $WatchListID, element_id
+                   FROM watch_list_staging
+                  WHERE element_id IS NOT NULL
+                    AND user_id = $UserID
+";
+
+		if (!$Overwrite) {
+			$sql .= "EXCEPT SELECT watch_list_id, element_id
+                              FROM watch_list_element
+                             WHERE watch_list_id = $WatchListID
+";
+		}
+	}
+
+#	syslog(LOG_NOTICE, $sql);
+
+	$result = pg_exec($dbh, $sql);
+#	syslog(LOG_NOTICE, "UploadDisplayWatchListItemsNotInStagingArea for WatchListID: $WatchListID");
+
+	if (!$result) {
+		$ok = FALSE;
+	}				
+
+	if ($ok) {
+#		syslog(LOG_NOTICE, 'commit');
+		pg_exec($dbh, "COMMIT");
+	} else {
+		echo pg_errormessage() . " sql = $sql";
+		pg_exec($dbh, "ROLLBACK");
+	}
+
+	return $ok;
+
+}
+
 
 function StagingAreaClear($UserID, $dbh) {
 	$ok = TRUE;

@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-list-maintenance.php,v 1.1.2.19 2002-12-18 17:55:24 dan Exp $
+	# $Id: watch-list-maintenance.php,v 1.1.2.20 2003-01-04 17:11:44 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -136,7 +136,6 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 			}
 			break;
 
-		case 'delete_all':
 		case 'delete':
 			pg_query($db, 'BEGIN');
 			$WatchList = new WatchList($db);
@@ -149,7 +148,16 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 				if ($Debug) echo 'I have deleted watch list id = ' . $WatchListIDToDelete . '<br>';
 			}
 			pg_query($db, 'COMMIT');
+			break;
 			
+		case 'delete_all':
+			pg_query($db, 'BEGIN');
+			$WatchLists = new WatchLists($db);
+			if ($WatchLists->DeleteAllLists($User->id) == 1) {
+				pg_query($db, 'COMMIT');
+			} else {
+				pg_query($db, 'ROLLBACK');
+			}
 			break;
 
 		case 'empty':

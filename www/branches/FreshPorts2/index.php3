@@ -1,5 +1,5 @@
 <?
-   # $Id: index.php3,v 1.34.2.11 2001-12-18 22:01:12 dan Exp $
+   # $Id: index.php3,v 1.34.2.12 2001-12-21 06:13:28 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -105,6 +105,8 @@ function StripQuotes($string) {
 }
 
 function FormatTime($Time, $Adjustment, $Format) {
+#echo "$Time<BR>";
+#echo time() . "<BR>";
 	return date($Format, strtotime($Time) + $Adjustment);
 }
 
@@ -118,7 +120,7 @@ function GetPortNameFromFileName($file_name) {
 
 }
 
-      $numrows = 100;
+      $numrows = $MaxNumberOfPorts;
       $database=$db;
       if ($database) {
 
@@ -130,8 +132,8 @@ $sql = "
 select DISTINCT commit_log.commit_date as commit_date_raw,
        commit_log.id as commit_log_id,
        commit_log.description as commit_description,
-       to_char(commit_log.commit_date - INTERVAL '10800 seconds', 'YYYY-Mon-DD') as commit_date,
-       to_char(commit_log.commit_date - INTERVAL '10800 seconds', 'HH24:MI') as commit_time,
+       to_char(commit_log.commit_date + INTERVAL '$CVSTimeAdjustment seconds', 'DD Mon YYYY') as commit_date,
+       to_char(commit_log.commit_date + INTERVAL '$CVSTimeAdjustment seconds', 'HH24:MI') as commit_time,
 	   commit_log_ports.port_id as port_id,
 	   categories.name as category,
 	   categories.id   as category_id,
@@ -195,7 +197,7 @@ order by commit_log.commit_date desc,
             bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">
 <tr>
     <td colspan="3" bgcolor="#AD0040" height="30">
-        <font color="#FFFFFF" size="+1"><? echo $FreshPortsName . '-' . $MaxNumberOfPorts ?> most recent commits
+        <font color="#FFFFFF" size="+1"><? echo $FreshPortsName . ' - ' . $MaxNumberOfPorts ?> most recent commits
         <? //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPorts) ?></font>
     </td>
 </tr>
@@ -211,7 +213,7 @@ order by commit_log.commit_date desc,
 
 					if ($LastDate <> $myrow["commit_date"]) {
 						$LastDate = $myrow["commit_date"];
-						$HTML .= "<tr><td colspan='3'><font size='+1'>" . $myrow["commit_date"] . "</font></td></tr>";
+						$HTML .= "<tr><td colspan='3'><font size='+1'>" . FormatTime($myrow["commit_date"], 0, "D, j M") . "</font></td></tr>";
 					}
 
 					$j = $i;

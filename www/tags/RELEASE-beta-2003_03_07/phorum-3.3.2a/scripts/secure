@@ -1,0 +1,133 @@
+#!/bin/bash
+# phorum installation script
+# originally written Morgan Christiansson <mog@linux.nu>
+# revised by Brian Moon <brian@phorum.org>
+
+if [ `id -un` = "root" ]; then
+  echo "*** It is not recommended to install Phorum as root. ***"
+  echo ""
+fi
+
+if [ ! -f common.php ]; then
+  echo "Run this from the phorum base directory."
+  exit
+fi
+
+PHADMIN="admin"
+PHCONFIGMOD="N"
+PHADMINMOD="N"
+PHHTACCESS="n"
+PHFILECHMOD="606"
+PHDIRCHMOD="707"
+
+echo
+echo "This script will help you secure your Phorum.  Please answer the"
+echo "following questions."
+echo
+
+echo
+echo "Renaming the admin directory is also a simple"
+echo "way to keep out intruders."
+echo
+echo -n "New admin directory name [$PHADMIN]: "; read
+if [ "$REPLY" != "" -a "$REPLY" != "$PHADMIN" ]; then
+  PHADMIN=$REPLY
+  PHADMINMOD="Y"
+fi
+
+PHCONFIG="$PHADMIN/settings"
+
+echo "It is a good idea to move the settings dir out"
+echo "of the web tree.  You may enter any path you like below."
+echo
+echo -n "Phorum settings path [$PHCONFIG]: "; read
+if [ "$REPLY" != "" -a "$REPLY" != "$PHCONFIG" ]; then
+  PHCONFIG=$REPLY
+  PHCONFIGMOD="Y"
+fi
+
+echo
+echo ".htaccess security works only with apache and may cause"
+echo "internal server error if the server doesn't allow you"
+echo "to change AuthConfig settings"
+echo
+echo "If you get internal server error, ask your administrator"
+echo "to \"AllowOveride AuthConfig\" for the directory your"
+echo "phorum installation is in."
+echo
+
+echo -n "Do you want .htaccess security [$PHHTACCESS]? "; read
+if [ "$REPLY" != "" -a "$REPLY" != "$PHHTACCESS" ]; then
+  PHHTACCESS=$REPLY
+fi
+
+echo
+echo "The next questions have to do with file permissions"
+echo "for the web server. If you are unsure of the answer,"
+echo "answer no."
+echo
+echo -n "Does this web server run as user `id -un` [n]?"; read
+if [ "$REPLY" = "y" ]; then
+  PHDIRCHMOD="700"
+  PHFILECHMOD="600"
+else
+  echo -n "Does this web server run as group `id -gn` [n]?"; read
+    if [ "$REPLY" = "y" ]; then
+      PHFILECHMOD="660"
+      PHDIRCHMOD="770"
+    fi
+fi
+
+echo
+echo "Securing Phorum...."
+
+if [ $PHADMINMOD = "Y" ]; then
+  echo "Moving the admin dir..."
+  mv admin $PHADMIN
+fi
+
+if [ $PHCONFIGMOD = "Y" -o $PHADMINMOD = "Y" ]; then
+  CMD="mkdir -p $PHCONFIG"
+  echo $CMD
+  $CMD
+  echo "Moving the settings dir..."
+  mv $PHADMIN/settings/* $PHCONFIG
+  cp common.php common2.php
+  echo "Updating common.php..."
+  sed s%\$settings_dir=\"./admin/settings%\$settings_dir=\"$PHCONFIG% common2.php > common.php
+  rm -rf common2.php
+fi
+
+
+echo "Setting file permissions..."
+chmod $PHDIRCHMOD $PHCONFIG
+chmod $PHFILECHMOD $PHCONFIG/forums.php
+touch $PHCONFIG/forums.bak.php
+chmod $PHFILECHMOD $PHCONFIG/forums.bak.php
+
+if [ $PHHTACCESS = "y" -o $PHHTACCESS = "Y" ]; then
+  echo "Securing directories..."
+  htaccess="deny from all"
+  echo $htaccess > db/.htaccess
+  echo $htaccess > docs/.htaccess
+  echo $htaccess > include/.htaccess
+  echo $htaccess > lang/.htaccess
+  echo $htaccess > plugin/.htaccess
+  echo $htaccess > scripts/.htaccess
+  echo $htaccess > $PHADMIN/pages/.htaccess
+  echo $htaccess > $PHADMIN/actions/.htaccess
+  echo $htaccess > $PHCONFIG/.htaccess
+fi
+
+echo
+echo "********************************************************************"
+echo "*                                                                  *"
+echo "* You still need to use the admin script to configure a few items. *"
+echo "* Point your web browser to the admin script and it will tell you  *"
+echo "* what to do.                                                      *"
+echo "*                                                                  *"
+echo "* After that please refer to the readme.txt for instructions on    *"
+echo "* adding forums and folders.                                       *"
+echo "*                                                                  *"
+echo "********************************************************************"
+echo

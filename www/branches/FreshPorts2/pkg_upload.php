@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: pkg_upload.php,v 1.5.2.36 2003-09-08 16:25:19 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.37 2003-09-16 12:25:27 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -271,6 +271,8 @@ function ChooseWatchLists($UserID, $db) {
 						}
 					}
 				}
+				# let's not leave files sitting around...
+				unlink($Destination);
 			}
 		}
 

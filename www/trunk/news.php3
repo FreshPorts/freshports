@@ -92,7 +92,8 @@ $sql = "select ports.id, ports.name as port, change_log.commit_date as updated_r
        "WHERE ports.system                    = 'FreeBSD' ".
        "  and ports.primary_category_id       = categories.id " .
        "  and change_log_port.port_id         = ports.id " .
-       "  and change_log.id                   = change_log_port.change_log_id ";
+       "  and change_log.id                   = change_log_port.change_log_id " .
+       "  and change_log.commit_date          > '" . date("Y-m-d", time() - 60*60*24*7) . "' ";
 
 
 $sql .= " order by $sort limit 20";

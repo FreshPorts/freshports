@@ -42,7 +42,8 @@ as encouragement.</p>
 <p>David Bushong did a FreshBSD site which is a freshmeat-look site.</p>
 
 <p>lzh on undernet #perl helped me with my perl knowledge.  Some of his examples 
-form the basis for some of the most important parts of the system,</p>
+form the basis for some of the most important parts of the system.  Aquitaine
+also showed me the PERL dbi->quote() function.</p>
 
 <p>John Beige did the logo you see at the top of the page.<p>
 

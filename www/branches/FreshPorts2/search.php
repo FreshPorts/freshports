@@ -1,5 +1,5 @@
 <?
-	# $Id: search.php,v 1.1.2.14 2002-05-09 20:02:00 dan Exp $
+	# $Id: search.php,v 1.1.2.15 2002-05-09 20:06:25 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -83,7 +83,7 @@ if ($fp) {
 }
 
 $sql = "select distinct ports.id, element.name as port, " .
-       "categories.name as category, categories.id as category_id, ports.version as version, ".
+       "categories.name as category, categories.id as category_id, ports.version as version, ports.revision as revision, ".
        "ports.maintainer, ports.short_description, ".
        "ports.package_exists, ports.extract_suffix, ports.homepage, element.status, ports.element_id, " .
        "ports.broken, ports.forbidden ";

@@ -104,7 +104,7 @@ if (!file_exists($cache_file)) {
 if ($UpdateCache == 1) {
 //   echo 'time to update the cache';
 
-$sql = "select ports.id, ports.name as port, ports.id as ports_id, ports.last_update as updated, " .
+$sql = "select ports.id, ports.name as port, ports.last_update as updated, " .
        "categories.name as category, categories.id as category_id, ports.version as version, ".
        "ports.committer, ports.last_update_description as update_description, " .
        "ports.maintainer, ports.short_description, ".
@@ -127,65 +127,7 @@ $HTML .= '<tr><td>';
 $NumTopics=0;
 
 while ($myrow = mysql_fetch_array($result)) {
-   $HTML .= "<dl>";
-
-   $HTML .= "<b>" . $myrow["port"];
-   if (strlen($myrow["version"]) > 0) {
-      $HTML .= '-' . $myrow["version"];
-   }
-
-   $HTML .= "</b>";
-
-   // indicate if this port needs refreshing from CVS
-   if ($myrow["needs_refresh"] == "Y") {
-      $HTML .= ' <font size="-1">[refresh]</font>';
-   }
-
-   $URL_Category = "category.php3?category=" . $myrow["category_id"];
-   $HTML .= ' <font size="-1"><a href="' . $URL_Category . '">' . $myrow["category"] . '</a></font>';
-
-
-   $HTML .= "<dd>";
-                
-   // description   
-   $HTML .= $myrow["short_description"] . "<br>\n";
-
-   // maintainer
-   $HTML .= 'Maintained by: <a href="mailto:' . $myrow["maintainer"];
-   $HTML .= '?cc=ports@FreeBSD.org&amp;subject=FreeBSD%20Port:%20' . $myrow["port"] . "-" . $myrow["version"] . '">';
-   $HTML .= $myrow["maintainer"] . '</a></br>' . "\n";
-
-   $HTML .= 'last change committed by ' . $myrow["committer"];  // separate lines in case committer is null                   
-                   
-   $HTML .= ' on <font size="-1">' . $myrow["updated"] . '</font><br>' . "\n";
-
-   $HTML .= $myrow["update_description"] . "<br>" . "\n";
-
-   // Long descripion
-   $HTML .= '<a HREF="port-description.php3?port=' . $myrow["id"] .'">Description</a>';
-
-   $HTML .= ' <b>:</b> ';
-
-   // changes
-   $HTML .= '<a HREF="http://www.FreeBSD.org/cgi/cvsweb.cgi/ports/' . 
-            $myrow["category"] . '/' .  $myrow["port"] . '">Changes</a>';
-   $HTML .= ' <b>:</b> ';
-
-   // download
-   $HTML .= '<a HREF="ftp://ftp.FreeBSD.org/pub/FreeBSD/branches/-current/ports/' . 
-            $myrow["category"] . '/' .  $myrow["port"] . '.tar">Download Port</a>';
-
-   if ($myrow["package_exists"] == "Y") {
-      // package
-      $HTML .= ' <b>:</b> ';
-      $HTML .= '<a HREF="ftp://ftp.FreeBSD.org/pub/FreeBSD/FreeBSD-stable/packages/' .
-               $myrow["category"] . '/' .  $myrow["port"] . "-" . $myrow["version"] . '.tgz">Package</a><p></p>';
-      $HTML .= "</dd>";
-      $HTML .= "</dl>";
-   }
-
-     $HTML .= "</dd>";
-     $HTML .= "</dl>" . "\n";
+   include("/www/freshports.org/_private/port-basics.inc");
 }
 
   $HTML .= "</td></tr>\n";
@@ -220,8 +162,8 @@ echo $HTML;
 </table>
 </td>
   <td valign="top" width="*">
-<? include("/www/freshports.org/_private/side-bars.php3") ?>
-</td>
+   <? include("/www/freshports.org/_private/side-bars.php3") ?>
+ </td>
 </tr>
 </table>
 </body>

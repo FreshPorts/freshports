@@ -1,5 +1,5 @@
 <?
-	# $Id: confirmation.php,v 1.1.2.1 2002-02-24 00:21:11 dan Exp $
+	# $Id: confirmation.php,v 1.1.2.2 2002-05-18 18:54:41 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -16,6 +16,7 @@
 
 	$ResultConfirm = 999;
 
+	$token = $_SERVER["token"];
 	if (IsSet($token)) {
 		$token = AddSlashes($token);
 		if ($Debug) echo "I'm confirming with token $token\n<BR>";

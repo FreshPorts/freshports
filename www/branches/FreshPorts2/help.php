@@ -1,5 +1,5 @@
 <?
-	# $Id: help.php,v 1.1.2.12 2003-05-16 02:33:44 dan Exp $
+	# $Id: help.php,v 1.1.2.13 2003-11-24 00:32:35 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 
@@ -64,7 +64,7 @@ ports database.  This database is at <CODE CLASS="code">/var/db/pkg/</CODE>.
 The <CODE CLASS="code">pkg_info</CODE> command interrogates this database
 and can produce a list of the installed ports.  The basic command outputs
 the name of the installed package and a brief description. Using the 
-<CODE CLASS="code">-qua</CODE> options, FreshPorts obtains the 
+<CODE CLASS="code">-qoa</CODE> options, FreshPorts obtains the 
 &lt;category&gt;/&lt;port&gt; format of the installed packages.  This 
 format is useful for three reasons:
 

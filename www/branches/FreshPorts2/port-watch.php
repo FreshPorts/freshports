@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-watch.php,v 1.1.2.32 2003-04-28 00:29:48 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.33 2003-04-28 00:53:58 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -137,12 +137,11 @@ $HTML .= '<tr><td valign="top" ALIGN="center">' . "\n";
 $numrows = pg_numrows($result);
 if ($numrows) {
 	
-	$HTML .= '<table border="0"><tr><td>';
-	$HTML .= '<table border="0"><tr><td>';
+	$HTML .= '<table border="0">' . "\n" . '<tr><td>' . "\n";
+	$HTML .= '<table border="0">' . "\n" . '<tr><td>' . "\n";
 
-	$HTML .= '<form action="' . $_SERVER["PHP_SELF"] . '" method="POST">';
+	$HTML .= '<form action="' . $_SERVER["PHP_SELF"] . '" method="POST">' . "\n";
 
-   $HTML .= "\n" . '<TABLE BORDER="1" CELLSPACING="0" CELLPADDING="5">' . "\n";
 
    // get the list of ports
 
@@ -154,10 +153,11 @@ if ($numrows) {
 	}
 
    // save the number of categories for when we submit
-   $HTML .= '<input type="hidden" name="NumPorts" value="' . $NumPorts . '">';
-   $HTML .= '<input type="hidden" name="category" value="' . $category . '">';
-   $HTML .= '<input type="hidden" name="wlid"     value="' . $wlid     . '">';
+   $HTML .= '<input type="hidden" name="NumPorts" value="' . $NumPorts . '">' . "\n";
+   $HTML .= '<input type="hidden" name="category" value="' . $category . '">' . "\n";
+   $HTML .= '<input type="hidden" name="wlid"     value="' . $wlid     . '">' . "\n";
 
+   $HTML .= "\n" . '<TABLE BORDER="1" CELLSPACING="0" CELLPADDING="5">' . "\n<tr>\n";
    $RowCount = ceil($NumPorts / (double) 4);
    $Row = 0;
    for ($i = 0; $i < $NumPorts; $i++) {
@@ -197,13 +197,12 @@ if ($numrows) {
    
    echo $HTML;
 ?>
-<TR><TD>&nbsp;</TD></TR>
-<tr><td ALIGN="center">
 
+<div align="center">
 <input TYPE="submit" VALUE="update watch list" name="submit">
 <input TYPE="reset"  VALUE="reset form">
 <input type="hidden" name="watch_list_id" value="<?php echo $wlid; ?>">
-</td></tr>
+</div>
 </form>
 </table>
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: pkg_upload.php,v 1.5.2.33 2003-04-27 14:48:14 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.34 2003-04-28 00:54:23 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -94,8 +94,7 @@ function DisplayUploadForm($pkg_info) {
 
 function DisplayStagingArea($UserID, $WatchListID, $db) {
 
-	echo '<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5" 
-					bordercolor="#a2a2a2" BORDERCOLORDARK="#a2a2a2" BORDERCOLORLIGHT="#a2a2a2"><TR>';
+	echo '<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5"><TR>';
 ?>
 
 	<TR><TD COLSPAN="4"><BIG>The following information is in your Staging Area.  To save it to a Watch List, 
@@ -156,8 +155,7 @@ function DisplayStagingArea($UserID, $WatchListID, $db) {
 
 function ChooseWatchLists($UserID, $db) {
 
-	echo '<TABLE width="100%" ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5" 
-					bordercolor="#a2a2a2" BORDERCOLORDARK="#a2a2a2" BORDERCOLORLIGHT="#a2a2a2"><TR>';
+	echo '<TABLE width="100%" ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5"><TR>';
 ?>
 
 	<TR><TD colspan="3"><BIG>Your staging area contains your uploaded information.  Please choose a watch list, and click on Go.

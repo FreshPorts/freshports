@@ -1,7 +1,8 @@
-<?
-	# $Id: pkg_process.inc,v 1.5.2.15 2002-12-10 04:43:03 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2002 DVL Software Limited
+	# $Id: pkg_process.inc,v 1.5.2.16 2003-04-28 00:54:23 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
 	require($_SERVER["DOCUMENT_ROOT"] . "/../classes/ports.php");	
@@ -183,7 +184,7 @@ function UploadDisplayStagingResultsMatches($UserID, $WatchListID, $dbh) {
 		if ($numrows) {
 			?>
 
-			<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5" BORDERCOLOR="#a2a2a2" BORDERCOLORDARK="#a2a2a2" BORDERCOLORLIGHT="#a2a2a2">
+			<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5">
 			<TR><TD COLSPAN="2"><B>Port name</B> <SMALL>(<? echo $numrows ?> ports)</SMALL></TD><TD ALIGN="center"><SMALL>Add</SMALL></TD></TR>
 
 			<?
@@ -240,7 +241,7 @@ function UploadDisplayStagingResultsMatchesNo($UserID, $dbh) {
 		if ($numrows) {
 			?>
 
-			<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5" BORDERCOLOR="#a2a2a2" BORDERCOLORDARK="#a2a2a2" BORDERCOLORLIGHT="#a2a2a2">
+			<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5">
 			<TR><TD><B>Port name</B> <SMALL>(<? echo $numrows ?> ports)</SMALL></TD><TD><SMALL>search</SMALL></TD></TR>
 
 			<?
@@ -284,7 +285,7 @@ function UploadDisplayStagingResultsMatchesDuplicates($UserID, $WatchListID, $db
 		if ($numrows) {
 			?>
 
-			<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5" BORDERCOLOR="#a2a2a2" BORDERCOLORDARK="#a2a2a2" BORDERCOLORLIGHT="#a2a2a2">
+			<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5">
 			<TR><TD><B>Port name</B></TD><TD><B>Count</B></TD><TD ALIGN="center"><SMALL>Add</SMALL></TD></TR>
 
 			<?
@@ -346,7 +347,7 @@ function UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $dbh) {
 		if ($numrows) {
 			?>
 
-			<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5" BORDERCOLOR="#a2a2a2" BORDERCOLORDARK="#a2a2a2" BORDERCOLORLIGHT="#a2a2a2">
+			<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5">
 			<TR><TD><B>Port name</TD><TD ALIGN="center"><SMALL>Add</SMALL></TD></TR>
 
 			<?

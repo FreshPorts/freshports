@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: new-user.php,v 1.1.2.34 2003-07-04 14:59:17 dan Exp $
+	# $Id: new-user.php,v 1.1.2.35 2003-09-09 19:25:13 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -8,6 +8,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/htmlify.php');
 
 	if (IsSet($_REQUEST['origin'])) $origin = $_REQUEST['origin'];
 	if (IsSet($_REQUEST['submit'])) $submit = $_REQUEST['submit'];

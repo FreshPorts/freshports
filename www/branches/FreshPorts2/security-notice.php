@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: security-notice.php,v 1.1.2.10 2003-05-08 13:18:57 dan Exp $
+	# $Id: security-notice.php,v 1.1.2.11 2003-09-09 19:25:13 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -15,6 +15,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/security_notice.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/security_notice_audit.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user_tasks.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/htmlify.php');
 
 	$PageTitle = 'Security Notice';
 

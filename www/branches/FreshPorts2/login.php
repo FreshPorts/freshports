@@ -1,5 +1,5 @@
 <?
-	# $Id: login.php,v 1.1.2.5 2002-01-05 23:01:15 dan Exp $
+	# $Id: login.php,v 1.1.2.6 2002-01-06 23:18:09 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -74,8 +74,8 @@ if ($submit) {
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
  <tr>
-    <td>
-<table width="100%" border=0>
+    <td VALIGN="top">
+<table width="100%" border="0">
 <tr><td valign="top" width="100%">
 <?
 if ($LoginFailed) {
@@ -87,7 +87,7 @@ echo '<table cellpadding=1 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>
 </tr>
 <tr bgcolor="#ffffff">
 <td>
-  <table width=100% cellpadding=3 cellspacing=0 border=0>
+  <table width=100% cellpadding=0 cellspacing=0 border=0>
   <tr valign=top>
    <td><img src="/images/warning.gif"></td>
    <td width=100%>
@@ -111,12 +111,13 @@ echo '<table cellpadding=1 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>
 }
 
 
-echo '<table cellpadding=1 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>
-<tr>
-<td>';
+#echo '<table cellpadding=1 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>
+#echo '<table cellpadding=0 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>
+#<tr>
+#<td>';
 
 
-echo '<table width=100% border=0 cellpadding=1 bgcolor="#AD0040">';
+echo '<table width=100% border=0 cellpadding=4 cellspacing=4 bgcolor="#AD0040">';
 
 echo '<tr bgcolor="#AD0040"><td bgcolor="#AD0040"><font color="#ffffff" size="+2">Login Details</font></td></tr>';
 
@@ -130,11 +131,12 @@ echo"
 </table>
 </td>
 </tr>
-</table>";
+</TABLE>
+";
 
 echo '<br><a href="forgotten-password.php">Forgotten your password?</a>';
 
-?></td>
+?>
 </td>
   <td valign="top" width="*">
     <? include("./include/side-bars.php") ?>

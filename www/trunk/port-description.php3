@@ -90,7 +90,7 @@ echo '<tr><td><table border="1" width="100%" CELLSPACING="0" CELLPADDING="5"bord
 echo '<tr height="20"><td colspan="3" bgcolor="#AD0040"><font color="#FFFFFF"><font size="+1">Commit History</font> (may be incomplete: see Changes link above for full details)</font></td></tr>' . "\n";
 echo "<tr><td><b>Date</b></td><td><b>Committer</b></td><td><b>Description</b></td></tr>\n";
 
-$sql = "select commit_date, update_description, committer " .
+$sql = "select change_log_port.id, commit_date, update_description, committer " .
        "  from change_log, change_log_port " .
        " where change_log.id                     = change_log_port.change_log_id ".
        "   and change_log_port.port_id           =  $port". 
@@ -100,7 +100,9 @@ $result = mysql_query($sql, $db);
 while ($myrow = mysql_fetch_array($result)) {
    echo "<tr><td valign='top'><font size='-1'>" . $myrow["commit_date"]        . "</font></td>\n";
    echo "    <td valign='top'>" . $myrow["committer"]          . "</td>\n";
-   echo "    <td valign='top'>" . $myrow["update_description"] . "</td>\n";
+   echo '    <td valign="top"><a href="files.php3?id=' . $myrow["id"] .
+                   '"><img src="images/logs.gif" alt="Files in this port affect by this commit" border="0" WIDTH="15" HEIGHT="22" hspace="2"></a>' . 
+                    $myrow["update_description"] . "</td>\n";
    echo "</tr>\n";
 }
 

@@ -27,11 +27,6 @@ This page shows the files associated with one port within a given commit.
     </td>
   </tr>
 <tr><td valign="top" width="100%">
-<table width="100%" border="0">
-<tr>
-    <td colspan="5" bgcolor="#AD0040" height="30">
-        <font color="#FFFFFF" size="+1">freshports - files</font></td>
-  </tr>
 <script language="php">
 
 $sql = "select change_log_port.change_log_id, change_log_port.id, change_log_port.port_id, details, " .
@@ -59,27 +54,20 @@ if (!$result) {
       $i++;
    }
 
-   if ($i > 0) {
-      
-      echo '<tr><td><table border="1" width="100%" CELLSPACING="0" CELLPADDING="5"bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">' . "\n";
-      echo '<tr height="20"><td colspan="3" bgcolor="#AD0040"><font color="#FFFFFF"><font size="+1">Commit Details</font> (may be incomplete: see Changes link above for full details)</font></td></tr>' . "\n";
-      echo "<tr><td><b>Date</b></td><td><b>Committer</b></td><td><b>Description</b></td></tr>\n";      
-      $myrow = $rows[0];
-      echo "<tr>";
-      echo "    <td valign='top'><font size='-1'>" . $myrow["commit_date"]        . "</font></td>\n";
-      echo "    <td valign='top'>" . $myrow["committer"]          . "</td>\n";
-      echo '    <td valign="top">' . $myrow["update_description"] . "</td>\n";
-      echo "</tr>";
-      echo "</table></td></tr>";
-   }
+   echo '<table border="1" width="100%" CELLSPACING="0" CELLPADDING="5"bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">' . "\n";
+   echo '<tr height="20"><td colspan="3" bgcolor="#AD0040"><font color="#FFFFFF" size="+1">Commit Details</font></td></tr>' . "\n";
+   echo "<tr><td><b>Date</b></td><td><b>Committer</b></td><td><b>Description</b></td></tr>\n";      
+   $myrow = $rows[0];
+   echo "<tr>";
+   echo "    <td valign='top'><font size='-1'>" . $myrow["commit_date"]        . "</font></td>\n";
+   echo "    <td valign='top'>" . $myrow["committer"]          . "</td>\n";
+   echo '    <td valign="top">' . $myrow["update_description"] . "</td>\n";
+   echo "</tr>";
 
-   echo "<tr><td colspan=\"2\">$i records found</td></tr>";
-
+   echo '<tr height="20"><td colspan="3" bgcolor="#AD0040"><font color="#FFFFFF"><font size="+1">' . "$i records found" . '</font></td></tr>';
    ?>
-   <tr><td>
-   <table border="1" width="100%">
    <tr>
-     <td><b>Action</b></td><td><b>File</b></td>
+     <td><b>Action</b></td><td colspan="2"><b>File</b></td>
    </tr>
    <?
 
@@ -107,12 +95,11 @@ if (!$result) {
       }
 
       echo "  <td>" . $Change_Type . "</td>";
-      echo '  <td><a href="' . $freshports_CVS_URL . $myrow["category"] . '/' . $myrow["port"] . '/' . $myrow["details"] . '">' .
+      echo '  <td colspan="2"><a href="' . $freshports_CVS_URL . $myrow["category"] . '/' . $myrow["port"] . '/' . $myrow["details"] . '">' .
               '<img src="images/logs.gif" alt="Changes to this file" border="0" WIDTH="15" HEIGHT="22" hspace="2"></a>' . 
                $myrow["details"] . "</td>";
       echo "</tr>\n";
    }
-   ?></td></tr></table> <?
 }
 
 </script>

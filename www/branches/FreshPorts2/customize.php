@@ -1,5 +1,5 @@
 <?
-	# $Id: customize.php,v 1.1.2.7 2002-04-20 02:39:36 dan Exp $
+	# $Id: customize.php,v 1.1.2.8 2002-05-08 02:21:07 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -20,6 +20,13 @@ if ($submit) {
 //$Debug = 1;
 
 // process form
+
+   $Password1            = AddSlashes($Password1);
+   $Password2            = AddSlashes($Password2);
+   $email                = AddSlashes($email);
+   $emailsitenotices_yn  = AddSlashes($emailsitenotices_yn);
+   $watchnotifyfrequency = AddSlashes($watchnotifyfrequency);
+
    if ($Debug) {
       while (list($name, $value) = each($HTTP_POST_VARS)) {
          echo "$name = $value<br>\n";
@@ -45,27 +52,7 @@ if ($submit) {
       if ($emailsitenotices_yn == "ON") {
           $emailsitenotices_yn_value = "t";
       } else {
-         $emailsitenotices_yn_value = "f";
-      }
-
-      if ($FormatDateSelect != "") {
-         $FormatDate = $FormatDateSelect;
-      } else {
-         if ($FormatDateCustom != "") {
-           $FormatDate = $FormatDateCustom;
-         } else {
-           $FormatDate = $FormatDateDefault;
-        }
-      }
-
-      if ($FormatTimeSelect != "") {
-         $FormatTime = $FormatTimeSelect;
-      } else {
-         if ($FormatTimeCustom != "") {
-           $FormatTime = $FormatTimeCustom;
-         } else {
-           $FormatTime = $FormatTimeDefault; 
-        }
+          $emailsitenotices_yn_value = "f";
       }
 
       // get the existing email in case we need to reset the bounce count

@@ -82,6 +82,9 @@ if ($submit) {
 <body bgcolor="#ffffff" link="#0000cc">
 
 <table width="100%">
+<tr><td>
+<? include("/www/freshports.org/_private/header.inc") ?>
+</td></tr>
   <tr>
     <td bgcolor="#AD0040"><big><big><font color="#FFFFFF">Customize User Account</font></big></big></td>
   </tr>
@@ -160,5 +163,6 @@ echo "</td>
   </tr>
 </table>
 </body>
+<? include("/www/freshports.org/_private/footer.inc") ?>
 </html>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">

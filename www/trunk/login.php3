@@ -54,6 +54,9 @@ if ($submit) {
 <body bgcolor="#ffffff" link="#0000cc">
 
 <table width="100%">
+<tr><td>
+<? include("/www/freshports.org/_private/header.inc") ?>
+</td></tr>
   <tr>
     <td><p align="center">
 <?
@@ -112,6 +115,7 @@ echo "</td>
 </script></td>
   </tr>
 </table>
+<? include("/www/freshports.org/_private/footer.inc") ?>
 </body>
 </html>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">

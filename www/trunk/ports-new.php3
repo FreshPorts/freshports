@@ -19,7 +19,7 @@ require( "/www/freshports.org/_private/getvalues.php3");
 <table width="100%" border="0">
 <tr>
  <td colspan="2">
- <font size="+4">freshports</font>
+ <? include("/www/freshports.org/_private/header.inc") ?>
  </td>
 </tr>
 <tr><td colspan="2">
@@ -146,5 +146,6 @@ echo $HTML;
  </td>
 </tr>
 </table>
+<? include("/www/freshports.org/_private/footer.inc") ?>
 </body>
 </html>

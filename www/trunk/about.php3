@@ -9,16 +9,14 @@ require( "/www/freshports.org/_private/getvalues.php3");
 <meta name="description" content="freshport">
 <meta name="keywords" content="FreeBSD, topics, index">
 <!--// DVL Software is a New Zealand company specializing in database applications. //-->
-<title>freshports</title>
+<title>freshports - about</title>
 </head>
 
 <body bgcolor="#ffffff" link="#0000cc">
 
 <html>
-<title>freshports - about</title>
 <body>
-<font size="+4">freshports - about</font>
-
+<? include("/www/freshports.org/_private/header.inc") ?>
 <table width="100%">
 <tr><td>
 <h2>what's a port?</h2>
@@ -51,6 +49,6 @@ About the Authors</a> for details of who else helped.</p>
  </td>
 </tr>
 </table>
-
+<? include("/www/freshports.org/_private/footer.inc") ?>
 </body>
 </html>

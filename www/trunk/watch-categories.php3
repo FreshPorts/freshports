@@ -19,7 +19,7 @@ require( "/www/freshports.org/_private/freshports.php3");
 <table width="100%" border="0">
 <tr>
  <td colspan="2">
- <font size="+4">freshports</font>
+<? include("/www/freshports.org/_private/header.inc") ?>
  </td>
 </tr>
 <tr><td colspan="2">
@@ -199,4 +199,5 @@ echo "</table>\n";
 </tr>
 </table>
 </body>
+<? include("/www/freshports.org/_private/footer.inc") ?>
 </html>

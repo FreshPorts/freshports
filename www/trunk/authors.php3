@@ -16,7 +16,7 @@ require( "/www/freshports.org/_private/getvalues.php3");
 
 </head>
 <body bgcolor="#ffffff" link="#0000cc">
-<font size="+4">freshports - authors</font>
+<? include("/www/freshports.org/_private/header.inc") ?>
 
 <table width="100%">
 <tr><td>
@@ -45,6 +45,8 @@ as encouragement.</p>
 <p>lzh on undernet #perl helped me with my perl knowledge.  Some of his examples 
 form the basis for some of the most important parts of the system,</p>
 
+<p>John Beige did the logo you see at the top of the page.<p>
+
 <p>And various people on undernet's #nz.general ad #freebsd helped me with 
 scripts and ideas.  That's not to mention that channel on efnet which I won't 
 name just so it stays a secret.</p>
@@ -54,5 +56,6 @@ name just so it stays a secret.</p>
  </td>
 </tr>
 </table>
+<? include("/www/freshports.org/_private/footer.inc") ?>
 </body>
 </html>

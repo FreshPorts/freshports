@@ -13,7 +13,7 @@
 <table width="100%" border="0">
 <tr>
  <td colspan="2">  
- <font size="+4">freshports</font>
+  <? include("/www/freshports.org/_private/header.inc") ?>
  </td>
 </tr><tr><td colspan="2">This page lists the categories sorted by various categories.  See also <a href="ports.php3">freshports by ports</a>.
 </td></tr>
@@ -187,6 +187,8 @@ freshports_echo_HTML_flush();
  </td>
 </tr>
 </table>
+
+<? include("/www/freshports.org/_private/footer.inc") ?>
 
 </body>
 </html>

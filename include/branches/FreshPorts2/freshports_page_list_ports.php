@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports_page_list_ports.php,v 1.1.2.5 2005-01-23 03:44:48 dan Exp $
+	# $Id: freshports_page_list_ports.php,v 1.1.2.6 2005-01-23 03:59:48 dan Exp $
 	#
 	# Copyright (c) 2005 DVL Software Limited
 	#
@@ -12,9 +12,26 @@ class freshports_page_list_ports extends freshports_page {
 
 	var $_sql;
 	var $_description;
+	var $_port_status = 'A';  # show only active ports
 
     function freshports_page_list_ports($attributes = array()) {
 		$this->freshports_page($attributes);
+	}
+
+	function setStatus($Status) {
+		switch ($Status) {
+			case 'A':
+			case 'D':
+				$this->_port_status = $Status;
+			break;
+
+			default:
+				$this->_port_status = 'A';
+		}
+	}
+
+	function getStatus() {
+		return $this->_port_status;
 	}
 
 	function setDescription($Description) {
@@ -75,8 +92,12 @@ from element, categories, ports ";
 	$this->_sql .= "
 WHERE ports.element_id  = element.id
   and ports.category_id = categories.id 
-  and status            = 'A' 
-  and " . $Condition;
+  and status            = '" . $this->getStatus() . "'";
+
+	if ($Condition) {
+		$this->_sql .= '
+  and ' . $Condition;
+	}
 
 	$this->_sql .= " order by " . $this->getSort();
 #	$this->_sql .= " limit 20";

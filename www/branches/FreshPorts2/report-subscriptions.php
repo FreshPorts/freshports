@@ -1,5 +1,5 @@
 <?
-	# $Id: report-subscriptions.php,v 1.1.2.16 2002-12-11 04:44:40 dan Exp $
+	# $Id: report-subscriptions.php,v 1.1.2.17 2002-12-11 05:07:57 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -66,31 +66,33 @@
 		$sql = "DELETE from report_subscriptions
     	         WHERE user_id = $User->id";
 
-		$result = pg_exec($db, $sql);
+		$result  = pg_exec($db, $sql);
 
-		$reports     = $_POST['reports'];
-
-		reset($reports);
-
-		while (list($key, $value) = each($reports)) {
-			$TheFrequency = $_POST['reportfrequency_' . $value];
-			if ($Debug) echo '$TheFrequency=\'' . $TheFrequency . '\'';
-			if ($Debug) echo "\$key='$key' \$value='$value' \$User->id='$User->id' \$frequencies[\$key]=" . $TheFrequency . '<BR>';
-			if (IsSet($TheFrequency) && $TheFrequency <> '') {
-				$sql = "INSERT INTO report_subscriptions(report_id, user_id, report_frequency_id) values ($value, $User->id, $TheFrequency)";
-			} else {
-				$sql = "INSERT INTO report_subscriptions(report_id, user_id) values ($value, $User->id)";
-			}
-			if ($Debug) echo "\$sql='$sql'<BR>\n";
-			$result = pg_exec ($db, $sql);
-
-			if (!$result) {
-				echo 'OUCH, that\'s not very nice.  something went wrong: ' . pg_errormessage() . "  $sql";
-				pg_exec($db, 'rollback');
-				exit;
+		$reports = $_REQUEST['reports'];
+		if (Is_Array($reports)) {
+		
+			reset($reports);
+	
+			while (list($key, $value) = each($reports)) {
+				$TheFrequency = $_POST['reportfrequency_' . $value];
+				if ($Debug) echo '$TheFrequency=\'' . $TheFrequency . '\'';
+				if ($Debug) echo "\$key='$key' \$value='$value' \$User->id='$User->id' \$frequencies[\$key]=" . $TheFrequency . '<BR>';
+				if (IsSet($TheFrequency) && $TheFrequency <> '') {
+					$sql = "INSERT INTO report_subscriptions(report_id, user_id, report_frequency_id) values ($value, $User->id, $TheFrequency)";
+				} else {
+					$sql = "INSERT INTO report_subscriptions(report_id, user_id) values ($value, $User->id)";
+				}
+				if ($Debug) echo "\$sql='$sql'<BR>\n";
+				$result = pg_exec ($db, $sql);
+	
+				if (!$result) {
+					echo 'OUCH, that\'s not very nice.  something went wrong: ' . pg_errormessage() . "  $sql";
+					pg_exec($db, 'rollback');
+					exit;
+				}
 			}
 		}
-
+	
 		pg_exec($db, 'commit');
 
 	}

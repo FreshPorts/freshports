@@ -1,5 +1,5 @@
 <?
-	# $Id: categories.php,v 1.1.2.4 2002-02-16 23:52:50 dan Exp $
+	# $Id: categories.php,v 1.1.2.5 2002-04-24 00:08:51 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -124,9 +124,6 @@ if (!$result) {
 }
 
 $HTML .= freshports_echo_HTML("<tr><td><b>port count:</b></td><td ALIGN=\"right\"><b>$NumPorts</b></td></tr>");
-
-#mysql_free_result($result);
-
 
 $HTML .= freshports_echo_HTML('</table>');
 //$HTML .= freshports_echo_HTML('</td></tr>');

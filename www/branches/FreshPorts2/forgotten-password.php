@@ -1,5 +1,5 @@
 <?
-	# $Id: forgotten-password.php,v 1.1.2.6 2002-04-20 02:47:57 dan Exp $
+	# $Id: forgotten-password.php,v 1.1.2.7 2002-04-24 00:08:51 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -56,7 +56,7 @@ if ($submit) {
          echo "$sql<br>\n";
       }
 
-      $result = pg_exec($db, $sql) or die('query failed ' . mysql_error());
+      $result = pg_exec($db, $sql) or die('query failed ' . pg_errormessage());
 
 
       if (!pg_numrows($result)) {
@@ -73,7 +73,7 @@ if ($submit) {
 
          if ($Debug) echo "$sql<br>\n";
 
-         $result = pg_exec($db, $sql) or die('query failed ' . mysql_error());
+         $result = pg_exec($db, $sql) or die('query failed ' . pg_errormessage());
 
          if (!pg_numrows($result)) {
             $eMailFailed = 1;
@@ -100,7 +100,6 @@ if ($submit) {
 
       if ($OKToMail) {
          # send out email
-//         $myrow = mysql_fetch_array($result);
          $message = "Someone, perhaps you, requested that you be emailed your password.\n".
                     "If that wasn't you, and this message becomes a nuisance, please\n".
                     "forward this message to webmaster@freshports.org and we will take\n". 

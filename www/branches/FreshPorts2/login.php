@@ -1,5 +1,5 @@
 <?
-	# $Id: login.php,v 1.1.2.14 2002-04-20 03:06:21 dan Exp $
+	# $Id: login.php,v 1.1.2.15 2002-04-24 00:08:52 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -37,7 +37,7 @@ if ($submit) {
       echo "$sql<BR>\n";
    }
 
-   $result = pg_exec($db, $sql) or die('query failed ' . mysql_error());
+   $result = pg_exec($db, $sql) or die('query failed ' . pg_errormessage());
 
 
 	if (!pg_numrows($result)) {

@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-list.php,v 1.2.2.19 2003-01-06 14:14:44 dan Exp $
+	# $Id: watch-list.php,v 1.2.2.20 2003-03-05 21:07:13 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -56,7 +56,7 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 		exit;  /* Make sure that code below does not get executed when we redirect. */
 	}
 
-	if (IsSet($_GET["ask"])) {
+	if (IsSet($_REQUEST["ask"])) {
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/include/watch-lists.php');
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
 
@@ -78,19 +78,19 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 		}
 	
 		$PostURL = $_SERVER["PHP_SELF"];
-		if (IsSet($_GET["remove"])) {
+		if (IsSet($_REQUEST["remove"])) {
 			$ButtonName = "Update";
 			$Action     = "remove";
 			$Verb       = 'removed';
 			$FromTo     = 'from';
-			$Object     = AddSlashes($_GET["remove"]);
+			$Object     = AddSlashes($_REQUEST["remove"]);
 		} else {
-			if (IsSet($_GET["add"])) {
+			if (IsSet($_REQUEST["add"])) {
 				$ButtonName = "Update";
 				$Action     = "add";
 				$Verb       = 'added';
 				$FromTo      = 'to';
-				$Object     = AddSlashes($_GET["add"]);
+				$Object     = AddSlashes($_REQUEST["add"]);
 			} else {
 				die("I don't know whether you are removing or adding, so I'll just stop here shall I?");
 			}
@@ -196,11 +196,11 @@ freshports_ShowFooter();
 					die(pg_last_error());
 				}
 			} else {
-				if (IsSet($_REQUEST['add'])) {
+				if (IsSet($_REQUEST['remove'])) {
 					pg_exec($db, 'BEGIN');
-					$ElementID = AddSlashes($_REQUEST['add']);
+					$ElementID = AddSlashes($_REQUEST['remove']);
 					$WatchListElement = new WatchListElement($db);
-					if ($WatchListElement->AddToDefault($User->id, $ElementID) == 1) {
+					if ($WatchListElement->DeleteFromDefault($User->id, $ElementID) >= 0) {
 						pg_exec('COMMIT');
 					} else {
 						pg_exec('ROLLBACK');

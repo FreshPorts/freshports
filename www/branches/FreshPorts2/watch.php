@@ -1,5 +1,5 @@
 <?
-	# $Id: watch.php,v 1.1.2.27 2002-12-04 21:26:10 dan Exp $
+	# $Id: watch.php,v 1.1.2.28 2002-12-06 16:51:11 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -24,6 +24,14 @@ if (!$visitor) {
 	freshports_Start("your watched ports",
 					"freshports - new ports, applications",
 					"FreeBSD, index, applications, ports");
+					
+	if ($_POST["watch_list_select_x"] && $_POST["watch_list_select_y"]) {
+		# they clicked on the GO button and we have to apply the 
+		# watch staging area against the watch list.
+		$WatchListID = AddSlashes($_POST["watch_list_id"]);
+		if ($Debug) echo "\$WatchListID='$WatchListID'";
+	}
+
 ?>
 
 <table width="<? echo $TableWidth ?>" border="0" ALIGN="center">
@@ -31,7 +39,7 @@ if (!$visitor) {
 <tr><td valign="top" width="100%">
 <table width="100%" border="0">
 <tr>
-	<? freshports_PageBannerText("your watch list"); ?>
+	<? freshports_PageBannerText("your watch list - PERHAPS the watch list name[s] should go here?"); ?>
 </tr>
 <tr><td>
 <table border=0 width="100%">
@@ -40,21 +48,11 @@ These are the ports which are on your <a href="watch-categories.php">watch list<
 That link also occurs on the right hand side of this page, under Login.
 </td><td valign="top" nowrap align="right">
 
-<form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
-
-<small>
 <?php
 
-echo freshports_WatchListDDLB($db, $UserID, $WatchListID);
+echo freshports_WatchListDDLBForm($db, $UserID, $WatchListID);
 
 ?>
-</small>
-</td><td valign="top" nowrap align="left">
-	<input type="image" border="0" name="submit" value="GO" src="/images/go.gif" alt="Go" width="30" height="20" align="middle" title="Display the selected watch list">
-</td>
-
-
-</form>
 
 </td></tr>
 </table>

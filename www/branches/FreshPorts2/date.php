@@ -1,5 +1,5 @@
 <?
-	# $Id: date.php,v 1.1.2.5 2002-11-28 05:04:01 dan Exp $
+	# $Id: date.php,v 1.1.2.6 2002-11-28 05:09:00 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -23,6 +23,9 @@
 ?>
 <html>
 <body>
+
+<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<TR><TD>
 
 <?php
 
@@ -161,9 +164,12 @@ echo $HTML;
 
 echo '</table>';
 
-
 ?>
 
+</TD>
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
+   <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
+</TD>
 
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">

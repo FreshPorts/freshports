@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: security-notice-list.php,v 1.1.2.3 2004-02-13 17:41:50 dan Exp $
+	# $Id: security-notice-list.php,v 1.1.2.4 2004-02-13 17:44:05 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -103,6 +103,7 @@ function MassageStatus($InStatus) {
 ?>
 <tr>
 <?php
+		$HTML = '';
 		$HTML .= '<td nowrap valign="top">' . FormatTime($SecurityNotice->commit_date, 0, "D, j M Y");
 
 		$HTML .= ' <SMALL>';

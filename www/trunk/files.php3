@@ -65,7 +65,7 @@ This page shows the files associated with one port within a given commit.
    echo '    <td valign="top">' . $myrow["update_description"] . "</td>\n";
    echo "</tr>";
 
-   echo '<tr height="20"><td colspan="3" bgcolor="#AD0040"><font color="#FFFFFF"><font size="+1">' . "$i records found" . '</font></td></tr>';
+   echo '<tr height="20"><td colspan="3" bgcolor="#AD0040"><font color="#FFFFFF"><font size="+1">' . "$i files found" . '</font></td></tr>';
    ?>
    <tr>
      <td><b>Action</b></td><td colspan="2"><b>File</b></td>

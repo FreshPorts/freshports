@@ -1,6 +1,11 @@
 <?
-	# $Id: graph.php,v 1.1.2.4 2002-04-19 20:35:43 dan Exp $
+	# $Id: graph.php,v 1.1.2.5 2002-04-19 20:43:28 dan Exp $
 	#
+
+	require($DOCUMENT_ROOT . "/include/common.php");
+	require($DOCUMENT_ROOT ."/include/freshports.php");
+	require($DOCUMENT_ROOT ."/include/databaselogin.php");
+	require($DOCUMENT_ROOT ."/include/getvalues.php");
 
 // parameters: graph id
 require("bar-graphs.php");
@@ -9,8 +14,7 @@ require("bar-graphs.php");
 // FreshPorts bar chart
 
 // $values must be an array of numbers
-function FreshPortsChart($title, $axislabel, $values, $labels, $urls, $file = "-")
-{
+function FreshPortsChart($title, $axislabel, $values, $labels, $urls, $file = "-") {
         $c = new dg_BarGraph();
         $c->width = 500;
         $c->values = $values;
@@ -39,16 +43,11 @@ $period = 14400; // in seconds
 $filename = $cache_dir.$fid.".png";
 if (!file_exists($filename) || filemtime($filename)+$period<time())	{
 	// get graph information
-	
-	if (IsSet($db)) {
-		$conn = $db;
-	} else {
-		$conn = @pg_connect("dbname=fp2migration")
-			or die("PGERR: cannot connect");
-	}
+
+	GLOBAL $db;
 
 	// XXX CHANGE THE QUERY XXX
-	$data = @pg_exec($conn,"select query, title, title from graphs where id=$id")
+	$data = @pg_exec($db,"select query, title, title from graphs where id=$id")
 		or die("PGERR 1: ".pg_ErrorMessage());
 	
 	if (pg_numrows($data) == 0)
@@ -63,7 +62,7 @@ if (!file_exists($filename) || filemtime($filename)+$period<time())	{
 	pg_freeresult($data);
 
 	// get graph data
-	$data = @pg_exec($conn,$query)
+	$data = @pg_exec($db, $query)
 		or die("PGERR 2: ".pg_ErrorMessage());
 
 	$v = array();

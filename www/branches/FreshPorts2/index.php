@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.88 2004-02-16 16:15:12 dan Exp $
+	# $Id: index.php,v 1.1.2.89 2004-03-22 18:42:33 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -18,11 +18,11 @@ $Debug = 0;
 
 if ($Debug) echo "\$User->id='$User->id'";
 
-function freshports_SummaryForDay($MinusN) {          
-   $BaseDirectory = "./archives";                     
-   $Now = time();                                    
-//   echo "$MinusN<br>\n"; 
-   $File = $BaseDirectory . "/" . date("Y/m/d", $Now - 60*60*24*$MinusN) . ".inc";  
+function freshports_SummaryForDay($MinusN) {
+   $BaseDirectory = "./archives";
+   $Now = time();
+//   echo "$MinusN<br>\n";
+   $File = $BaseDirectory . "/" . date("Y/m/d", $Now - 60*60*24*$MinusN) . ".inc";
 //   echo "$File<br>\n";
    if (file_exists($File)) {
       echo '<br><TABLE WIDTH="152" BORDER="1" CELLSPACING="0" CELLPADDING="5">';

@@ -2,8 +2,8 @@
 <html>
 
 <head>
-<meta name="description" content="freshport">
-<meta name="keywords" content="FreeBSD, topics, index">
+<meta name="description" content="freshports - new ports, applications">
+<meta name="keywords" content="FreeBSD, index, applications, ports">  
 
 <?
 require( "/www/freshports.org/_private/commonlogin.php3");

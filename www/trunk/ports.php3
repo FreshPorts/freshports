@@ -8,8 +8,8 @@ require( "/www/freshports.org/_private/freshports.php3");
 <html>
 
 <head>
-<meta name="description" content="freshport">
-<meta name="keywords" content="FreeBSD, topics, index">
+<meta name="description" content="freshports - new ports, applications">
+<meta name="keywords" content="FreeBSD, index, applications, ports">  
 <!--// DVL Software is a New Zealand company specializing in database applications. //-->
 <title>freshports</title>
 </head>

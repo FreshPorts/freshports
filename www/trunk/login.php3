@@ -46,8 +46,8 @@ if ($submit) {
 
 <head>
 <title>freshports -- Login</title>
-<meta name="description" content="Login">
-<meta name="keywords" content="FreeBSD">
+<meta name="description" content="freshports - new ports, applications">
+<meta name="keywords" content="FreeBSD, index, applications, ports">  
 <!--// DVL Software is a New Zealand company specializing in database applications. //-->
 </head>
 

@@ -5,8 +5,8 @@ require( "/www/freshports.org/_private/getvalues.php3");
 ?>
 
 <head>
-<meta name="description" content="freshport">
-<meta name="keywords" content="FreeBSD, topics, index">
+<meta name="description" content="freshports - new ports, applications">
+<meta name="keywords" content="FreeBSD, index, applications, ports">  
 <!--// DVL Software is a New Zealand company specializing in database applications. //-->
 <title>freshports - changes</title>
 </head>
@@ -22,6 +22,12 @@ require( "/www/freshports.org/_private/getvalues.php3");
 
 <p>This is where I will attempt to list the changes to the freshports website.  Please put your wish 
 lists in the <a href="http://freshports.org/phorum/list.php?f=3">feedback phorum</a>.
+</p>
+<p>May 14
+
+<ul>
+  <li>Added a <a href="ports-deleted.php3">deleted ports page.</a></li>
+</ul>
 </p>
 <p>May 13
 

@@ -1,3 +1,9 @@
+<?
+require( "/www/freshports.org/_private/commonlogin.php3");
+require( "/www/freshports.org/_private/getvalues.php3");
+
+?>
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
 <html>
 
@@ -5,38 +11,24 @@
 <meta name="description" content="freshports - new ports, applications">
 <meta name="keywords" content="FreeBSD, index, applications, ports">  
 <!--// DVL Software is a New Zealand company specializing in database applications. //-->
-<title>freshports</title>
+<title>freshports - recently deleted ports</title>
 </head>
 
 <body bgcolor="#ffffff" link="#0000cc">
  <? include("/www/freshports.org/_private/header.inc") ?>
 <table width="100%" border="0">
-
 <tr><td colspan="2">
-This page lists the ports which are on your watch list. To modify the contents of this list, click on 
-<a href="watch-categories.php3">watch list - Categories</a> at the right.
+This page shows the ports which have been recently removed the ports tree.
 </td></tr>
 <tr><td valign="top" width="100%">
 <table width="100%" border="0">
 <tr>
-    <td colspan="5" bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">freshports - your watch list</font></td>
+    <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">freshports - recently removed ports</font></td>
   </tr>
-<script language="php">
+<tr><td>
+<?
 
 $DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
-
-require( "/www/freshports.org/_private/commonlogin.php3");
-require( "/www/freshports.org/_private/getvalues.php3");
-require( "/www/freshports.org/_private/freshports.php3");
-
-if ($UserID == '') {
-   echo '<tr><td>';
-   echo 'You must be logged in order to view your watch lists.';
-   echo '</td></tr>';
-} else {
-
-
-$WatchID = freshports_MainWatchID($UserID, $db);
 
 $cache_file     =       "/tmp/freshports.org.cache." . basename($PHP_SELF);
 $LastUpdateFile =       "/www/freshports.org/work/msgs/lastupdate";
@@ -46,7 +38,7 @@ $LastUpdateFile =       "/www/freshports.org/work/msgs/lastupdate";
 switch ($sort) {
 /* sorting by port is disabled. Doesn't make sense to do this
    case "port":
-      $sort = "version, updated desc";
+      $sort = "port, updated desc";
       $cache_file .= ".port";
       break;
 */
@@ -55,25 +47,13 @@ switch ($sort) {
 //      break;
 
    default:
-      $sort ="category, port";
+      $sort ="updated desc, port";
       $cache_file .= ".updated";
 }
 
 srand((double)microtime()*1000000);
 $cache_time_rnd =       300 - rand(0, 600);
 
-
-if ($Debug) {
-echo '<br>';
-echo '$cache_file=', $cache_file, '<br>';
-echo '$LastUpdateFile=', $LastUpdateFile , '<br>';
-echo '!(file_exists($cache_file))=',     !(file_exists($cache_file)), '<br>';
-echo '!(file_exists($LastUpdateFile))=', !(file_exists($LastUpdateFile)), "<br>";
-echo 'filectime($cache_file)=',          filectime($cache_file), "<br>";
-echo 'filectime($LastUpdateFile)=',      filectime($LastUpdateFile), "<br>";
-echo '$cache_time_rnd=',                 $cache_time_rnd, '<br>';
-echo 'filectime($cache_file) - filectime($LastUpdateFile) + $cache_time_rnd =', filectime($cache_file) - filectime($LastUpdateFile) + $cache_time_rnd, '<br>';
-}
 
 $UpdateCache = 0;
 if (!file_exists($cache_file)) {
@@ -92,31 +72,24 @@ if (!file_exists($cache_file)) {
 //         echo 'created before the last database update<br>';
          $UpdateCache = 1;
       } else {
-//         echo 'created after the last database update<br>';
+//         echo 'crated after the last database update<br>';
       }
    }
 }
 
-$UpdateCache = 1;
-
-if ($WatchID == '') {
-   echo "<tr><td>Your watch list is empty.</td></tr>";
-} else {
+//$UpdateCache = 1;
 
 if ($UpdateCache == 1) {
 //   echo 'time to update the cache';
 
-$sql = "";
-$sql = "select ports.id, ports.name as port, ports.id as ports_id, ports.last_update as updated, " .
+$sql = "select ports.id, ports.name as port, ports.last_update as updated, " .
        "categories.name as category, categories.id as category_id, ports.version as version, ".
        "ports.committer, ports.last_update_description as update_description, " .
-       "ports.maintainer, ports.short_description, ".
-       "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, ports.status " .
-       "from ports, categories, watch_port  ".
-       "WHERE ports.system = 'FreeBSD' ".
-       "and ports.primary_category_id = categories.id " .
-       "and ports.id     = watch_port.port_id " .
-       "and watch_port.watch_id = $WatchID ";
+       "ports.maintainer, ports.short_description ".
+       "from ports, categories ".
+       "WHERE ports.system              = 'FreeBSD' ".
+       "  and ports.primary_category_id = categories.id " .
+       "  and ports.status              = 'D' ";
 
 $sql .= "order by $sort";
 //$sql .= " limit 20";
@@ -127,32 +100,18 @@ $result = mysql_query($sql, $db);
 
 //$HTML = "</tr></td><tr>";
 
-$HTML .= '<tr><td>';
-
 // get the list of topics, which we need to modify the order
-$NumTopics=0;
-
-$LastCategory='';
-
+//$HideDownloadPort=1;
 while ($myrow = mysql_fetch_array($result)) {
-   $Category = $myrow["category"];
-
-   if ($LastCategory != $Category) {
-      $LastCategory = $Category;
-      $URL_Category = "category.php3?category=" . $myrow["category_id"];
-      $HTML .= '<h3><a href="' . $URL_Category . '">Category ' . $myrow["category"] . '</a></h3>';
-   }
-
    include("/www/freshports.org/_private/port-basics.inc");
 }
 
-  $HTML .= "</td></tr>\n";
 //$HTML .= '</tr>';
+
+//$HTML .= "</table>\n";
 
 mysql_free_result($result);
 
-//$HTML .= '</table>';
-//$HTML .= '</td></tr>';
 
 echo $HTML;
 
@@ -172,15 +131,13 @@ echo $HTML;
       include($cache_file);
    }
 }
-} // end if no WatchID
-}
 
 </script>
 </table>
 </td>
   <td valign="top" width="*">
-<? include("/www/freshports.org/_private/side-bars.php3") ?>
-</td>
+   <? include("/www/freshports.org/_private/side-bars.php3") ?>
+ </td>
 </tr>
 </table>
 <? include("/www/freshports.org/_private/footer.inc") ?>

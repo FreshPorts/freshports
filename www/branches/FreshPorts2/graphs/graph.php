@@ -1,5 +1,5 @@
 <?
-	# $Id: graph.php,v 1.1.2.10 2002-12-04 16:35:20 dan Exp $
+	# $Id: graph.php,v 1.1.2.11 2002-12-04 16:53:40 dan Exp $
 	#
 
 	require($_SERVER["DOCUMENT_ROOT"] . "/include/common.php");
@@ -9,6 +9,9 @@
 
 // parameters: graph id
 require("bar-graphs.php");
+
+if (!function_exists('imagettfbbox'))
+	die("Fatal error: this version of PHP does not support GD.\n");
 
 // --------------------------------------------------------------------
 // FreshPorts bar chart

@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.9 2001-12-29 19:03:07 dan Exp $
+   # $Id: freshports.php,v 1.4.2.10 2001-12-29 20:36:17 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -425,11 +425,11 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
    $HTML .= "</DT>\n<DD>";
    # show forbidden and broken
    if ($port->forbidden) {
-      $HTML .= '<img src="images/forbidden.gif" alt="Forbidden" width="20" height="20" hspace="2">' . $port->forbidden . "<br><br>";
+      $HTML .= '<img src="images/forbidden.gif" alt="Forbidden" width="20" height="20" hspace="2"> FORBIDDEN: ' . $port->forbidden . "<br>";
 
    }
    if ($port->broken) {
-      $HTML .= '<img src="images/broken.gif" alt="Broken" width="17" height="16" hspace="2">' . $port->broken . "<br><br>"; ;
+      $HTML .= '<img src="images/broken.gif" alt="Broken" width="17" height="16" hspace="2"> BROKEN: ' . $port->broken . "<br><br>"; ;
    }
 
    // description

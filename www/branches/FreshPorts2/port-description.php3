@@ -1,5 +1,5 @@
 <?
-   # $Id: port-description.php3,v 1.25.2.2 2001-11-25 21:42:02 dan Exp $
+   # $Id: port-description.php3,v 1.25.2.3 2001-11-26 06:42:37 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -81,23 +81,19 @@ to see what files changed for this port in that commit.</p>
 
 if ($NumRows) {
 
-   $HideDescription=1;
-   $ShowCategories=1;
-   $ShowDepends=1;
-#	include("./include/port-basics.php");
+	$HideDescription	= 1;
+	$ShowCategories		= 1;
+GLOBAL	$ShowDepends;
+$ShowDepends		= 1;
 
-	$HTML .= freshports_PortDetails($myrow, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription);
+	$HTML .= freshports_PortDetails($myrow, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription);
 
 
    echo $HTML;
 
-   echo "<DL><DD><PRE>";
-   echo $myrow["long_description"];
-   echo "</PRE>\n</DD>\n</DL>\n</TD>\n</TR>";
-
-#   echo '<tr height="20"><td colspan="3"></td></tr>' . "\n";
-
-	
+   echo '<DL><DD>';
+   echo nl2br(convertAllLinks(htmlspecialchars($myrow["long_description"])));
+   echo "\n</DD>\n</DL>\n</TD>\n</TR>";
 
    echo '<tr><td><TABLE BORDER="1" width="100%" CELLSPACING="0" CELLPADDING="5"bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">' . "\n";
    echo '<tr height="20"><td colspan="3" bgcolor="#AD0040"><font color="#FFFFFF"><font size="+1">Commit History</font> (may be incomplete: see Changes link above for full details)</font></td></tr>' . "\n";
@@ -111,21 +107,20 @@ if ($NumRows) {
 
 	$result = pg_exec($db, $sql);
 	$numrows = pg_numrows($result);
+
 #echo "sql = $sql\n";
 #echo "that's $numrows rows\n";
 
-   $i = 0;
-   while ($myrow = pg_fetch_array($result, $i)) {
-      $i++;
-      echo "<tr><td valign='top'><font size='-1'>" . $myrow["commit_date"]        . "</font></td>\n";
-      echo "    <td valign='top'>" . $myrow["committer"]          . "</td>\n";
-      echo '    <td valign="top"><a href="files.php3?id=' . $myrow["id"] .
+	$i = 0;
+	for ($i = 0; $i <= $NumRows; $i++) {
+		$myrow = pg_fetch_array($result, $i);
+		$i++;
+		echo "<tr><td valign='top'><font size='-1'>" . $myrow["commit_date"]        . "</font></td>\n";
+		echo '    <td valign="top">' . $myrow["committer"]          . "</td>\n";
+		echo '    <td valign="top" WIDTH="*"><a href="files.php3?id=' . $myrow["id"] .
                       '"><img src="images/logs.gif" alt="Files within this port affected by this commit" border="0" WIDTH="17" HEIGHT="20" hspace="2"></a>' . 
-                       "<PRE>" . htmlspecialchars($myrow["description"]) . "</PRE></td>\n";
-      echo "</tr>\n";
-		if ($i >  $numrows - 1) {
-			break;
-		}
+                       nl2br(htmlspecialchars($myrow["description"])) . "</td>\n";
+		echo "</tr>\n";
 	}
 
    echo "</TABLE>\n</TD>\n</TR>\n";

@@ -1,5 +1,5 @@
 <?
-	# $Id: commit.php,v 1.1.2.21 2003-01-06 14:14:36 dan Exp $
+	# $Id: commit.php,v 1.1.2.22 2003-01-10 15:57:27 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -23,31 +23,6 @@
 $Debug = 0;
 
 if ($Debug) echo "UserID='$User->id'";
-
-if (!$StartAt) {
-   if ($Debug) {
-      echo "setting StartAt to zero<br>\n";
-      echo "UserID = $User->id<br>\n";
-   }
-   $StartAt = 0;
-} else {
-   $NewStart = floor($StartAt / $MaxNumberOfPorts) * $MaxNumberOfPorts;
-   if ($NewStart != $StartAt) {
-      $URL = basename($_SERVER["PHP_SELF"]);
-      if ($NewStart > 0) {
-         $URL .= "?StartAt=$NewStart";
-      } else {
-         $URL = "/";
-      }
-      header("Location: " . $URL );
-      // Make sure that code below does not get executed when we redirect.
-      exit;
-   }
-}
-
-if ($Debug) {
-   echo "StartAt = $StartAt<br>\n";
-}
 
 ?>
 
@@ -78,18 +53,18 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 
 	$sql = '';
 	
-	$sql .= "SELECT ports.*, 
-	         categories.name as category, 
-	         element.name as name, 
-	         commit_log.committer, 
-	         commit_log.description as commit_description, 
-	         commit_log_ports.port_version as version, 
+	$sql .= "SELECT ports.*,
+	         categories.name as category,
+	         element.name as name,
+	         commit_log.committer,
+	         commit_log.description as commit_description,
+	         commit_log_ports.port_version as version,
 	         commit_log_ports.port_revision as revision,
 	         to_char(commit_log.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')  as commit_date,
 	         to_char(commit_log.commit_date - SystemTimeAdjust(), 'HH24:MI:SS')   as commit_time,
-	         commit_log.message_id, 
-	         commit_log.encoding_losses, 
-	         element.name as port, 
+	         commit_log.message_id,
+	         commit_log.encoding_losses,
+	         element.name as port,
 	         commit_log.id as commit_log_id,
 	         commit_log_ports.needs_refresh ";
 
@@ -105,7 +80,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 				$sql .= "
 	      LEFT OUTER JOIN
 	 (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
-	    FROM watch_list JOIN watch_list_element 
+	    FROM watch_list JOIN watch_list_element
 	        ON watch_list.id      = watch_list_element.watch_list_id
 	       AND watch_list.user_id = $User->id
 	  GROUP BY watch_list_element.element_id) AS TEMP
@@ -122,7 +97,8 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 		$sql .= "\n           AND commit_log.id         = $commit_id \n";
 	}
 	
-	$sql .= '           AND ports.element_id      = element.id
+	$sql .= '
+           AND ports.element_id      = element.id
            AND ports.category_id     = categories.id' ."\n";
 
 	$sql .= "ORDER BY category, name";
@@ -168,7 +144,6 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 <TABLE WIDTH="100%" border="1" CELLSPACING="0" CELLPADDING="8">
 <TR>
 	<? echo freshports_PageBannerText($Title, 3); ?>
-	<? //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPorts) ?>
 </TR>
 
 <?
@@ -277,16 +252,13 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 				$i = $j - 1;
 
 				$HTML .= "\n<BLOCKQUOTE>\n";
-
 				$HTML .= freshports_PortDescriptionPrint($myrow["commit_description"], $myrow["encoding_losses"]);
-
-
 				$HTML .= "\n</BLOCKQUOTE>\n</TD></TR>\n\n\n";
 			}
 
 			echo $HTML;
 
-            echo "</TABLE>\n";
+			echo "</TABLE>\n";
 		} else {
 			?>
 <TR><TD VALIGN="top" WIDTH="100%">

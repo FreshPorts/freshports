@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-category.php,v 1.1.2.28 2003-09-24 17:47:41 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.29 2003-09-30 00:00:36 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -101,8 +101,6 @@ function freshports_Category($db, $element_id, $PageNo = 1, $PageSize = 25) {
 	freshports_Start($title,
 					'freshports - new ports, applications',
 					'FreeBSD, index, applications, ports');
-
-	$DESC_URL = 'ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports';
 
 	$port = new Port($db);
 

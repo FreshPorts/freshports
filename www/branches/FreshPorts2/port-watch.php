@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-watch.php,v 1.1.2.41 2003-09-08 14:21:23 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.42 2003-09-30 00:00:36 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -118,9 +118,6 @@ if ($submit) {
   </tr>
 
 <?php
-
-$DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
-
 
 $sql = "
   SELECT element.id, 

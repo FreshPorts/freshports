@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports-new.php,v 1.1.2.28 2003-04-29 15:14:29 dan Exp $
+	# $Id: ports-new.php,v 1.1.2.29 2003-09-30 00:00:37 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -70,8 +70,6 @@ These are the recently added ports.
 </TD></TR>
 <?
 
-	$DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
-	
 	$visitor = AddSlashes($_COOKIE["visitor"]);
 	$sort    = AddSlashes($_GET["sort"]);
 

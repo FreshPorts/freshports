@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports-deleted.php,v 1.1.2.22 2003-04-28 16:25:14 dan Exp $
+	# $Id: ports-deleted.php,v 1.1.2.23 2003-09-30 00:00:37 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -32,8 +32,6 @@
 These are the latest deleted ports.
 </TD></TR>
 <?
-
-	$DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
 
 	$visitor = $_COOKIE["visitor"];
 	$sort    = $_REQUEST["sort"];

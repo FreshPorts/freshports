@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch.php,v 1.1.2.42 2003-05-08 13:07:09 dan Exp $
+	# $Id: watch.php,v 1.1.2.43 2003-09-30 00:01:18 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -76,9 +76,6 @@ echo freshports_WatchListDDLBForm($db, $User->id, $wlid);
 </table>
 </td></tr>
 <script language="php">
-
-$DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
-
 
 // make sure the value for $sort is valid
 

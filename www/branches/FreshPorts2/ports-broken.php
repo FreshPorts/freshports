@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports-broken.php,v 1.1.2.14 2003-04-28 16:25:14 dan Exp $
+	# $Id: ports-broken.php,v 1.1.2.15 2003-09-30 00:00:36 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -31,8 +31,6 @@
 These are the recently added ports.
 </TD></TR>
 <?
-
-	$DESC_URL = 'ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports';
 
 	$visitor = $_COOKIE["visitor"];
 	$sort    = $_REQUEST["sort"];

@@ -1,5 +1,5 @@
 <?
-	# $Id: ports-not-in-latest-index.php,v 1.1.2.13 2003-05-16 02:33:45 dan Exp $
+	# $Id: ports-not-in-latest-index.php,v 1.1.2.14 2003-09-30 00:00:37 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 
@@ -34,8 +34,6 @@ $title = "Ports not in latest /usr/ports/INDEX";
 <TABLE WIDTH="<? echo $TableWidth ?>" BORDER="0" ALIGN="center">
 
 <?
-
-$DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
 
 $sql = "	SELECT categories.name || '/' || element.name  || '/' as port, ports.element_id, ports.id
 			  FROM ports, element, categories 

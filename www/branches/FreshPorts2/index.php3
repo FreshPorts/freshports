@@ -1,5 +1,5 @@
 <?
-   # $Id: index.php3,v 1.34.2.15 2001-12-29 19:00:42 dan Exp $
+   # $Id: index.php3,v 1.34.2.16 2001-12-29 22:02:04 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -223,7 +223,7 @@ order by commit_log.commit_date desc,
 							$HTML .= '<br>';
 						}
 
-						$HTML .= '<a href="port-description.php3?port=' . $myrow["port_id"]  . '">';
+						$HTML .= '<a href="/' . $myrow["category"] . '/' . $myrow["port"] . '">';
 						$HTML .= "<B>" . $myrow["port"];
 						
 						if (strlen($myrow["version"]) > 0) {
@@ -234,7 +234,7 @@ order by commit_log.commit_date desc,
 
 
 						$URL_Category = "category.php3?category=" . $myrow["category_id"];
-						$HTML .= ' <font size="-1"><a href="' . $URL_Category . '">' . $myrow["category"] . '</a></font>';
+						$HTML .= ' <font size="-1"><a href="/' . $myrow["category"] . '">' . $myrow["category"] . '</a></font>';
 
 						// indicate if this port needs refreshing from CVS
 						if ($myrow["status"] == "D") {

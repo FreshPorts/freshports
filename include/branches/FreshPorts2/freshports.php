@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.10 2001-12-29 20:36:17 dan Exp $
+   # $Id: freshports.php,v 1.4.2.11 2001-12-29 22:02:05 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -517,7 +517,7 @@ if ($ShowDepends) {
           $CategoryPortArray = explode('/', $CategoryPort);
           $DependsPortID = freshports_PortIDFromPortCategory($CategoryPortArray[0], $CategoryPortArray[1], $db);
 
-          $HTML .= '<a href="port-description.php3?port=' . $DependsPortID . '">' . $CategoryPortArray[1]. '</a>';
+          $HTML .= '<a href="/' . $CategoryPortArray[0] . '/' . $CategoryPortArray[1] . '">' . $CategoryPortArray[1]. '</a>';
           if ($i < $Count - 1) {
              $HTML .= ", ";
           }
@@ -543,7 +543,7 @@ if ($ShowDepends) {
           $CategoryPortArray = explode('/', $CategoryPort);
           $DependsPortID = freshports_PortIDFromPortCategory($CategoryPortArray[0], $CategoryPortArray[1], $db);
 
-          $HTML .= '<a href="port-description.php3?port=' . $DependsPortID . '">' . $CategoryPortArray[1]. '</a>';
+          $HTML .= '<a href="/' . $CategoryPortArray[0] . '/' . $CategoryPortArray[1] . '">' . $CategoryPortArray[1]. '</a>';
           if ($i < $Count - 1) {
              $HTML .= ", ";
           }
@@ -555,7 +555,7 @@ if ($ShowDepends) {
 
    if (!$HideDescription && ($ShowDescriptionLink == "Y" || $ShowEverything)) {
       // Long descripion
-      $HTML .= '<A HREF="port-description.php3?port=' . $port->id .'">Description</a>';
+      $HTML .= '<A HREF="/' . $port->category . '/' . $port->port .'/">Description</a>';
 
       $HTML .= ' <b>:</b> ';
    }

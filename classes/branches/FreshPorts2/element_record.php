@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: element_record.php,v 1.1.2.2 2003-09-24 17:53:23 dan Exp $
+	# $Id: element_record.php,v 1.1.2.3 2003-11-26 13:45:18 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -38,7 +38,7 @@ class ElementRecord {
 			$this->element_pathname = $Name;
 			UnSet($this->id);
 		}
-		$sql = "select * from elementGet('$Name')";
+		$sql = "select * from elementGet('" . AddSlashes($Name) . "')";
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {

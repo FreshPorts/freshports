@@ -1,5 +1,5 @@
 <?
-	# $Id: date.php,v 1.1.2.8 2002-11-28 18:49:43 dan Exp $
+	# $Id: date.php,v 1.1.2.9 2002-11-29 15:26:16 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -24,7 +24,16 @@
 	# Get the date we are going to work with.
 	#
 	$Date = AddSlashes($_GET["date"]);
+
+	$DateMessage = '';
+
 	if ($Date == '' || strtotime($Date) == -1) {
+		$DateMessage = 'date assumed';
+		$Date = date("Y/m/d");
+	}
+	list($year, $month, $day) = explode("/", $Date);
+	if (!CheckDate($month, $day, $year)) {
+		$DateMessage = 'date adjusted to something realistic';
 		$Date = date("Y/m/d");
 	} else {
 		$Date = date("Y/m/d", strtotime($Date));
@@ -65,7 +74,7 @@
 		
 	}
 
-	function ArchiveCreate($Date, $db, $WatchListID) {
+	function ArchiveCreate($Date, $DateMessage, $db, $WatchListID) {
 		GLOBAL	$freshports_CommitMsgMaxNumOfLinesToShow;
 		
 		$commits = new Commits($db);
@@ -92,7 +101,11 @@
 			if ($LastDate <> $commit->commit_date) {
 				$LastDate = $commit->commit_date;
 				$HTML .= '<TR><TD COLSPAN="3" BGCOLOR="#AD0040" HEIGHT="0">' . "\n";
-				$HTML .= '   <FONT COLOR="#FFFFFF"><BIG>' . FormatTime($commit->commit_date, 0, "D, j M Y") . ' : ' . $NumRows . ' commits today</BIG></FONT>' . "\n";
+				$HTML .= '   <FONT COLOR="#FFFFFF"><BIG>' . FormatTime($commit->commit_date, 0, "D, j M Y") . ' : ' . $NumRows . ' commits found </BIG>';
+				if ($DateMessage) {
+					$HTML .= ' (' . $DateMessage . ')';
+				}
+				$HTML .= '</FONT>' . "\n";
 				$HTML .= '</TD></TR>' . "\n\n";
 			}
 		
@@ -218,7 +231,7 @@
 
 echo '<TABLE WIDTH="100%" BORDER="1" CELLSPACING="0" CELLPADDING="5">';
 
-$HTML = ArchiveCreate($Date, $db, $WatchListID);
+$HTML = ArchiveCreate($Date, $DateMessage, $db, $WatchListID);
 
 echo $HTML;
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.48 2003-10-02 14:23:34 dan Exp $
+	# $Id: search.php,v 1.1.2.49 2003-11-05 17:02:41 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -14,6 +14,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
 
 	$Debug = 0;
+#	if ($Debug) phpinfo();
 
 	#
 	# I became annoyed with people creating their own search pages instead of using
@@ -32,17 +33,18 @@
 	$search = FALSE;
 	$HTML   = '';
 
-	// avoid nasty problems by adding slashes
+	// If these items are missing from the URL, we want them to have a value
 	$query				= '';
-	$stype				= '';
-	$num				= '';
+	$stype				= 'name';
+	$num				= '10';
 	$category			= '';
 	$port				= '';
 	$method				= '';
-	$deleted			= '';
-	$casesensitivity	= '';
-	$start				= '';
+	$deleted			= 'excludedeleted';
+	$casesensitivity	= 'caseinsensitive';
+	$start				= '1';
 
+	// avoid nasty problems by adding slashes
 	if (IsSet($_REQUEST['query']))           $query				= AddSlashes(trim($_REQUEST['query']));
 	if (IsSet($_REQUEST['stype']))           $stype				= AddSlashes(trim($_REQUEST['stype']));
 	if (IsSet($_REQUEST['num']))             $num				= AddSlashes(trim($_REQUEST['num']));
@@ -129,6 +131,7 @@ if ($Debug) {
 #
 # we can take parameters.  if so, make it look like a post
 #
+
 if (IsSet($_REQUEST['search'])) {
 	$search = $_REQUEST['search'];
 }
@@ -374,7 +377,7 @@ Search for:<BR>
 
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-	<INPUT TYPE="submit" VALUE="search">
+	<INPUT TYPE="submit" VALUE="Search" NAME="search">
 
 	<BR>
 
@@ -385,8 +388,6 @@ Search for:<BR>
 	NOTE: Case sensitivity is ignored for "sounding like".<BR>
 	NOTE: When searching on 'Message ID' only exact matches will succeed.
 
-  <INPUT TYPE="hidden" NAME="search" VALUE="1">
-  <INPUT TYPE="hidden" NAME="start"  VALUE="<? echo $start; ?>">
 </form>
 
 &nbsp;
@@ -412,13 +413,22 @@ if ($NumRows == 0) {
 	}
 
 	if ($start > 1) {
-		$QueryString = preg_replace("/start=(\d+)/e", "'start=' . max(1, ($start - $num))", $QueryString);
+		$QueryString = $_SERVER['QUERY_STRING'];
+		if (preg_match("/start=(\d+)/e", $QueryString)) {
+			$QueryString = preg_replace("/start=(\d+)/e", "'start=' . max(1, ($start - $num))", $QueryString);
+		} else {
+			$QueryString .= '&start=' . max(1, ($start - $num));
+		}
 		$NumPortsFound .= ' <a href="' . $_SERVER['PHP_SELF'] . '?' . htmlify(htmlspecialchars($QueryString)) . '">Previous page</a>';
 	}
 
 	if ($MoreToShow) {
 		$QueryString = $_SERVER['QUERY_STRING'];
-		$QueryString = preg_replace("/start=(\d+)/e", "'start=' . ($start + $num)", $QueryString);
+		if (preg_match("/start=(\d+)/e", $QueryString)) {
+			$QueryString = preg_replace("/start=(\d+)/e", "'start=' . ($start + $num)", $QueryString);
+		} else {
+			$QueryString .= '&start=' . ($start + $num);
+		}
 		$NumPortsFound .= ' <a href="' . $_SERVER['PHP_SELF'] . '?' . htmlify(htmlspecialchars($QueryString)) . '">Next page</a>';
 	}
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: customize.php,v 1.1.2.30 2003-09-09 19:28:18 dan Exp $
+	# $Id: customize.php,v 1.1.2.31 2003-09-09 19:28:54 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#

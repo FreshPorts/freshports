@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: security_notice_audit.php,v 1.1.2.1 2003-04-26 14:32:51 dan Exp $
+	# $Id: security_notice_audit.php,v 1.1.2.2 2004-02-13 16:43:39 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -38,7 +38,7 @@ class SecurityNoticeAudit {
 		$this->ip_address				= $myrow["ip_address"];
 		$this->description			= $myrow["description"];
 		$this->commit_log_id			= $myrow["commit_log_id"];
-		$this->status					= $myrow["status"];
+		$this->status					= $myrow["security_notice_status_id"];
 
 		$this->user_name				= $myrow["user_name"];
 		$this->user_email				= $myrow["user_email"];

@@ -1,5 +1,5 @@
 <?
-	# $Id: commit.php,v 1.1.2.3 2003-01-10 15:50:53 dan Exp $
+	# $Id: commit.php,v 1.1.2.4 2003-01-10 19:10:04 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -69,9 +69,7 @@ class Commit {
 	}
 
 	function FetchByMessageId($message_id) {
-		if (IsSet($message_id)) {
-			$this->message_id = $message_id;
-		}
+
 		$sql = "
 SELECT id as commit_log_id,
        message_id,
@@ -85,7 +83,7 @@ SELECT id as commit_log_id,
        system_id,
        encoding_losses       
   FROM commit_log 
- WHERE message_id = '$this->message_id'";
+ WHERE message_id = '" . AddSlashes($message_id) . "'";
 
 #		echo "sql = '<pre>$sql</pre>'<BR>";
 
@@ -99,6 +97,6 @@ SELECT id as commit_log_id,
 			}
 		}
 
-		return $this->id;
+		return $this->message_id;
 	}
 }

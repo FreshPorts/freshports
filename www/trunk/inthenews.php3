@@ -22,7 +22,7 @@ require( "/www/freshports.org/_private/getvalues.php3");
 
 <p>This page is just a place for me to record the freshports articles which appear
 on other sites.  Links are recorded in reverse chronological order (i.e. newest first).  If you spot an article which 
-is not list here, please <a href="http://freshports.org/phorum/list.php?f=3">let me know</a>.
+is not listed here, please <a href="http://freshports.org/phorum/list.php?f=3">let me know</a>.
 </p>
 <p>
 BSD Today - <a href="http://www.bsdtoday.com/2000/May/News146.html">Keeping track of your favorite ports</a>

@@ -1,5 +1,5 @@
 <?
-	# $Id: side-bars.php,v 1.4.2.42 2002-12-05 14:25:47 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.43 2002-12-09 20:28:13 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -34,7 +34,7 @@ $visitor = $_COOKIE["visitor"];
 
 //echo "OriginLocal = '$OriginLocal'<BR>\n";
 if ($visitor) {
-   echo '<FONT SIZE="-1">Logged in as ', $UserName, "</FONT><BR>";
+   echo '<FONT SIZE="-1">Logged in as ', $User->name, "</FONT><BR>";
 
    if ($EmailBounceCount > 0) {
       echo '<IMG SRC="/images/warning.gif"><IMG SRC="/images/warning.gif"><IMG SRC="/images/warning.gif"><BR>';

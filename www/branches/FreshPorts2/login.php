@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: login.php,v 1.1.2.30 2003-04-27 14:48:13 dan Exp $
+	# $Id: login.php,v 1.1.2.31 2003-05-08 12:22:57 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -134,10 +134,9 @@ if ($_GET["resend"]) {
 
 <script language="JavaScript" type="text/javascript">
 <!--
-function setfocus() { document.f.UserID.focus(); }
+function setfocus() { document.l.UserID.focus(); }
 // -->
 </script>
-
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
  <TR>

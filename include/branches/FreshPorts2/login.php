@@ -1,11 +1,13 @@
-<?
-	# $Id: login.php,v 1.1.2.5 2002-12-16 13:39:44 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: login.php,v 1.1.2.6 2003-05-08 12:22:58 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
 
 	$origin = $_GET["origin"];
 ?>
-<form action="<?php echo $_SERVER["PHP_SELF"] . "?origin=$origin" ?>" method="POST"  name="f">
+<form action="<?php echo $_SERVER["PHP_SELF"] . "?origin=$origin" ?>" method="POST" name="l">
       <input type="hidden" name="custom_settings" value="1"><input type="hidden" name="LOGIN" value="1">
       <p>User ID:<br>
       <input SIZE="15" NAME="UserID" value="<?php echo $User->id ?>"></p>

@@ -1,5 +1,5 @@
 <?
-	# $Id: authors.php,v 1.1.2.15 2003-01-06 14:14:36 dan Exp $
+	# $Id: authors.php,v 1.1.2.16 2003-02-10 14:59:20 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -57,18 +57,18 @@ do it alone.</p>
 
 <LI>Olaf wrote did the perl script for the log catcher.</LI>
 
-<LI>icmpecho wrote the awk code for the log catcher and the log munger.</LI>
+<LI>Titus Manea wrote the awk code for the log catcher and the log munger.</LI>
 
 <LI>Adriel helped me with perl syntax.</LI>
 
-<LI>Acme talked over data sources with me.</LI>
+<LI>Will Andrews talked over data sources with me.</LI>
 
 <LI>John Polstra and Satoshi Asami provided insight into cvs and ports as well
 as encouragement.</LI>
 
-<LI>Laz hung around, criticized, and suggested security improvements.</LI>
+<LI>Jeremy Shaffner hung around, criticized, and suggested security improvements.</LI>
 
-<LI>halflife did some prototype coding for me.</LI>
+<LI>Brian Mitchell did some prototype coding for me.</LI>
 
 <LI>David Bushong did a FreshBSD site which is a freshmeat-look site.</LI>
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.9 2003-07-04 14:45:07 dan Exp $
+	# $Id: categories.php,v 1.1.2.10 2003-09-24 17:53:49 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -34,6 +34,26 @@ class Category {
 			$this->id = $id;
 		}
 		$sql = "select * from categories where id = $this->id";
+		if ($Debug) echo "sql = '$sql'<BR>";
+
+        $result = pg_exec($this->dbh, $sql);
+		if ($result) {
+			$numrows = pg_numrows($result);
+			if ($numrows == 1) {
+				if ($Debug) echo "fetched by ID succeeded<BR>";
+				$myrow = pg_fetch_array ($result, 0);
+				$this->Populate($myrow);
+			}
+		}
+
+        return $this->id;
+	}
+
+	function FetchByElementID($element_id) {
+		if (IsSet($element_id)) {
+			$this->element_id = $element_id;
+		}
+		$sql = "select * from categories where element_id = $this->element_id";
 		if ($Debug) echo "sql = '$sql'<BR>";
 
         $result = pg_exec($this->dbh, $sql);

@@ -1,5 +1,5 @@
 <?
-	# $Id: commit.php,v 1.1.2.13 2002-11-01 20:23:36 dan Exp $
+	# $Id: commit.php,v 1.1.2.14 2002-11-28 16:53:44 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -106,7 +106,8 @@ function GetPortNameFromFileName($file_name) {
 					commit_log_ports.port_version as version, commit_log_ports.port_revision as revision,
 					to_char(commit_log.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')  as commit_date,
 					to_char(commit_log.commit_date - SystemTimeAdjust(), 'HH24:MI:SS')   as commit_time,
-					commit_log.message_id, commit_log.encoding_losses, ports_all.name as port, commit_log.id as commit_log_id ";
+					commit_log.message_id, commit_log.encoding_losses, ports_all.name as port, commit_log.id as commit_log_id,
+					commit_log_ports.needs_refresh ";
 
 	if ($WatchListID) {
 		$sql .= " ,

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.2 2004-01-06 13:45:53 dan Exp $
+	# $Id: index.php,v 1.1.2.3 2004-12-07 00:31:25 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -15,8 +15,20 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/latest_commits.php');
 
+	# JUST IN CASE THIS ISN'T SET ALREADY
+	if (!IsSet($MaxNumberOfPortsLong)) {
+		$MaxNumberOfPortsLong = 100;
+	}
+	$NumCommits = $MaxNumberOfPortsLong;
+
+	if (IsSet($_REQUEST["numcommits"])) {
+		$NumCommits = intval(AddSlashes($_REQUEST["numcommits"]));
+
+		$NumCommits = min($MaxNumberOfPortsLong, max(10, $NumCommits));
+	}
+
 	$LatestCommits = new LatestCommits($db);
-	$LatestCommits->SetMaxNumberOfPorts($MaxNumberOfPorts);
+	$LatestCommits->SetMaxNumberOfPorts($NumCommits);
 	$LatestCommits->SetDaysMarkedAsNew ($DaysMarkedAsNew);
 	$LatestCommits->CreateHTML();
 

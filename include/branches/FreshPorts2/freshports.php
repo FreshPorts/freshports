@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.185 2004-10-02 18:18:08 dan Exp $
+	# $Id: freshports.php,v 1.4.2.186 2004-10-02 18:49:49 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -23,6 +23,26 @@ DEFINE('URL2LINK_CUTOFF_LEVEL', 0);
 if ($Debug) echo "'" . $_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php<BR>';
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php');
+
+function PortsFreezeStatus() {
+	#
+	# this function checks to see if there is a port freeze on.
+	# if there is, it returns text that indicates same.
+	# otherwise, it returns an empty string.
+	#
+	$result = '';
+
+	if (file_exists($_SERVER["DOCUMENT_ROOT"] . "/../dynamic/PortsFreezeIsOn")) {
+		$result = '
+<p>
+<BIG><BIG>There is a ports freeze in effect!</big></big>  That means that
+commits will be few and far between and only by approval.
+</p>';
+	}
+
+	return $result;
+}
+
 
 function freshports_link_to_port($CategoryName, $PortName) {
 
@@ -359,6 +379,8 @@ GLOBAL $ShowAnnouncements;
 			echo DisplayAnnouncements($Announcement);
 		}
 	}
+
+	echo PortsFreezeStatus();
 }
 
 function freshports_Logo() {

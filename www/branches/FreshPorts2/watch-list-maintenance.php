@@ -1,7 +1,8 @@
 <?
-	# $Id: watch-list-maintenance.php,v 1.1.2.11 2002-12-11 04:44:41 dan Exp $
+	# $Id: watch-list-maintenance.php,v 1.1.2.12 2002-12-11 16:18:08 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
+	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
@@ -244,7 +245,7 @@ When clicking on Add/Remove for a port,<br> the action should affect
 	<ul>
 	<li><b>Add</b> - add a new watch list.  Supply the name in the space provided.  This name will be supplied
 			in any mail notification messages for this watch lists.  Names do not have to unique but it is advisable.
-			Valid characters are: TBA
+			Valid characters are: TBA.   Please contact the webmaster if you want more than 5 lists.
 	
 	<li><b>Rename</b> - rename a new watch list.  Select the watch list and supply the new name.
 	

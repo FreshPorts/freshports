@@ -1,5 +1,5 @@
 <?
-	# $Id: search.php,v 1.1.2.37 2003-01-06 14:14:43 dan Exp $
+	# $Id: search.php,v 1.1.2.38 2003-01-23 13:35:39 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -11,6 +11,18 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
 
 	$Debug = 0;
+
+	#
+	# I became annoyed with people creating their own search pages instead of using
+	# mine... If the referrer isn't us, ignore them
+	#
+
+	$pos = strpos($_SERVER["HTTP_REFERER"], "http://" . $_SERVER["SERVER_NAME"]);
+	if ($pos === FALSE || $pos != 0) {
+		echo "Ouch, something really nasty is going on.  Error code: UAFC.  Please contact the webmaster with this message.";
+		syslog(LOG_NOTICE, "External search form discovered: $_SERVER[HTTP_REFERER] $_SERVER[REMOTE_ADDR]:$_SERVER[REMOTE_PORT]");
+		exit;
+	}
 
 	// avoid nasty problems by adding slashes
 	$query				= AddSlashes($_REQUEST['query']);
@@ -55,7 +67,7 @@
 	}
 
 
-#	if ($Debug) phpinfo();
+	if ($Debug) phpinfo();
 
 	freshports_Start('Search',
 					'freshports - new ports, applications',

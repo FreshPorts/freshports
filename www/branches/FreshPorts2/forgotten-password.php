@@ -1,12 +1,11 @@
 <?
-   # $Id: forgotten-password.php,v 1.1.2.1 2002-01-02 02:53:40 dan Exp $
-   #
-   # Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: forgotten-password.php,v 1.1.2.2 2002-01-02 04:35:03 dan Exp $
+	#
+	# Copyright (c) 1998-2001 DVL Software Limited
 
-   require("./include/common.php");
-   require("./include/freshports.php");
-   require("./include/databaselogin.php");
-#   require("./include/getvalues.php");
+	require("./include/common.php");
+	require("./include/freshports.php");
+	require("./include/databaselogin.php");
 
 
 #$Debug=1;
@@ -51,16 +50,16 @@ if ($submit) {
          echo $UserID . "<br>\n";
       }
 
-      $sql = "select * from users where username = '$UserID'";
+      $sql = "select * from users where name = '$UserID'";
 
       if ($Debug) {
          echo "$sql<br>\n";
       }
 
-      $result = mysql_query($sql, $db) or die('query failed ' . mysql_error());
+      $result = pg_exec($db, $sql) or die('query failed ' . mysql_error());
 
 
-      if (!mysql_numrows($result)) {
+      if (!pg_numrows($result)) {
          $LoginFailed = 1;
       }
    } else {
@@ -74,17 +73,17 @@ if ($submit) {
 
          if ($Debug) echo "$sql<br>\n";
 
-         $result = mysql_query($sql, $db) or die('query failed ' . mysql_error());
+         $result = pg_exec($db, $sql) or die('query failed ' . mysql_error());
 
-         if (!mysql_numrows($result)) {
+         if (!pg_numrows($result)) {
             $eMailFailed = 1;
          }
       }
    }
 
-   if (mysql_numrows($result)) {
+   if (pg_numrows($result)) {
       // there is a result.  Let's fetch it.
-      $myrow = mysql_fetch_array($result);
+      $myrow = pg_fetch_array ($result, 0);
 
       $OKToMail = 1;
       if ($myrow["emailbouncecount"] > 0) {

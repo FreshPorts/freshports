@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_process.inc,v 1.5.2.12 2002-05-18 17:55:43 dan Exp $
+	# $Id: pkg_process.inc,v 1.5.2.13 2002-12-06 14:39:52 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 	#
@@ -7,15 +7,6 @@
 	require($_SERVER["DOCUMENT_ROOT"] . "/../classes/ports.php");	
 
 $Debug=0;
-
-// {{{ function ProcessPackages
-/**
-* Process the package file (this will be slimmed down, when there is no more debug
-*
-* @param	$filename - name of file to process
-* @return	an array of ports
-*
-*/
 
 function LinkToPort($category, $port) {
 	return '<A HREF="/' . $category . '/' . $port . '/">' . $category . '/' . $port . '</A>';
@@ -76,7 +67,16 @@ function DisplayError($error) {
 <?
 }
 
-function ProcessPackages($WatchListID, $filename, $dbh) {
+// {{{ function ProcessPackages
+/**
+* Process the package file (this will be slimmed down, when there is no more debug
+*
+* @param	$filename - name of file to process
+* @return	an array of ports
+*
+*/
+
+function ProcessPackages($UserID, $filename, $dbh) {
 	// profiling info {{{
 	// }}}
 	global $gDBG;
@@ -112,7 +112,7 @@ function ProcessPackages($WatchListID, $filename, $dbh) {
 
 	while (list ($key, $count) = each ($PortArray)) {
 
-#		echo "$key<BR>\n";
+#	echo "'$key'<BR>\n";
 		# trimming, just in case...
 		$CategoryPort = explode("/", trim($key));
 		if (count($CategoryPort) != 2) {
@@ -129,21 +129,24 @@ function ProcessPackages($WatchListID, $filename, $dbh) {
 		$Category = $CategoryPort[0];
 		$Port     = $CategoryPort[1];
 
-		$sql = "select WatchListStagingAddItem($WatchListID, '$Category', '$Port', $count)";
+		$sql = 'select WatchListStagingAddItem(' . AddSlashes($UserID) . ', \'' . 
+					AddSlashes($Category) . '\', \'' . AddSlashes($Port) . '\', ' . AddSlashes($count) . ')';
 #		echo "\$sql = '$sql'\n<BR>";
 		$result = pg_exec($dbh, $sql);
 		if ($result && pg_numrows($result)) {
 			# do nothing
 		} else {
 			echo pg_errormessage() . " sql = $sql";
+			$ok = FALSE;
 			break;
 		}
 	}
+		pg_exec ($dbh, "commit");
 
 	if ($ok) {
 		# All is well.
-				
-		$sql = "select WatchListStagingProcess($WatchListID)";
+
+		$sql = "select WatchListStagingProcess($UserID)";
 		$result = pg_exec($dbh, $sql);
 		if ($result && pg_numrows($result)) {
 			# do nothing.  All is well
@@ -163,7 +166,7 @@ function ProcessPackages($WatchListID, $filename, $dbh) {
 }
 // }}}
 
-function UploadDisplayStagingResultsMatches($WatchListID, $dbh) {
+function UploadDisplayStagingResultsMatches($UserID, $dbh) {
 
 	$begintime = time();
 	$sql = " SELECT	category, port, item_count, from_pkg_info, from_watch_list, watch_list_staging.element_id, 
@@ -171,8 +174,8 @@ function UploadDisplayStagingResultsMatches($WatchListID, $dbh) {
 			   FROM	watch_list_staging LEFT OUTER JOIN watch_list_element
 						ON  watch_list_staging.element_id    = watch_list_element.element_id
 						AND watch_list_staging.watch_list_id = watch_list_element.watch_list_id
-			  WHERE $WatchListID = watch_list_staging.watch_list_id
-			    AND item_count   = 1
+			  WHERE $UserID    = watch_list_staging.user_id
+			    AND item_count = 1
 				AND watch_list_staging.element_id IS NOT NULL
 			  ORDER BY port, category";
 
@@ -222,14 +225,14 @@ function UploadDisplayStagingResultsMatches($WatchListID, $dbh) {
 
 }
 
-function UploadDisplayStagingResultsMatchesNo($WatchListID, $dbh) {
+function UploadDisplayStagingResultsMatchesNo($UserID, $dbh) {
 
 	$begintime = time();
 	$begintime = time();
 	$sql = " SELECT	category, port, item_count, from_pkg_info, from_watch_list, watch_list_staging.element_id
 			   FROM	watch_list_staging
-			  WHERE $WatchListID = watch_list_staging.watch_list_id
-			    AND item_count   = 1
+			  WHERE $UserID    = watch_list_staging.user_id
+			    AND item_count = 1
 				AND watch_list_staging.element_id IS NULL
 			  ORDER BY port, category";
 
@@ -265,15 +268,15 @@ function UploadDisplayStagingResultsMatchesNo($WatchListID, $dbh) {
 
 }
 
-function UploadDisplayStagingResultsMatchesDuplicates($WatchListID, $dbh) {
+function UploadDisplayStagingResultsMatchesDuplicates($UserID, $dbh) {
 
 	$begintime = time();
 	$sql = " SELECT	category, port, item_count, from_pkg_info, from_watch_list, watch_list_staging.element_id
 			   FROM	watch_list_staging LEFT OUTER JOIN watch_list_element
 						ON  watch_list_staging.element_id    = watch_list_element.element_id
 						AND watch_list_staging.watch_list_id = watch_list_element.watch_list_id
-			  WHERE $WatchListID = watch_list_staging.watch_list_id
-			    AND item_count   > 1
+			  WHERE $UserID    = watch_list_staging.user_id
+			    AND item_count > 1
 				AND watch_list_staging.element_id IS NOT NULL
 			  ORDER BY port, category";
 
@@ -319,16 +322,16 @@ function UploadDisplayStagingResultsMatchesDuplicates($WatchListID, $dbh) {
 
 }
 
-function UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $dbh) {
+function UploadDisplayWatchListItemsNotInStagingArea($UserID, $dbh) {
 
 	$begintime = time();
-	$sql = " SELECT	categories.name as category, element.name as port, ports.element_id
-			   FROM	ports, categories, watch_list_element, element
-			  WHERE $WatchListID     = watch_list_element.watch_list_id
-				AND ports.element_id = watch_list_element.element_id
-				AND ports.element_id = element.id
-				AND categories.id    = ports.category_id
-				AND NOT EXISTS (
+	$sql = " SELECT categories.name as category, element.name as port, ports.element_id
+			     FROM ports, categories, watch_list_element, element
+			    WHERE $UserID          = watch_list_element.user_id
+				   AND ports.element_id = watch_list_element.element_id
+				   AND ports.element_id = element.id
+				   AND categories.id    = ports.category_id
+				   AND NOT EXISTS (
 					SELECT element_id
 					  FROM watch_list_staging
 					 WHERE watch_list_staging.element_id = watch_list_element.element_id
@@ -374,6 +377,16 @@ function UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $dbh) {
 
 function MoveStagingToWatchList($WatchListID, $ports, $dbh) {
 	$ok  = TRUE;
+	
+	$sql = "SELECT WatchListUserID($WatchListID)";
+	$result = pg_exec($dbh, $sql);
+	if ($result) {
+		$row = pg_fetch_array($result, 0);
+		$UserID = $row[0];
+	} else {
+		$ok = FALSE;
+	}	
+	
 
 	$sql = "BEGIN";
 	$result = pg_exec($dbh, $sql);
@@ -397,8 +410,8 @@ function MoveStagingToWatchList($WatchListID, $ports, $dbh) {
 
 #			echo "\$key='$key', \$value='$value'<BR>\n";
 
-			$sql = "insert into watch_list_element (watch_list_id, element_id)
-						values ($WatchListID, $value)";
+			$sql = 'insert into watch_list_element (watch_list_id, element_id)
+						values (' . AddSlashes($WatchListID) . ' , ' . AddSlashes($value) . ')';
 
 #			echo "\$sql='$sql'<BR>\n";
 
@@ -415,7 +428,7 @@ function MoveStagingToWatchList($WatchListID, $ports, $dbh) {
 
 	if ($ok) {
 		reset($ports);
-		$sql = "select WatchListStagingLogWatch($WatchListID, $PortCount)";
+		$sql = "select WatchListStagingLogWatch($UserID, $PortCount)";
 		$result = pg_exec($dbh, $sql);
 		if (!$result) {
 			$ok = FALSE;
@@ -432,12 +445,12 @@ function MoveStagingToWatchList($WatchListID, $ports, $dbh) {
 	return $ok;
 }
 
-function StagingAreaClear($WatchListID, $dbh) {
+function StagingAreaClear($UserID, $dbh) {
 	$ok = TRUE;
 
 	$result = pg_exec($dbh, "BEGIN");
 	if ($result) {
-		$sql = "select WatchListStagingClear($WatchListID)";
+		$sql = "select WatchListStagingClear($UserID)";
 		$result = pg_exec($dbh, $sql);
 		if (!$result) {
 			$ok = FALSE;

@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_upload.php,v 1.5.2.18 2002-06-09 21:42:39 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.19 2002-12-06 14:39:53 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -14,11 +14,11 @@
 					"FreeBSD, index, applications, ports");
 $Debug=0;
 #phpinfo();
-function StagingAlreadyInUse($WatchListID, $dbh) {
+function StagingAlreadyInUse($UserID, $dbh) {
 
 	$Result = 1;	// yes, already in progress.
 
-	$sql = "select WatchListStagingExists($WatchListID)";
+	$sql = "select WatchListStagingExists($UserID)";
 
 	$result = pg_exec($dbh, $sql);
 	if ($result && pg_numrows($result)) {
@@ -88,7 +88,7 @@ function DisplayUploadForm($pkg_info) {
 #	</P>
 }
 
-function DisplayStagingArea($WatchListID, $db) {
+function DisplayStagingArea($UserID, $db) {
 
 	echo '<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5" 
 					bordercolor="#a2a2a2" BORDERCOLORDARK="#a2a2a2" BORDERCOLORLIGHT="#a2a2a2"><TR>';
@@ -121,19 +121,19 @@ function DisplayStagingArea($WatchListID, $db) {
 
 	
 	echo '<TD VALIGN="top">' . "\n";
-	UploadDisplayStagingResultsMatches($WatchListID, $db);
+	UploadDisplayStagingResultsMatches($UserID, $db);
 	echo '</TD>';
 
 	echo '<TD VALIGN="top">' . "\n";
-	UploadDisplayStagingResultsMatchesNo($WatchListID, $db);
+	UploadDisplayStagingResultsMatchesNo($UserID, $db);
 	echo '</TD>';
 
 	echo '<TD VALIGN="top">' . "\n";
-	UploadDisplayStagingResultsMatchesDuplicates($WatchListID, $db);
+	UploadDisplayStagingResultsMatchesDuplicates($UserID, $db);
 	echo '</TD>';
 
 	echo '<TD VALIGN="top">' . "\n";
-	UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $db);
+	UploadDisplayWatchListItemsNotInStagingArea($UserID, $db);
 	echo '</TD>';
 			echo '</FORM>';
 
@@ -150,6 +150,9 @@ function DisplayStagingArea($WatchListID, $db) {
 <TR>
 	<? freshports_PageBannerText("Uploading pkg_info"); ?>
 <TR><TD>
+<BIG>WARNING</BIG>: The system will clear out your staging areas from time to time.
+</TD><TR>
+<TR><TD>
 	<?
 	# you can only be here if you are logged in!
 	$visitor = $_COOKIE["visitor"];
@@ -163,9 +166,9 @@ function DisplayStagingArea($WatchListID, $db) {
 		global $gDBG;
 		$gDBG  = false;
 
-		$StagingInUse       = StagingAlreadyInUse($WatchListID, $db);
+		$StagingInUse       = StagingAlreadyInUse($UserID, $db);
 		$DisplayStagingArea = FALSE;
-		$WatchListUpdated	= FALSE;
+		$WatchListUpdated	  = FALSE;
 
 		#
 		# is a file name supplied?
@@ -178,7 +181,7 @@ function DisplayStagingArea($WatchListID, $db) {
 				# save these things to the watch list
 				# and clear out part of the staging area.
 #				echo ' you clicked on submit';
-				if (MoveStagingToWatchList($WatchListID, $ports, $db)) {
+				if (MoveStagingToWatchList($UserID, $ports, $db)) {
 #					$DisplayStagingArea = FALSE;
 					$StagingInUse       = FALSE;
 					$WatchListUpdated   = TRUE;
@@ -186,8 +189,8 @@ function DisplayStagingArea($WatchListID, $db) {
 			}
 			if ($_POST["clear"]) {
 #				echo " you pressed clear!";
-				if (StagingAreaClear($WatchListID, $db)) {
-					$StagingInUse		= FALSE;
+				if (StagingAreaClear($UserID, $db)) {
+					$StagingInUse			= FALSE;
 					$DisplayStagingArea	= FALSE;
 					DisplayError("Your staging area has been cleared.");
 				}
@@ -198,7 +201,7 @@ function DisplayStagingArea($WatchListID, $db) {
 				$Destination = "/tmp/FreshPorts.tmp_pkg_output.$UserName";
 				if (HandleFileUpload("pkg_info", $Destination)) {
 					require_once $_SERVER['DOCUMENT_ROOT'] . "/pkg_utils.inc";
-					if (ProcessPackages($WatchListID, $Destination, $db)) {
+					if (ProcessPackages($UserID, $Destination, $db)) {
 						$DisplayStagingArea = TRUE;
 					}
 				}
@@ -212,7 +215,7 @@ function DisplayStagingArea($WatchListID, $db) {
 			if ($WatchListUpdated) {
 				DisplayError("<BIG>Your watch list has been updated. You may wish to empty your staging area now.</BIG>");
 			}
-			DisplayStagingArea($WatchListID, $db);
+			DisplayStagingArea($UserID, $db);
 		} else {
 			DisplayUploadForm($pkg_info);
 		}

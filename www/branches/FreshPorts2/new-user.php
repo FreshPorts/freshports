@@ -1,5 +1,5 @@
 <?
-	# $Id: new-user.php,v 1.1.2.21 2002-09-11 13:39:34 dan Exp $
+	# $Id: new-user.php,v 1.1.2.22 2002-09-11 13:45:26 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -55,13 +55,6 @@ if ($submit) {
 	# make sure we have valid values in this variable.
 	# by default, they don't get notified.
 	#
-
-	if ($watchnotifyfrequency == $WatchNoticeFrequencyNever       || $watchnotifyfrequency == $WatchNoticeFrequencyWeekly  ||
-	    $watchnotifyfrequency == $WatchNoticeFrequencyFortnightly || $watchnotifyfrequency == $WatchNoticeFrequencyMonthly) {
-		# do nothing
-	} else {
-		$watchnotifyfrequency == $WatchNoticeFrequencyDaily;
-	}
 
 	$UserCreated = 0;
 	if ($OK) {

@@ -1,7 +1,9 @@
-<?
-	# $Id: header.php,v 1.1.2.2 2003-05-16 02:31:21 dan Exp $
+<?php
+	#
+	# $Id: header.php,v 1.1.2.3 2003-11-11 16:28:39 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
+	#
 ?>
 <body bgcolor="#ffffff" link="#0000cc">
 <?

@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-list-maintenance.php,v 1.1.2.15 2002-12-12 02:43:05 dan Exp $
+	# $Id: watch-list-maintenance.php,v 1.1.2.16 2002-12-15 15:55:53 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -181,7 +181,7 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 		case 'set_options':
 			if ($Debug) echo 'I have set options to: ' . AddSlashes($_POST['addremove']);
 
-			$User->SetWatchListAddRemove($User->id, AddSlashes($_POST['addremove']));
+			$User->SetWatchListAddRemove(AddSlashes($_POST['addremove']));
 			break;
 
 		default:

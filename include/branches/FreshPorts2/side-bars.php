@@ -1,5 +1,5 @@
 <?
-	# $Id: side-bars.php,v 1.4.2.41 2002-12-05 13:43:41 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.42 2002-12-05 14:25:47 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -168,7 +168,8 @@ if ($visitor) {
 	echo '<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/about.php",            "What is FreshPorts?") . '</FONT><BR>';
 	echo '<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/authors.php",          "About the Authors")   . '</FONT><BR>';
 	echo '<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/faq.php",              "FAQ")                 . '</FONT><BR>';
-	echo '<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/fp2-announcement.php", "The new look!")         . '</FONT><BR>';
+	echo '<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/how-big-is-it.php",    "How big is it?")      . '</FONT><BR>';
+	echo '<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/fp2-announcement.php", "The new look!")       . '</FONT><BR>';
 	echo '<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/privacy.php",          "Privacy")             . '</FONT><BR>';
 ?>
 	</TD>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.43 2003-12-04 14:43:09 dan Exp $
+	# $Id: faq.php,v 1.1.2.44 2003-12-31 17:00:32 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -425,6 +425,29 @@ Here are a few examples:
 	<p>
 	The date should be of the format YYYY/MM/DD but I'm sure different formats
 	will work.  If the code has trouble figuring out what date you mean, it will guess and let you know it adjusted the date.
+
+	</TD></TR><TR><TD>&nbsp;</TD></TR>
+
+<TR>
+<? echo freshports_PageBannerText("What are Port Moves?"); ?>
+</TR>
+
+   <TR><TD>
+   <P>
+	Some ports (for example <a href="/net/">net</a>/<a href="/net/gift/">gift</a>) will have a section titled "Port Moves".
+	FreshPorts obtains information about ports from the commits to the 
+	<a href="http://www.freebsd.org/cgi/cvsweb.cgi/">CVS Repository</a>.  However, not all
+	changes to ports occur because of commits.  A manual change to the repository,
+	often referred to as a repo-copy, can move a port from one category to another.
+	Such a change is done to ensure the port history is retained.
+
+	<p>
+	Repo-copies are documented in <a href="/MOVED">/usr/ports/MOVED</a>.  FreshPorts parses this file and records
+	these changes in its database.
+
+	<p>
+	This new feature was added on 31 December 2003.
+
 
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 

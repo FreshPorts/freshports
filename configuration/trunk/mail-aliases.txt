@@ -80,5 +80,11 @@ http://www.cpan.org/authors/id/CJM/Text-Wrapper-1.000.tar.gz
 or
 http://cpan.noris.de/modules/by-category/17_Archiving_and_Compression/AppleII/CJM/Text-Wrapper-1.000.tar.gz
 
+for the search log:
+
+mkdir /home/freshports.org/logs
+chmod g+w /home/freshports.org/logs
+
+
 
 Remember to create logins on the database for the updater to use.

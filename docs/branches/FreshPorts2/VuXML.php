@@ -636,6 +636,61 @@ PORTEPOCH may be set in the master port.
 <li>I dunno, there might be something else I've not thought of yet.
 </ul>
 
+<h2>23 September 2004 - Ports that don't set their own EPOCH</h2>
+
+<p>
+I have the simple script working now.  See output at
+<a href="http://beta.freshports.org/tmp/epoch-fetching-slave.txt">http://beta.freshports.org/tmp/epoch-fetching-slave.txt</a>.
+There are issues..
+
+<p>
+That page lists 
+the ports that have a PORTEPOCH, the commits for that port, and the historical 
+value of the PORTEPOCH value for that commit.  I do this by literally fetching 
+each revision of the Makefile.  FreshPorts knows that revision is associated with 
+each commit (that information is in the cvs-all email0.
+
+<p>
+Obtaining the PORTEPOCH values is not a simple grep command.  You must do a 
+"make -V PORTVERSION". There are 27 ports containing an EPOCH value that are
+ also slave ports.  Of these 27, two set their own EPOCH value, the other 25
+ get it from the MASTERPORT.  It is thoese 25 ports which are going to be 
+tougher.  There are 15 distinct master ports involved (fortunately, none 
+of them have their own MASTERPORTs).
+
+<p>
+This query returns the master ports mentioned above:
+
+<blockquote><pre class="code">
+  SELECT P.id,
+         C.name || '/' || E.name as portname,
+         P.master_port,
+         P.portepoch
+    FROM categories C, element E, ports P JOIN
+(  SELECT distinct pathname_id('/ports/' || master_port) as mp_element_id
+    FROM ports P, element E
+   WHERE P.portepoch != '0'
+     AND P.element_id = E.id
+     AND P.master_port != '') MP
+   ON P.element_id = mp_element_id
+WHERE E.id = P.element_id
+  AND P.category_id  = C.id;
+</pre></blockquote>
+
+
+<p>
+I'm not yet sure how I'm going to cope with these master ports.  The others
+ should be straight forward.  I could take the scripts/Verify/set-historical-epoch.pl
+and use the query above.
+
+<p>
+[1] FWIW, there are 246 ports with a PORTEPOCH value.  This differs from the 
+result of this command, perhaps because not all such ports are in the INDEX 
+I'm using (e.g. archivers/bsdtar)
+
+<blockquote><pre class="code">
+awk -F\| '$1 ~ /,/ {print $2 "/Makefile"}' /usr/ports/INDEX-
+</pre></blockquote>
 <hr>
 <p align="right">
 <small>Last amended: 22 September 2004</small>

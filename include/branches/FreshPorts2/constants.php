@@ -1,7 +1,11 @@
 <?
-	# $Id: constants.php,v 1.1.2.2 2002-04-19 21:52:35 dan Exp $
+	# $Id: constants.php,v 1.1.2.3 2002-04-21 18:22:01 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
+
+#
+# colours for the banners (not really banners, but headings)
+#
 
 $BannerBackgroundColour = "#FFCC33";
 $BannerTextColour       = "#000000";
@@ -53,6 +57,10 @@ $FreshPortsWatchedPortNotSuffix	= '">' . freshports_Watch_Icon_Add() . '</A></SM
 $Sequence_Watch_List_ID	= 'watch_list_id_seq';
 $Sequence_User_ID		= 'users_id_seq';
 
+#
+# external URLs
+#
+
 // path to the CVS repository
 $freshports_CVS_URL = "http://www.FreeBSD.org/cgi/cvsweb.cgi";
 
@@ -61,5 +69,10 @@ $freshports_FTP_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports
 
 // path to the cvs-all mailing list archive
 $freshports_mail_archive = "http://www.freebsd.org/cgi/mid.cgi?db=mid&id=";
+
+#
+# max number of lines to show in a commit
+#
+$freshports_CommitMsgMaxNumOfLinesToShow = 15;
 
 ?>

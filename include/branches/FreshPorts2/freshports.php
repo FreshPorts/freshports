@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.84 2002-04-22 01:16:43 dan Exp $
+	# $Id: freshports.php,v 1.4.2.85 2002-04-22 03:34:01 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -471,7 +471,7 @@ function freshports_ONToYN($Value) {
 }
 
 
-function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, $LinkToPort=0, $AddRemoveExtra='', $ShowCategory=1) {
+function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, $LinkToPort=0, $AddRemoveExtra='', $ShowCategory=1, $ShowDateAdded=1) {
 //
 // This php3 fragment does the basic port information for a single port.
 //
@@ -596,6 +596,12 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
          }
       }
    }
+
+	# show the date added, if asked
+
+	if ($ShowDateAdded == "Y" || $ShowEverything) {
+		$HTML .= 'port added on <font size="-1">' . $port->date_added . '</font><BR>' . "\n";
+	}
 
    if ($port->categories) {
       // remove the primary category

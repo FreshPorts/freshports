@@ -13,3 +13,5 @@ database-schema/sp.txt <= all types changes above need to be updated here too.
              freshports_commit
              LatestCommitsLarge
              LatestCommitsSmall
+scripts/port.pm
+include/freshports_page_list_ports.php

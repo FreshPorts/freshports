@@ -108,6 +108,8 @@ After setup, enter the main loop.
         -- NOT REACHED
       Just p -> do -- parent
         takeMVar sem
+	_ <- getProcessStatus False False p
+	return ()
     -- loop
     worker sem cmd ch
    where

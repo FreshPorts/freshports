@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch_list.php,v 1.1.2.10 2003-02-10 16:54:31 dan Exp $
+	# $Id: watch_list.php,v 1.1.2.11 2003-03-05 21:33:05 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -117,6 +117,30 @@ DELETE FROM watch_list_element
 		# that worked and we updated exactly one row
 		if ($result) {
 			$return = $WatchListID;
+		}
+
+		return $return;
+	}
+
+	function EmptyAllLists($UserID) {
+		#
+		# Empty all watch lists
+		#
+		unset($return);
+		$Debug = 1;
+
+		$query = "
+DELETE FROM watch_list_element
+ WHERE watch_list.user_id               = $UserID
+   AND watch_list_element.watch_list_id = watch_list.id";
+
+		if ($Debug) echo $query;
+		$result = pg_query($this->dbh, $query);
+
+		# that worked and we updated exactly one row
+		if ($result) {
+			$return = pg_affected_rows($result);
+			if ($Debug) echo '<br>pg_affected_rows = ' . $return;
 		}
 
 		return $return;

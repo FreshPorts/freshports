@@ -1,5 +1,5 @@
 #
-# $Id: README.txt,v 1.1.2.5 2003-05-16 01:09:06 dan Exp $
+# $Id: README.txt,v 1.1.2.6 2003-11-14 04:39:49 dan Exp $
 #
 # Copyright (c) 1998-2003 DVL Software Limited
 #
@@ -23,6 +23,10 @@ chmod g+w phorum-3.3.2a
 +---------------------+
 |Website configuration|
 +---------------------+
+
+ - mkdir caching
+ - mkdir caching/cache
+ - mkdir caching/tmp
 
  - cd www/include
  - cp common.php.sample common.php

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: pkg_upload.php,v 1.5.2.37 2003-09-16 12:25:27 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.38 2004-10-25 00:23:13 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -39,7 +39,7 @@ function StagingAlreadyInUse($UserID, $dbh) {
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/pkg_process.inc');
 
-function DisplayUploadForm($pkg_info) {
+function DisplayUploadForm() {
 	?>
 
 	<P>
@@ -289,7 +289,7 @@ function ChooseWatchLists($UserID, $db) {
 				ChooseWatchLists($User->id, $db);
 			}
 		} else {
-			DisplayUploadForm($pkg_info);
+			DisplayUploadForm();
 		}
 	}
 	?>

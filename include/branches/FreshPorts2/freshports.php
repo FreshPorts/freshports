@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.6 2001-11-29 05:39:30 dan Exp $
+   # $Id: freshports.php,v 1.4.2.7 2001-12-21 06:14:08 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -53,12 +53,15 @@ GLOBAL $BannerAd;
 
 function freshports_Logo() {
 GLOBAL $TableWidth;
+GLOBAL $LocalTimeAdjustment;
+
+#echo "$LocalTimeAdjustment<BR>";
 
 echo '<BR>
 <TABLE WIDTH="' . $TableWidth . '" CELLPADDING="0" CELLSPACING="0" BORDER="0">
 <TR>
         <TD><A HREF="/"><IMG SRC="/images/freshports.jpg" ALT="FreshPorts.org - the place for ports" WIDTH="512" HEIGHT="110" BORDER="0"></A></TD>
-        <TD ALIGN="right" CLASS="sans" VALIGN="bottom"><small>' . date("D, j M Y g:i A T") . '</small></TD>
+        <TD ALIGN="right" CLASS="sans" VALIGN="bottom"><small>' . FormatTime(Date("D, j M Y g:i A T"), $LocalTimeAdjustment, "D, j M Y g:i A T") . '</small></TD>
 </TR>
 </TABLE>
 ';

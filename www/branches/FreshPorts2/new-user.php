@@ -1,5 +1,5 @@
 <?
-	# $Id: new-user.php,v 1.1.2.5 2002-02-11 02:52:47 dan Exp $
+	# $Id: new-user.php,v 1.1.2.6 2002-02-17 23:51:10 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -187,7 +187,7 @@ if (!$submit && !$errors) {
 <table cellpadding="1" cellspacing="0" border="1" bordercolor="#A2A2A2"
             bordercolordark="#A2A2A2" bordercolorlight="#A2A2A2" width="100%" cellpadding="5">
       <tr>
-        <td bgcolor="#AD0040" width="695"><b><font color="#ffffff" size="+1">New User Details</font></b></td>
+		<? freshports_PageBannerText("New User Details"); ?>
       </tr>
       <tr>
         <td>

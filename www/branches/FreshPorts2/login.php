@@ -1,5 +1,5 @@
 <?
-	# $Id: login.php,v 1.1.2.7 2002-02-11 02:52:46 dan Exp $
+	# $Id: login.php,v 1.1.2.8 2002-02-17 23:50:40 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -80,7 +80,8 @@ echo '<table cellpadding=1 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>
 <tr>
 <td>
 <table width=100% border=0 cellpadding=1>
-<tr bgcolor="#AD0040"><td><b><font color="#ffffff" size=+0>Login Failed!</font></b></td>
+<tr bgcolor="#AD0040">
+<? freshports_PageBannerText("Login Failed!"); ?>
 </tr>
 <tr bgcolor="#ffffff">
 <td>
@@ -116,7 +117,10 @@ echo '<table cellpadding=1 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>
 
 echo '<table width=100% border=0 cellpadding=4 cellspacing=4 bgcolor="#AD0040">';
 
-echo '<tr bgcolor="#AD0040"><td bgcolor="#AD0040"><font color="#ffffff" size="+2">Login Details</font></td></tr>';
+echo '<tr bgcolor="#AD0040">';
+
+freshports_PageBannerText("Login Details");
+echo '</tr>';
 
 echo '<tr><td bgcolor="#ffffff">';
 include ("./include/login.php");

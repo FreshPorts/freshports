@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.6 2003-12-05 14:36:03 dan Exp $
+	# $Id: index.php,v 1.1.2.7 2003-12-05 14:52:19 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -63,6 +63,7 @@ Here a few supporting documents:
 <ul>
 <li><a href="/fraud/first-email.php">My request to them</a>
 <li><a href="/fraud/their-reply.php">Their reply<a/>
+<li><a href="/fraud/second-email.php">Remaining email of 5 December 2003<a/>
 </ul>
 
 <p>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.131 2003-02-11 18:14:03 dan Exp $
+	# $Id: freshports.php,v 1.4.2.132 2003-02-11 21:27:16 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -1148,7 +1148,7 @@ function freshports_wrap($text, $length = 80) {
 }
 
 function freshports_PageBannerText($Text, $ColSpan=1) {
-	return '<TD BGCOLOR="#AD0040" HEIGHT="29" COLSPAN="' . $ColSpan . ' "><FONT COLOR="#FFFFFF"><BIG><BIG>' . $Text . '</BIG></BIG></FONT></TD>' . "\n";
+	return '<TD ALIGN="left" BGCOLOR="#AD0040" HEIGHT="29" COLSPAN="' . $ColSpan . ' "><FONT COLOR="#FFFFFF"><BIG><BIG>' . $Text . '</BIG></BIG></FONT></TD>' . "\n";
 }
 
 

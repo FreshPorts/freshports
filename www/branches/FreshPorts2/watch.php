@@ -1,5 +1,5 @@
 <?
-	# $Id: watch.php,v 1.1.2.16 2002-05-18 19:04:15 dan Exp $
+	# $Id: watch.php,v 1.1.2.17 2002-05-21 02:10:49 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -83,10 +83,10 @@ if ($UpdateCache == 1) {
 //   echo 'time to update the cache';
 
 $sql = "";
-$sql = "select ports.id, element.name as port, ports.id as ports_id, commit_log.commit_date as updated, " .
+$sql = "select ports.id, element.name as port, ports.id as ports_id, to_char(max(commit_log.commit_date) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as updated, " .
        "categories.name as category, categories.id as category_id, ports.version as version, ports.revision as revision, ".
        "commit_log.committer, commit_log.description as update_description, element.id as element_id, " .
-       "ports.maintainer, ports.short_description, ports.date_added as date_added, ".
+       "ports.maintainer, ports.short_description, to_char(max(commit_log.date_added) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, ".
        "ports.last_commit_id as last_change_log_id, " .
        "ports.package_exists, ports.extract_suffix, ports.homepage, element.status, " .
        "ports.broken, ports.forbidden, 1 as onwatchlist ".
@@ -94,7 +94,15 @@ $sql = "select ports.id, element.name as port, ports.id as ports_id, commit_log.
        "WHERE ports.category_id             = categories.id " .
 	   "  and watch_list_element.element_id = ports.element_id " .
 	   "  and ports.element_id              = element.id
-          and watch_list_element.watch_list_id = $WatchListID";
+          and watch_list_element.watch_list_id = $WatchListID ";
+
+$sql .= "GROUP BY ports.id, port, ports_id, " .
+        "         category, categories.id, version, revision, ".
+        "         commit_log.committer, update_description, element.id, " .
+        "         ports.maintainer, ports.short_description, ports.date_added, ".
+        "         last_change_log_id, " .
+        "         ports.package_exists, ports.extract_suffix, ports.homepage, element.status, " .
+        "         ports.broken, ports.forbidden, onwatchlist ";
 
 $sql .= " order by $sort ";
 //$sql .= " limit 20";

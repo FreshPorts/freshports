@@ -1,5 +1,5 @@
 <?
-	# $Id: ports-deleted.php,v 1.1.2.9 2002-05-18 19:27:10 dan Exp $
+	# $Id: ports-deleted.php,v 1.1.2.10 2002-05-21 02:10:48 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -61,10 +61,10 @@ These are the latest deleted ports.
 
 		echo "</TD></TR>\n";
 
-			$sql = "select ports.id, element.name as port, commit_log.commit_date as updated, " .
+			$sql = "select ports.id, element.name as port, to_char(max(commit_log.commit_date) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as updated, " .
 			       "categories.name as category, ports.category_id, version as version, revision as revision, ".
 			       "commit_log.committer, commit_log.description as update_description, ports.element_id, " .
-			       "maintainer, short_description, ports.date_added, commit_log.message_id, ".
+			       "maintainer, short_description, to_char(max(ports.date_added) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, commit_log.message_id, ".
 			       "last_commit_id as last_change_log_id, " .
 			       "package_exists, extract_suffix, homepage, status, " .
 			       "broken, forbidden ";
@@ -88,6 +88,14 @@ These are the latest deleted ports.
                        and status = 'D' 
 					   and commit_log.commit_date > (now() - interval '$Interval') 
 					   and ports.last_commit_id = commit_log.id ";
+
+			$sql .= "GROUP BY ports.id, element.name, commit_log.commit_date, " .
+			        "categories.name, ports.category_id, version, revision, ".
+			        "commit_log.committer, commit_log.description, ports.element_id, " .
+			        "maintainer, short_description, ports.date_added, commit_log.message_id, ".
+			        "last_commit_id, " .
+			        "package_exists, extract_suffix, homepage, status, " .
+			        "broken, forbidden ";
 
 			$sql .= " order by $sort ";
 #			$sql .= " limit 20";

@@ -1,5 +1,5 @@
 --
--- $Id: POSTGRESQL.sql,v 1.1.2.7 2002-04-08 17:07:30 dan Exp $
+-- $Id: POSTGRESQL.sql,v 1.1.2.8 2002-04-20 03:42:40 dan Exp $
 --
 -- Copyright (c) 1998-2002 DVL Software Limited
 --
@@ -61,19 +61,21 @@ grant select,                 update on watch_list_staging_id_seq  to group www;
 -- select, insert, update, delete
 --
 
-grant select, insert, update, delete on watch_list_element  to group www;
-grant select,         update         on watch_list_id_seq   to group www;
+grant select, insert, update, delete on watch_list_element             to group www;
+grant select,         update         on watch_list_id_seq              to group www;
 
 --
 -- select, delete
 --
-grant select, insert,         delete on user_confirmations      to group www;
+grant select, insert,         delete on user_confirmations             to group www;
 
-grant insert                         on watch_list_staging_log               to group www;
-grant update                         on watch_list_staging_log_id_seq        to group www;
+grant insert                         on watch_list_staging_log         to group www;
+grant update                         on watch_list_staging_log_id_seq  to group www;
 
 
 grant select                         on watch_notice                   to group www;
+
+grant select                         on graphs                         to group www;
 
 --
 -- no access

@@ -1,14 +1,17 @@
 <?
-	# $Id: watch.php,v 1.1.2.26 2002-12-03 20:21:18 dan Exp $
+	# $Id: watch.php,v 1.1.2.27 2002-12-04 21:26:10 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/watch-lists.php");
 
 $Debug = 0;
+
+if ($Debug) phpinfo();
 
 $visitor = $_COOKIE["visitor"];
 
@@ -31,8 +34,30 @@ if (!$visitor) {
 	<? freshports_PageBannerText("your watch list"); ?>
 </tr>
 <tr><td>
+<table border=0 width="100%">
+<tr><td>
 These are the ports which are on your <a href="watch-categories.php">watch list</A>. 
 That link also occurs on the right hand side of this page, under Login.
+</td><td valign="top" nowrap align="right">
+
+<form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
+
+<small>
+<?php
+
+echo freshports_WatchListDDLB($db, $UserID, $WatchListID);
+
+?>
+</small>
+</td><td valign="top" nowrap align="left">
+	<input type="image" border="0" name="submit" value="GO" src="/images/go.gif" alt="Go" width="30" height="20" align="middle" title="Display the selected watch list">
+</td>
+
+
+</form>
+
+</td></tr>
+</table>
 </td></tr>
 <script language="php">
 

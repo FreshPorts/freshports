@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.1.2.1 2002-05-25 23:57:04 dan Exp $
+# $Id: Makefile,v 1.1.2.2 2002-11-24 17:00:11 dan Exp $
 #
 # Install the ports needed by FreshPorts
 #
@@ -17,6 +17,7 @@ MAINTAINER=		ports@freebsddiary.org
 RUN_DEPENDS=	svstat:${PORTSDIR}/sysutils/daemontools \
 				/usr/local/lib/perl5/site_perl/5.005/XML/Writer.pm:${PORTSDIR}/textproc/p5-XML-Writer \
 				/usr/local/lib/perl5/site_perl/5.005/i386-freebsd/auto/XML/Node:${PORTSDIR}/textproc/p5-XML-Node \
+				/usr/local/lib/perl5/site_perl/5.005/Mail/Sender.pm:${PORTSDIR}/mail/p5-Mail-Sender \
 				DBD-Pg:${PORTSDIR}/databases/p5-DBD-Pg \
 				DBI:${PORTSDIR}/databases/p5-DBI \
 				procmail:${PORTSDIR}/mail/procmail \

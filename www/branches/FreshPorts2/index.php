@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.5 2002-01-06 23:17:31 dan Exp $
+	# $Id: index.php,v 1.1.2.6 2002-01-07 13:08:41 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -69,16 +69,7 @@ if ($Debug) {
 
 ?>
 
-<table width="<? echo $TableWidth ?>" border="0" ALIGN="center">
-<tr><td colspan="2">Welcome to FreshPorts, where you can find the latest information on your favourite
-ports. A port is marked as new for 10 days.
-</td></tr>
-
-<TR><TD>
-
-<B>Unless stated otherwise, everything should work now.</B>
-
-</TR></TD>
+<TABLE WIDTH="<? echo $TableWidth ?>" BORDER="0" ALIGN="center">
 
 <?
 if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
@@ -133,7 +124,8 @@ select DISTINCT commit_log.commit_date as commit_date_raw,
 	   commit_log_ports.needs_refresh  as needs_refresh,
 	   ports.forbidden      as forbidden,
 	   ports.broken         as broken,
-	   date_part('epoch', ports.date_created) as date_created
+	   date_part('epoch', ports.date_created) as date_created,
+	   ports.short_description
   from commit_log_ports, commit_log, ports, element, categories
  where commit_log.commit_date         > '2001-09-01'
    and commit_log_ports.commit_log_id = commit_log.id
@@ -183,7 +175,7 @@ order by commit_log.commit_date desc,
 ?>
 
 <tr><td VALIGN="top">
-<table width="<? echo $TableWidth ?>" border="1" CELLSPACING="0" CELLPADDING="5"
+<table width="<? echo $TableWidth ?>" border="1" CELLSPACING="0" CELLPADDING="8"
             bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">
 <tr>
     <td colspan="3" bgcolor="#AD0040" height="30">
@@ -191,6 +183,17 @@ order by commit_log.commit_date desc,
         <? //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPorts) ?></font>
     </td>
 </tr>
+<TR><TD>
+<P>
+Welcome to FreshPorts, where you can find the latest information on your favourite
+ports. A port is marked as new for 10 days.
+</P>
+
+<P>
+<B>Unless stated otherwise, everything should work now.</B>
+</P>
+
+</TR></TD>
 
 <?
 #				print "NumRows = $NumRows\n<BR>";
@@ -203,12 +206,12 @@ order by commit_log.commit_date desc,
 
 					if ($LastDate <> $myrow["commit_date"]) {
 						$LastDate = $myrow["commit_date"];
-						$HTML .= "<tr><td colspan='3'><font size='+1'>" . FormatTime($myrow["commit_date"], 0, "D, j M") . "</font></td></tr>";
+						$HTML .= '<TR><TD COLSPAN="3" BGCOLOR="#AD0040" HEIGHT="0"><FONT COLOR="#FFFFFF" SIZE="+1">' . FormatTime($myrow["commit_date"], 0, "D, j M") . '</FONT></TD></TR>';
 					}
 
 					$j = $i;
 
-					$HTML .= "<tr><td valign='top' width='150'>";
+					$HTML .= '<TR><TD>';
 
 					// OK, while we have the log change log, let's put the port details here.
 					$MultiplePortsThisCommit = 0;
@@ -216,19 +219,17 @@ order by commit_log.commit_date desc,
 						$myrow = $rows[$j];
 
 						if ($MultiplePortsThisCommit) {
-							$HTML .= '<br>';
+							$HTML .= '<BR>';
 						}
 
-						$HTML .= '<a href="/' . $myrow["category"] . '/' . $myrow["port"] . '/">';
-						$HTML .= "<B>" . $myrow["port"];
+						$HTML .= '<A HREF="/' . $myrow["category"] . '/' . $myrow["port"] . '/">';
+						$HTML .= '<FONT SIZE="+1">' . $myrow["category"] . '/' . $myrow["port"];
 						
 						if (strlen($myrow["version"]) > 0) {
 							$HTML .= ' ' . $myrow["version"];
 						}
 
-						$HTML .= "</b></a>";
-
-						$HTML .= ' <font size="-1"><a href="/' . $myrow["category"] . '/">' . $myrow["category"] . '</a></font>';
+						$HTML .= "</FONT></A>";
 
 						// indicate if this port needs refreshing from CVS
 						if ($myrow["status"] == "D") {
@@ -250,19 +251,21 @@ order by commit_log.commit_date desc,
 							$HTML .= '<img src="images/broken.gif" alt="Broken" width="17" height="16" hspace="2">';
 						}
 
+						$HTML .= '&nbsp;&nbsp;' . $myrow["short_description"] . '&nbsp;&nbsp;';
+
+						if (!$MultiplePortsThisCommit) {
+							$HTML .= '<FONT SIZE="-1">';
+							$HTML .= '[ ' . $myrow["commit_time"] . ' ]';
+							$HTML .= '</FONT>';
+						}
+
 						$j++;
 						$MultiplePortsThisCommit = 1;
 					} // end while
 
 					$i = $j - 1;
 
-					$HTML .= "</td><td valign='top'>";
-					$HTML .= '<font size="-1">' . $myrow["commit_time"] . '</font>';
-#					$HTML .= '<BR><font size="-1">' . FormatTime($myrow["commit_time"], 0, "H:i") . '</font>';
-#					$HTML .= '<BR><font size="-1">' . $myrow["commit_date_raw"] . '</font>';
-
-					$HTML .= "</td><td valign='top'>";
-					$HTML .= "<PRE>" . convertAllLinks(htmlspecialchars($myrow["commit_description"])) . "</PRE></td>\n";
+					$HTML .= '<BLOCKQUOTE><PRE CLASS="code">' . convertAllLinks(htmlspecialchars($myrow["commit_description"])) . "</PRE></BLOCKQUOTE></td>\n";
 
 					$HTML .= "</tr>\n";
 				}
@@ -297,6 +300,8 @@ order by commit_log.commit_date desc,
  </td>
 </tr>
 </table>
+
+<BR>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>

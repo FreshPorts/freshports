@@ -1,5 +1,5 @@
 <?
-	# $Id: port-basics.php,v 1.1.2.4 2002-01-06 07:29:28 dan Exp $
+	# $Id: port-basics.php,v 1.1.2.5 2002-01-07 13:08:42 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 //
@@ -48,11 +48,11 @@
    $HTML .= "<dd>";
    # show forbidden and broken
    if ($myrow["forbidden"]) {
-      $HTML .= '<img src="images/forbidden.gif" alt="Forbidden" width="20" height="20" hspace="2">' . $myrow["forbidden"] . "<br><br>";
+      $HTML .= '<img src="/images/forbidden.gif" alt="Forbidden" width="20" height="20" hspace="2">' . $myrow["forbidden"] . "<br><br>";
 
    }
    if ($myrow["broken"]) {
-      $HTML .= '<img src="images/broken.gif" alt="Broken" width="17" height="16" hspace="2">' . $myrow["broken"] . "<br><br>"; ;
+      $HTML .= '<img src="/images/broken.gif" alt="Broken" width="17" height="16" hspace="2">' . $myrow["broken"] . "<br><br>"; ;
    }
 
    // description

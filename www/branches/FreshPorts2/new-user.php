@@ -1,5 +1,5 @@
 <?
-	# $Id: new-user.php,v 1.1.2.3 2002-01-06 16:52:47 dan Exp $
+	# $Id: new-user.php,v 1.1.2.4 2002-01-07 13:08:41 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -149,7 +149,7 @@ echo '<table cellpadding=1 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>
 <td>
   <table width=100% cellpadding=3 cellspacing=0 border=0>
   <tr valign=top>
-   <td><img src="images/warning.gif"></td>
+   <td><img src="/images/warning.gif"></td>
    <td width=100%>
   <p>Some errors have occurred which must be corrected before your login can be created.</p>';
 

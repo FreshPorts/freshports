@@ -1,5 +1,5 @@
 <?
-	# $Id: port-description.admin.php,v 1.1.2.2 2002-01-05 23:01:16 dan Exp $
+	# $Id: port-description.admin.php,v 1.1.2.3 2002-01-07 13:08:41 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -156,8 +156,8 @@ $NumRows = mysql_num_rows($result);
 If there is no link to a category, that is because that category
 is a virtual category, and I haven't catered for those yet. But <a href="changes.php">I plan to</a></p>
 <p>
-<img src="images/new.gif"  alt="new feature" border="0" width="28" height="11" hspace="2">Click on 
-<img src="images/logs.gif" alt="Files within this port affected by this commit" border="0" WIDTH="17" HEIGHT="20" hspace="2"> 
+<img src="/images/new.gif"  alt="new feature" border="0" width="28" height="11" hspace="2">Click on 
+<img src="/images/logs.gif" alt="Files within this port affected by this commit" border="0" WIDTH="17" HEIGHT="20" hspace="2"> 
 to see what files changed for this port in that commit.</p>
 </td>
 </tr>
@@ -225,7 +225,7 @@ if ($NumRows) {
       echo "<tr><td valign='top'><font size='-1'>" . $myrow["commit_date"]        . "</font></td>\n";
       echo "    <td valign='top'>" . $myrow["committer"]          . "</td>\n";
       echo '    <td valign="top"><a href="files.php?id=' . $myrow["change_log_port_id"] .
-                      '"><img src="images/logs.gif" alt="Files within this port affected by this commit" border="0" WIDTH="17" HEIGHT="20" hspace="2"></a>' . 
+                      '"><img src="/images/logs.gif" alt="Files within this port affected by this commit" border="0" WIDTH="17" HEIGHT="20" hspace="2"></a>' . 
                        $myrow["update_description"] . "</td>\n";
 
       if ($Admin) {

@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.20 2002-01-06 23:20:03 dan Exp $
+   # $Id: freshports.php,v 1.4.2.21 2002-01-07 13:08:42 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -77,7 +77,7 @@ echo '<BR>
 <TABLE WIDTH="' . $TableWidth . '" CELLPADDING="0" CELLSPACING="0" BORDER="0">
 <TR>
         <TD><A HREF="/"><IMG SRC="/images/freshports.jpg" ALT="FreshPorts.org - the place for ports" WIDTH="512" HEIGHT="110" BORDER="0"></A></TD>
-        <TD ALIGN="right" CLASS="sans" VALIGN="bottom"><small>' . FormatTime(Date("D, j M Y g:i A T"), $LocalTimeAdjustment, "D, j M Y g:i A T") . '</small></TD>
+        <TD ALIGN="right" CLASS="sans" VALIGN="bottom">' . FormatTime(Date("D, j M Y g:i A T"), $LocalTimeAdjustment, "D, j M Y g:i A T") . '</TD>
 </TR>
 </TABLE>
 ';
@@ -106,7 +106,7 @@ function freshports_Header($ArticleTitle, $Description, $Keywords) {
 	echo "</TITLE>
 ";
 
-//	freshports_style();
+	freshports_style();
 
 echo "
 	<META NAME=\"description\" CONTENT=\"";
@@ -124,6 +124,27 @@ echo "\">
 echo '	<meta name="MSSmartTagsPreventParsing" content="TRUE">
 </HEAD>
 ';
+
+}
+
+function freshports_style() {
+
+echo "
+        <STYLE>
+                CODE.code { color: #461b7e}
+                PRE.code {  color: #461b7e}
+                BLOCKQUOTE.code { color: #461b7e}
+                TD.sans { font-size: smaller; }
+                P.white { color: white; }
+                P.blackhead { color: black; font-weight: 900; }
+                P.whitehead { color: white; font-weight: 900; }
+                P.yellow { color: #FFCC33; }
+                A:hover { color: #666666; }
+                A.white { color: white; text-decoration: none; font-size: smaller; }
+                A.black { color: black; text-decoration: none; font-size: smaller; }
+                A.white:hover { text-decoration: underline; }
+        </STYLE>
+";
 
 }
 
@@ -438,11 +459,11 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
    $HTML .= "</DT>\n<DD>";
    # show forbidden and broken
    if ($port->forbidden) {
-      $HTML .= '<img src="images/forbidden.gif" alt="Forbidden" width="20" height="20" hspace="2"> FORBIDDEN: ' . $port->forbidden . "<br>";
+      $HTML .= '<img src="/images/forbidden.gif" alt="Forbidden" width="20" height="20" hspace="2"> FORBIDDEN: ' . $port->forbidden . "<br>";
 
    }
    if ($port->broken) {
-      $HTML .= '<img src="images/broken.gif" alt="Broken" width="17" height="16" hspace="2"> BROKEN: ' . $port->broken . "<br>"; ;
+      $HTML .= '<img src="/images/broken.gif" alt="Broken" width="17" height="16" hspace="2"> BROKEN: ' . $port->broken . "<br>"; ;
    }
 
    // description
@@ -473,7 +494,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
  
             $HTML .= ' on <font size="-1">' . $port->updated . '</font>' . "\n";
  
-            $HTML .= '<PRE>' . $port->update_description . '</PRE>' . "\n";
+            $HTML .= '<PRE CLASS="code">' . $port->update_description . '</PRE>' . "\n";
          } else {
             $HTML .= "no changes recorded in FreshPorts<br>\n";
          }
@@ -682,7 +703,7 @@ function freshports_PortCommitsHeader($port) {
 	# print the header for the commits for a port
 
 	echo '<DL><DD>';
-    echo '<PRE>' . convertAllLinks(htmlspecialchars($port->long_description)) . '</PRE>';
+    echo '<PRE CLASS="code">' . convertAllLinks(htmlspecialchars($port->long_description)) . '</PRE>';
 	echo "\n</DD>\n</DL>\n</TD>\n</TR>";
 
 	echo '<tr><td><TABLE BORDER="1" width="100%" CELLSPACING="0" CELLPADDING="5"bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">' . "\n";
@@ -718,7 +739,7 @@ function freshports_PortCommitPrint($commit) {
 	echo '    <td valign="top">';
     echo $commit->committer . '<BR><a href="/files.php?id=' . $commit->id;
 	echo '"><img src="/images/logs.gif" alt="Files within this port affected by this commit" border="0" WIDTH="17" HEIGHT="20" hspace="2"></a>'. "</td>\n";
-	echo '    <td valign="top" WIDTH="*"><PRE>' . convertAllLinks(htmlspecialchars($commit->description)) . "</PRE></td>\n";
+	echo '    <td valign="top" WIDTH="*"><PRE CLASS="code">' . convertAllLinks(htmlspecialchars($commit->description)) . "</PRE></td>\n";
 	echo "</tr>\n";
 }
 

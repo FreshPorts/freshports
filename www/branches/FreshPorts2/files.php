@@ -1,5 +1,5 @@
 <?
-	# $Id: files.php,v 1.1.2.2 2002-01-05 23:01:14 dan Exp $
+	# $Id: files.php,v 1.1.2.3 2002-01-07 13:08:40 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -131,7 +131,7 @@ This page shows the files associated with one port for a given commit.
 		echo "  <td>" . $Change_Type . "</td>";
 		echo "  <TD>" . $myrow["revision_name"] . "</TD>";
 		echo '  <td colspan="2"><a href="' . $freshports_CVS_URL . $myrow["pathname"] . '">' .
-              '<img src="images/logs.gif" alt="Changes to this file" border="0" WIDTH="17" HEIGHT="20" hspace="2"></a>';
+              '<img src="/images/logs.gif" alt="Changes to this file" border="0" WIDTH="17" HEIGHT="20" hspace="2"></a>';
 
 		echo str_replace($PathNamePrefixToRemove, '', $myrow["pathname"]) . "</td>";
 		echo "</tr>\n";

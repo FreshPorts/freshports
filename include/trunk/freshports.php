@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.3 2001-10-20 21:50:54 dan Exp $
+   # $Id: freshports.php,v 1.4 2001-10-24 15:10:46 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -58,7 +58,7 @@ echo '<BR>
 <TABLE WIDTH="' . $TableWidth . '" CELLPADDING="0" CELLSPACING="0" BORDER="0">
 <TR>
         <TD><A HREF="/"><IMG SRC="/images/freshports.jpg" ALT="FreshPorts.org - the place for ports" WIDTH="512" HEIGHT="110" BORDER="0"></A></TD>
-        <TD ALIGN="right" CLASS="sans" VALIGN="bottom">' . date("D, j M Y g:i A T") . '</TD>
+        <TD ALIGN="right" CLASS="sans" VALIGN="bottom"><small>' . date("D, j M Y g:i A T") . '</small></TD>
 </TR>
 </TABLE>
 ';

@@ -1,5 +1,5 @@
 <?
-   # $Id: watch-categories.php,v 1.1.2.2 2002-01-05 03:37:35 dan Exp $
+   # $Id: watch-categories.php,v 1.1.2.3 2002-01-05 03:42:02 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -31,7 +31,7 @@ This page shows the various categories and indicates which ones contains ports w
 </td></tr>
 <td valign="top"><table width="100%">
   <tr>
-    <td bgcolor="#AD0040" height="29"><font color="#FFFFFF" size="+2">freshports - watch categories</font></td>
+    <td bgcolor="#AD0040" height="29"><font color="#FFFFFF" size="+2"><? echo $FreshPortsTitle; ?> - watch categories</font></td>
   </tr>
 <tr><td valign="top" width="100%">
 

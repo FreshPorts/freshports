@@ -169,7 +169,8 @@ while ($myrow = mysql_fetch_array($result)) {
       }
    }
 
-   include("./_private/port-basics.inc");
+   $HTML .= freshports_PortDetails($myrow, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink);
+//   include("./_private/port-basics.inc");
 }
 
 }

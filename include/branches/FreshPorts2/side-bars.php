@@ -1,5 +1,5 @@
 <?
-	# $Id: side-bars.php,v 1.4.2.12 2002-03-31 03:16:46 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.13 2002-04-01 21:02:01 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -28,6 +28,9 @@
          $OriginLocal = rawurlencode($HTTP_SERVER_VARS["REQUEST_URI"]);
          break;
    }
+
+GLOBAL $visitor;
+GLOBAL $PHP_SELF;
 
 //echo "OriginLocal = '$OriginLocal'<br>\n";
 if ($visitor) {

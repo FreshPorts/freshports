@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.153 2003-09-09 19:24:00 dan Exp $
+	# $Id: freshports.php,v 1.4.2.154 2003-09-24 16:45:15 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -969,13 +969,10 @@ function freshports_PortCommits($port) {
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit_log_ports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user_tasks.php');
 
-#	echo ' *************** into freshports_PortCommits ***************';
 	freshports_PortCommitsHeader($port);
 
 	$Commits = new Commit_Log_Ports($port->dbh);
 	$NumRows = $Commits->FetchInitialise($port->id);
-
-#	echo "freshports_PortCommits \$NumRows='$NumRows'";
 
 	$LastVersion = '';
 	for ($i = 0; $i < $NumRows; $i++) {
@@ -1058,6 +1055,139 @@ function freshports_PortCommitsFooter($port) {
 	# print the footer for the commits for a port
 	echo "</TABLE>\n";
 }
+
+
+
+
+
+
+
+
+
+
+
+function freshports_CommitsHeader($element_record) {
+	# print the header for the commits for an element
+
+	GLOBAL $User;
+
+	echo '<TABLE BORDER="1" width="100%" CELLSPACING="0" CELLPADDING="5">' . "\n";
+	echo "<TR>\n";
+
+	$Columns = 3;
+	if ($User->IsTaskAllowed(FRESHPORTS_TASKS_SECURITY_NOTICE_ADD)) {
+		$Columns++;
+	}
+	echo freshports_PageBannerText("Commit History - (may be incomplete: see CVSWeb link above for full details)", $Columns);
+
+	echo '<TR><TD WIDTH="180"><b>Date</b></td><td><b>By</b></td><td><b>Description</b></td>';
+	if ($User->IsTaskAllowed(FRESHPORTS_TASKS_SECURITY_NOTICE_ADD)) {
+		echo '<td><b>Security</b></td>';
+	}
+
+	echo "</tr>\n";
+}
+
+function freshports_CommitsFooter($port) {
+	# print the footer for the commits for a port
+	echo "</TABLE>\n";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function freshports_Commits($element_record) {
+	# print all the commits for this port
+
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit_log_elements.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/element_record.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user_tasks.php');
+
+	freshports_CommitsHeader($port);
+
+	$Commits = new Commit_Log_Elements($element_record->dbh);
+	$NumRows = $Commits->FetchInitialise($element_record->id);
+
+	$LastVersion = '';
+	for ($i = 0; $i < $NumRows; $i++) {
+		$Commits->FetchNthCommit($i);
+		freshports_CommitPrint($Commits);
+	}
+
+	freshports_CommitsFooter($port);
+}
+
+
+
+
+function freshports_CommitPrint($commit) {
+	GLOBAL $DateFormatDefault;
+	GLOBAL $TimeFormatDefault;
+	GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;
+	GLOBAL $User;
+
+	# print a single commit for a port
+	echo "<TR><TD VALIGN='top' NOWRAP>";
+	
+
+	echo $commit->commit_date . '<BR>';
+	echo freshports_Email_Link($commit->message_id);
+
+	echo '&nbsp;&nbsp;'. freshports_Commit_Link($commit->message_id);
+
+	if ($commit->encoding_losses == 't') {
+		echo '&nbsp;'. freshports_Encoding_Errors();
+	}
+
+	echo ' ';
+
+#	echo freshports_CommitFilesLink($commit->message_id, $category, $port);
+	if (IsSet($commit->security_notice_id)) {
+		echo ' <a href="/security-notice.php?message_id=' . $commit->message_id . '">' . freshports_Security_Icon() . '</a>';
+	}
+
+	# ouput the REVISION
+	if (strlen($commit->{'revision_name'}) > 0) {
+    	echo '&nbsp;&nbsp;&nbsp;<BIG><B>' . $commit->{'revision_name'} . '</B></BIG>';
+	}
+
+	echo "</TD>\n";
+	echo '    <TD VALIGN="top">';
+	echo freshports_CommitterEmailLink($commit->committer);
+
+	echo "</TD>\n";
+	echo '    <TD VALIGN="top" WIDTH="*">';
+
+	echo freshports_PortDescriptionPrint($commit->description, $commit->encoding_losses, $freshports_CommitMsgMaxNumOfLinesToShow, freshports_MoreCommitMsgToShow($commit->message_id, $freshports_CommitMsgMaxNumOfLinesToShow));
+
+	echo "</TD>\n";
+
+	if ($User->IsTaskAllowed(FRESHPORTS_TASKS_SECURITY_NOTICE_ADD)) {
+		echo '<TD ALIGN="center" VALIGN="top"><a href="/security-notice.php?message_id=' . $commit->message_id . '">Edit</a></td>';
+	}
+
+	echo "</TR>\n";
+}
+
+
+
+
+
+
+
+
+
 
 function freshports_Head($string, $n) {
 	if (!is_int($n) || $n <= 0) {

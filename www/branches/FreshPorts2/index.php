@@ -1,7 +1,7 @@
 <?
 $Starting =  microtime();
 	#
-	# $Id: index.php,v 1.1.2.67 2003-03-08 16:23:48 dan Exp $
+	# $Id: index.php,v 1.1.2.68 2003-04-12 19:14:21 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -136,7 +136,7 @@ FROM (
                (SELECT latest_commits_ports.commit_log_id
                    FROM latest_commits_ports
                ORDER BY latest_commits_ports.commit_date DESC
-                 LIMIT 100) AS LCP
+                 LIMIT $MaxNumberOfPorts) AS LCP
            ON commit_log.id = LCP.commit_log_id) AS LCPCL JOIN commit_log_ports
                          ON commit_log_ports.commit_log_id = LCPCL.commit_log_id
                          AND commit_log_ports.commit_log_id > Anchor_CLID()) AS LCPCLLCP JOIN ports

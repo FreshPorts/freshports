@@ -1,5 +1,5 @@
 <?
-	# $Id: search.php,v 1.1.2.18 2002-05-18 18:16:29 dan Exp $
+	# $Id: search.php,v 1.1.2.19 2002-05-18 18:17:45 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -9,8 +9,6 @@
 	require("./include/getvalues.php");
 
 	require("../classes/ports.php");
-
-	phpinfo();
 
 	// avoid nasty problems by adding slashes
 	$query		= AddSlashes($_POST["query"]);
@@ -51,6 +49,7 @@ if ($Debug) {
 #
 # we can take parameters.  if so, make it look like a post
 #
+$search = $_POST["search"];
 if (!$search && ($query && $stype && $num && $method)) {
 	$search = TRUE;
 }

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.50 2004-08-09 22:37:14 dan Exp $
+	# $Id: faq.php,v 1.1.2.51 2004-08-27 14:05:41 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -282,6 +282,9 @@ down you must read to find something you didn't already know.</P>
 
 	<P><? echo freshports_CVS_Icon(); ?> CVS Repository: This link will take you to the CVS Repository entry
 	for this version of the file.
+	</P>
+
+	<P><? echo freshports_VuXML_Icon(); ?> <a href="http://www.vuxml.org/freebsd/">VuXML</a> vulnerability.  Click icon for details.
 	</P>
 
 	</BLOCKQUOTE>

@@ -1,5 +1,5 @@
 <?
-	# $Id: commit.php,v 1.1.2.3 2002-04-12 07:15:48 dan Exp $
+	# $Id: commit.php,v 1.1.2.4 2002-04-14 18:47:48 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -280,7 +280,7 @@ if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 						}
 
 						if ($myrow["broken"]) {
-							$HTML .= freshports_Broken_Icon() . "\n";
+							$HTML .= '&nbsp;' . freshports_Broken_Icon() . "\n";
 						}
 
 						$HTML .= $myrow["short_description"] . "\n";

@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.38 2002-04-13 18:25:12 dan Exp $
+	# $Id: index.php,v 1.1.2.39 2002-04-14 18:47:48 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -242,9 +242,9 @@ ports. A port is marked as new for 10 days.
 
 							if ($WatchListID) {
 								if ($myrow["watch"]) {
-									$HTML .= ' '. freshports_Watch_Link_Remove($myrow["element_id"]);
+									$HTML .= ' '. freshports_Watch_Link_Remove($myrow["element_id"]) . ' ';
 								} else {
-									$HTML .= ' '. freshports_Watch_Link_Add($myrow["element_id"]);
+									$HTML .= ' '. freshports_Watch_Link_Add($myrow["element_id"]) . ' ';
 								}
 							}
 
@@ -268,10 +268,10 @@ ports. A port is marked as new for 10 days.
 							}
 
 							if ($myrow["broken"]) {
-								$HTML .= freshports_Broken_Icon() . "\n";
+								$HTML .= ' '. freshports_Broken_Icon() . "\n";
 							}
 
-							$HTML .= "&nbsp;";
+#							$HTML .= "&nbsp;";
 							$HTML .= freshports_CommitFilesLink($myrow["commit_log_id"], $myrow["category"], $myrow["port"]);
 							$HTML .= "&nbsp;";
 

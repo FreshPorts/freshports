@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-lists.php,v 1.1.2.12 2004-10-25 00:23:44 dan Exp $
+	# $Id: watch-lists.php,v 1.1.2.13 2005-01-13 22:14:12 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -91,6 +91,24 @@ $HTML .=  '
 
 	return $HTML;
 
+}
+
+function freshports_WatchListCountDefault($db, $UserID) {
+	$sql = "select WatchListCountDefault($UserID) as count";
+
+#	echo $sql;
+
+	$result = pg_exec($db, $sql);
+	if (!$result) {
+		echo "error " . pg_errormessage();
+		exit;
+	}
+
+	$myrow = pg_fetch_array($result, 0);
+
+#	echo $myrow["count"];
+
+	return $myrow["count"];
 }
 
 

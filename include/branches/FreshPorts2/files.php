@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: files.php,v 1.1.2.28 2003-07-04 14:59:18 dan Exp $
+	# $Id: files.php,v 1.1.2.29 2003-09-25 14:04:58 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -17,7 +17,6 @@ function freshports_Files($User, $PortID, $MessageID, $db) {
 	#
 
 	GLOBAL $TableWidth;
-	GLOBAL $freshports_CVS_URL;
 	GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;
 	GLOBAL $DaysMarkedAsNew;
 
@@ -264,7 +263,7 @@ select element_pathname(element.id) as pathname,
 
 			echo "  <TD>" . $Change_Type . "</TD>";
 			echo "  <TD>" . $myrow["revision_name"] . "</TD>";
-			echo '  <TD WIDTH="100%"><A HREF="' . $freshports_CVS_URL . $myrow["pathname"] . '">';
+			echo '  <TD WIDTH="100%"><A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $myrow["pathname"] . '">';
 
 			echo '<CODE CLASS="code">' . str_replace($PathNamePrefixToRemove, '', $myrow["pathname"]) . "</CODE></A></TD>";
 			echo "</TR>\n";

@@ -1,5 +1,5 @@
 <?
-	# $Id: new-user.php,v 1.1.2.29 2003-01-06 14:14:40 dan Exp $
+	# $Id: new-user.php,v 1.1.2.30 2003-03-06 17:57:36 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -80,7 +80,7 @@ if ($submit) {
 				$sql = "insert into users (id, name, password, cookie, email, " . 
 						"watch_notice_id, emailsitenotices_yn, type, ip_address, number_of_days) values (";
 				$sql .= "$UserID, '$UserLogin', '$Password1', '$Cookie', '$email', " .
-						"'1', 'N', 'S', '" . $_SERVER["REMOTE_ADDR"] . "', " .
+						"'1', 'N', 'U', '" . $_SERVER["REMOTE_ADDR"] . "', " .
 						"$numberofdays)";
 
 				$errors .= "<BR>sql=" . $sql;

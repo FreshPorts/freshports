@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-list-maintenance.php,v 1.1.2.7 2002-12-08 17:34:43 dan Exp $
+	# $Id: watch-list-maintenance.php,v 1.1.2.8 2002-12-09 15:03:06 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -18,6 +18,7 @@ if (!$visitor) {
 }
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/watch_lists.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/user.php");
 
 	freshports_Start("Watch list maintenance",
 					"freshports - new ports, applications",
@@ -164,7 +165,7 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 			break;
 
 		case "set_options":
-			echo 'I would have set options to: ' . AddSlashes($_POST["addremove"]);
+			if ($Debug) echo 'I would have set options to: ' . AddSlashes($_POST["addremove"]);
 			require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/user.php");
 
 			$User = new User($db);
@@ -179,7 +180,7 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 $User = new User($db);
 $User->Fetch($UserID);
 
-echo 'add remove = ' . $User->watch_list_add_remove;
+if ($Debug) echo 'add remove = ' . $User->watch_list_add_remove;
 
 ?>
 

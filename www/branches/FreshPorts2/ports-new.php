@@ -1,5 +1,5 @@
 <?
-	# $Id: ports-new.php,v 1.1.2.19 2002-12-11 17:49:11 dan Exp $
+	# $Id: ports-new.php,v 1.1.2.20 2002-12-11 18:15:09 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -93,7 +93,6 @@ These are the recently added ports.
 	echo "</TD></TR>\n";
 
 	$sql = "
-explain analyze 
 select TEMP.id,
        element.name as port,
        categories.name as category,

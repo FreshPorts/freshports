@@ -1,5 +1,5 @@
 <?
-	# $Id: search.php,v 1.1.2.23 2002-05-21 04:59:29 dan Exp $
+	# $Id: search.php,v 1.1.2.24 2002-05-21 16:11:17 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -19,6 +19,7 @@
 			$category	= AddSlashes($_POST["category"]);
 			$port		= AddSlashes($_POST["port"]);
 			$method		= AddSlashes($_POST["method"]);
+			$deleted	= AddSlashes($_POST["deleted"]);
 			break;
 
 		case "GET":
@@ -29,13 +30,30 @@
 			$category	= AddSlashes($_GET["category"]);
 			$port		= AddSlashes($_GET["port"]);
 			$method		= AddSlashes($_GET["method"]);
+			$deleted	= AddSlashes($_GET["deleted"]);
 			break;
+
 	}
 
 	if ($stype == 'messageid') {
 		header("Location: http://" . $_SERVER["HTTP_HOST"] . "/commit.php?message_id=$query");
 		exit;
 	}
+
+	#
+	# ensure deleted has an appropriate value
+	#
+	switch ($deleted) {
+		case "includedeleted":
+			# do nothing
+			break;
+
+		default:
+			$deleted = "excludedeleted";
+			# do not break here...
+	}
+
+
 
 #phpinfo();
 
@@ -129,7 +147,8 @@ if ($WatchListID) {
 	$sql .= "WHERE ports.category_id  = categories.id
 	           and ports.element_id   = element.id 
 	           and commit_log.id      = commit_log_ports.commit_log_id
-               and commit_log_ports.port_id = ports.id    " ;
+               and commit_log_ports.port_id = ports.id  " ;
+
 
 switch ($method) {
 	case 'match':
@@ -187,6 +206,22 @@ switch ($method) {
 			case "messageid":
 				$sql .= "and commit_log.message_id = '$query'";
 		}
+}
+
+#
+# include/exclude deleted ports
+#
+switch ($deleted) {
+	case "includedeleted":
+		# do nothing
+		break;
+
+	default:
+		$deleted = "excludedeleted";
+		# do not break here...
+
+	case "excludedeleted":
+		$sql .= " and element.status = 'A' ";
 }
 
 $sql .= " order by categories.name, element.name";
@@ -248,6 +283,13 @@ Search for:<BR>
 		<OPTION VALUE="100" <?if ($num == 100) echo 'SELECTED' ?>>100 results
 		<OPTION VALUE="500" <?if ($num == 500) echo 'SELECTED' ?>>500 results
 	</SELECT> 
+
+	<BR>
+
+	<INPUT TYPE=radio <? if ($deleted == "excludedeleted") echo 'CHECKED'; ?> VALUE=excludedeleted NAME=deleted> Do not include deleted ports
+	<INPUT TYPE=radio <? if ($deleted == "includedeleted") echo 'CHECKED'; ?> VALUE=includedeleted NAME=deleted> Include deleted ports
+
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 	<INPUT TYPE="submit" VALUE="search">
   <INPUT TYPE="hidden" NAME="search" VALUE="1">

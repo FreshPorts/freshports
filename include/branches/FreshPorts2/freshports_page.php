@@ -1,4 +1,9 @@
 <?php
+	#
+	# $Id: freshports_page.php,v 1.1.2.3 2005-01-23 03:11:21 dan Exp $
+	#
+	# Copyright (c) 2005 DVL Software Limited
+	#
 
 	set_include_path('/usr/local/share/pear');
 	require_once("HTML/Page2.php");

@@ -1,4 +1,10 @@
 <?php
+	#
+	# $Id: freshports_page_list_ports.php,v 1.1.2.2 2005-01-23 03:11:21 dan Exp $
+	#
+	# Copyright (c) 2005 DVL Software Limited
+	#
+
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports_page.php');
 

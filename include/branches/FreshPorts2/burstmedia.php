@@ -1,5 +1,5 @@
 <?
-	# $Id: burstmedia.php,v 1.1.2.2 2002-05-18 05:58:28 dan Exp $
+	# $Id: burstmedia.php,v 1.1.2.3 2002-06-05 18:24:52 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -114,7 +114,15 @@ Tv="";
   fontColor + \'k\' + fontColor + \'/RETURN-CODE" width=165 height=600\' +
   \'v\' +\'marginwidth=0 marginheight=0 hspace=0 vspace=0 \' +
   \'frameborder=0 scrolling=no>\');
-  document.write(\'<A HREF="http://www.FreshPorts.org/"><img src="/images/freshports-160x600.gif" width=160 height=600 BORDER="0"></A>\');
+  document.write(\'<A HREF="http://bchosting.com/track.php?refID=5665"><img src="';
+
+if (rand(0, 1) == 0) {
+	echo '/ads/bch_banner_freeserver2.sky.gif';
+} else {
+	echo '/ads/bch_banner_dedicated2.sky.gif';
+}
+
+echo '" width=160 height=600 BORDER="0"></A>\');
   document.write(\'</ifr\'+\'ame>\');   
 // -->
 </script>';

@@ -1,6 +1,6 @@
 <?
 	#
-	# $Id: index.php,v 1.1.2.53 2002-11-30 20:50:23 dan Exp $
+	# $Id: index.php,v 1.1.2.54 2002-12-02 18:32:25 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -15,7 +15,6 @@
 					"FreeBSD, index, applications, ports");
 $Debug = 0;
 
-#$dailysummary = $_GET["dailysummary"];
 
 if ($Debug) echo "UserID='$UserID'";
 
@@ -103,15 +102,27 @@ function GetPortNameFromFileName($file_name) {
 
 }
 
-$num = AddSlashes($_GET["num"]);
+$num			= AddSlashes($_GET["num"]);
+$dailysummary	= AddSlashes($_GET["dailysummary"]);
+$days			= AddSlashes($_GET["days"]);
+
 
 if (Is_Numeric($num)) {
 	$MaxNumberOfPorts = min($MaxNumberOfPorts, max(10, $num));
+} else {
+	$num = MaxNumberOfPorts;
 }
 
-$days = AddSlashes($_GET["days"]);
 if (Is_Numeric($days)) {
 	$NumberOfDays = min($NumberOfDays, max(0, $days));
+} else {
+	$days = $NumberOfDays;
+}
+
+if (Is_Numeric($dailysummary)) {
+	$dailysummary = min($NumberOfDays, max(0, $dailysummary));
+} else {
+	unset($dailysummary);
 }
 
 
@@ -341,14 +352,27 @@ ports. A port is marked as new for 10 days.
 <?
 
 	if ($dailysummary) {
-		for ($i = 0; $i < $NumberOfDays; $i++) {
+		for ($i = 0; $i < $dailysummary; $i++) {
 			freshports_SummaryForDay($i);
 		}
 	} else {
-		$Today = time();
-		for ($i = 1; $i <= $NumberOfDays; $i++) {
-//			echo "$Today " . $Today  - $i * 86400;
-			echo '<a href="/date.php?date=' . date("Y/n/j", $Today - $i * 86400) . '">' . date("D, j M Y", $Today - $i * 86400) . "<br>\n";
+		if ($NumberOfDays) {
+			$Today = time();
+			echo '<BR>
+<TABLE WIDTH="155" BORDER="1" CELLSPACING="0" CELLPADDING="5">
+	<TR>
+		<TD BGCOLOR="#AD0040" height="30"><FONT COLOR="#FFFFFF"><BIG><B>Previous days</B></BIG></FONT></TD>
+	</TR>
+	<TR><TD>
+';
+			for ($i = 1; $i <= $NumberOfDays; $i++) {
+				echo '<a href="/date.php?date=' . date("Y/n/j", $Today - $i * 86400) . '">' . date("D, j M Y", $Today - $i * 86400) . "<br>\n";
+			}
+			echo '
+	</TD></TR>
+</TABLE>
+
+';
 		}
 	}
 ?>

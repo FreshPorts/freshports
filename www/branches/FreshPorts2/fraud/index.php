@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.8 2003-12-05 16:15:59 dan Exp $
+	# $Id: index.php,v 1.1.2.9 2003-12-05 16:54:38 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -65,6 +65,8 @@ Here a few supporting documents:
 <li><a href="/fraud/their-reply.php">Their reply<a/>
 <li><a href="/fraud/second-email.php">Remaining email of 5 December 2003<a/>
 </ul>
+
+See also <a href="http://www.freebsddiary.org/freshports-fraud.php">this FreeBSD Diary article</a>.
 
 </td></tr>
 

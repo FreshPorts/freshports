@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.42 2003-07-04 14:59:17 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.43 2003-07-14 14:11:54 dan Exp $
 	#
 	# Copyright (c) 2001-2003 DVL Software Limited
 	#
@@ -87,7 +87,7 @@ function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 		if (IsSet($CategoryID)) {
 #			echo "<A HREF=\"/category.php?category=$CategoryID\">this link</A> should take you to the category details<BR>";
 			if (IsSet($port->id)) {
-				if ($FileName != '') {
+				if (IsSet($FileName) && $FileName != '') {
 					if (substr($FileName, 0, strlen(COMMIT_DETAILS)) == COMMIT_DETAILS) {
 						if ($Debug) echo '$_SERVER["REDIRECT_QUERY_STRING"]="' . $_SERVER["REDIRECT_QUERY_STRING"] . '"<BR>';
 						parse_str($_SERVER["REDIRECT_QUERY_STRING"], $query_parts);

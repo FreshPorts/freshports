@@ -45,7 +45,8 @@ $sql = "select ports.id, ports.name as port, ports.last_update as updated, " .
        "categories.name as category, categories.id as category_id, ports.version as version, ".
        "ports.committer, ports.last_update_description as update_description, " .
        "ports.maintainer, ports.short_description, ".
-       "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, ports.status " .
+       "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, ports.status, " .
+       "ports.broken, ports.forbidden " .
        "from ports, categories  ".
        "WHERE ports.system = 'FreeBSD' ".
        "and ports.primary_category_id = categories.id ";

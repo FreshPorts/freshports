@@ -15,7 +15,8 @@ $sql = "select ports.id, ports.name as port, ports.id as ports_id, " .
        "ports.maintainer, ports.short_description, ports.long_description, UNIX_TIMESTAMP(ports.date_created) as date_created, ".
        "date_format(date_created, '$FormatDate $FormatTime') as date_created_formatted, ".
        "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, " .
-       "ports.depends_run, ports.depends_build, ports.categories, ports.status " .
+       "ports.depends_run, ports.depends_build, ports.categories, ports.status, " .
+       "ports.broken, ports.forbidden " .
        "from ports, categories  ".
        "WHERE ports.id = $port ".
        "  and ports.primary_category_id       = categories.id ";

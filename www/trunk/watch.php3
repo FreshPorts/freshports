@@ -128,8 +128,9 @@ $sql = "select ports.id, ports.name as port, ports.id as ports_id, ports.last_up
        "ports.maintainer, ports.short_description, UNIX_TIMESTAMP(ports.date_created) as date_created, ".
        "date_format(date_created, '$FormatDate $FormatTime') as date_created_formatted, ".
        "ports.last_change_log_detail_id as last_change_log_id, " .
-       "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, ports.status " .
-       "from ports, categories, watch_port, change_log, change_log_port, change_log_details ".
+       "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, ports.status, " .
+       "ports.broken, ports.forbidden ".
+       "from ports, categories, watch_port, change_log, change_log_port, change_log_details " .
        "WHERE ports.system				= 'FreeBSD' ".
        "  and ports.primary_category_id			= categories.id " .
        "  and ports.id					= watch_port.port_id " .

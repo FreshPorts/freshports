@@ -163,7 +163,8 @@ $sql = "select ports.id, ports.name as port, change_log.commit_date as updated_r
        "date_format(change_log.commit_date, '$FormatDate') as updated_date, change_log.committer, " .
        "date_format(change_log.commit_date, '$FormatTime') as updated_time, change_log.id as change_log_id," .
        "change_log.update_description, date_format(change_log.commit_date, '%Y-%m-%d') as commit_date, " .
-       "ports.last_change_log_id, date_format(change_log.commit_date, '%T') as commit_time " .
+       "ports.last_change_log_id, date_format(change_log.commit_date, '%T') as commit_time, " .
+       "ports.broken, ports.forbidden " .
        "from ports, categories, change_log, change_log_port  ".
        "WHERE ports.system                    = 'FreeBSD' ".
        "  and ports.primary_category_id       = categories.id " .
@@ -261,7 +262,14 @@ for ($i = 0; $i < $NumRows; $i++) {
    $HTML .= "</td><td valign='top'>";
    $HTML .= '<font size="-1">' . $myrow["updated_time"] . '</font>';
 
-   $HTML .= "</td><td valign='top'>" . $myrow["update_description"] . "</td>\n";
+   $HTML .= "</td><td valign='top'>";
+   if ($myrow["forbidden"]) {
+      $HTML .= '<img src="images/forbidden.gif" alt="Forbidden" width="20" height="20" hspace="2">';
+   }
+   if ($myrow["broken"]) {
+      $HTML .= '<img src="images/broken.gif" alt="Broken" width="17" height="16" hspace="2">'; 
+   }
+   $HTML .= $myrow["update_description"] . "</td>\n";
 
    $HTML .= "</tr>\n";
 }

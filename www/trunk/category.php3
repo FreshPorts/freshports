@@ -104,7 +104,8 @@ $sql = "select ports.id, ports.name as port, ports.id as ports_id, ports.last_up
        "categories.name as category, categories.id as category_id, ports.version as version, ".
        "ports.committer, ports.last_update_description as update_description, " .
        "ports.maintainer, ports.short_description, UNIX_TIMESTAMP(ports.date_created) as date_created, ".
-       "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, ports.status  " .
+       "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, ports.status, " .
+       "ports.broken, ports.forbidden " .
        "from ports, categories  ".
        "WHERE ports.system = 'FreeBSD' ".
        "and ports.primary_category_id = categories.id " .

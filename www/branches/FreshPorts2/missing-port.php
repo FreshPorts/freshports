@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-port.php,v 1.1.2.1 2001-12-29 19:03:06 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.2 2001-12-29 20:37:23 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
@@ -48,9 +48,12 @@ function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 				$result = 1;
 
 			} else {
-				if (IsSet($PortName)) {
-					echo "no port found like that in this category";
-				}
+#				if (IsSet($PortName)) {
+#					echo "no port found like that in this category";
+#				}
+
+				require("missing-category.php");
+				freshports_Category($CategoryID, $db);
 			}
 		} else {
 			echo "no category '$CategoryName' found";
@@ -99,7 +102,6 @@ to see what files changed for this port in that commit.</p>
 	GLOBAL $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription;
 
 
-	$HideDescription	= 1;
 	$ShowCategories		= 1;
 GLOBAL	$ShowDepends;
 $ShowDepends		= 1;

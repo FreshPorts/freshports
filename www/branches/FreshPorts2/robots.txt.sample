@@ -7,3 +7,4 @@ Disallow: /new-user.php
 Disallow: /stats
 Disallow: /stats/
 Disallow: /stats/*
+Disallow: /commit.php

@@ -1,5 +1,5 @@
 <?
-	# $Id: missing.php,v 1.1.2.5 2002-02-11 13:17:19 dan Exp $
+	# $Id: missing.php,v 1.1.2.6 2002-02-13 00:28:33 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
@@ -79,7 +79,7 @@ Perhaps a <A HREF="/categories.php">list of categories</A> for <A HREF="/search.
 
 <?
 } else {
-	echo " ummm, not sure what that was: '$result'";
+#	echo " ummm, not sure what that was: '$result'";
 }
 
 ?>

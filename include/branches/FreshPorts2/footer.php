@@ -1,5 +1,5 @@
 <?
-	# $Id: footer.php,v 1.5.2.9 2002-12-16 13:34:41 dan Exp $
+	# $Id: footer.php,v 1.5.2.10 2003-04-24 15:06:17 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 ?>
@@ -47,13 +47,24 @@ ALT="powered by apache" BORDER="0" WIDTH="259" HEIGHT="32"></A>
 }
 ?>
 
-<TR><TD align="right">
+<TR><TD>
+<table width="100%">
+<tr><td align="left">
+<p>
+<a href="http://validator.w3.org/check/referer"><img border="0" 
+src="/images/valid-html401" alt="Valid HTML 4.01!" height="31" width="88"></a>
+</p>
+</td><td align="right" valign="top">
 
 <? echo freshports_copyright(); ?>
+
+</td></tr>
+</table>
 </TD></TR>
 </TABLE>
 
 <?
+	GLOBAL $ShowAds;
 	if ($ShowAds) {
 		Burst_468x60_Below();
 	}

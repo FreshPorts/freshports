@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-list-maintenance.php,v 1.1.2.1 2002-12-04 21:15:34 dan Exp $
+	# $Id: watch-list-maintenance.php,v 1.1.2.2 2002-12-04 21:32:52 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -7,6 +7,14 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
 	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
 	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+
+$visitor = $_COOKIE["visitor"];
+
+// if we don't know who they are, we'll make sure they login first
+if (!$visitor) {
+        header("Location: login.php?origin=" . $_SERVER["PHP_SELF"]);  /* Redirect browser to PHP web site */
+        exit;  /* Make sure that code below does not get executed when we redirect. */
+}
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/watch-lists.php");
 

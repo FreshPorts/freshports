@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.128 2003-01-10 17:12:22 dan Exp $
+	# $Id: freshports.php,v 1.4.2.129 2003-01-10 19:12:51 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -954,18 +954,19 @@ function freshports_PortCommitsHeader($port) {
 	# print the header for the commits for a port
 
 	GLOBAL $User;
+	GLOBAL $freshports_Tasks_SecurityNoticeAdd;
 
 	echo '<TABLE BORDER="1" width="100%" CELLSPACING="0" CELLPADDING="5">' . "\n";
 	echo "<TR>\n";
 
 	$Columns = 3;
-	if (IsSet($User->UserTasks{'SecurityNoticeAdd'})) {
+	if ($User->IsTaskAllowed($freshports_Tasks_SecurityNoticeAdd)) {
 		$Columns++;
 	}
 	echo freshports_PageBannerText("Commit History - (may be incomplete: see CVSWeb link above for full details)", $Columns);
 
 	echo '<TR><TD WIDTH="180"><b>Date</b></td><td><b>Committer</b></td><td><b>Description</b></td>';
-	if (IsSet($User->UserTasks{'SecurityNoticeAdd'})) {
+	if ($User->IsTaskAllowed($freshports_Tasks_SecurityNoticeAdd)) {
 		echo '<td><b>Security</b></td>';
 	}
 
@@ -979,8 +980,6 @@ function freshports_PortCommits($port) {
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit_log_ports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user_tasks.php');
-
-	$User->GetTasks();
 
 #	echo ' *************** into freshports_PortCommits ***************';
 	freshports_PortCommitsHeader($port);
@@ -1015,6 +1014,7 @@ function freshports_PortCommitPrint($commit, $category, $port) {
 	GLOBAL $TimeFormatDefault;
 	GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;
 	GLOBAL $User;
+	GLOBAL $freshports_Tasks_SecurityNoticeAdd;
 
 	# print a single commit for a port
 	echo "<TR><TD VALIGN='top'>";
@@ -1053,8 +1053,8 @@ function freshports_PortCommitPrint($commit, $category, $port) {
 
 	echo "</TD>\n";
 
-	if (IsSet($User->UserTasks{'SecurityNoticeAdd'})) {
-		echo '<TD ALIGN="center"><a href="/security-notice.php?message_id=' . $commit->message_id . '">Go</a></td>';
+	if ($User->IsTaskAllowed($freshports_Tasks_SecurityNoticeAdd)) {
+		echo '<TD ALIGN="center" VALIGN="top"><a href="/security-notice.php?message_id=' . $commit->message_id . '">Edit</a></td>';
 	}
 
 	echo "</TR>\n";

@@ -23,6 +23,10 @@ testing. Information found here may be widely out of date and/or inaccurate.  Us
 See also <a href="categories.php3">freshports by category</a>.
 </td></tr>
 <tr><td>
+<font size="+2">Sorry</font> but we had to delete all user logins which were created in the past
+two days.  Please try again.
+</td></tr>
+<tr><td>
 <table width="100%" border="0">
 <tr>
     <td colspan="5" bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">freshports - last 20 ports</font></td>
@@ -34,7 +38,7 @@ $DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
 require( "/www/freshports.org/_private/commonlogin.php3");
 require( "/www/freshports.org/_private/getvalues.php3");
 
-$cache_file     =       "/tmp/freshports.org.cache.ports";
+$cache_file     =       "/tmp/freshports.org.cache." . basename($PHP_SELF);
 $LastUpdateFile =       "/www/freshports.org/work/msgs/lastupdate";
 
 // make sure the value for $sort is valid
@@ -42,7 +46,7 @@ $LastUpdateFile =       "/www/freshports.org/work/msgs/lastupdate";
 switch ($sort) {
 /* sorting by port is disabled. Doesn't make sense to do this
    case "port":
-      $sort = "port, updated desc";
+      $sort = "version, updated desc";
       $cache_file .= ".port";
       break;
 */
@@ -51,7 +55,7 @@ switch ($sort) {
 //      break;
 
    default:
-      $sort ="updated desc, port";
+      $sort ="updated desc, category, version";
       $cache_file .= ".updated";
 }
 
@@ -108,6 +112,7 @@ $sql = "select ports.name as port, ports.id as ports_id, ports.last_update as up
 
 $sql .= "order by $sort limit 20";
 
+//echo $sql;
 
 $result = mysql_query($sql, $db);
 
@@ -183,37 +188,7 @@ echo $HTML;
 </table>
 </td>
   <td valign="top" width="*">
-  <table WIDTH="152" BORDER="1" CELLSPACING="0" CELLPADDING="5"
-            bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">
-        <tr>
-         <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" SIZE="+1">Login</font></td>
-        </tr>
-        <tr>
-         <td><script language="php">
-
-  if ($UserID) {
-   echo '<font SIZE="-1">Logged in as ', $UserID, "</font><br>";
-   echo '<font SIZE="-1"><a href="customize.php3">Customize</a> / <a href="logout.php3">Logout</a></font><br>';
-  } else {
-   echo '<font SIZE="-1"><a href="login.php3">User Login</a></font><br>';
-   echo '<font SIZE="-1"><a href="new-user.php3">Create account</a></font>';
-  }
-        </script>
-   </td>
-   </tr>
-   </table>
-<br>
- <table WIDTH="152" BORDER="1" BORDER="1" CELLSPACING="0" CELLPADDING="5"
-            bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">        <tr>
-         <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" SIZE="+1">This site</font></td>
-        </tr>
-        <tr>
-    <td valign="top"><font SIZE="-1"><a href="about.html">What is freshports?</a></font><br>
-                <font SIZE="-1"><a href="authors.html">About the Authors</a></font>
-   </td>
-   </tr>
-   </table>
-
+   <? include("/www/freshports.org/_private/side-bars.php3") ?>
 </td>
 </tr>
 </table>

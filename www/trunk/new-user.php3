@@ -15,7 +15,7 @@ if ($submit) {
 
   $errors = "";
 
-  if ($UserID == '') {
+  if ($UserName == '') {
     $errors .= "Please enter a user id.<BR>";
     $OK = 0;
   }
@@ -31,7 +31,7 @@ if ($submit) {
 
   $UserCreated = 0;
   if ($OK) {
-    $Cookie = UserToCookie($UserID);
+    $Cookie = UserToCookie($UserName);
 //    echo "checking database\n";
 
     // test for existance of user id
@@ -50,9 +50,9 @@ if ($submit) {
          $emailsitenotices_yn_value = "N";
       }
 
-      $sql = "insert into users (userid, password, cookie, firstlogin, lastlogin, email, " . 
+      $sql = "insert into users (username, password, cookie, firstlogin, lastlogin, email, " . 
              "watchnotifyfrequency, emailsitenotices_yn) values (";
-      $sql .= "'$UserID', '$Password1', '$Cookie', Now(), Now(), '$email', " .
+      $sql .= "'$UserName', '$Password1', '$Cookie', Now(), Now(), '$email', " .
               "'$watchnotifyfrequency', '$emailsitenotices_yn_value')";
 
 	$errors .= "<br>sql=" . $sql;
@@ -63,7 +63,7 @@ if ($submit) {
       } else {
 	$errors .= 'Something went terribly wrong there.<br>';
 /*
-	$errors .= 'UserID	= '.$UserID	  . '<br>';
+	$errors .= 'UserName	= '.$UserName	  . '<br>';
 	$errors .= 'Password	= '.$Password1	  . '<br>';
 	$errors .= 'DaysToShow	= '.$DaysToShow   . '<br>';
 	$errors .= 'MaxArticles = '.$MaxArticles  . '<br>';

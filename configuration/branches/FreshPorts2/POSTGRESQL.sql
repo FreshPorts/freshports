@@ -1,5 +1,5 @@
 --
--- $Id: POSTGRESQL.sql,v 1.1.2.1 2002-02-24 03:09:23 dan Exp $
+-- $Id: POSTGRESQL.sql,v 1.1.2.2 2002-03-14 20:29:29 dan Exp $
 --
 -- Copyright (c) 1998-2002 DVL Software Limited
 --
@@ -50,6 +50,10 @@ grant select on watch_list                     to group www;
 --
 grant select, insert, update on users          to group www;
 grant select,         update on users_id_seq   to group www;
+grant select, insert         on watch_list     to group www;
+
+grant select, insert, delete, update on watch_list_staging         to group www;
+grant select,                 update on watch_list_staging_id_seq  to group www;
 
 --
 -- select, insert, update, delete
@@ -62,6 +66,10 @@ grant select,         update         on watch_list_id_seq   to group www;
 -- select, delete
 --
 grant select, delete on user_confirmations      to group www;
+
+grant insert                         on watch_list_staging_log               to group www;
+grant update                         on watch_list_staging_log_id_seq        to group www;
+
 
 --
 -- no access
@@ -95,6 +103,7 @@ grant select, insert, update, delete on commit_log_port_elements       to group 
 grant select, insert, update, delete on commit_log_ports               to group commits;
 
 grant select, insert,         delete on commits_latest                 to group commits;
+grant select                         on commits_recent                 to group commits;
 
 grant select, insert, update, delete on element                        to group commits;
 grant select, update                 on element_id_seq                 to group commits;
@@ -119,3 +128,8 @@ grant select on watch_list_element to group commits;
 
 grant select, insert, update on watch_notice_log to group commits;
 grant select, insert, update on watch_notice     to group commits;
+
+grant insert                         on watch_notice_log               to group commits;
+grant update                         on watch_notice_log_id_seq        to group commits;
+
+grant ALL on ports_check to group commits;

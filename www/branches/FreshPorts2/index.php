@@ -1,7 +1,7 @@
 <?php
 $Starting =  microtime();
 	#
-	# $Id: index.php,v 1.1.2.69 2003-04-12 19:21:33 dan Exp $
+	# $Id: index.php,v 1.1.2.70 2003-04-13 19:53:50 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -15,7 +15,7 @@ $Starting =  microtime();
 	freshports_Start($FreshPortsSlogan,
 					$FreshPortsName . ' - new ports, applications',
 					'FreeBSD, index, applications, ports');
-$Debug = 1;
+$Debug = 0;
 
 if ($Debug) echo "\$User->id='$User->id'";
 

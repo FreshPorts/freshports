@@ -29,6 +29,12 @@ $FormatTime		= $FormatTimeDefault;
 $DaysMarkedAsNew	= $DaysMarkedAsNewDefault;
 $EmailBounceCount	= 0;
 
+#
+# flags for showing various port parts.
+#
+$ShowEverything		= 0;
+$ShowPortCreationDate	= 0;
+
 $UserName		= "";
 $UserID			= "";
 

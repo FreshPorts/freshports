@@ -31,8 +31,10 @@
    if ($myrow["date_created"] > Time() - 3600 * 24 * $DaysMarkedAsNew) {
       $MarkedAsNew = "Y";
       $HTML .= " <img src=\"/images/new.gif\" width=28 height=11 alt=\"new!\" hspace=2 align=absmiddle>";
+   }
 
-      if ($myrow["date_created_formatted"] != $myrow["updated"] || !($ShowLastChange == "Y" || $ShowEverything)) {
+   if ($MarkedAsNew == "Y" || $ShowPortCreationDate) {
+      if ($myrow["date_created_formatted"] != $myrow["updated"] || !($ShowLastChange == "Y" || $ShowEverything) || $ShowPortCreationDate) {
          $HTML .= ' <font size="-1">(' . $myrow["date_created_formatted"] . ")</font>";
       }
    }

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: legal.php,v 1.1.2.11 2003-04-27 14:48:13 dan Exp $
+	# $Id: legal.php,v 1.1.2.12 2004-01-01 13:59:52 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -31,7 +31,7 @@
     <TD BGCOLOR="#AD0040" height="32"><FONT COLOR="#FFFFFF" SIZE="+1">COPYRIGHT</FONT></TD>
   </TR>
   <TR><TD>
-  <p>Copyright 2000 DVL Software
+  <p>Copyright <?php echo COPYRIGHTYEARS; ?> DVL Software
   Limited, PO Box 11-310, Wellington, New Zealand.All rights reserved.&nbsp; Copyright in
   this document is owned by DVL Software Limited. &nbsp; Any person is hereby authorized to
   view, copy, print, and distribute this document subject to the following conditions: <ol>

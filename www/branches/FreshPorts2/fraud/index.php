@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.2 2003-12-04 23:06:19 dan Exp $
+	# $Id: index.php,v 1.1.2.3 2003-12-05 00:09:34 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -48,8 +48,6 @@ Here a few supporting documents:
 <li><a href="/fraud/whois.freshports.net.php">whois freshports.net</a>
 <li><a href="/fraud/first-email.php">My request to them</a>
 <li><a href="/fraud/their-reply.php">Their reply<a/>
-<li><a href="/fraud/their-reply2.php">Their second reply<a/>
-<li><a href="/fraud/second-email.php">Their second reply<a/>
 </ul>
 </td></tr>
 

@@ -1,5 +1,5 @@
 <?
-	# $Id: faq.php,v 1.1.2.10 2002-04-08 16:55:11 dan Exp $
+	# $Id: faq.php,v 1.1.2.11 2002-04-10 18:06:51 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -151,7 +151,7 @@
 
 <? freshports_PageBannerText("What do these symbols mean?"); ?>
 	<TR><TD>
-	There are a few symbols you will see in this website:
+	There are a few symbols you will see in this website.
 	<BLOCKQUOTE>
 	<P><? echo freshports_New_Icon() ?>
 		New: This port has been recently added.  A port is marked as new for 10 days.</P>
@@ -183,6 +183,13 @@
 	<P><? echo freshports_Commit_Icon(); ?> FreshPorts commit message: This will take you to the FreshPorts commit
 		message and allow you to see all other ports which were affected by this commit.   This link will not appear
         for commit messages before 3 March 2002 (which is the date FreshPorts started to store the message-id).</P>
+
+	<P><? echo freshports_Watch_Icon(); ?> Item is on your watch list: This port is on your watch list.  Click
+		this icon to remove the port from your watch list.  This icon appears only if you are logged in.</P>
+
+	<P><? echo freshports_Watch_Icon_Add(); ?> Add item to your watch list: This port is not on your watch list.  Click
+		this icon to add the port to your watch list.  This icon appears only if you are logged in.</P>
+
 	</BLOCKQUOTE>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 

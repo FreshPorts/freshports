@@ -1,5 +1,5 @@
 <?
-	# $Id: side-bars.php,v 1.4.2.11 2002-03-21 22:22:56 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.12 2002-03-31 03:16:46 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -118,6 +118,7 @@ if ($visitor) {
         echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/about.php",          "What is freshports?") . '</font><br>';
         echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/authors.php",        "About the Authors")   . '</font><br>';
         echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/faq.php",            "FAQ")                 . '</font><br>';
+        echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/stats/",             "Traffic")                 . '</font><br>';
         echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/privacy.php",        "Privacy")             . '</font><br>';
 ?>
     </td>

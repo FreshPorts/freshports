@@ -1,5 +1,5 @@
 <?
-	# $Id: login.php,v 1.1.2.13 2002-03-22 00:38:51 dan Exp $
+	# $Id: login.php,v 1.1.2.14 2002-04-20 03:06:21 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -9,7 +9,7 @@
 
 $Debug=0;
 
-if ($Debug) echo "origin = '" . rawurlencode($origin) . "'<br>\n";
+if ($Debug) echo "origin = '" . rawurlencode($origin) . "'<BR>\n";
 
 $origin=rawurlencode($origin);
 
@@ -18,7 +18,7 @@ if ($submit) {
 
    if ($Debug) {
       while (list($name, $value) = each($HTTP_POST_VARS)) {
-         echo "$name = $value<br>\n";
+         echo "$name = $value<BR>\n";
       }
    }
 
@@ -34,7 +34,7 @@ if ($submit) {
 	  " and password = '$Password' ";
 
    if ($Debug) {
-      echo "$sql<br>\n";
+      echo "$sql<BR>\n";
    }
 
    $result = pg_exec($db, $sql) or die('query failed ' . mysql_error());
@@ -56,8 +56,8 @@ if ($submit) {
 
 		if ($status == $UserStatusActive) {
 			if ($Debug) {
-				echo "well, debug was on, so I would have taken you to '$origin'<br>\n";
-				echo "Cookie = $Cookie<br>\n";
+				echo "well, debug was on, so I would have taken you to '$origin'<BR>\n";
+				echo "Cookie = $Cookie<BR>\n";
 			} else {
 				SetCookie("visitor", $Cookie, time() + 60*60*24*120, '/');
 				// Redirect browser to PHP web site
@@ -89,23 +89,23 @@ if ($submit) {
 ?>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
- <tr>
-    <td VALIGN="top" WIDTH="100%">
+ <TR>
+    <TD VALIGN="top" WIDTH="100%">
 <?
 if ($LoginFailed) {
 ?>
-<TABLE WIDTH="100%" BORDER="1" ALIGN="center" cellpadding=1 cellspacing=0 BORDER="1">
-<tr><td VALIGN=TOP>
+<TABLE WIDTH="100%" BORDER="1" ALIGN="center" CELLPADDING=1 CELLSPACING=0 BORDER="1">
+<TR><TD VALIGN=TOP>
 <TABLE WIDTH="100%">
 <TR>
 	<? freshports_PageBannerText("Login Failed!") ?>
-</tr>
-<tr bgcolor="#ffffff">
-<td>
-  <table width=100% cellpadding=0 cellspacing=0 border=0>
-  <tr valign=top>
-   <td><img src="/images/warning.gif"></td>
-   <td width=100%>
+</TR>
+<TR BGCOLOR="#ffffff">
+<TD>
+  <TABLE WIDTH="100%" CELLPADDING=0 CELLSPACING=0 BORDER=0>
+  <TR valign=top>
+   <TD><img src="/images/warning.gif"></TD>
+   <TD WIDTH="100%">
   <p>The User ID and password you supplied could not be used to login.	This could be for one of the following reasons:</p>
  <ul>
  <li>The login id is incorrect
@@ -113,81 +113,78 @@ if ($LoginFailed) {
  <li>Both of the above
  </ul>
  <p>If you need help, please ask in the forum. </p>
- </td>
- </tr>
- </table>
-</td>
-</tr>
-</table>
-</td>
-</tr>
-</table>
-<br>
+ </TD>
+ </TR>
+ </TABLE>
+</TD>
+</TR>
+</TABLE>
+</TD>
+</TR>
+</TABLE>
+<BR>
 <?
 }
 
 if ($error) {
 ?>
-<TABLE WIDTH="100%" BORDER="1" ALIGN="center" cellpadding=1 cellspacing=0 BORDER="1">
-<tr><td VALIGN=TOP>
+<TABLE WIDTH="100%" BORDER="1" ALIGN="center" CELLPADDING=1 CELLSPACING=0 BORDER="1">
+<TR><TD VALIGN=TOP>
 <TABLE WIDTH="100%">
 <TR>
     <? freshports_PageBannerText("NOTICE"); ?>
 </TR>
 
-<tr bgcolor="#ffffff">
-<td>
-  <table width=100% cellpadding=0 cellspacing=0 border=0>
-  <tr valign=top>
-   <td><img src="/images/warning.gif"></td>
-   <td width=100%>
+<TR BGCOLOR="#ffffff">
+<TD>
+  <TABLE WIDTH="100%" CELLPADDING=0 BORDER=0>
+  <TR valign=top>
+   <TD><img src="/images/warning.gif"></TD>
+   <TD WIDTH="100%">
 <? echo $error ?>
- </td>
- </tr>
- </table>
-</td>
-</tr>
-</table>
-</td>
-</tr>
-</table>
-<br>
+ </TD>
+ </TR>
+ </TABLE>
+</TD>
+</TR>
+</TABLE>
+</TD>
+</TR>
+</TABLE>
+<BR>
 <?
 }
 
 
 
 
-echo '<table width=100% border=1 cellpadding=1 cellspacing=0 bgcolor="#AD0040">';
+echo '<TABLE WIDTH="100%" BORDER="1" CELLPADDING="1" CELLSPACING="0" BGCOLOR="#AD0040">';
 
-echo '<tr bgcolor="#AD0040">';
+echo '<TR BGCOLOR="#AD0040">';
 
 freshports_PageBannerText("Login");
-echo '</tr>';
+echo '</TR>';
 
-echo '<tr><td bgcolor="#ffffff">';
+echo '<TR><TD BGCOLOR="#ffffff">';
 include ("./include/login.php");
 
 echo "Your browser must allow cookies for this login to work.";
 
-echo "</td>";
+echo "</TD>";
 echo"
-</tr>
-</table>
+</TR>
+</TABLE>
 ";
 
-echo '<br><a href="forgotten-password.php">Forgotten your password?</a>';
+echo '<BR><A HREF="forgotten-password.php">Forgotten your password?</a>';
 
 ?>
-</td>
-  <td valign="top" width="*">
+</TD>
+  <TD valign="top" WIDTH="*">
     <? include("./include/side-bars.php") ?>
- </td>
-</tr>
-</table> 
-</td></tr>
-</table>
-
+ </TD>
+</TR>
+</TABLE> 
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>

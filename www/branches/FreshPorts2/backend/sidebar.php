@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: sidebar.php,v 1.1.2.19 2004-03-22 20:28:45 dan Exp $
+	# $Id: sidebar.php,v 1.1.2.20 2004-06-16 10:36:38 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -35,6 +35,9 @@
 
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
+<?php
+	$ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['SERVER_NAME']);
+?>
 	<META HTTP-EQUIV="Refresh" CONTENT="1200; URL=http://<?php echo $ServerName . $_SERVER["PHP_SELF"]; ?>">
 	<META http-equiv="Pragma"              content="no-cache">
 	<META NAME="MSSmartTagsPreventParsing" content="TRUE">

@@ -1,1 +1,6 @@
-<BIG>NOTE: Data migration testing in progress.  Changes made here will be lost when the real migration occurs</BIG>
+<P>
+
+<BIG>NOTE: FP2 is now live.  </BIG>
+
+Please read the <A HREF="faq.php">FAQ</A> and the <A HREF="fp2-announcement.php">site annoucement</A>.  Please do not publish details on any news sites yet.</P>
+

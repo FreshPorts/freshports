@@ -1,5 +1,5 @@
 <?
-	# $Id: commit_log_ports.php,v 1.1.2.5 2002-02-21 00:28:53 dan Exp $
+	# $Id: commit_log_ports.php,v 1.1.2.6 2002-04-02 02:52:40 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -24,16 +24,15 @@ class Commit_Log_Ports {
 
 	function FetchInitialise($port_id) {
 
-		GLOBAL	$CVSTimeAdjustment;
-	
 		# get ready to fetch all the commit_log_ports for this port
 		# return the number of commits found
 
 		$sql = "select	commit_log.id, 
+						port_id,
 						message_id,
-					    to_char(commit_date + INTERVAL '$CVSTimeAdjustment seconds', 'DD Mon YYYY HH24:MI:SS')  as commit_date,
+					    to_char(commit_date - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS')  as commit_date,
 						description,
-						committer 
+						committer
 				   from commit_log, commit_log_ports
 				  where commit_log.id             = commit_log_ports.commit_log_id
 					and commit_log_ports.port_id  =  $port_id
@@ -58,6 +57,7 @@ class Commit_Log_Ports {
 		$myrow = pg_fetch_array($this->result, $N);
 
 		$this->id			= $myrow["id"];
+		$this->port_id		= $myrow["port_id"];
 		$this->message_id	= $myrow["message_id"];
 		$this->commit_date	= $myrow["commit_date"];
 		$this->description	= $myrow["description"];

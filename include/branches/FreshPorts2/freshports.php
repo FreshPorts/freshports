@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.16 2002-01-03 02:22:04 dan Exp $
+   # $Id: freshports.php,v 1.4.2.17 2002-01-03 03:03:59 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -432,7 +432,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 
    }
    if ($port->broken) {
-      $HTML .= '<img src="images/broken.gif" alt="Broken" width="17" height="16" hspace="2"> BROKEN: ' . $port->broken . "<br><br>"; ;
+      $HTML .= '<img src="images/broken.gif" alt="Broken" width="17" height="16" hspace="2"> BROKEN: ' . $port->broken . "<br>"; ;
    }
 
    // description

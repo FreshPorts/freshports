@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.65 2004-12-21 12:31:29 dan Exp $
+	# $Id: faq.php,v 1.1.2.66 2005-01-03 04:16:25 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -200,7 +200,7 @@ down you must read to find something you didn't already know.</P>
 		Here is the HTML for that graphic.
 
 		<BLOCKQUOTE>
-		<CODE CLASS="code">&lt;img src="images/freshports-banner.gif" alt="<?php echo "$FreshPortsName -- $FreshPortsSlogan"; ?>" title="<?php echo "$FreshPortsName -- $FreshPortsSlogan"; ?> width="468" height="60"&gt;</CODE>
+		<CODE CLASS="code">&lt;img src="images/freshports-banner.gif" alt="<?php echo "$FreshPortsName -- $FreshPortsSlogan"; ?>" title="<?php echo "$FreshPortsName -- $FreshPortsSlogan"; ?>" width="468" height="60"&gt;</CODE>
 		</BLOCKQUOTE>
 
 

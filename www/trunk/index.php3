@@ -1,5 +1,5 @@
 <?
-   # $Id: index.php3,v 1.30 2001-10-11 04:54:39 dan Exp $
+   # $Id: index.php3,v 1.31 2001-10-11 20:54:16 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -15,9 +15,12 @@
 #$Debug=1;
 
 #
-# $Author: dan $ $Date: 2001-10-11 04:54:39 $
-# $Header: /home/dan/repositories/freshports-1/www/Attic/index.php3,v 1.30 2001-10-11 04:54:39 dan Exp $
+# $Author: dan $ $Date: 2001-10-11 20:54:16 $
+# $Header: /home/dan/repositories/freshports-1/www/Attic/index.php3,v 1.31 2001-10-11 20:54:16 dan Exp $
 # $Log: not supported by cvs2svn $
+# Revision 1.30  2001/10/11 04:54:39  dan
+# Ask for a disk
+#
 # Revision 1.29  2001/10/10 03:27:04  dan
 # Add the HEADS UP to the website and newsfeed
 #
@@ -46,7 +49,7 @@
 # Add some headers
 #
 # $Name: not supported by cvs2svn $
-# $Revision: 1.30 $
+# $Revision: 1.31 $
 #
 
 //echo "UserID='$UserID'";
@@ -141,10 +144,7 @@ notice.  And a short description of the change.<P>
 <P>Enjoy</P>
 
 <P ALIGN="left">
-<BIG><BIG>DISK WANTED: </BIG></BIG>I need a hard drive please.  At least 500MB.  I'm trying
-to set up a development box so people can work on FreshPorts2.  Either SCSI or IDE is fine.
-Please contact me on <A HREF="mailto:donations@freebsddiary.org">donations@freebsddiary.org</A>.
-Unless you say otherwise, your kind contribution will be acknowledged here.  Thanks
+<BIG><BIG>DISK WANTED: </BIG></BIG>Thanks for the reponses folks. I have enough now.
 </P>
 
 <table width="100%" border="0">

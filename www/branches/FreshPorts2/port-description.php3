@@ -1,5 +1,5 @@
 <?
-   # $Id: port-description.php3,v 1.25.2.3 2001-11-26 06:42:37 dan Exp $
+   # $Id: port-description.php3,v 1.25.2.4 2001-11-26 06:50:48 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -119,7 +119,7 @@ $ShowDepends		= 1;
 		echo '    <td valign="top">' . $myrow["committer"]          . "</td>\n";
 		echo '    <td valign="top" WIDTH="*"><a href="files.php3?id=' . $myrow["id"] .
                       '"><img src="images/logs.gif" alt="Files within this port affected by this commit" border="0" WIDTH="17" HEIGHT="20" hspace="2"></a>' . 
-                       nl2br(htmlspecialchars($myrow["description"])) . "</td>\n";
+                       nl2br(convertAllLinks(htmlspecialchars($myrow["description"]))) . "</td>\n";
 		echo "</tr>\n";
 	}
 

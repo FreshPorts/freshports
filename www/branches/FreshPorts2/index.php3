@@ -1,5 +1,5 @@
 <?
-   # $Id: index.php3,v 1.34.2.3 2001-11-26 06:43:50 dan Exp $
+   # $Id: index.php3,v 1.34.2.4 2001-11-26 06:50:48 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -262,7 +262,7 @@ order by commit_log.commit_date desc,
 #					$HTML .= '<BR><font size="-1">' . $myrow["commit_date_raw"] . '</font>';
 
 					$HTML .= "</td><td valign='top'>";
-					$HTML .= nl2br(htmlspecialchars($myrow["commit_description"])) . "</PRE></td>\n";
+					$HTML .= nl2br(convertAllLinks(htmlspecialchars($myrow["commit_description"]))) . "</PRE></td>\n";
 
 					$HTML .= "</tr>\n";
 				}

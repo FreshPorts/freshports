@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.90 2004-08-23 19:10:59 dan Exp $
+	# $Id: index.php,v 1.1.2.91 2004-08-27 14:02:15 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -14,27 +14,31 @@
 
 	#
 	# If they supply a package name, go for it.
-	$package = AddSlashes($_REQUEST['package']);
-	if ($package != '') {
-		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/packages.php');
+	#
+	if (IsSet($_REQUEST['package'])) {
+		$package = AddSlashes($_REQUEST['package']);
+		if ($package != '') {
+			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/packages.php');
 
-		$Packages = new Packages($db);
+			$Packages = new Packages($db);
 
-		$CategoryPort = $Packages->GetCategoryPortFromPackageName($package);
-		switch ($CategoryPort) {
-			case "0":
-#				echo 'no such port found ' . $CategoryPort;
-				header('Location: /package.php?package=' . $package . '&notfound');
-				exit;
+			$CategoryPort = $Packages->GetCategoryPortFromPackageName($package);
+			switch ($CategoryPort) {
+				case "0":
+					# no such port found
+					header('Location: /package.php?package=' . $package . '&notfound');
+					exit;
 
-			case "-1":
-#				echo 'multiple ports have that package name ' . $CategoryPort;
-				header('Location: /package.php?package=' . $package . '&multiple');
-				exit;
+				case "-1":
+					# multiple ports have that package name
+					header('Location: /package.php?package=' . $package . '&multiple');
+					exit;
 
-			default:
-				header('Location: /' . $CategoryPort . '/');  /* Redirect browser to the real webpage */
-				exit;
+				default:
+					# one port found with that name, show that page.
+					header('Location: /' . $CategoryPort . '/');
+					exit;
+			}
 		}
 	}
 

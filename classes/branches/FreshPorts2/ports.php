@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports.php,v 1.1.2.30 2003-03-06 14:20:35 dan Exp $
+	# $Id: ports.php,v 1.1.2.31 2003-03-24 12:14:20 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -499,8 +499,14 @@ LEFT OUTER JOIN
 			$numrows = pg_numrows($result);
 			if ($numrows == 1) {
 				$myrow = pg_fetch_row($result);
-#die("port::Fetch id = " . $myrow[0]);
-				$result = $this->FetchByID($myrow[0], $UserID);
+				$PortID = $myrow[0];
+				if (IsSet($PortID)) {
+					$result = $this->FetchByID($myrow[0], $UserID);
+				} else {
+					return $PortID;
+				}
+			} else {
+				echo 'that port was not found:' . $Category . '/' . $Port;
 			}
 		} else {
 			echo 'pg_exec failed: ' . $sql;

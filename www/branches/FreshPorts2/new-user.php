@@ -1,5 +1,5 @@
 <?
-	# $Id: new-user.php,v 1.1.2.8 2002-02-23 21:32:41 dan Exp $
+	# $Id: new-user.php,v 1.1.2.9 2002-02-23 22:19:14 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -37,6 +37,7 @@ if ($submit) {
 	} else {
 		if ($Password1 == '') {
 			$errors .= 'A password must be supplied<BR>';
+			$OK = 0;
 		}
 	}
 

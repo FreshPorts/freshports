@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits.php,v 1.1.2.11 2003-04-28 16:21:52 dan Exp $
+	# $Id: commits.php,v 1.1.2.12 2003-07-29 20:14:55 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -78,8 +78,6 @@ class Commits {
 
 #		echo '<pre>' . $sql . '</pre>';
 
-		if ($Debug)	echo "commits::Fetch sql = '$sql'<BR>";
-
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {
 			$numrows = pg_numrows($this->LocalResult);
@@ -101,7 +99,7 @@ class Commits {
 
 #		echo "fetching row $N<br>";
 
-		$commit = new Commit($db);
+		$commit = new Commit($this->dbh);
 
 		$myrow = pg_fetch_array($this->LocalResult, $N);
 		$commit->PopulateValues($myrow);

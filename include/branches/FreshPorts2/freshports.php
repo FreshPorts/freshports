@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.125 2003-01-05 13:13:33 dan Exp $
+	# $Id: freshports.php,v 1.4.2.126 2003-01-06 23:59:29 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -49,7 +49,7 @@ function freshports_IndexFollow($URI) {
 
 function freshports_BannerSpace() {
 
-echo "
+return "
   <TR>
     <TD height=\"10\"></TD>
   </TR>

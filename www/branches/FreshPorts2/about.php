@@ -1,5 +1,5 @@
 <?
-	# $Id: about.php,v 1.1.2.13 2003-01-06 14:15:30 dan Exp $
+	# $Id: about.php,v 1.1.2.14 2003-01-06 23:59:28 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -15,7 +15,7 @@
 ?>
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><td VALIGN=TOP>
-<TABLE WIDTH="100%" ALIGN="left" border=1>
+<TABLE WIDTH="100%" ALIGN="left" border="0">
 <TR>
 	<? echo freshports_PageBannerText("About this site"); ?>
 </TR>
@@ -30,9 +30,12 @@ We have here a few notes about this website.
 <td align="left" valign="top" width="100%"></td>
 </tr>
 
-<TR>
 	<? 
-#	freshports_BannerSpace();
+	echo freshports_BannerSpace();
+	?>
+
+<TR>
+	<?
 	echo freshports_PageBannerText("What is a port?"); 
 	?>
 </TR>
@@ -52,9 +55,13 @@ we come in.</P>
 <P>For more information about the Ports tree, see <A HREF="http://www.freebsd.org/ports/">http://www.freebsd.org/ports/</A>.</P>
 
 </TD></TR>
+
+	<? 
+	echo freshports_BannerSpace();
+	?>
+
 <TR>
 	<?
-	freshports_BannerSpace();
 	echo freshports_PageBannerText("What is $FreshPortsTitle");
 	?>
 </TR>
@@ -73,10 +80,12 @@ create ports.  We do not fix ports.  We just tell you what others have been doin
 
 </TD></TR>
 
+	<? 
+	echo freshports_BannerSpace();
+	?>
 
 <TR>
 	<?
-	freshports_BannerSpace();
 	echo freshports_PageBannerText("OK, whose bright idea was this?");
 	?>
 </TR>

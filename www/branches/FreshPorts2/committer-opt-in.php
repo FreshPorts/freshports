@@ -1,5 +1,5 @@
 <?
-	# $Id: committer-opt-in.php,v 1.1.2.9 2003-01-06 14:14:37 dan Exp $
+	# $Id: committer-opt-in.php,v 1.1.2.10 2003-01-06 23:59:28 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -89,9 +89,12 @@ One committer referred to this service as a automated nagging mentor...
 </P>
 </TD></TR>
 
+<?
+	echo freshports_BannerSpace();
+?>
+
 <TR>
 	<?
-	freshports_BannerSpace();
 	echo freshports_PageBannerText("Your opt-in status");
 	?>
 </TR>

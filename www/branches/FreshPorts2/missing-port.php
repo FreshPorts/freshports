@@ -1,12 +1,20 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.49 2003-12-31 16:43:03 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.50 2004-03-22 19:01:08 dan Exp $
 	#
 	# Copyright (c) 2001-2003 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/htmlify.php');
+
+#
+# tell the robots not to follow links from this page.
+# see include/freshports.php for more information
+#
+GLOBAL $g_NOFOLLOW;
+
+$g_NOFOLLOW = 1;
 
 DEFINE('COMMIT_DETAILS', 'files.php');
 

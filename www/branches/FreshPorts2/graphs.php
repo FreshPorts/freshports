@@ -1,5 +1,5 @@
 <?
-	# $Id: graphs.php,v 1.5.2.4 2002-04-19 21:00:00 dan Exp $
+	# $Id: graphs.php,v 1.5.2.5 2002-04-19 21:10:37 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -25,6 +25,8 @@
 All graphs are at most 4 hours old.  The data used in these graphs are compiled by a large team of 
 trained worms.  As such, they are liable to be filled with errors and riddled with castings.  You
 are advised not to make life decisions based on this information.
+
+<? echo $PHP_SELF ?>
 </P>
 <P>
 If you have suggestions for graphs, please submit them via the forum.
@@ -47,7 +49,7 @@ If you have suggestions for graphs, please submit them via the forum.
 			echo '<UL>';
 			for ($i = 0; $i < $numrows; $i++) {
 				$myrow = pg_fetch_array ($result, $i);
-				echo '<LI><A HREF="/graphics.php?id=' . $myrow["id"] . '">' . $myrow["title"] . '</A></LI>';
+				echo '<LI><A HREF="' . $PHP_SELF . '?id=' . $myrow["id"] . '">' . $myrow["title"] . '</A></LI>';
 			}
 			echo '</UL>';
 		} else {

@@ -2,4 +2,8 @@
 
 # all others, please don't...
 User-agent: *
-Disallow: /
+Disallow: /login.php
+Disallow: /new-user.php
+Disallow: /stats
+Disallow: /stats/
+Disallow: /stats/*

@@ -1,5 +1,5 @@
 <?
-	# $Id: commits.php,v 1.1.2.3 2002-11-28 04:46:03 dan Exp $
+	# $Id: commits.php,v 1.1.2.4 2002-11-28 05:05:01 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -17,7 +17,7 @@ class Commits {
 		$this->dbh	= $dbh;
 	}
 
-	function Fetch($Date) {
+	function Fetch($Date, $WatchListID) {
 		$sql = "
 		SELECT DISTINCT
 			commit_log.commit_date - SystemTimeAdjust()														AS commit_date_raw,
@@ -40,8 +40,28 @@ class Commits {
 			ports.broken																								AS broken,
 			date_part('epoch', ports.date_added)																AS date_added,
 			ports.element_id																							AS element_id,
-			ports.short_description 																				AS short_description
-	   FROM commit_log_ports, commit_log, element, categories, ports
+			ports.short_description 																				AS short_description";
+
+		if ($WatchListID) {
+			$sql .= ",
+					CASE when watch_list_element.element_id is null
+						then 0
+						else 1
+					END as watch ";
+		}
+
+
+	   $sql .= "
+		FROM commit_log_ports, commit_log, categories, ports, element";
+
+		if ($WatchListID) {
+			$sql .= " left outer join watch_list_element
+					 ON watch_list_element.element_id    = element.id
+					AND watch_list_element.watch_list_id = $WatchListID ";
+
+		}
+
+		$sql .= "
 	  WHERE commit_log.commit_date         BETWEEN '$Date'::timestamptz  + SystemTimeAdjust()
 	                                           AND '$Date'::timestamptz  + SystemTimeAdjust() + '1 Day'
 		 AND commit_log_ports.commit_log_id = commit_log.id
@@ -52,6 +72,8 @@ class Commits {
 			commit_log_id,
 			category,
 			port";
+
+
 
 #		echo '<pre>' . $sql . '</pre>';
 

@@ -1,5 +1,5 @@
 <?
-	# $Id: logout.php,v 1.1.2.2 2002-01-05 23:01:16 dan Exp $
+	# $Id: logout.php,v 1.1.2.3 2002-01-06 16:48:12 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -7,7 +7,7 @@
 	require("./include/freshports.php");
 	require("./include/databaselogin.php");
 
-	SetCookie("visitor", '', 0, '/');  // clear the cookie
+	freshports_CookieClear();
 
 	if ($origin == "/index.php") {                   
 		$origin = "/";                                 

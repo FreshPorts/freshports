@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.18 2002-01-05 20:13:39 dan Exp $
+   # $Id: freshports.php,v 1.4.2.19 2002-01-06 16:48:13 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -25,6 +25,11 @@ $FreshPortsTitle		= "FreshPorts";
 
 // path to the CVS repository
 $freshports_CVS_URL = "http://www.FreeBSD.org/cgi/cvsweb.cgi";
+
+
+function freshports_CookieClear() {
+	SetCookie("visitor", '', 0, '/');
+}
 
 
 // common things needs for all freshports php3 pages

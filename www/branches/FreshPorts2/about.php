@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: about.php,v 1.1.2.20 2005-01-22 14:48:48 dan Exp $
+	# $Id: about.php,v 1.1.2.21 2005-02-21 01:17:35 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -27,13 +27,9 @@
 
 <TR><TD>
 <P>
-We have here a few notes about this website.
+We have a few notes about this website.
 </P>
 </TD></TR>
-
-<TR>
-<td align="left" valign="top" width="100%"></td>
-</tr>
 
 	<? 
 	echo freshports_BannerSpace();
@@ -98,7 +94,8 @@ create ports.  We do not fix ports.  We just tell you what others have been doin
 <TR><TD>
 <P>This site was created by Dan Langille.  His other web feats include 
 <A HREF="http://www.freebsddiary.org/">The FreeBSD Diary</A>, <a 
-href="http://www.racingsystem.com">The Racing System</A>, and an ability
+href="http://www.racingsystem.com">The Racing System</A>, 
+<a href="http://www.bsdcan.org/">BSDCan</a>, and an ability
 to avoid reading the inane comments on <A HREF="http://slashdot.org">slashdot</A>.
 But Dan didn't create the site all by himself.  Have a look at <A HREF="authors.php">
 About the Authors</A> for details of who else helped.</P>

@@ -30,13 +30,18 @@ if (strtolower(substr($host, 0, 7)) == "develop") {
    }
 }
 
+#
+# this is a debug aid so you don't change the wrong database.
+#
+$database = "nosuchdatabase";
+
 if ($Debug) {
    echo "database       = $database<br>\n";
    echo "cach_file      = $cache_file<br>\n";
    echo "LastUpdateFile = $LastUpdateFile<br>\n";
 }
 
-$db = mysql_connect("localhost","freshports", "marlboro");
+$db = mysql_connect("localhost", "freshports", "marlboro");
 if (!mysql_select_db($database, $db)) {
    echo mysql_error();
    exit;

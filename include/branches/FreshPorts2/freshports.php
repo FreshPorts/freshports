@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.126 2003-01-06 23:59:29 dan Exp $
+	# $Id: freshports.php,v 1.4.2.127 2003-01-10 15:55:02 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -63,11 +63,11 @@ return "
 $mailto = '&#109;&#97;&#105;&#108;&#116;&#111;';
 
 function freshports_Files_Icon() {
-	return '<IMG SRC="/images/logs.gif" ALT="files touched by this commit" BORDER="0" WIDTH="17" HEIGHT="20">';
+	return '<IMG SRC="/images/logs.gif" ALT="files touched by this commit" TITLE="files touched by this commit" BORDER="0" WIDTH="17" HEIGHT="20">';
 }
 
 function freshports_Refresh_Icon() {
-	return '<IMG SRC="/images/refresh.gif" ALT="Refresh" BORDER="0" WIDTH="15" HEIGHT="18">';
+	return '<IMG SRC="/images/refresh.gif" ALT="Refresh" TITLE="Refresh" BORDER="0" WIDTH="15" HEIGHT="18">';
 }
 
 function freshports_Deleted_Icon() {
@@ -87,19 +87,23 @@ function freshports_New_Icon() {
 }
 
 function freshports_Mail_Icon() {
-	return '<IMG SRC="/images/envelope10.gif" ALT="Original commit message" BORDER="0" WIDTH="25" HEIGHT="14">';
+	return '<IMG SRC="/images/envelope10.gif" ALT="Original commit message" TITLE="Original commit message" BORDER="0" WIDTH="25" HEIGHT="14">';
 }
 
 function freshports_Commit_Icon() {
-	return '<IMG SRC="/images/copy.gif" ALT="FreshPorts commit message" BORDER="0" WIDTH="16" HEIGHT="16">';
+	return '<IMG SRC="/images/copy.gif" ALT="FreshPorts commit message" TITLE="FreshPorts commit message" BORDER="0" WIDTH="16" HEIGHT="16">';
 }
 
 function freshports_Watch_Icon() {
-	return '<IMG SRC="/images/watch.gif" ALT="Item is on your watch list" BORDER="0" WIDTH="23" HEIGHT="22">';
+	return '<IMG SRC="/images/watch.gif" ALT="Item is on your watch list" TITLE="Item is on your watch list" BORDER="0" WIDTH="23" HEIGHT="22">';
 }
 
 function freshports_Watch_Icon_Add() {
-	return '<IMG SRC="/images/watch-add.gif" ALT="Add item to your watch list" BORDER="0" WIDTH="13" HEIGHT="13">';
+	return '<IMG SRC="/images/watch-add.gif" ALT="Add item to your watch list" TITLE="Add item to your watch list" BORDER="0" WIDTH="13" HEIGHT="13">';
+}
+
+function freshports_Security_Icon() {
+	return '<IMG SRC="/images/security.gif"  ALT="This commit addresses a security issue" TITLE="This commit addresses a security issue" WIDTH="20" HEIGHT="20">';
 }
 
 function freshports_Encoding_Errors() {
@@ -949,18 +953,34 @@ $url2link_cutoff_level = 70;
 function freshports_PortCommitsHeader($port) {
 	# print the header for the commits for a port
 
+	GLOBAL $User;
+
 	echo '<TABLE BORDER="1" width="100%" CELLSPACING="0" CELLPADDING="5">' . "\n";
 	echo "<TR>\n";
 
-	echo freshports_PageBannerText("Commit History - (may be incomplete: see CVSWeb link above for full details)", 3);
+	$Columns = 3;
+	if (IsSet($User->UserTasks{'SecurityNoticeAdd'})) {
+		$Columns++;
+	}
+	echo freshports_PageBannerText("Commit History - (may be incomplete: see CVSWeb link above for full details)", $Columns);
 
-	echo "<TR><TD WIDTH=\"180\"><b>Date</b></td><td><b>Committer</b></td><td><b>Description</b></td></tr>\n";
+	echo '<TR><TD WIDTH="180"><b>Date</b></td><td><b>Committer</b></td><td><b>Description</b></td>';
+	if (IsSet($User->UserTasks{'SecurityNoticeAdd'})) {
+		echo '<td><b>Security</b></td>';
+	}
+
+	echo "</tr>\n";
 }
 
 function freshports_PortCommits($port) {
 	# print all the commits for this port
 
+	GLOBAL $User;
+
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit_log_ports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user_tasks.php');
+
+	$User->GetTasks();
 
 #	echo ' *************** into freshports_PortCommits ***************';
 	freshports_PortCommitsHeader($port);
@@ -991,9 +1011,10 @@ function freshports_CommitFilesLink($MessageID, $Category, $Port) {
 }
 
 function freshports_PortCommitPrint($commit, $category, $port) {
-	GLOBAL	$DateFormatDefault;
-	GLOBAL	$TimeFormatDefault;
-	GLOBAL	$freshports_CommitMsgMaxNumOfLinesToShow;
+	GLOBAL $DateFormatDefault;
+	GLOBAL $TimeFormatDefault;
+	GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;
+	GLOBAL $User;
 
 	# print a single commit for a port
 	echo "<TR><TD VALIGN='top'>";
@@ -1019,12 +1040,24 @@ function freshports_PortCommitPrint($commit, $category, $port) {
 	echo '<BR>';
 
 	echo freshports_CommitFilesLink($commit->message_id, $category, $port);
+	if (IsSet($commit->security_notice_id)) {
+		echo '<a href="/security-notice.php?message_id=' . $commit->message_id . '">' . freshports_Security_Icon() . '</a>';
+	}
+
+
+
 	echo "</TD>\n";
 	echo '    <TD VALIGN="top" WIDTH="*">';
 
 	echo freshports_PortDescriptionPrint($commit->description, $commit->encoding_losses, $freshports_CommitMsgMaxNumOfLinesToShow, freshports_MoreCommitMsgToShow($commit->message_id, $freshports_CommitMsgMaxNumOfLinesToShow));
 
-	echo "</TD></TR>\n";
+	echo "</TD>\n";
+
+	if (IsSet($User->UserTasks{'SecurityNoticeAdd'})) {
+		echo '<TD ALIGN="center"><a href="/security-notice.php?message_id=' . $commit->message_id . '">Go</a></td>';
+	}
+
+	echo "</TR>\n";
 }
 
 function freshports_PortCommitsFooter($port) {

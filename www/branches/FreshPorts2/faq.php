@@ -1,5 +1,5 @@
 <?
-	# $Id: faq.php,v 1.1.2.16 2002-05-22 04:30:22 dan Exp $
+	# $Id: faq.php,v 1.1.2.17 2002-05-26 05:00:54 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -260,7 +260,7 @@ down you must read to find something you didn't already know.</P>
 	</P>
 
 	<?
-	$ServerName = str_replace("freshports", "FreshPorts", $SERVER_NAME);
+	$ServerName = str_replace("freshports", "FreshPorts", $_SERVER["SERVER_NAME"]);
 	$URL  = "http://$ServerName/news.php";
 	$HREF = "<A HREF=\"$URL\">$URL</A>";
 	?>
@@ -288,5 +288,6 @@ down you must read to find something you didn't already know.</P>
 </tr>
 </table>
 <? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+
 </body>
 </html>

@@ -1,5 +1,5 @@
 <?
-	# $Id: news.php,v 1.1.2.4 2002-05-22 04:30:26 dan Exp $
+	# $Id: news.php,v 1.1.2.5 2002-05-26 05:02:44 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -9,13 +9,9 @@
 
 	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 
-#	$Debug=1;
-#	echo 'stuff';
-#	exit;
+	$Debug=0;
 
-#	phpinfo();
-
-	$ServerName = str_replace("freshports", "FreshPorts", $SERVER_NAME);
+	$ServerName = str_replace("freshports", "FreshPorts", $_SERVER["SERVER_NAME"]);
 
 	$MyMaxArticles = 10;
 

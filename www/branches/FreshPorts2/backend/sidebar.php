@@ -1,5 +1,5 @@
 <?
-	# $Id: sidebar.php,v 1.1.2.6 2002-05-22 04:30:29 dan Exp $
+	# $Id: sidebar.php,v 1.1.2.7 2002-05-26 05:02:44 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -33,7 +33,7 @@
 
 <?
 	freshports_body();
-	$ServerName = str_replace("freshports", "FreshPorts", $SERVER_NAME);
+	$ServerName = str_replace("freshports", "FreshPorts", $_SERVER["SERVER_NAME"]);
 ?>
 
 	<CENTER>

@@ -1,5 +1,5 @@
 <?
-   # $Id: categories.php3,v 1.15.2.2 2001-11-29 04:07:26 dan Exp $
+   # $Id: categories.php3,v 1.15.2.3 2001-12-30 23:23:40 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -15,7 +15,7 @@
 
 ?>
 
-<table width="100%" border="0">
+<table width="<? echo $TableWidth ?>" border="0" ALIGN="center">
 </tr><tr><td colspan="2">This page lists the categories sorted by various categories.
 </td></tr>
 <tr><td colspan="2">
@@ -141,10 +141,8 @@ if (!$result) {
 	$i			= 0;
 	$NumRows = pg_numrows($result);
 	while ($myrow = pg_fetch_array($result, $i)) {
-		$URL_Category = "category.php3?category=" . $myrow["category_id"];
-
 		$HTML .= freshports_echo_HTML('<tr>');
-		$HTML .= freshports_echo_HTML('<td valign="top"><a href="' . $URL_Category . '">' . $myrow["category"] . '</a></td>');
+		$HTML .= freshports_echo_HTML('<td valign="top"><a href="/' . $myrow["category"] . '/">' . $myrow["category"] . '</a></td>');
 		$HTML .= freshports_echo_HTML('<td valign="top">' . $myrow["count"] . '</td>');
 		$HTML .= freshports_echo_HTML('<td valign="top">' . $myrow["description"] . '</td>');
 		$HTML .= freshports_echo_HTML('<td valign="top"><font size="-1">' . $myrow["updated"] . '</font></td>');

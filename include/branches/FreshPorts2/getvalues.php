@@ -1,6 +1,10 @@
 <script language="php">
 
-#$Debug=1;
+	# $Id: getvalues.php,v 1.1.2.5 2002-01-06 07:29:28 dan Exp $
+	#
+	# Copyright (c) 1998-2001 DVL Software Limited
+
+$Debug = 0;
 
 $FormatDateDefault	= "%W, %b %e";
 $FormatTimeDefault	= "%H:%i";

@@ -1,3 +1,8 @@
+<?
+	# $Id: footer.php,v 1.5.2.2 2002-01-06 07:29:27 dan Exp $
+	#
+	# Copyright (c) 1998-2001 DVL Software Limited
+?>
 <hr>
 <table width="100%" border="0">
 <?

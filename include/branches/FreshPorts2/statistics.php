@@ -1,4 +1,7 @@
 <?
+	# $Id: statistics.php,v 1.1.2.1 2002-01-06 07:29:29 dan Exp $
+	#
+	# Copyright (c) 1998-2001 DVL Software Limited
 
 function freshports_DrawGraph($data, $title, $width, $height, $filesave) {
    $im = new image("png", $width, $height, array(197,194,197));

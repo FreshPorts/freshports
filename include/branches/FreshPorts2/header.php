@@ -1,3 +1,8 @@
+<?
+	# $Id: header.php,v 1.1.2.1 2002-01-06 07:29:28 dan Exp $
+	#
+	# Copyright (c) 1998-2001 DVL Software Limited
+?>
 <body bgcolor="#ffffff" link="#0000cc">
 <?
 # get the minutes (well, actualy it's seconds now...)

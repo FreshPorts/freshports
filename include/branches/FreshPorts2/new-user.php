@@ -1,3 +1,8 @@
+<?
+	# $Id: new-user.php,v 1.1.2.2 2002-01-06 07:29:28 dan Exp $
+	#
+	# Copyright (c) 1998-2001 DVL Software Limited
+?>
 <table width="*" border="0" cellpadding="1">
 <form action="<?php echo $PHP_SELF . "?origin=" . $origin ?>" method="POST" name=f>
           <tr>

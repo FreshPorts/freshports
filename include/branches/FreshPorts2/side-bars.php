@@ -1,3 +1,10 @@
+<?
+	# $Id: side-bars.php,v 1.4.2.3 2002-01-06 07:29:29 dan Exp $
+	#
+	# Copyright (c) 1998-2001 DVL Software Limited
+?>
+
+
   <table WIDTH="152" BORDER="1" CELLSPACING="0" CELLPADDING="5"
             bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">
         <tr>

@@ -1,5 +1,5 @@
 <?
-	# $Id: graph.php,v 1.1.2.5 2002-04-19 20:43:28 dan Exp $
+	# $Id: graph.php,v 1.1.2.6 2002-04-23 16:58:30 dan Exp $
 	#
 
 	require($DOCUMENT_ROOT . "/include/common.php");
@@ -16,14 +16,14 @@ require("bar-graphs.php");
 // $values must be an array of numbers
 function FreshPortsChart($title, $axislabel, $values, $labels, $urls, $file = "-") {
         $c = new dg_BarGraph();
-        $c->width = 500;
-        $c->values = $values;
-        $c->labels = $labels;
-		$c->urls = $urls;
-		$c->title = $title;
+        $c->width      = 500;
+        $c->values     = $values;
+        $c->labels     = $labels;
+		$c->urls       = $urls;
+		$c->title      = $title;
 		$c->axis_label = $axislabel;
-		$c->gradient1 = array(180,0,0); // from dark red
-        $c->gradient2 = array(255,255,0); // to bright yellow
+		$c->gradient1  = array(180,0,0); // from dark red
+        $c->gradient2  = array(255,255,0); // to bright yellow
 
         $c->footer = "(c) http://www.FreshPorts.org/                               " . date("Y-m-d G:i:s");
         return $c->show($file);
@@ -47,34 +47,33 @@ if (!file_exists($filename) || filemtime($filename)+$period<time())	{
 	GLOBAL $db;
 
 	// XXX CHANGE THE QUERY XXX
-	$data = @pg_exec($db,"select query, title, title from graphs where id=$id")
-		or die("PGERR 1: ".pg_ErrorMessage());
+	$data = @pg_exec($db, "select query, title, label, is_clickable from graphs where id = $id")
+		or die("PGERR 1: " . pg_ErrorMessage());
 	
 	if (pg_numrows($data) == 0)
 		die("GRAPH: invalid id");
 
 	$r = pg_fetch_row($data, $i);
 
-	$query = $r[0];
-	$title = $r[1];
+	$query     = $r[0];
+	$title     = $r[1];
 	$axislabel = $r[2];
 
 	pg_freeresult($data);
 
 	// get graph data
 	$data = @pg_exec($db, $query)
-		or die("PGERR 2: ".pg_ErrorMessage());
+		or die("PGERR 2: " . pg_ErrorMessage());
 
 	$v = array();
 	$l = array();
 	$u = array();
 
-	for ($i=0; $i<pg_numrows($data); $i++)
-	{
+	for ($i=0; $i<pg_numrows($data); $i++) {
        	$r = pg_fetch_row($data, $i);
-	    array_push($v,$r[1]);
-		array_push($l,$r[0]."  ");
-		array_push($u,$r[2]); // XXX CHANGE IT TO 3 XXX
+	    array_push($v, $r[1]);
+		array_push($l, $r[0]."  ");
+		array_push($u, $r[2]);
 	}
 	
 	pg_freeresult($data);
@@ -82,10 +81,12 @@ if (!file_exists($filename) || filemtime($filename)+$period<time())	{
 	// draw
 	$map = FreshPortsChart($title, $axislabel, $v, $l, $u, $filename);
 
-	// save map
-	$fp = fopen($cache_dir.$fid.".map","w");
-	fputs($fp,$map);
-	fclose($fp);
+	if ($r[3] == 'Y') {
+		// save map
+		$fp = fopen($cache_dir.$fid.".map","w");
+		fputs($fp,$map);
+		fclose($fp);
+	}
 	
 	pg_close();
 }

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch.php,v 1.1.2.45 2003-11-28 00:17:41 dan Exp $
+	# $Id: watch.php,v 1.1.2.46 2003-12-10 13:08:43 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -34,10 +34,12 @@
 		if ($Debug) echo "\$wlid='$wlid'";
 	} else {
 		$wlid = $User->last_watch_list_chosen;
+		syslog(LOG_NOTICE, "www/watch.php::line 37 \$wlid='$wlid'");
 		if ($Debug) echo "\$wlid='$wlid'";
 		if ($wlid == '') {
 			$WatchLists = new WatchLists($db);
 			$wlid = $WatchLists->GetDefaultWatchListID($User->id);
+			syslog(LOG_NOTICE, "www/watch.php::line 42 \$wlid='$wlid'");
 			if ($Debug) echo "GetDefaultWatchListID => \$wlid='$wlid'";
 		}
 	}

@@ -1,5 +1,5 @@
 <?
-	# $Id: login.php,v 1.1.2.12 2002-02-28 21:54:44 dan Exp $
+	# $Id: login.php,v 1.1.2.13 2002-03-22 00:38:51 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -90,9 +90,7 @@ if ($submit) {
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
  <tr>
-    <td VALIGN="top">
-<table width="100%" border="0">
-<tr><td valign="top" width="100%">
+    <td VALIGN="top" WIDTH="100%">
 <?
 if ($LoginFailed) {
 ?>
@@ -176,9 +174,6 @@ echo "</td>";
 echo"
 </tr>
 </table>
-</td>
-</tr>
-</TABLE>
 ";
 
 echo '<br><a href="forgotten-password.php">Forgotten your password?</a>';

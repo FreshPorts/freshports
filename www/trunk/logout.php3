@@ -1,6 +1,6 @@
 <script language="php">
         SetCookie("visitor", '', 0, '/');  // clear the cookie
-        header("Location: ../../");  /* Redirect browser to PHP web site */
+        header("Location: $origin");  /* Redirect browser to PHP web site */
         exit;  /* Make sure that code below does not get executed when we redirect. */
 </script>
 
@@ -8,7 +8,7 @@
 
 <head>
 <title></title>
-</head>
+</head
 
 <body>
 </body>

@@ -1,4 +1,4 @@
-<script language="php">
+<?
 if ($submit) {
 
 // process form
@@ -35,12 +35,12 @@ if ($submit) {
   } else {
     SetCookie("visitor", $Cookie, time() + 60*60*24*120, '/');
     // Redirect browser to PHP web site
-    header("Location: ../");
+    header("Location: $origin");
     // Make sure that code below does not get executed when we redirect.
     exit;       
   }
 }
-</script>
+?>
 
 <html>
 
@@ -109,7 +109,7 @@ echo "</td>
 </tr>
 </table>";
 
-</script></td>
+?></td>
   </tr>
 </table>
 <? include("/www/freshports.org/_private/footer.inc") ?>

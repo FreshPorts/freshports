@@ -1,5 +1,5 @@
 <?
-	# $Id: logout.php,v 1.1.2.3 2002-01-06 16:48:12 dan Exp $
+	# $Id: logout.php,v 1.1.2.4 2002-02-24 00:23:11 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -13,7 +13,7 @@
 		$origin = "/";                                 
 	}
 
-	header("Location: $origin");  /* Redirect browser to PHP web site */
+	header("Location: http://$HTTP_HOST/$origin");  /* Redirect browser to PHP web site */
 	exit;  /* Make sure that code below does not get executed when we redirect. */
 ?>
 

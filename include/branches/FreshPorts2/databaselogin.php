@@ -1,15 +1,14 @@
 <?php
 	#
-   # $Id: databaselogin.php,v 1.1.2.3 2003-05-16 02:30:44 dan Exp $
-   #
-   # Copyright (c) 1998-2003 DVL Software Limited
+	# $Id: databaselogin.php,v 1.1.2.4 2003-09-30 11:37:48 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
-   # this file is merely a placeholder for the readfile.
-   # see common.php for the configuration settings.
+	# this file is merely a placeholder for the readfile.
+	# see common.php for the configuration settings.
 
-   require_once("$PathToDatabaseConfigFile/database.php");
-
+	require_once("$PathToDatabaseConfigFile/database.php");
 
 	if (!$AllowUserChanges) {
 		#

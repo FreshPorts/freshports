@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.12 2001-12-29 22:15:27 dan Exp $
+   # $Id: freshports.php,v 1.4.2.13 2001-12-30 23:27:29 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -18,6 +18,8 @@ $BannerFontSize         = "+1";
 $BannerWidth            = "100%";
 $TableWidth             = "98%";
 $DateFormatDefault      = "j F Y";
+
+$FreshPortsTitle		= "FreshPorts";
 
 // path to the CVS repository
 $freshports_CVS_URL = "http://www.FreeBSD.org/cgi/cvsweb.cgi";

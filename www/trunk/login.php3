@@ -117,12 +117,16 @@ echo '<tr bgcolor="#AD0040"><td bgcolor="#AD0040"><font color="#ffffff" size="+2
 echo '<tr><td bgcolor="#ffffff">';
 include ("./_private/login.inc.php3");
 
-echo "</td>
+echo "</td>";
+
+echo"
 </tr>
 </table>
 </td>
 </tr>
 </table>";
+
+echo '<br><a href="forgotten-password.php3">Forgotten your password?</a>';
 
 ?></td>
 </td>

@@ -15,7 +15,7 @@ $DaysToShow  = 20;
 $MaxArticles = 40;
 $DaysNew     = 10;
 
-$MaxNumberOfPorts	= 200;
+$MaxNumberOfPorts	= 100;
 $ShowShortDescription	= "Y";
 $ShowMaintainedBy	= "Y";
 $ShowLastChange		= "Y";

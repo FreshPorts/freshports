@@ -276,7 +276,7 @@ for ($i = 0; $i < $NumRows; $i++) {
    if ($myrow["broken"]) {
       $HTML .= '<img src="images/broken.gif" alt="Broken" width="17" height="16" hspace="2">'; 
    }
-   $HTML .= $myrow["update_description"] . "</td>\n";
+   $HTML .= htmlspecialchars($myrow["update_description"]) . "</td>\n";
 
    $HTML .= "</tr>\n";
 }

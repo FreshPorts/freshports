@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-port.php,v 1.1.2.35 2003-03-04 22:10:21 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.36 2003-03-05 21:07:34 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
@@ -58,7 +58,7 @@ function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 				if (IsSet($port->id)) {
 					echo "port was found with id = $port->id<BR>";
 				} else {
-					echo "that port not found<BR>";
+					echo "that port was not found<BR>";
 				}
 			}
 		}

@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.78 2002-04-15 16:11:44 dan Exp $
+   # $Id: freshports.php,v 1.4.2.79 2002-04-18 14:09:03 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -234,7 +234,7 @@ echo '<BR>
 function freshports_HTML_start() {
 GLOBAL $Debug;
 
-echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 ';
 }
@@ -1061,7 +1061,7 @@ function freshports_PortCommitsFooter($port) {
 function freshports_PortDescriptionPrint($description, $encoding_losses) {
 	$HTML .= '<PRE CLASS="code">';
 
-	$HTML .= htmlify(freshports_wrap($description));
+	$HTML .= htmlify(htmlspecialchars(freshports_wrap($description)));
 
 	$HTML .= '</PRE>';
 

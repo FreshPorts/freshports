@@ -31,7 +31,7 @@ alt="powered by phorum" border="0" width="88" height="31"></a>
 }
 ?>
 <tr><td align="right">
-<small><a href="../legal.php3" target="_top">Copyright</a> 2000,2001 <a href="http://www.dvl-software.com/">DVL Software Limited</a>.
+<small><a href="../legal.php3" target="_top">Copyright</a> 2000-2002 <a href="http://www.dvl-software.com/">DVL Software Limited</a>.
 All rights reserved.</small></p>
 </td></tr>
 </table>

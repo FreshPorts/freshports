@@ -1,5 +1,5 @@
 <?
-	# $Id: faq.php,v 1.1.2.14 2002-04-19 17:06:19 dan Exp $
+	# $Id: faq.php,v 1.1.2.15 2002-04-19 17:10:37 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -278,7 +278,6 @@ down you must read to find something you didn't already know.</P>
 
 	</OL>
 
-	</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 </table>

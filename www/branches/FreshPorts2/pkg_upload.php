@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_upload.php,v 1.5.2.6 2002-02-27 20:13:24 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.7 2002-02-28 21:37:43 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -13,7 +13,7 @@
 					"$FreshPortsName - new ports, applications",
 					"FreeBSD, index, applications, ports");
 $Debug=0;
-
+#phpinfo();
 function StagingAlreadyInUse($WatchListID, $dbh) {
 
 	$Result = 1;	// yes, already in progress.
@@ -27,13 +27,100 @@ function StagingAlreadyInUse($WatchListID, $dbh) {
 			$Result = 0;
 		}
 	} else {
-		pg_errormessage() . ' sql = $sql';
+		echo pg_errormessage() . " sql = $sql";
 	}
 
 	return $Result;
 }
 
 	require_once "pkg_process.inc";
+
+function DisplayUploadForm($pkg_info) {
+	?>
+
+	<P>
+	You can update your watch lists from the packges database on your computer.  Use the output
+	from the <CODE CLASS="code">pkg_info</CODE> command as the input for this page.  FreshPorts
+	will take this information, analyze it, and use that data to update your watch list.
+	</P>
+
+	<P>Here are the steps you should perform:</P>
+
+	<OL>
+
+	<LI>
+	<P>
+	You should first issue this command on your FreeBSD computer:
+	</P>
+
+	<BLOCKQUOTE>
+		<CODE CLASS="code">pkg_info -qoa > mypkg_info.txt</CODE>
+	</BLOCKQUOTE>
+
+	</LI>
+
+	<LI>
+	<P>
+	Then click on the <B>Choose</B> button and select the file you created in the previous step.
+	<P>
+	</LI>
+
+	<LI>
+	Then click on <B>Upload</B>.
+	</LI>
+
+	</OL>
+
+
+	<FORM ACTION="<? GLOBAL $PHP_SELF; echo $PHP_SELF; ?>" METHOD="post" enctype="multipart/form-data">
+		<TABLE>
+			<TR><TD>The file name containing the output from step 1:</TD></TR>
+			<TR><TD><INPUT TYPE="file"   NAME="pkg_info" SIZE="40" ></TD></TR>
+			<TR><TD><INPUT TYPE="submit" NAME="upload"   SIZE="20" VALUE="Upload"></TD></TR>
+		</TABLE>
+	</FORM>
+
+<?
+#	<P>
+#	If you prefer, you can download the <A HREF="/freshports.tgz">FreshPorts port</A> which will upload
+#	the output for you.
+#	</P>
+}
+
+function DisplayStagingArea($WatchListID, $db) {
+
+	echo '<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5" 
+					bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2"><TR>';
+
+	echo '<TD VALIGN="top"><B>Ports found from your uploaded data.</B><BR>Those marked with a W are already on your watch list.</TD>' . "\n";
+	echo '<TD VALIGN="top"><B>Ports not found.</B><BR>These ports are installed on your system but could not be located within FreshPorts.  Perhaps they have
+								been renamed or removed from the ports tree.</TD>' . "\n";
+	echo '<TD VALIGN="top"><B>Ports duplicated</B><BR>The following ports have been installed multiple times, most definitely with different versions on
+										 your system.</TD>' . "\n";
+
+	echo '<TD VALIGN="top"><B>Port from your watch lists</B><BR>These ports are on your watch list but do not appear in your pkg_info data.</TD>' . "\n";
+
+	echo '</TR><TR>';
+
+	
+	echo '<TD VALIGN="top">' . "\n";
+	UploadDisplayStagingResultsMatches($WatchListID, $db);
+	echo '</TD>';
+
+	echo '<TD VALIGN="top">' . "\n";
+	UploadDisplayStagingResultsMatchesNo($WatchListID, $db);
+	echo '</TD>';
+
+	echo '<TD VALIGN="top">' . "\n";
+	UploadDisplayStagingResultsMatchesDuplicates($WatchListID, $db);
+	echo '</TD>';
+
+	echo '<TD VALIGN="top">' . "\n";
+	UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $db);
+	echo '</TD>';
+
+	echo '</TABLE>';
+}
 
 
 
@@ -46,146 +133,68 @@ function StagingAlreadyInUse($WatchListID, $dbh) {
 	<? freshports_PageBannerText("Uploading pkg_info"); ?>
 <TR><TD>
 	<?
-#	GLOBAL $WatchListID;
-
-#	echo "WatchListID = $WatchListID<BR>";
-
-	// make sure the POST vars are ok. 
-	// check for funny stuff
-
-	global $gDBG;
-	$gDBG  = false;
-	$clean = false;
-
-	$DisplayStagingArea = 0;
-
-	#
-	# is a file name supplied?
-	#
-	if (StagingAlreadyInUse($WatchListID, $db)) {
-		$DisplayStagingArea = 1;
-	} else {
-		if (trim($pkg_info) != '') {
-
-			require_once "pkg_utils.inc";
-
-			$clean = (strpos($mode, "c") === false) ? false : true;
-			$gDBG  = (strpos($mode, "d") === false) ? false : true;
-
-			$retid = -1;
-			if (IsLoginValid($user, $pw, $ret_id) || $visitor) {
-				$filename = "/tmp/tmp_pkg_output.$user";
-				if (!copy($pkg_info, $filename)) {
-					?> <pre> Error writing file on server </pre> <?
-					exit();
-				}
-
-
-				#
-				# $UserID is set by include/getvalues.php
-				#
-				if ($visitor) $ret_id = $UserID;
-
-				$result = ProcessPackages($WatchListID, $filename, $ret_id, $clean, $db);
-				$DisplayStagingArea = 1;
-
-				epp("$user Your Ports Are: ");
-				eppp($result['FOUND']);
-				epp("<PRE>We were unable to be 100% certain about the following ports.");
-			  	epp("It is most likely that you will want them, but you may wish to review.</PRE>");
-				eppp($result['GUESS']);
-			} else {?>
-				<pre>
-					Invalid Username and/or Password
-	 			</pre> 
-			<?}
-		} else {
-			if ($visitor) {
-			?>
-
-				<P>
-				You can update your watch lists from the packges database on your computer.  Use the output
-				from the <CODE CLASS="code">pkg_info</CODE> command as the input for this page.  FreshPorts
-				will take this information, analyze it, and use that data to update your watch list.
-				</P>
-
-				<P>Here are the steps you should perform:</P>
-
-				<OL>
-
-				<LI>
-				<P>
-				You should first issue this command on your FreeBSD computer:
-				</P>
-
-				<BLOCKQUOTE>
-					<CODE CLASS="code">pkg_info -qoa > mypkg_info.txt</CODE>
-				</BLOCKQUOTE>
-
-				</LI>
-
-				<LI>
-				<P>
-				Then click on the browse button and select the file you created in the previous step.
-				<P>
-				</LI>
-
-				<LI>
-				Then click on upload.
-				</LI>
-
-				</OL>
-
-
-				<FORM action='pkg_upload.php?file=1' method='post' enctype='multipart/form-data'>
-					<TABLE>
-						<!-- <TR><TD>Enter Your Username</TD></TR>  -->
-						<!-- <TR><TD><INPUT type="text" name="user" value"" size=20></TD></TR> -->
-						<!-- <TR><TD>&nbsp;</TD></TR> -->
-						<TR><TD>The file name containing the output from <CODE CLASS="code">pkg_info</CODE>:</TD></TR>
-						<TR><TD><INPUT type="file" name="pkg_info" size=40></TD></TR>
-						<TR><TD><INPUT type="submit" name="upload" value="Upload" size=20></TD></TR>
-					</TABLE>
-				</FORM>
-
-				<P>
-				If you prefer, you can download the <A HREF="/freshports.tgz">FreshPorts port</A> which will upload
-				the output for you.
-				</P>
-		<? 	} else { ?>
-				<P>
-				You must <A HREF="login.php">login</A> before you upload your package information.
-				</P>
+	# you can only be here if you are logged in!
+	if (!$visitor) {
+		?>
+		<P>
+		You must <A HREF="login.php?origin=<?echo $PHP_SELF ?>">login</A> before you can upload your package information.
+		</P>
 		<?
-		 	} 
+ 	} else {
+		global $gDBG;
+		$gDBG  = false;
+
+		$StagingInUse       = StagingAlreadyInUse($WatchListID, $db);
+		$DisplayStagingArea = FALSE;
+		$WatchListUpdated	= FALSE;
+
+		#
+		# is a file name supplied?
+		#
+		if ($StagingInUse) {
+			$DisplayStagingArea = TRUE;
+			if ($_POST["submit"]) {
+				# save these things to the watch list
+				# and clear out part of the staging area.
+#				echo ' you clicked on submit';
+				if (MoveStagingToWatchList($WatchListID, $ports, $db)) {
+#					$DisplayStagingArea = FALSE;
+					$StagingInUse       = FALSE;
+					$WatchListUpdated   = TRUE;
+				}
+			}
+			if ($_POST["clear"]) {
+#				echo " you pressed clear!";
+				if (StagingAreaClear($WatchListID, $db)) {
+					$StagingInUse		= FALSE;
+					$DisplayStagingArea	= FALSE;
+					DisplayError("Your staging area has been cleared.");
+				}
+			}
+		} else {
+			$DisplayStagingArea = FALSE;
+			if (trim($pkg_info) != '') {
+				$Destination = "/tmp/FreshPorts.tmp_pkg_output.$UserName";
+				if (HandleFileUpload("pkg_info", $Destination)) {
+					require_once "pkg_utils.inc";
+					if (ProcessPackages($WatchListID, $Destination, $db)) {
+						$DisplayStagingArea = TRUE;
+					}
+				}
+			}
 		}
-	}
 
-	if ($DisplayStagingArea) {
-		echo '<TABLE ALIGN="center" BORDER="10"><TR>';
-
-		echo '<TD VALIGN="top"><B>Ports found</B></TD>' . "\n";
-		echo '<TD VALIGN="top"><B>These ports are installed on your system but could not be located within FreshPorts.  Perhaps they have
-									either been renamed or removed from the ports tree.</B></TD>' . "\n";
-		echo '<TD VALIGN="top"><B>The following ports have been installed multiple times, most definitely with different versions on
-											 your system.</B></TD>' . "\n";
-
-		echo '</TR><TR>';
-
-	
-		echo '<TD VALIGN="top">' . "\n";
-		UploadDisplayStagingResultsMatches($WatchListID, $db);
-		echo '</TD>';
-
-		echo '<TD VALIGN="top">' . "\n";
-		UploadDisplayStagingResultsMatchesNo($WatchListID, $db);
-		echo '</TD>';
-
-		echo '<TD VALIGN="top">' . "\n";
-		UploadDisplayStagingResultsMatchesDuplicates($WatchListID, $db);
-		echo '</TD>';
-
-		echo '</TABLE>';
+		#
+		# either we display the staging area, or we display the upload form.
+		#
+		if ($DisplayStagingArea) {
+			if ($WatchListUpdated) {
+				DisplayError("Your watch list has been updated.");
+			}
+			DisplayStagingArea($WatchListID, $db);
+		} else {
+			DisplayUploadForm($pkg_info);
+		}
 	}
 	?>
 </TD>

@@ -1,10 +1,11 @@
-<?
-	# $Id: watch_list_element.php,v 1.1.2.4 2003-02-10 16:54:31 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: watch_list_element.php,v 1.1.2.5 2003-04-28 16:21:36 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
-$Debug = 0;
+	$Debug = 0;
 
 // base class for a single item on a watch list
 class WatchListElement {
@@ -61,6 +62,7 @@ class WatchListElement {
 		# The "subselect" ensures the user can only delete things from their
 		# own watch list
 		#
+
 		$sql = "DELETE FROM watch_list_element
 		         WHERE watch_list_element.element_id    = $ElementID
 		           AND watch_list.user_id               = $UserID

@@ -1,25 +1,25 @@
 <?
-	# $Id: port-watch.php,v 1.1.2.20 2002-12-10 05:13:28 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.21 2002-12-11 04:44:39 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] ."/include/databaselogin.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] ."/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 
-    require_once($_SERVER["DOCUMENT_ROOT"] . "/../classes/categories.php");
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
 
-	$submit	= $_POST["submit"];
-	$visitor	= $_COOKIE["visitor"];
+	$submit	= $_POST['submit'];
+	$visitor	= $_COOKIE['visitor'];
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {
-	header("Location: login.php?origin=" . $_SERVER["PHP_SELF"]);  /* Redirect browser to PHP web site */
+	header('Location: login.php?origin=' . $_SERVER['PHP_SELF']);  /* Redirect browser to PHP web site */
 	exit;  /* Make sure that code below does not get executed when we redirect. */
 }
 
-$category = $_GET["category"];
+$category = $_GET['category'];
 
 if (!$category || $category != strval(intval($category))) {
    $category = 0;                                     
@@ -281,14 +281,14 @@ if ($User->id) {
 
 </td>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
-    <? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
+    <? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php') ?>
  </td>
 </tr>
 </table>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
 </TD></TR>
 </TABLE>
 

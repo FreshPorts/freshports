@@ -1,16 +1,16 @@
 <?
-	# $Id: help.php,v 1.1.2.7 2002-12-10 05:13:24 dan Exp $
+	# $Id: help.php,v 1.1.2.8 2002-12-11 04:44:35 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 
-	freshports_Start("pkg_info >> watch list",
-					"freshports - new ports, applications",
-					"FreeBSD, index, applications, ports");
+	freshports_Start('pkg_info >> watch list',
+					'freshports - new ports, applications',
+					'FreeBSD, index, applications, ports');
 
 ?>
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
@@ -160,7 +160,7 @@ your staging area before uploading again.
 </TD>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
     <?
-       require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php");
+       require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php');
     ?>
  </TD>
 </TR>
@@ -168,7 +168,7 @@ your staging area before uploading again.
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
 </TD></TR>
 </TABLE>
 

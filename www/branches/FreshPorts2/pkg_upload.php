@@ -1,18 +1,18 @@
 <?
-	# $Id: pkg_upload.php,v 1.5.2.24 2002-12-10 05:13:27 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.25 2002-12-11 04:44:39 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/watch-lists.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/watch-lists.php');
 
-	freshports_Start("Uploading pkg_info",
-					"$FreshPortsName - new ports, applications",
-					"FreeBSD, index, applications, ports");
+	freshports_Start('Uploading pkg_info',
+					$FreshPortsName . ' - new ports, applications',
+					'FreeBSD, index, applications, ports');
 $Debug=0;
 #phpinfo();
 
@@ -35,7 +35,7 @@ function StagingAlreadyInUse($UserID, $dbh) {
 	return $Result;
 }
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/pkg_process.inc");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/pkg_process.inc');
 
 function DisplayUploadForm($pkg_info) {
 	?>
@@ -245,7 +245,7 @@ function ChooseWatchLists($UserID, $db) {
 			if (trim($_FILES["pkg_info"]) != '') {
 				$Destination = "/tmp/FreshPorts.tmp_pkg_output.$UserName";
 				if (HandleFileUpload("pkg_info", $Destination)) {
-					require_once($_SERVER['DOCUMENT_ROOT'] . "/pkg_utils.inc");
+					require_once($_SERVER['DOCUMENT_ROOT'] . '/pkg_utils.inc');
 					if (ProcessPackages($User->id, $Destination, $db)) {
 						$DisplayStagingArea = TRUE;
 					}
@@ -258,7 +258,7 @@ function ChooseWatchLists($UserID, $db) {
 		#
 		if ($DisplayStagingArea) {
 			if ($WatchListUpdated) {
-				DisplayError("<BIG>Your watch list has been updated. You may wish to empty your staging area now.</BIG>");
+				DisplayError('<BIG>Your watch list has been updated. You may wish to empty your staging area now.</BIG>');
 			}
 			if ($WatchListID) {
 				DisplayStagingArea($User->id, $WatchListID, $db);
@@ -276,7 +276,7 @@ function ChooseWatchLists($UserID, $db) {
 </TD>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
     <?
-		require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php");
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php');
     ?>
  </TD>
 </TR>
@@ -284,7 +284,7 @@ function ChooseWatchLists($UserID, $db) {
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
 </TD></TR>
 </TABLE>
 

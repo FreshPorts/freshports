@@ -1,17 +1,17 @@
 <?
-	# $Id: login.php,v 1.1.2.25 2002-12-10 05:13:26 dan Exp $
+	# $Id: login.php,v 1.1.2.26 2002-12-11 04:44:37 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-   require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-   require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-   require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+   require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
+   require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
+   require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
 
 #$Debug=1;
 
-$origin = $_GET["origin"];
-if ($origin == "/index.php" || $origin == "") {
-	$origin = "/";
+$origin = $_GET['origin'];
+if ($origin == '/index.php' || $origin == '') {
+	$origin = '/';
 }
 
 
@@ -20,7 +20,7 @@ if ($Debug) phpinfo();
 
 $origin = rawurlencode($origin);
 
-if ($_POST["LOGIN"] && $_POST["UserID"]) {
+if ($_POST['LOGIN'] && $_POST['UserID']) {
    // process form
 
    if ($Debug) {
@@ -32,9 +32,9 @@ if ($_POST["LOGIN"] && $_POST["UserID"]) {
 
    $OK = 1;
 
-   $errors = "";
-   $User->id   = addslashes($_POST["UserID"]);
-   $Password = AddSlashes($_POST["Password"]);
+   $errors = '';
+   $User->id   = addslashes($_POST['UserID']);
+   $Password = AddSlashes($_POST['Password']);
 
    // test for existance of user id
 
@@ -121,9 +121,9 @@ if ($_GET["resend"]) {
 		$error .= "Hmmm, I know nothing about you.  That can't be right.  Please contact $ProblemSolverEmailAddress.";
 	}
 }
-   freshports_Start("Login",
-               "freshports - new ports, applications",
-               "FreeBSD, index, applications, ports");
+   freshports_Start('Login',
+               'freshports - new ports, applications',
+               'FreeBSD, index, applications, ports');
 
 ?>
 
@@ -220,14 +220,14 @@ echo '<BR><A HREF="forgotten-password.php">Forgotten your password?</a>';
 ?>
 </TD>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
-    <? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
+    <? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php') ?>
  </TD>
 </TR>
 </TABLE> 
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
 </TD></TR>
 </TABLE>
 

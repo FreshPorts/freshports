@@ -1,22 +1,22 @@
 <?
-	# $Id: how-big-is-it.php,v 1.1.2.5 2002-12-10 05:13:24 dan Exp $
+	# $Id: how-big-is-it.php,v 1.1.2.6 2002-12-11 04:44:36 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 
-	freshports_Start("How big is it?",
-					"freshports - new ports, applications",
-					"FreeBSD, index, applications, ports");
+	freshports_Start('How big is it?',
+					'freshports - new ports, applications',
+					'FreeBSD, index, applications, ports');
 
 	$Total = 0;
-	$Date = date("Y/m/d", time() - 86400);
+	$Date = date('Y/m/d', time() - 86400);
 
 function format_number($Value) {
-	return str_replace(" ", "&nbsp;", sprintf("%6s", $Value));
+	return str_replace(' ', '&nbsp;', sprintf('%6s', $Value));
 }
 	
 function StatsSQL($db, $Title, $Date) {
@@ -322,14 +322,14 @@ web pages on <a href="http://www.Google.com/">Google</a><small><sup><a href="#1"
 </TD>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
     <?
-       require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php");
+       require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php');
     ?>
  </TD>
 </TABLE>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
 </TD></TR>
 </TABLE>
 

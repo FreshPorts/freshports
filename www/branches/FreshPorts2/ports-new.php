@@ -1,12 +1,12 @@
 <?
-	# $Id: ports-new.php,v 1.1.2.16 2002-12-10 05:13:29 dan Exp $
+	# $Id: ports-new.php,v 1.1.2.17 2002-12-11 04:44:40 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 
 	$Debug = 0;
 
@@ -140,23 +140,23 @@ These are the recently added ports.
 #				echo "There are $numrows to fetch<BR>\n";
 			}
 
-			require_once($_SERVER['DOCUMENT_ROOT'] . "/include/list-of-ports.php");
+			require_once($_SERVER['DOCUMENT_ROOT'] . '/include/list-of-ports.php');
 
-			echo freshports_ListOfPorts($result, $db, "Y", $ShowCategoryHeaders);
+			echo freshports_ListOfPorts($result, $db, 'Y', $ShowCategoryHeaders);
 ?>
 
 </TABLE>
 
 </TD>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
-<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php') ?>
 </TD>
 </TR>
 </TABLE>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
 </TD></TR>
 </TABLE>
 

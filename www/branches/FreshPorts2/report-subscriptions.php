@@ -1,33 +1,33 @@
 <?
-	# $Id: report-subscriptions.php,v 1.1.2.15 2002-12-10 04:00:17 dan Exp $
+	# $Id: report-subscriptions.php,v 1.1.2.16 2002-12-11 04:44:40 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
-	if (!$_COOKIE["visitor"]) {
-		header("Location: login.php?origin=" . $_SERVER["PHP_SELF"]);  /* Redirect browser to PHP web site */
+	if (!$_COOKIE['visitor']) {
+		header('Location: login.php?origin=' . $_SERVER['PHP_SELF']);  /* Redirect browser to PHP web site */
 		exit;  /* Make sure that code below does not get executed when we redirect. */
 	}
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 
-	$ArticleTitle = "Report subscriptions";
+	$ArticleTitle = 'Report subscriptions';
 
 	freshports_Start(	$ArticleTitle,
-					"",
-					"FreeBSD, daemon copyright");
+					'',
+					'FreeBSD, daemon copyright');
 
 	$Debug = 0;
 	if ($Debug) phpinfo();
 
 
 	function freshports_ReportFrequencies($dbh) {
-		$sql = "select id, frequency, description
+		$sql = 'select id, frequency, description
 		          from report_frequency
-		         order by id";
+		         order by id';
 
 		$result = pg_exec($dbh, $sql);
 		if ($result) {
@@ -35,8 +35,8 @@
 			for ($i = 0; $i < $numrows; $i++) {
 				$myrow = pg_fetch_array ($result, $i);
 				# we don't include don't notify me.
-				if ($myrow["frequency"] != 'Z') {
-					$Frequencies[$myrow["id"]] = $myrow["description"];
+				if ($myrow['frequency'] != 'Z') {
+					$Frequencies[$myrow['id']] = $myrow['description'];
 				}
 			}
 		}
@@ -45,35 +45,35 @@
 	}
 
 	function freshports_ReportNames($dbh) {
-		$sql = "select id, name, description, needs_frequency from reports order by name";
+		$sql = 'select id, name, description, needs_frequency from reports order by name';
 		$result = pg_exec($dbh, $sql);
 		if ($result) {
 			$numrows = pg_numrows($result);
 			for ($i = 0; $i < $numrows; $i++) {
 				$myrow = pg_fetch_array ($result, $i);
-				$Values["name"]				= $myrow["name"];
-				$Values["needs_frequency"]	= $myrow["needs_frequency"];
-				$Values["description"]		= $myrow["description"];
-				$Reports[$myrow["id"]] = $Values;
+				$Values['name']				= $myrow['name'];
+				$Values['needs_frequency']	= $myrow['needs_frequency'];
+				$Values['description']		= $myrow['description'];
+				$Reports[$myrow['id']]		= $Values;
 			}
 		}
 
 		return $Reports;
 	}
 
-	if ($_POST["submit"] == 'update') {
-		pg_exec($db, "begin");
+	if ($_POST['submit'] == 'update') {
+		pg_exec($db, 'begin');
 		$sql = "DELETE from report_subscriptions
     	         WHERE user_id = $User->id";
 
 		$result = pg_exec($db, $sql);
 
-		$reports     = $_POST["reports"];
+		$reports     = $_POST['reports'];
 
 		reset($reports);
 
 		while (list($key, $value) = each($reports)) {
-			$TheFrequency = $_POST["reportfrequency_" . $value];
+			$TheFrequency = $_POST['reportfrequency_' . $value];
 			if ($Debug) echo '$TheFrequency=\'' . $TheFrequency . '\'';
 			if ($Debug) echo "\$key='$key' \$value='$value' \$User->id='$User->id' \$frequencies[\$key]=" . $TheFrequency . '<BR>';
 			if (IsSet($TheFrequency) && $TheFrequency <> '') {
@@ -85,13 +85,13 @@
 			$result = pg_exec ($db, $sql);
 
 			if (!$result) {
-				echo "OUCH, that's not very nice.  something went wrong: " . pg_errormessage() . "  $sql";
-				pg_exec($db, "rollback");
+				echo 'OUCH, that\'s not very nice.  something went wrong: ' . pg_errormessage() . "  $sql";
+				pg_exec($db, 'rollback');
 				exit;
 			}
 		}
 
-		pg_exec($db, "commit");
+		pg_exec($db, 'commit');
 
 	}
 
@@ -114,10 +114,10 @@
 		for ($i = 0; $i < $numrows; $i++) {
 			$myrow = pg_fetch_array ($result, $i);
 
-			$Values = $Reports[$myrow["report_id"]];
+			$Values = $Reports[$myrow['report_id']];
 
-			$Values["frequency"] = $myrow["report_frequency_id"];
-			$Values["selected"]  = 1;
+			$Values['frequency'] = $myrow['report_frequency_id'];
+			$Values['selected']  = 1;
 			if ($Debug) echo '# # # reading from DB: $Values = \'' . $Values . '\' and $Values ["frequency"] = \'' . $Values ["frequency"] . '\'<BR>';
 
 			$Reports[$myrow["report_id"]] = $Values;

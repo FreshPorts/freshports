@@ -1,18 +1,18 @@
 <?
-	# $Id: faq.php,v 1.1.2.26 2002-12-10 05:13:23 dan Exp $
+	# $Id: faq.php,v 1.1.2.27 2002-12-11 04:44:35 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 
-	freshports_Start("FAQ",
-					"freshports - new ports, applications",
-					"FreeBSD, index, applications, ports");
+	freshports_Start('FAQ',
+					'freshports - new ports, applications',
+					'FreeBSD, index, applications, ports');
 
-	$ServerName = str_replace("freshports", "FreshPorts", $_SERVER["SERVER_NAME"]);
+	$ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['SERVER_NAME']);
 
 	GLOBAL $FreshPortsName;
 	GLOBAL $FreshPortsSlogan;
@@ -385,11 +385,11 @@ SQL and I'll be implementing that gradually.
 </table>
 </td>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
-    <? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
+    <? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php') ?>
  </td>
 </tr>
 </table>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
 
 </body>
 </html>

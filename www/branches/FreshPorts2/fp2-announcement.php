@@ -1,16 +1,16 @@
 <?
-	# $Id: fp2-announcement.php,v 1.1.2.7 2002-12-10 05:13:24 dan Exp $
+	# $Id: fp2-announcement.php,v 1.1.2.8 2002-12-11 04:44:35 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 
-	freshports_Start("Announcement",
-					"freshports - new ports, applications",
-					"FreeBSD, index, applications, ports");
+	freshports_Start('Announcement',
+					'freshports - new ports, applications',
+					'FreeBSD, index, applications, ports');
 
 ?>
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
@@ -113,10 +113,10 @@ The following items deal with the technical changes which have occurred.
 </TABLE>
 </TD>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
-    <? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
+    <? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php') ?>
  </TD>
 </TR>
 </TABLE>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
 </BODY>
 </HTML>

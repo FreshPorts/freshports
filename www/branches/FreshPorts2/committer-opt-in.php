@@ -1,16 +1,16 @@
 <?
-	# $Id: committer-opt-in.php,v 1.1.2.6 2002-12-10 05:13:22 dan Exp $
+	# $Id: committer-opt-in.php,v 1.1.2.7 2002-12-11 04:44:34 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 
-	freshports_Start("Committer opt-in",
-					"freshports - new ports, applications",
-					"FreeBSD, index, applications, ports");
+	freshports_Start('Committer opt-in',
+					'freshports - new ports, applications',
+					'FreeBSD, index, applications, ports');
 
 	if (!eregi(".*@FreeBSD.org", $email)) {
 		echo 'Why are you here?';
@@ -157,14 +157,14 @@ if (!empty($visitor)) {
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
     <?
        $ShowPoweredBy = 1;
-       require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php");
+       require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php');
     ?>
  </TD>
 </TABLE>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
 </TD></TR>
 </TABLE>
 

@@ -1,25 +1,25 @@
 <?
-	# $Id: commit.php,v 1.1.2.18 2002-12-10 05:13:22 dan Exp $
+	# $Id: commit.php,v 1.1.2.19 2002-12-11 04:44:34 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 
-	$message_id = AddSlashes($_GET["message_id"]);
-	$commit_id  = AddSlashes($_GET["commit_id"]);
-	$Title = "Commit found by ";
+	$message_id = AddSlashes($_GET['message_id']);
+	$commit_id  = AddSlashes($_GET['commit_id']);
+	$Title = 'Commit found by ';
 	if ($message_id) {
-		$Title .= "message id";
+		$Title .= 'message id';
 	} else {
-		$Title .= "commit id";
+		$Title .= 'commit id';
 	}
 	freshports_Start($Title,
-					"$FreshPortsName - new ports, applications",
-					"FreeBSD, index, applications, ports");
+					$FreshPortsName . ' - new ports, applications',
+					'FreeBSD, index, applications, ports');
 $Debug = 0;
 
 if ($Debug) echo "UserID='$User->id'";
@@ -313,7 +313,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 </script>
 </TD>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
-   <? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
+   <? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php') ?>
  </TD>
 </TR>
 </TABLE>
@@ -322,7 +322,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
 </TD></TR>
 </TABLE>
 

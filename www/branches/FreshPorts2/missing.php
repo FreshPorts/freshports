@@ -1,13 +1,13 @@
 <?
-	# $Id: missing.php,v 1.1.2.12 2002-12-09 20:42:36 dan Exp $
+	# $Id: missing.php,v 1.1.2.13 2002-12-11 04:44:37 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 
 
 function freshports_Parse404URI($REQUEST_URI, $db) {
@@ -16,24 +16,24 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	# if we can parse it, then do so and return 1;
 	# otherwise, return 0.
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/missing-port.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-port.php');
 
 	$result = freshports_Parse404CategoryPort($REQUEST_URI, $db);
 
 	return $result;
 }
 
-$result = freshports_Parse404URI($_SERVER["REQUEST_URI"], $db);
+$result = freshports_Parse404URI($_SERVER['REQUEST_URI'], $db);
 
 if ($result) {
 
 	#
 	# this is a true 404
 
-	$Title = "Document not found";
+	$Title = 'Document not found';
 	freshports_Start($Title,
-					"$FreshPortsTitle - new ports, applications",
-					"FreeBSD, index, applications, ports");
+					$FreshPortsTitle . ' - new ports, applications',
+					'FreeBSD, index, applications, ports');
 
 ?>
 

@@ -1,42 +1,42 @@
 <?
-	# $Id: date.php,v 1.1.2.15 2002-12-10 05:13:23 dan Exp $
+	# $Id: date.php,v 1.1.2.16 2002-12-11 04:44:34 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/commits.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits.php');
 
 	freshports_Start($FreshPortsSlogan,
-					"$FreshPortsName - new ports, applications",
-					"FreeBSD, index, applications, ports");
+					$FreshPortsName . ' - new ports, applications',
+					'FreeBSD, index, applications, ports');
 	$Debug = 0;
 
-	$ArchiveBaseDirectory = $_SERVER['DOCUMENT_ROOT'] . "/archives";
+	$ArchiveBaseDirectory = $_SERVER['DOCUMENT_ROOT'] . '/archives';
 
 	# NOTE: All dates must be of the form: YYYY/MM/DD
-	# this format can be achieved using the date("Y/m/d") function.
+	# this format can be achieved using the date('Y/m/d') function.
 
 	#
 	# Get the date we are going to work with.
 	#
-	$Date = AddSlashes($_GET["date"]);
+	$Date = AddSlashes($_GET['date']);
 
 	$DateMessage = '';
 
 	if ($Date == '' || strtotime($Date) == -1) {
 		$DateMessage = 'date assumed';
-		$Date = date("Y/m/d");
+		$Date = date('Y/m/d');
 	}
-	list($year, $month, $day) = explode("/", $Date);
+	list($year, $month, $day) = explode('/', $Date);
 	if (!CheckDate($month, $day, $year)) {
 		$DateMessage = 'date adjusted to something realistic';
-		$Date = date("Y/m/d");
+		$Date = date('Y/m/d');
 	} else {
-		$Date = date("Y/m/d", strtotime($Date));
+		$Date = date('Y/m/d', strtotime($Date));
 	}
 
 	function ArchiveFileName($Date) {
@@ -44,7 +44,7 @@
 	}
 
 	function ArchiveDirectoryCreate($Date) {
-		$SubDir      = date("Y/m", strtotime($Date));
+		$SubDir      = date('Y/m', strtotime($Date));
 		$DirToCreate = $ArchiveBaseDirectory . '/' . $SubDir;
 		system("mkdir -p $DirToCreate");
 		
@@ -82,7 +82,7 @@
 	
 		#echo '<br>NumRows = ' . $NumRows;
 
-		$HTML = "";
+		$HTML = '';
 
 		if ($NumRows == 0) {
 			$HTML .= '<TR><TD COLSPAN="3" BGCOLOR="#AD0040" HEIGHT="0">' . "\n";
@@ -121,8 +121,6 @@
 				$NumberOfPortsInThisCommit++;
 		
 				if ($NumberOfPortsInThisCommit == 1) {
-					GLOBAL $freshports_mail_archive;
-		
 					$HTML .= '<SMALL>';
 					$HTML .= '[ ' . $commit->commit_time . ' ' . freshports_CommitterEmailLink($commit->committer) . ' ]';
 					$HTML .= '</SMALL>';
@@ -249,13 +247,13 @@ echo '</table>';
 
 </TD>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
-   <? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
+   <? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php') ?>
 </TD>
 
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
 </TD></TR>
 </TABLE>
 

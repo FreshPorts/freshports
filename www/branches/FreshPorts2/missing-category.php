@@ -1,19 +1,19 @@
 <?
-	# $Id: missing-category.php,v 1.1.2.17 2002-12-10 20:50:35 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.18 2002-12-11 04:44:37 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/ports.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
 
 function freshports_Category($CategoryID, $db) {
 
 	GLOBAL $TableWidth;
-	header("HTTP/1.1 200 OK");
+	header('HTTP/1.1 200 OK');
 
 
 	$Debug = 0;
 
-	require_once($_SERVER["DOCUMENT_ROOT"] . "/../classes/categories.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
 
 	$category = new Category($db);
 	$category->FetchByID($CategoryID);
@@ -23,10 +23,10 @@ function freshports_Category($CategoryID, $db) {
 	if ($Debug) echo "\$User->id='$User->id'";
 
 	freshports_Start($title,
-					"freshports - new ports, applications",
-					"FreeBSD, index, applications, ports");
+					'freshports - new ports, applications',
+					'FreeBSD, index, applications, ports');
 
-	$DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
+	$DESC_URL = 'ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports';
 
 	$port = new Port($db);
 
@@ -83,14 +83,14 @@ $ShowDescriptionLink  = "N";
 </TD>
 </TABLE>
 <TD VALIGN="top" WIDTH="*" ALIGN="center">
-   <? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
+   <? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php') ?>
 </TD>
 </TR>
 </TABLE>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
 </TD></TR>
 </TABLE>
 

@@ -1,16 +1,16 @@
 <?
-	# $Id: privacy.php,v 1.1.2.8 2002-12-10 05:13:29 dan Exp $
+	# $Id: privacy.php,v 1.1.2.9 2002-12-11 04:44:40 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 
-	freshports_Start("Privacy Policy",
-					"freshports - new ports, applications",
-					"FreeBSD, index, applications, ports");
+	freshports_Start('Privacy Policy',
+					'freshports - new ports, applications',
+					'FreeBSD, index, applications, ports');
 
 ?>
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
@@ -18,7 +18,7 @@
 <TABLE WIDTH="100%" BORDER="0">
 
 <TR>
-	<? freshports_PageBannerText("Privacy statement"); ?>
+	<? freshports_PageBannerText('Privacy statement'); ?>
 </TR>
 <TR><TD>
 <P>All the information we
@@ -36,10 +36,10 @@
 </TABLE>
 </TD>
 <TD VALIGN="top" WIDTH="*" ALIGN="center">
-    <? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
+    <? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php') ?>
 </TD>
 </TR>
 </TABLE>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
 </body>
 </html>

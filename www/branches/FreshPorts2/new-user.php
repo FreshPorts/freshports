@@ -1,17 +1,17 @@
 <?
-	# $Id: new-user.php,v 1.1.2.26 2002-12-10 05:13:27 dan Exp $
+	# $Id: new-user.php,v 1.1.2.27 2002-12-11 04:44:38 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
 
-	$origin = $_GET["origin"];
-	$submit = $_POST["submit"];
+	$origin = $_GET['origin'];
+	$submit = $_POST['submit'];
 
-if ($origin == "/index.php" || $origin == "") {
-	$origin = "/";
+if ($origin == '/index.php' || $origin == '') {
+	$origin = '/';
 }
 
 if ($submit) {
@@ -115,12 +115,12 @@ if ($submit) {
 	// not submit
 
 	// we can't do this if we are submitting because it overwrites the incoming values
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 }
 
-   freshports_Start("New User",
-               "freshports - new ports, applications",
-               "FreeBSD, index, applications, ports");
+   freshports_Start('New User',
+               'freshports - new ports, applications',
+               'FreeBSD, index, applications, ports');
 ?>
 
 <SCRIPT TYPE="text/javascript">
@@ -169,7 +169,7 @@ echo '<p>If you need help, please post a message on the forum. </p>
 
 if (!$submit && !$errors) {
   // provide default values for an empy form.
-  require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+  require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 }
 
 </script>
@@ -187,17 +187,17 @@ mail from <CODE CLASS="code">unixathome.org</CODE> and <CODE CLASS="code">freshp
 <P>Your browser must allow cookies for the login to work.</P>
 <P>&nbsp;</P>
 
-<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/new-user.php"); ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/new-user.php'); ?>
 
     </TD>
   </TR>
 </TABLE>
 </TD>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
-   <? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
+   <? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php') ?>
  </TD>
 </TR>
 </TABLE>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
 </BODY>
 </HTML>

@@ -1,15 +1,15 @@
 <?
-	# $Id: watch-list.php,v 1.2.2.15 2002-12-10 05:13:31 dan Exp $
+	# $Id: watch-list.php,v 1.2.2.16 2002-12-11 04:44:41 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/watch_list_element.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_list_element.php');
 
 	$Debug = 0;
 
@@ -59,12 +59,12 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 	}
 
 	if (IsSet($_GET["ask"])) {
-		require_once($_SERVER['DOCUMENT_ROOT'] . "/include/watch-lists.php");
-		require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/ports.php");
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/include/watch-lists.php');
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
 
-		freshports_Start("Watch list maintenance",
-						"freshports - new ports, applications",
-						"FreeBSD, index, applications, ports");
+		freshports_Start('Watch list maintenance',
+						'freshports - new ports, applications',
+						'FreeBSD, index, applications, ports');
 		?>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
@@ -150,7 +150,7 @@ NOTES
 </table>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
     <?
-       require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php");
+       require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php');
     ?>
  </TD>
 </TABLE>
@@ -159,7 +159,7 @@ NOTES
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
 </TD></TR>
 </TABLE>
 
@@ -169,17 +169,17 @@ NOTES
 <?php
 		$Redirect = 0;
 	} else {
-		if (IsSet($_REQUEST["Update"])) {
+		if (IsSet($_REQUEST['Update'])) {
 			pg_exec($db, 'BEGIN');
 			$Error = '';
-			$ElementID = AddSlashes($_REQUEST["Update"]);
+			$ElementID = AddSlashes($_REQUEST['Update']);
 			$WatchListElement = new WatchListElement($db);
 
 			if ($WatchListElement->DeleteElementFromWatchLists($User->id, $ElementID) == -1) {
 				$Error = 'removing element failed : Please try again, and if the problem persists, please contact the webmaster: ' . pg_last_error();
 			}
-			if ($Error == '' && IsSet($_REQUEST["watch_list_id"])) {
-				if (AddElementToWatchLists($db, $User->id, $ElementID, $_REQUEST["watch_list_id"]) == -1) {
+			if ($Error == '' && IsSet($_REQUEST['watch_list_id'])) {
+				if (AddElementToWatchLists($db, $User->id, $ElementID, $_REQUEST['watch_list_id']) == -1) {
 					$Error = 'adding element failed : Please try again, and if the problem persists, please contact the webmaster: ' . pg_last_error();
 				}
 			}
@@ -191,10 +191,10 @@ NOTES
 				die($Error);
 			}
 		} else {
-			if (IsSet($_REQUEST["add"])) {
+			if (IsSet($_REQUEST['add'])) {
 				pg_exec($db, 'BEGIN');
 				$Error = '';
-				$ElementID = AddSlashes($_REQUEST["add"]);
+				$ElementID = AddSlashes($_REQUEST['add']);
 	
 				$WatchListElement = new WatchListElement($db);
 				if ($WatchListElement->AddToDefault($User->id, $ElementID) == 1) {
@@ -204,9 +204,9 @@ NOTES
 					die(pg_last_error());
 				}
 			} else {
-				if (IsSet($_REQUEST["add"])) {
+				if (IsSet($_REQUEST['add'])) {
 					pg_exec($db, 'BEGIN');
-					$ElementID = AddSlashes($_REQUEST["add"]);
+					$ElementID = AddSlashes($_REQUEST['add']);
 					$WatchListElement = new WatchListElement($db);
 					if ($WatchListElement->AddToDefault($User->id, $ElementID) == 1) {
 						pg_exec('COMMIT');
@@ -221,11 +221,11 @@ NOTES
 		}
 	} // end if Ask
 
-#	echo "when done, I will return to " . $HTTP_SERVER_VARS["HTTP_REFERER"];
+#	echo 'when done, I will return to ' . $HTTP_SERVER_VARS['HTTP_REFERER'];
 	if ($Redirect) {
 		if ($Origin) {
 			if ($Debug) echo "Origin supplied is $Origin\n<BR>";
-			$Origin = str_replace(" ", "&", $Origin);
+			$Origin = str_replace(' ', '&', $Origin);
 		}
 
 		if ($Debug) echo "redirecting to $Origin\n<BR>";

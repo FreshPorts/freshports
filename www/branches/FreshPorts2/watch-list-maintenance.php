@@ -1,70 +1,70 @@
 <?
-	# $Id: watch-list-maintenance.php,v 1.1.2.10 2002-12-10 05:13:30 dan Exp $
+	# $Id: watch-list-maintenance.php,v 1.1.2.11 2002-12-11 04:44:41 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/watch-lists.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/watch-lists.php');
 
-$visitor = $_COOKIE["visitor"];
+$visitor = $_COOKIE['visitor'];
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {
-        header("Location: login.php?origin=" . $_SERVER["PHP_SELF"]);  /* Redirect browser to PHP web site */
+        header('Location: login.php?origin=' . $_SERVER['PHP_SELF']);  /* Redirect browser to PHP web site */
         exit;  /* Make sure that code below does not get executed when we redirect. */
 }
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/watch_lists.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/user.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_lists.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user.php');
 
-	freshports_Start("Watch list maintenance",
-					"freshports - new ports, applications",
-					"FreeBSD, index, applications, ports");
+	freshports_Start('Watch list maintenance',
+					'freshports - new ports, applications',
+					'FreeBSD, index, applications, ports');
 					
 #phpinfo();
 $Debug = 0;
 
-$ConfirmationNeeded{"delete"}     = 1;
-$ConfirmationNeeded{"delete_all"} = 1;
-$ConfirmationNeeded{"empty"}      = 1;
-$ConfirmationNeeded{"empty_all"}  = 1;
+$ConfirmationNeeded{'delete'}     = 1;
+$ConfirmationNeeded{'delete_all'} = 1;
+$ConfirmationNeeded{'empty'}      = 1;
+$ConfirmationNeeded{'empty_all'}  = 1;
 
 $UserClickedOn = '';
 $ErrorMessage  = '';
 
-if ($_POST["delete"]) {
-	$UserClickedOn = "delete";
+if ($_POST['delete']) {
+	$UserClickedOn = 'delete';
 }
 
-if ($_POST["delete_all"]) {
-	$UserClickedOn = "delete_all";
+if ($_POST['delete_all']) {
+	$UserClickedOn = 'delete_all';
 }
 
-if ($_POST["empty"]) {
-	$UserClickedOn = "empty";
+if ($_POST['empty']) {
+	$UserClickedOn = 'empty';
 }
 
-if ($_POST["empty_all"]) {
-	$UserClickedOn = "empty_all";
+if ($_POST['empty_all']) {
+	$UserClickedOn = 'empty_all';
 }
 
-if ($_POST["add"]) {
-	$UserClickedOn = "add";
+if ($_POST['add']) {
+	$UserClickedOn = 'add';
 }
 
-if ($_POST["rename"]) {
-	$UserClickedOn = "rename";
+if ($_POST['rename']) {
+	$UserClickedOn = 'rename';
 }
 
-if ($_POST["set_default"]) {
-	$UserClickedOn = "set_default";
+if ($_POST['set_default']) {
+	$UserClickedOn = 'set_default';
 }
 
-if ($_POST["set_options"]) {
-	$UserClickedOn = "set_options";
+if ($_POST['set_options']) {
+	$UserClickedOn = 'set_options';
 }
 
 #
@@ -72,21 +72,21 @@ if ($_POST["set_options"]) {
 #
 if ($UserClickedOn) {
 	if ($ConfirmationNeeded{$UserClickedOn}) {
-		if ($_POST["confirm"] != $_POST[$UserClickedOn]) {
-			$ErrorMessage = "You did not supply the confirmation text";
+		if ($_POST['confirm'] != $_POST[$UserClickedOn]) {
+			$ErrorMessage = 'You did not supply the confirmation text';
 		}
 	}
 
 	if ($ErrorMessage == '') {
 		switch ($UserClickedOn) {
-			case "add":
-				if (AddSlashes($_POST["add_name"]) == '') {
+			case 'add':
+				if (AddSlashes($_POST['add_name']) == '') {
 					$ErrorMessage = 'When creating a new list, you must supply a name.';
 				}
 					break;
 
-			case "rename":
-				if (AddSlashes($_POST["rename_name"]) == '') {
+			case 'rename':
+				if (AddSlashes($_POST['rename_name']) == '') {
 					$ErrorMessage = 'When renaming an existing list, you must supply a name.';
 				}
 					break;
@@ -97,34 +97,34 @@ if ($UserClickedOn) {
 
 if ($UserClickedOn != '' && $ErrorMessage == '') {
 	if ($Debug) echo "you clicked on = '$UserClickedOn'<br>";
-	if ($Debug) echo "your confirmation text = '" . AddSlashes($_POST["confirm"]) . "'<br>";
+	if ($Debug) echo "your confirmation text = '" . AddSlashes($_POST['confirm']) . "'<br>";
 
 	# all went well, so let us do what they told us to do
 	switch ($UserClickedOn) {
-		case "add":
+		case 'add':
 			$WatchList = new WatchList($db);
-			$NewWatchListID = $WatchList->Create($User->id, AddSlashes($_POST["add_name"]));
-			if ($Debug) echo 'I just created \'' . AddSlashes($_POST["add_name"]) . '\' with ID = \'' . $NewWatchListID . '\'';
+			$NewWatchListID = $WatchList->Create($User->id, AddSlashes($_POST['add_name']));
+			if ($Debug) echo 'I just created \'' . AddSlashes($_POST['add_name']) . '\' with ID = \'' . $NewWatchListID . '\'';
 			break;
 
-		case "rename":
+		case 'rename':
 			# check valid new name
 			# check only one watch list supplied
-			if (count($_POST["watch_list_id"]) == 1) {
-				list($key, $WatchListIDToRename) = each($_POST["watch_list_id"]);
+			if (count($_POST['watch_list_id']) == 1) {
+				list($key, $WatchListIDToRename) = each($_POST['watch_list_id']);
 				$WatchList = new WatchList($db);
-				$NewName = $WatchList->Rename($WatchListIDToRename, $_POST["rename_name"]);
-				if ($Debug) echo 'I have renamed your list to \'' . AddSlashes($_POST["rename_name"]) . '\'';
+				$NewName = $WatchList->Rename($WatchListIDToRename, $_POST['rename_name']);
+				if ($Debug) echo 'I have renamed your list to \'' . AddSlashes($_POST['rename_name']) . '\'';
 			} else {
 				$ErrorMessage = 'Select exactly one watch list to be renamed.  I can\'t handle zero or more than one.';
 			}
 			break;
 
-		case "delete_all":
-		case "delete":
-			pg_query($db, "BEGIN");
+		case 'delete_all':
+		case 'delete':
+			pg_query($db, 'BEGIN');
 			$WatchList = new WatchList($db);
-			while (list($key, $WatchListIDToDelete) = each($_POST["watch_list_id"])) {
+			while (list($key, $WatchListIDToDelete) = each($_POST['watch_list_id'])) {
 				if ($Debug) echo "\$key='$key' \$WatchListIDToDelete='$WatchListIDToDelete'<br>";
 				$DeletedWatchListID = $WatchList->Delete(AddSlashes($WatchListIDToDelete));
 				if ($DeletedWatchListID != $WatchListIDToDelete) {
@@ -132,42 +132,42 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 				}
 				if ($Debug) echo 'I have deleted watch list id = ' . $WatchListIDToDelete . '<br>';
 			}
-			pg_query($db, "COMMIT");
+			pg_query($db, 'COMMIT');
 			
 			break;
 
-		case "empty":
-		case "empty_all":
-			pg_query($db, "BEGIN");
+		case 'empty':
+		case 'empty_all':
+			pg_query($db, 'BEGIN');
 			$WatchList = new WatchList($db);
-			while (list($key, $WatchListIDToEmpty) = each($_POST["watch_list_id"])) {
+			while (list($key, $WatchListIDToEmpty) = each($_POST['watch_list_id'])) {
 				if ($Debug) echo "\$key='$key' \$WatchListIDToEmpty='$WatchListIDToEmpty'<br>";
 				$EmptydWatchListID = $WatchList->EmptyTheList(AddSlashes($WatchListIDToEmpty));
 				if ($EmptydWatchListID != $WatchListIDToEmpty) {
-					die("Failed to Emptyd '$WatchListIDToEmpty' (return value '$EmptydWatchListID')" . pg_last_error());
+					die("Failed to Empty '$WatchListIDToEmpty' (return value '$EmptydWatchListID')" . pg_last_error());
 				}
 				if ($Debug) echo 'I have emptied watch list id = ' . $WatchListIDToEmpty . '<br>';
 			}
-			pg_query($db, "COMMIT");
+			pg_query($db, 'COMMIT');
 			break;
 
-		case "set_default":
+		case 'set_default':
 			if ($Debug) echo 'I have set your default lists.<br>';
-			pg_query($db, "BEGIN");
+			pg_query($db, 'BEGIN');
 			$WatchLists = new WatchLists($db);
-			$numrows = $WatchLists->In_Service_Set($User->id, $_POST["watch_list_id"]);
+			$numrows = $WatchLists->In_Service_Set($User->id, $_POST['watch_list_id']);
 			if ($Debug) echo "$numrows watchlists were affected by that action";
 			if ($numrows >= 0) {
-				pg_query($db, "COMMIT");
+				pg_query($db, 'COMMIT');
 			} else {
-				pg_query($db, "ROLLBACK");
+				pg_query($db, 'ROLLBACK');
 			}
 			break;
 
-		case "set_options":
-			if ($Debug) echo 'I have set options to: ' . AddSlashes($_POST["addremove"]);
+		case 'set_options':
+			if ($Debug) echo 'I have set options to: ' . AddSlashes($_POST['addremove']);
 
-			$User->SetWatchListAddRemove($User->id, AddSlashes($_POST["addremove"]));
+			$User->SetWatchListAddRemove($User->id, AddSlashes($_POST['addremove']));
 			break;
 
 		default:
@@ -275,14 +275,14 @@ When clicking on Add/Remove for a port,<br> the action should affect
 </TD>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
     <?
-       require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php");
+       require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php');
     ?>
  </TD>
 </TABLE>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
 </TD></TR>
 </TABLE>
 

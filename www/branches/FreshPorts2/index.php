@@ -1,18 +1,18 @@
 <?
 	#
-	# $Id: index.php,v 1.1.2.61 2002-12-10 05:13:25 dan Exp $
+	# $Id: index.php,v 1.1.2.62 2002-12-11 04:44:36 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 
 	freshports_Start($FreshPortsSlogan,
-					"$FreshPortsName - new ports, applications",
-					"FreeBSD, index, applications, ports");
+					$FreshPortsName . ' - new ports, applications',
+					'FreeBSD, index, applications, ports');
 $Debug = 0;
 
 if ($Debug) echo "\$User->id='$User->id'";
@@ -273,7 +273,7 @@ ports. A port is marked as new for 10 days.
 ?>
 </TD>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
-   <? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
+   <? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php') ?>
 <?
 
 	if ($dailysummary) {
@@ -309,7 +309,7 @@ ports. A port is marked as new for 10 days.
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
 </TD></TR>
 </TABLE>
 

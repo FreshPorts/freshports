@@ -1,13 +1,13 @@
 <?
-	# $Id: watch.php,v 1.1.2.32 2002-12-10 05:13:31 dan Exp $
+	# $Id: watch.php,v 1.1.2.33 2002-12-11 04:44:42 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/watch-lists.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/watch-lists.php');
 
 	// if we don't know who they are, we'll make sure they login first
 	if (!$visitor) {
@@ -19,7 +19,7 @@ $Debug = 0;
 
 if ($Debug) phpinfo();
 
-$visitor = $_COOKIE["visitor"];
+$visitor = $_COOKIE['visitor'];
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {
@@ -27,9 +27,9 @@ if (!$visitor) {
         exit;  /* Make sure that code below does not get executed when we redirect. */
 }
 
-	freshports_Start("your watched ports",
-					"freshports - new ports, applications",
-					"FreeBSD, index, applications, ports");
+	freshports_Start('your watched ports',
+					'freshports - new ports, applications',
+					'FreeBSD, index, applications, ports');
 					
 	if ($_POST["watch_list_select_x"] && $_POST["watch_list_select_y"]) {
 		# they clicked on the GO button and we have to apply the 
@@ -182,12 +182,12 @@ if ($WatchListID == '') {
 	// get the list of topics, which we need to modify the order
 	$NumPorts=0;
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/ports.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
 	$port = new Port($db);
 	$port->LocalResult = $result;
 
 	$LastCategory='';
-	$GlobalHideLastChange = "N";
+	$GlobalHideLastChange = 'N';
 	$numrows = pg_numrows($result);
 
 	$ShowDescriptionLink = 0;
@@ -199,10 +199,10 @@ if ($WatchListID == '') {
 	$ShowDepends		= 1;
 	$HideDescription = 1;
 	$ShowEverything  = 1;
-	$ShowShortDescription = "Y";
-	$ShowMaintainedBy     = "Y";
-	#$GlobalHideLastChange = "Y";
-	$ShowDescriptionLink  = "N";
+	$ShowShortDescription = 'Y';
+	$ShowMaintainedBy     = 'Y';
+	#$GlobalHideLastChange = 'Y';
+	$ShowDescriptionLink  = 'N';
 
 	if ($ShowCategoryHeaders) {
 		$HTML .= '<DL>';
@@ -250,14 +250,14 @@ if ($WatchListID == '') {
 </table>
 </td>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
-<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php') ?>
 </td>
 </tr>
 </table>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
 </TD></TR>
 </TABLE>
 

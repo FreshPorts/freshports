@@ -1,14 +1,14 @@
 <?
-	# $Id: port-description.admin.php,v 1.1.2.11 2002-12-10 05:13:28 dan Exp $
+	# $Id: port-description.admin.php,v 1.1.2.12 2002-12-11 04:44:39 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 
-	$submit = $_POST["submit"];
+	$submit = $_POST['submit'];
 
 function freshports_Change_Log_Port_Delete($Change_Log_Port_ID, $db) {
    // delete everything from change_log_details which 
@@ -145,8 +145,8 @@ $NumRows = mysql_num_rows($result);
    }
 
    freshports_Start($Title,
-               "freshports - new ports, applications",
-               "FreeBSD, index, applications, ports");
+               'freshports - new ports, applications',
+               'FreeBSD, index, applications, ports');
 ?>
 
 <table width="100%" border="0">
@@ -180,12 +180,12 @@ if ($NumRows) {
    $HideDescription=1;
    $ShowCategories=1;
    $ShowDepends=1;
-   require_once($_SERVER['DOCUMENT_ROOT'] . "/include/port-basics.php");
+   require_once($_SERVER['DOCUMENT_ROOT'] . '/include/port-basics.php');
 
    echo $HTML;
 
-   echo "<dl><dd><pre>";
-   echo $myrow["long_description"];
+   echo '<dl><dd><pre>';
+   echo $myrow['long_description'];
    echo "</pre></dd></dl>\n";
 
    $ColSpan = 3;
@@ -256,11 +256,11 @@ if ($NumRows) {
 </td>
 <td valign="top">
 
-<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php') ?>
 
 </td>
 </tr>
 </table>
- <? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+ <? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
 </body>
 </html>

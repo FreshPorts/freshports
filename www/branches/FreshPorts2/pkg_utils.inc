@@ -1,7 +1,8 @@
 <?
-	# $Id: pkg_utils.inc,v 1.5 2002-02-11 03:23:12 dan Exp $
+	# $Id: pkg_utils.inc,v 1.5.2.1 2002-12-11 04:44:39 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
+	#
 
 $Debug=0;
 

@@ -1,16 +1,16 @@
 <?
-	# $Id: missing-port.php,v 1.1.2.27 2002-12-10 05:13:27 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.28 2002-12-11 04:44:37 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/elements.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/ports.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/elements.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
 
 #	phpinfo();
 
 
 $CommitDetails = 'files.php';
-require_once($_SERVER['DOCUMENT_ROOT'] . "/include/files.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . '/include/files.php');
 
 
 function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
@@ -97,7 +97,7 @@ function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 				if ($PortName != '' && !IsSet($port->id)) {
 					$result = "The <A HREF=\"/$CategoryName/\">category you specified</A> exists but not the port <I>$PortName</I>.";
 				} else {
-					require_once($_SERVER['DOCUMENT_ROOT'] . "/missing-category.php");
+					require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-category.php');
 					freshports_Category($CategoryID, $db);
 				}
 			}
@@ -118,7 +118,7 @@ function freshports_PortDescription($port) {
 	header("HTTP/1.1 200 OK");
 	$Title = $port->category . "/" . $port->port;
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 
 	freshports_Start($Title,
 	        		"$FreshPortsTitle - new ports, applications",
@@ -166,7 +166,7 @@ $ShowDescriptionLink	= "N";
 
 </TD>
 <TD VALIGN="top" WIDTH="*" ALIGN="center">
-   <? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
+   <? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php') ?>
 </TD>
 </TR>
 
@@ -174,7 +174,7 @@ $ShowDescriptionLink	= "N";
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
 </TD></TR>
 </TABLE>
 

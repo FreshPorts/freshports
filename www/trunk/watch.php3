@@ -43,6 +43,8 @@ $LastUpdateFile =       "/www/freshports.org/work/msgs/lastupdate";
 
 // make sure the value for $sort is valid
 
+echo "<tr><td>\n";
+
 switch ($sort) {
 /* sorting by port is disabled. Doesn't make sense to do this
    case "port":
@@ -50,14 +52,20 @@ switch ($sort) {
       $cache_file .= ".port";
       break;
 */
-//   case "updated":
-//      $sort = "updated desc, port";
-//      break;
+   case "updated":
+      $sort = "updated desc, port";
+      echo 'sorted by last update date.  but you can sort by <a href="' . $PHP_SELF . '?sort=category">category</a>';
+      $ShowCategoryHeaders = 0;
+      break;
 
    default:
       $sort ="category, port";
+      echo 'sorted by category.  but you can sort by <a href="' . $PHP_SELF . '?sort=updated">last update</a>';
+      $ShowCategoryHeaders = 1;
       $cache_file .= ".updated";
 }
+
+echo "</td></tr>\n";
 
 srand((double)microtime()*1000000);
 $cache_time_rnd =       300 - rand(0, 600);
@@ -135,12 +143,14 @@ $NumTopics=0;
 $LastCategory='';
 
 while ($myrow = mysql_fetch_array($result)) {
-   $Category = $myrow["category"];
+   if ($ShowCategoryHeaders) {
+      $Category = $myrow["category"];
 
-   if ($LastCategory != $Category) {
-      $LastCategory = $Category;
-      $URL_Category = "category.php3?category=" . $myrow["category_id"];
-      $HTML .= '<h3><a href="' . $URL_Category . '">Category ' . $myrow["category"] . '</a></h3>';
+      if ($LastCategory != $Category) {
+         $LastCategory = $Category;
+         $URL_Category = "category.php3?category=" . $myrow["category_id"];
+         $HTML .= '<h3><a href="' . $URL_Category . '">Category ' . $myrow["category"] . '</a></h3>';
+      }
    }
 
    include("/www/freshports.org/_private/port-basics.inc");

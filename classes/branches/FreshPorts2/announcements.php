@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: announcements.php,v 1.1.2.4 2003-05-16 02:37:33 dan Exp $
+	# $Id: announcements.php,v 1.1.2.5 2004-02-13 15:06:51 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -236,6 +236,30 @@ SELECT *
 		$this->PopulateValues($myrow);
 
 		return $this->id;
+	}
+
+	function GetAllActive() {
+		$Announcements = '';
+
+		$sql = "select * from AnnouncementsGet() as text";
+
+#		echo '<pre>' . $sql . '</pre>';
+
+		if ($Debug)	echo "commits::Fetch sql = '$sql'<BR>";
+
+		$result = pg_exec($this->dbh, $sql);
+		if ($this->LocalResult) {
+			$numrows = pg_numrows($this->LocalResult);
+#			echo "That would give us $numrows rows";
+			for ($i = 0; $i < $numrows; $i++) {
+				$myrow = pg_fetch_array($result, $i);
+				$Announcements .= '<p>' . $myrow['text'] . '</p>';
+			}
+		} else {
+			echo 'pg_exec failed: ' . $sql;
+		}
+
+		return $Announcements;
 	}
 	
 

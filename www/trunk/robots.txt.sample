@@ -6,4 +6,4 @@ Disallow: /images/
 Disallow: /cgi-bin/
 Disallow: /cgi/
 Disallow: /port-description.php3
-
+Disallow: /phorum/

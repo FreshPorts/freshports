@@ -1,5 +1,5 @@
 <?
-	# $Id: search.php,v 1.1.2.30 2002-08-13 04:05:52 dan Exp $
+	# $Id: search.php,v 1.1.2.31 2002-08-14 18:51:51 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -37,7 +37,7 @@
 
 	}
 
-	$Debug=0;
+	$Debug = 0;
 
 	if ($stype == 'messageid') {
 		header("Location: http://" . $_SERVER["HTTP_HOST"] . "/commit.php?message_id=$query");
@@ -72,7 +72,7 @@
 	}
 
 
-	if ($Debug) phpinfo();
+#	if ($Debug) phpinfo();
 
 	freshports_Start("Search",
 					"freshports - new ports, applications",
@@ -89,8 +89,19 @@
 <tr><td>
 <?
 
+#
+# ensure that our parameters have default values
+#
+
+if ($num < 1 or $num > 500) {
+	$num = 10;
+}
+
+if ($stype  == '') $stype  = 'name';
+if ($method == '') $method = 'match';
+
 if ($Debug) {
-	echo "$query && $stype && $num && $method\n<BR>";
+	echo "'$query' && '$stype' && '$num' && '$method'\n<BR>";
 
 	if ($query && $stype && $num) {
 		echo "yes, we have parameters\n<BR>";
@@ -245,9 +256,6 @@ switch ($deleted) {
 
 $sql .= " order by categories.name, element.name";
 
-if ($num < 1 or $num > 500) {
-	$num = 10;
-}
 
 $sql .= " limit $num";
 

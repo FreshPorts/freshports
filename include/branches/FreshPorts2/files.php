@@ -1,5 +1,5 @@
 <?
-	# $Id: files.php,v 1.1.2.17 2002-12-09 20:31:15 dan Exp $
+	# $Id: files.php,v 1.1.2.18 2002-12-10 05:07:22 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -263,13 +263,13 @@ select element_pathname(element.id) as pathname,
 	</table>
 	</TD>
 		<TD VALIGN="top" WIDTH="*" ALIGN="center">
-		<? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
+		<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
 		</TD>
 	</TR>
 	</table>
 	</TR>
 	</table>
-	<? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+	<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
 	</body>
 	</html>
 

@@ -23,6 +23,12 @@ require( "./_private/freshports.php3");
 <p>This is where I will attempt to list the changes to the freshports website.  Please put your wish 
 lists in the <a href="http://freshports.org/phorum/list.php?f=3">feedback phorum</a>.
 </p>
+<p>July 24<p>
+<ul>
+   <li>Added a facility to tell you if email to you from FreshPorts is bouncing.</li>
+   <li>I've neglected this page for too long.   I missed out the upgrade to FreshPorts 1.1...</li>
+</ul>
+
 
 <p>May 16<p>
 <ul>

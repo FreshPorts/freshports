@@ -1,11 +1,12 @@
 <?
-	# $Id: unrefreshed.php,v 1.1.2.2 2003-02-25 19:09:23 dan Exp $
+	# $Id: unrefreshed.php,v 1.1.2.3 2003-02-26 16:17:06 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
    require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
    require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
    require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports-unrefreshed.php');
 
 #$Debug=1;
@@ -29,14 +30,18 @@ function freshports_IfNull($Value1, $Value2='&nbsp') {
 }
                
 function freshports_DisplayUnrefreshedPorts($dbh) {
+	GLOBAL $User;
 	$Ports = new PortsUnrefreshed($dbh);
 
 	$NumRows = $Ports->FetchAll();
 
 	if ($NumRows > 0) {
-
+		if ($User->type == SUPER_USER) {
 ?>
 <FORM ACTION="<? echo $_SERVER["PHP_SELF"]; ?>" method="POST">
+<?php
+		}
+?>
 <TABLE WIDTH="100%" border="1" CELLSPACING="0" CELLPADDING="8">
 <tr>
 <td valign="top" align="center"><b>Port ID</b></td>
@@ -44,12 +49,16 @@ function freshports_DisplayUnrefreshedPorts($dbh) {
 <td valign="top" align="center"><b>Category</b></td>
 <td valign="top" align="center"><b>Category ID</b></td>
 <td valign="top" align="center"><b>Commit Log ID</b></td>
+<?php
+		if ($User->type == SUPER_USER) {
+?>
 <td valign="top" align="center"><b>Monitor</b></td>
 <td valign="top" align="center"><b>Ignore</b></td>
 <td valign="top" align="center"><b>Mark as Refreshed</b></td>
 <td valign="top" align="center"><b>Reason</b></td>
 <td valign="top" align="center"><b>Date Ignored</b></td>
 <?php
+		}
 		
 		for ($i = 0; $i < $NumRows; $i++) {
 			$Ports->FetchNth($i);
@@ -58,7 +67,7 @@ function freshports_DisplayUnrefreshedPorts($dbh) {
 			$ID = $Ports->commit_log_id . '_' . $Ports->port_id;
 
 ?>
-<td>
+<td  valign="top">
 <INPUT NAME="port_id[]"        TYPE="hidden" value="<?php echo $Ports->port_id;       ?>">
 <INPUT NAME="commit_log_id[]"  TYPE="hidden" value="<?php echo $Ports->commit_log_id; ?>"><?php
 			echo $Ports->port_id . '</td>' . "\n";
@@ -66,6 +75,7 @@ function freshports_DisplayUnrefreshedPorts($dbh) {
 			echo '<td valign="top">'                  . $Ports->category_id   . '</td>';
 			echo '<td valign="top"><a href="/' . $Ports->category_name . '/">' . $Ports->category_name  . '</a></td>' . "\n";
 			echo '<td  valign="top"nowrap>'    . $Ports->commit_log_id . ' '. freshports_Commit_Link($Ports->message_id) . ' ' . freshports_Email_Link($Ports->message_id) . '</td>' . "\n";
+			if ($User->type == SUPER_USER) {
 ?>
 <td valign="top" align="center" ><INPUT NAME="action[<?php echo $ID;?>]" TYPE="RADIO" VALUE="Monitor"<?php if (!IsSet($Ports->date_ignored)) echo " CHECKED"; ?>></td>
 <td valign="top" align="center" ><INPUT NAME="action[<?php echo $ID;?>]" TYPE="RADIO" VALUE="Ignore" <?php if ( IsSet($Ports->date_ignored)) echo " CHECKED"; ?>></td>
@@ -74,21 +84,26 @@ function freshports_DisplayUnrefreshedPorts($dbh) {
 <td valign="top" nowrap><INPUT NAME="date[<?php   echo $ID;?>]" TYPE="hidden"  VALUE="<?php echo $Ports->date_ignored; ?>"><?php echo freshports_IfNull($Ports->date_ignored); ?></td>
 </tr>
 <?php
+			}
 		}
 ?>
 </TABLE>
 <BR>
+<?php
+		if ($User->type == SUPER_USER) {
+?>
 <DIV ALIGN="CENTER">
 <INPUT TYPE="submit" VALUE="Update">
 </DIV>
 </FORM>
 <?php
+		}
 	} else {
 		echo '<h4>All ports are refreshed</h4>';
 	}
 }
 
-if (IsSet($_POST['port_id'])) {
+if (IsSet($_POST['port_id']) && $User->type == SUPER_USER ) {
 	#
 	# OK, time to update things!
 	#

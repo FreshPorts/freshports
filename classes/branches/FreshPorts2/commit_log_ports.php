@@ -1,5 +1,5 @@
 <?
-	# $Id: commit_log_ports.php,v 1.1.2.2 2002-02-20 20:31:46 dan Exp $
+	# $Id: commit_log_ports.php,v 1.1.2.3 2002-02-20 22:16:25 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -38,8 +38,6 @@ class Commit_Log_Ports {
 				  where commit_log.id             = commit_log_ports.commit_log_id
 					and commit_log_ports.port_id  =  $port_id
 				  order by commit_date desc ";
-
-echo $sql;
 
 		$this->result = pg_exec($this->dbh, $sql);
 		if (!$this->result) {

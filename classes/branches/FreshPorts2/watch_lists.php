@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch_lists.php,v 1.1.2.14 2003-12-21 14:13:31 dan Exp $
+	# $Id: watch_lists.php,v 1.1.2.15 2004-01-01 14:21:53 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -166,16 +166,18 @@ DELETE FROM watch_list
 				$myrow = pg_fetch_array($result, 0);
 				$WatchListID = $myrow["id"];
 			} else {
-				for ($i = 0; $i < $numrows; $i++) {
-					$myrow = pg_fetch_array($result, $i);
-					if ($myrow["in_service"] == 't') {
-						$WatchListID = $myrow["id"];
-						break;
+				if ($numrows > 0) {
+					for ($i = 0; $i < $numrows; $i++) {
+						$myrow = pg_fetch_array($result, $i);
+						if ($myrow["in_service"] == 't') {
+							$WatchListID = $myrow["id"];
+							break;
+						}
 					}
-				}
-				if ($WatchListID == '') {
-					$myrow = pg_fetch_array($result, 0);
-					$WatchListID = $myrow["id"];
+					if ($WatchListID == '') {
+						$myrow = pg_fetch_array($result, 0);
+						$WatchListID = $myrow["id"];
+					}
 				}
 			}
 		} else {

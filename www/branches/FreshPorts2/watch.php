@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch.php,v 1.1.2.47 2003-12-15 13:18:00 dan Exp $
+	# $Id: watch.php,v 1.1.2.48 2004-01-01 14:21:33 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -45,11 +45,15 @@
 			if ($Debug) echo "GetDefaultWatchListID => \$wlid='$wlid'";
 		}
 	}
-	
-	$WatchList = new WatchList($db);
-	$WatchList->Fetch($User->id, $wlid);
 
-	$Title = "Watch List - " . $WatchList->name;
+	$Title = "Watch List";
+	if ($wlid != '') {
+		$WatchList = new WatchList($db);
+		$WatchList->Fetch($User->id, $wlid);
+
+		$Title .= " - " . $WatchList->name;
+	}
+
 	freshports_Start($Title,
 					'freshports - new ports, applications',
 					'FreeBSD, index, applications, ports');
@@ -72,7 +76,9 @@ That link also occurs on the right hand side of this page, under Login.
 
 <?php
 
-echo freshports_WatchListDDLBForm($db, $User->id, $wlid);
+if ($wlid != '') {
+	echo freshports_WatchListDDLBForm($db, $User->id, $wlid);
+}
 
 ?>
 
@@ -113,7 +119,7 @@ echo "</td></tr>\n";
 
 
 if ($wlid == '') {
-	echo '<tr><td align="right"><BIG>Please select a watch list.</BIG><p>eventually, if you have just one watch list, this will default.</td></tr>';
+	echo '<tr><td align="right">You have no watch lists.</td></tr>';
 } else {
 	
 	$sql = "

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.51 2004-07-06 03:25:18 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.52 2004-08-09 22:37:46 dan Exp $
 	#
 	# Copyright (c) 2001-2003 DVL Software Limited
 	#
@@ -76,6 +76,34 @@ GLOBAL $ShowWatchListCount;
 
 	echo "</TD></TR>\n</TABLE>\n\n";
 
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports_updating.php');
+	$PortsUpdating   = new PortsUpdating($port->dbh);
+	$NumRowsUpdating = $PortsUpdating->FetchInitialise($port->id);
+
+	if ($NumRowsUpdating > 0) {
+		echo '<TABLE BORDER="1" width="100%" CELLSPACING="0" CELLPADDING="5">' . "\n";
+		echo "<TR>\n";
+		echo freshports_PageBannerText("Notes from <a href=\"/UPDATING\">/usr/ports/UPDATING</a>", 1);
+		echo "<tr><td>\n";
+		echo "<ul>\n";
+
+		for ($i = 0; $i < $NumRowsUpdating; $i++) {
+			$PortsUpdating->FetchNth($i);
+			echo '<li>' . freshports_PortsUpdating($port, $PortsUpdating) . "</li>\n";
+			if ($i + 1 != $NumRowsUpdating) {
+				echo '<br>';
+			}
+		}
+
+		echo "</ul>\n";
+		echo "</td></tr>\n";
+		echo "</table>\n";
+	}
+
+
+
+
+
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports_moved.php');
 
 	$PortsMovedFrom = new PortsMoved($port->dbh);
@@ -112,7 +140,7 @@ GLOBAL $ShowWatchListCount;
 		echo "</ul>\n";
 		echo "</td></tr>\n";
 		echo "</table>\n";
-	}
+		}
 
 #	echo 'about to call freshports_PortCommits #############################';
 

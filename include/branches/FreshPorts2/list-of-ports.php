@@ -1,9 +1,9 @@
 <?
-	# $Id: list-of-ports.php,v 1.1.2.1 2002-04-22 01:26:58 dan Exp $
+	# $Id: list-of-ports.php,v 1.1.2.2 2002-04-22 03:33:38 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-function freshports_ListOfPorts($result, $db) {
+function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeaders) {
 
 
 	require("../classes/ports.php");
@@ -18,19 +18,26 @@ function freshports_ListOfPorts($result, $db) {
 
 #	echo "There are $numrows to fetch<BR>\n";
 
+
 	$ShowDescriptionLink = 0;
-	$DaysMarkedAsNew= $DaysMarkedAsNew= $GlobalHideLastChange= $ShowChangesLink = $ShowDownloadPortLink= $ShowHomepageLink= $ShowLastChange= $ShowMaintainedBy= $ShowPortCreationDate= $ShowPackageLink= $ShowShortDescription =1;
+	$DaysMarkedAsNew= $DaysMarkedAsNew= $GlobalHideLastChange = $ShowMaintainedBy= $ShowPortCreationDate= $ShowPackageLink= $ShowShortDescription =1;
+	$ShowChangesLink = $ShowDownloadPortLink = $ShowHomepageLink = "Y";
 	$ShowPortCreationDate = 0;
 #	$HideCategory = 1;
 	$ShowCategories		= 1;
 	GLOBAL	$ShowDepends;
 	$ShowDepends		= 1;
 	$HideDescription = 1;
-	$ShowEverything  = 1;
+	$ShowEverything  = 0;
 	$ShowShortDescription = "Y";
 	$ShowMaintainedBy     = "Y";
 	#$GlobalHideLastChange = "Y";
 	$ShowDescriptionLink  = "N";
+	$ShowLastChange       = "Y";
+
+	if ($ShowDateAdded == "Y") {
+		$ShowLastChange = "N";
+	}
 
 	$HTML .= "<TR><TD>\n";
 
@@ -61,8 +68,8 @@ function freshports_ListOfPorts($result, $db) {
 			}
 		}
 
-		$HTML .= freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 1, '');
-		$HTML .= '<BR>';
+		$HTML .= freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 1, '', 1, $ShowDateAdded);
+#		$HTML .= '<BR>';
 	}
 
 	if ($ShowCategoryHeaders) {

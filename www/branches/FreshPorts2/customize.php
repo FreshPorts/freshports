@@ -1,11 +1,11 @@
 <?
-   # $Id: customize.php,v 1.1.2.2 2002-01-03 01:22:03 dan Exp $
-   #
-   # Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: customize.php,v 1.1.2.3 2002-01-03 02:22:03 dan Exp $
+	#
+	# Copyright (c) 1998-2001 DVL Software Limited
 
-   require("./include/common.php");
-   require("./include/freshports.php");
-   require("./include/databaselogin.php");
+	require("./include/common.php");
+	require("./include/freshports.php");
+	require("./include/databaselogin.php");
 
 ?>
 <script language="php">
@@ -38,9 +38,9 @@ if ($submit) {
    $AccountModified = 0;
    if ($OK) {
       if ($emailsitenotices_yn == "ON") {
-          $emailsitenotices_yn_value = "Y";
+          $emailsitenotices_yn_value = "t";
       } else {
-         $emailsitenotices_yn_value = "N";
+         $emailsitenotices_yn_value = "f";
       }
 
       if ($FormatDateSelect != "") {
@@ -65,15 +65,17 @@ if ($submit) {
 
       // get the existing email in case we need to reset the bounce count
       $sql = "select email from users where cookie = '$visitor'";
-      $result = mysql_query($sql);
+      $result = pg_exec($db, $sql);
       if ($result) {
-         $myrow = mysql_fetch_array($result);
+         $myrow = pg_fetch_array ($result, 0);
 
+		$WatchNotice = new WatchNotice($db);
+		$WatchNotice->FetchByFrequency($watchnotifyfrequency);
 
          $sql = "update users set ";
          $sql .= "email			= '$email', ";
-         $sql .= "emailsitenotices_yn	= '$emailsitenotices_yn_value',";
-         $sql .= "watchnotifyfrequency	= '$watchnotifyfrequency' ";
+         $sql .= "emailsitenotices_yn = '$emailsitenotices_yn_value',";
+         $sql .= "watch_notice_id     = $w$WatchNotice->id ";
 
          // if they are changing the email, reset the bouncecount.
          if ($myrow["email"] != $email) {
@@ -90,13 +92,12 @@ if ($submit) {
             echo $sql;
          }
 
-         $result = mysql_query($sql);
+         $result = pg_exec($db, $sql);
          if ($result) {
-//	    if (mysql_affected_rows() == 1) {
-               $AccountModified = 1;
-//	    }
+			$AccountModified = 1;
          }
       }
+
       if ($AccountModified == 1) {
          if ($Debug) {
             echo "I would have taken you to '$origin' now, but debugging is on<br>\n";
@@ -107,9 +108,10 @@ if ($submit) {
       } else {
          $errors .= 'Something went terribly wrong there.<br>';
          $errors .= $sql . "<br>\n";
-         $errors .= mysql_error();
+         $errors .= pg_errormessage();
       }
    }
+} else {
 }
 
    freshports_Start("Customize User Account",
@@ -126,7 +128,7 @@ if ($submit) {
     <td height="20"><script language="php">
 
 if (!$submit) {
- require( "./include/getvalues.php");
+	include( "./include/getvalues.php");
 }
 
 if ($errors) {

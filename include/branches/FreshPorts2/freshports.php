@@ -1,12 +1,14 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.15 2002-01-02 02:53:56 dan Exp $
+   # $Id: freshports.php,v 1.4.2.16 2002-01-03 02:22:04 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
 #
 # colours for the banners (not really banners, but headings)
 #
+
+require("../classes/watchnotice.php");
 
 $BannerBackgroundColour = "#FFCC33";
 $BannerTextColour       = "#000000";

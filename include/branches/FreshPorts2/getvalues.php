@@ -38,7 +38,7 @@ $LocalTimeAdjustment	= 0;		# This can be used to display the time the webpage wa
 #
 # flags for showing various port parts.
 #
-$ShowEverything		= 0;
+$ShowEverything			= 0;
 $ShowPortCreationDate	= 0;
 
 $UserName		= "";
@@ -48,79 +48,85 @@ $UserID			= "";
 $DefaultMaxArticles = $MaxArticles;
 
 if (!empty($visitor)) {
-   $sql = "select * from users ".
+	$sql = "select * from users ".
          "where cookie = '$visitor'";
 
-   if ($Debug) {
-      echo "sql=$sql<br>\n";
-   }
+	if ($Debug) {
+		echo "sql=$sql<br>\n";
+	}
 
-   $result = pg_exec($db, $sql) or die("getvalues query failed " . mysql_error());
 
-   if ($result) {
-      if ($Debug) echo "we found a result there...\n<br>";
-      $myrow = pg_fetch_array ($result, 0);
-      if ($myrow) {
-         if ($Debug) echo "we found a row there...\n<br>";
-         $UserName				= $myrow["name"];
-         $UserID		= $myrow["id"];
-         $emailsitenotices_yn	= $myrow["emailsitenotices_yn"];
-         $email			= $myrow["email"];
-         $watchnotifyfrequency	= $myrow["watchnotifyfrequency"];
+	$result = pg_exec($db, $sql) or die("getvalues query failed " . pg_errormessage());
 
-//         $MaxNumberOfPorts	= $myrow["max_number_of_ports"];
-         $ShowShortDescription	= $myrow["show_short_description"];
-         $ShowMaintainedBy	= $myrow["show_maintained_by"];
-         $ShowLastChange	= $myrow["show_last_change"];
-         $ShowDescriptionLink	= $myrow["show_description_link"];
-         $ShowChangesLink	= $myrow["show_changes_link"];
-         $ShowDownloadPortLink	= $myrow["show_download_port_link"];
-         $ShowPackageLink	= $myrow["show_package_link"];
-         $ShowHomepageLink	= $myrow["show_homepage_link"];
+	if ($result) {
+		if ($Debug) echo "we found a result there...\n<br>";
+		$myrow = pg_fetch_array ($result, 0);
+		if ($myrow) {
+			if ($Debug) echo "we found a row there...\n<br>";
+
+			$UserName				= $myrow["name"];
+			$UserID					= $myrow["id"];
+			$emailsitenotices_yn	= $myrow["emailsitenotices_yn"];
+			$email					= $myrow["email"];
+
+			$WatchNotice = new WatchNotice($db);
+			$WatchNotice->FetchByID($myrow["watch_notice_id"]);
+
+			$watchnotifyfrequency	= $WatchNotice->frequency;
+
+//			$MaxNumberOfPorts		= $myrow["max_number_of_ports"];
+			$ShowShortDescription	= $myrow["show_short_description"];
+			$ShowMaintainedBy		= $myrow["show_maintained_by"];
+			$ShowLastChange			= $myrow["show_last_change"];
+			$ShowDescriptionLink	= $myrow["show_description_link"];
+			$ShowChangesLink		= $myrow["show_changes_link"];
+			$ShowDownloadPortLink	= $myrow["show_download_port_link"];
+			$ShowPackageLink		= $myrow["show_package_link"];
+			$ShowHomepageLink		= $myrow["show_homepage_link"];
 
 /*
-         if ($myrow["days_marked_as_new"]) {
-            $DaysMarkedAsNew	= $myrow["days_marked_as_new"];
-         } else {
-            $DaysMarkedAsNew	= $DaysMarkedAsNewDefault;
-         }
+			if ($myrow["days_marked_as_new"]) {
+				$DaysMarkedAsNew	= $myrow["days_marked_as_new"];
+			} else {
+				$DaysMarkedAsNew	= $DaysMarkedAsNewDefault;
+			}
 */
 
 /*
-         if ($myrow["format_date"]) {
-            $FormatDate		= $myrow["format_date"];
-         }
+			if ($myrow["format_date"]) {
+				$FormatDate			= $myrow["format_date"];
+			}
 
-         if ($myrow["format_time"]) {
-            $FormatTime		= $myrow["format_time"];
-         }
+			if ($myrow["format_time"]) {
+				$FormatTime			= $myrow["format_time"];
+			}
 */
-         if ($emailsitenotices_yn == "Y") {
-            $emailsitenotices_yn = "ON";
-         } else {
-            $emailsitenotices_yn = "";
-         }
+			if ($emailsitenotices_yn == "t") {
+				$emailsitenotices_yn = "ON";
+			} else {
+				$emailsitenotices_yn = "";
+			}
 /*
-         $SampleFormatDate	= $myrow["sample_date"];
-         $SampleFormatTime	= $myrow["sample_time"];
+			$SampleFormatDate	= $myrow["sample_date"];
+			$SampleFormatTime	= $myrow["sample_time"];
 */
 
-         $EmailBounceCount	= $myrow["emailbouncecount"];
+			$EmailBounceCount	= $myrow["emailbouncecount"];
  
-//        echo "visitor = $visitor<br>";
+//			echo "visitor = $visitor<br>";
 
-         // record their last login
-         $sql = "update users set lastlogin = '" . date("Y/m/d", time()) . "'" .
-                " where id = $UserID";
-//        echo $sql, "<br>";
-		$result = pg_exec($db, $sql);
-      } else {
-         if ($Debug) echo "we didn't find anyone with that login... " . mysql_error() . "\n<br>";
-         $errors = "Sorry, but that login doesn't exist according to me.";
-      }
-   }
-   if ($Debug) {
-      echo "UserName = $UserName\n<br>UserID=$UserID<br>\n";
-   }
+			// record their last login
+			$sql = "update users set lastlogin = '" . date("Y/m/d", time()) . "'" .
+				" where id = $UserID";
+//			echo $sql, "<br>";
+			$result = pg_exec($db, $sql);
+		} else {
+			if ($Debug) echo "we didn't find anyone with that login... " . pg_errormessage() . "\n<br>";
+			$errors = "Sorry, but that login doesn't exist according to me.";
+		}
+	}
+	if ($Debug) {
+		echo "UserName = $UserName\n<br>UserID=$UserID<br>\n";
+	}
 }
 </script>

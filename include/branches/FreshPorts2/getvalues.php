@@ -1,6 +1,6 @@
 <?php
 
-	# $Id: getvalues.php,v 1.1.2.23 2003-03-06 14:20:44 dan Exp $
+	# $Id: getvalues.php,v 1.1.2.24 2003-03-06 15:02:16 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -15,7 +15,7 @@ $Debug = 0;
 $FormatDateDefault		= "%W, %b %e";
 $FormatTimeDefault		= "%H:%i";
 $DaysMarkedAsNewDefault	= 10;
-$DefaultPageSize			= 250;
+$DefaultPageSize			= 50;
 
 
 // there are only a few places we want to show the last change.

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.201 2005-01-03 04:04:26 dan Exp $
+	# $Id: freshports.php,v 1.4.2.202 2005-01-03 21:34:08 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -35,10 +35,13 @@ function PortsFreezeStatus() {
 
 	if (file_exists($_SERVER["DOCUMENT_ROOT"] . "/../dynamic/PortsFreezeIsOn")) {
 		$result = '
-<p>
-<BIG><BIG>There is a ports freeze in effect!</big></big>  That means that
-commits will be few and far between and only by approval.
-</p>';
+<tr>' . freshports_PageBannerText('There is a PORTS FREEZE in effect!') . '</tr>
+<tr><td>
+<p>A <a href="http://www.freebsd.org/doc/en/articles/committers-guide/ports.html#AEN1390">ports freeze</a>
+ means that commits will be few and far between and only by approval.
+</p>
+</td></tr>
+';
 	}
 
 	return $result;
@@ -437,7 +440,6 @@ GLOBAL $ShowAnnouncements;
 		}
 	}
 
-	echo PortsFreezeStatus();
 }
 
 function freshports_Logo() {

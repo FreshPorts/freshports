@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits.php,v 1.1.2.2 2005-01-02 00:52:28 dan Exp $
+	# $Id: commits.php,v 1.1.2.3 2005-01-03 21:34:07 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -112,6 +112,9 @@ if ($db) {
 ?>
 <TR><TD VALIGN="top" WIDTH="100%">
 <TABLE WIDTH="100%" border="1" CELLSPACING="0" CELLPADDING="8">
+<?php
+	echo PortsFreezeStatus();
+?>
 <TR>
 <? echo freshports_PageBannerText("$MaxNumberOfPortsLong most recently changed ports", 3); ?>
         <? //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPortsLong) ?>

@@ -1,5 +1,5 @@
 <?
-	# $Id: customize.php,v 1.1.2.11 2002-05-18 08:25:05 dan Exp $
+	# $Id: customize.php,v 1.1.2.12 2002-05-18 18:46:33 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -11,7 +11,7 @@
 <script language="php">
 
 $origin = $_GET["origin"];
-$submit = _POST["submit"];
+$submit = $_POST["submit"];
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {
@@ -24,12 +24,12 @@ if ($submit) {
 
 // process form
 
-   $Password1            = AddSlashes($Password1);
-   $Password2            = AddSlashes($Password2);
-   $email                = AddSlashes($email);
-   $emailsitenotices_yn  = AddSlashes($emailsitenotices_yn);
-   $watchnotifyfrequency = AddSlashes($watchnotifyfrequency);
-   $numberofdays         = AddSlashes($numberofdays);
+   $Password1				= AddSlashes($_POST["$Password1"]);
+   $Password2				= AddSlashes($_POST["Password2"]);
+   $email					= AddSlashes($_POST["email"]);
+   $emailsitenotices_yn		= AddSlashes($_POST["emailsitenotices_yn"]);
+   $watchnotifyfrequency	= AddSlashes($_POST["watchnotifyfrequency"]);
+   $numberofdays			= AddSlashes($_POST["numberofdays"]);
 
 
    if (!is_numeric($numberofdays) || $numberofdays < 0 || $numberofdays > 9) {

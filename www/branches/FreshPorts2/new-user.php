@@ -1,5 +1,5 @@
 <?
-	# $Id: new-user.php,v 1.1.2.16 2002-05-18 08:25:06 dan Exp $
+	# $Id: new-user.php,v 1.1.2.17 2002-05-18 18:46:33 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -24,6 +24,13 @@ if ($submit) {
 	$OK = 1;
 
 	$errors = "";
+
+	$UserLogin				= AddSlashes($_POST["UserLogin"]);
+	$email					= AddSlashes($_POST["email"]);
+	$Password1				= AddSlashes($_POST["Password1"]);
+	$Password2				= AddSlashes($_POST["Password2"]);
+	$emailsitenotices_yn	= AddSlashes($_POST["emailsitenotices_yn"]);
+	$numberofdays			= AddSlashes($_POST["numberofdays"]);
 
 	if ($UserLogin == '') {
 		$errors .= "Please enter a user id.<BR>";
@@ -87,16 +94,13 @@ if ($submit) {
 				$emailsitenotices_yn_value = "N";
 			}
 
-			$email     = addslashes($email);
-			$UserLogin = addslashes($UserLogin);
-			$Password1 = addslashes($Password1);
-
 			$UserID = freshports_GetNextValue($Sequence_User_ID, $db);
 			if (IsSet($UserID)) {			
 				$sql = "insert into users (id, name, password, cookie, email, " . 
-						"watch_notice_id, emailsitenotices_yn, type, ip_address) values (";
+						"watch_notice_id, emailsitenotices_yn, type, ip_address, number_of_days) values (";
 				$sql .= "$UserID, '$UserLogin', '$Password1', '$Cookie', '$email', " .
-						"'$WatchNotice->id', '$emailsitenotices_yn_value', 'S', '$REMOTE_ADDR')";
+						"'$WatchNotice->id', '$emailsitenotices_yn_value', 'S', '" . $_SERVER["REMOTE_ADDR"] . "', " .
+						"$numberofdays)";
 
 				$errors .= "<BR>sql=" . $sql;
 

@@ -1,5 +1,5 @@
 <?
-	# $Id: port-watch.php,v 1.1.2.11 2002-05-18 17:40:54 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.12 2002-05-18 17:43:08 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -18,6 +18,8 @@ if (!$visitor) {
         header("Location: login.php?origin=" . $_SERVER["PHP_SELF"]);  /* Redirect browser to PHP web site */
         exit;  /* Make sure that code below does not get executed when we redirect. */
 }
+
+$category = $_GET["category"];
 
 if (!$category || $category != strval(intval($category))) {
    $category = 0;                                     

@@ -1,7 +1,9 @@
-<?
-	# $Id: pkg_upload.php,v 1.5.2.31 2003-03-05 18:41:25 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: pkg_upload.php,v 1.5.2.32 2003-04-26 12:48:07 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');

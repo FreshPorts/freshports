@@ -1,5 +1,5 @@
 <?
-	# $Id: date.php,v 1.1.2.12 2002-12-06 23:20:11 dan Exp $
+	# $Id: date.php,v 1.1.2.13 2002-12-08 03:26:43 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -10,7 +10,7 @@
 	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 	require($_SERVER['DOCUMENT_ROOT'] . "/../classes/commits.php");
 
-	freshports_Start("the place for ports",
+	freshports_Start($FreshPortsSlogan,
 					"$FreshPortsName - new ports, applications",
 					"FreeBSD, index, applications, ports");
 	$Debug = 0;

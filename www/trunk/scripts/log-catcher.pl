@@ -1,5 +1,10 @@
 #!/usr/bin/perl -w
 
+# log catcher
+# written by Olaf
+# takes the data from cvs-all and creates a file
+# copyright 2000 DVL Software
+
 $Outfile  = "/usr/local/etc/freshports/msgs/" . time . ".$$.txt";
 
 $Nextfile = "/usr/local/etc/freshports/msgs/" . time . ".$$.txt.munged";

@@ -1,5 +1,12 @@
 #!/usr/bin/perl
 
+#
+# Port Updater for FreshPorts
+# takes output of LogMunger and updates the database
+# written by Dan Langille
+# copyright 2000 DVL Software
+#
+
 use DBI;
 
 #sub GetPortCategory($category, $dbh) {

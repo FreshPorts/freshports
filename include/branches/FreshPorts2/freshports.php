@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.204 2005-01-06 04:24:47 dan Exp $
+	# $Id: freshports.php,v 1.4.2.205 2005-01-18 23:57:31 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -1255,24 +1255,22 @@ function freshports_PortCommits($port) {
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit_log_ports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user_tasks.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit_log_ports_vuxml.php');
 
 	$Commits = new Commit_Log_Ports($port->dbh);
 	$NumRows = $Commits->FetchInitialise($port->id);
 
-	$VuXML = new Commit_Log_Ports_VuXML($port->dbh);
-	$VuXMLList = $VuXML->VuXML_List_Get($port->id);
+	$port->LoadVulnerabilities();
 
 	$Commits->FetchNthCommit(0);
 
-	freshports_CheckForOutdatedVulnClaim($Commits, $port, $VuXMLList);
+	freshports_CheckForOutdatedVulnClaim($Commits, $port, $port->VuXML_List);
 
 	freshports_PortCommitsHeader($port);
 
 	$LastVersion = '';
 	for ($i = 0; $i < $NumRows; $i++) {
 		$Commits->FetchNthCommit($i);
-		freshports_PortCommitPrint($Commits, $port->category, $port->port, $VuXMLList);
+		freshports_PortCommitPrint($Commits, $port->category, $port->port, $port->VuXML_List);
 	}
 
 	freshports_PortCommitsFooter($port);

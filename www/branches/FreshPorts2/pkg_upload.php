@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_upload.php,v 1.5.2.30 2003-02-10 16:54:09 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.31 2003-03-05 18:41:25 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -221,7 +221,7 @@ function ChooseWatchLists($UserID, $db) {
 				$ports = $_POST["ports"];
 				# save these things to the watch list
 				# and clear out part of the staging area.
-				$WatchListID = AddSlashes($_POST["wlid"]);
+				$WatchListID = AddSlashes($_POST['wlid']);
 				if ($Debug) echo ' you clicked on update_watch_list';
 				if (MoveStagingToWatchList($User->id, $WatchListID, $ports, $db)) {
 					$DisplayStagingArea = FALSE;
@@ -238,13 +238,13 @@ function ChooseWatchLists($UserID, $db) {
 				}
 			}
 			
-			if ($_REQUEST["wlid"]) {
+			if ($_REQUEST['wlid']) {
 				if ($Debug) echo 'you selected a list<br>';
 				# they clicked on the GO button and we have to apply the 
 				# watch staging area against the watch list.
-				$WatchListID = AddSlashes($_POST["wlid"]);
-				if ($Debug) echo "setting SetLastWatchListChosen => \$wlid='$wlid'";
-				$User->SetLastWatchListChosen($wlid);
+				$WatchListID = AddSlashes($_POST['wlid']);
+				if ($Debug) echo "setting SetLastWatchListChosen => \$wlid='$WatchListID'";
+				$User->SetLastWatchListChosen($WatchListID);
 			} else {
 				$WatchListID = $User->last_watch_list_chosen;
 				if ($Debug) echo "\$WatchListID='$WatchListID'";

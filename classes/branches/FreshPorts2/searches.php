@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: searches.php,v 1.1.2.1 2004-08-23 19:06:40 dan Exp $
+	# $Id: searches.php,v 1.1.2.2 2004-11-17 22:36:16 dan Exp $
 	#
 	# Copyright (c) 2004 DVL Software Limited
 	#
@@ -8,6 +8,9 @@
 define('FRESHPORTS_SEARCH_METHOD_Soundex', 'soundex');
 define('FRESHPORTS_SEARCH_METHOD_Match',   'match');
 define('FRESHPORTS_SEARCH_METHOD_Exact',   'exact');
+
+define('FRESHPORTS_SEARCH_STYPE_Package',           'package');
+define('FRESHPORTS_SEARCH_STYPE_LatestLink',        'latest_link');
 
 
 define('FRESHPORTS_SEARCH_DEFAULT_Num',             10);
@@ -54,21 +57,55 @@ return '
               '&casesensitivity=' . FRESHPORTS_SEARCH_DEFAULT_Casesensitivity;
 	}
 
-	function GetDefaultMethodString($text, $method) {
+	function GetDefaultSearchStringPackage($text) {
         return $this->SearchPage . '?' . 'query='           . $text                              .
               '&num='             . FRESHPORTS_SEARCH_DEFAULT_Num      . 
-              '&stype='           . FRESHPORTS_SEARCH_DEFAULT_Stype    .
-              '&method='          . $method   . 
+              '&stype='           . FRESHPORTS_SEARCH_STYPE_Package    .
+              '&method='          . FRESHPORTS_SEARCH_DEFAULT_Method   . 
               '&deleted='         . FRESHPORTS_SEARCH_DEFAULT_Deleted  .
               '&start='           . FRESHPORTS_SEARCH_DEFAULT_Start    .
               '&casesensitivity=' . FRESHPORTS_SEARCH_DEFAULT_Casesensitivity;
 	}
 
+	function GetDefaultMethodString($text, $method) {
+        return $this->SearchPage . '?' . 'query='           . $text    .
+              '&num='             . FRESHPORTS_SEARCH_DEFAULT_Num      .
+              '&stype='           . FRESHPORTS_SEARCH_DEFAULT_Stype    .
+              '&method='          . $method                            .
+              '&deleted='         . FRESHPORTS_SEARCH_DEFAULT_Deleted  .
+              '&start='           . FRESHPORTS_SEARCH_DEFAULT_Start    .
+              '&casesensitivity=' . FRESHPORTS_SEARCH_DEFAULT_Casesensitivity;
+	}
+
+	function GetDefaultMethodStringPackage($text, $method) {
+        return $this->SearchPage . '?' . 'query='           . $text    .
+              '&num='             . FRESHPORTS_SEARCH_DEFAULT_Num      .
+              '&stype='           . FRESHPORTS_SEARCH_STYPE_Package    .
+              '&method='          . $method                            . 
+              '&deleted='         . FRESHPORTS_SEARCH_DEFAULT_Deleted  .
+              '&start='           . FRESHPORTS_SEARCH_DEFAULT_Start    .
+              '&casesensitivity=' . FRESHPORTS_SEARCH_DEFAULT_Casesensitivity;
+	}
+
+#
+# This whole area needs to be cleaned up and improved
+# The various methods should be consolidated
+#
+
 	function GetDefaultSoundsLikeString($text) {
         return $this->GetDefaultMethodString($text, FRESHPORTS_SEARCH_METHOD_Soundex);
 	}
 
+	function GetDefaultPackageSoundsLikeString($text) {
+        return $this->GetDefaultMethodString($text, FRESHPORTS_SEARCH_METHOD_Soundex);
+	}
 
+	function GetDefaultPackage($text) {
+        return $this->GetDefaultMethodString($text, FRESHPORTS_SEARCH_METHOD_Soundex);
+	}
 
+	function GetLink($name, $search_type, $package = 0) {
+        return $this->GetDefaultMethodStringPackage($name, $search_type);
+	}
 
 }

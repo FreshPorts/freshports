@@ -1,5 +1,5 @@
 <?
-	# $Id: sidebar.php,v 1.1.2.3 2002-04-19 02:40:33 dan Exp $
+	# $Id: sidebar.php,v 1.1.2.4 2002-04-19 13:24:18 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -16,9 +16,14 @@
 <HEAD>
 	<TITLE>FreshPorts</TITLE>
 
-<?
-	freshports_style();
-?>
+	<STYLE>
+	BODY, TD, TR, P, UL, OL, LI, INPUT, SELECT, DL, DD, DT, FONT
+	{
+		font-family: Helvetica, Verdana, Arial, Clean, sans-serif;
+		font-size: 12px;
+	}
+	ul { padding-left: 20px;}
+	</STYLE>
 
 	<META HTTP-EQUIV="Refresh" CONTENT="1200; URL=http://test.FreshPorts.org/sidebar.php">
 	<META http-equiv="Pragma"              content="no-cache">

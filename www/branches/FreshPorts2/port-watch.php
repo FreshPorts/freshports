@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-watch.php,v 1.1.2.39 2003-09-08 14:18:14 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.40 2003-09-08 14:19:03 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -15,7 +15,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_list.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_list_element.php');
 
-	$Debug = 1;
+	$Debug = 0;
 
 	$submit	= AddSlashes($_POST['submit']);
 	$visitor	= $_COOKIE['visitor'];

@@ -1,5 +1,5 @@
 <?
-	# $Id: ports.php,v 1.1.2.11 2002-02-22 00:28:13 dan Exp $
+	# $Id: ports.php,v 1.1.2.12 2002-04-02 02:53:30 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -164,6 +164,69 @@ class Port {
 		} else {
 			echo 'ports FetchByPartialName for $path failed';
 		}
+	}
+
+	function FetchByName($PortName, $WatchListID=0) {
+
+		$Debug = 0;
+
+		$numrows = 0; 	# nothing found
+
+		# fetch zero or more ports based on the name.
+		# e.g. samba, logcheck
+		# it returns the number of ports found.  You must call FetchNth
+		#
+		# first, we get the element relating to this port
+		#
+		$sql = "select ports.id, ports.element_id, ports.category_id as category_id, " .
+		       "ports.short_description as short_description, ports.long_description, ports.version as version, ".
+		       "ports.revision as revision, ports.maintainer, ".
+		       "ports.homepage, ports.master_sites, ports.extract_suffix, ports.package_exists, " .
+		       "ports.depends_build, ports.depends_run, ports.last_commit_id, ports.found_in_index, " .
+		       "ports.forbidden, ports.broken, ports.date_added, " .
+		       "ports.categories as categories, ".
+			   "element.name as port, categories.name as category," .
+			   "element.status ";
+
+		if ($WatchListID) {
+			$sql .= ",
+		       CASE when watch_list_element.element_id is null
+	    	      then 0
+	        	  else 1
+		       END as onwatchlist ";
+		}
+
+
+		$sql .="from categories, element, ports ";
+
+		#
+		# if the watch list id is provided (i.e. they are logged in and have a watch list id...)
+		#
+		if ($WatchListID) {
+			$sql .="
+		            left outer join watch_list_element
+					on (ports.element_id                 = watch_list_element.element_id 
+				   and  watch_list_element.watch_list_id = $WatchListID) ";
+		}
+
+		$sql .="WHERE ports.category_id    = categories.id " .
+		       "  and ports.element_id     = element.id ".
+			   "  and element.name         = $PortName";
+
+
+		if ($Debug) {
+			echo $sql;
+			exit;
+		}
+
+        $this->LocalResult = pg_exec($this->dbh, $sql);
+		if ($this->LocalResult) {
+			$numrows = pg_numrows($this->LocalResult);
+		} else {
+			echo 'pg_exec failed: ' . $sql;
+		}
+
+		return $numrows;
 	}
 
 	function FetchByID($id) {

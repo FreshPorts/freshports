@@ -1,5 +1,5 @@
 <?
-	# $Id: ports-new.php,v 1.1.2.6 2002-05-18 08:07:38 dan Exp $
+	# $Id: ports-new.php,v 1.1.2.7 2002-05-18 19:04:15 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -33,6 +33,7 @@ These are the recently added ports.
 
 	$DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
 
+	$visitor = $_COOKIE["visitor"];
 	if ($visitor) {
 		$WatchID = freshports_MainWatchID($UserID, $db);
 	} else {

@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_upload.php,v 1.5.2.14 2002-05-18 18:00:34 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.15 2002-05-18 19:04:14 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -152,6 +152,7 @@ function DisplayStagingArea($WatchListID, $db) {
 <TR><TD>
 	<?
 	# you can only be here if you are logged in!
+	$visitor = $_COOKIE["visitor"];
 	if (!$visitor) {
 		?>
 		<P>

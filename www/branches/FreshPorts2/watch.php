@@ -1,5 +1,5 @@
 <?
-	# $Id: watch.php,v 1.1.2.15 2002-05-18 08:07:39 dan Exp $
+	# $Id: watch.php,v 1.1.2.16 2002-05-18 19:04:15 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -9,6 +9,8 @@
 	require("./include/getvalues.php");
 
 $Debug = 0;
+
+$visitor = $_COOKIE["visitor"];
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {

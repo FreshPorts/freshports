@@ -1,5 +1,5 @@
 <?
-	# $Id: port-watch.php,v 1.1.2.13 2002-05-18 17:46:12 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.14 2002-05-18 19:04:14 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -10,7 +10,8 @@
 
     require($_SERVER["DOCUMENT_ROOT"] . "/../classes/categories.php");
 
-	$submit = $_POST["submit"];
+	$submit		= $_POST["submit"];
+	$visitor	= $_COOKIE["visitor"];
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {

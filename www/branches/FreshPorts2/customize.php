@@ -1,5 +1,5 @@
 <?
-	# $Id: customize.php,v 1.1.2.13 2002-05-18 18:50:07 dan Exp $
+	# $Id: customize.php,v 1.1.2.14 2002-05-18 19:04:14 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -10,8 +10,9 @@
 ?>
 <script language="php">
 
-$origin = $_GET["origin"];
-$submit = $_POST["submit"];
+$origin		= $_GET["origin"];
+$submit 	= $_POST["submit"];
+$visitor	= $_COOKIE["visitor"];
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {

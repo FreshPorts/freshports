@@ -1,5 +1,5 @@
 <?
-	# $Id: forgotten-password.php,v 1.1.2.10 2002-05-18 19:05:31 dan Exp $
+	# $Id: forgotten-password.php,v 1.1.2.11 2002-05-18 19:10:41 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -10,7 +10,7 @@
 
 $Debug=0;
 
-$submit = _POST["submit"];
+$submit = $_POST["submit"];
 
 $MailSent = 0;
 

@@ -1,5 +1,5 @@
 <?
-	# $Id: port-description.admin.php,v 1.1.2.7 2002-05-18 18:30:17 dan Exp $
+	# $Id: port-description.admin.php,v 1.1.2.8 2002-05-18 19:10:41 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -8,7 +8,7 @@
 	require("./include/databaselogin.php");
 	require("./include/getvalues.php");
 
-	$submit = _POST["submit"];
+	$submit = $_POST["submit"];
 
 function freshports_Change_Log_Port_Delete($Change_Log_Port_ID, $db) {
    // delete everything from change_log_details which 

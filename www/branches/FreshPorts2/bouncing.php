@@ -1,5 +1,5 @@
 <?
-	# $Id: bouncing.php,v 1.1.2.8 2002-05-18 19:04:13 dan Exp $
+	# $Id: bouncing.php,v 1.1.2.9 2002-05-18 19:06:37 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -11,7 +11,7 @@
 	$Debug = 0;
 
 	$origin		= $_GET["origin"];
-	$submit		= _POST["submit"];
+	$submit		= $_POST["submit"];
 	$visitor	= $_COOKIE["visitor"];
 
 

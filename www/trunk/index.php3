@@ -1,5 +1,5 @@
 <?
-   # $Id: index.php3,v 1.24 2001-10-03 01:56:33 dan Exp $
+   # $Id: index.php3,v 1.25 2001-10-03 19:42:18 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -15,9 +15,12 @@
 #$Debug=1;
 
 #
-# $Author: dan $ $Date: 2001-10-03 01:56:33 $
-# $Header: /home/dan/repositories/freshports-1/www/Attic/index.php3,v 1.24 2001-10-03 01:56:33 dan Exp $
+# $Author: dan $ $Date: 2001-10-03 19:42:18 $
+# $Header: /home/dan/repositories/freshports-1/www/Attic/index.php3,v 1.25 2001-10-03 19:42:18 dan Exp $
 # $Log: not supported by cvs2svn $
+# Revision 1.24  2001/10/03 01:56:33  dan
+# don't mention the phorum
+#
 # Revision 1.23  2001/09/28 00:05:37  dan
 # Ready to deploy.  I think.
 #
@@ -28,7 +31,7 @@
 # Add some headers
 #
 # $Name: not supported by cvs2svn $
-# $Revision: 1.24 $
+# $Revision: 1.25 $
 #
 
 //echo "UserID='$UserID'";
@@ -102,10 +105,13 @@ if ($Debug) {
   <? include("./include/header.php") ?>
 <table width="100%" border="0">
 <tr><td colspan="2">Welcome to FreshPorts, where you can find the latest information on your favourite
-ports.
+ports. A port is marked as new for 10 days.
 </td></tr>
-<tr><td colspan="2">A port is marked as new for 10 days.
+<tr><td colspan="2">We are now hosted on the same box as <A HREF="http://www.freebsddiary.org/">The FreeBSD Diary</A>.
+Please keep an eye on this website and the <A HREF="http://old.freshports.org/">old one</A> to make sure they
+are in sync.  Yes, I am doing that, but I don't want to miss anything.  The more eyes the better...
 </td></tr>
+
 <?
 if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 ?>

@@ -1,5 +1,5 @@
 --
--- $Id: POSTGRESQL.sql,v 1.1.2.14 2002-06-15 20:24:05 dan Exp $
+-- $Id: POSTGRESQL.sql,v 1.1.2.15 2002-06-18 02:15:19 dan Exp $
 --
 -- Copyright (c) 1998-2002 DVL Software Limited
 --
@@ -160,3 +160,4 @@ grant select                         on reports                        to group 
 grant select                         on report_subscriptions           to group commits;
 grant select, insert                 on report_log                     to group commits;
 grant update                         on report_log_id_seq              to group commits;
+grant select                         on report_log_latest              to group commits;

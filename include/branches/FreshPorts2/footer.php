@@ -1,5 +1,5 @@
 <?
-	# $Id: footer.php,v 1.5.2.12 2003-05-16 02:31:20 dan Exp $
+	# $Id: footer.php,v 1.5.2.13 2003-06-02 21:22:02 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 ?>
@@ -55,8 +55,15 @@ ALT="powered by apache" BORDER="0" WIDTH="259" HEIGHT="32"></A>
 <a href="http://validator.w3.org/check/referer"><img border="0" 
 src="/images/valid-html401" alt="Valid HTML 4.01!" height="31" width="88"></a>
 
+&nbsp;
+
 <a href="http://jigsaw.w3.org/css-validator/"><img style="border:0;width:88px;height:31px"
 src="/images/vcss" alt="Valid CSS!"></a>
+
+&nbsp;
+
+<a href="http://feeds.archive.org/validator/check?url=http://<?php echo $_SERVER['HTTP_HOST']; ?>/news.php"><img 
+src="/images/valid-rss-dylan4.gif" alt="[Valid RSS]" title="Validate my RSS feed" width="88" height="31"></a>
 
 </p>
 </td><td align="right" valign="top">

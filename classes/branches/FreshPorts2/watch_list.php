@@ -1,5 +1,5 @@
 <?
-	# $Id: watch_list.php,v 1.1.2.4 2002-12-11 16:17:12 dan Exp $
+	# $Id: watch_list.php,v 1.1.2.5 2002-12-16 13:31:01 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -98,6 +98,7 @@ GROUP BY users.max_number_watch_lists";
 		# Empty a watch list (couldn't use empty, as that's reserved)
 		#
 		unset($return);
+		$Debug = 0;
 
 		$query  = 'DELETE FROM watch_list_element WHERE watch_list_id = ' . AddSlashes($WatchListID);
 		if ($Debug) echo $query;

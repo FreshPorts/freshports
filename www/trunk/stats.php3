@@ -1,5 +1,5 @@
 <?
-   # $Id: stats.php3,v 1.8 2001-10-02 17:36:00 dan Exp $
+   # $Id: stats.php3,v 1.9 2001-10-08 02:17:03 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -30,9 +30,11 @@
 <title>freshports</title>
 </head>
 
+
  <? include("./include/header.php") ?>
 <table width="100%" border="0">
-<tr><td colspan="2">Eventually, I'd like to modify these graphs so you can click on a port and be taken to
+<tr><td colspan="2">The graphs are broken.  A hazard of the move. I'll work on it later.<BR>
+Eventually, I'd like to modify these graphs so you can click on a port and be taken to
 its description.  Anyone willing to do that should let me know.  Note: these stats only cover the period
 since FreshPorts began and are updated once per day.
 </td></tr>

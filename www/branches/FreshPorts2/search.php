@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.61 2004-10-02 14:19:37 dan Exp $
+	# $Id: search.php,v 1.1.2.62 2004-11-17 13:39:49 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -222,6 +222,22 @@ switch ($method) {
 				}
 				break;
 
+			case 'package':
+				if ($casesensitivity == 'casesensitive') {
+					$sql .= "\n     and ports.package_name like '%$query%'";
+				} else {
+					$sql .= "\n     and lower(ports.package_name) like lower('%$query%')";
+				}
+				break;
+
+			case 'latest_link':
+				if ($casesensitivity == 'casesensitive') {
+					$sql .= "\n     and ports.latest_link like '%$query%'";
+				} else {
+					$sql .= "\n     and lower(ports.latest_link) like lower('%$query%')";
+				}
+				break;
+
 			case 'shortdescription':
 				if ($casesensitivity == 'casesensitive') {
 					$sql .= "\n     and ports.short_description like '%$query%'";
@@ -250,6 +266,22 @@ switch ($method) {
 				}
 				break;
 
+			case 'package':
+				if ($casesensitivity == 'casesensitive') {
+					$sql .= "\n     and ports.package_name = '$query'";
+				} else {
+					$sql .= "\n     and lower(ports.package_name) = lower('$query')";
+				}
+				break;
+
+			case 'latest_link':
+				if ($casesensitivity == 'casesensitive') {
+					$sql .= "\n     and ports.latest_link = '$query'";
+				} else {
+					$sql .= "\n     and lower(ports.latest_link) = lower('$query')";
+				}
+				break;
+
 			case 'shortdescription':
 				if ($casesensitivity == 'casesensitive') {
 					$sql .= "\n     and ports.short_description = '$query'";
@@ -273,6 +305,14 @@ switch ($method) {
 		switch ($stype) {
 			case 'name':
 				$sql .= "\n     and levenshtein(element.name, '$query') < 4";
+				break;
+
+			case 'package':
+				$sql .= "\n     and levenshtein(ports.package_name, '$query') < 4";
+				break;
+
+			case 'latest_link':
+				$sql .= "\n     and levenshtein(ports.latest_link, '$query') < 4";
 				break;
 
 			case 'shortdescription':
@@ -386,6 +426,8 @@ $Port->LocalResult = $result;
 Search for:<BR>
 	<SELECT NAME="stype" size="1">
 		<OPTION VALUE="name"             <? if ($stype == "name")             echo 'SELECTED'?>>Port Name</OPTION>
+		<OPTION VALUE="package"          <? if ($stype == "package")          echo 'SELECTED'?>>Package Name</OPTION>
+		<OPTION VALUE="latest_link"      <? if ($stype == "latest_link")      echo 'SELECTED'?>>Latest Link</OPTION>
 		<OPTION VALUE="maintainer"       <? if ($stype == "maintainer")       echo 'SELECTED'?>>Maintainer</OPTION>
 		<OPTION VALUE="shortdescription" <? if ($stype == "shortdescription") echo 'SELECTED'?>>Short Description</OPTION>
 		<OPTION VALUE="messageid"        <? if ($stype == "messageid")        echo 'SELECTED'?>>Message ID</OPTION>

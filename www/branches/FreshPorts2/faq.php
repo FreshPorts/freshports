@@ -1,5 +1,5 @@
 <?
-	# $Id: faq.php,v 1.1.2.28 2002-12-12 02:45:20 dan Exp $
+	# $Id: faq.php,v 1.1.2.29 2002-12-17 20:07:09 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -23,7 +23,7 @@
 <table width="100%" border="0">
 
 <tr>
-	<? echo echo freshports_PageBannerText("FAQ"); ?>
+	<? echo freshports_PageBannerText("FAQ"); ?>
 </tr>
 <TR><TD>
 <P>This page contains the FAQ for FreshPorts. Hopefully the questions
@@ -34,7 +34,7 @@ down you must read to find something you didn't already know.</P>
 
 <TR>
 
-<? echo echo freshports_PageBannerText("What is this website about?"); ?>
+<? echo freshports_PageBannerText("What is this website about?"); ?>
 
 	<TR><TD>
 	This website will help you keep up with the latest releases of your

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.37 2003-03-06 14:20:44 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.38 2003-03-24 12:13:28 dan Exp $
 	#
 	# Copyright (c) 2001-2003 DVL Software Limited
 	#
@@ -69,6 +69,7 @@ function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 		if (IsSet($PortName) && $PortName != '') {
 			$port = new Port($db);
 			GLOBAL $User;
+
 			$port->Fetch($CategoryName, $PortName, $User->id);
 
 			if ($Debug) {
@@ -104,7 +105,7 @@ function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 #					echo "no port found like that in this category";
 #				}
 				if ($PortName != '' && !IsSet($port->id)) {
-					$result = "The <A HREF=\"/$CategoryName/\">category you specified</A> exists but not the port <I>$PortName</I>.";
+					$result = "The category <A HREF=\"/$CategoryName/\"><b>$CategoryName</b></A> exists but not the port <b>$PortName</b>.";
 				} else {
 					if ($Debug) echo '$_SERVER["REDIRECT_QUERY_STRING"]="' . $_SERVER["REDIRECT_QUERY_STRING"] . '"<BR>';
 					if ($_SERVER['REDIRECT_QUERY_STRING'] != '') {

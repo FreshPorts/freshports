@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.171 2004-02-13 15:15:47 dan Exp $
+	# $Id: freshports.php,v 1.4.2.172 2004-02-22 14:54:43 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -92,6 +92,10 @@ function freshports_Forbidden_Icon() {
 
 function freshports_Broken_Icon() {
 	return '<IMG SRC="/images/broken.gif" ALT="Broken" TITLE="Broken" WIDTH="17" HEIGHT="16">';
+}
+
+function freshports_Deprecated_Icon() {
+	return '<IMG SRC="/images/deprecated.gif" ALT="Deprecated" TITLE="Deprecated" WIDTH="18" HEIGHT="18">';
 }
 
 function freshports_New_Icon() {
@@ -1453,7 +1457,7 @@ function DisplayAnnouncements($Announcement) {
 	for ($i = 0; $i < $NumRows; $i++) {
 		$Announcement->FetchNth($i);
 		$HTML .= '<tr>' . "\n";
-		$HTML .= '<td>' . htmlify(htmlspecialchars($Announcement->TextGet()))      . '</td>';
+		$HTML .= '<td>' . $Announcement->TextGet() . '</td>';
       $HTML .= '</tr>' . "\n";
 	}
 	$HTML .= '</table>' . "\n";

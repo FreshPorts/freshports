@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.102 2002-06-27 13:41:36 dan Exp $
+	# $Id: freshports.php,v 1.4.2.103 2002-07-10 19:48:20 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -1077,7 +1077,7 @@ function freshports_PageBannerText($Text, $ColSpan=1) {
 }
 
 function freshports_IsEmailValid($email) {
-	if (eregi("^[a-z0-9\._-]+@[a-z0-9\._-]+$", $email)) {
+	if (eregi("^[a-z0-9\._+-]+@[a-z0-9\._-]+$", $email)) {
 		return TRUE;
 	} else {
 		return FALSE;

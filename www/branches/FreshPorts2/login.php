@@ -1,5 +1,5 @@
 <?
-	# $Id: login.php,v 1.1.2.10 2002-02-23 21:32:41 dan Exp $
+	# $Id: login.php,v 1.1.2.11 2002-02-24 00:22:26 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -9,7 +9,7 @@
 
 $Debug=0;
 
-if ($Debug) echo 'origin = ' . rawurlencode($origin) . "'<br>\n";
+if ($Debug) echo "origin = '" . rawurlencode($origin) . "'<br>\n";
 
 $origin=rawurlencode($origin);
 
@@ -43,36 +43,42 @@ if ($submit) {
 	if (!pg_numrows($result)) {
 		$LoginFailed = 1;
 	} else {
-		if ($Debug) {
-			echo "well, debug was on, so I would have taken you to '$origin'<br>\n";
-		} else {
-			$row    = pg_fetch_array($result,0);
-			$status = $row["status"];
+		$Cookie = UserToCookie($UserID);
+		$row    = pg_fetch_array($result,0);
+		$status = $row["status"];
+		if ($Debug) echo "\$status = $status\n<BR>";
 
-			switch ($status) {
-				case $UserStatusEnabled:
-					if ($Debug) {
-						echo "Cookie = $Cookie<br>\n";
-					}
-					SetCookie("visitor", $Cookie, time() + 60*60*24*120, '/');
-					// Redirect browser to PHP web site
-					if ($origin == "/index.php") {
-						$origin = "/";
-					}
-					header("Location: " . rawurldecode($origin));
-					// Make sure that code below does not get executed when we redirect.
-					exit;
-					break;	// not needed because of the exit, but here anyway
+		GLOBAL $UserStatusActive;
+		GLOBAL $UserStatusDisabled;
+		GLOBAL $UserStatusUnconfirmed;
 
-				case $UserStatusDisabled:
-					$error .= "Your account has been disabled.  Please contact $ProblemSolverEmailAddress.";
-					break;
+		if ($Debug) echo "\$UserStatusActive = '$UserStatusActive'\n<BR>";
 
-				case $UserStatusUnconfirmed:
-					$error .= "Your account needs to be enabled by following the directions in the email we have sent to you.";
-					break;
-			
+		if ($status == $UserStatusActive) {
+			if ($Debug) {
+				echo "well, debug was on, so I would have taken you to '$origin'<br>\n";
+				echo "Cookie = $Cookie<br>\n";
+			} else {
+				SetCookie("visitor", $Cookie, time() + 60*60*24*120, '/');
+				// Redirect browser to PHP web site
+				if ($origin == "/index.php") {
+					$origin = "/";
+				}
+				header("Location: " . rawurldecode($origin));
+				// Make sure that code below does not get executed when we redirect.
+				exit;
 			}
+		} else {
+			if ($status == $UserStatusDisabled) {
+				$error .= "Your account has been disabled.  Please contact $ProblemSolverEmailAddress.";
+			} else {
+				if ($status == $UserStatusUnconfirmed) {
+					$error .= "Your account needs to be enabled by following the directions in the email we have sent to you.";
+				} else {
+					$error .= "I have no idea what your account status is.";
+				}
+			}
+		
 		}
 	}
 }
@@ -89,12 +95,12 @@ if ($submit) {
 <tr><td valign="top" width="100%">
 <?
 if ($LoginFailed) {
-echo '<table cellpadding=1 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>
-<tr>
-<td>
-<table width=100% border=0 cellpadding=1>
-<tr> ' .
-freshports_PageBannerText("Login Failed!") . '
+?>
+<TABLE WIDTH="100%" BORDER="1" ALIGN="center" cellpadding=1 cellspacing=0 BORDER="1">
+<tr><td VALIGN=TOP>
+<TABLE WIDTH="100%">
+<TR>
+	<? freshports_PageBannerText("Login Failed!") ?>
 </tr>
 <tr bgcolor="#ffffff">
 <td>
@@ -118,7 +124,8 @@ freshports_PageBannerText("Login Failed!") . '
 </td>
 </tr>
 </table>
-<br>';
+<br>
+<?
 }
 
 if ($error) {

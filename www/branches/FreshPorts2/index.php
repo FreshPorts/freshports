@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.23 2002-03-22 00:45:18 dan Exp $
+	# $Id: index.php,v 1.1.2.24 2002-03-25 20:33:38 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -210,6 +210,12 @@ ports. A port is marked as new for 10 days.
 							$HTML .= '<BR>';
 						}
 
+						if (!$MultiplePortsThisCommit) {
+							$HTML .= '<SMALL>';
+							$HTML .= '[ ' . $myrow["commit_time"] . ' ]';
+							$HTML .= '</SMALL>' . "<BR>\n";
+						}
+
 						$HTML .= '<BIG><B><A HREF="/' . $myrow["category"] . '/">';
 						$HTML .= $myrow["category"]. "</A>";
 						$HTML .= "/";
@@ -224,6 +230,20 @@ ports. A port is marked as new for 10 days.
 						}
 
 						$HTML .= "</A></B></BIG>\n";
+
+						if ($WatchListID) {
+							if ($myrow["watch"]) {
+								$HTML .= $FreshPortsWatchedPortPrefix    . $myrow["element_id"] . $FreshPortsWatchedPortSuffix;
+							} else {
+								$HTML .= $FreshPortsWatchedPortNotPrefix . $myrow["element_id"] . $FreshPortsWatchedPortNotSuffix;
+							}
+						}
+
+						$HTML .= "\n";
+
+
+						$HTML .= '<A HREF="/files.php?id=' . $myrow["commit_log_id"] . 
+									'"><IMG SRC="/images/logs.gif" ALT="files touched by this commit" BORDER="0" WIDTH="17" HEIGHT="20" HSPACE="2"></A>';
 
 						// indicate if this port needs refreshing from CVS
 						if ($myrow["status"] == "D") {
@@ -246,26 +266,6 @@ ports. A port is marked as new for 10 days.
 						}
 
 						$HTML .= $myrow["short_description"] . "\n";
-
-						if (!$MultiplePortsThisCommit) {
-							$HTML .= '<SMALL>';
-							$HTML .= '[ ' . $myrow["commit_time"] . ' ]';
-							$HTML .= '</SMALL>' . "\n";
-						}
-
-						if ($WatchListID) {
-							if ($myrow["watch"]) {
-								$HTML .= $FreshPortsWatchedPortPrefix    . $myrow["element_id"] . $FreshPortsWatchedPortSuffix;
-							} else {
-								$HTML .= $FreshPortsWatchedPortNotPrefix . $myrow["element_id"] . $FreshPortsWatchedPortNotSuffix;
-							}
-						}
-
-						$HTML .= "\n";
-
-
-						$HTML .= '<A HREF="/files.php?id=' . $myrow["commit_log_id"] . 
-									'"><IMG SRC="/images/logs.gif" ALT="files touched by this commit" BORDER="0" WIDTH="17" HEIGHT="20" HSPACE="2"></A>';
 
 						$j++;
 						$MultiplePortsThisCommit = 1;

@@ -1,5 +1,5 @@
 <?
-	# $Id: files.php,v 1.1.2.11 2002-04-19 17:06:21 dan Exp $
+	# $Id: files.php,v 1.1.2.12 2002-04-21 18:22:53 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -8,10 +8,10 @@
 	require_once("./include/databaselogin.php");
 	require_once("./include/getvalues.php");
 
-
 function freshports_Files($PortID, $CommitID, $WatchListID, $db) {
 	GLOBAL $TableWidth;
 	GLOBAL $freshports_CVS_URL;
+	GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;
 
 	$Debug = 0;
 
@@ -177,7 +177,7 @@ function freshports_Files($PortID, $CommitID, $WatchListID, $db) {
 
 		echo "</TD>\n";
 		echo '    <TD VALIGN="top">' . $myrow["committer"]         . "</TD>\n";
-		echo '    <TD VALIGN="top">' . freshports_PortDescriptionPrint($myrow["description"], $myrow["encoding_losses"]) . "</CODE></TD>\n";
+		echo '    <TD VALIGN="top">' . freshports_PortDescriptionPrint($myrow["description"], $myrow["encoding_losses"], $freshports_CommitMsgMaxNumOfLinesToShow, freshports_MoreCommitMsgToShow($myrow["message_id"], $freshports_CommitMsgMaxNumOfLinesToShow)) . "</CODE></TD>\n";
 		echo "</TR>";
 		?>
 
@@ -209,7 +209,6 @@ function freshports_Files($PortID, $CommitID, $WatchListID, $db) {
 		</TR>
 		<?
 
-#		$NumRows = $i;
 		for ($i = 0; $i < $NumRows; $i++) {
 			$myrow = $rows[$i];
 			echo "<TR>\n";

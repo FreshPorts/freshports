@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.conf.php.sample,v 1.1.2.8 2003-09-08 11:28:54 dan Exp $
+	# $Id: freshports.conf.php.sample,v 1.1.2.9 2004-11-18 21:15:27 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -30,28 +30,34 @@
 
 # $HeaderAdsBurst120x160 - 1 = show add
 
-$ShowAds						= 1;
-$BannerAd					= 1;
-$BannerAdUnder				= 1;
+if (substr($_SERVER['REMOTE_ADDR'], 0, 10) == '192.168.0.') {
+	$ShowAds = 0;
+} else {
+	$ShowAds = 1;
+}
+
+$ShowAds				= 1;
+$BannerAd				= 1;
+$BannerAdUnder			= 1;
 $BurstFrontPage120x160	= 0;
 $BurstFrontPage125x125	= 1;
 $BurstShowSkyscraperAd	= 1;
 
 $FrontPageAdsPayPal		= 1;
 $FrontPageAdsAmazon		= 1;
-$FrontPageDaemonNews		= 1;
+$FrontPageDaemonNews	= 1;
 
-$ShowHeaderAds				= 0;
-$HeaderAdsPayPal			= 1;
+$ShowHeaderAds			= 0;
+$HeaderAdsPayPal		= 1;
 $HeaderAdAmazon			= 1;
 $HeaderAdsBurst125x125	= 1;
 $HeaderAdsBurst120x160	= 1;
 
-$UsePHPAdsNew				= 0;
+$UsePHPAdsNew			= 0;
 
 $RejectExternalSearches	= 0;
 
-$AllowUserChanges			= 1;
+$AllowUserChanges		= 1;
 $ShowAnnouncements		= 1;
 $ShowWatchListCount		= 1;
 

@@ -1,5 +1,5 @@
 <?
-	# $Id: search.php,v 1.1.2.12 2002-04-30 02:59:04 dan Exp $
+	# $Id: search.php,v 1.1.2.13 2002-04-30 13:45:04 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -18,7 +18,6 @@
 	$port		= AddSlashes($port);
 
 	if ($stype == 'messageid') {
-		AddSlashes($query);
 		header("Location: http://$HTTP_HOST/commit.php?message_id=$query");
 		exit;
 	}

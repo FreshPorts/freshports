@@ -1,5 +1,5 @@
 <?
-   # $Id: index.php3,v 1.25 2001-10-03 19:42:18 dan Exp $
+   # $Id: index.php3,v 1.26 2001-10-06 15:08:38 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -15,9 +15,12 @@
 #$Debug=1;
 
 #
-# $Author: dan $ $Date: 2001-10-03 19:42:18 $
-# $Header: /home/dan/repositories/freshports-1/www/Attic/index.php3,v 1.25 2001-10-03 19:42:18 dan Exp $
+# $Author: dan $ $Date: 2001-10-06 15:08:38 $
+# $Header: /home/dan/repositories/freshports-1/www/Attic/index.php3,v 1.26 2001-10-06 15:08:38 dan Exp $
 # $Log: not supported by cvs2svn $
+# Revision 1.25  2001/10/03 19:42:18  dan
+# add note about new box and old website
+#
 # Revision 1.24  2001/10/03 01:56:33  dan
 # don't mention the phorum
 #
@@ -31,7 +34,7 @@
 # Add some headers
 #
 # $Name: not supported by cvs2svn $
-# $Revision: 1.25 $
+# $Revision: 1.26 $
 #
 
 //echo "UserID='$UserID'";
@@ -103,13 +106,22 @@ if ($Debug) {
 </head>
 
   <? include("./include/header.php") ?>
+
+<H1>Welcome to the new database server!</H1>
+<P>
+The database has been transferred to this webserver from the old webserver.
+ Enjoy.
+</P>
+
+<P>
+We are now hosted on the same box as <A HREF="http://www.freebsddiary.org/">The FreeBSD Diary</A>.
+Please keep an eye on this website and the <A HREF="http://old.freshports.org/">old one</A> to make sure they
+are in sync.  Yes, I am doing that, but I don't want to miss anything.  The more eyes the better...
+</P>
+
 <table width="100%" border="0">
 <tr><td colspan="2">Welcome to FreshPorts, where you can find the latest information on your favourite
 ports. A port is marked as new for 10 days.
-</td></tr>
-<tr><td colspan="2">We are now hosted on the same box as <A HREF="http://www.freebsddiary.org/">The FreeBSD Diary</A>.
-Please keep an eye on this website and the <A HREF="http://old.freshports.org/">old one</A> to make sure they
-are in sync.  Yes, I am doing that, but I don't want to miss anything.  The more eyes the better...
 </td></tr>
 
 <?
@@ -217,7 +229,7 @@ $sql = "select ports.id, ports.name as port, change_log.commit_date as updated_r
        "  and ports.primary_category_id       = categories.id " .
        "  and change_log_port.port_id         = ports.id " .
        "  and change_log.id                   = change_log_port.change_log_id " .
-       "  and change_log.commit_date          > '" . date("Y-m-d", time() - 60*60*24*7) . "' ";
+       "  and change_log.commit_date          > '" . date("Y-m-d", time() - 60*60*24*14) . "' ";
 
 $sql .= " order by $sort ";
 

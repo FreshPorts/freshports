@@ -1,6 +1,6 @@
 <?php
 
-	# $Id: getvalues.php,v 1.1.2.20 2002-12-09 20:29:09 dan Exp $
+	# $Id: getvalues.php,v 1.1.2.21 2002-12-10 20:48:58 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -42,7 +42,6 @@ GLOBAL $CVSTimeAdjustment;
 GLOBAL $UserName;
 GLOBAL $visitor;
 GLOBAL $db;
-GLOBAL $WatchListID;
 GLOBAL $NumberOfDays;
 GLOBAL $WatchListAsk;
 */
@@ -65,7 +64,6 @@ $CVSTimeAdjustment		= -10800;	# this is number of seconds the web server is rela
 									# we can override that for a particular user.
 
 $LocalTimeAdjustment	= 0;		# This can be used to display the time the webpage was loaded.
-$WatchListID			= 0;
 $NumberOfDays			= 9;
 $WatchListAsk			= 1;
 
@@ -116,7 +114,6 @@ if (!empty($visitor)) {
 
 		$watchnotifyfrequency	= $WatchNotice->frequency;
 
-		$WatchListID				= $myrow["watch_list_id"];
 
 //		$MaxNumberOfPorts			= $myrow["max_number_of_ports"];
 		$ShowShortDescription	= $myrow["show_short_description"];
@@ -145,14 +142,9 @@ if (!empty($visitor)) {
 //		echo $sql, "<br>";
 		$result = pg_exec($db, $sql);
 
-		if (!$WatchListID) {
-#			echo "OUCH, sorry, I don't know what your watch list ID is.\n";
-#			exit;
-		}
 	}
 	if ($Debug) {
 		echo "UserName = $User->name\n<br>UserID=$User->id<br>\n";
-		echo "watch list id = $WatchListID<BR>\n";
 	}
 } else {
 	if ($Debug) echo "we have no \$visitor\n<BR>";

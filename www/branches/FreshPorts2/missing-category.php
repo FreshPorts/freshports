@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-category.php,v 1.1.2.16 2002-12-10 05:13:26 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.17 2002-12-10 20:50:35 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -8,8 +8,6 @@
 function freshports_Category($CategoryID, $db) {
 
 	GLOBAL $TableWidth;
-	GLOBAL $WatchListID;
-
 	header("HTTP/1.1 200 OK");
 
 

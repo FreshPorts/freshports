@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.12 2003-12-12 13:03:09 dan Exp $
+	# $Id: index.php,v 1.1.2.13 2003-12-14 15:49:19 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -25,7 +25,7 @@
 <TR><TD>
 <P>
 On 4 December 2003 at about 16:30 EST, I received email which told me about
-freshports.net.  This websites was attempting to pass itself off as FreshPorts and 
+freshports.net.  This website was attempting to pass itself off as FreshPorts and 
 asking for donations.  freshports.net is not associated with FreshPorts in any
 way.
 
@@ -80,12 +80,15 @@ I received an email from Gabriel Medina today.  He apologized.
 
 <p>
 I also received email from the owner of the colo box on which 
-Gabriel Medina has an account and from which the freshports.net
-website was served.  The domain is forever banned from that server.
+Gabriel Medina has an account and which was the mail server for freshports.net.
+The domain is forever banned from that server.  Gabriel was hosting
+the website from home.  My first complaint was CC'd to his ISP (bostream.com) but I never
+received a reply from them.
 
 <p>
 I have asked Gabriel Medina to transfer freshports.net to me.  For
-what it's worth, at one time I owned it.
+what it's worth, at one time I owned it.  He has already relinquished the 
+domain back to the registrar.
 
 </td></tr>
 

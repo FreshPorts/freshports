@@ -1,7 +1,7 @@
 <?
 
-$cache_file     =       "/tmp/change.freshports.org.cache." . basename($PHP_SELF);
-$LastUpdateFile =       "/www/change.freshports.org/lastupdate";
+$cache_file     =       "/tmp/freshports.org.cache." . basename($PHP_SELF);
+$LastUpdateFile =       "/www/freshports.org/lastupdate";
 
 $Debug=0;
 
@@ -33,7 +33,6 @@ if (strtolower(substr($host, 0, 7)) == "develop") {
 #
 # this is a debug aid so you don't change the wrong database.
 #
-$database = "nosuchdatabase";
 
 if ($Debug) {
    echo "database       = $database<br>\n";

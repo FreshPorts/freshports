@@ -1,5 +1,5 @@
 <?
-	# $Id: faq.php,v 1.1.2.3 2002-02-22 03:59:12 dan Exp $
+	# $Id: faq.php,v 1.1.2.4 2002-03-01 02:13:10 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -32,6 +32,28 @@
 	This website will help you keep up with the latest releases of your
 	favourite software.  When a new version of the software is available,
 	FreshPorts will send you an email telling you about the change.
+	</TD></TR><TR><TD>&nbsp;</TD></TR>
+
+<? freshports_PageBannerText("How do I use this?"); ?>
+	<TR><TD>
+	Your primary FreshPorts tool is your watch list.  This is the
+	collection of ports which you have selected for FreshPorts to
+	keep track of.  You will be emailed when a change is found
+	for one of your watched ports.
+	</TD></TR><TR><TD>&nbsp;</TD></TR>
+
+<? freshports_PageBannerText("How do I modify my watch list?"); ?>
+	<TR><TD>
+	There are three easy ways to modify your watch list:
+	<OL>
+	<LI>Wherever you see a port, you can click on the Add/Remove
+		link as necessary.</LI>
+	<LI>The 'watch list categories' link provides you with a list
+		of categories.  Select the category, and then the ports within
+		that category.</LI>
+	<LI>Use the 'upload' link to upload your pkg_info data into your
+		watch list staging area and then into your watch list.</LI>
+	</OL>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <? freshports_PageBannerText("What is a port"); ?>

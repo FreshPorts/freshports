@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-watch.php,v 1.1.2.35 2003-05-08 13:07:44 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.36 2003-06-05 13:37:47 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -124,30 +124,17 @@ if (!IsSet($Category->id)) {
 }
 
 
-if ($Category->is_primary == 't') {
 $sql = "
   SELECT element.id, 
          element.name    AS port, 
-         element.status, 
-         categories.name AS category
-    FROM ports_active, element, categories
-   WHERE categories.name          = '$category'
-     AND ports_active.element_id  = element.id 
-     AND ports_active.category_id = categories.id
+         element.status,
+         CASE WHEN ports.category_id = $Category->id THEN '' ELSE '&nbsp;(s)' END AS virtual
+    FROM ports, ports_categories, element
+   WHERE ports_categories.category_id = $Category->id
+     AND ports_categories.port_id     = ports.id
+     AND ports.element_id             = element.id
+     AND element.status              = 'A'
 ORDER BY element.name";
-} else {
-$sql = "
-  SELECT element.id, 
-         element.name    AS port, 
-         element.status, 
-         categories.name AS category
-    FROM ports_active, ports_categories, element, categories
-   WHERE categories.name              = '$category'
-     AND ports_categories.category_id = categories.id
-     AND ports_categories.port_id     = ports_active.id
-     AND ports_active.element_id      = element.id
-ORDER BY element.name";
-}
 
 if ($Debug) echo "<pre>$sql</pre>\n";
 
@@ -155,8 +142,29 @@ $result = pg_exec($db, $sql);
 
 $numrows = pg_numrows($result);
 
-$HTML .= '<tr><td><b>' . $numrows . ' ports found</b></td></tr>';
+
+if ($numrows) {
+   // get the list of ports
+
+	$NumPorts   = 0;
+	$NumVirtual = 0;
+	for ($i = 0; $i < $numrows; $i++) {
+		$myrow = pg_fetch_array($result, $i);
+		$NumPorts++;
+		$rows[$NumPorts-1]=$myrow;
+		if ($myrow["virtual"] != '') {
+			$NumVirtual++;
+		}		
+	}
+}
+
+
+$HTML .= '<tr><td><b>' . $numrows . ' ports found (';
+if ($NumVirtual != 0) {
+	$HTML .=  ($numrows - $NumVirtual) . ' real, ' . $NumVirtual . ' virtual)</b></td></tr>';
+}
 $HTML .= '<tr><td valign="top" ALIGN="center">' . "\n";
+
 
 if ($numrows) {
 	
@@ -164,17 +172,6 @@ if ($numrows) {
 	$HTML .= '<table border="0">' . "\n" . '<tr><td>' . "\n";
 
 	$HTML .= '<form action="' . $_SERVER["PHP_SELF"] . '" method="POST">' . "\n";
-
-
-   // get the list of ports
-
-	$NumPorts = 0;
-	for ($i = 0; $i < $numrows; $i++) {
-		$myrow = pg_fetch_array($result, $i);
-		$NumPorts++;
-		$rows[$NumPorts-1]=$myrow;
-	}
-
    // save the number of categories for when we submit
    $HTML .= '<input type="hidden" name="NumPorts" value="' . $NumPorts . '">' . "\n";
    $HTML .= '<input type="hidden" name="category" value="' . $category . '">' . "\n";
@@ -203,11 +200,13 @@ if ($numrows) {
 
       $HTML .= '>';
 
-      $HTML .= ' <a href="/' . $rows[$i]["category"] . '/' . $rows[$i]["port"] . '/">' . $rows[$i]["port"] . '</a>';
+      $HTML .= ' <a href="/' . $category . '/' . $rows[$i]["port"] . '/">' . $rows[$i]["port"] . '</a>';
 
-      if ($rows[$i]["status"] == 'D') {
-         $HTML .= " [D]";
-      }
+		if ($rows[$i]["status"] == 'D') {
+			$HTML .= " [D]";
+		}
+
+		$HTML .= $rows[$i]["virtual"];
 
       $HTML .= "<br>\n";
    }
@@ -260,6 +259,7 @@ that are on your selected watch list.</LI>
 you have selected a notification frequency within your <a href="customize.php">personal preferences</a>.
 </LI>
 <LI>[D] indicates a port which has been removed from the tree.</LI>
+<LI>(s) indicates a port which resides in another cateogory but lists this category as a secondary.</LI>
 </UL>
 </table>
 

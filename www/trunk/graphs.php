@@ -1,8 +1,12 @@
 <?
 // sample graph
 
-require( "./include/commonlogin.php3");
-require( "./include/getvalues.php3");
+   require("./include/common.php");
+   require("./include/freshports.php");
+   require("./include/databaselogin.php");
+
+#require( "./include/commonlogin.php3");
+#require( "./include/getvalues.php3");
 
 $MaxGraph = 3;
 
@@ -44,7 +48,7 @@ if (!file_exists($cache_file)) {
    }
 }
 
-//$CreateImage = 1;
+$CreateImage = 1;
 if ($CreateImage) {
    require("./_phpgraph/phpgraph.php");
    require("./include/statistics.php3");

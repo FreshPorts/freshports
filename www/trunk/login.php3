@@ -1,5 +1,5 @@
 <?
-   # $Id: login.php3,v 1.19 2001-09-28 00:05:38 dan Exp $
+   # $Id: login.php3,v 1.20 2001-10-02 17:49:42 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -88,7 +88,7 @@ function setfocus() { document.f.UserID.focus(); }
 
 <body bgcolor="#ffffff" link="#0000cc"  onLoad=setfocus()>
 
- <? //include("./include/header.php") ?>
+ <? include("./include/header.php") ?>
 <table width="100%" border=0>
  <tr>
     <td>

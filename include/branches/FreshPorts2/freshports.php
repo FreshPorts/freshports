@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.93 2002-05-18 08:03:00 dan Exp $
+	# $Id: freshports.php,v 1.4.2.94 2002-05-18 15:33:28 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -185,10 +185,6 @@ function freshports_CommitterEmailLinkExtra($committer, $extrabits) {
 	$HTML = "<A HREF=\"$mailto:$new_addr?$extrabits\">$committer</A>";
 
 	return $HTML;
-
-#	$HTML .= '<A HREF="' . $mailto . ':' . $port->maintainer;
-#	$HTML .= htmlspecialchars('?cc=ports@FreeBSD.org&subject=FreeBSD%20Port:%20' . $port->port . '-' . $port->version) . '">';
-#	$HTML .= $port->maintainer . "</A>";
 }
 
 
@@ -947,7 +943,7 @@ function freshports_PortCommits($port) {
 
 #	echo "freshports_PortCommits \$NumRows='$NumRows'";
 
-	$i = 0;
+	$LastVersion = '';
 	for ($i = 0; $i < $NumRows; $i++) {
 		$Commits->FetchNthCommit($i);
 		freshports_PortCommitPrint($Commits, $port->category, $port->port);
@@ -978,6 +974,15 @@ function freshports_PortCommitPrint($commit, $category, $port) {
 
 	if ($commit->encoding_losses == 't') {
 		echo '&nbsp;'. freshports_Encoding_Errors();
+	}
+
+	# ouput the VERSION and REVISION
+	if (strlen($commit->{port_version}) > 0) {
+    	echo '&nbsp;&nbsp;&nbsp;<BIG><B>' . $commit->{port_version};
+		if (strlen($commit->{port_revision}) > 0 && $commit->{port_revision} != "0") {
+    		echo '-' . $commit->{port_revision};
+		}
+		echo '</B></BIG>';
 	}
 
 	echo "</TD>\n";

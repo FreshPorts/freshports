@@ -1,5 +1,6 @@
 <P>
-<BIG><BIG>Multiple watch lists!</BIG></BIG> - testers wanted please read  <a href="http://www.freshports.org/phorum/read.php?f=1&amp;i=451&amp;t=420">this notice!</a>
+<BIG><BIG>They're here......!</BIG></BIG>
+The website has been <a href="/release-2003-04-29.php">upgraded</a>.
 </P>
 <P>
 

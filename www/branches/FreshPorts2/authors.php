@@ -1,5 +1,5 @@
 <?
-	# $Id: authors.php,v 1.1.2.4 2002-02-21 23:13:52 dan Exp $
+	# $Id: authors.php,v 1.1.2.5 2002-04-19 21:47:09 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -23,6 +23,34 @@
 <p>Dan Langille thought up the idea, found the data sources, bugged people to 
 write scripts, and did the html and database work. But he certainly didn't 
 do it alone.</p>
+
+<H2>FreshPorts 2</H2>
+
+<P>I apologise as I have not been keeping this list up to date and therefore I fear I have
+   missed people but I don't know who.  Please let me know if you should be here.</P>
+
+<UL>
+<LI>Marcin Gryszkalis did the underlying work for the the <A HREF="/graphs.php">graphs</A>.  He
+    also helped out with the htmlifying of the log message (so you can click on PR and email and URLs).</LI>
+
+<LI>Jonathan Sage helped to reclaim some missing ports by writing some perl code to pull
+    things out of CVS.</LI>
+
+<LI>Dan Peterson showed me the wonders of <A HREF="http://cr.yp.to/daemontools.html">Daemon Tools</A>
+    which handles the processing of incoming messages and refreshes the main web page.</A></LI>
+
+<LI>Josef Karthauser for helping me thruogh the cvs-all log format and for greatly simplifying the
+	job of FP2.</LI>
+
+<LI>Titus Manea again always has great ideas.  His knowledge base of *nix far exceeds my own.</LI>
+
+<LI>Ade Lovett for grilling me about my need for daemons and leading me to discover Daemon Tools via Dan P.
+	And for his mega-commits which prompted me to show abbreviated commits.</LI>
+
+</UL>
+
+
+<H2>FreshPorts (original)</H2>
 
 <UL>
 
@@ -51,7 +79,7 @@ also showed me the PERL dbi->quote() function.</LI>
 
 <LI>Wolfram Schneider's <a href="http://www.freebsd.org/cgi/ports.cgi">FreeBSD Ports Changes</a>
 page provided much of the basis for this site.</LI>
-
+	
 <LI>Jay gave me the box on which FreshPorts runs.  Thanks.</LI>
 
 <LI>And various people on undernet's #nz.general and #freebsd helped me with 

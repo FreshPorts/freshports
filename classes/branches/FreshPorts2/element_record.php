@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: element_record.php,v 1.1.2.3 2003-11-26 13:45:18 dan Exp $
+	# $Id: element_record.php,v 1.1.2.4 2004-08-26 11:30:46 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -36,7 +36,7 @@ class ElementRecord {
 	function FetchByName($Name) {
 		if (IsSet($Name)) {
 			$this->element_pathname = $Name;
-			UnSet($this->id);
+			$this->id = '';
 		}
 		$sql = "select * from elementGet('" . AddSlashes($Name) . "')";
 

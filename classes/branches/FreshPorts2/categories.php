@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.12 2003-10-16 03:02:17 dan Exp $
+	# $Id: categories.php,v 1.1.2.13 2004-08-26 11:30:46 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -75,7 +75,7 @@ class Category {
 	function FetchByName($Name) {
 		if (IsSet($Name)) {
 			$this->name = $Name;
-			UnSet($this->id);
+			$this->id   = '';
 		}
 		$sql = "select * from categories where name = '$this->name'";
 

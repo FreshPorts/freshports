@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: category-maintenance.php,v 1.1.2.2 2003-04-27 14:48:10 dan Exp $
+	# $Id: category-maintenance.php,v 1.1.2.3 2003-09-25 14:02:25 dan Exp $
 	#
 	# Copyright (c) 2003 DVL Software Limited
 	#
@@ -22,7 +22,7 @@
 		die("I don't know that category: $CategoryName");
 	}
 
-	if ($Category->{is_primary} == 't') {
+	if ($Category->IsPrimary() == 't') {
 		$IsPrimary = 1;
 	} else {
 		$IsPrimary = 0;

@@ -1,5 +1,5 @@
 --
--- $Id: POSTGRESQL.sql,v 1.1.2.36 2003-05-16 01:09:06 dan Exp $
+-- $Id: POSTGRESQL.sql,v 1.1.2.37 2003-10-06 19:07:59 dan Exp $
 --
 -- Copyright (c) 1998-2003 DVL Software Limited
 --
@@ -30,6 +30,7 @@ alter group www add user www;
 grant select on commit_log                     to group www;
 grant select on commit_log_elements            to group www;
 grant select on commit_log_port_elements       to group www;
+grant select on commit_log_ports_elements      to group www;
 grant select on commit_log_ports               to group www;
 grant select on commit_log_ports_ignore        to group www;
 grant select on commits_latest                 to group www;
@@ -129,6 +130,7 @@ grant select, insert, update, delete on commit_log_elements            to group 
 grant select, update                 on commit_log_elements_id_seq     to group commits;
 grant select, update                 on commit_log_id_seq              to group commits;
 grant select, insert, update, delete on commit_log_port_elements       to group commits;
+grant select, insert, update, delete on commit_log_ports_elements      to group commits;
 grant select, insert, update, delete on commit_log_ports               to group commits;
 grant select, insert                 on commit_log_ports_ignore        to group commits;
 

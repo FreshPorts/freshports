@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: news.php,v 1.1.2.4 2004-09-22 23:04:45 dan Exp $
+	# $Id: news.php,v 1.1.2.5 2004-09-27 02:37:51 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -99,6 +99,7 @@ SELECT LCPCLLCP.*,
        CASE when clp_revision IS NULL then ports.revision else clp_revision END AS revision,
        ports.version                        AS ports_version,
        ports.revision                       AS ports_revision,
+       ports.portepoch                      AS epoch,
        date_part('epoch', ports.date_added) AS date_added,
        ports.short_description              AS short_description,
        ports.category_id

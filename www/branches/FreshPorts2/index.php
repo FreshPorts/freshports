@@ -1,9 +1,10 @@
-<?
+<?php
 $Starting =  microtime();
 	#
-	# $Id: index.php,v 1.1.2.68 2003-04-12 19:14:21 dan Exp $
+	# $Id: index.php,v 1.1.2.69 2003-04-12 19:21:33 dan Exp $
 	#
-	# Copyright (c) 1998-2002 DVL Software Limited
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
@@ -14,7 +15,7 @@ $Starting =  microtime();
 	freshports_Start($FreshPortsSlogan,
 					$FreshPortsName . ' - new ports, applications',
 					'FreeBSD, index, applications, ports');
-$Debug = 0;
+$Debug = 1;
 
 if ($Debug) echo "\$User->id='$User->id'";
 
@@ -157,6 +158,8 @@ GROUP BY element_id) AS W
 ON        W.wle_element_id = SECURITY.element_id
 ";
 }
+
+$sql .= "order by commit_date_raw desc, category, port ";
 
 #$sql .= " limit $MaxNumberOfPorts";
 

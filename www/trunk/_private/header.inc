@@ -1,7 +1,7 @@
 <body bgcolor="#ffffff" link="#0000cc">
 <?
-# get the minutes
-$Minutes = date("i");
+# get the minutes (well, actualy it's seconds now...)
+$Minutes = date("s");
 if ($Minutes >= 0 and $Minutes < 20) {
    $Image = "bsdcon-banner1.gif";
 } else {
@@ -14,7 +14,7 @@ if ($Minutes >= 0 and $Minutes < 20) {
 ?>
 
 <center>
-<a href="http://www.freesoftware.com/cgi-bin/ad_redirect.pl?URL=http://www.bsdcon.com&IMAGE=<? echo $Image?>"><img src="/ads/<? echo $Image?>" width="470" height="62" alt="BSD Con 2000" border="0"></a>
+<a href="http://www.freesoftware.com/cgi-bin/ad_redirect.pl?URL=http://www.bsdcon.com&IMAGE=<? echo $Image?>"><img src="http://www.freesoftware.com/ads/<? echo $Image?>" width="470" height="62" alt="BSD Con 2000" border="0"></a>
 </center>
 <a href="http://<? echo $HTTP_HOST?>/">
 <img src="http://<? echo $HTTP_HOST?>/images/freshports.jpg" 

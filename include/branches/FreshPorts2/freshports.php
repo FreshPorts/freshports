@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.72 2002-04-12 15:43:10 dan Exp $
+   # $Id: freshports.php,v 1.4.2.73 2002-04-12 17:46:56 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -913,6 +913,11 @@ function convertAllLinks($text) {
 	return $text;
 }
 
+
+#
+# The code below was donated by Marcin Gryszkalis
+#
+
 function pr2link($Arr) {
 	return preg_replace("/((\w+\/)?\d+)/", 
 					"<A HREF=\"http://www.FreeBSD.org/cgi/query-pr.cgi?pr=\\1\">\\1</A>",
@@ -920,6 +925,12 @@ function pr2link($Arr) {
 }
 
 function mail2link($Arr) {
+	#
+	# in an attempt to reduce spam, encode the mailto
+	# so the spambots get rubbish, but it works OK in
+	# the browser.
+	#
+
 	$addr     = $Arr[0];
 	$mailto   = '&#109;&#97;&#105;&#108;&#116;&#111;';
 	$new_addr = "";
@@ -934,6 +945,11 @@ function mail2link($Arr) {
 }
 
 function url2link($Arr) {
+	#
+	# URLs will be truncated if they are too long. But only
+	# the visible part
+	#
+
 	GLOBAL $url2link_cutoff_level;
 	$html = $Arr[1];
 
@@ -946,7 +962,7 @@ function url2link($Arr) {
 	return "<A HREF=\"$html\">$vhtml</A>" . $Arr[3];
 }
 
-function pr2html($String) {
+function htmlify($String) {
 	$del_t = array("&quot;","&#34;","&gt;","&#62;","\/\.\s","\)","'","\s","$");
 	$delimiters = "(".join("|",$del_t).")";
 
@@ -958,6 +974,11 @@ function pr2html($String) {
 }
 
 $url2link_cutoff_level = 70;
+
+#
+# The code above was donated by Marcin Gryszkalis
+#
+
 
 #
 #
@@ -1045,7 +1066,7 @@ function freshports_PortCommitsFooter($port) {
 function freshports_PortDescriptionPrint($description, $encoding_losses) {
 	$HTML .= '<PRE CLASS="code">';
 
-	$HTML .= pr2html(freshports_wrap($description));
+	$HTML .= htmlify(freshports_wrap($description));
 
 	$HTML .= '</PRE>';
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: burstmedia.php,v 1.1.2.12 2004-09-22 23:03:34 dan Exp $
+	# $Id: burstmedia.php,v 1.1.2.13 2004-09-22 23:08:20 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -51,7 +51,7 @@ document.write(\'<scr\'+\'ipt src="http://www.burstnet.com/cgi-bin/ads/sk4556a.c
 
 
 
-function ads_Burst_125x125() {
+function Burst_125x125() {
 
 echo '
 
@@ -69,7 +69,7 @@ document.write(\'<scr\'+\'ipt src="http://www.burstnet.com/cgi-bin/ads/cb4556a.c
 
 }
 
-function ads_Burst_468x60_Below() {
+function Burst_468x60_Below() {
 echo '
 
 <!-- BEGIN RICH-MEDIA BURST! CODE -->
@@ -85,7 +85,7 @@ document.write(\'<scr\'+\'ipt src="http://www.burstnet.com/cgi-bin/ads/ba4556a.c
 ';
 }
 
-function ads_Burst_300x250() {
+function Burst_300x250() {
 
 GLOBAL $ShowAds;
 
@@ -107,10 +107,10 @@ document.write(\'<scr\'+\'ipt src="http://www.burstnet.com/cgi-bin/ads/ad4556a.c
 	}
 }
 
-function ads_Burst_300x250_table() {
+function Burst_300x250_table() {
 
 	echo '<table border="0" cellpadding="8" cellspacing="0" align="right"><tr><td>' . "\n";
-	echo ads_Burst_300x250();
+	echo Burst_300x250();
 	echo '</td></tr></table>' ."\n";
 
 }

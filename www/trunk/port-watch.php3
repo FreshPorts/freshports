@@ -208,6 +208,7 @@ if ($UpdateCache == 1 && $UserID) {
 $sql = "select id, name  ".
        "from ports ".
        "WHERE primary_category_id = $category " .
+       "  and status              = 'A' " .
        "order by name";
 
 //echo $sql, "<br>\n";

@@ -89,9 +89,10 @@ $sql = "select ports.id, ports.name as port, ports.last_update as updated, " .
        "ports.committer, ports.last_update_description as update_description, " .
        "ports.maintainer, ports.short_description ".
        "from ports, categories, newports ".
-       "WHERE ports.system = 'FreeBSD' ".
-       "and ports.primary_category_id = categories.id " .
-       "and newports.name = ports.name ";
+       "WHERE ports.system              = 'FreeBSD' ".
+       "  and ports.primary_category_id = categories.id " .
+       "  and newports.name             = ports.name " .
+       "  and ports.status              = 'A' ";
 
 $sql .= "order by $sort limit 20";
 

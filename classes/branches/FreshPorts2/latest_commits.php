@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: latest_commits.php,v 1.1.2.6 2004-08-09 22:32:07 dan Exp $
+	# $Id: latest_commits.php,v 1.1.2.7 2004-09-22 13:57:58 dan Exp $
 	#
 	# Copyright (c) 2003-2004 DVL Software Limited
 	#
@@ -126,12 +126,10 @@ class LatestCommits {
 						$this->HTML .= '<A HREF="/' . $mycommit->category . '/' . $mycommit->port . '/">';
 						$this->HTML .= $mycommit->port;
 						$this->HTML .= '</A>';
-			
-						if (strlen($mycommit->version) > 0) {
-							$this->HTML .= ' ' . $mycommit->version;
-							if (strlen($mycommit->revision) > 0 && $mycommit->revision != "0") {
-								$this->HTML .= FRESHPORTS_VERSION_REVISION_JOINER . $mycommit->revision;
-							}
+
+						$PackageVersion = freshports_PackageVersion($mycommit->version, $mycommit->revision, $mycommit->epoch);
+						if (strlen($PackageVersion) > 0) {
+							$this->HTML .= ' ' . $PackageVersion;
 						}
 
 						$this->HTML .= "</B></BIG>\n";

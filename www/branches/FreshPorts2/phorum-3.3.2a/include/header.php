@@ -1,5 +1,5 @@
 <?
-	# $Id: header.php,v 1.1.2.8 2002-12-12 02:45:28 dan Exp $
+	# $Id: header.php,v 1.1.2.9 2002-12-12 02:45:28 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 

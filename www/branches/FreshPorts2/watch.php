@@ -1,5 +1,5 @@
 <?
-	# $Id: watch.php,v 1.1.2.19 2002-05-26 12:46:07 dan Exp $
+	# $Id: watch.php,v 1.1.2.20 2002-05-28 04:58:22 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -8,7 +8,7 @@
 	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
 	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 
-$Debug = 0;
+$Debug = 1;
 
 $visitor = $_COOKIE["visitor"];
 
@@ -61,7 +61,7 @@ switch ($sort) {
       break;
 */
    case "updated":
-      $sort = "updated desc, port";
+      $sort = "commit_date_sort_field desc, port";
       echo 'sorted by last update date.  but you can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=category">category</a>';
       $ShowCategoryHeaders = 0;
       break;
@@ -89,7 +89,7 @@ $sql = "select ports.id, element.name as port, ports.id as ports_id, to_char(max
        "categories.name as category, categories.id as category_id, ports.version as version, ports.revision as revision, ".
        "commit_log.committer, commit_log.description as update_description, element.id as element_id, " .
        "ports.maintainer, ports.short_description, to_char(max(commit_log.date_added) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, ".
-       "ports.last_commit_id as last_change_log_id, " .
+       "ports.last_commit_id as last_change_log_id, max(commit_log.commit_date) as commit_date_sort_field, " .
        "ports.package_exists, ports.extract_suffix, ports.homepage, element.status, " .
        "ports.broken, ports.forbidden, 1 as onwatchlist ".
        "from watch_list_element, element, categories, ports LEFT OUTER JOIN commit_log on (ports.last_commit_id = commit_log.id) " .

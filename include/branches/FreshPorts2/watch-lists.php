@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-lists.php,v 1.1.2.4 2002-12-09 20:27:55 dan Exp $
+	# $Id: watch-lists.php,v 1.1.2.5 2002-12-10 03:59:12 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 	#
@@ -9,6 +9,8 @@
 function freshports_WatchListDDLB($dbh, $UserID, $selected = '', $size = 0, $multiple = 0, $show_active = 1, $element_id = 0) {
 	# return the HTML which forms a dropdown list box.
 	# optionally, select the item identified by $selected.
+
+	$Debug = 0;
 
 	$HTML = '<select name=watch_list_id';
 	if ($multiple) {
@@ -27,22 +29,33 @@ function freshports_WatchListDDLB($dbh, $UserID, $selected = '', $size = 0, $mul
 
 	$WatchLists = new WatchLists($dbh);
 	$NumRows = $WatchLists->Fetch($UserID, $element_id);
-	
-#	echo "$NumRows rows found!<br>";
+
+	if ($Debug) {
+		echo "$NumRows rows found!<br>";
+		echo "selected = '$selected'<br>";
+	}
 
 	if ($NumRows) {
 		for ($i = 0; $i < $NumRows; $i++) {
 			$WatchList = $WatchLists->FetchNth($i);
 			$HTML .= '<option value="' . htmlspecialchars(AddSlashes($WatchList->id)) . '"';
-			if ($WatchList->id == $selected) $HTML .= ' selected';
+			if ($selected == '') {
+				if ($element_id && $WatchList->watch_list_count > 0) {
+					$HTML .= ' selected';
+				}
+			} else {
+				if ($WatchList->id == $selected) {
+#					$HTML .= ' selected';
+				}
+			}
 			$HTML .= '>' . htmlspecialchars(AddSlashes($WatchList->name));
 			if ($show_active && $WatchList->in_service == 't') {
 				$HTML .= '*';
 			}
-/*			if ($element_id) {
-				$HTML .= " ($WatchList->watch_list_count)";
+			if ($element_id && $WatchList->watch_list_count) {
+				$HTML .= " +";
 			}
-*/			$HRML .= "</option>\n";
+			$HRML .= "</option>\n";
 		}
 	}
 

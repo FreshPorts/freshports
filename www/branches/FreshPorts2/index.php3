@@ -1,5 +1,5 @@
 <?
-   # $Id: index.php3,v 1.34 2001-11-24 22:59:25 dan Exp $
+   # $Id: index.php3,v 1.34.2.1 2001-11-25 00:40:22 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -9,8 +9,8 @@
 
    require("./include/getvalues.php");
 
-   freshports_Start("FreshPorts - the place for ports",
-               "FreshPorts - new ports, applications",
+   freshports_Start("the place for ports",
+               "$FreshPortsName - new ports, applications",
                "FreeBSD, index, applications, ports");
 #$Debug=1;
 
@@ -42,9 +42,6 @@ function freshports_SummaryForDay($MinusN) {
 
 
 //$Debug = 1;
-#require( "./include/commonlogin.php3");
-#require( "./include/getvalues.php3");
-#require( "./include/freshports.php3");
 
 if (!$StartAt) {
    if ($Debug) {
@@ -89,255 +86,213 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 <?
 }
 ?>
-<tr><td valign="top" width="100%">
+
+<script language="php">
+
+function StripQuotes($string) {
+	$string = str_replace('"', '', $string);
+
+	return $string;
+}
+
+function FormatTime($Time, $Adjustment, $Format) {
+	return date($Format, strtotime($Time) + $Adjustment);
+}
+
+
+function GetPortNameFromFileName($file_name) {
+
+	list($fake, $subtree, $category, $port, $extra) = split('/', $file_name, 4);
+
+#	return $subtree;
+	return "$category/$port";
+
+}
+
+      $numrows = 500;
+      $database=pg_connect("dbname=FreshPorts2Test user=dan");
+      if ($database) {
+
+#
+# we limit the select to recent things by using a date
+# otherwise, it joins the whole table and that takes quite a while
+#
+$sql = " 
+select DISTINCT commit_log.commit_date as commit_date_raw,
+       commit_log.id as commit_log_id,
+       commit_log.description as commit_description,
+       to_char(commit_log.commit_date - INTERVAL '10800 seconds', 'YYYY-Mon-DD') as commit_date,
+       to_char(commit_log.commit_date - INTERVAL '10800 seconds', 'HH24:MI') as commit_time,
+	   commit_log_port.port_id as port_id,
+	   categories.name as category,
+	   categories.id   as category_id,
+	   element.name    as port,
+	   ports.version   as version,
+	   element.status    as status,
+	   ports.needs_refresh  as needs_refresh,
+	   ports.forbidden      as forbidden,
+	   ports.broken         as broken
+  from commit_log_port, commit_log, ports, element, categories
+ where commit_log.commit_date        > '2001-09-01'
+   and commit_log_port.commit_log_id = commit_log.id
+   and commit_log_port.port_id       = ports.id
+   and categories.id                 = ports.category_id
+   and element.id                    = ports.element_id
+order by commit_log.commit_date desc,
+         commit_log_id,
+         category, 
+         port
+         limit $numrows";
+
+#echo "\n<pre>sql=$sql</pre>\n";
+
+         $result = pg_exec ($database, $sql);
+         if ($result) {
+            $numrows = pg_numrows($result);
+#            echo $numrows . " rows to fetch\n";
+			if ($numrows) { 
+
+				$i=0;
+				$GlobalHideLastChange = "N";
+#				unset($ThisChangeLogID);
+				while ($myrow = pg_fetch_array ($result, $i)) {
+					$rows[$i] = $myrow;
+
+					#
+					# if we do a limit, it applies to the big result set
+					# not the resulting set if we also do a DISTINCT
+					# thus, count the commit id's ourselves.
+					#
+#					if ($ThisChangeLogID <> $myrow["commit_log_id"]) {
+#						$ThisChangeLogID = $myrow["commit_log_id"];
+						$i++;
+#					}
+#					echo "$i, ";
+					if ($i >= $numrows) break;
+				}
+
+				$NumRows = $numrows;
+				$LastDate = '';
+				if ($NumRows > 1) {
+					$LastChangeLogID = $rows[$i]["change_log_id"];
+					$LastChangeLogID = -1;
+				}
+
+?>
+
+<tr><td>
 <table width="100%" border="1" CELLSPACING="0" CELLPADDING="5"
             bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">
 <tr>
     <td colspan="3" bgcolor="#AD0040" height="30">
-        <font color="#FFFFFF" size="+1">freshports - <? echo $MaxNumberOfPorts ?> most recent commits
+        <font color="#FFFFFF" size="+1"><? echo $FreshPortsName . '-' . $MaxNumberOfPorts ?> most recent commits
         <? //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPorts) ?></font>
     </td>
 </tr>
 
-<script language="php">
+<?
+#				print "NumRows = $NumRows\n<BR>";
+				$HTML = "";
+				unset($ThisChangeLogID);
+				for ($i = 0; $i < $NumRows; $i++) {
+					$myrow = $rows[$i];
+					$ThisChangeLogID = $myrow["commit_log_id"];
 
-$DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
 
-// make sure the value for $sort is valid
+					if ($LastDate <> $myrow["commit_date"]) {
+						$LastDate = $myrow["commit_date"];
+						$HTML .= "<tr><td colspan='3'><font size='+1'>" . $myrow["commit_date"] . "</font></td></tr>";
+					}
 
-switch ($sort) {
-/* sorting by port is disabled. Doesn't make sense to do this
-   case "port":
-      $sort = "version, commit_date desc";
-      $
-cache_file .= ".port";
-      break;
-*/
-//   case "updated":
-//      $sort = "updated desc, port";
-//      break;
+					$j = $i;
 
-   default:
-      $sort ="change_log.commit_date desc, change_log.id asc, ports.name, category, version";
-      $cache_file .= ".updated";
-}
+					$HTML .= "<tr><td valign='top' width='150'>";
 
-$cache_file .= "." . $StartAt;
+					// OK, while we have the log change log, let's put the port details here.
+					$MultiplePortsThisCommit = 0;
+					while ($j < $NumRows && $rows[$j]["commit_log_id"] == $ThisChangeLogID) {
+						$myrow = $rows[$j];
 
-srand((double)microtime()*1000000);
-$cache_time_rnd =       300 - rand(0, 600);
+						if ($MultiplePortsThisCommit) {
+							$HTML .= '<br>';
+						}
 
-//$Debug=1;
-if ($Debug) {
-echo '<br>';
-echo '$cache_file=', $cache_file, '<br>';
-echo '$LastUpdateFile=', $LastUpdateFile , '<br>';
-echo '!(file_exists($cache_file))=',     !(file_exists($cache_file)), '<br>';
-echo '!(file_exists($LastUpdateFile))=', !(file_exists($LastUpdateFile)), "<br>";
-echo 'filectime($cache_file)=',          filectime($cache_file), "<br>";
-echo 'filectime($LastUpdateFile)=',      filectime($LastUpdateFile), "<br>";
-echo '$cache_time_rnd=',                 $cache_time_rnd, '<br>';
-echo 'filectime($cache_file) - filectime($LastUpdateFile) + $cache_time_rnd =', filectime($cache_file) - filectime($LastUpdateFile) + $cache_time_rnd, '<br>';
-}
+						$HTML .= '<a href="port-description.php3?port=' . $myrow["port_id"]  . '">';
+						$HTML .= "<B>" . $myrow["port"];
+						
+						if (strlen($myrow["version"]) > 0) {
+							$HTML .= ' ' . $myrow["version"];
+						}
 
-$UpdateCache = 0;
-if (!file_exists($cache_file)) {
-   if ($Debug) echo 'cache does not exist<br>';
-   // cache does not exist, we create it
-   $UpdateCache = 1;
-} else {
-   if ($Debug) echo 'cache exists<br>';
-   if (!file_exists($LastUpdateFile)) {
-      // no updates, so cache is fine.
-      if ($Debug) echo 'but no update file<br>';
-      $UpdateCache = 1;
-   } else {
-      if ($Debug) echo 'cache file was ';
-      // is the cache older than the db?
-      if ((filectime($cache_file) + $cache_time_rnd) < filectime($LastUpdateFile)) {
-         if ($Debug) echo 'created before the last database update<br>';
-         $UpdateCache = 1;
+						$HTML .= "</b></a>";
+
+
+						$URL_Category = "category.php3?category=" . $myrow["category_id"];
+						$HTML .= ' <font size="-1"><a href="' . $URL_Category . '">' . $myrow["category"] . '</a></font>';
+
+						// indicate if this port needs refreshing from CVS
+						if ($myrow["status"] == "D") {
+							$HTML .= '<br><font size="-1">[deleted]</font>';
+						}
+						if ($myrow["needs_refresh"]) {
+							$HTML .= ' <font size="-1">[refresh]</font>';
+						}
+
+						if ($myrow["date_created"] > Time() - 3600 * 24 * $DaysMarkedAsNew) {
+							$MarkedAsNew = "Y";
+							$HTML .= "<img src=\"/images/new.gif\" width=28 height=11 alt=\"new!\" hspace=2 > ";
+						}
+
+						if ($myrow["forbidden"]) {
+							$HTML .= '<img src="images/forbidden.gif" alt="' . StripQuotes($myrow["forbidden"]) . '" width="20" height="20" hspace="2">';
+						}
+						if ($myrow["broken"]) {
+							$HTML .= '<img src="images/broken.gif" alt="' . StripQuotes($myrow["broken"]) . '" width="17" height="16" hspace="2">';
+						}
+
+						$j++;
+						$MultiplePortsThisCommit = 1;
+					} // end while
+
+					$i = $j - 1;
+
+					$HTML .= "</td><td valign='top'>";
+					$HTML .= '<font size="-1">' . $myrow["commit_time"] . '</font>';
+#					$HTML .= '<BR><font size="-1">' . FormatTime($myrow["commit_time"], 0, "H:i") . '</font>';
+#					$HTML .= '<BR><font size="-1">' . $myrow["commit_date_raw"] . '</font>';
+
+					$HTML .= "</td><td valign='top'>";
+					$HTML .= '<PRE VARIABLE WRAP>' . htmlspecialchars($myrow["commit_description"]) . "</PRE></td>\n";
+
+					$HTML .= "</tr>\n";
+				}
+
+				$HTML .= "</td></tr>\n";
+
+				echo $HTML;
+
+	            echo "</table>\n";
+			} else {
+				echo "<P>Sorry, nothing found in the database....</P>\n";
+			}
+         } else {
+            echo "read from test failed";
+         }
+
+         pg_exec ($database, "end");
       } else {
-         if ($Debug)  echo 'created after the last database update<br>';
+         echo "no connection";
       }
-   }
-}
-
-//$UpdateCache = 1;
-
-if ($UpdateCache == 1) {
-   if ($Debug) echo 'time to update the cache<br>'. "\n";
-
-$sql = "select ports.id, ports.name as port, change_log.commit_date as updated_raw, categories.name as category, " .
-       "change_log.committer, ports.last_update_description as update_description, ports.version as version, " .
-       "ports.maintainer, ports.short_description, UNIX_TIMESTAMP(ports.date_created) as date_created, " .
-       "date_format(date_created, '$FormatDate $FormatTime') as date_created_formatted, categories.id as category_id, ".
-       "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, ports.status, " .
-       "date_format(change_log.commit_date, '$FormatDate') as updated_date, change_log.committer, " .
-       "date_format(change_log.commit_date, '$FormatTime') as updated_time, change_log.id as change_log_id," .
-       "change_log.update_description, date_format(change_log.commit_date, '%Y-%m-%d') as commit_date, " .
-       "ports.last_change_log_id, date_format(change_log.commit_date, '%T') as commit_time, " .
-       "ports.broken, ports.forbidden " .
-       "from ports, categories, change_log, change_log_port  ".
-       "WHERE ports.system                    = 'FreeBSD' ".
-       "  and ports.primary_category_id       = categories.id " .
-       "  and change_log_port.port_id         = ports.id " .
-       "  and change_log.id                   = change_log_port.change_log_id " .
-       "  and change_log.commit_date          > '" . date("Y-m-d", time() - 60*60*24*14) . "' ";
-
-$sql .= " order by $sort ";
-
-$sql .= " limit $MaxNumberOfPorts ";
-
-if ($Debug) echo $sql;
-
-$result = mysql_query($sql, $db);
-
-if (!$result) {
-   echo mysql_errno().": ".mysql_error()."<BR>";
-}
-
-//$HTML .= '<tr><td>';
-
-$i=0;
-$GlobalHideLastChange = "N";
-while ($myrow = mysql_fetch_array($result)) {
-   $rows[$i] = $myrow;
-   $i++;
-//   echo "$i, ";
-}
-
-$NumRows = $i;
-$LastDate = '';
-if ($NumRows > 1) {
-   $LastChangeLogID = $rows[$i]["change_log_id"];
-   $LastChangeLogID = -1;
-}
-
-for ($i = 0; $i < $NumRows; $i++) {
-   $myrow = $rows[$i];
-
-   $ThisChangeLogID = $myrow["change_log_id"];
-
-   if ($LastDate <> $myrow["commit_date"]) {
-      $LastDate = $myrow["commit_date"];
-      $HTML .= "<tr><td colspan='3'><font size='+1'>" . $myrow["updated_date"] . "</font></td></tr>";
-   }
-
-   $j = $i;
-
-   $HTML .= "<tr><td valign='top' width='150'>";
-
-   // OK, while we have the log change log, let's put the port details here.
-   $MultiplePortsThisCommit = 0;
-   while ($j < $NumRows && $rows[$j]["change_log_id"] == $ThisChangeLogID) {
-   $myrow = $rows[$j];
-
-//   include("./include/port-basics.inc");
-
-
-   if ($MultiplePortsThisCommit) {
-      $HTML .= '<br>';
-   }
-   $HTML .= '<a href="port-description.php3?port=' . $myrow["id"]  . '">';
-   $HTML .= "<b>" . $myrow["port"];
-   if (strlen($myrow["version"]) > 0) {
-      $HTML .= ' ' . $myrow["version"];
-   }
-
-   $HTML .= "</b></a>";
-
-   $URL_Category = "category.php3?category=" . $myrow["category_id"];
-   $HTML .= ' <font size="-1"><a href="' . $URL_Category . '">' . $myrow["category"] . '</a></font>';
-
-   // indicate if this port needs refreshing from CVS
-   if ($myrow["status"] == "D") {
-      $HTML .= '<br><font size="-1">[deleted]</font>';
-   }
-   if ($myrow["needs_refresh"]) {
-      $HTML .= ' <font size="-1">[refresh]</font>';
-   }
-
-
-   if ($myrow["date_created"] > Time() - 3600 * 24 * $DaysMarkedAsNew) {
-      $MarkedAsNew = "Y";
-      $HTML .= "<img src=\"/images/new.gif\" width=28 height=11 alt=\"new!\" hspace=2 > ";
-   }
-
-//   $HTML .= "<img src=\"/images/stop.gif\" width=16 height=16 alt=\"stop!\" hspace=2 > ";
-
-   $j++;
-   $MultiplePortsThisCommit = 1;
-   } // end while
-
-   $i = $j - 1;
-
-   $HTML .= "</td><td valign='top'>";
-   $HTML .= '<font size="-1">' . $myrow["updated_time"] . '</font>';
-
-   $HTML .= "</td><td valign='top'>";
-   if ($myrow["forbidden"]) {
-      $HTML .= '<img src="images/forbidden.gif" alt="Forbidden" width="20" height="20" hspace="2">';
-   }
-   if ($myrow["broken"]) {
-      $HTML .= '<img src="images/broken.gif" alt="Broken" width="17" height="16" hspace="2">'; 
-   }
-   $HTML .= htmlspecialchars($myrow["update_description"]) . "</td>\n";
-
-   $HTML .= "</tr>\n";
-}
-
-  $HTML .= "</td></tr>\n";
-
-
-echo $HTML;
-/*
-   $fpwrite = fopen($cache_file, 'w');
-   if(!$fpwrite) {
-      echo 'error on open<br>';
-      echo "$errstr ($errno)<br>\n";
-      exit;
-   } else {
-//      echo 'written<br>';
-      fputs($fpwrite, $HTML);
-      fclose($fpwrite);
-   }
-*/
-} else {
-//   echo 'looks like I\'ll read from cache this time';
-   if (file_exists($cache_file)) {
-      include($cache_file);
-   }
-}
-
-/*
-echo '<tr><td height="40" colspan="2" valign="bottom">';
-
-if ($StartAt == 0) {
-   echo 'Previous Page';
-} else {
-   echo '<a href="' . basename($PHP_SELF);
-   if ($StartAt > $MaxNumberOfPorts) {
-      echo '?StartAt=' . ($Start + $MaxNumberOfPorts);
-   }
-   echo '">Previous Page</a>';
-}
-
-echo '  <a href="' . basename($PHP_SELF) . "?StartAt=" . ($StartAt + $MaxNumberOfPorts) . '">Next Page</a>';
-
-echo '</td></tr>';
-*/
 
 </script>
-</table>
 </td>
   <td valign="top" width="*">
    <? include("./include/side-bars.php") ?>
 <?
-freshports_SummaryForDay(0);
-freshports_SummaryForDay(1);
-freshports_SummaryForDay(2);
-freshports_SummaryForDay(3);
+	freshports_SummaryForDay(0);
+	freshports_SummaryForDay(1);
+	freshports_SummaryForDay(2);
+	freshports_SummaryForDay(3);
 ?>
  </td>
 </tr>

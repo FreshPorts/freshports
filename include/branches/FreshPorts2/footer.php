@@ -1,5 +1,5 @@
 <?
-	# $Id: footer.php,v 1.5.2.5 2002-02-21 23:13:56 dan Exp $
+	# $Id: footer.php,v 1.5.2.6 2002-04-18 20:59:33 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 ?>
@@ -44,8 +44,8 @@ ALT="powered by phorum" BORDER="0" WIDTH="88" HEIGHT="31"></A>
 ?>
 
 <TR><TD align="right">
-<SMALL><A HREF="/legal.php" target="_top">Copyright</A> &copy; 2000-2002 <A HREF="http://www.dvl-software.com/">DVL Software Limited</A>.
-All rights reserved.</SMALL>
+
+<? echo freshports_copyright(); ?>
 </TD></TR>
 </TABLE>
 

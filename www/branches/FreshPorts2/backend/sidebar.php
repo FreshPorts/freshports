@@ -1,5 +1,5 @@
 <?
-	# $Id: sidebar.php,v 1.1.2.1 2002-04-18 20:48:03 dan Exp $
+	# $Id: sidebar.php,v 1.1.2.2 2002-04-18 20:59:45 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -63,6 +63,10 @@
 	}
 ?>
 	</UL>
+
+<P ALIGN="right">
+<? echo freshports_copyright(); ?>
+</P>
 
 </body>
 </html>

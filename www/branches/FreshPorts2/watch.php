@@ -1,5 +1,5 @@
 <?
-	# $Id: watch.php,v 1.1.2.11 2002-03-19 12:45:26 dan Exp $
+	# $Id: watch.php,v 1.1.2.12 2002-03-25 19:52:56 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -153,7 +153,7 @@ for ($i = 0; $i < $numrows; $i++) {
 				$HTML .= '<DT>';
 			}
 
-			$HTML .= '<BIG><BIG><B><a href="/' . $Category . '/">' . $Category . '</a><B></BIG></BIG>';
+			$HTML .= '<BIG><BIG><B><a href="/' . $Category . '/">' . $Category . '</a></B></BIG></BIG>';
 			if ($ShowCategoryHeaders) {
 				$HTML .= "</DT>\n<DD>";
 			}

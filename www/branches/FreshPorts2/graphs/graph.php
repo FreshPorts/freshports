@@ -1,5 +1,5 @@
 <?
-	# $Id: graph.php,v 1.1.2.1 2002-04-19 18:54:34 dan Exp $
+	# $Id: graph.php,v 1.1.2.2 2002-04-19 20:22:05 dan Exp $
 	#
 
 // parameters: graph id
@@ -34,7 +34,7 @@ if (!isset($id)) $id=0;
 
 $fid = "graph$id";
 $cache_dir = "/tmp/";
-$period = 5; // in seconds
+$period = 14400; // in seconds
 
 $filename = $cache_dir.$fid.".png";
 if (!file_exists($filename) || filemtime($filename)+$period<time())	

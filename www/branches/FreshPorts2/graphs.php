@@ -1,78 +1,90 @@
 <?
-	# $Id: graphs.php,v 1.5.2.2 2002-01-05 23:01:15 dan Exp $
+	# $Id: graphs.php,v 1.5.2.3 2002-04-19 20:22:04 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
 	require("./include/common.php");
 	require("./include/freshports.php");
 	require("./include/databaselogin.php");
+	require("./include/getvalues.php");
 
-#require( "./include/commonlogin.php");
-#require( "./include/getvalues.php");
+	freshports_Start("Statistics - everyone loves a graph",
+					"freshports - new ports, applications",
+					"FreeBSD, index, applications, ports");
 
-$MaxGraph = 3;
+?>
+<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<TR><TD VALIGN=TOP WIDTH="100%">
+<TABLE WIDTH="100%" BORDER="0">
+<TR>
+	<? freshports_PageBannerText("Statistics - everyone loves a graph"); ?>
+</TR>
 
-if (!isset($graph)) {
-   $graph = 1;
-} else {
-   if ($graph < 1 or $graph > $MaxGraph) {
-      $graph = 1;
-   }
-}
+<TR><TD>
+<P>
+If you have suggestions for graphs, please submit them via the forum.
+</P>
+</TD></TR>
 
-switch ($graph) {
-   case 1:
-      $cache_file .= ".top.watched.ports";
-      break;
+<TR><TD>
 
-   case 2:
-      $cache_file .= ".top.committers";
-      break;
-
-   case 3:
-      $cache_file .= ".top.biggest.commits";
-      break;
-}
-
-$CreateImage = 0;
-if (!file_exists($cache_file)) {
-//   echo 'cache does not exist<br>';
-   // cache does not exist, we create it
-   $CreateImage = 1;
-} else {
-/*
-   echo "filectime  = " . filectime($cache_file) . "<br>";
-   echo "filectime+ = " . (filectime($cache_file) + $cache_time_rnd + 24*60*60) . "<br>";
-   echo "time()     = " . time();
-*/
-   if ((filectime($cache_file) + $cache_time_rnd + 24*60*60) < time()) {
-      $CreateImage = 1;
-   }
-}
-
-$CreateImage = 1;
-if ($CreateImage) {
-   require("./_phpgraph/phpgraph.php");
-   require("./include/statistics.php");
-   switch ($graph) {
-      case 1:
-         $data = freshports_stats_watched_ports($db, 20);
-         freshports_DrawGraph($data, "Top 20 Most Watched Ports", 500, 475, $cache_file);
-         break;
-
-      case 2:
-         $data = freshports_stats_committers($db, 20);
-         freshports_DrawGraph($data, "Top 20 Committers - number of commits", 500, 475, $cache_file); 
-         break;
-
-      case 3:
-         $data = freshports_stats_biggest_commits($db, 20);
-         freshports_DrawGraph($data, "Top 20 biggest commits - number of ports", 500, 475, $cache_file);
-         break;
-   }
-} else {
-   header("Content-type: image/png");
-   $im = ImageCreateFromPng($cache_file);
-   ImagePng($im);
+<TABLE WIDTH="100%" BORDER="0">
+<TR>
+<TD WIDTH="300" VALIGN="top">
+<?
+	$sql = "select id, title from graphs order by title";
+	$result = pg_exec($db, $sql);
+    if ($result) {
+    	$numrows = pg_numrows($result);
+		if ($numrows) { 
+			echo '<UL>';
+			for ($i = 0; $i < $numrows; $i++) {
+				$myrow = pg_fetch_array ($result, $i);
+				echo '<LI><A HREF="/graphics.php?id=' . $myrow["id"] . '">' . $myrow["title"] . '</A></LI>';
+			}
+			echo '</UL>';
+		} else {
+			echo "Oh. This is rather embarassing.  I have no idea how this could have happened. ";
+			echo "I do hope you will understand.  Please don't tell anyone.  But I don't have any ";
+			echo "data to show you.  For you see, nobody has bothered to populate the graphs table.";
+		}
+	} else {
+	}
+?>
+</TD>
+<TD>
+<?
+	if ($id) {
+?>
+<FORM ACTION="/graphs/graphclick.php" METHOD="get">
+<INPUT TYPE="hidden" NAME="id"    VALUE="<? echo $id; ?>">
+<INPUT NAME="graph"  TYPE="image" SRC="/graphs/graph.php?id=<? echo $id; ?>">
+</FORM>
+<?
 }
 ?>
+</TD>
+</TR>
+</TABLE>
+
+
+</TD</TR>
+
+</TABLE>
+</TD>
+  <TD valign="top">
+    <?
+       include("./include/side-bars.php");
+    ?>
+ </TD>
+</TR>
+</TABLE>
+
+<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<TR><TD>
+<? include("./include/footer.php") ?>
+</TD></TR>
+</TABLE>
+
+</body>
+</html>

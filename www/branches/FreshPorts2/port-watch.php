@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-watch.php,v 1.1.2.33 2003-04-28 00:53:58 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.34 2003-04-29 14:01:28 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -102,7 +102,6 @@ if ($submit) {
                "freshports - new ports, applications",
                "FreeBSD, index, applications, ports");
 }
-
 ?>
 
 <table width="100%" border="0">
@@ -116,25 +115,49 @@ if ($submit) {
 
 $DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
 
+# we don't want to use port_categories here.... we'll get duplicates...
+
+$Category = new Category($db);
+$Category->FetchByName($category);
+if (!IsSet($Category->id)) {
+	die("category $category not found");
+}
+
+
+if ($Category->is_primary == 't') {
 $sql = "
   SELECT element.id, 
          element.name    AS port, 
          element.status, 
          categories.name AS category
-    FROM ports, ports_categories, element, categories
+    FROM ports_active, element, categories
+   WHERE categories.name          = '$category'
+     AND ports_active.element_id  = element.id 
+     AND ports_active.category_id = categories.id
+ORDER BY element.name";
+} else {
+$sql = "
+  SELECT element.id, 
+         element.name    AS port, 
+         element.status, 
+         categories.name AS category
+    FROM ports_active, ports_categories, element, categories
    WHERE categories.name              = '$category'
      AND ports_categories.category_id = categories.id
-     AND ports_categories.port_id     = ports.id
-     AND ports.element_id             = element.id 
+     AND ports_categories.port_id     = ports_active.id
+     AND ports_active.element_id      = element.id
 ORDER BY element.name";
+}
 
 if ($Debug) echo "<pre>$sql</pre>\n";
 
 $result = pg_exec($db, $sql);
 
+$numrows = pg_numrows($result);
+
+$HTML .= '<tr><td><b>' . $numrows . ' ports found</b></td></tr>';
 $HTML .= '<tr><td valign="top" ALIGN="center">' . "\n";
 
-$numrows = pg_numrows($result);
 if ($numrows) {
 	
 	$HTML .= '<table border="0">' . "\n" . '<tr><td>' . "\n";
@@ -202,6 +225,7 @@ if ($numrows) {
 <input TYPE="submit" VALUE="update watch list" name="submit">
 <input TYPE="reset"  VALUE="reset form">
 <input type="hidden" name="watch_list_id" value="<?php echo $wlid; ?>">
+
 </div>
 </form>
 </table>

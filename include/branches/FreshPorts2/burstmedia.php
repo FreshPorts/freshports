@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: burstmedia.php,v 1.1.2.11 2003-06-03 09:47:09 dan Exp $
+	# $Id: burstmedia.php,v 1.1.2.12 2004-09-22 23:03:34 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -9,165 +9,110 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/burstmedia.php');
 
 
-function BurstMediaCode() {
-#
-# This is required on all pages which contain Burst Ads.  It's the base code.
-#
-
-echo '<!-- BEGIN RICH-MEDIA BURST! CODE --> 
-<script language="JavaScript" type="text/javascript">
-<!-- /* © 1997-2001 BURST! Media, LLC. All Rights Reserved.*/ 
-function ShowBurstAd(adcode, width, height) {
- var bN = navigator.appName;
- var bV = parseInt(navigator.appVersion);
- var base=\'http://www.burstnet.com/\';
- var Tv=\'\';
- var agt=navigator.userAgent.toLowerCase();
- if (bV>=4)  
- {ts=window.location.pathname+window.location.search;
-  i=0; Tv=0; while (i< ts.length)
-    { Tv=Tv+ts.charCodeAt(i); i=i+1; } Tv="/"+Tv;}
-  else   {Tv=escape(window.location.pathname);
-  if( Tv.charAt(0)!=\'/\' ) Tv="/"+Tv; 
-    else if (Tv.charAt(1)=="/")
- Tv="";
- if( Tv.charAt(Tv.length-1) == "/")
-   Tv = Tv + "_";}
- if (bN==\'Netscape\'){
-  if ((bV>=4)&&(agt.indexOf("mac")==-1))  
- { document.write(\'<s\'+\'cript src="\'+ 
-  base+\'cgi-bin/ads/\'+adcode+\'.cgi/RETURN-CODE/JS\' 
-  +Tv+\'">\'); 
-  document.write(\'</\'+\'script>\');
- }
-   else if (bV>=3) {document.write(\'<\'+\'a href="\'+base+\'ads/\' + 
-  adcode + \'-map.cgi\'+Tv+\'"target=_top>\');
-  document.write(\'<img src="\' + base + \'cgi-bin/ads/\' +
-  adcode + \'.cgi\' + Tv + \'" width="\' + width + \'" height="\' + height + \'"\' +
-  \' border="0" alt="Click Here"><\/a>\');}
-}
-if (bN==\'Microsoft Internet Explorer\') 
-document.write(\'<ifr\'+\'ame id="BURST" src="\'+base+\'cgi-bin/ads/\'  
-+     
-adcode + \'.cgi\' + Tv + \'/RETURN-CODE" width="\' + width + \'" height="\' + height + \'"\' +
-\'marginwidth="0" marginheight="0" hspace="0" vspace="0" \' +
-\'frameborder="0" scrolling="no"><\/ifr\'+\'ame>\');
-}
-//-->
-</script>
-<!-- END BURST CODE -->
-';
-}
-
 function BurstMediaAd() {
-#
-# This goes at the top of each article and show the ad, the graphic, and the links
-#
-GLOBAL $AddressForAds;
 
-echo '	<!-- BEGIN RICH-MEDIA BURST! CODE --> 
-	<script language="JavaScript" type="text/javascript">
-	<!--
-	ShowBurstAd(\'ad4556a\',\'468\',\'60\');
-	// --></script>
-	<noscript><a href="http://www.burstnet.com/ads/ad4556a-
-	map.cgi/ns" target="_top"><img src="http://www.burstnet.com/cgi-
-	bin/ads/ad4556a.cgi/ns" width="468" height="60" 
-	border="0" alt="Click Here"></a> 
-	</noscript>
-	<!-- END BURST CODE -->
+echo '
+
+<!-- BEGIN RICH-MEDIA BURST! CODE -->
+<script language="JavaScript" type="text/javascript">
+rnum=Math.round(Math.random() * 100000);
+
+document.write(\'<scr\'+\'ipt src="http://www.burstnet.com/cgi-bin/ads/ad4556a.cgi/v=2.0S/sz=468x60A|728x90A/\'+rnum+\'/NI/RETURN-CODE/JS/"><\/scr\'+\'ipt>\');
+
+
+</script>
+<noscript><a href="http://www.burstnet.com/ads/ad4556a-map.cgi/ns/v=2.0S/sz=468x60A|728x90A/" target="_top">
+<img src="http://www.burstnet.com/cgi-bin/ads/ad4556a.cgi/ns/v=2.0S/sz=468x60A|728x90A/" border="0" alt="Click Here"></a>
+</noscript>
+<!-- END BURST CODE -->
+
 ';
-
-#<BR>
-#
-#<small>Your ad here.&nbsp; Please <a href="mailto:" . $AddressForAds . "?subject=your ad here">contact us</A> for details.</small>
 
 }
 
 function BurstSkyscraperAd() {
 
 echo '
+
+<!-- BEGIN RICH-MEDIA BURST! CODE -->
 <script language="JavaScript" type="text/javascript">
-<!-- /* © 1997-2002 BURST! Media, LLC. All Rights Reserved.*/
-var TheAdcode = \'sk4556a\';
-var bN = navigator.appName;
-var bV = parseInt(navigator.appVersion);
-var base=\'http://www.burstnet.com/\';
-var Tv=\'\';
-var backColor=\'' . str_replace('#', '', FRESHPORTS_BGCOLOR)   . '\';
-var fontColor=\'' . str_replace('#', '', FRESHPORTS_TEXTCOLOR) . '\';
-var agt=navigator.userAgent.toLowerCase();
-if (bV>=4)
-  {ts=window.location.pathname+window.location.search;
-   i=0; Tv=0; while (i< ts.length)
-      { Tv=Tv+ts.charCodeAt(i); i=i+1; } Tv="/"+Tv;}
-  else   {Tv=escape(window.location.pathname);
-   if( Tv.charAt(0)!=\'/\' ) Tv="/"+Tv;
-          else if (Tv.charAt(1)=="/")
-Tv="";
-  if( Tv.charAt(Tv.length-1) == "/")
-    Tv = Tv + "_";}
+rnum=Math.round(Math.random() * 100000);
+document.write(\'<scr\'+\'ipt src="http://www.burstnet.com/cgi-bin/ads/sk4556a.cgi/v=2.0S/sz=120x600A|160x600A/\'+rnum+\'/RETURN-CODE/JS/"><\/scr\'+\'ipt>\');
+</script>
+<noscript><a href="http://www.burstnet.com/ads/sk4556a-map.cgi/ns/v=2.0S/sz=120x600A|160x600A/" target="_top">
+<img src="http://www.burstnet.com/cgi-bin/ads/sk4556a.cgi/ns/v=2.0S/sz=120x600A|160x600A/" border="0" alt="Click Here"></a>
+</noscript>
+<!-- END BURST CODE -->
 
-  document.write(\'<ifr\'+\'ame id=BURST src="\'+base+\'cgi-bin/ads/\' +
-  TheAdcode + \'.cgi\' + Tv +  \'/zg\' + backColor + \'x\' + fontColor + \'l\' + fontColor + 
-  \'v\' + fontColor + \'k\' + fontColor + \'/RETURN-CODE" width=165 height=600\' +
-  \' marginwidth=0 marginheight=0 hspace=0 vspace=0 \' +
-  \'frameborder=0 scrolling=no>\');
-  document.write(\'<A HREF="http://bchosting.com/track.php?refID=5665"><img src="';
-
-if (rand(0, 1) == 0) {
-	echo '/ads/bch_banner_freeserver2.sky.gif';
-} else {
-	echo '/ads/bch_banner_dedicated2.sky.gif';
-}
-
-echo '" width=160 height=600 BORDER="0"><\/A>\');
-  document.write(\'<\/ifr\'+\'ame>\');
-// -->
-</script>';
+';
 }
 
 
 
-function Burst_120x160() {
 
-echo '	<!-- BEGIN BURST! CODE --> 
-	<!--webbot bot="HTMLMarkup" startspan -->
-	<IFRAME SRC="http://www.burstnet.com/cgi-bin/ads/bt4556a.cgi/RETURN-CODE/if/996362698;/" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" vspace="0" hspace="0" width="120" height="60">
-	<!--webbot bot="HTMLMarkup" endspan --> 
-	<a target="_top" HREF="http://www.burstnet.com/ads/bt4556a-map.cgi/996362698"><img SRC="http://www.burstnet.com/cgi-bin/ads/bt4556a.cgi/996362698" border="0" width="120" height="60" alt="Please support our sponsor."></a>
-	<!--webbot            bot="HTMLMarkup" startspan --></IFRAME>
-	<!--webbot bot="HTMLMarkup" endspan -->
-	<!-- END BURST! CODE -->
+
+function ads_Burst_125x125() {
+
+echo '
+
+<!-- BEGIN RICH-MEDIA BURST! CODE -->
+<script language="JavaScript" type="text/javascript">
+rnum=Math.round(Math.random() * 100000);
+document.write(\'<scr\'+\'ipt src="http://www.burstnet.com/cgi-bin/ads/cb4556a.cgi/v=2.0S/sz=125x125A/\'+rnum+\'/RETURN-CODE/JS/"><\/scr\'+\'ipt>\');
+</script>
+<noscript><a href="http://www.burstnet.com/ads/cb4556a-map.cgi/ns/v=2.0S/sz=125x125A/" target="_top">
+<img src="http://www.burstnet.com/cgi-bin/ads/cb4556a.cgi/ns/v=2.0S/sz=125x125A/" border="0" alt="Click Here"></a>
+</noscript>
+<!-- END BURST CODE -->
+
 ';
 
 }
 
-function Burst_125x125() {
+function ads_Burst_468x60_Below() {
+echo '
 
-echo '  <!-- BEGIN BURST! CODE -->
-	<IFRAME SRC="http://www.burstnet.com/cgi-bin/ads/cb4556a.cgi/RETURN-CODE/if/996362698/" scrolling="no" marginwidth="0"
-	marginheight="0" frameborder="0" vspace="0" hspace="0" width="125" height="125">
-	<a target="_top" HREF="http://www.burstnet.com/ads/cb4556a-map.cgi/996362698">
-	<img SRC="http://www.burstnet.com/cgi-bin/ads/cb4556a.cgi/996362698" border="0" width="125" height="125" alt="Please support our sponsor."></a></IFRAME>
-	<!-- END BURST! CODE -->
-';
+<!-- BEGIN RICH-MEDIA BURST! CODE -->
+<script language="JavaScript" type="text/javascript">
+rnum=Math.round(Math.random() * 100000);
+document.write(\'<scr\'+\'ipt src="http://www.burstnet.com/cgi-bin/ads/ba4556a.cgi/v=2.0S/sz=468x60B/\'+rnum+\'/RETURN-CODE/JS/"><\/scr\'+\'ipt>\');
+</script>
+<noscript><a href="http://www.burstnet.com/ads/ba4556a-map.cgi/ns/v=2.0S/sz=468x60B/" target="_top">
+<img src="http://www.burstnet.com/cgi-bin/ads/ba4556a.cgi/ns/v=2.0S/sz=468x60B/" border="0" alt="Click Here"></a>
+</noscript>
+<!-- END BURST CODE -->
 
-}
-
-function Burst_468x60_Below() {
-echo '	<div ALIGN="center">
-	<!-- BEGIN RICH-MEDIA BURST! CODE --> 
-	<script language="JavaScript" type="text/javascript">
-	<!--
-	ShowBurstAd(\'ba4556a\',\'468\',\'60\');
-	// --></script>
-	<noscript><a href="http://www.burstnet.com/ads/ba4556a-map.cgi/ns" target="_top"><img src="http://www.burstnet.com/cgi-bin/ads/ba4556a.cgi/ns" width="468" height="60" border="0" alt="Click Here"></a>
-	</noscript>
-	<!-- END BURST CODE -->
-	</div>
 ';
 }
 
+function ads_Burst_300x250() {
+
+GLOBAL $ShowAds;
+
+	if ($ShowAds) {
+echo '
+
+<!-- BEGIN RICH-MEDIA BURST! CODE -->
+<script language="JavaScript" type="text/javascript">
+rnum=Math.round(Math.random() * 100000);
+document.write(\'<scr\'+\'ipt src="http://www.burstnet.com/cgi-bin/ads/ad4556a.cgi/v=2.0S/sz=300x250A/\'+rnum+\'/RETURN-CODE/JS/"><\/scr\'+\'ipt>\');
+</script>
+<noscript><a href="http://www.burstnet.com/ads/ad4556a-map.cgi/ns/v=2.0S/sz=300x250A/" target="_top">
+<img src="http://www.burstnet.com/cgi-bin/ads/ad4556a.cgi/ns/v=2.0S/sz=300x250A/" border="0" alt="Click Here"></a>
+</noscript>
+<!-- END BURST CODE -->
+
+';
+
+	}
+}
+
+function ads_Burst_300x250_table() {
+
+	echo '<table border="0" cellpadding="8" cellspacing="0" align="right"><tr><td>' . "\n";
+	echo ads_Burst_300x250();
+	echo '</td></tr></table>' ."\n";
+
+}
 
 ?>

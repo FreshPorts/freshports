@@ -1,5 +1,5 @@
 <?
-	# $Id: missing.php,v 1.1.2.13 2002-12-11 04:44:37 dan Exp $
+	# $Id: missing.php,v 1.1.2.14 2003-01-05 13:14:13 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
@@ -77,7 +77,7 @@ Perhaps a <A HREF="/categories.php">list of categories</A> for <A HREF="/search.
 </TABLE>
 
 <?
-freshports_ShowFooter();
+	freshports_ShowFooter();
 ?>
 
 </body>

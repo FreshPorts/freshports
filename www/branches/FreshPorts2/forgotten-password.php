@@ -1,36 +1,20 @@
 <?
-	# $Id: forgotten-password.php,v 1.1.2.16 2002-12-09 20:37:47 dan Exp $
+	# $Id: forgotten-password.php,v 1.1.2.17 2002-12-10 03:57:30 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
 
-
-$Debug=0;
+$Debug = 0;
 
 $submit = $_POST["submit"];
 
 $MailSent = 0;
 
-#if (!$submit) {
-#   require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
-##   echo 'not submit';
-#   #
-#   # if they are logged in, put them over to customize, they shouldn't be here...
-#   #
-#   if ($User->id) {
-#       header("Location: customize.php");
-#       // Make sure that code below does not get executed when we redirect.
-#       exit;
-#   } else {
-##      echo 'no userid';
-#   }
-#}
-
 if ($submit) {
-//   echo "UserID = $User->id\n";
+//   echo "UserID = $UserID\n";
 	$Debug=0;
    // process form
 
@@ -44,18 +28,18 @@ if ($submit) {
 
    $OK = 1;
 
-	$User->id	= AddSlashes($_POST["UserID"]);
+	$UserID	= AddSlashes($_POST["UserID"]);
 	$eMail	= AddSlashes($_POST["eMail"]);
 
-   if ($User->id) {
+   if ($UserId) {
       $errors = "";
-      $User->id = addslashes($User->id);
+      $UserId = addslashes($UserID);
 
       if ($Debug) {
-         echo $User->id . "<br>\n";
+         echo $UserID . "<br>\n";
       }
 
-      $sql = "select * from users where lower(name) = lower('$User->id')";
+      $sql = "select * from users where lower(name) = lower('$UserID')";
 
       if ($Debug) {
          echo "$sql<br>\n";
@@ -248,7 +232,7 @@ we're only dealing with your FreshPorts login, not a financial transaction....</
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST">
       <input type="hidden" name="custom_settings" value="1"><input type="hidden" name="LOGIN" value="1">
       <p>User ID:<br>
-      <input SIZE="15" NAME="UserID" value="<? echo $User->id ?>"></p>
+      <input SIZE="15" NAME="UserID" value="<? echo $UserID ?>"></p>
       <p>email address:<br>
       <input NAME="eMail" VALUE = "<? echo $eMail ?>" SIZE="20"></p>
       <p><input TYPE="submit" VALUE="eMail Me!" name=submit> &nbsp;&nbsp;&nbsp;&nbsp; <input TYPE="reset" VALUE="reset form">
@@ -264,14 +248,14 @@ we're only dealing with your FreshPorts login, not a financial transaction....</
 </TD>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
     <? 
-       unset($User->id);
-       include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php");
+       unset($UserID);
+       require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php");
     ?>
  </TD>
 </TR>
 </TABLE> 
 </TD></TR>
 </TABLE>
-<? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
 </body>
 </html>

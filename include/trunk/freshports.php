@@ -104,7 +104,7 @@ function freshports_CategoryIDFromCategory($category, $db) {
 }
 
 function freshports_SideBarHTML($Self, $URL, $Title) {
-//   echo "PHP_SELF = $Self and URL=$URL";
+//  echo "PHP_SELF = $Self and URL=$URL";
    if ($Self == $URL || ($Self == '/index.php3' && $URL == '/')) {
       $HTML = $Title;
    } else {
@@ -147,12 +147,14 @@ function freshports_ONToYN($Value) {
 }
 
 
-function freshports_PortDetails($myrow, $ShowDeletedDate, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink) {
+function freshports_PortDetails($myrow, $ShowDeletedDate, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription) {
 //
 // This php3 fragment does the basic port information for a single port.
 // I'd show you what code is expected in $myrow, but I can't be bothered
 // right now
 //
+   GLOBAL $freshports_CVS_URL;
+
    $MarkedAsNew = "N";
    $HTML .= "<dl>";
 

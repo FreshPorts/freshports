@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: date.php,v 1.1.2.19 2003-07-29 20:37:41 dan Exp $
+	# $Id: date.php,v 1.1.2.20 2003-09-25 14:02:46 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -133,7 +133,7 @@
 					$HTML .= '&nbsp;';
 					$HTML .= freshports_Email_Link($commit->message_id);
 		
-					if ($commit->encoding_losses == 't') {
+					if ($commit->EncodingLosses()) {
 						$HTML .= '&nbsp;' . freshports_Encoding_Errors();
 					}
 				}

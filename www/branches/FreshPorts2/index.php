@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.81 2003-09-24 13:43:18 dan Exp $
+	# $Id: index.php,v 1.1.2.82 2003-09-25 14:02:46 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -168,7 +168,7 @@ ports. A port is marked as new for 10 days.
 							$HTML .= '&nbsp;';
 							$HTML .= freshports_Email_Link($mycommit->message_id);
 
-							if ($mycommit->encoding_losses == 't') {
+							if ($mycommit->EncodingLosses()) {
 								$HTML .= '&nbsp;' . freshports_Encoding_Errors();
 							}
 

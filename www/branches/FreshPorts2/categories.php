@@ -1,5 +1,5 @@
 <?
-	# $Id: categories.php,v 1.1.2.9 2002-06-09 21:42:32 dan Exp $
+	# $Id: categories.php,v 1.1.2.10 2002-11-28 23:16:33 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -14,9 +14,9 @@
 
 ?>
 
-<table width="<? echo $TableWidth ?>" border="0" ALIGN="center">
+<table width="<? echo $TableWidth ?>" border="10" ALIGN="center">
 <tr><td valign="top" width="100%">
-<table width="100%" border="0" CELLPADDING="5">
+<table width="100%" border="4" CELLPADDING="5">
   <tr>
 	<? freshports_PageBannerText("$FreshPortsTitle - list of categories", 4); ?>
   </tr>
@@ -39,7 +39,7 @@ $DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
 
 //echo "sort is $sort\n";
 
-$sort			= AddSlashes($_GET["sort"]);
+$sort				= AddSlashes($_GET["sort"]);
 $category		= AddSlashes($_GET["category"]);
 $count			= AddSlashes($_GET["count"]);
 $description	= AddSlashes($_GET["description"]);
@@ -53,7 +53,7 @@ switch ($sort) {
       break;
 
    case "lastupdate":
-      $sort ="updated desc";
+      $sort ="updated_raw desc";
       $cache_file .= ".updated";
       break;
 
@@ -62,17 +62,18 @@ switch ($sort) {
       $cache_file .= ".category";
 }
 
-$sql = "select to_char(max(commit_log.commit_date) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as updated, count(ports.id) as count, " .
-       "categories.id as category_id, categories.name as category, categories.description as description ".
-       "from categories, element, ports left outer join commit_log on ( ports.last_commit_id = commit_log.id ) ".
-       "WHERE ports.category_id    = categories.id " .
-       "  and ports.element_id     = element.id " .
-       "  and element.status       = 'A' " .
-       "group by categories.id, categories.name, categories.description ";
+$sql = "select to_char(max(commit_log.commit_date) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as updated, count(ports.id) as count,
+       max(commit_log.commit_date) - SystemTimeAdjust() as updated_raw,
+       categories.id as category_id, categories.name as category, categories.description as description 
+       from categories, element, ports left outer join commit_log on ( ports.last_commit_id = commit_log.id )
+       WHERE ports.category_id    = categories.id 
+         and ports.element_id     = element.id 
+         and element.status       = 'A' 
+       group by categories.id, categories.name, categories.description ";
 
 $sql .=  " order by $sort";
 
-//echo $sql, "\n";
+#echo '<pre>' . $sql, "</pre>\n";
 //echo $sort, "\n";
 
 $result = pg_exec($db, $sql);
@@ -87,7 +88,7 @@ if ($sort == "category") {
 
 
 if ($sort == "count") {
-   $HTML .= freshports_echo_HTML('<td><b>Count</b></td>');
+   $HTML .= freshports_echo_HTML('<td align="center"><b>Count</b></td>');
 } else {
    $HTML .= freshports_echo_HTML('<td><a href="categories.php?sort=count"><b>Count</b></a></td>');
 }
@@ -129,7 +130,7 @@ if (!$result) {
 	}
 }
 
-$HTML .= freshports_echo_HTML("<tr><td><b>port count:</b></td><td ALIGN=\"right\"><b>$NumPorts</b></td></tr>");
+$HTML .= freshports_echo_HTML("<tr><td><b>port count:</b></td><td ALIGN=\"right\"><b>$NumPorts</b></td><td>($NumRows categories)</td><td align=\"center\">-</td></tr>");
 
 $HTML .= freshports_echo_HTML('</table>');
 //$HTML .= freshports_echo_HTML('</td></tr>');

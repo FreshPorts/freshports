@@ -1,17 +1,50 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.108 2002-11-28 18:05:45 dan Exp $
+	# $Id: freshports.php,v 1.4.2.109 2002-12-02 17:31:12 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
 	require_once($_SERVER["DOCUMENT_ROOT"] . "/include/constants.php");
 	require_once($_SERVER["DOCUMENT_ROOT"] . "/include/burstmedia.php");
 
-
 if ($Debug) echo "'" . $_SERVER["DOCUMENT_ROOT"] . "/../classes/watchnotice.php'<BR>";
 
 require_once($_SERVER["DOCUMENT_ROOT"] . "/../classes/watchnotice.php");
 
+#
+# These are the pages which take NOINDEX and NOFOLLOW meta tags
+#
+
+
+function freshports_IndexFollow($URI) {
+	$NOINDEX{"/index.php"}				= 1;
+	$NOINDEX{"/date.php"}				= 1;
+	$NOINDEX{"/ports-deleted.php"}	= 1;
+	$NOINDEX{"/ports-new.php"}			= 1;
+	$NOINDEX{"/ports-forbidden.php"}	= 1;
+	$NOFOLLOW{"/date.php"}				= 1;
+	$NOFOLLOW{"/graphs.php"}			= 1;
+	$NOFOLLOW{"/ports-deleted.php"}	= 1;
+
+	# well, OK, so it may not be a URI... but it's close
+
+	if ($NOINDEX{$URI} || $NOFOLLOW{$URI}) {
+		echo '	<meta name="robots" content="';
+		if ($NOINDEX{$URI}) {
+			echo 'noindex';
+			if ($NOFOLLOW{$URI}) {
+				echo ',';
+			}
+		}
+
+		if ($NOFOLLOW{$URI}) {
+			echo 'nofollow';
+		}
+
+		echo '">' . "\n";
+	}
+
+}
 
 function freshports_BannerSpace() {
 
@@ -253,6 +286,8 @@ echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 ';
 }
 
+
+
 function freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum=0) {
 
 	GLOBAL $FreshPortsName;
@@ -306,8 +341,9 @@ if ($Phorum) {
 <?
 }
 
-	echo "</HEAD>\n";
+	echo freshports_IndexFollow($_SERVER["PHP_SELF"]);
 
+	echo "</HEAD>\n";
 }
 
 function freshports_style($Phorum=0) {

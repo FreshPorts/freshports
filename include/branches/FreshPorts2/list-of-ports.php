@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: list-of-ports.php,v 1.1.2.8 2005-01-06 04:24:05 dan Exp $
+	# $Id: list-of-ports.php,v 1.1.2.9 2005-01-23 03:02:57 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -16,7 +16,7 @@ function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeade
 	$GlobalHideLastChange = 'N';
 	$numrows = pg_numrows($result);
 
-	$HTML .= "<TR><TD>$numrows ports found</TD></TR>\n";
+	$HTML = "<TR><TD>$numrows ports found</TD></TR>\n";
 
 	$ShowDescriptionLink = 0;
 	$DaysMarkedAsNew= $DaysMarkedAsNew= $GlobalHideLastChange = $ShowMaintainedBy= $ShowPortCreationDate= $ShowPackageLink= $ShowShortDescription =1;

@@ -1,5 +1,5 @@
 <?
-	# $Id: graph.php,v 1.1.2.7 2002-04-23 17:18:37 dan Exp $
+	# $Id: graph.php,v 1.1.2.8 2002-05-18 18:09:07 dan Exp $
 	#
 
 	require($DOCUMENT_ROOT . "/include/common.php");
@@ -32,6 +32,8 @@ function FreshPortsChart($title, $axislabel, $values, $labels, $urls, $file = "-
 
 // parameters:
 // id=number of graph
+
+$id = $_GET["id"];
 
 // assume that we always have graph of id=0
 if (!isset($id)) $id=0;

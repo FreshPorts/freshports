@@ -1,5 +1,5 @@
 <?
-	# $Id: graphs.php,v 1.5.2.8 2002-05-18 08:07:36 dan Exp $
+	# $Id: graphs.php,v 1.5.2.9 2002-05-18 18:07:35 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -11,7 +11,6 @@
 	freshports_Start("Statistics - everyone loves a graph",
 					"freshports - new ports, applications",
 					"FreeBSD, index, applications, ports");
-
 ?>
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD VALIGN=TOP WIDTH="100%">
@@ -65,6 +64,7 @@ If you have suggestions for graphs, please submit them via the forum.
 </TD>
 <TD>
 <?
+	$id = $_GET["id"];
 	if ($id) {
 		if ($is_clickable == "t" ) {
 			?>

@@ -1,5 +1,5 @@
 <?
-	# $Id: ports-deleted.php,v 1.1.2.4 2002-04-19 17:05:53 dan Exp $
+	# $Id: ports-deleted.php,v 1.1.2.5 2002-04-22 01:15:56 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -8,13 +8,7 @@
 	require("./include/databaselogin.php");
 	require("./include/getvalues.php");
 
-	$Debug = 1;
-
-	// if we don't know who they are, we'll make sure they login first
-	if (!$visitor) {
-    	    header("Location: login.php?origin=" . $PHP_SELF);  /* Redirect browser to PHP web site */
-        	exit;  /* Make sure that code below does not get executed when we redirect. */
-	}
+	$Debug = 0;
 
 	$Interval = '3 months';
 	$Title    = "Deleted ports - past " . $Interval;
@@ -25,63 +19,50 @@
 
 ?>
 
-<table width="<? echo $TableWidth ?>" border="0" ALIGN="center">
+<TABLE width="<? echo $TableWidth ?>" border="0" ALIGN="center">
 
-<tr><td valign="top" width="100%">
-<table width="100%" border="0">
-<tr>
+<TR><TD valign="top" width="100%">
+<TABLE width="100%" border="0">
+<TR>
 	<? freshports_PageBannerText($Title); ?>
-</tr>
-<tr><td>
+</TR>
+<TR><TD>
 These are the latest deleted ports.
-</td></tr>
+</TD></TR>
 <?
 
 	$DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
 
-	if ($UserID == '') {
-		echo '<tr><td>';
-		echo 'You must be logged in order to view your watch lists.';
-		echo '</td></tr>';
-	} else {
-
+	if ($visitor) {
 		$WatchID = freshports_MainWatchID($UserID, $db);
+	} else {
+		unset ($WatchID);
+	}
 
 		// make sure the value for $sort is valid
 
-		echo "<tr><td>\nThis page is ";
+		echo "<TR><TD>\nThis page is ";
 
 		switch ($sort) {
-		/* sorting by port is disabled. Doesn't make sense to do this
-		case "port":
-			$sort = "version, updated desc";
-			$cache_file .= ".port";
-			break;
-		*/
-
 		case "updated":
-			$sort = "updated desc, port";
+			$sort = "updated desc, category, port";
 			echo 'sorted by last update date.  but you can sort by <a href="' . $PHP_SELF . '?sort=category">category</a>';
 			$ShowCategoryHeaders = 0;
 			break;
 
 		default:
-			$sort ="commit_log.commit_date desc";
+			$sort ="category, port";
 			echo 'sorted by category.  but you can sort by <a href="' . $PHP_SELF . '?sort=updated">last update</a>';
 			$ShowCategoryHeaders = 1;
 			$cache_file .= ".updated";
 		}
 
-		echo "</td></tr>\n";
-
-		if ($WatchID == '') {
-			echo "<tr><td>Your watch list is empty.</td></tr>";
-		} else {
+		echo "</TD></TR>\n";
 
 			$sql = "select ports.id, element.name as port, commit_log.commit_date as updated, " .
 			       "categories.name as category, ports.category_id, version as version, revision as revision, ".
 			       "commit_log.committer, commit_log.description as update_description, ports.element_id, " .
-			       "maintainer, short_description, ports.date_added, ".
+			       "maintainer, short_description, ports.date_added, commit_log.message_id, ".
 			       "last_commit_id as last_change_log_id, " .
 			       "package_exists, extract_suffix, homepage, status, " .
 			       "broken, forbidden ";
@@ -123,20 +104,17 @@ These are the latest deleted ports.
 
 			require("./include/list-of-ports.php");
 
-			echo '<TR><TD>' . freshports_ListOfPorts($result, $db) . '</TD></TR>';
-		}
-	}
-
+			echo freshports_ListOfPorts($result, $db);
 ?>
 
-</script>
-</table>
-</td>
-  <td valign="top" width="*">
+</TABLE>
+
+</TD>
+  <TD valign="top" width="*">
 <? include("./include/side-bars.php") ?>
-</td>
-</tr>
-</table>
+</TD>
+</TR>
+</TABLE>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>

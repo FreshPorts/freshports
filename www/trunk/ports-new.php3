@@ -26,9 +26,6 @@ require( "/www/freshports.org/_private/getvalues.php3");
 testing. Information found here may be widely out of date and/or inaccurate.  Use at your own risk.
 See also <a href="categories.php3">freshports by category</a>.
 </td></tr>
-  <tr>
-    <td bgcolor="#AD0040" height="29"><big><big><font color="#FFFFFF">freshports - watch categories</font></big></big></td>
-  </tr>
 <tr><td valign="top" width="100%">
 <table width="100%" border="0">
 <tr>
@@ -116,7 +113,7 @@ while ($myrow = mysql_fetch_array($result)) {
 
 //$HTML .= '</tr>';
 
-$HTML .= "</table>\n";
+//$HTML .= "</table>\n";
 
 mysql_free_result($result);
 

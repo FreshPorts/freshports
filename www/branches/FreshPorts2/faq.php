@@ -1,5 +1,5 @@
 <?
-	# $Id: faq.php,v 1.1.2.20 2002-11-05 05:32:08 dan Exp $
+	# $Id: faq.php,v 1.1.2.21 2002-11-05 15:21:54 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -69,7 +69,7 @@ down you must read to find something you didn't already know.</P>
 <? freshports_PageBannerText("How do I empty my watch list?"); ?>
 </TR>
 
-	TR><TD>
+	<TR><TD>
 	There is no way to do this in one click.  Sorry.  But a solution is planned (I wrote this on 5 Nov 2002).
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
@@ -77,7 +77,7 @@ down you must read to find something you didn't already know.</P>
 <? freshports_PageBannerText("How do delete my account?"); ?>
 </TR>
 
-	TR><TD>
+	<TR><TD>
 	You can't.  But you can unsubscribe from all of the reports
 	and you'll never hear from us again.
 	</TD></TR><TR><TD>&nbsp;</TD></TR>

@@ -1,5 +1,5 @@
 <?
-	# $Id: burstmedia.php,v 1.1.2.3 2002-06-05 18:24:52 dan Exp $
+	# $Id: burstmedia.php,v 1.1.2.4 2002-06-14 16:36:18 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -12,8 +12,7 @@ function BurstMediaCode() {
 # This is required on all pages which contain Burst Ads.  It's the base code.
 #
 
-echo '
-<!-- BEGIN RICH-MEDIA BURST! CODE --> 
+echo '<!-- BEGIN RICH-MEDIA BURST! CODE --> 
 <SCRIPT TYPE="text/javascript"> 
 <!-- /* © 1997-2001 BURST! Media, LLC. All Rights Reserved.*/ 
 function ShowBurstAd(adcode, width, height) {
@@ -64,8 +63,7 @@ function BurstMediaAd() {
 #
 GLOBAL $AddressForAds;
 
-echo '
-	<!-- BEGIN RICH-MEDIA BURST! CODE --> 
+echo '	<!-- BEGIN RICH-MEDIA BURST! CODE --> 
 	<SCRIPT TYPE="text/javascript" >
 	<!--
 	ShowBurstAd(\'ad4556a\',\'468\',\'60\');

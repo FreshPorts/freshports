@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.98 2002-06-12 03:06:16 dan Exp $
+	# $Id: freshports.php,v 1.4.2.99 2002-06-14 16:36:18 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -202,20 +202,15 @@ GLOBAL $BannerAd;
 
    freshports_body();
 
-   echo '<CENTER>
-';
-
    if ($ShowAds) {
       BurstMediaCode();
       if ($BannerAd) {
-		echo '<CENTER>';
+		echo "\n<CENTER>\n";
 		BurstMediaAd();
-		echo '</CENTER>';
+		echo "</CENTER>\n\n";
       }
    }
 
-   echo '</CENTER>
-';
    freshports_Logo();
    freshports_navigation_bar_top();
 }
@@ -349,18 +344,14 @@ function freshports_body() {
 GLOBAL $OnLoad;
 GLOBAL $Debug;
 
-echo '
-<BODY BGCOLOR="#FFFFFF" TEXT="#000000" ';
+echo "\n" . '<BODY BGCOLOR="#FFFFFF" TEXT="#000000" ';
 
 # should we have an onload?
 if ($OnLoad) {
 	echo ' onLoad="' . $OnLoad . '"';
 }
 
-echo '>';
-#<CENTER>
-#';
-
+echo ">\n\n";
 
 	if ($Debug) {
 		GLOBAL $ShowAds;
@@ -425,10 +416,7 @@ function freshports_MainWatchID($UserID, $db) {
 
 	$result = pg_exec ($db, $sql);
 
-//	echo "freshports_MainWatchID sql = $sql<br>\n";
-
 	if(pg_numrows($result)) {
-//		echo "results were found for that<br>\n";
 		$myrow = pg_fetch_array ($result, 0);
 		$WatchID = $myrow["id"];
 	}
@@ -457,18 +445,12 @@ function freshports_in_array($value, $array) {
 }
 
 function freshports_PortIDFromPortCategory($category, $port, $db) {
-/*
-	echo "category = $category<br>\n";
-	echo "port     = $port<br>\n";
-*/
 	$sql = "select pathname_id('ports/$category/$port') as id";
 
-#	echo "freshports_PortIDFromPortCategory SQL = $sql<BR>\n";
 	$result = pg_exec($db, $sql);
 	if (pg_numrows($result)) {
 		$myrow = pg_fetch_array($result, 0);
 		$PortID = $myrow["id"];
-#		echo 'freshports_PortIDFromPortCategory = ' . $PortID . "<BR>\n";
 	}
 
 	return $PortID;

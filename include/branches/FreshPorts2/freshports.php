@@ -1,15 +1,15 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.118 2002-12-10 05:13:33 dan Exp $
+	# $Id: freshports.php,v 1.4.2.119 2002-12-11 04:35:24 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
-	require_once($_SERVER["DOCUMENT_ROOT"] . "/include/constants.php");
-	require_once($_SERVER["DOCUMENT_ROOT"] . "/include/burstmedia.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/constants.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/burstmedia.php');
 
-if ($Debug) echo "'" . $_SERVER["DOCUMENT_ROOT"] . "/../classes/watchnotice.php'<BR>";
+if ($Debug) echo "'" . $_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php<BR>';
 
-require_once($_SERVER["DOCUMENT_ROOT"] . "/../classes/watchnotice.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php');
 
 #
 # These are the pages which take NOINDEX and NOFOLLOW meta tags
@@ -17,14 +17,14 @@ require_once($_SERVER["DOCUMENT_ROOT"] . "/../classes/watchnotice.php");
 
 
 function freshports_IndexFollow($URI) {
-	$NOINDEX{"/index.php"}				= 1;
-	$NOINDEX{"/date.php"}				= 1;
-	$NOINDEX{"/ports-deleted.php"}	= 1;
-	$NOINDEX{"/ports-new.php"}			= 1;
-	$NOINDEX{"/ports-forbidden.php"}	= 1;
-	$NOFOLLOW{"/date.php"}				= 1;
-	$NOFOLLOW{"/graphs.php"}			= 1;
-	$NOFOLLOW{"/ports-deleted.php"}	= 1;
+	$NOINDEX{'/index.php'}				= 1;
+	$NOINDEX{'/date.php'}				= 1;
+	$NOINDEX{'/ports-deleted.php'}	= 1;
+	$NOINDEX{'/ports-new.php'}			= 1;
+	$NOINDEX{'/ports-forbidden.php'}	= 1;
+	$NOFOLLOW{'/date.php'}				= 1;
+	$NOFOLLOW{'/graphs.php'}			= 1;
+	$NOFOLLOW{'/ports-deleted.php'}	= 1;
 
 	# well, OK, so it may not be a URI... but it's close
 
@@ -575,7 +575,8 @@ function freshports_ONToYN($Value) {
 
 function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, $LinkToPort = 0, $AddRemoveExtra = '', $ShowCategory = 1, $ShowDateAdded = "N", $IndicateWatchListStatus = 1) {
 //
-// This php3 fragment does the basic port information for a single port.
+// This fragment does the basic port information for a single port.
+// It really needs to be fixed up.
 //
 	GLOBAL $freshports_CVS_URL;
 	GLOBAL $freshports_FTP_URL;
@@ -585,6 +586,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 	GLOBAL $FreshPortsWatchedPortNotPrefix;
 	GLOBAL $FreshPortsWatchedPortNotSuffix;
 	GLOBAL $User;
+	GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;
 
 	$MarkedAsNew = "N";
 	$HTML .= "<DL>\n";
@@ -678,18 +680,20 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
  
             $HTML .= ' on <font size="-1">' . $port->updated . '</font>' . "\n";
 
-			$HTML .= freshports_Email_Link($port->message_id);
+				$HTML .= freshports_Email_Link($port->message_id);
 
-			if ($port->encoding_losses == 't') {
+				if ($port->encoding_losses == 't') {
 					$HTML .= '&nbsp;' . freshports_Encoding_Errors();
-			}
+				}
 
-			$HTML .= ' ' . freshports_Commit_Link($port->message_id);
-			$HTML .= ' ' . freshports_CommitFilesLink($port->message_id, $port->category, $port->port);
+				$HTML .= ' ' . freshports_Commit_Link($port->message_id);
+				$HTML .= ' ' . freshports_CommitFilesLink($port->message_id, $port->category, $port->port);
 
-
-			$HTML .= freshports_PortDescriptionPrint($port->update_description, $port->encoding_losses);
- 
+#				$HTML .= freshports_PortDescriptionPrint($port->update_description, $port->encoding_losses);
+ 				$HTML .= freshports_PortDescriptionPrint($port->update_description, $port->encoding_losses, 
+ 				 				$freshports_CommitMsgMaxNumOfLinesToShow, 
+ 				 				freshports_MoreCommitMsgToShow($port->message_id,
+ 				 				       $freshports_CommitMsgMaxNumOfLinesToShow));
          } else {
             $HTML .= "no changes recorded in FreshPorts<br>\n";
          }
@@ -959,7 +963,7 @@ function freshports_PortCommitsHeader($port) {
 function freshports_PortCommits($port) {
 	# print all the commits for this port
 
-	require_once($_SERVER["DOCUMENT_ROOT"] . "/../classes/commit_log_ports.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit_log_ports.php');
 
 #	echo ' *************** into freshports_PortCommits ***************';
 	freshports_PortCommitsHeader($port);
@@ -1170,7 +1174,7 @@ echo '<TABLE WIDTH="' . $TableWidth . '" BORDER="0" ALIGN="center">
 <TR><TD>
 ';
 
-require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php');
 
 echo '
 </TD></TR>
@@ -1186,7 +1190,7 @@ echo '
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
 ';
 
-require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php');
 
 echo '
 </TD>

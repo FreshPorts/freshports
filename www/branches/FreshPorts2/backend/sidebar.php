@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: sidebar.php,v 1.1.2.16 2003-07-30 12:10:10 dan Exp $
+	# $Id: sidebar.php,v 1.1.2.17 2003-07-30 12:24:56 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -163,12 +163,9 @@ order by commit_date_raw desc, category, port ";
 ?>
 	</UL>
 
-<SMALL>Server and bandwidth provided by <A HREF="http://www.bchosting.com/" TARGET="_new">BChosting.com</A></SMALL>
-
-
-<P ALIGN="right">
-<? echo freshports_copyright(); ?>
-</P>
+<?
+	freshports_ShowFooter();
+?>
 
 </body>
 </html>

@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.67 2002-04-11 22:03:35 dan Exp $
+   # $Id: freshports.php,v 1.4.2.68 2002-04-12 05:11:34 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -110,6 +110,10 @@ function freshports_Watch_Icon() {
 
 function freshports_Watch_Icon_Add() {
 	return '<IMG SRC="/images/watch-add.gif" ALT="Add item to your watch list" TITLE="Add item to your watch list" BORDER="0" WIDTH="13" HEIGHT="13">';
+}
+
+function freshports_Encoding_Errors() {
+	return '<IMG SRC="/images/error.gif" ALT="Encoding Errors (not all of the commit message was ASCII)" TITLE="Encoding Errors (not all of the commit message was ASCII)" BORDER="0" WIDTH="16" HEIGHT="16">';
 }
 
 function freshports_Watch_Link_Add($element_id) {
@@ -704,7 +708,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
  
             $HTML .= ' on <font size="-1">' . $port->updated . '</font>' . "\n";
 
-			$HTML .= freshports_PortDescriptionPrint($port->update_description);
+			$HTML .= freshports_PortDescriptionPrint($port->update_description, $port->encoding_losses);
  
          } else {
             $HTML .= "no changes recorded in FreshPorts<br>\n";
@@ -1011,6 +1015,11 @@ function freshports_PortCommitPrint($commit, $category, $port) {
 	echo "<TR><TD VALIGN='top'>";
 	echo $commit->commit_date . '<BR>' . freshports_Email_Link($commit->message_id);
 	echo '&nbsp;&nbsp;'. freshports_Commit_Link($commit->message_id);
+
+	if ($commit->encoding_losses == 't') {
+		echo '&nbsp;'. freshports_Encoding_Errors();
+	}
+
 	echo "</TD>\n";
 	echo '    <TD VALIGN="top">';
     echo $commit->committer;
@@ -1022,7 +1031,7 @@ function freshports_PortCommitPrint($commit, $category, $port) {
 	echo '    <TD VALIGN="top" WIDTH="*">';
 
 
-	echo freshports_PortDescriptionPrint($commit->description);
+	echo freshports_PortDescriptionPrint($commit->description, $commit->encoding_losses);
 
 	echo "</TD></TR>\n";
 }
@@ -1032,7 +1041,7 @@ function freshports_PortCommitsFooter($port) {
 	echo "</TABLE>\n";
 }
 
-function freshports_PortDescriptionPrint($description) {
+function freshports_PortDescriptionPrint($description, $encoding_losses) {
 	$HTML .= '<PRE CLASS="code">';
 
 	$HTML .= pr2html((freshports_wrap($description)));

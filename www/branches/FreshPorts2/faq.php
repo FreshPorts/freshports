@@ -1,5 +1,5 @@
 <?
-	# $Id: faq.php,v 1.1.2.11 2002-04-10 18:06:51 dan Exp $
+	# $Id: faq.php,v 1.1.2.12 2002-04-12 05:11:32 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -189,6 +189,10 @@
 
 	<P><? echo freshports_Watch_Icon_Add(); ?> Add item to your watch list: This port is not on your watch list.  Click
 		this icon to add the port to your watch list.  This icon appears only if you are logged in.</P>
+
+	<P><? echo freshports_Encoding_Errors(); ?> Encoding Errors (not all of the commit message was ASCII): Some of the
+		commit message may be altered because of character conversion problems.  We display only UTF-8 and remove
+		the offending characters.</P>
 
 	</BLOCKQUOTE>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>

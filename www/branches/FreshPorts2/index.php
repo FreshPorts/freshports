@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.31 2002-04-10 17:59:41 dan Exp $
+	# $Id: index.php,v 1.1.2.32 2002-04-12 05:11:32 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -218,6 +218,12 @@ ports. A port is marked as new for 10 days.
 							$HTML .= '</SMALL>';
 							$HTML .= '&nbsp;';
 							$HTML .= freshports_Email_Link($myrow["message_id"]);
+
+							if ($myrow["encoding_losses"] == 't') {
+								$HTML .= '&nbsp;' . freshports_Encoding_Errors();
+							}
+
+
 							$HTML .= "<BR>\n";
 						}
 
@@ -284,7 +290,7 @@ ports. A port is marked as new for 10 days.
 
 					$HTML .= "\n<BLOCKQUOTE>";
 
-					$HTML .= freshports_PortDescriptionPrint($myrow["commit_description"]);
+					$HTML .= freshports_PortDescriptionPrint($myrow["commit_description"], $myrow["encoding_losses"]);
 
 
 					$HTML .= "\n</BLOCKQUOTE>\n</TD></TR>\n\n\n";

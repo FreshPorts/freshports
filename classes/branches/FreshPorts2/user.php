@@ -1,5 +1,5 @@
 <?
-	# $Id: user.php,v 1.1.2.5 2003-01-10 15:49:45 dan Exp $
+	# $Id: user.php,v 1.1.2.6 2003-01-10 19:09:33 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -37,25 +37,6 @@ class User {
 	}
 	
 
-	function Rename($UserID, $NewName) {
-		#
-		# Delete a watch list
-		#
-		unset($return);
-
-		$query  = 'UPDATE watch_list SET name = \'' . AddSlashes($NewName) . '\' WHERE id = ' . AddSlashes($UserID);
-		if ($Debug) echo $query;
-		$result = pg_query($this->dbh, $query);
-
-		# that worked and we updated exactly one row
-		if ($result && pg_affected_rows($result) == 1) {
-			$return = $NewName;
-		}
-
-		return $return;
-	}
-
-	
 	function Fetch($ID) {
 		$sql = "
 		SELECT *
@@ -184,6 +165,20 @@ class User {
 		$UserTasks->FetchByID($this->id);
 
 		$this->UserTasks = $UserTasks->tasks;
+	}
+
+	function IsTaskAllowed($task) {
+#		echo "class::user \$this->id='$this->id'<br>\n";
+		if (IsSet($this->id) && $this->id != '' && !IsSet($this->UserTasks)) {
+			$this->GetTasks();
+#			die('getting the tasks now');
+		}
+
+		if (IsSet($this->UserTasks{$task})) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
 	}
 
 }

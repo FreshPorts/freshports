@@ -1,5 +1,5 @@
 <?
-	# $Id: forgotten-password.php,v 1.1.2.18 2002-12-11 04:42:05 dan Exp $
+	# $Id: forgotten-password.php,v 1.1.2.19 2002-12-11 04:43:01 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.82 2003-09-25 14:02:46 dan Exp $
+	# $Id: index.php,v 1.1.2.83 2003-09-26 12:03:52 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -186,6 +186,7 @@ ports. A port is marked as new for 10 days.
 								$HTML .= '<BIG><B>';
 								$HTML .= '<A HREF="/' . $mycommit->category . '/' . $mycommit->port . '/">';
 								$HTML .= $mycommit->port;
+								$HTML .= '</A>';
 			
 								if (strlen($mycommit->version) > 0) {
 									$HTML .= ' ' . $mycommit->version;
@@ -194,7 +195,7 @@ ports. A port is marked as new for 10 days.
 									}
 								}
 
-								$HTML .= "</A></B></BIG>\n";
+								$HTML .= "</B></BIG>\n";
 
 								$HTML .= '<A HREF="/' . $mycommit->category . '/">';
 								$HTML .= $mycommit->category. "</A>";

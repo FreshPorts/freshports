@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.157 2003-09-25 15:11:54 dan Exp $
+	# $Id: freshports.php,v 1.4.2.158 2003-09-26 12:03:52 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -674,7 +674,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 	$HTML .= '<BIG><B>';
 
 	if ($LinkToPort) {
-		$HTML .= "<A HREF=\"/$port->category/$port->port/\">$port->port";
+		$HTML .= "<A HREF=\"/$port->category/$port->port/\">$port->port</A>";
 	} else {
 		$HTML .= $port->port;
 	}
@@ -684,10 +684,6 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 		if (strlen($port->{'revision'}) > 0 && $port->{'revision'} != "0") {
     		$HTML .= '-' . $port->{'revision'};
 		}
-	}
-
-	if ($LinkToPort) {
-		$HTML .= '</A>';
 	}
 
 	if (IsSet($port->category_looking_at)) {

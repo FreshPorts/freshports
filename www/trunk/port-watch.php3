@@ -138,13 +138,18 @@ if ($submit) {
 
 <body bgcolor="#ffffff" link="#0000cc">
 
-<table width="100%">
-<tr><rd>Welcome to the freshports.org test page. This site is not yet in production. We are still
-testing. Information found here may be widely out of date and/or inaccurate.  Use at your own risk. 
-See also <a href="ports.php3">freshports by ports</a>.
+<table width="100%" border="0">
+<tr>
+ <td colspan="2">
+ <font size="+4">freshports</font>
+ </td>
+</tr>
+<tr><td colspan="2">This page shows the ports within a specific category which are in your watch list.
 </td></tr>
+<tr><td valign="top" width="100%">
+<table width="100%" border="0">
   <tr>
-	<td bgcolor="#AD0040" height="29"><big><big><font color="#FFFFFF">freshports - watch ports (<em><? echo $categoryname ?>)</em></font></big></big></td>
+     <td bgcolor="#AD0040" height="29"><big><big><font color="#FFFFFF">freshports - watch ports (<em><? echo $categoryname ?>)</em></font></big></big></td>
   </tr>
 <tr><td>
 <?
@@ -200,7 +205,7 @@ echo '<tr><td>' . "\n";
 
 echo "\n</td></tr>\n<tr><td>";
 
-$UpdateCache = 1;
+//$UpdateCache = 1;
 if ($UpdateCache == 1 && $UserID) {
 //   echo 'time to update the cache';
 
@@ -272,18 +277,6 @@ $HTML .= '</td></tr>';
 
 echo $HTML;                                                   
 
-/*
-   $fpwrite = fopen($cache_file, 'w');
-   if(!$fpwrite) {
-      echo 'error on open<br>';
-      echo "$errstr ($errno)<br>\n";
-      exit;
-   } else {
-//      echo 'written<br>';
-      fputs($fpwrite, $HTML);
-      fclose($fpwrite);
-   }
-*/
 } else {
 //   echo 'looks like I\'ll read from cache this time';
    if (file_exists($cache_file)) {
@@ -292,18 +285,25 @@ echo $HTML;
 }
 
 </script>
-</table>
+<tr><td>
 
 <input TYPE="submit" VALUE="update watch list" name="submit">
 <input TYPE="reset"  VALUE="reset form">
- <tr>           
-    <td height="21"></td>
-  </tr>
+</td></tr>
 <?
 if ($UserID) {
    echo '</form>';
 }
 ?>
+
+</table>
+
+</td>
+  <td valign="top" width="*">
+    <? include("/www/freshports.org/_private/side-bars.php3") ?>
+ </td>
+</tr>
+</table>
 
 </body>
 </html>

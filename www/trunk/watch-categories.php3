@@ -16,24 +16,23 @@ require( "/www/freshports.org/_private/freshports.php3");
 
 <body bgcolor="#ffffff" link="#0000cc">
 
-<table width="100%" border="1">
+<table width="100%" border="0">
 <tr>
  <td colspan="2">
  <font size="+4">freshports</font>
  </td>
 </tr>
-<tr><td colspan="2">Welcome to the freshports.org test page. This site is not yet in production. We are still
-testing. Information found here may be widely out of date and/or inaccurate.  Use at your own risk. 
-See also <a href="ports.php3">freshports by ports</a>.
+<tr><td colspan="2">
+This page shows the various categories and indicates which ones contains ports which are on your watch list.
 </td></tr>
-<td><table width="100%">
+<td valign="top"><table width="100%">
   <tr>
     <td bgcolor="#AD0040" height="29"><big><big><font color="#FFFFFF">freshports - watch categories</font></big></big></td>
   </tr>
 <tr><td valign="top" width="100%">
 
 
-<table width="100%" border="1">
+<table width="100%" border="0">
 <tr><td>
 <?
 if (!$UserID) {
@@ -85,7 +84,7 @@ if (!file_exists($cache_file)) {
    }
 }
 
-echo '<tr><td>' . "\n";
+echo '<tr><td align="center">' . "\n";
 
 // find out the watch id for this user's main watch list
 $sql_get_watch_ID = "select watch.id ".
@@ -94,9 +93,7 @@ $sql_get_watch_ID = "select watch.id ".
                     "and   watch.system        = 'FreeBSD' ".
                     "and   watch.name          = 'main'";
 
-//echo "\n</td></tr>\n<tr><td>";
-
-$UpdateCache = 1;
+//$UpdateCache = 1;
 if ($UpdateCache == 1 && $UserID) {
 //   echo 'time to update the cache';
 
@@ -107,7 +104,7 @@ $sql = "select distinct(primary_category_id) as category_id ".
        "  and watch_port.watch_id = watch.id ".
        "  and watch_port.port_id  = ports.id";
 
-echo $sql, "<br>\n";
+//echo $sql, "<br>\n";
 
 $result = mysql_query($sql, $db);
 $i = 0;

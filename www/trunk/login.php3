@@ -3,9 +3,11 @@ if ($submit) {
 
 // process form
 
-//  while (list($name, $value) = each($HTTP_POST_VARS)) {
-//    echo "$name = $value<br>\n";
-//  }
+/*
+  while (list($name, $value) = each($HTTP_POST_VARS)) {
+    echo "$name = $value<br>\n";
+  }
+*/
 
   $OK = 1;
 
@@ -14,9 +16,16 @@ if ($submit) {
   require( "/www/freshports.org/_private/commonlogin.php3");
 
   // test for existance of user id
-  $Cookie = UserToCookie($UserID);
-  $sql = "select * from users where cookie = '$Cookie'".
-	 " and password = '$Password'";
+  $Cookie = UserToCookie($UserName);
+
+//echo "Cookie = $Cookie";
+
+  $sql = "select * from users where username = '$UserName'".
+	 " and password = '$Password' ".
+         " and cookie   = '$Cookie'";
+
+//echo $sql;
+
   $result = mysql_query($sql, $db) or die('query failed');
 
 
@@ -25,8 +34,11 @@ if ($submit) {
      $LoginFailed = 1;
   } else {
     SetCookie("visitor", $Cookie, time() + 60*60*24*120, '/');
-    header("Location: ../");  /* Redirect browser to PHP web site */
-    exit;  /* Make sure that code below does not get executed when we redirect. */  }
+    // Redirect browser to PHP web site
+    header("Location: ../");
+    // Make sure that code below does not get executed when we redirect.
+    exit;       
+  }
 }
 </script>
 

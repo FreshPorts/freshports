@@ -24,10 +24,17 @@ $title = freshports_Category_Name($category, $db);
 
 <body bgcolor="#ffffff" link="#0000cc">
 
-<table width="100%">
-<tr><td>Welcome to the freshports.org test page. This site is not yet in production. We are still
-testing. Information found here may be widely out of date and/or inaccurate.  Use at your own risk.       
+<table width="100%" border="0">
+<tr>
+ <td colspan="2">
+ <font size="+4">freshports</font>
+ </td>
+</tr>
+<tr><td>
+This page lists all the ports in a given category.
 </td></tr>
+<tr><td valign="top" width="100%">
+<table width="100%" border="0">
   <tr>
     <td bgcolor="#AD0040" height="29"><big><big><font color="#FFFFFF">freshports - <? echo $title ?></font></big></big></td>
   </tr>
@@ -41,22 +48,24 @@ $DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
 
 $cache_file     =       "/tmp/freshports.org.cache.category." . $category;
 $LastUpdateFile =       "/www/freshports.org/work/msgs/lastupdate";
-$LimitRows	= 7;
+$LimitRows	= 50;
 
 if (!$start) {
-   $start = 0;
+   $start = 1;
 }
 
-if ($start < 0) {
-   $start = 0;
+if ($start < 1) {
+   $start = 1;
 }
 
-if ($start > 0) {
-   $cach_file .= ".$start";
+if ($start > 1) {
+   $cache_file .= ".$start";
+
+//   echo "adding $start to $cache_file";
 }
 
 if ($start > $end) {
-   $end = $start + $LimitRows;
+   $end = $start + $LimitRows -1;
 }
 
 if (!$end) {
@@ -74,7 +83,7 @@ if (!file_exists($cache_file)) {
    // cache does not exist, we create it
    $UpdateCache = 1;
 } else {
-//   echo 'cache exists<br>';
+//   echo "cache exists and is compared to $LastUpdateFile<br>";
    if (!file_exists($LastUpdateFile)) {
       // no updates, so cache is fine.
 //      echo 'but no update file<br>';
@@ -90,7 +99,7 @@ if (!file_exists($cache_file)) {
    }
 }
 
-$UpdateCache = 1;
+//$UpdateCache = 1;
 
 if ($UpdateCache == 1) {
 //   echo 'time to update the cache';
@@ -120,11 +129,12 @@ $sql .= "order by $sort";
 $result = mysql_query($sql, $db);
 $NumRows = mysql_num_rows($result);
 if ($end > $NumRows) {
-   $end = $NumRows - 1;
+//   echo "end was $end and is now $NumRows";
+   $end = $NumRows;
 }
 
 if ($NumRows == 0) {
-   echo " no results found<br>\n";
+   $HTML .= freshports_echo_HTML(" no results found<br>\n");
 } else {
 
 for ($i = 0; $i < $NumRows; $i++) {
@@ -134,21 +144,25 @@ for ($i = 0; $i < $NumRows; $i++) {
 
 $HTML .= freshports_echo_HTML('<tr><td>');
 
-$HTML .= freshports_echo_HTML('<table width="*" border=1>');
+$HTML .= freshports_echo_HTML('<table width="*" border=0>');
 
 // get the list of topics, which we need to modify the order
 $LastPort = '';
 
-echo "showing ";
-if ($start == 0 and $end == $NumRows - 1) {
-   echo "all";
+$HTML .= freshports_echo_HTML("<tr><td>showing ");
+if ($start == 1 and $end == $NumRows) {
+   $HTML .= freshports_echo_HTML("all");
 } else {
-   echo ($start+1) . " to " . ($end+1);
+   $HTML .= freshports_echo_HTML($start . " to " . $end);
 }
 
-echo " of $NumRows ports";
+$HTML .= freshports_echo_HTML(" of $NumRows ports</td></tr>\n");
+
+$HTML .= freshports_echo_HTML("<tr><td>");
+//$HTML .= freshports_echo_HTML("<br>start = $start, end = $end, LimitRows = $LimitRows<br>\n");
+
 for ($i = $start; $i <= $end; $i++) {
-   $myrow = $rows[$i];
+   $myrow = $rows[$i-1];
 
    $HideCategory = 1;
    if ($i == 0) {
@@ -230,7 +244,7 @@ for ($i = $start; $i <= $end; $i++) {
 
 $HTML .= freshports_echo_HTML('</tr>');
 
-$HTML .= freshports_echo_HTML("<p>$NumRows ports found</p>\n");
+//$HTML .= freshports_echo_HTML("<p>$NumRows ports found</p>\n");
 
 $HTML .= freshports_echo_HTML('</td></tr>');
 
@@ -238,15 +252,17 @@ $HTML .= freshports_echo_HTML('</table>');
 
 } // results found
 
-if ($i < $NumRows) {
+// here $i will be $end + 1
+if ($end < $NumRows) {
    $HTML .= freshports_echo_HTML('</td></tr><tr><td><a href=' . basename($PHP_SELF) . "?category=$category&start=". ($end+1));
    $HTML .= freshports_echo_HTML(">next page</a></td></tr>");
 }
 
-if ($start > 0) {
+if ($start > 1) {
    $HTML .= freshports_echo_HTML('</td></tr><tr><td><a href=' . basename($PHP_SELF) . "?category=$category");
-   if ($start) {
-      $HTML .= freshports_echo_HTML("&start=" . ($Start - $LimitRows));
+   $temp = $start - $LimitRows - 1;
+   if ($temp > 1) {
+      $HTML .= freshports_echo_HTML("&start=" . $temp);
    }
    $HTML .= freshports_echo_HTML(">previous page</a></td></tr>"); 
 }
@@ -272,9 +288,15 @@ $HTML .= freshports_echo_HTML('</td></tr>');
 }
 
 </script>
-  <tr>
-    <td height="21"></td>
-  </tr>
+</table>
+</td>
+  <td valign="top" width="*">
+   <? include("/www/freshports.org/_private/side-bars.php3") ?>
+ </td>
+</tr>
+</table>
+</td>
+</tr>
 </table>
 </body>
 </html>

@@ -18,9 +18,9 @@
 </tr>
 
 
-<tr><td colspan="2">Welcome to the freshports.org test page. This site is not yet in production. We are still
-testing. Information found here may be widely out of date and/or inaccurate.  Use at your own risk.
-See also <a href="categories.php3">freshports by category</a>.
+<tr><td colspan="2">
+This page lists the ports which are on your watch list. To modify the contents of this list, click on 
+<a href="watch-categories.php3">watch list - Categories</a> at the right.
 </td></tr>
 <tr><td valign="top" width="100%">
 <table width="100%" border="0">

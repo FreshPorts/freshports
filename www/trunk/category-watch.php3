@@ -16,9 +16,7 @@ require( "/www/freshports.org/_private/getvalues.php3");
 <body bgcolor="#ffffff" link="#0000cc">
 
 <table width="100%">
-<tr><rd>Welcome to the freshports.org test page. This site is not yet in production. We are still
-testing. Information found here may be widely out of date and/or inaccurate.  Use at your own risk. 
-See also <a href="ports.php3">freshports by ports</a>.
+<tr><td>Welcome to freshports.org. See also <a href="ports.php3">freshports by ports</a>.
 </td></tr>
   <tr>
     <td bgcolor="#AD0040" height="29"><big><big><font color="#FFFFFF">freshports - watch categories</font></big></big></td>
@@ -160,7 +158,7 @@ if ($submit) {
 
 echo "\n</td></tr>\n<tr><td>";
 
-$UpdateCache = 1;
+//$UpdateCache = 1;
 if ($UpdateCache == 1 && $UserID) {
 //   echo 'time to update the cache';
 
@@ -169,7 +167,7 @@ $sql = "select categories.id as category_id, categories.name as category, catego
        "WHERE categories.system = 'FreeBSD' " .
        "order by category";
 
-//echo $sql, "<br>\n";
+echo $sql, "<br>\n";
 
 $result = mysql_query($sql, $db);
 

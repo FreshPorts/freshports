@@ -22,9 +22,10 @@ require( "/www/freshports.org/_private/getvalues.php3");
  <font size="+4">freshports</font>
  </td>
 </tr>
-<tr><td colspan="2">Welcome to the freshports.org test page. This site is not yet in production. We are still
-testing. Information found here may be widely out of date and/or inaccurate.  Use at your own risk.
-See also <a href="categories.php3">freshports by category</a>.
+<tr><td colspan="2">
+This page shows the ports which have been recently added to the ports tree.  As such, some information
+may be missing (such as description, maintainer, etc.). This information will be obtained during the
+next database update.
 </td></tr>
 <tr><td valign="top" width="100%">
 <table width="100%" border="0">

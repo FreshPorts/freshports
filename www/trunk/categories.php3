@@ -10,16 +10,20 @@
 
 <body bgcolor="#ffffff" link="#0000cc">
 
-<table width="100%">
-<tr><td>Welcome to the freshports.org test page. This site is not yet in production. We are still
-testing. Information found here may be widely out of date and/or inaccurate.  Use at your own risk. 
-See also <a href="ports.php3">freshports by ports</a>.
+<table width="100%" border="0">
+<tr>
+ <td colspan="2">  
+ <font size="+4">freshports</font>
+ </td>
+</tr><tr><td colspan="2">This page lists the categories sorted by various categories.  See also <a href="ports.php3">freshports by ports</a>.
 </td></tr>
-<tr><td>
+<tr><td colspan="2">
 You can sort each column by clicking on the header.  e.g. click on <b>Category</b> to sort by category.
 </td></td>
+<tr><td valign="top" width="100%">
+<table width="100%" border="0">
   <tr>
-    <td bgcolor="#AD0040" height="29"><big><big><font color="#FFFFFF">freshports</font></big></big></td>
+    <td colspan="4" bgcolor="#AD0040" height="29"><big><big><font color="#FFFFFF">freshports - list of categories</font></big></big></td>
   </tr>
 <script language="php">
 
@@ -79,6 +83,7 @@ if (!file_exists($cache_file)) {
    }
 }
 
+//$UpdateCache = 1;
 if ($UpdateCache == 1) {
 //   echo 'time to update the cache';
 
@@ -98,11 +103,34 @@ $result = mysql_query($sql, $db);
 
 $HTML .= freshports_echo_HTML('<tr><td>');
 
-$HTML .= freshports_echo_HTML('<table width="100%" border=1><tr>');
-$HTML .= freshports_echo_HTML('<td><a href="categories.php3?sort=category"><b>Category<b></a></b></td>');
-$HTML .= freshports_echo_HTML('<td><a href="categories.php3?sort=count"><b>Count</b></a></td>');
-$HTML .= freshports_echo_HTML('<td><a href="categories.php3?sort=description"><b>Description</b></a></td>');
-$HTML .= freshports_echo_HTML('<td><a href="categories.php3?sort=lastupdate"><b>Last Update</b></a></td>');
+//$HTML .= freshports_echo_HTML('<table width="100%" border=6><tr>');
+$HTML .= freshports_echo_HTML('<tr>');
+
+if ($sort == "category") {
+   $HTML .= freshports_echo_HTML('<td><b>Category</b></td>');
+} else {
+   $HTML .= freshports_echo_HTML('<td><a href="categories.php3?sort=category"><b>Category<b></a></td>');
+}
+
+
+if ($sort == "count") {
+   $HTML .= freshports_echo_HTML('<td><b>Count</b></td>');
+} else {
+   $HTML .= freshports_echo_HTML('<td><a href="categories.php3?sort=count"><b>Count</b></a></td>');
+}
+
+if ($sort == "description") {
+   $HTML .= freshports_echo_HTML('<td><b>Description</b></td>');
+} else {
+   $HTML .= freshports_echo_HTML('<td><a href="categories.php3?sort=description"><b>Description</b></a></td>');
+}
+
+if ($sort == "updated desc") {
+   $HTML .= freshports_echo_HTML('<td><b>Last Update</b></td>');
+} else {
+   $HTML .= freshports_echo_HTML('<td><a href="categories.php3?sort=lastupdate"><b>Last Update</b></a></td>');
+}
+
 $HTML .= freshports_echo_HTML('</tr>');
 
 $HTML .= freshports_echo_HTML('<tr>');
@@ -128,7 +156,7 @@ mysql_free_result($result);
 
 
 $HTML .= freshports_echo_HTML('</table>');
-$HTML .= freshports_echo_HTML('</td></tr>');
+//$HTML .= freshports_echo_HTML('</td></tr>');
 
 
 freshports_echo_HTML_flush();
@@ -153,9 +181,12 @@ freshports_echo_HTML_flush();
 }
          
 </script>
-  <tr>
-    <td height="21"></td>
-  </tr>
+</td>
+  <td valign="top" width="*">
+    <? include("/www/freshports.org/_private/side-bars.php3") ?>
+ </td>
+</tr>
 </table>
+
 </body>
 </html>

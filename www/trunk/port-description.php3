@@ -42,9 +42,7 @@ $myrow = mysql_fetch_array($result);
 <body bgcolor="#ffffff" link="#0000cc">
 
 <table width="100%">
-<tr><rd>Welcome to the freshports.org test page. This site is not yet in production. We are still
-testing. Information found here may be widely out of date and/or inaccurate.  Use at your own risk.
-See also <a href="ports.php3">freshports by ports</a>.
+<tr><td>This page contains the description of a single port.
 </td></tr>
   <tr>
     <td bgcolor="#AD0040" height="29"><big><big><font color="#FFFFFF">freshports - 
@@ -61,9 +59,9 @@ include("/www/freshports.org/_private/port-basics.inc");
 
 echo $HTML;
 
-echo "<dl><dd>";
+echo "<dl><dd><pre>";
 echo $myrow["long_description"];
-echo "</dd></dl>";
+echo "</pre></dd></dl>";
 ?>
 
 </td></tr></table>

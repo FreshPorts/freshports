@@ -1,7 +1,8 @@
 <P ALIGN="left">
-<BIG><BIG>Shop at the <A HREF="http://store.yahoo.com/cgi-bin/clink?bsdmall+f47ggU+freebsd45.html">BSD Mall</A>
-and help support the Diary at the same time.  We get 5% on any sales you make through our BSD Mall links.  Thanks.</BIG></BIG>
-
-<P ALIGN="left">
-<BIG><BIG><A HREF="http://www.ocuug.on.ca/">Ottawa Unix Users Group</A></BIG></BIG> next meeting, Tuesday May 14th - a talk on FreeBSD</BIG></BIG>
+<BIG>
+The process of transferring all accounts from this website to the new FreshPorts website has commenced.  
+A dry run will be done first, then we will get some users to verify their accounts and see if everything is OK.  
+If all is well, a notice will be posted here warning people not to update their data or risk losing changes,
+and the final data transfer will be done and the new website will go live.</BIG></BIG><BR>
+25 May 2002 - 8:05 PM
 </P>

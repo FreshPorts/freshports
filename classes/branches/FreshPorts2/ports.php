@@ -1,5 +1,5 @@
 <?
-	# $Id: ports.php,v 1.1.2.13 2002-04-22 01:17:23 dan Exp $
+	# $Id: ports.php,v 1.1.2.14 2002-05-09 19:33:41 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -90,6 +90,7 @@ class Port {
 		$this->update_description = $myrow["update_description"];
 		$this->message_id         = $myrow["message_id"];
 		$this->encoding_losses    = $myrow["encoding_losses"];
+		$this->committer          = $myrow["committer"];
 	}
 
 	function FetchByPartialName($pathname, $WatchListID=0) {

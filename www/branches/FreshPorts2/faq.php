@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.37 2003-05-21 11:18:05 dan Exp $
+	# $Id: faq.php,v 1.1.2.38 2003-05-21 11:22:41 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -90,7 +90,7 @@ down you must read to find something you didn't already know.</P>
 
 	<TR><TD>
 	Via <a href="/watch-list-maintenance.php">Watch List Maintenance</a>.
-	Select the watch lists you wish to emtpy, and follow the instructions
+	Select the watch lists you wish to empty, and follow the instructions
 	provided.
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
@@ -270,7 +270,7 @@ down you must read to find something you didn't already know.</P>
 	</P>
 
 	<P><? echo freshports_WatchListCount_Icon(); ?> Watch List Count (WLC): This is the number of watch lists which are watching 
-	this port.  This might give you an idea of how popular the port it.
+	this port.  This might give you an idea of the popularity of the port.
 	</P>
 
 	</BLOCKQUOTE>
@@ -381,8 +381,6 @@ Here are a few examples:
 </table>
 </blockquote>
 
-BTW: I've found a way to improve the outer joins I've been doing in 
-SQL and I'll be implementing that gradually.
 </TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>

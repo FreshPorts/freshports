@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.154 2003-09-24 16:45:15 dan Exp $
+	# $Id: freshports.php,v 1.4.2.155 2003-09-25 14:13:40 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -105,6 +105,10 @@ function freshports_Commit_Icon() {
 	return '<IMG SRC="/images/copy.gif" ALT="Commit details" TITLE="FreshPorts commit message" BORDER="0" WIDTH="16" HEIGHT="16">';
 }
 
+function freshports_CVS_Icon() {
+	return '<IMG SRC="/images/cvs.png" ALT="CVS log" TITLE="CVS log" BORDER="0" WIDTH="19" HEIGHT="17">';
+}
+
 function freshports_Watch_Icon() {
 	return '<IMG SRC="/images/watch.gif" ALT="Item is on one of your default watch lists" TITLE="Item is on one of your default watch lists" BORDER="0" WIDTH="23" HEIGHT="22">';
 }
@@ -176,6 +180,21 @@ function freshports_Email_Link($message_id) {
 	return $HTML;
 }
 
+function freshports_CVS_Link($element_name, $revision) {
+	#
+	# produce a link to the FreeBSD CVS log
+	#
+
+	# make sure the element name starts with a /
+	if (substr($element_name, 0, 1) != '/') {
+		$element_name = '/' . $element_name;
+	}
+	$HTML  = '<A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $element_name . '?rev=' . $revision . '&content-type=text/x-cvsweb-markup">';
+	$HTML .= freshports_CVS_Icon();
+	$HTML .= '</A>';
+
+	return $HTML;
+}
 function freshports_Commit_Link($message_id, $LinkText = '') {
 	#
 	# produce a link to the commit.  by default, we provide the graphic link.
@@ -637,8 +656,6 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 // This fragment does the basic port information for a single port.
 // It really needs to be fixed up.
 //
-	GLOBAL $freshports_CVS_URL;
-	GLOBAL $freshports_FTP_URL;
 	GLOBAL $ShowDepends;
 	GLOBAL $FreshPortsWatchedPortPrefix;
 	GLOBAL $FreshPortsWatchedPortSuffix;
@@ -753,7 +770,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 
 				$HTML .= freshports_Email_Link($port->message_id);
 
-				if ($port->encoding_losses == 't') {
+				if ($port->EncodingLosses()) {
 					$HTML .= '&nbsp;' . freshports_Encoding_Errors();
 				}
 
@@ -895,7 +912,7 @@ if ($ShowDepends) {
 
    if ($ShowChangesLink == "Y" || $ShowEverything) {
       // changes
-      $HTML .= '<a HREF="' . $freshports_CVS_URL . '/ports/' .
+      $HTML .= '<a HREF="' . FRESHPORTS_FREEBSD_CVS_URL . '/ports/' .
                $port->category . '/' .  $port->port . '/">CVSWeb</a>';
    }
 
@@ -906,7 +923,7 @@ if ($ShowDepends) {
                $port->category . '/' .  $port->port . '">Sources</a>';
    }
 
-   if ($port->package_exists == "Y" && ($ShowPackageLink == "Y" || $ShowEverything)) {
+   if ($port->PackagesExists() && ($ShowPackageLink == "Y" || $ShowEverything)) {
       // package
       $HTML .= ' <b>:</b> ';
       $HTML .= '<a HREF="ftp://ftp5.FreeBSD.org/pub/FreeBSD/FreeBSD-stable/packages/' .
@@ -915,11 +932,15 @@ if ($ShowDepends) {
 
    if ($port->homepage && ($ShowHomepageLink == "Y" || $ShowEverything)) {
       $HTML .= ' <b>:</b> ';
-      $HTML .= '<a HREF="' . $port->homepage . '">Homepage</a>';
+      $HTML .= '<a HREF="' . $port->homepage . '">Main Web Site</a>';
    }
 
 	$HTML .= ' <b>:</b> ';
-	$HTML .= '<A HREF="' . $freshports_FTP_URL . $port->category . '/' . $port->port . '/">' . 'FTP</A>';
+	$HTML .= '<A HREF="' . FRESHPORTS_FREEBSD_FTP_URL . '/' . $port->port . '-' . $port->version;
+	if ($port->revision != '' and $port->revision != '0') {
+		$HTML .= '_' . $port->revision;
+	}
+	$HTML .= '.tgz">Package</A>';
 
    $HTML .= "\n</DD>\n</DL>\n";
 
@@ -1013,7 +1034,7 @@ function freshports_PortCommitPrint($commit, $category, $port) {
 
 	echo '&nbsp;&nbsp;'. freshports_Commit_Link($commit->message_id);
 
-	if ($commit->encoding_losses == 't') {
+	if ($commit->EncodingLosses()) {
 		echo '&nbsp;'. freshports_Encoding_Errors();
 	}
 
@@ -1122,7 +1143,7 @@ function freshports_Commits($element_record) {
 	$LastVersion = '';
 	for ($i = 0; $i < $NumRows; $i++) {
 		$Commits->FetchNthCommit($i);
-		freshports_CommitPrint($Commits);
+		freshports_CommitPrint($element_record, $Commits);
 	}
 
 	freshports_CommitsFooter($port);
@@ -1131,7 +1152,7 @@ function freshports_Commits($element_record) {
 
 
 
-function freshports_CommitPrint($commit) {
+function freshports_CommitPrint($element_record, $commit) {
 	GLOBAL $DateFormatDefault;
 	GLOBAL $TimeFormatDefault;
 	GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;
@@ -1146,13 +1167,13 @@ function freshports_CommitPrint($commit) {
 
 	echo '&nbsp;&nbsp;'. freshports_Commit_Link($commit->message_id);
 
-	if ($commit->encoding_losses == 't') {
+	if ($commit->EncodingLosses()) {
 		echo '&nbsp;'. freshports_Encoding_Errors();
 	}
 
 	echo ' ';
 
-#	echo freshports_CommitFilesLink($commit->message_id, $category, $port);
+	echo freshports_CVS_Link($element_record->element_pathname, $commit->revision_name);
 	if (IsSet($commit->security_notice_id)) {
 		echo ' <a href="/security-notice.php?message_id=' . $commit->message_id . '">' . freshports_Security_Icon() . '</a>';
 	}

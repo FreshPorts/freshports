@@ -1,5 +1,5 @@
 <?
-	# $Id: ports.php,v 1.1.2.12 2002-04-02 02:53:30 dan Exp $
+	# $Id: ports.php,v 1.1.2.13 2002-04-22 01:17:23 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -46,6 +46,9 @@ class Port {
 	// not always present/set
 	var $update_description;
 
+	// so far used by ports-deleted.php and include/list-of-ports.php
+	var $message_id;
+	var $encoding_losses;
 
 	// needed for fetch by category
 	var $LocalResult;
@@ -85,6 +88,8 @@ class Port {
 		$this->onwatchlist        = $myrow["onwatchlist"];
 
 		$this->update_description = $myrow["update_description"];
+		$this->message_id         = $myrow["message_id"];
+		$this->encoding_losses    = $myrow["encoding_losses"];
 	}
 
 	function FetchByPartialName($pathname, $WatchListID=0) {

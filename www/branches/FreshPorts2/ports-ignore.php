@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: ports-ignore.php,v 1.1.2.1 2004-03-22 20:28:45 dan Exp $
+	# $Id: ports-ignore.php,v 1.1.2.2 2004-06-30 15:45:57 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2004 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
@@ -28,7 +28,7 @@
 	<? echo freshports_PageBannerText($Title); ?>
 </TR>
 <TR><TD>
-These are the recently added ports.
+These are the ports marked as IGNORE.
 </TD></TR>
 <?
 
@@ -73,7 +73,8 @@ SELECT ports.id,
        broken,
        deprecated,
        ignore,
-       forbidden ";
+       forbidden,
+       latest_link ";
 
 	if ($User->id) {
 		$sql .= ",

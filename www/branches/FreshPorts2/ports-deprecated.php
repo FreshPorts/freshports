@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: ports-deprecated.php,v 1.1.2.1 2004-02-23 02:19:58 dan Exp $
+	# $Id: ports-deprecated.php,v 1.1.2.2 2004-06-30 15:44:39 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2004 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
@@ -28,7 +28,7 @@
 	<? echo freshports_PageBannerText($Title); ?>
 </TR>
 <TR><TD>
-These are the recently added ports.
+These are the deprecated ports.
 </TD></TR>
 <?
 
@@ -72,7 +72,8 @@ SELECT ports.id,
        status,
        broken,
        deprecated,
-       forbidden ";
+       forbidden,
+       latest_link ";
 
 	if ($User->id) {
 		$sql .= ",

@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.57 2002-04-03 20:25:13 dan Exp $
+   # $Id: freshports.php,v 1.4.2.58 2002-04-06 13:35:17 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -79,9 +79,17 @@ function freshports_Email_Link($message_id) {
 	#
 	GLOBAL $freshports_mail_archive;
 
-	$HTML .= '<A HREF="' . $freshports_mail_archive . $message_id . '">';
-	$HTML .= '<IMG SRC="/images/envelope10.gif" ALT="Original commit message" BORDER="0" WIDTH="25" HEIGHT="14">';
-	$HTML .= '</A>';
+	#
+	# if the message id is for freshports, then it's an old message which does not contain
+	# a valid message id which can be found in the mailing list archive.
+	#
+	if (strpos($message_id, "@freshports.org")) {
+		$HTML .= '';
+	} else {
+		$HTML .= '<A HREF="' . $freshports_mail_archive . $message_id . '">';
+		$HTML .= '<IMG SRC="/images/envelope10.gif" ALT="Original commit message" BORDER="0" WIDTH="25" HEIGHT="14">';
+		$HTML .= '</A>';
+	}
 
 	return $HTML;
 }

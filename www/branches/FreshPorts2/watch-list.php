@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-list.php,v 1.2.2.16 2002-12-11 04:44:41 dan Exp $
+	# $Id: watch-list.php,v 1.2.2.17 2002-12-12 02:22:44 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -76,7 +76,7 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 <TR><TD valign="top" width="100%">
 <?php
 		if ($ErrorMessage) {
-			freshports_ErrorMessage("Let\'s try that again!", $ErrorMessage);
+			echo freshports_ErrorMessage("Let\'s try that again!", $ErrorMessage);
 		}
 	
 		$PostURL = $_SERVER["PHP_SELF"];

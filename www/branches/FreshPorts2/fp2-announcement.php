@@ -1,5 +1,5 @@
 <?
-	# $Id: fp2-announcement.php,v 1.1.2.3 2002-05-22 04:30:22 dan Exp $
+	# $Id: fp2-announcement.php,v 1.1.2.4 2002-05-26 05:03:42 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -24,8 +24,12 @@
 
 FreshPorts 2 has been a long time in the making.  I think I've been working
 on it for almost two years (not full time of course...).  I think you'll
-find the changes are quite impressive.  Much of the work you cannot see
-direct.  The following are the changes you can see:
+find the changes are quite impressive.
+</P>
+
+<P>Much of the work you cannot see directly.  Please read the <A HREF="/faq.php">FAQ</A>
+for a full list of features.  The following is a short list of some of the changes you can see:
+</P>
 
 
 <TABLE WIDTH="100%" CELLPADDING="4" CELLSPACING="4">
@@ -39,7 +43,9 @@ direct.  The following are the changes you can see:
 
 <TR>
 <TD NOWRAP VALIGN="top" ALIGN="right"><B>full commit messages</B></TD>
-    <TD>The switch to XML input allows us to capture more data</TD></TR>
+    <TD>The switch to XML input allows us to capture more data.  And provide
+	you with a link to the original commit message.  <? echo freshports_Mail_Icon(); ?>
+	</TD></TR>
 
 <TR>
 <TD NOWRAP VALIGN="top" ALIGN="right"><B>directory structure</B></TD>
@@ -50,14 +56,15 @@ direct.  The following are the changes you can see:
 <TR>
 <TD NOWRAP VALIGN="top" ALIGN="right"><B>one-click add/remove</B></TD>
     <TD>See a port you like? You can add it to your watch list with
-        a single click.
+        a single click. <? echo freshports_Watch_Icon_Add(); ?>
     </TD></TR>
 
 <TR>
 <TD NOWRAP VALIGN="top" ALIGN="right"><B>link to commit details</B></TD>
     <TD>Want to know what files were changed in this commit?  It's now
     just one click away.  One more click will take to you the FreeBSD
-    CVS repository.</TD></TR>
+    CVS repository. <? echo freshports_Files_Icon(); ?>
+	</TD></TR>
 
 <TR>
 <TD NOWRAP VALIGN="top" ALIGN="right"><B>Forums are back!</B></TD>

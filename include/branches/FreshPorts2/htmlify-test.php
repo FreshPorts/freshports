@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: htmlify-test.php,v 1.1.2.3 2003-10-02 14:23:56 dan Exp $
+	# $Id: htmlify-test.php,v 1.1.2.4 2003-11-28 16:25:28 dan Exp $
 	#
 	# Copyright (c) 2003 DVL Software Limited
 	#
@@ -17,6 +17,10 @@ this is url   http://langille.org/ o ho
 this is url   http://langille.org/ 
 this is url   <http://langille.org/> 
 PR: 12345,43 23123123
+And these too: PR 123
+PR 1324
+PR 234,394 234
+PR 234, 234, and 234
 
 port check < 0 or > 10
 only with Netscape. You can trace the discussion at: <http://home.jp.FreeBSD.org/cgi-bin/thread?mesid=%3c20020115163006%2e482281905%40taro%2ec%2eu%2dtokyo%2eac%2ejp%3e>

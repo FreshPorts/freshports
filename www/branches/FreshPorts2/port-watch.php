@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-watch.php,v 1.1.2.31 2003-04-27 14:48:15 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.32 2003-04-28 00:29:48 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -142,7 +142,7 @@ if ($numrows) {
 
 	$HTML .= '<form action="' . $_SERVER["PHP_SELF"] . '" method="POST">';
 
-   $HTML .= "\n" . '<TABLE BORDER="1" CELLSPACING="0" CELLPADDING="5" BORDERCOLOR="#a2a2a2" BORDERCOLORDARK="#a2a2a2" BORDERCOLORLIGHT="#a2a2a2">' . "\n";
+   $HTML .= "\n" . '<TABLE BORDER="1" CELLSPACING="0" CELLPADDING="5">' . "\n";
 
    // get the list of ports
 

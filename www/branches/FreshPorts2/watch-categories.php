@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-categories.php,v 1.1.2.22 2003-04-27 14:48:18 dan Exp $
+	# $Id: watch-categories.php,v 1.1.2.23 2003-04-28 00:29:48 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -88,7 +88,6 @@ echo freshports_WatchListDDLBForm($db, $User->id, $wlid);
 </td></tr>
 
 
-</tr>
 <tr><td colspan="2">
 &nbsp;
 </td></tr>
@@ -122,7 +121,7 @@ for ($i = 0; $i < $numrows; $i++) {
 
 # categories list start
 
-$HTML .= "\n" . '<TABLE BORDER="1" CELLSPACING="0" CELLPADDING="5" BORDERCOLOR="#a2a2a2" BORDERCOLORDARK="#a2a2a2" BORDERCOLORLIGHT="#a2a2a2">' . "\n";
+$HTML .= "\n" . '<TABLE BORDER="1" CELLSPACING="0" CELLPADDING="5">' . "\n";
 $HTML .= '<tr>';
 // get the list of categories to display
 $sql = "
@@ -156,7 +155,7 @@ for ($i = 0; $i < $NumCategories; $i++) {
       $HTML .= '<td valign="top">';
    }
 
-   $HTML .= ' <a href="/port-watch.php?category=' . $rows[$i]["category"] . '&wlid=' . $wlid . '">' . $rows[$i]["category"] . '</a>';
+   $HTML .= ' <a href="/port-watch.php?category=' . $rows[$i]["category"] . '&amp;wlid=' . $wlid . '">' . $rows[$i]["category"] . '</a>';
 
    $HTML .= $WatchedCategories{$rows[$i]["category_id"]};
    $HTML .= "<br>\n";

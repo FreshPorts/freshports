@@ -1,5 +1,5 @@
 <?
-	# $Id: commit_log_ports.php,v 1.1.2.13 2003-05-16 01:06:58 dan Exp $
+	# $Id: commit_log_ports.php,v 1.1.2.14 2003-09-25 14:00:22 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -113,6 +113,10 @@ UPDATE commit_log_ports
 		
 	}
 	
+	function EncodingLosses() {
+		return $this->encoding_losses == 't';
+	}
+
 	
 
 }

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit_record.php,v 1.1.2.2 2003-09-24 13:45:02 dan Exp $
+	# $Id: commit_record.php,v 1.1.2.3 2003-09-25 14:00:22 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -68,4 +68,9 @@ class CommitRecord {
 		$this->watch				= $myrow['watch'];
 		$this->element_pathname		= $myrow['element_pathname'];
 	}
+
+	function EncodingLosses() {
+		return $this->encoding_losses == 't';
+	}
+
 }

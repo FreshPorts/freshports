@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.61 2004-12-01 22:56:47 dan Exp $
+	# $Id: faq.php,v 1.1.2.62 2004-12-02 00:01:04 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -229,7 +229,7 @@ down you must read to find something you didn't already know.</P>
 	<P><?php echo freshports_New_Icon() ?>
 		New: This port has been recently added.  A port is marked as new for 10 days.</P>
 
-	<P><?php echo freshports_Forbidden_Icon() ?>
+	<P><a name="forbidden"><?php echo freshports_Forbidden_Icon() ?></a>
 		Forbidden: The port is marked as forbidden.  If you view the port details,
 		you will see why.  Most often, it is because of a security exploit.</P>
 

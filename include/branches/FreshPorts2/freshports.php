@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.193 2004-12-01 22:56:47 dan Exp $
+	# $Id: freshports.php,v 1.4.2.194 2004-12-02 00:01:04 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -861,7 +861,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 	$HTML .= "</DT>\n<DD>";
 	# show forbidden and broken
 	if ($port->forbidden) {
-		$HTML .= freshports_Forbidden_Icon() . ' FORBIDDEN: ' . htmlify(htmlspecialchars($port->forbidden)) . "<br>";
+		$HTML .= freshports_Forbidden_Icon_Link() . ' FORBIDDEN: ' . htmlify(htmlspecialchars($port->forbidden)) . "<br>";
 	}
 
 	if ($port->broken) {
@@ -1219,7 +1219,7 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	echo $commit->commit_date . '<BR>';
 	// indicate if this port needs refreshing from CVS
 	if ($commit->{'needs_refresh'}) {
-		echo " " . freshports_Refresh_Icon() . "\n";
+		echo " " . freshports_Refresh_Icon_Link() . "\n";
 	}
 	echo freshports_Email_Link($commit->message_id);
 

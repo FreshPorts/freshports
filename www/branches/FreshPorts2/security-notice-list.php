@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: security-notice-list.php,v 1.1.2.2 2004-02-13 17:30:31 dan Exp $
+	# $Id: security-notice-list.php,v 1.1.2.3 2004-02-13 17:41:50 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -87,7 +87,6 @@ function MassageStatus($InStatus) {
 	}
 ?>
 
-</p>
 </TD></TR>
 <?php
 	# now get all the changed values from before...
@@ -95,7 +94,7 @@ function MassageStatus($InStatus) {
 	$numrows = $SecurityNotice->FetchByStatus('');
 	if ($numrows > 0) {
 ?>
-<tr>
+<tr><td>
 <table border=1 CELLSPACING="0" CELLPADDING="5">
 <tr><td><b>Commit date</b></td><td><b>Commit Message</b></td><td><b>Date Added</b></td><td><b>Security Reason</b></td><td><b>User Name</b></td><td><b>IP Address</b></td><td><b>e-mail</b></td><td><b>status</b></td></tr>
 <?php
@@ -140,7 +139,6 @@ function MassageStatus($InStatus) {
 
 <p>
 <?php echo $SecurityFlag; ?>
-</p>
 </TD>
 
   <TD VALIGN="top" WIDTH="*" ALIGN="center">

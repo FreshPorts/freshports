@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.103 2002-07-10 19:48:20 dan Exp $
+	# $Id: freshports.php,v 1.4.2.104 2002-08-19 17:58:04 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -814,7 +814,8 @@ function convertURLS($text) {
 }
 
 function convertMail($text) {
-	$text = eregi_replace("([_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3}))", "<A HREF='mailto:\\0'>\\0</A>", $text);
+	# see also freshports_IsEmailValid
+	$text = eregi_replace("([+_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3}))", "<A HREF='mailto:\\0'>\\0</A>", $text);
 	return $text;
 }
 
@@ -828,6 +829,17 @@ function convertAllLinks($text) {
 # The code above was donated by Steve Kacsmark <stevek@guide.chi.il.us>.
 # With modifications by Marcin Gryszkalis <mgryszkalis@cerint.pl>.
 #
+
+function freshports_IsEmailValid($email) {
+	# see also convertMail
+	if (eregi("^[a-z0-9\._+-]+@[a-z0-9\._-]+$", $email)) {
+		return TRUE;
+	} else {
+		return FALSE;
+	}
+}
+
+
 
 function pr2link($Arr) {
 	return preg_replace("/((\w+\/)?\d+)/", 
@@ -1074,14 +1086,6 @@ function freshports_wrap($text, $length = 80) {
 
 function freshports_PageBannerText($Text, $ColSpan=1) {
 	echo '<TD BGCOLOR="#AD0040" HEIGHT="29" COLSPAN="' . $ColSpan . ' "><FONT COLOR="#FFFFFF"><BIG><BIG>' . $Text . '</BIG></BIG></FONT></TD>' . "\n";
-}
-
-function freshports_IsEmailValid($email) {
-	if (eregi("^[a-z0-9\._+-]+@[a-z0-9\._-]+$", $email)) {
-		return TRUE;
-	} else {
-		return FALSE;
-	}
 }
 
 

@@ -1,5 +1,5 @@
 --
--- $Id: POSTGRESQL.sql,v 1.1.2.37 2003-10-06 19:07:59 dan Exp $
+-- $Id: POSTGRESQL.sql,v 1.1.2.38 2003-10-06 19:10:46 dan Exp $
 --
 -- Copyright (c) 1998-2003 DVL Software Limited
 --
@@ -51,7 +51,6 @@ grant select on user_tasks                     to group www;
 -- select, update
 --
 grant select, update on categories             to group www;
-grant select, update on housekeeping           to group www;
 
 --
 -- select, insert, update
@@ -154,7 +153,6 @@ grant select, insert, update, delete on ports_categories               to group 
 --
 grant select                         on ports_active                   to group commits;
 grant select, update                 on ports_id_seq                   to group commits;
-grant select, update                 on housekeeping                   to group commits;
 
 grant select, insert, update, delete on system                         to group commits;
 grant select, insert, update, delete on system_branch                  to group commits;

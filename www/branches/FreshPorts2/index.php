@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.6 2002-01-07 13:08:41 dan Exp $
+	# $Id: index.php,v 1.1.2.7 2002-02-01 15:57:37 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -127,7 +127,7 @@ select DISTINCT commit_log.commit_date as commit_date_raw,
 	   date_part('epoch', ports.date_created) as date_created,
 	   ports.short_description
   from commit_log_ports, commit_log, ports, element, categories
- where commit_log.commit_date         > '2001-09-01'
+ where commit_log.commit_date         > '2002-01-01'
    and commit_log_ports.commit_log_id = commit_log.id
    and commit_log_ports.port_id       = ports.id
    and categories.id                  = ports.category_id
@@ -233,10 +233,10 @@ ports. A port is marked as new for 10 days.
 
 						// indicate if this port needs refreshing from CVS
 						if ($myrow["status"] == "D") {
-							$HTML .= '<br><font size="-1">[deleted]</font>';
+							$HTML .= '<font size="-1"> [deleted]</font>';
 						}
 						if ($myrow["needs_refresh"]) {
-							$HTML .= ' <font size="-1">[refresh]</font>';
+							$HTML .= ' <font size="-1"> [refresh]</font>';
 						}
 
 						if ($myrow["date_created"] > Time() - 3600 * 24 * $DaysMarkedAsNew) {

@@ -1,5 +1,5 @@
 <?
-	# $Id: forgotten-password.php,v 1.1.2.3 2002-01-02 04:38:02 dan Exp $
+	# $Id: forgotten-password.php,v 1.1.2.4 2002-01-02 04:48:14 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -50,7 +50,7 @@ if ($submit) {
          echo $UserID . "<br>\n";
       }
 
-      $sql = "select * from users where name = '$UserID'";
+      $sql = "select * from users where lower(name) = lower('$UserID')";
 
       if ($Debug) {
          echo "$sql<br>\n";

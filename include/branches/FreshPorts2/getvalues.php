@@ -59,7 +59,7 @@ if (!empty($visitor)) {
 
    if ($result) {
       if ($Debug) echo "we found a result there...\n<br>";
-      $myrow = $myrow = pg_fetch_array ($result, 0);
+      $myrow = pg_fetch_array ($result, 0);
       if ($myrow) {
          if ($Debug) echo "we found a row there...\n<br>";
          $UserName				= $myrow["name"];

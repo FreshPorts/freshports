@@ -1,5 +1,5 @@
 <?
-   # $Id: login.php,v 1.1.2.2 2002-01-02 04:15:10 dan Exp $
+   # $Id: login.php,v 1.1.2.3 2002-01-02 04:48:14 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -33,7 +33,7 @@ if ($submit) {
 
    // test for existance of user id
 
-   $sql = "select * from users where name = '$UserID'".
+   $sql = "select * from users where lower(name) = lower('$UserID')".
 	  " and password = '$Password' ";
 
    if ($Debug) {

@@ -1,13 +1,13 @@
 <?
-	# $Id: header.php,v 1.1.2.6 2002-04-20 03:41:42 dan Exp $
+	# $Id: header.php,v 1.1.2.7 2002-05-22 04:34:54 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
-	require("../include/common.php");
-	require("../include/freshports.php");
-	require("../include/databaselogin.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
 
-	require("../include/getvalues.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 
 	freshports_Start("the place for ports",
 					"$FreshPortsName - new ports, applications",

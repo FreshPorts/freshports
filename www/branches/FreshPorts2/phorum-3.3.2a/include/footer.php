@@ -9,7 +9,7 @@
 </tr>
 </table>
 
-<? include("../include/footer.php") ?>
+<? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
 
 <br>
 

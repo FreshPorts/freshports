@@ -1,46 +1,29 @@
 <?
-	# $Id: search.php,v 1.1.2.34 2002-12-10 20:51:01 dan Exp $
+	# $Id: search.php,v 1.1.2.35 2002-12-11 04:40:46 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/ports.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
 
 	$Debug = 0;
 
-	switch ($_SERVER["REQUEST_METHOD"]) {
-		case "POST":
-			// avoid nasty problems by adding slashes
-			$query				= AddSlashes($_POST["query"]);
-			$stype				= AddSlashes($_POST["stype"]);
-			$num					= AddSlashes($_POST["num"]);
-			$category			= AddSlashes($_POST["category"]);
-			$port					= AddSlashes($_POST["port"]);
-			$method				= AddSlashes($_POST["method"]);
-			$deleted				= AddSlashes($_POST["deleted"]);
-			$casesensitivity	= AddSlashes($_POST["casesensitivity"]);
-			break;
-
-		case "GET":
-			// avoid nasty problems by adding slashes
-			$query				= AddSlashes($_GET["query"]);
-			$stype				= AddSlashes($_GET["stype"]);
-			$num					= AddSlashes($_GET["num"]);
-			$category			= AddSlashes($_GET["category"]);
-			$port					= AddSlashes($_GET["port"]);
-			$method				= AddSlashes($_GET["method"]);
-			$deleted				= AddSlashes($_GET["deleted"]);
-			$casesensitivity	= AddSlashes($_GET["casesensitivity"]);
-			break;
-
-	}
+	// avoid nasty problems by adding slashes
+	$query				= AddSlashes($_REQUEST['query']);
+	$stype				= AddSlashes($_REQUEST['stype']);
+	$num					= AddSlashes($_REQUEST['num']);
+	$category			= AddSlashes($_REQUEST['category']);
+	$port					= AddSlashes($_REQUEST['port']);
+	$method				= AddSlashes($_REQUEST['method']);
+	$deleted				= AddSlashes($_REQUEST['deleted']);
+	$casesensitivity	= AddSlashes($_REQUEST['casesensitivity']);
 
 	if ($stype == 'messageid') {
-		header("Location: http://" . $_SERVER["HTTP_HOST"] . "/commit.php?message_id=$query");
+		header('Location: http://' . $_SERVER['HTTP_HOST'] . "/commit.php?message_id=$query");
 		exit;
 	}
 
@@ -48,12 +31,12 @@
 	# ensure deleted has an appropriate value
 	#
 	switch ($deleted) {
-		case "includedeleted":
+		case 'includedeleted':
 			# do nothing
 			break;
 
 		default:
-			$deleted = "excludedeleted";
+			$deleted = 'excludedeleted';
 			# do not break here...
 	}
 
@@ -62,21 +45,21 @@
 	# ensure casesensitivity has an appropriate value
 	#
 	switch ($casesensitivity) {
-		case "casesensitive":
+		case 'casesensitive':
 			# do nothing
 			break;
 
 		default:
-			$casesensitivity = "caseinsensitive";
+			$casesensitivity = 'caseinsensitive';
 			# do not break here...
 	}
 
 
 #	if ($Debug) phpinfo();
 
-	freshports_Start("Search",
-					"freshports - new ports, applications",
-					"FreeBSD, index, applications, ports");
+	freshports_Start('Search',
+					'freshports - new ports, applications',
+					'FreeBSD, index, applications, ports');
 
 ?>
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
@@ -111,7 +94,7 @@ if ($Debug) {
 #
 # we can take parameters.  if so, make it look like a post
 #
-$search = $_POST["search"];
+$search = $_REQUEST["search"];
 if (!$search && ($query && $stype && $num && $method)) {
 	$search = TRUE;
 }
@@ -154,7 +137,6 @@ $sql = "
          onwatchlist";
    }
 
-
 	$sql .= "
     from ports, categories, commit_log, commit_log_ports, element  ";
 
@@ -162,7 +144,7 @@ $sql = "
 			$sql .= "
       LEFT OUTER JOIN
  (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
-    FROM watch_list JOIN watch_list_element 
+    FROM watch_list JOIN watch_list_element
         ON watch_list.id      = watch_list_element.watch_list_id
        AND watch_list.user_id = $User->id
   GROUP BY watch_list_element.element_id) AS TEMP
@@ -359,7 +341,7 @@ Search for:<BR>
 
 	<BR><BR>
 	NOTE: Case sensitivity is ignored for "sounding like".<BR>
-	NOTE: When searching on 'Message ID' only exact matches will succeeed.
+	NOTE: When searching on 'Message ID' only exact matches will succeed.
 
   <INPUT TYPE="hidden" NAME="search" VALUE="1">
 </form>
@@ -413,14 +395,14 @@ echo "</td></tr>\n";
 
 </td>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
-    <? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
+    <? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php') ?>
  </td>
 </tr>
 </table>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
 </TD></TR>
 </TABLE>
 

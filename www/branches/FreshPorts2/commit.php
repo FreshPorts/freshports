@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.31 2003-09-25 23:11:51 dan Exp $
+	# $Id: commit.php,v 1.1.2.32 2003-09-27 18:43:29 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -62,70 +62,9 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 #
 #$numrows=400;
 
-	$sql = '';
-
-	$sql .= "
-SELECT ports.id as port_id,
-       ports.short_description,
-       categories.name as category,
-       commit_log.message_id as message_id,
-       case when ports.element_id IS NOT NULL THEN element_pathname(ports.element_id) ELSE element_pathname(E.id) END as element_pathname,
-       commit_log.committer,
-       commit_log.description as commit_description,
-       commit_log_ports.port_version as version,
-       COALESCE(commit_log_ports.port_revision, commit_log_elements.revision_name) as revision,
-       element.name as port,
-       commit_log.id as commit_log_id,
-
-       to_char(commit_log.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')  as commit_date,
-       to_char(commit_log.commit_date - SystemTimeAdjust(), 'HH24:MI:SS')   as commit_time,
-       commit_log.encoding_losses,
-       element.name as port,
-       element.status as status,
-       commit_log.id as commit_log_id,
-       commit_log_ports.needs_refresh,
-
-       security_notice.id  AS security_no,
-       commit_log_elements.element_id ";
-
-	if ($User->id) {
-		$sql .= ",
-       onwatchlist";
-   }
-
-   $sql .= "
-  FROM (commit_log LEFT OUTER JOIN security_notice ON (commit_log.id = security_notice.commit_log_id))
-              LEFT OUTER JOIN commit_log_ports     ON (commit_log.id = commit_log_ports.commit_log_id)
-              LEFT OUTER JOIN ports                ON commit_log_ports.port_id = ports.id
-              LEFT OUTER JOIN element              ON ports.element_id         = element.id
-              LEFT OUTER JOIN categories           ON ports.category_id        = categories.id
-              LEFT OUTER JOIN commit_log_elements  ON commit_log.id                  = commit_log_elements.commit_log_id
-              LEFT OUTER JOIN element E            ON commit_log_elements.element_id = E.id 
-";
-
-	if ($User->id) {
-				$sql .= "
-	      LEFT OUTER JOIN
-	 (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
-	    FROM watch_list JOIN watch_list_element
-	        ON watch_list.id      = watch_list_element.watch_list_id
-	       AND watch_list.user_id = $User->id
-          AND watch_list.in_service
-	  GROUP BY wle_element_id) AS TEMP
-	       ON TEMP.wle_element_id = element.id";
-	      }
-	
-	if ($message_id) {
-		$sql .= "\n         WHERE commit_log.message_id = '$message_id' \n";
-	} else {
-		$sql .= "\n         WHERE commit_log.id         = $commit_id \n";
-	}
-	
-	$sql .= "ORDER BY category, port, element_pathname";
-
+	$sql = "select * from freshports_commit('$message_id')";
 
 	if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
-
 
    $result = pg_exec($database, $sql);
 
@@ -160,9 +99,6 @@ SELECT ports.id as port_id,
 			for ($i = 0; $i < $NumRows; $i++) {
 				$myrow = $rows[$i];
 				$ThisChangeLogID = $myrow["commit_log_id"];
-                $IsPort = $myrow['port_id'] != '';
-
-
 				if ($LastDate <> $myrow["commit_date"]) {
 					$LastDate = $myrow["commit_date"];
 					$HTML .= '<TR><TD COLSPAN="3" BGCOLOR="#AD0040" HEIGHT="0">' . "\n";
@@ -178,6 +114,8 @@ SELECT ports.id as port_id,
 				$MultiplePortsThisCommit = 0;
 				while ($j < $NumRows && $rows[$j]["commit_log_id"] == $ThisChangeLogID) {
 					$myrow = $rows[$j];
+
+	                $IsPort = $myrow['is_port'] == 't';
 
 					if ($MultiplePortsThisCommit) {
 						$HTML .= '<BR>';
@@ -219,19 +157,19 @@ SELECT ports.id as port_id,
 						}
 						$HTML .= "</B></BIG>\n";
 
+					$HTML .= '<A HREF="/' . $myrow["category"] . '/">';
+					$HTML .= $myrow["category"]. "</A>";
+					$HTML .= '&nbsp;';
+
 					} else {
 						$HTML .= '<BIG><B>';
-						$ElementPathname = preg_replace('|^/?ports/|', '', $myrow['element_pathname']);
+						$ElementPathname = preg_replace('|^/?ports/|', '', $myrow['pathname']);
 						$HTML .= '<A HREF="/' . $ElementPathname . '">';
 						$HTML .= $ElementPathname;
 						$HTML .= '</A>';
 						$HTML .= ' ' . $myrow["revision"];
 						$HTML .= "</B></BIG>\n";
 					}
-
-					$HTML .= '<A HREF="/' . $myrow["category"] . '/">';
-					$HTML .= $myrow["category"]. "</A>";
-					$HTML .= '&nbsp;';
 
 					if ($User->id && $IsPort) {
 						if ($myrow["onwatchlist"]) {
@@ -270,7 +208,9 @@ SELECT ports.id as port_id,
 						$HTML .= '&nbsp;' . freshports_Broken_Icon() . "\n";
 					}
 
-					$HTML .= ' ' . htmlspecialchars($myrow["short_description"]) . "\n";
+					if ($IsPort) {
+						$HTML .= ' ' . htmlspecialchars($myrow["short_description"]) . "\n";
+					}
 
 					$j++;
 					$MultiplePortsThisCommit = 1;

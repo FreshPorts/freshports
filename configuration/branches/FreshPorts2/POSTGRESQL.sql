@@ -1,5 +1,5 @@
 --
--- $Id: POSTGRESQL.sql,v 1.1.2.38 2003-10-06 19:10:46 dan Exp $
+-- $Id: POSTGRESQL.sql,v 1.1.2.39 2003-11-14 04:40:15 dan Exp $
 --
 -- Copyright (c) 1998-2003 DVL Software Limited
 --
@@ -199,3 +199,10 @@ alter group reading add user reading;
 
 grant select                         on report_subscriptions           to group reading;
 grant select                         on users                          to group reading;
+
+
+--
+-- For statistics gathering
+--
+grant insert                         on page_load_detail               to group www;
+grant update                         on page_load_detail_id_seq        to group www;

@@ -1,5 +1,5 @@
 <?
-	# $Id: ports-forbidden.php,v 1.1.2.8 2002-12-11 16:33:41 dan Exp $
+	# $Id: ports-forbidden.php,v 1.1.2.9 2002-12-11 17:47:23 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -90,7 +90,7 @@ select ports.id,
   GROUP BY watch_list_element.element_id) AS TEMP
        ON TEMP.wle_element_id = ports.element_id";
 	}
-	
+
 	$sql .= "
 WHERE ports.element_id  = element.id
   and ports.category_id = categories.id 

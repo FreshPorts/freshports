@@ -1,5 +1,5 @@
 <?
-	# $Id: files.php,v 1.1.2.4 2002-01-08 06:23:58 dan Exp $
+	# $Id: files.php,v 1.1.2.5 2002-02-13 22:58:31 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -12,19 +12,23 @@
 		$id = 0;
 	}
 
-$sql = "select element_pathname(element.id) as pathname, commit_log_port_elements.commit_log_id, " .
-	   "commit_log_port_elements.port_id, " .
-       "commit_log_elements.change_type, element.name as filename, categories.name as category, commit_log.committer, commit_log.commit_date, " .
-       "commit_log.description, B.name as port, commit_log_elements.revision_name as revision_name " .
-       "from commit_log, ports, categories, element, commit_log_port_elements, commit_log_elements, element B " .
-       "where commit_log.id                                  = $id " .
-	   "  and commit_log_port_elements.commit_log_id         = commit_log.id " .
-	   "  and commit_log_port_elements.commit_log_element_id = commit_log_elements.id " .
-       "  and commit_log_elements.element_id                 = element.id " .
-       "  and commit_log_port_elements.port_id               = ports.id " .
-       "  and ports.category_id                              = categories.id " .
-       "  and ports.element_id                               = B.id " .
-       "order by 1 limit 30";
+$sql = "
+select element_pathname(element.id) as pathname, commit_log_port_elements.commit_log_id, 
+	   commit_log_port_elements.port_id, 
+	   to_char(commit_log.commit_date + INTERVAL '$CVSTimeAdjustment seconds', 'DD Mon YYYY')  as commit_date,
+	   to_char(commit_log.commit_date + INTERVAL '$CVSTimeAdjustment seconds', 'HH24:MI')      as commit_time,
+	   commit_log_elements.change_type, element.name as filename, categories.name as category, commit_log.committer, 
+	   ports.short_description,
+	   commit_log.description, B.name as port, commit_log_elements.revision_name as revision_name 
+	   from commit_log, ports, categories, element, commit_log_port_elements, commit_log_elements, element B 
+ where commit_log.id                                  = $id 
+   and commit_log_port_elements.commit_log_id         = commit_log.id 
+   and commit_log_port_elements.commit_log_element_id = commit_log_elements.id 
+   and commit_log_elements.element_id                 = element.id 
+   and commit_log_port_elements.port_id               = ports.id 
+   and ports.category_id                              = categories.id 
+   and ports.element_id                               = B.id 
+ order by 1 limit 30";
 
 #echo $sql;
 
@@ -38,7 +42,7 @@ if (!$result) {
 	$i = 0;
 	$NumRows = pg_numrows($result);
 	while ($myrow = pg_fetch_array($result, $i)) {
-//		echo "<tr><td>" . $myrow["port_id"] . "</td><td>" . $myrow["port"] . "</td></tr>";
+//		echo "<TR><TD>" . $myrow["port_id"] . "</TD><TD>" . $myrow["port"] . "</TD></TR>";
 		$rows[$i] = $myrow;
 		$i++;
         if ($i >  $NumRows - 1) {
@@ -56,25 +60,30 @@ if (!$result) {
 ?>
 
 <table width="<? echo $TableWidth ?>" border="0" ALIGN="center">
-<tr><td colspan="2">Welcome to the freshports.org where you can find the latest information on your favourite
-ports.
-</td></tr>
-  <tr>
-    <td colspan="3">
-This page shows the files associated with one port for a given commit.
-    </td>
-  </tr>
-<tr><td valign="top" width="100%">
+<TR><TD VALIGN="top" width="100%">
 <?
-   echo '<table border="1" width="100%" CELLSPACING="0" CELLPADDING="5"bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">' . "\n";
-   echo '<tr height="20"><td colspan="3" bgcolor="#AD0040"><font color="#FFFFFF" size="+1">Commit Details</font></td></tr>' . "\n";
-   echo "<tr><td><b>Date</b></td><td><b>Committer</b></td><td><b>Description</b></td></tr>\n";      
+	echo '<TABLE BORDER="1" WIDTH="100%" CELLSPACING="0" CELLPADDING="5" BORDERCOLOR="#a2a2a2" BORDERCOLORDARK="#a2a2a2" BORDERCOLORLIGHT="#a2a2a2">' . "\n";
+	echo '<TR><TD colspan="3" bgcolor="#AD0040">';
+	echo '<FONT COLOR="#FFFFFF" SIZE="+1">';
+	echo 'Commit Details</FONT></TD></TR>' . "\n";
+	echo '<TR><TD COLSPAN="3">';
+	echo '<FONT size="+1"><A HREF="' . $myrow["category"] . '">' . $myrow["category"] . '</A>';
+	echo '/<A HREF="' . $myrow["category"] . '/' . $myrow["port"] . '">' . $myrow["port"] . '</A>';
+	echo '</FONT>';
 
-   echo "<tr>";
-   echo "    <td valign='top'><font size='-1'>" . $myrow["commit_date"]        . "</font></td>\n";
-   echo "    <td valign='top'>" . $myrow["committer"]          . "</td>\n";
-   echo '    <td valign="top"><PRE CLASS="code">' . $myrow["description"] . "</CODE></td>\n";
-   echo "</tr>";
+	echo ' - <CODE CLASS="code">' . $myrow["short_description"] . '</CODE>';
+
+	echo  '<BR>' . $myrow["commit_date"] . ' ' . $myrow["commit_time"];
+
+	echo '</TD></TR>';
+
+	echo "<TR><TD><B>Date</B></TD><TD><B>Committer</B></TD><TD><b>Description</b></TD></TR>\n";      
+
+	echo "<TR>";
+	echo "    <TD VALIGN='top'>" .$myrow["commit_date"] . ' ' . $myrow["commit_time"] . "</TD>\n";
+	echo "    <TD VALIGN='top'>" . $myrow["committer"]          . "</TD>\n";
+	echo '    <TD VALIGN="top"><PRE CLASS="code">' . $myrow["description"] . "</CODE></TD>\n";
+	echo "</TR>";
 ?>
 
 </TABLE>
@@ -84,7 +93,7 @@ This page shows the files associated with one port for a given commit.
 <table border="1" width="100%" CELLSPACING="0" CELLPADDING="5"bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">
 <?
 
-   echo '<tr height="20"><td colspan="3" bgcolor="#AD0040"><font color="#FFFFFF"><font size="+1">';
+   echo '<TR height="20"><TD colspan="3" bgcolor="#AD0040"><font color="#FFFFFF"><font size="+1">';
 
 	switch ($NumRows) {
 		case 0:
@@ -99,17 +108,17 @@ This page shows the files associated with one port for a given commit.
 			echo $i . ' files found';
 	}
 
-	echo  '</font></td></tr>';
+	echo  '</font></TD></TR>';
    ?>
-   <tr>
-     <td><b>Action</b></td><TD><B>Revision</B></TD><td colspan="2"><b>File</b></td>
-   </tr>
+   <TR>
+     <TD><b>Action</b></TD><TD><B>Revision</B></TD><TD colspan="2"><b>File</b></TD>
+   </TR>
    <?
 
 #   $NumRows = $i;
 	for ($i = 0; $i < $NumRows; $i++) {
 		$myrow = $rows[$i];
-		echo "<tr>\n";
+		echo "<TR>\n";
 
 		switch ($myrow["change_type"]) {
 			case "M":
@@ -133,19 +142,19 @@ This page shows the files associated with one port for a given commit.
 		echo '  <TD><A HREF="' . $freshports_CVS_URL . $myrow["pathname"] . '">';
 
 		echo '<CODE CLASS="code">' . str_replace($PathNamePrefixToRemove, '', $myrow["pathname"]) . "</CODE></A></TD>";
-		echo "</tr>\n";
+		echo "</TR>\n";
 	}
 }
 
 </script>
 </table>
-</td>
-  <td valign="top" width="*">
+</TD>
+  <TD VALIGN="top" width="*">
    <? include("./include/side-bars.php") ?>
- </td>
-</tr>
+ </TD>
+</TR>
 </table>
-</tr>
+</TR>
 </table>
 <? include("./include/footer.php") ?>
 </body>

@@ -1,0 +1,48 @@
+make database changes as found in changes.txt
+
+grant permissions using permissions.txt
+
+eventually drop a column from change_log_details
+
+run convert_change_log.php3 (perhaps should be a perl script?)
+
+is ports.last_change_log_detail_id  still needed?
+watch.php3 refers to last_change_log_detail_id 
+and incorrectly reports no changes found.
+last_change_log_id
+
+modify ports.needs_refresh to tinyint:
+
+alter table ports add column needs_refresh_tmp tinyint;
+update ports set needs_refresh_tmp = 3 where needs_refresh = "Y";
+alter table ports drop column needs_refresh;
+alter table ports add column needs_refresh tinyint;
+update ports set needs_refresh = needs_refresh_tmp;
+alter table ports drop column needs_refresh_tmp;
+alter table ports modify needs_refresh tinyint unsigned not null default 0;
+
+modify outfile and infil paths in log-catcher.awk
+create msgs directory according to above paths
+chmod daemon +x on msgs directory
+
+in updates.pl, change the login id accordingly
+
+also note updates.pl contains:
+use lib '/home/dan/walkports';
+I changed the above to use lib '/usr/local/etc/freshports.test/updates';  
+
+/usr/local/etc/freshports.changes/archives
+I changed the above to /www/test.freshports.org/archives
+and copied the archives directory from elsewhere.
+
+
+
+provide access to updater in the database
+
+grant select,insert,update on ports to updater@localhost;
+grant insert on change_log to updater@localhost;
+grant insert on change_log to updater@localhost;
+grant insert,select on change_log_port to updater@localhost;
+grant insert on change_log_details to updater@localhost;
+grant select on categories to updater@localhost;
+

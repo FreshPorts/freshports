@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-list-maintenance.php,v 1.1.2.4 2002-12-05 13:47:12 dan Exp $
+	# $Id: watch-list-maintenance.php,v 1.1.2.5 2002-12-08 03:23:46 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -16,7 +16,7 @@ if (!$visitor) {
         exit;  /* Make sure that code below does not get executed when we redirect. */
 }
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/watch-lists.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/watch_lists.php");
 
 	freshports_Start("Watch list maintenance",
 					"freshports - new ports, applications",
@@ -94,15 +94,15 @@ if ($UserClickedOn) {
 }
 
 if ($UserClickedOn != '' && $ErrorMessage == '') {
-	echo "you clicked on = '$UserClickedOn'<br>";
-	echo "your confirmation text = '" . AddSlashes($_POST["confirm"]) . "'<br>";
+	if ($Debug) echo "you clicked on = '$UserClickedOn'<br>";
+	if ($Debug) echo "your confirmation text = '" . AddSlashes($_POST["confirm"]) . "'<br>";
 
 	# all went well, so let us do what they told us to do
 	switch ($UserClickedOn) {
 		case "add":
 			$WatchList = new WatchList($db);
 			$NewWatchListID = $WatchList->Create($UserID, AddSlashes($_POST["add_name"]));
-			echo 'I just created \'' . AddSlashes($_POST["add_name"]) . '\' with ID = \'' . $NewWatchListID . '\'';
+			if ($Debug) echo 'I just created \'' . AddSlashes($_POST["add_name"]) . '\' with ID = \'' . $NewWatchListID . '\'';
 			break;
 
 		case "rename":
@@ -112,7 +112,7 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 				list($key, $WatchListIDToRename) = each($_POST["watch_list_id"]);
 				$WatchList = new WatchList($db);
 				$NewName = $WatchList->Rename($WatchListIDToRename, $_POST["rename_name"]);
-				echo 'I have renamed your list to \'' . AddSlashes($_POST["rename_name"]) . '\'';
+				if ($Debug) echo 'I have renamed your list to \'' . AddSlashes($_POST["rename_name"]) . '\'';
 			} else {
 				$ErrorMessage = 'Select exactly one watch list to be renamed.  I can\'t handle zero or more than one.';
 			}
@@ -128,7 +128,7 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 				if ($DeletedWatchListID != $WatchListIDToDelete) {
 					die("Failed to deleted '$WatchListIDToDelete' (return value '$DeletedWatchListID')" . pg_last_error());
 				}
-				echo 'I have deleted watch list id = ' . $WatchListIDToDelete . '<br>';
+				if ($Debug) echo 'I have deleted watch list id = ' . $WatchListIDToDelete . '<br>';
 			}
 			pg_query($db, "COMMIT");
 			
@@ -144,13 +144,22 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 				if ($EmptydWatchListID != $WatchListIDToEmpty) {
 					die("Failed to Emptyd '$WatchListIDToEmpty' (return value '$EmptydWatchListID')" . pg_last_error());
 				}
-				echo 'I have emptied watch list id = ' . $WatchListIDToEmpty . '<br>';
+				if ($Debug) echo 'I have emptied watch list id = ' . $WatchListIDToEmpty . '<br>';
 			}
 			pg_query($db, "COMMIT");
 			break;
 
 		case "set_default":
-			echo 'I would have set your default lists.';
+			if ($Debug) echo 'I have set your default lists.<br>';
+			pg_query($db, "BEGIN");
+			$WatchLists = new WatchLists($db);
+			$numrows = $WatchLists->In_Service_Set($UserID, $_POST["watch_list_id"]);
+			if ($Debug) echo "$numrows watchlists were affected by that action";
+			if ($numrows >= 0) {
+				pg_query($db, "COMMIT");
+			} else {
+				pg_query($db, "ROLLBACK");
+			}
 			break;
 
 		case "set_options":
@@ -176,33 +185,8 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 <TR><TD>
 <?php
 	if ($ErrorMessage) {
-?>
-<TABLE WIDTH="100%" BORDER="1" ALIGN="center" CELLPADDING=1 CELLSPACING=0 BORDER="1">
-<TR><TD VALIGN=TOP>
-<TABLE WIDTH="100%">
-<TR>
-	<? freshports_PageBannerText("Let's try that again!") ?>
-</TR>
-<TR BGCOLOR="#ffffff">
-<TD>
-  <TABLE WIDTH="100%" CELLPADDING=0 CELLSPACING=0 BORDER=0>
-  <TR valign=top>
-   <TD><img src="/images/warning.gif"></TD>
-   <TD WIDTH="100%">
-  <p><?php		echo "WARNING: $ErrorMessage"; ?></p>
- <p>If you need help, please ask in the forum. </p>
- </TD>
- </TR>
- </TABLE>
-</TD>
-</TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>
-<BR>
-<?php
-}
+		freshports_ErrorMessage("Let\'s try that again!", $ErrorMessage);
+	}
 ?>
 
 <TABLE WIDTH="100%" BORDER="1" CELLSPACING="0" CELLPADDING="5">
@@ -238,9 +222,9 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 <td valign="top" nowrap>
 When clicking on Add/Remove for a port,<br> the action should affect
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
-<INPUT id=main    type=radio name=main>&nbsp;the main watch list only<BR>
-<INPUT id=default type=radio name=default>&nbsp;the default watch list[s]<BR>
-<INPUT id=ask     type=radio name=ask>&nbsp;Ask for watch list name[s] each time<br>
+<INPUT id=selected type=radio name=main>&nbsp;the watch list only<BR>
+<INPUT id=default  type=radio name=default>&nbsp;the default watch list[s]<BR>
+<INPUT id=ask      type=radio name=ask>&nbsp;Ask for watch list name[s] each time<br>
 <INPUT id=set_options style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29 value="Set options"  name=set_options>
  </form>
 </td>

@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.17 2002-01-03 03:03:59 dan Exp $
+   # $Id: freshports.php,v 1.4.2.18 2002-01-05 20:13:39 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -267,24 +267,22 @@ function freshports_Category_Name($CategoryID, $db) {
 
 function freshports_MainWatchID($UserID, $db) {
 
-   $sql = "select watch.id ".
-          "from watch ".
-          "where watch.owner_user_id = $UserID ".
-          "and   watch.system        = 'FreeBSD' ".
-          "and   watch.name          = 'main'";
+	$sql = "select watch_list.id ".
+	       "  from watch_list ".
+	       " where watch_list.user_id = $UserID ".
+	       "   and watch_list.name    = 'main'";
 
+	$result = pg_exec ($db, $sql);
 
-   $result = mysql_query($sql, $db);
+//	echo "freshports_MainWatchID sql = $sql<br>\n";
 
-//   echo "freshports_MainWatchID sql = $sql<br>\n";
+	if(pg_numrows($result)) {
+//		echo "results were found for that<br>\n";
+		$myrow = pg_fetch_array ($result, 0);
+		$WatchID = $myrow["id"];
+	}
 
-   if(mysql_numrows($result)) {
-//      echo "results were found for that<br>\n";
-      $myrow = mysql_fetch_array($result);
-      $WatchID = $myrow["id"];
-   }
-
-   return $WatchID;
+	return $WatchID;
 }
 
 function freshports_echo_HTML($text) {
@@ -461,9 +459,9 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
          if ($port->updated != 0) {
             $HTML .= 'last change committed by ' . $port->committer;  // separate lines in case committer is null
  
-            $HTML .= ' on <font size="-1">' . $port->updated . '</font><br>' . "\n";
+            $HTML .= ' on <font size="-1">' . $port->updated . '</font>' . "\n";
  
-            $HTML .= $port->update_description . "<br>" . "\n";
+            $HTML .= '<PRE>' . $port->update_description . '</PRE>' . "\n";
          } else {
             $HTML .= "no changes recorded in FreshPorts<br>\n";
          }

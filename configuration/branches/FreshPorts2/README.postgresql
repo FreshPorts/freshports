@@ -1,5 +1,5 @@
 --
--- $Id: README.postgresql,v 1.1.2.2 2002-02-23 02:12:26 dan Exp $
+-- $Id: README.postgresql,v 1.1.2.3 2002-02-24 02:40:16 dan Exp $
 --
 -- Copyright (c) 1998-2002 DVL Software Limited
 --
@@ -14,7 +14,13 @@ After installing postgresql, you need to to these things:
 
    su -l pgsql /usr/local/bin/initdb /usr/local/pgsql/data
 
-2. Create yourself a user
+
+2. start the server:
+
+   /usr/local/etc/rc.d/010.pgsql.sh start
+
+
+3. Create yourself a user
 
    # su pgsql
    $ createuser dan
@@ -22,7 +28,12 @@ After installing postgresql, you need to to these things:
    Shall the new user be allowed to create more new users? (y/n) y
    CREATE USER
 
-1. Install the crypto
+4. Create the database
+
+   createdb DBname
+
+
+5. Install the crypto
 
    cd /usr/ports/databases/postgresql7/work/postgresql-7.2/contrib/pgcrypto
    edit Makefile and specify cryptolib = openssl
@@ -30,12 +41,12 @@ After installing postgresql, you need to to these things:
    gmake install
 
 
-2. Add crypto to the database
+6. Add crypto to the database
 
    psql db_name < /usr/local/share/postgresql/contrib/pgcrypto.sql 
 
 
-3. Test
+6. Test
 
    select DIGEST('adfsd', 'md5');
 
@@ -44,21 +55,32 @@ After installing postgresql, you need to to these things:
 |Database permissions|
 +--------------------+
 
+--
 -- users, groups, permissions for postgresql
 --
+
+--
+-- for the http server
+--
+
+
+-- DO THIS BEFORE YOU LOAD THE DATA
 
 create group www;
 create user www with password 'password';
 
 alter group www add user www;
 
+
+
+
+-- DO THIS AFTER YOU LOAD THE DATA
 --
 -- select access only
 --
 grant select on categories                     to group www;
 grant select on commit_log                     to group www;
 grant select on commit_log_elements            to group www;
-grant select on commit_log_id_seq              to group www;
 grant select on commit_log_port_elements       to group www;
 grant select on commit_log_ports               to group www;
 grant select on commits_latest                 to group www;
@@ -99,3 +121,45 @@ grant select, delete on user_confirmations      to group www;
 -- watch_notice_id_seq            to group www;
 -- watch_notice_log               to group www;
 -- watch_notice_log_id_seq        to group www;
+
+
+--
+-- for scripts etc
+--
+
+create user commits with password 'ld6420uX';
+create group commits;
+alter group commits add user commits;
+
+--
+-- select access only
+--
+grant select, insert, update         on categories                     to group commits;
+grant select, insert, update, delete on commit_log                     to group commits;
+grant select, insert, update, delete on commit_log_elements            to group commits;
+grant update                         on commit_log_elements_id_seq     to group commits;
+grant select, update                 on commit_log_id_seq              to group commits;
+grant select, insert, update, delete on commit_log_port_elements       to group commits;
+grant select, insert, update, delete on commit_log_ports               to group commits;
+grant select, insert,         delete on commits_latest                 to group commits;
+grant select, insert, update, delete on element                        to group commits;
+grant select, update                 on element_id_seq                 to group commits;
+grant select, insert, update, delete on element_revision               to group commits;
+grant select, insert, update, delete on ports                          to group commits;
+
+grant select, update                 on housekeeping                   to group commits;
+
+grant select, insert, update, delete on system                         to group commits;
+grant select, insert, update, delete on system_branch                  to group commits;
+grant select, insert, update, delete on system_branch_element_revision to group commits;
+
+grant select, insert, update, delete on security_notice                to group commits;
+grant select, insert, update         on security_notice_elements       to group commits;
+grant select, insert, update, delete on security_notice_log            to group commits;
+
+grant select on users              to group commits;
+grant select on watch_list         to group commits;
+grant select on watch_list_element to group commits;
+
+grant select, insert, update on watch_notice_log to group commits;
+grant select, insert, update on watch_notice     to group commits;

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.175 2004-03-22 20:28:47 dan Exp $
+	# $Id: freshports.php,v 1.4.2.176 2004-06-29 18:58:16 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -23,6 +23,15 @@ DEFINE('URL2LINK_CUTOFF_LEVEL', 0);
 if ($Debug) echo "'" . $_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php<BR>';
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php');
+
+function freshports_link_to_port($CategoryName, $PortName) {
+
+	$HTML .= '<a href="/' . $CategoryName . '/">' . $CategoryName . '</a>/';
+	$HTML .= '<a href="/' . $CategoryName . '/' . $PortName . '/">' 
+	            . $PortName . '</a>';
+
+	return $HTML;
+}
 
 #
 # These are the pages which take NOINDEX and NOFOLLOW meta tags
@@ -685,7 +694,34 @@ function freshports_ONToYN($Value) {
 }
 
 
-function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, $LinkToPort = 0, $AddRemoveExtra = '', $ShowCategory = 1, $ShowDateAdded = "N", $IndicateWatchListStatus = 1, $ShowMasterSites = 0, $ShowWatchListCount = 0) {
+function freshports_depends_links($dbh, $DependsList) {
+	// sometimes they have multiple spaces in the data...
+	$temp = str_replace('  ', ' ', $DependsList);
+      
+	// split each depends up into different bits
+	$depends = explode(' ', $temp);
+	$Count = count($depends);
+	for ($i = 0; $i < $Count; $i++) {
+		// split one depends into the library and the port name (/usr/ports/<category>/<port>)
+
+		$DependsArray = explode(':', $depends[$i]);
+
+		// now extract the port and category from this port name
+		$CategoryPort      = str_replace('/usr/ports/', '', $DependsArray[1]) ;
+		$CategoryPortArray = explode('/', $CategoryPort);
+#		$DependsPortID     = freshports_PortIDFromPortCategory($CategoryPortArray[0], $CategoryPortArray[1], $dbh);
+
+		$HTML .= '<A HREF="/' . $CategoryPortArray[0] . '/' . $CategoryPortArray[1] . '/">' . $CategoryPortArray[0] . '/' . $CategoryPortArray[1]. '</a>';
+		if ($i < $Count - 1) {
+			$HTML .= ", ";
+		}
+	}
+
+	return $HTML;
+}
+
+
+function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, $LinkToPort = 0, $AddRemoveExtra = '', $ShowCategory = 1, $ShowDateAdded = "N", $IndicateWatchListStatus = 1, $ShowMasterSites = 0, $ShowWatchListCount = 0, $ShowMasterSlave = 0) {
 //
 // This fragment does the basic port information for a single port.
 // It really needs to be fixed up.
@@ -837,6 +873,8 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 		$HTML .= '</font><BR>' . "\n";
 	}
 
+	$HTML .= '<p><b>To add the package:</b> <code class="code">pkg_add -r ' . $port->latest_link . '</code></p>';
+
    if ($port->categories) {
       // remove the primary category and remove any double spaces or trailing/leading spaces
 		// this ensures that explode gives us the right stuff
@@ -877,56 +915,23 @@ echo 'run   = ' . $port->depends_run . "<br>\n";
 if ($ShowDepends) {
    if ($port->depends_build) {
       $HTML .= "<i>required to build:</i> ";
+      $HTML .= freshports_depends_links($db, $port->depends_build);
 
-      // sometimes they have multiple spaces in the data...
-      $temp = str_replace('  ', ' ', $port->depends_build);
-      
-      // split each depends up into different bits
-      $depends = explode(' ', $temp);
-      $Count = count($depends);
-      for ($i = 0; $i < $Count; $i++) {
-          // split one depends into the library and the port name (/usr/ports/<category>/<port>)
-
-          $DependsArray = explode(':', $depends[$i]);
-
-          // now extract the port and category from this port name
-          $CategoryPort      = str_replace('/usr/ports/', '', $DependsArray[1]) ;
-          $CategoryPortArray = explode('/', $CategoryPort);
-          $DependsPortID     = freshports_PortIDFromPortCategory($CategoryPortArray[0], $CategoryPortArray[1], $db);
-
-          $HTML .= '<A HREF="/' . $CategoryPortArray[0] . '/' . $CategoryPortArray[1] . '/">' . $CategoryPortArray[0] . '/' . $CategoryPortArray[1]. '</a>';
-          if ($i < $Count - 1) {
-             $HTML .= ", ";
-          }
-      }
       $HTML .= "<br>\n";
    }
 
    if ($port->depends_run) {
       $HTML .= "<i>required to run:</i> ";
-      // sometimes they have multiple spaces in the data...
-      $temp = str_replace('  ', ' ', $port->depends_run);
-
-      // split each depends up into different bits
-      $depends = explode(' ', $temp);
-      $Count = count($depends);
-      for ($i = 0; $i < $Count; $i++) {
-          // split one depends into the library and the port name (/usr/ports/<category>/<port>)
-
-          $DependsArray = explode(':', $depends[$i]);
-
-          // now extract the port and category from this port name
-          $CategoryPort      = str_replace('/usr/ports/', '', $DependsArray[1]) ;
-          $CategoryPortArray = explode('/', $CategoryPort);
-          $DependsPortID     = freshports_PortIDFromPortCategory($CategoryPortArray[0], $CategoryPortArray[1], $db);
-
-          $HTML .= '<A HREF="/' . $CategoryPortArray[0] . '/' . $CategoryPortArray[1] . '/">' . $CategoryPortArray[0] . '/' . $CategoryPortArray[1]. '</a>';
-          if ($i < $Count - 1) {
-             $HTML .= ", ";
-          }
-      }
+      $HTML .= freshports_depends_links($db, $port->depends_run);
       $HTML .= "<BR>\n";
    }
+
+   if ($port->depends_lib) {
+      $HTML .= "<i>required libraries:</i> ";
+      $HTML .= freshports_depends_links($db, $port->depends_lib);
+
+      $HTML .= "<br>\n";
+	}
 
 }
 
@@ -940,6 +945,8 @@ if ($ShowDepends) {
 
 		$HTML .= "</dl>\n";
 	}
+
+	$HTML .= '<br>';
 
    if (!$HideDescription && ($ShowDescriptionLink == "Y" || $ShowEverything)) {
       // Long descripion
@@ -976,7 +983,41 @@ if ($ShowDepends) {
       $HTML .= '<a HREF="' . $port->homepage . '">Main Web Site</a>';
    }
 
-   $HTML .= "\n</DD>\n</DL>\n";
+	$HTML .= '<br><br>';
+
+	if ($ShowMasterSlave) {
+		#
+		# Display our master port
+		#
+
+		if ($port->master_port != '') {
+			$HTML .= '<dl><dt><b>Master port:</b> ';
+			list($MyCategory, $MyPort) = explode('/', $port->master_port);
+			$HTML .= freshports_link_to_port($MyCategory, $MyPort);
+			$HTML .= "</dt>\n";
+			$HTML .= "</dl>\n";
+		}
+	
+		#
+		# Display our slave ports
+		#
+
+		$MasterSlave = new MasterSlave($port->dbh);
+		$NumRows = $MasterSlave->FetchByMaster($port->category . '/' . $port->port);
+		if ($NumRows > 0) {
+			$HTML .= '<dl><dt><b>Slave ports</b>' . "</dt>\n";
+			for ($i = 0; $i < $NumRows; $i++) {
+				$MasterSlave->FetchNth($i);
+				$HTML .= '<dd>' . freshports_link_to_port($MasterSlave->slave_category_name, $MasterSlave->slave_port_name);
+				$HTML .= "</dd>\n";
+			}
+			$HTML .= "</dl>\n";
+		}
+	}
+	
+	
+   $HTML .= "\n</DD>\n";
+   $HTML .= "</DL>\n";
 
    return $HTML;
 }

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: pkg_process.inc,v 1.5.2.20 2003-12-07 20:10:50 dan Exp $
+	# $Id: pkg_process.inc,v 1.5.2.21 2004-11-02 02:19:18 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -272,8 +272,8 @@ function UploadDisplayStagingResultsMatchesDuplicates($UserID, $WatchListID, $db
 	$begintime = time();
 	$sql = " SELECT category, port, item_count, from_pkg_info, from_watch_list, watch_list_staging.element_id
 			     FROM watch_list_staging LEFT OUTER JOIN watch_list_element
-					     	 ON  watch_list_staging.element_id    = watch_list_element.element_id
-						    AND $WatchListID                     = watch_list_element.watch_list_id
+					     	 ON  watch_list_staging.element_id = watch_list_element.element_id
+						    AND $WatchListID                   = watch_list_element.watch_list_id
 			    WHERE $UserID    = watch_list_staging.user_id
 			      AND item_count > 1
 				   AND watch_list_staging.element_id IS NOT NULL
@@ -329,7 +329,7 @@ function UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $dbh) {
 	                element.name as port, 
 	                ports.element_id
 			     FROM ports, categories, watch_list_element, element
-			    WHERE $WatchListID     = watch_list_element.watch_list_id
+			    WHERE $WatchListID      = watch_list_element.watch_list_id
 				   AND ports.element_id = watch_list_element.element_id
 				   AND ports.element_id = element.id
 				   AND categories.id    = ports.category_id

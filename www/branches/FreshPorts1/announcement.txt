@@ -15,6 +15,7 @@ Here is the plan:
 <A HREF="http://test.freshports.org/phorum/list.php?f=1">the feedback forum</A>.</LI>
 <LI>Once I have had a few positive and the negatives have been resolved, another data migration will occur
 to pick up any user account modifications which have occured since step 1</LI>
+<LI>Any data changes you make at http://test.freshports.org/ will be lost.</LI>
 </OL>
 
 Dan Langille 25 May 2002 - 9:53 PM

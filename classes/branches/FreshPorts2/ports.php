@@ -1,5 +1,5 @@
 <?
-	# $Id: ports.php,v 1.1.2.19 2002-05-21 14:20:55 dan Exp $
+	# $Id: ports.php,v 1.1.2.20 2002-12-08 16:48:47 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -108,22 +108,26 @@ class Port {
 		# first, we get the element relating to this port
 		#
 		$element = new Element($this->dbh);
-        $element->FetchByName($pathname);
+      $element->FetchByName($pathname);
+      
+      # * * * * * * * * * * * * * * * * * * * * * * * * *
+      # Now that we have the ID, we should call FetchByID!
+      # * * * * * * * * * * * * * * * * * * * * * * * * *
 
 		if ($Debug) echo "into FetchByPartialName with $pathname<BR>";
 
 		if (IsSet($element->id)) {
 			$this->element_id = $element->id;
 
-			$sql = "select ports.id, ports.element_id, ports.category_id as category_id, " .
-			       "ports.short_description as short_description, ports.long_description, ports.version as version, ".
-			       "ports.revision as revision, ports.maintainer, ".
-			       "ports.homepage, ports.master_sites, ports.extract_suffix, ports.package_exists, " .
-			       "ports.depends_build, ports.depends_run, ports.last_commit_id, ports.found_in_index, " .
-			       "ports.forbidden, ports.broken, to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, " .
-			       "ports.categories as categories, ".
-				   "element.name as port, categories.name as category," .
-				   "element.status ";
+			$sql = "select ports.id, ports.element_id, ports.category_id as category_id, 
+			        ports.short_description as short_description, ports.long_description, ports.version as version, 
+			        ports.revision as revision, ports.maintainer, 
+			        ports.homepage, ports.master_sites, ports.extract_suffix, ports.package_exists, 
+			        ports.depends_build, ports.depends_run, ports.last_commit_id, ports.found_in_index, 
+			        ports.forbidden, ports.broken, to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, 
+			        ports.categories as categories,
+				     element.name as port, categories.name as category,
+				     element.status ";
 
 			if ($WatchListID) {
 				$sql .= ",
@@ -146,9 +150,9 @@ class Port {
 					   and  watch_list_element.watch_list_id = $WatchListID) ";
 			}
 
-			$sql .="WHERE ports.element_id     = $this->element_id ".
-			       "  and ports.category_id    = categories.id " .
-			       "  and ports.element_id     = element.id ";
+			$sql .="WHERE element.id        = $this->element_id 
+			          and ports.category_id = categories.id 
+			          and ports.element_id  = element.id ";
 
 
 			if ($Debug) {
@@ -156,7 +160,7 @@ class Port {
 				exit;
 			}
 
-	        $result = pg_exec($this->dbh, $sql);
+	      $result = pg_exec($this->dbh, $sql);
 			if ($result) {
 				$numrows = pg_numrows($result);
 				if ($numrows == 1) {
@@ -175,8 +179,10 @@ class Port {
 	}
 
 	function FetchByName($PortName, $WatchListID=0) {
+		
+		die("classes/ports.php::FetchByName has been invoked. Who called it?");
 
-		$Debug = 0;
+		$Debug   = 0;
 
 		$numrows = 0; 	# nothing found
 
@@ -184,17 +190,29 @@ class Port {
 		# e.g. samba, logcheck
 		# it returns the number of ports found.  You must call FetchNth
 		#
-		# first, we get the element relating to this port
-		#
-		$sql = "select ports.id, ports.element_id, ports.category_id as category_id, " .
-		       "ports.short_description as short_description, ports.long_description, ports.version as version, ".
-		       "ports.revision as revision, ports.maintainer, ".
-		       "ports.homepage, ports.master_sites, ports.extract_suffix, ports.package_exists, " .
-		       "ports.depends_build, ports.depends_run, ports.last_commit_id, ports.found_in_index, " .
-		       "ports.forbidden, ports.broken, to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, " .
-		       "ports.categories as categories, ".
-			   "element.name as port, categories.name as category," .
-			   "element.status ";
+		$sql = "select ports.id, 
+		               ports.element_id, 
+		               ports.category_id       as category_id,
+		               ports.short_description as short_description, 
+		               ports.long_description, 
+		               ports.version           as version,
+		               ports.revision          as revision, 
+		               ports.maintainer,
+		               ports.homepage, 
+		               ports.master_sites, 
+		               ports.extract_suffix, 
+		               ports.package_exists,
+		               ports.depends_build, 
+		               ports.depends_run, 
+		               ports.last_commit_id, 
+		               ports.found_in_index,
+		               ports.forbidden, 
+		               ports.broken, 
+		               to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added,
+		               ports.categories as categories,
+			            element.name     as port, 
+			            categories.name  as category,
+			            element.status ";
 
 		if ($WatchListID) {
 			$sql .= ",
@@ -205,7 +223,7 @@ class Port {
 		}
 
 
-		$sql .="from categories, element, ports ";
+		$sql .= "from categories, element, ports ";
 
 		#
 		# if the watch list id is provided (i.e. they are logged in and have a watch list id...)
@@ -214,16 +232,16 @@ class Port {
 			$sql .="
 		            left outer join watch_list_element
 					on (ports.element_id                 = watch_list_element.element_id 
-				   and  watch_list_element.watch_list_id = $WatchListID) ";
+				   and watch_list_element.watch_list_id = $WatchListID) ";
 		}
 
-		$sql .="WHERE ports.category_id    = categories.id " .
-		       "  and ports.element_id     = element.id ".
-			   "  and element.name         = $PortName";
+		$sql .="WHERE element.id        = $this->element_id 
+		          and ports.category_id = categories.id 
+		          and ports.element_id  = element.id ";
 
 
 		if ($Debug) {
-			echo $sql;
+			echo "<pre>$sql</pre>";
 			exit;
 		}
 
@@ -241,29 +259,42 @@ class Port {
 		# fetch a single port based on id
 		# I don't think this is actually used.
 
-		echo "classes/ports.php::FetchByID has been invoked. Who called it?<BR>";
-		exit;
+#		die("classes/ports.php::FetchByID has been invoked. Who called it?");
 
-		$sql = "select ports.id, ports.element_id, ports.category_id as category_id, " .
-		       "ports.short_description as short_description, ports.long_description, ports.version as version, ".
-		       "ports.revision as revision, ports.maintainer, ".
-		       "ports.homepage, ports.master_sites, ports.extract_suffix, ports.package_exists, " .
-		       "ports.depends_build, ports.depends_run, ports.last_commit_id, ports.found_in_index, " .
-		       "ports.forbidden, ports.broken, to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, " .
-		       "ports.categories as categories, ".
-			   "element.name as port, categories.name as category, commit_log_ports.needs_refresh, " .
-			   "element.status, to_char(max(commit_log.commit_date) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as updated ";
+		$sql = "select ports.id, 
+		               ports.element_id, 
+		               ports.category_id       as category_id,
+		               ports.short_description as short_description, 
+		               ports.long_description, 
+		               ports.version           as version,
+		               ports.revision          as revision, 
+		               ports.maintainer,
+		               ports.homepage, 
+		               ports.master_sites, 
+		               ports.extract_suffix, 
+		               ports.package_exists,
+		               ports.depends_build, 
+		               ports.depends_run, 
+		               ports.last_commit_id, 
+		               ports.found_in_index,
+		               ports.forbidden, 
+		               ports.broken, 
+		               to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added,
+		               ports.categories as categories,
+			            element.name     as port, 
+			            categories.name  as category,
+			            element.status ";
 
 		if ($WatchListID) {
 			$sql .= ",
 		       CASE when watch_list_element.element_id is null
-		          then 0
-		          else 1
+	    	      then 0
+	        	  else 1
 		       END as onwatchlist ";
 		}
 
 
-		$sql .=" from categories, element, commit_log_ports, commit_log, ports ";
+		$sql .= "from categories, element, ports ";
 
 		#
 		# if the watch list id is provided (i.e. they are logged in and have a watch list id...)
@@ -271,18 +302,20 @@ class Port {
 		if ($WatchListID) {
 			$sql .="
 		            left outer join watch_list_element
-					on watch_list_element.element_id    = ports.element_id 
-				   and watch_list_element.watch_list_id = $WatchListID ";
+					on (ports.element_id                 = watch_list_element.element_id 
+				   and watch_list_element.watch_list_id = $WatchListID) ";
 		}
 
-		$sql .= "WHERE ports.id             = $id ".
-		        "  and ports.category_id    = categories.id " .
-		        "  and ports.element_id     = element.id " .
-			    "  and ports.last_commit_id = commit_log_ports.commit_log_id " .
-			    "  and ports.id             = commit_log_ports.port_id " .
-			    "  and commit_log.id        = commit_log_ports.commit_log_id ";
+		$sql .= "\nWHERE element.id        = $id 
+		          and ports.category_id = categories.id 
+		          and ports.element_id  = element.id ";
 
-        $result = pg_exec($this->dbh, $sql);
+		if ($Debug) {
+			echo "<pre>$sql</pre>";
+			exit;
+		}
+
+      $result = pg_exec($this->dbh, $sql);
 		if ($result) {
 			$numrows = pg_numrows($result);
 			if ($numrows == 1) {
@@ -306,15 +339,15 @@ class Port {
 	function FetchByCategoryInitialise($CategoryID, $WatchListID=0) {
 		# fetch all ports based on category
 		# e.g. id for net
-		$sql = "select ports.id, ports.element_id, ports.category_id as category_id, " .
-		       "       ports.short_description as short_description, ports.long_description, ports.version as version, ".
-		       "       ports.revision as revision, ports.maintainer, ".
-		       "       ports.homepage, ports.master_sites, ports.extract_suffix, ports.package_exists, " .
-		       "       ports.depends_build, ports.depends_run, ports.last_commit_id, ports.found_in_index, " .
-		       "       ports.forbidden, ports.broken, to_char(max(ports.date_added) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, " .
-		       "       ports.categories as categories, ".
-			   "       element.name as port, categories.name as category, " .
-			   "       element.status ";
+		$sql = "select ports.id, ports.element_id, ports.category_id as category_id, 
+		               ports.short_description as short_description, ports.long_description, ports.version as version,
+		               ports.revision as revision, ports.maintainer,
+		               ports.homepage, ports.master_sites, ports.extract_suffix, ports.package_exists, 
+		               ports.depends_build, ports.depends_run, ports.last_commit_id, ports.found_in_index, 
+		               ports.forbidden, ports.broken, to_char(max(ports.date_added) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, 
+		               ports.categories as categories, 
+			            element.name as port, categories.name as category, 
+			            element.status ";
 
 		if ($WatchListID) {
 			$sql .= ",
@@ -337,15 +370,15 @@ class Port {
 				   and watch_list_element.watch_list_id = $WatchListID ";
 		}
 
-		$sql .= "WHERE ports.category_id    = categories.id " .
-		        "  and ports.element_id     = element.id " .
-				"  and categories.id        = $CategoryID " .
-				"  and element.status       = 'A' " .
-				"GROUP BY ports.id, ports.element_id, category_id, short_description, ports.long_description,
-				          version, revision, ports.maintainer, ports.homepage, ports.master_sites, ports.extract_suffix, 
-						  ports.package_exists, ports.depends_build, ports.depends_run, ports.last_commit_id, 
-						  ports.found_in_index, ports.forbidden, ports.broken, ports.date_added, 
-						  categories, port, category, element.status ";
+		$sql .= "WHERE ports.category_id    = categories.id 
+		           and ports.element_id     = element.id 
+				     and categories.id        = $CategoryID 
+				     and element.status       = 'A' 
+			   GROUP BY ports.id, ports.element_id, category_id, short_description, ports.long_description,
+				         version, revision, ports.maintainer, ports.homepage, ports.master_sites, ports.extract_suffix, 
+						   ports.package_exists, ports.depends_build, ports.depends_run, ports.last_commit_id, 
+						   ports.found_in_index, ports.forbidden, ports.broken, ports.date_added, 
+						   categories, port, category, element.status ";
 
 		if ($WatchListID) {
 			$sql .= ", watch_list_element.element_id";

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports_page_list_ports.php,v 1.1.2.2 2005-01-23 03:11:21 dan Exp $
+	# $Id: freshports_page_list_ports.php,v 1.1.2.3 2005-01-23 03:32:18 dan Exp $
 	#
 	# Copyright (c) 2005 DVL Software Limited
 	#
@@ -90,7 +90,7 @@ WHERE ports.element_id  = element.id
 
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/include/list-of-ports.php');
 
-		$HTML .= freshports_ListOfPorts($result, $this->_db, 'Y', $ShowCategoryHeaders);
+		$HTML .= freshports_ListOfPorts($result, $this->_db, 'Y', $this->getShowCategoryHeaders());
 
 		return $HTML;
 	}
@@ -107,17 +107,34 @@ WHERE ports.element_id  = element.id
 		switch ($sort) {
 			case 'dateadded':
 				$sort = 'ports.date_added desc, category, port';
-				$HTML .= 'sorted by date added.  but you can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=category">category</a>';
-				$ShowCategoryHeaders = 0;
+				break;
+
+			case 'port':
+				$sort = 'port';
 				break;
 
 			default:
 				$sort ='category, port';
-				$HTML .= 'sorted by category.  but you can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=dateadded">date added</a>';
-				$ShowCategoryHeaders = 1;
 		}
 
 		return $sort;
+	}
+
+
+	function getShowCategoryHeaders() {
+		$sort = $this->getSort();
+
+		switch ($sort) {
+			case 'port':
+			case 'dateadded':
+				$ShowCategoryHeaders = 0;
+				break;
+
+			default:
+				$ShowCategoryHeaders = 1;
+		}
+
+		return $ShowCategoryHeaders;
 	}
 
 
@@ -128,11 +145,18 @@ WHERE ports.element_id  = element.id
 
 		switch ($sort) {
 			case 'dateadded':
-				$HTML .= 'sorted by date added.  but you can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=category">category</a>';
+				$HTML .= 'sorted by date added.  You can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=category">category</a>' .
+							', or by <a href="' . $_SERVER["PHP_SELF"] . '?sort=port">port</a>.';
+				break;
+
+			case 'port':
+				$HTML .= 'sorted by port.  You can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=category">category</a>' .
+							', or by <a href="' . $_SERVER["PHP_SELF"] . '?sort=dateadded">date added</a>.';
 				break;
 
 			default:
-				$HTML .= 'sorted by category.  but you can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=dateadded">date added</a>';
+				$HTML .= 'sorted by category.  You can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=dateadded">date added</a>' . 
+							', or by <a href="' . $_SERVER["PHP_SELF"] . '?sort=port">port</a>.';
 		}
 
 		return $HTML;

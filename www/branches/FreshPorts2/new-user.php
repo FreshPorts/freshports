@@ -1,5 +1,5 @@
 <?
-	# $Id: new-user.php,v 1.1.2.11 2002-02-25 15:48:12 dan Exp $
+	# $Id: new-user.php,v 1.1.2.12 2002-02-28 21:56:53 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -200,6 +200,7 @@ if (!$submit && !$errors) {
 
 <P><BIG><BIG>NOTE:</BIG>You must supply a valid email address.<BR>Instructions to enable your account 
 will be emailed to you at that address.</BIG></P>
+<P>Your browser must allow cookies for the login to work.</P>
 <P>&nbsp;</P>
 
 <? include("./include/new-user.php"); ?>

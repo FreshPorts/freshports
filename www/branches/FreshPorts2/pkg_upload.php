@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: pkg_upload.php,v 1.5.2.34 2003-04-28 00:54:23 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.35 2003-05-08 13:07:44 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -199,7 +199,7 @@ function ChooseWatchLists($UserID, $db) {
 	if (!$visitor) {
 		?>
 		<P>
-		You must <A HREF="login.php?origin=<?echo $_SERVER["PHP_SELF"] ?>">login</A> before you can upload your package information.
+		You must <A HREF="/login.php?origin=<?echo $_SERVER["PHP_SELF"] ?>">login</A> before you can upload your package information.
 		</P>
 		<?
  	} else {

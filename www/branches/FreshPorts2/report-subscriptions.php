@@ -1,11 +1,11 @@
 <?
-	# $Id: report-subscriptions.php,v 1.1.2.19 2003-04-27 14:48:17 dan Exp $
+	# $Id: report-subscriptions.php,v 1.1.2.20 2003-05-08 13:07:44 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 	#
 
 	if (!$_COOKIE['visitor']) {
-		header('Location: login.php?origin=' . $_SERVER['PHP_SELF']);  /* Redirect browser to PHP web site */
+		header('Location: /login.php?origin=' . $_SERVER['PHP_SELF']);  /* Redirect browser to PHP web site */
 		exit;  /* Make sure that code below does not get executed when we redirect. */
 	}
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-categories.php,v 1.1.2.23 2003-04-28 00:29:48 dan Exp $
+	# $Id: watch-categories.php,v 1.1.2.24 2003-05-08 13:07:45 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -13,7 +13,7 @@
 
 	// if we don't know who they are, we'll make sure they login first
 	if (!$visitor) {
-		header("Location: login.php?origin=" . $_SERVER["PHP_SELF"]);  /* Redirect browser to PHP web site */
+		header("Location: /login.php?origin=" . $_SERVER["PHP_SELF"]);  /* Redirect browser to PHP web site */
 		exit;  /* Make sure that code below does not get executed when we redirect. */
 	}
 

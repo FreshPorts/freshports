@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-watch.php,v 1.1.2.34 2003-04-29 14:01:28 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.35 2003-05-08 13:07:44 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -22,7 +22,7 @@
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {
-	header('Location: login.php?origin=' . $_SERVER['PHP_SELF']);  /* Redirect browser to PHP web site */
+	header('Location: /login.php?origin=' . $_SERVER['PHP_SELF']);  /* Redirect browser to PHP web site */
 	exit;  /* Make sure that code below does not get executed when we redirect. */
 }
 

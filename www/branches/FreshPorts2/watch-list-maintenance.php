@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-list-maintenance.php,v 1.1.2.27 2003-05-02 13:28:29 dan Exp $
+	# $Id: watch-list-maintenance.php,v 1.1.2.28 2003-05-08 13:07:45 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -22,7 +22,7 @@ $WatchListNameMessage = 'Watch list names must contain only A..Z, a..z, or 0..9.
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {
-        header('Location: login.php?origin=' . $_SERVER['PHP_SELF']);  /* Redirect browser to PHP web site */
+        header('Location: /login.php?origin=' . $_SERVER['PHP_SELF']);  /* Redirect browser to PHP web site */
         exit;  /* Make sure that code below does not get executed when we redirect. */
 }
 

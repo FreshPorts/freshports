@@ -1,27 +1,44 @@
 <?
-	# $Id: missing-port.php,v 1.1.2.16 2002-03-19 21:26:59 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.17 2002-04-01 21:01:14 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
+
+#	phpinfo();
+
+
+$CommitDetails = 'files.php';
+require_once("./include/files.php");
 
 
 function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 
-$Debug=0;
+	$Debug=0;
+
+	unset($CategoryName);
+	unset($PortName);
+	unset($FileName);
 
 
 	if ($Debug) echo "you asked for $REQUEST_URI<BR>";
 
 	$result = "";
 	$url_Array = explode('/', $REQUEST_URI);
-	if (array_count_values($url_Array) >= 1) {
+	if ($Debug) echo "count(\$url_Array) = '" . sizeof($url_Array) .  "' : '" . $url_Array[4] . "'<BR>";
+	if (count($url_Array) >= 1) {
 		$CategoryName = AddSlashes($url_Array[1]);
 		if (array_count_values($url_Array) >= 2) {
 			$PortName = AddSlashes($url_Array[2]);
 		}
 
+		if (count($url_Array) >= 3) {
+			if ($Debug) echo "getting FileName<BR>";
+			$FileName = AddSlashes($url_Array[3]);
+		}
+
 		if ($Debug) {
 			echo "\$CategoryName = '$CategoryName'<BR>";
 			echo "\$PortName     = '$PortName'<BR>";
+			echo "\$FileName     = '$FileName'<BR>";
 		}
 
 
@@ -54,11 +71,16 @@ $Debug=0;
 		if (IsSet($CategoryID)) {
 #			echo "<A HREF=\"/category.php?category=$CategoryID\">this link</A> should take you to the category details<BR>";
 			if (IsSet($port->id)) {
-#				echo "This is where you'd see details for port = '$port->id'<BR>";
-#				echo "<A HREF=\"/port-description.php?port=$port->id\">this link</A> should take you to the port details<BR>";
-#				echo "and short_description = $port->short_description";
-
-				freshports_PortDescription($port);
+				if ($FileName != '') {
+					if (substr($FileName, 0, strlen($CommitDetails)) == $CommitDetails) {
+						$commit_id = $_SERVER["REDIRECT_QUERY_STRING"];
+						freshports_Files($port->id, $commit_id, $db);
+					} else {
+						$result = 'The category and port you specified both exist, but that extra bit I don\'t recognize: \'' . $FileName . '\'';
+					}
+				} else {
+					freshports_PortDescription($port);
+				}
 
 			} else {
 #				if (IsSet($PortName)) {

@@ -1,5 +1,5 @@
 <?
-	# $Id: faq.php,v 1.1.2.30 2003-01-06 14:14:38 dan Exp $
+	# $Id: faq.php,v 1.1.2.31 2003-01-10 15:56:29 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -248,6 +248,12 @@ down you must read to find something you didn't already know.</P>
 	<P><? echo freshports_Encoding_Errors(); ?> Encoding Errors (not all of the commit message was ASCII): Some of the
 		commit message may be altered because of character conversion problems.  We display only UTF-8 and remove
 		the offending characters.  These errors may occur in the log message or elsewhere in the commit email.</P>
+
+	<P><? echo freshports_Security_Icon(); ?> Security Issue: This commit addresses a security issue.  A port is flagged
+		as a security issue by trusted FreshPorts users.  If you'd like to help with this task, please contact us.
+	</P>
+
+
 
 	</BLOCKQUOTE>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>

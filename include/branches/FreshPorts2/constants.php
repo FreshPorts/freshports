@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: constants.php,v 1.1.2.11 2004-08-09 22:30:04 dan Exp $
+	# $Id: constants.php,v 1.1.2.12 2004-09-22 13:57:21 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -83,6 +83,7 @@ define('FRESHPORTS_BGCOLOR',   '#FFFFFF');
 define('FRESHPORTS_TEXTCOLOR', '#000000');
 
 define('FRESHPORTS_VERSION_REVISION_JOINER', '_');
+define('FRESHPORTS_VERSION_EPOCH_JOINER',    ',');
 
 
 ?>

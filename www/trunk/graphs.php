@@ -17,12 +17,15 @@ if (!isset($graph)) {
 switch ($graph) {
    case 1:
       $cache_file .= ".top.watched.ports";
+      break;
 
    case 2:
       $cache_file .= ".top.committers";
+      break;
 
    case 3:
       $cache_file .= ".top.biggest.commits";
+      break;
 }
 
 $CreateImage = 0;
@@ -54,10 +57,12 @@ if ($CreateImage) {
       case 2:
          $data = freshports_stats_committers($db, 20);
          freshports_DrawGraph($data, "Top 20 Committers - number of commits", 500, 475, $cache_file); 
+         break;
 
       case 3:
          $data = freshports_stats_biggest_commits($db, 20);
          freshports_DrawGraph($data, "Top 20 biggest commits - number of ports", 500, 475, $cache_file);
+         break;
    }
 } else {
    header("Content-type: image/png");

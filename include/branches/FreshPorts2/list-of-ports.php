@@ -1,7 +1,8 @@
-<?
-	# $Id: list-of-ports.php,v 1.1.2.6 2003-05-16 02:31:21 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# $Id: list-of-ports.php,v 1.1.2.7 2004-06-30 15:22:22 dan Exp $
+	#
+	# Copyright (c) 1998-2004 DVL Software Limited
 	#
 
 function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeaders) {
@@ -16,9 +17,6 @@ function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeade
 	$numrows = pg_numrows($result);
 
 	$HTML .= "<TR><TD>$numrows ports found</TD></TR>\n";
-
-#	echo "There are $numrows to fetch<BR>\n";
-
 
 	$ShowDescriptionLink = 0;
 	$DaysMarkedAsNew= $DaysMarkedAsNew= $GlobalHideLastChange = $ShowMaintainedBy= $ShowPortCreationDate= $ShowPackageLink= $ShowShortDescription =1;
@@ -47,7 +45,6 @@ function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeade
 	}
 
 	for ($i = 0; $i < $numrows; $i++) {
-#		echo "$i=" . $port->{id} . " ";
 		$port->FetchNth($i);
 		if ($ShowCategoryHeaders) {
 			$Category = $port->category;
@@ -68,10 +65,8 @@ function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeade
 				}
 			}
 		}
-#echo 'before freshports_PortDetails<br>';
 		$HTML .= freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 1, '', 1, $ShowDateAdded);
-#echo 'after freshports_PortDetails<br>';
-#		$HTML .= '<BR>';
+		$HTML .= '<BR>';
 	}
 
 	if ($ShowCategoryHeaders) {

@@ -1,5 +1,5 @@
 <?php
-	# $Id: commit_log_ports_vuxml.php,v 1.1.2.2 2004-08-27 11:34:21 dan Exp $
+	# $Id: commit_log_ports_vuxml.php,v 1.1.2.3 2004-08-27 11:56:22 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -15,6 +15,8 @@ class Commit_Log_Ports_VuXML {
 	var $port_id;
 	var $vuxml_id;
 
+	var	$vid;
+
 	var $result;
 
 	function Commit_Log_Ports_VuXML($dbh) {
@@ -27,15 +29,17 @@ class Commit_Log_Ports_VuXML {
 		# return the number of commits found
 
 		$sql = "
-select id,
-       commit_log_id, 
-       port_id,
-       vuxml_id
-  from commit_log_ports_vuxml
- where commit_log_ports_vuxml.port_id = $port_id
- order by commit_log_ports_vuxml.commit_log_id ";
+select CLPV.id,
+       CLPV.commit_log_id, 
+       CLPV.port_id,
+       CLPV.vuxml_id,
+       vuxml.vid
+  from commit_log_ports_vuxml CLPV, vuxml
+ where CLPV.port_id  = $port_id
+   and CLPV.vuxml_id = vuxml.id
+ order by CLPV.commit_log_id ";
 
-#		echo "\$sql='<pre>$sql</pre><br>\n";
+		echo "\$sql='<pre>$sql</pre><br>\n";
 		$this->result = pg_exec($this->dbh, $sql);
 		if (!$this->result) {
 			echo pg_errormessage() . " $sql";
@@ -58,6 +62,8 @@ select id,
 		$this->commit_log_id	= $myrow['commit_log_id'];
 		$this->port_id			= $myrow['port_id'];
 		$this->vuxml_id			= $myrow['vuxml_id'];
+
+		$this->vid				= $myrow['vid'];
 	}
 
 	function VuXML_List_Get($port_id) {
@@ -68,9 +74,9 @@ select id,
 		for ($i = 0; $i < $numrows; $i++) {
 			$this->FetchNth($i);
 			if (IsSet($VID[$this->commit_log_id])) {
-				$VID[$this->commit_log_id] = $VID[$this->commit_log_id] . '|' . $this->vuxml_id;
+				$VID[$this->commit_log_id] = $VID[$this->commit_log_id] . '|' . $this->vid;
 			} else {
-				$VID[$this->commit_log_id] = $this->vuxml_id;
+				$VID[$this->commit_log_id] = $this->vid;
 			}
 #print 'row ' . $i . ' has ' . $this->commit_log_id . " with " .  $VID[$this->commit_log_id] . "<br>\n";
 

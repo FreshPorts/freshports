@@ -1,5 +1,5 @@
 --
--- $Id: POSTGRESQL.sql,v 1.1.2.43 2004-01-29 15:53:23 dan Exp $
+-- $Id: POSTGRESQL.sql,v 1.1.2.44 2004-08-11 14:44:05 dan Exp $
 --
 -- Copyright (c) 1998-2003 DVL Software Limited
 --
@@ -41,6 +41,8 @@ grant select on ports_categories               to group www;
 grant select on ports_active                   to group www;
 grant select on ports_all                      to group www;
 grant select on ports_moved                    to group www;
+grant select on ports_updating                 to group www;
+grant select on ports_updating_ports_xref      to group www;
 grant select on system                         to group www;
 grant select on system_branch                  to group www;
 grant select on system_branch_element_revision to group www;
@@ -190,6 +192,9 @@ grant select                         on report_log_latest              to group 
 
 grant insert, delete, update         on ports_moved                    to group commits;
 grant update                         on ports_moved_id_seq             to group commits;
+grant insert, delete, update         on ports_updating                 to group commits;
+grant update                         on ports_updating_id_seq          to group commits;
+grant insert, delete, update         on ports_updating_ports_xref      to group commits;
 
 --
 -- the READING group only needs to read some things.

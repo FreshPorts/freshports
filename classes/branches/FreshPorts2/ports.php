@@ -1,5 +1,5 @@
 <?
-	# $Id: ports.php,v 1.1.2.6 2002-01-05 03:26:14 dan Exp $
+	# $Id: ports.php,v 1.1.2.7 2002-01-05 20:14:08 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -39,6 +39,9 @@ class Port {
 	var $status;
 	var $updated;	// timestamp of last update
 
+	// not always present/set
+	var $update_description;
+
 
 	// needed for fetch by category
 	var $LocalResult;
@@ -48,32 +51,34 @@ class Port {
 	}
 
 	function _PopulateValues($myrow) {
-		$this->id                = $myrow["id"];
-		$this->element_id        = $myrow["element_id"];
-		$this->category_id       = $myrow["category_id"];
-		$this->short_description = $myrow["short_description"];
-		$this->long_description  = $myrow["long_description"];
-		$this->version           = $myrow["version"];
-		$this->revision          = $myrow["revision"];
-		$this->maintainer        = $myrow["maintainer"];
-		$this->homepage          = $myrow["homepage"];
-		$this->master_sites      = $myrow["master_sites"];
-		$this->extract_suffix    = $myrow["extract_suffix"];
-		$this->package_exists    = $myrow["package_exists"];
-		$this->depends_build     = $myrow["depends_build"];
-		$this->depends_run       = $myrow["depends_run"];
-		$this->last_commit_id    = $myrow["last_commit_id"];
-		$this->found_in_index    = $myrow["found_in_index"];
-		$this->forbidden         = $myrow["forbidden"];
-		$this->broken            = $myrow["broken"];
-		$this->date_created      = $myrow["date_created"];
-		$this->categories        = $myrow["categories"];
+		$this->id                 = $myrow["id"];
+		$this->element_id         = $myrow["element_id"];
+		$this->category_id        = $myrow["category_id"];
+		$this->short_description  = $myrow["short_description"];
+		$this->long_description   = $myrow["long_description"];
+		$this->version            = $myrow["version"];
+		$this->revision           = $myrow["revision"];
+		$this->maintainer         = $myrow["maintainer"];
+		$this->homepage           = $myrow["homepage"];
+		$this->master_sites       = $myrow["master_sites"];
+		$this->extract_suffix     = $myrow["extract_suffix"];
+		$this->package_exists     = $myrow["package_exists"];
+		$this->depends_build      = $myrow["depends_build"];
+		$this->depends_run        = $myrow["depends_run"];
+		$this->last_commit_id     = $myrow["last_commit_id"];
+		$this->found_in_index     = $myrow["found_in_index"];
+		$this->forbidden          = $myrow["forbidden"];
+		$this->broken             = $myrow["broken"];
+		$this->date_created       = $myrow["date_created"];
+		$this->categories         = $myrow["categories"];
 
-		$this->port              = $myrow["port"];
-		$this->category          = $myrow["category"];
-		$this->needs_refresh     = $myrow["needs_refresh"];
-		$this->status            = $myrow["status"];
-		$this->updated           = $myrow["updated"];
+		$this->port               = $myrow["port"];
+		$this->category           = $myrow["category"];
+		$this->needs_refresh      = $myrow["needs_refresh"];
+		$this->status             = $myrow["status"];
+		$this->updated            = $myrow["updated"];
+
+		$this->update_description = $myrow["update_description"];
 	}
 
 	function FetchByPartialName($pathname) {

@@ -1,5 +1,5 @@
 <?
-	# $Id: side-bars.php,v 1.4.2.14 2002-04-18 21:29:23 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.15 2002-04-18 21:33:53 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -95,7 +95,7 @@ if ($visitor) {
 </SCRIPT>
 
 <CENTER>
-<a NAME="button_image"></a><a href="javascript:addNetscapePanel();"><img SRC="images/sidebar-add-button.gif" BORDER=0 height=45 width=100>
+<a NAME="button_image"></a><a href="javascript:addNetscapePanel();"><img SRC="/images/sidebar-add-button.gif" BORDER=0 height=45 width=100>
 </CENTER>
 
 <BR>

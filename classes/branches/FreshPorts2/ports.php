@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports.php,v 1.1.2.36 2003-09-22 14:39:49 dan Exp $
+	# $Id: ports.php,v 1.1.2.37 2003-09-23 13:25:20 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -42,8 +42,8 @@ class Port {
 	var $updated;	// timestamp of last update
 
 	var $onwatchlist;	// count of how many watch lists is this port on for this user. 
-							// not actually fetched directly by this class.
-							// normally used only if you've specified it in your own SQL.
+						// not actually fetched directly by this class.
+						// normally used only if you've specified it in your own SQL.
 
 	// not always present/set
 	var $update_description;

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-list-maintenance.php,v 1.1.2.23 2003-03-05 21:32:53 dan Exp $
+	# $Id: watch-list-maintenance.php,v 1.1.2.24 2003-05-02 12:34:30 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -234,6 +234,8 @@ if ($Debug) echo 'add remove = ' . $User->watch_list_add_remove;
   <TR>
     <TD valign="top">
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
+<table width="100%">
+<tr><td valign="top">
 <?php
 	echo freshports_WatchListDDLB($db, $User->id, '', 10, TRUE);
 ?>
@@ -255,6 +257,7 @@ if ($Debug) echo 'add remove = ' . $User->watch_list_add_remove;
 
     Confirm : <INPUT id=confirm name=confirm size=10>&nbsp;(case sensitive)
     </TD>
+</tr></table>
 </form>
 <td valign="top" nowrap>
 When clicking on Add/Remove for a port,<br> the action should affect
@@ -323,11 +326,14 @@ When clicking on Add/Remove for a port,<br> the action should affect
 
 </p>
 </TD>
+<td>
 
 	<?
 	freshports_SideBar();
 	?>
 
+</td>
+</tr>
 </TABLE>
 
 <?

@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.70 2002-04-12 14:29:42 dan Exp $
+   # $Id: freshports.php,v 1.4.2.71 2002-04-12 15:09:01 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -1045,7 +1045,7 @@ function freshports_PortCommitsFooter($port) {
 function freshports_PortDescriptionPrint($description, $encoding_losses) {
 	$HTML .= '<PRE CLASS="code">';
 
-	$HTML .= pr2html((freshports_wrap($description)));
+	$HTML .= pr2html(freshports_wrap($description));
 
 	$HTML .= '</PRE>';
 

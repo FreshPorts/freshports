@@ -92,7 +92,7 @@ if ($submit) {
 
       if ($OKToMail) {
          # send out email
-         $myrow = mysql_fetch_array($result);
+//         $myrow = mysql_fetch_array($result);
          $message = "Someone, perhaps you, requested that you be emailed your password.\n".
                     "If that wasn't you, and this message becomes a nuisance, please\n".
                     "forward this message to webmaster@freshports.org and we will take\n". 

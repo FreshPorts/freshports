@@ -1,5 +1,5 @@
 <?
-	# $Id: security-notice.php,v 1.1.2.3 2003-03-06 22:04:48 dan Exp $
+	# $Id: security-notice.php,v 1.1.2.4 2003-03-08 13:05:02 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -28,8 +28,10 @@
 	if (IsSet($_REQUEST[submit])) {
 		$result = "ROLLBACK";
 		pg_exec($db, "BEGIN");
-		$description = AddSlashes($_REQUEST[description]);
-		if ($SecurityNotice->Create($User->id, $message_id, $description, $_SERVER[REMOTE_ADDR])) {
+		$SecurityNotice->user_id     = $User->id;
+		$SecurityNotice->ip_address  = AddSlashes($_SERVER[REMOTE_ADDR]);
+		$SecurityNotice->description = AddSlashes($_REQUEST[description]);
+		if ($SecurityNotice->Create($message_id)) {
 			if ($SecurityNotice->FetchByMessageID($message_id)) {
 				if (pg_exec($db, 'UPDATE housekeeping SET refresh_now = 2')) {
 					$result = "COMMIT";
@@ -82,6 +84,8 @@
 		$HTML .= '</SMALL>';
 		$HTML .= '&nbsp;';
 		$HTML .= freshports_Email_Link($Commit->message_id);
+		$HTML .= '&nbsp;&nbsp;'. freshports_Commit_Link($Commit->message_id);
+
 
 		$HTML .= "\n<BLOCKQUOTE>\n";
 		$HTML .= freshports_PortDescriptionPrint($Commit->commit_description, $Commit->encoding_losses);

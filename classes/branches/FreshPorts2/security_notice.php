@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: security_notice.php,v 1.1.2.2 2003-01-10 19:10:33 dan Exp $
+	# $Id: security_notice.php,v 1.1.2.3 2003-03-08 13:04:16 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -36,39 +36,25 @@ class SecurityNotice {
 		$this->status			= $myrow["status"];
 	}
 
-	function Create($UserID, $message_id, $description, $ip_address) {
+	function Create($message_id) {
 		#
 		# create a security_notice item
 		#
-		GLOBAL $Sequence_Security_Notice_ID;
 
 		$return = 0;
 
-		$NextValue = freshports_GetNextValue($Sequence_Security_Notice_ID, $this->dbh);
+		$sql = "select SecurityNoticeCreate("  . $this->user_id      . ",
+		                                    '" . $this->ip_address  . "',
+		                                    '" . $this->description . "',
+		                                    '" . $message_id        . "')";
+		echo "<pre>$sql</pre>";
 
-		$query = "
-INSERT INTO security_notice (id,
-                             user_id, 
-                             ip_address,
-                             description,
-                             commit_log_id)
-                     VALUES ($NextValue,
-                             $UserID,
-                             '$ip_address',
-                             '$description',
-                             (SELECT id
-                                FROM commit_log
-                               WHERE message_id = '$message_id')
-                             )";
-
-#		echo "<pre>$query</pre>";
-
-		$this->LocalResult = pg_query($this->dbh, $query);
+		$this->LocalResult = pg_query($this->dbh, $sql);
 		if ($this->LocalResult) {
-			$numrows = pg_affected_rows($this->LocalResult);
+			$numrows = pg_numrows($this->LocalResult);
 			if ($numrows == 1) {
-				$this->id = $NextValue;			
-				$return   = $NextValue;
+				$myrow = pg_fetch_array ($this->LocalResult);
+				$this->id = $myrow[0];			
 				syslog(LOG_NOTICE, "added a new security notice: $NextValue : $description : $message_id");
 			} else {
 				syslog(LOG_ERR, "Could add item to security notice: $query " . pg_lasterror());
@@ -95,7 +81,7 @@ SELECT security_notice.*
 			$numrows = pg_numrows($this->LocalResult);
 			if ($numrows == 1) {
 				if ($Debug) echo "fetched by ID succeeded<BR>";
-				$myrow = pg_fetch_array ($this->LocalResult, 0);
+				$myrow = pg_fetch_array ($this->LocalResult);
 				$this->PopulateValues($myrow);
 			}
 		}

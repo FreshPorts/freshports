@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.7 2003-12-05 14:52:19 dan Exp $
+	# $Id: index.php,v 1.1.2.8 2003-12-05 16:15:59 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -66,8 +66,6 @@ Here a few supporting documents:
 <li><a href="/fraud/second-email.php">Remaining email of 5 December 2003<a/>
 </ul>
 
-<p>
-There is more email, but I have not had time to put it here.
 </td></tr>
 
 </TABLE>

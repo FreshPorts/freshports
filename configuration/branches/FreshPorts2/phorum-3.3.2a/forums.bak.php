@@ -16,8 +16,8 @@
   $PHORUM['ActiveForums']='1';
   $PHORUM['TimezoneOffset']='0';
 
-  $PHORUM['forum_url']='http://migration.freshports.org/phorum-3.3.2a';
-  $PHORUM['admin_url']='http://migration.freshports.org/phorum-3.3.2a/WoCKer921/index.php';
+  $PHORUM['forum_url']='http://beta.freshports.org/phorum';
+  $PHORUM['admin_url']='http://migration.freshports.org/phorum/WoCKer921/index.php';
 
   $PHORUM['AllowAttachments']='0';
   $PHORUM['AttachmentDir']='';
@@ -41,7 +41,7 @@
   $PHORUM['default_body_alink_color']='#FF0000';
   $PHORUM['default_table_width']='98%';
   $PHORUM['default_table_header_color']='#FFCC33';
-  $PHORUM['default_table_header_font_color']='#FFFFFF';
+  $PHORUM['default_table_header_font_color']='#000000';
   $PHORUM['default_table_body_color_1']='#FFFFFF';
   $PHORUM['default_table_body_font_color_1']='#000000';
   $PHORUM['default_table_body_color_2']='#FFFFFF';

@@ -16,8 +16,8 @@
   $PHORUM['ActiveForums']='1';
   $PHORUM['TimezoneOffset']='0';
 
-  $PHORUM['forum_url']='http://migration.freshports.org/phorum-3.3.2a';
-  $PHORUM['admin_url']='http://migration.freshports.org/phorum-3.3.2a/WoCKer921/index.php';
+  $PHORUM['forum_url']='http://' . $_SERVER["HTTP_HOST"] . '/phorum';
+  $PHORUM['admin_url']='http://' . $_SERVER["HTTP_HOST"] . '/phorum/WoCKer921/index.php';
 
   $PHORUM['AllowAttachments']='0';
   $PHORUM['AttachmentDir']='';

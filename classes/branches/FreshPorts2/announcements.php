@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: announcements.php,v 1.1.2.2 2003-05-09 21:32:32 dan Exp $
+	# $Id: announcements.php,v 1.1.2.3 2003-05-10 04:29:30 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -21,12 +21,16 @@ class Announcement {
 		$this->dbh = $dbh;
 	}
 
+	function IDSet($id) {
+		$this->id = $id;
+	}
+
 	function IDGet() {
 		return $this->id;
 	}
 
 	function TextSet($text) {
-		$this->text = AddSlashes($text);
+		$this->text = $text;
 	}
 
 	function TextGet() {
@@ -34,7 +38,7 @@ class Announcement {
 	}
 
 	function StartDateSet($start_date) {
-		$this->start_date = AddSlashes($start_date);
+		$this->start_date = $start_date;
 	}
 
 	function StartDateGet() {
@@ -42,7 +46,7 @@ class Announcement {
 	}
 
 	function EndDateSet($end_date) {
-		$this->end_date = AddSlashes($end_date);
+		$this->end_date = $end_date;
 	}
 
 	function EndDateGet() {
@@ -59,9 +63,9 @@ class Announcement {
 	function Delete() {
 		# delete the ignore entry for this commit/port combination
 
-		$sql = "
+		$sql = '
 DELETE from announcements
- WHERE id = $this->id";
+ WHERE id = ' . AddSlashes($this->id);
 
 		$this->result = pg_exec($this->dbh, $sql);
 		if (!$this->result) {
@@ -86,17 +90,19 @@ DELETE from announcements
 			$sql .= ', end_date';
 		}
 
-		$sql .= ") values ('" . $this->text . "'";
+		$sql .= ") values ('" . AddSlashes($this->text) . "'";
 
 		if ($this->start_date != '') {
-			$sql .= ", '" . $this->start_date . "'";
+			$sql .= ", '" . AddSlashes($this->start_date) . "'";
 		}
 
 		if ($this->end_date != '') {
-			$sql .= ", '" . $this->end_date . "'";
+			$sql .= ", '" . AddSlashes($this->end_date) . "'";
 		}
 
 		$sql .= ")";
+
+#		echo "<pre>$sql</pre>";
 
 		$this->result = pg_exec($this->dbh, $sql);
 		if (!$this->result) {
@@ -111,20 +117,24 @@ DELETE from announcements
 	function Update() {
 		# delete the ignore entry for this commit/port combination
 
-		$sql = "UPDATE announcements set text = '" . $this->text . "', start_date = ";
+		$sql = "UPDATE announcements set text = '" . AddSlashes($this->text) . "', start_date = ";
 
 		if ($this->start_date != '') {
-			$sql .= ', start_date';
+			$sql .= "'" . AddSlashes($this->start_date) . "'";
 		} else {
 			$sql .= 'NULL';
 		}
 
-		$sql .= ", end_date = '";		
+		$sql .= ", end_date = ";		
 		if ($this->end_date != '') {
-			$sql .= ', end_date';
+			$sql .= "'" . AddSlashes($this->end_date) . "'";
 		} else {
 			$sql .= 'NULL';
 		}
+
+		$sql .= ' where id = ' . AddSlashes($this->id);
+
+#		echo "<pre>$sql</pre>";
 
 		$this->result = pg_exec($this->dbh, $sql);
 		if (!$this->result) {
@@ -138,10 +148,10 @@ DELETE from announcements
 	
 	function Fetch($id) {
 
-		$sql = "
+		$sql = '
 SELECT *
   FROM announcements
- WHERE id = $id";
+ WHERE id = ' . AddSlashes($id);
 
 #		echo "sql = '<pre>$sql</pre>'<BR>";
 
@@ -165,8 +175,8 @@ SELECT *
              start_date,
              end_date
         FROM announcements
-       WHERE (start_date <= current_date OR start_date IS NULL)
-         AND (end_date   >= current_date OR end_date   IS NULL)";
+       WHERE (start_date <= CURRENT_TIMESTAMP OR start_date IS NULL)
+         AND (end_date   >= CURRENT_TIMESTAMP OR end_date   IS NULL)";
 
 #		echo '<pre>' . $sql . '</pre>';
 
@@ -182,6 +192,35 @@ SELECT *
 		}
 
 		return $numrows;
+	}
+
+	function FetchAll() {
+		$sql = "
+		SELECT id,
+             text,
+             start_date,
+             end_date
+        FROM announcements
+    ORDER BY start_date, end_date";
+
+#		echo '<pre>' . $sql . '</pre>';
+
+		if ($Debug)	echo "commits::Fetch sql = '$sql'<BR>";
+
+		$this->LocalResult = pg_exec($this->dbh, $sql);
+		if ($this->LocalResult) {
+			$numrows = pg_numrows($this->LocalResult);
+#			echo "That would give us $numrows rows";
+		} else {
+			$numrows = -1;
+			echo 'pg_exec failed: ' . $sql;
+		}
+
+		return $numrows;
+	}
+
+	function NumRows() {
+		return pg_numrows($this->LocalResult);
 	}
 
 	function FetchNth($N) {

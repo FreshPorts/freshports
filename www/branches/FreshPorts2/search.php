@@ -1,5 +1,5 @@
 <?
-	# $Id: search.php,v 1.1.2.11 2002-04-19 19:52:10 dan Exp $
+	# $Id: search.php,v 1.1.2.12 2002-04-30 02:59:04 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -138,11 +138,11 @@ if ($method == 'match') {
 			break;
 
 		case "shortdescription":
-			$sql .= "and evenshtein(ports.short_description, '$query') < 4";
+			$sql .= "and levenshtein(ports.short_description, '$query') < 4";
 			break;
       
 		case "maintainer":
-			$sql .= "and evenshtein(ports.maintainer, '$query') < 4";
+			$sql .= "and levenshtein(ports.maintainer, '$query') < 4";
 			break;
 
 		case "messageid":

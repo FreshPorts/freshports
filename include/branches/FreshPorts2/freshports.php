@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.139 2003-04-24 15:03:04 dan Exp $
+	# $Id: freshports.php,v 1.4.2.140 2003-04-26 14:41:58 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -1049,7 +1049,7 @@ function freshports_PortCommitPrint($commit, $category, $port) {
 
 	echo freshports_CommitFilesLink($commit->message_id, $category, $port);
 	if (IsSet($commit->security_notice_id)) {
-		echo '<a href="/security-notice.php?message_id=' . $commit->message_id . '">' . freshports_Security_Icon() . '</a>';
+		echo ' <a href="/security-notice.php?message_id=' . $commit->message_id . '">' . freshports_Security_Icon() . '</a>';
 	}
 
 	# ouput the VERSION and REVISION

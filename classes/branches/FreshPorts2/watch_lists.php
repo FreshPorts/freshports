@@ -1,5 +1,5 @@
 <?php
-	# $Id: watch_lists.php,v 1.1.2.3 2002-12-09 20:21:16 dan Exp $
+	# $Id: watch_lists.php,v 1.1.2.4 2002-12-10 03:56:26 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 	#
@@ -30,7 +30,6 @@ class WatchLists {
 			   AND watch_list_element.element_id    = $element_id
 			 WHERE user_id = $UserID
 		 GROUP BY id, user_id, name, in_service, element_id
-		   HAVING count(element_id) > 0
 		 ORDER BY name";
 		} else {
 			$sql = "
@@ -43,7 +42,9 @@ class WatchLists {
 		 ORDER BY name";
 		}
 
-#		echo '<pre>' . $sql . '</pre>';
+		if ($Debug) {
+			echo '<pre>' . $sql . '</pre>';
+		}
 
 		if ($Debug)	echo "WatchLists::Fetch sql = '$sql'<BR>";
 

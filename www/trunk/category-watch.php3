@@ -179,19 +179,7 @@ if ($UserID) {
   $HTML .= '<form action="' . $PHP_SELF . '" method="POST">';
 }
 
-$HTML .= "\n" . '<table width="100%" border=1>' . "\n";
-
-/*
-
-$HTML .= "<tr>";
-if ($UserID) {                  
-   $HTML .= '<td valign="bottom" width="40" valign="top" align="center"><b>Add to Watch List</b></td>';
-} 
-$HTML .= '<td valign="bottom" width="*"><b>Category</b></td>';
-$HTML .= '<td valign="bottom" width="300"><b>Description</b></td>';
-
-$HTML .= '</tr>' . "\n";
-*/
+$HTML .= "\n" . '<table border=1 cellpadding=12>' . "\n";
 
 // get the list of topics, which we need to modify the order
 
@@ -220,14 +208,13 @@ for ($i = 0; $i < $NumCategories; $i++) {
    }
 
    if ($UserID) {  
-   $HTML .= '<input type="checkbox" name="category_' . $rows[$i]["category_id"] . '" value="ON"';
+      $HTML .= '<input type="checkbox" name="category_' . $rows[$i]["category_id"] . '" value="ON"';
 
-   if (${"category_".$rows[$i]["category_id"]}) $HTML .= " checked ";
+      if (${"category_".$rows[$i]["category_id"]}) $HTML .= " checked ";
 
-   $HTML .= '>';
+      $HTML .= '>';
    }
 
-//        $URL_Category = "http://www.freebsd.org/ports/" . $rows[$i]["category"];
    $URL_Category = "category.php3?category=" . $rows[$i]["category_id"];
 
    $HTML .= ' <a href="' . $URL_Category . '">' . $rows[$i]["category"] . '</a>';

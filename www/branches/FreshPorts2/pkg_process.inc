@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_process.inc,v 1.5.2.11 2002-05-18 05:55:53 dan Exp $
+	# $Id: pkg_process.inc,v 1.5.2.12 2002-05-18 17:55:43 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 	#
@@ -351,7 +351,7 @@ function UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $dbh) {
 			for ($i = 0; $i < $numrows; $i++) {
 				$row = pg_fetch_array($result, $i);
 
-				echo '<TD ALIGN="center">';
+				echo '<TD ALIGN="left">';
 				echo LinkToPort($row["category"], $row["port"]);
 				echo '</TD>';
 

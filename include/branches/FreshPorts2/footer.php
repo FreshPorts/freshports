@@ -1,7 +1,9 @@
-<?
-	# $Id: footer.php,v 1.5.2.20 2004-01-13 12:51:52 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# $Id: footer.php,v 1.5.2.21 2004-01-30 18:35:31 dan Exp $
+	#
+	# Copyright (c) 1998-2004 DVL Software Limited
+	#
 ?>
 <HR>
 <TABLE WIDTH="98%" BORDER="0">

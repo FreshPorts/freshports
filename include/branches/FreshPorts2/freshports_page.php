@@ -11,6 +11,7 @@ class freshports_page extends HTML_Page2 {
 	var $_ShowLogo          = 1;
 
 	var $_db;
+	var $_debug             = 0;
 
     function freshports_page($attributes = array()) {
 		$this->assignDefaultAttributes($attributes);
@@ -35,6 +36,9 @@ class freshports_page extends HTML_Page2 {
 		$this->setBodyAttributes(array('BGCOLOR' => '#FFFFFF', 'TEXT' => '#000000'));
 	}
 
+	function setDB($db) {
+		$this->_db = $db;
+	}
 
 	function toHTML() {
 		$HTML = '';
@@ -61,11 +65,11 @@ class freshports_page extends HTML_Page2 {
 
 		$HTML .= freshports_MainTable() . "\n<tr><td width='100%' valign='top'>\n" .
 		         freshports_MainContentTable() . "\n<tr>\n" .
-		         freshports_PageBannerText($this->_title) . "\n<tr><td>\n";
+		         freshports_PageBannerText($this->_title);
 
 		$this->prependBodyContent($HTML);
 
-		$this->addBodyContent("\n</td></tr></table><td>" . freshports_SideBar() . "</td></tr></table>\n" . freshports_ShowFooter());
+		$this->addBodyContent("\n</table><td valign=\"top\">" . freshports_SideBar() . "</td></tr></table>\n" . freshports_ShowFooter());
 
 		return parent::toHTML();
 	}
@@ -90,5 +94,15 @@ class freshports_page extends HTML_Page2 {
 		}
 
 	}
+
+	function getDebug() {
+		return $this->_debug;
+	}
+
+	function setDebug($Debug) {
+		$this->_debug = $Debug;
+	}
+
+
 
 }

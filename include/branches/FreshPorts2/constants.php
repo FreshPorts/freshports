@@ -1,5 +1,5 @@
 <?
-	# $Id: constants.php,v 1.1.2.5 2003-01-10 15:55:17 dan Exp $
+	# $Id: constants.php,v 1.1.2.6 2003-01-10 19:12:29 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -75,5 +75,7 @@ $freshports_mail_archive = "http://www.freebsd.org/cgi/mid.cgi?db=mid&id=";
 # max number of lines to show in a commit
 #
 $freshports_CommitMsgMaxNumOfLinesToShow = 15;
+
+$freshports_Tasks_SecurityNoticeAdd	= 'SecurityNoticeAdd';
 
 ?>

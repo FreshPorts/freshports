@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.67 2005-01-05 23:14:37 dan Exp $
+	# $Id: faq.php,v 1.1.2.68 2005-01-22 14:48:51 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -737,7 +737,7 @@ the distfiles.  That is why we use that value, and not one of the other options.
 
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?php
-	freshports_SideBar();
+	echo freshports_SideBar();
 	?>
   </td>
 
@@ -745,7 +745,7 @@ the distfiles.  That is why we use that value, and not one of the other options.
 </table>
 
 <?php
-freshports_ShowFooter();
+echo freshports_ShowFooter();
 ?>
 
 </body>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-list.php,v 1.2.2.25 2005-01-05 23:14:39 dan Exp $
+	# $Id: watch-list.php,v 1.2.2.26 2005-01-22 14:48:53 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -154,14 +154,14 @@ NOTES
 </table>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
   <?
-  freshports_SideBar();
+  echo freshports_SideBar();
   ?>
   </td>
 
 </TABLE>
 
 <?
-freshports_ShowFooter();
+echo freshports_ShowFooter();
 ?>
 
 </BODY>

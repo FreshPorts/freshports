@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: date.php,v 1.1.2.28 2005-01-05 23:14:37 dan Exp $
+	# $Id: date.php,v 1.1.2.29 2005-01-22 14:48:50 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -242,7 +242,7 @@ $Tomorrow  = freshports_LinkToDate(strtotime($Date) + 86400, "Following day");
 echo "<center>$Yesterday $Tomorrow</center>";
 ?>
 
-<?php freshports_MainTable(); ?>
+<?php echo freshports_MainTable(); ?>
 
 <TR><TD VALIGN="top" WIDTH="100%">
 
@@ -263,7 +263,7 @@ echo '</table>';
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
 
 	<?
-	freshports_SideBar();
+	echo freshports_SideBar();
 	?>
 
   </td>	
@@ -271,7 +271,7 @@ echo '</table>';
 </table>
 
 <?
-freshports_ShowFooter();
+echo freshports_ShowFooter();
 ?>
 
 </body>

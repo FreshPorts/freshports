@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: other-copyrights.php,v 1.1.4.11 2005-01-05 23:14:38 dan Exp $
+	# $Id: other-copyrights.php,v 1.1.4.12 2005-01-22 14:48:52 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -44,7 +44,7 @@
 
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
-	freshports_SideBar();
+	echo freshports_SideBar();
 	?>
   </td>
 
@@ -53,7 +53,7 @@
 </TABLE>
 
 <?
-freshports_ShowFooter();
+echo freshports_ShowFooter();
 ?>
 
 </BODY>

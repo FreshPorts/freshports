@@ -1,6 +1,6 @@
-<?php
+.<?php
 	#
-	# $Id: search.php,v 1.1.2.71 2005-01-20 00:08:38 dan Exp $
+	# $Id: search.php,v 1.1.2.72 2005-01-22 14:48:53 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -661,7 +661,7 @@ echo "</td></tr>\n";
 
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
   <?
-  freshports_SideBar();
+  echo freshports_SideBar();
   ?>
   </td>
 
@@ -669,7 +669,7 @@ echo "</td></tr>\n";
 </table>
 
 <?
-freshports_ShowFooter();
+echo freshports_ShowFooter();
 ?>
 
 </body>

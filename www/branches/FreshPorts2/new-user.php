@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: new-user.php,v 1.1.2.38 2005-01-05 23:14:38 dan Exp $
+	# $Id: new-user.php,v 1.1.2.39 2005-01-22 14:48:52 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -219,14 +219,14 @@ Your cooperation with the above will make my life easier.  Thank you.
 <td>
 
 	<?
-	freshports_SideBar();
+	echo freshports_SideBar();
 	?>
 
 </TR>
 </TABLE>
 
 <?
-freshports_ShowFooter();
+echo freshports_ShowFooter();
 ?>
 
 </BODY>

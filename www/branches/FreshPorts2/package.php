@@ -1,6 +1,6 @@
-<?php
+.<?php
 	#
-	# $Id: package.php,v 1.1.2.3 2005-01-05 23:14:38 dan Exp $
+	# $Id: package.php,v 1.1.2.4 2005-01-22 14:48:52 dan Exp $
 	#
 	# Copyright (c) 2004 DVL Software Limited
 	#
@@ -59,7 +59,7 @@ The package specified ('<?php echo $package; ?>') could not be found.  We have a
 
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
-	freshports_SideBar();
+	echo freshports_SideBar();
 	?>
   </td>
 
@@ -72,7 +72,7 @@ The package specified ('<?php echo $package; ?>') could not be found.  We have a
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? freshports_ShowFooter(); ?>
+<? echo freshports_ShowFooter(); ?>
 </TD></TR>
 </TABLE>
 

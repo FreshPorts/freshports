@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-watch.php,v 1.1.2.43 2005-01-05 23:14:38 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.44 2005-01-22 14:48:52 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -267,7 +267,7 @@ you have selected a notification frequency within your <a href="customize.php">p
 
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
-	freshports_SideBar();
+	echo freshports_SideBar();
 	?>
   </td>
 
@@ -275,7 +275,7 @@ you have selected a notification frequency within your <a href="customize.php">p
 </table>
 
 <?
-freshports_ShowFooter();
+echo freshports_ShowFooter();
 ?>
 
 </body>

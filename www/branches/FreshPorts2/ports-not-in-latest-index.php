@@ -1,5 +1,5 @@
 <?
-	# $Id: ports-not-in-latest-index.php,v 1.1.2.14 2003-09-30 00:00:37 dan Exp $
+	# $Id: ports-not-in-latest-index.php,v 1.1.2.15 2005-01-22 14:48:52 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 
@@ -78,7 +78,7 @@ if ($result) {
 
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
-	freshports_SideBar();
+	echo freshports_SideBar();
 	?>
   </td>
 
@@ -86,7 +86,7 @@ if ($result) {
 </table>
 
 <?
-freshports_ShowFooter();
+echo freshports_ShowFooter();
 ?>
 
 </body>

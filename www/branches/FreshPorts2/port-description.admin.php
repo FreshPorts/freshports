@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-description.admin.php,v 1.1.2.14 2003-04-27 14:48:15 dan Exp $
+	# $Id: port-description.admin.php,v 1.1.2.15 2005-01-22 14:48:52 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -259,7 +259,7 @@ if ($NumRows) {
 
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
-	freshports_SideBar();
+	echo freshports_SideBar();
 	?>
   </td>
 
@@ -267,7 +267,7 @@ if ($NumRows) {
 </table>
 
 <?
-freshports_ShowFooter();
+echo freshports_ShowFooter();
 ?>
 
 </body>

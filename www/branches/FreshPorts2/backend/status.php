@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: status.php,v 1.1.2.3 2003-10-17 21:17:33 dan Exp $
+	# $Id: status.php,v 1.1.2.4 2005-01-22 14:48:55 dan Exp $
 	#
 	# Copyright (c) 2003 DVL Software Limited
 	#
@@ -95,7 +95,7 @@ if ($result) {
 
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
-	freshports_SideBar();
+	echo freshports_SideBar();
 	?>
   </td>
 
@@ -103,7 +103,7 @@ if ($result) {
 </TABLE>
 
 <?
-freshports_ShowFooter();
+echo freshports_ShowFooter();
 ?>
 
 </body>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: customize.php,v 1.1.2.33 2004-01-31 13:07:06 dan Exp $
+	# $Id: customize.php,v 1.1.2.34 2005-01-22 14:48:50 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -203,7 +203,7 @@ echo "</TD>
 
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
-	freshports_SideBar();
+	echo freshports_SideBar();
 	?>
   </td>
 
@@ -211,7 +211,7 @@ echo "</TD>
 </TABLE>
 
 <?
-freshports_ShowFooter();
+echo freshports_ShowFooter();
 ?>
 
 </body>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: announcements.php,v 1.1.2.5 2003-10-02 12:12:56 dan Exp $
+	# $Id: announcements.php,v 1.1.2.6 2005-01-22 14:48:55 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -211,7 +211,7 @@ if ($NumRows > 0) {
 
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
-	freshports_SideBar();
+	echo freshports_SideBar();
 	?>
   </td>
 
@@ -219,7 +219,7 @@ if ($NumRows > 0) {
 </TABLE>
 
 <?
-freshports_ShowFooter();
+echo freshports_ShowFooter();
 ?>
 
 </body>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: authors.php,v 1.1.2.20 2005-01-05 23:14:36 dan Exp $
+	# $Id: authors.php,v 1.1.2.21 2005-01-22 14:48:48 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -105,7 +105,7 @@ name just so it stays a secret.</LI>
 
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
-	freshports_SideBar();
+	echo freshports_SideBar();
 	?>
   </td>
 
@@ -113,7 +113,7 @@ name just so it stays a secret.</LI>
 </table>
 
 <?
-freshports_ShowFooter();
+echo freshports_ShowFooter();
 ?>
 
 </body>

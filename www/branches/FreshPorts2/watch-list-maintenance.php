@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-list-maintenance.php,v 1.1.2.30 2005-01-13 22:15:08 dan Exp $
+	# $Id: watch-list-maintenance.php,v 1.1.2.31 2005-01-22 14:48:53 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -363,14 +363,14 @@ When clicking on Add/Remove for a port,<br> the action should affect
 </td>
 <td valign="top">
 	<?
-	freshports_SideBar();
+	echo freshports_SideBar();
 	?>
 </td>
 </tr>
 </table>
 
 <?
-freshports_ShowFooter();
+echo freshports_ShowFooter();
 ?>
 
 </BODY>

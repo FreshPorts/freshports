@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-non-port.php,v 1.1.2.5 2005-01-05 23:14:37 dan Exp $
+	# $Id: missing-non-port.php,v 1.1.2.6 2005-01-22 14:48:51 dan Exp $
 	#
 	# Copyright (c) 2003 DVL Software Limited
 	#
@@ -45,7 +45,7 @@ function freshports_NonPortDescription($db, $element_record) {
 </TD>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
   <?
-  freshports_SideBar();
+  echo freshports_SideBar();
   ?>
   </td>
 </TR>
@@ -53,7 +53,7 @@ function freshports_NonPortDescription($db, $element_record) {
 </TABLE>
 
 <?
-	freshports_ShowFooter();
+	echo freshports_ShowFooter();
 ?>
 
 </body>

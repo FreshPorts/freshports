@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: unrefreshed.php,v 1.1.2.5 2005-01-05 23:14:39 dan Exp $
+	# $Id: unrefreshed.php,v 1.1.2.6 2005-01-22 14:48:53 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -199,14 +199,14 @@ for this situation is a port error.
 
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
-	freshports_SideBar();
+	echo freshports_SideBar();
 	?>
   </td>
 
 </TABLE> 
 
 <?
-freshports_ShowFooter();
+echo freshports_ShowFooter();
 ?>
 
 </body>

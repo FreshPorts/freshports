@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.13 2003-12-14 15:49:19 dan Exp $
+	# $Id: index.php,v 1.1.2.14 2005-01-22 14:48:56 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -97,7 +97,7 @@ domain back to the registrar.
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? freshports_ShowFooter(); ?>
+<? echo freshports_ShowFooter(); ?>
 </TD></TR>
 </TABLE>
 

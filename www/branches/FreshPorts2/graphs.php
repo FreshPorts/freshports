@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: graphs.php,v 1.5.2.22 2005-01-05 23:14:37 dan Exp $
+	# $Id: graphs.php,v 1.5.2.23 2005-01-22 14:48:51 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -99,7 +99,7 @@ If you have suggestions for graphs, please submit them via the forum.
 
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
-	freshports_SideBar();
+	echo freshports_SideBar();
 	?>
   </td>
 
@@ -107,7 +107,7 @@ If you have suggestions for graphs, please submit them via the forum.
 </TABLE>
 
 <?
-freshports_ShowFooter();
+echo freshports_ShowFooter();
 ?>
 
 </body>

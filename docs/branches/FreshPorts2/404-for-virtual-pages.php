@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: 404-for-virtual-pages.php,v 1.1.2.4 2003-03-04 19:05:50 dan Exp $
+	# $Id: 404-for-virtual-pages.php,v 1.1.2.5 2005-01-22 14:48:55 dan Exp $
 	#
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
@@ -231,7 +231,7 @@ Feedback please, preferably by posting in the
 email to the webmaster of this domain.  
 <p>
 <?
-freshports_ShowFooter();
+echo freshports_ShowFooter();
 ?>
 
 </body>

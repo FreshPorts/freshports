@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: category-maintenance.php,v 1.1.2.3 2003-09-25 14:02:25 dan Exp $
+	# $Id: category-maintenance.php,v 1.1.2.4 2005-01-22 14:48:50 dan Exp $
 	#
 	# Copyright (c) 2003 DVL Software Limited
 	#
@@ -145,7 +145,7 @@ Well, I'm sorry to advise you that this page is intentionally left blank.
 
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
   <?
-  freshports_SideBar();
+  echo freshports_SideBar();
   ?>
   </td>
 
@@ -153,7 +153,7 @@ Well, I'm sorry to advise you that this page is intentionally left blank.
 </TABLE>
 
 <?
-freshports_ShowFooter();
+echo freshports_ShowFooter();
 ?>
 
 </body>

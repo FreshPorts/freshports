@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.55 2005-01-05 23:14:38 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.56 2005-01-22 14:48:51 dan Exp $
 	#
 	# Copyright (c) 2001-2003 DVL Software Limited
 	#
@@ -157,7 +157,7 @@ GLOBAL $ShowWatchListCount;
 </TD>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
   <?
-  freshports_SideBar();
+  echo freshports_SideBar();
   ?>
   </td>
 </TR>
@@ -165,7 +165,7 @@ GLOBAL $ShowWatchListCount;
 </TABLE>
 
 <?
-	freshports_ShowFooter();
+	echo freshports_ShowFooter();
 ?>
 
 </body>

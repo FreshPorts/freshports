@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: login.php,v 1.1.2.36 2005-01-05 23:14:37 dan Exp $
+	# $Id: login.php,v 1.1.2.37 2005-01-22 14:48:51 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -238,7 +238,7 @@ echo '<BR><A HREF="forgotten-password.php">Forgotten your password?</a>';
 
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
-	freshports_SideBar();
+	echo freshports_SideBar();
 	?>
   </td>
 
@@ -246,7 +246,7 @@ echo '<BR><A HREF="forgotten-password.php">Forgotten your password?</a>';
 </TABLE> 
 
 <?
-freshports_ShowFooter();
+echo freshports_ShowFooter();
 ?>
 
 </body>

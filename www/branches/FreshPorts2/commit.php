@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.49 2005-01-05 23:14:36 dan Exp $
+	# $Id: commit.php,v 1.1.2.50 2005-01-22 14:48:50 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -356,7 +356,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
 
 	<?
-	freshports_SideBar();
+	echo freshports_SideBar();
 	?>
 
   </td>
@@ -366,7 +366,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 <BR>
 
 <?
-freshports_ShowFooter();
+echo freshports_ShowFooter();
 ?>
 
 </body>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports-forbidden.php,v 1.1.2.17 2005-01-05 23:14:38 dan Exp $
+	# $Id: ports-forbidden.php,v 1.1.2.18 2005-01-22 14:48:52 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -126,7 +126,7 @@ WHERE ports.element_id  = element.id
 
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
-	freshports_SideBar();
+	echo freshports_SideBar();
 	?>
   </td>
 
@@ -134,7 +134,7 @@ WHERE ports.element_id  = element.id
 </TABLE>
 
 <?
-freshports_ShowFooter();
+echo freshports_ShowFooter();
 ?>
 
 </body>

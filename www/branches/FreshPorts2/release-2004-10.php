@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: release-2004-10.php,v 1.1.2.3 2005-01-05 23:14:39 dan Exp $
+	# $Id: release-2004-10.php,v 1.1.2.4 2005-01-22 14:48:53 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -184,7 +184,7 @@ the following fields.
 
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
-	freshports_SideBar();
+	echo freshports_SideBar();
 	?>
   </td>
 
@@ -192,7 +192,7 @@ the following fields.
 
 <TABLE WIDTH="<?php echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<?php freshports_ShowFooter(); ?>
+<?php echo freshports_ShowFooter(); ?>
 </TD></TR>
 </TABLE>
 

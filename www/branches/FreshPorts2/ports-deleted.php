@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports-deleted.php,v 1.1.2.25 2005-01-05 23:14:38 dan Exp $
+	# $Id: ports-deleted.php,v 1.1.2.26 2005-01-22 14:48:52 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -161,7 +161,7 @@ GROUP BY ports.id,
 
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
-	freshports_SideBar();
+	echo freshports_SideBar();
 	?>
   </td>
 
@@ -169,7 +169,7 @@ GROUP BY ports.id,
 </TABLE>
 
 <?
-freshports_ShowFooter();
+echo freshports_ShowFooter();
 ?>
 
 </body>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: inthenews.php,v 1.1.2.14 2005-01-05 23:14:37 dan Exp $
+	# $Id: inthenews.php,v 1.1.2.15 2005-01-22 14:48:51 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -43,7 +43,7 @@ Daily Daemon News - <a href="http://daily.daemonnews.org/view_story.php3?story_i
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
 
 	<?
-	freshports_SideBar();
+	echo freshports_SideBar();
 	?>
   </td>
 
@@ -51,7 +51,7 @@ Daily Daemon News - <a href="http://daily.daemonnews.org/view_story.php3?story_i
 </table>
 
 <?
-freshports_ShowFooter();
+echo freshports_ShowFooter();
 ?>
 
 </body>

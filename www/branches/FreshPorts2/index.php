@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.100 2005-01-06 04:22:18 dan Exp $
+	# $Id: index.php,v 1.1.2.101 2005-01-22 14:48:51 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -158,7 +158,7 @@ If you want to see more try <a href="/commits.php">here</a>.
 </TABLE>
 </TD>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
-   <? freshports_SideBar(); ?>
+   <? echo freshports_SideBar(); ?>
 
 <BR>
 <?
@@ -195,7 +195,7 @@ If you want to see more try <a href="/commits.php">here</a>.
 <BR>
 
 <?
-freshports_ShowFooter();
+echo freshports_ShowFooter();
 ?>
 
 </body>

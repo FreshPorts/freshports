@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: about.php,v 1.1.2.19 2005-01-05 23:14:36 dan Exp $
+	# $Id: about.php,v 1.1.2.20 2005-01-22 14:48:48 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -109,7 +109,7 @@ About the Authors</A> for details of who else helped.</P>
 
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
-	freshports_SideBar();
+	echo freshports_SideBar();
 	?>
   </td>
 
@@ -122,7 +122,7 @@ About the Authors</A> for details of who else helped.</P>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? freshports_ShowFooter(); ?>
+<? echo freshports_ShowFooter(); ?>
 </TD></TR>
 </TABLE>
 

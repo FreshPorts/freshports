@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: release-2003-04-29.php,v 1.1.2.6 2005-01-05 23:14:38 dan Exp $
+	# $Id: release-2003-04-29.php,v 1.1.2.7 2005-01-22 14:48:53 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -203,7 +203,7 @@ needed.
 
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
-	freshports_SideBar();
+	echo freshports_SideBar();
 	?>
   </td>
 
@@ -211,7 +211,7 @@ needed.
 
 <TABLE WIDTH="<?php echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<?php freshports_ShowFooter(); ?>
+<?php echo freshports_ShowFooter(); ?>
 </TD></TR>
 </TABLE>
 

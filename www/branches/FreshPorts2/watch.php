@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch.php,v 1.1.2.52 2005-01-05 23:14:39 dan Exp $
+	# $Id: watch.php,v 1.1.2.53 2005-01-22 14:48:54 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -288,7 +288,7 @@ if ($wlid == '') {
 
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
-	freshports_SideBar();
+	echo freshports_SideBar();
 	?>
   </td>
 
@@ -296,7 +296,7 @@ if ($wlid == '') {
 </table>
 
 <?
-freshports_ShowFooter();
+echo freshports_ShowFooter();
 ?>
 
 </body>

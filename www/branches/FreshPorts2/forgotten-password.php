@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: forgotten-password.php,v 1.1.2.23 2003-05-23 12:32:49 dan Exp $
+	# $Id: forgotten-password.php,v 1.1.2.24 2005-01-22 14:48:51 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -253,7 +253,7 @@ we're only dealing with your FreshPorts login, not a financial transaction....</
 
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
-	freshports_SideBar();
+	echo freshports_SideBar();
 	?>
   </td>
 
@@ -263,7 +263,7 @@ we're only dealing with your FreshPorts login, not a financial transaction....</
 </TABLE>
 
 <?
-freshports_ShowFooter();
+echo freshports_ShowFooter();
 ?>
 
 </body>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits.php,v 1.1.2.4 2005-01-05 23:14:36 dan Exp $
+	# $Id: commits.php,v 1.1.2.5 2005-01-22 14:48:50 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -154,7 +154,7 @@ A port is marked as new for 10 days.
 </TABLE>
 </TD>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
-   <? freshports_SideBar(); ?>
+   <? echo freshports_SideBar(); ?>
 
 <BR>
 <?
@@ -191,7 +191,7 @@ A port is marked as new for 10 days.
 <BR>
 
 <?
-freshports_ShowFooter();
+echo freshports_ShowFooter();
 ?>
 
 </body>

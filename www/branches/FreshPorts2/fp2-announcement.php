@@ -1,5 +1,5 @@
 <?
-	# $Id: fp2-announcement.php,v 1.1.2.14 2005-01-05 23:14:37 dan Exp $
+	# $Id: fp2-announcement.php,v 1.1.2.15 2005-01-22 14:48:51 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 
@@ -120,7 +120,7 @@ The following items deal with the technical changes which have occurred.
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
 
 	<?
-	freshports_SideBar();
+	echo freshports_SideBar();
 	?>
 
   </td>
@@ -129,7 +129,7 @@ The following items deal with the technical changes which have occurred.
 </TABLE>
 
 <?
-freshports_ShowFooter();
+echo freshports_ShowFooter();
 ?>
 
 </BODY>

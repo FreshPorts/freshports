@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: sidebar.php,v 1.1.2.20 2004-06-16 10:36:38 dan Exp $
+	# $Id: sidebar.php,v 1.1.2.21 2005-01-22 14:48:53 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -169,7 +169,7 @@ order by commit_date_raw desc, category, port ";
 	</UL>
 
 <?
-	freshports_ShowFooter();
+	echo freshports_ShowFooter();
 ?>
 
 </body>

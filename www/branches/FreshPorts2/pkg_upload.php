@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: pkg_upload.php,v 1.5.2.42 2005-01-12 21:24:25 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.43 2005-01-22 14:48:52 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -364,7 +364,7 @@ function ChooseWatchLists($UserID, $db) {
 
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
-	freshports_SideBar();
+	echo freshports_SideBar();
 	?>
   </td>
 
@@ -372,7 +372,7 @@ function ChooseWatchLists($UserID, $db) {
 </TABLE>
 
 <?
-freshports_ShowFooter();
+echo freshports_ShowFooter();
 ?>
 
 </BODY>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch_list.php,v 1.1.2.16 2003-12-15 13:18:27 dan Exp $
+	# $Id: watch_list.php,v 1.1.2.17 2004-10-25 00:20:21 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -237,10 +237,10 @@ UPDATE watch_list
 		# returned by Fetch.
 		#
 
-		$this->id					= $myrow["id"];
-		$this->user_id				= $myrow["user_id"];
-		$this->name					= $myrow["name"];
-		$this->in_service			= $myrow["in_service"];
+		$this->id				= $myrow["id"];
+		$this->user_id			= $myrow["user_id"];
+		$this->name				= $myrow["name"];
+		$this->in_service		= $myrow["in_service"];
 		$this->watch_list_count = $myrow["watch_list_count"];
 	}
 }

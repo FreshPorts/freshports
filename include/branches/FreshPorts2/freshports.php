@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.211 2005-02-16 23:56:30 dan Exp $
+	# $Id: freshports.php,v 1.4.2.212 2005-02-17 01:53:25 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -223,22 +223,22 @@ function freshports_Restricted_Icon($HoverText = '') {
 	$Alt       = "Restricted";
 	$HoverText = freshports_HoverTextCleaner($Alt, $HoverText);
 
-	return '<IMG SRC="/images/restricted.gif" ALT="' . $Alt . '" TITLE="' . $HoverText . '" WIDTH="18" HEIGHT="18">';
+	return '<IMG SRC="/images/restricted.jpg" ALT="' . $Alt . '" TITLE="' . $HoverText . '" WIDTH="16" HEIGHT="16">';
 }
 
 function freshports_Restricted_Icon_Link($HoverText = '') {
-	return '<a href="/' . FAQLINK . '#deprecated">' . freshports_Restricted_Icon($HoverText) . '</a>';
+	return '<a href="/' . FAQLINK . '#restricted">' . freshports_Restricted_Icon($HoverText) . '</a>';
 }
 
-function freshports_NoCDROM_Icon($HoverText = '') {
+function freshports_No_CDROM_Icon($HoverText = '') {
 	$Alt       = "NO CDROM";
 	$HoverText = freshports_HoverTextCleaner($Alt, $HoverText);
 
-	return '<IMG SRC="/images/nocdrom.gif" ALT="' . $Alt . '" TITLE="' . $HoverText . '" WIDTH="18" HEIGHT="18">';
+	return '<IMG SRC="/images/cdrom.jpg" ALT="' . $Alt . '" TITLE="' . $HoverText . '" WIDTH="16" HEIGHT="16">';
 }
 
-function freshports_NoCDROM_Icon_Link($HoverText = '') {
-	return '<a href="/' . FAQLINK . '#deprecated">' . freshports_NoCDROM_Icon($HoverText) . '</a>';
+function freshports_No_CDROM_Icon_Link($HoverText = '') {
+	return '<a href="/' . FAQLINK . '#no_cdrom">' . freshports_No_CDROM_Icon($HoverText) . '</a>';
 }
 
 
@@ -974,11 +974,11 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 	}
 
 	if ($port->restricted) {
-		$HTML .= freshports_Restricted_Icon_Link($port->restricted) . ' IGNORE: '     . htmlify(htmlspecialchars($port->restricted)) . "<br>"; ;
+		$HTML .= freshports_Restricted_Icon_Link($port->restricted) . ' RESTRICTED: '     . htmlify(htmlspecialchars($port->restricted)) . "<br>"; ;
 	}
 
 	if ($port->no_cdrom) {
-		$HTML .= freshports_NoCDROM_Icon_Link($port->no_cdrom)      . ' IGNORE: '     . htmlify(htmlspecialchars($port->no_cdrom))   . "<br>"; ;
+		$HTML .= freshports_No_CDROM_Icon_Link($port->no_cdrom)      . ' NO CDROM: '     . htmlify(htmlspecialchars($port->no_cdrom))   . "<br>"; ;
 	}
 
    // description

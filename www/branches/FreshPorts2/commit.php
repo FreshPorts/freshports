@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.32 2003-09-27 18:43:29 dan Exp $
+	# $Id: commit.php,v 1.1.2.33 2003-10-24 16:24:02 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -125,7 +125,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 						GLOBAL $freshports_mail_archive;
 
 						$HTML .= '<SMALL>';
-						$HTML .= '[ ' . $myrow["commit_time"] . ' ' . $myrow["committer"] . ' ]';
+						$HTML .= '[ ' . $myrow["commit_time"] . ' ' . freshports_CommitterEmailLink($myrow["committer"]) . ' ]';
 						$HTML .= '</SMALL>';
 						$HTML .= '&nbsp;';
 						$HTML .= freshports_Email_Link($myrow["message_id"]);

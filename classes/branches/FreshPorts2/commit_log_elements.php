@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit_log_elements.php,v 1.1.2.1 2003-09-24 16:43:47 dan Exp $
+	# $Id: commit_log_elements.php,v 1.1.2.2 2003-09-24 17:53:03 dan Exp $
 	#
 	# Copyright (c) 2003 DVL Software Limited
 	#
@@ -46,7 +46,8 @@ select $element_id,
    and commit_log_elements.element_id = $element_id
  order by commit_log.commit_date desc ";
 
-		echo "\$sql='<pre>$sql</pre><br>\n";
+#		echo "\$sql='<pre>$sql</pre><br>\n";
+
 		$this->result = pg_exec($this->dbh, $sql);
 		if (!$this->result) {
 			echo pg_errormessage() . " $sql";

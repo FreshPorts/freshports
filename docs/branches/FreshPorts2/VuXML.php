@@ -160,11 +160,10 @@ freshports.org=#
 We might be able to reduce the number of rows fetched with this approach:
 
 <blockquote><pre class="code">
-freshports.org=# SELECT distinct port_id, port_version, port_revision, port_epoch
-freshports.org-#   FROM commit_log_ports
-freshports.org-#  WHERE port_id = (SELECT id
-freshports.org(#                     FROM ports
-freshports.org(#                    WHERE package_name = 'leafnode');
+freshports.org=# SELECT distinct CLP.port_id, CLP.port_version, CLP.port_revision, CLP.port_epoch
+freshports.org-#   FROM commit_log_ports CLP, ports P
+freshports.org-#  WHERE CLP.port_id    = P.id
+freshports.org-#    AND P.package_name = 'leafnode';
  port_id | port_version | port_revision | port_epoch
 ---------+--------------+---------------+------------
      334 | 1.10.0       | 0             | 0
@@ -207,7 +206,14 @@ freshports.org(#                    WHERE package_name = 'leafnode');
      334 | 1.9.54       | 1             | 0
      334 |              |               | 0
 (39 rows)
+
+freshports.org=#
 </pre></blockquote>
+
+<p>
+You will notice that we are now doing a join on the ports table.  This caters
+for ports such as <a href="/print/acroread/">acroread</a> and 
+<a href="/print/acroread5/">acroread5</a>.
 
 <p>
 The reason we are fetching these rows is so we can invoke pkg_version(1)

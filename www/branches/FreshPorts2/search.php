@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.55 2004-06-02 12:34:52 dan Exp $
+	# $Id: search.php,v 1.1.2.56 2004-06-29 20:59:28 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -15,6 +15,8 @@
 	
 	define('ORDERBYPORT',     'port');
 	define('ORDERBYCATEGORY', 'category');
+	define('ORDERBYASCENDING',  'asc');
+	define('ORDERBYDESCENDING', 'desc');
 
 	$Debug = 0;
 #	if ($Debug) phpinfo();
@@ -58,6 +60,7 @@
 	if (IsSet($_REQUEST['casesensitivity'])) $casesensitivity	= AddSlashes(trim($_REQUEST['casesensitivity']));
 	if (IsSet($_REQUEST['start']))           $start				= intval(AddSlashes(trim($_REQUEST['start'])));
 	if (IsSet($_REQUEST['orderby']))         $orderby			= AddSlashes(trim($_REQUEST['orderby']));
+	if (IsSet($_REQUEST['orderbyupdown']))   $orderbyupdown		= AddSlashes(trim($_REQUEST['orderbyupdown']));
 
 	if ($stype == 'messageid') {
 		header('Location: http://' . $_SERVER['HTTP_HOST'] . "/commit.php?message_id=$query");
@@ -298,12 +301,30 @@ switch ($deleted) {
 
 switch ($orderby) {
 	case ORDERBYCATEGORY:
-		$sql .= "\n order by categories.name, element.name";
+		switch ($orderbyupdown) {
+			case ORDREBYDESC:
+			default:
+				$sql .= "\n order by categories.name desc, element.name";
+				break;
+
+			case ORDERBYASC:
+				$sql .= "\n order by categories.name, element.name";
+				break;
+		}
 		break;
 
 	case ORDERBYPORT:
 	default:
-		$sql .= "\n order by element.name, categories.name";
+		switch ($orderbyupdown) {
+			case ORDREBYDESC:
+			default:
+				$sql .= "\n order by element.name desc, categories.name";
+				break;
+
+			case ORDERBYASC:
+				$sql .= "\n order by element.name, categories.name";
+				break;
+		}
 		break;
 }
 
@@ -405,6 +426,11 @@ Search for:<BR>
 	Sort by: <SELECT name="orderby">
 		<OPTION VALUE="<?php echo ORDERBYPORT;     ?>" <?if ($orderby == ORDERBYPORT        ) echo 'SELECTED' ?>>Port
 		<OPTION VALUE="<?php echo ORDERBYCATEGORY; ?>" <?if ($orderby == ORDERBYCATEGORY    ) echo 'SELECTED' ?>>Category
+	</SELECT>
+
+	<SELECT name="orderbyupdown">
+		<OPTION VALUE="<?php echo ORDERBYASC;  ?>" <?if ($orderbyupdown == ORDERBYASC  ) echo 'SELECTED' ?>>ascending
+		<OPTION VALUE="<?php echo ORDERBYDESC; ?>" <?if ($orderbyupdown == ORDERBYDESC ) echo 'SELECTED' ?>>descending
 	</SELECT>
 </td></tr>
 </table>

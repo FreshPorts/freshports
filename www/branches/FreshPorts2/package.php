@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: package.php,v 1.1.2.1 2004-08-23 19:05:16 dan Exp $
+	# $Id: package.php,v 1.1.2.2 2004-11-17 22:37:27 dan Exp $
 	#
 	# Copyright (c) 2004 DVL Software Limited
 	#
@@ -24,7 +24,6 @@
 
 	$Searches = new Searches($dbh);
 
-
 ?>
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><td VALIGN=TOP width="100%">
@@ -46,18 +45,7 @@ The package specified ('<?php echo $package; ?>') could not be found.  We have a
 </ul>
 <?php
 } else {
-	if ($multiple) {
-?>
-There is more than one port with the package name '<?php echo $package; ?>'.
-
-<ul>
-<li><a href="<?php echo $Searches->GetDefaultSearchString($package); ?>">Search</a> for ports containing which have '<?php echo $package; ?>' in their name.
-<li><a href="<?php echo $Searches->GetDefaultSoundsLikeString($package); ?>">Search</a> for ports which sound like '<?php echo $package; ?>'.
-</ul>
-<?php
-	} else {
-		die('I have no idea what I should be doing');
-	}
+	die('I have no idea what I should be doing');
 }
 ?>
 </P>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.93 2004-10-02 18:50:11 dan Exp $
+	# $Id: index.php,v 1.1.2.94 2004-11-17 22:37:27 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -31,7 +31,11 @@
 
 				case "-1":
 					# multiple ports have that package name
-					header('Location: /package.php?package=' . $package . '&multiple');
+					# search for them all and let the users decide which one they want
+					require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/searches.php');
+					$Searches = new Searches($dbh);
+					$Redirect = $Searches->GetLink($package, FRESHPORTS_SEARCH_METHOD_Exact, 1);
+					header('Location: ' . $Redirect);
 					exit;
 
 				default:

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.130 2003-02-10 16:52:14 dan Exp $
+	# $Id: freshports.php,v 1.4.2.131 2003-02-11 18:14:03 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -1034,6 +1034,13 @@ function freshports_PortCommitPrint($commit, $category, $port) {
 		echo '&nbsp;'. freshports_Encoding_Errors();
 	}
 
+	echo ' ';
+
+	echo freshports_CommitFilesLink($commit->message_id, $category, $port);
+	if (IsSet($commit->security_notice_id)) {
+		echo '<a href="/security-notice.php?message_id=' . $commit->message_id . '">' . freshports_Security_Icon() . '</a>';
+	}
+
 	# ouput the VERSION and REVISION
 	if (strlen($commit->{port_version}) > 0) {
     	echo '&nbsp;&nbsp;&nbsp;<BIG><B>' . $commit->{port_version};
@@ -1045,15 +1052,7 @@ function freshports_PortCommitPrint($commit, $category, $port) {
 
 	echo "</TD>\n";
 	echo '    <TD VALIGN="top">';
-    echo freshports_CommitterEmailLink($commit->committer);
-	echo '<BR>';
-
-	echo freshports_CommitFilesLink($commit->message_id, $category, $port);
-	if (IsSet($commit->security_notice_id)) {
-		echo '<a href="/security-notice.php?message_id=' . $commit->message_id . '">' . freshports_Security_Icon() . '</a>';
-	}
-
-
+	echo freshports_CommitterEmailLink($commit->committer);
 
 	echo "</TD>\n";
 	echo '    <TD VALIGN="top" WIDTH="*">';

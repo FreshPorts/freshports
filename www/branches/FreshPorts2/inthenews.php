@@ -1,12 +1,12 @@
 <?
-	# $Id: inthenews.php,v 1.1.2.5 2002-05-18 08:07:37 dan Exp $
+	# $Id: inthenews.php,v 1.1.2.6 2002-05-22 04:30:23 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require("./include/common.php");
-	require("./include/freshports.php");
-	require("./include/databaselogin.php");
-	require("./include/getvalues.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 
 	freshports_Start("In The News",
 					"freshports - new ports, applications",
@@ -39,14 +39,14 @@ Daily Daemon News - <a href="http://daily.daemonnews.org/view_story.php3?story_i
 </TABLE>
 </td>
   <td valign="top" width="*">
-    <? include("./include/side-bars.php") ?>
+    <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
  </td>
 </tr>
 </table>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? include("./include/footer.php") ?>
+<? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
 </TD></TR>
 </TABLE>
 

@@ -1,13 +1,13 @@
 <?
-	# $Id: index.php,v 1.1.2.44 2002-05-18 08:07:37 dan Exp $
+	# $Id: index.php,v 1.1.2.45 2002-05-22 04:30:23 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
-	require("./include/common.php");
-	require("./include/freshports.php");
-	require("./include/databaselogin.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
 
-	require("./include/getvalues.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 
 	freshports_Start("the place for ports",
 					"$FreshPortsName - new ports, applications",
@@ -300,7 +300,7 @@ ports. A port is marked as new for 10 days.
 ?>
 </TD>
   <TD VALIGN="top" WIDTH="*">
-   <? include("./include/side-bars.php") ?>
+   <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
 <?
 
 	for ($i = 0; $i < $NumberOfDays; $i++) {
@@ -315,9 +315,10 @@ ports. A port is marked as new for 10 days.
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? include("./include/footer.php") ?>
+<? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
 </TD></TR>
 </TABLE>
+
 
 </body>
 </html>

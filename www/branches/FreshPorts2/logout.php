@@ -1,11 +1,11 @@
 <?
-	# $Id: logout.php,v 1.1.2.6 2002-05-18 18:33:27 dan Exp $
+	# $Id: logout.php,v 1.1.2.7 2002-05-22 04:30:24 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require("./include/common.php");
-	require("./include/freshports.php");
-	require("./include/databaselogin.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
 
 	freshports_CookieClear();
 

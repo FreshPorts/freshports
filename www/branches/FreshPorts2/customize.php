@@ -1,11 +1,11 @@
 <?
-	# $Id: customize.php,v 1.1.2.14 2002-05-18 19:04:14 dan Exp $
+	# $Id: customize.php,v 1.1.2.15 2002-05-22 04:30:21 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require("./include/common.php");
-	require("./include/freshports.php");
-	require("./include/databaselogin.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
 
 ?>
 <script language="php">
@@ -129,7 +129,7 @@ if ($submit) {
     <TD height="20"><script language="php">
 
 if (!$submit) {
-	include( "./include/getvalues.php");
+	include( $_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
     $numberofdays = $NumberOfDays;
 }
 
@@ -169,7 +169,7 @@ if ($AccountModified) {
 //  $daystoshow = 20;
 //  $maxarticles = 40;
 //  $daysnew = 20;
-//   require( "./include/commonphp3.inc");
+//   require($_SERVER['DOCUMENT_ROOT'] . "/include/commonphp3.inc");
 //	echo $DaysToShow,  '= days to show';
 
 echo '<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="#AD0040" WIDTH="100%">
@@ -183,10 +183,10 @@ echo '<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="#AD0040" WIDTH="100%">
 <TD>';
 
 echo 'If you wish to change your password, supply your new password twice.  Otherwise, leave it blank.<br>';
-include("./include/getvalues.php");
+include($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 
 $Customize=1;
-include("./include/new-user.php");
+include($_SERVER['DOCUMENT_ROOT'] . "/include/new-user.php");
 
 echo "</TD>
 </TR>
@@ -200,14 +200,14 @@ echo "</TD>
 </TABLE>
 </TD>
   <TD VALIGN="top" WIDTH="*">
-   <? include("./include/side-bars.php") ?>
+   <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
  </TD>
 </TR>
 </TABLE>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? include("./include/footer.php") ?>
+<? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
 </TD></TR>
 </TABLE>
 

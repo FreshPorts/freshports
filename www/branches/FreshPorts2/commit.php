@@ -1,13 +1,13 @@
 <?
-	# $Id: commit.php,v 1.1.2.9 2002-05-18 08:07:36 dan Exp $
+	# $Id: commit.php,v 1.1.2.10 2002-05-22 04:30:21 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
-	require("./include/common.php");
-	require("./include/freshports.php");
-	require("./include/databaselogin.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
 
-	require("./include/getvalues.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 
 	$message_id = AddSlashes($_GET["message_id"]);
 	$commit_id  = AddSlashes($_GET["commit_id"]);
@@ -326,7 +326,7 @@ if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 </script>
 </TD>
   <TD VALIGN="top" WIDTH="*">
-   <? include("./include/side-bars.php") ?>
+   <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
  </TD>
 </TR>
 </TABLE>
@@ -335,7 +335,7 @@ if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? include("./include/footer.php") ?>
+<? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
 </TD></TR>
 </TABLE>
 

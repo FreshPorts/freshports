@@ -1,11 +1,11 @@
 <?
-	# $Id: login.php,v 1.1.2.17 2002-05-18 08:25:05 dan Exp $
+	# $Id: login.php,v 1.1.2.18 2002-05-22 04:30:24 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-   require("./include/common.php");
-   require("./include/freshports.php");
-   require("./include/databaselogin.php");
+   require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+   require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+   require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
 
 $Debug=0;
 
@@ -169,7 +169,7 @@ freshports_PageBannerText("Login");
 echo '</TR>';
 
 echo '<TR><TD BGCOLOR="#ffffff">';
-include ("./include/login.php");
+include ($_SERVER['DOCUMENT_ROOT'] . "/include/login.php");
 
 echo "Your browser must allow cookies for this login to work.";
 
@@ -184,14 +184,14 @@ echo '<BR><A HREF="forgotten-password.php">Forgotten your password?</a>';
 ?>
 </TD>
   <TD valign="top" WIDTH="*">
-    <? include("./include/side-bars.php") ?>
+    <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
  </TD>
 </TR>
 </TABLE> 
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? include("./include/footer.php") ?>
+<? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
 </TD></TR>
 </TABLE>
 

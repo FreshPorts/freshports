@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-category.php,v 1.1.2.12 2002-05-18 05:55:52 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.13 2002-05-22 04:30:24 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -20,7 +20,7 @@ function freshports_Category($CategoryID, $db) {
 	$category->FetchByID($CategoryID);
 	$title = $category->{name};
 
-	require("./include/getvalues.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 
 	freshports_Start($title,
 					"freshports - new ports, applications",
@@ -83,14 +83,14 @@ $ShowDescriptionLink  = "N";
 </TD>
 </TABLE>
 <TD VALIGN="top">
-   <? include("./include/side-bars.php") ?>
+   <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
 </TD>
 </TR>
 </TABLE>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? include("./include/footer.php") ?>
+<? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
 </TD></TR>
 </TABLE>
 

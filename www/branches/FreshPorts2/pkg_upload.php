@@ -1,13 +1,13 @@
 <?
-	# $Id: pkg_upload.php,v 1.5.2.15 2002-05-18 19:04:14 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.16 2002-05-22 04:30:26 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require("./include/common.php");
-	require("./include/freshports.php");
-	require("./include/databaselogin.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
 
-	require("./include/getvalues.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 
 	freshports_Start("Uploading pkg_info",
 					"$FreshPortsName - new ports, applications",
@@ -196,7 +196,7 @@ function DisplayStagingArea($WatchListID, $db) {
 			if (trim($pkg_info) != '') {
 				$Destination = "/tmp/FreshPorts.tmp_pkg_output.$UserName";
 				if (HandleFileUpload("pkg_info", $Destination)) {
-					require_once "pkg_utils.inc";
+					require_once $_SERVER['DOCUMENT_ROOT'] . "/pkg_utils.inc";
 					if (ProcessPackages($WatchListID, $Destination, $db)) {
 						$DisplayStagingArea = TRUE;
 					}
@@ -223,7 +223,7 @@ function DisplayStagingArea($WatchListID, $db) {
 </TD>
   <TD valign="top" width="*">
     <?
-		include("./include/side-bars.php");
+		include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php");
     ?>
  </TD>
 </TR>
@@ -231,7 +231,7 @@ function DisplayStagingArea($WatchListID, $db) {
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? include("./include/footer.php") ?>
+<? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
 </TD></TR>
 </TABLE>
 

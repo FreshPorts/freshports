@@ -1,12 +1,12 @@
 <?
-	# $Id: welcome.php,v 1.1.2.7 2002-05-18 08:25:08 dan Exp $
+	# $Id: welcome.php,v 1.1.2.8 2002-05-22 04:30:30 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require("./include/common.php");
-	require("./include/freshports.php");
-	require("./include/databaselogin.php");
-	require("./include/getvalues.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 
 	freshports_Start("New User",
 					"freshports - new ports, applications",
@@ -40,10 +40,10 @@
 </TABLE>
 </TD>
   <TD VALIGN="top" WIDTH="*">
-    <? include("./include/side-bars.php") ?>
+    <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
  </TD>
 </TR>
 </TABLE>
-<? include("./include/footer.php") ?>
+<? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
 </BODY>
 </HTML>

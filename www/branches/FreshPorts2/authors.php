@@ -1,12 +1,12 @@
 <?
-	# $Id: authors.php,v 1.1.2.7 2002-05-08 03:28:26 dan Exp $
+	# $Id: authors.php,v 1.1.2.8 2002-05-22 04:30:19 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require("./include/common.php");
-	require("./include/freshports.php");
-	require("./include/databaselogin.php");
-	require("./include/getvalues.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 
 	freshports_Start("The Authors",
 					"freshports - new ports, applications",
@@ -93,14 +93,14 @@ name just so it stays a secret.</LI>
 </TABLE>
 </td>
   <td valign="top" width="*">
-    <? include("./include/side-bars.php") ?>
+    <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
  </td>
 </tr>
 </table>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? include("./include/footer.php") ?>
+<? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
 </TD></TR>
 </TABLE>
 

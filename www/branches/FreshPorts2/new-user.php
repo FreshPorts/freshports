@@ -1,11 +1,11 @@
 <?
-	# $Id: new-user.php,v 1.1.2.18 2002-05-18 18:50:08 dan Exp $
+	# $Id: new-user.php,v 1.1.2.19 2002-05-22 04:30:25 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require("./include/common.php");
-	require("./include/freshports.php");
-	require("./include/databaselogin.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
 
 	$origin = $_GET["origin"];
 	$submit = $_POST["submit"];
@@ -137,7 +137,7 @@ if ($submit) {
 	$watchnotifyfrequency = $WatchNoticeFrequencyDaily;
 
 	// we can't do this if we are submitting because it overwrites the incoming values
-	require( "./include/getvalues.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 	$emailsitenotices_yn = "ON";
 }
 
@@ -192,7 +192,7 @@ echo '<p>If you need help, please post a message on the forum. </p>
 
 if (!$submit && !$errors) {
   // provide default values for an empy form.
-  require( "./include/getvalues.php");
+  require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 }
 
 </script>
@@ -209,14 +209,14 @@ will be emailed to you at that address.</BIG></P>
 <P>Your browser must allow cookies for the login to work.</P>
 <P>&nbsp;</P>
 
-<? include("./include/new-user.php"); ?>
+<? include($_SERVER['DOCUMENT_ROOT'] . "/include/new-user.php"); ?>
 
     </TD>
   </TR>
 </TABLE>
 </TD>
   <TD VALIGN="top" WIDTH="*">
-   <? include("./include/side-bars.php") ?>
+   <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
  </TD>
 </TR>
 </TABLE>

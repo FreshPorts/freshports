@@ -1,13 +1,13 @@
 <?
-	# $Id: news.php,v 1.1.2.3 2002-03-20 02:03:18 dan Exp $
+	# $Id: news.php,v 1.1.2.4 2002-05-22 04:30:26 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require("./include/common.php");
-	require("./include/freshports.php");
-	require("./include/databaselogin.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
 
-	require("include/getvalues.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 
 #	$Debug=1;
 #	echo 'stuff';

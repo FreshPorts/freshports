@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-port.php,v 1.1.2.21 2002-04-19 17:06:20 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.22 2002-05-22 04:30:25 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
@@ -7,7 +7,7 @@
 
 
 $CommitDetails = 'files.php';
-require_once("./include/files.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/include/files.php");
 
 
 function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
@@ -89,7 +89,7 @@ function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 				if ($PortName != '' && !IsSet($port->id)) {
 					$result = "The <A HREF=\"/$CategoryName/\">category you specified</A> exists but not the port <I>$PortName</I>.";
 				} else {
-					require("missing-category.php");
+					require($_SERVER['DOCUMENT_ROOT'] . "/missing-category.php");
 					freshports_Category($CategoryID, $db);
 				}
 			}
@@ -110,7 +110,7 @@ function freshports_PortDescription($port) {
 	header("HTTP/1.1 200 OK");
 	$Title = $port->category . "/" . $port->port;
 
-	require("./include/getvalues.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 
 	freshports_Start($Title,
 	        		"$FreshPortsTitle - new ports, applications",
@@ -158,7 +158,7 @@ $ShowDescriptionLink	= "N";
 
 </TD>
 <TD VALIGN="top">
-   <? include("./include/side-bars.php") ?>
+   <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
 </TD>
 </TR>
 
@@ -166,7 +166,7 @@ $ShowDescriptionLink	= "N";
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? include("./include/footer.php") ?>
+<? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
 </TD></TR>
 </TABLE>
 

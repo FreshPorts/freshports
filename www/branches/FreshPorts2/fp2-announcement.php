@@ -1,12 +1,12 @@
 <?
-	# $Id: fp2-announcement.php,v 1.1.2.2 2002-04-20 02:54:38 dan Exp $
+	# $Id: fp2-announcement.php,v 1.1.2.3 2002-05-22 04:30:22 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require("./include/common.php");
-	require("./include/freshports.php");
-	require("./include/databaselogin.php");
-	require("./include/getvalues.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 
 	freshports_Start("Announcement",
 					"freshports - new ports, applications",
@@ -106,10 +106,10 @@ The following items deal with the technical changes which have occurred.
 </TABLE>
 </TD>
   <TD VALIGN="top" WIDTH="*">
-    <? include("./include/side-bars.php") ?>
+    <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
  </TD>
 </TR>
 </TABLE>
-<? include("./include/footer.php") ?>
+<? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
 </BODY>
 </HTML>

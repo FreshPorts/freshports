@@ -1,11 +1,11 @@
 <?
-	# $Id: forgotten-password.php,v 1.1.2.12 2002-05-18 19:14:15 dan Exp $
+	# $Id: forgotten-password.php,v 1.1.2.13 2002-05-22 04:30:22 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require("./include/common.php");
-	require("./include/freshports.php");
-	require("./include/databaselogin.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
 
 
 $Debug=0;
@@ -15,7 +15,7 @@ $submit = $_POST["submit"];
 $MailSent = 0;
 
 #if (!$submit) {
-#   require( "./include/getvalues.php");
+#   require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 ##   echo 'not submit';
 #   #
 #   # if they are logged in, put them over to customize, they shouldn't be here...
@@ -265,13 +265,13 @@ we're only dealing with your FreshPorts login, not a financial transaction....</
   <TD VALIGN="top" WIDTH="*">
     <? 
        unset($UserID);
-       include("./include/side-bars.php");
+       include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php");
     ?>
  </TD>
 </TR>
 </TABLE> 
 </TD></TR>
 </TABLE>
-<? include("./include/footer.php") ?>
+<? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
 </body>
 </html>

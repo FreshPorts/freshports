@@ -1,13 +1,13 @@
 <?
-	# $Id: sidebar.php,v 1.1.2.5 2002-04-19 17:06:20 dan Exp $
+	# $Id: sidebar.php,v 1.1.2.6 2002-05-22 04:30:29 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require("./include/common.php");
-	require("./include/freshports.php");
-	require("./include/databaselogin.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
 
-	require("include/getvalues.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 
 	freshports_HTML_Start();
 

@@ -1,12 +1,12 @@
 <?
-	# $Id: list-of-ports.php,v 1.1.2.2 2002-04-22 03:33:38 dan Exp $
+	# $Id: list-of-ports.php,v 1.1.2.3 2002-05-22 04:30:31 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
 function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeaders) {
 
 
-	require("../classes/ports.php");
+	require($_SERVER["DOCUMENT_ROOT"] . "/../classes/ports.php");
 	$port = new Port($db);
 	$port->LocalResult = $result;
 

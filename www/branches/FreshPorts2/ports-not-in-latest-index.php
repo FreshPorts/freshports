@@ -1,12 +1,12 @@
 <?
-	# $Id: ports-not-in-latest-index.php,v 1.1.2.5 2002-03-03 23:52:49 dan Exp $
+	# $Id: ports-not-in-latest-index.php,v 1.1.2.6 2002-05-22 04:30:28 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require("./include/common.php");
-	require("./include/freshports.php");
-	require("./include/databaselogin.php");
-	require("./include/getvalues.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 
 	freshports_Start("title",
 					"freshports - new ports, applications",
@@ -87,12 +87,19 @@ if ($result) {
 </script>
 </td>
   <td valign="top" width="*">
-   <? include("./include/side-bars.php") ?>
+   <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
  </td>
 </tr>
 </table>
 </td>
 </tr>
 </table>
+
+<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<TR><TD>
+<? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+</TD></TR>
+</TABLE>
+
 </body>
 </html>

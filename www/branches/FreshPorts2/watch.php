@@ -1,12 +1,12 @@
 <?
-	# $Id: watch.php,v 1.1.2.17 2002-05-21 02:10:49 dan Exp $
+	# $Id: watch.php,v 1.1.2.18 2002-05-22 04:30:30 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require("./include/common.php");
-	require("./include/freshports.php");
-	require("./include/databaselogin.php");
-	require("./include/getvalues.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 
 $Debug = 0;
 
@@ -123,7 +123,7 @@ $HTML .= '<tr><td>';
 // get the list of topics, which we need to modify the order
 $NumPorts=0;
 
-require("../classes/ports.php");
+require($_SERVER['DOCUMENT_ROOT'] . "/../classes/ports.php");
 $port = new Port($db);
 $port->LocalResult = $result;
 
@@ -194,14 +194,14 @@ echo $HTML;
 </table>
 </td>
   <td valign="top" width="*">
-<? include("./include/side-bars.php") ?>
+<? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
 </td>
 </tr>
 </table>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? include("./include/footer.php") ?>
+<? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
 </TD></TR>
 </TABLE>
 

@@ -1,12 +1,12 @@
 <?
-	# $Id: port-description.admin.php,v 1.1.2.8 2002-05-18 19:10:41 dan Exp $
+	# $Id: port-description.admin.php,v 1.1.2.9 2002-05-22 04:30:26 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require("./include/common.php");
-	require("./include/freshports.php");
-	require("./include/databaselogin.php");
-	require("./include/getvalues.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 
 	$submit = $_POST["submit"];
 
@@ -256,11 +256,11 @@ if ($NumRows) {
 </td>
 <td valign="top">
 
-<? include("./include/side-bars.php") ?>
+<? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
 
 </td>
 </tr>
 </table>
- <? include("./include/footer.php") ?>
+ <? include($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
 </body>
 </html>

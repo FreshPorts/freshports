@@ -93,6 +93,7 @@ $sql = "select ports.id, ports.name as port, " .
        "  and ports.primary_category_id       = categories.id " .
        "  and ports.status                    = 'A' ";
 
+/*
 $sql .= "order by $sort limit $MaxNumberOfPorts";
 
 if ($Debug) {
@@ -132,6 +133,8 @@ echo $HTML;
    if (file_exists($cache_file)) {
       include($cache_file);
    }
+*/
+echo '<tr><td>Sorry, but we\'ve disabled this page. Sorry about that. With luck, it will be back in FreshPorts2.</td></tr>';
 }
 
 </script>

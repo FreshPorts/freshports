@@ -91,4 +91,26 @@ function freshports_CategoryIDFromCategory($category, $db) {
    return $CategoryID;
 }
 
+function freshports_SideBarHTML($Self, $URL, $Title) {
+//   echo "PHP_SELF = $Self and URL=$URL";
+   if ($Self == $URL || ($Self == '/index.php3' && $URL == '/')) {
+      $HTML = $Title;
+   } else {
+      $HTML = '<a href="' . $URL . '">' . $Title . '</a>';
+   }
+
+   return $HTML;
+}
+
+function freshports_SideBarHTMLParm($Self, $URL, $Parm, $Title) {
+//   echo "PHP_SELF = $Self and URL=$URL";
+   if ($Self == $URL || ($Self == '/index.php3' && $URL == '/')) {
+      $HTML = $Title;
+   } else {
+      $HTML = '<a href="' . $URL . $Parm . '">' . $Title . '</a>';
+   }
+      
+   return $HTML;
+}
+
 ?>

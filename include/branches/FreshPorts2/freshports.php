@@ -1,8 +1,8 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.25 2002-02-11 01:44:24 dan Exp $
+   # $Id: freshports.php,v 1.4.2.26 2002-02-12 22:58:05 dan Exp $
    #
-   # Copyright (c) 1998-2001 DVL Software Limited
+   # Copyright (c) 1998-2002 DVL Software Limited
 
 #
 # colours for the banners (not really banners, but headings)
@@ -22,6 +22,9 @@ $TableWidth             = "98%";
 $DateFormatDefault      = "j F Y";
 
 $FreshPortsTitle		= "FreshPorts";
+
+$FreshPortsWatchedPort		= "<A HREF=\"/watch-list.php?remove=' || ports.element_id || '\">-</A>";
+$FreshPortsWatchedPortNot	= "<A HREF=\"/watch-list.php?add='    || ports.element_id || '\">+</A>";
 
 #
 # SEQUENCES

@@ -1,7 +1,7 @@
 <?
-	# $Id: index.php,v 1.1.2.10 2002-02-11 01:44:24 dan Exp $
+	# $Id: index.php,v 1.1.2.11 2002-02-12 22:58:04 dan Exp $
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# Copyright (c) 1998-2002 DVL Software Limited
 
 	require("./include/common.php");
 	require("./include/freshports.php");
@@ -108,25 +108,58 @@ function GetPortNameFromFileName($file_name) {
 # we limit the select to recent things by using a date
 # otherwise, it joins the whole table and that takes quite a while
 #
-$numrows=400;
+#$numrows=400;
+
+if ($Debug) {
+	echo "\$FreshPortsWatchedPortNot = '$FreshPortsWatchedPortNot'<BR>\n";
+	echo "\$FreshPortsWatchedPort    = '$FreshPortsWatchedPort'<BR>\n";
+}
+
+#echo "\$WatchListID = '$WatchListID'\n";
 $sql = " 
-select DISTINCT commit_log.commit_date as commit_date_raw,
-       commit_log.id as commit_log_id,
-       commit_log.description as commit_description,
-       to_char(commit_log.commit_date + INTERVAL '$CVSTimeAdjustment seconds', 'DD Mon YYYY') as commit_date,
-       to_char(commit_log.commit_date + INTERVAL '$CVSTimeAdjustment seconds', 'HH24:MI') as commit_time,
-	   commit_log_ports.port_id as port_id,
-	   categories.name as category,
-	   categories.id   as category_id,
-	   element.name    as port,
-	   commit_log_ports.port_version   as version,
-	   element.status    as status,
-	   commit_log_ports.needs_refresh  as needs_refresh,
-	   ports.forbidden      as forbidden,
-	   ports.broken         as broken,
-	   date_part('epoch', ports.date_added) as date_added,
-	   ports.short_description
-  from commit_log_ports, commit_log, ports, element, categories
+	select DISTINCT
+	commit_log.commit_date					as commit_date_raw,
+	commit_log.id							as commit_log_id,
+	commit_log.description					as commit_description,
+	to_char(commit_log.commit_date + INTERVAL '$CVSTimeAdjustment seconds', 'DD Mon YYYY')	as commit_date,
+	to_char(commit_log.commit_date + INTERVAL '$CVSTimeAdjustment seconds', 'HH24:MI')		as commit_time,
+	commit_log_ports.port_id				as port_id,
+	categories.name							as category,
+	categories.id							as category_id,
+	element.name							as port,
+	commit_log_ports.port_version			as version,
+	element.status							as status,
+	commit_log_ports.needs_refresh 			as needs_refresh,
+	ports.forbidden							as forbidden,
+	ports.broken							as broken,
+	date_part('epoch', ports.date_added)	as date_added,
+	ports.element_id						as element_id,
+	ports.short_description ";
+
+if ($WatchListID) {
+	$sql .= ",
+       watch_list_element.element_id,
+       CASE when watch_list_element.element_id is null
+          then '$FreshPortsWatchedPortNot'
+          else '$FreshPortsWatchedPort'
+       END as watch ";
+}
+
+$sql .= "
+  from commit_log_ports, commit_log, element, categories, ports ";
+
+#
+# if the watch list id is provided (i.e. they are logged in and have a watch list id...)
+#
+if ($WatchListID) {
+	$sql .="
+            left outer join watch_list_element
+			on ports.element_id                 = watch_list_element.element_id 
+		   and watch_list_element.watch_list_id = $WatchListID ";
+}
+
+
+$sql .= "
  where commit_log.commit_date         > '2002-01-01'
    and commit_log_ports.commit_log_id = commit_log.id
    and commit_log_ports.port_id       = ports.id
@@ -138,7 +171,7 @@ order by commit_log.commit_date desc,
          port
          limit $numrows";
 
-#echo "\n<pre>sql=$sql</pre>\n";
+if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 
          $result = pg_exec($database, $sql);
          if ($result) {
@@ -258,6 +291,8 @@ ports. A port is marked as new for 10 days.
 							$HTML .= '[ ' . $myrow["commit_time"] . ' ]';
 							$HTML .= '</FONT>';
 						}
+
+						$HTML .= ' ' . $myrow["watch"];
 
 						$j++;
 						$MultiplePortsThisCommit = 1;

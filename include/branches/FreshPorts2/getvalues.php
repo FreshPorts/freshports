@@ -1,6 +1,6 @@
 <script language="php">
 
-	# $Id: getvalues.php,v 1.1.2.7 2002-01-06 16:58:45 dan Exp $
+	# $Id: getvalues.php,v 1.1.2.8 2002-02-12 22:58:05 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -37,7 +37,7 @@ $CVSTimeAdjustment		= -10800;	# this is number of seconds the web server is rela
 									# we can override that for a particular user.
 
 $LocalTimeAdjustment	= 0;		# This can be used to display the time the webpage was loaded.
-
+$WatchListID			= 0;
 
 #
 # flags for showing various port parts.
@@ -52,8 +52,11 @@ $UserID			= "";
 $DefaultMaxArticles = $MaxArticles;
 
 if (!empty($visitor)) {
-	$sql = "select * from users ".
-         "where cookie = '$visitor'";
+	$sql = "select users.*, watch_list.id as watch_list_id
+			  from users left outer join watch_list 
+				    on users.id        = watch_list.user_id 
+				   and watch_list.name = 'main'
+			 where cookie = '$visitor'";
 
 	if ($Debug) {
 		echo "sql=$sql<br>\n";
@@ -79,6 +82,8 @@ if (!empty($visitor)) {
 				$WatchNotice->FetchByID($myrow["watch_notice_id"]);
 
 				$watchnotifyfrequency	= $WatchNotice->frequency;
+
+				$WatchListID			= $myrow["watch_list_id"];
 
 //				$MaxNumberOfPorts		= $myrow["max_number_of_ports"];
 				$ShowShortDescription	= $myrow["show_short_description"];
@@ -136,6 +141,7 @@ if (!empty($visitor)) {
 	}
 	if ($Debug) {
 		echo "UserName = $UserName\n<br>UserID=$UserID<br>\n";
+		echo "watch list id = $WatchListID<BR>\n";
 	}
 }
 </script>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: date.php,v 1.1.2.18 2003-04-27 14:48:11 dan Exp $
+	# $Id: date.php,v 1.1.2.19 2003-07-29 20:37:41 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -25,7 +25,11 @@
 	#
 	# Get the date we are going to work with.
 	#
-	$Date = AddSlashes($_GET['date']);
+	if (IsSet($_GET['date'])) {
+		$Date = AddSlashes($_GET['date']);
+	} else {
+		$Date = '';
+	}
 
 	$DateMessage = '';
 
@@ -231,11 +235,11 @@ echo "<center>$Yesterday $Tomorrow</center>";
 ?>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<TR><TD VALIGN="top">
+<TR><TD VALIGN="top" WIDTH="100%">
 
 <?php
 
-echo '<TABLE WIDTH="100%" BORDER="1" CELLSPACING="0" CELLPADDING="5">';
+echo '<TABLE WIDTH="100%" BORDER="1" CELLSPACING="0" CELLPADDING="8">';
 
 $HTML = ArchiveCreate($Date, $DateMessage, $db, $User);
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports.php,v 1.1.2.38 2003-09-24 17:54:44 dan Exp $
+	# $Id: ports.php,v 1.1.2.39 2003-09-25 14:02:02 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -39,7 +39,7 @@ class Port {
 	var $port;
 	var $needs_refresh;
 	var $status;
-	var $updated;	// timestamp of last update
+	var $updated;		// timestamp of last update
 
 	var $onwatchlist;	// count of how many watch lists is this port on for this user. 
 						// not actually fetched directly by this class.
@@ -85,16 +85,16 @@ class Port {
 
 		$this->port               = $myrow["port"];
 		$this->category           = $myrow["category"];
-		if (In_Array('needs_refresh', $myrow)) $this->needs_refresh      = $myrow["needs_refresh"];
+		$this->needs_refresh      = $myrow["needs_refresh"];
 		$this->status             = $myrow["status"];
-		if (In_Array('updated',       $myrow)) $this->updated            = $myrow["updated"];
+		$this->updated            = $myrow["updated"];
 
-		if (In_Array('onwatchlist',   $myrow)) $this->onwatchlist        = $myrow["onwatchlist"];
+		$this->onwatchlist        = $myrow["onwatchlist"];
 
-		if (In_Array('update_description', $myrow)) $this->update_description = $myrow["update_description"];
-		if (In_Array('message_id',         $myrow)) $this->message_id         = $myrow["message_id"];
-		if (In_Array('encoding_losses',    $myrow)) $this->encoding_losses    = $myrow["encoding_losses"];
-		if (In_Array('committer',          $myrow)) $this->committer          = $myrow["committer"];
+		$this->update_description = $myrow["update_description"];
+		$this->message_id         = $myrow["message_id"];
+		$this->encoding_losses    = $myrow["encoding_losses"];
+		$this->committer          = $myrow["committer"];
 
 		// We might be looking at category lang.  japanese/gawk is listed in both japanese and lang.
 		// So when looking at lang, we don't want to say, Also listed in lang...  
@@ -450,6 +450,14 @@ LEFT OUTER JOIN
 		}
 
 		return $result;
+	}
+
+	function PackagesExists() {
+		return $this->package_exists == 't';
+	}
+
+	function EncodingLosses() {
+		return $this->encoding_losses == 't';
 	}
 
 }

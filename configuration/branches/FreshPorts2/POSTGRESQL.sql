@@ -1,5 +1,5 @@
 --
--- $Id: POSTGRESQL.sql,v 1.1.2.28 2003-03-05 23:26:54 dan Exp $
+-- $Id: POSTGRESQL.sql,v 1.1.2.29 2003-03-06 22:25:52 dan Exp $
 --
 -- Copyright (c) 1998-2002 DVL Software Limited
 --
@@ -27,7 +27,6 @@ alter group www add user www;
 --
 -- select access only
 --
-grant select on categories                     to group www;
 grant select on commit_log                     to group www;
 grant select on commit_log_elements            to group www;
 grant select on commit_log_port_elements       to group www;
@@ -49,6 +48,7 @@ grant select on user_tasks                     to group www;
 --
 -- select, update
 --
+grant select, update on categories             to group www;
 grant select, update on housekeeping           to group www;
 
 --

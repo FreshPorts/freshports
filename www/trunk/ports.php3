@@ -23,10 +23,6 @@ testing. Information found here may be widely out of date and/or inaccurate.  Us
 See also <a href="categories.php3">freshports by category</a>.
 </td></tr>
 <tr><td>
-<font size="+2">Sorry</font> but we had to delete all user logins which were created in the past
-two days.  Please try again.
-</td></tr>
-<tr><td>
 <table width="100%" border="0">
 <tr>
     <td colspan="5" bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">freshports - last 20 ports</font></td>
@@ -110,7 +106,7 @@ $sql = "select ports.name as port, ports.id as ports_id, ports.last_update as up
        "WHERE ports.system = 'FreeBSD' ".
        "and ports.primary_category_id = categories.id ";
 
-$sql .= "order by $sort limit 20";
+$sql .= "order by $sort limit 40";
 
 //echo $sql;
 
@@ -118,15 +114,10 @@ $result = mysql_query($sql, $db);
 
 $HTML = "</tr></td><tr>";
 
-//$HTML .= '<tr><td>';
-
-//$HTML .= '<table width="100%" border="0">';
-//$HTML .= '<td><a href="ports.php3?sort=port">Port</a></td>';
 $HTML .= '<td>Port</td>';
 $HTML .= '<td>Description</td>';
 $HTML .= '<td>Committer</td>';
 $HTML .= '<td>Category</td>';
-//$HTML .= '<td><a href="ports.php3?sort=updated">Updated</a></td>';
 $HTML .= '<td>Updated</td>';
 $HTML .= '</tr>';
 $HTML .= "\n";
@@ -135,12 +126,14 @@ $NumTopics=0;
 while ($myrow = mysql_fetch_array($result)) {
 	$HTML .= '<tr><td VALIGN="top"><A href="' . $DESC_URL . '/' . $myrow["category"] . '/' . $myrow["port"] . '/pkg/DESCR">';
 
-//        $URL_Category = "http://www.freebsd.org/ports/" . $myrow["category"];
 	$URL_Category = "category.php3?category=" . $myrow["category_id"];
-        if ($myrow["version"]) {
-           $HTML .= $myrow["version"];
-        } else {
-           $HTML .= $myrow["name"];
+        $HTML .= $myrow["port"];
+
+
+        $TempVersion = $myrow["version"];
+//        $HTML .= '--' . strlen($TempVersion) . '--';
+        if (strlen($TempVersion) > 0) {
+           $HTML .= '-' . $myrow["version"];
         }
         $HTML .= '</a></td>';
 

@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.112 2002-12-06 21:25:34 dan Exp $
+	# $Id: freshports.php,v 1.4.2.113 2002-12-06 23:19:03 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -106,22 +106,16 @@ function freshports_Encoding_Errors() {
 }
 
 function freshports_Watch_Link_Add($WatchListID, $ElementID) {
-	GLOBAL	$FreshPortsWatchedPortNotPrefix;
-	GLOBAL	$FreshPortsWatchedPortNotSuffix;
-
 	$HTML = '<SMALL><A HREF="/watch-list.php?';
-	$HTML .= 'add=' . $ElementID;
+	$HTML .= 'add='  . $ElementID;
 	$HTML .= '&';
-	$HTML .= 'wlid='   . $WatchListID;
+	$HTML .= 'wlid=' . $WatchListID;
 	$HTML .= '">' . freshports_Watch_Icon_Add() . '</A></SMALL>';
 
 	return $HTML;
 }
 
 function freshports_Watch_Link_Remove($WatchListID, $ElementID) {
-	GLOBAL	$FreshPortsWatchedPortPrefix;
-	GLOBAL	$FreshPortsWatchedPortSuffix;
-	
 	$HTML = '<SMALL><A HREF="/watch-list.php?';
 	$HTML .= 'remove=' . $ElementID;
 	$HTML .= '&';

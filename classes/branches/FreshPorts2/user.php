@@ -1,5 +1,5 @@
 <?
-	# $Id: user.php,v 1.1.2.2 2002-12-09 20:22:19 dan Exp $
+	# $Id: user.php,v 1.1.2.3 2002-12-11 04:32:52 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -91,10 +91,14 @@ class User {
 
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {
-			$myrow = pg_fetch_array($this->LocalResult, 0);
-			$this->PopulateValues($myrow);
 			$numrows = pg_numrows($this->LocalResult);
 #			echo "That would give us $numrows rows";
+			if ($numrows == 1) {
+				$myrow = pg_fetch_array($this->LocalResult, 0);
+				$this->PopulateValues($myrow);
+			} else {
+				die('user details not found');
+			}
 		} else {
 			$numrows = -1;
 			echo 'pg_exec failed: ' . $sql;

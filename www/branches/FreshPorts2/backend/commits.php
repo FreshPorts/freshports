@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits.php,v 1.1.2.12 2004-02-22 15:57:00 dan Exp $
+	# $Id: commits.php,v 1.1.2.13 2004-04-03 02:37:12 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -10,11 +10,11 @@
 	require($_SERVER["DOCUMENT_ROOT"] . "/include/databaselogin.php");
 	require($_SERVER["DOCUMENT_ROOT"] . "/include/getvalues.php");
 
-	DEFINE('MAXROWS', 150);
+	DEFINE('MAXROWS', 15000);
 
 	$Debug = 0;
 
-	if (In_Array('n', $_REQUEST)) {
+	if (IsSet($_REQUEST['n'])) {
 		$MaxCommits = AddSlashes($_REQUEST['n']);
 	}
 	if (IsSet($MaxCommits)) {
@@ -40,7 +40,7 @@
 
 
 	if ($Debug) {
-		echo $sql;
+		echo "<pre>$sql</pre>\n";
 	}
 
 	$result = pg_exec($db, $sql);

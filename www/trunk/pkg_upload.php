@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_upload.php,v 1.3 2002-01-06 23:19:30 dan Exp $
+	# $Id: pkg_upload.php,v 1.4 2002-01-06 23:49:37 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -77,11 +77,16 @@ $Debug=0;
 					<!-- <TR><TD>Enter Your Username</TD></TR>  -->
 					<!-- <TR><TD><INPUT type="text" name="user" value"" size=20></TD></TR> -->
 					<!-- <TR><TD>&nbsp;</TD></TR> -->
-					<TR><TD>Upload Your File</TD></TR>
-					<TR><TD><INPUT type="file" name="pkg_info" size=20></TD></TR>
+					<TR><TD>Upload the output from pkg_info:</TD></TR>
+					<TR><TD><INPUT type="file" name="pkg_info" size=40></TD></TR>
 					<TR><TD><INPUT type="submit" name="upload" value="Upload" size=20></TD></TR>
 				</TABLE>
 			</FORM>
+
+			<P>
+			If you prefer, you can download the <A HREF="/freshports.tgz">FreshPorts port</A> which will upload
+			the output for you.
+			</P>
 		<? 	} else { ?>
 				<P>
 				You must <A HREF="login.php">login</A> before you upload your package information.

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.208 2005-01-23 03:11:28 dan Exp $
+	# $Id: freshports.php,v 1.4.2.209 2005-01-26 21:04:10 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -268,6 +268,10 @@ function freshports_Encoding_Errors_Link() {
 
 function freshports_VuXML_Icon() {
 	return '<IMG SRC="/images/vuxml.gif" ALT="Vulnerability" TITLE="Vulnerability" BORDER="0" WIDTH="13" HEIGHT="16">';
+}
+
+function freshports_VuXML_Icon_Faded() {
+	return '<IMG SRC="/images/vuxml-faded.gif" ALT="Past Vulnerability" TITLE="Past Vulnerability" BORDER="0" WIDTH="13" HEIGHT="16">';
 }
 
 function freshports_Revision_Icon() {
@@ -909,8 +913,12 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 		$HTML .= '&nbsp; ' . freshPorts_WatchListCount_Icon_Link() . '=' . $port->WatchListCount();
 	}
 
-	if ($port->VulnerabilityCount() > 0) {
+	if ($port->IsVulnerable()) {
 		$HTML .= '&nbsp;' . freshports_VuXML_Icon();
+	} else {
+		if ($port->WasVulnerable()) {
+			$HTML .= '&nbsp;' . freshports_VuXML_Icon_Faded();
+		}
 	}
 
 	$HTML .= "</DT>\n<DD>";

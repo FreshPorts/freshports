@@ -1,5 +1,6 @@
 <?
-	# $Id: index.php,v 1.1.2.52 2002-11-29 15:29:03 dan Exp $
+	#
+	# $Id: index.php,v 1.1.2.53 2002-11-30 20:50:23 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -13,6 +14,8 @@
 					"$FreshPortsName - new ports, applications",
 					"FreeBSD, index, applications, ports");
 $Debug = 0;
+
+#$dailysummary = $_GET["dailysummary"];
 
 if ($Debug) echo "UserID='$UserID'";
 
@@ -337,8 +340,16 @@ ports. A port is marked as new for 10 days.
    <? include($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php") ?>
 <?
 
-	for ($i = 0; $i < $NumberOfDays; $i++) {
-		freshports_SummaryForDay($i);
+	if ($dailysummary) {
+		for ($i = 0; $i < $NumberOfDays; $i++) {
+			freshports_SummaryForDay($i);
+		}
+	} else {
+		$Today = time();
+		for ($i = 1; $i <= $NumberOfDays; $i++) {
+//			echo "$Today " . $Today  - $i * 86400;
+			echo '<a href="/date.php?date=' . date("Y/n/j", $Today - $i * 86400) . '">' . date("D, j M Y", $Today - $i * 86400) . "<br>\n";
+		}
 	}
 ?>
  </TD>

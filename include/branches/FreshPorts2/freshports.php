@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.64 2002-04-10 17:59:42 dan Exp $
+   # $Id: freshports.php,v 1.4.2.65 2002-04-11 21:15:02 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -904,24 +904,55 @@ function convertMail($text) {
 
 function convertAllLinks($text) {
 	$text = convertURLS($text);
-	$text= convertMail($text);
+	$text = convertMail($text);
 	return $text;
 }
 
 function pr2link($Arr) {
-	return preg_replace("/((\w+\/)?\d+)/", "<A HREF=\"http://www.FreeBSD.org/cgi/query-pr.cgi?pr=\\1\">\\1</A>", $Arr[0]);
+  return preg_replace("/((\w+\/)?\d+)/", 
+						"<A HREF=\"http://www.FreeBSD.org/cgi/query-pr.cgi?pr=\\1\">\\1</A>",
+						$Arr[0]);  
+}
+
+function mail2link($Arr) {
+	$addr     = $Arr[0];
+	$mailto   = '&#109;&#97;&#105;&#108;&#116;&#111;';
+	$new_addr = "";
+
+	for ($i=0; $i<strlen($addr); $i++) {
+		$new_addr .= ("&#".ord($addr[$i]).";");
+	}
+
+	$addr = "<A HREF='$mailto:$new_addr'>$new_addr</A>";
+	return $addr;
+}
+
+function url2link($Arr) {
+	GLOBAL $url2link_cutoff_level;
+	$html = $Arr[0];
+
+	echo "url2link is passed: $html";
+ 
+	if ($url2link_cutoff_level > 0 && strlen($html) > $url2link_cutoff_level - 5) {
+		$vhtml = substr($html, 0, $url2link_cutoff_level)."(...)";
+	} else { 
+		$vhtml = $html;
+	}
+	
+	return "<A HREF=\"$html\">$vhtml</A>";
 }
 
 function pr2html($String) {
 #	$String = addslashes($String);
 
-	$Match   = array("/((http|ftp|https):\/\/\S+)/i", "/([\w+=\-.!]+@[\w\-]+(\.[\w\-]+)+)/");
-	$Replace = array("<A HREF=\"\\1\">\\1</A>", "<A HREF=\"mailto:\\1\">\\1</A>");
-
-	$String =  preg_replace($Match, $Replace, $String);
-	return preg_replace_callback("/(\bPR[:\#]?)\s*(((\w+\/)?\d+)(,\s*((\w+\/)?\d+))*)/", pr2link, $String);
+	$String = preg_replace_callback("/((http|ftp|https):\/\/([^\s>])+)/i",                  url2link,  $String);
+	$String = preg_replace_callback("/([\w+=\-.!]+@[\w\-]+(\.[\w\-]+)+)/",                  mail2link, $String);
+	$String = preg_replace_callback("/(\bPR[:\#]?)\s*(((\w+\/)?\d+)(,\s*((\w+\/)?\d+))*)/", pr2link,   $String);
+ 
+	return $String;
 }
 
+$url2link_cutoff_level = 70;
 
 #
 #

@@ -1,23 +1,20 @@
 <?
-	# $Id: forgotten-password.php,v 1.1.2.17 2002-12-10 03:57:30 dan Exp $
+	# $Id: forgotten-password.php,v 1.1.2.18 2002-12-11 04:42:05 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
 
 $Debug = 0;
 
-$submit = $_POST["submit"];
+$submit = $_POST['submit'];
 
 $MailSent = 0;
 
 if ($submit) {
-//   echo "UserID = $UserID\n";
-	$Debug=0;
    // process form
-
    $error = '';
 
    if ($Debug) {
@@ -28,12 +25,12 @@ if ($submit) {
 
    $OK = 1;
 
-	$UserID	= AddSlashes($_POST["UserID"]);
-	$eMail	= AddSlashes($_POST["eMail"]);
+	$UserID	= AddSlashes($_REQUEST["UserID"]);
+	$eMail	= AddSlashes($_REQUEST["eMail"]);
 
-   if ($UserId) {
+   if ($UserID) {
       $errors = "";
-      $UserId = addslashes($UserID);
+      $UserID = addslashes($UserID);
 
       if ($Debug) {
          echo $UserID . "<br>\n";
@@ -42,11 +39,10 @@ if ($submit) {
       $sql = "select * from users where lower(name) = lower('$UserID')";
 
       if ($Debug) {
-         echo "$sql<br>\n";
+         echo "<pre>$sql</pre>\n";
       }
 
       $result = pg_exec($db, $sql) or die('query failed ' . pg_errormessage());
-
 
       if (!pg_numrows($result)) {
          $LoginFailed = 1;
@@ -59,6 +55,8 @@ if ($submit) {
          if ($Debug) echo $eMail . "<br>\n";
 
          $sql = "select * from users where email = '$eMail'";
+echo "<pre>This is the \$sql='$sql'</pre>\n";
+echo "<pre>$sql</pre>\n";
 
          if ($Debug) echo "$sql<br>\n";
 
@@ -111,9 +109,9 @@ if ($submit) {
    }
 }
 
-   freshports_Start("Forgotten password",
-               "freshports - new ports, applications",
-               "FreeBSD, index, applications, ports");
+   freshports_Start('Forgotten password',
+               'freshports - new ports, applications',
+               'FreeBSD, index, applications, ports');
 ?>
 
 <TABLE WIDTH="100%" BORDER="0">
@@ -122,7 +120,6 @@ if ($submit) {
 <TABLE WIDTH="100%" BORDER="0">
 <TR><TD VALIGN="top" WIDTH="100%">
 <?
-$Debug=1;
 
 if ($error) {
       echo '<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="#AD0040" WIDTH="100%">
@@ -248,14 +245,13 @@ we're only dealing with your FreshPorts login, not a financial transaction....</
 </TD>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
     <? 
-       unset($UserID);
-       require_once($_SERVER['DOCUMENT_ROOT'] . "/include/side-bars.php");
+       require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php');
     ?>
  </TD>
 </TR>
 </TABLE> 
 </TD></TR>
 </TABLE>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . "/include/footer.php") ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
 </body>
 </html>

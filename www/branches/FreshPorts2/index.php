@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.85 2003-11-20 14:27:12 dan Exp $
+	# $Id: index.php,v 1.1.2.86 2003-11-21 15:03:08 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -101,8 +101,19 @@ ports. A port is marked as new for 10 days.
 
 </TD></TR>
 <?php
+
+	$UseCache = FALSE;
+
+	DEFINE('CACHEFILE', $_SERVER['DOCUMENT_ROOT'] . '/../caching/cache/index.html');
+
 	if ($User->id == '') {
-		readfile($_SERVER['DOCUMENT_ROOT'] . '/../caching/cache/index.html');
+		if (file_exists(CACHEFILE) && is_readable(CACHEFILE)) {
+			$UseCache = TRUE;
+		}
+	}
+
+	if ($UseCache) {
+		readfile(CACHEFILE);
 	} else {
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/latest_commits.php');
 

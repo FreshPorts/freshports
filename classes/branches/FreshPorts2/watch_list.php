@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch_list.php,v 1.1.2.13 2003-04-27 20:33:36 dan Exp $
+	# $Id: watch_list.php,v 1.1.2.14 2003-06-05 14:30:36 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -108,6 +108,33 @@ DELETE FROM watch_list
 		$query = "
 DELETE FROM watch_list_element
  WHERE watch_list.id                    = $WatchListID
+   AND watch_list.user_id               = $UserID
+   AND watch_list_element.watch_list_id = watch_list.id";
+
+		if ($Debug) echo $query;
+		$result = pg_query($this->dbh, $query);
+
+		# that worked and we updated exactly one row
+		if ($result) {
+			$return = $WatchListID;
+		}
+
+		return $return;
+	}
+
+	function EmptyTheListCategory($UserID, $WatchListID, $CategoryID) {
+		#
+		# Empty a watch list of all items within the supplied category
+		#
+		unset($return);
+		$Debug = 0;
+
+		$query = "
+DELETE FROM watch_list_element
+ WHERE ports_categories.category_id     = $CategoryID
+   AND ports_categories.port_id         = ports.id
+   AND ports.element_id                 = watch_list_element.element_id
+   AND watch_list.id                    = $WatchListID
    AND watch_list.user_id               = $UserID
    AND watch_list_element.watch_list_id = watch_list.id";
 

@@ -1,7 +1,7 @@
 <?
-	# $Id: watchnotice.php,v 1.1.2.1 2002-01-02 04:14:14 dan Exp $
+	# $Id: watchnotice.php,v 1.1.2.2 2003-05-16 01:06:59 dan Exp $
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
 

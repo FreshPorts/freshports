@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.27 2002-04-01 21:00:17 dan Exp $
+	# $Id: index.php,v 1.1.2.28 2002-04-02 04:45:32 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -211,9 +211,14 @@ ports. A port is marked as new for 10 days.
 						}
 
 						if (!$MultiplePortsThisCommit) {
+							GLOBAL $freshports_mail_archive;
+
 							$HTML .= '<SMALL>';
 							$HTML .= '[ ' . $myrow["commit_time"] . ' ' . $myrow["committer"] . ' ]';
-							$HTML .= '</SMALL>' . "<BR>\n";
+							$HTML .= '</SMALL>';
+							$HTML .= '&nbsp;';
+							$HTML .= freshports_Email_Link($myrow["message_id"]);
+							$HTML .= "<BR>\n";
 						}
 
 						$HTML .= '<BIG><B>';

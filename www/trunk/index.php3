@@ -22,6 +22,7 @@ function freshports_SummaryForDay($MinusN) {
 }
 
 
+//$Debug = 1;
 require( "./_private/commonlogin.php3");
 require( "./_private/getvalues.php3");
 require( "./_private/freshports.php3");
@@ -29,6 +30,7 @@ require( "./_private/freshports.php3");
 if (!$StartAt) {
    if ($Debug) {
       echo "setting StartAt to zero<br>\n";
+      echo "UserID = $UserID<br>\n";
    }
    $StartAt = 0;
 } else {

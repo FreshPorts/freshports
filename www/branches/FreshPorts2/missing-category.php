@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-category.php,v 1.1.2.10 2002-04-19 17:06:20 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.11 2002-05-09 22:00:48 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -7,6 +7,8 @@
 function freshports_Category($CategoryID, $db) {
 
 	GLOBAL $TableWidth;
+	GLOBAL $WatchListID;
+
 	header("HTTP/1.1 200 OK");
 
 
@@ -29,7 +31,7 @@ function freshports_Category($CategoryID, $db) {
 
 	$port = new Port($db);
 
-	$numrows = $port->FetchByCategoryInitialise($CategoryID);
+	$numrows = $port->FetchByCategoryInitialise($CategoryID, $WatchListID);
 
 	?>
 
@@ -76,13 +78,6 @@ $ShowDescriptionLink  = "N";
 		$HTML .= freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 1, '', 0);
 	} // end for
 
-#	$HTML .= freshports_echo_HTML('</tr>');
-#
-#	$HTML .= freshports_echo_HTML('</td></tr>');
-#
-#	$HTML .= freshports_echo_HTML('</table>');
-#
-#	$HTML .= freshports_echo_HTML('</td></tr>');
 	echo $HTML;      
 
 	?>

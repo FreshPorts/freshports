@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: commit_record.php,v 1.1.2.4 2003-09-25 15:46:41 dan Exp $
+	# $Id: commit_record.php,v 1.1.2.5 2004-02-22 15:57:20 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2004 DVL Software Limited
 	#
 
 
@@ -24,6 +24,7 @@ class CommitRecord {
 	var $needs_refresh;
 	var $forbidden;
 	var $broken;
+	var $deprecated;
 	var $element_id;
 	var $version;
 	var $revision;
@@ -55,6 +56,7 @@ class CommitRecord {
 		$this->needs_refresh		= $myrow['needs_refresh'];
 		$this->forbidden			= $myrow['forbidden'];
 		$this->broken				= $myrow['broken'];
+		$this->deprecated			= $myrow['deprecated'];
 		$this->element_id			= $myrow['element_id'];
 		$this->version				= $myrow['version'];
 		$this->revision				= $myrow['revision'];

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: latest_commits.php,v 1.1.2.2 2004-01-06 13:45:07 dan Exp $
+	# $Id: latest_commits.php,v 1.1.2.3 2004-02-22 15:57:20 dan Exp $
 	#
 	# Copyright (c) 2003-2004 DVL Software Limited
 	#
@@ -165,6 +165,10 @@ class LatestCommits {
 
 						if ($mycommit->broken) {
 							$this->HTML .= ' '. freshports_Broken_Icon() . "\n";
+						}
+
+						if ($mycommit->deprecated) {
+							$this->HTML .= ' '. freshports_Deprecated_Icon() . "\n";
 						}
 
 						$this->HTML .= freshports_CommitFilesLink($mycommit->message_id, $mycommit->category, $mycommit->port);

@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.7 2003-09-25 14:01:07 dan Exp $
+	# $Id: commit.php,v 1.1.2.8 2004-02-22 15:57:19 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2004 DVL Software Limited
 	#
 
 
@@ -29,6 +29,7 @@ class Commit {
 	var $needs_refresh;
 	var $forbidden;
 	var $broken;
+	var $deprecated;
 	var $date_added;
 	var $element_id;
 	var $short_description;
@@ -57,6 +58,7 @@ class Commit {
 		$this->needs_refresh		= $myrow["needs_refresh"];
 		$this->forbidden			= $myrow["forbidden"];
 		$this->broken				= $myrow["broken"];
+		$this->deprecated			= $myrow["deprecated"];
 		$this->date_added			= $myrow["date_added"];
 		$this->element_id			= $myrow["element_id"];
 		$this->short_description	= $myrow["short_description"];

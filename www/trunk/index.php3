@@ -1,10 +1,13 @@
 <?
 #
-# $Author: dan $ $Date: 2001-03-23 04:36:57 $
-# $Header: /home/dan/repositories/freshports-1/www/Attic/index.php3,v 1.21 2001-03-23 04:36:57 dan Exp $
+# $Author: dan $ $Date: 2001-03-27 01:01:02 $
+# $Header: /home/dan/repositories/freshports-1/www/Attic/index.php3,v 1.22 2001-03-27 01:01:02 dan Exp $
 # $Log: not supported by cvs2svn $
+# Revision 1.21  2001/03/23 04:36:57  dan
+# Add some headers
+#
 # $Name: not supported by cvs2svn $
-# $Revision: 1.21 $
+# $Revision: 1.22 $
 #
 
 function freshports_SummaryForDay($MinusN) {          
@@ -168,7 +171,7 @@ if (!file_exists($cache_file)) {
 //$UpdateCache = 1;
 
 if ($UpdateCache == 1) {
-   if ($Debug) echo 'time to update the cache';
+   if ($Debug) echo 'time to update the cache<br>'. "\n";
 
 $sql = "select ports.id, ports.name as port, change_log.commit_date as updated_raw, categories.name as category, " .
        "change_log.committer, ports.last_update_description as update_description, ports.version as version, " .
@@ -191,7 +194,7 @@ $sql .= " order by $sort ";
 
 $sql .= " limit $MaxNumberOfPorts ";
 
-//echo $sql;
+if ($Debug) echo $sql;
 
 $result = mysql_query($sql, $db);
 

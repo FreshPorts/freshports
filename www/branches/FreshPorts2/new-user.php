@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: new-user.php,v 1.1.2.32 2003-03-20 02:22:20 dan Exp $
+	# $Id: new-user.php,v 1.1.2.33 2003-05-16 02:33:45 dan Exp $
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');

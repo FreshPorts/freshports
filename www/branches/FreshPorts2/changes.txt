@@ -1,7 +1,7 @@
 #
-# $Id: changes.txt,v 1.2.2.1 2002-01-06 07:25:13 dan Exp $
+# $Id: changes.txt,v 1.2.2.2 2003-05-16 02:33:44 dan Exp $
 #
-# Copyright (c) 1998-2001 DVL Software Limited
+# Copyright (c) 1998-2003 DVL Software Limited
 #
 
 create table change_log_port (id integer not null auto_increment default

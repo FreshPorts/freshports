@@ -1,7 +1,7 @@
 #
-# $Id: upgrade.1.txt,v 1.3.2.2 2002-02-09 19:42:42 dan Exp $
+# $Id: upgrade.1.txt,v 1.3.2.3 2003-05-16 02:33:46 dan Exp $
 #
-# Copyright (c) 1998-2001 DVL Software Limited
+# Copyright (c) 1998-2003 DVL Software Limited
 #
 
 make database changes as found in changes.txt

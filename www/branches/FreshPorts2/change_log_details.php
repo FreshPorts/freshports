@@ -1,7 +1,7 @@
 <?
-	# $Id: change_log_details.php,v 1.1.2.6 2002-12-11 04:44:33 dan Exp $
+	# $Id: change_log_details.php,v 1.1.2.7 2003-05-16 02:33:43 dan Exp $
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# Copyright (c) 1998-2003 DVL Software Limited
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');

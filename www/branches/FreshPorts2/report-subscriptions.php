@@ -1,7 +1,7 @@
 <?
-	# $Id: report-subscriptions.php,v 1.1.2.20 2003-05-08 13:07:44 dan Exp $
+	# $Id: report-subscriptions.php,v 1.1.2.21 2003-05-16 02:33:46 dan Exp $
 	#
-	# Copyright (c) 1998-2002 DVL Software Limited
+	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
 	if (!$_COOKIE['visitor']) {

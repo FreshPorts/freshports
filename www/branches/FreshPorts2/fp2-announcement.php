@@ -1,7 +1,7 @@
 <?
-	# $Id: fp2-announcement.php,v 1.1.2.12 2003-04-28 23:19:09 dan Exp $
+	# $Id: fp2-announcement.php,v 1.1.2.13 2003-05-16 02:33:44 dan Exp $
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# Copyright (c) 1998-2003 DVL Software Limited
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');

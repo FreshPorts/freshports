@@ -1,7 +1,7 @@
 <?php if ( !defined( "_COMMON_PHP" ) ) return; ?>
 <?php
 	#
-	# $Id: header.php,v 1.1.2.2 2004-01-10 15:32:14 dan Exp $
+	# $Id: header.php,v 1.1.2.3 2004-11-20 19:53:45 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -50,7 +50,6 @@ echo "
 <?php
 	freshports_body();
 	if ($ShowAds) {
-		BurstMediaCode();
 		if ($BannerAd) {
 			echo "<div align=\"center\">\n";
 			if ($UsePHPAdsNew) {

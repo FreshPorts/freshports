@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit_log_elements.php,v 1.1.2.5 2004-02-13 17:24:18 dan Exp $
+	# $Id: commit_log_elements.php,v 1.1.2.6 2004-10-02 18:19:28 dan Exp $
 	#
 	# Copyright (c) 2003 DVL Software Limited
 	#
@@ -32,7 +32,7 @@ class Commit_Log_Elements {
 		# return the number of commits found
 
 		$sql = "
-select $element_id, 
+select commit_log_elements.element_id, 
        message_id,
        to_char(commit_date - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS')  as commit_date,
        commit_log.description,

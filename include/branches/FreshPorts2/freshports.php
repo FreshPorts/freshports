@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.56 2002-04-02 04:45:24 dan Exp $
+   # $Id: freshports.php,v 1.4.2.57 2002-04-03 20:25:13 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -81,7 +81,7 @@ function freshports_Email_Link($message_id) {
 
 	$HTML .= '<A HREF="' . $freshports_mail_archive . $message_id . '">';
 	$HTML .= '<IMG SRC="/images/envelope10.gif" ALT="Original commit message" BORDER="0" WIDTH="25" HEIGHT="14">';
-	$HMTL .= '</A>';
+	$HTML .= '</A>';
 
 	return $HTML;
 }
@@ -219,7 +219,7 @@ if (2==2) {
 ?>
 BODY, TD, TR, P, UL, OL, LI, INPUT, SELECT, DL, DD, DT, FONT
 {
-    font-family: Verdana, Arial, Clean, Helvetica, sans-serif;
+    font-family: Helvetica, Verdana, Arial, Clean, sans-serif;
     font-size: 12px;
 }
 <?

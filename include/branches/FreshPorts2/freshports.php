@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.113 2002-12-06 23:19:03 dan Exp $
+	# $Id: freshports.php,v 1.4.2.114 2002-12-08 03:21:51 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -106,20 +106,30 @@ function freshports_Encoding_Errors() {
 }
 
 function freshports_Watch_Link_Add($WatchListID, $ElementID) {
+	GLOBAL $WatchListAsk;
+
 	$HTML = '<SMALL><A HREF="/watch-list.php?';
 	$HTML .= 'add='  . $ElementID;
 	$HTML .= '&';
 	$HTML .= 'wlid=' . $WatchListID;
+	if ($WatchListAsk) {
+		$HTML .= '&ask=1';
+	}
 	$HTML .= '">' . freshports_Watch_Icon_Add() . '</A></SMALL>';
 
 	return $HTML;
 }
 
 function freshports_Watch_Link_Remove($WatchListID, $ElementID) {
+	GLOBAL $WatchListAsk;
+
 	$HTML = '<SMALL><A HREF="/watch-list.php?';
 	$HTML .= 'remove=' . $ElementID;
 	$HTML .= '&';
 	$HTML .= 'wlid='   . $WatchListID;
+	if ($WatchListAsk) {
+		$HTML .= '&ask=1';
+	}
 	$HTML .= '">' . freshports_Watch_Icon() . '</A></SMALL>';
 	
 	return $HTML;
@@ -257,6 +267,7 @@ GLOBAL $BannerAd;
 function freshports_Logo() {
 GLOBAL $TableWidth;
 GLOBAL $LocalTimeAdjustment;
+GLOBAL $FreshPortsName;
 GLOBAL $FreshPortsLogo;
 GLOBAL $FreshPortsSlogan;
 GLOBAL $FreshPortsLogoWidth;
@@ -274,7 +285,7 @@ echo '<BR>
 	} else {
 		echo '/';
 	}
-        echo '"><IMG SRC="' . $FreshPortsLogo . '" ALT="' . $FreshPortsSlogan . ' " WIDTH="' . $FreshPortsLogoWidth . '" HEIGHT="' . $FreshPortsLogoHeight . '" BORDER="0"></A></TD>
+        echo '"><IMG SRC="' . $FreshPortsLogo . '" ALT="' . $FreshPortsName . ' -- ' . $FreshPortsSlogan . ' " WIDTH="' . $FreshPortsLogoWidth . '" HEIGHT="' . $FreshPortsLogoHeight . '" BORDER="0"></A></TD>
         <TD ALIGN="right" CLASS="sans" VALIGN="bottom">' . FormatTime(Date("D, j M Y g:i A T"), $LocalTimeAdjustment, "D, j M Y g:i A T") . '</TD>
 </TR>
 </TABLE>
@@ -1094,6 +1105,8 @@ function freshports_UserSendToken($UserID, $dbh) {
 	# send the confirmation token to the user
 	#
 
+	GLOBAL $FreshPortsSlogan;
+
 	$sql = "select email, token 
 	          from users, user_confirmations
 	         where users.id = $UserID
@@ -1129,7 +1142,7 @@ function freshports_UserSendToken($UserID, $dbh) {
     	            "the request came from " . $_SERVER["REMOTE_ADDR"] . ":" . $_SERVER["REMOTE_PORT"] ."\n".
 					"\n".
 					"-- \n".
-					"FreshPorts - http://" . $_SERVER["HTTP_HOST"] . "/ - the place for ports";
+					"FreshPorts - http://" . $_SERVER["HTTP_HOST"] . "/ -- $FreshPortsSlogan";
 
 		$result = mail($email, "FreshPorts - user registration", $message,
 					"From: webmaster@" . $_SERVER["HTTP_HOST"] . "\nReply-To: webmaster@" . $_SERVER["HTTP_HOST"] . "\nX-Mailer: PHP/" . phpversion());
@@ -1181,6 +1194,36 @@ function freshports_LinkToDate($Date, $Text = '') {
 	$URL .= '</a>';
 
 	return $URL;
+}
+
+function freshports_ErrorMessage($Title, $ErrorMessage) {
+	$HTML = '
+<TABLE WIDTH="100%" BORDER="1" ALIGN="center" CELLPADDING=1 CELLSPACING=0 BORDER="1">
+<TR><TD VALIGN=TOP>
+<TABLE WIDTH="100%">
+<TR>
+	<?php freshports_PageBannerText("' . $Title . '") ?>
+</TR>
+<TR BGCOLOR="#ffffff">
+<TD>
+  <TABLE WIDTH="100%" CELLPADDING=0 CELLSPACING=0 BORDER=0>
+  <TR valign=top>
+   <TD><img src="/images/warning.gif"></TD>
+   <TD WIDTH="100%">
+  <p><?php		echo "WARNING: $ErrorMessage"; ?></p>
+ <p>If you need help, please ask in the forum. </p>
+ </TD>
+ </TR>
+ </TABLE>
+</TD>
+</TR>
+</TABLE>
+</TD>
+</TR>
+</TABLE>
+<BR>';
+
+	return $HTML;
 }
 
 openlog('FreshPorts', LOG_PID | LOG_PERROR, LOG_LOCAL0);

@@ -1,5 +1,5 @@
 <?
-   # $Id: authors.php3,v 1.13 2001-10-20 21:50:37 dan Exp $
+   # $Id: authors.php3,v 1.14 2001-10-24 15:06:15 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -54,7 +54,6 @@ page provided much of the basis for this site.</p>
 scripts and ideas.  That's not to mention that channel on efnet which I won't 
 name just so it stays a secret.</p>
 
-<p>I can usually be found via IRC in #freebsd and #freshports on undernet.</p>
 </td>
   <td valign="top" width="*">
     <? include("./include/side-bars.php") ?>

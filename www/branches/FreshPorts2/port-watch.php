@@ -1,5 +1,5 @@
 <?
-   # $Id: port-watch.php,v 1.1.2.1 2002-01-02 02:53:46 dan Exp $
+   # $Id: port-watch.php,v 1.1.2.2 2002-01-05 03:37:35 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -24,11 +24,10 @@ if (!$category || $category != strval(intval($category))) {
 $categoryname = freshports_Category_Name($category, $db);
 
 // find out the watch id for this user's main watch list
-$sql_get_watch_ID = "select watch.id ".
-                    "from watch ".
-                    "where watch.owner_user_id = $UserID ".
-                    "and   watch.system        = 'FreeBSD' ".
-                    "and   watch.name          = 'main'";
+$sql_get_watch_ID = "select watch_list.id ".
+                    "  from watch_list ".
+                    " where watch_list.user_id = $UserID ".
+                    "   and watch_list.name    = 'main'";
 
 if ($submit) {
 /*    
@@ -48,16 +47,17 @@ if ($submit) {
        
    echo "$sql_get_watch_ID<br>\n";
 */
-   $result = mysql_query($sql_get_watch_ID, $db);
-   if(mysql_numrows($result)) {
+   $result = pg_exec($db, $sql_get_watch_ID);
+   $numrows = pg_numrows($result);
+   if($numrows) {
 //      echo "results were found for that<br>\n";
-      $myrow = mysql_fetch_array($result);
+      $myrow = pg_fetch_array ($result, 0);
       $WatchID = $myrow["id"];
    } else {
       // create their main list for them
-      $sql_create = "insert into watch (name, system, owner_user_id) values ('main', 'FreeBSD', $UserID)";
+      $sql_create = "insert into watch_list (name, owner_user_id) values ('main', $UserID)";
 //      echo "creating new watch: $sql_create<br>\n";
-      $result = mysql_query($sql_create, $db);
+      $result = pg_exec($db, $sql_create);
 //      if ($result) {
 //         echo "created<br>";       
 //      } else {
@@ -65,39 +65,25 @@ if ($submit) {
 //      }
 
       // refetch our watch id
-      $result = mysql_query($sql_get_watch_ID, $db);
+      $result = pg_exec ($db, $sql_get_watch_ID);
 
-      $myrow = mysql_fetch_array($result);
+      $myrow = pg_fetch_array ($result, 0);
       $WatchID = $myrow["id"];
 //      echo "watchid is $WatchID<br>\n";
 
-      $sql_insert = "insert into user_watch (user_id, watch_id) values ($UserID, $WatchID)";
-      $result = mysql_query($sql_insert, $db);
-
-//      echo "creating user_watch entry: $sql_insert<br>\n";
    }
 
 // delete existing watch_category entries for this watch
-   $sql = "select watch_port.port_id as id " .
-          "from watch_port, ports " .
-          "where watch_port.port_id = ports.id " .
-          "and ports.primary_category_id = $category";
+	$sql = "delete from watch_list_element where exists (
+	        select element.id
+	          from ports, element
+	         where watch_list_element.watch_list_id = $WatchID 
+	           and watch_list_element.element_id    = element.id 
+	           and ports.element_id                 = element.id 
+	           and ports.category_id                = $category)";
 
-//   echo "$sql<br>\n";
 
-   $result = mysql_query($sql, $db);
-   $NumPorts = 0;
-   while ($myrow = mysql_fetch_array($result)) {
-      $NumPorts++;
-      $rows[$NumPorts-1]=$myrow;
-   }  
-   
-//   echo "deleting<br>\n";       
-   for ($i = 0; $i < $NumPorts; $i++) {
-      $sql = "delete from watch_port where watch_id = $WatchID and port_id = " . $rows[$i]["id"];
-//      echo "$sql<br>\n";
-      $result = mysql_query($sql, $db);
-   }
+	$result = pg_exec ($db, $sql);
      
 // insert new stuff
 //   echo "inserting new stuff now<br>\n";
@@ -107,12 +93,12 @@ if ($submit) {
    if ($ports) {
       reset($ports);
       while (list($key, $value) = each($ports)) {
-         $sql = "insert into watch_port (watch_id, port_id, changes_new, changes_modify, changes_delete) ".
-                "values ($WatchID, $value, 'Y', 'Y', 'Y')";
+         $sql = "insert into watch_list_element (watch_list_id, element_id) ".
+                "values ($WatchID, $value)";
    
 //      echo "port $value has been selected<br>\n";
 
-         $result = mysql_query($sql, $db);
+         $result = pg_exec ($db, $sql);
          ${"port_".$value} = 1;
       }
    }
@@ -125,18 +111,21 @@ if ($submit) {
    if ($UserID != '') {
          
    // read the users current watch information from the database
-   $sql = "select watch_port.port_id " .
-          "from watch_port, watch " .
-          "where watch_port.watch_id = watch.id " . 
-          "  and watch.owner_user_id = $UserID";
+
+   $sql = "select watch_list_element.element_id " .
+          "  from watch_list_element, watch_list, ports " .
+          " where watch_list_element.watch_list_id = watch_list.id " . 
+          "   and watch_list.user_id               = $UserID " .
+		  "   and watch_list_element.element_id    = ports.element_id";
       
-   $result = mysql_query($sql, $db);
-      
+	$result = pg_exec($db, $sql);
+	$numrows = pg_numrows($result);      
    // read each value and set the variable accordingly
-   while ($myrow = mysql_fetch_array($result)) {
-      // we use these to see if a particular port is selected
-      ${"port_".$myrow["port_id"]} = 1;
-   }
+	for ($i = 0; $i < $numrows; $i++) {
+		$myrow = pg_fetch_array($result, $i);
+		// we use these to see if a particular port is selected
+		${"port_".$myrow["element_id"]} = 1;
+	}
    }
 
    freshports_Start($categoryname,
@@ -178,55 +167,27 @@ $DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
 
 //echo "UserID=$UserID";
 
-if ($UserID) {
-  $cache_file .= ".user";
-}
-
-srand((double)microtime()*1000000);
-$cache_time_rnd =       300 - rand(0, 600);
-
-$UpdateCache = 0;
-if (!file_exists($cache_file)) {
-//   echo 'cache does not exist<br>';
-   // cache does not exist, we create it
-   $UpdateCache = 1;
-} else {
-//   echo 'cache exists<br>';
-   if (!file_exists($LastUpdateFile)) {
-      // no updates, so cache is fine.
-//      echo 'but no update file<br>';
-   } else {
-//      echo 'cache file was ';
-      // is the cache older than the db?
-      if ((filectime($cache_file) + $cache_time_rnd) < filectime($LastUpdateFile)) {
-//         echo 'created before the last database update<br>';
-         $UpdateCache = 1;
-      } else {
-//         echo 'crated after the last database update<br>';
-      }
-   }
-}
-
 echo '<tr><td>' . "\n";
 
 echo "\n</td></tr>\n<tr><td>";
 
-//$UpdateCache = 1;
-if ($UpdateCache == 1 && $UserID) {
 //   echo 'time to update the cache';
 
-$sql = "select id, name, status  ".
-       "from ports ".
-       "WHERE primary_category_id = $category " .
-       "order by name";
+$sql = "select element.id, element.name as port, element.status, categories.name as category  ".
+       "  from ports, element, categories ".
+       " WHERE ports.category_id = $category " .
+	   "   and ports.element_id  = element.id " .
+	   "   and ports.category_id = categories.id " .
+       " order by element.name";
 
 //echo $sql, "<br>\n";
 
-$result = mysql_query($sql, $db);
+$result = pg_exec($db, $sql);
 
 $HTML .= '<tr><td>' . "\n";
 
-if (mysql_num_rows($result)) {
+$numrows = pg_numrows($result);
+if ($numrows) {
 
    if ($UserID) {
       $HTML .= '<form action="' . $PHP_SELF . "?category=$category". '" method="POST">';
@@ -236,11 +197,12 @@ if (mysql_num_rows($result)) {
 
    // get the list of topics, which we need to modify the order
 
-   $NumPorts = 0;
-   while ($myrow = mysql_fetch_array($result)) {
-      $NumPorts++;
-      $rows[$NumPorts-1]=$myrow;
-   }
+	$NumPorts = 0;
+	for ($i = 0; $i < $numrows; $i++) {
+		$myrow = pg_fetch_array($result, $i);
+		$NumPorts++;
+		$rows[$NumPorts-1]=$myrow;
+	}
 
    // save the number of categories for when we submit
    $HTML .= '<input type="hidden" name="NumPorts" value="' . $NumPorts . '">';
@@ -267,7 +229,7 @@ if (mysql_num_rows($result)) {
 
       $HTML .= '>';
 
-      $HTML .= ' <a href="/' . $category . '/' . $rows[$i]["name"] . 'l">' . $rows[$i]["name"] . '</a>';
+      $HTML .= ' <a href="/' . $rows[$i]["category"] . '/' . $rows[$i]["port"] . '/">' . $rows[$i]["port"] . '</a>';
 
       if ($rows[$i]["status"] == 'D') {
          $HTML .= " [D]";
@@ -286,19 +248,9 @@ if (mysql_num_rows($result)) {
    echo "no ports found.  perhaps this is an invalid category id.";
 }
 
-mysql_free_result($result);
-
-
 $HTML .= '</td></tr>';
 
 echo $HTML;                                                   
-
-} else {
-//   echo 'looks like I\'ll read from cache this time';
-   if (file_exists($cache_file)) {
-      include($cache_file);
-   }
-}
 
 </script>
 <tr><td>

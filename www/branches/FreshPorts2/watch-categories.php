@@ -1,5 +1,5 @@
 <?
-   # $Id: watch-categories.php,v 1.1.2.1 2002-01-02 02:53:52 dan Exp $
+   # $Id: watch-categories.php,v 1.1.2.2 2002-01-05 03:37:35 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -12,6 +12,8 @@
    freshports_Start("Watch categories",
                "freshports - new ports, applications",
                "FreeBSD, index, applications, ports");
+
+$Debug = 0;
 
 ?>
 <?
@@ -48,93 +50,52 @@ notification frequency within your <a href="customize.php">personal preferences<
 
 </tr></td>
 
-<script language="php">
+<?php
 
-$DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
-
-//echo "UserID=$UserID";
-
-if ($UserID) {
-  $cache_file .= ".user";
-}
-
-srand((double)microtime()*1000000);
-$cache_time_rnd =       300 - rand(0, 600);
-
-$UpdateCache = 0;
-if (!file_exists($cache_file)) {
-//   echo 'cache does not exist<br>';
-   // cache does not exist, we create it
-   $UpdateCache = 1;
-} else {
-//   echo 'cache exists<br>';
-   if (!file_exists($LastUpdateFile)) {
-      // no updates, so cache is fine.
-//      echo 'but no update file<br>';
-   } else {
-//      echo 'cache file was ';
-      // is the cache older than the db?
-      if ((filectime($cache_file) + $cache_time_rnd) < filectime($LastUpdateFile)) {
-//         echo 'created before the last database update<br>';
-         $UpdateCache = 1;
-      } else {
-//         echo 'crated after the last database update<br>';
-      }
-   }
-}
 
 echo '<tr><td align="center">' . "\n";
 
-// find out the watch id for this user's main watch list
-$sql_get_watch_ID = "select watch.id ".
-                    "from watch ".
-                    "where watch.owner_user_id = $UserID ".
-                    "and   watch.system        = 'FreeBSD' ".
-                    "and   watch.name          = 'main'";
+$sql = "select distinct(category_id) as category_id ".
+       "from watch_list, watch_list_element, ports ".
+       "WHERE watch_list.name    = 'main' ".
+       "  and watch_list.user_id = $UserID ".
+       "  and watch_list.id      = watch_list_element.watch_list_id ".
+       "  and ports.element_id   = watch_list_element.element_id";
 
-//$UpdateCache = 1;
-if ($UpdateCache == 1 && $UserID) {
-//   echo 'time to update the cache';
+if ($Debug) echo $sql, "<br>\n";
 
-$sql = "select distinct(primary_category_id) as category_id ".
-       "from watch, watch_port, ports ".
-       "WHERE watch.name          = 'main' ".
-       "  and watch.owner_user_id = $UserID ".
-       "  and watch_port.watch_id = watch.id ".
-       "  and watch_port.port_id  = ports.id";
+$result  = pg_exec ($db, $sql);
+$numrows = pg_numrows($result);
 
-//echo $sql, "<br>\n";
+if ($Debug) echo "num categories being watched = $numrows<BR>";
 
-$result = mysql_query($sql, $db);
-$i = 0;
-while ($myrow = mysql_fetch_array($result)) {
-   $WatchedCategories[$i] = $myrow["category_id"];
-   $i++;
+for ($i = 0; $i < $numrows; $i++) {
+	$myrow = pg_fetch_array($result, $i);
+	$WatchedCategories{$myrow["category_id"]} = ' *';
+	if ($Debug) echo "category " . $myrow["category_id"] . " = " . $WatchedCategories{$myrow["category_id"]} . '<BR>';
 }
 
-
-//$HTML .= '<tr><td>' . "\n";
 
 $HTML .= "\n" . '<table border=1 cellpadding=12>' . "\n";
 
 // get the list of categories to display
 $sql = "select categories.id as category_id, categories.name as category, categories.description as description ".
        "from categories ".
-       "WHERE categories.system = 'FreeBSD' " .
        "order by category";
 
-$result = mysql_query($sql, $db);  
-
+$result  = pg_exec($db, $sql);  
+$numrows = pg_numrows($result);
 $NumCategories = 0;
-while ($myrow = mysql_fetch_array($result)) {
-   $NumCategories++;
-   $rows[$NumCategories-1]=$myrow;
+for ($i = 0; $i < $numrows; $i++) {
+	$myrow = pg_fetch_array($result, $i);
+	$NumCategories++;
+	$rows[$NumCategories-1]=$myrow;
 }
 
 $RowCount = ceil($NumCategories / (double) 4);
 $Row = 0;
 for ($i = 0; $i < $NumCategories; $i++) {
-//while ($myrow = mysql_fetch_array($result)) {
+	pg_fetch_array ($result, $i);
    $Row++;
 
    if ($Row > $RowCount) {
@@ -146,11 +107,9 @@ for ($i = 0; $i < $NumCategories; $i++) {
       $HTML .= '<td valign="top">';
    }
 
-   $HTML .= ' <a href="/' . $rows[$i]["category"] . '/">' . $rows[$i]["category"] . '</a>';
+   $HTML .= ' <a href="/port-watch.php?category=' . $rows[$i]["category_id"] . '">' . $rows[$i]["category"] . '</a>';
 
-   if (freshports_in_array($rows[$i]["category_id"], $WatchedCategories)) {
-      $HTML .= " * ";
-   }
+   $HTML .= $WatchedCategories{$rows[$i]["category_id"]};
    $HTML .= "<br>\n";
 }
 
@@ -158,37 +117,13 @@ if ($Row != 1) {
    $HTML .= "</td></tr>\n";
 }
 
-//echo phpinfo();
-
-//$HTML .= "</table>\n";
-
-mysql_free_result($result);
-
-
-//$HTML .= '</td></tr>';
-
 echo $HTML;                                                   
 
-/*
-   $fpwrite = fopen($cache_file, 'w');
-   if(!$fpwrite) {
-      echo 'error on open<br>';
-      echo "$errstr ($errno)<br>\n";
-      exit;
-   } else {
-//      echo 'written<br>';
-      fputs($fpwrite, $HTML);
-      fclose($fpwrite);
-   }
-*/
-} else {
-//   echo 'looks like I\'ll read from cache this time';
-   if (file_exists($cache_file)) {
-      include($cache_file);
-   }
-}
-echo "</table>\n";   
+echo "</table>\n";
+
 </script>
+
+
 </table>
 </table>
 </td>

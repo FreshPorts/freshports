@@ -51,7 +51,14 @@ if (!mysql_select_db($database, $db)) {
 };
 
 function UserToCookie($User) {
-    $EncodedUserID = base64_encode($User);
+    #
+    # DOH!  we should always move this to lower case
+    # the mysql compare is case insensitive.
+    # so it will always match no matter what case is used
+    # therefore, we must always encode based upon lower case
+    #
+
+    $EncodedUserID = base64_encode(strtolower($User));
     $EncodedUserID = base64_encode($EncodedUserID);
     $EncodedUserID = base64_encode($EncodedUserID);
     $EncodedUserID = base64_encode($EncodedUserID);

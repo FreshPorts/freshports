@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 #
-# $Id: LoadWatchListPortsFromFP1IntoFP2.pl,v 1.1.2.1 2002-05-26 01:07:17 dan Exp $
+# $Id: LoadWatchListPortsFromFP1IntoFP2.pl,v 1.1.2.2 2002-07-26 15:51:05 dan Exp $
 #
 # Copyright (c) 2001-2002 DVL Software
 #
@@ -60,12 +60,17 @@ if ($dbh) {
 
 		print "$watch_id, $category, $port\n";
 
-		$sql = "insert into watch_list_element (watch_list_id, element_id) 
-					values ($watch_id, " . $Ports{"$category/$port"} . ")";
+		if (defined($Ports{"$category/$port"})) {
 
-		$sth = $dbh->prepare($sql);
-		$sth->execute ||
-            FreshPorts::Utilities::ReportError('warning', "Could not execute SQL $sql ... maybe invalid? " . $dbh->errstr, 1);
+			$sql = "insert into watch_list_element (watch_list_id, element_id) 
+						values ($watch_id, " . $Ports{"$category/$port"} . ")";
+
+			$sth = $dbh->prepare($sql);
+			$sth->execute ||
+    	        FreshPorts::Utilities::ReportError('warning', "Could not execute SQL $sql ... maybe invalid? " . $dbh->errstr, 1);
+		} else {
+			print "$category, $port not found!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n";
+		}
 	}
 #	$sth->finish();
 	$dbh->disconnect();

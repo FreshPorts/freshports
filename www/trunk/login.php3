@@ -29,12 +29,14 @@ if ($submit) {
   $result = mysql_query($sql, $db) or die('query failed');
 
 
-  // create user id if not found
   if(!mysql_numrows($result)) {
      $LoginFailed = 1;
   } else {
     SetCookie("visitor", $Cookie, time() + 60*60*24*120, '/');
     // Redirect browser to PHP web site
+    if ($origin  = "/index.php3") {
+       $origin = "/";
+    }
     header("Location: $origin");
     // Make sure that code below does not get executed when we redirect.
     exit;       
@@ -53,9 +55,11 @@ if ($submit) {
 
 <body bgcolor="#ffffff" link="#0000cc">
  <? include("/www/freshports.org/_private/header.inc") ?>
-<table width="100%">
-  <tr>
-    <td><p align="center">
+<table width="100%" border=0>
+ <tr>
+    <td>
+<table width="100%" border=0>
+<tr><td valign="top" width="100%">
 <?
 if ($LoginFailed) {
 echo '<table cellpadding=1 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>
@@ -110,7 +114,13 @@ echo "</td>
 </table>";
 
 ?></td>
-  </tr>
+</td>
+  <td valign="top" width="*">
+    <? include("/www/freshports.org/_private/side-bars.php3") ?>
+ </td>
+</tr>
+</table> 
+</td></tr>
 </table>
 <? include("/www/freshports.org/_private/footer.inc") ?>
 </body>

@@ -60,6 +60,8 @@ mailing list, but we were unable to determine the reason for the differences.</p
 
 </td>
 </tr>
+<tr><td valign="top" width="100%">
+<table width="100%" border="0">
 <tr>
     <td colspan="2" bgcolor="#AD0040" height="29"><font color="#FFFFFF" size="+2">freshports - 
 <?
@@ -82,8 +84,9 @@ echo $myrow["long_description"];
 echo "</pre></dd></dl>";
 ?>
 
+</table>
 </td>
-<td>
+<td valign="top">
 
 <? include("/www/freshports.org/_private/side-bars.php3") ?>
 

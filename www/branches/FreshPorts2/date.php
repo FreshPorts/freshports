@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: date.php,v 1.1.2.21 2004-02-22 15:56:59 dan Exp $
+	# $Id: date.php,v 1.1.2.22 2004-03-22 20:28:44 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -194,6 +194,10 @@
 		
 					if ($commit->deprecated) {
 						$HTML .= ' '. freshports_Deprecated_Icon() . "\n";
+					}
+		
+					if ($commit->ignore) {
+						$HTML .= ' '. freshports_Ignore_Icon() . "\n";
 					}
 		
 					$HTML .= freshports_CommitFilesLink($commit->message_id, $commit->category, $commit->port);

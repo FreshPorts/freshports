@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.37 2004-02-22 15:56:59 dan Exp $
+	# $Id: commit.php,v 1.1.2.38 2004-03-22 20:28:44 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -215,6 +215,10 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 
 					if ($myrow["deprecated"]) {
 						$HTML .= '&nbsp;' . freshports_Deprecated_Icon() . "\n";
+					}
+
+					if ($myrow["ignore"]) {
+						$HTML .= '&nbsp;' . freshports_Ignore_Icon() . "\n";
 					}
 
 					if ($IsPort) {

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.46 2004-02-22 15:56:37 dan Exp $
+	# $Id: faq.php,v 1.1.2.47 2004-03-22 20:28:44 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -239,6 +239,9 @@ down you must read to find something you didn't already know.</P>
 	<P><? echo freshports_Deprecated_Icon() ?>
 		Deprecated: The port is marked as deprecated.  Perhaps it has exceeded
 		its lifetime or is obselete.</P>
+
+	<P><? echo freshports_Ignore_Icon() ?>
+		Ignore: The port is marked as ignore.  It probably does not build.</P>
 
 	<P><? echo freshports_Files_Icon(); ?>
 		Files: If you click on this graphic, you will be taken to the list of files

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch.php,v 1.1.2.50 2004-02-22 15:57:00 dan Exp $
+	# $Id: watch.php,v 1.1.2.51 2004-03-22 20:28:45 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -148,6 +148,7 @@ if ($wlid == '') {
 	       element.status, 
 	       ports.broken, 
 	       ports.deprecated, 
+	       ports.ignore, 
 	       ports.forbidden, 
 	       1 as onwatchlist 
 	       from watch_list_element, element, categories, ports
@@ -180,6 +181,7 @@ if ($wlid == '') {
 	         temp.status, 
 	         temp.broken, 
 	         temp.deprecated, 
+	         temp.ignore, 
 	         temp.forbidden, 
 	         temp.onwatchlist  
 	";

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: files.php,v 1.1.2.31 2004-02-22 15:57:02 dan Exp $
+	# $Id: files.php,v 1.1.2.32 2004-03-22 20:28:47 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -55,6 +55,7 @@ select element_pathname(element.id) as pathname,
        ports.forbidden, 
        ports.broken,
        ports.deprecated,
+       ports.ignore,
        security_notice.id  AS security_notice_id";
 
 	if ($User->id) {
@@ -185,6 +186,10 @@ select element_pathname(element.id) as pathname,
 
 		if ($myrow["deprecated"]) {
 			$HTML .= freshports_Deprecated_Icon() . "\n";
+		}
+
+		if ($myrow["ignore"]) {
+			$HTML .= freshports_Ignore_Icon() . "\n";
 		}
 
 		echo $HTML;

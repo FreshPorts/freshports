@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.174 2004-03-22 18:58:22 dan Exp $
+	# $Id: freshports.php,v 1.4.2.175 2004-03-22 20:28:47 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -112,6 +112,10 @@ function freshports_Broken_Icon() {
 
 function freshports_Deprecated_Icon() {
 	return '<IMG SRC="/images/deprecated.gif" ALT="Deprecated" TITLE="Deprecated" WIDTH="18" HEIGHT="18">';
+}
+
+function freshports_Ignore_Icon() {
+	return '<IMG SRC="/images/ignored.png" ALT="Ignore" TITLE="Ignore" WIDTH="20" HEIGHT="21;">';
 }
 
 function freshports_New_Icon() {
@@ -767,6 +771,10 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 
 	if ($port->deprecated) {
 		$HTML .= freshports_Deprecated_Icon() . ' DEPRECATED: ' . htmlify(htmlspecialchars($port->deprecated)) . "<br>"; ;
+	}
+
+	if ($port->ignore) {
+		$HTML .= freshports_Ignore_Icon() . ' IGNORE: ' . htmlify(htmlspecialchars($port->ignore)) . "<br>"; ;
 	}
 
    // description

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: sidebar.php,v 1.1.2.18 2004-02-22 15:56:59 dan Exp $
+	# $Id: sidebar.php,v 1.1.2.19 2004-03-22 20:28:45 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -79,6 +79,7 @@ SELECT LCPCLLCP.*,
        ports.forbidden,
        ports.broken,
        ports.deprecated,
+       ports.ignore,
        ports.element_id                     AS element_id,
        CASE when clp_version  IS NULL then ports.version  else clp_version  END as version,
        CASE when clp_revision IS NULL then ports.revision else clp_revision END AS revision,

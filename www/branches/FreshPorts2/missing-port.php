@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.47 2003-11-27 16:03:24 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.48 2003-12-31 16:06:20 dan Exp $
 	#
 	# Copyright (c) 2001-2003 DVL Software Limited
 	#
@@ -65,6 +65,32 @@ GLOBAL $ShowWatchListCount;
 	echo "\n</DD>\n</DL>\n";
 
 	echo "</TD></TR>\n</TABLE>\n\n";
+
+	$PortsMoved = new PortsMoved($port->dbh);
+	$numrows = $PortsMoved->FetchInitialiseTo($port->id);
+
+	if ($numrows > 0) {
+		echo '<TABLE BORDER="1" width="100%" CELLSPACING="0" CELLPADDING="5">' . "\n";
+		echo "<TR>\n";
+		echo freshports_PageBannerText("Port Moves", 1);
+		echo "<tr><td>\n";
+		echo "<ul>\n";
+	}
+
+	for ($i = 0; $i < $numrows; $i++) {
+		$PortsMoved->FetchNth($i);
+		echo '<li>' . freshports_PortsMoved($port, $PortsMoved) . "</li>\n";
+		if ($i + 1 != $numrows) {
+			echo '<br>';
+		}
+	}
+	
+	if ($numrows > 0) {
+		echo "</ul>\n";
+		echo "</td></tr>\n";
+		echo "</table>\n";
+	}
+
 #	echo 'about to call freshports_PortCommits #############################';
 
 	freshports_PortCommits($port);

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.80 2003-09-23 13:24:33 dan Exp $
+	# $Id: index.php,v 1.1.2.81 2003-09-24 13:43:18 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -89,7 +89,13 @@ if (Is_Numeric($dailysummary)) {
 $database=$db;
 if ($database) {
 
-$sql = "select * from LastestCommits($MaxNumberOfPorts, $User->id)";
+$sql = "select * from LastestCommits($MaxNumberOfPorts, ";
+if ($User->id) {
+	$sql .= $User->id;
+} else {
+	$sql .= 0;
+}
+$sql .= ');';
 
 if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 
@@ -105,7 +111,6 @@ if ($result) {
 			$myrow = pg_fetch_array ($result, $i);
 			$mycommit = new CommitRecord($database);
 			$mycommit->PopulateValues($myrow);
-#echo "'$mycommit->element_id' '" . $myrow['element_id'] . '\'<br>';
 			$commits[$i] = $mycommit;
 		}
 	
@@ -177,57 +182,64 @@ ports. A port is marked as new for 10 days.
 
 							$HTML .= "<BR>\n";
 
-							$HTML .= '<BIG><B>';
-							$HTML .= '<A HREF="/' . $mycommit->category . '/' . $mycommit->port . '/">';
-							$HTML .= $mycommit->port;
-						
-							if (strlen($mycommit->version) > 0) {
-								$HTML .= ' ' . $mycommit->version;
-								if (strlen($mycommit->revision) > 0 && $mycommit->revision != "0") {
-						    		$HTML .= '-' . $mycommit->revision;
+							if (IsSet($mycommit->category) || $mycommit->category != '') {
+								$HTML .= '<BIG><B>';
+								$HTML .= '<A HREF="/' . $mycommit->category . '/' . $mycommit->port . '/">';
+								$HTML .= $mycommit->port;
+			
+								if (strlen($mycommit->version) > 0) {
+									$HTML .= ' ' . $mycommit->version;
+									if (strlen($mycommit->revision) > 0 && $mycommit->revision != "0") {
+							    		$HTML .= '-' . $mycommit->revision;
+									}
 								}
-							}
 
-							$HTML .= "</A></B></BIG>\n";
+								$HTML .= "</A></B></BIG>\n";
 
-							$HTML .= '<A HREF="/' . $mycommit->category . '/">';
-							$HTML .= $mycommit->category. "</A>";
-							$HTML .= '&nbsp;';
+								$HTML .= '<A HREF="/' . $mycommit->category . '/">';
+								$HTML .= $mycommit->category. "</A>";
+								$HTML .= '&nbsp;';
 
-							if ($User->id) {
-								if ($mycommit->watch) {
-									$HTML .= ' '. freshports_Watch_Link_Remove($User->watch_list_add_remove, $mycommit->watch, $mycommit->element_id) . ' ';
-								} else {
-									$HTML .= ' '. freshports_Watch_Link_Add   ($User->watch_list_add_remove, $mycommit->watch, $mycommit->element_id) . ' ';
+								if ($User->id) {
+									if ($mycommit->watch) {
+										$HTML .= ' '. freshports_Watch_Link_Remove($User->watch_list_add_remove, $mycommit->watch, $mycommit->element_id) . ' ';
+									} else {
+										$HTML .= ' '. freshports_Watch_Link_Add   ($User->watch_list_add_remove, $mycommit->watch, $mycommit->element_id) . ' ';
+									}
 								}
-							}
 
-							// indicate if this port has been removed from cvs
-							if ($mycommit->status == "D") {
-								$HTML .= " " . freshports_Deleted_Icon() . "\n";
-							}
+								// indicate if this port has been removed from cvs
+								if ($mycommit->status == "D") {
+									$HTML .= " " . freshports_Deleted_Icon() . "\n";
+								}
 
-							// indicate if this port needs refreshing from CVS
-							if ($mycommit->needs_refresh) {
+								// indicate if this port needs refreshing from CVS
+								if ($mycommit->needs_refresh) {
 								$HTML .= " " . freshports_Refresh_Icon() . "\n";
+								}
+
+								if ($mycommit->date_added > Time() - 3600 * 24 * $DaysMarkedAsNew) {
+									$MarkedAsNew = "Y";
+									$HTML .= freshports_New_Icon() . "\n";
+								}
+
+								if ($mycommit->forbidden) {
+									$HTML .= ' ' . freshports_Forbidden_Icon() . "\n";
+								}
+
+								if ($mycommit->broken) {
+									$HTML .= ' '. freshports_Broken_Icon() . "\n";
+								}
+
+								$HTML .= freshports_CommitFilesLink($mycommit->message_id, $mycommit->category, $mycommit->port);
+								$HTML .= "&nbsp;";
+
+							} else {
+								$HTML .= '<BIG><B>';
+								$PathName = preg_replace('|^/?ports/|', '', $mycommit->element_pathname);
+								$HTML .= '<a href="/' . $PathName . '">' . $PathName . '</a>';
+								$HTML .= "</B></BIG>\n";
 							}
-
-							if ($mycommit->date_added > Time() - 3600 * 24 * $DaysMarkedAsNew) {
-								$MarkedAsNew = "Y";
-								$HTML .= freshports_New_Icon() . "\n";
-							}
-
-							if ($mycommit->forbidden) {
-								$HTML .= ' ' . freshports_Forbidden_Icon() . "\n";
-							}
-
-							if ($mycommit->broken) {
-								$HTML .= ' '. freshports_Broken_Icon() . "\n";
-							}
-
-							$HTML .= freshports_CommitFilesLink($mycommit->message_id, $mycommit->category, $mycommit->port);
-							$HTML .= "&nbsp;";
-
 							$HTML .= htmlspecialchars($mycommit->short_description) . "\n";
 						}
 

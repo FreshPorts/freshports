@@ -1,5 +1,5 @@
 <?
-	# $Id: watch_list.php,v 1.1.2.1 2002-12-04 21:27:22 dan Exp $
+	# $Id: watch_list.php,v 1.1.2.2 2002-12-08 03:27:13 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -14,7 +14,7 @@ class WatchList {
 	var $id;
 	var $user_id;
 	var $name;
-	
+	var $in_service;
 	
 	var $LocalResult;
 
@@ -106,7 +106,8 @@ class WatchList {
 		$sql = "
 		SELECT id,
 		       user_id,
-		       name
+		       name,
+		       in_service
 		  FROM watch_list
 		 WHERE id = $ID";
 
@@ -134,8 +135,9 @@ class WatchList {
 		# returned by Fetch.
 		#
 
-		$this->id		= $myrow["id"];
-		$this->user_id	= $myrow["user_id"];
-		$this->name		= $myrow["name"];
+		$this->id			= $myrow["id"];
+		$this->user_id		= $myrow["user_id"];
+		$this->name			= $myrow["name"];
+		$this->in_service	= $myrow["in_service"];
 	}
 }

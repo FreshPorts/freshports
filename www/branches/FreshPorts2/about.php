@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: about.php,v 1.1.2.16 2003-04-27 14:48:09 dan Exp $
+	# $Id: about.php,v 1.1.2.17 2003-05-06 11:33:27 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -76,7 +76,7 @@ when your favourite port has been updated.
 
 <P>
 <? echo $FreshPortsTitle; ?> is not the place to report errors or request changes.  You should do that on the 
-<A HREF="<? GLOBAL $mailto; echo $mailto; ?>:freebsd-ports&#64;freebsd.org">FreeBSD Ports mailing list</A>.  We do not maintain ports.  We do not
+<A HREF="<? echo MAILTO; ?>:freebsd-ports&#64;freebsd.org">FreeBSD Ports mailing list</A>.  We do not maintain ports.  We do not
 create ports.  We do not fix ports.  We just tell you what others have been doing to the Ports tree.
 </P>
 

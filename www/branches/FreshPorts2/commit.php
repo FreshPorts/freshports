@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.41 2004-08-09 22:31:45 dan Exp $
+	# $Id: commit.php,v 1.1.2.42 2004-08-27 13:46:19 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -105,7 +105,7 @@ if ($Debug) echo "UserID='$User->id'";
 
 ?>
 
-<TABLE WIDTH="<? echo $TableWidth ?>" BORDER="0" ALIGN="center">
+<TABLE WIDTH="<? echo $TableWidth ?>" BORDER="1" ALIGN="center">
 
 <?
 if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
@@ -344,7 +344,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 	}
 	echo "</TABLE>\n";
 } else {
-	echo '<tr><td>nothing supplied, nothing found!</td></tr><tr>';
+	echo '<tr><td valign="top" width="100%">nothing supplied, nothing found!</td>';
 }
 
 

@@ -36,7 +36,7 @@ if (!$category || $category != strval(intval($category))) {
 #
 $cache_file .= "." . $category;
 
-$title = freshports_Category_Name($category, $db) . $category;
+$title = freshports_Category_Name($category, $db);
 ?>
 
 <!--// DVL Software is a New Zealand company specializing in database applications. //-->
@@ -184,7 +184,7 @@ $HTML .= freshports_echo_HTML(" of $NumRows ports</td></tr>\n");
 for ($i = $start; $i <= $end; $i++) {
    $myrow = $rows[$i-1];
 
-   include("/www/freshports.org/_private/port-basics.inc");
+   include("./_private/port-basics.inc");
    $LastPort = $myrow["port"];
 } // end for
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: pkg_process.inc,v 1.5.2.22 2004-11-03 23:44:44 dan Exp $
+	# $Id: pkg_process.inc,v 1.5.2.23 2005-01-06 04:22:59 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -41,18 +41,18 @@ function HandleFileUpload($FormFileName, $Destination) {
 
 function DisplayError($error) {
 ?>
-	<TABLE WIDTH="100%" BORDER="1" ALIGN="center" CELLPADDING="1" CELLSPACING="0" BORDER="1">
+	<TABLE WIDTH="100%" ALIGN="center" CELLPADDING="1" CELLSPACING="0" BORDER="1">
 	<TR><TD VALIGN=TOP>
 		<TABLE WIDTH="100%">
 			<TR>
-			    <? freshports_PageBannerText("NOTICE"); ?>
+			    <? echo freshports_PageBannerText("NOTICE"); ?>
 			</TR>
 
 			<TR BGCOLOR="#ffffff">
 				<TD>
 					<TABLE WIDTH="100%" CELLPADDING="0" CELLSPACING="0" BORDER="0">
 						<TR VALIGN="top">
-							<TD VALIGN="middle"><IMG SRC="/images/warning.gif"></TD>
+							<TD VALIGN="middle"><IMG SRC="/images/warning.gif" ALT="warning"></TD>
 							<TD VALIGN="middle" width="100%">
 							<? echo $error ?>
 							</TD>
@@ -252,7 +252,7 @@ function UploadDisplayStagingResultsMatchesNo($UserID, $dbh) {
 				$row = pg_fetch_array($result, $i);
 				echo '<TR>';
 				echo '<TD><FONT COLOR="red">' . $row["category"] . '/' . $row["port"] . '</FONT></TD>';
-				echo '<TD ALIGN="center"><A HREF="/search.php?query=' . $row["port"] . '&stype=name&num=10&method=soundex&staging=1">?</A></TD>';
+				echo '<TD ALIGN="center"><A HREF="/search.php?query=' . $row["port"] . '&amp;stype=name&amp;num=10&amp;method=soundex&amp;staging=1">?</A></TD>';
 				echo '</TR>';
 			}
 			echo '</TABLE>';
@@ -351,13 +351,13 @@ function UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $dbh) {
 			?>
 
 			<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5">
-			<TR><TD><B>Port name</TD><TD ALIGN="center"><SMALL>Add</SMALL></TD></TR>
+			<TR><TD><B>Port name</B></TD><TD ALIGN="center"><SMALL>Add</SMALL></TD></TR>
 
 			<?
 			for ($i = 0; $i < $numrows; $i++) {
 				$row = pg_fetch_array($result, $i);
 
-				echo '<TD ALIGN="left">';
+				echo '<TR><TD ALIGN="left">';
 				echo LinkToPort($row["category"], $row["port"]);
 				echo '</TD>';
 

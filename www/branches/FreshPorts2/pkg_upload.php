@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: pkg_upload.php,v 1.5.2.40 2005-01-05 23:14:38 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.41 2005-01-06 04:23:22 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -107,7 +107,7 @@ echo freshports_WatchListDDLB($db, $UserID);
 
 function DisplayStagingArea($UserID, $WatchListID, $db) {
 
-	echo '<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5"><TR>';
+	echo '<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5">';
 ?>
 
 	<TR><TD COLSPAN="4"><BIG>The following information is in your Staging Area.  To save it to a Watch List, 
@@ -115,22 +115,21 @@ function DisplayStagingArea($UserID, $WatchListID, $db) {
 			"Update watch list" button.</BIG> <SMALL><A HREF="/help.php">help</A></SMALL></TD></TR>
 
 	<TR><TD COLSPAN="4">
-	<table width="100%" border="0"><tr><td>
-			<FORM ACTION="<? echo $_SERVER["PHP_SELF"]; ?>" method="POST">
-			<P ALIGN="center">
+	<FORM ACTION="<? echo $_SERVER["PHP_SELF"]; ?>" method="POST">
+	<table width="100%" border="0">
+	<tr><td align="center">
 			<INPUT TYPE="submit" VALUE="Update watch list"  NAME="update_watch_list" SIZE="40">
 			&nbsp;&nbsp;&nbsp;
  			<INPUT TYPE="submit" VALUE="Empty staging area" NAME="clear">
-			</P>
-			<td align="right">
+	</td><td align="right">
 			<?php echo freshports_WatchListDDLB($db, $UserID, $WatchListID); ?>
-			</td>
-			<td>
+	</td><td>
 	<?php echo freshports_WatchListSelectGoButton() ?>
-</tr></table>
-</td>
+	</tr></table>
+	</form>
 
 	</TD></TR>
+	<tr>
 <?
 
 	echo '<TD VALIGN="top"><B>Ports found from your uploaded data.</B><BR>Those marked with a W are already on your watch list.</TD>' . "\n";
@@ -160,8 +159,6 @@ function DisplayStagingArea($UserID, $WatchListID, $db) {
 	echo '<TD VALIGN="top">' . "\n";
 	UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $db);
 	echo '</TD>';
-
-	echo '</FORM>';
 
 	echo '</TABLE>';
 }

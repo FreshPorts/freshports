@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-list-maintenance.php,v 1.1.2.6 2002-12-08 16:46:31 dan Exp $
+	# $Id: watch-list-maintenance.php,v 1.1.2.7 2002-12-08 17:34:43 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -164,16 +164,22 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 			break;
 
 		case "set_options":
-			echo 'I would have set options to: ';
-			if ($_POST["ask"])     echo 'ask';
-			if ($_POST["default"]) echo 'default';
-			if ($_POST["main"])    echo 'main';
+			echo 'I would have set options to: ' . AddSlashes($_POST["addremove"]);
+			require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/user.php");
+
+			$User = new User($db);
+			$User->SetWatchListAddRemove($UserID, AddSlashes($_POST["addremove"]));
 			break;
 
 		default:
 			echo 'Hmmm, I have no idea what you asked me to do';
 	}
 }
+
+$User = new User($db);
+$User->Fetch($UserID);
+
+echo 'add remove = ' . $User->watch_list_add_remove;
 
 ?>
 
@@ -223,10 +229,9 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 <td valign="top" nowrap>
 When clicking on Add/Remove for a port,<br> the action should affect
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
-<INPUT id=selected type=radio name=main>&nbsp;the watch list only<BR>
-<INPUT id=default  type=radio name=default>&nbsp;the default watch list[s]<BR>
-<INPUT id=ask      type=radio name=ask>&nbsp;Ask for watch list name[s] each time<br>
-<INPUT id=set_options style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29 value="Set options"  name=set_options>
+<INPUT type=radio name=addremove value=default<?php if ($User->watch_list_add_remove == 'default') echo ' checked'; ?>>&nbsp;the default watch list[s]<BR>
+<INPUT type=radio name=addremove value=ask<?php     if ($User->watch_list_add_remove == 'ask')     echo ' checked'; ?>>&nbsp;Ask for watch list name[s] each time<br>
+<INPUT style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29 value="Set options"  name=set_options>
  </form>
 </td>
     </TR>

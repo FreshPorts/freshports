@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.62 2004-12-02 00:01:04 dan Exp $
+	# $Id: faq.php,v 1.1.2.63 2004-12-02 01:07:20 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -613,6 +613,10 @@ Long URLs occur like that because the search form uses a GET.  A long URL
 would not occur if it was using a POST.  The long URLs are useful because
 they allow you to bookmark your favorite search.  That is why a GET is used
 instead of a POST.
+
+<p>
+It also makes it easier to <a href="http://validator.w3.org/">validate the HTML</a>
+if you can provide a URL that exercises all the options that require testing.
 
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 

@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.42 2002-02-21 23:13:56 dan Exp $
+   # $Id: freshports.php,v 1.4.2.43 2002-02-22 03:58:43 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -869,7 +869,7 @@ function freshports_GetNextValue($sequence, $dbh) {
 	return $NextValue;
 }
 
-function freshports_wrap($text, $length = 72) {
+function freshports_wrap($text, $length = 80) {
 	#
 	# split the text into lines based on \n
 	#

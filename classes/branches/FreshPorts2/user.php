@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: user.php,v 1.1.2.10 2003-03-10 14:36:16 dan Exp $
+	# $Id: user.php,v 1.1.2.11 2003-07-29 20:44:12 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -79,9 +79,7 @@ class User {
 		          FROM users
 				   WHERE cookie = '$Cookie'";
 
-#		echo '<pre>' . $sql . '</pre>';
-
-		if ($Debug)	echo "Users::Fetch sql = '$sql'<BR>";
+#		echo "Users::Fetch sql = '$sql'<BR>";
 
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {
@@ -113,7 +111,7 @@ class User {
 		$this->name							= $myrow["name"];
 		$this->password					= $myrow["password"];
 		$this->cookie						= $myrow["cookie"];
-		$this->firstlogin					= $myrow["firslogin"];
+		$this->firstlogin					= $myrow["firstlogin"];
 		$this->lastlogin					= $myrow["lastlogin"];
 		$this->email						= $myrow["email"];
 		$this->watch_notice_id			= $myrow["watch_notice_id"];

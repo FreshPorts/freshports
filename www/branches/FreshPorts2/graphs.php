@@ -1,5 +1,5 @@
 <?
-	# $Id: graphs.php,v 1.5.2.13 2002-10-21 22:19:39 dan Exp $
+	# $Id: graphs.php,v 1.5.2.14 2002-12-05 13:58:20 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -49,7 +49,7 @@ If you have suggestions for graphs, please submit them via the forum.
 			echo '<UL>';
 			for ($i = 0; $i < $numrows; $i++) {
 				$myrow = pg_fetch_array ($result, $i);
-				echo '<LI><A HREF="' . $_SERVER["PHP_SELF"] . '?id=' . $myrow["id"] . '">' . $myrow["title"] . '</A></LI>';
+				echo '<LI><A HREF="' . $_SERVER["PHP_SELF"] . '?id=' . $myrow["id"] . '">' . $myrow["title"] . '</A></LI>' . "\n";
 				if ($myrow["id"] == $id) {
 					$is_clickable = $myrow["is_clickable"];
 				}
@@ -72,12 +72,12 @@ If you have suggestions for graphs, please submit them via the forum.
 			?>
 			<FORM ACTION="/graphs/graphclick.php" METHOD="get">
 			<INPUT TYPE="hidden" NAME="id"    VALUE="<? echo $id; ?>">
-			<INPUT NAME="graph"  TYPE="image" SRC="/graphs/graph.php?id=<? echo $id; ?>">
+			<INPUT NAME="graph"  TYPE="image" SRC="/graphs/graph.php?id=<? echo $id; ?>" TITLE="graph goes here!" ALT="graph goes here!">
 			</FORM>
 			<?
 		} else {
 			?>
-			<IMG SRC="/graphs/graph.php?id=<? echo $id; ?>">
+			<IMG SRC="/graphs/graph.php?id=<? echo $id; ?>" TITLE="graph goes here!" ALT="graph goes here!">
 			<?
 		}
 	}

@@ -1,5 +1,5 @@
 <?
-	# $Id: date.php,v 1.1.2.4 2002-11-28 04:47:37 dan Exp $
+	# $Id: date.php,v 1.1.2.5 2002-11-28 05:04:01 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -30,7 +30,7 @@
 #echo 'which is ' . strtotime($Date) . '<br>';
 
 $commits = new Commits($db);
-$NumRows = $commits->Fetch($Date);
+$NumRows = $commits->Fetch($Date, $WatchListID);
 
 #echo '<br>NumRows = ' . $NumRows;
 

@@ -1,13 +1,13 @@
 <?php
 	#
-	# $Id: htmlify.php,v 1.1.2.1 2003-09-09 19:23:14 dan Exp $
+	# $Id: htmlify.php,v 1.1.2.2 2003-09-12 14:02:04 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
 #
 # The code below was donated by Steve Kacsmark <stevek@guide.chi.il.us>.
-# With modifications by Marcin Gryszkalis <mgryszkalis@cerint.pl>.
+# With modifications by Marcin Gryszkalis <mg@fork.pl>.
 #
 
 
@@ -104,7 +104,7 @@ function htmlify($String) {
 
 #
 # The code above was donated by Steve Kacsmark <stevek@guide.chi.il.us>.
-# With modifications by Marcin Gryszkalis <mgryszkalis@cerint.pl>.
+# With modifications by Marcin Gryszkalis <mg@fork.pl>.
 #
 
 

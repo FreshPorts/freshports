@@ -30,11 +30,25 @@
    echo '<font SIZE="-1"><a href="http://freshports.org/login.php3?origin=' . $PHP_SELF . ' ">User Login</a></font><br>';
    echo '<font SIZE="-1"><a href="http://freshports.org/new-user.php3">Create account</a></font><br>';
   }
-        </script>
+?>
    </td>
    </tr>
    </table>
 <br>
+
+<table WIDTH="152" BORDER="1" BORDER="1" CELLSPACING="0" CELLPADDING="5"
+            bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">        <tr>
+         <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" SIZE="+1">Vote now!</font></td>
+        </tr>
+        <tr>
+    <td valign="top">
+       <font SIZE="-1"><a href="http://freshports.org/whatnext.php3">Vote for change</a><font><br>
+   </td>
+   </tr>
+   </table>
+<br>
+
+
 <table WIDTH="152" BORDER="1" BORDER="1" CELLSPACING="0" CELLPADDING="5"
             bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">        <tr>
          <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" SIZE="+1">Ports</font></td>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.34 2003-04-28 22:25:10 dan Exp $
+	# $Id: faq.php,v 1.1.2.35 2003-05-16 02:48:41 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -400,6 +400,17 @@ SQL and I'll be implementing that gradually.
 	<p>
 	The date should be of the format YYYY/MM/DD but I'm sure different formats
 	will work.  If the code has trouble figuring out what date you mean, it will guess and let you know it adjusted the date.
+
+	</TD></TR><TR><TD>&nbsp;</TD></TR>
+
+<TR>
+<? echo freshports_PageBannerText("What does WLC mean?"); ?>
+</TR>
+
+   <TR><TD>
+   <P>
+	Watch List Count.  This is the number of watch lists which are watching 
+	this port.  This might give you an idea of how popular the port it.
 
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 

@@ -17,7 +17,8 @@ require( "./_private/freshports.php3");
  <? include("/www/freshports.org/_private/header.inc") ?>
 <table width="100%" border="0">
 <tr><td colspan="2">Eventually, I'd like to modify these graphs so you can click on a port and be taken to
-its description.  Anyone willing to do that should let me know.
+its description.  Anyone willing to do that should let me know.  Note: these stats only cover the period
+since FreshPorts began and are updated once per day.
 </td></tr>
 <tr><td valign="top" width="100%">
 <table width="100%" border="0">

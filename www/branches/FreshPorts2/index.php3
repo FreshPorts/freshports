@@ -1,5 +1,5 @@
 <?
-   # $Id: index.php3,v 1.34.2.10 2001-12-07 18:01:56 dan Exp $
+   # $Id: index.php3,v 1.34.2.11 2001-12-18 22:01:12 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -132,7 +132,7 @@ select DISTINCT commit_log.commit_date as commit_date_raw,
        commit_log.description as commit_description,
        to_char(commit_log.commit_date - INTERVAL '10800 seconds', 'YYYY-Mon-DD') as commit_date,
        to_char(commit_log.commit_date - INTERVAL '10800 seconds', 'HH24:MI') as commit_time,
-	   commit_log_port.port_id as port_id,
+	   commit_log_ports.port_id as port_id,
 	   categories.name as category,
 	   categories.id   as category_id,
 	   element.name    as port,
@@ -142,12 +142,12 @@ select DISTINCT commit_log.commit_date as commit_date_raw,
 	   ports.forbidden      as forbidden,
 	   ports.broken         as broken,
 	   date_part('epoch', ports.date_created) as date_created
-  from commit_log_port, commit_log, ports, element, categories
- where commit_log.commit_date        > '2001-09-01'
-   and commit_log_port.commit_log_id = commit_log.id
-   and commit_log_port.port_id       = ports.id
-   and categories.id                 = ports.category_id
-   and element.id                    = ports.element_id
+  from commit_log_ports, commit_log, ports, element, categories
+ where commit_log.commit_date         > '2001-09-01'
+   and commit_log_ports.commit_log_id = commit_log.id
+   and commit_log_ports.port_id       = ports.id
+   and categories.id                  = ports.category_id
+   and element.id                     = ports.element_id
 order by commit_log.commit_date desc,
          commit_log_id,
          category, 

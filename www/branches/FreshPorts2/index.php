@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.26 2002-03-28 03:42:38 dan Exp $
+	# $Id: index.php,v 1.1.2.27 2002-04-01 21:00:17 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -27,7 +27,7 @@ function freshports_SummaryForDay($MinusN) {
       echo '      bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">';
       echo '  <tr>';
       echo '<td bgcolor="#AD0040" height="30"><font color="#FFFFFF" SIZE="+1">';
-      echo date("l", $Now - 60*60*24*$MinusN);
+      echo date("l j M", $Now - 60*60*24*$MinusN);
       echo '</font></td>';
       echo '       </tr>';
       echo '        <tr>';
@@ -243,9 +243,7 @@ ports. A port is marked as new for 10 days.
 
 						$HTML .= "\n";
 
-
-						$HTML .= '<A HREF="/files.php?id=' . $myrow["commit_log_id"] . 
-									'"><IMG SRC="/images/logs.gif" ALT="files touched by this commit" BORDER="0" WIDTH="17" HEIGHT="20" HSPACE="2"></A>';
+						$HTML .= freshports_CommitFilesLink($myrow["commit_log_id"], $myrow["category"], $myrow["port"]);
 
 						// indicate if this port needs refreshing from CVS
 						if ($myrow["status"] == "D") {
@@ -305,10 +303,15 @@ ports. A port is marked as new for 10 days.
   <td valign="top" width="*">
    <? include("./include/side-bars.php") ?>
 <?
-#	freshports_SummaryForDay(0);
-#	freshports_SummaryForDay(1);
-#	freshports_SummaryForDay(2);
-#	freshports_SummaryForDay(3);
+	freshports_SummaryForDay(0);
+	freshports_SummaryForDay(1);
+	freshports_SummaryForDay(2);
+	freshports_SummaryForDay(3);
+	freshports_SummaryForDay(4);
+	freshports_SummaryForDay(5);
+	freshports_SummaryForDay(6);
+	freshports_SummaryForDay(7);
+	freshports_SummaryForDay(8);
 ?>
  </td>
 </tr>

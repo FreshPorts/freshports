@@ -43,12 +43,26 @@ We have taken the initial approach that we will delete all previous VuXML
 information when processing a newly committed vuln.xml file.  This simplifies
 the code.  We may wish to rethink this approach at a later date.
 
-<h2>Marking the commits</h2>
+<h2>Marking the commits - some database background</h2>
 
 <p>
 Technically speaking, we are not marking the commits.  We are marking the 
 commit history of parts that have been affected by a given VuXML entry.
 
+<p>
+FreshPorts stores each commit in the <b>commit_log</b> table.  The <b>ports</b>
+contains a row for each port.  The <b>commit_log_ports</b> table relates a
+given commit to the ports it touches.  It is this data which forms the basis
+for the <b>Commit History</b> for a port.
+
+<p>
+The <b>commit_log_ports</b> table also records
+the PORTVERSION, PORTREVISION, and PORTEPOCH values of the port as a result
+of that commit. It is this information which will be used to test against the
+VuXML information.
+
+
+<h2>Marking the commits - a proposed algorithm</h2>
 <p>
 Once the data is loaded into FreshPorts, we can obtain the names and ranges
 like this:
@@ -64,17 +78,21 @@ like this:
 8 - end for
 </pre></blockquote>
 
+<h2>Going into details</h2>
 <p>
-There is room for optimization here.  Some notes based upon first impressions.
+There is room for optimization here. Here are some notes based upon first
+impressions.
+
+<p>
+The combination of port_version, port_revision, and port_epoch will be
+known as the <b>PackageVersion</b>.
 
 <ul>
-<li>The combination of port_version, port_revision, and port_epoch will be 
-known as the <b>PackageVersion</b>.
 <li>2 - Select distinct on <b>PackageVersion</b>.  This will
 reduce the number of rows fetched and thereby the number of calls to 
 pkg_version.
 <p>
-Here is the basic data for one package:
+Here is the basic data for one package, without optmizing the data:
 
 <blockquote><pre class="code">
 freshports.org=# SELECT *
@@ -139,7 +157,7 @@ freshports.org=#
 </pre></blockquote>
 
 <p>
-We might be able to reduce the number of rows with this approach:
+We might be able to reduce the number of rows fetched with this approach:
 
 <blockquote><pre class="code">
 freshports.org=# SELECT distinct port_id, port_version, port_revision, port_epoch
@@ -191,7 +209,12 @@ freshports.org(#                    WHERE package_name = 'leafnode');
 (39 rows)
 </pre></blockquote>
 
-<li>4 - the test is done by invoking pkg_version -t and testing the result.
+<p>
+The reason we are fetching these rows is so we can invoke pkg_version(1)
+with their values.  This allows us to determine if a given 
+<b>PackageVersion</b> is affected by a VuXML entry.
+
+<li>4 - the test is done by invoking pkg_version -t and examining the result.
 <li>5 - store each vuxml id affecting this <b>PackageVersion</b>.
 <li>7 - when updating commit_log_ports_vuxml, something like this might be
 useful:
@@ -211,8 +234,13 @@ SELECT commit_log_id,
 This will need to be repeated for each <b>PackageVersion</b>.
 </ul>
 
+<h2>What else?</h2>
 <p>
 That's it.  Sounds simple.  Right?
+
+<hr>
+<p align="right">
+<small>Last amended: 14 September 2004</small>
 
 </body>
 </html>

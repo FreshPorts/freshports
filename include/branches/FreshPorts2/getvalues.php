@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: getvalues.php,v 1.1.2.27 2003-07-30 12:13:07 dan Exp $
+	# $Id: getvalues.php,v 1.1.2.28 2003-09-08 16:25:19 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -25,28 +25,6 @@ $GlobalHideLastChange   = "Y";
 $DaysToShow  = 20;
 $MaxArticles = 40;
 $DaysNew     = 10;
-
-/*
-GLOBAL $MaxNumberOfPorts;
-GLOBAL $ShowShortDescription;
-GLOBAL $ShowMaintainedBy;
-GLOBAL $ShowLastChange;
-GLOBAL $ShowDescriptionLink;
-GLOBAL $ShowChangesLink;
-GLOBAL $ShowDownloadPortLink;
-GLOBAL $ShowPackageLink;
-GLOBAL $ShowHomepageLink;
-GLOBAL $FormatDate;
-GLOBAL $FormatTime;
-GLOBAL $DaysMarkedAsNew;
-GLOBAL $EmailBounceCount;
-GLOBAL $CVSTimeAdjustment;
-GLOBAL $UserName;
-GLOBAL $visitor;
-GLOBAL $db;
-GLOBAL $NumberOfDays;
-GLOBAL $WatchListAsk;
-*/
 
 $MaxNumberOfPorts			= 100;
 $ShowShortDescription	= "Y";
@@ -75,7 +53,7 @@ $WatchListAsk			= 1;
 $ShowEverything			= 0;
 $ShowPortCreationDate	= 0;
 
-$UserName	= "";
+$User->name	= "";
 $User->id	= "";
 
 // This is used to determine whether or not the cach can be used.
@@ -108,7 +86,7 @@ if (!empty($visitor)) {
 			exit;
 		}
 /*
-		$UserName					= $myrow["name"];
+		$User->name					= $myrow["name"];
 		$User->id					= $myrow["id"];
 		$emailsitenotices_yn		= $myrow["emailsitenotices_yn"];
 		$email						= $myrow["email"];

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: pkg_upload.php,v 1.5.2.35 2003-05-08 13:07:44 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.36 2003-09-08 16:25:19 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -257,7 +257,7 @@ function ChooseWatchLists($UserID, $db) {
 		} else {
 			$DisplayStagingArea = FALSE;
 			if (trim($_FILES["pkg_info"]) != '') {
-				$Destination = "/tmp/FreshPorts.tmp_pkg_output.$UserName";
+				$Destination = "/tmp/FreshPorts.tmp_pkg_output." . $User->name;
 				if (HandleFileUpload("pkg_info", $Destination)) {
 					require_once($_SERVER['DOCUMENT_ROOT'] . '/pkg_utils.inc');
 					if (ProcessPackages($User->id, $Destination, $db)) {

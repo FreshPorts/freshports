@@ -115,27 +115,34 @@ for($i=0; $i<=$#file; $i++) {
    $committer   =~ s/\'/\\'/g;
    $description =~ s/\'/\\'/g;
 
-   print "committer=", $committer, "\ntimestamp=", $timestamp, "\naction=",  $action, "\nfilename=", $filename, "\ndescription=", $description, "\n";
+   print "committer=", $committer, "\ntimestamp=", $timestamp, "\naction='",  $action, "'\nfilename=", $filename, "\ndescription=", $description, "\n";
 
    ($category, $port, $entry, $extra2) = split/\//,$filename;
 
   print "category=$category\nport=$port\nentry=$entry\n";
 #  exit;
 
-  if ($entry) {
-      if ($category !~ /$ignoredirs/) {
+  if ($entry || (!$entry && $action eq 'import')) {
+
+      # we ignore certain categories and always ignore /usr/ports/<category>/Makefile.
+      if (($category !~ /$ignoredirs/) && ($port ne 'Makefile')) {
          #print '  ***';
          # we have a file in this port which is actually being updated.  Let's update the port.
      
          PortUpdate ($committer, $timestamp, $action, $description, $category, $port, $entry, $dbh)
       } else {
-         print "ignoring $category\n";
+         print "ignoring $category/$port\n";
       }
+   } else {
+     print 'not processing this update as it does not meet the criteria';
    }
    if ($i > 10) {
 #      exit;
    }
-# exit;
+
+  print "\n\n ===================================\n\n";
+
+#exit;
 }
 
 `touch /usr/local/etc/freshports/msgs/lastupdate`;

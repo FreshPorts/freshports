@@ -1,14 +1,13 @@
 <?
-	# $Id: missing.php,v 1.1.2.11 2002-06-12 03:16:52 dan Exp $
+	# $Id: missing.php,v 1.1.2.12 2002-12-09 20:42:36 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
 
-	require($_SERVER['DOCUMENT_ROOT'] . "/../classes/elements.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/../classes/ports.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 
 
 function freshports_Parse404URI($REQUEST_URI, $db) {
@@ -17,7 +16,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	# if we can parse it, then do so and return 1;
 	# otherwise, return 0.
 
-	require($_SERVER['DOCUMENT_ROOT'] . "/missing-port.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/missing-port.php");
 
 	$result = freshports_Parse404CategoryPort($REQUEST_URI, $db);
 

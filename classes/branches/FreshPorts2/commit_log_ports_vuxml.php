@@ -1,5 +1,5 @@
 <?php
-	# $Id: commit_log_ports_vuxml.php,v 1.1.2.1 2004-08-27 11:08:45 dan Exp $
+	# $Id: commit_log_ports_vuxml.php,v 1.1.2.2 2004-08-27 11:34:21 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -61,6 +61,8 @@ select id,
 	}
 
 	function VuXML_List_Get($port_id) {
+		$VID = '';
+
 #print 'VuXML_List_Get for ' . $port_id . "<br>\n";
 		$numrows = $this->FetchInitialise($port_id);
 		for ($i = 0; $i < $numrows; $i++) {

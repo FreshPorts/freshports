@@ -1,5 +1,5 @@
 <?
-	# $Id: committer-opt-in.php,v 1.1.2.2 2002-08-23 21:48:28 dan Exp $
+	# $Id: committer-opt-in.php,v 1.1.2.3 2002-11-18 18:03:13 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -131,13 +131,13 @@ if (!empty($visitor)) {
 }
 ?>
 
-<form action="<?php echo $_SERVER["PHP_SELF"] . "?origin=" . $origin ?>" method="POST" NAME=f>
+<form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
                committer id:
                <INPUT SIZE="35" NAME="email" VALUE="<?echo $committer ?>"><BR><BR>
 <?
 			if ($numrows) {
 ?>
-				<INPUT TYPE="submit" VALUE="update"      NAME="update"> 
+				<INPUT TYPE="submit" VALUE="update"      NAME="Update my address"> 
 				<INPUT TYPE="submit" VALUE="unsubscribe" NAME="unsubscribe">
 <?
 			} else {

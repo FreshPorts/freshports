@@ -1,5 +1,5 @@
 <?
-	# $Id: port-watch.php,v 1.1.2.29 2003-03-04 22:10:21 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.30 2003-03-05 21:33:39 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -226,9 +226,11 @@ if ($numrows) {
 ?>
 <tr><td align="left" valign="top">
 <UL>
+<LI>
+This page operates on a single watch list at a time.
 <LI>This page shows you the ports in a category (<em><?echo $category ?></em>)
-that are on your watch list.</LI>
-<LI>The entries with a tick beside them are your watch list.</LI>
+that are on your selected watch list.</LI>
+<LI>The entries with a tick beside them are your on the selected watch list.</LI>
 <LI>When one of the ports in your watch list changes, you will be notified by email if
 you have selected a notification frequency within your <a href="customize.php">personal preferences</a>.
 </LI>

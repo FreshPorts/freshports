@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch.php,v 1.1.2.43 2003-09-30 00:01:18 dan Exp $
+	# $Id: watch.php,v 1.1.2.44 2003-11-27 22:38:19 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -184,8 +184,6 @@ if ($wlid == '') {
 		echo pg_errormessage();
 	}
 
-	$HTML .= '<tr><td>';
-
 	// get the list of topics, which we need to modify the order
 	$NumPorts=0;
 
@@ -196,6 +194,24 @@ if ($wlid == '') {
 	$LastCategory='';
 	$GlobalHideLastChange = 'N';
 	$numrows = pg_numrows($result);
+
+	$TextNumRowsFound = '<p><small>';
+	if ($numrows > 1) {
+		$TextNumRowsFound .= "$numrows ports";
+	} else {
+		if ($numrows == 1) {
+			$TextNumRowsFound .= 'one port';
+		} else {
+			$TextNumRowsFound .= 'no ports';
+		}
+	}
+	$TextNumRowsFound .= ' found</small></p>';
+	$HTML .= '<tr><td>';
+
+	if ($numrows > 0) {
+		// Display the first row count only if there is a port.
+		$HTML .= $TextNumRowsFound;
+	}
 
 	$ShowDescriptionLink = 0;
 	$DaysMarkedAsNew= $DaysMarkedAsNew= $GlobalHideLastChange= $ShowChangesLink = $ShowDownloadPortLink= $ShowHomepageLink= $ShowLastChange= $ShowMaintainedBy= $ShowPortCreationDate= $ShowPackageLink= $ShowShortDescription =1;
@@ -247,7 +263,7 @@ if ($wlid == '') {
 
 	$HTML .= "</td></tr>\n";
 
-	$HTML .= "<tr><td>$numrows ports found</td></tr>\n";
+	$HTML .= "<tr><td>$TextNumRowsFound</td></tr>\n";
 
 	echo $HTML;
 

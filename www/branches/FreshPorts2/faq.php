@@ -1,5 +1,5 @@
 <?
-	# $Id: faq.php,v 1.1.2.12 2002-04-12 05:11:32 dan Exp $
+	# $Id: faq.php,v 1.1.2.13 2002-04-19 04:12:20 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -21,7 +21,9 @@
 	<? freshports_PageBannerText("FAQ"); ?>
 </tr>
 <TR><TD>
-<P>This page contains the FAQ for FreshPorts</P>
+<P>This page contains the FAQ for FreshPorts. Hopefully the questions
+are arranged from general to specific.  The more you know, the further
+down you must read to find something you didn't already know.</P>
 </TD></TR>
 </TD></TR><TR><TD>&nbsp;</TD></TR>
 <TR>
@@ -213,6 +215,34 @@
 	<P>
 	If it is any consolation, the new URLs are transparent
 	and permanent.  They are of the form &lt;category&gt;/&lt;port&gt;.
+	</P>
+	</TD></TR><TR><TD>&nbsp;</TD></TR>
+
+<? freshports_PageBannerText("Do you have any news feeds?"); ?>
+	<TR><TD>
+	<P>
+	Of course.  We have two:
+	</P>
+
+	<?
+	$ServerName = str_replace("freshports", "FreshPorts", $SERVER_NAME);
+	$URL  = "http://$ServerName/news.php";
+	$HREF = "<A HREF=\"$URL\">$URL</A>";
+	?>
+
+	<OL>
+	<LI>An RSS feed : <? echo $HREF; ?></LI>
+
+	<?
+	$URL  = "http://$ServerName/sidebar.php";
+	$HREF = "<A HREF=\"$URL\">$URL</A>";
+	?>
+
+	<LI>A Netscape 6, SideBar type feed : <? echo $HREF; ?>.  This can be added
+		to your browser using the button in the right hand column of this page.</LI>
+
+	</OL>
+
 	</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 

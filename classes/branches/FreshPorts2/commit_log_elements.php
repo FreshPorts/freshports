@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit_log_elements.php,v 1.1.2.2 2003-09-24 17:53:03 dan Exp $
+	# $Id: commit_log_elements.php,v 1.1.2.3 2003-09-25 15:46:58 dan Exp $
 	#
 	# Copyright (c) 2003 DVL Software Limited
 	#
@@ -75,6 +75,11 @@ select $element_id,
 		$this->revision_name		= $myrow["revision_name"];
 		$this->security_notice_id	= $myrow["security_notice_id"];
 	}
+
+	function EncodingLosses() {
+		return $this->encoding_losses == 't';
+	}
+
 }
 
 ?>

@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.87 2002-05-09 20:01:16 dan Exp $
+	# $Id: freshports.php,v 1.4.2.88 2002-05-09 20:04:06 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -471,7 +471,7 @@ function freshports_ONToYN($Value) {
 }
 
 
-function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, $LinkToPort=0, $AddRemoveExtra='', $ShowCategory=1, $ShowDateAdded="Y") {
+function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, $LinkToPort=0, $AddRemoveExtra='', $ShowCategory=1, $ShowDateAdded="N") {
 //
 // This php3 fragment does the basic port information for a single port.
 //

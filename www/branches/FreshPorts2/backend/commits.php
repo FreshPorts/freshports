@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits.php,v 1.1.2.10 2003-09-08 21:21:30 dan Exp $
+	# $Id: commits.php,v 1.1.2.11 2003-11-21 14:35:43 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -59,4 +59,6 @@
 		print $myrow["message_id"] . "\t" . $myrow["message_date"] . "\t" . $myrow["commit_date"] . "\t" . 
 			  $myrow["committer"]  . "\t" . $myrow["system_id"] . "\n";
 	}
+
+	$Statistics->Save();
 ?>

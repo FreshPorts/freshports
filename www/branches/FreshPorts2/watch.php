@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch.php,v 1.1.2.44 2003-11-27 22:38:19 dan Exp $
+	# $Id: watch.php,v 1.1.2.45 2003-11-28 00:17:41 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -206,11 +206,11 @@ if ($wlid == '') {
 		}
 	}
 	$TextNumRowsFound .= ' found</small></p>';
-	$HTML .= '<tr><td>';
+	echo '<tr><td>';
 
 	if ($numrows > 0) {
 		// Display the first row count only if there is a port.
-		$HTML .= $TextNumRowsFound;
+		echo $TextNumRowsFound;
 	}
 
 	$ShowDescriptionLink = 0;
@@ -228,7 +228,7 @@ if ($wlid == '') {
 	$ShowDescriptionLink  = 'N';
 
 	if ($ShowCategoryHeaders) {
-		$HTML .= '<DL>';
+		echo '<DL>';
 	}
 
 	for ($i = 0; $i < $numrows; $i++) {
@@ -238,34 +238,34 @@ if ($wlid == '') {
 	
 			if ($LastCategory != $Category) {
 				if ($i > 0) {
-					$HTML .= "\n</DD>\n";
+					echo "\n</DD>\n";
 				}
 
 				$LastCategory = $Category;
 				if ($ShowCategoryHeaders) {
-					$HTML .= '<DT>';
+					echo '<DT>';
 				}
 
-				$HTML .= '<BIG><BIG><B><a href="/' . $Category . '/">' . $Category . '</a></B></BIG></BIG>';
+				echo '<BIG><BIG><B><a href="/' . $Category . '/">' . $Category . '</a></B></BIG></BIG>';
 				if ($ShowCategoryHeaders) {
-					$HTML .= "</DT>\n<DD>";
+					echo "</DT>\n<DD>";
 				}
 			}
 		}
 
-		$HTML .= freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 1, '', 0);
-		$HTML .= '<BR>';
+		echo freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 1, '', 0);
+		echo '<BR>';
 	}
 
 	if ($ShowCategoryHeaders) {
-		$HTML .= "\n</DD>\n</DL>\n";
+		echo "\n</DD>\n</DL>\n";
 	}
 
-	$HTML .= "</td></tr>\n";
+	echo "</td></tr>\n";
 
-	$HTML .= "<tr><td>$TextNumRowsFound</td></tr>\n";
+	echo "<tr><td>$TextNumRowsFound</td></tr>\n";
 
-	echo $HTML;
+#	echo $HTML;
 
 } // end if no wlid
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-watch.php,v 1.1.2.38 2003-06-05 14:31:42 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.39 2003-09-08 14:18:14 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -15,7 +15,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_list.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_list_element.php');
 
-	$Debug = 0;
+	$Debug = 1;
 
 	$submit	= AddSlashes($_POST['submit']);
 	$visitor	= $_COOKIE['visitor'];
@@ -126,12 +126,14 @@ $sql = "
   SELECT element.id, 
          element.name    AS port, 
          element.status,
-         CASE WHEN ports.category_id = $Category->id THEN '' ELSE '&nbsp;(s)' END AS virtual
-    FROM ports, ports_categories, element
+         CASE WHEN ports.category_id = $Category->id THEN '' ELSE '&nbsp;<sup>*</sup>' END AS virtual,
+         PRIMARY_CATEGORY.name as primary_category
+    FROM ports, ports_categories, element, categories PRIMARY_CATEGORY
    WHERE ports_categories.category_id = $Category->id
      AND ports_categories.port_id     = ports.id
      AND ports.element_id             = element.id
-     AND element.status              = 'A'
+     AND element.status               = 'A'
+     AND PRIMARY_CATEGORY.id          = ports.category_id
 ORDER BY element.name";
 
 if ($Debug) echo "<pre>$sql</pre>\n";
@@ -198,7 +200,7 @@ if ($numrows) {
 
       $HTML .= '>';
 
-      $HTML .= ' <a href="/' . $category . '/' . $rows[$i]["port"] . '/">' . $rows[$i]["port"] . '</a>';
+      $HTML .= ' <a href="/' . $rows[$i]["primary_category"] . '/' . $rows[$i]["port"] . '/">' . $rows[$i]["port"] . '</a>';
 
 		if ($rows[$i]["status"] == 'D') {
 			$HTML .= " [D]";
@@ -257,7 +259,7 @@ that are on your selected watch list.</LI>
 you have selected a notification frequency within your <a href="customize.php">personal preferences</a>.
 </LI>
 <LI>[D] indicates a port which has been removed from the tree.</LI>
-<LI>(s) indicates a port which resides in another cateogory but lists this category as a secondary.</LI>
+<LI><sup>*</sup> indicates a port which resides in another cateogory but lists this category as a secondary.</LI>
 </UL>
 </table>
 

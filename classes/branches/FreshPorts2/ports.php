@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports.php,v 1.1.2.45 2004-09-22 13:58:18 dan Exp $
+	# $Id: ports.php,v 1.1.2.46 2004-10-25 00:22:34 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -39,6 +39,10 @@ class Port {
 	var $categories;
 	var $master_port;
 	var $latest_link;
+	var $no_latest_link;
+	var $no_package;
+	var $package_name;
+
 
 	// derived or from other tables
 	var $category;
@@ -94,6 +98,9 @@ class Port {
 		$this->categories         = $myrow["categories"];
 		$this->master_port        = $myrow["master_port"];
 		$this->latest_link        = $myrow["latest_link"];
+		$this->no_latest_link     = $myrow["no_latest_link"];
+		$this->no_package         = $myrow["no_package"];
+		$this->package_name       = $myrow["package_name"];
 
 		$this->port               = $myrow["port"];
 		$this->category           = $myrow["category"];
@@ -150,6 +157,9 @@ select ports.id,
        ports.ignore, 
        ports.master_port,
        ports.latest_link,
+       ports.no_latest_link,
+       ports.no_package,
+       ports.package_name,
        to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, 
        ports.categories as categories,
 	    element.name     as port, 
@@ -232,6 +242,9 @@ select ports.id,
 		               to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added,
 		               ports.master_port,
 		               ports.latest_link,
+		               ports.no_latest_link,
+		               ports.no_package,
+		               ports.package_name,
 		               ports.categories as categories,
 			           element.name     as port, 
 			           categories.name  as category,
@@ -341,6 +354,9 @@ SELECT P.*, element.name    as port,
         to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added,
         ports.master_port,
         ports.latest_link,
+        ports.no_latest_link,
+        ports.no_package,
+        ports.package_name,
         ports.categories      as categories,
         categories.name       as category_looking_at,
         PRIMARY_CATEGORY.name as category

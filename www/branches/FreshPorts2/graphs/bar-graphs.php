@@ -1,5 +1,5 @@
 <?
-	# $Id: bar-graphs.php,v 1.1.2.2 2002-05-18 18:13:57 dan Exp $
+	# $Id: bar-graphs.php,v 1.1.2.3 2002-05-29 03:44:42 dan Exp $
 	#
 
 
@@ -137,6 +137,27 @@ class dg_BarGraph {
 		header("Content-type: image/png");
 
 		$this->calculate_gradients();
+
+		// count left margin [THIS IS NEW PIECE OF CODE]
+		$maxw = 0;
+		for ($i = 0; $i < count($this->values); $i++) {
+			$box = imagettfbbox(
+				$this->label_size,
+				0,
+				$this->font_name,
+				$this->labels[$i]);
+
+			$w = abs($box[2] - $box[0]);
+
+			if ($w > $maxw) $maxw = $w;
+		}
+
+		$maxw += 8;
+
+		if ($maxw > $this->margin_l)
+		$this->margin_l = $maxw;
+
+		// [END OF NEW PIECE OF CODE]
 
 		// calculate sizes
 		$field_width = 

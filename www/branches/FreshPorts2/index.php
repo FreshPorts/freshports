@@ -1,5 +1,5 @@
 <?
-   # $Id: index.php,v 1.1.2.1 2002-01-02 02:53:41 dan Exp $
+   # $Id: index.php,v 1.1.2.2 2002-01-05 20:13:15 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -152,7 +152,7 @@ order by commit_log.commit_date desc,
 
 #echo "\n<pre>sql=$sql</pre>\n";
 
-         $result = pg_exec ($database, $sql);
+         $result = pg_exec($database, $sql);
          if ($result) {
             $numrows = pg_numrows($result);
 #            echo $numrows . " rows to fetch\n";

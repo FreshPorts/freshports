@@ -1,5 +1,5 @@
 <?
-	# $Id: report-subscriptions.php,v 1.1.2.11 2002-09-09 19:46:36 dan Exp $
+	# $Id: report-subscriptions.php,v 1.1.2.12 2002-09-09 19:51:10 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -181,7 +181,7 @@ of incoming email, these reports will be coming from the following addresses:
 <TABLE CELLSPACING="0" CELLPADDING="5" BORDER="1">
 <TR><TD>user</TD><TD>domain</TD></TR>
 <TR><TD NOWRAP><CODE CLASS="code">freshports-announce</CODE></TD><TD><CODE CLASS="code">freshports.org</CODE></TD></TR>
-<TR><TD NOWRAP><CODE CLASS="code">listsfp</CODE></TD><TD><CODE CLASS="code">nezlok.unixathomeo.org</CODE></TD></TR>
+<TR><TD NOWRAP><CODE CLASS="code">listsfp</CODE></TD><TD><CODE CLASS="code">nezlok.unixathome.org</CODE></TD></TR>
 </TABLE>
 </CODE></BLOCKQUOTE>
 

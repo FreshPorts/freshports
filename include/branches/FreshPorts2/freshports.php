@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.209 2005-01-26 21:04:10 dan Exp $
+	# $Id: freshports.php,v 1.4.2.210 2005-01-29 03:37:23 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -1891,11 +1891,6 @@ function freshports_SideBar() {
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/",                     "Home",             "FreshPorts Home page"       )   . '</FONT><BR>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/categories.php",       "Categories",       "List of all Port categories")   . '</FONT><BR>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/ports-deleted.php",    "Deleted ports",    "All deleted ports"          )   . '</FONT><BR>
-	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/ports-broken.php",     "Broken ports",     "All broken ports"           )   . '</FONT><BR>
-	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/ports-new.php",        "New ports",        "Recently added ports"       )   . '</FONT><BR>
-	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/ports-ignore.php",     "Ignored ports",    "Ports ignored by the system")   . '</FONT><BR>
-	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/ports-deprecated.php", "Deprecated ports", "Deprecated ports"           )   . '</FONT><BR>
-	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/ports-forbidden.php",  "Forbidden ports",  "Forbidden ports"            )   . '</FONT><BR>
 	</TD>
 	</TR>
 </TABLE>

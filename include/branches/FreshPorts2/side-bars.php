@@ -1,5 +1,5 @@
 <?
-	# $Id: side-bars.php,v 1.4.2.16 2002-04-19 02:48:23 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.17 2002-04-19 17:06:21 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -8,8 +8,7 @@
 ?>
 
 
-  <table WIDTH="<? echo $ColumnWidth ?>" BORDER="1" CELLSPACING="0" CELLPADDING="5"
-            bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">
+  <table WIDTH="<? echo $ColumnWidth ?>" BORDER="1" CELLSPACING="0" CELLPADDING="5">
         <tr>
          <td bgcolor="#AD0040" height="30"><font color="#FFFFFF"><BIG><B>Login</B></BIG></font></td>
         </tr>
@@ -74,29 +73,27 @@ if ($visitor) {
 
 <BR>
 
-<table WIDTH="<? echo $ColumnWidth ?>" BORDER="1" CELLSPACING="0" CELLPADDING="5"
-            bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">
+<table WIDTH="<? echo $ColumnWidth ?>" BORDER="1" CELLSPACING="0" CELLPADDING="5">
 	<tr>
 		<td bgcolor="#AD0040" height="30"><font color="#FFFFFF"><BIG><B>Search</B></BIG></font></td>
 	</tr>
 	<tr>
 
-	<FORM action="/search.php" METHOD="post" NAME="f">
 	<TD>
+	<FORM action="/search.php" METHOD="post" NAME="f">
 	Enter Keywords:<BR>
 	<INPUT NAME="query"  TYPE="text" SIZE="8">&nbsp;<INPUT TYPE="submit" VALUE="go">
 	<INPUT NAME="num"    TYPE="hidden" value="10">
 	<INPUT NAME="stype"  TYPE="hidden" value="name">
 	<INPUT NAME="method" TYPE="hidden" value="match">
-	</TD>
 	</FORM>
+	</TD>
 </TR>
 </TABLE>
 
 <br>
 
-<table WIDTH="<? echo $ColumnWidth ?>" BORDER="1" CELLSPACING="0" CELLPADDING="5"
-            bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">
+<table WIDTH="<? echo $ColumnWidth ?>" BORDER="1" CELLSPACING="0" CELLPADDING="5">
 	<tr>
 		<td bgcolor="#AD0040" height="30"><font color="#FFFFFF"><BIG><B>Ports</B></BIG></font></td>
 	</tr>
@@ -113,7 +110,7 @@ if ($visitor) {
 
 <BR>
 
-<SCRIPT LANGUAGE="JavaScript">
+<SCRIPT TYPE="text/javascript">
 
 
    function addNetscapePanel() {
@@ -134,15 +131,15 @@ if ($visitor) {
 </SCRIPT>
 
 <CENTER>
-<a NAME="button_image"></a><a href="javascript:addNetscapePanel();"><img SRC="/images/sidebar-add-button.gif" BORDER=0 height=45 width=100>
+<A NAME="button_image"></A><A HREF="javascript:addNetscapePanel();"><IMG SRC="/images/sidebar-add-button.gif" BORDER="0" HEIGHT="45" WIDTH="100" ALT="Add tab to Netscape 6"></A>
 </CENTER>
 
 
 
 <br>
 
- <table WIDTH="<? echo $ColumnWidth ?>" BORDER="1" CELLSPACING="0" CELLPADDING="5"
-            bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">        <tr>
+ <table WIDTH="<? echo $ColumnWidth ?>" BORDER="1" CELLSPACING="0" CELLPADDING="5">
+        <tr>
          <td bgcolor="#AD0040" height="30"><font color="#FFFFFF"><BIG><B>This site</B></BIG></font></td>
         </tr>
         <tr>

@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-category.php,v 1.1.2.9 2002-03-19 14:29:47 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.10 2002-04-19 17:06:20 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -93,9 +93,6 @@ $ShowDescriptionLink  = "N";
 </TD>
 </TR>
 </TABLE>
-	</td>
-	</tr>
-	</table>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>

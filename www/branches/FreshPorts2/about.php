@@ -1,5 +1,5 @@
 <?
-	# $Id: about.php,v 1.1.2.3 2002-02-16 23:52:49 dan Exp $
+	# $Id: about.php,v 1.1.2.4 2002-04-19 17:06:18 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -32,7 +32,8 @@ We have here a few notes about this website.
 <tr>
 	<? freshports_PageBannerText("What is a port?"); ?>
 </tr>
-</tr><td>
+
+<tr><td>
 
 <p>A port is the term used to describe a collection of files which makes it extremely
 easy to install an application.  As it says in the <a href="http://www.freebsd.org/ports/">
@@ -50,7 +51,8 @@ we come in.</p>
 <tr>
 	<? freshports_PageBannerText("What is $FreshPortsTitle"); ?>
 </tr>
-</tr><td>
+
+<tr><td>
 
 <p><? echo $FreshPortsTitle; ?> lists the change made to the ports tree. If you wish, <? echo $FreshPortsTitle; ?> can email you 
 when your favourite port has been updated.
@@ -58,15 +60,16 @@ when your favourite port has been updated.
 
 <P>
 <? echo $FreshPortsTitle; ?> is not the place to report errors or request changes.  You should do that on the 
-<A HREF-"mailto:freebsd-ports@freebsd.org">FreeBSD Ports mailing list</A>.  We do not maintain ports.  We do not
+<A HREF="mailto:freebsd-ports&#64;freebsd.org">FreeBSD Ports mailing list</A>.  We do not maintain ports.  We do not
 create ports.  We do not fix ports.  We just tell you what others have been doing to the Ports tree.
 </P>
 
-</td></tr>
+<td></tr>
 <tr>
 	<? freshports_PageBannerText("OK, whose bright idea was this?"); ?>
 </tr>
-</tr><td>
+
+<tr><td>
 <p>This site was created by Dan Langille.  His other web feats include 
 <a href="http://www.freebsddiary.org/">The FreeBSD Diary</a>, <a 
 href="http://www.racingsystem.com">The Racing System</a>, and an ability
@@ -75,7 +78,8 @@ But Dan didn't create the site all by himself.  Have a look at <a href="authors.
 About the Authors</a> for details of who else helped.</p>
 </table>
 </td>
-  <td valign="top" width="*">
+  <TR>
+  <td valign="top" width="100%">
     <?
        $ShowPoweredBy = 1;
        include("./include/side-bars.php");

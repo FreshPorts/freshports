@@ -1,5 +1,5 @@
 <?
-	# $Id: faq.php,v 1.1.2.13 2002-04-19 04:12:20 dan Exp $
+	# $Id: faq.php,v 1.1.2.14 2002-04-19 17:06:19 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -25,7 +25,8 @@
 are arranged from general to specific.  The more you know, the further
 down you must read to find something you didn't already know.</P>
 </TD></TR>
-</TD></TR><TR><TD>&nbsp;</TD></TR>
+<TR><TD>&nbsp;</TD></TR>
+
 <TR>
 
 <? freshports_PageBannerText("What is this website about?"); ?>
@@ -36,7 +37,10 @@ down you must read to find something you didn't already know.</P>
 	FreshPorts will send you an email telling you about the change.
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
+<TR>
 <? freshports_PageBannerText("How do I use this?"); ?>
+</TR>
+
 	<TR><TD>
 	Your primary FreshPorts tool is your watch list.  This is the
 	collection of ports which you have selected for FreshPorts to
@@ -44,7 +48,10 @@ down you must read to find something you didn't already know.</P>
 	for one of your watched ports.
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
+<TR>
 <? freshports_PageBannerText("How do I modify my watch list?"); ?>
+</TR>
+
 	<TR><TD>
 	There are three easy ways to modify your watch list:
 	<OL>
@@ -58,7 +65,10 @@ down you must read to find something you didn't already know.</P>
 	</OL>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
+<TR>
 <? freshports_PageBannerText("What is a port"); ?>
+</TR>
+
 	<TR><TD>
 	A port is a simple easy way to install an application.
 	A port is a collection of files.  These files contain the location
@@ -70,7 +80,9 @@ down you must read to find something you didn't already know.</P>
 	Handbook</A>.
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
+<TR>
 <? freshports_PageBannerText("Where do ports come from?"); ?>
+</TR>
 
 	<TR><TD>Ports are created by other FreeBSD volunteers, just like you
 	and just like the creators of FreshPorts.  The FreshPorts team does
@@ -78,7 +90,9 @@ down you must read to find something you didn't already know.</P>
 	FreeBSD Ports team creates, maintains, and upgrades the ports.
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
+<TR>
 <? freshports_PageBannerText("Who do I talk to about a port?"); ?>
+</TR>
 
 	<TR><TD>The official mailing list is freebsd-ports&#64;freebsd.org.
 		More information all FreeBSD mailing lists can be obtained
@@ -87,7 +101,10 @@ down you must read to find something you didn't already know.</P>
 		Forum</A>.
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
+<TR>
 <? freshports_PageBannerText("How do I get these ports?"); ?>
+</TR>
+
 	<TR><TD>For full information on how to obtain the ports which appear on
 	this website, please see <A HREF="http://www.FreeBSD.org/ports/">FreeBSD Ports</A>.
 	The easiest way to get a port is via cvsup.  An abbreviated example is
@@ -97,7 +114,9 @@ down you must read to find something you didn't already know.</P>
 	</BLOCKQUOTE>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
+<TR>
 <? freshports_PageBannerText("How is the website updated?"); ?>
+</TR>
 
 	<TR><TD>
 	The source code for the entire FreeBSD operating system and the Ports tree
@@ -110,13 +129,17 @@ down you must read to find something you didn't already know.</P>
 	arrives.
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
+<TR>
 <? freshports_PageBannerText("What does unknown mean for a revision number?"); ?>
+</TR>
 
 	<TR><TD>It means the data has been converted from an earlier
 		version of the FreshPorts database that did not record this information.
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
+<TR>
 <? freshports_PageBannerText("How can I link to your site?"); ?>
+</TR>
 
 	<TR><TD>Yes, thank you, you can.  No need to ask us.  Just go ahead and do it.
 		We prefer the name FreshPorts (one word, mixed case). The following 
@@ -142,7 +165,10 @@ down you must read to find something you didn't already know.</P>
 		<P>Please save this graphic on your website.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
+<TR>
 <? freshports_PageBannerText("Why do I need a different login for the Forums?"); ?>
+</TR>
+
 	<TR><TD>
 	You only need a login for the <A HREF="/phorum/">forums</A> if
 	you want to use a login.  A login will ensure that only you can
@@ -151,7 +177,10 @@ down you must read to find something you didn't already know.</P>
 	used to implement for forums.
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
+<TR>
 <? freshports_PageBannerText("What do these symbols mean?"); ?>
+</TR>
+
 	<TR><TD>
 	There are a few symbols you will see in this website.
 	<BLOCKQUOTE>
@@ -199,7 +228,10 @@ down you must read to find something you didn't already know.</P>
 	</BLOCKQUOTE>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
+<TR>
 <? freshports_PageBannerText("Why don't my old bookmarks work?"); ?>
+</TR>
+
 	<TR><TD>
 	<P>
 	Many things changed between FP1 and FP2. The most major change
@@ -218,7 +250,10 @@ down you must read to find something you didn't already know.</P>
 	</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
+<TR>
 <? freshports_PageBannerText("Do you have any news feeds?"); ?>
+</TR>
+
 	<TR><TD>
 	<P>
 	Of course.  We have two:

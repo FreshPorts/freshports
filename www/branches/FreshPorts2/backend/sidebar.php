@@ -1,5 +1,5 @@
 <?
-	# $Id: sidebar.php,v 1.1.2.4 2002-04-19 13:24:18 dan Exp $
+	# $Id: sidebar.php,v 1.1.2.5 2002-04-19 17:06:20 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -16,7 +16,7 @@
 <HEAD>
 	<TITLE>FreshPorts</TITLE>
 
-	<STYLE>
+	<STYLE TYPE="text/css">
 	BODY, TD, TR, P, UL, OL, LI, INPUT, SELECT, DL, DD, DT, FONT
 	{
 		font-family: Helvetica, Verdana, Arial, Clean, sans-serif;

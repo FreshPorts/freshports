@@ -1,5 +1,5 @@
 <?
-	# $Id: files.php,v 1.1.2.10 2002-04-12 14:27:56 dan Exp $
+	# $Id: files.php,v 1.1.2.11 2002-04-19 17:06:21 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -185,7 +185,7 @@ function freshports_Files($PortID, $CommitID, $WatchListID, $db) {
 
 		<BR>
 
-		<table border="1" width="100%" CELLSPACING="0" CELLPADDING="5"bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">
+		<table border="1" width="100%" CELLSPACING="0" CELLPADDING="5">
 		<?
 
 		switch ($NumRows) {

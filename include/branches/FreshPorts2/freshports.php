@@ -1,10 +1,11 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.80 2002-04-18 20:59:13 dan Exp $
-   #
-   # Copyright (c) 1998-2002 DVL Software Limited
+	# $Id: freshports.php,v 1.4.2.81 2002-04-19 17:06:21 dan Exp $
+	#
+	# Copyright (c) 1998-2002 DVL Software Limited
 
-GLOBAL $DOCUMENT_ROOT;
+	require_once($DOCUMENT_ROOT . "/include/constants.php");
+	require_once($DOCUMENT_ROOT . "/include/burstmedia.php");
 
 
 #
@@ -14,64 +15,6 @@ if ($Debug) echo "'" . $DOCUMENT_ROOT . "/../classes/watchnotice.php'<BR>";
 
 require_once($DOCUMENT_ROOT . "/../classes/watchnotice.php");
 
-$BannerBackgroundColour = "#FFCC33";
-$BannerTextColour       = "#000000";
-$BannerCellSpacing      = "0";
-$BannerCellPadding      = "2";
-$BannerBorder           = "1";
-$BannerFontSize         = "+1";
-
-$BannerWidth            = "100%";
-$TableWidth             = "98%";
-$DateFormatDefault      = "j M Y";
-$TimeFormatDefault		= "H:i:s";
-
-$FreshPortsTitle		= "FreshPorts";
-
-$WatchNoticeFrequencyDaily			= "D";
-$WatchNoticeFrequencyWeekly			= "W";
-$WatchNoticeFrequencyFortnightly	= "F";
-$WatchNoticeFrequencyMonthly		= "M";
-$WatchNoticeFrequencyNever			= "Z";
-
-$UserStatusActive	   = "A";
-$UserStatusDisabled    = "D";
-$UserStatusUnconfirmed = "U";
-
-$ProblemSolverEmailAddress	= "webmaster@freshports.org";
-
-#
-# These values are used when specifying add/remove on a port
-#
-$FreshPortsWatchedPortPrefix	= "<SMALL><A HREF=\"/watch-list.php?remove=";
-$FreshPortsWatchedPortSuffix	= '">' . freshports_Watch_Icon() . '</A></SMALL>';
-$FreshPortsWatchedPortNotPrefix	= "<SMALL><A HREF=\"/watch-list.php?add=";
-$FreshPortsWatchedPortNotSuffix	= '">' . freshports_Watch_Icon_Add() . '</A></SMALL>';
-
-#
-# These are similar to the above but are using in SQL queries
-#
-#$FreshPortsWatchedPort		= "<SMALL><A HREF=\"/watch-list.php?remove=' || commits_latest.element_id || '\">Remove</A></SMALL>";
-#$FreshPortsWatchedPortNot	= "<SMALL><A HREF=\"/watch-list.php?add='    || commits_latest.element_id || '\">Add</A></SMALL>";
-
-
-
-
-#
-# SEQUENCES
-#
-
-$Sequence_Watch_List_ID	= 'watch_list_id_seq';
-$Sequence_User_ID		= 'users_id_seq';
-
-// path to the CVS repository
-$freshports_CVS_URL = "http://www.FreeBSD.org/cgi/cvsweb.cgi";
-
-// path to the ftp server
-$freshports_FTP_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports/";
-
-// path to the cvs-all mailing list archive
-$freshports_mail_archive = " http://www.freebsd.org/cgi/mid.cgi?db=mid&id=";
 
 function freshports_Files_Icon() {
 	return '<IMG SRC="/images/logs.gif" ALT="files touched by this commit" BORDER="0" WIDTH="17" HEIGHT="20">';
@@ -144,7 +87,7 @@ function freshports_Email_Link($message_id) {
 	if (strpos($message_id, "@freshports.org")) {
 		$HTML .= '';
 	} else {
-		$HTML .= '<A HREF="' . $freshports_mail_archive . $message_id . '">';
+		$HTML .= '<A HREF="' . htmlentities($freshports_mail_archive . $message_id) . '">';
 		$HTML .= freshports_Mail_Icon();
 		$HTML .= '</A>';
 	}
@@ -190,10 +133,10 @@ GLOBAL $BannerAd;
 ';
 
    if ($ShowAds) {
-      freshports_BurstMediaCode();
+      BurstMediaCode();
       if ($BannerAd) {
 		echo '<CENTER>';
-		freshports_BurstMediaAd();
+		BurstMediaAd();
 		echo '</CENTER>';
       }
    }
@@ -261,6 +204,7 @@ function freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum=0) {
 	freshports_style($Phorum);
 
 	echo "
+	<meta http-equiv=\"Content-Type\" content=\"text/html; charset=ISO-8859-1\">
 	<META NAME=\"description\" CONTENT=\"";
 
 	if ($Description) {
@@ -295,7 +239,7 @@ if ($Phorum) {
 
 function freshports_style($Phorum=0) {
 
-	echo "\n        <STYLE>\n";
+	echo "\n        <STYLE TYPE=\"text/css\">\n";
 
 if (2==2) {
 ?>
@@ -328,91 +272,13 @@ BODY, TD, TR, P, UL, OL, LI, INPUT, SELECT, DL, DD, DT, FONT
 	}
 }
 
-function freshports_BurstMediaCode() {
-#
-# This is required on all pages which contain Burst Ads.  It's the base code.
-#
-
-echo '
-<!-- BEGIN RICH-MEDIA BURST! CODE -->
-<script language="JavaScript">
-<!-- /* © 1997-2001 BURST! Media, LLC. All Rights Reserved.*/
-function ShowBurstAd(adcode, width, height) {
- var bN = navigator.appName;
- var bV = parseInt(navigator.appVersion);
- var base=\'http://www.burstnet.com/\';
- var Tv=\'\';
- var agt=navigator.userAgent.toLowerCase();
- if (bV>=4)
- {ts=window.location.pathname+window.location.search;
-  i=0; Tv=0; while (i< ts.length)
-    { Tv=Tv+ts.charCodeAt(i); i=i+1; } Tv="/"+Tv;}
-  else   {Tv=escape(window.location.pathname);
-  if( Tv.charAt(0)!=\'/\' ) Tv="/"+Tv;
-    else if (Tv.charAt(1)=="/")
- Tv="";
- if( Tv.charAt(Tv.length-1) == "/")
-   Tv = Tv + "_";}
- if (bN==\'Netscape\'){
-  if ((bV>=4)&&(agt.indexOf("mac")==-1))
- { document.write(\'<s\'+\'cript src="\'+
-  base+\'cgi-bin/ads/\'+adcode+\'.cgi/RETURN-CODE/JS\'
-  +Tv+\'">\');
-  document.write(\'</\'+\'script>\');
- }
-   else if (bV>=3) {document.write(\'<\'+\'a href="\'+base+\'ads/\' +
-  adcode + \'-map.cgi\'+Tv+\'"target=_top>\');
-  document.write(\'<img src="\' + base + \'cgi-bin/ads/\' +
-  adcode + \'.cgi\' + Tv + \'" width="\' + width + \'" height="\' + height + \'"\' +
-  \' border="0" alt="Click Here"></a>\');}
-}
-if (bN==\'Microsoft Internet Explorer\')
-document.write(\'<ifr\'+\'ame id="BURST" src="\'+base+\'cgi-bin/ads/\'
-+
-adcode + \'.cgi\' + Tv + \'/RETURN-CODE" width="\' + width + \'" height="\' + height + \'"\' +
-\'marginwidth="0" marginheight="0" hspace="0" vspace="0" \' +
-\'frameborder="0" scrolling="no"></ifr\'+\'ame>\');
-}
-//-->
-</script>
-<!-- END BURST CODE -->
-';
-}
-
-function freshports_BurstMediaAd() {
-#
-# This goes at the top of each article and show the ad, the graphic, and the links
-#
-GLOBAL $AddressForAds;
-
-echo '
-        <!-- BEGIN RICH-MEDIA BURST! CODE -->
-        <script language="JavaScript">
-        <!--
-        ShowBurstAd(\'ad4556a\',\'468\',\'60\');
-        // --></script>
-        <noscript><a href="http://www.burstnet.com/ads/ad4556a-
-        map.cgi/ns" target="_top"><img src="http://www.burstnet.com/cgi-
-        bin/ads/ad4556a.cgi/ns" <width="468" height="60"
-        border="0" alt="Click Here"></a>
-        </noscript>
-        <!-- END BURST CODE -->
-';
-
-#<BR>
-#
-#<small>Your ad here.&nbsp; Please <a href="mailto:" . $AddressForAds . "?subject=your ad here">contact us</A> for deta
-
-}
-
-
 function freshports_body() {
 
 GLOBAL $OnLoad;
 GLOBAL $Debug;
 
 echo '
-<BODY BGCOLOR="#FFFFFF" TEXT="#000000" LEFTMARGIN="0" TOPMARGIN="0" MARGINWIDTH="0" MARGINHEIGHT="0"';
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000" ';
 
 # should we have an onload?
 if ($OnLoad) {
@@ -677,7 +543,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 
    // description
    if ($port->short_description && ($ShowShortDescription == "Y" || $ShowEverything)) {
-      $HTML .= $port->short_description;
+      $HTML .= htmlspecialchars($port->short_description);
       $HTML .= "<br>\n";
    }
 
@@ -859,8 +725,6 @@ function diary_ads_Random() {
 
 echo '  <P ALIGN="center">
         <a href="http://magazine.daemonnews.org/" target="_top"><img src="/ads/daemonnews.gif" width="468" height="60" border="0" alt="Daemon News - Bringing BSD Together"></a>
-        </noscript>
-        <!-- END BURST CODE -->
         </P>
 ';
 
@@ -974,7 +838,8 @@ $url2link_cutoff_level = 70;
 function freshports_PortCommitsHeader($port) {
 	# print the header for the commits for a port
 
-	echo '<TABLE BORDER="1" width="100%" CELLSPACING="0" CELLPADDING="5"bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">' . "\n";
+	echo '<TABLE BORDER="1" width="100%" CELLSPACING="0" CELLPADDING="5">' . "\n";
+	echo "<TR>\n";
 
 	freshports_PageBannerText("Commit History - (may be incomplete: see CVSWeb link above for full details)", 3);
 

@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.39 2002-04-14 18:47:48 dan Exp $
+	# $Id: index.php,v 1.1.2.40 2002-04-19 17:06:19 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -23,19 +23,18 @@ function freshports_SummaryForDay($MinusN) {
    $File = $BaseDirectory . "/" . date("Y/m/d", $Now - 60*60*24*$MinusN) . ".inc";  
 //   echo "$File<br>\n";
    if (file_exists($File)) {
-      echo '<br><table WIDTH="152" BORDER="1" CELLSPACING="0" CELLPADDING="5"';
-      echo '      bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">';
-      echo '  <tr>';
-      echo '<td bgcolor="#AD0040" height="30"><font color="#FFFFFF" SIZE="+1">';
+      echo '<br><TABLE WIDTH="152" BORDER="1" CELLSPACING="0" CELLPADDING="5">';
+      echo '  <TR>';
+      echo '<TD bgcolor="#AD0040" height="30"><font color="#FFFFFF" SIZE="+1">';
       echo date("l j M", $Now - 60*60*24*$MinusN);
-      echo '</font></td>';
-      echo '       </tr>';
-      echo '        <tr>';
-      echo '         <td>';
+      echo '</font></TD>';
+      echo '       </TR>';
+      echo '        <TR>';
+      echo '         <TD>';
       include($File);
-      echo '   </td>';
-      echo '   </tr>';
-      echo '   </table>';
+      echo '   </TD>';
+      echo '   </TR>';
+      echo '   </TABLE>';
    }
 }
 
@@ -77,21 +76,21 @@ if ($Debug) {
 
 ?>
 
-<TABLE WIDTH="<? echo $TableWidth ?>" BORDER="0" ALIGN="center">
+<TABLE WIDTH="100%" BORDER="0" ALIGN="center">
 
 <?
 if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 ?>
-  <tr>
-    <td colspan="2">
+  <TR>
+    <TD colspan="2">
        <? include ("announcement.txt"); ?>
-    </td>
-  </tr>
+    </TD>
+  </TR>
 <?
 }
 ?>
 
-<script language="php">
+<?php
 
 function StripQuotes($string) {
 	$string = str_replace('"', '', $string);
@@ -162,20 +161,19 @@ if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 
 ?>
 
-<tr><td VALIGN="top" WIDTH="100%">
-<table width="100%" border="1" CELLSPACING="0" CELLPADDING="8"
-            bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">
-<tr>
+<TR><TD VALIGN="top" WIDTH="100%">
+<TABLE WIDTH="100%" border="1" CELLSPACING="0" CELLPADDING="8">
+<TR>
 		<? freshports_PageBannerText("$MaxNumberOfPorts most recent commits", 3); ?>
-        <? //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPorts) ?></BIG></B></font>
-</tr>
+        <? //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPorts) ?>
+</TR>
 <TR><TD>
 <P>
 Welcome to FreshPorts, where you can find the latest information on your favourite
 ports. A port is marked as new for 10 days.
 </P>
 
-</TR></TD>
+</TD></TR>
 
 <?
 #				print "NumRows = $NumRows\n<BR>";
@@ -264,18 +262,17 @@ ports. A port is marked as new for 10 days.
 							}
 
 							if ($myrow["forbidden"]) {
-								$HTML .= freshports_Forbidden_Icon() . "\n";
+								$HTML .= ' ' . freshports_Forbidden_Icon() . "\n";
 							}
 
 							if ($myrow["broken"]) {
 								$HTML .= ' '. freshports_Broken_Icon() . "\n";
 							}
 
-#							$HTML .= "&nbsp;";
 							$HTML .= freshports_CommitFilesLink($myrow["commit_log_id"], $myrow["category"], $myrow["port"]);
 							$HTML .= "&nbsp;";
 
-							$HTML .= $myrow["short_description"] . "\n";
+							$HTML .= htmlspecialchars($myrow["short_description"]) . "\n";
 						}
 
 						$j++;
@@ -296,26 +293,22 @@ ports. A port is marked as new for 10 days.
 					$HTML .= "\n</BLOCKQUOTE>\n</TD></TR>\n\n\n";
 				}
 
-				$HTML .= "</td></tr>\n\n";
-
 				echo $HTML;
 
-	            echo "</table>\n";
+	            echo "</TABLE>\n";
 			} else {
 				echo "<P>Sorry, nothing found in the database....</P>\n";
 			}
          } else {
             echo "read from test failed";
          }
-
-#         pg_exec ($database, "end");
       } else {
          echo "no connection";
       }
 
-</script>
-</td>
-  <td valign="top" width="*">
+?>
+</TD>
+  <TD VALIGN="top" WIDTH="*">
    <? include("./include/side-bars.php") ?>
 <?
 	freshports_SummaryForDay(0);
@@ -328,9 +321,9 @@ ports. A port is marked as new for 10 days.
 	freshports_SummaryForDay(7);
 	freshports_SummaryForDay(8);
 ?>
- </td>
-</tr>
-</table>
+ </TD>
+</TR>
+</TABLE>
 
 <BR>
 

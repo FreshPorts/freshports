@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-port.php,v 1.1.2.20 2002-04-12 14:29:13 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.21 2002-04-19 17:06:20 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
@@ -118,12 +118,12 @@ function freshports_PortDescription($port) {
 
 ?>
 
-<TABLE WIDTH="<? echo $TableWidth ?>" BORDER="0" ALIGN="center" VALIGN="top">
+<TABLE WIDTH="<? echo $TableWidth ?>" BORDER="0" ALIGN="center">
 <tr><TD VALIGN="top" width="100%">
-<TABLE BORDER="1" WIDTH="100%" CELLSPACING="0" CELLPADDING="5" BORDERCOLOR="#a2a2a2" BORDERCOLORDARK="#a2a2a2" BORDERCOLORLIGHT="#a2a2a2">
-
-
+<TABLE BORDER="1" WIDTH="100%" CELLSPACING="0" CELLPADDING="5">
+<TR>
 <? freshports_PageBannerText("Port details"); ?>
+</TR>
 
 <tr><td valign="top" width="100%">
 
@@ -149,7 +149,7 @@ $ShowDescriptionLink	= "N";
     echo '<PRE CLASS="code">' . convertAllLinks(htmlspecialchars($port->long_description)) . '</PRE>';
 	echo "\n</DD>\n</DL>\n";
 
-	echo '</TD></TR></TABLE>';
+	echo "</TD></TR>\n</TABLE>\n\n";
 #	echo 'about to call freshports_PortCommits #############################';
 
 	freshports_PortCommits($port);

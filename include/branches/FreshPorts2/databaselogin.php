@@ -1,12 +1,36 @@
-<?
-   # $Id: databaselogin.php,v 1.1.2.2 2002-12-11 04:33:45 dan Exp $
+<?php
+	#
+   # $Id: databaselogin.php,v 1.1.2.3 2003-05-16 02:30:44 dan Exp $
    #
-   # Copyright (c) 1998-2001 DVL Software Limited
+   # Copyright (c) 1998-2003 DVL Software Limited
 	#
 
    # this file is merely a placeholder for the readfile.
    # see common.php for the configuration settings.
 
    require_once("$PathToDatabaseConfigFile/database.php");
+
+
+	if (!$AllowUserChanges) {
+		#
+		# This is a list of pages which allow users to make changes
+		# to their data.
+		#
+
+		$UserChangesPages['/committer-opt-in.php']       = 1;
+		$UserChangesPages['/customize.php']              = 1;
+		$UserChangesPages['/new-user.php']               = 1;
+		$UserChangesPages['/pkg_upload.php']             = 1;
+		$UserChangesPages['/port-watch.php']             = 1;
+		$UserChangesPages['/report-subscriptions.php']   = 1;
+		$UserChangesPages['/watch-categories.php']       = 1;
+		$UserChangesPages['/watch-list-maintenance.php'] = 1;
+		$UserChangesPages['/watch-list.php']             = 1;
+
+		if ($UserChangesPages[$_SERVER['PHP_SELF']]) {
+			echo 'User changes are not allowed just now.';
+			exit;
+		}
+	}
 
 ?>

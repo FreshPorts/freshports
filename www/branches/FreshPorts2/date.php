@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: date.php,v 1.1.2.24 2004-08-09 22:31:45 dan Exp $
+	# $Id: date.php,v 1.1.2.25 2004-09-22 15:29:56 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -151,12 +151,7 @@
 					$HTML .= '<A HREF="/' . $commit->category . '/' . $commit->port . '/">';
 					$HTML .= $commit->port;
 				
-					if (strlen($commit->version) > 0) {
-						$HTML .= ' ' . $commit->version;
-						if (strlen($commit->revision) > 0 && $commit->revision != "0") {
-				    		$HTML .= FRESHPORTS_VERSION_REVISION_JOINER . $commit->revision;
-						}
-					}
+					$HTML .= ' ' . freshports_PackageVersion($commit->version, $commit->revision, $commit->epoch);
 		
 					$HTML .= "</A></B></BIG>\n";
 		

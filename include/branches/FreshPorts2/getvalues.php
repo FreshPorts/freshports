@@ -1,6 +1,6 @@
 <?php
 
-	# $Id: getvalues.php,v 1.1.2.16 2002-05-31 01:32:34 dan Exp $
+	# $Id: getvalues.php,v 1.1.2.17 2002-12-04 18:57:24 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -119,17 +119,17 @@ if (!empty($visitor)) {
 
 				$watchnotifyfrequency	= $WatchNotice->frequency;
 
-				$WatchListID			= $myrow["watch_list_id"];
+				$WatchListID				= $myrow["watch_list_id"];
 
-//				$MaxNumberOfPorts		= $myrow["max_number_of_ports"];
+//				$MaxNumberOfPorts			= $myrow["max_number_of_ports"];
 				$ShowShortDescription	= $myrow["show_short_description"];
-				$ShowMaintainedBy		= $myrow["show_maintained_by"];
+				$ShowMaintainedBy			= $myrow["show_maintained_by"];
 				$ShowLastChange			= $myrow["show_last_change"];
-				$ShowDescriptionLink	= $myrow["show_description_link"];
-				$ShowChangesLink		= $myrow["show_changes_link"];
+				$ShowDescriptionLink		= $myrow["show_description_link"];
+				$ShowChangesLink			= $myrow["show_changes_link"];
 				$ShowDownloadPortLink	= $myrow["show_download_port_link"];
-				$ShowPackageLink		= $myrow["show_package_link"];
-				$ShowHomepageLink		= $myrow["show_homepage_link"];
+				$ShowPackageLink			= $myrow["show_package_link"];
+				$ShowHomepageLink			= $myrow["show_homepage_link"];
 
 /*
 				if ($myrow["days_marked_as_new"]) {

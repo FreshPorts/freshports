@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.4 2001-11-26 06:39:07 dan Exp $
+   # $Id: freshports.php,v 1.4.2.5 2001-11-29 04:08:16 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -321,9 +321,9 @@ function freshports_PortIDFromPortCategory($category, $port, $db) {
 function freshports_CategoryIDFromCategory($category, $db) {
    $sql = "select categories.id from categories where categories.name = '$category'";
 
-   $result = mysql_query($sql, $db);
-   if(mysql_numrows($result)) {
-      $myrow = mysql_fetch_array($result);
+   $result = pg_exec($db, $sql);
+   if(pg_numrows($result)) {
+      $myrow = pg_fetch_array($result, 0);
       $CategoryID = $myrow["id"];
    }
    

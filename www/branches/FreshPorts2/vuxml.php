@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: vuxml.php,v 1.1.2.11 2005-01-06 04:25:22 dan Exp $
+	# $Id: vuxml.php,v 1.1.2.12 2005-01-08 14:12:42 dan Exp $
 	#
 	# Copyright (c) 2004 DVL Software Limited
 	#
@@ -38,9 +38,9 @@ This page displays <a href="<?php echo VUXMLURL; ?>">vulnerability information</
 <?php
 	if (file_exists(VUXMLREVISION) && is_readable(VUXMLREVISION)) {
 		echo '<p>The last vuln.xml file processed by FreshPorts is:</p>';
-		echo '<pre>';
+		echo "<blockquote><pre>\n";
 		require_once(VUXMLREVISION);
-		echo '</pre>';
+		echo "</pre></blockquote>\n";
 	}
 
 	if (!IsSet($_REQUEST['list'])) {
@@ -126,6 +126,7 @@ ORDER BY lower(VN.name), V.vid
 			$NumPackages = 0;
 			$VIDs        = array();
 			echo '<table border="1">' . "\n";
+			echo '<th colspan="3">VuXML entries as process by FreshPorts</th>';
 			echo '<tr><td><b>';
 			echo 'package';
 			echo '</b></td><td align="center"><b>';

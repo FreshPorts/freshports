@@ -1,5 +1,5 @@
 <?
-// function SplitPackage($pkg,$arr) {{{
+// {{{ function SplitPackage($pkg,$arr)
 /**
 * Take a package name (basename-version) and split it 
 * @param
@@ -12,8 +12,9 @@ function SplitPackage($pkg,&$arr) {
 	}
 	$arr[] = $pkg;
 	return $arr;
-}/*}}}*/
-// function ReadINDEX() {{{
+}
+//}}}
+// {{{ function ReadINDEX()
 /**
 * Read in the INDEX file
 *
@@ -50,7 +51,7 @@ function ReadINDEX() {
 	return $indexArray;
 }
 // }}}
-// function ProcessPackages {{{
+// {{{ function ProcessPackages
 /**
 * Process the package file (this will be slimmed down, when there is no more debug
 *

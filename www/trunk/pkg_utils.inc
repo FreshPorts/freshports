@@ -19,7 +19,7 @@ function epp($s) {
 	echo dbgonly("<pre>DBG: $s</pre>");
 }
 
-// function &DBConnect() {{{
+// {{{ function &DBConnect()
 /**
 *
 * @param
@@ -34,7 +34,7 @@ function &DBConnect() {
 	return $database;
 }
 // }}}
-// function Cleanup() {{{
+// {{{ function Cleanup()
 function Cleanup() {
 	global $database;
 	if ($database) {
@@ -42,7 +42,7 @@ function Cleanup() {
 	}
 }
 //}}}
-// function IsLoginValid($user,$pw,&$retval) {{{
+// {{{ function IsLoginValid($user,$pw,&$retval)
 /**
 *
 * @param
@@ -68,7 +68,7 @@ function IsLoginValid($user,$pw,&$retval) {
 	return $retval;
 }
 // }}}
-// function GetWatchID($userID,&$watchID) {{{
+// {{{ function GetWatchID($userID,&$watchID)
 /**
 *
 * @param
@@ -95,7 +95,7 @@ function GetWatchID($userID,&$watchID) {
 	return $retval;
 }
 // }}}
-// function CleanPorts($watchID) {{{
+// {{{ function CleanPorts($watchID)
 /**
 *
 * @param
@@ -124,7 +124,7 @@ function CleanPorts($watchID) {
 	return $retval;
 }
 // }}}
-// function AddPortsToList($ports,$userID) {{{
+// {{{ function AddPortsToList($ports,$userID)
 /**
 *
 * @param

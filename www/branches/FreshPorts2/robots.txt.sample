@@ -1,9 +1,5 @@
 # robots.txt for http://www.freshports.org/
 
-# Google is my friend
-User-agent: Googlebot
-Disallow:
-
 # all others, please don't...
 User-agent: *
 Disallow: /

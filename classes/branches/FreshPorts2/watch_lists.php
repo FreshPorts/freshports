@@ -1,9 +1,9 @@
 <?php
-	# $Id: watch_lists.php,v 1.1.2.7 2003-01-04 17:11:02 dan Exp $
 	#
-	# Copyright (c) 1998-2002 DVL Software Limited
+	# $Id: watch_lists.php,v 1.1.2.8 2003-01-04 17:20:14 dan Exp $
 	#
-
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_list.php');
 

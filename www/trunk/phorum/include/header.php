@@ -1,6 +1,7 @@
 <?
 require( "../_private/commonlogin.php3");
 require( "../_private/getvalues.php3");
+require( "../_private/freshports.php3");
 ?>
 
 <HTML>

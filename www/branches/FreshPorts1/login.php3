@@ -1,5 +1,5 @@
 <?
-   # $Id: login.php3,v 1.21 2001-10-20 21:50:39 dan Exp $
+   # $Id: login.php3,v 1.21.4.1 2002-04-17 03:19:53 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -132,7 +132,7 @@ echo"
 </tr>
 </table>";
 
-echo '<br><a href="forgotten-password.php3">Forgotten your password?</a>';
+echo '<br><a href="forgotten-password.php3">Forgotten your login or password?</a>';
 
 ?></td>
 </td>

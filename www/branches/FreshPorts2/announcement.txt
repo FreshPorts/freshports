@@ -1,10 +1,5 @@
 <P>
-<BIG><BIG>HEADS UP: serious problem with watch list notifications</BIG></BIG> - please read <a href="http://www.freshports.org/phorum/read.php?f=1&i=413&t=413">the details.</a>
-<P>
-<BIG><BIG>HEADS UP: changes to notification mail headers</BIG></BIG> - please read <a href="http://www.freshports.org/phorum/read.php?f=1&i=410&t=410">the notice.</a>
-</P>
-<P>
-<BIG><BIG>HEADS UP: fortnightly/monthly reports</BIG></BIG> - are you getting <a href="http://www.freshports.org/phorum/read.php?f=1&i=425&t=425">yours?</a>
+<BIG><BIG>Multiple watch lists!</BIG></BIG> - testers wanted please read  <a href="http://www.burstnet.com/cgi-bin/ads/ba4556a.cgi/2545/RETURN-CODE">this notice!</a>
 </P>
 <P>
 

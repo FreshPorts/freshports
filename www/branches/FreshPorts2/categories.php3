@@ -1,5 +1,5 @@
 <?
-   # $Id: categories.php3,v 1.15.2.1 2001-11-25 19:48:10 dan Exp $
+   # $Id: categories.php3,v 1.15.2.2 2001-11-29 04:07:26 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -103,7 +103,6 @@ $result = pg_exec($db, $sql);
 
 $HTML .= freshports_echo_HTML('<tr><td>');
 
-//$HTML .= freshports_echo_HTML('<table width="100%" border=6><tr>');
 $HTML .= freshports_echo_HTML('<tr>');
 
 if ($sort == "category") {
@@ -171,25 +170,6 @@ freshports_echo_HTML_flush();
 
 echo $HTML;                                                   
 
-                          
-#   $fpwrite = fopen($cache_file, 'w');
-#   if(!$fpwrite) {                                          
-#      echo 'error on open<br>';
-#      echo "$errstr ($errno)<br>\n";
-#      exit;
-#   } else {
-#//      echo 'written<br>';
-#      fputs($fpwrite, $HTML);        
-#      fclose($fpwrite);
-#   }                                                                                      
-#} else {                                                                                       
-#//   echo 'looks like I\'ll read from cache this time';                  
-#   if (file_exists($cache_file)) {
-#      include($cache_file);              
-#   }                                                     
-#}
-
-         
 </script>
 </td>
   <td valign="top" width="*">

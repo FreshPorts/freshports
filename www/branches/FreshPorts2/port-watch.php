@@ -1,5 +1,5 @@
 <?
-	# $Id: port-watch.php,v 1.1.2.6 2002-02-28 17:45:39 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.7 2002-04-20 03:21:14 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -160,7 +160,7 @@ echo '</td></tr><tr><td>';
 } else {
 ?>
 <UL>
-<LI>This page shows you the ports in category <em><?echo $category->{name} ?></em>
+<LI>This page shows you the ports in a category (<em><?echo $category->{name} ?></em>)
 that are on your watch list.</LI>
 <LI>The entries with a tick beside them are your watch list.</LI>
 <LI>When one of the ports in your watch list changes, you will be notified by email if

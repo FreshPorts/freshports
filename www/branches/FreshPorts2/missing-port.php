@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-port.php,v 1.1.2.23 2002-06-09 21:42:38 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.24 2002-09-26 16:08:52 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
@@ -146,7 +146,7 @@ $ShowDescriptionLink	= "N";
 	echo $HTML;
 
 	echo '<DL><DD>';
-    echo '<PRE CLASS="code">' . convertAllLinks(htmlspecialchars($port->long_description)) . '</PRE>';
+    echo '<PRE CLASS="code">' . htmlify(htmlspecialchars($port->long_description)) . '</PRE>';
 	echo "\n</DD>\n</DL>\n";
 
 	echo "</TD></TR>\n</TABLE>\n\n";

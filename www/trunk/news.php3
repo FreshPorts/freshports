@@ -1,5 +1,5 @@
 <?
-   # $Id: news.php3,v 1.11 2001-10-03 02:16:17 dan Exp $
+   # $Id: news.php3,v 1.12 2001-10-07 03:49:00 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -105,20 +105,20 @@ $sql = "select ports.id, ports.name as port, change_log.commit_date as updated_r
        "  and change_log.id                   = change_log_port.change_log_id " .
        "  and change_log.commit_date          > '" . date("Y-m-d", time() - 60*60*24*14) . "' ";
 
-/*
-$AnnounceFile = "news.announcement.txt";
-if (file_exists($AnnounceFile) && filesize($AnnounceFile) > 4) {
+
+#$AnnounceFile = "news.announcement.txt";
+#if (file_exists($AnnounceFile) && filesize($AnnounceFile) > 4) {
    $sql .= " order by $sort limit 19";
    $HTML .= '  <item>' . "\n";
-   $HTML .= '    <title>Please take our survey</title>' . "\n";
-   $HTML .= '    <link>http://freshports.org/survey/</link>' . "\n";
-   $HTML .= '    <description>Help us design FreshPorts2</description>' . "\n";
+   $HTML .= '    <title>FreshPorts has a new faster webserver</title>' . "\n";
+   $HTML .= '    <link>http://www.FreshPorts.org/</link>' . "\n";
+   $HTML .= '    <description>the place for ports - same great content; far faster delivery</description>' . "\n";
    $HTML .= '  </item>' . "\n";
 
    $TEXT .= 'Please take our survey' . "\n";
    $TEXT .= 'http://freshports.org/survey/' . "\n";
-} else { */
-   $sql .= " order by $sort limit 20";
+#} else { */
+#   $sql .= " order by $sort limit 20";
 #}
 
 if ($Debug) {

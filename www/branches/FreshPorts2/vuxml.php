@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: vuxml.php,v 1.1.2.5 2004-09-28 03:25:03 dan Exp $
+	# $Id: vuxml.php,v 1.1.2.6 2004-09-28 03:27:31 dan Exp $
 	#
 	# Copyright (c) 2004 DVL Software Limited
 	#
@@ -83,6 +83,7 @@ ORDER BY lower(VN.name), V.vid
 			$numrows = pg_numrows($result);
 
 			$LastName    = '';
+			$LastVID     = '';
 			$Count       = 0;
 			$NumPackages = 0;
 			$VIDs        = array();

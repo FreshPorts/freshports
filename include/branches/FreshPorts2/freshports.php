@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.191 2004-11-30 12:50:09 dan Exp $
+	# $Id: freshports.php,v 1.4.2.192 2004-12-01 03:28:39 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -127,7 +127,7 @@ function freshports_Files_Icon() {
 }
 
 function freshports_Refresh_Icon() {
-	return '<IMG SRC="/images/refresh.gif" ALT="Refresh" TITLE="Refresh" BORDER="0" WIDTH="15" HEIGHT="18">';
+	return '<IMG SRC="/images/refresh.gif" ALT="Refresh" TITLE="Refresh - this port is being refreshed, or make failed to run error-free." BORDER="0" WIDTH="15" HEIGHT="18">';
 }
 
 function freshports_Deleted_Icon() {

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.145 2003-05-16 02:44:13 dan Exp $
+	# $Id: freshports.php,v 1.4.2.146 2003-05-16 02:56:43 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -8,7 +8,9 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/constants.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/burstmedia.php');
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/announcements.php');
+	if ($ShowAnnouncements) {
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/announcements.php');
+	}
 #
 # special HTMLified mailto to foil spam harvesters
 #
@@ -279,12 +281,15 @@ GLOBAL $BannerAd;
    freshports_Logo();
    freshports_navigation_bar_top();
 
-	GLOBAL $db;
-	$Announcement = new Announcement($db);
+	if ($ShowAnnouncements) {
 
-	$NumRows = $Announcement->FetchAllActive();
-	if ($NumRows > 0) {
-		echo DisplayAnnouncements($Announcement);
+		GLOBAL $db;
+		$Announcement = new Announcement($db);
+
+		$NumRows = $Announcement->FetchAllActive();
+		if ($NumRows > 0) {
+			echo DisplayAnnouncements($Announcement);
+		}
 	}
 }
 
@@ -657,9 +662,9 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 		$HTML .= freshports_New_Icon() . "\n";
 	}
 
-#	if ($ShowWatchListCount) {
-		$HTML .= ' <a href="/faq.php">WLC</a>=' . $port->WatchListCount() . '<br>';
-#	}
+	if ($ShowWatchListCount) {
+		$HTML .= '&nbsp; <a href="/faq.php"><img src="/images/sum.gif" width="12" height="17" alt="WLC" title="watch list count" align="center"></a>' . $port->WatchListCount() . '</a><br>';
+	}
 
 	$HTML .= "</DT>\n<DD>";
 	# show forbidden and broken

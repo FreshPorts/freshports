@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.1 2003-12-04 22:52:00 dan Exp $
+	# $Id: index.php,v 1.1.2.2 2003-12-04 23:06:19 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -42,10 +42,14 @@ Here a few supporting documents:
 
 <ul>
 <li><a href="/fraud/freshports.net.jpg">Their fake page</a>
+<li><a href="/fraud/freshports.net.code.php">Source code for their page</a>
 <li><a href="/fraud/freshports.net.paypal.jpg">Their paypal page</a>
+<li><a href="/fraud/freshports.net.mozilla.cache.php">Mozilla cache</a>
 <li><a href="/fraud/whois.freshports.net.php">whois freshports.net</a>
 <li><a href="/fraud/first-email.php">My request to them</a>
 <li><a href="/fraud/their-reply.php">Their reply<a/>
+<li><a href="/fraud/their-reply2.php">Their second reply<a/>
+<li><a href="/fraud/second-email.php">Their second reply<a/>
 </ul>
 </td></tr>
 

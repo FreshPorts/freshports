@@ -1,5 +1,5 @@
 <?
-	# $Id: faq.php,v 1.1.2.23 2002-12-02 18:32:08 dan Exp $
+	# $Id: faq.php,v 1.1.2.24 2002-12-08 03:26:23 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -13,6 +13,10 @@
 					"FreeBSD, index, applications, ports");
 
 	$ServerName = str_replace("freshports", "FreshPorts", $_SERVER["SERVER_NAME"]);
+
+	GLOBAL $FreshPortsName;
+	GLOBAL $FreshPortsSlogan;
+
 ?>
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <tr><td valign="top" width="100%">
@@ -172,13 +176,13 @@ down you must read to find something you didn't already know.</P>
 		<P>Here is a banner which you are free to use to link to this site:</P>
 
 		<P ALIGN="center">
-		<img src="images/freshports-banner.gif" alt="FreshPorts - the place for ports" width="468" height="60">
+		<img src="images/freshports-banner.gif" alt="<?php echo "$FreshPortsName -- $FreshPortsSlogan"; ?>" title="<?php echo "$FreshPortsName -- $FreshPortsSlogan"; ?>" width="468" height="60">
 		</P>
 
 		Here is the HTML for that graphic.
 
 		<BLOCKQUOTE>
-		<CODE CLASS="code">&lt;img src="images/freshports-banner.gif" alt="FreshPorts - the place for ports" width="468" height="60"&gt;</CODE>
+		<CODE CLASS="code">&lt;img src="images/freshports-banner.gif" alt="<?php echo "$FreshPortsName -- $FreshPortsSlogan"; ?>" title="<?php echo "$FreshPortsName -- $FreshPortsSlogan"; ?> width="468" height="60"&gt;</CODE>
 		</BLOCKQUOTE>
 
 

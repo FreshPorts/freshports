@@ -1,5 +1,5 @@
 <?
-	# $Id: search.php,v 1.1.2.22 2002-05-19 22:47:54 dan Exp $
+	# $Id: search.php,v 1.1.2.23 2002-05-21 04:59:29 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -10,18 +10,34 @@
 
 	require("../classes/ports.php");
 
-	// avoid nasty problems by adding slashes
-	$query		= AddSlashes($_POST["query"]);
-	$stype		= AddSlashes($_POST["stype"]);
-	$num		= AddSlashes($_POST["num"]);
-	$category	= AddSlashes($_POST["category"]);
-	$port		= AddSlashes($_POST["port"]);
-	$method		= AddSlashes($_POST["method"]);
+	switch ($_SERVER["REQUEST_METHOD"]) {
+		case "POST":
+			// avoid nasty problems by adding slashes
+			$query		= AddSlashes($_POST["query"]);
+			$stype		= AddSlashes($_POST["stype"]);
+			$num		= AddSlashes($_POST["num"]);
+			$category	= AddSlashes($_POST["category"]);
+			$port		= AddSlashes($_POST["port"]);
+			$method		= AddSlashes($_POST["method"]);
+			break;
+
+		case "GET":
+			// avoid nasty problems by adding slashes
+			$query		= AddSlashes($_GET["query"]);
+			$stype		= AddSlashes($_GET["stype"]);
+			$num		= AddSlashes($_GET["num"]);
+			$category	= AddSlashes($_GET["category"]);
+			$port		= AddSlashes($_GET["port"]);
+			$method		= AddSlashes($_GET["method"]);
+			break;
+	}
 
 	if ($stype == 'messageid') {
 		header("Location: http://" . $_SERVER["HTTP_HOST"] . "/commit.php?message_id=$query");
 		exit;
 	}
+
+#phpinfo();
 
 	freshports_Start("Search",
 					"freshports - new ports, applications",

@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_upload.php,v 1.5.2.4 2002-02-27 02:25:07 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.5 2002-02-27 04:11:41 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -162,14 +162,35 @@ function StagingAlreadyInUse($WatchListID, $dbh) {
 	}
 
 	if ($DisplayStagingArea) {
-		echo '<TABLE ALIGN="center"><TR><TD VALIGN="top"><B>Ports found</B><BR>' . "\n";
-		UploadDisplayStagingResultsMatches  ($WatchListID, $db);
-		echo '</TD><TD VALIGN="top"><B>These ports are installed on your system but could not be located within FreshPorts.  Perhaps they have
-									either been renamed or removed from the ports tree.</B><BR>' . "\n";
+		echo '<TABLE ALIGN="center" BORDER="10"><TR>';
+
+		echo '<TD VALIGN="top"><B>Ports found</B></TD>' . "\n";
+		echo '<TD VALIGN="top"><B>Ports with multiple matches</B></TD>' . "\n";
+		echo '<TD VALIGN="top"><B>These ports are installed on your system but could not be located within FreshPorts.  Perhaps they have
+									either been renamed or removed from the ports tree.</B></TD>' . "\n";
+		echo '<TD VALIGN="top"><B>The following ports have been installed multiple times, most definitely with different versions on
+											 your system.</B></TD>' . "\n";
+
+		echo '</TR><TR>';
+
+	
+		echo '<TD VALIGN="top">' . "\n";
+		UploadDisplayStagingResultsMatches($WatchListID, $db);
+		echo '</TD>';
+
+		echo '<TD VALIGN="top">' . "\n";
+		UploadDisplayStagingResultsMatchesMultiple($WatchListID, $db);
+		echo '</TD>';
+
+		echo '<TD VALIGN="top">' . "\n";
 		UploadDisplayStagingResultsMatchesNo($WatchListID, $db);
-		echo '</TD><TD VALIGN="top"><B>The following ports have been installed multiple times, most definitely with different versions on your system.</B><BR>' . "\n";
+		echo '</TD>';
+
+		echo '<TD VALIGN="top">' . "\n";
 		UploadDisplayStagingResultsMatchesDuplicates($WatchListID, $db);
-		echo "</TD></TABLE>";
+		echo '</TD>';
+
+		echo '</TABLE>';
 	}
 	?>
 </TD>

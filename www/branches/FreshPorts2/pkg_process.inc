@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_process.inc,v 1.5.2.3 2002-02-27 02:25:07 dan Exp $
+	# $Id: pkg_process.inc,v 1.5.2.4 2002-02-27 04:11:41 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 	#
@@ -119,8 +119,6 @@ function ProcessPackages($WatchListID, $filename, $userID, $clean, $dbh) {
 
 	pg_exec ($dbh, "commit");
 
-	UploadDisplayStagingResults($WatchListID, $dbh);	
-
 	return false;  #***********************************
 
 	// profiling info {{{
@@ -139,11 +137,21 @@ function UploadDisplayStagingResultsMatches($WatchListID, $dbh) {
 					watch_list_staging_results.element_id as element_id, 
 					from_pkg_info,
 					count_on_pkg_info,
-					from_watch_list
-			   FROM	watch_list_staging, watch_list_staging_results
+					from_watch_list,
+					categories.name                       AS category
+			   FROM	watch_list_staging, watch_list_staging_results, ports, categories
 			  WHERE $WatchListID          = watch_list_staging.watch_list_id
 			    AND watch_list_staging.id = watch_list_staging_results.watch_list_staging_id
 			    AND count_on_pkg_info     = 1
+				AND ports.element_id      = watch_list_staging_results.element_id
+				AND ports.category_id     = categories.id
+			    AND (
+					SELECT count(element_id) 
+					  FROM watch_list_staging_results
+					 WHERE $WatchListID          = watch_list_staging.watch_list_id
+					   AND watch_list_staging.id = watch_list_staging_results.watch_list_staging_id
+					 GROUP BY port_name
+					) = 1
 			  ORDER BY port";
 
 #	echo $sql;
@@ -153,21 +161,90 @@ function UploadDisplayStagingResultsMatches($WatchListID, $dbh) {
 	?>
 
 	<TABLE ALIGN="center" BORDER="1" CELLSPACING="2" CELLSPADDING="3">
-	<TR><TD><B>Port name</B></TD><TD><B>Status</B></TD><TD COLSPAN="2"><B>Source</B></TD><TD>&nbsp;</TD></TR>
+	<TR><TD NOWRAP><B>Port name</B></TD><TD><B>Category</B></TD><TD COLSPAN="2"><B>Source</B></TD></TR>
 
 	<?
 	if ($result) {
 		$numrows = pg_numrows($result);
 		for ($i = 0; $i < $numrows; $i++) {
 			$row = pg_fetch_array($result, $i);
-			echo '<TR><TD>' . $row["port"] . '</TD>';
+			echo '<TR><TD NOWRAP>' . $row["port"] . '</TD>';
 
-			echo '<TD>';
-			if ($row["element_id"] == '') {
-				echo '<FONT COLOR="red">not found</FONT>';
+			echo '<TD NOWRAP>';
+			echo $row["category"];
+			echo '</TD>';
+
+			echo '<TD ALIGN="center">';
+			if ($row["from_pkg_info"]   == 't') {
+				echo 'P';
 			} else {
 				echo '&nbsp;';
 			}
+			echo '</TD>';
+
+
+			echo '<TD ALIGN="center">';
+			if ($row["from_watch_list"] == 't') {
+				echo 'W';
+			} else {
+				echo '&nbsp;';
+			}
+			echo '</TD>';
+
+			echo '</TR>';
+			
+		}
+	} else {
+		echo "nothing found!";
+	}
+
+	echo '</TABLE>';
+
+	echo 'that took '. (time() - $begintime) . ' seconds to process ' . $numrows . ' rows';
+}
+
+function UploadDisplayStagingResultsMatchesMultiple($WatchListID, $dbh) {
+
+	$begintime = time();
+	$sql = " SELECT	port_name                             as port, 
+					watch_list_staging_results.element_id as element_id, 
+					from_pkg_info,
+					count_on_pkg_info,
+					from_watch_list,
+					categories.name                       AS category
+			   FROM	watch_list_staging, watch_list_staging_results, ports, categories
+			  WHERE $WatchListID          = watch_list_staging.watch_list_id
+			    AND watch_list_staging.id = watch_list_staging_results.watch_list_staging_id
+			    AND count_on_pkg_info     = 1
+				AND ports.element_id      = watch_list_staging_results.element_id
+				AND ports.category_id     = categories.id
+			    AND (
+					SELECT count(element_id) 
+					  FROM watch_list_staging_results
+					 WHERE $WatchListID          = watch_list_staging.watch_list_id
+					   AND watch_list_staging.id = watch_list_staging_results.watch_list_staging_id
+					 GROUP BY port_name
+					) > 1
+			  ORDER BY port";
+
+#	echo $sql;
+
+	$result = pg_exec($dbh, $sql);
+
+	?>
+
+	<TABLE ALIGN="center" BORDER="1" CELLSPACING="2" CELLSPADDING="3">
+	<TR><TD><B>Port name</B></TD><TD><B>Category</B></TD><TD COLSPAN="2"><B>Source</B></TD></TR>
+
+	<?
+	if ($result) {
+		$numrows = pg_numrows($result);
+		for ($i = 0; $i < $numrows; $i++) {
+			$row = pg_fetch_array($result, $i);
+			echo '<TR><TD NOWRAP>' . $row["port"] . '</TD>';
+
+			echo '<TD NOWRAP>';
+			echo $row["category"];
 			echo '</TD>';
 
 			echo '<TD ALIGN="center">';
@@ -220,7 +297,7 @@ function UploadDisplayStagingResultsMatchesNo($WatchListID, $dbh) {
 	?>
 
 	<TABLE ALIGN="center" BORDER="1" CELLSPACING="2" CELLSPADDING="3">
-	<TR><TD><B>Port name</B></TD><TD><B>Status</B></TD><TD COLSPAN="2"><B>Source</B></TD><TD>&nbsp;</TD></TR>
+	<TR><TD><B>Port name</B></TD><TD><B>Status</B></TD><TD COLSPAN="2"><B>Source</B></TD></TR>
 
 	<?
 	if ($result) {
@@ -287,7 +364,7 @@ function UploadDisplayStagingResultsMatchesDuplicates($WatchListID, $dbh) {
 	?>
 
 	<TABLE ALIGN="center" BORDER="1" CELLSPACING="2" CELLSPADDING="3">
-	<TR><TD><B>Port name</B></TD><TD><B>Count</B></TD><TD COLSPAN="2"><B>Source</B></TD><TD>&nbsp;</TD></TR>
+	<TR><TD><B>Port name</B></TD><TD><B>Count</B></TD><TD COLSPAN="2"><B>Source</B></TD></TR>
 
 	<?
 	if ($result) {

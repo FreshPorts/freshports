@@ -12,7 +12,7 @@ $sql = "select ports.id, ports.name as port, ports.id as ports_id, ports.last_up
        "ports.committer, ports.last_update_description as update_description, " .
        "ports.maintainer, ports.short_description, ports.long_description, ".
        "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, " .
-       "ports.depends_run, ports.depends_build, ports.categories " .
+       "ports.depends_run, ports.depends_build, ports.categories, ports.status " .
        "from ports, categories  ".
        "WHERE ports.id = $port ".
        "  and ports.primary_category_id = categories.id";

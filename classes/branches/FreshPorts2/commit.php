@@ -1,5 +1,5 @@
 <?
-	# $Id: commit.php,v 1.1.2.2 2002-12-09 20:24:03 dan Exp $
+	# $Id: commit.php,v 1.1.2.3 2003-01-10 15:50:53 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -66,5 +66,39 @@ class Commit {
 		$this->element_id				= $myrow["element_id"];
 		$this->short_description	= $myrow["short_description"];
 		$this->onwatchlist			= $myrow["onwatchlist"];
+	}
+
+	function FetchByMessageId($message_id) {
+		if (IsSet($message_id)) {
+			$this->message_id = $message_id;
+		}
+		$sql = "
+SELECT id as commit_log_id,
+       message_id,
+       message_date,
+       to_char(commit_date - SystemTimeAdjust(), 'DD Mon YYYY')  as commit_date,
+       to_char(commit_date - SystemTimeAdjust(), 'HH24:MI:SS')   as commit_time,
+       message_subject,
+       date_added,
+       committer,
+       description AS commit_description,
+       system_id,
+       encoding_losses       
+  FROM commit_log 
+ WHERE message_id = '$this->message_id'";
+
+#		echo "sql = '<pre>$sql</pre>'<BR>";
+
+		$result = pg_exec($this->dbh, $sql);
+		if ($result) {
+			$numrows = pg_numrows($result);
+			if ($numrows == 1) {
+				if ($Debug) echo "fetched by ID succeeded<BR>";
+				$myrow = pg_fetch_array ($result, 0);
+				$this->PopulateValues($myrow);
+			}
+		}
+
+		return $this->id;
 	}
 }

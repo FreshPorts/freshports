@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch_list.php,v 1.1.2.15 2003-12-10 13:08:16 dan Exp $
+	# $Id: watch_list.php,v 1.1.2.16 2003-12-15 13:18:27 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -210,7 +210,9 @@ UPDATE watch_list
 
 		if ($Debug)	echo "WatchLists::Fetch sql = '$sql'<BR>";
 
-		syslog(LOG_NOTICE, "classes/watch_list.php::line 213 \$UserID='$UserID', \$ID='$ID'");
+		if ($ID == '') {
+			syslog(LOG_NOTICE, "classes/watch_list.php::line 213 \$UserID='$UserID', \$ID='$ID'");
+		}
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {
 			$numrows = pg_numrows($this->LocalResult);

@@ -1,7 +1,9 @@
-<?
-	# $Id: security-notice.php,v 1.1.2.4 2003-03-08 13:05:02 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: security-notice.php,v 1.1.2.5 2003-03-08 13:30:33 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');

@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.15 2002-02-16 23:52:50 dan Exp $
+	# $Id: index.php,v 1.1.2.16 2002-02-17 19:58:23 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -271,6 +271,9 @@ ports. A port is marked as new for 10 days.
 						
 						if (strlen($myrow["version"]) > 0) {
 							$HTML .= ' ' . $myrow["version"];
+							if (strlen($myrow["revision"]) > 0 && $myrow["revision"] != "0") {
+					    		$HTML .= '-' . $myrow["revision"];
+							}
 						}
 
 						$HTML .= "</FONT></A>";

@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.33 2002-02-16 23:52:53 dan Exp $
+   # $Id: freshports.php,v 1.4.2.34 2002-02-17 19:58:23 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -464,9 +464,13 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 	$HTML .= "<DT>";
 
 	$HTML .= '<FONT SIZE="+1"><A HREF="/' . $port->category . '/">' . $port->category . '</A>/' . $port->port;
-	if (strlen($myrow["version"]) > 0) {
-    	$HTML .= ' ' . $myrow["version"];
+	if (strlen($port->{version}) > 0) {
+    	$HTML .= ' ' . $port->{version};
+		if (strlen($port->{revision}) > 0 && $port->{revision} != "0") {
+    		$HTML .= '-' . $port->{revision};
+		}
 	}
+
 
 	$HTML .= "</FONT>";
 

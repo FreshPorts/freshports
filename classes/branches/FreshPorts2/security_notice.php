@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: security_notice.php,v 1.1.2.6 2004-02-13 15:09:27 dan Exp $
+	# $Id: security_notice.php,v 1.1.2.7 2004-02-13 16:44:14 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -46,7 +46,7 @@ class SecurityNotice {
 		$this->ip_address		= $myrow['ip_address'];
 		$this->description		= $myrow['description'];
 		$this->commit_log_id	= $myrow['commit_log_id'];
-		$this->status			= $myrow['status'];
+		$this->status			= $myrow['security_notice_status_id'];
 
 		$this->commit_date        = $myrow['commit_date'];
 		$this->commit_time        = $myrow['commit_time'];
@@ -95,10 +95,18 @@ class SecurityNotice {
 	function FetchByMessageID($message_id) {
 
 		$query = "
-SELECT security_notice.* 
-  FROM security_notice, commit_log
- WHERE commit_log.message_id = '" . AddSlashes($message_id) . "'
-   AND commit_log.id         = security_notice.commit_log_id";
+SELECT SN.*,
+       to_char(CL.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')  as commit_date,
+       to_char(CL.commit_date - SystemTimeAdjust(), 'HH24:MI:SS')   as commit_time,
+       CL.committer,
+       CL.description as commit_description,
+       CL.encoding_losses,
+       CL.message_id,
+       U.name as user_name,
+       U.email as user_email
+  FROM commit_log CL, security_notice SN LEFT OUTER JOIN users U on SN.user_id = U.id
+ WHERE CL.message_id = '" . AddSlashes($message_id) . "'
+   AND CL.id         = SN.commit_log_id";
 
 		$this->LocalResult = pg_query($this->dbh, $query);
 		if ($this->LocalResult) {
@@ -131,7 +139,7 @@ SELECT SN.*,
  WHERE CL.id = SN.commit_log_id";
 
 		if (IsSet($status) && $status != '') {
-			$query .= "\n   AND SN.status = '" . AddSlashes($status) . "'";
+			$query .= "\n   AND SN.security_notice_status_id = '" . AddSlashes($status) . "'";
 		}
 
 		$query .= "\n  ORDER BY SN.date_added desc";

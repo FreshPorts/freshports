@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-list.php,v 1.2.2.12 2002-12-09 21:01:15 dan Exp $
+	# $Id: watch-list.php,v 1.2.2.13 2002-12-10 03:58:19 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -81,14 +81,14 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 	
 		$PostURL = $_SERVER["PHP_SELF"];
 		if (IsSet($_GET["remove"])) {
-			$ButtonName = "Remove";
+			$ButtonName = "Update";
 			$Action     = "remove";
 			$Verb       = 'removed';
 			$FromTo     = 'from';
 			$Object     = AddSlashes($_GET["remove"]);
 		} else {
 			if (IsSet($_GET["add"])) {
-				$ButtonName = "Add";
+				$ButtonName = "Update";
 				$Action     = "add";
 				$Verb       = 'added';
 				$FromTo      = 'to';
@@ -111,21 +111,20 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 		$port->FetchByID($Object);
 		echo freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 1, '', 1, "N", 0);
 ?>
-Please select the watch lists <?php echo $FromTo; ?> which this port will be <?php echo $Verb; ?>:
+Please select the watch lists which should contain this port:
 <blockquote>
 		<form action="<?php echo $PostURL; ?>" method="POST" NAME=f>
 		<?php
-		if ($Action == 'add') {
-			echo freshports_WatchListDDLB($db, $User->id, '', 10, TRUE, TRUE);
-		} else {
+#		if ($Action == 'add') {
+#			echo freshports_WatchListDDLB($db, $User->id, '', 10, TRUE, TRUE);
+#		} else {
 			echo freshports_WatchListDDLB($db, $User->id, '', 10, TRUE, TRUE, $Object);
-		}				
 		?>
 		<br><br>
 		<INPUT id=submit style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29 
 		   value="<?php echo $ButtonName; ?>" name=submit><br>
 		<INPUT TYPE="hidden" NAME="Origin" VALUE="<?php echo $Origin?>">
-		<INPUT TYPE="hidden" NAME="<?php echo $Action?>" VALUE="<?php echo $Object?>">
+		<INPUT TYPE="hidden" NAME="Update" VALUE="<?php echo $Object?>">
 <?php
 		if ($WatchListID) {
 			echo '		<INPUT TYPE="hidden" NAME="wlid" VALUE="' . $WatchListID . '">';
@@ -136,7 +135,13 @@ Please select the watch lists <?php echo $FromTo; ?> which this port will be <?p
 
 <?php
 		if ($Action == 'remove') {
-			echo 'NOTE: Only the watch lists which contain this port are shown above';
+?>
+NOTES
+<ul>
+<li>'+' indicates that the port is on this watch list.
+<li>'*' indicates a default watch list.
+</ul>
+<?php
 		}
 ?>
 </TD>
@@ -160,35 +165,57 @@ Please select the watch lists <?php echo $FromTo; ?> which this port will be <?p
 </BODY>
 </HTML>
 
-		<?php
-
-			$Redirect = 0;
+<?php
+		$Redirect = 0;
 	} else {
+		if (IsSet($_REQUEST["Update"])) {
+			pg_exec($db, 'BEGIN');
+			$Error = '';
+			$ElementID = AddSlashes($_REQUEST["Update"]);
+			$WatchListElement = new WatchListElement($db);
 
-		if (IsSet($_REQUEST["remove"])) {
-			$ElementID = AddSlashes($_REQUEST["remove"]);
-			if (IsSet($_REQUEST["watch_list_id"])) {
-				if (RemoveElementFromWatchLists($db, $User->id, $ElementID, $_REQUEST["watch_list_id"]) == -1) {
-					die("removing element failed : Please try again, and if the problem persists, please contact the webmaster: " . pg_last_error());
-					$Redirect = 0;
-				}
-			} else {
-				$WatchListElement = new WatchListElement($db);
-				$WatchListElement->DeleteFromDefault($User->id, $ElementID);
+			if ($WatchListElement->DeleteElementFromWatchLists($User->id, $ElementID) == -1) {
+				$Error = 'removing element failed : Please try again, and if the problem persists, please contact the webmaster: ' . pg_last_error();
 			}
-		}
-	
-		if (IsSet($_REQUEST["add"])) {
-			$ElementID = AddSlashes($_REQUEST["add"]);
-	
-			if (IsSet($_REQUEST["watch_list_id"])) {
+			if ($Error == '' && IsSet($_REQUEST["watch_list_id"])) {
 				if (AddElementToWatchLists($db, $User->id, $ElementID, $_REQUEST["watch_list_id"]) == -1) {
-					die("adding element failed : Please try again, and if the problem persists, please contact the webmaster: " . pg_last_error());
-					$Redirect = 0;
+					$Error = 'adding element failed : Please try again, and if the problem persists, please contact the webmaster: ' . pg_last_error();
+				}
+			}
+
+			if ($Error == '') {
+				pg_exec($db, 'COMMIT');
+			} else {
+				pg_exec($db, 'ROLLBACK');
+				die($Error);
+			}
+		} else {
+			if (IsSet($_REQUEST["add"])) {
+				pg_exec($db, 'BEGIN');
+				$Error = '';
+				$ElementID = AddSlashes($_REQUEST["add"]);
+	
+				$WatchListElement = new WatchListElement($db);
+				if ($WatchListElement->AddToDefault($User->id, $ElementID) == 1) {
+					pg_exec($db, 'COMMIT');
+				} else {
+					pg_exec($db, 'ROLLBACK');
+					die(pg_last_error());
 				}
 			} else {
-				$WatchListElement = new WatchListElement($db);
-				$WatchListElement->AddToDefault($User->id, $ElementID);
+				if (IsSet($_REQUEST["add"])) {
+					pg_exec($db, 'BEGIN');
+					$ElementID = AddSlashes($_REQUEST["add"]);
+					$WatchListElement = new WatchListElement($db);
+					if ($WatchListElement->AddToDefault($User->id, $ElementID) == 1) {
+						pg_exec('COMMIT');
+					} else {
+						pg_exec('ROLLBACK');
+						die(pg_last_error());
+					}
+				} else {
+					die("I don't know what I was supposed to do there!");
+				}
 			}
 		}
 	} // end if Ask

@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-category.php,v 1.1.2.8 2002-02-25 15:48:11 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.9 2002-03-19 14:29:47 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -73,7 +73,7 @@ $ShowDescriptionLink  = "N";
 	for ($i = 0; $i < $numrows; $i++) {
 		$port->FetchNth($i);
 
-		$HTML .= freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 1);
+		$HTML .= freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 1, '', 0);
 	} // end for
 
 #	$HTML .= freshports_echo_HTML('</tr>');

@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.49 2002-03-19 14:12:34 dan Exp $
+   # $Id: freshports.php,v 1.4.2.50 2002-03-19 14:29:47 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -491,7 +491,7 @@ function freshports_ONToYN($Value) {
 }
 
 
-function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, $LinkToPort=0, $AddRemoveExtra='') {
+function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, $LinkToPort=0, $AddRemoveExtra='', $ShowCategory=1) {
 //
 // This php3 fragment does the basic port information for a single port.
 //
@@ -509,7 +509,11 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 
 	$HTML .= "<DT>";
 
-	$HTML .= '<BIG><B><A HREF="/' . $port->category . '/">' . $port->category . '</A>/';
+	$HTML .= '<BIG><B>';
+
+	if ($ShowCategory) {
+		$HTML .= '<A HREF="/' . $port->category . '/">' . $port->category . '</A>/';
+	}
 
 	if ($LinkToPort) {
 		$HTML .= "<A HREF=\"/$port->category/$port->port/\">$port->port</A>";

@@ -40,7 +40,7 @@ function freshports_MainWatchID($UserID, $db) {
 }
 
 function freshports_echo_HTML($text) {
-   echo $text;
+//   echo $text;
    return $text;
 }
 

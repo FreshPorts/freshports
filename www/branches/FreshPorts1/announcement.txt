@@ -1,10 +1,10 @@
 <P ALIGN="left">
 <BIG>
 Here is the data migration plan for moving to FreshPorts2!
+</BIG>
+</P>
 
-All users accounts have been copied to <A HREF="http://test.freshports.org/">the test website</A>.  Please go there 
-and verify that you can log in and that your watch list is intact.</P>
-<BIG>
+<P>
 
 Here is the plan:
 

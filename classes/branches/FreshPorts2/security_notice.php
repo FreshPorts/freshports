@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: security_notice.php,v 1.1.2.1 2003-01-10 15:51:30 dan Exp $
+	# $Id: security_notice.php,v 1.1.2.2 2003-01-10 19:10:33 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -19,7 +19,7 @@ class SecurityNotice {
 	var $description;
 	var $commit_log_id;
 	var $status;
-	
+
 	var $LocalResult;
 
 	function SecurityNotice($dbh) {

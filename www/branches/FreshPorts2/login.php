@@ -1,22 +1,19 @@
 <?
-	# $Id: login.php,v 1.1.2.6 2002-01-06 23:18:09 dan Exp $
+	# $Id: login.php,v 1.1.2.7 2002-02-11 02:52:46 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-//echo "UserID = $UserID";
    require("./include/common.php");
    require("./include/freshports.php");
    require("./include/databaselogin.php");
-//   require("./include/getvalues.php");
 
-//$Debug=1;
+$Debug=0;
 
 if ($Debug) echo 'origin = ' . rawurlencode($origin) . "'<br>\n";
 
 $origin=rawurlencode($origin);
 
 if ($submit) {
-//   $Debug=1;
    // process form
 
    if ($Debug) {
@@ -43,28 +40,28 @@ if ($submit) {
    $result = pg_exec($db, $sql) or die('query failed ' . mysql_error());
 
 
-   if (!pg_numrows($result)) {
-      $LoginFailed = 1;
-   } else {
-
-      if ($Debug) {
-         echo "well, debug was on, so I would have taken you to '$origin'<br>\n";
-      } else {
-		$Cookie = UserToCookie($UserID);
+	if (!pg_numrows($result)) {
+		$LoginFailed = 1;
+	} else {
 
 		if ($Debug) {
-			echo "Cookie = $Cookie<br>\n";
+			echo "well, debug was on, so I would have taken you to '$origin'<br>\n";
+		} else {
+			$Cookie = UserToCookie($UserID);
+
+			if ($Debug) {
+				echo "Cookie = $Cookie<br>\n";
+			}
+			SetCookie("visitor", $Cookie, time() + 60*60*24*120, '/');
+			// Redirect browser to PHP web site
+			if ($origin == "/index.php") {
+				$origin = "/";
+			}
+			header("Location: " . rawurldecode($origin));
+			// Make sure that code below does not get executed when we redirect.
+			exit;
 		}
-         SetCookie("visitor", $Cookie, time() + 60*60*24*120, '/');
-         // Redirect browser to PHP web site
-         if ($origin == "/index.php") {
-            $origin = "/";
-         }
-         header("Location: " . rawurldecode($origin));
-         // Make sure that code below does not get executed when we redirect.
-         exit;
-      }
-   }
+	}
 }
    freshports_Start("Login",
                "freshports - new ports, applications",

@@ -1,5 +1,5 @@
 <?
-	# $Id: new-user.php,v 1.1.2.4 2002-01-07 13:08:41 dan Exp $
+	# $Id: new-user.php,v 1.1.2.5 2002-02-11 02:52:47 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -53,6 +53,10 @@ if ($submit) {
 
 	$WatchNotice = new WatchNotice($db);
 	$WatchNotice->FetchByFrequency($watchnotifyfrequency);
+	if (!IsSet($WatchNotice->id)) {
+		echo "<B>Sorry, I didn't find that watch notice frequency ('$watchnotifyfrequency').  Has the table been populated?</B><BR>";
+		exit;
+	}
 
 
   $UserCreated = 0;
@@ -87,7 +91,7 @@ if ($submit) {
       $sql .= "'$UserLogin', '$Password1', '$Cookie', '$email', " .
               "'$WatchNotice->id', '$emailsitenotices_yn_value', 'S')";
 
-	$errors .= "<br>sql=" . $sql;
+      $errors .= "<br>sql=" . $sql;
 
 	  $result = pg_exec($db, $sql);
       if ($result) {

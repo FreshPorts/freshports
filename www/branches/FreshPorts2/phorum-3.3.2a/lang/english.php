@@ -128,7 +128,7 @@
   $lRequiredFields  = "Fields marked with * are required.";
   $lRegistrationCensor = "Some words you used are in our censor list.  Please remove them.";
   $lNewPassword     = "New Password";
-  $lNewPassBody     = "Your new login for the forums at cardtradingfools.com is";
+  $lNewPassBody     = "Your new login for the forums at FreshPorts.org is";
   $lNewPassChange   = "Please change the password when you login.";
   $lNewPassMailed   = "Your new password has been mailed to your email address.";
   $lNewPassError    = "The username/email address you entered could not be found.  Please try again.";

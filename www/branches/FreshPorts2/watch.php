@@ -1,5 +1,5 @@
 <?
-	# $Id: watch.php,v 1.1.2.29 2002-12-06 21:25:33 dan Exp $
+	# $Id: watch.php,v 1.1.2.30 2002-12-09 20:32:22 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -58,7 +58,7 @@ That link also occurs on the right hand side of this page, under Login.
 
 <?php
 
-echo freshports_WatchListDDLBForm($db, $UserID, $WatchListID);
+echo freshports_WatchListDDLBForm($db, $User->id, $WatchListID);
 
 ?>
 

@@ -1,5 +1,5 @@
 <?
-	# $Id: login.php,v 1.1.2.22 2002-11-18 18:02:28 dan Exp $
+	# $Id: login.php,v 1.1.2.23 2002-12-09 20:32:22 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -33,12 +33,12 @@ if ($_POST["LOGIN"] && $_POST["UserID"]) {
    $OK = 1;
 
    $errors = "";
-   $UserID   = addslashes($_POST["UserID"]);
+   $User->id   = addslashes($_POST["UserID"]);
    $Password = AddSlashes($_POST["Password"]);
 
    // test for existance of user id
 
-   $sql = "select * from users where lower(name) = lower('$UserID')".
+   $sql = "select * from users where lower(name) = lower('$User->id')".
 	  " and password = '$Password' ";
 
    if ($Debug) {
@@ -84,7 +84,7 @@ if ($_POST["LOGIN"] && $_POST["UserID"]) {
 					$error .= 'Your account needs to be enabled by following the directions in the email we have sent to you.' . "<BR>\n";
 					$error .= 'To have your activation details resent to the email address you supplied, click on the resend button' . "<BR>\n";
 					$error .= '<form action="' . $_SERVER["PHP_SELF"] . "?origin=$origin" . ' method="POST">' . "\n";
-					$error .= '<input type="hidden" name="user" value="' . $UserID . '">' . "\n";
+					$error .= '<input type="hidden" name="user" value="' . $User->id . '">' . "\n";
 					$error .= '<input TYPE="submit" VALUE="Resend" name=resend>' . "\n";
 					$error .= '</form>' . "\n";
 				} else {

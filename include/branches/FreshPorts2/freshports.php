@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.54 2002-04-01 21:03:51 dan Exp $
+   # $Id: freshports.php,v 1.4.2.55 2002-04-02 03:06:20 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -866,8 +866,7 @@ function freshports_PortCommitPrint($commit, $category, $port) {
 	GLOBAL  $TimeFormatDefault;
 
 	# print a single commit for a port
-#	echo "<TR><TD VALIGN='top'><xSMALL>" . date("$DateFormatDefault $TimeFormatDefault", $commit->commit_date)        . "</SMALL></TD>\n";
-	echo "<TR><TD VALIGN='top'><xSMALL>" . $commit->commit_date . "</SMALL></TD>\n";
+	echo "<TR><TD VALIGN='top'>" . $commit->commit_date . "</TD>\n";
 	echo '    <TD VALIGN="top">';
     echo $commit->committer;
 	echo '<BR>';

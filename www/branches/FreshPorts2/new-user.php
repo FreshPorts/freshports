@@ -1,5 +1,5 @@
 <?
-	# $Id: new-user.php,v 1.1.2.23 2002-09-11 14:29:51 dan Exp $
+	# $Id: new-user.php,v 1.1.2.24 2002-11-18 18:02:28 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -9,6 +9,10 @@
 
 	$origin = $_GET["origin"];
 	$submit = $_POST["submit"];
+
+if ($origin == "/index.php" || $origin == "") {
+	$origin = "/";
+}
 
 if ($submit) {
 

@@ -1,5 +1,5 @@
 <?
-	# $Id: login.php,v 1.1.2.21 2002-09-11 14:19:05 dan Exp $
+	# $Id: login.php,v 1.1.2.22 2002-11-18 18:02:28 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -10,11 +10,15 @@
 #$Debug=1;
 
 $origin = $_GET["origin"];
+if ($origin == "/index.php" || $origin == "") {
+	$origin = "/";
+}
+
 
 if ($Debug) echo "origin = '" . rawurlencode($origin) . "'<BR>\n";
 if ($Debug) phpinfo();
 
-$origin=rawurlencode($origin);
+$origin = rawurlencode($origin);
 
 if ($_POST["LOGIN"] && $_POST["UserID"]) {
    // process form

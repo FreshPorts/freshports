@@ -1,5 +1,5 @@
 <?
-	# $Id: bouncing.php,v 1.1.2.11 2002-06-09 21:42:32 dan Exp $
+	# $Id: bouncing.php,v 1.1.2.12 2002-11-18 18:02:50 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -12,8 +12,11 @@
 
 	$origin		= $_GET["origin"];
 	$submit		= $_POST["submit"];
-	$visitor	= $_COOKIE["visitor"];
+	$visitor		= $_COOKIE["visitor"];
 
+if ($origin == "/index.php" || $origin == "") {
+	$origin = "/";
+}
 
 if ($submit) {
    $sql = "update users set emailbouncecount = 0 where cookie = '$visitor'";

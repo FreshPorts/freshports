@@ -1,5 +1,5 @@
 <?
-	# $Id: customize.php,v 1.1.2.18 2002-09-18 15:10:47 dan Exp $
+	# $Id: customize.php,v 1.1.2.19 2002-11-18 18:02:28 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -7,12 +7,13 @@
 	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
 	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
 
-?>
-<script language="php">
-
-$origin		= $_GET["origin"];
+$origin	= $_GET["origin"];
 $submit 	= $_POST["submit"];
 $visitor	= $_COOKIE["visitor"];
+
+if ($origin == "/index.php" || $origin == "") {
+	$origin = "/";
+}
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {
@@ -110,7 +111,7 @@ if ($submit) {
    freshports_Start("Customize User Account",
                "freshports - new ports, applications",
                "FreeBSD, index, applications, ports");
-</script>
+?>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD VALIGN="top" width="100%">

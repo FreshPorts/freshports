@@ -49,6 +49,8 @@ form the basis for some of the most important parts of the system,</p>
 </p>Wolfram Schneider's <a href="http://www.freebsd.org/cgi/ports.cgi">FreeBSD Ports Changes</a>
 page provided much of the basis for this site.</p>
 
+<p>Jay gave me the box on which FreshPorts runs.  Thanks.</p>
+
 <p>And various people on undernet's #nz.general and #freebsd helped me with 
 scripts and ideas.  That's not to mention that channel on efnet which I won't 
 name just so it stays a secret.</p>

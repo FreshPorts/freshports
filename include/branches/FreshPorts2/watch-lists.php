@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-lists.php,v 1.1.2.5 2002-12-10 03:59:12 dan Exp $
+	# $Id: watch-lists.php,v 1.1.2.6 2002-12-10 04:42:06 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 	#
@@ -45,7 +45,7 @@ function freshports_WatchListDDLB($dbh, $UserID, $selected = '', $size = 0, $mul
 				}
 			} else {
 				if ($WatchList->id == $selected) {
-#					$HTML .= ' selected';
+					$HTML .= ' selected';
 				}
 			}
 			$HTML .= '>' . htmlspecialchars(AddSlashes($WatchList->name));

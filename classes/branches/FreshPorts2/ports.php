@@ -1,5 +1,5 @@
 <?
-	# $Id: ports.php,v 1.1.2.26 2003-02-21 19:13:39 dan Exp $
+	# $Id: ports.php,v 1.1.2.27 2003-03-04 22:00:21 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -179,7 +179,7 @@ select ports.id,
 				$numrows = pg_numrows($result);
 				if ($numrows == 1) {
 					if ($Debug) echo "fetched by ID succeeded<BR>";
-					$myrow = pg_fetch_array ($result, 0);
+					$myrow = pg_fetch_array ($result);
 					$this->_PopulateValues($myrow);
 				} else {
 					echo "Ports::FetchByPartialName I'm concerned I got $numrows from that.<BR>$sql<BR>";
@@ -271,9 +271,7 @@ select ports.id,
 
 	function FetchByID($id, $UserID = 0) {
 		# fetch a single port based on id
-		# I don't think this is actually used.
-
-#		die("classes/ports.php::FetchByID has been invoked. Who called it?");
+		# used by missing-port.php
 
 		$sql = "select ports.id, 
 		               ports.element_id, 
@@ -320,7 +318,7 @@ select ports.id,
 				   and watch_list_element.watch_list_id = $WatchListID) ";
 		}
 
-		$sql .= "\nWHERE element.id        = $id 
+		$sql .= "\nWHERE ports.id        = $id 
 		          and ports.category_id = categories.id 
 		          and ports.element_id  = element.id ";
 
@@ -334,7 +332,7 @@ select ports.id,
 			$numrows = pg_numrows($result);
 			if ($numrows == 1) {
 				if ($Debug) echo "fetched by ID succeeded<BR>";
-				$myrow = pg_fetch_array ($result, 0);
+				$myrow = pg_fetch_array ($result);
 				$this->_PopulateValues($myrow);
 
 				#
@@ -346,7 +344,7 @@ select ports.id,
 
 			}
 		} else {
-			echo 'pg_exec failed: ' . $sql;
+			echo 'pg_exec failed: <pre>' . $sql . '</pre>';
 		}
 	}
 
@@ -388,9 +386,10 @@ SELECT P.*, element.name    as port,
         to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added,
         ports.categories as categories,
         categories.name  as category
-   FROM ports, categories
-  WHERE ports.category_id = categories.id
-    AND categories.name   = '$CategoryName' ) AS P
+   FROM ports, categories, ports_categories
+  WHERE ports_categories.port_id     = ports.id
+    AND ports_categories.category_id = categories.id
+    AND categories.name              = '$CategoryName' ) AS P
    ON (P.element_id     = element.id
    AND element.status   = 'A')";
 
@@ -415,7 +414,7 @@ LEFT OUTER JOIN
 			$numrows = pg_numrows($this->LocalResult);
 			if ($numrows == 1) {
 #				echo "fetched by ID succeeded<BR>";
-				$myrow = pg_fetch_array ($this->LocalResult, 0);
+				$myrow = pg_fetch_array ($this->LocalResult);
 				$this->_PopulateValues($myrow);
 
 			}
@@ -450,12 +449,34 @@ LEFT OUTER JOIN
 					 where watch_list_id = $WatchListID
 					   and element_id    = $this->element_id";
 
-        $result = pg_exec($this->dbh, $sql);
+		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
 			$numrows = pg_numrows($result);
 			if ($numrows == 1) {
 				if ($Debug) echo "IsOnWatchList succeeded<BR>";
 				$result = 1;
+			}
+		} else {
+			echo 'pg_exec failed: ' . $sql;
+		}
+
+		return $result;
+	}
+
+	function Fetch($Category, $Port, $UserID = 0) {
+		#
+		# introduced for virtual categories.
+		# given a category port combination, let's get the port id
+		# and then fetch
+		#
+
+		$sql = "select GetPortID('" . AddSlashes($Category) . "', '"  . AddSlashes($Port) . "') as port_id";
+		$result = pg_exec($this->dbh, $sql);
+		if ($result) {
+			$numrows = pg_numrows($result);
+			if ($numrows == 1) {
+				$myrow = pg_fetch_array ($result);
+				$result = $this->FetchByID($myrow["port_id"], $UserID);
 			}
 		} else {
 			echo 'pg_exec failed: ' . $sql;

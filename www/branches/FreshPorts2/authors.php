@@ -1,23 +1,25 @@
 <?
-   # $Id: authors.php,v 1.1.2.1 2002-01-02 02:53:33 dan Exp $
-   #
-   # Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: authors.php,v 1.1.2.2 2002-01-05 23:01:12 dan Exp $
+	#
+	# Copyright (c) 1998-2001 DVL Software Limited
 
-   require("./include/common.php");
-   require("./include/freshports.php");
-   require("./include/databaselogin.php");
-   require("./include/getvalues.php");
+	require("./include/common.php");
+	require("./include/freshports.php");
+	require("./include/databaselogin.php");
+	require("./include/getvalues.php");
 
-
-   freshports_Start("The Authors",
-               "freshports - new ports, applications",
-               "FreeBSD, index, applications, ports");
+	freshports_Start("The Authors",
+					"freshports - new ports, applications",
+					"FreeBSD, index, applications, ports");
 
 ?>
-
-<table width="100%">
-<tr><td>
-<h2>about the authors</h2>
+<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<tr><td valign="top">
+<table width="100%" border="0">
+  <tr>
+    <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">About the authors</font></td>
+  </tr>
+<TR><TD>
 <p>Dan Langille thought up the idea, found the data sources, bugged people to 
 write scripts, and did the html and database work. But he certainly didn't 
 do it alone.</p>
@@ -54,6 +56,9 @@ page provided much of the basis for this site.</p>
 scripts and ideas.  That's not to mention that channel on efnet which I won't 
 name just so it stays a secret.</p>
 
+</TD>
+</TR>
+</TABLE>
 </td>
   <td valign="top" width="*">
     <? include("./include/side-bars.php") ?>

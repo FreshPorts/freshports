@@ -1,18 +1,18 @@
 <?
-   # $Id: index.php,v 1.1.2.2 2002-01-05 20:13:15 dan Exp $
-   #
-   # Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: index.php,v 1.1.2.3 2002-01-05 23:01:15 dan Exp $
+	#
+	# Copyright (c) 1998-2001 DVL Software Limited
 
-   require("./include/common.php");
-   require("./include/freshports.php");
-   require("./include/databaselogin.php");
+	require("./include/common.php");
+	require("./include/freshports.php");
+	require("./include/databaselogin.php");
 
-   require("./include/getvalues.php");
+	require("./include/getvalues.php");
 
-   freshports_Start("the place for ports",
-               "$FreshPortsName - new ports, applications",
-               "FreeBSD, index, applications, ports");
-#$Debug=1;
+	freshports_Start("the place for ports",
+					"$FreshPortsName - new ports, applications",
+					"FreeBSD, index, applications, ports");
+$Debug=0;
 
 
 //echo "UserID='$UserID'";
@@ -301,6 +301,12 @@ order by commit_log.commit_date desc,
  </td>
 </tr>
 </table>
+
+<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<TR><TD>
 <? include("./include/footer.php") ?>
+</TD></TR>
+</TABLE>
+
 </body>
 </html>

@@ -1,17 +1,16 @@
 <?
-   # $Id: change_log_details.php,v 1.1.2.1 2002-01-02 02:53:37 dan Exp $
-   #
-   # Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: change_log_details.php,v 1.1.2.2 2002-01-05 23:01:13 dan Exp $
+	#
+	# Copyright (c) 1998-2001 DVL Software Limited
 
-   require("./include/common.php");
-   require("./include/freshports.php");
-   require("./include/databaselogin.php");
-   require("./include/getvalues.php");
+	require("./include/common.php");
+	require("./include/freshports.php");
+	require("./include/databaselogin.php");
+	require("./include/getvalues.php");
 
-
-   freshports_Start("Files within a port changed by a commit",
-               "freshports - new ports, applications",
-               "FreeBSD, index, applications, ports");
+	freshports_Start("Files within a port changed by a commit",
+					"freshports - new ports, applications",
+					"FreeBSD, index, applications, ports");
 
 ?>
 <table width="100%" border="0">

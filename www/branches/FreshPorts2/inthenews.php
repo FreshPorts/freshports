@@ -1,22 +1,27 @@
 <?
-   # $Id: inthenews.php,v 1.1.2.2 2002-01-05 21:24:28 dan Exp $
-   #
-   # Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: inthenews.php,v 1.1.2.3 2002-01-05 23:01:15 dan Exp $
+	#
+	# Copyright (c) 1998-2001 DVL Software Limited
 
-   require("./include/common.php");
-   require("./include/freshports.php");
-   require("./include/databaselogin.php");
-   require("./include/getvalues.php");
+	require("./include/common.php");
+	require("./include/freshports.php");
+	require("./include/databaselogin.php");
+	require("./include/getvalues.php");
 
-
-   freshports_Start("In The News",
-               "freshports - new ports, applications",
-               "FreeBSD, index, applications, ports");
+	freshports_Start("In The News",
+					"freshports - new ports, applications",
+					"FreeBSD, index, applications, ports");
 
 ?>
-<table width="<? echo $TableWidth ?>">
-<tr><td valign="top">
-<font size="+2">in the news</font> 
+<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<tr><td valign="top" width="100%">
+<table width="100%" border="0">
+  <tr>
+    <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">In the news</font></td>
+  </tr>
+
+<TR>
+<TD VALIGN="top">
 <p>This page is just a place for me to record the <? echo $FreshPortsTitle; ?> articles which appear
 on other sites.  Links are recorded in reverse chronological order (i.e. newest first).  If you spot an article which 
 is not listed here, please <a href="http://freshports.org/phorum/list.php?f=3">let me know</a>.
@@ -30,13 +35,21 @@ slashdot - <a href="http://slashdot.org/article.pl?sid=00/05/10/1014226">BSD: Fr
 </p>
 
 Daily Daemon News - <a href="http://daily.daemonnews.org/view_story.php3?story_id=889"><? echo $FreshPortsTitle; ?> site announncement</a>
-
+</TD>
+</TR>
+</TABLE>
 </td>
   <td valign="top" width="*">
     <? include("./include/side-bars.php") ?>
  </td>
 </tr>
 </table>
+
+<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<TR><TD>
 <? include("./include/footer.php") ?>
+</TD></TR>
+</TABLE>
+
 </body>
 </html>

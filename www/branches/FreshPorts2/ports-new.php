@@ -1,32 +1,31 @@
 <?
-   # $Id: ports-new.php,v 1.1.2.1 2002-01-02 02:53:48 dan Exp $
-   #
-   # Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: ports-new.php,v 1.1.2.2 2002-01-05 23:01:17 dan Exp $
+	#
+	# Copyright (c) 1998-2001 DVL Software Limited
 
-   require("./include/common.php");
-   require("./include/freshports.php");
-   require("./include/databaselogin.php");
-   require("./include/getvalues.php");
+	require("./include/common.php");
+	require("./include/freshports.php");
+	require("./include/databaselogin.php");
+	require("./include/getvalues.php");
 
-
-   freshports_Start("recently added ports",
-               "freshports - new ports, applications",
-               "FreeBSD, index, applications, ports");
+	freshports_Start("recently added ports",
+					"freshports - new ports, applications",
+					"FreeBSD, index, applications, ports");
 
 $Debug=1;
 ?>
 
-<table width="100%" border="0">
-<tr><td colspan="2">
-This page shows the ports which have been recently added to the ports tree.  As such, some information
-may be missing (such as description, maintainer, etc.). This information will be obtained during the
-next database update.
-</td></tr>
+<table width="<? echo $TableWidth ?>" border="0" ALIGN="center">
 <tr><td valign="top" width="100%">
 <table width="100%" border="0">
 <tr>
     <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">freshports - recently added ports</font></td>
   </tr>
+<tr><td colspan="2">
+This page shows the ports which have been recently added to the ports tree.  As such, some information
+may be missing (such as description, maintainer, etc.). This information will be obtained during the
+next database update.
+</td></tr>
 <tr><td>
 <?
 
@@ -145,6 +144,12 @@ echo '<tr><td>Sorry, but we\'ve disabled this page. Sorry about that. With luck,
  </td>
 </tr>
 </table>
+
+<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<TR><TD>
 <? include("./include/footer.php") ?>
+</TD></TR>
+</TABLE>
+
 </body>
 </html>

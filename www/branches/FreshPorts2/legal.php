@@ -1,17 +1,16 @@
 <?
-   # $Id: legal.php,v 1.1.2.1 2002-01-02 02:53:42 dan Exp $
-   #
-   # Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: legal.php,v 1.1.2.2 2002-01-05 23:01:15 dan Exp $
+	#
+	# Copyright (c) 1998-2001 DVL Software Limited
 
-   require("./include/common.php");
-   require("./include/freshports.php");
-   require("./include/databaselogin.php");
-   require("./include/getvalues.php");
+	require("./include/common.php");
+	require("./include/freshports.php");
+	require("./include/databaselogin.php");
+	require("./include/getvalues.php");
 
-
-   freshports_Start("Legal Notice",
-               "freshports - new ports, applications",
-               "FreeBSD, index, applications, ports");
+	freshports_Start("Legal Notice",
+					"freshports - new ports, applications",
+					"FreeBSD, index, applications, ports");
 
 ?>
 

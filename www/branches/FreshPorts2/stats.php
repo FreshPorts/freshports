@@ -1,21 +1,25 @@
 <?
-   # $Id: stats.php,v 1.2.2.1 2002-01-02 02:53:50 dan Exp $
-   #
-   # Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: stats.php,v 1.2.2.2 2002-01-05 23:01:18 dan Exp $
+	#
+	# Copyright (c) 1998-2001 DVL Software Limited
 
-   require("./include/common.php");
-   require("./include/freshports.php");
-   require("./include/databaselogin.php");
-   require("./include/getvalues.php");
+	require("./include/common.php");
+	require("./include/freshports.php");
+	require("./include/databaselogin.php");
+	require("./include/getvalues.php");
 
-
-   freshports_Start("Statistics",
-               "freshports - new ports, applications",
-               "FreeBSD, index, applications, ports");
+	freshports_Start("Statistics",
+					"freshports - new ports, applications",
+					"FreeBSD, index, applications, ports");
 
 ?>
+<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<tr><td valign="top" width="100%">
 <table width="100%" border="0">
-<tr><td colspan="2">
+  <tr>
+    <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">About the authors</font></td>
+  </tr>
+<tr><td>
 <B>The graphs are broken.  A hazard of the move. I'll work on it later.</B>
 <BR>
 <BR>
@@ -44,16 +48,26 @@ since FreshPorts began and are updated once per day.
 #   echo '<IMG src="graphics.php?graph=' . $graph . '" width="500" height="475">';
 #}
 ?>
-</td></tr>
-</table>
+</TD>
+</TR>
+</TABLE>
+
+
+</TD>
+</TR>
+</TABLE>
 </td>
   <td valign="top" width="*">
-   <? include("./include/side-bars.php") ?>
+    <? include("./include/side-bars.php") ?>
  </td>
 </tr>
 </table>
-</tr>
-</table>
+
+<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<TR><TD>
 <? include("./include/footer.php") ?>
+</TD></TR>
+</TABLE>
+
 </body>
 </html>

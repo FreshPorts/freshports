@@ -1,33 +1,31 @@
 <?
-   # $Id: changes.php,v 1.1.2.2 2002-01-05 21:24:28 dan Exp $
-   #
-   # Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: changes.php,v 1.1.2.3 2002-01-05 23:01:14 dan Exp $
+	#
+	# Copyright (c) 1998-2001 DVL Software Limited
 
-   require("./include/common.php");
-   require("./include/freshports.php");
-   require("./include/databaselogin.php");
-   require("./include/getvalues.php");
+	require("./include/common.php");
+	require("./include/freshports.php");
+	require("./include/databaselogin.php");
+	require("./include/getvalues.php");
 
-   freshports_Start("Changes",
-               "freshports - new ports, applications",
-               "FreeBSD, index, applications, ports");
+	freshports_Start("Changes",
+					"freshports - new ports, applications",
+					"FreeBSD, index, applications, ports");
 
 ?>
+<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<tr><td valign="top" width="100%">
 <table width="100%" border="0">
-<tr><td valign="top">
-<table width="100%" border="0" CELLSPACING="0" CELLPADDING="5"
-            bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">
   <tr>
-    <td bgcolor="#AD0040" height="22"><font color="#FFFFFF" size="+1">changes</font></td>
+    <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">Changes</font></td>
   </tr>
 <tr><td>
 This page contains the changes made and the changes planned.  Please put your wish 
 lists in the <a href="http://freshports.org/phorum/list.php?f=3">feedback phorum</a>.
 </td></tr>
-<tr><td height="20"></td></tr>
 <tr><td>
   <tr>
-    <td bgcolor="#AD0040" ><font color="#FFFFFF" size="+1">July 25</font></td>
+    <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">July 25</font></td>
   </tr>
 <tr><td>
 <ul>
@@ -39,10 +37,9 @@ lists in the <a href="http://freshports.org/phorum/list.php?f=3">feedback phorum
        thought I had already dealt with it].</li>
 </ul>
 </td></tr>
-<tr><td height="20"></td></tr>
 <tr><td>
   <tr>       
-    <td bgcolor="#AD0040" ><font color="#FFFFFF" size="+1">July 24</font></td>
+    <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">July 24</font></td>
   </tr>
 <tr><td>
 <ul>
@@ -50,20 +47,18 @@ lists in the <a href="http://freshports.org/phorum/list.php?f=3">feedback phorum
    <li>I've neglected this page for too long.   I missed out the upgrade to FreshPorts 1.1...</li>
 </ul>
 </td></tr>
-<tr><td height="20"></td></tr>
 <tr><td>
   <tr>       
-    <td bgcolor="#AD0040" ><font color="#FFFFFF" size="+1">May 16</font></td>
+    <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">May 16</font></td>
   </tr>
 <tr><td>
 <ul>
    <li>Added <img src="/images/new.gif" width=28 height=11 alt="new!" hspace=2 align=absmiddle> to each port which is new to the tree.</li>
 </ul>
 </td></tr>
-<tr><td height="20"></td></tr>
 <tr><td>
   <tr>
-    <td bgcolor="#AD0040" ><font color="#FFFFFF" size="+1">May 15</font></td>
+    <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">May 15</font></td>
   </tr>
 <tr><td>
 <ul>
@@ -75,10 +70,9 @@ lists in the <a href="http://freshports.org/phorum/list.php?f=3">feedback phorum
        but correctly updated your watch list.  Sorry about that.</li>
 </ul>
 </td></tr>
-<tr><td height="20"></td></tr>
 <tr><td>
   <tr>       
-    <td bgcolor="#AD0040" ><font color="#FFFFFF" size="+1">May 14</font></td>
+    <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">May 14</font></td>
   </tr>
 <tr><td>
 
@@ -94,10 +88,9 @@ lists in the <a href="http://freshports.org/phorum/list.php?f=3">feedback phorum
 </ul>
 </p>
 </td></tr>
-<tr><td height="20"></td></tr>    
 <tr><td>
   <tr>       
-    <td bgcolor="#AD0040" ><font color="#FFFFFF" size="+1">May 13</font></td>
+    <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">May 13</font></td>
   </tr>
 <tr><td>
 
@@ -108,10 +101,9 @@ lists in the <a href="http://freshports.org/phorum/list.php?f=3">feedback phorum
 </p>
 
 </td></tr>
-<tr><td height="20"></td></tr>    
 <tr><td>
   <tr>       
-    <td bgcolor="#AD0040" ><font color="#FFFFFF" size="+1">May 12</font></td>
+    <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">May 12</font></td>
   </tr>
 <tr><td>
 
@@ -123,10 +115,9 @@ lists in the <a href="http://freshports.org/phorum/list.php?f=3">feedback phorum
 </p>
 
 </td></tr>
-<tr><td height="20"></td></tr>    
 <tr><td>
   <tr>       
-    <td bgcolor="#AD0040" ><font color="#FFFFFF" size="+1">These are the planned changes</font></td>
+    <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">These are the planned changes</font></td>
   </tr>
 <tr><td>
 <ul>
@@ -145,6 +136,12 @@ is all there in the database.  I just have to code it.</li>
  </td>
 </tr>
 </table>
+
+<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<TR><TD>
 <? include("./include/footer.php") ?>
+</TD></TR>
+</TABLE>
+
 </body>
 </html>

@@ -1,14 +1,14 @@
 <?
-   # $Id: category.php,v 1.1.2.1 2002-01-02 02:53:36 dan Exp $
-   #
-   # Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: category.php,v 1.1.2.2 2002-01-05 23:01:13 dan Exp $
+	#
+	# Copyright (c) 1998-2001 DVL Software Limited
 
-   require("./include/common.php");
-   require("./include/freshports.php");
-   require("./include/databaselogin.php");
-   require("./include/getvalues.php");
+	require("./include/common.php");
+	require("./include/freshports.php");
+	require("./include/databaselogin.php");
+	require("./include/getvalues.php");
 
-#$Debug=1;
+	$Debug = 0;
 
 #
 # if no category provided or category is not numeric, try

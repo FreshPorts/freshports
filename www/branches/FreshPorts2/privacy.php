@@ -1,26 +1,24 @@
 <?
-   # $Id: privacy.php,v 1.1.2.1 2002-01-02 02:53:49 dan Exp $
-   #
-   # Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: privacy.php,v 1.1.2.2 2002-01-05 23:01:18 dan Exp $
+	#
+	# Copyright (c) 1998-2001 DVL Software Limited
 
-   require("./include/common.php");
-   require("./include/freshports.php");
-   require("./include/databaselogin.php");
-   require("./include/getvalues.php");
+	require("./include/common.php");
+	require("./include/freshports.php");
+	require("./include/databaselogin.php");
+	require("./include/getvalues.php");
 
-
-   freshports_Start("Privacy Policy",
-               "freshports - new ports, applications",
-               "FreeBSD, index, applications, ports");
+	freshports_Start("Privacy Policy",
+					"freshports - new ports, applications",
+					"FreeBSD, index, applications, ports");
 
 ?>
-<table width="100%" border="0">
-<tr>
-<td valign="top" width="100%">
+<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<tr><td valign="top" width="100%">
 <table width="100%" border="0">
 
 <tr><td bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">
-privacy statement
+Privacy statement
 </font></td>
 </tr>
 </tr><td>

@@ -1,31 +1,35 @@
 <?
-   # $Id: categories.php,v 1.1.2.2 2002-01-05 02:00:13 dan Exp $
-   #
-   # Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: categories.php,v 1.1.2.3 2002-01-05 23:01:13 dan Exp $
+	#
+	# Copyright (c) 1998-2001 DVL Software Limited
 
-   require("./include/common.php");
-   require("./include/freshports.php");
-   require("./include/databaselogin.php");
-   require("./include/getvalues.php");
+	require("./include/common.php");
+	require("./include/freshports.php");
+	require("./include/databaselogin.php");
+	require("./include/getvalues.php");
 
-
-   freshports_Start("Categories",
-               "freshports - new ports, applications",
-               "FreeBSD, index, applications, ports");
+	freshports_Start("Categories",
+					"freshports - new ports, applications",
+					"FreeBSD, index, applications, ports");
 
 ?>
 
 <table width="<? echo $TableWidth ?>" border="0" ALIGN="center">
-</tr><tr><td colspan="2">This page lists the categories sorted by various categories.
-</td></tr>
-<tr><td colspan="2">
-You can sort each column by clicking on the header.  e.g. click on <b>Category</b> to sort by category.
-</td></tr>
 <tr><td valign="top" width="100%">
 <table width="100%" border="0" CELLPADDING="5">
   <tr>
     <td colspan="4" bgcolor="#AD0040" height="29"><font color="#FFFFFF" size="+2"><? echo $FreshPortsTitle ?> - list of categories</font></td>
   </tr>
+<tr><td COLSPAN="4">
+<P>
+This page lists the categories sorted by various categories.
+</P>
+
+<P>
+You can sort each column by clicking on the header.  e.g. click on <b>Category</b> to sort by category.
+</P>
+
+</td></tr>
 <script language="php">
 
 $DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
@@ -52,35 +56,6 @@ switch ($sort) {
       $cache_file .= ".category";
 }
 
-srand((double)microtime()*1000000);
-$cache_time_rnd =       300 - rand(0, 600);
-
-$UpdateCache = 0;
-if (!file_exists($cache_file)) {
-//   echo 'cache does not exist<br>';
-   // cache does not exist, we create it
-   $UpdateCache = 1;
-} else {
-//   echo 'cache exists<br>';
-   if (!file_exists($LastUpdateFile)) {
-      // no updates, so cache is fine.
-//      echo 'but no update file<br>';
-   } else {
-//      echo 'cache file was ';
-      // is the cache older than the db?
-      if ((filectime($cache_file) + $cache_time_rnd) < filectime($LastUpdateFile)) {
-//         echo 'created before the last database update<br>';
-         $UpdateCache = 1;
-      } else {
-//         echo 'crated after the last database update<br>';
-      }
-   }
-}
-
-//$UpdateCache = 1;
-#if ($UpdateCache == 1) {
-//   echo 'time to update the cache';
-
 $sql = "select max(commit_log.commit_date) - INTERVAL '10800 seconds' as updated, count(ports.id) as count, " .
        "categories.id as category_id, categories.name as category, categories.description as description ".
        "from categories, element, ports left outer join commit_log on ( ports.last_commit_id = commit_log.id ) ".
@@ -95,8 +70,6 @@ $sql .=  " order by $sort";
 //echo $sort, "\n";
 
 $result = pg_exec($db, $sql);
-
-$HTML .= freshports_echo_HTML('<tr><td>');
 
 $HTML .= freshports_echo_HTML('<tr>');
 
@@ -150,7 +123,7 @@ if (!$result) {
 	}
 }
 
-$HTML .= freshports_echo_HTML("<tr><td><b>port count:</b></td><td><b>$NumPorts</b></td></tr>");
+$HTML .= freshports_echo_HTML("<tr><td><b>port count:</b></td><td ALIGN=\"right\"><b>$NumPorts</b></td></tr>");
 
 #mysql_free_result($result);
 
@@ -171,7 +144,11 @@ echo $HTML;
 </tr>
 </table>
 
+<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<TR><TD>
 <? include("./include/footer.php") ?>
+</TD></TR>
+</TABLE>
 
 </body>
 </html>

@@ -1,17 +1,16 @@
 <?
-   # $Id: watch-categories.php,v 1.1.2.3 2002-01-05 03:42:02 dan Exp $
-   #
-   # Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: watch-categories.php,v 1.1.2.4 2002-01-05 23:01:19 dan Exp $
+	#
+	# Copyright (c) 1998-2001 DVL Software Limited
 
-   require("./include/common.php");
-   require("./include/freshports.php");
-   require("./include/databaselogin.php");
-   require("./include/getvalues.php");
+	require("./include/common.php");
+	require("./include/freshports.php");
+	require("./include/databaselogin.php");
+	require("./include/getvalues.php");
 
-
-   freshports_Start("Watch categories",
-               "freshports - new ports, applications",
-               "FreeBSD, index, applications, ports");
+	freshports_Start("Watch categories",
+					"freshports - new ports, applications",
+					"FreeBSD, index, applications, ports");
 
 $Debug = 0;
 
@@ -25,10 +24,6 @@ if (!$visitor) {
 
 ?>
 <table width="100%" border="0">
-</tr>
-<tr><td colspan="2">
-This page shows the various categories and indicates which ones contains ports which are on your watch list.
-</td></tr>
 <td valign="top"><table width="100%">
   <tr>
     <td bgcolor="#AD0040" height="29"><font color="#FFFFFF" size="+2"><? echo $FreshPortsTitle; ?> - watch categories</font></td>
@@ -132,6 +127,12 @@ echo "</table>\n";
  </td>
 </tr>
 </table>
-</body>
+
+<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<TR><TD>
 <? include("./include/footer.php") ?>
+</TD></TR>
+</TABLE>
+
+</body>
 </html>

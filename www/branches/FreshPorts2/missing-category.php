@@ -1,7 +1,7 @@
 <?
-   # $Id: missing-category.php,v 1.1.2.2 2001-12-30 23:25:56 dan Exp $
-   #
-   # Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: missing-category.php,v 1.1.2.3 2002-01-05 23:01:16 dan Exp $
+	#
+	# Copyright (c) 1998-2001 DVL Software Limited
 
 
 function freshports_Category($category, $db) {

@@ -1,5 +1,5 @@
 <?
-	# $Id: watch.php,v 1.1.2.2 2002-01-05 20:13:04 dan Exp $
+	# $Id: watch.php,v 1.1.2.3 2002-01-05 23:01:19 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -20,17 +20,17 @@ if (!$visitor) {
 					"FreeBSD, index, applications, ports");
 ?>
 
-<table width="100%" border="0">
+<table width="<? echo $TableWidth ?>" border="0" ALIGN="center">
 
-<tr><td colspan="2">
-This page lists the ports which are on your watch list. To modify the contents of this list, click on 
-<a href="watch-categories.php">watch list - Categories</a> at the right.
-</td></tr>
 <tr><td valign="top" width="100%">
 <table width="100%" border="0">
 <tr>
     <td colspan="5" bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1"><? echo $FreshPortsTitle; ?> - your watch list</font></td>
   </tr>
+<tr><td>
+This page lists the ports which are on your watch list. To modify the contents of this list, click on 
+<a href="watch-categories.php">watch list - Categories</a> at the right.
+</td></tr>
 <script language="php">
 
 $DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
@@ -203,6 +203,12 @@ echo $HTML;
 </td>
 </tr>
 </table>
+
+<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<TR><TD>
 <? include("./include/footer.php") ?>
+</TD></TR>
+</TABLE>
+
 </body>
 </html>

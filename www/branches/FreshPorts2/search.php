@@ -1,5 +1,5 @@
 <?
-	# $Id: search.php,v 1.1.2.2 2002-01-03 03:04:18 dan Exp $
+	# $Id: search.php,v 1.1.2.3 2002-01-05 23:01:18 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -15,16 +15,16 @@
 					"FreeBSD, index, applications, ports");
 
 ?>
-<table width="100%">
-<tr><td valign="top" td colspan="2">
-OK, we have just a very simple search.  Eventually this will be extended. If you find any bugs, please
-let <a href="http://freshports.org/phorum/list.php?f=3">me know</a>.
-</td></tr>
+<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <tr><td valign="top" width="100%">                    
 <table width="100%" border="0">                       
   <tr>                                                
-    <td colspan="2" bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+2">freshports - search</font></td>
+    <td colspan="2" bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+2"><? echo $FreshPortsTitle; ?> - search</font></td>
   </tr>
+<tr><td valign="top">
+OK, we have just a very simple search.  Eventually this will be extended. If you find any bugs, please
+let <a href="http://freshports.org/phorum/list.php?f=3">me know</a>.
+</td></tr>
 <tr><td>
 <?
 if ($search) {

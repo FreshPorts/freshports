@@ -1,17 +1,16 @@
 <?
-   # $Id: files.php,v 1.1.2.1 2002-01-02 02:53:39 dan Exp $
-   #
-   # Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: files.php,v 1.1.2.2 2002-01-05 23:01:14 dan Exp $
+	#
+	# Copyright (c) 1998-2001 DVL Software Limited
 
-   require("./include/common.php");
-   require("./include/freshports.php");
-   require("./include/databaselogin.php");
-   require("./include/getvalues.php");
+	require("./include/common.php");
+	require("./include/freshports.php");
+	require("./include/databaselogin.php");
+	require("./include/getvalues.php");
 
-
-if (!$id || $id != strval(intval($id))) {
-  $id = 0;
-}
+	if (!$id || $id != strval(intval($id))) {
+		$id = 0;
+	}
 
 $sql = "select element_pathname(element.id) as pathname, commit_log_port_elements.commit_log_id, " .
 	   "commit_log_port_elements.port_id, " .

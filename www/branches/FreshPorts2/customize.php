@@ -1,5 +1,5 @@
 <?
-	# $Id: customize.php,v 1.1.2.3 2002-01-03 02:22:03 dan Exp $
+	# $Id: customize.php,v 1.1.2.4 2002-01-05 23:01:14 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -119,8 +119,8 @@ if ($submit) {
                "FreeBSD, index, applications, ports");
 </script>
 
-<table width="100%" border="0">
-  <tr><td valign="top" width="100%">
+<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<tr><td valign="top" width="100%">
 <table width="100%" border="0">
     <td bgcolor="#AD0040"><font color="#FFFFFF" size="+2">Customize User Account</font></td>
   </tr>
@@ -204,6 +204,12 @@ echo "</td>
 </tr>
   </tr>
 </table>
-</body>
+
+<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<TR><TD>
 <? include("./include/footer.php") ?>
+</TD></TR>
+</TABLE>
+
+</body>
 </html>

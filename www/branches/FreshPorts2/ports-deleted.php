@@ -1,29 +1,28 @@
 <?
-   # $Id: ports-deleted.php,v 1.1.2.1 2002-01-02 02:53:47 dan Exp $
-   #
-   # Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: ports-deleted.php,v 1.1.2.2 2002-01-05 23:01:17 dan Exp $
+	#
+	# Copyright (c) 1998-2001 DVL Software Limited
 
-   require("./include/common.php");
-   require("./include/freshports.php");
-   require("./include/databaselogin.php");
-   require("./include/getvalues.php");
+	require("./include/common.php");
+	require("./include/freshports.php");
+	require("./include/databaselogin.php");
+	require("./include/getvalues.php");
 
-
-   freshports_Start("Ports removed",
-               "freshports - new ports, applications",
-               "FreeBSD, index, applications, ports");
+	freshports_Start("Ports removed",
+					"freshports - new ports, applications",
+					"FreeBSD, index, applications, ports");
 
 ?>
 
-<table width="100%" border="0">
-<tr><td colspan="2">
-This page shows the last <? echo $MaxNumberOfPorts ?> ports to be removed the ports tree.
-</td></tr>
-<tr><td valign="top" width="100%">
+<table width="<? echo $TableWidth ?>" border="0" ALIGN="center">
+<tr><td COLSPAN="2" valign="top" width="100%">
 <table width="100%" border="0">
 <tr>
     <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" size="+1">freshports - recently removed ports</font></td>
   </tr>
+<tr><td colspan="2">
+This page shows the last <? echo $MaxNumberOfPorts ?> ports to be removed the ports tree.
+</td></tr>
 <tr><td>
 Sorry, but we've disabled this page.  Sorry about that.  With luck, it will be back in FreshPorts2.
 </td></tr>
@@ -33,7 +32,13 @@ Sorry, but we've disabled this page.  Sorry about that.  With luck, it will be b
    <? include("./include/side-bars.php") ?>
  </td>
 </tr>
-</table>
+</TABLE>
+
+<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<TR><TD>
 <? include("./include/footer.php") ?>
+</TD></TR>
+</TABLE>
+
 </body>
 </html>

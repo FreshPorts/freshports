@@ -1,14 +1,14 @@
 <?
-   # $Id: bouncing.php,v 1.1.2.2 2002-01-05 03:50:52 dan Exp $
-   #
-   # Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: bouncing.php,v 1.1.2.3 2002-01-05 23:01:12 dan Exp $
+	#
+	# Copyright (c) 1998-2001 DVL Software Limited
 
-   require("./include/common.php");
-   require("./include/freshports.php");
-   require("./include/databaselogin.php");
-   require("./include/getvalues.php");
+	require("./include/common.php");
+	require("./include/freshports.php");
+	require("./include/databaselogin.php");
+	require("./include/getvalues.php");
 
-#$Debug = 1;
+	$Debug = 0;
 
 
 if ($submit) {

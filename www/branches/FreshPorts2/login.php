@@ -1,7 +1,7 @@
 <?
-   # $Id: login.php,v 1.1.2.4 2002-01-03 01:22:03 dan Exp $
-   #
-   # Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: login.php,v 1.1.2.5 2002-01-05 23:01:15 dan Exp $
+	#
+	# Copyright (c) 1998-2001 DVL Software Limited
 
 //echo "UserID = $UserID";
    require("./include/common.php");
@@ -72,7 +72,7 @@ if ($submit) {
 
 ?>
 
-<table width="100%" border=0>
+<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
  <tr>
     <td>
 <table width="100%" border=0>
@@ -143,6 +143,13 @@ echo '<br><a href="forgotten-password.php">Forgotten your password?</a>';
 </table> 
 </td></tr>
 </table>
+
+
+<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<TR><TD>
 <? include("./include/footer.php") ?>
+</TD></TR>
+</TABLE>
+
 </body>
 </html>

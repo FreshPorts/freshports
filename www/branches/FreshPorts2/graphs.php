@@ -1,9 +1,11 @@
 <?
-// sample graph
+	# $Id: graphs.php,v 1.5.2.2 2002-01-05 23:01:15 dan Exp $
+	#
+	# Copyright (c) 1998-2001 DVL Software Limited
 
-   require("./include/common.php");
-   require("./include/freshports.php");
-   require("./include/databaselogin.php");
+	require("./include/common.php");
+	require("./include/freshports.php");
+	require("./include/databaselogin.php");
 
 #require( "./include/commonlogin.php");
 #require( "./include/getvalues.php");

@@ -4,8 +4,8 @@
 
 	ServerName      www.freshports.org
 
-	ErrorLog        /www/log/freshports.org-error.log
-	CustomLog       /www/log/freshports.org-access.log common
+	ErrorLog        /usr/websites/log/virtual.freshports.org-error.log
+	CustomLog       /usr/websites/log/virtual.freshports.org-access.log common
 
 	ErrorDocument   404 /missing.php
 </VirtualHost>

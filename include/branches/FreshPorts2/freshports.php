@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.182 2004-09-22 23:02:22 dan Exp $
+	# $Id: freshports.php,v 1.4.2.183 2004-09-27 00:30:41 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -1090,6 +1090,7 @@ function freshports_PortCommitsHeader($port) {
 
 	echo "</tr>\n";
 }
+
 function freshports_PackageVersion($PortVersion, $PortRevision, $PortEpoch) {
 	$PackageVersion = '';
 

@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_process.inc,v 1.5.2.7 2002-03-01 17:52:06 dan Exp $
+	# $Id: pkg_process.inc,v 1.5.2.8 2002-03-01 18:00:10 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 	#
@@ -34,7 +34,7 @@ function HandleFileUpload($FormFileName, $Destination) {
 
 	if (is_uploaded_file($HTTP_POST_FILES[$FormFileName]['tmp_name'])) {
 		$filename = $HTTP_POST_FILES[$FormFileName]['tmp_name'];
-#		print "$filename was uploaded successfuly<BR>";
+#		print "$filename was uploaded successfully<BR>";
 		$realname = $HTTP_POST_FILES[$FormFileName]['name'];
 #		print "realname is $realname<BR>";
 #		print "copying file to $Destination<BR>";

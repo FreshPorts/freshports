@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_upload.php,v 1.5.2.8 2002-03-01 17:52:06 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.9 2002-03-01 18:00:11 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -39,7 +39,7 @@ function DisplayUploadForm($pkg_info) {
 	?>
 
 	<P>
-	You can update your watch lists from the packges database on your computer.  Use the output
+	You can update your watch lists from the packages database on your computer.  Use the output
 	from the <CODE CLASS="code">pkg_info</CODE> command as the input for this page.  FreshPorts
 	will take this information, analyze it, and use that data to update your watch list.
 	</P>
@@ -90,7 +90,7 @@ function DisplayUploadForm($pkg_info) {
 function DisplayStagingArea($WatchListID, $db) {
 
 	echo '<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5" 
-					bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2"><TR>';
+					bordercolor="#a2a2a2" BORDERCOLORDARK="#a2a2a2" BORDERCOLORLIGHT="#a2a2a2"><TR>';
 ?>
 
 	<TR><TD COLSPAN="4"><BIG>The following information is in your Staging Area.  To save it to your Watch List, please click on the
@@ -100,7 +100,8 @@ function DisplayStagingArea($WatchListID, $db) {
 
 	echo '<TD VALIGN="top"><B>Ports found from your uploaded data.</B><BR>Those marked with a W are already on your watch list.</TD>' . "\n";
 	echo '<TD VALIGN="top"><B>Ports not found.</B><BR>These ports are installed on your system but could not be located within FreshPorts.  Perhaps they have
-								been renamed or removed from the ports tree.</TD>' . "\n";
+								been renamed or removed from the ports tree.  You could use the search link, locate the ports, and add them to your
+								watch list manually.</TD>' . "\n";
 	echo '<TD VALIGN="top"><B>Ports duplicated</B><BR>The following ports have been installed multiple times, most definitely with different versions on
 										 your system.</TD>' . "\n";
 
@@ -133,7 +134,7 @@ function DisplayStagingArea($WatchListID, $db) {
 ?>
 
 <table width="<? echo $TableWidth ?>" border="0" ALIGN="center">
-<tr><td VALIGN=TOP>
+<TR><td VALIGN=TOP>
 <TABLE WIDTH="100%">
 <TR>
 	<? freshports_PageBannerText("Uploading pkg_info"); ?>
@@ -212,11 +213,11 @@ function DisplayStagingArea($WatchListID, $db) {
 		include("./include/side-bars.php");
     ?>
  </td>
-</tr>
+</TR>
 
 
  </td>
-</tr>
+</TR>
 </table>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">

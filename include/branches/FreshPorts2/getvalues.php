@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: getvalues.php,v 1.1.2.29 2003-09-16 12:22:00 dan Exp $
+	# $Id: getvalues.php,v 1.1.2.30 2003-09-16 12:22:49 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -15,7 +15,7 @@ $Debug = 0;
 $FormatDateDefault		= "%W, %b %e";
 $FormatTimeDefault		= "%H:%i";
 $DaysMarkedAsNewDefault	= 10;
-$DefaultPageSize			= 50;
+$DefaultPageSize		= 50;
 
 
 // there are only a few places we want to show the last change.
@@ -26,19 +26,19 @@ $DaysToShow  = 20;
 $MaxArticles = 40;
 $DaysNew     = 10;
 
-$MaxNumberOfPorts			= 100;
+$MaxNumberOfPorts		= 100;
 $ShowShortDescription	= "Y";
-$ShowMaintainedBy			= "Y";
+$ShowMaintainedBy		= "Y";
 $ShowLastChange			= "Y";
-$ShowDescriptionLink		= "Y";
-$ShowChangesLink			= "Y";
+$ShowDescriptionLink	= "Y";
+$ShowChangesLink		= "Y";
 $ShowDownloadPortLink	= "Y";
-$ShowPackageLink			= "Y";
-$ShowHomepageLink			= "Y";
-$FormatDate					= $FormatDateDefault;
-$FormatTime					= $FormatTimeDefault;
-$DaysMarkedAsNew			= $DaysMarkedAsNewDefault;
-$EmailBounceCount			= 0;
+$ShowPackageLink		= "Y";
+$ShowHomepageLink		= "Y";
+$FormatDate				= $FormatDateDefault;
+$FormatTime				= $FormatTimeDefault;
+$DaysMarkedAsNew		= $DaysMarkedAsNewDefault;
+$EmailBounceCount		= 0;
 $CVSTimeAdjustment		= -10800;	# this is number of seconds the web server is relative to the cvs server.
 									# a value of -10800 means the web server is three hours east of the cvs server.
 									# we can override that for a particular user.

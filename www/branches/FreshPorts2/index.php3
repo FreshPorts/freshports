@@ -1,5 +1,5 @@
 <?
-   # $Id: index.php3,v 1.34.2.13 2001-12-23 00:28:04 dan Exp $
+   # $Id: index.php3,v 1.34.2.14 2001-12-28 22:50:39 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -132,7 +132,7 @@ select DISTINCT commit_log.commit_date as commit_date_raw,
 	   categories.name as category,
 	   categories.id   as category_id,
 	   element.name    as port,
-	   ports.version   as version,
+	   commit_log_ports.port_version   as version,
 	   element.status    as status,
 	   ports.needs_refresh  as needs_refresh,
 	   ports.forbidden      as forbidden,

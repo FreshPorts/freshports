@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits.php,v 1.1.2.5 2005-01-22 14:48:50 dan Exp $
+	# $Id: commits.php,v 1.1.2.6 2005-03-13 12:53:22 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -81,10 +81,9 @@ $num          = $MaxNumberOfPortsLong;
 $days         = $NumberOfDays;
 $dailysummary = 7;
 
-if (In_Array('num',          $_GET)) $num			= AddSlashes($_GET["num"]);
-if (In_Array('dailysummary', $_GET)) $dailysummary	= AddSlashes($_GET["dailysummary"]);
-if (In_Array('days',         $_GET)) $days			= AddSlashes($_GET["days"]);
-
+if (IsSet($_REQUEST['num']))          $num			= AddSlashes($_REQUEST["num"]);
+if (IsSet($_REQUEST['dailysummary'])) $dailysummary	= AddSlashes($_REQUEST["dailysummary"]);
+if (IsSet($_REQUEST['days']))         $days			= AddSlashes($_REQUEST["days"]);
 
 if (Is_Numeric($num)) {
 	$MaxNumberOfPortsLong = min($MaxNumberOfPortsLong, max(10, $num));

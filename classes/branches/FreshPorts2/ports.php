@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports.php,v 1.1.2.44 2004-07-06 03:26:25 dan Exp $
+	# $Id: ports.php,v 1.1.2.45 2004-09-22 13:58:18 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -20,6 +20,7 @@ class Port {
 	var $long_description;
 	var $version;
 	var $revision;
+	var $epoch;
 	var $maintainer;
 	var $homepage;
 	var $master_sites;
@@ -74,6 +75,7 @@ class Port {
 		$this->long_description   = $myrow["long_description"];
 		$this->version            = $myrow["version"];
 		$this->revision           = $myrow["revision"];
+		$this->epoch              = $myrow["epoch"];
 		$this->maintainer         = $myrow["maintainer"];
 		$this->homepage           = $myrow["homepage"];
 		$this->master_sites       = $myrow["master_sites"];
@@ -129,8 +131,9 @@ select ports.id,
        ports.category_id       as category_id, 
        ports.short_description as short_description, 
        ports.long_description, 
-       ports.version           as version, 
-       ports.revision          as revision, 
+       ports.version           as version,
+       ports.revision          as revision,
+       ports.portepoch         as epoch,
        ports.maintainer, 
        ports.homepage, 
        ports.master_sites, 
@@ -211,6 +214,7 @@ select ports.id,
 		               ports.long_description, 
 		               ports.version           as version,
 		               ports.revision          as revision, 
+		               ports.portepoch         as epoch, 
 		               ports.maintainer,
 		               ports.homepage, 
 		               ports.master_sites, 
@@ -319,6 +323,7 @@ SELECT P.*, element.name    as port,
         ports.long_description,
         ports.version           as version,
         ports.revision          as revision,
+        ports.portepoch         as epoch,
         ports.maintainer,
         ports.homepage,
         ports.master_sites,

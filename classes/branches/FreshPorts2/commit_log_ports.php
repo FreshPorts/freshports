@@ -1,5 +1,5 @@
 <?php
-	# $Id: commit_log_ports.php,v 1.1.2.17 2004-06-10 15:21:06 dan Exp $
+	# $Id: commit_log_ports.php,v 1.1.2.18 2004-09-22 13:58:17 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -18,6 +18,7 @@ class Commit_Log_Ports {
 	var $encoding_losses;
 	var $port_version;
 	var $port_revision;
+	var $port_epoch;
 	var $security_notice_id;
 	var $needs_refresh;
 
@@ -50,6 +51,7 @@ select commit_log.id,
        encoding_losses,
        port_version,
        port_revision,
+       port_epoch,
        security_notice.id as security_notice_id,
        needs_refresh
   from commit_log, commit_log_ports LEFT OUTER JOIN security_notice
@@ -78,17 +80,18 @@ select commit_log.id,
 
 		$myrow = pg_fetch_array($this->result, $N);
 
-		$this->id						= $myrow["id"];
-		$this->port_id					= $myrow["port_id"];
-		$this->message_id				= $myrow["message_id"];
+		$this->id					= $myrow["id"];
+		$this->port_id				= $myrow["port_id"];
+		$this->message_id			= $myrow["message_id"];
 		$this->commit_date			= $myrow["commit_date"];
 		$this->description			= $myrow["description"];
-		$this->committer				= $myrow["committer"];
+		$this->committer			= $myrow["committer"];
 		$this->encoding_losses		= $myrow["encoding_losses"];
 		$this->port_version			= $myrow["port_version"];
-		$this->port_revision			= $myrow["port_revision"];
+		$this->port_revision		= $myrow["port_revision"];
+		$this->port_epoch			= $myrow["port_epoch"];
 		$this->security_notice_id	= $myrow["security_notice_id"];
-		$this->needs_refresh			= $myrow["needs_refresh"];
+		$this->needs_refresh		= $myrow["needs_refresh"];
 	}
 
 	function NeedsRefreshClear() {

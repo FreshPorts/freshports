@@ -1,5 +1,5 @@
 <?
-	# $Id: ports.php,v 1.1.2.5 2002-01-03 03:05:27 dan Exp $
+	# $Id: ports.php,v 1.1.2.6 2002-01-05 03:26:14 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -79,12 +79,16 @@ class Port {
 	function FetchByPartialName($pathname) {
 		# fetch a single port based on pathname.
 		# e.g. net/samba
+		#
+		# It will not bring back any commit information.
 
 		#
 		# first, we get the element relating to this port
 		#
 		$element = new Element($this->dbh);
         $element->FetchByName($pathname);
+
+		if ($Debug) echo "into FetchByPartialName with $pathname<BR>";
 
 		if (IsSet($element->id)) {
 			$this->element_id = $element->id;
@@ -96,28 +100,28 @@ class Port {
 			       "ports.depends_build, ports.depends_run, ports.last_commit_id, ports.found_in_index, " .
 			       "ports.forbidden, ports.broken, ports.date_created, " .
 			       "ports.categories as categories, ".
-				   "element.name as port, categories.name as category, commit_log_ports.needs_refresh, " .
-				   "element.status, commit_log.commit_date as updated " .
-			       "from ports, categories, element, commit_log_ports, commit_log ".
+				   "element.name as port, categories.name as category, " .
+				   "element.status " .
+			       "from ports, categories, element ".
 			       "WHERE ports.element_id     = $this->element_id ".
 			       "  and ports.category_id    = categories.id " .
-			       "  and ports.element_id     = element.id " .
-				   "  and ports.last_commit_id = commit_log_ports.commit_log_id " .
-				   "  and ports.id             = commit_log_ports.port_id " .
-				   "  and commit_log.id        = commit_log_ports.commit_log_id ";
+			       "  and ports.element_id     = element.id ";
 
 	        $result = pg_exec($this->dbh, $sql);
 			if ($result) {
 				$numrows = pg_numrows($result);
 				if ($numrows == 1) {
-#					echo "fetched by ID succeeded<BR>";
+					if ($Debug) echo "fetched by ID succeeded<BR>";
 					$myrow = pg_fetch_array ($result, 0);
 					$this->_PopulateValues($myrow);
-
+				} else {
+					echo "Ports::FetchByPartialName I'm concerned I got $numrows from that.<BR>$sql<BR>";
 				}
 			} else {
-#				echo 'pg_exec failed: ' . $sql;
+				echo 'pg_exec failed: ' . $sql;
 			}
+		} else {
+			echo 'ports FetchByPartialName for $path failed';
 		}
 	}
 
@@ -145,13 +149,13 @@ class Port {
 		if ($result) {
 			$numrows = pg_numrows($result);
 			if ($numrows == 1) {
-#				echo "fetched by ID succeeded<BR>";
+				if ($Debug) echo "fetched by ID succeeded<BR>";
 				$myrow = pg_fetch_array ($result, 0);
 				$this->_PopulateValues($myrow);
 
 			}
 		} else {
-#			echo 'pg_exec failed: ' . $sql;
+			echo 'pg_exec failed: ' . $sql;
 		}
 	}
 

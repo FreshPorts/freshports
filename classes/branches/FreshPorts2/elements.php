@@ -1,5 +1,5 @@
 <?
-	# $Id: elements.php,v 1.1.2.1 2001-12-23 02:53:29 dan Exp $
+	# $Id: elements.php,v 1.1.2.2 2002-01-05 03:26:15 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -28,13 +28,13 @@ class Element {
 			$this->id = $id;
 		}
 		$sql = "select *, element_pathname(id) as pathname from element where id = $this->id";
-#		echo "sql = '$sql'<BR>";
+		if ($Debug) echo "sql = '$sql'<BR>";
 
         $result = pg_exec($this->dbh, $sql);
 		if ($result) {
 			$numrows = pg_numrows($result);
 			if ($numrows == 1) {
-#				echo "fetched by ID succeeded<BR>";
+				if ($Debug) echo "fetched by ID succeeded<BR>";
 				$myrow = pg_fetch_array ($result, 0);
 				$this->id					= $myrow["id"];
 				$this->name					= $myrow["name"];
@@ -52,7 +52,8 @@ class Element {
 	function FetchByName($pathname) {
 		# obtain the element based on the pathname supplied
 		$sql = "select Pathname_ID('$pathname') as id";
-#		echo "sql = '$sql'<BR>";
+
+		if ($Debug)	echo "Element::FetchByName sql = '$sql'<BR>";
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
@@ -60,14 +61,14 @@ class Element {
 			if ($numrows == 1) {
 				$myrow = pg_fetch_array ($result, 0);
 				$this->id = $myrow["id"];
-#				echo "id for '$pathname' is $this->id<BR>";
+				if ($Debug) echo "id for '$pathname' is $this->id<BR>";
 
 				if (IsSet($this->id)) {
 					return $this->FetchByID($this->id);
 				}
 			}
 		} else {
-#			echo 'pg_exec failed: ' . $sql;
+			echo 'pg_exec failed: ' . $sql;
 		}
 	}
 }

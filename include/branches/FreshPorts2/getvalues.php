@@ -1,6 +1,6 @@
-<script language="php">
+<?php
 
-	# $Id: getvalues.php,v 1.1.2.8 2002-02-12 22:58:05 dan Exp $
+	# $Id: getvalues.php,v 1.1.2.9 2002-02-24 00:25:29 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -143,5 +143,7 @@ if (!empty($visitor)) {
 		echo "UserName = $UserName\n<br>UserID=$UserID<br>\n";
 		echo "watch list id = $WatchListID<BR>\n";
 	}
+} else {
+	if ($Debug) echo "we have no \$visitor\n<BR>";
 }
-</script>
+?>

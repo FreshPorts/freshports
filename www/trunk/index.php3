@@ -132,7 +132,7 @@ $sql = "select ports.id, ports.name as port, change_log.commit_date as updated, 
        "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, ports.status, " .
        "date_format(change_log.commit_date, '$FormatDate $FormatTime') as updated, change_log.committer, " .
        "change_log.update_description, " .
-       "ports.last_change_log_detail_id " .
+       "ports.last_change_log_id " .
        "from ports, categories, change_log, change_log_port  ".
        "WHERE ports.system = 'FreeBSD' ".
        "  and ports.primary_category_id       = categories.id " .

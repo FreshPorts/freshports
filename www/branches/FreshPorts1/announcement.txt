@@ -1,3 +1,4 @@
 <P ALIGN="left">
-<BIG>FreshPorts2:</BIG> We're getting close... Watch this space.
+<BIG>FreshPorts2:</BIG> Have you been to the <A HREF="http://www.FreshPorts.org/">beta test site yet</A>?  Please have 
+a look around, read the FAQ, and check the forum there for details on new features and how you can help with the testing.
 </P>

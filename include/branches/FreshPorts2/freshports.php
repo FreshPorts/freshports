@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.132 2003-02-11 21:27:16 dan Exp $
+	# $Id: freshports.php,v 1.4.2.133 2003-02-21 19:16:30 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -574,7 +574,7 @@ function freshports_ONToYN($Value) {
 }
 
 
-function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, $LinkToPort = 0, $AddRemoveExtra = '', $ShowCategory = 1, $ShowDateAdded = "N", $IndicateWatchListStatus = 1) {
+function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, $LinkToPort = 0, $AddRemoveExtra = '', $ShowCategory = 1, $ShowDateAdded = "N", $IndicateWatchListStatus = 1, $ShowMasterSites = 0) {
 //
 // This fragment does the basic port information for a single port.
 // It really needs to be fixed up.
@@ -799,14 +799,16 @@ if ($ShowDepends) {
 
 }
 
-	$HTML .= '<dl><dt><i>master sites:</i></dt>' . "\n";
+	if ($ShowMasterSites) {
+		$HTML .= '<dl><dt><i>master sites:</i></dt>' . "\n";
 
-	$MasterSites = explode(' ', $port->master_sites);
-	foreach ($MasterSites as $Site) {
-		$HTML .= '<dd>' . htmlify(htmlspecialchars($Site)) . "</dd>\n";
+		$MasterSites = explode(' ', $port->master_sites);
+		foreach ($MasterSites as $Site) {
+			$HTML .= '<dd>' . htmlify(htmlspecialchars($Site)) . "</dd>\n";
+		}
+
+		$HTML .= "</dt></dl>\n";
 	}
-
-	$HTML .= "</dt></dl>\n";
 
    if (!$HideDescription && ($ShowDescriptionLink == "Y" || $ShowEverything)) {
       // Long descripion
@@ -974,7 +976,7 @@ function freshports_PortCommitsHeader($port) {
 	}
 	echo freshports_PageBannerText("Commit History - (may be incomplete: see CVSWeb link above for full details)", $Columns);
 
-	echo '<TR><TD WIDTH="180"><b>Date</b></td><td><b>Committer</b></td><td><b>Description</b></td>';
+	echo '<TR><TD WIDTH="180"><b>Date</b></td><td><b>By</b></td><td><b>Description</b></td>';
 	if ($User->IsTaskAllowed($freshports_Tasks_SecurityNoticeAdd)) {
 		echo '<td><b>Security</b></td>';
 	}
@@ -1026,7 +1028,7 @@ function freshports_PortCommitPrint($commit, $category, $port) {
 	GLOBAL $freshports_Tasks_SecurityNoticeAdd;
 
 	# print a single commit for a port
-	echo "<TR><TD VALIGN='top'>";
+	echo "<TR><TD VALIGN='top' NOWRAP>";
 	echo $commit->commit_date . '<BR>' . freshports_Email_Link($commit->message_id);
 	echo '&nbsp;&nbsp;'. freshports_Commit_Link($commit->message_id);
 

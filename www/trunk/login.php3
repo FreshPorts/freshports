@@ -4,49 +4,53 @@ require( "./_private/commonlogin.php3");
 require( "./_private/freshports.php3");
 
 if ($submit) {
-//$Debug=1;
-// process form
+//   $Debug=1;
+   // process form
 
-if ($Debug) {
-  while (list($name, $value) = each($HTTP_POST_VARS)) {
-    echo "$name = $value<br>\n";
-  }
-}
+   if ($Debug) {
+      while (list($name, $value) = each($HTTP_POST_VARS)) {
+         echo "$name = $value<br>\n";
+      }
+   }
 
-  $OK = 1;
+   $OK = 1;
 
-  $errors = "";
+   $errors = "";
 
-  // test for existance of user id
-  $Cookie = UserToCookie($UserID);
+   // test for existance of user id
+   $Cookie = UserToCookie($UserID);
 
-if ($Debug) {
-   echo "Cookie = $Cookie\n";
-}
+   if ($Debug) {
+      echo "Cookie = $Cookie<br>\n";
+   }
 
-  $sql = "select * from users where username = '$UserID'".
-	 " and password = '$Password' ";
+   $sql = "select * from users where username = '$UserID'".
+	  " and password = '$Password' ";
 
-if ($Debug) {
-   echo "$sql\n";
-}
+   if ($Debug) {
+      echo "$sql<br>\n";
+   }
 
-  $result = mysql_query($sql, $db) or die('query failed ' . mysql_error());
+   $result = mysql_query($sql, $db) or die('query failed ' . mysql_error());
 
 
-  if(!mysql_numrows($result)) {
-     $LoginFailed = 1;
-  } else {
+   if (!mysql_numrows($result)) {
+      $LoginFailed = 1;
+   } else {
 
-    SetCookie("visitor", $Cookie, time() + 60*60*24*120, '/');
-    // Redirect browser to PHP web site
-    if ($origin == "/index.php3") {
-       $origin = "/";
-    }
-    header("Location: $origin");
-    // Make sure that code below does not get executed when we redirect.
-    exit;       
-  }
+      if ($Debug) {
+         echo "well, debug was on, so I would have taken you to '$origin'<br>\n";
+      } else {
+         SetCookie("visitor", $Cookie, time() + 60*60*24*120, '/');
+         // Redirect browser to PHP web site
+         if ($origin == "/index.php3") {
+            $origin = "/";
+         }
+         header("Location: $origin");
+         // Make sure that code below does not get executed when we redirect.
+         exit;
+      }
+   }
 }
 ?>
 

@@ -1,7 +1,7 @@
 <?php
 $Starting =  microtime();
 	#
-	# $Id: index.php,v 1.1.2.70 2003-04-13 19:53:50 dan Exp $
+	# $Id: index.php,v 1.1.2.71 2003-04-23 14:30:18 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -140,7 +140,7 @@ FROM (
                  LIMIT $MaxNumberOfPorts) AS LCP
            ON commit_log.id = LCP.commit_log_id) AS LCPCL JOIN commit_log_ports
                          ON commit_log_ports.commit_log_id = LCPCL.commit_log_id
-                         AND commit_log_ports.commit_log_id > Anchor_CLID()) AS LCPCLLCP JOIN ports
+                         AND commit_log_ports.commit_log_id > latest_commits_ports_anchor()) AS LCPCLLCP JOIN ports
 on LCPCLLCP.port_id = ports.id) AS LCPPORTS JOIN element
 on LCPPORTS.element_id = element.id) AS PORTELEMENT JOIN categories
 on PORTELEMENT.category_id = categories.id) AS PEC LEFT OUTER JOIN security_notice

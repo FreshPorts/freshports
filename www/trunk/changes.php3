@@ -23,6 +23,15 @@ require( "./_private/freshports.php3");
 <p>This is where I will attempt to list the changes to the freshports website.  Please put your wish 
 lists in the <a href="http://freshports.org/phorum/list.php?f=3">feedback phorum</a>.
 </p>
+<p>July 25<p>
+<ul>
+   <li>Change the user entry screens to prevent silly buggers from playing silly buggers with the new-user,
+       customize, and search screens.  Thanks to schematic for bringing this to my attention.</li>
+   <li>Set a deleted port to be undeleted if it is reactivated.  gtm 0.4.5 ftp, Tuesday, Jul 25, 01:40, 
+       was the commit which prompt this problem to my attention [again, I had noticed it once before, but 
+       thought I had already dealt with it].</li>
+</ul>
+
 <p>July 24<p>
 <ul>
    <li>Added a facility to tell you if email to you from FreshPorts is bouncing.</li>

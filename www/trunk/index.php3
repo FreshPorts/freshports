@@ -1,5 +1,5 @@
 <?
-   # $Id: index.php3,v 1.27 2001-10-09 20:40:57 dan Exp $
+   # $Id: index.php3,v 1.28 2001-10-09 20:41:54 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -15,9 +15,12 @@
 #$Debug=1;
 
 #
-# $Author: dan $ $Date: 2001-10-09 20:40:57 $
-# $Header: /home/dan/repositories/freshports-1/www/Attic/index.php3,v 1.27 2001-10-09 20:40:57 dan Exp $
+# $Author: dan $ $Date: 2001-10-09 20:41:54 $
+# $Header: /home/dan/repositories/freshports-1/www/Attic/index.php3,v 1.28 2001-10-09 20:41:54 dan Exp $
 # $Log: not supported by cvs2svn $
+# Revision 1.27  2001/10/09 20:40:57  dan
+# FreshPorts not freshports
+#
 # Revision 1.26  2001/10/06 15:08:38  dan
 # welcome to the new box
 #
@@ -37,7 +40,7 @@
 # Add some headers
 #
 # $Name: not supported by cvs2svn $
-# $Revision: 1.27 $
+# $Revision: 1.28 $
 #
 
 //echo "UserID='$UserID'";
@@ -105,7 +108,7 @@ if ($Debug) {
 <meta name="description" content="freshports - new ports, applications">
 <meta name="keywords" content="FreeBSD, index, applications, ports">  
 <!--// DVL Software is a New Zealand company specializing in database applications. //-->
-<title>freshports - the place for ports</title>
+<title>FreshPorts - the place for ports</title>
 </head>
 
   <? include("./include/header.php") ?>

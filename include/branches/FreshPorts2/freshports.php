@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.63 2002-04-10 14:26:19 dan Exp $
+   # $Id: freshports.php,v 1.4.2.64 2002-04-10 17:59:42 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -44,9 +44,9 @@ $ProblemSolverEmailAddress	= "webmaster@freshports.org";
 # These values are used when specifying add/remove on a port
 #
 $FreshPortsWatchedPortPrefix	= "<SMALL><A HREF=\"/watch-list.php?remove=";
-$FreshPortsWatchedPortSuffix	= "\">Remove</A></SMALL>";
+$FreshPortsWatchedPortSuffix	= '">' . freshports_Watch_Icon() . '</A></SMALL>';
 $FreshPortsWatchedPortNotPrefix	= "<SMALL><A HREF=\"/watch-list.php?add=";
-$FreshPortsWatchedPortNotSuffix	= "\">Add</A></SMALL>";
+$FreshPortsWatchedPortNotSuffix	= '">' . freshports_Watch_Icon_Add() . '</A></SMALL>';
 
 #
 # These are similar to the above but are using in SQL queries
@@ -102,6 +102,28 @@ function freshports_Mail_Icon() {
 
 function freshports_Commit_Icon() {
 	return '<IMG SRC="/images/copy.gif" ALT="FreshPorts commit message" TITLE="FreshPorts commit message" BORDER="0" WIDTH="16" HEIGHT="16">';
+}
+
+function freshports_Watch_Icon() {
+	return '<IMG SRC="/images/watch.gif" ALT="Item is on your watch list" TITLE="Item is on your watch list" BORDER="0" WIDTH="23" HEIGHT="22">';
+}
+
+function freshports_Watch_Icon_Add() {
+	return '<IMG SRC="/images/watch-add.gif" ALT="Add item to your watch list" TITLE="Add item to your watch list" BORDER="0" WIDTH="13" HEIGHT="13">';
+}
+
+function freshports_Watch_Link_Add($element_id) {
+	GLOBAL	$FreshPortsWatchedPortNotPrefix;
+	GLOBAL	$FreshPortsWatchedPortNotSuffix;
+
+	return $FreshPortsWatchedPortNotPrefix    . $element_id . $FreshPortsWatchedPortNotSuffix;
+}
+
+function freshports_Watch_Link_Remove($element_id) {
+	GLOBAL	$FreshPortsWatchedPortPrefix;
+	GLOBAL	$FreshPortsWatchedPortSuffix;
+
+	return $FreshPortsWatchedPortPrefix    . $element_id . $FreshPortsWatchedPortSuffix;
 }
 
 function freshports_Email_Link($message_id) {

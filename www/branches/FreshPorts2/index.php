@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.30 2002-04-09 13:01:22 dan Exp $
+	# $Id: index.php,v 1.1.2.31 2002-04-10 17:59:41 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -240,15 +240,16 @@ ports. A port is marked as new for 10 days.
 
 						if ($WatchListID) {
 							if ($myrow["watch"]) {
-								$HTML .= $FreshPortsWatchedPortPrefix    . $myrow["element_id"] . $FreshPortsWatchedPortSuffix;
+								$HTML .= ' '. freshports_Watch_Link_Remove($myrow["element_id"]);
 							} else {
-								$HTML .= $FreshPortsWatchedPortNotPrefix . $myrow["element_id"] . $FreshPortsWatchedPortNotSuffix;
+								$HTML .= ' '. freshports_Watch_Link_Add($myrow["element_id"]);
 							}
 						}
 
-						$HTML .= "\n";
+						$HTML .= "\n&nbsp;";
 
 						$HTML .= freshports_CommitFilesLink($myrow["commit_log_id"], $myrow["category"], $myrow["port"]);
+						$HTML .= "&nbsp;";
 
 						// indicate if this port has been removed from cvs
 						if ($myrow["status"] == "D") {

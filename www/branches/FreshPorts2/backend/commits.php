@@ -1,16 +1,29 @@
-<?
-	# $Id: commits.php,v 1.1.2.6 2003-02-21 19:14:43 dan Exp $
+<?php
+	#
+	# $Id: commits.php,v 1.1.2.7 2003-04-23 16:39:42 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
+	#
 
 	require($_SERVER["DOCUMENT_ROOT"] . "/include/common.php");
 	require($_SERVER["DOCUMENT_ROOT"] . "/include/freshports.php");
 	require($_SERVER["DOCUMENT_ROOT"] . "/include/databaselogin.php");
 	require($_SERVER["DOCUMENT_ROOT"] . "/include/getvalues.php");
 
+	DEFINE('MAXROWS', 150);
+
 	$Debug = 0;
 
-	$Title    = "Broken ports";
+	$MaxCommits = AddSlashes($_REQUEST['n']);
+	if (IsSet($MaxCommits)) {
+		if ($MaxCommits < 1 or $MaxCommits > MAXROWS) {
+			$MaxCommits = MAXROWS;
+		}
+	} else {
+		$MaxCommits = MAXROWS;
+	}
+
+	$Title = "Broken ports";
 
 	$sql = "SELECT message_id, 
 				   to_char(message_date - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS'), 
@@ -20,7 +33,7 @@
 			  FROM commit_log
 			 WHERE date_added < now() - INTERVAL '1 minutes'
 		  ORDER BY commit_date desc, message_date desc, message_id, committer
-			 LIMIT 50";
+			 LIMIT $MaxCommits";
 
 
 	if ($Debug) {

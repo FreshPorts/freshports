@@ -6,10 +6,6 @@ if (!$visitor) {
         exit;  /* Make sure that code below does not get executed when we redirect. */
 }
 
-?>
-
-<?
-
 require( "/www/freshports.org/_private/commonlogin.php3");
 require( "/www/freshports.org/_private/getvalues.php3");
 require( "/www/freshports.org/_private/freshports.php3");

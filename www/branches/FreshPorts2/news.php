@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: news.php,v 1.1.2.12 2003-04-28 20:27:28 dan Exp $
+	# $Id: news.php,v 1.1.2.13 2003-04-28 21:13:04 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -21,16 +21,28 @@
 	$ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['SERVER_NAME']);
 
 	$HTML .= '<!DOCTYPE rss PUBLIC "-//Netscape Communications//DTD RSS 0.91//EN"' . "\n";
-	$HTML .= '        "http://my.netscape.com/publish/formats/rss-0.91.dtd">' . "\n";
-	$HTML .= '<rss version="0.91">' . "\n";
+	$HTML .= '        "http://my.netscape.com/publish/formats/rss-0.91.dtd">'      . "\n";
+	$HTML .= '<rss version="0.91">'                                                . "\n";
 
 	$HTML .= "\n";
 
-	$HTML .= '<channel>' . "\n";
-	$HTML .= '  <title>' . "$FreshPortsName -- $FreshPortsSlogan" . '</title>' . "\n";
-	$HTML .= '  <link>http://' . $ServerName . '/</link>' . "\n";
-	$HTML .= '  <description>The easiest place to find ports</description>' . "\n";
-	$HTML .= '  <language>en-us</language>' . "\n";
+	$HTML .= '<channel>'                                                                        . "\n";
+	$HTML .= '  <title>' . "$FreshPortsName -- $FreshPortsSlogan" . '</title>'                  . "\n";
+	$HTML .= '  <link>http://' . $ServerName . '/</link>'                                       . "\n";
+	$HTML .= '  <description>The easiest place to find ports</description>'                     . "\n";
+	$HTML .= '  <language>en-us</language>'                                                     . "\n";
+	$HTML .= '  <copyright>Copyright ' . COPYRIGHTYEARS . ', DVL Software Limited.</copyright>' . "\n";
+
+	$HTML .= "\n";
+
+	$HTML .= '  <image>'                                                                       . "\n";
+	$HTML .= '    <title>FreshPorts - The place for ports</title>'                             . "\n";
+	$HTML .= '    <url>http://'  . $_SERVER["HTTP_HOST"] . '/images/freshports_mini.jpg</url>' . "\n";
+	$HTML .= '    <link>http://' . $_SERVER["HTTP_HOST"] . '/</link>'                          . "\n";
+	$HTML .= '    <width>128</width>'                                                          . "\n";
+	$HTML .= '    <height>28</height>'                                                         . "\n";
+	$HTML .= '    <description>FreshPorts - The place for ports</description>'                 . "\n";
+	$HTML .= '  </image>'                                                                      . "\n";
 
 	$sort ="commit_log.commit_date desc, commit_log.id asc, element.name, category, version";
 
@@ -119,7 +131,9 @@ order by commit_date_raw desc, category, port ";
 	$numrows = pg_numrows($result);
 	for ($i = 0; $i < $numrows; $i++) {
 		$myrow = pg_fetch_array ($result, $i);
+		$HTML .= "\n";
 		$HTML .= '  <item>' . "\n";
+
 		$HTML .= '    <title>' . $myrow["category"] . '/' . $myrow["port"] . ' - ' . $myrow["version"];
 		if ($myrow["revision"] != 0) {
 			$HTML .= '-' . $myrow["revision"];
@@ -127,10 +141,12 @@ order by commit_date_raw desc, category, port ";
 		if (IsSet($myrow["security_notice_id"])) {
 			$HTML .= ' - Security Alert!';
 		}
-		$HTML .= '</title>' . "\n";
+		$HTML .= '</title>'                                                                                       . "\n";
+
 		$HTML .= '    <link>http://' . $ServerName . '/' . $myrow["category"] . '/' . $myrow["port"] . '/</link>' . "\n";
-		$HTML .= '    <description>' . htmlspecialchars(trim($myrow["commit_description"])) . '</description>' . "\n";
-		$HTML .= '  </item>' . "\n";
+		$HTML .= '    <description>' . htmlspecialchars(trim($myrow["commit_description"])) . '</description>'    . "\n";
+
+		$HTML .= '  </item>'                                                                                      . "\n";
 	}
 
 	$HTML .= '</channel>' . "\n";
@@ -139,4 +155,3 @@ order by commit_date_raw desc, category, port ";
 	echo '<?xml version="1.0"?>', "\n";
 	echo $HTML;
 ?>
- 	

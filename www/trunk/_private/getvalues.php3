@@ -1,10 +1,10 @@
 <script language="php">
 
-//$Debug=1;
+$Debug=0;
 
-$FormatDateDefault	= "%m/%d";
+$FormatDateDefault	= "%W, %b %e";
 $FormatTimeDefault	= "%H:%i";
-$DaysMarkedAsNewDefault	= 21;
+$DaysMarkedAsNewDefault	= 10;
 
 
 // there are only a few places we want to show the last change.
@@ -35,69 +35,71 @@ $UserID			= "";
 $DefaultMaxArticles = $MaxArticles;
 
 if (!empty($visitor)) {
-
-  $sql = "select *, date_format(now(), format_date) as sample_date, date_format(now(), format_time) as sample_time from users ".
+   $sql = "select * from users ".
          "where cookie = '$visitor'";
 
-//  echo "sql=$sql<br>";
+   if ($Debug) {
+      echo "sql=$sql<br>\n";
+   }
 
-  $result = mysql_query($sql, $db) or die("getvalues query failed");
+   $result = mysql_query($sql, $db) or die("getvalues query failed " . mysql_error());
 
-  if ($result) {
-     $myrow = mysql_fetch_array($result);
-     if ($myrow) {
-        $UserName		= $myrow["username"];
-        $UserID			= $myrow["id"];
-        $emailsitenotices_yn	= $myrow["emailsitenotices_yn"];
-        $email			= $myrow["email"];
-        $watchnotifyfrequency	= $myrow["watchnotifyfrequency"];
+   if ($result) {
+      $myrow = mysql_fetch_array($result);
+      if ($myrow) {
+         $UserName		= $myrow["username"];
+         $UserID		= $myrow["id"];
+         $emailsitenotices_yn	= $myrow["emailsitenotices_yn"];
+         $email			= $myrow["email"];
+         $watchnotifyfrequency	= $myrow["watchnotifyfrequency"];
 
-        $MaxNumberOfPorts	= $myrow["max_number_of_ports"];
-        $ShowShortDescription	= $myrow["show_short_description"];
-        $ShowMaintainedBy	= $myrow["show_maintained_by"];
-        $ShowLastChange		= $myrow["show_last_change"];
-        $ShowDescriptionLink	= $myrow["show_description_link"];
-        $ShowChangesLink	= $myrow["show_changes_link"];
-        $ShowDownloadPortLink	= $myrow["show_download_port_link"];
-        $ShowPackageLink	= $myrow["show_package_link"];
-        $ShowHomepageLink	= $myrow["show_homepage_link"];
+         $MaxNumberOfPorts	= $myrow["max_number_of_ports"];
+         $ShowShortDescription	= $myrow["show_short_description"];
+         $ShowMaintainedBy	= $myrow["show_maintained_by"];
+         $ShowLastChange	= $myrow["show_last_change"];
+         $ShowDescriptionLink	= $myrow["show_description_link"];
+         $ShowChangesLink	= $myrow["show_changes_link"];
+         $ShowDownloadPortLink	= $myrow["show_download_port_link"];
+         $ShowPackageLink	= $myrow["show_package_link"];
+         $ShowHomepageLink	= $myrow["show_homepage_link"];
 
-        if ($myrow["days_marked_as_new"]) {
-           $DaysMarkedAsNew	= $myrow["days_marked_as_new"];
-        } else {
-           $DaysMarkedAsNew	= $DaysMarkedAsNewDefault;
-        }
+         if ($myrow["days_marked_as_new"]) {
+            $DaysMarkedAsNew	= $myrow["days_marked_as_new"];
+         } else {
+            $DaysMarkedAsNew	= $DaysMarkedAsNewDefault;
+         }
+/*
+         if ($myrow["format_date"]) {
+            $FormatDate		= $myrow["format_date"];
+         }
 
-        if ($myrow["format_date"]) {
-           $FormatDate		= $myrow["format_date"];
-        }
-
-        if ($myrow["format_time"]) {
-           $FormatTime		= $myrow["format_time"];
-        }
-
-        if ($emailsitenotices_yn == "Y") {
-           $emailsitenotices_yn = "ON";
-        } else {
-           $emailsitenotices_yn = "";
-        }
-
-        $SampleFormatDate	= $myrow["sample_date"];
-        $SampleFormatTime       = $myrow["sample_time"];
+         if ($myrow["format_time"]) {
+            $FormatTime		= $myrow["format_time"];
+         }
+*/
+         if ($emailsitenotices_yn == "Y") {
+            $emailsitenotices_yn = "ON";
+         } else {
+            $emailsitenotices_yn = "";
+         }
+/*
+         $SampleFormatDate	= $myrow["sample_date"];
+         $SampleFormatTime	= $myrow["sample_time"];
+*/
  
 //        echo "visitor = $visitor<br>";
 
-        // record their last login
-        $sql = "update users set lastlogin = '" . date("Y/m/d", time()) . "'" .
-               " where id = $UserID";
+         // record their last login
+         $sql = "update users set lastlogin = '" . date("Y/m/d", time()) . "'" .
+                " where id = $UserID";
 //        echo $sql, "<br>";
-        $result = mysql_query($sql, $db);
-     } else {
-        $errors = "Sorry, but that login doesn't exist according to me.";
+         $result = mysql_query($sql, $db);
+      } else {
+         $errors = "Sorry, but that login doesn't exist according to me.";
+      }
    }
-  }
-  if ($Debug) {
-     echo "UserName = $UserName\nUserID=$UserID\n";
-  }
+   if ($Debug) {
+      echo "UserName = $UserName\nUserID=$UserID\n";
+   }
 }
 </script>

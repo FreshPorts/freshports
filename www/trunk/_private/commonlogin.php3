@@ -37,7 +37,10 @@ if ($Debug) {
 }
 
 $db = mysql_connect("localhost","freshports", "marlboro");
-mysql_select_db($database, $db);
+if (!mysql_select_db($database, $db)) {
+   echo mysql_error();
+   exit;
+};
 
 function UserToCookie($User) {
     $EncodedUserID = base64_encode($User);

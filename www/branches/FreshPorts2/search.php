@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.57 2004-07-05 19:37:41 dan Exp $
+	# $Id: search.php,v 1.1.2.58 2004-08-26 18:38:42 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -48,6 +48,8 @@
 	$deleted			= 'excludedeleted';
 	$casesensitivity	= 'caseinsensitive';
 	$start				= '1';
+	$orderby            = ORDERBYCATEGORY;
+	$orderbyupdown		= ORDERBYASCENDING;
 
 	// avoid nasty problems by adding slashes
 	if (IsSet($_REQUEST['query']))           $query				= AddSlashes(trim($_REQUEST['query']));
@@ -308,7 +310,7 @@ switch ($orderby) {
 				$sql .= "\n order by categories.name desc, element.name";
 				break;
 
-			case ORDERBYASC:
+			case ORDERBYASCENDING:
 				$sql .= "\n order by categories.name, element.name";
 				break;
 		}
@@ -322,7 +324,7 @@ switch ($orderby) {
 				$sql .= "\n order by element.name desc, categories.name";
 				break;
 
-			case ORDERBYASC:
+			case ORDERBYASCENDING:
 				$sql .= "\n order by element.name, categories.name";
 				break;
 		}
@@ -430,8 +432,8 @@ Search for:<BR>
 	</SELECT>
 
 	<SELECT name="orderbyupdown">
-		<OPTION VALUE="<?php echo ORDERBYASC;  ?>" <?if ($orderbyupdown == ORDERBYASC  ) echo 'SELECTED' ?>>ascending
-		<OPTION VALUE="<?php echo ORDERBYDESC; ?>" <?if ($orderbyupdown == ORDERBYDESC ) echo 'SELECTED' ?>>descending
+		<OPTION VALUE="<?php echo ORDERBYASCENDING;  ?>" <?if ($orderbyupdown == ORDERBYASCENDING  ) echo 'SELECTED' ?>>ascending
+		<OPTION VALUE="<?php echo ORDERBYDESCENDING; ?>" <?if ($orderbyupdown == ORDERBYDESCENDING ) echo 'SELECTED' ?>>descending
 	</SELECT>
 </td></tr>
 </table>

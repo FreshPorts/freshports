@@ -1,5 +1,5 @@
 <?
-	# $Id: watch_list_element.php,v 1.1.2.2 2002-12-09 21:03:30 dan Exp $
+	# $Id: watch_list_element.php,v 1.1.2.3 2002-12-10 03:55:45 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -51,6 +51,32 @@ class WatchListElement {
 		return $return;
 	}
 
+
+	function DeleteElementFromWatchLists($UserID, $ElementID) {
+		#
+		# Delete this element from all watch lists
+		#
+
+		#
+		# The "subselect" ensures the user can only delete things from their
+		# own watch list
+		#
+		$sql = "DELETE FROM watch_list_element
+		         WHERE watch_list_element.element_id    = $ElementID
+		           AND watch_list.user_id               = $UserID
+		           AND watch_list_element.watch_list_id = watch_list.id";
+		if ($Debug) echo "<pre>$sql</pre>";
+		$result = pg_exec($this->dbh, $sql);
+
+		# that worked and we updated exactly one row
+		if ($result) {
+			$return = pg_affected_rows($result);
+		} else {
+			$return = -1;
+		}
+
+		return $return;
+	}
 
 	function DeleteFromDefault($UserID, $ElementID) {
 		#

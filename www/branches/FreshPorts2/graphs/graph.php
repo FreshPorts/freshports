@@ -1,5 +1,5 @@
 <?
-	# $Id: graph.php,v 1.1.2.9 2002-05-18 18:13:57 dan Exp $
+	# $Id: graph.php,v 1.1.2.10 2002-12-04 16:35:20 dan Exp $
 	#
 
 	require($_SERVER["DOCUMENT_ROOT"] . "/include/common.php");
@@ -15,18 +15,18 @@ require("bar-graphs.php");
 
 // $values must be an array of numbers
 function FreshPortsChart($title, $axislabel, $values, $labels, $urls, $file = "-") {
-        $c = new dg_BarGraph();
-        $c->width      = 500;
-        $c->values     = $values;
-        $c->labels     = $labels;
+		$c = new dg_BarGraph();
+		$c->width      = 500;
+		$c->values     = $values;
+		$c->labels     = $labels;
 		$c->urls       = $urls;
 		$c->title      = $title;
 		$c->axis_label = $axislabel;
 		$c->gradient1  = array(180,0,0); // from dark red
-        $c->gradient2  = array(255,255,0); // to bright yellow
+		$c->gradient2  = array(255,255,0); // to bright yellow
 
-        $c->footer = "(c) http://www.FreshPorts.org/                               " . date("Y-m-d G:i:s");
-        return $c->show($file);
+		$c->footer = "(c) http://www.FreshPorts.org/                               " . date("Y-m-d G:i:s");
+		return $c->show($file);
 }
 
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: security-notice.php,v 1.1.2.8 2003-04-26 14:33:20 dan Exp $
+	# $Id: security-notice.php,v 1.1.2.9 2003-04-27 14:48:17 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -96,7 +96,7 @@
 		$HTML .= freshports_PortDescriptionPrint($Commit->commit_description, $Commit->encoding_losses);
 		$HTML .= "\n</BLOCKQUOTE>\n</TD></TR>\n\n\n";
 
-		$HTML .= '<tr><td height=20><hr width="97%" align="center"></tr></td>';
+		$HTML .= '<tr><td><hr width="97%" align="center"></td></tr>';
 	} else {
 		$HTML = '<TR><TD>I did not find that commit</TD></TR>';
 	}
@@ -109,7 +109,7 @@
 	GLOBAL $freshports_Tasks_SecuritydNoticeAdd;
 
 	if (IsSet($SecurityNotice->id)) {
-		echo '<h2>Notification reason</h2>';
+		echo '<h2>Notification reason</h2>' . "\n";
 	}
 
 	if ($UserCanEdit) {
@@ -119,7 +119,7 @@ Please enter your reasoning for marking the above commit as a security issue.
 </p>
 
 <FORM ACTION="<? echo $_SERVER["PHP_SELF"]; ?>" method="POST">
-	<TEXTAREA NAME="description" ROWS="10" COLS=60"><?php
+	<TEXTAREA NAME="description" ROWS="10" COLS="60"><?php
 	if (IsSet($SecurityNotice->description)) {
 		echo $SecurityNotice->description;
 	} else {
@@ -132,7 +132,7 @@ Please enter your reasoning for marking the above commit as a security issue.
 </FORM>
 <?php
 	} else {
-		echo htmlify(htmlspecialchars($SecurityNotice->description));
+		echo htmlify(htmlspecialchars($SecurityNotice->description)) . "\n";
 	}
 
 	if (IsSet($SecurityNotice->id) && $UserCanEdit) {
@@ -177,18 +177,16 @@ Please enter your reasoning for marking the above commit as a security issue.
 		echo freshports_Security_Icon() . 'This commit is set as security related';
 	}
 ?>
-</td></tr>
-<?php
-	?>
 </TD>
 </TR>
 </TABLE>
 </TD>
 
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
 	freshports_SideBar();
 	?>
-
+  </td>
 </TR>
 </TABLE>
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.38 2003-03-24 12:13:28 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.39 2003-04-27 14:48:14 dan Exp $
 	#
 	# Copyright (c) 2001-2003 DVL Software Limited
 	#
@@ -195,9 +195,11 @@ $ShowDescriptionLink		= "N";
 ?>
 
 </TD>
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
   <?
   freshports_SideBar();
   ?>
+  </td>
 </TR>
 
 </TABLE>

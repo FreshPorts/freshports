@@ -1,7 +1,8 @@
-<?
-	# $Id: watch-lists.php,v 1.1.2.9 2002-12-16 13:33:13 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2002 DVL Software Limited
+	# $Id: watch-lists.php,v 1.1.2.10 2003-04-27 14:48:21 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_lists.php');
@@ -12,12 +13,12 @@ function freshports_WatchListDDLB($dbh, $UserID, $selected = '', $size = 0, $mul
 
 	$Debug = 0;
 
-	$HTML = '<select name=wlid';
+	$HTML = '<select name="wlid';
 	if ($multiple) {
 		$HTML .= '[]';
 	}
 	
-	$HTML .= ' title="Select a watch list"';
+	$HTML .= '" title="Select a watch list"';
 
 	if ($size) {
 		$HTML .= ' size="' . $size . '"';

@@ -1,5 +1,5 @@
 <?
-	# $Id: report-subscriptions.php,v 1.1.2.18 2002-12-11 14:58:56 dan Exp $
+	# $Id: report-subscriptions.php,v 1.1.2.19 2003-04-27 14:48:17 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 	#
@@ -216,9 +216,11 @@ This page allows you to select the reports you wish to receive and the frequency
 
 	</TD>
 
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
   <?
   freshports_SideBar();
   ?>
+  </td>
 
   </TR>
 

@@ -1,5 +1,5 @@
 <?
-	# $Id: privacy.php,v 1.1.2.11 2003-01-06 14:14:43 dan Exp $
+	# $Id: privacy.php,v 1.1.2.12 2003-04-27 14:48:16 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -36,9 +36,11 @@
 </TABLE>
 </TD>
 
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
   <?
   freshports_SideBar();
   ?>
+  </td>
 
 </TR>
 </TABLE>

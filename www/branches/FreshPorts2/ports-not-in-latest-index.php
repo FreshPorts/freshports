@@ -1,5 +1,5 @@
 <?
-	# $Id: ports-not-in-latest-index.php,v 1.1.2.11 2003-01-06 14:14:43 dan Exp $
+	# $Id: ports-not-in-latest-index.php,v 1.1.2.12 2003-04-27 14:48:16 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -13,12 +13,6 @@
 					'FreeBSD, index, applications, ports');
 
 ?>
-<html>
-
-<head>
-<meta name="description" content="freshports - new ports, applications">
-<meta name="keywords" content="FreeBSD, index, applications, ports">  
-
 <?
 $Debug=0;
 
@@ -38,7 +32,6 @@ $title = "Ports not in latest /usr/ports/INDEX";
 ?>
 
 <TABLE WIDTH="<? echo $TableWidth ?>" BORDER="0" ALIGN="center">
-<tr><td VALIGN="top">
 
 <?
 
@@ -64,36 +57,33 @@ if ($Debug) {
 $result = $result = pg_exec($db, $sql);
 if ($result) {
 	$NumRows = pg_numrows($result);
-	echo "<BIG>$NumRows ports found</BIG><BR>\n";
+	echo "<tr><td><BIG>$NumRows ports found</BIG></td></tr>\n";
 ?>
 
+<tr><td>
 <TABLE WIDTH="<? echo $TableWidth ?>" BORDER="10" ALIGN="center">
-<tr><td VALIGN="top">
-
 <?
-
 	for ($i = 0; $i < $NumRows; $i++) {
 		$myrow = pg_fetch_array ($result, $i);
 		echo '<TR><TD WIDTH="*">';
-		echo '<A HREF="' . $myrow["port"] . '">' . $myrow["port"] . '</A>';
-		echo '</TD><TD ALIGN="left">' . $myrow["element_id"] . '</TD>' . "\n";
-		echo '</TD><TD ALIGN="left">' . $myrow["id"]         . '</TD>' . "\n";
+		echo '<A HREF="' . $myrow["port"] . '">' . $myrow["port"] . '</A></td>';
+		echo '<TD ALIGN="left">' . $myrow["element_id"] . '</TD>' . "\n";
+		echo '<TD ALIGN="left">' . $myrow["id"]         . '</TD>' . "\n";
 		echo '</TR>';
 	}
 
-	echo '</TABLE>';
 } // end for
+?>
 
-</script>
+</table>
 </td>
 
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
 	freshports_SideBar();
 	?>
+  </td>
 
-</tr>
-</table>
-</td>
 </tr>
 </table>
 

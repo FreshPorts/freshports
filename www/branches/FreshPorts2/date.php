@@ -1,7 +1,9 @@
-<?
-	# $Id: date.php,v 1.1.2.17 2003-01-06 14:14:38 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2002 DVL Software Limited
+	# $Id: date.php,v 1.1.2.18 2003-04-27 14:48:11 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
@@ -217,8 +219,6 @@
 	}
 
 ?>
-<html>
-<body>
 
 <?php
 #echo "That date is " . $Date . '<br>';
@@ -247,9 +247,13 @@ echo '</table>';
 
 </td>
 
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
+
 	<?
 	freshports_SideBar();
 	?>
+
+  </td>	
 </tr>
 </table>
 

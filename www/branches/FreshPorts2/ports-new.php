@@ -1,7 +1,9 @@
-<?
-	# $Id: ports-new.php,v 1.1.2.25 2003-03-06 13:51:57 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2002 DVL Software Limited
+	# $Id: ports-new.php,v 1.1.2.26 2003-04-27 14:48:16 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
@@ -80,13 +82,13 @@ These are the recently added ports.
 	switch ($sort) {
 		case "dateadded":
 			$sort = "date_added desc, category, port";
-			echo 'sorted by date added.  <A HREF="' . $_SERVER["PHP_SELF"] . '?interval=' . $interval . '&sort=category">Sort by category</A>';
+			echo 'sorted by date added.  <A HREF="' . $_SERVER["PHP_SELF"] . '?interval=' . $interval . '&amp;sort=category">Sort by category</A>';
 			$ShowCategoryHeaders = 0;
 			break;
 	
 		default:
 			$sort ="category, port";
-			echo 'sorted by category.  <A HREF="' . $_SERVER["PHP_SELF"] . '?interval=' . $interval . '&sort=dateadded">Sort by date added</A>';
+			echo 'sorted by category.  <A HREF="' . $_SERVER["PHP_SELF"] . '?interval=' . $interval . '&amp;sort=dateadded">Sort by date added</A>';
 			$ShowCategoryHeaders = 1;
 	}
 	
@@ -179,9 +181,11 @@ TEMP, element, categories
 
 </TABLE>
 
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
 	freshports_SideBar();
 	?>
+  </td>
 
 </TR>
 </TABLE>

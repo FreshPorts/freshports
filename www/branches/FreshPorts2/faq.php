@@ -1,7 +1,9 @@
-<?
-	# $Id: faq.php,v 1.1.2.32 2003-03-05 21:37:26 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: faq.php,v 1.1.2.33 2003-04-27 14:48:11 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
@@ -319,7 +321,7 @@ down you must read to find something you didn't already know.</P>
 this website.  It contains a lot of information.  You can trim this information by using parameters.
 
 <p>
-Try this URL: <a href="http://<?php echo $ServerName ?>/index.php?num=30&days=0">http://<?php echo $ServerName ?>/index.php?num=30&days=0</a>
+Try this URL: <a href="http://<?php echo $ServerName ?>/index.php?num=30&amp;days=0">http://<?php echo $ServerName ?>/index.php?num=30&amp;days=0</a>
 
 <ul>
 <li>
@@ -342,22 +344,22 @@ Here are a few examples:
 <table BORDER="1" CELLSPACING="0" CELLPADDING="5">
 <tr>
 <td><b>Description</b></td>
-<td nowrap valign="top"><b>URL</td>
+<td nowrap valign="top"><b>URL</b></td>
 </tr>
 
 <tr>
 <td>The last ten ports</td>
-<td nowrap valign="top"><a href="http://<?php echo $ServerName ?>/index.php?num=10">http://<?php echo $ServerName ?>/index.php?num=10</b></a><br></td>
+<td nowrap valign="top"><a href="http://<?php echo $ServerName ?>/index.php?num=10">http://<?php echo $ServerName ?>/index.php?<b>num=10</b></a><br></td>
 </tr>
 
 <tr>
 <td>Same as above, but show only two days of previous commits</td>
-<td nowrap valign="top"><a href="http://<?php echo $ServerName ?>/index.php?num=10&days=2">http://<?php echo $ServerName ?>/index.php?num=10&<b>days=2</b></a><br></td>
+<td nowrap valign="top"><a href="http://<?php echo $ServerName ?>/index.php?num=10&amp;days=2">http://<?php echo $ServerName ?>/index.php?num=10&amp;<b>days=2</b></a><br></td>
 </tr>
 
 <tr>
 <td>Same as above, but show summaries instead of a link to another page</td>
-<td nowrap valign="top"><a href="http://<?php echo $ServerName ?>/index.php?num=10&dailysummary=2">http://<?php echo $ServerName ?>/index.php?num=10&<b>dailysummary=2</b></a></td>
+<td nowrap valign="top"><a href="http://<?php echo $ServerName ?>/index.php?num=10&amp;dailysummary=2">http://<?php echo $ServerName ?>/index.php?num=10&amp;<b>dailysummary=2</b></a></td>
 </tr>
 
 </table>
@@ -391,9 +393,11 @@ SQL and I'll be implementing that gradually.
 </table>
 </td>
 
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
 	freshports_SideBar();
 	?>
+  </td>
 
 </tr>
 </table>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.73 2003-04-26 14:50:23 dan Exp $
+	# $Id: index.php,v 1.1.2.74 2003-04-27 14:48:12 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -340,6 +340,8 @@ ports. A port is marked as new for 10 days.
 </TD>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
    <? freshports_SideBar(); ?>
+
+<BR>
 <?
 
 	if ($dailysummary) {
@@ -349,7 +351,7 @@ ports. A port is marked as new for 10 days.
 	} else {
 		if ($NumberOfDays) {
 			$Today = time();
-			echo '<BR>
+			echo '
 <TABLE WIDTH="155" BORDER="1" CELLSPACING="0" CELLPADDING="5">
 	<TR>
 		<TD BGCOLOR="#AD0040" height="30"><FONT COLOR="#FFFFFF"><BIG><B>Previous days</B></BIG></FONT></TD>

@@ -1,7 +1,9 @@
-<?
-	# $Id: watch-list.php,v 1.2.2.20 2003-03-05 21:07:13 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2002 DVL Software Limited
+	# $Id: watch-list.php,v 1.2.2.21 2003-04-27 14:48:18 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
@@ -120,7 +122,7 @@ Please select the watch lists which should contain this port:
 		?>
 		<br><br>
 		<INPUT id=submit style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29 
-		   value="<?php echo $ButtonName; ?>" name=submit><br>
+		   value="<?php echo $ButtonName; ?>" name="submit"><br>
 		<INPUT TYPE="hidden" NAME="Origin" VALUE="<?php echo $Origin?>">
 		<INPUT TYPE="hidden" NAME="Update" VALUE="<?php echo $Object?>">
 <?php
@@ -146,9 +148,12 @@ NOTES
 </TD>
 </tr>
 </table>
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
   <?
   freshports_SideBar();
   ?>
+  </td>
+
 </TABLE>
 
 <?

@@ -1,7 +1,9 @@
-<?
-	# $Id: ports-deleted.php,v 1.1.2.20 2003-03-06 13:51:56 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: ports-deleted.php,v 1.1.2.21 2003-04-27 14:48:15 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
@@ -155,9 +157,11 @@ GROUP BY ports.id,
 
 </TD>
 
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
 	freshports_SideBar();
 	?>
+  </td>
 
 </TR>
 </TABLE>

@@ -1,7 +1,9 @@
-<?
-	# $Id: login.php,v 1.1.2.29 2003-01-06 14:14:40 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: login.php,v 1.1.2.30 2003-04-27 14:48:13 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
 
    require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
    require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
@@ -121,12 +123,6 @@ if ($_GET["resend"]) {
 }
 ?>
 
-<script>
-<!--
-function setfocus() { document.f.UserID.focus(); }
-// -->
-</script>
-
 
 <?php
 	$OnLoad = 'setfocus()';
@@ -135,6 +131,12 @@ function setfocus() { document.f.UserID.focus(); }
                'FreeBSD, index, applications, ports');
 
 ?>
+
+<script language="JavaScript" type="text/javascript">
+<!--
+function setfocus() { document.f.UserID.focus(); }
+// -->
+</script>
 
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
@@ -230,9 +232,11 @@ echo '<BR><A HREF="forgotten-password.php">Forgotten your password?</a>';
 ?>
 </TD>
 
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
 	freshports_SideBar();
 	?>
+  </td>
 
 </TR>
 </TABLE> 

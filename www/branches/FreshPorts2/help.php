@@ -1,5 +1,5 @@
 <?
-	# $Id: help.php,v 1.1.2.10 2003-01-06 14:14:39 dan Exp $
+	# $Id: help.php,v 1.1.2.11 2003-04-27 14:48:12 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -159,9 +159,11 @@ your staging area before uploading again.
 </TABLE>
 </TD>
 
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
 	freshports_SideBar();
 	?>
+  </td>
 
 </TR>
 </TABLE>

@@ -1,7 +1,9 @@
-<?
-	# $Id: authors.php,v 1.1.2.16 2003-02-10 14:59:20 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: authors.php,v 1.1.2.17 2003-04-27 14:48:09 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
@@ -94,9 +96,11 @@ name just so it stays a secret.</LI>
 </TABLE>
 </td>
 
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
 	freshports_SideBar();
 	?>
+  </td>
 
 </tr>
 </table>

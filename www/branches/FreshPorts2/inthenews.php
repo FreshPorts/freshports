@@ -1,7 +1,9 @@
-<?
-	# $Id: inthenews.php,v 1.1.2.12 2003-01-06 14:14:39 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: inthenews.php,v 1.1.2.13 2003-04-27 14:48:13 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
@@ -38,10 +40,12 @@ Daily Daemon News - <a href="http://daily.daemonnews.org/view_story.php3?story_i
 </TR>
 </TABLE>
 </td>
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
 
 	<?
 	freshports_SideBar();
 	?>
+  </td>
 
 </tr>
 </table>

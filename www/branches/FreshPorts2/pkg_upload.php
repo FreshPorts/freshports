@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: pkg_upload.php,v 1.5.2.32 2003-04-26 12:48:07 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.33 2003-04-27 14:48:14 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -191,7 +191,7 @@ function ChooseWatchLists($UserID, $db) {
 	<? echo freshports_PageBannerText("Uploading pkg_info"); ?>
 <TR><TD>
 <BIG>WARNING</BIG>: The system will clear out your staging area from time to time.
-</TD><TR>
+</TD></TR>
 <TR><TD>
 	<?
 	$Debug = 0;
@@ -298,9 +298,11 @@ function ChooseWatchLists($UserID, $db) {
 </TABLE>
 </TD>
 
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
 	freshports_SideBar();
 	?>
+  </td>
 
 </TR>
 </TABLE>

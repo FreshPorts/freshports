@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing.php,v 1.1.2.16 2003-03-24 12:13:43 dan Exp $
+	# $Id: missing.php,v 1.1.2.17 2003-04-27 14:48:14 dan Exp $
 	#
 	# Copyright (c) 2001-2003 DVL Software Limited
 	#
@@ -70,9 +70,11 @@ Perhaps a <A HREF="/categories.php">list of categories</A> or <A HREF="/search.p
 </TABLE>
 </TD>
 
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
   <?
   freshports_SideBar();
   ?>
+  </td>
 
 </TR>
 

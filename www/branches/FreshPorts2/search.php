@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.40 2003-03-06 13:36:58 dan Exp $
+	# $Id: search.php,v 1.1.2.41 2003-04-27 14:48:17 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -411,9 +411,11 @@ echo "</td></tr>\n";
 
 </td>
 
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
   <?
   freshports_SideBar();
   ?>
+  </td>
 
 </tr>
 </table>

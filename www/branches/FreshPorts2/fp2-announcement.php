@@ -1,5 +1,5 @@
 <?
-	# $Id: fp2-announcement.php,v 1.1.2.10 2003-01-06 14:14:38 dan Exp $
+	# $Id: fp2-announcement.php,v 1.1.2.11 2003-04-27 14:48:11 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -22,6 +22,7 @@
 </TR>
 <TR><TD>
 
+<p>
 FreshPorts 2 has been a long time in the making.  I think I've been working
 on it for almost two years (not full time of course...).  I think you'll
 find the changes are quite impressive.
@@ -112,10 +113,13 @@ The following items deal with the technical changes which have occurred.
 </TD></TR>
 </TABLE>
 </TD>
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
 
 	<?
 	freshports_SideBar();
 	?>
+
+  </td>
 
 </TR>
 </TABLE>

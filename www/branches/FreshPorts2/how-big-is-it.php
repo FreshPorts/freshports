@@ -1,7 +1,9 @@
-<?
-	# $Id: how-big-is-it.php,v 1.1.2.10 2003-02-10 16:54:08 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: how-big-is-it.php,v 1.1.2.11 2003-04-27 14:48:12 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
@@ -86,7 +88,6 @@ echo $Files;
 $Total += $Files;
 ?>
 </code></blockquote>
-</P>
 
 <?
 	echo freshports_BannerSpace();
@@ -115,7 +116,6 @@ echo format_number($Value) . '<br>'
 ?>
 (1 row)<br>
 </code></blockquote>
-</P>
 </TD></TR>
 
 <?
@@ -157,7 +157,6 @@ echo format_number($Value) . '<br>';
 ?>
 (1 row)<br>
 </code></blockquote>
-</P>
 </TD></TR>
 
 <?
@@ -187,7 +186,6 @@ echo format_number($Value) . '<br>';
 ?>
 (1 row)<br>
 </code></blockquote>
-</P>
 </TD></TR>
 
 <?
@@ -217,7 +215,6 @@ echo format_number($Value) . '<br>';
 ?>
 (1 row)<br>
 </code></blockquote>
-</P>
 </TD></TR>
 
 <?
@@ -247,7 +244,6 @@ echo format_number($Value) . '<br>';
 ?>
 (1 row)<br>
 </code></blockquote>
-</P>
 </TD></TR>
 
 <?
@@ -277,7 +273,6 @@ echo format_number($Value) . '<br>';
 ?>
 (1 row)<br>
 </code></blockquote>
-</P>
 </TD></TR>
 
 <?
@@ -307,7 +302,6 @@ echo format_number($Value) . '<br>';
 ?>
 (1 row)<br>
 </code></blockquote>
-</P>
 </TD></TR>
 
 <?
@@ -335,7 +329,6 @@ web pages on <a href="http://www.Google.com/">Google</a><small><sup><a href="#1"
 <li>These statistics are updated daily.
 <li><a name="1"></a>The number of Google pages used in this calculation is <?php echo number_format($GooglePages) ?>.
 </ul>
-</p>
 
 </td></tr>
 
@@ -343,9 +336,11 @@ web pages on <a href="http://www.Google.com/">Google</a><small><sup><a href="#1"
 </TABLE>
 </TD>
 
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
 	freshports_SideBar();
 	?>
+  </td>
 
 </TABLE>
 

@@ -1,7 +1,9 @@
-<?
-	# $Id: graphs.php,v 1.5.2.20 2003-03-29 14:03:14 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: graphs.php,v 1.5.2.21 2003-04-27 14:48:12 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
@@ -92,9 +94,11 @@ If you have suggestions for graphs, please submit them via the forum.
 </TABLE>
 </TD>
 
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
 	freshports_SideBar();
 	?>
+  </td>
 
 </TR>
 </TABLE>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-category.php,v 1.1.2.24 2003-03-06 18:18:07 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.25 2003-04-27 14:48:13 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -155,9 +155,11 @@ freshports_CategoryNextPreviousPage($CategoryName, $PortCount, $PageNo, $PageSiz
 </div> 
 </TD></TR>
 </TABLE>
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
   <?
   freshports_SideBar();
   ?>
+  </td>
 </TR>
 </TABLE>
 

@@ -1,5 +1,5 @@
 <?
-	# $Id: ports-broken.php,v 1.1.2.11 2003-03-06 13:51:56 dan Exp $
+	# $Id: ports-broken.php,v 1.1.2.12 2003-04-27 14:48:15 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -123,9 +123,11 @@ WHERE ports.element_id  = element.id
 
 </TD>
 
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
 	freshports_SideBar();
 	?>
+  </td>
 
 </TR>
 </TABLE>

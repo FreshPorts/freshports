@@ -1,7 +1,8 @@
-<?
-	# $Id: burstmedia.php,v 1.1.2.7 2002-12-16 13:35:08 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2002 DVL Software Limited
+	# $Id: burstmedia.php,v 1.1.2.8 2003-04-27 14:48:20 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/constants.php');

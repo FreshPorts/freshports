@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: watch.php,v 1.1.2.38 2003-03-21 15:35:08 dan Exp $
+	# $Id: watch.php,v 1.1.2.39 2003-04-27 14:48:18 dan Exp $
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
@@ -260,9 +260,11 @@ if ($wlid == '') {
 </table>
 </td>
 
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
 	freshports_SideBar();
 	?>
+  </td>
 
 </tr>
 </table>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: category-maintenance.php,v 1.1.2.1 2003-03-06 22:10:15 dan Exp $
+	# $Id: category-maintenance.php,v 1.1.2.2 2003-04-27 14:48:10 dan Exp $
 	#
 	# Copyright (c) 2003 DVL Software Limited
 	#
@@ -99,7 +99,6 @@ echo '</td>';
 <?php
 if (!$IsPrimary) {
 ?>
-</tr>
 <tr><td colspan="5" align="center">
 <p>
 <INPUT id=default     style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29 value="Update"  name="update">
@@ -118,7 +117,6 @@ if (!$IsPrimary) {
 	echo '</form>';
 }
 ?>
-</form>
 
 <p>
 NOTES:
@@ -145,9 +143,11 @@ Well, I'm sorry to advise you that this page is intentionally left blank.
 </TABLE>
 </TD>
 
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
   <?
   freshports_SideBar();
   ?>
+  </td>
 
 </TR>
 </TABLE>

@@ -1,7 +1,9 @@
-<?
-	# $Id: unrefreshed.php,v 1.1.2.3 2003-02-26 16:17:06 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: unrefreshed.php,v 1.1.2.4 2003-04-27 14:48:18 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
 
    require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
    require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
@@ -193,9 +195,11 @@ for this situation is a port error.
 </table>
 </td>
 
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
 	freshports_SideBar();
 	?>
+  </td>
 
 </TABLE> 
 

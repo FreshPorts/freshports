@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.24 2003-04-26 13:15:47 dan Exp $
+	# $Id: commit.php,v 1.1.2.25 2003-04-27 14:48:10 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -28,7 +28,7 @@ if ($Debug) echo "UserID='$User->id'";
 
 ?>
 
-<TABLE WIDTH="<? echo $TableWidth ?>" BORDER="0" ALIGN="center">
+<TABLE WIDTH="<? echo $TableWidth ?>" BORDER="1" ALIGN="center">
 
 <?
 if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
@@ -40,13 +40,21 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
   </TR>
 <?
 }
+	if ($message_id != '' || $commit_id != '') {
+	
 ?>
 
-<script language="php">
+<TR><TD VALIGN="top" WIDTH="100%">
+<TABLE WIDTH="100%" border="1" CELLSPACING="0" CELLPADDING="8">
+<TR>
+	<? echo freshports_PageBannerText($Title, 3); ?>
+</TR>
 
-      $numrows = $MaxNumberOfPorts;
-      $database=$db;
-      if ($database) {
+<?php
+
+	$numrows = $MaxNumberOfPorts;
+	$database=$db;
+	if ($database ) {
 #
 # we limit the select to recent things by using a date
 # otherwise, it joins the whole table and that takes quite a while
@@ -54,7 +62,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 #$numrows=400;
 
 	$sql = '';
-	
+
 	$sql .= "SELECT ports.*,
 	         categories.name as category,
 	         element.name as name,
@@ -112,6 +120,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 
 
    $result = pg_exec($database, $sql);
+
    if ($result) {
 		$numrows = pg_numrows($result);
 		if ($numrows) { 
@@ -142,15 +151,6 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 				$LastChangeLogID = -1;
 			}
 
-?>
-
-<TR><TD VALIGN="top" WIDTH="100%">
-<TABLE WIDTH="100%" border="1" CELLSPACING="0" CELLPADDING="8">
-<TR>
-	<? echo freshports_PageBannerText($Title, 3); ?>
-</TR>
-
-<?
 #			print "NumRows = $NumRows\n<BR>";
 			$HTML = "";
 			unset($ThisChangeLogID);
@@ -266,35 +266,32 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 
 			echo $HTML;
 
-			echo "</TABLE>\n";
 		} else {
-			?>
-<TR><TD VALIGN="top" WIDTH="100%">
-<TABLE WIDTH="100%" border="1" CELLSPACING="0" CELLPADDING="8">
-<TR>
-<? echo freshports_PageBannerText($Title, 3); ?>
-</TR>
-<TR>
-<?
-				echo "<TD><P>Sorry, nothing found in the database....</P>\n";
-				echo "</TD></TR></TABLE>";
+				echo '<tr><TD VALIGN="top"><P>Sorry, nothing found in the database....</P>' . "\n";
+				echo "</TD></tr>";
 			}
 		} else {
 			echo "read from test failed <pre>$sql</pre>";
 		}
-
-#		pg_exec ($database, "end");
+		pg_exec ($database, "end");
 	} else {
 		echo "no connection";
 	}
+	echo "</TABLE>\n";
+} else {
+	echo '<tr><td>nothing supplied, nothing found!</td></tr><tr>';
+}
 
-</script>
-</TD>
+
+?>
+
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
 
 	<?
 	freshports_SideBar();
 	?>
 
+  </td>
 </TR>
 </TABLE>
 

@@ -1,7 +1,9 @@
-<?
-	# $Id: other-copyrights.php,v 1.1.4.9 2003-01-06 14:14:41 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2002 DVL Software Limited
+	# $Id: other-copyrights.php,v 1.1.4.10 2003-04-27 14:48:14 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
@@ -39,9 +41,11 @@
 </BLOCKQUOTE>
 	</TD>
 
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
 	freshports_SideBar();
 	?>
+  </td>
 
   </TR>
 

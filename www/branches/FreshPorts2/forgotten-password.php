@@ -1,5 +1,5 @@
 <?
-	# $Id: forgotten-password.php,v 1.1.2.20 2003-01-06 14:14:38 dan Exp $
+	# $Id: forgotten-password.php,v 1.1.2.21 2003-04-27 14:48:11 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -244,9 +244,11 @@ we're only dealing with your FreshPorts login, not a financial transaction....</
 </TABLE>
 </TD>
 
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
 	freshports_SideBar();
 	?>
+  </td>
 
 </TR>
 </TABLE> 

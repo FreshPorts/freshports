@@ -1,7 +1,9 @@
-<?
-	# $Id: bouncing.php,v 1.1.2.17 2003-01-06 14:14:36 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: bouncing.php,v 1.1.2.18 2003-04-27 14:48:09 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
@@ -91,9 +93,11 @@ the button below.</p>
 </table>
 </td>
 
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
 	freshports_SideBar();
 	?>
+  </td>
 
 </tr>
 </table>

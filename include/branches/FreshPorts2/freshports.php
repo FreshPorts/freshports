@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.140 2003-04-26 14:41:58 dan Exp $
+	# $Id: freshports.php,v 1.4.2.141 2003-04-27 14:48:20 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -1235,15 +1235,8 @@ function freshports_SideBar() {
 
 	GLOBAL $User;
 
-echo '
-  <TD VALIGN="top" WIDTH="*" ALIGN="center">
-';
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php');
 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php');
-
-echo '
-</TD>
-';
 }
 
 function freshports_LinkToDate($Date, $Text = '') {

@@ -1,7 +1,9 @@
-<?
-	# $Id: confirmation.php,v 1.1.2.10 2003-01-06 14:14:37 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2002 DVL Software Limited
+	# $Id: confirmation.php,v 1.1.2.11 2003-04-27 14:48:10 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
@@ -75,9 +77,13 @@
 </table>
 </td>
 
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
+
 	<?
 	freshports_SideBar();
 	?>
+
+  </td>
 
 </tr>
 </table>

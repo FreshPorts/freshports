@@ -1,13 +1,21 @@
-<?
-	# $Id: watch-categories.php,v 1.1.2.21 2003-03-04 22:10:21 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: watch-categories.php,v 1.1.2.22 2003-04-27 14:48:18 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/watch-lists.php');
+
+	// if we don't know who they are, we'll make sure they login first
+	if (!$visitor) {
+		header("Location: login.php?origin=" . $_SERVER["PHP_SELF"]);  /* Redirect browser to PHP web site */
+		exit;  /* Make sure that code below does not get executed when we redirect. */
+	}
 
 	freshports_Start('Watch categories',
 					'freshports - new ports, applications',
@@ -18,12 +26,6 @@ $Debug = 0;
 if ($Debug) # phpinfo();
 
 $visitor = $_COOKIE["visitor"];
-
-// if we don't know who they are, we'll make sure they login first
-if (!$visitor) {
-#	header("Location: login.php?origin=" . $_SERVER["PHP_SELF"]);  /* Redirect browser to PHP web site */
-#	exit;  /* Make sure that code below does not get executed when we redirect. */
-}
 
 if ($_REQUEST['wlid']) {
 		# they clicked on the GO button and we have to apply the 
@@ -177,9 +179,11 @@ echo "</table>\n";
 <?php # main article table finish ?>
 </td>
 
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
   <?
   freshports_SideBar();
   ?>
+  </td>
 
 </tr>
 </table>

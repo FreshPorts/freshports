@@ -83,8 +83,9 @@ if ($submit) {
 
  <? include("/www/freshports.org/_private/header.inc") ?>
 
-<table width="100%">
-  <tr>
+<table width="100%" border="0">
+  <tr><td valign="top" width="100%">
+<table width="100%" border="0">
     <td bgcolor="#AD0040"><big><big><font color="#FFFFFF">Customize User Account</font></big></big></td>
   </tr>
   <tr>
@@ -159,6 +160,12 @@ echo "</td>
 }
 
 </script></td>
+</table>
+</td>
+  <td valign="top" width="*">
+   <? include("/www/freshports.org/_private/side-bars.php3") ?>
+ </td>
+</tr>
   </tr>
 </table>
 </body>

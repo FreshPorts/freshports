@@ -1,4 +1,4 @@
-  <table WIDTH="192" BORDER="1" CELLSPACING="0" CELLPADDING="5"
+  <table WIDTH="152" BORDER="1" CELLSPACING="0" CELLPADDING="5"
             bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">
         <tr>
          <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" SIZE="+1">Login</font></td>
@@ -37,7 +37,7 @@ if ($UserID) {
    </table>
 <br>
 
-<table WIDTH="192" BORDER="1" CELLSPACING="0" CELLPADDING="5"
+<table WIDTH="152" BORDER="1" CELLSPACING="0" CELLPADDING="5"
             bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">        <tr>
          <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" SIZE="+1">Vote now!</font></td>
         </tr>
@@ -50,7 +50,7 @@ if ($UserID) {
 <br>
 
 
-<table WIDTH="192" BORDER="1" CELLSPACING="0" CELLPADDING="5"
+<table WIDTH="152" BORDER="1" CELLSPACING="0" CELLPADDING="5"
             bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">        <tr>
          <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" SIZE="+1">Ports</font></td>
         </tr>
@@ -67,7 +67,7 @@ if ($UserID) {
    </tr>
    </table>
 <br>
- <table WIDTH="192" BORDER="1" CELLSPACING="0" CELLPADDING="5"
+ <table WIDTH="152" BORDER="1" CELLSPACING="0" CELLPADDING="5"
             bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">        <tr>
          <td bgcolor="#AD0040" height="30"><font color="#FFFFFF" SIZE="+1">This site</font></td>
         </tr>

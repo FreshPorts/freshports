@@ -1,5 +1,5 @@
 <?
-	# $Id: faq.php,v 1.1.2.19 2002-07-29 00:37:10 dan Exp $
+	# $Id: faq.php,v 1.1.2.20 2002-11-05 05:32:08 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -64,6 +64,25 @@ down you must read to find something you didn't already know.</P>
 		watch list staging area and then into your watch list.</LI>
 	</OL>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
+
+<TR>
+<? freshports_PageBannerText("How do I empty my watch list?"); ?>
+</TR>
+
+	TR><TD>
+	There is no way to do this in one click.  Sorry.  But a solution is planned (I wrote this on 5 Nov 2002).
+	</TD></TR><TR><TD>&nbsp;</TD></TR>
+
+<TR>
+<? freshports_PageBannerText("How do delete my account?"); ?>
+</TR>
+
+	TR><TD>
+	You can't.  But you can unsubscribe from all of the reports
+	and you'll never hear from us again.
+	</TD></TR><TR><TD>&nbsp;</TD></TR>
+
+
 
 <TR>
 <? freshports_PageBannerText("What is a port"); ?>

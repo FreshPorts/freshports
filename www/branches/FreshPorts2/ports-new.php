@@ -1,5 +1,5 @@
 <?
-	# $Id: ports-new.php,v 1.1.2.18 2002-12-11 16:33:42 dan Exp $
+	# $Id: ports-new.php,v 1.1.2.19 2002-12-11 17:49:11 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -69,75 +69,113 @@ These are the recently added ports.
 <?
 
 	$DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
-
+	
 	$visitor = AddSlashes($_COOKIE["visitor"]);
 	$sort    = AddSlashes($_GET["sort"]);
 
-		// make sure the value for $sort is valid
+	// make sure the value for $sort is valid
+	
+	echo "<TR><TD>\nThis page is ";
+	
+	switch ($sort) {
+		case "dateadded":
+			$sort = "ports.date_added desc, category, port";
+			echo 'sorted by date added.  <A HREF="' . $_SERVER["PHP_SELF"] . '?interval=' . $interval . '&sort=category">Sort by category</A>';
+			$ShowCategoryHeaders = 0;
+			break;
+	
+		default:
+			$sort ="category, port";
+			echo 'sorted by category.  <A HREF="' . $_SERVER["PHP_SELF"] . '?interval=' . $interval . '&sort=dateadded">Sort by date added</A>';
+			$ShowCategoryHeaders = 1;
+	}
+	
+	echo "</TD></TR>\n";
 
-		echo "<TR><TD>\nThis page is ";
+	$sql = "
+explain analyze 
+select TEMP.id,
+       element.name as port,
+       categories.name as category,
+       TEMP.category_id,
+       TEMP.version as version,
+       TEMP.revision as revision,
+       TEMP.element_id,
+       TEMP.maintainer,
+       TEMP.short_description,
+       TEMP.date_added,
+       TEMP.last_change_log_id,
+       TEMP.package_exists,
+       TEMP.extract_suffix,
+       TEMP.homepage,
+       element.status,
+       TEMP.broken,
+       TEMP.forbidden ";
 
-		switch ($sort) {
-			case "dateadded":
-				$sort = "ports.date_added desc, category, port";
-				echo 'sorted by date added.  <A HREF="' . $_SERVER["PHP_SELF"] . '?interval=' . $interval . '&sort=category">Sort by category</A>';
-				$ShowCategoryHeaders = 0;
-				break;
+	if ($User->id) {
+		$sql .= ",
+         onwatchlist";
+   }
 
-			default:
-				$sort ="category, port";
-				echo 'sorted by category.  <A HREF="' . $_SERVER["PHP_SELF"] . '?interval=' . $interval . '&sort=dateadded">Sort by date added</A>';
-				$ShowCategoryHeaders = 1;
-		}
+	$sql .= "
+	 FROM (
+   SELECT ports.id,
+          ports.category_id,
+          version as version,
+          revision as revision,
+          ports.element_id,
+          maintainer,
+          short_description,
+          to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added,
+          last_commit_id as last_change_log_id,
+          package_exists,
+          extract_suffix,
+          homepage,
+          broken,
+          forbidden 
+";
+	if ($User->id) {
+		$sql .= ",
+         onwatchlist";
+   }
 
-		echo "</TD></TR>\n";
+	$sql .= "   from ports ";
 
-			$sql = "select ports.id, element.name as port,  " .
-			       "categories.name as category, ports.category_id, version as version, revision as revision, ".
-			       " ports.element_id, " .
-			       "maintainer, short_description, 
-					to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, ".
-			       "last_commit_id as last_change_log_id, " .
-			       "package_exists, extract_suffix, homepage, status, " .
-			       "broken, forbidden ";
+	if ($User->id) {
+			$sql .= "
+      LEFT OUTER JOIN
+ (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
+    FROM watch_list JOIN watch_list_element
+        ON watch_list.id      = watch_list_element.watch_list_id
+       AND watch_list.user_id = $User->id
+  GROUP BY watch_list_element.element_id) AS TEMP2
+       ON TEMP2.wle_element_id = ports.element_id";
+	}
+	
+	$sql .= "
+ WHERE ports.date_added  > (SELECT now() - interval '$IntervalAdjust' - SystemTimeAdjust())) AS
+TEMP, element, categories
+ WHERE TEMP.category_id = categories.id
+   and element.status   = 'A'
+   and TEMP.element_id  = element.id
+  ";
 
-			if ($WatchListID) {
-				$sql .= ", CASE when watch_list_element.element_id is null
-								then 0
-								else 1
-							END as watch ";
-			}
+	$sql .= "\n  order by $sort ";
 
-			$sql .= " from element, categories, ports   ";
+	if ($Debug) {
+		echo "<pre>$sql</pre>";
+	}
 
-			if ($WatchListID) {
-					$sql .= " left outer join watch_list_element
-							 ON (ports.element_id        = watch_list_element.element_id
-							AND watch_list_element.watch_list_id = $WatchListID) ";
-			}
-			$sql .= "WHERE ports.element_id = element.id
-					   and ports.category_id = categories.id 
-                       and status = 'A' 
-					   and ports.date_added > (now() - interval '$IntervalAdjust' - SystemTimeAdjust()) ";
+	$result = pg_exec($db, $sql);
+	if (!$result) {
+		echo pg_errormessage();
+	} else {
+		$numrows = pg_numrows($result);
+	}
 
-			$sql .= " order by $sort ";
-#			$sql .= " limit 20";
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/list-of-ports.php');
 
-			if ($Debug) {
-				echo $sql;
-			}
-
-			$result = pg_exec($db, $sql);
-			if (!$result) {
-				echo pg_errormessage();
-			} else {
-				$numrows = pg_numrows($result);
-#				echo "There are $numrows to fetch<BR>\n";
-			}
-
-			require_once($_SERVER['DOCUMENT_ROOT'] . '/include/list-of-ports.php');
-
-			echo freshports_ListOfPorts($result, $db, 'Y', $ShowCategoryHeaders);
+	echo freshports_ListOfPorts($result, $db, 'Y', $ShowCategoryHeaders);
 ?>
 
 </TABLE>

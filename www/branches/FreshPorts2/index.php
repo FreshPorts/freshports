@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.50 2002-11-28 21:16:48 dan Exp $
+	# $Id: index.php,v 1.1.2.51 2002-11-28 21:52:27 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -100,7 +100,23 @@ function GetPortNameFromFileName($file_name) {
 
 }
 
-      $numrows = $MaxNumberOfPorts;
+$num = AddSlashes($_GET["num"]);
+
+if (Is_Numeric($num)) {
+	$numrows = min($MaxNumberOfPorts, max(0, $num));
+} else {
+	$numrows = $MaxNumberOfPorts;
+}
+
+$days = AddSlashes($_GET["days"]);
+if (Is_Numeric($days)) {
+	$NumberOfDays = min($NumberOfDays, max(0, $days));
+}
+
+
+#phpinfo();
+#exit;
+
       $database=$db;
       if ($database) {
 #
@@ -149,7 +165,7 @@ if ($WatchListID) {
                AND WLE.element_id    = TEMP.element_id ' . "\n";
 }
 
-$sql .= '         ORDER BY commit_date_raw desc, category, port';
+$sql .= '         ORDER BY commit_date_raw desc, category, port ' . " limit $numrows";
 
 
 if ($Debug) echo "\n<pre>sql=$sql</pre>\n";

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-category.php,v 1.1.2.29 2003-09-30 00:00:36 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.30 2003-10-16 03:04:53 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -41,8 +41,22 @@ function str_is_int($str) {
 	return ($str == $var);
 }
 
+function freshports_CategoryByID($db, $category_id, $PageNo = 1, $PageSize = 25) {
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
+	$category = new Category($db);
+	$category->FetchByID($category_id);
+	freshports_CategoryDisplay($db, $category, $PageNo, $PageSize);}
 
-function freshports_Category($db, $element_id, $PageNo = 1, $PageSize = 25) {
+
+function freshports_CategoryByElementID($db, $element_id, $PageNo = 1, $PageSize = 25) {
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
+	$category = new Category($db);
+	$category->FetchByElementID($element_id);
+	freshports_CategoryDisplay($db, $category, $PageNo, $PageSize);
+}
+
+
+function freshports_CategoryDisplay($db, $category, $PageNo = 1, $PageSize = 25) {
 
 	GLOBAL $TableWidth;
 	header('HTTP/1.1 200 OK');
@@ -88,8 +102,6 @@ function freshports_Category($db, $element_id, $PageNo = 1, $PageSize = 25) {
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
 
-	$category = new Category($db);
-	$category->FetchByElementID($element_id);
 	$title = $category->{'name'};
 
 	# find out how many ports are in this category

@@ -1,5 +1,5 @@
 <?
-	# $Id: watch.php,v 1.1.2.20 2002-05-28 04:58:22 dan Exp $
+	# $Id: watch.php,v 1.1.2.21 2002-05-29 12:19:01 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -8,7 +8,7 @@
 	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
 	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 
-$Debug = 1;
+$Debug = 0;
 
 $visitor = $_COOKIE["visitor"];
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.77 2003-07-30 12:06:08 dan Exp $
+	# $Id: index.php,v 1.1.2.78 2003-09-09 19:28:18 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -24,6 +24,7 @@ function freshports_SummaryForDay($MinusN) {
 //   echo "$MinusN<br>\n"; 
    $File = $BaseDirectory . "/" . date("Y/m/d", $Now - 60*60*24*$MinusN) . ".inc";  
 //   echo "$File<br>\n";
+
    if (file_exists($File)) {
       echo '<br><TABLE WIDTH="152" BORDER="1" CELLSPACING="0" CELLPADDING="5">';
       echo '  <TR>';
@@ -37,7 +38,8 @@ function freshports_SummaryForDay($MinusN) {
       echo '   </TD>';
       echo '   </TR>';
       echo '   </TABLE>';
-   }
+   } else { die($File . ' does not exist');}
+
 }
 
 ?>

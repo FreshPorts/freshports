@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: customize.php,v 1.1.2.29 2003-07-04 14:56:20 dan Exp $
+	# $Id: customize.php,v 1.1.2.30 2003-09-09 19:28:18 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -9,12 +9,13 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/htmlify.php');
 
 	GLOBAL $User;
 
-	$origin = '/';
-	$errors = 0;
-   $AccountModified = 0;
+	$origin          = '/';
+	$errors          = 0;
+	$AccountModified = 0;
 
 if (IsSet($_REQUEST['origin'])) $origin	= $_REQUEST['origin'];
 if (IsSet($_REQUEST['submit'])) $submit 	= $_REQUEST['submit'];
@@ -31,99 +32,99 @@ if (!$visitor) {
 }
 
 if (IsSet($submit)) {
-   $Debug = 0;
+	$Debug = 0;
 
 // process form
 
-   $email					= AddSlashes($_POST['email']);
-   $Password1				= AddSlashes($_POST['Password1']);
-   $Password2				= AddSlashes($_POST['Password2']);
-   $numberofdays			= AddSlashes($_POST['numberofdays']);
+	$email					= AddSlashes($_POST['email']);
+	$Password1				= AddSlashes($_POST['Password1']);
+	$Password2				= AddSlashes($_POST['Password2']);
+	$numberofdays			= AddSlashes($_POST['numberofdays']);
 	$page_size				= AddSlashes($_POST['page_size']);
 
-   if (!is_numeric($numberofdays) || $numberofdays < 0 || $numberofdays > 9) {
-      $numberofdays = 9;
-   }
+	if (!is_numeric($numberofdays) || $numberofdays < 0 || $numberofdays > 9) {
+		$numberofdays = 9;
+	}
 
-   if ($Debug) {
-      while (list($name, $value) = each($HTTP_POST_VARS)) {
-         echo "$name = $value<br>\n";
-      }
-   }
+	if ($Debug) {
+		while (list($name, $value) = each($HTTP_POST_VARS)) {
+			echo "$name = $value<br>\n";
+		}
+	}
 
-   $OK = 1;
+	$OK = 1;
 
-   $errors = '';
+	$errors = '';
 
 	if (!freshports_IsEmailValid($email)) {
 		$errors .= 'That email address doesn\'t look right to me<BR>';
 		$OK = 0;
 	}
 
-   if ($Password1 != $Password2) {
-      $errors .= 'The password was not confirmed.  It must be entered twice.<BR>';
-      $OK = 0;
-   }
+	if ($Password1 != $Password2) {
+		$errors .= 'The password was not confirmed.  It must be entered twice.<BR>';
+		$OK = 0;
+	}
 
-   if ($OK) {
-      // get the existing email in case we need to reset the bounce count
-      $sql = "select email from users where cookie = '$visitor'";
-      $result = pg_exec($db, $sql);
-      if ($result) {
-         $myrow = pg_fetch_array ($result, 0);
+	if ($OK) {
+		// get the existing email in case we need to reset the bounce count
+		$sql = "select email from users where cookie = '$visitor'";
+		$result = pg_exec($db, $sql);
+		if ($result) {
+			$myrow = pg_fetch_array ($result, 0);
 
-         $sql = "
+			$sql = "
 UPDATE users
    SET email          = '$email',
        number_of_days = $numberofdays,
        page_size      = $page_size";
 
-         // if they are changing the email, reset the bouncecount.
-         if ($myrow["email"] != $email) {
-            $sql .= ", emailbouncecount = 0 ";
-         }
+			// if they are changing the email, reset the bouncecount.
+			if ($myrow["email"] != $email) {
+				$sql .= ", emailbouncecount = 0 ";
+			}
 
-         if ($Password1 != '') {
-            $sql .= ", password = '$Password1'";
-         }
+			if ($Password1 != '') {
+				$sql .= ", password = '$Password1'";
+			}
 
-         $sql .= " where cookie = '$visitor'";
+			$sql .= " where cookie = '$visitor'";
 
-         if ($Debug) {
-            echo $sql;
-         }
+			if ($Debug) {
+				echo $sql;
+			}
 
-         $result = pg_exec($db, $sql);
-         if ($result) {
-			$AccountModified = 1;
-         }
-      }
+			$result = pg_exec($db, $sql);
+			if ($result) {
+				$AccountModified = 1;
+			}
+		}
 
-      if ($AccountModified == 1) {
-         if ($Debug) {
-            echo "I would have taken you to '$origin' now, but debugging is on<br>\n";
-         } else {
-            header("Location: $origin");
-            exit;  /* Make sure that code below does not get executed when we redirect. */
-         }
-      } else {
-         $errors .= 'Something went terribly wrong there.<br>';
-         $errors .= $sql . "<br>\n";
-         $errors .= pg_errormessage();
-      }
-   }
+		if ($AccountModified == 1) {
+			if ($Debug) {
+				echo "I would have taken you to '$origin' now, but debugging is on<br>\n";
+			} else {
+				header("Location: $origin");
+				exit;  /* Make sure that code below does not get executed when we redirect. */
+			}
+		} else {
+			$errors .= 'Something went terribly wrong there.<br>';
+			$errors .= $sql . "<br>\n";
+			$errors .= pg_errormessage();
+		}
+	}
 } else {
 
-   $email			= $User->email;
-   $numberofdays	= $User->number_of_days;
+	$email			= $User->email;
+	$numberofdays	= $User->number_of_days;
 	$page_size		= $User->page_size;
 }
 
-	#echo '<br>the page size is ' . $page_size . ' : ' . $email;
+#	echo '<br>the page size is ' . $page_size . ' : ' . $email;
 
-   freshports_Start('Customize User Account',
-               'freshports - new ports, applications',
-               'FreeBSD, index, applications, ports');
+	freshports_Start('Customize User Account',
+						'freshports - new ports, applications',
+						'FreeBSD, index, applications, ports');
 ?>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">

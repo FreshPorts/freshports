@@ -1,5 +1,5 @@
 <?
-	# $Id: report-subscriptions.php,v 1.1.2.5 2002-06-13 16:36:56 dan Exp $
+	# $Id: report-subscriptions.php,v 1.1.2.6 2002-08-17 14:47:51 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -24,7 +24,10 @@
 	if ($Debug) phpinfo();
 
 	function freshports_ReportFrequencies($dbh) {
-		$sql = "select id, frequency, description from report_frequency order by id";
+		$sql = "select id, frequency, description
+		          from report_frequency
+		         order by id";
+
 		$result = pg_exec($dbh, $sql);
 		if ($result) {
 			$numrows = pg_numrows($result);
@@ -41,13 +44,15 @@
 	}
 
 	function freshports_ReportNames($dbh) {
-		$sql = "select id, name from reports order by id";
+		$sql = "select id, name, needs_frequency from reports order by id";
 		$result = pg_exec($dbh, $sql);
 		if ($result) {
 			$numrows = pg_numrows($result);
 			for ($i = 0; $i < $numrows; $i++) {
 				$myrow = pg_fetch_array ($result, $i);
-				$Reports[$myrow["id"]] = $myrow["name"];
+				$Values["name"]				= $myrow["name"];
+				$Values["needs_frequency"]	= $myrow["needs_frequency"];
+				$Reports[$myrow["id"]] = $Values;
 			}
 		}
 
@@ -68,14 +73,19 @@
 		reset($frequencies);
 
 		while (list($key, $value) = each($reports)) {
-			$sql = "INSERT INTO report_subscriptions(report_id, user_id, report_frequency_id) values ($value, $UserID, $frequencies[$key])";
+			if ($Debug) echo "\$key='$key' \$value='$value' \$UserID='$UserID' \$frequencies[\$key]=$frequencies[$key]<BR>";
+			if (IsSet($frequencies[$key])) {
+				$sql = "INSERT INTO report_subscriptions(report_id, user_id, report_frequency_id) values ($value, $UserID, $frequencies[$key])";
+			} else {
+				$sql = "INSERT INTO report_subscriptions(report_id, user_id) values ($value, $UserID)";
+			}
 			if ($Debug) echo "\$sql='$sql'<BR>\n";
 			$result = pg_exec ($db, $sql);
 			${"reports_"     . $value} = 1;
 			${"frequencies_" . $value} = $frequencies[$key];
 
 			if (!$result) {
-				echo "OUCH, that's not very nice.  something went wrong: " . pg_errormessage();
+				echo "OUCH, that's not very nice.  something went wrong: " . pg_errormessage() . "  $sql";
 				pg_exec($db, "rollback");
 				exit;
 			}
@@ -140,7 +150,9 @@ This page allows you to select the reports you wish to receive and the frequency
 
 		$Reports = freshports_ReportNames($db);
 		$numrows = count($Reports);
-		while (list($report_id, $name) = each($Reports)) {
+		while (list($report_id, $Values) = each($Reports)) {
+			$name				= $Values["name"];
+			$needs_frequency	= $Values["needs_frequency"];
 			echo '<TR><TD>';
 			echo '<INPUT TYPE="checkbox" NAME="reports[]" value="' . $report_id . '"';
 			if (${"reports_" . $report_id}) {
@@ -150,7 +162,10 @@ This page allows you to select the reports you wish to receive and the frequency
 			echo '</TD><TD>';
 			echo '<A HREF="/show-help.php?type=report&id=' . $report_id . '">?</A>';
 			echo '</TD><TD>';
-			echo freshports_ReportFrequenciesDDLB($Frequencies, ${"frequencies_" . $report_id});
+#			echo "\$needs_frequency='$needs_frequency'<BR>\n";
+			if ($needs_frequency == 't') {
+				echo freshports_ReportFrequenciesDDLB($Frequencies, ${"frequencies_" . $report_id});
+			}
 			echo "</TD></TR>\n";
 		}
 

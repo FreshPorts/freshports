@@ -22,8 +22,15 @@ require( "/www/freshports.org/_private/getvalues.php3");
 
 <p>This is where I will attempt to list the changes to the freshports website.  Please put your wish 
 lists in the <a href="http://freshports.org/phorum/list.php?f=3">feedback phorum</a>.
-</p>May 15
-<p>
+<<<<<<< changes.php3
+</p>
+
+<p>May 16<p>
+<ul>
+   <li>Added <img src="/images/new.gif" width=28 height=11 alt="new!" hspace=2 align=absmiddle> to each port which is new to the tree.</li>
+</ul>
+
+<p>May 15<p>
 <ul>
    <li>Change the link in the side bar so Delete ports points to the 
    <a href="ports-deleted.php3">deleted ports page</a> and not the
@@ -32,7 +39,7 @@ lists in the <a href="http://freshports.org/phorum/list.php?f=3">feedback phorum
    <li>Fixed a problem with the watch ports page which displayed an error
        but correctly updated your watch list.  Sorry about that.</li>
 </ul>
-<p>May 14
+<p>May 14</p>
 
 <ul>
   <li>Added a <a href="ports-deleted.php3">deleted ports page</a>.</li>
@@ -45,7 +52,7 @@ lists in the <a href="http://freshports.org/phorum/list.php?f=3">feedback phorum
       login screen, then take you back after you successfully login.</li>
 </ul>
 </p>
-<p>May 13
+<p>May 13</p>
 
 <ul>
   <li>Added a simple <a href="search.php3">search</a> screen.</li>
@@ -54,7 +61,7 @@ lists in the <a href="http://freshports.org/phorum/list.php?f=3">feedback phorum
 </p>
 
 
-<p>May 12
+<p>May 12</p>
 
 <ul>
   <li>Login/Logout should now take you back to the page from which they were invoked</li>

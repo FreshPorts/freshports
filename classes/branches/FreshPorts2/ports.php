@@ -1,5 +1,5 @@
 <?
-	# $Id: ports.php,v 1.1.2.10 2002-02-20 22:10:28 dan Exp $
+	# $Id: ports.php,v 1.1.2.11 2002-02-22 00:28:13 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -7,6 +7,7 @@
 
 // base class for Port
 class Port {
+
 	// set on new
 	var $dbh;
 
@@ -38,6 +39,9 @@ class Port {
 	var $needs_refresh;
 	var $status;
 	var $updated;	// timestamp of last update
+
+	var $onwatchlist;	// 0 or 1 if set. not actually fetched directly by this classe.
+						// normally used only if you've specified it in your own SQL.
 
 	// not always present/set
 	var $update_description;
@@ -78,10 +82,15 @@ class Port {
 		$this->status             = $myrow["status"];
 		$this->updated            = $myrow["updated"];
 
+		$this->onwatchlist        = $myrow["onwatchlist"];
+
 		$this->update_description = $myrow["update_description"];
 	}
 
-	function FetchByPartialName($pathname) {
+	function FetchByPartialName($pathname, $WatchListID=0) {
+
+		$Debug = 0;
+
 		# fetch a single port based on pathname.
 		# e.g. net/samba
 		#
@@ -98,19 +107,46 @@ class Port {
 		if (IsSet($element->id)) {
 			$this->element_id = $element->id;
 
-			$sql = "select ports.id, ports.element_id, ports.id as id, ports.category_id as category_id, " .
+			$sql = "select ports.id, ports.element_id, ports.category_id as category_id, " .
 			       "ports.short_description as short_description, ports.long_description, ports.version as version, ".
 			       "ports.revision as revision, ports.maintainer, ".
 			       "ports.homepage, ports.master_sites, ports.extract_suffix, ports.package_exists, " .
 			       "ports.depends_build, ports.depends_run, ports.last_commit_id, ports.found_in_index, " .
 			       "ports.forbidden, ports.broken, ports.date_added, " .
 			       "ports.categories as categories, ".
-				   "element.name as port, categories.name as category, " .
-				   "element.status " .
-			       "from ports, categories, element ".
-			       "WHERE ports.element_id     = $this->element_id ".
+				   "element.name as port, categories.name as category," .
+				   "element.status ";
+
+			if ($WatchListID) {
+				$sql .= ",
+			       CASE when watch_list_element.element_id is null
+		    	      then 0
+		        	  else 1
+			       END as onwatchlist ";
+			}
+
+
+			$sql .="from categories, element, ports ";
+
+			#
+			# if the watch list id is provided (i.e. they are logged in and have a watch list id...)
+			#
+			if ($WatchListID) {
+				$sql .="
+			            left outer join watch_list_element
+						on (ports.element_id                 = watch_list_element.element_id 
+					   and  watch_list_element.watch_list_id = $WatchListID) ";
+			}
+
+			$sql .="WHERE ports.element_id     = $this->element_id ".
 			       "  and ports.category_id    = categories.id " .
 			       "  and ports.element_id     = element.id ";
+
+
+			if ($Debug) {
+				echo $sql;
+				exit;
+			}
 
 	        $result = pg_exec($this->dbh, $sql);
 			if ($result) {
@@ -133,7 +169,7 @@ class Port {
 	function FetchByID($id) {
 		# fetch a single port based on id
 
-		$sql = "select ports.id, ports.element_id, ports.id as id, ports.category_id as category_id, " .
+		$sql = "select ports.id, ports.element_id, ports.category_id as category_id, " .
 		       "ports.short_description as short_description, ports.long_description, ports.version as version, ".
 		       "ports.revision as revision, ports.maintainer, ".
 		       "ports.homepage, ports.master_sites, ports.extract_suffix, ports.package_exists, " .
@@ -141,14 +177,35 @@ class Port {
 		       "ports.forbidden, ports.broken, ports.date_added, " .
 		       "ports.categories as categories, ".
 			   "element.name as port, categories.name as category, commit_log_ports.needs_refresh, " .
-			   "element.status, commit_log.commit_date as updated " .
-		       "from ports, categories, element, commit_log_ports, commit_log ".
-		       "WHERE ports.id             = $id ".
-		       "  and ports.category_id    = categories.id " .
-		       "  and ports.element_id     = element.id " .
-			   "  and ports.last_commit_id = commit_log_ports.commit_log_id " .
-			   "  and ports.id             = commit_log_ports.port_id " .
-			   "  and commit_log.id        = commit_log_ports.commit_log_id ";
+			   "element.status, commit_log.commit_date as updated ";
+
+		if ($WatchListID) {
+			$sql .= ",
+		       CASE when watch_list_element.element_id is null
+		          then 0
+		          else 1
+		       END as onwatchlist ";
+		}
+
+
+		$sql .=" from categories, element, commit_log_ports, commit_log, ports ";
+
+		#
+		# if the watch list id is provided (i.e. they are logged in and have a watch list id...)
+		#
+		if ($WatchListID) {
+			$sql .="
+		            left outer join watch_list_element
+					on watch_list_element.element_id    = ports.element_id 
+				   and watch_list_element.watch_list_id = $WatchListID ";
+		}
+
+		$sql .= "WHERE ports.id             = $id ".
+		        "  and ports.category_id    = categories.id " .
+		        "  and ports.element_id     = element.id " .
+			    "  and ports.last_commit_id = commit_log_ports.commit_log_id " .
+			    "  and ports.id             = commit_log_ports.port_id " .
+			    "  and commit_log.id        = commit_log_ports.commit_log_id ";
 
         $result = pg_exec($this->dbh, $sql);
 		if ($result) {
@@ -157,6 +214,13 @@ class Port {
 				if ($Debug) echo "fetched by ID succeeded<BR>";
 				$myrow = pg_fetch_array ($result, 0);
 				$this->_PopulateValues($myrow);
+
+				#
+				# I had considered including an OUTER JOIN in the above SQL
+				# but didn't.  I figured the above was
+				if ($WatchListID) {
+					$this->onwatchlist = IsOnWatchList($WatchListID);
+				}
 
 			}
 		} else {
@@ -168,7 +232,7 @@ class Port {
 		# fetch all ports based on category
 		# e.g. id for net
 
-		$sql = "select ports.id, ports.element_id, ports.id as id, ports.category_id as category_id, " .
+		$sql = "select ports.id, ports.element_id, ports.category_id as category_id, " .
 		       "       ports.short_description as short_description, ports.long_description, ports.version as version, ".
 		       "       ports.revision as revision, ports.maintainer, ".
 		       "       ports.homepage, ports.master_sites, ports.extract_suffix, ports.package_exists, " .

@@ -1,5 +1,5 @@
 <?
-	# $Id: legal.php,v 1.1.2.3 2002-02-16 23:52:51 dan Exp $
+	# $Id: legal.php,v 1.1.2.4 2002-04-20 03:00:53 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -14,22 +14,21 @@
 
 ?>
 
-<table width="<? echo $TableWidth ?>" border="0" ALIGN="center">
-<tr><td valign="top">
-<table width="100%" border="0" CELLSPACING="0" CELLPADDING="5"
-            bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">
-  <tr>
-    <td bgcolor="#AD0040" height="32"><font color="#FFFFFF" size="+1">LEGAL NOTICE</font></td>
-  </tr>
-  <tr><td>This page contains our obligatory legal notice.  I really don't like having to say
+<TABLE WIDTH="<? echo $TableWidth ?>" BORDER="0" ALIGN="center">
+<TR><TD VALIGN="top">
+<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="5">
+  <TR>
+    <TD bgcolor="#AD0040" height="32"><FONT COLOR="#FFFFFF" SIZE="+1">LEGAL NOTICE</FONT></TD>
+  </TR>
+  <TR><TD>This page contains our obligatory legal notice.  I really don't like having to say
           these things, but given the nature of some people, I must.  For the rest of you,
           if you respect my work and my right to it, you'll have no problem.  Thanks.
-  </td></tr>
-  <tr><td height="20"></td></tr>
-  <tr>
-    <td bgcolor="#AD0040" height="32"><font color="#FFFFFF" size="+1">COPYRIGHT</font></td>
-  </tr>
-  <tr><td>
+  </TD></TR>
+  <TR><TD height="20"></TD></TR>
+  <TR>
+    <TD BGCOLOR="#AD0040" height="32"><FONT COLOR="#FFFFFF" SIZE="+1">COPYRIGHT</FONT></TD>
+  </TR>
+  <TR><TD>
   <p>Copyright 2000 DVL Software
   Limited, PO Box 11-310, Wellington, New Zealand.All rights reserved.&nbsp; Copyright in
   this document is owned by DVL Software Limited. &nbsp; Any person is hereby authorized to
@@ -41,12 +40,12 @@
   <p>Note that any product, process or technology described in the document may be the
   subject of other Intellectual Property rights reserved by DVL Software Limited and are not
   licensed hereunder.</p>
-  </td><tr>
-  <tr><td height="20"></td></tr>
-  <tr>
-    <td bgcolor="#AD0040" height="32"><font color="#FFFFFF" size="+1">CONTENT AND LIABILITY DISCLAIMER</font></td>     
-  </tr>
-  <tr><td>
+  </TD></TR>
+  <TR><TD height="20"></TD></TR>
+  <TR>
+    <TD BGCOLOR="#AD0040" height="32"><FONT COLOR="#FFFFFF" SIZE="+1">CONTENT AND LIABILITY DISCLAIMER</FONT></TD>     
+  </TR>
+  <TR><TD>
   <p>DVL Software Limited shall not be responsible for any errors or omissions contained at
   this Web Site, and reserves the right to make changes without notice.&nbsp; Accordingly,
   all DVL Software Limited and third party information is provided &quot;AS IS&quot;. </p>
@@ -60,33 +59,33 @@
   arising out of or related to any DVL Software Limited Web Site or the information
   contained in it, whether such damages arise in contract, negligence, tort, under statute,
   in equity, at law or otherwise. </p>
-  </td></tr>
-  <tr><td height="20"></td></tr>
-  <tr>
-    <td bgcolor="#AD0040" height="32"><font color="#FFFFFF" size="+1">FEEDBACK INFORMATION</font></td>
-  </tr>
-  <tr><td>
+  </TD></TR>
+  <TR><TD height="20"></TD></TR>
+  <TR>
+    <TD BGCOLOR="#AD0040" height="32"><FONT COLOR="#FFFFFF" SIZE="+1">FEEDBACK INFORMATION</FONT></TD>
+  </TR>
+  <TR><TD>
   <p>Any information provided to DVL Software Limited in connection with any DVL Software
   Limited Web Site shall be provided by the submitted and received by DVL Software Limited
   on a non-confidential basis. DVL Software Limited shall be free to use such information on
   an unrestricted basis. </p>
-  </td></tr>
-  <tr><td height="20"></td></tr>
-  <tr>
-    <td bgcolor="#AD0040" height="32"><font color="#FFFFFF" size="+1">TRADEMARKS</font></td>
-  </tr>
-  <tr><td>
+  </TD></TR>
+  <TR><TD height="20"></TD></TR>
+  <TR>
+    <TD BGCOLOR="#AD0040" height="32"><FONT COLOR="#FFFFFF" SIZE="+1">TRADEMARKS</FONT></TD>
+  </TR>
+  <TR><TD>
   <p>All DVL Software Limited's product names are trademarks or registered trademarks of DVL
   Software Limited.&nbsp; Other brand and product names are trademarks or registered
   trademarks of their respective holders. </p>
-  </td></tr>
-</table>
-</td>
-  <td valign="top" width="*">
+  </TD></TR>
+</TABLE>
+</TD>
+  <TD VALIGN="top" WIDTH="*">
     <? include("./include/side-bars.php") ?>
- </td>
-</tr>
-</table>
+ </TD>
+</TR>
+</TABLE>
 <? include("./include/footer.php") ?>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-list.php,v 1.2.2.10 2002-12-08 16:47:59 dan Exp $
+	# $Id: watch-list.php,v 1.2.2.11 2002-12-09 20:33:03 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -8,6 +8,8 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/watch_list_element.php");
 
 	$Debug = 0;
 
@@ -21,20 +23,10 @@
 
 function RemoveElementFromWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 	if ($Debug) echo "I'm removing $ElementID\n<BR>";
-	#
-	# The subselect ensures the user can only delete things from their
-	# own watch list
-	#
+	$WatchListElement = new WatchListElement($db);
 	while (list($key, $WatchListID) = each($WatchListsIDs)) {
-		$sql = "DELETE FROM watch_list_element
-		         WHERE watch_list_element.element_id     = $ElementID
-		            AND watch_list.id                    = $WatchListID
-		            AND watch_list.user_id               = $UserID
-		            AND watch_list_element.watch_list_id = watch_list.id";
-
-		if ($Debug) echo "<pre>$sql</pre>";
-		$result = pg_exec($db, $sql);
-		if (!$result) {
+		$result = $WatchListElement->Delete($UserID, $WatchListID, $ElementID);
+		if ($result == -1) {
 			break;
 		}
 	}
@@ -43,42 +35,21 @@ function RemoveElementFromWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 }
 
 function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
-	#
-	# The subselect ensures the user can only delete things from their
-	# own watch list
-	#
 	$Debug = 0;
 
-	#
-	# make sure we don't report the duplicate entry error when adding...
-	#
-	$PreviousReportingLevel = error_reporting(E_ALL ^ E_WARNING);
 	if ($Debug) echo "I'm adding $ElementID\n<BR>";
+	$WatchListElement = new WatchListElement($db);
 	while (list($key, $WatchListID) = each($WatchListsIDs)) {
-		$sql = "insert into watch_list_element (watch_list_id, element_id)
-		        values (
-		             (SELECT id
-		               FROM watch_list
-		              WHERE user_id = $UserID
-		                AND id      = $WatchListID), $ElementID)";
-        
-		if ($Debug) echo "<pre>$sql</pre>";
-		$result = pg_exec($db, $sql);
-		if (!$result) {
-			# If this isn't s aduplicate key error, then break
-			if (stristr(pg_last_error(), "Cannot insert a duplicate key") == '') {
-				break;
-			} else {
-				$result = 1;
-			}
+		$result = $WatchListElement->Add($UserID, $WatchListID, $ElementID);
+		if ($result == -1) {
+			break;
 		}
 	}
-	error_reporting($PreviousReportingLevel);
 
 	return $result;
 }
 
-	if ($UserID == '') {
+	if ($User->id == '') {
 		# OI!  you aren't logged in!
 		# just what are you doing here?
 		header("Location: $Origin");  /* Redirect browser to PHP web site */
@@ -102,46 +73,52 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 </TR>
 <TR><TD valign="top" width="100%">
 <?php
-	if ($ErrorMessage) {
-		freshports_ErrorMessage("Let\'s try that again!", $ErrorMessage);
-	}
-
-	$PostURL = $_SERVER["PHP_SELF"];
-	if (IsSet($_GET["remove"])) {
-		$ButtonName = "Remove";
-		$Action     = "remove";
-		$Verb       = 'removed';
-		$FromTo     = 'from';
-		$Object     = AddSlashes($_GET["remove"]);
-	} else {
-		if (IsSet($_GET["add"])) {
-			$ButtonName = "Add";
-			$Action     = "add";
-			$Verb       = 'added';
-			$FromTo      = 'to';
-			$Object     = AddSlashes($_GET["add"]);
-		} else {
-			die("I don't know whether you are removing or adding, so I'll just stop here shall I?");
+		if ($ErrorMessage) {
+			freshports_ErrorMessage("Let\'s try that again!", $ErrorMessage);
 		}
-	}
-	$ShowCategories			= 1;
-	GLOBAL $ShowDepends;
-	$ShowDepends				= 1;
-	$DaysMarkedAsNew			= $DaysMarkedAsNew = $GlobalHideLastChange = $ShowChangesLink = $ShowDescriptionLink = $ShowDownloadPortLink = $ShowHomepageLink = $ShowLastChange = $ShowMaintainedBy = $ShowPortCreationDate = $ShowPackageLink = $ShowShortDescription = 1;
-	$HideDescription			= 1;
-	$ShowEverything			= 1;
-	$ShowShortDescription	= "Y";
-	$ShowMaintainedBy			= "Y";
-	$GlobalHideLastChange	= "Y";
-	$ShowDescriptionLink		= "N";
-	$port = new Port($db);
-	$port->FetchByID($Object);
-	echo freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 1, '', 1, "N", 0);
+	
+		$PostURL = $_SERVER["PHP_SELF"];
+		if (IsSet($_GET["remove"])) {
+			$ButtonName = "Remove";
+			$Action     = "remove";
+			$Verb       = 'removed';
+			$FromTo     = 'from';
+			$Object     = AddSlashes($_GET["remove"]);
+		} else {
+			if (IsSet($_GET["add"])) {
+				$ButtonName = "Add";
+				$Action     = "add";
+				$Verb       = 'added';
+				$FromTo      = 'to';
+				$Object     = AddSlashes($_GET["add"]);
+			} else {
+				die("I don't know whether you are removing or adding, so I'll just stop here shall I?");
+			}
+		}
+		$ShowCategories			= 1;
+		GLOBAL $ShowDepends;
+		$ShowDepends				= 1;
+		$DaysMarkedAsNew			= $DaysMarkedAsNew = $GlobalHideLastChange = $ShowChangesLink = $ShowDescriptionLink = $ShowDownloadPortLink = $ShowHomepageLink = $ShowLastChange = $ShowMaintainedBy = $ShowPortCreationDate = $ShowPackageLink = $ShowShortDescription = 1;
+		$HideDescription			= 1;
+		$ShowEverything			= 1;
+		$ShowShortDescription	= "Y";
+		$ShowMaintainedBy			= "Y";
+		$GlobalHideLastChange	= "Y";
+		$ShowDescriptionLink		= "N";
+		$port = new Port($db);
+		$port->FetchByID($Object);
+		echo freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 1, '', 1, "N", 0);
 ?>
 Please select the watch lists <?php echo $FromTo; ?> which this port will be <?php echo $Verb; ?>:
 <blockquote>
 		<form action="<?php echo $PostURL; ?>" method="POST" NAME=f>
-		<?php	echo freshports_WatchListDDLB($db, $UserID, '', 10, TRUE, TRUE); ?>
+		<?php
+		if ($Action == 'add') {
+			echo freshports_WatchListDDLB($db, $User->id, '', 10, TRUE, TRUE);
+		} else {
+			echo freshports_WatchListDDLB($db, $User->id, '', 10, TRUE, TRUE, $Object);
+		}				
+		?>
 		<br><br>
 		<INPUT id=submit style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29 
 		   value="<?php echo $ButtonName; ?>" name=submit><br>
@@ -154,6 +131,12 @@ Please select the watch lists <?php echo $FromTo; ?> which this port will be <?p
 ?>
 		</form>
 </blockquote>
+
+<?php
+		if ($Action == 'remove') {
+			echo 'NOTE: Only the watch lists which contain this port are shown above';
+		}
+?>
 </TD>
 </tr>
 </table>
@@ -177,38 +160,35 @@ Please select the watch lists <?php echo $FromTo; ?> which this port will be <?p
 
 		<?php
 
-		$Redirect = 0;
+			$Redirect = 0;
 	} else {
 
-	if (IsSet($_REQUEST["remove"])) {
-		$ElementID = AddSlashes($_REQUEST["remove"]);
-		if (!RemoveElementFromWatchLists($db, $UserID, $ElementID, $_REQUEST["watch_list_id"])) {
-			die("adding element failed : Please try again, and if the problem persists, please contact the webmaster.");
-			$Redirect = 0;
+		if (IsSet($_REQUEST["remove"])) {
+			$ElementID = AddSlashes($_REQUEST["remove"]);
+			if (IsSet($_REQUEST["watch_list_id"])) {
+				if (RemoveElementFromWatchLists($db, $User->id, $ElementID, $_REQUEST["watch_list_id"]) == -1) {
+					die("removing element failed : Please try again, and if the problem persists, please contact the webmaster: " . pg_last_error());
+					$Redirect = 0;
+				}
+			} else {
+				$WatchListElement = new WatchListElement($db);
+				$WatchListElement->DeleteFromDefault($User->id, $ElementID);
+			}
 		}
-	}
-
-	if (IsSet($_REQUEST["add"])) {
-		$ElementID     = AddSlashes($_GET["add"]);
-#		echo 'getting stuff from post<br>';
-		$ElementID     = AddSlashes($_POST["add"]);
-		$WatchListsIDs = AddSlashes($_POST["watch_list_id"]);
-		/*
-		echo '$WatchListsIDs[0]=\'' . $WatchListsIDs . '\'<br>';
-		echo 'count($WatchListsIDs)=\'' . count($WatchListsIDs) . '\'<br>';
-		while (list($key, $WatchListID) = each($_REQUEST["watch_list_id"])) {
-			echo "$key = $WatchListID<br>";
+	
+		if (IsSet($_REQUEST["add"])) {
+			$ElementID = AddSlashes($_REQUEST["add"]);
+	
+			if (IsSet($_REQUEST["watch_list_id"])) {
+				if (AddElementToWatchLists($db, $User->id, $ElementID, $_REQUEST["watch_list_id"]) == -1) {
+					die("adding element failed : Please try again, and if the problem persists, please contact the webmaster: " . pg_last_error());
+					$Redirect = 0;
+				}
+			} else {
+				$WatchListElement = new WatchListElement($db);
+				$WatchListElement->AddToDefault($User->id, $ElementID);
+			}
 		}
-		echo '$UserID=\'' . $UserID .'\'<br>';
-		while (list($key, $WatchListID) = each($WatchListsIDs)) {
-			echo "$key = $WatchListID<br>";
-		}
-		*/
-		if (!AddElementToWatchLists($db, $UserID, $ElementID, $_REQUEST["watch_list_id"])) {
-			die("adding element failed : please contact postmaster");
-			$Redirect = 0;
-		}
-	}
 	} // end if Ask
 
 #	echo "when done, I will return to " . $HTTP_SERVER_VARS["HTTP_REFERER"];

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: htmlify.php,v 1.1.2.3 2003-09-12 14:23:28 dan Exp $
+	# $Id: htmlify.php,v 1.1.2.4 2003-09-27 14:50:07 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -50,7 +50,7 @@ function mail2link($Arr) {
 function entity($Arr) {
 	$o = ord($Arr[0]);
 	if ($o < 65) {
-		$result = "&#$o";
+		$result = "&#$o;";
 	} else {
 		$result = $Arr[0];
 	}

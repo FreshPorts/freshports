@@ -1,5 +1,5 @@
 <?
-	# $Id: login.php,v 1.1.2.11 2002-02-24 00:22:26 dan Exp $
+	# $Id: login.php,v 1.1.2.12 2002-02-28 21:54:44 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -170,8 +170,9 @@ echo '</tr>';
 echo '<tr><td bgcolor="#ffffff">';
 include ("./include/login.php");
 
-echo "</td>";
+echo "Your browser must allow cookies for this login to work.";
 
+echo "</td>";
 echo"
 </tr>
 </table>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.59 2004-11-30 13:02:07 dan Exp $
+	# $Id: faq.php,v 1.1.2.60 2004-12-01 03:29:07 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -20,12 +20,12 @@
 	GLOBAL $FreshPortsSlogan;
 
 ?>
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<TABLE WIDTH="<?php echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <tr><td valign="top" width="100%">
 <table width="100%" border="0">
 
 <tr>
-	<? echo freshports_PageBannerText("FAQ"); ?>
+	<?php echo freshports_PageBannerText("FAQ"); ?>
 </tr>
 <TR><TD>
 <P>This page contains the FAQ for FreshPorts. Hopefully the questions
@@ -36,7 +36,7 @@ down you must read to find something you didn't already know.</P>
 
 <TR>
 
-<? echo freshports_PageBannerText("What is this website about?"); ?>
+<?php echo freshports_PageBannerText("What is this website about?"); ?>
 
 	<TR><TD>
 	This website will help you keep up with the latest releases of your
@@ -45,7 +45,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? echo freshports_PageBannerText("How do I use this?"); ?>
+<?php echo freshports_PageBannerText("How do I use this?"); ?>
 </TR>
 
 	<TR><TD>
@@ -64,15 +64,15 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? echo freshports_PageBannerText("How do I modify my watch list?"); ?>
+<?php echo freshports_PageBannerText("How do I modify my watch list?"); ?>
 </TR>
 
 	<TR><TD>
 	There are three easy ways to modify your watch list:
 	<OL>
 	<LI>Wherever you see a port, you can click on the Add 
-		(<? echo freshports_Watch_Icon_Add(); ?>) /
-		Remove (<? echo freshports_Watch_Icon(); ?>)
+		(<?php echo freshports_Watch_Icon_Add(); ?>) /
+		Remove (<?php echo freshports_Watch_Icon(); ?>)
 		link as necessary (i.e. one-click watch list maintenance).</LI>
 	<LI>The 'watch list categories' link provides you with a list
 		of categories.  Select the category, and then the ports within
@@ -87,7 +87,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? echo freshports_PageBannerText("How do I empty my watch list?"); ?>
+<?php echo freshports_PageBannerText("How do I empty my watch list?"); ?>
 </TR>
 
 	<TR><TD>
@@ -97,7 +97,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? echo freshports_PageBannerText("How do delete my account?"); ?>
+<?php echo freshports_PageBannerText("How do delete my account?"); ?>
 </TR>
 
 	<TR><TD>
@@ -108,7 +108,7 @@ down you must read to find something you didn't already know.</P>
 
 
 <TR>
-<? echo freshports_PageBannerText("What is a port?"); ?>
+<?php echo freshports_PageBannerText("What is a port?"); ?>
 </TR>
 
 	<TR><TD>
@@ -123,7 +123,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? echo freshports_PageBannerText("Where do ports come from?"); ?>
+<?php echo freshports_PageBannerText("Where do ports come from?"); ?>
 </TR>
 
 	<TR><TD>Ports are created by other FreeBSD volunteers, just like you
@@ -133,7 +133,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? echo freshports_PageBannerText("Who do I talk to about a port?"); ?>
+<?php echo freshports_PageBannerText("Who do I talk to about a port?"); ?>
 </TR>
 
 	<TR><TD>The official mailing list is freebsd-ports&#64;freebsd.org.
@@ -144,7 +144,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? echo freshports_PageBannerText("How do I get these ports?"); ?>
+<?php echo freshports_PageBannerText("How do I get these ports?"); ?>
 </TR>
 
 	<TR><TD>For full information on how to obtain the ports which appear on
@@ -157,7 +157,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? echo freshports_PageBannerText("How is the website updated?"); ?>
+<?php echo freshports_PageBannerText("How is the website updated?"); ?>
 </TR>
 
 	<TR><TD>
@@ -172,7 +172,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? echo freshports_PageBannerText("What does unknown mean for a revision number?"); ?>
+<?php echo freshports_PageBannerText("What does unknown mean for a revision number?"); ?>
 </TR>
 
 	<TR><TD>It means the data has been converted from an earlier
@@ -180,7 +180,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? echo freshports_PageBannerText("How can I link to your site?"); ?>
+<?php echo freshports_PageBannerText("How can I link to your site?"); ?>
 </TR>
 
 	<TR><TD>Yes, thank you, you can.  No need to ask us.  Just go ahead and do it.
@@ -208,7 +208,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? echo freshports_PageBannerText("Why do I need a different login for the Forums?"); ?>
+<?php echo freshports_PageBannerText("Why do I need a different login for the Forums?"); ?>
 </TR>
 
 	<TR><TD>
@@ -220,76 +220,92 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? echo freshports_PageBannerText("What do these symbols mean?"); ?>
+<?php echo freshports_PageBannerText("What do these symbols mean?"); ?>
 </TR>
 
 	<TR><TD>
 	There are a few symbols you will see in this website.
 	<BLOCKQUOTE>
-	<P><? echo freshports_New_Icon() ?>
+	<P><?php echo freshports_New_Icon() ?>
 		New: This port has been recently added.  A port is marked as new for 10 days.</P>
 
-	<P><? echo freshports_Forbidden_Icon() ?>
+	<P><?php echo freshports_Forbidden_Icon() ?>
 		Forbidden: The port is marked as forbidden.  If you view the port details,
 		you will see why.  Most often, it is because of a security exploit.</P>
 
-	<P><? echo freshports_Broken_Icon() ?>
+	<P><?php echo freshports_Broken_Icon() ?>
 		Broken: The port is marked as broken.  Perhaps it won't compile.  Maybe
 		it doesn't work under FreeBSD right now.  If you view the port details,
 		you will see the reason why.</P>
 
-	<P><? echo freshports_Deprecated_Icon() ?>
+	<P><?php echo freshports_Deprecated_Icon() ?>
 		Deprecated: The port is marked as deprecated.  Perhaps it has exceeded
 		its lifetime or is obselete.</P>
 
-	<P><? echo freshports_Ignore_Icon() ?>
+	<P><?php echo freshports_Ignore_Icon() ?>
 		Ignore: The port is marked as ignore.  It probably does not build.</P>
 
-	<P><? echo freshports_Files_Icon(); ?>
+	<P><?php echo freshports_Files_Icon(); ?>
 		Files: If you click on this graphic, you will be taken to the list of files
 		touched by the commit in question.</P>
 
-	<P><? echo freshports_Refresh_Icon(); ?> Refresh: 
+	<P><?php echo freshports_Refresh_Icon(); ?> Refresh: 
 		The system is in the process of refreshing that port by inspecting
 		the ports tree.  You should rarely see this.</P>
+		<p>If you do see one, chances are that the port contains an error
+		that prevents make(1) from running.  For example:
 
-	<P><? echo freshports_Deleted_Icon(); ?> Deleted:  This port has been removed from the ports tree.</P>
+<blockquote><code class="code">
+$ make -V PORTVERSION<br>
+"Makefile", line 271: 1 open conditional<br>
+make: fatal errors encountered -- cannot continue
+</code></blockquote>
 
-	<P><? echo freshports_Mail_Icon(); ?>
+		<p>
+		In such circumstances, the port committer is notified (if they have
+		opted in to the FreshPorts Sanity Check Report) and they should
+		fix the problem as soon as possible.  Once you see a more recent
+		commit without a refresh icon,
+		then the problem has been fixed. The refresh icons will go away after
+		FreshPorts has dealt with the old commits.  This may take a few hours.
+
+	<P><?php echo freshports_Deleted_Icon(); ?> Deleted:  This port has been removed from the ports tree.</P>
+
+	<P><?php echo freshports_Mail_Icon(); ?>
 		Commit message: This link will take you to the original cvs-all message in the FreeBSD mailing list archives.
 		Note that it can take a few minutes for the message to appear in the archives.  This link will not appear
 		for commit messages before 3 March 2002 (which is the date FreshPorts started to store the message-id).</P>
 
-	<P><? echo freshports_Commit_Icon(); ?> FreshPorts commit message: This will take you to the FreshPorts commit
+	<P><?php echo freshports_Commit_Icon(); ?> FreshPorts commit message: This will take you to the FreshPorts commit
 		message and allow you to see all other ports which were affected by this commit.   This link will not appear
         for commit messages before 3 March 2002 (which is the date FreshPorts started to store the message-id).</P>
 
-	<P><? echo freshports_Watch_Icon(); ?> Item is on one of your default watch lists: This port is on one of your default watch lists.  Click
+	<P><?php echo freshports_Watch_Icon(); ?> Item is on one of your default watch lists: This port is on one of your default watch lists.  Click
 		this icon to remove the port from your default watch lists.  This icon appears only if you are logged in.</P>
 
-	<P><? echo freshports_Watch_Icon_Add(); ?> Add item to your default watch lists: This port is not on any of your  default watch lists.  Click
+	<P><?php echo freshports_Watch_Icon_Add(); ?> Add item to your default watch lists: This port is not on any of your  default watch lists.  Click
 		this icon to add the port to your default watch lists.  This icon appears only if you are logged in.</P>
 
-	<P><? echo freshports_Encoding_Errors(); ?> Encoding Errors (not all of the commit message was ASCII): Some of the
+	<P><?php echo freshports_Encoding_Errors(); ?> Encoding Errors (not all of the commit message was ASCII): Some of the
 		commit message may be altered because of character conversion problems.  We display only UTF-8 and remove
 		the offending characters.  These errors may occur in the log message or elsewhere in the commit email.</P>
 
-	<P><? echo freshports_Security_Icon(); ?> Security Issue: This commit addresses a security issue.  A port is flagged
+	<P><?php echo freshports_Security_Icon(); ?> Security Issue: This commit addresses a security issue.  A port is flagged
 		as a security issue by trusted FreshPorts users.  If you'd like to help with this task, please contact us.
 	</P>
 
-	<P><? echo freshports_WatchListCount_Icon(); ?> Watch List Count (WLC): This is the number of watch lists which are watching 
+	<P><?php echo freshports_WatchListCount_Icon(); ?> Watch List Count (WLC): This is the number of watch lists which are watching 
 	this port.  This might give you an idea of the popularity of the port.
 	</P>
 
-	<P><? echo freshports_CVS_Icon(); ?> CVS Repository: This link will take you to the CVS Repository entry
+	<P><?php echo freshports_CVS_Icon(); ?> CVS Repository: This link will take you to the CVS Repository entry
 	for this version of the file.
 	</P>
 
-	<P><? echo freshports_VuXML_Icon(); ?> <a href="http://www.vuxml.org/freebsd/">VuXML</a> vulnerability.  Click icon for details.
+	<P><?php echo freshports_VuXML_Icon(); ?> <a href="http://www.vuxml.org/freebsd/">VuXML</a> vulnerability.  Click icon for details.
 	</P>
 
-	<P><? echo freshports_Revision_Icon(); ?> Revision details.  Click on the Files icon in the commit history and
+	<P><?php echo freshports_Revision_Icon(); ?> Revision details.  Click on the Files icon in the commit history and
 	you'll see what files in this port were touched by this commit.  Click on the Revision details to view the
 	revision of the file associated this commit.
 	</P>
@@ -298,7 +314,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? echo freshports_PageBannerText("Why don't my old bookmarks work?"); ?>
+<?php echo freshports_PageBannerText("Why don't my old bookmarks work?"); ?>
 </TR>
 
 	<TR><TD>
@@ -320,7 +336,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? echo freshports_PageBannerText("Do you have any news feeds?"); ?>
+<?php echo freshports_PageBannerText("Do you have any news feeds?"); ?>
 </TR>
 
 	<TR><TD>
@@ -328,13 +344,13 @@ down you must read to find something you didn't already know.</P>
 	Of course.  We have two:
 	</P>
 
-	<?
+	<?php
 	$URL  = "http://$ServerName/news.php";
 	$HREF = "<A HREF=\"$URL\">$URL</A>";
 	?>
 
 	<OL>
-	<LI>An RSS feed : <? echo $HREF; ?>
+	<LI>An RSS feed : <?php echo $HREF; ?>
 	<p>This RSS feed takes the following optional parameters:
 	<ul>
 	<li><b>MaxArticles</b> : number of ports to report upon (min 1, max 20, default 20)
@@ -343,7 +359,7 @@ down you must read to find something you didn't already know.</P>
 	<li><b>time=1</b> : show the commit time
 	</ul>
 	<p>
-	A sample URL is <? echo $URL; ?>?MaxArticles=10&amp;committer=1&amp;time=1&amp;date=1
+	A sample URL is <?php echo $URL; ?>?MaxArticles=10&amp;committer=1&amp;time=1&amp;date=1
 	</p>
 
 	<P>
@@ -352,12 +368,12 @@ down you must read to find something you didn't already know.</P>
 	</P>
 	</LI>
 
-	<?
+	<?php
 	$URL  = "http://$ServerName/sidebar.php";
 	$HREF = "<A HREF=\"$URL\">$URL</A>";
 	?>
 
-	<LI>A Netscape 6, SideBar type feed : <? echo $HREF; ?>.  This can be added
+	<LI>A Netscape 6, SideBar type feed : <?php echo $HREF; ?>.  This can be added
 		to your browser using the button in the right hand column of this page.</LI>
 
 	</OL>
@@ -365,7 +381,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? echo freshports_PageBannerText("Can the main page load any faster?"); ?>
+<?php echo freshports_PageBannerText("Can the main page load any faster?"); ?>
 </TR>
 
 	<TR><TD>
@@ -426,7 +442,7 @@ Here are a few examples:
 </TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? echo freshports_PageBannerText("How can I view the commits for a particular day?"); ?>
+<?php echo freshports_PageBannerText("How can I view the commits for a particular day?"); ?>
 </TR>
 
    <TR><TD>
@@ -446,7 +462,7 @@ Here are a few examples:
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? echo freshports_PageBannerText("Why can't I add a port to my watch list?"); ?>
+<?php echo freshports_PageBannerText("Why can't I add a port to my watch list?"); ?>
 </TR>
 
    <TR><TD>
@@ -462,7 +478,7 @@ Here are a few examples:
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? echo freshports_PageBannerText("What are Port Moves?"); ?>
+<?php echo freshports_PageBannerText("What are Port Moves?"); ?>
 </TR>
 
    <TR><TD>
@@ -485,7 +501,7 @@ Here are a few examples:
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? echo freshports_PageBannerText("What is /usr/ports/UPDATING?"); ?>
+<?php echo freshports_PageBannerText("What is /usr/ports/UPDATING?"); ?>
 </TR>
 
    <TR><TD>
@@ -503,7 +519,7 @@ example of what to expect.
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? echo freshports_PageBannerText("What are Master/Slave ports?"); ?>
+<?php echo freshports_PageBannerText("What are Master/Slave ports?"); ?>
 </TR>
 
    <TR><TD>
@@ -558,7 +574,7 @@ example of what to expect.
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? echo freshports_PageBannerText('What is this "to add the package" stuff?'); ?>
+<?php echo freshports_PageBannerText('What is this "to add the package" stuff?'); ?>
 </TR>
 
 	<TR><TD>
@@ -584,7 +600,7 @@ pkg_add -r XFree86-clients
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? echo freshports_PageBannerText('Why does the search page use GET and not POST?'); ?>
+<?php echo freshports_PageBannerText('Why does the search page use GET and not POST?'); ?>
 </TR>
 
    <TR><TD>
@@ -601,7 +617,7 @@ instead of a POST.
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? echo freshports_PageBannerText('What are all those fields I can search on?'); ?>
+<?php echo freshports_PageBannerText('What are all those fields I can search on?'); ?>
 </TR>
 
    <TR><TD>
@@ -640,7 +656,7 @@ example <code class="code">/usr/ports/sysutils/bacula/pkg-descr</code>.
 
 
 <TR>
-<? echo freshports_PageBannerText('Where did this "People watching this port, also watch" feature come from?'); ?>
+<?php echo freshports_PageBannerText('Where did this "People watching this port, also watch" feature come from?'); ?>
 </TR>
 
    <TR><TD>
@@ -670,7 +686,7 @@ All of this takes about 55ms.
 </td>
 
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
-	<?
+	<?php
 	freshports_SideBar();
 	?>
   </td>
@@ -678,7 +694,7 @@ All of this takes about 55ms.
 </tr>
 </table>
 
-<?
+<?php
 freshports_ShowFooter();
 ?>
 

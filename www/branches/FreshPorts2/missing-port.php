@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-port.php,v 1.1.2.15 2002-02-25 15:48:11 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.16 2002-03-19 21:26:59 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
@@ -135,7 +135,7 @@ $ShowDescriptionLink	= "N";
 ?>
 
 </TD>
-<TD>
+<TD VALIGN="top">
    <? include("./include/side-bars.php") ?>
 </TD>
 </TR>

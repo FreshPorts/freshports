@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: authors.php,v 1.1.2.18 2004-06-30 15:01:47 dan Exp $
+	# $Id: authors.php,v 1.1.2.19 2004-11-20 03:42:17 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -84,6 +84,10 @@ also showed me the PERL dbi->quote() function.</LI>
 page provided much of the basis for this site.</LI>
 	
 <LI>Jay gave me the box on which FreshPorts runs.  Thanks.</LI>
+
+<li>Will Andrews told me about <code class="code">make -V</code>.
+This eventually led to the sanity checks that annoy Ports committers
+and ensure users encounter fewer problems.
 
 <LI>And various people on undernet's #nz.general and #freebsd helped me with 
 scripts and ideas.  That's not to mention that channel on efnet which I won't 

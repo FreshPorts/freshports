@@ -1,5 +1,5 @@
 <?
-	# $Id: side-bars.php,v 1.4.2.38 2002-11-18 18:01:46 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.39 2002-12-04 22:01:41 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -102,17 +102,17 @@ if ($visitor) {
 <BR>
 
 <?
-
-	BurstMediaCode();
-	echo '<TABLE BORDER="0" CELLPADDING=5">
+	if ($ShowAds) {
+		BurstMediaCode();
+		echo '<TABLE BORDER="0" CELLPADDING=5">
 		  <TR><TD ALIGN="center">
 		 ';
 
-	BurstSkyscraperAd();
-	echo '</TD></TR>
+		BurstSkyscraperAd();
+		echo '</TD></TR>
 		  </TABLE>
 		 ';
-
+	}
 ?>
 
 

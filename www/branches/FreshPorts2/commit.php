@@ -1,5 +1,5 @@
 <?
-	# $Id: commit.php,v 1.1.2.7 2002-04-20 05:17:35 dan Exp $
+	# $Id: commit.php,v 1.1.2.8 2002-05-18 06:48:28 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -9,8 +9,8 @@
 
 	require("./include/getvalues.php");
 
-	$message_id = AddSlashes($message_id);
-	$commit_id  = AddSlashes($commit_id);
+	$message_id = AddSlashes($_GET["message_id"]);
+	$commit_id  = AddSlashes($_GET["commit_id"]);
 	$Title = "Commit found by ";
 	if ($message_id) {
 		$Title .= "message id";

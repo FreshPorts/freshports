@@ -1,5 +1,5 @@
 <?
-	# $Id: graph.php,v 1.1.2.6 2002-04-23 16:58:30 dan Exp $
+	# $Id: graph.php,v 1.1.2.7 2002-04-23 17:18:37 dan Exp $
 	#
 
 	require($DOCUMENT_ROOT . "/include/common.php");
@@ -55,9 +55,10 @@ if (!file_exists($filename) || filemtime($filename)+$period<time())	{
 
 	$r = pg_fetch_row($data, $i);
 
-	$query     = $r[0];
-	$title     = $r[1];
-	$axislabel = $r[2];
+	$query        = $r[0];
+	$title        = $r[1];
+	$axislabel    = $r[2];
+	$is_clickable = $r[3];
 
 	pg_freeresult($data);
 
@@ -81,7 +82,7 @@ if (!file_exists($filename) || filemtime($filename)+$period<time())	{
 	// draw
 	$map = FreshPortsChart($title, $axislabel, $v, $l, $u, $filename);
 
-	if ($r[3] == 'Y') {
+	if ($is_clickable == 't') {
 		// save map
 		$fp = fopen($cache_dir.$fid.".map","w");
 		fputs($fp,$map);

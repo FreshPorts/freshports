@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports.php,v 1.1.2.43 2004-03-22 20:34:06 dan Exp $
+	# $Id: ports.php,v 1.1.2.44 2004-07-06 03:26:25 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -27,6 +27,7 @@ class Port {
 	var $package_exists;
 	var $depends_build;
 	var $depends_run;
+	var $depends_lib;
 	var $last_commit_id;
 	var $found_in_index;
 	var $forbidden;
@@ -35,6 +36,8 @@ class Port {
 	var $ignore;
 	var $date_added;
 	var $categories;
+	var $master_port;
+	var $latest_link;
 
 	// derived or from other tables
 	var $category;
@@ -78,6 +81,7 @@ class Port {
 		$this->package_exists     = $myrow["package_exists"];
 		$this->depends_build      = $myrow["depends_build"];
 		$this->depends_run        = $myrow["depends_run"];
+		$this->depends_lib        = $myrow["depends_lib"];
 		$this->last_commit_id     = $myrow["last_commit_id"];
 		$this->found_in_index     = $myrow["found_in_index"];
 		$this->forbidden          = $myrow["forbidden"];
@@ -86,6 +90,8 @@ class Port {
 		$this->ignore             = $myrow["ignore"];
 		$this->date_added         = $myrow["date_added"];
 		$this->categories         = $myrow["categories"];
+		$this->master_port        = $myrow["master_port"];
+		$this->latest_link        = $myrow["latest_link"];
 
 		$this->port               = $myrow["port"];
 		$this->category           = $myrow["category"];
@@ -132,12 +138,15 @@ select ports.id,
        ports.package_exists, 
        ports.depends_build, 
        ports.depends_run, 
+       ports.depends_lib, 
        ports.last_commit_id, 
        ports.found_in_index, 
        ports.forbidden, 
        ports.broken, 
        ports.deprecated, 
        ports.ignore, 
+       ports.master_port,
+       ports.latest_link,
        to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, 
        ports.categories as categories,
 	    element.name     as port, 
@@ -209,6 +218,7 @@ select ports.id,
 		               ports.package_exists,
 		               ports.depends_build, 
 		               ports.depends_run, 
+		               ports.depends_lib, 
 		               ports.last_commit_id, 
 		               ports.found_in_index,
 		               ports.forbidden, 
@@ -216,6 +226,8 @@ select ports.id,
 		               ports.deprecated, 
 		               ports.ignore, 
 		               to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added,
+		               ports.master_port,
+		               ports.latest_link,
 		               ports.categories as categories,
 			           element.name     as port, 
 			           categories.name  as category,
@@ -314,6 +326,7 @@ SELECT P.*, element.name    as port,
         ports.package_exists,
         ports.depends_build,
         ports.depends_run,
+        ports.depends_lib,
         ports.last_commit_id,
         ports.found_in_index,
         ports.forbidden,
@@ -321,6 +334,8 @@ SELECT P.*, element.name    as port,
         ports.deprecated,
         ports.ignore,
         to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added,
+        ports.master_port,
+        ports.latest_link,
         ports.categories      as categories,
         categories.name       as category_looking_at,
         PRIMARY_CATEGORY.name as category

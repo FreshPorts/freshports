@@ -1,13 +1,13 @@
 <?
-	# $Id: news.php,v 1.1.2.6 2002-07-26 15:08:50 dan Exp $
+	# $Id: news.php,v 1.1.2.7 2002-12-04 22:35:08 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
 
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
 
 	$Debug=0;
 
@@ -41,7 +41,20 @@
 
 	$sql = "select * from commits_latest_ports order by commit_date_raw desc, category, port";
 
-	$sql .= " limit 20";
+	$NewsAddenda = $_SERVER['DOCUMENT_ROOT'] . "/news.addenda";
+	if (file_exists($NewsAddenda)) {
+		# include any highlights here
+		$fp = fopen($NewsAddenda, "r");
+		if ($fp) {
+			$NewsAddendaContents = fread($fp, filesize ($NewsAddenda));
+			fclose($fp);
+		}
+		$HTML .= $NewsAddendaContents;
+		$sql .= " limit 19";
+	} else {
+		echo 'not doing it';
+		$sql .= " limit 20";
+	}
 
 	if ($Debug) {
 		echo $sql;

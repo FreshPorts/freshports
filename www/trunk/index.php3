@@ -1,4 +1,28 @@
 <?
+
+function freshports_SummaryForDay($MinusN) {          
+   $BaseDirectory = "./archives";                     
+    $Now = time();                                    
+//   echo $MinusN; 
+   $File = $BaseDirectory . "/" . date("Y/m/d", $Now - 60*60*24*$MinusN) . ".inc";  
+//   echo $File;
+   if (file_exists($File)) {
+      echo '<br><table WIDTH="192" BORDER="1" CELLSPACING="0" CELLPADDING="5"';
+      echo '      bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">';
+      echo '  <tr>';
+      echo '<td bgcolor="#AD0040" height="30"><font color="#FFFFFF" SIZE="+1">';
+      echo date("l", $Now - 60*60*24*$MinusN);
+      echo '       </tr>';
+      echo '        <tr>';
+      echo '         <td>';
+      include($File);
+      echo '   </td>';
+      echo '   </tr>';
+      echo '   </table>';
+   }
+}
+
+
 require( "./_private/commonlogin.php3");
 require( "./_private/getvalues.php3");
 require( "./_private/freshports.php3");
@@ -45,19 +69,23 @@ if ($Debug) {
 <tr><td colspan="2">Welcome to the freshports.org where you can find the latest information on your favourite
 ports.
 </td></tr>
+
   <tr>
     <td colspan="2">Note: <font size="-1">[refresh]</font> indicates a port for which the Makefile, 
                   pkg/DESC, or pkg/COMMENT has changed and has not yet been updated within FreshPorts.
     </td>
   </tr>
+
 <tr><td valign="top" width="100%">
-<table width="100%" border="0">
+<table width="100%" border="1" CELLSPACING="0" CELLPADDING="5"
+            bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">
 <tr>
-    <td colspan="5" bgcolor="#AD0040" height="30">
-        <font color="#FFFFFF" size="+1">freshports - most recent commits
-        <? echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPorts) ?></font></td>
-  </tr>
-<tr>
+    <td colspan="3" bgcolor="#AD0040" height="30">
+        <font color="#FFFFFF" size="+1">freshports - 50 most recent commits
+        <? //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPorts) ?></font>
+    </td>
+</tr>
+
 <script language="php">
 
 $DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
@@ -67,7 +95,7 @@ $DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
 switch ($sort) {
 /* sorting by port is disabled. Doesn't make sense to do this
    case "port":
-      $sort = "version, updated desc";
+      $sort = "version, commit_date desc";
       $cache_file .= ".port";
       break;
 */
@@ -125,28 +153,27 @@ $UpdateCache = 1;
 if ($UpdateCache == 1) {
 //   echo 'time to update the cache';
 
-$sql = "select ports.id, ports.name as port, categories.id as category_id, " .
-       "date_format(change_log.commit_date, '$FormatDate $FormatTime') as updated, categories.name as category, " .
+$sql = "select ports.id, ports.name as port, change_log.commit_date as updated_raw, categories.name as category, " .
        "ports.committer, ports.last_update_description as update_description, ports.version as version, " .
        "ports.maintainer, ports.short_description, UNIX_TIMESTAMP(ports.date_created) as date_created, " .
-       "date_format(date_created, '$FormatDate $FormatTime') as date_created_formatted, ".
+       "date_format(date_created, '$FormatDate $FormatTime') as date_created_formatted, categories.id as category_id, ".
        "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, ports.status, " .
-       "date_format(change_log.commit_date, '$FormatDate $FormatTime') as updated, change_log.committer, " .
-       "change_log.update_description, " .
-       "ports.last_change_log_id " .
+       "date_format(change_log.commit_date, '$FormatDate') as updated_date, change_log.committer, " .
+       "date_format(change_log.commit_date, '$FormatTime') as updated_time, " .
+       "change_log.update_description, date_format(change_log.commit_date, '%Y-%m-%d') as commit_date, " .
+       "ports.last_change_log_id, date_format(change_log.commit_date, '%T') as commit_time " .
        "from ports, categories, change_log, change_log_port  ".
-       "WHERE ports.system = 'FreeBSD' ".
+       "WHERE ports.system                    = 'FreeBSD' ".
        "  and ports.primary_category_id       = categories.id " .
        "  and change_log_port.port_id         = ports.id " .
-       "  and change_log.id                   = change_log_port.change_log_id ";
+       "  and change_log.id                   = change_log_port.change_log_id " .
+       "  and change_log.commit_date          > '" . date("Y-m-d", time() - 60*60*24*7) . "' ";
 
 $sql .= " order by $sort ";
 
-$sql .= " limit 20 ";
+$sql .= " limit 50 ";
 
-if ($Debug) {
-   echo $sql;
-}
+//echo $sql;
 
 $result = mysql_query($sql, $db);
 
@@ -154,16 +181,61 @@ if (!$result) {
    echo mysql_errno().": ".mysql_error()."<BR>";
 }
 
-$HTML = "</tr></td>";
-
-$HTML .= '<tr><td>';
+//$HTML .= '<tr><td>';
 
 $i=0;
 $GlobalHideLastChange = "N";
 while ($myrow = mysql_fetch_array($result)) {
-//   $HTML .= $i++;
-   include("./_private/port-basics.inc");
-//   $HTML .= $myrow["port"] . "<br>";
+   $rows[$i] = $myrow;
+   $i++;
+//   echo "$i, ";
+}
+
+$NumRows = $i;
+$LastDate = '';
+for ($i = 0; $i < $NumRows; $i++) {
+   $myrow = $rows[$i];
+
+   if ($LastDate <> $myrow["commit_date"]) {
+      $LastDate = $myrow["commit_date"];
+      $HTML .= "<tr><td colspan='3'><font size='+1'>" . $myrow["updated_date"] . "</font></td></tr>";
+   }
+
+//   include("./_private/port-basics.inc");
+
+
+   $HTML .= "<tr><td valign='top' width='150'>";
+   $HTML .= '<a href="port-description.php3?port=' . $myrow["id"]  . '">';
+   $HTML .= "<b>" . $myrow["port"];
+   if (strlen($myrow["version"]) > 0) {
+      $HTML .= ' ' . $myrow["version"];
+   }
+
+   $HTML .= "</b></a>";
+
+   $URL_Category = "category.php3?category=" . $myrow["category_id"];
+   $HTML .= ' <font size="-1"><a href="' . $URL_Category . '">' . $myrow["category"] . '</a></font>';
+
+   // indicate if this port needs refreshing from CVS
+   if ($myrow["status"] == "D") {
+      $HTML .= '<br><font size="-1">[deleted]</font>';
+   }
+   if ($myrow["needs_refresh"]) {
+      $HTML .= ' <font size="-1">[refresh]</font>';
+   }
+
+//   $HTML .= "<br>";
+
+   if ($myrow["date_created"] > Time() - 3600 * 24 * $DaysMarkedAsNew) {
+      $MarkedAsNew = "Y";
+      $HTML .= "<img src=\"/images/new.gif\" width=28 height=11 alt=\"new!\" hspace=2 > ";
+   }
+   $HTML .= "</td><td valign='top'>";
+   $HTML .= '<font size="-1">' . $myrow["updated_time"] . '</font>';
+
+   $HTML .= "</td><td valign='top'>" . $myrow["update_description"] . "</td>\n";
+
+   $HTML .= "</tr>\n";
 }
 
   $HTML .= "</td></tr>\n";
@@ -189,6 +261,7 @@ echo $HTML;
    }
 }
 
+/*
 echo '<tr><td height="40" colspan="2" valign="bottom">';
 
 if ($StartAt == 0) {
@@ -204,16 +277,20 @@ if ($StartAt == 0) {
 echo '  <a href="' . basename($PHP_SELF) . "?StartAt=" . ($StartAt + $MaxNumberOfPorts) . '">Next Page</a>';
 
 echo '</td></tr>';
+*/
 
-//$HTML .= "</table>\n";
 </script>
 </table>
 </td>
   <td valign="top" width="*">
    <? include("./_private/side-bars.php3") ?>
+<?
+freshports_SummaryForDay(0);
+freshports_SummaryForDay(1);
+freshports_SummaryForDay(2);
+freshports_SummaryForDay(3);
+?>
  </td>
-</tr>
-</table>
 </tr>
 </table>
 <? include("./_private/footer.inc") ?>

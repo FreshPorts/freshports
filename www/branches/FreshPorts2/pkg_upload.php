@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_upload.php,v 1.5.2.27 2002-12-18 17:33:27 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.28 2002-12-18 17:44:29 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -243,6 +243,16 @@ function ChooseWatchLists($UserID, $db) {
 				# they clicked on the GO button and we have to apply the 
 				# watch staging area against the watch list.
 				$WatchListID = AddSlashes($_POST["wlid"]);
+				if ($Debug) echo "setting SetLastWatchListChosen => \$wlid='$wlid'";
+				$User->SetLastWatchListChosen($wlid);
+			} else {
+				$WatchListID = $User->last_watch_list_chosen;
+				if ($Debug) echo "\$WatchListID='$WatchListID'";
+				if ($WatchListID == '') {
+					$WatchLists = new WatchLists($db);
+					$WatchListID = $WatchLists->GetDefaultWatchListID($User->id);
+					if ($Debug) echo "GetDefaultWatchListID => \$WatchListID='$WatchListID'";
+				}
 			}
 		} else {
 			$DisplayStagingArea = FALSE;
@@ -252,6 +262,13 @@ function ChooseWatchLists($UserID, $db) {
 					require_once($_SERVER['DOCUMENT_ROOT'] . '/pkg_utils.inc');
 					if (ProcessPackages($User->id, $Destination, $db)) {
 						$DisplayStagingArea = TRUE;
+						$WatchListID = $User->last_watch_list_chosen;
+						if ($Debug) echo "\$WatchListID='$WatchListID'";
+						if ($WatchListID == '') {
+							$WatchLists = new WatchLists($db);
+							$WatchListID = $WatchLists->GetDefaultWatchListID($User->id);
+							if ($Debug) echo "GetDefaultWatchListID => \$WatchListID='$WatchListID'";
+						}
 					}
 				}
 			}

@@ -1,5 +1,5 @@
 <?
-	# $Id: commit.php,v 1.1.2.19 2002-12-11 04:44:34 dan Exp $
+	# $Id: commit.php,v 1.1.2.20 2002-12-12 02:45:19 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -167,10 +167,8 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 <TR><TD VALIGN="top" WIDTH="100%">
 <TABLE WIDTH="100%" border="1" CELLSPACING="0" CELLPADDING="8">
 <TR>
-		<? 
-		freshports_PageBannerText($Title, 3);
-		?>
-        <? //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPorts) ?>
+	<? echo freshports_PageBannerText($Title, 3); ?>
+	<? //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPorts) ?>
 </TR>
 
 <?
@@ -294,7 +292,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 <TR><TD VALIGN="top" WIDTH="100%">
 <TABLE WIDTH="100%" border="1" CELLSPACING="0" CELLPADDING="8">
 <TR>
-<? freshports_PageBannerText($Title, 3); ?>
+<? echo freshports_PageBannerText($Title, 3); ?>
 </TR>
 <TR>
 <?

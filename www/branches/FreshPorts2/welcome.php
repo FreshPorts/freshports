@@ -1,5 +1,5 @@
 <?
-	# $Id: welcome.php,v 1.1.2.14 2002-12-11 04:44:42 dan Exp $
+	# $Id: welcome.php,v 1.1.2.15 2002-12-12 02:45:25 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -19,7 +19,7 @@
 <TR><TD VALIGN="top">
 <TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="5">
   <TR>
-	<? freshports_PageBannerText("Account created"); ?>
+	<? echo freshports_PageBannerText("Account created"); ?>
   </TR>
 	<TR>
 	<TD>

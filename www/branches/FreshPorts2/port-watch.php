@@ -1,5 +1,5 @@
 <?
-	# $Id: port-watch.php,v 1.1.2.21 2002-12-11 04:44:39 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.22 2002-12-12 02:45:23 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -152,7 +152,7 @@ if ($submit) {
 <tr><td valign="top" width="100%">
 <table width="100%" border="0">
   <tr>
-	<? freshports_PageBannerText("Watch List - " . $category->{name}) ?>
+	<? echo freshports_PageBannerText("Watch List - " . $category->{name}) ?>
   </tr>
 
 <tr><td>

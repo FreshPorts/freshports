@@ -1,5 +1,5 @@
 <?
-	# $Id: inthenews.php,v 1.1.2.10 2002-12-11 04:44:36 dan Exp $
+	# $Id: inthenews.php,v 1.1.2.11 2002-12-12 02:45:22 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -17,7 +17,7 @@
 <tr><td valign="top" width="100%">
 <table width="100%" border="0">
   <tr>
-	<? freshports_PageBannerText("In the news"); ?>
+	<? echo freshports_PageBannerText("In the news"); ?>
   </tr>
 
 <TR>

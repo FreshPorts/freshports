@@ -1,5 +1,5 @@
 <?
-	# $Id: committer-opt-in.php,v 1.1.2.7 2002-12-11 04:44:34 dan Exp $
+	# $Id: committer-opt-in.php,v 1.1.2.8 2002-12-12 02:45:20 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -73,7 +73,7 @@
 <TR><td VALIGN=TOP>
 <TABLE>
 <TR>
-	<? freshports_PageBannerText("Committer opt-in"); ?>
+	<? echo freshports_PageBannerText("Committer opt-in"); ?>
 </TR>
 
 <TR><TD>
@@ -92,7 +92,7 @@ One committer referred to this service as a automated nagging mentor...
 <TR>
 	<?
 	freshports_BannerSpace();
-	freshports_PageBannerText("Your opt-in status");
+	echo freshports_PageBannerText("Your opt-in status");
 	?>
 </TR>
 

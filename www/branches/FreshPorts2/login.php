@@ -1,5 +1,5 @@
 <?
-	# $Id: login.php,v 1.1.2.26 2002-12-11 04:44:37 dan Exp $
+	# $Id: login.php,v 1.1.2.27 2002-12-12 02:45:22 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -29,11 +29,10 @@ if ($_POST['LOGIN'] && $_POST['UserID']) {
       }
    }
 
-
    $OK = 1;
 
    $errors = '';
-   $User->id   = addslashes($_POST['UserID']);
+   $User->id = addslashes($_POST['UserID']);
    $Password = AddSlashes($_POST['Password']);
 
    // test for existance of user id
@@ -46,7 +45,6 @@ if ($_POST['LOGIN'] && $_POST['UserID']) {
    }
 
    $result = pg_exec($db, $sql) or die('query failed ' . pg_errormessage());
-
 
 	if (!pg_numrows($result)) {
 		$LoginFailed = 1;
@@ -137,7 +135,7 @@ if ($LoginFailed) {
 <TR><TD VALIGN=TOP>
 <TABLE WIDTH="100%">
 <TR>
-	<? freshports_PageBannerText("Login Failed!") ?>
+	<? echo freshports_PageBannerText("Login Failed!") ?>
 </TR>
 <TR BGCOLOR="#ffffff">
 <TD>
@@ -171,7 +169,7 @@ if ($error) {
 <TR><TD VALIGN=TOP>
 <TABLE WIDTH="100%">
 <TR>
-    <? freshports_PageBannerText("NOTICE"); ?>
+    <? echo freshports_PageBannerText("NOTICE"); ?>
 </TR>
 
 <TR BGCOLOR="#ffffff">
@@ -201,7 +199,7 @@ echo '<TABLE WIDTH="100%" BORDER="1" CELLPADDING="1" CELLSPACING="0" BGCOLOR="#A
 
 echo '<TR BGCOLOR="#AD0040">';
 
-freshports_PageBannerText("Login");
+echo freshports_PageBannerText("Login");
 echo '</TR>';
 
 echo '<TR><TD BGCOLOR="#ffffff">';

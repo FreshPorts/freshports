@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-list.php,v 1.2.2.17 2002-12-12 02:22:44 dan Exp $
+	# $Id: watch-list.php,v 1.2.2.18 2002-12-12 02:45:25 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -71,7 +71,7 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 <TR><td VALIGN=TOP>
 <TABLE border="0" width="100%">
 <TR>
-	<? freshports_PageBannerText("Watch list maintenance"); ?>
+	<? echo freshports_PageBannerText("Watch list maintenance"); ?>
 </TR>
 <TR><TD valign="top" width="100%">
 <?php

@@ -1,5 +1,5 @@
 <?
-	# $Id: how-big-is-it.php,v 1.1.2.6 2002-12-11 04:44:36 dan Exp $
+	# $Id: how-big-is-it.php,v 1.1.2.7 2002-12-12 02:45:21 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -47,7 +47,7 @@ function StatsSQL($db, $Title, $Date) {
 <TR><td VALIGN=TOP>
 <TABLE>
 <TR>
-	<? freshports_PageBannerText("How big is it"); ?>
+	<? echo freshports_PageBannerText("How big is it"); ?>
 </TR>
 
 <TR><TD>
@@ -66,7 +66,7 @@ there are.  Roughly.  This will not be a 100% accurate forumla, but it will be c
 <TR>
 	<? 
 	freshports_BannerSpace();
-	freshports_PageBannerText("Pages on disk"); 
+	echo freshports_PageBannerText("Pages on disk"); 
 	?>
 </TR>
 
@@ -88,7 +88,7 @@ $Total += $Files;
 <TR>
 	<? 
 	freshports_BannerSpace();
-	freshports_PageBannerText("Number of categories"); 
+	echo freshports_PageBannerText("Number of categories"); 
 	?>
 </TR>
 
@@ -115,7 +115,7 @@ echo format_number($Value) . '<br>'
 <TR>
 	<? 
 	freshports_BannerSpace();
-	freshports_PageBannerText("Number of ports"); 
+	echo freshports_PageBannerText("Number of ports"); 
 	?>
 </TR>
 
@@ -155,7 +155,7 @@ echo format_number($Value) . '<br>';
 <TR>
 	<? 
 	freshports_BannerSpace();
-	freshports_PageBannerText("Number of commits"); 
+	echo freshports_PageBannerText("Number of commits"); 
 	?>
 </TR>
 
@@ -183,7 +183,7 @@ echo format_number($Value) . '<br>';
 <TR>
 	<? 
 	freshports_BannerSpace();
-	freshports_PageBannerText("Number of ports for each commit"); 
+	echo freshports_PageBannerText("Number of ports for each commit"); 
 	?>
 </TR>
 
@@ -211,7 +211,7 @@ echo format_number($Value) . '<br>';
 <TR>
 	<? 
 	freshports_BannerSpace();
-	freshports_PageBannerText("How many days?"); 
+	echo freshports_PageBannerText("How many days?"); 
 	?>
 </TR>
 
@@ -238,7 +238,7 @@ echo format_number($Value) . '<br>';
 <TR>
 	<? 
 	freshports_BannerSpace();
-	freshports_PageBannerText("How many users?"); 
+	echo freshports_PageBannerText("How many users?"); 
 	?>
 </TR>
 
@@ -266,7 +266,7 @@ echo format_number($Value) . '<br>';
 <TR>
 	<? 
 	freshports_BannerSpace();
-	freshports_PageBannerText("How many watch lists?"); 
+	echo freshports_PageBannerText("How many watch lists?"); 
 	?>
 </TR>
 
@@ -294,7 +294,7 @@ echo format_number($Value) . '<br>';
 <TR>
 	<? 
 	freshports_BannerSpace();
-	freshports_PageBannerText("Estimated total"); 
+	echo freshports_PageBannerText("Estimated total"); 
 	?>
 </TR>
 

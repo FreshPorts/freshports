@@ -1,5 +1,5 @@
 <?
-	# $Id: help.php,v 1.1.2.8 2002-12-11 04:44:35 dan Exp $
+	# $Id: help.php,v 1.1.2.9 2002-12-12 02:45:21 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -17,7 +17,7 @@
 <TR><TD VALIGN=TOP>
 <TABLE BORDER="0">
 <TR>
-	<? freshports_PageBannerText("pkg_info and your watch list "); ?>
+	<? echo freshports_PageBannerText("pkg_info and your watch list "); ?>
 </TR>
 
 <TR><TD>
@@ -39,7 +39,7 @@ The rest of this page should answer everything.
 </TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-	<? freshports_PageBannerText("How does pkg_upload work?"); ?>
+	<? echo freshports_PageBannerText("How does pkg_upload work?"); ?>
 </TR>
 <TR><TD>
 <P>
@@ -54,7 +54,7 @@ available on your system.  It's pretty basic.  And easy.
 </TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-	<? freshports_PageBannerText("How does pkg_upload really work?"); ?>
+	<? echo freshports_PageBannerText("How does pkg_upload really work?"); ?>
 </TR>
 
 <TR><TD>
@@ -99,7 +99,7 @@ database in your personal staging area.
 </TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-	<? freshports_PageBannerText("What is a staging area?"); ?>
+	<? echo freshports_PageBannerText("What is a staging area?"); ?>
 </TR>
 <TR><TD>
 The watch list staging area is a temporary storage area
@@ -108,7 +108,7 @@ can compare the new and old watch lists before saving any changes.
 </TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-	<? freshports_PageBannerText("What are the different sections in my staging area?"); ?>
+	<? echo freshports_PageBannerText("What are the different sections in my staging area?"); ?>
 </TR>
 <TR><TD>
 There are four sections to your staging area.  These will be listed from
@@ -137,7 +137,7 @@ You should inspect that information carefully before saving it to your watch lis
 </TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-	<? freshports_PageBannerText("What are these check boxes in my staging area?"); ?>
+	<? echo freshports_PageBannerText("What are these check boxes in my staging area?"); ?>
 </TR>
 <TR><TD>
 Your staging area is just a temporary situation.  You must save this information
@@ -146,7 +146,7 @@ check boxes.  Only selected ports will be saved to your watch list.
 </TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-	<? freshports_PageBannerText("Why would I want to clear my staging area?"); ?>
+	<? echo freshports_PageBannerText("Why would I want to clear my staging area?"); ?>
 </TR>
 <TR><TD>
 You cannot upload anything to your staging area unless it is empty.  If you 

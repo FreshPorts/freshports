@@ -1,5 +1,5 @@
 <?
-	# $Id: confirmation.php,v 1.1.2.8 2002-12-11 04:44:34 dan Exp $
+	# $Id: confirmation.php,v 1.1.2.9 2002-12-12 02:45:20 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -36,7 +36,7 @@
 <tr><td VALIGN=TOP>
 <TABLE WIDTH="100%">
 <TR>
-	<? freshports_PageBannerText("Account confirmation"); ?>
+	<? echo freshports_PageBannerText("Account confirmation"); ?>
 </TR>
 
 <TR><TD>

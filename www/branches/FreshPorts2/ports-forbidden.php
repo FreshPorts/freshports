@@ -1,5 +1,5 @@
 <?
-	# $Id: ports-forbidden.php,v 1.1.2.9 2002-12-11 17:47:23 dan Exp $
+	# $Id: ports-forbidden.php,v 1.1.2.10 2002-12-12 02:45:24 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -23,7 +23,7 @@
 <TR><TD valign="top" width="100%">
 <TABLE width="100%" border="0">
 <TR>
-	<? freshports_PageBannerText($Title); ?>
+	<? echo freshports_PageBannerText($Title); ?>
 </TR>
 <TR><TD>
 These are the recently added ports.

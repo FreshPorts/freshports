@@ -1,5 +1,5 @@
 <?
-	# $Id: bouncing.php,v 1.1.2.15 2002-12-11 04:44:33 dan Exp $
+	# $Id: bouncing.php,v 1.1.2.16 2002-12-12 02:45:19 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -51,7 +51,7 @@ if ($submit) {
 <table width="100%" border="0">
 
 <tr>
-<? freshports_PageBannerText("Bouncing?  What do you mean?"); ?>
+<? echo freshports_PageBannerText("Bouncing?  What do you mean?"); ?>
 </tr>
 <tr><td>
 
@@ -66,7 +66,7 @@ messages, you should update your email address on the customization page.</p>
 <TR><TD HEIGHT="20">
 </TD></TR>
 <tr>
-<? freshports_PageBannerText("How to fix the problem"); ?>
+<? echo freshports_PageBannerText("How to fix the problem"); ?>
 </tr>
 <tr><td>
 <p>There are two things which might have caused your email to bounce:</p>

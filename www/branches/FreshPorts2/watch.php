@@ -1,5 +1,5 @@
 <?
-	# $Id: watch.php,v 1.1.2.33 2002-12-11 04:44:42 dan Exp $
+	# $Id: watch.php,v 1.1.2.34 2002-12-12 02:45:25 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -47,7 +47,7 @@ if (!$visitor) {
 <tr><td valign="top" width="100%">
 <table width="100%" border="0">
 <tr>
-	<? freshports_PageBannerText("your watch list - PERHAPS the watch list name[s] should go here?"); ?>
+	<? echo freshports_PageBannerText("your watch list - PERHAPS the watch list name[s] should go here?"); ?>
 </tr>
 <tr><td>
 <table border=0 width="100%">

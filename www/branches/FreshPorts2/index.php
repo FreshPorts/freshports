@@ -1,6 +1,6 @@
 <?
 	#
-	# $Id: index.php,v 1.1.2.62 2002-12-11 04:44:36 dan Exp $
+	# $Id: index.php,v 1.1.2.63 2002-12-12 02:45:21 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -129,7 +129,7 @@ if ($result) {
 <TR><TD VALIGN="top" WIDTH="100%">
 <TABLE WIDTH="100%" border="1" CELLSPACING="0" CELLPADDING="8">
 <TR>
-		<? freshports_PageBannerText("$MaxNumberOfPorts most recently changed ports", 3); ?>
+		<? echo freshports_PageBannerText("$MaxNumberOfPorts most recently changed ports", 3); ?>
         <? //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPorts) ?>
 </TR>
 <TR><TD>

@@ -1,5 +1,5 @@
 <?
-	# $Id: about.php,v 1.1.2.11 2002-12-11 04:44:32 dan Exp $
+	# $Id: about.php,v 1.1.2.12 2002-12-12 02:45:18 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -17,7 +17,7 @@
 <TR><td VALIGN=TOP>
 <TABLE>
 <TR>
-	<? freshports_PageBannerText("About this site"); ?>
+	<? echo freshports_PageBannerText("About this site"); ?>
 </TR>
 
 <TR><TD>
@@ -32,7 +32,7 @@ We have here a few notes about this website.
 <TR>
 	<? 
 	freshports_BannerSpace();
-	freshports_PageBannerText("What is a port?"); 
+	echo freshports_PageBannerText("What is a port?"); 
 	?>
 </TR>
 
@@ -54,7 +54,7 @@ we come in.</P>
 <TR>
 	<?
 	freshports_BannerSpace();
-	freshports_PageBannerText("What is $FreshPortsTitle");
+	echo freshports_PageBannerText("What is $FreshPortsTitle");
 	?>
 </TR>
 
@@ -76,7 +76,7 @@ create ports.  We do not fix ports.  We just tell you what others have been doin
 <TR>
 	<?
 	freshports_BannerSpace();
-	freshports_PageBannerText("OK, whose bright idea was this?");
+	echo freshports_PageBannerText("OK, whose bright idea was this?");
 	?>
 </TR>
 

@@ -1,5 +1,5 @@
 <?
-	# $Id: faq.php,v 1.1.2.27 2002-12-11 04:44:35 dan Exp $
+	# $Id: faq.php,v 1.1.2.28 2002-12-12 02:45:20 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -23,7 +23,7 @@
 <table width="100%" border="0">
 
 <tr>
-	<? freshports_PageBannerText("FAQ"); ?>
+	<? echo echo freshports_PageBannerText("FAQ"); ?>
 </tr>
 <TR><TD>
 <P>This page contains the FAQ for FreshPorts. Hopefully the questions
@@ -34,7 +34,7 @@ down you must read to find something you didn't already know.</P>
 
 <TR>
 
-<? freshports_PageBannerText("What is this website about?"); ?>
+<? echo echo freshports_PageBannerText("What is this website about?"); ?>
 
 	<TR><TD>
 	This website will help you keep up with the latest releases of your
@@ -43,7 +43,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? freshports_PageBannerText("How do I use this?"); ?>
+<? echo freshports_PageBannerText("How do I use this?"); ?>
 </TR>
 
 	<TR><TD>
@@ -54,7 +54,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? freshports_PageBannerText("How do I modify my watch list?"); ?>
+<? echo freshports_PageBannerText("How do I modify my watch list?"); ?>
 </TR>
 
 	<TR><TD>
@@ -71,7 +71,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? freshports_PageBannerText("How do I empty my watch list?"); ?>
+<? echo freshports_PageBannerText("How do I empty my watch list?"); ?>
 </TR>
 
 	<TR><TD>
@@ -79,7 +79,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? freshports_PageBannerText("How do delete my account?"); ?>
+<? echo freshports_PageBannerText("How do delete my account?"); ?>
 </TR>
 
 	<TR><TD>
@@ -90,7 +90,7 @@ down you must read to find something you didn't already know.</P>
 
 
 <TR>
-<? freshports_PageBannerText("What is a port"); ?>
+<? echo freshports_PageBannerText("What is a port"); ?>
 </TR>
 
 	<TR><TD>
@@ -105,7 +105,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? freshports_PageBannerText("Where do ports come from?"); ?>
+<? echo freshports_PageBannerText("Where do ports come from?"); ?>
 </TR>
 
 	<TR><TD>Ports are created by other FreeBSD volunteers, just like you
@@ -115,7 +115,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? freshports_PageBannerText("Who do I talk to about a port?"); ?>
+<? echo freshports_PageBannerText("Who do I talk to about a port?"); ?>
 </TR>
 
 	<TR><TD>The official mailing list is freebsd-ports&#64;freebsd.org.
@@ -126,7 +126,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? freshports_PageBannerText("How do I get these ports?"); ?>
+<? echo freshports_PageBannerText("How do I get these ports?"); ?>
 </TR>
 
 	<TR><TD>For full information on how to obtain the ports which appear on
@@ -139,7 +139,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? freshports_PageBannerText("How is the website updated?"); ?>
+<? echo freshports_PageBannerText("How is the website updated?"); ?>
 </TR>
 
 	<TR><TD>
@@ -154,7 +154,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? freshports_PageBannerText("What does unknown mean for a revision number?"); ?>
+<? echo freshports_PageBannerText("What does unknown mean for a revision number?"); ?>
 </TR>
 
 	<TR><TD>It means the data has been converted from an earlier
@@ -162,7 +162,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? freshports_PageBannerText("How can I link to your site?"); ?>
+<? echo freshports_PageBannerText("How can I link to your site?"); ?>
 </TR>
 
 	<TR><TD>Yes, thank you, you can.  No need to ask us.  Just go ahead and do it.
@@ -190,7 +190,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? freshports_PageBannerText("Why do I need a different login for the Forums?"); ?>
+<? echo freshports_PageBannerText("Why do I need a different login for the Forums?"); ?>
 </TR>
 
 	<TR><TD>
@@ -202,7 +202,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? freshports_PageBannerText("What do these symbols mean?"); ?>
+<? echo freshports_PageBannerText("What do these symbols mean?"); ?>
 </TR>
 
 	<TR><TD>
@@ -253,7 +253,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? freshports_PageBannerText("Why don't my old bookmarks work?"); ?>
+<? echo freshports_PageBannerText("Why don't my old bookmarks work?"); ?>
 </TR>
 
 	<TR><TD>
@@ -275,7 +275,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? freshports_PageBannerText("Do you have any news feeds?"); ?>
+<? echo freshports_PageBannerText("Do you have any news feeds?"); ?>
 </TR>
 
 	<TR><TD>
@@ -304,7 +304,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? freshports_PageBannerText("Can the main page load any faster?"); ?>
+<? echo freshports_PageBannerText("Can the main page load any faster?"); ?>
 </TR>
 
 	<TR><TD>
@@ -362,7 +362,7 @@ SQL and I'll be implementing that gradually.
 </TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<? freshports_PageBannerText("How can I view the commits for a particular day?"); ?>
+<? echo freshports_PageBannerText("How can I view the commits for a particular day?"); ?>
 </TR>
 
    <TR><TD>

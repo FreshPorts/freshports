@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-list-maintenance.php,v 1.1.2.14 2002-12-12 02:21:39 dan Exp $
+	# $Id: watch-list-maintenance.php,v 1.1.2.15 2002-12-12 02:43:05 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -92,7 +92,7 @@ if ($UserClickedOn) {
 				if (preg_match("/[^a-zA-Z0-9]/", $_POST['add_name'])) {
 					$ErrorMessage = $WatchListNameMessage;
 					$add_name     = $_POST['add_name'];
-				} else { echo 'that name is ok';}
+				}
 				break;
 
 			case 'rename':
@@ -197,13 +197,13 @@ if ($Debug) echo 'add remove = ' . $User->watch_list_add_remove;
 <TR><td VALIGN=TOP>
 <TABLE border="0" width="100%">
 <TR>
-	<? freshports_PageBannerText("Watch list maintenance"); ?>
+	<? echo freshports_PageBannerText("Watch list maintenance"); ?>
 </TR>
 <TR><TD>
-Adding or renaming watch list is broken. The DB isn't up to date.  I will fix this tonight.
+
 <?php
 	if ($ErrorMessage != '') {
-		echo freshports_ErrorMessage("Let\'s try that again!", $ErrorMessage);
+		echo freshports_ErrorMessage("Let's try that again!", $ErrorMessage);
 	}
 ?>
 

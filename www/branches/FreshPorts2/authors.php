@@ -1,5 +1,5 @@
 <?
-	# $Id: authors.php,v 1.1.2.13 2002-12-11 04:44:32 dan Exp $
+	# $Id: authors.php,v 1.1.2.14 2002-12-12 02:45:19 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -17,7 +17,7 @@
 <tr><td valign="top">
 <table width="100%" border="0">
   <tr>
-	<? freshports_PageBannerText("About the authors"); ?>
+	<? echo freshports_PageBannerText("About the authors"); ?>
   </tr>
 <TR><TD>
 <p>Dan Langille thought up the idea, found the data sources, bugged people to 

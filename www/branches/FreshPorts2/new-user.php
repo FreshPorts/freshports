@@ -1,5 +1,5 @@
 <?
-	# $Id: new-user.php,v 1.1.2.27 2002-12-11 04:44:38 dan Exp $
+	# $Id: new-user.php,v 1.1.2.28 2002-12-12 02:45:22 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -176,7 +176,7 @@ if (!$submit && !$errors) {
 
 <TABLE CELLSPACING="0" BORDER="0" WIDTH="100%" CELLPADDING="5">
       <TR>
-		<? freshports_PageBannerText("New User Details"); ?>
+		<? echo freshports_PageBannerText("New User Details"); ?>
       </TR>
       <TR>
         <TD>

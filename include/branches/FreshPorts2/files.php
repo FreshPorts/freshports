@@ -1,5 +1,5 @@
 <?
-	# $Id: files.php,v 1.1.2.20 2002-12-11 04:36:20 dan Exp $
+	# $Id: files.php,v 1.1.2.21 2002-12-12 02:45:26 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -127,7 +127,7 @@ select element_pathname(element.id) as pathname,
 		<?
  		echo '<TABLE BORDER="1" WIDTH="100%" CELLSPACING="0" CELLPADDING="5" BORDERCOLOR="#a2a2a2" BORDERCOLORDARK="#a2a2a2" BORDERCOLORLIGHT="#a2a2a2">' . "\n";
 
-		freshports_PageBannerText("Commit Details", 3);
+		echo freshports_PageBannerText("Commit Details", 3);
 
 		echo '<TR><TD COLSPAN="3">';
 		echo '<BIG><B><A HREF="/' . $myrow["category"] . '/">' . $myrow["category"] . '</A>';
@@ -220,7 +220,7 @@ select element_pathname(element.id) as pathname,
 				$title =  $i . ' files found';
 		}
 
-		freshports_PageBannerText($title, 3);
+		echo freshports_PageBannerText($title, 3);
 
 		?>
 		<TR>

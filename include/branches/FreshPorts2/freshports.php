@@ -1,6 +1,6 @@
 <?
 
-	# $Id: freshports.php,v 1.4.2.121 2002-12-12 02:23:12 dan Exp $
+	# $Id: freshports.php,v 1.4.2.122 2002-12-12 02:45:27 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -938,7 +938,7 @@ function freshports_PortCommitsHeader($port) {
 	echo '<TABLE BORDER="1" width="100%" CELLSPACING="0" CELLPADDING="5">' . "\n";
 	echo "<TR>\n";
 
-	freshports_PageBannerText("Commit History - (may be incomplete: see CVSWeb link above for full details)", 3);
+	echo freshports_PageBannerText("Commit History - (may be incomplete: see CVSWeb link above for full details)", 3);
 
 	echo "<TR><TD WIDTH=\"180\"><b>Date</b></td><td><b>Committer</b></td><td><b>Description</b></td></tr>\n";
 }
@@ -1093,7 +1093,7 @@ function freshports_wrap($text, $length = 80) {
 }
 
 function freshports_PageBannerText($Text, $ColSpan=1) {
-	echo '<TD BGCOLOR="#AD0040" HEIGHT="29" COLSPAN="' . $ColSpan . ' "><FONT COLOR="#FFFFFF"><BIG><BIG>' . $Text . '</BIG></BIG></FONT></TD>' . "\n";
+	return '<TD BGCOLOR="#AD0040" HEIGHT="29" COLSPAN="' . $ColSpan . ' "><FONT COLOR="#FFFFFF"><BIG><BIG>' . $Text . '</BIG></BIG></FONT></TD>' . "\n";
 }
 
 
@@ -1187,7 +1187,7 @@ function freshports_LinkToDate($Date, $Text = '') {
 	} else {
 		$URL .= date("D, j M Y", $Date);
 	}
-	
+
 	$URL .= '</a>';
 
 	return $URL;
@@ -1199,7 +1199,7 @@ function freshports_ErrorMessage($Title, $ErrorMessage) {
 <TR><TD VALIGN=TOP>
 <TABLE WIDTH="100%">
 <TR>
-	<?php freshports_PageBannerText("' . $Title . '") ?>
+	' . freshports_PageBannerText($Title) . '
 </TR>
 <TR BGCOLOR="#ffffff">
 <TD>

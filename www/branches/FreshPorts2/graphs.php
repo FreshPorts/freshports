@@ -1,5 +1,5 @@
 <?
-	# $Id: graphs.php,v 1.5.2.17 2002-12-11 04:44:35 dan Exp $
+	# $Id: graphs.php,v 1.5.2.18 2002-12-12 02:45:21 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -16,7 +16,7 @@
 <TR><TD VALIGN=TOP WIDTH="100%">
 <TABLE WIDTH="100%" BORDER="0">
 <TR>
-	<? freshports_PageBannerText("Statistics - everyone loves a graph"); ?>
+	<? echo freshports_PageBannerText("Statistics - everyone loves a graph"); ?>
 </TR>
 
 <TR><TD>

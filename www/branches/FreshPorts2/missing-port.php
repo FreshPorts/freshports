@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-port.php,v 1.1.2.28 2002-12-11 04:44:37 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.29 2002-12-12 02:45:22 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
@@ -130,7 +130,7 @@ function freshports_PortDescription($port) {
 <tr><TD VALIGN="top" width="100%">
 <TABLE BORDER="1" WIDTH="100%" CELLSPACING="0" CELLPADDING="5">
 <TR>
-<? freshports_PageBannerText("Port details"); ?>
+<? echo freshports_PageBannerText("Port details"); ?>
 </TR>
 
 <tr><td valign="top" width="100%">

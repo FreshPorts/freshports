@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-categories.php,v 1.1.2.16 2002-12-11 04:44:41 dan Exp $
+	# $Id: watch-categories.php,v 1.1.2.17 2002-12-12 02:45:25 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -28,7 +28,7 @@ if (!$visitor) {
 <table width="<? echo $TableWidth ?>" border="0" ALIGN="center">
 <td valign="top"><table width="100%">
   <tr>
-	<? freshports_PageBannerText("Watch List - categories"); ?>
+	<? echo freshports_PageBannerText("Watch List - categories"); ?>
   </tr>
 <tr><td valign="top" width="100%">
 

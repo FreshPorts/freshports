@@ -1,5 +1,5 @@
 <?
-	# $Id: fp2-announcement.php,v 1.1.2.8 2002-12-11 04:44:35 dan Exp $
+	# $Id: fp2-announcement.php,v 1.1.2.9 2002-12-12 02:45:20 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -18,7 +18,7 @@
 <TABLE WIDTH="100%" BORDER="0">
 
 <TR>
-	<? freshports_PageBannerText("Announcement"); ?>
+	<? echo freshports_PageBannerText("Announcement"); ?>
 </TR>
 <TR><TD>
 

@@ -1,5 +1,5 @@
 <?
-	# $Id: ports-new.php,v 1.1.2.20 2002-12-11 18:15:09 dan Exp $
+	# $Id: ports-new.php,v 1.1.2.21 2002-12-12 02:45:24 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -61,7 +61,7 @@
 <TR><TD valign="top" width="100%">
 <TABLE width="100%" border="0">
 <TR>
-	<? freshports_PageBannerText($Title); ?>
+	<? echo freshports_PageBannerText($Title); ?>
 </TR>
 <TR><TD>
 These are the recently added ports.

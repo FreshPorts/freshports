@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.203 2005-01-05 23:14:40 dan Exp $
+	# $Id: freshports.php,v 1.4.2.204 2005-01-06 04:24:47 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -21,19 +21,23 @@ DEFINE('URL2LINK_CUTOFF_LEVEL', 0);
 DEFINE('FAQLINK',               'faq.php');
 DEFINE('PORTSMONURL',			'http://portsmon.firepipe.net/portoverview.py');
 DEFINE('NOBORDER',              '0');
+DEFINE('BORDER',                '1');
 
 if ($Debug) echo "'" . $_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php<BR>';
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php');
 
 function freshports_MainTable() {
-	echo '<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+	GLOBAL $TableWidth;
+
+	echo '<TABLE WIDTH="' . $TableWidth . '" BORDER="0" ALIGN="center">
 ';
 }
 
-function freshports_MainContentTable($Border=1) {
+function freshports_MainContentTable($Border=1, $ColSpan=1) {
 	echo '<TABLE WIDTH="100%" border="' . $Border . '" CELLSPACING="0" CELLPADDING="8">
 ';
+	echo PortsFreezeStatus($ColSpan);
 }
 
 function  freshports_ErrorContentTable() {
@@ -42,7 +46,7 @@ function  freshports_ErrorContentTable() {
 }
 
 
-function PortsFreezeStatus() {
+function PortsFreezeStatus($ColSpan=1) {
 	#
 	# this function checks to see if there is a port freeze on.
 	# if there is, it returns text that indicates same.
@@ -52,8 +56,12 @@ function PortsFreezeStatus() {
 
 	if (file_exists($_SERVER["DOCUMENT_ROOT"] . "/../dynamic/PortsFreezeIsOn")) {
 		$result = '
-<tr>' . freshports_PageBannerText('There is a PORTS FREEZE in effect!') . '</tr>
-<tr><td>
+<tr>' . freshports_PageBannerText('There is a PORTS FREEZE in effect!', $ColSpan) . '</tr>
+<tr><td';
+		if ($ColSpan > 1) {
+			$result .= ' colspan="' . $ColSpan . '"';
+		}
+		$result .= '>
 <p>A <a href="http://www.freebsd.org/doc/en/articles/committers-guide/ports.html#AEN1390">ports freeze</a>
  means that commits will be few and far between and only by approval.
 </p>

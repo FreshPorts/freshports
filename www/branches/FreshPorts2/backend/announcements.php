@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: announcements.php,v 1.1.2.4 2003-05-16 02:43:28 dan Exp $
+	# $Id: announcements.php,v 1.1.2.5 2003-10-02 12:12:56 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -15,7 +15,7 @@
 
 	GLOBAL $User;
 
-$origin	= $_REQUEST['origin'];
+$origin		= $_REQUEST['origin'];
 $submit 	= $_REQUEST['submit'];
 $visitor	= $_COOKIE['visitor'];
 
@@ -24,7 +24,7 @@ if ($origin == '/index.php' || $origin == '') {
 }
 
 // if we don't know who they are, we'll make sure they login first
-if (!$visitor) {
+if (!$User->id) {
 	header('Location: /login.php?origin=' . $_SERVER['PHP_SELF']);  /* Redirect browser to PHP web site */
 	exit;  /* Make sure that code below does not get executed when we redirect. */
 }

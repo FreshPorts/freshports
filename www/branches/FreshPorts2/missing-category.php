@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-category.php,v 1.1.2.22 2003-03-06 14:20:43 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.23 2003-03-06 15:02:39 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -10,34 +10,28 @@
 DEFINE('MAX_PAGE_SIZE',     500);
 DEFINE('DEFAULT_PAGE_SIZE', 25);
 
+DEFINE('NEXT_PAGE',		'Next');
+
 function freshports_CategoryNextPreviousPage($CategoryName, $PortCount, $PageNo, $PageSize) {
 
-	echo "\n";
-
-	if ($PageNo == 1) {
-		echo '&lt;-';
-	} else {
-		echo '<a href="/' . $CategoryName . '/?page=' . ($PageNo - 1) . '">&lt;-</a> ';
-		echo "\n";
-	}
+	echo "Result Page:";
 
 	$NumPages = ceil($PortCount / $PageSize);
-#	echo "Number of Pages = '$NumPages'<br>\n";
 
 	for ($i = 1; $i <= $NumPages; $i++) {
 		if ($i == $PageNo) {
-			echo " $i";
+			echo "&nbsp;<b>$i</b>";
 			echo "\n";
 		} else {
-			echo ' <a href="/' . $CategoryName . '/?page=' . $i .  '">' . $i . '</a>';
+			echo '&nbsp;<a href="/' . $CategoryName . '/?page=' . $i .  '">' . $i . '</a>';
 			echo "\n";
 		}
 	}
 
 	if ($PageNo == $NumPages) {
-		echo ' -&gt;';
+		echo '&nbsp; ' . NEXT_PAGE;
 	} else {
-		echo ' <a href="/' . $CategoryName . '/?page=' . $NumPages .  '">-&gt;</a>';
+		echo '&nbsp;<a href="/' . $CategoryName . '/?page=' . ($PageNo + 1) .  '">' . NEXT_PAGE . '</a>';
 		echo "\n";
 	}
 }
@@ -111,7 +105,7 @@ echo $category->{description}
 ?></B></BIG></BIG> - Number of ports in this category: <?php
 echo $PortCount;
 
-echo '<div align="center">';
+echo '<div align="center"><br>';
 freshports_CategoryNextPreviousPage($CategoryName, $PortCount, $PageNo, $PageSize);
 echo '</div>';
 
@@ -154,7 +148,7 @@ $ShowDescriptionLink  = "N";
 	?>
 </TD></TR>
 <TR><TD>
-<div align="center">
+<div align="center"><br>
 <?php 
 freshports_CategoryNextPreviousPage($CategoryName, $PortCount, $PageNo, $PageSize);
 ?>

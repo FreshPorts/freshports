@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.200 2005-01-02 00:10:57 dan Exp $
+	# $Id: freshports.php,v 1.4.2.201 2005-01-03 04:04:26 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -185,7 +185,7 @@ function freshports_Deprecated_Icon($HoverText = '') {
 	$Alt       = "Deprecated";
 	$HoverText = freshports_HoverTextCleaner($Alt, $HoverText);
 
-	return '<IMG SRC="/images/deprecated.gif"' . $Alt . '" TITLE="' . $HoverText . '" WIDTH="18" HEIGHT="18">';
+	return '<IMG SRC="/images/deprecated.gif" ALT="' . $Alt . '" TITLE="' . $HoverText . '" WIDTH="18" HEIGHT="18">';
 }
 
 function freshports_Deprecated_Icon_Link($HoverText = '') {

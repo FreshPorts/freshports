@@ -3,32 +3,6 @@ require( "./_private/commonlogin.php3");
 require( "./_private/getvalues.php3");
 require( "./_private/freshports.php3");
 
-?>
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
-<html>
-
-<head>
-<meta name="description" content="freshports - new ports, applications">
-<meta name="keywords" content="FreeBSD, index, applications, ports">  
-<!--// DVL Software is a New Zealand company specializing in database applications. //-->
-<title>freshports</title>
-</head>
-
-<body bgcolor="#ffffff" link="#0000cc">
- <? include("./_private/header.inc") ?>
-<table width="100%" border="0">
-<tr><td colspan="2">Welcome to the freshports.org where you can find the latest information on your favourite
-ports.
-</td></tr>
-  <tr>
-    <td colspan="2">
-This page shows the files associated with one port within a given commit.
-    </td>
-  </tr>
-<tr><td valign="top" width="100%">
-<script language="php">
-
 $sql = "select change_log_port.change_log_id, change_log_port.id, change_log_port.port_id, details, " .
        "change_type, ports.name as port, categories.name as category, change_log.committer, change_log.commit_date, " .
        "change_log.update_description " .
@@ -54,10 +28,37 @@ if (!$result) {
       $i++;
    }
 
+   $myrow = $rows[0];
+
+?>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+
+<head>
+<meta name="description" content="freshports - new ports, applications">
+<meta name="keywords" content="FreeBSD, index, applications, ports">
+<!--// DVL Software is a New Zealand company specializing in database applications. //-->
+<title>freshports - <? echo $myrow["category"] . '/' . $myrow["port"] ?> - commit details</title>
+</head>
+
+<body bgcolor="#ffffff" link="#0000cc">
+ <? include("./_private/header.inc") ?>
+<table width="100%" border="0">
+<tr><td colspan="2">Welcome to the freshports.org where you can find the latest information on your favourite
+ports.
+</td></tr>
+  <tr>
+    <td colspan="2">
+This page shows the files associated with one port within a given commit.
+    </td>
+  </tr>
+<tr><td valign="top" width="100%">
+<?
    echo '<table border="1" width="100%" CELLSPACING="0" CELLPADDING="5"bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">' . "\n";
    echo '<tr height="20"><td colspan="3" bgcolor="#AD0040"><font color="#FFFFFF" size="+1">Commit Details</font></td></tr>' . "\n";
    echo "<tr><td><b>Date</b></td><td><b>Committer</b></td><td><b>Description</b></td></tr>\n";      
-   $myrow = $rows[0];
+
    echo "<tr>";
    echo "    <td valign='top'><font size='-1'>" . $myrow["commit_date"]        . "</font></td>\n";
    echo "    <td valign='top'>" . $myrow["committer"]          . "</td>\n";

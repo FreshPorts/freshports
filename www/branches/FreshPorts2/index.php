@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.3 2002-01-05 23:01:15 dan Exp $
+	# $Id: index.php,v 1.1.2.4 2002-01-06 06:33:59 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -77,10 +77,7 @@ ports. A port is marked as new for 10 days.
 
 <TR><TD>
 
-<H1>Not all links will work</H1>
-
-<B>This is a work in progress.  Only the main page is expected to work. Other links may not, especially
-login...</B>
+<B>Unless stated otherwise, everything should work now.</B>
 
 </TR></TD>
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing.php,v 1.1.2.20 2003-09-26 12:48:56 dan Exp $
+	# $Id: missing.php,v 1.1.2.21 2003-10-16 03:04:12 dan Exp $
 	#
 	# Copyright (c) 2001-2003 DVL Software Limited
 	#
@@ -65,15 +65,23 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 			if ($ElementRecord->IsCategory()) {
 
 				require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-category.php');
-				freshports_Category($db, $ElementRecord->id);
+				freshports_CategoryByElementID($db, $ElementRecord->id);
 
 			} else {
+				# this is a non-port (e.g. /Mk/)
 				require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-non-port.php');
 				freshports_NonPortDescription($db, $ElementRecord);
 			}
 		}
 	} else {
-		$result = $REQUEST_URI;
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
+		$Category = new Category($db);
+		if ($Category->FetchByName(AddSlashes(str_replace('/', '', $REQUEST_URI)))) {
+			require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-category.php');
+			freshports_CategoryByID($db, $Category->id);
+		} else {
+			$result = $REQUEST_URI;
+		}
 	}
 
 	if ($Debug) {

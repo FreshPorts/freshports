@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.10 2004-04-07 21:01:50 dan Exp $
+	# $Id: commit.php,v 1.1.2.11 2004-09-22 15:34:50 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -25,6 +25,7 @@ class Commit {
 	var $port;
 	var $version;
 	var $revision;
+	var $epoch;
 	var $status;
 	var $needs_refresh;
 	var $forbidden;
@@ -56,6 +57,7 @@ class Commit {
 		$this->port					= $myrow["port"];
 		$this->version				= $myrow["version"];
 		$this->revision				= $myrow["revision"];
+		$this->epoch				= $myrow["epoch"];
 		$this->status				= $myrow["status"];
 		$this->needs_refresh		= $myrow["needs_refresh"];
 		$this->forbidden			= $myrow["forbidden"];

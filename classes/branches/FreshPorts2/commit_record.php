@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit_record.php,v 1.1.2.6 2004-03-22 20:34:05 dan Exp $
+	# $Id: commit_record.php,v 1.1.2.7 2004-09-22 15:34:50 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -29,6 +29,7 @@ class CommitRecord {
 	var $element_id;
 	var $version;
 	var $revision;
+	var $epoch;
 	var $date_added;
 	var $short_description;
 	var $category_id;
@@ -62,6 +63,7 @@ class CommitRecord {
 		$this->element_id			= $myrow['element_id'];
 		$this->version				= $myrow['version'];
 		$this->revision				= $myrow['revision'];
+		$this->epoch				= $myrow['epoch'];
 		$this->date_added			= $myrow['date_added'];
 		$this->short_description	= $myrow['short_description'];
 		$this->category_id			= $myrow['category_id'];

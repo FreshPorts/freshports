@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: security_notice.php,v 1.1.2.3 2003-03-08 13:04:16 dan Exp $
+	# $Id: security_notice.php,v 1.1.2.4 2003-03-08 13:31:41 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -43,21 +43,21 @@ class SecurityNotice {
 
 		$return = 0;
 
-		$sql = "select SecurityNoticeCreate("  . $this->user_id      . ",
-		                                    '" . $this->ip_address  . "',
-		                                    '" . $this->description . "',
-		                                    '" . $message_id        . "')";
-		echo "<pre>$sql</pre>";
+		$query = "select SecurityNoticeCreate("  . $this->user_id      . ",
+		                                      '" . $this->ip_address  . "',
+		                                      '" . $this->description . "',
+		                                      '" . $message_id        . "')";
+		echo "<pre>$query</pre>";
 
-		$this->LocalResult = pg_query($this->dbh, $sql);
+		$this->LocalResult = pg_query($this->dbh, $query);
 		if ($this->LocalResult) {
 			$numrows = pg_numrows($this->LocalResult);
 			if ($numrows == 1) {
 				$myrow = pg_fetch_array ($this->LocalResult);
-				$this->id = $myrow[0];			
-				syslog(LOG_NOTICE, "added a new security notice: $NextValue : $description : $message_id");
+				$this->id = $myrow['securitynoticecreate'];
+				$return = $this->id;
 			} else {
-				syslog(LOG_ERR, "Could add item to security notice: $query " . pg_lasterror());
+				syslog(LOG_ERR, "Could not add item to security notice: $query " . pg_lasterror());
 				die('Could not add item to security notice table');
 			}
 		} else {

@@ -1,5 +1,5 @@
 <?
-	# $Id: commit.php,v 1.1.2.11 2002-06-09 21:42:34 dan Exp $
+	# $Id: commit.php,v 1.1.2.12 2002-09-05 17:45:59 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -103,6 +103,7 @@ function GetPortNameFromFileName($file_name) {
 	
 
 	$sql = " SELECT	ports_all.*, commit_log.committer, commit_log.description as commit_description, 
+					commit_log_ports.port_version as version, commit_log_ports.port_revision as revision,
 					to_char(commit_log.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')  as commit_date,
 					to_char(commit_log.commit_date - SystemTimeAdjust(), 'HH24:MI:SS')   as commit_time,
 					commit_log.message_id, commit_log.encoding_losses, ports_all.name as port, commit_log.id as commit_log_id ";

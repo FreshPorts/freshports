@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.60 2004-09-12 10:44:45 dan Exp $
+	# $Id: search.php,v 1.1.2.61 2004-10-02 14:19:37 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -305,7 +305,7 @@ switch ($deleted) {
 switch ($orderby) {
 	case ORDERBYCATEGORY:
 		switch ($orderbyupdown) {
-			case ORDREBYDESC:
+			case ORDERBYDESCENDING:
 			default:
 				$sql .= "\n order by categories.name desc, element.name";
 				break;
@@ -319,7 +319,7 @@ switch ($orderby) {
 	case ORDERBYPORT:
 	default:
 		switch ($orderbyupdown) {
-			case ORDREBYDESC:
+			case ORDERBYDESCENDING:
 			default:
 				$sql .= "\n order by element.name desc, categories.name";
 				break;

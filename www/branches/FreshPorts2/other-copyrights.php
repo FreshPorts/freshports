@@ -1,5 +1,5 @@
 <?
-	# $Id: other-copyrights.php,v 1.1.4.2 2002-02-21 06:42:20 dan Exp $
+	# $Id: other-copyrights.php,v 1.1.4.3 2002-04-20 03:14:00 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -35,7 +35,6 @@
 		USA<BR>
 </BLOCKQUOTE>
 	or via email at mckusick&#64;mckusick.com<BR>
-	</P>
 
 </BLOCKQUOTE>
 	</TD>

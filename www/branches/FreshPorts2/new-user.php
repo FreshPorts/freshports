@@ -1,5 +1,5 @@
 <?
-	# $Id: new-user.php,v 1.1.2.14 2002-03-25 02:09:53 dan Exp $
+	# $Id: new-user.php,v 1.1.2.15 2002-04-20 03:13:05 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -13,7 +13,7 @@ if ($submit) {
 
 	/*
 	while (list($name, $value) = each($HTTP_POST_VARS)) {
-		echo "$name = $value<br>\n";
+		echo "$name = $value<BR>\n";
 	}
 	*/
 
@@ -95,7 +95,7 @@ if ($submit) {
 				$sql .= "$UserID, '$UserLogin', '$Password1', '$Cookie', '$email', " .
 						"'$WatchNotice->id', '$emailsitenotices_yn_value', 'S', '$REMOTE_ADDR')";
 
-				$errors .= "<br>sql=" . $sql;
+				$errors .= "<BR>sql=" . $sql;
 
 				$result = pg_exec($db, $sql);
 				if ($result) {
@@ -138,48 +138,48 @@ if ($submit) {
                "FreeBSD, index, applications, ports");
 ?>
 
-<script>
+<SCRIPT TYPE="text/javascript">
 <!--
 function setfocus() { document.f.UserLogin.focus(); }
 // -->
-</script>
+</SCRIPT>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<tr><td valign="top" width="100%">
+<TR><TD VALIGN="top" WIDTH="100%">
 <script language="php">
 if ($errors) {
-echo '<table cellpadding=1 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>
-<tr>
-<td>
-<table width=100% border=0 cellpadding=1>
-<tr bgcolor="#AD0040"><td><b><font color="#ffffff" size=+0>Access Code Failed!</font></b></td>
-</tr>
-<tr bgcolor="#ffffff">
-<td>
-  <table width=100% cellpadding=3 cellspacing=0 border=0>
-  <tr valign=top>
-   <td><img src="/images/warning.gif"></td>
-   <td width=100%>
+echo '<TABLE CELLPADDING=1 CELLSPACING=0 BORDER=0 BGCOLOR="#AD0040" WIDTH=100%>
+<TR>
+<TD>
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=1>
+<TR BGCOLOR="#AD0040"><TD><B><FONT color="#ffffff" size=+0>Access Code Failed!</FONT></B></TD>
+</TR>
+<TR BGCOLOR="#ffffff">
+<TD>
+  <TABLE WIDTH=100% CELLPADDING=3 CELLSPACING=0 BORDER=0>
+  <TR VALIGN=top>
+   <TD><IMG SRC="/images/warning.gif"></TD>
+   <TD WIDTH=100%>
   <p>Some errors have occurred which must be corrected before your login can be created.</p>';
 
 /*
   while (list($name, $value) = each($HTTP_POST_VARS)) {
-    echo "$name = $value<br>\n";
+    echo "$name = $value<BR>\n";
   }
 */
 echo $errors;
 
 echo '<p>If you need help, please post a message on the forum. </p>
- </td>
- </tr>
- </table>
-</td>
-</tr>
-</table>
-</td>
-</tr>
-</table>
-<br>';
+ </TD>
+ </TR>
+ </TABLE>
+</TD>
+</TR>
+</TABLE>
+</TD>
+</TR>
+</TABLE>
+<BR>';
 }
 
 if (!$submit && !$errors) {
@@ -189,13 +189,12 @@ if (!$submit && !$errors) {
 
 </script>
 
-<table cellpadding="1" cellspacing="0" border="0" bordercolor="#A2A2A2"
-            bordercolordark="#A2A2A2" bordercolorlight="#A2A2A2" width="100%" cellpadding="5">
-      <tr>
+<TABLE CELLSPACING="0" BORDER="0" WIDTH="100%" CELLPADDING="5">
+      <TR>
 		<? freshports_PageBannerText("New User Details"); ?>
-      </tr>
-      <tr>
-        <td>
+      </TR>
+      <TR>
+        <TD>
 
 <P><BIG><BIG>NOTE:</BIG>You must supply a valid email address.<BR>Instructions to enable your account 
 will be emailed to you at that address.</BIG></P>
@@ -204,17 +203,15 @@ will be emailed to you at that address.</BIG></P>
 
 <? include("./include/new-user.php"); ?>
 
-    </td>
-  </tr>
-</form>
-</table>
-</td>
-  <td valign="top" width="*">
+    </TD>
+  </TR>
+</TABLE>
+</TD>
+  <TD VALIGN="top" WIDTH="*">
    <? include("./include/side-bars.php") ?>
- </td>
-</tr>
-</table>
-</a>
+ </TD>
+</TR>
+</TABLE>
 <? include("./include/footer.php") ?>
-</body>
-</html>
+</BODY>
+</HTML>

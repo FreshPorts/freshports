@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_upload.php,v 1.5.2.11 2002-03-02 21:11:50 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.12 2002-04-20 03:15:58 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -144,8 +144,8 @@ function DisplayStagingArea($WatchListID, $db) {
 
 ?>
 
-<table width="<? echo $TableWidth ?>" border="0" ALIGN="center">
-<TR><td VALIGN=TOP>
+<TABLE width="<? echo $TableWidth ?>" border="0" ALIGN="center">
+<TR><TD VALIGN=TOP>
 <TABLE WIDTH="100%">
 <TR>
 	<? freshports_PageBannerText("Uploading pkg_info"); ?>
@@ -218,18 +218,14 @@ function DisplayStagingArea($WatchListID, $db) {
 </TD>
 </TR>
 </TABLE>
-</td>
-  <td valign="top" width="*">
+</TD>
+  <TD valign="top" width="*">
     <?
 		include("./include/side-bars.php");
     ?>
- </td>
+ </TD>
 </TR>
-
-
- </td>
-</TR>
-</table>
+</TABLE>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
@@ -237,5 +233,5 @@ function DisplayStagingArea($WatchListID, $db) {
 </TD></TR>
 </TABLE>
 
-	</BODY>
+</BODY>
 </HTML>

@@ -1,5 +1,9 @@
 <?
 
+// path to the CVS repository
+$freshports_CVS_URL = "http://www.FreeBSD.org/cgi/cvsweb.cgi/ports/";
+
+
 // common things needs for all freshports php3 pages
 
 function freshports_Category_Name($CategoryID, $db) {

@@ -174,7 +174,7 @@ if ($ShowDepends) {
 
    if ($ShowChangesLink == "Y" || $ShowEverything) {
       // changes
-      $HTML .= '<a HREF="http://www.FreeBSD.org/cgi/cvsweb.cgi/ports/' .
+      $HTML .= '<a HREF="' . $freshports_CVS_URL .
                $myrow["category"] . '/' .  $myrow["port"] . '">Changes</a>';
    }
 

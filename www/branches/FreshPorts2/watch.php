@@ -1,5 +1,5 @@
 <?
-	# $Id: watch.php,v 1.1.2.5 2002-02-16 23:53:46 dan Exp $
+	# $Id: watch.php,v 1.1.2.6 2002-02-17 23:42:27 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -119,8 +119,8 @@ if ($UpdateCache == 1) {
 
 $sql = "";
 $sql = "select ports.id, element.name as port, ports.id as ports_id, commit_log.commit_date as updated, " .
-       "categories.name as category, categories.id as category_id, ports.version as version, ".
-       "commit_log.committer, commit_log.description as update_description, " .
+       "categories.name as category, categories.id as category_id, ports.version as version, ports.revision as revision, ".
+       "commit_log.committer, commit_log.description as update_description, element.id as element_id, " .
        "ports.maintainer, ports.short_description, ports.date_added as date_added, ".
        "ports.last_commit_id as last_change_log_id, " .
        "ports.package_exists, ports.extract_suffix, ports.homepage, element.status, " .
@@ -170,6 +170,10 @@ $ShowMaintainedBy     = "Y";
 #$GlobalHideLastChange = "Y";
 $ShowDescriptionLink  = "N";
 
+if ($ShowCategoryHeaders) {
+	$HTML .= '<DL>';
+}
+
 for ($i = 0; $i < $numrows; $i++) {
 	$port->FetchNth($i);
 	if ($ShowCategoryHeaders) {
@@ -177,11 +181,26 @@ for ($i = 0; $i < $numrows; $i++) {
 
 		if ($LastCategory != $Category) {
 			$LastCategory = $Category;
-			$HTML .= '<h3><a href="/' . $Category . '/">Category ' . $Category . '</a></h3>';
+			if ($ShowCategoryHeaders) {
+				$HTML .= '<DT>';
+			}
+			$HTML .= '<BIG><BIG><B><a href="/' . $Category . '/">' . $Category . '</a><B></BIG></BIG>';
+			if ($ShowCategoryHeaders) {
+				$HTML .= "</DT>\n<DD>";
+			}
 		}
 	}
 
-	$HTML .= freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription);
+	$HTML .= freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 1);
+
+	if ($ShowCategoryHeaders) {
+		$HTML .= "\n</DD>\n";
+	}
+
+}
+
+if ($ShowCategoryHeaders) {
+	$HTML .= "\n<\DL>\n";
 }
 
 }

@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.35 2002-02-17 23:24:05 dan Exp $
+   # $Id: freshports.php,v 1.4.2.36 2002-02-17 23:42:27 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -451,7 +451,7 @@ function freshports_ONToYN($Value) {
 }
 
 
-function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription) {
+function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, $LinkToPort=0) {
 //
 // This php3 fragment does the basic port information for a single port.
 //
@@ -466,7 +466,14 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 
 	$HTML .= "<DT>";
 
-	$HTML .= '<FONT SIZE="+1"><A HREF="/' . $port->category . '/">' . $port->category . '</A>/' . $port->port;
+	$HTML .= '<BIG><B><A HREF="/' . $port->category . '/">' . $port->category . '</A>/';
+
+	if ($LinkToPort) {
+		$HTML .= "<A HREF=\"/$port->category/$port->port/\">$port->port</A>";
+	} else {
+		$HTML .= $port->port;
+	}
+
 	if (strlen($port->{version}) > 0) {
     	$HTML .= ' ' . $port->{version};
 		if (strlen($port->{revision}) > 0 && $port->{revision} != "0") {
@@ -474,7 +481,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 		}
 	}
 
-	$HTML .= "</FONT>";
+	$HTML .= "</B></BIG>";
 
 	// indicate if this port needs refreshing from CVS
 	if ($port->status == "D") {

@@ -1,5 +1,5 @@
 <?
-	# $Id: port-basics.php,v 1.1.2.5 2002-01-07 13:08:42 dan Exp $
+	# $Id: port-basics.php,v 1.1.2.6 2002-02-09 19:42:43 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 //
@@ -33,15 +33,15 @@
       $HTML .= ' <font size="-1"><a href="/' . $$myrow["category"] . '/">' . $myrow["category"] . '</a></font>';
    }
 
-//   $HTML .= $myrow["date_created_formatted"] ."::". $myrow["updated"] ."--". $DaysMarkedAsNew;
-   if ($myrow["date_created"] > Time() - 3600 * 24 * $DaysMarkedAsNew) {
+//   $HTML .= $myrow["date_added_formatted"] ."::". $myrow["updated"] ."--". $DaysMarkedAsNew;
+   if ($myrow["date_added"] > Time() - 3600 * 24 * $DaysMarkedAsNew) {
       $MarkedAsNew = "Y";
       $HTML .= " <img src=\"/images/new.gif\" width=28 height=11 alt=\"new!\" hspace=2 align=absmiddle>";
    }
 
    if ($MarkedAsNew == "Y" || $ShowPortCreationDate) {
-      if ($myrow["date_created_formatted"] != $myrow["updated"] || !($ShowLastChange == "Y" || $ShowEverything) || $ShowPortCreationDate) {
-         $HTML .= ' <font size="-1">(' . $myrow["date_created_formatted"] . ")</font>";
+      if ($myrow["date_added_formatted"] != $myrow["updated"] || !($ShowLastChange == "Y" || $ShowEverything) || $ShowPortCreationDate) {
+         $HTML .= ' <font size="-1">(' . $myrow["date_added_formatted"] . ")</font>";
       }
    }
 

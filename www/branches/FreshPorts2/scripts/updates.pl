@@ -81,7 +81,7 @@ sub PortUpdate($;$;$;$;$;$;$;$) {
    if (!@row) {
       # no such port.  create it.
       $sql = "insert into ports (name, last_update, primary_category_id, " .
-             "last_update_description, committer, date_created, needs_refresh, " .
+             "last_update_description, committer, date_added, needs_refresh, " .
              "status, package_exists, short_description) values (";
       # we assume above that the package does not exist until we are told otherwise.
 

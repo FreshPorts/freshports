@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.7 2002-02-01 15:57:37 dan Exp $
+	# $Id: index.php,v 1.1.2.8 2002-02-09 19:42:41 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -124,7 +124,7 @@ select DISTINCT commit_log.commit_date as commit_date_raw,
 	   commit_log_ports.needs_refresh  as needs_refresh,
 	   ports.forbidden      as forbidden,
 	   ports.broken         as broken,
-	   date_part('epoch', ports.date_created) as date_created,
+	   date_part('epoch', ports.date_added) as date_added,
 	   ports.short_description
   from commit_log_ports, commit_log, ports, element, categories
  where commit_log.commit_date         > '2002-01-01'
@@ -239,7 +239,7 @@ ports. A port is marked as new for 10 days.
 							$HTML .= ' <font size="-1"> [refresh]</font>';
 						}
 
-						if ($myrow["date_created"] > Time() - 3600 * 24 * $DaysMarkedAsNew) {
+						if ($myrow["date_added"] > Time() - 3600 * 24 * $DaysMarkedAsNew) {
 							$MarkedAsNew = "Y";
 							$HTML .= "<img src=\"/images/new.gif\" width=28 height=11 alt=\"new!\" hspace=2 > ";
 						}

@@ -1,25 +1,56 @@
 #
-# $Id: db-permissions.txt,v 1.2.2.1 2002-01-06 07:23:32 dan Exp $
+# $Id: db-permissions.txt,v 1.2.2.2 2002-02-09 19:42:39 dan Exp $
 #
-# Copyright (c) 1998-2001 DVL Software Limited
+# Copyright (c) 1998-2002 DVL Software Limited
 #
 
-grant usage on freshports.* to sakya@localhost;
+#
+# issue the following command to create the www postgresql user
+#
 
-grant select, insert, delete, update on freshports.* to sakya@localhost;
+# su -l pgsql
+$ createuser www
+Shall the new user be allowed to create databases? (y/n) n
+Shall the new user be allowed to create more new users? (y/n) n
+CREATE USER
+$
 
-SET PASSWORD FOR sakya@localhost = PASSWORD('poostick'); 
+#
+# create the user/group www
+#
+fp2migration=# create group www;
+CREATE GROUP
+fp2migration=# alter group www add user www;
+ALTER GROUP
 
+#
+# things we need to select from the website
+#
+grant select on categories                     to group www;
+grant select on commit_log                     to group www;
+grant select on commit_log_elements            to group www;
+grant select on commit_log_port_elements       to group www;
+grant select on commit_log_ports               to group www;
+grant select on element                        to group www;
+grant select on element_revision               to group www;
+grant select on ports                          to group www;
+grant select on security_notice                to group www;
+grant select on security_notice_elements       to group www;
+grant select on security_notice_log            to group www;
+grant select on system                         to group www;
+grant select on system_branch                  to group www;
+grant select on system_branch_element_revision to group www;
 
-provide access to updater in the database
-
-grant select,insert,update on ports to updater@localhost;
-grant select,insert on change_log to updater@localhost;
-grant insert,select on change_log_port to updater@localhost;
-grant insert on change_log_details to updater@localhost;
-grant select on categories to updater@localhost;
-
-allow user to connect:
-grant usage on freshports.* to updater@localhost ;
-
-SET PASSWORD FOR updater@localhost = PASSWORD('Simp23right'); 
+#
+# things updated from the website
+#
+grant select,insert,update,delete on user_confirmations             to group www;
+grant select,insert,update,delete on users                          to group www;
+grant select,insert,update,delete on users_id_seq                   to group www;
+grant select,insert,update,delete on watch_list                     to group www;
+grant select,insert,update,delete on watch_list_element             to group www;
+grant select,insert,update,delete on watch_list_id_seq              to group www;
+grant select,insert,update,delete on watch_notice                   to group www;
+grant select,insert,update,delete on watch_notice_id_seq            to group www;
+grant select,insert,update,delete on watch_notice_log               to group www;
+grant select,insert,update,delete on watch_notice_log_id_seq        to group www;

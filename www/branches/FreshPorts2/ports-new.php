@@ -1,5 +1,5 @@
 <?
-	# $Id: ports-new.php,v 1.1.2.2 2002-01-05 23:01:17 dan Exp $
+	# $Id: ports-new.php,v 1.1.2.3 2002-02-09 19:42:42 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -45,7 +45,7 @@ switch ($sort) {
 //      break;
 
    default:
-      $sort ="date_created desc, port";
+      $sort ="date_added desc, port";
       $cache_file .= ".updated";
 }
 
@@ -83,8 +83,8 @@ if ($UpdateCache == 1) {
 $sql = "select ports.id, ports.name as port, " .
        "categories.name as category, categories.id as category_id, ports.version as version, ".
        "ports.last_update_description as update_description, " .
-       "ports.maintainer, ports.short_description, UNIX_TIMESTAMP(ports.date_created) as date_created, ".
-       "date_format(date_created, '$FormatDate $FormatTime') as date_created_formatted, ".
+       "ports.maintainer, ports.short_description, UNIX_TIMESTAMP(ports.date_added) as date_added, ".
+       "date_format(date_added, '$FormatDate $FormatTime') as date_added_formatted, ".
        "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, ports.status, " .
        "ports.broken, ports.forbidden " .
        "from ports, categories ".

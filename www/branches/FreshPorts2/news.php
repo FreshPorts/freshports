@@ -1,5 +1,5 @@
 <?
-	# $Id: news.php,v 1.1.2.1 2002-01-02 02:10:44 dan Exp $
+	# $Id: news.php,v 1.1.2.2 2002-02-09 19:42:41 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -64,7 +64,7 @@ select DISTINCT commit_log.commit_date as commit_date_raw,
 	   commit_log_ports.needs_refresh  as needs_refresh,
 	   ports.forbidden      as forbidden,
 	   ports.broken         as broken,
-	   date_part('epoch', ports.date_created) as date_created
+	   date_part('epoch', ports.date_added) as date_added
   from commit_log_ports, commit_log, ports, element, categories
  where commit_log.commit_date         > '" . date("Y-m-d", time() - 60*60*24*14) . "'
    and commit_log_ports.commit_log_id = commit_log.id

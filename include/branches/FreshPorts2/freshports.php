@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.22 2002-01-27 20:23:16 dan Exp $
+   # $Id: freshports.php,v 1.4.2.23 2002-02-09 19:42:43 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -445,14 +445,14 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
       $HTML .= ' <font size="-1"><a href="/' . $port->category . '/">' . $port->category . '</a></font>';
    }
 
-   if ($port->date_created > Time() - 3600 * 24 * $DaysMarkedAsNew) {
+   if ($port->date_added > Time() - 3600 * 24 * $DaysMarkedAsNew) {
       $MarkedAsNew = "Y";
       $HTML .= " <img src=\"/images/new.gif\" width=28 height=11 alt=\"new!\" hspace=2 align=absmiddle>";
    }
 
    if ($MarkedAsNew == "Y" || $ShowPortCreationDate) {
-      if ($port->date_created != $port->updated || !($ShowLastChange == "Y" || $ShowEverything) || $ShowPortCreationDate) {
-         $HTML .= ' <font size="-1">(' . date("j M Y H:i", $port->date_created) . ")</font>";
+      if ($port->date_added != $port->updated || !($ShowLastChange == "Y" || $ShowEverything) || $ShowPortCreationDate) {
+         $HTML .= ' <font size="-1">(' . date("j M Y H:i", $port->date_added) . ")</font>";
       }
    }
 

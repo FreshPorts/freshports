@@ -1,5 +1,5 @@
 <?
-	# $Id: watch.php,v 1.1.2.3 2002-01-05 23:01:19 dan Exp $
+	# $Id: watch.php,v 1.1.2.4 2002-02-09 19:42:42 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -121,7 +121,7 @@ $sql = "";
 $sql = "select ports.id, element.name as port, ports.id as ports_id, commit_log.commit_date as updated, " .
        "categories.name as category, categories.id as category_id, ports.version as version, ".
        "commit_log.committer, commit_log.description as update_description, " .
-       "ports.maintainer, ports.short_description, ports.date_created as date_created, ".
+       "ports.maintainer, ports.short_description, ports.date_added as date_added, ".
        "ports.last_commit_id as last_change_log_id, " .
        "ports.package_exists, ports.extract_suffix, ports.homepage, element.status, " .
        "ports.broken, ports.forbidden ".

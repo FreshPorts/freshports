@@ -1,5 +1,5 @@
 <?
-	# $Id: ports-not-in-latest-index.php,v 1.1.2.3 2002-01-05 23:01:18 dan Exp $
+	# $Id: ports-not-in-latest-index.php,v 1.1.2.4 2002-02-09 19:42:42 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -121,9 +121,9 @@ if ($UpdateCache == 1) {
 $sql = "select ports.id, ports.name as port, ports.id as ports_id, ports.last_update as updated, " .
        "categories.name as category, categories.id as category_id, ports.version as version, ".
        "ports.last_update_description as update_description, " .
-       "ports.maintainer, ports.short_description, UNIX_TIMESTAMP(ports.date_created) as date_created, ".
+       "ports.maintainer, ports.short_description, UNIX_TIMESTAMP(ports.date_added) as date_added, ".
        "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, ports.status, " .
-       "date_format(date_created, '$FormatDate $FormatTime') as date_created_formatted, ".
+       "date_format(date_added, '$FormatDate $FormatTime') as date_added_formatted, ".
        "ports.broken, ports.forbidden " .
        "from ports, categories  ".
        "WHERE            ports.system = 'FreeBSD' ".

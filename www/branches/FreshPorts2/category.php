@@ -1,5 +1,5 @@
 <?
-	# $Id: category.php,v 1.1.2.2 2002-01-05 23:01:13 dan Exp $
+	# $Id: category.php,v 1.1.2.3 2002-02-09 19:42:40 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -92,7 +92,7 @@ $sql = "select ports.id, element.name as port, ports.id as ports_id, commit_log.
        "ports.maintainer, ports.short_description, " .
        "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, element.status, " .
        "ports.broken, ports.forbidden, " .
-	   "date_part('epoch', ports.date_created) - 10800 as date_created " .
+	   "date_part('epoch', ports.date_added) - 10800 as date_added " .
        "from ports, categories, element, commit_log  ".
        "WHERE ports.category_id    = categories.id " .
        "  and categories.id        = $category " .

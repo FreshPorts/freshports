@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.39 2003-07-04 15:29:17 dan Exp $
+	# $Id: faq.php,v 1.1.2.40 2003-07-04 18:14:59 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -314,14 +314,15 @@ down you must read to find something you didn't already know.</P>
 
 	<OL>
 	<LI>An RSS feed : <? echo $HREF; ?>
-	<p>This RSS feed takes the following parameters:
+	<p>This RSS feed takes the following optional parameters:
 	<ul>
 	<li><b>MaxArticles</b> : number of ports to report upon (min 1, max 20, default 20)
 	<li><b>date=1</b> : show the commit date
 	<li><b>committer=1</b> : show the committer name
 	<li><b>time=1</b> : show the commit time
 	</ul>
-	A sample URL is <? echo $URL; ?>?MaxArticles=10&committer=1&time=1&date=1
+	<p>
+	A sample URL is <? echo $URL; ?>?MaxArticles=10&amp;committer=1&amp;time=1&amp;date=1
 	</p>
 	</LI>
 

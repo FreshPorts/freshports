@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: login.php,v 1.1.2.32 2003-07-04 14:59:16 dan Exp $
+	# $Id: login.php,v 1.1.2.33 2003-10-02 12:12:07 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -9,7 +9,7 @@
    require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
    require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
 
-#$Debug=1;
+$Debug = 0;
 
 $LoginFailed = 0;
 $error       = 0;

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.220 2005-03-31 04:29:57 dan Exp $
+	# $Id: freshports.php,v 1.4.2.221 2005-04-04 00:00:22 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -22,6 +22,10 @@ DEFINE('FAQLINK',               'faq.php');
 DEFINE('PORTSMONURL',			'http://portsmon.firepipe.net/portoverview.py');
 DEFINE('NOBORDER',              '0');
 DEFINE('BORDER',                '1');
+
+DEFINE('MESSAGE_ID_OLD_DOMAIN', '@freshports.org');
+DEFINE('MESSAGE_ID_NEW_DOMAIN', '@dev.null.freshports.org');
+
 
 if ($Debug) echo "'" . $_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php<BR>';
 
@@ -349,7 +353,7 @@ function freshports_Email_Link($message_id) {
 	# if the message id is for freshports, then it's an old message which does not contain
 	# a valid message id which can be found in the mailing list archive.
 	#
-	if (strpos($message_id, "@freshports.org")) {
+	if (strpos($message_id, MESSAGE_ID_OLD_DOMAIN) || strpos($message_id, MESSAGE_ID_NEW_DOMAIN)) {
 		$HTML = '';
 	} else {
 		$HTML  = '<A HREF="' . htmlentities($freshports_mail_archive . $message_id) . '">';
@@ -2031,6 +2035,29 @@ function PeopleWatchingThisPortAlsoWatch($dbh, $element_id) {
 
 function freshports_PortsMonitorURL($Category, $Port) {
 	return '<a href="' . PORTSMONURL . '?category=' . $Category . '&amp;portname=' . $Port . '" TITLE="Ports Monitor">PortsMon</a>';
+}
+
+
+function freshports_MessageIDConvertOldToNew($message_id) {
+	# Any cvs-all message before 2003-02-19 did not contain a message_id.
+	# so we gave them one in the @freshports.org domain.
+	# To avoid spam attempts to deliver email to those addresses,
+	# the message ids have been changed to @dev.null.freshports.org
+	# this code looks for @freshports.org and changes it to @dev.null.freshports.org
+	#
+	$message_id = str_replace(MESSAGE_ID_OLD_DOMAIN, MESSAGE_ID_NEW_DOMAIN, $message_id);
+
+	return $message_id;
+}
+
+function freshports_RedirectPermanent($URL) {
+	#
+	# My thanks to nne van Kesteren who posted this solution
+	# at http://annevankesteren.nl/archives/2005/01/permanent-redirect
+	#
+
+	header("HTTP/1.1 301 Moved Permanently");
+	header("Location: $URL");
 }
 
 openlog('FreshPorts', LOG_PID | LOG_PERROR, LOG_LOCAL0);

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.53 2005-02-17 01:50:00 dan Exp $
+	# $Id: commit.php,v 1.1.2.54 2005-04-04 00:00:22 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -66,6 +66,20 @@ DEFINE('NEXT_PAGE',		'Next');
 	$Title = 'Commit found by ';
 	if ($message_id) {
 		$Title .= 'message id';
+
+		# if found, this will be > 0
+		if (strpos($message_id, MESSAGE_ID_OLD_DOMAIN)) {
+			# yes, we found an old message_id.  Convert it,
+			# and redirect them to the permanent new location
+			#
+			$new_message_id = freshports_MessageIDConvertOldToNew($message_id);
+
+			$URL = $_SERVER['SCRIPT_URI'] . '?' .
+                   str_replace($_SERVER['QUERY_STRING'], "message_id=$message_id", "message_id=$new_message_id");
+
+			freshports_RedirectPermanent($URL);
+			exit;
+		}
 	} else {
 		$Title .= 'commit id';
 	}

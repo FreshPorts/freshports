@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: files.php,v 1.1.2.42 2005-03-15 18:09:25 dan Exp $
+	# $Id: files.php,v 1.1.2.43 2005-04-04 00:00:22 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -15,6 +15,22 @@ function freshports_Files($User, $ElementID, $MessageID, $db) {
 	# $PortId      == ports.id
 	# $MessageID   == commit_log.message_id
 	#
+
+	# if found, this will be > 0
+	if (strpos($MessageID, MESSAGE_ID_OLD_DOMAIN)) {
+		# yes, we found an old MessageID.  Convert it,
+		# and redirect them to the permanent new location
+		#
+		$new_MessageID = freshports_MessageIDConvertOldToNew($MessageID);
+
+		$URL = $_SERVER['SCRIPT_URI'] . '?' .
+                  str_replace($_SERVER['QUERY_STRING'], "message_id=$MessageID", "message_id=$new_MessageID");
+
+		freshports_RedirectPermanent($URL);
+		phpinfo();
+		exit;
+	}
+
 
 	GLOBAL $TableWidth;
 	GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;

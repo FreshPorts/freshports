@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-watch.php,v 1.1.2.37 2003-06-05 13:39:03 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.38 2003-06-05 14:31:42 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -46,11 +46,17 @@ if ($_REQUEST['wlid']) {
 $category = AddSlashes($_REQUEST['category']);
 $wlid     = AddSlashes($_REQUEST['wlid']);
 
+$Category = new Category($db);
+$Category->FetchByName($category);
+if (!IsSet($Category->id)) {
+	die("category $category not found");
+}
+
 if ($submit) {
 	pg_exec($db, "BEGIN");
 
 	$WatchList = new WatchList($db);
-	$WatchList->EmptyTheList($User->id, $wlid);
+	$WatchList->EmptyTheListCategory($User->id, $wlid, $Category->id);
 
    $ports = $_POST["ports"];
    if ($ports) {
@@ -114,14 +120,6 @@ if ($submit) {
 <?php
 
 $DESC_URL = "ftp://ftp.freebsd.org/pub/FreeBSD/branches/-current/ports";
-
-# we don't want to use port_categories here.... we'll get duplicates...
-
-$Category = new Category($db);
-$Category->FetchByName($category);
-if (!IsSet($Category->id)) {
-	die("category $category not found");
-}
 
 
 $sql = "

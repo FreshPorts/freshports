@@ -24,9 +24,10 @@ require( "./_private/freshports.php3");
     <td height="20">Your account
 <script language="php">
 echo '"' . $UserName . '"'; </script> has been
-    created. &nbsp; If you wish to change your settings, please follow the link on the <a
-    href="">home page</a>.</td>
+    created. &nbsp; If you wish to change your settings, please use the customize link at right.
+   </td>
   </tr>
+  <tr><td>Click <a href="<? echo $origin?>">here</a> to return to your previous page</td></tr>
 </table>
 </td>
   <td valign="top" width="*">

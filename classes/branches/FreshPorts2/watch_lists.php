@@ -1,5 +1,5 @@
 <?php
-	# $Id: watch_lists.php,v 1.1.2.5 2002-12-11 04:32:22 dan Exp $
+	# $Id: watch_lists.php,v 1.1.2.6 2002-12-16 13:32:06 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 	#
@@ -115,6 +115,49 @@ class WatchLists {
 		}
 
 		return $numrows;
+	}
+
+	function	GetDefaultWatchListID($UserID) {
+		#
+		# If the user has just one watch list, return that.
+		# If the user has more than one watch list, but
+		# only one is set to default, use that.
+		# otherwise, return an empty string.
+		#
+
+		$sql = "
+   SELECT id,
+          in_service
+     FROM watch_list
+    WHERE user_id = $UserID
+ ORDER BY name";
+
+
+		$WatchListID = '';
+		if ($Debug) echo "<pre>$sql</pre>";
+		$result = pg_exec($this->dbh, $sql);
+		if ($result) {
+			$numrows = pg_numrows($result);
+			for ($i = 0; $i < $numrows; $i++) {
+				$myrow = pg_fetch_array($result, 0);
+				if ($myrow["in_service"] == 't') {
+					if ($WatchListID == '') {
+						$WatchListID = $myrow["id"];
+					} else {
+						$WatchListID = '';
+						break;
+					}
+				}
+			}
+
+			if ($numrows == 1) {
+				$WatchListID = $myrow["id"];
+			}
+		} else {
+			die(pg_lasterror . '<pre>' . $sql . '</pre>');
+		}
+
+		return $WatchListID;
 	}
 
 }

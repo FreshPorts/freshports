@@ -1,5 +1,5 @@
 <?
-	# $Id: pkg_upload.php,v 1.5.2.9 2002-03-01 18:00:11 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.10 2002-03-02 14:38:20 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -42,6 +42,7 @@ function DisplayUploadForm($pkg_info) {
 	You can update your watch lists from the packages database on your computer.  Use the output
 	from the <CODE CLASS="code">pkg_info</CODE> command as the input for this page.  FreshPorts
 	will take this information, analyze it, and use that data to update your watch list.
+	<SMALL><A HREF="/help.php">help</A></SMALL>
 	</P>
 
 	<P>Here are the steps you should perform:</P>
@@ -94,7 +95,7 @@ function DisplayStagingArea($WatchListID, $db) {
 ?>
 
 	<TR><TD COLSPAN="4"><BIG>The following information is in your Staging Area.  To save it to your Watch List, please click on the
-			"Update watch list" button.</BIG></TD></TR>
+			"Update watch list" button.</BIG> <SMALL><A HREF="/help.php">help</A></SMALL></TD></TR>
 
 <?
 

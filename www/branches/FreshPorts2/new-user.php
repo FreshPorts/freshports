@@ -1,5 +1,5 @@
 <?
-	# $Id: new-user.php,v 1.1.2.13 2002-03-22 00:43:05 dan Exp $
+	# $Id: new-user.php,v 1.1.2.14 2002-03-25 02:09:53 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -29,6 +29,7 @@ if ($submit) {
 
 	if (!freshports_IsEmailValid($email)) {
 		$errors .= "That email address doesn't look right to me<BR>";
+		$OK = 0;
 	}
 
 	if ($Password1 != $Password2) {

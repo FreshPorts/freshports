@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-port.php,v 1.1.2.8 2002-02-11 13:17:19 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.9 2002-02-13 22:54:43 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
@@ -93,19 +93,6 @@ function freshports_PortDescription($port) {
 ?>
 
 <TABLE WIDTH="<? echo $TableWidth ?>" BORDER="0" ALIGN="center">
-<tr>
-  <td>
-<p>This page contains the description of a single port.</p>
-
-<p>I've just added <i>Also listed in</i>.  Some ports appear in more than one category.  
-If there is no link to a category, that is because that category
-is a virtual category, and I haven't catered for those yet. But <a href="changes.php">I plan to</a></p>
-<p>
-Click on 
-<img src="/images/logs.gif" alt="Files within this port affected by this commit" border="0" WIDTH="17" HEIGHT="20" hspace="2"> 
-to see what files changed for this port in that commit.</p>
-</td>
-</tr>
 <tr><TD VALIGN="top" width="100%">
 <TABLE WIDTH="100%" BORDER="0" ALIGN="centre">
 <tr>

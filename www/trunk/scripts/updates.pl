@@ -9,6 +9,11 @@
 
 use DBI;
 
+#
+# These are the files which require a port be refreshed from the raw Makefile
+#
+$FilesWhichPromptRefresh = "Makefile|pkg/DESCR|pkg/COMMENT";
+
 #sub GetPortCategory($category, $dbh) {
 sub GetPortCategory($;$) {
    my $category = shift;
@@ -41,6 +46,9 @@ sub PortUpdate($;$;$;$;$;$;$;$) {
    my $entry       = shift;
    my $dbh         = shift;
 
+   my $sql = "";
+   my $refresh_needed = "N";
+
    $categoryid = GetPortCategory($category, $dbh);
 
    # update the port, creating it if necessary
@@ -60,15 +68,26 @@ sub PortUpdate($;$;$;$;$;$;$;$) {
       print "nothing found\n";
    }
 
-   print @row[0];
+   #
+   # depending on what has changed, we need to take action accordingly
+   #
 
+   if ($entry =~ /$FilesWhichPromptRefresh/) {
+      $refresh_needed = "Y";
+   }
+
+   print @row[0];
 
    if (!@row) {
       # no such port.  create it.
-      $sql = "insert into ports (name, description, last_update, primary_category_id, last_update_description, committer, version, date_created) values (";
+      $sql = "insert into ports (name, description, last_update, primary_category_id, " .
+             "last_update_description, committer, version, date_created, needs_refresh, " .
+             "status, package_exists) values (";
+      # we assume above that the package does not exist until we are told otherwise.
 
       # we don't get a version when inserting, so we must fake it by supplying a name.
-      $sql .= "'$port', '*** no description ***', '$timestamp', $categoryid, '$description', '$committer', '$port', CurDate())";
+      $sql .= "'$port', '*** no description ***', '$timestamp', $categoryid, '$description', " . 
+              "'$committer', '$port', CurDate(), 'Y', 'N', 'N')";
 
       print "$sql\n";
 
@@ -86,7 +105,14 @@ sub PortUpdate($;$;$;$;$;$;$;$) {
 
    } else {
       # update the time on the port
-      $sql = "update ports set last_update = '$timestamp', committer = '$committer', last_update_description = '$description' where id = " . @row[0];
+      $sql = "update ports set last_update = '$timestamp', committer = '$committer', " .
+             "last_update_description = '$description' ";
+
+      if ($refresh_needed eq "Y") {
+         $sql .= ", needs_refresh = 'Y'";
+      }
+
+      $sql .= " where id = " . @row[0];
 
       print "$sql\n";
 
@@ -129,24 +155,32 @@ for($i=0; $i<=$#file; $i++) {
   print "category=$category\nport=$port\nentry=$entry\n";
 #  exit;
 
-  if ($entry || (!$entry && $action eq 'import')) {
+   #
+   # this is where we can pick up on special things
+   #
 
-      # we ignore certain categories and always ignore /usr/ports/<category>/Makefile.
-      if (($category !~ /$ignoredirs/) && ($port ne 'Makefile')) {
-         #print '  ***';
-         # we have a file in this port which is actually being updated.  Let's update the port.
-     
-         PortUpdate ($committer, $timestamp, $action, $description, $category, $port, $entry, $dbh)
-      } else {
-         print "ignoring $category/$port\n";
-      }
+   if ($category eq "." and $port eq "INDEX") {
+      #
+      # ahh, the index has changed, do we want to know?
+      #
+      print "ahh, the index has changed, do we want to know?";
    } else {
-     print 'not processing this update as it does not meet the criteria';
-   }
-   if ($i > 10) {
-#      exit;
-   }
+      if ($entry || (!$entry && $action eq 'import')) {
 
+         # we ignore certain categories and always ignore /usr/ports/<category>/Makefile.
+         if (($category !~ /$ignoredirs/) && ($port ne 'Makefile')) {
+            #print '  ***';
+            # we have a file in this port which is actually being updated.  Let's update the port.
+     
+            PortUpdate ($committer, $timestamp, $action, $description, $category, $port, $entry, $dbh)
+         } else {
+            print "ignoring $category/$port\n";
+         }
+      } else {
+        print 'not processing this update as it does not meet the criteria';
+      }
+   }
+ 
   print "\n\n ===================================\n\n";
 
 #exit;

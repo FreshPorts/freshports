@@ -1,5 +1,5 @@
 <?
-	# $Id: ports.php,v 1.1.2.18 2002-05-21 14:06:03 dan Exp $
+	# $Id: ports.php,v 1.1.2.19 2002-05-21 14:20:55 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -345,8 +345,13 @@ class Port {
 				          version, revision, ports.maintainer, ports.homepage, ports.master_sites, ports.extract_suffix, 
 						  ports.package_exists, ports.depends_build, ports.depends_run, ports.last_commit_id, 
 						  ports.found_in_index, ports.forbidden, ports.broken, ports.date_added, 
-						  categories, port, category, element.status " .
-				" ORDER by port ";
+						  categories, port, category, element.status ";
+
+		if ($WatchListID) {
+			$sql .= ", watch_list_element.element_id";
+		}
+
+		$sql .= " ORDER by port ";
 
         $this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {

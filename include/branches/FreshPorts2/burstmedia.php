@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: burstmedia.php,v 1.1.2.10 2003-05-03 12:01:00 dan Exp $
+	# $Id: burstmedia.php,v 1.1.2.11 2003-06-03 09:47:09 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -19,10 +19,10 @@ echo '<!-- BEGIN RICH-MEDIA BURST! CODE -->
 <!-- /* © 1997-2001 BURST! Media, LLC. All Rights Reserved.*/ 
 function ShowBurstAd(adcode, width, height) {
  var bN = navigator.appName;
- var bV = parseInt(navigator.appVersion);   
- var base=\'http://www.burstnet.com/\';   
- var Tv=\'\';   
- var agt=navigator.userAgent.toLowerCase();   
+ var bV = parseInt(navigator.appVersion);
+ var base=\'http://www.burstnet.com/\';
+ var Tv=\'\';
+ var agt=navigator.userAgent.toLowerCase();
  if (bV>=4)  
  {ts=window.location.pathname+window.location.search;
   i=0; Tv=0; while (i< ts.length)
@@ -30,10 +30,10 @@ function ShowBurstAd(adcode, width, height) {
   else   {Tv=escape(window.location.pathname);
   if( Tv.charAt(0)!=\'/\' ) Tv="/"+Tv; 
     else if (Tv.charAt(1)=="/")
- Tv="";     
+ Tv="";
  if( Tv.charAt(Tv.length-1) == "/")
-   Tv = Tv + "_";}   
- if (bN==\'Netscape\'){        
+   Tv = Tv + "_";}
+ if (bN==\'Netscape\'){
   if ((bV>=4)&&(agt.indexOf("mac")==-1))  
  { document.write(\'<s\'+\'cript src="\'+ 
   base+\'cgi-bin/ads/\'+adcode+\'.cgi/RETURN-CODE/JS\' 
@@ -44,14 +44,14 @@ function ShowBurstAd(adcode, width, height) {
   adcode + \'-map.cgi\'+Tv+\'"target=_top>\');
   document.write(\'<img src="\' + base + \'cgi-bin/ads/\' +
   adcode + \'.cgi\' + Tv + \'" width="\' + width + \'" height="\' + height + \'"\' +
-  \' border="0" alt="Click Here"><\/a>\');}   
+  \' border="0" alt="Click Here"><\/a>\');}
 }
-if (bN==\'Microsoft Internet Explorer\')    
+if (bN==\'Microsoft Internet Explorer\') 
 document.write(\'<ifr\'+\'ame id="BURST" src="\'+base+\'cgi-bin/ads/\'  
 +     
-adcode + \'.cgi\' + Tv + \'/RETURN-CODE" width="\' + width + \'" height="\' + height + \'"\' +     
-\'marginwidth="0" marginheight="0" hspace="0" vspace="0" \' +     
-\'frameborder="0" scrolling="no"><\/ifr\'+\'ame>\');  
+adcode + \'.cgi\' + Tv + \'/RETURN-CODE" width="\' + width + \'" height="\' + height + \'"\' +
+\'marginwidth="0" marginheight="0" hspace="0" vspace="0" \' +
+\'frameborder="0" scrolling="no"><\/ifr\'+\'ame>\');
 }
 //-->
 </script>
@@ -110,8 +110,8 @@ Tv="";
 
   document.write(\'<ifr\'+\'ame id=BURST src="\'+base+\'cgi-bin/ads/\' +
   TheAdcode + \'.cgi\' + Tv +  \'/zg\' + backColor + \'x\' + fontColor + \'l\' + fontColor + 
-  fontColor + \'k\' + fontColor + \'/RETURN-CODE" width=165 height=600\' +
-  \'v\' +\'marginwidth=0 marginheight=0 hspace=0 vspace=0 \' +
+  \'v\' + fontColor + \'k\' + fontColor + \'/RETURN-CODE" width=165 height=600\' +
+  \' marginwidth=0 marginheight=0 hspace=0 vspace=0 \' +
   \'frameborder=0 scrolling=no>\');
   document.write(\'<A HREF="http://bchosting.com/track.php?refID=5665"><img src="';
 
@@ -122,7 +122,7 @@ if (rand(0, 1) == 0) {
 }
 
 echo '" width=160 height=600 BORDER="0"><\/A>\');
-  document.write(\'<\/ifr\'+\'ame>\');   
+  document.write(\'<\/ifr\'+\'ame>\');
 // -->
 </script>';
 }

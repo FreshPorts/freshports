@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: latest_commits.php,v 1.1.2.9 2005-02-01 13:56:54 dan Exp $
+	# $Id: latest_commits.php,v 1.1.2.10 2005-02-17 01:54:07 dan Exp $
 	#
 	# Copyright (c) 2003-2004 DVL Software Limited
 	#
@@ -186,6 +186,14 @@ class LatestCommits {
 								$this->HTML .= '&nbsp;' . freshports_VuXML_Icon_Faded() . '&nbsp;';
 							}
 						}
+
+					if ($mycommit->restricted) {
+						$this->HTML .= freshports_Restricted_Icon_Link($mycommit->restricted);
+					}
+
+					if ($mycommit->no_cdrom) {
+						$this->HTML .= '&nbsp;' . freshports_No_CDROM_Icon_Link($mycommit->no_cdrom);
+					}
 
 					} else {
 						$this->HTML .= '<BIG><B>';

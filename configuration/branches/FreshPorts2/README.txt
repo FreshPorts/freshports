@@ -1,3 +1,9 @@
+#
+# $Id: README.txt,v 1.1.2.4 2002-02-23 02:12:26 dan Exp $
+#
+# Copyright (c) 1998-2002 DVL Software Limited
+#
+
 You need to do this:
 
 +-----------------------+

@@ -1,8 +1,21 @@
 <P ALIGN="left">
 <BIG>
-The process of transferring all accounts from this website to the new FreshPorts website has commenced.  
-A dry run will be done first, then we will get some users to verify their accounts and see if everything is OK.  
-If all is well, a notice will be posted here warning people not to update their data or risk losing changes,
-and the final data transfer will be done and the new website will go live.</BIG></BIG><BR>
-25 May 2002 - 8:05 PM
+Here is the data migration plan for moving to FreshPorts2!
+
+All users accounts have been copied to <A HREF="http://test.freshports.org/">the test website</A>.  Please go there 
+and verify that you can log in and that your watch list is intact.</P>
+<BIG>
+
+Here is the plan:
+
+<OL>
+<LI>All users accounts have been copied to <A HREF="http://test.freshports.org/">the test website</A>.</LI>
+<LI>Please go to the above URL and verify that you can log in and that your watch list is intact</A>.</LI>
+<LI>Please acknowledge that all is well with your data via 
+<A HREF="http://test.freshports.org/phorum/list.php?f=1">the feedback forum</A>.</LI>
+<LI>Once I have had a few positive and the negatives have been resolved, another data migration will occur
+to pick up any user account modifications which have occured since step 1</LI>
+</OL>
+
+Dan Langille 25 May 2002 - 9:53 PM
 </P>

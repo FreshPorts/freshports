@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.25 2003-04-27 14:48:10 dan Exp $
+	# $Id: commit.php,v 1.1.2.26 2003-04-28 16:25:13 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -95,6 +95,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 	    FROM watch_list JOIN watch_list_element
 	        ON watch_list.id      = watch_list_element.watch_list_id
 	       AND watch_list.user_id = $User->id
+          AND watch_list.in_service
 	  GROUP BY wle_element_id) AS TEMP
 	       ON TEMP.wle_element_id = element.id";
 	      }

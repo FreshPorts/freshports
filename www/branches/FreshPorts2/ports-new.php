@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports-new.php,v 1.1.2.26 2003-04-27 14:48:16 dan Exp $
+	# $Id: ports-new.php,v 1.1.2.27 2003-04-28 16:25:14 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -149,6 +149,7 @@ select TEMP.id,
     FROM watch_list JOIN watch_list_element
         ON watch_list.id      = watch_list_element.watch_list_id
        AND watch_list.user_id = $User->id
+       AND watch_list.in_service
   GROUP BY wle_element_id) AS TEMP2
        ON TEMP2.wle_element_id = ports.element_id";
 	}

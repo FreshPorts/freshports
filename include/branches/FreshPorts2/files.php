@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: files.php,v 1.1.2.26 2003-04-26 13:13:18 dan Exp $
+	# $Id: files.php,v 1.1.2.27 2003-04-28 16:25:15 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -78,6 +78,7 @@ select element_pathname(element.id) as pathname,
 	    FROM watch_list JOIN watch_list_element 
 	        ON watch_list.id      = watch_list_element.watch_list_id
 	       AND watch_list.user_id = $User->id
+          AND watch_list.in_service
 	  GROUP BY wle_element_id) AS TEMP
 	       ON TEMP.wle_element_id = ports.element_id";
 	}

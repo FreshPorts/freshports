@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports-broken.php,v 1.1.2.13 2003-04-28 01:37:21 dan Exp $
+	# $Id: ports-broken.php,v 1.1.2.14 2003-04-28 16:25:14 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -90,6 +90,7 @@ from element, categories, ports ";
     FROM watch_list JOIN watch_list_element
         ON watch_list.id      = watch_list_element.watch_list_id
        AND watch_list.user_id = $User->id
+       AND watch_list.in_service
   GROUP BY wle_element_id) AS TEMP
        ON TEMP.wle_element_id = ports.element_id";
 	}

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports-deleted.php,v 1.1.2.21 2003-04-27 14:48:15 dan Exp $
+	# $Id: ports-deleted.php,v 1.1.2.22 2003-04-28 16:25:14 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -94,6 +94,7 @@ select ports.id,
     FROM watch_list JOIN watch_list_element
         ON watch_list.id      = watch_list_element.watch_list_id
        AND watch_list.user_id = $User->id
+       AND watch_list.in_service
   GROUP BY wle_element_id) AS TEMP
        ON TEMP.wle_element_id = ports.element_id";
 	}

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.180 2004-08-27 14:32:51 dan Exp $
+	# $Id: freshports.php,v 1.4.2.181 2004-09-22 13:57:09 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -757,11 +757,9 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 		$HTML .= $port->port;
 	}
 
-	if (strlen($port->{'version'}) > 0) {
-    	$HTML .= ' ' . $port->{'version'};
-		if (strlen($port->{'revision'}) > 0 && $port->{'revision'} != "0") {
-    		$HTML .= FRESHPORTS_VERSION_REVISION_JOINER . $port->{'revision'};
-		}
+	$PackageVersion = freshports_PackageVersion($port->{'version'}, $port->{'revision'}, $port->{'epoch'});
+	if (strlen($PackageVersion) > 0) {
+		$HTML .= ' ' . $PackageVersion;
 	}
 
 	if (IsSet($port->category_looking_at)) {
@@ -837,7 +835,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
       }
 
       $HTML .= ' by:</i> <A HREF="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);
-      $HTML .= freshportsObscureHTML('?cc=ports@FreeBSD.org&amp;subject=FreeBSD%20Port:%20' . $port->port . '-' . $port->version) . '">';
+      $HTML .= freshportsObscureHTML('?cc=ports@FreeBSD.org') . '&amp;subject=FreeBSD%20Port:%20' . $port->port . '-' . freshports_PackageVersion($port->version, $port->revision, $port->epoch) . '">';
       $HTML .= freshportsObscureHTML($port->maintainer) . "</A><BR>";
   }
 
@@ -974,10 +972,7 @@ if ($ShowDepends) {
 	if ($port->PackageExists() && ($ShowPackageLink == "Y" || $ShowEverything)) {
 		// package
 		$HTML .= ' <b>:</b> ';
-		$HTML .= '<A HREF="' . FRESHPORTS_FREEBSD_FTP_URL . '/' . $port->port . '-' . $port->version;
-		if ($port->revision != '' and $port->revision != '0') {
-			$HTML .= FRESHPORTS_VERSION_REVISION_JOINER . $port->revision;
-		}
+		$HTML .= '<A HREF="' . FRESHPORTS_FREEBSD_FTP_URL . '/' . freshports_PackageVersion($port->version, $port->revision, $port->epoch);
 		$HTML .= '.tgz">Package</A>';
 	}
 
@@ -1092,6 +1087,22 @@ function freshports_PortCommitsHeader($port) {
 
 	echo "</tr>\n";
 }
+function freshports_PackageVersion($PortVersion, $PortRevision, $PortEpoch) {
+	$PackageVersion = '';
+
+	if (strlen($PortVersion) > 0) {
+    	$PackageVersion .= $PortVersion;
+		if (strlen($PortRevision) > 0 && $PortRevision != "0") {
+    		$PackageVersion .= FRESHPORTS_VERSION_REVISION_JOINER . $PortRevision;
+		}
+
+		if (strlen($PortEpoch) > 0 && $PortEpoch != "0") {
+    		$PackageVersion .= FRESHPORTS_VERSION_EPOCH_JOINER . $PortEpoch;
+		}
+	}
+
+	return $PackageVersion;
+}
 
 function freshports_PortCommits($port) {
 	# print all the commits for this port
@@ -1161,12 +1172,9 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	}
 
 	# ouput the VERSION and REVISION
-	if (strlen($commit->{'port_version'}) > 0) {
-    	echo '&nbsp;&nbsp;&nbsp;<BIG><B>' . $commit->{'port_version'};
-		if (strlen($commit->{'port_revision'}) > 0 && $commit->{'port_revision'} != "0") {
-    		echo FRESHPORTS_VERSION_REVISION_JOINER . $commit->{'port_revision'};
-		}
-		echo '</B></BIG>';
+	$PackageVersion = freshports_PackageVersion($commit->{'port_version'},  $commit->{'port_revision'},  $commit->{'port_epoch'});
+	if (strlen($PackageVersion) > 0) {
+    	echo '&nbsp;&nbsp;&nbsp;<BIG><B>' . $PackageVersion . '</B></BIG>';
 	}
 
 	if (IsSet($VuXMLList[$commit->id])) {

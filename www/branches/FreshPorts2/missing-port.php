@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-port.php,v 1.1.2.31 2003-02-10 16:54:09 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.32 2003-02-11 18:16:28 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
@@ -15,7 +15,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/include/files.php');
 
 function freshports_Parse404CategoryPort($REQUEST_URI, $db) {
 
-	$Debug = 1;
+	$Debug = 0;
 
 	unset($CategoryName);
 	unset($PortName);

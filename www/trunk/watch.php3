@@ -1,5 +1,4 @@
 <?
-
 require( "./_private/commonlogin.php3");
 
 // if we don't know who they are, we'll make sure they login first
@@ -125,22 +124,31 @@ if ($UpdateCache == 1) {
 $sql = "";
 $sql = "select ports.id, ports.name as port, ports.id as ports_id, ports.last_update as updated, " .
        "categories.name as category, categories.id as category_id, ports.version as version, ".
-       "ports.committer, ports.last_update_description as update_description, " .
+       "ports.committer, change_log.update_description as update_description, " .
        "ports.maintainer, ports.short_description, UNIX_TIMESTAMP(ports.date_created) as date_created, ".
+       "date_format(date_created, '$FormatDate $FormatTime') as date_created_formatted, ".
+       "ports.last_change_log_detail_id as last_change_log_detail_id, " .
        "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, ports.status " .
-       "from ports, categories, watch_port  ".
-       "WHERE ports.system = 'FreeBSD' ".
-       "and ports.primary_category_id = categories.id " .
-       "and ports.id     = watch_port.port_id " .
-       "and watch_port.watch_id = $WatchID ";
+       "from ports, categories, watch_port, change_log_details, change_log ".
+       "WHERE ports.system                    = 'FreeBSD' ".
+       "  and ports.primary_category_id       = categories.id " .
+       "  and ports.id                        = watch_port.port_id " .
+       "  and watch_port.watch_id             = $WatchID " .
+       "  and ports.last_change_log_detail_id = change_log_details.id " .
+       "  and change_log.id                   = change_log_details.change_log_id ";
 
-$sql .= "order by $sort";
+$sql .= " order by $sort ";
 //$sql .= " limit 20";
 
-//echo $sql;
+$Debug=1;
+if ($Debug) {
+   echo $sql;
+}
 
 $result = mysql_query($sql, $db);
-
+if (!$result) {
+   echo mysql_error();
+}
 //$HTML = "</tr></td><tr>";
 
 $HTML .= '<tr><td>';
@@ -149,7 +157,7 @@ $HTML .= '<tr><td>';
 $NumTopics=0;
 
 $LastCategory='';
-
+$GlobalHideLastChange = "N";
 while ($myrow = mysql_fetch_array($result)) {
    if ($ShowCategoryHeaders) {
       $Category = $myrow["category"];
@@ -166,31 +174,9 @@ while ($myrow = mysql_fetch_array($result)) {
 
 }
   $HTML .= "</td></tr>\n";
-//$HTML .= '</tr>';
-
-mysql_free_result($result);
-
-//$HTML .= '</table>';
-//$HTML .= '</td></tr>';
 
 echo $HTML;
 
-   $fpwrite = fopen($cache_file, 'w');
-   if(!$fpwrite) {
-      echo 'error on open<br>';
-      echo "$errstr ($errno)<br>\n";
-      exit;
-   } else {
-//      echo 'written<br>';
-      fputs($fpwrite, $HTML);
-      fclose($fpwrite);
-   }
-} else {
-//   echo 'looks like I\'ll read from cache this time';
-   if (file_exists($cache_file)) {
-      include($cache_file);
-   }
-}
 } // end if no WatchID
 }
 

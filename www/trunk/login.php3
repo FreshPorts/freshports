@@ -4,7 +4,7 @@ require( "./_private/commonlogin.php3");
 require( "./_private/freshports.php3");
 
 if ($submit) {
-
+//$Debug=1;
 // process form
 
 if ($Debug) {
@@ -25,7 +25,7 @@ if ($Debug) {
 }
 
   $sql = "select * from users where username = '$UserID'".
-	 " and password = '$Password'";
+	 " and password = '$Password' ";
 
 if ($Debug) {
    echo "$sql\n";

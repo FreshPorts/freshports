@@ -79,30 +79,34 @@ $UpdateCache = 1;
 if ($UpdateCache == 1) {
 //   echo 'time to update the cache';
 
-$sql = "select ports.id, ports.name as port, " .
+$sql = "select ports.id, ports.name as port, change_log.commit_date as updated," .
        "categories.name as category, categories.id as category_id, ports.version as version, ".
        "ports.committer, ports.last_update_description as update_description, " .
        "ports.maintainer, ports.short_description, UNIX_TIMESTAMP(ports.date_created) as date_created, ".
-       "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, ports.status, " .
-       "date_format(change_log.commit_date, '$FormatDate $FormatTime') as updated, change_log.committer, change_log.update_description, " .
-       "change_log_details.change_type, ports.last_change_log_detail_id " .
-       "from ports, categories, change_log, change_log_details  " .
-       "WHERE ports.system = 'FreeBSD' ".
-       "  and ports.primary_category_id       = categories.id " .
-       "  and ports.last_change_log_detail_id = change_log_details.id " .
-       "  and change_log.id                   = change_log_details.change_log_id ";
+       "date_format(date_created, '$FormatDate $FormatTime') as date_created_formatted, ".
+       "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, ports.status " .
+       "from ports, categories, change_log, change_log_port  " .
+       "WHERE ports.system                  = 'FreeBSD' ".
+       "  and ports.primary_category_id     = categories.id " .
+       "  and ports.status                  = 'D' " .
+       "  and ports.id                      = change_log_port.port_id " .
+       "  and change_log_port.change_log_id = change_log.id ";
 
-$sql .= "order by $sort";
-//$sql .= " limit $MaxNumberOfPorts";
+$sql .= " order by $sort ";
+//$sql .= " limit $MaxNumberOfPorts ";
 
-//echo $sql;
+echo $sql;
 
 $result = mysql_query($sql, $db);
+if(!$result) {
+echo "<br>\n" . mysql_error() . "<br>\n";
+}
 
 //$HTML = "</tr></td><tr>";
 
 // get the list of topics, which we need to modify the order
 //$HideDownloadPort=1;
+$ShowLastChange = "N";
 while ($myrow = mysql_fetch_array($result)) {
    include("./_private/port-basics.inc");
 }

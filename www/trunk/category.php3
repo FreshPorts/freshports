@@ -6,6 +6,7 @@
 <meta name="keywords" content="FreeBSD, index, applications, ports">  
 
 <?
+$Debug=1;
 require( "./_private/commonlogin.php3");
 require( "./_private/getvalues.php3");
 require( "./_private/freshports.php3");
@@ -119,7 +120,10 @@ $sql .= "order by $sort";
 
 //$sql .= " limit $LimitRows";
 
-//echo $sql;
+if ($Debug) {
+   echo $sql;
+   echo "GlobalHideLastChange = $GlobalHideLastChange\n";
+}
 
 $result = mysql_query($sql, $db);
 $NumRows = mysql_num_rows($result);

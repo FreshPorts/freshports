@@ -40,7 +40,7 @@ if ($Debug) {
 </head>
 
 <body bgcolor="#ffffff" link="#0000cc">
- <? include("./_private/header.inc") ?>
+  <? include("./_private/header.inc") ?>
 <table width="100%" border="0">
 <tr><td colspan="2">Welcome to the freshports.org where you can find the latest information on your favourite
 ports.
@@ -125,23 +125,23 @@ $UpdateCache = 1;
 if ($UpdateCache == 1) {
 //   echo 'time to update the cache';
 
-$sql = "select ports.id, ports.name as port,  " .
-       "categories.name as category, categories.id as category_id, ports.version as version, ".
+$sql = "select ports.id, ports.name as port, change_log.commit_date as updated, categories.name as category, " .
        "ports.committer, ports.last_update_description as update_description, " .
        "ports.maintainer, ports.short_description, UNIX_TIMESTAMP(ports.date_created) as date_created, " .
        "date_format(date_created, '$FormatDate $FormatTime') as date_created_formatted, ".
        "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, ports.status, " .
-       "date_format(change_log.commit_date, '$FormatDate $FormatTime') as updated, change_log.committer, change_log.update_description, " .
-       "change_log_details.change_type, ports.last_change_log_detail_id " .
-       "from ports, categories, change_log, change_log_details  ".
+       "date_format(change_log.commit_date, '$FormatDate $FormatTime') as updated, change_log.committer, " .
+       "change_log.update_description, " .
+       "ports.last_change_log_detail_id " .
+       "from ports, categories, change_log, change_log_port  ".
        "WHERE ports.system = 'FreeBSD' ".
        "  and ports.primary_category_id       = categories.id " .
-       "  and ports.last_change_log_detail_id = change_log_details.id " .
-       "  and change_log.id                   = change_log_details.change_log_id ";
+       "  and change_log_port.port_id         = ports.id " .
+       "  and change_log.id                   = change_log_port.change_log_id ";
 
-$sql .= "order by $sort ";
+$sql .= " order by $sort ";
 
-$sql .= "limit $StartAt, $MaxNumberOfPorts";
+$sql .= " limit 20 ";
 
 echo $sql;
 
@@ -151,22 +151,20 @@ if (!$result) {
    echo mysql_errno().": ".mysql_error()."<BR>";
 }
 
-$HTML = "</tr></td><tr>";
+$HTML = "</tr></td>";
 
 $HTML .= '<tr><td>';
 
+$i=0;
+$GlobalHideLastChange = "N";
 while ($myrow = mysql_fetch_array($result)) {
+//   $HTML .= $i++;
    include("./_private/port-basics.inc");
+//   $HTML .= $myrow["port"] . "<br>";
 }
 
   $HTML .= "</td></tr>\n";
-//$HTML .= '</tr>';
 
-mysql_free_result($result);
-
-
-//$HTML .= '</table>';
-//$HTML .= '</td></tr>';
 
 echo $HTML;
 

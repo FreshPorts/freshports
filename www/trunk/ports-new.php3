@@ -87,14 +87,10 @@ $sql = "select ports.id, ports.name as port, " .
        "ports.committer, ports.last_update_description as update_description, " .
        "ports.maintainer, ports.short_description, UNIX_TIMESTAMP(ports.date_created) as date_created, ".
        "date_format(date_created, '$FormatDate $FormatTime') as date_created_formatted, ".
-       "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, ports.status, " .
-       "date_format(change_log.commit_date, '$FormatDate $FormatTime') as updated, change_log.committer, change_log.update_description, " . 
-       "change_log_details.change_type, ports.last_change_log_detail_id " .
-       "from ports, categories, change_log, change_log_details  ".
+       "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, ports.status " .
+       "from ports, categories ".
        "WHERE ports.system = 'FreeBSD' ".
        "  and ports.primary_category_id       = categories.id " .
-       "  and ports.last_change_log_detail_id = change_log_details.id " .
-       "  and change_log.id                   = change_log_details.change_log_id ";       "from ports, categories, newports ".
        "  and ports.status                    = 'A' ";
 
 $sql .= "order by $sort limit $MaxNumberOfPorts";
@@ -107,6 +103,7 @@ $result = mysql_query($sql, $db);
 
 // get the list of topics, which we need to modify the order
 $NumTopics=0;
+$ShowLastChange="N";
 while ($myrow = mysql_fetch_array($result)) {
    include("./_private/port-basics.inc");
 }

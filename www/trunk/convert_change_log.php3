@@ -47,10 +47,47 @@ if (!$result) {
 
    $i = 0;
    while ($myrow = mysql_fetch_array($result)) {
+//      echo "<tr><td>" . $myrow["change_log_id"] . "</td><td>" . $myrow["port_id"] . "</td></tr>";
+      $rows[$i] = $myrow;
       $i++;
-      echo "<tr><td>" . $myrow["change_log_id"] . "</td><td>" . $myrow["port_id"] . "</td></tr>";
    }
    echo "<tr><td>$i records found</td><td></td></tr>";
+
+   $NumRows = $i;
+   for ($i = 0; $i < $NumRows; $i++) {
+      $myrow = $rows[$i];
+      echo "<tr><td>" . $myrow["change_log_id"] . "</td><td>" . $myrow["port_id"] . "</td>";
+
+      $sql = "insert into change_log_port (change_log_id, port_id) " .
+               " values (" . $myrow["change_log_id"] . ", " . $myrow["port_id"] . ")";
+
+//      echo "<td>". $sql . "<td>";
+      $result = mysql_query($sql);
+
+      echo "<td>";
+      if ($result) {
+         $ChangePortID = mysql_insert_id($result);
+         echo "$ChangePortID";
+         $sql = "update change_log_details set change_port_id = $ChangePortID ".
+                "where change_log_id = " . $myrow["change_log_id"] . 
+                "  and port_id       = " . $myrow["port_id"];
+
+         echo "<td>". $sql . "<td>";
+
+         $result = mysql_query($sql);
+         if ($result) {
+
+           echo " gives " . mysql_num_rows() . " rows changed";
+         } else {
+            echo mysql_error();
+            exit;
+         }
+      } else {
+         echo mysql_error();
+         exit;
+      }
+      echo "</td></tr>\n";
+   }
 }
 
 </script>

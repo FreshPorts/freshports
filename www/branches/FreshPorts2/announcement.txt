@@ -1,6 +1,7 @@
 <P>
 
-<BIG>NOTE: FP2 is now live.  </BIG>
+<BIG><BIG>Please verify your <A HREF="/report-subscriptions.php">report subscriptions!</A></BIG></BIG> - we had a bug! <small>- 20 September 2002</small>
 
-Please read the <A HREF="faq.php">FAQ</A> and the <A HREF="fp2-announcement.php">site annoucement</A>.</P>
+</P>
+<P>
 

@@ -1,5 +1,5 @@
 <?
-	# $Id: user.php,v 1.1.2.1 2002-12-08 17:34:21 dan Exp $
+	# $Id: user.php,v 1.1.2.2 2002-12-09 20:22:19 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -80,6 +80,30 @@ class User {
 	}
 
 
+	function FetchByCookie($Cookie) {
+		$sql = "SELECT users.*
+		          FROM users
+				   WHERE cookie = '$Cookie'";
+
+#		echo '<pre>' . $sql . '</pre>';
+
+		if ($Debug)	echo "Users::Fetch sql = '$sql'<BR>";
+
+		$this->LocalResult = pg_exec($this->dbh, $sql);
+		if ($this->LocalResult) {
+			$myrow = pg_fetch_array($this->LocalResult, 0);
+			$this->PopulateValues($myrow);
+			$numrows = pg_numrows($this->LocalResult);
+#			echo "That would give us $numrows rows";
+		} else {
+			$numrows = -1;
+			echo 'pg_exec failed: ' . $sql;
+		}
+
+		return $numrows;
+	}
+
+
 	function PopulateValues($myrow) {
 		#
 		# call Fetch first.
@@ -117,6 +141,7 @@ class User {
 		if ($this->LocalResult) {
 			$numrows = pg_affected_rows($this->LocalResult);
 #			echo "That would give us $numrows rows";
+			$this->watch_list_add_remove = AddSlashes($WatchListAddRemove);
 		} else {
 			$numrows = -1;
 			echo 'pg_exec failed: ' . $sql;

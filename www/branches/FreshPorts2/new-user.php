@@ -1,13 +1,11 @@
 <?
-	# $Id: new-user.php,v 1.1.2.2 2002-01-02 04:15:10 dan Exp $
+	# $Id: new-user.php,v 1.1.2.3 2002-01-06 16:52:47 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
 	require("./include/common.php");
 	require("./include/freshports.php");
 	require("./include/databaselogin.php");
-	require("../classes/watchnotice.php");
-
 
 if ($submit) {
 

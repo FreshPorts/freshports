@@ -210,7 +210,10 @@ we're only dealing with your FreshPorts login, not a financial transaction....</
 </table>
 </td>
   <td valign="top" width="*">
-    <? include("./_private/side-bars.php3") ?>
+    <? 
+       unset($UserID);
+       include("./_private/side-bars.php3");
+    ?>
  </td>
 </tr>
 </table> 

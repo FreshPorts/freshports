@@ -1,7 +1,8 @@
-<?
-	# $Id: categories.php,v 1.1.2.6 2003-03-06 21:26:43 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: categories.php,v 1.1.2.7 2003-03-06 22:03:22 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
 
@@ -94,7 +95,7 @@ class Category {
 		
 
 	function UpdateDescription() {
-		$Debug = 1;
+		$Debug = 0;
 		$sql = "UPDATE categories SET description = '" . $this->description . "' WHERE id = " . $this->id . ' AND is_primary = FALSE';
 		if ($Debug) echo "sql = '$sql'<BR>";
 

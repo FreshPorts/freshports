@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: side-bars.php,v 1.4.2.49 2003-06-05 13:27:19 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.50 2003-07-04 14:45:55 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -32,13 +32,16 @@
          break;
    }
 
-$visitor = $_COOKIE["visitor"];
+if (IsSet($_COOKIE["visitor"])) {
+	$visitor = $_COOKIE["visitor"];
+}
 
 //echo "OriginLocal = '$OriginLocal'<BR>\n";
-if ($visitor) {
+if (IsSet($visitor)) {
+	GLOBAL $User;
    echo '<FONT SIZE="-1">Logged in as ', $User->name, "</FONT><BR>";
 
-   if ($EmailBounceCount > 0) {
+   if ($User->emailbouncecount > 0) {
       echo '<IMG SRC="/images/warning.gif"><IMG SRC="/images/warning.gif"><IMG SRC="/images/warning.gif"><BR>';
       echo '<FONT SIZE="-1">your email is <A HREF="bouncing.php?origin=' . $OriginLocal. '">bouncing</A></FONT><BR>';
       echo '<IMG SRC="/images/warning.gif"><IMG SRC="/images/warning.gif"><IMG SRC="/images/warning.gif"><BR>';

@@ -3,6 +3,10 @@ require( "./_private/commonlogin.php3");
 require( "./_private/getvalues.php3");
 require( "./_private/freshports.php3");
 
+if (!$id || $id != strval(intval($id))) {
+  $id = 0;
+}
+
 $sql = "select change_log_port.change_log_id, change_log_port.id, change_log_port.port_id, details, " .
        "change_type, ports.name as port, categories.name as category, change_log.committer, change_log.commit_date, " .
        "change_log.update_description " .

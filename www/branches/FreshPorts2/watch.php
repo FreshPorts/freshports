@@ -1,5 +1,5 @@
 <?
-	# $Id: watch.php,v 1.1.2.21 2002-05-29 12:19:01 dan Exp $
+	# $Id: watch.php,v 1.1.2.22 2002-06-03 02:09:01 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -60,17 +60,19 @@ switch ($sort) {
       $cache_file .= ".port";
       break;
 */
-   case "updated":
+   case "category":
+      $sort ="category, port";
+      echo 'sorted by category.  but you can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=updated">last update</a>';
+      $ShowCategoryHeaders = 1;
+      $cache_file .= ".updated";
+      break;
+
+   default:
       $sort = "commit_date_sort_field desc, port";
       echo 'sorted by last update date.  but you can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=category">category</a>';
       $ShowCategoryHeaders = 0;
       break;
 
-   default:
-      $sort ="category, port";
-      echo 'sorted by category.  but you can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=updated">last update</a>';
-      $ShowCategoryHeaders = 1;
-      $cache_file .= ".updated";
 }
 
 echo "</td></tr>\n";

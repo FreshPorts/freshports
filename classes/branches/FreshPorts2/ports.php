@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports.php,v 1.1.2.35 2003-09-08 13:50:59 dan Exp $
+	# $Id: ports.php,v 1.1.2.36 2003-09-22 14:39:49 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -226,9 +226,9 @@ select ports.id,
 		               ports.broken, 
 		               to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added,
 		               ports.categories as categories,
-			            element.name     as port, 
-			            categories.name  as category,
-			            element.status ";
+			           element.name     as port, 
+			           categories.name  as category,
+			           element.status ";
 
 		if ($UserID) {
 			$sql .= ', 
@@ -433,7 +433,7 @@ LEFT OUTER JOIN
 				$myrow = pg_fetch_row($result);
 				$PortID = $myrow[0];
 				if (IsSet($PortID)) {
-					$result = $this->FetchByID($myrow[0], $UserID);
+					$result = $this->FetchByID($PortID, $UserID);
 				} else {
 					return $PortID;
 				}

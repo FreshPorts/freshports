@@ -1,5 +1,5 @@
 <?
-	# $Id: commit.php,v 1.1.2.15 2002-11-28 20:59:07 dan Exp $
+	# $Id: commit.php,v 1.1.2.16 2002-12-06 21:21:17 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -258,9 +258,9 @@ if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 
 						if ($WatchListID) {
 							if ($myrow["watch"]) {
-								$HTML .= $FreshPortsWatchedPortPrefix    . $myrow["element_id"] . $FreshPortsWatchedPortSuffix;
+								$HTML .= freshports_Watch_Link_Remove($WatchListID, $myrow["element_id"]);
 							} else {
-								$HTML .= $FreshPortsWatchedPortNotPrefix . $myrow["element_id"] . $FreshPortsWatchedPortNotSuffix;
+								$HTML .= freshports_Watch_Link_Add   ($WatchListID, $myrow["element_id"]);
 							}
 						}
 

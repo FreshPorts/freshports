@@ -1,5 +1,5 @@
 <?
-	# $Id: faq.php,v 1.1.2.9 2002-04-06 15:15:10 dan Exp $
+	# $Id: faq.php,v 1.1.2.10 2002-04-08 16:55:11 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -178,7 +178,11 @@
 	<P><? echo freshports_Mail_Icon(); ?>
 		Commit message: This link will take you to the original cvs-all message in the FreeBSD mailing list archives.
 		Note that it can take a view minutes for the message to appear in the archives.  This link will not appear
-		for commit messages before 3 March 2002 (which is the date FreshPorts started to store the message-id).
+		for commit messages before 3 March 2002 (which is the date FreshPorts started to store the message-id).</P>
+
+	<P><? echo freshports_Commit_Icon(); ?> FreshPorts commit message: This will take you to the FreshPorts commit
+		message and allow you to see all other ports which were affected by this commit.   This link will not appear
+        for commit messages before 3 March 2002 (which is the date FreshPorts started to store the message-id).</P>
 	</BLOCKQUOTE>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 

@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.61 2002-04-08 15:21:15 dan Exp $
+   # $Id: freshports.php,v 1.4.2.62 2002-04-08 16:55:13 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -100,6 +100,10 @@ function freshports_Mail_Icon() {
 	return '<IMG SRC="/images/envelope10.gif" ALT="Original commit message" BORDER="0" WIDTH="25" HEIGHT="14">';
 }
 
+function freshports_Commit_Icon() {
+	return '<IMG SRC="/images/copy.gif" ALT="FreshPorts commit message" BORDER="0" WIDTH="16" HEIGHT="16">';
+}
+
 function freshports_Email_Link($message_id) {
 	#
 	# produce a link to the email
@@ -115,6 +119,26 @@ function freshports_Email_Link($message_id) {
 	} else {
 		$HTML .= '<A HREF="' . $freshports_mail_archive . $message_id . '">';
 		$HTML .= freshports_Mail_Icon();
+		$HTML .= '</A>';
+	}
+
+	return $HTML;
+}
+
+function freshports_Commit_Link($message_id) {
+	#
+	# produce a link to the commit
+	#
+
+	#
+	# if the message id is for freshports, then it's an old message which does not contain
+	# a valid message id which can be found in the mailing list archive.
+	#
+	if (strpos($message_id, "@freshports.org")) {
+		$HTML .= '';
+	} else {
+		$HTML .= '<A HREF="/commit.php?message_id=' . $message_id . '">';
+		$HTML .= freshports_Commit_Icon();
 		$HTML .= '</A>';
 	}
 
@@ -916,7 +940,9 @@ function freshports_PortCommitPrint($commit, $category, $port) {
 	GLOBAL  $TimeFormatDefault;
 
 	# print a single commit for a port
-	echo "<TR><TD VALIGN='top'>" . $commit->commit_date . '<BR>' . freshports_Email_Link($commit->message_id);
+	echo "<TR><TD VALIGN='top'>";
+	echo $commit->commit_date . '<BR>' . freshports_Email_Link($commit->message_id);
+	echo '&nbsp;&nbsp;'. freshports_Commit_Link($commit->message_id);
 	echo "</TD>\n";
 	echo '    <TD VALIGN="top">';
     echo $commit->committer;

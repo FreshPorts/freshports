@@ -1,5 +1,5 @@
 <?
-	# $Id: customize.php,v 1.1.2.25 2003-03-06 14:20:43 dan Exp $
+	# $Id: customize.php,v 1.1.2.26 2003-03-06 15:12:56 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -117,7 +117,7 @@ UPDATE users
 	$page_size		= $User->page_size;
 }
 
-echo '<br>the page size is ' . $page_size . ' : ' . $email;
+	#echo '<br>the page size is ' . $page_size . ' : ' . $email;
 
    freshports_Start('Customize User Account',
                'freshports - new ports, applications',

@@ -26,25 +26,23 @@
       $HTML .= ' <font size="-1"><a href="' . $URL_Category . '">' . $myrow["category"] . '</a></font>';
    }
 
-/*
-   $HTML .= $myrow["date_created"];
-   $HTML .= "--";
-   $HTML .= Time() - 3600*24*10;
-*/
-
-   if ($myrow["date_created"] > Time() - 3600*24*10) {
+//   $HTML .= $myrow["date_created_formatted"] ."::". $myrow["updated"] ."--". $DaysMarkedAsNew;
+   if ($myrow["date_created"] > Time() - 3600 * 24 * $DaysMarkedAsNew) {
       $HTML .= " <img src=\"/images/new.gif\" width=28 height=11 alt=\"new!\" hspace=2 align=absmiddle>";
+//      if ($myrow["date_created_formatted"] != $myrow["updated"]) {
+          $HTML .= ' <font size="-1">(' . $myrow["date_created_formatted"] . ")</font>";
+//      }
    }
 
    $HTML .= "<dd>";
 
    // description
-   if ($myrow["short_description"]) {
+   if ($myrow["short_description"] && ($ShowShortDescription == "Y" || $ShowEverything)) {
       $HTML .= $myrow["short_description"] . "<br>\n";
    }
 
    // maintainer
-   if ($myrow["maintainer"]) {
+   if ($myrow["maintainer"] && ($ShowMaintainedBy == "Y" || $ShowEverything)) {
       $HTML .= '<i>';
       if ($myrow["status"] == 'A') {
          $HTML .= 'Maintained';
@@ -54,19 +52,21 @@
       $HTML .= ' by:</i> <a href="mailto:' . $myrow["maintainer"];
       $HTML .= '?cc=ports@FreeBSD.org&amp;subject=FreeBSD%20Port:%20' . $myrow["port"] . "-" . $myrow["version"] . '">';
       $HTML .= $myrow["maintainer"] . '</a></br>' . "\n";
+  }
+
+   if ($ShowLastChange == "Y" || $ShowEverything) {
+      if ($myrow["last_change_log_detail_id"] != 0) {
+         $HTML .= 'last change committed by ' . $myrow["committer"];  // separate lines in case committer is null
+
+         $HTML .= ' on <font size="-1">' . $myrow["updated"] . '</font><br>' . "\n";
+
+         $HTML .= $myrow["update_description"] . "<br>" . "\n";
+      } else {
+         $HTML .= "no changes recorded in FreshPorts<br>\n";
+      }
    }
 
-   if ($myrow["last_change_log_detail_id"] != 0) {
-      $HTML .= 'last change committed by ' . $myrow["committer"];  // separate lines in case committer is null
-
-      $HTML .= ' on <font size="-1">' . $myrow["updated"] . '</font><br>' . "\n";
-
-      $HTML .= $myrow["update_description"] . "<br>" . "\n";
-   } else {
-      $HTML .= "no changes recorded in FreshPorts<br>\n";
-   }
-
-if ($ShowCategories) {
+//if ($ShowCategories) {
 
    if ($myrow["categories"]) {
 //      $HTML .= "Also listed in: ";
@@ -94,7 +94,7 @@ if ($ShowCategories) {
       $HTML .= "<br>\n";
       }
    }
-}
+//}
 
 /*
 echo 'build = ' . $myrow["depends_build"] . "<br>\n";
@@ -157,32 +157,34 @@ if ($ShowDepends) {
 
 }
 
-   if (!$HideDescription) {
+   if (!$HideDescription && ($ShowDescriptionLink == "Y" || $ShowEverything)) {
       // Long descripion
       $HTML .= '<a HREF="port-description.php3?port=' . $myrow["id"] .'">Description</a>';
 
       $HTML .= ' <b>:</b> ';
    }
 
-   // changes
-   $HTML .= '<a HREF="http://www.FreeBSD.org/cgi/cvsweb.cgi/ports/' .
-            $myrow["category"] . '/' .  $myrow["port"] . '">Changes</a>';
+   if ($ShowChangesLink == "Y" || $ShowEverything) {
+      // changes
+      $HTML .= '<a HREF="http://www.FreeBSD.org/cgi/cvsweb.cgi/ports/' .
+               $myrow["category"] . '/' .  $myrow["port"] . '">Changes</a>';
+   }
 
    // download
-   if ($myrow["status"] == "A") {
+   if ($myrow["status"] == "A" && ($ShowDownloadPortLink == "Y" || $ShowEverything)) {
       $HTML .= ' <b>:</b> ';
       $HTML .= '<a HREF="ftp://ftp.FreeBSD.org/pub/FreeBSD/branches/-current/ports/' .
                $myrow["category"] . '/' .  $myrow["port"] . '.tar">Download Port</a>';
    }
 
-   if ($myrow["package_exists"] == "Y") {
+   if ($myrow["package_exists"] == "Y" && ($ShowPackageLink == "Y" || $ShowEverything)) {
       // package
       $HTML .= ' <b>:</b> ';
       $HTML .= '<a HREF="ftp://ftp.FreeBSD.org/pub/FreeBSD/FreeBSD-stable/packages/' .
                $myrow["category"] . '/' .  $myrow["port"] . "-" . $myrow["version"] . '.tgz">Package</a>';
    }
 
-   if ($myrow["homepage"]) {
+   if ($myrow["homepage"] && ($ShowHomepageLink == "Y" || $ShowEverything)) {
       $HTML .= ' <b>:</b> ';
       $HTML .= '<a HREF="' . $myrow["homepage"] . '">Homepage</a>';
    }

@@ -22,7 +22,7 @@
          $origin = $PHP_SELF;
          break;
    }
-   echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/logout.php3?origin=$Origin", "Logout") . '</font><br>';
+   echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/logout.php3?origin=$origin", "Logout") . '</font><br>';
    echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/watch-categories.php3", "watch list - Categories") . '</font><br>';
    echo '<font SIZE="-1">' . freshports_SideBarHTML($PHP_SELF, "/watch.php3", "your watched ports") . '</font><br>';
   } else {

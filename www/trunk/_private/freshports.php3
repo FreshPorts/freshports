@@ -113,4 +113,25 @@ function freshports_SideBarHTMLParm($Self, $URL, $Parm, $Title) {
    return $HTML;
 }
 
+function freshports_YNToCheckbox($Value) {
+// this function takes a Y/N value and converts it to
+// HTML suitable for a checkbox.
+   $HTML = 'value="ON"';
+   if ($Value == "Y") {
+      $HTML .= " checked";
+   }
+
+   return $HTML;
+}
+
+function freshports_ONToYN($Value) {
+   if ($Value == "ON") {
+      $YN = "Y";
+   } else {
+      $YN = "N";
+   }
+
+   return $YN;
+}
+
 ?>

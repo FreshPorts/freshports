@@ -163,7 +163,7 @@ if ($UpdateCache == 1) {
    if ($Debug) echo 'time to update the cache';
 
 $sql = "select ports.id, ports.name as port, change_log.commit_date as updated_raw, categories.name as category, " .
-       "ports.committer, ports.last_update_description as update_description, ports.version as version, " .
+       "change_log.committer, ports.last_update_description as update_description, ports.version as version, " .
        "ports.maintainer, ports.short_description, UNIX_TIMESTAMP(ports.date_created) as date_created, " .
        "date_format(date_created, '$FormatDate $FormatTime') as date_created_formatted, categories.id as category_id, ".
        "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, ports.status, " .

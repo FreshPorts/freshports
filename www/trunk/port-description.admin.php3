@@ -105,7 +105,7 @@ if (!$port || $port != strval(intval($port))) {
 
 $sql = "select ports.id, ports.name as port, ports.id as ports_id, " .
        "categories.name as category, categories.id as category_id, ports.version as version, ".
-       "ports.committer, ports.last_update_description as update_description, " .
+       "ports.last_update_description as update_description, " .
        "ports.maintainer, ports.short_description, ports.long_description, UNIX_TIMESTAMP(ports.date_created) as date_created, ".
        "date_format(date_created, '$FormatDate $FormatTime') as date_created_formatted, ".
        "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, " .

@@ -123,7 +123,7 @@ if ($UpdateCache == 1) {
 $sql = "";
 $sql = "select ports.id, ports.name as port, ports.id as ports_id, change_log.commit_date as updated, " .
        "categories.name as category, categories.id as category_id, ports.version as version, ".
-       "ports.committer, change_log.update_description as update_description, " .
+       "change_log.committer, change_log.update_description as update_description, " .
        "ports.maintainer, ports.short_description, UNIX_TIMESTAMP(ports.date_created) as date_created, ".
        "date_format(date_created, '$FormatDate $FormatTime') as date_created_formatted, ".
        "ports.last_change_log_id as last_change_log_id, " .

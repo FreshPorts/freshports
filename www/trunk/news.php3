@@ -67,24 +67,14 @@ if ($BuildTable == 1) {
    $HTML .= '  <description>The easiest place to find ports</description>' . "\n";
    $HTML .= '  <language>en-us</language>' . "\n";
 
-$sort ="updated desc, category, version";
 $sort ="change_log.commit_date desc, change_log.id asc, ports.name, category, version";
 
-$sql = "select ports.id, ports.name as port, ports.last_update as updated, " .
-       "categories.name as category, categories.id as category_id, ports.version as version, ".
-       "ports.committer, ports.last_update_description as update_description, " .
-       "ports.maintainer, ports.short_description, ".
-       "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage " .
-       "from ports, categories  ".
-       "WHERE ports.system = 'FreeBSD' ".
-       "and ports.primary_category_id = categories.id ";
-
 $sql = "select ports.id, ports.name as port, change_log.commit_date as updated_raw, categories.name as category, " .
-       "ports.committer, ports.last_update_description as update_description, ports.version as version, " .
+       "change_log.committer, ports.last_update_description as update_description, ports.version as version, " .
        "ports.maintainer, ports.short_description, UNIX_TIMESTAMP(ports.date_created) as date_created, " .
        "date_format(date_created, '$FormatDate $FormatTime') as date_created_formatted, categories.id as category_id, ".
        "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, ports.status, " .
-       "date_format(change_log.commit_date, '$FormatDate') as updated_date, change_log.committer, " .
+       "date_format(change_log.commit_date, '$FormatDate') as updated_date, " .
        "date_format(change_log.commit_date, '$FormatTime') as updated_time, change_log.id as change_log_id," .
        "change_log.update_description, date_format(change_log.commit_date, '%Y-%m-%d') as commit_date, " .
        "ports.last_change_log_id, date_format(change_log.commit_date, '%T') as commit_time " .

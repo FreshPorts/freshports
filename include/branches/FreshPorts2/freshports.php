@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.1 2001-11-25 20:50:59 dan Exp $
+   # $Id: freshports.php,v 1.4.2.2 2001-11-25 21:20:50 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -307,12 +307,12 @@ function freshports_PortIDFromPortCategory($category, $port, $db) {
 */
 	$sql = "select pathname_id('ports/$category/$port') as id";
 
-	echo "freshports_PortIDFromPortCategory SQL = $sql<BR>\n";
+#	echo "freshports_PortIDFromPortCategory SQL = $sql<BR>\n";
 	$result = pg_exec($db, $sql);
 	if (pg_numrows($result)) {
 		$myrow = pg_fetch_array($result, 0);
 		$PortID = $myrow["id"];
-		echo 'freshports_PortIDFromPortCategory = ' . $PortID . "<BR>\n";
+#		echo 'freshports_PortIDFromPortCategory = ' . $PortID . "<BR>\n";
 	}
 
 	return $PortID;

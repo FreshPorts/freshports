@@ -1,8 +1,6 @@
 <?
+//$Debug=1;
 require( "./_private/commonlogin.php3");
-// you can't have this here.  It clears out the values coming in
-// which isn't very nice.
-//require( "./_private/getvalues.php3");
 require( "./_private/freshports.php3");
 
 if ($submit) {
@@ -20,26 +18,26 @@ if ($Debug) {
   $errors = "";
 
   // test for existance of user id
-  $Cookie = UserToCookie($UserName);
+  $Cookie = UserToCookie($UserID);
 
 if ($Debug) {
-   echo "Cookie = $Cookie";
+   echo "Cookie = $Cookie\n";
 }
 
-  $sql = "select * from users where username = '$UserName'".
-	 " and password = '$Password' ".
-         " and cookie   = '$Cookie'";
+  $sql = "select * from users where username = '$UserID'".
+	 " and password = '$Password'";
 
 if ($Debug) {
-   echo $sql;
+   echo "$sql\n";
 }
 
-  $result = mysql_query($sql, $db) or die('query failed');
+  $result = mysql_query($sql, $db) or die('query failed ' . mysql_error());
 
 
   if(!mysql_numrows($result)) {
      $LoginFailed = 1;
   } else {
+
     SetCookie("visitor", $Cookie, time() + 60*60*24*120, '/');
     // Redirect browser to PHP web site
     if ($origin == "/index.php3") {

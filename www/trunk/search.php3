@@ -53,11 +53,14 @@ switch ($stype) {
       $sql .= "and ports.name like '%$query%'";
       break;
 
-/*
-   case "text":
-      $sql .= "and ports.short_description like '%$query%' or ports.long_description like '%$query%'";
+   case "longdescription":
+      $sql .= "and ports.long_description like '%$query%'";
       break;
-*/
+
+   case "shortdescription":
+      $sql .= "and ports.short_description like '%$query%'";
+      break;
+      
    case "maintainer":
       $sql .= "and ports.maintainer like '%$query%'";
       break;
@@ -79,9 +82,11 @@ $NumRows = mysql_num_rows($result);
 ?>
 <form METHOD="POST" ACTION="<? echo $PHP_SELF ?>">
   <p>Search for: <input NAME="query" size="20"  value="<? echo $query?>"> <select NAME="stype" size="1">
-    <option VALUE="name"      <? if ($stype == "name")       echo 'selected'?>>Port Name</option>
-    <option VALUE="maintainer"<? if ($stype == "maintainer") echo 'selected'?>>Maintainer</option>
-    <option VALUE="requires"  <? if ($stype == "requires")   echo 'selected'?>>Requires</option>
+    <option VALUE="name"             <? if ($stype == "name")             echo 'selected'?>>Port Name</option>
+    <option VALUE="maintainer"       <? if ($stype == "maintainer")       echo 'selected'?>>Maintainer</option>
+    <option VALUE="requires"         <? if ($stype == "requires")         echo 'selected'?>>Requires</option>
+    <option VALUE="shortdescription" <? if ($stype == "shortdescription") echo 'selected'?>>Short Description</option>
+    <option VALUE="longdescription"  <? if ($stype == "longdescription")  echo 'selected'?>>Long Description</option>
   </select> <input TYPE="submit" VALUE="search"> </p>
   <input type="hidden" name="search" value="1">
 </form>

@@ -12,36 +12,81 @@ if (!$visitor) {
 }
 
 if ($submit) {
+//$Debug = 1;
 
 // process form
+   if ($Debug) {
+      while (list($name, $value) = each($HTTP_POST_VARS)) {
+         echo "$name = $value<br>\n";
+      }
+   }
 
-//  while (list($name, $value) = each($HTTP_POST_VARS)) {
-//    echo "$name = $value<br>\n";
-//  }
+   $OK = 1;
 
-  $OK = 1;
+   $errors = "";
 
-  $errors = "";
+   if ($Password1 != $Password2) {
+      $errors .= "The password was not confirmed.  It must be entered twice.<BR>";
+      $OK = 0;
+   }
 
-  if ($Password1 != $Password2) {
-    $errors .= "The password was not confirmed.  It must be entered twice.<BR>";
-    $OK = 0;
-  }
+   if ($MaxNumberOfPorts < 1 || $MaxNumberOfPorts > 99) {
+      $errors .= "The maximum number of ports per page must be in the range 1..99.<BR>";
+      $OK = 0;
+   }
 
-  $AccountModified = 0;
-  if ($OK) {
+   if ($DaysMarkedAsNew < 1 || $DaysMarkedAsNew > 99) {
+      $errors .= "Number of days marked as new must be in the range 1..99.<BR>";
+      $OK = 0;
+   }
+
+   $AccountModified = 0;
+   if ($OK) {
 
 
-     if ($emailsitenotices_yn == "ON") {
-         $emailsitenotices_yn_value = "Y";
-     } else {
-        $emailsitenotices_yn_value = "N";
-     }
+      if ($emailsitenotices_yn == "ON") {
+          $emailsitenotices_yn_value = "Y";
+      } else {
+         $emailsitenotices_yn_value = "N";
+      }
+
+      if ($FormatDateSelect != "") {
+         $FormatDate = $FormatDateSelect;
+      } else {
+         if ($FormatDateCustom != "") {
+           $FormatDate = $FormatDateCustom;
+         } else {
+           $FormatDate = $FormatDateDefault;
+        }
+      }
+
+      if ($FormatTimeSelect != "") {
+         $FormatTime = $FormatTimeSelect;
+      } else {
+         if ($FormatTimeCustom != "") {
+           $FormatTime = $FormatTimeCustom;
+         } else {
+           $FormatTime = $FormatTimeDefault; 
+        }
+      }
+
 
      $sql = "update users set ";
-     $sql .= "email                = '$email', ";
-     $sql .= "emailsitenotices_yn  = '$emailsitenotices_yn_value',";
-     $sql .= "watchnotifyfrequency = '$watchnotifyfrequency'";
+     $sql .= "email			= '$email', ";
+     $sql .= "emailsitenotices_yn	= '$emailsitenotices_yn_value',";
+     $sql .= "watchnotifyfrequency	= '$watchnotifyfrequency', ";
+     $sql .= "max_number_of_ports	= " . $MaxNumberOfPorts . ",";
+     $sql .= "show_short_description 	= '" . freshports_ONToYN($ShowShortDescription	) . "', ";
+     $sql .= "show_maintained_by	= '" . freshports_ONToYN($ShowMaintainedBy	) . "', ";
+     $sql .= "show_last_change		= '" . freshports_ONToYN($ShowLastChange	) . "', ";
+     $sql .= "show_description_link	= '" . freshports_ONToYN($ShowDescriptionLink	) . "', ";
+     $sql .= "show_changes_link		= '" . freshports_ONToYN($ShowChangesLink	) . "', ";
+     $sql .= "show_download_port_link	= '" . freshports_ONToYN($ShowDownloadPortLink	) . "', ";
+     $sql .= "show_package_link		= '" . freshports_ONToYN($ShowPackageLink	) . "', ";
+     $sql .= "show_homepage_link	= '" . freshports_ONToYN($ShowHomepageLink	) . "', ";
+     $sql .= "format_date		= '" . $FormatDate . "', ";
+     $sql .= "format_time		= '" . $FormatTime . "', ";
+     $sql .= "days_marked_as_new	= $DaysMarkedAsNew";
 
      if ($Password1 != '') {
        $sql .= ", password = '$Password1'";
@@ -49,24 +94,26 @@ if ($submit) {
 
      $sql .= " where cookie = '$visitor'";
 
-     $result = mysql_query($sql);
-     if ($result) {
-	if (mysql_affected_rows() == 1) {
-	   $AccountModified = 1;
-	}
+     if ($Debug) {
+        echo $sql;
      }
 
-     if (!$AccountModified) {
-	$errors .= 'Something went terribly wrong there.<br>';
-	$errors .= 'UserID	= '.$UserID	  . '<br>';
-	$errors .= 'Password	= '.$Password1	  . '<br>';
-	$errors .= 'DaysToShow	= '.$DaysToShow   . '<br>';
-	$errors .= 'MaxArticles = '.$MaxArticles  . '<br>';
-	$errors .= 'DaysNew	= '.$DaysNew	  . '<br>';
-	$errors .= $sql;
+     $result = mysql_query($sql);
+     if ($result) {
+//	if (mysql_affected_rows() == 1) {
+	   $AccountModified = 1;
+//	}
+     }
+
+     if ($AccountModified == 1) {
+        if (!$Debug) {
+           header("Location: ../../");  /* Redirect browser to PHP web site */
+           exit;  /* Make sure that code below does not get executed when we redirect. */
+        }
      } else {
-	header("Location: ../../");  /* Redirect browser to PHP web site */
-	exit;  /* Make sure that code below does not get executed when we redirect. */
+	$errors .= 'Something went terribly wrong there.<br>';
+	$errors .= $sql . "<br>\n";
+        $errors .= mysql_error();
      }
    }
 }
@@ -108,7 +155,7 @@ echo '<table cellpadding=1 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>
 <td>
   <table width=100% cellpadding=3 cellspacing=0 border=0>
   <tr valign=top>
-   <td><img src="/warning.gif"></td>
+   <td><img src="/images/warning.gif"></td>
    <td width=100%>
   <p>Some errors have occurred which must be corrected before your login can be created.</p>';
 
@@ -138,10 +185,10 @@ if ($AccountModified) {
 
 echo '<table cellpadding=1 cellspacing=0 border=0 bgcolor="#AD0040" width=100%>
 <tr>
-<td>
+<td valign="top">
 <table width=100% border=0 cellpadding=1>
 
-<tr bgcolor="#AD0040"><td><font color="#ffffff">Use this form to customzie your account.</font></td>
+<tr bgcolor="#AD0040"><td><font color="#ffffff">Use this form to customize your account.</font></td>
 </tr>
 <tr bgcolor="#ffffff">
 <td>';

@@ -3,6 +3,8 @@ require( "./_private/commonlogin.php3");
 require( "./_private/getvalues.php3");
 require( "./_private/freshports.php3");
 
+$ShowEverything=1;
+
 if (!$port) {
    $port = 1;
 }

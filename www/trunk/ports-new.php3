@@ -1,4 +1,5 @@
 <?
+$Debug=1;
 require( "./_private/commonlogin.php3");
 require( "./_private/getvalues.php3");
 require( "./_private/freshports.php3");
@@ -46,7 +47,7 @@ switch ($sort) {
 //      break;
 
    default:
-      $sort ="updated desc, port";
+      $sort ="date_created desc, port";
       $cache_file .= ".updated";
 }
 
@@ -76,28 +77,33 @@ if (!file_exists($cache_file)) {
    }
 }
 
-//$UpdateCache = 1;
+$UpdateCache = 1;
 
 if ($UpdateCache == 1) {
 //   echo 'time to update the cache';
 
-$sql = "select ports.id, ports.name as port, ports.last_update as updated, " .
+$sql = "select ports.id, ports.name as port, " .
        "categories.name as category, categories.id as category_id, ports.version as version, ".
        "ports.committer, ports.last_update_description as update_description, " .
-       "ports.maintainer, ports.short_description ".
-       "from ports, categories, newports ".
-       "WHERE ports.system              = 'FreeBSD' ".
-       "  and ports.primary_category_id = categories.id " .
-       "  and newports.name             = ports.name " .
-       "  and ports.status              = 'A' ";
+       "ports.maintainer, ports.short_description, UNIX_TIMESTAMP(ports.date_created) as date_created, ".
+       "date_format(date_created, '$FormatDate $FormatTime') as date_created_formatted, ".
+       "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, ports.status, " .
+       "date_format(change_log.commit_date, '$FormatDate $FormatTime') as updated, change_log.committer, change_log.update_description, " . 
+       "change_log_details.change_type, ports.last_change_log_detail_id " .
+       "from ports, categories, change_log, change_log_details  ".
+       "WHERE ports.system = 'FreeBSD' ".
+       "  and ports.primary_category_id       = categories.id " .
+       "  and ports.last_change_log_detail_id = change_log_details.id " .
+       "  and change_log.id                   = change_log_details.change_log_id ";       "from ports, categories, newports ".
+       "  and ports.status                    = 'A' ";
 
-$sql .= "order by $sort limit 20";
+$sql .= "order by $sort limit $MaxNumberOfPorts";
 
-//echo $sql;
+if ($Debug) {
+   echo $sql;
+}
 
 $result = mysql_query($sql, $db);
-
-//$HTML = "</tr></td><tr>";
 
 // get the list of topics, which we need to modify the order
 $NumTopics=0;

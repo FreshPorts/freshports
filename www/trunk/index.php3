@@ -9,7 +9,7 @@ if (!$StartAt) {
    }
    $StartAt = 0;
 } else {
-   $NewStart = floor($StartAt / 20) * 20;
+   $NewStart = floor($StartAt / $MaxNumberOfPorts) * $MaxNumberOfPorts;
    if ($NewStart != $StartAt) {
       $URL = basename($PHP_SELF);
       if ($NewStart > 0) {
@@ -55,7 +55,7 @@ ports.
 <tr>
     <td colspan="5" bgcolor="#AD0040" height="30">
         <font color="#FFFFFF" size="+1">freshports - most recent commits
-        <? echo ($StartAt + 1) . " - " . ($StartAt + 20) ?></font></td>
+        <? echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPorts) ?></font></td>
   </tr>
 <tr>
 <script language="php">
@@ -120,23 +120,28 @@ if (!file_exists($cache_file)) {
    }
 }
 
-//$UpdateCache = 1;
+$UpdateCache = 1;
 
 if ($UpdateCache == 1) {
 //   echo 'time to update the cache';
 
-$sql = "select ports.id, ports.name as port, ports.last_update as updated, " .
+$sql = "select ports.id, ports.name as port,  " .
        "categories.name as category, categories.id as category_id, ports.version as version, ".
        "ports.committer, ports.last_update_description as update_description, " .
-       "ports.maintainer, ports.short_description, UNIX_TIMESTAMP(ports.date_created) as date_created, ".
-       "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, ports.status " .
-       "from ports, categories  ".
+       "ports.maintainer, ports.short_description, UNIX_TIMESTAMP(ports.date_created) as date_created, " .
+       "date_format(date_created, '$FormatDate $FormatTime') as date_created_formatted, ".
+       "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, ports.status, " .
+       "date_format(change_log.commit_date, '$FormatDate $FormatTime') as updated, change_log.committer, change_log.update_description, " .
+       "change_log_details.change_type, ports.last_change_log_detail_id " .
+       "from ports, categories, change_log, change_log_details  ".
        "WHERE ports.system = 'FreeBSD' ".
-       "and ports.primary_category_id = categories.id ";
+       "  and ports.primary_category_id       = categories.id " .
+       "  and ports.last_change_log_detail_id = change_log_details.id " .
+       "  and change_log.id                   = change_log_details.change_log_id ";
 
 $sql .= "order by $sort ";
 
-$sql .= "limit $StartAt, 20";
+$sql .= "limit $StartAt, $MaxNumberOfPorts";
 
 echo $sql;
 
@@ -186,16 +191,16 @@ echo $HTML;
 echo '<tr><td height="40" colspan="2" valign="bottom">';
 
 if ($StartAt == 0) {
-   echo 'Previous 20';
+   echo 'Previous Page';
 } else {
    echo '<a href="' . basename($PHP_SELF);
-   if ($StartAt > 20) {
-      echo '?StartAt=' . ($Start + 20);
+   if ($StartAt > $MaxNumberOfPorts) {
+      echo '?StartAt=' . ($Start + $MaxNumberOfPorts);
    }
-   echo '">Previous 20</a>';
+   echo '">Previous Page</a>';
 }
 
-echo '  <a href="' . basename($PHP_SELF) . "?StartAt=" . ($StartAt + 20) . '">Next 20</a>';
+echo '  <a href="' . basename($PHP_SELF) . "?StartAt=" . ($StartAt + $MaxNumberOfPorts) . '">Next Page</a>';
 
 echo '</td></tr>';
 

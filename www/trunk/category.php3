@@ -94,7 +94,7 @@ if (!file_exists($cache_file)) {
    }
 }
 
-//$UpdateCache = 1;
+$UpdateCache = 1;
 
 if ($UpdateCache == 1) {
 //   echo 'time to update the cache';

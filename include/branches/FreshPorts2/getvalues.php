@@ -1,8 +1,8 @@
 <?php
-
-	# $Id: getvalues.php,v 1.1.2.24 2003-03-06 15:02:16 dan Exp $
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: getvalues.php,v 1.1.2.25 2003-04-27 20:33:21 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user.php');

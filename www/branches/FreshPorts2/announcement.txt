@@ -1,5 +1,0 @@
-<BIG><BIG>
-BSDCan 2004 is coming!
-</big></big>
-See the <a href="http://www.bsdcan.org/">website</a> for details. Also, we could use a logo for BSDCan!
-

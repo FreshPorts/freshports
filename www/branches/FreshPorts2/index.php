@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.87 2004-01-06 13:46:21 dan Exp $
+	# $Id: index.php,v 1.1.2.88 2004-02-16 16:15:12 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -43,18 +43,6 @@ function freshports_SummaryForDay($MinusN) {
 ?>
 
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-
-<?
-if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
-?>
-  <TR>
-    <TD colspan="2">
-       <? include ("announcement.txt"); ?>
-    </TD>
-  </TR>
-<?
-}
-?>
 
 <?php
 $num          = $MaxNumberOfPorts;

@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.76 2002-04-14 18:47:49 dan Exp $
+   # $Id: freshports.php,v 1.4.2.77 2002-04-15 16:08:02 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -612,12 +612,8 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 
 	$HTML .= '<BIG><B>';
 
-	if ($ShowCategory) {
-		$HTML .= '<A HREF="/' . $port->category . '/">' . $port->category . '</A>/';
-	}
-
 	if ($LinkToPort) {
-		$HTML .= "<A HREF=\"/$port->category/$port->port/\">$port->port</A>";
+		$HTML .= "<A HREF=\"/$port->category/$port->port/\">$port->port";
 	} else {
 		$HTML .= $port->port;
 	}
@@ -629,13 +625,21 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 		}
 	}
 
+	if ($LinkToPort) {
+		$HTML .= '</A>';
+	}
+
 	$HTML .= "</B></BIG>";
+
+	if ($ShowCategory) {
+		$HTML .= ' / <A HREF="/' . $port->category . '/">' . $port->category . '</A>';
+	}
 
 	if ($WatchListID) {
 		if ($port->{watch}) {
-			$HTML .= ' '. freshports_Watch_Link_Remove($myrow["element_id"]);
+			$HTML .= ' '. freshports_Watch_Link_Remove($port->{element_id});
 		} else {
-			$HTML .= ' '. freshports_Watch_Link_Add($myrow["element_id"]);
+			$HTML .= ' '. freshports_Watch_Link_Add($port->{element_id});
 		}
 	}
 

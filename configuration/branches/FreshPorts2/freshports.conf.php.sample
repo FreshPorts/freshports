@@ -1,7 +1,9 @@
-<?
-   # $Id: freshports.conf.php.sample,v 1.1.2.2 2003-01-24 17:41:34 dan Exp $
-   #
-   # Copyright (c) 1998-2001 DVL Software Limited
+<?php
+	#
+	# $Id: freshports.conf.php.sample,v 1.1.2.3 2003-04-22 17:28:56 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
 
 #
 # This file contains the various configuration items which may differ 

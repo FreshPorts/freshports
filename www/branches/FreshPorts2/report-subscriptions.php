@@ -1,5 +1,5 @@
 <?
-	# $Id: report-subscriptions.php,v 1.1.2.2 2002-06-12 03:06:33 dan Exp $
+	# $Id: report-subscriptions.php,v 1.1.2.3 2002-06-12 03:28:39 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -79,6 +79,18 @@
 		}
 
 		pg_exec($db, "commit");
+	} else {
+		# read the values from the db
+		$sql = "SELECT report_id, report_frequency_id
+				  FROM report_subscriptions
+				 WHERE user_id = $UserID";
+		$result = pg_exec ($db, $sql);
+		$numrows = pg_numrows($result);
+		for ($i = 0; $i < $numrows; $i++) {
+			$myrow = pg_fetch_array ($result, $i);
+			${"reports_"     . $myrow["report_id"]} = 1;
+			${"frequencies_" . $myrow["report_id"]} = $myrow["report_frequency_id"];
+		}
 	}
 
 
@@ -117,7 +129,7 @@
 
 This page allows you to select the reports you wish to receive and the frequency of the report.
 
-<FORM ACTION="<?php echo $_SERVER["PHP_SELF"] . "?origin=" . $origin ?>" METHOD="POST" NAME=f>
+<FORM ACTION="<?php echo $_SERVER["PHP_SELF"] ;?>" METHOD="POST" NAME=f>
 	<TABLE CELLPADDING="3" CELLSPACING="6" BORDER="0">
 	<TR><TD COLSPAN="2"><BIG><B>Report Name</B></BIG></TD><TD><BIG><B>Frequency</B></BIG></TD></TR>
 	<?

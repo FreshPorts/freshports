@@ -1,12 +1,12 @@
 <?
-   # $Id: category.php3,v 1.19 2001-09-28 00:05:36 dan Exp $
+   # $Id: category.php3,v 1.20 2001-10-02 17:14:12 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
    require("./include/common.php");
    require("./include/freshports.php");
    require("./include/databaselogin.php");
-
+   require("./include/getvalues.php");
 
    freshports_Start("title",
                "freshports - new ports, applications",
@@ -21,7 +21,7 @@
 <meta name="keywords" content="FreeBSD, index, applications, ports">  
 
 <?
-$Debug=1;
+#$Debug=1;
 
 #
 # if no category provided or category is not numeric, try
@@ -135,6 +135,7 @@ $sql = "select ports.id, ports.name as port, ports.id as ports_id, ports.last_up
        "ports.last_update_description as update_description, " .
        "ports.maintainer, ports.short_description, UNIX_TIMESTAMP(ports.date_created) as date_created, ".
        "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, ports.status, " .
+       "date_format(date_created, '$FormatDate $FormatTime') as date_created_formatted, " .
        "ports.broken, ports.forbidden " .
        "from ports, categories  ".
        "WHERE ports.system = 'FreeBSD' ".
@@ -152,7 +153,7 @@ $sql .= "order by $sort";
 //$sql .= " limit $LimitRows";
 
 if ($Debug) {
-   echo $sql;
+   echo $sql . '<BR>';
    echo "GlobalHideLastChange = $GlobalHideLastChange\n";
 }
 
@@ -191,12 +192,15 @@ $HTML .= freshports_echo_HTML(" of $NumRows ports</td></tr>\n");
 //$HTML .= freshports_echo_HTML("<tr><td>");
 //$HTML .= freshports_echo_HTML("<br>start = $start, end = $end, LimitRows = $LimitRows<br>\n");
 
+
+$ShowShortDescription	= "Y";
+
 for ($i = $start; $i <= $end; $i++) {
    $myrow = $rows[$i-1];
 
 //   include("./include/port-basics.php");
 
-   $HTML .= freshports_PortDetails($myrow, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink);
+   $HTML .= freshports_PortDetails($myrow, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription);
 
    $LastPort = $myrow["port"];
 } // end for

@@ -1,5 +1,5 @@
 <?
-	# $Id: categories.php,v 1.1.2.2 2002-12-16 13:31:50 dan Exp $
+	# $Id: categories.php,v 1.1.2.3 2003-01-10 15:51:12 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 	#
@@ -55,7 +55,7 @@ class Category {
 		$sql = "select * from categories where name = $this->name";
 		if ($Debug) echo "sql = '$sql'<BR>";
 
-        $result = pg_exec($this->dbh, $sql);
+		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
 			$numrows = pg_numrows($result);
 			if ($numrows == 1) {

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.187 2004-10-21 03:29:44 dan Exp $
+	# $Id: freshports.php,v 1.4.2.188 2004-10-21 03:36:33 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -905,7 +905,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 	}
 
 	if (IsSet($port->no_package) && $port->no_package != '') {
-		$HTML .= '<p><b>No package is available: ' . $port->no_package . '</p>';
+		$HTML .= '<p><b>No package is available:</b> ' . $port->no_package . '</p>';
 	} else {
 		$HTML .= '<p><b>To add the package:</b> <code class="code">pkg_add -r ' . $port->latest_link . '</code></p>';
 	}

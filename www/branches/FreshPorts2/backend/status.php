@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: status.php,v 1.1.2.1 2003-09-28 15:03:04 dan Exp $
+	# $Id: status.php,v 1.1.2.2 2003-09-30 11:38:21 dan Exp $
 	#
 	# Copyright (c) 2003 DVL Software Limited
 	#
@@ -28,7 +28,7 @@
 	<? echo freshports_PageBannerText($Title); ?>
 </TR>
 <TR><TD>
-System status
+<h2>System status</h2>
 </TD></TR>
 <tr><td>
 <?
@@ -57,7 +57,32 @@ echo "</table>\n";
 </td></tr>
 </TABLE>
 
-<p>The processed queue is cleared out daily.
+<p><sup>*</sup>The processed queue is cleared out daily.
+
+<h2>Last login count</h2>
+
+<?php
+$sql = "select * from LoginCounts(7)";
+$result = pg_exec($db, $sql);
+if ($result) {
+	$numrows = pg_numrows($result);
+	if ($numrows) {
+		echo '<table border="1">' . "\n";
+		echo "<tr><td><b>Days</b><td><b>Users</b></td></tr>\n";
+	
+		$i=0;
+		$GlobalHideLastChange = "N";
+		for ($i = 0; $i < $numrows; $i++) {
+			$myrow = pg_fetch_array ($result, $i);
+			echo '<tr><td align="right">' . $myrow[0] . '</td><td align="right">' . $myrow[1] . '</td></tr>' . "\n";
+		}
+
+		echo "</table>\n";
+	}
+}
+?>
+
+<sup>*</sup>The users column indicates the number of logged-in users who last accessed the system on that day.
 
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?

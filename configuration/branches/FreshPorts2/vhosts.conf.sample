@@ -1,5 +1,5 @@
 #
-# $Id: vhosts.conf.sample,v 1.3.2.13 2003-12-04 23:53:28 dan Exp $
+# $Id: vhosts.conf.sample,v 1.3.2.14 2003-12-05 00:02:09 dan Exp $
 #
 # Copyright (c) 1998-2003 DVL Software Limited
 #
@@ -52,7 +52,7 @@
 	</Location>
 
 	RewriteEngine On
-    RewriteCond %{HTTP_REFERER} .*freshports.net*
-    RewriteRule .* /fraud/fraud.php
+	RewriteCond %{HTTP_REFERER} .*freshports.net*
+	RewriteRule .* /fraud/fraud.php
 
 </VirtualHost>

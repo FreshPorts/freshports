@@ -1,0 +1,31 @@
+<!-- http://freshports.org/docs/cvs_commits.dtd                                                          -->
+<!-- This DTD defines the input to FreshPorts (http://freshports.org/>                                   -->
+<!-- version 0.02                                                                                        -->
+<!-- Change History:	0.01	2000.12.27	Initial Release                                          -->
+<!--			0.02	2000.12.27	Added several fields to the COMMIT element;              -->
+<!--						Pr, SubmittedBy, ReviewedBy, ApprovedBy and ObtainedFrom -->
+
+<!ELEMENT COMMITS	(COMMIT+) >
+<!ELEMENT COMMIT	(Committer, Commit-Date, Log, Pr?, SubmittedBy?, ReviewedBy?, ApprovedBy?, ObtainedFrom?, MESSAGE, FILES)>
+<!ATTLIST COMMIT	Os	CDATA #REQUIRED
+			Branch	CDATA #REQUIRED >
+<!ELEMENT Committer	(#PCDATA) >
+<!ELEMENT Commit-Date	(#PCDATA) >
+<!ELEMENT Log		(#PCDATA) >
+<!ELEMENT Pr		(#PCDATA) >
+<!ELEMENT SubmittedBy	(#PCDATA) >
+<!ELEMENT ReviewedBy	(#PCDATA) >
+<!ELEMENT ApprovedBy	(#PCDATA) >
+<!ELEMENT ObtainedFrom	(#PCDATA) >
+<!ELEMENT MESSAGE	(#PCDATA) >
+<!ATTLIST MESSAGE	Message-Id	CDATA #IMPLIED
+			Date		CDATA #IMPLIED
+			To		CDATA #IMPLIED
+			Sender		CDATA #IMPLIED
+			Subject		CDATA #IMPLIED >
+<!ELEMENT FILES		(FILE+) >
+<!ELEMENT FILE		(#PCDATA) >
+<!ATTLIST FILE		Path		CDATA #REQUIRED
+			Revision	CDATA #IMPLIED
+			Changes		CDATA #IMPLIED
+			Action		(Add | Delete | Modify) "Modify" >

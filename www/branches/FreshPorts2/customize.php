@@ -1,5 +1,5 @@
 <?
-   # $Id: customize.php,v 1.1.2.1 2002-01-02 02:53:39 dan Exp $
+   # $Id: customize.php,v 1.1.2.2 2002-01-03 01:22:03 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -205,4 +205,3 @@ echo "</td>
 </body>
 <? include("./include/footer.php") ?>
 </html>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">

@@ -1,5 +1,5 @@
 <?
-   # $Id: login.php,v 1.1.2.3 2002-01-02 04:48:14 dan Exp $
+   # $Id: login.php,v 1.1.2.4 2002-01-03 01:22:03 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -146,4 +146,3 @@ echo '<br><a href="forgotten-password.php">Forgotten your password?</a>';
 <? include("./include/footer.php") ?>
 </body>
 </html>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">

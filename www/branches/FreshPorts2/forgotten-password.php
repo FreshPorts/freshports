@@ -1,5 +1,5 @@
 <?
-	# $Id: forgotten-password.php,v 1.1.2.4 2002-01-02 04:48:14 dan Exp $
+	# $Id: forgotten-password.php,v 1.1.2.5 2002-01-03 01:22:03 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -271,4 +271,3 @@ we're only dealing with your FreshPorts login, not a financial transaction....</
 <? include("./include/footer.php") ?>
 </body>
 </html>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">

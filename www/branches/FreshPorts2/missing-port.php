@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-port.php,v 1.1.2.29 2002-12-12 02:45:22 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.30 2003-01-05 13:14:46 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
@@ -165,18 +165,16 @@ $ShowDescriptionLink	= "N";
 ?>
 
 </TD>
-<TD VALIGN="top" WIDTH="*" ALIGN="center">
-   <? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php') ?>
-</TD>
+  <?
+  freshports_SideBar();
+  ?>
 </TR>
 
 </TABLE>
 
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<TR><TD>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
-</TD></TR>
-</TABLE>
+<?
+	freshports_ShowFooter();
+?>
 
 </body>
 </html>

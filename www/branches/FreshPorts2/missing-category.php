@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-category.php,v 1.1.2.19 2002-12-12 02:45:22 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.20 2003-01-05 13:14:57 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -82,17 +82,15 @@ $ShowDescriptionLink  = "N";
 	?>
 </TD>
 </TABLE>
-<TD VALIGN="top" WIDTH="*" ALIGN="center">
-   <? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/side-bars.php') ?>
-</TD>
+  <?
+  freshports_SideBar();
+  ?>
 </TR>
 </TABLE>
 
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
-<TR><TD>
-<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/footer.php') ?>
-</TD></TR>
-</TABLE>
+<?
+	freshports_ShowFooter();
+?>
 
 	</body>
 	</html>

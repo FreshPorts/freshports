@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: security-notice.php,v 1.1.2.6 2003-03-08 16:21:42 dan Exp $
+	# $Id: security-notice.php,v 1.1.2.7 2003-04-23 16:39:05 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -38,9 +38,7 @@
 		$SecurityNotice->description = AddSlashes($_REQUEST[description]);
 		if ($SecurityNotice->Create($message_id)) {
 			if ($SecurityNotice->FetchByMessageID($message_id)) {
-				if (pg_exec($db, 'UPDATE housekeeping SET refresh_now = 2')) {
-					$result = "COMMIT";
-				}
+				$result = "COMMIT";
 			}
 		}
 

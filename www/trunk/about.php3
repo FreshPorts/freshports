@@ -23,9 +23,9 @@ require( "/www/freshports.org/_private/getvalues.php3");
 
 <p>A port is the term used to describe a collection of files which makes it extremely
 easy to install an application.  As it says in the <a href="http://www.freebsd.org/ports/">
-FreeBSD Ports description</a>:<em>Installing an application is as simple as downloading 
-the port, unpacking it and typing make in the port directory</em>. So if you want application, 
-the port is the Way To Go(TM)<p>
+FreeBSD Ports description</a>: <em>Installing an application is as simple as downloading 
+the port, unpacking it and typing <b>make</b> in the port directory</em>. If you want an application, 
+the port is the Way To Go(TM)</p>
 
 <p>So off you go to the ports tree to install your favourite port.  It's quite easy. It's simple.
 And you love that new application.  And you want to know when the port is updated.  That's where

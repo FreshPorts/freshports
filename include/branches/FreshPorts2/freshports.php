@@ -1,12 +1,18 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.137 2003-03-06 22:05:03 dan Exp $
+	# $Id: freshports.php,v 1.4.2.138 2003-04-23 14:16:45 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/constants.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/burstmedia.php');
+
+#
+# special HTMLified mailto to foil spam harvesters
+#
+DEFINE('MAILTO', '&#109;&#97;&#105;&#108;&#116;&#111;');
+
 
 if ($Debug) echo "'" . $_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php<BR>';
 
@@ -57,10 +63,6 @@ return "
 
 }
 
-#
-# special HTMLified mailto to foil spam harvesters
-#
-$mailto = '&#109;&#97;&#105;&#108;&#116;&#111;';
 
 function freshports_Files_Icon() {
 	return '<IMG SRC="/images/logs.gif" ALT="files touched by this commit" TITLE="files touched by this commit" BORDER="0" WIDTH="17" HEIGHT="20">';
@@ -202,6 +204,14 @@ function freshports_CookieClear() {
 	SetCookie("visitor", '', 0, '/');
 }
 
+function freshportsObscureHTML($HTML) {
+	for ($i = 0; $i <strlen($HTML); $i++) {
+		$new_HTML .= ("&#".ord($HTML[$i]).";");
+	}
+	
+	return $new_HTML;
+}
+
 function freshports_CommitterEmailLink($committer) {
 	#
 	# in an attempt to reduce spam, encode the mailto
@@ -210,14 +220,11 @@ function freshports_CommitterEmailLink($committer) {
 	#
 
 	$new_addr = "";
-    GLOBAL $mailto;
 	$addr = $committer . "@FreeBSD.org";
 
-	for ($i=0; $i<strlen($addr); $i++) {
-		$new_addr .= ("&#".ord($addr[$i]).";");
-	}
+	$new_addr = freshportsObscureHTML($addr);
 
-	$HTML = "<A HREF='$mailto:$new_addr'>$committer</A>";
+	$HTML = "<A HREF=\"" . MAILTO . ":$new_addr\">$committer</A>";
 
 	return $HTML;
 }
@@ -233,14 +240,11 @@ function freshports_CommitterEmailLinkExtra($committer, $extrabits) {
 	#
 
 	$new_addr = "";
-    GLOBAL $mailto;
 	$addr = $committer . "@FreeBSD.org";
 
-	for ($i=0; $i<strlen($addr); $i++) {
-		$new_addr .= ("&#".ord($addr[$i]).";");
-	}
+	$new_addr = freshportsObscureHTML($addr);
 
-	$HTML = "<A HREF=\"$mailto:$new_addr?$extrabits\">$committer</A>";
+	$HTML = "<A HREF=\"" . MAILTO . ":$new_addr?$extrabits\">$committer</A>";
 
 	return $HTML;
 }
@@ -666,10 +670,10 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
       } else {
          $HTML .= 'was maintained'; 
       }
-      GLOBAL $mailto;
-      $HTML .= ' by:</i> <A HREF="' . $mailto . ':' . $port->maintainer;
-      $HTML .= htmlspecialchars('?cc=ports@FreeBSD.org&subject=FreeBSD%20Port:%20' . $port->port . '-' . $port->version) . '">';
-      $HTML .= $port->maintainer . "</A><BR>";
+
+      $HTML .= ' by:</i> <A HREF="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);
+      $HTML .= freshportsObscureHTML('?cc=ports@FreeBSD.org&subject=FreeBSD%20Port:%20' . $port->port . '-' . $port->version) . '">';
+      $HTML .= freshportsObscureHTML($port->maintainer) . "</A><BR>";
   }
 
    // there are only a few places we want to show the last change.
@@ -905,13 +909,12 @@ function mail2link($Arr) {
 
 	$addr     = $Arr[0];
 	$new_addr = "";
-    GLOBAL $mailto;
 
 	for ($i=0; $i<strlen($addr); $i++) {
 		$new_addr .= ("&#".ord($addr[$i]).";");
 	}
 
-	$addr = "<A HREF=\"$mailto:$new_addr\">$new_addr</A>";
+	$addr = "<A HREF=\"" . MAILTO . ":$new_addr\">$new_addr</A>";
 
 	return $addr;
 }

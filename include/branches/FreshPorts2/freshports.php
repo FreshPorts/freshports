@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.50 2002-03-19 14:29:47 dan Exp $
+   # $Id: freshports.php,v 1.4.2.51 2002-03-25 02:10:41 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -957,6 +957,10 @@ function freshports_UserSendToken($UserID, $dbh) {
 	}
 
 	if (IsSet($token)) {
+		OpenLog("FreshPorts", LOG_PID, LOG_SYSLOG);
+		SysLog(LOG_NOTICE, "User Creation: UID=$UserID, email=$email");
+		CloseLog();
+
 		$message =  "Someone, perhaps you, supplied your email address as their\n".
 					"FreshPorts login. If that wasn't you, and this message becomes\n".
 				    "a nuisance, please forward this message to webmaster@$HTTP_HOST\n".

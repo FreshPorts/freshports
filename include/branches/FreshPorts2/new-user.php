@@ -1,10 +1,9 @@
 <?
-	# $Id: new-user.php,v 1.1.2.8 2002-09-09 18:11:19 dan Exp $
+	# $Id: new-user.php,v 1.1.2.9 2002-12-11 04:35:51 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
-	$origin = $_GET["origin"];
-
+	$origin = $_REQUEST["origin"];
 ?>
 
 <form action="<?php echo $_SERVER["PHP_SELF"] . "?origin=" . $origin ?>" method="POST" NAME=f>

@@ -1,11 +1,11 @@
-<?
-	# $Id: watch_lists.php,v 1.1.2.1 2002-12-04 21:27:22 dan Exp $
+<?php
+	# $Id: watch_lists.php,v 1.1.2.2 2002-12-08 03:27:43 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 	#
 
 
-	require($_SERVER['DOCUMENT_ROOT'] . "/../classes/watch_list.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/watch_list.php");
 
 // base class for fetching watch lists
 class WatchLists {
@@ -21,7 +21,8 @@ class WatchLists {
 		$sql = "
 		SELECT id,
 		       user_id,
-		       name
+		       name,
+		       in_service
 		  FROM watch_list
 		 WHERE user_id = $UserID
 	 ORDER BY name";
@@ -51,11 +52,54 @@ class WatchLists {
 
 #		echo "fetching row $N<br>";
 
-		$commit = new WatchList($db);
+		$WatchList = new WatchList($db);
 
 		$myrow = pg_fetch_array($this->LocalResult, $N);
-		$commit->PopulateValues($myrow);
+		$WatchList->PopulateValues($myrow);
 
-		return $commit;
+		return $WatchList;
 	}
+
+	function	In_Service_Set($UserID, $WatchListIDs) {
+		#
+		# for each ID in $WatchListIDs, set in_service = true
+		# returns the number of rows set to true
+		#
+
+		$max = count($WatchListIDs);
+		$sql = 'UPDATE watch_list
+		           SET in_service = FALSE
+		         WHERE user_id = ' . AddSlashes($UserID);
+
+		if ($Debug) echo "<pre>$sql</pre>";
+		$result = pg_exec($this->dbh, $sql);
+		if ($result && $max) {
+			$sql = 'UPDATE watch_list
+		           SET in_service = TRUE
+		         WHERE user_id = ' . AddSlashes($UserID) . '
+		           AND id IN (';
+
+			for ($i = 0; $i < $max; $i++) {
+				$sql .= $WatchListIDs[$i] . ', ';
+			}
+
+			# now get rid of the trailing ,
+			$sql = substr($sql, 0, strlen($sql) - 2);
+
+			$sql .= ')';
+			if ($Debug) echo "<pre>$sql</pre>";
+			$result = pg_exec($this->dbh, $sql);
+		}
+		if ($result) {
+			$numrows = pg_affected_rows($result);
+		} else {
+			$numrows = -1;
+			die(pg_lasterror . '<pre>' . $sql . '</pre>');
+		}
+
+		return $numrows;
+	}
+
 }
+
+?>

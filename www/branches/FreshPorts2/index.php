@@ -1,5 +1,5 @@
 <?
-	# $Id: index.php,v 1.1.2.51 2002-11-28 21:52:27 dan Exp $
+	# $Id: index.php,v 1.1.2.52 2002-11-29 15:29:03 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -103,9 +103,7 @@ function GetPortNameFromFileName($file_name) {
 $num = AddSlashes($_GET["num"]);
 
 if (Is_Numeric($num)) {
-	$numrows = min($MaxNumberOfPorts, max(0, $num));
-} else {
-	$numrows = $MaxNumberOfPorts;
+	$MaxNumberOfPorts = min($MaxNumberOfPorts, max(10, $num));
 }
 
 $days = AddSlashes($_GET["days"]);
@@ -119,11 +117,6 @@ if (Is_Numeric($days)) {
 
       $database=$db;
       if ($database) {
-#
-# we limit the select to recent things by using a date
-# otherwise, it joins the whole table and that takes quite a while
-#
-#$numrows=400;
 
 if ($Debug) {
 	echo "\$WatchListID = '$WatchListID'\n";
@@ -165,7 +158,7 @@ if ($WatchListID) {
                AND WLE.element_id    = TEMP.element_id ' . "\n";
 }
 
-$sql .= '         ORDER BY commit_date_raw desc, category, port ' . " limit $numrows";
+$sql .= '         ORDER BY commit_date_raw desc, category, port ' . " limit $MaxNumberOfPorts";
 
 
 if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
@@ -197,7 +190,7 @@ if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 <TR><TD VALIGN="top" WIDTH="100%">
 <TABLE WIDTH="100%" border="1" CELLSPACING="0" CELLPADDING="8">
 <TR>
-		<? freshports_PageBannerText("$MaxNumberOfPorts most recent commits", 3); ?>
+		<? freshports_PageBannerText("$MaxNumberOfPorts most recently changed ports", 3); ?>
         <? //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPorts) ?>
 </TR>
 <TR><TD>

@@ -84,7 +84,7 @@ for the search log:
 
 mkdir /home/freshports.org/logs
 chmod g+w /home/freshports.org/logs
-
+chgrp www /home/freshports.org/logs
 
 
 Remember to create logins on the database for the updater to use.

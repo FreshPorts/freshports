@@ -1,5 +1,5 @@
 <?
-	# $Id: customize.php,v 1.1.2.10 2002-05-18 08:07:36 dan Exp $
+	# $Id: customize.php,v 1.1.2.11 2002-05-18 08:25:05 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -9,6 +9,9 @@
 
 ?>
 <script language="php">
+
+$origin = $_GET["origin"];
+$submit = _POST["submit"];
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {

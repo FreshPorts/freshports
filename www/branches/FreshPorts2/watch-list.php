@@ -1,5 +1,5 @@
 <?
-	# $Id: watch-list.php,v 1.2.2.4 2002-02-21 19:46:01 dan Exp $
+	# $Id: watch-list.php,v 1.2.2.5 2002-05-18 08:25:07 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
 
@@ -10,6 +10,7 @@
     require("./include/getvalues.php");
 
 	$Debug = 0;
+	$origin = $_GET["origin"];
 
 	$Origin = $HTTP_SERVER_VARS["HTTP_REFERER"];
 	$Redirect = 1;

@@ -1,7 +1,9 @@
 <?
-	# $Id: login.php,v 1.1.2.2 2002-05-18 08:03:00 dan Exp $
+	# $Id: login.php,v 1.1.2.3 2002-05-18 08:25:09 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
+
+	$origin = $_GET["origin"];
 ?>
 <form action="<?php echo $_SERVER["PHP_SELF"] . "?origin=$origin" ?>" method="POST"  name=f>
       <input type="hidden" name="custom_settings" value="1"><input type="hidden" name="LOGIN" value="1">

@@ -1,5 +1,5 @@
 <?
-	# $Id: login.php,v 1.1.2.16 2002-05-18 08:15:08 dan Exp $
+	# $Id: login.php,v 1.1.2.17 2002-05-18 08:25:05 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -8,6 +8,8 @@
    require("./include/databaselogin.php");
 
 $Debug=0;
+
+$origin = $_GET["origin"];
 
 if ($Debug) echo "origin = '" . rawurlencode($origin) . "'<BR>\n";
 
@@ -62,7 +64,7 @@ if ($_POST["UserID"]) {
 			} else {
 				SetCookie("visitor", $Cookie, time() + 60*60*24*120, '/');
 				// Redirect browser to PHP web site
-				if ($origin == "/index.php") {
+				if ($origin == "/index.php" || origin == "") {
 					$origin = "/";
 				}
 				header("Location: " . rawurldecode($origin));

@@ -1,5 +1,5 @@
 <?
-	# $Id: logout.php,v 1.1.2.4 2002-02-24 00:23:11 dan Exp $
+	# $Id: logout.php,v 1.1.2.5 2002-05-18 08:25:06 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -8,6 +8,8 @@
 	require("./include/databaselogin.php");
 
 	freshports_CookieClear();
+
+	$origin = $_GET["origin"];
 
 	if ($origin == "/index.php") {                   
 		$origin = "/";                                 

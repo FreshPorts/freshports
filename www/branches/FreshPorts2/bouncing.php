@@ -1,5 +1,5 @@
 <?
-	# $Id: bouncing.php,v 1.1.2.6 2002-05-18 08:07:35 dan Exp $
+	# $Id: bouncing.php,v 1.1.2.7 2002-05-18 08:25:04 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -9,6 +9,9 @@
 	require("./include/getvalues.php");
 
 	$Debug = 0;
+
+	$origin = $_GET["origin"];
+	$submit = _POST["submit"];
 
 
 if ($submit) {

@@ -1,5 +1,5 @@
 <?
-	# $Id: forgotten-password.php,v 1.1.2.8 2002-05-18 08:07:36 dan Exp $
+	# $Id: forgotten-password.php,v 1.1.2.9 2002-05-18 08:25:05 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -8,7 +8,9 @@
 	require("./include/databaselogin.php");
 
 
-#$Debug=1;
+$Debug=0;
+
+$submit = _POST["submit"];
 
 $MailSent = 0;
 

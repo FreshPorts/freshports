@@ -1,7 +1,9 @@
 <?
-	# $Id: new-user.php,v 1.1.2.6 2002-05-18 08:02:59 dan Exp $
+	# $Id: new-user.php,v 1.1.2.7 2002-05-18 08:25:09 dan Exp $
 	#
 	# Copyright (c) 1998-2002 DVL Software Limited
+
+	$origin = $_GET["origin"];
 
 ?>
 

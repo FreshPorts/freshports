@@ -1,5 +1,5 @@
 <?
-	# $Id: welcome.php,v 1.1.2.6 2002-04-20 03:23:36 dan Exp $
+	# $Id: welcome.php,v 1.1.2.7 2002-05-18 08:25:08 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -11,6 +11,8 @@
 	freshports_Start("New User",
 					"freshports - new ports, applications",
 					"FreeBSD, index, applications, ports");
+
+	$origin = $_GET["origin"];
 
 ?>
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">

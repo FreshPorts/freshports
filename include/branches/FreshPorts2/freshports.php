@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.178 2004-08-09 22:36:36 dan Exp $
+	# $Id: freshports.php,v 1.4.2.179 2004-08-25 20:32:44 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -62,6 +62,8 @@ function freshports_IndexFollow($URI) {
 	GLOBAL $g_NOFOLLOW;
 	GLOBAL $g_NOINDEX;
 
+	$l_NoFollow = 0;
+	$l_NoIndex  = 0;
 
 	if (IsSet($NOFOLLOW[$URI]) || $g_NOFOLLOW) $l_NoFollow = 1;
 	if (IsSet($NOINDEX[$URI])  || $g_NOINDEX)  $l_NoIndex  = 1;
@@ -401,7 +403,7 @@ echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 
 function freshports_HEAD_charset() {
 	return '
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 ';
 }
 
@@ -702,6 +704,7 @@ function freshports_depends_links($dbh, $DependsList) {
 	// split each depends up into different bits
 	$depends = explode(' ', $temp);
 	$Count = count($depends);
+	$HTML  = '';
 	for ($i = 0; $i < $Count; $i++) {
 		// split one depends into the library and the port name (/usr/ports/<category>/<port>)
 
@@ -770,10 +773,10 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 	}
 
 	if ($User->id && $IndicateWatchListStatus) {
-		if ($port->{onwatchlist}) {
-			$HTML .= ' '. freshports_Watch_Link_Remove($User->watch_list_add_remove, $port->onwatchlist, $port->{element_id});
+		if ($port->{'onwatchlist'}) {
+			$HTML .= ' '. freshports_Watch_Link_Remove($User->watch_list_add_remove, $port->onwatchlist, $port->{'element_id'});
 		} else {
-			$HTML .= ' '. freshports_Watch_Link_Add   ($User->watch_list_add_remove, $port->onwatchlist, $port->{element_id});
+			$HTML .= ' '. freshports_Watch_Link_Add   ($User->watch_list_add_remove, $port->onwatchlist, $port->{'element_id'});
 		}
 	}
 

@@ -1,5 +1,8 @@
 <?
 
+$cache_file     =       "/tmp/freshports.org.test.cache." . basename($PHP_SELF);
+$LastUpdateFile =       "/www/test.freshports.org/lastupdate";
+
 $db = mysql_connect("localhost","freshports", "marlboro");
 mysql_select_db("freshports",$db);
 

@@ -1,5 +1,5 @@
 <?
-	# $Id: customize.php,v 1.1.2.16 2002-06-09 21:42:34 dan Exp $
+	# $Id: customize.php,v 1.1.2.17 2002-09-11 13:39:34 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -28,8 +28,6 @@ if ($submit) {
    $email					= AddSlashes($_POST["email"]);
    $Password1				= AddSlashes($_POST["$Password1"]);
    $Password2				= AddSlashes($_POST["Password2"]);
-   $emailsitenotices_yn		= AddSlashes($_POST["emailsitenotices_yn"]);
-   $watchnotifyfrequency	= AddSlashes($_POST["watchnotifyfrequency"]);
    $numberofdays			= AddSlashes($_POST["numberofdays"]);
 
 
@@ -59,12 +57,6 @@ if ($submit) {
 
    $AccountModified = 0;
    if ($OK) {
-      if ($emailsitenotices_yn == "ON") {
-          $emailsitenotices_yn_value = "t";
-      } else {
-          $emailsitenotices_yn_value = "f";
-      }
-
       // get the existing email in case we need to reset the bounce count
       $sql = "select email from users where cookie = '$visitor'";
       $result = pg_exec($db, $sql);
@@ -76,8 +68,6 @@ if ($submit) {
 
          $sql = "update users set ";
          $sql .= "email			= '$email', ";
-         $sql .= "emailsitenotices_yn = '$emailsitenotices_yn_value',";
-         $sql .= "watch_notice_id     = $w$WatchNotice->id, ";
          $sql .= "number_of_days      = $numberofdays ";
 
          // if they are changing the email, reset the bouncecount.

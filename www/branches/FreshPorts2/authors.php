@@ -1,5 +1,5 @@
 <?
-	# $Id: authors.php,v 1.1.2.9 2002-06-09 21:42:32 dan Exp $
+	# $Id: authors.php,v 1.1.2.10 2002-06-20 19:57:37 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -30,6 +30,7 @@ do it alone.</p>
    missed people but I don't know who.  Please let me know if you should be here.</P>
 
 <UL>
+<LI>Adam Herzog wrote the XML DTD and the perl script which converts the raw email to XML.</LI>
 <LI>Marcin Gryszkalis did the underlying work for the the <A HREF="/graphs.php">graphs</A>.  He
     also helped out with the htmlifying of the log message (so you can click on PR and email and URLs).</LI>
 

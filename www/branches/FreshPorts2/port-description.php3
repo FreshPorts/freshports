@@ -1,5 +1,5 @@
 <?
-   # $Id: port-description.php3,v 1.25.2.4 2001-11-26 06:50:48 dan Exp $
+   # $Id: port-description.php3,v 1.25.2.5 2001-11-29 04:09:46 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -21,7 +21,8 @@ $sql = "select ports.id, element.name as port, ports.id as ports_id, " .
        "ports.maintainer, ports.short_description, ports.long_description, ".
        "ports.package_exists, ports.extract_suffix, ports.needs_refresh, ports.homepage, " .
        "ports.depends_run, ports.depends_build, element.status, " .
-       "ports.broken, ports.forbidden " .
+       "ports.broken, ports.forbidden, " .
+	   "ports.categories as categories ".
        "from ports, categories, element  ".
        "WHERE ports.id = $port ".
        "  and ports.category_id	= categories.id " .

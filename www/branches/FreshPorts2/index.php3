@@ -1,5 +1,5 @@
 <?
-   # $Id: index.php3,v 1.34.2.6 2001-11-27 19:23:50 dan Exp $
+   # $Id: index.php3,v 1.34.2.7 2001-11-29 04:09:46 dan Exp $
    #
    # Copyright (c) 1998-2001 DVL Software Limited
 
@@ -75,6 +75,15 @@ if ($Debug) {
 ports. A port is marked as new for 10 days.
 </td></tr>
 
+<TR><TD>
+
+<H1>Not all links will work</H1>
+
+<B>This is a work in progress.  Only the main page is expected to work. Other links may not, especially
+login...</B>
+
+</TR></TD>
+
 <?
 if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 ?>
@@ -131,7 +140,8 @@ select DISTINCT commit_log.commit_date as commit_date_raw,
 	   element.status    as status,
 	   ports.needs_refresh  as needs_refresh,
 	   ports.forbidden      as forbidden,
-	   ports.broken         as broken
+	   ports.broken         as broken,
+	   date_part('epoch', ports.date_created) as date_created
   from commit_log_port, commit_log, ports, element, categories
  where commit_log.commit_date        > '2001-09-01'
    and commit_log_port.commit_log_id = commit_log.id

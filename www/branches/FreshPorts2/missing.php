@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing.php,v 1.1.2.21 2003-10-16 03:04:12 dan Exp $
+	# $Id: missing.php,v 1.1.2.22 2003-11-26 17:29:04 dan Exp $
 	#
 	# Copyright (c) 2001-2003 DVL Software Limited
 	#
@@ -54,8 +54,12 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 				parse_str($_SERVER['REDIRECT_QUERY_STRING'], $query_parts);
 				$message_id = $query_parts['message_id'];
 
-				require_once($_SERVER['DOCUMENT_ROOT'] . '/include/files.php');
-				freshports_Files($User, $ElementRecord->id, $message_id, $db);
+				if ($message_id != '') {
+					require_once($_SERVER['DOCUMENT_ROOT'] . '/include/files.php');
+					freshports_Files($User, $ElementRecord->id, $message_id, $db);
+				} else {
+					$result = $REQUEST_URI;
+				}
 			} else {
 				require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-port.php');
 				freshports_PortDescription($db, $ElementRecord->id);

@@ -1,5 +1,5 @@
 <?
-	# $Id: how-big-is-it.php,v 1.1.2.1 2002-12-03 14:56:45 dan Exp $
+	# $Id: how-big-is-it.php,v 1.1.2.2 2002-12-04 16:23:13 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -13,6 +13,35 @@
 					"FreeBSD, index, applications, ports");
 
 	$Total = 0;
+	$Date = date("Y/m/d", time() - 86400);
+
+function format_number($Value) {
+	return str_replace(" ", "&nbsp;", sprintf("%6s", $Value));
+}
+	
+function StatsSQL($db, $Title, $Date) {
+	$sql = "select value, date 
+             from daily_stats_data, daily_stats 
+            where daily_stats_id = daily_stats.id 
+              and daily_stats.title = '$Title' 
+              and date = '$Date'";
+
+	$result = pg_exec($db, $sql);
+	if ($result) {
+		$numrows = pg_numrows($result);
+		if ($numrows) {
+			$myrow  = pg_fetch_array ($result, 0);
+			$Value  = $myrow[0];
+		} else {
+			$Value = 'numrows = ' . $numrows . ' ' . $sql;;
+		}
+	} else {
+		$Value = pg_errormessage();
+	}
+
+	return $Value;
+}
+
 ?>
 <TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><td VALIGN=TOP>
@@ -73,14 +102,10 @@ There is a page for each category:
 -------<br>
 <?php
 
-$sql = "select count(*) from categories";
-$result = pg_exec($db, $sql);
-$myrow = pg_fetch_array ($result, 0);
-$Categories = $myrow[0];
-$Output = sprintf("%6s", $Categories);
-echo str_replace(" ", "&nbsp;", $Output);
-echo '<br>';
-$Total += $Categories;
+$Value = StatsSQL($db, 'Category count', $Date);
+$Total += $Value;
+echo format_number($Value) . '<br>'
+
 ?>
 (1 row)<br>
 </code></blockquote>
@@ -104,30 +129,22 @@ There are ports, and there are deleted ports. I'll show both:
 -------<br>
 <?php
 
-$sql = "select count(*) from ports_all where status = 'A';";
-$result = pg_exec($db, $sql);
-$myrow = pg_fetch_array ($result, 0);
-$Ports = $myrow[0];
-$Output = sprintf("%6s", $Ports);
-echo str_replace(" ", "&nbsp;", $Output);
-echo '<br>';
-$Total += $Ports;
+$Value = StatsSQL($db, 'Port count', $Date);
+$Total += $Value;
+echo format_number($Value) . '<br>'
+
 ?>
 <br>
-# select count(*) from ports_all where status = 'A';<br>
+# select count(*) from ports_all where status = 'D';<br>
 &nbsp;count<br>
 -------<br>
 
 <?php
 
-$sql = "select count(*) from ports_all where status = 'D';";
-$result = pg_exec($db, $sql);
-$myrow = pg_fetch_array ($result, 0);
-$Ports = $myrow[0];
-$Output = sprintf("%6s", $Ports);
-echo str_replace(" ", "&nbsp;", $Output);
-echo '<br>';
-$Total += $Ports;
+$Value = StatsSQL($db, 'Port count (deleted)', $Date);
+$Total += $Value;
+echo format_number($Value) . '<br>';
+
 ?>
 (1 row)<br>
 </code></blockquote>
@@ -152,14 +169,10 @@ There is a page for each commit:
 -------<br>
 <?php
 
-$sql = "select count(distinct commit_log_id) from commit_log_ports;";
-$result = pg_exec($db, $sql);
-$myrow = pg_fetch_array ($result, 0);
-$Commits = $myrow[0];
-$Output = sprintf("%6s", $Commits);
-echo str_replace(" ", "&nbsp;", $Output);
-echo '<br>';
-$Total += $Commits;
+$Value = StatsSQL($db, 'Commit count (ports)', $Date);
+$Total += $Value;
+echo format_number($Value) . '<br>';
+
 ?>
 (1 row)<br>
 </code></blockquote>
@@ -184,14 +197,10 @@ For each commit, you can view the files modified by that commit for a particular
 -------<br>
 <?php
 
-$sql = "select count(*) from commit_log_ports";
-$result = pg_exec($db, $sql);
-$myrow = pg_fetch_array ($result, 0);
-$Commits = $myrow[0];
-$Output = sprintf("%6s", $Commits);
-echo str_replace(" ", "&nbsp;", $Output);
-echo '<br>';
-$Total += $Commits;
+$Value = StatsSQL($db, 'Commit Port Count', $Date);
+$Total += $Value;
+echo format_number($Value) . '<br>';
+
 ?>
 (1 row)<br>
 </code></blockquote>
@@ -216,14 +225,10 @@ For each day, there is a page showing the commits for that day.  How many days d
 -------<br>
 <?php
 
-$sql = "select count(distinct date_trunc('day', commit_date)) from commit_log, commit_log_ports where commit_log_ports.commit_log_id = commit_log.id;";
-$result = pg_exec($db, $sql);
-$myrow = pg_fetch_array ($result, 0);
-$Commits = $myrow[0];
-$Output = sprintf("%6s", $Commits);
-echo str_replace(" ", "&nbsp;", $Output);
-echo '<br>';
-$Total += $Commits;
+$Value = StatsSQL($db, 'Commit days (ports)', $Date);
+$Total += $Value;
+echo format_number($Value) . '<br>';
+
 ?>
 (1 row)<br>
 </code></blockquote>
@@ -247,14 +252,10 @@ Each user has a page:
 -------<br>
 <?php
 
-$sql = "select count(*) from users";
-$result = pg_exec($db, $sql);
-$myrow = pg_fetch_array ($result, 0);
-$Users = $myrow[0];
-$Output = sprintf("%6s", $Users);
-echo str_replace(" ", "&nbsp;", $Output);
-echo '<br>';
-$Total += $Users;
+$Value = StatsSQL($db, 'User count', $Date);
+$Total += $Value;
+echo format_number($Value) . '<br>';
+
 ?>
 (1 row)<br>
 </code></blockquote>
@@ -279,14 +280,10 @@ For each watch list, there is a page:
 -------<br>
 <?php
 
-$sql = "select count(*) from watch_list";
-$result = pg_exec($db, $sql);
-$myrow = pg_fetch_array ($result, 0);
-$Users = $myrow[0];
-$Output = sprintf("%6s", $Users);
-echo str_replace(" ", "&nbsp;", $Output);
-echo '<br>';
-$Total += $Users;
+$Value = StatsSQL($db, 'Watch List count', $Date);
+$Total += $Value;
+echo format_number($Value) . '<br>';
+
 ?>
 (1 row)<br>
 </code></blockquote>

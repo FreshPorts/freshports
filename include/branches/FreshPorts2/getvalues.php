@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: getvalues.php,v 1.1.2.31 2004-06-29 18:55:49 dan Exp $
+	# $Id: getvalues.php,v 1.1.2.32 2004-12-07 00:30:05 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -26,7 +26,8 @@ $DaysToShow  = 20;
 $MaxArticles = 40;
 $DaysNew     = 10;
 
-$MaxNumberOfPorts		= 100;
+$MaxNumberOfPorts		= 10;	# max number of commits to show on index.php
+$MaxNumberOfPortsLong   = 100;	# max number of commits to show on commits.php
 $ShowShortDescription	= "Y";
 $ShowMaintainedBy		= "Y";
 $ShowLastChange			= "Y";

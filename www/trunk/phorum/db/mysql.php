@@ -13,7 +13,7 @@ class db {
   }
 
   function open($database, $host, $user, $password) {
-    $this->connect_id=mysql_pconnect($host, $user, $password); 
+    $this->connect_id=mysql_connect($host, $user, $password); 
     if ($this->connect_id) {
       $result=@mysql_select_db($database);
       if (!$result) {

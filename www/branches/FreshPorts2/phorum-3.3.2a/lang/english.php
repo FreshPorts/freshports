@@ -156,7 +156,7 @@
     list($hour,$minute,$second) = explode(":",$time);
     $hour = $hour + $TimezoneOffset;
     $tstamp = mktime($hour,$minute,$second,$month,$day,$year);
-    $sDate = date("m-d-y H:i",$tstamp);
+    $sDate = date("m-d-y H:i T",$tstamp);
     return $sDate;
   }
 

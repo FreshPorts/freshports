@@ -1,5 +1,5 @@
 <?php
-	# $Id: commit_log_ports_vuxml.php,v 1.1.2.3 2004-08-27 11:56:22 dan Exp $
+	# $Id: commit_log_ports_vuxml.php,v 1.1.2.4 2004-08-27 12:05:03 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -39,7 +39,7 @@ select CLPV.id,
    and CLPV.vuxml_id = vuxml.id
  order by CLPV.commit_log_id ";
 
-		echo "\$sql='<pre>$sql</pre><br>\n";
+#		echo "\$sql='<pre>$sql</pre><br>\n";
 		$this->result = pg_exec($this->dbh, $sql);
 		if (!$this->result) {
 			echo pg_errormessage() . " $sql";

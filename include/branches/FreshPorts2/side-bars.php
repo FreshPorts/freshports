@@ -1,5 +1,5 @@
 <?
-	# $Id: side-bars.php,v 1.4.2.23 2002-05-18 08:03:00 dan Exp $
+	# $Id: side-bars.php,v 1.4.2.24 2002-05-18 17:21:07 dan Exp $
 	#
 	# Copyright (c) 1998-2001 DVL Software Limited
 
@@ -28,7 +28,7 @@
          break;
    }
 
-GLOBAL $visitor;
+$visitor = $_COOKIE["visitor"];
 
 //echo "OriginLocal = '$OriginLocal'<br>\n";
 if ($visitor) {

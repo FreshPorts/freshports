@@ -1,8 +1,9 @@
-<?
-
-	# $Id: freshports.php,v 1.4.2.123 2002-12-12 05:28:11 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2002 DVL Software Limited
+	# $Id: freshports.php,v 1.4.2.124 2003-01-01 13:49:33 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/constants.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/burstmedia.php');
@@ -849,7 +850,7 @@ function freshports_navigation_bar_top() {
 
 
 function freshports_copyright() {
-	return '<SMALL><A HREF="/legal.php" target="_top">Copyright</A> &copy; 2000-2002 <A HREF="http://www.dvl-software.com/">DVL Software Limited</A>. All rights reserved.</SMALL>';
+	return '<SMALL><A HREF="/legal.php" target="_top">Copyright</A> &copy; 2000-2003 <A HREF="http://www.dvl-software.com/">DVL Software Limited</A>. All rights reserved.</SMALL>';
 }
 
 function FormatTime($Time, $Adjustment, $Format) {

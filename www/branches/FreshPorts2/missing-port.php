@@ -1,5 +1,5 @@
 <?
-	# $Id: missing-port.php,v 1.1.2.10 2002-02-16 23:52:51 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.11 2002-02-17 23:24:06 dan Exp $
 	#
 	# Copyright (c) 2001 DVL Software Limited
 
@@ -92,7 +92,7 @@ function freshports_PortDescription($port) {
 
 ?>
 
-<TABLE WIDTH="<? echo $TableWidth ?>" BORDER="0" ALIGN="center">
+<TABLE WIDTH="<? echo $TableWidth ?>" BORDER="0" ALIGN="center" VALIGN="top">
 <tr><TD VALIGN="top" width="100%">
 <TABLE WIDTH="100%" BORDER="0" ALIGN="centre">
 <tr>
@@ -108,16 +108,16 @@ function freshports_PortDescription($port) {
 	GLOBAL $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription;
 
 
-	$ShowCategories		= 1;
+$ShowCategories			= 1;
 GLOBAL	$ShowDepends;
-$ShowDepends		= 1;
+$ShowDepends			= 1;
 $DaysMarkedAsNew= $DaysMarkedAsNew= $GlobalHideLastChange= $ShowChangesLink= $ShowDescriptionLink= $ShowDownloadPortLink= $ShowHomepageLink= $ShowLastChange= $ShowMaintainedBy= $ShowPortCreationDate= $ShowPackageLink= $ShowShortDescription =1;
-$HideDescription = 1;
-$ShowEverything  = 1;
-$ShowShortDescription = "Y";
-$ShowMaintainedBy     = "Y";
-$GlobalHideLastChange = "Y";
-$ShowDescriptionLink  = "N";
+$HideDescription		= 1;
+$ShowEverything			= 1;
+$ShowShortDescription	= "Y";
+$ShowMaintainedBy		= "Y";
+$GlobalHideLastChange	= "Y";
+$ShowDescriptionLink	= "N";
 
 	$HTML .= freshports_PortDetails($port, $port->dbh, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription);
 	echo $HTML;
@@ -129,6 +129,9 @@ $ShowDescriptionLink  = "N";
 ?>
 
 </TABLE>
+</TD>
+<TD>
+   <? include("./include/side-bars.php") ?>
 </TD>
 </TR>
 

@@ -1,6 +1,6 @@
 <?
 
-   # $Id: freshports.php,v 1.4.2.34 2002-02-17 19:58:23 dan Exp $
+   # $Id: freshports.php,v 1.4.2.35 2002-02-17 23:24:05 dan Exp $
    #
    # Copyright (c) 1998-2002 DVL Software Limited
 
@@ -23,8 +23,8 @@ $DateFormatDefault      = "j F Y";
 
 $FreshPortsTitle		= "FreshPorts";
 
-$FreshPortsWatchedPort		= "<A HREF=\"/watch-list.php?remove=' || commits_latest.element_id || '\">-</A>";
-$FreshPortsWatchedPortNot	= "<A HREF=\"/watch-list.php?add='    || commits_latest.element_id || '\">+</A>";
+$FreshPortsWatchedPort		= "<A HREF=\"/watch-list.php?remove=' || commits_latest.element_id || '\">Remove</A>";
+$FreshPortsWatchedPortNot	= "<A HREF=\"/watch-list.php?add='    || commits_latest.element_id || '\">Add</A>";
 
 #
 # SEQUENCES
@@ -457,6 +457,9 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 //
 	GLOBAL $freshports_CVS_URL;
 	GLOBAL $ShowDepends;
+	GLOBAL $FreshPortsWatchedPort;
+	GLOBAL $FreshPortsWatchedPortNot;
+	GLOBAL $WatchListID;
 
 	$MarkedAsNew = "N";
 	$HTML .= "<DL>\n";
@@ -470,7 +473,6 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
     		$HTML .= '-' . $port->{revision};
 		}
 	}
-
 
 	$HTML .= "</FONT>";
 
@@ -497,6 +499,12 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 #         $HTML .= ' <font size="-1">(' . date("j M Y H:i", $port->date_added) . ")</font>";
 #      }
 #   }
+
+	if ($WatchListID && $port->IsOnWatchList($WatchListID)) {
+		$HTML .= ' ' . $FreshPortsWatchedPort;
+	} else {
+		$HTML .= ' ' . $FreshPortsWatchedPortNot;
+	}
 
    $HTML .= "</DT>\n<DD>";
    # show forbidden and broken

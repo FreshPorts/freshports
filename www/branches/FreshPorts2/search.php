@@ -1,6 +1,6 @@
 .<?php
 	#
-	# $Id: search.php,v 1.1.2.75 2005-02-20 14:57:46 dan Exp $
+	# $Id: search.php,v 1.1.2.76 2005-04-09 20:36:40 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -218,6 +218,22 @@ $sql = "
       and ports.element_id   = element.id 
       and commit_log.id      = commit_log_ports_elements.commit_log_id
       and ports.element_id   = commit_log_ports_elements.element_id ' ;
+
+
+if ($method == 'soundex') {
+	switch ($stype) {
+		case 'name':
+		case 'package':
+		case 'latest_link':
+		case 'maintainer':
+			break;
+
+		default:
+			$method = 'match';
+			echo "NOTE: Instead of using 'sounding like' as instructed, the system used 'containing'.  See the notes below for why this is done.<br>";
+			break;
+	}
+}
 
 
 switch ($method) {
@@ -557,8 +573,17 @@ Search for:<BR>
 </form>
 
 <p>
-<small>Case sensitivity is ignored for "sounding like".<BR>
-When searching on 'Message ID' only exact matches will succeed.</small>
+
+<h3>Notes</h3>
+<ul>
+<li><small>Case sensitivity is ignored for "sounding like".</small></li>
+<li><small>When searching on 'Message ID' only exact matches will succeed.</small></li>
+<li><small>"Sounding like" is only for the short fields (i.e. "Port Name", "Package Name", "Latest Link", and
+"Maintainer"). If you try "Sounding like" on any other field, the system will actually use
+"Containing" instead.</small></li>
+</ul>
+</small>
+
 </p>
 <?php
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.221 2005-04-04 00:00:22 dan Exp $
+	# $Id: freshports.php,v 1.4.2.222 2005-04-13 18:54:03 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -25,6 +25,8 @@ DEFINE('BORDER',                '1');
 
 DEFINE('MESSAGE_ID_OLD_DOMAIN', '@freshports.org');
 DEFINE('MESSAGE_ID_NEW_DOMAIN', '@dev.null.freshports.org');
+
+DEFINE('UNMAINTAINTED_ADDRESS', 'ports@freebsd.org');
 
 
 if ($Debug) echo "'" . $_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php<BR>';
@@ -947,17 +949,26 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 
    // maintainer
    if ($port->maintainer && ($ShowMaintainedBy == "Y" || $ShowEverything)) {
-      $HTML .= '<i>';
-      if ($port->status == 'A') {
-         $HTML .= 'Maintained';
+      if (strtolower($port->maintainer) == UNMAINTAINTED_ADDRESS) {
+         $HTML .= '<br>There is no maintainer for this port.<br>';
+         $HTML .= 'Any concerns regarding this port should be directed to the FreeBSD ' .
+                   'Ports mailing list via ';
+         $HTML .= '<A HREF="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);
+         $HTML .= '&amp;subject=FreeBSD%20Port:%20' . $port->port . '-' . freshports_PackageVersion($port->version, $port->revision, $port->epoch) . '" TITLE="email the FreeBSD Ports mailing list">';
+         $HTML .= freshportsObscureHTML($port->maintainer) . "</A><BR><br>";
       } else {
-         $HTML .= 'was maintained'; 
-      }
+         $HTML .= '<i>';
+         if ($port->status == 'A') {
+            $HTML .= 'Maintained';
+         } else {
+            $HTML .= 'was maintained'; 
+         }
 
-      $HTML .= ' by:</i> <A HREF="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);
-      $HTML .= freshportsObscureHTML('?cc=ports@FreeBSD.org') . '&amp;subject=FreeBSD%20Port:%20' . $port->port . '-' . freshports_PackageVersion($port->version, $port->revision, $port->epoch) . '" TITLE="email the maintainer">';
-      $HTML .= freshportsObscureHTML($port->maintainer) . "</A><BR>";
-  }
+         $HTML .= ' by:</i> <A HREF="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);
+         $HTML .= freshportsObscureHTML('?cc=ports@FreeBSD.org') . '&amp;subject=FreeBSD%20Port:%20' . $port->port . '-' . freshports_PackageVersion($port->version, $port->revision, $port->epoch) . '" TITLE="email the maintainer">';
+         $HTML .= freshportsObscureHTML($port->maintainer) . "</A><BR>";
+      }
+   }
 
    // there are only a few places we want to show the last change.
    // such places set $GlobalHideLastChange == "Y"

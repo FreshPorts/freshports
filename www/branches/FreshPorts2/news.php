@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: news.php,v 1.1.2.18 2004-11-26 14:57:20 dan Exp $
+	# $Id: news.php,v 1.1.2.19 2005-05-17 22:47:34 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -14,6 +14,8 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 
 	DEFINE('NEWSCACHE', $_SERVER['DOCUMENT_ROOT'] . '/../caching/cache/news.rss');
+
+	header('Content-type: application/rss+xml');
 
 	if (file_exists(NEWSCACHE) && is_readable(NEWSCACHE)) {
 		readfile(NEWSCACHE);

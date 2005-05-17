@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.222 2005-04-13 18:54:03 dan Exp $
+	# $Id: freshports.php,v 1.4.2.223 2005-05-17 22:50:06 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -1017,7 +1017,9 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 	}
 
 
+	$HTML .= '======<br>';
 	$HTML .= PeopleWatchingThisPortAlsoWatch($db, $port->element_id);
+	$HTML .= '======<br>';
 
    if ($port->categories) {
       // remove the primary category and remove any double spaces or trailing/leading spaces
@@ -1736,7 +1738,7 @@ ALT="powered by apache" BORDER="0" WIDTH="259" HEIGHT="32"></A>
 Valid 
 <a href="http://validator.w3.org/check/referer" TITLE="We like to keep our HTML valid">HTML</a>, 
 <a href="http://jigsaw.w3.org/css-validator/check/referer" TITLE="We like to have valid CSS">CSS</a>, and
-<a href="http://feeds.archive.org/validator/check?url=http://' . $_SERVER['HTTP_HOST'] . '/news.php" TITLE="Valid RSS is good too">RSS</a>.
+<a href="http://feedvalidator.org/check.cgi?url=http://' . $_SERVER['HTTP_HOST'] . '/news.php" TITLE="Valid RSS is good too">RSS</a>.
 </small>
 <BR>' . freshports_copyright() . '
 

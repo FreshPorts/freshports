@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: news.php,v 1.1.2.6 2004-11-26 14:57:20 dan Exp $
+	# $Id: news.php,v 1.1.2.7 2005-05-17 22:47:59 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -188,8 +188,6 @@ limit 30";
 
 	$HTML .= '</channel>' . "\n";
 	$HTML .= '</rss>' . "\n";
-
-	header('Content-type: text/xml');
 
 	echo '<?xml version="1.0"?>', "\n";
 	echo $HTML;

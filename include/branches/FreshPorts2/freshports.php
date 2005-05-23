@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.223 2005-05-17 22:50:06 dan Exp $
+	# $Id: freshports.php,v 1.4.2.224 2005-05-23 16:19:23 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -1017,9 +1017,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 	}
 
 
-	$HTML .= '======<br>';
 	$HTML .= PeopleWatchingThisPortAlsoWatch($db, $port->element_id);
-	$HTML .= '======<br>';
 
    if ($port->categories) {
       // remove the primary category and remove any double spaces or trailing/leading spaces
@@ -2027,6 +2025,7 @@ function PeopleWatchingThisPortAlsoWatch($dbh, $element_id) {
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_list_also_watched.php');
 
 	$HTML = '';
+	return $HTML;
 
 	$AlsoWatched = new WatchListAlsoWatched($dbh);
 	$numrows = $AlsoWatched->WatchersAlsoWatch($element_id);

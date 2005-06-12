@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.225 2005-06-12 18:24:59 dan Exp $
+	# $Id: freshports.php,v 1.4.2.226 2005-06-12 18:41:26 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -954,7 +954,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
          $HTML .= 'Any concerns regarding this port should be directed to the FreeBSD ' .
                    'Ports mailing list via ';
          $HTML .= '<A HREF="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);
-         $HTML .= '&amp;subject=FreeBSD%20Port:%20' . $port->port . '-' . freshports_PackageVersion($port->version, $port->revision, $port->epoch) . '" TITLE="email the FreeBSD Ports mailing list">';
+         $HTML .= '?subject=FreeBSD%20Port:%20' . $port->category . '/' . $port->port . '" TITLE="email the FreeBSD Ports mailing list">';
          $HTML .= freshportsObscureHTML($port->maintainer) . "</A><BR><br>";
       } else {
          $HTML .= '<i>';
@@ -965,7 +965,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
          }
 
          $HTML .= ' by:</i> <A HREF="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);
-         $HTML .= '?subject=FreeBSD%20Port:%20' . $port->port . '-' . freshports_PackageVersion($port->version, $port->revision, $port->epoch) . '" TITLE="email the maintainer">';
+         $HTML .= '?subject=FreeBSD%20Port:%20' . $port->category . '/' . $port->port . '" TITLE="email the maintainer">';
          $HTML .= freshportsObscureHTML($port->maintainer) . "</A><BR>";
       }
    }

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.224 2005-05-23 16:19:23 dan Exp $
+	# $Id: freshports.php,v 1.4.2.225 2005-06-12 18:24:59 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -965,7 +965,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
          }
 
          $HTML .= ' by:</i> <A HREF="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);
-         $HTML .= freshportsObscureHTML('?cc=ports@FreeBSD.org') . '&amp;subject=FreeBSD%20Port:%20' . $port->port . '-' . freshports_PackageVersion($port->version, $port->revision, $port->epoch) . '" TITLE="email the maintainer">';
+         $HTML .= '?subject=FreeBSD%20Port:%20' . $port->port . '-' . freshports_PackageVersion($port->version, $port->revision, $port->epoch) . '" TITLE="email the maintainer">';
          $HTML .= freshportsObscureHTML($port->maintainer) . "</A><BR>";
       }
    }

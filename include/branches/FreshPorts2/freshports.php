@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.226 2005-06-12 18:41:26 dan Exp $
+	# $Id: freshports.php,v 1.4.2.227 2005-06-22 15:34:45 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -567,6 +567,9 @@ function freshports_HEAD_main_items() {
 	<META HTTP-EQUIV="cache-directive"     CONTENT="no-cache">
 	<META HTTP-EQUIV="Expires"             CONTENT="0">
 	<META NAME="ROBOTS"                    CONTENT="NOARCHIVE">
+	<link rel="alternate" type="application/rss+xml" title="FreshPorts - The Place For Ports" href="http://' . $_SERVER['HTTP_HOST'] . '/news.php">
+
+	
 ';
 }
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch.php,v 1.1.2.53 2005-01-22 14:48:54 dan Exp $
+	# $Id: watch.php,v 1.1.2.54 2005-06-24 04:01:59 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -11,6 +11,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/watch-lists.php');
 
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports_updating.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_list.php');
 
 	// if we don't know who they are, we'll make sure they login first
@@ -24,6 +25,9 @@
 	if ($Debug) phpinfo();
 
 	$visitor = $_COOKIE['visitor'];
+
+	$IncludeUpdating              = IsSet($_REQUEST['updating']);
+	$OnlyThoseWithUpdatingEntries = IsSet($_REQUEST['updatingonly']);
 
 	if ($_POST["watch_list_select_x"] && $_POST["watch_list_select_y"]) {
 		# they clicked on the GO button and we have to apply the 
@@ -56,6 +60,8 @@
 	freshports_Start($Title,
 					'freshports - new ports, applications',
 					'FreeBSD, index, applications, ports');
+
+	$PortsUpdating   = new PortsUpdating($db);
 
 ?>
 
@@ -116,6 +122,33 @@ switch ($sort) {
 
 echo "</td></tr>\n";
 
+?>
+
+<tr><td>
+<?php
+	if ($OnlyThoseWithUpdatingEntries) {
+		echo '<a href="?updating">Show all ports and entries from </code>/usr/ports/UPDATING</code></a>';
+	} else {
+		if ($IncludeUpdating) {
+			echo '<a href="http://' .  $_SERVER['HTTP_HOST'] .  $_SERVER['PHP_SELF'] . '">Hide entries from </code>/usr/ports/UPDATING</code></a>';
+		} else {
+			echo '<a href="?updating">Show entries from </code>/usr/ports/UPDATING</code></a>';
+		}
+	}
+
+	echo "\n<br>\n";
+
+	if ($OnlyThoseWithUpdatingEntries) {
+		echo '<a href="http://' .  $_SERVER['HTTP_HOST'] .  $_SERVER['PHP_SELF'] . '">Show all ports on my list.</a>';
+	} else {
+		echo '<a href="?updatingonly">Show only ports with entries in </code>/usr/ports/UPDATING</code></a>';
+	}
+
+?>
+</td></tr>
+
+<?php
+
 
 if ($wlid == '') {
 	echo '<tr><td align="right">You have no watch lists.</td></tr>';
@@ -133,7 +166,7 @@ if ($wlid == '') {
 	(
 	
 	select element.name 			as port, 
-			 ports.id 				as ports_id, 
+			 ports.id 				as id, 
 	       categories.name 		as category, 
 	       categories.id 		as category_id, 
 	       ports.version 		as version, 
@@ -162,7 +195,7 @@ if ($wlid == '') {
 	on (TEMP.last_commit_id = commit_log.id) 
 	
 	GROUP BY temp.port,
-				temp.ports_id, 
+				temp.id, 
 	         temp.category, 
 	         temp.category_id, 
 	         temp.version, 
@@ -218,12 +251,19 @@ if ($wlid == '') {
 			$TextNumRowsFound .= 'no ports';
 		}
 	}
-	$TextNumRowsFound .= ' found</small></p>';
-	echo '<tr><td>';
+	$TextNumRowsFound .= ' found';
+
+
+	$TextNumRowsFound .= '</small>';
+	echo "</p>\n<tr><td>";
 
 	if ($numrows > 0) {
 		// Display the first row count only if there is a port.
 		echo $TextNumRowsFound;
+
+		if ($OnlyThoseWithUpdatingEntries) {
+			echo '<small> on your watch list (but only showing those with entries in <code>/usr/ports/UPDATING</code>)</small>';
+		}
 	}
 
 	$ShowDescriptionLink = 0;
@@ -244,8 +284,16 @@ if ($wlid == '') {
 		echo '<DL>';
 	}
 
+
+	$NumSkipped = 0;
 	for ($i = 0; $i < $numrows; $i++) {
 		$port->FetchNth($i);
+		$NumRowsUpdating = $PortsUpdating->FetchInitialise($port->id);
+		if ($OnlyThoseWithUpdatingEntries && $NumRowsUpdating == 0){	
+			$NumSkipped++;
+			continue;
+		}
+
 		if ($ShowCategoryHeaders) {
 			$Category = $port->category;
 	
@@ -267,6 +315,11 @@ if ($wlid == '') {
 		}
 
 		echo freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 1, '', 0);
+
+		if ($IncludeUpdating || $OnlyThoseWithUpdatingEntries) {
+			freshports_UpdatingOutput($NumRowsUpdating, $PortsUpdating, $port);
+		}
+		
 		echo '<BR>';
 	}
 
@@ -276,9 +329,13 @@ if ($wlid == '') {
 
 	echo "</td></tr>\n";
 
-	echo "<tr><td>$TextNumRowsFound</td></tr>\n";
+	echo "<tr><td>$TextNumRowsFound";
 
-#	echo $HTML;
+	if ($OnlyThoseWithUpdatingEntries) {
+		echo '<small> on your watch list (but only showing ' . ($numrows - $NumSkipped) . ')</small>';
+	}
+
+	echo "</p>\n</td></tr>\n";
 
 } // end if no wlid
 

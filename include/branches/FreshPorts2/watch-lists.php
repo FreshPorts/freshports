@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-lists.php,v 1.1.2.13 2005-01-13 22:14:12 dan Exp $
+	# $Id: watch-lists.php,v 1.1.2.14 2005-06-24 03:59:08 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -110,6 +110,29 @@ function freshports_WatchListCountDefault($db, $UserID) {
 
 	return $myrow["count"];
 }
+
+function freshports_UpdatingOutput($NumRowsUpdating, $PortsUpdating, $port) {
+	if ($NumRowsUpdating > 0) {
+		echo '<TABLE BORDER="1" width="100%" CELLSPACING="0" CELLPADDING="5">' . "\n";
+		echo "<TR>\n";
+		echo freshports_PageBannerText("Notes from <a href=\"/UPDATING\">/usr/ports/UPDATING</a>", 1);
+		echo "<tr><td>\n";
+		echo "<ul>\n";
+
+		for ($i = 0; $i < $NumRowsUpdating; $i++) {
+			$PortsUpdating->FetchNth($i);
+			echo '<li>' . freshports_PortsUpdating($port, $PortsUpdating) . "</li>\n";
+			if ($i + 1 != $NumRowsUpdating) {
+				echo '<br>';
+			}
+		}
+
+		echo "</ul>\n";
+		echo "</td></tr>\n";
+		echo "</table>\n";
+	}
+}
+
 
 
 ?>

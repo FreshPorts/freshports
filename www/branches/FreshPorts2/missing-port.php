@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.56 2005-01-22 14:48:51 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.57 2005-06-24 03:59:54 dan Exp $
 	#
 	# Copyright (c) 2001-2003 DVL Software Limited
 	#
@@ -8,6 +8,9 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/master_slave.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/htmlify.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports_updating.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/files.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/watch-lists.php');
 
 #
 # tell the robots not to follow links from this page.
@@ -19,7 +22,6 @@ $g_NOFOLLOW = 1;
 
 DEFINE('COMMIT_DETAILS', 'files.php');
 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/include/files.php');
 
 function freshports_PortDescription($db, $element_id) {
 	GLOBAL $TableWidth;
@@ -80,33 +82,11 @@ GLOBAL $ShowWatchListCount;
 
 	echo "</TD></TR>\n</TABLE>\n\n";
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports_updating.php');
+
 	$PortsUpdating   = new PortsUpdating($port->dbh);
 	$NumRowsUpdating = $PortsUpdating->FetchInitialise($port->id);
 
-	if ($NumRowsUpdating > 0) {
-		echo '<TABLE BORDER="1" width="100%" CELLSPACING="0" CELLPADDING="5">' . "\n";
-		echo "<TR>\n";
-		echo freshports_PageBannerText("Notes from <a href=\"/UPDATING\">/usr/ports/UPDATING</a>", 1);
-		echo "<tr><td>\n";
-		echo "<ul>\n";
-
-		for ($i = 0; $i < $NumRowsUpdating; $i++) {
-			$PortsUpdating->FetchNth($i);
-			echo '<li>' . freshports_PortsUpdating($port, $PortsUpdating) . "</li>\n";
-			if ($i + 1 != $NumRowsUpdating) {
-				echo '<br>';
-			}
-		}
-
-		echo "</ul>\n";
-		echo "</td></tr>\n";
-		echo "</table>\n";
-	}
-
-
-
-
+	freshports_UpdatingOutput($NumRowsUpdating, $PortsUpdating, $port);
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports_moved.php');
 

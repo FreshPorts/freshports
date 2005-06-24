@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch.php,v 1.1.2.54 2005-06-24 04:01:59 dan Exp $
+	# $Id: watch.php,v 1.1.2.55 2005-06-24 04:18:56 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -127,21 +127,21 @@ echo "</td></tr>\n";
 <tr><td>
 <?php
 	if ($OnlyThoseWithUpdatingEntries) {
-		echo '<a href="?updating">Show all ports and entries from </code>/usr/ports/UPDATING</code></a>';
+		echo '<a href="?updating">View watched ports + entries from </code>/usr/ports/UPDATING</code></a>';
 	} else {
 		if ($IncludeUpdating) {
-			echo '<a href="http://' .  $_SERVER['HTTP_HOST'] .  $_SERVER['PHP_SELF'] . '">Hide entries from </code>/usr/ports/UPDATING</code></a>';
+			echo '<a href="http://' .  $_SERVER['HTTP_HOST'] .  $_SERVER['PHP_SELF'] . '">View all watched ports</a>';
 		} else {
-			echo '<a href="?updating">Show entries from </code>/usr/ports/UPDATING</code></a>';
+			echo '<a href="?updating">View all watched ports + entries from </code>/usr/ports/UPDATING</code></a>';
 		}
 	}
 
 	echo "\n<br>\n";
 
 	if ($OnlyThoseWithUpdatingEntries) {
-		echo '<a href="http://' .  $_SERVER['HTTP_HOST'] .  $_SERVER['PHP_SELF'] . '">Show all ports on my list.</a>';
+		echo '<a href="http://' .  $_SERVER['HTTP_HOST'] .  $_SERVER['PHP_SELF'] . '">View all watched ports.</a>';
 	} else {
-		echo '<a href="?updatingonly">Show only ports with entries in </code>/usr/ports/UPDATING</code></a>';
+		echo '<a href="?updatingonly">View only watched ports with entries in </code>/usr/ports/UPDATING</code></a>';
 	}
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.227 2005-06-22 15:34:45 dan Exp $
+	# $Id: freshports.php,v 1.4.2.228 2005-06-25 17:59:49 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -224,6 +224,28 @@ function freshports_Deprecated_Icon($HoverText = '') {
 
 function freshports_Deprecated_Icon_Link($HoverText = '') {
 	return '<a href="/' . FAQLINK . '#deprecated">' . freshports_Deprecated_Icon($HoverText) . '</a>';
+}
+
+function freshports_Expired_Icon($HoverText = '') {
+	$Alt       = "Expired";
+	$HoverText = freshports_HoverTextCleaner($Alt, $HoverText);
+
+	return '<IMG SRC="/images/expired.gif" ALT="' . $Alt . '" TITLE="' . $HoverText . '" BORDER="0" WIDTH="16" HEIGHT="16">';
+}
+
+function freshports_Expired_Icon_Link($HoverText = '') {
+	return '<a href="/' . FAQLINK . '#expired">' . freshports_Expired_Icon($HoverText) . '</a>';
+}
+
+function freshports_Expiration_Icon($HoverText = '') {
+	$Alt       = "Expiration Date";
+	$HoverText = freshports_HoverTextCleaner($Alt, $HoverText);
+
+	return '<IMG SRC="/images/expiration.gif" ALT="' . $Alt . '" TITLE="' . $HoverText . '" BORDER="0" WIDTH="16" HEIGHT="16">';
+}
+
+function freshports_Expiration_Icon_Link($HoverText = '') {
+	return '<a href="/' . FAQLINK . '#expiration">' . freshports_Expiration_Icon($HoverText) . '</a>';
 }
 
 function freshports_Restricted_Icon($HoverText = '') {
@@ -919,29 +941,37 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 	$HTML .= "</DT>\n<DD>";
 	# show forbidden and broken
 	if ($port->forbidden) {
-		$HTML .= freshports_Forbidden_Icon_Link($port->forbidden)   . ' FORBIDDEN: '  . htmlify(htmlspecialchars($port->forbidden))  . "<br>";
+		$HTML .= freshports_Forbidden_Icon_Link($port->forbidden)   . ' FORBIDDEN: '  . htmlify(htmlspecialchars($port->forbidden))  . '<br>';
 	}
 
 	if ($port->broken) {
-		$HTML .= freshports_Broken_Icon_Link($port->broken)         . ' BROKEN: '     . htmlify(htmlspecialchars($port->broken))     . "<br>"; ;
+		$HTML .= freshports_Broken_Icon_Link($port->broken)         . ' BROKEN: '     . htmlify(htmlspecialchars($port->broken))     . '<br>';
 	}
 
 	if ($port->deprecated) {
-		$HTML .= freshports_Deprecated_Icon_Link($port->deprecated) . ' DEPRECATED: ' . htmlify(htmlspecialchars($port->deprecated)) . "<br>"; ;
+		$HTML .= freshports_Deprecated_Icon_Link($port->deprecated) . ' DEPRECATED: ' . htmlify(htmlspecialchars($port->deprecated)) . '<br>';
+	}
+
+	if ($port->expiration_date) {
+		if (date('Y-m-d') >= $port->expiration_date) {
+			$HTML .= freshports_Expired_Icon_Link($port->expiration_date) . ' This port expired on: ' . $port->expiration_date . '<br>';
+		} else {
+			$HTML .= freshports_Expiration_Icon_Link($port->expiration_date) . ' EXPIRATION DATE: ' . $port->expiration_date . '<br>';
+		}
 	}
 
 	if ($port->ignore) {
-		$HTML .= freshports_Ignore_Icon_Link($port->ignore)         . ' IGNORE: '     . htmlify(htmlspecialchars($port->ignore))     . "<br>"; ;
+		$HTML .= freshports_Ignore_Icon_Link($port->ignore)         . ' IGNORE: '     . htmlify(htmlspecialchars($port->ignore))     . '<br>';
 	}
 
 	# we do not show vulnerabilities here.  We are showing detail.
 
 	if ($port->restricted) {
-		$HTML .= freshports_Restricted_Icon_Link($port->restricted) . ' RESTRICTED: '     . htmlify(htmlspecialchars($port->restricted)) . "<br>"; ;
+		$HTML .= freshports_Restricted_Icon_Link($port->restricted) . ' RESTRICTED: '     . htmlify(htmlspecialchars($port->restricted)) . '<br>';
 	}
 
 	if ($port->no_cdrom) {
-		$HTML .= freshports_No_CDROM_Icon_Link($port->no_cdrom)      . ' NO CDROM: '     . htmlify(htmlspecialchars($port->no_cdrom))   . "<br>"; ;
+		$HTML .= freshports_No_CDROM_Icon_Link($port->no_cdrom)      . ' NO CDROM: '     . htmlify(htmlspecialchars($port->no_cdrom))   . '<br>';
 	}
 
    // description
@@ -1016,7 +1046,11 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 	if (IsSet($port->no_package) && $port->no_package != '') {
 		$HTML .= '<p><b>No package is available:</b> ' . $port->no_package . '</p>';
 	} else {
-		$HTML .= '<p><b>To add the package:</b> <code class="code">pkg_add -r ' . $port->latest_link . '</code></p>';
+		if ($port->forbidden || $port->broken || $port->ignore) {
+			$HTML .= '<p><b>No package because port is marked as Forbidden/Broken/Ignore</b></p>';
+		} else {
+			$HTML .= '<p><b>To add the package:</b> <code class="code">pkg_add -r ' . $port->latest_link . '</code></p>';
+		}
 	}
 
 
@@ -1182,7 +1216,7 @@ function freshports_PortsMoved($port, $PortsMoved) {
 		}
 	}
 
-	$HTML .= 'on ' . $PortsMoved->date . "<br>";
+	$HTML .= 'on ' . $PortsMoved->date . '<br>';
 	$HTML .= 'REASON: ' . $PortsMoved->reason . '<br>';
 
 	return $HTML;

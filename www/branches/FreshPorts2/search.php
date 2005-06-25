@@ -1,6 +1,6 @@
 .<?php
 	#
-	# $Id: search.php,v 1.1.2.76 2005-04-09 20:36:40 dan Exp $
+	# $Id: search.php,v 1.1.2.77 2005-06-25 17:59:48 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -184,13 +184,13 @@ $sql = "
          ports_vulnerable.current as vulnerable_current,
          ports_vulnerable.past    as vulnerable_past,
          ports.forbidden,
-         ports.latest_link,
          ports.master_port,
          ports.latest_link,
          ports.no_package,
          ports.package_name,
          ports.restricted,
          ports.no_cdrom,
+         ports.expiration_date,
          ports.no_package  ";
 
 	if ($User->id) {

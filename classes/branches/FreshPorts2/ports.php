@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports.php,v 1.1.2.52 2005-02-16 23:55:28 dan Exp $
+	# $Id: ports.php,v 1.1.2.53 2005-06-25 18:01:36 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -44,6 +44,7 @@ class Port {
 	var $package_name;
 	var $restricted;
 	var $no_cdrom;
+	var $expiration_date;
 
 	// derived or from other tables
 	var $category;
@@ -111,6 +112,7 @@ class Port {
 		$this->package_name       = $myrow["package_name"];
 		$this->restricted         = $myrow["restricted"];
 		$this->no_cdrom           = $myrow["no_cdrom"];
+		$this->expiration_date    = $myrow["expiration_date"];
 
 		$this->port               = $myrow["port"];
 		$this->category           = $myrow["category"];
@@ -175,6 +177,7 @@ select ports.id,
        ports.package_name,
        ports.restricted,
        ports.no_cdrom,
+       ports.expiration_date,
 
        to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, 
        ports.categories as categories,
@@ -266,6 +269,7 @@ select ports.id,
 		               ports.package_name,
 	                   ports.restricted,
 	                   ports.no_cdrom,
+	                   ports.expiration_date,
 		               ports.categories as categories,
 			           element.name     as port, 
 			           categories.name  as category,
@@ -383,6 +387,7 @@ SELECT P.*, element.name    as port,
         ports.package_name,
         ports.restricted,
         ports.no_cdrom,
+        ports.expiration_date,
         ports.categories      as categories,
         categories.name       as category_looking_at,
         PRIMARY_CATEGORY.name as category,

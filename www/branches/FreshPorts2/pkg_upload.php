@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: pkg_upload.php,v 1.5.2.43 2005-01-22 14:48:52 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.44 2005-06-25 17:59:48 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -48,6 +48,16 @@ function DisplayUploadForm($db, $UserID) {
 	will take this information, analyze it, and use that data to update your watch list.
 	<SMALL><A HREF="/help.php">help</A></SMALL>
 	</P>
+
+	<p>
+	You can either save the output to a file and update the file, or you can
+	copy/paste the results into a form.
+	</p>
+
+	<table border="1" cellpadding="5" cellspacing="0" width="100%">
+	<tr>
+	<td valign="top">
+	<h2>Uploading a file</h2>
 
 	<P>Here are the steps you should perform:</P>
 
@@ -98,11 +108,35 @@ echo freshports_WatchListDDLB($db, $UserID);
 		</TABLE>
 	</FORM>
 
+	</td>
+	<td valign="top">
+	<h2>Copy/Paste</h2>
+
+	<FORM ACTION="<? echo $_SERVER["PHP_SELF"]; ?>" METHOD="post" enctype="multipart/form-data">
+		<TABLE>
+			<TR><TD>Paste the output of <code>pkg_info -qoa</code> here:</TD></TR>
+			<tr><td><textarea rows="20" cols="30"></textarea></td></tr>
+			<TR><TD><INPUT TYPE="submit" NAME="staging_copypaste" SIZE="20" VALUE="Staging"> <= Click here to go to staging area</TD></TR>
+			<tr><td><hr></td></tr>
+
+			<tr><td>Use this Watch List: 
+			<?php
+echo freshports_WatchListDDLB($db, $UserID); 
+
+?>
+</td></tr>
+			<tr><td><input type="radio" name="replaceappend" value="replace" checked>Replace list contents<br>
+                    <input type="radio" name="replaceappend" value="append" >Append to list (duplicates will be removed)</td></tr>
+			<tr><td><input type="submit" name="upload_copypaste" size="40" value="Upload"> <= Click here here to avoid staging area</td></tr>
+		</TABLE>
+	</FORM>
+
+
+	</td>
+	</tr>
+	</table>
+
 <?
-#	<P>
-#	If you prefer, you can download the <A HREF="/freshports.tgz">FreshPorts port</A> which will upload
-#	the output for you.
-#	</P>
 }
 
 function DisplayStagingArea($UserID, $WatchListID, $db) {

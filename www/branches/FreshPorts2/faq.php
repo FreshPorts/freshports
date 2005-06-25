@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.73 2005-06-25 16:37:16 dan Exp $
+	# $Id: faq.php,v 1.1.2.74 2005-06-25 17:59:48 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -622,7 +622,7 @@ pkg_add -r XFree86-clients
 
 	<p>
 	Broken, ignored, and forbidden ports are not built by the package
-	cluster.  Therefore, there is no packge for <code>pkg_add</code> to use.
+	cluster.  Therefore, there is no package for <code>pkg_add</code> to use.
 	
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 

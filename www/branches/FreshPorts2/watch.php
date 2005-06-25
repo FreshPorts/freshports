@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch.php,v 1.1.2.55 2005-06-24 04:18:56 dan Exp $
+	# $Id: watch.php,v 1.1.2.56 2005-06-25 17:59:49 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -183,6 +183,13 @@ if ($wlid == '') {
 	       ports.deprecated, 
 	       ports.ignore, 
 	       ports.forbidden, 
+           ports.master_port,
+           ports.latest_link,
+           ports.no_package,
+           ports.package_name,
+           ports.restricted,
+           ports.no_cdrom,
+           ports.expiration_date,
 	       1 as onwatchlist 
 	       from watch_list_element, element, categories, ports
 	 WHERE ports.category_id                = categories.id 
@@ -195,7 +202,7 @@ if ($wlid == '') {
 	on (TEMP.last_commit_id = commit_log.id) 
 	
 	GROUP BY temp.port,
-				temp.id, 
+			 temp.id, 
 	         temp.category, 
 	         temp.category_id, 
 	         temp.version, 
@@ -216,6 +223,13 @@ if ($wlid == '') {
 	         temp.deprecated, 
 	         temp.ignore, 
 	         temp.forbidden, 
+             temp.master_port,
+             temp.latest_link,
+             temp.no_package,
+             temp.package_name,
+             temp.restricted,
+             temp.no_cdrom,
+             temp.expiration_date,
 	         temp.onwatchlist  
 	";
 	

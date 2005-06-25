@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: date.php,v 1.1.2.29 2005-01-22 14:48:50 dan Exp $
+	# $Id: date.php,v 1.1.2.30 2005-06-25 18:39:08 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -196,6 +196,14 @@
 						$HTML .= ' '. freshports_Deprecated_Icon_Link($commit->deprecated) . "\n";
 					}
 		
+					if ($commit->expiration_date) {
+						if (date('Y-m-d') >= $commit->expiration_date) {
+							$HTML .= freshports_Expired_Icon_Link($commit->expiration_date) . "\n";
+						} else {
+							$HTML .= freshports_Expiration_Icon_Link($commit->expiration_date) . "\n";
+						}
+					}
+
 					if ($commit->ignore) {
 						$HTML .= ' '. freshports_Ignore_Icon_Link($commit->ignore) . "\n";
 					}

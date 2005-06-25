@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: latest_commits.php,v 1.1.2.11 2005-02-17 02:33:05 dan Exp $
+	# $Id: latest_commits.php,v 1.1.2.12 2005-06-25 18:40:03 dan Exp $
 	#
 	# Copyright (c) 2003-2004 DVL Software Limited
 	#
@@ -170,6 +170,14 @@ class LatestCommits {
 
 						if ($mycommit->deprecated) {
 							$this->HTML .= ' '. freshports_Deprecated_Icon_Link() . "\n";
+						}
+
+						if ($mycommit->expiration_date) {
+							if (date('Y-m-d') >= $mycommit->expiration_date) {
+							$HTML .= freshports_Expired_Icon_Link($mycommit->expiration_date) . "\n";
+							} else {
+							$HTML .= freshports_Expiration_Icon_Link($mycommit->expiration_date) . "\n";
+							}
 						}
 
 						if ($mycommit->ignore) {

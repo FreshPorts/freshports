@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: files.php,v 1.1.2.43 2005-04-04 00:00:22 dan Exp $
+	# $Id: files.php,v 1.1.2.44 2005-06-25 18:55:59 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -74,6 +74,7 @@ select element_pathname(element.id) as pathname,
        ports.ignore,
        ports.restricted,
        ports.no_cdrom,
+       ports.expiration_date,
        security_notice.id  AS security_notice_id,
        ports_vulnerable.current as vulnerable_current,
        ports_vulnerable.past    as vulnerable_past ";
@@ -202,6 +203,14 @@ select element_pathname(element.id) as pathname,
 
 		if ($myrow["deprecated"]) {
 			$HTML .= freshports_Deprecated_Icon_Link($myrow["deprecated"]) . "\n";
+		}
+
+		if ($myrow["expiration_date"]) {
+			if (date('Y-m-d') >= $myrow["expiration_date"]) {
+				$HTML .= freshports_Expired_Icon_Link($myrow["expiration_date"]) . "\n";
+			} else {
+				$HTML .= freshports_Expiration_Icon_Link($myrow["expiration_date"]) . "\n";
+			}
 		}
 
 		if ($myrow["ignore"]) {

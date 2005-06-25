@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit_record.php,v 1.1.2.9 2005-02-17 01:53:46 dan Exp $
+	# $Id: commit_record.php,v 1.1.2.10 2005-06-25 18:44:10 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -41,6 +41,8 @@ class CommitRecord {
 	var $vulnerable_past;
 	var $restricted;
 	var $no_cdrom;
+	var $expiration_date;
+
 	var $watch;
 	var $element_pathname;
 
@@ -80,6 +82,7 @@ class CommitRecord {
 		$this->vulnerable_past		= $myrow['vulnerable_past'];
 		$this->restricted			= $myrow['restricted'];
 		$this->no_cdrom				= $myrow['no_cdrom'];
+		$this->expiration_date		= $myrow['expiration_date'];
 		$this->element_pathname		= $myrow['element_pathname'];
 	}
 

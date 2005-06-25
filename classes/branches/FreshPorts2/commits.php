@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits.php,v 1.1.2.16 2004-09-22 15:34:35 dan Exp $
+	# $Id: commits.php,v 1.1.2.17 2005-06-25 18:44:10 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -42,6 +42,7 @@ class Commits {
 			ports.broken                                                                                                AS broken,
 			ports.deprecated                                                                                            AS deprecated,
 			ports.ignore                                                                                                AS ignore,
+			ports.expiration_date                                                                                       AS expiration_date,
 			date_part('epoch', ports.date_added)                                                                        AS date_added,
 			ports.element_id                                                                                            AS element_id,
 			ports.short_description                                                                                     AS short_description,

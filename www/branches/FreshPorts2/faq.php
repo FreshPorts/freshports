@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.74 2005-06-25 17:59:48 dan Exp $
+	# $Id: faq.php,v 1.1.2.75 2005-06-26 23:46:40 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -246,6 +246,14 @@ down you must read to find something you didn't already know.</P>
 	<P><a name="deprecated"><?php echo freshports_Deprecated_Icon() ?></a>
 		Deprecated: The port is marked as deprecated.  Perhaps it has exceeded
 		its lifetime or is obselete. </P>
+
+	<P><a name="expiration"><?php echo freshports_Expiration_Icon() ?></a>
+		Expiration Date: The port has an expiration date. A port may be removed from the
+        tree after this date. Often added in conjunction with Deprecated. </P>
+
+	<P><a name="expired"><?php echo freshports_Expired_Icon() ?></a>
+		Expired: The port has passed the expiration date. A port may be removed from the
+        tree after this date. Often added in conjunction with Deprecated. </P>
 
 	<P><a name="ignore"><?php echo freshports_Ignore_Icon() ?></a>
 		Ignore: The port is marked as ignore.  It probably does not build. Packages for an ignored port are not built

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports_page_list_ports.php,v 1.1.2.10 2005-06-26 23:38:17 dan Exp $
+	# $Id: freshports_page_list_ports.php,v 1.1.2.11 2005-06-26 23:56:45 dan Exp $
 	#
 	# Copyright (c) 2005 DVL Software Limited
 	#
@@ -69,6 +69,7 @@ SELECT ports.id,
        PV.current as vulnerable_current,
        PV.past    as vulnerable_past,
        restricted,
+       deprecated,
        no_cdrom,
        expiration_date,
        latest_link ";

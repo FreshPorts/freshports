@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports-expired.php,v 1.1.2.1 2005-06-25 17:59:49 dan Exp $
+	# $Id: ports-expired.php,v 1.1.2.2 2005-06-26 23:40:19 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -16,8 +16,8 @@
 
 	$page->setDB($db);
 
-	$page->setTitle('Broken ports');
-	$page->setDescription('These are the broken ports');
+	$page->setTitle('Ports that have expired');
+	$page->setDescription('These ports are past their expiration date');
 
 	$page->setSQL("ports.expiration_date is not null and ports.expiration_date <= CURRENT_DATE", $User->id);
 

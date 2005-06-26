@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports-expiration-date.php,v 1.1.2.1 2005-06-25 17:59:49 dan Exp $
+	# $Id: ports-expiration-date.php,v 1.1.2.2 2005-06-26 23:40:19 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -16,8 +16,8 @@
 
 	$page->setDB($db);
 
-	$page->setTitle('Broken ports');
-	$page->setDescription('These are the broken ports');
+	$page->setTitle('Ports with an expiration date');
+	$page->setDescription('These ports have an expiration date, after which they may be removed from the tree');
 
 	$page->setSQL("ports.expiration_date is not null", $User->id);
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports-expiration-date.php,v 1.1.2.2 2005-06-26 23:40:19 dan Exp $
+	# $Id: ports-expiration-date.php,v 1.1.2.3 2005-06-27 00:30:23 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -10,9 +10,9 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports_page_list_ports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports_page_expiration_ports.php');
 
-	$page = new freshports_page_list_ports();
+	$page = new freshports_page_expiration_ports();
 
 	$page->setDB($db);
 

@@ -1,12 +1,12 @@
 <?php
 	#
-	# $Id: news.php,v 1.1.2.22 2005-07-11 23:06:12 dan Exp $
+	# $Id: news.php,v 1.1.2.23 2005-07-15 01:55:23 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
 
 	$headers = apache_request_headers();
-
+/*
 	if(isset($headers['If-Modified-Since'])) {
 		syslog(LOG_NOTICE, 'If-Modified-Since=' . $headers['If-Modified-Since']);
 	}
@@ -14,7 +14,7 @@
 	if(isset($headers['ETag'])) {
 		syslog(LOG_NOTICE, 'ETag=' . $headers['ETag']);
 	}
-
+*/
 	DEFINE('MAX_PORTS', 20);
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');

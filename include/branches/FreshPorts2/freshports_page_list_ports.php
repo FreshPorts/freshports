@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports_page_list_ports.php,v 1.1.2.12 2005-07-15 03:08:34 dan Exp $
+	# $Id: freshports_page_list_ports.php,v 1.1.2.13 2005-07-15 03:10:19 dan Exp $
 	#
 	# Copyright (c) 2005 DVL Software Limited
 	#
@@ -144,7 +144,7 @@ WHERE ports.last_commit_id = commit_log.id
 			$last_modified = $myrow['last_modified'];
 		}
 
-echo 'Last Modified is ' . $last_modified . '<br>';
+#echo 'Last Modified is ' . $last_modified . '<br>';
 		return $last_modified;
 	}
 

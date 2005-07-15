@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: files.php,v 1.1.2.44 2005-06-25 18:55:59 dan Exp $
+	# $Id: files.php,v 1.1.2.45 2005-07-15 03:08:34 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -77,7 +77,8 @@ select element_pathname(element.id) as pathname,
        ports.expiration_date,
        security_notice.id  AS security_notice_id,
        ports_vulnerable.current as vulnerable_current,
-       ports_vulnerable.past    as vulnerable_past ";
+       ports_vulnerable.past    as vulnerable_past, 
+       GMT_Format(commit_log.date_added) as last_modified ";
 
 	if ($User->id) {
 		$sql .= ",
@@ -145,6 +146,8 @@ select element_pathname(element.id) as pathname,
 		$PathNamePrefixToRemove = '/ports/' . $myrow["category"] . '/' . $myrow["port"] . '/';
 
 		header("HTTP/1.1 200 OK");
+
+		freshports_ConditionalGet($myrow['last_modified']);
 
 		freshports_Start($myrow["category"] . '/' . $myrow["port"] . " - commit details",
     	           "freshports - new ports, applications",

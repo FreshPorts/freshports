@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: authors.php,v 1.1.2.21 2005-01-22 14:48:48 dan Exp $
+	# $Id: authors.php,v 1.1.2.22 2005-07-15 03:08:32 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -9,6 +9,8 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+
+	freshports_ConditionalGet(freshports_LastModified());
 
 	freshports_Start('The Authors',
 					'freshports - new ports, applications',

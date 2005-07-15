@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports_page.php,v 1.1.2.4 2005-01-23 04:50:47 dan Exp $
+	# $Id: freshports_page.php,v 1.1.2.5 2005-07-15 03:08:34 dan Exp $
 	#
 	# Copyright (c) 2005 DVL Software Limited
 	#
@@ -19,6 +19,10 @@ class freshports_page extends HTML_Page2 {
 	var $_debug             = 0;
 
     function freshports_page($attributes = array()) {
+
+		GLOBAL $ShowAds;
+
+		$this->_ShowAds = $ShowAds;
 		$this->assignDefaultAttributes($attributes);
 
 		$this->HTML_Page2($attributes);

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-category.php,v 1.1.2.33 2005-01-22 14:48:51 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.34 2005-07-15 03:08:33 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -45,6 +45,9 @@ function freshports_CategoryByID($db, $category_id, $PageNo = 1, $PageSize = 25)
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
 	$category = new Category($db);
 	$category->FetchByID($category_id);
+
+	freshports_ConditionalGet($category->last_modified);
+
 	freshports_CategoryDisplay($db, $category, $PageNo, $PageSize);
 }
 
@@ -53,6 +56,9 @@ function freshports_CategoryByElementID($db, $element_id, $PageNo = 1, $PageSize
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
 	$category = new Category($db);
 	$category->FetchByElementID($element_id);
+
+	freshports_ConditionalGet($category->last_modified);
+
 	freshports_CategoryDisplay($db, $category, $PageNo, $PageSize);
 }
 

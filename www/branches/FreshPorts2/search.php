@@ -1,6 +1,6 @@
 .<?php
 	#
-	# $Id: search.php,v 1.1.2.77 2005-06-25 17:59:48 dan Exp $
+	# $Id: search.php,v 1.1.2.78 2005-07-15 03:08:34 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -12,6 +12,8 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/htmlify.php');
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
+
+	freshports_ConditionalGet(freshports_LastModified_Dynamic());
 	
 	define('ORDERBYPORT',       'port');
 	define('ORDERBYCATEGORY',   'category');

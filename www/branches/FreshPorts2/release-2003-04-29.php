@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: release-2003-04-29.php,v 1.1.2.7 2005-01-22 14:48:53 dan Exp $
+	# $Id: release-2003-04-29.php,v 1.1.2.8 2005-07-15 03:08:33 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -9,6 +9,8 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+
+	freshports_ConditionalGet(freshports_LastModified());
 
 	$Title = "New Release - 29 April 2003";
 

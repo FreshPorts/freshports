@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.55 2005-06-25 18:50:14 dan Exp $
+	# $Id: commit.php,v 1.1.2.56 2005-07-15 03:08:32 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -23,6 +23,15 @@ DEFINE('NEXT_PAGE',		'Next');
 
 	if (IsSet($_GET['message_id'])) $message_id = AddSlashes($_GET['message_id']);
 	if (IsSet($_GET['commit_id']))  $commit_id  = AddSlashes($_GET['commit_id']);
+
+	# I'm quite sure we use only message_id, and never commit_id.
+	if ($message_id != '') {
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
+
+		$Commit = new Commit($db);
+		$Commit->FetchByMessageId($message_id);
+		freshports_ConditionalGet($Commit->last_modified);
+	}
 
 	if (IsSet($_REQUEST['page']))      $PageNo   = $_REQUEST['page'];
 	if (IsSet($_REQUEST['page_size'])) $PageSize = $_REQUEST['page_size'];

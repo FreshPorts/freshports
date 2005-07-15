@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.57 2005-06-24 03:59:54 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.58 2005-07-15 03:08:33 dan Exp $
 	#
 	# Copyright (c) 2001-2003 DVL Software Limited
 	#
@@ -31,7 +31,10 @@ function freshports_PortDescription($db, $element_id) {
 	$port = new Port($db);
 	$port->FetchByElementID($element_id, $User->id);
 
+	freshports_ConditionalGet($port->last_modified);
+
 	header("HTTP/1.1 200 OK");
+
 	$Title = $port->category . "/" . $port->port;
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');

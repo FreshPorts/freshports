@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.27 2005-01-22 14:48:50 dan Exp $
+	# $Id: categories.php,v 1.1.2.28 2005-07-15 03:08:32 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -11,7 +11,12 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user_tasks.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
 
+	$Commit = new Commit($db);
+	$Commit->DateNewestPort();
+
+	freshports_ConditionalGet($Commit->last_modified);
 
 	freshports_Start('Categories',
 					'freshports - new ports, applications',
@@ -21,7 +26,7 @@
 
 	DEFINE('VIRTUAL', '<sup>*</sup>'); 
 	$Primary['t'] = '';
-   $Primary['f'] = VIRTUAL;
+    $Primary['f'] = VIRTUAL;
 
 	$AllowedToEdit = $User->IsTaskAllowed(FRESHPORTS_TASKS_CATEGORY_VIRTUAL_DESCRIPTION_SET);
 

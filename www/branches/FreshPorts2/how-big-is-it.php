@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: how-big-is-it.php,v 1.1.2.17 2005-01-22 14:48:51 dan Exp $
+	# $Id: how-big-is-it.php,v 1.1.2.18 2005-07-15 03:08:33 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -9,6 +9,8 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+
+	freshports_ConditionalGet(freshports_LastModified());
 
 	freshports_Start('How big is it?',
 					'freshports - new ports, applications',

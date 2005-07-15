@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports_page_list_ports.php,v 1.1.2.11 2005-06-26 23:56:45 dan Exp $
+	# $Id: freshports_page_list_ports.php,v 1.1.2.12 2005-07-15 03:08:34 dan Exp $
 	#
 	# Copyright (c) 2005 DVL Software Limited
 	#
@@ -14,8 +14,20 @@ class freshports_page_list_ports extends freshports_page {
 	var $_description;
 	var $_port_status = 'A';  # show only active ports
 
+	var $_condition   = '';   # any conditions on the SQL
+
     function freshports_page_list_ports($attributes = array()) {
 		$this->freshports_page($attributes);
+	}
+
+	function Display() {
+		freshports_ConditionalGet($this->getLastModified());
+
+		# disable the HTML_Page2 headers.  we do our own.
+		#
+		$this->setCache(true);
+
+		parent::Display();
 	}
 
 	function setStatus($Status) {
@@ -74,15 +86,15 @@ SELECT ports.id,
        expiration_date,
        latest_link ";
 
-	if ($UserID) {
-		$this->_sql .= ",
-         onwatchlist";
-   }
+		if ($UserID) {
+			$this->_sql .= ",
+       onwatchlist";
+		}
 
-	$this->_sql .= "
+		$this->_sql .= "
 from element, categories, ports_vulnerable PV right outer join ports on PV.port_id = ports.id ";
 
-	if ($UserID) {
+		if ($UserID) {
 			$this->_sql .= '
       LEFT OUTER JOIN
  (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
@@ -92,23 +104,48 @@ from element, categories, ports_vulnerable PV right outer join ports on PV.port_
        AND watch_list.in_service
   GROUP BY wle_element_id) AS TEMP
        ON TEMP.wle_element_id = ports.element_id';
-	}
+		}
 
-	$this->_sql .= "
+		$this->_sql .= "
 WHERE ports.element_id  = element.id
   and ports.category_id = categories.id 
   and status            = '" . $this->getStatus() . "'";
 
-	if ($Condition) {
-		$this->_sql .= '
+		if ($Condition) {
+			$this->_sql .= '
   and ' . $Condition;
+			$this->_condition = $Condition;
+		}
+
+		$this->_sql .= " order by " . $this->getSort();
+#		$this->_sql .= " limit 20";
+
+#		echo '<pre>' . $this->_sql . '</pre>';
 	}
 
-	$this->_sql .= " order by " . $this->getSort();
-#	$this->_sql .= " limit 20";
+	function getLastModified() {
+		$sql = "
+SELECT gmt_format(max(commit_log.date_added)) as last_modified
+  FROM ports, element, commit_log
+WHERE ports.last_commit_id = commit_log.id
+  AND ports.element_id     = element.id
+  AND element.status       = '" . $this->getStatus() . "'";
 
-#	echo '<pre>' . $this->_sql . '</pre>';
+		if ($this->_condition) {
+			$sql .= '
+  and ' . $this->_condition;
+		}
 
+#		echo '<pre>' . $sql . '</pre>';
+
+		$result = pg_exec($this->_db, $sql);
+		if ($result) {
+			$myrow = pg_fetch_array ($result);
+			$last_modified = $myrow['last_modified'];
+		}
+
+echo 'Last Modified is ' . $last_modified . '<br>';
+		return $last_modified;
 	}
 
 	function getPorts() {

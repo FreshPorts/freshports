@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: date.php,v 1.1.2.30 2005-06-25 18:39:08 dan Exp $
+	# $Id: date.php,v 1.1.2.31 2005-07-15 03:08:33 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -11,13 +11,6 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits.php');
-
-	freshports_Start($FreshPortsSlogan,
-					$FreshPortsName . ' - new ports, applications',
-					'FreeBSD, index, applications, ports');
-	$Debug = 0;
-
-	$ArchiveBaseDirectory = $_SERVER['DOCUMENT_ROOT'] . '/archives';
 
 	# NOTE: All dates must be of the form: YYYY/MM/DD
 	# this format can be achieved using the date('Y/m/d') function.
@@ -44,6 +37,18 @@
 	} else {
 		$Date = date('Y/m/d', strtotime($Date));
 	}
+
+	$commits = new Commits($db);
+	$last_modified = $commits->LastModified($Date);
+
+	freshports_ConditionalGet($last_modified);
+
+	freshports_Start($FreshPortsSlogan,
+					$FreshPortsName . ' - new ports, applications',
+					'FreeBSD, index, applications, ports');
+	$Debug = 0;
+
+	$ArchiveBaseDirectory = $_SERVER['DOCUMENT_ROOT'] . '/archives';
 
 	function ArchiveFileName($Date) {
 		$File = $ArchiveBaseDirectory . '/' . $Date . '.daily';

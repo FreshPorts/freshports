@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.76 2005-06-26 23:54:05 dan Exp $
+	# $Id: faq.php,v 1.1.2.77 2005-07-15 03:08:33 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -9,6 +9,8 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+
+	freshports_ConditionalGet(freshports_LastModified());
 
 	freshports_Start('FAQ',
 					'freshports - new ports, applications',

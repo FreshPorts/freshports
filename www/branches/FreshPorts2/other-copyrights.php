@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: other-copyrights.php,v 1.1.4.12 2005-01-22 14:48:52 dan Exp $
+	# $Id: other-copyrights.php,v 1.1.4.13 2005-07-15 03:08:33 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -10,6 +10,8 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+
+	freshports_ConditionalGet(freshports_LastModified());
 
 	freshports_Start(	$ArticleTitle,
 					'',

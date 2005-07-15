@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-non-port.php,v 1.1.2.6 2005-01-22 14:48:51 dan Exp $
+	# $Id: missing-non-port.php,v 1.1.2.7 2005-07-15 03:08:33 dan Exp $
 	#
 	# Copyright (c) 2003 DVL Software Limited
 	#
@@ -11,6 +11,8 @@
 function freshports_NonPortDescription($db, $element_record) {
 	GLOBAL $TableWidth;
 	GLOBAL $FreshPortsTitle;
+
+	freshports_ConditionalGet(freshports_LastModified());
 
 	header("HTTP/1.1 200 OK");
 	$Title = preg_replace('|^/?ports/|', '', $element_record->element_pathname);

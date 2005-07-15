@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.229 2005-07-15 03:02:29 dan Exp $
+	# $Id: freshports.php,v 1.4.2.230 2005-07-15 03:09:17 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -2132,10 +2132,6 @@ function freshports_ConditionalGet($LastModified) {
 
 	$UnixTime = strtotime($LastModified);
 	$ETag     = gmdate('Y-m-d H:i:s', $UnixTime);
-
-	// Send the headers
-	echo 'Last-Modified: ' . $LastModified . '<br>';
-	echo 'ETag: '          . $ETag         . '<br>';
 
 	// Send the headers
 	header('Last-Modified: ' . $LastModified);

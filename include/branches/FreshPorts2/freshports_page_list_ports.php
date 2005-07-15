@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports_page_list_ports.php,v 1.1.2.13 2005-07-15 03:10:19 dan Exp $
+	# $Id: freshports_page_list_ports.php,v 1.1.2.14 2005-07-15 04:26:19 dan Exp $
 	#
 	# Copyright (c) 2005 DVL Software Limited
 	#
@@ -126,10 +126,11 @@ WHERE ports.element_id  = element.id
 	function getLastModified() {
 		$sql = "
 SELECT gmt_format(max(commit_log.date_added)) as last_modified
-  FROM ports, element, commit_log
-WHERE ports.last_commit_id = commit_log.id
-  AND ports.element_id     = element.id
-  AND element.status       = '" . $this->getStatus() . "'";
+  FROM element, commit_log, ports_vulnerable PV right outer join ports on PV.port_id = ports.id
+ WHERE ports.element_id     = element.id
+   AND ports.last_commit_id = commit_log.id
+   AND ports.element_id     = element.id
+   AND element.status       = '" . $this->getStatus() . "'";
 
 		if ($this->_condition) {
 			$sql .= '

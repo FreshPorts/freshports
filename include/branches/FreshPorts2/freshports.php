@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.228 2005-06-25 17:59:49 dan Exp $
+	# $Id: freshports.php,v 1.4.2.229 2005-07-15 03:02:29 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -583,11 +583,6 @@ function freshports_HEAD_main_items() {
 	<LINK REL="SHORTCUT ICON" HREF="/favicon.ico">
 	<meta name="MSSmartTagsPreventParsing" content="TRUE">
 
-	<META http-equiv="Pragma"              CONTENT="no-cache">
-	<META HTTP-EQUIV="Cache-Control"       CONTENT="no-cache">
-	<META HTTP-EQUIV="Pragma-directive"    CONTENT="no-cache">
-	<META HTTP-EQUIV="cache-directive"     CONTENT="no-cache">
-	<META HTTP-EQUIV="Expires"             CONTENT="0">
 	<META NAME="ROBOTS"                    CONTENT="NOARCHIVE">
 	<link rel="alternate" type="application/rss+xml" title="FreshPorts - The Place For Ports" href="http://' . $_SERVER['HTTP_HOST'] . '/news.php">
 
@@ -2107,6 +2102,73 @@ function freshports_RedirectPermanent($URL) {
 
 	header("HTTP/1.1 301 Moved Permanently");
 	header("Location: $URL");
+}
+
+
+define('LAST_MODIFIED_FORMAT', 'D, d M Y H:i:s T'); // eg Sun, 10 Jul 2005 22:49:33 GMT
+
+
+function freshports_LastModified() {
+	# get the last modified date of this file.
+	#
+	$UnixTime     = filemtime($_SERVER['SCRIPT_FILENAME']);
+	$LastModified = gmdate(LAST_MODIFIED_FORMAT, $UnixTime);
+
+	return $LastModified;
+}
+
+function freshports_LastModified_Dynamic() {
+	# Use the current date/time as the modified date.
+	#
+	$LastModified = gmdate(LAST_MODIFIED_FORMAT);
+
+	return $LastModified;
+}
+
+function freshports_ConditionalGet($LastModified) {
+	// A PHP implementation of conditional get, see 
+	//   http://fishbowl.pastiche.org/archives/001132.html
+	// Based upon code from http://simon.incutio.com/archive/2003/04/23/conditionalGet
+
+	$UnixTime = strtotime($LastModified);
+	$ETag     = gmdate('Y-m-d H:i:s', $UnixTime);
+
+	// Send the headers
+	echo 'Last-Modified: ' . $LastModified . '<br>';
+	echo 'ETag: '          . $ETag         . '<br>';
+
+	// Send the headers
+	header('Last-Modified: ' . $LastModified);
+	header('ETag: "'         . $ETag . '"');
+
+	$if_modified_since = false;
+	$if_none_match     = false;
+
+	// See if the client has provided the required headers
+	if (IsSet($_SERVER['HTTP_IF_MODIFIED_SINCE'])) {
+		$if_modified_since = stripslashes($_SERVER['HTTP_IF_MODIFIED_SINCE']);
+	}
+
+	if (IsSet($_SERVER['HTTP_IF_NONE_MATCH'])) {
+		$if_none_match = stripslashes($_SERVER['HTTP_IF_NONE_MATCH']);
+	}
+
+	if (!$if_modified_since && !$if_none_match) {
+		return;
+	}
+
+	// At least one of the headers is there - check them
+	if ($if_none_match && $if_none_match != $etag) {
+		return; // etag is there but doesn't match
+	}
+
+	if ($if_modified_since && $if_modified_since != $last_modified) {
+		return; // if-modified-since is there but doesn't match
+	}
+
+	// Nothing has changed since their last request - serve a 304 and exit
+	header('HTTP/1.0 304 Not Modified');
+	exit;
 }
 
 openlog('FreshPorts', LOG_PID | LOG_PERROR, LOG_LOCAL0);

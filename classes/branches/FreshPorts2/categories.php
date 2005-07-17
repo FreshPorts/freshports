@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.14 2005-07-17 14:19:36 dan Exp $
+	# $Id: categories.php,v 1.1.2.15 2005-07-17 18:40:30 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -96,11 +96,12 @@ SELECT C.*, (SELECT MAX(CL.date_added)
 	}
 
 	function FetchByName($Name) {
+
 		if (IsSet($Name)) {
 			$this->name = $Name;
 			$this->id   = '';
 		}
-		$sql = '
+		$sql = "
 SELECT C.*, (SELECT MAX(CL.date_added)
                FROM ports            P,
                     commit_log       CL,
@@ -109,7 +110,9 @@ SELECT C.*, (SELECT MAX(CL.date_added)
                 AND P.last_commit_id = CL.id
                 AND PC.category_id   = C.id) AS last_modified
   FROM categories C
- WHERE C.name = ' . $this->name;
+ WHERE C.name = '" . $this->name . "'";
+
+#		echo "<pre>$sql</pre>";
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {

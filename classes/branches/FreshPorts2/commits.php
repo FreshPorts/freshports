@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits.php,v 1.1.2.18 2005-07-17 14:19:36 dan Exp $
+	# $Id: commits.php,v 1.1.2.19 2005-07-17 14:31:37 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -119,10 +119,11 @@ class Commits {
 		$last_modified = gmdate();
 
 		$sql = "
-select gmt_format(max(CL.date_added)) as last_modified
-  from commit_log CL
- where CL.commit_date BETWEEN '2005-07-09'::timestamptz  + SystemTimeAdjust()
-                          AND '2005-07-09'::timestamptz  + SystemTimeAdjust() + '1 Day'";
+SELECT gmt_format(max(CL.date_added)) AS last_modified
+  FROM commit_log CL, commit_log_ports CLP
+ WHERE CL.id = CLP.commit_log_id
+   AND CL.commit_date BETWEEN '$Date'::timestamptz  + SystemTimeAdjust()
+                          AND '$Date'::timestamptz  + SystemTimeAdjust() + '1 Day'";
 		
 #		echo '<pre>' . $sql . '</pre>';
 		$result = pg_exec($this->dbh, $sql);

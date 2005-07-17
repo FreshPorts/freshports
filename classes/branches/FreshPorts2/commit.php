@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.12 2005-06-25 18:44:10 dan Exp $
+	# $Id: commit.php,v 1.1.2.13 2005-07-17 14:19:36 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -39,6 +39,8 @@ class Commit {
 	var $onwatchlist;
 	var $security_notice_id;
 
+	var $last_modified;
+
 	function Commit($dbh) {
 		$this->dbh	= $dbh;
 	}
@@ -71,6 +73,8 @@ class Commit {
 		$this->short_description	= $myrow["short_description"];
 		$this->onwatchlist			= $myrow["onwatchlist"];
 		$this->security_notice_id	= $myrow["security_notice_id"];
+
+		$this->last_modified		= $myrow["last_modified"];
 	}
 
 	function FetchByMessageId($message_id) {
@@ -86,9 +90,34 @@ SELECT id as commit_log_id,
        committer,
        description AS commit_description,
        system_id,
-       encoding_losses       
+       encoding_losses,
+       GMT_Format(date_added) as last_modified
   FROM commit_log 
  WHERE message_id = '" . AddSlashes($message_id) . "'";
+
+#		echo "sql = '<pre>$sql</pre>'<BR>";
+
+		$result = pg_exec($this->dbh, $sql);
+		if ($result) {
+			$numrows = pg_numrows($result);
+			if ($numrows == 1) {
+				if ($Debug) echo "fetched by ID succeeded<BR>";
+				$myrow = pg_fetch_array ($result, 0);
+				$this->PopulateValues($myrow);
+			}
+		}
+
+		return $this->message_id;
+	}
+
+	function DateNewestPort($message_id) {
+
+		$sql = "
+SELECT GMT_Format(date_added) as last_modified
+  FROM ports
+ WHERE date_added is not null
+  ORDER BY date_added desc 
+  LIMIT 1";
 
 #		echo "sql = '<pre>$sql</pre>'<BR>";
 

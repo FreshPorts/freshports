@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits.php,v 1.1.2.17 2005-06-25 18:44:10 dan Exp $
+	# $Id: commits.php,v 1.1.2.18 2005-07-17 14:19:36 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -112,5 +112,25 @@ class Commits {
 		$commit->PopulateValues($myrow);
 
 		return $commit;
+	}
+
+	function LastModified($Date) {
+		# default to the current GMT time
+		$last_modified = gmdate();
+
+		$sql = "
+select gmt_format(max(CL.date_added)) as last_modified
+  from commit_log CL
+ where CL.commit_date BETWEEN '2005-07-09'::timestamptz  + SystemTimeAdjust()
+                          AND '2005-07-09'::timestamptz  + SystemTimeAdjust() + '1 Day'";
+		
+#		echo '<pre>' . $sql . '</pre>';
+		$result = pg_exec($this->dbh, $sql);
+		if ($result) {
+			$myrow = pg_fetch_array($result);
+			$last_modified = $myrow['last_modified'];
+		}
+
+		return $last_modified;
 	}
 }

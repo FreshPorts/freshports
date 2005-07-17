@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports.php,v 1.1.2.53 2005-06-25 18:01:36 dan Exp $
+	# $Id: ports.php,v 1.1.2.54 2005-07-17 14:19:36 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -67,6 +67,9 @@ class Port {
 	var $message_id;
 	var $encoding_losses;
 
+	// taken from commit_log based upon ports.last_commit_id
+	var $last_modified;
+
 	// for any vulnerabilities
 	var $VuXML_List;
 
@@ -121,6 +124,7 @@ class Port {
 		$this->updated            = $myrow["updated"];
 
 		$this->onwatchlist        = $myrow["onwatchlist"];
+		$this->last_modified      = $myrow["last_modified"];
 
 		$this->update_description = $myrow["update_description"];
 		$this->message_id         = $myrow["message_id"];
@@ -185,7 +189,8 @@ select ports.id,
 	    categories.name  as category,
 	    element.status,
        ports_vulnerable.current as vulnerable_current,
-       ports_vulnerable.past    as vulnerable_past ";
+       ports_vulnerable.past    as vulnerable_past,
+       GMT_Format(commit_log.date_added) as last_modified ";
 
 		if ($UserID) {
 			$sql .= ",
@@ -194,7 +199,8 @@ select ports.id,
 
 		$sql .= "
        from categories, element, ports_vulnerable right outer join ports 
-                       on (ports_vulnerable.port_id = ports.id)";
+                       on (ports_vulnerable.port_id = ports.id)
+               left outer join commit_log on ports.last_commit_id = commit_log.id ";
 
 		if ($UserID) {
 			$sql .= "
@@ -275,7 +281,8 @@ select ports.id,
 			           categories.name  as category,
 			           element.status,
                        ports_vulnerable.current as vulnerable_current,
-                       ports_vulnerable.past    as vulnerable_past ";
+                       ports_vulnerable.past    as vulnerable_past,
+                       GMT_Format(commit_log.date_added) as last_modified ";
 
 		if ($UserID) {
 			$sql .= ', 
@@ -286,7 +293,8 @@ END as onwatchlist';
 
 
 		$sql .= " from categories, element, ports_vulnerable right outer join ports
-                       on (ports_vulnerable.port_id = ports.id)";
+                       on (ports_vulnerable.port_id = ports.id)
+               left outer join commit_log on ports.last_commit_id = commit_log.id ";
 
 		#
 		# if the watch list id is provided (i.e. they are logged in and have a watch list id...)

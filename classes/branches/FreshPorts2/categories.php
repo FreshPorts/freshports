@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.13 2004-08-26 11:30:46 dan Exp $
+	# $Id: categories.php,v 1.1.2.14 2005-07-17 14:19:36 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -27,13 +27,27 @@ class Category {
 		$this->element_id		= $myrow["element_id"];
 		$this->name				= $myrow["name"];
 		$this->description		= $myrow["description"];
+		$this->last_modified	= $myrow["last_modified"];
 	}
 
 	function FetchByID($id) {
 		if (IsSet($id)) {
 			$this->id = $id;
 		}
-		$sql = "select * from categories where id = $this->id";
+
+		# Get the category details, and the date of the
+		# last modified port therein
+		#
+		$sql = '
+SELECT C.*, (SELECT MAX(CL.date_added)
+               FROM ports            P,
+                    commit_log       CL,
+                    ports_categories PC
+              WHERE PC.port_id       = P.id
+                AND P.last_commit_id = CL.id
+                AND PC.category_id   = C.id) AS last_modified
+  FROM categories C
+ WHERE id = ' . $this->id;
 		if ($Debug) echo "sql = '$sql'<BR>";
 
         $result = pg_exec($this->dbh, $sql);
@@ -56,7 +70,16 @@ class Category {
 		if (IsSet($element_id)) {
 			$this->element_id = $element_id;
 		}
-		$sql = "select * from categories where element_id = $this->element_id";
+		$sql = '
+SELECT C.*, (SELECT MAX(CL.date_added)
+               FROM ports            P,
+                    commit_log       CL,
+                    ports_categories PC
+              WHERE PC.port_id       = P.id
+                AND P.last_commit_id = CL.id
+                AND PC.category_id   = C.id) AS last_modified
+  FROM categories C
+ WHERE C.element_id = ' . $this->element_id;
 		if ($Debug) echo "sql = '$sql'<BR>";
 
         $result = pg_exec($this->dbh, $sql);
@@ -77,7 +100,16 @@ class Category {
 			$this->name = $Name;
 			$this->id   = '';
 		}
-		$sql = "select * from categories where name = '$this->name'";
+		$sql = '
+SELECT C.*, (SELECT MAX(CL.date_added)
+               FROM ports            P,
+                    commit_log       CL,
+                    ports_categories PC
+              WHERE PC.port_id       = P.id
+                AND P.last_commit_id = CL.id
+                AND PC.category_id   = C.id) AS last_modified
+  FROM categories C
+ WHERE C.name = ' . $this->name;
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {

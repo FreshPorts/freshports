@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.230 2005-07-15 03:09:17 dan Exp $
+	# $Id: freshports.php,v 1.4.2.231 2005-07-20 18:56:33 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -19,7 +19,7 @@ DEFINE('MAILTO',                '&#109;&#97;&#105;&#108;&#116;&#111;');
 DEFINE('COPYRIGHTYEARS',        '2000-2005');
 DEFINE('URL2LINK_CUTOFF_LEVEL', 0);
 DEFINE('FAQLINK',               'faq.php');
-DEFINE('PORTSMONURL',			'http://portsmon.firepipe.net/portoverview.py');
+DEFINE('PORTSMONURL',			'http://portsmon.droso.net/portoverview.py');
 DEFINE('NOBORDER',              '0');
 DEFINE('BORDER',                '1');
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.232 2005-07-26 02:41:57 dan Exp $
+	# $Id: freshports.php,v 1.4.2.233 2005-08-01 21:34:00 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -67,7 +67,7 @@ function PortsFreezeStatus($ColSpan=1) {
 			$result .= ' colspan="' . $ColSpan . '"';
 		}
 		$result .= '>
-<p>A <a href="http://www.freebsd.org/doc/en/articles/committers-guide/ports.html#AEN1390">ports freeze</a>
+<p>A <a href="http://www.freebsd.org/doc/en/articles/committers-guide/ports.html#AEN1395">ports freeze</a>
  means that commits will be few and far between and only by approval.
 </p>
 </td></tr>

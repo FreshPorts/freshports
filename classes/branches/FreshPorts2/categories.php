@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.15 2005-07-17 18:40:30 dan Exp $
+	# $Id: categories.php,v 1.1.2.16 2005-08-03 12:01:20 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -98,8 +98,8 @@ SELECT C.*, (SELECT MAX(CL.date_added)
 	function FetchByName($Name) {
 
 		if (IsSet($Name)) {
-			$this->name = $Name;
-			$this->id   = '';
+			$this->name = AddSlashes($Name);
+			unset($this->id);
 		}
 		$sql = "
 SELECT C.*, (SELECT MAX(CL.date_added)
@@ -131,7 +131,7 @@ SELECT C.*, (SELECT MAX(CL.date_added)
 		$Debug = 0;
 
 		if (IsSet($Name)) {
-			$this->name = $Name;
+			$this->name = AddSlashes($Name);
 		}
 		$sql = "select CategoryPortCount('$this->name')";
 		if ($Debug) echo "sql = '$sql'<BR>";

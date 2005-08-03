@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-watch.php,v 1.1.2.44 2005-01-22 14:48:52 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.45 2005-08-03 12:15:33 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -15,10 +15,14 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_list.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_list_element.php');
 
-	$Debug = 0;
+	$Debug  = 0;
+	$submit = 0;
+	$HTML   = '';
 
-	$submit	= AddSlashes($_POST['submit']);
-	$visitor	= $_COOKIE['visitor'];
+	if (IsSet($_POST['submit'])) {
+		$submit = AddSlashes($_POST['submit']);
+	}
+	$visitor = $_COOKIE['visitor'];
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {
@@ -26,7 +30,7 @@ if (!$visitor) {
 	exit;  /* Make sure that code below does not get executed when we redirect. */
 }
 
-if ($_REQUEST['wlid']) {
+if (IsSet($_REQUEST['wlid'])) {
 		# they clicked on the GO button and we have to apply the 
 		# watch staging area against the watch list.
 		$wlid = AddSlashes($_REQUEST["wlid"]);
@@ -43,13 +47,26 @@ if ($_REQUEST['wlid']) {
 	}
 }
 
-$category = AddSlashes($_REQUEST['category']);
-$wlid     = AddSlashes($_REQUEST['wlid']);
+if (!freshports_IsInt($wlid)) {
+	$msg = "\$wlid = '$wlid', which is not an integer as expected.";
+	syslog(LOG_ERR, $msg . " User = '" . $User->id . "' in " . __FILE__ . ':' . __LINE__);
+	die($msg);
+}
 
 $Category = new Category($db);
-$Category->FetchByName($category);
-if (!IsSet($Category->id)) {
-	die("category $category not found");
+if (IsSet($_REQUEST['category'])) {
+	$category = AddSlashes($_REQUEST['category']);
+
+	$Category->FetchByName($category);
+	if (!IsSet($Category->id)) {
+		$msg = "category '$category' not found";
+		syslog(LOG_ERR, $msg . " User = '" . $User->id . "' in " . __FILE__ . ':' . __LINE__);
+		die($msg);
+	}
+} else {
+		$msg = "category not supplied";
+		syslog(LOG_ERR, $msg . " User = '" . $User->id . "' in " . __FILE__ . ':' . __LINE__);
+		die($msg);
 }
 
 if ($submit) {
@@ -69,7 +86,7 @@ if ($submit) {
          $result = pg_exec ($db, $sql);
          ${"port_".$value} = 1;
          if (!$result) {
-         	syslog(LOG_ERROR, $_SERVER["PHP_SELF"] . ": could not clear watch list '$wlid' owned by '$Use->id' of element '$value'");
+         	syslog(LOG_ERROR, $_SERVER["PHP_SELF"] . ": could not clear watch list '$wlid' owned by '$Use->id' of element '$value' in " . __FILE__ . ':' . __LINE__);
          	die("error clear list before saving");
          }
       }
@@ -193,7 +210,7 @@ if ($numrows) {
 
       $HTML .= '<input type="checkbox" name="ports[]" value="'. $rows[$i]["id"] .'"';
 
-      if (${"port_".$rows[$i]["id"]}) {
+      if (IsSet(${"port_".$rows[$i]["id"]})) {
          $HTML .= " checked ";
       }
 
@@ -242,7 +259,7 @@ if ($numrows) {
 <?php
 } else {
 	echo '<tr><td ALIGN="center">' . "\n";
-   echo "No ports found.  perhaps this is an invalid category id.";
+	echo "No ports found.  Perhaps this is an invalid category id.";
 	echo "</td></tr>\n";
 }
 

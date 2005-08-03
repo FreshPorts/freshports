@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.233 2005-08-01 21:34:00 dan Exp $
+	# $Id: freshports.php,v 1.4.2.234 2005-08-03 12:15:58 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -2165,6 +2165,15 @@ function freshports_ConditionalGet($LastModified) {
 	// Nothing has changed since their last request - serve a 304 and exit
 	header('HTTP/1.0 304 Not Modified');
 	exit;
+}
+
+#
+# obtained from http://ca3.php.net/manual/en/function.is-int.php 
+# on 2 August 2005. Posted by phpContrib (A T) esurfers d o t c o m
+# on 06-Nov-2003 03:42
+
+function freshports_IsInt($x) {
+   return ( is_numeric ($x ) ?  intval(0+$x ) ==  $x  :  false ); 
 }
 
 openlog('FreshPorts', LOG_PID | LOG_PERROR, LOG_LOCAL0);

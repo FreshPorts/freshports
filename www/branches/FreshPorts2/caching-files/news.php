@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: news.php,v 1.1.2.8 2005-07-02 02:10:24 dan Exp $
+	# $Id: news.php,v 1.1.2.9 2005-08-03 22:11:41 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -181,7 +181,7 @@ limit 30";
 		$HTML .= '</title>'                                                                                       . "\n";
 
 		$HTML .= '    <link>http://' . $ServerName . '/' . $myrow["category"] . '/' . $myrow["port"] . '/</link>' . "\n";
-		$HTML .= '    <description><pre>' . htmlspecialchars(trim($myrow["commit_description"])) . '</pre></description>'    . "\n";
+		$HTML .= '    <description>' . htmlspecialchars(trim($myrow["commit_description"])) . '</description>'    . "\n";
 
 		$HTML .= '  </item>'                                                                                      . "\n";
 	}

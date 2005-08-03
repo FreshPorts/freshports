@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: customize.php,v 1.1.2.34 2005-01-22 14:48:50 dan Exp $
+	# $Id: customize.php,v 1.1.2.35 2005-08-03 12:05:16 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -18,7 +18,7 @@
 	$AccountModified = 0;
 
 if (IsSet($_REQUEST['origin'])) $origin	= $_REQUEST['origin'];
-if (IsSet($_REQUEST['submit'])) $submit 	= $_REQUEST['submit'];
+if (IsSet($_REQUEST['submit'])) $submit = $_REQUEST['submit'];
 $visitor	= $_COOKIE['visitor'];
 
 if ($origin == '/index.php' || $origin == '') {

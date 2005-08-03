@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: bouncing.php,v 1.1.2.20 2005-01-22 14:48:49 dan Exp $
+	# $Id: bouncing.php,v 1.1.2.21 2005-08-03 12:05:16 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -14,7 +14,7 @@
 
 	$origin		= $_GET["origin"];
 	$submit		= $_POST["submit"];
-	$visitor		= $_COOKIE["visitor"];
+	$visitor	= $_COOKIE["visitor"];
 
 if ($origin == "/index.php" || $origin == "") {
 	$origin = "/";

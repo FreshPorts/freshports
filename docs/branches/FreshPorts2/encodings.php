@@ -5,10 +5,11 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 
-
-
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
+
+	freshports_ConditionalGet(freshports_LastModified());
+
 ?>
 
 <html>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits.php,v 1.1.2.19 2005-07-17 14:31:37 dan Exp $
+	# $Id: commits.php,v 1.1.2.20 2005-08-06 12:55:59 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -116,7 +116,7 @@ class Commits {
 
 	function LastModified($Date) {
 		# default to the current GMT time
-		$last_modified = gmdate();
+		$last_modified = gmdate(LAST_MODIFIED_FORMAT);
 
 		$sql = "
 SELECT gmt_format(max(CL.date_added)) AS last_modified

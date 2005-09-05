@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: new-user.php,v 1.1.2.39 2005-01-22 14:48:52 dan Exp $
+	# $Id: new-user.php,v 1.1.2.40 2005-09-05 19:52:59 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -34,11 +34,11 @@ if (IsSet($submit)) {
 
 	$errors = "";
 
-	$UserLogin				= AddSlashes($_POST["UserLogin"]);
-	$email					= AddSlashes($_POST["email"]);
-	$Password1				= AddSlashes($_POST["Password1"]);
-	$Password2				= AddSlashes($_POST["Password2"]);
-	$numberofdays			= AddSlashes($_POST["numberofdays"]);
+	$UserLogin				= $_POST["UserLogin"];
+	$email					= $_POST["email"];
+	$Password1				= $_POST["Password1"];
+	$Password2				= $_POST["Password2"];
+	$numberofdays			= $_POST["numberofdays"];
 
 	if ($UserLogin == '') {
 		$errors .= "Please enter a user id.<BR>";
@@ -84,9 +84,10 @@ if (IsSet($submit)) {
 			if (IsSet($UserID)) {			
 				$sql = "insert into users (id, name, password, cookie, email, " . 
 						"watch_notice_id, emailsitenotices_yn, type, ip_address, number_of_days) values (";
-				$sql .= "$UserID, '$UserLogin', '$Password1', '$Cookie', '$email', " .
-						"'1', 'N', 'U', '" . $_SERVER["REMOTE_ADDR"] . "', " .
-						"$numberofdays)";
+				$sql .= AddSlashes($UserID) . ", '" . AddSlashes($UserLogin) . "', '" .
+                        AddSlashes($Password1) . "', '" . AddSlashes($Cookie) . "', '" . 
+						AddSlashes($email) . "', '1', 'N', 'U', '" . $_SERVER["REMOTE_ADDR"] . "', " .
+						AddSlashes($numberofdays) . ')';
 
 				$errors .= "<BR>sql=" . $sql;
 

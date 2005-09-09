@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: new-user.php,v 1.1.2.12 2005-09-05 19:52:59 dan Exp $
+	# $Id: new-user.php,v 1.1.2.13 2005-09-09 20:09:20 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -9,6 +9,9 @@
 	GLOBAL $numberofdays;
 	GLOBAL $page_size;
 ?>
+
+<BIG><BIG>Having trouble registering?  Please, I want to know about it!  Email me at dan@langille.org.
+If you can send me a screen shot of the problem, I'll fix it!  Thank you.</big></big>
 
 <form action="<?php echo $_SERVER["PHP_SELF"] . "?origin=" . $origin ?>" method="POST" NAME=f>
 <TABLE width="*" border="0" cellpadding="1">

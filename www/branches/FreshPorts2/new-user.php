@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: new-user.php,v 1.1.2.41 2005-09-09 20:11:51 dan Exp $
+	# $Id: new-user.php,v 1.1.2.42 2005-09-10 14:40:09 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -14,6 +14,8 @@
 	if (IsSet($_REQUEST['submit'])) $submit = $_REQUEST['submit'];
 
 	$errors = 0;
+
+phpinfo();
 
 if ($origin == '/index.php' || $origin == '') {
 	$origin = '/';
@@ -34,11 +36,11 @@ if (IsSet($submit)) {
 
 	$errors = "";
 
-	$UserLogin				= $_POST["UserLogin"];
-	$email					= $_POST["email"];
-	$Password1				= $_POST["Password1"];
-	$Password2				= $_POST["Password2"];
-	$numberofdays			= $_POST["numberofdays"];
+	$UserLogin				= $_REQUEST["UserLogin"];
+	$email					= $_REQUEST["email"];
+	$Password1				= $_REQUEST["Password1"];
+	$Password2				= $_REQUEST["Password2"];
+	$numberofdays			= $_REQUEST["numberofdays"];
 
 	if ($UserLogin == '') {
 		$errors .= "Please enter a user id.<BR>";
@@ -58,6 +60,14 @@ if (IsSet($submit)) {
 			$errors .= 'A password must be supplied<BR>';
 			$OK = 0;
 		}
+	}
+
+	if (is_numeric($numberofdays)) {
+		if ($numberofdays < 0 || $numberofdays > 9) {
+			$numberofdays = 0;
+		}
+	} else {
+		$numberofdays = 0;
 	}
 
 	#

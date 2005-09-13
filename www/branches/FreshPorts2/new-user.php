@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: new-user.php,v 1.1.2.42 2005-09-10 14:40:09 dan Exp $
+	# $Id: new-user.php,v 1.1.2.43 2005-09-13 12:11:03 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -14,8 +14,6 @@
 	if (IsSet($_REQUEST['submit'])) $submit = $_REQUEST['submit'];
 
 	$errors = 0;
-
-phpinfo();
 
 if ($origin == '/index.php' || $origin == '') {
 	$origin = '/';
@@ -47,9 +45,19 @@ if (IsSet($submit)) {
 		$OK = 0;
 	}
 
+	if ($UserLogin != trim($UserLogin, "\t\n\r\x0B")) {
+		syslog(LOG_ERR, 'FreshPorts new user (odd UserLogin): '. $UserLogin);
+		$errors .= "Please, just use plain text for your user id.  This event has been logged.<br>";
+	}
+
 	if (!freshports_IsEmailValid($email)) {
 		$errors .= "That email address doesn't look right to me<BR>";
 		$OK = 0;
+	}
+
+	if ($email != trim($email, "\t\n\r\x0B")) {
+		syslog(LOG_ERR, 'FreshPorts new user (odd email): '. $email);
+		$errors .= "Please, just use plain text for your email.  This event has been logged.<br>";
 	}
 
 	if ($Password1 != $Password2) {

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-lists.php,v 1.1.2.14 2005-06-24 03:59:08 dan Exp $
+	# $Id: watch-lists.php,v 1.1.2.15 2005-10-07 23:55:43 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -133,6 +133,34 @@ function freshports_UpdatingOutput($NumRowsUpdating, $PortsUpdating, $port) {
 	}
 }
 
+function freshports_WatchListVerifyToken($db, $token) {
+	$id = '';
 
+	$sql = "SELECT id from watch_list where token = '" . $token . "'";
+
+	echo $sql;
+
+	$result = pg_exec($db, $sql);
+	if ($result) {
+		$numrows = pg_numrows($result);
+		switch ($numrows) {
+			case 0:
+				// nothing found, do nothing
+				break;
+
+			case 1:
+				$row = pg_fetch_array($result, 0);
+				$id = $row['id'];
+				break;
+
+			default:
+				syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ' more than one watch list with this token ' . $token);
+				header('HTTP/1.1 500 OK******');
+				exit;
+		}
+	}
+
+	return $id;
+}
 
 ?>

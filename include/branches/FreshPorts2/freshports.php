@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.234 2005-08-03 12:15:58 dan Exp $
+	# $Id: freshports.php,v 1.4.2.235 2005-10-07 23:55:43 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -1848,6 +1848,7 @@ function freshports_SideBar() {
 		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/watch-categories.php',       '',                     "Watch list - Categories", "Search through categories for ports to add to your watch list"             ) . '</FONT><BR>';
 		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/watch-list-maintenance.php', '',                     "Watch lists - Maintain",  "Maintain your watch list[s]"                                               ) . '</FONT><BR>';
 		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/watch.php',                  '',                     "Your watched ports",      "Your list of watched ports"                                                ) . '</FONT><BR>';
+		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/rss/watch-list.php',         '',                     "Personal newsfeeds	",   "A list of news feeds for your watched lists"                               ) . '</FONT><BR>';
 		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/report-subscriptions.php',   '',                     "Report Subscriptions",    "Maintain your list of subscriptions"                                       ) . '</FONT><BR>';
 	} else {
 		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/login.php',                  "?origin=$OriginLocal", "User Login",              "Login to the website"                                                      ) . '</FONT><BR>';

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports-new.php,v 1.1.2.1 2005-03-13 14:00:29 dan Exp $
+	# $Id: ports-new.php,v 1.1.2.2 2005-10-08 01:59:20 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -87,7 +87,7 @@ SELECT PA.name AS port,
        PA.maintainer,
        PA.version,
        PA.revision,
-       PA.portepoch
+       PA.portepoch as epoch
   FROM ports_active PA
  WHERE PA.date_added is not NULL
 ORDER BY PA.date_added desc

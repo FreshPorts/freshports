@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-list.php,v 1.1.2.1 2005-10-07 23:55:43 dan Exp $
+	# $Id: watch-list.php,v 1.1.2.2 2005-10-08 02:00:48 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -13,10 +13,12 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/watch-lists.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_lists.php');
 
 	$Debug = 0;
 
 function DisplayNewsFeed($db, $token) {
+	$Debug = 0;
 
 
 	GLOBAL $FreshPortsSlogan;
@@ -57,7 +59,7 @@ function DisplayNewsFeed($db, $token) {
 	$HTML .= '    <description>FreshPorts - The place for ports</description>'                 . "\n";
 	$HTML .= '  </image>'                                                                      . "\n";
 
-	$sort ="CL.commit_date desc, CL.id asc, E.name, category, version";
+	$sort ="commit_date_sort DESC, CL.id ASC, E.name, category, version";
 
 	$MaxArticles = MAX_PORTS;
 	$date        = 1;
@@ -101,7 +103,10 @@ function DisplayNewsFeed($db, $token) {
 	       E.id 			as element_id,
            to_char(CL.commit_date - SystemTimeAdjust(), 'DD Mon')  AS commit_date,
            to_char(CL.commit_date - SystemTimeAdjust(), 'HH24:MI') AS commit_time,
-           CL.description       AS commit_description
+           CL.description       AS commit_description,
+           CLP.port_epoch as epoch,
+           CL.committer,
+           CL.commit_date as commit_date_sort
 	  FROM watch_list_element WLE, element E, categories C, ports P,
            commit_log CL, commit_log_ports CLP
 	 WHERE CLP.commit_log_id = CL.id
@@ -112,6 +117,8 @@ function DisplayNewsFeed($db, $token) {
 	   AND WLE.watch_list_id = $wlid";
 	
 	$sql .= " order by $sort ";
+
+	syslog (LOG_NOTICE, $wlid . ' ' . $sort);
 	
 	if ($Debug) {
 	   echo "<pre>$sql</pre>";
@@ -182,16 +189,47 @@ function DisplayNewsFeed($db, $token) {
 	echo $HTML;
 }
 
-function DisplayWatchListNewsFeeds($db) {
-	echo 'These are your newsfeeds';
+function DisplayWatchListNewsFeeds($db, $UserID) {
+	$Debug = 0;
+
+	echo '<h1>These are your newsfeeds</h1>';
+	$WatchLists = new WatchLists($db);
+	$NumRows = $WatchLists->Fetch($UserID);
+
+	if ($Debug) {
+		echo "$NumRows rows found!<br>";
+		echo "selected = '$selected'<br>";
+	}
+
+	$HTML = '';
+
+	if ($NumRows) {
+		for ($i = 0; $i < $NumRows; $i++) {
+			$WatchList = $WatchLists->FetchNth($i);
+			$URL = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . '?id=' . $WatchList->token;
+			$HTML .= '<a href="' . $URL . '">' . $WatchList->name . '</a><br>';
+		}
+	}
+
+	$HTML .= '</select>';
+
+	echo $HTML;	
 }
 
-	$token = $_REQUEST['id'];
+	if (IsSet($_REQUEST['id'])) {
+		$token = $_REQUEST['id'];
+	}
 
-	if (!IsSet($token)) {
-		DisplayWatchListNewsFeeds($db);
-	} else {
+	if (IsSet($token)) {
 		DisplayNewsFeed($db, $token);
+	} else {
+		// if we don't know who they are, we'll make sure they login first
+		if (!$visitor) {
+			header("Location: /login.php");
+			exit;  /* Make sure that code below does not get executed when we redirect. */
+		}
+
+		DisplayWatchListNewsFeeds($db, $User->id);
 	}
 
 ?>

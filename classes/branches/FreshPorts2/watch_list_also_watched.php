@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: watch_list_also_watched.php,v 1.1.2.1 2004-11-30 12:50:32 dan Exp $
+	# $Id: watch_list_also_watched.php,v 1.1.2.2 2005-10-08 01:56:58 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2005 DVL Software Limited
 	#
 
 	$Debug = 0;
@@ -68,3 +68,5 @@ class WatchListAlsoWatched {
 		$this->URL			= $myrow['url'];
 	}
 }
+
+?>

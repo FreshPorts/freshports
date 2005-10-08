@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: watch_lists.php,v 1.1.2.16 2004-10-25 00:20:52 dan Exp $
+	# $Id: watch_lists.php,v 1.1.2.17 2005-10-08 01:58:08 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2005 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_list.php');
@@ -47,19 +47,21 @@ DELETE FROM watch_list
 			       user_id,
 			       name,
 			       in_service,
-			       count(element_id) as watch_list_count
+			       count(element_id) as watch_list_count,
+			       token
 			  FROM watch_list LEFT OUTER JOIN watch_list_element
 			    ON watch_list_element.watch_list_id = watch_list.id
 			   AND watch_list_element.element_id    = $element_id
 			 WHERE user_id = $UserID
-		 GROUP BY id, user_id, name, in_service, element_id
+		 GROUP BY id, user_id, name, in_service, element_id, token
 		 ORDER BY name";
 		} else {
 			$sql = "
 			SELECT id,
 			       user_id,
 			       name,
-			       in_service
+			       in_service,
+			       token
 			  FROM watch_list
 			 WHERE user_id = $UserID
 		 ORDER BY name";
@@ -98,7 +100,7 @@ DELETE FROM watch_list
 		return $WatchList;
 	}
 
-	function	In_Service_Set($UserID, $WatchListIDs) {
+	function In_Service_Set($UserID, $WatchListIDs) {
 		#
 		# for each ID in $WatchListIDs, set in_service = true
 		# returns the number of rows set to true

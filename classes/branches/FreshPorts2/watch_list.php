@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: watch_list.php,v 1.1.2.18 2004-11-17 13:23:28 dan Exp $
+	# $Id: watch_list.php,v 1.1.2.19 2005-10-08 01:58:08 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2005 DVL Software Limited
 	#
 
 $Debug = 0;
@@ -16,6 +16,8 @@ class WatchList {
 	var $user_id;
 	var $name;
 	var $in_service;
+	var $token;
+
 	var $watch_list_count;
 	
 	var $LocalResult;
@@ -203,7 +205,8 @@ UPDATE watch_list
 		SELECT id,
 		       user_id,
 		       name,
-		       in_service
+		       in_service,
+		       token
 		  FROM watch_list
 		 WHERE id      = $ID
 		   AND user_id = $UserID";
@@ -243,6 +246,9 @@ UPDATE watch_list
 		$this->user_id			= $myrow["user_id"];
 		$this->name				= $myrow["name"];
 		$this->in_service		= $myrow["in_service"];
+		$this->token			= $myrow["token"];
 		$this->watch_list_count = $myrow["watch_list_count"];
 	}
 }
+
+?>

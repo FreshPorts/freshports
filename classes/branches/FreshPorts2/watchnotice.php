@@ -1,5 +1,6 @@
 <?php
-	# $Id: watchnotice.php,v 1.1.2.3 2004-06-10 15:21:07 dan Exp $
+	#
+	# $Id: watchnotice.php,v 1.1.2.4 2005-10-08 01:57:16 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -73,3 +74,5 @@ class WatchNotice {
         return $this->id;
 	}
 }
+
+?>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-lists.php,v 1.1.2.15 2005-10-07 23:55:43 dan Exp $
+	# $Id: watch-lists.php,v 1.1.2.16 2005-10-08 01:59:45 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -138,7 +138,7 @@ function freshports_WatchListVerifyToken($db, $token) {
 
 	$sql = "SELECT id from watch_list where token = '" . $token . "'";
 
-	echo $sql;
+#	echo $sql;
 
 	$result = pg_exec($db, $sql);
 	if ($result) {

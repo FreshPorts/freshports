@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: watch_list_element.php,v 1.1.2.5 2003-04-28 16:21:36 dan Exp $
+	# $Id: watch_list_element.php,v 1.1.2.6 2005-10-08 01:57:42 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2005 DVL Software Limited
 	#
 
 	$Debug = 0;
@@ -202,3 +202,5 @@ select id, $ElementID
 		$this->user_id				= $myrow["user_id"];
 	}
 }
+
+?>

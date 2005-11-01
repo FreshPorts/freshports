@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-category.php,v 1.1.2.34 2005-07-15 03:08:33 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.35 2005-11-01 22:52:12 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -66,6 +66,8 @@ function freshports_CategoryByElementID($db, $element_id, $PageNo = 1, $PageSize
 function freshports_CategoryDisplay($db, $category, $PageNo = 1, $PageSize = 25) {
 
 	GLOBAL $TableWidth;
+	GLOBAL $User;
+
 	header('HTTP/1.1 200 OK');
 
 	$Debug = 0;

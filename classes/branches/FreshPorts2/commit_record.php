@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit_record.php,v 1.1.2.10 2005-06-25 18:44:10 dan Exp $
+	# $Id: commit_record.php,v 1.1.2.11 2005-11-01 23:09:58 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -42,6 +42,9 @@ class CommitRecord {
 	var $restricted;
 	var $no_cdrom;
 	var $expiration_date;
+	var $is_interactive;
+    var $only_for_archs;
+    var $not_for_archs;
 
 	var $watch;
 	var $element_pathname;
@@ -83,6 +86,9 @@ class CommitRecord {
 		$this->restricted			= $myrow['restricted'];
 		$this->no_cdrom				= $myrow['no_cdrom'];
 		$this->expiration_date		= $myrow['expiration_date'];
+		$this->is_interactive		= $myrow['is_interactive'];
+		$this->only_for_archs		= $myrow['only_for_archs'];
+		$this->not_for_archs		= $myrow['not_for_archs'];
 		$this->element_pathname		= $myrow['element_pathname'];
 	}
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch_lists.php,v 1.1.2.17 2005-10-08 01:58:08 dan Exp $
+	# $Id: watch_lists.php,v 1.1.2.18 2005-11-01 23:09:58 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -48,7 +48,8 @@ DELETE FROM watch_list
 			       name,
 			       in_service,
 			       count(element_id) as watch_list_count,
-			       token
+			       token,
+                   NULL as watch_list_count
 			  FROM watch_list LEFT OUTER JOIN watch_list_element
 			    ON watch_list_element.watch_list_id = watch_list.id
 			   AND watch_list_element.element_id    = $element_id
@@ -61,7 +62,8 @@ DELETE FROM watch_list
 			       user_id,
 			       name,
 			       in_service,
-			       token
+			       token,
+                   NULL as watch_list_count
 			  FROM watch_list
 			 WHERE user_id = $UserID
 		 ORDER BY name";

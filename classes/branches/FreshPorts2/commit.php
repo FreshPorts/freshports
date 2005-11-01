@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.13 2005-07-17 14:19:36 dan Exp $
+	# $Id: commit.php,v 1.1.2.14 2005-11-01 23:09:58 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -110,7 +110,8 @@ SELECT id as commit_log_id,
 		return $this->message_id;
 	}
 
-	function DateNewestPort($message_id) {
+	function DateNewestPort() {
+		$Debug = 0;
 
 		$sql = "
 SELECT GMT_Format(date_added) as last_modified

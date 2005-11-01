@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports.php,v 1.1.2.54 2005-07-17 14:19:36 dan Exp $
+	# $Id: ports.php,v 1.1.2.55 2005-11-01 23:09:58 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -45,6 +45,9 @@ class Port {
 	var $restricted;
 	var $no_cdrom;
 	var $expiration_date;
+	var $is_interactive;
+	var $only_for_archs;
+	var $not_for_archs;
 
 	// derived or from other tables
 	var $category;
@@ -116,6 +119,9 @@ class Port {
 		$this->restricted         = $myrow["restricted"];
 		$this->no_cdrom           = $myrow["no_cdrom"];
 		$this->expiration_date    = $myrow["expiration_date"];
+		$this->is_interactive     = $myrow["is_interactive"];
+		$this->only_for_archs     = $myrow["only_for_archs"];
+		$this->not_for_archs      = $myrow["not_for_archs"];
 
 		$this->port               = $myrow["port"];
 		$this->category           = $myrow["category"];
@@ -182,6 +188,9 @@ select ports.id,
        ports.restricted,
        ports.no_cdrom,
        ports.expiration_date,
+       ports.is_interactive,
+       ports.only_for_archs,
+       ports.not_for_archs,
 
        to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, 
        ports.categories as categories,
@@ -276,6 +285,9 @@ select ports.id,
 	                   ports.restricted,
 	                   ports.no_cdrom,
 	                   ports.expiration_date,
+	                   ports.is_interactive,
+	                   ports.only_for_archs,
+	                   ports.not_for_archs,
 		               ports.categories as categories,
 			           element.name     as port, 
 			           categories.name  as category,
@@ -396,11 +408,21 @@ SELECT P.*, element.name    as port,
         ports.restricted,
         ports.no_cdrom,
         ports.expiration_date,
+        ports.is_interactive,
+        ports.only_for_archs,
+        ports.not_for_archs,
         ports.categories      as categories,
         categories.name       as category_looking_at,
         PRIMARY_CATEGORY.name as category,
         ports_vulnerable.current as vulnerable_current,
-        ports_vulnerable.past    as vulnerable_past 
+        ports_vulnerable.past    as vulnerable_past,
+        NULL AS needs_refresh,
+        NULL AS updated,
+        NULL AS last_modified,
+        NULL AS update_description,
+        NULL AS message_id,
+        NULL AS encoding_losses,
+        NULL AS committer
 
    FROM ports_vulnerable right outer join ports on (ports_vulnerable.port_id = ports.id),
         categories, ports_categories, categories PRIMARY_CATEGORY

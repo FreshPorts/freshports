@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: latest_commits.php,v 1.1.2.13 2005-10-08 01:56:43 dan Exp $
+	# $Id: latest_commits.php,v 1.1.2.14 2005-11-01 23:09:58 dan Exp $
 	#
 	# Copyright (c) 2003-2004 DVL Software Limited
 	#
@@ -201,6 +201,10 @@ class LatestCommits {
 
 					if ($mycommit->no_cdrom) {
 						$this->HTML .= freshports_No_CDROM_Icon_Link($mycommit->no_cdrom) . '&nbsp;';
+					}
+
+					if ($mycommit->is_interactive) {
+						$this->HTML .= freshports_Is_Interactive_Icon_Link($mycommit->is_interactive) . '&nbsp;';
 					}
 
 					} else {

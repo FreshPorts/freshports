@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: user_tasks.php,v 1.1.2.3 2003-05-09 19:39:55 dan Exp $
+	# $Id: user_tasks.php,v 1.1.2.4 2005-11-01 23:09:58 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -35,7 +35,7 @@ class UserTasks {
 			$numrows = pg_numrows($result);
 			for ($i = 0; $i < $numrows; $i++) {
 				$myrow = pg_fetch_array ($result, $i);
-				$this->tasks{$myrow[name]} = $myrow[id];
+				$this->tasks{$myrow['name']} = $myrow['id'];
 #				echo "\$myrow[name]='$myrow[name]' = $myrow[id]<br>\n";
 #				echo "\$this->tasks{$myrow[name]} = '$this->tasks{$myrow[name]}'<br>\n";
 			}

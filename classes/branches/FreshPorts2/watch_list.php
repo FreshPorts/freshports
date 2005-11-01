@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch_list.php,v 1.1.2.19 2005-10-08 01:58:08 dan Exp $
+	# $Id: watch_list.php,v 1.1.2.20 2005-11-01 23:09:58 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -206,7 +206,8 @@ UPDATE watch_list
 		       user_id,
 		       name,
 		       in_service,
-		       token
+		       token,
+               NULL as watch_list_count
 		  FROM watch_list
 		 WHERE id      = $ID
 		   AND user_id = $UserID";

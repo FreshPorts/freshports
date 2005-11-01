@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.16 2005-08-03 12:01:20 dan Exp $
+	# $Id: categories.php,v 1.1.2.17 2005-11-01 23:09:58 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -31,6 +31,8 @@ class Category {
 	}
 
 	function FetchByID($id) {
+		$Debug = 1;
+
 		if (IsSet($id)) {
 			$this->id = $id;
 		}
@@ -48,7 +50,9 @@ SELECT C.*, (SELECT MAX(CL.date_added)
                 AND PC.category_id   = C.id) AS last_modified
   FROM categories C
  WHERE id = ' . $this->id;
+
 		if ($Debug) echo "sql = '$sql'<BR>";
+		die($sql);
 
         $result = pg_exec($this->dbh, $sql);
 		if ($result) {
@@ -97,6 +101,8 @@ SELECT C.*, (SELECT MAX(CL.date_added)
 
 	function FetchByName($Name) {
 
+		Unset($CategoryID);
+
 		if (IsSet($Name)) {
 			$this->name = AddSlashes($Name);
 			unset($this->id);
@@ -112,7 +118,7 @@ SELECT C.*, (SELECT MAX(CL.date_added)
   FROM categories C
  WHERE C.name = '" . $this->name . "'";
 
-#		echo "<pre>$sql</pre>";
+		echo "<pre>$sql</pre>";
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
@@ -120,10 +126,11 @@ SELECT C.*, (SELECT MAX(CL.date_added)
 			if ($numrows == 1) {
 				$myrow = pg_fetch_array ($result, 0);
 				$this->Populate($myrow);
+				$CategoryID = $this->id;
 			}
 		}
 
-		return $this->id;
+		return $CategoryID;
 	}
 
 	function PortCount($Name) {

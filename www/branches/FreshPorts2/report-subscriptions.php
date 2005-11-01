@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: report-subscriptions.php,v 1.1.2.25 2005-01-22 14:48:53 dan Exp $
+	# $Id: report-subscriptions.php,v 1.1.2.26 2005-11-01 22:52:59 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -63,7 +63,7 @@
 		return $Reports;
 	}
 
-	if ($_POST['submit'] == 'update') {
+	if (IsSet($_POST['submit']) && $_POST['submit'] == 'update') {
 		pg_exec($db, 'begin');
 		$sql = "DELETE from report_subscriptions
     	         WHERE user_id = $User->id";

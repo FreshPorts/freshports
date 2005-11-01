@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit_record.php,v 1.1.2.11 2005-11-01 23:09:58 dan Exp $
+	# $Id: commit_record.php,v 1.1.2.12 2005-11-01 23:10:17 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing.php,v 1.1.2.25 2005-01-22 14:48:51 dan Exp $
+	# $Id: missing.php,v 1.1.2.26 2005-11-01 22:52:37 dan Exp $
 	#
 	# Copyright (c) 2001-2003 DVL Software Limited
 	#
@@ -47,6 +47,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 		$FilesRequest = 0;
 	}
 
+
 	if ($ElementRecord->FetchByName($pathname)) {
 		if ($ElementRecord->IsPort()) {
 
@@ -79,14 +80,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 			}
 		}
 	} else {
-		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
-		$Category = new Category($db);
-		if ($Category->FetchByName(AddSlashes(str_replace('/', '', $REQUEST_URI)))) {
-			require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-category.php');
-			freshports_CategoryByID($db, $Category->id);
-		} else {
-			$result = $REQUEST_URI;
-		}
+		$result = $REQUEST_URI;
 	}
 
 	if ($Debug) {

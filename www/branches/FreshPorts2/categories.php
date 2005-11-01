@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.28 2005-07-15 03:08:32 dan Exp $
+	# $Id: categories.php,v 1.1.2.29 2005-11-01 22:50:01 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -64,10 +64,10 @@ You can sort each column by clicking on the header.  e.g. click on <b>Category</
 
 //echo "sort is $sort\n";
 
-$sort				= AddSlashes($_GET['sort']);
-$category		= AddSlashes($_GET['category']);
-$count			= AddSlashes($_GET['count']);
-$description	= AddSlashes($_GET['description']);
+$sort			= IsSet($_REQUEST['sort'])        ? AddSlashes($_REQUEST['sort'])        : '';
+$category		= IsSet($_REQUEST['category'])    ? AddSlashes($_REQUEST['category'])    : '';
+$count			= IsSet($_REQUEST['count'])       ? AddSlashes($_REQUEST['count'])       : '';
+$description	= IsSet($_REQUEST['description']) ? AddSlashes($_REQUEST['description']) : '';
 
 switch ($sort) {
    case 'category':
@@ -118,7 +118,7 @@ if ($Debug) echo '<pre>' . $sql, "</pre>\n";
 
 $result = pg_exec($db, $sql);
 
-$HTML .= freshports_echo_HTML('<tr>');
+$HTML = freshports_echo_HTML('<tr>');
 
 if ($sort == "category") {
    $HTML .= freshports_echo_HTML('<td><b>Category</b></td>');

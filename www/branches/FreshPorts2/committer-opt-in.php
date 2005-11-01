@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: committer-opt-in.php,v 1.1.2.14 2005-01-22 14:48:50 dan Exp $
+	# $Id: committer-opt-in.php,v 1.1.2.15 2005-11-01 22:50:22 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -19,7 +19,7 @@
 		exit;
    }
 
-	if ($_POST["subscribe"] && !empty($visitor)) {
+	if (IsSet($_POST["subscribe"]) && $_POST["subscribe"] && !empty($visitor)) {
 		$committer = AddSlashes($_POST["email"]);
 		$sql = "insert into committer_notify (user_id, committer, status)
 				values ($User->id, '$committer', 'A')";
@@ -35,7 +35,7 @@
 		}
 	}
 
-	if ($_POST["unsubscribe"] && !empty($visitor)) {
+	if (IsSet($_POST["unsubscribe"]) && $_POST["unsubscribe"] && !empty($visitor)) {
 		$committer = AddSlashes($_POST["email"]);
 		$sql = "delete from committer_notify where user_id = $User->id";
 
@@ -53,7 +53,7 @@
 	}
 
 
-	if ($_POST["update"] && !empty($visitor)) {
+	if (IsSet($_POST["update"]) && $_POST["update"] && !empty($visitor)) {
 		$committer = AddSlashes($_POST["email"]);
 		$sql = "update committer_notify 
                    set committer = '$committer'

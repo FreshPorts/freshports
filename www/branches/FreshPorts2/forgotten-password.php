@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: forgotten-password.php,v 1.1.2.24 2005-01-22 14:48:51 dan Exp $
+	# $Id: forgotten-password.php,v 1.1.2.25 2005-11-01 22:51:44 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -11,11 +11,16 @@
 
 $Debug = 0;
 
-$submit = $_POST['submit'];
 
-$MailSent = 0;
+if (IsSet($_POST['submit'])) {
+	$submit = $_POST['submit'];
+}
 
-if ($submit) {
+$MailSent    = 0;
+$LoginFailed = 0;
+$eMailFailed = 0;
+
+if (IsSet($submit)) {
    // process form
    $error = '';
 
@@ -31,7 +36,7 @@ if ($submit) {
 	$eMail	= AddSlashes($_REQUEST["eMail"]);
 
    if ($UserID) {
-      $errors = "";
+      $error = '';
       $UserID = addslashes($UserID);
 
       if ($Debug) {
@@ -51,7 +56,7 @@ if ($submit) {
       }
    } else {
       if ($eMail) {
-         $errors = "";
+         $error = '';
          $eMail = addslashes($eMail);
 
          if ($Debug) echo $eMail . "<br>\n";
@@ -129,7 +134,7 @@ if ($submit) {
 <TR><TD VALIGN="top" WIDTH="100%">
 <?
 
-if ($error) {
+if (IsSet($error) and $error != '') {
       echo '<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="#AD0040" WIDTH="100%">
             <TR>
             <TD>
@@ -236,9 +241,9 @@ we're only dealing with your FreshPorts login, not a financial transaction....</
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST">
       <input type="hidden" name="custom_settings" value="1"><input type="hidden" name="LOGIN" value="1">
       <p>User ID:<br>
-      <input SIZE="15" NAME="UserID" value="<? echo $UserID ?>"></p>
+      <input SIZE="15" NAME="UserID" value="<? if (IsSet($UserID)) echo $UserID ?>"></p>
       <p>email address:<br>
-      <input NAME="eMail" VALUE = "<? echo $eMail ?>" SIZE="20"></p>
+      <input NAME="eMail" VALUE = "<? if (IsSet($eMail)) echo $eMail ?>" SIZE="20"></p>
       <p><input TYPE="submit" VALUE="eMail Me!" name=submit> &nbsp;&nbsp;&nbsp;&nbsp; <input TYPE="reset" VALUE="reset form">
 </form>
 <? } ?>

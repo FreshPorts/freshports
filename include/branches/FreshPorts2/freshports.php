@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.235 2005-10-07 23:55:43 dan Exp $
+	# $Id: freshports.php,v 1.4.2.236 2005-11-01 22:53:42 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -259,6 +259,17 @@ function freshports_Restricted_Icon_Link($HoverText = '') {
 	return '<a href="/' . FAQLINK . '#restricted">' . freshports_Restricted_Icon($HoverText) . '</a>';
 }
 
+function freshports_Is_Interactive_Icon($HoverText = '') {
+	$Alt       = "Is Interactive";
+	$HoverText = freshports_HoverTextCleaner($Alt, $HoverText);
+
+	return '<IMG SRC="/images/crt.gif" ALT="' . $Alt . '" TITLE="' . $HoverText . '" BORDER="0" WIDTH="16" HEIGHT="16" ALIGN="middle">';
+}
+
+function freshports_Is_Interactive_Icon_Link($HoverText = '') {
+	return '<a href="/' . FAQLINK . '#is_interactive">' . freshports_Is_Interactive_Icon($HoverText) . '</a>';
+}
+
 function freshports_No_CDROM_Icon($HoverText = '') {
 	$Alt       = "NO CDROM";
 	$HoverText = freshports_HoverTextCleaner($Alt, $HoverText);
@@ -269,10 +280,6 @@ function freshports_No_CDROM_Icon($HoverText = '') {
 function freshports_No_CDROM_Icon_Link($HoverText = '') {
 	return '<a href="/' . FAQLINK . '#no_cdrom">' . freshports_No_CDROM_Icon($HoverText) . '</a>';
 }
-
-
-
-
 
 function freshports_Ignore_Icon($HoverText = '') {
 	$Alt       = "Ignore";
@@ -745,7 +752,7 @@ function freshports_echo_HTML($text) {
 }
 
 function freshports_echo_HTML_flush() {
-   echo $HTML_Temp;
+#   echo $HTML_Temp;
 }
 
 function freshports_in_array($value, $array) {
@@ -969,6 +976,10 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 		$HTML .= freshports_No_CDROM_Icon_Link($port->no_cdrom)      . ' NO CDROM: '     . htmlify(htmlspecialchars($port->no_cdrom))   . '<br>';
 	}
 
+	if ($port->is_interactive) {
+		$HTML .= freshports_Is_Interactive_Icon_Link($port->is_interactive) . ' IS INTERACTIVE: '  . htmlify(htmlspecialchars($port->is_interactive)) . '<br>';
+	}
+
    // description
    if ($port->short_description && ($ShowShortDescription == "Y" || $ShowEverything)) {
       $HTML .= htmlify(htmlspecialchars($port->short_description));
@@ -1029,7 +1040,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 	# show the date added, if asked
 
 	if ($ShowDateAdded == "Y" || $ShowEverything) {
-		$HTML .= 'port added: <font size="-1">';
+		$HTML .= '<i>port added:</i> <font size="-1">';
 		if ($port->date_added) {
 			$HTML .= $port->date_added;
 		} else {

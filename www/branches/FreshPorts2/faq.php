@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.77 2005-07-15 03:08:33 dan Exp $
+	# $Id: faq.php,v 1.1.2.78 2005-11-01 22:51:16 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -328,6 +328,9 @@ make: fatal errors encountered -- cannot continue
 	</P>
 
 	<P><a name="no_cdrom"><?php echo freshports_No_CDROM_Icon(); ?></a> This port has some restrictions with respect to being included on a CD-ROM.
+	</P>
+
+	<P><a name="is_interactive"><?php echo freshports_Is_Interactive_Icon(); ?></a> This port will require interaction during installation.
 	</P>
 
 	<P><?php echo freshports_Revision_Icon(); ?> Revision details.  Click on the Files icon in the commit history and

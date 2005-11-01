@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.56 2005-07-15 03:08:32 dan Exp $
+	# $Id: commit.php,v 1.1.2.57 2005-11-01 22:50:43 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -365,6 +365,10 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 
 						if ($myrow['no_cdrom']) {
 							$HTML .= '&nbsp;' . freshports_No_CDROM_Icon_Link($myrow['no_cdrom']);
+						}
+
+						if ($myrow['is_interactive']) {
+							$HTML .= '&nbsp;' . freshports_Is_Interactive_Icon_Link($myrow['is_interactive']);
 						}
 
 						$HTML .= ' ' . htmlspecialchars($myrow["short_description"]) . "\n";

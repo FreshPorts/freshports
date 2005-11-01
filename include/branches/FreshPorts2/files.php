@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: files.php,v 1.1.2.45 2005-07-15 03:08:34 dan Exp $
+	# $Id: files.php,v 1.1.2.46 2005-11-01 22:53:42 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -236,6 +236,9 @@ select element_pathname(element.id) as pathname,
 			$HTML .=  '&nbsp;' . freshports_No_CDROM_Icon_Link($myrow['no_cdrom']);
 		}
 
+		if ($myrow['is_interactive']) {
+			$HTML .= '&nbsp;' . freshports_Is_Interactive_Icon_Link($myrow['is_interactive']);
+		}
 
 		echo $HTML;
 

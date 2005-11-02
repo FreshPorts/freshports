@@ -1,6 +1,6 @@
-.<?php
+<?php
 	#
-	# $Id: search.php,v 1.1.2.78 2005-07-15 03:08:34 dan Exp $
+	# $Id: search.php,v 1.1.2.79 2005-11-02 13:58:24 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.236 2005-11-01 22:53:42 dan Exp $
+	# $Id: freshports.php,v 1.4.2.237 2005-11-02 11:41:35 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -557,7 +557,7 @@ GLOBAL $FreshPortsLogoHeight;
 ';
 
 if (date("M") == 'Nov' && date("j") <= 12) {
-	$HTML .= '	<TD ALIGN="right" CLASS="sans" VALIGN="bottom"><a href="http://www.google.ca/search?q=remembrance+day"><img src="/images/poppy.gif" width="50" height="48" border="0" alt="Remember" TITLE="Remember"><br>I remember</a></TD>';
+	$HTML .= '	<TD width="53" ALIGN="center" CLASS="sans" VALIGN="bottom"><a href="http://www.google.ca/search?q=remembrance+day"><img src="/images/poppy.gif" width="50" height="48" border="0" alt="Remember" TITLE="Remember"><br>I remember</a></TD>';
 } else {
 	$HTML .= '	<TD ALIGN="right" CLASS="sans" VALIGN="bottom">' . FormatTime(Date("D, j M Y g:i A T"), $LocalTimeAdjustment, "D, j M Y g:i A T") . '</TD>';
 }

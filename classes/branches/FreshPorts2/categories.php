@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.18 2005-11-01 23:10:17 dan Exp $
+	# $Id: categories.php,v 1.1.2.19 2005-11-16 14:34:50 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -31,7 +31,7 @@ class Category {
 	}
 
 	function FetchByID($id) {
-		$Debug = 1;
+		$Debug = 0;
 
 		if (IsSet($id)) {
 			$this->id = $id;
@@ -52,7 +52,6 @@ SELECT C.*, (SELECT MAX(CL.date_added)
  WHERE id = ' . $this->id;
 
 		if ($Debug) echo "sql = '$sql'<BR>";
-		die($sql);
 
         $result = pg_exec($this->dbh, $sql);
 		if ($result) {
@@ -101,6 +100,8 @@ SELECT C.*, (SELECT MAX(CL.date_added)
 
 	function FetchByName($Name) {
 
+		$Debug = 0;
+
 		Unset($CategoryID);
 
 		if (IsSet($Name)) {
@@ -118,7 +119,7 @@ SELECT C.*, (SELECT MAX(CL.date_added)
   FROM categories C
  WHERE C.name = '" . $this->name . "'";
 
-		echo "<pre>$sql</pre>";
+		if ($Debug) echo "sql = '$sql'<BR>";
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {

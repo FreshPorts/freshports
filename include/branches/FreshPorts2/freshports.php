@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.237 2005-11-02 11:41:35 dan Exp $
+	# $Id: freshports.php,v 1.4.2.238 2005-11-30 00:32:42 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -1966,6 +1966,7 @@ function freshports_SideBar() {
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/about.php",           "What is FreshPorts?", "A bit of background on FreshPorts"    ) . '</FONT><BR>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/authors.php",         "About the Authors",   "Who wrote this stuff?"                ) . '</FONT><BR>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/faq.php",             "FAQ",                 "Frequently Asked Questions"           ) . '</FONT><BR>
+	<FONT SIZE="-1">' . freshports_SideBarHTML('', 'http://news.freshports.org/',            "FreshPorts News",     "News about FreshPorts"                ) . '</FONT><BR>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/how-big-is-it.php",   "How big is it?",      "How many pages are in this website?"  ) . '</FONT><BR>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/release-2004-10.php", "The latest upgrade!", "Details on the latest website upgrade") . '</FONT><BR>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/privacy.php",         "Privacy",             "Our privacy statement"                ) . '</FONT><BR>

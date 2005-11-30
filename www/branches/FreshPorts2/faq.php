@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.78 2005-11-01 22:51:16 dan Exp $
+	# $Id: faq.php,v 1.1.2.79 2005-11-30 00:32:42 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -369,50 +369,7 @@ make: fatal errors encountered -- cannot continue
 
 	<TR><TD>
 	<P>
-	We have THREE:
-	</P>
-
-	<?php
-	$URL  = "http://$ServerName/news.php";
-	$HREF = "<A HREF=\"$URL\">$URL</A>";
-	?>
-
-	<OL>
-	<LI>An RSS feed : <?php echo $HREF; ?>
-	<p>This RSS feed takes the following optional parameters:
-	<ul>
-	<li><b>MaxArticles</b> : number of ports to report upon (min 1, max 20, default 20)
-	<li><b>date=1</b> : show the commit date
-	<li><b>committer=1</b> : show the committer name
-	<li><b>time=1</b> : show the commit time
-	</ul>
-	<p>
-	A sample URL is <?php echo $URL; ?>?MaxArticles=10&amp;committer=1&amp;time=1&amp;date=1
-	</p>
-
-	<P>
-	<B>NOTE:</B> - As of 13 November 2003, these parameters are no longer available.  The
-	values they obtained are now supplied by default.
-	</P>
-	</LI>
-
-	<?php
-	$URL  = "http://$ServerName/sidebar.php";
-	$HREF = "<A HREF=\"$URL\">$URL</A>";
-	?>
-
-	<LI>A Netscape 6, SideBar type feed : <?php echo $HREF; ?>.  This can be added
-		to your browser using the button in the right hand column of this page.</LI>
-
-
-	<?php
-	$URL  = "http://$ServerName/rss/ports-new.php";
-	$HREF = "<A HREF=\"$URL\">$URL</A>";
-	?>
-
-	<li><p>An RSS feed that lists only new ports:  <?php echo $HREF; ?></p></li>
-
-	</OL>
+	Yes.  Read <a href="/newsfeeds.php">all about it</a>!.
 
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 

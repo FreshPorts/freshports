@@ -1,9 +1,10 @@
 #
-# $Id: Makefile,v 1.1.2.8 2005-12-01 04:06:13 dan Exp $
+# $Id: Makefile,v 1.1.2.9 2005-12-01 04:45:59 dan Exp $
 #
 # Install the ports needed by FreshPorts
 #
-# Copyright (c) 2002-2003 DVL Software Limited
+# Copyright (c) 2002-2005 DVL Software Limited
+#
 
 PORTNAME=		FreshPorts-ports
 PORTVERSION=	1.0
@@ -13,7 +14,6 @@ MASTER_SITES=   # none
 DISTFILES=      # none
 
 MAINTAINER=		ports@freebsddiary.org
-COMMENT=	For use by Dan Langille only
 
 RUN_DEPENDS=	svstat:${PORTSDIR}/sysutils/daemontools \
 				${SITE_PERL}/XML/Writer.pm:${PORTSDIR}/textproc/p5-XML-Writer \
@@ -35,7 +35,8 @@ RUN_DEPENDS=	svstat:${PORTSDIR}/sysutils/daemontools \
 				mysql_install_db:${PORTSDIR}/databases/mysql41-server \
 				${PREFIX}/share/pear/HTML/Common.php:${PORTSDIR}/devel/pear-HTML_Common \
 				${PREFIX}/share/pear/HTML/Page2.php:${PORTSDIR}/devel/pear-HTML_Page2 \
-				${PREFIX}/lib/postgresql/pgcrypto.so:${PORTSDIR}/databases/postgresql-contrib
+				${PREFIX}/lib/postgresql/pgcrypto.so:${PORTSDIR}/databases/postgresql-contrib \
+				${SITE_PERL}/Class/Observable.pm:${PORTSDIR}/devel/p5-Class-Observable
 				
 NO_WRKSUBDIR=	YES
 NO_BUILD=		YES

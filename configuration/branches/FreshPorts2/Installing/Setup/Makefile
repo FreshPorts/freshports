@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.1.2.7 2005-12-01 00:11:30 dan Exp $
+# $Id: Makefile,v 1.1.2.8 2005-12-01 04:06:13 dan Exp $
 #
 # Install the ports needed by FreshPorts
 #
@@ -27,15 +27,19 @@ RUN_DEPENDS=	svstat:${PORTSDIR}/sysutils/daemontools \
 				${PREFIX}/sbin/httpd:${PORTSDIR}/www/apache13-modssl \
 				${PREFIX}/bin/php:${PORTSDIR}/lang/php4 \
 				${LOCALBASE}/sbin/portsdb:${PORTSDIR}/sysutils/portupgrade \
-				psql:${PORTSDIR}/databases/postgresql74-server 
-
-
-
+				psql:${PORTSDIR}/databases/postgresql74-client \
+				postmaster:${PORTSDIR}/databases/postgresql74-server \
+				bacula-fd:${PORTSDIR}/sysutils/bacula-client \
+				svc:${PORTSDIR}/sysutils/daemontools \
+				mysqladmin:${PORTSDIR}/databases/mysql41-client \
+				mysql_install_db:${PORTSDIR}/databases/mysql41-server \
+				${PREFIX}/share/pear/HTML/Common.php:${PORTSDIR}/devel/pear-HTML_Common \
+				${PREFIX}/share/pear/HTML/Page2.php:${PORTSDIR}/devel/pear-HTML_Page2 \
+				${PREFIX}/lib/postgresql/pgcrypto.so:${PORTSDIR}/databases/postgresql-contrib
+				
 NO_WRKSUBDIR=	YES
 NO_BUILD=		YES
 
 do-install: 	# empty
 
 .include <bsd.port.mk>
-
-

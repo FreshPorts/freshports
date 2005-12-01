@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.1.2.6 2004-12-23 18:21:46 dan Exp $
+# $Id: Makefile,v 1.1.2.7 2005-12-01 00:11:30 dan Exp $
 #
 # Install the ports needed by FreshPorts
 #
@@ -16,18 +16,19 @@ MAINTAINER=		ports@freebsddiary.org
 COMMENT=	For use by Dan Langille only
 
 RUN_DEPENDS=	svstat:${PORTSDIR}/sysutils/daemontools \
-				/usr/local/lib/perl5/site_perl/5.005/XML/Writer.pm:${PORTSDIR}/textproc/p5-XML-Writer \
-				/usr/local/lib/perl5/site_perl/5.005/i386-freebsd/auto/XML/Node:${PORTSDIR}/textproc/p5-XML-Node \
-				/usr/local/lib/perl5/site_perl/5.005/Mail/Sender.pm:${PORTSDIR}/mail/p5-Mail-Sender \
-				/usr/local/lib/perl5/site_perl/5.6.1/mach/Date/Calc.pm:${PORTSDIR}/devel/p5-Date-Calc \
-				p5-DBD-Pg:${PORTSDIR}/databases/p5-DBD-Pg \
-				p5-DBI:${PORTSDIR}/databases/p5-DBI \
+				${SITE_PERL}/XML/Writer.pm:${PORTSDIR}/textproc/p5-XML-Writer \
+				${SITE_PERL}/XML/Node.pm:${PORTSDIR}/textproc/p5-XML-Node \
+				${SITE_PERL}/Mail/Sender.pm:${PORTSDIR}/mail/p5-Mail-Sender \
+				${SITE_PERL}/mach/Date/Calc.pm:${PORTSDIR}/devel/p5-Date-Calc \
+				${SITE_PERL}/mach/DBD/Pg.pm:${PORTSDIR}/databases/p5-DBD-Pg \
+				${SITE_PERL}/mach/Bundle/DBI.pm:${PORTSDIR}/databases/p5-DBI \
 				procmail:${PORTSDIR}/mail/procmail \
 				stunnel:${PORTSDIR}/security/stunnel \
-				apache+mod_ssl:${PORTSDIR}/www/apache13-modssl \
-				mod_php4:${PORTSDIR}/www/mod_php4 \
-				portupgrade:${PORTSDIR}/sysutils/portupgrade \
-				psql:${PORTSDIR}/databases/postgresql7
+				${PREFIX}/sbin/httpd:${PORTSDIR}/www/apache13-modssl \
+				${PREFIX}/bin/php:${PORTSDIR}/lang/php4 \
+				${LOCALBASE}/sbin/portsdb:${PORTSDIR}/sysutils/portupgrade \
+				psql:${PORTSDIR}/databases/postgresql74-server 
+
 
 
 NO_WRKSUBDIR=	YES

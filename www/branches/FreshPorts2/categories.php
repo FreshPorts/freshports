@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.30 2005-12-07 22:48:27 dan Exp $
+	# $Id: categories.php,v 1.1.2.31 2005-12-07 23:04:06 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -63,8 +63,14 @@ You can sort each column by clicking on the header.  e.g. click on <b>Category</
 	if (file_exists(CACHE_CATEGORIES) && is_readable(CACHE_CATEGORIES)) {
 		readfile(CACHE_CATEGORIES);
 	} else {
-		echo 'Sorry, the category summary it not available just now.  It should appear within five minutes. ' .
-			'If it does not, please feel free to notify the webmaster who will promptly fix the problem.';
+?>
+<p>
+<big>Oops!</big>
+Sorry, the category summary it not available just now.  It should appear within five minutes.
+If it does not, please feel free to notify the webmaster who will promptly fix the problem.
+</td></tr>
+</table>
+<?php
 	}
 ?>
 

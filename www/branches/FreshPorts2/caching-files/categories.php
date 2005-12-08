@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.1 2005-12-07 22:48:28 dan Exp $
+	# $Id: categories.php,v 1.1.2.2 2005-12-08 05:01:17 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -54,9 +54,9 @@ echo FormatTime(date("D, j M Y g:i A T"), $LocalTimeAdjustment, "D, j M Y g:i A 
 //echo "sort is $sort\n";
 
 $sort			= IsSet($_REQUEST['sort'])        ? AddSlashes($_REQUEST['sort'])        : '';
-$category		= IsSet($_REQUEST['category'])    ? AddSlashes($_REQUEST['category'])    : '';
-$count			= IsSet($_REQUEST['count'])       ? AddSlashes($_REQUEST['count'])       : '';
-$description	= IsSet($_REQUEST['description']) ? AddSlashes($_REQUEST['description']) : '';
+#$category		= IsSet($_REQUEST['category'])    ? AddSlashes($_REQUEST['category'])    : '';
+#$count			= IsSet($_REQUEST['count'])       ? AddSlashes($_REQUEST['count'])       : '';
+#$description	= IsSet($_REQUEST['description']) ? AddSlashes($_REQUEST['description']) : '';
 
 switch ($sort) {
    case 'category':

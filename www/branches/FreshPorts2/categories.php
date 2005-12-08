@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.31 2005-12-07 23:04:06 dan Exp $
+	# $Id: categories.php,v 1.1.2.32 2005-12-08 05:01:17 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -60,6 +60,21 @@ You can sort each column by clicking on the header.  e.g. click on <b>Category</
 </P>
 
 <?php
+$sort			= IsSet($_REQUEST['sort'])        ? AddSlashes($_REQUEST['sort'])        : '';
+
+switch ($sort) {
+   case 'category':
+   case 'count':
+   case 'description':
+   case 'lastupdate':
+      $sort = $sort;
+      break;
+
+   default:
+      $sort = 'category';
+}
+	define('CACHE_CATEGORIES', $_SERVER['DOCUMENT_ROOT'] . '/../caching/cache/categories-by-' . $sort . '.html');
+
 	if (file_exists(CACHE_CATEGORIES) && is_readable(CACHE_CATEGORIES)) {
 		readfile(CACHE_CATEGORIES);
 	} else {

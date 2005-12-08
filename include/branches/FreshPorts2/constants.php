@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: constants.php,v 1.1.2.13 2005-12-07 22:48:28 dan Exp $
+	# $Id: constants.php,v 1.1.2.14 2005-12-08 05:00:56 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -84,7 +84,5 @@ define('FRESHPORTS_TEXTCOLOR', '#000000');
 
 define('FRESHPORTS_VERSION_REVISION_JOINER', '_');
 define('FRESHPORTS_VERSION_EPOCH_JOINER',    ',');
-
-define('CACHE_CATEGORIES', $_SERVER['DOCUMENT_ROOT'] . '/../caching/cache/categories.html');
 
 ?>

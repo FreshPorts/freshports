@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports-new.php,v 1.1.2.33 2005-01-22 14:48:52 dan Exp $
+	# $Id: ports-new.php,v 1.1.2.34 2005-12-27 13:47:52 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -81,7 +81,7 @@ These are the recently added ports.
 	
 	switch ($sort) {
 		case "dateadded":
-			$sort = "date_added desc, category, port";
+			$sort = "date_added_raw desc, category, port";
 			echo 'sorted by date added.  <A HREF="' . $_SERVER["PHP_SELF"] . '?interval=' . $interval . '&amp;sort=category">Sort by category</A>';
 			$ShowCategoryHeaders = 0;
 			break;
@@ -105,6 +105,7 @@ select TEMP.id,
        TEMP.maintainer,
        TEMP.short_description,
        TEMP.date_added,
+       TEMP.date_added_raw,
        TEMP.last_change_log_id,
        TEMP.package_exists,
        TEMP.extract_suffix,
@@ -129,6 +130,7 @@ select TEMP.id,
           maintainer,
           short_description,
           to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added,
+          ports.date_added as date_added_raw,
           last_commit_id as last_change_log_id,
           package_exists,
           extract_suffix,

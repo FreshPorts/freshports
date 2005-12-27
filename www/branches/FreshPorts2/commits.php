@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits.php,v 1.1.2.7 2005-03-20 22:42:25 dan Exp $
+	# $Id: commits.php,v 1.1.2.8 2005-12-27 13:50:20 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -188,6 +188,14 @@ A port is marked as new for 10 days.
 </TABLE>
 
 <BR>
+
+<?php
+define('RELATIVE_DATE_24HOURS', 24 * 60 * 60);	# seconds in a day
+$Date = date('Y/m/d');
+$Yesterday = freshports_LinkToDate(strtotime($Date) - RELATIVE_DATE_24HOURS, "Yesterday's Commits");
+
+echo '&lt; ' . $Yesterday . ' &gt;';
+?>
 
 <?
 echo freshports_ShowFooter();

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: date.php,v 1.1.2.31 2005-07-15 03:08:33 dan Exp $
+	# $Id: date.php,v 1.1.2.32 2005-12-27 13:50:20 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -249,10 +249,24 @@
 #echo "That date is " . $Date . '<br>';
 #echo 'which is ' . strtotime($Date) . '<br>';
 
-$Yesterday = freshports_LinkToDate(strtotime($Date) - 86400, "Previous day");
-$Tomorrow  = freshports_LinkToDate(strtotime($Date) + 86400, "Following day");
+define('RELATIVE_DATE_24HOURS', 24 * 60 * 60);	# seconds in a day
 
-echo "<center>$Yesterday $Tomorrow</center>";
+$Today     = '<a href="/commits.php">Today\'s commits</a>';
+$Yesterday = freshports_LinkToDate(strtotime($Date) - RELATIVE_DATE_24HOURS);
+$Tomorrow  = freshports_LinkToDate(strtotime($Date) + RELATIVE_DATE_24HOURS);
+
+if (strtotime($Date) + RELATIVE_DATE_24HOURS == strtotime(date('Y/m/d'))) {
+	$Yesterday = freshports_LinkToDate(strtotime($Date) - RELATIVE_DATE_24HOURS);
+
+	$DateLinks = '&lt; ' . $Today . ' | ' . $Yesterday . ' &gt;';
+} else {
+	$Today     = '<a href="/commits.php">Today\'s commits</a>';
+	$Yesterday = freshports_LinkToDate(strtotime($Date) - RELATIVE_DATE_24HOURS);
+	$Tomorrow  = freshports_LinkToDate(strtotime($Date) + RELATIVE_DATE_24HOURS);
+
+	$DateLinks = '&lt; ' . $Today . ' | ' . $Tomorrow . ' | ' . $Yesterday . ' &gt;';
+}
+echo $DateLinks;
 ?>
 
 <?php echo freshports_MainTable(); ?>
@@ -268,6 +282,8 @@ $HTML = ArchiveCreate($Date, $DateMessage, $db, $User);
 echo $HTML;
 
 echo '</table>';
+
+echo $DateLinks;
 
 ?>
 

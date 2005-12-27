@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.238 2005-11-30 00:32:42 dan Exp $
+	# $Id: freshports.php,v 1.4.2.239 2005-12-27 13:49:01 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -2008,7 +2008,7 @@ function freshports_LinkToDate($Date, $Text = '') {
 	if ($Text != '') {
 		$URL .= $Text;
 	} else {
-		$URL .= date("D, j M Y", $Date);
+		$URL .= date("j F", $Date);
 	}
 
 	$URL .= '</a>';

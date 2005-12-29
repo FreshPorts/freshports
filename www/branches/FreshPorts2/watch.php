@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: watch.php,v 1.1.2.56 2005-06-25 17:59:49 dan Exp $
+	# $Id: watch.php,v 1.1.2.57 2005-12-29 12:37:56 dan Exp $
 	#
-	# Copyright (c) 1998-2004 DVL Software Limited
+	# Copyright (c) 1998-2005 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
@@ -158,7 +158,6 @@ if ($wlid == '') {
 	SELECT temp.*,
 		to_char(max(commit_log.commit_date) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') 	as updated,
 		commit_log.committer, commit_log.description 														as update_description, 
-		to_char(max(commit_log.date_added) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') 		as date_added, 
 		commit_log.message_id, max(commit_log.commit_date) 												as commit_date_sort_field,
 		commit_log.committer
 	from commit_log
@@ -178,6 +177,7 @@ if ($wlid == '') {
 	       ports.package_exists, 
 	       ports.extract_suffix, 
 	       ports.homepage, 
+		   to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') 		as date_added, 
 	       element.status, 
 	       ports.broken, 
 	       ports.deprecated, 
@@ -212,7 +212,7 @@ if ($wlid == '') {
 	         temp.element_id, 
 	         temp.maintainer, 
 	         temp.short_description, 
-	         date_added, 
+	         temp.date_added, 
 	         temp.last_commit_id, 
 	         commit_log.message_id, 
 	         temp.package_exists, 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: latest_commits.php,v 1.1.2.15 2005-11-01 23:10:17 dan Exp $
+	# $Id: latest_commits.php,v 1.1.2.16 2005-12-29 20:11:42 dan Exp $
 	#
 	# Copyright (c) 2003-2004 DVL Software Limited
 	#
@@ -145,6 +145,8 @@ class LatestCommits {
 								$this->HTML .= ' '. freshports_Watch_Link_Add   ($this->WatchListAsk, $mycommit->watch, $mycommit->element_id) . ' ';
 							}
 						}
+
+						$this->HTML .= ' ' . freshports_Commit_Link($mycommit->message_id) . "\n";
 
 						// indicate if this port has been removed from cvs
 						if ($mycommit->status == "D") {

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: announcements.php,v 1.1.2.6 2005-01-22 14:48:55 dan Exp $
+	# $Id: announcements.php,v 1.1.2.7 2006-01-07 21:29:11 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -101,9 +101,9 @@ echo '<p>If you need help, please post a message on the forum. </p>
 <br>';
 }
 
-echo '<TABLE CELLPADDING="1" CELLSPACING="3" BORDER="0" BGCOLOR="#AD0040" WIDTH="100%">
+echo '<TABLE CELLPADDING="1" CELLSPACING="3" BORDER="0" BGCOLOR="' . BACKGROUND_COLOUR . '" WIDTH="100%">
 <TR>
-<TD BGCOLOR="#AD0040" COLSPAN="1"><FONT COLOR="#FFFFFF"><BIG><BIG>' . $Title . '</BIG></BIG></FONT></TD>
+<TD BGCOLOR="' . BACKGROUND_COLOUR . '" COLSPAN="1"><FONT COLOR="#FFFFFF"><BIG><BIG>' . $Title . '</BIG></BIG></FONT></TD>
 </TR>
 <TR BGCOLOR="#ffffff">
 <TD>';

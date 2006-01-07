@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-description.admin.php,v 1.1.2.15 2005-01-22 14:48:52 dan Exp $
+	# $Id: port-description.admin.php,v 1.1.2.16 2006-01-07 21:29:10 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -168,7 +168,7 @@ to see what files changed for this port in that commit.</p>
 <tr><td valign="top" width="100%">
 <table width="100%" border="0">
 <tr>
-    <td colspan="3" bgcolor="#AD0040" height="29"><font color="#FFFFFF" size="+2">freshports - 
+    <td colspan="3" bgcolor="<?php echo BACKGROUND_COLOUR; ?>" height="29"><font color="#FFFFFF" size="+2">freshports - 
 <?
    echo $Title;
 ?> 
@@ -205,7 +205,7 @@ if ($NumRows) {
    }
 
    echo '<table border="1" width="100%" CELLSPACING="0" CELLPADDING="5"bordercolor="#a2a2a2" bordercolordark="#a2a2a2" bordercolorlight="#a2a2a2">' . "\n";
-   echo '<tr height="20"><td colspan="' . $ColSpan . '" bgcolor="#AD0040"><font color="#FFFFFF"><font size="+1">Commit History</font> (may be incomplete: see Changes link above for full details)</font></td></tr>' . "\n";
+   echo '<tr height="20"><td colspan="' . $ColSpan . '" bgcolor="' . BACKGROUND_COLOUR . '"><font color="#FFFFFF"><font size="+1">Commit History</font> (may be incomplete: see Changes link above for full details)</font></td></tr>' . "\n";
    echo "<tr><td><b>Date</b></td><td><b>Committer</b></td><td><b>Description</b></td>";
 
    if ($Admin) {

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: new-user.php,v 1.1.2.45 2005-09-22 22:41:10 dan Exp $
+	# $Id: new-user.php,v 1.1.2.46 2006-01-07 21:29:10 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -161,11 +161,11 @@ function setfocus() { document.f.UserLogin.focus(); }
 <TR><TD VALIGN="top" WIDTH="100%">
 <script language="php">
 if ($errors) {
-echo '<TABLE CELLPADDING=1 CELLSPACING=0 BORDER=0 BGCOLOR="#AD0040" WIDTH=100%>
+echo '<TABLE CELLPADDING=1 CELLSPACING=0 BORDER=0 BGCOLOR="' . BACKGROUND_COLOUR . '" WIDTH=100%>
 <TR>
 <TD>
 <TABLE WIDTH=100% BORDER=0 CELLPADDING=1>
-<TR BGCOLOR="#AD0040"><TD><B><FONT color="#ffffff" size=+0>Access Code Failed!</FONT></B></TD>
+<TR BGCOLOR="' . BACKGROUND_COLOUR . '"><TD><B><FONT color="#ffffff" size=+0>Access Code Failed!</FONT></B></TD>
 </TR>
 <TR BGCOLOR="#ffffff">
 <TD>

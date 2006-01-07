@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits.php,v 1.1.2.8 2005-12-27 13:50:20 dan Exp $
+	# $Id: commits.php,v 1.1.2.9 2006-01-07 21:29:10 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -62,7 +62,7 @@ function freshports_SummaryForDay($MinusN) {
    if (file_exists($File)) {
       echo '<br><TABLE WIDTH="152" BORDER="1" CELLSPACING="0" CELLPADDING="5">';
       echo '  <TR>';
-      echo '<TD bgcolor="#AD0040" height="30"><font color="#FFFFFF" SIZE="+1">';
+      echo '<TD bgcolor="' . BACKGROUND_COLOUR . '" height="30"><font color="#FFFFFF" SIZE="+1">';
       echo date("l j M", $Now - 60*60*24*$MinusN);
       echo '</font></TD>';
       echo '       </TR>';
@@ -168,7 +168,7 @@ A port is marked as new for 10 days.
 			echo '
 <TABLE WIDTH="155" BORDER="1" CELLSPACING="0" CELLPADDING="5">
 	<TR>
-		<TD BGCOLOR="#AD0040" height="30"><FONT COLOR="#FFFFFF"><BIG><B>Previous days</B></BIG></FONT></TD>
+		<TD BGCOLOR="<?php echo BACKGROUND_COLOUR; ?>" height="30"><FONT COLOR="#FFFFFF"><BIG><B>Previous days</B></BIG></FONT></TD>
 	</TR>
 	<TR><TD>
 ';

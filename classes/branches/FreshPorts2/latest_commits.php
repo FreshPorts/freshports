@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: latest_commits.php,v 1.1.2.16 2005-12-29 20:11:42 dan Exp $
+	# $Id: latest_commits.php,v 1.1.2.17 2006-01-07 21:29:28 dan Exp $
 	#
 	# Copyright (c) 2003-2004 DVL Software Limited
 	#
@@ -80,7 +80,7 @@ class LatestCommits {
 
 			if ($LastDate <> $mycommit->commit_date) {
 				$LastDate = $mycommit->commit_date;
-				$this->HTML .= '<TR><TD COLSPAN="3" BGCOLOR="#AD0040" HEIGHT="0">' . "\n";
+				$this->HTML .= '<TR><TD COLSPAN="3" BGCOLOR="' . BACKGROUND_COLOUR . '" HEIGHT="0">' . "\n";
 				$this->HTML .= '   <FONT COLOR="#FFFFFF"><BIG>' . FormatTime($mycommit->commit_date, 0, "D, j M Y") . '</BIG></FONT>' . "\n";
 				$this->HTML .= '</TD></TR>' . "\n\n";
 			}

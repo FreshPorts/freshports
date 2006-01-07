@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.57 2005-11-01 22:50:43 dan Exp $
+	# $Id: commit.php,v 1.1.2.58 2006-01-07 21:29:10 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -224,7 +224,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 				$ThisChangeLogID = $myrow["commit_log_id"];
 				if ($LastDate <> $myrow["commit_date"]) {
 					$LastDate = $myrow["commit_date"];
-					$HTML .= '<TR><TD COLSPAN="3" BGCOLOR="#AD0040" HEIGHT="0">' . "\n";
+					$HTML .= '<TR><TD COLSPAN="3" BGCOLOR="' . BACKGROUND_COLOUR . '" HEIGHT="0">' . "\n";
 					$HTML .= '   <FONT COLOR="#FFFFFF"><BIG>' . FormatTime($myrow["commit_date"], 0, "D, j M Y") . '</BIG></FONT>' . "\n";
 					$HTML .= '</TD></TR>' . "\n\n";
 					if ($NumRowsTotal > $PageSize) {

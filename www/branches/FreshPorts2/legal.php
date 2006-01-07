@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: legal.php,v 1.1.2.15 2005-07-15 03:08:33 dan Exp $
+	# $Id: legal.php,v 1.1.2.16 2006-01-07 21:29:10 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -24,7 +24,7 @@
 
 	<?php echo freshports_MainContentTable(NOBORDER); ?>
   <TR>
-    <TD bgcolor="#AD0040" height="32"><FONT COLOR="#FFFFFF" SIZE="+1">LEGAL NOTICE</FONT></TD>
+    <TD bgcolor="<?php echo BACKGROUND_COLOUR; ?>" height="32"><FONT COLOR="#FFFFFF" SIZE="+1">LEGAL NOTICE</FONT></TD>
   </TR>
   <TR><TD>This page contains our obligatory legal notice.  I really don't like having to say
           these things, but given the nature of some people, I must.  For the rest of you,
@@ -32,7 +32,7 @@
   </TD></TR>
   <TR><TD height="20"></TD></TR>
   <TR>
-    <TD BGCOLOR="#AD0040" height="32"><FONT COLOR="#FFFFFF" SIZE="+1">COPYRIGHT</FONT></TD>
+    <TD BGCOLOR="<?php echo BACKGROUND_COLOUR; ?>" height="32"><FONT COLOR="#FFFFFF" SIZE="+1">COPYRIGHT</FONT></TD>
   </TR>
   <TR><TD>
   <p>Copyright <?php echo COPYRIGHTYEARS; ?> DVL Software
@@ -49,7 +49,7 @@
   </TD></TR>
   <TR><TD height="20"></TD></TR>
   <TR>
-    <TD BGCOLOR="#AD0040" height="32"><FONT COLOR="#FFFFFF" SIZE="+1">CONTENT AND LIABILITY DISCLAIMER</FONT></TD>     
+    <TD BGCOLOR="<?php echo BACKGROUND_COLOUR; ?>" height="32"><FONT COLOR="#FFFFFF" SIZE="+1">CONTENT AND LIABILITY DISCLAIMER</FONT></TD>     
   </TR>
   <TR><TD>
   <p>DVL Software Limited shall not be responsible for any errors or omissions contained at
@@ -68,7 +68,7 @@
   </TD></TR>
   <TR><TD height="20"></TD></TR>
   <TR>
-    <TD BGCOLOR="#AD0040" height="32"><FONT COLOR="#FFFFFF" SIZE="+1">FEEDBACK INFORMATION</FONT></TD>
+    <TD BGCOLOR="<?php echo BACKGROUND_COLOUR; ?>" height="32"><FONT COLOR="#FFFFFF" SIZE="+1">FEEDBACK INFORMATION</FONT></TD>
   </TR>
   <TR><TD>
   <p>Any information provided to DVL Software Limited in connection with any DVL Software
@@ -78,7 +78,7 @@
   </TD></TR>
   <TR><TD height="20"></TD></TR>
   <TR>
-    <TD BGCOLOR="#AD0040" height="32"><FONT COLOR="#FFFFFF" SIZE="+1">TRADEMARKS</FONT></TD>
+    <TD BGCOLOR="<?php echo BACKGROUND_COLOUR; ?>" height="32"><FONT COLOR="#FFFFFF" SIZE="+1">TRADEMARKS</FONT></TD>
   </TR>
   <TR><TD>
   <p>All DVL Software Limited's product names are trademarks or registered trademarks of DVL

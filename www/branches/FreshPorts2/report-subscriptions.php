@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: report-subscriptions.php,v 1.1.2.26 2005-11-01 22:52:59 dan Exp $
+	# $Id: report-subscriptions.php,v 1.1.2.27 2006-01-07 21:29:10 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -139,7 +139,7 @@
 <TD WIDTH="100%" VALIGN="top">
 <TABLE WIDTH="100%" BORDER="0" CELLPADDING="1">
 <TR>
-<TD BGCOLOR="#AD0040" HEIGHT="29" COLSPAN="1"><FONT COLOR="#FFFFFF"><BIG><BIG><? echo $ArticleTitle; ?></BIG></BIG></FONT></TD>
+<TD BGCOLOR="<?php echo BACKGROUND_COLOUR; ?>" HEIGHT="29" COLSPAN="1"><FONT COLOR="#FFFFFF"><BIG><BIG><? echo $ArticleTitle; ?></BIG></BIG></FONT></TD>
 </TR>
 <TR>
 <TD>

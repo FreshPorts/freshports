@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: date.php,v 1.1.2.32 2005-12-27 13:50:20 dan Exp $
+	# $Id: date.php,v 1.1.2.33 2006-01-07 21:29:10 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -96,7 +96,7 @@
 		$HTML = '';
 
 		if ($NumRows == 0) {
-			$HTML .= '<TR><TD COLSPAN="3" BGCOLOR="#AD0040" HEIGHT="0">' . "\n";
+			$HTML .= '<TR><TD COLSPAN="3" BGCOLOR="' . BACKGROUND_COLOUR . '" HEIGHT="0">' . "\n";
 			$HTML .= '   <FONT COLOR="#FFFFFF"><BIG>' . FormatTime($Date, 0, "D, j M Y") . '</BIG></FONT>' . "\n";
 			$HTML .= '</TD></TR>' . "\n\n";
 			$HTML .= '<TR><TD>No commits found for that date</TD></TR>';
@@ -109,7 +109,7 @@
 		
 			if ($LastDate <> $commit->commit_date) {
 				$LastDate = $commit->commit_date;
-				$HTML .= '<TR><TD COLSPAN="3" BGCOLOR="#AD0040" HEIGHT="0">' . "\n";
+				$HTML .= '<TR><TD COLSPAN="3" BGCOLOR="' . BACKGROUND_COLOUR . '" HEIGHT="0">' . "\n";
 				$HTML .= '   <FONT COLOR="#FFFFFF"><BIG>' . FormatTime($commit->commit_date, 0, "D, j M Y") . ' : ' . $NumRows . ' commits found </BIG>';
 				if ($DateMessage) {
 					$HTML .= ' (' . $DateMessage . ')';

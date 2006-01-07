@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: login.php,v 1.1.2.38 2005-09-05 19:50:38 dan Exp $
+	# $Id: login.php,v 1.1.2.39 2006-01-07 21:29:10 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -213,9 +213,9 @@ if ($error) {
 
 
 
-echo '<TABLE WIDTH="100%" BORDER="1" CELLPADDING="1" CELLSPACING="0" BGCOLOR="#AD0040">';
+echo '<TABLE WIDTH="100%" BORDER="1" CELLPADDING="1" CELLSPACING="0" BGCOLOR="' . BACKGROUND_COLOUR . '">';
 
-echo '<TR BGCOLOR="#AD0040">';
+echo '<TR BGCOLOR="' . BACKGROUND_COLOUR . '">';
 
 echo freshports_PageBannerText("Login");
 echo '</TR>';

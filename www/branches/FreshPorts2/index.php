@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.102 2005-03-20 22:42:25 dan Exp $
+	# $Id: index.php,v 1.1.2.103 2006-01-07 21:29:10 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -62,7 +62,7 @@ function freshports_SummaryForDay($MinusN) {
    if (file_exists($File)) {
       echo '<br><TABLE WIDTH="152" BORDER="1" CELLSPACING="0" CELLPADDING="5">';
       echo '  <TR>';
-      echo '<TD bgcolor="#AD0040" height="30"><font color="#FFFFFF" SIZE="+1">';
+      echo '<TD bgcolor="' . BACKGROUND_COLOUR . '" height="30"><font color="#FFFFFF" SIZE="+1">';
       echo date("l j M", $Now - 60*60*24*$MinusN);
       echo '</font></TD>';
       echo '       </TR>';
@@ -173,7 +173,7 @@ If you want to see more try <a href="/commits.php">here</a>.
 			echo '
 <TABLE WIDTH="155" BORDER="1" CELLSPACING="0" CELLPADDING="5">
 	<TR>
-		<TD BGCOLOR="#AD0040" height="30"><FONT COLOR="#FFFFFF"><BIG><B>Previous days</B></BIG></FONT></TD>
+		<TD BGCOLOR="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><BIG><B>Previous days</B></BIG></FONT></TD>
 	</TR>
 	<TR><TD>
 ';

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: customize.php,v 1.1.2.35 2005-08-03 12:05:16 dan Exp $
+	# $Id: customize.php,v 1.1.2.36 2006-01-07 21:29:10 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -135,11 +135,11 @@ UPDATE users
 
 
 if ($errors) {
-echo '<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="#AD0040" width="100%">
+echo '<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="' . BACKGROUND_COLOUR . '" width="100%">
 <TR>
 <TD>
 <TABLE width="100%" BORDER="0" CELLPADDING="1">
-<TR BGCOLOR="#AD0040"><TD><b><font color="#ffffff" size=+0>Access Code Failed!</font></b></TD>
+<TR BGCOLOR="' . BACKGROUND_COLOUR . '"><TD><b><font color="#ffffff" size=+0>Access Code Failed!</font></b></TD>
 </TR>
 <TR BGCOLOR="#ffffff">
 <TD>
@@ -167,12 +167,12 @@ if ($AccountModified) {
    echo "Your account details were successfully updated.";
 } else {
 
-echo '<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="#AD0040" WIDTH="100%">
+echo '<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="' . BACKGROUND_COLOUR . '" WIDTH="100%">
 <TR>
 <TD VALIGN="top">
 <TABLE WIDTH="100%" BORDER="0" CELLPADDING="1">
 <TR>
-<TD BGCOLOR="#AD0040" HEIGHT="29" COLSPAN="1"><FONT COLOR="#FFFFFF"><BIG><BIG>Customize</BIG></BIG></FONT></TD>
+<TD BGCOLOR="' . BACKGROUND_COLOUR . '" HEIGHT="29" COLSPAN="1"><FONT COLOR="#FFFFFF"><BIG><BIG>Customize</BIG></BIG></FONT></TD>
 </TR>
 <TR BGCOLOR="#ffffff">
 <TD>';

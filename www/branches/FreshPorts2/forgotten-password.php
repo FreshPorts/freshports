@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: forgotten-password.php,v 1.1.2.25 2005-11-01 22:51:44 dan Exp $
+	# $Id: forgotten-password.php,v 1.1.2.26 2006-01-07 21:29:10 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -135,11 +135,11 @@ if (IsSet($submit)) {
 <?
 
 if (IsSet($error) and $error != '') {
-      echo '<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="#AD0040" WIDTH="100%">
+      echo '<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="' . BACKGROUND_COLOUR . '" WIDTH="100%">
             <TR>
             <TD>
                <TABLE WIDTH="100%" BORDER="0" CELLPADDING="1">
-                  <TR BGCOLOR="#AD0040"><TD><b><FONT COLOR="#ffffff" SIZE="+2">We have a problem!</FONT></b></TD>
+                  <TR BGCOLOR="' . BACKGROUND_COLOUR . '"><TD><b><FONT COLOR="#ffffff" SIZE="+2">We have a problem!</FONT></b></TD>
                  </TR> 
                  <TR BGCOLOR="#ffffff">
             <TD>
@@ -162,11 +162,11 @@ if (IsSet($error) and $error != '') {
 } else {
 
    if ($LoginFailed || $eMailFailed) {
-      echo '<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="#AD0040" WIDTH="100%">
+      echo '<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="' . BACKGROUND_COLOUR . '" WIDTH="100%">
             <TR>
             <TD>
                <TABLE WIDTH="100%" BORDER="0" CELLPADDING="1">
-                  <TR BGCOLOR="#AD0040"><TD><b><FONT COLOR="#ffffff" SIZE="+2">UserID not found!</FONT></b></TD>
+                  <TR BGCOLOR="' . BACKGROUND_COLOUR . '"><TD><b><FONT COLOR="#ffffff" SIZE="+2">UserID not found!</FONT></b></TD>
                  </TR>
                  <TR BGCOLOR="#ffffff">
             <TD>
@@ -204,12 +204,12 @@ if (IsSet($error) and $error != '') {
 }
 ?>
 
-<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="#AD0040" WIDTH="100%"> <TR> <TD>
+<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="<?php echo BACKGROUND_COLOUR; ?>" WIDTH="100%"> <TR> <TD>
 
 
-<TABLE WIDTH="100%" BORDER="0" CELLPADDING="5" BGCOLOR="#AD0040">
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="5" BGCOLOR="<?php echo BACKGROUND_COLOUR; ?>">
 
-<TR BGCOLOR="#AD0040"><TD BGCOLOR="#AD0040"><FONT COLOR="#ffffff" SIZE="+2">
+<TR BGCOLOR="<?php echo BACKGROUND_COLOUR; ?>"><TD BGCOLOR="<?php echo BACKGROUND_COLOUR; ?>"><FONT COLOR="#ffffff" SIZE="+2">
 <?
 if ($MailSent) {
    echo "Mail sent to your address";

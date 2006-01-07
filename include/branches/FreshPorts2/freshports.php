@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.240 2006-01-01 14:17:07 dan Exp $
+	# $Id: freshports.php,v 1.4.2.241 2006-01-07 21:29:11 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -27,6 +27,8 @@ DEFINE('MESSAGE_ID_OLD_DOMAIN', '@freshports.org');
 DEFINE('MESSAGE_ID_NEW_DOMAIN', '@dev.null.freshports.org');
 
 DEFINE('UNMAINTAINTED_ADDRESS', 'ports@freebsd.org');
+
+DEFINE('BACKGROUND_COLOUR', '#8c0707');
 
 
 if ($Debug) echo "'" . $_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php<BR>';
@@ -1659,7 +1661,7 @@ function freshports_wrap($text, $length = WRAPCOMMITSATCOLUMN) {
 }
 
 function freshports_PageBannerText($Text, $ColSpan=1) {
-	return '<TD ALIGN="left" BGCOLOR="#AD0040" HEIGHT="29" COLSPAN="' . $ColSpan . ' "><FONT COLOR="#FFFFFF"><BIG><BIG>' . $Text . '</BIG></BIG></FONT></TD>' . "\n";
+	return '<TD ALIGN="left" BGCOLOR="' . BACKGROUND_COLOUR . '" HEIGHT="29" COLSPAN="' . $ColSpan . ' "><FONT COLOR="#FFFFFF"><BIG><BIG>' . $Text . '</BIG></BIG></FONT></TD>' . "\n";
 }
 
 
@@ -1815,7 +1817,7 @@ function freshports_SideBar() {
 	$HTML = '
   <TABLE WIDTH="' . $ColumnWidth . '" BORDER="1" CELLSPACING="0" CELLPADDING="5">
         <TR>
-         <TD BGCOLOR="#AD0040" height="30"><FONT COLOR="#FFFFFF"><BIG><B>Login</B></BIG></FONT></TD>
+         <TD BGCOLOR="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><BIG><B>Login</B></BIG></FONT></TD>
         </TR>
         <TR>
 
@@ -1880,7 +1882,7 @@ function freshports_SideBar() {
 
 <TABLE WIDTH="' . $ColumnWidth . '" BORDER="1" CELLSPACING="0" CELLPADDING="5">
 	<TR>
-		<TD BGCOLOR="#AD0040" height="30"><FONT COLOR="#FFFFFF"><BIG><B>Search</B></BIG></FONT></TD>
+		<TD BGCOLOR="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><BIG><B>Search</B></BIG></FONT></TD>
 	</TR>
 	<TR>
 
@@ -1918,7 +1920,7 @@ function freshports_SideBar() {
 
 <TABLE WIDTH="' . $ColumnWidth . '" BORDER="1" CELLSPACING="0" CELLPADDING="5">
 	<TR>
-		<TD COLSPAN="2" BGCOLOR="#AD0040" height="30"><FONT COLOR="#FFFFFF"><BIG><B>Statistics</B></BIG></FONT></TD>
+		<TD COLSPAN="2" BGCOLOR="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><BIG><B>Statistics</B></BIG></FONT></TD>
 	</TR>
 	<TR>
 	<TD VALIGN="top">
@@ -1941,7 +1943,7 @@ function freshports_SideBar() {
 
 <TABLE WIDTH="' . $ColumnWidth . '" BORDER="1" CELLSPACING="0" CELLPADDING="5">
 	<TR>
-		<TD BGCOLOR="#AD0040" height="30"><FONT COLOR="#FFFFFF"><BIG><B>Ports</B></BIG></FONT></TD>
+		<TD BGCOLOR="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><BIG><B>Ports</B></BIG></FONT></TD>
 	</TR>
 	<TR>
 	<TD VALIGN="top">
@@ -1959,7 +1961,7 @@ function freshports_SideBar() {
 
 <TABLE WIDTH="' . $ColumnWidth .'" BORDER="1" CELLSPACING="0" CELLPADDING="5">
 	<TR>
-		<TD BGCOLOR="#AD0040" height="30"><FONT COLOR="#FFFFFF"><BIG><B>This site</B></BIG></FONT></TD>
+		<TD BGCOLOR="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><BIG><B>This site</B></BIG></FONT></TD>
 	</TR>
 	<TR>
 	<TD VALIGN="top">

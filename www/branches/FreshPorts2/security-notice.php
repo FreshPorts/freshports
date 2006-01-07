@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: security-notice.php,v 1.1.2.15 2005-01-22 14:48:53 dan Exp $
+	# $Id: security-notice.php,v 1.1.2.16 2006-01-07 21:29:10 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -113,7 +113,7 @@ function MassageStatus($InStatus) {
 	$Commit = new Commit($db);
 	if ($Commit->FetchByMessageId($message_id) == $message_id) {
 
-		$HTML .= '<TR><TD COLSPAN="3" BGCOLOR="#AD0040" HEIGHT="0">' . "\n";
+		$HTML .= '<TR><TD COLSPAN="3" BGCOLOR="' . BACKGROUND_COLOUR . '" HEIGHT="0">' . "\n";
 		$HTML .= '   <FONT COLOR="#FFFFFF"><BIG>' . FormatTime($Commit->commit_date, 0, "D, j M Y") . '</BIG></FONT>' . "\n";
 		$HTML .= '</TD></TR>' . "\n\n";
 

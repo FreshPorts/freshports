@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.1.2.10 2006-01-07 21:47:16 dan Exp $
+# $Id: Makefile,v 1.1.2.11 2006-01-13 14:42:05 dan Exp $
 #
 # Install the ports needed by FreshPorts
 #
@@ -38,6 +38,7 @@ RUN_DEPENDS=	${LOCALBASE}/bin/svstat:${PORTSDIR}/sysutils/daemontools \
 		${PREFIX}/share/pear/HTML/Common.php:${PORTSDIR}/devel/pear-HTML_Common \
 		${PREFIX}/share/pear/HTML/Page2.php:${PORTSDIR}/devel/pear-HTML_Page2 \
 		${SITE_PERL}/Class/Observable.pm:${PORTSDIR}/devel/p5-Class-Observable \
+		${SITE_PERL}/LWP/Simple.pm:${PORTSDIR}/www/p5-libwww \
 		${LOCALBASE}/bin/php:${PORTSDIR}/lang/php4-extensions 
 				
 NO_WRKSUBDIR=	YES

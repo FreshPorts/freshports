@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch_list.php,v 1.1.2.21 2005-11-01 23:10:17 dan Exp $
+	# $Id: watch_list.php,v 1.1.2.22 2006-01-20 16:32:45 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -109,6 +109,7 @@ DELETE FROM watch_list
 
 		$query = "
 DELETE FROM watch_list_element
+ USING watch_list
  WHERE watch_list.id                    = $WatchListID
    AND watch_list.user_id               = $UserID
    AND watch_list_element.watch_list_id = watch_list.id";
@@ -133,6 +134,7 @@ DELETE FROM watch_list_element
 
 		$query = "
 DELETE FROM watch_list_element
+ USING ports_categories, ports, watch_list
  WHERE ports_categories.category_id     = $CategoryID
    AND ports_categories.port_id         = ports.id
    AND ports.element_id                 = watch_list_element.element_id
@@ -160,6 +162,7 @@ DELETE FROM watch_list_element
 
 		$query = "
 DELETE FROM watch_list_element
+ USING watch_list
  WHERE watch_list.user_id               = $UserID
    AND watch_list_element.watch_list_id = watch_list.id";
 

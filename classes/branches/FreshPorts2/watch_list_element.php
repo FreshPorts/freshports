@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch_list_element.php,v 1.1.2.6 2005-10-08 01:57:42 dan Exp $
+	# $Id: watch_list_element.php,v 1.1.2.7 2006-01-20 16:32:45 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -35,6 +35,7 @@ class WatchListElement {
 		# own watch list
 		#
 		$sql = "DELETE FROM watch_list_element
+                 USING watch_list
 		         WHERE watch_list_element.element_id    = $ElementID
 		           AND watch_list.id                    = $WatchListID
 		           AND watch_list.user_id               = $UserID
@@ -64,6 +65,7 @@ class WatchListElement {
 		#
 
 		$sql = "DELETE FROM watch_list_element
+                 USING watch_list
 		         WHERE watch_list_element.element_id    = $ElementID
 		           AND watch_list.user_id               = $UserID
 		           AND watch_list_element.watch_list_id = watch_list.id";
@@ -90,10 +92,13 @@ class WatchListElement {
 		# own watch list
 		#
 		$sql = "DELETE FROM watch_list_element
+                 USING watch_list
 		         WHERE watch_list_element.element_id    = $ElementID
 		           AND watch_list.in_service            = TRUE
 		           AND watch_list.user_id               = $UserID
 		           AND watch_list_element.watch_list_id = watch_list.id";
+
+		syslog(LOG_ERR, $sql);
 		if ($Debug) echo "<pre>$sql</pre>";
 		$result = pg_exec($this->dbh, $sql);
 

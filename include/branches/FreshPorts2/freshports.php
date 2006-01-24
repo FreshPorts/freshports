@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.241 2006-01-07 21:29:11 dan Exp $
+	# $Id: freshports.php,v 1.4.2.242 2006-01-24 18:38:12 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -96,7 +96,7 @@ function freshports_link_to_port($CategoryName, $PortName) {
 
 
 function freshports_IndexFollow($URI) {
-	$NOINDEX["/index.php"]				= 1;
+#	$NOINDEX["/index.php"]				= 1;
 	$NOINDEX["/date.php"]				= 1;
 
 	$NOINDEX['/ports-broken.php']		= 1;
@@ -110,7 +110,11 @@ function freshports_IndexFollow($URI) {
 	$NOFOLLOW['/ports-deleted.php']		= 1;
 	$NOFOLLOW['/graphs.php']			= 1;
 	$NOFOLLOW['/ports-deleted.php']		= 1;
-	$NOFOLLOW['/commit.php']		= 1;
+	$NOFOLLOW['/commit.php']			= 1;
+
+	$NOFOLLOW['/new-user.php']			= 1;
+	$NOFOLLOW['/login.php']				= 1;
+
 
 	# well, OK, so it may not be a URI... but it's close
 

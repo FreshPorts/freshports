@@ -4,6 +4,8 @@
 User-agent: *
 Disallow: /login.php
 Disallow: /new-user.php
+Disallow: /login.php*
+Disallow: /new-user.php*
 Disallow: /ports-broken.php
 Disallow: /ports-deleted.php
 Disallow: /ports-forbidden.php

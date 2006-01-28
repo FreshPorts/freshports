@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch_list_element.php,v 1.1.2.7 2006-01-20 16:32:45 dan Exp $
+	# $Id: watch_list_element.php,v 1.1.2.8 2006-01-28 13:18:13 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -98,7 +98,6 @@ class WatchListElement {
 		           AND watch_list.user_id               = $UserID
 		           AND watch_list_element.watch_list_id = watch_list.id";
 
-		syslog(LOG_ERR, $sql);
 		if ($Debug) echo "<pre>$sql</pre>";
 		$result = pg_exec($this->dbh, $sql);
 

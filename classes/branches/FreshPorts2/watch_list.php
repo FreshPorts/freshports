@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch_list.php,v 1.1.2.22 2006-01-20 16:32:45 dan Exp $
+	# $Id: watch_list.php,v 1.1.2.23 2006-02-04 22:48:28 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -53,14 +53,34 @@ GROUP BY users.max_number_watch_lists";
 				$Max   = $myrow[1];
 				if ($Count < $Max) {
 					$NextValue = freshports_GetNextValue($Sequence_Watch_List_ID, $this->dbh);
-			
-					$query  = "insert into watch_list (id, user_id, name) values ($NextValue, $UserID, '$Name')";
-					$result = pg_query($this->dbh, $query);
+
+					$result   = 0;
+					$Attempts = 5;
+
+					#
+					# repeat the inserts until we get it in
+					# we do this because the db inserts a random number into the
+					# token column.  We might get a collision.  If we do, try 
+					# again.  5 Collisions should be very rare.
+					#
+					while ($Attempts > 0 and !$result) {
+						$query  = "insert into watch_list (id, user_id, name) values ($NextValue, $UserID, '$Name')";
+						$result = pg_query($this->dbh, $query);
+						if (!result) {
+							syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ' inserting into watch_list failed on attempt ' . $Attempts . '.  collision on token column suspected.');
+						}
+						$Attempts--;
+					}
 			
 					# that worked and we updated exactly one row
 					if ($result && pg_affected_rows($result) == 1) {
 						$return = $NextValue;
 					}
+					if (!result) {
+						syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ' failed to insert into watch_list.  collision on token column suspected.').
+						die('Sorry, I was unable to create you a watch list.  Please try again, and if failure persist, please contast the webmaster.');
+					}
+
 				} else {
 					syslog(LOG_NOTICE, "You already have $Count watch lists.  If you want more than $Max watch lists, please contact the postmaster. UserID='$UserID'");
 					die("You already have $Count watch lists.  If you want more than $Max watch lists, please contact the postmaster.");

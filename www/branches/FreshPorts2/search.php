@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.79 2005-11-02 13:58:24 dan Exp $
+	# $Id: search.php,v 1.1.2.80 2006-02-05 20:36:39 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -105,11 +105,18 @@
 
 #	if ($Debug) phpinfo();
 
+	$OnLoad = 'setfocus()';
 	freshports_Start('Search',
 					'freshports - new ports, applications',
 					'FreeBSD, index, applications, ports');
 
 ?>
+
+<script language="JavaScript" type="text/javascript">
+<!--
+function setfocus() { document.search.query.focus(); }
+// -->
+</script>
 
 <?php echo freshports_MainTable(); ?>
 <tr><td valign="top" width="100%">
@@ -514,7 +521,8 @@ $Port->LocalResult = $result;
 
 }
 ?>
-<form ACTION="<? echo $_SERVER["PHP_SELF"] ?>">
+<form ACTION="<? echo $_SERVER["PHP_SELF"] ?>" name="search" >
+
 Search for:<BR>
 	<SELECT NAME="stype" size="1">
 		<OPTION VALUE="name"             <? if ($stype == "name")             echo 'SELECTED'?>>Port Name</OPTION>
@@ -697,7 +705,6 @@ echo "</td></tr>\n";
 
 </tr>
 </table>
-
 <?
 echo freshports_ShowFooter();
 ?>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-list.php,v 1.1.2.2 2005-10-08 02:00:48 dan Exp $
+	# $Id: watch-list.php,v 1.1.2.3 2006-02-07 00:49:31 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -27,7 +27,7 @@ function DisplayNewsFeed($db, $token) {
 	$wlid  = freshports_WatchListVerifyToken($db, $token);
 	if ($wlid == '') {
 		syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . 
-			' watch list token requested by ' . $_SERVER[REMOTE_ADDR] . 
+			' watch list token requested by ' . $_SERVER['REMOTE_ADDR'] . 
 			' not found ' . $token);
 		header('HTTP/1.1 500 OK******');
 		exit; 

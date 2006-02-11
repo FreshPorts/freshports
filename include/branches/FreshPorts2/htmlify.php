@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: htmlify.php,v 1.1.2.6 2004-03-22 16:41:02 dan Exp $
+	# $Id: htmlify.php,v 1.1.2.7 2006-02-11 20:40:14 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -107,7 +107,7 @@ function htmlify($String) {
 #
 # URLs to test with: http://www.freshports.org/commit.php?message_id=200206232029.g5NKT1O13181@freefall.freebsd.org
 #
-	$del_t = array("&quot;","&#34;","&gt;","&#62;","\/\.\s","\)","'","\s","$");
+	$del_t = array("&quot;", "&#34;", "&gt;", "&#62;", "\/\.\s","\)", "'", ",\s", "\s", "$");
 	$delimiters = "(".join("|",$del_t).")";
 
 	$String = preg_replace_callback("/((http|ftp|https):\/\/.*?)($delimiters)/i",                    'url2link',    $String);

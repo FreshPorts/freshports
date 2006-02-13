@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch.php,v 1.1.2.57 2005-12-29 12:37:56 dan Exp $
+	# $Id: watch.php,v 1.1.2.58 2006-02-13 15:39:00 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -13,6 +13,7 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports_updating.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_list.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_list_deleted_ports.php');
 
 	// if we don't know who they are, we'll make sure they login first
 	if (!$visitor) {
@@ -90,11 +91,38 @@ if ($wlid != '') {
 </td></tr>
 </table>
 </td></tr>
-<script language="php">
+<?php
 
 // make sure the value for $sort is valid
 
-echo "<tr><td>\nThis page is ";
+echo "<tr><td>";
+
+$WatchListDeletedPorts = new WatchListDeletedPorts($db);
+$rowcount = $WatchListDeletedPorts->FetchInitialise($wlid);
+if ($rowcount)
+{
+echo '<hr><p>Some of your watched ports have moved.  You are still watching the old ports.</p>';
+echo '<table border="1" cellpadding="5" cellspacing="0">';
+echo '<tr><td><b>Old Port</b></td><td><b>Replaced by</b></td></tr>';
+for ($i = 0; $i < $rowcount; $i++) {
+	$WatchListDeletedPorts->FetchNth($i);
+
+	$OldPort = $WatchListDeletedPorts->category_old . '/' . $WatchListDeletedPorts->name_old;
+	$NewPort = $WatchListDeletedPorts->category_new . '/' . $WatchListDeletedPorts->name_new;
+	$OldURL = '<a href="/' . $OldPort . '/">' . $OldPort . '</a>';
+	$NewURL = '<a href="/' . $NewPort . '/">' . $NewPort . '</a>';
+
+	echo "<tr><td>$OldURL</td><td>$NewURL</td></td>";
+}
+
+echo '</table>';
+
+echo '<p>You should visit the <i>Replaced By</i> link first, add that port to your watch list, then 
+visit the <i>Old Port</i> link and remove it from your watch list. <hr>';
+
+}
+
+echo "\nThis page is ";
 
 $sort = $_GET["sort"];
 

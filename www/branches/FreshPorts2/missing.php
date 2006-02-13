@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing.php,v 1.1.2.27 2006-01-07 21:29:10 dan Exp $
+	# $Id: missing.php,v 1.1.2.28 2006-02-13 15:56:25 dan Exp $
 	#
 	# Copyright (c) 2001-2003 DVL Software Limited
 	#
@@ -18,6 +18,8 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	# if we can parse it, then do so and return 1;
 	# otherwise, return 0.
 
+	define('FRESHPORTS_PORTS_TREE_PREFIX', '/ports/');
+
 	$Debug  = 0;
 	$result = '';
 
@@ -29,57 +31,96 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 
 	$ElementRecord = new ElementRecord($db);
 
-	if (substr($pathname, 0, 1) != '/') {
-		$pathname = '/' . $pathname;
+	# first goal, remove leading / and leading ports/
+	if (substr($pathname, 0, 1) == '/') {
+		$pathname = substr($pathname, 1);
 	}
 
-	if (!preg_match('|^/?ports/|', $pathname)) {
-		$pathname = '/ports' . $pathname;
+	if (preg_match('|^ports/|', $pathname)) {
+		$pathname = substr($pathname, 6);
 	}
+
+	define('PATH_NAME', $pathname);
 
 	# Strip off the files.php extension if it's there...
 	$FilesRequest = preg_replace('|^(.*)/files\.php$|', '\\1', $pathname);
 	if ($FilesRequest != $pathname) {
 		$pathname     = $FilesRequest;
-		$FilesRequest = 1;
-
+		$FilesRequest = true;
 	} else {
-		$FilesRequest = 0;
+		$FilesRequest = false;
+	}
+
+	if ($Debug) {
+		echo "pathname='" . htmlentities($pathname) . "'<br>";
+		echo "FilesRequest='" . $FilesRequest . "'<br>";
 	}
 
 
-	if ($ElementRecord->FetchByName($pathname)) {
-		if ($ElementRecord->IsPort()) {
+	if (strpos($pathname, '/') !== FALSE) {
+		GLOBAL $User;
 
-			if ($FilesRequest) {
-				# extract the message ID from the URI
-				parse_str($_SERVER['REDIRECT_QUERY_STRING'], $query_parts);
-				$message_id = $query_parts['message_id'];
+		list($category, $port, $extra) = explode('/', PATH_NAME);
+		if ($Debug) echo "extra is '" . $extra . "'<br>";
+		if ($extra == '' || $FilesRequest) {
+			if ($Debug) echo 'checking for PortID<br>';
+			$port_id = freshports_GetPortID($db, $category, $port);
+			if (IsSet($port_id)) {
+				if ($Debug) echo "$category/$port found by freshports_GetPortID<br>";
 
-				if ($message_id != '') {
+				if ($FilesRequest) {
+					if ($Debug) echo 'going for files.php<br>';
+					# extract the message ID from the URI
+					parse_str($_SERVER['REDIRECT_QUERY_STRING'], $query_parts);
+					$message_id = $query_parts['message_id'];
+
+					if ($Debug) echo 'we have message_id=' . $message_id . '<br>';
 					require_once($_SERVER['DOCUMENT_ROOT'] . '/include/files.php');
-					freshports_Files($User, $ElementRecord->id, $message_id, $db);
+					require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
+					$Port = new Port($db);
+					$Port->FetchByID($port_id);
+					freshports_Files($User, $Port->element_id, $message_id, $db);
+					exit;
 				} else {
-					$result = $REQUEST_URI;
+					require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-port.php');
+
+					freshports_PortDescriptionByPortID($db, $port_id);
+					exit;
 				}
-			} else {
-				require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-port.php');
-				freshports_PortDescription($db, $ElementRecord->id);
-			}
-
-		} else {
-			if ($ElementRecord->IsCategory()) {
-
-				require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-category.php');
-				freshports_CategoryByElementID($db, $ElementRecord->id);
-
-			} else {
-				# this is a non-port (e.g. /Mk/)
-				require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-non-port.php');
-				freshports_NonPortDescription($db, $ElementRecord);
 			}
 		}
+	}
+
+	if ($Debug) echo 'checking for ' . FRESHPORTS_PORTS_TREE_PREFIX . $pathname . '<br>';
+	list($category, $extra) = explode('/', $pathname);
+	if ($extra == '') {
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
+		$Category = new Category($db);
+		$CategoryID = $Category->IsCategoryByName($category);
+		if (IsSet($CategoryID)) {
+			// found that category!
+			if ($Debug) echo 'found that category<br>';
+			require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-category.php');
+			freshports_CategoryByID($db, $CategoryID);
+			exit;
+		}
+	}
+
+
+	if ($ElementRecord->FetchByName(FRESHPORTS_PORTS_TREE_PREFIX . $pathname)) {
+		if ($ElementRecord->IsCategory()) {
+
+			require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-category.php');
+			freshports_CategoryByElementID($db, $ElementRecord->id);
+			exit;
+		} else {
+			# this is a non-port (e.g. /Mk/)
+			require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-non-port.php');
+			freshports_NonPortDescription($db, $ElementRecord);
+			exit;
+		}
 	} else {
+		if ($Debug) echo 'not an element<br>';
 		$result = $REQUEST_URI;
 	}
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.58 2005-07-15 03:08:33 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.59 2006-02-13 15:41:21 dan Exp $
 	#
 	# Copyright (c) 2001-2003 DVL Software Limited
 	#
@@ -30,6 +30,25 @@ function freshports_PortDescription($db, $element_id) {
 
 	$port = new Port($db);
 	$port->FetchByElementID($element_id, $User->id);
+
+	freshports_PortDisplay($db, $port);
+}
+
+function freshports_PortDescriptionByPortID($db, $port_id) {
+	GLOBAL $TableWidth;
+	GLOBAL $FreshPortsTitle;
+	GLOBAL $User;
+
+	$port = new Port($db);
+	$port->FetchByID($port_id, $User->id);
+
+	freshports_PortDisplay($db, $port);
+}
+
+function freshports_PortDisplay($db, $port) {
+	GLOBAL $TableWidth;
+	GLOBAL $FreshPortsTitle;
+	GLOBAL $User;
 
 	freshports_ConditionalGet($port->last_modified);
 

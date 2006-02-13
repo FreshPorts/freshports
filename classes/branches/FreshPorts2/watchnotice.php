@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watchnotice.php,v 1.1.2.4 2005-10-08 01:57:16 dan Exp $
+	# $Id: watchnotice.php,v 1.1.2.5 2006-02-13 15:10:30 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -11,7 +11,7 @@ class WatchNotice {
 
 	var $Never			= 'Z';
 	var $Daily			= 'D';
-	var $Weekely		= 'W';
+	var $Weekly			= 'W';
 	var $Fortnightly	= 'F';
 	var $Monthly		= 'M';
 

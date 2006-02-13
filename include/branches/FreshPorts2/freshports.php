@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.242 2006-01-24 18:38:12 dan Exp $
+	# $Id: freshports.php,v 1.4.2.243 2006-02-13 15:40:13 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -2193,6 +2193,20 @@ function freshports_ConditionalGet($LastModified) {
 
 function freshports_IsInt($x) {
    return ( is_numeric ($x ) ?  intval(0+$x ) ==  $x  :  false ); 
+}
+
+function freshports_GetPortID($db, $category, $port) {
+	$sql = "select Port_ID('$category', '$port');";
+
+	$result = pg_exec($db, $sql);
+	if (!$result) {
+		echo "error " . pg_errormessage();
+		exit;
+	}
+
+	$myrow = pg_fetch_array($result, 0);
+
+	return $myrow['port_id'];
 }
 
 openlog('FreshPorts', LOG_PID | LOG_PERROR, LOG_LOCAL0);

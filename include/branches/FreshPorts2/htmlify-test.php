@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: htmlify-test.php,v 1.1.2.4 2003-11-28 16:25:28 dan Exp $
+	# $Id: htmlify-test.php,v 1.1.2.5 2006-02-13 15:41:53 dan Exp $
 	#
 	# Copyright (c) 2003 DVL Software Limited
 	#
@@ -53,6 +53,10 @@ http://www.freebsd.org/cgi/query-pr.cgi?pr=ports/39731
 
 Does it handle great then (>) and less than (<) and ampersand (&)?
 
+
+Make sure that links with trailing commas work OK:  The following is from java/linux-sun-jdk14/Makefile:
+
+IGNORE: You must manually fetch the J2SE SDK self-extracting file for the Linux platform (j2sdk-1_4_2_10-linux-i586.bin) from http://javashoplm.sun.com/ECom/docs/Welcome.jsp?StoreId=22&PartDetailId=j2sdk-1.4.2_10-oth-JPR&SiteId=JSC&TransactionId=noreg, place it in /usr/ports/distfiles and then run make again
 EOD;
 
 ?>

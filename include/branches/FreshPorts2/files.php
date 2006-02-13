@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: files.php,v 1.1.2.46 2005-11-01 22:53:42 dan Exp $
+	# $Id: files.php,v 1.1.2.47 2006-02-13 15:39:43 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -16,6 +16,12 @@ function freshports_Files($User, $ElementID, $MessageID, $db) {
 	# $MessageID   == commit_log.message_id
 	#
 
+	if ($MessageID == '') {
+		echo 'No message_id supplied';
+		syslog(LOG_NOTICE, 'No message_id supplied: $ElementID="' . $ElementID . '"');
+		exit;
+	}
+
 	# if found, this will be > 0
 	if (strpos($MessageID, MESSAGE_ID_OLD_DOMAIN)) {
 		# yes, we found an old MessageID.  Convert it,
@@ -27,7 +33,6 @@ function freshports_Files($User, $ElementID, $MessageID, $db) {
                   str_replace($_SERVER['QUERY_STRING'], "message_id=$MessageID", "message_id=$new_MessageID");
 
 		freshports_RedirectPermanent($URL);
-		phpinfo();
 		exit;
 	}
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.19 2005-11-16 14:34:50 dan Exp $
+	# $Id: categories.php,v 1.1.2.20 2006-02-13 15:13:27 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -128,6 +128,28 @@ SELECT C.*, (SELECT MAX(CL.date_added)
 				$myrow = pg_fetch_array ($result, 0);
 				$this->Populate($myrow);
 				$CategoryID = $this->id;
+			}
+		}
+
+		return $CategoryID;
+	}
+
+	function IsCategoryByName($Name) {
+
+		$Debug = 0;
+
+		Unset($CategoryID);
+
+		$sql = "SELECT id FROM categories where name = '$Name'";
+
+		if ($Debug) echo "sql = '$sql'<BR>";
+
+		$result = pg_exec($this->dbh, $sql);
+		if ($result) {
+			$numrows = pg_numrows($result);
+			if ($numrows == 1) {
+				$myrow = pg_fetch_array ($result, 0);
+				$CategoryID = $myrow['id'];
 			}
 		}
 

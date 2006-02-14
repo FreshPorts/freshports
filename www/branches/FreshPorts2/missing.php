@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing.php,v 1.1.2.28 2006-02-13 15:56:25 dan Exp $
+	# $Id: missing.php,v 1.1.2.29 2006-02-14 13:04:37 dan Exp $
 	#
 	# Copyright (c) 2001-2003 DVL Software Limited
 	#
@@ -23,7 +23,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	$Debug  = 0;
 	$result = '';
 
-	$pathname = $REQUEST_URI;
+	$pathname = AddSlashes(htmlentities($REQUEST_URI));
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/element_record.php');
 
@@ -171,7 +171,7 @@ Sorry, but I don't know anything about that.
 </P>
 
 <P>
-<? echo $result ?>
+<? echo htmlentities($result) ?>
 </P>
 
 <P>

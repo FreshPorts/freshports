@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.243 2006-02-13 15:40:13 dan Exp $
+	# $Id: freshports.php,v 1.4.2.244 2006-02-21 21:04:31 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -1055,17 +1055,6 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 		$HTML .= '</font><BR>' . "\n";
 	}
 
-	if (IsSet($port->no_package) && $port->no_package != '') {
-		$HTML .= '<p><b>No package is available:</b> ' . $port->no_package . '</p>';
-	} else {
-		if ($port->forbidden || $port->broken || $port->ignore) {
-			$HTML .= '<p><b>No package because port is marked as Forbidden/Broken/Ignore</b></p>';
-		} else {
-			$HTML .= '<p><b>To add the package:</b> <code class="code">pkg_add -r ' . $port->latest_link . '</code></p>';
-		}
-	}
-
-
 	$HTML .= PeopleWatchingThisPortAlsoWatch($db, $port->element_id);
 
    if ($port->categories) {
@@ -1123,6 +1112,23 @@ if ($ShowDepends) {
 
 }
 
+	$HTML .= "\n<hr>\n";
+	if (IsSet($port->no_package) && $port->no_package != '') {
+		$HTML .= '<p><b>No package is available:</b> ' . $port->no_package . '</p>';
+	} else {
+		if ($port->forbidden || $port->broken || $port->ignore) {
+			$HTML .= '<p><b>No package because port is marked as Forbidden/Broken/Ignore</b></p>';
+		} else {
+			$HTML .= '<p><b>To install <a href="faq.php#">the port</a>:</b> <code class="code">cd /usr/ports/'  . $port->category . '/' . $port->port . '/ && make install clean</code><br>';
+			$HTML .= '<b>To add the <a href="faq.php#">package</a>:</b> <code class="code">pkg_add -r ' . $port->latest_link . '</code></p>';
+#			$HTML .= '<hr><p><b>To install the <a href="faq.php#">port</a> (i.e. from source):</b> <code class="code">cd /usr/ports/'  . $port->category . '/' . $port->port . '/ && make install clean</code><br>';
+#			$HTML .= '<b>To add the <a href="<a href="faq.php#">package</a> (i.e. the binary):</b> <code class="code">pkg_add -r ' . $port->latest_link . '</code></p>';
+
+		}
+	}
+
+	$HTML .= "\n<hr>\n";
+
 	if ($ShowMasterSites) {
 		$HTML .= '<dl><dt><i>master sites:</i></dt>' . "\n";
 
@@ -1133,7 +1139,7 @@ if ($ShowDepends) {
 
 		$HTML .= "</dl>\n";
 
-		$HTML .= '<br>';
+#		$HTML .= '<br>';
 	}
 
    if (!$HideDescription && ($ShowDescriptionLink == "Y" || $ShowEverything)) {
@@ -1201,6 +1207,9 @@ if ($ShowDepends) {
 			$HTML .= "</dl>\n";
 		}
 	}
+
+	$HTML .= "\n<hr>\n";
+
 	
    $HTML .= "\n</DD>\n";
    $HTML .= "</DL>\n";
@@ -2196,7 +2205,7 @@ function freshports_IsInt($x) {
 }
 
 function freshports_GetPortID($db, $category, $port) {
-	$sql = "select Port_ID('$category', '$port');";
+	$sql = "select Port_ID('$category', '$port')";
 
 	$result = pg_exec($db, $sql);
 	if (!$result) {

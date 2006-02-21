@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.79 2005-11-30 00:32:42 dan Exp $
+	# $Id: faq.php,v 1.1.2.80 2006-02-21 21:25:34 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -66,6 +66,45 @@ down you must read to find something you didn't already know.</P>
 	the watch list the same name as the machine.  Email notifications
 	will contain headers with the list name.  You can use that for any
 	filtering you may want to do (e.g. procmail).
+	</TD></TR><TR><TD>&nbsp;</TD></TR>
+
+<TR>
+<?php echo freshports_PageBannerText("Some definitions"); ?>
+</TR>
+
+	<TR><TD>
+	<p>
+	You should be familiar with the <a href="http://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/ports.html">Ports</a>
+	section of <a href="http://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/index.html">The FreeBSD Handbook</a>.
+	Pay careful attention to the difference between a port and a package.
+
+	<h2>Definitions for the hopelessly lazy</h2>
+
+	<h3><a name="port">What is a port?</a></h3>
+	<p>
+	If you install the port, the source will be downloaded, patched if necessary,
+	compiled and installed.  You will have a chance to set any optional configuration
+	items particular to that port. If the port is dependent upon another port,
+	that port will also be installed.  After installing, ports are identical to
+	packages.
+
+	<p>
+	It is because of these compile time options that I prefer ports over packages.
+
+	<h3><a name="package">What is a package?</a></h3>
+	<p>
+	A package is a compiled port.  It is a binary.  When you install the package, 
+	you will download a binary and it will be installed.
+
+	<p>
+	Packages often lag behind ports.  That is usually because it takes time to compile
+	the packages, etc.  If you want the latest version, and the package is not
+	available, then you should install the port.
+
+	<p>
+	Not all ports can have packages, often because of license restrictions that
+	prevent binary distribution.
+
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.244 2006-02-21 21:04:31 dan Exp $
+	# $Id: freshports.php,v 1.4.2.245 2006-02-21 21:25:34 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -1119,11 +1119,8 @@ if ($ShowDepends) {
 		if ($port->forbidden || $port->broken || $port->ignore) {
 			$HTML .= '<p><b>No package because port is marked as Forbidden/Broken/Ignore</b></p>';
 		} else {
-			$HTML .= '<p><b>To install <a href="faq.php#">the port</a>:</b> <code class="code">cd /usr/ports/'  . $port->category . '/' . $port->port . '/ && make install clean</code><br>';
-			$HTML .= '<b>To add the <a href="faq.php#">package</a>:</b> <code class="code">pkg_add -r ' . $port->latest_link . '</code></p>';
-#			$HTML .= '<hr><p><b>To install the <a href="faq.php#">port</a> (i.e. from source):</b> <code class="code">cd /usr/ports/'  . $port->category . '/' . $port->port . '/ && make install clean</code><br>';
-#			$HTML .= '<b>To add the <a href="<a href="faq.php#">package</a> (i.e. the binary):</b> <code class="code">pkg_add -r ' . $port->latest_link . '</code></p>';
-
+			$HTML .= '<p><b>To install <a href="/faq.php#port" ALT="what is a port?" TITLE="what is a port?">the port</a>:</b> <code class="code">cd /usr/ports/'  . $port->category . '/' . $port->port . '/ && make install clean</code><br>';
+			$HTML .= '<b>To add the <a href="/faq.php#package" ALT="what is a package?" TITLE="what is a package?">package</a>:</b> <code class="code">pkg_add -r ' . $port->latest_link . '</code></p>';
 		}
 	}
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch.php,v 1.1.2.58 2006-02-13 15:39:00 dan Exp $
+	# $Id: watch.php,v 1.1.2.59 2006-02-24 20:08:25 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -30,7 +30,7 @@
 	$IncludeUpdating              = IsSet($_REQUEST['updating']);
 	$OnlyThoseWithUpdatingEntries = IsSet($_REQUEST['updatingonly']);
 
-	if ($_POST["watch_list_select_x"] && $_POST["watch_list_select_y"]) {
+	if (IsSet($_POST["watch_list_select_x"]) && IsSet($_POST["watch_list_select_y"])) {
 		# they clicked on the GO button and we have to apply the 
 		# watch staging area against the watch list.
 		$wlid = AddSlashes($_POST["wlid"]);
@@ -76,8 +76,16 @@
 <tr><td valign="top">
 <table border=0 width="100%">
 <tr><td>
+<?php
+if ($wlid == '') {
+	echo 'You have no watch lists.';
+} else {
+?>
 These are the ports which are on your <a href="watch-categories.php">watch list</A>. 
 That link also occurs on the right hand side of this page, under Login.
+<?php
+}
+?>
 </td><td valign="top" nowrap align="right">
 
 <?php
@@ -96,7 +104,8 @@ if ($wlid != '') {
 // make sure the value for $sort is valid
 
 echo "<tr><td>";
-
+if ($wlid == '') {
+} else {
 $WatchListDeletedPorts = new WatchListDeletedPorts($db);
 $rowcount = $WatchListDeletedPorts->FetchInitialise($wlid);
 if ($rowcount)
@@ -114,7 +123,6 @@ for ($i = 0; $i < $rowcount; $i++) {
 
 	echo "<tr><td>$OldURL</td><td>$NewURL</td></td>";
 }
-
 echo '</table>';
 
 echo '<p>You should visit the <i>Replaced By</i> link first, add that port to your watch list, then 
@@ -122,9 +130,17 @@ visit the <i>Old Port</i> link and remove it from your watch list. <hr>';
 
 }
 
+}
+
+if ($wlid != '') {
+
 echo "\nThis page is ";
 
-$sort = $_GET["sort"];
+if (IsSet($_GET["sort"])) {
+	$sort = $_GET["sort"];
+} else {
+	$sort = '';
+}
 
 switch ($sort) {
 /* sorting by port is disabled. Doesn't make sense to do this
@@ -138,7 +154,7 @@ switch ($sort) {
       echo 'sorted by category.  but you can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=updated">last update</a>';
       $ShowCategoryHeaders = 1;
       $cache_file .= ".updated";
-      break;
+       break;
 
    default:
       $sort = "commit_date_sort_field desc, port";
@@ -147,6 +163,7 @@ switch ($sort) {
       break;
 
 }
+}
 
 echo "</td></tr>\n";
 
@@ -154,6 +171,7 @@ echo "</td></tr>\n";
 
 <tr><td>
 <?php
+	if ($wlid != '') {
 	if ($OnlyThoseWithUpdatingEntries) {
 		echo '<a href="?updating">View watched ports + entries from </code>/usr/ports/UPDATING</code></a>';
 	} else {
@@ -171,6 +189,7 @@ echo "</td></tr>\n";
 	} else {
 		echo '<a href="?updatingonly">View only watched ports with entries in </code>/usr/ports/UPDATING</code></a>';
 	}
+	}
 
 ?>
 </td></tr>
@@ -178,10 +197,7 @@ echo "</td></tr>\n";
 <?php
 
 
-if ($wlid == '') {
-	echo '<tr><td align="right">You have no watch lists.</td></tr>';
-} else {
-	
+if ($wlid != '') {
 	$sql = "
 	SELECT temp.*,
 		to_char(max(commit_log.commit_date) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') 	as updated,

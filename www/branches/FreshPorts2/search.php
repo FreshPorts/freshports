@@ -1,15 +1,14 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.80 2006-02-05 20:36:39 dan Exp $
+	# $Id: search.php,v 1.1.2.81 2006-04-26 21:41:50 dan Exp $
 	#
-	# Copyright (c) 1998-2004 DVL Software Limited
+	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/htmlify.php');
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
 
@@ -21,7 +20,7 @@
 	define('ORDERBYDESCENDING', 'desc');
 
 	$Debug = 0;
-#	if ($Debug) phpinfo();
+	if ($Debug) phpinfo();
 
 	#
 	# I became annoyed with people creating their own search pages instead of using
@@ -172,6 +171,21 @@ if ($search) {
 $logfile = $_SERVER["DOCUMENT_ROOT"] . "/../dynamic/searchlog.txt";
 
 
+if ($stype == 'committer') {
+  require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits.php');
+  require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
+  
+  $Commits = new Commits($db);
+  if ($start > 1) {
+    $Commits->SetOffset($start);
+  }
+  $Commits->SetLimit($num);
+  
+  $NumberOfPortCommits = $Commits->GetCountPortCommitsByCommitter($query);
+
+  $NumRows = $Commits->FetchByCommitter($query, $User->id);
+  
+} else {
 $sql = "
   select distinct 
          ports.id, 
@@ -235,6 +249,7 @@ if ($method == 'soundex') {
 		case 'package':
 		case 'latest_link':
 		case 'maintainer':
+		case 'committer':
 			break;
 
 		default:
@@ -290,6 +305,11 @@ switch ($method) {
 				break;
 
 			case 'maintainer':
+				$sql .= "\n     and ports.maintainer $Like '%$query%'";
+				break;
+
+			case 'committer':
+			    die('sorry, but seaching by committer is hard!');
 				$sql .= "\n     and ports.maintainer $Like '%$query%'";
 				break;
 		}
@@ -377,6 +397,14 @@ switch ($method) {
 				}
 				break;
 
+			case 'committer':
+				if ($casesensitivity == 'casesensitive') {
+					$sql .= "\n     and ports.maintainer = '$query'";
+				} else {
+					$sql .= "\n     and lower(ports.maintainer) = lower('$query')";
+				}
+				break;
+
 		}
 		break;
 
@@ -419,6 +447,10 @@ switch ($method) {
 				break;
 
 			case 'maintainer':
+				$sql .= "\n     and levenshtein(ports.maintainer, '$query') < 4";
+				break;
+
+			case 'committer':
 				$sql .= "\n     and levenshtein(ports.maintainer, '$query') < 4";
 				break;
 
@@ -470,8 +502,6 @@ switch ($orderby) {
 		break;
 }
 
-#$sql .= "\n limit $num";
-
 if ($start > 1) {
 	$sql .= "\n OFFSET " . ($start - 1);
 }
@@ -489,12 +519,19 @@ if ($Debug) {
 }
 
 
+
+
 $result  = pg_exec($db, $sql);
 if (!$result) {
 	echo pg_errormessage() . '<pre>' . $sql . '</pre>';
 	exit;
 }
 $NumRows = pg_numrows($result);
+
+#echo "NumRows=$NumRows<br>\n";
+
+
+} // end of non-committer search
 
 $fp = fopen($logfile, "a");
 if ($fp) {
@@ -529,6 +566,7 @@ Search for:<BR>
 		<OPTION VALUE="package"          <? if ($stype == "package")          echo 'SELECTED'?>>Package Name</OPTION>
 		<OPTION VALUE="latest_link"      <? if ($stype == "latest_link")      echo 'SELECTED'?>>Latest Link</OPTION>
 		<OPTION VALUE="maintainer"       <? if ($stype == "maintainer")       echo 'SELECTED'?>>Maintainer</OPTION>
+		<OPTION VALUE="committer"        <? if ($stype == "committer")        echo 'SELECTED'?>>Committer</OPTION>
 		<OPTION VALUE="shortdescription" <? if ($stype == "shortdescription") echo 'SELECTED'?>>Short Description</OPTION>
 		<OPTION VALUE="longdescription"  <? if ($stype == "longdescription")  echo 'SELECTED'?>>Long Description</OPTION>
 		<OPTION VALUE="depends_build"    <? if ($stype == "depends_build")    echo 'SELECTED'?>>Depends Build</OPTION>
@@ -544,7 +582,8 @@ Search for:<BR>
 		<OPTION VALUE="soundex" <?if ($method == "soundex") echo 'SELECTED' ?>>sounding like
 	</SELECT>
 
-	<INPUT NAME="query" size="40"  VALUE="<? echo stripslashes($query)?>">
+	<INPUT NAME="query" size="40"  VALUE="<? echo
+	htmlentities(stripslashes($query))?>">
 
 	<SELECT name=num>
 		<OPTION VALUE="10"  <?if ($num == 10)  echo 'SELECTED' ?>>10 results
@@ -582,8 +621,6 @@ Search for:<BR>
 </table>
 </form>
 
-<p>
-
 <h3>Notes</h3>
 <ul>
 <li><small>Case sensitivity is ignored for "sounding like".</small></li>
@@ -592,9 +629,7 @@ Search for:<BR>
 "Maintainer"). If you try "Sounding like" on any other field, the system will actually use
 "Containing" instead.</small></li>
 </ul>
-</small>
 
-</p>
 <?php
 
 if ($User->id != '') {
@@ -622,21 +657,38 @@ Special searches:
 <?
 if ($search) {
 echo "<tr><td>\n";
+
 if ($NumRows == 0) {
    $HTML .= " no results found<br>\n";
 } else {
-
-	$NumFetches = min($num, $NumRows);
-	if ($NumFetches != $NumRows) {
+#	$HTML .= "\$start='$start' \$NumRows='$NumRows'<br>\n";
+	if ($stype == 'committer') {
+	  $NumFetches = min($num, $NumberOfPortCommits);
+	  if ($NumFetches != $NumberOfPortCommits) {
 		$MoreToShow = 1;
-	} else {
+      } else {
 		$MoreToShow = 0;
-	}
+      }
 
-	$NumPortsFound = 'Number of matches: ' . ($start + $NumRows - 1);
-	if ($MoreToShow || $start > 1) {
-		$NumPortsFound .= " (showing only $start - " . ($start + $NumFetches - 1) . ')';
+	  $NumPortsFound = 'Number of ports: ' . $NumRows;
+      if ($MoreToShow || $start > 1) {
+	    $NumPortsFound .= " (showing only $start - " . ($start + $NumRows - 1) . ')';
+	  }
+	} else {
+	  $NumFetches = min($num, $NumRows);
+	  if ($NumFetches != $NumRows) {
+		$MoreToShow = 1;
+      } else {
+		$MoreToShow = 0;
+      }
+
+      $NumPortsFound = 'Number of ports: ' . ($start + $NumRows - 1);
+      if ($MoreToShow || $start > 1) {
+	    $NumPortsFound .= " (showing only $start - " . ($start + $NumFetches - 1) . ')';
+	  }
 	}
+	
+#	echo "NumFetches=$NumFetches<br>\n";
 
 	if ($start > 1) {
 		$QueryString = $_SERVER['QUERY_STRING'];
@@ -645,7 +697,7 @@ if ($NumRows == 0) {
 		} else {
 			$QueryString .= '&start=' . max(1, ($start - $num));
 		}
-		$NumPortsFound .= ' <a href="' . $_SERVER['PHP_SELF'] . '?' . htmlify(htmlspecialchars($QueryString)) . '">Previous page</a>';
+		$NumPortsFound .= ' <a href="' . $_SERVER['PHP_SELF'] . '?' . htmlspecialchars($QueryString) . '">Previous page</a>';
 	}
 
 	if ($MoreToShow) {
@@ -655,12 +707,17 @@ if ($NumRows == 0) {
 		} else {
 			$QueryString .= '&start=' . ($start + $num);
 		}
-		$NumPortsFound .= ' <a href="' . $_SERVER['PHP_SELF'] . '?' . htmlify(htmlspecialchars($QueryString)) . '">Next page</a>';
+		$NumPortsFound .= ' <a href="' . $_SERVER['PHP_SELF'] . '?' . htmlspecialchars($QueryString) . '">Next page</a>';
 	}
 
 	
 	$HTML .= $NumPortsFound;
 
+if ($stype == 'committer') {
+  $DisplayCommit = new DisplayCommit($Commits->LocalResult);
+  $HTML .= $DisplayCommit->CreateHTML();
+
+} else {
 $ShowCategories		= 1;
 GLOBAL	$ShowDepends;
 $ShowDepends		= 1;
@@ -686,11 +743,12 @@ $HideCategory         = 'N';
    }
 
 	$HTML .= $NumPortsFound;
+
+} // if stype == 'committer'
 }
 
 
 echo $HTML;
-echo "</td></tr>\n";
 }
 ?>
 </table>

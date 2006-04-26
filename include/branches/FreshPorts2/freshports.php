@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.246 2006-03-03 15:22:29 dan Exp $
+	# $Id: freshports.php,v 1.4.2.247 2006-04-26 21:32:57 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -42,9 +42,23 @@ function freshports_MainTable() {
 ';
 }
 
+function freshports_Search_Depends_All($CategoryPort) {
+	return '<a href="/search.php?stype=depends_all&amp;method=match&amp;query=' . htmlentities($CategoryPort) . '">' .
+	      freshports_Search_Icon('search for ports that depend on this port') . '</a>';
+}
+
+function freshports_Search_Maintainer($Maintainer) {
+	return '<a href="/search.php?stype=maintainer&amp;method=exact&amp;query=' . htmlentities($Maintainer) . '">' .
+	      freshports_Search_Icon('search for ports maintained by this maintainer') . '</a>';
+}
+
+function freshports_Search_Committer($Committer) {
+	return '<a href="/search.php?stype=committer&amp;method=exact&amp;query=' . htmlentities($Committer) . '">' .
+	      freshports_Search_Icon('search for other commits by this committer') . '</a>';
+}
+
 function freshports_MainContentTable($Border=1, $ColSpan=1) {
-	return '<TABLE WIDTH="100%" border="' . $Border . '" CELLSPACING="0" CELLPADDING="8">
-' . PortsFreezeStatus($ColSpan);
+	return '<TABLE WIDTH="100%" border="' . $Border . '" CELLSPACING="0" CELLPADDING="8">' . PortsFreezeStatus($ColSpan);
 }
 
 function  freshports_ErrorContentTable() {
@@ -105,6 +119,8 @@ function freshports_IndexFollow($URI) {
 	$NOINDEX['/ports-deprecated.php']	= 1;
 	$NOINDEX['/ports-ignore.php']		= 1;
 	$NOINDEX['/ports-new.php']			= 1;
+	$NOINDEX['/search.php']				= 1;
+
 
 	$NOFOLLOW["/date.php"]				= 1;
 	$NOFOLLOW['/ports-deleted.php']		= 1;
@@ -114,6 +130,7 @@ function freshports_IndexFollow($URI) {
 
 	$NOFOLLOW['/new-user.php']			= 1;
 	$NOFOLLOW['/login.php']				= 1;
+	$NOFOLLOW['/search.php']			= 1;
 
 
 	# well, OK, so it may not be a URI... but it's close
@@ -159,8 +176,16 @@ return "
 }
 
 
+function freshports_Search_Depends_Icon() {
+	return '<IMG SRC="/images/depends_search.png" ALT="What Depends On This Port?" TITLE="What Depends On This Port?" BORDER="0" WIDTH="22" HEIGHT="14" ALIGN="top">';
+}
+
+function freshports_Search_Icon($Title = 'Search') {
+	return '<IMG SRC="/images/search.jpg" ALT="' . $Title . '" TITLE="' . $Title . '" BORDER="0" WIDTH="17" HEIGHT="17" ALIGN="top">';
+}
+
 function freshports_WatchListCount_Icon() {
-	return '<IMG SRC="/images/sum.gif" ALT="on this many watch lists" TITLE="on this many watch lists" BORDER="0" WIDTH="12" HEIGHT="17" ALIGN="middle">';
+	return '<IMG SRC="/images/sum.gif" ALT="on this many watch lists" TITLE="on this many watch lists" BORDER="0" WIDTH="12" HEIGHT="17" ALIGN="top">';
 }
 
 function freshports_WatchListCount_Icon_Link() {
@@ -269,7 +294,7 @@ function freshports_Is_Interactive_Icon($HoverText = '') {
 	$Alt       = "Is Interactive";
 	$HoverText = freshports_HoverTextCleaner($Alt, $HoverText);
 
-	return '<IMG SRC="/images/crt.gif" ALT="' . $Alt . '" TITLE="' . $HoverText . '" BORDER="0" WIDTH="16" HEIGHT="16" ALIGN="middle">';
+	return '<IMG SRC="/images/crt.gif" ALT="' . $Alt . '" TITLE="' . $HoverText . '" BORDER="0" WIDTH="16" HEIGHT="16" ALIGN="top">';
 }
 
 function freshports_Is_Interactive_Icon_Link($HoverText = '') {
@@ -343,7 +368,7 @@ function freshports_VuXML_Icon_Faded() {
 }
 
 function freshports_Revision_Icon() {
-	return '<IMG SRC="/images/revision.jpg" ALT="View revision" TITLE="view revision" BORDER="0" WIDTH="11" HEIGHT="15" ALIGN="middle">';
+	return '<IMG SRC="/images/revision.jpg" ALT="View revision" TITLE="view revision" BORDER="0" WIDTH="11" HEIGHT="15" ALIGN="top">';
 }
 
 function freshports_Watch_Link_Add($WatchListAsk, $WatchListCount, $ElementID) {
@@ -935,8 +960,10 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 	}
 
 	if ($ShowWatchListCount) {
-		$HTML .= '&nbsp; ' . freshPorts_WatchListCount_Icon_Link() . '=' . $port->WatchListCount();
+		$HTML .= '&nbsp; ' . freshports_WatchListCount_Icon_Link() . '=' . $port->WatchListCount();
 	}
+	
+	$HTML .= ' ' . freshports_Search_Depends_All($port->category . '/' . $port->port);
 
 	if ($port->IsVulnerable()) {
 		$HTML .= '&nbsp;' . freshports_VuXML_Icon();
@@ -1000,7 +1027,7 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
                    'Ports mailing list via ';
          $HTML .= '<A HREF="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);
          $HTML .= '?subject=FreeBSD%20Port:%20' . $port->category . '/' . $port->port . '" TITLE="email the FreeBSD Ports mailing list">';
-         $HTML .= freshportsObscureHTML($port->maintainer) . "</A><BR><br>";
+         $HTML .= freshportsObscureHTML($port->maintainer) . '</A>';
       } else {
          $HTML .= '<i>';
          if ($port->status == 'A') {
@@ -1011,8 +1038,10 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
 
          $HTML .= ' by:</i> <A HREF="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);
          $HTML .= '?subject=FreeBSD%20Port:%20' . $port->category . '/' . $port->port . '" TITLE="email the maintainer">';
-         $HTML .= freshportsObscureHTML($port->maintainer) . "</A><BR>";
+         $HTML .= freshportsObscureHTML($port->maintainer) . '</A>';
       }
+      
+      $HTML .= ' ' . freshports_Search_Maintainer($port->maintainer) . '<br>';
    }
 
    // there are only a few places we want to show the last change.
@@ -1021,6 +1050,8 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
       if ($ShowLastChange == "Y" || $ShowEverything) {
          if ($port->updated != 0) {
             $HTML .= 'last change committed by ' . freshports_CommitterEmailLink($port->committer);  // separate lines in case committer is null
+            
+            $HTML .= ' ' . freshports_Search_Committer($port->committer);
  
             $HTML .= ' on <font size="-1">' . $port->updated . '</font>' . "\n";
 
@@ -1088,6 +1119,69 @@ function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, 
       $HTML .= "<br>\n";
       }
    }
+   
+   $HTML .= "<br>\n";
+
+   if ($ShowChangesLink == "Y" || $ShowEverything) {
+      // changes
+      $HTML .= '<a HREF="' . FRESHPORTS_FREEBSD_CVS_URL . '/ports/' .
+               $port->category . '/' .  $port->port . '/" TITLE="The CVS Repository">CVSWeb</a>';
+   }
+
+   // download
+   if ($port->status == "A" && ($ShowDownloadPortLink == "Y" || $ShowEverything)) {
+      $HTML .= ' <b>:</b> ';
+      $HTML .= '<a HREF="http://www.freebsd.org/cgi/pds.cgi?ports/' .
+               $port->category . '/' .  $port->port . '" TITLE="The source code">Sources</a>';
+   }
+
+	if ($port->PackageExists() && ($ShowPackageLink == "Y" || $ShowEverything)) {
+		// package
+		$HTML .= ' <b>:</b> ';
+		$HTML .= '<A HREF="' . FRESHPORTS_FREEBSD_FTP_URL . '/' . freshports_PackageVersion($port->version, $port->revision, $port->epoch);
+		$HTML .= '.tgz">Package</A>';
+	}
+
+   if ($port->homepage && ($ShowHomepageLink == "Y" || $ShowEverything)) {
+      $HTML .= ' <b>:</b> ';
+      $HTML .= '<a HREF="' . htmlspecialchars($port->homepage) . '" TITLE="Main web site for this port">Main Web Site</a>';
+   }
+
+	if (defined('PORTSMONSHOW')) {
+		$HTML .= ' <b>:</b> ' . freshports_PortsMonitorURL($port->category, $port->port);
+	}
+	
+	if ($ShowMasterSlave) {
+		#
+		# Display our master port
+		#
+
+		if ($port->IsSlavePort()) {
+			$HTML .= '<dl><dt><b>Master port:</b> ';
+			list($MyCategory, $MyPort) = explode('/', $port->master_port);
+			$HTML .= freshports_link_to_port($MyCategory, $MyPort);
+			$HTML .= "</dt>\n";
+			$HTML .= "</dl>\n";
+		}
+	
+		#
+		# Display our slave ports
+		#
+
+		$MasterSlave = new MasterSlave($port->dbh);
+		$NumRows = $MasterSlave->FetchByMaster($port->category . '/' . $port->port);
+		if ($NumRows > 0) {
+			$HTML .= '<dl><dt><b>Slave ports</b>' . "</dt>\n";
+			for ($i = 0; $i < $NumRows; $i++) {
+				$MasterSlave->FetchNth($i);
+				$HTML .= '<dd>' . freshports_link_to_port($MasterSlave->slave_category_name, $MasterSlave->slave_port_name);
+				$HTML .= "</dd>\n";
+			}
+			$HTML .= "</dl>\n";
+		} else {
+			$HTML .= "<br><br>\n";
+		}
+	}
 
 if ($ShowDepends) {
    if ($port->depends_build) {
@@ -1119,12 +1213,19 @@ if ($ShowDepends) {
 		if ($port->forbidden || $port->broken || $port->ignore) {
 			$HTML .= '<p><b>No package because port is marked as Forbidden/Broken/Ignore</b></p>';
 		} else {
-			$HTML .= '<p><b>To install <a href="/faq.php#port" ALT="what is a port?" TITLE="what is a port?">the port</a>:</b> <code class="code">cd /usr/ports/'  . $port->category . '/' . $port->port . '/ && make install clean</code><br>';
-			$HTML .= '<b>To add the <a href="/faq.php#package" ALT="what is a package?" TITLE="what is a package?">package</a>:</b> <code class="code">pkg_add -r ' . $port->latest_link . '</code></p>';
+			$HTML .= '<p><b>To install <a href="/faq.php#port" TITLE="what is a port?">the port</a>:</b> <code class="code">cd /usr/ports/'  . $port->category . '/' . $port->port . '/ && make install clean</code><br>';
+			$HTML .= '<b>To add the <a href="/faq.php#package" TITLE="what is a package?">package</a>:</b> <code class="code">pkg_add -r ' . $port->latest_link . '</code></p>';
 		}
 	}
 
 	$HTML .= "\n<hr>\n";
+
+   if (!$HideDescription && ($ShowDescriptionLink == "Y" || $ShowEverything)) {
+      // Long descripion
+      $HTML .= '<A HREF="/' . $port->category . '/' . $port->port .'/">Description</a>';
+
+      $HTML .= ' <b>:</b> ';
+   }
 
 	if ($ShowMasterSites) {
 		$HTML .= '<dl><dt><i>master sites:</i></dt>' . "\n";
@@ -1137,72 +1238,6 @@ if ($ShowDepends) {
 		$HTML .= "</dl>\n";
 
 #		$HTML .= '<br>';
-	}
-
-   if (!$HideDescription && ($ShowDescriptionLink == "Y" || $ShowEverything)) {
-      // Long descripion
-      $HTML .= '<A HREF="/' . $port->category . '/' . $port->port .'/">Description</a>';
-
-      $HTML .= ' <b>:</b> ';
-   }
-
-   if ($ShowChangesLink == "Y" || $ShowEverything) {
-      // changes
-      $HTML .= '<a HREF="' . FRESHPORTS_FREEBSD_CVS_URL . '/ports/' .
-               $port->category . '/' .  $port->port . '/" TITLE="The CVS Repository">CVSWeb</a>';
-   }
-
-   // download
-   if ($port->status == "A" && ($ShowDownloadPortLink == "Y" || $ShowEverything)) {
-      $HTML .= ' <b>:</b> ';
-      $HTML .= '<a HREF="http://www.freebsd.org/cgi/pds.cgi?ports/' .
-               $port->category . '/' .  $port->port . '" TITLE="The source code">Sources</a>';
-   }
-
-	if ($port->PackageExists() && ($ShowPackageLink == "Y" || $ShowEverything)) {
-		// package
-		$HTML .= ' <b>:</b> ';
-		$HTML .= '<A HREF="' . FRESHPORTS_FREEBSD_FTP_URL . '/' . freshports_PackageVersion($port->version, $port->revision, $port->epoch);
-		$HTML .= '.tgz">Package</A>';
-	}
-
-   if ($port->homepage && ($ShowHomepageLink == "Y" || $ShowEverything)) {
-      $HTML .= ' <b>:</b> ';
-      $HTML .= '<a HREF="' . htmlspecialchars($port->homepage) . '" TITLE="Main web site for this port">Main Web Site</a>';
-   }
-
-	if (defined('PORTSMONSHOW')) {
-		$HTML .= ' <b>:</b> ' . freshports_PortsMonitorURL($port->category, $port->port);
-	}
-
-	if ($ShowMasterSlave) {
-		#
-		# Display our master port
-		#
-
-		if ($port->IsSlavePort()) {
-			$HTML .= '<dl><dt><b>Master port:</b> ';
-			list($MyCategory, $MyPort) = explode('/', $port->master_port);
-			$HTML .= freshports_link_to_port($MyCategory, $MyPort);
-			$HTML .= "</dt>\n";
-			$HTML .= "</dl>\n";
-		}
-	
-		#
-		# Display our slave ports
-		#
-
-		$MasterSlave = new MasterSlave($port->dbh);
-		$NumRows = $MasterSlave->FetchByMaster($port->category . '/' . $port->port);
-		if ($NumRows > 0) {
-			$HTML .= '<dl><dt><b>Slave ports</b>' . "</dt>\n";
-			for ($i = 0; $i < $NumRows; $i++) {
-				$MasterSlave->FetchNth($i);
-				$HTML .= '<dd>' . freshports_link_to_port($MasterSlave->slave_category_name, $MasterSlave->slave_port_name);
-				$HTML .= "</dd>\n";
-			}
-			$HTML .= "</dl>\n";
-		}
 	}
 
 	$HTML .= "\n<hr>\n";
@@ -1406,7 +1441,7 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 
 	echo "</TD>\n";
 	echo '    <TD VALIGN="top">';
-	echo freshports_CommitterEmailLink($commit->committer);
+	echo freshports_CommitterEmailLink($commit->committer) . '&nbsp;' . freshports_Search_Committer($commit->committer);;
 
 	echo "</TD>\n";
 	echo '    <TD VALIGN="top" WIDTH="*">';
@@ -1535,7 +1570,7 @@ function freshports_CommitPrint($element_record, $commit) {
 
 	echo "</TD>\n";
 	echo '    <TD VALIGN="top">';
-	echo freshports_CommitterEmailLink($commit->committer);
+	echo freshports_CommitterEmailLink($commit->committer) . freshports_Search_Committer($commit->committer);
 
 	echo "</TD>\n";
 	echo '    <TD VALIGN="top" WIDTH="*">';

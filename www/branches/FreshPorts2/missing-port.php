@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.59 2006-02-13 15:41:21 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.60 2006-04-26 21:39:00 dan Exp $
 	#
 	# Copyright (c) 2001-2003 DVL Software Limited
 	#
@@ -101,6 +101,16 @@ GLOBAL $ShowWatchListCount;
 	echo '<DL><DD>';
     echo '<PRE CLASS="code">' . htmlify(htmlspecialchars($port->long_description)) . '</PRE>';
 	echo "\n</DD>\n</DL>\n";
+
+	GLOBAL $ShowAds;
+
+	if ($ShowAds) {
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/include/adsense.php');
+		echo '<div align="center">';
+		echo AdSense728x90();
+		echo '</div>';
+	}
+	
 
 	echo "</TD></TR>\n</TABLE>\n\n";
 

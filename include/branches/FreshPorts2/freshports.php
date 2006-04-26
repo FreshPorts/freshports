@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.248 2006-04-26 21:35:36 dan Exp $
+	# $Id: freshports.php,v 1.4.2.249 2006-04-26 21:38:19 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -175,10 +175,6 @@ return "
 
 }
 
-
-function freshports_Search_Depends_Icon() {
-	return '<IMG SRC="/images/depends_search.png" ALT="What Depends On This Port?" TITLE="What Depends On This Port?" BORDER="0" WIDTH="22" HEIGHT="14" ALIGN="top">';
-}
 
 function freshports_Search_Icon($Title = 'Search') {
 	return '<IMG SRC="/images/search.jpg" ALT="' . $Title . '" TITLE="' . $Title . '" BORDER="0" WIDTH="17" HEIGHT="17" ALIGN="top">';

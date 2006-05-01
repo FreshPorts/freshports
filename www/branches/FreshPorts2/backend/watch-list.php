@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-list.php,v 1.1.2.3 2006-02-07 00:49:31 dan Exp $
+	# $Id: watch-list.php,v 1.1.2.4 2006-05-01 14:39:32 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -118,7 +118,7 @@ function DisplayNewsFeed($db, $token) {
 	
 	$sql .= " order by $sort ";
 
-	syslog (LOG_NOTICE, $wlid . ' ' . $sort);
+#	syslog (LOG_NOTICE, $wlid . ' ' . $sort);
 	
 	if ($Debug) {
 	   echo "<pre>$sql</pre>";

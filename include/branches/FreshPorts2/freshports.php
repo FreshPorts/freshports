@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.249 2006-04-26 21:38:19 dan Exp $
+	# $Id: freshports.php,v 1.4.2.250 2006-05-16 11:15:04 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -2210,7 +2210,7 @@ function freshports_ConditionalGet($LastModified) {
 	}
 
 	// At least one of the headers is there - check them
-	if ($if_none_match && $if_none_match != $etag) {
+	if ($if_none_match && $if_none_match != $ETag) {
 		return; // etag is there but doesn't match
 	}
 

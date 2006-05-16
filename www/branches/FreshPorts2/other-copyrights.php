@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: other-copyrights.php,v 1.1.4.13 2005-07-15 03:08:33 dan Exp $
+	# $Id: other-copyrights.php,v 1.1.4.14 2006-05-16 11:15:37 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -13,7 +13,7 @@
 
 	freshports_ConditionalGet(freshports_LastModified());
 
-	freshports_Start(	$ArticleTitle,
+	freshports_Start(	'Other copyrights',
 					'',
 					'FreeBSD, daemon copyright');
 

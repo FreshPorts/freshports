@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-list.php,v 1.1.2.4 2006-05-01 14:39:32 dan Exp $
+	# $Id: watch-list.php,v 1.1.2.5 2006-05-18 11:53:10 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -215,6 +215,9 @@ function DisplayWatchListNewsFeeds($db, $UserID) {
 
 	echo $HTML;	
 }
+
+	header('HTTP/1.1 503 Service Unavailable');
+	exit;
 
 	if (IsSet($_REQUEST['id'])) {
 		$token = $_REQUEST['id'];

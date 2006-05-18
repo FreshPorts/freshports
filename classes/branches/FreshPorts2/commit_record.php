@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit_record.php,v 1.1.2.12 2005-11-01 23:10:17 dan Exp $
+	# $Id: commit_record.php,v 1.1.2.13 2006-05-18 18:21:42 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -8,8 +8,6 @@
 
 // base class for a single commit
 class CommitRecord {
-
-	var $dbh;
 
 	var $commit_log_id;
 	var $commit_date_raw;
@@ -49,8 +47,7 @@ class CommitRecord {
 	var $watch;
 	var $element_pathname;
 
-	function CommitRecord($dbh) {
-		$this->dbh = $dbh;
+	function CommitRecord() {
 	}
 
 	function PopulateValues($myrow) {

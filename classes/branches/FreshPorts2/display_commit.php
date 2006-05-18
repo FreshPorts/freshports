@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: display_commit.php,v 1.1.2.1 2006-04-26 21:31:29 dan Exp $
+	# $Id: display_commit.php,v 1.1.2.2 2006-05-18 18:21:42 dan Exp $
 	#
 	# Copyright (c) 2003-2006 DVL Software Limited
 	#
@@ -56,7 +56,7 @@ class DisplayCommit {
 		$GlobalHideLastChange = "N";
 		for ($i = 0; $i < $NumRows; $i++) {
 			$myrow = pg_fetch_array ($this->result, $i);
-			$mycommit = new CommitRecord($this->dbh);
+			$mycommit = new CommitRecord();
 			$mycommit->PopulateValues($myrow);
 			$commits[$i] = $mycommit;
 		}

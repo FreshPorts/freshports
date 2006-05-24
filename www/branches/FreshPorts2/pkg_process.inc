@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: pkg_process.inc,v 1.5.2.24 2005-01-12 21:24:00 dan Exp $
+	# $Id: pkg_process.inc,v 1.5.2.25 2006-05-24 18:06:58 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
 	require($_SERVER["DOCUMENT_ROOT"] . "/../classes/ports.php");	

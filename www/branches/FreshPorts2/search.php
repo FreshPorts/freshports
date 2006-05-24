@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.81 2006-04-26 21:41:50 dan Exp $
+	# $Id: search.php,v 1.1.2.82 2006-05-24 18:06:02 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -121,7 +121,7 @@ function setfocus() { document.search.query.focus(); }
 <tr><td valign="top" width="100%">
 <?php echo freshports_MainContentTable(); ?>
   <tr>
-	<? echo freshports_PageBannerText("Search"); ?>
+	<? echo freshports_PageBannerText("Search using Google"); ?>
   </tr>
 <tr><td valign="top">
 <?
@@ -170,22 +170,42 @@ if ($search) {
 
 $logfile = $_SERVER["DOCUMENT_ROOT"] . "/../dynamic/searchlog.txt";
 
+switch ($stype) {
+  case 'committer':
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
+  
+    $Commits = new Commits($db);
+    if ($start > 1) {
+      $Commits->SetOffset($start);
+    }
+    $Commits->SetLimit($num);
+  
+    $NumberOfPortCommits = $Commits->GetCountPortCommitsByCommitter($query);
+    if ($Debug) echo 'number of commits = ' . $NumberOfPortCommits . "<br>\n";
 
-if ($stype == 'committer') {
-  require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits.php');
-  require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
+    $NumRows = $Commits->FetchByCommitter($query, $User->id);
+    break;
+    
+  case 'commitmessage':
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
   
-  $Commits = new Commits($db);
-  if ($start > 1) {
-    $Commits->SetOffset($start);
-  }
-  $Commits->SetLimit($num);
+    $Commits = new Commits($db);
+    if ($start > 1) {
+      $Commits->SetOffset($start);
+    }
+    $Commits->SetLimit($num);
   
-  $NumberOfPortCommits = $Commits->GetCountPortCommitsByCommitter($query);
+    $NumberOfPortCommits = $Commits->GetCountCommitsByCommitMessage($query);
+    if ($Debug) echo 'number of commits = ' . $NumberOfPortCommits . "<br>\n";
 
-  $NumRows = $Commits->FetchByCommitter($query, $User->id);
-  
-} else {
+    $NumRows = $Commits->FetchByCommitMessageContents($query, $User->id);
+    break;
+    
+    break;
+    
+  default:
 $sql = "
   select distinct 
          ports.id, 
@@ -249,7 +269,6 @@ if ($method == 'soundex') {
 		case 'package':
 		case 'latest_link':
 		case 'maintainer':
-		case 'committer':
 			break;
 
 		default:
@@ -305,11 +324,6 @@ switch ($method) {
 				break;
 
 			case 'maintainer':
-				$sql .= "\n     and ports.maintainer $Like '%$query%'";
-				break;
-
-			case 'committer':
-			    die('sorry, but seaching by committer is hard!');
 				$sql .= "\n     and ports.maintainer $Like '%$query%'";
 				break;
 		}
@@ -397,14 +411,6 @@ switch ($method) {
 				}
 				break;
 
-			case 'committer':
-				if ($casesensitivity == 'casesensitive') {
-					$sql .= "\n     and ports.maintainer = '$query'";
-				} else {
-					$sql .= "\n     and lower(ports.maintainer) = lower('$query')";
-				}
-				break;
-
 		}
 		break;
 
@@ -447,10 +453,6 @@ switch ($method) {
 				break;
 
 			case 'maintainer':
-				$sql .= "\n     and levenshtein(ports.maintainer, '$query') < 4";
-				break;
-
-			case 'committer':
 				$sql .= "\n     and levenshtein(ports.maintainer, '$query') < 4";
 				break;
 
@@ -558,9 +560,58 @@ $Port->LocalResult = $result;
 
 }
 ?>
-<form ACTION="<? echo $_SERVER["PHP_SELF"] ?>" name="search" >
+<!-- SiteSearch Google -->
+<form method="get" action="http://www.google.com/custom" target="_top">
+<table border="0" bgcolor="#ffffff">
+<tr><td nowrap="nowrap" valign="top" align="left" height="32">
+<a href="http://www.google.com/">
+<img src="http://www.google.com/logos/Logo_25wht.gif" border="0" alt="Google" align="middle"></a>
+</td>
+<td nowrap="nowrap">
+<input type="hidden" name="domains" value="www.freshports.org">
+<input type="text" name="q" size="40" maxlength="255" value="">
+<input type="submit" name="sa" value="Search">
+</td></tr>
+<tr>
+<td>&nbsp;</td>
+<td nowrap="nowrap">
+<table>
+<tr>
+<td>
+<input type="radio" name="sitesearch" value="">
+<font size="-1" color="#000000">Web</font>
+</td>
+<td>
+<input type="radio" name="sitesearch" value="www.freshports.org" checked="checked">
+<font size="-1" color="#000000">www.freshports.org</font>
+</td>
+</tr>
+</table>
+<input type="hidden" name="client" value="pub-0711826105743221">
+<input type="hidden" name="forid" value="1">
+<input type="hidden" name="channel" value="4668702316">
+<input type="hidden" name="ie" value="ISO-8859-1">
+<input type="hidden" name="oe" value="ISO-8859-1">
+<input type="hidden" name="cof" value="GALT:#0066CC;GL:1;DIV:#999999;VLC:336633;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0066CC;LC:0066CC;T:000000;GFNT:666666;GIMP:666666;LH:50;LW:233;L:http://www.freshports.org/images/freshports-233x50.jpg;S:http://www.freshports.org;FORID:1;">
+<input type="hidden" name="hl" value="en">
+</td></tr></table>
+</form>
+<!-- SiteSearch Google -->
 
-Search for:<BR>
+
+</td></tr>
+</table>
+
+<br>
+
+<?php echo freshports_MainContentTable(); ?>
+  <tr>
+	<? echo freshports_PageBannerText("The FreshPorts Search"); ?>
+  </tr>
+<tr><td valign="top">
+
+
+<form ACTION="<? echo $_SERVER["PHP_SELF"] ?>" name="search" >
 	<SELECT NAME="stype" size="1">
 		<OPTION VALUE="name"             <? if ($stype == "name")             echo 'SELECTED'?>>Port Name</OPTION>
 		<OPTION VALUE="package"          <? if ($stype == "package")          echo 'SELECTED'?>>Package Name</OPTION>
@@ -574,6 +625,7 @@ Search for:<BR>
 		<OPTION VALUE="depends_run"      <? if ($stype == "depends_run")      echo 'SELECTED'?>>Depends Run</OPTION>
 		<OPTION VALUE="depends_all"      <? if ($stype == "depends_all")      echo 'SELECTED'?>>Depends Build/Lib/Run</OPTION>
 		<OPTION VALUE="messageid"        <? if ($stype == "messageid")        echo 'SELECTED'?>>Message ID</OPTION>
+		<OPTION VALUE="commitmessage"    <? if ($stype == "commitmessage")    echo 'SELECTED'?>>Commit Message</OPTION>
 	</SELECT> 
 
 	<SELECT name=method>
@@ -598,12 +650,12 @@ Search for:<BR>
 
 <table cellpadding="5" cellspacing="0" border="0">
 <tr>
-<td>
+<td valign="middle">
 	<INPUT TYPE=checkbox <? if ($deleted == "includedeleted") echo 'CHECKED'; ?> VALUE=includedeleted NAME=deleted> Include deleted ports
 </td>
-<td>
+<td valign="middle">
 	<INPUT TYPE=checkbox <? if ($casesensitivity == "casesensitive")   echo 'CHECKED'; ?> VALUE=casesensitive   NAME=casesensitivity> Case sensitive search
-<td>
+<td valign="middle">
 	Sort by: <SELECT name="orderby">
 		<OPTION VALUE="<?php echo ORDERBYPORT;     ?>" <?if ($orderby == ORDERBYPORT        ) echo 'SELECTED' ?>>Port
 		<OPTION VALUE="<?php echo ORDERBYCATEGORY; ?>" <?if ($orderby == ORDERBYCATEGORY    ) echo 'SELECTED' ?>>Category
@@ -625,6 +677,7 @@ Search for:<BR>
 <ul>
 <li><small>Case sensitivity is ignored for "sounding like".</small></li>
 <li><small>When searching on 'Message ID' only exact matches will succeed.</small></li>
+<li><small>When searching on 'Commit Message' only containing matches succeed.</small></li>
 <li><small>"Sounding like" is only for the short fields (i.e. "Port Name", "Package Name", "Latest Link", and
 "Maintainer"). If you try "Sounding like" on any other field, the system will actually use
 "Containing" instead.</small></li>
@@ -653,7 +706,6 @@ Special searches:
 <?php
 }
 ?>
-</td></tr>
 <?
 if ($search) {
 echo "<tr><td>\n";
@@ -662,7 +714,7 @@ if ($NumRows == 0) {
    $HTML .= " no results found<br>\n";
 } else {
 #	$HTML .= "\$start='$start' \$NumRows='$NumRows'<br>\n";
-	if ($stype == 'committer') {
+	if ($stype == 'committer' || $stype == 'commitmessage') {
 	  $NumFetches = min($num, $NumberOfPortCommits);
 	  if ($NumFetches != $NumberOfPortCommits) {
 		$MoreToShow = 1;
@@ -670,7 +722,7 @@ if ($NumRows == 0) {
 		$MoreToShow = 0;
       }
 
-	  $NumPortsFound = 'Number of ports: ' . $NumRows;
+	  $NumPortsFound = 'Number of commits: ' . $NumberOfPortCommits;
       if ($MoreToShow || $start > 1) {
 	    $NumPortsFound .= " (showing only $start - " . ($start + $NumRows - 1) . ')';
 	  }
@@ -713,7 +765,7 @@ if ($NumRows == 0) {
 	
 	$HTML .= $NumPortsFound;
 
-if ($stype == 'committer') {
+if ($stype == 'committer' || $stype == 'commitmessage') {
   $DisplayCommit = new DisplayCommit($Commits->LocalResult);
   $HTML .= $DisplayCommit->CreateHTML();
 

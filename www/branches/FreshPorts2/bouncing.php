@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: bouncing.php,v 1.1.2.21 2005-08-03 12:05:16 dan Exp $
+	# $Id: bouncing.php,v 1.1.2.22 2006-05-24 22:09:51 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -58,7 +58,7 @@ if ($submit) {
 </tr>
 <tr><td>
 
-<p>You are a registered user. You have indicted that we can send you email.  This will either
+<p>You are a registered user. You have indicated that we can send you email.  This will either
 be part of your watch list notifications or as an announcement.  You can view these settings
 on the customization page (see the link on the right hand side of the page).</p>
 

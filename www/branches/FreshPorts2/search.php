@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.82 2006-05-24 18:06:02 dan Exp $
+	# $Id: search.php,v 1.1.2.83 2006-05-24 18:32:00 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -589,7 +589,7 @@ $Port->LocalResult = $result;
 </table>
 <input type="hidden" name="client" value="pub-0711826105743221">
 <input type="hidden" name="forid" value="1">
-<input type="hidden" name="channel" value="4668702316">
+<input type="hidden" name="channel" value="6485377625">
 <input type="hidden" name="ie" value="ISO-8859-1">
 <input type="hidden" name="oe" value="ISO-8859-1">
 <input type="hidden" name="cof" value="GALT:#0066CC;GL:1;DIV:#999999;VLC:336633;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0066CC;LC:0066CC;T:000000;GFNT:666666;GIMP:666666;LH:50;LW:233;L:http://www.freshports.org/images/freshports-233x50.jpg;S:http://www.freshports.org;FORID:1;">

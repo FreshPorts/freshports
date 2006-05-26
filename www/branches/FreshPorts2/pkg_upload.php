@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: pkg_upload.php,v 1.5.2.44 2005-06-25 17:59:48 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.45 2006-05-26 14:55:53 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
@@ -93,7 +93,7 @@ function DisplayUploadForm($db, $UserID) {
 		<TABLE>
 			<TR><TD>The file name containing the output from step 1:</TD></TR>
 			<TR><TD><INPUT TYPE="file"   NAME="pkg_info" SIZE="40" ></TD></TR>
-			<TR><TD><INPUT TYPE="submit" NAME="staging"  SIZE="20" VALUE="Staging"> <= Click here to go to staging area</TD></TR>
+			<TR><TD><INPUT TYPE="submit" NAME="staging"  SIZE="20" VALUE="Staging"> &lt;= Click here to go to staging area</TD></TR>
 			<tr><td><hr></td></tr>
 
 			<tr><td>Use this Watch List: 
@@ -103,8 +103,8 @@ echo freshports_WatchListDDLB($db, $UserID);
 ?>
 </td></tr>
 			<tr><td><input type="radio" name="replaceappend" value="replace" checked>Replace list contents<br>
-                    <input type="radio" name="replaceappend" value="append" >Append to list (duplicates will be removed)</td></tr>
-			<tr><td><input type="submit" name="upload" size="40" value="Upload"> <= Click here here to avoid staging area</td></tr>
+                    <input type="radio" name="replaceappend" value="append">Append to list (duplicates will be removed)</td></tr>
+			<tr><td><input type="submit" name="upload" size="40" value="Upload"> &lt;= Click here here to avoid staging area</td></tr>
 		</TABLE>
 	</FORM>
 
@@ -115,8 +115,8 @@ echo freshports_WatchListDDLB($db, $UserID);
 	<FORM ACTION="<? echo $_SERVER["PHP_SELF"]; ?>" METHOD="post" enctype="multipart/form-data">
 		<TABLE>
 			<TR><TD>Paste the output of <code>pkg_info -qoa</code> here:</TD></TR>
-			<tr><td><textarea rows="20" cols="30"></textarea></td></tr>
-			<TR><TD><INPUT TYPE="submit" NAME="staging_copypaste" SIZE="20" VALUE="Staging"> <= Click here to go to staging area</TD></TR>
+			<tr><td><textarea name="copypaste" rows="20" cols="30"></textarea></td></tr>
+			<TR><TD><INPUT TYPE="submit" NAME="staging_copypaste" SIZE="20" VALUE="Staging"> &lt;= Click here to go to staging area</TD></TR>
 			<tr><td><hr></td></tr>
 
 			<tr><td>Use this Watch List: 
@@ -127,7 +127,7 @@ echo freshports_WatchListDDLB($db, $UserID);
 </td></tr>
 			<tr><td><input type="radio" name="replaceappend" value="replace" checked>Replace list contents<br>
                     <input type="radio" name="replaceappend" value="append" >Append to list (duplicates will be removed)</td></tr>
-			<tr><td><input type="submit" name="upload_copypaste" size="40" value="Upload"> <= Click here here to avoid staging area</td></tr>
+			<tr><td><input type="submit" name="upload_copypaste" size="40" value="Upload"> &lt;= Click here here to avoid staging area</td></tr>
 		</TABLE>
 	</FORM>
 

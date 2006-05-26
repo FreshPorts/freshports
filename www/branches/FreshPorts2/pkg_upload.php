@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: pkg_upload.php,v 1.5.2.45 2006-05-26 14:55:53 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.46 2006-05-26 22:07:55 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -239,6 +239,8 @@ function ChooseWatchLists($UserID, $db) {
 <TR><TD>
 	<?
 	$Debug = 0;
+	
+#	if ($Debug) phpinfo();
 
 	# you can only be here if you are logged in!
 	$visitor = $_COOKIE["visitor"];
@@ -260,7 +262,9 @@ function ChooseWatchLists($UserID, $db) {
 		# upload, then clear out the staging area!
 		#
 
+if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 		if (IsSet($_REQUEST["upload"]) && $StagingInUse) {
+if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 			if (StagingAreaClear($User->id, $db)) {
 				$StagingInUse = FALSE;
 			} else {
@@ -273,6 +277,7 @@ function ChooseWatchLists($UserID, $db) {
 		#
 
 		if ($StagingInUse) {
+		if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 			if ($Debug) echo 'staging area is in use<br>';
 			$DisplayStagingArea = TRUE;
 			if ($_POST["update_watch_list"]) {
@@ -281,8 +286,8 @@ function ChooseWatchLists($UserID, $db) {
 				# and clear out part of the staging area.
 				$WatchListID = AddSlashes($_REQUEST['wlid']);
 				if (!IsSet($WatchListID) || $WatchListID === '') {
-					syslog(LOG_NOTICE, "No watch list ID was supplied.  I cannot continue.  pkg_upload.php::250 " .
-						"User id = " . $User->id);
+					syslog(LOG_NOTICE, "No watch list ID was supplied.  I cannot continue.  " .
+					    __FILE__ . '::' . __LINE__ . " User id = " . $User->id);
 					die('No watch list ID was supplied.  I cannot continue.');
 				} 
 
@@ -319,14 +324,21 @@ function ChooseWatchLists($UserID, $db) {
 				}
 			}
 		} else {
+if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 			$DisplayStagingArea = FALSE;
-			if (trim($_FILES["pkg_info"]) != '') {
+			# are they uploading a file?
+			if (IsSet($_FILES["pkg_info"]) && trim($_FILES["pkg_info"]) != '') {
+if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 				$Destination = "/tmp/FreshPorts.tmp_pkg_output." . $User->name;
 				if (HandleFileUpload("pkg_info", $Destination)) {
+if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 					require_once($_SERVER['DOCUMENT_ROOT'] . '/pkg_utils.inc');
 					if (IsSet($_REQUEST["upload"])) {
+if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 						StagingAreaClear($User->id, $db);
-						if (ProcessPackages($User->id, $Destination, $db)) {
+						$PortArray = ConvertFileContentsToArray($Destination);
+						if (ProcessPackages($User->id, $PortArray, $db)) {
+if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 							# we are not using the staging list
 							$WatchListID = AddSlashes($_POST['wlid']);
 							if ($Debug) echo ' you clicked on update_watch_list';
@@ -357,7 +369,9 @@ function ChooseWatchLists($UserID, $db) {
 							}
 						}
 					} else {
-						if (ProcessPackages($User->id, $Destination, $db)) {
+if ($Debug) echo 'at line ' . __LINE__ . '<br>';
+   						$PortArray = ConvertFileContentsToArray($Destination);
+						if (ProcessPackages($User->id, $PortArray, $db)) {
 							$DisplayStagingArea = TRUE;
 							$WatchListID = $User->last_watch_list_chosen;
 							if ($Debug) echo "\$WatchListID='$WatchListID'";
@@ -371,7 +385,51 @@ function ChooseWatchLists($UserID, $db) {
 				}
 				# let's not leave files sitting around...
 				unlink($Destination);
-			}
+			} else {
+			  if ($Debug) echo 'at line ' . __LINE__ . '<br>';
+			  if (IsSet($_REQUEST['staging_copypaste']) && trim($_REQUEST['copypaste']) != '') {
+if ($Debug) echo 'at line ' . __LINE__ . '<br>';
+if ($Debug) echo '<pre>' . $_REQUEST['copypaste'] . '</pre>';
+                $PortArray = ConvertStringToArray($_REQUEST['copypaste']);
+				if (ProcessPackages($User->id, $PortArray, $db)) {
+					$DisplayStagingArea = TRUE;
+					$WatchListID = $User->last_watch_list_chosen;
+					if ($Debug) echo "\$WatchListID='$WatchListID'";
+					if ($WatchListID == '') {
+						$WatchLists = new WatchLists($db);
+						$WatchListID = $WatchLists->GetDefaultWatchListID($User->id);
+						if ($Debug) echo "GetDefaultWatchListID => \$WatchListID='$WatchListID'";
+					}
+				}
+			  } else {
+			    if (IsSet($_REQUEST['upload_copypaste']) && trim($_REQUEST['copypaste']) != '') {
+                  $PortArray = ConvertStringToArray($_REQUEST['copypaste']);
+                  if (ProcessPackages($User->id, $PortArray, $db)) {
+#                  if ($Debug) phpinfo();
+					$WatchListID = AddSlashes($_POST['wlid']);
+					if ($_REQUEST['replaceappend'] == 'replace') {
+					  $Overwrite = TRUE;
+					} else {
+						$Overwrite = FALSE;
+					}
+
+                    if (CopyStagingToWatchList($db, $User->id, $WatchListID, $Overwrite)) {
+				      $DisplayStagingArea = FALSE;
+				      $StagingInUse       = FALSE;
+				      $WatchListUpdated   = TRUE;
+				      if (StagingAreaClear($User->id, $db)) {
+					    DisplayError("Your watch list has been updated.");
+					    } else {
+					    DisplayError("Your staging area was not cleared.");
+                      }
+                    } else {
+					  DisplayError('OH NO! CopyStagingToWatchList failed!');
+                    }
+				  }
+			    }
+			  }
+            }
+			
 		}
 
 		#

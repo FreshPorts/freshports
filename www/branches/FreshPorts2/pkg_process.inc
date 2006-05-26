@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: pkg_process.inc,v 1.5.2.25 2006-05-24 18:06:58 dan Exp $
+	# $Id: pkg_process.inc,v 1.5.2.26 2006-05-26 22:06:49 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -68,36 +68,22 @@ function DisplayError($error) {
 <?
 }
 
-// {{{ function ProcessPackages
-/**
-* Process the package file (this will be slimmed down, when there is no more debug
-*
-* @param	$filename - name of file to process
-* @return	an array of ports
-*
-*/
 
-function ProcessPackages($UserID, $filename, $dbh) {
-	// profiling info {{{
-	// }}}
-	global $gDBG;
 
-	$ok			= true;
-	$gMyPorts	= array();
-	$tempArray	= array();
+function ConvertFileContentsToArray($filename) {
+	$PortArray = array();
 
 	$gFid = fopen($filename, 'r');
-	if (!$gFid) { return false; }
+	if (!$gFid) {
+		return false;
+	}
 
-	$starttime = time();
-	$portcount = 0;
 	while (!feof($gFid)) {
-		$buffer = fgets($gFid,4096);
+		$buffer = fgets($gFid, 4096);
 		if (!$buffer) {
 			continue;
 		}
 
-		$portcount++;
 		// Get the package name
 
 		$buffer = trim($buffer);
@@ -109,8 +95,50 @@ function ProcessPackages($UserID, $filename, $dbh) {
 		} else {
 			$PortArray[$buffer] = 1;
 		}
-
 	}
+
+	return $PortArray;
+
+}
+
+
+function ConvertStringToArray($PkgInfoString) {
+	$PortArray = array();
+
+	$Lines = explode("\n", $PkgInfoString);
+	while (list($key, $CatPort) = each($Lines)) {
+		// Get the package name
+
+		$CatPort = trim($CatPort);
+		if ($CatPort == '') {
+			continue;
+		}
+		if (IsSet($PortArray[$CatPort])) {
+			$PortArray[$CatPort] = $PortArray[$CatPort] + 1;
+		} else {
+			$PortArray[$CatPort] = 1;
+		}
+	}
+
+	return $PortArray;
+
+}
+
+
+// {{{ function ProcessPackages
+/**
+* Process the package file (this will be slimmed down, when there is no more debug
+*
+* @param	$filename - name of file to process
+* @return	an array of ports
+*
+*/
+
+function ProcessPackages($UserID, $PortArray, $dbh) {
+	// profiling info {{{
+	// }}}
+
+	$ok = true;
 
 	pg_exec($dbh, "BEGIN");
 

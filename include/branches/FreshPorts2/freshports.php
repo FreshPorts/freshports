@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.250 2006-05-16 11:15:04 dan Exp $
+	# $Id: freshports.php,v 1.4.2.251 2006-05-29 06:38:51 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -1297,22 +1297,26 @@ function freshports_PortCommitsHeader($port) {
 	# print the header for the commits for a port
 
 	GLOBAL $User;
+	
+	$HTML = '';
 
-	echo '<TABLE BORDER="1" width="100%" CELLSPACING="0" CELLPADDING="5">' . "\n";
-	echo "<TR>\n";
+	$HTML .= '<TABLE BORDER="1" width="100%" CELLSPACING="0" CELLPADDING="5">' . "\n";
+	$HTML .= "<TR>\n";
 
 	$Columns = 3;
 	if ($User->IsTaskAllowed(FRESHPORTS_TASKS_SECURITY_NOTICE_ADD)) {
 		$Columns++;
 	}
-	echo freshports_PageBannerText("Commit History - (may be incomplete: see CVSWeb link above for full details)", $Columns);
+	$HTML .= freshports_PageBannerText("Commit History - (may be incomplete: see CVSWeb link above for full details)", $Columns);
 
-	echo '<TR><TD WIDTH="180"><b>Date</b></td><td><b>By</b></td><td><b>Description</b></td>';
+	$HTML .= '<TR><TD WIDTH="180"><b>Date</b></td><td><b>By</b></td><td><b>Description</b></td>';
 	if ($User->IsTaskAllowed(FRESHPORTS_TASKS_SECURITY_NOTICE_ADD)) {
-		echo '<td><b>Security</b></td>';
+		$HTML .= '<td><b>Security</b></td>';
 	}
 
-	echo "</tr>\n";
+	$HTML .= "</tr>\n";
+
+	return $HTML;
 }
 
 function freshports_PackageVersion($PortVersion, $PortRevision, $PortEpoch) {
@@ -1340,6 +1344,9 @@ function freshports_CheckForOutdatedVulnClaim($commit, $port, $VuXMLList) {
 	# appear under the slave port, thereby giving a false impression
 	# that the slave port was still vulnerable.
 	#
+
+	$HTML = '';
+
 	if (IsSet($VuXMLList[$commit->id])) {
 		# yes, the most recent commit has been marked as vulnerable
 		if ($port->IsSlavePort()) {
@@ -1349,17 +1356,21 @@ function freshports_CheckForOutdatedVulnClaim($commit, $port, $VuXMLList) {
 			$PortVersion   = freshports_PackageVersion($port->{'version'},         $port->{'revision'},         $port->{'epoch'});
 
 			if ($CommitVersion != PortVersion) {
-				echo "<p><b>NOTE</b>: This slave port may no longer be vulnerable to issues shown below because the ";
-				echo '<a href="/' . $port->master_port . '/">master port</a>' . " has been updated.</p>\n";
+				$HTML .= "<p><b>NOTE</b>: This slave port may no longer be vulnerable to issues shown below because the ";
+				$HTML .= '<a href="/' . $port->master_port . '/">master port</a>' . " has been updated.</p>\n";
 			}
 		}
 	}
+
+	return $HTML;
 }
 
 function freshports_PortCommits($port) {
 	# print all the commits for this port
 
 	GLOBAL $User;
+
+	$HTML = '';
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit_log_ports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user_tasks.php');
@@ -1371,17 +1382,19 @@ function freshports_PortCommits($port) {
 
 	$Commits->FetchNthCommit(0);
 
-	freshports_CheckForOutdatedVulnClaim($Commits, $port, $port->VuXML_List);
+	$HTML .= freshports_CheckForOutdatedVulnClaim($Commits, $port, $port->VuXML_List);
 
-	freshports_PortCommitsHeader($port);
+	$HTML .= freshports_PortCommitsHeader($port);
 
 	$LastVersion = '';
 	for ($i = 0; $i < $NumRows; $i++) {
 		$Commits->FetchNthCommit($i);
-		freshports_PortCommitPrint($Commits, $port->category, $port->port, $port->VuXML_List);
+		$HTML .= freshports_PortCommitPrint($Commits, $port->category, $port->port, $port->VuXML_List);
 	}
 
-	freshports_PortCommitsFooter($port);
+	$HTML .= freshports_PortCommitsFooter($port);
+	
+	return $HTML;
 }
 
 function freshports_CommitFilesLink($MessageID, $Category, $Port) {
@@ -1401,61 +1414,65 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;
 	GLOBAL $User;
 
+	$HTML = '';
+
 	# print a single commit for a port
-	echo "<TR><TD VALIGN='top' NOWRAP>";
+	$HTML .= "<TR><TD VALIGN='top' NOWRAP>";
 	
 
-	echo $commit->commit_date . '<BR>';
+	$HTML .= $commit->commit_date . '<BR>';
 	// indicate if this port needs refreshing from CVS
 	if ($commit->{'needs_refresh'}) {
-		echo " " . freshports_Refresh_Icon_Link() . "\n";
+		$HTML .= " " . freshports_Refresh_Icon_Link() . "\n";
 	}
-	echo freshports_Email_Link($commit->message_id);
+	$HTML .= freshports_Email_Link($commit->message_id);
 
-	echo '&nbsp;&nbsp;'. freshports_Commit_Link($commit->message_id);
+	$HTML .= '&nbsp;&nbsp;'. freshports_Commit_Link($commit->message_id);
 
 	if ($commit->EncodingLosses()) {
-		echo '&nbsp;'. freshports_Encoding_Errors_Link();
+		$HTML .= '&nbsp;'. freshports_Encoding_Errors_Link();
 	}
 
-	echo ' ';
+	$HTML .= ' ';
 
-	echo freshports_CommitFilesLink($commit->message_id, $category, $port);
+	$HTML .= freshports_CommitFilesLink($commit->message_id, $category, $port);
 	if (IsSet($commit->security_notice_id)) {
-		echo ' <a href="/security-notice.php?message_id=' . $commit->message_id . '">' . freshports_Security_Icon() . '</a>';
+		$HTML .= ' <a href="/security-notice.php?message_id=' . $commit->message_id . '">' . freshports_Security_Icon() . '</a>';
 	}
 
 	# ouput the VERSION and REVISION
 	$PackageVersion = freshports_PackageVersion($commit->{'port_version'},  $commit->{'port_revision'},  $commit->{'port_epoch'});
 	if (strlen($PackageVersion) > 0) {
-    	echo '&nbsp;&nbsp;&nbsp;<BIG><B>' . $PackageVersion . '</B></BIG>';
+    	$HTML .= '&nbsp;&nbsp;&nbsp;<BIG><B>' . $PackageVersion . '</B></BIG>';
 	}
 
 	if (IsSet($VuXMLList[$commit->id])) {
-		echo '&nbsp;<a href="/vuxml.php?vid=' . $VuXMLList[$commit->id] . '">' . freshports_VuXML_Icon() . '</a>';
+		$HTML .= '&nbsp;<a href="/vuxml.php?vid=' . $VuXMLList[$commit->id] . '">' . freshports_VuXML_Icon() . '</a>';
 	}
 
-	echo "</TD>\n";
-	echo '    <TD VALIGN="top">';
-	echo freshports_CommitterEmailLink($commit->committer) . '&nbsp;' . freshports_Search_Committer($commit->committer);;
+	$HTML .= "</TD>\n";
+	$HTML .= '    <TD VALIGN="top">';
+	$HTML .= freshports_CommitterEmailLink($commit->committer) . '&nbsp;' . freshports_Search_Committer($commit->committer);;
 
-	echo "</TD>\n";
-	echo '    <TD VALIGN="top" WIDTH="*">';
+	$HTML .= "</TD>\n";
+	$HTML .= '    <TD VALIGN="top" WIDTH="*">';
 
-	echo freshports_PortDescriptionPrint($commit->description, $commit->encoding_losses, $freshports_CommitMsgMaxNumOfLinesToShow, freshports_MoreCommitMsgToShow($commit->message_id, $freshports_CommitMsgMaxNumOfLinesToShow));
+	$HTML .= freshports_PortDescriptionPrint($commit->description, $commit->encoding_losses, $freshports_CommitMsgMaxNumOfLinesToShow, freshports_MoreCommitMsgToShow($commit->message_id, $freshports_CommitMsgMaxNumOfLinesToShow));
 
-	echo "</TD>\n";
+	$HTML .= "</TD>\n";
 
 	if ($User->IsTaskAllowed(FRESHPORTS_TASKS_SECURITY_NOTICE_ADD)) {
-		echo '<TD ALIGN="center" VALIGN="top"><a href="/security-notice.php?message_id=' . $commit->message_id . '">Edit</a></td>';
+		$HTML .= '<TD ALIGN="center" VALIGN="top"><a href="/security-notice.php?message_id=' . $commit->message_id . '">Edit</a></td>';
 	}
 
-	echo "</TR>\n";
+	$HTML .= "</TR>\n";
+
+	return $HTML;
 }
 
 function freshports_PortCommitsFooter($port) {
 	# print the footer for the commits for a port
-	echo "</TABLE>\n";
+	return "</TABLE>\n";
 }
 
 
@@ -1473,26 +1490,28 @@ function freshports_CommitsHeader($element_record) {
 
 	GLOBAL $User;
 
-	echo '<TABLE BORDER="1" width="100%" CELLSPACING="0" CELLPADDING="5">' . "\n";
-	echo "<TR>\n";
+	$HTML = '';
+
+	$HTML .= '<TABLE BORDER="1" width="100%" CELLSPACING="0" CELLPADDING="5">' . "\n";
+	$HTML .= "<TR>\n";
 
 	$Columns = 3;
 	if ($User->IsTaskAllowed(FRESHPORTS_TASKS_SECURITY_NOTICE_ADD)) {
 		$Columns++;
 	}
-	echo freshports_PageBannerText("Commit History - (may be incomplete: see CVSWeb link above for full details)", $Columns);
+	$HTML .= freshports_PageBannerText("Commit History - (may be incomplete: see CVSWeb link above for full details)", $Columns);
 
-	echo '<TR><TD WIDTH="180"><b>Date</b></td><td><b>By</b></td><td><b>Description</b></td>';
+	$HTML .= '<TR><TD WIDTH="180"><b>Date</b></td><td><b>By</b></td><td><b>Description</b></td>';
 	if ($User->IsTaskAllowed(FRESHPORTS_TASKS_SECURITY_NOTICE_ADD)) {
-		echo '<td><b>Security</b></td>';
+		$HTML .= '<td><b>Security</b></td>';
 	}
 
-	echo "</tr>\n";
+	$HTML .= "</tr>\n";
 }
 
 function freshports_CommitsFooter($element_record) {
 	# print the footer for the commits for a port
-	echo "</TABLE>\n";
+	$HTML .= "</TABLE>\n";
 }
 
 
@@ -1510,13 +1529,15 @@ function freshports_CommitsFooter($element_record) {
 
 
 function freshports_Commits($element_record) {
+	$HTML = '';
+
 	# print all the commits for this port
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit_log_elements.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/element_record.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user_tasks.php');
 
-	freshports_CommitsHeader($element_record);
+	$HTML .= freshports_CommitsHeader($element_record);
 
 	$Commits = new Commit_Log_Elements($element_record->dbh);
 	$NumRows = $Commits->FetchInitialise($element_record->id);
@@ -1524,10 +1545,12 @@ function freshports_Commits($element_record) {
 	$LastVersion = '';
 	for ($i = 0; $i < $NumRows; $i++) {
 		$Commits->FetchNthCommit($i);
-		freshports_CommitPrint($element_record, $Commits);
+		$HTML .= freshports_CommitPrint($element_record, $Commits);
 	}
 
-	freshports_CommitsFooter($element_record);
+	$HTML .= freshports_CommitsFooter($element_record);
+
+	return $HTML;
 }
 
 
@@ -1538,48 +1561,52 @@ function freshports_CommitPrint($element_record, $commit) {
 	GLOBAL $TimeFormatDefault;
 	GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;
 	GLOBAL $User;
+	
+	$HTML = '';
 
 	# print a single commit for a port
-	echo "<TR><TD VALIGN='top' NOWRAP>";
+	$HTML .= "<TR><TD VALIGN='top' NOWRAP>";
 	
 
-	echo $commit->commit_date . '<BR>';
-	echo freshports_Email_Link($commit->message_id);
+	$HTML .= $commit->commit_date . '<BR>';
+	$HTML .= freshports_Email_Link($commit->message_id);
 
-	echo '&nbsp;&nbsp;'. freshports_Commit_Link($commit->message_id);
+	$HTML .= '&nbsp;&nbsp;'. freshports_Commit_Link($commit->message_id);
 
 	if ($commit->EncodingLosses()) {
-		echo '&nbsp;'. freshports_Encoding_Errors_Link();
+		$HTML .= '&nbsp;'. freshports_Encoding_Errors_Link();
 	}
 
-	echo ' ';
+	$HTML .= ' ';
 
-	echo freshports_CVS_Link($element_record->element_pathname, $commit->revision_name);
+	$HTML .= freshports_CVS_Link($element_record->element_pathname, $commit->revision_name);
 	if (IsSet($commit->security_notice_id)) {
-		echo ' <a href="/security-notice.php?message_id=' . $commit->message_id . '">' . freshports_Security_Icon() . '</a>';
+		$HTML .= ' <a href="/security-notice.php?message_id=' . $commit->message_id . '">' . freshports_Security_Icon() . '</a>';
 	}
 
 	# ouput the REVISION
 	if (strlen($commit->{'revision_name'}) > 0) {
-    	echo '&nbsp;&nbsp;&nbsp;<BIG><B>' . $commit->{'revision_name'} . '</B></BIG>';
+		$HTML .= '&nbsp;&nbsp;&nbsp;<BIG><B>' . $commit->{'revision_name'} . '</B></BIG>';
 	}
 
-	echo "</TD>\n";
-	echo '    <TD VALIGN="top">';
-	echo freshports_CommitterEmailLink($commit->committer) . freshports_Search_Committer($commit->committer);
+	$HTML .= "</TD>\n";
+	$HTML .= '    <TD VALIGN="top">';
+	$HTML .= freshports_CommitterEmailLink($commit->committer) . freshports_Search_Committer($commit->committer);
 
-	echo "</TD>\n";
-	echo '    <TD VALIGN="top" WIDTH="*">';
+	$HTML .= "</TD>\n";
+	$HTML .= '    <TD VALIGN="top" WIDTH="*">';
 
-	echo freshports_PortDescriptionPrint($commit->description, $commit->encoding_losses, $freshports_CommitMsgMaxNumOfLinesToShow, freshports_MoreCommitMsgToShow($commit->message_id, $freshports_CommitMsgMaxNumOfLinesToShow));
+	$HTML .= freshports_PortDescriptionPrint($commit->description, $commit->encoding_losses, $freshports_CommitMsgMaxNumOfLinesToShow, freshports_MoreCommitMsgToShow($commit->message_id, $freshports_CommitMsgMaxNumOfLinesToShow));
 
-	echo "</TD>\n";
+	$HTML .= "</TD>\n";
 
 	if ($User->IsTaskAllowed(FRESHPORTS_TASKS_SECURITY_NOTICE_ADD)) {
-		echo '<TD ALIGN="center" VALIGN="top"><a href="/security-notice.php?message_id=' . $commit->message_id . '">Edit</a></td>';
+		$HTML .= '<TD ALIGN="center" VALIGN="top"><a href="/security-notice.php?message_id=' . $commit->message_id . '">Edit</a></td>';
 	}
 
-	echo "</TR>\n";
+	$HTML .= "</TR>\n";
+
+	return $HTML;
 }
 
 

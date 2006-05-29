@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: cache.php,v 1.1.2.1 2006-05-29 05:26:54 dan Exp $
+	# $Id: cache.php,v 1.1.2.2 2006-05-29 06:26:30 dan Exp $
 	#
 	# Copyright (c) 2006 DVL Software Limited
 	#
@@ -99,11 +99,13 @@ class Cache {
 
 	function _SpoolFileName($key) {
 		$FileName = $this->SpoolDir . '/'. $this->_CleanKey($key) . $ProcessID . '.tmp';
+
 		return $FileName;
 	}
 
 	function _CacheFileName($key) {
 		$FileName = $this->CacheDir . '/'. $this->_CleanKey($key);
+
 		return $FileName;
 	}
 	

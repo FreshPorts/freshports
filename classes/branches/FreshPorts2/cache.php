@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: cache.php,v 1.1.2.2 2006-05-29 06:26:30 dan Exp $
+	# $Id: cache.php,v 1.1.2.3 2006-05-29 06:47:18 dan Exp $
 	#
 	# Copyright (c) 2006 DVL Software Limited
 	#
@@ -63,13 +63,13 @@ class Cache {
 				} else {
 					// rm $SpoolFileName
 					unlink($SpoolFileName);
-					$this->_Log('FAILED Add on move ' . $CacheFileName);
+					$this->_Log('FAILED Add on move" ' . $SpoolFileName . ' to ' . $CacheFileName);
 				}
 			} else {
-				$this->_Log('FAILED Add on write ' . $SpoolFileName);
+				$this->_Log('FAILED Add on write: ' . $SpoolFileName);
 			}
 		} else {
-			$this->_Log('FAILED Add on opening file' .$CacheFileName);
+			$this->_Log('FAILED Add on opening file: ' . $SpoolFileName);
 			$result = -1;
 		}
 

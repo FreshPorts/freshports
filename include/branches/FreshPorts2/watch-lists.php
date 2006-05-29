@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-lists.php,v 1.1.2.16 2005-10-08 01:59:45 dan Exp $
+	# $Id: watch-lists.php,v 1.1.2.17 2006-05-29 06:37:14 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -112,25 +112,29 @@ function freshports_WatchListCountDefault($db, $UserID) {
 }
 
 function freshports_UpdatingOutput($NumRowsUpdating, $PortsUpdating, $port) {
+	$HTML = '';
+	
 	if ($NumRowsUpdating > 0) {
-		echo '<TABLE BORDER="1" width="100%" CELLSPACING="0" CELLPADDING="5">' . "\n";
-		echo "<TR>\n";
-		echo freshports_PageBannerText("Notes from <a href=\"/UPDATING\">/usr/ports/UPDATING</a>", 1);
-		echo "<tr><td>\n";
-		echo "<ul>\n";
+		$HTML .= '<TABLE BORDER="1" width="100%" CELLSPACING="0" CELLPADDING="5">' . "\n";
+		$HTML .= "<TR>\n";
+		$HTML .= freshports_PageBannerText("Notes from <a href=\"/UPDATING\">/usr/ports/UPDATING</a>", 1);
+		$HTML .= "<tr><td>\n";
+		$HTML .= "<ul>\n";
 
 		for ($i = 0; $i < $NumRowsUpdating; $i++) {
 			$PortsUpdating->FetchNth($i);
-			echo '<li>' . freshports_PortsUpdating($port, $PortsUpdating) . "</li>\n";
+			$HTML .= '<li>' . freshports_PortsUpdating($port, $PortsUpdating) . "</li>\n";
 			if ($i + 1 != $NumRowsUpdating) {
-				echo '<br>';
+				$HTML .= '<br>';
 			}
 		}
 
-		echo "</ul>\n";
-		echo "</td></tr>\n";
-		echo "</table>\n";
+		$HTML .= "</ul>\n";
+		$HTML .= "</td></tr>\n";
+		$HTML .= "</table>\n";
 	}
+
+	return $HTML;
 }
 
 function freshports_WatchListVerifyToken($db, $token) {

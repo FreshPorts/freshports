@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch.php,v 1.1.2.59 2006-02-24 20:08:25 dan Exp $
+	# $Id: watch.php,v 1.1.2.60 2006-05-29 06:37:40 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -375,7 +375,7 @@ if ($wlid != '') {
 		echo freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 1, '', 0);
 
 		if ($IncludeUpdating || $OnlyThoseWithUpdatingEntries) {
-			freshports_UpdatingOutput($NumRowsUpdating, $PortsUpdating, $port);
+			echo freshports_UpdatingOutput($NumRowsUpdating, $PortsUpdating, $port);
 		}
 		
 		echo '<BR>';

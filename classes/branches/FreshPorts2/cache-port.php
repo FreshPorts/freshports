@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: cache-port.php,v 1.1.2.1 2006-05-29 05:26:54 dan Exp $
+	# $Id: cache-port.php,v 1.1.2.2 2006-05-29 06:27:19 dan Exp $
 	#
 	# Copyright (c) 2006 DVL Software Limited
 	#
@@ -10,11 +10,12 @@
 //
 class CachePort extends Cache {
 
-	function CachePort()
+	function CachePort() {
 		return Parent::Cache();
 	}
 	
 	function Retrieve($Category, $Port, &$data) {
+		$this->_Log("CachPort: Retrieving for $Category/$Port");
 		$Key = $this->_PortKey($Category, $Port);
 		$result = Parent::Retrieve($Key, $data);
 
@@ -22,6 +23,7 @@ class CachePort extends Cache {
 	}
 
 	function Add($Category, $Port, $data) {
+		$this->_Log("CachPort: Adding for $Category/$Port");
 		$Key = $this->_PortKey($Category, $Port);
 		$result = Parent::Add($Key, $data);
 
@@ -29,14 +31,17 @@ class CachePort extends Cache {
 	}
 
 	function Remove($Category, $Port) {
+		$this->_Log("CachPort: Removing for $Category/$Port");
 		$Key = $this->_PortKey($Category, $Port);
 		$result = Parent::Remove($Key, $data);
 
 		return $result;
 	}
 	
-	function _PortKey($Category, $Port);
+	function _PortKey($Category, $Port) {
 		// might want some parameter checking here
-		$key = $Category . '.' . $Port;
+		$Key = $Category . '.' . $Port;
+
+		return $Key;
 	}
 }

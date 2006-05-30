@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.83 2006-05-24 18:32:00 dan Exp $
+	# $Id: search.php,v 1.1.2.84 2006-05-30 21:17:10 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -121,7 +121,7 @@ function setfocus() { document.search.query.focus(); }
 <tr><td valign="top" width="100%">
 <?php echo freshports_MainContentTable(); ?>
   <tr>
-	<? echo freshports_PageBannerText("Search using Google"); ?>
+	<? echo freshports_PageBannerText("Search FreshPorts using Google"); ?>
   </tr>
 <tr><td valign="top">
 <?

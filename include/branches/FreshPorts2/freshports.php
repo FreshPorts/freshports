@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.251 2006-05-29 06:38:51 dan Exp $
+	# $Id: freshports.php,v 1.4.2.252 2006-05-30 22:10:27 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -2273,6 +2273,6 @@ function freshports_GetPortID($db, $category, $port) {
 	return $myrow['port_id'];
 }
 
-openlog('FreshPorts', LOG_PID | LOG_PERROR, LOG_LOCAL0);
+openlog('FreshPorts', LOG_PID, LOG_SYSLOG);
 
 ?>

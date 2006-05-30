@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: cache.php,v 1.1.2.3 2006-05-29 06:47:18 dan Exp $
+	# $Id: cache.php,v 1.1.2.4 2006-05-30 21:51:57 dan Exp $
 	#
 	# Copyright (c) 2006 DVL Software Limited
 	#
@@ -49,10 +49,15 @@ class Cache {
 		$SpoolFileHandle = fopen($SpoolFileName, 'w');
 		if ($SpoolFileHandle) {
 			// write $data to file
-			fputs($SpoolFileHandle, $data);
-			$datawritten = 1;
-			if ($datawritten) {
+			if (fwrite($SpoolFileHandle, $data)) {
 				// close $SpoolFileHandle
+				fclose($SpoolFileHandle);
+
+				// chmod to group writable so that the perl scripts, running
+				// as dan, can remove them when a new commit comes in.
+				// the leading zero is important.
+				chmod($SpoolFileName, 0664);
+
 				// mv spool file to cache dir
 				$CacheFileName = $this->_CacheFileName($key);
 
@@ -66,6 +71,7 @@ class Cache {
 					$this->_Log('FAILED Add on move" ' . $SpoolFileName . ' to ' . $CacheFileName);
 				}
 			} else {
+				fclose($SpoolFileHandle);
 				$this->_Log('FAILED Add on write: ' . $SpoolFileName);
 			}
 		} else {
@@ -98,7 +104,9 @@ class Cache {
 	}
 
 	function _SpoolFileName($key) {
-		$FileName = $this->SpoolDir . '/'. $this->_CleanKey($key) . $ProcessID . '.tmp';
+		$FileName = tempnam($this->SpoolDir, $this->_CleanKey($key) . '.tmp');
+
+		syslog(LOG_NOTICE, 'creating spool file ' . $FileName);
 
 		return $FileName;
 	}

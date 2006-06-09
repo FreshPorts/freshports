@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.252 2006-05-30 22:10:27 dan Exp $
+	# $Id: freshports.php,v 1.4.2.253 2006-06-09 16:22:27 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -1217,7 +1217,7 @@ if ($ShowDepends) {
 	$HTML .= "\n<hr>\n";
 
    if (!$HideDescription && ($ShowDescriptionLink == "Y" || $ShowEverything)) {
-      // Long descripion
+      // Long description
       $HTML .= '<A HREF="/' . $port->category . '/' . $port->port .'/">Description</a>';
 
       $HTML .= ' <b>:</b> ';

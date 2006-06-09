@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.80 2006-02-21 21:25:34 dan Exp $
+	# $Id: faq.php,v 1.1.2.81 2006-06-09 19:23:14 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -506,8 +506,24 @@ Here are a few examples:
 	probably selected "default watch list[s]" when you don't have any default watch
 	list[s] set.  To mark a watch list as a default, select it in the list, then click on
 	the Set Default button.
+	
+	<p>
+	NOTE: The <?php echo freshports_Watch_Icon(); ?> will only appear beside a port
+	that is one on of your default watch lists.  If the port is on one of your non-default
+	watch list, the <?php echo freshports_Watch_Icon_Add(); ?> icon will appear instead.
+	If you do not see what you expect, try setting the default watch lists in your
+	 <a href="/watch-list-maintenance.php">watch list settings</a>.
 
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
+
+<TR>
+<?php echo freshports_PageBannerText("Why doesn't this port appear on my watch list?"); ?>
+</TR>
+
+   <TR><TD>
+   <P>
+   Please refer to the above question.
+   </TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
 <?php echo freshports_PageBannerText("What are Port Moves?"); ?>

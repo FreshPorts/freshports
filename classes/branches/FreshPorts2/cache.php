@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: cache.php,v 1.1.2.4 2006-05-30 21:51:57 dan Exp $
+	# $Id: cache.php,v 1.1.2.5 2006-06-10 02:20:25 dan Exp $
 	#
 	# Copyright (c) 2006 DVL Software Limited
 	#
@@ -22,6 +22,8 @@ class Cache {
 	}
 	
 	function Retrieve($key, &$data) {
+		$result = 0;
+
 		$CacheFileName = $this->_CacheFileName($key);
 		if (file_exists($CacheFileName) && is_readable($CacheFileName)) {
 			// open, read, and return

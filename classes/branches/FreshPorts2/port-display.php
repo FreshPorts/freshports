@@ -1,11 +1,12 @@
 <?php
 	#
-	# $Id: port-display.php,v 1.1.2.2 2006-06-12 17:46:16 dan Exp $
+	# $Id: port-display.php,v 1.1.2.3 2006-06-12 22:57:46 dan Exp $
 	#
 	# Copyright (c) 2005 DVL Software Limited
 	#
 	
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/master_slave.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/include/htmlify.php');
 
 class port_display {
 	var $db;

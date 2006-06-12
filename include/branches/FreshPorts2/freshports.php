@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.253 2006-06-09 16:22:27 dan Exp $
+	# $Id: freshports.php,v 1.4.2.254 2006-06-12 04:46:07 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -1870,7 +1870,21 @@ Valid
 </TABLE>
 ';
 
+	$HTML .= freshports_GoogleAnalytics();
+
 	$Statistics->Save();
+
+	return $HTML;
+}
+
+function freshports_GoogleAnalytics() {
+	$HTML = '<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-408525-1";
+urchinTracker();
+</script>
+';
 
 	return $HTML;
 }

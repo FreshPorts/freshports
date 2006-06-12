@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: files.php,v 1.1.2.47 2006-02-13 15:39:43 dan Exp $
+	# $Id: files.php,v 1.1.2.48 2006-06-12 04:45:30 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -351,9 +351,9 @@ select element_pathname(element.id) as pathname,
 echo freshports_ShowFooter();
 ?>
 
-	</body>
-	</html>
+</body>
+</html>
 
-	<?
+<?
 
 }

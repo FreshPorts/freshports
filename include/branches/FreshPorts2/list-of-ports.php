@@ -1,14 +1,17 @@
 <?php
 	#
-	# $Id: list-of-ports.php,v 1.1.2.9 2005-01-23 03:02:57 dan Exp $
+	# $Id: list-of-ports.php,v 1.1.2.10 2006-06-12 17:55:10 dan Exp $
 	#
-	# Copyright (c) 1998-2004 DVL Software Limited
+	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
-function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeaders) {
+function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeaders, $User) {
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
 
+	$port_display = new port_display($db, $User);
+	$port_display->SetDetailsReports();
 	$port = new Port($db);
 	$port->LocalResult = $result;
 
@@ -46,9 +49,10 @@ function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeade
 
 	for ($i = 0; $i < $numrows; $i++) {
 		$port->FetchNth($i);
+
 		if ($ShowCategoryHeaders) {
 			$Category = $port->category;
-	
+
 			if ($LastCategory != $Category) {
 				if ($i > 0) {
 					$HTML .= "\n</DD>\n";
@@ -65,7 +69,12 @@ function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeade
 				}
 			}
 		}
-		$HTML .= freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 1, '', 1, $ShowDateAdded);
+		$port_display->port = $port;
+#		$HTML .= 'START ..';
+		$HTML .= $port_display->Display();
+
+#		$HTML .= freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 1, '', 1, $ShowDateAdded);
+#		$HTML .= '... END';
 		$HTML .= '<BR>';
 	}
 

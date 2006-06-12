@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: freshports_page_expiration_ports.php,v 1.1.2.1 2005-06-27 00:29:50 dan Exp $
+	# $Id: freshports_page_expiration_ports.php,v 1.1.2.2 2006-06-12 17:50:55 dan Exp $
 	#
-	# Copyright (c) 2005 DVL Software Limited
+	# Copyright (c) 2005-2006 DVL Software Limited
 	#
 
 

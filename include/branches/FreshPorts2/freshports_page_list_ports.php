@@ -1,14 +1,16 @@
 <?php
 	#
-	# $Id: freshports_page_list_ports.php,v 1.1.2.14 2005-07-15 04:26:19 dan Exp $
+	# $Id: freshports_page_list_ports.php,v 1.1.2.15 2006-06-12 17:59:49 dan Exp $
 	#
-	# Copyright (c) 2005 DVL Software Limited
+	# Copyright (c) 2005-2006 DVL Software Limited
 	#
 
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports_page.php');
 
 class freshports_page_list_ports extends freshports_page {
+
+	var $User;
 
 	var $_sql;
 	var $_description;
@@ -18,6 +20,13 @@ class freshports_page_list_ports extends freshports_page {
 
     function freshports_page_list_ports($attributes = array()) {
 		$this->freshports_page($attributes);
+		
+		GLOBAL $User;
+		$this->User = $User;
+	}
+	
+	function SetUser($User) {
+		$this->User = $User;
 	}
 
 	function Display() {
@@ -108,12 +117,12 @@ from element, categories, ports_vulnerable PV right outer join ports on PV.port_
 
 		$this->_sql .= "
 WHERE ports.element_id  = element.id
-  and ports.category_id = categories.id 
-  and status            = '" . $this->getStatus() . "'";
+  AND ports.category_id = categories.id 
+  AND status            = '" . $this->getStatus() . "'";
 
 		if ($Condition) {
 			$this->_sql .= '
-  and ' . $Condition;
+   AND ' . $Condition;
 			$this->_condition = $Condition;
 		}
 
@@ -134,15 +143,39 @@ SELECT gmt_format(max(commit_log.date_added)) as last_modified
 
 		if ($this->_condition) {
 			$sql .= '
-  and ' . $this->_condition;
+   AND ' . $this->_condition;
 		}
 
 #		echo '<pre>' . $sql . '</pre>';
 
 		$result = pg_exec($this->_db, $sql);
 		if ($result) {
-			$myrow = pg_fetch_array ($result);
-			$last_modified = $myrow['last_modified'];
+			$numrows = pg_numrows($result);
+			#
+			# here we are doing a max. Even if we have nothing in the result set,
+			# we will still get a null value.
+			#
+			if ($numrows == 1) {
+				$myrow = pg_fetch_array ($result);
+				$last_modified = $myrow['last_modified'];
+			}
+
+			if ($numrows != 1 || $last_modified == '') {
+				$sql = 'select gmt_format(LatestCommitDatePorts()) as last_modified';
+				$result = pg_exec($this->_db, $sql);
+				if (!$result) {
+					# if the above failed, give them the current date time
+					$sql = 'select GMT_Format(CURRENT_TIMESTAMP) as last_modified';
+					$result = pg_exec($this->_db, $sql);
+					if (!$result) {
+						die('could not get last_modified value: ' . __FILE__);
+					}
+				}
+
+				$myrow = pg_fetch_array ($result);
+				$last_modified = $myrow['last_modified'];
+			}
+			
 		}
 
 #echo 'Last Modified is ' . $last_modified . '<br>';
@@ -166,7 +199,7 @@ SELECT gmt_format(max(commit_log.date_added)) as last_modified
 
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/include/list-of-ports.php');
 
-		$HTML .= freshports_ListOfPorts($result, $this->_db, 'Y', $this->getShowCategoryHeaders());
+		$HTML .= freshports_ListOfPorts($result, $this->_db, 'Y', $this->getShowCategoryHeaders(), $this->User);
 
 		return $HTML;
 	}
@@ -249,8 +282,6 @@ SELECT gmt_format(max(commit_log.date_added)) as last_modified
 		$SortStatement = "<TR><TD>\nThis page is " . $this->getSortedbyHTML() . "</TD></TR>\n";
 
 		$this->addBodyContent($SortStatement); 
-
-		$this->addBodyContent($HTML);
 
 		$this->addBodyContent($this->getPorts());
 

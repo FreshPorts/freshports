@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.61 2006-05-29 06:39:48 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.62 2006-06-12 18:00:11 dan Exp $
 	#
 	# Copyright (c) 2001-2003 DVL Software Limited
 	#
@@ -79,6 +79,7 @@ function freshports_PortDisplay($db, $port) {
 <tr><td valign="top" width="100%">
 
 <?
+/*
 	GLOBAL $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription;
 
 
@@ -95,13 +96,17 @@ $ShowDescriptionLink		= "N";
 $ShowMasterSlave		= 1;
 
 GLOBAL $ShowWatchListCount;
+*/
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
 
-	$HTML = freshports_PortDetails($port, $port->dbh, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 0, '', 1, "N", 1, 1, $ShowWatchListCount, $ShowMasterSlave);
+	$port_display = new port_display($db, $User);
+	$port_display->SetDetailsFull();
+
+	$port_display->port = $port;
+	$HTML = $port_display->Display();
+#	$HTML .= freshports_PortDetails($port, $port->dbh, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 0, '', 1, "N", 1, 1, $ShowWatchListCount, $ShowMasterSlave);
+
 	echo $HTML;
-
-	echo '<DL><DD>';
-    echo '<PRE CLASS="code">' . htmlify(htmlspecialchars($port->long_description)) . '</PRE>';
-	echo "\n</DD>\n</DL>\n";
 
 	GLOBAL $ShowAds;
 
@@ -111,10 +116,8 @@ GLOBAL $ShowWatchListCount;
 		echo AdSense728x90();
 		echo '</div>';
 	}
-	
 
 	echo "</TD></TR>\n</TABLE>\n\n";
-
 
 	// start of caching
 	$HTML = '';

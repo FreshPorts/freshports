@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch.php,v 1.1.2.60 2006-05-29 06:37:40 dan Exp $
+	# $Id: watch.php,v 1.1.2.61 2006-06-12 18:00:12 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -343,6 +343,11 @@ if ($wlid != '') {
 	}
 
 
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
+
+	$port_display = new port_display($db, $User);
+	$port_display->SetDetailsWatchList();
+
 	$NumSkipped = 0;
 	for ($i = 0; $i < $numrows; $i++) {
 		$port->FetchNth($i);
@@ -372,7 +377,11 @@ if ($wlid != '') {
 			}
 		}
 
-		echo freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 1, '', 0);
+		$port_display->port = $port;
+		$HTML = $port_display->Display();
+		echo $HTML;
+
+#		echo freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 1, '', 0);
 
 		if ($IncludeUpdating || $OnlyThoseWithUpdatingEntries) {
 			echo freshports_UpdatingOutput($NumRowsUpdating, $PortsUpdating, $port);

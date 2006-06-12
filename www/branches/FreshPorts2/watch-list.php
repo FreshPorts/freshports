@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-list.php,v 1.2.2.26 2005-01-22 14:48:53 dan Exp $
+	# $Id: watch-list.php,v 1.2.2.27 2006-06-12 18:00:12 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -116,7 +116,17 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 		$port = new Port($db);
 		$port->FetchByElementID($Object, $User->id);
 
-		echo freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 1, '', 1, "N", 0);
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
+
+		$port_display = new port_display($db, $User);
+		$port_display->SetDetailsReports();
+
+		$port_display->port = $port;
+		$HTML = $port_display->Display();
+
+		echo $HTML;
+
+#		echo freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 1, '', 1, "N", 0);
 ?>
 Please select the watch lists which should contain this port:
 <blockquote>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-category.php,v 1.1.2.35 2005-11-01 22:52:12 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.36 2006-06-12 18:00:11 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -183,10 +183,18 @@ $ShowShortDescription = "Y";
 $ShowMaintainedBy     = "Y";
 $GlobalHideLastChange = "Y";
 $ShowDescriptionLink  = "N";
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
+
+	$port_display = new port_display($db, $User);
+	$port_display->SetDetailsCategory();
+
 	for ($i = 0; $i < $numrows; $i++) {
 		$port->FetchNth($i);
 
-		$HTML .= freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 1, '', 0);
+		$port_display->port = $port;
+		$HTML .= $port_display->Display();
+
+#		$HTML .= freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 1, '', 0);
 	} // end for
 
 	echo $HTML;

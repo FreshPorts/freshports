@@ -1,5 +1,5 @@
 #
-# $Id: README.txt,v 1.1.2.6 2003-11-14 04:39:49 dan Exp $
+# $Id: README.txt,v 1.1.2.7 2006-06-13 15:49:32 dan Exp $
 #
 # Copyright (c) 1998-2003 DVL Software Limited
 #
@@ -10,9 +10,9 @@ You need to do this:
 |file system permissions|
 +-----------------------+
 
-touch searchlog.txt
-chgrp www searchlog.txt
-chmod g+w searchlog.txt
+touch dynamic/searchlog.txt
+chgrp www dynamic/searchlog.txt
+chmod g+w dynamic/searchlog.txt
 
 The following settings are necessary for a phorum:
 
@@ -24,19 +24,19 @@ chmod g+w phorum-3.3.2a
 |Website configuration|
 +---------------------+
 
- - mkdir caching
- - mkdir caching/cache
- - mkdir caching/tmp
+mkdir -p dynamic/caching/cache/ports
+mkdir -p dynamic/caching/spool
+chown -R www:www dynamic/caching
 
- - cd www/include
- - cp common.php.sample common.php
+cd www/include
+cp common.php.sample common.php
 
- - cd configuration
- - cp database.php.sample database.php
+cd configuration
+cp database.php.sample database.php
 
-   modify the login:
+modify the login:
 
-  $database=pg_connect("dbname=FreshPorts2 user=dan")
+$database=pg_connect("dbname=FreshPorts2 user=dan")
 
 
 +-------+

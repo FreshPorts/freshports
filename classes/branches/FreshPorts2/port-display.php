@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-display.php,v 1.1.2.3 2006-06-12 22:57:46 dan Exp $
+	# $Id: port-display.php,v 1.1.2.4 2006-06-22 15:12:50 dan Exp $
 	#
 	# Copyright (c) 2005 DVL Software Limited
 	#
@@ -448,13 +448,13 @@ class port_display {
 
 		if ($this->ShowPackageLink || $this->ShowEverything) {
 			$HTML .= "\n<hr>\n";
+			$HTML .= '<p><b>To install <a href="/faq.php#port" TITLE="what is a port?">the port</a>:</b> <code class="code">cd /usr/ports/'  . $port->category . '/' . $port->port . '/ && make install clean</code><br>';
 			if (IsSet($port->no_package) && $port->no_package != '') {
-				$HTML .= '<p><b>No package is available:</b> ' . $port->no_package . '</p>';
+				$HTML .= '<p><b>No <a href="/faq.php#package" TITLE="what is a package?">package</a> is available:</b> ' . $port->no_package . '</p>';
 			} else {
-				if ($port->forbidden || $port->broken || $port->ignore) {
-					$HTML .= '<p><b>No package because port is marked as Forbidden/Broken/Ignore</b></p>';
+				if ($port->forbidden || $port->broken || $port->ignore || $port->restricted) {
+					$HTML .= '<p><b>A <a href="/faq.php#package" TITLE="what is a package?">package</a> is not available because port is marked as one of: Forbidden / Broken / Ignore / Restricted</b></p>';
 				} else {
-					$HTML .= '<p><b>To install <a href="/faq.php#port" TITLE="what is a port?">the port</a>:</b> <code class="code">cd /usr/ports/'  . $port->category . '/' . $port->port . '/ && make install clean</code><br>';
 					$HTML .= '<b>To add the <a href="/faq.php#package" TITLE="what is a package?">package</a>:</b> <code class="code">pkg_add -r ' . $port->latest_link . '</code></p>';
 				}
 			}

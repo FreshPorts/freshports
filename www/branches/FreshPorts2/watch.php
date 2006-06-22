@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch.php,v 1.1.2.61 2006-06-12 18:00:12 dan Exp $
+	# $Id: watch.php,v 1.1.2.62 2006-06-22 15:36:32 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -324,20 +324,6 @@ if ($wlid != '') {
 		}
 	}
 
-	$ShowDescriptionLink = 0;
-	$DaysMarkedAsNew= $DaysMarkedAsNew= $GlobalHideLastChange= $ShowChangesLink = $ShowDownloadPortLink= $ShowHomepageLink= $ShowLastChange= $ShowMaintainedBy= $ShowPortCreationDate= $ShowPackageLink= $ShowShortDescription =1;
-	$ShowPortCreationDate = 0;
-	$HideCategory = 1;
-	$ShowCategories		= 1;
-	GLOBAL	$ShowDepends;
-	$ShowDepends		= 1;
-	$HideDescription = 1;
-	$ShowEverything  = 1;
-	$ShowShortDescription = 'Y';
-	$ShowMaintainedBy     = 'Y';
-	#$GlobalHideLastChange = 'Y';
-	$ShowDescriptionLink  = 'N';
-
 	if ($ShowCategoryHeaders) {
 		echo '<DL>';
 	}
@@ -380,8 +366,6 @@ if ($wlid != '') {
 		$port_display->port = $port;
 		$HTML = $port_display->Display();
 		echo $HTML;
-
-#		echo freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 1, '', 0);
 
 		if ($IncludeUpdating || $OnlyThoseWithUpdatingEntries) {
 			echo freshports_UpdatingOutput($NumRowsUpdating, $PortsUpdating, $port);

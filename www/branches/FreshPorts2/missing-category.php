@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-category.php,v 1.1.2.36 2006-06-12 18:00:11 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.37 2006-06-22 15:36:31 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -170,19 +170,6 @@ echo '</div>';
 
 	$HTML = freshports_echo_HTML("<TR>\n<TD>\n");
 
-
-$DaysMarkedAsNew= $DaysMarkedAsNew= $GlobalHideLastChange= $ShowChangesLink= $ShowDescriptionLink= $ShowDownloadPortLink= $ShowHomepageLink= $ShowLastChange= $ShowMaintainedBy= $ShowPortCreationDate= $ShowPackageLink= $ShowShortDescription =1;
-$ShowPortCreationDate = 0;
-$HideCategory = 1;
-$ShowCategories		= 1;
-GLOBAL	$ShowDepends;
-$ShowDepends		= 1;
-$HideDescription = 1;
-$ShowEverything  = 1;
-$ShowShortDescription = "Y";
-$ShowMaintainedBy     = "Y";
-$GlobalHideLastChange = "Y";
-$ShowDescriptionLink  = "N";
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
 
 	$port_display = new port_display($db, $User);
@@ -194,7 +181,6 @@ $ShowDescriptionLink  = "N";
 		$port_display->port = $port;
 		$HTML .= $port_display->Display();
 
-#		$HTML .= freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 1, '', 0);
 	} // end for
 
 	echo $HTML;

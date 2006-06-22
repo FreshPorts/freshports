@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.85 2006-06-12 18:00:12 dan Exp $
+	# $Id: search.php,v 1.1.2.86 2006-06-22 15:36:32 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -770,23 +770,6 @@ if ($stype == 'committer' || $stype == 'commitmessage') {
   $HTML .= $DisplayCommit->CreateHTML();
 
 } else {
-/*
-$ShowCategories		= 1;
-GLOBAL	$ShowDepends;
-$ShowDepends		= 1;
-$DaysMarkedAsNew= $DaysMarkedAsNew= $GlobalHideLastChange= $ShowChangesLink= $ShowDescriptionLink= $ShowDownloadPortLink= $ShowHomepageLink= $ShowLastChange= $ShowMaintainedBy= $ShowPortCreationDate= $ShowPackageLink= $ShowShortDescription =1;
-$HideDescription = 1;
-$ShowEverything  = 0;
-$ShowShortDescription = "Y";
-$ShowMaintainedBy     = "Y";
-$GlobalHideLastChange = "Y";
-$ShowDescriptionLink  = "N";
-$ShowChangesLink      = "Y";
-$ShowDescriptionLink  = "Y";
-$ShowHomepageLink     = "Y";
-$ShowDownloadPortLink = "Y";
-$HideCategory         = 'N';
-*/
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
 
 	GLOBAL $User;
@@ -797,10 +780,6 @@ $HideCategory         = 'N';
 		$Port->FetchNth($i);
 		$port_display->port = $Port;
 		$HTML .= $port_display->Display();
-#		$HTML .= freshports_PortDetails($Port, $Port->dbh, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, 
-#                     $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, 
-#                     $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, 
-#                     $ShowPackageLink, $ShowShortDescription, 1, $AddRemoveExtra, 1);
    }
 
 	$HTML .= $NumPortsFound;

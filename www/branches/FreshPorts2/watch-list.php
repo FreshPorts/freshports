@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-list.php,v 1.2.2.27 2006-06-12 18:00:12 dan Exp $
+	# $Id: watch-list.php,v 1.2.2.28 2006-06-22 15:36:32 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -101,18 +101,6 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 		if ($Object == '') {
 			die('I have no idea what I\'m supposed to add or remove here...');
 		}
-		$ShowCategories			= 1;
-
-		GLOBAL $ShowDepends;
-		$ShowDepends			= 1;
-		$DaysMarkedAsNew		= $DaysMarkedAsNew = $GlobalHideLastChange = $ShowChangesLink = $ShowDescriptionLink = $ShowDownloadPortLink = $ShowHomepageLink = $ShowLastChange = $ShowMaintainedBy = $ShowPortCreationDate = $ShowPackageLink = $ShowShortDescription = 1;
-		$HideDescription		= 1;
-		$ShowEverything			= 1;
-		$ShowShortDescription	= "Y";
-		$ShowMaintainedBy		= "Y";
-		$GlobalHideLastChange	= "Y";
-		$ShowDescriptionLink	= "N";
-
 		$port = new Port($db);
 		$port->FetchByElementID($Object, $User->id);
 
@@ -125,8 +113,6 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 		$HTML = $port_display->Display();
 
 		echo $HTML;
-
-#		echo freshports_PortDetails($port, $db, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 1, '', 1, "N", 0);
 ?>
 Please select the watch lists which should contain this port:
 <blockquote>

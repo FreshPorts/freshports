@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.63 2006-06-22 15:13:22 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.64 2006-06-22 15:36:32 dan Exp $
 	#
 	# Copyright (c) 2001-2003 DVL Software Limited
 	#
@@ -79,24 +79,6 @@ function freshports_PortDisplay($db, $port) {
 <tr><td valign="top" width="100%">
 
 <?
-/*
-	GLOBAL $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription;
-
-
-$ShowCategories			= 1;
-GLOBAL	$ShowDepends;
-$ShowDepends				= 1;
-$DaysMarkedAsNew= $DaysMarkedAsNew= $GlobalHideLastChange= $ShowChangesLink= $ShowDescriptionLink= $ShowDownloadPortLink= $ShowHomepageLink= $ShowLastChange= $ShowMaintainedBy= $ShowPortCreationDate= $ShowPackageLink= $ShowShortDescription =1;
-$HideDescription			= 1;
-$ShowEverything			= 1;
-$ShowShortDescription	= "Y";
-$ShowMaintainedBy			= "Y";
-$GlobalHideLastChange	= "Y";
-$ShowDescriptionLink		= "N";
-$ShowMasterSlave		= 1;
-
-GLOBAL $ShowWatchListCount;
-*/
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
 
 	$port_display = new port_display($db, $User);
@@ -104,7 +86,6 @@ GLOBAL $ShowWatchListCount;
 
 	$port_display->port = $port;
 	$HTML = $port_display->Display();
-#	$HTML .= freshports_PortDetails($port, $port->dbh, $DaysMarkedAsNew, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, 0, '', 1, "N", 1, 1, $ShowWatchListCount, $ShowMasterSlave);
 
 	echo $HTML;
 

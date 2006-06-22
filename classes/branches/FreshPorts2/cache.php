@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: cache.php,v 1.1.2.5 2006-06-10 02:20:25 dan Exp $
+	# $Id: cache.php,v 1.1.2.6 2006-06-22 15:11:44 dan Exp $
 	#
 	# Copyright (c) 2006 DVL Software Limited
 	#
@@ -31,13 +31,13 @@ class Cache {
 			if ($CacheFileHandle) {
 				$data = fread($CacheFileHandle, filesize ($CacheFileName));
 				fclose($CacheFileHandle);
-				$this->_Log('Retrieve ' . $CacheFileName);
+				$this->_Log('Cache: Retrieve ' . $CacheFileName);
 			} else {
-				$this->_Log('FAILED Retrieve file open ' . $CacheFileName);
+				$this->_Log('Cache: FAILED Retrieve file open ' . $CacheFileName);
 				$result = -1;
 			}
 		} else {
-			$this->_Log('FAILED Retrieve NOT FOUND ' .$CacheFileName);
+			$this->_Log('Cache: FAILED Retrieve NOT FOUND ' .$CacheFileName);
 			$result = -2;
 		}
 		
@@ -66,18 +66,18 @@ class Cache {
 				// mv $SpoolFileName $CacheFileName
 				if (rename($SpoolFileName, $CacheFileName)) {
 					// success
-					$this->_Log('Add ' . $CacheFileName);
+					$this->_Log('Cache: Add ' . $CacheFileName);
 				} else {
 					// rm $SpoolFileName
 					unlink($SpoolFileName);
-					$this->_Log('FAILED Add on move" ' . $SpoolFileName . ' to ' . $CacheFileName);
+					$this->_Log('Cache: FAILED Add on move" ' . $SpoolFileName . ' to ' . $CacheFileName);
 				}
 			} else {
 				fclose($SpoolFileHandle);
-				$this->_Log('FAILED Add on write: ' . $SpoolFileName);
+				$this->_Log('Cache: FAILED Add on write: ' . $SpoolFileName);
 			}
 		} else {
-			$this->_Log('FAILED Add on opening file: ' . $SpoolFileName);
+			$this->_Log('Cache: FAILED Add on opening file: ' . $SpoolFileName);
 			$result = -1;
 		}
 
@@ -91,9 +91,9 @@ class Cache {
 		// rm $Filename
 		if (unlink($Filename)) {
 			// success
-			$this->_Log('Remove ' .$CacheFileName);
+			$this->_Log('Cache: Remove ' .$CacheFileName);
 		} else {
-			$this->_Log('FAILED Remove ' .$CacheFileName);
+			$this->_Log('Cache: FAILED Remove ' .$CacheFileName);
 			$result = -1;
 		}
 		
@@ -101,14 +101,23 @@ class Cache {
 	}
 
 	function _CleanKey($key) {
-		// not sure how to clean yet
-		return $key;
+		// convert /../ to .
+		
+		$new_key = $key;
+		$new_key = str_replace('/../', '', $new_key);
+		$new_key = str_replace('../',  '', $new_key);
+		$new_key = str_replace('/..',  '', $new_key);
+		$new_key = str_replace('..',   '', $new_key);
+
+		$new_key = str_replace('/',   '.', $new_key);
+
+		return $new_key;
 	}
 
 	function _SpoolFileName($key) {
 		$FileName = tempnam($this->SpoolDir, $this->_CleanKey($key) . '.tmp');
 
-		syslog(LOG_NOTICE, 'creating spool file ' . $FileName);
+		syslog(LOG_NOTICE, 'Cache: creating spool file ' . $FileName);
 
 		return $FileName;
 	}
@@ -124,3 +133,5 @@ class Cache {
 		syslog(LOG_NOTICE, $activity);
 	}
 }
+
+?>

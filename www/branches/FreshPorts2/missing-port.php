@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.62 2006-06-12 18:00:11 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.63 2006-06-22 15:13:22 dan Exp $
 	#
 	# Copyright (c) 2001-2003 DVL Software Limited
 	#
@@ -173,7 +173,7 @@ GLOBAL $ShowWatchListCount;
 		$HTML .= "</table>\n";
 		}
 
-#	echo 'about to call freshports_PortCommits #############################';
+#	$HTML .= 'about to call freshports_PortCommits #############################';
 
 	$HTML .= freshports_PortCommits($port);
 	

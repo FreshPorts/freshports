@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: port-display.php,v 1.1.2.5 2006-06-22 15:33:10 dan Exp $
+	# $Id: port-display.php,v 1.1.2.6 2006-06-23 12:26:29 dan Exp $
 	#
-	# Copyright (c) 2005 DVL Software Limited
+	# Copyright (c) 2005-2006 DVL Software Limited
 	#
 	
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/master_slave.php');

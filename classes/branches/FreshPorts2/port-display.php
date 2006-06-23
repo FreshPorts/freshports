@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-display.php,v 1.1.2.6 2006-06-23 12:26:29 dan Exp $
+	# $Id: port-display.php,v 1.1.2.7 2006-06-23 14:38:20 dan Exp $
 	#
 	# Copyright (c) 2005-2006 DVL Software Limited
 	#
@@ -8,7 +8,10 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/master_slave.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/include/htmlify.php');
 
+define('port_display_WATCH_LIST_ADD_REMOVE', '%%%$$$WATCHLIST$$$%%%');
+
 class port_display {
+
 	var $db;
 
 	var $port;
@@ -164,13 +167,8 @@ class port_display {
 			$HTML .= ' / <A HREF="/' . $port->category . '/" TITLE="The category for this port">' . $port->category . '</A>';
 		}
 
-		if ($this->User && $this->User->id && ($this->ShowEverything || $this->ShowWatchListStatus)) {
-			if ($port->{'onwatchlist'}) {
-				$HTML .= ' '. freshports_Watch_Link_Remove($this->User->watch_list_add_remove, $port->onwatchlist, $port->{'element_id'});
-			} else {
-				$HTML .= ' '. freshports_Watch_Link_Add   ($this->User->watch_list_add_remove, $port->onwatchlist, $port->{'element_id'});
-			}
-		}
+		$HTML .= port_display_WATCH_LIST_ADD_REMOVE;
+
 
 		// indicate if this port has been removed from cvs
 		if ($port->{'status'} == "D") {
@@ -493,6 +491,22 @@ class port_display {
 	function LinkToPort() {
 		$HTML = '<a href="/' . $this->port->category . '/' . $this->port->port . 
 			            '/">' . $this->port->port . '</a>';
+
+		return $HTML;
+	}
+	
+	function ReplaceWatchListToken($OnWatchList, $HTML, $ElementID) {
+		$Watch_HTML = '';
+		
+		if ($this->User && $this->User->id && ($this->ShowEverything || $this->ShowWatchListStatus)) {
+			if ($OnWatchList) {
+				$Watch_HTML .= ' '. freshports_Watch_Link_Remove($this->User->watch_list_add_remove, $OnWatchList, $ElementID);
+			} else {
+				$Watch_HTML .= ' '. freshports_Watch_Link_Add   ($this->User->watch_list_add_remove, $OnWatchList, $ElementID);
+			}
+		}
+		
+		$HTML = str_replace(port_display_WATCH_LIST_ADD_REMOVE, $Watch_HTML, $HTML);
 
 		return $HTML;
 	}

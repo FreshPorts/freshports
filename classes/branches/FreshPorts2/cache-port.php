@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: cache-port.php,v 1.1.2.3 2006-06-22 15:09:46 dan Exp $
+	# $Id: cache-port.php,v 1.1.2.4 2006-06-23 14:37:32 dan Exp $
 	#
 	# Copyright (c) 2006 DVL Software Limited
 	#
@@ -8,25 +8,29 @@
 // base class for caching
 // Supplies methods for adding, removing, and retrieving.
 //
+
+define('CACHE_PORT_COMMITS', 'Commits');
+define('CACHE_PORT_DETAIL',  'Detail');
+
 class CachePort extends Cache {
 
 	function CachePort() {
 		return Parent::Cache();
 	}
 	
-	function Retrieve($Category, $Port, &$data) {
+	function Retrieve($Category, $Port, &$data, $CacheType = CACHE_PORT_COMMITS) {
 		$this->_Log("CachePort: Retrieving for $Category/$Port");
-		$Key = $this->_PortKey($Category, $Port);
+		$Key = $this->_PortKey($Category, $Port, $CacheType);
 		$result = Parent::Retrieve($Key, $data);
 
 		return $result;
 	}
 
-	function Add($Category, $Port, $data) {
+	function Add($Category, $Port, $data, $CacheType = CACHE_PORT_COMMITS) {
 		$this->_Log("CachePort: Adding for $Category/$Port");
 
 		$CategoryCacheDir = $this->CacheDir . '/ports/' . $Category;
-		$Key = $this->_PortKey($Category, $Port);
+		$Key = $this->_PortKey($Category, $Port, $CacheType);
 		 
 		if (!file_exists($CategoryCacheDir)) {
 			$this->_Log("CachePort: creating directory $CategoryCacheDir");
@@ -40,15 +44,19 @@ class CachePort extends Cache {
 
 	function Remove($Category, $Port) {
 		$this->_Log("CachePort: Removing for $Category/$Port");
-		$Key = $this->_PortKey($Category, $Port);
+
+		#
+		# the wild card allows us to remove all cache entries for this port
+		#
+		$Key = $this->_PortKey($Category, $Port, '*');
 		$result = Parent::Remove($Key, $data);
 
 		return $result;
 	}
 	
-	function _PortKey($Category, $Port) {
+	function _PortKey($Category, $Port, $CacheType) {
 		// might want some parameter checking here
-		$Key = 'ports/' . $Category . '/' . $Port . '.html';
+		$Key = "ports/$Category/$Port.$CacheType.html";
 
 		return $Key;
 	}

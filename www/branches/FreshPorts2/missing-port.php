@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.65 2006-06-23 12:26:14 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.66 2006-06-23 14:39:42 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -84,10 +84,22 @@ function freshports_PortDisplay($db, $port) {
 	$port_display = new port_display($db, $User);
 	$port_display->SetDetailsFull();
 
-	$port_display->port = $port;
-	$HTML = $port_display->Display();
+	$Cache = new CachePort();
+	$result = $Cache->Retrieve($port->category, $port->port, $HTML, CACHE_PORT_DETAIL);
+	if (!$result) {
+		# do nothing
+	} else {
+		$port_display->port = $port;
+		$HTML = $port_display->Display();
+		
+		$Cache->Add($port->category, $port->port, $HTML, CACHE_PORT_DETAIL);
+	}
+	
+	# At this point, we can cache the port detail HTML
+	
+	$Watch_HTML = $port_display->ReplaceWatchListToken($port->{'onwatchlist'}, $HTML, $port->{'element_id'});
 
-	echo $HTML;
+	echo $Watch_HTML;
 
 	GLOBAL $ShowAds;
 
@@ -103,8 +115,7 @@ function freshports_PortDisplay($db, $port) {
 	// start of caching
 	$HTML = '';
 	
-	$Cache = new CachePort();
-	$result = $Cache->Retrieve($port->category, $port->port, $data);
+	$result = $Cache->Retrieve($port->category, $port->port, $data, CACHE_PORT_COMMITS);
 	if (!$result) {
 		echo $data;
 	} else {

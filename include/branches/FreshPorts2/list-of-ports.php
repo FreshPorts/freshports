@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: list-of-ports.php,v 1.1.2.11 2006-06-22 15:36:32 dan Exp $
+	# $Id: list-of-ports.php,v 1.1.2.12 2006-06-26 22:11:21 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -50,7 +50,10 @@ function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeade
 			}
 		}
 		$port_display->port = $port;
-		$HTML .= $port_display->Display();
+
+		$Port_HTML .= $port_display->Display();
+		
+		$HTML .= $port_display->ReplaceWatchListToken($port->{'onwatchlist'}, $Port_HTML, $port->{'element_id'});
 
 		$HTML .= '<BR>';
 	}

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-list.php,v 1.2.2.28 2006-06-22 15:36:32 dan Exp $
+	# $Id: watch-list.php,v 1.2.2.29 2006-06-26 22:11:21 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -110,7 +110,10 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 		$port_display->SetDetailsReports();
 
 		$port_display->port = $port;
-		$HTML = $port_display->Display();
+
+		$Port_HTML .= $port_display->Display();
+		
+		$HTML .= $port_display->ReplaceWatchListToken($port->{'onwatchlist'}, $Port_HTML, $port->{'element_id'});
 
 		echo $HTML;
 ?>

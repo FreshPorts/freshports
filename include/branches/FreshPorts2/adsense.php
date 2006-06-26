@@ -1,12 +1,11 @@
 <?php
 	#
-	# $Id: adsense.php,v 1.1.2.1 2006-04-26 21:32:57 dan Exp $
+	# $Id: adsense.php,v 1.1.2.2 2006-06-26 12:13:45 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/constants.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/burstmedia.php');
 
 
 function AdSense728x90() {

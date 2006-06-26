@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: burstmedia.php,v 1.1.2.15 2006-06-26 12:17:24 dan Exp $
+	# $Id: burstmedia.php,v 1.1.2.16 2006-06-26 13:02:08 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -104,14 +104,6 @@ document.write(\'<scr\'+\'ipt src="http://www.burstnet.com/cgi-bin/ads/ad4556a.c
 ';
 
 	}
-}
-
-function Burst_300x250_table() {
-
-	return '<table border="0" cellpadding="8" cellspacing="0" align="right"><tr><td>' . "\n" . 
-	        Burst_300x250() .
-	        '</td></tr></table>' ."\n";
-
 }
 
 ?>

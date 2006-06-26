@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: cache.php,v 1.1.2.7 2006-06-26 12:04:27 dan Exp $
+	# $Id: cache.php,v 1.1.2.8 2006-06-26 12:13:07 dan Exp $
 	#
 	# Copyright (c) 2006 DVL Software Limited
 	#
@@ -117,7 +117,7 @@ class Cache {
 	function _SpoolFileName($key) {
 		$FileName = tempnam($this->SpoolDir, $this->_CleanKey($key) . '.tmp');
 
-		this->_Log('Cache: creating spool file ' . $FileName);
+		$this->_Log('Cache: creating spool file ' . $FileName);
 
 		return $FileName;
 	}

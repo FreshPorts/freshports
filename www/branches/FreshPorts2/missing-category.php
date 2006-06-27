@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-category.php,v 1.1.2.38 2006-06-26 22:11:21 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.39 2006-06-27 01:27:29 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -180,7 +180,7 @@ echo '</div>';
 
 		$port_display->port = $port;
 
-		$Port_HTML .= $port_display->Display();
+		$Port_HTML = $port_display->Display();
 		
 		$HTML .= $port_display->ReplaceWatchListToken($port->{'onwatchlist'}, $Port_HTML, $port->{'element_id'});
 

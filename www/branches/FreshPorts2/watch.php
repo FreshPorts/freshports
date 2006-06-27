@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch.php,v 1.1.2.63 2006-06-26 22:11:21 dan Exp $
+	# $Id: watch.php,v 1.1.2.64 2006-06-27 01:23:12 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -365,9 +365,9 @@ if ($wlid != '') {
 
 		$port_display->port = $port;
 
-		$Port_HTML .= $port_display->Display();
+		$Port_HTML = $port_display->Display();
 		
-		$HTML .= $port_display->ReplaceWatchListToken($port->{'onwatchlist'}, $Port_HTML, $port->{'element_id'});
+		$HTML = $port_display->ReplaceWatchListToken($port->{'onwatchlist'}, $Port_HTML, $port->{'element_id'});
 
 		echo $HTML;
 

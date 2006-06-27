@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.87 2006-06-26 22:11:21 dan Exp $
+	# $Id: search.php,v 1.1.2.88 2006-06-27 01:24:52 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -779,8 +779,8 @@ if ($stype == 'committer' || $stype == 'commitmessage') {
 	for ($i = 0; $i < $NumFetches; $i++) {
 		$Port->FetchNth($i);
 		$port_display->port = $Port;
-		$Port_HTML .= $port_display->Display();
-		
+		$Port_HTML = $port_display->Display();
+
 		$HTML .= $port_display->ReplaceWatchListToken($Port->{'onwatchlist'}, $Port_HTML, $Port->{'element_id'});
     }
 

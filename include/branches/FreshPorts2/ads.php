@@ -1,19 +1,27 @@
 <?php
 	#
-	# $Id: ads.php,v 1.1.2.1 2006-07-01 17:41:16 dan Exp $
+	# $Id: ads.php,v 1.1.2.2 2006-07-01 17:42:28 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/constants.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/adsense.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/burstmedia.php');
+	
+	#
+	# Google Ads need Javascript
+	# Burst does not.
+	#
 
 
 function Ad_468x60() {
 
-return '
-
-<a href="http://ads.unixathome.org/phpPgAds/adclick.php?n=a525ecb3" target="_blank"><img src="http://ads.unixathome.org/phpPgAds/adview.php?what=zone:17&amp;n=a525ecb3" border="0" alt=""></a>
-
+return AdSense468x60() . "\n" . 
+'
+<noscript><a href="http://www.burstnet.com/ads/ad4556a-map.cgi/ns/v=2.0S/sz=468x60A|728x90A/" target="_top">
+<img src="http://www.burstnet.com/cgi-bin/ads/ad4556a.cgi/ns/v=2.0S/sz=468x60A|728x90A/" border="0" alt="Click Here"></a>
+</noscript>
 ';
 
 }

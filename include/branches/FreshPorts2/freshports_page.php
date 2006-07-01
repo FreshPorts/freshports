@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports_page.php,v 1.1.2.5 2005-07-15 03:08:34 dan Exp $
+	# $Id: freshports_page.php,v 1.1.2.6 2006-07-01 17:41:17 dan Exp $
 	#
 	# Copyright (c) 2005 DVL Software Limited
 	#
@@ -55,9 +55,13 @@ class freshports_page extends HTML_Page2 {
 		$HTML = '';
 
 		if ($this->_ShowAds && $this->_BannerAd) {
-			$HTML .= "\n<CENTER>\n" .
-			         BurstMediaAd() .
-			         "</CENTER>\n\n";
+			$HTML .= "\n<CENTER>\n";
+			if (rand(0, 1)) {
+				$HTML.= Ad_468x60();
+			} else {
+				$HTML .= Ad_728x90();
+			}
+			$HTML .= "</CENTER>\n\n";
 		}
 
 		if ($this->_ShowLogo) {

@@ -1,12 +1,12 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.255 2006-06-22 15:36:32 dan Exp $
+	# $Id: freshports.php,v 1.4.2.256 2006-07-01 17:41:17 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/constants.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/burstmedia.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/ads.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../configuration/freshports.conf.php');
 
 	if (IsSet($ShowAnnouncements)) {
@@ -530,18 +530,20 @@ GLOBAL $ShowAds;
 GLOBAL $BannerAd;
 GLOBAL $ShowAnnouncements;
 
-   freshports_HTML_Start();
-   freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum);
+	freshports_HTML_Start();
+	freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum);
 
-   freshports_body();
+	freshports_body();
 
-   if ($ShowAds) {
-      if ($BannerAd) {
+	if ($BannerAd) {
 		echo "\n<CENTER>\n";
-		echo BurstMediaAd();
+		if (rand(0, 1)) {
+			echo Ad_468x60();
+		} else {
+			echo Ad_728x90();
+		}
 		echo "</CENTER>\n\n";
-      }
-   }
+	}
 
    echo freshports_Logo();
    freshports_navigation_bar_top();
@@ -1503,7 +1505,7 @@ Valid
 	if ($ShowAds) {
 		$HTML .= "<div align=\"center\">\n";
 		$HTML .= '<br>';
-		$HTML .= Burst_468x60_Below();
+		$HTML .= Ad_468x60_Below();
 		$HTML .= "</div>\n";
 	}
 
@@ -1632,9 +1634,12 @@ function freshports_SideBar() {
 	if ($ShowAds) {
 		$HTML .= '<TABLE BORDER="0" CELLPADDING="5">
 		  <TR><TD ALIGN="center">
-		 ';
-
-		$HTML .= BurstSkyscraperAd();
+		';
+		if (rand(0,1)) {
+			$HTML .= Ad_120x160();
+		} else {
+			$HTML .= Ad_160x160();
+		}
 		$HTML .= '</TD></TR>
 		  </TABLE>
 		 ';

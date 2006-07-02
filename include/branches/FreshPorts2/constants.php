@@ -1,9 +1,11 @@
 <?php
 	#
-	# $Id: constants.php,v 1.1.2.14 2005-12-08 05:00:56 dan Exp $
+	# $Id: constants.php,v 1.1.2.15 2006-07-02 19:26:24 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2006 DVL Software Limited
 	#
+
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
 
 #
 # colours for the banners (not really banners, but headings)

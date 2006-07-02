@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.256 2006-07-01 17:41:17 dan Exp $
+	# $Id: freshports.php,v 1.4.2.257 2006-07-02 19:26:24 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -535,6 +535,7 @@ GLOBAL $ShowAnnouncements;
 
 	freshports_body();
 
+/*
 	if ($BannerAd) {
 		echo "\n<CENTER>\n";
 		if (rand(0, 1)) {
@@ -544,6 +545,7 @@ GLOBAL $ShowAnnouncements;
 		}
 		echo "</CENTER>\n\n";
 	}
+*/
 
    echo freshports_Logo();
    freshports_navigation_bar_top();
@@ -1436,8 +1438,16 @@ function freshports_ShowFooter() {
 	GLOBAL $ShowAds;
 
 	$HTML = '<TABLE WIDTH="' . $TableWidth . '" BORDER="0" ALIGN="center">
-<TR><TD>
+<TR><TD>';
 
+
+	if ($ShowAds) {
+		$HTML .= "<div align=\"center\">\n";
+		$HTML .= Ad_468x60_Below();
+		$HTML .= "</div>\n";
+	}
+
+	$HTML .= '
 <HR>
 <TABLE WIDTH="98%" BORDER="0">
 ';
@@ -1501,13 +1511,6 @@ Valid
 </table>
 </TD></TR>
 </TABLE>';
-
-	if ($ShowAds) {
-		$HTML .= "<div align=\"center\">\n";
-		$HTML .= '<br>';
-		$HTML .= Ad_468x60_Below();
-		$HTML .= "</div>\n";
-	}
 
 	$HTML .= '
 </TD></TR>
@@ -1636,9 +1639,9 @@ function freshports_SideBar() {
 		  <TR><TD ALIGN="center">
 		';
 		if (rand(0,1)) {
-			$HTML .= Ad_120x160();
+			$HTML .= Ad_120x600();
 		} else {
-			$HTML .= Ad_160x160();
+			$HTML .= Ad_160x600();
 		}
 		$HTML .= '</TD></TR>
 		  </TABLE>

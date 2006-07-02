@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ads.php,v 1.1.2.2 2006-07-01 17:42:28 dan Exp $
+	# $Id: ads.php,v 1.1.2.3 2006-07-02 19:26:24 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -15,78 +15,55 @@
 	#
 
 
-function Ad_468x60() {
 
-return AdSense468x60() . "\n" . 
+function Ad_PhpPgAdsBase($Zone, $N) {
+
+  return 
 '
-<noscript><a href="http://www.burstnet.com/ads/ad4556a-map.cgi/ns/v=2.0S/sz=468x60A|728x90A/" target="_top">
-<img src="http://www.burstnet.com/cgi-bin/ads/ad4556a.cgi/ns/v=2.0S/sz=468x60A|728x90A/" border="0" alt="Click Here"></a>
-</noscript>
-';
-
-}
-
-
-function Ad_728x90() {
-
-return '
-
-<a href="http://ads.unixathome.org/phpPgAds/adclick.php?n=a14b3a43" target="_blank"><img src="http://ads.unixathome.org/phpPgAds/adview.php?what=zone:23&amp;n=a14b3a43" border="0" alt=""></a>
-
-';
-
-}
-
-
-function Ad_120x160() {
-
-return '
-
-<a href="http://ads.unixathome.org/phpPgAds/adclick.php?n=ad672337" target="_blank"><img src="http://ads.unixathome.org/phpPgAds/adview.php?what=zone:11&amp;n=ad672337" border="0" alt=""></a>
-
+<script language=\'JavaScript\' type=\'text/javascript\' src=\'http://ads.unixathome.org/phpPgAds/adx.js\'></script>
+<script language=\'JavaScript\' type=\'text/javascript\'>
+<!--
+   if (!document.phpAds_used) document.phpAds_used = \',\';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+   
+   document.write ("<" + "script language=\'JavaScript\' type=\'text/javascript\' src=\'");
+   document.write ("http://ads.unixathome.org/phpPgAds/adjs.php?n=" + phpAds_random);
+   document.write ("&amp;what=zone:' . $Zone . '");
+   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape(document.referrer));
+   document.write ("\'><" + "/script>");
+//-->
+</script><noscript><a href=\'http://ads.unixathome.org/phpPgAds/adclick.php?n=' . $N . '\' target=\'_top\'><img src=\'http://ads.unixathome.org/phpPgAds/adview.php?what=zone:' . $Zone . '&amp;n=' . $N . '\' border=\'0\' alt=\'\'></a></noscript>
 ';
 }
-
-
-function Ad_160x160() {
-
-return '
-
-<a href="http://ads.unixathome.org/phpPgAds/adclick.php?n=ac3ee8c9" target="_blank"><img src="http://ads.unixathome.org/phpPgAds/adview.php?what=zone:22&amp;n=ac3ee8c9" border="0" alt=""></a>
-
-';
-}
-
-
-
-
 
 function Ad_125x125() {
+  return Ad_PhpPgAdsBase(43, 'ab4a7d2c');
+}
 
-return '
+function Ad_468x60() {
+  return Ad_PhpPgAdsBase(44, 'addffeb2');
+}
 
-<a href="http://ads.unixathome.org/phpPgAds/adclick.php?n=aca219aa" target="_blank"><img src="http://ads.unixathome.org/phpPgAds/adview.php?what=zone:26&amp;n=aca219aa" border="0" alt=""></a>
+function Ad_728x90() {
+  return Ad_PhpPgAdsBase(42, 'a6a018dd');
+}
 
-';
+function Ad_120x600() {
+  return Ad_PhpPgAdsbase(11, 'af3231e2');
+}
 
+function Ad_160x600() {
+  return Ad_PhpPgAdsBase(40, 'a6cfe162');
 }
 
 function Ad_468x60_Below() {
-return '
-
-<a href="http://ads.unixathome.org/phpPgAds/adclick.php?n=ad3e7d4a" target="_blank"><img src="http://ads.unixathome.org/phpPgAds/adview.php?what=zone:4&amp;n=ad3e7d4a" border="0" alt=""></a>
-
-';
+  return Ad_PhpPgAdsBase(45, 'a4123951');
 }
 
 function Ad_300x250() {
-
-return '
-
-<a href="http://ads.unixathome.org/phpPgAds/adclick.php?n=a831bb78" target="_blank"><img src="http://ads.unixathome.org/phpPgAds/adview.php?what=zone:25&amp;n=a831bb78" border="0" alt=""></a>
-
-';
-
+  return Ad_PhpPgAdsBase(41, 'a98095ab');
 }
 
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.68 2006-07-02 20:37:59 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.69 2006-07-02 21:26:04 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -99,7 +99,7 @@ function freshports_PortDisplay($db, $port) {
 	
 	$HTML = $port_display->ReplaceWatchListToken($port->{'onwatchlist'}, $HTML, $port->{'element_id'});
 
-	$HTML = $port_display->ReplaceAdvertismentToken($HTML, "<hr><center>\n" . Ad_728x90() . "\n</center>\n<hr>\n");
+	$HTML = $port_display->ReplaceAdvertismentToken($HTML, "<hr><center>\n" . Ad_728x90PortDescription() . "\n</center>\n<hr>\n");
 	
 	echo $HTML;
 

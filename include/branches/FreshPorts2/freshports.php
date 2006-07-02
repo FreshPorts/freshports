@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.259 2006-07-02 20:56:20 dan Exp $
+	# $Id: freshports.php,v 1.4.2.260 2006-07-02 21:15:24 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -1419,7 +1419,7 @@ function freshports_UserSendToken($UserID, $dbh) {
 	return $result;
 }
 
-function freshports_ShowFooter() {
+function freshports_ShowFooter($PhorumBottom = 0) {
 	GLOBAL $TableWidth;
 	GLOBAL $Statistics;
 	GLOBAL $ShowPoweredBy;
@@ -1431,7 +1431,11 @@ function freshports_ShowFooter() {
 
 	if ($ShowAds) {
 		$HTML .= "<div align=\"center\">\n";
-		$HTML .= Ad_728x90();
+		if ($PhorumBottom) {
+			$HTML .= Ad_728x90PhorumBottom();
+		} else {
+			$HTML .= Ad_728x90();
+		}
 		$HTML .= "</div>\n";
 	}
 

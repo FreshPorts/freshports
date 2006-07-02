@@ -1,7 +1,7 @@
 <?php if ( !defined( "_COMMON_PHP" ) ) return; ?>
 <?php
 	#
-	# $Id: header.php,v 1.1.2.5 2006-07-02 20:53:36 dan Exp $
+	# $Id: header.php,v 1.1.2.6 2006-07-02 21:15:51 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -30,7 +30,7 @@ echo "
 
   if ($BannerAd) {
     echo "</td></tr>\n<tr><td>\n<CENTER>\n";
-    echo Ad_728x90();
+    echo Ad_728x90PhorumTop();
     echo "</CENTER>\n\n";
     }
 

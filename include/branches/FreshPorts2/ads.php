@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ads.php,v 1.1.2.3 2006-07-02 19:26:24 dan Exp $
+	# $Id: ads.php,v 1.1.2.4 2006-07-02 21:15:24 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -48,6 +48,14 @@ function Ad_468x60() {
 
 function Ad_728x90() {
   return Ad_PhpPgAdsBase(42, 'a6a018dd');
+}
+
+function Ad_728x90PhorumBottom() {
+  return Ad_PhpPgAdsBase(48, 'a3752dcd');
+}
+
+function Ad_728x90PhorumTop() {
+  return Ad_PhpPgAdsBase(47, 'a67dfc4c');
 }
 
 function Ad_120x600() {

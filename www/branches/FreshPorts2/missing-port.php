@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.67 2006-07-02 19:26:57 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.68 2006-07-02 20:37:59 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -97,18 +97,13 @@ function freshports_PortDisplay($db, $port) {
 	
 	# At this point, we can cache the port detail HTML
 	
-	$Watch_HTML = $port_display->ReplaceWatchListToken($port->{'onwatchlist'}, $HTML, $port->{'element_id'});
+	$HTML = $port_display->ReplaceWatchListToken($port->{'onwatchlist'}, $HTML, $port->{'element_id'});
 
-	echo $Watch_HTML;
+	$HTML = $port_display->ReplaceAdvertismentToken($HTML, "<hr><center>\n" . Ad_728x90() . "\n</center>\n<hr>\n");
+	
+	echo $HTML;
 
 	GLOBAL $ShowAds;
-
-	if ($ShowAds) {
-		require_once($_SERVER['DOCUMENT_ROOT'] . '/include/adsense.php');
-		echo '<div align="center">';
-		echo Ad_728x90();
-		echo '</div>';
-	}
 
 	echo "</TD></TR>\n</TABLE>\n\n";
 
@@ -164,8 +159,6 @@ function freshports_PortDisplay($db, $port) {
 		$HTML .= "</td></tr>\n";
 		$HTML .= "</table>\n";
 		}
-
-#	$HTML .= 'about to call freshports_PortCommits #############################';
 
 	$HTML .= freshports_PortCommits($port);
 	

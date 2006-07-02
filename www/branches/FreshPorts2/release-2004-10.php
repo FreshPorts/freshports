@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: release-2004-10.php,v 1.1.2.5 2005-07-15 03:08:34 dan Exp $
+	# $Id: release-2004-10.php,v 1.1.2.6 2006-07-02 20:42:16 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
@@ -30,7 +30,25 @@
 </TR>
 
 <TR><TD>
-<P>
+
+<CENTER>
+<?php
+	echo Ad_728x90();
+?>
+</CENTER>
+
+<CENTER>
+<?php
+	echo Ad_728x90();
+?>
+</CENTER>
+
+
+<p>
+This page is rather dated.  Most news is now published on the
+<a href="http://news.freshports.org/">FreshPorts Blog</a>.
+
+<p>
 This is the biggest release of FreshPorts since 
 <a href="/release-2003-04-29.php">April 2003</a> (nearly 18 months ago).
 Some of the changes are big. Some are little.  Those that appear below
@@ -178,7 +196,6 @@ the following fields.
 </table>
 </blockquote>
 
-</P>
 </TD></TR>
 
 </TABLE>

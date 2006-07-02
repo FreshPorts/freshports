@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits.php,v 1.1.2.10 2006-07-02 19:26:56 dan Exp $
+	# $Id: commits.php,v 1.1.2.11 2006-07-02 20:42:15 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -123,11 +123,7 @@ A port is marked as new for 10 days.
 <?php
 	if ($BannerAd) {
 		echo "</td></tr>\n<tr><td>\n<CENTER>\n";
-		if (rand(0, 1)) {
-			echo Ad_468x60();
-		} else {
-			echo Ad_728x90();
-		}
+		echo Ad_728x90();
 		echo "</CENTER>\n\n";
 	}
 ?>

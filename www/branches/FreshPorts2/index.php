@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.104 2006-07-02 19:26:56 dan Exp $
+	# $Id: index.php,v 1.1.2.105 2006-07-02 20:42:16 dan Exp $
 	#
-	# Copyright (c) 1998-2004 DVL Software Limited
+	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
@@ -129,11 +129,7 @@ If you want to see more try <a href="/commits.php">here</a>.
 <?php
 	if ($BannerAd) {
 		echo "</td></tr>\n<tr><td>\n<CENTER>\n";
-		if (rand(0, 1)) {
-			echo Ad_468x60();
-		} else {
-			echo Ad_728x90();
-		}
+		echo Ad_728x90();
 		echo "</CENTER>\n\n";
 	}
 ?>

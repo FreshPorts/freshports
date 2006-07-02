@@ -1,7 +1,9 @@
-<?
-	# $Id: privacy.php,v 1.1.2.16 2005-07-15 03:08:33 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# $Id: privacy.php,v 1.1.2.17 2006-07-02 20:42:16 dan Exp $
+	#
+	# Copyright (c) 1998-2006 DVL Software Limited
+	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
@@ -26,6 +28,7 @@
 	<? echo freshports_PageBannerText('Privacy statement'); ?>
 </TR>
 <TR><TD>
+
 <P>All the information we
     gather is for our own use.  We do not release it to anyone else.</P>
     <P>For example, when you subscribe to our mailing list, we

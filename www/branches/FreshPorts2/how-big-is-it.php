@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: how-big-is-it.php,v 1.1.2.18 2005-07-15 03:08:33 dan Exp $
+	# $Id: how-big-is-it.php,v 1.1.2.19 2006-07-02 20:42:15 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
@@ -58,6 +58,13 @@ function StatsSQL($db, $Title, $Date) {
 </TR>
 
 <TR><TD>
+
+<CENTER>
+<?php
+	echo Ad_728x90();
+?>
+</CENTER>
+
 <P>
 It was a few days ago that I was thinking about search engines crawling through this website.
 I began to wonder just how many web pages there are here.  To calculate this total, it's not 

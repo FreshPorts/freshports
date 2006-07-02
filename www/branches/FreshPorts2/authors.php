@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: authors.php,v 1.1.2.22 2005-07-15 03:08:32 dan Exp $
+	# $Id: authors.php,v 1.1.2.23 2006-07-02 20:42:15 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
@@ -27,6 +27,12 @@
 	<? echo freshports_PageBannerText("About the authors"); ?>
   </tr>
 <TR><TD>
+<CENTER>
+<?php
+	echo Ad_728x90();
+?>
+</CENTER>
+
 <p>Dan Langille thought up the idea, found the data sources, bugged people to 
 write scripts, and did the html and database work. But he certainly didn't 
 do it alone.</p>

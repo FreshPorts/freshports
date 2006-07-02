@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.81 2006-06-09 19:23:14 dan Exp $
+	# $Id: faq.php,v 1.1.2.82 2006-07-02 20:42:15 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
@@ -33,6 +33,13 @@
 	<?php echo freshports_PageBannerText("FAQ"); ?>
 </tr>
 <TR><TD>
+
+<CENTER>
+<?php
+	echo Ad_728x90();
+?>
+</CENTER>
+
 <P>This page contains the FAQ for FreshPorts. Hopefully the questions
 are arranged from general to specific.  The more you know, the further
 down you must read to find something you didn't already know.</P>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.32 2005-12-08 05:01:17 dan Exp $
+	# $Id: categories.php,v 1.1.2.33 2006-07-02 20:42:15 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -58,6 +58,13 @@ categories are indicated by <?php echo VIRTUAL; ?>.
 <P>
 You can sort each column by clicking on the header.  e.g. click on <b>Category</b> to sort by category.
 </P>
+
+<center>
+<?php
+  echo Ad_728x90();
+?>
+</center>
+
 
 <?php
 $sort			= IsSet($_REQUEST['sort'])        ? AddSlashes($_REQUEST['sort'])        : '';

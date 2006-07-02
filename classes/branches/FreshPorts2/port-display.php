@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-display.php,v 1.1.2.7 2006-06-23 14:38:20 dan Exp $
+	# $Id: port-display.php,v 1.1.2.8 2006-07-02 20:37:07 dan Exp $
 	#
 	# Copyright (c) 2005-2006 DVL Software Limited
 	#
@@ -9,6 +9,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/master_slave.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/include/htmlify.php');
 
 define('port_display_WATCH_LIST_ADD_REMOVE', '%%%$$$WATCHLIST$$$%%%');
+define('port_display_AD',                    '%%%$$$ADGOESHERE$$$%%%');
 
 class port_display {
 
@@ -21,6 +22,7 @@ class port_display {
 	var $ShowEverything;
 
 	var $LinkToPort;
+	var $ShowAd;
 	var $ShowCategory;
 	var $ShowChangesLink;
 	var $ShowDateAdded;
@@ -52,6 +54,7 @@ class port_display {
 		$this->ShowEverything       = false;
 
  		$this->LinkToPort           = false;
+ 		$this->ShowAd               = false;
 		$this->ShowCategory         = false;
 		$this->ShowChangesLink      = false;
 		$this->ShowDateAdded        = false;
@@ -144,7 +147,7 @@ class port_display {
 
 		$HTML .= '<BIG><B>';
 
-		if ($this->ShowEverything || $this->LinkToPort) {
+		if ($this->LinkToPort) {
 			$HTML .= $this->LinkToPort();
 		} else {
 			$HTML .= $port->port;
@@ -345,7 +348,10 @@ class port_display {
 			}
 		}
 
-#	   $HTML .= "<br>\n";
+	   # The ad goes here
+	   if ($this->ShowAd || $this->ShowEverything) {
+		   $HTML .= port_display_AD;
+	   }
 
 	   if ($this->ShowDescriptionLong || $this->ShowEverything) {
 		   $HTML .= '<PRE CLASS="code">' . htmlify(htmlspecialchars($port->long_description)) . '</PRE>';
@@ -510,6 +516,13 @@ class port_display {
 
 		return $HTML;
 	}
+
+	function ReplaceAdvertismentToken($HTML, $Ad) {
+		$HTML = str_replace(port_display_AD, $Ad, $HTML);
+
+		return $HTML;
+	}
+
 }
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: report-subscriptions.php,v 1.1.2.27 2006-01-07 21:29:10 dan Exp $
+	# $Id: report-subscriptions.php,v 1.1.2.28 2006-07-02 20:11:25 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -215,17 +215,8 @@ This page allows you to select the reports you wish to receive and the frequency
 You may wish to help me test new FreshPorts features or even just get a sneak
 peek at them.  If so, I urge you to join the new Beta mailing list.  This
 will be a low volume list which broadcasts details of new features which
-you can try out before they hit the main website.  To subscribe, send
-an email to majordomo at lists.freshports.org, with this in the body of the
-message:
-
-<blockquote><pre class="code">
-subscribe beta
-</pre></blockquote>
-
-<p>
-Please remember to follow the instructions in the confirmation email which
-you will receive in reply.
+you can try out before they hit the main website.  To subscribe, follow
+the directions found on the <a href="http://lists.freshports.org/mailman/listinfo/">FreshPorts mailing list website</a>
 
 <hr>
 

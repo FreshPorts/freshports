@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.258 2006-07-02 20:40:46 dan Exp $
+	# $Id: freshports.php,v 1.4.2.259 2006-07-02 20:56:20 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -1431,7 +1431,7 @@ function freshports_ShowFooter() {
 
 	if ($ShowAds) {
 		$HTML .= "<div align=\"center\">\n";
-		$HTML .= Ad_468x60_Below();
+		$HTML .= Ad_728x90();
 		$HTML .= "</div>\n";
 	}
 

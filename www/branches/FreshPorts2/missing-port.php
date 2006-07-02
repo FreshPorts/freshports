@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.66 2006-06-23 14:39:42 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.67 2006-07-02 19:26:57 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -106,7 +106,7 @@ function freshports_PortDisplay($db, $port) {
 	if ($ShowAds) {
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/include/adsense.php');
 		echo '<div align="center">';
-		echo AdSense728x90();
+		echo Ad_728x90();
 		echo '</div>';
 	}
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.257 2006-07-02 19:26:24 dan Exp $
+	# $Id: freshports.php,v 1.4.2.258 2006-07-02 20:40:46 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -534,18 +534,6 @@ GLOBAL $ShowAnnouncements;
 	freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum);
 
 	freshports_body();
-
-/*
-	if ($BannerAd) {
-		echo "\n<CENTER>\n";
-		if (rand(0, 1)) {
-			echo Ad_468x60();
-		} else {
-			echo Ad_728x90();
-		}
-		echo "</CENTER>\n\n";
-	}
-*/
 
    echo freshports_Logo();
    freshports_navigation_bar_top();
@@ -1638,11 +1626,7 @@ function freshports_SideBar() {
 		$HTML .= '<TABLE BORDER="0" CELLPADDING="5">
 		  <TR><TD ALIGN="center">
 		';
-		if (rand(0,1)) {
-			$HTML .= Ad_120x600();
-		} else {
-			$HTML .= Ad_160x600();
-		}
+		$HTML .= Ad_160x600();
 		$HTML .= '</TD></TR>
 		  </TABLE>
 		 ';

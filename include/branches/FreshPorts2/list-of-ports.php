@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: list-of-ports.php,v 1.1.2.13 2006-06-27 01:25:40 dan Exp $
+	# $Id: list-of-ports.php,v 1.1.2.14 2006-07-02 20:40:46 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -22,6 +22,9 @@ function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeade
 	$HTML = "<TR><TD>$numrows ports found</TD></TR>\n";
 
 	$HTML .= "<TR><TD>\n";
+	
+	$HTML .= "<br><center>\n" . Ad_728x90() . "\n</center>\n";
+	
 
 	if ($numrows > 0 && $ShowCategoryHeaders) {
 		$HTML .= '<DL>';

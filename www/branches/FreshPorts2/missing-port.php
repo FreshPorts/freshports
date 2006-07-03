@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.70 2006-07-03 15:53:15 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.71 2006-07-03 21:23:33 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -141,12 +141,14 @@ function freshports_PortDisplay($db, $port) {
 
 	$Cache = new CachePort();
 	$result = $Cache->Retrieve($port->category, $port->port, $HTML, CACHE_PORT_DETAIL);
-	if (!$result) {
-		# do nothing
-	} else {
+	if ($result) {
 		$port_display->port = $port;
 		$HTML = $port_display->Display();
 		
+		$HTML .= "</TD></TR>\n</TABLE>\n\n";
+
+		$HTML .= freshports_DisplayPortCommits($port);
+
 		$Cache->Add($port->category, $port->port, $HTML, CACHE_PORT_DETAIL);
 	}
 	
@@ -157,23 +159,6 @@ function freshports_PortDisplay($db, $port) {
 	$HTML = $port_display->ReplaceAdvertismentToken($HTML, "<hr><center>\n" . Ad_728x90PortDescription() . "\n</center>\n<hr>\n");
 	
 	echo $HTML;
-
-	GLOBAL $ShowAds;
-
-	echo "</TD></TR>\n</TABLE>\n\n";
-
-	// start of caching
-	$HTML = '';
-	
-	$result = $Cache->Retrieve($port->category, $port->port, $data, CACHE_PORT_COMMITS);
-	if (!$result) {
-		echo $data;
-	} else {
-		$HTML = freshports_DisplayPortCommits($port);
-		echo $HTML;
-		$Cache->Add($port->category, $port->port, $HTML);
-	}
-
 ?>
 
 </TD>

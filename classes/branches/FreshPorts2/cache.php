@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: cache.php,v 1.1.2.8 2006-06-26 12:13:07 dan Exp $
+	# $Id: cache.php,v 1.1.2.9 2006-07-03 22:29:19 dan Exp $
 	#
 	# Copyright (c) 2006 DVL Software Limited
 	#
@@ -13,6 +13,9 @@ define('SPOOLING_LOCATION', $_SERVER['DOCUMENT_ROOT'] . '/../dynamic/caching/spo
 //
 class Cache {
 
+	var $LastModified;
+	var $CacheData;
+
 	var $CacheDir;
 	var $SpoolDir;
 
@@ -20,18 +23,28 @@ class Cache {
 		$this->CacheDir = $CacheDir;
 		$this->SpoolDir = $SpoolDir;
 	}
-	
-	function Retrieve($key, &$data) {
+
+	function CacheDataGet() {
+		return $this->CacheData;
+	}
+
+	function CacheDataSet($Data) {
+		$this->CacheData = $Data;
+	}
+
+	function Retrieve($key) {
 		$result = 0;
 
 		$CacheFileName = $this->_CacheFileName($key);
 		if (file_exists($CacheFileName) && is_readable($CacheFileName)) {
 			// open, read, and return
+			$this->LastModified = filemtime($CacheFileName);
 			$CacheFileHandle = fopen($CacheFileName, 'r');
 			if ($CacheFileHandle) {
-				$data = fread($CacheFileHandle, filesize ($CacheFileName));
+				$this->CacheData = fread($CacheFileHandle, filesize ($CacheFileName));
 				fclose($CacheFileHandle);
 				$this->_Log('Cache: Retrieve ' . $CacheFileName);
+				
 			} else {
 				$this->_Log('Cache: FAILED Retrieve file open ' . $CacheFileName);
 				$result = -1;
@@ -44,14 +57,14 @@ class Cache {
 		return $result;
 	}
 
-	function Add($key, $data) {
+	function Add($key) {
 		$result = 0;
 		// need to use key name with care.  Remove all non a-z, A-Z, and 0-9.
 		$SpoolFileName = $this->_SpoolFileName($key);
 		$SpoolFileHandle = fopen($SpoolFileName, 'w');
 		if ($SpoolFileHandle) {
 			// write $data to file
-			if (fwrite($SpoolFileHandle, $data)) {
+			if (fwrite($SpoolFileHandle, $this->CacheData)) {
 				// close $SpoolFileHandle
 				fclose($SpoolFileHandle);
 

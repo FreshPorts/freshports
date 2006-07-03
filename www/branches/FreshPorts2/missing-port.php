@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.69 2006-07-02 21:26:04 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.70 2006-07-03 15:53:15 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -44,6 +44,61 @@ function freshports_PortDescriptionByPortID($db, $port_id) {
 	$port->FetchByID($port_id, $User->id);
 
 	freshports_PortDisplay($db, $port);
+}
+
+function freshports_DisplayPortCommits($port) {
+	$HTML = '';
+	
+	$PortsUpdating   = new PortsUpdating($port->dbh);
+	$NumRowsUpdating = $PortsUpdating->FetchInitialise($port->id);
+
+	$HTML .= freshports_UpdatingOutput($NumRowsUpdating, $PortsUpdating, $port);
+
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports_moved.php');
+
+	$PortsMovedFrom = new PortsMoved($port->dbh);
+	$NumRowsFrom    = $PortsMovedFrom->FetchInitialiseFrom($port->id);
+
+	$PortsMovedTo   = new PortsMoved($port->dbh);
+	$NumRowsTo      = $PortsMovedTo->FetchInitialiseTo($port->id);
+
+	if ($NumRowsFrom + $NumRowsTo > 0) {
+		$HTML .= '<TABLE BORDER="1" width="100%" CELLSPACING="0" CELLPADDING="5">' . "\n";
+		$HTML .= "<TR>\n";
+		$HTML .= freshports_PageBannerText("Port Moves", 1);
+		$HTML .= "<tr><td>\n";
+		$HTML .= "<ul>\n";
+	}
+
+	for ($i = 0; $i < $NumRowsFrom; $i++) {
+		$PortsMovedFrom->FetchNth($i);
+		$HTML .= '<li>' . freshports_PortsMoved($port, $PortsMovedFrom);
+		if ($i + 1 != $NumRowsFrom) {
+			$HTML .= '<br>';
+		}
+		$HTML .= "</li>\n";
+	}
+
+	for ($i = 0; $i < $NumRowsTo; $i++) {
+		$PortsMovedTo->FetchNth($i);
+		$HTML .= '<li>' . freshports_PortsMoved($port, $PortsMovedTo);
+		if ($i + 1 != $NumRowsTo) {
+			$HTML .= '<br>';
+		}
+		$HTML .= "</li>\n";
+	}
+	
+	if ($NumRowsFrom + $NumRowsTo > 0) {
+		$HTML .= "</ul>\n";
+		$HTML .= "</td></tr>\n";
+		$HTML .= "</table>\n";
+	}
+
+	$HTML .= freshports_PortCommits($port);
+	
+	// end of caching
+	
+	return $HTML;
 }
 
 function freshports_PortDisplay($db, $port) {
@@ -95,7 +150,7 @@ function freshports_PortDisplay($db, $port) {
 		$Cache->Add($port->category, $port->port, $HTML, CACHE_PORT_DETAIL);
 	}
 	
-	# At this point, we can cache the port detail HTML
+	# At this point, we have the port detail HTML
 	
 	$HTML = $port_display->ReplaceWatchListToken($port->{'onwatchlist'}, $HTML, $port->{'element_id'});
 
@@ -114,58 +169,9 @@ function freshports_PortDisplay($db, $port) {
 	if (!$result) {
 		echo $data;
 	} else {
-
-	$PortsUpdating   = new PortsUpdating($port->dbh);
-	$NumRowsUpdating = $PortsUpdating->FetchInitialise($port->id);
-
-	$HTML .= freshports_UpdatingOutput($NumRowsUpdating, $PortsUpdating, $port);
-
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports_moved.php');
-
-	$PortsMovedFrom = new PortsMoved($port->dbh);
-	$NumRowsFrom    = $PortsMovedFrom->FetchInitialiseFrom($port->id);
-
-	$PortsMovedTo   = new PortsMoved($port->dbh);
-	$NumRowsTo      = $PortsMovedTo->FetchInitialiseTo($port->id);
-
-	if ($NumRowsFrom + $NumRowsTo > 0) {
-		$HTML .= '<TABLE BORDER="1" width="100%" CELLSPACING="0" CELLPADDING="5">' . "\n";
-		$HTML .= "<TR>\n";
-		$HTML .= freshports_PageBannerText("Port Moves", 1);
-		$HTML .= "<tr><td>\n";
-		$HTML .= "<ul>\n";
-	}
-
-	for ($i = 0; $i < $NumRowsFrom; $i++) {
-		$PortsMovedFrom->FetchNth($i);
-		$HTML .= '<li>' . freshports_PortsMoved($port, $PortsMovedFrom);
-		if ($i + 1 != $NumRowsFrom) {
-			$HTML .= '<br>';
-		}
-		$HTML .= "</li>\n";
-	}
-
-	for ($i = 0; $i < $NumRowsTo; $i++) {
-		$PortsMovedTo->FetchNth($i);
-		$HTML .= '<li>' . freshports_PortsMoved($port, $PortsMovedTo);
-		if ($i + 1 != $NumRowsTo) {
-			$HTML .= '<br>';
-		}
-		$HTML .= "</li>\n";
-	}
-	
-	if ($NumRowsFrom + $NumRowsTo > 0) {
-		$HTML .= "</ul>\n";
-		$HTML .= "</td></tr>\n";
-		$HTML .= "</table>\n";
-		}
-
-	$HTML .= freshports_PortCommits($port);
-	
-	// end of caching
-	
-	echo $HTML;
-	$Cache->Add($port->category, $port->port, $HTML);
+		$HTML = freshports_DisplayPortCommits($port);
+		echo $HTML;
+		$Cache->Add($port->category, $port->port, $HTML);
 	}
 
 ?>

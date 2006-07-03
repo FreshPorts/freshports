@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.71 2006-07-03 21:23:33 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.72 2006-07-03 22:30:25 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -140,8 +140,10 @@ function freshports_PortDisplay($db, $port) {
 	$port_display->SetDetailsFull();
 
 	$Cache = new CachePort();
-	$result = $Cache->Retrieve($port->category, $port->port, $HTML, CACHE_PORT_DETAIL);
-	if ($result) {
+	$result = $Cache->Retrieve($port->category, $port->port, CACHE_PORT_DETAIL);
+	if (!$result) {
+		$HTML = $Cache->CacheDataGet();
+	} else {
 		$port_display->port = $port;
 		$HTML = $port_display->Display();
 		
@@ -149,7 +151,8 @@ function freshports_PortDisplay($db, $port) {
 
 		$HTML .= freshports_DisplayPortCommits($port);
 
-		$Cache->Add($port->category, $port->port, $HTML, CACHE_PORT_DETAIL);
+		$Cache->CacheDataSet($HTML);
+		$Cache->Add($port->category, $port->port, CACHE_PORT_DETAIL);
 	}
 	
 	# At this point, we have the port detail HTML

@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: missing.php,v 1.1.2.29 2006-02-14 13:04:37 dan Exp $
+	# $Id: missing.php,v 1.1.2.30 2006-07-04 20:18:57 dan Exp $
 	#
-	# Copyright (c) 2001-2003 DVL Software Limited
+	# Copyright (c) 2001-2006 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
@@ -56,20 +56,18 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 		echo "FilesRequest='" . $FilesRequest . "'<br>";
 	}
 
-
 	if (strpos($pathname, '/') !== FALSE) {
 		GLOBAL $User;
 
 		list($category, $port, $extra) = explode('/', PATH_NAME);
 		if ($Debug) echo "extra is '" . $extra . "'<br>";
-		if ($extra == '' || $FilesRequest) {
-			if ($Debug) echo 'checking for PortID<br>';
-			$port_id = freshports_GetPortID($db, $category, $port);
-			if (IsSet($port_id)) {
-				if ($Debug) echo "$category/$port found by freshports_GetPortID<br>";
-
-				if ($FilesRequest) {
-					if ($Debug) echo 'going for files.php<br>';
+		if ($extra == '' && $port != '' || $FilesRequest) {
+			if ($FilesRequest) {
+				if ($Debug) echo 'going for files.php<br>';
+				if ($Debug) echo 'checking for PortID<br>';
+				$element_id = freshports_GetElementID($db, $category, $port);
+				if (IsSet($element_id)) {
+					if ($Debug) echo "$category/$port found by freshports_GetElementID<br>";
 					# extract the message ID from the URI
 					parse_str($_SERVER['REDIRECT_QUERY_STRING'], $query_parts);
 					$message_id = $query_parts['message_id'];
@@ -77,14 +75,14 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 					if ($Debug) echo 'we have message_id=' . $message_id . '<br>';
 					require_once($_SERVER['DOCUMENT_ROOT'] . '/include/files.php');
 					require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
-					$Port = new Port($db);
-					$Port->FetchByID($port_id);
-					freshports_Files($User, $Port->element_id, $message_id, $db);
+					freshports_Files($User, $element_id, $message_id, $db);
 					exit;
-				} else {
-					require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-port.php');
+				}
+			} else {
+				require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-port.php');
 
-					freshports_PortDescriptionByPortID($db, $port_id);
+				# if zero is returned, all is well, otherwise, we can't display that category/port.
+				if (!freshports_PortDisplay($db, $category, $port)) {
 					exit;
 				}
 			}

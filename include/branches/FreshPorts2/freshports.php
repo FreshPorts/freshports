@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.260 2006-07-02 21:15:24 dan Exp $
+	# $Id: freshports.php,v 1.4.2.261 2006-07-04 20:17:14 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -1860,12 +1860,11 @@ function freshports_LastModified_Dynamic() {
 	return $LastModified;
 }
 
-function freshports_ConditionalGet($LastModified) {
+function freshports_ConditionalGetUnix($UnixTime) {
 	// A PHP implementation of conditional get, see 
 	//   http://fishbowl.pastiche.org/archives/001132.html
 	// Based upon code from http://simon.incutio.com/archive/2003/04/23/conditionalGet
 
-	$UnixTime = strtotime($LastModified);
 	$ETag     = gmdate('Y-m-d H:i:s', $UnixTime);
 
 	// Send the headers
@@ -1902,6 +1901,15 @@ function freshports_ConditionalGet($LastModified) {
 	exit;
 }
 
+function freshports_ConditionalGet($LastModified) {
+	// A PHP implementation of conditional get, see 
+	//   http://fishbowl.pastiche.org/archives/001132.html
+	// Based upon code from http://simon.incutio.com/archive/2003/04/23/conditionalGet
+
+	$UnixTime = strtotime($LastModified);
+	freshports_ConditionalGetUnix($UnixTime);
+}
+
 #
 # obtained from http://ca3.php.net/manual/en/function.is-int.php 
 # on 2 August 2005. Posted by phpContrib (A T) esurfers d o t c o m
@@ -1923,6 +1931,34 @@ function freshports_GetPortID($db, $category, $port) {
 	$myrow = pg_fetch_array($result, 0);
 
 	return $myrow['port_id'];
+}
+
+function freshports_GetElementID($db, $category, $port) {
+	$sql = "select Element_ID('$category', '$port')";
+
+	$result = pg_exec($db, $sql);
+	if (!$result) {
+		echo "error " . pg_errormessage();
+		exit;
+	}
+
+	$myrow = pg_fetch_array($result, 0);
+
+	return $myrow['element_id'];
+}
+
+function freshports_OnWatchList($db, $UserID, $ElementID) {
+	$sql = "select OnWatchList($UserID, $ElementID)";
+
+	$result = pg_exec($db, $sql);
+	if (!$result) {
+		echo "error " . pg_errormessage();
+		exit;
+	}
+
+	$myrow = pg_fetch_array($result, 0);
+
+	return $myrow['onwatchlist'];
 }
 
 openlog('FreshPorts', LOG_PID, LOG_SYSLOG);

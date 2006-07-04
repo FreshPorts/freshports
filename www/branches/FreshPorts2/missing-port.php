@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.73 2006-07-04 20:21:21 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.74 2006-07-04 20:26:52 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -118,22 +118,22 @@ function freshports_PortDisplay($db, $category, $port) {
 
 		if ($Debug) echo "$category/$port found by freshports_GetPortID<br>";
 
-		$port = new Port($db);
-		$port->FetchByID($port_id, $User->id);
+		$MyPort = new Port($db);
+		$MyPort->FetchByID($port_id, $User->id);
 
-		$port_display->port = $port;
+		$port_display->port = $MyPort;
 	
 		$HTML .= $port_display->Display();
 		
 		$HTML .= "</TD></TR>\n</TABLE>\n\n";
 
-		$HTML .= freshports_DisplayPortCommits($port);
+		$HTML .= freshports_DisplayPortCommits($MyPort);
 
-		$Cache->CacheDataSet($port->{element_id} . "\n" . $HTML);
-		$Cache->Add($port->category, $port->port, CACHE_PORT_DETAIL);
+		$Cache->CacheDataSet($MyPort->{element_id} . "\n" . $HTML);
+		$Cache->Add($MyPort->category, $MyPort->port, CACHE_PORT_DETAIL);
 
-		$ElementID   = $port->{'element_id'};
-		$OnWatchList = $port->{'onwatchlist'};
+		$ElementID   = $MyPort->{'element_id'};
+		$OnWatchList = $MyPort->{'onwatchlist'};
 	}
 	
 	# At this point, we have the port detail HTML
@@ -146,7 +146,7 @@ function freshports_PortDisplay($db, $category, $port) {
 
 	header("HTTP/1.1 200 OK");
 
-	$Title = $port->category . "/" . $port->port;
+	$Title = $category . "/" . $port;
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 

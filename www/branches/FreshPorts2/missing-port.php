@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.72 2006-07-03 22:30:25 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.73 2006-07-04 20:21:21 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -23,28 +23,6 @@ GLOBAL $g_NOFOLLOW;
 $g_NOFOLLOW = 1;
 
 DEFINE('COMMIT_DETAILS', 'files.php');
-
-function freshports_PortDescription($db, $element_id) {
-	GLOBAL $TableWidth;
-	GLOBAL $FreshPortsTitle;
-	GLOBAL $User;
-
-	$port = new Port($db);
-	$port->FetchByElementID($element_id, $User->id);
-
-	freshports_PortDisplay($db, $port);
-}
-
-function freshports_PortDescriptionByPortID($db, $port_id) {
-	GLOBAL $TableWidth;
-	GLOBAL $FreshPortsTitle;
-	GLOBAL $User;
-
-	$port = new Port($db);
-	$port->FetchByID($port_id, $User->id);
-
-	freshports_PortDisplay($db, $port);
-}
 
 function freshports_DisplayPortCommits($port) {
 	$HTML = '';
@@ -101,12 +79,70 @@ function freshports_DisplayPortCommits($port) {
 	return $HTML;
 }
 
-function freshports_PortDisplay($db, $port) {
+function freshports_PortDisplay($db, $category, $port) {
 	GLOBAL $TableWidth;
 	GLOBAL $FreshPortsTitle;
 	GLOBAL $User;
 
-	freshports_ConditionalGet($port->last_modified);
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
+
+	$port_display = new port_display($db, $User);
+	$port_display->SetDetailsFull();
+
+	$Cache = new CachePort();
+	$result = $Cache->Retrieve($category, $port, CACHE_PORT_DETAIL);
+	if (!$result) {
+		$HTML = $Cache->CacheDataGet();
+		#
+		# we need to know the element_id of this port
+		# and the whether or not it is on the person's watch list
+		# let's create a special function for that!
+		#
+		if ($User->id) {
+			$EndOfFirstLine = strpos($HTML, "\n");
+			if ($EndOfFirstLine == false) {
+				die('Internal error: I was expecting an ElementID and found nothing');
+			}
+			# extract the ElementID from the cache
+			$ElementID   = substr($HTML, 0, $EndOfFirstLine - 1);
+			$OnWatchList = freshports_OnWatchList($db, $User->id, $ElementID);
+
+			$HTML        = substr($HTML, $EndOfFirstLine + 1);
+		}
+	} else {
+		$HTML = '';
+		$port_id = freshports_GetPortID($db, $category, $port);
+		if (!IsSet($port_id)) {
+			return -1;
+		}
+
+		if ($Debug) echo "$category/$port found by freshports_GetPortID<br>";
+
+		$port = new Port($db);
+		$port->FetchByID($port_id, $User->id);
+
+		$port_display->port = $port;
+	
+		$HTML .= $port_display->Display();
+		
+		$HTML .= "</TD></TR>\n</TABLE>\n\n";
+
+		$HTML .= freshports_DisplayPortCommits($port);
+
+		$Cache->CacheDataSet($port->{element_id} . "\n" . $HTML);
+		$Cache->Add($port->category, $port->port, CACHE_PORT_DETAIL);
+
+		$ElementID   = $port->{'element_id'};
+		$OnWatchList = $port->{'onwatchlist'};
+	}
+	
+	# At this point, we have the port detail HTML
+
+	$HTML = $port_display->ReplaceWatchListToken($OnWatchList, $HTML, $ElementID);
+
+	$HTML = $port_display->ReplaceAdvertismentToken($HTML, "<hr><center>\n" . Ad_728x90PortDescription() . "\n</center>\n<hr>\n");
+
+	freshports_ConditionalGetUnix($Cache->LastModifiedGet());
 
 	header("HTTP/1.1 200 OK");
 
@@ -134,33 +170,6 @@ function freshports_PortDisplay($db, $port) {
 <tr><td valign="top" width="100%">
 
 <?
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
-
-	$port_display = new port_display($db, $User);
-	$port_display->SetDetailsFull();
-
-	$Cache = new CachePort();
-	$result = $Cache->Retrieve($port->category, $port->port, CACHE_PORT_DETAIL);
-	if (!$result) {
-		$HTML = $Cache->CacheDataGet();
-	} else {
-		$port_display->port = $port;
-		$HTML = $port_display->Display();
-		
-		$HTML .= "</TD></TR>\n</TABLE>\n\n";
-
-		$HTML .= freshports_DisplayPortCommits($port);
-
-		$Cache->CacheDataSet($HTML);
-		$Cache->Add($port->category, $port->port, CACHE_PORT_DETAIL);
-	}
-	
-	# At this point, we have the port detail HTML
-	
-	$HTML = $port_display->ReplaceWatchListToken($port->{'onwatchlist'}, $HTML, $port->{'element_id'});
-
-	$HTML = $port_display->ReplaceAdvertismentToken($HTML, "<hr><center>\n" . Ad_728x90PortDescription() . "\n</center>\n<hr>\n");
-	
 	echo $HTML;
 ?>
 
@@ -182,6 +191,12 @@ function freshports_PortDisplay($db, $port) {
 </html>
 
 <?
+
+return 0;
+
 }
+
+
+
 
 ?>

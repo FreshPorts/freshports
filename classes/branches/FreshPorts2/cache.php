@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: cache.php,v 1.1.2.9 2006-07-03 22:29:19 dan Exp $
+	# $Id: cache.php,v 1.1.2.10 2006-07-04 01:50:10 dan Exp $
 	#
 	# Copyright (c) 2006 DVL Software Limited
 	#
@@ -22,6 +22,10 @@ class Cache {
 	function Cache($CacheDir = CACHING_LOCATION, $SpoolDir = SPOOLING_LOCATION) {
 		$this->CacheDir = $CacheDir;
 		$this->SpoolDir = $SpoolDir;
+	}
+
+	function LastModifiedGet() {
+		return $this->LastModified;
 	}
 
 	function CacheDataGet() {
@@ -79,6 +83,8 @@ class Cache {
 				// mv $SpoolFileName $CacheFileName
 				if (rename($SpoolFileName, $CacheFileName)) {
 					// success
+					$this->LastModified = filemtime($CacheFileName);
+
 					$this->_Log('Cache: Add ' . $CacheFileName);
 				} else {
 					// rm $SpoolFileName

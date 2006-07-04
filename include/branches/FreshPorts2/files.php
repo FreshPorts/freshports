@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: files.php,v 1.1.2.48 2006-06-12 04:45:30 dan Exp $
+	# $Id: files.php,v 1.1.2.49 2006-07-04 20:18:15 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -15,6 +15,8 @@ function freshports_Files($User, $ElementID, $MessageID, $db) {
 	# $PortId      == ports.id
 	# $MessageID   == commit_log.message_id
 	#
+
+	$Debug = 0;
 
 	if ($MessageID == '') {
 		echo 'No message_id supplied';
@@ -40,8 +42,6 @@ function freshports_Files($User, $ElementID, $MessageID, $db) {
 	GLOBAL $TableWidth;
 	GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;
 	GLOBAL $DaysMarkedAsNew;
-
-	$Debug = 0;
 
 	if ($Debug) echo "\$MessageID = '$MessageID', \$ElementID = '$ElementID'<BR>";
 

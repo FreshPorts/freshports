@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-display.php,v 1.1.2.8 2006-07-02 20:37:07 dan Exp $
+	# $Id: port-display.php,v 1.1.2.9 2006-07-04 01:51:25 dan Exp $
 	#
 	# Copyright (c) 2005-2006 DVL Software Limited
 	#
@@ -189,16 +189,16 @@ class port_display {
 		}
 
 		if ($this->ShowEverything || $this->ShowWatchListCount) {
-			$HTML .= '&nbsp; ' . freshPorts_WatchListCount_Icon_Link() . '=' . $port->WatchListCount();
+			$HTML .= ' ' . freshPorts_WatchListCount_Icon_Link() . '=' . $port->WatchListCount();
 		}
 
 		$HTML .= ' ' . freshports_Search_Depends_All($port->category . '/' . $port->port);
 
 		if ($port->IsVulnerable()) {
-			$HTML .= '&nbsp;' . freshports_VuXML_Icon();
+			$HTML .= ' ' . freshports_VuXML_Icon();
 		} else {
 			if ($port->WasVulnerable()) {
-				$HTML .= '&nbsp;' . freshports_VuXML_Icon_Faded();
+				$HTML .= ' ' . freshports_VuXML_Icon_Faded();
 			}
 		}
 
@@ -285,7 +285,7 @@ class port_display {
 				$HTML .= freshports_Email_Link($port->message_id);
 
 				if ($port->EncodingLosses()) {
-					$HTML .= '&nbsp;' . freshports_Encoding_Errors_Link();
+					$HTML .= ' ' . freshports_Encoding_Errors_Link();
 				}
 
 				$HTML .= ' ' . freshports_Commit_Link($port->message_id);
@@ -333,13 +333,13 @@ class port_display {
 				$Count = count($CategoriesArray);
 				for ($i = 0; $i < $Count; $i++) {
 					$Category = $CategoriesArray[$i];
-					$CategoryID = freshports_CategoryIDFromCategory($Category, $this->db);
-					if ($CategoryID) {
-						// this is a real category
+#					$CategoryID = freshports_CategoryIDFromCategory($Category, $this->db);
+#					if ($CategoryID) {
+#						// this is a real category
 						$HTML .= '<a href="/' . $Category . '/">' . $Category . '</a>';
-					} else {
-						$HTML .= $Category;
-					}
+#					} else {
+#						$HTML .= $Category;
+#					}
 					if ($i < $Count - 1) {
 						$HTML .= " ";
 					}

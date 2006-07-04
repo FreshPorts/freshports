@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.74 2006-07-04 20:26:52 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.75 2006-07-04 20:31:47 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -98,17 +98,20 @@ function freshports_PortDisplay($db, $category, $port) {
 		# and the whether or not it is on the person's watch list
 		# let's create a special function for that!
 		#
-		if ($User->id) {
-			$EndOfFirstLine = strpos($HTML, "\n");
-			if ($EndOfFirstLine == false) {
-				die('Internal error: I was expecting an ElementID and found nothing');
-			}
-			# extract the ElementID from the cache
-			$ElementID   = substr($HTML, 0, $EndOfFirstLine - 1);
-			$OnWatchList = freshports_OnWatchList($db, $User->id, $ElementID);
-
-			$HTML        = substr($HTML, $EndOfFirstLine + 1);
+		$EndOfFirstLine = strpos($HTML, "\n");
+		if ($EndOfFirstLine == false) {
+			die('Internal error: I was expecting an ElementID and found nothing');
 		}
+		# extract the ElementID from the cache
+		$ElementID  = substr($HTML, 0, $EndOfFirstLine - 1);
+
+		if ($User->id) {
+			$OnWatchList = freshports_OnWatchList($db, $User->id, $ElementID);
+		} else {
+			$OnWatchList = 0;
+		}
+
+		$HTML = substr($HTML, $EndOfFirstLine + 1);
 	} else {
 		$HTML = '';
 		$port_id = freshports_GetPortID($db, $category, $port);

@@ -25,8 +25,11 @@ The above feeds are created using <a href="http://www.bitfolge.de/rsscreator-en.
 to add Atom 1.0 to FeedCreator. 
 
 <p>
-NOTE: The above feeds may be static for a while.  I've not done anything to refresh the cache.  I'm doing that 
-outside the mechanism provided by FeedCreator, which is quite good by the way.
+NOTE: <strike>The above feeds may be static for a while.  I've not done anything to refresh the cache.  I'm doing that 
+outside the mechanism provided by FeedCreator, which is quite good by the way.</strike>
+
+<p>
+15 July 2006: The feeds should now be updated after each commit.  They are no longer static.
 
 </body>
 </html>

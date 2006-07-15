@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: newsfeed.php,v 1.1.2.1 2006-07-14 13:41:05 dan Exp $
+	# $Id: newsfeed.php,v 1.1.2.2 2006-07-15 03:13:24 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -20,7 +20,7 @@ function newsfeed($db, $Format) {
 
 	# potential for exploitation here, with $Format
 
-	define('NEWSFEEDCACHE', $_SERVER['DOCUMENT_ROOT'] . '/../dynamic/caching/news/new.' . $Format . '.xml');
+	define('NEWSFEEDCACHE', $_SERVER['DOCUMENT_ROOT'] . '/../dynamic/caching/news/news.' . $Format . '.xml');
 
 	$MaxNumberOfPorts = MAX_PORTS;
 

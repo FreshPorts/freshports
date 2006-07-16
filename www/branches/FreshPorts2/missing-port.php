@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.75 2006-07-04 20:31:47 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.76 2006-07-16 23:15:09 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -103,7 +103,11 @@ function freshports_PortDisplay($db, $category, $port) {
 			die('Internal error: I was expecting an ElementID and found nothing');
 		}
 		# extract the ElementID from the cache
-		$ElementID  = substr($HTML, 0, $EndOfFirstLine - 1);
+		$ElementID  = intval(substr($HTML, 0, $EndOfFirstLine - 1));
+		if ($ElementID == 0) {
+			syslog(LOG_ERR, "Extract of ElementID from cache failed.  Is cache corrupt/deprecated? port was $category/$port");
+			die('sorry, I encountered a problem with the cache.  Please send the URL and this message to the webmaster.');
+		}
 
 		if ($User->id) {
 			$OnWatchList = freshports_OnWatchList($db, $User->id, $ElementID);

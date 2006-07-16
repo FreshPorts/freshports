@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.261 2006-07-04 20:17:14 dan Exp $
+	# $Id: freshports.php,v 1.4.2.262 2006-07-16 23:31:28 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -473,13 +473,9 @@ function freshports_CookieClear() {
 	SetCookie("visitor", '', 0, '/');
 }
 
-function freshportsObscureHTML($HTML) {
-	$new_HTML = '';
-	for ($i = 0; $i <strlen($HTML); $i++) {
-		$new_HTML .= ("&#".ord($HTML[$i]).";");
-	}
-	
-	return $new_HTML;
+function freshportsObscureHTML($email) {
+	# why obscure?  The spammers catch up.
+	return $email;
 }
 
 function freshports_CommitterEmailLink($committer) {
@@ -1950,6 +1946,7 @@ function freshports_GetElementID($db, $category, $port) {
 function freshports_OnWatchList($db, $UserID, $ElementID) {
 	$sql = "select OnWatchList($UserID, $ElementID)";
 
+echo "<pre>$sql</pre><br>\n";
 	$result = pg_exec($db, $sql);
 	if (!$result) {
 		echo "error " . pg_errormessage();

@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: htmlify.php,v 1.1.2.7 2006-02-11 20:40:14 dan Exp $
+	# $Id: htmlify.php,v 1.1.2.8 2006-07-16 23:31:29 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
 #
@@ -35,14 +35,9 @@ function mail2link($Arr) {
 	# the browser.
 	#
 
-	$addr     = $Arr[0];
-	$new_addr = "";
+	$addr = $Arr[0];
 
-	for ($i=0; $i<strlen($addr); $i++) {
-		$new_addr .= ("&#".ord($addr[$i]).";");
-	}
-
-	$addr = "<A HREF=\"" . MAILTO . ":$new_addr\">$new_addr</A>";
+	$addr = "<A HREF=\"mailto:$addr\">$addr</A>";
 
 	return $addr;
 }

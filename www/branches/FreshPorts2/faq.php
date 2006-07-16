@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.82 2006-07-02 20:42:15 dan Exp $
+	# $Id: faq.php,v 1.1.2.83 2006-07-16 23:38:25 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -786,6 +786,27 @@ list of master sites that a port knows about.  Edwin Groothuis explains it in th
 In short, FreshPorts displays the list of master sites that should contain all
 the distfiles.  That is why we use that value, and not one of the other options.
 
+	</TD></TR><TR><TD>&nbsp;</TD></TR>
+
+<TR>
+<?php echo freshports_PageBannerText('Why don\'t you obscure email addresses?'); ?>
+</TR>
+
+   <TR><TD>
+   <P>
+FreshPorts used to obscure email addresses, but we don't any more.  We realised that
+every email address on FreshPorts is already somewhere else first. For example:
+
+<ul>
+<li>www/ports pages
+<li>portsmon
+<li>fenner's output
+<li>GNATS
+<li>cvsweb
+</ul>
+
+<p>
+In short, it doesn't make sense to obscure that which is freely available elsewhere.
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 </table>

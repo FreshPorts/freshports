@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: newsfeed.php,v 1.1.2.2 2006-07-15 03:13:24 dan Exp $
+	# $Id: newsfeed.php,v 1.1.2.3 2006-07-16 16:45:13 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -141,7 +141,7 @@ limit 30";
 #		$item->date   = filemtime($_SERVER['DOCUMENT_ROOT']  . '/' . $myrow['filename']);
 		$item->date   = strtotime($myrow['commit_date_raw']);
 		$item->source = $_SERVER['HTTP_HOST']; 
-		$item->author = 'FreshPorts'; 
+		$item->author = 'editor@FreshPorts.org'; 
 	 
 		$rss->addItem($item); 
 	} 

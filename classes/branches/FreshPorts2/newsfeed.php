@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: newsfeed.php,v 1.1.2.3 2006-07-16 16:45:13 dan Exp $
+	# $Id: newsfeed.php,v 1.1.2.4 2006-07-16 16:47:55 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#

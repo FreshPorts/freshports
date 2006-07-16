@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: newsfeed.php,v 1.1.2.6 2006-07-16 17:02:37 dan Exp $
+	# $Id: newsfeed.php,v 1.1.2.7 2006-07-16 17:25:21 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -132,7 +132,11 @@ limit 30";
 		$item = new FeedItem(); 
 		$item->title       = $myrow["category"] . '/' . $myrow["port"] . ' - ' . freshports_PackageVersion($myrow["version"], $myrow["revision"], $myrow["epoch"]);
 		$item->link        = 'http://' . $ServerName . '/' . $myrow["category"] . '/' . $myrow["port"] . '/';
-		$item->description = htmlentities(trim($myrow["commit_description"])); 
+		if ($Format == 'rss0.91') {
+			$item->description = trim($myrow["commit_description"]);
+		} else {
+			$item->description = htmlentities(trim($myrow["commit_description"]));
+		}
 	
 		//optional
 		//item->descriptionTruncSize = 500;

@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.33 2006-07-02 20:42:15 dan Exp $
+	# $Id: categories.php,v 1.1.2.34 2006-07-19 14:46:40 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
@@ -61,7 +61,9 @@ You can sort each column by clicking on the header.  e.g. click on <b>Category</
 
 <center>
 <?php
-  echo Ad_728x90();
+  if ($ShowAds && $BannerAd) {
+    echo Ad_728x90();
+  }
 ?>
 </center>
 
@@ -80,7 +82,7 @@ switch ($sort) {
    default:
       $sort = 'category';
 }
-	define('CACHE_CATEGORIES', $_SERVER['DOCUMENT_ROOT'] . '/../caching/cache/categories-by-' . $sort . '.html');
+	define('CACHE_CATEGORIES', $_SERVER['DOCUMENT_ROOT'] . '/../dynamic/caching/cache/categories-by-' . $sort . '.html');
 
 	if (file_exists(CACHE_CATEGORIES) && is_readable(CACHE_CATEGORIES)) {
 		readfile(CACHE_CATEGORIES);

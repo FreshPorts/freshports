@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.105 2006-07-02 20:42:16 dan Exp $
+	# $Id: index.php,v 1.1.2.106 2006-07-19 14:44:07 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -127,7 +127,7 @@ If you want to see more try <a href="/commits.php">here</a>.
 </p>
 
 <?php
-	if ($BannerAd) {
+	if ($ShowAds && $BannerAd) {
 		echo "</td></tr>\n<tr><td>\n<CENTER>\n";
 		echo Ad_728x90();
 		echo "</CENTER>\n\n";

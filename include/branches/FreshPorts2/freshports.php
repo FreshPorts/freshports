@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.263 2006-07-18 02:58:49 dan Exp $
+	# $Id: freshports.php,v 1.4.2.264 2006-07-19 14:50:17 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -1573,20 +1573,12 @@ function freshports_SideBar() {
 				$args = '';
 		}
 		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/logout.php',                 $args,                  "Logout", "Logout of the website"                  ) . '</FONT><BR>';
-
-		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/pkg_upload.php',             '',                     "Watch list - upload",     "Upoad a file containing a list of ports you want to add to your watch list") . '</FONT><BR>';
-		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/watch-categories.php',       '',                     "Watch list - Categories", "Search through categories for ports to add to your watch list"             ) . '</FONT><BR>';
-		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/watch-list-maintenance.php', '',                     "Watch lists - Maintain",  "Maintain your watch list[s]"                                               ) . '</FONT><BR>';
-		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/watch.php',                  '',                     "Your watched ports",      "Your list of watched ports"                                                ) . '</FONT><BR>';
-		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/rss/watch-list.php',         '',                     "Personal newsfeeds	",   "A list of news feeds for your watched lists"                               ) . '</FONT><BR>';
-		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/report-subscriptions.php',   '',                     "Report Subscriptions",    "Maintain your list of subscriptions"                                       ) . '</FONT><BR>';
 	} else {
 		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/login.php',                  "?origin=$OriginLocal", "User Login",              "Login to the website"                                                      ) . '</FONT><BR>';
 		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/new-user.php',               "?origin=$OriginLocal", "Create account",          "Create an account"                                                         ) . '</FONT><BR>';
 	}
 
 	$HTML .= '
-	<A HREF="/phorum/" TITLE="Discussion Forums">Forums</A>
    </TD>
    </TR>
    </TABLE>
@@ -1596,6 +1588,49 @@ function freshports_SideBar() {
 <SMALL>Server and bandwidth provided by <A HREF="http://www.bchosting.com/" TARGET="_new" TITLE="Our major sponsor">BChosting.com</A></SMALL>
 
 </P>
+
+<TABLE WIDTH="' . $ColumnWidth . '" BORDER="1" CELLSPACING="0" CELLPADDING="5">
+	<TR>
+		<TD BGCOLOR="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><BIG><B>Ports</B></BIG></FONT></TD>
+	</TR>
+	<TR>
+	<TD VALIGN="top">
+
+	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/",                     "Home",             "FreshPorts Home page"       )   . '</FONT><BR>
+	<FONT SIZE="-1"><A HREF="/phorum/" TITLE="Discussion Forums">Forums</A></FONT><BR>
+	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/categories.php",       "Categories",       "List of all Port categories")   . '</FONT><BR>
+	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/ports-deleted.php",    "Deleted ports",    "All deleted ports"          )   . '</FONT><BR>
+	
+	</TD>
+	</TR>
+</TABLE>';
+
+if (IsSet($visitor)) {
+
+
+$HTML .= '<br>
+<TABLE WIDTH="' . $ColumnWidth . '" BORDER="1" CELLSPACING="0" CELLPADDING="5">
+	<TR>
+		<TD BGCOLOR="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><BIG><B>Watch Lists</B></BIG></FONT></TD>
+	</TR>
+	<TR>
+	<TD VALIGN="top">';
+
+		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/pkg_upload.php',             '',                     "upload",               "Upoad a file containing a list of ports you want to add to your watch list") . '</FONT><BR>';
+		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/watch-categories.php',       '',                     "categories",           "Search through categories for ports to add to your watch list"             ) . '</FONT><BR>';
+		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/watch-list-maintenance.php', '',                     "maintain",             "Maintain your watch list[s]"                                               ) . '</FONT><BR>';
+		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/watch.php',                  '',                     "ports",                "Your list of watched ports"                                                ) . '</FONT><BR>';
+		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/rss/watch-list.php',         '',                     "newsfeeds",   "A list of news feeds for your watched lists"                               ) . '</FONT><BR>';
+		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/report-subscriptions.php',   '',                     "Report Subscriptions", "Maintain your list of subscriptions"                                       ) . '</FONT><BR>';
+
+$HTML .= '		
+	</TD>
+	</TR>
+</TABLE>';
+	}
+
+	$HTML .= '	
+<br>
 
 <TABLE WIDTH="' . $ColumnWidth . '" BORDER="1" CELLSPACING="0" CELLPADDING="5">
 	<TR>
@@ -1618,7 +1653,7 @@ function freshports_SideBar() {
 </TR>
 </TABLE>
 
-<BR>';
+';
 
 	GLOBAL $ShowAds;
 
@@ -1653,25 +1688,6 @@ function freshports_SideBar() {
 	</TD>
 	</TR>
 </TABLE>
-
-
-<BR>
-
-<TABLE WIDTH="' . $ColumnWidth . '" BORDER="1" CELLSPACING="0" CELLPADDING="5">
-	<TR>
-		<TD BGCOLOR="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><BIG><B>Ports</B></BIG></FONT></TD>
-	</TR>
-	<TR>
-	<TD VALIGN="top">
-
-	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/",                     "Home",             "FreshPorts Home page"       )   . '</FONT><BR>
-	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/categories.php",       "Categories",       "List of all Port categories")   . '</FONT><BR>
-	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/ports-deleted.php",    "Deleted ports",    "All deleted ports"          )   . '</FONT><BR>
-	</TD>
-	</TR>
-</TABLE>
-
-
 
 <BR>
 
@@ -1946,7 +1962,6 @@ function freshports_GetElementID($db, $category, $port) {
 function freshports_OnWatchList($db, $UserID, $ElementID) {
 	$sql = "select OnWatchList($UserID, $ElementID)";
 
-echo "<pre>$sql</pre><br>\n";
 	$result = pg_exec($db, $sql);
 	if (!$result) {
 		echo "error " . pg_errormessage();

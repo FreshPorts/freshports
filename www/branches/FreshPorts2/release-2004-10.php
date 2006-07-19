@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: release-2004-10.php,v 1.1.2.6 2006-07-02 20:42:16 dan Exp $
+	# $Id: release-2004-10.php,v 1.1.2.7 2006-07-19 15:03:57 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -36,13 +36,6 @@
 	echo Ad_728x90();
 ?>
 </CENTER>
-
-<CENTER>
-<?php
-	echo Ad_728x90();
-?>
-</CENTER>
-
 
 <p>
 This page is rather dated.  Most news is now published on the

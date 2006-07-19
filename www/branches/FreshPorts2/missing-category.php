@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-category.php,v 1.1.2.41 2006-07-19 14:44:52 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.42 2006-07-19 15:16:12 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -154,6 +154,8 @@ echo $PortCount;
 echo '<div align="center"><br>';
 freshports_CategoryNextPreviousPage($category->name, $PortCount, $PageNo, $PageSize);
 echo '</div>';
+
+GLOBAL $ShowAds, $BannerAd;
 
 if ($ShowAds && $BannerAd) {
 	echo "<br><center>\n" . Ad_728x90() . "\n</center>\n";

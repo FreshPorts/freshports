@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: report-subscriptions.php,v 1.1.2.28 2006-07-02 20:11:25 dan Exp $
+	# $Id: report-subscriptions.php,v 1.1.2.29 2006-07-19 15:54:05 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
 	if (!$_COOKIE['visitor']) {
@@ -144,10 +144,12 @@
 <TR>
 <TD>
 
+<p>
 This page allows you to select the reports you wish to receive and the frequency of the report.
+</p>
 
 <FORM ACTION="<?php echo $_SERVER["PHP_SELF"] ;?>" METHOD="POST" NAME=f>
-	<TABLE CELLPADDING="3" CELLSPACING="6" BORDER="0">
+	<TABLE CELLPADDING="3" CELLSPACING="0" BORDER="1">
 	<TR><TD><BIG><B>Report Name</B></BIG></TD><TD><BIG><B>Frequency</B></BIG></TD><TD><BIG><B>Description</B></BIG></TD></TR>
 	<?
 
@@ -164,19 +166,22 @@ This page allows you to select the reports you wish to receive and the frequency
 			$needs_frequency	= $Values["needs_frequency"];
 			$description		= $Values["description"];
 			$thefrequency		= $Values["frequency"];
-			echo '<TR><TD VALIGN="top" NOWRAP>';
+		
+			echo '<TR>';
+     		echo '<TD VALIGN="top" NOWRAP>';
 			echo '<INPUT TYPE="checkbox" NAME="reports[]" value="' . $report_id . '"';
 			if ($Values["selected"]) {
 				echo ' checked';
 			}
 			echo '> ' . $name;
-			echo '</TD><TD VALIGN="top" NOWRAP>';
+			echo '</TD>';
 
 			if ($Debug) {
 				echo '$Values["frequency"]=\'' . $Values["frequency"] . '\'';
 				echo 'now processing $report_id = \'' . $report_id . '\'';
 			}
 
+            echo '<TD VALIGN="top" NOWRAP>';
 			if ($needs_frequency == 't') {
 				reset($Frequencies);
 				$numrows = count($Frequencies);
@@ -198,8 +203,11 @@ This page allows you to select the reports you wish to receive and the frequency
 				$DDLB .= '</SELECT>';
 
 				echo $DDLB;
+			} else {
+			  echo 'nil';
 			}
-			echo "</TD><TD>" . $description . " </TD>";
+			echo '</TD>';
+			echo "<TD>" . $description . " </TD>";
 			echo "</TR>\n";
 		}
 

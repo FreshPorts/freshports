@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-category.php,v 1.1.2.43 2006-07-19 15:22:40 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.44 2006-07-19 15:35:16 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -8,7 +8,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
 
 DEFINE('MAX_PAGE_SIZE',     500);
-DEFINE('DEFAULT_PAGE_SIZE', 25);
+DEFINE('DEFAULT_PAGE_SIZE', 100);
 
 DEFINE('NEXT_PAGE',		'Next');
 
@@ -41,7 +41,7 @@ function str_is_int($str) {
 	return ($str == $var);
 }
 
-function freshports_CategoryByID($db, $category_id, $PageNo = 1, $PageSize = 25) {
+function freshports_CategoryByID($db, $category_id, $PageNo = 1, $PageSize = DEFAULT_PAGE_SIZE) {
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
 	$category = new Category($db);
 	$category->FetchByID($category_id);
@@ -52,7 +52,7 @@ function freshports_CategoryByID($db, $category_id, $PageNo = 1, $PageSize = 25)
 }
 
 
-function freshports_CategoryByElementID($db, $element_id, $PageNo = 1, $PageSize = 25) {
+function freshports_CategoryByElementID($db, $element_id, $PageNo = 1, $PageSize = DEFAULT_PAGE_SIZE) {
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
 	$category = new Category($db);
 	$category->FetchByElementID($element_id);
@@ -63,7 +63,7 @@ function freshports_CategoryByElementID($db, $element_id, $PageNo = 1, $PageSize
 }
 
 
-function freshports_CategoryDisplay($db, $category, $PageNo = 1, $PageSize = 25) {
+function freshports_CategoryDisplay($db, $category, $PageNo = 1, $PageSize = DEFAULT_PAGE_SIZE) {
 
 	GLOBAL $TableWidth;
 	GLOBAL $User;

@@ -1,8 +1,11 @@
 #
-# $Id: README.txt,v 1.1.2.7 2006-06-13 15:49:32 dan Exp $
+# $Id: README.txt,v 1.1.2.8 2006-07-20 09:54:09 dan Exp $
 #
-# Copyright (c) 1998-2003 DVL Software Limited
+# Copyright (c) 1998-2006 DVL Software Limited
 #
+
+This file documents the directory structure that needs to be present
+for a FreshPorts website and scripts.
 
 You need to do this:
 
@@ -24,9 +27,15 @@ chmod g+w phorum-3.3.2a
 |Website configuration|
 +---------------------+
 
-mkdir -p dynamic/caching/cache/ports
+mkdir -p dynamic/caching/cache
+mkdir -p dynamic/caching/categories
+mkdir -p dynamic/caching/news
+mkdir -p dynamic/caching/ports
 mkdir -p dynamic/caching/spool
-chown -R www:www dynamic/caching
+mkdir -p dynamic/caching/tmp
+
+chown -R www:www dynamic
+chmod -R g+w     dynamic
 
 cd www/include
 cp common.php.sample common.php

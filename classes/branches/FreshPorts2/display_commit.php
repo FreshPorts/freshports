@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: display_commit.php,v 1.1.2.2 2006-05-18 18:21:42 dan Exp $
+	# $Id: display_commit.php,v 1.1.2.3 2006-07-23 13:52:51 dan Exp $
 	#
 	# Copyright (c) 2003-2006 DVL Software Limited
 	#
@@ -101,11 +101,6 @@ class DisplayCommit {
 					if ($mycommit->EncodingLosses()) {
 						$this->HTML .= '&nbsp;' . freshports_Encoding_Errors();
 					}
-
-					if (IsSet($mycommit->security_notice_id)) {
-						$this->HTML .= ' <a href="/security-notice.php?message_id=' . $mycommit->message_id . '">' . freshports_Security_Icon() . '</a>';
-					}
-
 				}
 
 				if ($NumberOfPortsInThisCommit <= $MaxNumberPortsToShow) {

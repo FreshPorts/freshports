@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: privacy.php,v 1.1.2.17 2006-07-02 20:42:16 dan Exp $
+	# $Id: privacy.php,v 1.1.2.18 2006-07-23 13:34:34 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -28,6 +28,12 @@
 	<? echo freshports_PageBannerText('Privacy statement'); ?>
 </TR>
 <TR><TD>
+
+<CENTER>
+<?php
+	echo Ad_728x90();
+?>
+</CENTER>
 
 <P>All the information we
     gather is for our own use.  We do not release it to anyone else.</P>

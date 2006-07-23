@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.267 2006-07-23 14:17:06 dan Exp $
+	# $Id: freshports.php,v 1.4.2.268 2006-07-23 17:02:44 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -181,7 +181,7 @@ function freshports_Search_Icon($Title = 'Search') {
 }
 
 function freshports_WatchListCount_Icon() {
-	return '<IMG SRC="/images/sum.gif" ALT="on this many watch lists" TITLE="on this many watch lists"  WIDTH="8" HEIGHT="11">';
+	return '<IMG SRC="/images/sum.gif" ALT="on this many watch lists" TITLE="on this many watch lists" border="0" WIDTH="8" HEIGHT="11">';
 }
 
 function freshports_WatchListCount_Icon_Link() {
@@ -1630,7 +1630,7 @@ $HTML .= '
 	GLOBAL $ShowAds;
 
 	if ($ShowAds) {
-		$HTML .= '<br><TABLE BORDER="0" CELLPADDING="5"">
+		$HTML .= '<br><TABLE BORDER="0" CELLPADDING="5">
 		  <TR><TD ALIGN="center">
 		';
 		$HTML .= Ad_160x600();

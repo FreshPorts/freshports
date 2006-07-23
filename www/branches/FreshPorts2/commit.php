@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.58 2006-01-07 21:29:10 dan Exp $
+	# $Id: commit.php,v 1.1.2.59 2006-07-23 13:57:33 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -258,10 +258,6 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 
 						if ($myrow["encoding_losses"] == 't') {
 							$HTML .= '&nbsp;' . freshports_Encoding_Errors();
-						}
-
-						if (IsSet($myrow["security_notice_id"])) {
-							$HTML .= ' <a href="/security-notice.php?message_id=' . $myrow["message_id"] . '">' . freshports_Security_Icon() . '</a>';
 						}
 
 						if ($NumRows > 7) {

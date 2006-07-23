@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: files.php,v 1.1.2.49 2006-07-04 20:18:15 dan Exp $
+	# $Id: files.php,v 1.1.2.50 2006-07-23 13:57:34 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -262,11 +262,6 @@ select element_pathname(element.id) as pathname,
 		if ($myrow["encoding_losses"] == 't') {
 			echo '&nbsp;' . freshports_Encoding_Errors();
 		}
-
-		if (IsSet($myrow["security_notice_id"])) {
-			echo ' <a href="/security-notice.php?message_id=' . $myrow["message_id"] . '">' . freshports_Security_Icon() . '</a>';
-		}
-
 
 		echo "</TD>\n";
 		echo '    <TD VALIGN="top">' . $myrow["committer"]         . "</TD>\n";

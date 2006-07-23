@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.265 2006-07-23 13:33:14 dan Exp $
+	# $Id: freshports.php,v 1.4.2.266 2006-07-23 13:57:34 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -341,10 +341,6 @@ function freshports_Watch_Icon() {
 
 function freshports_Watch_Icon_Add() {
 	return '<IMG SRC="/images/watch-add.gif" ALT="Click to add this port to your default watch list[s]"" TITLE=""Click to add this port to your default watch list[s]" BORDER="0" WIDTH="16" HEIGHT="16">';
-}
-
-function freshports_Security_Icon() {
-	return '<IMG SRC="/images/security.gif"  ALT="This commit addresses a security issue" TITLE="This commit addresses a security issue" BORDER="0" WIDTH="20" HEIGHT="20">';
 }
 
 function freshports_Encoding_Errors() {
@@ -934,15 +930,9 @@ function freshports_PortCommitsHeader($port) {
 	$HTML .= "<TR>\n";
 
 	$Columns = 3;
-	if ($User->IsTaskAllowed(FRESHPORTS_TASKS_SECURITY_NOTICE_ADD)) {
-		$Columns++;
-	}
 	$HTML .= freshports_PageBannerText("Commit History - (may be incomplete: see CVSWeb link above for full details)", $Columns);
 
 	$HTML .= '<TR><TD WIDTH="180"><b>Date</b></td><td><b>By</b></td><td><b>Description</b></td>';
-	if ($User->IsTaskAllowed(FRESHPORTS_TASKS_SECURITY_NOTICE_ADD)) {
-		$HTML .= '<td><b>Security</b></td>';
-	}
 
 	$HTML .= "</tr>\n";
 
@@ -1066,9 +1056,6 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	$HTML .= ' ';
 
 	$HTML .= freshports_CommitFilesLink($commit->message_id, $category, $port);
-	if (IsSet($commit->security_notice_id)) {
-		$HTML .= ' <a href="/security-notice.php?message_id=' . $commit->message_id . '">' . freshports_Security_Icon() . '</a>';
-	}
 
 	# ouput the VERSION and REVISION
 	$PackageVersion = freshports_PackageVersion($commit->{'port_version'},  $commit->{'port_revision'},  $commit->{'port_epoch'});
@@ -1090,10 +1077,6 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	$HTML .= freshports_PortDescriptionPrint($commit->description, $commit->encoding_losses, $freshports_CommitMsgMaxNumOfLinesToShow, freshports_MoreCommitMsgToShow($commit->message_id, $freshports_CommitMsgMaxNumOfLinesToShow));
 
 	$HTML .= "</TD>\n";
-
-	if ($User->IsTaskAllowed(FRESHPORTS_TASKS_SECURITY_NOTICE_ADD)) {
-		$HTML .= '<TD ALIGN="center" VALIGN="top"><a href="/security-notice.php?message_id=' . $commit->message_id . '">Edit</a></td>';
-	}
 
 	$HTML .= "</TR>\n";
 
@@ -1126,15 +1109,9 @@ function freshports_CommitsHeader($element_record) {
 	$HTML .= "<TR>\n";
 
 	$Columns = 3;
-	if ($User->IsTaskAllowed(FRESHPORTS_TASKS_SECURITY_NOTICE_ADD)) {
-		$Columns++;
-	}
 	$HTML .= freshports_PageBannerText("Commit History - (may be incomplete: see CVSWeb link above for full details)", $Columns);
 
 	$HTML .= '<TR><TD WIDTH="180"><b>Date</b></td><td><b>By</b></td><td><b>Description</b></td>';
-	if ($User->IsTaskAllowed(FRESHPORTS_TASKS_SECURITY_NOTICE_ADD)) {
-		$HTML .= '<td><b>Security</b></td>';
-	}
 
 	$HTML .= "</tr>\n";
 }
@@ -1210,9 +1187,6 @@ function freshports_CommitPrint($element_record, $commit) {
 	$HTML .= ' ';
 
 	$HTML .= freshports_CVS_Link($element_record->element_pathname, $commit->revision_name);
-	if (IsSet($commit->security_notice_id)) {
-		$HTML .= ' <a href="/security-notice.php?message_id=' . $commit->message_id . '">' . freshports_Security_Icon() . '</a>';
-	}
 
 	# ouput the REVISION
 	if (strlen($commit->{'revision_name'}) > 0) {
@@ -1229,10 +1203,6 @@ function freshports_CommitPrint($element_record, $commit) {
 	$HTML .= freshports_PortDescriptionPrint($commit->description, $commit->encoding_losses, $freshports_CommitMsgMaxNumOfLinesToShow, freshports_MoreCommitMsgToShow($commit->message_id, $freshports_CommitMsgMaxNumOfLinesToShow));
 
 	$HTML .= "</TD>\n";
-
-	if ($User->IsTaskAllowed(FRESHPORTS_TASKS_SECURITY_NOTICE_ADD)) {
-		$HTML .= '<TD ALIGN="center" VALIGN="top"><a href="/security-notice.php?message_id=' . $commit->message_id . '">Edit</a></td>';
-	}
 
 	$HTML .= "</TR>\n";
 
@@ -1658,7 +1628,7 @@ $HTML .= '
 	GLOBAL $ShowAds;
 
 	if ($ShowAds) {
-		$HTML .= '<TABLE BORDER="0" CELLPADDING="5">
+		$HTML .= '<br><TABLE BORDER="0" CELLPADDING="5"">
 		  <TR><TD ALIGN="center">
 		';
 		$HTML .= Ad_160x600();

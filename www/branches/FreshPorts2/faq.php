@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.83 2006-07-16 23:38:25 dan Exp $
+	# $Id: faq.php,v 1.1.2.84 2006-07-23 13:57:33 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -351,10 +351,6 @@ make: fatal errors encountered -- cannot continue
 	<P><a name="encodingerrors"><?php echo freshports_Encoding_Errors(); ?></a> Encoding Errors (not all of the commit message was ASCII): Some of the
 		commit message may be altered because of character conversion problems.  We display only UTF-8 and remove
 		the offending characters.  These errors may occur in the log message or elsewhere in the commit email.</P>
-
-	<P><?php echo freshports_Security_Icon(); ?> Security Issue: This commit addresses a security issue.  A port is flagged
-		as a security issue by trusted FreshPorts users.  If you'd like to help with this task, please contact us.
-	</P>
 
 	<P><a name="watchlistcount"><?php echo freshports_WatchListCount_Icon(); ?></a> Watch List Count (WLC): This is the number of watch lists which are watching 
 	this port.  This might give you an idea of the popularity of the port.

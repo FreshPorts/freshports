@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.266 2006-07-23 13:57:34 dan Exp $
+	# $Id: freshports.php,v 1.4.2.267 2006-07-23 14:17:06 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -339,8 +339,10 @@ function freshports_Watch_Icon() {
 	return '<IMG SRC="/images/watch-remove.gif" ALT="Click to remove this port from your default watch list[s]" TITLE="Click to remove this port from your default watch list[s]" BORDER="0" WIDTH="16" HEIGHT="16">';
 }
 
+define('CLICKTOADD', 'Click to add this port to your default watch list[s]');
+
 function freshports_Watch_Icon_Add() {
-	return '<IMG SRC="/images/watch-add.gif" ALT="Click to add this port to your default watch list[s]"" TITLE=""Click to add this port to your default watch list[s]" BORDER="0" WIDTH="16" HEIGHT="16">';
+	return '<IMG SRC="/images/watch-add.gif" ALT="' . CLICKTOADD . '" TITLE="' . CLICKTOADD . '" BORDER="0" WIDTH="16" HEIGHT="16">';
 }
 
 function freshports_Encoding_Errors() {
@@ -372,9 +374,9 @@ function freshports_Watch_Link_Add($WatchListAsk, $WatchListCount, $ElementID) {
 	}
 
 	$HTML .= '"';
-	$HTML .= ' TITLE="add to watch list';
+	$HTML .= ' TITLE="' . CLICKTOADD . '"';
 
-	$HTML .= '">' . freshports_Watch_Icon_Add() . '</A></SMALL>';
+	$HTML .= '>' . freshports_Watch_Icon_Add() . '</A></SMALL>';
 
 	return $HTML;
 }

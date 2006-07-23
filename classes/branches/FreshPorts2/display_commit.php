@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: display_commit.php,v 1.1.2.3 2006-07-23 13:52:51 dan Exp $
+	# $Id: display_commit.php,v 1.1.2.4 2006-07-23 14:54:11 dan Exp $
 	#
 	# Copyright (c) 2003-2006 DVL Software Limited
 	#
@@ -108,6 +108,14 @@ class DisplayCommit {
 					$this->HTML .= "<BR>\n";
 
 					if (IsSet($mycommit->category) || $mycommit->category != '') {
+						if ($this->UserID) {
+							if ($mycommit->watch) {
+								$this->HTML .= ' '. freshports_Watch_Link_Remove($this->WatchListAsk, $mycommit->watch, $mycommit->element_id) . ' ';
+							} else {
+								$this->HTML .= ' '. freshports_Watch_Link_Add   ($this->WatchListAsk, $mycommit->watch, $mycommit->element_id) . ' ';
+							}
+						}
+
 						$this->HTML .= '<BIG><B>';
 						$this->HTML .= '<A HREF="/' . $mycommit->category . '/' . $mycommit->port . '/">';
 						$this->HTML .= $mycommit->port;
@@ -123,14 +131,6 @@ class DisplayCommit {
 						$this->HTML .= '<A HREF="/' . $mycommit->category . '/">';
 						$this->HTML .= $mycommit->category. "</A>";
 						$this->HTML .= '&nbsp;';
-
-						if ($this->UserID) {
-							if ($mycommit->watch) {
-								$this->HTML .= ' '. freshports_Watch_Link_Remove($this->WatchListAsk, $mycommit->watch, $mycommit->element_id) . ' ';
-							} else {
-								$this->HTML .= ' '. freshports_Watch_Link_Add   ($this->WatchListAsk, $mycommit->watch, $mycommit->element_id) . ' ';
-							}
-						}
 
 						$this->HTML .= ' ' . freshports_Commit_Link($mycommit->message_id) . "\n";
 

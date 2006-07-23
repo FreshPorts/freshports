@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.264 2006-07-19 14:50:17 dan Exp $
+	# $Id: freshports.php,v 1.4.2.265 2006-07-23 13:33:14 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -181,7 +181,7 @@ function freshports_Search_Icon($Title = 'Search') {
 }
 
 function freshports_WatchListCount_Icon() {
-	return '<IMG SRC="/images/sum.gif" ALT="on this many watch lists" TITLE="on this many watch lists" BORDER="0" WIDTH="12" HEIGHT="17" ALIGN="top">';
+	return '<IMG SRC="/images/sum.gif" ALT="on this many watch lists" TITLE="on this many watch lists"  WIDTH="8" HEIGHT="11">';
 }
 
 function freshports_WatchListCount_Icon_Link() {
@@ -336,11 +336,11 @@ function freshports_CVS_Icon() {
 }
 
 function freshports_Watch_Icon() {
-	return '<IMG SRC="/images/watch.jpg" ALT="Item is on one of your default watch lists" TITLE="Item is on one of your default watch lists" BORDER="0" WIDTH="12" HEIGHT="12" VSPACE="2" HSPACE="2">';
+	return '<IMG SRC="/images/watch-remove.gif" ALT="Click to remove this port from your default watch list[s]" TITLE="Click to remove this port from your default watch list[s]" BORDER="0" WIDTH="16" HEIGHT="16">';
 }
 
 function freshports_Watch_Icon_Add() {
-	return '<IMG SRC="/images/watch-add.gif" ALT="Add item to your default watch lists" TITLE="Add item to your default watch lists" BORDER="0" WIDTH="13" HEIGHT="13">';
+	return '<IMG SRC="/images/watch-add.gif" ALT="Click to add this port to your default watch list[s]"" TITLE=""Click to add this port to your default watch list[s]" BORDER="0" WIDTH="16" HEIGHT="16">';
 }
 
 function freshports_Security_Icon() {

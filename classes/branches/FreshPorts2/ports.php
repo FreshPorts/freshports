@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports.php,v 1.1.2.56 2005-11-01 23:10:17 dan Exp $
+	# $Id: ports.php,v 1.1.2.57 2006-07-23 14:10:02 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -241,7 +241,7 @@ select ports.id,
 				$myrow = pg_fetch_array ($result);
 				$this->_PopulateValues($myrow);
 			} else {
-				echo "Ports::FetchByPartialName I'm concerned I got $numrows from that.<BR>$sql<BR>";
+				die(__CLASS__ . ':' . __FUNCTION__ . " got $numrows rows at line " . __LINE__);
 			}
 		} else {
 			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();

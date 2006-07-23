@@ -1,12 +1,11 @@
 <?php
 	#
-	# $Id: user_tasks.php,v 1.1.2.5 2005-11-01 23:10:17 dan Exp $
+	# $Id: user_tasks.php,v 1.1.2.6 2006-07-23 13:56:43 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
 
-DEFINE('FRESHPORTS_TASKS_SECURITY_NOTICE_ADD',              'SecurityNoticeAdd');
 DEFINE('FRESHPORTS_TASKS_CATEGORY_VIRTUAL_DESCRIPTION_SET', 'CategoryVirtualDescriptionSet');
 DEFINE('FRESHPORTS_TASKS_ANNOUNCEMENTS_MAINTAIN',           'AnnouncementsUpdate');
 

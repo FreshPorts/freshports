@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-display.php,v 1.1.2.9 2006-07-04 01:51:25 dan Exp $
+	# $Id: port-display.php,v 1.1.2.10 2006-07-23 14:09:37 dan Exp $
 	#
 	# Copyright (c) 2005-2006 DVL Software Limited
 	#
@@ -147,6 +147,8 @@ class port_display {
 
 		$HTML .= '<BIG><B>';
 
+		$HTML .= port_display_WATCH_LIST_ADD_REMOVE;
+
 		if ($this->LinkToPort) {
 			$HTML .= $this->LinkToPort();
 		} else {
@@ -169,9 +171,6 @@ class port_display {
 		if ($this->ShowEverything || $this->ShowCategory) {
 			$HTML .= ' / <A HREF="/' . $port->category . '/" TITLE="The category for this port">' . $port->category . '</A>';
 		}
-
-		$HTML .= port_display_WATCH_LIST_ADD_REMOVE;
-
 
 		// indicate if this port has been removed from cvs
 		if ($port->{'status'} == "D") {

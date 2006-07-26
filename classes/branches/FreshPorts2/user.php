@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: user.php,v 1.1.2.14 2004-10-25 00:21:36 dan Exp $
+	# $Id: user.php,v 1.1.2.15 2006-07-26 20:11:25 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -33,6 +33,7 @@ class User {
 	var $watch_list_add_remove;
 	var $last_watch_list_chosen;
 	var $page_size;
+	var $filter;
 
 	var $UserTasks;
 
@@ -110,25 +111,26 @@ class User {
 		# returned by Fetch.
 		#
 
-		$this->id						= $myrow["id"];
-		$this->name						= $myrow["name"];
-		$this->password					= $myrow["password"];
-		$this->cookie					= $myrow["cookie"];
-		$this->firstlogin				= $myrow["firstlogin"];
-		$this->lastlogin				= $myrow["lastlogin"];
-		$this->email					= $myrow["email"];
-		$this->watch_notice_id			= $myrow["watch_notice_id"];
-		$this->emailsitenotices_yn		= $myrow["emailsitenotices_yn"];
-		$this->emailbouncecount			= $myrow["emailbouncecount"];
-		$this->type						= $myrow["type"];
-		$this->status					= $myrow["status"];
-		$this->ip_address				= $myrow["ip_address"];
-		$this->number_of_commits		= $myrow["number_of_commits"];
-		$this->number_of_days			= $myrow["number_of_days"];
-		$this->watch_list_add_remove	= $myrow["watch_list_add_remove"];
-		$this->last_watch_list_chosen	= $myrow["last_watch_list_chosen"];
+		$this->id						= $myrow['id'];
+		$this->name						= $myrow['name'];
+		$this->password					= $myrow['password'];
+		$this->cookie					= $myrow['cookie'];
+		$this->firstlogin				= $myrow['firstlogin'];
+		$this->lastlogin				= $myrow['lastlogin'];
+		$this->email					= $myrow['email'];
+		$this->watch_notice_id			= $myrow['watch_notice_id'];
+		$this->emailsitenotices_yn		= $myrow['emailsitenotices_yn'];
+		$this->emailbouncecount			= $myrow['emailbouncecount'];
+		$this->type						= $myrow['type'];
+		$this->status					= $myrow['status'];
+		$this->ip_address				= $myrow['ip_address'];
+		$this->number_of_commits		= $myrow['number_of_commits'];
+		$this->number_of_days			= $myrow['number_of_days'];
+		$this->watch_list_add_remove	= $myrow['watch_list_add_remove'];
+		$this->last_watch_list_chosen	= $myrow['last_watch_list_chosen'];
+		$this->filter					= $myrow['filter'];
 
-		$this->page_size				= $myrow["page_size"];
+		$this->page_size				= $myrow['page_size'];
 		if (!IsSet($this->page_size) || $this->page_size == '') {
 			GLOBAL $DefaultPageSize;	# from configuration/freshports.conf.php
 										# and also set in include/getvalues.php

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: new-user.php,v 1.1.2.13 2005-09-09 20:09:20 dan Exp $
+	# $Id: new-user.php,v 1.1.2.14 2006-07-27 19:10:03 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -9,9 +9,6 @@
 	GLOBAL $numberofdays;
 	GLOBAL $page_size;
 ?>
-
-<BIG><BIG>Having trouble registering?  Please, I want to know about it!  Email me at dan@langille.org.
-If you can send me a screen shot of the problem, I'll fix it!  Thank you.</big></big>
 
 <form action="<?php echo $_SERVER["PHP_SELF"] . "?origin=" . $origin ?>" method="POST" NAME=f>
 <TABLE width="*" border="0" cellpadding="1">
@@ -63,4 +60,4 @@ Number of ports to display per page per category:
 </TABLE>
 </FORM>
 
-For your reporting needs, please visit <A HREF="/report-subscriptions.php">Report Subscriptions</A>.
+<p>For your reporting needs, please visit <A HREF="/report-subscriptions.php">Report Subscriptions</A></p>.

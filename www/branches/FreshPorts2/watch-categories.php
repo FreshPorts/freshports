@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: watch-categories.php,v 1.1.2.26 2005-01-22 14:48:53 dan Exp $
+	# $Id: watch-categories.php,v 1.1.2.27 2006-07-27 19:08:39 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
@@ -16,6 +16,8 @@
 		header("Location: /login.php?origin=" . $_SERVER["PHP_SELF"]);  /* Redirect browser to PHP web site */
 		exit;  /* Make sure that code below does not get executed when we redirect. */
 	}
+
+	define('NUMCOLUMNS', 7);
 
 	freshports_Start('Watch categories',
 					'freshports - new ports, applications',
@@ -141,7 +143,8 @@ for ($i = 0; $i < $numrows; $i++) {
 	$rows[$NumCategories-1]=$myrow;
 }
 
-$RowCount = ceil($NumCategories / (double) 4);
+# how many rows will we have if we go for NUMCOLUMNS colums?
+$RowCount = ceil($NumCategories / (double) NUMCOLUMNS);
 $Row = 0;
 for ($i = 0; $i < $NumCategories; $i++) {
 	pg_fetch_array ($result, $i);

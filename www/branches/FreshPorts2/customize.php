@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: customize.php,v 1.1.2.36 2006-01-07 21:29:10 dan Exp $
+	# $Id: customize.php,v 1.1.2.37 2006-07-27 19:10:59 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -177,7 +177,7 @@ echo '<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="' . BACKGROUND_COLOUR . '" WIDT
 <TR BGCOLOR="#ffffff">
 <TD>';
 
-echo 'If you wish to change your password, supply your new password twice.  Otherwise, leave it blank.<br>';
+echo '<p>If you wish to change your password, supply your new password twice.  Otherwise, leave it blank.</p><br>';
 require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
 
 $Customize=1;

@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: files.php,v 1.1.2.50 2006-07-23 13:57:34 dan Exp $
+	# $Id: files.php,v 1.1.2.51 2006-07-27 19:10:33 dan Exp $
 	#
-	# Copyright (c) 1998-2004 DVL Software Limited
+	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
@@ -80,7 +80,6 @@ select element_pathname(element.id) as pathname,
        ports.restricted,
        ports.no_cdrom,
        ports.expiration_date,
-       security_notice.id  AS security_notice_id,
        ports_vulnerable.current as vulnerable_current,
        ports_vulnerable.past    as vulnerable_past, 
        GMT_Format(commit_log.date_added) as last_modified ";
@@ -92,7 +91,7 @@ select element_pathname(element.id) as pathname,
 
 
 	$sql .="
-		   from commit_log LEFT OUTER JOIN security_notice ON commit_log.id = security_notice.commit_log_id,
+		   from commit_log,
 			    categories, element, commit_log_port_elements, commit_log_elements, 
 			    element B, commit_log_ports, ports_vulnerable right outer join ports
                 on (ports_vulnerable.port_id = ports.id) ";

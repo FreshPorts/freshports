@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: news.php,v 1.1.2.9 2005-08-03 22:11:41 dan Exp $
+	# $Id: news.php,v 1.1.2.10 2006-07-27 19:10:33 dan Exp $
 	#
-	# Copyright (c) 1998-2004 DVL Software Limited
+	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 	
 	DEFINE('MAX_PORTS', 20);
@@ -79,8 +79,7 @@
 
 
 $sql = "
-SELECT PEC.*,
-       security_notice.id  AS security_notice_id
+SELECT PEC.*
 FROM (
 SELECT PORTELEMENT.*,
        categories.name AS category
@@ -129,8 +128,7 @@ FROM (
                          AND commit_log_ports.commit_log_id > latest_commits_ports_anchor()) AS LCPCLLCP JOIN ports
 on LCPCLLCP.port_id = ports.id) AS LCPPORTS JOIN element
 on LCPPORTS.element_id = element.id) AS PORTELEMENT JOIN categories
-on PORTELEMENT.category_id = categories.id) AS PEC LEFT OUTER JOIN security_notice
-ON PEC.commit_log_id = security_notice.commit_log_id
+on PORTELEMENT.category_id = categories.id) AS PEC
 order by commit_date_raw desc, category, port 
 limit 30";
 
@@ -175,9 +173,6 @@ limit 30";
 
 		$HTML .= $myrow["category"] . '/' . $myrow["port"] . ' - ' . freshports_PackageVersion($myrow["version"], $myrow["revision"], $myrow["epoch"]);
 
-		if (IsSet($myrow["security_notice_id"])) {
-			$HTML .= ' - Security Alert!';
-		}
 		$HTML .= '</title>'                                                                                       . "\n";
 
 		$HTML .= '    <link>http://' . $ServerName . '/' . $myrow["category"] . '/' . $myrow["port"] . '/</link>' . "\n";

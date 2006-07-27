@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: watch-list.php,v 1.1.2.5 2006-05-18 11:53:10 dan Exp $
+	# $Id: watch-list.php,v 1.1.2.6 2006-07-27 19:10:33 dan Exp $
 	#
-	# Copyright (c) 1998-2004 DVL Software Limited
+	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 	
 	DEFINE('MAX_PORTS', 20);
@@ -171,9 +171,6 @@ function DisplayNewsFeed($db, $token) {
 
 		$HTML .= $myrow["category"] . '/' . $myrow["port"] . ' - ' . freshports_PackageVersion($myrow["version"], $myrow["revision"], $myrow["epoch"]);
 
-		if (IsSet($myrow["security_notice_id"])) {
-			$HTML .= ' - Security Alert!';
-		}
 		$HTML .= '</title>'                                                                                       . "\n";
 
 		$HTML .= '    <link>http://' . $ServerName . '/' . $myrow["category"] . '/' . $myrow["port"] . '/</link>' . "\n";

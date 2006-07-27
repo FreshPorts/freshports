@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: sidebar.php,v 1.1.2.21 2005-01-22 14:48:53 dan Exp $
+	# $Id: sidebar.php,v 1.1.2.22 2006-07-27 19:10:33 dan Exp $
 	#
-	# Copyright (c) 1998-2004 DVL Software Limited
+	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
 	DEFINE('MAX_PORTS', 40);
@@ -67,8 +67,7 @@
 <?
 
 $sql = "
-SELECT PEC.*,
-       security_notice.id  AS security_notice_id
+SELECT PEC.*
 FROM (
 SELECT PORTELEMENT.*,
        categories.name AS category
@@ -117,8 +116,7 @@ FROM (
                          AND commit_log_ports.commit_log_id > latest_commits_ports_anchor()) AS LCPCLLCP JOIN ports
 on LCPCLLCP.port_id = ports.id) AS LCPPORTS JOIN element
 on LCPPORTS.element_id = element.id) AS PORTELEMENT JOIN categories
-on PORTELEMENT.category_id = categories.id) AS PEC LEFT OUTER JOIN security_notice
-ON PEC.commit_log_id = security_notice.commit_log_id
+on PORTELEMENT.category_id = categories.id) AS PEC
 order by commit_date_raw desc, category, port ";
 
 	if ($Debug) {

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: display_commit.php,v 1.1.2.4 2006-07-23 14:54:11 dan Exp $
+	# $Id: display_commit.php,v 1.1.2.5 2006-07-27 19:03:54 dan Exp $
 	#
 	# Copyright (c) 2003-2006 DVL Software Limited
 	#
@@ -8,7 +8,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/constants.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit_record.php');
 
-// base class for keeping statistics on page rendering issues
+// base class for displaying commits
 class DisplayCommit {
 
 	var $Debug = 0;
@@ -46,9 +46,9 @@ class DisplayCommit {
 		}
 
 		$NumRows = pg_numrows($this->result);
-#		if ($this->Debug) echo "Number of rows = $NumRows<br>";
+		if ($this->Debug) echo __FILE__ . ':' . __LINE__ . " Number of rows = $NumRows<br>\n";
 		if (!$NumRows) { 
-			$this->HTML = "<P>Sorry, nothing found in the database....</P>\n";
+			$this->HTML = "<TR><TD>\n<P>Sorry, nothing found in the database....</P>\n</td></tr>\n";
 			return 1;
 		}
 	

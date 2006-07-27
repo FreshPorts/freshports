@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: commit_log_ports.php,v 1.1.2.19 2004-09-22 14:00:55 dan Exp $
+	# $Id: commit_log_ports.php,v 1.1.2.20 2006-07-27 19:06:41 dan Exp $
 	#
-	# Copyright (c) 1998-2004 DVL Software Limited
+	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
 
@@ -20,7 +20,6 @@ class Commit_Log_Ports {
 	var $port_version;
 	var $port_revision;
 	var $port_epoch;
-	var $security_notice_id;
 	var $needs_refresh;
 
 	var $result;
@@ -53,11 +52,8 @@ select commit_log.id,
        port_version,
        port_revision,
        port_epoch,
-       security_notice.id as security_notice_id,
        needs_refresh
-  from commit_log, commit_log_ports LEFT OUTER JOIN security_notice
-       ON commit_log_ports.commit_log_id = security_notice.commit_log_id
-          AND security_notice.security_notice_status_id = 'A'
+  from commit_log, commit_log_ports
  where commit_log.id            = commit_log_ports.commit_log_id
    and commit_log_ports.port_id = $port_id
  order by commit_log.commit_date desc ";
@@ -91,7 +87,6 @@ select commit_log.id,
 		$this->port_version			= $myrow["port_version"];
 		$this->port_revision		= $myrow["port_revision"];
 		$this->port_epoch			= $myrow["port_epoch"];
-		$this->security_notice_id	= $myrow["security_notice_id"];
 		$this->needs_refresh		= $myrow["needs_refresh"];
 	}
 

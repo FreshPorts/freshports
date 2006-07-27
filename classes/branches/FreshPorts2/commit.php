@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.15 2005-11-01 23:10:17 dan Exp $
+	# $Id: commit.php,v 1.1.2.16 2006-07-27 19:06:41 dan Exp $
 	#
-	# Copyright (c) 1998-2004 DVL Software Limited
+	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
 
@@ -37,7 +37,6 @@ class Commit {
 	var $element_id;
 	var $short_description;
 	var $onwatchlist;
-	var $security_notice_id;
 
 	var $last_modified;
 
@@ -72,7 +71,6 @@ class Commit {
 		$this->element_id			= $myrow["element_id"];
 		$this->short_description	= $myrow["short_description"];
 		$this->onwatchlist			= $myrow["onwatchlist"];
-		$this->security_notice_id	= $myrow["security_notice_id"];
 
 		$this->last_modified		= $myrow["last_modified"];
 	}

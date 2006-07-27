@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: newsfeed.php,v 1.1.2.7 2006-07-16 17:25:21 dan Exp $
+	# $Id: newsfeed.php,v 1.1.2.8 2006-07-27 19:06:42 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -65,11 +65,8 @@ function newsfeed($db, $Format) {
 	if (!$MaxArticles || $MaxArticles < 1 || $MaxArticles > $MyMaxArticles) {
 	    $MaxArticles = $MyMaxArticles;
 	}
-
+	
 	$sql = "
-SELECT PEC.*,
-       security_notice.id  AS security_notice_id
-FROM (
 SELECT PORTELEMENT.*,
        categories.name AS category
 FROM (
@@ -117,8 +114,7 @@ FROM (
                          AND commit_log_ports.commit_log_id > latest_commits_ports_anchor()) AS LCPCLLCP JOIN ports
 on LCPCLLCP.port_id = ports.id) AS LCPPORTS JOIN element
 on LCPPORTS.element_id = element.id) AS PORTELEMENT JOIN categories
-on PORTELEMENT.category_id = categories.id) AS PEC LEFT OUTER JOIN security_notice
-ON PEC.commit_log_id = security_notice.commit_log_id
+on PORTELEMENT.category_id = categories.id
 order by commit_date_raw desc, category, port 
 limit 30";
 

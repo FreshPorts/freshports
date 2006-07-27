@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: commit_record.php,v 1.1.2.13 2006-05-18 18:21:42 dan Exp $
+	# $Id: commit_record.php,v 1.1.2.14 2006-07-27 19:06:42 dan Exp $
 	#
-	# Copyright (c) 1998-2004 DVL Software Limited
+	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
 
@@ -34,7 +34,6 @@ class CommitRecord {
 	var $port;
 	var $status;
 	var $category;
-	var $security_notice_id;
 	var $vulnerable_current;
 	var $vulnerable_past;
 	var $restricted;
@@ -76,7 +75,6 @@ class CommitRecord {
 		$this->port					= $myrow['port'];
 		$this->status				= $myrow['status'];
 		$this->category				= $myrow['category'];
-		$this->security_notice_id	= $myrow['security_notice_id'];
 		$this->watch				= $myrow['watch'];
 		$this->vulnerable_current	= $myrow['vulnerable_current'];
 		$this->vulnerable_past		= $myrow['vulnerable_past'];

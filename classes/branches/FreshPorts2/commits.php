@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits.php,v 1.1.2.22 2006-05-30 21:52:30 dan Exp $
+	# $Id: commits.php,v 1.1.2.23 2006-07-27 19:06:42 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -107,17 +107,14 @@ class Commits {
 			ports.expiration_date                                                                                       AS expiration_date,
 			date_part('epoch', ports.date_added)                                                                        AS date_added,
 			ports.element_id                                                                                            AS element_id,
-			ports.short_description                                                                                     AS short_description,
-			security_notice.id                                                                                          AS security_notice_id";
+			ports.short_description                                                                                     AS short_description";
 		if ($UserID) {
 				$sql .= ",
 	        onwatchlist ";
 		}
 
 		$sql .= "
-    FROM commit_log_ports LEFT OUTER JOIN security_notice
-       ON commit_log_ports.commit_log_id = security_notice.commit_log_id
-          AND security_notice.security_notice_status_id = 'A', commit_log, categories, ports, element ";
+    FROM commit_log_ports, commit_log, categories, ports, element ";
 
 		if ($UserID) {
 				$sql .= "
@@ -193,17 +190,14 @@ class Commits {
 			ports.expiration_date                                                                                       AS expiration_date,
 			date_part('epoch', ports.date_added)                                                                        AS date_added,
 			ports.element_id                                                                                            AS element_id,
-			ports.short_description                                                                                     AS short_description,
-			security_notice.id                                                                                          AS security_notice_id";
+			ports.short_description                                                                                     AS short_description";
 		if ($UserID) {
 				$sql .= ",
 	        onwatchlist ";
 		}
 
 		$sql .= "
-    FROM commit_log_ports LEFT OUTER JOIN security_notice
-       ON commit_log_ports.commit_log_id = security_notice.commit_log_id
-          AND security_notice.security_notice_status_id = 'A', commit_log, categories, ports, element ";
+    FROM commit_log_ports, commit_log, categories, ports, element ";
 
 		if ($UserID) {
 				$sql .= "
@@ -297,17 +291,14 @@ class Commits {
 			ports.expiration_date                                                                                       AS expiration_date,
 			date_part('epoch', ports.date_added)                                                                        AS date_added,
 			ports.element_id                                                                                            AS element_id,
-			ports.short_description                                                                                     AS short_description,
-			security_notice.id                                                                                          AS security_notice_id";
+			ports.short_description                                                                                     AS short_description";
 		if ($UserID) {
 				$sql .= ",
 	        onwatchlist ";
 		}
 
 		$sql .= "
-    FROM commit_log_ports LEFT OUTER JOIN security_notice
-       ON commit_log_ports.commit_log_id = security_notice.commit_log_id
-          AND security_notice.security_notice_status_id = 'A', commit_log, categories, ports, element ";
+    FROM commit_log_ports, commit_log, categories, ports, element ";
 
 		if ($UserID) {
 				$sql .= "
@@ -367,6 +358,7 @@ class Commits {
 	}
 
 	function LastModified($Date) {
+
 		# default to the current GMT time
 		$last_modified = gmdate(LAST_MODIFIED_FORMAT);
 

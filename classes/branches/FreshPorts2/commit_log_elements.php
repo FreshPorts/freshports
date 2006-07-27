@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: commit_log_elements.php,v 1.1.2.6 2004-10-02 18:19:28 dan Exp $
+	# $Id: commit_log_elements.php,v 1.1.2.7 2006-07-27 19:06:41 dan Exp $
 	#
-	# Copyright (c) 2003 DVL Software Limited
+	# Copyright (c) 2003-2006 DVL Software Limited
 	#
 
 
@@ -18,7 +18,6 @@ class Commit_Log_Elements {
 	var $committer;
 	var $encoding_losses;
 	var $revision_name;
-	var $security_notice_id;
 
 	var $result;
 
@@ -38,11 +37,8 @@ select commit_log_elements.element_id,
        commit_log.description,
        committer,
        encoding_losses,
-       revision_name,
-       security_notice.id as security_notice_id
-  from commit_log, commit_log_elements LEFT OUTER JOIN security_notice
-       ON commit_log_elements.commit_log_id = security_notice.commit_log_id
-          AND security_notice.security_notice_status_id = 'A'
+       revision_name
+  from commit_log, commit_log_elements
  where commit_log.id                  = commit_log_elements.commit_log_id
    and commit_log_elements.element_id = $element_id
  order by commit_log.commit_date desc ";
@@ -74,7 +70,6 @@ select commit_log_elements.element_id,
 		$this->committer			= $myrow["committer"];
 		$this->encoding_losses		= $myrow["encoding_losses"];
 		$this->revision_name		= $myrow["revision_name"];
-		$this->security_notice_id	= $myrow["security_notice_id"];
 	}
 
 	function EncodingLosses() {

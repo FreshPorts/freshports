@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: latest_commits.php,v 1.1.2.18 2006-04-26 21:32:00 dan Exp $
+	# $Id: latest_commits.php,v 1.1.2.19 2006-07-27 19:04:51 dan Exp $
 	#
 	# Copyright (c) 2003-2004 DVL Software Limited
 	#
@@ -16,6 +16,7 @@ class LatestCommits {
 	var $dbh;
 	var $MaxNumberOfPorts;
 
+	var $Filter;
 	var $WatchListAsk    = '';	// either default or ask.  the watch list to which add/remove works.
 	var $UserID          = 0;
 	var $DaysMarkedAsNew = 10;
@@ -42,10 +43,18 @@ class LatestCommits {
 		$this->WatchListAsk = $WatchListAsk;
 	}
 
+	function SetFilter($Filter) {
+		$this->Filter = $Filter;
+	}
+
 	function CreateHTML() {
 		GLOBAL	$freshports_CommitMsgMaxNumOfLinesToShow;
 
-		$sql = "select * from LatestCommits($this->MaxNumberOfPorts, $this->UserID)";
+		if (IsSet($this->Filter)) {
+			$sql = "select * from LatestCommitsFiltered($this->MaxNumberOfPorts, $this->UserID, '" . AddSlashes($this->Filter) . "')";
+		} else {
+			$sql = "select * from LatestCommits($this->MaxNumberOfPorts, $this->UserID)";
+		}
 
 		if ($this->Debug) echo "\n<pre>sql=$sql</pre>\n";
 
@@ -55,13 +64,17 @@ class LatestCommits {
 			exit;
 		}
 		
+		$DisplayCommit->Debug = $this->Debug;
+		
 		$DisplayCommit = new DisplayCommit($result);
 		$DisplayCommit->SetDaysMarkedAsNew($this->DaysMarkedAsNew);
 		$DisplayCommit->SetUserID($this->UserID);
 		$DisplayCommit->SetWatchListAsk($this->WatchListAsk);
-		$this->HTML = $DisplayCommit->CreateHTML();
+		$RetVal = $DisplayCommit->CreateHTML();
+		
+		$this->HTML = $DisplayCommit->HTML;
 
-		return $this->HTML;
+		return $RetVal;
 
 	}
 }

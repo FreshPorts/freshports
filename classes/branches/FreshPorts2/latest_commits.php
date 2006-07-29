@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: latest_commits.php,v 1.1.2.19 2006-07-27 19:04:51 dan Exp $
+	# $Id: latest_commits.php,v 1.1.2.20 2006-07-29 21:27:43 dan Exp $
 	#
 	# Copyright (c) 2003-2004 DVL Software Limited
 	#
@@ -56,7 +56,7 @@ class LatestCommits {
 			$sql = "select * from LatestCommits($this->MaxNumberOfPorts, $this->UserID)";
 		}
 
-		if ($this->Debug) echo "\n<pre>sql=$sql</pre>\n";
+		if ($this->Debug) echo "\n<p>sql=$sql</p>\n";
 
 		$result = pg_exec($this->dbh, $sql);
 		if (!$result) {

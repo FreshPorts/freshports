@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.34 2006-07-19 14:46:40 dan Exp $
+	# $Id: categories.php,v 1.1.2.35 2006-07-29 21:29:39 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -69,7 +69,7 @@ You can sort each column by clicking on the header.  e.g. click on <b>Category</
 
 
 <?php
-$sort			= IsSet($_REQUEST['sort'])        ? AddSlashes($_REQUEST['sort'])        : '';
+$sort = IsSet($_REQUEST['sort']) ? AddSlashes($_REQUEST['sort']) : '';
 
 switch ($sort) {
    case 'category':

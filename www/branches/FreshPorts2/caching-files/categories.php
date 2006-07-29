@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.2 2005-12-08 05:01:17 dan Exp $
+	# $Id: categories.php,v 1.1.2.3 2006-07-29 21:31:23 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -80,11 +80,12 @@ SELECT to_char(max(commit_log.commit_date) - SystemTimeAdjust(), 'DD Mon YYYY HH
          categories.id          AS category_id,
          categories.name        AS category,
          categories.description AS description,
-         categories.is_primary  AS is_primary
+         categories.is_primary  AS is_primary,
+         categories.element_id  AS element_id
     FROM categories, ports_active left outer join commit_log on ( ports_active.last_commit_id = commit_log.id )
    WHERE categories.id   = ports_active.category_id
      AND categories.is_primary
-GROUP BY categories.id, categories.name, categories.description, is_primary
+GROUP BY categories.id, categories.name, categories.description, is_primary, categories.element_id
 UNION
   SELECT to_char(max(commit_log.commit_date) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') AS updated,
          count(ports_active.id)        AS count,
@@ -92,12 +93,13 @@ UNION
          categories.id          AS category_id,
          categories.name        AS category,
          categories.description AS description,
-         categories.is_primary  AS is_primary
+         categories.is_primary  AS is_primary,
+         categories.element_id  AS element_id
     FROM ports_categories, categories, ports_active left outer join commit_log on ( ports_active.last_commit_id = commit_log.id )
    WHERE ports_active.id = ports_categories.port_id
      AND categories.id   = ports_categories.category_id
      AND NOT categories.is_primary
-GROUP BY categories.id, categories.name, categories.description, is_primary
+GROUP BY categories.id, categories.name, categories.description, is_primary, categories.element_id
 ";
 
 $sql .=  " ORDER BY $sort";
@@ -152,8 +154,12 @@ if (!$result) {
 	$NumRows = pg_numrows($result);
 	while ($myrow = pg_fetch_array($result, $i)) {
 		$HTML .= freshports_echo_HTML('<tr>');
-		$HTML .= freshports_echo_HTML('<td valign="top"><a href="/' . $myrow["category"] . '/">' . $myrow["category"] . '</a>' . $Primary[$myrow["is_primary"]] . '</td>');
+		$HTML .= '<td align="top">';
+		$HTML .= freshports_echo_HTML('<a href="/' . $myrow["category"] . '/">' . $myrow["category"] . '</a>' . $Primary[$myrow["is_primary"]]);
+		
+		$HTML .= ' ' . freshports_Watch_Link_Add('', 0, $myrow['element_id']);
 
+		$HTML .= '</td>';
 		if ($AllowedToEdit) {
 			$HTML .= freshports_echo_HTML('<td valign="top"><a href="/category-maintenance.php?category=' . $myrow["category"] . '">update</a></td>');
 		}

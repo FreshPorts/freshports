@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch_list_element.php,v 1.1.2.8 2006-01-28 13:18:13 dan Exp $
+	# $Id: watch_list_element.php,v 1.1.2.9 2006-07-29 21:28:02 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -143,7 +143,7 @@ select $WatchListID, $ElementID
 		if ($result) {
 			$return = 1;
 		} else {
-			# If this isn't s aduplicate key error, then break
+			# If this isn't a duplicate key error, then break
 			if (stristr(pg_last_error(), "Cannot insert a duplicate key") == '') {
 				$return = -1;
 			} else {

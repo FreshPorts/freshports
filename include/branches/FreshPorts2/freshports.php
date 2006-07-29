@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.268 2006-07-23 17:02:44 dan Exp $
+	# $Id: freshports.php,v 1.4.2.269 2006-07-29 21:28:58 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -336,10 +336,10 @@ function freshports_CVS_Icon() {
 }
 
 function freshports_Watch_Icon() {
-	return '<IMG SRC="/images/watch-remove.gif" ALT="Click to remove this port from your default watch list[s]" TITLE="Click to remove this port from your default watch list[s]" BORDER="0" WIDTH="16" HEIGHT="16">';
+	return '<IMG SRC="/images/watch-remove.gif" ALT="Click to remove this from your default watch list[s]" TITLE="Click to remove this from your default watch list[s]" BORDER="0" WIDTH="16" HEIGHT="16">';
 }
 
-define('CLICKTOADD', 'Click to add this port to your default watch list[s]');
+define('CLICKTOADD', 'Click to add this to your default watch list[s]');
 
 function freshports_Watch_Icon_Add() {
 	return '<IMG SRC="/images/watch-add.gif" ALT="' . CLICKTOADD . '" TITLE="' . CLICKTOADD . '" BORDER="0" WIDTH="16" HEIGHT="16">';
@@ -604,7 +604,7 @@ function freshports_HEAD_main_items() {
 	<meta name="MSSmartTagsPreventParsing" content="TRUE">
 
 	<META NAME="ROBOTS"                    CONTENT="NOARCHIVE">
-	<link rel="alternate" type="application/rss+xml" title="FreshPorts - The Place For Ports" href="http://' . $_SERVER['HTTP_HOST'] . '/news.php">
+	<link rel="alternate" type="application/rss+xml" title="FreshPorts - The Place For Ports" href="http://' . $_SERVER['HTTP_HOST'] . '/news/rss2.0.php">
 
 	
 ';
@@ -1477,7 +1477,9 @@ Valid
 </TABLE>
 ';
 
-	$HTML .= freshports_GoogleAnalytics();
+	if ($ShowAds) {
+		$HTML .= freshports_GoogleAnalytics();
+	}
 
 	$Statistics->Save();
 

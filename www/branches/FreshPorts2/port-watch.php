@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-watch.php,v 1.1.2.45 2005-08-03 12:15:33 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.46 2006-07-29 21:30:42 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -86,7 +86,7 @@ if ($submit) {
          $result = pg_exec ($db, $sql);
          ${"port_".$value} = 1;
          if (!$result) {
-         	syslog(LOG_ERROR, $_SERVER["PHP_SELF"] . ": could not clear watch list '$wlid' owned by '$Use->id' of element '$value' in " . __FILE__ . ':' . __LINE__);
+         	syslog(LOG_ERR, $_SERVER["PHP_SELF"] . ": could not clear watch list '$wlid' owned by '$User->id' of element '$value' in " . __FILE__ . ':' . __LINE__);
          	die("error clear list before saving");
          }
       }

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-watch.php,v 1.1.2.46 2006-07-29 21:30:42 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.47 2006-07-31 02:54:21 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -205,7 +205,7 @@ if ($numrows) {
       }
 
       if ($Row == 1) {
-         $HTML .= '<td valign="top">';
+         $HTML .= '<td valign="top" nowrap>';
       }
 
       $HTML .= '<input type="checkbox" name="ports[]" value="'. $rows[$i]["id"] .'"';

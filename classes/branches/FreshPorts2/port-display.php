@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-display.php,v 1.1.2.11 2006-07-23 14:53:54 dan Exp $
+	# $Id: port-display.php,v 1.1.2.12 2006-07-31 02:46:54 dan Exp $
 	#
 	# Copyright (c) 2005-2006 DVL Software Limited
 	#
@@ -145,9 +145,9 @@ class port_display {
 		
 		$HTML .= "<DT>";
 
-		$HTML .= '<BIG><B>';
-
 		$HTML .= port_display_WATCH_LIST_ADD_REMOVE;
+
+		$HTML .= '<BIG><B>';
 
 		if ($this->LinkToPort) {
 			$HTML .= $this->LinkToPort();
@@ -505,11 +505,13 @@ class port_display {
 		
 		if ($this->User && $this->User->id && ($this->ShowEverything || $this->ShowWatchListStatus)) {
 			if ($OnWatchList) {
-				$Watch_HTML .= ' '. freshports_Watch_Link_Remove($this->User->watch_list_add_remove, $OnWatchList, $ElementID);
+				$Watch_HTML .= freshports_Watch_Link_Remove($this->User->watch_list_add_remove, $OnWatchList, $ElementID);
 			} else {
-				$Watch_HTML .= ' '. freshports_Watch_Link_Add   ($this->User->watch_list_add_remove, $OnWatchList, $ElementID);
+				$Watch_HTML .= freshports_Watch_Link_Add   ($this->User->watch_list_add_remove, $OnWatchList, $ElementID);
 			}
 		}
+		
+		$Watch_HTML .= ' ';
 		
 		$HTML = str_replace(port_display_WATCH_LIST_ADD_REMOVE, $Watch_HTML, $HTML);
 

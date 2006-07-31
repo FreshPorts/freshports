@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch_list_element.php,v 1.1.2.9 2006-07-29 21:28:02 dan Exp $
+	# $Id: watch_list_element.php,v 1.1.2.10 2006-07-31 05:31:33 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -199,11 +199,11 @@ select id, $ElementID
 		# returned by Fetch.
 		#
 
-		$this->watch_list_id		= $myrow["watch_list_id"];
-		$this->element_id			= $myrow["element_id"];
+		$this->watch_list_id	= $myrow["watch_list_id"];
+		$this->element_id		= $myrow["element_id"];
 
 		$this->watch_list_count	= $myrow["watch_list_count"];
-		$this->user_id				= $myrow["user_id"];
+		$this->user_id			= $myrow["user_id"];
 	}
 }
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-category.php,v 1.1.2.44 2006-07-19 15:35:16 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.45 2006-07-31 02:32:16 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -142,7 +142,7 @@ function freshports_CategoryDisplay($db, $category, $PageNo = 1, $PageSize = DEF
 	<tr><td>
 	<BIG><BIG><B><?php
 echo $category->{'description'} 
-?></B></BIG></BIG> - Number of ports in this category: <?php
+?></B></BIG></BIG> <?php echo freshports_Watch_Link_Add('', 0, $category->{'element_id'}); ?> - Number of ports in this category: <?php
 echo $PortCount;
 
 ?>

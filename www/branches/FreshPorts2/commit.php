@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.59 2006-07-23 13:57:33 dan Exp $
+	# $Id: commit.php,v 1.1.2.60 2006-07-31 15:15:25 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -185,8 +185,8 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 		$NumRowsTotal = $myrow['count'];
 	}
 
-	$sql = "select * from freshports_commit('$message_id', $PageSize, ($PageNo - 1 ) * $PageSize)";
-	if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
+	$sql = "select * from freshports_commit('$message_id', $PageSize, ($PageNo - 1 ) * $PageSize, $User->id)";
+	if ($Debug) echo "\n<p>sql=$sql</p>\n";
 
 	$result = pg_exec($database, $sql);
 
@@ -268,6 +268,15 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 					}
 
 
+					if ($User->id && $IsPort) {
+						if ($myrow["watch"]) {
+							$HTML .= freshports_Watch_Link_Remove($User->watch_list_add_remove, $myrow["onwatchlist"], $myrow["element_id"]);
+						} else {
+							$HTML .= freshports_Watch_Link_Add   ($User->watch_list_add_remove, $myrow["onwatchlist"], $myrow["element_id"]);
+						}
+						$HTML .= ' ';
+					}
+
 					if ($IsPort) {
 						$HTML .= '<BIG><B>';
 						$HTML .= '<A HREF="/' . $myrow["category"] . '/' . $myrow["port"] . '/">';
@@ -279,9 +288,9 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 
 						$HTML .= "</B></BIG>\n";
 
-					$HTML .= '<A HREF="/' . $myrow["category"] . '/">';
-					$HTML .= $myrow["category"]. "</A>";
-					$HTML .= '&nbsp;';
+                        $HTML .= '<A HREF="/' . $myrow["category"] . '/">';
+                        $HTML .= $myrow["category"]. "</A>";
+                        $HTML .= '&nbsp;';
 
 					} else {
 						$HTML .= '<BIG><B>';
@@ -290,14 +299,6 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 						$HTML .= $ElementPathname;
 						$HTML .= '</A>';
 						$HTML .= "</B></BIG>\n";
-					}
-
-					if ($User->id && $IsPort) {
-						if ($myrow["onwatchlist"]) {
-							$HTML .= freshports_Watch_Link_Remove($User->watch_list_add_remove, $myrow["onwatchlist"], $myrow["element_id"]);
-						} else {
-							$HTML .= freshports_Watch_Link_Add   ($User->watch_list_add_remove, $myrow["onwatchlist"], $myrow["element_id"]);
-						}
 					}
 
 					$HTML .= "\n";

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: constants.php,v 1.1.2.16 2006-07-27 19:10:33 dan Exp $
+	# $Id: constants.php,v 1.1.2.17 2006-08-01 18:59:55 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -36,22 +36,6 @@ $UserStatusDisabled    = "D";
 $UserStatusUnconfirmed = "U";
 
 $ProblemSolverEmailAddress	= "webmaster@freshports.org";
-
-#
-# These values are used when specifying add/remove on a port
-#
-$FreshPortsWatchedPortPrefix	= "<SMALL><A HREF=\"/watch-list.php?remove=";
-$FreshPortsWatchedPortSuffix	= '">' . freshports_Watch_Icon() . '</A></SMALL>';
-$FreshPortsWatchedPortNotPrefix	= "<SMALL><A HREF=\"/watch-list.php?add=";
-$FreshPortsWatchedPortNotSuffix	= '">' . freshports_Watch_Icon_Add() . '</A></SMALL>';
-
-#
-# These are similar to the above but are using in SQL queries
-#
-#$FreshPortsWatchedPort		= "<SMALL><A HREF=\"/watch-list.php?remove=' || commits_latest_ports.element_id || '\">Remove</A></SMALL>";
-#$FreshPortsWatchedPortNot	= "<SMALL><A HREF=\"/watch-list.php?add='    || commits_latest_ports.element_id || '\">Add</A></SMALL>";
-
-
 
 
 #

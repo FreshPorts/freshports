@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports.php,v 1.1.2.57 2006-07-23 14:10:02 dan Exp $
+	# $Id: ports.php,v 1.1.2.58 2006-08-02 14:37:30 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -334,21 +334,13 @@ ON TEMP.wle_element_id = ports.element_id";
 			exit;
 		}
 
-      $result = pg_exec($this->dbh, $sql);
+        $result = pg_exec($this->dbh, $sql);
 		if ($result) {
 			$numrows = pg_numrows($result);
 			if ($numrows == 1) {
 				if ($Debug) echo "fetched by ID succeeded<BR>";
 				$myrow = pg_fetch_array ($result);
 				$this->_PopulateValues($myrow);
-
-				#
-				# I had considered including an OUTER JOIN in the above SQL
-				# but didn't.  I figured the above was
-				if (IsSet($WatchListID)) {
-					$this->onwatchlist = IsOnWatchList($WatchListID);
-				}
-
 			}
 		} else {
 			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();

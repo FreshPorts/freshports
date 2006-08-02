@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.78 2006-07-22 17:44:01 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.79 2006-08-02 02:08:29 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -146,6 +146,9 @@ function freshports_PortDisplay($db, $category, $port) {
 	# At this point, we have the port detail HTML
 
 	$HTML = $port_display->ReplaceWatchListToken($OnWatchList, $HTML, $ElementID);
+
+	GLOBAL $ShowAds;
+	GLOBAL $BannerAd;
 
 	if ($ShowAds && $BannerAd) {
 		$HTML_For_Ad = "<hr><center>\n" . Ad_728x90PortDescription() . "\n</center>\n<hr>\n";

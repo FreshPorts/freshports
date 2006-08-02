@@ -1,5 +1,5 @@
 --
--- $Id: POSTGRESQL.sql,v 1.1.2.53 2006-08-02 17:26:27 dan Exp $
+-- $Id: POSTGRESQL.sql,v 1.1.2.54 2006-08-02 17:36:54 dan Exp $
 --
 -- Copyright (c) 1998-2003 DVL Software Limited
 --
@@ -147,6 +147,7 @@ grant select                         on commits_recent_ports           to group 
 grant select                         on committer_notify               to group commits;
 
 grant select, insert, update, delete on element                        to group commits;
+grant select, insert, update, delete on element_pathname               to group commits;
 
 grant select, update                 on element_id_seq                 to group commits;
 grant select, insert, update, delete on element_revision               to group commits;

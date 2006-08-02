@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.36 2006-08-02 14:20:07 dan Exp $
+	# $Id: categories.php,v 1.1.2.37 2006-08-02 18:02:27 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -153,10 +153,11 @@ if (!$result) {
 } else {
 	$NumTopics	   = 0;
 	$NumPorts      = 0;
-	$i			      = 0;
+	$i		       = 0;
 	$CategoryCount = 0;
 	$NumRows = pg_numrows($result);
-	while ($myrow = pg_fetch_array($result, $i)) {
+    if ($NumRows) {
+      for ($i = 0; $i < $NumRows; $i++) {
 		$HTML .= freshports_echo_HTML('<tr>');
 		$HTML .= '<td align="top" nowrap>';
         if ($User->id) {
@@ -196,7 +197,10 @@ if (!$result) {
 		if ($i >  $NumRows - 1) {
 			break;
 		}
-	}
+      }
+    } else {
+        $HTML .= "<tr><td colspan=5>No categories statistics found.  I bet the refresh script is not running.</td></tr>";
+    }
 }
 
 $HTML .= freshports_echo_HTML('<tr><td><b>port count:</b></td>');

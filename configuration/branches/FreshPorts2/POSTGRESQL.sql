@@ -1,5 +1,5 @@
 --
--- $Id: POSTGRESQL.sql,v 1.1.2.51 2005-02-01 13:55:58 dan Exp $
+-- $Id: POSTGRESQL.sql,v 1.1.2.52 2006-08-02 17:25:38 dan Exp $
 --
 -- Copyright (c) 1998-2003 DVL Software Limited
 --
@@ -35,6 +35,7 @@ grant select on commit_log_ports               to group www;
 grant select on commit_log_ports_ignore        to group www;
 grant select on latest_commits_ports           to group www;
 grant select on element                        to group www;
+grant select on element_pathname               to group www;
 grant select on element_revision               to group www;
 grant select on ports                          to group www;
 grant select on ports_categories               to group www;
@@ -68,12 +69,6 @@ grant select, update on categories             to group www;
 
 grant select, insert, update on users          to group www;
 grant select,         update on users_id_seq   to group www;
-
-grant select, insert, update on security_notice        to group www;
-grant update                 on security_notice_id_seq to group www;
-
-grant select, insert         on security_notice_audit         to group www;
-grant select, update         on security_notice_audit_id_seq  to group www;
 
 grant select, insert, update, delete on announcements              to group www;
 grant update on announcements_id_seq                               to group www;
@@ -170,9 +165,6 @@ grant select, insert, update, delete on system                         to group 
 grant select, insert, update, delete on system_branch                  to group commits;
 grant select, update                 on system_branch_id_seq           to group commits;
 grant select, insert, update, delete on system_branch_element_revision to group commits;
-
-grant select                         on security_notice                to group commits;
-grant select                         on security_notice_audit          to group commits;
 
 grant select on users              to group commits;
 grant select on watch_list         to group commits;

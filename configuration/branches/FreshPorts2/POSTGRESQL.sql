@@ -1,5 +1,5 @@
 --
--- $Id: POSTGRESQL.sql,v 1.1.2.52 2006-08-02 17:25:38 dan Exp $
+-- $Id: POSTGRESQL.sql,v 1.1.2.53 2006-08-02 17:26:27 dan Exp $
 --
 -- Copyright (c) 1998-2003 DVL Software Limited
 --
@@ -62,6 +62,7 @@ grant select on vuxml_references               to group www;
 -- select, update
 --
 grant select, update on categories             to group www;
+grant select, update on category_stats         to group www;
 
 --
 -- select, insert, update
@@ -192,11 +193,11 @@ grant select, insert                 on report_log                     to group 
 grant update                         on report_log_id_seq              to group commits;
 grant select                         on report_log_latest              to group commits;
 
-grant insert, delete, update         on ports_moved                    to group commits;
+grant select, insert, delete, update on ports_moved                    to group commits;
 grant update                         on ports_moved_id_seq             to group commits;
 grant insert, delete, update         on ports_updating                 to group commits;
 grant update                         on ports_updating_id_seq          to group commits;
-grant insert, delete, update         on ports_updating_ports_xref      to group commits;
+grant select, insert, delete, update on ports_updating_ports_xref      to group commits;
 
 grant insert, delete, select,update  on vuxml                          to group commits;
 grant update                         on vuxml_id_seq                   to group commits;

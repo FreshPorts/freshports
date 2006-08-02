@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.272 2006-08-02 18:11:41 dan Exp $
+	# $Id: freshports.php,v 1.4.2.273 2006-08-02 18:42:15 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -177,6 +177,13 @@ return "
 
 }
 
+function freshports_Ascending_Icon($Title = 'Ascending Order') {
+	return '<IMG SRC="/images/ascending.gif" ALT="' . $Title . '" TITLE="' . $Title . '" BORDER="0" WIDTH="9" HEIGHT="9" ALIGN="middle">';
+}
+
+function freshports_Descending_Icon($Title = 'Descending Order') {
+	return '<IMG SRC="/images/descending.gif" ALT="' . $Title . '" TITLE="' . $Title . '" BORDER="0" WIDTH="9" HEIGHT="9" ALIGN="middle">';
+}
 
 function freshports_Search_Icon($Title = 'Search') {
 	return '<IMG SRC="/images/search.jpg" ALT="' . $Title . '" TITLE="' . $Title . '" BORDER="0" WIDTH="17" HEIGHT="17" ALIGN="top">';

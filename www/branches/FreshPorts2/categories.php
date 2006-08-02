@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.37 2006-08-02 18:02:27 dan Exp $
+	# $Id: categories.php,v 1.1.2.38 2006-08-02 18:15:48 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -153,11 +153,11 @@ if (!$result) {
 } else {
 	$NumTopics	   = 0;
 	$NumPorts      = 0;
-	$i		       = 0;
 	$CategoryCount = 0;
 	$NumRows = pg_numrows($result);
     if ($NumRows) {
       for ($i = 0; $i < $NumRows; $i++) {
+        $myrow = pg_fetch_array($result, $i);
 		$HTML .= freshports_echo_HTML('<tr>');
 		$HTML .= '<td align="top" nowrap>';
         if ($User->id) {
@@ -191,11 +191,6 @@ if (!$result) {
 		if ($myrow["is_primary"] == 't') {
 			$NumPorts += $myrow["count"];
 			$CategoryCount++;
-		}
-
-		$i++;
-		if ($i >  $NumRows - 1) {
-			break;
 		}
       }
     } else {

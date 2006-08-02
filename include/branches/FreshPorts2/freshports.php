@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.270 2006-08-02 02:08:57 dan Exp $
+	# $Id: freshports.php,v 1.4.2.271 2006-08-02 14:22:27 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -29,6 +29,8 @@ DEFINE('MESSAGE_ID_NEW_DOMAIN', '@dev.null.freshports.org');
 DEFINE('UNMAINTAINTED_ADDRESS', 'ports@freebsd.org');
 
 DEFINE('BACKGROUND_COLOUR', '#8c0707');
+
+DEFINE('CLICKTOADD', 'Click to add this to your default watch list[s]');
 
 
 if ($Debug) echo "'" . $_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php<BR>';
@@ -339,10 +341,12 @@ function freshports_Watch_Icon() {
 	return '<IMG SRC="/images/watch-remove.gif" ALT="Click to remove this from your default watch list[s]" TITLE="Click to remove this from your default watch list[s]" BORDER="0" WIDTH="16" HEIGHT="16">';
 }
 
-define('CLICKTOADD', 'Click to add this to your default watch list[s]');
-
 function freshports_Watch_Icon_Add() {
 	return '<IMG SRC="/images/watch-add.gif" ALT="' . CLICKTOADD . '" TITLE="' . CLICKTOADD . '" BORDER="0" WIDTH="16" HEIGHT="16">';
+}
+
+function freshports_Watch_Icon_Empty() {
+	return '<IMG SRC="/images/watch-empty.gif" ALT="" TITLE="" BORDER="0" WIDTH="16" HEIGHT="1">';
 }
 
 function freshports_Encoding_Errors() {

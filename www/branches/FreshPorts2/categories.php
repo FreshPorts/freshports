@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.38 2006-08-02 18:15:48 dan Exp $
+	# $Id: categories.php,v 1.1.2.39 2006-08-02 18:41:26 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -12,7 +12,7 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user_tasks.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
-
+	
 	$Commit = new Commit($db);
 	$Commit->DateNewestPort();
 
@@ -102,7 +102,7 @@ $sql = "
          C.description          AS description,
          C.is_primary           AS is_primary,
          C.element_id           AS element_id,
-         to_char(CS.last_update - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') AS updated,
+         to_char(CS.last_update - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') AS lastupdate,
          CS.port_count          AS count
     FROM categories C JOIN category_stats CS ON (C.id = CS.category_id)";
 
@@ -116,7 +116,7 @@ $result = pg_exec($db, $sql);
 $HTML = freshports_echo_HTML('<tr>');
 
 if ($sort == "category") {
-   $HTML .= freshports_echo_HTML('<td><b>Category</b></td>');
+   $HTML .= freshports_echo_HTML('<td><b>Category</b> ' . freshports_Ascending_Icon() . '</td>');
 } else {
    $HTML .= freshports_echo_HTML('<td><a href="categories.php?sort=category"><b>Category<b></a></td>');
 }
@@ -128,19 +128,19 @@ if ($AllowedToEdit) {
 	
 
 if ($sort == "count") {
-   $HTML .= freshports_echo_HTML('<td align="center"><b>Count</b></td>');
+   $HTML .= freshports_echo_HTML('<td align="center"><b>Count</b> ' . freshports_Ascending_Icon() . '</td>');
 } else {
    $HTML .= freshports_echo_HTML('<td><a href="categories.php?sort=count"><b>Count</b></a></td>');
 }
 
 if ($sort == "description") {
-   $HTML .= freshports_echo_HTML('<td><b>Description</b></td>');
+   $HTML .= freshports_echo_HTML('<td><b>Description</b> ' . freshports_Ascending_Icon() . '</td>');
 } else {
    $HTML .= freshports_echo_HTML('<td><a href="categories.php?sort=description"><b>Description</b></a></td>');
 }
 
-if ($sort == "updated desc") {
-   $HTML .= freshports_echo_HTML('<td nowrap><b>Last Update</b></td>');
+if ($sort == "lastupdate") {
+   $HTML .= freshports_echo_HTML('<td nowrap><b>Last Update</b> ' . freshports_Ascending_Icon() . '</td>');
 } else {
    $HTML .= freshports_echo_HTML('<td nowrap><a href="categories.php?sort=lastupdate"><b>Last Update</b></a></td>');
 }
@@ -182,7 +182,7 @@ if (!$result) {
 
 		$HTML .= freshports_echo_HTML('<td valign="top" ALIGN="right">' . $myrow["count"] . '</td>');
 		$HTML .= freshports_echo_HTML('<td valign="top">' . $myrow["description"] . '</td>');
-		$HTML .= freshports_echo_HTML('<td valign="top" nowrap><font size="-1">' . $myrow["updated"] . '</font></td>');
+		$HTML .= freshports_echo_HTML('<td valign="top" nowrap><font size="-1">' . $myrow["lastupdate"] . '</font></td>');
 		$HTML .= freshports_echo_HTML("</tr>\n");
 
 

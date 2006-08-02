@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-category.php,v 1.1.2.45 2006-07-31 02:32:16 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.46 2006-08-02 14:20:34 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -110,6 +110,10 @@ function freshports_CategoryDisplay($db, $category, $PageNo = 1, $PageSize = DEF
 	}
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_lists.php');
+
+	$WatchLists = new WatchLists($db);
+	$WatchListCount = $WatchLists->IsOnWatchList($User->id, $category->element_id);
 
 	$title = $category->{'name'};
 
@@ -140,9 +144,17 @@ function freshports_CategoryDisplay($db, $category, $PageNo = 1, $PageSize = DEF
 		</tr>
 
 	<tr><td>
-	<BIG><BIG><B><?php
+<?php 
+	if ($WatchListCount) {
+		echo freshports_Watch_Link_Remove('', 0, $category->{'element_id'});
+	} else {
+		echo freshports_Watch_Link_Add   ('', 0, $category->{'element_id'});
+	}
+?>
+	
+<BIG><BIG><B><?php
 echo $category->{'description'} 
-?></B></BIG></BIG> <?php echo freshports_Watch_Link_Add('', 0, $category->{'element_id'}); ?> - Number of ports in this category: <?php
+?></B></BIG></BIG>- Number of ports in this category: <?php
 echo $PortCount;
 
 ?>

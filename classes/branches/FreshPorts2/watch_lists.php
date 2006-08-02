@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch_lists.php,v 1.1.2.19 2005-11-01 23:10:17 dan Exp $
+	# $Id: watch_lists.php,v 1.1.2.20 2006-08-02 14:37:47 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -136,7 +136,7 @@ DELETE FROM watch_list
 			$numrows = pg_affected_rows($result);
 		} else {
 			$numrows = -1;
-			die(pg_lasterror . '<pre>' . $sql . '</pre>');
+			die(pg_last_error() . '<pre>' . $sql . '</pre>');
 		}
 
 		return $numrows;
@@ -185,12 +185,37 @@ DELETE FROM watch_list
 				}
 			}
 		} else {
-			die(pg_lasterror . '<pre>' . $sql . '</pre>');
+			die(pg_last_error() . '<pre>' . $sql . '</pre>');
 		}
 
 		return $WatchListID;
 	}
+	
+	function IsOnWatchList($UserID, $ElementID) {
+		# return the number of watch lists owned by the user that
+		# contain the indicated element
 
+		$sql = "
+   SELECT count(WLE.watch_list_id) AS listcount
+     FROM watch_list WL, watch_list_element WLE
+    WHERE WL.user_id     = $UserID
+      AND WL.id          = WLE.watch_list_id
+      AND WLE.element_id = $ElementID";
+
+      	$ListCount = 0;
+		$result = pg_exec($this->dbh, $sql);
+		if ($result) {
+			$numrows = pg_numrows($result);
+			if ($numrows == 1) {
+				$myrow = pg_fetch_array($result, 0);
+				$ListCount = $myrow['listcount'];
+			}
+		} else {
+			die(pg_result_error($result) . "<pre>$sql</pre>");
+		}
+				
+		return $ListCount;
+	}
 }
 
 ?>

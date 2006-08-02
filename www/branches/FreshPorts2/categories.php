@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.35 2006-07-29 21:29:39 dan Exp $
+	# $Id: categories.php,v 1.1.2.36 2006-08-02 14:20:07 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -34,6 +34,18 @@
 		$ColSpan = 5;
 	} else {
 	   	$ColSpan = 4;
+	}
+	
+	if ($User->id) {
+	  # obtain a list of the categories on this users watchlists
+      require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/category-listing.php');
+      
+      $CategoryListing = new Categories($db);
+      $NumRows = $CategoryListing->GetAllCategoriesOnWatchLists($User->id);
+      for ($i = 0; $i < $NumRows; $i++) {
+        $CategoryListing->FetchNth($i);
+        $CategoriesWatched[$CategoryListing->category_id] = $CategoryListing->category_id;
+      }
 	}
 
 ?>
@@ -82,22 +94,126 @@ switch ($sort) {
    default:
       $sort = 'category';
 }
-	define('CACHE_CATEGORIES', $_SERVER['DOCUMENT_ROOT'] . '/../dynamic/caching/cache/categories-by-' . $sort . '.html');
 
-	if (file_exists(CACHE_CATEGORIES) && is_readable(CACHE_CATEGORIES)) {
-		readfile(CACHE_CATEGORIES);
-	} else {
-?>
-<p>
-<big>Oops!</big>
-Sorry, the category summary it not available just now.  It should appear within five minutes.
-If it does not, please feel free to notify the webmaster who will promptly fix the problem.
-</td></tr>
-</table>
-<?php
+$sql = "
+  SELECT C.id                   AS category_id,
+         C.name                 AS category,
+         C.element_id           AS element_id,
+         C.description          AS description,
+         C.is_primary           AS is_primary,
+         C.element_id           AS element_id,
+         to_char(CS.last_update - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') AS updated,
+         CS.port_count          AS count
+    FROM categories C JOIN category_stats CS ON (C.id = CS.category_id)";
+
+$sql .=  " ORDER BY $sort";
+
+if ($Debug) echo '<pre>' . $sql, "</pre>\n";
+//echo $sort, "\n";
+
+$result = pg_exec($db, $sql);
+
+$HTML = freshports_echo_HTML('<tr>');
+
+if ($sort == "category") {
+   $HTML .= freshports_echo_HTML('<td><b>Category</b></td>');
+} else {
+   $HTML .= freshports_echo_HTML('<td><a href="categories.php?sort=category"><b>Category<b></a></td>');
+}
+
+
+if ($AllowedToEdit) {
+	$HTML .= freshports_echo_HTML('<td><b>Action</b></td>');
+}
+	
+
+if ($sort == "count") {
+   $HTML .= freshports_echo_HTML('<td align="center"><b>Count</b></td>');
+} else {
+   $HTML .= freshports_echo_HTML('<td><a href="categories.php?sort=count"><b>Count</b></a></td>');
+}
+
+if ($sort == "description") {
+   $HTML .= freshports_echo_HTML('<td><b>Description</b></td>');
+} else {
+   $HTML .= freshports_echo_HTML('<td><a href="categories.php?sort=description"><b>Description</b></a></td>');
+}
+
+if ($sort == "updated desc") {
+   $HTML .= freshports_echo_HTML('<td nowrap><b>Last Update</b></td>');
+} else {
+   $HTML .= freshports_echo_HTML('<td nowrap><a href="categories.php?sort=lastupdate"><b>Last Update</b></a></td>');
+}
+
+$HTML .= freshports_echo_HTML('</tr>');
+
+if (!$result) {
+   print pg_errormessage() . "<br>\n";
+   exit;
+} else {
+	$NumTopics	   = 0;
+	$NumPorts      = 0;
+	$i			      = 0;
+	$CategoryCount = 0;
+	$NumRows = pg_numrows($result);
+	while ($myrow = pg_fetch_array($result, $i)) {
+		$HTML .= freshports_echo_HTML('<tr>');
+		$HTML .= '<td align="top" nowrap>';
+        if ($User->id) {
+          if ($Primary[$myrow["is_primary"]]) {
+            $HTML .= freshports_Watch_Icon_Empty();
+          } else {
+		    if (IsSet($CategoriesWatched[$myrow['category_id']])) {
+              $HTML .= freshports_Watch_Link_Remove('', 0, $myrow['element_id']);
+			} else {
+              $HTML .= freshports_Watch_Link_Add   ('', 0, $myrow['element_id']);
+			}
+          }
+		}
+		$HTML .= ' ';
+
+		$HTML .= freshports_echo_HTML('<a href="/' . $myrow["category"] . '/">' . $myrow["category"] . '</a>' . $Primary[$myrow["is_primary"]]);
+		
+		$HTML .= '</td>';
+		if ($AllowedToEdit) {
+			$HTML .= freshports_echo_HTML('<td valign="top"><a href="/category-maintenance.php?category=' . $myrow["category"] . '">update</a></td>');
+		}
+
+		$HTML .= freshports_echo_HTML('<td valign="top" ALIGN="right">' . $myrow["count"] . '</td>');
+		$HTML .= freshports_echo_HTML('<td valign="top">' . $myrow["description"] . '</td>');
+		$HTML .= freshports_echo_HTML('<td valign="top" nowrap><font size="-1">' . $myrow["updated"] . '</font></td>');
+		$HTML .= freshports_echo_HTML("</tr>\n");
+
+
+		# count only the ports in primary categories
+		# as non-primary categories contain only ports which appear in primary categories.
+		if ($myrow["is_primary"] == 't') {
+			$NumPorts += $myrow["count"];
+			$CategoryCount++;
+		}
+
+		$i++;
+		if ($i >  $NumRows - 1) {
+			break;
+		}
 	}
-?>
+}
 
+$HTML .= freshports_echo_HTML('<tr><td><b>port count:</b></td>');
+if ($AllowedToEdit) {
+	$HTML .= freshports_echo_HTML('<td>&nbsp;</td>');
+}
+
+$HTML .= freshports_echo_HTML("<td ALIGN=\"right\"><b>$NumPorts</b></td><td colspan=\"2\">($CategoryCount categories)</td></tr>");
+
+$HTML .= freshports_echo_HTML("<tr><td colspan=\"5\">Hmmm, I'm not so sure this port count is accurate. Dan Langille 27 April 2003</td></tr>");
+
+$HTML .= freshports_echo_HTML('</table>');
+
+freshports_echo_HTML_flush();
+
+echo $HTML;                                                   
+?>
 
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
 	<?

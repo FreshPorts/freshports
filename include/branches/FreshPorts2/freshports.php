@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.271 2006-08-02 14:22:27 dan Exp $
+	# $Id: freshports.php,v 1.4.2.272 2006-08-02 18:11:41 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -1505,7 +1505,7 @@ urchinTracker();
 function freshports_SideBar() {
 
 	GLOBAL $User;
-	$ColumnWidth = 155;
+	$ColumnWidth = 160;
 
 	$OriginLocal = rawurlencode($_SERVER["REQUEST_URI"]);
 
@@ -1563,10 +1563,10 @@ function freshports_SideBar() {
 
 <P>
 
-' . Ad_Referral_120x60() . '<br><br>
+' . '<div align="center">' . Ad_Referral_120x60() . '
 
-
-<SMALL>Server and bandwidth provided by <A HREF="http://www.bchosting.com/" TARGET="_new" TITLE="Our major sponsor">BChosting.com</A></SMALL>
+<p><SMALL>Server and bandwidth provided by <A HREF="http://www.bchosting.com/" TARGET="_new" TITLE="Our major sponsor">BChosting.com</A></SMALL></p>
+</div>
 
 </P>
 

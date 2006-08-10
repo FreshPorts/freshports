@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-category.php,v 1.1.2.46 2006-08-02 14:20:34 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.47 2006-08-10 18:31:52 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -111,9 +111,11 @@ function freshports_CategoryDisplay($db, $category, $PageNo = 1, $PageSize = DEF
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_lists.php');
-
-	$WatchLists = new WatchLists($db);
-	$WatchListCount = $WatchLists->IsOnWatchList($User->id, $category->element_id);
+	
+	if ($category->IsPrimary()) {
+		$WatchLists = new WatchLists($db);
+		$WatchListCount = $WatchLists->IsOnWatchList($User->id, $category->element_id);
+	}
 
 	$title = $category->{'name'};
 
@@ -145,10 +147,12 @@ function freshports_CategoryDisplay($db, $category, $PageNo = 1, $PageSize = DEF
 
 	<tr><td>
 <?php 
-	if ($WatchListCount) {
-		echo freshports_Watch_Link_Remove('', 0, $category->{'element_id'});
-	} else {
-		echo freshports_Watch_Link_Add   ('', 0, $category->{'element_id'});
+	if ($category->IsPrimary()) {
+		if ($WatchListCount) {
+			echo freshports_Watch_Link_Remove('', 0, $category->{'element_id'});
+		} else {
+			echo freshports_Watch_Link_Add   ('', 0, $category->{'element_id'});
+		}
 	}
 ?>
 	

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.20 2006-02-13 15:13:27 dan Exp $
+	# $Id: categories.php,v 1.1.2.21 2006-08-10 18:32:16 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -12,7 +12,7 @@ class Category {
 	var $dbh;
 
 	var $id;
-	var $is_primary;
+	var $is_primary;  # will contain either 't' or 'f'
 	var $element_id;
 	var $name;
 	var $description;

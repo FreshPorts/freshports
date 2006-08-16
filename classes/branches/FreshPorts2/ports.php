@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports.php,v 1.1.2.58 2006-08-02 14:37:30 dan Exp $
+	# $Id: ports.php,v 1.1.2.59 2006-08-16 18:29:47 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -579,16 +579,16 @@ LEFT OUTER JOIN
 		return count($this->VuXML_List);
 	}
 
-	function IsCurrentPortVulnerable() {
-		return 1;
-	}
-
 	function IsVulnerable() {
 		return $this->vulnerable_current > 0;
 	}
 
 	function WasVulnerable() {
 		return $this->vulnerable_past > 0;
+	}
+	
+	function IsDeleted() {
+		return $this->{'status'} == "D";
 	}
 
 }

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-display.php,v 1.1.2.12 2006-07-31 02:46:54 dan Exp $
+	# $Id: port-display.php,v 1.1.2.13 2006-08-16 18:30:26 dan Exp $
 	#
 	# Copyright (c) 2005-2006 DVL Software Limited
 	#
@@ -173,7 +173,7 @@ class port_display {
 		}
 
 		// indicate if this port has been removed from cvs
-		if ($port->{'status'} == "D") {
+		if ($port->IsDeleted()) {
 			$HTML .= " " . freshports_Deleted_Icon_Link() . "\n";
 		}
 
@@ -449,16 +449,21 @@ class port_display {
 
 		}
 
+		# only show if we're meant to show, and if the port has not been deleted.
 		if ($this->ShowPackageLink || $this->ShowEverything) {
 			$HTML .= "\n<hr>\n";
-			$HTML .= '<p><b>To install <a href="/faq.php#port" TITLE="what is a port?">the port</a>:</b> <code class="code">cd /usr/ports/'  . $port->category . '/' . $port->port . '/ && make install clean</code><br>';
-			if (IsSet($port->no_package) && $port->no_package != '') {
-				$HTML .= '<p><b>No <a href="/faq.php#package" TITLE="what is a package?">package</a> is available:</b> ' . $port->no_package . '</p>';
+			if ($port->IsDeleted()) {
+				$HTML .= 'No installation instructions: this port has been deleted.';
 			} else {
-				if ($port->forbidden || $port->broken || $port->ignore || $port->restricted) {
-					$HTML .= '<p><b>A <a href="/faq.php#package" TITLE="what is a package?">package</a> is not available for ports asked as: Forbidden / Broken / Ignore / Restricted</b></p>';
-				} else {
-					$HTML .= '<b>To add the <a href="/faq.php#package" TITLE="what is a package?">package</a>:</b> <code class="code">pkg_add -r ' . $port->latest_link . '</code></p>';
+				$HTML .= '<p><b>To install <a href="/faq.php#port" TITLE="what is a port?">the port</a>:</b> <code class="code">cd /usr/ports/'  . $port->category . '/' . $port->port . '/ && make install clean</code><br>';
+				if (IsSet($port->no_package) && $port->no_package != '') {
+					$HTML .= '<p><b>No <a href="/faq.php#package" TITLE="what is a package?">package</a> is available:</b> ' . $port->no_package . '</p>';
+					} else {
+					if ($port->forbidden || $port->broken || $port->ignore || $port->restricted) {
+						$HTML .= '<p><b>A <a href="/faq.php#package" TITLE="what is a package?">package</a> is not available for ports asked as: Forbidden / Broken / Ignore / Restricted</b></p>';
+					} else {
+						$HTML .= '<b>To add the <a href="/faq.php#package" TITLE="what is a package?">package</a>:</b> <code class="code">pkg_add -r ' . $port->latest_link . '</code></p>';
+					}
 				}
 			}
 

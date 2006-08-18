@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: files.php,v 1.1.2.51 2006-07-27 19:10:33 dan Exp $
+	# $Id: files.php,v 1.1.2.52 2006-08-18 01:28:01 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -323,7 +323,7 @@ select element_pathname(element.id) as pathname,
 			echo '  <TD WIDTH="100%" VALIGN="middle">';
 			echo '<A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $myrow["pathname"] . '?annotate=' . $myrow["revision_name"] . '">';
 			echo freshports_Revision_Icon() . '</a> ';
-			echo '<A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $myrow["pathname"] . '">';
+			echo '<A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $myrow["pathname"] . '#rev'       . $myrow["revision_name"] . '">';
 
 			echo '<CODE CLASS="code">' . str_replace($PathNamePrefixToRemove, '', $myrow["pathname"]) . "</CODE></A></TD>";
 			echo "</TR>\n";

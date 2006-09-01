@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.80 2006-08-02 14:21:07 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.81 2006-09-01 03:40:34 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -13,6 +13,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/watch-lists.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/cache.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/cache-port.php');
+
 
 #
 # tell the robots not to follow links from this page.
@@ -86,6 +87,8 @@ function freshports_PortDisplay($db, $category, $port) {
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
 
+	$Debug = 0;
+
 	$port_display = new port_display($db, $User);
 	$port_display->SetDetailsFull();
 
@@ -136,7 +139,7 @@ function freshports_PortDisplay($db, $category, $port) {
 
 		$HTML .= freshports_DisplayPortCommits($MyPort);
 
-		$Cache->CacheDataSet($MyPort->{element_id} . "\n" . $HTML);
+		$Cache->CacheDataSet($MyPort->{'element_id'} . "\n" . $HTML);
 		$Cache->Add($MyPort->category, $MyPort->port, CACHE_PORT_DETAIL);
 
 		$ElementID   = $MyPort->{'element_id'};

@@ -1,5 +1,5 @@
 <?php
-	# $Id: ports-unrefreshed.php,v 1.1.2.3 2004-06-10 15:21:07 dan Exp $
+	# $Id: ports-unrefreshed.php,v 1.1.2.4 2006-09-08 17:02:23 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -40,7 +40,7 @@ class PortsUnrefreshed {
 		
 		$Debug = 1;
 
-		$sql .= "
+		$sql = "
 select ports.id         as port_id,
        element.name     as port_name,
        categories.id    as category_id,

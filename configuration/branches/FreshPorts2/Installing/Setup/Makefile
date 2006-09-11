@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.1.2.13 2006-09-11 02:07:58 dan Exp $
+# $Id: Makefile,v 1.1.2.14 2006-09-11 02:18:39 dan Exp $
 #
 # Install the ports needed by FreshPorts
 #
@@ -18,7 +18,8 @@ MAINTAINER=	ports@freebsddiary.org
 
 BUILD_DEPENDS=	${LOCALBASE}/bin/psql:${PORTSDIR}/databases/postgresql81-client \
 		${LOCALBASE}/bin/postmaster:${PORTSDIR}/databases/postgresql81-server \
-		${PREFIX}/lib/postgresql/pgcrypto.so:${PORTSDIR}/databases/postgresql-contrib 
+		${PREFIX}/lib/postgresql/pgcrypto.so:${PORTSDIR}/databases/postgresql-contrib \
+		${LOCALBASE}/lib/python2.4/site-packages/psycopgmodule.so:${PORTSDIR}/databases/py-psycopg
 
 RUN_DEPENDS=	${LOCALBASE}/bin/svstat:${PORTSDIR}/sysutils/daemontools \
 		${SITE_PERL}/XML/Writer.pm:${PORTSDIR}/textproc/p5-XML-Writer \
@@ -39,9 +40,7 @@ RUN_DEPENDS=	${LOCALBASE}/bin/svstat:${PORTSDIR}/sysutils/daemontools \
 		${PREFIX}/share/pear/HTML/Page2.php:${PORTSDIR}/devel/pear-HTML_Page2 \
 		${SITE_PERL}/Class/Observable.pm:${PORTSDIR}/devel/p5-Class-Observable \
 		${SITE_PERL}/LWP/Simple.pm:${PORTSDIR}/www/p5-libwww \
-		${SITE_PERL}/mach/Text/CSV_XS.pm:${PORTSDIR}/textproc/p5-Text-CSV_XS \
-		${LOCALBASE}/bin/php:${PORTSDIR}/lang/php4-extensions \
-		${LOCALBASE}/lib/python2.4/site-packages/psycopgmodule.so:${PORTSDIR}/databases/py-psycopg
+		${LOCALBASE}/bin/php:${PORTSDIR}/lang/php4-extensions
 				
 NO_WRKSUBDIR=	YES
 NO_BUILD=		YES

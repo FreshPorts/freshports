@@ -1,12 +1,13 @@
 <?php
 	#
-	# $Id: freshports_page_list_ports.php,v 1.1.2.15 2006-06-12 17:59:49 dan Exp $
+	# $Id: freshports_page_list_ports.php,v 1.1.2.16 2006-09-11 13:35:02 dan Exp $
 	#
 	# Copyright (c) 2005-2006 DVL Software Limited
 	#
 
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports_page.php');
+   require_once('Pager/Pager.php');
 
 class freshports_page_list_ports extends freshports_page {
 
@@ -83,7 +84,7 @@ SELECT ports.id,
        package_exists,
        extract_suffix,
        homepage,
-       status,
+       ports.status,
        broken,
        forbidden,
        ignore,
@@ -118,7 +119,7 @@ from element, categories, ports_vulnerable PV right outer join ports on PV.port_
 		$this->_sql .= "
 WHERE ports.element_id  = element.id
   AND ports.category_id = categories.id 
-  AND status            = '" . $this->getStatus() . "'";
+  AND ports.status      = '" . $this->getStatus() . "'";
 
 		if ($Condition) {
 			$this->_sql .= '

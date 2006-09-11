@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.1.2.12 2006-07-20 10:03:21 dan Exp $
+# $Id: Makefile,v 1.1.2.13 2006-09-11 02:07:58 dan Exp $
 #
 # Install the ports needed by FreshPorts
 #
@@ -40,7 +40,8 @@ RUN_DEPENDS=	${LOCALBASE}/bin/svstat:${PORTSDIR}/sysutils/daemontools \
 		${SITE_PERL}/Class/Observable.pm:${PORTSDIR}/devel/p5-Class-Observable \
 		${SITE_PERL}/LWP/Simple.pm:${PORTSDIR}/www/p5-libwww \
 		${SITE_PERL}/mach/Text/CSV_XS.pm:${PORTSDIR}/textproc/p5-Text-CSV_XS \
-		${LOCALBASE}/bin/php:${PORTSDIR}/lang/php4-extensions 
+		${LOCALBASE}/bin/php:${PORTSDIR}/lang/php4-extensions \
+		${LOCALBASE}/lib/python2.4/site-packages/psycopgmodule.so:${PORTSDIR}/databases/py-psycopg
 				
 NO_WRKSUBDIR=	YES
 NO_BUILD=		YES

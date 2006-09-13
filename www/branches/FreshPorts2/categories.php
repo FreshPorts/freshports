@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.39 2006-08-02 18:41:26 dan Exp $
+	# $Id: categories.php,v 1.1.2.40 2006-09-13 13:46:38 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -87,8 +87,11 @@ switch ($sort) {
    case 'category':
    case 'count':
    case 'description':
-   case 'lastupdate':
       $sort = $sort;
+      break;
+
+   case 'lastupdate':
+      $sort = 'last_update';
       break;
 
    default:
@@ -139,7 +142,7 @@ if ($sort == "description") {
    $HTML .= freshports_echo_HTML('<td><a href="categories.php?sort=description"><b>Description</b></a></td>');
 }
 
-if ($sort == "lastupdate") {
+if ($sort == "last_update") {
    $HTML .= freshports_echo_HTML('<td nowrap><b>Last Update</b> ' . freshports_Ascending_Icon() . '</td>');
 } else {
    $HTML .= freshports_echo_HTML('<td nowrap><a href="categories.php?sort=lastupdate"><b>Last Update</b></a></td>');

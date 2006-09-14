@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing.php,v 1.1.2.30 2006-07-04 20:18:57 dan Exp $
+	# $Id: missing.php,v 1.1.2.31 2006-09-14 16:50:25 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -61,6 +61,8 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 
 		list($category, $port, $extra) = explode('/', PATH_NAME);
 		if ($Debug) echo "extra is '" . $extra . "'<br>";
+		if ($Debug) echo "category: '" . $category . "'<br>";
+		if ($Debug) echo "port: '" . $port . "'<br>";
 		if ($extra == '' && $port != '' || $FilesRequest) {
 			if ($FilesRequest) {
 				if ($Debug) echo 'going for files.php<br>';

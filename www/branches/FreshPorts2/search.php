@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.88 2006-06-27 01:24:52 dan Exp $
+	# $Id: search.php,v 1.1.2.89 2006-09-14 16:16:40 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -525,8 +525,8 @@ if ($Debug) {
 
 $result  = pg_exec($db, $sql);
 if (!$result) {
-	echo pg_errormessage() . '<pre>' . $sql . '</pre>';
-	exit;
+  syslog(LOG_NOTICE, pg_errormessage() . ': ' . $sql);
+  die('something went terribly wrong.  Sorry.');
 }
 $NumRows = pg_numrows($result);
 

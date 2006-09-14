@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.89 2006-09-14 16:16:40 dan Exp $
+	# $Id: search.php,v 1.1.2.90 2006-09-14 16:35:23 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -437,19 +437,19 @@ switch ($method) {
 				break;
 
 			case 'depends_build':
-				$sql .= "\n     and levenshtein(ports.depends_build, '$query') < 4";
+				$sql .= "\n     and levenshtein(substring(ports.depends_build for 255), '$query') < 4";
 				break;
 
 			case 'depends_lib':
-				$sql .= "\n     and levenshtein(ports.depends_lib, '$query') < 4";
+				$sql .= "\n     and levenshtein(substring(ports.depends_lib for 255), '$query') < 4";
 				break;
 
 			case 'depends_run':
-				$sql .= "\n     and (levenshtein(ports.depends_build, '$query') < 4";
+				$sql .= "\n     and levenshtein(substring(ports.depends_build for 255), '$query') < 4";
 				break;
 
 			case 'depends_all':
-				$sql .= "\n     and (levenshtein(ports.depends_build, '$query') < 4 OR levenshtein(ports.depends_lib, '$query') < 4 OR levenshtein(ports.depends_run, '$query') < 4)";
+				$sql .= "\n     and (levenshtein(substring(ports.depends_build for 255), '$query') < 4 OR levenshtein(substring(ports.depends_lib for 255), '$query') < 4 OR levenshtein(substring(ports.depends_run for 255), '$query') < 4)";
 				break;
 
 			case 'maintainer':
@@ -528,6 +528,7 @@ if (!$result) {
   syslog(LOG_NOTICE, pg_errormessage() . ': ' . $sql);
   die('something went terribly wrong.  Sorry.');
 }
+
 $NumRows = pg_numrows($result);
 
 #echo "NumRows=$NumRows<br>\n";

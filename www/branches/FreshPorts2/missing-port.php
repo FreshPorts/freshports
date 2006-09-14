@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.81 2006-09-01 03:40:34 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.82 2006-09-14 17:02:25 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -13,6 +13,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/watch-lists.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/cache.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/cache-port.php');
+	
 
 
 #
@@ -87,14 +88,24 @@ function freshports_PortDisplay($db, $category, $port) {
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
 
+	# these two options must be the last on the line.  And as such are mutually exclusive
+	define('BYPASSCACHE',  'bypasscache=1');  # do not read the cache for display
+	define('REFRESHCACHE', 'refreshcache=1'); # refresh the cache
+
+	$BypassCache  = substr($_SERVER["REQUEST_URI"], strlen($_SERVER["REQUEST_URI"]) - strlen(BYPASSCACHE))  == BYPASSCACHE;
+	$RefreshCache = substr($_SERVER["REQUEST_URI"], strlen($_SERVER["REQUEST_URI"]) - strlen(REFRESHCACHE)) == REFRESHCACHE;
+
 	$Debug = 0;
+	
+	if ($Debug) echo 'into ' . __FILE__ . ' now' . "<br>\n";
 
 	$port_display = new port_display($db, $User);
 	$port_display->SetDetailsFull();
 
 	$Cache = new CachePort();
 	$result = $Cache->Retrieve($category, $port, CACHE_PORT_DETAIL);
-	if (!$result) {
+	if (!$result && !$BypassCache && !$RefreshCache) {
+		if ($Debug) echo "found something from the cache<br>\n";
 		$HTML = $Cache->CacheDataGet();
 		#
 		# we need to know the element_id of this port
@@ -120,9 +131,12 @@ function freshports_PortDisplay($db, $category, $port) {
 
 		$HTML = substr($HTML, $EndOfFirstLine + 1);
 	} else {
+		if ($Debug) echo "found NOTHING in cache<br>\n";
 		$HTML = '';
 		$port_id = freshports_GetPortID($db, $category, $port);
 		if (!IsSet($port_id)) {
+			if ($Debug) echo "$category/$port is not a port<br>\n";
+
 			return -1;
 		}
 
@@ -139,8 +153,11 @@ function freshports_PortDisplay($db, $category, $port) {
 
 		$HTML .= freshports_DisplayPortCommits($MyPort);
 
-		$Cache->CacheDataSet($MyPort->{'element_id'} . "\n" . $HTML);
-		$Cache->Add($MyPort->category, $MyPort->port, CACHE_PORT_DETAIL);
+		# If we are not reading 
+		if (!$BypassCache || $RefreshCache) {
+			$Cache->CacheDataSet($MyPort->{'element_id'} . "\n" . $HTML);
+			$Cache->Add($MyPort->category, $MyPort->port, CACHE_PORT_DETAIL);
+		}
 
 		$ElementID   = $MyPort->{'element_id'};
 		$OnWatchList = $MyPort->{'onwatchlist'};

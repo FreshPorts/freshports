@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.274 2006-09-16 14:34:33 dan Exp $
+	# $Id: freshports.php,v 1.4.2.275 2006-09-16 23:18:45 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -1577,6 +1577,7 @@ function freshports_SideBar() {
 
 </P>
 
+
 <TABLE WIDTH="' . $ColumnWidth . '" BORDER="1" CELLSPACING="0" CELLPADDING="5">
 	<TR>
 		<TD BGCOLOR="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><BIG><B>Ports</B></BIG></FONT></TD>
@@ -1592,6 +1593,19 @@ function freshports_SideBar() {
 	</TD>
 	</TR>
 </TABLE>';
+
+
+	if (file_exists($_SERVER["DOCUMENT_ROOT"] . "/../dynamic/vuln-latest.html")) {
+$HTML .= '<br>
+<TABLE WIDTH="' . $ColumnWidth . '" BORDER="1" CELLSPACING="0" CELLPADDING="5">
+	<TR>
+		<TD BGCOLOR="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><BIG><B>Latest Vulnerabilities</B></BIG></FONT></TD>
+	</TR>
+	<TR><td>
+	' . file_get_contents($_SERVER["DOCUMENT_ROOT"] . "/../dynamic/vuln-latest.html") . "\n" . '
+	</td></TR>
+</TABLE>';
+	}
 
 if (IsSet($visitor)) {
 

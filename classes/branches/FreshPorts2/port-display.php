@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-display.php,v 1.1.2.13 2006-08-16 18:30:26 dan Exp $
+	# $Id: port-display.php,v 1.1.2.14 2006-09-16 23:17:20 dan Exp $
 	#
 	# Copyright (c) 2005-2006 DVL Software Limited
 	#
@@ -453,7 +453,8 @@ class port_display {
 		if ($this->ShowPackageLink || $this->ShowEverything) {
 			$HTML .= "\n<hr>\n";
 			if ($port->IsDeleted()) {
-				$HTML .= 'No installation instructions: this port has been deleted.';
+				$HTML .= '<p>No installation instructions: this port has been deleted.</p>';
+				$HTML .= '<p>The package name of this deleted port was: <code class="code">' . $port->latest_link . '</code></p>';
 			} else {
 				$HTML .= '<p><b>To install <a href="/faq.php#port" TITLE="what is a port?">the port</a>:</b> <code class="code">cd /usr/ports/'  . $port->category . '/' . $port->port . '/ && make install clean</code><br>';
 				if (IsSet($port->no_package) && $port->no_package != '') {

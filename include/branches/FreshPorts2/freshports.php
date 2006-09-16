@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.273 2006-08-02 18:42:15 dan Exp $
+	# $Id: freshports.php,v 1.4.2.274 2006-09-16 14:34:33 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -1813,7 +1813,11 @@ function PeopleWatchingThisPortAlsoWatch($dbh, $element_id) {
 }
 
 function freshports_PortsMonitorURL($Category, $Port) {
-	return '<a href="' . PORTSMONURL . '?category=' . $Category . '&amp;portname=' . $Port . '" TITLE="Ports Monitor">PortsMon</a>';
+	# we have a problem with + in portnames.
+	# works: http://portsmon.freebsd.org/portoverview.py?category=editors&portname=vim6%2Bruby
+	# fails: http://portsmon.freebsd.org/portoverview.py?category=editors&portname=vim6+ruby
+	#
+	return '<a href="' . PORTSMONURL . '?category=' . urlencode($Category) . '&amp;portname=' . urlencode($Port) . '" TITLE="Ports Monitor">PortsMon</a>';
 }
 
 

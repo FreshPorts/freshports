@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: vuxml.php,v 1.1.2.14 2006-07-31 22:21:59 dan Exp $
+	# $Id: vuxml.php,v 1.1.2.15 2006-09-17 05:22:18 dan Exp $
 	#
 	# Copyright (c) 2004 DVL Software Limited
 	#
@@ -41,7 +41,11 @@ This page displays <a href="<?php echo VUXMLURL; ?>">vulnerability information</
 	}
 
 	if (!IsSet($_REQUEST['list'])) {
-		echo '<p><a href="' . $_SERVER["PHP_SELF"] . '?list">List all Vulnerabilities</a></p>';
+		echo '<p><a href="' . $_SERVER["PHP_SELF"] . '?list">List all Vulnerabilities, by package</a></p>';
+	}
+
+	if (!IsSet($_REQUEST['all'])) {
+		echo '<p><a href="' . $_SERVER["PHP_SELF"] . '?all">List all Vulnerabilities, by vuln</a></p>';
 	}
 
 
@@ -123,7 +127,7 @@ ORDER BY lower(VN.name), V.vid
 			$NumPackages = 0;
 			$VIDs        = array();
 			echo '<table border="1">' . "\n";
-			echo '<th colspan="3">VuXML entries as process by FreshPorts</th>';
+			echo '<th colspan="3">VuXML entries as processed by FreshPorts</th>';
 			echo '<tr><td><b>';
 			echo 'package';
 			echo '</b></td><td align="center"><b>';
@@ -159,6 +163,89 @@ ORDER BY lower(VN.name), V.vid
 
 			echo "<p>Number of packages: $NumPackages<br>\n";
 			echo "<p>Number of vulns   : " . count($VIDs) . "<br>\n";
+		}
+
+	}
+
+
+	if (IsSet($_REQUEST['all'])) {
+
+		function vuxml_name_link($VID, $Date, $Description, $PortArray) {
+			$HTML = '<tr><td nowrap valign="top">';
+			
+			$HTML .= $Date;
+			$HTML .= '</td><td valign="top">';
+			
+			$Narrative = trim(strip_tags($Description));
+			$HTML .= $Narrative . ' <a href="/vuxml.php?vid=' . $VID . '">more...</a>';
+			$HTML .= '</td><td align="left" valign="top">';
+
+			foreach ($PortArray as $package) {
+				$HTML .= '<a href="/?package=' . $package . '">' . $package . '</a> ';
+				$HTML .= '<br>';
+			}
+			
+
+			$HTML .= '</td></tr>' . "\n";
+
+			return $HTML;
+		}
+
+	
+
+
+		$sql = "
+SELECT V.vid,
+       VN.name,
+       V.description,
+       coalesce(V.date_modified, V.date_entry, V.date_discovery)::date as date
+  FROM vuxml V left outer join vuxml_affected VA on VA.vuxml_id          = V.id
+       left outer join vuxml_names VN on VN.vuxml_affected_id = VA.id
+ORDER BY coalesce(V.date_modified, V.date_entry, V.date_discovery)::date desc, V.vid, lower(VN.name)
+";
+
+		$result = pg_exec($db, $sql);
+		if ($result) {
+			$numrows = pg_numrows($result);
+			if ($numrows == 0) {
+				echo '<p>no vulnerabilities found.  it looks as if the data is missing.</p>';
+			} else {
+
+				$PortArray   = array();
+				$LastVID     = '';
+				$NumPackages = 0;
+				$VIDs        = 0;
+				echo '<table border="1" cellpadding="5" cellspacing="0">' . "\n";
+				echo '<th colspan="3">VuXML entries as processed by FreshPorts</th>';
+				echo '<tr><td><b>Date</b></td><td><b>';
+				echo 'Decscription';
+				echo '</b></td><td align="center"><b>Port(s)</b></td></tr>' . "\n";
+				for ($i = 0; $i < $numrows; $i++) {
+					$myrow = pg_fetch_array($result, $i);
+
+					$NumPackages += 1;
+					if ($LastVID == '') {
+						$LastVID = $myrow['vid'];
+					}
+					
+					if ($LastVID != $myrow['vid']) {
+						$VIDs++;
+						echo vuxml_name_link($LastVID, $Date, $Description, $PortArray);
+						$PortArray = array();
+						$LastVID = $myrow['vid'];
+					}
+
+					$PortArray[$myrow['name']] = $myrow['name'];
+					$Description = $myrow['description'];
+					$Date        = $myrow['date'];
+				}
+				$VIDs++;
+				echo vuxml_name_link($LastVID, $Date, $Description, $PortArray);
+				echo "</table>\n";
+
+				echo "<p>Number of vulns/ports : " . $numrows . "<br>\n";
+				echo "<p>Number of vulns   : " . $VIDs . "<br>\n";
+			}
 		}
 
 	}

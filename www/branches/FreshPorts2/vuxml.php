@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: vuxml.php,v 1.1.2.15 2006-09-17 05:22:18 dan Exp $
+	# $Id: vuxml.php,v 1.1.2.16 2006-09-18 11:37:44 dan Exp $
 	#
 	# Copyright (c) 2004 DVL Software Limited
 	#
@@ -177,7 +177,7 @@ ORDER BY lower(VN.name), V.vid
 			$HTML .= '</td><td valign="top">';
 			
 			$Narrative = trim(strip_tags($Description));
-			$HTML .= $Narrative . ' <a href="/vuxml.php?vid=' . $VID . '">more...</a>';
+			$HTML .= $Narrative . ' <a href="' . VUXMLURL . $VID . '.html">more...</a>';
 			$HTML .= '</td><td align="left" valign="top">';
 
 			foreach ($PortArray as $package) {

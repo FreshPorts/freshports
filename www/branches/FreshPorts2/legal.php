@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: legal.php,v 1.1.2.16 2006-01-07 21:29:10 dan Exp $
+	# $Id: legal.php,v 1.1.2.17 2006-09-21 20:25:07 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -36,7 +36,7 @@
   </TR>
   <TR><TD>
   <p>Copyright <?php echo COPYRIGHTYEARS; ?> DVL Software
-  Limited, PO Box 11-310, Wellington, New Zealand.All rights reserved.&nbsp; Copyright in
+  Limited, PO Box 11-310, Wellington, New Zealand. All rights reserved.&nbsp; Copyright in
   this document is owned by DVL Software Limited. &nbsp; Any person is hereby authorized to
   view, copy, print, and distribute this document subject to the following conditions: <ol>
     <li>The document may be used for informational purposes only.</li>

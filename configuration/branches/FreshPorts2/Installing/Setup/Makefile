@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.1.2.14 2006-09-11 02:18:39 dan Exp $
+# $Id: Makefile,v 1.1.2.15 2006-09-25 21:15:57 dan Exp $
 #
 # Install the ports needed by FreshPorts
 #
@@ -38,6 +38,7 @@ RUN_DEPENDS=	${LOCALBASE}/bin/svstat:${PORTSDIR}/sysutils/daemontools \
 		${LOCALBASE}/bin/mysql_install_db:${PORTSDIR}/databases/mysql41-server \
 		${PREFIX}/share/pear/HTML/Common.php:${PORTSDIR}/devel/pear-HTML_Common \
 		${PREFIX}/share/pear/HTML/Page2.php:${PORTSDIR}/devel/pear-HTML_Page2 \
+		${PREFIX}/share/pear/Pager/Pager.php:${PORTSDIR}/devel/pear-Pager \
 		${SITE_PERL}/Class/Observable.pm:${PORTSDIR}/devel/p5-Class-Observable \
 		${SITE_PERL}/LWP/Simple.pm:${PORTSDIR}/www/p5-libwww \
 		${LOCALBASE}/bin/php:${PORTSDIR}/lang/php4-extensions

@@ -31,5 +31,9 @@ outside the mechanism provided by FeedCreator, which is quite good by the way.</
 <p>
 15 July 2006: The feeds should now be updated after each commit.  They are no longer static.
 
+<p>
+22 September 2006: The feeds have been moved to /backend/ instead of /news/.
+The latter conflicted with the category of the same name.
+
 </body>
 </html>

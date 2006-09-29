@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: databaselogin.php,v 1.1.2.5 2006-09-29 12:53:35 dan Exp $
+	# $Id: databaselogin.php,v 1.1.2.6 2006-09-29 15:24:26 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -8,9 +8,6 @@
 	# this file is merely a placeholder for the readfile.
 	# see common.php for the configuration settings.
 
-openlog('FRESHPORTS PID', LOG_PID | LOG_NDELAY, LOG_SYSLOG);
-syslog(LOG_NOTICE, $_SERVER["REQUEST_URI"]);
-closelog();
 	require_once("$PathToDatabaseConfigFile/database.php");
 
 	if (!$AllowUserChanges) {

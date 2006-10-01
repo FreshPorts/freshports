@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: newsfeeds.php,v 1.1.2.1 2005-11-30 00:32:42 dan Exp $
+	# $Id: newsfeeds.php,v 1.1.2.2 2006-10-01 18:17:18 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -25,12 +25,18 @@
 
 	$ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['SERVER_NAME']);
 
-	$URL  = "http://$ServerName/news.php";
+	$URL  = "http://$ServerName/backend/news.php";
 	$HREF = "<A HREF=\"$URL\">$URL</A>";
 
 	$page->addBodyContent('
 	<OL>
 	<LI>An RSS feed : ' . $HREF . '
+	<p>Take your pick of different formats:');
+	
+	$URL  = "http://$ServerName/backend/";
+	$HREF = "<A HREF=\"$URL\">$URL</A>";
+	$page->addBodyContent($HREF . '
+	
 	<p>This RSS feed takes the following optional parameters:
 	<ul>
 	<li><b>MaxArticles</b> : number of ports to report upon (min 1, max 20, default 20)
@@ -48,14 +54,14 @@
 	</P>
 	</LI>');
 
-	$URL  = "http://$ServerName/sidebar.php";
+	$URL  = "http://$ServerName/backend/sidebar.php";
 	$HREF = "<A HREF=\"$URL\">$URL</A>";
 
 	$page->addBodyContent('
 	<LI>A Netscape 6, SideBar type feed : ' . $HREF . '.  This can be added
 		to your browser using the button in the right hand column of this page.</LI>');
 
-	$URL  = "http://$ServerName/rss/ports-new.php";
+	$URL  = "http://$ServerName/backend/ports-new.php";
 	$HREF = "<A HREF=\"$URL\">$URL</A>";
 
 	$page->addBodyContent('
@@ -64,7 +70,7 @@
 	<li><p>A Personal News feed for each of your watch lists. Look for the link under
 		the <code>Login</code> box after you have logged in.</li>
 
-	<li><p>The news feed for our News website, <a href="http://news.freshports.org/">FreshPorts News</a>.
+	<li><p>The blog for this website, <a href="http://news.freshports.org/">FreshPorts News</a>.
 
 	</OL>');
 

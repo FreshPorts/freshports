@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports_page_list_ports.php,v 1.1.2.18 2006-10-01 19:02:03 dan Exp $
+	# $Id: freshports_page_list_ports.php,v 1.1.2.19 2006-10-01 20:04:49 dan Exp $
 	#
 	# Copyright (c) 2005-2006 DVL Software Limited
 	#
@@ -120,7 +120,7 @@ class freshports_page_list_ports extends freshports_page {
 	}
 	
 	function getSQLCount() {
-		$sql  = 'SELECT count(*) FROM ports';
+		$sql  = 'SELECT count(*) FROM ports LEFT OUTER JOIN ports_vulnerable PV on PV.port_id = ports.id';
 		$sql .= " WHERE ports.status = '" . $this->getStatus() . "'";
 		if ($this->_condition) {
 			$sql .= "\n   AND " . $this->_condition;

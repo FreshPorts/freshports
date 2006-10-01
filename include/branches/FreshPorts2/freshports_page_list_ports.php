@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports_page_list_ports.php,v 1.1.2.17 2006-10-01 12:43:13 dan Exp $
+	# $Id: freshports_page_list_ports.php,v 1.1.2.18 2006-10-01 19:02:03 dan Exp $
 	#
 	# Copyright (c) 2005-2006 DVL Software Limited
 	#
@@ -386,13 +386,18 @@ SELECT gmt_format(max(commit_log.date_added)) as last_modified
 			$this->AddBodyContent('<tr><td align="center">');
 			$this->AddBodyContent($PageLinks);
 			$this->AddBodyContent('</td></tr>');
-			unset($PageLinks);
 		}
 
 		$this->addBodyContent($this->getPorts($NumPorts));
 
 		$this->addBodyContent($SortStatement); 
 
+		if ($PageLinks != '') {
+			$this->AddBodyContent('<tr><td align="center">');
+			$this->AddBodyContent($PageLinks);
+			$this->AddBodyContent('</td></tr>');
+		}
+		
 		return parent::toHTML();
 	}
 }

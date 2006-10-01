@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-list.php,v 1.1.2.7 2006-10-01 20:53:12 dan Exp $
+	# $Id: watch-list.php,v 1.1.2.8 2006-10-01 21:08:10 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -35,6 +35,8 @@ function DisplayNewsFeed($db, $token) {
 
 	$ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['SERVER_NAME']);
 
+	header('Content-type: application/rss+xml');
+
 	$HTML  = '<!DOCTYPE rss PUBLIC "-//Netscape Communications//DTD RSS 0.91//EN"' . "\n";
 	$HTML .= '        "http://my.netscape.com/publish/formats/rss-0.91.dtd">'      . "\n";
 	$HTML .= '<rss version="0.91">'                                                . "\n";
@@ -52,8 +54,8 @@ function DisplayNewsFeed($db, $token) {
 
 	$HTML .= '  <image>'                                                                       . "\n";
 	$HTML .= '    <title>FreshPorts - The place for ports</title>'                             . "\n";
-	$HTML .= '    <url>http://'  . $_SERVER["HTTP_HOST"] . '/images/freshports_mini.jpg</url>' . "\n";
-	$HTML .= '    <link>http://' . $_SERVER["HTTP_HOST"] . '/</link>'                          . "\n";
+	$HTML .= '    <url>http://'  . $ServerName . '/images/freshports_mini.jpg</url>' . "\n";
+	$HTML .= '    <link>http://' . $ServerName . '/</link>'                          . "\n";
 	$HTML .= '    <width>128</width>'                                                          . "\n";
 	$HTML .= '    <height>28</height>'                                                         . "\n";
 	$HTML .= '    <description>FreshPorts - The place for ports</description>'                 . "\n";

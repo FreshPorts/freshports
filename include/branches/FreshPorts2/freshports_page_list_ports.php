@@ -1,13 +1,13 @@
 <?php
 	#
-	# $Id: freshports_page_list_ports.php,v 1.1.2.16 2006-09-11 13:35:02 dan Exp $
+	# $Id: freshports_page_list_ports.php,v 1.1.2.17 2006-10-01 12:43:13 dan Exp $
 	#
 	# Copyright (c) 2005-2006 DVL Software Limited
 	#
 
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports_page.php');
-   require_once('Pager/Pager.php');
+	require_once('Pager/Pager.php');
 
 class freshports_page_list_ports extends freshports_page {
 
@@ -17,13 +17,31 @@ class freshports_page_list_ports extends freshports_page {
 	var $_description;
 	var $_port_status = 'A';  # show only active ports
 
+	var $_result;
 	var $_condition   = '';   # any conditions on the SQL
 
-    function freshports_page_list_ports($attributes = array()) {
+	var $_pager;				# if set, a Pager::Pager() object
+								# set 'pager' in the attributes
+
+	# if either of these two are set, it implies a pager is required
+	var $_pageSize    = 100;	# max number of items per page.
+	var $_pageNumber  = 1;		# the page number to display now
+
+	function freshports_page_list_ports($attributes = array()) {
 		$this->freshports_page($attributes);
 		
 		GLOBAL $User;
 		$this->User = $User;
+
+		$page_number = 1;
+		if (IsSet($_REQUEST['page'])) {
+			$page_number = intval($_REQUEST['page']);
+			if ($page_number != $_REQUEST['page']) {
+				$page_number = 1;
+			}
+		}
+
+		$this->setPageNumber($page_number);
 	}
 	
 	function SetUser($User) {
@@ -65,7 +83,66 @@ class freshports_page_list_ports extends freshports_page {
 	}
 
 	function getSQL() {
-		return $this->_sql;
+		$sql = $this->_sql;
+		
+		$NumPorts = $this->getRowCount();
+
+		if (IsSet($this->_pager)) {
+			unset($this->_pager);
+		}
+
+		$params = array(
+				'mode'        => 'Sliding',
+				'perPage'     => $this->_pageSize,
+				'delta'       => 5,
+				'totalItems'  => $NumPorts,
+				'urlVar'      => 'page',
+				'currentPage' => $this->_pageNumber,
+				'spacesBeforeSeparator' => 1,
+				'spacesAfterSeparator'  => 1,
+			);
+		$this->_pager = & Pager::factory($params);
+		unset($params);
+
+		if ($this->_pageNumber > 1) {
+			$offset = $this->_pager->getOffsetByPageId();
+			$sql .= "\nOFFSET " . ($offset[0] - 1);
+			unset($offset);
+		}
+
+		if ($this->_pageSize) {
+			$sql .= "\nLIMIT " . $this->_pageSize;
+		}
+		
+#		echo '<pre>From line ' . __LINE__ . ' of ' . __FILE__ . ': ' . $sql . '</pre>';exit;
+#echo 'in GetSQL now';
+		return $sql;
+	}
+	
+	function getSQLCount() {
+		$sql  = 'SELECT count(*) FROM ports';
+		$sql .= " WHERE ports.status = '" . $this->getStatus() . "'";
+		if ($this->_condition) {
+			$sql .= "\n   AND " . $this->_condition;
+		}
+
+#		echo '<pre>From line ' . __LINE__ . ' of ' . __FILE__ . ': ' . $sql . '</pre>';exit;
+
+		return $sql;
+	}
+
+	function getRowCount() {
+		$numrows = -1;
+		$result = pg_exec($this->_db, $this->getSQLCount());
+		if ($result) {
+			$myrow = pg_fetch_array ($result);
+			$numrows = $myrow[0];
+#			echo "There are $numrows to fetch<BR>\n";
+		} else {
+			echo pg_errormessage();
+		}
+		
+		return $numrows;
 	}
 
 	function setSQL($Condition, $UserID=0) {
@@ -127,10 +204,7 @@ WHERE ports.element_id  = element.id
 			$this->_condition = $Condition;
 		}
 
-		$this->_sql .= " order by " . $this->getSort();
-#		$this->_sql .= " limit 20";
-
-#		echo '<pre>' . $this->_sql . '</pre>';
+		$this->_sql .= "\n order by " . $this->getSort();
 	}
 
 	function getLastModified() {
@@ -183,24 +257,29 @@ SELECT gmt_format(max(commit_log.date_added)) as last_modified
 		return $last_modified;
 	}
 
-	function getPorts() {
-		$HTML = '';
-
+	function executeQuery() {
+		$numrows = -1;
 		if ($this->getDebug()) {
 			$HTML .= '<pre>' . $this->getSQL() . '</pre>';
 		}
 
-		$result = pg_exec($this->_db, $this->getSQL());
-		if (!$result) {
+		$this->_result = pg_exec($this->_db, $this->getSQL());
+		if (!$this->_result) {
 			echo pg_errormessage();
 		} else {
-			$numrows = pg_numrows($result);
+			$numrows = pg_numrows($this->_result);
 #			echo "There are $numrows to fetch<BR>\n";
 		}
+		
+		return $numrows;
+	}
+
+	function getPorts($NumPorts) {
+		$HTML = '';
 
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/include/list-of-ports.php');
 
-		$HTML .= freshports_ListOfPorts($result, $this->_db, 'Y', $this->getShowCategoryHeaders(), $this->User);
+		$HTML .= freshports_ListOfPorts($this->_result, $this->_db, 'Y', $this->getShowCategoryHeaders(), $this->User, $NumPorts);
 
 		return $HTML;
 	}
@@ -272,10 +351,24 @@ SELECT gmt_format(max(commit_log.date_added)) as last_modified
 		return $HTML;
 	}
 
+	function setPageSize($PageSize) {
+		$this->_pageSize = $PageSize;
+	}
 
+	function setPageNumber($PageNumber) {
+		$this->_pageNumber = $PageNumber;
+	}
+
+	function pageLinks() {
+		$HTML = '';
+		$links = $this->_pager->GetLinks();
+
+		$HTML .= $links['all'];
+
+		return $HTML;
+	}
 
 	function toHTML() {
-
 		$this->addBodyContent('<TR><TD>' . $this->getDescription() . '</TD></TR>');
 
 		// make sure the value for $sort is valid
@@ -284,7 +377,19 @@ SELECT gmt_format(max(commit_log.date_added)) as last_modified
 
 		$this->addBodyContent($SortStatement); 
 
-		$this->addBodyContent($this->getPorts());
+		$NumPorts = $this->getRowCount();
+		$numrows  = $this->ExecuteQuery();
+
+
+		$PageLinks = $this->pageLinks();
+		if ($PageLinks != '') {
+			$this->AddBodyContent('<tr><td align="center">');
+			$this->AddBodyContent($PageLinks);
+			$this->AddBodyContent('</td></tr>');
+			unset($PageLinks);
+		}
+
+		$this->addBodyContent($this->getPorts($NumPorts));
 
 		$this->addBodyContent($SortStatement); 
 

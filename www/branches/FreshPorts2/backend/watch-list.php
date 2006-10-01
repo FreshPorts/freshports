@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-list.php,v 1.1.2.6 2006-07-27 19:10:33 dan Exp $
+	# $Id: watch-list.php,v 1.1.2.7 2006-10-01 20:53:12 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -117,6 +117,7 @@ function DisplayNewsFeed($db, $token) {
 	   AND WLE.watch_list_id = $wlid";
 	
 	$sql .= " order by $sort ";
+	$sql .= " LIMIT 100 ";
 
 #	syslog (LOG_NOTICE, $wlid . ' ' . $sort);
 	
@@ -212,9 +213,6 @@ function DisplayWatchListNewsFeeds($db, $UserID) {
 
 	echo $HTML;	
 }
-
-	header('HTTP/1.1 503 Service Unavailable');
-	exit;
 
 	if (IsSet($_REQUEST['id'])) {
 		$token = $_REQUEST['id'];

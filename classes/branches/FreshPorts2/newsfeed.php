@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: newsfeed.php,v 1.1.2.8 2006-07-27 19:06:42 dan Exp $
+	# $Id: newsfeed.php,v 1.1.2.9 2006-10-01 12:38:50 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -122,6 +122,23 @@ limit 30";
 #	die("<pre>$sql</pre>");
 
 	$ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['SERVER_NAME']);
+	
+		$item = new FeedItem(); 
+		$item->title       = "NEWSFEED HAVE MOVED!";
+		$item->link        = 'http://' . $ServerName . '/backend/';
+		$item->description = "Please read, newsfeed URLs have changed.";
+	
+		//optional
+		//item->descriptionTruncSize = 500;
+		$item->descriptionHtmlSyndicated = true;
+	
+		$item->date   = strtotime("now");
+		$item->source = $_SERVER['HTTP_HOST']; 
+		$item->author = 'editor@FreshPorts.org'; 
+		$item->guid   = 'http://www.freshports.org/phorum/read.php?f=1&rmp;i=1133&rmp;t=1133';
+	 
+		$rss->addItem($item); 
+
 
 	$result = pg_query($db, $sql);
 	while ($myrow = pg_fetch_array($result)) {

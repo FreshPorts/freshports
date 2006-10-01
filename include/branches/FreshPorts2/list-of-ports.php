@@ -1,11 +1,11 @@
 <?php
 	#
-	# $Id: list-of-ports.php,v 1.1.2.14 2006-07-02 20:40:46 dan Exp $
+	# $Id: list-of-ports.php,v 1.1.2.15 2006-10-01 12:40:01 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
-function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeaders, $User) {
+function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeaders, $User, $PortCount = -1) {
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
@@ -18,9 +18,17 @@ function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeade
 	$LastCategory         = '';
 	$GlobalHideLastChange = 'N';
 	$numrows = pg_numrows($result);
+	if ($PortCount == -1) {
+		$PortCount = $numrows;
+	}
 
-	$HTML = "<TR><TD>$numrows ports found</TD></TR>\n";
+	$PortCountText = "<TR><TD>$PortCount ports found.";
+	if ($numrows != $PortCount) {
+		$PortCountText .= " (showing only $numrows ports on this page)";
+	}
+	$PortCountText .= "</TD></TR>\n";
 
+	$HTML .= $PortCountText;
 	$HTML .= "<TR><TD>\n";
 	
 	$HTML .= "<br><center>\n" . Ad_728x90() . "\n</center>\n";
@@ -67,7 +75,7 @@ function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeade
 
 	$HTML .= "</TD></TR>\n";
 
-	$HTML .= "<TR><TD>$numrows ports found</TD></TR>\n";
+	$HTML .= $PortCountText;
 
 	return $HTML;
 

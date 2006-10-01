@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.276 2006-10-01 14:31:59 dan Exp $
+	# $Id: freshports.php,v 1.4.2.277 2006-10-01 18:21:57 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -1568,7 +1568,7 @@ function freshports_SideBar() {
    </TR>
    </TABLE>
 
-' . '<div align="center">' . Ad_Referral_120x60() . '
+' . '<br><div align="center">' . Ad_Referral_120x60() . '
 
 <p><SMALL>Server and bandwidth provided by <A HREF="http://www.bchosting.com/" TARGET="_new" TITLE="Our major sponsor">BChosting.com</A></SMALL></p>
 </div>

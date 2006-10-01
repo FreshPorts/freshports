@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.277 2006-10-01 18:21:57 dan Exp $
+	# $Id: freshports.php,v 1.4.2.278 2006-10-01 18:32:39 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -816,7 +816,7 @@ function freshports_CategoryIDFromCategory($category, $db) {
 
 function freshports_SideBarHTML($Self, $URL, $Label, $Title) {
    if ($Self == $URL || ($Self == '/index.php' && $URL == '/')) {
-      $HTML = $Title;
+      $HTML = $Label;
    } else {
       $HTML = '<a href="' . $URL . '" TITLE="' . $Title . '">' . $Label . '</a>';
    }
@@ -1584,6 +1584,8 @@ function freshports_SideBar() {
 	<FONT SIZE="-1"><A HREF="/phorum/" TITLE="Discussion Forums">Forums</A></FONT><BR>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/categories.php",       "Categories",       "List of all Port categories")   . '</FONT><BR>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/ports-deleted.php",    "Deleted ports",    "All deleted ports"          )   . '</FONT><BR>
+	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/backend/newsfeeds.php",    "Newsfeeds",    "Newsfeeds for just about everything"          )   . '</FONT><BR>
+	<FONT SIZE="-1">' . freshports_SideBarHTML('', 'http://news.freshports.org/',            "Blog",     "The Official FreshPorts Blog"                ) . '</FONT><BR>
 	
 	</TD>
 	</TR>
@@ -1697,7 +1699,6 @@ $HTML .= '
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/about.php",           "What is FreshPorts?", "A bit of background on FreshPorts"    ) . '</FONT><BR>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/authors.php",         "About the Authors",   "Who wrote this stuff?"                ) . '</FONT><BR>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/faq.php",             "FAQ",                 "Frequently Asked Questions"           ) . '</FONT><BR>
-	<FONT SIZE="-1">' . freshports_SideBarHTML('', 'http://news.freshports.org/',            "FreshPorts News",     "News about FreshPorts"                ) . '</FONT><BR>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/how-big-is-it.php",   "How big is it?",      "How many pages are in this website?"  ) . '</FONT><BR>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/release-2004-10.php", "The latest upgrade!", "Details on the latest website upgrade") . '</FONT><BR>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/privacy.php",         "Privacy",             "Our privacy statement"                ) . '</FONT><BR>

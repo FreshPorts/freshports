@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: freshports_page.php,v 1.1.2.7 2006-07-02 20:40:46 dan Exp $
+	# $Id: freshports_page.php,v 1.1.2.8 2006-10-01 12:41:31 dan Exp $
 	#
-	# Copyright (c) 2005 DVL Software Limited
+	# Copyright (c) 2005-2006 DVL Software Limited
 	#
 
 	set_include_path('/usr/local/share/pear');
@@ -18,7 +18,7 @@ class freshports_page extends HTML_Page2 {
 	var $_db;
 	var $_debug             = 0;
 
-    function freshports_page($attributes = array()) {
+	function freshports_page($attributes = array()) {
 
 		GLOBAL $ShowAds;
 
@@ -59,7 +59,7 @@ class freshports_page extends HTML_Page2 {
 		}
 
 		if ($this->_ShowAnnouncements) {
-	
+
 			$Announcement = new Announcement($this->$_db);
 
 			$NumRows = $Announcement->FetchAllActive();
@@ -97,7 +97,6 @@ class freshports_page extends HTML_Page2 {
 		if (!IsSet($attributes['prolog'])) {
 			$attributes['prolog'] = 'false';
 		}
-
 	}
 
 	function getDebug() {
@@ -107,7 +106,4 @@ class freshports_page extends HTML_Page2 {
 	function setDebug($Debug) {
 		$this->_debug = $Debug;
 	}
-
-
-
 }

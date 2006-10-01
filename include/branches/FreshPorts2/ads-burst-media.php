@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ads-burst-media.php,v 1.1.2.1 2006-08-01 17:34:13 dan Exp $
+	# $Id: ads-burst-media.php,v 1.1.2.2 2006-10-01 14:30:54 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -39,7 +39,7 @@ function Ad_PhpPgAdsBase($Zone, $N) {
 function Ad_125x125() {
   return '
 <!-- BEGIN RICH-MEDIA Burst CODE -->
-<script language="JavaScript">
+<script language="JavaScript" type="text/javascript">
 rnum=Math.round(Math.random() * 100000); ts=String.fromCharCode(60);
 if (window.self != window.top) { nf=\'\' } else { nf=\'NF/\' };
 document.write(ts+\'script src="http://www.burstnet.com/cgi-bin/ads/cb4556a.cgi/v=2.1S/sz=125x125A/\'+rnum+\'/\'+nf+\'RETURN-CODE/JS/">\'+ts+\'/script>\');
@@ -53,7 +53,7 @@ document.write(ts+\'script src="http://www.burstnet.com/cgi-bin/ads/cb4556a.cgi/
 function Ad_468x60() {
   return '
 <!-- BEGIN RICH-MEDIA NETWORK CODE -->
-<script language="JavaScript">
+<script language="JavaScript" type="text/javascript">
 rnum=Math.round(Math.random() * 100000); ts=String.fromCharCode(60);
 if (window.self != window.top) { nf=\'\' } else { nf=\'NF/\' };
 
@@ -69,7 +69,7 @@ document.write(ts+\'script src="http://www.burstnet.com/cgi-bin/ads/ad4556a.cgi/
 function Ad_728x90() {
   return '
 <!-- BEGIN RICH-MEDIA NETWORK CODE -->
-<script language="JavaScript">
+<script language="JavaScript" type="text/javascript">
 rnum=Math.round(Math.random() * 100000); ts=String.fromCharCode(60);
 if (window.self != window.top) { nf=\'\' } else { nf=\'NF/\' };
 
@@ -97,7 +97,7 @@ function Ad_728x90PhorumTop() {
 function Ad_120x600() {
   return '
 <!-- BEGIN RICH-MEDIA NETWORK CODE -->
-<script language="JavaScript">
+<script language="JavaScript" type="text/javascript">
 rnum=Math.round(Math.random() * 100000); ts=String.fromCharCode(60);
 if (window.self != window.top) { nf=\'\' } else { nf=\'NF/\' };
 document.write(ts+\'script src="http://www.burstnet.com/cgi-bin/ads/sk4556a.cgi/v=2.1S/sz=120x600A/\'+rnum+\'/\'+nf+\'RETURN-CODE/JS/">\'+ts+\'/script>\');
@@ -111,7 +111,7 @@ document.write(ts+\'script src="http://www.burstnet.com/cgi-bin/ads/sk4556a.cgi/
 function Ad_160x600() {
   return '
   <!-- BEGIN RICH-MEDIA NETWORK CODE -->
-  <script language="JavaScript">
+  <script language="JavaScript" type="text/javascript">
   rnum=Math.round(Math.random() * 100000); ts=String.fromCharCode(60);
   if (window.self != window.top) { nf=\'\' } else { nf=\'NF/\' };
   document.write(ts+\'script src="http://www.burstnet.com/cgi-bin/ads/sk4556a.cgi/v=2.1S/sz=120x600A|160x600A/\'+rnum+\'/\'+nf+\'RETURN-CODE/JS/">\'+ts+\'/script>\');
@@ -126,7 +126,7 @@ function Ad_160x600() {
 function Ad_468x60_Below() {
   return '
   <!-- BEGIN RICH-MEDIA Burst CODE -->
-  <script language="JavaScript">
+  <script language="JavaScript" type="text/javascript">
   rnum=Math.round(Math.random() * 100000); ts=String.fromCharCode(60);
   if (window.self != window.top) { nf=\'\' } else { nf=\'NF/\' };
   document.write(ts+\'script src="http://www.burstnet.com/cgi-bin/ads/ba4556a.cgi/v=2.1S/sz=468x60B/\'+rnum+\'/\'+nf+\'RETURN-CODE/JS/">\'+ts+\'/script>\');
@@ -141,7 +141,7 @@ function Ad_468x60_Below() {
 function Ad_300x250() {
   return '
   <!-- BEGIN RICH-MEDIA Burst CODE -->
-  <script language="JavaScript">
+  <script language="JavaScript" type="text/javascript">
   rnum=Math.round(Math.random() * 100000); ts=String.fromCharCode(60);
   if (window.self != window.top) { nf=\'\' } else { nf=\'NF/\' };
   document.write(ts+\'script src="http://www.burstnet.com/cgi-bin/ads/ad4556a.cgi/v=2.1S/sz=300x250A/NZ/\'+rnum+\'/\'+nf+\'RETURN-CODE/JS/">\'+ts+\'/script>\');

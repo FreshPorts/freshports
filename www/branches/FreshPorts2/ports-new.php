@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports-new.php,v 1.1.2.35 2006-06-12 17:50:21 dan Exp $
+	# $Id: ports-new.php,v 1.1.2.36 2006-10-01 14:31:30 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -181,7 +181,7 @@ TEMP, element, categories
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/list-of-ports.php');
 
-	echo freshports_ListOfPorts($result, $db, 'Y', $ShowCategoryHeaders, $User);
+	echo freshports_ListOfPorts($result, $db, 'Y', $ShowCategoryHeaders, $User, $numrows);
 ?>
 
 </TABLE>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: vuxml.php,v 1.1.2.17 2006-10-01 14:20:55 dan Exp $
+	# $Id: vuxml.php,v 1.1.2.18 2006-10-02 22:17:24 dan Exp $
 	#
 	# Copyright (c) 2004 DVL Software Limited
 	#
@@ -49,7 +49,7 @@ This page displays <a href="<?php echo VUXMLURL; ?>">vulnerability information</
 	}
 
 	if (!IsSet($_REQUEST['all'])) {
-		echo '<p><a href="' . $_SERVER["PHP_SELF"] . '?all">List all Vulnerabilities, by vuln</a></p>';
+		echo '<p><a href="' . $_SERVER["PHP_SELF"] . '?all">List all Vulnerabilities, by date</a></p>';
 	}
 
 

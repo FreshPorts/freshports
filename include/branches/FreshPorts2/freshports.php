@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.280 2006-10-01 21:11:04 dan Exp $
+	# $Id: freshports.php,v 1.4.2.281 2006-10-02 15:48:07 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -1571,7 +1571,46 @@ function freshports_SideBar() {
 ' . '<br><div align="center">' . Ad_Referral_120x60() . '
 
 <p><SMALL>Server and bandwidth provided by <A HREF="http://www.bchosting.com/" TARGET="_new" TITLE="Our major sponsor">BChosting.com</A></SMALL></p>
-</div>
+</div>';
+
+	$HTML .= '	
+<TABLE WIDTH="' . $ColumnWidth . '" BORDER="1" CELLSPACING="0" CELLPADDING="5">
+	<TR>
+		<TD BGCOLOR="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><BIG><B>Search</B></BIG></FONT></TD>
+	</TR>
+	<TR>
+
+	<TD>';
+
+	GLOBAL $dbh;
+
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/searches.php');
+
+
+	$Searches = new Searches($dbh);
+	$HTML .= $Searches->GetFormSimple('&nbsp;');
+
+	$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/search.php', '', "more...", "Advanced Searching options") . '</FONT><BR>
+	</TD>
+</TR>
+</TABLE>
+
+';
+	if (file_exists($_SERVER["DOCUMENT_ROOT"] . "/../dynamic/vuln-latest.html")) {
+$HTML .= '<br>
+<TABLE WIDTH="' . $ColumnWidth . '" BORDER="1" CELLSPACING="0" CELLPADDING="5">
+	<TR>
+		<TD BGCOLOR="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><BIG><B>Latest Vulnerabilities</B></BIG></FONT></TD>
+	</TR>
+	<TR><td>
+	' . file_get_contents($_SERVER["DOCUMENT_ROOT"] . "/../dynamic/vuln-latest.html") . "\n" . '
+	</td></TR>
+	<tr><td align="center"><a href="vuxml.php">All vulnerabilities</a>
+</TABLE>
+<br>';
+	}
+
+	$HTML .= '
 
 <TABLE WIDTH="' . $ColumnWidth . '" BORDER="1" CELLSPACING="0" CELLPADDING="5">
 	<TR>
@@ -1591,19 +1630,6 @@ function freshports_SideBar() {
 	</TR>
 </TABLE>';
 
-
-	if (file_exists($_SERVER["DOCUMENT_ROOT"] . "/../dynamic/vuln-latest.html")) {
-$HTML .= '<br>
-<TABLE WIDTH="' . $ColumnWidth . '" BORDER="1" CELLSPACING="0" CELLPADDING="5">
-	<TR>
-		<TD BGCOLOR="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><BIG><B>Latest Vulnerabilities</B></BIG></FONT></TD>
-	</TR>
-	<TR><td>
-	' . file_get_contents($_SERVER["DOCUMENT_ROOT"] . "/../dynamic/vuln-latest.html") . "\n" . '
-	</td></TR>
-	<tr><td align="center"><a href="vuxml.php">All vulnerabilities</a>
-</TABLE>';
-	}
 
 if (IsSet($visitor)) {
 
@@ -1629,31 +1655,6 @@ $HTML .= '
 </TABLE>';
 	}
 
-	$HTML .= '	
-<br>
-
-<TABLE WIDTH="' . $ColumnWidth . '" BORDER="1" CELLSPACING="0" CELLPADDING="5">
-	<TR>
-		<TD BGCOLOR="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><BIG><B>Search</B></BIG></FONT></TD>
-	</TR>
-	<TR>
-
-	<TD>';
-
-	GLOBAL $dbh;
-
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/searches.php');
-
-
-	$Searches = new Searches($dbh);
-	$HTML .= $Searches->GetFormSimple('&nbsp;');
-
-	$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/search.php', '', "more...", "Advanced Searching options") . '</FONT><BR>
-	</TD>
-</TR>
-</TABLE>
-
-';
 
 	GLOBAL $ShowAds;
 

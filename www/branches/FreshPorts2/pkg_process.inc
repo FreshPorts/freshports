@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: pkg_process.inc,v 1.5.2.26 2006-05-26 22:06:49 dan Exp $
+	# $Id: pkg_process.inc,v 1.5.2.27 2006-10-04 11:58:45 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -216,7 +216,7 @@ function UploadDisplayStagingResultsMatches($UserID, $WatchListID, $dbh) {
 			?>
 
 			<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5">
-			<TR><TD COLSPAN="2"><B>Port name</B> <SMALL>(<? echo $numrows ?> ports)</SMALL></TD><TD ALIGN="center"><SMALL>Add</SMALL></TD></TR>
+			<TR><TD COLSPAN="2"><B>Port name</B> <SMALL>(<? echo $numrows ?> port<?php if ($numrows > 1) echo 's'; ?>)</SMALL></TD><TD ALIGN="center"><SMALL>Add</SMALL></TD></TR>
 
 			<?
 			for ($i = 0; $i < $numrows; $i++) {
@@ -273,7 +273,7 @@ function UploadDisplayStagingResultsMatchesNo($UserID, $dbh) {
 			?>
 
 			<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5">
-			<TR><TD><B>Port name</B> <SMALL>(<? echo $numrows ?> ports)</SMALL></TD><TD><SMALL>search</SMALL></TD></TR>
+			<TR><TD><B>Port name</B> <SMALL>(<? echo $numrows ?> port<?php if ($numrows > 1) echo 's'; ?>)</SMALL></TD><TD><SMALL>search</SMALL></TD></TR>
 
 			<?
 			for ($i = 0; $i < $numrows; $i++) {
@@ -406,48 +406,33 @@ function UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $dbh) {
 }
 
 
-function MoveStagingToWatchList($UserID, $WatchListID, $ports, $dbh) {
+function MoveStagingToWatchList($UserID, $WatchListID, $dbh) {
 	$ok  = TRUE;
 
-#	syslog(LOG_NOTICE, 'begin');
+	$Debug = 0;
+
+	if ($Debug) syslog(LOG_NOTICE, 'begin');
 	$result = pg_exec($dbh, 'BEGIN');
 	if (!$result) {
 		$ok = FALSE;
 	}
 
+#	if ($ok) {
+#		if ($Debug) syslog(LOG_NOTICE, 'WatchListDeleteAllElements: line ' . __LINE__);
+#		$sql = "select WatchListDeleteAllElements($WatchListID)";
+#		$result = pg_exec($dbh, $sql);
+#		if (!$result) {
+#			$ok = FALSE;
+#		}
+#	}
+
+	$PortCount = 0;
 	if ($ok) {
-		$sql = "select WatchListDeleteAllElements($WatchListID)";
+		if ($Debug) syslog(LOG_NOTICE, 'MoveStagingToWatchList: line ' . __LINE__);
+		$sql = "select MigrateStagingAreaToWatchList($WatchListID)";
 		$result = pg_exec($dbh, $sql);
 		if (!$result) {
 			$ok = FALSE;
-		}
-	}
-
-	$PortCount = 0;
-	if ($ok && $ports) {
-		if (IsSet($ports)) {
-			reset($ports);
-		} else {
-			syslog(LOG_NOTICE, 'FreshPorts: pkg_process.inc line 403 - cannot reset ports');
-		}
-		while (list($key, $value) = each($ports)) {
-			$PortCount++;
-
-#			echo "\$key='$key', \$value='$value'<BR>\n";
-
-			$sql = 'insert into watch_list_element (watch_list_id, element_id)
-						values (' . AddSlashes($WatchListID) . ' , ' . AddSlashes($value) . ')';
-#			syslog(LOG_NOTICE, $sql);
-#			echo "\$sql='$sql'<BR>\n";
-
-			$result = pg_exec($dbh, $sql);
-			${"port_".$value} = 1;
-
-			if (!$result) {
-				echo 'ouch, that failed';
-				$ok = FALSE;
-				break;
-			}				
 		}
 	}
 
@@ -457,10 +442,20 @@ function MoveStagingToWatchList($UserID, $WatchListID, $ports, $dbh) {
 		if (!$result) {
 			$ok = FALSE;
 		}
-	}			
-			
+	}
+
+	# clear out the staging area
+
 	if ($ok) {
-#		syslog(LOG_NOTICE, 'commit');
+		$sql = "select WatchListStagingClear($UserID)";
+		$result = pg_exec($dbh, $sql);
+		if (!$result) {
+			$ok = FALSE;
+		}
+	}
+
+	if ($ok) {
+		if ($Debug) syslog(LOG_NOTICE, 'commit');
 		pg_exec($dbh, "COMMIT");
 	} else {
 		echo pg_errormessage() . " sql = $sql";

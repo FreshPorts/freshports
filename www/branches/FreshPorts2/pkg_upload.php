@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: pkg_upload.php,v 1.5.2.46 2006-05-26 22:07:55 dan Exp $
+	# $Id: pkg_upload.php,v 1.5.2.47 2006-10-04 12:00:49 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -280,8 +280,8 @@ if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 		if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 			if ($Debug) echo 'staging area is in use<br>';
 			$DisplayStagingArea = TRUE;
-			if ($_POST["update_watch_list"]) {
-				$ports = $_POST["ports"];
+			if ($_REQUEST["update_watch_list"]) {
+				$ports = $_REQUEST["ports"];
 				# save these things to the watch list
 				# and clear out part of the staging area.
 				$WatchListID = AddSlashes($_REQUEST['wlid']);
@@ -292,13 +292,15 @@ if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 				} 
 
 				if ($Debug) echo ' you clicked on update_watch_list';
-				if (MoveStagingToWatchList($User->id, $WatchListID, $ports, $db)) {
+#phpinfo();
+				if (MoveStagingToWatchList($User->id, $WatchListID, $db)) {
 					$DisplayStagingArea = FALSE;
 					$StagingInUse       = FALSE;
 					$WatchListUpdated   = TRUE;
 				}
 			}
-			if ($_POST["clear"]) {
+if ($Debug) echo '<br>' . __LINE__ . '<br>';
+			if ($_REQUEST["clear"]) {
 				if ($Debug) echo " you pressed clear!<br>";
 				if (StagingAreaClear($User->id, $db)) {
 					$StagingInUse		= FALSE;
@@ -308,13 +310,15 @@ if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 			}
 			
 			if ($_REQUEST['wlid']) {
+if ($Debug) echo '<br>' . __LINE__ . '<br>';
 				if ($Debug) echo 'you selected a list<br>';
 				# they clicked on the GO button and we have to apply the 
 				# watch staging area against the watch list.
-				$WatchListID = AddSlashes($_POST['wlid']);
+				$WatchListID = AddSlashes($_REQUEST['wlid']);
 				if ($Debug) echo "setting SetLastWatchListChosen => \$wlid='$WatchListID'";
 				$User->SetLastWatchListChosen($WatchListID);
 			} else {
+if ($Debug) echo '<br>' . __LINE__ . '<br>';
 				$WatchListID = $User->last_watch_list_chosen;
 				if ($Debug) echo "\$WatchListID='$WatchListID'";
 				if ($WatchListID == '') {
@@ -323,6 +327,7 @@ if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 					if ($Debug) echo "GetDefaultWatchListID => \$WatchListID='$WatchListID'";
 				}
 			}
+if ($Debug) echo '<br>' . __LINE__ . '<br>';
 		} else {
 if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 			$DisplayStagingArea = FALSE;
@@ -340,7 +345,7 @@ if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 						if (ProcessPackages($User->id, $PortArray, $db)) {
 if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 							# we are not using the staging list
-							$WatchListID = AddSlashes($_POST['wlid']);
+							$WatchListID = AddSlashes($_REQUEST['wlid']);
 							if ($Debug) echo ' you clicked on update_watch_list';
 
 							if ($_REQUEST['replaceappend'] == 'replace') {
@@ -406,7 +411,7 @@ if ($Debug) echo '<pre>' . $_REQUEST['copypaste'] . '</pre>';
                   $PortArray = ConvertStringToArray($_REQUEST['copypaste']);
                   if (ProcessPackages($User->id, $PortArray, $db)) {
 #                  if ($Debug) phpinfo();
-					$WatchListID = AddSlashes($_POST['wlid']);
+					$WatchListID = AddSlashes($_REQUEST['wlid']);
 					if ($_REQUEST['replaceappend'] == 'replace') {
 					  $Overwrite = TRUE;
 					} else {
@@ -431,6 +436,8 @@ if ($Debug) echo '<pre>' . $_REQUEST['copypaste'] . '</pre>';
             }
 			
 		}
+
+if ($Debug) echo '<br>' . __LINE__ . '<br>';
 
 		#
 		# either we display the staging area, or we display the upload form.

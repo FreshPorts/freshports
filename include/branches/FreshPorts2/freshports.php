@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.283 2006-10-04 11:55:31 dan Exp $
+	# $Id: freshports.php,v 1.4.2.284 2006-10-05 19:30:49 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -1611,7 +1611,7 @@ $HTML .= '<br>
 	<TR><td>
 	' . file_get_contents($_SERVER["DOCUMENT_ROOT"] . "/../dynamic/vuln-latest.html") . "\n" . '
 	</td></TR>
-	<tr><td align="center"><a href="/vuxml.php">All vulnerabilities</a>
+	<tr><td align="center"><a href="/vuxml.php?all">All vulnerabilities</a>
 </TABLE>
 <br>';
 	}

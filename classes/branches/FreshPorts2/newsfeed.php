@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: newsfeed.php,v 1.1.2.9 2006-10-01 12:38:50 dan Exp $
+	# $Id: newsfeed.php,v 1.1.2.10 2006-10-06 00:40:53 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -17,6 +17,8 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/feedcreator.class.php'); 
 	
 function newsfeed($db, $Format) {
+
+	$PHP_SELF = $_SERVER['PHP_SELF'];
 
 	# potential for exploitation here, with $Format
 
@@ -62,7 +64,7 @@ function newsfeed($db, $Format) {
 	$rss->image = $image;
 
 	$MyMaxArticles = 10;
-	if (!$MaxArticles || $MaxArticles < 1 || $MaxArticles > $MyMaxArticles) {
+	if (!IsSet($MaxArticles) || !$MaxArticles || $MaxArticles < 1 || $MaxArticles > $MyMaxArticles) {
 	    $MaxArticles = $MyMaxArticles;
 	}
 	
@@ -124,7 +126,7 @@ limit 30";
 	$ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['SERVER_NAME']);
 	
 		$item = new FeedItem(); 
-		$item->title       = "NEWSFEED HAVE MOVED!";
+		$item->title       = "NEWSFEEDS HAVE MOVED!";
 		$item->link        = 'http://' . $ServerName . '/backend/';
 		$item->description = "Please read, newsfeed URLs have changed.";
 	

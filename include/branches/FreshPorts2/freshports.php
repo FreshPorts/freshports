@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.284 2006-10-05 19:30:49 dan Exp $
+	# $Id: freshports.php,v 1.4.2.285 2006-10-07 19:41:00 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -1614,6 +1614,8 @@ $HTML .= '<br>
 	<tr><td align="center"><a href="/vuxml.php?all">All vulnerabilities</a>
 </TABLE>
 <br>';
+	} else {
+		$HTML .= "<br>\n";
 	}
 
 	$HTML .= '

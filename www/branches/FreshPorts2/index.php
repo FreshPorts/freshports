@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.1.2.106 2006-07-19 14:44:07 dan Exp $
+	# $Id: index.php,v 1.1.2.107 2006-10-07 19:28:08 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -106,7 +106,6 @@ if (Is_Numeric($dailysummary)) {
 
 
 if ($db) {
-	echo 
 ?>
 <TR><TD VALIGN="top" WIDTH="100%">
 

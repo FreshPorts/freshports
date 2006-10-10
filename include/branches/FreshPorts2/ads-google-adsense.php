@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ads-google-adsense.php,v 1.1.2.1 2006-08-01 17:34:13 dan Exp $
+	# $Id: ads-google-adsense.php,v 1.1.2.2 2006-10-10 19:03:17 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -50,7 +50,7 @@ google_alternate_ad_url = "http://ads.unixathome.org/AdSense/defaults/728x90.htm
 google_ad_width = 728;
 google_ad_height = 90;
 google_ad_format = "728x90_as";
-google_ad_type = "text_image";
+google_ad_type = "text";
 google_ad_channel ="";
 google_color_border = "2D5893";
 google_color_bg = "99AACC";
@@ -71,7 +71,7 @@ function Ad_728x90() {
   google_ad_width = 728;
   google_ad_height = 90;
   google_ad_format = "728x90_as";
-  google_ad_type = "text_image";
+  google_ad_type = "text";
   google_ad_channel ="";
   google_color_border = "2D5893";
   google_color_bg = "99AACC";
@@ -91,7 +91,7 @@ google_alternate_ad_url = "http://ads.unixathome.org/AdSense/defaults/728x90.htm
 google_ad_width = 728;
 google_ad_height = 90;
 google_ad_format = "728x90_as";
-google_ad_type = "text_image";
+google_ad_type = "text";
 google_ad_channel ="5402590257";
 google_color_border = "2D5893";
 google_color_bg = "99AACC";

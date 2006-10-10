@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.285 2006-10-07 19:41:00 dan Exp $
+	# $Id: freshports.php,v 1.4.2.286 2006-10-10 19:02:36 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -615,7 +615,7 @@ function freshports_HEAD_main_items() {
 	<meta name="MSSmartTagsPreventParsing" content="TRUE">
 
 	<META NAME="ROBOTS"                    CONTENT="NOARCHIVE">
-	<link rel="alternate" type="application/rss+xml" title="FreshPorts - The Place For Ports" href="http://' . $_SERVER['HTTP_HOST'] . '/news/rss2.0.php">
+	<link rel="alternate" type="application/rss+xml" title="FreshPorts - The Place For Ports" href="http://' . $_SERVER['HTTP_HOST'] . '/backend/rss2.0.php">
 
 	
 ';
@@ -1474,7 +1474,7 @@ ALT="powered by apache" BORDER="0" WIDTH="259" HEIGHT="32"></A>
 Valid 
 <a href="http://validator.w3.org/check/referer" TITLE="We like to keep our HTML valid">HTML</a>, 
 <a href="http://jigsaw.w3.org/css-validator/check/referer" TITLE="We like to have valid CSS">CSS</a>, and
-<a href="http://feedvalidator.org/check.cgi?url=http://' . $_SERVER['HTTP_HOST'] . '/news.php" TITLE="Valid RSS is good too">RSS</a>.
+<a href="http://feedvalidator.org/check.cgi?url=http://' . $_SERVER['HTTP_HOST'] . '/backend/rss2.0.php" TITLE="Valid RSS is good too">RSS</a>.
 </small>
 <BR>' . freshports_copyright() . '
 

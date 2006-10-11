@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: newsfeeds.php,v 1.1.2.2 2006-10-01 18:17:18 dan Exp $
+	# $Id: newsfeeds.php,v 1.1.2.3 2006-10-11 12:47:18 dan Exp $
 	#
-	# Copyright (c) 1998-2005 DVL Software Limited
+	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');

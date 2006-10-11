@@ -15,9 +15,9 @@ We have a number of newsfeeds for your consumption:
 <li><a href="mbox.php">mbox</a>
 <li><a href="opml.php">opml</a>
 <li><a href="pie0.1.php">PIE 0.1</a>
-<li><a href="rss0.91.php">RSS 0.91</a> [ <a href="http://feedvalidator.org/check.cgi?url=http%3A//beta.freshports.org/news/rss0.91.php">RSS Feed validator</a> ]
-<li><a href="rss1.0.php">RSS 1.0</a>   [ <a href="http://feedvalidator.org/check.cgi?url=http%3A//beta.freshports.org/news/rss1.0.php">RSS Feed validator</a>  ]
-<li><a href="rss2.0.php">RSS 2.0</a>   [ <a href="http://feedvalidator.org/check.cgi?url=http%3A//beta.freshports.org/news/rss2.0.php">RSS Feed validator</a>  ]
+<li><a href="rss0.91.php">RSS 0.91</a> [ <a href="http://feedvalidator.org/check.cgi?url=http%3A//beta.freshports.org/backend/rss0.91.php">RSS Feed validator</a> ]
+<li><a href="rss1.0.php">RSS 1.0</a>   [ <a href="http://feedvalidator.org/check.cgi?url=http%3A//beta.freshports.org/backend/rss1.0.php">RSS Feed validator</a>  ]
+<li><a href="rss2.0.php">RSS 2.0</a>   [ <a href="http://feedvalidator.org/check.cgi?url=http%3A//beta.freshports.org/backend/rss2.0.php">RSS Feed validator</a>  ]
 </ol>
 
 <p>

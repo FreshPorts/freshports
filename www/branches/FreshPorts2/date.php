@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: date.php,v 1.1.2.34 2006-07-23 13:57:33 dan Exp $
+	# $Id: date.php,v 1.1.2.35 2006-10-14 15:33:26 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -103,137 +103,14 @@
 		}
 		
 		unset($ThisCommitLogID);
-		for ($i = 0; $i < $NumRows; $i++) {
-			$commit = $commits->FetchNth($i);
-			$ThisCommitLogID = $commit->commit_log_id;
-		
-			if ($LastDate <> $commit->commit_date) {
-				$LastDate = $commit->commit_date;
-				$HTML .= '<TR><TD COLSPAN="3" BGCOLOR="' . BACKGROUND_COLOUR . '" HEIGHT="0">' . "\n";
-				$HTML .= '   <FONT COLOR="#FFFFFF"><BIG>' . FormatTime($commit->commit_date, 0, "D, j M Y") . ' : ' . $NumRows . ' commits found </BIG>';
-				if ($DateMessage) {
-					$HTML .= ' (' . $DateMessage . ')';
-				}
-				
-				$HTML .= '</FONT>' . "\n";
-				$HTML .= '</TD></TR>' . "\n\n";
-			}
-		
-			$j = $i;
-		
-			$HTML .= "<TR><TD>\n";
-		
-			// OK, while we have the log change log, let's put the port details here.
-		
-			# count the number of ports in this commit
-			$NumberOfPortsInThisCommit = 0;
-			$MaxNumberPortsToShow      = 10;
-			while ($j < $NumRows && $commit->commit_log_id == $ThisCommitLogID) {
-				$NumberOfPortsInThisCommit++;
-		
-				if ($NumberOfPortsInThisCommit == 1) {
-					$HTML .= '<SMALL>';
-					$HTML .= '[ ' . $commit->commit_time . ' ' . freshports_CommitterEmailLink($commit->committer) . ' ]';
-					$HTML .= '</SMALL>';
-					$HTML .= '&nbsp;';
-					$HTML .= freshports_Email_Link($commit->message_id);
-		
-					if ($commit->EncodingLosses()) {
-						$HTML .= '&nbsp;' . freshports_Encoding_Errors();
-					}
-				}
-		
-				if ($NumberOfPortsInThisCommit <= $MaxNumberPortsToShow) {
-		
-					$HTML .= "<BR>\n";
-		
-					$HTML .= '<BIG><B>';
-					$HTML .= '<A HREF="/' . $commit->category . '/' . $commit->port . '/">';
-					$HTML .= $commit->port;
-				
-					$HTML .= ' ' . freshports_PackageVersion($commit->version, $commit->revision, $commit->epoch);
-		
-					$HTML .= "</A></B></BIG>\n";
-		
-					$HTML .= '<A HREF="/' . $commit->category . '/">';
-					$HTML .= $commit->category. "</A>";
-					$HTML .= '&nbsp;';
-		
-					if ($User->id) {
-#						echo '$User->watch_list_add_remove=\'' . $User->watch_list_add_remove . '\'';
 
-						if ($commit->onwatchlist) {
-							$HTML .= ' '. freshports_Watch_Link_Remove($User->watch_list_add_remove, $commit->onwatchlist, $commit->element_id) . ' ';
-						} else {
-							$HTML .= ' '. freshports_Watch_Link_Add   ($User->watch_list_add_remove, $commit->onwatchlist, $commit->element_id) . ' ';
-						}
-					}
-		
-					// indicate if this port has been removed from cvs
-					if ($commit->status == "D") {
-						$HTML .= " " . freshports_Deleted_Icon_Link() . "\n";
-					}
-		
-					// indicate if this port needs refreshing from CVS
-					if ($commit->needs_refresh) {
-						$HTML .= " " . freshports_Refresh_Icon_Link() . "\n";
-					}
-		
-					if ($commit->date_added > Time() - 3600 * 24 * $DaysMarkedAsNew) {
-						$MarkedAsNew = "Y";
-						$HTML .= freshports_New_Icon() . "\n";
-					}
-		
-					if ($commit->forbidden) {
-						$HTML .= ' ' . freshports_Forbidden_Icon_Link($commit->forbidden) . "\n";
-					}
-		
-					if ($commit->broken) {
-						$HTML .= ' '. freshports_Broken_Icon_Link($commit->broken) . "\n";
-					}
-		
-					if ($commit->deprecated) {
-						$HTML .= ' '. freshports_Deprecated_Icon_Link($commit->deprecated) . "\n";
-					}
-		
-					if ($commit->expiration_date) {
-						if (date('Y-m-d') >= $commit->expiration_date) {
-							$HTML .= freshports_Expired_Icon_Link($commit->expiration_date) . "\n";
-						} else {
-							$HTML .= freshports_Expiration_Icon_Link($commit->expiration_date) . "\n";
-						}
-					}
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
 
-					if ($commit->ignore) {
-						$HTML .= ' '. freshports_Ignore_Icon_Link($commit->ignore) . "\n";
-					}
-		
-					$HTML .= freshports_CommitFilesLink($commit->message_id, $commit->category, $commit->port);
-					$HTML .= "&nbsp;";
-		
-					$HTML .= htmlspecialchars($commit->short_description) . "\n";
-				}
-		
-				$j++;
-				$PreviousCommit = $commit;
-				if ($j < $NumRows) {
-					$commit = $commits->FetchNth($j);
-				}
-			} // end while
-		
-		
-			if ($NumberOfPortsInThisCommit > $MaxNumberPortsToShow) {
-				$HTML .= '<BR>' . freshports_MorePortsToShow($PreviousCommit->message_id, $NumberOfPortsInThisCommit, $MaxNumberPortsToShow);
-			}
-		
-			$i = $j - 1;
-		
-			$HTML .= "\n<BLOCKQUOTE>";
-		
-			$HTML .= freshports_PortDescriptionPrint($PreviousCommit->commit_description, $PreviousCommit->encoding_losses, $freshports_CommitMsgMaxNumOfLinesToShow, freshports_MoreCommitMsgToShow($PreviousCommit->message_id, $freshports_CommitMsgMaxNumOfLinesToShow));
-		
-			$HTML .= "\n</BLOCKQUOTE>\n</TD></TR>\n\n\n";
-		}
+		$DisplayCommit = new DisplayCommit($commits->LocalResult);
+		$DisplayCommit->SanityTestFailure = true;
+		$RetVal = $DisplayCommit->CreateHTML();
+
+		$HTML = $DisplayCommit->HTML;
 
 		return $HTML;
 	}

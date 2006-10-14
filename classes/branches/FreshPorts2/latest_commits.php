@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: latest_commits.php,v 1.1.2.21 2006-10-14 15:29:59 dan Exp $
+	# $Id: latest_commits.php,v 1.1.2.22 2006-10-14 22:23:55 dan Exp $
 	#
 	# Copyright (c) 2003-2004 DVL Software Limited
 	#
@@ -55,9 +55,10 @@ class LatestCommits {
 		} else {
 #			$sql = "select * from LatestCommits($this->MaxNumberOfPorts, $this->UserID)";
 			$sql = "
-SELECT LC.*, STF.message AS stf_message
-  FROM LatestCommits(100, 0) LC LEFT OUTER JOIN sanity_test_failures STF
-    ON LC.commit_log_id = STF.commit_log_id";
+  SELECT LC.*, STF.message AS stf_message
+    FROM LatestCommits($this->MaxNumberOfPorts, 0) LC LEFT OUTER JOIN sanity_test_failures STF
+      ON LC.commit_log_id = STF.commit_log_id
+ORDER BY LC.commit_date_raw DESC, LC.category, LC.port";
 		}
 
 		if ($this->Debug) echo "\n<p>sql=$sql</p>\n";

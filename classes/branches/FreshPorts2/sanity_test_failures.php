@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: sanity_test_failures.php,v 1.1.2.1 2006-10-14 15:29:02 dan Exp $
+	# $Id: sanity_test_failures.php,v 1.1.2.2 2006-10-14 15:49:05 dan Exp $
 	#
 	# Copyright (c) 2003-2004 DVL Software Limited
 	#
@@ -12,7 +12,7 @@
 // base class for keeping statistics on page rendering issues
 class SanityTestFailures {
 
-	var $Debug = 1;
+	var $Debug = 0;
 	var $dbh;
 	var $MaxNumberOfPorts;
 

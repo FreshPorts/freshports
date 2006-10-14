@@ -1,5 +1,5 @@
 --
--- $Id: POSTGRESQL.sql,v 1.1.2.56 2006-09-11 02:21:03 dan Exp $
+-- $Id: POSTGRESQL.sql,v 1.1.2.57 2006-10-14 15:41:55 dan Exp $
 --
 -- Copyright (c) 1998-2006 DVL Software Limited
 --
@@ -45,6 +45,7 @@ grant select on ports_moved                    to group www;
 grant select on ports_updating                 to group www;
 grant select on ports_updating_ports_xref      to group www;
 grant select on ports_vulnerable               to group www;
+grant select on sanity_test_failures           to group www;
 grant select on system                         to group www;
 grant select on system_branch                  to group www;
 grant select on system_branch_element_revision to group www;
@@ -199,6 +200,11 @@ grant select                         on report_log_latest              to group 
 
 grant select, insert, delete, update on ports_moved                    to group commits;
 grant update                         on ports_moved_id_seq             to group commits;
+
+grant insert        on sanity_test_failures           to group commits;
+grant update         on sanity_test_failures_id_seq           to group commits;
+
+
 grant insert, delete, update         on ports_updating                 to group commits;
 grant update                         on ports_updating_id_seq          to group commits;
 grant select, insert, delete, update on ports_updating_ports_xref      to group commits;

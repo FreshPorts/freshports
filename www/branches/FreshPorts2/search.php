@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.91 2006-10-14 15:39:39 dan Exp $
+	# $Id: search.php,v 1.1.2.92 2006-10-14 15:41:11 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -12,13 +12,25 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
 
+	require_once('Pager/Pager.php');
+
 	freshports_ConditionalGet(freshports_LastModified_Dynamic());
 	
 	define('ORDERBYPORT',       'port');
 	define('ORDERBYCATEGORY',   'category');
 	define('ORDERBYASCENDING',  'asc');
 	define('ORDERBYDESCENDING', 'desc');
+	
+	$PageNumber = 1;
+	$PageSize   = 100;
 
+	if (IsSet($_REQUEST['page'])) {
+		$PageNumber = intval($_REQUEST['page']);
+		if ($PageNumber != $_REQUEST['page']) {
+			$PageNumber = 1;
+		}
+	}
+	
 function WildCardQuery($stype, $Like, $query) {
 # return the clause for this particular type of query
 	$sql = '';
@@ -68,7 +80,7 @@ function WildCardQuery($stype, $Like, $query) {
 }
 
 	$Debug = 0;
-	if ($Debug) phpinfo();
+#	if ($Debug) phpinfo();
 
 	#
 	# I became annoyed with people creating their own search pages instead of using
@@ -96,7 +108,6 @@ function WildCardQuery($stype, $Like, $query) {
 	$method				= '';
 	$deleted			= 'excludedeleted';
 	$casesensitivity	= 'caseinsensitive';
-	$start				= '1';
 	$orderby            = ORDERBYCATEGORY;
 	$orderbyupdown		= ORDERBYASCENDING;
 
@@ -109,17 +120,12 @@ function WildCardQuery($stype, $Like, $query) {
 	if (IsSet($_REQUEST['method']))          $method			= AddSlashes(trim($_REQUEST['method']));
 	if (IsSet($_REQUEST['deleted']))         $deleted			= AddSlashes(trim($_REQUEST['deleted']));
 	if (IsSet($_REQUEST['casesensitivity'])) $casesensitivity	= AddSlashes(trim($_REQUEST['casesensitivity']));
-	if (IsSet($_REQUEST['start']))           $start				= intval(AddSlashes(trim($_REQUEST['start'])));
 	if (IsSet($_REQUEST['orderby']))         $orderby			= AddSlashes(trim($_REQUEST['orderby']));
 	if (IsSet($_REQUEST['orderbyupdown']))   $orderbyupdown		= AddSlashes(trim($_REQUEST['orderbyupdown']));
 
 	if ($stype == 'messageid') {
 		header('Location: http://' . $_SERVER['HTTP_HOST'] . "/commit.php?message_id=$query");
 		exit;
-	}
-
-	if ($start < 1 || $start > 20000) {
-		$start = 1;
 	}
 
 	#
@@ -182,6 +188,8 @@ if ($num < 1 or $num > 500) {
 	$num = 10;
 }
 
+$PageSize = $num;
+
 if ($stype  == '') $stype  = 'name';
 if ($method == '') $method = 'match';
 
@@ -224,15 +232,32 @@ switch ($stype) {
     require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
   
     $Commits = new Commits($db);
-    if ($start > 1) {
-      $Commits->SetOffset($start);
-    }
-    $Commits->SetLimit($num);
   
     $NumberOfPortCommits = $Commits->GetCountPortCommitsByCommitter($query);
     if ($Debug) echo 'number of commits = ' . $NumberOfPortCommits . "<br>\n";
 
-    $NumRows = $Commits->FetchByCommitter($query, $User->id);
+	$NumFound = $NumberOfPortCommits;
+	$params = array(
+			'mode'        => 'Sliding',
+			'perPage'     => $PageSize,
+			'delta'       => 5,
+			'totalItems'  => $NumFound,
+			'urlVar'      => 'page',
+			'currentPage' => $PageNumber,
+			'spacesBeforeSeparator' => 1,
+			'spacesAfterSeparator'  => 1,
+		);
+	$Pager = & Pager::factory($params);
+
+	$offset = $Pager->getOffsetByPageId();
+	$NumOnThisPage = $offset[1] - $offset[0] + 1;
+
+    if ($PageNumber > 1) {
+      $Commits->SetOffset($offset[0] - 1);
+    }
+    $Commits->SetLimit($PageSize);
+
+    $NumFetches = $Commits->FetchByCommitter($query, $User->id);
     break;
     
   case 'commitmessage':
@@ -240,21 +265,38 @@ switch ($stype) {
     require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
   
     $Commits = new Commits($db);
-    if ($start > 1) {
-      $Commits->SetOffset($start);
-    }
-    $Commits->SetLimit($num);
-  
+
     $NumberOfPortCommits = $Commits->GetCountCommitsByCommitMessage($query);
     if ($Debug) echo 'number of commits = ' . $NumberOfPortCommits . "<br>\n";
 
-    $NumRows = $Commits->FetchByCommitMessageContents($query, $User->id);
+	$NumFound = $NumberOfPortCommits;
+	$params = array(
+			'mode'        => 'Sliding',
+			'perPage'     => $PageSize,
+			'delta'       => 5,
+			'totalItems'  => $NumFound,
+			'urlVar'      => 'page',
+			'currentPage' => $PageNumber,
+			'spacesBeforeSeparator' => 1,
+			'spacesAfterSeparator'  => 1,
+		);
+	$Pager = & Pager::factory($params);
+
+	$offset = $Pager->getOffsetByPageId();
+	$NumOnThisPage = $offset[1] - $offset[0] + 1;
+
+    if ($PageNumber > 1) {
+      $Commits->SetOffset($offset[0] - 1);
+    }
+    $Commits->SetLimit($PageSize);
+  
+    $NumFetches = $Commits->FetchByCommitMessageContents($query, $User->id);
     break;
     
     break;
     
   default:
-$sql = "
+$sqlSelectFields = "
   select distinct 
          ports.id, 
          element.name as port,
@@ -283,17 +325,23 @@ $sql = "
          ports.no_cdrom,
          ports.expiration_date,
          ports.no_package  ";
+         
+$sqlSelectCount = "
+  SELECT count(*)";
+  
+$sqlWatchListFields = '';
 
 	if ($User->id) {
-		$sql .= ",
+		$sqlWatchListFields .= ",
          onwatchlist";
    }
 
-	$sql .= "
-    from ports LEFT OUTER JOIN ports_vulnerable on ports_vulnerable.port_id = ports.id , categories, commit_log, commit_log_ports_elements, element  ";
+	$sqlFrom = "
+    from ports LEFT OUTER JOIN ports_vulnerable on ports_vulnerable.port_id = ports.id , categories, element  ";
 
+$sqlWatchListFrom = '';
 	if ($User->id) {
-			$sql .= "
+			$sqlWatchListFrom .= "
       LEFT OUTER JOIN
  (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
     FROM watch_list JOIN watch_list_element
@@ -304,11 +352,9 @@ $sql = "
        ON TEMP.wle_element_id = element.id";
 	}
 
-	$sql .= '
+	$sqlWhere = '
 	WHERE ports.category_id  = categories.id
-      and ports.element_id   = element.id 
-      and commit_log.id      = commit_log_ports_elements.commit_log_id
-      and ports.element_id   = commit_log_ports_elements.element_id ' ;
+      and ports.element_id   = element.id ' ;
 
 
 if ($method == 'soundex') {
@@ -335,7 +381,7 @@ switch ($method) {
 		} else {
 			$Like = 'ILIKE';
 		}
-		$sql .= WildCardQuery($stype, $Like, $WildCardMatch);
+		$sqlUserSpecifiedCondition = WildCardQuery($stype, $Like, $WildCardMatch);
 		break;
 
 	case 'match':
@@ -345,7 +391,7 @@ switch ($method) {
 		} else {
 			$Like = 'ILIKE';
 		}
-		$sql .= WildCardQuery($stype, $Like, $WildCardMatch);
+		$sqlUserSpecifiedCondition = WildCardQuery($stype, $Like, $WildCardMatch);
 		break;
 
 	case 'suffix':
@@ -355,88 +401,88 @@ switch ($method) {
 		} else {
 			$Like = 'ILIKE';
 		}
-		$sql .= WildCardQuery($stype, $Like, $WildCardMatch);
+		$sqlUserSpecifiedCondition = WildCardQuery($stype, $Like, $WildCardMatch);
 		break;
 
 	case 'exact':
 		switch ($stype) {
 			case 'name':
 				if ($casesensitivity == 'casesensitive') {
-					$sql .= "\n     and element.name = '$query'";
+					$sqlUserSpecifiedCondition = "\n     and element.name = '$query'";
 				} else {
-					$sql .= "\n     and lower(element.name) = lower('$query')";
+					$sqlUserSpecifiedCondition = "\n     and lower(element.name) = lower('$query')";
 				}
 				break;
 
 			case 'package':
 				if ($casesensitivity == 'casesensitive') {
-					$sql .= "\n     and ports.package_name = '$query'";
+					$sqlUserSpecifiedCondition = "\n     and ports.package_name = '$query'";
 				} else {
-					$sql .= "\n     and lower(ports.package_name) = lower('$query')";
+					$sqlUserSpecifiedCondition = "\n     and lower(ports.package_name) = lower('$query')";
 				}
 				break;
 
 			case 'latest_link':
 				if ($casesensitivity == 'casesensitive') {
-					$sql .= "\n     and ports.latest_link = '$query'";
+					$sqlUserSpecifiedCondition = "\n     and ports.latest_link = '$query'";
 				} else {
-					$sql .= "\n     and lower(ports.latest_link) = lower('$query')";
+					$sqlUserSpecifiedCondition = "\n     and lower(ports.latest_link) = lower('$query')";
 				}
 				break;
 
 			case 'shortdescription':
 				if ($casesensitivity == 'casesensitive') {
-					$sql .= "\n     and ports.short_description = '$query'";
+					$sqlUserSpecifiedCondition = "\n     and ports.short_description = '$query'";
 				} else {
-					$sql .= "\n     and lower(ports.short_description) = lower('$query')";
+					$sqlUserSpecifiedCondition = "\n     and lower(ports.short_description) = lower('$query')";
 				}
 				break;
       
 			case 'longdescription':
 				if ($casesensitivity == 'casesensitive') {
-					$sql .= "\n     and ports.long_description = '$query'";
+					$sqlUserSpecifiedCondition = "\n     and ports.long_description = '$query'";
 				} else {
-					$sql .= "\n     and lower(ports.long_description) = lower('$query')";
+					$sqlUserSpecifiedCondition = "\n     and lower(ports.long_description) = lower('$query')";
 				}
 				break;
       
 			case 'depends_build':
 				if ($casesensitivity == 'casesensitive') {
-					$sql .= "\n     and ports.depends_build = '$query'";
+					$sqlUserSpecifiedCondition = "\n     and ports.depends_build = '$query'";
 				} else {
-					$sql .= "\n     and lower(ports.depends_build) = lower('$query')";
+					$sqlUserSpecifiedCondition = "\n     and lower(ports.depends_build) = lower('$query')";
 				}
 				break;
 
 			case 'depends_lib':
 				if ($casesensitivity == 'casesensitive') {
-					$sql .= "\n     and ports.depends_lib = '$query'";
+					$sqlUserSpecifiedCondition = "\n     and ports.depends_lib = '$query'";
 				} else {
-					$sql .= "\n     and lower(ports.depends_lib) = lower('$query')";
+					$sqlUserSpecifiedCondition = "\n     and lower(ports.depends_lib) = lower('$query')";
 				}
 				break;
 
 			case 'depends_run':
 				if ($casesensitivity == 'casesensitive') {
-					$sql .= "\n     and ports.depends_run = '$query'";
+					$sqlUserSpecifiedCondition = "\n     and ports.depends_run = '$query'";
 				} else {
-					$sql .= "\n     and lower(ports.depends_run) = lower('$query')";
+					$sqlUserSpecifiedCondition = "\n     and lower(ports.depends_run) = lower('$query')";
 				}
 				break;
 
 			case 'depends_all':
 				if ($casesensitivity == 'casesensitive') {
-					$sql .= "\n     and (ports.depends_build = '$query' OR ports.depends_lib = '$query' OR ports.depends_run = '$query')";
+					$sqlUserSpecifiedCondition = "\n     and (ports.depends_build = '$query' OR ports.depends_lib = '$query' OR ports.depends_run = '$query')";
 				} else {
-					$sql .= "\n     and (lower(ports.depends_build) = lower('$query') OR lower(ports.depends_lib) = lower('$query') OR lower(ports.depends_run) = lower('$query'))";
+					$sqlUserSpecifiedCondition = "\n     and (lower(ports.depends_build) = lower('$query') OR lower(ports.depends_lib) = lower('$query') OR lower(ports.depends_run) = lower('$query'))";
 				}
 				break;
 
 			case 'maintainer':
 				if ($casesensitivity == 'casesensitive') {
-					$sql .= "\n     and ports.maintainer = '$query'";
+					$sqlUserSpecifiedCondition = "\n     and ports.maintainer = '$query'";
 				} else {
-					$sql .= "\n     and lower(ports.maintainer) = lower('$query')";
+					$sqlUserSpecifiedCondition = "\n     and lower(ports.maintainer) = lower('$query')";
 				}
 				break;
 
@@ -446,43 +492,43 @@ switch ($method) {
 	default:
 		switch ($stype) {
 			case 'name':
-				$sql .= "\n     and levenshtein(element.name, '$query') < 4";
+				$sqlUserSpecifiedCondition = "\n     and levenshtein(element.name, '$query') < 4";
 				break;
 
 			case 'package':
-				$sql .= "\n     and levenshtein(ports.package_name, '$query') < 4";
+				$sqlUserSpecifiedCondition = "\n     and levenshtein(ports.package_name, '$query') < 4";
 				break;
 
 			case 'latest_link':
-				$sql .= "\n     and levenshtein(ports.latest_link, '$query') < 4";
+				$sqlUserSpecifiedCondition = "\n     and levenshtein(ports.latest_link, '$query') < 4";
 				break;
 
 			case 'shortdescription':
-				$sql .= "\n     and levenshtein(ports.short_description, '$query') < 4";
+				$sqlUserSpecifiedCondition = "\n     and levenshtein(ports.short_description, '$query') < 4";
 				break;
 
 			case 'longdescription':
-				$sql .= "\n     and levenshtein(ports.long_description, '$query') < 4";
+				$sqlUserSpecifiedCondition = "\n     and levenshtein(ports.long_description, '$query') < 4";
 				break;
 
 			case 'depends_build':
-				$sql .= "\n     and levenshtein(substring(ports.depends_build for 255), '$query') < 4";
+				$sqlUserSpecifiedCondition = "\n     and levenshtein(substring(ports.depends_build for 255), '$query') < 4";
 				break;
 
 			case 'depends_lib':
-				$sql .= "\n     and levenshtein(substring(ports.depends_lib for 255), '$query') < 4";
+				$sqlUserSpecifiedCondition = "\n     and levenshtein(substring(ports.depends_lib for 255), '$query') < 4";
 				break;
 
 			case 'depends_run':
-				$sql .= "\n     and levenshtein(substring(ports.depends_build for 255), '$query') < 4";
+				$sqlUserSpecifiedCondition = "\n     and levenshtein(substring(ports.depends_build for 255), '$query') < 4";
 				break;
 
 			case 'depends_all':
-				$sql .= "\n     and (levenshtein(substring(ports.depends_build for 255), '$query') < 4 OR levenshtein(substring(ports.depends_lib for 255), '$query') < 4 OR levenshtein(substring(ports.depends_run for 255), '$query') < 4)";
+				$sqlUserSpecifiedCondition = "\n     and (levenshtein(substring(ports.depends_build for 255), '$query') < 4 OR levenshtein(substring(ports.depends_lib for 255), '$query') < 4 OR levenshtein(substring(ports.depends_run for 255), '$query') < 4)";
 				break;
 
 			case 'maintainer':
-				$sql .= "\n     and levenshtein(ports.maintainer, '$query') < 4";
+				$sqlUserSpecifiedCondition = "\n     and levenshtein(ports.maintainer, '$query') < 4";
 				break;
 
 		}
@@ -501,7 +547,7 @@ switch ($deleted) {
 		# do not break here...
 
 	case 'excludedeleted':
-		$sql .= " and element.status = 'A' ";
+		$sqlUserSpecifiedCondition .= " and element.status = 'A' ";
 }
 
 switch ($orderby) {
@@ -509,11 +555,11 @@ switch ($orderby) {
 		switch ($orderbyupdown) {
 			case ORDERBYDESCENDING:
 			default:
-				$sql .= "\n order by categories.name desc, element.name";
+				$sqlOrderBy = "\n order by categories.name desc, element.name";
 				break;
 
 			case ORDERBYASCENDING:
-				$sql .= "\n order by categories.name, element.name";
+				$sqlOrderBy = "\n order by categories.name, element.name";
 				break;
 		}
 		break;
@@ -523,34 +569,30 @@ switch ($orderby) {
 		switch ($orderbyupdown) {
 			case ORDERBYDESCENDING:
 			default:
-				$sql .= "\n order by element.name desc, categories.name";
+				$sqlOrderBy = "\n order by element.name desc, categories.name";
 				break;
 
 			case ORDERBYASCENDING:
-				$sql .= "\n order by element.name, categories.name";
+				$sqlOrderBy = "\n order by element.name, categories.name";
 				break;
 		}
 		break;
 }
 
-if ($start > 1) {
-	$sql .= "\n OFFSET " . ($start - 1);
-}
 
 $AddRemoveExtra  = "&&origin=" . $_SERVER['SCRIPT_NAME'] . "?query=" . $query. "+stype=$stype+num=$num+method=$method";
 if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<BR>";
 $AddRemoveExtra = AddSlashes($AddRemoveExtra);
 if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<BR>";
 
+
+### how many rows is this?
+
+$sql = $sqlSelectCount . $sqlFrom .  $sqlWhere . $sqlUserSpecifiedCondition;
+
 if ($Debug) {
 	echo "<pre>$sql<pre>\n";
-
-#	print "now exitting....";
-#	exit;
 }
-
-
-
 
 $result  = pg_exec($db, $sql);
 if (!$result) {
@@ -559,9 +601,50 @@ if (!$result) {
 }
 
 $NumRows = pg_numrows($result);
+$myrow = pg_fetch_array ($result);
+$NumFound = $myrow[0];
 
-#echo "NumRows=$NumRows<br>\n";
+	$params = array(
+			'mode'        => 'Sliding',
+			'perPage'     => $PageSize,
+			'delta'       => 5,
+			'totalItems'  => $NumFound,
+			'urlVar'      => 'page',
+			'currentPage' => $PageNumber,
+			'spacesBeforeSeparator' => 1,
+			'spacesAfterSeparator'  => 1,
+		);
+	$Pager = & Pager::factory($params);
 
+
+
+$sqlOffsetLimit = '';
+$offset = $Pager->getOffsetByPageId();
+$NumOnThisPage = $offset[1] - $offset[0] + 1;
+if ($PageNumber > 1) {
+	$sqlOffsetLimit .= "\nOFFSET " . ($offset[0] - 1);
+	unset($offset);
+}
+
+if ($PageSize) {
+	$sqlOffsetLimit .= "\nLIMIT " . $PageSize;
+}
+
+
+$sql = $sqlSelectFields . $sqlWatchListFields . $sqlFrom . $sqlWatchListFrom . 
+        $sqlWhere . $sqlUserSpecifiedCondition . $sqlOrderBy . $sqlOffsetLimit;
+
+if ($Debug) {
+	echo "<pre>$sql<pre>\n";
+}
+
+$result  = pg_exec($db, $sql);
+if (!$result) {
+  syslog(LOG_NOTICE, pg_errormessage() . ': ' . $sql);
+  die('something went terribly wrong.  Sorry.');
+}
+
+$NumFetches = pg_numrows($result);
 
 } // end of non-committer search
 
@@ -571,11 +654,11 @@ if ($fp) {
 		case "match":
 		case "exact":
 		case "soundex":
-			fwrite($fp, date("Y-m-d H:i:s") . " $stype : $method : $query : $num : $NumRows : $deleted : $casesensitivity\n");
+			fwrite($fp, date("Y-m-d H:i:s") . " $stype : $method : $query : $num : $NumFetches : $deleted : $casesensitivity\n");
 			break;
 
 		default: 
-			fwrite($fp, date("Y-m-d H:i:s") . " $stype : $method : $category/$port : $num : $NumRows : $deleted\n");
+			fwrite($fp, date("Y-m-d H:i:s") . " $stype : $method : $category/$port : $num : $NumFetches : $deleted\n");
 	}
 	fclose($fp);
 } else {
@@ -742,10 +825,9 @@ Special searches:
 if ($search) {
 echo "<tr><td>\n";
 
-if ($NumRows == 0) {
+if ($NumFetches == 0) {
    $HTML .= " no results found<br>\n";
 } else {
-#	$HTML .= "\$start='$start' \$NumRows='$NumRows'<br>\n";
 	if ($stype == 'committer' || $stype == 'commitmessage') {
 	  $NumFetches = min($num, $NumberOfPortCommits);
 	  if ($NumFetches != $NumberOfPortCommits) {
@@ -755,54 +837,39 @@ if ($NumRows == 0) {
       }
 
 	  $NumPortsFound = 'Number of commits: ' . $NumberOfPortCommits;
-      if ($MoreToShow || $start > 1) {
-	    $NumPortsFound .= " (showing only $start - " . ($start + $NumRows - 1) . ')';
+      if ($NumFound > $PageSize) {
+	    $NumPortsFound .= " (showing only $NumOnThisPage on this page)";
 	  }
 	} else {
-	  $NumFetches = min($num, $NumRows);
 	  if ($NumFetches != $NumRows) {
 		$MoreToShow = 1;
       } else {
 		$MoreToShow = 0;
       }
 
-      $NumPortsFound = 'Number of ports: ' . ($start + $NumRows - 1);
-      if ($MoreToShow || $start > 1) {
-	    $NumPortsFound .= " (showing only $start - " . ($start + $NumFetches - 1) . ')';
+      $NumPortsFound = 'Number of ports: ' . $NumFound;
+      if ($NumFound > $PageSize) {
+	    $NumPortsFound .= " (showing only $NumOnThisPage on this page)";
 	  }
 	}
 	
-#	echo "NumFetches=$NumFetches<br>\n";
-
-	if ($start > 1) {
-		$QueryString = $_SERVER['QUERY_STRING'];
-		if (preg_match("/start=(\d+)/e", $QueryString)) {
-			$QueryString = preg_replace("/start=(\d+)/e", "'start=' . max(1, ($start - $num))", $QueryString);
-		} else {
-			$QueryString .= '&start=' . max(1, ($start - $num));
-		}
-		$NumPortsFound .= ' <a href="' . $_SERVER['PHP_SELF'] . '?' . htmlspecialchars($QueryString) . '">Previous page</a>';
-	}
-
-	if ($MoreToShow) {
-		$QueryString = $_SERVER['QUERY_STRING'];
-		if (preg_match("/start=(\d+)/e", $QueryString)) {
-			$QueryString = preg_replace("/start=(\d+)/e", "'start=' . ($start + $num)", $QueryString);
-		} else {
-			$QueryString .= '&start=' . ($start + $num);
-		}
-		$NumPortsFound .= ' <a href="' . $_SERVER['PHP_SELF'] . '?' . htmlspecialchars($QueryString) . '">Next page</a>';
-	}
-
 	
 	$HTML .= $NumPortsFound;
 
 if ($stype == 'committer' || $stype == 'commitmessage') {
-  $DisplayCommit = new DisplayCommit($Commits->LocalResult);
-  $HTML .= $DisplayCommit->CreateHTML();
+	$DisplayCommit = new DisplayCommit($Commits->LocalResult);
+	$links = $Pager->GetLinks();
+	
+	$HTML .= $links['all'];
+	$HTML .= $DisplayCommit->CreateHTML();
+	$HTML .= '<tr><td>' . $NumPortsFound . ' ' . $links['all'] . '</td></tr>';
 
 } else {
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
+
+	$links = $Pager->GetLinks();
+	
+	$HTML .= $links['all'];
 
 	GLOBAL $User;
 	$port_display = new port_display($db, $User);
@@ -816,7 +883,7 @@ if ($stype == 'committer' || $stype == 'commitmessage') {
 		$HTML .= $port_display->ReplaceWatchListToken($Port->{'onwatchlist'}, $Port_HTML, $Port->{'element_id'});
     }
 
-	$HTML .= $NumPortsFound;
+	$HTML .= $NumPortsFound . ' ' . $links['all'];
 
 } // if stype == 'committer'
 }

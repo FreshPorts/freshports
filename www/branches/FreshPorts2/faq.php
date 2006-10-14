@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.84 2006-07-23 13:57:33 dan Exp $
+	# $Id: faq.php,v 1.1.2.85 2006-10-14 15:33:45 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -378,6 +378,11 @@ make: fatal errors encountered -- cannot continue
 	<P><?php echo freshports_Revision_Icon(); ?> Revision details.  Click on the Files icon in the commit history and
 	you'll see what files in this port were touched by this commit.  Click on the Revision details to view the
 	revision of the file associated this commit.
+	</P>
+
+	<P><?php echo freshports_SanityTestFailure_Icon(); ?> Sanity Test Failures.  The maintainers and committers are
+	good.   But sometimes a mistake slips through.  This record the mistake to make it easier for others to correct
+	it if it goes unnoticed.  If you see this icon next to a commit, it failed a Sanity Test.
 	</P>
 
 	</BLOCKQUOTE>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.60 2006-07-31 15:15:25 dan Exp $
+	# $Id: commit.php,v 1.1.2.61 2006-10-14 15:32:26 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -137,7 +137,7 @@ if ($Debug) echo "UserID='$User->id'";
 
 	<tr><td valign="top" width="100%">
 
-	<?php echo freshports_MainContentTable(NOBORDER); ?>
+	<?php echo freshports_MainContentTable(BORDER); ?>
 
 <?
 if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
@@ -153,7 +153,6 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 	
 ?>
 
-<TABLE WIDTH="100%" border="1" CELLSPACING="0" CELLPADDING="8">
 <TR>
 	<? echo freshports_PageBannerText($Title, 3); ?>
 </TR>
@@ -185,205 +184,27 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 		$NumRowsTotal = $myrow['count'];
 	}
 
-	$sql = "select * from freshports_commit('$message_id', $PageSize, ($PageNo - 1 ) * $PageSize, $User->id)";
+	$sql ="
+SELECT FPC.*, STF.message as stf_message
+  FROM freshports_commit('$message_id', $PageSize, ($PageNo - 1 ) * $PageSize, $User->id) FPC
+ LEFT OUTER JOIN sanity_test_failures STF
+    ON FPC.commit_log_id = STF.commit_log_id";
+
 	if ($Debug) echo "\n<p>sql=$sql</p>\n";
 
 	$result = pg_exec($database, $sql);
 
 	if ($result) {
 		$numrows = pg_numrows($result);
-		if ($numrows) { 
+		if ($numrows) {
+			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
 
-			$i=0;
-			$GlobalHideLastChange = "N";
-#			unset($ThisChangeLogID);
-			while ($myrow = pg_fetch_array ($result, $i)) {
-				$rows[$i] = $myrow;
-				#
-				# if we do a limit, it applies to the big result set
-				# not the resulting set if we also do a DISTINCT
-				# thus, count the commit id's ourselves.
-				#
-#				if ($ThisChangeLogID <> $myrow["commit_log_id"]) {
-#					$ThisChangeLogID  = $myrow["commit_log_id"];
-					$i++;
-#				}
-#				echo "$i, ";
-				if ($i >= $numrows) break;
-			}
-
-			$NumRows = $numrows;
-			$LastDate = '';
-
-#			print "NumRows = $NumRows\n<BR>";
-			$URL = $_SERVER["PHP_SELF"] . '?message_id=' . $message_id;
-			unset($ThisChangeLogID);
-			$HTML = '';
-			for ($i = 0; $i < $NumRows; $i++) {
-				$myrow = $rows[$i];
-				$ThisChangeLogID = $myrow["commit_log_id"];
-				if ($LastDate <> $myrow["commit_date"]) {
-					$LastDate = $myrow["commit_date"];
-					$HTML .= '<TR><TD COLSPAN="3" BGCOLOR="' . BACKGROUND_COLOUR . '" HEIGHT="0">' . "\n";
-					$HTML .= '   <FONT COLOR="#FFFFFF"><BIG>' . FormatTime($myrow["commit_date"], 0, "D, j M Y") . '</BIG></FONT>' . "\n";
-					$HTML .= '</TD></TR>' . "\n\n";
-					if ($NumRowsTotal > $PageSize) {
-						$HTML .= '<tr><td>' . freshports_CommitNextPreviousPage($URL, $NumRowsTotal, $PageNo, $PageSize) . '</td></tr>';
-					}
-				}
-
-				$j = $i;
-
-				$HTML .= "<TR><TD>\n";
-
-				// OK, while we have the log change log, let's put the port details here.
-				$MultiplePortsThisCommit = 0;
-				while ($j < $NumRows && $rows[$j]["commit_log_id"] == $ThisChangeLogID) {
-					$myrow = $rows[$j];
-
-	                $IsPort = $myrow['is_port'] == 't';
-
-					if ($MultiplePortsThisCommit) {
-						$HTML .= '<BR>';
-					}
-
-					if (!$MultiplePortsThisCommit) {
-						GLOBAL $freshports_mail_archive;
-
-						$HTML .= '<SMALL>';
-						$HTML .= '[ ' . $myrow["commit_time"] . ' ' . freshports_CommitterEmailLink($myrow["committer"]) . ' ]';
-						$HTML .= '</SMALL>';
-						$HTML .= '&nbsp;';
-						$HTML .= freshports_Email_Link($myrow["message_id"]);
-
-						if ($myrow["encoding_losses"] == 't') {
-							$HTML .= '&nbsp;' . freshports_Encoding_Errors();
-						}
-
-						if ($NumRows > 7) {
-							$HTML .= " <small>$NumRowsTotal ports touched by this commit</small>\n";
-						}
-
-						$HTML .= "<BR>\n";
-					}
-
-
-					if ($User->id && $IsPort) {
-						if ($myrow["watch"]) {
-							$HTML .= freshports_Watch_Link_Remove($User->watch_list_add_remove, $myrow["onwatchlist"], $myrow["element_id"]);
-						} else {
-							$HTML .= freshports_Watch_Link_Add   ($User->watch_list_add_remove, $myrow["onwatchlist"], $myrow["element_id"]);
-						}
-						$HTML .= ' ';
-					}
-
-					if ($IsPort) {
-						$HTML .= '<BIG><B>';
-						$HTML .= '<A HREF="/' . $myrow["category"] . '/' . $myrow["port"] . '/">';
-						$HTML .= $myrow["port"];
-					
-						$HTML .= '</A>';
-
-						$HTML .= ' '. freshports_PackageVersion($myrow["port_version"], $myrow["port_revision"], $myrow["port_epoch"]);
-
-						$HTML .= "</B></BIG>\n";
-
-                        $HTML .= '<A HREF="/' . $myrow["category"] . '/">';
-                        $HTML .= $myrow["category"]. "</A>";
-                        $HTML .= '&nbsp;';
-
-					} else {
-						$HTML .= '<BIG><B>';
-						$ElementPathname = preg_replace('|^/?ports/|', '', $myrow['pathname']);
-						$HTML .= '<A HREF="/' . $ElementPathname . '">';
-						$HTML .= $ElementPathname;
-						$HTML .= '</A>';
-						$HTML .= "</B></BIG>\n";
-					}
-
-					$HTML .= "\n";
-
-					if ($IsPort) {
-						$HTML .= freshports_CommitFilesLink($myrow["message_id"], $myrow["category"], $myrow["port"]);
-					}
-
-					// indicate if this port has been removed from cvs
-					if ($myrow["status"] == "D") {
-						$HTML .= " " . freshports_Deleted_Icon_Link() . "\n";
-					}
-
-					if ($IsPort) {
-						// indicate if this port needs refreshing from CVS
-						if ($myrow["needs_refresh"]) {
-							$HTML .= " " . freshports_Refresh_Icon_Link() . "\n";
-						}
-
-						if ($myrow["date_added"] > Time() - 3600 * 24 * $DaysMarkedAsNew) {
-							$MarkedAsNew = "Y";
-							$HTML .= freshports_New_Icon() . "\n";
-						}
-
-						if ($myrow["forbidden"]) {
-							$HTML .= ' ' . freshports_Forbidden_Icon_Link($myrow["forbidden"]) . "\n";
-						}
-
-						if ($myrow["broken"]) {
-							$HTML .= '&nbsp;' . freshports_Broken_Icon_Link($myrow["broken"]) . "\n";
-						}
-
-						if ($myrow["deprecated"]) {
-							$HTML .= '&nbsp;' . freshports_Deprecated_Icon_Link($myrow["deprecated"]) . "\n";
-						}
-
-						if ($myrow["expiration_date"]) {
-							if (date('Y-m-d') >= $myrow["expiration_date"]) {
-								$HTML .= freshports_Expired_Icon_Link($myrow["expiration_date"]) . "\n";
-							} else {
-								$HTML .= freshports_Expiration_Icon_Link($myrow["expiration_date"]) . "\n";
-							}
-						}
-
-						if ($myrow["ignore"]) {
-							$HTML .= '&nbsp;' . freshports_Ignore_Icon_Link($myrow["ignore"]) . "\n";
-						}
-
-						if ($myrow['vulnerable_current']) {
-							$HTML .= '&nbsp;' . freshports_VuXML_Icon();
-						} else {
-							if ($myrow['vulnerable_past']) {
-								$HTML .= '&nbsp;' . freshports_VuXML_Icon_Faded();
-							}
-						}
-
-						if ($myrow['restricted']) {
-							# the restricted icon is wide enough to not need a leading spacer
-							$HTML .= freshports_Restricted_Icon_Link($myrow['restricted']);
-						}
-
-						if ($myrow['no_cdrom']) {
-							$HTML .= '&nbsp;' . freshports_No_CDROM_Icon_Link($myrow['no_cdrom']);
-						}
-
-						if ($myrow['is_interactive']) {
-							$HTML .= '&nbsp;' . freshports_Is_Interactive_Icon_Link($myrow['is_interactive']);
-						}
-
-						$HTML .= ' ' . htmlspecialchars($myrow["short_description"]) . "\n";
-					}
-
-					$j++;
-					$MultiplePortsThisCommit = 1;
-				} // end while
-
-				$i = $j - 1;
-
-				$HTML .= "\n<BLOCKQUOTE>\n";
-				$HTML .= freshports_PortDescriptionPrint($myrow["commit_description"], $myrow["encoding_losses"]);
-				$HTML .= "\n</BLOCKQUOTE>\n</TD></TR>\n\n\n";
-			}
-
-			echo $HTML;
-
+			$DisplayCommit = new DisplayCommit($result);
+			$DisplayCommit->SanityTestFailure = true;
+			$RetVal = $DisplayCommit->CreateHTML();
+	
+			echo $DisplayCommit->HTML;
+	
 		} else {
 				echo '<tr><TD VALIGN="top"><P>Sorry, nothing found in the database....</P>' . "\n";
 				echo "</TD></tr>";

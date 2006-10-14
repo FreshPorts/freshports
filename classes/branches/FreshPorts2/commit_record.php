@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit_record.php,v 1.1.2.14 2006-07-27 19:06:42 dan Exp $
+	# $Id: commit_record.php,v 1.1.2.15 2006-10-14 15:29:59 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -42,6 +42,8 @@ class CommitRecord {
 	var $is_interactive;
     var $only_for_archs;
     var $not_for_archs;
+    
+    var $stf_message;
 
 	var $watch;
 	var $element_pathname;
@@ -85,6 +87,7 @@ class CommitRecord {
 		$this->only_for_archs		= $myrow['only_for_archs'];
 		$this->not_for_archs		= $myrow['not_for_archs'];
 		$this->element_pathname		= $myrow['element_pathname'];
+		$this->stf_message			= $myrow['stf_message'];
 	}
 
 	function EncodingLosses() {

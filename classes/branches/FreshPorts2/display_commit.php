@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: display_commit.php,v 1.1.2.5 2006-07-27 19:03:54 dan Exp $
+	# $Id: display_commit.php,v 1.1.2.6 2006-10-14 15:29:59 dan Exp $
 	#
 	# Copyright (c) 2003-2006 DVL Software Limited
 	#
@@ -20,6 +20,8 @@ class DisplayCommit {
 	var $DaysMarkedAsNew = 10;
 	var $LocalResult;
 	var $HTML;
+	
+	var $SanityTestFailure = FALSE;
 
 	function DisplayCommit($result) {
 		$this->result = $result;
@@ -100,6 +102,10 @@ class DisplayCommit {
 
 					if ($mycommit->EncodingLosses()) {
 						$this->HTML .= '&nbsp;' . freshports_Encoding_Errors();
+					}
+
+					if ($mycommit->stf_message != '') {
+						$this->HTML .= '&nbsp; ' . freshports_SanityTestFailure_Link($mycommit->message_id);
 					}
 				}
 

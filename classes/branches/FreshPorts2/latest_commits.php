@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: latest_commits.php,v 1.1.2.20 2006-07-29 21:27:43 dan Exp $
+	# $Id: latest_commits.php,v 1.1.2.21 2006-10-14 15:29:59 dan Exp $
 	#
 	# Copyright (c) 2003-2004 DVL Software Limited
 	#
@@ -53,7 +53,11 @@ class LatestCommits {
 		if (IsSet($this->Filter)) {
 			$sql = "select * from LatestCommitsFiltered($this->MaxNumberOfPorts, $this->UserID, '" . AddSlashes($this->Filter) . "')";
 		} else {
-			$sql = "select * from LatestCommits($this->MaxNumberOfPorts, $this->UserID)";
+#			$sql = "select * from LatestCommits($this->MaxNumberOfPorts, $this->UserID)";
+			$sql = "
+SELECT LC.*, STF.message AS stf_message
+  FROM LatestCommits(100, 0) LC LEFT OUTER JOIN sanity_test_failures STF
+    ON LC.commit_log_id = STF.commit_log_id";
 		}
 
 		if ($this->Debug) echo "\n<p>sql=$sql</p>\n";
@@ -75,7 +79,6 @@ class LatestCommits {
 		$this->HTML = $DisplayCommit->HTML;
 
 		return $RetVal;
-
 	}
 }
 ?>

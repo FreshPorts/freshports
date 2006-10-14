@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits.php,v 1.1.2.23 2006-07-27 19:06:42 dan Exp $
+	# $Id: commits.php,v 1.1.2.24 2006-10-14 15:29:59 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -107,14 +107,15 @@ class Commits {
 			ports.expiration_date                                                                                       AS expiration_date,
 			date_part('epoch', ports.date_added)                                                                        AS date_added,
 			ports.element_id                                                                                            AS element_id,
-			ports.short_description                                                                                     AS short_description";
+			ports.short_description                                                                                     AS short_description,
+			STF.message                                                                                                 AS stf_message";
 		if ($UserID) {
 				$sql .= ",
 	        onwatchlist ";
 		}
 
 		$sql .= "
-    FROM commit_log_ports, commit_log, categories, ports, element ";
+    FROM commit_log_ports LEFT OUTER JOIN sanity_test_failures STF ON STF.commit_log_id = commit_log_ports.commit_log_id, commit_log, categories, ports, element ";
 
 		if ($UserID) {
 				$sql .= "
@@ -127,7 +128,7 @@ class Commits {
 	  GROUP BY wle_element_id) AS TEMP
 	       ON TEMP.wle_element_id = element.id";
 		}
-
+		
 		$sql .= "
 	  WHERE commit_log.committer = '" . AddSlashes($Committer) . "'
 	    AND commit_log_ports.commit_log_id = commit_log.id
@@ -291,14 +292,17 @@ class Commits {
 			ports.expiration_date                                                                                       AS expiration_date,
 			date_part('epoch', ports.date_added)                                                                        AS date_added,
 			ports.element_id                                                                                            AS element_id,
-			ports.short_description                                                                                     AS short_description";
+			ports.short_description                                                                                     AS short_description,
+			STF.message                                                                                                 AS stf_message";
+
 		if ($UserID) {
 				$sql .= ",
 	        onwatchlist ";
 		}
 
 		$sql .= "
-    FROM commit_log_ports, commit_log, categories, ports, element ";
+    FROM commit_log_ports LEFT OUTER JOIN sanity_test_failures STF ON STF.commit_log_id = commit_log_ports.commit_log_id
+	, commit_log, categories, ports, element ";
 
 		if ($UserID) {
 				$sql .= "
@@ -315,7 +319,7 @@ class Commits {
 		$sql .= "
 	  WHERE commit_log.commit_date         BETWEEN '$Date'::timestamptz  + SystemTimeAdjust()
 	                                           AND '$Date'::timestamptz  + SystemTimeAdjust() + '1 Day'
-		 AND commit_log_ports.commit_log_id = commit_log.id
+		AND commit_log_ports.commit_log_id = commit_log.id
 	    AND commit_log_ports.port_id       = ports.id
 	    AND categories.id                  = ports.category_id
 	    AND element.id                     = ports.element_id

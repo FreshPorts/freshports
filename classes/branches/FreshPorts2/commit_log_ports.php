@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit_log_ports.php,v 1.1.2.20 2006-07-27 19:06:41 dan Exp $
+	# $Id: commit_log_ports.php,v 1.1.2.21 2006-10-14 15:29:58 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -21,6 +21,7 @@ class Commit_Log_Ports {
 	var $port_revision;
 	var $port_epoch;
 	var $needs_refresh;
+	var $stf_message;
 
 	var $result;
 
@@ -42,21 +43,25 @@ class Commit_Log_Ports {
 		# return the number of commits found
 
 		$sql = "
-select commit_log.id, 
-       port_id,
-       message_id,
-       to_char(commit_date - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS')  as commit_date,
-       commit_log.description,
-       committer,
-       encoding_losses,
-       port_version,
-       port_revision,
-       port_epoch,
-       needs_refresh
-  from commit_log, commit_log_ports
- where commit_log.id            = commit_log_ports.commit_log_id
-   and commit_log_ports.port_id = $port_id
- order by commit_log.commit_date desc ";
+   SELECT CL.id, 
+          port_id,
+          message_id,
+          to_char(commit_date - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') AS commit_date,
+          CL.description,
+          committer,
+          encoding_losses,
+          port_version,
+          port_revision,
+          port_epoch,
+          needs_refresh,
+          STF.message AS stf_message
+     FROM commit_log           CL,
+          commit_log_ports     CLP LEFT OUTER JOIN
+          sanity_test_failures STF on 
+            CLP.commit_log_id = STF.commit_log_id
+    WHERE CL.id       = CLP.commit_log_id
+      AND CLP.port_id = $port_id
+ ORDER BY CL.commit_date desc ";
 
 #		echo "\$sql='<pre>$sql</pre><br>\n";
 		$this->result = pg_exec($this->dbh, $sql);
@@ -88,6 +93,7 @@ select commit_log.id,
 		$this->port_revision		= $myrow["port_revision"];
 		$this->port_epoch			= $myrow["port_epoch"];
 		$this->needs_refresh		= $myrow["needs_refresh"];
+		$this->stf_message			= $myrow["stf_message"];
 	}
 
 	function NeedsRefreshClear() {

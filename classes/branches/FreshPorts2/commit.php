@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.16 2006-07-27 19:06:41 dan Exp $
+	# $Id: commit.php,v 1.1.2.17 2006-10-14 15:29:58 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -37,6 +37,7 @@ class Commit {
 	var $element_id;
 	var $short_description;
 	var $onwatchlist;
+	var $stf_message;
 
 	var $last_modified;
 
@@ -71,14 +72,16 @@ class Commit {
 		$this->element_id			= $myrow["element_id"];
 		$this->short_description	= $myrow["short_description"];
 		$this->onwatchlist			= $myrow["onwatchlist"];
+		$this->stf_message			= $myrow["stf_message"];
 
 		$this->last_modified		= $myrow["last_modified"];
 	}
 
 	function FetchByMessageId($message_id) {
+		$Debug = 0;
 
 		$sql = "
-SELECT id as commit_log_id,
+SELECT CL.id as commit_log_id,
        message_id,
        message_date,
        to_char(commit_date - SystemTimeAdjust(), 'DD Mon YYYY')  as commit_date,
@@ -89,8 +92,10 @@ SELECT id as commit_log_id,
        description AS commit_description,
        system_id,
        encoding_losses,
-       GMT_Format(date_added) as last_modified
-  FROM commit_log 
+       GMT_Format(date_added) as last_modified,
+       STF.message as stf_message
+  FROM commit_log CL LEFT OUTER JOIN sanity_test_failures STF
+    ON CL.id = STF.commit_log_id
  WHERE message_id = '" . AddSlashes($message_id) . "'";
 
 #		echo "sql = '<pre>$sql</pre>'<BR>";

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.286 2006-10-10 19:02:36 dan Exp $
+	# $Id: freshports.php,v 1.4.2.287 2006-10-14 15:36:53 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -49,6 +49,10 @@ function freshports_Search_Depends_All($CategoryPort) {
 	      freshports_Search_Icon('search for ports that depend on this port') . '</a>';
 }
 
+function freshports_SanityTestFailure_Link($message_id) {
+	return '<a href="/sanity_test_failures.php?message_id=' . $message_id . '">' . freshports_SanityTestFailure_Icon() . '</a>';
+}
+
 function freshports_Search_Maintainer($Maintainer) {
 	return '<a href="/search.php?stype=maintainer&amp;method=exact&amp;query=' . htmlentities($Maintainer) . '">' .
 	      freshports_Search_Icon('search for ports maintained by this maintainer') . '</a>';
@@ -60,7 +64,8 @@ function freshports_Search_Committer($Committer) {
 }
 
 function freshports_MainContentTable($Border=1, $ColSpan=1) {
-	return '<TABLE WIDTH="100%" border="' . $Border . '" CELLSPACING="0" CELLPADDING="8">' . PortsFreezeStatus($ColSpan);
+	return '<TABLE WIDTH="100%" border="' . $Border . '" CELLSPACING="0" CELLPADDING="8">' . 
+		PortsFreezeStatus($ColSpan);
 }
 
 function  freshports_ErrorContentTable() {
@@ -169,12 +174,16 @@ function freshports_IndexFollow($URI) {
 
 function freshports_BannerSpace() {
 
-return "
+return '
   <TR>
-    <TD height=\"10\"></TD>
+    <TD height="10"></TD>
   </TR>
-";
+';
 
+}
+
+function freshports_SanityTestFailure_Icon($Title = 'Sanity Test Failure') {
+	return '<IMG SRC="/images/stf.gif" ALT="' . $Title . '" TITLE="' . $Title . '" BORDER="0" WIDTH="13" HEIGHT="13" VSPACE="1">';
 }
 
 function freshports_Ascending_Icon($Title = 'Ascending Order') {
@@ -1065,7 +1074,6 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	if ($commit->EncodingLosses()) {
 		$HTML .= '&nbsp;'. freshports_Encoding_Errors_Link();
 	}
-
 	$HTML .= ' ';
 
 	$HTML .= freshports_CommitFilesLink($commit->message_id, $category, $port);
@@ -1074,6 +1082,10 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	$PackageVersion = freshports_PackageVersion($commit->{'port_version'},  $commit->{'port_revision'},  $commit->{'port_epoch'});
 	if (strlen($PackageVersion) > 0) {
     	$HTML .= '&nbsp;&nbsp;&nbsp;<BIG><B>' . $PackageVersion . '</B></BIG>';
+	}
+
+	if ($commit->stf_message != '') {
+		$HTML .= '&nbsp; ' . freshports_SanityTestFailure_Link($commit->message_id);
 	}
 
 	if (IsSet($VuXMLList[$commit->id])) {
@@ -1570,6 +1582,8 @@ function freshports_SideBar() {
 
 ' . '<br><div align="center">';
 
+	GLOBAL $ShowAds;
+
 	if ($ShowAds) {
 		$HTML .= Ad_Referral_120x60();
 	}
@@ -1631,6 +1645,7 @@ $HTML .= '<br>
 	<FONT SIZE="-1"><A HREF="/phorum/" TITLE="Discussion Forums">Forums</A></FONT><BR>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/categories.php",       "Categories",       "List of all Port categories")   . '</FONT><BR>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/ports-deleted.php",    "Deleted ports",    "All deleted ports"          )   . '</FONT><BR>
+	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/sanity_test_failures.php",    "Sanity Test Failures",    "Things that didn't go quite right..."          )   . '</FONT><BR>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/backend/newsfeeds.php",    "Newsfeeds",    "Newsfeeds for just about everything"          )   . '</FONT><BR>
 	<FONT SIZE="-1">' . freshports_SideBarHTML('', 'http://news.freshports.org/',            "Blog",     "The Official FreshPorts Blog"                ) . '</FONT><BR>
 	

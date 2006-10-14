@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.90 2006-09-14 16:35:23 dan Exp $
+	# $Id: search.php,v 1.1.2.91 2006-10-14 15:39:39 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -18,6 +18,54 @@
 	define('ORDERBYCATEGORY',   'category');
 	define('ORDERBYASCENDING',  'asc');
 	define('ORDERBYDESCENDING', 'desc');
+
+function WildCardQuery($stype, $Like, $query) {
+# return the clause for this particular type of query
+	$sql = '';
+	switch ($stype) {
+		case 'name':
+			$sql .= "\n     and element.name $Like '$query'";
+			break;
+
+		case 'package':
+			$sql .= "\n     and ports.package_name $Like '$query'";
+			break;
+
+		case 'latest_link':
+			$sql .= "\n     and ports.latest_link $Like '$query'";
+			break;
+
+		case 'shortdescription':
+			$sql .= "\n     and ports.short_description $Like '$query'";
+			break;
+  
+		case 'longdescription':
+			$sql .= "\n     and ports.long_description $Like '$query'";
+			break;
+  
+		case 'depends_build':
+			$sql .= "\n     and ports.depends_build $Like '$query'";
+			break;
+  
+		case 'depends_lib':
+			$sql .= "\n     and ports.depends_lib $Like '$query'";
+			break;
+
+		case 'depends_run':
+			$sql .= "\n     and ports.depends_run $Like '$query'";
+			break;
+
+		case 'depends_all':
+			$sql .= "\n     and (ports.depends_build $Like '$query' OR ports.depends_lib $Like '$query' OR ports.depends_run $Like '$query')";
+			break;
+
+		case 'maintainer':
+			$sql .= "\n     and ports.maintainer $Like '$query'";
+			break;
+	}
+
+	return $sql;
+}
 
 	$Debug = 0;
 	if ($Debug) phpinfo();
@@ -280,53 +328,34 @@ if ($method == 'soundex') {
 
 
 switch ($method) {
-	case 'match':
+	case 'prefix':
+		$WildCardMatch = "$query%";
 		if ($casesensitivity == 'casesensitive') {
 			$Like = 'LIKE';
 		} else {
 			$Like = 'ILIKE';
 		}
-		switch ($stype) {
-			case 'name':
-				$sql .= "\n     and element.name $Like '%$query%'";
-				break;
+		$sql .= WildCardQuery($stype, $Like, $WildCardMatch);
+		break;
 
-			case 'package':
-				$sql .= "\n     and ports.package_name $Like '%$query%'";
-				break;
-
-			case 'latest_link':
-				$sql .= "\n     and ports.latest_link $Like '%$query%'";
-				break;
-
-			case 'shortdescription':
-				$sql .= "\n     and ports.short_description $Like '%$query%'";
-				break;
-      
-			case 'longdescription':
-				$sql .= "\n     and ports.long_description $Like '%$query%'";
-				break;
-      
-			case 'depends_build':
-				$sql .= "\n     and ports.depends_build $Like '%$query%'";
-				break;
-      
-			case 'depends_lib':
-				$sql .= "\n     and ports.depends_lib $Like '%$query%'";
-				break;
-
-			case 'depends_run':
-				$sql .= "\n     and ports.depends_run $Like '%$query%'";
-				break;
-
-			case 'depends_all':
-				$sql .= "\n     and (ports.depends_build $Like '%$query%' OR ports.depends_lib $Like '%$query%' OR ports.depends_run $Like '%$query%')";
-				break;
-
-			case 'maintainer':
-				$sql .= "\n     and ports.maintainer $Like '%$query%'";
-				break;
+	case 'match':
+		$WildCardMatch = "%$query%";
+		if ($casesensitivity == 'casesensitive') {
+			$Like = 'LIKE';
+		} else {
+			$Like = 'ILIKE';
 		}
+		$sql .= WildCardQuery($stype, $Like, $WildCardMatch);
+		break;
+
+	case 'suffix':
+		$WildCardMatch = "%$query";
+		if ($casesensitivity == 'casesensitive') {
+			$Like = 'LIKE';
+		} else {
+			$Like = 'ILIKE';
+		}
+		$sql .= WildCardQuery($stype, $Like, $WildCardMatch);
 		break;
 
 	case 'exact':
@@ -631,7 +660,9 @@ $Port->LocalResult = $result;
 
 	<SELECT name=method>
 		<OPTION VALUE="exact"   <?if ($method == "exact"  ) echo 'SELECTED' ?>>equal to
+		<OPTION VALUE="prefix"  <?if ($method == "prefix" ) echo 'SELECTED' ?>>starting with
 		<OPTION VALUE="match"   <?if ($method == "match"  ) echo 'SELECTED' ?>>containing
+		<OPTION VALUE="suffix"  <?if ($method == "suffix" ) echo 'SELECTED' ?>>ending with
 		<OPTION VALUE="soundex" <?if ($method == "soundex") echo 'SELECTED' ?>>sounding like
 	</SELECT>
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch.php,v 1.1.2.64 2006-06-27 01:23:12 dan Exp $
+	# $Id: watch.php,v 1.1.2.65 2006-10-15 18:57:09 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -23,7 +23,7 @@
 
 	$Debug = 0;
 
-	if ($Debug) phpinfo();
+#	if ($Debug) phpinfo();
 
 	$visitor = $_COOKIE['visitor'];
 
@@ -143,23 +143,24 @@ if (IsSet($_GET["sort"])) {
 }
 
 switch ($sort) {
-/* sorting by port is disabled. Doesn't make sense to do this
    case "port":
-      $sort = "version, updated desc";
+      $sort = "port";
+      echo 'sorted by port.  but you can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=updated">last update</a> or <a href="' . $_SERVER["PHP_SELF"] . '?sort=category">category</a>';
       $cache_file .= ".port";
       break;
-*/
+
    case "category":
       $sort ="category, port";
-      echo 'sorted by category.  but you can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=updated">last update</a>';
+      echo 'sorted by category.  but you can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=updated">last update</a> or <a href="' . $_SERVER["PHP_SELF"] . '?sort=port">port</a>';
       $ShowCategoryHeaders = 1;
-      $cache_file .= ".updated";
-       break;
+      $cache_file .= ".category";
+      break;
 
    default:
-      $sort = "commit_date_sort_field desc, port";
-      echo 'sorted by last update date.  but you can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=category">category</a>';
+      $sort = "max(commit_log.commit_date) is null, max(commit_log.commit_date), port";
+      echo 'sorted by last update date.  but you can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=category">category</a> or <a href="' . $_SERVER["PHP_SELF"] . '?sort=port">port</a>';
       $ShowCategoryHeaders = 0;
+      $cache_file .= ".updated";
       break;
 
 }

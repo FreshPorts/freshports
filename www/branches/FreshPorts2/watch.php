@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch.php,v 1.1.2.65 2006-10-15 18:57:09 dan Exp $
+	# $Id: watch.php,v 1.1.2.66 2006-10-15 18:57:37 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#

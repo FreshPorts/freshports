@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.287 2006-10-14 15:36:53 dan Exp $
+	# $Id: freshports.php,v 1.4.2.288 2006-10-16 23:20:13 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -893,6 +893,367 @@ function freshports_depends_links($dbh, $DependsList) {
 }
 
 
+<<<<<<< freshports.php
+function freshports_PortDetails($port, $db, $ShowDeletedDate, $DaysMarkedAsNew, $GlobalHideLastChange, $HideCategory, $HideDescription, $ShowChangesLink, $ShowDescriptionLink, $ShowDownloadPortLink, $ShowEverything, $ShowHomepageLink, $ShowLastChange, $ShowMaintainedBy, $ShowPortCreationDate, $ShowPackageLink, $ShowShortDescription, $LinkToPort = 0, $AddRemoveExtra = '', $ShowCategory = 1, $ShowDateAdded = "N", $IndicateWatchListStatus = 1, $ShowMasterSites = 0, $ShowWatchListCount = 0, $ShowMasterSlave = 0) {
+//
+// This fragment does the basic port information for a single port.
+// It really needs to be fixed up.
+//
+	GLOBAL $ShowDepends;
+	GLOBAL $FreshPortsWatchedPortPrefix;
+	GLOBAL $FreshPortsWatchedPortSuffix;
+	GLOBAL $FreshPortsWatchedPortNotPrefix;
+	GLOBAL $FreshPortsWatchedPortNotSuffix;
+	GLOBAL $User;
+	GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;
+
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/htmlify.php');
+
+	$MarkedAsNew = "N";
+	$HTML  = "<DL>\n";
+
+	$HTML .= "<DT>";
+
+	$HTML .= '<BIG><B>';
+
+	if ($LinkToPort) {
+		$HTML .= "<A HREF=\"/$port->category/$port->port/\">$port->port</A>";
+	} else {
+		$HTML .= $port->port;
+	}
+
+	$PackageVersion = freshports_PackageVersion($port->{'version'}, $port->{'revision'}, $port->{'epoch'});
+	if (strlen($PackageVersion) > 0) {
+		$HTML .= ' ' . $PackageVersion;
+	}
+
+	if (IsSet($port->category_looking_at)) {
+		if ($port->category_looking_at != $port->category) {
+			$HTML .= '<sup>*</sup>';
+		}
+	}
+
+	$HTML .= "</B></BIG>";
+
+	if ($ShowCategory) {
+		$HTML .= ' / <A HREF="/' . $port->category . '/" TITLE="The category for this port">' . $port->category . '</A>';
+	}
+
+	if ($User->id && $IndicateWatchListStatus) {
+		if ($port->{'onwatchlist'}) {
+			$HTML .= ' '. freshports_Watch_Link_Remove($User->watch_list_add_remove, $port->onwatchlist, $port->{'element_id'});
+		} else {
+			$HTML .= ' '. freshports_Watch_Link_Add   ($User->watch_list_add_remove, $port->onwatchlist, $port->{'element_id'});
+		}
+	}
+
+	// indicate if this port has been removed from cvs
+	if ($port->{'status'} == "D") {
+		$HTML .= " " . freshports_Deleted_Icon_Link() . "\n";
+	}
+
+	// indicate if this port needs refreshing from CVS
+	if ($port->{'needs_refresh'}) {
+		$HTML .= " " . freshports_Refresh_Icon_Link() . "\n";
+	}
+
+	if ($port->{'date_added'} > Time() - 3600 * 24 * $DaysMarkedAsNew) {
+		$MarkedAsNew = "Y";
+		$HTML .= freshports_New_Icon() . "\n";
+	}
+
+	if ($ShowWatchListCount) {
+		$HTML .= '&nbsp; ' . freshports_WatchListCount_Icon_Link() . '=' . $port->WatchListCount();
+	}
+	
+	$HTML .= ' ' . freshports_Search_Depends_All($port->category . '/' . $port->port);
+
+	if ($port->IsVulnerable()) {
+		$HTML .= '&nbsp;' . freshports_VuXML_Icon();
+	} else {
+		if ($port->WasVulnerable()) {
+			$HTML .= '&nbsp;' . freshports_VuXML_Icon_Faded();
+		}
+	}
+
+	$HTML .= "</DT>\n<DD>";
+	# show forbidden and broken
+	if ($port->forbidden) {
+		$HTML .= freshports_Forbidden_Icon_Link($port->forbidden)   . ' FORBIDDEN: '  . htmlify(htmlspecialchars($port->forbidden))  . '<br>';
+	}
+
+	if ($port->broken) {
+		$HTML .= freshports_Broken_Icon_Link($port->broken)         . ' BROKEN: '     . htmlify(htmlspecialchars($port->broken))     . '<br>';
+	}
+
+	if ($port->deprecated) {
+		$HTML .= freshports_Deprecated_Icon_Link($port->deprecated) . ' DEPRECATED: ' . htmlify(htmlspecialchars($port->deprecated)) . '<br>';
+	}
+
+	if ($port->expiration_date) {
+		if (date('Y-m-d') >= $port->expiration_date) {
+			$HTML .= freshports_Expired_Icon_Link($port->expiration_date) . ' This port expired on: ' . $port->expiration_date . '<br>';
+		} else {
+			$HTML .= freshports_Expiration_Icon_Link($port->expiration_date) . ' EXPIRATION DATE: ' . $port->expiration_date . '<br>';
+		}
+	}
+
+	if ($port->ignore) {
+		$HTML .= freshports_Ignore_Icon_Link($port->ignore)         . ' IGNORE: '     . htmlify(htmlspecialchars($port->ignore))     . '<br>';
+	}
+
+	# we do not show vulnerabilities here.  We are showing detail.
+
+	if ($port->restricted) {
+		$HTML .= freshports_Restricted_Icon_Link($port->restricted) . ' RESTRICTED: '     . htmlify(htmlspecialchars($port->restricted)) . '<br>';
+	}
+
+	if ($port->no_cdrom) {
+		$HTML .= freshports_No_CDROM_Icon_Link($port->no_cdrom)      . ' NO CDROM: '     . htmlify(htmlspecialchars($port->no_cdrom))   . '<br>';
+	}
+
+	if ($port->is_interactive) {
+		$HTML .= freshports_Is_Interactive_Icon_Link($port->is_interactive) . ' IS INTERACTIVE: '  . htmlify(htmlspecialchars($port->is_interactive)) . '<br>';
+	}
+
+   // description
+   if ($port->short_description && ($ShowShortDescription == "Y" || $ShowEverything)) {
+      $HTML .= htmlify(htmlspecialchars($port->short_description));
+      $HTML .= "<br>\n";
+   }
+
+   // maintainer
+   if ($port->maintainer && ($ShowMaintainedBy == "Y" || $ShowEverything)) {
+      if (strtolower($port->maintainer) == UNMAINTAINTED_ADDRESS) {
+         $HTML .= '<br>There is no maintainer for this port.<br>';
+         $HTML .= 'Any concerns regarding this port should be directed to the FreeBSD ' .
+                   'Ports mailing list via ';
+         $HTML .= '<A HREF="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);
+         $HTML .= '?subject=FreeBSD%20Port:%20' . $port->category . '/' . $port->port . '" TITLE="email the FreeBSD Ports mailing list">';
+         $HTML .= freshportsObscureHTML($port->maintainer) . '</A>';
+      } else {
+         $HTML .= '<i>';
+         if ($port->status == 'A') {
+            $HTML .= 'Maintained';
+         } else {
+            $HTML .= 'was maintained'; 
+         }
+
+         $HTML .= ' by:</i> <A HREF="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);
+         $HTML .= '?subject=FreeBSD%20Port:%20' . $port->category . '/' . $port->port . '" TITLE="email the maintainer">';
+         $HTML .= freshportsObscureHTML($port->maintainer) . '</A>';
+      }
+      
+      $HTML .= ' ' . freshports_Search_Maintainer($port->maintainer) . '<br>';
+   }
+
+   // there are only a few places we want to show the last change.
+   // such places set $GlobalHideLastChange == "Y"
+   if ($GlobalHideLastChange != "Y") {
+      if ($ShowLastChange == "Y" || $ShowEverything) {
+         if ($port->updated != 0) {
+            $HTML .= 'last change committed by ' . freshports_CommitterEmailLink($port->committer);  // separate lines in case committer is null
+            
+            $HTML .= ' ' . freshports_Search_Committer($port->committer);
+ 
+            $HTML .= ' on <font size="-1">' . $port->updated . '</font>' . "\n";
+
+				$HTML .= freshports_Email_Link($port->message_id);
+
+				if ($port->EncodingLosses()) {
+					$HTML .= '&nbsp;' . freshports_Encoding_Errors_Link();
+				}
+
+				$HTML .= ' ' . freshports_Commit_Link($port->message_id);
+				$HTML .= ' ' . freshports_CommitFilesLink($port->message_id, $port->category, $port->port);
+
+ 				$HTML .= freshports_PortDescriptionPrint($port->update_description, $port->encoding_losses, 
+ 				 				$freshports_CommitMsgMaxNumOfLinesToShow, 
+ 				 				freshports_MoreCommitMsgToShow($port->message_id,
+ 				 				       $freshports_CommitMsgMaxNumOfLinesToShow));
+         } else {
+            $HTML .= "no changes recorded in FreshPorts<br>\n";
+         }
+      }
+   }
+
+	# show the date added, if asked
+
+	if ($ShowDateAdded == "Y" || $ShowEverything) {
+		$HTML .= '<i>port added:</i> <font size="-1">';
+		if ($port->date_added) {
+			$HTML .= $port->date_added;
+		} else {
+			$HTML .= "unknown";
+		}
+		$HTML .= '</font><BR>' . "\n";
+	}
+
+	$HTML .= PeopleWatchingThisPortAlsoWatch($db, $port->element_id);
+
+   if ($port->categories) {
+      // remove the primary category and remove any double spaces or trailing/leading spaces
+		// this ensures that explode gives us the right stuff
+      if (IsSet($port->category_looking_at)) {
+         $CategoryToRemove = $port->category_looking_at;
+      } else {
+         $CategoryToRemove = $port->category;
+      }
+      $Categories = str_replace($CategoryToRemove, '', $port->categories);
+      $Categories = str_replace('  ', ' ', $Categories);
+		$Categories = trim($Categories);
+      if ($Categories) {
+         $HTML .= "<i>Also listed in:</i> ";
+         $CategoriesArray = explode(" ", $Categories);
+         $Count = count($CategoriesArray);
+         for ($i = 0; $i < $Count; $i++) {
+            $Category = $CategoriesArray[$i];
+            $CategoryID = freshports_CategoryIDFromCategory($Category, $db);
+            if ($CategoryID) {
+               // this is a real category
+               $HTML .= '<a href="/' . $Category . '/">' . $Category . '</a>';
+            } else {
+               $HTML .= $Category;
+            }
+            if ($i < $Count - 1) {
+               $HTML .= " ";
+            }
+         }
+      $HTML .= "<br>\n";
+      }
+   }
+   
+   $HTML .= "<br>\n";
+
+   if ($ShowChangesLink == "Y" || $ShowEverything) {
+      // changes
+      $HTML .= '<a HREF="' . FRESHPORTS_FREEBSD_CVS_URL . '/ports/' .
+               $port->category . '/' .  $port->port . '/" TITLE="The CVS Repository">CVSWeb</a>';
+   }
+
+   // download
+   if ($port->status == "A" && ($ShowDownloadPortLink == "Y" || $ShowEverything)) {
+      $HTML .= ' <b>:</b> ';
+      $HTML .= '<a HREF="http://www.freebsd.org/cgi/pds.cgi?ports/' .
+               $port->category . '/' .  $port->port . '" TITLE="The source code">Sources</a>';
+   }
+
+	if ($port->PackageExists() && ($ShowPackageLink == "Y" || $ShowEverything)) {
+		// package
+		$HTML .= ' <b>:</b> ';
+		$HTML .= '<A HREF="' . FRESHPORTS_FREEBSD_FTP_URL . '/' . freshports_PackageVersion($port->version, $port->revision, $port->epoch);
+		$HTML .= '.tgz">Package</A>';
+	}
+
+   if ($port->homepage && ($ShowHomepageLink == "Y" || $ShowEverything)) {
+      $HTML .= ' <b>:</b> ';
+      $HTML .= '<a HREF="' . htmlspecialchars($port->homepage) . '" TITLE="Main web site for this port">Main Web Site</a>';
+   }
+
+	if (defined('PORTSMONSHOW')) {
+		$HTML .= ' <b>:</b> ' . freshports_PortsMonitorURL($port->category, $port->port);
+	}
+	
+	if ($ShowMasterSlave) {
+		#
+		# Display our master port
+		#
+
+		if ($port->IsSlavePort()) {
+			$HTML .= '<dl><dt><b>Master port:</b> ';
+			list($MyCategory, $MyPort) = explode('/', $port->master_port);
+			$HTML .= freshports_link_to_port($MyCategory, $MyPort);
+			$HTML .= "</dt>\n";
+			$HTML .= "</dl>\n";
+		}
+	
+		#
+		# Display our slave ports
+		#
+
+		$MasterSlave = new MasterSlave($port->dbh);
+		$NumRows = $MasterSlave->FetchByMaster($port->category . '/' . $port->port);
+		if ($NumRows > 0) {
+			$HTML .= '<dl><dt><b>Slave ports</b>' . "</dt>\n";
+			for ($i = 0; $i < $NumRows; $i++) {
+				$MasterSlave->FetchNth($i);
+				$HTML .= '<dd>' . freshports_link_to_port($MasterSlave->slave_category_name, $MasterSlave->slave_port_name);
+				$HTML .= "</dd>\n";
+			}
+			$HTML .= "</dl>\n";
+		} else {
+			$HTML .= "<br><br>\n";
+		}
+	}
+
+if ($ShowDepends) {
+   if ($port->depends_build) {
+      $HTML .= "<i>required to build:</i> ";
+      $HTML .= freshports_depends_links($db, $port->depends_build);
+
+      $HTML .= "<br>\n";
+   }
+
+   if ($port->depends_run) {
+      $HTML .= "<i>required to run:</i> ";
+      $HTML .= freshports_depends_links($db, $port->depends_run);
+      $HTML .= "<BR>\n";
+   }
+
+   if ($port->depends_lib) {
+      $HTML .= "<i>required libraries:</i> ";
+      $HTML .= freshports_depends_links($db, $port->depends_lib);
+
+      $HTML .= "<br>\n";
+	}
+
+}
+
+	$HTML .= "\n<hr>\n";
+	$HTML .= '<p><b>To install <a href="/faq.php#port" TITLE="what is a port?">the port</a>:</b> <code class="code">cd /usr/ports/'  . $port->category . '/' . $port->port . '/ && make install clean</code><br>';
+	if (IsSet($port->no_package) && $port->no_package != '') {
+		$HTML .= '<p><b>No package is available:</b> ' . $port->no_package . '</p>';
+	} else {
+		if ($port->forbidden || $port->broken || $port->ignore) {
+			$HTML .= '<p><b>No package because port is marked as Forbidden/Broken/Ignore</b></p>';
+		} else {
+			$HTML .= '<b>To add the <a href="/faq.php#package" TITLE="what is a package?">package</a>:</b> <code class="code">pkg_add -r ' . $port->latest_link . '</code></p>';
+		}
+	}
+
+	$HTML .= "\n<hr>\n";
+
+   if (!$HideDescription && ($ShowDescriptionLink == "Y" || $ShowEverything)) {
+      // Long description
+      $HTML .= '<A HREF="/' . $port->category . '/' . $port->port .'/">Description</a>';
+
+      $HTML .= ' <b>:</b> ';
+   }
+
+	if ($ShowMasterSites) {
+		$HTML .= '<dl><dt><i>master sites:</i></dt>' . "\n";
+
+		$MasterSites = explode(' ', $port->master_sites);
+		foreach ($MasterSites as $Site) {
+			$HTML .= '<dd>' . htmlify(htmlspecialchars($Site)) . "</dd>\n";
+		}
+
+		$HTML .= "</dl>\n";
+
+#		$HTML .= '<br>';
+	}
+
+	$HTML .= "\n<hr>\n";
+
+	
+   $HTML .= "\n</DD>\n";
+   $HTML .= "</DL>\n";
+
+   return $HTML;
+}
+
+=======
+>>>>>>> 1.4.2.261
 function freshports_PortsMoved($port, $PortsMoved) {
 	$HTML = '';
 

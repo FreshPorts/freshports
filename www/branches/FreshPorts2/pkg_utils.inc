@@ -1,6 +1,6 @@
 <?
 	#
-	# $Id: pkg_utils.inc,v 1.5.2.4 2006-05-24 18:06:33 dan Exp $
+	# $Id: pkg_utils.inc,v 1.5.2.5 2006-10-16 23:19:37 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: list-of-ports.php,v 1.1.2.15 2006-10-01 12:40:01 dan Exp $
+	# $Id: list-of-ports.php,v 1.1.2.16 2006-10-17 23:34:33 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -28,7 +28,7 @@ function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeade
 	}
 	$PortCountText .= "</TD></TR>\n";
 
-	$HTML .= $PortCountText;
+	$HTML  = $PortCountText;
 	$HTML .= "<TR><TD>\n";
 	
 	$HTML .= "<br><center>\n" . Ad_728x90() . "\n</center>\n";

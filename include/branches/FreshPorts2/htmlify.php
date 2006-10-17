@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: htmlify.php,v 1.1.2.8 2006-07-16 23:31:29 dan Exp $
+	# $Id: htmlify.php,v 1.1.2.9 2006-10-17 23:40:30 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -42,17 +42,6 @@ function mail2link($Arr) {
 	return $addr;
 }
 
-function entity($Arr) {
-	$o = ord($Arr[0]);
-	if ($o < 65) {
-		$result = "&#$o;";
-	} else {
-		$result = $Arr[0];
-	}
-
-	return $result;
-}
-
 function url2link($Arr) {
 	#
 	# URLs will be truncated if they are too long. But only
@@ -67,9 +56,6 @@ function url2link($Arr) {
 
 	$vhtml = $html;
 
-    $html  = preg_replace_callback("/(.)/", 'entity', $html);
-    $vhtml = preg_replace_callback("/(.)/", 'entity', $vhtml);
-	
 	return "<A HREF=\"$html\">$vhtml</A>" . $Arr[3];
 }
 

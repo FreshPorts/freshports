@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.92 2006-10-14 15:41:11 dan Exp $
+	# $Id: search.php,v 1.1.2.93 2006-10-20 23:24:19 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -14,13 +14,18 @@
 
 	require_once('Pager/Pager.php');
 
+	$Debug = 0;
+#	if ($Debug) phpinfo();
+
 	freshports_ConditionalGet(freshports_LastModified_Dynamic());
-	
+
 	define('ORDERBYPORT',       'port');
 	define('ORDERBYCATEGORY',   'category');
 	define('ORDERBYASCENDING',  'asc');
 	define('ORDERBYDESCENDING', 'desc');
-	
+
+	define('VEVENSHTEIN_MATCH', 3);
+
 	$PageNumber = 1;
 	$PageSize   = 100;
 
@@ -30,57 +35,55 @@
 			$PageNumber = 1;
 		}
 	}
+
+define('SEARCH_FIELD_NAME',             'name');
+define('SEARCH_FIELD_PACKAGE',          'package');
+define('SEARCH_FIELD_LATEST_LINK',      'latest_link');
+define('SEARCH_FIELD_SHORTDESCRIPTION', 'shortdescription');
+define('SEARCH_FIELD_LONGDESCRIPTION',  'longdescription');
+define('SEARCH_FIELD_DEPENDS_BUILD',    'depends_build');
+define('SEARCH_FIELD_DEPENDS_LIB',      'depends_lib');
+define('SEARCH_FIELD_DEPENDS_RUN',      'depends_run');
+define('SEARCH_FIELD_DEPENDS_ALL',      'depends_all');
+define('SEARCH_FIELD_MAINTAINER',       'maintainer');
+define('SEARCH_FIELD_COMMITTER',        'committer');
+
+define('SEARCH_FIELD_PATHNAME',         'tree');
+define('SEARCH_FIELD_MESSAGEID',        'message_id');
+define('SEARCH_FIELD_COMMITMESSAGE',    'commitmessage');
 	
+$SearchTypeToFieldMap = array(
+	SEARCH_FIELD_NAME 				=> 'element.name',
+	SEARCH_FIELD_PACKAGE			=> 'ports.package_name',
+	SEARCH_FIELD_LATEST_LINK		=> 'ports.latest_link',
+	SEARCH_FIELD_SHORTDESCRIPTION	=> 'ports.short_description',
+	SEARCH_FIELD_LONGDESCRIPTION	=> 'ports.long_description',
+	SEARCH_FIELD_DEPENDS_BUILD		=> 'ports.depends_build',
+	SEARCH_FIELD_DEPENDS_LIB		=> 'ports.depends_lib',
+	SEARCH_FIELD_DEPENDS_RUN		=> 'ports.depends_run',
+	SEARCH_FIELD_DEPENDS_ALL		=> 'ports.depends_all',
+	SEARCH_FIELD_MAINTAINER			=> 'ports.maintainer',
+	SEARCH_FIELD_COMMITMESSAGE		=> 'commit_log.description',
+	SEARCH_FIELD_COMMITTER			=> 'commit_log.committer'
+);
+
 function WildCardQuery($stype, $Like, $query) {
+	GLOBAL $SearchTypeToFieldMap;
 # return the clause for this particular type of query
 	$sql = '';
+
 	switch ($stype) {
-		case 'name':
-			$sql .= "\n     and element.name $Like '$query'";
+		case SEARCH_FIELD_DEPENDS_ALL:
+			$sql .= "\n     (ports.depends_build $Like '$query' OR ports.depends_lib $Like '$query' OR ports.depends_run $Like '$query')";
 			break;
 
-		case 'package':
-			$sql .= "\n     and ports.package_name $Like '$query'";
-			break;
-
-		case 'latest_link':
-			$sql .= "\n     and ports.latest_link $Like '$query'";
-			break;
-
-		case 'shortdescription':
-			$sql .= "\n     and ports.short_description $Like '$query'";
-			break;
-  
-		case 'longdescription':
-			$sql .= "\n     and ports.long_description $Like '$query'";
-			break;
-  
-		case 'depends_build':
-			$sql .= "\n     and ports.depends_build $Like '$query'";
-			break;
-  
-		case 'depends_lib':
-			$sql .= "\n     and ports.depends_lib $Like '$query'";
-			break;
-
-		case 'depends_run':
-			$sql .= "\n     and ports.depends_run $Like '$query'";
-			break;
-
-		case 'depends_all':
-			$sql .= "\n     and (ports.depends_build $Like '$query' OR ports.depends_lib $Like '$query' OR ports.depends_run $Like '$query')";
-			break;
-
-		case 'maintainer':
-			$sql .= "\n     and ports.maintainer $Like '$query'";
+		default:
+			$sql .= "\n     " .  $SearchTypeToFieldMap[$stype] . " $Like '$query'";
 			break;
 	}
 
 	return $sql;
 }
-
-	$Debug = 0;
-#	if ($Debug) phpinfo();
 
 	#
 	# I became annoyed with people creating their own search pages instead of using
@@ -216,22 +219,165 @@ if ($search) {
 
 	if ($Debug) echo "into search stuff<BR>\n";
 
-/*
-   while (list($name, $value) = each($HTTP_POST_VARS)) {
-      echo "$name = $value<br>\n";
-   }
-
-   echo "you submitted<br>\n";
-*/
-
 $logfile = $_SERVER["DOCUMENT_ROOT"] . "/../dynamic/searchlog.txt";
 
+# Adjust method if required
+if ($method == 'soundex') {
+	switch ($stype) {
+		case SEARCH_FIELD_NAME:
+		case SEARCH_FIELD_PACKAGE:
+		case SEARCH_FIELD_LATEST_LINK:
+		case SEARCH_FIELD_MAINTAINER:
+		case SEARCH_FIELD_PATHNAME:
+			break;
+
+		default:
+			$method = 'match';
+			echo "NOTE: Instead of using 'sounds like' as instructed, the system used 'containing'.  See the notes below for why this is done.<br>";
+			break;
+	}
+}
+
+
+switch ($method) {
+	case 'prefix':
+		$WildCardMatch = "$query%";
+		if ($casesensitivity == 'casesensitive') {
+			$Like = 'LIKE';
+		} else {
+			$Like = 'ILIKE';
+		}
+		$sqlUserSpecifiedCondition = WildCardQuery($stype, $Like, $WildCardMatch);
+		break;
+
+	case 'match':
+		$WildCardMatch = "%$query%";
+		if ($casesensitivity == 'casesensitive') {
+			$Like = 'LIKE';
+		} else {
+			$Like = 'ILIKE';
+		}
+		$sqlUserSpecifiedCondition = WildCardQuery($stype, $Like, $WildCardMatch);
+		break;
+
+	case 'suffix':
+		$WildCardMatch = "%$query";
+		if ($casesensitivity == 'casesensitive') {
+			$Like = 'LIKE';
+		} else {
+			$Like = 'ILIKE';
+		}
+		$sqlUserSpecifiedCondition = WildCardQuery($stype, $Like, $WildCardMatch);
+		break;
+
+	default:
+	case 'exact':
+		switch ($stype) {
+			case SEARCH_FIELD_DEPENDS_ALL:
+				if ($casesensitivity == 'casesensitive') {
+					$sqlUserSpecifiedCondition = "\n     (ports.depends_build = '$query' OR ports.depends_lib = '$query' OR ports.depends_run = '$query')";
+				} else {
+					$sqlUserSpecifiedCondition = "\n     (lower(ports.depends_build) = lower('$query') OR lower(ports.depends_lib) = lower('$query') OR lower(ports.depends_run) = lower('$query'))";
+				}
+				break;
+
+			default:
+				$FieldName = $SearchTypeToFieldMap[$stype];
+				if ($casesensitivity == 'casesensitive') {
+					$sqlUserSpecifiedCondition = "\n     $FieldName = '$query'";
+				} else {
+					$sqlUserSpecifiedCondition = "\n     lower($FieldName) = lower('$query')";
+				}
+				break;
+		}
+		break;
+
+	case 'soundex':
+		switch ($stype) {
+			case SEARCH_FIELD_DEPENDS_ALL:
+				$sqlUserSpecifiedCondition = "\n     (levenshtein(substring(ports.depends_build for 255), '$query') < VEVENSHTEIN_MATCH OR levenshtein(substring(ports.depends_lib for 255), '$query') < VEVENSHTEIN_MATCH OR levenshtein(substring(ports.depends_run for 255), '$query') < VEVENSHTEIN_MATCH)";
+				$sqlSoundsLikeOrderBy = "levenshtein(substring(ports.depends_build for 255) + levenshtein(substring(ports.depends_lib for 255), '$query') + levenshtein(substring(ports.depends_run for 255), '$query')";
+				break;
+
+			default:
+				$FieldName = $SearchTypeToFieldMap[$stype];
+				$sqlUserSpecifiedCondition = "\n     levenshtein($FieldName, '$query') < " . VEVENSHTEIN_MATCH;
+				$sqlSoundsLikeOrderBy = "levenshtein($FieldName, '$query')";
+				break;
+		}
+		break;
+
+		$sqlUserSpecifiedCondition = "\n     levenshtein(" . $FieldName . ", '$query') < " . VEVENSHTEIN_MATCH;
+		break;
+}
+
+#
+# include/exclude deleted ports
+#
+
 switch ($stype) {
-  case 'committer':
+	case SEARCH_FIELD_COMMITMESSAGE:
+		break;
+
+	default:
+		switch ($deleted) {
+			case 'includedeleted':
+				# do nothing
+				break;
+		
+			default:
+				$deleted = 'excludedeleted';
+				# do not break here...
+		
+			case 'excludedeleted':
+				$sqlUserSpecifiedCondition .= " and element.status = 'A' ";
+		}
+		break;
+}
+
+switch ($orderby) {
+	case ORDERBYCATEGORY:
+		switch ($orderbyupdown) {
+			case ORDERBYDESCENDING:
+			default:
+				$sqlOrderBy = "\n order by categories.name desc, element.name";
+				break;
+
+			case ORDERBYASCENDING:
+				$sqlOrderBy = "\n order by categories.name, element.name";
+				break;
+		}
+		break;
+
+	case ORDERBYPORT:
+	default:
+		switch ($orderbyupdown) {
+			case ORDERBYDESCENDING:
+			default:
+				$sqlOrderBy = "\n ORDER BY element.name desc, categories.name";
+				break;
+
+			case ORDERBYASCENDING:
+				$sqlOrderBy = "\n ORDER BY element.name, categories.name";
+				break;
+		}
+		break;
+}
+
+if ($method == 'soundex') {
+	$sqlOrderBy = ' ORDER BY ' . $sqlSoundsLikeOrderBy;
+	$sqlSelectFields .= ', ' . $sqlSoundsLikeOrderBy;
+	echo 'ORDER BY ' . $sqlOrderBy;
+}
+
+
+switch ($stype) {
+  case SEARCH_FIELD_COMMITTER:
     require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits.php');
     require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
   
     $Commits = new Commits($db);
+    $Commits->Debug = $Debug;
   
     $NumberOfPortCommits = $Commits->GetCountPortCommitsByCommitter($query);
     if ($Debug) echo 'number of commits = ' . $NumberOfPortCommits . "<br>\n";
@@ -260,13 +406,15 @@ switch ($stype) {
     $NumFetches = $Commits->FetchByCommitter($query, $User->id);
     break;
     
-  case 'commitmessage':
+  case SEARCH_FIELD_COMMITMESSAGE:
     require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits.php');
     require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
   
     $Commits = new Commits($db);
+    $Commits->Debug = $Debug;
+    $Commits->Debug = $Debug;
 
-    $NumberOfPortCommits = $Commits->GetCountCommitsByCommitMessage($query);
+    $NumberOfPortCommits = $Commits->GetCountCommitsByCommitMessage($sqlUserSpecifiedCondition);
     if ($Debug) echo 'number of commits = ' . $NumberOfPortCommits . "<br>\n";
 
 	$NumFound = $NumberOfPortCommits;
@@ -290,9 +438,50 @@ switch ($stype) {
     }
     $Commits->SetLimit($PageSize);
   
-    $NumFetches = $Commits->FetchByCommitMessageContents($query, $User->id);
+    $NumFetches = $Commits->FetchByCommitMessageContents($sqlUserSpecifiedCondition, $User->id);
     break;
     
+  case SEARCH_FIELD_PATHNAME:
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
+  
+    $Commits = new Commits($db);
+    $Commits->Debug = $Debug;
+    $Commits->Debug = $Debug;
+
+	if (substr($query, 0, 7) == '/ports/') {
+	    $NumberOfPortCommits = $Commits->GetCountPortCommitsByTreeLocation($query);
+	} else {
+	    $NumberOfPortCommits = $Commits->GetCountCommitsByTreeLocation    ($query);
+	}
+    if ($Debug) echo 'number of commits = ' . $NumberOfPortCommits . "<br>\n";
+
+	$NumFound = $NumberOfPortCommits;
+	$params = array(
+			'mode'        => 'Sliding',
+			'perPage'     => $PageSize,
+			'delta'       => 5,
+			'totalItems'  => $NumFound,
+			'urlVar'      => 'page',
+			'currentPage' => $PageNumber,
+			'spacesBeforeSeparator' => 1,
+			'spacesAfterSeparator'  => 1,
+		);
+	$Pager = & Pager::factory($params);
+
+	$offset = $Pager->getOffsetByPageId();
+	$NumOnThisPage = $offset[1] - $offset[0] + 1;
+
+    if ($PageNumber > 1) {
+      $Commits->SetOffset($offset[0] - 1);
+    }
+    $Commits->SetLimit($PageSize);
+
+	if (substr($query, 0, 7) == '/ports/') {
+	    $NumFetches = $Commits->FetchByTreePath   ($query, $User->id);
+	} else {
+	    $NumFetches = $Commits->FetchByTreePathSrc($query, $User->id);
+	}
     break;
     
   default:
@@ -357,229 +546,6 @@ $sqlWatchListFrom = '';
       and ports.element_id   = element.id ' ;
 
 
-if ($method == 'soundex') {
-	switch ($stype) {
-		case 'name':
-		case 'package':
-		case 'latest_link':
-		case 'maintainer':
-			break;
-
-		default:
-			$method = 'match';
-			echo "NOTE: Instead of using 'sounding like' as instructed, the system used 'containing'.  See the notes below for why this is done.<br>";
-			break;
-	}
-}
-
-
-switch ($method) {
-	case 'prefix':
-		$WildCardMatch = "$query%";
-		if ($casesensitivity == 'casesensitive') {
-			$Like = 'LIKE';
-		} else {
-			$Like = 'ILIKE';
-		}
-		$sqlUserSpecifiedCondition = WildCardQuery($stype, $Like, $WildCardMatch);
-		break;
-
-	case 'match':
-		$WildCardMatch = "%$query%";
-		if ($casesensitivity == 'casesensitive') {
-			$Like = 'LIKE';
-		} else {
-			$Like = 'ILIKE';
-		}
-		$sqlUserSpecifiedCondition = WildCardQuery($stype, $Like, $WildCardMatch);
-		break;
-
-	case 'suffix':
-		$WildCardMatch = "%$query";
-		if ($casesensitivity == 'casesensitive') {
-			$Like = 'LIKE';
-		} else {
-			$Like = 'ILIKE';
-		}
-		$sqlUserSpecifiedCondition = WildCardQuery($stype, $Like, $WildCardMatch);
-		break;
-
-	case 'exact':
-		switch ($stype) {
-			case 'name':
-				if ($casesensitivity == 'casesensitive') {
-					$sqlUserSpecifiedCondition = "\n     and element.name = '$query'";
-				} else {
-					$sqlUserSpecifiedCondition = "\n     and lower(element.name) = lower('$query')";
-				}
-				break;
-
-			case 'package':
-				if ($casesensitivity == 'casesensitive') {
-					$sqlUserSpecifiedCondition = "\n     and ports.package_name = '$query'";
-				} else {
-					$sqlUserSpecifiedCondition = "\n     and lower(ports.package_name) = lower('$query')";
-				}
-				break;
-
-			case 'latest_link':
-				if ($casesensitivity == 'casesensitive') {
-					$sqlUserSpecifiedCondition = "\n     and ports.latest_link = '$query'";
-				} else {
-					$sqlUserSpecifiedCondition = "\n     and lower(ports.latest_link) = lower('$query')";
-				}
-				break;
-
-			case 'shortdescription':
-				if ($casesensitivity == 'casesensitive') {
-					$sqlUserSpecifiedCondition = "\n     and ports.short_description = '$query'";
-				} else {
-					$sqlUserSpecifiedCondition = "\n     and lower(ports.short_description) = lower('$query')";
-				}
-				break;
-      
-			case 'longdescription':
-				if ($casesensitivity == 'casesensitive') {
-					$sqlUserSpecifiedCondition = "\n     and ports.long_description = '$query'";
-				} else {
-					$sqlUserSpecifiedCondition = "\n     and lower(ports.long_description) = lower('$query')";
-				}
-				break;
-      
-			case 'depends_build':
-				if ($casesensitivity == 'casesensitive') {
-					$sqlUserSpecifiedCondition = "\n     and ports.depends_build = '$query'";
-				} else {
-					$sqlUserSpecifiedCondition = "\n     and lower(ports.depends_build) = lower('$query')";
-				}
-				break;
-
-			case 'depends_lib':
-				if ($casesensitivity == 'casesensitive') {
-					$sqlUserSpecifiedCondition = "\n     and ports.depends_lib = '$query'";
-				} else {
-					$sqlUserSpecifiedCondition = "\n     and lower(ports.depends_lib) = lower('$query')";
-				}
-				break;
-
-			case 'depends_run':
-				if ($casesensitivity == 'casesensitive') {
-					$sqlUserSpecifiedCondition = "\n     and ports.depends_run = '$query'";
-				} else {
-					$sqlUserSpecifiedCondition = "\n     and lower(ports.depends_run) = lower('$query')";
-				}
-				break;
-
-			case 'depends_all':
-				if ($casesensitivity == 'casesensitive') {
-					$sqlUserSpecifiedCondition = "\n     and (ports.depends_build = '$query' OR ports.depends_lib = '$query' OR ports.depends_run = '$query')";
-				} else {
-					$sqlUserSpecifiedCondition = "\n     and (lower(ports.depends_build) = lower('$query') OR lower(ports.depends_lib) = lower('$query') OR lower(ports.depends_run) = lower('$query'))";
-				}
-				break;
-
-			case 'maintainer':
-				if ($casesensitivity == 'casesensitive') {
-					$sqlUserSpecifiedCondition = "\n     and ports.maintainer = '$query'";
-				} else {
-					$sqlUserSpecifiedCondition = "\n     and lower(ports.maintainer) = lower('$query')";
-				}
-				break;
-
-		}
-		break;
-
-	default:
-		switch ($stype) {
-			case 'name':
-				$sqlUserSpecifiedCondition = "\n     and levenshtein(element.name, '$query') < 4";
-				break;
-
-			case 'package':
-				$sqlUserSpecifiedCondition = "\n     and levenshtein(ports.package_name, '$query') < 4";
-				break;
-
-			case 'latest_link':
-				$sqlUserSpecifiedCondition = "\n     and levenshtein(ports.latest_link, '$query') < 4";
-				break;
-
-			case 'shortdescription':
-				$sqlUserSpecifiedCondition = "\n     and levenshtein(ports.short_description, '$query') < 4";
-				break;
-
-			case 'longdescription':
-				$sqlUserSpecifiedCondition = "\n     and levenshtein(ports.long_description, '$query') < 4";
-				break;
-
-			case 'depends_build':
-				$sqlUserSpecifiedCondition = "\n     and levenshtein(substring(ports.depends_build for 255), '$query') < 4";
-				break;
-
-			case 'depends_lib':
-				$sqlUserSpecifiedCondition = "\n     and levenshtein(substring(ports.depends_lib for 255), '$query') < 4";
-				break;
-
-			case 'depends_run':
-				$sqlUserSpecifiedCondition = "\n     and levenshtein(substring(ports.depends_build for 255), '$query') < 4";
-				break;
-
-			case 'depends_all':
-				$sqlUserSpecifiedCondition = "\n     and (levenshtein(substring(ports.depends_build for 255), '$query') < 4 OR levenshtein(substring(ports.depends_lib for 255), '$query') < 4 OR levenshtein(substring(ports.depends_run for 255), '$query') < 4)";
-				break;
-
-			case 'maintainer':
-				$sqlUserSpecifiedCondition = "\n     and levenshtein(ports.maintainer, '$query') < 4";
-				break;
-
-		}
-}
-
-#
-# include/exclude deleted ports
-#
-switch ($deleted) {
-	case 'includedeleted':
-		# do nothing
-		break;
-
-	default:
-		$deleted = 'excludedeleted';
-		# do not break here...
-
-	case 'excludedeleted':
-		$sqlUserSpecifiedCondition .= " and element.status = 'A' ";
-}
-
-switch ($orderby) {
-	case ORDERBYCATEGORY:
-		switch ($orderbyupdown) {
-			case ORDERBYDESCENDING:
-			default:
-				$sqlOrderBy = "\n order by categories.name desc, element.name";
-				break;
-
-			case ORDERBYASCENDING:
-				$sqlOrderBy = "\n order by categories.name, element.name";
-				break;
-		}
-		break;
-
-	case ORDERBYPORT:
-	default:
-		switch ($orderbyupdown) {
-			case ORDERBYDESCENDING:
-			default:
-				$sqlOrderBy = "\n order by element.name desc, categories.name";
-				break;
-
-			case ORDERBYASCENDING:
-				$sqlOrderBy = "\n order by element.name, categories.name";
-				break;
-		}
-		break;
-}
-
-
 $AddRemoveExtra  = "&&origin=" . $_SERVER['SCRIPT_NAME'] . "?query=" . $query. "+stype=$stype+num=$num+method=$method";
 if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<BR>";
 $AddRemoveExtra = AddSlashes($AddRemoveExtra);
@@ -588,7 +554,7 @@ if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<BR>";
 
 ### how many rows is this?
 
-$sql = $sqlSelectCount . $sqlFrom .  $sqlWhere . $sqlUserSpecifiedCondition;
+$sql = $sqlSelectCount . $sqlFrom .  $sqlWhere . ' AND ' . $sqlUserSpecifiedCondition;
 
 if ($Debug) {
 	echo "<pre>$sql<pre>\n";
@@ -632,7 +598,7 @@ if ($PageSize) {
 
 
 $sql = $sqlSelectFields . $sqlWatchListFields . $sqlFrom . $sqlWatchListFrom . 
-        $sqlWhere . $sqlUserSpecifiedCondition . $sqlOrderBy . $sqlOffsetLimit;
+        $sqlWhere . ' AND ' . $sqlUserSpecifiedCondition . $sqlOrderBy . $sqlOffsetLimit;
 
 if ($Debug) {
 	echo "<pre>$sql<pre>\n";
@@ -651,9 +617,10 @@ $NumFetches = pg_numrows($result);
 $fp = fopen($logfile, "a");
 if ($fp) {
 	switch ($method) {
-		case "match":
-		case "exact":
-		case "soundex":
+		case 'match':
+		case 'tree':
+		case 'exact':
+		case 'soundex':
 			fwrite($fp, date("Y-m-d H:i:s") . " $stype : $method : $query : $num : $NumFetches : $deleted : $casesensitivity\n");
 			break;
 
@@ -739,6 +706,7 @@ $Port->LocalResult = $result;
 		<OPTION VALUE="depends_all"      <? if ($stype == "depends_all")      echo 'SELECTED'?>>Depends Build/Lib/Run</OPTION>
 		<OPTION VALUE="messageid"        <? if ($stype == "messageid")        echo 'SELECTED'?>>Message ID</OPTION>
 		<OPTION VALUE="commitmessage"    <? if ($stype == "commitmessage")    echo 'SELECTED'?>>Commit Message</OPTION>
+		<OPTION VALUE="tree"             <? if ($stype == "tree")             echo 'SELECTED'?>>Under a pathname</OPTION>
 	</SELECT> 
 
 	<SELECT name=method>
@@ -746,7 +714,7 @@ $Port->LocalResult = $result;
 		<OPTION VALUE="prefix"  <?if ($method == "prefix" ) echo 'SELECTED' ?>>starting with
 		<OPTION VALUE="match"   <?if ($method == "match"  ) echo 'SELECTED' ?>>containing
 		<OPTION VALUE="suffix"  <?if ($method == "suffix" ) echo 'SELECTED' ?>>ending with
-		<OPTION VALUE="soundex" <?if ($method == "soundex") echo 'SELECTED' ?>>sounding like
+		<OPTION VALUE="soundex" <?if ($method == "soundex") echo 'SELECTED' ?>>sounds like
 	</SELECT>
 
 	<INPUT NAME="query" size="40"  VALUE="<? echo
@@ -790,12 +758,11 @@ $Port->LocalResult = $result;
 
 <h3>Notes</h3>
 <ul>
-<li><small>Case sensitivity is ignored for "sounding like".</small></li>
-<li><small>When searching on 'Message ID' only exact matches will succeed.</small></li>
-<li><small>When searching on 'Commit Message' only containing matches succeed.</small></li>
-<li><small>"Sounding like" is only for the short fields (i.e. "Port Name", "Package Name", "Latest Link", and
-"Maintainer"). If you try "Sounding like" on any other field, the system will actually use
-"Containing" instead.</small></li>
+<li><small>Case sensitivity is ignored for "sounds like" and output is ordered by the soundex.</small></li>
+<li><small>When searching on 'Message ID', the type of match is ignored.</small></li>
+<li><small>When searching on 'Commit Message' only 'containing' is used.</small></li>
+<li><small>When searching  by 'Under a pathname', your path must start with something like /ports/, /doc/, or /src/. All 
+      commits under that point will be returned. The selected match type is ignored and defaults to 'Starts with'.</small></li>
 </ul>
 
 <?php
@@ -828,7 +795,7 @@ echo "<tr><td>\n";
 if ($NumFetches == 0) {
    $HTML .= " no results found<br>\n";
 } else {
-	if ($stype == 'committer' || $stype == 'commitmessage') {
+	if ($stype == 'committer' || $stype == 'commitmessage' || $stype == 'tree') {
 	  $NumFetches = min($num, $NumberOfPortCommits);
 	  if ($NumFetches != $NumberOfPortCommits) {
 		$MoreToShow = 1;
@@ -854,38 +821,39 @@ if ($NumFetches == 0) {
 	}
 	
 	
-	$HTML .= $NumPortsFound;
+switch ($stype) {
+	case SEARCH_FIELD_COMMITTER:
+	case SEARCH_FIELD_COMMITMESSAGE:
+	case SEARCH_FIELD_PATHNAME:
+		$DisplayCommit = new DisplayCommit($Commits->LocalResult);
+		$links = $Pager->GetLinks();
+		
+		$HTML .= $NumPortsFound . ' ' . $links['all'];
+		$HTML .= $DisplayCommit->CreateHTML();
+		$HTML .= '<tr><td>' . $NumPortsFound . ' ' . $links['all'] . '</td></tr>';
+		break;
 
-if ($stype == 'committer' || $stype == 'commitmessage') {
-	$DisplayCommit = new DisplayCommit($Commits->LocalResult);
-	$links = $Pager->GetLinks();
+	default:
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
 	
-	$HTML .= $links['all'];
-	$HTML .= $DisplayCommit->CreateHTML();
-	$HTML .= '<tr><td>' . $NumPortsFound . ' ' . $links['all'] . '</td></tr>';
-
-} else {
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
-
-	$links = $Pager->GetLinks();
+		$links = $Pager->GetLinks();
+		
+		$HTML .= $NumPortsFound . ' ' . $links['all'];
 	
-	$HTML .= $links['all'];
-
-	GLOBAL $User;
-	$port_display = new port_display($db, $User);
-	$port_display->SetDetailsSearch();
-
-	for ($i = 0; $i < $NumFetches; $i++) {
-		$Port->FetchNth($i);
-		$port_display->port = $Port;
-		$Port_HTML = $port_display->Display();
-
-		$HTML .= $port_display->ReplaceWatchListToken($Port->{'onwatchlist'}, $Port_HTML, $Port->{'element_id'});
-    }
-
-	$HTML .= $NumPortsFound . ' ' . $links['all'];
-
-} // if stype == 'committer'
+		GLOBAL $User;
+		$port_display = new port_display($db, $User);
+		$port_display->SetDetailsSearch();
+	
+		for ($i = 0; $i < $NumFetches; $i++) {
+			$Port->FetchNth($i);
+			$port_display->port = $Port;
+			$Port_HTML = $port_display->Display();
+	
+			$HTML .= $port_display->ReplaceWatchListToken($Port->{'onwatchlist'}, $Port_HTML, $Port->{'element_id'});
+	    }
+	
+		$HTML .= $NumPortsFound . ' ' . $links['all'];
+	}
 }
 
 

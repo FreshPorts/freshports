@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.290 2006-10-17 23:39:07 dan Exp $
+	# $Id: freshports.php,v 1.4.2.291 2006-10-20 02:31:43 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -997,7 +997,7 @@ function freshports_CheckForOutdatedVulnClaim($commit, $port, $VuXMLList) {
 			$CommitVersion = freshports_PackageVersion($commit->{'port_version'},  $commit->{'port_revision'},  $commit->{'port_epoch'});
 			$PortVersion   = freshports_PackageVersion($port->{'version'},         $port->{'revision'},         $port->{'epoch'});
 
-			if ($CommitVersion != PortVersion) {
+			if ($CommitVersion != $PortVersion) {
 				$HTML .= "<p><b>NOTE</b>: This slave port may no longer be vulnerable to issues shown below because the ";
 				$HTML .= '<a href="/' . $port->master_port . '/">master port</a>' . " has been updated.</p>\n";
 			}

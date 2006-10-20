@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: display_commit.php,v 1.1.2.6 2006-10-14 15:29:59 dan Exp $
+	# $Id: display_commit.php,v 1.1.2.7 2006-10-20 23:25:59 dan Exp $
 	#
 	# Copyright (c) 2003-2006 DVL Software Limited
 	#
@@ -113,7 +113,7 @@ class DisplayCommit {
 
 					$this->HTML .= "<BR>\n";
 
-					if (IsSet($mycommit->category) || $mycommit->category != '') {
+					if (IsSet($mycommit->category) && $mycommit->category != '') {
 						if ($this->UserID) {
 							if ($mycommit->watch) {
 								$this->HTML .= ' '. freshports_Watch_Link_Remove($this->WatchListAsk, $mycommit->watch, $mycommit->element_id) . ' ';
@@ -189,23 +189,29 @@ class DisplayCommit {
 							}
 						}
 
-					if ($mycommit->restricted) {
-						$this->HTML .= freshports_Restricted_Icon_Link($mycommit->restricted) . '&nbsp;';
-					}
+						if ($mycommit->restricted) {
+							$this->HTML .= freshports_Restricted_Icon_Link($mycommit->restricted) . '&nbsp;';
+						}
 
-					if ($mycommit->no_cdrom) {
-						$this->HTML .= freshports_No_CDROM_Icon_Link($mycommit->no_cdrom) . '&nbsp;';
-					}
+						if ($mycommit->no_cdrom) {
+							$this->HTML .= freshports_No_CDROM_Icon_Link($mycommit->no_cdrom) . '&nbsp;';
+						}
 
-					if ($mycommit->is_interactive) {
-						$this->HTML .= freshports_Is_Interactive_Icon_Link($mycommit->is_interactive) . '&nbsp;';
-					}
+						if ($mycommit->is_interactive) {
+							$this->HTML .= freshports_Is_Interactive_Icon_Link($mycommit->is_interactive) . '&nbsp;';
+						}
 
 					} else {
-						$this->HTML .= '<BIG><B>';
+						$this->HTML .= $mycommit->revision . ' ';
+						$this->HTML .= '<big><B>';
 						$PathName = preg_replace('|^/?ports/|', '', $mycommit->element_pathname);
-						$this->HTML .= '<a href="/' . $PathName . '">' . $PathName . '</a>';
-						$this->HTML .= "</B></BIG>\n";
+						if ($PathName != $mycommit->element_pathname) {
+							$this->HTML .= '<a href="' . $PathName . '">' . $PathName . '</a>';
+							$this->HTML .= "</B></BIG>\n";
+						} else {
+							$this->HTML .= '<a href="' . FRESHPORTS_FREEBSD_CVS_URL . $PathName . '#rev' . $mycommit->revision . '">' . $PathName . '</a>';
+							$this->HTML .= "</B></BIG>\n";
+						}
 					}
 					$this->HTML .= htmlspecialchars($mycommit->short_description) . "\n";
 				}

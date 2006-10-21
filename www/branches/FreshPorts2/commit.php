@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.61 2006-10-14 15:32:26 dan Exp $
+	# $Id: commit.php,v 1.1.2.62 2006-10-21 13:37:15 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -200,6 +200,7 @@ SELECT FPC.*, STF.message as stf_message
 			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
 
 			$DisplayCommit = new DisplayCommit($result);
+			$DisplayCommit->SetShowAllPorts(true);
 			$DisplayCommit->SanityTestFailure = true;
 			$RetVal = $DisplayCommit->CreateHTML();
 	

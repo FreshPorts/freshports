@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.93 2006-10-20 23:24:19 dan Exp $
+	# $Id: search.php,v 1.1.2.94 2006-10-21 13:36:53 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -66,6 +66,9 @@ $SearchTypeToFieldMap = array(
 	SEARCH_FIELD_COMMITMESSAGE		=> 'commit_log.description',
 	SEARCH_FIELD_COMMITTER			=> 'commit_log.committer'
 );
+
+$sqlExtraFields = ''; # will hold extra fields we need, such as watch list
+                      # or soundex function needed for ORDER BY
 
 function WildCardQuery($stype, $Like, $query) {
 	GLOBAL $SearchTypeToFieldMap;
@@ -295,7 +298,9 @@ switch ($method) {
 	case 'soundex':
 		switch ($stype) {
 			case SEARCH_FIELD_DEPENDS_ALL:
-				$sqlUserSpecifiedCondition = "\n     (levenshtein(substring(ports.depends_build for 255), '$query') < VEVENSHTEIN_MATCH OR levenshtein(substring(ports.depends_lib for 255), '$query') < VEVENSHTEIN_MATCH OR levenshtein(substring(ports.depends_run for 255), '$query') < VEVENSHTEIN_MATCH)";
+				$sqlUserSpecifiedCondition = "\n     (levenshtein(substring(ports.depends_build FOR 255), '$query') < " . VEVENSHTEIN_MATCH . 
+				                               "   OR levenshtein(substring(ports.depends_lib   FOR 255), '$query') < " . VEVENSHTEIN_MATCH .
+											   "   OR levenshtein(substring(ports.depends_run   FPR 255), '$query') < " . VEVENSHTEIN_MATCH . ')';
 				$sqlSoundsLikeOrderBy = "levenshtein(substring(ports.depends_build for 255) + levenshtein(substring(ports.depends_lib for 255), '$query') + levenshtein(substring(ports.depends_run for 255), '$query')";
 				break;
 
@@ -305,9 +310,6 @@ switch ($method) {
 				$sqlSoundsLikeOrderBy = "levenshtein($FieldName, '$query')";
 				break;
 		}
-		break;
-
-		$sqlUserSpecifiedCondition = "\n     levenshtein(" . $FieldName . ", '$query') < " . VEVENSHTEIN_MATCH;
 		break;
 }
 
@@ -335,40 +337,48 @@ switch ($stype) {
 		break;
 }
 
-switch ($orderby) {
-	case ORDERBYCATEGORY:
-		switch ($orderbyupdown) {
-			case ORDERBYDESCENDING:
-			default:
-				$sqlOrderBy = "\n order by categories.name desc, element.name";
-				break;
+#
+# How are we ordering the output?
+# NOTE that searching by 'sounds like' requires a special approach
+#
 
-			case ORDERBYASCENDING:
-				$sqlOrderBy = "\n order by categories.name, element.name";
-				break;
-		}
+switch ($method) {
+	case 'soundex':
+		$sqlOrderBy = "\n ORDER BY " . $sqlSoundsLikeOrderBy;
+		$sqlExtraFields .= ', ' . $sqlSoundsLikeOrderBy;
 		break;
 
-	case ORDERBYPORT:
 	default:
-		switch ($orderbyupdown) {
-			case ORDERBYDESCENDING:
-			default:
-				$sqlOrderBy = "\n ORDER BY element.name desc, categories.name";
+		switch ($orderby) {
+			case ORDERBYCATEGORY:
+				switch ($orderbyupdown) {
+					case ORDERBYDESCENDING:
+					default:
+						$sqlOrderBy = "\n ORDER BY categories.name desc, element.name";
+						break;
+		
+					case ORDERBYASCENDING:
+						$sqlOrderBy = "\n ORDER BY categories.name, element.name";
+						break;
+				}
 				break;
-
-			case ORDERBYASCENDING:
-				$sqlOrderBy = "\n ORDER BY element.name, categories.name";
+		
+			case ORDERBYPORT:
+			default:
+				switch ($orderbyupdown) {
+					case ORDERBYDESCENDING:
+					default:
+						$sqlOrderBy = "\n ORDER BY element.name desc, categories.name";
+						break;
+		
+					case ORDERBYASCENDING:
+						$sqlOrderBy = "\n ORDER BY element.name, categories.name";
+						break;
+				}
 				break;
 		}
-		break;
 }
-
-if ($method == 'soundex') {
-	$sqlOrderBy = ' ORDER BY ' . $sqlSoundsLikeOrderBy;
-	$sqlSelectFields .= ', ' . $sqlSoundsLikeOrderBy;
-	echo 'ORDER BY ' . $sqlOrderBy;
-}
+	
 
 
 switch ($stype) {
@@ -518,10 +528,8 @@ $sqlSelectFields = "
 $sqlSelectCount = "
   SELECT count(*)";
   
-$sqlWatchListFields = '';
-
 	if ($User->id) {
-		$sqlWatchListFields .= ",
+		$sqlExtraFields .= ",
          onwatchlist";
    }
 
@@ -597,7 +605,7 @@ if ($PageSize) {
 }
 
 
-$sql = $sqlSelectFields . $sqlWatchListFields . $sqlFrom . $sqlWatchListFrom . 
+$sql = $sqlSelectFields . $sqlExtraFields . $sqlFrom . $sqlWatchListFrom . 
         $sqlWhere . ' AND ' . $sqlUserSpecifiedCondition . $sqlOrderBy . $sqlOffsetLimit;
 
 if ($Debug) {

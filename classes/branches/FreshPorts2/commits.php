@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits.php,v 1.1.2.25 2006-10-20 23:28:52 dan Exp $
+	# $Id: commits.php,v 1.1.2.26 2006-10-21 13:38:46 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -152,6 +152,7 @@ class Commits {
 			categories.name                                                                                             AS category,
 			categories.id                                                                                               AS category_id,
 			element.name                                                                                                AS port,
+			element_pathname(element.id)                                                                                AS pathname,
 			CASE when commit_log_ports.port_version IS NULL then ports.version  else commit_log_ports.port_version  END AS version,
 			CASE when commit_log_ports.port_version is NULL then ports.revision else commit_log_ports.port_revision END AS revision,
 			CASE when commit_log_ports.port_epoch   is NULL then ports.portepoch else commit_log_ports.port_epoch   END AS epoch,
@@ -236,6 +237,7 @@ class Commits {
 			categories.name                                                                                             AS category,
 			categories.id                                                                                               AS category_id,
 			element.name                                                                                                AS port,
+			element_pathname(element.id)                                                                                AS pathname,
 			CASE when commit_log_ports.port_version IS NULL then ports.version  else commit_log_ports.port_version  END AS version,
 			CASE when commit_log_ports.port_version is NULL then ports.revision else commit_log_ports.port_revision END AS revision,
 			CASE when commit_log_ports.port_epoch   is NULL then ports.portepoch else commit_log_ports.port_epoch   END AS epoch,
@@ -323,9 +325,10 @@ ORDER BY CL.commit_date DESC ";
 			to_char(commit_log.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')                                         AS commit_date,
 			to_char(commit_log.commit_date - SystemTimeAdjust(), 'HH24:MI')                                             AS commit_time,
 			element.name                                                                                                AS port,
+			element_pathname(element.id)                                                                                AS pathname,
 			element.status                                                                                              AS status,
 			element_pathname.pathname                            as element_pathname,
-			commit_log_elements.revision_name as revision ";
+			commit_log_elements.revision_name as revision_name ";
 		if ($UserID) {
 				$sql .= ",
 	        onwatchlist ";

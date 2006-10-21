@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: display_commit.php,v 1.1.2.7 2006-10-20 23:25:59 dan Exp $
+	# $Id: display_commit.php,v 1.1.2.8 2006-10-21 13:40:48 dan Exp $
 	#
 	# Copyright (c) 2003-2006 DVL Software Limited
 	#
@@ -21,6 +21,8 @@ class DisplayCommit {
 	var $LocalResult;
 	var $HTML;
 	
+	var $ShowAllPorts = FALSE;	# by default we show only the first few ports.
+	
 	var $SanityTestFailure = FALSE;
 
 	function DisplayCommit($result) {
@@ -37,6 +39,10 @@ class DisplayCommit {
 
 	function SetWatchListAsk($WatchListAsk) {
 		$this->WatchListAsk = $WatchListAsk;
+	}
+	
+	function SetShowAllPorts($ShowAllPorts) {
+		$this->ShowAllPorts = $ShowAllPorts;
 	}
 
 	function CreateHTML() {
@@ -109,7 +115,7 @@ class DisplayCommit {
 					}
 				}
 
-				if ($NumberOfPortsInThisCommit <= $MaxNumberPortsToShow) {
+				if (($NumberOfPortsInThisCommit <= $MaxNumberPortsToShow) || $this->ShowAllPorts) {
 
 					$this->HTML .= "<BR>\n";
 
@@ -202,14 +208,15 @@ class DisplayCommit {
 						}
 
 					} else {
-						$this->HTML .= $mycommit->revision . ' ';
+						# This is a non-port element... 
+						$this->HTML .= $mycommit->revision_name . ' ';
 						$this->HTML .= '<big><B>';
-						$PathName = preg_replace('|^/?ports/|', '', $mycommit->element_pathname);
-						if ($PathName != $mycommit->element_pathname) {
+						$PathName = preg_replace('|^/?ports/|', '', $mycommit->pathname);
+						if ($PathName != $mycommit->pathname) {
 							$this->HTML .= '<a href="' . $PathName . '">' . $PathName . '</a>';
 							$this->HTML .= "</B></BIG>\n";
 						} else {
-							$this->HTML .= '<a href="' . FRESHPORTS_FREEBSD_CVS_URL . $PathName . '#rev' . $mycommit->revision . '">' . $PathName . '</a>';
+							$this->HTML .= '<a href="' . FRESHPORTS_FREEBSD_CVS_URL . $PathName . '#rev' . $mycommit->revision_name . '">' . $PathName . '</a>';
 							$this->HTML .= "</B></BIG>\n";
 						}
 					}
@@ -219,7 +226,7 @@ class DisplayCommit {
 				$j++;
 			} // end while
 
-			if ($NumberOfPortsInThisCommit > $MaxNumberPortsToShow) {
+			if (($NumberOfPortsInThisCommit > $MaxNumberPortsToShow) && !$this->ShowAllPorts) {
 				$this->HTML .= '<BR>' . freshports_MorePortsToShow($mycommit->message_id, $NumberOfPortsInThisCommit, $MaxNumberPortsToShow);
 			}
 			$i = $j - 1;

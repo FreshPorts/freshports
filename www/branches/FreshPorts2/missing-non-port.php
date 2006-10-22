@@ -1,12 +1,14 @@
 <?php
 	#
-	# $Id: missing-non-port.php,v 1.1.2.7 2005-07-15 03:08:33 dan Exp $
+	# $Id: missing-non-port.php,v 1.1.2.8 2006-10-22 16:17:38 dan Exp $
 	#
 	# Copyright (c) 2003 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/htmlify.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
 
 function freshports_NonPortDescription($db, $element_record) {
 	GLOBAL $TableWidth;
@@ -36,11 +38,20 @@ function freshports_NonPortDescription($db, $element_record) {
 <tr><td>
 <a HREF="<?php echo FRESHPORTS_FREEBSD_CVS_URL . $element_record->element_pathname; ?>">CVSWeb</a>
 </td></tr>
-</table>
 
 <?
 
-	freshports_Commits($element_record);
+    $Commits = new Commits($db);
+    
+    $Commits->SetLimit(100);
+    $Commits->Debug = 1;
+	$Commits->UserIDSet($User->id);
+	$Commits->TreePathConditionSet("= '" . $element_record->element_pathname . "'");
+	$NumFetches = $Commits->FetchByTreePath();
+	$DisplayCommit = new DisplayCommit($Commits->LocalResult);
+	$HTML .= $DisplayCommit->CreateHTML();
+	echo $HTML;
+	echo "</table>\n"
 
 ?>
 

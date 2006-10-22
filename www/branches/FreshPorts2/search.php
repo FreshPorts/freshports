@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.94 2006-10-21 13:36:53 dan Exp $
+	# $Id: search.php,v 1.1.2.95 2006-10-22 16:20:46 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -422,7 +422,6 @@ switch ($stype) {
   
     $Commits = new Commits($db);
     $Commits->Debug = $Debug;
-    $Commits->Debug = $Debug;
 
     $NumberOfPortCommits = $Commits->GetCountCommitsByCommitMessage($sqlUserSpecifiedCondition);
     if ($Debug) echo 'number of commits = ' . $NumberOfPortCommits . "<br>\n";
@@ -487,8 +486,10 @@ switch ($stype) {
     }
     $Commits->SetLimit($PageSize);
 
+	$Commits->UserIDSet($User->id);
+	$Commits->TreePathConditionSet($query);
 	if (substr($query, 0, 7) == '/ports/') {
-	    $NumFetches = $Commits->FetchByTreePath   ($query, $User->id);
+	    $NumFetches = $Commits->FetchByTreePath();
 	} else {
 	    $NumFetches = $Commits->FetchByTreePathSrc($query, $User->id);
 	}

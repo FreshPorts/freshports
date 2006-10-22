@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits.php,v 1.1.2.26 2006-10-21 13:38:46 dan Exp $
+	# $Id: commits.php,v 1.1.2.27 2006-10-22 16:20:23 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -15,6 +15,13 @@ class Commits {
 	var $LocalResult;
 	var $Limit  = 0;
 	var $Offset = 0;
+
+	#
+	# a condition for the tree path comparison
+	# e.g. LIKE '/src/sys/i386/conf/%'
+	#
+	var $TreePathCondition = '';
+	var $UserID            = 0;
 
 	var $Debug;
 
@@ -222,10 +229,17 @@ class Commits {
 		return $numrows;
 	}
 
-	function FetchByTreePath($TreePath, $UserID) {
+	function TreePathConditionSet($TreePathCondition) {
+		$this->TreePathCondition = $TreePathCondition;
+	}
+
+	function UserIDSet($UserID) {
+		$this->UserID = $UserID;
+	}
+
+	function FetchByTreePath() {
 		$sql = "
-		SELECT DISTINCT
-			commit_log.commit_date - SystemTimeAdjust()                                                                 AS commit_date_raw,
+	 SELECT commit_log.commit_date - SystemTimeAdjust()                                                                 AS commit_date_raw,
 			commit_log.id                                                                                               AS commit_log_id,
 			commit_log.encoding_losses                                                                                  AS encoding_losses,
 			commit_log.message_id                                                                                       AS message_id,
@@ -265,7 +279,7 @@ class Commits {
 	 (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
 	    FROM watch_list JOIN watch_list_element 
 	        ON watch_list.id      = watch_list_element.watch_list_id
-	       AND watch_list.user_id = $UserID
+	       AND watch_list.user_id = " . $this->UserID . "
 	       AND watch_list.in_service		
 	  GROUP BY wle_element_id) AS TEMP
 	       ON TEMP.wle_element_id = element.id";
@@ -274,7 +288,7 @@ class Commits {
 		$sql .= "
 	  WHERE commit_log.id IN (SELECT tmp.id FROM (SELECT DISTINCT CL.id, CL.commit_date
   FROM element_pathname EP, commit_log_elements CLE, commit_log CL
- WHERE EP.pathname   LIKE '$TreePath%'
+ WHERE EP.pathname   " . $this->TreePathCondition . "
    AND EP.element_id = CLE.element_ID
    AND CL.id         = CLE.commit_log_id
 ORDER BY CL.commit_date DESC ";

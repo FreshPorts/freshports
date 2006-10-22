@@ -1,47 +1,88 @@
 <?php
 	#
-	# $Id: commits.php,v 1.1.2.28 2006-10-22 17:15:51 dan Exp $
+	# $Id: commits_by_committer.php,v 1.1.2.1 2006-10-22 17:15:51 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/commit.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/commits.php");
 
-// base class for fetching commits
-class Commits {
+// base class for fetching commits by a particular committer
+class CommitsByCommitter extends commits {
 
-	var $dbh;
-	var $LocalResult;
-	var $Limit  = 0;
-	var $Offset = 0;
+	var $Committer;
 
-	#
-	# a condition for the tree path comparison
-	# e.g. LIKE '/src/sys/i386/conf/%'
-	#
-	var $TreePathCondition = '';
-	var $UserID            = 0;
-
-	var $Debug;
-
-	function Commits($dbh) {
-		$this->dbh	= $dbh;
+	function __construct($dbh) {
+		parent::__contstruct($dbh);
 	}
 	
-	function SetLimit($Limit) {
-		$this->Limit = $Limit;
-	}
-	
-	function SetOffset($Offset) {
-		$this->Offset = $Offset;
-	}
-	
-	function UserIDSet($UserID) {
-		$this->UserID = $UserID;
+	function CommitterSet($Committer) {
+		$this->Committer = $Committer;
 	}
 
-	function Fetch($Date, $UserID) {
+	function GetCountCommits() {
+		$count = 0;
+		
+		$sql = "select count(*) as count from commit_log where committer = '" . AddSlashes($this->Committer) . "'";
+		if ($this->Debug) echo "<pre>$sql</pre>";
+		$result = pg_exec($this->dbh, $sql);
+		if ($result) {
+			$myrow = pg_fetch_array($result);
+			$count = $myrow['count'];
+		} else {
+			syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ': ' . pg_last_error($this->dbh));
+			die('SQL ERROR');
+		}
+
+		return $count;
+	}
+
+	function GetCountPortCommits() {
+		$count = 0;
+		
+		$sql = "
+		SELECT count(distinct CL.id) as count 
+		  FROM commit_log CL, commit_log_ports CLP 
+		 WHERE CL.id = CLP.commit_log_id
+		   AND committer = '" . AddSlashes($this->Committer) . "'";
+
+		if ($this->Debug) echo "<pre>$sql</pre>";
+		$result = pg_exec($this->dbh, $sql);
+		if ($result) {
+			$myrow = pg_fetch_array($result);
+			$count = $myrow['count'];
+		} else {
+			syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ': ' . pg_last_error($this->dbh));
+			die('SQL ERROR');
+		}
+
+		return $count;
+	}
+
+	function GetCountPortsTouched() {
+		$count = 0;
+		
+		$sql = "
+		SELECT count(*) as count 
+		  FROM commit_log CL, commit_log_ports CLP 
+		 WHERE CL.id = CLP.commit_log_id
+		   AND committer = '" . AddSlashes($this->Committer) . "'";
+		;
+		if ($this->Debug) echo "<pre>$sql</pre>";
+		$result = pg_exec($this->dbh, $sql);
+		if ($result) {
+			$myrow = pg_fetch_array($result);
+			$count = $myrow['count'];
+		} else {
+			syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ': ' . pg_last_error($this->dbh));
+			die('SQL ERROR');
+		}
+
+		return $count;
+	}
+
+	function Fetch() {
 		$sql = "
 		SELECT DISTINCT
 			commit_log.commit_date - SystemTimeAdjust()                                                                 AS commit_date_raw,
@@ -56,6 +97,7 @@ class Commits {
 			categories.name                                                                                             AS category,
 			categories.id                                                                                               AS category_id,
 			element.name                                                                                                AS port,
+			element_pathname(element.id)                                                                                AS pathname,
 			CASE when commit_log_ports.port_version IS NULL then ports.version  else commit_log_ports.port_version  END AS version,
 			CASE when commit_log_ports.port_version is NULL then ports.revision else commit_log_ports.port_revision END AS revision,
 			CASE when commit_log_ports.port_epoch   is NULL then ports.portepoch else commit_log_ports.port_epoch   END AS epoch,
@@ -70,32 +112,29 @@ class Commits {
 			ports.element_id                                                                                            AS element_id,
 			ports.short_description                                                                                     AS short_description,
 			STF.message                                                                                                 AS stf_message";
-
-		if ($UserID) {
+		if ($this->UserID) {
 				$sql .= ",
 	        onwatchlist ";
 		}
 
 		$sql .= "
-    FROM commit_log_ports LEFT OUTER JOIN sanity_test_failures STF ON STF.commit_log_id = commit_log_ports.commit_log_id
-	, commit_log, categories, ports, element ";
+    FROM commit_log_ports LEFT OUTER JOIN sanity_test_failures STF ON STF.commit_log_id = commit_log_ports.commit_log_id, commit_log, categories, ports, element ";
 
-		if ($UserID) {
+		if ($this->UserID) {
 				$sql .= "
 	      LEFT OUTER JOIN
 	 (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
 	    FROM watch_list JOIN watch_list_element 
 	        ON watch_list.id      = watch_list_element.watch_list_id
-	       AND watch_list.user_id = $UserID
+	       AND watch_list.user_id = " . $this->UserID . "
 	       AND watch_list.in_service		
 	  GROUP BY wle_element_id) AS TEMP
 	       ON TEMP.wle_element_id = element.id";
 		}
-
+		
 		$sql .= "
-	  WHERE commit_log.commit_date         BETWEEN '$Date'::timestamptz  + SystemTimeAdjust()
-	                                           AND '$Date'::timestamptz  + SystemTimeAdjust() + '1 Day'
-		AND commit_log_ports.commit_log_id = commit_log.id
+	  WHERE commit_log.committer = '" . AddSlashes($this->Committer) . "'
+	    AND commit_log_ports.commit_log_id = commit_log.id
 	    AND commit_log_ports.port_id       = ports.id
 	    AND categories.id                  = ports.category_id
 	    AND element.id                     = ports.element_id
@@ -103,6 +142,14 @@ class Commits {
 			commit_log_id,
 			category,
 			port";
+			
+		if ($this->Limit) {
+			$sql .= "\nLIMIT " . $this->Limit;
+		}
+		
+		if ($this->Offset) {
+			$sql .= "\nOFFSET " . $this->Offset;
+		}
 
 
 
@@ -118,47 +165,5 @@ class Commits {
 		}
 
 		return $numrows;
-	}
-
-	function FetchNth($N) {
-		#
-		# call Fetch first.
-		# then call this function N times, where N is the number
-		# returned by Fetch
-		#
-
-		if ($this->Debug) echo "fetching row $N<br>";
-
-		$commit = new Commit($this->dbh);
-
-		$myrow = pg_fetch_array($this->LocalResult, $N);
-		$commit->PopulateValues($myrow);
-
-		return $commit;
-	}
-
-	function LastModified($Date) {
-
-		# default to the current GMT time
-		$last_modified = gmdate(LAST_MODIFIED_FORMAT);
-
-		$sql = "
-SELECT gmt_format(max(CL.date_added)) AS last_modified
-  FROM commit_log CL, commit_log_ports CLP
- WHERE CL.id = CLP.commit_log_id
-   AND CL.commit_date BETWEEN '$Date'::timestamptz  + SystemTimeAdjust()
-                          AND '$Date'::timestamptz  + SystemTimeAdjust() + '1 Day'";
-		
-		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
-		$result = pg_exec($this->dbh, $sql);
-		if ($result) {
-			$myrow = pg_fetch_array($result);
-			$last_modified = $myrow['last_modified'];
-		} else {
-			syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ': ' . pg_last_error($this->dbh));
-			die('SQL ERROR');
-		}
-
-		return $last_modified;
 	}
 }

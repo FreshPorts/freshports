@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.291 2006-10-20 02:31:43 dan Exp $
+	# $Id: freshports.php,v 1.4.2.292 2006-10-22 13:34:15 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -1143,7 +1143,9 @@ function freshports_CommitsHeader($element_record) {
 
 function freshports_CommitsFooter($element_record) {
 	# print the footer for the commits for a port
-	$HTML .= "</table>\n";
+	$HTML = "</table>\n";
+	
+	return $HTML;
 }
 
 
@@ -1173,7 +1175,7 @@ function freshports_Commits($element_record) {
 
 	$Commits = new Commit_Log_Elements($element_record->dbh);
 	$NumRows = $Commits->FetchInitialise($element_record->id);
-
+	
 	$LastVersion = '';
 	for ($i = 0; $i < $NumRows; $i++) {
 		$Commits->FetchNthCommit($i);

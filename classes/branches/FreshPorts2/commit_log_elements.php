@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit_log_elements.php,v 1.1.2.7 2006-07-27 19:06:41 dan Exp $
+	# $Id: commit_log_elements.php,v 1.1.2.8 2006-10-22 16:19:19 dan Exp $
 	#
 	# Copyright (c) 2003-2006 DVL Software Limited
 	#
@@ -20,6 +20,7 @@ class Commit_Log_Elements {
 	var $revision_name;
 
 	var $result;
+	var $Debug;
 
 	function Commit_Log_Elements($dbh) {
 		$this->dbh	= $dbh;
@@ -43,7 +44,7 @@ select commit_log_elements.element_id,
    and commit_log_elements.element_id = $element_id
  order by commit_log.commit_date desc ";
 
-#		echo "\$sql='<pre>$sql</pre><br>\n";
+		if ($Debug) echo "\$sql='<pre>$sql</pre><br>\n";
 
 		$this->result = pg_exec($this->dbh, $sql);
 		if (!$this->result) {

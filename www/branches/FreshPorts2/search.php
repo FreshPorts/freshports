@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.95 2006-10-22 16:20:46 dan Exp $
+	# $Id: search.php,v 1.1.2.96 2006-10-22 17:39:24 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -319,6 +319,7 @@ switch ($method) {
 
 switch ($stype) {
 	case SEARCH_FIELD_COMMITMESSAGE:
+	case SEARCH_FIELD_PATHNAME:
 		break;
 
 	default:
@@ -383,13 +384,15 @@ switch ($method) {
 
 switch ($stype) {
   case SEARCH_FIELD_COMMITTER:
-    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits_by_committer.php');
     require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
   
-    $Commits = new Commits($db);
+    $Commits = new CommitsByCommitter($db);
+    $Commits->CommitterSet($query);
+    
     $Commits->Debug = $Debug;
   
-    $NumberOfPortCommits = $Commits->GetCountPortCommitsByCommitter($query);
+    $NumberOfPortCommits = $Commits->GetCountPortCommits($query);
     if ($Debug) echo 'number of commits = ' . $NumberOfPortCommits . "<br>\n";
 
 	$NumFound = $NumberOfPortCommits;
@@ -413,17 +416,20 @@ switch ($stype) {
     }
     $Commits->SetLimit($PageSize);
 
-    $NumFetches = $Commits->FetchByCommitter($query, $User->id);
+    $NumFetches = $Commits->Fetch();
     break;
     
   case SEARCH_FIELD_COMMITMESSAGE:
-    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits_by_description.php');
     require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
   
-    $Commits = new Commits($db);
+	$Commits = new CommitsByDescription($db);
+	$Commits->ConditionSet($sqlUserSpecifiedCondition);
+	$Commits->UserIDSet($User->id);
+
     $Commits->Debug = $Debug;
 
-    $NumberOfPortCommits = $Commits->GetCountCommitsByCommitMessage($sqlUserSpecifiedCondition);
+    $NumberOfPortCommits = $Commits->GetCountCommits();
     if ($Debug) echo 'number of commits = ' . $NumberOfPortCommits . "<br>\n";
 
 	$NumFound = $NumberOfPortCommits;
@@ -447,21 +453,23 @@ switch ($stype) {
     }
     $Commits->SetLimit($PageSize);
   
-    $NumFetches = $Commits->FetchByCommitMessageContents($sqlUserSpecifiedCondition, $User->id);
+    $NumFetches = $Commits->Fetch();
     break;
     
   case SEARCH_FIELD_PATHNAME:
-    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits.php');
-    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
-  
-    $Commits = new Commits($db);
-    $Commits->Debug = $Debug;
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits_by_tree_location.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
+
+	$Commits = new CommitsByTreeLocation($db);
+	$Commits->UserIDSet($User->id);
+	$Commits->TreePathConditionSet($sqlUserSpecifiedCondition);
+
     $Commits->Debug = $Debug;
 
 	if (substr($query, 0, 7) == '/ports/') {
-	    $NumberOfPortCommits = $Commits->GetCountPortCommitsByTreeLocation($query);
+	    $NumberOfPortCommits = $Commits->GetCountPortCommits();
 	} else {
-	    $NumberOfPortCommits = $Commits->GetCountCommitsByTreeLocation    ($query);
+	    $NumberOfPortCommits = $Commits->GetCountCommits();
 	}
     if ($Debug) echo 'number of commits = ' . $NumberOfPortCommits . "<br>\n";
 
@@ -486,12 +494,10 @@ switch ($stype) {
     }
     $Commits->SetLimit($PageSize);
 
-	$Commits->UserIDSet($User->id);
-	$Commits->TreePathConditionSet($query);
 	if (substr($query, 0, 7) == '/ports/') {
-	    $NumFetches = $Commits->FetchByTreePath();
+	    $NumFetches = $Commits->FetchPortCommits();
 	} else {
-	    $NumFetches = $Commits->FetchByTreePathSrc($query, $User->id);
+	    $NumFetches = $Commits->Fetch();
 	}
     break;
     

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: how-big-is-it.php,v 1.1.2.19 2006-07-02 20:42:15 dan Exp $
+	# $Id: how-big-is-it.php,v 1.1.2.20 2006-10-24 17:04:14 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -22,13 +22,54 @@
 function format_number($Value) {
 	return str_replace(' ', '&nbsp;', sprintf('%6s', $Value));
 }
-	
+
+#
+# grabbed from http://ca3.php.net/manual/en/function.number-format.php
+# was attributed there to: Thanks to "php dot net at alan-smith dot no-ip dot com" and "service at dual-creators dot de".	
+#
+function human_readable($size)
+{
+	$count = 0;
+	$format = array("B","KB","MB","GB","TB","PB","EB","ZB","YB");
+	while(($size/1024) > 1 && $count < 8) {
+		$size=$size/1024;
+		$count++;
+	}
+	if( $size < 10 ) {
+		$decimals = 1;
+	} else {
+		$decimals = 0;
+	}
+	$return = number_format($size,$decimals,'.',' ')." ".$format[$count];
+
+	return $return;
+}
+
 function StatsSQL($db, $Title, $Date) {
 	$sql = "select value, date 
              from daily_stats_data, daily_stats 
             where daily_stats_id = daily_stats.id 
               and daily_stats.title = '$Title' 
               and date = '$Date'";
+
+	$result = pg_exec($db, $sql);
+	if ($result) {
+		$numrows = pg_numrows($result);
+		if ($numrows) {
+			$myrow  = pg_fetch_array ($result, 0);
+			$Value  = $myrow[0];
+		} else {
+			$Value = 'numrows = ' . $numrows . ' ' . $sql;;
+		}
+	} else {
+		$Value = pg_errormessage();
+	}
+
+	return $Value;
+}
+
+function DBSize($db) {
+	$sql = "select pg_database_size('freshports.org')";
 
 	$result = pg_exec($db, $sql);
 	if ($result) {
@@ -343,6 +384,37 @@ web pages on <a href="http://www.Google.com/">Google</a><small><sup><a href="#1"
 </ul>
 
 </td></tr>
+
+<?
+	echo freshports_BannerSpace();
+?>
+
+<TR>
+	<? 
+	echo freshports_PageBannerText("How much diskspace?"); 
+	?>
+</TR>
+
+<TR><TD>
+
+<P>
+The total space used by the FreshPorts database is:
+<blockquote><code class="code">
+# select pg_database_size('freshports.org');<br>
+&nbsp;pg_database_size<br>
+------------------<br>
+<?php
+
+$Value = DBSize($db);
+echo number_format($Value) . '<br>';
+
+?>
+(1 row)<br>
+</code></blockquote>
+
+<p>That's bytes...
+<p>This value might be easier to parse: <?php echo human_readable($Value); ?>
+</TD></TR>
 
 
 </TABLE>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.62 2006-10-21 13:37:15 dan Exp $
+	# $Id: commit.php,v 1.1.2.63 2006-10-25 03:37:07 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -205,7 +205,7 @@ SELECT FPC.*, STF.message as stf_message
 			$RetVal = $DisplayCommit->CreateHTML();
 	
 			echo $DisplayCommit->HTML;
-	
+			
 		} else {
 				echo '<tr><TD VALIGN="top"><P>Sorry, nothing found in the database....</P>' . "\n";
 				echo "</TD></tr>";

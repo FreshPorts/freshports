@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: how-big-is-it.php,v 1.1.2.20 2006-10-24 17:04:14 dan Exp $
+	# $Id: how-big-is-it.php,v 1.1.2.21 2006-10-25 03:36:37 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -69,7 +69,7 @@ function StatsSQL($db, $Title, $Date) {
 }
 
 function DBSize($db) {
-	$sql = "select pg_database_size('freshports.org')";
+	$sql = "select pg_database_size(current_database())";
 
 	$result = pg_exec($db, $sql);
 	if ($result) {

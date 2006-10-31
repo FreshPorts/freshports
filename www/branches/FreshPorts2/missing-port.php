@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.83 2006-10-31 13:17:32 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.84 2006-10-31 14:29:15 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -98,25 +98,24 @@ function freshports_PortDisplay($db, $category, $port) {
 	$RefreshCache = substr($_SERVER["REQUEST_URI"], strlen($_SERVER["REQUEST_URI"]) - strlen(REFRESHCACHE)) == REFRESHCACHE;
 
 	$Debug = 0;
-	
 	if ($Debug) echo 'into ' . __FILE__ . ' now' . "<br>\n";
 
 	$PageNumber = 1;
 	parse_str($_SERVER['REQUEST_URI'], $query_parts);
-#	phpinfo();
 	if (IsSet($query_parts['page'])  && Is_Numeric($query_parts['page'])) {
 		$PageNumber = intval($query_parts['page']);
 		if ($PageNumber != $query_parts['page'] || $PageNumber < 1) {
 			$PageNumber = 1;
 		}
 	}
-	
+
 	syslog(LOG_ERR, "PageNumber='$PageNumber'<br>");
 
 	$port_display = new port_display($db, $User);
 	$port_display->SetDetailsFull();
 
 	$Cache = new CachePort();
+	$Cache->PageSize = $User->page_size;
 	$result = $Cache->Retrieve($category, $port, CACHE_PORT_DETAIL, $PageNumber);
 	if (!$result && !$BypassCache && !$RefreshCache) {
 		if ($Debug) echo "found something from the cache<br>\n";

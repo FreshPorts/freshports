@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits_by_committer.php,v 1.1.2.2 2006-10-31 13:05:43 dan Exp $
+	# $Id: commits_by_committer.php,v 1.1.2.3 2006-10-31 17:28:14 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -13,8 +13,8 @@ class CommitsByCommitter extends commits {
 
 	var $Committer;
 
-	function __construct($dbh) {
-		parent::__contstruct($dbh);
+	function CommitsByCommitter($dbh) {
+		parent::Commits($dbh);
 	}
 	
 	function CommitterSet($Committer) {

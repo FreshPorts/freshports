@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: missing-category.php,v 1.1.2.47 2006-08-10 18:31:52 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.48 2006-10-31 13:06:26 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing.php,v 1.1.2.31 2006-09-14 16:50:25 dan Exp $
+	# $Id: missing.php,v 1.1.2.32 2006-10-31 13:29:43 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -24,6 +24,13 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	$result = '';
 
 	$pathname = AddSlashes(htmlentities($REQUEST_URI));
+#	phpinfo();
+
+	if ($Debug) {
+		echo '<pre>';	
+		print_r(parse_url($_SERVER["SCRIPT_URI"]));
+		echo '</pre>';
+	}
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/element_record.php');
 
@@ -51,11 +58,24 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 		$FilesRequest = false;
 	}
 
+/*
+	# Strip off the &page= extension if it's there...
+	$PageNumber = preg_replace('|^(.*)/\&amp;page=\s$|', '${1}', $pathname);
+	if ($PageNumber != $pathname_page) {
+		$pathname_page = $PageNumber;
+		$PageRequest   = true;
+	} else {
+		$PageRequest   = false;
+	}
+
 	if ($Debug) {
 		echo "pathname='" . htmlentities($pathname) . "'<br>";
 		echo "FilesRequest='" . $FilesRequest . "'<br>";
+		echo '<br>';
+		echo "pathname_page='" . htmlentities($pathname_page) . "'<br>";
+		echo "PageRequest='" . $PageRequest . "'<br>";
 	}
-
+*/
 	if (strpos($pathname, '/') !== FALSE) {
 		GLOBAL $User;
 
@@ -63,7 +83,8 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 		if ($Debug) echo "extra is '" . $extra . "'<br>";
 		if ($Debug) echo "category: '" . $category . "'<br>";
 		if ($Debug) echo "port: '" . $port . "'<br>";
-		if ($extra == '' && $port != '' || $FilesRequest) {
+#		if ($extra == '' && $port != '' || $FilesRequest) {
+		if ($port != '') {
 			if ($FilesRequest) {
 				if ($Debug) echo 'going for files.php<br>';
 				if ($Debug) echo 'checking for PortID<br>';
@@ -101,7 +122,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 			// found that category!
 			if ($Debug) echo 'found that category<br>';
 			require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-category.php');
-			freshports_CategoryByID($db, $CategoryID);
+			freshports_CategoryByID($db, $CategoryID, 1, $User->page_size);
 			exit;
 		}
 	}
@@ -111,7 +132,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 		if ($ElementRecord->IsCategory()) {
 
 			require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-category.php');
-			freshports_CategoryByElementID($db, $ElementRecord->id);
+			freshports_CategoryByElementID($db, $ElementRecord->id, 1, $User->page_size);
 			exit;
 		} else {
 			# this is a non-port (e.g. /Mk/)

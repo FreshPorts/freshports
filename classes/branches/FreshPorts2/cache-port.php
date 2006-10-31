@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: cache-port.php,v 1.1.2.6 2006-07-03 22:29:18 dan Exp $
+	# $Id: cache-port.php,v 1.1.2.7 2006-10-31 12:53:27 dan Exp $
 	#
 	# Copyright (c) 2006 DVL Software Limited
 	#
@@ -14,23 +14,25 @@ define('CACHE_PORT_DETAIL',  'Detail');
 
 class CachePort extends Cache {
 
+	var $PageSize = 100;
+
 	function CachePort() {
 		return Parent::Cache();
 	}
 	
-	function Retrieve($Category, $Port, $CacheType = CACHE_PORT_COMMITS) {
+	function Retrieve($Category, $Port, $CacheType = CACHE_PORT_COMMITS, $PageNum = 1) {
 		$this->_Log("CachePort: Retrieving for $Category/$Port");
-		$Key = $this->_PortKey($Category, $Port, $CacheType);
+		$Key = $this->_PortKey($Category, $Port, $CacheType, $PageNum);
 		$result = Parent::Retrieve($Key);
 
 		return $result;
 	}
 
-	function Add($Category, $Port, $CacheType = CACHE_PORT_COMMITS) {
+	function Add($Category, $Port, $CacheType = CACHE_PORT_COMMITS, $PageNum = 1) {
 		$this->_Log("CachePort: Adding for $Category/$Port");
 
 		$CategoryCacheDir = $this->CacheDir . '/ports/' . $Category;
-		$Key = $this->_PortKey($Category, $Port, $CacheType);
+		$Key = $this->_PortKey($Category, $Port, $CacheType, $PageNum);
 		 
 		if (!file_exists($CategoryCacheDir)) {
 			$this->_Log("CachePort: creating directory $CategoryCacheDir");
@@ -49,16 +51,17 @@ class CachePort extends Cache {
 
 		#
 		# the wild card allows us to remove all cache entries for this port
+		# regardless of the CacheType or page number
 		#
-		$Key = $this->_PortKey($Category, $Port, '*');
+		$Key = $this->_PortKey($Category, $Port, '*', '*');
 		$result = Parent::Remove($Key, $data);
 
 		return $result;
 	}
 	
-	function _PortKey($Category, $Port, $CacheType) {
+	function _PortKey($Category, $Port, $CacheType, $PageNum = 1) {
 		// might want some parameter checking here
-		$Key = "ports/$Category/$Port.$CacheType.html";
+		$Key = "ports/$Category/$Port.$CacheType.PageSize$this->PageSize.PageNum$PageNum.html";
 
 		return $Key;
 	}
@@ -69,3 +72,4 @@ class CachePort extends Cache {
 	
 
 }
+?>

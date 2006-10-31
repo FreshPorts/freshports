@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: cache.php,v 1.1.2.11 2006-09-11 13:33:50 dan Exp $
+	# $Id: cache.php,v 1.1.2.12 2006-10-31 12:52:51 dan Exp $
 	#
 	# Copyright (c) 2006 DVL Software Limited
 	#
@@ -149,7 +149,7 @@ class Cache {
 	
 	function _Log($activity) {
 		// log the above message
-#		syslog(LOG_NOTICE, $activity);
+		syslog(LOG_NOTICE, $activity);
 	}
 }
 

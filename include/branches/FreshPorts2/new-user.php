@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: new-user.php,v 1.1.2.14 2006-07-27 19:10:03 dan Exp $
+	# $Id: new-user.php,v 1.1.2.15 2006-10-31 13:21:02 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -42,16 +42,16 @@ Number of Days to show in side-bar:
     <OPTION <? if ($numberofdays == "8") echo "selected " ?> VALUE="8">8</OPTION>
     <OPTION <? if ($numberofdays == "9") echo "selected " ?> VALUE="9">9</OPTION>
 </SELECT>
+
 <br><br><BR>
 
-Number of ports to display per page per category:
-<SELECT NAME="page_size" size="1">
-    <OPTION <? if ($page_size == 25)  echo "selected " ?> VALUE="25">25</OPTION>
-    <OPTION <? if ($page_size == 50)  echo "selected " ?> VALUE="50">50</OPTION>
-    <OPTION <? if ($page_size == 100) echo "selected " ?> VALUE="100">100</OPTION>
-    <OPTION <? if ($page_size == 150) echo "selected " ?> VALUE="150">150</OPTION>
-    <OPTION <? if ($page_size == 250) echo "selected " ?> VALUE="250">250</OPTION>
-</SELECT>
+Number of results to display per page (e.g commits per page):
+<?php
+	  require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/page_options.php');
+	  $PageOptions = new ItemsPerPage();
+	  echo $PageOptions->DDLB_Choices('page_size', $page_size);
+
+?>
 <br><br><BR>
             <INPUT TYPE="submit" VALUE="<? if (IsSet($Customize)) { echo "update";} else { echo "create";} ?> account" NAME="submit">
             <INPUT TYPE="reset"  VALUE="reset form">

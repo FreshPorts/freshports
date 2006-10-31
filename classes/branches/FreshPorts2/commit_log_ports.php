@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit_log_ports.php,v 1.1.2.21 2006-10-14 15:29:58 dan Exp $
+	# $Id: commit_log_ports.php,v 1.1.2.22 2006-10-31 13:03:57 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -24,9 +24,15 @@ class Commit_Log_Ports {
 	var $stf_message;
 
 	var $result;
+	var $Debug = 0;
+
+	var $Limit;
+	var $Offset;
 
 	function Commit_Log_Ports($dbh) {
-		$this->dbh	= $dbh;
+		$this->dbh	  = $dbh;
+		$this->Limit  = '';
+		$this->Offset = '';
 	}
 	
 	function CommitLogIDSet($commit_log_id) {
@@ -37,6 +43,39 @@ class Commit_Log_Ports {
 		$this->port_id = $port_id;
 	}
 
+	function Count($port_id) {
+
+		# how many commits do we have for this port?
+
+		$sql = "
+   SELECT count(*)
+     FROM commit_log           CL,
+          commit_log_ports     CLP
+    WHERE CL.id       = CLP.commit_log_id
+      AND CLP.port_id = $port_id";
+
+		if ($this->Debug) echo "\$sql='<pre>$sql</pre><br>\n";
+		$this->result = pg_exec($this->dbh, $sql);
+		if (!$this->result) {
+			syslog(LOG_ERR, pg_errormessage() . " $sql");
+			die('that query failed.  details have been logged');
+		}
+
+		$myrow = pg_fetch_array ($this->result);
+		$numrows = $myrow[0];
+		
+		return $numrows;
+		return $numrows;
+	}
+
+	function LimitSet($Limit) {
+		$this->Limit = $Limit;
+	}
+ 
+	function OffsetSet($Offset) {
+		$this->Offset = $Offset;
+	}
+ 
 	function FetchInitialise($port_id) {
 
 		# get ready to fetch all the commit_log_ports for this port
@@ -62,11 +101,20 @@ class Commit_Log_Ports {
     WHERE CL.id       = CLP.commit_log_id
       AND CLP.port_id = $port_id
  ORDER BY CL.commit_date desc ";
+ 
+ 		if ($Limit) {
+ 			$sql .= " LIMIT $Limit";
+		}
 
-#		echo "\$sql='<pre>$sql</pre><br>\n";
+		if ($Offset) {
+			$sql .= " OFFSET $Offset";
+		}
+
+		if ($this->Debug) echo "\$sql='<pre>$sql</pre><br>\n";
 		$this->result = pg_exec($this->dbh, $sql);
 		if (!$this->result) {
-			echo pg_errormessage() . " $sql";
+			syslog(LOG_ERR, pg_errormessage() . " $sql");
+			die('that query failed.  details have been logged');
 		}
 		$numrows = pg_numrows($this->result);
 
@@ -105,11 +153,12 @@ UPDATE commit_log_ports
  WHERE commit_log_id = $this->commit_log_id
    AND port_id       = $this->port_id";
 
-#		echo "\$sql='<pre>$sql</pre><br>\n";
+		if ($this->Debug) echo "\$sql='<pre>$sql</pre><br>\n";
 		
 		$this->result = pg_exec($this->dbh, $sql);
 		if (!$this->result) {
-			echo pg_errormessage() . " $sql";
+			syslog(LOG_ERR, pg_errormessage() . " $sql");
+			die('that query failed.  details have been logged');
 		} else {
 			$this->needs_refresh = 0;
 		}
@@ -126,3 +175,4 @@ UPDATE commit_log_ports
 	
 
 }
+?>

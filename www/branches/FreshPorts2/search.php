@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.96 2006-10-22 17:39:24 dan Exp $
+	# $Id: search.php,v 1.1.2.97 2006-10-31 13:22:17 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -108,7 +108,7 @@ function WildCardQuery($stype, $Like, $query) {
 	// If these items are missing from the URL, we want them to have a value
 	$query				= '';
 	$stype				= 'name';
-	$num				= '10';
+	$num				= $User->page_size;
 	$category			= '';
 	$port				= '';
 	$method				= '';
@@ -735,14 +735,11 @@ $Port->LocalResult = $result;
 	<INPUT NAME="query" size="40"  VALUE="<? echo
 	htmlentities(stripslashes($query))?>">
 
-	<SELECT name=num>
-		<OPTION VALUE="10"  <?if ($num == 10)  echo 'SELECTED' ?>>10 results
-		<OPTION VALUE="20"  <?if ($num == 20)  echo 'SELECTED' ?>>20 results
-		<OPTION VALUE="30"  <?if ($num == 30)  echo 'SELECTED' ?>>30 results
-		<OPTION VALUE="50"  <?if ($num == 50)  echo 'SELECTED' ?>>50 results
-		<OPTION VALUE="100" <?if ($num == 100) echo 'SELECTED' ?>>100 results
-		<OPTION VALUE="500" <?if ($num == 500) echo 'SELECTED' ?>>500 results
-	</SELECT> 
+<?php
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/page_options.php');
+    $PageOptions = new ItemsPerPage();
+    echo $PageOptions->DDLB_Choices('num', $num, 'results');
+?>
 
 	<BR><br>
 

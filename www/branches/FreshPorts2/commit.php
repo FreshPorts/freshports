@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.63 2006-10-25 03:37:07 dan Exp $
+	# $Id: commit.php,v 1.1.2.64 2006-10-31 13:31:05 dan Exp $
 	#
-	# Copyright (c) 1998-2004 DVL Software Limited
+	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
@@ -10,6 +10,8 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+
+    $Debug = 0;
 
 DEFINE('MAX_PAGE_SIZE',     1000);
 DEFINE('DEFAULT_PAGE_SIZE', 500);
@@ -188,7 +190,8 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 SELECT FPC.*, STF.message as stf_message
   FROM freshports_commit('$message_id', $PageSize, ($PageNo - 1 ) * $PageSize, $User->id) FPC
  LEFT OUTER JOIN sanity_test_failures STF
-    ON FPC.commit_log_id = STF.commit_log_id";
+    ON FPC.commit_log_id = STF.commit_log_id
+ORDER BY port, pathname";
 
 	if ($Debug) echo "\n<p>sql=$sql</p>\n";
 

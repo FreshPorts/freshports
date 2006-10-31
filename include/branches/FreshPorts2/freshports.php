@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.293 2006-10-22 13:38:00 dan Exp $
+	# $Id: freshports.php,v 1.4.2.294 2006-10-31 13:20:35 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -1007,19 +1007,87 @@ function freshports_CheckForOutdatedVulnClaim($commit, $port, $VuXMLList) {
 	return $HTML;
 }
 
-function freshports_PortCommits($port) {
+function freshports_PortCommits($port, $PageNumber = 1, $NumCommitsPerPage = 100) {
 	# print all the commits for this port
+	
 
 	GLOBAL $User;
 
 	$HTML = '';
 
+	require_once('Pager/Pager.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit_log_ports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user_tasks.php');
 
 	$Commits = new Commit_Log_Ports($port->dbh);
-	$NumRows = $Commits->FetchInitialise($port->id);
+	$Commits->Debug = 0;
 
+	#	
+	# get the count without excuting the whole query
+	# we don't want to pull back all the data.
+	#
+	$NumCommits = $Commits->Count($port->id);
+	$params = array(
+			'mode'        => 'Sliding',
+			'perPage'     => $NumCommitsPerPage,
+			'delta'       => 5,
+			'totalItems'  => $NumCommits,
+			'urlVar'      => 'page',
+			'currentPage' => $PageNumber,
+			'spacesBeforeSeparator' => 1,
+			'spacesAfterSeparator'  => 1,
+			'append'                => false,
+			'path'					=> '/' . $port->category . '/' . $port->port,
+			'fileName'              => '&page=%d',
+			'altFirst'              => 'First Page',
+			'firstPageText'         => 'First Page',
+			'altLast'               => 'Last Page',
+			'lastPageText'          => 'Last Page',
+		);
+	$Pager = & Pager::factory($params);
+	
+	//Results from methods:
+	if ($this->Debug) {
+		echo '<pre>';
+		echo 'getCurrentPageID()...: '; var_dump($Pager->getCurrentPageID());
+		echo 'getNextPageID()......: '; var_dump($Pager->getNextPageID());
+		echo 'getPreviousPageID()..: '; var_dump($Pager->getPreviousPageID());
+		echo 'numItems()...........: '; var_dump($Pager->numItems());
+		echo 'numPages()...........: '; var_dump($Pager->numPages());
+		echo 'isFirstPage()........: '; var_dump($Pager->isFirstPage());
+		echo 'isLastPage().........: '; var_dump($Pager->isLastPage());
+		echo 'isLastPageComplete().: '; var_dump($Pager->isLastPageComplete());
+		echo '$Pager->range........: '; var_dump($Pager->range);
+		echo '</pre>';
+	}
+
+	$links = $Pager->GetLinks();
+
+	$NumCommitsHTML = '<p align="left">Number of commits found: ' . $NumCommits;
+
+	$Offset = 0;
+	$PageLinks = $links['all'];
+	if ($PageLinks != '') {
+		$offset = $Pager->getOffsetByPageId();
+		$NumOnThisPage = $offset[1] - $offset[0] + 1;
+		$Offset = $offset[0] - 1;
+	    $NumCommitsHTML .= " (showing only $NumOnThisPage on this page)";
+		unset($offset);
+	}
+
+	$NumCommitsHTML .= '</p>';
+
+	if ($PageLinks != '') {
+		$PageLinksHTML .= '<p align="center">' . $PageLinks . '</p>';
+	}
+
+	$HTML .= $NumCommitsHTML . $PageLinksHTML;
+
+	if ($Commits->Debug) echo "PageNumber='$PageNumber'<br>Offset='$Offset'<br>";
+	
+	$Commits->LimitSet($NumCommitsPerPage);
+	$Commits->OffsetSet($Offset);
+	$NumRows = $Commits->FetchInitialise($port->id);
 	$port->LoadVulnerabilities();
 
 	$Commits->FetchNthCommit(0);
@@ -1036,6 +1104,8 @@ function freshports_PortCommits($port) {
 
 	$HTML .= freshports_PortCommitsFooter($port);
 	
+	$HTML .= $NumCommitsHTML . $PageLinksHTML;
+
 	return $HTML;
 }
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: announcements.php,v 1.1.2.6 2004-08-25 20:32:10 dan Exp $
+	# $Id: announcements.php,v 1.1.2.7 2006-10-31 13:05:43 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -266,3 +266,4 @@ SELECT *
 	
 
 }
+?>

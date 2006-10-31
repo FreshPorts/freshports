@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: element_record.php,v 1.1.2.4 2004-08-26 11:30:46 dan Exp $
+	# $Id: element_record.php,v 1.1.2.5 2006-10-31 13:05:44 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -61,3 +61,5 @@ class ElementRecord {
 	}
 
 }
+
+?>

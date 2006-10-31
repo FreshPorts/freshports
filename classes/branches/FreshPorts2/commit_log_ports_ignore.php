@@ -1,5 +1,5 @@
 <?php
-	# $Id: commit_log_ports_ignore.php,v 1.1.2.3 2004-06-10 15:21:07 dan Exp $
+	# $Id: commit_log_ports_ignore.php,v 1.1.2.4 2006-10-31 13:05:43 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -76,3 +76,4 @@ INSERT INTO commit_log_ports_ignore (commit_log_id, port_id, reason)
 	
 
 }
+?>

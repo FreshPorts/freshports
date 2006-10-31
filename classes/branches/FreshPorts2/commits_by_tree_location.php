@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits_by_tree_location.php,v 1.1.2.2 2006-10-22 17:37:02 dan Exp $
+	# $Id: commits_by_tree_location.php,v 1.1.2.3 2006-10-31 13:05:43 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -236,3 +236,5 @@ ORDER BY CL.commit_date DESC ";
 		return $numrows;
 	}
 }
+
+?>

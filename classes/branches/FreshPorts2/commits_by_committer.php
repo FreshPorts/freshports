@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits_by_committer.php,v 1.1.2.1 2006-10-22 17:15:51 dan Exp $
+	# $Id: commits_by_committer.php,v 1.1.2.2 2006-10-31 13:05:43 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -167,3 +167,5 @@ class CommitsByCommitter extends commits {
 		return $numrows;
 	}
 }
+
+?>

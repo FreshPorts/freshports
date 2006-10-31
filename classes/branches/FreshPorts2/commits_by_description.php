@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits_by_description.php,v 1.1.2.2 2006-10-22 17:36:47 dan Exp $
+	# $Id: commits_by_description.php,v 1.1.2.3 2006-10-31 13:05:43 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -125,3 +125,5 @@ class CommitsByDescription extends commits {
 		return $count;
 	}
 }
+
+?>

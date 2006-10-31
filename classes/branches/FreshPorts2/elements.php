@@ -1,5 +1,5 @@
 <?php
-	# $Id: elements.php,v 1.1.2.5 2004-06-10 15:21:07 dan Exp $
+	# $Id: elements.php,v 1.1.2.6 2006-10-31 13:05:44 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -72,3 +72,5 @@ class Element {
 		}
 	}
 }
+
+?>

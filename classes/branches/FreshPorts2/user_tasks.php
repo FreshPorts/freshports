@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: user_tasks.php,v 1.1.2.6 2006-07-23 13:56:43 dan Exp $
+	# $Id: user_tasks.php,v 1.1.2.7 2006-10-31 13:05:44 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -43,3 +43,5 @@ class UserTasks {
         return $this->id;
 	}
 }
+
+?>

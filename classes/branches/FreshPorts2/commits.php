@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits.php,v 1.1.2.28 2006-10-22 17:15:51 dan Exp $
+	# $Id: commits.php,v 1.1.2.29 2006-10-31 13:05:43 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -162,3 +162,4 @@ SELECT gmt_format(max(CL.date_added)) AS last_modified
 		return $last_modified;
 	}
 }
+?>

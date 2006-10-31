@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: vuln_latest.php,v 1.1.2.1 2006-09-16 23:17:42 dan Exp $
+	# $Id: vuln_latest.php,v 1.1.2.2 2006-10-31 13:05:45 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -68,3 +68,5 @@ SELECT distinct PA.category, PA.name as port, coalesce(V.date_modified, V.date_e
 	}
 
 }
+
+?>

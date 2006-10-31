@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.21 2006-08-10 18:32:16 dan Exp $
+	# $Id: categories.php,v 1.1.2.22 2006-10-31 13:05:43 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -200,3 +200,4 @@ SELECT C.*, (SELECT MAX(CL.date_added)
 	}
 
 }
+?>

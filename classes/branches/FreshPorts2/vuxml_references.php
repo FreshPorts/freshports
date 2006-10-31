@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: vuxml_references.php,v 1.1.2.1 2004-12-19 17:10:56 dan Exp $
+	# $Id: vuxml_references.php,v 1.1.2.2 2006-10-31 13:05:45 dan Exp $
 	#
 	# Copyright (c) 2004 DVL Software Limited
 	#
@@ -52,3 +52,5 @@ class VuXML_References {
 	}
 
 }
+
+?>

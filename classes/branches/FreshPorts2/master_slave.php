@@ -1,5 +1,5 @@
 <?php
-	# $Id: master_slave.php,v 1.1.2.1 2004-07-06 03:25:51 dan Exp $
+	# $Id: master_slave.php,v 1.1.2.2 2006-10-31 13:05:44 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -55,3 +55,5 @@ ORDER BY slave_category_name, slave_port_name";
 	}
 
 }
+
+?>

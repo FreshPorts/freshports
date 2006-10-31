@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: searches.php,v 1.1.2.2 2004-11-17 22:36:16 dan Exp $
+	# $Id: searches.php,v 1.1.2.3 2006-10-31 13:05:44 dan Exp $
 	#
 	# Copyright (c) 2004 DVL Software Limited
 	#
@@ -109,3 +109,5 @@ return '
 	}
 
 }
+
+?>

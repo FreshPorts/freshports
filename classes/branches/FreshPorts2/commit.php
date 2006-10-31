@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.17 2006-10-14 15:29:58 dan Exp $
+	# $Id: commit.php,v 1.1.2.18 2006-10-31 13:05:43 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -143,3 +143,4 @@ SELECT GMT_Format(date_added) as last_modified
 	}
 
 }
+?>

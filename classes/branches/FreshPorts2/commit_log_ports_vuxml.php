@@ -1,5 +1,5 @@
 <?php
-	# $Id: commit_log_ports_vuxml.php,v 1.1.2.7 2005-01-22 14:36:19 dan Exp $
+	# $Id: commit_log_ports_vuxml.php,v 1.1.2.8 2006-10-31 13:05:43 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -83,3 +83,4 @@ select CLPV.id,
 	}
 
 }
+?>

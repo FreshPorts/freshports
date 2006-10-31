@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: user.php,v 1.1.2.15 2006-07-26 20:11:25 dan Exp $
+	# $Id: user.php,v 1.1.2.16 2006-10-31 13:05:44 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -209,3 +209,5 @@ class User {
 	}
 
 }
+
+?>

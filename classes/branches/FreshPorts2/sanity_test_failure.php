@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: sanity_test_failure.php,v 1.1.2.1 2006-10-14 15:29:02 dan Exp $
+	# $Id: sanity_test_failure.php,v 1.1.2.2 2006-10-31 13:05:44 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#

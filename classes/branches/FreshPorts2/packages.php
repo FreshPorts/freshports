@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: packages.php,v 1.1.2.1 2004-08-23 19:09:26 dan Exp $
+	# $Id: packages.php,v 1.1.2.2 2006-10-31 13:05:44 dan Exp $
 	#
 	# Copyright (c) 2004 DVL Software Limited
 	#
@@ -39,3 +39,5 @@ class Packages {
         return $this->CategoryPort;
 	}
 }
+
+?>

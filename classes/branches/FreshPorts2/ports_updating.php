@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports_updating.php,v 1.1.2.1 2004-08-01 12:49:02 dan Exp $
+	# $Id: ports_updating.php,v 1.1.2.2 2006-10-31 13:05:44 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -80,3 +80,5 @@ ORDER BY date desc"
 	}
 
 }
+
+?>

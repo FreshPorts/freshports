@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit_log_ports.php,v 1.1.2.22 2006-10-31 13:03:57 dan Exp $
+	# $Id: commit_log_ports.php,v 1.1.2.23 2006-10-31 14:28:18 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -102,12 +102,12 @@ class Commit_Log_Ports {
       AND CLP.port_id = $port_id
  ORDER BY CL.commit_date desc ";
  
- 		if ($Limit) {
- 			$sql .= " LIMIT $Limit";
+ 		if ($this->Limit) {
+ 			$sql .= ' LIMIT ' . $this->Limit;
 		}
 
-		if ($Offset) {
-			$sql .= " OFFSET $Offset";
+		if ($this->Offset) {
+			$sql .= ' OFFSET ' . $this->Offset;
 		}
 
 		if ($this->Debug) echo "\$sql='<pre>$sql</pre><br>\n";

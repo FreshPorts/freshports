@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: cache-port.php,v 1.1.2.7 2006-10-31 12:53:27 dan Exp $
+	# $Id: cache-port.php,v 1.1.2.8 2006-10-31 14:28:34 dan Exp $
 	#
 	# Copyright (c) 2006 DVL Software Limited
 	#
@@ -20,6 +20,10 @@ class CachePort extends Cache {
 		return Parent::Cache();
 	}
 	
+	function PageSizeSet($PageSize) {
+		$this->PageSize = $PageSize;
+	}
+
 	function Retrieve($Category, $Port, $CacheType = CACHE_PORT_COMMITS, $PageNum = 1) {
 		$this->_Log("CachePort: Retrieving for $Category/$Port");
 		$Key = $this->_PortKey($Category, $Port, $CacheType, $PageNum);

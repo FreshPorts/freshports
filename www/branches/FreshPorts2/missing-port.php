@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.82 2006-09-14 17:02:25 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.83 2006-10-31 13:17:32 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -26,14 +26,14 @@ $g_NOFOLLOW = 1;
 
 DEFINE('COMMIT_DETAILS', 'files.php');
 
-function freshports_DisplayPortCommits($port) {
+function DisplayPortCommits($port, $PageNumber) {
 	$HTML = '';
 	
 	$PortsUpdating   = new PortsUpdating($port->dbh);
 	$NumRowsUpdating = $PortsUpdating->FetchInitialise($port->id);
 
 	$HTML .= freshports_UpdatingOutput($NumRowsUpdating, $PortsUpdating, $port);
-
+	
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports_moved.php');
 
 	$PortsMovedFrom = new PortsMoved($port->dbh);
@@ -74,7 +74,9 @@ function freshports_DisplayPortCommits($port) {
 		$HTML .= "</table>\n";
 	}
 
-	$HTML .= freshports_PortCommits($port);
+
+	GLOBAL $User;
+	$HTML .= freshports_PortCommits($port, $PageNumber, $User->page_size);
 	
 	// end of caching
 	
@@ -99,11 +101,23 @@ function freshports_PortDisplay($db, $category, $port) {
 	
 	if ($Debug) echo 'into ' . __FILE__ . ' now' . "<br>\n";
 
+	$PageNumber = 1;
+	parse_str($_SERVER['REQUEST_URI'], $query_parts);
+#	phpinfo();
+	if (IsSet($query_parts['page'])  && Is_Numeric($query_parts['page'])) {
+		$PageNumber = intval($query_parts['page']);
+		if ($PageNumber != $query_parts['page'] || $PageNumber < 1) {
+			$PageNumber = 1;
+		}
+	}
+	
+	syslog(LOG_ERR, "PageNumber='$PageNumber'<br>");
+
 	$port_display = new port_display($db, $User);
 	$port_display->SetDetailsFull();
 
 	$Cache = new CachePort();
-	$result = $Cache->Retrieve($category, $port, CACHE_PORT_DETAIL);
+	$result = $Cache->Retrieve($category, $port, CACHE_PORT_DETAIL, $PageNumber);
 	if (!$result && !$BypassCache && !$RefreshCache) {
 		if ($Debug) echo "found something from the cache<br>\n";
 		$HTML = $Cache->CacheDataGet();
@@ -151,12 +165,12 @@ function freshports_PortDisplay($db, $category, $port) {
 		
 		$HTML .= "</TD></TR>\n</TABLE>\n\n";
 
-		$HTML .= freshports_DisplayPortCommits($MyPort);
+		$HTML .= DisplayPortCommits($MyPort, $PageNumber);
 
 		# If we are not reading 
 		if (!$BypassCache || $RefreshCache) {
 			$Cache->CacheDataSet($MyPort->{'element_id'} . "\n" . $HTML);
-			$Cache->Add($MyPort->category, $MyPort->port, CACHE_PORT_DETAIL);
+			$Cache->Add($MyPort->category, $MyPort->port, CACHE_PORT_DETAIL, $PageNumber);
 		}
 
 		$ElementID   = $MyPort->{'element_id'};

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.84 2006-10-31 14:29:15 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.85 2006-11-01 20:29:48 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -108,8 +108,6 @@ function freshports_PortDisplay($db, $category, $port) {
 			$PageNumber = 1;
 		}
 	}
-
-	syslog(LOG_ERR, "PageNumber='$PageNumber'<br>");
 
 	$port_display = new port_display($db, $User);
 	$port_display->SetDetailsFull();

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch.php,v 1.1.2.66 2006-10-15 18:57:37 dan Exp $
+	# $Id: watch.php,v 1.1.2.67 2006-11-03 12:17:50 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -157,7 +157,7 @@ switch ($sort) {
       break;
 
    default:
-      $sort = "max(commit_log.commit_date) is null, max(commit_log.commit_date), port";
+      $sort = "max(commit_log.commit_date) is null desc, max(commit_log.commit_date) desc, port";
       echo 'sorted by last update date.  but you can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=category">category</a> or <a href="' . $_SERVER["PHP_SELF"] . '?sort=port">port</a>';
       $ShowCategoryHeaders = 0;
       $cache_file .= ".updated";

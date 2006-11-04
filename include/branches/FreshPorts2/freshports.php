@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.294 2006-10-31 13:20:35 dan Exp $
+	# $Id: freshports.php,v 1.4.2.295 2006-11-04 19:30:37 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -590,7 +590,7 @@ GLOBAL $FreshPortsLogoHeight;
 ';
 
 if (date("M") == 'Nov' && date("j") <= 12) {
-	$HTML .= '	<td width="53" align="center" CLASS="sans" valign="bottom"><a href="http://www.google.ca/search?q=remembrance+day"><img src="/images/poppy.gif" width="50" height="48" border="0" alt="Remember" title="Remember"><br>I remember</a></td>';
+	$HTML .= '	<td nowrap align="center" CLASS="sans" valign="bottom"><a href="http://www.google.ca/search?q=remembrance+day"><img src="/images/poppy.gif" width="50" height="48" border="0" alt="Remember" title="Remember"><br>I remember</a></td>';
 } else {
 	$HTML .= '	<td align="right" CLASS="sans" valign="bottom">' . FormatTime(Date("D, j M Y g:i A T"), $LocalTimeAdjustment, "D, j M Y g:i A T") . '</td>';
 }
@@ -1067,6 +1067,7 @@ function freshports_PortCommits($port, $PageNumber = 1, $NumCommitsPerPage = 100
 
 	$Offset = 0;
 	$PageLinks = $links['all'];
+	$PageLinks = str_replace('&amp;page=1"', '"', $PageLinks);
 	if ($PageLinks != '') {
 		$offset = $Pager->getOffsetByPageId();
 		$NumOnThisPage = $offset[1] - $offset[0] + 1;
@@ -1111,9 +1112,7 @@ function freshports_PortCommits($port, $PageNumber = 1, $NumCommitsPerPage = 100
 
 function freshports_CommitFilesLink($MessageID, $Category, $Port) {
 
-#	echo "freshports_CommitFilesLink gets $MesssageID, $Category, $Port<br>";
-
-	$HTML  = '<a href="/' . $Category . '/' . $Port . '/files.php?message_id=' . $MessageID . '">';
+	$HTML  = '<a href="/commit.php?message_id=' . $MessageID . '&amp;category=' . $Category . '&amp;port=' . $Port . '&amp;files=yes">';
 	$HTML .= freshports_Files_Icon();
 	$HTML .= '</a>';
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.64 2006-10-31 13:31:05 dan Exp $
+	# $Id: commit.php,v 1.1.2.65 2006-11-04 19:40:50 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -22,7 +22,7 @@ DEFINE('NEXT_PAGE',		'Next');
 	$commit_id  = '';
 	$page       = '';
 	$page_size  = '';
-
+	
 	if (IsSet($_GET['message_id'])) $message_id = AddSlashes($_GET['message_id']);
 	if (IsSet($_GET['commit_id']))  $commit_id  = AddSlashes($_GET['commit_id']);
 
@@ -129,8 +129,6 @@ function freshports_CommitNextPreviousPage($URL, $NumRowsTotal, $PageNo, $PageSi
 	return $HTML;
 }
 
-$Debug = 0;
-
 if ($Debug) echo "UserID='$User->id'";
 
 ?>
@@ -193,7 +191,7 @@ SELECT FPC.*, STF.message as stf_message
     ON FPC.commit_log_id = STF.commit_log_id
 ORDER BY port, pathname";
 
-	if ($Debug) echo "\n<p>sql=$sql</p>\n";
+	if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 
 	$result = pg_exec($database, $sql);
 
@@ -210,16 +208,59 @@ ORDER BY port, pathname";
 			echo $DisplayCommit->HTML;
 			
 		} else {
-				echo '<tr><TD VALIGN="top"><P>Sorry, nothing found in the database....</P>' . "\n";
-				echo "</TD></tr>";
-			}
-		} else {
-			echo "read from test failed <pre>$sql</pre>";
+          echo '<tr><TD VALIGN="top"><P>Sorry, nothing found in the database....</P>' . "\n";
+          echo "</TD></tr>";
 		}
 	} else {
-		echo "no connection";
-	}
+	  syslog(LOG_NOTICE, __FILE__ . '::' . __LINE__ . ': ' . pg_last_error());
+    }
+} else {
+  echo "no connection";
+}
+
 	echo "</TABLE>\n";
+
+	parse_str($_SERVER['QUERY_STRING'], $query_parts);
+
+	$FilesForJustOnePort = ($query_parts['category']) && IsSet($query_parts['port']);
+	$files = $query_parts['files'];
+
+	$ShowAllFilesURL = '<a href="' . htmlspecialchars($_SERVER['SCRIPT_URL'] . '?message_id=' .  $message_id . '&files=yes') . '">show all files</a>';
+
+	$HideAllFilesURL = '<a href="' . htmlspecialchars($_SERVER['SCRIPT_URL'] . '?message_id=' .  $message_id) . '">hide all files</a>';
+
+	if ($FilesForJustOnePort) {
+	  $clean['category'] = $query_parts['category'];
+	  $clean['port']    = $query_parts['port'];
+	  $PortURL = '<a href="/' . $clean['category'] . '">' . $clean['category'] . '</a>/<a href="' . $clean['port'] . '/">' . $clean['port'] . '</a>';
+	  echo '<p>Showing files for just one port: <big><b>' . $PortURL . '</b></big></p>';
+	  echo "<p>$ShowAllFilesURL</p>";
+	}
+	# if we ask for files=yes or files=y
+	if (!strcasecmp($files, 'yes') || !strcasecmp($files, 'y')) {
+	    echo "<p>$HideAllFilesURL</p>";
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/files.php');
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/files-display.php');
+		
+		$Files = new CommitFiles($database);
+		$Files->Debug = $Debug;
+		$Files->MessageIDSet($message_id);
+		$Files->UserIDSet($User->id);
+		if (IsSet($query_parts['category'])) {
+			$Files->CategorySet(AddSlashes($query_parts['category']));
+		}
+		if (IsSet($query_parts['port'])) {
+			$Files->PortSet(AddSlashes($query_parts['port']));
+		}
+
+		$NumRows = $Files->Fetch();
+
+		$FilesDisplay = new FilesDisplay($Files->LocalResult);
+		$HTML = $FilesDisplay->CreateHTML();
+		echo '<br>' . $HTML;
+	} else {
+	  echo "<p>$ShowAllFilesURL</p>";
+	}
 } else {
 	echo '<tr><td valign="top" width="100%">nothing supplied, nothing found!</td>';
 }

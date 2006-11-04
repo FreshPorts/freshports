@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.295 2006-11-04 19:30:37 dan Exp $
+	# $Id: freshports.php,v 1.4.2.296 2006-11-04 20:03:35 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -31,6 +31,8 @@ DEFINE('UNMAINTAINTED_ADDRESS', 'ports@freebsd.org');
 DEFINE('BACKGROUND_COLOUR', '#8c0707');
 
 DEFINE('CLICKTOADD', 'Click to add this to your default watch list[s]');
+
+DEFINE('SPONSORS', 'Servers and bandwidth provided by <a href="http://www.bchosting.com/" TARGET="_new">BChosting</a> and <a href="http://www.nyi.net" TARGET="_new">NYI</a>');
 
 
 if ($Debug) echo "'" . $_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php<br>';
@@ -1416,7 +1418,7 @@ alt="powered by apache" border="0" width="259" height="32"></a>
 <table width="100%">
 <tr>
 <td align="left"  valign="top">
-<small>Server and bandwidth provided by <a href="http://www.bchosting.com/" TARGET="_new" title="Our major sponsor">BChosting.com</a></small>
+<small>' . SPONSORS . '</small>
 <br>
 <small>This page created in ' . round($Statistics->ElapsedTime(), 3) . ' seconds.</small>
 </td>
@@ -1529,7 +1531,7 @@ function freshports_SideBar() {
 	
 	$HTML .='
 
-<p><small>Server and bandwidth provided by <a href="http://www.bchosting.com/" TARGET="_new" title="Our major sponsor">BChosting.com</a></small></p>
+<p><small>' . SPONSORS  . '</small></p>
 </div>';
 
 	$HTML .= '	

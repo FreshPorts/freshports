@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.97 2006-10-31 13:22:17 dan Exp $
+	# $Id: search.php,v 1.1.2.98 2006-11-06 15:26:21 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -71,18 +71,22 @@ $sqlExtraFields = ''; # will hold extra fields we need, such as watch list
                       # or soundex function needed for ORDER BY
 
 function WildCardQuery($stype, $Like, $query) {
-	GLOBAL $SearchTypeToFieldMap;
-# return the clause for this particular type of query
-	$sql = '';
+  GLOBAL $SearchTypeToFieldMap;
+  # return the clause for this particular type of query
+  $sql = '';
 
-	switch ($stype) {
-		case SEARCH_FIELD_DEPENDS_ALL:
-			$sql .= "\n     (ports.depends_build $Like '$query' OR ports.depends_lib $Like '$query' OR ports.depends_run $Like '$query')";
-			break;
+  switch ($stype) {
+    case SEARCH_FIELD_DEPENDS_ALL:
+      $sql .= "\n     (ports.depends_build $Like '$query' OR ports.depends_lib $Like '$query' OR ports.depends_run $Like '$query')";
+      break;
 
-		default:
-			$sql .= "\n     " .  $SearchTypeToFieldMap[$stype] . " $Like '$query'";
-			break;
+    default:
+      if (!IsSet($SearchTypeToFieldMap[$stype])) {
+        syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . " unknown stype supplied: '$stype'");
+        die('something terrible has happened!');
+      }
+      $sql .= "\n     " .  $SearchTypeToFieldMap[$stype] . " $Like '$query'";
+      break;
 	}
 
 	return $sql;
@@ -241,6 +245,9 @@ if ($method == 'soundex') {
 	}
 }
 
+if ($Debug) echo "at line " . __LINE__ . " sqlUserSpecifiedCondition='$sqlUserSpecifiedCondition'<br>";
+if ($Debug) echo "at line " . __LINE__ . " stype='$stype'<br>";
+
 
 switch ($method) {
 	case 'prefix':
@@ -312,6 +319,8 @@ switch ($method) {
 		}
 		break;
 }
+
+if ($Debug) echo "at line " . __LINE__ . " sqlUserSpecifiedCondition='$sqlUserSpecifiedCondition'<br>";
 
 #
 # include/exclude deleted ports

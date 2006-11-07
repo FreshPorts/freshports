@@ -15,11 +15,11 @@
   $PHORUM['UseCookies']='1';
   $PHORUM['ConfirmRegister']='1';
   $PHORUM['SortForums']='1';
-  $PHORUM['ActiveForums']='4';
+  $PHORUM['ActiveForums']='2';
   $PHORUM['TimezoneOffset']='0';
 
-  $PHORUM['forum_url']='http://www.freebsddiary.org/phorum';
-  $PHORUM['admin_url']='http://www.freebsddiary.org/phorum/admin/index.php';
+  $PHORUM['forum_url']='http://www.freshports.org/phorum';
+  $PHORUM['admin_url']='http://www.freshports.org/phorum/admin/index.php';
 
   $PHORUM['AllowAttachments']='0';
   $PHORUM['AttachmentDir']='';
@@ -62,8 +62,8 @@
 
   // database variables
   $PHORUM['DatabaseServer']='';
-  $PHORUM['DatabaseName']='freebsddiary.org';
-  $PHORUM['DatabaseUser']='phorum';
+  $PHORUM['DatabaseName']='fpphorum';
+  $PHORUM['DatabaseUser']='dan';
   $PHORUM['DatabasePassword']='';
 
 

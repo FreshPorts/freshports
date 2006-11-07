@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: bar-graphs.php,v 1.1.2.6 2003-03-29 13:51:10 dan Exp $
+	# $Id: bar-graphs.php,v 1.1.2.7 2006-11-07 13:21:13 dan Exp $
 	#
 
 
@@ -322,7 +322,11 @@ class dg_BarGraph {
 			
 				$v = ($this->values[$i] * $field_width)/$rmax;
 
-				$gd = 64 / $v;
+				if ($v) {
+					$gd = 64 / $v;
+				} else {
+					$gd = 0;
+				}
 
 				$x1 = $this->margin_l;
 			

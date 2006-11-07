@@ -1,9 +1,9 @@
 <?php
-  // FreeBSD Pets forum
-  $PHORUM['ForumId']=2;
+  // Scripts / handy tips forum
+  $PHORUM['ForumId']=4;
   $PHORUM['ForumActive']='1';
-  $PHORUM['ForumName']='FreeBSD Pets';
-  $PHORUM['ForumDescription']='A place for pictures, stories, etc about FreeBSD pets. FreeBSD Support';
+  $PHORUM['ForumName']='Scripts / handy tips';
+  $PHORUM['ForumDescription']='Add your scripts / handy tips here';
   $PHORUM['ForumConfigSuffix']='';
   $PHORUM['ForumFolder']='0';
   $PHORUM['ForumParent']='0';
@@ -11,7 +11,7 @@
   $PHORUM['ForumAllowLang']='0';
   $PHORUM['ForumAllowEdit']='1';
   $PHORUM['ForumDisplay']='30';
-  $PHORUM['ForumTableName']='pets';
+  $PHORUM['ForumTableName']='tips';
   $PHORUM['ForumModeration']='r';
   $PHORUM['ForumSecurity']='2';
   $PHORUM['ForumEmailList']='dan@langille.org';

@@ -13,13 +13,13 @@
   $PHORUM['ReplyLocation']='0';
   $PHORUM['PhorumMailCode']='';
   $PHORUM['UseCookies']='1';
-  $PHORUM['ConfirmRegister']='';
+  $PHORUM['ConfirmRegister']='1';
   $PHORUM['SortForums']='1';
-  $PHORUM['ActiveForums']='2';
+  $PHORUM['ActiveForums']='4';
   $PHORUM['TimezoneOffset']='0';
 
-  $PHORUM['forum_url']='http://beta.freshports.org/phorum';
-  $PHORUM['admin_url']='http://beta.freshports.org/phorum/admin/index.php';
+  $PHORUM['forum_url']='http://www.freebsddiary.org/phorum';
+  $PHORUM['admin_url']='http://www.freebsddiary.org/phorum/admin/index.php';
 
   $PHORUM['AllowAttachments']='0';
   $PHORUM['AttachmentDir']='';
@@ -51,7 +51,7 @@
   $PHORUM['default_table_body_font_color_2']='#000000';
   $PHORUM['default_nav_color']='#FFFFFF';
   $PHORUM['default_nav_font_color']='#000000';
-  $PHORUM['ModEditProps']='';
+  $PHORUM['ModEditProps']='0';
   $PHORUM['VisCreateAcc']='1';
   $PHORUM['UserModifyProf']='1';
 
@@ -62,8 +62,8 @@
 
   // database variables
   $PHORUM['DatabaseServer']='';
-  $PHORUM['DatabaseName']='fpphorum';
-  $PHORUM['DatabaseUser']='dan';
+  $PHORUM['DatabaseName']='freebsddiary.org';
+  $PHORUM['DatabaseUser']='phorum';
   $PHORUM['DatabasePassword']='';
 
 

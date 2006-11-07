@@ -1,20 +1,20 @@
 <?php
-  // FreeBSD Pets forum
+  // Help with ports forum
   $PHORUM['ForumId']=2;
   $PHORUM['ForumActive']='1';
-  $PHORUM['ForumName']='FreeBSD Pets';
-  $PHORUM['ForumDescription']='A place for pictures, stories, etc about FreeBSD pets. FreeBSD Support';
+  $PHORUM['ForumName']='Help with ports';
+  $PHORUM['ForumDescription']='A place for you to get help and help others.';
   $PHORUM['ForumConfigSuffix']='';
   $PHORUM['ForumFolder']='0';
   $PHORUM['ForumParent']='0';
   $PHORUM['ForumLang']='lang/english.php';
-  $PHORUM['ForumAllowLang']='0';
-  $PHORUM['ForumAllowEdit']='1';
-  $PHORUM['ForumDisplay']='30';
-  $PHORUM['ForumTableName']='pets';
-  $PHORUM['ForumModeration']='r';
-  $PHORUM['ForumSecurity']='2';
-  $PHORUM['ForumEmailList']='dan@langille.org';
+  $PHORUM['ForumAllowLang']='';
+  $PHORUM['ForumAllowEdit']='';
+  $PHORUM['ForumDisplay']='5';
+  $PHORUM['ForumTableName']='help';
+  $PHORUM['ForumModeration']='n';
+  $PHORUM['ForumSecurity']='1';
+  $PHORUM['ForumEmailList']='';
   $PHORUM['ForumEmailReturnList']='';
   $PHORUM['ForumEmailTag']='';
   $PHORUM['ForumCheckDup']='1';
@@ -28,11 +28,11 @@
   $PHORUM['ForumMaxUploads']='0';
   $PHORUM['ForumTableBodyColor2']=$PHORUM['default_table_body_color_2'];
   $PHORUM['ForumTableBodyFontColor2']=$PHORUM['default_table_body_font_color_2'];
-  $PHORUM['ForumShowIP']='0';
+  $PHORUM['ForumShowIP']='1';
   $PHORUM['ForumAllowEMailNotify']='0';
-  $PHORUM['ForumPermissions']='0';
-  $PHORUM['ForumRequiredLevel']='0';
-  $PHORUM['ForumCheckDisp']='0';
+  $PHORUM['ForumPermissions']='';
+  $PHORUM['ForumRequiredLevel']='';
+  $PHORUM['ForumCheckDisp']='';
   $PHORUM['ForumBodyColor']=$PHORUM['default_body_color'];
   $PHORUM['ForumBodyLinkColor']=$PHORUM['default_body_link_color'];
   $PHORUM['ForumBodyALinkColor']=$PHORUM['default_body_alink_color'];

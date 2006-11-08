@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: newsfeed.php,v 1.1.2.10 2006-10-06 00:40:53 dan Exp $
+	# $Id: newsfeed.php,v 1.1.2.11 2006-11-08 17:11:24 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -41,7 +41,6 @@ function newsfeed($db, $Format) {
 	$rss->webmaster = 'editor@freshports.org';
 	$rss->language  = 'en-us';
 	$rss->copyright = 'Copyright 1998-2006 DVL Software Limited';
-
 
 	//optional
 	//$rss->descriptionTruncSize = 500;
@@ -114,55 +113,56 @@ FROM (
            ON commit_log.id = LCP.commit_log_id) AS LCPCL JOIN commit_log_ports
                          ON commit_log_ports.commit_log_id = LCPCL.commit_log_id
                          AND commit_log_ports.commit_log_id > latest_commits_ports_anchor()) AS LCPCLLCP JOIN ports
-on LCPCLLCP.port_id = ports.id) AS LCPPORTS JOIN element
-on LCPPORTS.element_id = element.id) AS PORTELEMENT JOIN categories
-on PORTELEMENT.category_id = categories.id
-order by commit_date_raw desc, category, port 
-limit 30";
+ON LCPCLLCP.port_id = ports.id) AS LCPPORTS JOIN element
+ON LCPPORTS.element_id = element.id) AS PORTELEMENT JOIN categories
+ON PORTELEMENT.category_id = categories.id
+ORDER BY commit_date_raw desc, category, port 
+LIMIT 30";
 
 
 #	die("<pre>$sql</pre>");
 
 	$ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['SERVER_NAME']);
 	
-		$item = new FeedItem(); 
-		$item->title       = "NEWSFEEDS HAVE MOVED!";
-		$item->link        = 'http://' . $ServerName . '/backend/';
-		$item->description = "Please read, newsfeed URLs have changed.";
-	
-		//optional
-		//item->descriptionTruncSize = 500;
-		$item->descriptionHtmlSyndicated = true;
-	
-		$item->date   = strtotime("now");
-		$item->source = $_SERVER['HTTP_HOST']; 
-		$item->author = 'editor@FreshPorts.org'; 
-		$item->guid   = 'http://www.freshports.org/phorum/read.php?f=1&rmp;i=1133&rmp;t=1133';
-	 
-		$rss->addItem($item); 
+	$item = new FeedItem(); 
+	$item->title       = "NEWSFEEDS HAVE MOVED!";
+	$item->link        = 'http://' . $ServerName . '/backend/';
+	$item->description = "Please read, newsfeed URLs have changed.";
 
+	//optional
+	//item->descriptionTruncSize = 500;
+	$item->descriptionHtmlSyndicated = true;
+
+	$item->date   = strtotime("now");
+	$item->source = $_SERVER['HTTP_HOST']; 
+	$item->author = 'editor@FreshPorts.org'; 
+	$item->guid   = 'http://www.freshports.org/phorum/read.php?f=1&rmp;i=1133&rmp;t=1133';
+ 
+	$rss->addItem($item); 
 
 	$result = pg_query($db, $sql);
 	while ($myrow = pg_fetch_array($result)) {
-		$item = new FeedItem(); 
-		$item->title       = $myrow["category"] . '/' . $myrow["port"] . ' - ' . freshports_PackageVersion($myrow["version"], $myrow["revision"], $myrow["epoch"]);
-		$item->link        = 'http://' . $ServerName . '/' . $myrow["category"] . '/' . $myrow["port"] . '/';
+		$item = new FeedItem();
+		$CommitURL = 'http://' . $ServerName . '/commit.php?message_id=' . $myrow['message_id'] .
+		   '&category=' . $myrow["category"] . '&port=' . $myrow["port"] . '&files=yes';
+
+		$item->title = $myrow["category"] . '/' . $myrow["port"] . ' - ' . freshports_PackageVersion($myrow["version"], $myrow["revision"], $myrow["epoch"]);
+		$item->link  = $CommitURL;
 		if ($Format == 'rss0.91') {
 			$item->description = trim($myrow["commit_description"]);
 		} else {
 			$item->description = htmlentities(trim($myrow["commit_description"]));
 		}
-	
+
 		//optional
 		//item->descriptionTruncSize = 500;
 		$item->descriptionHtmlSyndicated = true;
 	
-#		$item->date   = filemtime($_SERVER['DOCUMENT_ROOT']  . '/' . $myrow['filename']);
 		$item->date   = strtotime($myrow['commit_date_raw']);
 		$item->source = $_SERVER['HTTP_HOST']; 
 		$item->author = 'editor@FreshPorts.org'; 
-		$item->guid   = 'http://' . $ServerName . '/commit.php?message_id=' . $myrow['message_id'];
-	 
+		$item->guid   = $CommitURL; 
+
 		$rss->addItem($item); 
 	} 
 

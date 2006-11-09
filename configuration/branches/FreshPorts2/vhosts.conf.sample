@@ -1,5 +1,5 @@
 #
-# $Id: vhosts.conf.sample,v 1.3.2.20 2006-11-09 17:50:53 dan Exp $
+# $Id: vhosts.conf.sample,v 1.3.2.21 2006-11-09 17:56:55 dan Exp $
 #
 # Copyright (c) 1998-2003 DVL Software Limited
 #
@@ -54,7 +54,7 @@
 	RewriteRule	^/newsfeeds.php$	/backend/newsfeeds.php [R=permanent]
 	RewriteRule	^/rss/ports-new.php$	/backend/ports-new.php [R=permanent]
 	RewriteRule	^/sidebar.php$		/backend/sidebar.php [R=permanent]
-	RewriteRule	^/news3.php$		/backend/rss0.91.php [R=permanent]
+	RewriteRule	^/news.php3$		/backend/rss0.91.php [R=permanent]
 	RewriteRule	^/news.php$			/backend/rss0.91.php [R=permanent]
 	RewriteRule	^/news/atom0.3.php$	/backend/atom0.3.php [R=permanent]
 	RewriteRule	^/news/html.php$	/backend/html.php    [R=permanent]

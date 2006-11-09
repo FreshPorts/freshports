@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.98 2006-11-06 15:26:21 dan Exp $
+	# $Id: search.php,v 1.1.2.99 2006-11-09 16:44:02 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -133,7 +133,7 @@ function WildCardQuery($stype, $Like, $query) {
 	if (IsSet($_REQUEST['orderby']))         $orderby			= AddSlashes(trim($_REQUEST['orderby']));
 	if (IsSet($_REQUEST['orderbyupdown']))   $orderbyupdown		= AddSlashes(trim($_REQUEST['orderbyupdown']));
 
-	if ($stype == 'messageid') {
+	if ($stype == SEARCH_FIELD_MESSAGEID) {
 		header('Location: http://' . $_SERVER['HTTP_HOST'] . "/commit.php?message_id=$query");
 		exit;
 	}
@@ -717,20 +717,20 @@ $Port->LocalResult = $result;
 
 <form ACTION="<? echo $_SERVER["PHP_SELF"] ?>" name="search" >
 	<SELECT NAME="stype" size="1">
-		<OPTION VALUE="name"             <? if ($stype == "name")             echo 'SELECTED'?>>Port Name</OPTION>
-		<OPTION VALUE="package"          <? if ($stype == "package")          echo 'SELECTED'?>>Package Name</OPTION>
-		<OPTION VALUE="latest_link"      <? if ($stype == "latest_link")      echo 'SELECTED'?>>Latest Link</OPTION>
-		<OPTION VALUE="maintainer"       <? if ($stype == "maintainer")       echo 'SELECTED'?>>Maintainer</OPTION>
-		<OPTION VALUE="committer"        <? if ($stype == "committer")        echo 'SELECTED'?>>Committer</OPTION>
-		<OPTION VALUE="shortdescription" <? if ($stype == "shortdescription") echo 'SELECTED'?>>Short Description</OPTION>
-		<OPTION VALUE="longdescription"  <? if ($stype == "longdescription")  echo 'SELECTED'?>>Long Description</OPTION>
-		<OPTION VALUE="depends_build"    <? if ($stype == "depends_build")    echo 'SELECTED'?>>Depends Build</OPTION>
-		<OPTION VALUE="depends_lib"      <? if ($stype == "depends_lib")      echo 'SELECTED'?>>Depends Lib</OPTION>
-		<OPTION VALUE="depends_run"      <? if ($stype == "depends_run")      echo 'SELECTED'?>>Depends Run</OPTION>
-		<OPTION VALUE="depends_all"      <? if ($stype == "depends_all")      echo 'SELECTED'?>>Depends Build/Lib/Run</OPTION>
-		<OPTION VALUE="messageid"        <? if ($stype == "messageid")        echo 'SELECTED'?>>Message ID</OPTION>
-		<OPTION VALUE="commitmessage"    <? if ($stype == "commitmessage")    echo 'SELECTED'?>>Commit Message</OPTION>
-		<OPTION VALUE="tree"             <? if ($stype == "tree")             echo 'SELECTED'?>>Under a pathname</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_NAME             . '"'; if ($stype == SEARCH_FIELD_NAME)             echo 'SELECTED'; ?>>Port Name</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_PACKAGE          . '"'; if ($stype == SEARCH_FIELD_PACKAGE)          echo 'SELECTED'; ?>>Package Name</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_LATEST_LINK      . '"'; if ($stype == SEARCH_FIELD_LATEST_LINK)      echo 'SELECTED'; ?>>Latest Link</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_MAINTAINER       . '"'; if ($stype == SEARCH_FIELD_MAINTAINER)       echo 'SELECTED'; ?>>Maintainer</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_COMMITTER        . '"'; if ($stype == SEARCH_FIELD_COMMITTER)        echo 'SELECTED'; ?>>Committer</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_SHORTDESCRIPTION . '"'; if ($stype == SEARCH_FIELD_SHORTDESCRIPTION) echo 'SELECTED'; ?>>Short Description</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_LONGDESCRIPTION  . '"'; if ($stype == SEARCH_FIELD_LONGDESCRIPTION)  echo 'SELECTED'; ?>>Long Description</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_DEPENDS_BUILD    . '"'; if ($stype == SEARCH_FIELD_DEPENDS_BUILD)    echo 'SELECTED'; ?>>Depends Build</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_DEPENDS_LIB      . '"'; if ($stype == SEARCH_FIELD_DEPENDS_LIB)      echo 'SELECTED'; ?>>Depends Lib</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_DEPENDS_RUN      . '"'; if ($stype == SEARCH_FIELD_DEPENDS_RUN)      echo 'SELECTED'; ?>>Depends Run</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_DEPENDS_ALL      . '"'; if ($stype == SEARCH_FIELD_DEPENDS_ALL)      echo 'SELECTED'; ?>>Depends Build/Lib/Run</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_MESSAGEID        . '"'; if ($stype == SEARCH_FIELD_MESSAGEID)        echo 'SELECTED'; ?>>Message ID</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_COMMITMESSAGE    . '"'; if ($stype == SEARCH_FIELD_COMMITMESSAGE)    echo 'SELECTED'; ?>>Commit Message</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_PATHNAME         . '"'; if ($stype == SEARCH_FIELD_PATHNAME)         echo 'SELECTED'; ?>>Under a pathname</OPTION>
 	</SELECT> 
 
 	<SELECT name=method>

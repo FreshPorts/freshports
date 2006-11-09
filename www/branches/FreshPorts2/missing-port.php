@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.1.2.85 2006-11-01 20:29:48 dan Exp $
+	# $Id: missing-port.php,v 1.1.2.86 2006-11-09 16:52:27 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -9,12 +9,9 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/master_slave.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/htmlify.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports_updating.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/files.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/watch-lists.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/cache.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/cache-port.php');
-	
-
 
 #
 # tell the robots not to follow links from this page.
@@ -23,8 +20,6 @@
 GLOBAL $g_NOFOLLOW;
 
 $g_NOFOLLOW = 1;
-
-DEFINE('COMMIT_DETAILS', 'files.php');
 
 function DisplayPortCommits($port, $PageNumber) {
 	$HTML = '';

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing.php,v 1.1.2.32 2006-10-31 13:29:43 dan Exp $
+	# $Id: missing.php,v 1.1.2.33 2006-11-09 17:05:51 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -23,18 +23,24 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	$Debug  = 0;
 	$result = '';
 
-	$pathname = AddSlashes(htmlentities($REQUEST_URI));
-#	phpinfo();
-
+	$URLParts = parse_url($_SERVER['SCRIPT_URI']);
+	parse_str($_SERVER['REDIRECT_QUERY_STRING'], $QueryParts);
 	if ($Debug) {
-		echo '<pre>';	
-		print_r(parse_url($_SERVER["SCRIPT_URI"]));
+		echo 'parse_url output is: <pre>';
+		print_r($URLParts);
 		echo '</pre>';
+
+		echo 'and the query parts of the URL are:<pre>';
+		var_dump($QueryParts); 
+		echo '</pre>';
+
+#		phpinfo();
 	}
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/element_record.php');
+	$pathname = $URLParts['path'];
+	if ($Debug) echo "The pathname is '$pathname'<br>";
 
-#	UnSet($result);
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/element_record.php');
 
 	$ElementRecord = new ElementRecord($db);
 
@@ -48,112 +54,55 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	}
 
 	define('PATH_NAME', $pathname);
-
-	# Strip off the files.php extension if it's there...
-	$FilesRequest = preg_replace('|^(.*)/files\.php$|', '\\1', $pathname);
-	if ($FilesRequest != $pathname) {
-		$pathname     = $FilesRequest;
-		$FilesRequest = true;
-	} else {
-		$FilesRequest = false;
-	}
-
-/*
-	# Strip off the &page= extension if it's there...
-	$PageNumber = preg_replace('|^(.*)/\&amp;page=\s$|', '${1}', $pathname);
-	if ($PageNumber != $pathname_page) {
-		$pathname_page = $PageNumber;
-		$PageRequest   = true;
-	} else {
-		$PageRequest   = false;
-	}
-
-	if ($Debug) {
-		echo "pathname='" . htmlentities($pathname) . "'<br>";
-		echo "FilesRequest='" . $FilesRequest . "'<br>";
-		echo '<br>';
-		echo "pathname_page='" . htmlentities($pathname_page) . "'<br>";
-		echo "PageRequest='" . $PageRequest . "'<br>";
-	}
-*/
-	if (strpos($pathname, '/') !== FALSE) {
-		GLOBAL $User;
-
-		list($category, $port, $extra) = explode('/', PATH_NAME);
-		if ($Debug) echo "extra is '" . $extra . "'<br>";
-		if ($Debug) echo "category: '" . $category . "'<br>";
-		if ($Debug) echo "port: '" . $port . "'<br>";
-#		if ($extra == '' && $port != '' || $FilesRequest) {
-		if ($port != '') {
-			if ($FilesRequest) {
-				if ($Debug) echo 'going for files.php<br>';
-				if ($Debug) echo 'checking for PortID<br>';
-				$element_id = freshports_GetElementID($db, $category, $port);
-				if (IsSet($element_id)) {
-					if ($Debug) echo "$category/$port found by freshports_GetElementID<br>";
-					# extract the message ID from the URI
-					parse_str($_SERVER['REDIRECT_QUERY_STRING'], $query_parts);
-					$message_id = $query_parts['message_id'];
-
-					if ($Debug) echo 'we have message_id=' . $message_id . '<br>';
-					require_once($_SERVER['DOCUMENT_ROOT'] . '/include/files.php');
-					require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
-					freshports_Files($User, $element_id, $message_id, $db);
-					exit;
-				}
-			} else {
-				require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-port.php');
-
-				# if zero is returned, all is well, otherwise, we can't display that category/port.
-				if (!freshports_PortDisplay($db, $category, $port)) {
-					exit;
-				}
-			}
-		}
-	}
-
-	if ($Debug) echo 'checking for ' . FRESHPORTS_PORTS_TREE_PREFIX . $pathname . '<br>';
-	list($category, $extra) = explode('/', $pathname);
-	if ($extra == '') {
-		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
-		$Category = new Category($db);
-		$CategoryID = $Category->IsCategoryByName($category);
-		if (IsSet($CategoryID)) {
-			// found that category!
-			if ($Debug) echo 'found that category<br>';
-			require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-category.php');
-			freshports_CategoryByID($db, $CategoryID, 1, $User->page_size);
-			exit;
-		}
-	}
-
+	
+	if ($Debug) echo "PATH_NAME='" . PATH_NAME . "'<br>";
 
 	if ($ElementRecord->FetchByName(FRESHPORTS_PORTS_TREE_PREFIX . $pathname)) {
-		if ($ElementRecord->IsCategory()) {
+		if ($Debug) {
+			echo 'Yes, we found an element for that path!<br>';
+			echo '<pre>';
+			var_dump($ElementRecord);
+			echo '</pre>';
+		}
 
+		if ($ElementRecord->IsCategory()) {
+			if ($Debug) echo 'This is a category<br>';
 			require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-category.php');
 			freshports_CategoryByElementID($db, $ElementRecord->id, 1, $User->page_size);
 			exit;
-		} else {
-			# this is a non-port (e.g. /Mk/)
-			require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-non-port.php');
-			freshports_NonPortDescription($db, $ElementRecord);
+		}
+		
+		if ($Debug) echo 'No, that cannot be a category!<br>';
+
+		if ($ElementRecord->IsPort()) {
+			# we don't use list($category, $port) so we don't have to worry
+			# about extra bits
+			$PathParts = explode('/', PATH_NAME);
+			$category = $PathParts[0];
+			$port     = $PathParts[1];
+			if ($Debug) echo "Category='$category'<br>";
+			if ($Debug) echo "Port='$port'<br>";
+
+			require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-port.php');
+
+			$Debug = 0;
+			if ($Debug) echo 'This is a Port<br>';
+
+			# if zero is returned, all is well, otherwise, we can't display that category/port.
+			freshports_PortDisplay($db, $category, $port);
 			exit;
 		}
+
+		if ($Debug) echo 'No, that cannot be a port either!!<br>';
+
+		if ($Debug) echo 'This is a not a category and not a port<br>';
+		# this is a non-port (e.g. /Mk/)
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-non-port.php');
+		freshports_NonPortDescription($db, $ElementRecord);
+		exit;
 	} else {
 		if ($Debug) echo 'not an element<br>';
 		$result = $REQUEST_URI;
-	}
-
-	if ($Debug) {
-		echo "\$ElementRecord->id         = $ElementRecord->id<br>";
-		echo "\$ElementRecord->name       = $ElementRecord->name<br>";
-		echo "\$ElementRecord->type       = $ElementRecord->type<br>";
-		echo "\$ElementRecord->status     = $ElementRecord->status<br>";
-		echo "\$ElementRecord->iscategory = $ElementRecord->iscategory<br>";
-		echo "\$ElementRecord->isport     = $ElementRecord->isport<br>";
-		echo '<br>';
-		echo "\$ElementRecord->element_pathname = $ElementRecord->element_pathname<br>";
 	}
 
 	return $result;

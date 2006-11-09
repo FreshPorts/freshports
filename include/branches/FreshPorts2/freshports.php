@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.296 2006-11-04 20:03:35 dan Exp $
+	# $Id: freshports.php,v 1.4.2.297 2006-11-09 16:41:44 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -457,6 +457,7 @@ function freshports_CVS_Link($element_name, $revision) {
 
 	return $HTML;
 }
+
 function freshports_Commit_Link($message_id, $LinkText = '') {
 	#
 	# produce a link to the commit.  by default, we provide the graphic link.
@@ -468,6 +469,15 @@ function freshports_Commit_Link($message_id, $LinkText = '') {
 	} else {
 		$HTML .= $LinkText;
 	}
+	$HTML .= '</a>';
+
+	return $HTML;
+}
+
+function freshports_Commit_Link_Port($MessageID, $Category, $Port) {
+
+	$HTML  = '<a href="/commit.php?category=' . $Category . '&amp;port=' . $Port . '&amp;files=yes&amp;message_id=' . $MessageID . '">';
+	$HTML .= freshports_Files_Icon();
 	$HTML .= '</a>';
 
 	return $HTML;
@@ -1108,15 +1118,6 @@ function freshports_PortCommits($port, $PageNumber = 1, $NumCommitsPerPage = 100
 	$HTML .= freshports_PortCommitsFooter($port);
 	
 	$HTML .= $NumCommitsHTML . $PageLinksHTML;
-
-	return $HTML;
-}
-
-function freshports_CommitFilesLink($MessageID, $Category, $Port) {
-
-	$HTML  = '<a href="/commit.php?message_id=' . $MessageID . '&amp;category=' . $Category . '&amp;port=' . $Port . '&amp;files=yes">';
-	$HTML .= freshports_Files_Icon();
-	$HTML .= '</a>';
 
 	return $HTML;
 }

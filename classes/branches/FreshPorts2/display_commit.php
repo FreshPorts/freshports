@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: display_commit.php,v 1.1.2.8 2006-10-21 13:40:48 dan Exp $
+	# $Id: display_commit.php,v 1.1.2.9 2006-11-09 16:35:38 dan Exp $
 	#
 	# Copyright (c) 2003-2006 DVL Software Limited
 	#
@@ -184,7 +184,7 @@ class DisplayCommit {
 							$this->HTML .= ' '. freshports_Ignore_Icon_Link() . "\n";
 						}
 
-						$this->HTML .= freshports_CommitFilesLink($mycommit->message_id, $mycommit->category, $mycommit->port);
+						$this->HTML .= freshports_Commit_Link_Port($mycommit->message_id, $mycommit->category, $mycommit->port);
 						$this->HTML .= "&nbsp;";
 
 						if ($mycommit->vulnerable_current) {
@@ -213,7 +213,7 @@ class DisplayCommit {
 						$this->HTML .= '<big><B>';
 						$PathName = preg_replace('|^/?ports/|', '', $mycommit->pathname);
 						if ($PathName != $mycommit->pathname) {
-							$this->HTML .= '<a href="' . $PathName . '">' . $PathName . '</a>';
+							$this->HTML .= '<a href="/' . $PathName . '">' . $PathName . '</a>';
 							$this->HTML .= "</B></BIG>\n";
 						} else {
 							$this->HTML .= '<a href="' . FRESHPORTS_FREEBSD_CVS_URL . $PathName . '#rev' . $mycommit->revision_name . '">' . $PathName . '</a>';

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing.php,v 1.1.2.33 2006-11-09 17:05:51 dan Exp $
+	# $Id: missing.php,v 1.1.2.34 2006-11-09 21:47:58 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -24,18 +24,6 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	$result = '';
 
 	$URLParts = parse_url($_SERVER['SCRIPT_URI']);
-	parse_str($_SERVER['REDIRECT_QUERY_STRING'], $QueryParts);
-	if ($Debug) {
-		echo 'parse_url output is: <pre>';
-		print_r($URLParts);
-		echo '</pre>';
-
-		echo 'and the query parts of the URL are:<pre>';
-		var_dump($QueryParts); 
-		echo '</pre>';
-
-#		phpinfo();
-	}
 
 	$pathname = $URLParts['path'];
 	if ($Debug) echo "The pathname is '$pathname'<br>";
@@ -102,7 +90,51 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 		exit;
 	} else {
 		if ($Debug) echo 'not an element<br>';
+		# let's see if this is a virtual category!
+
 		$result = $REQUEST_URI;
+		$PathParts = explode('/', PATH_NAME);
+
+		if ($Debug) {
+			echo '<pre>';
+			var_dump($PathParts);
+			echo '</pre>';
+		}
+
+		# start with nothing.
+		unset($category);
+		unset($port);
+
+		# if the URL looks like /afterstep/, then we'll get two elements
+		# in the array.  The second will be empty.  Hence the != ''
+		#
+		# grab whatever we have
+		#
+		if (IsSet($PathParts[0]) && $PathParts[0] != '') {
+			$category = $PathParts[0];
+			if ($Debug) echo "Category is '$category'<br>";
+		}			
+		if (IsSet($PathParts[1]) && $PathParts[1] != '') {
+			$port     = $PathParts[1];
+			if ($Debug) echo "Port is '$port'<br>";
+		}
+
+		if (IsSet($port)) {
+			if ($Debug) echo 'This is a Port<br>';
+
+			require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-port.php');
+
+			# if zero is returned, all is well, otherwise, we can't display that category/port.
+			freshports_PortDisplay($db, $category, $port);
+			exit;
+		}
+
+		if (IsSet($category)) {
+			if ($Debug) echo 'This is a category<br>';
+			require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-category.php');
+			freshports_CategoryByName($db, $category, 1, $User->page_size);
+			exit;
+		}
 	}
 
 	return $result;

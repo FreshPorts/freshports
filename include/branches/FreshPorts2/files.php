@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: files.php,v 1.1.2.52 2006-08-18 01:28:01 dan Exp $
+	# $Id: files.php,v 1.1.2.53 2006-11-09 16:42:20 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -348,6 +348,7 @@ echo freshports_ShowFooter();
 </body>
 </html>
 
-<?
+<?php
 
 }
+?>

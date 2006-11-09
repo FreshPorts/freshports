@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-display.php,v 1.1.2.14 2006-09-16 23:17:20 dan Exp $
+	# $Id: port-display.php,v 1.1.2.15 2006-11-09 16:38:55 dan Exp $
 	#
 	# Copyright (c) 2005-2006 DVL Software Limited
 	#
@@ -288,7 +288,7 @@ class port_display {
 				}
 
 				$HTML .= ' ' . freshports_Commit_Link($port->message_id);
-				$HTML .= ' ' . freshports_CommitFilesLink($port->message_id, $port->category, $port->port);
+				$HTML .= ' ' . freshports_Commit_Link_Port($port->message_id, $port->category, $port->port);
 				
 				GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.1.2.65 2006-11-04 19:40:50 dan Exp $
+	# $Id: commit.php,v 1.1.2.66 2006-11-09 16:43:38 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -232,7 +232,7 @@ ORDER BY port, pathname";
 	if ($FilesForJustOnePort) {
 	  $clean['category'] = $query_parts['category'];
 	  $clean['port']    = $query_parts['port'];
-	  $PortURL = '<a href="/' . $clean['category'] . '">' . $clean['category'] . '</a>/<a href="' . $clean['port'] . '/">' . $clean['port'] . '</a>';
+	  $PortURL = '<a href="/' . $clean['category'] . '/' . $clean['port'] . '/">' . $clean['category'] . '/' . $clean['port'] . '</a>';
 	  echo '<p>Showing files for just one port: <big><b>' . $PortURL . '</b></big></p>';
 	  echo "<p>$ShowAllFilesURL</p>";
 	}

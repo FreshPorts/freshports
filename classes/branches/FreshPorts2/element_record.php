@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: element_record.php,v 1.1.2.5 2006-10-31 13:05:44 dan Exp $
+	# $Id: element_record.php,v 1.1.2.6 2006-11-09 16:32:42 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -25,12 +25,14 @@ class ElementRecord {
 	}
 
 	function PopulateValues($myrow) {
-		$this->id			= $myrow['id'];
-		$this->name			= $myrow['name'];
-		$this->type			= $myrow['type'];
-		$this->status		= $myrow['status'];
-		$this->iscategory	= $myrow['iscategory'];
-		$this->isport		= $myrow['isport'];
+		$this->id				= $myrow['id'];
+		$this->name				= $myrow['name'];
+		$this->type				= $myrow['type'];
+		$this->status			= $myrow['status'];
+		$this->iscategory		= $myrow['iscategory'];
+		$this->isport			= $myrow['isport'];
+
+		$this->element_pathname	= $myrow['element_pathname'];
 	}
 
 	function FetchByName($Name) {

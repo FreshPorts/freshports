@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: newsfeed.php,v 1.1.2.13 2006-11-09 17:54:48 dan Exp $
+	# $Id: newsfeed.php,v 1.1.2.14 2006-11-10 12:15:46 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -143,7 +143,7 @@ LIMIT 30";
 	$result = pg_query($db, $sql);
 	while ($myrow = pg_fetch_array($result)) {
 		$item = new FeedItem();
-		$CommitURL = freshports_Commit_Link_Port($myrow['message_id'], $myrow['category'], $myrow['port']);
+		$CommitURL = freshports_Commit_Link_Port_URL($myrow['message_id'], $myrow['category'], $myrow['port']);
 
 		$item->title = $myrow["category"] . '/' . $myrow["port"] . ' - ' . freshports_PackageVersion($myrow["version"], $myrow["revision"], $myrow["epoch"]);
 		$item->link  = $CommitURL;

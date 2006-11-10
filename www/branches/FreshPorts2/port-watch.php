@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-watch.php,v 1.1.2.47 2006-07-31 02:54:21 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.48 2006-11-10 12:51:39 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -57,8 +57,8 @@ $Category = new Category($db);
 if (IsSet($_REQUEST['category'])) {
 	$category = AddSlashes($_REQUEST['category']);
 
-	$Category->FetchByName($category);
-	if (!IsSet($Category->id)) {
+	$CategoryID = $Category->FetchByName($category);
+	if (!$CategoryID) {
 		$msg = "category '$category' not found";
 		syslog(LOG_ERR, $msg . " User = '" . $User->id . "' in " . __FILE__ . ':' . __LINE__);
 		die($msg);

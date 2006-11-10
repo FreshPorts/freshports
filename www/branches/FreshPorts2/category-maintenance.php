@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: category-maintenance.php,v 1.1.2.4 2005-01-22 14:48:50 dan Exp $
+	# $Id: category-maintenance.php,v 1.1.2.5 2006-11-10 12:52:16 dan Exp $
 	#
 	# Copyright (c) 2003 DVL Software Limited
 	#
@@ -17,8 +17,8 @@
 	$CategoryName = AddSlashes($_REQUEST['category']);
 
 	$Category = new Category($db);
-	$Category->FetchByName($CategoryName);
-	if (!IsSet($Category->{id})) {
+	$CategoryID = $Category->FetchByName($CategoryName);
+	if (!$CategoryID) {
 		die("I don't know that category: $CategoryName");
 	}
 
@@ -30,7 +30,6 @@
 
 	if (IsSet($_REQUEST['update'])) {
 		$Category->{description} = AddSlashes($_REQUEST['description']);
-#		echo 'setting description to ' . $Category->{description};
 		$Category->UpdateDescription();
 	}
 
@@ -67,7 +66,7 @@ if (!$IsPrimary) {
 <table cellpadding="5" cellspacing="0" border="1">
 <tr><td><b>id</b></td><td><b>is_primary</b></td><td><b>element_id</b></td><td><b>name</b></td><td><b>description</b></td></tr>
 <tr><?php
-echo '<td>' . $Category->{id}          . '</td>';
+echo '<td>' . $Category->id          . '</td>';
 
 echo '<td>';
 if ($IsPrimary) {
@@ -78,19 +77,19 @@ if ($IsPrimary) {
 echo '</td>';
 
 echo '<td>';
-if (IsSet($Category->{element_id})) {
-	echo $Category->{element_id};
+if (IsSet($Category->element_id)) {
+	echo $Category->element_id;
 } else {
 	echo 'NULL';
 }
 echo '</td>';
 
-echo '<td>' . $Category->{name}        . '</td>';
+echo '<td>' . $Category->name        . '</td>';
 echo '<td>';
 if ($IsPrimary) {
-	echo $Category->{description};
+	echo $Category->description;
 } else {
-	echo '<INPUT id="description" name="description" value="' . $Category->{description}  . '" size="40">' . "\n";
+	echo '<INPUT id="description" name="description" value="' . $Category->description  . '" size="40">' . "\n";
 }
 echo '</td>';
 ?>

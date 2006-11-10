@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-category.php,v 1.1.2.49 2006-11-09 21:48:24 dan Exp $
+	# $Id: missing-category.php,v 1.1.2.50 2006-11-10 03:35:24 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -39,16 +39,6 @@ function freshports_CategoryNextPreviousPage($CategoryName, $PortCount, $PageNo,
 function str_is_int($str) {
 	$var = intval($str);
 	return ($str == $var);
-}
-
-function freshports_CategoryByName($db, $CategoryName, $PageNo = 1, $PageSize = DEFAULT_PAGE_SIZE) {
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
-	$category = new Category($db);
-	$category->FetchByName($CategoryName);
-
-	freshports_ConditionalGet($category->last_modified);
-
-	freshports_CategoryDisplay($db, $category, $PageNo, $PageSize);
 }
 
 
@@ -103,7 +93,7 @@ function freshports_CategoryDisplay($db, $category, $PageNo = 1, $PageSize = DEF
 		echo "\$page      = '$page'<br>\n";
 		echo "\$page_size = '$page_size'<br>\n";
 	}
-					
+
 	SetType($PageNo,   "integer");
 	SetType($PageSize, "integer"); 
 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing.php,v 1.1.2.34 2006-11-09 21:47:58 dan Exp $
+	# $Id: missing.php,v 1.1.2.35 2006-11-10 03:37:02 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -17,11 +17,17 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	# we have a pending 404
 	# if we can parse it, then do so and return 1;
 	# otherwise, return 0.
-
-	define('FRESHPORTS_PORTS_TREE_PREFIX', '/ports/');
-
+	
 	$Debug  = 0;
 	$result = '';
+
+	$IsPort     = false;
+	$IsCatgory  = false;
+	$IsElement  = false;
+
+	$CategoryID = 0;
+
+	define('FRESHPORTS_PORTS_TREE_PREFIX', '/ports/');
 
 	$URLParts = parse_url($_SERVER['SCRIPT_URI']);
 
@@ -46,6 +52,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	if ($Debug) echo "PATH_NAME='" . PATH_NAME . "'<br>";
 
 	if ($ElementRecord->FetchByName(FRESHPORTS_PORTS_TREE_PREFIX . $pathname)) {
+		$IsElement = true;
 		if ($Debug) {
 			echo 'Yes, we found an element for that path!<br>';
 			echo '<pre>';
@@ -54,15 +61,18 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 		}
 
 		if ($ElementRecord->IsCategory()) {
+			$IsCategory = true;
 			if ($Debug) echo 'This is a category<br>';
-			require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-category.php');
-			freshports_CategoryByElementID($db, $ElementRecord->id, 1, $User->page_size);
-			exit;
+
+			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
+			$Category = new Category($db);
+			$CategoryID = $Category->FetchByElementID($ElementRecord->id);
 		}
 		
 		if ($Debug) echo 'No, that cannot be a category!<br>';
 
 		if ($ElementRecord->IsPort()) {
+			$IsPort = true;
 			# we don't use list($category, $port) so we don't have to worry
 			# about extra bits
 			$PathParts = explode('/', PATH_NAME);
@@ -75,19 +85,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 
 			$Debug = 0;
 			if ($Debug) echo 'This is a Port<br>';
-
-			# if zero is returned, all is well, otherwise, we can't display that category/port.
-			freshports_PortDisplay($db, $category, $port);
-			exit;
 		}
-
-		if ($Debug) echo 'No, that cannot be a port either!!<br>';
-
-		if ($Debug) echo 'This is a not a category and not a port<br>';
-		# this is a non-port (e.g. /Mk/)
-		require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-non-port.php');
-		freshports_NonPortDescription($db, $ElementRecord);
-		exit;
 	} else {
 		if ($Debug) echo 'not an element<br>';
 		# let's see if this is a virtual category!
@@ -113,30 +111,50 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 		if (IsSet($PathParts[0]) && $PathParts[0] != '') {
 			$category = $PathParts[0];
 			if ($Debug) echo "Category is '$category'<br>";
-		}			
+		}
+
 		if (IsSet($PathParts[1]) && $PathParts[1] != '') {
-			$port     = $PathParts[1];
+			$port = $PathParts[1];
 			if ($Debug) echo "Port is '$port'<br>";
 		}
 
 		if (IsSet($port)) {
+			$IsPort = true;
+
 			if ($Debug) echo 'This is a Port<br>';
-
-			require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-port.php');
-
-			# if zero is returned, all is well, otherwise, we can't display that category/port.
-			freshports_PortDisplay($db, $category, $port);
-			exit;
 		}
 
-		if (IsSet($category)) {
+		if (IsSet($category) && !$IsPort) {
+			$IsCategory = true;
 			if ($Debug) echo 'This is a category<br>';
-			require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-category.php');
-			freshports_CategoryByName($db, $category, 1, $User->page_size);
-			exit;
+
+			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
+			$Category = new Category($db);
+			$CategoryID = $Category->FetchByName($category);
 		}
 	}
 
+	if ($IsPort) {
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-port.php');
+
+		# if zero is returned, all is well, otherwise, we can't display that category/port.
+		freshports_PortDisplay($db, $category, $port);
+		exit;
+	}
+
+	if ($IsCategory) {
+		if ($Debug) echo 'This is a category<br>';
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-category.php');
+		freshports_CategoryByID($db, $CategoryID, 1, $User->page_size);
+		exit;
+	}
+
+	if ($IsElement) {
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-non-port.php');
+		freshports_NonPortDescription($db, $ElementRecord);
+		exit;
+	}
+				
 	return $result;
 }
 

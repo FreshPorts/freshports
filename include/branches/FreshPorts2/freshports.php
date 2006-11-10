@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.298 2006-11-09 17:08:13 dan Exp $
+	# $Id: freshports.php,v 1.4.2.299 2006-11-10 12:16:16 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -470,6 +470,13 @@ function freshports_Commit_Link($message_id, $LinkText = '') {
 		$HTML .= $LinkText;
 	}
 	$HTML .= '</a>';
+
+	return $HTML;
+}
+
+function freshports_Commit_Link_Port_URL($MessageID, $Category, $Port) {
+
+	$HTML = 'http://' . $_SERVER['HTTP_HOST'] . '/commit.php?category=' . $Category . '&amp;port=' . $Port . '&amp;files=yes&amp;message_id=' . $MessageID;
 
 	return $HTML;
 }

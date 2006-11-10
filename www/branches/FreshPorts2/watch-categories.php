@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-categories.php,v 1.1.2.27 2006-07-27 19:08:39 dan Exp $
+	# $Id: watch-categories.php,v 1.1.2.28 2006-11-10 12:51:00 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -124,7 +124,7 @@ for ($i = 0; $i < $numrows; $i++) {
 
 # categories list start
 
-$HTML .= "\n" . '<TABLE BORDER="1" CELLSPACING="0" CELLPADDING="5">' . "\n";
+$HTML  = "\n" . '<TABLE BORDER="1" CELLSPACING="0" CELLPADDING="5">' . "\n";
 $HTML .= '<tr>';
 // get the list of categories to display
 $sql = "

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: user.php,v 1.1.2.16 2006-10-31 13:05:44 dan Exp $
+	# $Id: user.php,v 1.1.2.17 2006-11-10 12:48:55 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -46,7 +46,6 @@ class User {
 		$this->dbh	     = $dbh;
 		$this->id        = 0;
 		$this->page_size = 100;
-#echo 'page size = .' . $this->page_size . '.';
 	}
 	
 
@@ -56,19 +55,15 @@ class User {
 		  FROM users
 		 WHERE id = $ID";
 
-#		echo '<pre>' . $sql . '</pre>';
-
-		if ($Debug)	echo "Users::Fetch sql = '$sql'<BR>";
-
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {
 			$myrow = pg_fetch_array($this->LocalResult, 0);
 			$this->PopulateValues($myrow);
 			$numrows = pg_numrows($this->LocalResult);
-#			echo "That would give us $numrows rows";
 		} else {
 			$numrows = -1;
-			echo 'pg_exec failed: ' . $sql;
+			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': ' . pg_last_error());
+			die('something terrible has happened');
 		}
 
 		return $numrows;
@@ -80,12 +75,9 @@ class User {
 		          FROM users
 				 WHERE cookie = '$Cookie'";
 
-#		echo "Users::Fetch sql = '$sql'<BR>";
-
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {
 			$numrows = pg_numrows($this->LocalResult);
-#			echo "That would give us $numrows rows";
 			if ($numrows == 1) {
 				$myrow = pg_fetch_array($this->LocalResult, 0);
 				$this->PopulateValues($myrow);
@@ -97,7 +89,8 @@ class User {
 			}
 		} else {
 			$numrows = -1;
-			echo 'pg_exec failed: ' . $sql;
+			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': ' . pg_last_error());
+			die('something terrible has happened');
 		}
 
 		return $numrows;
@@ -145,16 +138,14 @@ class User {
 		          set watch_list_add_remove = \'' . AddSlashes($WatchListAddRemove) . '\'
 		        WHERE id                    =   ' . $this->id;
 
-#		if ($Debug)	echo "Users::Fetch sql = '$sql'<BR>";
-
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {
 			$numrows = pg_affected_rows($this->LocalResult);
-#			echo "That would give us $numrows rows";
 			$this->watch_list_add_remove = AddSlashes($WatchListAddRemove);
 		} else {
 			$numrows = -1;
-			echo 'pg_exec failed: ' . $sql;
+			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': ' . pg_last_error());
+			die('something terrible has happened');
 		}
 
 		return $numrows;
@@ -163,21 +154,20 @@ class User {
 	function SetLastWatchListChosen($WatchListID) {
 
 		$Debug = 0;
-		
+
+		# we should have some checks here to verify that this WatchListID belongs to this user		
 		$sql = 'UPDATE users 
 		          set last_watch_list_chosen = \'' . AddSlashes($WatchListID) . '\'
 		        WHERE id                     =   ' . $this->id;
 		
-		if ($Debug)	echo "Users::Fetch sql = '$sql'<BR>";
-
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {
 			$numrows = pg_affected_rows($this->LocalResult);
-#			echo "That would give us $numrows rows";
 			$this->last_watch_list_chosen = AddSlashes($WatchListID);
 		} else {
 			$numrows = -1;
-			echo 'pg_exec failed: ' . $sql;
+			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': ' . pg_last_error());
+			die('something terrible has happened');
 		}
 
 		return $numrows;
@@ -193,13 +183,10 @@ class User {
 	}
 
 	function IsTaskAllowed($task) {
-#		echo "class::user \$this->id='$this->id' and task '$task'<br>\n";
 		if (IsSet($this->id) && $this->id != '' && !IsSet($this->UserTasks)) {
 			$this->GetTasks();
 #			die('getting the tasks now');
 		}
-
-#		echo 'looking for ' . $task . ' which gives ' . $this->UserTasks{$task};
 
 		if (IsSet($this->UserTasks{$task})) {
 			return TRUE;

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.1.2.22 2006-10-31 13:05:43 dan Exp $
+	# $Id: categories.php,v 1.1.2.23 2006-11-10 12:49:26 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -102,7 +102,7 @@ SELECT C.*, (SELECT MAX(CL.date_added)
 
 		$Debug = 0;
 
-		Unset($CategoryID);
+		$CategoryID = 0;
 
 		if (IsSet($Name)) {
 			$this->name = AddSlashes($Name);

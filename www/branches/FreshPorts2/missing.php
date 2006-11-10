@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing.php,v 1.1.2.35 2006-11-10 03:37:02 dan Exp $
+	# $Id: missing.php,v 1.1.2.36 2006-11-10 12:50:21 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -18,11 +18,13 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	# if we can parse it, then do so and return 1;
 	# otherwise, return 0.
 	
+	GLOBAL $User;
+	
 	$Debug  = 0;
 	$result = '';
 
 	$IsPort     = false;
-	$IsCatgory  = false;
+	$IsCategory = false;
 	$IsElement  = false;
 
 	$CategoryID = 0;
@@ -125,12 +127,14 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 		}
 
 		if (IsSet($category) && !$IsPort) {
-			$IsCategory = true;
 			if ($Debug) echo 'This is a category<br>';
 
 			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
 			$Category = new Category($db);
 			$CategoryID = $Category->FetchByName($category);
+			if ($CategoryID) {
+				$IsCategory = true;
+			}
 		}
 	}
 

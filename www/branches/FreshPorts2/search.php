@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.99 2006-11-09 16:44:02 dan Exp $
+	# $Id: search.php,v 1.1.2.100 2006-11-11 17:43:30 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -76,6 +76,10 @@ function WildCardQuery($stype, $Like, $query) {
   $sql = '';
 
   switch ($stype) {
+    case SEARCH_FIELD_PATHNAME:
+      $sql .= " $Like '$query'";
+      break;
+
     case SEARCH_FIELD_DEPENDS_ALL:
       $sql .= "\n     (ports.depends_build $Like '$query' OR ports.depends_lib $Like '$query' OR ports.depends_run $Like '$query')";
       break;

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing.php,v 1.1.2.36 2006-11-10 12:50:21 dan Exp $
+	# $Id: missing.php,v 1.1.2.37 2006-11-13 00:43:26 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -142,8 +142,9 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-port.php');
 
 		# if zero is returned, all is well, otherwise, we can't display that category/port.
-		freshports_PortDisplay($db, $category, $port);
-		exit;
+		if (!freshports_PortDisplay($db, $category, $port)) {
+			exit;
+		}
 	}
 
 	if ($IsCategory) {

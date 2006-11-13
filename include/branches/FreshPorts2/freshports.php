@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.299 2006-11-10 12:16:16 dan Exp $
+	# $Id: freshports.php,v 1.4.2.300 2006-11-13 00:47:31 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -1908,12 +1908,12 @@ function freshports_IsInt($x) {
 }
 
 function freshports_GetPortID($db, $category, $port) {
-	$sql = "select Port_ID('$category', '$port')";
+	$sql = "select Port_ID('" . AddSlashes($category) . "', '" . AddSlashes($port) . "')";
 
 	$result = pg_exec($db, $sql);
 	if (!$result) {
-		echo "error " . pg_errormessage();
-		exit;
+		syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ': ' . pg_last_error() . ' - ' . $sql);
+		die('something terrible has happened!');
 	}
 
 	$myrow = pg_fetch_array($result, 0);

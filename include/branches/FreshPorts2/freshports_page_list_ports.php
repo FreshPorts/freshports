@@ -1,12 +1,12 @@
 <?php
 	#
-	# $Id: freshports_page_list_ports.php,v 1.1.2.19 2006-10-01 20:04:49 dan Exp $
+	# $Id: freshports_page_list_ports.php,v 1.1.2.20 2006-11-28 20:53:41 dan Exp $
 	#
 	# Copyright (c) 2005-2006 DVL Software Limited
 	#
 
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports_page.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports_page.php');
 	require_once('Pager/Pager.php');
 
 class freshports_page_list_ports extends freshports_page {
@@ -277,7 +277,7 @@ SELECT gmt_format(max(commit_log.date_added)) as last_modified
 	function getPorts($NumPorts) {
 		$HTML = '';
 
-		require_once($_SERVER['DOCUMENT_ROOT'] . '/include/list-of-ports.php');
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/list-of-ports.php');
 
 		$HTML .= freshports_ListOfPorts($this->_result, $this->_db, 'Y', $this->getShowCategoryHeaders(), $this->User, $NumPorts);
 

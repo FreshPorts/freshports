@@ -1,12 +1,12 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.300 2006-11-13 00:47:31 dan Exp $
+	# $Id: freshports.php,v 1.4.2.301 2006-11-28 20:53:41 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/constants.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/ads.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/ads.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../configuration/freshports.conf.php');
 
 	if (IsSet($ShowAnnouncements)) {
@@ -1246,7 +1246,7 @@ function freshports_Head($string, $n, $FudgeFactor = 10) {
 
 function freshports_PortDescriptionPrint($description, $encoding_losses, $maxnumlines=0, $URL='') {
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/htmlify.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
 
 	$shortened = freshports_Head($description, $maxnumlines);
 	$HTML  = '<PRE CLASS="code">';
@@ -1754,7 +1754,7 @@ function freshports_ErrorMessage($Title, $ErrorMessage) {
 
 function DisplayAnnouncements($Announcement) {
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/announcements.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/htmlify.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
 
 	$HTML = '';
 	$HTML .= '<table width="100%"cellpadding="4" cellspacing="0" border="0">' . "\n";

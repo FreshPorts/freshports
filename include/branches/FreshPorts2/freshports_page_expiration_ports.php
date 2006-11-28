@@ -1,12 +1,12 @@
 <?php
 	#
-	# $Id: freshports_page_expiration_ports.php,v 1.1.2.2 2006-06-12 17:50:55 dan Exp $
+	# $Id: freshports_page_expiration_ports.php,v 1.1.2.3 2006-11-28 20:53:41 dan Exp $
 	#
 	# Copyright (c) 2005-2006 DVL Software Limited
 	#
 
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports_page_list_ports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports_page_list_ports.php');
 
 class freshports_page_expiration_ports extends freshports_page_list_ports {
 

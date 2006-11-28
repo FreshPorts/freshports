@@ -1,11 +1,11 @@
 <?php
 	#
-	# $Id: ads-phppgads.php,v 1.1.2.1 2006-11-28 20:09:09 dan Exp $
+	# $Id: ads-phppgads.php,v 1.1.2.2 2006-11-28 20:53:40 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/constants.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
 	
 function Ad_PhpPgAdsBase($Zone, $N) {
 

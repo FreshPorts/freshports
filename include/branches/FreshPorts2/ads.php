@@ -1,11 +1,11 @@
 <?php
 	#
-	# $Id: ads.php,v 1.1.2.9 2006-11-28 20:09:06 dan Exp $
+	# $Id: ads.php,v 1.1.2.10 2006-11-28 20:53:40 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/constants.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
 	
 	#
 	# Google Ads need Javascript
@@ -19,16 +19,16 @@
 
     switch($PrimaryAdSource) {
       case 'PHPPGADS':
-        require_once($_SERVER['DOCUMENT_ROOT'] . '/include/ads-phppgads.php');
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/ads-phppgads.php');
         break;
 
       case 'GOOGLE':
-        require_once($_SERVER['DOCUMENT_ROOT'] . '/include/ads-google-adsense.php');
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/ads-google-adsense.php');
         break;
 
       case 'BURST':
       default:
-        require_once($_SERVER['DOCUMENT_ROOT'] . '/include/ads-burst-media.php');
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/ads-burst-media.php');
         break;
       }
 

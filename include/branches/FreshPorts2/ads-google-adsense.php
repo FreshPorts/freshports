@@ -1,13 +1,13 @@
 <?php
 	#
-	# $Id: ads-google-adsense.php,v 1.1.2.2 2006-10-10 19:03:17 dan Exp $
+	# $Id: ads-google-adsense.php,v 1.1.2.3 2006-11-28 20:53:40 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/constants.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/adsense.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/burstmedia.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/adsense.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/burstmedia.php');
 	
 	#
 	# Google Ads need Javascript

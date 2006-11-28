@@ -1,15 +1,15 @@
 <?php
 	#
-	# $Id: commits.php,v 1.1.2.11 2006-07-02 20:42:15 dan Exp $
+	# $Id: commits.php,v 1.1.2.12 2006-11-28 20:51:00 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 
 	#

@@ -1,15 +1,15 @@
 <?php
 	#
-	# $Id: watch-list-maintenance.php,v 1.1.2.31 2005-01-22 14:48:53 dan Exp $
+	# $Id: watch-list-maintenance.php,v 1.1.2.32 2006-11-28 20:51:03 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/watch-lists.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/watch-lists.php');
 
 $visitor = $_COOKIE['visitor'];
 

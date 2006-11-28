@@ -1,14 +1,14 @@
 <?php
 	#
-	# $Id: release-2003-04-29.php,v 1.1.2.8 2005-07-15 03:08:33 dan Exp $
+	# $Id: release-2003-04-29.php,v 1.1.2.9 2006-11-28 20:51:03 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 	freshports_ConditionalGet(freshports_LastModified());
 

@@ -1,14 +1,14 @@
 <?php
 	#
-	# $Id: category-maintenance.php,v 1.1.2.5 2006-11-10 12:52:16 dan Exp $
+	# $Id: category-maintenance.php,v 1.1.2.6 2006-11-28 20:51:00 dan Exp $
 	#
 	# Copyright (c) 2003 DVL Software Limited
 	#
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user_tasks.php');
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');

@@ -1,14 +1,14 @@
 <?php
 	#
-	# $Id: port-description.admin.php,v 1.1.2.16 2006-01-07 21:29:10 dan Exp $
+	# $Id: port-description.admin.php,v 1.1.2.17 2006-11-28 20:51:02 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 	$submit = $_POST['submit'];
 
@@ -182,7 +182,7 @@ if ($NumRows) {
    $HideDescription=1;
    $ShowCategories=1;
    $ShowDepends=1;
-   require_once($_SERVER['DOCUMENT_ROOT'] . '/include/port-basics.php');
+   require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/port-basics.php');
 
    echo $HTML;
 

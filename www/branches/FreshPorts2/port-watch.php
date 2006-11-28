@@ -1,15 +1,15 @@
 <?php
 	#
-	# $Id: port-watch.php,v 1.1.2.48 2006-11-10 12:51:39 dan Exp $
+	# $Id: port-watch.php,v 1.1.2.49 2006-11-28 20:51:02 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/watch-lists.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/watch-lists.php');
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_list.php');

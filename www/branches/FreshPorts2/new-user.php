@@ -1,14 +1,14 @@
 <?php
 	#
-	# $Id: new-user.php,v 1.1.2.46 2006-01-07 21:29:10 dan Exp $
+	# $Id: new-user.php,v 1.1.2.47 2006-11-28 20:51:01 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/htmlify.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
 
 	if (IsSet($_REQUEST['origin'])) $origin = $_REQUEST['origin'];
 	if (IsSet($_REQUEST['submit'])) $submit = $_REQUEST['submit'];
@@ -143,7 +143,7 @@ if (IsSet($submit)) {
 	// not submit
 
 	// we can't do this if we are submitting because it overwrites the incoming values
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 }
 
    freshports_Start('New User',
@@ -197,7 +197,7 @@ echo '<p>If you need help, please post a message on the forum. </p>
 
 if (!IsSet($submit) && !$errors) {
   // provide default values for an empy form.
-  require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+  require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 }
 
 </script>
@@ -231,7 +231,7 @@ Your cooperation with the above will make my life easier.  Thank you.
 
 <hr>
 
-<? require_once($_SERVER['DOCUMENT_ROOT'] . '/include/new-user.php'); ?>
+<? require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/new-user.php'); ?>
 
 	<hr>
 

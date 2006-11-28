@@ -1,15 +1,15 @@
 <?php
 	#
-	# $Id: customize.php,v 1.1.2.37 2006-07-27 19:10:59 dan Exp $
+	# $Id: customize.php,v 1.1.2.38 2006-11-28 20:51:00 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/htmlify.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
 
 	GLOBAL $User;
 
@@ -178,10 +178,10 @@ echo '<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="' . BACKGROUND_COLOUR . '" WIDT
 <TD>';
 
 echo '<p>If you wish to change your password, supply your new password twice.  Otherwise, leave it blank.</p><br>';
-require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 $Customize=1;
-require_once($_SERVER['DOCUMENT_ROOT'] . '/include/new-user.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/new-user.php');
 
 echo "</TD>
 </TR>
@@ -195,7 +195,7 @@ echo "</TD>
 
 <p>
 
-<?php require_once($_SERVER['DOCUMENT_ROOT'] . '/include/spam-filter-information.php'); ?>
+<?php require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/spam-filter-information.php'); ?>
 
 </TD>
 </TABLE>

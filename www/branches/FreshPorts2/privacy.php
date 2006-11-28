@@ -1,14 +1,14 @@
 <?php
 	#
-	# $Id: privacy.php,v 1.1.2.18 2006-07-23 13:34:34 dan Exp $
+	# $Id: privacy.php,v 1.1.2.19 2006-11-28 20:51:03 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 	freshports_ConditionalGet(freshports_LastModified());
 

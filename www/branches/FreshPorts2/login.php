@@ -1,13 +1,13 @@
 <?php
 	#
-	# $Id: login.php,v 1.1.2.39 2006-01-07 21:29:10 dan Exp $
+	# $Id: login.php,v 1.1.2.40 2006-11-28 20:51:01 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
-   require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
-   require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
-   require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
+   require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+   require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
+   require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 
 $Debug = 0;
 
@@ -221,7 +221,7 @@ echo freshports_PageBannerText("Login");
 echo '</TR>';
 
 echo '<TR><TD BGCOLOR="#ffffff">';
-include ($_SERVER['DOCUMENT_ROOT'] . "/include/login.php");
+include ($_SERVER['DOCUMENT_ROOT'] . "/../include/login.php");
 
 echo "Your browser must allow cookies for this login to work.";
 

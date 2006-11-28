@@ -1,15 +1,15 @@
 <?php
 	#
-	# $Id: filter-setup.php,v 1.1.2.1 2006-07-31 02:49:35 dan Exp $
+	# $Id: filter-setup.php,v 1.1.2.2 2006-11-28 20:51:01 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/watch-lists.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/watch-lists.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_list_element.php');
 
 	// if we don't know who they are, we'll make sure they login first

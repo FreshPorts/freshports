@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: report-subscriptions.php,v 1.1.2.29 2006-07-19 15:54:05 dan Exp $
+	# $Id: report-subscriptions.php,v 1.1.2.30 2006-11-28 20:51:03 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -10,11 +10,11 @@
 		exit;  /* Make sure that code below does not get executed when we redirect. */
 	}
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 	$ArticleTitle = 'Report subscriptions';
 
@@ -214,7 +214,7 @@ This page allows you to select the reports you wish to receive and the frequency
 	?>
 	</TABLE>
 
-<?php require_once($_SERVER['DOCUMENT_ROOT'] . '/include/spam-filter-information.php'); ?>
+<?php require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/spam-filter-information.php'); ?>
 
 <hr>
 <p>

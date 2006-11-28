@@ -1,12 +1,12 @@
 <?php
 	#
-	# $Id: missing-non-port.php,v 1.1.2.9 2006-11-09 17:01:51 dan Exp $
+	# $Id: missing-non-port.php,v 1.1.2.10 2006-11-28 20:51:01 dan Exp $
 	#
 	# Copyright (c) 2003-2006 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/htmlify.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
     require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits_by_tree_location.php');
     require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
 	require_once('Pager/Pager.php');
@@ -20,7 +20,7 @@ function freshports_NonPortDescription($db, $element_record) {
 	header("HTTP/1.1 200 OK");
 	$Title = preg_replace('|^/?ports/|', '', $element_record->element_pathname);
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 	freshports_Start($Title,
 	        		"$FreshPortsTitle - new ports, applications",

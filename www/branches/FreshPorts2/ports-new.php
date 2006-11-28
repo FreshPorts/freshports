@@ -1,14 +1,14 @@
 <?php
 	#
-	# $Id: ports-new.php,v 1.1.2.36 2006-10-01 14:31:30 dan Exp $
+	# $Id: ports-new.php,v 1.1.2.37 2006-11-28 20:51:03 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 	$Debug = 0;
 
@@ -179,7 +179,7 @@ TEMP, element, categories
 		$numrows = pg_numrows($result);
 	}
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/list-of-ports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/list-of-ports.php');
 
 	echo freshports_ListOfPorts($result, $db, 'Y', $ShowCategoryHeaders, $User, $numrows);
 ?>

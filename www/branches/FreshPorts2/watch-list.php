@@ -1,14 +1,14 @@
 <?php
 	#
-	# $Id: watch-list.php,v 1.2.2.30 2006-06-27 01:30:52 dan Exp $
+	# $Id: watch-list.php,v 1.2.2.31 2006-11-28 20:51:04 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_list_element.php');
 
 	$Debug = 0;
@@ -57,7 +57,7 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 	}
 
 	if (IsSet($_REQUEST["ask"])) {
-		require_once($_SERVER['DOCUMENT_ROOT'] . '/include/watch-lists.php');
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/watch-lists.php');
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
 
 		freshports_Start('Watch list maintenance',

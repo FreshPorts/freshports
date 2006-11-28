@@ -1,14 +1,14 @@
 <?php
 	#
-	# $Id: release-2004-10.php,v 1.1.2.7 2006-07-19 15:03:57 dan Exp $
+	# $Id: release-2004-10.php,v 1.1.2.8 2006-11-28 20:51:03 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 	$Title = "New Release - October 2004";
 

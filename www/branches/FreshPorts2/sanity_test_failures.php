@@ -1,15 +1,15 @@
 <?php
 	#
-	# $Id: sanity_test_failures.php,v 1.1.2.1 2006-10-14 15:34:26 dan Exp $
+	# $Id: sanity_test_failures.php,v 1.1.2.2 2006-11-28 20:51:03 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 	$message_id = '';
 	if (IsSet($_GET['message_id'])) $message_id = AddSlashes($_GET['message_id']);

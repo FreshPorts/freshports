@@ -1,13 +1,13 @@
 <?php
 	#
-	# $Id: forgotten-password.php,v 1.1.2.26 2006-01-07 21:29:10 dan Exp $
+	# $Id: forgotten-password.php,v 1.1.2.27 2006-11-28 20:51:01 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 
 $Debug = 0;
 

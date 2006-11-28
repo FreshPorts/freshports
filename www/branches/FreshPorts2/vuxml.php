@@ -1,14 +1,14 @@
 <?php
 	#
-	# $Id: vuxml.php,v 1.1.2.18 2006-10-02 22:17:24 dan Exp $
+	# $Id: vuxml.php,v 1.1.2.19 2006-11-28 20:51:03 dan Exp $
 	#
 	# Copyright (c) 2004 DVL Software Limited
 	#
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 	define('VUXMLURL',     'http://www.vuxml.org/freebsd/');
 	define('VUXMLREVISION', $_SERVER['DOCUMENT_ROOT'] . '/../dynamic/vuxml_revision');

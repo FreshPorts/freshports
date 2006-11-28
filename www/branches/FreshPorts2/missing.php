@@ -1,15 +1,15 @@
 <?php
 	#
-	# $Id: missing.php,v 1.1.2.37 2006-11-13 00:43:26 dan Exp $
+	# $Id: missing.php,v 1.1.2.38 2006-11-28 20:51:01 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 
 function freshports_Parse404URI($REQUEST_URI, $db) {

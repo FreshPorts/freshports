@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit_record.php,v 1.1.2.16 2006-10-21 13:38:11 dan Exp $
+	# $Id: commit_record.php,v 1.1.2.17 2006-11-28 21:08:29 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -26,7 +26,7 @@ class CommitRecord {
 	var $ignore;
 	var $element_id;
 	var $version;
-	var $revision_name;
+	var $revision;
 	var $epoch;
 	var $date_added;
 	var $short_description;
@@ -70,7 +70,7 @@ class CommitRecord {
 		$this->ignore				= $myrow['ignore'];
 		$this->element_id			= $myrow['element_id'];
 		$this->version				= $myrow['version'];
-		$this->revision_name		= $myrow['revision_name'];
+		$this->revision				= $myrow['revision'];
 		$this->epoch				= $myrow['epoch'];
 		$this->date_added			= $myrow['date_added'];
 		$this->short_description	= $myrow['short_description'];

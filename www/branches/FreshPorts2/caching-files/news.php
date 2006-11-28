@@ -1,17 +1,17 @@
 <?php
 	#
-	# $Id: news.php,v 1.1.2.10 2006-07-27 19:10:33 dan Exp $
+	# $Id: news.php,v 1.1.2.11 2006-11-28 21:13:43 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 	
 	DEFINE('MAX_PORTS', 20);
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 	$Debug = 0;
 

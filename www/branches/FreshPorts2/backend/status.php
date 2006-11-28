@@ -1,14 +1,14 @@
 <?php
 	#
-	# $Id: status.php,v 1.1.2.4 2005-01-22 14:48:55 dan Exp $
+	# $Id: status.php,v 1.1.2.5 2006-11-28 21:13:07 dan Exp $
 	#
 	# Copyright (c) 2003 DVL Software Limited
 	#
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 	$Debug = 0;
 

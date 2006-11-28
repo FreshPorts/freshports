@@ -1,17 +1,17 @@
 <?php
 	#
-	# $Id: sidebar.php,v 1.1.2.22 2006-07-27 19:10:33 dan Exp $
+	# $Id: sidebar.php,v 1.1.2.23 2006-11-28 21:13:07 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
 	DEFINE('MAX_PORTS', 40);
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 	$date        = AddSlashes($_REQUEST['date']);
 	$committer   = AddSlashes($_REQUEST['committer']);

@@ -1,14 +1,14 @@
 <?php
 	#
-	# $Id: commits.php,v 1.1.2.13 2004-04-03 02:37:12 dan Exp $
+	# $Id: commits.php,v 1.1.2.14 2006-11-28 21:13:07 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
 
-	require($_SERVER["DOCUMENT_ROOT"] . "/include/common.php");
-	require($_SERVER["DOCUMENT_ROOT"] . "/include/freshports.php");
-	require($_SERVER["DOCUMENT_ROOT"] . "/include/databaselogin.php");
-	require($_SERVER["DOCUMENT_ROOT"] . "/include/getvalues.php");
+	require($_SERVER["DOCUMENT_ROOT"] . "/../include/common.php");
+	require($_SERVER["DOCUMENT_ROOT"] . "/../include/freshports.php");
+	require($_SERVER["DOCUMENT_ROOT"] . "/../include/databaselogin.php");
+	require($_SERVER["DOCUMENT_ROOT"] . "/../include/getvalues.php");
 
 	DEFINE('MAXROWS', 15000);
 

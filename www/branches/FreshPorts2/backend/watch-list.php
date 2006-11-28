@@ -1,18 +1,18 @@
 <?php
 	#
-	# $Id: watch-list.php,v 1.1.2.8 2006-10-01 21:08:10 dan Exp $
+	# $Id: watch-list.php,v 1.1.2.9 2006-11-28 21:13:07 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 	
 	DEFINE('MAX_PORTS', 20);
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/watch-lists.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/watch-lists.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_lists.php');
 
 	$Debug = 0;

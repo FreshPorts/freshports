@@ -1,13 +1,13 @@
 <?php
 	#
 	#
-	# $Id: graph.php,v 1.1.2.13 2003-03-29 13:39:33 dan Exp $
+	# $Id: graph.php,v 1.1.2.14 2006-11-28 21:14:29 dan Exp $
 	#
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 	// parameters: graph id
 	require_once('bar-graphs.php');

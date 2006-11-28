@@ -1,14 +1,14 @@
 <?php
 	#
-	# $Id: announcements.php,v 1.1.2.7 2006-01-07 21:29:11 dan Exp $
+	# $Id: announcements.php,v 1.1.2.8 2006-11-28 21:13:07 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user_tasks.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/announcements.php');

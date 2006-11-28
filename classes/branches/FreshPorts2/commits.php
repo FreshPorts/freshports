@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits.php,v 1.1.2.29 2006-10-31 13:05:43 dan Exp $
+	# $Id: commits.php,v 1.1.2.30 2006-11-28 21:08:51 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -118,6 +118,28 @@ class Commits {
 		}
 
 		return $numrows;
+	}
+
+	function Count($Date) {
+		$sql = "
+		SELECT count(*) AS count
+          FROM commit_log_ports, commit_log
+	     WHERE commit_log.commit_date         BETWEEN '$Date'::timestamptz  + SystemTimeAdjust()
+	                                              AND '$Date'::timestamptz  + SystemTimeAdjust() + '1 Day'
+		AND commit_log_ports.commit_log_id = commit_log.id";
+
+		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
+
+		$this->LocalResult = pg_exec($this->dbh, $sql);
+		if ($this->LocalResult) {
+			$myrow = pg_fetch_array($this->LocalResult);
+			$count = $myrow['count'];
+		} else {
+			syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ': ' . pg_last_error($this->dbh));
+			die('SQL ERROR');
+		}
+
+		return $count;
 	}
 
 	function FetchNth($N) {

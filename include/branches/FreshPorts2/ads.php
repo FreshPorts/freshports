@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ads.php,v 1.1.2.8 2006-08-02 02:08:57 dan Exp $
+	# $Id: ads.php,v 1.1.2.9 2006-11-28 20:09:06 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -18,6 +18,10 @@
     }
 
     switch($PrimaryAdSource) {
+      case 'PHPPGADS':
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/include/ads-phppgads.php');
+        break;
+
       case 'GOOGLE':
         require_once($_SERVER['DOCUMENT_ROOT'] . '/include/ads-google-adsense.php');
         break;

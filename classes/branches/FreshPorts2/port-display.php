@@ -1,12 +1,12 @@
 <?php
 	#
-	# $Id: port-display.php,v 1.1.2.15 2006-11-09 16:38:55 dan Exp $
+	# $Id: port-display.php,v 1.1.2.16 2006-11-28 20:55:32 dan Exp $
 	#
 	# Copyright (c) 2005-2006 DVL Software Limited
 	#
 	
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/master_slave.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/include/htmlify.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
 
 define('port_display_WATCH_LIST_ADD_REMOVE', '%%%$$$WATCHLIST$$$%%%');
 define('port_display_AD',                    '%%%$$$ADGOESHERE$$$%%%');

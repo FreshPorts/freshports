@@ -1,14 +1,14 @@
 <?php
 	#
-	# $Id: files.php,v 1.1.2.1 2006-11-06 20:21:39 dan Exp $
+	# $Id: files.php,v 1.1.2.2 2006-11-28 20:55:32 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 	
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 // base class for fetching files associated with a commit
 class CommitFiles {

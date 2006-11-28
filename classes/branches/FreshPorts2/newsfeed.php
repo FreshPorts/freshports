@@ -1,17 +1,17 @@
 <?php
 	#
-	# $Id: newsfeed.php,v 1.1.2.14 2006-11-10 12:15:46 dan Exp $
+	# $Id: newsfeed.php,v 1.1.2.15 2006-11-28 20:55:32 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
 	DEFINE('MAX_PORTS', 20);
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/feedcreator.class.php'); 

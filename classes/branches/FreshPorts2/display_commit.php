@@ -1,11 +1,11 @@
 <?php
 	#
-	# $Id: display_commit.php,v 1.1.2.9 2006-11-09 16:35:38 dan Exp $
+	# $Id: display_commit.php,v 1.1.2.10 2006-11-28 20:55:32 dan Exp $
 	#
 	# Copyright (c) 2003-2006 DVL Software Limited
 	#
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/constants.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit_record.php');
 
 // base class for displaying commits

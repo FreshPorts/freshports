@@ -1,11 +1,11 @@
 <?php
 	#
-	# $Id: sanity_test_failures.php,v 1.1.2.3 2006-10-31 13:05:44 dan Exp $
+	# $Id: sanity_test_failures.php,v 1.1.2.4 2006-11-28 20:55:32 dan Exp $
 	#
 	# Copyright (c) 2003-2004 DVL Software Limited
 	#
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/constants.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit_record.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
 

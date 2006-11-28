@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: date.php,v 1.1.2.36 2006-11-28 20:51:00 dan Exp $
+	# $Id: date.php,v 1.1.2.37 2006-11-28 21:09:38 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -40,6 +40,7 @@
 
 	$commits = new Commits($db);
 	$last_modified = $commits->LastModified($Date);
+	$NumCommits = $commits->Count($Date);
 
 	freshports_ConditionalGet($last_modified);
 
@@ -144,10 +145,13 @@ echo $DateLinks;
 <?php echo freshports_MainTable(); ?>
 
 <TR><TD VALIGN="top" WIDTH="100%">
-
 <?php
 
 echo freshports_MainContentTable();
+
+if ($NumCommits > 0) {
+  echo "Number of commits: " . $NumCommits;
+}
 
 $HTML = ArchiveCreate($Date, $DateMessage, $db, $User);
 

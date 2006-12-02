@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.302 2006-12-02 18:14:02 dan Exp $
+	# $Id: freshports.php,v 1.4.2.303 2006-12-02 18:15:45 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -1437,7 +1437,7 @@ Valid
 </small>
 <br>' . freshports_copyright() . '
 
-b<br>
+<br>
 <small>This page created in ' . round($Statistics->ElapsedTime(), 3) . ' seconds.</small>
 </td></tr>
 </table>

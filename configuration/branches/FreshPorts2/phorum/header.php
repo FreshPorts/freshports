@@ -1,16 +1,16 @@
 <?php if ( !defined( "_COMMON_PHP" ) ) return; ?>
 <?php
 	#
-	# $Id: header.php,v 1.1.2.6 2006-07-02 21:15:51 dan Exp $
+	# $Id: header.php,v 1.1.2.7 2006-12-02 16:30:36 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
 
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/common.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/freshports.php");
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/databaselogin.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/../include/common.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/../include/freshports.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/../include/databaselogin.php");
 
-	require($_SERVER['DOCUMENT_ROOT'] . "/include/getvalues.php");
+	require($_SERVER['DOCUMENT_ROOT'] . "/../include/getvalues.php");
 
 	freshports_Start('', '', '', 1);
 

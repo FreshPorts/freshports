@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ads-phppgads.php,v 1.1.2.2 2006-11-28 20:53:40 dan Exp $
+	# $Id: ads-phppgads.php,v 1.1.2.3 2006-12-02 16:02:19 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -24,7 +24,7 @@ function Ad_PhpPgAdsBase($Zone, $N) {
       document.write ("&amp;referer=" + escape(document.referrer));
    document.write ("\'><" + "/script>");
 //-->
-</script><noscript><a href=\'http://ads.unixathome.org/phpPgAds/adclick.php?n=' . $N . '\' target=\'_blank\'><img src=\'http://ads.unixathome.org/phpPgAds/adview.php?what=zone:55&amp;n=a0185fbb\' border=\'0\' alt=\'\'></a></noscript>
+</script><noscript><a href=\'http://ads.unixathome.org/phpPgAds/adclick.php?n=' . $N . '\' target=\'_blank\'><img src=\'http://ads.unixathome.org/phpPgAds/adview.php?what=zone:' . $Zone . '&amp;n=' . $Zone . '\' border=\'0\' alt=\'\'></a></noscript>
 
 	';
 	

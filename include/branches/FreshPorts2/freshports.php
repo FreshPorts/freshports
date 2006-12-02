@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.301 2006-11-28 20:53:41 dan Exp $
+	# $Id: freshports.php,v 1.4.2.302 2006-12-02 18:14:02 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -32,7 +32,7 @@ DEFINE('BACKGROUND_COLOUR', '#8c0707');
 
 DEFINE('CLICKTOADD', 'Click to add this to your default watch list[s]');
 
-DEFINE('SPONSORS', 'Servers and bandwidth provided by <a href="http://www.bchosting.com/" TARGET="_new">BChosting</a> and <a href="http://www.nyi.net" TARGET="_new">NYI</a>');
+DEFINE('SPONSORS', 'Servers and bandwidth provided by<br><a href="http://www.bchosting.com/" TARGET="_new">BChosting</a><br><a href="http://www.nyi.net" TARGET="_new">New York Internet</a><br><a href="http://www.supernews.com/"  TARGET="_new">SuperNews</a>');
 
 
 if ($Debug) echo "'" . $_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php<br>';
@@ -1427,8 +1427,6 @@ alt="powered by apache" border="0" width="259" height="32"></a>
 <tr>
 <td align="left"  valign="top">
 <small>' . SPONSORS . '</small>
-<br>
-<small>This page created in ' . round($Statistics->ElapsedTime(), 3) . ' seconds.</small>
 </td>
 <td align="right" valign="top">
 <small>
@@ -1439,6 +1437,8 @@ Valid
 </small>
 <br>' . freshports_copyright() . '
 
+b<br>
+<small>This page created in ' . round($Statistics->ElapsedTime(), 3) . ' seconds.</small>
 </td></tr>
 </table>
 </td></tr>

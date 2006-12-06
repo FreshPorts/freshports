@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.304 2006-12-06 16:24:31 dan Exp $
+	# $Id: freshports.php,v 1.4.2.305 2006-12-06 17:49:58 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -344,7 +344,7 @@ function freshports_New_Icon() {
 }
 
 function freshports_Mail_Icon() {
-	return '<img src="/images/envelope10.gif" alt="Original commit" title="Original commit message" border="0" width="25" height="14">';
+	return '<img src="/images/envelope10.gif" alt="Original commit" title="Original commit message" border="0" width="32" height="18">';
 }
 
 function freshports_Commit_Icon() {

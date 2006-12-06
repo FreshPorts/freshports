@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: sanity_test_failures.php,v 1.1.2.4 2006-11-28 20:55:32 dan Exp $
+	# $Id: sanity_test_failures.php,v 1.1.2.5 2006-12-06 16:19:54 dan Exp $
 	#
 	# Copyright (c) 2003-2004 DVL Software Limited
 	#
@@ -78,7 +78,7 @@ SELECT S.*, STF.message as stf_message
 			exit;
 		}
 		
-		$DisplayCommit = new DisplayCommit($result);
+		$DisplayCommit = new DisplayCommit($this->dbh, $result);
 		$DisplayCommit->Debug = $this->Debug;
 		
 		$DisplayCommit->SetDaysMarkedAsNew($this->DaysMarkedAsNew);

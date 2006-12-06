@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: latest_commits.php,v 1.1.2.24 2006-11-28 20:55:32 dan Exp $
+	# $Id: latest_commits.php,v 1.1.2.25 2006-12-06 16:19:54 dan Exp $
 	#
 	# Copyright (c) 2003-2004 DVL Software Limited
 	#
@@ -71,7 +71,7 @@ ORDER BY LC.commit_date_raw DESC, LC.category, LC.port";
 		
 		$DisplayCommit->Debug = $this->Debug;
 		
-		$DisplayCommit = new DisplayCommit($result);
+		$DisplayCommit = new DisplayCommit($this->dbh, $result);
 		$DisplayCommit->SetDaysMarkedAsNew($this->DaysMarkedAsNew);
 		$DisplayCommit->SetUserID($this->UserID);
 		$DisplayCommit->SetWatchListAsk($this->WatchListAsk);

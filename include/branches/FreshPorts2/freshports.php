@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.303 2006-12-02 18:15:45 dan Exp $
+	# $Id: freshports.php,v 1.4.2.304 2006-12-06 16:24:31 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -438,6 +438,30 @@ function freshports_Email_Link($message_id) {
 		$HTML .= freshports_Mail_Icon();
 		$HTML .= '</a>';
 	}
+
+	return $HTML;
+}
+
+function freshports_Commit_Flagged_Icon($Title = 'Commit Flagged') {
+	return '<img src="/images/commit-flagged.gif" alt="' . $Title . '" title="' . $Title . '" border="0" width="16" height="16" align="middle">';
+}
+
+function freshports_Commit_Flagged_Not_Icon($Title = 'Commit Not Flagged') {
+	return '<img src="/images/commit-flagged-not.gif" alt="' . $Title . '" title="' . $Title . '" border="0" width="16" height="16" align="middle">';
+}
+
+function freshports_Commit_Flagged_Link($message_id) {
+	$HTML  = '<a href="/commit-flag.php?message_id=' . $message_id . '&amp;action=remove">';
+	$HTML .= freshports_Commit_Flagged_Icon();
+	$HTML .= '</a>';
+
+	return $HTML;
+}
+
+function freshports_Commit_Flagged_Not_Link($message_id) {
+	$HTML  = '<a href="/commit-flag.php?message_id=' . $message_id . '&amp;action=add">';
+	$HTML .= freshports_Commit_Flagged_Not_Icon();
+	$HTML .= '</a>';
 
 	return $HTML;
 }

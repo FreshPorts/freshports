@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: display_commit.php,v 1.1.2.10 2006-11-28 20:55:32 dan Exp $
+	# $Id: display_commit.php,v 1.1.2.11 2006-12-06 16:18:59 dan Exp $
 	#
 	# Copyright (c) 2003-2006 DVL Software Limited
 	#
@@ -12,6 +12,8 @@
 class DisplayCommit {
 
 	var $Debug = 0;
+	var $dbh;
+
 	var $result;
 	var $MaxNumberOfPorts;
 
@@ -21,11 +23,14 @@ class DisplayCommit {
 	var $LocalResult;
 	var $HTML;
 	
+	var $FlaggedCommits;
+	
 	var $ShowAllPorts = FALSE;	# by default we show only the first few ports.
 	
 	var $SanityTestFailure = FALSE;
 
-	function DisplayCommit($result) {
+	function DisplayCommit($dbh, $result) {
+		$this->dbh    = $dbh;
 		$this->result = $result;
 	}
 
@@ -49,6 +54,7 @@ class DisplayCommit {
 		GLOBAL	$freshports_CommitMsgMaxNumOfLinesToShow;
 
 		if (!$this->result) {
+			syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ': no result set supplied');
             die("read from database failed");
 			exit;
 		}
@@ -58,6 +64,22 @@ class DisplayCommit {
 		if (!$NumRows) { 
 			$this->HTML = "<TR><TD>\n<P>Sorry, nothing found in the database....</P>\n</td></tr>\n";
 			return 1;
+		}
+		
+		# if we have a UserID, but no flagged commits, grab them
+		#
+		if ($this->UserID && !IsSet($this->FlaggedCommits)) {
+			syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ': fetching Flagged commits');
+		
+			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit_flag.php');
+
+			$FlaggedCommits = new CommitFlag($this->dbh);
+			$NumFlaggedCommits = $FlaggedCommits->Fetch($this->UserID);
+			for ($i = 0; $i < $NumFlaggedCommits; $i++) {
+				$FlaggedCommits->FetchNth($i);
+				$this->FlaggedCommits[$FlaggedCommits->commit_log_id] = $FlaggedCommits->commit_log_id;
+				if ($this->Debug) echo "fetching record # $i -> $FlaggedCommits->commit_log_id<br>";
+			}
 		}
 	
 		$i=0;
@@ -105,6 +127,13 @@ class DisplayCommit {
 					$this->HTML .= '</SMALL>';
 					$this->HTML .= '&nbsp;';
 					$this->HTML .= freshports_Email_Link($mycommit->message_id);
+
+					$this->HTML .= '&nbsp;';
+					if (IsSet($this->FlaggedCommits[$mycommit->commit_log_id])) {
+						$this->HTML .= freshports_Commit_Flagged_Link($mycommit->message_id);
+					} else {
+						$this->HTML .= freshports_Commit_Flagged_Not_Link($mycommit->message_id);
+					}
 
 					if ($mycommit->EncodingLosses()) {
 						$this->HTML .= '&nbsp;' . freshports_Encoding_Errors();

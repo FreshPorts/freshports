@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: display_commit.php,v 1.1.2.11 2006-12-06 16:18:59 dan Exp $
+	# $Id: display_commit.php,v 1.1.2.12 2006-12-06 17:51:30 dan Exp $
 	#
 	# Copyright (c) 2003-2006 DVL Software Limited
 	#
@@ -129,10 +129,12 @@ class DisplayCommit {
 					$this->HTML .= freshports_Email_Link($mycommit->message_id);
 
 					$this->HTML .= '&nbsp;';
-					if (IsSet($this->FlaggedCommits[$mycommit->commit_log_id])) {
-						$this->HTML .= freshports_Commit_Flagged_Link($mycommit->message_id);
-					} else {
-						$this->HTML .= freshports_Commit_Flagged_Not_Link($mycommit->message_id);
+					if ($this->UserID) {
+						if (IsSet($this->FlaggedCommits[$mycommit->commit_log_id])) {
+							$this->HTML .= freshports_Commit_Flagged_Link($mycommit->message_id);
+						} else {
+							$this->HTML .= freshports_Commit_Flagged_Not_Link($mycommit->message_id);
+						}
 					}
 
 					if ($mycommit->EncodingLosses()) {

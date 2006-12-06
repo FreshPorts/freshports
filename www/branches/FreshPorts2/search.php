@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.1.2.101 2006-11-28 20:51:03 dan Exp $
+	# $Id: search.php,v 1.1.2.102 2006-12-06 16:21:15 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -850,7 +850,7 @@ switch ($stype) {
 	case SEARCH_FIELD_COMMITTER:
 	case SEARCH_FIELD_COMMITMESSAGE:
 	case SEARCH_FIELD_PATHNAME:
-		$DisplayCommit = new DisplayCommit($Commits->LocalResult);
+		$DisplayCommit = new DisplayCommit($db, $Commits->LocalResult);
 		$links = $Pager->GetLinks();
 		
 		$HTML .= $NumPortsFound . ' ' . $links['all'];

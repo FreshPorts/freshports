@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: date.php,v 1.1.2.37 2006-11-28 21:09:38 dan Exp $
+	# $Id: date.php,v 1.1.2.38 2006-12-06 16:21:16 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -107,7 +107,7 @@
 
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
 
-		$DisplayCommit = new DisplayCommit($commits->LocalResult);
+		$DisplayCommit = new DisplayCommit($db, $commits->LocalResult);
 		$DisplayCommit->SanityTestFailure = true;
 		$RetVal = $DisplayCommit->CreateHTML();
 

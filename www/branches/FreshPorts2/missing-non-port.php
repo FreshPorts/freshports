@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-non-port.php,v 1.1.2.10 2006-11-28 20:51:01 dan Exp $
+	# $Id: missing-non-port.php,v 1.1.2.11 2006-12-06 16:21:16 dan Exp $
 	#
 	# Copyright (c) 2003-2006 DVL Software Limited
 	#
@@ -116,7 +116,7 @@ function freshports_NonPortDescription($db, $element_record) {
 	if ($Commits->Debug) echo "PageNumber='$PageNumber'<br>Offset='$Offset'<br>";
 
 	$NumFetches = $Commits->Fetch();
-	$DisplayCommit = new DisplayCommit($Commits->LocalResult);
+	$DisplayCommit = new DisplayCommit($db, $Commits->LocalResult);
 	$HTML .= $DisplayCommit->CreateHTML();
 
 	$HTML .= $NumCommitsHTML;

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit-flag.php,v 1.1.2.1 2006-12-06 16:23:51 dan Exp $
+	# $Id: commit-flag.php,v 1.1.2.2 2006-12-06 18:01:44 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -12,7 +12,6 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit_flag.php');
 
 	$Debug = 0;
-
 	if ($_POST["Origin"]) {
 		$Origin = AddSlashes($_POST["Origin"]);
 	} else {
@@ -20,34 +19,6 @@
 	}
 	$Redirect = 1;
 #phpinfo();
-
-function RemoveElementFromWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
-	$Debug = 0;
-
-	if ($Debug) echo "I'm removing $ElementID\n<BR>";
-	$WatchListElement = new WatchListElement($db);
-	while (list($key, $WatchListID) = each($WatchListsIDs)) {
-		$result = $WatchListElement->Delete($UserID, $WatchListID, $ElementID);
-		if ($result == -1) {
-			break;
-		}
-	}
-
-	return $result;
-}
-
-function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
-	if ($Debug) echo "I'm adding $ElementID\n<BR>";
-	$WatchListElement = new WatchListElement($db);
-	while (list($key, $WatchListID) = each($WatchListsIDs)) {
-		$result = $WatchListElement->Add($UserID, $WatchListID, $ElementID);
-		if ($result == -1) {
-			break;
-		}
-	}
-
-	return $result;
-}
 
 	if ($User->id == '') {
 		# OI!  you aren't logged in!

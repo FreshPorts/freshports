@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: display_commit.php,v 1.1.2.12 2006-12-06 17:51:30 dan Exp $
+	# $Id: display_commit.php,v 1.1.2.13 2006-12-11 12:55:54 dan Exp $
 	#
 	# Copyright (c) 2003-2006 DVL Software Limited
 	#
@@ -175,7 +175,7 @@ class DisplayCommit {
 						$this->HTML .= $mycommit->category. "</A>";
 						$this->HTML .= '&nbsp;';
 
-						$this->HTML .= ' ' . freshports_Commit_Link($mycommit->message_id) . "\n";
+#						$this->HTML .= ' ' . freshports_Commit_Link($mycommit->message_id) . "\n";
 
 						// indicate if this port has been removed from cvs
 						if ($mycommit->status == "D") {

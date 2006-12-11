@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.4.2.305 2006-12-06 17:49:58 dan Exp $
+	# $Id: freshports.php,v 1.4.2.306 2006-12-11 12:54:46 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -1172,7 +1172,7 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	}
 	$HTML .= freshports_Email_Link($commit->message_id);
 
-	$HTML .= '&nbsp;&nbsp;'. freshports_Commit_Link($commit->message_id);
+#	$HTML .= '&nbsp;&nbsp;'. freshports_Commit_Link($commit->message_id);
 
 	if ($commit->EncodingLosses()) {
 		$HTML .= '&nbsp;'. freshports_Encoding_Errors_Link();
@@ -1184,7 +1184,7 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	# ouput the VERSION and REVISION
 	$PackageVersion = freshports_PackageVersion($commit->{'port_version'},  $commit->{'port_revision'},  $commit->{'port_epoch'});
 	if (strlen($PackageVersion) > 0) {
-    	$HTML .= '&nbsp;&nbsp;&nbsp;<big><b>' . $PackageVersion . '</b></big>';
+    	$HTML .= '&nbsp;&nbsp;<big><b>' . $PackageVersion . '</b></big>';
 	}
 
 	if ($commit->stf_message != '') {
@@ -1542,10 +1542,11 @@ function freshports_SideBar() {
 			default:
 				$args = '';
 		}
-		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/logout.php',                 $args,                  "Logout", "Logout of the website"                  ) . '</FONT><br>';
+		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/logout.php',                 $args,                  "Logout",                  "Logout of the website"                  ) . '</FONT><br>';
+		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/my-flagged-commits.php',                 $args,      "My Flagged Commits",      "List of commits you have flagged"       ) . '</FONT><br>';
 	} else {
-		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/login.php',                  "?origin=$OriginLocal", "User Login",              "Login to the website"                                                      ) . '</FONT><br>';
-		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/new-user.php',               "?origin=$OriginLocal", "Create account",          "Create an account"                                                         ) . '</FONT><br>';
+		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/login.php',                  "?origin=$OriginLocal", "User Login",              "Login to the website"                   ) . '</FONT><br>';
+		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/new-user.php',               "?origin=$OriginLocal", "Create account",          "Create an account"                      ) . '</FONT><br>';
 	}
 
 	$HTML .= '

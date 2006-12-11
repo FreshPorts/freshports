@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.1.2.86 2006-11-28 20:51:00 dan Exp $
+	# $Id: faq.php,v 1.1.2.87 2006-12-11 12:55:15 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -340,7 +340,15 @@ make: fatal errors encountered -- cannot continue
 
 	<P><?php echo freshports_Commit_Icon(); ?> FreshPorts commit message: This will take you to the FreshPorts commit
 		message and allow you to see all other ports which were affected by this commit.   This link will not appear
-        for commit messages before 3 March 2002 (which is the date FreshPorts started to store the message-id).</P>
+        for commit messages before 3 March 2002 (which is the date FreshPorts started to store the message-id).
+        <br>
+        <br>
+        NOTE: This link has been made redundant by recent advances in the Files link.  See next icon.
+        </P>
+
+	<P><?php echo freshports_Files_Icon(); ?>
+		Files: If you click on this graphic, you will be taken to the list of files
+		touched by the commit in question.</P>
 
 	<P><?php echo freshports_Watch_Icon(); ?> Item is on one of your default watch lists: This port is on one of your default watch lists.  Click
 		this icon to remove the port from your default watch lists.  This icon appears only if you are logged in.</P>
@@ -383,6 +391,15 @@ make: fatal errors encountered -- cannot continue
 	<P><?php echo freshports_SanityTestFailure_Icon(); ?> Sanity Test Failures.  The maintainers and committers are
 	good.   But sometimes a mistake slips through.  This record the mistake to make it easier for others to correct
 	it if it goes unnoticed.  If you see this icon next to a commit, it failed a Sanity Test.
+	</P>
+
+	<P><?php echo freshports_Commit_Flagged_Icon(); ?> Flagged Commit.  This commit is on your list of flagged
+	commits.Why would you flag a commit?  Perhaps you want to review that commit.  Perhaps you want to MFC it later.
+	Click on this icon to remove the commit from your flag list.
+	</P>
+	
+    <P><?php echo freshports_Commit_Flagged_Not_Icon(); ?> Click on this icon to add the commit to your flagged
+	list.
 	</P>
 
 	</BLOCKQUOTE>

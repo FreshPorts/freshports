@@ -1,7 +1,13 @@
-<?
-   # $Id: common.php.sample,v 1.1 2001-09-28 02:02:44 dan Exp $
-   #
-   # Copyright (c) 1998-2001 DVL Software Limited
+<?php
+	#
+	# $Id: common.php.sample,v 1.2 2006-12-17 11:55:52 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
+
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/page_load_detail.php');
+
+$Statistics = new PageLoadDetail();
 
 # 
 # This file should be included first by any page wishing
@@ -10,22 +16,22 @@
 
 # These are the default values
 
-$Debug			= 0;
-$ShowAds		= 1;
-$BannerAd		= 1;
-$BannerAdUnder		= 1;
+$Debug					= 0;
+$ShowAds				= 1;
+$BannerAd				= 1;
+$BannerAdUnder			= 1;
 $BurstFrontPage120x160	= 1;
 $BurstFrontPage125x125	= 1;
-$FrontPageAdsPayPal	= 1;
-$FrontPageAdsAmazon	= 1;
+$FrontPageAdsPayPal		= 1;
+$FrontPageAdsAmazon		= 1;
 $FrontPageDaemonNews	= 1;
 
-$HeaderAdsPayPal	= 1;
-$HeaderAdAmazon		= 1;
+$HeaderAdsPayPal		= 1;
+$HeaderAdAmazon			= 1;
 $HeaderAdsBurst125x125	= 1;
 $HeaderAdsBurst120x160	= 1;
 
-$DiaryConfigFile = "/home/freshports.org/configuration/freshports.conf.php";
+$DiaryConfigFile = $_SERVER["DOCUMENT_ROOT"] . "/../configuration/freshports.conf.php";
 
 if (file_exists($DiaryConfigFile)) {
    require($DiaryConfigFile);
@@ -35,6 +41,11 @@ if (file_exists($DiaryConfigFile)) {
 # This should reside somewhere outside the document root.
 # This will always protect the contents from any possible httpd access.
 #
-$PathToDatabaseConfigFile = "/home/freshports.org/configuration"; # no trailing slash
+$PathToDatabaseConfigFile	= $_SERVER["DOCUMENT_ROOT"] . "/../configuration"; # no trailing slash
 
+$FreshPortsName				= "FreshPorts";
+$FreshPortsLogo				= "/images/freshports.jpg";
+$FreshPortsLogoWidth		= 512;
+$FreshPortsLogoHeight		= 110;
+$FreshPortsSlogan			= "The Place For Ports";
 ?>

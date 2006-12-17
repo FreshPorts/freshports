@@ -1,6 +1,13 @@
+<?php
+	#
+	# $Id: header.php,v 1.2 2006-12-17 11:55:53 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
+?>
 <body bgcolor="#ffffff" link="#0000cc">
 <?
-# get the minutes (well, actualy it's seconds now...)
+# get the minutes (well, actually it's seconds now...)
 $Minutes = date("s");
 if ($Minutes >= 0 and $Minutes < 20) {
    $Image = "bsdcon-banner1.gif";
@@ -15,4 +22,4 @@ if ($Minutes >= 0 and $Minutes < 20) {
 
 <a href="/">
 <img src="/images/freshports.jpg" 
-alt="freshports.org - the place for ports" width="512" height="110" border="0"></a>
+alt="freshports.org - The Place For Ports" width="512" height="110" border="0"></a>

@@ -1,76 +1,121 @@
-<?
-// sample graph
+<?php
+	#
+	# $Id: graphs.php,v 1.6 2006-12-17 12:06:11 dan Exp $
+	#
+	# Copyright (c) 1998-2003 DVL Software Limited
+	#
 
-   require("./include/common.php");
-   require("./include/freshports.php");
-   require("./include/databaselogin.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
-#require( "./include/commonlogin.php3");
-#require( "./include/getvalues.php3");
-
-$MaxGraph = 3;
-
-if (!isset($graph)) {
-   $graph = 1;
-} else {
-   if ($graph < 1 or $graph > $MaxGraph) {
-      $graph = 1;
-   }
-}
-
-switch ($graph) {
-   case 1:
-      $cache_file .= ".top.watched.ports";
-      break;
-
-   case 2:
-      $cache_file .= ".top.committers";
-      break;
-
-   case 3:
-      $cache_file .= ".top.biggest.commits";
-      break;
-}
-
-$CreateImage = 0;
-if (!file_exists($cache_file)) {
-//   echo 'cache does not exist<br>';
-   // cache does not exist, we create it
-   $CreateImage = 1;
-} else {
-/*
-   echo "filectime  = " . filectime($cache_file) . "<br>";
-   echo "filectime+ = " . (filectime($cache_file) + $cache_time_rnd + 24*60*60) . "<br>";
-   echo "time()     = " . time();
-*/
-   if ((filectime($cache_file) + $cache_time_rnd + 24*60*60) < time()) {
-      $CreateImage = 1;
-   }
-}
-
-$CreateImage = 1;
-if ($CreateImage) {
-   require("./_phpgraph/phpgraph.php");
-   require("./include/statistics.php");
-   switch ($graph) {
-      case 1:
-         $data = freshports_stats_watched_ports($db, 20);
-         freshports_DrawGraph($data, "Top 20 Most Watched Ports", 500, 475, $cache_file);
-         break;
-
-      case 2:
-         $data = freshports_stats_committers($db, 20);
-         freshports_DrawGraph($data, "Top 20 Committers - number of commits", 500, 475, $cache_file); 
-         break;
-
-      case 3:
-         $data = freshports_stats_biggest_commits($db, 20);
-         freshports_DrawGraph($data, "Top 20 biggest commits - number of ports", 500, 475, $cache_file);
-         break;
-   }
-} else {
-   header("Content-type: image/png");
-   $im = ImageCreateFromPng($cache_file);
-   ImagePng($im);
-}
+	freshports_Start('Statistics - everyone loves a graph',
+					'freshports - new ports, applications',
+					'FreeBSD, index, applications, ports');
 ?>
+	<?php echo freshports_MainTable(); ?>
+
+	<tr><td valign="top" width="100%">
+
+	<?php echo freshports_MainContentTable(); ?>
+
+<TR>
+	<? echo freshports_PageBannerText("Statistics - everyone loves a graph"); ?>
+</TR>
+
+<TR><TD>
+<P>
+All graphs are at most 4 hours old.  The data used in these graphs are compiled by a large team of 
+trained worms.  As such, they are liable to be filled with errors and riddled with castings.  You
+are advised not to make life decisions based on this information.
+</P>
+<P>
+If you have suggestions for graphs, please submit them via the forum.
+</P>
+
+<h3>NOTE that many graphs are clickable and will take you to the category, port, etc.</h3>
+
+<HR>
+
+<center>
+<?php
+  echo Ad_728x90();
+?>
+</center>
+
+</TD></TR>
+
+<TR><TD>
+
+<TABLE WIDTH="100%" BORDER="0">
+<TR>
+<TD WIDTH="300" VALIGN="top">
+<?
+	$id = $_GET["id"];
+	$sql = "select id, title, is_clickable from graphs order by title";
+	$result = pg_exec($db, $sql);
+    if ($result) {
+    	$numrows = pg_numrows($result);
+		if ($numrows) { 
+			echo '<UL>';
+			for ($i = 0; $i < $numrows; $i++) {
+				$myrow = pg_fetch_array ($result, $i);
+				echo '<LI><A HREF="' . $_SERVER["PHP_SELF"] . '?id=' . $myrow["id"] . '">' . $myrow["title"] . '</A></LI>' . "\n";
+				if ($myrow["id"] == $id) {
+					$is_clickable = $myrow["is_clickable"];
+				}
+#				echo $myrow["id"] .  ' '  . $myrow["is_clickable"] . '<BR>';
+			}
+			echo '</UL>';
+		} else {
+			echo "Oh. This is rather embarassing.  I have no idea how this could have happened. ";
+			echo "I do hope you will understand.  Please don't tell anyone.  But I don't have any ";
+			echo "data to show you.  For you see, nobody has bothered to populate the graphs table.";
+		}
+	} else {
+	}
+?>
+</TD>
+<TD>
+<?
+	if ($id) {
+		if ($is_clickable == "t" ) {
+			?>
+			<FORM ACTION="/graphs/graphclick.php" METHOD="get">
+			<INPUT TYPE="hidden" NAME="id"    VALUE="<? echo $id; ?>">
+			<INPUT NAME="graph"  TYPE="image" SRC="/graphs/graph.php?id=<? echo $id; ?>" TITLE="graph goes here!" ALT="graph goes here!">
+			</FORM>
+			<?
+		} else {
+			?>
+			<IMG SRC="/graphs/graph.php?id=<? echo $id; ?>" TITLE="graph goes here!" ALT="graph goes here!">
+			<?
+		}
+	}
+?>
+</TD>
+</TR>
+</TABLE>
+
+
+</TD></TR>
+
+</TABLE>
+</TD>
+
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
+	<?
+	echo freshports_SideBar();
+	?>
+  </td>
+
+</TR>
+</TABLE>
+
+<?
+echo freshports_ShowFooter();
+?>
+
+</body>
+</html>

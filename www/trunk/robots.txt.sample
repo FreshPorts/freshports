@@ -1,10 +1,20 @@
 # robots.txt for http://www.freshports.org/
 
+# all others, please don't...
 User-agent: *
-Disallow: /_
-Disallow: /images/
-Disallow: /cgi-bin/
-Disallow: /cgi/
-Disallow: /port-description.php3
-Disallow: /port-description.php3*
-Disallow: /phorum/
+Disallow: /login.php
+Disallow: /new-user.php
+Disallow: /login.php*
+Disallow: /new-user.php*
+Disallow: /ports-broken.php
+Disallow: /ports-deleted.php
+Disallow: /ports-forbidden.php
+Disallow: /ports-deprecated.php
+Disallow: /ports-ignore.php
+Disallow: /ports-new.php
+Disallow: /date.php
+Disallow: /stats
+Disallow: /stats/
+Disallow: /stats/*
+Disallow: /commit.php
+Disallow: /commits.php

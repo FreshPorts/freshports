@@ -1,12 +1,15 @@
-<!-- http://freshports.org/docs/fp-updates.dtd                                                           -->
-<!-- This DTD defines the input to FreshPorts (http://freshports.org/>                                   -->
-<!-- version 0.12                                                                                        -->
-<!-- Change History:	0.01	2000.12.27	Initial Release                                          -->
-<!--			0.02	2000.12.27	Added several fields to the COMMIT element;              -->
-<!--						Pr, SubmittedBy, ReviewedBy, ApprovedBy and ObtainedFrom -->
-<!--			0.10	2000.12.29	Complete Rewrite.					 -->
-<!--			0.11	2000.12.30	Renamed OS:System to OS:Id				 -->
-<!--			0.12	2001.01.04	Removed MESSAGE:Sender attribute			 -->
+
+<!-- $Id: fp-updates.dtd,v 1.4 2006-12-17 12:06:23 dan Exp $          -->
+
+<!-- http://freshports.org/docs/fp-updates.dtd															-->
+<!-- This DTD defines the input to FreshPorts (http://freshports.org/>									-->
+<!-- Change History:	0.01	2000.12.27	Initial Release												-->
+<!--			0.02	2000.12.27	Added several fields to the COMMIT element;							-->
+<!--						Pr, SubmittedBy, ReviewedBy, ApprovedBy and ObtainedFrom					-->
+<!--			0.10	2000.12.29	Complete Rewrite.													-->
+<!--			0.11	2000.12.30	Renamed OS:System to OS:Id											-->
+<!--			0.12	2001.01.04	Removed MESSAGE:Sender attribute									-->
+<!--					2002.04.11  Added EncodingLosses 												-->
 
 <!ELEMENT 	UPDATES	(UPDATE+) >
 <!ELEMENT 	UPDATE	(DATE, TIME, OS, LOG, PEOPLE, FILES, MESSAGE?, PR?) >
@@ -47,8 +50,9 @@
 
 <!-- MESSAGE element; Contains information about the email						-->
 <!ELEMENT	MESSAGE	(DATE, TIME, TO+) >
-<!ATTLIST	MESSAGE	Id	CDATA	#REQUIRED
-			Subject	CDATA	#REQUIRED >
+<!ATTLIST	MESSAGE	Id				CDATA	#REQUIRED
+					Subject			CDATA	#REQUIRED
+					EncodingLosses	BOOLEAN #REQUIRED >
 
 <!-- TO element; Contains information about who the message was sent to					-->
 <!ELEMENT	TO	EMPTY >
@@ -76,3 +80,5 @@
 			Minute		%Minutes;	#REQUIRED
 			Second		%Seconds;	#REQUIRED
 			Timezone	CDATA		#REQUIRED >
+
+<!ENTITY	% boolean	"(true|false)">

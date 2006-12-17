@@ -1,66 +1,130 @@
-<?
-	# $Id: pkg_process.inc,v 1.5 2002-02-11 03:23:11 dan Exp $
+<?php
 	#
-	# Copyright (c) 1998-2001 DVL Software Limited
+	# $Id: pkg_process.inc,v 1.6 2006-12-17 12:06:13 dan Exp $
+	#
+	# Copyright (c) 1998-2006 DVL Software Limited
+	#
+
+	require($_SERVER["DOCUMENT_ROOT"] . "/../classes/ports.php");	
 
 $Debug=0;
 
-
-// {{{ function SplitPackage($pkg,$arr)
-/**
-* Take a package name (basename-version) and split it 
-* @param
-* @return
-*
-*/
-function SplitPackage($pkg,&$arr) {
-	if (preg_match("/(.+)-(.*)/",$pkg,$arr)) {
-		return $arr;
-	}
-	$arr[] = $pkg;
-	return $arr;
+function LinkToPort($category, $port) {
+	return '<A HREF="/' . $category . '/' . $port . '/">' . $category . '/' . $port . '</A>';
 }
-//}}}
-// {{{ function ReadINDEX()
-/**
-* Read in the INDEX file
-*
-* @return The index array
-*
-*/
-function ReadINDEX() {
-	# Get the latest from fetch ftp://ftp.freebsd.org/pub/FreeBSD/ports/ports/INDEX
-	# as needed
 
-	GLOBAL $DOCUMENT_ROOT;
 
-	$gIndexFile = $DOCUMENT_ROOT . "/../configuration/INDEX";
-	$iFid = fopen($gIndexFile,'r');
-	if (!$iFid) { return false; }
-	while(!feof($iFid)) {
-		$buffer = fgets($iFid,4096);
-		list ($pkg,$port,$rest) = preg_split("/\|/",$buffer,3);
-		if (!$pkg) { 
+function HandleFileUpload($FormFileName, $Destination) {
+	#
+	# pass in the name of the field on the form into which the user supplies
+	# the file name.
+	#
+	global $HTTP_POST_FILES;
+
+	if (is_uploaded_file($HTTP_POST_FILES[$FormFileName]['tmp_name'])) {
+		$filename = $HTTP_POST_FILES[$FormFileName]['tmp_name'];
+#		print "$filename was uploaded successfully<BR>";
+		$realname = $HTTP_POST_FILES[$FormFileName]['name'];
+#		print "realname is $realname<BR>";
+#		print "copying file to $Destination<BR>";
+		copy($HTTP_POST_FILES[$FormFileName]['tmp_name'], $Destination);
+		$result = 1;
+	} else {
+		DisplayError("No file was uploaded.  Make sure the file name is correct, that the file is non-empty, and that the 
+			file size is less than 40KB (this should be sufficient for any
+			installation).  Verify you have correctly followed the instructions.<P>Please click back, check the file, and try again.");
+		$result = 0;
+	}
+
+	return $result;
+}
+
+function DisplayError($error) {
+?>
+	<TABLE WIDTH="100%" ALIGN="center" CELLPADDING="1" CELLSPACING="0" BORDER="1">
+	<TR><TD VALIGN=TOP>
+		<TABLE WIDTH="100%">
+			<TR>
+			    <? echo freshports_PageBannerText("NOTICE"); ?>
+			</TR>
+
+			<TR BGCOLOR="#ffffff">
+				<TD>
+					<TABLE WIDTH="100%" CELLPADDING="0" CELLSPACING="0" BORDER="0">
+						<TR VALIGN="top">
+							<TD VALIGN="middle"><IMG SRC="/images/warning.gif" ALT="warning"></TD>
+							<TD VALIGN="middle" width="100%">
+							<? echo $error ?>
+							</TD>
+						</TR>
+					</TABLE>
+				</TD>
+			</TR>
+		</TABLE>
+	</TD>
+	</TR>
+	</TABLE>
+
+<?
+}
+
+
+
+function ConvertFileContentsToArray($filename) {
+	$PortArray = array();
+
+	$gFid = fopen($filename, 'r');
+	if (!$gFid) {
+		return false;
+	}
+
+	while (!feof($gFid)) {
+		$buffer = fgets($gFid, 4096);
+		if (!$buffer) {
 			continue;
 		}
 
-		$rv = array();
-		SplitPackage($pkg,$rv);
-		if ( count($rv) == 0) {
-			echo ("Error Parsing INDEX file");
-			return false;
+		// Get the package name
+
+		$buffer = trim($buffer);
+		if ($buffer == '') {
+			continue;
 		}
-		$pkg = strtoupper($pkg);
-		$base = strtoupper($rv[1]);
-	
-		$indexArray[$pkg]['PORT'] = substr($port,11);
-		//$indexArray[$pkg]['BASE'] = $base;
-		// Also index the basename of the port for use when versions do not match
-		$indexArray[$base][] = $indexArray[$pkg];
+		if (IsSet($PortArray[$buffer])) {
+			$PortArray[$buffer] = $PortArray[$buffer] + 1;
+		} else {
+			$PortArray[$buffer] = 1;
+		}
 	}
-	return $indexArray;
+
+	return $PortArray;
+
 }
-// }}}
+
+
+function ConvertStringToArray($PkgInfoString) {
+	$PortArray = array();
+
+	$Lines = explode("\n", $PkgInfoString);
+	while (list($key, $CatPort) = each($Lines)) {
+		// Get the package name
+
+		$CatPort = trim($CatPort);
+		if ($CatPort == '') {
+			continue;
+		}
+		if (IsSet($PortArray[$CatPort])) {
+			$PortArray[$CatPort] = $PortArray[$CatPort] + 1;
+		} else {
+			$PortArray[$CatPort] = 1;
+		}
+	}
+
+	return $PortArray;
+
+}
+
+
 // {{{ function ProcessPackages
 /**
 * Process the package file (this will be slimmed down, when there is no more debug
@@ -69,99 +133,416 @@ function ReadINDEX() {
 * @return	an array of ports
 *
 */
-function ProcessPackages($filename, $userID, $clean) {
+
+function ProcessPackages($UserID, $PortArray, $dbh) {
 	// profiling info {{{
-	$starttime = time();
 	// }}}
-	global $gDBG;
 
 	$ok = true;
-	$indexArray = ReadINDEX();
-	if (!$indexArray) { return false; }
-	$gMyPorts = array();
-	$tempArray = array();
 
-	$gFid = fopen($filename,'r');
-	if (!$gFid) { return false; }
+	pg_exec($dbh, "BEGIN");
 
-	while(!feof($gFid)) {
-		$buffer = fgets($gFid,4096);
-		if (!$buffer) {
-			continue;
+	while (list ($key, $count) = each ($PortArray)) {
+
+		# trimming, just in case...
+		$CategoryPort = explode("/", trim($key));
+		if (count($CategoryPort) != 2) {
+			#
+			# in an ideal world, this error message would not be in this function, but in the caller function
+			#
+			DisplayError('<P>OUCH, That does not look like the right output to me.  Please ensure you
+								have the correct file format and try again (see step 1). </P>
+							<P>This is the first line I found: <CODE CLASS="code">' . $key . '</CODE></P>');
+			$ok = FALSE;
+			break;
 		}
-		// Get the package name
-		$pkg = strtoupper(array_shift(preg_split("/[\s]+/",$buffer,2)));
-	
-		$rv = array();
-		SplitPackage($pkg,$rv);
-		if ( count($rv) == 0) {
-			return false;
-		}
-		$base = $rv[1];
-			
-		// if our package is in the INDEX and we haven't already found it
-		$port = 'ports/' . $indexArray[$pkg]['PORT'];
-		if ($indexArray[$pkg] && !in_array($port,$gMyPorts)) {
-			$gMyPorts[] = $port;
-		} elseif ($base && $indexArray[$base]) {
-			// The package is not in the INDEX.  Maybe our version is out dated.
-			// Check for the basename in the INDEX.
-	
-			// If there is only one base match, then assume that's what they want
-			if (count($indexArray[$base]) == 1 ) {
-				$port = 'ports/' . $indexArray[$base][0]['PORT'];
-				if (!in_array($port,$gMyPorts)) {
-					$gMyPorts[] = $port;
-				}
-			} else {
-				// There are multiple ports with the same basename, add them to the guess list
-				foreach($indexArray[$base] as $port) {
-					if(!in_array($port['PORT'],$gMyPorts) && !in_array($port['PORT'],$tempArray)) {
-						$tempArray[] = $port['PORT'];
-					}
-				}
-			}
+
+		$Category = $CategoryPort[0];
+		$Port     = $CategoryPort[1];
+
+		$sql = 'select WatchListStagingAddItem(' . AddSlashes($UserID) . ', \'' . 
+					AddSlashes($Category) . '\', \'' . AddSlashes($Port) . '\', ' . AddSlashes($count) . ')';
+		$result = pg_exec($dbh, $sql);
+		if ($result && pg_numrows($result)) {
+			# do nothing
+		} else {
+			echo pg_errormessage() . " sql = $sql";
+			$ok = FALSE;
+			break;
 		}
 	}
 
-	// Now remove duplicates from the tempArray
-	foreach ($tempArray as $port) {
-		$port = 'ports/' . $port;
-		if ( !in_array($port, $gMyPorts) ) {
-			$guessPorts[] = $port;
-		}
-	}
-	asort($gMyPorts);
-	asort($guessPorts);
-	$returnArray['FOUND'] = $gMyPorts;
-	$returnArray['GUESS'] = $guessPorts;
+	if ($ok) {
+		# All is well.
 
-	$ok = GetWatchID($userID, $watchID);
-	if (!$ok) {
-		echo "Could not find watch_id for user $userID<BR>\n";
-		return false;
-	}
-
-#echo "obtained WatchID of '$watchID'<BR>\n";
-
-	if ($clean) {
-		$ok = CleanPorts($watchID);
-	}
-
-	$ok = $ok && AddPortsToList(array_merge($gMyPorts,$guessPorts), $watchID);
-	if (!$ok) {
-		echo "Error adding ports.<BR>\n";
-	  	if ($gDBG != 1) {
-			echo "Rerun with the '-d' option for details.<BR>\n";
+		$sql = "select WatchListStagingProcess($UserID)";
+		$result = pg_exec($dbh, $sql);
+		if ($result && pg_numrows($result)) {
+			# do nothing.  All is well
+		} else {
+			echo pg_errormessage() . " sql = $sql";
+			$ok = FALSE;
 		}
 	}
 
-	// profiling info {{{
-	$endtime = time();
-	$total = $endtime - $starttime;
-	print("Total Time Processing:  $total seconds<BR>\n");
-	// }}}
-	return $returnArray;
+	if ($ok) {
+		pg_exec ($dbh, "commit");
+	} else {
+		pg_exec ($dbh, "rollback");
+	}
+
+	return $ok;
 }
 // }}}
+
+function UploadDisplayStagingResultsMatches($UserID, $WatchListID, $dbh) {
+
+	$begintime = time();
+	$sql = " SELECT	category, port, item_count, from_pkg_info, from_watch_list, watch_list_staging.element_id, 
+					watch_list_element.element_id AS onwatchlist
+			   FROM	watch_list_staging LEFT OUTER JOIN watch_list_element
+						ON  watch_list_staging.element_id    = watch_list_element.element_id
+						AND $WatchListID                     = watch_list_element.watch_list_id
+			  WHERE $UserID    = watch_list_staging.user_id
+			    AND item_count = 1
+				AND watch_list_staging.element_id IS NOT NULL
+			  ORDER BY category, port";
+
+	$result = pg_exec($dbh, $sql);
+
+	if ($result) {
+		$numrows = pg_numrows($result);
+		if ($numrows) {
+			?>
+
+			<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5">
+			<TR><TD COLSPAN="2"><B>Port name</B> <SMALL>(<? echo $numrows ?> port<?php if ($numrows > 1) echo 's'; ?>)</SMALL></TD><TD ALIGN="center"><SMALL>Add</SMALL></TD></TR>
+
+			<?
+			for ($i = 0; $i < $numrows; $i++) {
+				$row = pg_fetch_array($result, $i);
+				echo '<TR>';
+
+				echo '<TD>';
+				echo LinkToPort($row["category"], $row["port"]);
+				echo '</TD>';
+
+				echo '<TD ALIGN="center">';
+				if ($row["onwatchlist"]) {
+					echo 'W';
+				} else {
+					echo '&nbsp;';
+				}
+				echo '</TD>';
+
+				echo '<TD ALIGN="center"><INPUT TYPE="checkbox" NAME="ports[]" VALUE="' . $row["element_id"] . '" CHECKED></TD>';
+
+				echo '</TR>' . "\n";
+			}
+			
+			echo '</TABLE>';
+
+#			echo 'that took '. (time() - $begintime) . ' seconds to process ' . $numrows . ' rows';
+		} else {
+			echo "Nothing you uploaded was found within our database.";
+		}
+	} else {
+		echo "<pre>$sql</pre>";
+	}
+
+}
+
+function UploadDisplayStagingResultsMatchesNo($UserID, $dbh) {
+
+	$begintime = time();
+	$begintime = time();
+	$sql = " SELECT category, port, item_count, from_pkg_info, from_watch_list, watch_list_staging.element_id
+			     FROM watch_list_staging
+			    WHERE $UserID    = watch_list_staging.user_id
+			      AND item_count = 1
+				   AND watch_list_staging.element_id IS NULL
+			 ORDER BY category, port";
+
+#	echo $sql;
+
+	$result = pg_exec($dbh, $sql);
+
+	if ($result) {
+		$numrows = pg_numrows($result);
+		if ($numrows) {
+			?>
+
+			<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5">
+			<TR><TD><B>Port name</B> <SMALL>(<? echo $numrows ?> port<?php if ($numrows > 1) echo 's'; ?>)</SMALL></TD><TD><SMALL>search</SMALL></TD></TR>
+
+			<?
+			for ($i = 0; $i < $numrows; $i++) {
+				$row = pg_fetch_array($result, $i);
+				echo '<TR>';
+				echo '<TD><FONT COLOR="red">' . $row["category"] . '/' . $row["port"] . '</FONT></TD>';
+				echo '<TD ALIGN="center"><A HREF="/search.php?query=' . $row["port"] . '&amp;stype=name&amp;num=10&amp;method=soundex&amp;staging=1">?</A></TD>';
+				echo '</TR>';
+			}
+			echo '</TABLE>';
+
+#			echo 'that took '. (time() - $begintime) . ' seconds to process ' . $numrows . ' rows';
+		} else {
+			echo "Everything in your uploaded list was located within our database.";
+		}
+	} else {
+		echo "nothing found!";
+	}
+
+}
+
+function UploadDisplayStagingResultsMatchesDuplicates($UserID, $WatchListID, $dbh) {
+
+	$begintime = time();
+	$sql = " SELECT category, port, item_count, from_pkg_info, from_watch_list, watch_list_staging.element_id
+			     FROM watch_list_staging LEFT OUTER JOIN watch_list_element
+					     	 ON  watch_list_staging.element_id = watch_list_element.element_id
+						    AND $WatchListID                   = watch_list_element.watch_list_id
+			    WHERE $UserID    = watch_list_staging.user_id
+			      AND item_count > 1
+				   AND watch_list_staging.element_id IS NOT NULL
+			 ORDER BY category, port";
+
+#	echo $sql;
+
+	$result = pg_exec($dbh, $sql);
+
+	if ($result) {
+		$numrows = pg_numrows($result);
+		if ($numrows) {
+			?>
+
+			<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5">
+			<TR><TD><B>Port name</B></TD><TD><B>Count</B></TD><TD ALIGN="center"><SMALL>Add</SMALL></TD></TR>
+
+			<?
+			for ($i = 0; $i < $numrows; $i++) {
+				$row = pg_fetch_array($result, $i);
+				echo '<TR>';
+
+				echo '<TD>';
+				echo LinkToPort($row["category"], $row["port"]);
+				echo '</TD>';
+
+				echo '<TD ALIGN="center">';
+				echo $row["item_count"];
+				echo '</TD>';
+
+				echo '<TD ALIGN="center"><INPUT TYPE="checkbox" NAME="ports[]" VALUE="' . $row["element_id"] . '" CHECKED></TD>';
+
+				echo '</TR>';
+			
+			}
+			echo '</TABLE>';
+
+#			echo 'that took '. (time() - $begintime) . ' seconds to process ' . $numrows . ' rows';
+		} else {
+			echo "no Duplicates found";
+		}
+	} else {
+		echo "nothing found!";
+	}
+
+}
+
+function UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $dbh) {
+#	syslog(LOG_NOTICE, "UploadDisplayWatchListItemsNotInStagingArea for WatchListID: $WatchListID");
+
+	$begintime = time();
+	$sql = " SELECT categories.name as category, 
+	                element.name as port, 
+	                ports.element_id
+			     FROM ports, categories, watch_list_element, element
+			    WHERE $WatchListID      = watch_list_element.watch_list_id
+				   AND ports.element_id = watch_list_element.element_id
+				   AND ports.element_id = element.id
+				   AND categories.id    = ports.category_id
+				   AND NOT EXISTS (
+					SELECT element_id
+					  FROM watch_list_staging
+					 WHERE watch_list_staging.element_id = watch_list_element.element_id
+				)
+			  ORDER BY port, category";
+
+#	syslog(LOG_NOTICE, $sql);
+
+	$result = pg_exec($dbh, $sql);
+#	syslog(LOG_NOTICE, "UploadDisplayWatchListItemsNotInStagingArea for WatchListID: $WatchListID");
+
+	if ($result) {
+		$numrows = pg_numrows($result);
+		if ($numrows) {
+			?>
+
+			<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5">
+			<TR><TD><B>Port name</B></TD><TD ALIGN="center"><SMALL>Add</SMALL></TD></TR>
+
+			<?
+			for ($i = 0; $i < $numrows; $i++) {
+				$row = pg_fetch_array($result, $i);
+
+				echo '<TR><TD ALIGN="left">';
+				echo LinkToPort($row["category"], $row["port"]);
+				echo '</TD>';
+
+				echo '<TD ALIGN="center"><INPUT TYPE="checkbox" NAME="ports[]" VALUE="' . $row["element_id"] . '" CHECKED></TD>';
+
+				echo '</TR>' . "\n";
+			}
+			echo '</TABLE>';
+
+#			echo 'that took '. (time() - $begintime) . ' seconds to process ' . $numrows . ' rows';
+		} else {
+			echo "There is nothing on this watch list which does not appear in your staging area.";
+		}
+	} else {
+		echo "nothing found!";
+	}
+
+}
+
+
+function MoveStagingToWatchList($UserID, $WatchListID, $dbh) {
+	$ok  = TRUE;
+
+	$Debug = 0;
+
+	if ($Debug) syslog(LOG_NOTICE, 'begin');
+	$result = pg_exec($dbh, 'BEGIN');
+	if (!$result) {
+		$ok = FALSE;
+	}
+
+#	if ($ok) {
+#		if ($Debug) syslog(LOG_NOTICE, 'WatchListDeleteAllElements: line ' . __LINE__);
+#		$sql = "select WatchListDeleteAllElements($WatchListID)";
+#		$result = pg_exec($dbh, $sql);
+#		if (!$result) {
+#			$ok = FALSE;
+#		}
+#	}
+
+	$PortCount = 0;
+	if ($ok) {
+		if ($Debug) syslog(LOG_NOTICE, 'MoveStagingToWatchList: line ' . __LINE__);
+		$sql = "select MigrateStagingAreaToWatchList($WatchListID)";
+		$result = pg_exec($dbh, $sql);
+		if (!$result) {
+			$ok = FALSE;
+		}
+	}
+
+	if ($ok) {
+		$sql = "select WatchListStagingLogWatch($UserID, $PortCount)";
+		$result = pg_exec($dbh, $sql);
+		if (!$result) {
+			$ok = FALSE;
+		}
+	}
+
+	# clear out the staging area
+
+	if ($ok) {
+		$sql = "select WatchListStagingClear($UserID)";
+		$result = pg_exec($dbh, $sql);
+		if (!$result) {
+			$ok = FALSE;
+		}
+	}
+
+	if ($ok) {
+		if ($Debug) syslog(LOG_NOTICE, 'commit');
+		pg_exec($dbh, "COMMIT");
+	} else {
+		echo pg_errormessage() . " sql = $sql";
+		pg_exec($dbh, "ROLLBACK");
+	}
+
+	return $ok;
+}
+
+function CopyStagingToWatchList($dbh, $UserID, $WatchListID, $Overwrite = TRUE) {
+	$ok  = TRUE;
+	$begintime = time();
+
+	$result = pg_exec($dbh, 'BEGIN');
+	if (!$result) {
+		$ok = FALSE;
+	}
+
+	if ($ok && $Overwrite) {
+		$sql = "select WatchListDeleteAllElements($WatchListID)";
+		$result = pg_exec($dbh, $sql);
+		if (!$result) {
+			$ok = FALSE;
+		}
+	}
+
+	if ($ok) {
+		$sql = " INSERT INTO watch_list_element
+                 SELECT $WatchListID, element_id
+                   FROM watch_list_staging
+                  WHERE element_id IS NOT NULL
+                    AND user_id = $UserID
+";
+
+		if (!$Overwrite) {
+			$sql .= "EXCEPT SELECT watch_list_id, element_id
+                              FROM watch_list_element
+                             WHERE watch_list_id = $WatchListID
+";
+		}
+	}
+
+#	syslog(LOG_NOTICE, $sql);
+
+	$result = pg_exec($dbh, $sql);
+#	syslog(LOG_NOTICE, "UploadDisplayWatchListItemsNotInStagingArea for WatchListID: $WatchListID");
+
+	if (!$result) {
+		$ok = FALSE;
+	}				
+
+	if ($ok) {
+#		syslog(LOG_NOTICE, 'commit');
+		pg_exec($dbh, "COMMIT");
+	} else {
+		echo pg_errormessage() . " sql = $sql";
+		pg_exec($dbh, "ROLLBACK");
+	}
+
+	return $ok;
+
+}
+
+
+function StagingAreaClear($UserID, $dbh) {
+	$ok = TRUE;
+
+	$result = pg_exec($dbh, "BEGIN");
+	if ($result) {
+		$sql = "select WatchListStagingClear($UserID)";
+		$result = pg_exec($dbh, $sql);
+		if (!$result) {
+			$ok = FALSE;
+		}
+	} else {
+		$ok = FALSE;
+	}
+
+	if ($result && $ok) {
+		pg_exec($dbh, "COMMIT");
+	} else {
+		echo pg_errormessage() . " sql = $sql";
+		pg_exec($dbh, "ROLLBACK");
+	}
+
+	return $ok;		
+}
+
+
 ?>

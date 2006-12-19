@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: vuxml.php,v 1.2 2006-12-17 12:06:18 dan Exp $
+	# $Id: vuxml.php,v 1.3 2006-12-19 01:33:05 dan Exp $
 	#
 	# Copyright (c) 2004 DVL Software Limited
 	#
@@ -174,10 +174,13 @@ ORDER BY lower(VN.name), V.vid
 
 	if (IsSet($_REQUEST['all'])) {
 
-		function vuxml_name_link($VID, $Date, $Description, $PortArray) {
+		function vuxml_name_link($VID, $Date, $Description, $PortArray, $IsNew) {
 			$HTML = '<tr><td nowrap valign="top">';
 			
 			$HTML .= $Date;
+			if ($IsNew == 'f') {
+				$HTML .= '<sup>*</sup>';
+			}
 			$HTML .= '</td><td valign="top">';
 			
 			$Narrative = trim(strip_tags($Description));
@@ -202,10 +205,11 @@ ORDER BY lower(VN.name), V.vid
 SELECT V.vid,
        VN.name,
        V.description,
-       coalesce(V.date_modified, V.date_entry, V.date_discovery)::date as date
+       coalesce(V.date_modified, V.date_entry, V.date_discovery)::date as date,
+       V.date_modified IS NULL AS new
   FROM vuxml V left outer join vuxml_affected VA on VA.vuxml_id          = V.id
        left outer join vuxml_names VN on VN.vuxml_affected_id = VA.id
-ORDER BY coalesce(V.date_modified, V.date_entry, V.date_discovery)::date desc, V.vid, lower(VN.name)
+ORDER BY coalesce(V.date_modified, V.date_entry, V.date_discovery)::date desc, lower(VN.name)
 ";
 
 		$result = pg_exec($db, $sql);
@@ -234,21 +238,23 @@ ORDER BY coalesce(V.date_modified, V.date_entry, V.date_discovery)::date desc, V
 					
 					if ($LastVID != $myrow['vid']) {
 						$VIDs++;
-						echo vuxml_name_link($LastVID, $Date, $Description, $PortArray);
+						echo vuxml_name_link($LastVID, $Date, $Description, $PortArray, $IsNew);
 						$PortArray = array();
 						$LastVID = $myrow['vid'];
 					}
 
 					$PortArray[$myrow['name']] = $myrow['name'];
 					$Description = $myrow['description'];
+					$IsNew       = $myrow['new'];
 					$Date        = $myrow['date'];
 				}
 				$VIDs++;
-				echo vuxml_name_link($LastVID, $Date, $Description, $PortArray);
+				echo vuxml_name_link($LastVID, $Date, $Description, $PortArray, $IsNew);
 				echo "</table>\n";
 
 				echo "<p>Number of vulns/ports : " . $numrows . "<br>\n";
 				echo "<p>Number of vulns   : " . $VIDs . "<br>\n";
+				echo "<p>A date marked with <sup>*</sup> indicates an updated vuxml entry.<br>\n";
 			}
 		}
 

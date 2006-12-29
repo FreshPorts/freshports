@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.6 2006-12-19 01:09:28 dan Exp $
+	# $Id: freshports.php,v 1.7 2006-12-29 22:14:22 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -32,7 +32,7 @@ DEFINE('BACKGROUND_COLOUR', '#8c0707');
 
 DEFINE('CLICKTOADD', 'Click to add this to your default watch list[s]');
 
-DEFINE('SPONSORS', 'Servers and bandwidth provided by<br><a href="http://www.bchosting.com/" TARGET="_new">BChosting</a><br><a href="http://www.nyi.net" TARGET="_new">New York Internet</a><br><a href="http://www.supernews.com/"  TARGET="_new">SuperNews</a>');
+DEFINE('SPONSORS', 'Servers and bandwidth provided by<br><a href="http://www.nyi.net" TARGET="_new">New York Internet</a><br><a href="http://www.supernews.com/"  TARGET="_new">SuperNews</a>');
 
 
 if ($Debug) echo "'" . $_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php<br>';

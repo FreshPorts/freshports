@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: date.php,v 1.2 2006-12-17 12:06:10 dan Exp $
+	# $Id: date.php,v 1.3 2006-12-30 21:16:12 dan Exp $
 	#
-	# Copyright (c) 1998-2004 DVL Software Limited
+	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
@@ -124,7 +124,7 @@
 
 define('RELATIVE_DATE_24HOURS', 24 * 60 * 60);	# seconds in a day
 
-$Today     = '<a href="/commits.php">Today\'s commits</a>';
+$Today     = '<a href="/commits.php">Latest commits</a>';
 $Yesterday = freshports_LinkToDate(strtotime($Date) - RELATIVE_DATE_24HOURS);
 $Tomorrow  = freshports_LinkToDate(strtotime($Date) + RELATIVE_DATE_24HOURS);
 
@@ -133,13 +133,17 @@ if (strtotime($Date) + RELATIVE_DATE_24HOURS == strtotime(date('Y/m/d'))) {
 
 	$DateLinks = '&lt; ' . $Today . ' | ' . $Yesterday . ' &gt;';
 } else {
-	$Today     = '<a href="/commits.php">Today\'s commits</a>';
+	$Today     = '<a href="/commits.php">Latest commits</a>';
 	$Yesterday = freshports_LinkToDate(strtotime($Date) - RELATIVE_DATE_24HOURS);
 	$Tomorrow  = freshports_LinkToDate(strtotime($Date) + RELATIVE_DATE_24HOURS);
 
 	$DateLinks = '&lt; ' . $Today . ' | ' . $Tomorrow . ' | ' . $Yesterday . ' &gt;';
 }
 echo $DateLinks;
+if ($NumCommits > 0) {
+  echo " | Number of commits: " . $NumCommits;
+}
+
 ?>
 
 <?php echo freshports_MainTable(); ?>
@@ -149,10 +153,6 @@ echo $DateLinks;
 
 echo freshports_MainContentTable();
 
-if ($NumCommits > 0) {
-  echo "Number of commits: " . $NumCommits;
-}
-
 $HTML = ArchiveCreate($Date, $DateMessage, $db, $User);
 
 echo $HTML;
@@ -160,6 +160,9 @@ echo $HTML;
 echo '</table>';
 
 echo $DateLinks;
+if ($NumCommits > 0) {
+  echo " | Number of commits: " . $NumCommits;
+}
 
 ?>
 

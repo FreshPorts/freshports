@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: display_commit.php,v 1.2 2006-12-17 11:37:19 dan Exp $
+	# $Id: display_commit.php,v 1.3 2006-12-30 17:02:30 dan Exp $
 	#
 	# Copyright (c) 2003-2006 DVL Software Limited
 	#
@@ -69,8 +69,6 @@ class DisplayCommit {
 		# if we have a UserID, but no flagged commits, grab them
 		#
 		if ($this->UserID && !IsSet($this->FlaggedCommits)) {
-			syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ': fetching Flagged commits');
-		
 			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit_flag.php');
 
 			$FlaggedCommits = new CommitFlag($this->dbh);

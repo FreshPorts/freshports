@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.2 2006-12-17 12:06:10 dan Exp $
+	# $Id: faq.php,v 1.3 2007-01-01 00:22:07 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -148,7 +148,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<?php echo freshports_PageBannerText("How do delete my account?"); ?>
+<?php echo freshports_PageBannerText("How do I delete my account?"); ?>
 </TR>
 
 	<TR><TD>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-list.php,v 1.2 2006-12-17 12:06:22 dan Exp $
+	# $Id: watch-list.php,v 1.3 2007-01-18 13:35:55 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -29,7 +29,7 @@ function DisplayNewsFeed($db, $token) {
 		syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . 
 			' watch list token requested by ' . $_SERVER['REMOTE_ADDR'] . 
 			' not found ' . $token);
-		header('HTTP/1.1 500 OK******');
+		header('HTTP/1.1 404 NOT FOUND');
 		exit; 
 	}
 

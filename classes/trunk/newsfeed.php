@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: newsfeed.php,v 1.2 2006-12-17 11:37:20 dan Exp $
+	# $Id: newsfeed.php,v 1.3 2007-01-20 00:50:00 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -136,13 +136,14 @@ LIMIT 30";
 	$item->date   = strtotime("now");
 	$item->source = $_SERVER['HTTP_HOST']; 
 	$item->author = 'editor@FreshPorts.org'; 
-	$item->guid   = 'http://www.freshports.org/phorum/read.php?f=1&rmp;i=1133&rmp;t=1133';
+	$item->guid   = 'http://www.freshports.org/phorum/read.php?f=1&i=1133&t=1133';
  
 	$rss->addItem($item); 
 
 	$result = pg_query($db, $sql);
 	while ($myrow = pg_fetch_array($result)) {
 		$item = new FeedItem();
+
 		$CommitURL = freshports_Commit_Link_Port_URL($myrow['message_id'], $myrow['category'], $myrow['port']);
 
 		$item->title = $myrow["category"] . '/' . $myrow["port"] . ' - ' . freshports_PackageVersion($myrow["version"], $myrow["revision"], $myrow["epoch"]);

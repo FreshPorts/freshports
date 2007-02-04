@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.9 2007-01-20 00:50:43 dan Exp $
+	# $Id: freshports.php,v 1.10 2007-02-04 16:03:08 dan Exp $
 	#
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
@@ -997,7 +997,7 @@ function freshports_PortCommitsHeader($port) {
 	$Columns = 3;
 	$HTML .= freshports_PageBannerText("Commit History - (may be incomplete: see CVSWeb link above for full details)", $Columns);
 
-	$HTML .= '<tr><td width="180"><b>Date</b>r</td><td><b>By</b></td><td><b>Description</b></td>';
+	$HTML .= '<tr><td width="180"><b>Date</b></td><td><b>By</b></td><td><b>Description</b></td>';
 
 	$HTML .= "</tr>\n";
 

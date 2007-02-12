@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: display_commit.php,v 1.3 2006-12-30 17:02:30 dan Exp $
+	# $Id: display_commit.php,v 1.4 2007-02-12 22:02:03 dan Exp $
 	#
 	# Copyright (c) 2003-2006 DVL Software Limited
 	#
@@ -262,7 +262,7 @@ class DisplayCommit {
 
 			$this->HTML .= "\n<BLOCKQUOTE>";
 
-			$this->HTML .= freshports_PortDescriptionPrint($mycommit->commit_description, $mycommit->encoding_losses, $freshports_CommitMsgMaxNumOfLinesToShow, freshports_MoreCommitMsgToShow($mycommit->message_id, $freshports_CommitMsgMaxNumOfLinesToShow));
+			$this->HTML .= freshports_CommitDescriptionPrint($mycommit->commit_description, $mycommit->encoding_losses, $freshports_CommitMsgMaxNumOfLinesToShow, freshports_MoreCommitMsgToShow($mycommit->message_id, $freshports_CommitMsgMaxNumOfLinesToShow));
 
 			$this->HTML .= "\n</BLOCKQUOTE>\n</TD></TR>\n\n\n";
 		}

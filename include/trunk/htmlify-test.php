@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: htmlify-test.php,v 1.2 2006-12-17 11:55:53 dan Exp $
+	# $Id: htmlify-test.php,v 1.3 2007-02-12 22:00:04 dan Exp $
 	#
 	# Copyright (c) 2003 DVL Software Limited
 	#
@@ -57,6 +57,11 @@ Does it handle great then (>) and less than (<) and ampersand (&)?
 Make sure that links with trailing commas work OK:  The following is from java/linux-sun-jdk14/Makefile:
 
 IGNORE: You must manually fetch the J2SE SDK self-extracting file for the Linux platform (j2sdk-1_4_2_10-linux-i586.bin) from http://javashoplm.sun.com/ECom/docs/Welcome.jsp?StoreId=22&PartDetailId=j2sdk-1.4.2_10-oth-JPR&SiteId=JSC&TransactionId=noreg, place it in /usr/ports/distfiles and then run make again
+
+The following should not get a PR type hyperlink:
+
+http://www.postgresql.org/docs/8.2/static/release-8-2-2.html
+
 EOD;
 
 ?>
@@ -65,7 +70,7 @@ EOD;
 <body>
 <h2>Testing the html-ify code</h2>
 <pre>
-<?php print htmlify(htmlspecialchars($str)); ?>
+<?php print htmlify(htmlspecialchars($str), true); ?>
 </pre>
 
 <h2>	Other links to check</h2>

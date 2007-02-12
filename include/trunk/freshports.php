@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.10 2007-02-04 16:03:08 dan Exp $
+	# $Id: freshports.php,v 1.11 2007-02-12 22:00:04 dan Exp $
 	#
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
@@ -1202,7 +1202,7 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	$HTML .= "</td>\n";
 	$HTML .= '    <td valign="top" width="*">';
 
-	$HTML .= freshports_PortDescriptionPrint($commit->description, $commit->encoding_losses, $freshports_CommitMsgMaxNumOfLinesToShow, freshports_MoreCommitMsgToShow($commit->message_id, $freshports_CommitMsgMaxNumOfLinesToShow));
+	$HTML .= freshports_CommitDescriptionPrint($commit->description, $commit->encoding_losses, $freshports_CommitMsgMaxNumOfLinesToShow, freshports_MoreCommitMsgToShow($commit->message_id, $freshports_CommitMsgMaxNumOfLinesToShow));
 
 	$HTML .= "</td>\n";
 
@@ -1269,13 +1269,21 @@ function freshports_Head($string, $n, $FudgeFactor = 10) {
 }
 
 function freshports_PortDescriptionPrint($description, $encoding_losses, $maxnumlines=0, $URL='') {
+	return freshports_DescriptionPrint($description, $encoding_losses, $maxnumlines, $URL);
+}
+
+function freshports_CommitDescriptionPrint($description, $encoding_losses, $maxnumlines=0, $URL='') {
+	return freshports_DescriptionPrint($description, $encoding_losses, $maxnumlines, $URL, true);
+}
+
+function freshports_DescriptionPrint($description, $encoding_losses, $maxnumlines = 0, $URL = '', $Process_PRs = false) {
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
 
 	$shortened = freshports_Head($description, $maxnumlines);
 	$HTML  = '<PRE CLASS="code">';
 
-	$HTML .= htmlify(htmlspecialchars(freshports_wrap($shortened)));
+	$HTML .= htmlify(htmlspecialchars(freshports_wrap($shortened)), $Process_PRs);
 
 	$HTML .= '</PRE>';
 

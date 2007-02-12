@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: how-big-is-it.php,v 1.2 2006-12-17 12:06:11 dan Exp $
+	# $Id: how-big-is-it.php,v 1.3 2007-02-12 01:58:58 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -66,7 +66,7 @@ function StatsSQL($db, $Title, $Date) {
 	}
 
 	return $Value;
-}
+} 
 
 function DBSize($db) {
 	$sql = "select pg_database_size(current_database())";
@@ -209,6 +209,44 @@ echo format_number($Value) . '<br>';
 
 ?>
 (1 row)<br>
+</code></blockquote>
+</TD></TR>
+
+<?
+	echo freshports_BannerSpace();
+?>
+
+<TR>
+	<? 
+	echo freshports_PageBannerText("Number of files in the ports tree"); 
+	?>
+</TR>
+
+<TR><TD>
+
+<P>
+There is a page for each file in the ports tree:
+<blockquote><code class="code">
+[dan@ngaio:/usr/ports] $ find . | wc -l<br>
+<?php
+$Value = 115803; # default value, found at time of writing.
+$PortFileCount = "/usr/websites/freshports.org/dynamic/PortsTreeCount";
+if (file_exists($PortFileCount) && is_readable($PortFileCount) &&
+    filesize($PortFileCount) < 1000) {
+  $FileContents = trim(file_get_contents($PortFileCount));
+  if (is_numeric($FileContents)) {
+    if (intval($FileContents) == $FileContents) {
+      $Value = intval($FileContents);
+    }
+  }
+}
+echo format_number($Value);
+?>
+<br>
+[dan@ngaio:/usr/ports] $
+<?php
+$Total += $Value;
+?>
 </code></blockquote>
 </TD></TR>
 

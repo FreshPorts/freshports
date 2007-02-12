@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: cache-port.php,v 1.2 2006-12-17 11:37:18 dan Exp $
+	# $Id: cache-port.php,v 1.3 2007-02-12 22:01:29 dan Exp $
 	#
 	# Copyright (c) 2006 DVL Software Limited
 	#
@@ -17,7 +17,7 @@ class CachePort extends Cache {
 	var $PageSize = 100;
 
 	function CachePort() {
-		return Parent::Cache();
+		return parent::Cache();
 	}
 	
 	function PageSizeSet($PageSize) {
@@ -27,7 +27,7 @@ class CachePort extends Cache {
 	function Retrieve($Category, $Port, $CacheType = CACHE_PORT_COMMITS, $PageNum = 1) {
 		$this->_Log("CachePort: Retrieving for $Category/$Port");
 		$Key = $this->_PortKey($Category, $Port, $CacheType, $PageNum);
-		$result = Parent::Retrieve($Key);
+		$result = parent::Retrieve($Key);
 
 		return $result;
 	}
@@ -45,7 +45,7 @@ class CachePort extends Cache {
 			umask($old_mask);
 		}
 		$result = 0;
-		$result = Parent::Add($Key);
+		$result = parent::Add($Key);
 
 		return $result;
 	}
@@ -58,7 +58,7 @@ class CachePort extends Cache {
 		# regardless of the CacheType or page number
 		#
 		$Key = $this->_PortKey($Category, $Port, '*', '*');
-		$result = Parent::Remove($Key, $data);
+		$result = parent::Remove($Key, $data);
 
 		return $result;
 	}

@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: cache-port.php,v 1.3 2007-02-12 22:01:29 dan Exp $
+	# $Id: cache-port.php,v 1.4 2007-02-13 23:13:13 dan Exp $
 	#
-	# Copyright (c) 2006 DVL Software Limited
+	# Copyright (c) 2006-2007 DVL Software Limited
 	#
 
 // base class for caching
@@ -41,9 +41,22 @@ class CachePort extends Cache {
 		if (!file_exists($CategoryCacheDir)) {
 			$this->_Log("CachePort: creating directory $CategoryCacheDir");
 			$old_mask = umask(0000);
-			mkdir($CategoryCacheDir, 0774);
+			if (!mkdir($CategoryCacheDir, 0774)) {
+				$this->_Log("CachePort: unable to create directory $CategoryCacheDir");
+			}
 			umask($old_mask);
 		}
+
+		$PortCacheDir = $CategoryCacheDir . '/' . $Port;
+		if (!file_exists($PortCacheDir)) {
+			$this->_Log("CachePort: creating directory $PortCacheDir");
+			$old_mask = umask(0000);
+			if (mkdir($PortCacheDir, 0774)) {
+				$this->_Log("CachePort: unable to create directory $PortCacheDir");
+			}
+			umask($old_mask);
+		}
+
 		$result = 0;
 		$result = parent::Add($Key);
 
@@ -65,7 +78,7 @@ class CachePort extends Cache {
 	
 	function _PortKey($Category, $Port, $CacheType, $PageNum = 1) {
 		// might want some parameter checking here
-		$Key = "ports/$Category/$Port.$CacheType.PageSize$this->PageSize.PageNum$PageNum.html";
+		$Key = "ports/$Category/$Port/$CacheType.PageSize$this->PageSize.PageNum$PageNum.html";
 
 		return $Key;
 	}

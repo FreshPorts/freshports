@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: how-big-is-it.php,v 1.3 2007-02-12 01:58:58 dan Exp $
+	# $Id: how-big-is-it.php,v 1.4 2007-02-18 15:59:23 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -229,7 +229,9 @@ There is a page for each file in the ports tree:
 <blockquote><code class="code">
 [dan@ngaio:/usr/ports] $ find . | wc -l<br>
 <?php
-$Value = 115803; # default value, found at time of writing.
+$Value = 115803;
+$DateLastChecked =  "2007/02/12 01:58:58"; # default value, found at time of writing.
+
 $PortFileCount = "/usr/websites/freshports.org/dynamic/PortsTreeCount";
 if (file_exists($PortFileCount) && is_readable($PortFileCount) &&
     filesize($PortFileCount) < 1000) {
@@ -237,6 +239,7 @@ if (file_exists($PortFileCount) && is_readable($PortFileCount) &&
   if (is_numeric($FileContents)) {
     if (intval($FileContents) == $FileContents) {
       $Value = intval($FileContents);
+      $DateLastChecked = gmdate(LAST_MODIFIED_FORMAT, filemtime($PortFileCount));
     }
   }
 }
@@ -248,6 +251,8 @@ echo format_number($Value);
 $Total += $Value;
 ?>
 </code></blockquote>
+
+Count last performed at <?php echo $DateLastChecked; ?>
 </TD></TR>
 
 <?

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: newsfeed.php,v 1.3 2007-01-20 00:50:00 dan Exp $
+	# $Id: newsfeed.php,v 1.4 2007-03-08 21:38:55 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -160,7 +160,7 @@ LIMIT 30";
 	
 		$item->date   = strtotime($myrow['commit_date_raw']);
 		$item->source = $_SERVER['HTTP_HOST']; 
-		$item->author = 'editor@FreshPorts.org'; 
+		$item->author = $myrow['committer'] . '@FreeBSD.org'; 
 		$item->guid   = $CommitURL; 
 
 		$rss->addItem($item); 

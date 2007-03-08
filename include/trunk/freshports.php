@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.11 2007-02-12 22:00:04 dan Exp $
+	# $Id: freshports.php,v 1.12 2007-03-08 01:44:19 dan Exp $
 	#
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
@@ -1090,7 +1090,7 @@ function freshports_PortCommits($port, $PageNumber = 1, $NumCommitsPerPage = 100
 	$Pager = & Pager::factory($params);
 	
 	//Results from methods:
-	if ($this->Debug) {
+	if ($Commits->Debug) {
 		echo '<pre>';
 		echo 'getCurrentPageID()...: '; var_dump($Pager->getCurrentPageID());
 		echo 'getNextPageID()......: '; var_dump($Pager->getNextPageID());

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: htmlify.php,v 1.3 2007-02-04 15:55:32 dan Exp $
+	# $Id: htmlify.php,v 1.4 2007-03-08 01:44:54 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -90,7 +90,7 @@ function htmlify($String, $Process_PRs = false) {
 #
 # URLs to test with: http://www.freshports.org/commit.php?message_id=200206232029.g5NKT1O13181@freefall.freebsd.org
 #
-	$del_t = array("&quot;", "&#34;", "&gt;", "&#62;", "\/\.\s","\)", "'", ",\s", "\s", "$");
+	$del_t = array("&quot;", "&#34;", "&gt;", "&#62;", "\/\.\s","\)", ",\s", "\s", "$");
 	$delimiters = "(".join("|",$del_t).")";
 
 	$String = preg_replace_callback("/((http|ftp|https):\/\/.*?)($delimiters)/i",                    'url2link',    $String);
@@ -98,7 +98,7 @@ function htmlify($String, $Process_PRs = false) {
 	$String = preg_replace_callback("/([\w+=\-.!]+@[\w\-]+(\.[\w\-]+)+)/",                           'mail2link',   $String);
 	if ($Process_PRs) {
 		$String = preg_replace_callback("/\bPR[:\#]?\s*(\d+)([,\s\n]*(\d+))*/",                      'pr2link',     $String);
-		$String = preg_replace_callback("/[\b]?((advocacy|alpha|bin|conf|docs|gnu|i386|ia64|java|kern|misc|ports|powerpc|sparc64|standards|www)\/\d+)/", 'pr2link', $String);
+		$String = preg_replace_callback("/[\w\s]+((advocacy|alpha|bin|conf|docs|gnu|i386|ia64|java|kern|misc|ports|powerpc|sparc64|standards|www)\/\d+)/", 'pr2link', $String);
 	}
 
 	return $String;

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.3 2007-01-01 00:22:07 dan Exp $
+	# $Id: faq.php,v 1.4 2007-03-17 13:10:42 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -213,7 +213,7 @@ down you must read to find something you didn't already know.</P>
 
 	<TR><TD>
 	The source code for the entire FreeBSD operating system and the Ports tree
-	are stored in the official <A HREF="http://www.FreeBSD.org/cgi/cvsweb.cgi">FreeBSD 
+	are stored in the official <A HREF="<?echo FRESHPORTS_FREEBSD_CVS_URL; ?>">FreeBSD 
 	repository</A>.  Each time a change is committed to this <A HREF="http://cvshome.org/">CVS</A>
 	repository, a mail message is sent out to the cvs-all mailing list.  FreshPorts
 	takes these mail messages, parses them, and then loads them into a database.
@@ -389,7 +389,7 @@ make: fatal errors encountered -- cannot continue
 	</P>
 
 	<P><?php echo freshports_SanityTestFailure_Icon(); ?> Sanity Test Failures.  The maintainers and committers are
-	good.   But sometimes a mistake slips through.  This record the mistake to make it easier for others to correct
+	good.   But sometimes a mistake slips through.  This records the mistake to make it easier for others to correct
 	it if it goes unnoticed.  If you see this icon next to a commit, it failed a Sanity Test.
 	</P>
 
@@ -433,7 +433,7 @@ make: fatal errors encountered -- cannot continue
 
 	<TR><TD>
 	<P>
-	Yes.  Read <a href="/newsfeeds.php">all about it</a>!.
+	Yes.  Read <a href="/newsfeeds.php">all about it</a>!
 
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
@@ -558,7 +558,7 @@ Here are a few examples:
    <P>
 	Some ports (for example <a href="/net/">net</a>/<a href="/net/gift/">gift</a>) will have a section titled "Port Moves".
 	FreshPorts obtains information about ports from the commits to the 
-	<a href="http://www.freebsd.org/cgi/cvsweb.cgi/">CVS Repository</a>.  However, not all
+	<a href="<?php echo FRESHPORTS_FREEBSD_CVS_URL; ?>">CVS Repository</a>.  However, not all
 	changes to ports occur because of commits.  A manual change to the repository,
 	often referred to as a repo-copy, can move a port from one category to another.
 	Such a change is done to ensure the port history is retained.

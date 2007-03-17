@@ -13,7 +13,7 @@ This page documents the strategy used when processing
 <h2>Major Goal</h2>
 The major goal is to flag records [within the Commit History for a given port] that
 are affected by a VuXML entry.  The key to this is the ability to parse the XML
-provided in <a href="http://cvsweb.freebsd.org/ports/security/vuxml/vuln.xml?rev=.">ports/security/vuxml/vuln.xml</a>
+provided in <a href="<?php echo FRESHPORTS_FREEBSD_CVS_URL; ?>/ports/security/vuxml/vuln.xml?rev=.">ports/security/vuxml/vuln.xml</a>
 and then associate that information with a given commit.
 
 <h2>Processing Strategy</h2>
@@ -425,7 +425,7 @@ And now we know the CVS revision for the Makefile which was created by this comm
 <p>
 This URL gets us that revision:
 
-<a href="http://www.freebsd.org/cgi/cvsweb.cgi/~checkout~/ports/textproc/scrollkeeper/Makefile?rev=1.7&amp;content-type=text/plain">http://www.freebsd.org/cgi/cvsweb.cgi/~checkout~/ports/textproc/scrollkeeper/Makefile?rev=1.7&amp;content-type=text/plain</a>
+<a href="<?php echo FRESHPORTS_FREEBSD_CVS_URL; ?>/~checkout~/ports/textproc/scrollkeeper/Makefile?rev=1.7&amp;content-type=text/plain"><?php echo FRESHPORTS_FREEBSD_CVS_URL; ?>/~checkout~/ports/textproc/scrollkeeper/Makefile?rev=1.7&amp;content-type=text/plain</a>
 
 <p>
 From that, we can get PORTEPOCH.  If that is not equal to the current value of 

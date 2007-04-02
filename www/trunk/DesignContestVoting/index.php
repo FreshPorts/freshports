@@ -9,7 +9,7 @@ Option C is what we have now.
 
 <p>
 I will be asking for votes.  Votes will be accepted only from logged in FreshPorts 
-users with accounts created before today.  No, you can't create a bunch of new accounts
+users with accounts created before or before 1 April 2007 at 11:45 pm EST.  No, you can't create a bunch of new accounts
 now and load the voting.
 
 <p>

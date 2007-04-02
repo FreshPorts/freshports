@@ -1,6 +1,6 @@
 <?php
   #
-  # $Id: vote.php,v 1.1 2007-04-02 01:53:18 dan Exp $
+  # $Id: vote.php,v 1.2 2007-04-02 03:34:14 dan Exp $
   #
   # Copyright (c) 1998-2003 DVL Software Limited
   #
@@ -36,6 +36,10 @@
       echo 'You have already voted.  Thank you';
     } else {
 ?>
+<p>
+Read about the <a href="http://news.freshports.org/2007/01/30/freshports-design-contest/">FreshPorts Design Contest</a> first. Then
+<a href="/DesignContestVoting/">review the options</a> for the future.  You can vote for the two submissions
+or for the status quo (option C).
 <p>
 NOTE: You may vote only once.  You cannot amend your vote.
 Play nice.

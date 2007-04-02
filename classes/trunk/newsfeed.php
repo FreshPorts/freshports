@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: newsfeed.php,v 1.4 2007-03-08 21:38:55 dan Exp $
+	# $Id: newsfeed.php,v 1.5 2007-04-02 20:14:53 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -125,9 +125,9 @@ LIMIT 30";
 	$ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['SERVER_NAME']);
 	
 	$item = new FeedItem(); 
-	$item->title       = "NEWSFEEDS HAVE MOVED!";
-	$item->link        = 'http://' . $ServerName . '/backend/';
-	$item->description = "Please read, newsfeed URLs have changed.";
+	$item->title       = "FreshPorts Design Contest!";
+	$item->link        = 'http://' . $ServerName . '/DesignContestVoting/';
+	$item->description = "Please read + vote for the new look FreshPorts.";
 
 	//optional
 	//item->descriptionTruncSize = 500;
@@ -136,7 +136,7 @@ LIMIT 30";
 	$item->date   = strtotime("now");
 	$item->source = $_SERVER['HTTP_HOST']; 
 	$item->author = 'editor@FreshPorts.org'; 
-	$item->guid   = 'http://www.freshports.org/phorum/read.php?f=1&i=1133&t=1133';
+	$item->guid   = 'http://news.freshports.org/2007/01/30/freshports-design-contest/';
  
 	$rss->addItem($item); 
 

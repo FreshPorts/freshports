@@ -13,7 +13,9 @@ users with accounts created before today.  No, you can't create a bunch of new a
 now and load the voting.
 
 <p>
-Voting will be open for two weeks.
+Voting is now open and will close on April 14, at some random time.  :)
+ When you are logged in, you'll see a link
+to the voting pages.
 
 <p>
 

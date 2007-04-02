@@ -16,14 +16,36 @@ function ProcessVote($db, $UserID, $choice1, $choice2, $choice3) {
     return 'Please make a selection for each choice.';
   }
 
-  if ($choice1 === $choice2 || $choice1 === $choice3 || $choice2 == $choice3) {
+  if ($choice1 === $choice2 || $choice1 === $choice3 || $choice2 === $choice3) {
     return 'Please do not vote for the same choice twice.';
+  }
+  
+  $sql = "INSERT INTO design_results (user_id, choice1, choice2, choice3) values (" .
+           pg_escape_string($UserID)   . ", '"  .
+           pg_escape_string($choice1)  . "', '" .
+           pg_escape_string($choice2)  . "', '" .
+           pg_escape_string($choice3)  . "')";      
+  $result = pg_exec($db, $sql);
+  if ($result) {
+    return 'Your vote has been recorded.  Thank you.';
+  } else {
+    syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ": $sql " . pg_last_error($db));
+    return 'SQL ERROR';
   }
 }
 
 function AlreadyVoted($db, $ID) {
-  $sql = "SELECT count(*) FROM design_results WHERE user_id = $ID";
-  return false;
+  $sql = "SELECT count(*) AS count FROM design_results WHERE user_id = $ID";
+  $result = pg_exec($db, $sql);
+  if ($result) {
+    $myrow = pg_fetch_array($result);
+    $count = $myrow['count'];
+  } else {
+    syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ": $sql " . pg_last_error($db));
+    die('SQL ERROR');
+  }
+
+  return $count != 0;
 }
 
 function myhash($value) {

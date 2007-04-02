@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.12 2007-03-08 01:44:19 dan Exp $
+	# $Id: freshports.php,v 1.13 2007-04-02 03:28:31 dan Exp $
 	#
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
@@ -1552,6 +1552,7 @@ function freshports_SideBar() {
 		}
 		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/logout.php',                 $args,                  "Logout",                  "Logout of the website"                  ) . '</FONT><br>';
 		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/my-flagged-commits.php',                 $args,      "My Flagged Commits",      "List of commits you have flagged"       ) . '</FONT><br>';
+		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/vote.php',                   $args,      "Vote for design!",      "Vote for the design contest"       ) . '</FONT><br>';
 	} else {
 		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/login.php',                  "?origin=$OriginLocal", "User Login",              "Login to the website"                   ) . '</FONT><br>';
 		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/new-user.php',               "?origin=$OriginLocal", "Create account",          "Create an account"                      ) . '</FONT><br>';
@@ -1886,7 +1887,8 @@ function freshports_ConditionalGetUnix($UnixTime) {
 	//   http://fishbowl.pastiche.org/archives/001132.html
 	// Based upon code from http://simon.incutio.com/archive/2003/04/23/conditionalGet
 
-	$ETag     = gmdate('Y-m-d H:i:s', $UnixTime);
+	$ETag         = gmdate('Y-m-d H:i:s', $UnixTime);
+	$LastModified = gmdate(LAST_MODIFIED_FORMAT, $UnixTime);
 
 	// Send the headers
 	header('Last-Modified: ' . $LastModified);

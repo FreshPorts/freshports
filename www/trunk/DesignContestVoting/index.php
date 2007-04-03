@@ -33,6 +33,10 @@ to the voting pages.
 <h2>Option B</h2>
 <ul>
 <li><a href="B/index.html">home page</a></li>
+<li><a href="B/bacula.html">sample port</a></li>
+<li><a href="B/sysutils.html">sample category</a></li>
+<li><a href="B/categories.html">all categories</a></li>
+<li><a href="B/search.html">search page</a></li>
 </ul>
 
 <h2>Option C</h2>

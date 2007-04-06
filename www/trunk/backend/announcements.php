@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: announcements.php,v 1.2 2006-12-17 12:06:21 dan Exp $
+	# $Id: announcements.php,v 1.3 2007-04-06 16:09:03 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -37,6 +37,7 @@ if (IsSet($_REQUEST['add'])) {
 	$Announcement = new Announcement($db);
 
 	$Announcement->TextSet     ($_REQUEST['announcement']);
+	$Announcement->TextPlainSet($_REQUEST['announcement_plain']);
 	$Announcement->StartDateSet($_REQUEST['start_date']);
 	$Announcement->EndDateSet  ($_REQUEST['end_date']);
 
@@ -48,6 +49,7 @@ if (IsSet($_REQUEST['update'])) {
 	$Announcement = new Announcement($db);
 
 	$Announcement->TextSet     ($_REQUEST['announcement']);
+	$Announcement->TextPlainSet($_REQUEST['announcement_plain']);
 	$Announcement->StartDateSet($_REQUEST['start_date']);
 	$Announcement->EndDateSet  ($_REQUEST['end_date']);
 	$Announcement->IDSet       ($_REQUEST['id']);
@@ -133,6 +135,16 @@ $HTML .= '<INPUT id="end_date"   name="end_date"   value="' . $Announcement->End
 $HTML .= '</td>'  . "\n";
 
 $HTML .= '</tr>'  . "\n";
+
+$HTML .= '<tr>'  . "\n";
+
+$HTML .= '<td><b>Plain text Version</b>'  . "\n";
+$HTML .= '<TEXTAREA NAME="announcement_plain" ROWS="10" COLS="60">'          . "\n";
+$HTML .= htmlspecialchars($Announcement->TextPlainGet());
+$HTML .= '</TEXTAREA>';
+$HTML .= '</td>'  . "\n";
+$HTML .= '</tr>'  . "\n";
+
 
 $ControlName  = IsSet($_REQUEST['edit']) ? 'update' : 'add';
 $ControlValue = IsSet($_REQUEST['edit']) ? 'Update' : 'Add';

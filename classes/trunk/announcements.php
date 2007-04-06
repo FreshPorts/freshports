@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: announcements.php,v 1.2 2006-12-17 11:37:18 dan Exp $
+	# $Id: announcements.php,v 1.3 2007-04-06 16:09:51 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -14,6 +14,7 @@ class Announcement {
 
 	var $id;
 	var $text;
+	var $text_plain;
 	var $start_date;
 	var $end_date;
 
@@ -39,6 +40,14 @@ class Announcement {
 		return $this->text;
 	}
 
+	function TextPlainSet($text_plain) {
+		$this->text_plain = $text_plain;
+	}
+
+	function TextPlainGet() {
+		return $this->text_plain;
+	}
+
 	function StartDateSet($start_date) {
 		$this->start_date = $start_date;
 	}
@@ -58,8 +67,9 @@ class Announcement {
 	function PopulateValues($myrow) {
 		$this->id			= $myrow["id"];
 		$this->text			= $myrow["text"];
+		$this->text_plain	= $myrow["text_plain"];
 		$this->start_date	= $myrow["start_date"];
-		$this->end_date	= $myrow["end_date"];
+		$this->end_date	    = $myrow["end_date"];
 	}
 
 	function Delete() {
@@ -82,7 +92,7 @@ DELETE from announcements
 	function Insert() {
 		# delete the ignore entry for this commit/port combination
 
-		$sql = 'INSERT INTO announcements (text';
+		$sql = 'INSERT INTO announcements (text, plain_text';
 
 		if ($this->start_date != '') {
 			$sql .= ', start_date';
@@ -92,7 +102,7 @@ DELETE from announcements
 			$sql .= ', end_date';
 		}
 
-		$sql .= ") values ('" . AddSlashes($this->text) . "'";
+		$sql .= ") values ('" . AddSlashes($this->text) . "', '" . AddSlashes($this->text_plain) . "'";
 
 		if ($this->start_date != '') {
 			$sql .= ", '" . AddSlashes($this->start_date) . "'";
@@ -119,7 +129,8 @@ DELETE from announcements
 	function Update() {
 		# delete the ignore entry for this commit/port combination
 
-		$sql = "UPDATE announcements set text = '" . AddSlashes($this->text) . "', start_date = ";
+		$sql = "UPDATE announcements set text = '" . AddSlashes($this->text) . 
+		          "', text_plain = '" . AddSlashes($this->text_plain) . "', start_date = ";
 
 		if ($this->start_date != '') {
 			$sql .= "'" . AddSlashes($this->start_date) . "'";
@@ -174,6 +185,7 @@ SELECT *
 		$sql = "
 		SELECT id,
              text,
+             text_plain,
              start_date,
              end_date
         FROM announcements
@@ -200,6 +212,7 @@ SELECT *
 		$sql = "
 		SELECT id,
              text,
+             text_plain,
              start_date,
              end_date
         FROM announcements

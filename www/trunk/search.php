@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.2 2006-12-17 12:06:16 dan Exp $
+	# $Id: search.php,v 1.3 2007-04-12 00:31:13 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -64,7 +64,8 @@ $SearchTypeToFieldMap = array(
 	SEARCH_FIELD_DEPENDS_ALL		=> 'ports.depends_all',
 	SEARCH_FIELD_MAINTAINER			=> 'ports.maintainer',
 	SEARCH_FIELD_COMMITMESSAGE		=> 'commit_log.description',
-	SEARCH_FIELD_COMMITTER			=> 'commit_log.committer'
+	SEARCH_FIELD_COMMITTER			=> 'commit_log.committer',
+	SEARCH_FIELD_PATHNAME           => 'EP.pathname'
 );
 
 $sqlExtraFields = ''; # will hold extra fields we need, such as watch list
@@ -142,6 +143,29 @@ function WildCardQuery($stype, $Like, $query) {
 		exit;
 	}
 
+	switch ($stype) {
+		case SEARCH_FIELD_NAME:
+		case SEARCH_FIELD_PACKAGE:
+		case SEARCH_FIELD_LATEST_LINK:
+        case SEARCH_FIELD_SHORTDESCRIPTION:
+        case SEARCH_FIELD_LONGDESCRIPTION:
+        case SEARCH_FIELD_DEPENDS_BUILD:
+        case SEARCH_FIELD_DEPENDS_LIB:
+        case SEARCH_FIELD_DEPENDS_RUN:
+        case SEARCH_FIELD_DEPENDS_ALL:
+		case SEARCH_FIELD_MAINTAINER:
+		case SEARCH_FIELD_COMMITTER:
+		case SEARCH_FIELD_PATHNAME:
+		case SEARCH_FIELD_COMMITMESSAGE:
+          # all is well.  we have a valid value.
+          break;
+
+        default:
+          # bad value.
+          # ERROR
+          syslog(LOG_ERR, 'bad search string: ' . $_SERVER['QUERY_STRING']);
+          die('something terrible has happened!');
+    }
 	#
 	# ensure deleted has an appropriate value
 	#
@@ -249,6 +273,9 @@ if ($method == 'soundex') {
 	}
 }
 
+# are we setting the whole SQL condition or just the operator and the value?
+$sqlSetAll = false;
+
 if ($Debug) echo "at line " . __LINE__ . " sqlUserSpecifiedCondition='$sqlUserSpecifiedCondition'<br>";
 if ($Debug) echo "at line " . __LINE__ . " stype='$stype'<br>";
 
@@ -307,6 +334,7 @@ switch ($method) {
 		break;
 
 	case 'soundex':
+	    $sqlSetAll = true;
 		switch ($stype) {
 			case SEARCH_FIELD_DEPENDS_ALL:
 				$sqlUserSpecifiedCondition = "\n     (levenshtein(substring(ports.depends_build FOR 255), '$query') < " . VEVENSHTEIN_MATCH . 
@@ -437,7 +465,7 @@ switch ($stype) {
     require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
   
 	$Commits = new CommitsByDescription($db);
-	$Commits->ConditionSet($sqlUserSpecifiedCondition);
+    $Commits->ConditionSet($sqlUserSpecifiedCondition);
 	$Commits->UserIDSet($User->id);
 
     $Commits->Debug = $Debug;
@@ -475,7 +503,13 @@ switch ($stype) {
 
 	$Commits = new CommitsByTreeLocation($db);
 	$Commits->UserIDSet($User->id);
-	$Commits->TreePathConditionSet($sqlUserSpecifiedCondition);
+	if ($sqlSetAll) {
+	  if ($Debug) echo 'invoking TreePathConditionSetAll() with ' . $sqlUserSpecifiedCondition;
+      $Commits->TreePathConditionSetAll($sqlUserSpecifiedCondition);
+    } else {
+	  if ($Debug) echo 'invoking TreePathConditionSet() with ' . $sqlUserSpecifiedCondition;
+      $Commits->TreePathConditionSet($sqlUserSpecifiedCondition);
+    }
 
     $Commits->Debug = $Debug;
 

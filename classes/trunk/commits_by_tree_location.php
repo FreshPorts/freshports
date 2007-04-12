@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits_by_tree_location.php,v 1.2 2006-12-17 11:37:19 dan Exp $
+	# $Id: commits_by_tree_location.php,v 1.3 2007-04-12 00:20:29 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -22,6 +22,12 @@ class CommitsByTreeLocation extends commits {
 	}
 	
 	function TreePathConditionSet($TreePathCondition) {
+		# this function assumes you have the operator and the value.
+		$this->TreePathCondition ="EP.pathname   " . $TreePathCondition;
+	}
+
+	function TreePathConditionSetAll($TreePathCondition) {
+		# this function assumes you are setting the entire condition.
 		$this->TreePathCondition = $TreePathCondition;
 	}
 
@@ -31,7 +37,7 @@ class CommitsByTreeLocation extends commits {
 		$sql = "
 			SELECT count(DISTINCT CL.id) AS count
 			  FROM element_pathname EP, commit_log_ports_elements CLPE, commit_log CL
-			 WHERE EP.pathname   " . $this->TreePathCondition . "
+			 WHERE ". $this->TreePathCondition . "
 			   AND EP.element_id = CLPE.element_ID
 			   AND CL.id         = CLPE.commit_log_id";
    
@@ -54,7 +60,7 @@ class CommitsByTreeLocation extends commits {
 		$sql = "
 			SELECT count(DISTINCT CL.id) AS count
 			  FROM element_pathname EP, commit_log_elements CLE, commit_log CL
-			 WHERE EP.pathname   " . $this->TreePathCondition . "
+			 WHERE " . $this->TreePathCondition . "
 			   AND EP.element_id = CLE.element_ID
 			   AND CL.id         = CLE.commit_log_id";
    
@@ -122,7 +128,7 @@ class CommitsByTreeLocation extends commits {
 		$sql .= "
 	  WHERE commit_log.id IN (SELECT tmp.id FROM (SELECT DISTINCT CL.id, CL.commit_date
   FROM element_pathname EP, commit_log_elements CLE, commit_log CL
- WHERE EP.pathname   " . $this->TreePathCondition . "
+ WHERE " . $this->TreePathCondition . "
    AND EP.element_id = CLE.element_ID
    AND CL.id         = CLE.commit_log_id
 ORDER BY CL.commit_date DESC ";
@@ -199,7 +205,7 @@ ORDER BY CL.commit_date DESC ";
 		$sql .= "
 	  WHERE commit_log.id IN (SELECT tmp.ID FROM (SELECT DISTINCT CL.id, CL.commit_date
   FROM element_pathname EP, commit_log_elements CLE, commit_log CL
- WHERE EP.pathname   " . $this->TreePathCondition . "
+ WHERE " . $this->TreePathCondition . "
    AND EP.element_id = CLE.element_ID
    AND CL.id         = CLE.commit_log_id
 ORDER BY CL.commit_date DESC ";

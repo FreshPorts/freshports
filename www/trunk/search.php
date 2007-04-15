@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.3 2007-04-12 00:31:13 dan Exp $
+	# $Id: search.php,v 1.4 2007-04-15 17:36:32 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -323,11 +323,12 @@ switch ($method) {
 				break;
 
 			default:
+                $sqlSetAll = true;
 				$FieldName = $SearchTypeToFieldMap[$stype];
 				if ($casesensitivity == 'casesensitive') {
-					$sqlUserSpecifiedCondition = "\n     $FieldName = '$query'";
+					$sqlUserSpecifiedCondition = "     $FieldName = '$query'";
 				} else {
-					$sqlUserSpecifiedCondition = "\n     lower($FieldName) = lower('$query')";
+					$sqlUserSpecifiedCondition = "     lower($FieldName) = lower('$query')";
 				}
 				break;
 		}

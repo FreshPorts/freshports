@@ -17,7 +17,10 @@ Voting is now open and will close on April 14, at some random time.  :)
  When you are logged in, you'll see a link
 to the voting pages.
 
+<h2>Voting has closed</h2>
+
 <p>
+Note: voting has now closed.
 
 <h2>Option A</h2>
 

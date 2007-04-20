@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: announcements.php,v 1.3 2007-04-06 16:09:51 dan Exp $
+	# $Id: announcements.php,v 1.4 2007-04-20 02:07:23 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -92,7 +92,7 @@ DELETE from announcements
 	function Insert() {
 		# delete the ignore entry for this commit/port combination
 
-		$sql = 'INSERT INTO announcements (text, plain_text';
+		$sql = 'INSERT INTO announcements (text, text_plain';
 
 		if ($this->start_date != '') {
 			$sql .= ', start_date';

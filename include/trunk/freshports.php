@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.13 2007-04-02 03:28:31 dan Exp $
+	# $Id: freshports.php,v 1.14 2007-04-20 00:48:23 dan Exp $
 	#
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
@@ -1552,7 +1552,6 @@ function freshports_SideBar() {
 		}
 		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/logout.php',                 $args,                  "Logout",                  "Logout of the website"                  ) . '</FONT><br>';
 		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/my-flagged-commits.php',                 $args,      "My Flagged Commits",      "List of commits you have flagged"       ) . '</FONT><br>';
-		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/vote.php',                   $args,      "Vote for design!",      "Vote for the design contest"       ) . '</FONT><br>';
 	} else {
 		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/login.php',                  "?origin=$OriginLocal", "User Login",              "Login to the website"                   ) . '</FONT><br>';
 		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/new-user.php',               "?origin=$OriginLocal", "Create account",          "Create an account"                      ) . '</FONT><br>';

@@ -1,24 +1,28 @@
 <?php
 	#
-	# $Id: missing-non-port.php,v 1.2 2006-12-17 12:06:12 dan Exp $
+	# $Id: missing-non-port.php,v 1.3 2007-06-03 15:44:47 dan Exp $
 	#
-	# Copyright (c) 2003-2006 DVL Software Limited
+	# Copyright (c) 2003-2007 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
     require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits_by_tree_location.php');
     require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/cache-file.php');
 	require_once('Pager/Pager.php');
-
+	
 function freshports_NonPortDescription($db, $element_record) {
 	GLOBAL $TableWidth;
 	GLOBAL $FreshPortsTitle;
 
+	$Debug = 0;
+
 	freshports_ConditionalGet(freshports_LastModified());
 
 	header("HTTP/1.1 200 OK");
-	$Title = preg_replace('|^/?ports/|', '', $element_record->element_pathname);
+	$Title    = preg_replace('|^/?ports/|', '', $element_record->element_pathname);
+	$FileName = preg_replace('|^/?ports/|', '', $element_record->element_pathname);
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
@@ -43,16 +47,60 @@ function freshports_NonPortDescription($db, $element_record) {
 <?
 	GLOBAL $User;
 
+	# these two options must be the last on the line.  And as such are mutually exclusive
+	define('BYPASSCACHE',  'bypasscache=1');  # do not read the cache for display
+	define('REFRESHCACHE', 'refreshcache=1'); # refresh the cache
+
+	$BypassCache  = substr($_SERVER["REQUEST_URI"], strlen($_SERVER["REQUEST_URI"]) - strlen(BYPASSCACHE))  == BYPASSCACHE;
+	$RefreshCache = substr($_SERVER["REQUEST_URI"], strlen($_SERVER["REQUEST_URI"]) - strlen(REFRESHCACHE)) == REFRESHCACHE;
+
 	$PageNumber = 1;
-	parse_str($_SERVER['REDIRECT_QUERY_STRING'], $query_parts);
-	if (IsSet($query_parts['page'])  && Is_Numeric($query_parts['page'])) {
-		$PageNumber = intval($query_parts['page']);
-		if ($PageNumber != $query_parts['page'] || $PageNumber < 1) {
-			$PageNumber = 1;
+	if (IsSet($_SERVER['REDIRECT_QUERY_STRING'])) {
+		parse_str($_SERVER['REDIRECT_QUERY_STRING'], $query_parts);
+		if (IsSet($query_parts['page'])  && Is_Numeric($query_parts['page'])) {
+			$PageNumber = intval($query_parts['page']);
+			if ($PageNumber != $query_parts['page'] || $PageNumber < 1) {
+				$PageNumber = 1;
+			}
 		}
 	}
 
 	$NumCommitsPerPage = $User->page_size;
+	
+	syslog(LOG_NOTICE, __FILE__ . '::' . __LINE__);
+	$Cache = new CacheFile();
+	$Cache->PageSize = $User->page_size;
+	$result = $Cache->Retrieve($FileName, $PageNumber);
+	if (!$result && !$BypassCache && !$RefreshCache) {
+		if ($Debug) echo "found something from the cache<br>\n";
+		$HTML = $Cache->CacheDataGet();
+		#
+		# we need to know the element_id of this port
+		# and the whether or not it is on the person's watch list
+		# let's create a special function for that!
+		#
+		$EndOfFirstLine = strpos($HTML, "\n");
+		if ($EndOfFirstLine == false) {
+			die('Internal error: I was expecting an ElementID and found nothing');
+		}
+		# extract the ElementID from the cache
+		$ElementID  = intval(substr($HTML, 0, $EndOfFirstLine));
+		if ($ElementID == 0) {
+			syslog(LOG_ERR, "Extract of ElementID from cache failed.  Is cache corrupt/deprecated? port was $category/$port");
+			die('sorry, I encountered a problem with the cache.  Please send the URL and this message to the webmaster.');
+		}
+
+		if ($User->id) {
+			$OnWatchList = freshports_OnWatchList($db, $User->id, $ElementID);
+		} else {
+			$OnWatchList = 0;
+		}
+
+		$HTML = substr($HTML, $EndOfFirstLine + 1);
+	} else {
+		if ($Debug) echo "found NOTHING in cache<br>\n";
+		$HTML = '';
+
 
     $Commits = new CommitsByTreeLocation($db);
     $Commits->SetLimit(100);
@@ -121,6 +169,15 @@ function freshports_NonPortDescription($db, $element_record) {
 
 	$HTML .= $NumCommitsHTML;
 
+	
+	# If we are not reading 
+	if (!$BypassCache || $RefreshCache) {
+		$Cache->CacheDataSet($element_record->{'id'} . "\n" . $HTML);
+		$Cache->Add($FileName, $PageNumber);
+	}
+}
+
+	
 	echo $HTML;
 	echo "</table>\n"
 

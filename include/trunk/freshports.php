@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.14 2007-04-20 00:48:23 dan Exp $
+	# $Id: freshports.php,v 1.15 2007-06-03 15:56:18 dan Exp $
 	#
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
@@ -1123,6 +1123,8 @@ function freshports_PortCommits($port, $PageNumber = 1, $NumCommitsPerPage = 100
 
 	if ($PageLinks != '') {
 		$PageLinksHTML .= '<p align="center">' . $PageLinks . '</p>';
+	} else {
+		$PageLinksHTML = '';
 	}
 
 	$HTML .= $NumCommitsHTML . $PageLinksHTML;
@@ -1984,5 +1986,6 @@ function freshports_OnWatchList($db, $UserID, $ElementID) {
 }
 
 openlog('FreshPorts', LOG_PID, LOG_SYSLOG);
+syslog(LOG_NOTICE, $_SERVER['SCRIPT_URL']);
 
 ?>

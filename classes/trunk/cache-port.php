@@ -1,9 +1,11 @@
 <?php
 	#
-	# $Id: cache-port.php,v 1.4 2007-02-13 23:13:13 dan Exp $
+	# $Id: cache-port.php,v 1.5 2007-06-03 15:46:18 dan Exp $
 	#
 	# Copyright (c) 2006-2007 DVL Software Limited
 	#
+
+	require_once('cache.php');
 
 // base class for caching
 // Supplies methods for adding, removing, and retrieving.
@@ -35,24 +37,14 @@ class CachePort extends Cache {
 	function Add($Category, $Port, $CacheType = CACHE_PORT_COMMITS, $PageNum = 1) {
 		$this->_Log("CachePort: Adding for $Category/$Port");
 
-		$CategoryCacheDir = $this->CacheDir . '/ports/' . $Category;
+		$CacheDir = $this->CacheDir . '/ports/' . $Category . '/' . $Port;
 		$Key = $this->_PortKey($Category, $Port, $CacheType, $PageNum);
 		 
-		if (!file_exists($CategoryCacheDir)) {
+		if (!file_exists($CacheDir)) {
 			$this->_Log("CachePort: creating directory $CategoryCacheDir");
 			$old_mask = umask(0000);
-			if (!mkdir($CategoryCacheDir, 0774)) {
-				$this->_Log("CachePort: unable to create directory $CategoryCacheDir");
-			}
-			umask($old_mask);
-		}
-
-		$PortCacheDir = $CategoryCacheDir . '/' . $Port;
-		if (!file_exists($PortCacheDir)) {
-			$this->_Log("CachePort: creating directory $PortCacheDir");
-			$old_mask = umask(0000);
-			if (mkdir($PortCacheDir, 0774)) {
-				$this->_Log("CachePort: unable to create directory $PortCacheDir");
+			if (!mkdir($CategoryCacheDir, 0774, true)) {
+				$this->_Log("CachePort: unable to create directory $CacheDir");
 			}
 			umask($old_mask);
 		}

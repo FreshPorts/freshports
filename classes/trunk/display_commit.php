@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: display_commit.php,v 1.5 2007-06-03 03:17:43 dan Exp $
+	# $Id: display_commit.php,v 1.6 2007-06-03 15:46:39 dan Exp $
 	#
 	# Copyright (c) 2003-2006 DVL Software Limited
 	#
@@ -88,7 +88,7 @@ class DisplayCommit {
 		$i=0;
 		$GlobalHideLastChange = "N";
 		for ($i = 0; $i < $NumRows; $i++) {
-			$myrow = pg_fetch_array ($this->result, $i);
+			$myrow = pg_fetch_array($this->result, $i);
 			$mycommit = new CommitRecord();
 			$mycommit->PopulateValues($myrow);
 			$commits[$i] = $mycommit;
@@ -243,14 +243,14 @@ class DisplayCommit {
 
 					} else {
 						# This is a non-port element... 
-						$this->HTML .= $mycommit->revision_name . ' ';
+						$this->HTML .= $mycommit->revision . ' ';
 						$this->HTML .= '<big><B>';
 						$PathName = preg_replace('|^/?ports/|', '', $mycommit->pathname);
 						if ($PathName != $mycommit->pathname) {
 							$this->HTML .= '<a href="/' . $PathName . '">' . $PathName . '</a>';
 							$this->HTML .= "</B></BIG>\n";
 						} else {
-							$this->HTML .= '<a href="' . FRESHPORTS_FREEBSD_CVS_URL . $PathName . '#rev' . $mycommit->revision_name . '">' . $PathName . '</a>';
+							$this->HTML .= '<a href="' . FRESHPORTS_FREEBSD_CVS_URL . $PathName . '#rev' . $mycommit->revision . '">' . $PathName . '</a>';
 							$this->HTML .= "</B></BIG>\n";
 						}
 					}

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits_by_tree_location.php,v 1.3 2007-04-12 00:20:29 dan Exp $
+	# $Id: commits_by_tree_location.php,v 1.4 2007-06-03 15:48:25 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -169,26 +169,50 @@ ORDER BY CL.commit_date DESC ";
 	function Fetch() {
 		$sql = "
 		SELECT DISTINCT
-			commit_log.commit_date - SystemTimeAdjust()                                                                 AS commit_date_raw,
-			commit_log.id                                                                                               AS commit_log_id,
-			commit_log.encoding_losses                                                                                  AS encoding_losses,
-			commit_log.message_id                                                                                       AS message_id,
-			commit_log.committer                                                                                        AS committer,
-			commit_log.description                                                                                      AS commit_description,
-			to_char(commit_log.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')                                         AS commit_date,
-			to_char(commit_log.commit_date - SystemTimeAdjust(), 'HH24:MI')                                             AS commit_time,
+			CL.commit_date - SystemTimeAdjust()                                                                 AS commit_date_raw,
+			CL.id                                                                                               AS commit_log_id,
+			CL.encoding_losses                                                                                  AS encoding_losses,
+			CL.message_id                                                                                       AS message_id,
+			CL.committer                                                                                        AS committer,
+			CL.description                                                                                      AS commit_description,
+			to_char(CL.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')                                         AS commit_date,
+			to_char(CL.commit_date - SystemTimeAdjust(), 'HH24:MI')                                             AS commit_time,
 			element.name                                                                                                AS port,
 			element_pathname(element.id)                                                                                AS pathname,
 			element.status                                                                                              AS status,
 			element_pathname.pathname                            as element_pathname,
-			commit_log_elements.revision_name as revision_name ";
+			CL.message_subject,
+			NULL AS port_id,
+			0    AS needs_refresh,
+			NULL AS forbidden,
+			NULL AS broken,
+			NULL AS deprecated,
+			NULL AS ignore,
+			commit_log_elements.element_id,
+			NULL AS version,
+			NULL AS epoch,
+			NULL as date_added,
+			NULL AS short_description,
+			NULL AS category_id,
+			NULL AS category,
+			NULL AS watch,
+			NULL AS vulnerable_current,
+			NULL AS vulnerable_past,
+			NULL AS restricted,
+			NULL AS no_cdrom,
+			NULL AS expiration_date,
+			NULL AS is_interactive,
+			NULL AS only_for_archs,
+			NULL AS not_for_archs,
+			NULL AS stf_message,
+			commit_log_elements.revision_name as revision ";
 		if ($this->UserID) {
 				$sql .= ",
 	        onwatchlist ";
 		}
 
 		$sql .= "
-    FROM commit_log_elements, commit_log, element_pathname, element ";
+    FROM commit_log_elements, commit_log CL, element_pathname, element ";
 
 		if ($this->UserID) {
 				$sql .= "
@@ -203,7 +227,7 @@ ORDER BY CL.commit_date DESC ";
 		}
 
 		$sql .= "
-	  WHERE commit_log.id IN (SELECT tmp.ID FROM (SELECT DISTINCT CL.id, CL.commit_date
+	  WHERE CL.id IN (SELECT tmp.ID FROM (SELECT DISTINCT CL.id, CL.commit_date
   FROM element_pathname EP, commit_log_elements CLE, commit_log CL
  WHERE " . $this->TreePathCondition . "
    AND EP.element_id = CLE.element_ID
@@ -219,7 +243,7 @@ ORDER BY CL.commit_date DESC ";
 		}
 
    		$sql .= ") AS tmp)
-	    AND commit_log_elements.commit_log_id = commit_log.id
+	    AND commit_log_elements.commit_log_id = CL.id
 	    AND commit_log_elements.element_id    = element.id
         AND element_pathname.element_id       = element.id
    ORDER BY 1 desc,

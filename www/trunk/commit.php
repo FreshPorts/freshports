@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.2 2006-12-17 12:06:09 dan Exp $
+	# $Id: commit.php,v 1.3 2007-06-03 03:18:21 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -202,6 +202,7 @@ ORDER BY port, pathname";
 
 			$DisplayCommit = new DisplayCommit($database, $result);
 			$DisplayCommit->SetShowAllPorts(true);
+			$DisplayCommit->SetShowEntireCommit(true);
 			$DisplayCommit->SanityTestFailure = true;
 			$RetVal = $DisplayCommit->CreateHTML();
 	

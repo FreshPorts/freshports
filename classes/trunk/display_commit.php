@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: display_commit.php,v 1.4 2007-02-12 22:02:03 dan Exp $
+	# $Id: display_commit.php,v 1.5 2007-06-03 03:17:43 dan Exp $
 	#
 	# Copyright (c) 2003-2006 DVL Software Limited
 	#
@@ -25,7 +25,8 @@ class DisplayCommit {
 	
 	var $FlaggedCommits;
 	
-	var $ShowAllPorts = FALSE;	# by default we show only the first few ports.
+	var $ShowAllPorts     = FALSE;	# by default we show only the first few ports.
+	var $ShowEntireCommit = 0;		# by default we show only the first few lines of the commit message.
 	
 	var $SanityTestFailure = FALSE;
 
@@ -48,6 +49,10 @@ class DisplayCommit {
 	
 	function SetShowAllPorts($ShowAllPorts) {
 		$this->ShowAllPorts = $ShowAllPorts;
+	}
+
+	function SetShowEntireCommit($ShowEntireCommit) {
+		$this->ShowEntireCommit = $ShowEntireCommit;
 	}
 
 	function CreateHTML() {
@@ -261,8 +266,19 @@ class DisplayCommit {
 			$i = $j - 1;
 
 			$this->HTML .= "\n<BLOCKQUOTE>";
-
-			$this->HTML .= freshports_CommitDescriptionPrint($mycommit->commit_description, $mycommit->encoding_losses, $freshports_CommitMsgMaxNumOfLinesToShow, freshports_MoreCommitMsgToShow($mycommit->message_id, $freshports_CommitMsgMaxNumOfLinesToShow));
+			
+			GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;			
+			if ($this->ShowEntireCommit) {
+				$Lines = 0;
+			} else {
+				$Lines = $freshports_CommitMsgMaxNumOfLinesToShow;
+			}
+			
+			$this->HTML .= freshports_CommitDescriptionPrint(
+			                    $mycommit->commit_description,
+			                    $mycommit->encoding_losses,
+			                    $Lines,
+			                    freshports_MoreCommitMsgToShow($mycommit->message_id, $Lines));
 
 			$this->HTML .= "\n</BLOCKQUOTE>\n</TD></TR>\n\n\n";
 		}

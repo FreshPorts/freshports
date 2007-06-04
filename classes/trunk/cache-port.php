@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: cache-port.php,v 1.5 2007-06-03 15:46:18 dan Exp $
+	# $Id: cache-port.php,v 1.6 2007-06-04 02:16:33 dan Exp $
 	#
 	# Copyright (c) 2006-2007 DVL Software Limited
 	#
@@ -41,9 +41,9 @@ class CachePort extends Cache {
 		$Key = $this->_PortKey($Category, $Port, $CacheType, $PageNum);
 		 
 		if (!file_exists($CacheDir)) {
-			$this->_Log("CachePort: creating directory $CategoryCacheDir");
+			$this->_Log("CachePort: creating directory $CacheDir");
 			$old_mask = umask(0000);
-			if (!mkdir($CategoryCacheDir, 0774, true)) {
+			if (!mkdir($CacheDir, 0774, true)) {
 				$this->_Log("CachePort: unable to create directory $CacheDir");
 			}
 			umask($old_mask);

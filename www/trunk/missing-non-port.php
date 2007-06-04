@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-non-port.php,v 1.3 2007-06-03 15:44:47 dan Exp $
+	# $Id: missing-non-port.php,v 1.4 2007-06-04 03:37:47 dan Exp $
 	#
 	# Copyright (c) 2003-2007 DVL Software Limited
 	#
@@ -67,7 +67,6 @@ function freshports_NonPortDescription($db, $element_record) {
 
 	$NumCommitsPerPage = $User->page_size;
 	
-	syslog(LOG_NOTICE, __FILE__ . '::' . __LINE__);
 	$Cache = new CacheFile();
 	$Cache->PageSize = $User->page_size;
 	$result = $Cache->Retrieve($FileName, $PageNumber);

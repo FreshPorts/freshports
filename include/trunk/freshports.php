@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.17 2007-06-04 03:35:20 dan Exp $
+	# $Id: freshports.php,v 1.18 2007-06-27 11:16:29 dan Exp $
 	#
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
@@ -1986,6 +1986,6 @@ function freshports_OnWatchList($db, $UserID, $ElementID) {
 }
 
 openlog('FreshPorts', LOG_PID, LOG_SYSLOG);
-syslog(LOG_NOTICE, $_SERVER['SCRIPT_URL']);
+#syslog(LOG_NOTICE, $_SERVER['SCRIPT_URL']);
 
 ?>

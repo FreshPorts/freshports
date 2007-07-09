@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: how-big-is-it.php,v 1.5 2007-07-09 12:59:02 dan Exp $
+	# $Id: how-big-is-it.php,v 1.6 2007-07-09 13:11:12 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -49,7 +49,7 @@ function StatsSQL($db, $Title) {
              from daily_stats_data, daily_stats 
             where daily_stats_id = daily_stats.id 
               and daily_stats.title = '$Title' 
-         ORDER BY date
+         ORDER BY date DESC
             LIMIT 1";
 
 	$result = pg_exec($db, $sql);

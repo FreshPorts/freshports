@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: how-big-is-it.php,v 1.4 2007-02-18 15:59:23 dan Exp $
+	# $Id: how-big-is-it.php,v 1.5 2007-07-09 12:59:02 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -17,7 +17,6 @@
 					'FreeBSD, index, applications, ports');
 
 	$Total = 0;
-	$Date = date('Y/m/d', time() - 86400);
 
 function format_number($Value) {
 	return str_replace(' ', '&nbsp;', sprintf('%6s', $Value));
@@ -45,12 +44,13 @@ function human_readable($size)
 	return $return;
 }
 
-function StatsSQL($db, $Title, $Date) {
+function StatsSQL($db, $Title) {
 	$sql = "select value, date 
              from daily_stats_data, daily_stats 
             where daily_stats_id = daily_stats.id 
               and daily_stats.title = '$Title' 
-              and date = '$Date'";
+         ORDER BY date
+            LIMIT 1";
 
 	$result = pg_exec($db, $sql);
 	if ($result) {
@@ -59,7 +59,8 @@ function StatsSQL($db, $Title, $Date) {
 			$myrow  = pg_fetch_array ($result, 0);
 			$Value  = $myrow[0];
 		} else {
-			$Value = 'numrows = ' . $numrows . ' ' . $sql;;
+		    syslog(LOG_NOTICE, $_SERVER["PHP_SELF"] . ' no stats found for ' . $Title . ' numrows = ' . $numrows . ' ' . $sql);
+		    $Value  = '';
 		}
 	} else {
 		$Value = pg_errormessage();
@@ -162,7 +163,7 @@ There is a page for each category:
 -------<br>
 <?php
 
-$Value = StatsSQL($db, 'Category count', $Date);
+$Value = StatsSQL($db, 'Category count');
 $Total += $Value;
 echo format_number($Value) . '<br>'
 
@@ -191,7 +192,7 @@ There are ports, and there are deleted ports. I'll show both:
 -------<br>
 <?php
 
-$Value = StatsSQL($db, 'Port count', $Date);
+$Value = StatsSQL($db, 'Port count');
 $Total += $Value;
 echo format_number($Value) . '<br>'
 
@@ -203,7 +204,7 @@ echo format_number($Value) . '<br>'
 
 <?php
 
-$Value = StatsSQL($db, 'Port count (deleted)', $Date);
+$Value = StatsSQL($db, 'Port count (deleted)');
 $Total += $Value;
 echo format_number($Value) . '<br>';
 
@@ -275,7 +276,7 @@ There is a page for each commit:
 -------<br>
 <?php
 
-$Value = StatsSQL($db, 'Commit count (ports)', $Date);
+$Value = StatsSQL($db, 'Commit count (ports)');
 $Total += $Value;
 echo format_number($Value) . '<br>';
 
@@ -304,7 +305,7 @@ For each commit, you can view the files modified by that commit for a particular
 -------<br>
 <?php
 
-$Value = StatsSQL($db, 'Commit Port Count', $Date);
+$Value = StatsSQL($db, 'Commit Port Count');
 $Total += $Value;
 echo format_number($Value) . '<br>';
 
@@ -333,7 +334,7 @@ For each day, there is a page showing the commits for that day.  How many days d
 -------<br>
 <?php
 
-$Value = StatsSQL($db, 'Commit days (ports)', $Date);
+$Value = StatsSQL($db, 'Commit days (ports)');
 $Total += $Value;
 echo format_number($Value) . '<br>';
 
@@ -362,7 +363,7 @@ Each user has a page:
 -------<br>
 <?php
 
-$Value = StatsSQL($db, 'User count', $Date);
+$Value = StatsSQL($db, 'User count');
 $Total += $Value;
 echo format_number($Value) . '<br>';
 
@@ -391,7 +392,7 @@ For each watch list, there is a page:
 -------<br>
 <?php
 
-$Value = StatsSQL($db, 'Watch List count', $Date);
+$Value = StatsSQL($db, 'Watch List count');
 $Total += $Value;
 echo format_number($Value) . '<br>';
 

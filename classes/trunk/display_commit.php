@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: display_commit.php,v 1.7 2007-07-06 19:01:01 dan Exp $
+	# $Id: display_commit.php,v 1.8 2007-07-10 11:39:07 dan Exp $
 	#
 	# Copyright (c) 2003-2006 DVL Software Limited
 	#
@@ -250,7 +250,7 @@ class DisplayCommit {
 							$this->HTML .= '<a href="/' . $PathName . '">' . $PathName . '</a>';
 							$this->HTML .= "</B></BIG>\n";
 						} else {
-							$this->HTML .= '<a href="' . FRESHPORTS_FREEBSD_CVS_URL . '/' . $PathName . '#rev' . $mycommit->revision . '">' . $PathName . '</a>';
+							$this->HTML .= '<a href="' . FRESHPORTS_FREEBSD_CVS_URL . $PathName . '#rev' . $mycommit->revision . '">' . $PathName . '</a>';
 							$this->HTML .= "</B></BIG>\n";
 						}
 					}

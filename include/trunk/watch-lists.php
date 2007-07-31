@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: watch-lists.php,v 1.2 2006-12-17 11:55:54 dan Exp $
+	# $Id: watch-lists.php,v 1.3 2007-07-31 14:26:13 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2007 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_lists.php');
@@ -117,8 +117,9 @@ function freshports_UpdatingOutput($NumRowsUpdating, $PortsUpdating, $port) {
 	if ($NumRowsUpdating > 0) {
 		$HTML .= '<TABLE BORDER="1" width="100%" CELLSPACING="0" CELLPADDING="5">' . "\n";
 		$HTML .= "<TR>\n";
-		$HTML .= freshports_PageBannerText("Notes from <a href=\"/UPDATING\">/usr/ports/UPDATING</a>", 1);
+		$HTML .= freshports_PageBannerText("Notes from UPDATING", 1);
 		$HTML .= "<tr><td>\n";
+		$HTML .= "These upgrade notes are taken from <a href=\"/UPDATING\">/usr/ports/UPDATING</a>";
 		$HTML .= "<ul>\n";
 
 		for ($i = 0; $i < $NumRowsUpdating; $i++) {

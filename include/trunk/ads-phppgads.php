@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ads-phppgads.php,v 1.2 2006-12-17 11:55:52 dan Exp $
+	# $Id: ads-phppgads.php,v 1.3 2007-08-26 22:20:40 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -37,7 +37,7 @@ function Ad_125x125() {
 }
 
 function Ad_468x60() {
-	$Code = Ad_PhpPgAdsBase(55, 'a0185fbb');
+	$Code = Ad_PhpPgAdsBase(56, 'a0185fbb');	# really at 728x90 (for Verio)
 	return $Code;
 }
 
@@ -59,7 +59,7 @@ function Ad_728x90PhorumTop() {
 }
 
 function Ad_120x600() {
-	$Code = Ad_PhpPgAdsBase(57, 'aba75b2d');
+	$Code = Ad_PhpPgAdsBase(58, 'aba75b2d');	# actualy 160x600 for Verio
 	return $Code;
 }
 

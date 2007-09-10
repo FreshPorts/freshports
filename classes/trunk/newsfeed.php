@@ -1,8 +1,8 @@
 <?php
 	#
-	# $Id: newsfeed.php,v 1.5 2007-04-02 20:14:53 dan Exp $
+	# $Id: newsfeed.php,v 1.6 2007-09-10 15:24:19 dan Exp $
 	#
-	# Copyright (c) 1998-2006 DVL Software Limited
+	# Copyright (c) 1998-2007 DVL Software Limited
 	#
 
 	DEFINE('MAX_PORTS', 20);
@@ -120,26 +120,8 @@ ORDER BY commit_date_raw desc, category, port
 LIMIT 30";
 
 
-#	die("<pre>$sql</pre>");
-
 	$ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['SERVER_NAME']);
 	
-	$item = new FeedItem(); 
-	$item->title       = "FreshPorts Design Contest!";
-	$item->link        = 'http://' . $ServerName . '/DesignContestVoting/';
-	$item->description = "Please read + vote for the new look FreshPorts.";
-
-	//optional
-	//item->descriptionTruncSize = 500;
-	$item->descriptionHtmlSyndicated = true;
-
-	$item->date   = strtotime("now");
-	$item->source = $_SERVER['HTTP_HOST']; 
-	$item->author = 'editor@FreshPorts.org'; 
-	$item->guid   = 'http://news.freshports.org/2007/01/30/freshports-design-contest/';
- 
-	$rss->addItem($item); 
-
 	$result = pg_query($db, $sql);
 	while ($myrow = pg_fetch_array($result)) {
 		$item = new FeedItem();

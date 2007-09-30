@@ -1,5 +1,5 @@
 <?php
-	# $Id: master_slave.php,v 1.2 2006-12-17 11:37:20 dan Exp $
+	# $Id: master_slave.php,v 1.3 2007-09-30 16:46:23 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -37,7 +37,7 @@ SELECT id          AS slave_port_id,
  WHERE master_port = '". AddSlashes($MasterName). "'
 ORDER BY slave_category_name, slave_port_name";
 
-#		echo "sql = <pre>$sql</pre>";
+		#echo "sql = <pre>$sql</pre>";
 
         $this->LocalResult = pg_exec($this->dbh, $sql);
 		if (!$this->LocalResult) {

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: latest_commits.php,v 1.2 2006-12-17 11:37:20 dan Exp $
+	# $Id: latest_commits.php,v 1.3 2007-09-30 16:47:55 dan Exp $
 	#
 	# Copyright (c) 2003-2004 DVL Software Limited
 	#
@@ -58,9 +58,9 @@ class LatestCommits {
   SELECT LC.*, STF.message AS stf_message
     FROM LatestCommits($this->MaxNumberOfPorts, 0) LC LEFT OUTER JOIN sanity_test_failures STF
       ON LC.commit_log_id = STF.commit_log_id
-ORDER BY LC.commit_date_raw DESC, LC.category, LC.port";
+ORDER BY LC.commit_date_raw DESC, LC.category, LC.port, pathname";
 		}
-
+		
 		if ($this->Debug) echo "\n<p>sql=$sql</p>\n";
 
 		$result = pg_exec($this->dbh, $sql);

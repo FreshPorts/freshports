@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch_lists.php,v 1.1.2.20 2006-08-02 14:37:47 dan Exp $
+	# $Id: watch_lists.php,v 1.1.2.21 2007-10-08 23:06:28 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
@@ -188,6 +188,8 @@ DELETE FROM watch_list
 			die(pg_last_error() . '<pre>' . $sql . '</pre>');
 		}
 
+		if ($Debug) echo "WatchListID found is '$WatchListID'<br>\n";
+		
 		return $WatchListID;
 	}
 	

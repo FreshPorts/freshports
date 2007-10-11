@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing.php,v 1.2 2006-12-17 12:06:12 dan Exp $
+	# $Id: missing.php,v 1.3 2007-10-11 18:09:12 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -15,17 +15,19 @@
 function freshports_Parse404URI($REQUEST_URI, $db) {
 	#
 	# we have a pending 404
-	# if we can parse it, then do so and return 1;
-	# otherwise, return 0.
-	
+	# if we can parse it, then do so and return a false value;
+	# otherwise, return a non-false value.
+
 	GLOBAL $User;
-	
+
 	$Debug  = 0;
 	$result = '';
 
 	$IsPort     = false;
 	$IsCategory = false;
 	$IsElement  = false;
+	
+	if ($Debug) echo "Debug is turned on.  Only 404 will be returned now because we cannot alter the headers at this time.<br>\n";
 
 	$CategoryID = 0;
 
@@ -69,9 +71,9 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
 			$Category = new Category($db);
 			$CategoryID = $Category->FetchByElementID($ElementRecord->id);
+		} else {
+			if ($Debug) echo 'That path does not point at a category!<br>';
 		}
-		
-		if ($Debug) echo 'No, that cannot be a category!<br>';
 
 		if ($ElementRecord->IsPort()) {
 			$IsPort = true;
@@ -122,18 +124,29 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 
 		if (IsSet($port)) {
 			$IsPort = true;
+			$IsPort = false;
+			$result = $REQUEST_URI;
 
-			if ($Debug) echo 'This is a Port<br>';
+			if ($Debug) echo 'This is a Port but there is no element for it.<br>';
+			
 		}
 
 		if (IsSet($category) && !$IsPort) {
+			# we have a valid category, but no valid port.
+			# we will display the category only if they did *try* to speciy a port.
+			# i.e. they suuplied an invalid port name
 			if ($Debug) echo 'This is a category<br>';
 
-			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
-			$Category = new Category($db);
-			$CategoryID = $Category->FetchByName($category);
-			if ($CategoryID) {
-				$IsCategory = true;
+			if (IsSet($port)) {
+				if ($Debug)  'Invalid port supplied for a valid category<br>';
+			} else {
+				
+				require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
+				$Category = new Category($db);
+				$CategoryID = $Category->FetchByName($category);
+				if ($CategoryID) {
+					$IsCategory = true;
+				}
 			}
 		}
 	}

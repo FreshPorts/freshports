@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits.php,v 1.2 2006-12-17 12:06:09 dan Exp $
+	# $Id: commits.php,v 1.3 2007-10-11 18:09:39 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -135,7 +135,7 @@ A port is marked as new for 10 days.
 
 	$UseCache = FALSE;
 
-	DEFINE('CACHEFILE', $_SERVER['DOCUMENT_ROOT'] . '/../caching/cache/commits.html');
+	DEFINE('CACHEFILE', $_SERVER['DOCUMENT_ROOT'] . '/../dynamic/caching/cache/commits.html');
 
 	if ($User->id == '') {
 		if (file_exists(CACHEFILE) && is_readable(CACHEFILE)) {

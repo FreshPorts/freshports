@@ -1,5 +1,5 @@
 --
--- $Id: POSTGRESQL.sql,v 1.2 2006-12-17 11:39:35 dan Exp $
+-- $Id: POSTGRESQL.sql,v 1.3 2007-10-16 18:29:25 dan Exp $
 --
 -- Copyright (c) 1998-2006 DVL Software Limited
 --
@@ -62,8 +62,10 @@ grant select on vuxml_references               to group www;
 --
 -- select, update
 --
-grant select, update on categories             to group www;
-grant select, insert, delete on category_stats to group www;
+grant select, insert on cache_clearing_ports        to group www;
+grant select, update on cache_clearing_ports_id_seq to group www;
+grant select, update on categories                  to group www;
+grant select, insert, delete on category_stats      to group www;
 
 --
 -- select, insert, update

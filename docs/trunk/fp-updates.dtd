@@ -1,5 +1,5 @@
 
-<!-- $Id: fp-updates.dtd,v 1.4 2006-12-17 12:06:23 dan Exp $          -->
+<!-- $Id: fp-updates.dtd,v 1.5 2007-10-16 19:02:45 dan Exp $          -->
 
 <!-- http://freshports.org/docs/fp-updates.dtd															-->
 <!-- This DTD defines the input to FreshPorts (http://freshports.org/>									-->
@@ -49,10 +49,13 @@
 			Changes		CDATA	#IMPLIED >
 
 <!-- MESSAGE element; Contains information about the email						-->
-<!ELEMENT	MESSAGE	(DATE, TIME, TO+) >
+<!ELEMENT	MESSAGE	(DATE, TIME, REPOSITORY, TO+) >
 <!ATTLIST	MESSAGE	Id				CDATA	#REQUIRED
 					Subject			CDATA	#REQUIRED
 					EncodingLosses	BOOLEAN #REQUIRED >
+
+<!-- REPOSITORY element; Specifies which repository this commit acts against					-->
+<!ELEMENT	REPOSITORY	(#PCDATA) >
 
 <!-- TO element; Contains information about who the message was sent to					-->
 <!ELEMENT	TO	EMPTY >

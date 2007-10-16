@@ -1,5 +1,5 @@
 #
-# $Id: README.txt,v 1.2 2006-12-17 11:39:35 dan Exp $
+# $Id: README.txt,v 1.3 2007-10-16 18:29:39 dan Exp $
 #
 # Copyright (c) 1998-2006 DVL Software Limited
 #
@@ -36,6 +36,8 @@ mkdir -p dynamic/caching/tmp
 
 chown -R www:www dynamic
 chmod -R g+w     dynamic
+
+mkdir scripts-log
 
 cd www/include
 cp common.php.sample common.php

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: vuxml.php,v 1.4 2007-07-21 16:03:22 dan Exp $
+	# $Id: vuxml.php,v 1.5 2007-10-20 20:57:23 dan Exp $
 	#
 	# Copyright (c) 2004 DVL Software Limited
 	#
@@ -13,14 +13,11 @@
 	define('VUXMLURL',     'http://www.vuxml.org/freebsd/');
 	define('VUXMLREVISION', $_SERVER['DOCUMENT_ROOT'] . '/../dynamic/vuxml_revision');
 
+
 	if (IsSet($_REQUEST['vid'])) {
 		$vid = $_REQUEST['vid'];
 
 		$vidArray = explode('|', $vid);
-
-		if (count($vidArray) == 1) {
-			header('Location: ' . VUXMLURL . $_REQUEST['vid'] . '.html');
-		} 
 	}
 ?>
 <html>
@@ -70,7 +67,7 @@ These are the vulnerabilities relating to the commit you have selected:
 	if (!IsSet($vidArray)) {
 		$vuln = $_REQUEST['vuln'];
 
-        $vidArray = explode('|', $vuln);
+		$vidArray = explode('|', $vuln);
 	}
 
 	$VuXML = new VuXML($db);
@@ -149,7 +146,7 @@ ORDER BY lower(VN.name), V.vid
 				if ($LastName == '') {
 					$LastName = $myrow['name'];
 				}
-				if ($LastName == $myrow['name']) {
+				if (strtolower($LastName) == strtolower($myrow['name'])) {
 					if ($LastVID != '') {
 						$LastVID .= '|';
 					}

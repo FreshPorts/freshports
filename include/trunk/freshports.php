@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.18 2007-06-27 11:16:29 dan Exp $
+	# $Id: freshports.php,v 1.19 2007-10-20 22:41:32 dan Exp $
 	#
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
@@ -385,6 +385,19 @@ function freshports_VuXML_Icon_Faded() {
 
 function freshports_Revision_Icon() {
 	return '<img src="/images/revision.jpg" alt="View revision" title="view revision" border="0" width="11" height="15" align="top">';
+}
+
+
+function freshports_VuXML_Link($PackageName, $HasCurrentVulns) {
+	$HTML = '<a href="/vuxml.php?package=' . $PackageName . '">';
+	if ($HasCurrentVulns) {
+		$HTML .= freshports_VuXML_Icon();
+	} else {
+		$HTML .= freshports_VuXML_Icon_Faded();
+	}
+	$HTML .= '</a>';
+
+	return $HTML;
 }
 
 function freshports_Watch_Link_Add($WatchListAsk, $WatchListCount, $ElementID) {

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-display.php,v 1.2 2006-12-17 11:37:20 dan Exp $
+	# $Id: port-display.php,v 1.3 2007-10-20 22:41:13 dan Exp $
 	#
 	# Copyright (c) 2005-2006 DVL Software Limited
 	#
@@ -193,12 +193,10 @@ class port_display {
 
 		$HTML .= ' ' . freshports_Search_Depends_All($port->category . '/' . $port->port);
 
-		if ($port->IsVulnerable()) {
-			$HTML .= ' ' . freshports_VuXML_Icon();
-		} else {
-			if ($port->WasVulnerable()) {
-				$HTML .= ' ' . freshports_VuXML_Icon_Faded();
-			}
+		# if this port is, or every has been, vulnerable, display the right skull
+		# and a link to the list of all such vulnerabilities
+		if ($port->IsVulnerable() || $port->WasVulnerable()) {
+			$HTML .= ' ' . freshports_VuXML_Link($port->package_name, $port->IsVulnerable());
 		}
 
 		$HTML .= "</DT>\n<DD>";

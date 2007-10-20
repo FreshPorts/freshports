@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: vuxml.php,v 1.5 2007-10-20 20:57:23 dan Exp $
+	# $Id: vuxml.php,v 1.6 2007-10-20 22:12:07 dan Exp $
 	#
 	# Copyright (c) 2004 DVL Software Limited
 	#
@@ -87,7 +87,7 @@ These are the vulnerabilities relating to the commit you have selected:
 </table>
 <?php
 }
-	if (IsSet($_REQUEST['list'])) {
+	if (IsSet($_REQUEST['list']) || IsSet($_REQUEST['package']) ) {
 
 		function vuxml_name_link($VID, $Name, $Count) {
 			$HTML = '<tr><td>';
@@ -114,10 +114,14 @@ SELECT V.vid,
        VN.name
   FROM vuxml_affected VA, vuxml_names VN, vuxml V
  WHERE VN.vuxml_affected_id = VA.id
-   AND VA.vuxml_id          = V.id
-ORDER BY lower(VN.name), V.vid
-";
+   AND VA.vuxml_id          = V.id";
+   
+   	if (IsSet($_REQUEST['package'])) {
+   		$sql .= "\n   AND lower(VN.name) = '" . pg_escape_string($db, $_REQUEST['package']) . "'";
+   	}
 
+   	$sql .= "\nORDER BY lower(VN.name), V.vid\n";
+   	
 		$result = pg_exec($db, $sql);
 		if ($result) {
 			$numrows = pg_numrows($result);

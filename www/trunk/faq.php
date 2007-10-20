@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.4 2007-03-17 13:10:42 dan Exp $
+	# $Id: faq.php,v 1.5 2007-10-20 23:11:06 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -825,6 +825,23 @@ every email address on FreshPorts is already somewhere else first. For example:
 
 <p>
 In short, it doesn't make sense to obscure that which is freely available elsewhere.
+	</TD></TR><TR><TD>&nbsp;</TD></TR>
+
+<TR>
+<?php echo freshports_PageBannerText('Why does the PORTVERSION at the top of page differ from that of the first commit?'); ?>
+</TR>
+
+   <TR><TD>
+   <P>
+   This question refers to the a port page.  
+   
+<p>
+This situation usually occurs with MASTER/SLAVE ports.  The Master port is updated with a new
+REVISION.  No commit is done against the Slave port.  FreshPorts knows to refresh the Slave port
+when its Master port is updated.    This refresh updates the PORTVERSION at the top of the 
+page.  This update reflects the REVISION you would get if you were to install the Slave port
+now that the Master has been upgraded.
+
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 </table>

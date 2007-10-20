@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: vuxml.php,v 1.6 2007-10-20 22:12:07 dan Exp $
+	# $Id: vuxml.php,v 1.7 2007-10-20 22:39:24 dan Exp $
 	#
 	# Copyright (c) 2004 DVL Software Limited
 	#
@@ -117,7 +117,7 @@ SELECT V.vid,
    AND VA.vuxml_id          = V.id";
    
    	if (IsSet($_REQUEST['package'])) {
-   		$sql .= "\n   AND lower(VN.name) = '" . pg_escape_string($db, $_REQUEST['package']) . "'";
+   		$sql .= "\n   AND lower(VN.name) = '" . pg_escape_string($db, strtolower($_REQUEST['package'])) . "'";
    	}
 
    	$sql .= "\nORDER BY lower(VN.name), V.vid\n";

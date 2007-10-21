@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.19 2007-10-20 22:41:32 dan Exp $
+	# $Id: freshports.php,v 1.20 2007-10-21 17:00:17 dan Exp $
 	#
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
@@ -1639,12 +1639,10 @@ $HTML .= '<br>
 	<td valign="top">
 
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/",                     "Home",             "FreshPorts Home page"       )   . '</FONT><br>
-	<FONT SIZE="-1"><a href="/phorum/" title="Discussion Forums">Forums</a></FONT><br>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/categories.php",       "Categories",       "List of all Port categories")   . '</FONT><br>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/ports-deleted.php",    "Deleted ports",    "All deleted ports"          )   . '</FONT><br>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/sanity_test_failures.php",    "Sanity Test Failures",    "Things that didn't go quite right..."          )   . '</FONT><br>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/backend/newsfeeds.php",    "Newsfeeds",    "Newsfeeds for just about everything"          )   . '</FONT><br>
-	<FONT SIZE="-1">' . freshports_SideBarHTML('', 'http://news.freshports.org/',            "Blog",     "The Official FreshPorts Blog"                ) . '</FONT><br>
 	
 	</td>
 	</tr>
@@ -1724,6 +1722,9 @@ $HTML .= '
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/how-big-is-it.php",   "How big is it?",      "How many pages are in this website?"  ) . '</FONT><br>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/release-2004-10.php", "The latest upgrade!", "Details on the latest website upgrade") . '</FONT><br>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/privacy.php",         "Privacy",             "Our privacy statement"                ) . '</FONT><br>
+	<FONT SIZE="-1"><a href="/phorum/" title="Discussion Forums">Forums</a></FONT><br>
+	<FONT SIZE="-1"><a href="http://news.freshports.org/" title="All the latest FresHPorts news">Blog</a></FONT><br>
+	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/contact.php",         "Contact",             "Contact details"                      ) . '</FONT><br>
 	</td>
 	</tr>
 </table>

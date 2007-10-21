@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: authors.php,v 1.2 2006-12-17 12:06:08 dan Exp $
+	# $Id: authors.php,v 1.3 2007-10-21 16:58:45 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -33,9 +33,13 @@
 ?>
 </CENTER>
 
-<p>Dan Langille thought up the idea, found the data sources, bugged people to 
+<p><a href="http://www.langille.org/">Dan Langille</a> thought up the idea, found the data sources, bugged people to 
 write scripts, and did the html and database work. But he certainly didn't 
 do it alone.</p>
+
+<p>
+The details of day-to-day changes, bug fixes, challenges, and new features
+are documented on the <a href="http://news.freshports.org/">news blog</a>.
 
 <H2>FreshPorts 2</H2>
 

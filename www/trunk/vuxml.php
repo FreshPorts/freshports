@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: vuxml.php,v 1.7 2007-10-20 22:39:24 dan Exp $
+	# $Id: vuxml.php,v 1.8 2007-10-21 16:23:36 dan Exp $
 	#
 	# Copyright (c) 2004 DVL Software Limited
 	#
@@ -35,7 +35,7 @@ This page displays <a href="<?php echo VUXMLURL; ?>">vulnerability information</
 
 <?php
 	if (file_exists(VUXMLREVISION) && is_readable(VUXMLREVISION)) {
-		echo '<p>The last vuln.xml file processed by FreshPorts is:</p>';
+		echo '<p>The last <a href="/security/vuxml/vuln.xml">vuln.xml</a> file processed by FreshPorts is:</p>';
 		echo "<blockquote><pre>\n";
 		require_once(VUXMLREVISION);
 		echo "</pre></blockquote>\n";

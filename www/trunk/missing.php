@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing.php,v 1.3 2007-10-11 18:09:12 dan Exp $
+	# $Id: missing.php,v 1.4 2007-10-22 13:01:43 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -26,7 +26,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	$IsPort     = false;
 	$IsCategory = false;
 	$IsElement  = false;
-	
+
 	if ($Debug) echo "Debug is turned on.  Only 404 will be returned now because we cannot alter the headers at this time.<br>\n";
 
 	$CategoryID = 0;
@@ -52,7 +52,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	}
 
 	define('PATH_NAME', $pathname);
-	
+
 	if ($Debug) echo "PATH_NAME='" . PATH_NAME . "'<br>";
 
 	if ($ElementRecord->FetchByName(FRESHPORTS_PORTS_TREE_PREFIX . $pathname)) {

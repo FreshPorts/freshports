@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.20 2007-10-21 17:00:17 dan Exp $
+	# $Id: freshports.php,v 1.21 2007-10-22 13:04:21 dan Exp $
 	#
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
@@ -1094,7 +1094,7 @@ function freshports_PortCommits($port, $PageNumber = 1, $NumCommitsPerPage = 100
 			'spacesAfterSeparator'  => 1,
 			'append'                => false,
 			'path'					=> '/' . $port->category . '/' . $port->port,
-			'fileName'              => '&page=%d',
+			'fileName'              => '?page=%d',
 			'altFirst'              => 'First Page',
 			'firstPageText'         => 'First Page',
 			'altLast'               => 'Last Page',

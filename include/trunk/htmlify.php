@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: htmlify.php,v 1.4 2007-03-08 01:44:54 dan Exp $
+	# $Id: htmlify.php,v 1.5 2007-10-23 18:55:08 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -54,11 +54,9 @@ function url2link($Arr) {
 	#
 	# this changes anything like &amp; back to &
 	#
-	$html  = html_entity_decode($html);
+	$new_html  = html_entity_decode($html);
 
-	$vhtml = $html;
-
-	return "<A HREF=\"$html\">$vhtml</A>" . $Arr[3];
+	return "<A HREF=\"$new_html\">$html</A>" . $Arr[3];
 }
 
 function url_shorten($Arr) {

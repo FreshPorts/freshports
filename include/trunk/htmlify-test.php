@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: htmlify-test.php,v 1.4 2007-03-08 01:44:39 dan Exp $
+	# $Id: htmlify-test.php,v 1.5 2007-10-23 18:55:08 dan Exp $
 	#
 	# Copyright (c) 2003 DVL Software Limited
 	#
@@ -83,6 +83,12 @@ The following should not get a PR type hyperlink:
 <ul>
 <li>Ensure all PRs are HTMLified: <a href="/databases/postgresql7/files.php?message_id=200302062046.h16KkqNv024036@repoman.freebsd.org">/databases/postgresql7/files.php?message_id=200302062046.h16KkqNv024036@repoman.freebsd.org</a>
 <li>Good test page: <a href="/lang/php4/">/lang/php4/</a>
+</ul>
+
+<h2>Does it htmlify the URL and the URL name?</h2>
+<ul>
+<li>Before: http://www.sql-ledger.org/cgi-bin/nav.pl?page=news.html&title=What's%20New
+<li>After: <?php echo htmlify("http://www.sql-ledger.org/cgi-bin/nav.pl?page=news.html&title=What's%20New"); ?>
 </ul>
 
 </body>

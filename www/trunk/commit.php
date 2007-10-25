@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.3 2007-06-03 03:18:21 dan Exp $
+	# $Id: commit.php,v 1.4 2007-10-25 02:01:52 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -207,6 +207,7 @@ ORDER BY port, pathname";
 			$RetVal = $DisplayCommit->CreateHTML();
 	
 			echo $DisplayCommit->HTML;
+			echo '<tr><TD VALIGN="top"><p>Number of ports [&amp; non-ports] in this commit: ' . $numrows . '</p></td></tr>';
 			
 		} else {
           echo '<tr><TD VALIGN="top"><P>Sorry, nothing found in the database....</P>' . "\n";

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: display_commit.php,v 1.9 2007-10-23 18:39:41 dan Exp $
+	# $Id: display_commit.php,v 1.10 2007-10-25 00:07:59 dan Exp $
 	#
 	# Copyright (c) 2003-2007 DVL Software Limited
 	#
@@ -94,6 +94,7 @@ class DisplayCommit {
 		# leave it all empty as a comparison point
 		$PreviousCommit = new CommitRecord();
 
+		$TooManyPorts = false;	# we might not show all of a commit, just for the really big ones.
 		for ($i = 0; $i < $NumRows; $i++) {
 			$myrow = pg_fetch_array($this->result, $i);
 			if ($Debug) echo 'processing ' . $myrow['commit_log_id'] . ' ' . $myrow['message_id'] . "<br>\n";
@@ -105,6 +106,10 @@ class DisplayCommit {
 			// OK, while we have the log change log, let's put the port details here.
 
 			if ($mycommit->commit_log_id != $PreviousCommit->commit_log_id) {
+				if (($NumberOfPortsInThisCommit > $MaxNumberPortsToShow) && !$this->ShowAllPorts) {
+					$this->HTML .= '<BR>' . freshports_MorePortsToShow($PreviousCommit->message_id, $NumberOfPortsInThisCommit, $MaxNumberPortsToShow);
+				}
+				$TooManyPorts = false;
 				if ($i > 0) {
 					$this->HTML .= "\n<BLOCKQUOTE>";
 					$this->HTML .= freshports_CommitDescriptionPrint(
@@ -158,9 +163,12 @@ class DisplayCommit {
 			}
 
 			$NumberOfPortsInThisCommit++;
+			if (($NumberOfPortsInThisCommit > $MaxNumberPortsToShow) && !$this->ShowAllPorts) {
+				$TooManyPorts = true;
+			}
 
-
-			if (IsSet($mycommit->category) && $mycommit->category != '') {
+			if (!$TooManyPorts) {
+				if (IsSet($mycommit->category) && $mycommit->category != '') {
 				if ($this->UserID) {
 					if ($mycommit->watch) {
 						$this->HTML .= ' '. freshports_Watch_Link_Remove($this->WatchListAsk, $mycommit->watch, $mycommit->element_id) . ' ';
@@ -263,21 +271,21 @@ class DisplayCommit {
 
 			$this->HTML .= "<BR>\n";
 
-			if (($NumberOfPortsInThisCommit > $MaxNumberPortsToShow) && !$this->ShowAllPorts) {
-				$this->HTML .= '<BR>' . freshports_MorePortsToShow($mycommit->message_id, $NumberOfPortsInThisCommit, $MaxNumberPortsToShow);
-			}
-
 			GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;			
 			if ($this->ShowEntireCommit) {
 				$Lines = 0;
 			} else {
 				$Lines = $freshports_CommitMsgMaxNumOfLinesToShow;
 			}
+			} # !$TooManyPorts
 			
 
 			$PreviousCommit = $mycommit;
 		}
 		
+		if (($NumberOfPortsInThisCommit > $MaxNumberPortsToShow) && !$this->ShowAllPorts) {
+			$this->HTML .= '<BR>' . freshports_MorePortsToShow($PreviousCommit->message_id, $NumberOfPortsInThisCommit, $MaxNumberPortsToShow);
+		}
 		$this->HTML .= "\n<BLOCKQUOTE>";
 		$this->HTML .= freshports_CommitDescriptionPrint(
                     $PreviousCommit->commit_description,
@@ -286,6 +294,7 @@ class DisplayCommit {
                     freshports_MoreCommitMsgToShow($PreviousCommit->message_id, $Lines));
 		# close off the last commit
 		$this->HTML .= "\n</BLOCKQUOTE>\n</TD></TR>\n\n\n";
+
 		unset($mycommit);
 		
 		return $this->HTML;

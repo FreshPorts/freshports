@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits.php,v 1.2 2006-12-17 11:37:19 dan Exp $
+	# $Id: commits.php,v 1.3 2007-10-25 00:07:40 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -122,7 +122,7 @@ class Commits {
 
 	function Count($Date) {
 		$sql = "
-		SELECT count(*) AS count
+		SELECT count(DISTINCT commit_log.id) AS count
           FROM commit_log_ports, commit_log
 	     WHERE commit_log.commit_date         BETWEEN '$Date'::timestamptz  + SystemTimeAdjust()
 	                                              AND '$Date'::timestamptz  + SystemTimeAdjust() + '1 Day'

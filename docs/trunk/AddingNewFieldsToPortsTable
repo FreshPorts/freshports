@@ -1,7 +1,7 @@
 When adding new fields to the ports table, you need to alter these
 files:
 
-class/ports.php
+classes/ports.php
 www/commit.php <== should use freshports.php to display port information
 database-schema/datatype.txt <== add fields here too.
              commit_record

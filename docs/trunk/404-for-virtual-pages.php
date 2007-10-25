@@ -1,9 +1,9 @@
 <?php
 	#
-	# $Id: 404-for-virtual-pages.php,v 1.2 2006-12-17 12:06:23 dan Exp $
+	# $Id: 404-for-virtual-pages.php,v 1.3 2007-10-25 11:57:23 dan Exp $
 	#
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/common.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
 	
 	$Title = 'Using 404 errors to serve up virtual pages and virtual categories';
 ?>

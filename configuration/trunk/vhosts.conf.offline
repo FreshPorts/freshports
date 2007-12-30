@@ -1,0 +1,13 @@
+<VirtualHost *>
+	ServerAdmin     dan@langille.org
+
+	DocumentRoot    /usr/websites/freshports.org/www-offline
+
+	ServerName      dev.freshports.org
+
+	ErrorLog        /usr/websites/log/dev.freshports.org-error.log
+	CustomLog       /usr/websites/log/dev.freshports.org-access.log combined
+
+	ErrorDocument   404 /index.php
+
+</VirtualHost>

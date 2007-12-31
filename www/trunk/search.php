@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.5 2007-10-02 14:33:11 dan Exp $
+	# $Id: search.php,v 1.6 2007-12-31 02:14:06 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -208,7 +208,10 @@ function WildCardQuery($stype, $Like, $query) {
 
 #	if ($Debug) phpinfo();
 
+if (!IsSet($_REQUEST['query'])) {
 	$OnLoad = 'setfocus()';
+}
+
 	freshports_Start('Search',
 					'freshports - new ports, applications',
 					'FreeBSD, index, applications, ports');

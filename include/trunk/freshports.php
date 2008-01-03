@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.22 2008-01-01 13:53:51 dan Exp $
+	# $Id: freshports.php,v 1.23 2008-01-03 00:38:12 dan Exp $
 	#
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
@@ -20,6 +20,7 @@ DEFINE('COPYRIGHTYEARS',        '2000-2008');
 DEFINE('URL2LINK_CUTOFF_LEVEL', 0);
 DEFINE('FAQLINK',               'faq.php');
 DEFINE('PORTSMONURL',			'http://portsmon.freebsd.org/portoverview.py');
+DEFINE('DISTFILESSURVEYURL',	'http://people.freebsd.org/~fenner/portsurvey/');
 DEFINE('NOBORDER',              '0');
 DEFINE('BORDER',                '1');
 
@@ -1844,6 +1845,16 @@ function PeopleWatchingThisPortAlsoWatch($dbh, $element_id) {
 	return $HTML;
 
 }
+
+
+function freshports_DistFilesSurveyURL($Category, $Port) {
+	# we have a problem with + in portnames.
+	# works: http://portsmon.freebsd.org/portoverview.py?category=editors&portname=vim6%2Bruby
+	# fails: http://portsmon.freebsd.org/portoverview.py?category=editors&portname=vim6+ruby
+	#
+	return '<a href="' . DISTFILESSURVEYURL . urlencode($Category) . '.html#' . urlencode($Port) . '" title="Distfiles Availability">Distfiles Availability</a>';
+}
+
 
 function freshports_PortsMonitorURL($Category, $Port) {
 	# we have a problem with + in portnames.

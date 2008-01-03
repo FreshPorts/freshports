@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.23 2008-01-03 00:38:12 dan Exp $
+	# $Id: freshports.php,v 1.24 2008-01-03 00:45:52 dan Exp $
 	#
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
@@ -2009,6 +2009,9 @@ function freshports_OnWatchList($db, $UserID, $ElementID) {
 
 	return $myrow['onwatchlist'];
 }
+
+define('EVERYTHING', 'FreshPorts has everything you want to know about <a href="http://www.freebsd.org/">FreeBSD</a> software, ports, packages,
+applications, whatever term you want to use.');
 
 openlog('FreshPorts', LOG_PID, LOG_SYSLOG);
 #syslog(LOG_NOTICE, $_SERVER['SCRIPT_URL']);

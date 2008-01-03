@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.3 2006-12-19 00:58:51 dan Exp $
+	# $Id: index.php,v 1.4 2008-01-03 00:46:07 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -116,8 +116,7 @@ if ($db) {
         <? //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPorts) ?>
 </TR>
 <TR><TD>
-<p>FreshPorts has everything you want to know about FreeBSD software, ports, packages,
-applications, whatever term you want to use.
+<p><?php echo EVERYTHING; ?>
 <p>
 A port is marked as new for 10 days. If you want to see more try <a href="/commits.php">here</a>.
 </p>

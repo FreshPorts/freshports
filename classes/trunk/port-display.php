@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-display.php,v 1.4 2008-01-03 00:39:04 dan Exp $
+	# $Id: port-display.php,v 1.5 2008-01-18 15:04:36 dan Exp $
 	#
 	# Copyright (c) 2005-2006 DVL Software Limited
 	#
@@ -84,19 +84,19 @@ class port_display {
 
 	function SetDetailsSearch() {
 		$this->SetDetailsNil();
- 		$this->LinkToPort           = true;
-		$this->ShowCategory         = true;
-		$this->ShowChangesLink      = true;
-		$this->ShowDescriptionLink  = true;
-		$this->ShowDownloadPortLink = true;
-		$this->ShowHomepageLink     = true;
-		$this->ShowMaintainedBy     = true;
-		$this->ShowPortCreationDate = true;
-		$this->ShowPortsMonLink     = true;
+ 		$this->LinkToPort              = true;
+		$this->ShowCategory            = true;
+		$this->ShowChangesLink         = true;
+		$this->ShowDescriptionLink     = true;
+		$this->ShowDownloadPortLink    = true;
+		$this->ShowHomepageLink        = true;
+		$this->ShowMaintainedBy        = true;
+		$this->ShowPortCreationDate    = true;
+		$this->ShowPortsMonLink        = true;
 		$this->ShowDistfilesSurveyLink = true;
-		$this->ShowPackageLink      = true;
-		$this->ShowShortDescription = true;
-		$this->ShowWatchListStatus  = true;
+		$this->ShowPackageLink         = true;
+		$this->ShowShortDescription    = true;
+		$this->ShowWatchListStatus     = true;
 	}
 
 	function SetDetailsReports() {

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-display.php,v 1.6 2008-01-18 15:06:50 dan Exp $
+	# $Id: port-display.php,v 1.7 2008-01-18 15:10:46 dan Exp $
 	#
 	# Copyright (c) 2005-2006 DVL Software Limited
 	#
@@ -71,7 +71,7 @@ class port_display {
 		$this->ShowPackageLink         = false;
 		$this->ShowPortCreationDate    = false;
 		$this->ShowPortsMonLink        = false;
-		$this->ShowDistFilesSurveyLink = false;
+		$this->ShowDistfilesSurveyLink = false;
 		$this->ShowShortDescription    = false;
 		$this->ShowWatchListCount      = false;
 		$this->ShowWatchListStatus     = false;
@@ -381,7 +381,7 @@ class port_display {
 		   $HTML .= '<a HREF="' . htmlspecialchars($port->homepage) . '" TITLE="Main web site for this port">Main Web Site</a>';
 	   }
 
-	   if (defined('DISTFILESSURVEYSHOW')  && ($this->ShowDistFilesSurveyLink || $this->ShowEverything)) {
+	   if (defined('DISTFILESSURVEYSHOW')  && ($this->ShowDistfilesSurveyLink || $this->ShowEverything)) {
 		   $HTML .= ' <b>:</b> ' . freshports_DistFilesSurveyURL($port->category, $port->port);
 	   }
 	   

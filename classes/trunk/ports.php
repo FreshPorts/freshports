@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports.php,v 1.2 2006-12-17 11:37:20 dan Exp $
+	# $Id: ports.php,v 1.3 2008-01-18 23:59:44 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -48,12 +48,13 @@ class Port {
 	var $is_interactive;
 	var $only_for_archs;
 	var $not_for_archs;
+	var $status;
+	var $showconfig;
 
 	// derived or from other tables
 	var $category;
 	var $port;
 	var $needs_refresh;
-	var $status;
 	var $updated;		// timestamp of last update
 
 	var $onwatchlist;	// count of how many watch lists is this port on for this user. 
@@ -122,11 +123,12 @@ class Port {
 		$this->is_interactive     = $myrow["is_interactive"];
 		$this->only_for_archs     = $myrow["only_for_archs"];
 		$this->not_for_archs      = $myrow["not_for_archs"];
+		$this->status             = $myrow["status"];
+		$this->showconfig         = $myrow["showconfig"];
 
 		$this->port               = $myrow["port"];
 		$this->category           = $myrow["category"];
 		$this->needs_refresh      = $myrow["needs_refresh"];
-		$this->status             = $myrow["status"];
 		$this->updated            = $myrow["updated"];
 
 		$this->onwatchlist        = $myrow["onwatchlist"];
@@ -191,12 +193,13 @@ select ports.id,
        ports.is_interactive,
        ports.only_for_archs,
        ports.not_for_archs,
+	   ports.status,
+	   ports.showconfig,
 
        to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, 
        ports.categories as categories,
 	    element.name     as port, 
 	    categories.name  as category,
-	    element.status,
        ports_vulnerable.current as vulnerable_current,
        ports_vulnerable.past    as vulnerable_past,
        GMT_Format(commit_log.date_added) as last_modified ";
@@ -288,10 +291,11 @@ select ports.id,
 	                   ports.is_interactive,
 	                   ports.only_for_archs,
 	                   ports.not_for_archs,
+			           ports.status,
+			           ports.showconfig,
 		               ports.categories as categories,
 			           element.name     as port, 
 			           categories.name  as category,
-			           element.status,
                        ports_vulnerable.current as vulnerable_current,
                        ports_vulnerable.past    as vulnerable_past,
                        GMT_Format(commit_log.date_added) as last_modified ";
@@ -366,8 +370,7 @@ FROM
      	}
 
 		$sql .= "
-SELECT P.*, element.name    as port,
-        element.status  as status
+SELECT P.*, element.name    as port
    FROM element JOIN
  (SELECT ports.id,
         ports.element_id        as element_id,
@@ -403,6 +406,8 @@ SELECT P.*, element.name    as port,
         ports.is_interactive,
         ports.only_for_archs,
         ports.not_for_archs,
+        ports.status,
+        ports.showconfig,
         ports.categories      as categories,
         categories.name       as category_looking_at,
         PRIMARY_CATEGORY.name as category,

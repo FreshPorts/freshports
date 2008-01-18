@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.6 2007-12-31 02:14:06 dan Exp $
+	# $Id: search.php,v 1.7 2008-01-18 18:35:31 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -573,6 +573,7 @@ $sqlSelectFields = "
          categories.id as category_id, 
          ports.version as version, 
          ports.revision as revision, 
+         ports.portepoch as epoch, 
          ports.maintainer, 
          ports.short_description, 
          ports.package_exists, 

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-display.php,v 1.7 2008-01-18 15:10:46 dan Exp $
+	# $Id: port-display.php,v 1.8 2008-01-18 23:59:20 dan Exp $
 	#
 	# Copyright (c) 2005-2006 DVL Software Limited
 	#
@@ -255,14 +255,14 @@ class port_display {
         	 $HTML .= '?subject=FreeBSD%20Port:%20' . $port->category . '/' . $port->port . '" TITLE="email the FreeBSD Ports mailing list">';
 	         $HTML .= freshportsObscureHTML($port->maintainer) . '</A>';
     	  } else {
-	         $HTML .= '<i>';
+	         $HTML .= '<b>';
     	     if ($port->status == 'A') {
         	    $HTML .= 'Maintained';
 	         } else {
-    	        $HTML .= 'was maintained'; 
+    	        $HTML .= 'Was Maintained'; 
         	 }
 
-	         $HTML .= ' by:</i> <A HREF="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);
+	         $HTML .= ' by:</b> <A HREF="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);
     	     $HTML .= '?subject=FreeBSD%20Port:%20' . $port->category . '/' . $port->port . '" TITLE="email the maintainer">';
         	 $HTML .= freshportsObscureHTML($port->maintainer) . '</A>';
 	      }
@@ -304,7 +304,7 @@ class port_display {
 		# show the date added, if asked
 
 		if ($this->ShowDateAdded || $this->ShowEverything) {
-			$HTML .= '<i>port added:</i> <font size="-1">';
+			$HTML .= '<b>Port Added:</b> <font size="-1">';
 			if ($port->date_added) {
 				$HTML .= $port->date_added;
 			} else {
@@ -327,7 +327,7 @@ class port_display {
 			$Categories = str_replace('  ', ' ', $Categories);
 			$Categories = trim($Categories);
 			if ($Categories) {
-				$HTML .= "<i>Also listed in:</i> ";
+				$HTML .= "<b>Also Listed In:</b> ";
 				$CategoriesArray = explode(" ", $Categories);
 				$Count = count($CategoriesArray);
 				for ($i = 0; $i < $Count; $i++) {
@@ -432,20 +432,20 @@ class port_display {
 			}
 
 			if ($port->depends_build) {
-				$HTML .= "<i>required to build:</i> ";
+				$HTML .= "<b>Required To Build:</b> ";
 				$HTML .= freshports_depends_links($this->db, $port->depends_build);
 
 				$HTML .= "<br>\n";
 			}
 
 			if ($port->depends_run) {
-				$HTML .= "<i>required to run:</i> ";
+				$HTML .= "<b>Required To Run:</b> ";
 				$HTML .= freshports_depends_links($this->db, $port->depends_run);
 				$HTML .= "<BR>\n";
 			}
 
 			if ($port->depends_lib) {
-				$HTML .= "<i>required libraries:</i> ";
+				$HTML .= "<b>Required Libraries:</b> ";
 				$HTML .= freshports_depends_links($this->db, $port->depends_lib);
 
 				$HTML .= "<br>\n";
@@ -481,9 +481,13 @@ class port_display {
 
 			$HTML .= ' <b>:</b> ';
 		}
+		
+		if ($this->ShowEverything && $port->showconfig) {
+			$HTML .= "<b>Configuration Options</b>\n<pre>" . $port->showconfig . "</pre>\n<hr>\n";
+		}
 
 		if ($this->ShowEverything || $this->ShowMasterSites) {
-			$HTML .= '<dl><dt><i>master sites:</i></dt>' . "\n";
+			$HTML .= '<dl><dt><b>Master Sites:</b></dt>' . "\n";
 
 			$MasterSites = explode(' ', $port->master_sites);
 			foreach ($MasterSites as $Site) {

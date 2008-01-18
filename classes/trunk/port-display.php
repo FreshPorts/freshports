@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-display.php,v 1.5 2008-01-18 15:04:36 dan Exp $
+	# $Id: port-display.php,v 1.6 2008-01-18 15:06:50 dan Exp $
 	#
 	# Copyright (c) 2005-2006 DVL Software Limited
 	#
@@ -51,30 +51,30 @@ class port_display {
 	}
 	
 	function SetDetailsNil() {
-		$this->ShowEverything       = false;
+		$this->ShowEverything          = false;
 
- 		$this->LinkToPort           = false;
- 		$this->ShowAd               = false;
-		$this->ShowCategory         = false;
-		$this->ShowChangesLink      = false;
-		$this->ShowDateAdded        = false;
-		$this->ShowDescriptionShort = false;
-		$this->ShowDescriptionLong  = false;
-		$this->ShowDescriptionLink  = false;
-		$this->ShowDepends          = false;
-		$this->ShowDownloadPortLink = false;
-		$this->ShowHomepageLink     = false;
-		$this->ShowLastChange       = false;
-		$this->ShowMaintainedBy     = false;
-		$this->ShowMasterSites      = false;
-		$this->ShowMasterSlave      = false;
-		$this->ShowPackageLink      = false;
-		$this->ShowPortCreationDate = false;
-		$this->ShowPortsMonLink     = false;
+ 		$this->LinkToPort              = false;
+ 		$this->ShowAd                  = false;
+		$this->ShowCategory            = false;
+		$this->ShowChangesLink         = false;
+		$this->ShowDateAdded           = false;
+		$this->ShowDescriptionShort    = false;
+		$this->ShowDescriptionLong     = false;
+		$this->ShowDescriptionLink     = false;
+		$this->ShowDepends             = false;
+		$this->ShowDownloadPortLink    = false;
+		$this->ShowHomepageLink        = false;
+		$this->ShowLastChange          = false;
+		$this->ShowMaintainedBy        = false;
+		$this->ShowMasterSites         = false;
+		$this->ShowMasterSlave         = false;
+		$this->ShowPackageLink         = false;
+		$this->ShowPortCreationDate    = false;
+		$this->ShowPortsMonLink        = false;
 		$this->ShowDistFilesSurveyLink = false;
-		$this->ShowShortDescription = false;
-		$this->ShowWatchListCount   = false;
-		$this->ShowWatchListStatus  = false;
+		$this->ShowShortDescription    = false;
+		$this->ShowWatchListCount      = false;
+		$this->ShowWatchListStatus     = false;
 	}
 
 	function SetDetailsFull() {

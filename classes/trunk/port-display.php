@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-display.php,v 1.8 2008-01-18 23:59:20 dan Exp $
+	# $Id: port-display.php,v 1.9 2008-01-24 20:33:13 dan Exp $
 	#
 	# Copyright (c) 2005-2006 DVL Software Limited
 	#
@@ -482,8 +482,14 @@ class port_display {
 			$HTML .= ' <b>:</b> ';
 		}
 		
-		if ($this->ShowEverything && $port->showconfig) {
-			$HTML .= "<b>Configuration Options</b>\n<pre>" . $port->showconfig . "</pre>\n<hr>\n";
+		if ($this->ShowEverything) {
+			$HTML .= "<b>Configuration Options</b>\n<pre>";
+			if ($port->showconfig) {
+				$HTML .= $port->showconfig;
+			} else {
+				$HTML .= '     nil';
+			}
+			$HTML .= "</pre>\n<hr>\n";
 		}
 
 		if ($this->ShowEverything || $this->ShowMasterSites) {

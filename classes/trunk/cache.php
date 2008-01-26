@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: cache.php,v 1.3 2007-06-03 16:00:17 dan Exp $
+	# $Id: cache.php,v 1.4 2008-01-26 23:41:05 dan Exp $
 	#
 	# Copyright (c) 2006 DVL Software Limited
 	#
@@ -149,7 +149,9 @@ class Cache {
 	
 	function _Log($activity) {
 		// log the above message
-		syslog(LOG_NOTICE, $activity);
+		if (defined('FRESHPORTS_LOG_CACHE_ACTIVITY')) {
+			syslog(LOG_NOTICE, $activity);
+		}
 	}
 }
 

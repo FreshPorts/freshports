@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits_by_committer.php,v 1.2 2006-12-17 11:37:19 dan Exp $
+	# $Id: commits_by_committer.php,v 1.3 2008-02-10 19:17:22 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -38,50 +38,6 @@ class CommitsByCommitter extends commits {
 		return $count;
 	}
 
-	function GetCountPortCommits() {
-		$count = 0;
-		
-		$sql = "
-		SELECT count(distinct CL.id) as count 
-		  FROM commit_log CL, commit_log_ports CLP 
-		 WHERE CL.id = CLP.commit_log_id
-		   AND committer = '" . AddSlashes($this->Committer) . "'";
-
-		if ($this->Debug) echo "<pre>$sql</pre>";
-		$result = pg_exec($this->dbh, $sql);
-		if ($result) {
-			$myrow = pg_fetch_array($result);
-			$count = $myrow['count'];
-		} else {
-			syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ': ' . pg_last_error($this->dbh));
-			die('SQL ERROR');
-		}
-
-		return $count;
-	}
-
-	function GetCountPortsTouched() {
-		$count = 0;
-		
-		$sql = "
-		SELECT count(*) as count 
-		  FROM commit_log CL, commit_log_ports CLP 
-		 WHERE CL.id = CLP.commit_log_id
-		   AND committer = '" . AddSlashes($this->Committer) . "'";
-		;
-		if ($this->Debug) echo "<pre>$sql</pre>";
-		$result = pg_exec($this->dbh, $sql);
-		if ($result) {
-			$myrow = pg_fetch_array($result);
-			$count = $myrow['count'];
-		} else {
-			syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ': ' . pg_last_error($this->dbh));
-			die('SQL ERROR');
-		}
-
-		return $count;
-	}
-
 	function Fetch() {
 		$sql = "
 		SELECT DISTINCT
@@ -93,32 +49,32 @@ class CommitsByCommitter extends commits {
 			commit_log.description                                                                                      AS commit_description,
 			to_char(commit_log.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')                                         AS commit_date,
 			to_char(commit_log.commit_date - SystemTimeAdjust(), 'HH24:MI')                                             AS commit_time,
-			commit_log_ports.port_id                                                                                    AS port_id,
-			categories.name                                                                                             AS category,
-			categories.id                                                                                               AS category_id,
-			element.name                                                                                                AS port,
+			NULL                                                                                    AS port_id,
+			NULL                                                                                         AS category,
+			NULL                                                                                               AS category_id,
+			NULL                                                                                                AS port,
 			element_pathname(element.id)                                                                                AS pathname,
-			CASE when commit_log_ports.port_version IS NULL then ports.version  else commit_log_ports.port_version  END AS version,
-			CASE when commit_log_ports.port_version is NULL then ports.revision else commit_log_ports.port_revision END AS revision,
-			CASE when commit_log_ports.port_epoch   is NULL then ports.portepoch else commit_log_ports.port_epoch   END AS epoch,
+			NULL AS version,
+			commit_log_elements.revision_name AS revision,
+			NULL AS epoch,
 			element.status                                                                                              AS status,
-			commit_log_ports.needs_refresh                                                                              AS needs_refresh,
-			ports.forbidden                                                                                             AS forbidden,
-			ports.broken                                                                                                AS broken,
-			ports.deprecated                                                                                            AS deprecated,
-			ports.ignore                                                                                                AS ignore,
-			ports.expiration_date                                                                                       AS expiration_date,
-			date_part('epoch', ports.date_added)                                                                        AS date_added,
-			ports.element_id                                                                                            AS element_id,
-			ports.short_description                                                                                     AS short_description,
-			STF.message                                                                                                 AS stf_message";
+			NULL AS needs_refresh,
+			NULL                                                                                             AS forbidden,
+			NULL                                                                                                AS broken,
+			NULL                                                                                            AS deprecated,
+			NULL                                                                                                AS ignore,
+			NULL                                                                                       AS expiration_date,
+			NULL                                                                        AS date_added,
+			NULL                                                                                            AS element_id,
+			NULL                                                                                     AS short_description,
+			NULL                                                                                                 AS stf_message";
 		if ($this->UserID) {
 				$sql .= ",
 	        onwatchlist ";
 		}
 
 		$sql .= "
-    FROM commit_log_ports LEFT OUTER JOIN sanity_test_failures STF ON STF.commit_log_id = commit_log_ports.commit_log_id, commit_log, categories, ports, element ";
+    FROM commit_log, commit_log_elements, element ";
 
 		if ($this->UserID) {
 				$sql .= "
@@ -134,14 +90,10 @@ class CommitsByCommitter extends commits {
 		
 		$sql .= "
 	  WHERE commit_log.committer = '" . AddSlashes($this->Committer) . "'
-	    AND commit_log_ports.commit_log_id = commit_log.id
-	    AND commit_log_ports.port_id       = ports.id
-	    AND categories.id                  = ports.category_id
-	    AND element.id                     = ports.element_id
+	    AND commit_log_elements.commit_log_id = commit_log.id
+	    AND commit_log_elements.element_id    = element.id
    ORDER BY 1 desc,
-			commit_log_id,
-			category,
-			port";
+			commit_log_id";
 			
 		if ($this->Limit) {
 			$sql .= "\nLIMIT " . $this->Limit;

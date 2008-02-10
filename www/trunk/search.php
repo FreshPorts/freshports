@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.7 2008-01-18 18:35:31 dan Exp $
+	# $Id: search.php,v 1.8 2008-02-10 19:18:13 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -24,6 +24,8 @@
 	define('ORDERBYASCENDING',  'asc');
 	define('ORDERBYDESCENDING', 'desc');
 
+	define('INCLUDE_DELETED_PORTS', 'includedeleted');
+	define('INCLUDE_SRC_COMMITS',   'include_src_commits');
 	define('VEVENSHTEIN_MATCH', 3);
 
 	$PageNumber = 1;
@@ -122,6 +124,7 @@ function WildCardQuery($stype, $Like, $query) {
 	$port				= '';
 	$method				= '';
 	$deleted			= 'excludedeleted';
+	$include_src_commits= INCLUDE_SRC_COMMITS;
 	$casesensitivity	= 'caseinsensitive';
 	$orderby            = ORDERBYCATEGORY;
 	$orderbyupdown		= ORDERBYASCENDING;
@@ -134,6 +137,7 @@ function WildCardQuery($stype, $Like, $query) {
 	if (IsSet($_REQUEST['port']))            $port				= AddSlashes(trim($_REQUEST['port']));
 	if (IsSet($_REQUEST['method']))          $method			= AddSlashes(trim($_REQUEST['method']));
 	if (IsSet($_REQUEST['deleted']))         $deleted			= AddSlashes(trim($_REQUEST['deleted']));
+	if (!IsSet($_REQUEST[INCLUDE_SRC_COMMITS])) $include_src_commits	= '';
 	if (IsSet($_REQUEST['casesensitivity'])) $casesensitivity	= AddSlashes(trim($_REQUEST['casesensitivity']));
 	if (IsSet($_REQUEST['orderby']))         $orderby			= AddSlashes(trim($_REQUEST['orderby']));
 	if (IsSet($_REQUEST['orderbyupdown']))   $orderbyupdown		= AddSlashes(trim($_REQUEST['orderbyupdown']));
@@ -182,7 +186,7 @@ function WildCardQuery($stype, $Like, $query) {
 	# ensure deleted has an appropriate value
 	#
 	switch ($deleted) {
-		case 'includedeleted':
+		case INCLUDE_DELETED_PORTS:
 			# do nothing
 			break;
 
@@ -381,7 +385,7 @@ switch ($stype) {
 
 	default:
 		switch ($deleted) {
-			case 'includedeleted':
+			case INCLUDE_DELETED_PORTS:
 				# do nothing
 				break;
 		
@@ -441,18 +445,25 @@ switch ($method) {
 
 switch ($stype) {
   case SEARCH_FIELD_COMMITTER:
-    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits_by_committer.php');
     require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
-  
-    $Commits = new CommitsByCommitter($db);
+
+    if ($include_src_commits) {
+      echo 'searching src';
+      require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits_by_committer.php');
+      $Commits = new CommitsByCommitter($db);
+    } else {
+      echo 'not searching src';
+      require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port_commits_by_committer.php');
+      $Commits = new PortCommitsByCommitter($db);
+    }
     $Commits->CommitterSet($query);
     
     $Commits->Debug = $Debug;
   
-    $NumberOfPortCommits = $Commits->GetCountPortCommits($query);
-    if ($Debug) echo 'number of commits = ' . $NumberOfPortCommits . "<br>\n";
+    $NumberOfCommits = $Commits->GetCountCommits($query);
+    if ($Debug) echo 'number of commits = ' . $NumberOfCommits . "<br>\n";
 
-	$NumFound = $NumberOfPortCommits;
+	$NumFound = $NumberOfCommits;
 	$params = array(
 			'mode'        => 'Sliding',
 			'perPage'     => $PageSize,
@@ -486,10 +497,10 @@ switch ($stype) {
 
     $Commits->Debug = $Debug;
 
-    $NumberOfPortCommits = $Commits->GetCountCommits();
-    if ($Debug) echo 'number of commits = ' . $NumberOfPortCommits . "<br>\n";
+    $NumberOfCommits = $Commits->GetCountCommits();
+    if ($Debug) echo 'number of commits = ' . $NumberOfCommits . "<br>\n";
 
-	$NumFound = $NumberOfPortCommits;
+	$NumFound = $NumberOfCommits;
 	$params = array(
 			'mode'        => 'Sliding',
 			'perPage'     => $PageSize,
@@ -530,13 +541,13 @@ switch ($stype) {
     $Commits->Debug = $Debug;
 
 	if (substr($query, 0, 7) == '/ports/') {
-	    $NumberOfPortCommits = $Commits->GetCountPortCommits();
+	    $NumberOfCommits = $Commits->GetCountPortCommits();
 	} else {
-	    $NumberOfPortCommits = $Commits->GetCountCommits();
+	    $NumberOfCommits = $Commits->GetCountCommits();
 	}
-    if ($Debug) echo 'number of commits = ' . $NumberOfPortCommits . "<br>\n";
+    if ($Debug) echo 'number of commits = ' . $NumberOfCommits . "<br>\n";
 
-	$NumFound = $NumberOfPortCommits;
+	$NumFound = $NumberOfCommits;
 	$params = array(
 			'mode'        => 'Sliding',
 			'perPage'     => $PageSize,
@@ -810,7 +821,7 @@ $Port->LocalResult = $result;
 <table cellpadding="5" cellspacing="0" border="0">
 <tr>
 <td valign="middle">
-	<INPUT TYPE=checkbox <? if ($deleted == "includedeleted") echo 'CHECKED'; ?> VALUE=includedeleted NAME=deleted> Include deleted ports
+	<INPUT TYPE=checkbox <? if ($deleted == INCLUDE_DELETED_PORTS) echo 'CHECKED'; ?> VALUE=<?php echo INCLUDE_DELETED_PORTS; ?> NAME=deleted> Include deleted ports
 </td>
 <td valign="middle">
 	<INPUT TYPE=checkbox <? if ($casesensitivity == "casesensitive")   echo 'CHECKED'; ?> VALUE=casesensitive   NAME=casesensitivity> Case sensitive search
@@ -827,6 +838,10 @@ $Port->LocalResult = $result;
 </td>
 <td>
 	<INPUT TYPE="submit" VALUE="Search" NAME="search">
+</td>
+</tr><tr>
+<td>
+	<INPUT TYPE=checkbox <? if ($include_src_commits == INCLUDE_SRC_COMMITS) echo 'CHECKED'; ?> VALUE=<?php echo INCLUDE_SRC_COMMITS; ?> NAME=<?php echo INCLUDE_SRC_COMMITS; ?>> Include /src tree
 </td>
 </tr>
 </table>
@@ -872,14 +887,14 @@ if ($NumFetches == 0) {
    $HTML .= " no results found<br>\n";
 } else {
 	if ($stype == 'committer' || $stype == 'commitmessage' || $stype == 'tree') {
-	  $NumFetches = min($num, $NumberOfPortCommits);
-	  if ($NumFetches != $NumberOfPortCommits) {
+	  $NumFetches = min($num, $NumberOfCommits);
+	  if ($NumFetches != $NumberOfCommits) {
 		$MoreToShow = 1;
       } else {
 		$MoreToShow = 0;
       }
 
-	  $NumPortsFound = 'Number of commits: ' . $NumberOfPortCommits;
+	  $NumPortsFound = 'Number of commits: ' . $NumberOfCommits;
       if ($NumFound > $PageSize) {
 	    $NumPortsFound .= " (showing only $NumOnThisPage on this page)";
 	  }

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: new-user.php,v 1.3 2008-04-29 01:56:23 dan Exp $
+	# $Id: new-user.php,v 1.4 2008-04-29 21:10:24 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -109,7 +109,7 @@ if (IsSet($submit)) {
 						AddSlashes($email) . "', '1', 'N', 'U', '" . $_SERVER["REMOTE_ADDR"] . "', " .
 						AddSlashes($numberofdays) . ", crypt('" . AddSlashes($Password1) . "' , gen_salt('md5')))";
 
-				syslog(LOG_ERR, 'FreshPorts new user: '. $sql);
+				syslog(LOG_ERR, "FreshPorts new user: '$UserID', '$UserLogin', '$email', " . $_SERVER["REMOTE_ADDR"]);
 
 				$errors .= "<BR>sql=" . $sql;
 

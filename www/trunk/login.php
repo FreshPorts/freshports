@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: login.php,v 1.2 2006-12-17 12:06:11 dan Exp $
+	# $Id: login.php,v 1.3 2008-04-29 01:45:53 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -43,7 +43,7 @@ if (IsSet($_REQUEST['LOGIN']) && $_REQUEST['UserID']) {
    // test for existance of user id
 
    $sql = "select * from users where lower(name) = lower('" . AddSlashes($UserID) . "')".
-	  " and password = '" . AddSlashes($Password) . "' ";
+	  " and password_hash = crypt('" . AddSlashes($Password) . "', password_hash) ";
 
    if ($Debug) {
       echo "$sql<BR>\n";
@@ -231,7 +231,7 @@ echo"
 </TABLE>
 ";
 
-echo '<BR><A HREF="forgotten-password.php">Forgotten your password?</a>';
+#echo '<BR><A HREF="forgotten-password.php">Forgotten your password?</a>';
 
 ?>
 </TD>

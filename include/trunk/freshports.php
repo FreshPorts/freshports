@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.25 2008-04-30 15:47:30 dan Exp $
+	# $Id: freshports.php,v 1.26 2008-04-30 15:48:59 dan Exp $
 	#
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
@@ -1200,7 +1200,7 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	# output the VERSION and REVISION
 	$PackageVersion = freshports_PackageVersion($commit->{'port_version'},  $commit->{'port_revision'},  $commit->{'port_epoch'});
 	if (strlen($PackageVersion) > 0) {
-    	$HTML .= '&nbsp;&nbsp;<b>' . $PackageVersion . '</b>';
+    	$HTML .= '&nbsp;&nbsp;<big><b>' . $PackageVersion . '</b></big>';
 	}
 
 	$HTML .= '<br>';

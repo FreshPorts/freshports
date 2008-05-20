@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-display.php,v 1.10 2008-02-10 19:42:42 dan Exp $
+	# $Id: port-display.php,v 1.11 2008-05-20 00:39:10 dan Exp $
 	#
 	# Copyright (c) 2005-2006 DVL Software Limited
 	#
@@ -465,7 +465,7 @@ class port_display {
 					$HTML .= '<p><b>No <a href="/faq.php#package" TITLE="what is a package?">package</a> is available:</b> ' . $port->no_package . '</p>';
 					} else {
 					if ($port->forbidden || $port->broken || $port->ignore || $port->restricted) {
-						$HTML .= '<p><b>A <a href="/faq.php#package" TITLE="what is a package?">package</a> is not available for ports asked as: Forbidden / Broken / Ignore / Restricted</b></p>';
+						$HTML .= '<p><b>A <a href="/faq.php#package" TITLE="what is a package?">package</a> is not available for ports marked as: Forbidden / Broken / Ignore / Restricted</b></p>';
 					} else {
 						$HTML .= '<b>To add the <a href="/faq.php#package" TITLE="what is a package?">package</a>:</b> <code class="code">pkg_add -r ' . $port->latest_link . '</code></p>';
 					}

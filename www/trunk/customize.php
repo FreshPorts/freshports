@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: customize.php,v 1.2 2006-12-17 12:06:09 dan Exp $
+	# $Id: customize.php,v 1.3 2008-08-06 13:36:16 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -85,7 +85,7 @@ UPDATE users
 			}
 
 			if ($Password1 != '') {
-				$sql .= ", password = '$Password1'";
+				$sql .= ", password_hash = crypt('" . AddSlashes($Password1) . "', gen_salt('md5'))";
 			}
 
 			$sql .= " where cookie = '$visitor'";

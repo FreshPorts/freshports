@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.26 2008-04-30 15:48:59 dan Exp $
+	# $Id: freshports.php,v 1.27 2008-09-29 04:49:04 dan Exp $
 	#
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
@@ -1580,14 +1580,8 @@ function freshports_SideBar() {
    </tr>
    </table>
 
-' . '<br><div align="center">';
+' . '<div align="center">';
 
-	GLOBAL $ShowAds;
-
-	if ($ShowAds) {
-		$HTML .= Ad_Referral_120x60();
-	}
-	
 	$HTML .='
 
 <p><small>' . SPONSORS  . '</small></p>

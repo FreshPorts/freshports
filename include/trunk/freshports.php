@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.27 2008-09-29 04:49:04 dan Exp $
+	# $Id: freshports.php,v 1.28 2008-10-10 19:42:33 dan Exp $
 	#
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
@@ -1693,6 +1693,7 @@ $HTML .= '
 	<td valign="top">
 
 ' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/graphs.php",        "Graphs", "Everyone loves statistics!")   . '<br>
+' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/graphs2.php",        "NEW Graphs (Javascript)", "Everyone loves statistics!")   . '<br>
 ' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/stats/",            "Traffic", "Traffic to this website");
 
 	if (file_exists($_SERVER["DOCUMENT_ROOT"] . "/../dynamic/stats.html")) {

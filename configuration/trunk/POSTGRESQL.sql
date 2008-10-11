@@ -1,5 +1,5 @@
 --
--- $Id: POSTGRESQL.sql,v 1.3 2007-10-16 18:29:25 dan Exp $
+-- $Id: POSTGRESQL.sql,v 1.4 2008-10-11 01:21:23 dan Exp $
 --
 -- Copyright (c) 1998-2006 DVL Software Limited
 --
@@ -33,6 +33,7 @@ grant select on commit_log_port_elements       to group www;
 grant select on commit_log_ports_elements      to group www;
 grant select on commit_log_ports               to group www;
 grant select on commit_log_ports_ignore        to group www;
+grant select on latest_commits                 to group www;
 grant select on latest_commits_ports           to group www;
 grant select on element                        to group www;
 grant select on element_pathname               to group www;
@@ -77,6 +78,7 @@ grant select,         update on users_id_seq   to group www;
 grant select, insert, update, delete on announcements              to group www;
 grant update on announcements_id_seq                               to group www;
 grant select, insert, delete, update on committer_notify           to group www;
+grant select, insert, update         on security_notice            to group www;
 grant select, insert, delete, update on watch_list                 to group www;
 grant select, insert, delete, update on watch_list_staging         to group www;
 grant select,                 update on watch_list_staging_id_seq  to group www;
@@ -147,6 +149,7 @@ grant select, insert, update, delete on commit_log_ports_elements      to group 
 grant select, insert, update, delete on commit_log_ports               to group commits;
 grant select, insert                 on commit_log_ports_ignore        to group commits;
 
+grant select, insert,         delete on latest_commits                 to group commits;
 grant select, insert,         delete on latest_commits_ports           to group commits;
 grant select                         on commits_recent                 to group commits;
 grant select                         on commits_recent_ports           to group commits;
@@ -163,6 +166,7 @@ grant select, insert, update, delete on ports                          to group 
 grant select, update                 on ports_id_seq                   to group commits;
 grant select, insert, update, delete on ports_all                      to group commits;
 grant select, insert, update, delete on ports_categories               to group commits;
+grant select                         on security_notice                to group commits;
 
 --
 -- mostly for use only by ~/scripts/ports_categories-populate.pl

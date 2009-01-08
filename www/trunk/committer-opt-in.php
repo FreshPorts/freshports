@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: committer-opt-in.php,v 1.4 2009-01-08 19:22:42 dan Exp $
+	# $Id: committer-opt-in.php,v 1.5 2009-01-08 19:47:08 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -21,7 +21,7 @@
 
 	if (IsSet($_POST["subscribe"]) && $_POST["subscribe"] && !empty($visitor)) {
 	    # if not an email address
-	    if (strrpos($email, '@') === false) {
+	    if (strrpos($_POST["email"], '@') === false) {
     		$committer = AddSlashes($_POST["email"]);
     		$sql = "insert into committer_notify (user_id, committer, status)
 	    			values ($User->id, '$committer', 'A')";

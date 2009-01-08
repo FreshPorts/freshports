@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: committer-opt-in.php,v 1.3 2009-01-08 19:14:11 dan Exp $
+	# $Id: committer-opt-in.php,v 1.4 2009-01-08 19:22:42 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -20,19 +20,24 @@
    }
 
 	if (IsSet($_POST["subscribe"]) && $_POST["subscribe"] && !empty($visitor)) {
-		$committer = AddSlashes($_POST["email"]);
-		$sql = "insert into committer_notify (user_id, committer, status)
-				values ($User->id, '$committer', 'A')";
+	    # if not an email address
+	    if (strrpos($email, '@') === false) {
+    		$committer = AddSlashes($_POST["email"]);
+    		$sql = "insert into committer_notify (user_id, committer, status)
+	    			values ($User->id, '$committer', 'A')";
 
-		if ($Debug) {
-			echo "sql=$sql<br>\n";
-		}
+    		if ($Debug) {
+	    		echo "sql=$sql<br>\n";
+            }
 
-		$result = pg_exec($db, $sql) or die("insert query failed " . pg_errormessage());
+    		$result = pg_exec($db, $sql) or die("insert query failed " . pg_errormessage());
 
-		if (!$result) {
-			die("determine committer subscribe failed " . pg_errormessage());
-		}
+	    	if (!$result) {
+	        	die("determine committer subscribe failed " . pg_errormessage());
+    		}
+        } else {
+          die("please enter just your login, not your email address");
+        }
 	}
 
 	if (IsSet($_POST["unsubscribe"]) && $_POST["unsubscribe"] && !empty($visitor)) {

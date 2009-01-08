@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: committer-opt-in.php,v 1.2 2006-12-17 12:06:09 dan Exp $
+	# $Id: committer-opt-in.php,v 1.3 2009-01-08 19:14:11 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -156,6 +156,10 @@ if (!empty($visitor)) {
 ?>
 
 </FORM>
+
+<p>
+<BIG>Please do not include @FreeBSD.org in your login name.</BIG>
+</p>
 
 </TD></TR>
 

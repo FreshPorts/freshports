@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.2 2006-12-17 11:39:36 dan Exp $
+# $Id: Makefile,v 1.3 2009-12-05 17:46:06 dan Exp $
 #
 # Install the ports needed by FreshPorts
 #
@@ -29,7 +29,6 @@ RUN_DEPENDS=	${LOCALBASE}/bin/svstat:${PORTSDIR}/sysutils/daemontools \
 		${SITE_PERL}/mach/Bundle/DBI.pm:${PORTSDIR}/databases/p5-DBI \
 		${SITE_PERL}/mach/DBD/Pg.pm:${PORTSDIR}/databases/p5-DBD-Pg \
 		${LOCALBASE}/bin/procmail:${PORTSDIR}/mail/procmail \
-		${LOCALBASE}/sbin/stunnel:${PORTSDIR}/security/stunnel \
 		${PREFIX}/sbin/httpd:${PORTSDIR}/www/apache13-modssl \
 		${PREFIX}/bin/php:${PORTSDIR}/lang/php4 \
 		${LOCALBASE}/sbin/portsdb:${PORTSDIR}/sysutils/portupgrade \

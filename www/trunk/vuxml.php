@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: vuxml.php,v 1.8 2007-10-21 16:23:36 dan Exp $
+	# $Id: vuxml.php,v 1.9 2010-01-10 02:23:55 dan Exp $
 	#
 	# Copyright (c) 2004 DVL Software Limited
 	#
@@ -15,7 +15,7 @@
 
 
 	if (IsSet($_REQUEST['vid'])) {
-		$vid = $_REQUEST['vid'];
+		$vid = pg_escape_string($_REQUEST['vid']);
 
 		$vidArray = explode('|', $vid);
 	}

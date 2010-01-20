@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.8 2008-02-10 19:18:13 dan Exp $
+	# $Id: search.php,v 1.9 2010-01-20 20:30:13 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -132,7 +132,7 @@ function WildCardQuery($stype, $Like, $query) {
 	// avoid nasty problems by adding slashes
 	if (IsSet($_REQUEST['query']))           $query				= AddSlashes(trim($_REQUEST['query']));
 	if (IsSet($_REQUEST['stype']))           $stype				= AddSlashes(trim($_REQUEST['stype']));
-	if (IsSet($_REQUEST['num']))             $num				= AddSlashes(trim($_REQUEST['num']));
+	if (IsSet($_REQUEST['num']))             $num			 = intval(AddSlashes(trim($_REQUEST['num'])));
 	if (IsSet($_REQUEST['category']))        $category			= AddSlashes(trim($_REQUEST['category']));
 	if (IsSet($_REQUEST['port']))            $port				= AddSlashes(trim($_REQUEST['port']));
 	if (IsSet($_REQUEST['method']))          $method			= AddSlashes(trim($_REQUEST['method']));
@@ -240,6 +240,10 @@ function setfocus() { document.search.query.focus(); }
 #
 # ensure that our parameters have default values
 #
+
+echo 'hi mom!';
+
+var_dump($num);
 
 if ($num < 1 or $num > 500) {
 	$num = 10;

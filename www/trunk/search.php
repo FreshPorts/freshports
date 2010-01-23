@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.9 2010-01-20 20:30:13 dan Exp $
+	# $Id: search.php,v 1.10 2010-01-23 19:17:01 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -240,10 +240,6 @@ function setfocus() { document.search.query.focus(); }
 #
 # ensure that our parameters have default values
 #
-
-echo 'hi mom!';
-
-var_dump($num);
 
 if ($num < 1 or $num > 500) {
 	$num = 10;

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits_by_committer.php,v 1.3 2008-02-10 19:17:22 dan Exp $
+	# $Id: commits_by_committer.php,v 1.4 2010-07-11 18:23:26 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -41,33 +41,33 @@ class CommitsByCommitter extends commits {
 	function Fetch() {
 		$sql = "
 		SELECT DISTINCT
-			commit_log.commit_date - SystemTimeAdjust()                                                                 AS commit_date_raw,
-			commit_log.id                                                                                               AS commit_log_id,
-			commit_log.encoding_losses                                                                                  AS encoding_losses,
-			commit_log.message_id                                                                                       AS message_id,
-			commit_log.committer                                                                                        AS committer,
-			commit_log.description                                                                                      AS commit_description,
-			to_char(commit_log.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')                                         AS commit_date,
-			to_char(commit_log.commit_date - SystemTimeAdjust(), 'HH24:MI')                                             AS commit_time,
-			NULL                                                                                    AS port_id,
-			NULL                                                                                         AS category,
-			NULL                                                                                               AS category_id,
-			NULL                                                                                                AS port,
-			element_pathname(element.id)                                                                                AS pathname,
+			commit_log.commit_date - SystemTimeAdjust()        AS commit_date_raw,
+			commit_log.id                                      AS commit_log_id,
+			commit_log.encoding_losses                         AS encoding_losses,
+			commit_log.message_id                              AS message_id,
+			commit_log.committer                               AS committer,
+			commit_log.description                             AS commit_description,
+			to_char(commit_log.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')  AS commit_date,
+			to_char(commit_log.commit_date - SystemTimeAdjust(), 'HH24:MI')      AS commit_time,
+			NULL                                               AS port_id,
+			NULL                                               AS category,
+			NULL                                               AS category_id,
+			NULL                                               AS port,
+			element_pathname(element.id)                       AS pathname,
 			NULL AS version,
 			commit_log_elements.revision_name AS revision,
 			NULL AS epoch,
-			element.status                                                                                              AS status,
+			element.status                                     AS status,
 			NULL AS needs_refresh,
-			NULL                                                                                             AS forbidden,
-			NULL                                                                                                AS broken,
-			NULL                                                                                            AS deprecated,
-			NULL                                                                                                AS ignore,
-			NULL                                                                                       AS expiration_date,
-			NULL                                                                        AS date_added,
-			NULL                                                                                            AS element_id,
-			NULL                                                                                     AS short_description,
-			NULL                                                                                                 AS stf_message";
+			NULL                                               AS forbidden,
+			NULL                                               AS broken,
+			NULL                                               AS deprecated,
+			NULL                                               AS ignore,
+			NULL                                               AS expiration_date,
+			NULL                                               AS date_added,
+			NULL                                               AS element_id,
+			NULL                                               AS short_description,
+			NULL                                               AS stf_message";
 		if ($this->UserID) {
 				$sql .= ",
 	        onwatchlist ";
@@ -89,13 +89,12 @@ class CommitsByCommitter extends commits {
 		}
 		
 		$sql .= "
-	  WHERE commit_log.committer = '" . AddSlashes($this->Committer) . "'
-	    AND commit_log_elements.commit_log_id = commit_log.id
-	    AND commit_log_elements.element_id    = element.id
-   ORDER BY 1 desc,
-			commit_log_id";
-			
-		if ($this->Limit) {
+	  WHERE commit_log.id IN (SELECT tmp.id FROM (SELECT DISTINCT CL.id, CL.commit_date
+  FROM commit_log CL
+ WHERE CL.committer  = '" . AddSlashes($this->Committer) . "'
+ORDER BY CL.commit_date DESC ";
+
+   		if ($this->Limit) {
 			$sql .= "\nLIMIT " . $this->Limit;
 		}
 		
@@ -105,6 +104,13 @@ class CommitsByCommitter extends commits {
 
 
 
+
+		$sql .= ")as tmp)
+	    AND commit_log_elements.commit_log_id = commit_log.id
+	    AND commit_log_elements.element_id    = element.id
+   ORDER BY 1 desc,
+			commit_log_id";
+			
 		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
 
 		$this->LocalResult = pg_exec($this->dbh, $sql);

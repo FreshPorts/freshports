@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.3 2007-10-22 13:02:54 dan Exp $
+	# $Id: missing-port.php,v 1.4 2010-09-15 13:33:37 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -139,7 +139,7 @@ function freshports_PortDisplay($db, $category, $port) {
 
 		$HTML = substr($HTML, $EndOfFirstLine + 1);
 	} else {
-		if ($Debug) echo "found NOTHING in cache<br>\n";
+		if ($Debug) echo "found NOTHING in cache for '$category/$port'<br>\n";
 		$HTML = '';
 		$port_id = freshports_GetPortID($db, $category, $port);
 		if (!IsSet($port_id)) {

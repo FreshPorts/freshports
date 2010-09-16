@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: news.php,v 1.2 2006-12-17 12:06:22 dan Exp $
+	# $Id: news.php,v 1.3 2010-09-16 15:46:48 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -150,11 +150,11 @@ limit 30";
 
 		$HTML .= '    <title>';
 		if ($date == 1) {
-			$HTML .= '[' . $myrow['commit_date'] . '] ';
+			$HTML .= '[' . htmlentities($myrow['commit_date']) . '] ';
 		}
 
 		if ($time == 1) {
-			$HTML .= '[' . $myrow['commit_time'];
+			$HTML .= '[' . htmlentities($myrow['commit_time']);
 		}
 
 		if ($committer == 1) {
@@ -164,18 +164,18 @@ limit 30";
 				$HTML .= ' ';
 			}
 
-			$HTML .= $myrow['committer'];
+			$HTML .= htmlentities($myrow['committer']);
 		}
 
 		if ($time == 1 || $committer == 1) {
 			$HTML .= '] ';
 		}
 
-		$HTML .= $myrow["category"] . '/' . $myrow["port"] . ' - ' . freshports_PackageVersion($myrow["version"], $myrow["revision"], $myrow["epoch"]);
+		$HTML .= htmlentities($myrow["category"]) . '/' . htmlentities($myrow["port"]) . ' - ' . htmlentities(freshports_PackageVersion($myrow["version"], $myrow["revision"], $myrow["epoch"]));
 
 		$HTML .= '</title>'                                                                                       . "\n";
 
-		$HTML .= '    <link>http://' . $ServerName . '/' . $myrow["category"] . '/' . $myrow["port"] . '/</link>' . "\n";
+		$HTML .= '    <link>http://' . $ServerName . '/' . htmlentities($myrow["category"] . '/' . $myrow["port"]) . '/</link>' . "\n";
 		$HTML .= '    <description>' . htmlspecialchars(trim($myrow["commit_description"])) . '</description>'    . "\n";
 
 		$HTML .= '  </item>'                                                                                      . "\n";

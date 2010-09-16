@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports.php,v 1.3 2008-01-18 23:59:44 dan Exp $
+	# $Id: ports.php,v 1.4 2010-09-16 15:47:38 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -50,6 +50,7 @@ class Port {
 	var $not_for_archs;
 	var $status;
 	var $showconfig;
+	var $license;
 
 	// derived or from other tables
 	var $category;
@@ -125,6 +126,7 @@ class Port {
 		$this->not_for_archs      = $myrow["not_for_archs"];
 		$this->status             = $myrow["status"];
 		$this->showconfig         = $myrow["showconfig"];
+		$this->license            = $myrow["license"];
 
 		$this->port               = $myrow["port"];
 		$this->category           = $myrow["category"];
@@ -195,6 +197,7 @@ select ports.id,
        ports.not_for_archs,
 	   ports.status,
 	   ports.showconfig,
+	   ports.license,
 
        to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, 
        ports.categories as categories,
@@ -293,6 +296,7 @@ select ports.id,
 	                   ports.not_for_archs,
 			           ports.status,
 			           ports.showconfig,
+			           ports.license,
 		               ports.categories as categories,
 			           element.name     as port, 
 			           categories.name  as category,
@@ -408,6 +412,7 @@ SELECT P.*, element.name    as port
         ports.not_for_archs,
         ports.status,
         ports.showconfig,
+        ports.license,
         ports.categories      as categories,
         categories.name       as category_looking_at,
         PRIMARY_CATEGORY.name as category,

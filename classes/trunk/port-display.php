@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-display.php,v 1.11 2008-05-20 00:39:10 dan Exp $
+	# $Id: port-display.php,v 1.12 2010-09-16 15:47:38 dan Exp $
 	#
 	# Copyright (c) 2005-2006 DVL Software Limited
 	#
@@ -346,6 +346,13 @@ class port_display {
 				$HTML .= "<br>\n";
 			}
 		}
+		
+	        $HTML .= '<b>License:</b> ';
+		if ($port->license) {
+		        $HTML .= htmlentities($port->license);
+		} else {
+		        $HTML .= 'not specified in port';
+                }
 
 	   # The ad goes here
 	   if ($this->ShowAd || $this->ShowEverything) {

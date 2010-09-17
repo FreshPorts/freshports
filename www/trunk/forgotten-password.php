@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: forgotten-password.php,v 1.2 2006-12-17 12:06:10 dan Exp $
+	# $Id: forgotten-password.php,v 1.3 2010-09-17 14:38:29 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -32,18 +32,17 @@ if (IsSet($submit)) {
 
    $OK = 1;
 
-	$UserID	= AddSlashes($_REQUEST["UserID"]);
-	$eMail	= AddSlashes($_REQUEST["eMail"]);
+   $UserID = pg_escape_string( $_REQUEST["UserID"] );
+   $eMail  = pg_escape_string( strtolower( $_REQUEST["eMail"] ) );
 
    if ($UserID) {
       $error = '';
-      $UserID = addslashes($UserID);
 
       if ($Debug) {
          echo $UserID . "<br>\n";
       }
 
-      $sql = "select * from users where lower(name) = lower('$UserID')";
+      $sql = "select * from users where name = '" . $UserID . "'";
 
       if ($Debug) {
          echo "<pre>$sql</pre>\n";
@@ -57,11 +56,10 @@ if (IsSet($submit)) {
    } else {
       if ($eMail) {
          $error = '';
-         $eMail = addslashes($eMail);
 
          if ($Debug) echo $eMail . "<br>\n";
 
-         $sql = "select * from users where email = '$eMail'";
+         $sql = "select * from users where lower(email) = '" . $eMail . "'";
 			if ($Debug) {
 				echo "<pre>This is the \$sql='$sql'</pre>\n";
 				echo "<pre>$sql</pre>\n";
@@ -78,46 +76,50 @@ if (IsSet($submit)) {
    }
 
    if (pg_numrows($result)) {
-      // there is a result.  Let's fetch it.
-      $myrow = pg_fetch_array ($result, 0);
+      // there is a result.  Let's fetch it, or rather, all of them
+      while ( $myrow = pg_fetch_array ($result) ) {
 
-      $OKToMail = 1;
-      if ($myrow["emailbouncecount"] > 0) {
-         $error = "Sorry, but previous email to you has bounced, so we're not sure it's going to get to you.  But we sent it out
+        $OKToMail = 1;
+        if ($myrow["emailbouncecount"] > 0) {
+           $error = "Sorry, but previous email to you has bounced, so we're not sure it's going to get to you.  But we sent it out
 						anyway.  Please contact " .
-                  'the <A HREF="' . MAILTO . ':webmaster&#64;freshports.org?subject=I forgot my password">webmaster</A> for help
-                  if it doesn\'t arrive.';
-         $OKToMail = 1;
-			syslog(LOG_NOTICE, "Forgotten password: previous email to '" . $myrow['email'] . "' bounced");
-      }
+                    'the <A HREF="' . MAILTO . ':webmaster&#64;freshports.org?subject=I forgot my password">webmaster</A> for help
+                    if it doesn\'t arrive.';
+           $OKToMail = 1;
+           syslog(LOG_NOTICE, "Forgotten password: previous email to '" . $myrow['email'] . "' bounced");
+        }
 
-		if ($myrow["email"] == "") {
-			$error = 'Guess what?  You never gave us an email address.  So I guess you must ' . 
-						'contact the <A HREF="' . MAILTO . ':webmaster&#64;freshports.org?subject=I forgot my password">webmaster</A> for help.';
-			$OKToMail = 0;
-			syslog(LOG_NOTICE, "Forgotten password: '" . $myrow['name'] . "' never supplied an email.");
-		}
+        if ($myrow["email"] == "") {
+          $error = 'Guess what?  You never gave us an email address.  So I guess you must ' . 
+              'contact the <A HREF="' . MAILTO . ':webmaster&#64;freshports.org?subject=I forgot my password">webmaster</A> for help.';
+              $OKToMail = 0;
+          syslog(LOG_NOTICE, "Forgotten password: '" . $myrow['name'] . "' never supplied an email.");
+        }
 
-      if ($OKToMail) {
-         # send out email
-         $message = "Someone, perhaps you, requested that you be emailed your password.\n".
-                    "If that wasn't you, and this message becomes a nuisance, please\n".
-                    "forward this message to webmaster@freshports.org and we will take\n". 
-                    "care of it for you.\n" .
-                    " \n" .
-                    "Your User ID is:\n" .
-                    $myrow["name"] . "\n" .
-                    "\n" .
-                    "Your password is:\n" .
-                    $myrow["password"] . "\n" .
-                    "\n" .
-                    "the request came from " . $_SERVER["REMOTE_ADDR"] . ':' . $_SERVER["REMOTE_PORT"];
+        if ($OKToMail) {
+          $sql = "insert into user_password_reset (user_id, ip_address) values (" . $myrow["id"] . ", '" . $_SERVER['REMOTE_ADDR'] . "') returning token";
+          $token_result = pg_exec($db, $sql) or die('password token creation failed ' . pg_errormessage());
+          $token_row = pg_fetch_array ($token_result, 0);
+          $token = $token_row["token"];
+          
+           # send out email
+           $message = "Someone, perhaps you, requested that you be emailed your password.\n".
+                      "If that wasn't you, and this message becomes a nuisance, please\n".
+                      "forward this message to webmaster@freshports.org and we will take\n". 
+                      "care of it for you.\n" .
+                      " \n" .
+                      "Your login id is: " . $myrow["name"] . "\n\n" . 
+                      "Your password recovery URL is:\n" .
+                      "http://" . $_SERVER["SERVER_NAME"] . "/password-reset-via-token.php?token=" . $token . "\n" .
+                      "\n" .
+                      "the request came from " . $_SERVER["REMOTE_ADDR"] . ':' . $_SERVER["REMOTE_PORT"];
 
-         mail($myrow["email"], "FreshPorts - password", $message,
-         "From: webmaster@freshports.org\nReply-To: webmaster@freshports.org\nX-Mailer: PHP/" . phpversion());
+           mail($myrow["email"], "FreshPorts - password", $message,
+           "From: webmaster@freshports.org\nReply-To: webmaster@freshports.org\nX-Mailer: PHP/" . phpversion());
 
-         $MailSent = 1;
-			syslog(LOG_NOTICE, "Forgotten password: email for '" . $myrow['name'] . "' sent to '" . $myrow['email'] . "'.");
+           $MailSent = 1;
+          syslog(LOG_NOTICE, "Forgotten password: email for '" . $myrow['name'] . "' sent to '" . $myrow['email'] . "': " . $token);
+        }
       }
    }
 }
@@ -224,7 +226,7 @@ if ($MailSent) {
 if ($MailSent) {
 ?>
 <p>
-Your password has been sent to the address we have on file.  If you still can't get logged in
+A password recovery URL has been sent to the address we have on file.  If you still can't get logged in
 please contact <A HREF="<? echo MAILTO; ?>:webmaster&#64;freshports.org?subject=I forgot my password">the webmaster</A>
 and we'll see what we can do.
 </p>
@@ -235,7 +237,8 @@ and we'll see what we can do.
 
 <p>Please enter either your login or your email address (whichever you remember), then click on 'eMail Me!'.</p>
 
-<p>We'll forward your password via clear text to your email account.  This isn't exactly totally secure, but then
+<p>We will send you an email with a link in it. Click on that link and you'll be able to set a new password.
+This link will expire within a few hours. This isn't exactly totally secure, but then
 we're only dealing with your FreshPorts login, not a financial transaction....</p>
 
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST">
@@ -244,7 +247,7 @@ we're only dealing with your FreshPorts login, not a financial transaction....</
       <input SIZE="15" NAME="UserID" value="<? if (IsSet($UserID)) echo $UserID ?>"></p>
       <p>email address:<br>
       <input NAME="eMail" VALUE = "<? if (IsSet($eMail)) echo $eMail ?>" SIZE="20"></p>
-      <p><input TYPE="submit" VALUE="eMail Me!" name=submit> &nbsp;&nbsp;&nbsp;&nbsp; <input TYPE="reset" VALUE="reset form">
+      <p><input TYPE="submit" VALUE="eMail Me!" name=submit>
 </form>
 <? } ?>
 </TD>

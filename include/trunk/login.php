@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: login.php,v 1.2 2006-12-17 11:55:53 dan Exp $
+	# $Id: login.php,v 1.3 2010-09-17 14:44:38 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -14,5 +14,9 @@
       <input SIZE="15" NAME="UserID" value="<?php if (IsSet($UserID)) echo htmlentities($UserID) ?>"></p>
       <p>Password:<br>
       <input TYPE="PASSWORD" NAME="Password" VALUE = "<?php if (IsSet($Password)) echo htmlentities($Password) ?>" size="20"></p>
-      <p><input TYPE="submit" VALUE="Login" name=submit> &nbsp;&nbsp;&nbsp;&nbsp; <input TYPE="reset" VALUE="reset form">
+      <p><input TYPE="submit" VALUE="Login" name=submit>
+      <br>
+      <br>
+      <a href="forgotten-password.php">Forgotten your password?</a>
+      <br><br>
 </form>

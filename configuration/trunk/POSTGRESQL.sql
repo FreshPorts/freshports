@@ -1,5 +1,5 @@
 --
--- $Id: POSTGRESQL.sql,v 1.4 2008-10-11 01:21:23 dan Exp $
+-- $Id: POSTGRESQL.sql,v 1.5 2010-09-17 14:42:34 dan Exp $
 --
 -- Copyright (c) 1998-2006 DVL Software Limited
 --
@@ -60,6 +60,7 @@ grant select on vuxml_names                    to group www;
 grant select on vuxml_ranges                   to group www;
 grant select on vuxml_references               to group www;
 
+
 --
 -- select, update
 --
@@ -67,6 +68,8 @@ grant select, insert on cache_clearing_ports        to group www;
 grant select, update on cache_clearing_ports_id_seq to group www;
 grant select, update on categories                  to group www;
 grant select, insert, delete on category_stats      to group www;
+
+grant select, insert, delete on user_password_reset to group www;
 
 --
 -- select, insert, update
@@ -237,6 +240,9 @@ grant update                         on vuxml_ranges_id_seq            to group 
 
 grant insert, delete, select         on commit_log_ports_vuxml         to group commits;
 grant update                         on commit_log_ports_vuxml_id_seq  to group commits;
+
+grant delete                         on user_password_reset            to group commits;
+
 
 --
 -- the READING group only needs to read some things.

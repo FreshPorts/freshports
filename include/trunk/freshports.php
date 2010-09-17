@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.28 2008-10-10 19:42:33 dan Exp $
+	# $Id: freshports.php,v 1.29 2010-09-17 14:44:02 dan Exp $
 	#
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
@@ -16,7 +16,7 @@
 # special HTMLified mailto to foil spam harvesters
 #
 DEFINE('MAILTO',                'mailto');
-DEFINE('COPYRIGHTYEARS',        '2000-2008');
+DEFINE('COPYRIGHTYEARS',        '2000-2010');
 DEFINE('URL2LINK_CUTOFF_LEVEL', 0);
 DEFINE('FAQLINK',               'faq.php');
 DEFINE('PORTSMONURL',			'http://portsmon.freebsd.org/portoverview.py');
@@ -37,6 +37,8 @@ DEFINE('SPONSORS', 'Servers and bandwidth provided by<br><a href="http://www.nyi
 
 
 if ($Debug) echo "'" . $_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php<br>';
+
+date_default_timezone_set('Europe/London');
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php');
 
@@ -1551,7 +1553,7 @@ function freshports_SideBar() {
 		}
 		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/customize.php',        "?origin=$OriginLocal", "Customize", "Customize your settings"              ) . '</FONT><br>';
 
-		if (eregi(".*@FreeBSD.org", $User->email)) {
+		if (preg_match("/.*@FreeBSD.org/i", $User->email)) {
 			$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/committer-opt-in.php', '', "Committer Opt-in", "Committers can receive reports of Sanity Test Failures"       ) . '</FONT><br>';
 		}
 

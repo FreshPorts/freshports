@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: password-reset-via-token.php,v 1.1 2010-09-17 14:38:29 dan Exp $
+	# $Id: password-reset-via-token.php,v 1.2 2010-09-17 15:14:42 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -24,7 +24,7 @@ if (IsSet($_REQUEST['origin'])) $origin	= pg_escape_string( $_REQUEST['origin'] 
 if (IsSet($_REQUEST['submit'])) $submit = pg_escape_string( $_REQUEST['submit'] );
 if (IsSet($_REQUEST['token']))  $token  = pg_escape_string( $_REQUEST['token'] );
 
-syslog(LOG_NOTICE, "Password reset page loaded with: " . $token);
+syslog(LOG_NOTICE, "Password reset page: loaded with: " . $token);
 
 if ($origin == '/index.php' || $origin == '') {
 	$origin = '/';
@@ -50,7 +50,7 @@ if (IsSet($submit)) {
 
   if ( !$Password1 || ( $Password1 != $Password2 ) ) {
     $errors .= 'The password was not confirmed.  It must be entered twice.<BR>';
-    syslog(LOG_NOTICE, "Password not confirmed for " . $token);
+    syslog(LOG_NOTICE, ""Password reset page: password not confirmed for " . $token);
     $OK = 0;
   }
 
@@ -64,10 +64,10 @@ if (IsSet($submit)) {
     if ($result) {
       $myrow = pg_fetch_array ($result);
       if ($myrow['rowcount'] == 1) {
-          syslog(LOG_NOTICE, "Token deleted after reset: " . $token);
+          syslog(LOG_NOTICE, "Password reset page: Token deleted after reset: " . $token);
           $PasswordReset = 1;
       } else {
-          syslog(LOG_NOTICE, "Token not deleted after reset: " . $token);
+          syslog(LOG_NOTICE, "Password reset page: Token not deleted after reset: " . $token);
           $errors = "It seems that token is no longer valid.<br>";
       }
     }
@@ -78,7 +78,7 @@ if (IsSet($submit)) {
       }
     } else {
       $errors .= 'Something went terribly wrong there.<br>';
-      syslog(LOG_NOTICE, "Password reset went wrong " . $sql . ' ' . pg_errormessage());
+      syslog(LOG_NOTICE, "Password reset page: Password reset went wrong " . $sql . ' ' . pg_errormessage());
     }
   }
 }

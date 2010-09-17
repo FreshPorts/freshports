@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: login.php,v 1.3 2008-04-29 01:45:53 dan Exp $
+	# $Id: login.php,v 1.4 2010-09-17 14:37:16 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -42,8 +42,8 @@ if (IsSet($_REQUEST['LOGIN']) && $_REQUEST['UserID']) {
 
    // test for existance of user id
 
-   $sql = "select * from users where lower(name) = lower('" . AddSlashes($UserID) . "')".
-	  " and password_hash = crypt('" . AddSlashes($Password) . "', password_hash) ";
+   $sql = "select * from users where lower(name) = lower('" . pg_escape_string($UserID) . "')".
+	  " and password_hash = crypt('" . pg_escape_string($Password) . "', password_hash) ";
 
    if ($Debug) {
       echo "$sql<BR>\n";
@@ -100,7 +100,7 @@ if (IsSet($_REQUEST['LOGIN']) && $_REQUEST['UserID']) {
 }
 
 if (IsSet($_GET["resend"])) {
-	$User = addslashes($_GET["user"]);
+	$User = pg_escape_string($_GET["user"]);
 
 	// get user id for that name
 

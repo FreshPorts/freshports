@@ -1,5 +1,5 @@
 --
--- $Id: POSTGRESQL.sql,v 1.5 2010-09-17 14:42:34 dan Exp $
+-- $Id: POSTGRESQL.sql,v 1.6 2010-09-19 14:47:56 dan Exp $
 --
 -- Copyright (c) 1998-2006 DVL Software Limited
 --
@@ -241,7 +241,7 @@ grant update                         on vuxml_ranges_id_seq            to group 
 grant insert, delete, select         on commit_log_ports_vuxml         to group commits;
 grant update                         on commit_log_ports_vuxml_id_seq  to group commits;
 
-grant delete                         on user_password_reset            to group commits;
+grant select, delete                 on user_password_reset            to group commits;
 
 
 --

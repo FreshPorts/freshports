@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: password-reset-via-token.php,v 1.2 2010-09-17 15:14:42 dan Exp $
+	# $Id: password-reset-via-token.php,v 1.3 2010-09-21 11:08:10 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -50,7 +50,7 @@ if (IsSet($submit)) {
 
   if ( !$Password1 || ( $Password1 != $Password2 ) ) {
     $errors .= 'The password was not confirmed.  It must be entered twice.<BR>';
-    syslog(LOG_NOTICE, ""Password reset page: password not confirmed for " . $token);
+    syslog(LOG_NOTICE, "Password reset page: password not confirmed for " . $token);
     $OK = 0;
   }
 

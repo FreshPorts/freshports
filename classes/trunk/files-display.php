@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: files-display.php,v 1.2 2006-12-17 11:37:20 dan Exp $
+	# $Id: files-display.php,v 1.3 2010-10-12 19:02:30 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -59,11 +59,11 @@ class FilesDisplay {
 				$title =  $NumRows . ' files found';
 		}
 
-		$this->HTML .= freshports_PageBannerText($title, 3);
+		$this->HTML .= freshports_PageBannerText($title, 4);
 
 		$this->HTML .= "
 		<TR>
-			<TD><b>Action</b></TD><TD><B>Revision</B></TD><TD><b>File</b></TD>
+			<TD><b>Action</b></TD><TD><B>Revision</B></TD><td><b>Links</b></td><TD><b>File</b></TD>
 		</TR>\n";
 
 		for ($i = 0; $i < $NumRows; $i++) {
@@ -88,10 +88,24 @@ class FilesDisplay {
 			}
 
 			$this->HTML .= "  <TD>" . $Change_Type . "</TD>";
-			$this->HTML .= "  <TD>" . $myrow["revision_name"] . "</TD>";
-			$this->HTML .= '  <TD WIDTH="100%" VALIGN="middle">';
-			$this->HTML .= '<A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $myrow["pathname"] . '?annotate=' . $myrow["revision_name"] . '">';
+			$this->HTML .= '  <TD>' . $myrow["revision_name"];
+            $this->HTML .= "</TD>";
+            
+            $this->HTML .= '<td>';
+            if ( $Change_Type == "modify" ) {
+                $this->HTML .= ' ';
+    			$previousRevision =  $this->GetPreviousRevision( $myrow["revision_name"] );
+		    	$this->HTML .= '<A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $myrow["pathname"] . '.diff?r1=' . $previousRevision . ';r2=' . $myrow["revision_name"] . '">';
+		    	$this->HTML .= freshports_Diff_Icon() . '</a> ';
+            }
+            
+			$this->HTML .= ' <A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $myrow["pathname"] . '?annotate=' . $myrow["revision_name"] . '">';
 			$this->HTML .= freshports_Revision_Icon() . '</a> ';
+
+            $this->HTML .= '</td>';
+            
+			$this->HTML .= '  <TD WIDTH="100%" VALIGN="middle">';
+
 			$this->HTML .= '<A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $myrow["pathname"] . '#rev'       . $myrow["revision_name"] . '">';
 
 			$this->HTML .= '<CODE CLASS="code">' . $myrow["pathname"] . "</CODE></A></TD>";
@@ -101,6 +115,33 @@ class FilesDisplay {
 		$this->HTML .= "</table>";
 		
 		return $this->HTML;
+	}
+
+
+	function GetPreviousRevision( $revision ) {
+	    // if we find a dot, decrement the bit after the last dot
+	    // hence, a cvs revision
+	    // if no dot, treat it as an svn revision
+
+    	$dotPos = strrpos( $revision, '.' );
+
+    	if ( $dotPos === false ) {
+    	    $prev = intval ( $revision ) - 1;
+	    } else {
+	        $beforeLastDot = substr( $revision, 0, $dotPos + 1 );
+
+	        $afterDot = substr( $revision, $dotPos + 1 );
+	        if ( $afterDot === false ) {
+	            syslog( LOG_ERR, 'decimal not found in ' . $revision);
+	            $prev = $revision;
+            } else {
+                // previous revision is before dot || (after dot - 1)
+	            $prev = $beforeLastDot . ( intval( $afterDot ) - 1 );
+            }
+        }
+
+
+        return $prev;
 	}
 
 }

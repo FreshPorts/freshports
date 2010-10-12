@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.5 2007-10-20 23:11:06 dan Exp $
+	# $Id: faq.php,v 1.6 2010-10-12 19:03:17 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -386,6 +386,11 @@ make: fatal errors encountered -- cannot continue
 	<P><?php echo freshports_Revision_Icon(); ?> Revision details.  Click on the Files icon in the commit history and
 	you'll see what files in this port were touched by this commit.  Click on the Revision details to view the
 	revision of the file associated this commit.
+	</P>
+
+	<P><?php echo freshports_Diff_Icon(); ?> Diff.  Click on the Files icon in the commit history and
+	you'll see what files in this port were touched by this commit.  Click on the Diff icon to view the
+	diff between this revision of the file and the previous revision..
 	</P>
 
 	<P><?php echo freshports_SanityTestFailure_Icon(); ?> Sanity Test Failures.  The maintainers and committers are

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.29 2010-09-17 14:44:02 dan Exp $
+	# $Id: freshports.php,v 1.30 2010-10-12 19:02:55 dan Exp $
 	#
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
@@ -388,6 +388,10 @@ function freshports_VuXML_Icon_Faded() {
 
 function freshports_Revision_Icon() {
 	return '<img src="/images/revision.jpg" alt="View revision" title="view revision" border="0" width="11" height="15" align="top">';
+}
+
+function freshports_Diff_Icon() {
+	return '<img src="/images/diff.png" alt="View diff" title="view diff" border="0" width="15" height="11" align="top">';
 }
 
 

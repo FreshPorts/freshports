@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-category.php,v 1.2 2006-12-17 12:06:12 dan Exp $
+	# $Id: missing-category.php,v 1.3 2010-11-10 20:04:44 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -11,6 +11,10 @@ DEFINE('MAX_PAGE_SIZE',     500);
 DEFINE('DEFAULT_PAGE_SIZE', 100);
 
 DEFINE('NEXT_PAGE',		'Next');
+
+GLOBAL $g_NOINDEX;
+
+$g_NOINDEX = 1;  // we should not index category pages. too much clutter.
 
 function freshports_CategoryNextPreviousPage($CategoryName, $PortCount, $PageNo, $PageSize) {
 

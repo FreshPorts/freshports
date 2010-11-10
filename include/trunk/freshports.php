@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.30 2010-10-12 19:02:55 dan Exp $
+	# $Id: freshports.php,v 1.31 2010-11-10 20:04:59 dan Exp $
 	#
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
@@ -686,7 +686,6 @@ function freshports_HEAD_main_items() {
 	<LINK REL="SHORTCUT ICON" HREF="/favicon.ico">
 	<meta name="MSSmartTagsPreventParsing" content="TRUE">
 
-	<META NAME="ROBOTS"                    CONTENT="NOARCHIVE">
 	<link rel="alternate" type="application/rss+xml" title="FreshPorts - The Place For Ports" href="http://' . $_SERVER['HTTP_HOST'] . '/backend/rss2.0.php">
 
 	

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.10 2010-01-23 19:17:01 dan Exp $
+	# $Id: search.php,v 1.11 2010-12-25 17:44:15 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -605,7 +605,8 @@ $sqlSelectFields = "
          ports.restricted,
          ports.no_cdrom,
          ports.expiration_date,
-         ports.no_package  ";
+         ports.no_package,
+         ports.license  ";
          
 $sqlSelectCount = "
   SELECT count(*)";

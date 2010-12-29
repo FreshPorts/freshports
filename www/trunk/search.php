@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.11 2010-12-25 17:44:15 dan Exp $
+	# $Id: search.php,v 1.12 2010-12-29 00:01:47 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -732,41 +732,28 @@ $Port->LocalResult = $result;
 }
 ?>
 <!-- SiteSearch Google -->
-<form method="get" action="http://www.google.com/custom" target="_top">
-<table border="0" bgcolor="#ffffff">
-<tr><td nowrap="nowrap" valign="top" align="left" height="32">
-<a href="http://www.google.com/">
-<img src="http://www.google.com/logos/Logo_25wht.gif" border="0" alt="Google" align="middle"></a>
-</td>
-<td nowrap="nowrap">
-<input type="hidden" name="domains" value="www.freshports.org">
-<input type="text" name="q" size="40" maxlength="255" value="">
-<input type="submit" name="sa" value="Search">
-</td></tr>
-<tr>
-<td>&nbsp;</td>
-<td nowrap="nowrap">
-<table>
-<tr>
-<td>
-<input type="radio" name="sitesearch" value="">
-<font size="-1" color="#000000">Web</font>
-</td>
-<td>
-<input type="radio" name="sitesearch" value="www.freshports.org" checked="checked">
-<font size="-1" color="#000000">www.freshports.org</font>
-</td>
-</tr>
-</table>
-<input type="hidden" name="client" value="pub-0711826105743221">
-<input type="hidden" name="forid" value="1">
-<input type="hidden" name="channel" value="6485377625">
-<input type="hidden" name="ie" value="ISO-8859-1">
-<input type="hidden" name="oe" value="ISO-8859-1">
-<input type="hidden" name="cof" value="GALT:#0066CC;GL:1;DIV:#999999;VLC:336633;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0066CC;LC:0066CC;T:000000;GFNT:666666;GIMP:666666;LH:50;LW:233;L:http://www.freshports.org/images/freshports-233x50.jpg;S:http://www.freshports.org;FORID:1;">
-<input type="hidden" name="hl" value="en">
-</td></tr></table>
-</form>
+
+<style type="text/css">
+@import url(http://www.google.com/cse/api/branding.css);
+</style>
+<div class="cse-branding-bottom" style="background-color:#FFFFFF;color:#000000">
+  <div class="cse-branding-form">
+    <form action="http://www.google.com/cse" id="cse-search-box" target="_blank">
+      <div>
+        <input type="hidden" name="cx" value="partner-pub-0711826105743221:o2t5woa4k6z" />
+        <input type="hidden" name="ie" value="ISO-8859-1" />
+        <input type="text" name="q" size="70" />
+        <input type="submit" name="sa" value="Search" />
+      </div>
+    </form>
+  </div>
+  <div class="cse-branding-logo">
+    <img src="http://www.google.com/images/poweredby_transparent/poweredby_FFFFFF.gif" alt="Google" />
+  </div>
+  <div class="cse-branding-text">
+    Custom Search
+  </div>
+</div>
 <!-- SiteSearch Google -->
 
 

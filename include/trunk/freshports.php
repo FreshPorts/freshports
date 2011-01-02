@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.31 2010-11-10 20:04:59 dan Exp $
+	# $Id: freshports.php,v 1.32 2011-01-02 11:47:28 dan Exp $
 	#
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
@@ -16,7 +16,7 @@
 # special HTMLified mailto to foil spam harvesters
 #
 DEFINE('MAILTO',                'mailto');
-DEFINE('COPYRIGHTYEARS',        '2000-2010');
+DEFINE('COPYRIGHTYEARS',        '2000-2011');
 DEFINE('URL2LINK_CUTOFF_LEVEL', 0);
 DEFINE('FAQLINK',               'faq.php');
 DEFINE('PORTSMONURL',			'http://portsmon.freebsd.org/portoverview.py');

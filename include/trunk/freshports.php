@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.32 2011-01-02 11:47:28 dan Exp $
+	# $Id: freshports.php,v 1.33 2011-01-16 15:19:02 dan Exp $
 	#
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
@@ -1732,30 +1732,7 @@ $HTML .= '
 	</tr>
 </table>
 
-
-<br>
-
-<SCRIPT TYPE="text/javascript">
-   function addNetscapePanel() {
-      if ((typeof window.sidebar == "object") && (typeof window.sidebar.addPanel == "function"))
-      {
-         window.sidebar.addPanel ("FreshPorts",
-         "http://www.FreshPorts.org/sidebar.php","");
-      }
-      else
-      {
-         var rv = window.confirm ("This page is enhanced for use with Netscape 6.  " + "Would you like to upgrade now?");
-         if (rv)
-            document.location.href = "http://home.netscape.com/download/index.html";
-      }
-   }
-//-->
-
-</SCRIPT>
-
-<CENTER>
-<A NAME="button_image"></a><a href="javascript:addNetscapePanel();"><img src="/images/sidebar-add-button.gif" border="0" height="45" width="100" alt="Add tab to Netscape 6"></a>
-</CENTER>';
+';
 
 	return $HTML;
 

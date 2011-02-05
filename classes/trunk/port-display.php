@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-display.php,v 1.14 2011-02-05 18:15:56 dan Exp $
+	# $Id: port-display.php,v 1.15 2011-02-05 18:26:44 dan Exp $
 	#
 	# Copyright (c) 2005-2006 DVL Software Limited
 	#
@@ -439,7 +439,7 @@ class port_display {
 	
 		if ($this->ShowDepends || $this->ShowEverything) {
 			if ($port->depends_build || $port->depends_run || $port->depends_lib) {
-				$HTML .= '<hr><big>NOTE: FreshPorts displays only required dependencies information.  Optional dependencies are not covered.</big>';
+				$HTML .= '<hr><big>NOTE: FreshPorts displays only required dependencies information.  Optional dependencies are not covered.</big><br>';
 			}
 
 			if ($port->depends_build) {

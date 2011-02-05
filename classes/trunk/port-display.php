@@ -1,11 +1,12 @@
 <?php
 	#
-	# $Id: port-display.php,v 1.13 2010-12-25 17:44:15 dan Exp $
+	# $Id: port-display.php,v 1.14 2011-02-05 18:15:56 dan Exp $
 	#
 	# Copyright (c) 2005-2006 DVL Software Limited
 	#
 	
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/master_slave.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port_dependencies.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
 
 define('port_display_WATCH_LIST_ADD_REMOVE', '%%%$$$WATCHLIST$$$%%%');
@@ -438,7 +439,7 @@ class port_display {
 	
 		if ($this->ShowDepends || $this->ShowEverything) {
 			if ($port->depends_build || $port->depends_run || $port->depends_lib) {
-				$HTML .= '<hr>';
+				$HTML .= '<hr><big>NOTE: FreshPorts displays only required dependencies information.  Optional dependencies are not covered.</big>';
 			}
 
 			if ($port->depends_build) {
@@ -460,7 +461,8 @@ class port_display {
 
 				$HTML .= "<br>\n";
 			}
-
+			
+			$HTML .= $this->ShowDependencies( $port->id );
 		}
 
 		# only show if we're meant to show, and if the port has not been deleted.
@@ -552,6 +554,30 @@ class port_display {
 		$HTML = str_replace(port_display_AD, $Ad, $HTML);
 
 		return $HTML;
+	}
+	
+	function ShowDependencies( $port_id )
+	{
+	  // pull back and show links to all ports that this port is dependant upon
+    $PortDependencies = new PortDependencies( $this->db );
+    $NumRows = $PortDependencies->FetchInitialise( $port_id );
+    if ( $NumRows > 0 )
+    {
+      $HTML .= '<b>These ports depend upon this port:</b> ';
+      for ( $i = 0; $i < $NumRows; $i++ )
+      {
+					$PortDependencies->FetchNth($i);
+					$HTML .= freshports_link_to_port_single($PortDependencies->category, $PortDependencies->port) . ' ';
+  		}
+    }
+    else
+    {
+      $HTML .= 'There are no ports dependent upon this port<br>';
+    }
+    
+    return $HTML;
+
+
 	}
 	
 }

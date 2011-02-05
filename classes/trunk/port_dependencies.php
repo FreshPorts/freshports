@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port_dependencies.php,v 1.1 2011-02-05 18:15:56 dan Exp $
+	# $Id: port_dependencies.php,v 1.2 2011-02-05 18:25:00 dan Exp $
 	#
 	# Copyright (c) 1998-2011 DVL Software Limited
 	#
@@ -34,7 +34,7 @@ class PortDependencies {
 	function FetchInitialise($PortID) {
 		# fetch all rows in port_dependencies with port_id = $PortID
 
-		$Debug = 1;
+		$Debug = 0;
 
 		$sql = "
   SELECT port_id,

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.33 2011-01-16 15:19:02 dan Exp $
+	# $Id: freshports.php,v 1.34 2011-02-05 18:15:00 dan Exp $
 	#
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
@@ -112,6 +112,18 @@ function freshports_link_to_port($CategoryName, $PortName) {
 	$HTML .= '<a href="/' . $CategoryName . '/">' . $CategoryName . '</a>/';
 	$HTML .= '<a href="/' . $CategoryName . '/' . $PortName . '/">' 
 	            . $PortName . '</a>';
+
+	return $HTML;
+}
+
+function freshports_link_to_port_single($CategoryName, $PortName) {
+
+	// This differs from freshports_link_to_port in that you get a single link, not a 
+	// link to both category and port
+
+	$HTML = '';
+	$HTML .= '<a href="/' . $CategoryName . '/' . $PortName . '/">' .
+	                        $CategoryName . '/' . $PortName . '</a>';
 
 	return $HTML;
 }
@@ -943,9 +955,8 @@ function freshports_depends_links($dbh, $DependsList) {
 		// now extract the port and category from this port name
 		$CategoryPort      = str_replace('/usr/ports/', '', $DependsArray[1]) ;
 		$CategoryPortArray = explode('/', $CategoryPort);
-#		$DependsPortID     = freshports_PortIDFromPortCategory($CategoryPortArray[0], $CategoryPortArray[1], $dbh);
 
-		$HTML .= '<a href="/' . $CategoryPortArray[0] . '/' . $CategoryPortArray[1] . '/">' . $CategoryPortArray[0] . '/' . $CategoryPortArray[1]. '</a>';
+		$HTML .= freshports_link_to_port_single($CategoryPortArray[0], $CategoryPortArray[1]);
 		if ($i < $Count - 1) {
 			$HTML .= ", ";
 		}

@@ -1,5 +1,5 @@
 --
--- $Id: POSTGRESQL.sql,v 1.6 2010-09-19 14:47:56 dan Exp $
+-- $Id: POSTGRESQL.sql,v 1.7 2011-02-06 14:53:45 dan Exp $
 --
 -- Copyright (c) 1998-2006 DVL Software Limited
 --
@@ -39,6 +39,7 @@ grant select on element                        to group www;
 grant select on element_pathname               to group www;
 grant select on element_revision               to group www;
 grant select on ports                          to group www;
+grant select on port_dependencies              to group www;
 grant select on ports_categories               to group www;
 grant select on ports_active                   to group www;
 grant select on ports_all                      to group www;
@@ -166,6 +167,7 @@ grant select, update                 on element_id_seq                 to group 
 grant select, insert, update, delete on element_revision               to group commits;
 
 grant select, insert, update, delete on ports                          to group commits;
+grant select, insert, update, delete on port_dependencies              to group commits;
 grant select, update                 on ports_id_seq                   to group commits;
 grant select, insert, update, delete on ports_all                      to group commits;
 grant select, insert, update, delete on ports_categories               to group commits;

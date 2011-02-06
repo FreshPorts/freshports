@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port_dependencies.php,v 1.2 2011-02-05 18:25:00 dan Exp $
+	# $Id: port_dependencies.php,v 1.3 2011-02-06 14:45:46 dan Exp $
 	#
 	# Copyright (c) 1998-2011 DVL Software Limited
 	#
@@ -31,7 +31,7 @@ class PortDependencies {
 		$this->port                   = $myrow['port'];
 	}
 
-	function FetchInitialise($PortID) {
+	function FetchInitialise( $PortID, $depends_type ) {
 		# fetch all rows in port_dependencies with port_id = $PortID
 
 		$Debug = 0;
@@ -43,11 +43,12 @@ class PortDependencies {
          categories.name    as category,
          element.name       as port
     FROM port_dependencies
-         LEFT OUTER JOIN ports      ON ports.id         = port_dependencies.port_id_dependent_upon
+         LEFT OUTER JOIN ports      ON ports.id         = port_dependencies.port_id
          LEFT OUTER JOIN categories ON categories.id    = ports.category_id
          LEFT OUTER JOIN element    ON ports.element_id = element.id
-   WHERE port_id = $PortID"
-;
+   WHERE port_id_dependent_upon = $PortID
+     AND dependency_type = '" . pg_escape_string($depends_type) . "'";
+
 		if ($Debug) echo "<pre>$sql</pre>";
 
 		$this->LocalResult = pg_exec($this->dbh, $sql);

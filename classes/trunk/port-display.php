@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-display.php,v 1.15 2011-02-05 18:26:44 dan Exp $
+	# $Id: port-display.php,v 1.16 2011-02-06 14:52:51 dan Exp $
 	#
 	# Copyright (c) 2005-2006 DVL Software Limited
 	#
@@ -462,7 +462,7 @@ class port_display {
 				$HTML .= "<br>\n";
 			}
 			
-			$HTML .= $this->ShowDependencies( $port->id );
+			$HTML .= $this->ShowDependencies( $port );
 		}
 
 		# only show if we're meant to show, and if the port has not been deleted.
@@ -556,30 +556,46 @@ class port_display {
 		return $HTML;
 	}
 	
-	function ShowDependencies( $port_id )
+	function ShowDependencies( $port )
 	{
 	  // pull back and show links to all ports that this port is dependant upon
+    $HTML = '';
+
     $PortDependencies = new PortDependencies( $this->db );
-    $NumRows = $PortDependencies->FetchInitialise( $port_id );
-    if ( $NumRows > 0 )
+    $Types = array( 'B' => 'Build', 'L' => 'Libraries', 'R' => 'Run' );
+    foreach ( $Types as $type => $title )
     {
-      $HTML .= '<b>These ports depend upon this port:</b> ';
-      for ( $i = 0; $i < $NumRows; $i++ )
+      $NumRows = $PortDependencies->FetchInitialise( $port->id, $type );
+      if ( $NumRows > 0 )
       {
+        // if this is our first output, put up our standard header
+        if ( $HTML === '' )
+        {
+          if ( $port->IsDeleted() )
+          {
+            $HTML .= 'NOTE: dependencies for deleted ports are notoriously suspect<br>';
+          }
+          $HTML .= '<b>These ports depend upon this port:</b> ';
+        }
+        
+        $HTML .= '<br>for ' . $title . '<br>';
+
+        for ( $i = 0; $i < $NumRows; $i++ )
+        {
 					$PortDependencies->FetchNth($i);
+          
 					$HTML .= freshports_link_to_port_single($PortDependencies->category, $PortDependencies->port) . ' ';
+        }
   		}
     }
-    else
+
+    if ( $HTML === '' )
     {
       $HTML .= 'There are no ports dependent upon this port<br>';
     }
     
     return $HTML;
-
-
 	}
-	
 }
 
 ?>

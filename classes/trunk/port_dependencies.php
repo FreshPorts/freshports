@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port_dependencies.php,v 1.3 2011-02-06 14:45:46 dan Exp $
+	# $Id: port_dependencies.php,v 1.4 2011-02-07 00:38:59 dan Exp $
 	#
 	# Copyright (c) 1998-2011 DVL Software Limited
 	#
@@ -47,7 +47,8 @@ class PortDependencies {
          LEFT OUTER JOIN categories ON categories.id    = ports.category_id
          LEFT OUTER JOIN element    ON ports.element_id = element.id
    WHERE port_id_dependent_upon = $PortID
-     AND dependency_type = '" . pg_escape_string($depends_type) . "'";
+     AND dependency_type = '" . pg_escape_string($depends_type) . "'
+ORDER BY category, port ";
 
 		if ($Debug) echo "<pre>$sql</pre>";
 

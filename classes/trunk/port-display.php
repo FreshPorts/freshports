@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-display.php,v 1.17 2011-02-07 00:45:10 dan Exp $
+	# $Id: port-display.php,v 1.18 2011-02-07 01:27:14 dan Exp $
 	#
 	# Copyright (c) 2005-2006 DVL Software Limited
 	#
@@ -584,7 +584,7 @@ class port_display {
           {
             $HTML .= 'NOTE: dependencies for deleted ports are notoriously suspect<br>';
           }
-          $HTML .= '<b>These ports depend upon this port:</b> ';
+          $HTML .= '<br><b>Required by:</b> ';
         }
         
         $HTML .= '<br>for ' . $title . '<br>';

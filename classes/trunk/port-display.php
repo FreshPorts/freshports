@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-display.php,v 1.16 2011-02-06 14:52:51 dan Exp $
+	# $Id: port-display.php,v 1.17 2011-02-07 00:45:10 dan Exp $
 	#
 	# Copyright (c) 2005-2006 DVL Software Limited
 	#
@@ -138,10 +138,19 @@ class port_display {
 		$this->ShowWatchListStatus  = true;
 		$this->ShowDateAdded        = true;
 	}
+	
+	function JavascriptInclude()
+	{
+	  return '
+	  <script type="text/javascript" src="/javascript/jquery-1.5.min.js"></script>
+	  <script type="text/javascript" src="/javascript/freshports.js"></script>
+';	  
+	}
 
 	function Display() {
 		$port = $this->port;
-		$HTML = '';
+
+		$HTML = $this->JavascriptInclude();
 
 		$MarkedAsNew = "N";
 		$HTML .= "<DL>\n";
@@ -579,13 +588,32 @@ class port_display {
         }
         
         $HTML .= '<br>for ' . $title . '<br>';
+        $div = '<div id="RequiredBy' . $title . '">';
 
+        define('DEPENDS_SUMMARY', 40 );
         for ( $i = 0; $i < $NumRows; $i++ )
         {
 					$PortDependencies->FetchNth($i);
           
-					$HTML .= freshports_link_to_port_single($PortDependencies->category, $PortDependencies->port) . ' ';
+					$div .= freshports_link_to_port_single( $PortDependencies->category, $PortDependencies->port );
+					if ( $i == DEPENDS_SUMMARY )
+					{
+					  $div .= '<span id="RequiredBy' . $title . 'Span" style="display: inline">';
+					}
+					if ( $i != $NumRows - 1 )
+					{
+					  $div .= ' ';
+					}
         }
+        
+        if ( $NumRows > DEPENDS_SUMMARY )
+        {
+          $div .= '</span>';
+          $div .= ' <img id="RequiredBy' . $title . 'SpanContract" data-control="#RequiredBy' . $title . 'Span" class="contract" src="/images/contract.gif" alt="Contract depends" title="Contract depends" border="0" width="13" height="13" style="display: inline; cursor: pointer">';
+        }
+        
+        $div .= '</div>';
+        $HTML .= $div;
   		}
     }
 

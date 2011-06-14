@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.3 2009-12-05 17:46:06 dan Exp $
+# $Id: Makefile,v 1.4 2011-06-14 17:32:41 dan Exp $
 #
 # Install the ports needed by FreshPorts
 #
@@ -25,7 +25,7 @@ RUN_DEPENDS=	${LOCALBASE}/bin/svstat:${PORTSDIR}/sysutils/daemontools \
 		${SITE_PERL}/XML/Writer.pm:${PORTSDIR}/textproc/p5-XML-Writer \
 		${SITE_PERL}/XML/Node.pm:${PORTSDIR}/textproc/p5-XML-Node \
 		${SITE_PERL}/Mail/Sender.pm:${PORTSDIR}/mail/p5-Mail-Sender \
-		${SITE_PERL}/mach/Date/Calc.pm:${PORTSDIR}/devel/p5-Date-Calc \
+		${SITE_PERL}/Date/Calc.pm:${PORTSDIR}/devel/p5-Date-Calc \
 		${SITE_PERL}/mach/Bundle/DBI.pm:${PORTSDIR}/databases/p5-DBI \
 		${SITE_PERL}/mach/DBD/Pg.pm:${PORTSDIR}/databases/p5-DBD-Pg \
 		${LOCALBASE}/bin/procmail:${PORTSDIR}/mail/procmail \

@@ -1,0 +1,212 @@
+From owner-svn-src-all@freebsd.org  Mon Aug  8 13:15:56 2011
+Return-Path: <owner-svn-src-all@freebsd.org>
+X-Original-To: dan+svn.freshports.org-svn-src-all@supernews.example.org
+Delivered-To: dan+svn.freshports.org-svn-src-all@supernews.example.org
+Received: from localhost (localhost [127.0.0.1])
+	by supernews.example.org (Postfix) with ESMTP id 5C5671703C
+	for <dan+svn.freshports.org-svn-src-all@supernews.example.org>; Mon,  8 Aug 2011 13:15:56 +0000 (UTC)
+X-Virus-Scanned: amavisd-new at example.org
+Received: from supernews.example.org ([127.0.0.1])
+	by localhost (supernews.example.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id mc9IGoIvcqJO
+	for <dan+svn.freshports.org-svn-src-all@supernews.example.org>;
+	Mon,  8 Aug 2011 14:15:56 +0100 (BST)
+Received: from mx2.freebsd.org (mx2.freebsd.org [69.147.83.53])
+	by supernews.example.org (Postfix) with ESMTP id 06E4B17038
+	for <dan+svn.freshports.org-svn-src-all@supernews.example.org>; Mon,  8 Aug 2011 13:15:56 +0000 (UTC)
+Received: from hub.freebsd.org (hub.freebsd.org [IPv6:2001:4f8:fff6::36])
+	by mx2.freebsd.org (Postfix) with ESMTP id 1FEB2176ACB;
+	Mon,  8 Aug 2011 13:15:52 +0000 (UTC)
+Received: from hub.freebsd.org (localhost [127.0.0.1])
+	by hub.freebsd.org (Postfix) with ESMTP id E387F106567B;
+	Mon,  8 Aug 2011 13:15:51 +0000 (UTC)
+	(envelope-from owner-svn-src-all@freebsd.org)
+Delivered-To: svn-src-all@freebsd.org
+Received: from mx1.freebsd.org (mx1.freebsd.org [IPv6:2001:4f8:fff6::34])
+	by hub.freebsd.org (Postfix) with ESMTP id B97B2106566C;
+	Mon,  8 Aug 2011 13:15:39 +0000 (UTC)
+	(envelope-from adrian@FreeBSD.org)
+Received: from svn.freebsd.org (svn.freebsd.org [IPv6:2001:4f8:fff6::2c])
+	by mx1.freebsd.org (Postfix) with ESMTP id A79208FC15;
+	Mon,  8 Aug 2011 13:15:39 +0000 (UTC)
+Received: from svn.freebsd.org (localhost [127.0.0.1])
+	by svn.freebsd.org (8.14.4/8.14.4) with ESMTP id p78DFdPl048758;
+	Mon, 8 Aug 2011 13:15:39 GMT (envelope-from adrian@svn.freebsd.org)
+Received: (from adrian@localhost)
+	by svn.freebsd.org (8.14.4/8.14.4/Submit) id p78DFdCK048749;
+	Mon, 8 Aug 2011 13:15:39 GMT (envelope-from adrian@svn.freebsd.org)
+Message-Id: <201108081315.p78DFdCK048749@svn.freebsd.org>
+From: Adrian Chadd <adrian@FreeBSD.org>
+Date: Mon, 8 Aug 2011 13:15:39 +0000 (UTC)
+To: src-committers@freebsd.org, svn-src-all@freebsd.org,
+	svn-src-head@freebsd.org
+X-SVN-Group: head
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: 
+Subject: svn commit: r224709 - in head/sys/dev/ath: . ath_hal ath_hal/ar5212
+	ath_hal/ar5416
+X-BeenThere: svn-src-all@freebsd.org
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: "SVN commit messages for the entire src tree \(except for &quot;
+	user&quot; and &quot; projects&quot; \)" <svn-src-all.freebsd.org>
+List-Unsubscribe: <http://lists.freebsd.org/mailman/listinfo/svn-src-all>,
+	<mailto:svn-src-all-request@freebsd.org?subject=unsubscribe>
+List-Archive: <http://lists.freebsd.org/pipermail/svn-src-all>
+List-Post: <mailto:svn-src-all@freebsd.org>
+List-Help: <mailto:svn-src-all-request@freebsd.org?subject=help>
+List-Subscribe: <http://lists.freebsd.org/mailman/listinfo/svn-src-all>,
+	<mailto:svn-src-all-request@freebsd.org?subject=subscribe>
+Sender: owner-svn-src-all@freebsd.org
+Errors-To: owner-svn-src-all@freebsd.org
+
+Author: adrian
+Date: Mon Aug  8 13:15:39 2011
+New Revision: 224709
+URL: http://svn.freebsd.org/changeset/base/224709
+
+Log:
+  Add another HAL method - ah_isFastClockEnabled - which returns AH_TRUE
+  if 5ghz fast clock is enabled in the current operating mode.
+  
+  It's slightly dirty, but it's part of the reference HAL and used by
+  the (currently closed-source) radar event code to map radar pulses
+  back to microsecond durations.
+  
+  Obtained from:	Atheros
+  Approved by:	re (kib, blanket)
+
+Modified:
+  head/sys/dev/ath/ath_hal/ah.h
+  head/sys/dev/ath/ath_hal/ar5212/ar5212.h
+  head/sys/dev/ath/ath_hal/ar5212/ar5212_attach.c
+  head/sys/dev/ath/ath_hal/ar5212/ar5212_misc.c
+  head/sys/dev/ath/ath_hal/ar5416/ar5416.h
+  head/sys/dev/ath/ath_hal/ar5416/ar5416_attach.c
+  head/sys/dev/ath/ath_hal/ar5416/ar5416_misc.c
+  head/sys/dev/ath/if_athvar.h
+
+Modified: head/sys/dev/ath/ath_hal/ah.h
+==============================================================================
+--- head/sys/dev/ath/ath_hal/ah.h	Mon Aug  8 13:13:22 2011	(r224708)
++++ head/sys/dev/ath/ath_hal/ah.h	Mon Aug  8 13:15:39 2011	(r224709)
+@@ -958,6 +958,7 @@ struct ath_hal {
+ 	HAL_BOOL  __ahdecl(*ah_procRadarEvent)(struct ath_hal *ah,
+ 				struct ath_rx_status *rxs, uint64_t fulltsf,
+ 				const char *buf, HAL_DFS_EVENT *event);
++	HAL_BOOL  __ahdecl(*ah_isFastClockEnabled)(struct ath_hal *ah);
+ 
+ 	/* Key Cache Functions */
+ 	uint32_t __ahdecl(*ah_getKeyCacheSize)(struct ath_hal*);
+
+Modified: head/sys/dev/ath/ath_hal/ar5212/ar5212.h
+==============================================================================
+--- head/sys/dev/ath/ath_hal/ar5212/ar5212.h	Mon Aug  8 13:13:22 2011	(r224708)
++++ head/sys/dev/ath/ath_hal/ar5212/ar5212.h	Mon Aug  8 13:15:39 2011	(r224709)
+@@ -625,5 +625,6 @@ extern	void ar5212GetDfsThresh(struct at
+ extern	HAL_BOOL ar5212ProcessRadarEvent(struct ath_hal *ah,
+ 	    struct ath_rx_status *rxs, uint64_t fulltsf, const char *buf,
+ 	    HAL_DFS_EVENT *event);
++extern	HAL_BOOL ar5212IsFastClockEnabled(struct ath_hal *ah);
+ 
+ #endif	/* _ATH_AR5212_H_ */
+
+Modified: head/sys/dev/ath/ath_hal/ar5212/ar5212_attach.c
+==============================================================================
+--- head/sys/dev/ath/ath_hal/ar5212/ar5212_attach.c	Mon Aug  8 13:13:22 2011	(r224708)
++++ head/sys/dev/ath/ath_hal/ar5212/ar5212_attach.c	Mon Aug  8 13:15:39 2011	(r224709)
+@@ -133,6 +133,7 @@ static const struct ath_hal_private ar52
+ 	.ah_enableDfs			= ar5212EnableDfs,
+ 	.ah_getDfsThresh		= ar5212GetDfsThresh,
+ 	.ah_procRadarEvent		= ar5212ProcessRadarEvent,
++	.ah_isFastClockEnabled		= ar5212IsFastClockEnabled,
+ 
+ 	/* Key Cache Functions */
+ 	.ah_getKeyCacheSize		= ar5212GetKeyCacheSize,
+
+Modified: head/sys/dev/ath/ath_hal/ar5212/ar5212_misc.c
+==============================================================================
+--- head/sys/dev/ath/ath_hal/ar5212/ar5212_misc.c	Mon Aug  8 13:13:22 2011	(r224708)
++++ head/sys/dev/ath/ath_hal/ar5212/ar5212_misc.c	Mon Aug  8 13:15:39 2011	(r224709)
+@@ -1222,3 +1222,13 @@ ar5212ProcessRadarEvent(struct ath_hal *
+ 
+ 	return AH_TRUE;
+ }
++
++/*
++ * Return whether 5GHz fast-clock (44MHz) is enabled.
++ * It's always disabled for AR5212 series NICs.
++ */
++HAL_BOOL
++ar5212IsFastClockEnabled(struct ath_hal *ah)
++{
++	return AH_FALSE;
++}
+
+Modified: head/sys/dev/ath/ath_hal/ar5416/ar5416.h
+==============================================================================
+--- head/sys/dev/ath/ath_hal/ar5416/ar5416.h	Mon Aug  8 13:13:22 2011	(r224708)
++++ head/sys/dev/ath/ath_hal/ar5416/ar5416.h	Mon Aug  8 13:15:39 2011	(r224709)
+@@ -208,6 +208,7 @@ extern	void ar5416GetDfsThresh(struct at
+ extern	HAL_BOOL ar5416ProcessRadarEvent(struct ath_hal *ah,
+ 	    struct ath_rx_status *rxs, uint64_t fulltsf, const char *buf,
+ 	    HAL_DFS_EVENT *event);
++extern	HAL_BOOL ar5416IsFastClockEnabled(struct ath_hal *ah);
+ 
+ extern	HAL_BOOL ar5416SetPowerMode(struct ath_hal *ah, HAL_POWER_MODE mode,
+ 		int setChip);
+
+Modified: head/sys/dev/ath/ath_hal/ar5416/ar5416_attach.c
+==============================================================================
+--- head/sys/dev/ath/ath_hal/ar5416/ar5416_attach.c	Mon Aug  8 13:13:22 2011	(r224708)
++++ head/sys/dev/ath/ath_hal/ar5416/ar5416_attach.c	Mon Aug  8 13:15:39 2011	(r224709)
+@@ -150,6 +150,7 @@ ar5416InitState(struct ath_hal_5416 *ahp
+ 	ah->ah_enableDfs		= ar5416EnableDfs;
+ 	ah->ah_getDfsThresh		= ar5416GetDfsThresh;
+ 	ah->ah_procRadarEvent		= ar5416ProcessRadarEvent;
++	ah->ah_isFastClockEnabled	= ar5416IsFastClockEnabled;
+ 
+ 	/* Power Management Functions */
+ 	ah->ah_setPowerMode		= ar5416SetPowerMode;
+
+Modified: head/sys/dev/ath/ath_hal/ar5416/ar5416_misc.c
+==============================================================================
+--- head/sys/dev/ath/ath_hal/ar5416/ar5416_misc.c	Mon Aug  8 13:13:22 2011	(r224708)
++++ head/sys/dev/ath/ath_hal/ar5416/ar5416_misc.c	Mon Aug  8 13:15:39 2011	(r224709)
+@@ -731,3 +731,15 @@ ar5416ProcessRadarEvent(struct ath_hal *
+ 	 */
+ 	return AH_FALSE;
+ }
++
++/*
++ * Return whether fast-clock is currently enabled for this
++ * channel.
++ */
++HAL_BOOL
++ar5416IsFastClockEnabled(struct ath_hal *ah)
++{
++	struct ath_hal_private *ahp = AH_PRIVATE(ah);
++
++	return IS_5GHZ_FAST_CLOCK_EN(ah, ahp->ah_curchan);
++}
+
+Modified: head/sys/dev/ath/if_athvar.h
+==============================================================================
+--- head/sys/dev/ath/if_athvar.h	Mon Aug  8 13:13:22 2011	(r224708)
++++ head/sys/dev/ath/if_athvar.h	Mon Aug  8 13:15:39 2011	(r224709)
+@@ -712,6 +712,8 @@ void	ath_intr(void *);
+ 	((*(_ah)->ah_getDfsThresh)((_ah), (_param)))
+ #define	ath_hal_procradarevent(_ah, _rxs, _fulltsf, _buf, _event) \
+ 	((*(_ah)->ah_procRadarEvent)((_ah), (_rxs), (_fulltsf), (_buf), (_event)))
++#define	ath_hal_isfastclockenabled(_ah) \
++	((*(_ah)->ah_isFastClockEnabled((_ah))
+ 
+ #define ath_hal_gpioCfgOutput(_ah, _gpio, _type) \
+         ((*(_ah)->ah_gpioCfgOutput)((_ah), (_gpio), (_type)))
+_______________________________________________
+svn-src-all@freebsd.org mailing list
+http://lists.freebsd.org/mailman/listinfo/svn-src-all
+To unsubscribe, send any mail to "svn-src-all-unsubscribe@freebsd.org"
+

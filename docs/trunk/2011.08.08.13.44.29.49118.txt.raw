@@ -1,0 +1,82 @@
+From owner-cvs-all@freebsd.org  Mon Aug  8 13:44:29 2011
+Return-Path: <owner-cvs-all@freebsd.org>
+X-Original-To: dan+svn.freshports.org@supernews.example.org
+Delivered-To: dan+svn.freshports.org@supernews.example.org
+Received: from localhost (localhost [127.0.0.1])
+	by supernews.example.org (Postfix) with ESMTP id 20C521703C
+	for <dan+svn.freshports.org@supernews.example.org>; Mon,  8 Aug 2011 13:44:29 +0000 (UTC)
+X-Virus-Scanned: amavisd-new at example.org
+Received: from supernews.example.org ([127.0.0.1])
+	by localhost (supernews.example.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id oZLZGVAZtG56
+	for <dan+svn.freshports.org@supernews.example.org>;
+	Mon,  8 Aug 2011 14:44:28 +0100 (BST)
+Received: from mx2.freebsd.org (mx2.freebsd.org [69.147.83.53])
+	by supernews.example.org (Postfix) with ESMTP id DCBF117038
+	for <dan+svn.freshports.org@supernews.example.org>; Mon,  8 Aug 2011 13:44:28 +0000 (UTC)
+Received: from hub.freebsd.org (hub.freebsd.org [IPv6:2001:4f8:fff6::36])
+	by mx2.freebsd.org (Postfix) with ESMTP id E6F121605F1;
+	Mon,  8 Aug 2011 13:44:20 +0000 (UTC)
+Received: from hub.freebsd.org (localhost [127.0.0.1])
+	by hub.freebsd.org (Postfix) with ESMTP id B81111065745;
+	Mon,  8 Aug 2011 13:44:18 +0000 (UTC)
+	(envelope-from owner-cvs-all@freebsd.org)
+Delivered-To: cvs-all@FreeBSD.org
+Received: from mx1.freebsd.org (mx1.freebsd.org [IPv6:2001:4f8:fff6::34])
+	by hub.freebsd.org (Postfix) with ESMTP id 8FBAB1065672;
+	Mon,  8 Aug 2011 13:44:12 +0000 (UTC)
+	(envelope-from ehaupt@FreeBSD.org)
+Received: from repoman.freebsd.org (repoman.freebsd.org
+	[IPv6:2001:4f8:fff6::29])
+	by mx1.freebsd.org (Postfix) with ESMTP id 674408FC1A;
+	Mon,  8 Aug 2011 13:44:12 +0000 (UTC)
+Received: from repoman.freebsd.org (localhost [127.0.0.1])
+	by repoman.freebsd.org (8.14.4/8.14.4) with ESMTP id p78DiCcc084744;
+	Mon, 8 Aug 2011 13:44:12 GMT
+	(envelope-from ehaupt@repoman.freebsd.org)
+Received: (from ehaupt@localhost)
+	by repoman.freebsd.org (8.14.4/8.14.4/Submit) id p78DiCJD084743;
+	Mon, 8 Aug 2011 13:44:12 GMT (envelope-from ehaupt)
+Message-Id: <201108081344.p78DiCJD084743@repoman.freebsd.org>
+From: Emanuel Haupt <ehaupt@FreeBSD.org>
+Date: Mon, 8 Aug 2011 13:44:12 +0000 (UTC)
+To: ports-committers@FreeBSD.org, cvs-ports@FreeBSD.org, cvs-all@FreeBSD.org
+X-FreeBSD-CVS-Branch: HEAD
+Cc: 
+Subject: cvs commit: ports/games/fkiss Makefile pkg-descr
+X-BeenThere: cvs-all@freebsd.org
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: **OBSOLETE** CVS commit messages for the entire tree
+	<cvs-all.freebsd.org>
+List-Unsubscribe: <http://lists.freebsd.org/mailman/listinfo/cvs-all>,
+	<mailto:cvs-all-request@freebsd.org?subject=unsubscribe>
+List-Archive: <http://lists.freebsd.org/pipermail/cvs-all>
+List-Post: <mailto:cvs-all@freebsd.org>
+List-Help: <mailto:cvs-all-request@freebsd.org?subject=help>
+List-Subscribe: <http://lists.freebsd.org/mailman/listinfo/cvs-all>,
+	<mailto:cvs-all-request@freebsd.org?subject=subscribe>
+Sender: owner-cvs-all@freebsd.org
+Errors-To: owner-cvs-all@freebsd.org
+
+ehaupt      2011-08-08 13:44:12 UTC
+
+  FreeBSD ports repository
+
+  Modified files:
+    games/fkiss          Makefile pkg-descr 
+  Log:
+  - Update MASTER_SITES and WWW: line
+  - Support NOPORTEXAMPLES
+  
+  PR:             159444
+  Submitted by:   KATO Tsuguru <tkato432@yahoo.com>
+  
+  Revision  Changes    Path
+  1.20      +9 -13     ports/games/fkiss/Makefile
+  1.9       +2 -0      ports/games/fkiss/pkg-descr
+_______________________________________________
+cvs-all@freebsd.org mailing list
+http://lists.freebsd.org/mailman/listinfo/cvs-all
+To unsubscribe, send any mail to "cvs-all-unsubscribe@freebsd.org"
+

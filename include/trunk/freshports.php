@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.34 2011-02-05 18:15:00 dan Exp $
+	# $Id: freshports.php,v 1.35 2011-08-21 15:12:20 dan Exp $
 	#
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
@@ -20,7 +20,7 @@ DEFINE('COPYRIGHTYEARS',        '2000-2011');
 DEFINE('URL2LINK_CUTOFF_LEVEL', 0);
 DEFINE('FAQLINK',               'faq.php');
 DEFINE('PORTSMONURL',			'http://portsmon.freebsd.org/portoverview.py');
-DEFINE('DISTFILESSURVEYURL',	'http://people.freebsd.org/~fenner/portsurvey/');
+DEFINE('DISTFILESSURVEYURL',	'http://people.freebsd.org/~ehaupt/distilator/');
 DEFINE('NOBORDER',              '0');
 DEFINE('BORDER',                '1');
 
@@ -661,8 +661,11 @@ GLOBAL $FreshPortsLogoHeight;
 	} else {
 		$HTML .= '/';
 	}
-	$HTML .= '"><img src="' . $FreshPortsLogo . '" alt="' . $FreshPortsName . ' -- ' . $FreshPortsSlogan . ' " width="' . $FreshPortsLogoWidth . '" height="' . $FreshPortsLogoHeight . '" border="0"></a></td>
+	$HTML .= '"><img src="' . $FreshPortsLogo . '" alt="' . $FreshPortsName . ' -- ' . $FreshPortsSlogan . ' " width="' . $FreshPortsLogoWidth . '" height="' . $FreshPortsLogoHeight . '" border="0"></a>
 ';
+
+	$HTML .= '<img src="/images/notbug.gif">';
+	$HTML .= '</td>';
 
 if (date("M") == 'Nov' && date("j") <= 12) {
 	$HTML .= '	<td nowrap align="center" CLASS="sans" valign="bottom"><a href="http://www.google.ca/search?q=remembrance+day"><img src="/images/poppy.gif" width="50" height="48" border="0" alt="Remember" title="Remember"><br>I remember</a></td>';
@@ -1842,7 +1845,7 @@ function freshports_DistFilesSurveyURL($Category, $Port) {
 	# works: http://portsmon.freebsd.org/portoverview.py?category=editors&portname=vim6%2Bruby
 	# fails: http://portsmon.freebsd.org/portoverview.py?category=editors&portname=vim6+ruby
 	#
-	return '<a href="' . DISTFILESSURVEYURL . urlencode($Category) . '.html#' . urlencode($Port) . '" title="Distfiles Availability">Distfiles Availability</a>';
+	return '<a href="' . DISTFILESSURVEYURL . urlencode($Category) . '/' . urlencode($Port) . '/" title="Distfiles Availability">Distfiles Availability</a>';
 }
 
 

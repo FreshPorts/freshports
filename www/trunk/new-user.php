@@ -1,9 +1,12 @@
 <?php
 	#
-	# $Id: new-user.php,v 1.4 2008-04-29 21:10:24 dan Exp $
+	# $Id: new-user.php,v 1.5 2011-08-21 15:10:59 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
+
+	# for captcha
+	session_start();
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
@@ -39,7 +42,7 @@ if (IsSet($submit)) {
 	$Password1				= $_REQUEST["Password1"];
 	$Password2				= $_REQUEST["Password2"];
 	$numberofdays			= $_REQUEST["numberofdays"];
-
+	
 	if ($UserLogin == '') {
 		$errors .= "Please enter a user id.<BR>";
 		$OK = 0;
@@ -79,6 +82,20 @@ if (IsSet($submit)) {
 	} else {
 		$numberofdays = 0;
 	}
+
+	if ( isset( $_POST["captcha"] ) )
+	{
+  	if ( $_SESSION["captcha"] == $_POST["captcha"] )
+  	{
+      //CAPTHCA is valid; proceed the message: save to database, send by e-mail ...
+      // echo 'CAPTHCA is valid; proceed the message';
+    }
+	  else
+	  {
+	    $errors .= 'Your CAPTHCA code is not valid<br>';
+	    $OK = 0;
+	  }
+  }
 
 	#
 	# make sure we have valid values in this variable.

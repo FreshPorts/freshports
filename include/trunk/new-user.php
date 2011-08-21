@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: new-user.php,v 1.2 2006-12-17 11:55:53 dan Exp $
+	# $Id: new-user.php,v 1.3 2011-08-21 15:10:59 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -57,7 +57,23 @@ Number of results to display per page (e.g commits per page):
             <INPUT TYPE="reset"  VALUE="reset form">
             </TD>
           </TR>
-</TABLE>
+<?php
+
+# include this CAPTCHA only for new registrations
+
+if ( $_SERVER['SCRIPT_NAME'] == '/new-user.php' )
+{
+?>
+
+<tr><td align="center">CAPTCHA:<br>
+  (antispam code, 3 black symbols)<br>
+  <table><tr><td><img src="/images/captcha/captcha.php" alt="captcha image"></td><td><input type="text" name="captcha" size="3" maxlength="3"></td></tr></table>
+</td></tr>
+<?php
+}
+?>    
+    </TABLE>
 </FORM>
 
 <p>For your reporting needs, please visit <A HREF="/report-subscriptions.php">Report Subscriptions</A></p>.
+

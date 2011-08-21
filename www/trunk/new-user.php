@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: new-user.php,v 1.5 2011-08-21 15:10:59 dan Exp $
+	# $Id: new-user.php,v 1.6 2011-08-21 15:20:25 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -93,6 +93,7 @@ if (IsSet($submit)) {
 	  else
 	  {
 	    $errors .= 'Your CAPTHCA code is not valid<br>';
+  		syslog(LOG_ERR, "FreshPorts captcha failure: '" . $UserLogin . "', '" . $email . "', "  . $_SERVER['REMOTE_ADDR']);
 	    $OK = 0;
 	  }
   }

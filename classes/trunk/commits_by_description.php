@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits_by_description.php,v 1.2 2006-12-17 11:37:19 dan Exp $
+	# $Id: commits_by_description.php,v 1.3 2011-09-24 19:55:18 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -55,7 +55,19 @@ class CommitsByDescription extends commits {
 		}
 
 		$sql .= "
-    FROM commit_log_ports, commit_log, categories, ports, element ";
+    FROM commit_log_ports, (SELECT * FROM commit_log WHERE " . $this->Condition;
+    
+			
+		if ($this->Limit) {
+			$sql .= "\nLIMIT " . $this->Limit;
+		}
+		
+		if ($this->Offset) {
+			$sql .= "\nOFFSET " . $this->Offset;
+		}
+
+
+    $sql .= ") AS commit_log, categories, ports, element ";
 
 		if ($this->UserID) {
 				$sql .= "
@@ -70,8 +82,7 @@ class CommitsByDescription extends commits {
 		}
 
 		$sql .= "
-	  WHERE " . $this->Condition . "
-	    AND commit_log_ports.commit_log_id = commit_log.id
+	  WHERE commit_log_ports.commit_log_id = commit_log.id
 	    AND commit_log_ports.port_id       = ports.id
 	    AND categories.id                  = ports.category_id
 	    AND element.id                     = ports.element_id
@@ -79,16 +90,6 @@ class CommitsByDescription extends commits {
 			commit_log_id,
 			category,
 			port";
-			
-		if ($this->Limit) {
-			$sql .= "\nLIMIT " . $this->Limit;
-		}
-		
-		if ($this->Offset) {
-			$sql .= "\nOFFSET " . $this->Offset;
-		}
-
-
 
 		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
 

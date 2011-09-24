@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.4 2007-10-25 02:01:52 dan Exp $
+	# $Id: commit.php,v 1.5 2011-09-24 19:59:20 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -103,6 +103,7 @@ function str_is_int($str) {
 	return ($str == $var);
 }
 
+// this function may be unused
 function freshports_CommitNextPreviousPage($URL, $NumRowsTotal, $PageNo, $PageSize) {
 
 	$HTML .= "Result Page:";
@@ -181,7 +182,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 			die('could not determine the number of commit elements');
 		}
 
-		$NumRowsTotal = $myrow['count'];
+		$NumFilesTouched = $myrow['count'];
 	}
 
 	$sql ="
@@ -201,13 +202,14 @@ ORDER BY port, pathname";
 			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
 
 			$DisplayCommit = new DisplayCommit($database, $result);
+			$DisplayCommit->Debug = $Debug;
 			$DisplayCommit->SetShowAllPorts(true);
 			$DisplayCommit->SetShowEntireCommit(true);
 			$DisplayCommit->SanityTestFailure = true;
 			$RetVal = $DisplayCommit->CreateHTML();
 	
 			echo $DisplayCommit->HTML;
-			echo '<tr><TD VALIGN="top"><p>Number of ports [&amp; non-ports] in this commit: ' . $numrows . '</p></td></tr>';
+			echo '<tr><TD VALIGN="top"><p>Number of ports [&amp; non-ports] in this commit: ' . $NumFilesTouched . '</p></td></tr>';
 			
 		} else {
           echo '<tr><TD VALIGN="top"><P>Sorry, nothing found in the database....</P>' . "\n";

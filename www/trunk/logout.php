@@ -1,5 +1,5 @@
 <?
-	# $Id: logout.php,v 1.2 2006-12-17 12:06:12 dan Exp $
+	# $Id: logout.php,v 1.3 2011-10-02 18:58:36 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 
@@ -27,7 +27,7 @@
 
 <head>
 <title></title>
-</head
+</head>
 
 <body>
 </body>

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.5 2011-09-24 19:59:20 dan Exp $
+	# $Id: commit.php,v 1.6 2011-11-30 04:02:19 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -234,8 +234,37 @@ ORDER BY port, pathname";
 	$HideAllFilesURL = '<a href="' . htmlspecialchars($_SERVER['SCRIPT_URL'] . '?message_id=' .  $message_id) . '">hide all files</a>';
 
 	if ($FilesForJustOnePort) {
-	  $clean['category'] = $query_parts['category'];
-	  $clean['port']    = $query_parts['port'];
+	  // TODO need to validate category/port here!
+    $clean['category'] = $query_parts['category'];
+	  $clean['port']     = $query_parts['port'];
+
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
+
+    $Category = new Category($database);
+    $CategoryID = $Category->FetchByName($clean['category']);
+    if (!$CategoryID)
+    {
+      die( 'I don\'t know that category: . ' . htmlentities($clean['category']));
+    }
+            
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/element_record.php');
+
+		$elementName = '/ports/' . $clean['category'] . '/' . $clean['port'];
+
+    $Element = new ElementRecord($database);
+    $ElementID = $Element->FetchByName($elementName);
+    if (!$ElementID)
+    {
+      die( 'I don\'t know that port.');
+    }
+    
+    if (!$Element->IsPort())
+    {
+      die( 'That is not a port.');
+    }
+    
+    
+            
 	  $PortURL = '<a href="/' . $clean['category'] . '/' . $clean['port'] . '/">' . $clean['category'] . '/' . $clean['port'] . '</a>';
 	  echo '<p>Showing files for just one port: <big><b>' . $PortURL . '</b></big></p>';
 	  echo "<p>$ShowAllFilesURL</p>";

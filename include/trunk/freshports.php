@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.37 2012-02-05 21:17:27 dan Exp $
+	# $Id: freshports.php,v 1.38 2012-03-11 04:00:11 dan Exp $
 	#
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
@@ -802,7 +802,8 @@ if ($OnLoad) {
 
 echo ">\n\n";
 
-	if ($Debug) {
+	#if ($Debug) 
+	{
 		GLOBAL $ShowAds;
 		GLOBAL $BannerAd;
 		GLOBAL $BannerAdUnder;
@@ -1565,7 +1566,7 @@ function freshports_SideBar() {
 
 		if ($User->emailbouncecount > 0) {
 			$HTML .= '<img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif"  border="0" height="32" width="32"><img src="/images/warning.gif" border="0"height="32" width="32"><br>';
-			$HTML .= '<FONT SIZE="-1">your email is <a href="bouncing.php?origin=' . $OriginLocal. '">bouncing</a></FONT><br>';
+			$HTML .= '<FONT SIZE="-1">your email is <a href="/bouncing.php?origin=' . $OriginLocal. '">bouncing</a></FONT><br>';
 			$HTML .= '<img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><br>';
 		}
 		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/customize.php',        "?origin=$OriginLocal", "Customize", "Customize your settings"              ) . '</FONT><br>';

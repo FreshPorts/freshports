@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.38 2012-03-11 04:00:11 dan Exp $
+	# $Id: freshports.php,v 1.39 2012-03-11 04:01:49 dan Exp $
 	#
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
@@ -802,7 +802,7 @@ if ($OnLoad) {
 
 echo ">\n\n";
 
-	#if ($Debug) 
+	if ($Debug) 
 	{
 		GLOBAL $ShowAds;
 		GLOBAL $BannerAd;

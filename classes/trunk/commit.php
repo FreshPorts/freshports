@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.2 2006-12-17 11:37:18 dan Exp $
+	# $Id: commit.php,v 1.3 2012-03-31 20:41:41 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -98,7 +98,8 @@ SELECT CL.id as commit_log_id,
     ON CL.id = STF.commit_log_id
  WHERE message_id = '" . AddSlashes($message_id) . "'";
 
-#		echo "sql = '<pre>$sql</pre>'<BR>";
+
+    if ($Debug) echo "sql = '<pre>$sql</pre>'<BR>";
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {

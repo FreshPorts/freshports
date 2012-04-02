@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: display_commit.php,v 1.10 2007-10-25 00:07:59 dan Exp $
+	# $Id: display_commit.php,v 1.11 2012-04-02 01:03:37 dan Exp $
 	#
 	# Copyright (c) 2003-2007 DVL Software Limited
 	#
@@ -70,7 +70,7 @@ class DisplayCommit {
 		if ($this->Debug) echo __FILE__ . ':' . __LINE__ . " Number of rows = $NumRows<br>\n";
 		if (!$NumRows) { 
 			$this->HTML = "<TR><TD>\n<P>Sorry, nothing found in the database....</P>\n</td></tr>\n";
-			return 1;
+			return $this->HTML;
 		}
 		
 		# if we have a UserID, but no flagged commits, grab them

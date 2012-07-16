@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: files-display.php,v 1.3 2010-10-12 19:02:30 dan Exp $
+	# $Id: files-display.php,v 1.4 2012-07-16 14:53:15 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -23,7 +23,7 @@ class FilesDisplay {
 		$this->HTML       = '';
 	}
 
-	function CreateHTML() {
+	function CreateHTML($WhichRepo) {
 		GLOBAL $TableWidth;
 		GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;
 		GLOBAL $DaysMarkedAsNew;
@@ -93,20 +93,56 @@ class FilesDisplay {
             
             $this->HTML .= '<td>';
             if ( $Change_Type == "modify" ) {
-                $this->HTML .= ' ';
-    			$previousRevision =  $this->GetPreviousRevision( $myrow["revision_name"] );
-		    	$this->HTML .= '<A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $myrow["pathname"] . '.diff?r1=' . $previousRevision . ';r2=' . $myrow["revision_name"] . '">';
-		    	$this->HTML .= freshports_Diff_Icon() . '</a> ';
+                switch($WhichRepo)
+                {
+                    case FREEBSD_REPO_CVS:
+                        $this->HTML .= ' ';
+    	        		$previousRevision =  $this->GetPreviousRevision( $myrow["revision_name"] );
+    	       		    $this->HTML .= '<A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $myrow["pathname"] . '.diff?r1=' . $previousRevision . ';r2=' . $myrow["revision_name"] . '">';
+        		    	$this->HTML .= freshports_Diff_Icon() . '</a> ';
+        		    	break;
+
+                    case FREEBSD_REPO_SVN:
+                        $this->HTML .= ' ';
+    	        		$previousRevision =  $this->GetPreviousRevision( $myrow["revision_name"] );
+                        # we want something like http://svnweb.freebsd.org/ports/head/www/p5-App-Nopaste/Makefile?r1=300951&r2=300950&pathrev=300951
+            			$this->HTML .= ' <A HREF="' . FRESHPORTS_FREEBSD_SVN_URL . '/' . freshports_pathname_to_repo_name($WhichRepo, $myrow["pathname"]) . '?r1=' . 
+            			    $myrow["revision_name"] . '&amp;r2=' . $previousRevision . '&amp;pathrev=' . $myrow["revision_name"] . '">';
+        		    	$this->HTML .= freshports_Diff_Icon() . '</a> ';
+                        break;
+                }
             }
             
-			$this->HTML .= ' <A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $myrow["pathname"] . '?annotate=' . $myrow["revision_name"] . '">';
-			$this->HTML .= freshports_Revision_Icon() . '</a> ';
+            # we want something like
+            # http://svn.freebsd.org/ports/head/x11-wm/awesome/Makefile
+            switch($WhichRepo)
+            {
+                case FREEBSD_REPO_CVS:
+        			$this->HTML .= ' <A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $myrow["pathname"] . '?annotate=' . $myrow["revision_name"] . '">';
+		        	$this->HTML .= freshports_Revision_Icon() . '</a> ';
+		        	break;
+
+                case FREEBSD_REPO_SVN:
+        			$this->HTML .= ' <A HREF="' . FRESHPORTS_FREEBSD_SVN_URL . '/' . freshports_pathname_to_repo_name($WhichRepo, $myrow["pathname"]) . '?annotate=' . $myrow["revision_name"] . '">';
+		        	$this->HTML .= freshports_Revision_Icon() . '</a> ';
+                    break;
+            }
 
             $this->HTML .= '</td>';
             
 			$this->HTML .= '  <TD WIDTH="100%" VALIGN="middle">';
 
-			$this->HTML .= '<A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $myrow["pathname"] . '#rev'       . $myrow["revision_name"] . '">';
+            switch($WhichRepo)
+            {
+                case FREEBSD_REPO_CVS:
+        			$this->HTML .= '<A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $myrow["pathname"] . '#rev' . $myrow["revision_name"] . '">';
+       			    break;
+
+                case FREEBSD_REPO_SVN:
+                    # we want something like http://svnweb.freebsd.org/ports/head/www/p5-App-Nopaste/Makefile?revision=300951&view=markup
+        			$this->HTML .= ' <A HREF="' . FRESHPORTS_FREEBSD_SVN_URL . '/' . freshports_pathname_to_repo_name($WhichRepo, $myrow["pathname"]) . '?revision=' . $myrow["revision_name"] . '&amp;&view=markup">';
+                    break;
+            }
 
 			$this->HTML .= '<CODE CLASS="code">' . $myrow["pathname"] . "</CODE></A></TD>";
 			$this->HTML .= "</TR>\n";

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: constants.php,v 1.3 2008-01-03 00:37:59 dan Exp $
+	# $Id: constants.php,v 1.4 2012-07-16 14:53:15 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -51,6 +51,13 @@ $Sequence_User_ID				= 'users_id_seq';
 
 // path to the CVS repository
 define('FRESHPORTS_FREEBSD_CVS_URL' , 'http://www.FreeBSD.org/cgi/cvsweb.cgi');
+
+// path to the SVN repository
+define('FRESHPORTS_FREEBSD_SVN_URL' , 'http://svnweb.FreeBSD.org');
+
+// which repo do we want?
+define('FREEBSD_REPO_SVN', 'svn');
+define('FREEBSD_REPO_CVS', 'cvs');
 
 // path to the ftp server
 define('FRESHPORTS_FREEBSD_FTP_URL', 'ftp://ftp.freebsd.org/pub/FreeBSD/ports/i386/packages/All/');

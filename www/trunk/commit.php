@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.6 2011-11-30 04:02:19 dan Exp $
+	# $Id: commit.php,v 1.7 2012-07-16 14:53:15 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -275,6 +275,8 @@ ORDER BY port, pathname";
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/files.php');
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/files-display.php');
 		
+		$WhichRepo = freshports_MessageIdToRepoName($message_id);
+		
 		$Files = new CommitFiles($database);
 		$Files->Debug = $Debug;
 		$Files->MessageIDSet($message_id);
@@ -289,7 +291,7 @@ ORDER BY port, pathname";
 		$NumRows = $Files->Fetch();
 
 		$FilesDisplay = new FilesDisplay($Files->LocalResult);
-		$HTML = $FilesDisplay->CreateHTML();
+		$HTML = $FilesDisplay->CreateHTML($WhichRepo);
 		echo '<br>' . $HTML;
 	} else {
 	  echo "<p>$ShowAllFilesURL</p>";

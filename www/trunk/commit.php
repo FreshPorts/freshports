@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.7 2012-07-16 14:53:15 dan Exp $
+	# $Id: commit.php,v 1.8 2012-07-16 14:53:39 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#

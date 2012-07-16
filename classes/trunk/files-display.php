@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: files-display.php,v 1.4 2012-07-16 14:53:15 dan Exp $
+	# $Id: files-display.php,v 1.5 2012-07-16 14:53:39 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.39 2012-03-11 04:01:49 dan Exp $
+	# $Id: freshports.php,v 1.40 2012-07-16 14:56:28 dan Exp $
 	#
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
@@ -2002,6 +2002,57 @@ function freshports_OnWatchList($db, $UserID, $ElementID) {
 	$myrow = pg_fetch_array($result, 0);
 
 	return $myrow['onwatchlist'];
+}
+
+function freshports_MessageIdToRepoName($message_id)
+{
+  $repo = array(
+            '/\@svn.freebsd.org$/i'     => FREEBSD_REPO_SVN,
+            '/\@repoman.freebsd.org$/i' => FREEBSD_REPO_CVS);
+
+  # given a message id, figure out what repo it came from
+  $RepoName = '';
+  foreach($repo as $message_id_format => $reponame)
+  {
+    if (preg_match($message_id_format, $message_id))
+    {
+      $RepoName = $reponame;
+    }
+  }
+
+  return $RepoName;
+}
+
+function freshports_pathname_to_repo_name($WhichRepo, $pathname)
+{
+  # strip the repo name from the pathname
+  # e.g. ports/sysutils to sysutils
+  $RepoNames = array(
+    FREEBSD_REPO_SVN => 'ports'
+  );
+  
+  $AdjustPathname = array(
+    FREEBSD_REPO_SVN => array('match' => '|^/?ports/|', 'replace' => '')
+  );
+  
+
+  $repo_file_name = '';
+  switch($WhichRepo)
+  {
+    case FREEBSD_REPO_SVN:
+      # given ports/www/p5-App-Nopaste/Makefile, we want something like: http://svn.freebsd.org/ports/head/www/p5-App-Nopaste/Makefile
+      $RepoName = $RepoNames[$WhichRepo];
+      $match   = $AdjustPathname[$WhichRepo]['match'];
+      $replace = $AdjustPathname[$WhichRepo]['replace'];
+      $repo_file_name = $RepoName . '/head/' . preg_replace($match, $replace, $pathname);
+      break;
+
+    default:
+      $repo_file_name = $pathname;
+      break;
+  }
+
+  return $repo_file_name;
 }
 
 define('EVERYTHING', 'FreshPorts has everything you want to know about <a href="http://www.freebsd.org/">FreeBSD</a> software, ports, packages,

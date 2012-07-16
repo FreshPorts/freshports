@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: files-display.php,v 1.5 2012-07-16 14:53:39 dan Exp $
+	# $Id: files-display.php,v 1.6 2012-07-16 15:59:57 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -113,8 +113,6 @@ class FilesDisplay {
                 }
             }
             
-            # we want something like
-            # http://svn.freebsd.org/ports/head/x11-wm/awesome/Makefile
             switch($WhichRepo)
             {
                 case FREEBSD_REPO_CVS:
@@ -123,6 +121,8 @@ class FilesDisplay {
 		        	break;
 
                 case FREEBSD_REPO_SVN:
+                    # we want something like
+                    # http://svn.freebsd.org/ports/head/x11-wm/awesome/Makefile
         			$this->HTML .= ' <A HREF="' . FRESHPORTS_FREEBSD_SVN_URL . '/' . freshports_pathname_to_repo_name($WhichRepo, $myrow["pathname"]) . '?annotate=' . $myrow["revision_name"] . '">';
 		        	$this->HTML .= freshports_Revision_Icon() . '</a> ';
                     break;
@@ -139,8 +139,10 @@ class FilesDisplay {
        			    break;
 
                 case FREEBSD_REPO_SVN:
-                    # we want something like http://svnweb.freebsd.org/ports/head/www/p5-App-Nopaste/Makefile?revision=300951&view=markup
-        			$this->HTML .= ' <A HREF="' . FRESHPORTS_FREEBSD_SVN_URL . '/' . freshports_pathname_to_repo_name($WhichRepo, $myrow["pathname"]) . '?revision=' . $myrow["revision_name"] . '&amp;&view=markup">';
+                    # we want something like
+                    # http://svnweb.freebsd.org/ports/head/textproc/bsddiff/Makefile?view=log#rev300953
+        			$this->HTML .= ' <A HREF="' . FRESHPORTS_FREEBSD_SVN_URL . '/' . 
+        			    freshports_pathname_to_repo_name($WhichRepo, $myrow["pathname"]) . '?view=log#rev' . $myrow["revision_name"] . '">';
                     break;
             }
 

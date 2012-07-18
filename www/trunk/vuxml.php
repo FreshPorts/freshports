@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: vuxml.php,v 1.9 2010-01-10 02:23:55 dan Exp $
+	# $Id: vuxml.php,v 1.10 2012-07-18 18:33:27 dan Exp $
 	#
 	# Copyright (c) 2004 DVL Software Limited
 	#
@@ -210,7 +210,7 @@ SELECT V.vid,
        V.date_modified IS NULL AS new
   FROM vuxml V left outer join vuxml_affected VA on VA.vuxml_id          = V.id
        left outer join vuxml_names VN on VN.vuxml_affected_id = VA.id
-ORDER BY coalesce(V.date_modified, V.date_entry, V.date_discovery)::date desc, V.id, lower(VN.name)
+ORDER BY coalesce(V.date_modified, V.date_entry, V.date_discovery)::date desc, V.vid, lower(VN.name)
 ";
 
 		$result = pg_exec($db, $sql);

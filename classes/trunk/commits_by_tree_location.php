@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits_by_tree_location.php,v 1.4 2007-06-03 15:48:25 dan Exp $
+	# $Id: commits_by_tree_location.php,v 1.5 2012-07-19 18:56:30 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -247,7 +247,7 @@ ORDER BY CL.commit_date DESC ";
 	    AND commit_log_elements.element_id    = element.id
         AND element_pathname.element_id       = element.id
    ORDER BY 1 desc,
-			commit_log_id";
+			commit_log_id, element_pathname";
 			
 
 

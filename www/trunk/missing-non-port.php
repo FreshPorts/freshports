@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-non-port.php,v 1.5 2007-10-22 17:02:46 dan Exp $
+	# $Id: missing-non-port.php,v 1.6 2012-07-19 19:14:15 dan Exp $
 	#
 	# Copyright (c) 2003-2007 DVL Software Limited
 	#
@@ -103,7 +103,7 @@ function freshports_NonPortDescription($db, $element_record) {
 
     $Commits = new CommitsByTreeLocation($db);
     $Commits->SetLimit($Cache->PageSize);
-    $Commits->Debug = 0;
+    $Commits->Debug = $Debug;
 	$Commits->UserIDSet($User->id);
 	$Commits->TreePathConditionSet("= '" . $element_record->element_pathname . "'");
     

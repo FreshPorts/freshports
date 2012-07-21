@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: privacy.php,v 1.3 2009-10-17 13:55:36 dan Exp $
+	# $Id: privacy.php,v 1.4 2012-07-21 23:23:58 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -31,7 +31,7 @@
 
 <CENTER>
 <?php
-	echo Ad_728x90();
+	if ($ShowAds) echo Ad_728x90();
 ?>
 </CENTER>
 

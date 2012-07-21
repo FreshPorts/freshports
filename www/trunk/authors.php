@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: authors.php,v 1.3 2007-10-21 16:58:45 dan Exp $
+	# $Id: authors.php,v 1.4 2012-07-21 23:23:57 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -29,7 +29,7 @@
 <TR><TD>
 <CENTER>
 <?php
-	echo Ad_728x90();
+	if ($ShowAds) echo Ad_728x90();
 ?>
 </CENTER>
 

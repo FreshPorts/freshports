@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: about.php,v 1.2 2006-12-17 12:06:07 dan Exp $
+	# $Id: about.php,v 1.3 2012-07-21 23:23:57 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -34,7 +34,7 @@ We have a few notes about this website.
 
 <CENTER>
 <?php
-	echo Ad_728x90();
+	if ($ShowAds) echo Ad_728x90();
 ?>
 </CENTER>
 

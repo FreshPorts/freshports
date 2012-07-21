@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: how-big-is-it.php,v 1.6 2007-07-09 13:11:12 dan Exp $
+	# $Id: how-big-is-it.php,v 1.7 2012-07-21 23:23:57 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -103,7 +103,7 @@ function DBSize($db) {
 
 <CENTER>
 <?php
-	echo Ad_728x90();
+	if ($ShowAds) echo Ad_728x90();
 ?>
 </CENTER>
 

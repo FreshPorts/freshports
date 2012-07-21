@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: faq.php,v 1.6 2010-10-12 19:03:17 dan Exp $
+	# $Id: faq.php,v 1.7 2012-07-21 23:23:57 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -36,7 +36,7 @@
 
 <CENTER>
 <?php
-	echo Ad_728x90();
+    if ($ShowAds) echo Ad_728x90();
 ?>
 </CENTER>
 

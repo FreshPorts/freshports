@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: graphs.php,v 1.6 2006-12-17 12:06:11 dan Exp $
+	# $Id: graphs.php,v 1.7 2012-07-21 23:23:57 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -40,7 +40,7 @@ If you have suggestions for graphs, please submit them via the forum.
 
 <center>
 <?php
-  echo Ad_728x90();
+  if ($ShowAds) echo Ad_728x90();
 ?>
 </center>
 

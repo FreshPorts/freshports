@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: filter.php,v 1.3 2008-01-03 00:46:07 dan Exp $
+	# $Id: filter.php,v 1.4 2012-07-21 23:23:57 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -120,7 +120,7 @@ if ($db) {
 A port is marked as new for 10 days.
 
 <?php
-	if ($BannerAd) {
+	if ($ShowAds && $BannerAd) {
 		echo "</td></tr>\n<tr><td>\n<CENTER>\n";
 		echo Ad_728x90();
 		echo "</CENTER>\n\n";

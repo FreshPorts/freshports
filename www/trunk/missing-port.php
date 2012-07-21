@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.4 2010-09-15 13:33:37 dan Exp $
+	# $Id: missing-port.php,v 1.5 2012-07-21 23:23:58 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -233,6 +233,7 @@ function freshports_PortDisplay($db, $category, $port) {
 ?>
 
 </body>
+<script type="text/javascript" src="/js/master.js">
 </html>
 
 <?

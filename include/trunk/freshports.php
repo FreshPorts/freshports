@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.40 2012-07-16 14:56:28 dan Exp $
+	# $Id: freshports.php,v 1.41 2012-07-24 18:17:22 dan Exp $
 	#
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
@@ -665,12 +665,20 @@ GLOBAL $FreshPortsLogoHeight;
 ';
 
 	$HTML .= '<img src="/images/notbug.gif" alt="notbug" title="notbug">';
+	
 	$HTML .= '</td>';
 
 if (date("M") == 'Nov' && date("j") <= 12) {
 	$HTML .= '	<td nowrap align="center" CLASS="sans" valign="bottom"><a href="http://www.google.ca/search?q=remembrance+day"><img src="/images/poppy.gif" width="50" height="48" border="0" alt="Remember" title="Remember"><br>I remember</a></td>';
 } else {
-	$HTML .= '	<td align="right" CLASS="sans" valign="bottom">' . FormatTime(Date("D, j M Y g:i A T"), $LocalTimeAdjustment, "D, j M Y g:i A T") . '</td>';
+	$HTML .= '	<td>';
+	$HTML .= '<div id="followus"><div class="header">Follow us</div><a href="http://news.freshports.org/">Blog</a><br><a href="https://twitter.com/freshports/">Twitter</a><br><br>';
+
+    $HTML .= '<div id="time">';	
+	$HTML .= FormatTime(Date("j M Y g:i A T"), $LocalTimeAdjustment, "j M Y g:i A T");
+	$HTML .= '</div></div>';
+	$HTML .= '</td>';
+	
 }
 
 $HTML .= '

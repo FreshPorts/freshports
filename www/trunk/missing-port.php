@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing-port.php,v 1.5 2012-07-21 23:23:58 dan Exp $
+	# $Id: missing-port.php,v 1.6 2012-08-07 13:13:24 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -98,7 +98,7 @@ function freshports_PortDisplay($db, $category, $port) {
 	$PageNumber = 1;
 	parse_str($_SERVER['REDIRECT_QUERY_STRING'], $query_parts);
 
-	if ($Debug) var_dump($query_parts);
+	if ($Debug) echo print_r($query_parts, true);
 	if (IsSet($query_parts['page'])  && Is_Numeric($query_parts['page'])) {
 		$PageNumber = intval($query_parts['page']);
 		if ($PageNumber != $query_parts['page'] || $PageNumber < 1) {
@@ -143,7 +143,7 @@ function freshports_PortDisplay($db, $category, $port) {
 		$HTML = '';
 		$port_id = freshports_GetPortID($db, $category, $port);
 		if (!IsSet($port_id)) {
-			if ($Debug) echo "$category/$port is not a port<br>\n";
+			if ($Debug) echo "$category/$port is not a port according to freshports_GetPortID<br>\n";
 
 			return -1;
 		}
@@ -233,7 +233,6 @@ function freshports_PortDisplay($db, $category, $port) {
 ?>
 
 </body>
-<script type="text/javascript" src="/js/master.js">
 </html>
 
 <?

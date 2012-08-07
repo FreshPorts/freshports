@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing.php,v 1.5 2012-07-16 14:49:13 dan Exp $
+	# $Id: missing.php,v 1.6 2012-08-07 13:13:24 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -60,7 +60,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 		if ($Debug) {
 			echo 'Yes, we found an element for that path!<br>';
 			echo '<pre>';
-			var_dump($ElementRecord);
+			echo print_r($ElementRecord, true);
 			echo '</pre>';
 		}
 
@@ -85,11 +85,10 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 			if ($Debug) echo "This is a port!<br>";
 			if ($Debug) echo "Category='$category'<br>";
 			if ($Debug) echo "Port='$port'<br>";
-
-			require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-port.php');
-
-			$Debug = 0;
-			if ($Debug) echo 'This is a Port<br>';
+		}
+		else
+		{
+		 if ($Debug) echo 'The call to ElementRecord indicates this is not a port<br>';
 		}
 	} else {
 		if ($Debug) echo 'not an element<br>';
@@ -152,28 +151,34 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 		}
 	}
 
+	if ($Debug) echo 'let us see what we will include now....<br>';
+
 	if ($IsPort) {
+		if ($Debug) echo 'including missing-port ' . $Debug . '<BR>';
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-port.php');
+		if ($Debug) echo 'including missing-port ' . $Debug . '<BR>';
 
 		# if zero is returned, all is well, otherwise, we can't display that category/port.
-		if (!freshports_PortDisplay($db, $category, $port)) {
+		if (freshports_PortDisplay($db, $category, $port)) {
+            echo 'freshports_PortDisplay returned non-zero';
 			exit;
 		}
 	}
 
-	if ($IsCategory) {
+	if ($IsCategory && !IsPort) {
 		if ($Debug) echo 'This is a category<br>';
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-category.php');
 		freshports_CategoryByID($db, $CategoryID, 1, $User->page_size);
 		exit;
 	}
 
-	if ($IsElement) {
+	if ($IsElement && !IsPort) {
+		if ($Debug) echo 'This is an element<br>';
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-non-port.php');
 		freshports_NonPortDescription($db, $ElementRecord);
 		exit;
 	}
-				
+	
 	return $result;
 }
 

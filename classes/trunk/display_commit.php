@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: display_commit.php,v 1.11 2012-04-02 01:03:37 dan Exp $
+	# $Id: display_commit.php,v 1.12 2012-08-07 16:07:57 dan Exp $
 	#
 	# Copyright (c) 2003-2007 DVL Software Limited
 	#
@@ -260,7 +260,7 @@ class DisplayCommit {
 				$this->HTML .= '<big><B>';
 				$PathName = preg_replace('|^/?ports/|', '', $mycommit->pathname);
 				if ($PathName != $mycommit->pathname) {
-					$this->HTML .= '<a href="/' . $PathName . '">' . $PathName . '</a>';
+					$this->HTML .= '<a href="/' . str_replace('%2F', '/', urlencode($PathName)) . '">' . $PathName . '</a>';
 					$this->HTML .= "</B></BIG>\n";
 				} else {
 					$this->HTML .= '<a href="' . FRESHPORTS_FREEBSD_CVS_URL . $PathName . '#rev' . $mycommit->revision . '">' . $PathName . '</a>';

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: release-2003-04-29.php,v 1.2 2006-12-17 12:06:16 dan Exp $
+	# $Id: release-2003-04-29.php,v 1.3 2012-09-01 16:33:19 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -173,7 +173,7 @@ paging to the <a href="/categories.php">categories</a> page.
 
 <p>
 You can set the paging length via the 
-<a href="/customization.php">customization</> page.
+<a href="/customize.php">customization</> page.
 </P>
 </TD></TR>
 

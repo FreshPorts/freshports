@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-lists.php,v 1.3 2007-07-31 14:26:13 dan Exp $
+	# $Id: watch-lists.php,v 1.4 2012-09-18 20:51:39 dan Exp $
 	#
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
@@ -125,9 +125,6 @@ function freshports_UpdatingOutput($NumRowsUpdating, $PortsUpdating, $port) {
 		for ($i = 0; $i < $NumRowsUpdating; $i++) {
 			$PortsUpdating->FetchNth($i);
 			$HTML .= '<li>' . freshports_PortsUpdating($port, $PortsUpdating) . "</li>\n";
-			if ($i + 1 != $NumRowsUpdating) {
-				$HTML .= '<br>';
-			}
 		}
 
 		$HTML .= "</ul>\n";

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.41 2012-07-24 18:17:22 dan Exp $
+	# $Id: freshports.php,v 1.42 2012-09-18 20:51:39 dan Exp $
 	#
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
@@ -568,7 +568,7 @@ function freshports_CookieClear() {
 
 function freshportsObscureHTML($email) {
 	# why obscure?  The spammers catch up.
-	return $email;
+	return htmlentities($email);
 }
 
 function freshports_CommitterEmailLink($committer) {
@@ -968,10 +968,7 @@ function freshports_depends_links($dbh, $DependsList) {
 		$CategoryPort      = str_replace('/usr/ports/', '', $DependsArray[1]) ;
 		$CategoryPortArray = explode('/', $CategoryPort);
 
-		$HTML .= freshports_link_to_port_single($CategoryPortArray[0], $CategoryPortArray[1]);
-		if ($i < $Count - 1) {
-			$HTML .= ", ";
-		}
+		$HTML .= '<li>' . freshports_link_to_port_single($CategoryPortArray[0], $CategoryPortArray[1]) . '</li>';
 	}
 
 	return $HTML;

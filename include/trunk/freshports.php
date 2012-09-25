@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.42 2012-09-18 20:51:39 dan Exp $
+	# $Id: freshports.php,v 1.43 2012-09-25 18:10:39 dan Exp $
 	#
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
@@ -56,6 +56,37 @@ function freshports_Search_Depends_All($CategoryPort) {
 
 function freshports_SanityTestFailure_Link($message_id) {
 	return '<a href="/sanity_test_failures.php?message_id=' . $message_id . '">' . freshports_SanityTestFailure_Icon() . '</a>';
+}
+
+function freshports_cvsweb_Diff_Link($pathname, $previousRevision, $revision_name)
+{
+  $pathname = str_replace('/ports/head/', '/ports/', $pathname);
+  $HTML  = '<A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $pathname . '.diff?r1=' . $previousRevision . ';r2=' . $revision_name . '">';
+  $HTML .= freshports_Diff_Icon() . '</a> ';
+
+  return $HTML;
+}
+
+function freshports_cvsweb_Annotate_Link($pathname, $revision_name)
+{
+  $pathname = str_replace('/ports/head/', '/ports/', $pathname);
+  $HTML  = ' <A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $pathname . '?annotate=' . $revision_name . '">';
+  $HTML .= freshports_Revision_Icon() . '</a> ';
+
+  return $HTML;
+}
+
+function freshports_cvsweb_Revision_Link($pathname, $revision_name)
+{
+  $pathname = str_replace('/ports/head/', '/ports/', $pathname);
+  $HTML = '<A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $pathname . '#rev' . $revision_name . '">';
+
+  return $HTML;
+}
+
+function freshports_svnweb_ChangeSet_Link($revision, $hostname, $path) {
+  return '<a href="http://' . htmlentities($hostname) . htmlentities($path) . 
+                                            '?view=revision&amp;revision=' . htmlentities($revision) .  '">' . freshports_Subversion_Icon() . '</a>';
 }
 
 function freshports_Search_Maintainer($Maintainer) {
@@ -197,6 +228,10 @@ return '
   </tr>
 ';
 
+}
+
+function freshports_Subversion_Icon($Title = 'Subversion') {
+	return '<img src="/images/subversion.jpg" alt="' . $Title . '" title="' . $Title . '" border="0" width="16" height="16" vspace="1">';
 }
 
 function freshports_SanityTestFailure_Icon($Title = 'Sanity Test Failure') {
@@ -2065,5 +2100,3 @@ applications, whatever term you want to use.');
 
 openlog('FreshPorts', LOG_PID, LOG_SYSLOG);
 #syslog(LOG_NOTICE, $_SERVER['SCRIPT_URL']);
-
-?>

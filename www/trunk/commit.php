@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.8 2012-07-16 14:53:39 dan Exp $
+	# $Id: commit.php,v 1.9 2012-09-25 18:10:29 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -25,6 +25,7 @@ DEFINE('NEXT_PAGE',		'Next');
 	
 	if (IsSet($_GET['message_id'])) $message_id = AddSlashes($_GET['message_id']);
 	if (IsSet($_GET['commit_id']))  $commit_id  = AddSlashes($_GET['commit_id']);
+	if (IsSet($_GET['revision']))   $revision   = AddSlashes($_GET['revision']);
 
 	# I'm quite sure we use only message_id, and never commit_id.
 	if ($message_id != '') {
@@ -34,6 +35,26 @@ DEFINE('NEXT_PAGE',		'Next');
 		$Commit->FetchByMessageId($message_id);
 		freshports_ConditionalGet($Commit->last_modified);
 	}
+	else
+	{
+          if ($revision != '')
+          {
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
+
+		$Commit = new Commit($db);
+		// Get the message IDs for this revision
+		$message_id_array = $Commit->FetchByRevision($revision);
+		if (count($message_id_array) == 1)
+		{
+		  header('Location: /commit.php?message_id=' . $message_id_array[0]);
+                  exit;
+                }
+                freshports_ConditionalGet($Commit->last_modified);
+		
+		if ($Debug) echo 'oh... got something back there: <pre>'. print_r($message_id_array, true) . '</pre>';
+          }
+	}
+	
 
 	if (IsSet($_REQUEST['page']))      $PageNo   = $_REQUEST['page'];
 	if (IsSet($_REQUEST['page_size'])) $PageSize = $_REQUEST['page_size'];
@@ -92,7 +113,14 @@ DEFINE('NEXT_PAGE',		'Next');
 			exit;
 		}
 	} else {
-		$Title .= 'commit id';
+	        if ($revision)
+	        {
+	           $Title .= 'revision';
+                }
+                else
+                {
+                  $Title .= 'commit id';
+                }
 	}
 	freshports_Start($Title,
 					$FreshPortsName . ' - new ports, applications',
@@ -150,7 +178,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
   </TR>
 <?
 }
-	if ($message_id != '' || $commit_id != '') {
+	if ($message_id != '' || $commit_id != '' || $revision != '') {
 	
 ?>
 
@@ -161,8 +189,32 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 <?php
 
 	$numrows = $MaxNumberOfPorts;
-	$database=$db;
+	$database = $db;
 	if ($database ) {
+	
+	  if (!empty($revision) && count($message_id_array))
+	  {
+	    // we have multiple messages for that commit
+            echo '<tr><TD VALIGN="top">';
+            echo "We have multiple emails for that revision: ";
+            $Commit->FetchNth(0);
+            $clean_revision = htmlentities($Commit->svn_revision);
+            // e.g. http://svnweb.freebsd.org/base?view=revision&revision=177821
+            echo '<a href="http://' . htmlentities($Commit->svn_hostname) . htmlentities($Commit->path_to_repo) . '?view=revision&amp;revision=' . $clean_revision . 
+                 '">' . $clean_revision . '</a>';
+
+            echo "<ol>\n";
+            foreach($message_id_array as $i => $message_id)
+            {
+              $Commit->FetchNth($i);
+              $clean_message_id = htmlentities($Commit->message_id);
+              echo '<li><a href="/commit.php?message_id=' . $clean_message_id . '">' . htmlentities($clean_message_id) . '</a></li>' . "\n";
+            }
+            echo "</ol></TD></tr>";
+	    
+	  }
+	  else
+	  {
 #
 # we limit the select to recent things by using a date
 # otherwise, it joins the whole table and that takes quite a while
@@ -218,6 +270,7 @@ ORDER BY port, pathname";
 	} else {
 	  syslog(LOG_NOTICE, __FILE__ . '::' . __LINE__ . ': ' . pg_last_error());
     }
+    }
 } else {
   echo "no connection";
 }
@@ -247,9 +300,9 @@ ORDER BY port, pathname";
       die( 'I don\'t know that category: . ' . htmlentities($clean['category']));
     }
             
-		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/element_record.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/element_record.php');
 
-		$elementName = '/ports/' . $clean['category'] . '/' . $clean['port'];
+    $elementName = '/ports/head/' . $clean['category'] . '/' . $clean['port'];
 
     $Element = new ElementRecord($database);
     $ElementID = $Element->FetchByName($elementName);
@@ -272,11 +325,11 @@ ORDER BY port, pathname";
 	# if we ask for files=yes or files=y
 	if (!strcasecmp($files, 'yes') || !strcasecmp($files, 'y')) {
 	    echo "<p>$HideAllFilesURL</p>";
-		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/files.php');
-		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/files-display.php');
 		
 		$WhichRepo = freshports_MessageIdToRepoName($message_id);
 		
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/files.php');
+
 		$Files = new CommitFiles($database);
 		$Files->Debug = $Debug;
 		$Files->MessageIDSet($message_id);
@@ -289,7 +342,9 @@ ORDER BY port, pathname";
 		}
 
 		$NumRows = $Files->Fetch();
+		if ($Debug) echo 'numrows = ' . $NumRows;
 
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/files-display.php');
 		$FilesDisplay = new FilesDisplay($Files->LocalResult);
 		$HTML = $FilesDisplay->CreateHTML($WhichRepo);
 		echo '<br>' . $HTML;

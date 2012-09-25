@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: display_commit.php,v 1.12 2012-08-07 16:07:57 dan Exp $
+	# $Id: display_commit.php,v 1.13 2012-09-25 18:10:12 dan Exp $
 	#
 	# Copyright (c) 2003-2007 DVL Software Limited
 	#
@@ -156,6 +156,12 @@ class DisplayCommit {
 
 				if ($mycommit->stf_message != '') {
 					$this->HTML .= '&nbsp; ' . freshports_SanityTestFailure_Link($mycommit->message_id);
+				}
+				
+#        			echo '<pre>' . print_r($mycommit, true) . '</pre>';
+	
+				if ($mycommit->svn_revision != '') {
+					$this->HTML .= '&nbsp; ' . freshports_svnweb_ChangeSet_Link($mycommit->svn_revision, $mycommit->svn_hostname, $mycommit->path_to_repo);
 				}
 				
 				$this->HTML .= "<br>\n";

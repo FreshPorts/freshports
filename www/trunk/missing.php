@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing.php,v 1.8 2012-09-25 18:05:53 dan Exp $
+	# $Id: missing.php,v 1.9 2012-09-25 18:10:29 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -20,7 +20,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 
 	GLOBAL $User;
 
-	$Debug  = 0;
+	$Debug  = 1;
 	$result = '';
 
 	$IsPort     = false;
@@ -249,4 +249,3 @@ Perhaps a <A HREF="/categories.php">list of categories</A> or <A HREF="/search.p
 #	echo " ummm, not sure what that was: '$result'";
 }
 
-?>

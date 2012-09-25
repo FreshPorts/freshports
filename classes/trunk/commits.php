@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits.php,v 1.3 2007-10-25 00:07:40 dan Exp $
+	# $Id: commits.php,v 1.4 2012-09-25 18:10:12 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -69,6 +69,9 @@ class Commits {
 			date_part('epoch', ports.date_added)                                                                        AS date_added,
 			ports.element_id                                                                                            AS element_id,
 			ports.short_description                                                                                     AS short_description,
+			commit_log.svn_revision                                                                                     AS svn_revision,
+                        R.svn_hostname                                                                                              AS svn_hostname,
+                        R.path_to_repo                                                                                              AS path_to_repo,
 			STF.message                                                                                                 AS stf_message";
 
 		if ($UserID) {
@@ -78,7 +81,7 @@ class Commits {
 
 		$sql .= "
     FROM commit_log_ports LEFT OUTER JOIN sanity_test_failures STF ON STF.commit_log_id = commit_log_ports.commit_log_id
-	, commit_log, categories, ports, element ";
+	, commit_log LEFT OUTER JOIN repo R on commit_log.repo_id = R.id, categories, ports, element ";
 
 		if ($UserID) {
 				$sql .= "
@@ -91,7 +94,7 @@ class Commits {
 	  GROUP BY wle_element_id) AS TEMP
 	       ON TEMP.wle_element_id = element.id";
 		}
-
+		
 		$sql .= "
 	  WHERE commit_log.commit_date         BETWEEN '$Date'::timestamptz  + SystemTimeAdjust()
 	                                           AND '$Date'::timestamptz  + SystemTimeAdjust() + '1 Day'

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.13 2012-09-05 16:36:15 dan Exp $
+	# $Id: search.php,v 1.14 2012-09-25 18:10:29 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -856,7 +856,7 @@ Special searches:
 	<INPUT NAME="query"           TYPE="hidden" value="<?php GLOBAL $User; echo $User->email; ?>">
 	<INPUT NAME="num"             TYPE="hidden" value="10">
 	<INPUT NAME="stype"           TYPE="hidden" value="maintainer">
-	<INPUT NAME="method"          TYPE="hidden" value="exact">
+	<INPUT NAME="method"          TYPE="hidden" value="match">
 	<INPUT NAME="deleted"         TYPE="hidden" value="excludedeleted">
 	<INPUT NAME="start"           TYPE="hidden" value="1">
   	<INPUT NAME="casesensitivity" TYPE="hidden" value="caseinsensitive">

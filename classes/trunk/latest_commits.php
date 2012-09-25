@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: latest_commits.php,v 1.3 2007-09-30 16:47:55 dan Exp $
+	# $Id: latest_commits.php,v 1.4 2012-09-25 18:10:12 dan Exp $
 	#
 	# Copyright (c) 2003-2004 DVL Software Limited
 	#
@@ -69,9 +69,8 @@ ORDER BY LC.commit_date_raw DESC, LC.category, LC.port, pathname";
 			exit;
 		}
 		
-		$DisplayCommit->Debug = $this->Debug;
-		
 		$DisplayCommit = new DisplayCommit($this->dbh, $result);
+		$DisplayCommit->Debug = $this->Debug;
 		$DisplayCommit->SetDaysMarkedAsNew($this->DaysMarkedAsNew);
 		$DisplayCommit->SetUserID($this->UserID);
 		$DisplayCommit->SetWatchListAsk($this->WatchListAsk);
@@ -82,4 +81,3 @@ ORDER BY LC.commit_date_raw DESC, LC.category, LC.port, pathname";
 		return $RetVal;
 	}
 }
-?>

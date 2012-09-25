@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit_record.php,v 1.2 2006-12-17 11:37:19 dan Exp $
+	# $Id: commit_record.php,v 1.3 2012-09-25 18:10:12 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -45,6 +45,9 @@ class CommitRecord {
     var $not_for_archs;
     
     var $stf_message;
+	var $svn_revision;
+	var $svn_hostname;
+	var $path_to_repo;
 
 	var $watch;
 	var $element_pathname;
@@ -90,6 +93,9 @@ class CommitRecord {
 		$this->not_for_archs		= $myrow['not_for_archs'];
 		$this->element_pathname		= $myrow['element_pathname'];
 		$this->stf_message			= $myrow['stf_message'];
+		$this->svn_revision                     = $myrow['svn_revision'];
+		$this->svn_hostname                     = $myrow['svn_hostname'];
+		$this->path_to_repo                     = $myrow['path_to_repo'];
 	}
 
 	function EncodingLosses() {

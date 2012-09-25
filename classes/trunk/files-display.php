@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: files-display.php,v 1.6 2012-07-16 15:59:57 dan Exp $
+	# $Id: files-display.php,v 1.7 2012-09-25 18:10:12 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -39,7 +39,7 @@ class FilesDisplay {
 		if ($this->Debug) echo __FILE__ . ':' . __LINE__ . " Number of rows = $NumRows<br>\n";
 		if (!$NumRows) { 
 			$this->HTML = "<TR><TD>\n<P>Sorry, nothing found in the database....</P>\n</td></tr>\n";
-			return 1;
+			return $this->HTML;
 		}
 
 		$this->HTML .= '
@@ -97,16 +97,15 @@ class FilesDisplay {
                 {
                     case FREEBSD_REPO_CVS:
                         $this->HTML .= ' ';
-    	        		$previousRevision =  $this->GetPreviousRevision( $myrow["revision_name"] );
-    	       		    $this->HTML .= '<A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $myrow["pathname"] . '.diff?r1=' . $previousRevision . ';r2=' . $myrow["revision_name"] . '">';
-        		    	$this->HTML .= freshports_Diff_Icon() . '</a> ';
+                        $previousRevision =  $this->GetPreviousRevision( $myrow["revision_name"] );
+                        $this->HTML .= freshports_cvsweb_Diff_Link($myrow["pathname"] , $previousRevision, $myrow["revision_name"]);
         		    	break;
 
                     case FREEBSD_REPO_SVN:
                         $this->HTML .= ' ';
     	        		$previousRevision =  $this->GetPreviousRevision( $myrow["revision_name"] );
                         # we want something like http://svnweb.freebsd.org/ports/head/www/p5-App-Nopaste/Makefile?r1=300951&r2=300950&pathrev=300951
-            			$this->HTML .= ' <A HREF="' . FRESHPORTS_FREEBSD_SVN_URL . '/' . freshports_pathname_to_repo_name($WhichRepo, $myrow["pathname"]) . '?r1=' . 
+            			$this->HTML .= ' <A HREF="http://' . $myrow['svn_hostname'] . $myrow["pathname"] . '?r1=' . 
             			    $myrow["revision_name"] . '&amp;r2=' . $previousRevision . '&amp;pathrev=' . $myrow["revision_name"] . '">';
         		    	$this->HTML .= freshports_Diff_Icon() . '</a> ';
                         break;
@@ -116,14 +115,13 @@ class FilesDisplay {
             switch($WhichRepo)
             {
                 case FREEBSD_REPO_CVS:
-        			$this->HTML .= ' <A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $myrow["pathname"] . '?annotate=' . $myrow["revision_name"] . '">';
-		        	$this->HTML .= freshports_Revision_Icon() . '</a> ';
-		        	break;
+                    $this->HTML .= freshports_cvsweb_Annotate_Link($myrow["pathname"] , $myrow["revision_name"]); 
+                    break;
 
                 case FREEBSD_REPO_SVN:
                     # we want something like
                     # http://svn.freebsd.org/ports/head/x11-wm/awesome/Makefile
-        			$this->HTML .= ' <A HREF="' . FRESHPORTS_FREEBSD_SVN_URL . '/' . freshports_pathname_to_repo_name($WhichRepo, $myrow["pathname"]) . '?annotate=' . $myrow["revision_name"] . '">';
+        			$this->HTML .= ' <A HREF="http://' . $myrow['svn_hostname'] . $myrow["pathname"] . '?annotate=' . $myrow["revision_name"] . '">';
 		        	$this->HTML .= freshports_Revision_Icon() . '</a> ';
                     break;
             }
@@ -135,14 +133,13 @@ class FilesDisplay {
             switch($WhichRepo)
             {
                 case FREEBSD_REPO_CVS:
-        			$this->HTML .= '<A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $myrow["pathname"] . '#rev' . $myrow["revision_name"] . '">';
-       			    break;
+                    $this->HTML .= freshports_cvsweb_Revision_Link($myrow["pathname"] , $myrow["revision_name"]); 
+                    break;
 
                 case FREEBSD_REPO_SVN:
                     # we want something like
                     # http://svnweb.freebsd.org/ports/head/textproc/bsddiff/Makefile?view=log#rev300953
-        			$this->HTML .= ' <A HREF="' . FRESHPORTS_FREEBSD_SVN_URL . '/' . 
-        			    freshports_pathname_to_repo_name($WhichRepo, $myrow["pathname"]) . '?view=log#rev' . $myrow["revision_name"] . '">';
+        			$this->HTML .= ' <A HREF="http://' . $myrow['svn_hostname'] . $myrow["pathname"] . '?view=log#rev' . $myrow["revision_name"] . '">';
                     break;
             }
 
@@ -183,4 +180,3 @@ class FilesDisplay {
 	}
 
 }
-?>

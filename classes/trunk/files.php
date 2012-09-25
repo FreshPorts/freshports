@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: files.php,v 1.2 2006-12-17 11:37:20 dan Exp $
+	# $Id: files.php,v 1.3 2012-09-25 18:10:12 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -99,8 +99,11 @@ class CommitFiles {
 	       NULL::text AS no_cdrom,
 	       NULL::text AS expiration_date,
 	       NULL::text AS is_interactive,
-	       GMT_Format(CL.date_added) AS last_modified
-	  FROM commit_log               CL,
+	       GMT_Format(CL.date_added) AS last_modified,
+               R.svn_hostname,
+               R.path_to_repo
+	  FROM commit_log               CL
+	       LEFT OUTER JOIN repo R on CL.repo_id = R.id,
 	       commit_log_elements      CLE,
 	       element                  E
 	 WHERE CL.message_id              = '" . AddSlashes($this->MessageID) . "'
@@ -110,9 +113,7 @@ class CommitFiles {
 	
 		if ($ForJustOnePort) { 
 			$sql .= "
-	   AND element_pathname(E.id) ILIKE  '/ports/" . 
-	                $this->Category . '/' . $this->Port . "/%'
-";
+	   AND element_pathname(E.id) ILIKE  element_pathname(element_id('" .  htmlentities($this->Category)  . "', '" . htmlentities($this->Port) . "')) || '%'"; 
 		}
 		
 		$sql .= ") AS A

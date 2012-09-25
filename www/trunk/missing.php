@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing.php,v 1.7 2012-09-01 16:05:46 dan Exp $
+	# $Id: missing.php,v 1.8 2012-09-25 18:05:53 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -31,7 +31,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 
 	$CategoryID = 0;
 
-	define('FRESHPORTS_PORTS_TREE_PREFIX', '/ports/');
+	define('FRESHPORTS_PORTS_TREE_PREFIX', '/ports/head/');
 
 	$URLParts = parse_url($_SERVER['SCRIPT_URI']);
 

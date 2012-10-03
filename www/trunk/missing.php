@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing.php,v 1.9 2012-09-25 18:10:29 dan Exp $
+	# $Id: missing.php,v 1.10 2012-10-03 14:19:15 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -34,6 +34,11 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	define('FRESHPORTS_PORTS_TREE_PREFIX', '/ports/head/');
 
 	$URLParts = parse_url($_SERVER['SCRIPT_URI']);
+	if ($Debug)
+	{
+	  echo 'the URI is <pre>' . $_SERVER['SCRIPT_URI'] . "</pre><br>\n";
+	  echo 'the url parts are <pre>' . print_r($URLParts) . "</pre><br>\n";
+    }
 
 	$pathname = $URLParts['path'];
 	if ($Debug) echo "The pathname is '$pathname'<br>";

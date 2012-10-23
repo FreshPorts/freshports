@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: missing.php,v 1.10 2012-10-03 14:19:15 dan Exp $
+	# $Id: missing.php,v 1.11 2012-10-23 17:08:20 dan Exp $
 	#
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
@@ -20,7 +20,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 
 	GLOBAL $User;
 
-	$Debug  = 1;
+	$Debug  = 0;
 	$result = '';
 
 	$IsPort     = false;

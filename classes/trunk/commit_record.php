@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit_record.php,v 1.3 2012-09-25 18:10:12 dan Exp $
+	# $Id: commit_record.php,v 1.4 2012-12-21 18:20:53 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -46,6 +46,7 @@ class CommitRecord {
     
     var $stf_message;
 	var $svn_revision;
+	var $repo_name;
 	var $svn_hostname;
 	var $path_to_repo;
 
@@ -94,6 +95,7 @@ class CommitRecord {
 		$this->element_pathname		= $myrow['element_pathname'];
 		$this->stf_message			= $myrow['stf_message'];
 		$this->svn_revision                     = $myrow['svn_revision'];
+		$this->repo_name                        = $myrow['repo_name'];
 		$this->svn_hostname                     = $myrow['svn_hostname'];
 		$this->path_to_repo                     = $myrow['path_to_repo'];
 	}

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: index.php,v 1.4 2008-01-03 00:46:07 dan Exp $
+	# $Id: index.php,v 1.5 2012-12-21 18:20:53 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -15,7 +15,9 @@
 	#
 	# If they supply a package name, go for it.
 	#
+	$Debug = 0;
 	if (IsSet($_REQUEST['package'])) {
+	    if ($Debug) echo "package is specfied on the URL<br>\n";
 		$package = AddSlashes($_REQUEST['package']);
 		if ($package != '') {
 			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/packages.php');
@@ -45,6 +47,10 @@
 			}
 		}
 	}
+	else
+	{
+	    if ($Debug) echo "package is not specified on the URL<br>\n";
+    }
 
 	freshports_Start($FreshPortsSlogan,
 					$FreshPortsName . ' - new ports, applications',

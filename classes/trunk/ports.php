@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: ports.php,v 1.4 2010-09-16 15:47:38 dan Exp $
+	# $Id: ports.php,v 1.5 2012-12-21 18:20:53 dan Exp $
 	#
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
@@ -82,6 +82,11 @@ class Port {
 	var $LocalResult;
 
 	var $committer; 
+	
+	var $svn_hostname;
+	var $path_to_repo;
+	var $element_pathname;
+	
 
 	function Port($dbh) {
 		$this->dbh = $dbh;
@@ -148,6 +153,10 @@ class Port {
 		// So when looking at lang, we don't want to say, Also listed in lang...  
 		//
 		$this->category_looking_at= $myrow["category_looking_at"];
+		
+		$this->svn_hostname       = $myrow['svn_hostname'];
+		$this->path_to_repo       = $myrow['path_to_repo'];
+		$this->element_pathname   = $myrow['element_pathname'];
 	}
 
 	function FetchByElementID($element_id, $UserID = 0) {
@@ -205,7 +214,10 @@ select ports.id,
 	    categories.name  as category,
        ports_vulnerable.current as vulnerable_current,
        ports_vulnerable.past    as vulnerable_past,
-       GMT_Format(commit_log.date_added) as last_modified ";
+       GMT_Format(commit_log.date_added) as last_modified,
+       R.svn_hostname,
+       R.path_to_repo,
+       element_pathname(ports.element_id) as element_pathname  ";
 
 		if ($UserID) {
 			$sql .= ",
@@ -215,7 +227,8 @@ select ports.id,
 		$sql .= "
        from categories, element, ports_vulnerable right outer join ports 
                        on (ports_vulnerable.port_id = ports.id)
-               left outer join commit_log on ports.last_commit_id = commit_log.id ";
+               left outer join commit_log on ports.last_commit_id = commit_log.id 
+               LEFT OUTER JOIN repo R ON commit_log.repo_id = R.id ";
 
 		if ($UserID) {
 			$sql .= "
@@ -302,7 +315,10 @@ select ports.id,
 			           categories.name  as category,
                        ports_vulnerable.current as vulnerable_current,
                        ports_vulnerable.past    as vulnerable_past,
-                       GMT_Format(commit_log.date_added) as last_modified ";
+                       GMT_Format(commit_log.date_added) as last_modified,
+                       R.svn_hostname,
+                       R.path_to_repo,
+                       element_pathname(ports.element_id) as element_pathname ";
 
 		if ($UserID) {
 			$sql .= ', 
@@ -314,7 +330,8 @@ END as onwatchlist';
 
 		$sql .= " from categories, element, ports_vulnerable right outer join ports
                        on (ports_vulnerable.port_id = ports.id)
-               left outer join commit_log on ports.last_commit_id = commit_log.id ";
+               left outer join commit_log on ports.last_commit_id = commit_log.id 
+               LEFT OUTER JOIN repo R ON commit_log.repo_id = R.id ";
 
 		#
 		# if the watch list id is provided (i.e. they are logged in and have a watch list id...)
@@ -603,4 +620,3 @@ LEFT OUTER JOIN
 
 }
 
-?>

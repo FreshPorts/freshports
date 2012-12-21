@@ -1,3 +1,4 @@
+<!-- example from http://www.cssnewbie.com/example/showhide-content/ -->
 $(document).ready(function() {
 
   var clickFnExpand = function() {
@@ -17,4 +18,4 @@ $(document).ready(function() {
   $('.contract').click();
   
 });
-                                
+

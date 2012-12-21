@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.43 2012-09-25 18:10:39 dan Exp $
+	# $Id: freshports.php,v 1.44 2012-12-21 18:20:53 dan Exp $
 	#
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
@@ -71,7 +71,7 @@ function freshports_cvsweb_Annotate_Link($pathname, $revision_name)
 {
   $pathname = str_replace('/ports/head/', '/ports/', $pathname);
   $HTML  = ' <A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $pathname . '?annotate=' . $revision_name . '">';
-  $HTML .= freshports_Revision_Icon() . '</a> ';
+  $HTML .= freshports_Revision_Icon() . '</a>';
 
   return $HTML;
 }
@@ -1069,7 +1069,7 @@ function freshports_PortCommitsHeader($port) {
 	$HTML .= "<tr>\n";
 
 	$Columns = 3;
-	$HTML .= freshports_PageBannerText("Commit History - (may be incomplete: see CVSWeb link above for full details)", $Columns);
+	$HTML .= freshports_PageBannerText("Commit History - (may be incomplete: see SVNWeb link above for full details)", $Columns);
 
 	$HTML .= '<tr><td width="180"><b>Date</b></td><td><b>By</b></td><td><b>Description</b></td>';
 

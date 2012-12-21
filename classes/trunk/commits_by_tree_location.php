@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commits_by_tree_location.php,v 1.5 2012-07-19 18:56:30 dan Exp $
+	# $Id: commits_by_tree_location.php,v 1.6 2012-12-21 18:20:53 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -205,14 +205,17 @@ ORDER BY CL.commit_date DESC ";
 			NULL AS only_for_archs,
 			NULL AS not_for_archs,
 			NULL AS stf_message,
-			commit_log_elements.revision_name as revision ";
+			commit_log_elements.revision_name as revision,
+			R.name         AS repo_name,
+			R.svn_hostname AS hostname,
+			R.path_to_repo AS path_to_repo ";
 		if ($this->UserID) {
 				$sql .= ",
 	        onwatchlist ";
 		}
 
 		$sql .= "
-    FROM commit_log_elements, commit_log CL, element_pathname, element ";
+    FROM commit_log_elements, commit_log CL LEFT OUTER JOIN repo R on  CL.repo_id = R.id, element_pathname, element ";
 
 		if ($this->UserID) {
 				$sql .= "
@@ -267,4 +270,3 @@ ORDER BY CL.commit_date DESC ";
 	}
 }
 
-?>

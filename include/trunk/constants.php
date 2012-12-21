@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: constants.php,v 1.5 2012-07-16 14:53:39 dan Exp $
+	# $Id: constants.php,v 1.6 2012-12-21 18:20:53 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -80,4 +80,3 @@ define('FRESHPORTS_VERSION_EPOCH_JOINER',    ',');
 define('PORTSMONSHOW',        1);
 define('DISTFILESSURVEYSHOW', 1);
 
-?>

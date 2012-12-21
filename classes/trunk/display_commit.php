@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: display_commit.php,v 1.13 2012-09-25 18:10:12 dan Exp $
+	# $Id: display_commit.php,v 1.14 2012-12-21 18:20:53 dan Exp $
 	#
 	# Copyright (c) 2003-2007 DVL Software Limited
 	#
@@ -97,7 +97,7 @@ class DisplayCommit {
 		$TooManyPorts = false;	# we might not show all of a commit, just for the really big ones.
 		for ($i = 0; $i < $NumRows; $i++) {
 			$myrow = pg_fetch_array($this->result, $i);
-			if ($Debug) echo 'processing ' . $myrow['commit_log_id'] . ' ' . $myrow['message_id'] . "<br>\n";
+			if ($Debug) echo 'processing row ' . $i . ' ' . $myrow['commit_log_id'] . ' ' . $myrow['message_id'] . "<br>\n";
 			unset($mycommit);
 			$mycommit = new CommitRecord();
 			$mycommit->PopulateValues($myrow);
@@ -265,6 +265,12 @@ class DisplayCommit {
 				$this->HTML .= $mycommit->revision . ' ';
 				$this->HTML .= '<big><B>';
 				$PathName = preg_replace('|^/?ports/|', '', $mycommit->pathname);
+				switch($mycommit->repo_name)
+				{
+				    case 'ports':
+				        $PathName = preg_replace('|^head/|', '', $PathName);
+				        break;
+				}
 				if ($PathName != $mycommit->pathname) {
 					$this->HTML .= '<a href="/' . str_replace('%2F', '/', urlencode($PathName)) . '">' . $PathName . '</a>';
 					$this->HTML .= "</B></BIG>\n";
@@ -306,4 +312,3 @@ class DisplayCommit {
 		return $this->HTML;
 	}
 }
-?>

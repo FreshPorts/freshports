@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-display.php,v 1.18 2011-02-07 01:27:14 dan Exp $
+	# $Id: port-display.php,v 1.19 2012-12-21 18:20:53 dan Exp $
 	#
 	# Copyright (c) 2005-2006 DVL Software Limited
 	#
@@ -150,7 +150,8 @@ class port_display {
 	function Display() {
 		$port = $this->port;
 
-		$HTML = $this->JavascriptInclude();
+        $HTML = '';
+#		$HTML = $this->JavascriptInclude();
 
 		$MarkedAsNew = "N";
 		$HTML .= "<DL>\n";
@@ -377,10 +378,10 @@ class port_display {
 	   }
 
 	   if ($this->ShowChangesLink || $this->ShowEverything) {
-		   // changes
-		   $HTML .= '<a HREF="' . FRESHPORTS_FREEBSD_CVS_URL . '/ports/' .
-			   $port->category . '/' .  $port->port . '/" TITLE="The CVS Repository">CVSWeb</a>';
-	   }
+            # we want something like
+            # http://svn.freebsd.org/ports/head/x11-wm/awesome/
+        	$HTML .=  '<a href="http://' . $port->svn_hostname . $port->element_pathname . '/">SVNWeb</a>';
+       }
 
 	   // download
 	   if ($port->status == "A" && ($this->ShowDownloadPortLink || $this->ShowEverything)) {
@@ -434,41 +435,36 @@ class port_display {
 			#
 
 			if ($NumRows > 0) {
-				$HTML .= '<dl><dt><b>Slave ports</b>' . "</dt>\n";
+				$HTML .= '<span class="slaveports">Slave ports</span>' . "\n" . '<ol class="slaveports" id="slaveports">';
 				for ($i = 0; $i < $NumRows; $i++) {
 					$MasterSlave->FetchNth($i);
-					$HTML .= '<dd>' . freshports_link_to_port($MasterSlave->slave_category_name, $MasterSlave->slave_port_name);
-					$HTML .= "</dd>\n";
+					$HTML .= '<li>' . freshports_link_to_port($MasterSlave->slave_category_name, $MasterSlave->slave_port_name) . '</li>';
 				}
-				$HTML .= "</dl>\n";
-#			} else {
-#				$HTML .= "<br><br>\n";
+				$HTML .= "</ol>\n";
 			}
 		}
 	
 		if ($this->ShowDepends || $this->ShowEverything) {
 			if ($port->depends_build || $port->depends_run || $port->depends_lib) {
-				$HTML .= '<hr><big>NOTE: FreshPorts displays only required dependencies information.  Optional dependencies are not covered.</big><br>';
+				$HTML .= '<hr><p><big>NOTE: FreshPorts displays only required dependencies information.  Optional dependencies are not covered.</big></p>';
 			}
 
 			if ($port->depends_build) {
-				$HTML .= "<b>Required To Build:</b> ";
+				$HTML .= '<span class="required">Required To Build:</span>' . "\n" . '<ol class="required" id="requiredtobuild">';
 				$HTML .= freshports_depends_links($this->db, $port->depends_build);
-
-				$HTML .= "<br>\n";
+				$HTML .= "\n</ol>\n";
 			}
 
 			if ($port->depends_run) {
-				$HTML .= "<b>Required To Run:</b> ";
+				$HTML .= '<span class="required">Required To Run:</span>' . "\n" . '<ol class="required" id="requiredtorun">';
 				$HTML .= freshports_depends_links($this->db, $port->depends_run);
-				$HTML .= "<BR>\n";
+				$HTML .= "\n</ol>\n";
 			}
 
 			if ($port->depends_lib) {
-				$HTML .= "<b>Required Libraries:</b> ";
+				$HTML .= '<span class="required">Required Libraries:</span>' . "\n" . '<ol class="required" id="requiredlibraries">';
 				$HTML .= freshports_depends_links($this->db, $port->depends_lib);
-
-				$HTML .= "<br>\n";
+				$HTML .= "\n</ol>\n";
 			}
 			
 			$HTML .= $this->ShowDependencies( $port );
@@ -514,14 +510,15 @@ class port_display {
 		}
 
 		if ($this->ShowEverything || $this->ShowMasterSites) {
-			$HTML .= '<dl><dt><b>Master Sites:</b></dt>' . "\n";
+  			$HTML .= '<b>Master Sites:</b>' . "\n" . '<ol class="mastersites" id="mastersites">' . "\n";
 
 			$MasterSites = explode(' ', $port->master_sites);
+			asort($MasterSites);
 			foreach ($MasterSites as $Site) {
-				$HTML .= '<dd>' . htmlify(htmlspecialchars($Site)) . "</dd>\n";
+				$HTML .= '<li>' . htmlify(htmlspecialchars($Site)) . "</li>\n";
 			}
 
-			$HTML .= "</dl>\n";
+			$HTML .= "</ol>\n";
 
 #			$HTML .= '<br>';
 		}
@@ -568,6 +565,7 @@ class port_display {
 	function ShowDependencies( $port )
 	{
 	  // pull back and show links to all ports that this port is dependant upon
+#    $HTML = ' HI MOM!';
     $HTML = '';
 
     $PortDependencies = new PortDependencies( $this->db );
@@ -584,37 +582,43 @@ class port_display {
           {
             $HTML .= 'NOTE: dependencies for deleted ports are notoriously suspect<br>';
           }
-          $HTML .= '<br><b>Required by:</b> ';
+          $HTML .= '<p class="required">This port is required by:</p>';
         }
         
-        $HTML .= '<br>for ' . $title . '<br>';
+        $HTML .= '<span class="required">for ' . $title . "</span>\n";
         $div = '<div id="RequiredBy' . $title . '">';
+        $div .= "\n" . '<ol class="depends" id="requiredfor"' . $title . '>' . "\n";
 
-        define('DEPENDS_SUMMARY', 40 );
+        define('DEPENDS_SUMMARY', 71 );
         for ( $i = 0; $i < $NumRows; $i++ )
         {
 					$PortDependencies->FetchNth($i);
           
-					$div .= freshports_link_to_port_single( $PortDependencies->category, $PortDependencies->port );
-					if ( $i == DEPENDS_SUMMARY )
+					$div .= '<li>' . freshports_link_to_port_single( $PortDependencies->category, $PortDependencies->port );
+					$div .= "</li>\n";
+					if ( $NumRows > DEPENDS_SUMMARY && $i == DEPENDS_SUMMARY  - 1)
 					{
 					  $div .= '<span id="RequiredBy' . $title . 'Span" style="display: inline">';
 					}
-					if ( $i != $NumRows - 1 )
-					{
-					  $div .= ' ';
-					}
         }
-        
+
         if ( $NumRows > DEPENDS_SUMMARY )
         {
           $div .= '</span>';
-          $div .= ' <img id="RequiredBy' . $title . 'SpanContract" data-control="#RequiredBy' . $title . 'Span" class="contract" src="/images/contract.gif" alt="Contract depends" title="Contract depends" border="0" width="13" height="13" style="display: inline; cursor: pointer">';
         }
         
-        $div .= '</div>';
+        $div .= '</ol></div>';
+
+        // add in the closing tag for the show/hide button        
+        if ( $NumRows > DEPENDS_SUMMARY )
+        {
+            $div .= '<div class="showlink"><a id="testshowhide" class="showLink" href="#"><img id="RequiredBy' . 
+                 $title . 'SpanContract" data-control="#RequiredBy' . $title . 
+                 'Span" class="contract" src="/images/contract.gif" alt="Contract depends" title="Contract depends" border="0" width="13" height="13" style="display: inline; cursor: pointer"></a></div>';
+        }
+
         $HTML .= $div;
-  		}
+      }
     }
 
     if ( $HTML === '' )

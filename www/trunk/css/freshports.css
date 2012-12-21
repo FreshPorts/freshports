@@ -50,3 +50,19 @@ div#followus .header
 {
     font-size: 37px;
 }
+
+
+p.required, span.required
+{
+    font-weight: bold;
+}
+
+ol.required, ol.depends, ol.mastersites
+{
+    margin-bottom: 10px;
+}
+
+div.showLink
+{
+    margin-bottom: 20px;
+}

@@ -12,12 +12,12 @@ Kill /usr/bin/perl /home/listsfp/scripts/main-page-update.pl
 
 pg_dumpall > pg_dumpall.sql
 
-/usr/local/etc/rc.d/010.pgsql.sh stop
+/usr/local/etc/rc.d/psotgresql stop
 /usr/local/etc/rc.d/apache.sh stop
 
 Putting things back up 
 
-/usr/local/etc/rc.d/010.pgsql.sh start
+/usr/local/etc/rc.d/postgresql start
 /usr/local/etc/rc.d/apache.sh start
 
 cd /var/service

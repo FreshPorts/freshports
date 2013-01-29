@@ -1,11 +1,9 @@
 <?php
 	#
-	# $Id: watch_list_element.php,v 1.2 2006-12-17 11:37:22 dan Exp $
+	# $Id: watch_list_element.php,v 1.3 2013-01-29 16:02:57 dan Exp $
 	#
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
-
-	$Debug = 0;
 
 // base class for a single item on a watch list
 class WatchListElement {
@@ -19,10 +17,13 @@ class WatchListElement {
 	var $user_id;
 
 	var $LocalResult;
+	
+	var $Debug;
 
 
 	function WatchListElement($dbh) {
 		$this->dbh	= $dbh;
+		$this->Debug = 0;
 	}
 	
 	function Delete($UserID, $WatchListID, $ElementID) {
@@ -40,7 +41,7 @@ class WatchListElement {
 		           AND watch_list.id                    = $WatchListID
 		           AND watch_list.user_id               = $UserID
 		           AND watch_list_element.watch_list_id = watch_list.id";
-		if ($Debug) echo "<pre>$sql</pre>";
+		if ($this->Debug) echo "<pre>$sql</pre>";
 		$result = pg_exec($this->dbh, $sql);
 
 		# that worked and we updated exactly one row
@@ -69,7 +70,7 @@ class WatchListElement {
 		         WHERE watch_list_element.element_id    = $ElementID
 		           AND watch_list.user_id               = $UserID
 		           AND watch_list_element.watch_list_id = watch_list.id";
-		if ($Debug) echo "<pre>$sql</pre>";
+		if ($this->Debug) echo "<pre>$sql</pre>";
 		$result = pg_exec($this->dbh, $sql);
 
 		# that worked and we updated exactly one row
@@ -98,7 +99,7 @@ class WatchListElement {
 		           AND watch_list.user_id               = $UserID
 		           AND watch_list_element.watch_list_id = watch_list.id";
 
-		if ($Debug) echo "<pre>$sql</pre>";
+		if ($this->Debug) echo "<pre>$sql</pre>";
 		$result = pg_exec($this->dbh, $sql);
 
 		# that worked and we updated exactly one row
@@ -115,8 +116,6 @@ class WatchListElement {
 		#
 		# Add an item to a watch list
 		#
-
-		$Debug = 0;
 
 		#
 		# make sure we don't report the duplicate entry error when adding...
@@ -138,7 +137,7 @@ select $WatchListID, $ElementID
       FROM watch_list_element
      WHERE watch_list_element.watch_list_id = $WatchListID
        AND watch_list_element.element_id    = $ElementID)";
-		if ($Debug) echo "<pre>$sql</pre>";
+		if ($this->Debug) echo "<pre>$sql</pre>";
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
 			$return = 1;
@@ -161,8 +160,6 @@ select $WatchListID, $ElementID
 		# Add an item to all default watch lists
 		#
 
-		$Debug = 0;
-
 		#
 		# The subselect ensures the user can only add things to their
 		# own watch list and avoid duplicate key problems.
@@ -179,7 +176,7 @@ select id, $ElementID
      WHERE watch_list_element.watch_list_id = watch_list.id
        AND watch_list_element.element_id    = $ElementID)";
 
-		if ($Debug) echo "<pre>$sql</pre>";
+		if ($this->Debug) echo "<pre>$sql</pre>";
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
 			$return = 1;

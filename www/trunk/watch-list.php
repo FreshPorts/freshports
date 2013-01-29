@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: watch-list.php,v 1.3 2006-12-17 12:06:19 dan Exp $
+	# $Id: watch-list.php,v 1.4 2013-01-29 16:02:57 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -16,7 +16,7 @@
 	if ($_POST["Origin"]) {
 		$Origin = AddSlashes($_POST["Origin"]);
 	} else {
-		$Origin = $HTTP_SERVER_VARS["HTTP_REFERER"];
+		$Origin = $_SERVER["HTTP_REFERER"];
 	}
 	$Redirect = 1;
 #phpinfo();

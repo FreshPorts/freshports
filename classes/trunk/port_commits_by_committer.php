@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port_commits_by_committer.php,v 1.1 2008-02-10 19:17:22 dan Exp $
+	# $Id: port_commits_by_committer.php,v 1.2 2013-02-13 19:06:28 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -65,40 +65,52 @@ class PortCommitsByCommitter extends CommitsByCommitter {
 	function Fetch() {
 		$sql = "
 		SELECT DISTINCT
-			commit_log.commit_date - SystemTimeAdjust()                                                                 AS commit_date_raw,
-			commit_log.id                                                                                               AS commit_log_id,
-			commit_log.encoding_losses                                                                                  AS encoding_losses,
-			commit_log.message_id                                                                                       AS message_id,
-			commit_log.committer                                                                                        AS committer,
-			commit_log.description                                                                                      AS commit_description,
-			to_char(commit_log.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')                                         AS commit_date,
-			to_char(commit_log.commit_date - SystemTimeAdjust(), 'HH24:MI')                                             AS commit_time,
-			commit_log_ports.port_id                                                                                    AS port_id,
-			categories.name                                                                                             AS category,
-			categories.id                                                                                               AS category_id,
-			element.name                                                                                                AS port,
-			element_pathname(element.id)                                                                                AS pathname,
-			CASE when commit_log_ports.port_version IS NULL then ports.version  else commit_log_ports.port_version  END AS version,
-			CASE when commit_log_ports.port_version is NULL then ports.revision else commit_log_ports.port_revision END AS revision,
-			CASE when commit_log_ports.port_epoch   is NULL then ports.portepoch else commit_log_ports.port_epoch   END AS epoch,
-			element.status                                                                                              AS status,
-			commit_log_ports.needs_refresh                                                                              AS needs_refresh,
-			ports.forbidden                                                                                             AS forbidden,
-			ports.broken                                                                                                AS broken,
-			ports.deprecated                                                                                            AS deprecated,
-			ports.ignore                                                                                                AS ignore,
-			ports.expiration_date                                                                                       AS expiration_date,
-			date_part('epoch', ports.date_added)                                                                        AS date_added,
-			ports.element_id                                                                                            AS element_id,
-			ports.short_description                                                                                     AS short_description,
-			STF.message                                                                                                 AS stf_message";
+			CL.commit_date - SystemTimeAdjust()                                            AS commit_date_raw,
+			CL.id                                                                          AS commit_log_id,
+			CL.encoding_losses                                                             AS encoding_losses,
+			CL.message_id                                                                  AS message_id,
+			CL.committer                                                                   AS committer,
+			CL.description                                                                 AS commit_description,
+			to_char(CL.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')                    AS commit_date,
+			to_char(CL.commit_date - SystemTimeAdjust(), 'HH24:MI')                        AS commit_time,
+			CLP.port_id                                                                    AS port_id,
+			C.name                                                                         AS category,
+			C.id                                                                           AS category_id,
+			E.name                                                                         AS port,
+			element_pathname(E.id)                                                         AS pathname,
+			CASE when CLP.port_version IS NULL then P.version   else CLP.port_version  END AS version,
+			CASE when CLP.port_version is NULL then P.revision  else CLP.port_revision END AS revision,
+			CASE when CLP.port_epoch   is NULL then P.portepoch else CLP.port_epoch    END AS epoch,
+			E.status                                                                       AS status,
+			CLP.needs_refresh                                                              AS needs_refresh,
+			P.forbidden                                                                    AS forbidden,
+			P.broken                                                                       AS broken,
+			P.deprecated                                                                   AS deprecated,
+			P.ignore                                                                       AS ignore,
+			P.expiration_date                                                              AS expiration_date,
+			date_part('epoch', P.date_added)                                               AS date_added,
+			P.element_id                                                                   AS element_id,
+			P.short_description                                                            AS short_description,
+			STF.message                                                                    AS stf_message";
 		if ($this->UserID) {
 				$sql .= ",
 	        onwatchlist ";
 		}
 
 		$sql .= "
-    FROM commit_log_ports LEFT OUTER JOIN sanity_test_failures STF ON STF.commit_log_id = commit_log_ports.commit_log_id, commit_log, categories, ports, element ";
+    FROM commit_log_ports CLP JOIN (SELECT * FROM commit_log WHERE commit_log.committer = '" . AddSlashes($this->Committer) . "' ";
+    
+		if ($this->Limit) {
+			$sql .= "LIMIT " . $this->Limit;
+		}
+		
+		if ($this->Offset) {
+			$sql .= "OFFSET " . $this->Offset;
+		}
+
+    
+        $sql .= ") CL on (CLP.commit_log_id = CL.id) 
+          LEFT OUTER JOIN sanity_test_failures STF ON STF.commit_log_id = CLP.commit_log_id, categories C, ports P, element E ";
 
 		if ($this->UserID) {
 				$sql .= "
@@ -109,28 +121,18 @@ class PortCommitsByCommitter extends CommitsByCommitter {
 	       AND watch_list.user_id = " . $this->UserID . "
 	       AND watch_list.in_service		
 	  GROUP BY wle_element_id) AS TEMP
-	       ON TEMP.wle_element_id = element.id";
+	       ON TEMP.wle_element_id = E.id";
 		}
 		
 		$sql .= "
-	  WHERE commit_log.committer = '" . AddSlashes($this->Committer) . "'
-	    AND commit_log_ports.commit_log_id = commit_log.id
-	    AND commit_log_ports.port_id       = ports.id
-	    AND categories.id                  = ports.category_id
-	    AND element.id                     = ports.element_id
+	  WHERE CLP.port_id = P.id
+	    AND C.id        = P.category_id
+	    AND E.id        = P.element_id
    ORDER BY 1 desc,
 			commit_log_id,
 			category,
 			port";
 			
-		if ($this->Limit) {
-			$sql .= "\nLIMIT " . $this->Limit;
-		}
-		
-		if ($this->Offset) {
-			$sql .= "\nOFFSET " . $this->Offset;
-		}
-
 
 
 		if ($this->Debug) echo '<pre>' . $sql . '</pre>';

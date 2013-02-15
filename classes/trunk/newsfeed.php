@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: newsfeed.php,v 1.6 2007-09-10 15:24:19 dan Exp $
+	# $Id: newsfeed.php,v 1.7 2013-02-15 02:09:22 dan Exp $
 	#
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
@@ -37,10 +37,10 @@ function newsfeed($db, $Format) {
 	$rss->description    = 'The place for ports'; 
 	$rss->syndicationURL = $_SERVER['HTTP_HOST'] . '/' .  $PHP_SELF;
 
-	$rss->editor    = 'editor@freshports.org';
-	$rss->webmaster = 'editor@freshports.org';
+	$rss->editor    = 'editor@freshports.org (The Editor)';
+	$rss->webmaster = 'webmaster@freshports.org (The Webmaster)';
 	$rss->language  = 'en-us';
-	$rss->copyright = 'Copyright 1998-2006 DVL Software Limited';
+	$rss->copyright = 'Copyright 1998-2013 DVL Software Limited';
 
 	//optional
 	//$rss->descriptionTruncSize = 500;
@@ -51,7 +51,7 @@ function newsfeed($db, $Format) {
 	$rss->feedURL = 'http://' . $_SERVER['HTTP_HOST'] . '/' .  $PHP_SELF; 
 
 	$image = new FeedImage(); 
-	$image->title       = 'FreshPorts Logo'; 
+	$image->title       = 'FreshPorts news'; 
 	$image->url         = 'http://' . $_SERVER['HTTP_HOST'] .'/images/freshports_mini.jpg'; 
 	$image->link        = 'http://' . $_SERVER['HTTP_HOST']; ; 
 	$image->description = 'Feed provided by FreshPorts. Click to visit.'; 
@@ -142,7 +142,7 @@ LIMIT 30";
 	
 		$item->date   = strtotime($myrow['commit_date_raw']);
 		$item->source = $_SERVER['HTTP_HOST']; 
-		$item->author = $myrow['committer'] . '@FreeBSD.org'; 
+		$item->author = $myrow['committer'] . '@FreeBSD.org (' . $myrow['committer'] . ')';
 		$item->guid   = $CommitURL; 
 
 		$rss->addItem($item); 

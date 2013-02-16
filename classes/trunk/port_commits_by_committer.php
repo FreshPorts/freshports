@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port_commits_by_committer.php,v 1.2 2013-02-13 19:06:28 dan Exp $
+	# $Id: port_commits_by_committer.php,v 1.3 2013-02-16 01:58:47 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -98,7 +98,7 @@ class PortCommitsByCommitter extends CommitsByCommitter {
 		}
 
 		$sql .= "
-    FROM commit_log_ports CLP JOIN (SELECT * FROM commit_log WHERE commit_log.committer = '" . AddSlashes($this->Committer) . "' ";
+    FROM commit_log_ports CLP JOIN (SELECT * FROM commit_log WHERE commit_log.committer = '" . AddSlashes($this->Committer) . "' ORDER BY commit_date DESC ";
     
 		if ($this->Limit) {
 			$sql .= "LIMIT " . $this->Limit;

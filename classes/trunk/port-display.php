@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: port-display.php,v 1.19 2012-12-21 18:20:53 dan Exp $
+	# $Id: port-display.php,v 1.20 2013-03-25 16:09:08 dan Exp $
 	#
 	# Copyright (c) 2005-2006 DVL Software Limited
 	#
@@ -382,13 +382,6 @@ class port_display {
             # http://svn.freebsd.org/ports/head/x11-wm/awesome/
         	$HTML .=  '<a href="http://' . $port->svn_hostname . $port->element_pathname . '/">SVNWeb</a>';
        }
-
-	   // download
-	   if ($port->status == "A" && ($this->ShowDownloadPortLink || $this->ShowEverything)) {
-		   $HTML .= ' <b>:</b> ';
-		   $HTML .= '<a HREF="http://www.freebsd.org/cgi/pds.cgi?ports/' .
-			   $port->category . '/' .  $port->port . '" TITLE="The source code">Sources</a>';
-	   }
 
 	   if ($port->PackageExists() && ($this->ShowPackageLink || $this->ShowEverything)) {
 		   // package

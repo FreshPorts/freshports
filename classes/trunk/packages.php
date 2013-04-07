@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: packages.php,v 1.2 2006-12-17 11:37:20 dan Exp $
+	# $Id: packages.php,v 1.3 2013-04-07 01:19:59 dan Exp $
 	#
 	# Copyright (c) 2004 DVL Software Limited
 	#
@@ -19,7 +19,7 @@ class Packages {
 
 	function GetCategoryPortFromPackageName($package) {
 		$this->package = $package;
-		$sql = "select GetCategoryPortFromLatestLink('" . AddSlashes($package) . "') as categoryport";
+		$sql = "select GetCategoryPortFromLatestLink(E'" . AddSlashes($package) . "') as categoryport";
 #		echo "<pre>sql = '$sql'</pre><BR>";
 
 		$result = pg_query($this->dbh, $sql);

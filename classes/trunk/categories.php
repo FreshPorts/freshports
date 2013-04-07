@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: categories.php,v 1.2 2006-12-17 11:37:18 dan Exp $
+	# $Id: categories.php,v 1.3 2013-04-07 01:19:59 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -117,7 +117,7 @@ SELECT C.*, (SELECT MAX(CL.date_added)
                 AND P.last_commit_id = CL.id
                 AND PC.category_id   = C.id) AS last_modified
   FROM categories C
- WHERE C.name = '" . $this->name . "'";
+ WHERE C.name = E'" . $this->name . "'";
 
 		if ($Debug) echo "sql = '$sql'<BR>";
 

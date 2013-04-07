@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.9 2012-09-25 18:10:29 dan Exp $
+	# $Id: commit.php,v 1.10 2013-04-07 01:19:59 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -239,7 +239,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 
 	$sql ="
 SELECT FPC.*, STF.message as stf_message
-  FROM freshports_commit('$message_id', $PageSize, ($PageNo - 1 ) * $PageSize, $User->id) FPC
+  FROM freshports_commit(E'$message_id', $PageSize, ($PageNo - 1 ) * $PageSize, $User->id) FPC
  LEFT OUTER JOIN sanity_test_failures STF
     ON FPC.commit_log_id = STF.commit_log_id
 ORDER BY port, pathname";

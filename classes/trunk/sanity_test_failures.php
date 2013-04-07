@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: sanity_test_failures.php,v 1.2 2006-12-17 11:37:21 dan Exp $
+	# $Id: sanity_test_failures.php,v 1.3 2013-04-07 01:19:59 dan Exp $
 	#
 	# Copyright (c) 2003-2004 DVL Software Limited
 	#
@@ -65,7 +65,7 @@ SELECT S.*, STF.message as stf_message
 		}
 		
 		if ($this->MessageID != '') {
-			$sql .= " WHERE message_id = '" . $this->MessageID . "'";
+			$sql .= " WHERE message_id = E'" . $this->MessageID . "'";
 		}
 
 		$sql .= " ORDER BY S.commit_date_raw DESC, S.category, S.port";

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: search.php,v 1.14 2012-09-25 18:10:29 dan Exp $
+	# $Id: search.php,v 1.15 2013-04-08 12:15:52 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -80,11 +80,11 @@ function WildCardQuery($stype, $Like, $query) {
 
   switch ($stype) {
     case SEARCH_FIELD_PATHNAME:
-      $sql .= " $Like '$query'";
+      $sql .= " $Like E'$query'";
       break;
 
     case SEARCH_FIELD_DEPENDS_ALL:
-      $sql .= "\n     (ports.depends_build $Like '$query' OR ports.depends_lib $Like '$query' OR ports.depends_run $Like '$query')";
+      $sql .= "\n     (ports.depends_build $Like E'$query' OR ports.depends_lib $Like E'$query' OR ports.depends_run $Like E'$query')";
       break;
 
     default:
@@ -92,7 +92,7 @@ function WildCardQuery($stype, $Like, $query) {
         syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . " unknown stype supplied: '$stype'");
         die('something terrible has happened!');
       }
-      $sql .= "\n     " .  $SearchTypeToFieldMap[$stype] . " $Like '$query'";
+      $sql .= "\n     " .  $SearchTypeToFieldMap[$stype] . " $Like E'$query'";
       break;
 	}
 
@@ -132,7 +132,7 @@ function WildCardQuery($stype, $Like, $query) {
 	// avoid nasty problems by adding slashes
 	if (IsSet($_REQUEST['query']))           $query				= AddSlashes(trim($_REQUEST['query']));
 	if (IsSet($_REQUEST['stype']))           $stype				= AddSlashes(trim($_REQUEST['stype']));
-	if (IsSet($_REQUEST['num']))             $num			 = intval(AddSlashes(trim($_REQUEST['num'])));
+	if (IsSet($_REQUEST['num']))             $num   		    = intval(AddSlashes(trim($_REQUEST['num'])));
 	if (IsSet($_REQUEST['category']))        $category			= AddSlashes(trim($_REQUEST['category']));
 	if (IsSet($_REQUEST['port']))            $port				= AddSlashes(trim($_REQUEST['port']));
 	if (IsSet($_REQUEST['method']))          $method			= AddSlashes(trim($_REQUEST['method']));
@@ -335,9 +335,9 @@ switch ($method) {
 		switch ($stype) {
 			case SEARCH_FIELD_DEPENDS_ALL:
 				if ($casesensitivity == 'casesensitive') {
-					$sqlUserSpecifiedCondition = "\n     (ports.depends_build = '$query' OR ports.depends_lib = '$query' OR ports.depends_run = '$query')";
+					$sqlUserSpecifiedCondition = "\n     (ports.depends_build = E'$query' OR ports.depends_lib = E'$query' OR ports.depends_run = E'$query')";
 				} else {
-					$sqlUserSpecifiedCondition = "\n     (lower(ports.depends_build) = lower('$query') OR lower(ports.depends_lib) = lower('$query') OR lower(ports.depends_run) = lower('$query'))";
+					$sqlUserSpecifiedCondition = "\n     (lower(ports.depends_build) = lower(E'$query') OR lower(ports.depends_lib) = lower(E'$query') OR lower(ports.depends_run) = lower(E'$query'))";
 				}
 				break;
 
@@ -345,9 +345,9 @@ switch ($method) {
                 $sqlSetAll = true;
 				$FieldName = $SearchTypeToFieldMap[$stype];
 				if ($casesensitivity == 'casesensitive') {
-					$sqlUserSpecifiedCondition = "     $FieldName = '$query'";
+					$sqlUserSpecifiedCondition = "     $FieldName = E'$query'";
 				} else {
-					$sqlUserSpecifiedCondition = "     lower($FieldName) = lower('$query')";
+					$sqlUserSpecifiedCondition = "     lower($FieldName) = lower(E'$query')";
 				}
 				break;
 		}
@@ -357,16 +357,16 @@ switch ($method) {
 	    $sqlSetAll = true;
 		switch ($stype) {
 			case SEARCH_FIELD_DEPENDS_ALL:
-				$sqlUserSpecifiedCondition = "\n     (levenshtein(substring(ports.depends_build FOR 255), '$query') < " . VEVENSHTEIN_MATCH . 
-				                               "   OR levenshtein(substring(ports.depends_lib   FOR 255), '$query') < " . VEVENSHTEIN_MATCH .
-											   "   OR levenshtein(substring(ports.depends_run   FPR 255), '$query') < " . VEVENSHTEIN_MATCH . ')';
-				$sqlSoundsLikeOrderBy = "levenshtein(substring(ports.depends_build for 255) + levenshtein(substring(ports.depends_lib for 255), '$query') + levenshtein(substring(ports.depends_run for 255), '$query')";
+				$sqlUserSpecifiedCondition = "\n     (levenshtein(substring(ports.depends_build FOR 255), E'$query') < " . VEVENSHTEIN_MATCH . 
+				                               "   OR levenshtein(substring(ports.depends_lib   FOR 255), E'$query') < " . VEVENSHTEIN_MATCH .
+											   "   OR levenshtein(substring(ports.depends_run   FPR 255), E'$query') < " . VEVENSHTEIN_MATCH . ')';
+				$sqlSoundsLikeOrderBy = "levenshtein(substring(ports.depends_build for 255) + levenshtein(substring(ports.depends_lib for 255), E'$query') + levenshtein(substring(ports.depends_run for 255), E'$query')";
 				break;
 
 			default:
 				$FieldName = $SearchTypeToFieldMap[$stype];
-				$sqlUserSpecifiedCondition = "\n     levenshtein($FieldName, '$query') < " . VEVENSHTEIN_MATCH;
-				$sqlSoundsLikeOrderBy = "levenshtein($FieldName, '$query')";
+				$sqlUserSpecifiedCondition = "\n     levenshtein($FieldName, E'$query') < " . VEVENSHTEIN_MATCH;
+				$sqlSoundsLikeOrderBy = "levenshtein($FieldName, E'$query')";
 				break;
 		}
 		break;
@@ -606,7 +606,10 @@ $sqlSelectFields = "
          ports.no_cdrom,
          ports.expiration_date,
          ports.no_package,
-         ports.license  ";
+         ports.license,
+         R.svn_hostname,
+         R.path_to_repo,
+         element_pathname(ports.element_id) as element_pathname  ";
          
 $sqlSelectCount = "
   SELECT count(*)";
@@ -617,7 +620,7 @@ $sqlSelectCount = "
    }
 
 	$sqlFrom = "
-    from ports LEFT OUTER JOIN ports_vulnerable on ports_vulnerable.port_id = ports.id , categories, element  ";
+    from ports LEFT OUTER JOIN ports_vulnerable on ports_vulnerable.port_id = ports.id JOIN commit_log CL on ports.last_commit_id = CL.id JOIN repo R on CL.repo_id = R.id , categories, element  ";
 
 $sqlWatchListFrom = '';
 	if ($User->id) {

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: files.php,v 1.3 2012-09-25 18:10:12 dan Exp $
+	# $Id: files.php,v 1.4 2013-04-08 12:15:34 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -106,14 +106,14 @@ class CommitFiles {
 	       LEFT OUTER JOIN repo R on CL.repo_id = R.id,
 	       commit_log_elements      CLE,
 	       element                  E
-	 WHERE CL.message_id              = '" . AddSlashes($this->MessageID) . "'
+	 WHERE CL.message_id              = E'" . AddSlashes($this->MessageID) . "'
 	   AND CL.id                      = CLE.commit_log_id
 	   AND CLE.element_id             = E.id";
 
 	
 		if ($ForJustOnePort) { 
 			$sql .= "
-	   AND element_pathname(E.id) ILIKE  element_pathname(element_id('" .  htmlentities($this->Category)  . "', '" . htmlentities($this->Port) . "')) || '%'"; 
+	   AND element_pathname(E.id) ILIKE  element_pathname(element_id(E'" .  htmlentities($this->Category)  . "', '" . htmlentities($this->Port) . "')) || '%'"; 
 		}
 		
 		$sql .= ") AS A

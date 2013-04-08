@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: page_load_detail.php,v 1.2 2006-12-17 11:37:20 dan Exp $
+	# $Id: page_load_detail.php,v 1.3 2013-04-08 12:15:34 dan Exp $
 	#
 	# Copyright (c) 2003 DVL Software Limited
 	#
@@ -70,7 +70,7 @@ INSERT INTO page_load_detail(page_name,
                      values ('" . AddSlashes($_SERVER['SCRIPT_NAME']) . "',
                              $UserID,
                              '" . AddSlashes($_SERVER['REMOTE_ADDR']) . "',
-                             '" . AddSlashes($_SERVER["REQUEST_URI"]) . "',
+                             E'" . AddSlashes($_SERVER["REQUEST_URI"]) . "',
                              '" . $this->ElapsedTime() . " seconds')";
 		if ($Debug) echo "CODE <pre>$sql</pre>";
 		$result = pg_exec($this->dbh, $sql);

@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.4 2012-09-25 18:10:12 dan Exp $
+	# $Id: commit.php,v 1.5 2013-04-08 12:15:34 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -96,7 +96,7 @@ class Commit {
 
 
 	function FetchByMessageId($message_id) {
-		$Where = "message_id = '" . AddSlashes($message_id) . "'";
+		$Where = "message_id = E'" . AddSlashes($message_id) . "'";
 
 		$result = $this->FetchByIDHelper($Where);
 		
@@ -113,7 +113,7 @@ class Commit {
 	}
 
 	function FetchByRevision($revision) {
-		$Where = "svn_revision = '" . AddSlashes($revision) . "'";
+		$Where = "svn_revision = E'" . AddSlashes($revision) . "'";
 
 		$result = $this->FetchByIDHelper($Where);
 		

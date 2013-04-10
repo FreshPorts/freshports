@@ -34,4 +34,11 @@ cd ${PORTDIR}
 
 Then we can issue this command:
 
-$ sudo /usr/sbin/chroot -u dan /usr/local/FreshPorts/ports-jail /make.sh /usr/ports/sysutils/msktutil
+$ sudo /usr/sbin/chroot -u dan /usr/local/FreshPorts/ports-jail /make.sh sysutils/msktutil
+
+dan      ALL=(ALL) NOPASSWD:/usr/sbin/chroot -u dan /usr/FreshPorts/ports-jail /make-port.sh *
+dan      ALL=(ALL) NOPASSWD:/usr/sbin/chroot -u dan /usr/FreshPorts/ports-jail /make-category-comment.sh *
+dan      ALL=(ALL) NOPASSWD:/usr/sbin/chroot -u dan /usr/FreshPorts/ports-jail /make-master-port-test.sh *
+dan      ALL=(ALL) NOPASSWD:/usr/sbin/chroot -u dan /usr/FreshPorts/ports-jail /make-master-sites-all.sh *
+dan      ALL=(ALL) NOPASSWD:/usr/sbin/chroot -u dan /usr/FreshPorts/ports-jail /make-showconfig.sh *
+

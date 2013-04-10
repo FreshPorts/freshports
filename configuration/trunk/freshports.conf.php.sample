@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.conf.php.sample,v 1.4 2008-01-26 23:41:32 dan Exp $
+	# $Id: freshports.conf.php.sample,v 1.5 2013-04-10 18:47:24 dan Exp $
 	#
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
@@ -66,4 +66,4 @@ define('WRAPCOMMITSATCOLUMN', 80);	# when we wrap long lines, where do we start?
 
 #define('FRESHPORTS_LOG_CACHE_ACTIVITY', 1);
 
-?>
+define('SHOW_ANIMATED_BUG', false);

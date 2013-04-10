@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: commit.php,v 1.10 2013-04-07 01:19:59 dan Exp $
+	# $Id: commit.php,v 1.11 2013-04-10 18:47:47 dan Exp $
 	#
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
@@ -221,7 +221,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 #
 #$numrows=400;
 
-	$sql = "select freshports_commit_count_elements('$message_id') as count";
+	$sql = "select freshports_commit_count_elements(E'$message_id') as count";
 
 	if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 

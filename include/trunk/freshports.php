@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.47 2013-04-10 18:47:23 dan Exp $
+	# $Id: freshports.php,v 1.48 2013-04-24 15:09:15 dan Exp $
 	#
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
@@ -712,9 +712,6 @@ if (date("M") == 'Nov' && date("j") <= 12) {
 	$HTML .= '	<td>';
 	$HTML .= '<div id="followus"><div class="header">Follow us</div><a href="http://news.freshports.org/">Blog</a><br><a href="https://twitter.com/freshports/">Twitter</a><br><br>';
 
-    $HTML .= '<div id="time">';	
-	$HTML .= FormatTime(Date("j M Y g:i A T"), $LocalTimeAdjustment, "j M Y g:i A T");
-	$HTML .= '</div></div>';
 	$HTML .= '</td>';
 	
 }
@@ -1549,9 +1546,6 @@ Valid
 <a href="http://feedvalidator.org/check.cgi?url=http://' . $_SERVER['HTTP_HOST'] . '/backend/rss2.0.php" title="Valid RSS is good too">RSS</a>.
 </small>
 <br>' . freshports_copyright() . '
-
-<br>
-<small>This page created in ' . round($Statistics->ElapsedTime(), 3) . ' seconds.</small>
 </td></tr>
 </table>
 </td></tr>
@@ -1978,7 +1972,7 @@ function freshports_ConditionalGetUnix($UnixTime) {
 		return; // etag is there but doesn't match
 	}
 
-	if ($if_modified_since && $if_modified_since != $last_modified) {
+	if ($if_modified_since && $if_modified_since != $LastModified) {
 		return; // if-modified-since is there but doesn't match
 	}
 

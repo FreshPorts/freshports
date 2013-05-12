@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: vuxml.php,v 1.2 2006-12-17 11:37:21 dan Exp $
+	# $Id: vuxml.php,v 1.3 2013-05-12 20:21:26 dan Exp $
 	#
 	# Copyright (c) 2004 DVL Software Limited
 	#
@@ -32,7 +32,7 @@ class VuXML {
 
 	function FetchByVID($VID) {
 		$this->vid = $VID;
-		$sql = "select * from vuxml where vid = '" . AddSlashes($VID) . "'";
+		$sql = "select * from vuxml where vid = '" . pg_escape_string($VID) . "'";
 #		echo "<pre>sql = '$sql'</pre><BR>";
 
 		$result = pg_query($this->dbh, $sql);

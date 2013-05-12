@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.49 2013-05-12 14:09:31 dan Exp $
+	# $Id: freshports.php,v 1.50 2013-05-12 14:15:59 dan Exp $
 	#
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
@@ -696,7 +696,7 @@ GLOBAL $FreshPortsLogoHeight;
 	} else {
 		$HTML .= '/';
 	}
-	$HTML .= '"><img src="' . $FreshPortsLogo . '" alt="' . $FreshPortsName . ' -- ' . $FreshPortsSlogan . ' " width="' . $FreshPortsLogoWidth . '" height="' . $FreshPortsLogoHeight . '" border="0"></a>
+	$HTML .= '"><img src="' . $FreshPortsLogo . '" alt="' . $FreshPortsName . ' -- ' . $FreshPortsSlogan . '" title="' . $FreshPortsName . ' -- ' . $FreshPortsSlogan . '" width="' . $FreshPortsLogoWidth . '" height="' . $FreshPortsLogoHeight . '" border="0"></a>
 ';
 
     if (defined('SHOW_ANIMATED_BUG') && SHOW_ANIMATED_BUG)

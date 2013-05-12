@@ -66,3 +66,9 @@ div.showLink
 {
     margin-bottom: 20px;
 }
+
+span.amazon
+{
+  float:     right;
+  font-size: 20px;
+}

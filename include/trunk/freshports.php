@@ -1,6 +1,6 @@
 <?php
 	#
-	# $Id: freshports.php,v 1.50 2013-05-12 14:15:59 dan Exp $
+	# $Id: freshports.php,v 1.51 2013-05-12 14:47:12 dan Exp $
 	#
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
@@ -703,6 +703,8 @@ GLOBAL $FreshPortsLogoHeight;
     {
 	  $HTML .= '<img src="/images/notbug.gif" alt="notbug" title="notbug">';
     }
+    
+    $HTML .= '<span class="amazon">If you buy from Amazon USA, please support us by using <a href="http://www.amazon.com/?tag=thfrdi0c-20">this link</a>.</span>';
 	
 	$HTML .= '</td>';
 

@@ -29,6 +29,7 @@ class PortDependencies {
 		$this->dependency_type        = $myrow['dependency_type'];
 		$this->category               = $myrow['category'];
 		$this->port                   = $myrow['port'];
+		$this->status                 = $myrow['status'];
 	}
 
 	function FetchInitialise( $PortID, $depends_type ) {
@@ -40,8 +41,9 @@ class PortDependencies {
   SELECT port_id,
          port_id_dependent_upon,
          dependency_type,
-         categories.name    as category,
-         element.name       as port
+         categories.name    AS category,
+         element.name       AS port,
+         ports.status       AS status
     FROM port_dependencies
          LEFT OUTER JOIN ports      ON ports.id         = port_dependencies.port_id
          LEFT OUTER JOIN categories ON categories.id    = ports.category_id

@@ -34,7 +34,7 @@ SELECT STF.id,
        STF.commit_log_id,
        STF.message
   FROM sanity_test_failures STF, commit_log CL
- WHERE CL.message_id     = '" . $message_id . "'
+ WHERE CL.message_id     = '" . pg_escape_string($message_id) . "'
    AND STF.commit_log_id = CL.id";
    
 		$result = pg_exec($this->dbh, $sql);

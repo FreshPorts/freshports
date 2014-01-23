@@ -582,12 +582,18 @@ class port_display {
         $div = '<div id="RequiredBy' . $title . '">';
         $div .= "\n" . '<ol class="depends" id="requiredfor"' . $title . '>' . "\n";
 
+        $deletedPortFound = true;
         define('DEPENDS_SUMMARY', 71 );
         for ( $i = 0; $i < $NumRows; $i++ )
         {
 					$PortDependencies->FetchNth($i);
           
 					$div .= '<li>' . freshports_link_to_port_single( $PortDependencies->category, $PortDependencies->port );
+					if ( $PortDependencies->status == 'D')
+					{
+					    $div .= '<sup>*</sup>';
+					    $deletedPortFound = true;
+                                        }
 					$div .= "</li>\n";
 					if ( $NumRows > DEPENDS_SUMMARY && $i == DEPENDS_SUMMARY  - 1)
 					{
@@ -617,6 +623,10 @@ class port_display {
     if ( $HTML === '' )
     {
       $HTML .= 'There are no ports dependent upon this port<br>';
+    }
+    elseif ($deletedPortFound)
+    {
+      $HTML .= '* - deleted ports are only shown under the <em>This port is required by</em> section.  It was harder to do for the <em>Required</em> section.  Perhaps later...';
     }
     
     return $HTML;

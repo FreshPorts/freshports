@@ -270,3 +270,16 @@ grant select, delete                 on page_load_detail               to group 
 
 grant insert                         on page_load_summary              to group commits;
 grant update                         on page_load_summary_id_seq       to group commits;
+
+
+-- 
+-- for the fp-listen daemon
+--
+
+CREATE GROUP listening;
+ALTER USER   listening PASSWORD '2m38aqo';
+ALTER USER   listening LOGIN;
+
+
+GRANT select ON listen_for           TO GROUP listening;
+GRANT delete ON cache_clearing_ports TO GROUP listening;

@@ -1649,6 +1649,25 @@ function freshports_SideBar() {
 	$HTML .= '	
 <table width="' . $ColumnWidth . '" border="1" cellspacing="0" cellpadding="5">
 	<tr>
+		<td bgcolor="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><big><b>This site</b></big></FONT></td>
+	</tr>
+	<tr>
+	<td valign="top">
+	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/about.php",           "What is FreshPorts?", "A bit of background on FreshPorts"    ) . '</FONT><br>
+	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/authors.php",         "About the authors",   "Who wrote this stuff?"                ) . '</FONT><br>
+	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/faq.php",             "FAQ",                 "Frequently Asked Questions"           ) . '</FONT><br>
+	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/how-big-is-it.php",   "How big is it?",      "How many pages are in this website?"  ) . '</FONT><br>
+	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/release-2004-10.php", "The latest upgrade!", "Details on the latest website upgrade") . '</FONT><br>
+	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/privacy.php",         "Privacy",             "Our privacy statement"                ) . '</FONT><br>
+	<FONT SIZE="-1"><a href="/phorum/" title="Discussion Forums">Forums</a></FONT><br>
+	<FONT SIZE="-1"><a href="http://news.freshports.org/" title="All the latest FresHPorts news">Blog</a></FONT><br>
+	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/contact.php",         "Contact",             "Contact details"                      ) . '</FONT><br>
+	</td>
+	</tr>
+</table>
+<br>
+<table width="' . $ColumnWidth . '" border="1" cellspacing="0" cellpadding="5">
+	<tr>
 		<td bgcolor="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><big><b>Search</b></big></FONT></td>
 	</tr>
 	<tr>
@@ -1765,26 +1784,6 @@ $HTML .= '
 	</tr>
 </table>
 
-<br>
-
-<table width="' . $ColumnWidth .'" border="1" cellspacing="0" cellpadding="5">
-	<tr>
-		<td bgcolor="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><big><b>This site</b></big></FONT></td>
-	</tr>
-	<tr>
-	<td valign="top">
-	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/about.php",           "What is FreshPorts?", "A bit of background on FreshPorts"    ) . '</FONT><br>
-	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/authors.php",         "About the Authors",   "Who wrote this stuff?"                ) . '</FONT><br>
-	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/faq.php",             "FAQ",                 "Frequently Asked Questions"           ) . '</FONT><br>
-	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/how-big-is-it.php",   "How big is it?",      "How many pages are in this website?"  ) . '</FONT><br>
-	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/release-2004-10.php", "The latest upgrade!", "Details on the latest website upgrade") . '</FONT><br>
-	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/privacy.php",         "Privacy",             "Our privacy statement"                ) . '</FONT><br>
-	<FONT SIZE="-1"><a href="/phorum/" title="Discussion Forums">Forums</a></FONT><br>
-	<FONT SIZE="-1"><a href="http://news.freshports.org/" title="All the latest FresHPorts news">Blog</a></FONT><br>
-	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/contact.php",         "Contact",             "Contact details"                      ) . '</FONT><br>
-	</td>
-	</tr>
-</table>
 
 ';
 

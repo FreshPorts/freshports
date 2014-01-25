@@ -37,7 +37,7 @@ class port_display {
 	var $ShowMaintainedBy;
 	var $ShowMasterSites;
 	var $ShowMasterSlave;
-	var	$ShowPackageLink;
+	var $ShowPackageLink;
 	var $ShowPortCreationDate;
 	var $ShowShortDescription;
 	var $ShowWatchListCount;
@@ -630,7 +630,5 @@ class port_display {
     }
     
     return $HTML;
-	}
+    }
 }
-
-?>

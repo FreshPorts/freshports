@@ -12,6 +12,7 @@ class Commit_Log_Ports {
 	var $dbh;
 
 	var $id;
+	var $svn_revision;
 	var $message_id;
 	var $commit_date;
 	var $description;
@@ -22,6 +23,8 @@ class Commit_Log_Ports {
 	var $port_epoch;
 	var $needs_refresh;
 	var $stf_message;
+	var $svn_hostname;
+	var $path_to_repo;
 
 	var $result;
 	var $Debug = 0;
@@ -82,7 +85,10 @@ class Commit_Log_Ports {
 		# return the number of commits found
 
 		$sql = "
-   SELECT CL.id, 
+   SELECT CL.id,
+          CL.svn_revision,
+          R.svn_hostname,
+          R.path_to_repo,
           port_id,
           message_id,
           to_char(commit_date - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') AS commit_date,
@@ -94,7 +100,7 @@ class Commit_Log_Ports {
           port_epoch,
           needs_refresh,
           STF.message AS stf_message
-     FROM commit_log           CL,
+     FROM commit_log           CL  LEFT OUTER JOIN repo R ON CL.repo_id = R.id,
           commit_log_ports     CLP LEFT OUTER JOIN
           sanity_test_failures STF on 
             CLP.commit_log_id = STF.commit_log_id
@@ -130,18 +136,21 @@ class Commit_Log_Ports {
 
 		$myrow = pg_fetch_array($this->result, $N);
 
-		$this->id					= $myrow["id"];
-		$this->port_id				= $myrow["port_id"];
-		$this->message_id			= $myrow["message_id"];
-		$this->commit_date			= $myrow["commit_date"];
-		$this->description			= $myrow["description"];
-		$this->committer			= $myrow["committer"];
+		$this->id			= $myrow["id"];
+		$this->svn_revision		= $myrow["svn_revision"];
+		$this->port_id			= $myrow["port_id"];
+		$this->message_id		= $myrow["message_id"];
+		$this->commit_date		= $myrow["commit_date"];
+		$this->description		= $myrow["description"];
+		$this->committer		= $myrow["committer"];
 		$this->encoding_losses		= $myrow["encoding_losses"];
-		$this->port_version			= $myrow["port_version"];
+		$this->port_version		= $myrow["port_version"];
 		$this->port_revision		= $myrow["port_revision"];
-		$this->port_epoch			= $myrow["port_epoch"];
+		$this->port_epoch		= $myrow["port_epoch"];
 		$this->needs_refresh		= $myrow["needs_refresh"];
-		$this->stf_message			= $myrow["stf_message"];
+		$this->stf_message		= $myrow["stf_message"];
+		$this->svn_hostname             = $myrow["svn_hostname"];
+		$this->path_to_repo             = $myrow["path_to_repo"];
 	}
 
 	function NeedsRefreshClear() {
@@ -172,7 +181,4 @@ UPDATE commit_log_ports
 		return $this->encoding_losses == 't';
 	}
 
-	
-
 }
-?>

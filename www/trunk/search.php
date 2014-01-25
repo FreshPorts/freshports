@@ -55,18 +55,18 @@ define('SEARCH_FIELD_MESSAGEID',        'message_id');
 define('SEARCH_FIELD_COMMITMESSAGE',    'commitmessage');
 	
 $SearchTypeToFieldMap = array(
-	SEARCH_FIELD_NAME 				=> 'element.name',
-	SEARCH_FIELD_PACKAGE			=> 'ports.package_name',
-	SEARCH_FIELD_LATEST_LINK		=> 'ports.latest_link',
-	SEARCH_FIELD_SHORTDESCRIPTION	=> 'ports.short_description',
-	SEARCH_FIELD_LONGDESCRIPTION	=> 'ports.long_description',
-	SEARCH_FIELD_DEPENDS_BUILD		=> 'ports.depends_build',
-	SEARCH_FIELD_DEPENDS_LIB		=> 'ports.depends_lib',
-	SEARCH_FIELD_DEPENDS_RUN		=> 'ports.depends_run',
-	SEARCH_FIELD_DEPENDS_ALL		=> 'ports.depends_all',
-	SEARCH_FIELD_MAINTAINER			=> 'ports.maintainer',
-	SEARCH_FIELD_COMMITMESSAGE		=> 'commit_log.description',
-	SEARCH_FIELD_COMMITTER			=> 'commit_log.committer',
+	SEARCH_FIELD_NAME 		=> 'E.name',
+	SEARCH_FIELD_PACKAGE		=> 'P.package_name',
+	SEARCH_FIELD_LATEST_LINK	=> 'P.latest_link',
+	SEARCH_FIELD_SHORTDESCRIPTION	=> 'P.short_description',
+	SEARCH_FIELD_LONGDESCRIPTION	=> 'P.long_description',
+	SEARCH_FIELD_DEPENDS_BUILD	=> 'P.depends_build',
+	SEARCH_FIELD_DEPENDS_LIB	=> 'P.depends_lib',
+	SEARCH_FIELD_DEPENDS_RUN	=> 'P.depends_run',
+	SEARCH_FIELD_DEPENDS_ALL	=> 'P.depends_all',
+	SEARCH_FIELD_MAINTAINER		=> 'P.maintainer',
+	SEARCH_FIELD_COMMITMESSAGE	=> 'CL.description',
+	SEARCH_FIELD_COMMITTER		=> 'CL.committer',
 	SEARCH_FIELD_PATHNAME           => 'EP.pathname'
 );
 
@@ -84,7 +84,7 @@ function WildCardQuery($stype, $Like, $query) {
       break;
 
     case SEARCH_FIELD_DEPENDS_ALL:
-      $sql .= "\n     (ports.depends_build $Like E'$query' OR ports.depends_lib $Like E'$query' OR ports.depends_run $Like E'$query')";
+      $sql .= "\n     (P.depends_build $Like E'$query' OR P.depends_lib $Like E'$query' OR P.depends_run $Like E'$query')";
       break;
 
     default:
@@ -295,7 +295,7 @@ if ($method == 'soundex') {
 # are we setting the whole SQL condition or just the operator and the value?
 $sqlSetAll = false;
 
-if ($Debug) echo "at line " . __LINE__ . " sqlUserSpecifiedCondition='$sqlUserSpecifiedCondition'<br>";
+#if ($Debug) echo "at line " . __LINE__ . " sqlUserSpecifiedCondition='$sqlUserSpecifiedCondition'<br>";
 if ($Debug) echo "at line " . __LINE__ . " stype='$stype'<br>";
 
 
@@ -335,9 +335,9 @@ switch ($method) {
 		switch ($stype) {
 			case SEARCH_FIELD_DEPENDS_ALL:
 				if ($casesensitivity == 'casesensitive') {
-					$sqlUserSpecifiedCondition = "\n     (ports.depends_build = E'$query' OR ports.depends_lib = E'$query' OR ports.depends_run = E'$query')";
+					$sqlUserSpecifiedCondition = "\n     (P.depends_build = E'$query' OR P.depends_lib = E'$query' OR P.depends_run = E'$query')";
 				} else {
-					$sqlUserSpecifiedCondition = "\n     (lower(ports.depends_build) = lower(E'$query') OR lower(ports.depends_lib) = lower(E'$query') OR lower(ports.depends_run) = lower(E'$query'))";
+					$sqlUserSpecifiedCondition = "\n     (lower(P.depends_build) = lower(E'$query') OR lower(P.depends_lib) = lower(E'$query') OR lower(P.depends_run) = lower(E'$query'))";
 				}
 				break;
 
@@ -357,10 +357,10 @@ switch ($method) {
 	    $sqlSetAll = true;
 		switch ($stype) {
 			case SEARCH_FIELD_DEPENDS_ALL:
-				$sqlUserSpecifiedCondition = "\n     (levenshtein(substring(ports.depends_build FOR 255), E'$query') < " . VEVENSHTEIN_MATCH . 
-				                               "   OR levenshtein(substring(ports.depends_lib   FOR 255), E'$query') < " . VEVENSHTEIN_MATCH .
-											   "   OR levenshtein(substring(ports.depends_run   FPR 255), E'$query') < " . VEVENSHTEIN_MATCH . ')';
-				$sqlSoundsLikeOrderBy = "levenshtein(substring(ports.depends_build for 255) + levenshtein(substring(ports.depends_lib for 255), E'$query') + levenshtein(substring(ports.depends_run for 255), E'$query')";
+				$sqlUserSpecifiedCondition = "\n     (levenshtein(substring(P.depends_build FOR 255), E'$query') < " . VEVENSHTEIN_MATCH . 
+				                               "   OR levenshtein(substring(P.depends_lib   FOR 255), E'$query') < " . VEVENSHTEIN_MATCH .
+											   "   OR levenshtein(substring(P.depends_run   FPR 255), E'$query') < " . VEVENSHTEIN_MATCH . ')';
+				$sqlSoundsLikeOrderBy = "levenshtein(substring(P.depends_build for 255) + levenshtein(substring(P.depends_lib for 255), E'$query') + levenshtein(substring(P.depends_run for 255), E'$query')";
 				break;
 
 			default:
@@ -394,7 +394,7 @@ switch ($stype) {
 				# do not break here...
 		
 			case 'excludedeleted':
-				$sqlUserSpecifiedCondition .= " and element.status = 'A' ";
+				$sqlUserSpecifiedCondition .= " and E.status = 'A' ";
 		}
 		break;
 }
@@ -416,11 +416,11 @@ switch ($method) {
 				switch ($orderbyupdown) {
 					case ORDERBYDESCENDING:
 					default:
-						$sqlOrderBy = "\n ORDER BY categories.name desc, element.name";
+						$sqlOrderBy = "\n ORDER BY C.name desc, E.name";
 						break;
 		
 					case ORDERBYASCENDING:
-						$sqlOrderBy = "\n ORDER BY categories.name, element.name";
+						$sqlOrderBy = "\n ORDER BY C.name, E.name";
 						break;
 				}
 				break;
@@ -430,11 +430,11 @@ switch ($method) {
 				switch ($orderbyupdown) {
 					case ORDERBYDESCENDING:
 					default:
-						$sqlOrderBy = "\n ORDER BY element.name desc, categories.name";
+						$sqlOrderBy = "\n ORDER BY E.name desc, C.name";
 						break;
 		
 					case ORDERBYASCENDING:
-						$sqlOrderBy = "\n ORDER BY element.name, categories.name";
+						$sqlOrderBy = "\n ORDER BY E.name, C.name";
 						break;
 				}
 				break;
@@ -491,9 +491,9 @@ switch ($stype) {
     require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits_by_description.php');
     require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
   
-	$Commits = new CommitsByDescription($db);
+    $Commits = new CommitsByDescription($db);
     $Commits->ConditionSet($sqlUserSpecifiedCondition);
-	$Commits->UserIDSet($User->id);
+    $Commits->UserIDSet($User->id);
 
     $Commits->Debug = $Debug;
 
@@ -578,38 +578,38 @@ switch ($stype) {
   default:
 $sqlSelectFields = "
   select distinct 
-         ports.id, 
-         element.name as port,
-         categories.name as category, 
-         categories.id as category_id, 
-         ports.version as version, 
-         ports.revision as revision, 
-         ports.portepoch as epoch, 
-         ports.maintainer, 
-         ports.short_description, 
-         ports.package_exists, 
-         ports.extract_suffix, 
-         ports.homepage, 
-         element.status, 
-         ports.element_id, 
-         ports.broken, 
-         ports.deprecated, 
-         ports.ignore, 
-         ports_vulnerable.current as vulnerable_current,
-         ports_vulnerable.past    as vulnerable_past,
-         ports.forbidden,
-         ports.master_port,
-         ports.latest_link,
-         ports.no_package,
-         ports.package_name,
-         ports.restricted,
-         ports.no_cdrom,
-         ports.expiration_date,
-         ports.no_package,
-         ports.license,
+         P.id, 
+         E.name as port,
+         C.name as category, 
+         C.id as category_id, 
+         P.version as version, 
+         P.revision as revision, 
+         P.portepoch as epoch, 
+         P.maintainer, 
+         P.short_description, 
+         P.package_exists, 
+         P.extract_suffix, 
+         P.homepage, 
+         E.status, 
+         P.element_id, 
+         P.broken, 
+         P.deprecated, 
+         P.ignore, 
+         PV.current as vulnerable_current,
+         PV.past    as vulnerable_past,
+         P.forbidden,
+         P.master_port,
+         P.latest_link,
+         P.no_package,
+         P.package_name,
+         P.restricted,
+         P.no_cdrom,
+         P.expiration_date,
+         P.no_package,
+         P.license,
          R.svn_hostname,
          R.path_to_repo,
-         element_pathname(ports.element_id) as element_pathname  ";
+         element_pathname(P.element_id) as element_pathname  ";
          
 $sqlSelectCount = "
   SELECT count(*)";
@@ -620,7 +620,12 @@ $sqlSelectCount = "
    }
 
 	$sqlFrom = "
-    from ports LEFT OUTER JOIN ports_vulnerable on ports_vulnerable.port_id = ports.id JOIN commit_log CL on ports.last_commit_id = CL.id JOIN repo R on CL.repo_id = R.id , categories, element  ";
+  FROM ports P LEFT OUTER JOIN ports_vulnerable PV ON PV.port_id       = P.id 
+               LEFT OUTER JOIN commit_log       CL ON P.last_commit_id = CL.id 
+               LEFT OUTER JOIN repo             R  ON CL.repo_id       = R.id, 
+       categories C, element E
+";                                       	
+#    from ports LEFT OUTER JOIN ports_vulnerable on ports_vulnerable.port_id = ports.id JOIN commit_log CL on ports.last_commit_id = CL.id JOIN repo R on CL.repo_id = R.id , categories, element  ";
 
 $sqlWatchListFrom = '';
 	if ($User->id) {
@@ -632,12 +637,12 @@ $sqlWatchListFrom = '';
        AND watch_list.user_id = $User->id
        AND watch_list.in_service
   GROUP BY wle_element_id) AS TEMP
-       ON TEMP.wle_element_id = element.id";
+       ON TEMP.wle_element_id = E.id";
 	}
 
 	$sqlWhere = '
-	WHERE ports.category_id  = categories.id
-      and ports.element_id   = element.id ' ;
+    WHERE P.category_id  = C.id
+      AND P.element_id   = E.id ' ;
 
 
 $AddRemoveExtra  = "&&origin=" . $_SERVER['SCRIPT_NAME'] . "?query=" . $query. "+stype=$stype+num=$num+method=$method";

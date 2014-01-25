@@ -86,7 +86,7 @@ function freshports_cvsweb_Revision_Link($pathname, $revision_name)
 
 function freshports_svnweb_ChangeSet_Link($revision, $hostname, $path) {
   return '<a href="http://' . htmlentities($hostname) . htmlentities($path) . 
-                                            '?view=revision&amp;revision=' . htmlentities($revision) .  '">' . freshports_Subversion_Icon() . '</a>';
+                                            '?view=revision&amp;revision=' . htmlentities($revision) .  '">' . freshports_Subversion_Icon('Revision:' . $revision) . '</a>';
 }
 
 function freshports_Search_Maintainer($Maintainer) {
@@ -1165,7 +1165,7 @@ function freshports_PortCommits($port, $PageNumber = 1, $NumCommitsPerPage = 100
 		);
 	$Pager = & Pager::factory($params);
 	
-	//Results from methods:
+	// Results from methods:
 	if ($Commits->Debug) {
 		echo '<pre>';
 		echo 'getCurrentPageID()...: '; var_dump($Pager->getCurrentPageID());
@@ -1191,7 +1191,7 @@ function freshports_PortCommits($port, $PageNumber = 1, $NumCommitsPerPage = 100
 		$offset = $Pager->getOffsetByPageId();
 		$NumOnThisPage = $offset[1] - $offset[0] + 1;
 		$Offset = $offset[0] - 1;
-	    $NumCommitsHTML .= " (showing only $NumOnThisPage on this page)";
+		$NumCommitsHTML .= " (showing only $NumOnThisPage on this page)";
 		unset($offset);
 	}
 
@@ -1266,6 +1266,10 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	}
 
 	$HTML .= '<br>';
+
+	if (isset($commit->svn_revision)) {
+	  $HTML .= freshports_svnweb_ChangeSet_Link($commit->svn_revision, $commit->svn_hostname, $commit->path_to_repo);
+        }
 
 	if ($commit->stf_message != '') {
 		$HTML .= '&nbsp; ' . freshports_SanityTestFailure_Link($commit->message_id);

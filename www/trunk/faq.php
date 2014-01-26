@@ -283,13 +283,13 @@ down you must read to find something you didn't already know.</P>
 	<P><a name="forbidden"><?php echo freshports_Forbidden_Icon() ?></a>
 		Forbidden: The port is marked as forbidden.  If you view the port details,
 		you will see why.  Most often, it is because of a security exploit. Packages for a forbidden port are not built
-        by the package cluster.  Therefore, <code>pkg_add</code> will not work.</P>
+        by the package cluster.  Therefore, <code>pkg install</code> will not work.</P>
 
 	<P><a name="broken"><?php echo freshports_Broken_Icon() ?></a>
 		Broken: The port is marked as broken.  Perhaps it won't compile.  Maybe
 		it doesn't work under FreeBSD right now.  If you view the port details,
 		you will see the reason why. Packages for a broken port are not built
-        by the package cluster.  Therefore, <code>pkg_add</code> will not work.</P>
+        by the package cluster.  Therefore, <code>pkg install</code> will not work.</P>
 
 	<P><a name="deprecated"><?php echo freshports_Deprecated_Icon() ?></a>
 		Deprecated: The port is marked as deprecated.  Perhaps it has exceeded
@@ -305,7 +305,7 @@ down you must read to find something you didn't already know.</P>
 
 	<P><a name="ignore"><?php echo freshports_Ignore_Icon() ?></a>
 		Ignore: The port is marked as ignore.  It probably does not build. Packages for an ignored port are not built
-        by the package cluster.  Therefore, <code>pkg_add</code> will not work.</P>
+        by the package cluster.  Therefore, <code>pkg install</code> will not work.</P>
 
 	<P><?php echo freshports_Files_Icon(); ?>
 		Files: If you click on this graphic, you will be taken to the list of files
@@ -663,7 +663,7 @@ example of what to expect.
 	The command to add this package is:
 
 <blockquote><code class="code">
-pkg_add -r XFree86-clients
+pkg install XFree86-clients
 </code></blockquote>
 
 	<p>
@@ -671,13 +671,13 @@ pkg_add -r XFree86-clients
 	this information is very useful.
 
 	<p>
-	If the <code class="code">pkg_add</code> information does not appear,
+	If the <code class="code">pkg install</code> information does not appear,
 	you'll be told why there is no package.  This is controlled by the
 	<code class="code">NO_PACKAGE</code> variable in the port's Makefile.
 
 	<p>
 	Broken, ignored, and forbidden ports are not built by the package
-	cluster.  Therefore, there is no package for <code>pkg_add</code> to use.
+	cluster.  Therefore, there is no package for <code>pkg install</code> to use.
 	
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 

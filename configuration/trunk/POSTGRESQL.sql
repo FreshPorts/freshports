@@ -283,3 +283,8 @@ ALTER USER   listening LOGIN;
 
 GRANT select ON listen_for           TO GROUP listening;
 GRANT delete ON cache_clearing_ports TO GROUP listening;
+
+-- for the session schema
+
+grant select, insert,         delete on session_variables              to group commits;
+

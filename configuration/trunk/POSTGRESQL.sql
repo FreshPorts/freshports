@@ -28,6 +28,7 @@ alter group www add user www;
 -- select access only
 --
 grant select on commit_log                     to group www;
+grant select on commit_log_branches            to group www;
 grant select on commit_log_elements            to group www;
 grant select on commit_log_port_elements       to group www;
 grant select on commit_log_ports_elements      to group www;
@@ -144,6 +145,9 @@ grant select, insert, update         on categories                     to group 
 grant select, update                 on categories_id_seq              to group commits;
 grant select, insert, update, delete on commit_log                     to group commits;
 grant select, update                 on commit_log_id_seq              to group commits;
+
+grant select, insert, update, delete on commit_log_branches            to group commits;
+
 
 grant select, insert, update, delete on commit_log_elements            to group commits;
 grant select, update                 on commit_log_elements_id_seq     to group commits;

@@ -477,7 +477,7 @@ class port_display {
 					if ($port->forbidden || $port->broken || $port->ignore || $port->restricted) {
 						$HTML .= '<p><b>A <a href="/faq.php#package" TITLE="what is a package?">package</a> is not available for ports marked as: Forbidden / Broken / Ignore / Restricted</b></p>';
 					} else {
-						$HTML .= '<b>To add the <a href="/faq.php#package" TITLE="what is a package?">package</a>:</b> <code class="code">pkg install ' . $port->latest_link . '</code></p>';
+						$HTML .= '<b>To add the <a href="/faq.php#package" TITLE="what is a package?">package</a>:</b> <code class="code">pkg install ' . $port->category . '/' . $port->port . '</code></p>';
 					}
 				}
 			}

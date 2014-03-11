@@ -864,7 +864,7 @@ Special searches:
 	<INPUT NAME="query"           TYPE="hidden" value="<?php GLOBAL $User; echo $User->email; ?>">
 	<INPUT NAME="num"             TYPE="hidden" value="10">
 	<INPUT NAME="stype"           TYPE="hidden" value="maintainer">
-	<INPUT NAME="method"          TYPE="hidden" value="match">
+	<INPUT NAME="method"          TYPE="hidden" value="exact">
 	<INPUT NAME="deleted"         TYPE="hidden" value="excludedeleted">
 	<INPUT NAME="start"           TYPE="hidden" value="1">
   	<INPUT NAME="casesensitivity" TYPE="hidden" value="caseinsensitive">

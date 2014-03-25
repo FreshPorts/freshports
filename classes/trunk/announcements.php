@@ -77,7 +77,7 @@ class Announcement {
 
 		$sql = '
 DELETE from announcements
- WHERE id = ' . AddSlashes($this->id);
+ WHERE id = ' . pg_escape_string($this->id);
 
 		$this->result = pg_exec($this->dbh, $sql);
 		if (!$this->result) {
@@ -102,14 +102,14 @@ DELETE from announcements
 			$sql .= ', end_date';
 		}
 
-		$sql .= ") values ('" . AddSlashes($this->text) . "', '" . AddSlashes($this->text_plain) . "'";
+		$sql .= ") values ('" . pg_escape_string($this->text) . "', '" . pg_escape_string($this->text_plain) . "'";
 
 		if ($this->start_date != '') {
-			$sql .= ", '" . AddSlashes($this->start_date) . "'";
+			$sql .= ", '" . pg_escape_string($this->start_date) . "'";
 		}
 
 		if ($this->end_date != '') {
-			$sql .= ", '" . AddSlashes($this->end_date) . "'";
+			$sql .= ", '" . pg_escape_string($this->end_date) . "'";
 		}
 
 		$sql .= ")";
@@ -129,23 +129,23 @@ DELETE from announcements
 	function Update() {
 		# delete the ignore entry for this commit/port combination
 
-		$sql = "UPDATE announcements set text = '" . AddSlashes($this->text) . 
-		          "', text_plain = '" . AddSlashes($this->text_plain) . "', start_date = ";
+		$sql = "UPDATE announcements set text = '" . pg_escape_string($this->text) . 
+		          "', text_plain = '" . pg_escape_string($this->text_plain) . "', start_date = ";
 
 		if ($this->start_date != '') {
-			$sql .= "'" . AddSlashes($this->start_date) . "'";
+			$sql .= "'" . pg_escape_string($this->start_date) . "'";
 		} else {
 			$sql .= 'NULL';
 		}
 
 		$sql .= ", end_date = ";		
 		if ($this->end_date != '') {
-			$sql .= "'" . AddSlashes($this->end_date) . "'";
+			$sql .= "'" . pg_escape_string($this->end_date) . "'";
 		} else {
 			$sql .= 'NULL';
 		}
 
-		$sql .= ' where id = ' . AddSlashes($this->id);
+		$sql .= ' where id = ' . pg_escape_string($this->id);
 
 #		echo "<pre>$sql</pre>";
 
@@ -164,7 +164,7 @@ DELETE from announcements
 		$sql = '
 SELECT *
   FROM announcements
- WHERE id = ' . AddSlashes($id);
+ WHERE id = ' . pg_escape_string($id);
 
 #		echo "sql = '<pre>$sql</pre>'<BR>";
 

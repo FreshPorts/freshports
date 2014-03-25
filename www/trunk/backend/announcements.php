@@ -15,9 +15,9 @@
 
 	GLOBAL $User;
 
-$origin		= $_REQUEST['origin'];
-$submit 	= $_REQUEST['submit'];
-$visitor	= $_COOKIE['visitor'];
+$origin		= isset($_REQUEST['origin']) ? $_REQUEST['origin'] : null;
+$submit 	= isset($_REQUEST['submit']) ? $_REQUEST['submit'] : null;
+$visitor	= isset($_COOKIE['visitor']) ? $_COOKIE['visitor'] : null;
 
 if ($origin == '/index.php' || $origin == '') {
 	$origin = '/';
@@ -86,7 +86,7 @@ if (IsSet($_REQUEST['edit'])) {
 <?php
 
 
-if ($errors) {
+if (isset($errors)) {
 echo '
   <TABLE width="100%" CELLPADDING="3" BORDER="0">
   <TR VALIGN=top>
@@ -112,6 +112,7 @@ echo '<TABLE CELLPADDING="1" CELLSPACING="3" BORDER="0" BGCOLOR="' . BACKGROUND_
 
 echo 'Current annoucements<blockquote>';
 
+$HTML  = '';
 $HTML .= '<form action="' . $_SERVER["PHP_SELF"] . '" method="POST">' . "\n";
 
 $HTML .= '<table cellpadding="4" cellspacing="0" border="1">' . "\n";
@@ -122,7 +123,7 @@ $HTML .= '<tr>'  . "\n";
 
 $HTML .= '<td>'  . "\n";
 $HTML .= '<TEXTAREA NAME="announcement" ROWS="10" COLS="60">'          . "\n";
-$HTML .= htmlspecialchars($Announcement->TextGet());
+$HTML .= $Announcement->TextGet();
 $HTML .= '</TEXTAREA>';
 $HTML .= '</td>'  . "\n";
 
@@ -167,6 +168,7 @@ echo "<p></blockquote></TD>
 </TABLE>";
 
 function MyDisplayAnnouncements($Announcement) {
+        $HTML = '';
 	$HTML .= '<table cellpadding="4" cellspacing="0" border="1">' . "\n";
 	$HTML .= '<tr><td><b>Announcement Text</b></td><td><b>Start Date</b></td><td><b>End Date</b></td><td><b>Edit</b></td><td><b>Delete</b</td></tr>' . "\n";
 

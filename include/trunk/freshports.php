@@ -1011,7 +1011,6 @@ function freshports_depends_links($dbh, $DependsList, $BranchName = BRANCH_HEAD)
 		if ($CategoryPort == $DependsArray[1]) {
 		   $CategoryPort = str_replace('/usr/ports/', '', $DependsArray[1]) ;
 		}
-		echo '<pre>'; var_dump($DependsArray[1]); var_dump($CategoryPort); echo '</pre>';
 		$CategoryPortArray = explode('/', $CategoryPort);
 
 		$HTML .= '<li>' . freshports_link_to_port_single($CategoryPortArray[0], $CategoryPortArray[1]) . '</li>';

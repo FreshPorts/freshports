@@ -80,3 +80,6 @@ define('FRESHPORTS_VERSION_EPOCH_JOINER',    ',');
 define('PORTSMONSHOW',        1);
 define('DISTFILESSURVEYSHOW', 1);
 
+define('BRANCH_HEAD', 'head');
+define('PATH_TO_PORTSDIR', '/usr/local/');
+define('PORTSDIR_PREFIX',  'PORTS-');

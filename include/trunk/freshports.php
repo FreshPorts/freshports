@@ -988,7 +988,7 @@ function freshports_ONToYN($Value) {
 }
 
 
-function freshports_depends_links($dbh, $DependsList) {
+function freshports_depends_links($dbh, $DependsList, $BranchName = BRANCH_HEAD) {
 	// sometimes they have multiple spaces in the data...
 	$temp = str_replace('  ', ' ', $DependsList);
       
@@ -996,13 +996,14 @@ function freshports_depends_links($dbh, $DependsList) {
 	$depends = explode(' ', $temp);
 	$Count = count($depends);
 	$HTML  = '';
-	for ($i = 0; $i < $Count; $i++) {
+	foreach ($depends as $depend) {
 		// split one depends into the library and the port name (/usr/ports/<category>/<port>)
 
-		$DependsArray = explode(':', $depends[$i]);
+		$DependsArray = explode(':', $depend);
 
 		// now extract the port and category from this port name
-		$CategoryPort      = str_replace('/usr/ports/', '', $DependsArray[1]) ;
+		// it might look like: /usr/local/bin/perl5.16.3:/usr/local/PORTS-head/lang/perl5.16
+		$CategoryPort      = str_replace(PATH_TO_PORTSDIR . PORTSDIR_PREFIX . BRANCH_HEAD . '/', '', $DependsArray[1]) ;
 		$CategoryPortArray = explode('/', $CategoryPort);
 
 		$HTML .= '<li>' . freshports_link_to_port_single($CategoryPortArray[0], $CategoryPortArray[1]) . '</li>';

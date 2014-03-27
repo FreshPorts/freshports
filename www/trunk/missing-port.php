@@ -96,7 +96,11 @@ function freshports_PortDisplay($db, $category, $port) {
 	if ($Debug) echo 'into ' . __FILE__ . ' now' . "<br>\n";
 
 	$PageNumber = 1;
-	parse_str($_SERVER['REDIRECT_QUERY_STRING'], $query_parts);
+	if (isset($_SERVER['REDIRECT_QUERY_STRING'])) {
+	   parse_str($_SERVER['REDIRECT_QUERY_STRING'], $query_parts);
+        } else {
+           $query_parts = null;
+        }
 
 	if ($Debug) echo print_r($query_parts, true);
 	if (IsSet($query_parts['page'])  && Is_Numeric($query_parts['page'])) {

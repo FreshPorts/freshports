@@ -1003,7 +1003,15 @@ function freshports_depends_links($dbh, $DependsList, $BranchName = BRANCH_HEAD)
 
 		// now extract the port and category from this port name
 		// it might look like: /usr/local/bin/perl5.16.3:/usr/local/PORTS-head/lang/perl5.16
-		$CategoryPort      = str_replace(PATH_TO_PORTSDIR . PORTSDIR_PREFIX . BRANCH_HEAD . '/', '', $DependsArray[1]) ;
+		// try it this way
+		$CategoryPort = str_replace(PATH_TO_PORTSDIR . PORTSDIR_PREFIX . BRANCH_HEAD . '/', '', $DependsArray[1]) ;
+		
+		// if that has no effect, try it the old way:
+		// we might have old stuff stored in the db.  Which makes me think: we should store it another way in the db.
+		if ($CategoryPort == $DependsArray[1]) {
+		   $CategoryPort = str_replace('/usr/ports/', '', $DependsArray[1]) ;
+		}
+		echo '<pre>'; var_dump($DependsArray[1]); var_dump($CategoryPort); echo '</pre>';
 		$CategoryPortArray = explode('/', $CategoryPort);
 
 		$HTML .= '<li>' . freshports_link_to_port_single($CategoryPortArray[0], $CategoryPortArray[1]) . '</li>';

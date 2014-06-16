@@ -26,7 +26,7 @@ function freshports_IsEmailValid($email) {
 
 function pr2link($Arr) {
 	return preg_replace("/((\w+\/)?\d+)/", 
-					"<A HREF=\"http://www.FreeBSD.org/cgi/query-pr.cgi?pr=\\1\">\\1</A>",
+					"<A HREF=\"http://bugs.FreeBSD.org/\\1\">\\1</A>",
 					$Arr[0]);  
 }
 

@@ -25,9 +25,9 @@ function freshports_IsEmailValid($email) {
 
 
 function pr2link($Arr) {
-	return preg_replace("/((\w+\/)?\d+)/", 
-					"<A HREF=\"http://bugs.FreeBSD.org/\\1\">\\1</A>",
-					$Arr[0]);  
+	return preg_replace("/(\w+\/)?(\d+)/", 
+			    "<a href=\"http://bugs.FreeBSD.org/\\2\">\\1\\2</a>",
+			    $Arr[0]);  
 }
 
 function mail2link($Arr) {
@@ -96,7 +96,7 @@ function htmlify($String, $Process_PRs = false) {
 	$String = preg_replace_callback("/(<a href=(\"|')(http|ftp|https):\/\/.*?)(\">|'>)(.*?)<\/a>/i", 'url_shorten', $String);
 	$String = preg_replace_callback("/([\w+=\-.!]+@[\w\-]+(\.[\w\-]+)+)/",                           'mail2link',   $String);
 	if ($Process_PRs) {
-		$String = preg_replace_callback("/\bPR[:\#]?\s*(\d+)([,\s\n]*(\d+))*/",                      'pr2link',     $String);
+		$String = preg_replace_callback("/\bPR[:\#]?\s*(\d+)([,\s\nand]*(\d+))*/",                      'pr2link',     $String);
 		$String = preg_replace_callback("/[\w\s]+((advocacy|alpha|bin|conf|docs|gnu|i386|ia64|java|kern|misc|ports|powerpc|sparc64|standards|www)\/\d+)/", 'pr2link', $String);
 	}
 

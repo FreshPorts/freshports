@@ -20,7 +20,9 @@ PR: 12345,43 23123123
 And these too: PR 123
 PR 1324
 PR 234,394 234
+PR 234,394, 234
 PR 234, 234, and 234
+PR: 234, 234, and 234
 
 port check < 0 or > 10
 only with Netscape. You can trace the discussion at: <http://home.jp.FreeBSD.org/cgi-bin/thread?mesid=%3c20020115163006%2e482281905%40taro%2ec%2eu%2dtokyo%2eac%2ejp%3e>

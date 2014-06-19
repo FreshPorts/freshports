@@ -83,7 +83,7 @@ function freshports_SummaryForDay($MinusN) {
 
 echo freshports_MainTable();
 
-$num          = $MaxNumberOfPorts;
+$num          = $MaxNumberOfPortsLong;
 $days         = $NumberOfDays;
 $dailysummary = 7;
 
@@ -91,11 +91,10 @@ if (In_Array('num',          $_GET)) $num			= AddSlashes($_GET["num"]);
 if (In_Array('dailysummary', $_GET)) $dailysummary	= AddSlashes($_GET["dailysummary"]);
 if (In_Array('days',         $_GET)) $days			= AddSlashes($_GET["days"]);
 
-
 if (Is_Numeric($num)) {
-	$MaxNumberOfPorts = min($MaxNumberOfPorts, max(10, $num));
+	$MaxNumberOfPortsLong = min($MaxNumberOfPortsLong, max(10, $num));
 } else {
-	$num = MaxNumberOfPorts;
+	$num = MaxNumberOfPortsLong;
 }
 
 if (Is_Numeric($days)) {
@@ -118,14 +117,11 @@ if ($db) {
 <?php echo freshports_MainContentTable(); ?>
 
 <TR>
-<? echo freshports_PageBannerText("$MaxNumberOfPorts most recent commits", 3); ?>
-        <? //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPorts) ?>
+<? echo freshports_PageBannerText("$MaxNumberOfPortsLong most recent commits", 3); ?>
+        <? //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPortsLong) ?>
 </TR>
 <TR><TD>
 <p><?php echo EVERYTHING; ?>
-<p>
-A port is marked as new for 10 days. If you want to see more try <a href="/commits.php">here</a>.
-</p>
 
 <?php
 	if ($ShowAds && $BannerAd) {
@@ -154,11 +150,19 @@ A port is marked as new for 10 days. If you want to see more try <a href="/commi
 	} else {
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/latest_commits.php');
 
+		if (IsSet($_REQUEST['branch'])) {
+			$Branch = htmlspecialchars($_REQUEST['branch']);
+		} else {
+			$Branch = BRANCH_HEAD;
+		}
+
 		$LatestCommits = new LatestCommits($db);
-		$LatestCommits->SetMaxNumberOfPorts($MaxNumberOfPorts);
+		$LatestCommits->SetMaxNumberOfPorts($MaxNumberOfPortsLong);
 		$LatestCommits->SetDaysMarkedAsNew ($DaysMarkedAsNew);
 		$LatestCommits->SetUserID($User->id);
+		$LatestCommits->SetBranch($Branch);
 		$LatestCommits->SetWatchListAsk($User->watch_list_add_remove);
+		
 		$LatestCommits->CreateHTML();
 
 		echo $LatestCommits->HTML;
@@ -205,6 +209,14 @@ A port is marked as new for 10 days. If you want to see more try <a href="/commi
 </TABLE>
 
 <BR>
+
+<?php
+define('RELATIVE_DATE_24HOURS', 24 * 60 * 60);	# seconds in a day
+$Date = date('Y/m/d');
+$Yesterday = freshports_LinkToDate(strtotime($Date) - RELATIVE_DATE_24HOURS, "Yesterday's Commits");
+
+echo '&lt; ' . $Yesterday . ' &gt;';
+?>
 
 <?
 echo freshports_ShowFooter();

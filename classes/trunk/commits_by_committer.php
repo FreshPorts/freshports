@@ -126,4 +126,3 @@ ORDER BY CL.commit_date DESC ";
 	}
 }
 
-?>

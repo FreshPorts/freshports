@@ -163,12 +163,12 @@ function WildCardQuery($stype, $Like, $query) {
 		case SEARCH_FIELD_NAME:
 		case SEARCH_FIELD_PACKAGE:
 		case SEARCH_FIELD_LATEST_LINK:
-        case SEARCH_FIELD_SHORTDESCRIPTION:
-        case SEARCH_FIELD_LONGDESCRIPTION:
-        case SEARCH_FIELD_DEPENDS_BUILD:
-        case SEARCH_FIELD_DEPENDS_LIB:
-        case SEARCH_FIELD_DEPENDS_RUN:
-        case SEARCH_FIELD_DEPENDS_ALL:
+		case SEARCH_FIELD_SHORTDESCRIPTION:
+		case SEARCH_FIELD_LONGDESCRIPTION:
+		case SEARCH_FIELD_DEPENDS_BUILD:
+		case SEARCH_FIELD_DEPENDS_LIB:
+		case SEARCH_FIELD_DEPENDS_RUN:
+		case SEARCH_FIELD_DEPENDS_ALL:
 		case SEARCH_FIELD_MAINTAINER:
 		case SEARCH_FIELD_COMMITTER:
 		case SEARCH_FIELD_PATHNAME:
@@ -577,7 +577,8 @@ switch ($stype) {
     
   default:
 $sqlSelectFields = "
-  select distinct 
+  select distinct
+         CL.commit_date - SystemTimeAdjust() AS last_commit_date, 
          P.id, 
          E.name as port,
          C.name as category, 
@@ -679,7 +680,7 @@ $NumFound = $myrow[0];
 			'spacesBeforeSeparator' => 1,
 			'spacesAfterSeparator'  => 1,
 		);
-	$Pager = & Pager::factory($params);
+	$Pager = Pager::factory($params);
 
 
 

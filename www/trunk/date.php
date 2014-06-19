@@ -38,9 +38,15 @@
 		$Date = date('Y/m/d', strtotime($Date));
 	}
 
-	$commits = new Commits($db);
+	if (IsSet($_REQUEST['branch'])) {
+		$BranchName = htmlspecialchars($_REQUEST['branch']);
+	} else {
+		$BranchName = BRANCH_HEAD;
+	}
+
+	$commits = new Commits($db, $BranchName);
 	$last_modified = $commits->LastModified($Date);
-	$NumCommits = $commits->Count($Date);
+	$NumCommits    = $commits->Count($Date);
 
 	freshports_ConditionalGet($last_modified);
 
@@ -80,16 +86,13 @@
 		
 		ArchiveDirectoryCreate($Date);
 		$File = ArchiveFileName($Date);
-		
-		
-
-		
 	}
 
-	function ArchiveCreate($Date, $DateMessage, $db, $User) {
+	function ArchiveCreate($Date, $DateMessage, $db, $Use, $BranchName) {
 		GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;
 
 		$commits = new Commits($db);
+	    $commits->SetBranch($BranchName);
 		$NumRows = $commits->Fetch($Date, $User->id);
 	
 		#echo '<br>NumRows = ' . $NumRows;
@@ -153,7 +156,7 @@ if ($NumCommits > 0) {
 
 echo freshports_MainContentTable();
 
-$HTML = ArchiveCreate($Date, $DateMessage, $db, $User);
+$HTML = ArchiveCreate($Date, $DateMessage, $db, $User, $BranchName);
 
 echo $HTML;
 

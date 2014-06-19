@@ -147,10 +147,17 @@ A port is marked as new for 10 days.
 	} else {
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/latest_commits.php');
 
+		if (IsSet($_REQUEST['branch'])) {
+			$Branch = htmlspecialchars($_REQUEST['branch']);
+		} else {
+			$Branch = BRANCH_HEAD;
+		}
+	
 		$LatestCommits = new LatestCommits($db);
 		$LatestCommits->SetMaxNumberOfPorts($MaxNumberOfPortsLong);
 		$LatestCommits->SetDaysMarkedAsNew ($DaysMarkedAsNew);
 		$LatestCommits->SetUserID($User->id);
+		$LatestCommits->SetBranch($Branch);
 		$LatestCommits->SetWatchListAsk($User->watch_list_add_remove);
 		$LatestCommits->CreateHTML();
 

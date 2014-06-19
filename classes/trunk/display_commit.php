@@ -17,6 +17,7 @@ class DisplayCommit {
 	var $result;
 	var $MaxNumberOfPorts;
 
+	var $BranchName;
 	var $WatchListAsk    = '';	// either default or ask.  the watch list to which add/remove works.
 	var $UserID          = 0;
 	var $DaysMarkedAsNew = 10;
@@ -265,6 +266,7 @@ class DisplayCommit {
 				$this->HTML .= $mycommit->revision . ' ';
 				$this->HTML .= '<big><B>';
 				$PathName = preg_replace('|^/?ports/|', '', $mycommit->pathname);
+#				echo "'$PathName' " . "'" . $mycommit->repo_name . "'";
 				switch($mycommit->repo_name)
 				{
 				    case 'ports':
@@ -311,4 +313,9 @@ class DisplayCommit {
 		
 		return $this->HTML;
 	}
+
+	function SetBranch($BranchName) {
+		$this->BranchName = $BranchName;
+	}
+	
 }

@@ -106,7 +106,7 @@ class User {
 
 		$this->id						= $myrow['id'];
 		$this->name						= $myrow['name'];
-		$this->password					= $myrow['password'];
+		$this->password					= isset($myrow['password']) ? $myrow['password'] : null;
 		$this->cookie					= $myrow['cookie'];
 		$this->firstlogin				= $myrow['firstlogin'];
 		$this->lastlogin				= $myrow['lastlogin'];
@@ -121,7 +121,7 @@ class User {
 		$this->number_of_days			= $myrow['number_of_days'];
 		$this->watch_list_add_remove	= $myrow['watch_list_add_remove'];
 		$this->last_watch_list_chosen	= $myrow['last_watch_list_chosen'];
-		$this->filter					= $myrow['filter'];
+		$this->filter					= isset($myrow['filter']) ? $myrow['filter'] : null;
 
 		$this->page_size				= $myrow['page_size'];
 		if (!IsSet($this->page_size) || $this->page_size == '') {

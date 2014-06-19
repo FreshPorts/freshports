@@ -16,6 +16,7 @@ class LatestCommits {
 	var $dbh;
 	var $MaxNumberOfPorts;
 
+	var $BranchName;
 	var $Filter;
 	var $WatchListAsk    = '';	// either default or ask.  the watch list to which add/remove works.
 	var $UserID          = 0;
@@ -39,6 +40,10 @@ class LatestCommits {
 		$this->UserID = $UserID;
 	}
 
+	function SetBranch($BranchName) {
+		$this->BranchName = $BranchName;
+	}
+	
 	function SetWatchListAsk($WatchListAsk) {
 		$this->WatchListAsk = $WatchListAsk;
 	}
@@ -56,7 +61,7 @@ class LatestCommits {
 #			$sql = "select * from LatestCommits($this->MaxNumberOfPorts, $this->UserID)";
 			$sql = "
   SELECT LC.*, STF.message AS stf_message
-    FROM LatestCommits($this->MaxNumberOfPorts, 0) LC LEFT OUTER JOIN sanity_test_failures STF
+    FROM LatestCommits($this->MaxNumberOfPorts, 0, E'" . pg_escape_string($this->BranchName) . "') LC LEFT OUTER JOIN sanity_test_failures STF
       ON LC.commit_log_id = STF.commit_log_id
 ORDER BY LC.commit_date_raw DESC, LC.category, LC.port, pathname";
 		}

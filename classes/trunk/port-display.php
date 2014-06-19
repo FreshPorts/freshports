@@ -33,7 +33,8 @@ class port_display {
 	var $ShowDepends;
 	var $ShowDownloadPortLink;
 	var $ShowHomepageLink;
-	var $ShowLastChange;
+	var $ShowLastChange;        # who made the last change - useful for knowing last commit
+	var $ShowLastCommitDate;    # when was the last change - useful when searching by committer
 	var $ShowMaintainedBy;
 	var $ShowMasterSites;
 	var $ShowMasterSlave;
@@ -66,6 +67,7 @@ class port_display {
 		$this->ShowDownloadPortLink    = false;
 		$this->ShowHomepageLink        = false;
 		$this->ShowLastChange          = false;
+		$this->ShowLastCommitDate      = false;
 		$this->ShowMaintainedBy        = false;
 		$this->ShowMasterSites         = false;
 		$this->ShowMasterSlave         = false;
@@ -98,6 +100,7 @@ class port_display {
 		$this->ShowPackageLink         = true;
 		$this->ShowShortDescription    = true;
 		$this->ShowWatchListStatus     = true;
+		$this->ShowLastCommitDate      = true;
 	}
 
 	function SetDetailsReports() {
@@ -280,6 +283,12 @@ class port_display {
       
     	  $HTML .= ' ' . freshports_Search_Maintainer($port->maintainer) . '<br>';
 	   }
+	   
+	       // last commit date
+	       if (($this->ShowLastCommitDate || $this->ShowEverything) && $port->last_commit_date)
+	       {
+	           $HTML .= '<b>Last commit date:</b> ' . FormatTime($port->last_commit_date, 0, "Y-m-d H:i:s") . '<br>';
+	       }
 
 
 		// there are only a few places we want to show the last change.
@@ -439,7 +448,7 @@ class port_display {
 	
 		if ($this->ShowDepends || $this->ShowEverything) {
 			if ($port->depends_build || $port->depends_run || $port->depends_lib) {
-				$HTML .= '<hr><p><big>NOTE: FreshPorts displays only required dependencies information.  Optional dependencies are not covered.</big></p>';
+				$HTML .= '<hr><p><big>NOTE: FreshPorts displays only information on required and default dependencies.  Optional dependencies are not covered.</big></p>';
 			}
 
 			if ($port->depends_build) {

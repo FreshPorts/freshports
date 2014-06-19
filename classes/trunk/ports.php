@@ -87,6 +87,9 @@ class Port {
 	var $path_to_repo;
 	var $element_pathname;
 	
+	// used when searching
+	var $last_commit_date;
+	
 
 	function Port($dbh) {
 		$this->dbh = $dbh;
@@ -98,53 +101,54 @@ class Port {
 		$this->element_id         = $myrow["element_id"];
 		$this->category_id        = $myrow["category_id"];
 		$this->short_description  = $myrow["short_description"];
-		$this->long_description   = $myrow["long_description"];
+		$this->long_description   = isset($myrow["long_description"]) ? $myrow["long_description"] : null;
 		$this->version            = $myrow["version"];
 		$this->revision           = $myrow["revision"];
 		$this->epoch              = $myrow["epoch"];
 		$this->maintainer         = $myrow["maintainer"];
 		$this->homepage           = $myrow["homepage"];
-		$this->master_sites       = $myrow["master_sites"];
+		$this->master_sites       = isset($myrow["master_sites"]) ? $myrow["master_sites"] : null;
 		$this->extract_suffix     = $myrow["extract_suffix"];
 		$this->package_exists     = $myrow["package_exists"];
-		$this->depends_build      = $myrow["depends_build"];
-		$this->depends_run        = $myrow["depends_run"];
-		$this->depends_lib        = $myrow["depends_lib"];
-		$this->last_commit_id     = $myrow["last_commit_id"];
-		$this->found_in_index     = $myrow["found_in_index"];
+		
+		$this->depends_build      = isset($myrow["depends_build"]) ? $myrow["depends_build"] : null;
+		$this->depends_run        = isset($myrow["depends_run"]) ? $myrow["depends_run"] : null;
+		$this->depends_lib        = isset($myrow["depends_lib"]) ? $myrow["depends_lib"] : null;
+		$this->last_commit_id     = isset($myrow["last_commit_id"]) ? $myrow["last_commit_id"] : null;
+		$this->found_in_index     = isset($myrow["found_in_index"]) ? $myrow["found_in_index"] : null;
 		$this->forbidden          = $myrow["forbidden"];
 		$this->broken             = $myrow["broken"];
 		$this->deprecated         = $myrow["deprecated"];
 		$this->ignore             = $myrow["ignore"];
-		$this->date_added         = $myrow["date_added"];
-		$this->categories         = $myrow["categories"];
+		$this->date_added         = isset($myrow["date_added"]) ? $myrow["date_added"] : null;
+		$this->categories         = isset($myrow["categories"]) ? $myrow["categories"] : null;
 		$this->master_port        = $myrow["master_port"];
-		$this->latest_link        = $myrow["latest_link"];
-		$this->no_latest_link     = $myrow["no_latest_link"];
+		$this->latest_link        = isset($myrow["latest_link"])    ? $myrow["latest_link"]    : null;
+		$this->no_latest_link     = isset($myrow["no_latest_link"]) ? $myrow["no_latest_link"] : null;
 		$this->no_package         = $myrow["no_package"];
 		$this->package_name       = $myrow["package_name"];
 		$this->restricted         = $myrow["restricted"];
 		$this->no_cdrom           = $myrow["no_cdrom"];
 		$this->expiration_date    = $myrow["expiration_date"];
-		$this->is_interactive     = $myrow["is_interactive"];
-		$this->only_for_archs     = $myrow["only_for_archs"];
-		$this->not_for_archs      = $myrow["not_for_archs"];
+		$this->is_interactive     = isset($myrow["is_interactive"]) ? $myrow["is_interactive"] : null;
+		$this->only_for_archs     = isset($myrow["only_for_archs"]) ? $myrow["only_for_archs"] : null;
+		$this->not_for_archs      = isset($myrow["not_for_archs"]) ? $myrow["not_for_archs"] : null;
 		$this->status             = $myrow["status"];
-		$this->showconfig         = $myrow["showconfig"];
+		$this->showconfig         = isset($myrow["showconfig"]) ? $myrow["showconfig"] : null;
 		$this->license            = $myrow["license"];
 
 		$this->port               = $myrow["port"];
 		$this->category           = $myrow["category"];
-		$this->needs_refresh      = $myrow["needs_refresh"];
-		$this->updated            = $myrow["updated"];
+		$this->needs_refresh      = isset($myrow["needs_refresh"]) ? $myrow["needs_refresh"] : null;
+		$this->updated            = isset($myrow["updated"]) ?$myrow["updated"] : null;
 
 		$this->onwatchlist        = $myrow["onwatchlist"];
-		$this->last_modified      = $myrow["last_modified"];
+		$this->last_modified      = isset($myrow["last_modified"]) ? $myrow["last_modified"] : null;
 
-		$this->update_description = $myrow["update_description"];
-		$this->message_id         = $myrow["message_id"];
-		$this->encoding_losses    = $myrow["encoding_losses"];
-		$this->committer          = $myrow["committer"];
+		$this->update_description = isset($myrow["update_description"]) ? $myrow["update_description"] : null;
+		$this->message_id         = isset($myrow["message_id"]) ? $myrow["message_id"] : null;
+		$this->encoding_losses    = isset($myrow["encoding_losses"]) ? $myrow["encoding_losses"] : null;
+		$this->committer          = isset($myrow["committer"]) ? $myrow["committer"] : null;
 
 		$this->vulnerable_current = $myrow["vulnerable_current"];
 		$this->vulnerable_past    = $myrow["vulnerable_past"];
@@ -152,11 +156,13 @@ class Port {
 		// We might be looking at category lang.  japanese/gawk is listed in both japanese and lang.
 		// So when looking at lang, we don't want to say, Also listed in lang...  
 		//
-		$this->category_looking_at= $myrow["category_looking_at"];
+		$this->category_looking_at= isset($myrow["category_looking_at"]) ? $myrow["category_looking_at"] : null;
 		
 		$this->svn_hostname       = $myrow['svn_hostname'];
 		$this->path_to_repo       = $myrow['path_to_repo'];
 		$this->element_pathname   = $myrow['element_pathname'];
+		
+		$this->last_commit_date   = isset($myrow['last_commit_date']) ? $myrow['last_commit_date'] : null;
 	}
 
 	function FetchByElementID($element_id, $UserID = 0) {

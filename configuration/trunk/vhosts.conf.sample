@@ -54,6 +54,28 @@
 </VirtualHost>
 
 <VirtualHost 206.127.23.230:443>
+	ServerAdmin	dan@langille.org
+	ServerName	freshports.org
+
+	Redirect	permanent / https://www.freshports.org/
+
+	ErrorLog	/usr/websites/log/freshports.org-error.log
+	CustomLog	/usr/websites/log/freshports.org-access.log combined
+
+  SSLEngine on
+  SSLCipherSuite ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP:+eNULL
+
+  SSLCertificateFile    /usr/local/etc/ssl/www.freshports.org.crt
+  SSLCertificateKeyFile /usr/local/etc/ssl/www.freshports.org.nopassword.key
+
+  SSLCertificateChainFile /usr/local/etc/ssl/sub.class2.server.ca.pem
+  SSLCACertificateFile    /usr/local/etc/ssl/ca.pem
+</VirtualHost>
+
+
+
+
+<VirtualHost 206.127.23.230:443>
   ServerAdmin     dan@langille.org
 
   ServerName      www.freshports.org
@@ -70,8 +92,11 @@
   SSLEngine on
   SSLCipherSuite ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP:+eNULL
 
-  SSLCertificateFile    /usr/local/etc/CACERT/www.freshports.org.cert
-  SSLCertificateKeyFile /usr/local/etc/CACERT/www.freshports.org.nopassword.key
+  SSLCertificateFile    /usr/local/etc/ssl/www.freshports.org.crt
+  SSLCertificateKeyFile /usr/local/etc/ssl/www.freshports.org.nopassword.key
+
+  SSLCertificateChainFile /usr/local/etc/ssl/sub.class2.server.ca.pem
+  SSLCACertificateFile    /usr/local/etc/ssl/ca.pem
 
   <FilesMatch "\.(cgi|shtml|phtml|php)$">
     SSLOptions +StdEnvVars

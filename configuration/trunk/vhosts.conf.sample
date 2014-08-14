@@ -63,7 +63,7 @@
 	CustomLog	/usr/websites/log/freshports.org-access.log combined
 
   SSLEngine on
-  SSLCipherSuite ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP:+eNULL
+  SSLCipherSuite ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:-SSLv2:+EXP:+eNULL
 
   SSLCertificateFile    /usr/local/etc/ssl/www.freshports.org.crt
   SSLCertificateKeyFile /usr/local/etc/ssl/www.freshports.org.nopassword.key
@@ -90,7 +90,7 @@
   Include         /usr/websites/freshports.org/configuration/virtualhost-common.conf
 
   SSLEngine on
-  SSLCipherSuite ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP:+eNULL
+  SSLCipherSuite ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:-SSLv2:+EXP:+eNULL
 
   SSLCertificateFile    /usr/local/etc/ssl/www.freshports.org.crt
   SSLCertificateKeyFile /usr/local/etc/ssl/www.freshports.org.nopassword.key

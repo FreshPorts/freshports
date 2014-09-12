@@ -46,7 +46,7 @@ if (IsSet($_REQUEST['LOGIN']) && $_REQUEST['UserID']) {
 	  " and password_hash = crypt('" . pg_escape_string($Password) . "', password_hash) ";
 
    if ($Debug) {
-      echo "$sql<BR>\n";
+      echo '<pre>' . htmlentities($sql) . '<pre>';
    }
 
    $result = pg_exec($db, $sql) or die('query failed ' . pg_errormessage());

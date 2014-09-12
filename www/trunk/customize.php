@@ -36,11 +36,11 @@ if (IsSet($submit)) {
 
 // process form
 
-	$email					= AddSlashes($_POST['email']);
-	$Password1				= AddSlashes($_POST['Password1']);
-	$Password2				= AddSlashes($_POST['Password2']);
+	$email				= AddSlashes($_POST['email']);
+	$Password1			= $_POST['Password1'];
+	$Password2			= $_POST['Password2'];
 	$numberofdays			= AddSlashes($_POST['numberofdays']);
-	$page_size				= AddSlashes($_POST['page_size']);
+	$page_size			= AddSlashes($_POST['page_size']);
 
 	if (!is_numeric($numberofdays) || $numberofdays < 0 || $numberofdays > 9) {
 		$numberofdays = 9;
@@ -85,13 +85,14 @@ UPDATE users
 			}
 
 			if ($Password1 != '') {
-				$sql .= ", password_hash = crypt('" . AddSlashes($Password1) . "', gen_salt('md5'))";
+				$sql .= ", password_hash = crypt('" . 	pg_escape_string($Password1) . "', gen_salt('md5'))";
 			}
 
 			$sql .= " where cookie = '$visitor'";
 
 			if ($Debug) {
-				echo $sql;
+#			phpinfo();
+				echo '<pre>' . htmlentities($sql) . '</ore>';
 			}
 
 			$result = pg_exec($db, $sql);

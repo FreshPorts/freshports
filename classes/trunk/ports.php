@@ -229,6 +229,11 @@ select ports.id,
 			$sql .= ",
 	        TEMP.onwatchlist";
 		}
+		else
+		{
+			$sql .= ",
+			0 as onwatchlist";
+		}
 
 		$sql .= "
        from categories, element, ports_vulnerable right outer join ports 
@@ -331,6 +336,11 @@ select ports.id,
 CASE WHEN TEMP.onwatchlist IS NULL
 THEN 0 ELSE 1
 END as onwatchlist';
+		}
+		else
+		{
+		   $sql .= ',
+		   0 as onwatchlist';
 		}
 
 

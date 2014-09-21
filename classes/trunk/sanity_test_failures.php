@@ -12,7 +12,7 @@
 // base class for keeping statistics on page rendering issues
 class SanityTestFailures {
 
-	var $Debug = 0;
+	var $Debug = 1;
 	var $dbh;
 	var $MaxNumberOfPorts;
 
@@ -65,7 +65,7 @@ SELECT S.*, STF.message as stf_message
 		}
 		
 		if ($this->MessageID != '') {
-			$sql .= " WHERE message_id = E'" . $this->MessageID . "'";
+			$sql .= " WHERE message_id = E'" . pg_escape($this->MessageID) . "'";
 		}
 
 		$sql .= " ORDER BY S.commit_date_raw DESC, S.category, S.port";

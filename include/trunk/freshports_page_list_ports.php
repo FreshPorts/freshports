@@ -5,7 +5,6 @@
 	# Copyright (c) 2005-2006 DVL Software Limited
 	#
 
-
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports_page.php');
 	require_once('Pager/Pager.php');
 

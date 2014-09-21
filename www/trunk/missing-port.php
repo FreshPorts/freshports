@@ -115,7 +115,7 @@ function freshports_PortDisplay($db, $category, $port) {
 
 	$Cache = new CachePort();
 	$Cache->PageSize = $User->page_size;
-	$result = $Cache->Retrieve($category, $port, CACHE_PORT_DETAIL, $PageNumber);
+	$result = $Cache->RetrievePort($category, $port, CACHE_PORT_DETAIL, $PageNumber);
 	if (!$result && !$BypassCache && !$RefreshCache) {
 		if ($Debug) echo "found something from the cache<br>\n";
 		$HTML = $Cache->CacheDataGet();
@@ -168,7 +168,7 @@ function freshports_PortDisplay($db, $category, $port) {
 		# If we are not reading 
 		if (!$BypassCache || $RefreshCache) {
 			$Cache->CacheDataSet($MyPort->{'element_id'} . "\n" . $HTML);
-			$Cache->Add($MyPort->category, $MyPort->port, CACHE_PORT_DETAIL, $PageNumber);
+			$Cache->AddPort($MyPort->category, $MyPort->port, CACHE_PORT_DETAIL, $PageNumber);
 		}
 
 		$ElementID   = $MyPort->{'element_id'};

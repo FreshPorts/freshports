@@ -279,8 +279,8 @@ ORDER BY port, element_pathname";
 
 	parse_str($_SERVER['QUERY_STRING'], $query_parts);
 
-	$FilesForJustOnePort = ($query_parts['category']) && IsSet($query_parts['port']);
-	$files = $query_parts['files'];
+	$FilesForJustOnePort = IsSet($query_parts['category']) && IsSet($query_parts['port']);
+	$files = isset($query_parts['files']) ? $query_parts['files'] : 'n';
 
 	$ShowAllFilesURL = '<a href="' . htmlspecialchars($_SERVER['SCRIPT_URL'] . '?message_id=' .  $message_id . '&files=yes') . '">show all files</a>';
 

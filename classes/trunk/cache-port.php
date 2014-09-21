@@ -26,7 +26,7 @@ class CachePort extends Cache {
 		$this->PageSize = $PageSize;
 	}
 
-	function Retrieve($Category, $Port, $CacheType = CACHE_PORT_COMMITS, $PageNum = 1) {
+	function RetrievePort($Category, $Port, $CacheType = CACHE_PORT_COMMITS, $PageNum = 1) {
 		$this->_Log("CachePort: Retrieving for $Category/$Port");
 		$Key = $this->_PortKey($Category, $Port, $CacheType, $PageNum);
 		$result = parent::Retrieve($Key);
@@ -34,7 +34,7 @@ class CachePort extends Cache {
 		return $result;
 	}
 
-	function Add($Category, $Port, $CacheType = CACHE_PORT_COMMITS, $PageNum = 1) {
+	function AddPort($Category, $Port, $CacheType = CACHE_PORT_COMMITS, $PageNum = 1) {
 		$this->_Log("CachePort: Adding for $Category/$Port");
 
 		$CacheDir = $this->CacheDir . '/ports/' . $Category . '/' . $Port;
@@ -55,7 +55,7 @@ class CachePort extends Cache {
 		return $result;
 	}
 
-	function Remove($Category, $Port) {
+	function RemovePort($Category, $Port) {
 		$this->_Log("CachePort: Removing for $Category/$Port");
 
 		#

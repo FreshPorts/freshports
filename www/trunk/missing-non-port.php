@@ -201,4 +201,3 @@ function freshports_NonPortDescription($db, $element_record) {
 
 <?
 } # end of freshports_NonPortDescription
-?>

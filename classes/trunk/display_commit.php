@@ -95,6 +95,8 @@ class DisplayCommit {
 		# leave it all empty as a comparison point
 		$PreviousCommit = new CommitRecord();
 
+		$NumberOfPortsInThisCommit = 0;
+		$MaxNumberPortsToShow      = 10;
 		$TooManyPorts = false;	# we might not show all of a commit, just for the really big ones.
 		for ($i = 0; $i < $NumRows; $i++) {
 			$myrow = pg_fetch_array($this->result, $i);
@@ -265,7 +267,7 @@ class DisplayCommit {
 				# This is a non-port element... 
 				$this->HTML .= $mycommit->revision . ' ';
 				$this->HTML .= '<big><B>';
-				$PathName = preg_replace('|^/?ports/|', '', $mycommit->pathname);
+				$PathName = preg_replace('|^/?ports/|', '', $mycommit->element_pathname);
 #				echo "'$PathName' " . "'" . $mycommit->repo_name . "'";
 				switch($mycommit->repo_name)
 				{
@@ -273,7 +275,7 @@ class DisplayCommit {
 				        $PathName = preg_replace('|^head/|', '', $PathName);
 				        break;
 				}
-				if ($PathName != $mycommit->pathname) {
+				if ($PathName != $mycommit->element_pathname) {
 					$this->HTML .= '<a href="/' . str_replace('%2F', '/', urlencode($PathName)) . '">' . $PathName . '</a>';
 					$this->HTML .= "</B></BIG>\n";
 				} else {

@@ -32,7 +32,7 @@ class CommitRecord {
 	var $short_description;
 	var $category_id;
 	var $port;
-	var $pathname;
+	var $element_pathname;
 	var $status;
 	var $category;
 	var $vulnerable_current;
@@ -51,7 +51,6 @@ class CommitRecord {
 	var $path_to_repo;
 
 	var $watch;
-	var $element_pathname;
 
 	function CommitRecord() {
 	}
@@ -80,7 +79,7 @@ class CommitRecord {
 		$this->short_description	= $myrow['short_description'];
 		$this->category_id			= $myrow['category_id'];
 		$this->port					= $myrow['port'];
-		$this->pathname				= $myrow['pathname'];
+		$this->element_pathname				= $myrow['element_pathname'];
 		$this->status				= $myrow['status'];
 		$this->category				= $myrow['category'];
 		$this->watch				= $myrow['watch'];
@@ -92,7 +91,6 @@ class CommitRecord {
 		$this->is_interactive		= $myrow['is_interactive'];
 		$this->only_for_archs		= $myrow['only_for_archs'];
 		$this->not_for_archs		= $myrow['not_for_archs'];
-		$this->element_pathname		= $myrow['element_pathname'];
 		$this->stf_message			= $myrow['stf_message'];
 		$this->svn_revision                     = $myrow['svn_revision'];
 		$this->repo_name                        = $myrow['repo_name'];

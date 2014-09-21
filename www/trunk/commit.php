@@ -239,10 +239,10 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 
 	$sql ="
 SELECT FPC.*, STF.message as stf_message
-  FROM freshports_commit(E'$message_id', $PageSize, ($PageNo - 1 ) * $PageSize, $User->id) FPC
+  FROM freshports_commit('" . pg_escape_string($message_id) . "', $PageSize, ($PageNo - 1 ) * $PageSize, $User->id) FPC
  LEFT OUTER JOIN sanity_test_failures STF
     ON FPC.commit_log_id = STF.commit_log_id
-ORDER BY port, pathname";
+ORDER BY port, element_pathname";
 
 	if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 

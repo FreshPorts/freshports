@@ -96,6 +96,7 @@ class Commit {
 
 
 	function FetchByMessageId($message_id) {
+	        $Debug = 0;
 		$Where = "message_id = E'" . AddSlashes($message_id) . "'";
 
 		$result = $this->FetchByIDHelper($Where);

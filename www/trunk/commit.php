@@ -221,7 +221,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 #
 #$numrows=400;
 
-	$sql = "select freshports_commit_count_elements(E'$message_id') as count";
+	$sql = "select freshports_commit_count_elements('" . pg_escape_string($message_id) . "') as count";
 
 	if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 

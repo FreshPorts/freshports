@@ -65,7 +65,7 @@ SELECT S.*, STF.message as stf_message
 		}
 		
 		if ($this->MessageID != '') {
-			$sql .= " WHERE message_id = E'" . pg_escape($this->MessageID) . "'";
+			$sql .= " WHERE message_id = E'" . pg_escape_string($this->MessageID) . "'";
 		}
 
 		$sql .= " ORDER BY S.commit_date_raw DESC, S.category, S.port";

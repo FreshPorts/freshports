@@ -12,7 +12,7 @@
 // base class for keeping statistics on page rendering issues
 class SanityTestFailures {
 
-	var $Debug = 1;
+	var $Debug = 0;
 	var $dbh;
 	var $MaxNumberOfPorts;
 

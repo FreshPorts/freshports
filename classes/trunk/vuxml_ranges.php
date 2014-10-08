@@ -23,7 +23,7 @@ class VuXML_Ranges {
 	function FetchByVuXMLAffectedID($vuxml_affected_id) {
 		$sql = "SELECT vuxml_ranges.*
 	              FROM vuxml_ranges
-	             WHERE vuxml_ranges.vuxml_affected_id = " . AddSlashes($vuxml_affected_id);
+	             WHERE vuxml_ranges.vuxml_affected_id = " . pg_escape_string($vuxml_affected_id);
 #		echo "<pre>sql = '$sql'</pre><BR>";
 
 		$result = pg_query($this->dbh, $sql);

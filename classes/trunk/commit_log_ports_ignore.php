@@ -59,7 +59,7 @@ DELETE from commit_log_ports_ignore
 
 		$sql = "
 INSERT INTO commit_log_ports_ignore (commit_log_id, port_id, reason)
-   values ($this->commit_log_id, $this->port_id, '" . AddSlashes($this->reason) . "')";
+   values ($this->commit_log_id, $this->port_id, '" . pg_escape_string($this->reason) . "')";
 
 		echo "\$sql='<pre>$sql</pre><br>\n";
 		

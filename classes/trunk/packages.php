@@ -19,7 +19,7 @@ class Packages {
 
 	function GetCategoryPortFromPackageName($package) {
 		$this->package = $package;
-		$sql = "select GetCategoryPortFromLatestLink(E'" . AddSlashes($package) . "') as categoryport";
+		$sql = "select GetCategoryPortFromLatestLink(E'" . pg_escape_string($package) . "') as categoryport";
 #		echo "<pre>sql = '$sql'</pre><BR>";
 
 		$result = pg_query($this->dbh, $sql);

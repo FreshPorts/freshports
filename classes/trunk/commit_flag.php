@@ -37,7 +37,7 @@ class CommitFlag {
 		#
 		$sql = "DELETE FROM $this->_TableName
 		         WHERE user_id       = $UserID
-		           AND commit_log_id = (SELECT id from commit_log where message_id = '" . AddSlashes($CommitLogID) . "')";
+		           AND commit_log_id = (SELECT id from commit_log where message_id = '" . pg_escape_string($CommitLogID) . "')";
 		if ($this->_Debug) echo "<pre>$sql</pre>";
 		$result = pg_exec($this->dbh, $sql);
 
@@ -69,12 +69,12 @@ class CommitFlag {
 		$sql = "
 INSERT INTO $this->_TableName
 SELECT $UserID as user_id, 
-	   (SELECT id from commit_log where message_id = '" . AddSlashes($CommitLogID) . "') as commit_log_id
+	   (SELECT id from commit_log where message_id = '" . pg_escape_string($CommitLogID) . "') as commit_log_id
  WHERE not exists (
     SELECT T.user_id, T.commit_log_id
       FROM $this->_TableName T
      WHERE T.user_id       = $UserID
-       AND T.commit_log_id = (SELECT id from commit_log where message_id = '" . AddSlashes($CommitLogID) . "'))";
+       AND T.commit_log_id = (SELECT id from commit_log where message_id = '" . pg_escape_string($CommitLogID) . "'))";
 		if ($this->_Debug) echo "<pre>$sql</pre>";
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {

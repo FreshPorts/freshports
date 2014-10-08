@@ -56,7 +56,7 @@ class SanityTestFailures {
 		GLOBAL	$freshports_CommitMsgMaxNumOfLinesToShow;
 
 		if (IsSet($this->Filter)) {
-			$sql = "select * from SanityTestFailures($this->UserID, '" . AddSlashes($this->Filter) . "')";
+			$sql = "select * from SanityTestFailures($this->UserID, '" . pg_escape_string($this->Filter) . "')";
 		} else {
 			$sql = "
 SELECT S.*, STF.message as stf_message

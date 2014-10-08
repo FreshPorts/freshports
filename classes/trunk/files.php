@@ -106,7 +106,7 @@ class CommitFiles {
 	       LEFT OUTER JOIN repo R on CL.repo_id = R.id,
 	       commit_log_elements      CLE,
 	       element                  E
-	 WHERE CL.message_id              = E'" . AddSlashes($this->MessageID) . "'
+	 WHERE CL.message_id              = E'" . pg_escape_string($this->MessageID) . "'
 	   AND CL.id                      = CLE.commit_log_id
 	   AND CLE.element_id             = E.id";
 

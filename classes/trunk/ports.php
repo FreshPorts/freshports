@@ -554,7 +554,7 @@ LEFT OUTER JOIN
 		# and then fetch
 		#
 
-		$sql = "select GetPortID('" . AddSlashes($Category) . "', '"  . AddSlashes($Port) . "') as port_id";
+		$sql = "select GetPortID('" . pg_escape_string($Category) . "', '"  . pg_escape_string($Port) . "') as port_id";
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
 			$numrows = pg_numrows($result);

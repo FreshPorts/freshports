@@ -171,6 +171,15 @@ class port_display {
 			$HTML .= $port->port;
 		}
 
+		$HTML .= "</B></BIG>";
+
+		// description
+		if ($port->short_description && ($this->ShowShortDescription || $this->ShowEverything)) {
+			$HTML .= ' <span class="fp_description_short">' . htmlify(htmlspecialchars($port->short_description)) . '</span>';
+			$HTML .= "<br>\n";
+		}
+
+		$HTML .= "<b>";
 		$PackageVersion = freshports_PackageVersion($port->{'version'}, $port->{'revision'}, $port->{'epoch'});
 		if (strlen($PackageVersion) > 0) {
 			$HTML .= ' ' . $PackageVersion;
@@ -182,7 +191,7 @@ class port_display {
 			}
 		}
 
-		$HTML .= "</B></BIG>";
+		$HTML .= "</b>";
 
 		if ($this->ShowEverything || $this->ShowCategory) {
 			$HTML .= ' <A HREF="/' . $port->category . '/" TITLE="The category for this port">' . $port->category . '</A>';
@@ -251,12 +260,6 @@ class port_display {
 
 		if ($port->is_interactive) {
 			$HTML .= freshports_Is_Interactive_Icon_Link($port->is_interactive) . ' IS INTERACTIVE: '  . htmlify(htmlspecialchars($port->is_interactive)) . '<br>';
-		}
-
-		// description
-		if ($port->short_description && ($this->ShowShortDescription || $this->ShowEverything)) {
-			$HTML .= htmlify(htmlspecialchars($port->short_description));
-			$HTML .= "<br>\n";
 		}
 
 		// maintainer

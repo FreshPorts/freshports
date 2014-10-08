@@ -20,7 +20,7 @@ class VuXML_Packages {
 	function FetchByVID($vuxml_id) {
 		$sql = "SELECT vuxml_affected.*
 	              FROM vuxml_affected
-	             WHERE vuxml_affected.vuxml_id = " . AddSlashes($vuxml_id);
+	             WHERE vuxml_affected.vuxml_id = " . pg_escape_string($vuxml_id);
 #		echo "<pre>sql = '$sql'</pre><BR>";
 
 		$result = pg_query($this->dbh, $sql);

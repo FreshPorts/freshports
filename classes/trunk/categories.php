@@ -105,7 +105,7 @@ SELECT C.*, (SELECT MAX(CL.date_added)
 		$CategoryID = 0;
 
 		if (IsSet($Name)) {
-			$this->name = AddSlashes($Name);
+			$this->name = pg_escape_string($Name);
 			unset($this->id);
 		}
 		$sql = "
@@ -161,7 +161,7 @@ SELECT C.*, (SELECT MAX(CL.date_added)
 		$Debug = 0;
 
 		if (IsSet($Name)) {
-			$this->name = AddSlashes($Name);
+			$this->name = pg_escape_string($Name);
 		}
 		$sql = "select CategoryPortCount('$this->name')";
 		if ($Debug) echo "sql = '$sql'<BR>";
@@ -186,7 +186,7 @@ SELECT C.*, (SELECT MAX(CL.date_added)
 		$Debug = 0;
 		$sql = "UPDATE categories SET description = '" . $this->description . "' WHERE id = " . $this->id . ' AND is_primary = FALSE';
 		syslog(LOG_NOTICE, 'User \'' . $User->name . '\' at '
-			. AddSlashes($_SERVER[REMOTE_ADDR]) . ' is changing category \'' 
+			. pg_escape_string($_SERVER[REMOTE_ADDR]) . ' is changing category \'' 
 			. $this->name . '\' to \'' . $this->description . '\'.');
 		if ($Debug) echo "sql = '$sql'<BR>";
 

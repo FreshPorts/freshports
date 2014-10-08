@@ -111,14 +111,14 @@ DELETE FROM watch_list
 		$max = count($WatchListIDs);
 		$sql = 'UPDATE watch_list
 		           SET in_service = FALSE
-		         WHERE user_id = ' . AddSlashes($UserID);
+		         WHERE user_id = ' . pg_escape_string($UserID);
 
 		if ($Debug) echo "<pre>$sql</pre>";
 		$result = pg_exec($this->dbh, $sql);
 		if ($result && $max) {
 			$sql = 'UPDATE watch_list
 		           SET in_service = TRUE
-		         WHERE user_id = ' . AddSlashes($UserID) . '
+		         WHERE user_id = ' . pg_escape_string($UserID) . '
 		           AND id IN (';
 
 			for ($i = 0; $i < $max; $i++) {

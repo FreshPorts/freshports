@@ -40,7 +40,7 @@ class ElementRecord {
 			$this->element_pathname = $Name;
 			$this->id = '';
 		}
-		$sql = "select * from elementGet(E'" . AddSlashes($Name) . "')";
+		$sql = "select * from elementGet(E'" . pg_escape_string($Name) . "')";
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {

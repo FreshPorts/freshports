@@ -21,7 +21,7 @@ class VuXML_References {
 	function FetchByVID($vuxml_id) {
 		$sql = "SELECT vuxml_references.*
 	              FROM vuxml_references
-	             WHERE vuxml_references.vuxml_id = " . AddSlashes($vuxml_id);
+	             WHERE vuxml_references.vuxml_id = " . pg_escape_string($vuxml_id);
 #		echo "<pre>sql = '$sql'</pre><BR>";
 
 		$result = pg_query($this->dbh, $sql);

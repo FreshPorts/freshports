@@ -135,13 +135,13 @@ class User {
 	function SetWatchListAddRemove($WatchListAddRemove) {
 		
 		$sql = 'UPDATE users 
-		          set watch_list_add_remove = \'' . AddSlashes($WatchListAddRemove) . '\'
+		          set watch_list_add_remove = \'' . pg_escape_string($WatchListAddRemove) . '\'
 		        WHERE id                    =   ' . $this->id;
 
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {
 			$numrows = pg_affected_rows($this->LocalResult);
-			$this->watch_list_add_remove = AddSlashes($WatchListAddRemove);
+			$this->watch_list_add_remove = pg_escape_string($WatchListAddRemove);
 		} else {
 			$numrows = -1;
 			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': ' . pg_last_error());
@@ -157,13 +157,13 @@ class User {
 
 		# we should have some checks here to verify that this WatchListID belongs to this user		
 		$sql = 'UPDATE users 
-		          set last_watch_list_chosen = \'' . AddSlashes($WatchListID) . '\'
+		          set last_watch_list_chosen = \'' . pg_escape_string($WatchListID) . '\'
 		        WHERE id                     =   ' . $this->id;
 		
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {
 			$numrows = pg_affected_rows($this->LocalResult);
-			$this->last_watch_list_chosen = AddSlashes($WatchListID);
+			$this->last_watch_list_chosen = pg_escape_string($WatchListID);
 		} else {
 			$numrows = -1;
 			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': ' . pg_last_error());

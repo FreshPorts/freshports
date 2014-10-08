@@ -34,7 +34,7 @@ SELECT id          AS slave_port_id,
        category_id AS slave_category_id,
        category    AS slave_category_name
   FROM ports_active
- WHERE master_port = '". AddSlashes($MasterName). "'
+ WHERE master_port = '". pg_escape_string($MasterName). "'
 ORDER BY slave_category_name, slave_port_name";
 
 		#echo "sql = <pre>$sql</pre>";

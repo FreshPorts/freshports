@@ -56,7 +56,7 @@ class LatestCommits {
 		GLOBAL	$freshports_CommitMsgMaxNumOfLinesToShow;
 
 		if (IsSet($this->Filter)) {
-			$sql = "select * from LatestCommitsFiltered($this->MaxNumberOfPorts, $this->UserID, '" . AddSlashes($this->Filter) . "')";
+			$sql = "select * from LatestCommitsFiltered($this->MaxNumberOfPorts, $this->UserID, '" . pg_escape_string($this->Filter) . "')";
 		} else {
 #			$sql = "select * from LatestCommits($this->MaxNumberOfPorts, $this->UserID)";
 			$sql = "

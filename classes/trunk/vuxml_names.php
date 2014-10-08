@@ -22,7 +22,7 @@ class VuXML_Names {
 	function FetchByVuXMLAffectedID($vuxml_affected_id) {
 		$sql = "SELECT vuxml_names.*, GetCategoryPortFromLatestLink(name) as package_link
 	              FROM vuxml_names
-	             WHERE vuxml_names.vuxml_affected_id = " . AddSlashes($vuxml_affected_id);
+	             WHERE vuxml_names.vuxml_affected_id = " . pg_escape_string($vuxml_affected_id);
 #		echo "<pre>sql = '$sql'</pre><BR>";
 
 		$result = pg_query($this->dbh, $sql);

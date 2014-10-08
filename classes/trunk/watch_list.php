@@ -35,7 +35,7 @@ class WatchList {
 
 		$return = 0;
 
-		$Name = AddSlashes($Name);
+		$Name = pg_escape_string($Name);
 		
 		$query = "
 SELECT count(watch_list.id), users.max_number_watch_lists
@@ -106,7 +106,7 @@ GROUP BY users.max_number_watch_lists";
 
 		$query  = '
 DELETE FROM watch_list 
- WHERE id = ' . AddSlashes($WatchListID) .'
+ WHERE id = ' . pg_escape_string($WatchListID) .'
    AND user_id = ' . $UserID;
 
 		if ($Debug) echo $query;
@@ -206,8 +206,8 @@ DELETE FROM watch_list_element
 
 		$query  = '
 UPDATE watch_list 
-   SET name = \'' . AddSlashes($NewName) . '\' 
- WHERE id = ' . AddSlashes($WatchListID) . '
+   SET name = \'' . pg_escape_string($NewName) . '\' 
+ WHERE id = ' . pg_escape_string($WatchListID) . '
    AND watch_list.user_id = ' . $UserID;
 		if ($Debug) echo $query;
 		$result = pg_query($this->dbh, $query);

@@ -1171,7 +1171,7 @@ function freshports_PortCommits($port, $PageNumber = 1, $NumCommitsPerPage = 100
 			'altLast'               => 'Last Page',
 			'lastPageText'          => 'Last Page',
 		);
-	$Pager = & Pager::factory($params);
+	$Pager = @Pager::factory($params);
 	
 	// Results from methods:
 	if ($Commits->Debug) {
@@ -2013,7 +2013,7 @@ function freshports_IsInt($x) {
 }
 
 function freshports_GetPortID($db, $category, $port) {
-	$sql = "select Port_ID('" . AddSlashes($category) . "', '" . AddSlashes($port) . "')";
+	$sql = "select Port_ID('" . pg_escape_string($category) . "', '" . pg_escape_string($port) . "')";
 
 	$result = pg_exec($db, $sql);
 	if (!$result) {

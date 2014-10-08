@@ -186,7 +186,7 @@ from element, categories, ports_vulnerable PV right outer join ports on PV.port_
  (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
     FROM watch_list JOIN watch_list_element
         ON watch_list.id      = watch_list_element.watch_list_id
-       AND watch_list.user_id = ' . AddSlashes($UserID) . '
+       AND watch_list.user_id = ' . pg_escape_string($UserID) . '
        AND watch_list.in_service
   GROUP BY wle_element_id) AS TEMP
        ON TEMP.wle_element_id = ports.element_id';

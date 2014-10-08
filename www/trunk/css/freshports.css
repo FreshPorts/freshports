@@ -72,3 +72,8 @@ span.amazon
   float:     right;
   font-size: 20px;
 }
+
+span.fp_description_short
+{
+  font-size:   16px;
+}

@@ -20,7 +20,7 @@
 	if (IsSet($_REQUEST['notfound'])) $notfound = 1;
 	if (IsSet($_REQUEST['multiple'])) $multiple = 1;
 
-	$package  = AddSlashes($_REQUEST['package']);
+	$package  = pg_escape_string($_REQUEST['package']);
 
 	$Searches = new Searches($dbh);
 

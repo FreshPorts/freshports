@@ -36,11 +36,11 @@ if (IsSet($submit)) {
 
 // process form
 
-	$email				= AddSlashes($_POST['email']);
+	$email				= pg_escape_string($_POST['email']);
 	$Password1			= $_POST['Password1'];
 	$Password2			= $_POST['Password2'];
-	$numberofdays			= AddSlashes($_POST['numberofdays']);
-	$page_size			= AddSlashes($_POST['page_size']);
+	$numberofdays			= pg_escape_string($_POST['numberofdays']);
+	$page_size			= pg_escape_string($_POST['page_size']);
 
 	if (!is_numeric($numberofdays) || $numberofdays < 0 || $numberofdays > 9) {
 		$numberofdays = 9;

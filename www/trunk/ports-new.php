@@ -14,7 +14,7 @@
 
 	# we allow the following intervals: today, yesterday, this past week, past 3 months
 
-	$interval = AddSlashes($_GET["interval"]);
+	$interval = pg_escape_string($_GET["interval"]);
 
 	switch ($interval) {
 		case 'today':
@@ -72,8 +72,8 @@ These are the recently added ports.
 </TD></TR>
 <?
 
-	$visitor = AddSlashes($_COOKIE["visitor"]);
-	$sort    = AddSlashes($_GET["sort"]);
+	$visitor = pg_escape_string($_COOKIE["visitor"]);
+	$sort    = pg_escape_string($_GET["sort"]);
 
 	// make sure the value for $sort is valid
 	

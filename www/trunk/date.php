@@ -19,7 +19,7 @@
 	# Get the date we are going to work with.
 	#
 	if (IsSet($_GET['date'])) {
-		$Date = AddSlashes($_GET['date']);
+		$Date = pg_escape_string($_GET['date']);
 	} else {
 		$Date = '';
 	}

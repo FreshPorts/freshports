@@ -22,7 +22,7 @@
 	if (IsSet($_POST["subscribe"]) && $_POST["subscribe"] && !empty($visitor)) {
 	    # if not an email address
 	    if (strrpos($_POST["email"], '@') === false) {
-    		$committer = AddSlashes($_POST["email"]);
+    		$committer = pg_escape_string($_POST["email"]);
     		$sql = "insert into committer_notify (user_id, committer, status)
 	    			values ($User->id, '$committer', 'A')";
 
@@ -41,7 +41,7 @@
 	}
 
 	if (IsSet($_POST["unsubscribe"]) && $_POST["unsubscribe"] && !empty($visitor)) {
-		$committer = AddSlashes($_POST["email"]);
+		$committer = pg_escape_string($_POST["email"]);
 		$sql = "delete from committer_notify where user_id = $User->id";
 
 		if ($Debug) {
@@ -59,7 +59,7 @@
 
 
 	if (IsSet($_POST["update"]) && $_POST["update"] && !empty($visitor)) {
-		$committer = AddSlashes($_POST["email"]);
+		$committer = pg_escape_string($_POST["email"]);
 		$sql = "update committer_notify 
                    set committer = '$committer'
                  where user_id   = $User->id";

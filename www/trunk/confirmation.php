@@ -20,7 +20,7 @@
 
 	$token = $_GET['token'];
 	if (IsSet($token)) {
-		$token = AddSlashes($token);
+		$token = pg_escape_string($token);
 		if ($Debug) echo "I'm confirming with token $token\n<BR>";
 		$sql = "select ConfirmUserAccount('$token')";
 		$result = pg_exec($db, $sql);

@@ -160,8 +160,8 @@ function ProcessPackages($UserID, $PortArray, $dbh) {
 		$Category = $CategoryPort[0];
 		$Port     = $CategoryPort[1];
 
-		$sql = 'select WatchListStagingAddItem(' . AddSlashes($UserID) . ', \'' . 
-					AddSlashes($Category) . '\', \'' . AddSlashes($Port) . '\', ' . AddSlashes($count) . ')';
+		$sql = 'select WatchListStagingAddItem(' . pg_escape_string($UserID) . ', \'' . 
+					pg_escape_string($Category) . '\', \'' . pg_escape_string($Port) . '\', ' . pg_escape_string($count) . ')';
 		$result = pg_exec($dbh, $sql);
 		if ($result && pg_numrows($result)) {
 			# do nothing

@@ -12,13 +12,13 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 	$message_id = '';
-	if (IsSet($_GET['message_id'])) $message_id = AddSlashes($_GET['message_id']);
+	if (IsSet($_GET['message_id'])) $message_id = pg_escape_string($_GET['message_id']);
 
 	#
 	# If they supply a package name, go for it.
 	#
 	if (IsSet($_REQUEST['package'])) {
-		$package = AddSlashes($_REQUEST['package']);
+		$package = pg_escape_string($_REQUEST['package']);
 		if ($package != '') {
 			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/packages.php');
 
@@ -83,9 +83,9 @@ $num          = $MaxNumberOfPorts;
 $days         = $NumberOfDays;
 $dailysummary = 7;
 
-if (In_Array('num',          $_GET)) $num			= AddSlashes($_GET["num"]);
-if (In_Array('dailysummary', $_GET)) $dailysummary	= AddSlashes($_GET["dailysummary"]);
-if (In_Array('days',         $_GET)) $days			= AddSlashes($_GET["days"]);
+if (In_Array('num',          $_GET)) $num		= pg_escape_string($_GET["num"]);
+if (In_Array('dailysummary', $_GET)) $dailysummary	= pg_escape_string($_GET["dailysummary"]);
+if (In_Array('days',         $_GET)) $days		= pg_escape_string($_GET["days"]);
 
 
 if (Is_Numeric($num)) {

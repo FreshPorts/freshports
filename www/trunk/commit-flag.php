@@ -13,7 +13,7 @@
 
 	$Debug = 0;
 	if ($_POST["Origin"]) {
-		$Origin = AddSlashes($_POST["Origin"]);
+		$Origin = pg_escape_string($_POST["Origin"]);
 	} else {
 		$Origin = $_SERVER["HTTP_REFERER"];
 	}
@@ -28,7 +28,7 @@
 	}
 
 	if (IsSet($_REQUEST['message_id'])) {
-		$message_id = AddSlashes($_REQUEST['message_id']);
+		$message_id = pg_escape_string($_REQUEST['message_id']);
 	} else {
 		$message_id = '';
 	}

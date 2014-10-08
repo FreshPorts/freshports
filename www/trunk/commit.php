@@ -23,9 +23,9 @@ DEFINE('NEXT_PAGE',		'Next');
 	$page       = '';
 	$page_size  = '';
 	
-	if (IsSet($_GET['message_id'])) $message_id = AddSlashes($_GET['message_id']);
-	if (IsSet($_GET['commit_id']))  $commit_id  = AddSlashes($_GET['commit_id']);
-	if (IsSet($_GET['revision']))   $revision   = AddSlashes($_GET['revision']);
+	if (IsSet($_GET['message_id'])) $message_id = pg_escape_string($_GET['message_id']);
+	if (IsSet($_GET['commit_id']))  $commit_id  = pg_escape_string($_GET['commit_id']);
+	if (IsSet($_GET['revision']))   $revision   = pg_escape_string($_GET['revision']);
 
 	# I'm quite sure we use only message_id, and never commit_id.
 	if ($message_id != '') {
@@ -335,10 +335,10 @@ ORDER BY port, element_pathname";
 		$Files->MessageIDSet($message_id);
 		$Files->UserIDSet($User->id);
 		if (IsSet($query_parts['category'])) {
-			$Files->CategorySet(AddSlashes($query_parts['category']));
+			$Files->CategorySet(pg_escape_string($query_parts['category']));
 		}
 		if (IsSet($query_parts['port'])) {
-			$Files->PortSet(AddSlashes($query_parts['port']));
+			$Files->PortSet(pg_escape_string($query_parts['port']));
 		}
 
 		$NumRows = $Files->Fetch();

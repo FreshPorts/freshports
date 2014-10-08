@@ -130,17 +130,17 @@ function WildCardQuery($stype, $Like, $query) {
 	$orderbyupdown		= ORDERBYASCENDING;
 
 	// avoid nasty problems by adding slashes
-	if (IsSet($_REQUEST['query']))           $query				= AddSlashes(trim($_REQUEST['query']));
-	if (IsSet($_REQUEST['stype']))           $stype				= AddSlashes(trim($_REQUEST['stype']));
-	if (IsSet($_REQUEST['num']))             $num   		    = intval(AddSlashes(trim($_REQUEST['num'])));
-	if (IsSet($_REQUEST['category']))        $category			= AddSlashes(trim($_REQUEST['category']));
-	if (IsSet($_REQUEST['port']))            $port				= AddSlashes(trim($_REQUEST['port']));
-	if (IsSet($_REQUEST['method']))          $method			= AddSlashes(trim($_REQUEST['method']));
-	if (IsSet($_REQUEST['deleted']))         $deleted			= AddSlashes(trim($_REQUEST['deleted']));
+	if (IsSet($_REQUEST['query']))           $query				= pg_escape_string(trim($_REQUEST['query']));
+	if (IsSet($_REQUEST['stype']))           $stype				= pg_escape_string(trim($_REQUEST['stype']));
+	if (IsSet($_REQUEST['num']))             $num   		    = intval(pg_escape_string(trim($_REQUEST['num'])));
+	if (IsSet($_REQUEST['category']))        $category			= pg_escape_string(trim($_REQUEST['category']));
+	if (IsSet($_REQUEST['port']))            $port				= pg_escape_string(trim($_REQUEST['port']));
+	if (IsSet($_REQUEST['method']))          $method			= pg_escape_string(trim($_REQUEST['method']));
+	if (IsSet($_REQUEST['deleted']))         $deleted			= pg_escape_string(trim($_REQUEST['deleted']));
 	if (!IsSet($_REQUEST[INCLUDE_SRC_COMMITS])) $include_src_commits	= '';
-	if (IsSet($_REQUEST['casesensitivity'])) $casesensitivity	= AddSlashes(trim($_REQUEST['casesensitivity']));
-	if (IsSet($_REQUEST['orderby']))         $orderby			= AddSlashes(trim($_REQUEST['orderby']));
-	if (IsSet($_REQUEST['orderbyupdown']))   $orderbyupdown		= AddSlashes(trim($_REQUEST['orderbyupdown']));
+	if (IsSet($_REQUEST['casesensitivity'])) $casesensitivity	= pg_escape_string(trim($_REQUEST['casesensitivity']));
+	if (IsSet($_REQUEST['orderby']))         $orderby			= pg_escape_string(trim($_REQUEST['orderby']));
+	if (IsSet($_REQUEST['orderbyupdown']))   $orderbyupdown		= pg_escape_string(trim($_REQUEST['orderbyupdown']));
 	
 	# we have a problem with people doing this:
 	#
@@ -648,7 +648,7 @@ $sqlWatchListFrom = '';
 
 $AddRemoveExtra  = "&&origin=" . $_SERVER['SCRIPT_NAME'] . "?query=" . $query. "+stype=$stype+num=$num+method=$method";
 if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<BR>";
-$AddRemoveExtra = AddSlashes($AddRemoveExtra);
+$AddRemoveExtra = pg_escape_string($AddRemoveExtra);
 if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<BR>";
 
 

@@ -18,7 +18,7 @@
 	$Debug = 0;
 	if (IsSet($_REQUEST['package'])) {
 	    if ($Debug) echo "package is specfied on the URL<br>\n";
-		$package = AddSlashes($_REQUEST['package']);
+		$package = pg_escape_string($_REQUEST['package']);
 		if ($package != '') {
 			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/packages.php');
 
@@ -87,9 +87,9 @@ $num          = $MaxNumberOfPortsLong;
 $days         = $NumberOfDays;
 $dailysummary = 7;
 
-if (In_Array('num',          $_GET)) $num			= AddSlashes($_GET["num"]);
-if (In_Array('dailysummary', $_GET)) $dailysummary	= AddSlashes($_GET["dailysummary"]);
-if (In_Array('days',         $_GET)) $days			= AddSlashes($_GET["days"]);
+if (In_Array('num',          $_GET)) $num			= pg_escape_string($_GET["num"]);
+if (In_Array('dailysummary', $_GET)) $dailysummary	= pg_escape_string($_GET["dailysummary"]);
+if (In_Array('days',         $_GET)) $days			= pg_escape_string($_GET["days"]);
 
 if (Is_Numeric($num)) {
 	$MaxNumberOfPortsLong = min($MaxNumberOfPortsLong, max(10, $num));

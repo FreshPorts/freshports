@@ -81,7 +81,7 @@ You can sort each column by clicking on the header.  e.g. click on <b>Category</
 
 
 <?php
-$sort = IsSet($_REQUEST['sort']) ? AddSlashes($_REQUEST['sort']) : '';
+$sort = IsSet($_REQUEST['sort']) ? pg_escape_string($_REQUEST['sort']) : '';
 
 switch ($sort) {
    case 'category':

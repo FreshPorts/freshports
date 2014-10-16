@@ -106,14 +106,14 @@ class CommitFiles {
 	       LEFT OUTER JOIN repo R on CL.repo_id = R.id,
 	       commit_log_elements      CLE,
 	       element                  E
-	 WHERE CL.message_id              = E'" . pg_escape_string($this->MessageID) . "'
+	 WHERE CL.message_id              = '" . pg_escape_string($this->MessageID) . "'
 	   AND CL.id                      = CLE.commit_log_id
 	   AND CLE.element_id             = E.id";
 
 	
 		if ($ForJustOnePort) { 
 			$sql .= "
-	   AND element_pathname(E.id) ILIKE  element_pathname(element_id(E'" .  htmlentities($this->Category)  . "', '" . htmlentities($this->Port) . "')) || '%'"; 
+	   AND element_pathname(E.id) ILIKE  element_pathname(element_id('" .  pg_escape_string($this->Category)  . "', '" . pg_escape_string($this->Port) . "')) || '%'"; 
 		}
 		
 		$sql .= ") AS A

@@ -70,7 +70,7 @@ INSERT INTO page_load_detail(page_name,
                      values ('" . pg_escape_string($_SERVER['SCRIPT_NAME']) . "',
                              $UserID,
                              '" . pg_escape_string($_SERVER['REMOTE_ADDR']) . "',
-                             E'" . pg_escape_string($_SERVER["REQUEST_URI"]) . "',
+                             '" . pg_escape_string($_SERVER["REQUEST_URI"]) . "',
                              '" . $this->ElapsedTime() . " seconds')";
 		if ($Debug) echo "CODE <pre>$sql</pre>";
 		$result = pg_exec($this->dbh, $sql);

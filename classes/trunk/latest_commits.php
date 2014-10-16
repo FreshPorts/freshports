@@ -61,7 +61,7 @@ class LatestCommits {
 #			$sql = "select * from LatestCommits($this->MaxNumberOfPorts, $this->UserID)";
 			$sql = "
   SELECT LC.*, STF.message AS stf_message
-    FROM LatestCommits($this->MaxNumberOfPorts, 0, E'" . pg_escape_string($this->BranchName) . "') LC LEFT OUTER JOIN sanity_test_failures STF
+    FROM LatestCommits($this->MaxNumberOfPorts, 0, '" . pg_escape_string($this->BranchName) . "') LC LEFT OUTER JOIN sanity_test_failures STF
       ON LC.commit_log_id = STF.commit_log_id
 ORDER BY LC.commit_date_raw DESC, LC.category, LC.port, element_pathname";
 		}

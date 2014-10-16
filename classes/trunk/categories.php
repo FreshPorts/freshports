@@ -117,7 +117,7 @@ SELECT C.*, (SELECT MAX(CL.date_added)
                 AND P.last_commit_id = CL.id
                 AND PC.category_id   = C.id) AS last_modified
   FROM categories C
- WHERE C.name = E'" . $this->name . "'";
+ WHERE C.name = '" . $this->name . "'";
 
 		if ($Debug) echo "sql = '$sql'<BR>";
 

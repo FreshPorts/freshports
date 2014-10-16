@@ -88,7 +88,7 @@ class Commits {
 
         $sql .= "
     FROM commit_log_ports CLP JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
-                              JOIN system_branch SB ON SB.branch_name = E'" . pg_escape_string($this->BranchName) . "' AND SB.id = CLB.branch_id
+                              JOIN system_branch SB ON SB.branch_name = '" . pg_escape_string($this->BranchName) . "' AND SB.id = CLB.branch_id
       LEFT OUTER JOIN sanity_test_failures STF ON STF.commit_log_id = CLP.commit_log_id
     , commit_log LEFT OUTER JOIN repo R on commit_log.repo_id = R.id, categories, ports, element ";
 
@@ -136,7 +136,7 @@ class Commits {
 		$sql = "
         SELECT count(DISTINCT CL.id) AS count
           FROM commit_log_ports CLP, commit_log CL JOIN commit_log_branches CLB ON CL.id = CLB.commit_log_id
-                                                   JOIN system_branch SB ON SB.branch_name = E'" . pg_escape_string($this->BranchName) . "' AND SB.id = CLB.branch_id
+                                                   JOIN system_branch SB ON SB.branch_name = '" . pg_escape_string($this->BranchName) . "' AND SB.id = CLB.branch_id
          WHERE CL.commit_date BETWEEN '$Date'::timestamptz  + SystemTimeAdjust()
                                   AND '$Date'::timestamptz  + SystemTimeAdjust() + '1 Day'
         AND CLP.commit_log_id = CL.id";
@@ -180,7 +180,7 @@ class Commits {
 		$sql = "
 SELECT gmt_format(max(CL.date_added)) AS last_modified
   FROM commit_log CL, commit_log_ports CLP JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
-                                           JOIN system_branch SB ON SB.branch_name = E'" . pg_escape_string($this->BranchName) . "' AND SB.id = CLB.branch_id
+                                           JOIN system_branch SB ON SB.branch_name = '" . pg_escape_string($this->BranchName) . "' AND SB.id = CLB.branch_id
  WHERE CL.id = CLP.commit_log_id
    AND CL.commit_date BETWEEN '$Date'::timestamptz  + SystemTimeAdjust()
                           AND '$Date'::timestamptz  + SystemTimeAdjust() + '1 Day'";

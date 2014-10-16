@@ -80,11 +80,11 @@ function WildCardQuery($stype, $Like, $query) {
 
   switch ($stype) {
     case SEARCH_FIELD_PATHNAME:
-      $sql .= " $Like E'$query'";
+      $sql .= " $Like '" . pg_escape_string($query) . "'";
       break;
 
     case SEARCH_FIELD_DEPENDS_ALL:
-      $sql .= "\n     (P.depends_build $Like E'$query' OR P.depends_lib $Like E'$query' OR P.depends_run $Like E'$query')";
+      $sql .= "\n     (P.depends_build $Like '" . pg_escape_string($query) . "' OR P.depends_lib $Like '" . pg_escape_string($query) . "' OR P.depends_run $Like '" . pg_escape_string($query) . "')";
       break;
 
     default:
@@ -92,7 +92,7 @@ function WildCardQuery($stype, $Like, $query) {
         syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . " unknown stype supplied: '$stype'");
         die('something terrible has happened!');
       }
-      $sql .= "\n     " .  $SearchTypeToFieldMap[$stype] . " $Like E'$query'";
+      $sql .= "\n     " .  $SearchTypeToFieldMap[$stype] . " $Like '" . pg_escape_string($query) . "'";
       break;
 	}
 
@@ -335,9 +335,9 @@ switch ($method) {
 		switch ($stype) {
 			case SEARCH_FIELD_DEPENDS_ALL:
 				if ($casesensitivity == 'casesensitive') {
-					$sqlUserSpecifiedCondition = "\n     (P.depends_build = E'$query' OR P.depends_lib = E'$query' OR P.depends_run = E'$query')";
+					$sqlUserSpecifiedCondition = "\n     (P.depends_build = '" . pg_escape_string($query) . "' OR P.depends_lib = '" . pg_escape_string($query) . "' OR P.depends_run = '" . pg_escape_string($query) . "')";
 				} else {
-					$sqlUserSpecifiedCondition = "\n     (lower(P.depends_build) = lower(E'$query') OR lower(P.depends_lib) = lower(E'$query') OR lower(P.depends_run) = lower(E'$query'))";
+					$sqlUserSpecifiedCondition = "\n     (lower(P.depends_build) = lower('" . pg_escape_string($query) . "') OR lower(P.depends_lib) = lower('" . pg_escape_string($query) . "') OR lower(P.depends_run) = lower('" . pg_escape_string($query) . "'))";
 				}
 				break;
 
@@ -345,9 +345,9 @@ switch ($method) {
                 $sqlSetAll = true;
 				$FieldName = $SearchTypeToFieldMap[$stype];
 				if ($casesensitivity == 'casesensitive') {
-					$sqlUserSpecifiedCondition = "     $FieldName = E'$query'";
+					$sqlUserSpecifiedCondition = "     $FieldName = '" . pg_escape_string($query) . "'";
 				} else {
-					$sqlUserSpecifiedCondition = "     lower($FieldName) = lower(E'$query')";
+					$sqlUserSpecifiedCondition = "     lower($FieldName) = lower('" . pg_escape_string($query) . "')";
 				}
 				break;
 		}
@@ -357,16 +357,16 @@ switch ($method) {
 	    $sqlSetAll = true;
 		switch ($stype) {
 			case SEARCH_FIELD_DEPENDS_ALL:
-				$sqlUserSpecifiedCondition = "\n     (levenshtein(substring(P.depends_build FOR 255), E'$query') < " . VEVENSHTEIN_MATCH . 
-				                               "   OR levenshtein(substring(P.depends_lib   FOR 255), E'$query') < " . VEVENSHTEIN_MATCH .
-											   "   OR levenshtein(substring(P.depends_run   FPR 255), E'$query') < " . VEVENSHTEIN_MATCH . ')';
-				$sqlSoundsLikeOrderBy = "levenshtein(substring(P.depends_build for 255) + levenshtein(substring(P.depends_lib for 255), E'$query') + levenshtein(substring(P.depends_run for 255), E'$query')";
+				$sqlUserSpecifiedCondition = "\n     (levenshtein(substring(P.depends_build FOR 255), '" . pg_escape_string($query) . "') < " . VEVENSHTEIN_MATCH . 
+				                               "   OR levenshtein(substring(P.depends_lib   FOR 255), '" . pg_escape_string($query) . "') < " . VEVENSHTEIN_MATCH .
+											   "   OR levenshtein(substring(P.depends_run   FPR 255), '" . pg_escape_string($query) . "') < " . VEVENSHTEIN_MATCH . ')';
+				$sqlSoundsLikeOrderBy = "levenshtein(substring(P.depends_build for 255) + levenshtein(substring(P.depends_lib for 255), '" . pg_escape_string($query) . "') + levenshtein(substring(P.depends_run for 255), '" . pg_escape_string($query) . "')";
 				break;
 
 			default:
 				$FieldName = $SearchTypeToFieldMap[$stype];
-				$sqlUserSpecifiedCondition = "\n     levenshtein($FieldName, E'$query') < " . VEVENSHTEIN_MATCH;
-				$sqlSoundsLikeOrderBy = "levenshtein($FieldName, E'$query')";
+				$sqlUserSpecifiedCondition = "\n     levenshtein($FieldName, '" . pg_escape_string($query) . "') < " . VEVENSHTEIN_MATCH;
+				$sqlSoundsLikeOrderBy = "levenshtein($FieldName, '" . pg_escape_string($query) . "')";
 				break;
 		}
 		break;

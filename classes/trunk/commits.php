@@ -134,12 +134,13 @@ class Commits {
 
 	function Count($Date) {
 		$sql = "
-        SELECT count(DISTINCT CL.id) AS count
-          FROM commit_log_ports CLP, commit_log CL JOIN commit_log_branches CLB ON CL.id = CLB.commit_log_id
-                                                   JOIN system_branch SB ON SB.branch_name = '" . pg_escape_string($this->BranchName) . "' AND SB.id = CLB.branch_id
-         WHERE CL.commit_date BETWEEN '$Date'::timestamptz  + SystemTimeAdjust()
-                                  AND '$Date'::timestamptz  + SystemTimeAdjust() + '1 Day'
-        AND CLP.commit_log_id = CL.id";
+SELECT count(DISTINCT CL.id) AS count
+  FROM commit_log CL JOIN commit_log_ports    CLP ON CLP.commit_log_id = CL.id
+                                                 AND CL.commit_date BETWEEN '$Date'::timestamptz  + SystemTimeAdjust()
+                                                                        AND '$Date'::timestamptz  + SystemTimeAdjust() + '1 Day'
+                     JOIN commit_log_branches CLB ON CL.id             = CLB.commit_log_id
+                     JOIN system_branch       SB  ON SB.branch_name    = '" . pg_escape_string($this->BranchName) . "'
+                                                 AND SB.id             = CLB.branch_id";
 
 		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
 

@@ -224,6 +224,12 @@ class port_display {
 			$HTML .= ' ' . freshports_VuXML_Link($port->package_name, $port->IsVulnerable());
 		}
 
+		# search for bugs related to this port
+		$HTML .= ' ' . freshports_Search_For_Bugs($port->category . '/' . $port->port);
+
+		# report a bug related to this port
+		$HTML .= ' ' . freshports_Report_A_Bug($port->category . '/' . $port->port);
+
 		$HTML .= "</DT>\n<DD>";
 		# show forbidden and broken
 		if ($port->forbidden) {
@@ -273,13 +279,8 @@ class port_display {
 	         $HTML .= freshportsObscureHTML($port->maintainer) . '</A>';
     	  } else {
 	         $HTML .= '<b>';
-    	     if ($port->status == 'A') {
-        	    $HTML .= 'Maintained';
-	         } else {
-    	        $HTML .= 'Was Maintained'; 
-        	 }
 
-	         $HTML .= ' by:</b> <A HREF="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);
+	         $HTML .= 'Maintainer:</b> <A HREF="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);
     	     $HTML .= '?subject=FreeBSD%20Port:%20' . $port->category . '/' . $port->port . '" TITLE="email the maintainer">';
         	 $HTML .= freshportsObscureHTML($port->maintainer) . '</A>';
 	      }
@@ -404,7 +405,7 @@ class port_display {
 
 	   if ($port->homepage && ($this->ShowHomepageLink || $this->ShowEverything)) {
 		   $HTML .= ' <b>:</b> ';
-		   $HTML .= '<a HREF="' . htmlspecialchars($port->homepage) . '" TITLE="Main web site for this port">Main Web Site</a>';
+		   $HTML .= '<a HREF="' . htmlspecialchars($port->homepage) . '" TITLE="Homepage for this port">Homepage</a>';
 	   }
 
 	   if (defined('DISTFILESSURVEYSHOW')  && ($this->ShowDistfilesSurveyLink || $this->ShowEverything)) {
@@ -455,19 +456,19 @@ class port_display {
 			}
 
 			if ($port->depends_build) {
-				$HTML .= '<span class="required">Required To Build:</span>' . "\n" . '<ol class="required" id="requiredtobuild">';
+				$HTML .= '<span class="required">Build dependencies:</span>' . "\n" . '<ol class="required" id="requiredtobuild">';
 				$HTML .= freshports_depends_links($this->db, $port->depends_build);
 				$HTML .= "\n</ol>\n";
 			}
 
 			if ($port->depends_run) {
-				$HTML .= '<span class="required">Required To Run:</span>' . "\n" . '<ol class="required" id="requiredtorun">';
+				$HTML .= '<span class="required">Runtime dependencies:</span>' . "\n" . '<ol class="required" id="requiredtorun">';
 				$HTML .= freshports_depends_links($this->db, $port->depends_run);
 				$HTML .= "\n</ol>\n";
 			}
 
 			if ($port->depends_lib) {
-				$HTML .= '<span class="required">Required Libraries:</span>' . "\n" . '<ol class="required" id="requiredlibraries">';
+				$HTML .= '<span class="required">Library dependencies:</span>' . "\n" . '<ol class="required" id="requiredlibraries">';
 				$HTML .= freshports_depends_links($this->db, $port->depends_lib);
 				$HTML .= "\n</ol>\n";
 			}

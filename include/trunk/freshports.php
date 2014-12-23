@@ -54,6 +54,19 @@ function freshports_Search_Depends_All($CategoryPort) {
 	      freshports_Search_Icon('search for ports that depend on this port') . '</a>';
 }
 
+function freshports_Search_For_Bugs($CategoryPort) {
+  $SearchURL = "https://bugs.freebsd.org/bugzilla/buglist.cgi?component=Individual%20Port%28s%29&amp;list_id=28394&amp;product=Ports%20Tree&amp;query_format=advanced&amp;resolution=---" . 
+    "&amp;short_desc=" . urlencode($CategoryPort) . "&amp;short_desc_type=allwordssubstr";
+
+  return '<a href="' . $SearchURL . '"  rel="nofollow">' . freshports_Bugs_Find_Icon() . '</a>';
+}
+
+function freshports_Report_A_Bug($CategoryPort) {
+  $SearchURL = "https://bugs.freebsd.org/bugzilla/enter_bug.cgi?component=Individual%20Port%28s%29&amp;product=Ports%20Tree&amp;short_desc=" . urlencode($CategoryPort);
+
+  return '<a href="' . $SearchURL . '"  rel="nofollow">' . freshports_Bugs_Report_Icon() . '</a>';
+}
+
 function freshports_SanityTestFailure_Link($message_id) {
 	return '<a href="/sanity_test_failures.php?message_id=' . $message_id . '">' . freshports_SanityTestFailure_Icon() . '</a>';
 }
@@ -159,6 +172,17 @@ function freshports_link_to_port_single($CategoryName, $PortName) {
 	return $HTML;
 }
 
+function freshports_link_text_to_port_single($text, $CategoryName, $PortName) {
+
+	// This differs from freshports_link_to_port_single in the link text is not necessarily the port name.
+
+	$HTML = '';
+	$HTML .= $text . ' : <a href="/' . $CategoryName . '/' . $PortName . '/">' .
+	                                   $CategoryName . '/' . $PortName . '</a>';
+
+	return $HTML;
+}
+
 #
 # These are the pages which take NOINDEX and NOFOLLOW meta tags
 #
@@ -248,6 +272,14 @@ function freshports_Descending_Icon($Title = 'Descending Order') {
 
 function freshports_Search_Icon($Title = 'Search') {
 	return '<img src="/images/search.jpg" alt="' . $Title . '" title="' . $Title . '" border="0" width="17" height="17" align="top">';
+}
+
+function freshports_Bugs_Find_Icon($Title = 'Find issues related to this port') {
+	return '<img src="/images/bug.gif" alt="' . $Title . '" title="' . $Title . '" border="0" width="16" height="16" align="top">';
+}
+
+function freshports_Bugs_Report_Icon($Title = 'Report an issue related to this port') {
+	return '<img src="/images/bug_report.gif" alt="' . $Title . '" title="' . $Title . '" border="0" width="16" height="16" align="top">';
 }
 
 function freshports_WatchListCount_Icon() {
@@ -712,7 +744,7 @@ if (date("M") == 'Nov' && date("j") <= 12) {
 	$HTML .= '	<td nowrap align="center" CLASS="sans" valign="bottom"><a href="http://www.google.ca/search?q=remembrance+day"><img src="/images/poppy.gif" width="50" height="48" border="0" alt="Remember" title="Remember"><br>I remember</a></td>';
 } else {
 	$HTML .= '	<td>';
-	$HTML .= '<div id="followus"><div class="header">Follow us</div><a href="http://news.freshports.org/">Blog</a><br><a href="https://twitter.com/freshports/">Twitter</a><br><br>';
+	$HTML .= '<div id="followus"><div class="header">Follow us</div><a href="http://news.freshports.org/">Blog</a><br><a href="https://twitter.com/freshports/">Twitter</a><br><br></div>';
 
 	$HTML .= '</td>';
 	
@@ -1013,7 +1045,8 @@ function freshports_depends_links($dbh, $DependsList, $BranchName = BRANCH_HEAD)
 		}
 		$CategoryPortArray = explode('/', $CategoryPort);
 
-		$HTML .= '<li>' . freshports_link_to_port_single($CategoryPortArray[0], $CategoryPortArray[1]) . '</li>';
+#		$HTML .= '<li>xxx ' . freshports_link_to_port_single($CategoryPortArray[0], $CategoryPortArray[1]) . '</li>';
+		$HTML .= '<li>' . freshports_link_text_to_port_single($DependsArray[0], $CategoryPortArray[0], $CategoryPortArray[1]) . '</li>';
 	}
 
 	return $HTML;
@@ -1573,6 +1606,8 @@ Valid
 	if ($ShowAds) {
 		$HTML .= freshports_GoogleAnalytics();
 	}
+	
+	$HTML .= '<script src="/javascript/freshports.js" type="text/javascript"></script>';
 
 	$Statistics->Save();
 

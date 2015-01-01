@@ -51,6 +51,10 @@ class Port {
 	var $status;
 	var $showconfig;
 	var $license;
+	var $fetch_depends;
+	var $extract_depends;
+	var $patch_depends;
+	var $uses;
 
 	// derived or from other tables
 	var $category;
@@ -136,6 +140,10 @@ class Port {
 		$this->status             = $myrow["status"];
 		$this->showconfig         = isset($myrow["showconfig"]) ? $myrow["showconfig"] : null;
 		$this->license            = $myrow["license"];
+		$this->fetch_depends      = isset($myrow["fetch_depends"])   ? $myrow["fetch_depends"]   : null;
+		$this->extract_depends    = isset($myrow["extract_depends"]) ? $myrow["extract_depends"] : null;
+		$this->patch_depends      = isset($myrow["patch_depends"])   ? $myrow["patch_depends"]   : null;
+		$this->uses               = isset($myrow["uses"])            ? $myrow["uses"]            : null;
 
 		$this->port               = $myrow["port"];
 		$this->category           = $myrow["category"];
@@ -210,10 +218,14 @@ select ports.id,
        ports.is_interactive,
        ports.only_for_archs,
        ports.not_for_archs,
-	   ports.status,
-	   ports.showconfig,
-	   ports.license,
-
+       ports.status,
+       ports.showconfig,
+       ports.license,
+       ports.fetch_depends,
+       ports.extract_depends,
+       ports.patch_depends,
+       ports.uses,
+       
        to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, 
        ports.categories as categories,
 	    element.name     as port, 
@@ -321,6 +333,10 @@ select ports.id,
 			           ports.status,
 			           ports.showconfig,
 			           ports.license,
+			       ports.fetch_depends,
+			       ports.extract_depends,
+			       ports.patch_depends,
+			       ports.uses,
 		               ports.categories as categories,
 			           element.name     as port, 
 			           categories.name  as category,
@@ -446,6 +462,10 @@ SELECT P.*, element.name    as port
         ports.status,
         ports.showconfig,
         ports.license,
+        ports.fetch_depends,
+        ports.extract_depends,
+        ports.patch_depends,
+        ports.uses,
         ports.categories      as categories,
         categories.name       as category_looking_at,
         PRIMARY_CATEGORY.name as category,

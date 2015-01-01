@@ -472,8 +472,26 @@ class port_display {
 				$HTML .= freshports_depends_links($this->db, $port->depends_lib);
 				$HTML .= "\n</ol>\n";
 			}
-			
-			$HTML .= $this->ShowDependencies( $port );
+
+			if ($port->fetch_depends) {
+				$HTML .= '<span class="required">Fetch dependencies:</span>' . "\n" . '<ol class="required" id="requiredfetches">';
+				$HTML .= freshports_depends_links($this->db, $port->fetch_depends);
+				$HTML .= "\n</ol>\n";
+			}
+
+			if ($port->patch_depends) {
+				$HTML .= '<span class="required">Patch dependencies:</span>' . "\n" . '<ol class="required" id="requiredpatches">';
+				$HTML .= freshports_depends_links($this->db, $port->patch_depends);
+				$HTML .= "\n</ol>\n";
+			}
+
+			if ($port->extract_depends) {
+				$HTML .= '<span class="required">Extract dependencies:</span>' . "\n" . '<ol class="required" id="requiredextracts">';
+				$HTML .= freshports_depends_links($this->db, $port->extract_depends);
+				$HTML .= "\n</ol>\n";
+			}
+
+			$HTML .= "\n" . freshports_NoIndex() . "\n\n" . $this->ShowDependencies( $port ) . "\n\n" . freshports_Index() . "\n";
 		}
 
 		# only show if we're meant to show, and if the port has not been deleted.
@@ -512,6 +530,12 @@ class port_display {
 			} else {
 				$HTML .= '     No options to configure';
 			}
+			$HTML .= "</pre>\n<hr>\n";
+		}
+		
+		if ($this->ShowEverything && $port->uses) {
+			$HTML .= "<b>USES:</b>\n<pre>";
+			$HTML .= $port->uses;
 			$HTML .= "</pre>\n<hr>\n";
 		}
 

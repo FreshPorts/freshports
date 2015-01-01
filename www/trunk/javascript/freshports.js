@@ -16,6 +16,8 @@ $(document).ready(function() {
 
   $('.contract').click( clickFnExpand );
   $('.contract').click();
+  $('.showLink').click( clickFnExpand );
+  $('.showLink').click();
   
 });
 

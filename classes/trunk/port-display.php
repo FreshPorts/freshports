@@ -491,7 +491,7 @@ class port_display {
 				$HTML .= "\n</ol>\n";
 			}
 
-			$HTML .= "\n" . freshports_NoIndex() . "\n\n" . $this->ShowDependencies( $port ) . "\n\n" . freshports_Index() . "\n";
+			$HTML .= $this->ShowDependencies( $port );
 		}
 
 		# only show if we're meant to show, and if the port has not been deleted.

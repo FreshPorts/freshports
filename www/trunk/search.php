@@ -17,6 +17,13 @@
 	$Debug = 0;
 #	if ($Debug) phpinfo();
 
+    $https = ((!empty($_SERVER['HTTPS'])) && ($_SERVER['HTTPS'] != 'off'));
+    if ($https) {
+      $protocol = "https";
+    } else {
+      $protocol = "http";
+    }
+
 	freshports_ConditionalGet(freshports_LastModified_Dynamic());
 
 	define('ORDERBYPORT',       'port');
@@ -105,7 +112,7 @@ function WildCardQuery($stype, $Like, $query) {
 	#
 
 	if ($RejectExternalSearches  && $_SERVER["HTTP_REFERER"] != '') {
-		$pos = strpos($_SERVER["HTTP_REFERER"], "http://" . $_SERVER["SERVER_NAME"]);
+		$pos = strpos($_SERVER["HTTP_REFERER"], $protocol . '://' . $_SERVER["SERVER_NAME"]);
 		if ($pos === FALSE || $pos != 0) {
 			echo "Ouch, something really nasty is going on.  Error code: UAFC.  Please contact the webmaster with this message.";
 			syslog(LOG_NOTICE, "External search form discovered: $_SERVER[HTTP_REFERER] $_SERVER[REMOTE_ADDR]:$_SERVER[REMOTE_PORT]");
@@ -155,7 +162,7 @@ function WildCardQuery($stype, $Like, $query) {
 	}
 
 	if ($stype == SEARCH_FIELD_MESSAGEID) {
-		header('Location: http://' . $_SERVER['HTTP_HOST'] . "/commit.php?message_id=$query");
+		header('Location: ' . $protocol . '://' . $_SERVER['HTTP_HOST'] . "/commit.php?message_id=$query");
 		exit;
 	}
 
@@ -739,34 +746,24 @@ $Port = new Port($db);
 $Port->LocalResult = $result;
 
 }
+
 ?>
 <!-- SiteSearch Google -->
-
-<style type="text/css">
-@import url(http://www.google.com/cse/api/branding.css);
-</style>
-<div class="cse-branding-bottom" style="background-color:#FFFFFF;color:#000000">
-  <div class="cse-branding-form">
-    <form action="http://www.google.com/cse" id="cse-search-box" target="_blank">
-      <div>
-        <input type="hidden" name="cx" value="partner-pub-0711826105743221:o2t5woa4k6z" />
-        <input type="hidden" name="ie" value="ISO-8859-1" />
-        <input type="text" name="q" size="70" />
-        <input type="submit" name="sa" value="Search" />
-      </div>
-    </form>
-  </div>
-  <div class="cse-branding-logo">
-    <img src="http://www.google.com/images/poweredby_transparent/poweredby_FFFFFF.gif" alt="Google" />
-  </div>
-  <div class="cse-branding-text">
-    Custom Search
-  </div>
-</div>
+<script>
+  (function() {
+    var cx = '015787766717316021231:u1yjof0lhkk';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:searchbox-only></gcse:searchbox-only>
 <!-- SiteSearch Google -->
 
-
-</td></tr>
 </table>
 
 <br>

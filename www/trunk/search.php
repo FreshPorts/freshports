@@ -97,7 +97,7 @@ function WildCardQuery($stype, $Like, $query) {
     default:
       if (!IsSet($SearchTypeToFieldMap[$stype])) {
         syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . " unknown stype supplied: '$stype'");
-        die('something terrible has happened!');
+        $stype = SEARCH_FIELD_NAME;
       }
       $sql .= "\n     " .  $SearchTypeToFieldMap[$stype] . " $Like '" . pg_escape_string($query) . "'";
       break;
@@ -187,7 +187,7 @@ function WildCardQuery($stype, $Like, $query) {
           # bad value.
           # ERROR
           syslog(LOG_ERR, 'bad search string: ' . $_SERVER['QUERY_STRING']);
-          die('something terrible has happened!');
+          $type = SEARCH_FIELD_NAME;
     }
 	#
 	# ensure deleted has an appropriate value

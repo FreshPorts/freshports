@@ -490,6 +490,8 @@ class port_display {
 				$HTML .= freshports_depends_links($this->db, $port->extract_depends);
 				$HTML .= "\n</ol>\n";
 			}
+			
+			# XXX when adding new depends above, be sure to update the array in ShowDependencies()
 
 			$HTML .= $this->ShowDependencies( $port );
 		}
@@ -599,7 +601,7 @@ class port_display {
     $HTML = '';
 
     $PortDependencies = new PortDependencies( $this->db );
-    $Types = array( 'B' => 'Build', 'L' => 'Libraries', 'R' => 'Run' );
+    $Types = array( 'B' => 'Build', 'E' => 'Extract', 'F' => 'Fetch', 'L' => 'Libraries', 'P' => 'Patch', 'R' => 'Run' );
     foreach ( $Types as $type => $title )
     {
       $NumRows = $PortDependencies->FetchInitialise( $port->id, $type );

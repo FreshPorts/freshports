@@ -55,14 +55,14 @@ function freshports_Search_Depends_All($CategoryPort) {
 }
 
 function freshports_Search_For_Bugs($CategoryPort) {
-  $SearchURL = "https://bugs.freebsd.org/bugzilla/buglist.cgi?component=Individual%20Port%28s%29&amp;list_id=28394&amp;product=Ports%20Tree&amp;query_format=advanced&amp;resolution=---" . 
+  $SearchURL = "https://bugs.freebsd.org/bugzilla/buglist.cgi?component=Individual%20Port%28s%29&amp;list_id=28394&amp;product=Ports%20%26%20Packages&amp;query_format=advanced&amp;resolution=---" . 
     "&amp;short_desc=" . urlencode($CategoryPort) . "&amp;short_desc_type=allwordssubstr";
 
   return '<a href="' . $SearchURL . '"  rel="nofollow">' . freshports_Bugs_Find_Icon() . '</a>';
 }
 
 function freshports_Report_A_Bug($CategoryPort) {
-  $SearchURL = "https://bugs.freebsd.org/bugzilla/enter_bug.cgi?component=Individual%20Port%28s%29&amp;product=Ports%20Tree&amp;short_desc=" . urlencode($CategoryPort);
+  $SearchURL = "https://bugs.freebsd.org/bugzilla/enter_bug.cgi?component=Individual%20Port%28s%29&amp;product=Ports%20%26%20Packages&amp;short_desc=" . urlencode($CategoryPort);
 
   return '<a href="' . $SearchURL . '"  rel="nofollow">' . freshports_Bugs_Report_Icon() . '</a>';
 }
@@ -1045,8 +1045,7 @@ function freshports_depends_links($dbh, $DependsList, $BranchName = BRANCH_HEAD)
 		}
 		$CategoryPortArray = explode('/', $CategoryPort);
 
-#		$HTML .= '<li>xxx ' . freshports_link_to_port_single($CategoryPortArray[0], $CategoryPortArray[1]) . '</li>';
-		$HTML .= '<li>' . freshports_link_text_to_port_single($DependsArray[0], $CategoryPortArray[0], $CategoryPortArray[1]) . '</li>';
+		$HTML .= '<li>' . freshports_link_text_to_port_single(basename($DependsArray[0]), $CategoryPortArray[0], $CategoryPortArray[1]) . '</li>';
 	}
 
 	return $HTML;

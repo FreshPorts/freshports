@@ -15,8 +15,11 @@
 	freshports_Start('Uploading pkg_info',
 					$FreshPortsName . ' - new ports, applications',
 					'FreeBSD, index, applications, ports');
-$Debug = 0;
+$Debug = 1;
+if ($Debug) {
 #phpinfo();
+#exit;
+}
 
 function StagingAlreadyInUse($UserID, $dbh) {
 
@@ -44,7 +47,7 @@ function DisplayUploadForm($db, $UserID) {
 
 	<P>
 	You can update your watch lists from the packages database on your computer.  Use the output
-	from the <CODE CLASS="code">pkg_info</CODE> command as the input for this page.  FreshPorts
+	from the <CODE CLASS="code">pkg info</CODE> command as the input for this page.  FreshPorts
 	will take this information, analyze it, and use that data to update your watch list.
 	<SMALL><A HREF="/help.php">help</A></SMALL>
 	</P>
@@ -69,7 +72,7 @@ function DisplayUploadForm($db, $UserID) {
 	</P>
 
 	<BLOCKQUOTE>
-		<CODE CLASS="code">pkg_info -qoa > mypkg_info.txt</CODE>
+		<CODE CLASS="code">pkg info -qoa > mypkg_info.txt</CODE>
 	</BLOCKQUOTE>
 
 	</LI>
@@ -332,10 +335,24 @@ if ($Debug) echo '<br>' . __LINE__ . '<br>';
 if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 			$DisplayStagingArea = FALSE;
 			# are they uploading a file?
-			if (IsSet($_FILES["pkg_info"]) && trim($_FILES["pkg_info"]) != '') {
+/*
+The file might look like this:
+
+Array
+(
+    [name] => mypkg_info.txt
+    [type] => text/plain
+    [tmp_name] => /tmp/phpDltNul
+    [error] => 0
+    [size] => 8387
+)
+*/			
+
+			if (IsSet($_FILES["pkg_info"]) && count($_FILES["pkg_info"]) != 0) {
 if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 				$Destination = "/tmp/FreshPorts.tmp_pkg_output." . $User->name;
-				if (HandleFileUpload("pkg_info", $Destination)) {
+#				$Destination = $_FILES["pkg_info"]['tmp_name'];
+				if (HandleFileUpload('pkg_info', $Destination)) {
 if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 					require_once($_SERVER['DOCUMENT_ROOT'] . '/pkg_utils.inc');
 					if (IsSet($_REQUEST["upload"])) {

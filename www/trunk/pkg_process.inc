@@ -19,15 +19,15 @@ function HandleFileUpload($FormFileName, $Destination) {
 	# pass in the name of the field on the form into which the user supplies
 	# the file name.
 	#
-	global $HTTP_POST_FILES;
+#	global $HTTP_POST_FILES;
 
-	if (is_uploaded_file($HTTP_POST_FILES[$FormFileName]['tmp_name'])) {
-		$filename = $HTTP_POST_FILES[$FormFileName]['tmp_name'];
+	if (is_uploaded_file($_FILES[$FormFileName]['tmp_name'])) {
+		$filename = $_FILES[$FormFileName]['tmp_name'];
 #		print "$filename was uploaded successfully<BR>";
-		$realname = $HTTP_POST_FILES[$FormFileName]['name'];
+		$realname = $_FILES[$FormFileName]['name'];
 #		print "realname is $realname<BR>";
 #		print "copying file to $Destination<BR>";
-		copy($HTTP_POST_FILES[$FormFileName]['tmp_name'], $Destination);
+		copy($_FILES[$FormFileName]['tmp_name'], $Destination);
 		$result = 1;
 	} else {
 		DisplayError("No file was uploaded.  Make sure the file name is correct, that the file is non-empty, and that the 

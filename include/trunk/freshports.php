@@ -35,6 +35,7 @@ DEFINE('CLICKTOADD', 'Click to add this to your default watch list[s]');
 
 DEFINE('SPONSORS', 'Servers and bandwidth provided by<br><a href="http://www.nyi.net/" TARGET="_new">New York Internet</a>, <a href="http://www.supernews.com/"  TARGET="_new">SuperNews</a>, and <a href="http://www.rootbsd.net/" TARGET="_new">RootBSD</a>');
 
+DEFINE('FRESHPORTS_ENCODING', 'UTF-8');
 
 if ($Debug) echo "'" . $_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php<br>';
 
@@ -769,7 +770,7 @@ echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 
 function freshports_HEAD_charset() {
 	return '
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=' . FRESHPORTS_ENCODING . '">
 ';
 }
 
@@ -1079,10 +1080,10 @@ function freshports_PortsMoved($port, $PortsMoved) {
 }
 
 function freshports_PortsUpdating($port, $PortsUpdating) {
-	$HTML  =                    htmlspecialchars($PortsUpdating->date);
-	$HTML .= '<pre>Affects: ' . htmlspecialchars($PortsUpdating->affects) . '</pre>';
-	$HTML .= '<pre>Author: '  . htmlspecialchars($PortsUpdating->author)  . '</pre>';
-	$HTML .= '<pre>Reason: '  . htmlspecialchars($PortsUpdating->reason)  . '</pre>';
+	$HTML  =                    _forDisplay($PortsUpdating->date);
+	$HTML .= '<pre>Affects: ' . _forDisplay($PortsUpdating->affects) . '</pre>';
+	$HTML .= '<pre>Author: '  . _forDisplay($PortsUpdating->author)  . '</pre>';
+	$HTML .= '<pre>Reason: '  . _forDisplay($PortsUpdating->reason)  . '</pre>';
 
 	return $HTML;
 }
@@ -1407,7 +1408,7 @@ function freshports_DescriptionPrint($description, $encoding_losses, $maxnumline
 	$shortened = freshports_Head($description, $maxnumlines);
 	$HTML  = '<PRE CLASS="code">';
 
-	$HTML .= htmlify(htmlspecialchars(freshports_wrap($shortened)), $Process_PRs);
+	$HTML .= _forDisplay(freshports_wrap($shortened), $Process_PRs);
 
 	$HTML .= '</PRE>';
 
@@ -2137,6 +2138,17 @@ function freshports_pathname_to_repo_name($WhichRepo, $pathname)
   }
 
   return $repo_file_name;
+}
+
+function _forDisplay($string, $flags = NULL, $encoding = FRESHPORTS_ENCODING) {
+  # can't put this in the header.  See http://php.net/manual/en/functions.arguments.php
+  if ($flags === NULL) {
+    $flags = ENT_COMPAT | ENT_HTML401;
+  }
+  # does special magic for outputing stuff to a webpage.
+  # e.g. htmlspecialchars($port->long_description, ENT_COMPAT | ENT_HTML401, 'ISO-8859-15')
+	    
+  return htmlspecialchars($string, $flags, $encoding);
 }
 
 define('EVERYTHING', 'FreshPorts has everything you want to know about <a href="http://www.freebsd.org/">FreeBSD</a> software, ports, packages,

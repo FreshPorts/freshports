@@ -10,7 +10,7 @@
 	GLOBAL $page_size;
 ?>
 
-<form action="<?php echo $_SERVER["PHP_SELF"] . "?origin=" . $origin ?>" method="POST" NAME=f>
+<form action="<?php echo $_SERVER["PHP_SELF"] . "?origin=" . htmlentities($origin) ?>" method="POST" NAME=f>
 <TABLE width="*" border="0" cellpadding="1">
           <TR>
             <TD VALIGN="top">

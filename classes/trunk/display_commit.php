@@ -6,6 +6,7 @@
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit_record.php');
 
 // base class for displaying commits
@@ -283,7 +284,7 @@ class DisplayCommit {
 					$this->HTML .= "</B></BIG>\n";
 				}
 			}
-			$this->HTML .= htmlspecialchars($mycommit->short_description) . "\n";
+			$this->HTML .= htmlify(_forDisplay($mycommit->short_description)) . "\n";
 
 			$this->HTML .= "<BR>\n";
 

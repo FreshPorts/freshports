@@ -43,7 +43,7 @@ class port_display {
 	var $ShowShortDescription;
 	var $ShowWatchListCount;
 	var $ShowWatchListStatus;
-	
+
 	function port_display(&$db, $User = 0) {
 		$this->db   = $db;
 		$this->User = $User;
@@ -51,7 +51,7 @@ class port_display {
 		
 		$this->SetDetailsNil();
 	}
-	
+
 	function SetDetailsNil() {
 		$this->ShowEverything          = false;
 
@@ -175,7 +175,7 @@ class port_display {
 
 		// description
 		if ($port->short_description && ($this->ShowShortDescription || $this->ShowEverything)) {
-			$HTML .= ' <span class="fp_description_short">' . htmlify(htmlspecialchars($port->short_description)) . '</span>';
+			$HTML .= ' <span class="fp_description_short">' . htmlify(_forDisplay($port->short_description)) . '</span>';
 			$HTML .= "<br>\n";
 		}
 
@@ -233,15 +233,15 @@ class port_display {
 		$HTML .= "</DT>\n<DD>";
 		# show forbidden and broken
 		if ($port->forbidden) {
-			$HTML .= freshports_Forbidden_Icon_Link($port->forbidden)   . ' FORBIDDEN: '  . htmlify(htmlspecialchars($port->forbidden))  . "<br>";
+			$HTML .= freshports_Forbidden_Icon_Link($port->forbidden)   . ' FORBIDDEN: '  . htmlify(_forDisplay($port->forbidden))  . "<br>";
 		}
 
 		if ($port->broken) {
-			$HTML .= freshports_Broken_Icon_Link($port->broken)         . ' BROKEN: '     . htmlify(htmlspecialchars($port->broken))     . "<br>"; ;
+			$HTML .= freshports_Broken_Icon_Link($port->broken)         . ' BROKEN: '     . htmlify(_forDisplay($port->broken))     . "<br>"; ;
 		}
 
 		if ($port->deprecated) {
-			$HTML .= freshports_Deprecated_Icon_Link($port->deprecated) . ' DEPRECATED: ' . htmlify(htmlspecialchars($port->deprecated)) . "<br>"; ;
+			$HTML .= freshports_Deprecated_Icon_Link($port->deprecated) . ' DEPRECATED: ' . htmlify(_forDisplay($port->deprecated)) . "<br>"; ;
 		}
 
 		if ($port->expiration_date) {
@@ -253,19 +253,19 @@ class port_display {
 		}
 
 		if ($port->ignore) {
-			$HTML .= freshports_Ignore_Icon_Link($port->ignore)         . ' IGNORE: '     . htmlify(htmlspecialchars($port->ignore))     . "<br>"; ;
+			$HTML .= freshports_Ignore_Icon_Link($port->ignore)         . ' IGNORE: '     . htmlify(_forDisplay($port->ignore))     . "<br>"; ;
 		}
 
 		if ($port->restricted) {
-			$HTML .= freshports_Restricted_Icon_Link($port->restricted) . ' RESTRICTED: '     . htmlify(htmlspecialchars($port->restricted)) . '<br>';
+			$HTML .= freshports_Restricted_Icon_Link($port->restricted) . ' RESTRICTED: '     . htmlify(_forDisplay($port->restricted)) . '<br>';
 		}
 
 		if ($port->no_cdrom) {
-			$HTML .= freshports_No_CDROM_Icon_Link($port->no_cdrom)      . ' NO CDROM: '     . htmlify(htmlspecialchars($port->no_cdrom))   . '<br>';
+			$HTML .= freshports_No_CDROM_Icon_Link($port->no_cdrom)      . ' NO CDROM: '     . htmlify(_forDisplay($port->no_cdrom))   . '<br>';
 		}
 
 		if ($port->is_interactive) {
-			$HTML .= freshports_Is_Interactive_Icon_Link($port->is_interactive) . ' IS INTERACTIVE: '  . htmlify(htmlspecialchars($port->is_interactive)) . '<br>';
+			$HTML .= freshports_Is_Interactive_Icon_Link($port->is_interactive) . ' IS INTERACTIVE: '  . htmlify(_forDisplay($port->is_interactive)) . '<br>';
 		}
 
 		// maintainer
@@ -387,7 +387,7 @@ class port_display {
 	   }
 
 	   if ($this->ShowDescriptionLong || $this->ShowEverything) {
-		   $HTML .= '<PRE CLASS="code">' . htmlify(htmlspecialchars($port->long_description)) . '</PRE>';
+		   $HTML .= '<PRE CLASS="code">' . htmlify(_forDisplay($port->long_description)) . '</PRE>';
 	   }
 
 	   if ($this->ShowChangesLink || $this->ShowEverything) {
@@ -405,7 +405,7 @@ class port_display {
 
 	   if ($port->homepage && ($this->ShowHomepageLink || $this->ShowEverything)) {
 		   $HTML .= ' <b>:</b> ';
-		   $HTML .= '<a HREF="' . htmlspecialchars($port->homepage) . '" TITLE="Homepage for this port">Homepage</a>';
+		   $HTML .= '<a HREF="' . _forDisplay($port->homepage) . '" TITLE="Homepage for this port">Homepage</a>';
 	   }
 
 	   if (defined('DISTFILESSURVEYSHOW')  && ($this->ShowDistfilesSurveyLink || $this->ShowEverything)) {
@@ -547,7 +547,7 @@ class port_display {
 			$MasterSites = explode(' ', $port->master_sites);
 			asort($MasterSites);
 			foreach ($MasterSites as $Site) {
-				$HTML .= '<li>' . htmlify(htmlspecialchars($Site)) . "</li>\n";
+				$HTML .= '<li>' . htmlify(_forDisplay($Site)) . "</li>\n";
 			}
 
 			$HTML .= "</ol>\n";

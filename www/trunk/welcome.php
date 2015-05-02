@@ -23,7 +23,7 @@
 
 	<?php echo freshports_MainContentTable(); ?>
   <TR>
-	<? echo freshports_PageBannerText("Account created"); ?>
+	<?php echo freshports_PageBannerText("Account created"); ?>
   </TR>
 	<TR>
 	<TD>
@@ -41,7 +41,7 @@
 	</P>
 
 	<P>
-	Click <a href="<? echo $origin?>">here</a> to return to your previous page.
+	Click <a href="<?php echo htmlentities($origin) ?>">here</a> to return to your previous page.
 	</P>
 
 </TD></TR>

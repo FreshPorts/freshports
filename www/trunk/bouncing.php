@@ -29,7 +29,7 @@ if ($submit) {
    $result = pg_exec($db, $sql);
    if ($result) {
       if ($Debug) {
-         echo "I would have taken you to '$origin' now, but debugging is on<br>\n";
+         echo "I would have taken you to '" . htmlentities($origin) . "' now, but debugging is on<br>\n";
       } else {
          // Redirect browser to PHP web site
          if ($origin == "/index.php" || $origin == '') {
@@ -54,7 +54,7 @@ if ($submit) {
 	<?php echo freshports_MainContentTable(NOBORDER); ?>
 
 <tr>
-<? echo freshports_PageBannerText("Bouncing?  What do you mean?"); ?>
+<?php echo freshports_PageBannerText("Bouncing?  What do you mean?"); ?>
 </tr>
 <tr><td>
 
@@ -69,7 +69,7 @@ messages, you should update your email address on the customization page.</p>
 <TR><TD HEIGHT="20">
 </TD></TR>
 <tr>
-<? echo freshports_PageBannerText("How to fix the problem"); ?>
+<?php echo freshports_PageBannerText("How to fix the problem"); ?>
 </tr>
 <tr><td>
 <p>There are two things which might have caused your email to bounce:</p>
@@ -86,7 +86,7 @@ the button below.</p>
 
 </td></tr>
 <tr><td><CENTER>
-<form action="<?php echo $_SERVER["PHP_SELF"] . "?origin=" . $origin ?>" method="POST">
+<form action="<?php echo $_SERVER["PHP_SELF"] . "?origin=" . htmlentities($origin) ?>" method="POST">
 <input TYPE="submit" VALUE="There was a problem, but it's fixed now" name="submit">
 </form>
 </CENTER>

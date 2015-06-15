@@ -351,6 +351,9 @@ switch ($method) {
 			default:
                 $sqlSetAll = true;
 				$FieldName = $SearchTypeToFieldMap[$stype];
+				if (empty($FieldName)) {
+				   die('you are probably doing this wrong');
+				}
 				if ($casesensitivity == 'casesensitive') {
 					$sqlUserSpecifiedCondition = "     $FieldName = '" . pg_escape_string($query) . "'";
 				} else {

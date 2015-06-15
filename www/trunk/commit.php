@@ -269,6 +269,7 @@ ORDER BY port, element_pathname";
 		}
 	} else {
 	  syslog(LOG_NOTICE, __FILE__ . '::' . __LINE__ . ': ' . pg_last_error());
+	  exit;
     }
     }
 } else {

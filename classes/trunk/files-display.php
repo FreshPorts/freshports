@@ -124,6 +124,9 @@ class FilesDisplay {
         			$this->HTML .= ' <A HREF="http://' . $myrow['svn_hostname'] . $myrow["pathname"] . '?annotate=' . $myrow["revision_name"] . '">';
 		        	$this->HTML .= freshports_Revision_Icon() . '</a> ';
                     break;
+                    
+                default:
+		    $this->HTML .= 'unknown: \'' . htmlentities($WhichRepo) . '\'';
             }
 
             $this->HTML .= '</td>';

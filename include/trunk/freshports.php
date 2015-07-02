@@ -2093,7 +2093,8 @@ function freshports_MessageIdToRepoName($message_id)
 {
   $repo = array(
             '/\@svn.freebsd.org$/i'     => FREEBSD_REPO_SVN,
-            '/\@repoman.freebsd.org$/i' => FREEBSD_REPO_CVS);
+            '/\@repoman.freebsd.org$/i' => FREEBSD_REPO_CVS,
+            '/\@repo.freebsd.org$/i'    => FREEBSD_REPO_SVN);
 
   # given a message id, figure out what repo it came from
   $RepoName = '';

@@ -2105,6 +2105,10 @@ function freshports_MessageIdToRepoName($message_id)
       $RepoName = $reponame;
     }
   }
+  
+  if (Empty($RepoName)) {
+    $RepoName = FREEBSD_REPO_SVN;
+  }
 
   return $RepoName;
 }

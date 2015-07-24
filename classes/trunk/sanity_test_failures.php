@@ -58,7 +58,7 @@ class SanityTestFailures {
 		if (IsSet($this->Filter)) {
 			$sql = "select * from SanityTestFailures($this->UserID, '" . pg_escape_string($this->Filter) . "')";
 		} else {
-			$sql = "
+			$sql = "set client_encoding = 'ISO-8859-15';
 SELECT S.*, STF.message as stf_message
   FROM SanityTestFailures($this->UserID) S LEFT OUTER JOIN sanity_test_failures STF
     ON S.commit_log_id = STF.commit_log_id";

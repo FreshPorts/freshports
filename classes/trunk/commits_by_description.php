@@ -59,11 +59,11 @@ class CommitsByDescription extends commits {
     
 			
 		if ($this->Limit) {
-			$sql .= "\nLIMIT " . $this->Limit;
+			$sql .= " LIMIT " . $this->Limit;
 		}
 		
 		if ($this->Offset) {
-			$sql .= "\nOFFSET " . $this->Offset;
+			$sql .= " OFFSET " . $this->Offset;
 		}
 
 

@@ -134,11 +134,11 @@ class CommitsByTreeLocation extends commits {
 ORDER BY CL.commit_date DESC ";
 
    		if ($this->Limit) {
-			$sql .= "\nLIMIT " . $this->Limit;
+			$sql .= " LIMIT " . $this->Limit;
 		}
 		
 		if ($this->Offset) {
-			$sql .= "\nOFFSET " . $this->Offset;
+			$sql .= " OFFSET " . $this->Offset;
 		}
 
 

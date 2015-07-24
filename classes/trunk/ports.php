@@ -184,7 +184,7 @@ class Port {
 
 		$this->element_id = $element_id;
 
-		$sql = "
+		$sql = "set client_encoding = 'ISO-8859-15';
 select ports.id,
        ports.element_id,
        ports.category_id       as category_id, 
@@ -296,7 +296,7 @@ select ports.id,
 
 		$Debug = 0;
 
-		$sql = "select ports.id, 
+		$sql = "set client_encoding = 'ISO-8859-15'; select ports.id, 
 		               ports.element_id, 
 		               ports.category_id       as category_id,
 		               ports.short_description as short_description, 
@@ -422,7 +422,7 @@ FROM
  (";
      	}
 
-		$sql .= "
+		$sql .= "set client_encoding = 'ISO-8859-15';
 SELECT P.*, element.name    as port
    FROM element JOIN
  (SELECT ports.id,

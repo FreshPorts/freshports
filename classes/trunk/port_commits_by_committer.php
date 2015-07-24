@@ -63,7 +63,7 @@ class PortCommitsByCommitter extends CommitsByCommitter {
 	}
 
 	function Fetch() {
-		$sql = "
+		$sql = "set client_encoding = 'ISO-8859-15';
 		SELECT DISTINCT
 			CL.commit_date - SystemTimeAdjust()                                            AS commit_date_raw,
 			CL.id                                                                          AS commit_log_id,
@@ -101,11 +101,11 @@ class PortCommitsByCommitter extends CommitsByCommitter {
     FROM commit_log_ports CLP JOIN (SELECT * FROM commit_log WHERE commit_log.committer = '" . pg_escape_string($this->Committer) . "' ORDER BY commit_date DESC ";
     
 		if ($this->Limit) {
-			$sql .= "LIMIT " . $this->Limit;
+			$sql .= " LIMIT " . $this->Limit;
 		}
 		
 		if ($this->Offset) {
-			$sql .= "OFFSET " . $this->Offset;
+			$sql .= " OFFSET " . $this->Offset;
 		}
 
     

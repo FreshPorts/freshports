@@ -141,4 +141,3 @@ google_color_text = "000000";
  
 }
   
-?>

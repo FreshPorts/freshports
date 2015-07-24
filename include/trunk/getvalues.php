@@ -100,4 +100,3 @@ if (!empty($visitor)) {
 } else {
 	if ($Debug) echo "we have no \$visitor\n<BR>";
 }
-?>

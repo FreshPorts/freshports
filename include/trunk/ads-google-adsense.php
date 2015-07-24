@@ -127,6 +127,3 @@ function Ad_468x60_Below() {
 function Ad_300x250() {
   return Ad_PhpPgAdsBase(41, 'a98095ab');
 }
-
-
-?>

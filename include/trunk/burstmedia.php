@@ -106,4 +106,3 @@ document.write(\'<scr\'+\'ipt src="http://www.burstnet.com/cgi-bin/ads/ad4556a.c
 	}
 }
 
-?>

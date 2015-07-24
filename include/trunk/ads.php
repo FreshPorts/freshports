@@ -62,4 +62,3 @@ function Ad_Referral_120x60() {
   }
 }
 
-?>

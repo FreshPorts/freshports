@@ -151,6 +151,3 @@ function Ad_300x250() {
   <!-- END BURST CODE -->
   ';
 }
-
-
-?>

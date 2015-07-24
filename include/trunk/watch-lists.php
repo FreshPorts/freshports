@@ -165,4 +165,3 @@ function freshports_WatchListVerifyToken($db, $token) {
 	return $id;
 }
 
-?>

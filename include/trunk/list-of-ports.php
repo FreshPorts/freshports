@@ -81,4 +81,3 @@ function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeade
 
 }
 
-?>

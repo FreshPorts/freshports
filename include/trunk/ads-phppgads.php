@@ -76,5 +76,3 @@ function Ad_300x250() {
 	$Code = Ad_PhpPgAdsBase(60, 'ae3d342e');
 	return $Code;
 }
-
-?>

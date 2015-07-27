@@ -410,7 +410,7 @@ ON TEMP.wle_element_id = ports.element_id";
 		
 		$Debug = 0;
 
-		$sql = "";
+		$sql = "set client_encoding = 'ISO-8859-15';";
 		if ($UserID) {
 			$sql .= "SELECT PE.*,
 
@@ -422,7 +422,7 @@ FROM
  (";
      	}
 
-		$sql .= "set client_encoding = 'ISO-8859-15';
+		$sql .= "
 SELECT P.*, element.name    as port
    FROM element JOIN
  (SELECT ports.id,

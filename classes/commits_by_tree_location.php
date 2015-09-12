@@ -23,7 +23,7 @@ class CommitsByTreeLocation extends commits {
 	
 	function TreePathConditionSet($TreePathCondition) {
 		# this function assumes you have the operator and the value.
-		$this->TreePathCondition ="EP.pathname   " . $TreePathCondition;
+		$this->TreePathCondition = "EP.pathname   " . $TreePathCondition;
 	}
 
 	function TreePathConditionSetAll($TreePathCondition) {
@@ -37,7 +37,7 @@ class CommitsByTreeLocation extends commits {
 		$sql = "
 			SELECT count(DISTINCT CL.id) AS count
 			  FROM element_pathname EP, commit_log_ports_elements CLPE, commit_log CL
-			 WHERE ". pg_escape_string($this->TreePathCondition) . "
+			 WHERE $this->TreePathCondition)
 			   AND EP.element_id = CLPE.element_ID
 			   AND CL.id         = CLPE.commit_log_id";
    
@@ -60,7 +60,7 @@ class CommitsByTreeLocation extends commits {
 		$sql = "
 			SELECT count(DISTINCT CL.id) AS count
 			  FROM element_pathname EP, commit_log_elements CLE, commit_log CL
-			 WHERE " . pg_escape_string($this->TreePathCondition) . "
+			 WHERE $this->TreePathCondition
 			   AND EP.element_id = CLE.element_ID
 			   AND CL.id         = CLE.commit_log_id";
    
@@ -128,7 +128,7 @@ class CommitsByTreeLocation extends commits {
 		$sql .= "
 	  WHERE commit_log.id IN (SELECT tmp.id FROM (SELECT DISTINCT CL.id, CL.commit_date
   FROM element_pathname EP, commit_log_elements CLE, commit_log CL
- WHERE " . pg_escape_string($this->TreePathCondition) . "
+ WHERE $this->TreePathCondition
    AND EP.element_id = CLE.element_ID
    AND CL.id         = CLE.commit_log_id
 ORDER BY CL.commit_date DESC ";
@@ -232,7 +232,7 @@ ORDER BY CL.commit_date DESC ";
 		$sql .= "
 	  WHERE CL.id IN (SELECT tmp.ID FROM (SELECT DISTINCT CL.id, CL.commit_date
   FROM element_pathname EP, commit_log_elements CLE, commit_log CL
- WHERE " . pg_escape_string($this->TreePathCondition) . "
+ WHERE $this->TreePathCondition
    AND EP.element_id = CLE.element_ID
    AND CL.id         = CLE.commit_log_id
 ORDER BY CL.commit_date DESC ";

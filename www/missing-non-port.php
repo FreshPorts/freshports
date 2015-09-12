@@ -7,8 +7,8 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
-    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits_by_tree_location.php');
-    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits_by_tree_location.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/cache-file.php');
 	require_once('Pager/Pager.php');
 	
@@ -105,7 +105,7 @@ function freshports_NonPortDescription($db, $element_record) {
     $Commits->SetLimit($Cache->PageSize);
     $Commits->Debug = $Debug;
 	$Commits->UserIDSet($User->id);
-	$Commits->TreePathConditionSet("= '" . $element_record->element_pathname . "'");
+	$Commits->TreePathConditionSet("= '" . pg_escape_path($element_record->element_pathname) . "'");
     
 	#	
 	# get the count without excuting the whole query

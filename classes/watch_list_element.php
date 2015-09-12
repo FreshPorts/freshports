@@ -131,7 +131,7 @@ INSERT INTO watch_list_element
 select " . pg_escape_string($WatchListID) . ", " . pg_escape_string($ElementID) . "
   from watch_list 
  where user_id = " . pg_escape_string($UserID)      . "
-   and id      = " , pg_escape_string($WatchListID) . "
+   and id      = " . pg_escape_string($WatchListID) . "
    and not exists (
     SELECT watch_list_element.watch_list_id, watch_list_element.element_id
       FROM watch_list_element

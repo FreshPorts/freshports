@@ -140,7 +140,7 @@ SELECT C.*, (SELECT MAX(CL.date_added)
 
 		Unset($CategoryID);
 
-		$sql = "SELECT id FROM categories where name = '" . pg_escape_string($Name) "'";
+		$sql = "SELECT id FROM categories where name = '" . pg_escape_string($Name) . "'";
 
 		if ($Debug) echo "sql = '$sql'<BR>";
 

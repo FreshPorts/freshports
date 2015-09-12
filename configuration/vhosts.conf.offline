@@ -1,9 +1,10 @@
-<VirtualHost *>
+<VirtualHost [2001:470:b8ce::1]:80>
 	ServerAdmin     dan@langille.org
 
-	DocumentRoot    /usr/websites/freshports.org/www-offline
+	DocumentRoot    /usr/local/www/freshports.org/www-offline
 
-	ServerName      dev.freshports.org
+	ServerName      www.freshports.org
+    ServerAlias	    freshports.org
 
 	ErrorLog        /usr/websites/log/dev.freshports.org-error.log
 	CustomLog       /usr/websites/log/dev.freshports.org-access.log combined
@@ -11,3 +12,49 @@
 	ErrorDocument   404 /index.php
 
 </VirtualHost>
+<VirtualHost 206.127.23.230:80>
+	ServerAdmin     dan@langille.org
+
+	DocumentRoot    /usr/local/www/freshports.org/www-offline
+
+	ServerName      www.freshports.org
+    ServerAlias	    freshports.org
+
+	ErrorLog        /usr/websites/log/dev.freshports.org-error.log
+	CustomLog       /usr/websites/log/dev.freshports.org-access.log combined
+
+	ErrorDocument   404 /index.php
+
+</VirtualHost>
+
+
+<VirtualHost 206.127.23.230:443>
+  ServerAdmin     dan@langille.org
+
+  ServerName      www.freshports.org
+    ServerAlias	    freshports.org
+
+	DocumentRoot    /usr/local/www/freshports.org/www-offline
+
+  ErrorLog        /usr/websites/log/freshports.org-error.log
+  CustomLog       /usr/websites/log/freshports.org-access.log combined
+
+	ErrorDocument   404 /index.php
+
+  Include         /usr/local/www/freshports.org/configuration/ssl-configuration.conf
+
+  <FilesMatch "\.(cgi|shtml|phtml|php)$">
+    SSLOptions +StdEnvVars
+  </FilesMatch>
+  <Directory "/usr/local/www/apache22/cgi-bin">
+    SSLOptions +StdEnvVars
+  </Directory>
+
+  BrowserMatch ".*MSIE.*" \
+         nokeepalive ssl-unclean-shutdown \
+         downgrade-1.0 force-response-1.0
+
+  CustomLog "/usr/websites/log/freshports.org-ssl_request.log" \
+          "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
+
+</VirtualHost>                                  

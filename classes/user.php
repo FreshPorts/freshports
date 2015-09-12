@@ -195,6 +195,9 @@ class User {
 		}
 	}
 
+	function createUserToken() {
+		return hash('sha256', uniqid(rand(), true));
+	}
+
 }
 
-?>

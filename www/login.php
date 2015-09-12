@@ -8,6 +8,7 @@
    require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
    require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
    require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
+   require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user.php');
 
 $Debug = 0;
 
@@ -49,6 +50,7 @@ if (IsSet($_REQUEST['LOGIN']) && $_REQUEST['UserID']) {
       echo '<pre>' . htmlentities($sql) . '<pre>';
    }
 
+   syslog(LOG_ERROR, $sql);
    $result = pg_exec($db, $sql) or die('query failed ' . pg_errormessage());
 
 	if (!pg_numrows($result)) {
@@ -56,7 +58,7 @@ if (IsSet($_REQUEST['LOGIN']) && $_REQUEST['UserID']) {
 	} else {
 		$row    = pg_fetch_array($result,0);
 		$status = $row["status"];
-		$Cookie = $row["cookie"];
+
 		if ($Debug) echo "\$status = $status\n<BR>";
 
 		GLOBAL $UserStatusActive;
@@ -68,8 +70,15 @@ if (IsSet($_REQUEST['LOGIN']) && $_REQUEST['UserID']) {
 		if ($status == $UserStatusActive) {
 			if ($Debug) {
 				echo "well, debug was on, so I would have taken you to '$origin'<BR>\n";
-				echo "Cookie = $Cookie<BR>\n";
 			} else {
+				$user = new User();
+				$Cookie = $user->createUserToken();
+				# we should use $user to save this...
+
+				$sql = "UPDATE users SET cookie = '" . pg_escape_string($Cookie) . "' WHERE id = " . $row['id'];
+				# if we were doing this in a user object, we could retry when there was a cookie collision and we get a unique index error
+				$result = pg_exec($db, $sql) or die('query failed ' . pg_errormessage());
+
 				SetCookie("visitor", $Cookie, time() + 60*60*24*120, '/');
 				// Redirect browser to PHP web site
 				if ($origin == "/index.php" || $origin == "") {

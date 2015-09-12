@@ -93,10 +93,12 @@ if (IsSet($submit)) {
 	  else
 	  {
 	    $errors .= 'Your CAPTHCA code is not valid<br>';
-  		syslog(LOG_ERR, "FreshPorts captcha failure: '" . $UserLogin . "', '" . $email . "', "  . $_SERVER['REMOTE_ADDR']);
+	    syslog(LOG_ERR, "FreshPorts captcha failure: '" . $UserLogin . "', '" . $email . "', "  . $_SERVER['REMOTE_ADDR']);
 	    $OK = 0;
 	  }
   }
+
+
 
 	#
 	# make sure we have valid values in this variable.
@@ -105,25 +107,25 @@ if (IsSet($submit)) {
 
 	$UserCreated = 0;
 	if ($OK) {
-		$Cookie = UserToCookie($UserLogin);
 //		echo "checking database\n";
+                syslog(LOG_ERR, "FreshPorts new XXX user");
 
 		// test for existance of user id
 
-		$sql = "select * from users where cookie = '$Cookie'";
+		$sql = "select * from users where name = '" . pg_escape_string(strtolower($UserLogin)) . "'";
+		syslog(LOG_ERR, "FreshPorts new user: $sql");
 
 		$result = pg_exec($db, $sql) or die('query failed');
 
 		// create user id if not found
 		if(!pg_numrows($result)) {
- //			echo "confirmed: user id is new\n";
+			syslog(LOG_ERR, "FreshPorts new user: '$UserLogin', '$email', " . $_SERVER["REMOTE_ADDR"] . ' confirmed: user id is new');
 
 			$UserID = freshports_GetNextValue($Sequence_User_ID, $db);
 			if (IsSet($UserID)) {			
 				$sql = "insert into users (id, name, cookie, email, " . 
 						"watch_notice_id, emailsitenotices_yn, type, ip_address, number_of_days, password_hash) values (";
-				$sql .= pg_escape_string($UserID) . ", '" . pg_escape_string($UserLogin) . "', '" .
-                        pg_escape_string($Cookie) . "', '" . 
+				$sql .= pg_escape_string($UserID) . ", '" . pg_escape_string($UserLogin) . "', 'nocookie', '" . 
 						pg_escape_string($email) . "', '1', 'N', 'U', '" . $_SERVER["REMOTE_ADDR"] . "', " .
 						pg_escape_string($numberofdays) . ", crypt('" . pg_escape_string($Password1) . "' , gen_salt('md5')))";
 

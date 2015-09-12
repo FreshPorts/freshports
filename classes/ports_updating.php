@@ -44,7 +44,7 @@ class PortsUpdating {
          E.name       as port,
          C.name       as category
     FROM ports_updating PU, ports_updating_ports_xref PUPX, ports, categories C, element E
-   WHERE PUPX.port_id           = $PortID
+   WHERE PUPX.port_id           = " . pg_escape_string($PortID) . "
      AND PUPX.ports_updating_id = PU.id
      AND PUPX.port_id           = ports.id
      AND ports.category_id      = C.id
@@ -80,5 +80,3 @@ ORDER BY date desc"
 	}
 
 }
-
-?>

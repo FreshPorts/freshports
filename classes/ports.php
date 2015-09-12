@@ -259,14 +259,14 @@ select ports.id,
 	 (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
 	    FROM watch_list JOIN watch_list_element 
 	        ON watch_list.id      = watch_list_element.watch_list_id
-	       AND watch_list.user_id = $UserID
+	       AND watch_list.user_id = " . pg_escape_string($UserID) . "
            AND watch_list.in_service
 	  GROUP BY element_id) AS TEMP
 	       ON TEMP.wle_element_id = ports.element_id";
 		}
 	
 
-		$sql .= " WHERE element.id        = $this->element_id 
+		$sql .= " WHERE element.id        = " . pg_escape_string($this->element_id) . " 
 			        and ports.category_id = categories.id 
 			        and ports.element_id  = element.id ";
 
@@ -374,7 +374,7 @@ LEFT OUTER JOIN (
 SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
     FROM watch_list JOIN watch_list_element
         ON watch_list.id      = watch_list_element.watch_list_id
-       AND watch_list.user_id = $UserID
+       AND watch_list.user_id = " . pg_escape_string($UserID) . "
        AND watch_list.in_service
   GROUP BY element_id
 ) AS TEMP
@@ -382,7 +382,7 @@ ON TEMP.wle_element_id = ports.element_id";
 
 		}
 
-		$sql .= "\nWHERE ports.id        = $id 
+		$sql .= "\nWHERE ports.id        = " . pg_escape_string($id) . " 
 		          and ports.category_id = categories.id 
 		          and ports.element_id  = element.id ";
 
@@ -495,7 +495,7 @@ LEFT OUTER JOIN
          COUNT(watch_list_id) as watchlistcount
     FROM watch_list JOIN watch_list_element
       ON watch_list.id      = watch_list_element.watch_list_id
-     AND watch_list.user_id = $UserID
+     AND watch_list.user_id = " . pg_escape_string($UserID) . "
      AND watch_list.in_service
  GROUP BY wle_element_id) AS TEMP
   ON TEMP.wle_element_id = PE.element_id";
@@ -507,7 +507,7 @@ LEFT OUTER JOIN
 		if ($PageSize) {
 			$sql .= " LIMIT $PageSize";
 			if ($PageNo) {
-				$sql .= ' OFFSET ' . ($PageNo - 1 ) * $PageSize;
+				$sql .= ' OFFSET ' . pg_escape_string(($PageNo - 1 ) * $PageSize);
 			}
 		}
 
@@ -550,8 +550,8 @@ LEFT OUTER JOIN
 
 		$sql = "	select element_id
 					  from watch_list_element
-					 where watch_list_id = $WatchListID
-					   and element_id    = $this->element_id";
+					 where watch_list_id = " . pg_escape_string($WatchListID) . "
+					   and element_id    = " . pg_escape_string($this->element_id);
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
@@ -603,7 +603,7 @@ LEFT OUTER JOIN
 
 		$result = 0;
 
-		$sql = 'select watch_list_count(' . $this->element_id . ')';
+		$sql = 'select watch_list_count(' . pg_escape_string($this->element_id) . ')';
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {

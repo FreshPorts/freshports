@@ -52,8 +52,8 @@ DELETE FROM watch_list
                    NULL as watch_list_count
 			  FROM watch_list LEFT OUTER JOIN watch_list_element
 			    ON watch_list_element.watch_list_id = watch_list.id
-			   AND watch_list_element.element_id    = $element_id
-			 WHERE user_id = $UserID
+			   AND watch_list_element.element_id    = " . pg_escape_string($element_id) . "
+			 WHERE user_id = " . pg_escape_string($UserID) . "
 		 GROUP BY id, user_id, name, in_service, element_id, token
 		 ORDER BY name";
 		} else {
@@ -65,7 +65,7 @@ DELETE FROM watch_list
 			       token,
                    NULL as watch_list_count
 			  FROM watch_list
-			 WHERE user_id = $UserID
+			 WHERE user_id = " . pg_escape_string($UserID) . "
 		 ORDER BY name";
 		}
 
@@ -157,7 +157,7 @@ DELETE FROM watch_list
    SELECT id,
           in_service
      FROM watch_list
-    WHERE user_id = $UserID
+    WHERE user_id = " . pg_escape_string($UserID) . "
  ORDER BY name";
 
 		if ($Debug) echo "<pre>$sql</pre>";
@@ -198,9 +198,9 @@ DELETE FROM watch_list
 		$sql = "
    SELECT count(WLE.watch_list_id) AS listcount
      FROM watch_list WL, watch_list_element WLE
-    WHERE WL.user_id     = $UserID
+    WHERE WL.user_id     = " . pg_escape_string($UserID) . "
       AND WL.id          = WLE.watch_list_id
-      AND WLE.element_id = $ElementID";
+      AND WLE.element_id = " . pg_escape_string($ElementID);
 
       	$ListCount = 0;
 		$result = pg_exec($this->dbh, $sql);
@@ -218,4 +218,3 @@ DELETE FROM watch_list
 	}
 }
 
-?>

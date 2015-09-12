@@ -26,7 +26,7 @@ class UserTasks {
 		if (IsSet($user_id)) {
 			$this->id = $user_id;
 		}
-		$sql = "select id, name from user_tasks, tasks where user_id = $this->id and user_tasks.task_id = tasks.id";
+		$sql = "select id, name from user_tasks, tasks where user_id = " . pg_escape_string($this->id) . " and user_tasks.task_id = tasks.id";
 #		echo "<pre>sql = '$sql'</pre><BR>";
 
 		$result = pg_exec($this->dbh, $sql);
@@ -44,4 +44,3 @@ class UserTasks {
 	}
 }
 
-?>

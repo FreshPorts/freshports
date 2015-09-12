@@ -37,7 +37,7 @@ class CommitsByTreeLocation extends commits {
 		$sql = "
 			SELECT count(DISTINCT CL.id) AS count
 			  FROM element_pathname EP, commit_log_ports_elements CLPE, commit_log CL
-			 WHERE ". $this->TreePathCondition . "
+			 WHERE ". pg_escape_string($this->TreePathCondition) . "
 			   AND EP.element_id = CLPE.element_ID
 			   AND CL.id         = CLPE.commit_log_id";
    
@@ -60,7 +60,7 @@ class CommitsByTreeLocation extends commits {
 		$sql = "
 			SELECT count(DISTINCT CL.id) AS count
 			  FROM element_pathname EP, commit_log_elements CLE, commit_log CL
-			 WHERE " . $this->TreePathCondition . "
+			 WHERE " . pg_escape_string($this->TreePathCondition) . "
 			   AND EP.element_id = CLE.element_ID
 			   AND CL.id         = CLE.commit_log_id";
    
@@ -119,7 +119,7 @@ class CommitsByTreeLocation extends commits {
 	 (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
 	    FROM watch_list JOIN watch_list_element 
 	        ON watch_list.id      = watch_list_element.watch_list_id
-	       AND watch_list.user_id = " . $this->UserID . "
+	       AND watch_list.user_id = " . pg_escape_string($this->UserID) . "
 	       AND watch_list.in_service		
 	  GROUP BY wle_element_id) AS TEMP
 	       ON TEMP.wle_element_id = element.id";
@@ -128,17 +128,17 @@ class CommitsByTreeLocation extends commits {
 		$sql .= "
 	  WHERE commit_log.id IN (SELECT tmp.id FROM (SELECT DISTINCT CL.id, CL.commit_date
   FROM element_pathname EP, commit_log_elements CLE, commit_log CL
- WHERE " . $this->TreePathCondition . "
+ WHERE " . pg_escape_string($this->TreePathCondition) . "
    AND EP.element_id = CLE.element_ID
    AND CL.id         = CLE.commit_log_id
 ORDER BY CL.commit_date DESC ";
 
    		if ($this->Limit) {
-			$sql .= " LIMIT " . $this->Limit;
+			$sql .= " LIMIT " . pg_escape_string($this->Limit);
 		}
 		
 		if ($this->Offset) {
-			$sql .= " OFFSET " . $this->Offset;
+			$sql .= " OFFSET " . pg_escape_string($this->Offset);
 		}
 
 
@@ -223,7 +223,7 @@ ORDER BY CL.commit_date DESC ";
 	 (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
 	    FROM watch_list JOIN watch_list_element 
 	        ON watch_list.id      = watch_list_element.watch_list_id
-	       AND watch_list.user_id = " . $this->UserID . "
+	       AND watch_list.user_id = " . pg_escape_string($this->UserID) . "
 	       AND watch_list.in_service		
 	  GROUP BY wle_element_id) AS TEMP
 	       ON TEMP.wle_element_id = element.id";
@@ -232,17 +232,17 @@ ORDER BY CL.commit_date DESC ";
 		$sql .= "
 	  WHERE CL.id IN (SELECT tmp.ID FROM (SELECT DISTINCT CL.id, CL.commit_date
   FROM element_pathname EP, commit_log_elements CLE, commit_log CL
- WHERE " . $this->TreePathCondition . "
+ WHERE " . pg_escape_string($this->TreePathCondition) . "
    AND EP.element_id = CLE.element_ID
    AND CL.id         = CLE.commit_log_id
 ORDER BY CL.commit_date DESC ";
 
 		if ($this->Limit) {
-			$sql .= "\nLIMIT " . $this->Limit;
+			$sql .= "\nLIMIT " . pg_escape_string($this->Limit);
 		}
 		
 		if ($this->Offset) {
-			$sql .= "\nOFFSET " . $this->Offset;
+			$sql .= "\nOFFSET " . pg_escape_string($this->Offset);
 		}
 
    		$sql .= ") AS tmp)

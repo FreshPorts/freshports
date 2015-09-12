@@ -32,7 +32,7 @@ class WatchListDeletedPorts {
 
 		$Debug = 0;
 
-		$sql = "SELECT * from WatchListDeletedPorts($WatchListID)";
+		$sql = "SELECT * from WatchListDeletedPorts(" . pg_escape_string($WatchListID) . ")";
 
 		if ($Debug) echo "<pre>$sql</pre>";
 
@@ -58,4 +58,3 @@ class WatchListDeletedPorts {
 	}
 
 }
-?>

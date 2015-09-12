@@ -56,5 +56,3 @@ SELECT STF.id,
 	}
 
 }
-
-?>

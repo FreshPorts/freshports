@@ -41,7 +41,7 @@ select commit_log_elements.element_id,
        revision_name
   from commit_log, commit_log_elements
  where commit_log.id                  = commit_log_elements.commit_log_id
-   and commit_log_elements.element_id = $element_id
+   and commit_log_elements.element_id = " . pg_escape_string($element_id) . "
  order by commit_log.commit_date desc ";
 
 		if ($Debug) echo "\$sql='<pre>$sql</pre><br>\n";

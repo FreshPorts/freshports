@@ -98,15 +98,15 @@ class Commits {
      (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
         FROM watch_list JOIN watch_list_element 
             ON watch_list.id      = watch_list_element.watch_list_id
-           AND watch_list.user_id = $UserID
+           AND watch_list.user_id = " . pg_escape_string($UserID) . "
            AND watch_list.in_service        
       GROUP BY wle_element_id) AS TEMP
            ON TEMP.wle_element_id = element.id";
         }
 
         $sql .= "
-      WHERE commit_log.commit_date         BETWEEN '$Date'::timestamptz  + SystemTimeAdjust()
-                                               AND '$Date'::timestamptz  + SystemTimeAdjust() + '1 Day'
+      WHERE commit_log.commit_date         BETWEEN '" . pg_escape_string($Date) . "'::timestamptz  + SystemTimeAdjust()
+                                               AND '" . pg_escape_string($Date) . "'::timestamptz  + SystemTimeAdjust() + '1 Day'
         AND CLP.commit_log_id = commit_log.id
         AND CLP.port_id       = ports.id
         AND categories.id     = ports.category_id
@@ -136,8 +136,8 @@ class Commits {
 		$sql = "
 SELECT count(DISTINCT CL.id) AS count
   FROM commit_log CL JOIN commit_log_ports    CLP ON CLP.commit_log_id = CL.id
-                                                 AND CL.commit_date BETWEEN '$Date'::timestamptz  + SystemTimeAdjust()
-                                                                        AND '$Date'::timestamptz  + SystemTimeAdjust() + '1 Day'
+                                                 AND CL.commit_date BETWEEN '" . pg_escape_string($Date) . "'::timestamptz  + SystemTimeAdjust()
+                                                                        AND '" . pg_escape_string($Date) . "'::timestamptz  + SystemTimeAdjust() + '1 Day'
                      JOIN commit_log_branches CLB ON CL.id             = CLB.commit_log_id
                      JOIN system_branch       SB  ON SB.branch_name    = '" . pg_escape_string($this->BranchName) . "'
                                                  AND SB.id             = CLB.branch_id";
@@ -183,8 +183,8 @@ SELECT gmt_format(max(CL.date_added)) AS last_modified
   FROM commit_log CL, commit_log_ports CLP JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
                                            JOIN system_branch SB ON SB.branch_name = '" . pg_escape_string($this->BranchName) . "' AND SB.id = CLB.branch_id
  WHERE CL.id = CLP.commit_log_id
-   AND CL.commit_date BETWEEN '$Date'::timestamptz  + SystemTimeAdjust()
-                          AND '$Date'::timestamptz  + SystemTimeAdjust() + '1 Day'";
+   AND CL.commit_date BETWEEN '" . pg_escape_string($Date) . "'::timestamptz  + SystemTimeAdjust()
+                          AND '" . pg_escape_string($Date) . "'::timestamptz  + SystemTimeAdjust() + '1 Day'";
 		
 		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
 		$result = pg_exec($this->dbh, $sql);
@@ -199,4 +199,3 @@ SELECT gmt_format(max(CL.date_added)) AS last_modified
 		return $last_modified;
 	}
 }
-?>

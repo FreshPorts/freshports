@@ -232,8 +232,8 @@ UPDATE watch_list
 		       token,
                NULL as watch_list_count
 		  FROM watch_list
-		 WHERE id      = $ID
-		   AND user_id = $UserID";
+		 WHERE id      = " . pg_escape_string($ID) . "
+		   AND user_id = " . pg_escape_string($UserID);
 
 #		echo '<pre>' . $sql . '</pre>';
 
@@ -275,4 +275,3 @@ UPDATE watch_list
 	}
 }
 
-?>

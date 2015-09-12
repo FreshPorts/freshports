@@ -37,9 +37,9 @@ class WatchListElement {
 		#
 		$sql = "DELETE FROM watch_list_element
                  USING watch_list
-		         WHERE watch_list_element.element_id    = $ElementID
-		           AND watch_list.id                    = $WatchListID
-		           AND watch_list.user_id               = $UserID
+		         WHERE watch_list_element.element_id    = " . pg_escape_string($ElementID)   . "
+		           AND watch_list.id                    = " . pg_escape_string($WatchListID) . "
+		           AND watch_list.user_id               = " . pg_escape_string($UserID)      . "
 		           AND watch_list_element.watch_list_id = watch_list.id";
 		if ($this->Debug) echo "<pre>$sql</pre>";
 		$result = pg_exec($this->dbh, $sql);
@@ -67,8 +67,8 @@ class WatchListElement {
 
 		$sql = "DELETE FROM watch_list_element
                  USING watch_list
-		         WHERE watch_list_element.element_id    = $ElementID
-		           AND watch_list.user_id               = $UserID
+		         WHERE watch_list_element.element_id    = " . pg_escape_string($ElementID) . "
+		           AND watch_list.user_id               = " . pg_escape_string($UserID)    . "
 		           AND watch_list_element.watch_list_id = watch_list.id";
 		if ($this->Debug) echo "<pre>$sql</pre>";
 		$result = pg_exec($this->dbh, $sql);
@@ -94,9 +94,9 @@ class WatchListElement {
 		#
 		$sql = "DELETE FROM watch_list_element
                  USING watch_list
-		         WHERE watch_list_element.element_id    = $ElementID
+		         WHERE watch_list_element.element_id    = " . pg_escape_string($ElementID) . "
 		           AND watch_list.in_service            = TRUE
-		           AND watch_list.user_id               = $UserID
+		           AND watch_list.user_id               = " . pg_escape_string($UserID)    . "
 		           AND watch_list_element.watch_list_id = watch_list.id";
 
 		if ($this->Debug) echo "<pre>$sql</pre>";
@@ -128,15 +128,15 @@ class WatchListElement {
 		#
 		$sql = "
 INSERT INTO watch_list_element 
-select $WatchListID, $ElementID
+select " . pg_escape_string($WatchListID) . ", " . pg_escape_string($ElementID) . "
   from watch_list 
- where user_id = $UserID
-   and id      = $WatchListID
+ where user_id = " . pg_escape_string($UserID)      . "
+   and id      = " , pg_escape_string($WatchListID) . "
    and not exists (
     SELECT watch_list_element.watch_list_id, watch_list_element.element_id
       FROM watch_list_element
-     WHERE watch_list_element.watch_list_id = $WatchListID
-       AND watch_list_element.element_id    = $ElementID)";
+     WHERE watch_list_element.watch_list_id = " . pg_escape_string($WatchListID) . "
+       AND watch_list_element.element_id    = " . pg_escape_string($ElementID);
 		if ($this->Debug) echo "<pre>$sql</pre>";
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
@@ -166,15 +166,15 @@ select $WatchListID, $ElementID
 		#
 		$sql = "
 INSERT INTO watch_list_element 
-select id, $ElementID 
+select id, " . pg_escape_string($ElementID) . "
   from watch_list 
  where in_service = TRUE 
-   and user_id = $UserID
+   and user_id = " . pg_escape_string($UserID) . "
    and not exists (
     SELECT *
       FROM watch_list_element
      WHERE watch_list_element.watch_list_id = watch_list.id
-       AND watch_list_element.element_id    = $ElementID)";
+       AND watch_list_element.element_id    = " . pg_escape_string($ElementID) . ")";
 
 		if ($this->Debug) echo "<pre>$sql</pre>";
 		$result = pg_exec($this->dbh, $sql);
@@ -204,4 +204,3 @@ select id, $ElementID
 	}
 }
 
-?>

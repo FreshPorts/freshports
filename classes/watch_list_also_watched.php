@@ -32,7 +32,7 @@ class WatchListAlsoWatched {
 		# The subselect ensures the user can only add things to their
 		# own watch list and avoid duplicate key problems.
 		#
-		$sql = "select * from WatchersAlsoWatched($ElementID)";
+		$sql = "select * from WatchersAlsoWatched(" . pg_escape_string($ElementID) . ")";
 
 		if ($Debug) echo "<pre>$sql</pre>";
 		$this->LocalResult = pg_exec($this->dbh, $sql);
@@ -69,4 +69,3 @@ class WatchListAlsoWatched {
 	}
 }
 
-?>

@@ -51,7 +51,7 @@ class PortsMoved {
          LEFT OUTER JOIN ports      ON ports.id         = ports_moved.to_port_id
          LEFT OUTER JOIN categories ON categories.id    = ports.category_id
          LEFT OUTER JOIN element    ON ports.element_id = element.id
-   WHERE from_port_id = $PortID
+   WHERE from_port_id = " . pg_escape_string($PortID) . "
 ORDER BY date desc"
 ;
 		if ($Debug) echo "<pre>$sql</pre>";
@@ -88,8 +88,8 @@ ORDER BY date desc"
          LEFT OUTER JOIN ports      ON ports.id         = ports_moved.from_port_id
          LEFT OUTER JOIN categories ON categories.id    = ports.category_id
          LEFT OUTER JOIN element    ON ports.element_id = element.id
-   WHERE to_port_id    = $PortID
-     AND from_port_id <> $PortID
+   WHERE to_port_id    = " . pg_escape_string($PortID) . "
+     AND from_port_id <> " . pg_escape_string($PortID) . "
 ORDER BY date desc"
 ;
 		if ($Debug) echo "<pre>$sql</pre>";
@@ -122,4 +122,3 @@ ORDER BY date desc"
 
 }
 
-?>

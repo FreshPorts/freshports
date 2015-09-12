@@ -35,7 +35,7 @@ function ProcessVote($db, $UserID, $choice1, $choice2, $choice3) {
 }
 
 function AlreadyVoted($db, $ID) {
-  $sql = "SELECT count(*) AS count FROM design_results WHERE user_id = $ID";
+  $sql = "SELECT count(*) AS count FROM design_results WHERE user_id = " . pg_escape_string($ID);
   $result = pg_exec($db, $sql);
   if ($result) {
     $myrow = pg_fetch_array($result);
@@ -84,4 +84,3 @@ My third choice is:
 </form>
 <?php
 }
-?>

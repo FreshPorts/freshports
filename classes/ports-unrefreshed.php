@@ -84,4 +84,3 @@ order by category_name, port_name";
 
 }
 
-?>

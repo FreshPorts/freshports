@@ -49,7 +49,7 @@ SELECT C.*, (SELECT MAX(CL.date_added)
                 AND P.last_commit_id = CL.id
                 AND PC.category_id   = C.id) AS last_modified
   FROM categories C
- WHERE id = ' . $this->id;
+ WHERE id = ' . pg_escape_string($this->id);
 
 		if ($Debug) echo "sql = '$sql'<BR>";
 
@@ -82,7 +82,7 @@ SELECT C.*, (SELECT MAX(CL.date_added)
                 AND P.last_commit_id = CL.id
                 AND PC.category_id   = C.id) AS last_modified
   FROM categories C
- WHERE C.element_id = ' . $this->element_id;
+ WHERE C.element_id = ' . pg_escape_string($this->element_id);
 		if ($Debug) echo "sql = '$sql'<BR>";
 
         $result = pg_exec($this->dbh, $sql);
@@ -117,7 +117,7 @@ SELECT C.*, (SELECT MAX(CL.date_added)
                 AND P.last_commit_id = CL.id
                 AND PC.category_id   = C.id) AS last_modified
   FROM categories C
- WHERE C.name = '" . $this->name . "'";
+ WHERE C.name = '" . pg_escape_string($this->name) . "'";
 
 		if ($Debug) echo "sql = '$sql'<BR>";
 
@@ -140,7 +140,7 @@ SELECT C.*, (SELECT MAX(CL.date_added)
 
 		Unset($CategoryID);
 
-		$sql = "SELECT id FROM categories where name = '$Name'";
+		$sql = "SELECT id FROM categories where name = '" . pg_escape_string($Name) "'";
 
 		if ($Debug) echo "sql = '$sql'<BR>";
 
@@ -163,7 +163,7 @@ SELECT C.*, (SELECT MAX(CL.date_added)
 		if (IsSet($Name)) {
 			$this->name = pg_escape_string($Name);
 		}
-		$sql = "select CategoryPortCount('$this->name')";
+		$sql = "select CategoryPortCount('" . pg_escape_string($this->name) . "')";
 		if ($Debug) echo "sql = '$sql'<BR>";
 
 		$result = pg_exec($this->dbh, $sql);
@@ -184,7 +184,7 @@ SELECT C.*, (SELECT MAX(CL.date_added)
 		GLOBAL $User;
 
 		$Debug = 0;
-		$sql = "UPDATE categories SET description = '" . $this->description . "' WHERE id = " . $this->id . ' AND is_primary = FALSE';
+		$sql = "UPDATE categories SET description = '" . pg_escape_string($this->description) . "' WHERE id = " . pg_escape_string($this->id) . ' AND is_primary = FALSE';
 		syslog(LOG_NOTICE, 'User \'' . $User->name . '\' at '
 			. pg_escape_string($_SERVER[REMOTE_ADDR]) . ' is changing category \'' 
 			. $this->name . '\' to \'' . $this->description . '\'.');

@@ -94,7 +94,7 @@ $HTML .=  '
 }
 
 function freshports_WatchListCountDefault($db, $UserID) {
-	$sql = "select WatchListCountDefault($UserID) as count";
+	$sql = "select WatchListCountDefault(" . pg_escape_string($UserID) . ") as count";
 
 #	echo $sql;
 
@@ -138,7 +138,7 @@ function freshports_UpdatingOutput($NumRowsUpdating, $PortsUpdating, $port) {
 function freshports_WatchListVerifyToken($db, $token) {
 	$id = '';
 
-	$sql = "SELECT id from watch_list where token = '" . $token . "'";
+	$sql = "SELECT id from watch_list where token = '" . pg_escape_string($token) . "'";
 
 #	echo $sql;
 

@@ -53,7 +53,7 @@ class User {
 		$sql = "
 		SELECT *
 		  FROM users
-		 WHERE id = $ID";
+		 WHERE id = " . pg_escape_string($ID);
 
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {
@@ -73,7 +73,7 @@ class User {
 	function FetchByCookie($Cookie) {
 		$sql = "SELECT users.*
 		          FROM users
-				 WHERE cookie = '$Cookie'";
+				 WHERE cookie = '" . pg_escape_string($Cookie) . "'";
 
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {

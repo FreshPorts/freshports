@@ -27,7 +27,7 @@ class Element {
 		if (IsSet($id)) {
 			$this->id = $id;
 		}
-		$sql = "select *, element_pathname(id) as pathname from element where id = $this->id";
+		$sql = "select *, element_pathname(id) as pathname from element where id = " . pg_escape_string($this->id);
 		if ($Debug) echo "sql = '$sql'<BR>";
 
         $result = pg_exec($this->dbh, $sql);
@@ -51,7 +51,7 @@ class Element {
 	
 	function FetchByName($pathname) {
 		# obtain the element based on the pathname supplied
-		$sql = "select Pathname_ID('$pathname') as id";
+		$sql = "select Pathname_ID('" . pg_escape_string($pathname) . "') as id";
 
 		if ($Debug)	echo "Element::FetchByName sql = '$sql'<BR>";
 
@@ -72,5 +72,3 @@ class Element {
 		}
 	}
 }
-
-?>

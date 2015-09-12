@@ -139,7 +139,7 @@ class CommitsMyFlagged extends commits {
 	    AND commit_log_ports.port_id       = ports.id
 	    AND categories.id                  = ports.category_id
 	    AND element.id                     = ports.element_id
-	    AND CF.user_id                     = " . $this->UserID . "
+	    AND CF.user_id                     = " . pg_escape_string($this->UserID) . "
 	    AND CF.commit_log_id               = commit_log.id
    ORDER BY 1 desc,
 			commit_log_id,
@@ -147,11 +147,11 @@ class CommitsMyFlagged extends commits {
 			port";
 			
 		if ($this->Limit) {
-			$sql .= " LIMIT " . $this->Limit;
+			$sql .= " LIMIT " . pg_escape_string($this->Limit);
 		}
 		
 		if ($this->Offset) {
-			$sql .= " OFFSET " . $this->Offset;
+			$sql .= " OFFSET " . pg_escape_string($this->Offset);
 		}
 
 
@@ -171,4 +171,3 @@ class CommitsMyFlagged extends commits {
 	}
 }
 
-?>

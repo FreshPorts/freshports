@@ -128,7 +128,7 @@ class CommitFiles {
 		 (SELECT element_id AS wle_element_id, COUNT(watch_list_id) AS onwatchlist
 		    FROM watch_list JOIN watch_list_element 
 		        ON watch_list.id      = watch_list_element.watch_list_id
-		       AND watch_list.user_id = " . $this->UserID . "
+		       AND watch_list.user_id = " . pg_escape_string($this->UserID) . "
 	          AND watch_list.in_service
 		  GROUP BY wle_element_id) AS B
 		       ON B.wle_element_id = A.element_id
@@ -155,4 +155,3 @@ class CommitFiles {
 	}
 }
 
-?>

@@ -39,8 +39,8 @@ class Commit_Log_Ports_Ignore {
 
 		$sql = "
 DELETE from commit_log_ports_ignore
- WHERE commit_log_id = $this->commit_log_id
-   AND port_id       = $this->port_id";
+ WHERE commit_log_id = " . pg_escape_string($this->commit_log_id) . "
+   AND port_id       = " . pg_escape_string($this->port_id);
 
 		echo ("\$sql='<pre>$sql</pre><br>\n");
 		
@@ -59,7 +59,7 @@ DELETE from commit_log_ports_ignore
 
 		$sql = "
 INSERT INTO commit_log_ports_ignore (commit_log_id, port_id, reason)
-   values ($this->commit_log_id, $this->port_id, '" . pg_escape_string($this->reason) . "')";
+   values (" . pg_escape_string($this->commit_log_id) . ", " . pg_escape_string($this->port_id) . ", '" . pg_escape_string($this->reason) . "')";
 
 		echo "\$sql='<pre>$sql</pre><br>\n";
 		
@@ -76,4 +76,3 @@ INSERT INTO commit_log_ports_ignore (commit_log_id, port_id, reason)
 	
 
 }
-?>

@@ -35,7 +35,7 @@ select CLPV.id,
        CLPV.vuxml_id,
        vuxml.vid
   from commit_log_ports_vuxml CLPV, vuxml
- where CLPV.port_id  = $port_id
+ where CLPV.port_id  = " . pg_escape_string($port_id) . "
    and CLPV.vuxml_id = vuxml.id
  order by CLPV.commit_log_id ";
 

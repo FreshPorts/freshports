@@ -195,7 +195,7 @@ from element, categories, ports_vulnerable PV right outer join ports on PV.port_
 		$this->_sql .= "
 WHERE ports.element_id  = element.id
   AND ports.category_id = categories.id 
-  AND ports.status      = '" . $this->getStatus() . "'";
+  AND ports.status      = '" . pg_escape_string($this->getStatus()) . "'";
 
 		if ($Condition) {
 			$this->_sql .= '
@@ -213,7 +213,7 @@ SELECT gmt_format(max(commit_log.date_added)) as last_modified
  WHERE ports.element_id     = element.id
    AND ports.last_commit_id = commit_log.id
    AND ports.element_id     = element.id
-   AND element.status       = '" . $this->getStatus() . "'";
+   AND element.status       = '" . pg_escape_string($this->getStatus()) . "'";
 
 		if ($this->_condition) {
 			$sql .= '

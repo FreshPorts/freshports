@@ -917,7 +917,7 @@ echo ">\n\n";
 }
 
 function freshports_Category_Name($CategoryID, $db) {
-	$sql = "select name from categories where id = $CategoryID";
+	$sql = "select name from categories where id = " . pg_escape_string($CategoryID);
 
 //	echo $sql;
 
@@ -956,7 +956,7 @@ function freshports_in_array($value, $array) {
 }
 
 function freshports_PortIDFromPortCategory($category, $port, $db) {
-	$sql = "select pathname_id('ports/$category/$port') as id";
+	$sql = "select pathname_id('ports/" . pg_escape_string($category) . '/' . pg_escape_string($port) ")') as id";
 
 	$result = pg_exec($db, $sql);
 	if (pg_numrows($result)) {
@@ -968,7 +968,7 @@ function freshports_PortIDFromPortCategory($category, $port, $db) {
 }
 
 function freshports_CategoryIDFromCategory($category, $db) {
-   $sql = "select categories.id from categories where categories.name = '$category'";
+   $sql = "select categories.id from categories where categories.name = '" . pg_escape_string($category) "'";
 
    $result = pg_exec($db, $sql);
    if(pg_numrows($result)) {
@@ -1420,7 +1420,7 @@ function freshports_DescriptionPrint($description, $encoding_losses, $maxnumline
 }
 
 function freshports_GetNextValue($sequence, $dbh) {
-	$sql = "select nextval('$sequence')";
+	$sql = "select nextval('" . pg_escape_string($sequence) . "')";
 
 #	echo "\$sql = '$sql'<br>";
 
@@ -1473,7 +1473,7 @@ function freshports_UserSendToken($UserID, $dbh) {
 
 	$sql = "select email, token 
 	          from users, user_confirmations
-	         where users.id = $UserID
+	         where users.id = " . pg_escape_string($UserID) . "
 	           and users.id = user_confirmations.user_id";
 
 #	echo "\$sql = '$sql'<br>";
@@ -2062,7 +2062,7 @@ function freshports_GetPortID($db, $category, $port) {
 }
 
 function freshports_GetElementID($db, $category, $port) {
-	$sql = "select Element_ID('$category', '$port')";
+	$sql = "select Element_ID('" . pg_escape_string($category) . "', '" . pg_escape_string($port) . "')";
 
 	$result = pg_exec($db, $sql);
 	if (!$result) {
@@ -2076,7 +2076,7 @@ function freshports_GetElementID($db, $category, $port) {
 }
 
 function freshports_OnWatchList($db, $UserID, $ElementID) {
-	$sql = "select OnWatchList($UserID, $ElementID)";
+	$sql = "select OnWatchList(" . pg_escape_string($UserID) . ", " . pg_escape_string($ElementID) . ")";
 
 	$result = pg_exec($db, $sql);
 	if (!$result) {

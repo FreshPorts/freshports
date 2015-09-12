@@ -1,7 +1,0 @@
-# robots.txt for http://www.freshports.org/
-
-User-agent: *
-Disallow: /_
-Disallow: /images/*
-Disallow: /cgi-bin/
-Disallow: /cgi/

@@ -1,7 +1,0 @@
-<VirtualHost 192.168.0.18>
-	ServerAdmin     dan@langille.org
-	DocumentRoot    /home/freshports.org/www
-	ServerName      freshports.unixathome.org
-	ErrorLog        /www/logs/freshports.org-error.log
-	CustomLog       /www/logs/freshports.org-access.log common
-</VirtualHost>

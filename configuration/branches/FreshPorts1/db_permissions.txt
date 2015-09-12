@@ -1,4 +1,0 @@
-grant usage on fpfeedbackup.* to phorum@localhost;
-grant insert, update, delete, select on fpfeedbackup.* to phorum@localhost;
-
-SET PASSWORD FOR phorum@localhost = password('thingsstuff');

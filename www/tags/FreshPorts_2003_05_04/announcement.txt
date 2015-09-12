@@ -1,6 +1,0 @@
-<P>
-<BIG><BIG>They're here......!</BIG></BIG>
-The website has been <a href="/release-2003-04-29.php">upgraded</a>.
-</P>
-<P>
-

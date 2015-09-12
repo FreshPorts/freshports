@@ -1,3 +1,0 @@
-<?PHP
-$pluginreplace = array();
-?>

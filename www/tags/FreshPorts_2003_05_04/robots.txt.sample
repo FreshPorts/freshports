@@ -1,9 +1,0 @@
-# robots.txt for http://www.freshports.org/
-
-# all others, please don't...
-User-agent: *
-Disallow: /login.php
-Disallow: /new-user.php
-Disallow: /stats
-Disallow: /stats/
-Disallow: /stats/*

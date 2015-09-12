@@ -83,6 +83,7 @@ if ($submit) {
       while (list($key, $value) = each($ports)) {
       	$WatchListElement->Add($User->id, $wlid, $value);
 
+      	# I have no idea why this works... seems to be missing the value of $sql
          $result = pg_exec ($db, $sql);
          ${"port_".$value} = 1;
          if (!$result) {

@@ -21,7 +21,7 @@ if ($origin == "/index.php" || $origin == "") {
 }
 
 if ($submit) {
-   $sql = "update users set emailbouncecount = 0 where cookie = '$visitor'";
+   $sql = "update users set emailbouncecount = 0 where cookie = '" . pg_escape_string($visitor) . "'";
    if ($Debug) {
       echo $sql;
    }

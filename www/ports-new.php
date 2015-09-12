@@ -159,7 +159,7 @@ select TEMP.id,
 	}
 	
 	$sql .= "
- WHERE ports.date_added  > (SELECT now() - interval '$IntervalAdjust')) AS
+ WHERE ports.date_added  > (SELECT now() - interval '" . pg_escape_string($IntervalAdjust) . "')) AS
 TEMP, element, categories
  WHERE TEMP.category_id = categories.id
    and element.status   = 'A'

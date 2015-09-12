@@ -97,7 +97,7 @@ if (IsSet($submit)) {
         }
 
         if ($OKToMail) {
-          $sql = "insert into user_password_reset (user_id, ip_address) values (" . $myrow["id"] . ", '" . $_SERVER['REMOTE_ADDR'] . "') returning token";
+          $sql = "insert into user_password_reset (user_id, ip_address) values (" . pg_escape_string($myrow["id"]) . ", '" . pg_escape_string($_SERVER['REMOTE_ADDR']) . "') returning token";
           $token_result = pg_exec($db, $sql) or die('password token creation failed ' . pg_errormessage());
           $token_row = pg_fetch_array ($token_result, 0);
           $token = $token_row["token"];

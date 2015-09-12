@@ -49,8 +49,7 @@ If you have suggestions for graphs, please submit them via the forum.
 <TABLE WIDTH="100%" BORDER="0">
 <TR align="center">
 <TD WIDTH="300" VALIGN="top">
-<?
-	$id = $_GET["id"];
+<?php
 	$sql = "select title, label from graphs where json=true order by title";
 	$result = pg_exec($db, $sql);
     if ($result) {

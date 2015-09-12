@@ -133,6 +133,7 @@ function DisplayNewsFeed($db, $token) {
 	}
 
 
+	# oh really?  Why two pg_exec?
 	if ($Debug) {
 		echo $sql;
 	}

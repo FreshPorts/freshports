@@ -175,7 +175,7 @@ function ProcessPackages($UserID, $PortArray, $dbh) {
 	if ($ok) {
 		# All is well.
 
-		$sql = "select WatchListStagingProcess($UserID)";
+		$sql = "select WatchListStagingProcess(" . pg_escape_string($UserID) . ")";
 		$result = pg_exec($dbh, $sql);
 		if ($result && pg_numrows($result)) {
 			# do nothing.  All is well
@@ -203,7 +203,7 @@ function UploadDisplayStagingResultsMatches($UserID, $WatchListID, $dbh) {
 			   FROM	watch_list_staging LEFT OUTER JOIN watch_list_element
 						ON  watch_list_staging.element_id    = watch_list_element.element_id
 						AND $WatchListID                     = watch_list_element.watch_list_id
-			  WHERE $UserID    = watch_list_staging.user_id
+			  WHERE " . pg_escape_string($UserID) . "    = watch_list_staging.user_id
 			    AND item_count = 1
 				AND watch_list_staging.element_id IS NOT NULL
 			  ORDER BY category, port";
@@ -258,7 +258,7 @@ function UploadDisplayStagingResultsMatchesNo($UserID, $dbh) {
 	$begintime = time();
 	$sql = " SELECT category, port, item_count, from_pkg_info, from_watch_list, watch_list_staging.element_id
 			     FROM watch_list_staging
-			    WHERE $UserID    = watch_list_staging.user_id
+			    WHERE " . pg_escape_string($UserID) . "    = watch_list_staging.user_id
 			      AND item_count = 1
 				   AND watch_list_staging.element_id IS NULL
 			 ORDER BY category, port";
@@ -302,7 +302,7 @@ function UploadDisplayStagingResultsMatchesDuplicates($UserID, $WatchListID, $db
 			     FROM watch_list_staging LEFT OUTER JOIN watch_list_element
 					     	 ON  watch_list_staging.element_id = watch_list_element.element_id
 						    AND $WatchListID                   = watch_list_element.watch_list_id
-			    WHERE $UserID    = watch_list_staging.user_id
+			    WHERE " . pg_escape_string($UserID) . "    = watch_list_staging.user_id
 			      AND item_count > 1
 				   AND watch_list_staging.element_id IS NOT NULL
 			 ORDER BY category, port";
@@ -409,6 +409,9 @@ function UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $dbh) {
 function MoveStagingToWatchList($UserID, $WatchListID, $dbh) {
 	$ok  = TRUE;
 
+	$UserID      = pg_escape_string($UserID);
+	$WatchListID = pg_escape_string($WatchListID);
+
 	$Debug = 0;
 
 	if ($Debug) syslog(LOG_NOTICE, 'begin');
@@ -469,6 +472,9 @@ function CopyStagingToWatchList($dbh, $UserID, $WatchListID, $Overwrite = TRUE) 
 	$ok  = TRUE;
 	$begintime = time();
 
+	$UserID      = pg_escape_string($UserID);
+	$WatchListID = pg_escape_string($WatchListID);
+
 	$result = pg_exec($dbh, 'BEGIN');
 	if (!$result) {
 		$ok = FALSE;
@@ -523,6 +529,8 @@ function CopyStagingToWatchList($dbh, $UserID, $WatchListID, $Overwrite = TRUE) 
 function StagingAreaClear($UserID, $dbh) {
 	$ok = TRUE;
 
+	$UserID = pg_escape_string($UserID);
+
 	$result = pg_exec($dbh, "BEGIN");
 	if ($result) {
 		$sql = "select WatchListStagingClear($UserID)";
@@ -544,5 +552,3 @@ function StagingAreaClear($UserID, $dbh) {
 	return $ok;		
 }
 
-
-?>

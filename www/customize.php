@@ -19,7 +19,7 @@
 
 if (IsSet($_REQUEST['origin'])) $origin	= $_REQUEST['origin'];
 if (IsSet($_REQUEST['submit'])) $submit = $_REQUEST['submit'];
-$visitor	= $_COOKIE['visitor'];
+$visitor	= pg_escape_string($_COOKIE['visitor']);
 
 if ($origin == '/index.php' || $origin == '') {
 	$origin = '/';

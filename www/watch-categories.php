@@ -100,7 +100,7 @@ if ($wlid != '') {
 $sql = "
    select distinct(ports_categories.category_id) as category_id
      from watch_list, watch_list_element, ports, ports_categories
-    WHERE watch_list.id      = " . $wlid . "
+    WHERE watch_list.id      = " . pg_escape_string($wlid) . "
       and watch_list.user_id = $User->id
       and watch_list.id      = watch_list_element.watch_list_id
       and ports.element_id   = watch_list_element.element_id

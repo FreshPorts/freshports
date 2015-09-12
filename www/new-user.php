@@ -126,8 +126,8 @@ if (IsSet($submit)) {
 				$sql = "insert into users (id, name, cookie, email, " . 
 						"watch_notice_id, emailsitenotices_yn, type, ip_address, number_of_days, password_hash) values (";
 				$sql .= pg_escape_string($UserID) . ", '" . pg_escape_string($UserLogin) . "', 'nocookie', '" . 
-						pg_escape_string($email) . "', '1', 'N', 'U', '" . $_SERVER["REMOTE_ADDR"] . "', " .
-						pg_escape_string($numberofdays) . ", crypt('" . pg_escape_string($Password1) . "' , gen_salt('md5')))";
+					pg_escape_string($email) . "', '1', 'N', 'U', '" . $_SERVER["REMOTE_ADDR"] . "', " .
+					pg_escape_string($numberofdays) . ", crypt('" . pg_escape_string($Password1) . "' , gen_salt('md5')))";
 
 				syslog(LOG_ERR, "FreshPorts new user: '$UserID', '$UserLogin', '$email', " . $_SERVER["REMOTE_ADDR"]);
 

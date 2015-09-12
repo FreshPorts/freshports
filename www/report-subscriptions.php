@@ -76,7 +76,9 @@
 			reset($reports);
 	
 			while (list($key, $value) = each($reports)) {
-				$TheFrequency = $_POST['reportfrequency_' . $value];
+				$TheFrequency = pg_escape_string($_POST['reportfrequency_' . $value]);
+				$value = pg_escape_string($value);
+
 				if ($Debug) echo '$TheFrequency=\'' . $TheFrequency . '\'';
 				if ($Debug) echo "\$key='$key' \$value='$value' \$User->id='$User->id' \$frequencies[\$key]=" . $TheFrequency . '<BR>';
 				if (IsSet($TheFrequency) && $TheFrequency <> '') {

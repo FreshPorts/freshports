@@ -23,6 +23,8 @@ if ($Debug) {
 
 function StagingAlreadyInUse($UserID, $dbh) {
 
+        $UserID = pg_escape_string($UserID);
+
 	$Result = 1;	// yes, already in progress.
 
 	$sql = "select WatchListStagingExists($UserID)";

@@ -240,7 +240,7 @@ if ($wlid != '') {
 	 WHERE ports.category_id                = categories.id 
 	   and watch_list_element.element_id    = ports.element_id 
 		and ports.element_id                 = element.id
-	   and watch_list_element.watch_list_id = $wlid
+	   and watch_list_element.watch_list_id = " . pg_escape_string($wlid) . "
 	
 	
 	) as TEMP

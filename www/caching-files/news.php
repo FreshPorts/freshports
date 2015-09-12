@@ -51,10 +51,10 @@
 	$committer   = 1;
 	$time        = 1;
 
-#	if (IsSet($_REQUEST['MaxArticles'])) $MaxArticles = AddSlashes($_REQUEST['MaxArticles']);
-#	if (IsSet($_REQUEST['date']))        $date        = AddSlashes($_REQUEST['date']);
-#	if (IsSet($_REQUEST['committer']))   $committer   = AddSlashes($_REQUEST['committer']);
-#	if (IsSet($_REQUEST['time']))        $time        = AddSlashes($_REQUEST['time']);
+#	if (IsSet($_REQUEST['MaxArticles'])) $MaxArticles = pg_escape_string($_REQUEST['MaxArticles']);
+#	if (IsSet($_REQUEST['date']))        $date        = pg_escape_string($_REQUEST['date']);
+#	if (IsSet($_REQUEST['committer']))   $committer   = pg_escape_string($_REQUEST['committer']);
+#	if (IsSet($_REQUEST['time']))        $time        = pg_escape_string($_REQUEST['time']);
 
 #	phpinfo();
 #	exit;

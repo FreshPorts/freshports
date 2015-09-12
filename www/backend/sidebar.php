@@ -13,9 +13,9 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
-	$date        = AddSlashes($_REQUEST['date']);
-	$committer   = AddSlashes($_REQUEST['committer']);
-	$time        = AddSlashes($_REQUEST['time']);
+	$date        = pg_escape_string($_REQUEST['date']);
+	$committer   = pg_escape_string($_REQUEST['committer']);
+	$time        = pg_escape_string($_REQUEST['time']);
 
 	freshports_HTML_Start();
 

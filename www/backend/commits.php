@@ -15,7 +15,7 @@
 	$Debug = 0;
 
 	if (IsSet($_REQUEST['n'])) {
-		$MaxCommits = AddSlashes($_REQUEST['n']);
+		$MaxCommits = pg_escape_string($_REQUEST['n']);
 	}
 	if (IsSet($MaxCommits)) {
 		if ($MaxCommits < 1 or $MaxCommits > MAXROWS) {

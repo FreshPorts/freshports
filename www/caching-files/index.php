@@ -22,7 +22,7 @@
 	$NumCommits = $MaxNumberOfPortsLong;
 
 	if (IsSet($_REQUEST["numcommits"])) {
-		$NumCommits = intval(AddSlashes($_REQUEST["numcommits"]));
+		$NumCommits = intval(pg_escape_string($_REQUEST["numcommits"]));
 
 		$NumCommits = min($MaxNumberOfPortsLong, max(10, $NumCommits));
 	}

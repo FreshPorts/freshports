@@ -956,7 +956,7 @@ function freshports_in_array($value, $array) {
 }
 
 function freshports_PortIDFromPortCategory($category, $port, $db) {
-	$sql = "select pathname_id('ports/" . pg_escape_string($category) . '/' . pg_escape_string($port) ")') as id";
+	$sql = "select pathname_id('ports/" . pg_escape_string($category) . '/' . pg_escape_string($port) . "') as id";
 
 	$result = pg_exec($db, $sql);
 	if (pg_numrows($result)) {
@@ -968,7 +968,7 @@ function freshports_PortIDFromPortCategory($category, $port, $db) {
 }
 
 function freshports_CategoryIDFromCategory($category, $db) {
-   $sql = "select categories.id from categories where categories.name = '" . pg_escape_string($category) "'";
+   $sql = "select categories.id from categories where categories.name = '" . pg_escape_string($category) . "'";
 
    $result = pg_exec($db, $sql);
    if(pg_numrows($result)) {

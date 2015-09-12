@@ -105,7 +105,7 @@ function freshports_NonPortDescription($db, $element_record) {
     $Commits->SetLimit($Cache->PageSize);
     $Commits->Debug = $Debug;
 	$Commits->UserIDSet($User->id);
-	$Commits->TreePathConditionSet("= '" . pg_escape_path($element_record->element_pathname) . "'");
+	$Commits->TreePathConditionSet("= '" . pg_escape_string($element_record->element_pathname) . "'");
     
 	#	
 	# get the count without excuting the whole query

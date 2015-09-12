@@ -169,7 +169,7 @@ SELECT CL.id as commit_log_id,
   FROM commit_log CL LEFT OUTER JOIN sanity_test_failures STF
     ON CL.id = STF.commit_log_id
     LEFT OUTER JOIN repo R ON CL.repo_id = R.id
- WHERE " . pg_escape_string($Where);
+ WHERE " . $Where;
 
 
     if ($Debug) echo "sql = '<pre>$sql</pre>'<BR>";

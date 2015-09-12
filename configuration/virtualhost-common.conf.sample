@@ -1,0 +1,126 @@
+    CBandRemoteSpeed 3GB/s 100 20
+
+	ErrorDocument   404 /missing.php
+
+	<Directory /usr/websites/freshports.org/www>
+      Options +FollowSymLinks
+      AllowOverride None
+      Order allow,deny
+      Allow from all
+    </Directory>
+
+	<Directory /usr/websites/freshports.org/www/backend>
+		Options			FollowSymLinks
+    </Directory>
+
+	<Location /docs>
+		IndexOptions	FancyIndexing NameWidth=* DescriptionWidth=*
+		Options			Indexes FollowSymLinks
+		AddDescription	"Using 404 errors to serve up virtual pages and virtual categories"			404-for-virtual-pages.php
+		AddDescription	"sample xml file for a commit message from FreeBSD's cvs-all mailing list"	commits.xml
+		AddDescription	"another samle xml file"																	commits_2.xml
+		AddDescription	"The data definition document for the FreshPorts/FreshSource XML"				fp-updates.dtd
+		AddDescription	"FreshPorts/FreshSource database diagram"												physical_database.gif
+		AddDescription	"A sample email"																				sample_message.1
+		AddDescription	"The xml produced from sample_message.1 by code in the scripts directory"	sample_message.1.xml
+		AddDescription	"more information about this directory"		README.txt
+		AddDescription	"perl module needed by process_cvs_mail.pl"	constants.pm
+		AddDescription	"raw email to be used as sample input"			email.txt
+		AddDescription	"xml output by process_cvs_mail.pl"				email.xml
+		AddDescription	"the perl code used to convert email to xml"	process_cvs_mail.pl
+		AddDescription	"Sample scripts for FreshPorts"															scripts
+	</Location>
+
+	RewriteEngine On
+
+        RewriteLogLevel 0
+
+	RewriteLog      /usr/websites/log/freshports.org-rewrite.log
+
+	# we are retiring commits.php and using index.php exclusively
+	RewriteRule	^/commits.php$	/  [R=permanent]
+
+
+	# look for stuff in the old /news/ directory
+	# we put php files in that directory in error
+	# and it conflicts with a category
+	#
+	RewriteRule	^/rss/watch-list.php$	/backend/watch-list.php [R=permanent]
+	RewriteRule	^/newsfeeds.php$	/backend/newsfeeds.php [R=permanent]
+	RewriteRule	^/rss/ports-new.php$	/backend/ports-new.php [R=permanent]
+	RewriteRule	^/sidebar.php$		/backend/sidebar.php [R=permanent]
+	RewriteRule	^/news.php3$		/backend/rss0.91.php [R=permanent]
+	RewriteRule	^/news.php$			/backend/rss0.91.php [R=permanent]
+	RewriteRule	^/news/atom0.3.php$	/backend/atom0.3.php [R=permanent]
+	RewriteRule	^/news/html.php$	/backend/html.php    [R=permanent]
+	RewriteRule	^/news/js.php$	    /backend/js.php      [R=permanent]
+	RewriteRule	^/news/mbox.php$	/backend/mbox.php    [R=permanent]
+	RewriteRule	^/news/opml.php$	/backend/opml.php    [R=permanent]
+	RewriteRule	^/news/pie0.1.php$	/backend/pie0.1.php  [R=permanent]
+	RewriteRule	^/news/rss0.91.php$	/backend/rss0.91.php [R=permanent]
+	RewriteRule	^/news/rss1.0.php$	/backend/rss1.0.php  [R=permanent]
+	RewriteRule	^/news/rss2.0.php$	/backend/rss2.0.php  [R=permanent]
+
+	RewriteRule ^/(.*)/(.*)/files\.php$ /commit.php?category=$1&port=$2&files=yes [R=permanent,QSA]
+
+
+	RewriteCond %{HTTP_REFERER} .*freshports.net*
+	RewriteRule .* /fraud/fraud.php
+
+	RewriteRule modules/coppermine        http://news.freshports.org/2006/11/09/coppermining/ [R=permanent]
+	RewriteRule ^/www/smarty_config.php$  http://news.freshports.org/2006/11/09/coppermining/ [R=permanent]
+	RewriteRule ^/admin/upgrade.php$       http://news.freshports.org/2006/11/09/coppermining/ [R=permanent]
+
+	<IfModule mod_gzip.c>
+		mod_gzip_on      Yes
+		mod_gzip_dechunk Yes
+
+		mod_gzip_item_include mime ^text/
+		mod_gzip_item_include mime ^httpd/unix-directory
+		mod_gzip_item_include mime ^application/.*xml
+		mod_gzip_item_include mime ^application/x-javascript
+	</IfModule>
+
+
+	RewriteEngine On
+	RewriteLog      /usr/websites/log/freshports.org-rewrite.log
+
+    RewriteCond %{REMOTE_ADDR} 87.119.196.31
+    RewriteRule .*   http://news.freshports.org/2006/11/06/my-what-interesting-search-queries/  [R=permanent]
+
+	RewriteEngine On
+	RewriteLog      /usr/websites/log/freshports.org-rewrite.log
+
+	RewriteCond %{HTTP_USER_AGENT} "MSNPTC/1.0"
+	RewriteRule .*	http://news.freshports.org/2007/11/01/msnptc10/
+
+    RewriteEngine On
+	RewriteCond %{REMOTE_ADDR} 91.212.226.143
+    RewriteRule .*   http://dan.langille.org/2010/04/28/how-many-freshports-accounts-are-enough/  [R=permanent]
+
+    RewriteEngine On
+    include /usr/websites/freshports.org/configuration/phorum-blocked-from-registration.inc
+	RewriteCond %{REMOTE_ADDR} 24.103.37.47
+    RewriteRule ^/phorum/(register.php|profile.php)  http://www.freshports.org/?debug=1 [R=permanent]
+
+    RewriteEngine On
+	RewriteCond %{REMOTE_ADDR} 222.186.26.41   [OR]
+	RewriteCond %{REMOTE_ADDR} 91.212.226.136  [OR]
+	RewriteCond %{REMOTE_ADDR} 94.242.214.7    [OR]
+	RewriteCond %{REMOTE_ADDR} 31.184.236.63   [OR]
+	RewriteCond %{REMOTE_ADDR} 193.105.210.41  [OR]
+	RewriteCond %{REMOTE_ADDR} 94.242.214.6    [OR]
+	RewriteCond %{REMOTE_ADDR} 31.184.236.16   [OR]
+	RewriteCond %{REMOTE_ADDR} 72.20.2.246     [OR]
+	RewriteCond %{REMOTE_ADDR} 31.184.238.21   [OR]
+	RewriteCond %{REMOTE_ADDR} 117.41.184.199  [OR]
+	RewriteCond %{REMOTE_ADDR} 61.160.221.27   [OR]
+	RewriteCond %{REMOTE_ADDR} 46.105.123.87   [OR]
+    RewriteCond %{REMOTE_ADDR} 5.9.152.10      [OR]
+    RewriteCond %{REMOTE_ADDR} 137.175.21.172  [OR]
+    RewriteCond %{REMOTE_ADDR} 46.105.99.160 [OR]
+    RewriteCond %{REMOTE_ADDR} 52.25.244.84 [OR]
+    RewriteCond %{REMOTE_ADDR} 208.115.111.72 [OR]
+    RewriteCond %{REMOTE_ADDR} 193.41.185.185
+
+    RewriteRule .*   http://dan.langille.org/2010/04/28/how-many-freshports-accounts-are-enough/?really  [R=permanent]

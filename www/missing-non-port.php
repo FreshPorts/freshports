@@ -16,7 +16,7 @@ function freshports_NonPortDescription($db, $element_record) {
 	GLOBAL $TableWidth;
 	GLOBAL $FreshPortsTitle;
 
-	$Debug = 1;
+	$Debug = 0;
 
 	freshports_ConditionalGet(freshports_LastModified());
 

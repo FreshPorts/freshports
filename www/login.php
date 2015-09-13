@@ -50,7 +50,7 @@ if (IsSet($_REQUEST['LOGIN']) && $_REQUEST['UserID']) {
       echo '<pre>' . htmlentities($sql) . '<pre>';
    }
 
-   syslog(LOG_ERROR, $sql);
+   syslog(LOG_ERR, $sql);
    $result = pg_exec($db, $sql) or die('query failed ' . pg_errormessage());
 
 	if (!pg_numrows($result)) {

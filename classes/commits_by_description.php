@@ -111,7 +111,7 @@ class CommitsByDescription extends commits {
 		$sql = "
 		SELECT count(*) as count 
 		  FROM commit_log CL
-		 WHERE " . pg_escape_string($this->Condition);
+		 WHERE " . $this->Condition;
 
 		if ($this->Debug) echo "<pre>$sql</pre>";
 		$result = pg_exec($this->dbh, $sql);

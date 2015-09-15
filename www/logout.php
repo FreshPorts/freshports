@@ -11,20 +11,15 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 
-        syslog(LOG_ERROR, 'you clicked logout');
-
 	freshports_CookieClear();
 
-        syslog(LOG_ERROR, 'logging out');
         if (IsSet($_COOKIE["visitor"])) {
                 $visitor = $_COOKIE["visitor"];
 
                 $sql = "UPDATE users SET cookie = 'nocookie' WHERE cookie = '" . pg_escape_string($_COOKIE["visitor"]) . "'";
 #                echo $sql;
-		syslog(LOG_ERROR, $sql);
 		$result = pg_exec($db, $sql);
 		if (!$result) {
-		  syslog(LOG_ERROR, "$sql -> " . pg_errormessage());
                 }
         }
 

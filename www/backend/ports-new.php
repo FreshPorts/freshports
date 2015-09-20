@@ -20,4 +20,3 @@
 	}
 
 	$Statistics->Save();
-?>

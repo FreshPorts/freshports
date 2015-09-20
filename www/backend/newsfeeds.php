@@ -75,4 +75,3 @@
 	</OL>');
 
 	$page->display();
-?>

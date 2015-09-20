@@ -149,4 +149,3 @@ class PortCommitsByCommitter extends CommitsByCommitter {
 		return $numrows;
 	}
 }
-

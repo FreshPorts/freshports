@@ -152,5 +152,3 @@ LIMIT 30";
 
 	return $rss->saveFeed($Format, NEWSFEEDCACHE);
 }
-
-?>

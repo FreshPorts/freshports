@@ -64,5 +64,3 @@ class VuXML_Ranges {
 	}
 
 }
-
-?>

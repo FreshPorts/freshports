@@ -48,4 +48,3 @@ class Categories {
 		$this->category_id = $myrow['category_id'];
 	}
 }
-?>

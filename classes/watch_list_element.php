@@ -203,4 +203,3 @@ select id, " . pg_escape_string($ElementID) . "
 		$this->user_id			= $myrow["user_id"];
 	}
 }
-

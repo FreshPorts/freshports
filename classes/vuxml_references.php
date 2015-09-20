@@ -52,5 +52,3 @@ class VuXML_References {
 	}
 
 }
-
-?>

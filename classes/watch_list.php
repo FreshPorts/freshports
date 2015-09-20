@@ -274,4 +274,3 @@ UPDATE watch_list
 		$this->watch_list_count = $myrow["watch_list_count"];
 	}
 }
-

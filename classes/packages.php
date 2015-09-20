@@ -39,5 +39,3 @@ class Packages {
         return $this->CategoryPort;
 	}
 }
-
-?>

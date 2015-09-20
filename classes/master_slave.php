@@ -55,5 +55,3 @@ ORDER BY slave_category_name, slave_port_name";
 	}
 
 }
-
-?>

@@ -24,13 +24,17 @@ function newsfeed($db, $Format) {
 
 	define('NEWSFEEDCACHE', $_SERVER['DOCUMENT_ROOT'] . '/../dynamic/caching/news/news.' . $Format . '.xml');
 
-	$MaxNumberOfPorts = MAX_PORTS;
+	$MaxNumberOfPorts = pg_escape_string(MAX_PORTS);
 
 	$rss = new UniversalFeedCreator(); 
 
+	# NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
+	#
 	# this next call may wind up using the cached and the 
 	# rest of the function may never be use executed.
 	#
+	# NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
+
 	$rss->useCached($Format, NEWSFEEDCACHE, time());
 
 	$rss->title          = 'FreshPorts news'; 

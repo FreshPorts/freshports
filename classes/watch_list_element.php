@@ -136,7 +136,7 @@ select " . pg_escape_string($WatchListID) . ", " . pg_escape_string($ElementID) 
     SELECT watch_list_element.watch_list_id, watch_list_element.element_id
       FROM watch_list_element
      WHERE watch_list_element.watch_list_id = " . pg_escape_string($WatchListID) . "
-       AND watch_list_element.element_id    = " . pg_escape_string($ElementID);
+       AND watch_list_element.element_id    = " . pg_escape_string($ElementID)   . ')';
 		if ($this->Debug) echo "<pre>$sql</pre>";
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {

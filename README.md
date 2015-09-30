@@ -14,3 +14,5 @@ to the Ports tree.
 At present, this repo contains only the website code.  It does not contain the
 database or or commit-loading code. You won't be able to run your own
 FreshPorts website with what's here now.
+
+See also: https://github.com/dlangille/freshports/issues

@@ -1,16 +1,4 @@
 <?php
-	#
-	# $Id: missing.php,v 1.11 2012-10-23 17:08:20 dan Exp $
-	#
-	# Copyright (c) 2001-2006 DVL Software Limited
-	#
-
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
-
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
-
 
 function freshports_Parse404URI($REQUEST_URI, $db) {
 	#
@@ -160,7 +148,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 
 	if ($IsPort) {
 		if ($Debug) echo 'including missing-port ' . $Debug . '<BR>';
-		require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-port.php');
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-port.php');
 		if ($Debug) echo 'including missing-port ' . $Debug . '<BR>';
 
 		# if zero is returned, all is well, otherwise, we can't display that category/port.
@@ -172,85 +160,17 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 
 	if ($IsCategory && !$IsPort) {
 		if ($Debug) echo 'This is a category<br>';
-		require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-category.php');
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-category.php');
 		freshports_CategoryByID($db, $CategoryID, 1, $User->page_size);
 		exit;
 	}
 
 	if ($IsElement && !$IsPort) {
 		if ($Debug) echo 'This is an element<br>';
-		require_once($_SERVER['DOCUMENT_ROOT'] . '/missing-non-port.php');
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-non-port.php');
 		freshports_NonPortDescription($db, $ElementRecord);
 		exit;
 	}
 	
 	return $result;
 }
-
-$result = freshports_Parse404URI($_SERVER['REDIRECT_URL'], $db);
-
-if ($result) {
-
-	#
-	# this is a true 404
-
-	$Title = 'Document not found';
-	freshports_Start($Title,
-					$FreshPortsTitle . ' - new ports, applications',
-					'FreeBSD, index, applications, ports');
-
-?>
-
-<?php echo freshports_MainTable(); ?>
-<TR>
-<TD WIDTH="100%" VALIGN="top">
-<?php echo freshports_MainContentTable(); ?>
-<TR>
-    <TD BGCOLOR="<?php echo BACKGROUND_COLOUR; ?>" HEIGHT="29"><FONT COLOR="#FFFFFF"><BIG><BIG>
-<?
-   echo "$FreshPortsTitle -- $Title";
-?>
-</BIG></BIG></FONT></TD>
-</TR>
-
-<TR>
-<TD WIDTH="100%" VALIGN="top">
-<P>
-Sorry, but I don't know anything about that.
-</P>
-
-<P>
-<? echo htmlentities($result) ?>
-</P>
-
-<P>
-Perhaps a <A HREF="/categories.php">list of categories</A> or <A HREF="/search.php">the search page</A> might be helpful.
-</P>
-
-</TD>
-</TR>
-</TABLE>
-</TD>
-
-  <TD VALIGN="top" WIDTH="*" ALIGN="center">
-  <?
-  echo freshports_SideBar();
-  ?>
-  </td>
-
-</TR>
-
-</TABLE>
-
-<?
-	echo freshports_ShowFooter();
-?>
-
-</body>
-</html>
-
-<?
-} else {
-#	echo " ummm, not sure what that was: '$result'";
-}
-

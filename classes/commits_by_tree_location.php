@@ -37,7 +37,7 @@ class CommitsByTreeLocation extends commits {
 		$sql = "
 			SELECT count(DISTINCT CL.id) AS count
 			  FROM element_pathname EP, commit_log_ports_elements CLPE, commit_log CL
-			 WHERE $this->TreePathCondition)
+			 WHERE $this->TreePathCondition
 			   AND EP.element_id = CLPE.element_ID
 			   AND CL.id         = CLPE.commit_log_id";
    

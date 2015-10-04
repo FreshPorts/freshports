@@ -70,7 +70,7 @@ if (IsSet($_REQUEST['LOGIN']) && $_REQUEST['UserID']) {
 			if ($Debug) {
 				echo "well, debug was on, so I would have taken you to '$origin'<BR>\n";
 			} else {
-				$user = new User();
+				$user = new User($db);
 				$Cookie = $user->createUserToken();
 				# we should use $user to save this...
 

@@ -5,16 +5,15 @@
 	# Copyright (c) 2001-2006 DVL Software Limited
 	#
 
-
-
 	#
 	# this is a true 404
+	header("HTTP/1.1 404 NOT FOUND");
 
 	$Title = 'Document not found';
 	freshports_Start($Title,
 					$FreshPortsTitle . ' - new ports, applications',
 					'FreeBSD, index, applications, ports');
-
+					
 ?>
 
 <?php echo freshports_MainTable(); ?>

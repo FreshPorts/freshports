@@ -15,7 +15,10 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	$IsCategory = false;
 	$IsElement  = false;
 
-	if ($Debug) echo "Debug is turned on.  Only 404 will be returned now because we cannot alter the headers at this time.<br>\n";
+	if ($Debug) {
+		echo "Debug is turned on.  Only 404 will be returned now because we cannot alter the headers at this time.<br>\n";
+		echo "\$REQUEST_URI='$REQUEST_URI'<br>";
+	}
 
 	$CategoryID = 0;
 
@@ -24,8 +27,8 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	$URLParts = parse_url($_SERVER['SCRIPT_URI']);
 	if ($Debug)
 	{
-	  echo 'the URI is <pre>' . $_SERVER['SCRIPT_URI'] . "</pre><br>\n";
-	  echo 'the url parts are <pre>' . print_r($URLParts) . "</pre><br>\n";
+	  echo 'the URI is <pre>\'' . $_SERVER['SCRIPT_URI'] . "'</pre><br>\n";
+	  echo 'the url parts are <pre>\'' . print_r($URLParts) . "'</pre><br>\n";
     }
 
 	$pathname = $URLParts['path'];
@@ -171,6 +174,6 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 		freshports_NonPortDescription($db, $ElementRecord);
 		exit;
 	}
-	
+
 	return $result;
 }

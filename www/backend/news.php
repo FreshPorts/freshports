@@ -8,12 +8,9 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
-
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
-
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/newsfeed.php'); 
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/newsfeed.php');
 
 	$format = basename($_SERVER['PHP_SELF'], '.php');
 
 	echo newsfeed($db, $format);
-?>

@@ -80,4 +80,3 @@ ORDER BY category, port ";
 		$this->_PopulateValues($myrow);
 	}
 }
-

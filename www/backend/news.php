@@ -13,4 +13,8 @@
 
 	$format = basename($_SERVER['PHP_SELF'], '.php');
 
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/newsfeed.php'); 
+
+	$format = basename($_SERVER['PHP_SELF'], '.php');
+
 	echo newsfeed($db, $format);

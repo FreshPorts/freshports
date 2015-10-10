@@ -133,5 +133,3 @@ SELECT $UserID as user_id,
 		$this->commit_log_id = $myrow["commit_log_id"];
 	}
 }
-
-?>

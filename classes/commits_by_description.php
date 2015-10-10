@@ -126,4 +126,3 @@ class CommitsByDescription extends commits {
 		return $count;
 	}
 }
-

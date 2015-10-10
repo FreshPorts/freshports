@@ -154,4 +154,3 @@ class CommitFiles {
 		return $NumRows;
 	}
 }
-

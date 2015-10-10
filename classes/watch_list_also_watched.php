@@ -68,4 +68,3 @@ class WatchListAlsoWatched {
 		$this->URL			= $myrow['url'];
 	}
 }
-

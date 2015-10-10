@@ -200,4 +200,3 @@ SELECT C.*, (SELECT MAX(CL.date_added)
 	}
 
 }
-?>

@@ -78,5 +78,3 @@ select commit_log_elements.element_id,
 	}
 
 }
-
-?>

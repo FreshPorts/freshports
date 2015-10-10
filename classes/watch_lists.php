@@ -217,4 +217,3 @@ DELETE FROM watch_list
 		return $ListCount;
 	}
 }
-

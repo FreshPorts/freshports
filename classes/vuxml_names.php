@@ -63,5 +63,3 @@ class VuXML_Names {
 	}
 
 }
-
-?>

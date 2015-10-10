@@ -68,4 +68,3 @@ SELECT distinct PA.category, PA.name as port, coalesce(V.date_modified, V.date_e
 	}
 
 }
-

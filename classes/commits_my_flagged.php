@@ -170,4 +170,3 @@ class CommitsMyFlagged extends commits {
 		return $numrows;
 	}
 }
-

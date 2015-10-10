@@ -232,5 +232,3 @@ function DisplayWatchListNewsFeeds($db, $UserID) {
 
 		DisplayWatchListNewsFeeds($db, $User->id);
 	}
-
-?>

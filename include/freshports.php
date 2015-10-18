@@ -99,8 +99,7 @@ function freshports_cvsweb_Revision_Link($pathname, $revision_name)
 }
 
 function freshports_svnweb_ChangeSet_Link($revision, $hostname, $path) {
-  return '<a href="http://' . htmlentities($hostname) . htmlentities($path) . 
-                                            '?view=revision&amp;revision=' . htmlentities($revision) .  '">' . freshports_Subversion_Icon('Revision:' . $revision) . '</a>';
+  return '<a href="http://' . htmlentities($hostname) . '/changeset/ports/' . htmlentities($revision) .  '">' . freshports_Subversion_Icon('Revision:' . $revision) . '</a>';
 }
 
 function freshports_Search_Maintainer($Maintainer) {

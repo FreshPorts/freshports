@@ -15,7 +15,7 @@
 	require_once('Pager/Pager.php');
 
 	$Debug = 0;
-#	if ($Debug) phpinfo();
+	if ($Debug) phpinfo();
 
     $https = ((!empty($_SERVER['HTTPS'])) && ($_SERVER['HTTPS'] != 'off'));
     if ($https) {
@@ -135,7 +135,7 @@ function WildCardQuery($stype, $Like, $query) {
 	$casesensitivity	= 'caseinsensitive';
 	$orderby            = ORDERBYCATEGORY;
 	$orderbyupdown		= ORDERBYASCENDING;
-
+	
 	// avoid nasty problems by adding slashes
 	if (IsSet($_REQUEST['query']))           $query				= pg_escape_string(trim($_REQUEST['query']));
 	if (IsSet($_REQUEST['stype']))           $stype				= pg_escape_string(trim($_REQUEST['stype']));
@@ -805,7 +805,7 @@ $Port->LocalResult = $result;
 	</SELECT>
 
 	<INPUT NAME="query" size="40"  VALUE="<? echo
-	htmlentities(stripslashes($query))?>">
+	htmlentities($query)?>">
 
 <?php
     require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/page_options.php');

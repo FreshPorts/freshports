@@ -285,8 +285,8 @@ ALTER USER   listening PASSWORD '2m38aqo';
 ALTER USER   listening LOGIN;
 
 
-GRANT select ON listen_for           TO GROUP listening;
-GRANT delete ON cache_clearing_ports TO GROUP listening;
+GRANT select         ON listen_for           TO GROUP listening;
+GRANT select, delete ON cache_clearing_ports TO GROUP listening;
 
 -- for the session schema
 

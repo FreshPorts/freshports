@@ -416,6 +416,29 @@ class port_display {
 		   $HTML .= ' <b>:</b> ' . freshports_PortsMonitorURL($port->category, $port->port);
 	   }
 	   
+		# only show if we're meant to show, and if the port has not been deleted.
+		if ($this->ShowPackageLink || $this->ShowEverything) {
+			$HTML .= "\n<hr>\n";
+			if ($port->IsDeleted()) {
+				$HTML .= '<p>No installation instructions: this port has been deleted.</p>';
+				$HTML .= '<p>The package name of this deleted port was: <code class="code">' . $port->latest_link . '</code></p>';
+			} else {
+				$HTML .= '<p><b>To install <a href="/faq.php#port" TITLE="what is a port?">the port</a>:</b> <code class="code">cd /usr/ports/'  . $port->category . '/' . $port->port . '/ && make install clean</code><br>';
+				if (IsSet($port->no_package) && $port->no_package != '') {
+					$HTML .= '<p><b>No <a href="/faq.php#package" TITLE="what is a package?">package</a> is available:</b> ' . $port->no_package . '</p>';
+					} else {
+					if ($port->forbidden || $port->broken || $port->ignore || $port->restricted) {
+						$HTML .= '<p><b>A <a href="/faq.php#package" TITLE="what is a package?">package</a> is not available for ports marked as: Forbidden / Broken / Ignore / Restricted</b></p>';
+					} else {
+						$HTML .= '<b>To add the <a href="/faq.php#package" TITLE="what is a package?">package</a>:</b> <code class="code">pkg install ' . $port->package_name . '</code></p>';
+					}
+				}
+			}
+
+			$HTML .= '<p><b>PKGNAME:</b> ' . $port->package_name . '</p>';
+
+		}
+
 	   if ($this->ShowEverything || $this->ShowMasterSlave) {
 			#
 			# Display our master port
@@ -496,28 +519,6 @@ class port_display {
 			$HTML .= $this->ShowDependencies( $port );
 		}
 
-		# only show if we're meant to show, and if the port has not been deleted.
-		if ($this->ShowPackageLink || $this->ShowEverything) {
-			$HTML .= "\n<hr>\n";
-			if ($port->IsDeleted()) {
-				$HTML .= '<p>No installation instructions: this port has been deleted.</p>';
-				$HTML .= '<p>The package name of this deleted port was: <code class="code">' . $port->latest_link . '</code></p>';
-			} else {
-				$HTML .= '<p><b>To install <a href="/faq.php#port" TITLE="what is a port?">the port</a>:</b> <code class="code">cd /usr/ports/'  . $port->category . '/' . $port->port . '/ && make install clean</code><br>';
-				if (IsSet($port->no_package) && $port->no_package != '') {
-					$HTML .= '<p><b>No <a href="/faq.php#package" TITLE="what is a package?">package</a> is available:</b> ' . $port->no_package . '</p>';
-					} else {
-					if ($port->forbidden || $port->broken || $port->ignore || $port->restricted) {
-						$HTML .= '<p><b>A <a href="/faq.php#package" TITLE="what is a package?">package</a> is not available for ports marked as: Forbidden / Broken / Ignore / Restricted</b></p>';
-					} else {
-						$HTML .= '<b>To add the <a href="/faq.php#package" TITLE="what is a package?">package</a>:</b> <code class="code">pkg install ' . $port->category . '/' . $port->port . '</code></p>';
-					}
-				}
-			}
-
-			$HTML .= "\n<hr>\n";
-		}
-
 		if ($this->ShowDescriptionShort && ($this->ShowDescriptionLink || $this->ShowEverything)) {
 			// Long description
 			$HTML .= '<A HREF="/' . $port->category . '/' . $port->port .'/">Description</a>';
@@ -526,6 +527,7 @@ class port_display {
 		}
 		
 		if ($this->ShowEverything) {
+			$HTML .= "\n<hr>\n";
 			$HTML .= "<b>Configuration Options</b>\n<pre>";
 			if ($port->showconfig) {
 				$HTML .= $port->showconfig;

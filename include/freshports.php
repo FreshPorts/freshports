@@ -1238,7 +1238,7 @@ function freshports_PortCommits($port, $PageNumber = 1, $NumCommitsPerPage = 100
 	$NumCommitsHTML .= '</p>';
 
 	if ($PageLinks != '') {
-		$PageLinksHTML .= '<p align="center">' . $PageLinks . '</p>';
+		$PageLinksHTML = '<p align="center">' . $PageLinks . '</p>';
 	} else {
 		$PageLinksHTML = '';
 	}

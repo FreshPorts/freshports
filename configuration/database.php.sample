@@ -24,5 +24,3 @@ function UserToCookie($User) {
 
 	return $EncodedUserID;
 }
-
-?>

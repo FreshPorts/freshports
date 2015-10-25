@@ -1,9 +1,9 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/--/serviceMyREST.php');
+#require_once($_SERVER['DOCUMENT_ROOT'] . '/--/serviceMyREST.php');
 
-$service = new serviceMyREST(null);
-$service->handleRawRequest($_SERVER, $_GET, $_POST);
+#$service = new serviceMyREST(null);
+#$service->handleRawRequest($_SERVER, $_GET, $_POST);
 
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
@@ -74,7 +74,7 @@ switch($script) {
 #            echo '<br><img src="' . $badge . '">';
         } else {
             $img = $port_badge->not_found();
-            echo $img;
+#            echo $img;
             header("Location: $img", true, 303);
             exit;
 #            echo '<br><img src="' . $img . '">';

@@ -10,21 +10,21 @@
 
 	Redirect	permanent / http://www.freshports.org/
 
-	ErrorLog	/usr/websites/log/freshports.org-error.log
-	CustomLog	/usr/websites/log/freshports.org-access.log combined
+	ErrorLog	/var/log/freshports.org-error.log
+	CustomLog	/var/log/freshports.org-access.log combined
 </VirtualHost>
 
 <VirtualHost *>
 	ServerAdmin     dan@langille.org
 
-	DocumentRoot    /usr/websites/freshports.org/www
+	DocumentRoot    /usr/local/www/freshports.org/www
 
 	ServerName      www.freshports.org
 
-	ErrorLog        /usr/websites/log/freshports.org-error.log
-	CustomLog       /usr/websites/log/freshports.org-access.log combined
+	ErrorLog        /var/log/freshports.org-error.log
+	CustomLog       /var/log/freshports.org-access.log combined
 
-    Include         /usr/websites/freshports.org/configuration/virtualhost-common.conf
+	Include         /usr/local/www/freshports.org/configuration/virtualhost-common.conf
 </VirtualHost>
 
 <VirtualHost 206.127.23.230:80>
@@ -33,8 +33,8 @@
 
 	Redirect	permanent / http://www.freshports.org/
 
-	ErrorLog	/usr/websites/log/freshports.org-error.log
-	CustomLog	/usr/websites/log/freshports.org-access.log combined
+	ErrorLog	/var/log/freshports.org-error.log
+	CustomLog	/var/log/freshports.org-access.log combined
 
 
 </VirtualHost>
@@ -44,12 +44,12 @@
 
 	ServerName      www.freshports.org
 
-	DocumentRoot    /usr/websites/freshports.org/www
+	DocumentRoot    /usr/local/www/freshports.org/www
 
-	ErrorLog        /usr/websites/log/freshports.org-error.log
-	CustomLog       /usr/websites/log/freshports.org-access.log combined
+	ErrorLog        /var/log/freshports.org-error.log
+	CustomLog       /var/log/freshports.org-access.log combined
 
-    Include         /usr/websites/freshports.org/configuration/virtualhost-common.conf
+	Include         /usr/local/www/freshports.org/configuration/virtualhost-common.conf
 
 </VirtualHost>
 
@@ -59,8 +59,8 @@
 
 	Redirect	permanent / https://www.freshports.org/
 
-	ErrorLog	/usr/websites/log/freshports.org-error.log
-	CustomLog	/usr/websites/log/freshports.org-access.log combined
+	ErrorLog	/var/log/freshports.org-error.log
+	CustomLog	/var/log/freshports.org-access.log combined
 
   SSLEngine on
   SSLCipherSuite ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:-SSLv2:+EXP:+eNULL
@@ -80,14 +80,14 @@
 
   ServerName      www.freshports.org
 
-  DocumentRoot    /usr/websites/freshports.org/www
+  DocumentRoot    /usr/local/www/freshports.org/www
 
-  ErrorLog        /usr/websites/log/freshports.org-error.log
-  CustomLog       /usr/websites/log/freshports.org-access.log combined
+  ErrorLog        /var/log/freshports.org-error.log
+  CustomLog       /var/log/freshports.org-access.log combined
 
-  RewriteLog      /usr/websites/log/freshports.org-rewrite.log
+  RewriteLog      /var/log/freshports.org-rewrite.log
 
-  Include         /usr/websites/freshports.org/configuration/virtualhost-common.conf
+  Include         /usr/local/www/freshports.org/configuration/virtualhost-common.conf
 
   SSLEngine on
   SSLCipherSuite ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:-SSLv2:+EXP:+eNULL
@@ -109,7 +109,7 @@
          nokeepalive ssl-unclean-shutdown \
          downgrade-1.0 force-response-1.0
 
-  CustomLog "/usr/websites/log/freshports.org-ssl_request.log" \
+  CustomLog "/var/log/freshports.org-ssl_request.log" \
           "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
 
 </VirtualHost>                                  

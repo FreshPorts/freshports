@@ -62,20 +62,21 @@ switch($script) {
 #        echo "\$port='$port'<br>";
         $myPort = new Port($db);
         $result = $myPort->Fetch($category, $port);
+#        var_dump($result);
+        $port_badge = new port_badge($db, $myPort);
         if (!empty($result)) {
 #            echo "result = '$result'<br>\n";
-            $port_badge = new port_badge($db, $myPort);
-            $badge = $port_badge->contents();
+            $badge = $port_badge->url();
 #            header("HTTP/1.1 404 NOT FOUND");
             header("Location: $badge", true, 303);
 #            echo $badge;
             exit;
 #            echo '<br><img src="' . $badge . '">';
         } else {
-            $img = 'https://img.shields.io/badge/FreeBSD_port-not_found-lightgray.png';
+            $img = $port_badge->not_found();
+            echo $img;
             header("Location: $img", true, 303);
             exit;
-#            echo $img;
 #            echo '<br><img src="' . $img . '">';
         }
 

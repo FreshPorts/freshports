@@ -11,6 +11,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
 
 define('port_display_WATCH_LIST_ADD_REMOVE', '%%%$$$WATCHLIST$$$%%%');
 define('port_display_AD',                    '%%%$$$ADGOESHERE$$$%%%');
+define('DEPENDS_SUMMARY', 71 );
 
 class port_display {
 
@@ -624,7 +625,6 @@ class port_display {
         $div .= "\n" . '<ol class="depends" id="requiredfor"' . $title . '>' . "\n";
 
         $deletedPortFound = true;
-        define('DEPENDS_SUMMARY', 71 );
         for ( $i = 0; $i < $NumRows; $i++ )
         {
 					$PortDependencies->FetchNth($i);

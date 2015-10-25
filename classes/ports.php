@@ -402,6 +402,8 @@ ON TEMP.wle_element_id = ports.element_id";
 		} else {
 			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
 		}
+
+		return $result;
 	}
 
 	function FetchByCategoryInitialise($CategoryName, $UserID = 0, $PageSize = 0, $PageNo = 0) {

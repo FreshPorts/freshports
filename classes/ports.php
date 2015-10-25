@@ -398,10 +398,13 @@ ON TEMP.wle_element_id = ports.element_id";
 				if ($Debug) echo "fetched by ID succeeded<BR>";
 				$myrow = pg_fetch_array ($result);
 				$this->_PopulateValues($myrow);
+				$result = $this->{'id'};
 			}
 		} else {
 			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
 		}
+
+		return $result;
 	}
 
 	function FetchByCategoryInitialise($CategoryName, $UserID = 0, $PageSize = 0, $PageNo = 0) {
@@ -581,6 +584,7 @@ LEFT OUTER JOIN
 			if ($numrows == 1) {
 				$myrow = pg_fetch_row($result);
 				$PortID = $myrow[0];
+
 				if (IsSet($PortID)) {
 					$result = $this->FetchByID($PortID, $UserID);
 				} else {

@@ -163,8 +163,11 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 
 	if ($IsCategory && !$IsPort) {
 		if ($Debug) echo 'This is a category<br>';
+		$query_string = $_SERVER["QUERY_STRING"];
+		parse_str($query_string, $url_parts);
+		$page = isset($url_parts['page']) ? intval($url_parts['page']) : 1;
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-category.php');
-		freshports_CategoryByID($db, $CategoryID, 1, $User->page_size);
+		freshports_CategoryByID($db, $CategoryID, $page, $User->page_size);
 		exit;
 	}
 

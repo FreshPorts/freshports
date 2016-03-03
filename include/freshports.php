@@ -19,8 +19,7 @@ DEFINE('MAILTO',                'mailto');
 DEFINE('COPYRIGHTYEARS',        '2000-2014');
 DEFINE('URL2LINK_CUTOFF_LEVEL', 0);
 DEFINE('FAQLINK',               'faq.php');
-DEFINE('PORTSMONURL',			'http://portsmon.freebsd.org/portoverview.py');
-DEFINE('DISTFILESSURVEYURL',	'http://people.freebsd.org/~ehaupt/distilator/');
+DEFINE('PORTSMONURL',		'http://portsmon.freebsd.org/portoverview.py');
 DEFINE('NOBORDER',              '0');
 DEFINE('BORDER',                '1');
 

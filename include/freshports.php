@@ -1924,16 +1924,6 @@ function PeopleWatchingThisPortAlsoWatch($dbh, $element_id) {
 
 }
 
-
-function freshports_DistFilesSurveyURL($Category, $Port) {
-	# we have a problem with + in portnames.
-	# works: http://portsmon.freebsd.org/portoverview.py?category=editors&portname=vim6%2Bruby
-	# fails: http://portsmon.freebsd.org/portoverview.py?category=editors&portname=vim6+ruby
-	#
-	return '<a href="' . DISTFILESSURVEYURL . urlencode($Category) . '/' . urlencode($Port) . '/" title="Distfiles Availability">Distfiles Availability</a>';
-}
-
-
 function freshports_PortsMonitorURL($Category, $Port) {
 	# we have a problem with + in portnames.
 	# works: http://portsmon.freebsd.org/portoverview.py?category=editors&portname=vim6%2Bruby

@@ -203,7 +203,7 @@ SELECT V.vid,
 	
 
 
-		$sql = "
+		$sql = "set client_encoding = 'ISO-8859-15';
 SELECT V.vid,
        VN.name,
        V.description,

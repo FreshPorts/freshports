@@ -55,17 +55,20 @@
 					'FreeBSD, index, applications, ports');
 	$Debug = 0;
 
-	$ArchiveBaseDirectory = $_SERVER['DOCUMENT_ROOT'] . '/archives';
-
 	function ArchiveFileName($Date) {
-		$File = $ArchiveBaseDirectory . '/' . $Date . '.daily';
+		$File = ARCHIVE_DIRECTORY . '/' . $Date . '.daily';
+		
+		return $File;
 	}
 
 	function ArchiveDirectoryCreate($Date) {
 		$SubDir      = date('Y/m', strtotime($Date));
-		$DirToCreate = $ArchiveBaseDirectory . '/' . $SubDir;
-		system("mkdir -p $DirToCreate");
-		
+		$DirToCreate = ARCHIVE_DIRECTORY . '/' . $SubDir;
+		syslog(LOG_NOTICE, $DirToCreate);
+		if (!file_exists($DirToCreate)) {
+			mkdir($DirToCreate, 0740, true);
+		}
+
 		return $DirToCreate;
 	}
 
@@ -81,11 +84,27 @@
 		return $File;
 	}
 
-	function ArchiveSave($Date) {
+	function ArchiveSave($Date, $HTML) {
 		# saves the archive away...
 		
 		ArchiveDirectoryCreate($Date);
 		$File = ArchiveFileName($Date);
+
+		$myfile = fopen($File, 'w');
+		fwrite($myfile, $HTML);
+		fclose($myfile);
+	}
+
+	function ArchiveGet($Date) {
+		# saves the archive away...
+		
+		$File = ArchiveFileName($Date);
+		
+		$myfile = fopen($File, 'r');
+		$HTML = fread($myfile, filesize($File));
+		fclose($myfile);
+
+		return $HTML;
 	}
 
 	function ArchiveCreate($Date, $DateMessage, $db, $Use, $BranchName) {
@@ -156,7 +175,12 @@ if ($NumCommits > 0) {
 
 echo freshports_MainContentTable();
 
-$HTML = ArchiveCreate($Date, $DateMessage, $db, $User, $BranchName);
+if (ArchiveExists($Date)) {
+  $HTML = ArchiveGet($Date);
+} else {
+  $HTML = ArchiveCreate($Date, $DateMessage, $db, $User, $BranchName);
+  ArchiveSave($Date, $HTML);
+}
 
 echo $HTML;
 

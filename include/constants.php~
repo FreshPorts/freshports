@@ -83,5 +83,3 @@ define('DISTFILESSURVEYSHOW', 1);
 define('BRANCH_HEAD', 'head');
 define('PATH_TO_PORTSDIR', '/usr/local/');
 define('PORTSDIR_PREFIX',  'PORTS-');
-
-define('ARCHIVE_DIRECTORY', $_SERVER['DOCUMENT_ROOT'] . '/../archives');

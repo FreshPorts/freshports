@@ -20,7 +20,6 @@ DEFINE('COPYRIGHTYEARS',        '2000-2014');
 DEFINE('URL2LINK_CUTOFF_LEVEL', 0);
 DEFINE('FAQLINK',               'faq.php');
 DEFINE('PORTSMONURL',			'http://portsmon.freebsd.org/portoverview.py');
-DEFINE('DISTFILESSURVEYURL',	'http://people.freebsd.org/~ehaupt/distilator/');
 DEFINE('NOBORDER',              '0');
 DEFINE('BORDER',                '1');
 
@@ -1923,15 +1922,6 @@ function PeopleWatchingThisPortAlsoWatch($dbh, $element_id) {
 
 	return $HTML;
 
-}
-
-
-function freshports_DistFilesSurveyURL($Category, $Port) {
-	# we have a problem with + in portnames.
-	# works: http://portsmon.freebsd.org/portoverview.py?category=editors&portname=vim6%2Bruby
-	# fails: http://portsmon.freebsd.org/portoverview.py?category=editors&portname=vim6+ruby
-	#
-	return '<a href="' . DISTFILESSURVEYURL . urlencode($Category) . '/' . urlencode($Port) . '/" title="Distfiles Availability">Distfiles Availability</a>';
 }
 
 

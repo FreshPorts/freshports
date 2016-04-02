@@ -75,7 +75,6 @@ class port_display {
 		$this->ShowPackageLink         = false;
 		$this->ShowPortCreationDate    = false;
 		$this->ShowPortsMonLink        = false;
-		$this->ShowDistfilesSurveyLink = false;
 		$this->ShowShortDescription    = false;
 		$this->ShowWatchListCount      = false;
 		$this->ShowWatchListStatus     = false;
@@ -97,7 +96,6 @@ class port_display {
 		$this->ShowMaintainedBy        = true;
 		$this->ShowPortCreationDate    = true;
 		$this->ShowPortsMonLink        = true;
-		$this->ShowDistfilesSurveyLink = true;
 		$this->ShowPackageLink         = true;
 		$this->ShowShortDescription    = true;
 		$this->ShowWatchListStatus     = true;
@@ -409,10 +407,6 @@ class port_display {
 		   $HTML .= '<a HREF="' . _forDisplay($port->homepage) . '" TITLE="Homepage for this port">Homepage</a>';
 	   }
 
-	   if (defined('DISTFILESSURVEYSHOW')  && ($this->ShowDistfilesSurveyLink || $this->ShowEverything)) {
-		   $HTML .= ' <b>:</b> ' . freshports_DistFilesSurveyURL($port->category, $port->port);
-	   }
-	   
 	   if (defined('PORTSMONSHOW')  && ($this->ShowPortsMonLink || $this->ShowEverything)) {
 		   $HTML .= ' <b>:</b> ' . freshports_PortsMonitorURL($port->category, $port->port);
 	   }

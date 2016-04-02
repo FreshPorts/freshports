@@ -92,8 +92,8 @@
 		GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;
 
 		$commits = new Commits($db);
-	    $commits->SetBranch($BranchName);
-		$NumRows = $commits->Fetch($Date, $User->id);
+		$commits->SetBranch($BranchName);
+		$NumRows = $commits->Fetch($Date, isset($User) ? $User->id : null);
 	
 		#echo '<br>NumRows = ' . $NumRows;
 

@@ -68,6 +68,11 @@ grant select on vuxml_references               to group www;
 --
 grant select, insert on cache_clearing_ports        to group www;
 grant select, update on cache_clearing_ports_id_seq to group www;
+
+grant select, insert on cache_clearing_dates        to group www;
+grant select, update on cache_clearing_dates_id_seq to group www;
+
+
 grant select, update on categories                  to group www;
 grant select, insert, delete on category_stats      to group www;
 
@@ -141,6 +146,8 @@ alter group commits add user commits;
 grant select                         on announcements                  to group commits;
 grant select, insert, update         on cache_clearing_ports           to group commits;
 grant select, update                 on cache_clearing_ports_id_seq    to group commits;
+grant select, insert, update         on cache_clearing_dates           to group commits;
+grant select, update                 on cache_clearing_dates_id_seq    to group commits;
 grant select, insert, update         on categories                     to group commits;
 grant select, update                 on categories_id_seq              to group commits;
 grant select, insert, update, delete on commit_log                     to group commits;
@@ -285,8 +292,9 @@ ALTER USER   listening PASSWORD '2m38aqo';
 ALTER USER   listening LOGIN;
 
 
-GRANT select         ON listen_for           TO GROUP listening;
+GRANT select ON listen_for           TO GROUP listening;
 GRANT select, delete ON cache_clearing_ports TO GROUP listening;
+GRANT select, delete ON cache_clearing_dates TO GROUP listening;
 
 -- for the session schema
 

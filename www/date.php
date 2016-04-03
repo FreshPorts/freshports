@@ -64,7 +64,6 @@
 	function ArchiveDirectoryCreate($Date) {
 		$SubDir      = date('Y/m', strtotime($Date));
 		$DirToCreate = ARCHIVE_DIRECTORY . '/' . $SubDir;
-		syslog(LOG_NOTICE, $DirToCreate);
 		if (!file_exists($DirToCreate)) {
 			mkdir($DirToCreate, 0740, true);
 		}

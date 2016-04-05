@@ -618,6 +618,7 @@ $sqlSelectFields = "
          P.expiration_date,
          P.no_package,
          P.license,
+         P.last_commit_id,
          R.svn_hostname,
          R.path_to_repo,
          element_pathname(P.element_id) as element_pathname  ";

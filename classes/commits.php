@@ -45,7 +45,6 @@ class Commits {
 
 	function SetBranch($BranchName) {
 		$this->BranchName = $BranchName;
-		echo 'setting branch to ' . $BranchName;
 	}
 	
 	function Fetch($Date, $UserID) {

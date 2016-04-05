@@ -108,7 +108,25 @@ class Commit {
 				$myrow = pg_fetch_array ($result, 0);
 				$this->PopulateValues($myrow);
 			}
+		}		if ($Debug) echo 'message_id is ' . $this->message_id;
+		return $this->message_id;
+	}
+
+	function FetchById($commit_log_id) {
+	        $Debug = 0;
+		$Where = "CL.id = " . pg_escape_string($commit_log_id);
+
+		$result = $this->FetchByIDHelper($Where);
+
+		if ($result) {
+			$numrows = pg_numrows($result);
+			if ($numrows == 1) {
+				if ($Debug) echo "fetched by ID succeeded<BR>";
+				$myrow = pg_fetch_array ($result, 0);
+				$this->PopulateValues($myrow);
+			}
 		}
+
 		if ($Debug) echo 'message_id is ' . $this->message_id;
 		return $this->message_id;
 	}
@@ -146,7 +164,7 @@ class Commit {
 		return $this->message_id;
 	}
 
-	function FetchByIDHelper($Where) {
+	protected function FetchByIDHelper($Where) {
 		$Debug = 0;
 
 		$sql = "

@@ -45,6 +45,27 @@ class port_display {
 	var $ShowWatchListCount;
 	var $ShowWatchListStatus;
 
+	function link_to_repo() {
+          # we want something like
+          # http://svn.freebsd.org/ports/head/x11-wm/awesome/
+          $link = 'https://' . $this->port->svn_hostname . $this->port->element_pathname . '/';
+          if ($this->port->IsDeleted()) {
+            #
+	    # if the port has been deleted, let's link to the last commit
+	    # deleted ports don't change much.  It's easier to do this here
+	    # than to do it for ALL ports.
+	    #
+            require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
+
+            $commit = new Commit($this->db);
+            $commit->FetchById($this->port->last_commit_id);
+
+            $link .= '?pathrev=' . ($commit->svn_revision - 1);
+          }
+
+	  return $link;
+	}
+
 	function port_display(&$db, $User = 0) {
 		$this->db   = $db;
 		$this->User = $User;
@@ -390,10 +411,8 @@ class port_display {
 	   }
 
 	   if ($this->ShowChangesLink || $this->ShowEverything) {
-            # we want something like
-            # http://svn.freebsd.org/ports/head/x11-wm/awesome/
-        	$HTML .=  '<a href="http://' . $port->svn_hostname . $port->element_pathname . '/">SVNWeb</a>';
-       }
+             $HTML .=  '<a href="' . $this->link_to_repo() . '">SVNWeb</a>';
+	   }
 
 	   if ($port->PackageExists() && ($this->ShowPackageLink || $this->ShowEverything)) {
 		   // package

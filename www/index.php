@@ -148,7 +148,8 @@ if ($db) {
 	if ($UseCache) {
 		readfile(CACHEFILE);
 	} else {
-		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/latest_commits.php');
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits.php');
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
 
 		if (IsSet($_REQUEST['branch'])) {
 			$Branch = htmlspecialchars($_REQUEST['branch']);
@@ -156,16 +157,15 @@ if ($db) {
 			$Branch = BRANCH_HEAD;
 		}
 
-		$LatestCommits = new LatestCommits($db);
-		$LatestCommits->SetMaxNumberOfPorts($MaxNumberOfPortsLong);
-		$LatestCommits->SetDaysMarkedAsNew ($DaysMarkedAsNew);
-		$LatestCommits->SetUserID($User->id);
+		$LatestCommits = new Commits($db);
 		$LatestCommits->SetBranch($Branch);
-		$LatestCommits->SetWatchListAsk($User->watch_list_add_remove);
+		$LatestCommits->FetchLimit(date('Y-m-d'), isset($User) ? $User->id : null, 100);
 		
-		$LatestCommits->CreateHTML();
+		$DisplayCommit = new DisplayCommit($db, $LatestCommits->LocalResult);
+		$DisplayCommit->SanityTestFailure = true;
+		$RetVal = $DisplayCommit->CreateHTML();
 
-		echo $LatestCommits->HTML;
+		echo $DisplayCommit->HTML;
 	}
 
 }

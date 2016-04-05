@@ -135,14 +135,14 @@ class Commits {
 	function FetchLimit($Date, $UserID, $Limit) {
 		$sql = "
         SELECT DISTINCT
-            commit_log.commit_date - SystemTimeAdjust()                                                                 AS commit_date_raw,
-            commit_log.id                                                                                               AS commit_log_id,
-            commit_log.encoding_losses                                                                                  AS encoding_losses,
-            commit_log.message_id                                                                                       AS message_id,
-            commit_log.committer                                                                                        AS committer,
-            commit_log.description                                                                                      AS commit_description,
-            to_char(commit_log.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')                                         AS commit_date,
-            to_char(commit_log.commit_date - SystemTimeAdjust(), 'HH24:MI')                                             AS commit_time,
+            CL.commit_date - SystemTimeAdjust()                                                                 AS commit_date_raw,
+            CL.id                                                                                               AS commit_log_id,
+            CL.encoding_losses                                                                                  AS encoding_losses,
+            CL.message_id                                                                                       AS message_id,
+            CL.committer                                                                                        AS committer,
+            CL.description                                                                                      AS commit_description,
+            to_char(CL.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')                                         AS commit_date,
+            to_char(CL.commit_date - SystemTimeAdjust(), 'HH24:MI')                                             AS commit_time,
             CLP.port_id                                                                                    AS port_id,
             categories.name                                                                                             AS category,
             categories.id                                                                                               AS category_id,
@@ -160,7 +160,7 @@ class Commits {
             date_part('epoch', ports.date_added)                                                                        AS date_added,
             ports.element_id                                                                                            AS element_id,
             ports.short_description                                                                                     AS short_description,
-            commit_log.svn_revision                                                                                     AS svn_revision,
+            CL.svn_revision                                                                                     AS svn_revision,
             R.svn_hostname                                                                                              AS svn_hostname,
             R.path_to_repo                                                                                              AS path_to_repo,
             STF.message                                                                                                 AS stf_message";
@@ -173,8 +173,12 @@ class Commits {
         $sql .= "
     FROM commit_log_ports CLP JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
                               JOIN system_branch SB ON SB.branch_name = '" . pg_escape_string($this->BranchName) . "' AND SB.id = CLB.branch_id
-      LEFT OUTER JOIN sanity_test_failures STF ON STF.commit_log_id = CLP.commit_log_id
-    , commit_log LEFT OUTER JOIN repo R on commit_log.repo_id = R.id, categories, ports, element ";
+      LEFT OUTER JOIN sanity_test_failures STF ON STF.commit_log_id = CLP.commit_log_id, 
+      (SELECT *
+         FROM commit_log
+        WHERE commit_log.commit_date <= '" . pg_escape_string($Date) . "'::timestamptz  + SystemTimeAdjust() + '1 Day'
+     ORDER BY commit_log.commit_date DESC
+        LIMIT " . pg_escape_string($Limit) . ") AS CL LEFT OUTER JOIN repo R on CL.repo_id = R.id, categories, ports, element ";
 
         if ($UserID) {
                 $sql .= "
@@ -189,16 +193,14 @@ class Commits {
         }
 
         $sql .= "
-      WHERE commit_log.commit_date         <= '" . pg_escape_string($Date) . "'::timestamptz  + SystemTimeAdjust() + '1 Day'
-        AND CLP.commit_log_id = commit_log.id
+      WHERE CLP.commit_log_id = CL.id
         AND CLP.port_id       = ports.id
         AND categories.id     = ports.category_id
         AND element.id        = ports.element_id
    ORDER BY 1 desc,
             commit_log_id,
             category,
-            port
-    LIMIT " . pg_escape_string($Limit);
+            port";
 
 		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
 

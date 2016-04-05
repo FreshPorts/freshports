@@ -81,9 +81,9 @@ $num          = $MaxNumberOfPortsLong;
 $days         = $NumberOfDays;
 $dailysummary = 7;
 
-if (IsSet($_REQUEST['num']))          $num			= pg_escape_string($_REQUEST["num"]);
-if (IsSet($_REQUEST['dailysummary'])) $dailysummary	= pg_escape_string($_REQUEST["dailysummary"]);
-if (IsSet($_REQUEST['days']))         $days			= pg_escape_string($_REQUEST["days"]);
+if (IsSet($_REQUEST['num']))          $num          = pg_escape_string($_REQUEST["num"]);
+if (IsSet($_REQUEST['dailysummary'])) $dailysummary = pg_escape_string($_REQUEST["dailysummary"]);
+if (IsSet($_REQUEST['days']))         $days         = pg_escape_string($_REQUEST["days"]);
 
 if (Is_Numeric($num)) {
 	$MaxNumberOfPortsLong = min($MaxNumberOfPortsLong, max(10, $num));

@@ -94,7 +94,7 @@ which you committed.  In the past, such problems are related to syntax errors in
 </P>
 
 <P>
-One committer referred to this service as a automated nagging mentor...
+One committer referred to this service as an automated nagging mentor...
 </P>
 </TD></TR>
 

@@ -1110,7 +1110,16 @@ function freshports_PortCommitsHeader($port) {
 	$HTML .= "<tr>\n";
 
 	$Columns = 3;
+
 	$HTML .= freshports_PageBannerText("Commit History - (may be incomplete: see SVNWeb link above for full details)", $Columns);
+
+	if ($port->IsSlavePort()) {
+		$HTML .= '<tr><td colspan="' . $Columns . '">'; 
+		$HTML .= 'This is a slave port.  You may also want to view the commits to the master port: ';
+		list($MyCategory, $MyPort) = explode('/', $port->master_port);
+		$HTML .= freshports_link_to_port_single($MyCategory, $MyPort);
+		$HTML .= '</td></tr>';
+	}
 
 	$HTML .= '<tr><td width="180"><b>Date</b></td><td><b>By</b></td><td><b>Description</b></td>';
 

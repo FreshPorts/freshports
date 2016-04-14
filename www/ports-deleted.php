@@ -23,4 +23,3 @@
 	$page->setSQL('', $User->id);
 
 	$page->display();
-?>

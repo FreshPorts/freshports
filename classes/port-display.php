@@ -57,8 +57,6 @@ class port_display {
 	    #
             require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
             
-            echo '<pre>'; var_dump($this->port); echo '</pre>';
-
             $commit = new Commit($this->db);
             $commit->FetchById($this->port->last_commit_id);
 

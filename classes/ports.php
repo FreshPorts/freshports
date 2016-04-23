@@ -55,6 +55,7 @@ class Port {
 	var $extract_depends;
 	var $patch_depends;
 	var $uses;
+	var $pkgmessage;
 
 	// derived or from other tables
 	var $category;
@@ -144,6 +145,7 @@ class Port {
 		$this->extract_depends    = isset($myrow["extract_depends"]) ? $myrow["extract_depends"] : null;
 		$this->patch_depends      = isset($myrow["patch_depends"])   ? $myrow["patch_depends"]   : null;
 		$this->uses               = isset($myrow["uses"])            ? $myrow["uses"]            : null;
+		$this->pkgmessage         = isset($myrow["pkgmessage"])      ? $myrow["pkgmessage"]      : null;
 
 		$this->port               = $myrow["port"];
 		$this->category           = $myrow["category"];
@@ -225,6 +227,7 @@ select ports.id,
        ports.extract_depends,
        ports.patch_depends,
        ports.uses,
+       ports.pkgmessage,
        
        to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, 
        ports.categories as categories,
@@ -337,6 +340,7 @@ select ports.id,
 			       ports.extract_depends,
 			       ports.patch_depends,
 			       ports.uses,
+			       ports.pkgmessage,
 		               ports.categories as categories,
 			           element.name     as port, 
 			           categories.name  as category,
@@ -469,6 +473,7 @@ SELECT P.*, element.name    as port
         ports.extract_depends,
         ports.patch_depends,
         ports.uses,
+        ports.pkgmessage,
         ports.categories      as categories,
         categories.name       as category_looking_at,
         PRIMARY_CATEGORY.name as category,

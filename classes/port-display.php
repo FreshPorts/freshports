@@ -557,6 +557,12 @@ class port_display {
 			$HTML .= "</pre>\n<hr>\n";
 		}
 
+		if ($this->ShowEverything && $port->pkgmessage) {
+			$HTML .= "<b>pkg-mesage:</b>\n<pre>";
+			$HTML .= $port->pkgmessage;
+			$HTML .= "</pre>\n<hr>\n";
+		}
+
 		if ($this->ShowEverything || $this->ShowMasterSites) {
   			$HTML .= '<b>Master Sites:</b>' . "\n" . '<ol class="mastersites" id="mastersites">' . "\n";
 

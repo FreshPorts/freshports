@@ -65,7 +65,9 @@
 		$SubDir      = date('Y/m', strtotime($Date));
 		$DirToCreate = ARCHIVE_DIRECTORY . '/' . $SubDir;
 		if (!file_exists($DirToCreate)) {
-			mkdir($DirToCreate, 0740, true);
+			$old = umask(0);
+			mkdir($DirToCreate, 0770, true);
+			umask($old);
 		}
 
 		return $DirToCreate;
@@ -92,6 +94,10 @@
 		$myfile = fopen($File, 'w');
 		fwrite($myfile, $HTML);
 		fclose($myfile);
+		$old = umask(0);
+		chmod($File, 0664);
+		umask($old);
+		
 	}
 
 	function ArchiveGet($Date) {

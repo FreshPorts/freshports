@@ -75,7 +75,9 @@ class Cache {
 				// chmod to group writable so that the perl scripts, running
 				// as dan, can remove them when a new commit comes in.
 				// the leading zero is important.
-				chmod($SpoolFileName, 0664);
+				$old = umask(0);
+				chmod($SpoolFileName, 0774);
+				umask($old);
 
 				// mv spool file to cache dir
 				$CacheFileName = $this->_CacheFileName($key);

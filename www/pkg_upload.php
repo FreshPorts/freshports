@@ -119,7 +119,7 @@ echo freshports_WatchListDDLB($db, $UserID);
 
 	<FORM ACTION="<? echo $_SERVER["PHP_SELF"]; ?>" METHOD="post" enctype="multipart/form-data">
 		<TABLE>
-			<TR><TD>Paste the output of <code>pkg_info -qoa</code> here:</TD></TR>
+			<TR><TD>Paste the output of <code>pkg info -qoa</code> here:</TD></TR>
 			<tr><td><textarea name="copypaste" rows="20" cols="30"></textarea></td></tr>
 			<TR><TD><INPUT TYPE="submit" NAME="staging_copypaste" SIZE="20" VALUE="Staging"> &lt;= Click here to go to staging area</TD></TR>
 			<tr><td><hr></td></tr>
@@ -178,7 +178,7 @@ function DisplayStagingArea($UserID, $WatchListID, $db) {
 	echo '<TD VALIGN="top"><B>Ports duplicated</B><BR>The following ports have been installed multiple times, most definitely with different versions on
 										 your system.</TD>' . "\n";
 
-	echo '<TD VALIGN="top"><B>Port from your watch lists</B><BR>These ports are on your watch list but do not appear in your pkg_info data.</TD>' . "\n";
+	echo '<TD VALIGN="top"><B>Port from your watch lists</B><BR>These ports are on your watch list but do not appear in your pkg info data.</TD>' . "\n";
 
 	echo '</TR><TR>';
 
@@ -237,7 +237,7 @@ function ChooseWatchLists($UserID, $db) {
 
 	<?php echo freshports_MainContentTable(); ?>
 <TR>
-	<? echo freshports_PageBannerText("Uploading pkg_info"); ?>
+	<? echo freshports_PageBannerText("Uploading pkg info"); ?>
 <TR><TD>
 <BIG>WARNING</BIG>: The system will clear out your staging area from time to time.
 </TD></TR>

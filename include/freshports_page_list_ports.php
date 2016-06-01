@@ -170,6 +170,7 @@ SELECT ports.id,
        deprecated,
        no_cdrom,
        expiration_date,
+       last_commit_id,
        latest_link ";
 
 		if ($UserID) {

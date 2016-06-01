@@ -61,6 +61,10 @@
 		}
 	
 		$HTML .= '</select>';
+
+		if (!$NumRows) {
+			$HTML .= '<br><h2> You have no watch lists.  You must <a href="watch-list-maintenance.php">create one</a>.</h2>';
+		}
 	
 		return $HTML;
 	}

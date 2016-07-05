@@ -26,19 +26,19 @@ class CachePort extends Cache {
 		$this->PageSize = $PageSize;
 	}
 
-	function RetrievePort($Category, $Port, $CacheType = CACHE_PORT_COMMITS, $PageNum = 1) {
+	function RetrievePort($Category, $Port, $CacheType = CACHE_PORT_COMMITS, $PageNum = 1, $Branch = BRANCH_HEAD) {
 		$this->_Log("CachePort: Retrieving for $Category/$Port");
-		$Key = $this->_PortKey($Category, $Port, $CacheType, $PageNum);
+		$Key = $this->_PortKey($Category, $Port, $CacheType, $PageNum, $Branch);
 		$result = parent::Retrieve($Key);
 
 		return $result;
 	}
 
-	function AddPort($Category, $Port, $CacheType = CACHE_PORT_COMMITS, $PageNum = 1) {
+	function AddPort($Category, $Port, $CacheType = CACHE_PORT_COMMITS, $PageNum = 1, $Branch = BRANCH_HEAD) {
 		$this->_Log("CachePort: Adding for $Category/$Port");
 
 		$CacheDir = $this->CacheDir . '/ports/' . $Category . '/' . $Port;
-		$Key = $this->_PortKey($Category, $Port, $CacheType, $PageNum);
+		$Key = $this->_PortKey($Category, $Port, $CacheType, $PageNum, $Branch);
 		 
 		if (!file_exists($CacheDir)) {
 			$this->_Log("CachePort: creating directory $CacheDir");
@@ -62,15 +62,15 @@ class CachePort extends Cache {
 		# the wild card allows us to remove all cache entries for this port
 		# regardless of the CacheType or page number
 		#
-		$Key = $this->_PortKey($Category, $Port, '*', '*');
+		$Key = $this->_PortKey($Category, $Port, '*', '*', '*');
 		$result = parent::Remove($Key, $data);
 
 		return $result;
 	}
-	
-	function _PortKey($Category, $Port, $CacheType, $PageNum = 1) {
+
+	function _PortKey($Category, $Port, $CacheType, $PageNum = 1, $Branch = BRANCH_HEAD) {
 		// might want some parameter checking here
-		$Key = "ports/$Category/$Port/$CacheType.PageSize$this->PageSize.PageNum$PageNum.html";
+		$Key = "ports/$Category/$Port/$CacheType.$Branch.PageSize$this->PageSize.PageNum$PageNum.html";
 
 		return $Key;
 	}

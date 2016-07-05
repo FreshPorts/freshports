@@ -78,7 +78,15 @@ function DisplayPortCommits($port, $PageNumber) {
 	return $HTML;
 }
 
-function freshports_PortDisplay($db, $category, $port) {
+function freshports_PortDisplay($db, $category, $port, $branch) {
+	return _freshports_PortDisplayHelper($db, $category, $port, $branch);
+}
+
+function freshports_PortDisplayNotOnBranch($db, $category, $port, $branch) {
+	return _freshports_PortDisplayHelper($db, $category, $port, $branch, false);
+}
+
+function _freshports_PortDisplayHelper($db, $category, $port, $branch, $HasCommitsOnBranch = true) {
 	GLOBAL $TableWidth;
 	GLOBAL $FreshPortsTitle;
 	GLOBAL $User;
@@ -115,7 +123,7 @@ function freshports_PortDisplay($db, $category, $port) {
 
 	$Cache = new CachePort();
 	$Cache->PageSize = $User->page_size;
-	$result = $Cache->RetrievePort($category, $port, CACHE_PORT_DETAIL, $PageNumber);
+	$result = $Cache->RetrievePort($category, $port, CACHE_PORT_DETAIL, $PageNumber, $branch);
 	if (!$result && !$BypassCache && !$RefreshCache) {
 		if ($Debug) echo "found something from the cache<br>\n";
 		$HTML = $Cache->CacheDataGet();
@@ -129,7 +137,7 @@ function freshports_PortDisplay($db, $category, $port) {
 			die('Internal error: I was expecting an ElementID and found nothing');
 		}
 		# extract the ElementID from the cache
-		$ElementID  = intval(substr($HTML, 0, $EndOfFirstLine));
+		$ElementID = intval(substr($HTML, 0, $EndOfFirstLine));
 		if ($ElementID == 0) {
 			syslog(LOG_ERR, "Extract of ElementID from cache failed.  Is cache corrupt/deprecated? port was $category/$port");
 			die('sorry, I encountered a problem with the cache.  Please send the URL and this message to the webmaster.');
@@ -143,32 +151,41 @@ function freshports_PortDisplay($db, $category, $port) {
 
 		$HTML = substr($HTML, $EndOfFirstLine + 1);
 	} else {
-		if ($Debug) echo "found NOTHING in cache for '$category/$port'<br>\n";
+		if ($Debug) echo "found NOTHING in cache for '$category/$port' on $branch<br>\n";
 		$HTML = '';
-		$port_id = freshports_GetPortID($db, $category, $port);
+		//
+		// sometimes they want to see a port on a branch, but there have been commits against that port on that branch
+		// therefore, we display head.
+		///
+		$port_id = freshports_GetPortID($db, $category, $port, $HasCommitsOnBranch ? $branch : BRANCH_HEAD);
 		if (!IsSet($port_id)) {
 			if ($Debug) echo "$category/$port is not a port according to freshports_GetPortID<br>\n";
 
 			return -1;
 		}
 
-		if ($Debug) echo "$category/$port found by freshports_GetPortID<br>";
+		if ($Debug) echo "$category/$port $port_id found by freshports_GetPortID on $branch<br>";
 
 		$MyPort = new Port($db);
 		$MyPort->FetchByID($port_id, $User->id);
 
-		$port_display->port = $MyPort;
+		$port_display->SetPort($MyPort, $branch);
 	
 		$HTML .= $port_display->Display();
 		
 		$HTML .= "</TD></TR>\n</TABLE>\n\n";
 
-		$HTML .= DisplayPortCommits($MyPort, $PageNumber);
+		if ($HasCommitsOnBranch) {
+			# we are displaying the 
+			$HTML .= DisplayPortCommits($MyPort, $PageNumber);
+		} else {
+			$HTML .= "<h2>There are no commits on branch $branch for this port</h2>";
+		}
 
 		# If we are not reading 
 		if (!$BypassCache || $RefreshCache) {
 			$Cache->CacheDataSet($MyPort->{'element_id'} . "\n" . $HTML);
-			$Cache->AddPort($MyPort->category, $MyPort->port, CACHE_PORT_DETAIL, $PageNumber);
+			$Cache->AddPort($MyPort->category, $MyPort->port, CACHE_PORT_DETAIL, $PageNumber, $branch);
 		}
 
 		$ElementID   = $MyPort->{'element_id'};

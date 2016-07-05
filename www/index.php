@@ -12,10 +12,19 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 
+	$Debug = 0;
+
+	if (IsSet($_REQUEST['branch'])) {
+		$Branch = htmlspecialchars($_REQUEST['branch']);
+	} else {
+		$Branch = BRANCH_HEAD;
+	}
+
+	if ($Debug) echo 'Branch is ' . $Branch . '<br>';
+
 	#
 	# If they supply a package name, go for it.
 	#
-	$Debug = 0;
 	if (IsSet($_REQUEST['package'])) {
 	    if ($Debug) echo "package is specfied on the URL<br>\n";
 		$package = pg_escape_string($_REQUEST['package']);
@@ -55,8 +64,6 @@
 	freshports_Start($FreshPortsSlogan,
 					$FreshPortsName . ' - new ports, applications',
 					'FreeBSD, index, applications, ports');
-$Debug = 0;
-
 if ($Debug) echo "\$User->id='$User->id'";
 
 function freshports_SummaryForDay($MinusN) {
@@ -117,7 +124,14 @@ if ($db) {
 <?php echo freshports_MainContentTable(); ?>
 
 <TR>
-<? echo freshports_PageBannerText("$MaxNumberOfPortsLong most recent commits", 3); ?>
+<?php
+ if ( $BranchName == BRANCH_HEAD) {
+   echo freshports_PageBannerText("$MaxNumberOfPortsLong most recent commits", 3);
+ } else {
+   echo freshports_PageBannerText("Commits from the $Branch branch", 3);
+ }
+ 
+?>
         <? //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPortsLong) ?>
 </TR>
 <TR><TD>
@@ -150,12 +164,6 @@ if ($db) {
 	} else {
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits.php');
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
-
-		if (IsSet($_REQUEST['branch'])) {
-			$Branch = htmlspecialchars($_REQUEST['branch']);
-		} else {
-			$Branch = BRANCH_HEAD;
-		}
 
 		$LatestCommits = new Commits($db);
 		$LatestCommits->SetBranch($Branch);

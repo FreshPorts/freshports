@@ -39,6 +39,9 @@ class Commit {
 	var $onwatchlist;
 	var $stf_message;
 	var $svn_revision;
+	var $svn_hostname;
+	var $path_to_repo;
+	var $branch;
 
 	var $last_modified;
 	
@@ -79,6 +82,7 @@ class Commit {
 		$this->svn_revision             = $myrow["svn_revision"];
 		$this->svn_hostname             = $myrow["svn_hostname"];
 		$this->path_to_repo             = $myrow["path_to_repo"];
+		$this->branch                   = $myrow["branch"];
 
 		$this->last_modified		= $myrow["last_modified"];
 	}
@@ -177,15 +181,17 @@ SELECT CL.id as commit_log_id,
        date_added,
        committer,
        CL.description AS commit_description,
-       system_id,
+       CL.system_id,
        svn_revision,
        R.svn_hostname,
        R.path_to_repo,
        encoding_losses,
        GMT_Format(date_added) as last_modified,
-       STF.message as stf_message
-  FROM commit_log CL LEFT OUTER JOIN sanity_test_failures STF
-    ON CL.id = STF.commit_log_id
+       STF.message as stf_message,
+       SB.branch_name AS branch
+  FROM commit_log CL LEFT OUTER JOIN sanity_test_failures STF ON CL.id         = STF.commit_log_id
+                                JOIN commit_log_branches  CLB ON CL.id         = CLB.commit_log_id
+                                JOIN system_branch        SB  ON CLB.branch_id = SB.id
     LEFT OUTER JOIN repo R ON CL.repo_id = R.id
  WHERE " . $Where;
 

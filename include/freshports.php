@@ -171,13 +171,17 @@ function freshports_link_to_port_single($CategoryName, $PortName) {
 	return $HTML;
 }
 
-function freshports_link_text_to_port_single($text, $CategoryName, $PortName) {
+function freshports_link_text_to_port_single($text, $CategoryName, $PortName, $BranchName = BRANCH_HEAD) {
 
 	// This differs from freshports_link_to_port_single in the link text is not necessarily the port name.
 
 	$HTML = '';
-	$HTML .= $text . ' : <a href="/' . $CategoryName . '/' . $PortName . '/">' .
-	                                   $CategoryName . '/' . $PortName . '</a>';
+	$HTML .= $text . ' : <a href="/' . $CategoryName . '/' . $PortName . '/';
+	if ($BranchName != BRANCH_HEAD) {
+	  $HTML .= '?branch=' . htmlentities($BranchName);
+	}
+
+	$HTML .= '">' . $CategoryName . '/' . $PortName . '</a>';
 
 	return $HTML;
 }
@@ -1020,6 +1024,8 @@ function freshports_ONToYN($Value) {
 
 
 function freshports_depends_links($dbh, $DependsList, $BranchName = BRANCH_HEAD) {
+	$Debug = 0;
+
 	// sometimes they have multiple spaces in the data...
 	$temp = str_replace('  ', ' ', $DependsList);
       
@@ -1029,14 +1035,21 @@ function freshports_depends_links($dbh, $DependsList, $BranchName = BRANCH_HEAD)
 	$HTML  = '';
 	foreach ($depends as $depend) {
 		// split one depends into the library and the port name (/usr/ports/<category>/<port>)
+		if ($Debug) echo "depends is $depend<br>";
 
 		$DependsArray = explode(':', $depend);
 
 		// now extract the port and category from this port name
 		// it might look like: /usr/local/bin/perl5.16.3:/usr/local/PORTS-head/lang/perl5.16
+		//                 or: yasm:/usr/local/repos/PORTS-2016Q1/devel/yasm
 		// try it this way
-		$CategoryPort = str_replace(PATH_TO_PORTSDIR . PORTSDIR_PREFIX . BRANCH_HEAD . '/', '', $DependsArray[1]) ;
-		
+		$full_path = PATH_TO_PORTSDIR . PORTSDIR_PREFIX . $BranchName . '/';
+		if ($Debug) echo "full_path=$full_path<br>";
+
+		$CategoryPort = str_replace($full_path, '', $DependsArray[1]) ;
+
+		if ($Debug) echo "CategoryPort='$CategoryPort'<br>";
+
 		// if that has no effect, try it the old way:
 		// we might have old stuff stored in the db.  Which makes me think: we should store it another way in the db.
 		if ($CategoryPort == $DependsArray[1]) {
@@ -1044,7 +1057,7 @@ function freshports_depends_links($dbh, $DependsList, $BranchName = BRANCH_HEAD)
 		}
 		$CategoryPortArray = explode('/', $CategoryPort);
 
-		$HTML .= '<li>' . freshports_link_text_to_port_single(basename($DependsArray[0]), $CategoryPortArray[0], $CategoryPortArray[1]) . '</li>';
+		$HTML .= '<li>' . freshports_link_text_to_port_single(basename($DependsArray[0]), $CategoryPortArray[0], $CategoryPortArray[1], $BranchName) . '</li>';
 	}
 
 	return $HTML;
@@ -2046,18 +2059,33 @@ function freshports_IsInt($x) {
    return ( is_numeric ($x ) ?  intval(0+$x ) ==  $x  :  false ); 
 }
 
-function freshports_GetPortID($db, $category, $port) {
+function freshports_GetPortID($db, $category, $port, $branch) {
+	$Debug = 0;
 	$sql = "select Port_ID('" . pg_escape_string($category) . "', '" . pg_escape_string($port) . "')";
 
+	$sql = "select id AS port_id from ports where element_id = pathname_id('/ports";
+
+	if ($branch != BRANCH_HEAD) {
+	  $sql .= '/branches';
+	}
+
+	$sql .= '/' . pg_escape_string($branch) . '/' .  pg_escape_string($category) . '/' . pg_escape_string($port) . "')";
+
+	if ($Debug) echo $sql . '<br>';
 	$result = pg_exec($db, $sql);
 	if (!$result) {
 		syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ': ' . pg_last_error() . ' - ' . $sql);
 		die('something terrible has happened!');
 	}
 
-	$myrow = pg_fetch_array($result, 0);
+	if (pg_numrows($result)) {
+	  $myrow = pg_fetch_array($result, 0);
+	  $port_id = $myrow['port_id'];
+	} else {
+	  $port_id = null;
+	}
 
-	return $myrow['port_id'];
+	return $port_id;
 }
 
 function freshports_GetElementID($db, $category, $port) {

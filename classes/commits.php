@@ -172,12 +172,20 @@ class Commits {
         $sql .= "
     FROM commit_log_ports CLP JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
                               JOIN system_branch SB ON SB.branch_name = '" . pg_escape_string($this->BranchName) . "' AND SB.id = CLB.branch_id
-      LEFT OUTER JOIN sanity_test_failures STF ON STF.commit_log_id = CLP.commit_log_id, 
+      LEFT OUTER JOIN sanity_test_failures STF ON STF.commit_log_id = CLP.commit_log_id, ";
+
+        if ($this->BranchName == BRANCH_HEAD ) {
+            $sql .= "
       (SELECT *
          FROM commit_log
         WHERE commit_log.commit_date <= '" . pg_escape_string($Date) . "'::timestamptz  + SystemTimeAdjust() + '1 Day'
      ORDER BY commit_log.commit_date DESC
-        LIMIT " . pg_escape_string($Limit) . ") AS CL LEFT OUTER JOIN repo R on CL.repo_id = R.id, categories, ports, element ";
+        LIMIT " . pg_escape_string($Limit) . ") AS CL ";
+        } else {
+            $sql .= " commit_log CL ";
+        }
+
+        $sql .= "LEFT OUTER JOIN repo R on CL.repo_id = R.id, categories, ports, element ";
 
         if ($UserID) {
                 $sql .= "

@@ -122,6 +122,9 @@ DEFINE('NEXT_PAGE',		'Next');
                   $Title .= 'commit id';
                 }
 	}
+	if ($Commit->branch != BRANCH_HEAD) {
+	  $Title .= ' on branch ' . $Commit->branch;
+	}
 	freshports_Start($Title,
 					$FreshPortsName . ' - new ports, applications',
 					'FreeBSD, index, applications, ports');

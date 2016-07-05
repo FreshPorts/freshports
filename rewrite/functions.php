@@ -6,6 +6,14 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	# if we can parse it, then do so and return a false value;
 	# otherwise, return a non-false value.
 
+	if (IsSet($_REQUEST['branch'])) {
+		$Branch = htmlspecialchars($_REQUEST['branch']);
+		define('FRESHPORTS_PORTS_TREE_PREFIX', '/ports/branches/' . $Branch . '/');
+	} else {
+		$Branch = BRANCH_HEAD;
+		define('FRESHPORTS_PORTS_TREE_PREFIX', '/ports/head/');
+	}
+
 	GLOBAL $User;
 
 	$Debug  = 0;
@@ -14,6 +22,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	$IsPort     = false;
 	$IsCategory = false;
 	$IsElement  = false;
+	$HasCommitsOnBranch = false;
 
 	if ($Debug) {
 		echo "Debug is turned on.  Only 404 will be returned now because we cannot alter the headers at this time.<br>\n";
@@ -21,8 +30,6 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	}
 
 	$CategoryID = 0;
-
-	define('FRESHPORTS_PORTS_TREE_PREFIX', '/ports/head/');
 
 	$URLParts = parse_url($_SERVER['SCRIPT_URI']);
 	if ($Debug)
@@ -52,6 +59,19 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	if ($Debug) echo "PATH_NAME='" . FRESHPORTS_PORTS_TREE_PREFIX . PATH_NAME . "'<br>";
 
 	if ($ElementRecord->FetchByName(FRESHPORTS_PORTS_TREE_PREFIX . $pathname)) {
+	  $IsElement          = true;
+          $HasCommitsOnBranch = true; // this is true even if the branch is head
+	} else {
+	  if ($Branch != BRANCH_HEAD) {
+            if ($Debug) echo 'trying on head next<br>';
+	    if ($ElementRecord->FetchByName('/ports/head/' . $pathname)) {
+	      $IsElement          = true;
+	      $HasCommitsOnBranch = false;
+	    }
+	  }
+	}
+
+	if ($IsElement) {
 		$IsElement = true;
 		if ($Debug) {
 			echo 'Yes, we found an element for that path!<br>';
@@ -120,7 +140,6 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 
 		if (IsSet($port)) {
 			$IsPort = true;
-			$IsPort = false;
 			$result = $REQUEST_URI;
 
 			if ($Debug) echo 'This is a Port but there is no element for it.<br>';
@@ -154,10 +173,18 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-port.php');
 		if ($Debug) echo 'including missing-port ' . $Debug . '<BR>';
 
-		# if zero is returned, all is well, otherwise, we can't display that category/port.
-		if (freshports_PortDisplay($db, $category, $port)) {
-            echo 'freshports_PortDisplay returned non-zero';
-			exit;
+		if ($HasCommitsOnBranch) {
+			# if zero is returned, all is well, otherwise, we can't display that category/port.
+			if (freshports_PortDisplay($db, $category, $port, $Branch)) {
+				echo 'freshports_PortDisplay returned non-zero';
+				return -1;
+			}
+		} else {
+			# if zero is returned, all is well, otherwise, we can't display that category/port.
+			if (freshports_PortDisplayNotOnBranch($db, $category, $port, $Branch)) {
+				echo 'freshports_PortDisplay returned non-zero';
+				return -1;
+			}
 		}
 	}
 

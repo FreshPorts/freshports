@@ -17,7 +17,9 @@ class port_display {
 
 	var $db;
 
-	var $port;
+	protected $port;
+	protected $branch;
+
 	var $User;		# used for matching against watch lists
 	var $DaysMarkedAsNew;
 
@@ -44,6 +46,14 @@ class port_display {
 	var $ShowShortDescription;
 	var $ShowWatchListCount;
 	var $ShowWatchListStatus;
+
+	function SetPort($port, $branch = BRANCH_HEAD) {
+	  //
+	  // We could derived branch from element_pathname(port->element_id) but let's try passing in branch explicity.
+	  //
+	  $this->port   = $port;
+	  $this->branch = $branch;
+	}
 
 	function link_to_repo() {
           # we want something like
@@ -451,6 +461,14 @@ class port_display {
 
 			$HTML .= '<p><b>PKGNAME:</b> ' . $port->package_name . '</p>';
 
+			$HTML .= '<p><b>distinfo:</b>';
+
+			if ($port->distinfo) {
+				$HTML .= '<blockquote><pre>' . $port->distinfo . '</pre></blockquote>';
+			} else {
+				$HTML .= ' There is no distinfo for this port.';
+			}
+			$HTML .= '<p>';
 		}
 
 	   if ($this->ShowEverything || $this->ShowMasterSlave) {
@@ -494,37 +512,37 @@ class port_display {
 
 			if ($port->depends_build) {
 				$HTML .= '<span class="required">Build dependencies:</span>' . "\n" . '<ol class="required" id="requiredtobuild">';
-				$HTML .= freshports_depends_links($this->db, $port->depends_build);
+				$HTML .= freshports_depends_links($this->db, $port->depends_build, $this->branch);
 				$HTML .= "\n</ol>\n";
 			}
 
 			if ($port->depends_run) {
 				$HTML .= '<span class="required">Runtime dependencies:</span>' . "\n" . '<ol class="required" id="requiredtorun">';
-				$HTML .= freshports_depends_links($this->db, $port->depends_run);
+				$HTML .= freshports_depends_links($this->db, $port->depends_run, $this->branch);
 				$HTML .= "\n</ol>\n";
 			}
 
 			if ($port->depends_lib) {
 				$HTML .= '<span class="required">Library dependencies:</span>' . "\n" . '<ol class="required" id="requiredlibraries">';
-				$HTML .= freshports_depends_links($this->db, $port->depends_lib);
+				$HTML .= freshports_depends_links($this->db, $port->depends_lib, $this->branch);
 				$HTML .= "\n</ol>\n";
 			}
 
 			if ($port->fetch_depends) {
 				$HTML .= '<span class="required">Fetch dependencies:</span>' . "\n" . '<ol class="required" id="requiredfetches">';
-				$HTML .= freshports_depends_links($this->db, $port->fetch_depends);
+				$HTML .= freshports_depends_links($this->db, $port->fetch_depends, $this->branch);
 				$HTML .= "\n</ol>\n";
 			}
 
 			if ($port->patch_depends) {
 				$HTML .= '<span class="required">Patch dependencies:</span>' . "\n" . '<ol class="required" id="requiredpatches">';
-				$HTML .= freshports_depends_links($this->db, $port->patch_depends);
+				$HTML .= freshports_depends_links($this->db, $port->patch_depends, $this->branch);
 				$HTML .= "\n</ol>\n";
 			}
 
 			if ($port->extract_depends) {
 				$HTML .= '<span class="required">Extract dependencies:</span>' . "\n" . '<ol class="required" id="requiredextracts">';
-				$HTML .= freshports_depends_links($this->db, $port->extract_depends);
+				$HTML .= freshports_depends_links($this->db, $port->extract_depends, $this->branch);
 				$HTML .= "\n</ol>\n";
 			}
 			
@@ -564,17 +582,20 @@ class port_display {
 		}
 
 		if ($this->ShowEverything || $this->ShowMasterSites) {
-  			$HTML .= '<b>Master Sites:</b>' . "\n" . '<ol class="mastersites" id="mastersites">' . "\n";
+			$HTML .= '<b>Master Sites:</b>' . "\n" . '<ol class="mastersites" id="mastersites">' . "\n";
+			if (!empty($port->master_sites)) {
 
-			$MasterSites = explode(' ', $port->master_sites);
-			asort($MasterSites);
-			foreach ($MasterSites as $Site) {
+			  $MasterSites = explode(' ', $port->master_sites);
+			  asort($MasterSites);
+			  foreach ($MasterSites as $Site) {
 				$HTML .= '<li>' . htmlify(_forDisplay($Site)) . "</li>\n";
+			  }
+
+			  $HTML .= "</ol>\n";
+			} else {
+			  $HTML .= 'There is no master site for this port.<br>';
 			}
 
-			$HTML .= "</ol>\n";
-
-#			$HTML .= '<br>';
 		}
 
 #		$HTML .= "\n<hr>\n";

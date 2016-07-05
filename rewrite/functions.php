@@ -139,7 +139,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 		}
 
 		if (IsSet($port)) {
-			$IsPort = true;
+			$IsPort = false;
 			$result = $REQUEST_URI;
 
 			if ($Debug) echo 'This is a Port but there is no element for it.<br>';

@@ -85,3 +85,5 @@ define('PATH_TO_PORTSDIR', '/usr/local/repos/');  // must have a trailing /
 define('PORTSDIR_PREFIX',  'PORTS-');
 
 define('ARCHIVE_DIRECTORY', $_SERVER['DOCUMENT_ROOT'] . '/../archives');
+
+define('DELETE_PACKAGE', 'delete-package');

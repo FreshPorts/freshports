@@ -459,7 +459,13 @@ class port_display {
 				}
 			}
 
-			$HTML .= '<p><b>PKGNAME:</b> ' . $port->package_name . '</p>';
+			$HTML .= '<p><b>PKGNAME:</b> ';
+			if ($port->PackageIsAvailable()) {
+			  $HTML .= $port->package_name;
+			} else {
+			  $HTML .= 'there is no package for this port: ' . $port->PackageNotAvailableReason();
+			}
+			$HTML .= '</p>';
 
 			$HTML .= '<p><b>distinfo:</b>';
 

@@ -57,6 +57,9 @@ class Port {
 	var $uses;
 	var $pkgmessage;
 	var $distinfo;
+	var $license_restricted;
+	var $manual_package_build;
+	var $license_perms;
 
 	// derived or from other tables
 	var $category;
@@ -148,6 +151,9 @@ class Port {
 		$this->uses               = isset($myrow["uses"])            ? $myrow["uses"]            : null;
 		$this->pkgmessage         = isset($myrow["pkgmessage"])      ? $myrow["pkgmessage"]      : null;
 		$this->distinfo           = isset($myrow["distinfo"])        ? $myrow["distinfo"]        : null;
+		$this->license_restricted  =  isset($myrow["license_restricted"])   ? $myrow["license_restricted"]   : null;
+		$this->manual_package_build = isset($myrow["manual_package_build"]) ? $myrow["manual_package_build"] : null;
+		$this->license_perms        = isset($myrow["license_perms"])        ? $myrow["license_perms"]        : null;
 
 		$this->port               = $myrow["port"];
 		$this->category           = $myrow["category"];
@@ -231,6 +237,9 @@ select ports.id,
        ports.uses,
        ports.pkgmessage,
        ports.distinfo,
+       ports.license_restricted,
+       ports.manual_package_build,
+       ports.license_perms,
        
        to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, 
        ports.categories as categories,
@@ -345,6 +354,9 @@ select ports.id,
 			       ports.uses,
 			       ports.pkgmessage,
 			       ports.distinfo,
+                               ports.license_restricted,
+                               ports.manual_package_build,
+                               ports.license_perms,
 		               ports.categories as categories,
 			           element.name     as port, 
 			           categories.name  as category,
@@ -479,6 +491,9 @@ SELECT P.*, element.name    as port
         ports.uses,
         ports.pkgmessage,
         ports.distinfo,
+        ports.license_restricted,
+        ports.manual_package_build,
+        ports.license_perms,
         ports.categories      as categories,
         categories.name       as category_looking_at,
         PRIMARY_CATEGORY.name as category,
@@ -666,6 +681,42 @@ LEFT OUTER JOIN
 	
 	function IsDeleted() {
 		return $this->{'status'} == "D";
+	}
+
+	function PackageIsAvailable() {
+		$available = true;
+		if (strpos($this->{'license_restricted'}, DELETE_PACKAGE) !== false) {
+			# false === not found
+			# non false = found
+			$available = false;
+		}
+
+		# if either of these are non-black, there is no package
+		if (!empty($this->{'no_package'}) || !empty($this->{'manual_package_build'})) {
+			$available = false;
+		}
+
+		return $available;
+	}
+
+	function PackageNotAvailableReason() {
+		$available = '';
+		if (strpos($this->{'license_restricted'}, DELETE_PACKAGE) !== false) {
+			# false === not found
+			# non false = found
+			$available = '_LICENSE_RESTRICTED = ' . $this->{'license_restricted'};
+		}
+
+		# if either of these are non-black, there is no package
+		if (!empty($this->{'no_package'}) || !empty($this->{'manual_package_build'})) {
+			$available = 'NO_PACKAGE = ' . $this->{'no_package'};
+		}
+
+		if (!empty($this->{'manual_package_build'})) {
+			$available = 'MANUAL_PACKAGE_BUILD = ' . $this->{'manual_package_build'};
+		}
+
+		return $available;
 	}
 
 }

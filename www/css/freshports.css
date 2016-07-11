@@ -77,3 +77,8 @@ span.fp_description_short
 {
   font-size:   16px;
 }
+
+span.file {
+    color: #007a00;
+    font-family: monospace;
+}

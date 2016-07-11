@@ -463,7 +463,7 @@ class port_display {
 			if ($port->PackageIsAvailable()) {
 			  $HTML .= $port->package_name;
 			} else {
-			  $HTML .= 'there is no package for this port: ' . $port->PackageNotAvailableReason();
+			  $HTML .= 'there is no package for this port: <span class="file">' . $port->PackageNotAvailableReason() . '</span>';
 			}
 			$HTML .= '</p>';
 

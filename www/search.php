@@ -935,7 +935,7 @@ switch ($stype) {
 	
 		for ($i = 0; $i < $NumFetches; $i++) {
 			$Port->FetchNth($i);
-			$port_display->port = $Port;
+			$port_display->SetPort($Port);
 			$Port_HTML = $port_display->Display();
 	
 			$HTML .= $port_display->ReplaceWatchListToken($Port->{'onwatchlist'}, $Port_HTML, $Port->{'element_id'});

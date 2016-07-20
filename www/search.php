@@ -45,36 +45,46 @@
 		}
 	}
 
-define('SEARCH_FIELD_NAME',             'name');
-define('SEARCH_FIELD_PACKAGE',          'package');
-define('SEARCH_FIELD_LATEST_LINK',      'latest_link');
-define('SEARCH_FIELD_SHORTDESCRIPTION', 'shortdescription');
-define('SEARCH_FIELD_LONGDESCRIPTION',  'longdescription');
-define('SEARCH_FIELD_DEPENDS_BUILD',    'depends_build');
-define('SEARCH_FIELD_DEPENDS_LIB',      'depends_lib');
-define('SEARCH_FIELD_DEPENDS_RUN',      'depends_run');
-define('SEARCH_FIELD_DEPENDS_ALL',      'depends_all');
-define('SEARCH_FIELD_MAINTAINER',       'maintainer');
-define('SEARCH_FIELD_COMMITTER',        'committer');
+define('SEARCH_FIELD_COMMITMESSAGE',        'commitmessage');
+define('SEARCH_FIELD_COMMITTER',            'committer');
+define('SEARCH_FIELD_DEPENDS_ALL',          'depends_all');
+define('SEARCH_FIELD_DEPENDS_BUILD',        'depends_build');
+define('SEARCH_FIELD_DEPENDS_LIB',          'depends_lib');
+define('SEARCH_FIELD_DEPENDS_RUN',          'depends_run');
+define('SEARCH_FIELD_LATEST_LINK',          'latest_link');
+define('SEARCH_FIELD_LONGDESCRIPTION',      'longdescription');
+define('SEARCH_FIELD_LICENSE_PERMS',        'license_perms');
+define('SEARCH_FIELD_LICENSE_RESTRICTED',   'license_restricted');
+define('SEARCH_FIELD_MAINTAINER',           'maintainer');
+define('SEARCH_FIELD_MAKEFILE',             'makefile');
+define('SEARCH_FIELD_MESSAGEID',            'message_id');
+define('SEARCH_FIELD_MANUAL_PACKAGE_BUILD', 'manual_pacakge_bulid');
+define('SEARCH_FIELD_NAME',                 'name');
+define('SEARCH_FIELD_PACKAGE',              'package');
+define('SEARCH_FIELD_PATHNAME',             'tree');
+define('SEARCH_FIELD_PKG_PLIST',            'pkg-plist');
+define('SEARCH_FIELD_SHORTDESCRIPTION',     'shortdescription');
 
-define('SEARCH_FIELD_PATHNAME',         'tree');
-define('SEARCH_FIELD_MESSAGEID',        'message_id');
-define('SEARCH_FIELD_COMMITMESSAGE',    'commitmessage');
 	
 $SearchTypeToFieldMap = array(
-	SEARCH_FIELD_NAME 		=> 'E.name',
-	SEARCH_FIELD_PACKAGE		=> 'P.package_name',
-	SEARCH_FIELD_LATEST_LINK	=> 'P.latest_link',
-	SEARCH_FIELD_SHORTDESCRIPTION	=> 'P.short_description',
-	SEARCH_FIELD_LONGDESCRIPTION	=> 'P.long_description',
-	SEARCH_FIELD_DEPENDS_BUILD	=> 'P.depends_build',
-	SEARCH_FIELD_DEPENDS_LIB	=> 'P.depends_lib',
-	SEARCH_FIELD_DEPENDS_RUN	=> 'P.depends_run',
-	SEARCH_FIELD_DEPENDS_ALL	=> 'P.depends_all',
-	SEARCH_FIELD_MAINTAINER		=> 'P.maintainer',
-	SEARCH_FIELD_COMMITMESSAGE	=> 'CL.description',
-	SEARCH_FIELD_COMMITTER		=> 'CL.committer',
-	SEARCH_FIELD_PATHNAME           => 'EP.pathname'
+    SEARCH_FIELD_COMMITMESSAGE        => 'CL.description',
+    SEARCH_FIELD_COMMITTER            => 'CL.committer',
+    SEARCH_FIELD_DEPENDS_ALL          => 'P.depends_all',
+    SEARCH_FIELD_DEPENDS_BUILD        => 'P.depends_build',
+    SEARCH_FIELD_DEPENDS_LIB          => 'P.depends_lib',
+    SEARCH_FIELD_DEPENDS_RUN          => 'P.depends_run',
+    SEARCH_FIELD_LATEST_LINK          => 'P.latest_link',
+    SEARCH_FIELD_LONGDESCRIPTION      => 'P.long_description',
+    SEARCH_FIELD_LICENSE_PERMS        => 'P.license_perms',
+    SEARCH_FIELD_LICENSE_RESTRICTED   => 'P.license_restricted',
+    SEARCH_FIELD_MAINTAINER           => 'P.maintainer',
+    SEARCH_FIELD_MAKEFILE             => 'P.makefile',
+    SEARCH_FIELD_MANUAL_PACKAGE_BUILD => 'P.manual_package_build',
+    SEARCH_FIELD_NAME                 => 'E.name',
+    SEARCH_FIELD_PACKAGE              => 'P.package_name',
+    SEARCH_FIELD_PKG_PLIST            => 'P.pkg_plist',
+    SEARCH_FIELD_PATHNAME             => 'EP.pathname',
+    SEARCH_FIELD_SHORTDESCRIPTION     => 'P.short_description',
 );
 
 $sqlExtraFields = ''; # will hold extra fields we need, such as watch list
@@ -167,19 +177,24 @@ function WildCardQuery($stype, $Like, $query) {
 	}
 
 	switch ($stype) {
-		case SEARCH_FIELD_NAME:
-		case SEARCH_FIELD_PACKAGE:
-		case SEARCH_FIELD_LATEST_LINK:
-		case SEARCH_FIELD_SHORTDESCRIPTION:
-		case SEARCH_FIELD_LONGDESCRIPTION:
+		case SEARCH_FIELD_COMMITTER:
+		case SEARCH_FIELD_COMMITMESSAGE:
+		case SEARCH_FIELD_DEPENDS_ALL:
 		case SEARCH_FIELD_DEPENDS_BUILD:
 		case SEARCH_FIELD_DEPENDS_LIB:
 		case SEARCH_FIELD_DEPENDS_RUN:
-		case SEARCH_FIELD_DEPENDS_ALL:
+		case SEARCH_FIELD_LATEST_LINK:
+		case SEARCH_FIELD_LONGDESCRIPTION:
+		case SEARCH_FIELD_LICENSE_PERMS:
+		case SEARCH_FIELD_LICENSE_RESTRICTED:
 		case SEARCH_FIELD_MAINTAINER:
-		case SEARCH_FIELD_COMMITTER:
+		case SEARCH_FIELD_MAKEFILE:
+		case SEARCH_FIELD_MANUAL_PACKAGE_BUILD:
+		case SEARCH_FIELD_NAME:
+		case SEARCH_FIELD_PACKAGE:
 		case SEARCH_FIELD_PATHNAME:
-		case SEARCH_FIELD_COMMITMESSAGE:
+		case SEARCH_FIELD_PKG_PLIST:
+		case SEARCH_FIELD_SHORTDESCRIPTION:
           # all is well.  we have a valid value.
           break;
 
@@ -781,20 +796,25 @@ $Port->LocalResult = $result;
 
 <form ACTION="<? echo $_SERVER["PHP_SELF"] ?>" name="search" >
 	<SELECT NAME="stype" size="1">
-		<OPTION VALUE="<?php echo SEARCH_FIELD_NAME             . '"'; if ($stype == SEARCH_FIELD_NAME)             echo 'SELECTED'; ?>>Port Name</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_PACKAGE          . '"'; if ($stype == SEARCH_FIELD_PACKAGE)          echo 'SELECTED'; ?>>Package Name</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_LATEST_LINK      . '"'; if ($stype == SEARCH_FIELD_LATEST_LINK)      echo 'SELECTED'; ?>>Latest Link</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_MAINTAINER       . '"'; if ($stype == SEARCH_FIELD_MAINTAINER)       echo 'SELECTED'; ?>>Maintainer</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_COMMITTER        . '"'; if ($stype == SEARCH_FIELD_COMMITTER)        echo 'SELECTED'; ?>>Committer</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_SHORTDESCRIPTION . '"'; if ($stype == SEARCH_FIELD_SHORTDESCRIPTION) echo 'SELECTED'; ?>>Short Description</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_LONGDESCRIPTION  . '"'; if ($stype == SEARCH_FIELD_LONGDESCRIPTION)  echo 'SELECTED'; ?>>Long Description</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_DEPENDS_BUILD    . '"'; if ($stype == SEARCH_FIELD_DEPENDS_BUILD)    echo 'SELECTED'; ?>>Depends Build</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_DEPENDS_LIB      . '"'; if ($stype == SEARCH_FIELD_DEPENDS_LIB)      echo 'SELECTED'; ?>>Depends Lib</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_DEPENDS_RUN      . '"'; if ($stype == SEARCH_FIELD_DEPENDS_RUN)      echo 'SELECTED'; ?>>Depends Run</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_DEPENDS_ALL      . '"'; if ($stype == SEARCH_FIELD_DEPENDS_ALL)      echo 'SELECTED'; ?>>Depends Build/Lib/Run</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_MESSAGEID        . '"'; if ($stype == SEARCH_FIELD_MESSAGEID)        echo 'SELECTED'; ?>>Message ID</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_COMMITMESSAGE    . '"'; if ($stype == SEARCH_FIELD_COMMITMESSAGE)    echo 'SELECTED'; ?>>Commit Message</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_PATHNAME         . '"'; if ($stype == SEARCH_FIELD_PATHNAME)         echo 'SELECTED'; ?>>Under a pathname</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_COMMITMESSAGE        . '"'; if ($stype == SEARCH_FIELD_COMMITMESSAGE)        echo 'SELECTED'; ?>>Commit Message</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_COMMITTER            . '"'; if ($stype == SEARCH_FIELD_COMMITTER)            echo 'SELECTED'; ?>>Committer</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_DEPENDS_BUILD        . '"'; if ($stype == SEARCH_FIELD_DEPENDS_BUILD)        echo 'SELECTED'; ?>>Depends Build</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_DEPENDS_LIB          . '"'; if ($stype == SEARCH_FIELD_DEPENDS_LIB)          echo 'SELECTED'; ?>>Depends Lib</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_DEPENDS_RUN          . '"'; if ($stype == SEARCH_FIELD_DEPENDS_RUN)          echo 'SELECTED'; ?>>Depends Run</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_DEPENDS_ALL          . '"'; if ($stype == SEARCH_FIELD_DEPENDS_ALL)          echo 'SELECTED'; ?>>Depends Build/Lib/Run</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_LATEST_LINK          . '"'; if ($stype == SEARCH_FIELD_LATEST_LINK)          echo 'SELECTED'; ?>>Latest Link</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_LONGDESCRIPTION      . '"'; if ($stype == SEARCH_FIELD_LONGDESCRIPTION)      echo 'SELECTED'; ?>>Long Description</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_LICENSE_PERMS        . '"'; if ($stype == SEARCH_FIELD_LICENSE_PERMS)        echo 'SELECTED'; ?>>LICENSE_PERMS</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_LICENSE_RESTRICTED   . '"'; if ($stype == SEARCH_FIELD_LICENSE_RESTRICTED)   echo 'SELECTED'; ?>>_LICENSE_RESTRICTED</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_MAKEFILE             . '"'; if ($stype == SEARCH_FIELD_MAKEFILE)             echo 'SELECTED'; ?>>Makefile (ports only)</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_MAINTAINER           . '"'; if ($stype == SEARCH_FIELD_MAINTAINER)           echo 'SELECTED'; ?>>Maintainer</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_MANUAL_PACKAGE_BUILD . '"'; if ($stype == SEARCH_FIELD_MANUAL_PACKAGE_BUILD) echo 'SELECTED'; ?>>MANUAL_PACKAGE_BUILD</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_MESSAGEID            . '"'; if ($stype == SEARCH_FIELD_MESSAGEID)            echo 'SELECTED'; ?>>Message ID</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_PACKAGE              . '"'; if ($stype == SEARCH_FIELD_PACKAGE)              echo 'SELECTED'; ?>>Package Name</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_PKG_PLIST            . '"'; if ($stype == SEARCH_FIELD_PKG_PLIST)            echo 'SELECTED'; ?>>pkg-plist</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_NAME                 . '"'; if ($stype == SEARCH_FIELD_NAME)                 echo 'SELECTED'; ?>>Port Name</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_SHORTDESCRIPTION     . '"'; if ($stype == SEARCH_FIELD_SHORTDESCRIPTION)     echo 'SELECTED'; ?>>Short Description</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_PATHNAME             . '"'; if ($stype == SEARCH_FIELD_PATHNAME)             echo 'SELECTED'; ?>>Under a pathname</OPTION>
 	</SELECT> 
 
 	<SELECT name=method>

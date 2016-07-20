@@ -82,3 +82,27 @@ span.file {
     color: #007a00;
     font-family: monospace;
 }
+
+
+
+/* This CSS is used for the Show/Hide functionality. */
+.more {
+    display: none;
+/*    border-top: 1px solid #666; */
+/*    border-bottom: 1px solid #666; */
+}
+
+a.showLink, a.hideLink {
+    text-decoration: none;
+    color: #36f;
+    padding-left: 16px;
+    background: transparent url(/images/expand.gif) no-repeat left;
+}
+
+a.hideLink {
+    background: transparent url(/images/contract.gif) no-repeat left;
+}
+
+a.showLink:hover, a.hideLink:hover {
+    border-bottom: 1px dotted #36f;
+}

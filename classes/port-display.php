@@ -11,7 +11,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
 
 define('port_display_WATCH_LIST_ADD_REMOVE', '%%%$$$WATCHLIST$$$%%%');
 define('port_display_AD',                    '%%%$$$ADGOESHERE$$$%%%');
-define('DEPENDS_SUMMARY', 71 );
+define('DEPENDS_SUMMARY', 7 );
 
 class port_display {
 
@@ -643,79 +643,71 @@ class port_display {
 		return $HTML;
 	}
 	
-	function ShowDependencies( $port )
-	{
-	  // pull back and show links to all ports that this port is dependant upon
-#    $HTML = ' HI MOM!';
-    $HTML = '';
-
-    $PortDependencies = new PortDependencies( $this->db );
-    $Types = array( 'B' => 'Build', 'E' => 'Extract', 'F' => 'Fetch', 'L' => 'Libraries', 'P' => 'Patch', 'R' => 'Run' );
-    foreach ( $Types as $type => $title )
+    function ShowDependencies( $port )
     {
-      $NumRows = $PortDependencies->FetchInitialise( $port->id, $type );
-      if ( $NumRows > 0 )
-      {
-        // if this is our first output, put up our standard header
+        $HTML = '';
+
+        $PortDependencies = new PortDependencies( $this->db );
+        $Types = array( 'B' => 'Build', 'E' => 'Extract', 'F' => 'Fetch', 'L' => 'Libraries', 'P' => 'Patch', 'R' => 'Run' );
+        foreach ( $Types as $type => $title )
+        {
+            $NumRows = $PortDependencies->FetchInitialise( $port->id, $type );
+            if ( $NumRows > 0 )
+            {
+                // if this is our first output, put up our standard header
+                if ( $HTML === '' )
+                {
+                  if ( $port->IsDeleted() )
+                  {
+                      $HTML .= 'NOTE: dependencies for deleted ports are notoriously suspect<br>';
+                  }
+                  $HTML .= '<p class="required">This port is required by:</p>';
+                }
+
+                $HTML .= '<span class="required">for ' . $title . "</span>\n";
+                $div = '<div id="RequiredBy' . $title . '">';
+                $div .= "\n" . '<ol class="depends" id="requiredfor"' . $title . '>' . "\n";
+
+                $deletedPortFound = true;
+                for ( $i = 0; $i < $NumRows; $i++ )
+                {
+	            $PortDependencies->FetchNth($i);
+
+                    $div .= '<li>' . freshports_link_to_port_single( $PortDependencies->category, $PortDependencies->port );
+                    if ( $PortDependencies->status == 'D')
+                    {
+                        $div .= '<sup>*</sup>';
+                        $deletedPortFound = true;
+                    }
+                    $div .= "</li>\n";
+                    if ( $NumRows > DEPENDS_SUMMARY && $i == DEPENDS_SUMMARY  - 1)
+                    {
+                        $div .= '<a href="#" id="RequiredBy' . $title . 'Extra-show" class="showLink" onclick="showHide(\'RequiredBy' . $title . 'Extra\');return false;">Expand this list (' . $NumRows . ' items)</a>';
+                        $div .= '<span id="RequiredBy' . $title . 'Extra" class="more">';
+                    }
+                }
+
+                if ( $NumRows > DEPENDS_SUMMARY )
+                {
+                    $div .= '<a href="#" id="RequiredBy' . $title . 'Extra-hide" class="hideLink" onclick="showHide(\'RequiredBy' . $title . 'Extra\');return false;">Collapse this list.</a>';
+                    $div .= '</span>';
+                }
+
+                $div .= '</ol></div>';
+
+                $HTML .= $div;
+	    }
+        }
+
         if ( $HTML === '' )
         {
-          if ( $port->IsDeleted() )
-          {
-            $HTML .= 'NOTE: dependencies for deleted ports are notoriously suspect<br>';
-          }
-          $HTML .= '<p class="required">This port is required by:</p>';
+          $HTML .= 'There are no ports dependent upon this port<br>';
         }
-        
-        $HTML .= '<span class="required">for ' . $title . "</span>\n";
-        $div = '<div id="RequiredBy' . $title . '">';
-        $div .= "\n" . '<ol class="depends" id="requiredfor"' . $title . '>' . "\n";
-
-        $deletedPortFound = true;
-        for ( $i = 0; $i < $NumRows; $i++ )
+        elseif ($deletedPortFound)
         {
-					$PortDependencies->FetchNth($i);
-          
-					$div .= '<li>' . freshports_link_to_port_single( $PortDependencies->category, $PortDependencies->port );
-					if ( $PortDependencies->status == 'D')
-					{
-					    $div .= '<sup>*</sup>';
-					    $deletedPortFound = true;
-                                        }
-					$div .= "</li>\n";
-					if ( $NumRows > DEPENDS_SUMMARY && $i == DEPENDS_SUMMARY  - 1)
-					{
-					  $div .= '<span id="RequiredBy' . $title . 'Span" style="display: inline">';
-					}
+          $HTML .= '* - deleted ports are only shown under the <em>This port is required by</em> section.  It was harder to do for the <em>Required</em> section.  Perhaps later...';
         }
 
-        if ( $NumRows > DEPENDS_SUMMARY )
-        {
-          $div .= '</span>';
-        }
-        
-        $div .= '</ol></div>';
-
-        // add in the closing tag for the show/hide button        
-        if ( $NumRows > DEPENDS_SUMMARY )
-        {
-            $div .= '<div class="showlink"><a id="testshowhide" class="showLink" href="#"><img id="RequiredBy' . 
-                 $title . 'SpanContract" data-control="#RequiredBy' . $title . 
-                 'Span" class="contract" src="/images/contract.gif" alt="Contract depends" title="Contract depends" border="0" width="13" height="13" style="display: inline; cursor: pointer"></a></div>';
-        }
-
-        $HTML .= $div;
-      }
-    }
-
-    if ( $HTML === '' )
-    {
-      $HTML .= 'There are no ports dependent upon this port<br>';
-    }
-    elseif ($deletedPortFound)
-    {
-      $HTML .= '* - deleted ports are only shown under the <em>This port is required by</em> section.  It was harder to do for the <em>Required</em> section.  Perhaps later...';
-    }
-    
-    return $HTML;
+        return $HTML;
     }
 }

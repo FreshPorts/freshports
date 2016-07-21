@@ -206,7 +206,7 @@ echo '</div>';
 	for ($i = 0; $i < $numrows; $i++) {
 		$port->FetchNth($i);
 
-		$port_display->port = $port;
+		$port_display->SetPort($port);
 
 		$Port_HTML = $port_display->Display();
 		

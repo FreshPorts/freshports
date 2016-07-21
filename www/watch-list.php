@@ -109,7 +109,7 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 		$port_display = new port_display($db, $User);
 		$port_display->SetDetailsReports();
 
-		$port_display->port = $port;
+		$port_display->SetPort($port);
 
 		$Port_HTML = $port_display->Display();
 		

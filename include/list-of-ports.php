@@ -60,7 +60,7 @@ function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeade
 				}
 			}
 		}
-		$port_display->port = $port;
+		$port_display->SetPort($port);
 
 		$Port_HTML = $port_display->Display();
 		

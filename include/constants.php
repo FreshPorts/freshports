@@ -6,6 +6,7 @@
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.local.php');
 
 #
 # colours for the banners (not really banners, but headings)
@@ -81,7 +82,9 @@ define('PORTSMONSHOW',        1);
 define('DISTFILESSURVEYSHOW', 1);
 
 define('BRANCH_HEAD', 'head');
-define('PATH_TO_PORTSDIR', '/usr/local/repos/');  // must have a trailing /
+
+if (!defined(PATH_TO_PORTSDIR)) define('PATH_TO_PORTSDIR', '/usr/local/');  // must have a trailing /
+
 define('PORTSDIR_PREFIX',  'PORTS-');
 
 define('ARCHIVE_DIRECTORY', $_SERVER['DOCUMENT_ROOT'] . '/../archives');

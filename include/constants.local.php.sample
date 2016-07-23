@@ -1,0 +1,10 @@
+<?php
+  # This is a sample file and you need to copy it to constants.local.php for
+  # it to be effective.
+  #
+  # This file contains overrides to the constants.php file and allows
+  # constants to vary from instance to instance.
+  # Not all contants can be overridden, only those declared with if (!defined())
+  # constants which 
+
+#define('PATH_TO_PORTSDIR', '/usr/local/');  // must have a trailing /

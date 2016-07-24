@@ -35,6 +35,9 @@
 	define('INCLUDE_SRC_COMMITS',   'include_src_commits');
 	define('VEVENSHTEIN_MATCH', 3);
 
+	define('OUTPUT_FORMAT_HTML',        'html');
+	define('OUTPUT_FORMAT_PLAIN_TEXT',  'plaintext');
+
 	$PageNumber = 1;
 	$PageSize   = 100;
 
@@ -145,6 +148,8 @@ function WildCardQuery($stype, $Like, $query) {
 	$casesensitivity	= 'caseinsensitive';
 	$orderby            = ORDERBYCATEGORY;
 	$orderbyupdown		= ORDERBYASCENDING;
+	$output_format      = OUTPUT_FORMAT_HTML;
+	$minimal_output     = 0;
 	
 	// avoid nasty problems by adding slashes
 	if (IsSet($_REQUEST['query']))           $query				= pg_escape_string(trim($_REQUEST['query']));
@@ -158,6 +163,8 @@ function WildCardQuery($stype, $Like, $query) {
 	if (IsSet($_REQUEST['casesensitivity'])) $casesensitivity	= pg_escape_string(trim($_REQUEST['casesensitivity']));
 	if (IsSet($_REQUEST['orderby']))         $orderby			= pg_escape_string(trim($_REQUEST['orderby']));
 	if (IsSet($_REQUEST['orderbyupdown']))   $orderbyupdown		= pg_escape_string(trim($_REQUEST['orderbyupdown']));
+	if (IsSet($_REQUEST['format']))          $output_format           = pg_escape_string(trim($_REQUEST['format']));
+	if (IsSet($_REQUEST['minimal']))         $minimal_output          = pg_escape_string(trim($_REQUEST['minimal']));
 	
 	# we have a problem with people doing this:
 	#
@@ -231,13 +238,29 @@ function WildCardQuery($stype, $Like, $query) {
 			# do not break here...
 	}
 
+// validate $output_format
+switch ($output_format) {
+	case OUTPUT_FORMAT_HTML:
+	case OUTPUT_FORMAT_PLAIN_TEXT:
+		# valid; do nothing
+		break;
 
-#	if ($Debug) phpinfo();
+	default:
+		# some strange value
+		$output_format = OUTPUT_FORMAT_HTML;
+		break;
+}
+
+if ($output_format == OUTPUT_FORMAT_PLAIN_TEXT) {
+  # tell the browser to display plain text
+  header('Content-Type: text/plain');
+}
 
 if (!IsSet($_REQUEST['query'])) {
 	$OnLoad = 'setfocus()';
 }
 
+if ($output_format == OUTPUT_FORMAT_HTML) {
 	freshports_Start('Search',
 					'freshports - new ports, applications',
 					'FreeBSD, index, applications, ports');
@@ -258,6 +281,8 @@ function setfocus() { document.search.query.focus(); }
   </tr>
 <tr><td valign="top">
 <?
+} // end of HTML only output
+
 
 #
 # ensure that our parameters have default values
@@ -317,7 +342,6 @@ if ($method == 'soundex') {
 # are we setting the whole SQL condition or just the operator and the value?
 $sqlSetAll = false;
 
-#if ($Debug) echo "at line " . __LINE__ . " sqlUserSpecifiedCondition='$sqlUserSpecifiedCondition'<br>";
 if ($Debug) echo "at line " . __LINE__ . " stype='$stype'<br>";
 
 
@@ -423,6 +447,7 @@ switch ($stype) {
 		}
 		break;
 }
+
 
 #
 # How are we ordering the output?
@@ -636,6 +661,7 @@ $sqlSelectFields = "
          P.last_commit_id,
          R.svn_hostname,
          R.path_to_repo,
+         P.distinfo,
          element_pathname(P.element_id) as element_pathname  ";
          
 $sqlSelectCount = "
@@ -711,6 +737,8 @@ $NumFound = $myrow[0];
 
 
 $sqlOffsetLimit = '';
+
+if ($output_format == OUTPUT_FORMAT_HTML) {
 $offset = $Pager->getOffsetByPageId();
 $NumOnThisPage = $offset[1] - $offset[0] + 1;
 if ($PageNumber > 1) {
@@ -721,6 +749,8 @@ if ($PageNumber > 1) {
 if ($PageSize) {
 	$sqlOffsetLimit .= "\nLIMIT " . $PageSize;
 }
+
+} // HTML format
 
 
 $sql = $sqlSelectFields . $sqlExtraFields . $sqlFrom . $sqlWatchListFrom . 
@@ -766,6 +796,7 @@ $Port->LocalResult = $result;
 
 }
 
+if ($output_format == OUTPUT_FORMAT_HTML) {
 ?>
 <!-- SiteSearch Google -->
 <script>
@@ -836,7 +867,7 @@ $Port->LocalResult = $result;
 
 	<BR><br>
 
-<table cellpadding="5" cellspacing="0" border="0">
+<table cellpadding="5" cellspacing="0" border="1">
 <tr>
 <td valign="middle">
 	<INPUT TYPE=checkbox <? if ($deleted == INCLUDE_DELETED_PORTS) echo 'CHECKED'; ?> VALUE=<?php echo INCLUDE_DELETED_PORTS; ?> NAME=deleted> Include deleted ports
@@ -858,8 +889,20 @@ $Port->LocalResult = $result;
 	<INPUT TYPE="submit" VALUE="Search" NAME="search">
 </td>
 </tr><tr>
-<td>
+<td colspan="4">
 	<INPUT TYPE=checkbox <? if ($include_src_commits == INCLUDE_SRC_COMMITS) echo 'CHECKED'; ?> VALUE=<?php echo INCLUDE_SRC_COMMITS; ?> NAME=<?php echo INCLUDE_SRC_COMMITS; ?>> Include /src tree
+</td>
+</tr>
+<tr><td colspan="2">
+  <b>Output format</b>:<br>
+  <input type="radio" name="format" value="<?php echo OUTPUT_FORMAT_HTML       . '"'; if ($output_format == OUTPUT_FORMAT_HTML)       echo 'checked'; ?>> HTML<br>
+  <input type="radio" name="format" value="<?php echo OUTPUT_FORMAT_PLAIN_TEXT . '"'; if ($output_format == OUTPUT_FORMAT_PLAIN_TEXT) echo 'checked'; ?>> Plain Text<br>
+</td>
+<td>
+<INPUT TYPE=checkbox VALUE=1   NAME=effort> Maximum Effort
+</td>
+<td>
+<INPUT TYPE=checkbox <? if ($minimal_output == "1")   echo 'CHECKED'; ?> VALUE=1   NAME=minimal> Minimal output
 </td>
 </tr>
 </table>
@@ -895,14 +938,18 @@ Special searches:
 
 </ul>
 <?php
-}
-?>
-<?
+} // end User->id
+
 if ($search) {
-echo "<tr><td>\n";
+  echo "<tr><td>\n";
+}
+
+}  // end of putting out HTML output
 
 if ($NumFetches == 0) {
-   $HTML .= " no results found<br>\n";
+   if ($output_format == OUTPUT_FORMAT_HTML) {
+     $HTML .= " no results found<br>\n";
+   }
 } else {
 	if ($stype == 'committer' || $stype == 'commitmessage' || $stype == 'tree') {
 	  $NumFetches = min($num, $NumberOfCommits);
@@ -928,8 +975,7 @@ if ($NumFetches == 0) {
 	    $NumPortsFound .= " (showing only $NumOnThisPage on this page)";
 	  }
 	}
-	
-	
+
 switch ($stype) {
 	case SEARCH_FIELD_COMMITTER:
 	case SEARCH_FIELD_COMMITMESSAGE:
@@ -944,30 +990,50 @@ switch ($stype) {
 
 	default:
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
-	
+
 		$links = $Pager->GetLinks();
+
+		if ($output_format == OUTPUT_FORMAT_HTML) {
+			$HTML .= $NumPortsFound . ' ' . $links['all'];
+		}
 		
-		$HTML .= $NumPortsFound . ' ' . $links['all'];
-	
 		GLOBAL $User;
+
 		$port_display = new port_display($db, $User);
-		$port_display->SetDetailsSearch();
+
+		switch ($minimal_output) {
+			case 1:
+				$port_display->SetDetailsNil();
+				break;
+			default:
+				$port_display->SetDetailsSearch();
+				break;
+		}
 	
 		for ($i = 0; $i < $NumFetches; $i++) {
 			$Port->FetchNth($i);
 			$port_display->SetPort($Port);
-			$Port_HTML = $port_display->Display();
-	
-			$HTML .= $port_display->ReplaceWatchListToken($Port->{'onwatchlist'}, $Port_HTML, $Port->{'element_id'});
-	    }
-	
-		$HTML .= $NumPortsFound . ' ' . $links['all'];
+			switch ($output_format) {
+				case OUTPUT_FORMAT_HTML:
+					$Port_HTML = $port_display->Display($verbosity_level);
+					$HTML .= $port_display->ReplaceWatchListToken($Port->{'onwatchlist'}, $Port_HTML, $Port->{'element_id'});
+					break;
+
+				case OUTPUT_FORMAT_PLAIN_TEXT:
+					$HTML .= $port_display->DisplayPlainText() . "\n";
+					break;
+			} // switch
+		} // for
+
+	    	if ($output_format == OUTPUT_FORMAT_HTML) {
+			$HTML .= $NumPortsFound . ' ' . $links['all'];
+		}
 	}
 }
 
-
 echo $HTML;
-}
+
+if ($output_format == OUTPUT_FORMAT_HTML) {
 ?>
 </table>
 
@@ -983,7 +1049,12 @@ echo $HTML;
 </table>
 <?
 echo freshports_ShowFooter();
+
 ?>
 
 </body>
 </html>
+
+<?php
+
+} // end of HTML output

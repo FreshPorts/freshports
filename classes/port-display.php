@@ -80,7 +80,7 @@ class port_display {
 		$this->db   = $db;
 		$this->User = $User;
 		$this->DaysMarkedAsNew = 10;
-		
+
 		$this->SetDetailsNil();
 	}
 
@@ -180,7 +180,13 @@ class port_display {
 ';	  
 	}
 
-	function Display() {
+	function DisplayPlainText() {
+		$result = $this->port->category . '/' . $this->port->port;
+
+		return $result;
+	}
+
+	function Display($verbosity_level = 1) {
 		$port = $this->port;
 
         $HTML = '';

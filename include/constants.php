@@ -83,7 +83,7 @@ define('DISTFILESSURVEYSHOW', 1);
 
 define('BRANCH_HEAD', 'head');
 
-if (!defined(PATH_TO_PORTSDIR)) define('PATH_TO_PORTSDIR', '/usr/local/');  // must have a trailing /
+if (!defined('PATH_TO_PORTSDIR')) define('PATH_TO_PORTSDIR', '/usr/local/');  // must have a trailing /
 
 define('PORTSDIR_PREFIX',  'PORTS-');
 

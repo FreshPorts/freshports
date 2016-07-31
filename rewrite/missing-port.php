@@ -104,13 +104,16 @@ function _freshports_PortDisplayHelper($db, $category, $port, $branch, $HasCommi
 	if ($Debug) echo 'into ' . __FILE__ . ' now' . "<br>\n";
 
 	$PageNumber = 1;
-	if (isset($_SERVER['REDIRECT_QUERY_STRING'])) {
-	   parse_str($_SERVER['REDIRECT_QUERY_STRING'], $query_parts);
+	if (isset($_SERVER['QUERY_STRING'])) {
+	   parse_str($_SERVER['QUERY_STRING'], $query_parts);
         } else {
            $query_parts = null;
         }
 
-	if ($Debug) echo print_r($query_parts, true);
+	if ($Debug) {
+	  echo 'query parts';
+	  echo print_r($query_parts, true);
+	}
 	if (IsSet($query_parts['page'])  && Is_Numeric($query_parts['page'])) {
 		$PageNumber = intval($query_parts['page']);
 		if ($PageNumber != $query_parts['page'] || $PageNumber < 1) {

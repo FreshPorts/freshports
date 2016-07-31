@@ -325,16 +325,17 @@ $logfile = $_SERVER["DOCUMENT_ROOT"] . "/../dynamic/searchlog.txt";
 # Adjust method if required
 if ($method == 'soundex') {
 	switch ($stype) {
+		case SEARCH_FIELD_COMMITTER:
+		case SEARCH_FIELD_MAINTAINER:
 		case SEARCH_FIELD_NAME:
 		case SEARCH_FIELD_PACKAGE:
-		case SEARCH_FIELD_LATEST_LINK:
-		case SEARCH_FIELD_MAINTAINER:
-		case SEARCH_FIELD_PATHNAME:
 			break;
 
 		default:
 			$method = 'match';
-			echo "NOTE: Instead of using 'sounds like' as instructed, the system used 'containing'.  See the notes below for why this is done.<br>";
+			if ($output_format == OUTPUT_FORMAT_HTML ) {
+				$HTML .= "<p><b>NOTE</b>: Instead of using 'sounds like' as instructed, the system used 'containing'.  See the notes above for why this is done.</p>";
+			}
 			break;
 	}
 }
@@ -404,20 +405,9 @@ switch ($method) {
 
 	case 'soundex':
 	    $sqlSetAll = true;
-		switch ($stype) {
-			case SEARCH_FIELD_DEPENDS_ALL:
-				$sqlUserSpecifiedCondition = "\n     (levenshtein(substring(P.depends_build FOR 255), '" . pg_escape_string($query) . "') < " . VEVENSHTEIN_MATCH . 
-				                               "   OR levenshtein(substring(P.depends_lib   FOR 255), '" . pg_escape_string($query) . "') < " . VEVENSHTEIN_MATCH .
-											   "   OR levenshtein(substring(P.depends_run   FPR 255), '" . pg_escape_string($query) . "') < " . VEVENSHTEIN_MATCH . ')';
-				$sqlSoundsLikeOrderBy = "levenshtein(substring(P.depends_build for 255) + levenshtein(substring(P.depends_lib for 255), '" . pg_escape_string($query) . "') + levenshtein(substring(P.depends_run for 255), '" . pg_escape_string($query) . "')";
-				break;
-
-			default:
-				$FieldName = $SearchTypeToFieldMap[$stype];
-				$sqlUserSpecifiedCondition = "\n     levenshtein($FieldName, '" . pg_escape_string($query) . "') < " . VEVENSHTEIN_MATCH;
-				$sqlSoundsLikeOrderBy = "levenshtein($FieldName, '" . pg_escape_string($query) . "')";
-				break;
-		}
+		$FieldName = $SearchTypeToFieldMap[$stype];
+		$sqlUserSpecifiedCondition = "\n     levenshtein($FieldName, '" . pg_escape_string($query) . "') < " . VEVENSHTEIN_MATCH;
+		$sqlSoundsLikeOrderBy = "levenshtein($FieldName, '" . pg_escape_string($query) . "')";
 		break;
 }
 
@@ -799,7 +789,7 @@ $Port->LocalResult = $result;
 if ($output_format == OUTPUT_FORMAT_HTML) {
 ?>
 <!-- SiteSearch Google -->
-<script>
+<script type="text/javascript">
   (function() {
     var cx = '015787766717316021231:u1yjof0lhkk';
     var gcse = document.createElement('script');
@@ -811,7 +801,6 @@ if ($output_format == OUTPUT_FORMAT_HTML) {
     s.parentNode.insertBefore(gcse, s);
   })();
 </script>
-<gcse:searchbox-only></gcse:searchbox-only>
 <!-- SiteSearch Google -->
 
 </table>
@@ -915,6 +904,7 @@ if ($output_format == OUTPUT_FORMAT_HTML) {
 <li><small>When searching on 'Commit Message' only 'containing' is used.</small></li>
 <li><small>When searching  by 'Under a pathname', your path must start with something like /ports/, /doc/, or /src/. All 
       commits under that point will be returned. The selected match type is ignored and defaults to 'Starts with'.</small></li>
+<li><small>Searching for 'sounds like' is only valid for Committer, Maintainer, Package Name, and Port Name.</small></li>
 </ul>
 
 <?php

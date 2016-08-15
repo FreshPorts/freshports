@@ -125,6 +125,12 @@ if ($db) {
 
 <TR>
 <?php
+ if (IsSet($_REQUEST['branch'])) {
+   $BranchName = htmlspecialchars($_REQUEST['branch']);
+ } else {
+   $BranchName = BRANCH_HEAD;
+ }
+
  if ( $BranchName == BRANCH_HEAD) {
    echo freshports_PageBannerText("$MaxNumberOfPortsLong most recent commits", 3);
  } else {

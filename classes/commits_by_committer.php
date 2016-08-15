@@ -38,7 +38,7 @@ class CommitsByCommitter extends commits {
 		return $count;
 	}
 
-	function Fetch() {
+	function Fetch($Date = null, $UserID = null) {
 		$sql = "
 		SELECT DISTINCT
 			commit_log.commit_date - SystemTimeAdjust()        AS commit_date_raw,

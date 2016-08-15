@@ -7,9 +7,6 @@
 
 
 // base class for a single commit
-// This class is used for two purposes
-// commit.php, where you pull back details of a single commit.
-
 class Commit {
 
 	var $dbh;

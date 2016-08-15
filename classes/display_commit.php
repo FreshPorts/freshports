@@ -7,7 +7,7 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit_record.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit_ports.php');
 
 // base class for displaying commits
 class DisplayCommit {
@@ -94,7 +94,7 @@ class DisplayCommit {
 		$this->HTML = "";
 
 		# leave it all empty as a comparison point
-		$PreviousCommit = new CommitRecord();
+		$PreviousCommit = new Commit_Ports();
 
 		$NumberOfPortsInThisCommit = 0;
 		$MaxNumberPortsToShow      = 10;
@@ -103,7 +103,7 @@ class DisplayCommit {
 			$myrow = pg_fetch_array($this->result, $i);
 			if ($Debug) echo 'processing row ' . $i . ' ' . $myrow['commit_log_id'] . ' ' . $myrow['message_id'] . "<br>\n";
 			unset($mycommit);
-			$mycommit = new CommitRecord();
+			$mycommit = new Commit_Ports();
 			$mycommit->PopulateValues($myrow);
 
 

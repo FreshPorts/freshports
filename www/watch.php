@@ -268,13 +268,13 @@ if ($wlid != '') {
 	         temp.deprecated, 
 	         temp.ignore, 
 	         temp.forbidden, 
-             temp.master_port,
-             temp.latest_link,
-             temp.no_package,
-             temp.package_name,
-             temp.restricted,
-             temp.no_cdrom,
-             temp.expiration_date,
+	         temp.master_port,
+	         temp.latest_link,
+	         temp.no_package,
+	         temp.package_name,
+	         temp.restricted,
+	         temp.no_cdrom,
+	         temp.expiration_date,
 	         temp.onwatchlist  
 	";
 	

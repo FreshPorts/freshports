@@ -53,11 +53,11 @@ class PageLoadDetail {
 		#
 		# Record the statistics
 		#
-		
+
 		GLOBAL $User;
 
 		$Debug = 0;
-		
+
 		$UserID = $User->id == '' ? "NULL" : $User->id;
 #		echo "\$UserID='$UserID'<br>";
 

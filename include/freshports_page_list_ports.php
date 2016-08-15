@@ -100,7 +100,9 @@ class freshports_page_list_ports extends freshports_page {
 				'spacesBeforeSeparator' => 1,
 				'spacesAfterSeparator'  => 1,
 			);
-		$this->_pager = & Pager::factory($params);
+
+		# use @ to suppress: Non-static method Pager::factory() should not be called statically
+		$this->_pager = @Pager::factory($params);
 		unset($params);
 
 		if ($this->_pageNumber > 1) {
@@ -153,6 +155,7 @@ SELECT ports.id,
        version         as version, 
        revision        as revision,
        ports.element_id,
+       element_pathname(ports.element_id) AS element_pathname,
        maintainer, 
        short_description, 
        to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added,
@@ -164,6 +167,10 @@ SELECT ports.id,
        broken,
        forbidden,
        ignore,
+       license,
+       package_name,
+       no_package,
+       master_port,
        PV.current as vulnerable_current,
        PV.past    as vulnerable_past,
        restricted,
@@ -171,11 +178,18 @@ SELECT ports.id,
        no_cdrom,
        expiration_date,
        last_commit_id,
+       null AS path_to_repo,
+       null AS svn_hostname,
+       null AS epoch,
+       null AS onwatchlist,
        latest_link ";
 
 		if ($UserID) {
 			$this->_sql .= ",
        onwatchlist";
+		} else {
+			$this->_sql .= ",
+       NULL AS onwatchlist ";
 		}
 
 		$this->_sql .= "

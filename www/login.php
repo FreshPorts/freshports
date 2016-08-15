@@ -8,6 +8,9 @@
    require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
    require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
    require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
+
+   require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
+
    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user.php');
 
 $Debug = 0;

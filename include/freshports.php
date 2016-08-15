@@ -1224,6 +1224,8 @@ function freshports_PortCommits($port, $PageNumber = 1, $NumCommitsPerPage = 100
 			'altLast'               => 'Last Page',
 			'lastPageText'          => 'Last Page',
 		);
+
+	# use @ to suppress: Non-static method Pager::factory() should not be called statically
 	$Pager = @Pager::factory($params);
 	
 	// Results from methods:
@@ -1668,6 +1670,7 @@ function freshports_SideBar() {
 
 	if (IsSet($visitor)) {
 		GLOBAL $User;
+
 		$HTML .= '<FONT SIZE="-1">Logged in as ' . $User->name . "</FONT><br>";
 
 		if ($User->emailbouncecount > 0) {

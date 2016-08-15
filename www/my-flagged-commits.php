@@ -48,7 +48,9 @@ $dailysummary = 7;
 			'spacesBeforeSeparator' => 1,
 			'spacesAfterSeparator'  => 1,
 		);
-	$Pager = & Pager::factory($params);
+
+	# use @ to suppress: Non-static method Pager::factory() should not be called statically
+	$Pager = @Pager::factory($params);
 
 	$offset = $Pager->getOffsetByPageId();
 	$NumOnThisPage = $offset[1] - $offset[0] + 1;

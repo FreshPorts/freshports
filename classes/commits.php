@@ -6,7 +6,7 @@
 	#
 
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/commit.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/commit_ports.php");
 
 // base class for fetching commits
 class Commits {
@@ -46,7 +46,7 @@ class Commits {
 	function SetBranch($BranchName) {
 		$this->BranchName = $BranchName;
 	}
-	
+
 	function Fetch($Date, $UserID) {
 		$sql = "
         SELECT DISTINCT
@@ -58,7 +58,7 @@ class Commits {
             commit_log.description                                                                                      AS commit_description,
             to_char(commit_log.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')                                         AS commit_date,
             to_char(commit_log.commit_date - SystemTimeAdjust(), 'HH24:MI')                                             AS commit_time,
-            CLP.port_id                                                                                    AS port_id,
+            CLP.port_id                                                                                    		AS port_id,
             categories.name                                                                                             AS category,
             categories.id                                                                                               AS category_id,
             element.name                                                                  AS port,
@@ -66,7 +66,7 @@ class Commits {
             CASE when CLP.port_version is NULL then ports.revision else CLP.port_revision END AS revision,
             CASE when CLP.port_epoch   is NULL then ports.portepoch else CLP.port_epoch   END AS epoch,
             element.status                                                                                              AS status,
-            CLP.needs_refresh                                                                              AS needs_refresh,
+            CLP.needs_refresh                                                                              		AS needs_refresh,
             ports.forbidden                                                                                             AS forbidden,
             ports.broken                                                                                                AS broken,
             ports.deprecated                                                                                            AS deprecated,
@@ -75,21 +75,30 @@ class Commits {
             date_part('epoch', ports.date_added)                                                                        AS date_added,
             ports.element_id                                                                                            AS element_id,
             ports.short_description                                                                                     AS short_description,
-            commit_log.svn_revision                                                                                     AS svn_revision,
+            CL.svn_revision                                                                                     	AS svn_revision,
             R.svn_hostname                                                                                              AS svn_hostname,
             R.path_to_repo                                                                                              AS path_to_repo,
-            STF.message                                                                                                 AS stf_message";
+            R.name                                                                                                      AS repo_name,
+            ports_vulnerable.current AS vulnerable_current,
+            ports_vulnerable.past    AS vulnerable_past,
+            STF.message                                                                                                 AS stf_message,
+            ports.is_interactive                                                                                        AS is_interactive,
+            ports.no_cdrom                                                                                              AS no_cdrom,
+            ports.restricted                                                                                            AS restricted";
 
         if ($UserID) {
                 $sql .= ",
             onwatchlist ";
+        } else {
+                $sql .= ",
+            NULL AS onwatchlist ";
         }
 
         $sql .= "
     FROM commit_log_ports CLP JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
                               JOIN system_branch SB ON SB.branch_name = '" . pg_escape_string($this->BranchName) . "' AND SB.id = CLB.branch_id
       LEFT OUTER JOIN sanity_test_failures STF ON STF.commit_log_id = CLP.commit_log_id
-    , commit_log LEFT OUTER JOIN repo R on commit_log.repo_id = R.id, categories, ports, element ";
+    , commit_log LEFT OUTER JOIN repo R on commit_log.repo_id = R.id, categories, ports LEFT OUTER JOIN ports_vulnerable ON ports.id = ports_vulnerable.port_id, element ";
 
         if ($UserID) {
                 $sql .= "
@@ -146,6 +155,7 @@ class Commits {
             categories.name                                                                                             AS category,
             categories.id                                                                                               AS category_id,
             element.name                                                                  AS port,
+            element_pathname(element.id)                                                                  AS element_pathname,
             CASE when CLP.port_version IS NULL then ports.version  else CLP.port_version  END AS version,
             CASE when CLP.port_version is NULL then ports.revision else CLP.port_revision END AS revision,
             CASE when CLP.port_epoch   is NULL then ports.portepoch else CLP.port_epoch   END AS epoch,
@@ -159,14 +169,23 @@ class Commits {
             date_part('epoch', ports.date_added)                                                                        AS date_added,
             ports.element_id                                                                                            AS element_id,
             ports.short_description                                                                                     AS short_description,
-            CL.svn_revision                                                                                     AS svn_revision,
+            CL.svn_revision                                                                                     	AS svn_revision,
             R.svn_hostname                                                                                              AS svn_hostname,
             R.path_to_repo                                                                                              AS path_to_repo,
-            STF.message                                                                                                 AS stf_message";
+            R.name                                                                                                      AS repo_name,
+            ports_vulnerable.current AS vulnerable_current,
+            ports_vulnerable.past    AS vulnerable_past,
+            STF.message                                                                                                 AS stf_message,
+            ports.is_interactive                                                                                        AS is_interactive,
+            ports.no_cdrom                                                                                              AS no_cdrom,
+            ports.restricted                                                                                            AS restricted";
 
         if ($UserID) {
                 $sql .= ",
             onwatchlist ";
+        } else {
+                $sql .= ",
+            NULL AS onwatchlist ";
         }
 
         $sql .= "
@@ -185,7 +204,7 @@ class Commits {
             $sql .= " commit_log CL ";
         }
 
-        $sql .= "LEFT OUTER JOIN repo R on CL.repo_id = R.id, categories, ports, element ";
+        $sql .= "LEFT OUTER JOIN repo R on CL.repo_id = R.id, categories, ports LEFT OUTER JOIN ports_vulnerable ON ports.id = ports_vulnerable.port_id, element ";
 
         if ($UserID) {
                 $sql .= "
@@ -256,7 +275,7 @@ SELECT count(DISTINCT CL.id) AS count
 
 		if ($this->Debug) echo "fetching row $N<br>";
 
-		$commit = new Commit($this->dbh);
+		$commit = new Commit_Ports($this->dbh);
 
 		$myrow = pg_fetch_array($this->LocalResult, $N);
 		$commit->PopulateValues($myrow);

@@ -35,7 +35,7 @@ class CommitsByTreeLocation extends commits {
 		$count = 0;
 
 		$sql = "
-			SELECT count(DISTINCT CL.id) AS count
+			SELECT count(DISTINCT CL.id) AS    count
 			  FROM element_pathname EP, commit_log_ports_elements CLPE, commit_log CL
 			 WHERE $this->TreePathCondition
 			   AND EP.element_id = CLPE.element_ID
@@ -58,7 +58,7 @@ class CommitsByTreeLocation extends commits {
 		$count = 0;
 
 		$sql = "
-			SELECT count(DISTINCT CL.id) AS count
+			SELECT count(DISTINCT CL.id) AS                 count
 			  FROM element_pathname EP, commit_log_elements CLE, commit_log CL
 			 WHERE $this->TreePathCondition
 			   AND EP.element_id = CLE.element_ID
@@ -107,7 +107,10 @@ class CommitsByTreeLocation extends commits {
 			ports.short_description                                                                                     AS short_description";
 		if ($this->UserID) {
 				$sql .= ",
-	        onwatchlist ";
+		        onwatchlist ";
+	        } else {
+				$sql .= ",
+		        null AS onwatchlist ";
 		}
 
 		$sql .= "
@@ -166,7 +169,10 @@ ORDER BY CL.commit_date DESC ";
 
 		return $numrows;
 	}
-	function Fetch() {
+
+	# neither of these arguments are used in this function
+	# they are present to be compatible with the parent class
+	function Fetch($date = null, $UserID = null) {
 		$sql = "
 		SELECT DISTINCT
 			CL.commit_date - SystemTimeAdjust()                                                                 AS commit_date_raw,
@@ -182,6 +188,7 @@ ORDER BY CL.commit_date DESC ";
 			element.status                                                                                              AS status,
 			element_pathname.pathname                            as element_pathname,
 			CL.message_subject,
+			CL.svn_revision                                                                                     	AS svn_revision,
 			NULL AS port_id,
 			0    AS needs_refresh,
 			NULL AS forbidden,
@@ -207,11 +214,14 @@ ORDER BY CL.commit_date DESC ";
 			NULL AS stf_message,
 			commit_log_elements.revision_name as revision,
 			R.name         AS repo_name,
-			R.svn_hostname AS hostname,
+			R.svn_hostname AS svn_hostname,
 			R.path_to_repo AS path_to_repo ";
 		if ($this->UserID) {
 				$sql .= ",
-	        onwatchlist ";
+		        onwatchlist ";
+	        } else {
+				$sql .= ",
+		        null AS onwatchlist ";
 		}
 
 		$sql .= "

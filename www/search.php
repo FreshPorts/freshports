@@ -514,7 +514,8 @@ switch ($stype) {
 			'spacesBeforeSeparator' => 1,
 			'spacesAfterSeparator'  => 1,
 		);
-	$Pager = & Pager::factory($params);
+	# use @ to suppress: Non-static method Pager::factory() should not be called statically
+	$Pager = @Pager::factory($params);
 
 	$offset = $Pager->getOffsetByPageId();
 	$NumOnThisPage = $offset[1] - $offset[0] + 1;
@@ -551,7 +552,8 @@ switch ($stype) {
 			'spacesBeforeSeparator' => 1,
 			'spacesAfterSeparator'  => 1,
 		);
-	$Pager = & Pager::factory($params);
+	# use @ to suppress: Non-static method Pager::factory() should not be called statically
+	$Pager = @Pager::factory($params);
 
 	$offset = $Pager->getOffsetByPageId();
 	$NumOnThisPage = $offset[1] - $offset[0] + 1;
@@ -598,7 +600,8 @@ switch ($stype) {
 			'spacesBeforeSeparator' => 1,
 			'spacesAfterSeparator'  => 1,
 		);
-	$Pager = & Pager::factory($params);
+	# use @ to suppress: Non-static method Pager::factory() should not be called statically
+	$Pager = @Pager::factory($params);
 
 	$offset = $Pager->getOffsetByPageId();
 	$NumOnThisPage = $offset[1] - $offset[0] + 1;
@@ -660,7 +663,10 @@ $sqlSelectCount = "
 	if ($User->id) {
 		$sqlExtraFields .= ",
          onwatchlist";
-   }
+        } else {
+		$sqlExtraFields .= ",
+         NULL AS onwatchlist";
+        }
 
 	$sqlFrom = "
   FROM ports P LEFT OUTER JOIN ports_vulnerable PV ON PV.port_id       = P.id 
@@ -722,9 +728,9 @@ $NumFound = $myrow[0];
 			'spacesBeforeSeparator' => 1,
 			'spacesAfterSeparator'  => 1,
 		);
-	$Pager = Pager::factory($params);
 
-
+	# use @ to suppress: Non-static method Pager::factory() should not be called statically
+	$Pager = @Pager::factory($params);
 
 $sqlOffsetLimit = '';
 
@@ -1005,7 +1011,7 @@ switch ($stype) {
 			$port_display->SetPort($Port);
 			switch ($output_format) {
 				case OUTPUT_FORMAT_HTML:
-					$Port_HTML = $port_display->Display($verbosity_level);
+					$Port_HTML = $port_display->Display();
 					$HTML .= $port_display->ReplaceWatchListToken($Port->{'onwatchlist'}, $Port_HTML, $Port->{'element_id'});
 					break;
 

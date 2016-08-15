@@ -101,9 +101,9 @@ function freshports_NonPortDescription($db, $element_record) {
 		$HTML = '';
 
 
-    $Commits = new CommitsByTreeLocation($db);
-    $Commits->SetLimit($Cache->PageSize);
-    $Commits->Debug = $Debug;
+	$Commits = new CommitsByTreeLocation($db);
+	$Commits->SetLimit($Cache->PageSize);
+	$Commits->Debug = $Debug;
 	$Commits->UserIDSet($User->id);
 	$Commits->TreePathConditionSet("= '" . pg_escape_string($element_record->element_pathname) . "'");
     
@@ -129,7 +129,9 @@ function freshports_NonPortDescription($db, $element_record) {
 			'altLast'               => 'Last Page',
 			'lastPageText'          => 'Last Page',
 		);
-	$Pager = & Pager::factory($params);
+
+	# use @ to suppress: Non-static method Pager::factory() should not be called statically
+	$Pager = @Pager::factory($params);
 	
 	$links = $Pager->GetLinks();
 

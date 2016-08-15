@@ -62,7 +62,7 @@ class PortCommitsByCommitter extends CommitsByCommitter {
 		return $count;
 	}
 
-	function Fetch() {
+	function Fetch($Date = null, $UserID = null) {
 		$sql = "set client_encoding = 'ISO-8859-15';
 		SELECT DISTINCT
 			CL.commit_date - SystemTimeAdjust()                                            AS commit_date_raw,

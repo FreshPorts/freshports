@@ -187,6 +187,8 @@ class port_display {
 	}
 
 	function Display($verbosity_level = 1) {
+
+		# verbosity_level has been defined, but not used.
 		$port = $this->port;
 
         $HTML = '';

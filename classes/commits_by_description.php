@@ -51,7 +51,10 @@ class CommitsByDescription extends commits {
 			ports.short_description                                                                                     AS short_description";
 		if ($this->UserID) {
 				$sql .= ",
-	        onwatchlist ";
+		        onwatchlist ";
+		} else {
+				$sql .= ",
+		        NULL AS onwatchlist ";
 		}
 
 		$sql .= "

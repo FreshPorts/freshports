@@ -118,7 +118,10 @@ select TEMP.id,
 	if ($User->id) {
 		$sql .= ",
          onwatchlist";
-   }
+	} else {
+		$sql .= ",
+         NULL AS onwatchlist ";
+	}
 
 	$sql .= "
 	 FROM (
@@ -142,7 +145,10 @@ select TEMP.id,
 	if ($User->id) {
 		$sql .= ",
          onwatchlist";
-   }
+	} else {
+		$sql .= ",
+         NULL AS onwatchlist ";
+        }
 
 	$sql .= "   from ports ";
 

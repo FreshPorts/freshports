@@ -70,7 +70,10 @@ class CommitsByCommitter extends commits {
 			NULL                                               AS stf_message";
 		if ($this->UserID) {
 				$sql .= ",
-	        onwatchlist ";
+		        onwatchlist ";
+		} else {
+				$sql .= ",
+		        NULL AS onwatchlist ";
 		}
 
 		$sql .= "

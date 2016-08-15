@@ -450,6 +450,7 @@ SELECT P.*, element.name    as port
    FROM element JOIN
  (SELECT ports.id,
         ports.element_id        as element_id,
+        element_pathname(ports.element_id)        as element_pathname,
         ports.category_id       as category_id,
         ports.short_description as short_description,
         ports.long_description,
@@ -505,7 +506,10 @@ SELECT P.*, element.name    as port
         NULL AS update_description,
         NULL AS message_id,
         NULL AS encoding_losses,
-        NULL AS committer
+        NULL AS committer,
+        NULL AS path_to_repo,
+        NULL AS svn_hostname,
+        NULL AS onwatchlist
 
    FROM ports_vulnerable right outer join ports on (ports_vulnerable.port_id = ports.id),
         categories, ports_categories, categories PRIMARY_CATEGORY

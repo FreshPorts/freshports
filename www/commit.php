@@ -312,6 +312,7 @@ ORDER BY port, element_pathname";
 
     $Element = new ElementRecord($database);
     $ElementID = $Element->FetchByName($elementName);
+
     if (!$ElementID)
     {
       die( 'I don\'t know that port.');
@@ -351,7 +352,9 @@ ORDER BY port, element_pathname";
 		if ($Debug) echo 'numrows = ' . $NumRows;
 
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/files-display.php');
+
 		$FilesDisplay = new FilesDisplay($Files->LocalResult);
+
 		$HTML = $FilesDisplay->CreateHTML($WhichRepo);
 		echo '<br>' . $HTML;
 	} else {

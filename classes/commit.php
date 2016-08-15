@@ -7,6 +7,9 @@
 
 
 // base class for a single commit
+// This class is used for two purposes
+// commit.php, where you pull back details of a single commit.
+
 class Commit {
 
 	var $dbh;
@@ -19,24 +22,7 @@ class Commit {
 	var $commit_description;
 	var $commit_date;
 	var $commit_time;
-	var $port_id;
-	var $category;
-	var $category_id;
-	var $port;
-	var $version;
-	var $revision_name;
-	var $epoch;
-	var $status;
-	var $needs_refresh;
-	var $forbidden;
-	var $broken;
-	var $deprecated;
-	var $expiration_date;
-	var $ignore;
 	var $date_added;
-	var $element_id;
-	var $short_description;
-	var $onwatchlist;
 	var $stf_message;
 	var $svn_revision;
 	var $svn_hostname;
@@ -60,24 +46,7 @@ class Commit {
 		$this->commit_description	= $myrow["commit_description"];
 		$this->commit_date		= $myrow["commit_date"];
 		$this->commit_time		= $myrow["commit_time"];
-		$this->port_id			= $myrow["port_id"];
-		$this->category			= $myrow["category"];
-		$this->category_id		= $myrow["category_id"];
-		$this->port			= $myrow["port"];
-		$this->version			= $myrow["version"];
-		$this->revision_name		= $myrow["revision_name"];
-		$this->epoch			= $myrow["epoch"];
-		$this->status			= $myrow["status"];
-		$this->needs_refresh		= $myrow["needs_refresh"];
-		$this->forbidden		= $myrow["forbidden"];
-		$this->broken			= $myrow["broken"];
-		$this->deprecated		= $myrow["deprecated"];
-		$this->expiration_date		= $myrow["expiration_date"];
-		$this->ignore			= $myrow["ignore"];
 		$this->date_added		= $myrow["date_added"];
-		$this->element_id		= $myrow["element_id"];
-		$this->short_description	= $myrow["short_description"];
-		$this->onwatchlist		= $myrow["onwatchlist"];
 		$this->stf_message		= $myrow["stf_message"];
 		$this->svn_revision             = $myrow["svn_revision"];
 		$this->svn_hostname             = $myrow["svn_hostname"];
@@ -175,6 +144,7 @@ class Commit {
 SELECT CL.id as commit_log_id,
        message_id,
        message_date,
+       CL.commit_date - SystemTimeAdjust()               AS commit_date_raw,
        to_char(commit_date - SystemTimeAdjust(), 'DD Mon YYYY')  as commit_date,
        to_char(commit_date - SystemTimeAdjust(), 'HH24:MI:SS')   as commit_time,
        message_subject,

@@ -75,7 +75,7 @@ class Commits {
             date_part('epoch', ports.date_added)                                                                        AS date_added,
             ports.element_id                                                                                            AS element_id,
             ports.short_description                                                                                     AS short_description,
-            CL.svn_revision                                                                                     	AS svn_revision,
+            commit_log.svn_revision                                                                                    	AS svn_revision,
             R.svn_hostname                                                                                              AS svn_hostname,
             R.path_to_repo                                                                                              AS path_to_repo,
             R.name                                                                                                      AS repo_name,

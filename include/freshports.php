@@ -683,7 +683,7 @@ function freshports_CommitterEmailLinkExtra($committer, $extrabits) {
 
 // common things needs for all freshports php3 pages
 
-function freshports_Start($ArticleTitle, $Description, $Keywords, $Phorum=0) {
+function freshports_Start($ArticleTitle, $Description, $Keywords, $Phorum = 0, $ExtraScript = null) {
 
 GLOBAL $ShowAds;
 GLOBAL $BannerAd;
@@ -692,7 +692,7 @@ GLOBAL $ShowAnnouncements;
 	freshports_HTML_Start();
 	freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum);
 
-	freshports_body();
+	freshports_body($ExtraScript);
 
    echo freshports_Logo();
    freshports_navigation_bar_top();
@@ -868,7 +868,7 @@ function freshports_style($Phorum=0) {
 	}
 }
 
-function freshports_body() {
+function freshports_body($ExtraScript = null) {
 
 GLOBAL $OnLoad;
 GLOBAL $Debug;
@@ -881,6 +881,11 @@ if ($OnLoad) {
 }
 
 echo ">\n\n";
+
+# most often used for page setup, hiding elements, etc
+if (!empty($ExtraScript)) {
+  echo $ExtraScript;
+}
 
 	if ($Debug) 
 	{

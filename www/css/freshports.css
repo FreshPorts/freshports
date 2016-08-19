@@ -83,15 +83,6 @@ span.file {
     font-family: monospace;
 }
 
-
-
-/* This CSS is used for the Show/Hide functionality. */
-.more {
-    display: none;
-/*    border-top: 1px solid #666; */
-/*    border-bottom: 1px solid #666; */
-}
-
 a.showLink, a.hideLink {
     text-decoration: none;
     color: #36f;

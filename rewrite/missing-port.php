@@ -218,10 +218,18 @@ function _freshports_PortDisplayHelper($db, $category, $port, $branch, $HasCommi
 	$Title = $category . "/" . $port;
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
+	
+	$ExtraScript = "
+<script type=\"text/javascript\">
+var sheet = document.createElement('style')
+sheet.innerHTML = \".more {display: none;}\";
+document.body.appendChild(sheet);
+</script>
+";
 
 	freshports_Start($Title,
 	        		"$FreshPortsTitle - new ports, applications",
-					"FreeBSD, index, applications, ports");
+					"FreeBSD, index, applications, ports", 0, $ExtraScript);
 
 ?>
 

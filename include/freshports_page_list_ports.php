@@ -274,7 +274,7 @@ SELECT gmt_format(max(commit_log.date_added)) as last_modified
 	function executeQuery() {
 		$numrows = -1;
 		if ($this->getDebug()) {
-			$HTML .= '<pre>' . $this->getSQL() . '</pre>';
+			echo '<pre>' . $this->getSQL() . '</pre>';
 		}
 
 		$this->_result = pg_exec($this->_db, $this->getSQL());

@@ -146,24 +146,29 @@
 ?>
 
 <?php
-#echo "That date is " . $Date . '<br>';
-#echo 'which is ' . strtotime($Date) . '<br>';
 
 define('RELATIVE_DATE_24HOURS', 24 * 60 * 60);	# seconds in a day
 
-$Today     = '<a href="/commits.php">Latest commits</a>';
-$Yesterday = freshports_LinkToDate(strtotime($Date) - RELATIVE_DATE_24HOURS);
-$Tomorrow  = freshports_LinkToDate(strtotime($Date) + RELATIVE_DATE_24HOURS);
+$Today = '<a href="/commits.php">Latest commits</a>';
 
+# use DateTime because it gets the math correct, even with daylight savings changes
+# see https://github.com/FreshPorts/freshports/issues/18
+# this will be yesterday
+$dateBefore = new DateTime($Date);
+$dateBefore->add(new DateInterval('P1D'));
+
+# this will be tomorrow
+$dateAfter = new DateTime($Date);
+$dateAfter->sub(new DateInterval('P1D'));
+
+$Yesterday = freshports_LinkToDate(strtotime($dateBefore->format('Y-m-d')));
+$Tomorrow  = freshports_LinkToDate(strtotime($dateAfter->format('Y-m-d')));
+
+# This *seems* to cater for looking at yesterday's commits.
+# I think maybe we should not try to be so clever.
 if (strtotime($Date) + RELATIVE_DATE_24HOURS == strtotime(date('Y/m/d'))) {
-	$Yesterday = freshports_LinkToDate(strtotime($Date) - RELATIVE_DATE_24HOURS);
-
 	$DateLinks = '&lt; ' . $Today . ' | ' . $Yesterday . ' &gt;';
 } else {
-	$Today     = '<a href="/commits.php">Latest commits</a>';
-	$Yesterday = freshports_LinkToDate(strtotime($Date) - RELATIVE_DATE_24HOURS);
-	$Tomorrow  = freshports_LinkToDate(strtotime($Date) + RELATIVE_DATE_24HOURS);
-
 	$DateLinks = '&lt; ' . $Today . ' | ' . $Tomorrow . ' | ' . $Yesterday . ' &gt;';
 }
 echo $DateLinks;

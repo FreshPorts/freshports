@@ -12,14 +12,25 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports_page_expiration_ports.php');
 
-	$page = new freshports_page_expiration_ports();
+	# not using this yet, but putting it in here.	
+	if (IsSet($_REQUEST['branch'])) {
+		$Branch = htmlspecialchars($_REQUEST['branch']);
+	} else {
+		$Branch = BRANCH_HEAD;
+	}
+	
+	$attributes = array('branch' => $Branch);
+
+	$page = new freshports_page_expiration_ports($attributes);
+	
+	$page->setDebug(0);
 
 	$page->setDB($db);
 
 	$page->setTitle('Ports that have expired');
 	$page->setDescription('These ports are past their expiration date.  This list never includes deleted ports.');
 
+
 	$page->setSQL("ports.expiration_date is not null and ports.expiration_date <= CURRENT_DATE", $User->id);
 
 	$page->display();
-?>

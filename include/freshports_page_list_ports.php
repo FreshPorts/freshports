@@ -20,8 +20,9 @@ class freshports_page_list_ports extends freshports_page {
 	var $_condition   = '';   # any conditions on the SQL
 
 	var $_pager;				# if set, a Pager::Pager() object
-								# set 'pager' in the attributes
+						# set 'pager' in the attributes
 
+						
 	# if either of these two are set, it implies a pager is required
 	var $_pageSize    = 100;	# max number of items per page.
 	var $_pageNumber  = 1;		# the page number to display now
@@ -178,8 +179,8 @@ SELECT ports.id,
        no_cdrom,
        expiration_date,
        last_commit_id,
-       null AS path_to_repo,
-       null AS svn_hostname,
+       R.path_to_repo,
+       R.svn_hostname,
        null AS epoch,
        null AS onwatchlist,
        latest_link ";
@@ -193,7 +194,7 @@ SELECT ports.id,
 		}
 
 		$this->_sql .= "
-from element, categories, ports_vulnerable PV right outer join ports on PV.port_id = ports.id ";
+from element, categories, ports_vulnerable PV right outer join ports on PV.port_id = ports.id LEFT OUTER JOIN commit_log CL ON ports.last_commit_id = CL.id LEFT OUTER JOIN repo R ON CL.repo_id = R.id ";
 
 		if ($UserID) {
 			$this->_sql .= '

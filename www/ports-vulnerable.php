@@ -12,14 +12,25 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports_page_list_ports.php');
 
-	$page = new freshports_page_list_ports();
+	# not using this yet, but putting it in here.	
+	if (IsSet($_REQUEST['branch'])) {
+		$Branch = htmlspecialchars($_REQUEST['branch']);
+	} else {
+		$Branch = BRANCH_HEAD;
+	}
+	
+	$attributes = array('branch' => $Branch);
+
+	$page = new freshports_page_list_ports($attributes);
+	
+	$page->setDebug(0);
 
 	$page->setDB($db);
 
 	$page->setTitle('Vulnerable ports');
 	$page->setDescription('These are the vulnerable ports');
 
+
 	$page->setSQL("PV.current != 0", $User->id);
 
 	$page->display();
-?>

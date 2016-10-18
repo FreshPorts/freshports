@@ -59,7 +59,14 @@ class port_display {
           # we want something like
           # http://svn.freebsd.org/ports/head/x11-wm/awesome/
           $link_title = 'SVNWeb';
-          $link = 'https://' . $this->port->svn_hostname . $this->port->element_pathname . '/';
+          $link = 'https://';
+          if (!empty($this->port->svn_hostname)) {
+            $link .= $this->port->svn_hostname;
+          } else {
+            $link .= DEFAULT_SVN_REPO;
+          }
+
+          $link .= $this->port->element_pathname . '/';
           if ($this->port->IsDeleted()) {
             #
 	    # If the port has been deleted, let's link to the last commit.
@@ -74,6 +81,7 @@ class port_display {
             if (!empty($commit->svn_revision)) {
               $link .= '?pathrev=' . ($commit->svn_revision - 1);
             } else {
+              # if there is no last revision, we can't link to it.
 	      $link = null;
             }
           }

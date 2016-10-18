@@ -90,3 +90,5 @@ define('PORTSDIR_PREFIX',  'PORTS-');
 define('ARCHIVE_DIRECTORY', $_SERVER['DOCUMENT_ROOT'] . '/../archives');
 
 define('DELETE_PACKAGE', 'delete-package');
+
+define('DEFAULT_SVN_REPO', 'svn.freebsd.org');

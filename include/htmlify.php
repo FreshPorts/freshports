@@ -57,7 +57,7 @@ function url2link($Arr) {
 	$new_html  = html_entity_decode($html);
 	$new_html  = htmlentities($new_html);
 
-	return '<A HREF="' . $new_html . '">' . $html . '</A>' . $Arr[3];
+	return '<A HREF="' . $new_html . '" REL="NOFOLLOW">' . $html . '</A>' . $Arr[3];
 }
 
 function url_shorten($Arr) {

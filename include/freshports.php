@@ -739,7 +739,7 @@ GLOBAL $FreshPortsLogoHeight;
 	  $HTML .= '<img src="/images/notbug.gif" alt="notbug" title="notbug">';
     }
     
-    $HTML .= '<span class="amazon">If you buy from Amazon USA, please support us by using <a href="http://www.amazon.com/?tag=thfrdi0c-20">this link</a>.</span>';
+    $HTML .= '<span class="amazon">If you buy from Amazon USA, please support us by using <a href="https://www.amazon.com/?tag=thfrdi0c-20" rel="nofollow">this link</a>.</span>';
 	
 	$HTML .= '</td>';
 

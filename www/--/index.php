@@ -1,11 +1,5 @@
 <?php
 
-#require_once($_SERVER['DOCUMENT_ROOT'] . '/--/serviceMyREST.php');
-
-#$service = new serviceMyREST(null);
-#$service->handleRawRequest($_SERVER, $_GET, $_POST);
-
-
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
@@ -13,8 +7,6 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/functions.php');
 
-
-#echo phpinfo();
 
 $script = $_SERVER['SCRIPT_URL'];
 $query  = $_SERVER['QUERY_STRING'];
@@ -50,34 +42,23 @@ $items = explode('/', $script);
 
 switch($script) {
     case SCRIPT_BADGES:
-#        echo 'badges? we do not need no stinking badges!';
-        require($_SERVER['DOCUMENT_ROOT'] . '/../classes/badges.php');
-        require($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/badges.php');
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
         
         $category_port = pg_escape_string($url_parts['port']);
         
-#        echo "\$category_port='$category_port'<br>";
         list($category, $port) = explode('/', $category_port);
-#        echo "\$category='$category'<br>";
-#        echo "\$port='$port'<br>";
         $myPort = new Port($db);
         $result = $myPort->Fetch($category, $port);
-#        var_dump($result);
         $port_badge = new port_badge($db, $myPort);
         if (!empty($result)) {
-#            echo "result = '$result'<br>\n";
             $badge = $port_badge->url();
-#            header("HTTP/1.1 404 NOT FOUND");
             header("Location: $badge", true, 303);
-#            echo $badge;
             exit;
-#            echo '<br><img src="' . $badge . '">';
         } else {
             $img = $port_badge->not_found();
-#            echo $img;
             header("Location: $img", true, 303);
             exit;
-#            echo '<br><img src="' . $img . '">';
         }
 
         break;

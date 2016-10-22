@@ -1,5 +1,5 @@
 <?php
-    #
+    # See https://github.com/FreshPorts/freshports/issues/3
     #
     #
 class port_badge {

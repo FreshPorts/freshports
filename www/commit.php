@@ -11,7 +11,7 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
-    $Debug = 0;
+    $Debug = 1;
 
 DEFINE('MAX_PAGE_SIZE',     1000);
 DEFINE('DEFAULT_PAGE_SIZE', 500);
@@ -242,7 +242,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 
 	$ActualPageNum = ($PageNo - 1 ) * $PageSize;
         
-	$sql ="
+	$sql ="set client_encoding = 'ISO-8859-15';
 SELECT FPC.*, STF.message as stf_message
   FROM freshports_commit('" . pg_escape_string($message_id) . "', " . pg_escape_string($PageSize) . ", " . pg_escape_string($ActualPageNum) . ", $User->id) FPC
  LEFT OUTER JOIN sanity_test_failures STF

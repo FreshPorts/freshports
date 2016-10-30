@@ -838,7 +838,7 @@ In short, it doesn't make sense to obscure that which is freely available elsewh
 
    <TR><TD>
    <P>
-   This question refers to the a port page.  
+   This question refers to a port page.
    
 <p>
 This situation usually occurs with MASTER/SLAVE ports.  The Master port is updated with a new

@@ -11,7 +11,7 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
-    $Debug = 1;
+    $Debug = 0;
 
 DEFINE('MAX_PAGE_SIZE',     1000);
 DEFINE('DEFAULT_PAGE_SIZE', 500);

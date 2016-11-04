@@ -99,6 +99,8 @@ select TEMP.id,
        element.name as port,
        categories.name as category,
        TEMP.category_id,
+       TEMP.element_id,
+       element_pathname(TEMP.element_id) as element_pathname,
        TEMP.version as version,
        TEMP.revision as revision,
        TEMP.element_id,
@@ -113,7 +115,11 @@ select TEMP.id,
        element.status,
        TEMP.broken,
        TEMP.forbidden,
-       TEMP.latest_link ";
+       TEMP.latest_link,
+       TEMP.license,
+       TEMP.last_commit_id,
+       TEMP.svn_hostname,
+       TEMP.path_to_repo ";
 
 	if ($User->id) {
 		$sql .= ",
@@ -140,7 +146,12 @@ select TEMP.id,
           homepage,
           broken,
           forbidden,
-          latest_link
+          latest_link,
+          license,
+          last_commit_id,
+          R.svn_hostname,
+          R.path_to_repo
+          
 ";
 	if ($User->id) {
 		$sql .= ",
@@ -165,6 +176,8 @@ select TEMP.id,
 	}
 	
 	$sql .= "
+               LEFT OUTER JOIN commit_log       CL ON ports.last_commit_id = CL.id
+               LEFT OUTER JOIN repo             R  ON CL.repo_id           = R.id
  WHERE ports.date_added  > (SELECT now() - interval '" . pg_escape_string($IntervalAdjust) . "')) AS
 TEMP, element, categories
  WHERE TEMP.category_id = categories.id

@@ -684,7 +684,6 @@ $sqlSelectCount = "
                                                       AND SB.id            = CLB.branch_id,
        categories C, element E
 ";                                       	
-#    from ports LEFT OUTER JOIN ports_vulnerable on ports_vulnerable.port_id = ports.id JOIN commit_log CL on ports.last_commit_id = CL.id JOIN repo R on CL.repo_id = R.id , categories, element  ";
 
 $sqlWatchListFrom = '';
 	if ($User->id) {

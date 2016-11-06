@@ -11,6 +11,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/system_branch.php');
 
 	require_once('Pager/Pager.php');
 
@@ -23,6 +24,12 @@
     } else {
       $protocol = "http";
     }
+
+	if (IsSet($_REQUEST['branch'])) {
+		$Branch = htmlspecialchars($_REQUEST['branch']);
+	} else {
+		$Branch = BRANCH_HEAD;
+	}
 
 	freshports_ConditionalGet(freshports_LastModified_Dynamic());
 
@@ -669,9 +676,12 @@ $sqlSelectCount = "
         }
 
 	$sqlFrom = "
-  FROM ports P LEFT OUTER JOIN ports_vulnerable PV ON PV.port_id       = P.id 
-               LEFT OUTER JOIN commit_log       CL ON P.last_commit_id = CL.id 
-               LEFT OUTER JOIN repo             R  ON CL.repo_id       = R.id, 
+  FROM ports P LEFT OUTER JOIN ports_vulnerable    PV  ON PV.port_id       = P.id
+               LEFT OUTER JOIN commit_log          CL  ON P.last_commit_id = CL.id
+               LEFT OUTER JOIN repo                R   ON CL.repo_id       = R.id
+               LEFT OUTER JOIN commit_log_branches CLB ON CL.id            = CLB.commit_log_id
+                          JOIN system_branch       SB  ON SB.branch_name   = '" . pg_escape_string($Branch) . "'
+                                                      AND SB.id            = CLB.branch_id,
        categories C, element E
 ";                                       	
 #    from ports LEFT OUTER JOIN ports_vulnerable on ports_vulnerable.port_id = ports.id JOIN commit_log CL on ports.last_commit_id = CL.id JOIN repo R on CL.repo_id = R.id , categories, element  ";
@@ -900,6 +910,28 @@ if ($output_format == OUTPUT_FORMAT_HTML) {
 <INPUT TYPE=checkbox <? if ($minimal_output == "1")   echo 'CHECKED'; ?> VALUE=1   NAME=minimal> Minimal output
 </td>
 </tr>
+<tr>
+  <td colspan="3">
+    <b>Branch</b>:<br>
+      <SELECT NAME="branch" size="1">
+        <OPTION VALUE="<?php
+          echo BRANCH_HEAD . '"';
+          if ($Branch == BRANCH_HEAD) echo ' SELECTED'; echo '>' . BRANCH_HEAD;
+          echo '</OPTION>';
+
+          $system_branch = new SystemBranch($db);
+          $branches = $system_branch->getBranchNames();
+          foreach($branches as $branch_name) {
+            echo '<OPTION VALUE="' . $branch_name . '"';
+            if ($Branch == $branch_name) echo ' SELECTED';
+            echo '>' . $branch_name . '</OPTION>';
+          }
+          ?>
+      </SELECT>
+  </td>
+</tr>
+
+</td>
 </table>
 </form>
 

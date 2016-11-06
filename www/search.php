@@ -910,7 +910,7 @@ if ($output_format == OUTPUT_FORMAT_HTML) {
 </td>
 </tr>
 <tr>
-  <td colspan="3">
+  <td colspan="4">
     <b>Branch</b>:<br>
       <SELECT NAME="branch" size="1">
         <OPTION VALUE="<?php

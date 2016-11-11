@@ -15,7 +15,7 @@ class freshports_page_list_ports extends freshports_page {
 
 	var $_sql;
 	var $_description;
-	var $_port_status = 'A';  # show only active ports
+	var $_port_status = PORT_STATUS_ACTIVE;  # show only active ports
 
 	var $_result;
 	var $_condition   = '';   # any conditions on the SQL
@@ -27,6 +27,25 @@ class freshports_page_list_ports extends freshports_page {
 	# if either of these two are set, it implies a pager is required
 	var $_pageSize    = 100;	# max number of items per page.
 	var $_pageNumber  = 1;		# the page number to display now
+
+        protected function _FROM_CLAUSE() {
+          $_FROM_CLAUSE = "FROM element, categories, ports_vulnerable PV RIGHT OUTER JOIN ports                   ON PV.port_id = ports.id
+                                                                         LEFT  OUTER JOIN commit_log CL           ON ports.last_commit_id = CL.id
+                                                                         LEFT  OUTER JOIN repo R                  ON CL.repo_id = R.id
+                                                                         LEFT  OUTER JOIN commit_log_branches CLB ON CL.id            = CLB.commit_log_id
+                                                                                     JOIN system_branch       SB  ON SB.branch_name   = '" . pg_escape_string($this->Branch) . "'
+                                                                                                                 AND SB.id            = CLB.branch_id";
+          return $_FROM_CLAUSE;
+	}
+
+	protected function _WHERE_CLAUSE() {
+
+	  $_WHERE_CLAUSE = " WHERE ports.element_id  = element.id
+  AND ports.category_id = categories.id 
+  AND ports.status      = '" . pg_escape_string($this->getStatus()) . "'";
+
+          return $_WHERE_CLAUSE;
+        }
 
 	function freshports_page_list_ports($attributes = array()) {
 		$this->freshports_page($attributes);
@@ -66,13 +85,13 @@ class freshports_page_list_ports extends freshports_page {
 
 	function setStatus($Status) {
 		switch ($Status) {
-			case 'A':
-			case 'D':
+			case PORT_STATUS_ACTIVE:
+			case PORT_STATUS_DELETED:
 				$this->_port_status = $Status;
-			break;
+				break;
 
 			default:
-				$this->_port_status = 'A';
+				$this->_port_status = PORT_STATUS_ACTIVE;
 		}
 	}
 
@@ -128,8 +147,8 @@ class freshports_page_list_ports extends freshports_page {
 	}
 	
 	function getSQLCount() {
-		$sql  = 'SELECT count(*) FROM ports LEFT OUTER JOIN ports_vulnerable PV on PV.port_id = ports.id';
-		$sql .= " WHERE ports.status = '" . $this->getStatus() . "'";
+		$sql = 'SELECT count(*) ' . $this->_FROM_CLAUSE() . $this->_WHERE_CLAUSE();
+
 		if ($this->_condition) {
 			$sql .= "\n   AND " . $this->_condition;
 		}
@@ -199,13 +218,8 @@ SELECT ports.id,
        NULL AS onwatchlist ";
 		}
 
-		$this->_sql .= "
-from element, categories, ports_vulnerable PV right outer join ports on PV.port_id = ports.id
-                                              LEFT OUTER JOIN commit_log CL ON ports.last_commit_id = CL.id
-                                              LEFT OUTER JOIN repo R ON CL.repo_id = R.id
-                                              LEFT OUTER JOIN commit_log_branches CLB ON CL.id            = CLB.commit_log_id
-                                                         JOIN system_branch       SB  ON SB.branch_name   = '" . pg_escape_string($this->Branch) . "'
-                                                                                     AND SB.id            = CLB.branch_id";
+		$this->_sql .= $this->_FROM_CLAUSE();
+
 
 		if ($UserID) {
 			$this->_sql .= '
@@ -219,12 +233,7 @@ from element, categories, ports_vulnerable PV right outer join ports on PV.port_
        ON TEMP.wle_element_id = ports.element_id';
 		}
 
-		$this->_sql .= "
-
-
-WHERE ports.element_id  = element.id
-  AND ports.category_id = categories.id 
-  AND ports.status      = '" . pg_escape_string($this->getStatus()) . "'";
+                $this->_sql .= $this->_WHERE_CLAUSE();
 
 		if ($Condition) {
 			$this->_sql .= '
@@ -237,12 +246,8 @@ WHERE ports.element_id  = element.id
 
 	function getLastModified() {
 		$sql = "
-SELECT gmt_format(max(commit_log.date_added)) as last_modified
-  FROM element, commit_log, ports_vulnerable PV right outer join ports on PV.port_id = ports.id
- WHERE ports.element_id     = element.id
-   AND ports.last_commit_id = commit_log.id
-   AND ports.element_id     = element.id
-   AND element.status       = '" . pg_escape_string($this->getStatus()) . "'";
+SELECT gmt_format(max(CL.date_added)) as last_modified " . $this->_FROM_CLAUSE() . $this->_WHERE_CLAUSE();
+
 
 		if ($this->_condition) {
 			$sql .= '

@@ -11,6 +11,7 @@
 class freshports_page_list_ports extends freshports_page {
 
 	var $User;
+	var $Branch;
 
 	var $_sql;
 	var $_description;
@@ -32,6 +33,7 @@ class freshports_page_list_ports extends freshports_page {
 		
 		GLOBAL $User;
 		$this->User = $User;
+		$this->Branch = BRANCH_HEAD;
 
 		$page_number = 1;
 		if (IsSet($_REQUEST['page'])) {
@@ -46,6 +48,10 @@ class freshports_page_list_ports extends freshports_page {
 	
 	function SetUser($User) {
 		$this->User = $User;
+	}
+
+	function SetBranch($Branch) {
+		$this->Branch = $Branch;
 	}
 
 	function Display() {
@@ -194,7 +200,12 @@ SELECT ports.id,
 		}
 
 		$this->_sql .= "
-from element, categories, ports_vulnerable PV right outer join ports on PV.port_id = ports.id LEFT OUTER JOIN commit_log CL ON ports.last_commit_id = CL.id LEFT OUTER JOIN repo R ON CL.repo_id = R.id ";
+from element, categories, ports_vulnerable PV right outer join ports on PV.port_id = ports.id
+                                              LEFT OUTER JOIN commit_log CL ON ports.last_commit_id = CL.id
+                                              LEFT OUTER JOIN repo R ON CL.repo_id = R.id
+                                              LEFT OUTER JOIN commit_log_branches CLB ON CL.id            = CLB.commit_log_id
+                                                         JOIN system_branch       SB  ON SB.branch_name   = '" . pg_escape_string($this->Branch) . "'
+                                                                                     AND SB.id            = CLB.branch_id";
 
 		if ($UserID) {
 			$this->_sql .= '
@@ -209,6 +220,8 @@ from element, categories, ports_vulnerable PV right outer join ports on PV.port_
 		}
 
 		$this->_sql .= "
+
+
 WHERE ports.element_id  = element.id
   AND ports.category_id = categories.id 
   AND ports.status      = '" . pg_escape_string($this->getStatus()) . "'";

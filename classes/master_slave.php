@@ -28,25 +28,29 @@ class MasterSlave {
 	}
 
 	function FetchByMaster($MasterName) {
-		$sql = "
-SELECT id          AS slave_port_id,
-       name        AS slave_port_name,
-       category_id AS slave_category_id,
-       category    AS slave_category_name
-  FROM ports_active
- WHERE master_port = '". pg_escape_string($MasterName). "'
+          $sql = "
+SELECT P.id          AS slave_port_id,
+       P.name        AS slave_port_name,
+       P.category_id AS slave_category_id,
+       P.category    AS slave_category_name
+  FROM ports_active P LEFT OUTER JOIN commit_log CL           ON P.last_commit_id = CL.id
+                      LEFT OUTER JOIN repo R                  ON CL.repo_id = R.id
+                      LEFT OUTER JOIN commit_log_branches CLB ON CL.id            = CLB.commit_log_id
+                                 JOIN system_branch       SB  ON SB.branch_name   = 'head'
+                                                             AND SB.id            = CLB.branch_id
+ WHERE P.master_port = '". pg_escape_string($MasterName). "'
 ORDER BY slave_category_name, slave_port_name";
 
 		#echo "sql = <pre>$sql</pre>";
 
-        $this->LocalResult = pg_exec($this->dbh, $sql);
-		if (!$this->LocalResult) {
-			echo pg_errormessage() . " $sql";
-		}
+          $this->LocalResult = pg_exec($this->dbh, $sql);
+          if (!$this->LocalResult) {
+            echo pg_errormessage() . " $sql";
+          }
 
-		$numrows = pg_numrows($this->LocalResult);
+          $numrows = pg_numrows($this->LocalResult);
 
-		return $numrows;
+          return $numrows;
 	}
 	
 	function FetchNth($N) {

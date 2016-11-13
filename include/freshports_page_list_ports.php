@@ -212,7 +212,7 @@ SELECT ports.id,
 
 		if ($UserID) {
 			$this->_sql .= ",
-       onwatchlist";
+       onwatchlist ";
 		} else {
 			$this->_sql .= ",
        NULL AS onwatchlist ";

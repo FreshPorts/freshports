@@ -294,7 +294,7 @@ select ports.id,
 		if ($result) {
 			$numrows = pg_numrows($result);
 			if ($numrows == 1) {
-				if ($Debug) echo "fetched by ID succeeded<BR>";
+ 				if ($Debug) echo "FetchByElementID succeeded<BR>";
 				$myrow = pg_fetch_array ($result);
 				$this->_PopulateValues($myrow);
 			} else {
@@ -408,14 +408,13 @@ ON TEMP.wle_element_id = ports.element_id";
 
 		if ($Debug) {
 			echo "<pre>$sql</pre>";
-			exit;
 		}
 
         $result = pg_exec($this->dbh, $sql);
 		if ($result) {
 			$numrows = pg_numrows($result);
 			if ($numrows == 1) {
-				if ($Debug) echo "fetched by ID succeeded<BR>";
+				if ($Debug) echo "FetchByID succeeded<BR>";
 				$myrow = pg_fetch_array ($result);
 				$this->_PopulateValues($myrow);
 				$result = $this->{'id'};

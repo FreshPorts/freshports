@@ -480,7 +480,7 @@ function CopyStagingToWatchList($dbh, $UserID, $WatchListID, $Overwrite = TRUE) 
 		$ok = FALSE;
 	}
 
-	if ($ok && $Overwrite) {
+	if ($ok && $Overwrite && !empty($WatchListID)) {
 		$sql = "select WatchListDeleteAllElements($WatchListID)";
 		$result = pg_exec($dbh, $sql);
 		if (!$result) {

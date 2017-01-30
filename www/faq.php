@@ -722,6 +722,8 @@ if you can provide a URL that exercises all the options that require testing.
 <tr><td>Depends Lib</td><td><code class="code">LIB_DEPENDS</code></td></tr>
 <tr><td>Depends Run</td><td><code class="code">RUN_DEPENDS</code></td></tr>
 <tr><td>Message ID</td><td>The message id in the original commit email</td></tr>
+<tr><td>ONLY_FOR_ARCHS</td><td>output from `make -V ONLY_FOR_ARCHS`</td></tr>
+<tr><td>NOT_FOR_ARCHS</td><td>output from `make -V NOT_FOR_ARCHS`</td></tr>
 </table>
 
 	For all of the above origins, you can obtain the value using 

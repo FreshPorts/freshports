@@ -157,9 +157,10 @@ function _freshports_PortDisplayHelper($db, $category, $port, $branch, $HasCommi
 		if ($Debug) echo "found NOTHING in cache for '$category/$port' on $branch<br>\n";
 		$HTML = '';
 		//
-		// sometimes they want to see a port on a branch, but there have been commits against that port on that branch
-		// therefore, we display head.
-		///
+		// sometimes they want to see a port on a branch, but there have been no commits against that port on that branch
+		// therefore, we display head. We display head because that's what will be on the branch by default, given no
+		// commits.
+		//
 		$port_id = freshports_GetPortID($db, $category, $port, $HasCommitsOnBranch ? $branch : BRANCH_HEAD);
 		if (!IsSet($port_id)) {
 			if ($Debug) echo "$category/$port is not a port according to freshports_GetPortID<br>\n";

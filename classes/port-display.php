@@ -494,21 +494,17 @@ class port_display {
 			}
 			$HTML .= '</p>';
 
-			$HTML .= '<p><b>ONLY_FOR_ARCHS:</b> ';
 			if ($port->only_for_archs) {
+			  $HTML .= '<p><b>ONLY_FOR_ARCHS:</b> ';
 			  $HTML .= htmlify($port->only_for_archs);
-			} else {
-			  $HTML .= 'nil';
+			  $HTML .= '</p>';
 			}
-			$HTML .= '</p>';
 
-			$HTML .= '<p><b>NOT_FOR_ARCHS:</b> ';
 			if ($port->not_for_archs) {
+			  $HTML .= '<p><b>NOT_FOR_ARCHS:</b> ';
 			  $HTML .= htmlify($port->not_for_archs);
-			} else {
-			  $HTML .= 'nil';
+			  $HTML .= '</p>';
 			}
-			$HTML .= '</p>';
 
 			$HTML .= '<p><b>distinfo:</b>';
 

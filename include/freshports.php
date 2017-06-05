@@ -16,7 +16,7 @@
 # special HTMLified mailto to foil spam harvesters
 #
 DEFINE('MAILTO',                'mailto');
-DEFINE('COPYRIGHTYEARS',        '2000-2014');
+DEFINE('COPYRIGHTYEARS',        '2000-2017');
 DEFINE('URL2LINK_CUTOFF_LEVEL', 0);
 DEFINE('FAQLINK',               'faq.php');
 DEFINE('PORTSMONURL',			'http://portsmon.freebsd.org/portoverview.py');

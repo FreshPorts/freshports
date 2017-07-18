@@ -621,7 +621,7 @@ class port_display {
 		}
 
 		if ($this->ShowEverything && $port->pkgmessage) {
-			$HTML .= "<b>pkg-mesage:</b>\n<pre>";
+			$HTML .= "<b>pkg-message:</b>\n<pre>";
 			$HTML .= $port->pkgmessage;
 			$HTML .= "</pre>\n<hr>\n";
 		}

@@ -16,7 +16,9 @@
 # special HTMLified mailto to foil spam harvesters
 #
 DEFINE('MAILTO',                'mailto');
-DEFINE('COPYRIGHTYEARS',        '2000-2017');
+DEFINE('COPYRIGHTYEARS',        '2000-' . date('Y'));
+DEFINE('COPYRIGHTHOLDER',       'Dan Langille');
+DEFINE('COPYRIGHTHOLDERURL',    'https://www.langille.org/');
 DEFINE('URL2LINK_CUTOFF_LEVEL', 0);
 DEFINE('FAQLINK',               'faq.php');
 DEFINE('PORTSMONURL',			'http://portsmon.freebsd.org/portoverview.py');
@@ -1108,7 +1110,7 @@ function freshports_navigation_bar_top() {
 }
 
 function freshports_copyright() {
-	return '<small><a href="/legal.php" target="_top" title="This material is copyrighted">Copyright</a> &copy; ' . COPYRIGHTYEARS . ' <a href="http://www.langille.org/">Dan Langille</a>. All rights reserved.</small>';
+	return '<small><a href="/legal.php" target="_top" title="This material is copyrighted">Copyright</a> &copy; ' . COPYRIGHTYEARS . ' <a href="' . COPYRIGHTHOLDERURL . '">' . COPYRIGHTHOLDER . '</a>. All rights reserved.</small>';
 }
 
 function FormatTime($Time, $Adjustment, $Format) {

@@ -1,4 +1,4 @@
-<?php
+	<?php
 	#
 	# $Id: newsfeed.php,v 1.7 2013-02-15 02:09:22 dan Exp $
 	#
@@ -44,7 +44,7 @@ function newsfeed($db, $Format) {
 	$rss->editor    = 'editor@freshports.org (The Editor)';
 	$rss->webmaster = 'webmaster@freshports.org (The Webmaster)';
 	$rss->language  = 'en-us';
-	$rss->copyright = 'Copyright 1998-2013 DVL Software Limited';
+	$rss->copyright = 'Copyright ' . COPYRIGHTYEARS . ' ' . COPYRIGHTHOLDER;
 
 	//optional
 	//$rss->descriptionTruncSize = 500;

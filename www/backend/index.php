@@ -8,6 +8,17 @@
 <p>
 We have a number of newsfeeds for your consumption:
 
+<?php
+
+#echo phpinfo();
+#exit;
+
+$Protocol = isset($_SERVER['HTTPS']) ? 'https' : 'http';
+
+$Hostname = $_SERVER['SERVER_NAME'];
+
+?>
+
 <ol>
 <li><a href="atom0.3.php">ATOM 0.3</a>
 <li><a href="html.php">HTML</a>
@@ -15,9 +26,9 @@ We have a number of newsfeeds for your consumption:
 <li><a href="mbox.php">mbox</a>
 <li><a href="opml.php">opml</a>
 <li><a href="pie0.1.php">PIE 0.1</a>
-<li><a href="rss0.91.php">RSS 0.91</a> [ <a href="http://feedvalidator.org/check.cgi?url=http%3A//beta.freshports.org/backend/rss0.91.php">RSS Feed validator</a> ]
-<li><a href="rss1.0.php">RSS 1.0</a>   [ <a href="http://feedvalidator.org/check.cgi?url=http%3A//beta.freshports.org/backend/rss1.0.php">RSS Feed validator</a>  ]
-<li><a href="rss2.0.php">RSS 2.0</a>   [ <a href="http://feedvalidator.org/check.cgi?url=http%3A//beta.freshports.org/backend/rss2.0.php">RSS Feed validator</a>  ]
+<li><a href="rss0.91.php">RSS 0.91</a> [ <a href="http://feedvalidator.org/check.cgi?url=<?php echo $Protocol; ?>%3A//<?php echo $Hostname; ?>/backend/rss0.91.php">RSS Feed validator</a> ]
+<li><a href="rss1.0.php">RSS 1.0</a>   [ <a href="http://feedvalidator.org/check.cgi?url=<?php echo $Protocol; ?>%3A//<?php echo $Hostname; ?>/backend/rss1.0.php">RSS Feed validator</a>  ]
+<li><a href="rss2.0.php">RSS 2.0</a>   [ <a href="http://feedvalidator.org/check.cgi?url=<?php echo $Protocol; ?>%3A//<?php echo $Hostname; ?>/backend/rss2.0.php">RSS Feed validator</a>  ]
 </ol>
 
 <p>

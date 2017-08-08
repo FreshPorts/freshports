@@ -32,4 +32,3 @@
 	}
 
 	$Statistics->Save();
-?>

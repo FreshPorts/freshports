@@ -1,4 +1,4 @@
-	<?php
+<?php
 	#
 	# $Id: newsfeed.php,v 1.7 2013-02-15 02:09:22 dan Exp $
 	#
@@ -6,6 +6,7 @@
 	#
 
 	DEFINE('MAX_PORTS', 20);
+	define('TIME_ZONE', 'UTC');
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
@@ -14,7 +15,22 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/feedcreator.class.php'); 
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/Element/FeedDate.php'); 
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/Element/FeedHtmlField.php'); 
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/Element/HtmlDescribable.php'); 
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/Element/FeedImage.php'); 
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/Element/FeedItem.php'); 
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/Creator/FeedCreator.php'); 
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/Creator/AtomCreator03.php'); 
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/Creator/HTMLCreator.php'); 
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/Creator/JSCreator.php'); 
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/Creator/MBOXCreator.php'); 
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/Creator/OPMLCreator.php'); 
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/Creator/PIECreator01.php'); 
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/Creator/RSSCreator091.php'); 
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/Creator/RSSCreator10.php'); 
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/Creator/RSSCreator20.php'); 
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/UniversalFeedCreator.php'); 
 	
 function newsfeed($db, $Format) {
 
@@ -134,16 +150,13 @@ LIMIT 30";
 
 		$item->title = $myrow["category"] . '/' . $myrow["port"] . ' - ' . freshports_PackageVersion($myrow["version"], $myrow["revision"], $myrow["epoch"]);
 		$item->link  = $CommitURL;
-		if ($Format == 'rss0.91') {
-			$item->description = trim($myrow["commit_description"]);
-		} else {
-			$item->description = htmlentities(trim($myrow["commit_description"]));
-		}
+		$item->description = trim($myrow["commit_description"]);
 
 		//optional
 		//item->descriptionTruncSize = 500;
 		$item->descriptionHtmlSyndicated = true;
 	
+		#$item->date   = gmdate(DATE_RSS, strtotime($myrow['commit_date_raw']));
 		$item->date   = strtotime($myrow['commit_date_raw']);
 		$item->source = $_SERVER['HTTP_HOST']; 
 		$item->author = $myrow['committer'] . '@FreeBSD.org (' . $myrow['committer'] . ')';

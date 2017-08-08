@@ -852,10 +852,8 @@ if ($Phorum) {
 	<meta name="PhorumVersion" content="<?php echo $phorumver; ?>">
 	<meta name="PhorumDB" content="<?php echo $DB->type; ?>">
 	<meta name="PHPVersion" content="<?php echo phpversion(); ?>">
-	
-<?
+<?php
 }
-
 	echo freshports_IndexFollow($_SERVER["PHP_SELF"]);
 
 	echo "</HEAD>\n";

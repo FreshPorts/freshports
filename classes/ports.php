@@ -430,7 +430,7 @@ ON TEMP.wle_element_id = ports.element_id";
 		# fetch all ports based on category
 		# e.g. id for net
 		
-		$Debug = 1;
+		$Debug = 0;
 
 		$sql = "set client_encoding = 'ISO-8859-15';";
 		if ($UserID) {
@@ -517,7 +517,7 @@ SELECT P.*, element.name    as port
     AND categories.name              = '$CategoryName'
     AND PRIMARY_CATEGORY.id          = ports.category_id ) AS P
    ON (P.element_id     = element.id
-   AND element.status   = 'A') JOIN element_pathname EP ON P.element_id = EP.element_id AND EP.pathname like '/ports/head/%'";
+   AND element.status   = 'A')";
 
 		if ($UserID) {
 			$sql .= ") AS PE

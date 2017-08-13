@@ -32,13 +32,19 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/Creator/RSSCreator20.php'); 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/UniversalFeedCreator.php'); 
 	
-function newsfeed($db, $Format) {
+function newsfeed($db, $Format, $WatchListID = 0) {
+
+	$WatchListID = pg_escape_string($WatchListID);
+	$Format      = pg_escape_string($Format);
 
 	$PHP_SELF = $_SERVER['PHP_SELF'];
 
 	# potential for exploitation here, with $Format
-
-	define('NEWSFEEDCACHE', $_SERVER['DOCUMENT_ROOT'] . '/../dynamic/caching/news/news.' . $Format . '.xml');
+	if ($WatchListID) {
+		define('NEWSFEEDCACHE', $_SERVER['DOCUMENT_ROOT'] . '/../dynamic/caching/news/news.' . $WatchListID . '.'  . $Format . '.xml');
+	} else {
+		define('NEWSFEEDCACHE', $_SERVER['DOCUMENT_ROOT'] . '/../dynamic/caching/news/news.' . $Format . '.xml');
+	}
 
 	$MaxNumberOfPorts = pg_escape_string(MAX_PORTS);
 
@@ -86,7 +92,35 @@ function newsfeed($db, $Format) {
 	if (!IsSet($MaxArticles) || !$MaxArticles || $MaxArticles < 1 || $MaxArticles > $MyMaxArticles) {
 	    $MaxArticles = $MyMaxArticles;
 	}
-	
+
+	if ($WatchListID) {
+	$sql = "
+	select E.name 			as port, 
+		   P.id 				as id, 
+	       C.name 		as category, 
+	       C.id 		as category_id, 
+	       P.version 		as version, 
+	       P.revision 		as revision, 
+	       E.id 			as element_id,
+           to_char(CL.commit_date - SystemTimeAdjust(), 'DD Mon')  AS commit_date,
+           to_char(CL.commit_date - SystemTimeAdjust(), 'HH24:MI') AS commit_time,
+           commit_date          AS commit_date_raw,
+           CL.description       AS commit_description,
+           CLP.port_epoch as epoch,
+           CL.committer,
+           CL.commit_date as commit_date_sort,
+           CL.message_id
+	  FROM watch_list_element WLE, element E, categories C, ports P,
+           commit_log CL, commit_log_ports CLP
+	 WHERE CLP.commit_log_id = CL.id
+       AND CLP.port_id       = P.id
+       AND P.element_id      = WLE.element_id
+	   AND P.element_id      = E.id
+	   AND P.category_id     = C.id 
+	   AND WLE.watch_list_id = " . pg_escape_string($WatchListID) . "
+	ORDER BY commit_date_sort DESC, CL.id ASC, E.name, category, version
+	LIMIT 100";
+	} else {
 	$sql = "
 SELECT PORTELEMENT.*,
        categories.name AS category
@@ -138,7 +172,10 @@ ON LCPPORTS.element_id = element.id) AS PORTELEMENT JOIN categories
 ON PORTELEMENT.category_id = categories.id
 ORDER BY commit_date_raw desc, category, port 
 LIMIT 30";
-
+	}
+	
+#	echo "<pre>$sql</pre>";
+#	exit;
 
 	$ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['SERVER_NAME']);
 	
@@ -148,15 +185,14 @@ LIMIT 30";
 
 		$CommitURL = freshports_Commit_Link_Port_URL($myrow['message_id'], $myrow['category'], $myrow['port']);
 
-		$item->title = $myrow["category"] . '/' . $myrow["port"] . ' - ' . freshports_PackageVersion($myrow["version"], $myrow["revision"], $myrow["epoch"]);
+		$item->title = $myrow['category'] . '/' . $myrow["port"] . ' - ' . freshports_PackageVersion($myrow['version'], $myrow['revision'], $myrow['epoch']);
 		$item->link  = $CommitURL;
-		$item->description = trim($myrow["commit_description"]);
+		$item->description = trim($myrow['commit_description']);
 
 		//optional
 		//item->descriptionTruncSize = 500;
 		$item->descriptionHtmlSyndicated = true;
 	
-		#$item->date   = gmdate(DATE_RSS, strtotime($myrow['commit_date_raw']));
 		$item->date   = strtotime($myrow['commit_date_raw']);
 		$item->source = $_SERVER['HTTP_HOST']; 
 		$item->author = $myrow['committer'] . '@FreeBSD.org (' . $myrow['committer'] . ')';

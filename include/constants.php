@@ -79,6 +79,7 @@ define('FRESHPORTS_VERSION_REVISION_JOINER', '_');
 define('FRESHPORTS_VERSION_EPOCH_JOINER',    ',');
 
 define('PORTSMONSHOW',        1);
+define('PKGPLISTSHOW',        1);
 define('DISTFILESSURVEYSHOW', 1);
 
 define('BRANCH_HEAD', 'head');

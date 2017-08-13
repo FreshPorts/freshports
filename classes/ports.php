@@ -517,7 +517,7 @@ SELECT P.*, element.name    as port
     AND categories.name              = '$CategoryName'
     AND PRIMARY_CATEGORY.id          = ports.category_id ) AS P
    ON (P.element_id     = element.id
-   AND element.status   = 'A')";
+   AND element.status   = 'A') JOIN element_pathname EP ON P.element_id = EP.element_id AND EP.pathname like '/ports/head/%'";
 
 		if ($UserID) {
 			$sql .= ") AS PE

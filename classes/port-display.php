@@ -55,6 +55,49 @@ class port_display {
 	  $this->branch = $branch;
 	}
 
+	function freshports_PkgPlistURL() {
+	# works: http://portsmon.freebsd.org/portoverview.py?category=editors&portname=vim6%2Bruby
+	# fails: http://portsmon.freebsd.org/portoverview.py?category=editors&portname=vim6+ruby
+	#
+          # we want something like
+          # http://svn.freebsd.org/ports/head/x11-wm/awesome/
+          $link_title = 'pkg-plist';
+          $link = 'https://';
+          if (!empty($this->port->svn_hostname)) {
+            $link .= $this->port->svn_hostname;
+          } else {
+            $link .= DEFAULT_SVN_REPO;
+          }
+
+          $link .= $this->port->element_pathname . '/pkg-plist?view=co';
+          if ($this->port->IsDeleted()) {
+            #
+	    # If the port has been deleted, let's link to the last commit.
+	    # Deleted ports don't change much.  It's easier to do this here
+	    # than to do it for ALL ports.
+	    #
+            require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
+
+            $commit = new Commit($this->db);
+            $commit->FetchById($this->port->last_commit_id);
+
+            if (!empty($commit->svn_revision)) {
+              $link .= '&pathrev=' . ($commit->svn_revision - 1);
+            } else {
+              # if there is no last revision, we can't link to it.
+	      $link = null;
+            }
+          }
+
+          if (!empty($link)) {
+            $link = '<a href="' . $link . '">' . $link_title . '</a>';
+          } else {
+            $link = '<strike>pkg-plist</strike>';
+          }
+
+          return $link;
+	}
+
 	function link_to_repo() {
           # we want something like
           # http://svn.freebsd.org/ports/head/x11-wm/awesome/
@@ -74,10 +117,10 @@ class port_display {
 	    # than to do it for ALL ports.
 	    #
             require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
-            
+
             $commit = new Commit($this->db);
             $commit->FetchById($this->port->last_commit_id);
-            
+
             if (!empty($commit->svn_revision)) {
               $link .= '?pathrev=' . ($commit->svn_revision - 1);
             } else {
@@ -91,7 +134,7 @@ class port_display {
           } else {
             $link = '<strike>SVNWeb</strike>';
           }
-          
+
           return $link;
 	}
 
@@ -125,6 +168,7 @@ class port_display {
 		$this->ShowPackageLink         = false;
 		$this->ShowPortCreationDate    = false;
 		$this->ShowPortsMonLink        = false;
+		$this->ShowPkgPlistLink        = false;
 		$this->ShowShortDescription    = false;
 		$this->ShowWatchListCount      = false;
 		$this->ShowWatchListStatus     = false;
@@ -146,6 +190,7 @@ class port_display {
 		$this->ShowMaintainedBy        = true;
 		$this->ShowPortCreationDate    = true;
 		$this->ShowPortsMonLink        = true;
+		$this->ShowPkgPlistLink        = true;
 		$this->ShowPackageLink         = true;
 		$this->ShowShortDescription    = true;
 		$this->ShowWatchListStatus     = true;
@@ -465,6 +510,10 @@ class port_display {
 
 	   if (defined('PORTSMONSHOW')  && ($this->ShowPortsMonLink || $this->ShowEverything)) {
 		   $HTML .= ' <b>:</b> ' . freshports_PortsMonitorURL($port->category, $port->port);
+	   }
+
+	   if (defined('PKGPLISTSHOW')  && ($this->ShowPkgPlistLink || $this->ShowEverything)) {
+		   $HTML .= ' <b>:</b> ' . $this->freshports_PkgPlistURL($port->category, $port->port);
 	   }
 
 		# only show if we're meant to show, and if the port has not been deleted.

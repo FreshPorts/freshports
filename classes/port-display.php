@@ -69,7 +69,7 @@ class port_display {
             $link .= DEFAULT_SVN_REPO;
           }
 
-          $link .= $this->port->element_pathname . '/';
+          $link .= $this->port->element_pathname . '/pkg-plist?view=co';
           if ($this->port->IsDeleted()) {
             #
 	    # If the port has been deleted, let's link to the last commit.
@@ -82,7 +82,7 @@ class port_display {
             $commit->FetchById($this->port->last_commit_id);
 
             if (!empty($commit->svn_revision)) {
-              $link .= '?pathrev=' . ($commit->svn_revision - 1);
+              $link .= '&pathrev=' . ($commit->svn_revision - 1);
             } else {
               # if there is no last revision, we can't link to it.
 	      $link = null;
@@ -90,7 +90,7 @@ class port_display {
           }
 
           if (!empty($link)) {
-            $link = '<a href="' . $link . 'pkg-plist?view=co">' . $link_title . '</a>';
+            $link = '<a href="' . $link . '">' . $link_title . '</a>';
           } else {
             $link = '<strike>pkg-plist</strike>';
           }

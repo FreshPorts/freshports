@@ -13,6 +13,4 @@
 
 	$format = basename($_SERVER['PHP_SELF'], '.php');
 
-	$format = basename($_SERVER['PHP_SELF'], '.php');
-
 	echo newsfeed($db, strtoupper($format));

@@ -32,7 +32,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/Creator/RSSCreator20.php'); 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/UniversalFeedCreator.php'); 
 	
-function newsfeed($db, $Format, $WatchListID = 0) {
+function newsfeed($db, $Format, $WatchListID = 0, $Branch = BRANCH_HEAD) {
 
 	$WatchListID = pg_escape_string($WatchListID);
 	$Format      = pg_escape_string($Format);
@@ -160,9 +160,10 @@ FROM (
            to_char(commit_log.commit_date - SystemTimeAdjust(), 'HH24:MI') AS commit_time,
            encoding_losses
      FROM commit_log JOIN
-               (SELECT latest_commits_ports.commit_log_id
-                   FROM latest_commits_ports
-               ORDER BY latest_commits_ports.commit_date DESC
+               (SELECT LCP.commit_log_id
+                  FROM latest_commits_ports LCP JOIN commit_log_branches CLB ON LCP.commit_log_id = CLB.commit_log_id
+                                     JOIN system_branch SB ON SB.branch_name = '$Branch' AND SB.id = CLB.branch_id
+              ORDER BY LCP.commit_date DESC
                  LIMIT $MaxNumberOfPorts) AS LCP
            ON commit_log.id = LCP.commit_log_id) AS LCPCL JOIN commit_log_ports
                          ON commit_log_ports.commit_log_id = LCPCL.commit_log_id

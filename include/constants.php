@@ -96,3 +96,6 @@ define('DEFAULT_SVN_REPO', 'svn.freebsd.org');
 
 define('PORT_STATUS_ACTIVE',  'A');
 define('PORT_STATUS_DELETED', 'D');
+
+# used mainly when calling freshports_LinkToDate as a sensible parameter
+define('DATE_FORMAT_D_LONG_MONTH', '');

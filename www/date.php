@@ -55,8 +55,8 @@
 					'FreeBSD, index, applications, ports');
 	$Debug = 0;
 
-	function ArchiveFileName($Date) {
-		$File = ARCHIVE_DIRECTORY . '/' . $Date . '.daily';
+	function ArchiveFileName($Date, $BranchName = BRANCH_HEAD) {
+		$File = ARCHIVE_DIRECTORY . '/' . $Date . '.daily.' . $BranchName;
 		
 		return $File;
 	}
@@ -73,11 +73,11 @@
 		return $DirToCreate;
 	}
 
-	function ArchiveExists($Date) {
+	function ArchiveExists($Date, $BranchName = BRANCH_HEAD) {
 		# returns file name for archive if it exists
 		# empty string otherwise
 
-		$File = ArchiveFileName($Date);
+		$File = ArchiveFileName($Date, $BranchName);
 		if (!file_exists($File)) {
 			$File = '';
 		}
@@ -85,11 +85,11 @@
 		return $File;
 	}
 
-	function ArchiveSave($Date, $HTML) {
+	function ArchiveSave($Date, $HTML, $BranchName = BRANCH_HEAD) {
 		# saves the archive away...
 		
 		ArchiveDirectoryCreate($Date);
-		$File = ArchiveFileName($Date);
+		$File = ArchiveFileName($Date, $BranchName);
 
 		$myfile = fopen($File, 'w');
 		fwrite($myfile, $HTML);
@@ -100,10 +100,10 @@
 		
 	}
 
-	function ArchiveGet($Date) {
+	function ArchiveGet($Date, $BranchName = BRANCH_HEAD) {
 		# saves the archive away...
 		
-		$File = ArchiveFileName($Date);
+		$File = ArchiveFileName($Date, $BranchName);
 		
 		$myfile = fopen($File, 'r');
 		$HTML = fread($myfile, filesize($File));
@@ -161,16 +161,11 @@ $dateBefore->add(new DateInterval('P1D'));
 $dateAfter = new DateTime($Date);
 $dateAfter->sub(new DateInterval('P1D'));
 
-$Yesterday = freshports_LinkToDate(strtotime($dateBefore->format('Y-m-d')));
-$Tomorrow  = freshports_LinkToDate(strtotime($dateAfter->format('Y-m-d')));
+# DATE_FORMAT_D_LONG_MONTH is an empty string, and freshports_LinkToDate will format a date for me
+$Yesterday = freshports_LinkToDate(strtotime($dateBefore->format('Y-m-d')), DATE_FORMAT_D_LONG_MONTH, $BranchName);
+$Tomorrow  = freshports_LinkToDate(strtotime($dateAfter->format('Y-m-d')),  DATE_FORMAT_D_LONG_MONTH, $BranchName);
 
-# This *seems* to cater for looking at yesterday's commits.
-# I think maybe we should not try to be so clever.
-if (strtotime($Date) + RELATIVE_DATE_24HOURS == strtotime(date('Y/m/d'))) {
-	$DateLinks = '&lt; ' . $Today . ' | ' . $Yesterday . ' &gt;';
-} else {
-	$DateLinks = '&lt; ' . $Today . ' | ' . $Tomorrow . ' | ' . $Yesterday . ' &gt;';
-}
+$DateLinks = '&lt; ' . $Today . ' | ' . $Tomorrow . ' | ' . $Yesterday . ' &gt;';
 echo $DateLinks;
 if ($NumCommits > 0) {
   echo " | Number of commits: " . $NumCommits;
@@ -185,11 +180,11 @@ if ($NumCommits > 0) {
 
 echo freshports_MainContentTable();
 
-if (ArchiveExists($Date)) {
-  $HTML = ArchiveGet($Date);
+if (ArchiveExists($Date, $BranchName)) {
+  $HTML = ArchiveGet($Date, $BranchName);
 } else {
   $HTML = ArchiveCreate($Date, $DateMessage, $db, $User, $BranchName);
-  ArchiveSave($Date, $HTML);
+  ArchiveSave($Date, $HTML, $BranchName);
 }
 
 echo $HTML;

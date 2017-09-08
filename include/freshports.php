@@ -1867,8 +1867,12 @@ $HTML .= '
 
 }
 
-function freshports_LinkToDate($Date, $Text = '') {
-	$URL = '<a href="/date.php?date=' . date("Y/n/j", $Date) . '">';
+function freshports_LinkToDate($Date, $Text = '', $BranchName = BRANCH_HEAD) {
+	$URL = '<a href="/date.php?date=' . date("Y/n/j", $Date);
+	if ($BranchName != BRANCH_HEAD) {
+		$URL .= '&amp;branch=' . htmlspecialchars($BranchName);
+	}
+	$URL .= '">';
 	if ($Text != '') {
 		$URL .= $Text;
 	} else {

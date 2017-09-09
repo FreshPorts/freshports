@@ -12,6 +12,8 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits.php');
 
+	$Debug = 0;
+
 	# NOTE: All dates must be of the form: YYYY/MM/DD
 	# this format can be achieved using the date('Y/m/d') function.
 
@@ -45,6 +47,7 @@
 	}
 
 	$commits = new Commits($db, $BranchName);
+	$commits->Debug = $Debug;
 	$last_modified = $commits->LastModified($Date);
 	$NumCommits    = $commits->Count($Date);
 
@@ -53,7 +56,6 @@
 	freshports_Start($FreshPortsSlogan,
 					$FreshPortsName . ' - new ports, applications',
 					'FreeBSD, index, applications, ports');
-	$Debug = 0;
 
 	function ArchiveFileName($Date, $BranchName = BRANCH_HEAD) {
 		$File = ARCHIVE_DIRECTORY . '/' . $Date . '.daily.' . $BranchName;
@@ -112,7 +114,7 @@
 		return $HTML;
 	}
 
-	function ArchiveCreate($Date, $DateMessage, $db, $Use, $BranchName) {
+	function ArchiveCreate($Date, $DateMessage, $db, $User, $BranchName) {
 		GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;
 
 		$commits = new Commits($db);

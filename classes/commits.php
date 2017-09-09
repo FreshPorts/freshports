@@ -50,41 +50,41 @@ class Commits {
 	function Fetch($Date, $UserID) {
 		$sql = "
         SELECT DISTINCT
-            commit_log.commit_date - SystemTimeAdjust()                                                                 AS commit_date_raw,
-            commit_log.id                                                                                               AS commit_log_id,
-            commit_log.encoding_losses                                                                                  AS encoding_losses,
-            commit_log.message_id                                                                                       AS message_id,
-            commit_log.committer                                                                                        AS committer,
-            commit_log.description                                                                                      AS commit_description,
-            to_char(commit_log.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')                                         AS commit_date,
-            to_char(commit_log.commit_date - SystemTimeAdjust(), 'HH24:MI')                                             AS commit_time,
+            CL.commit_date - SystemTimeAdjust()                                                                 AS commit_date_raw,
+            CL.id                                                                                               AS commit_log_id,
+            CL.encoding_losses                                                                                  AS encoding_losses,
+            CL.message_id                                                                                       AS message_id,
+            CL.committer                                                                                        AS committer,
+            CL.description                                                                                      AS commit_description,
+            to_char(CL.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')                                         AS commit_date,
+            to_char(CL.commit_date - SystemTimeAdjust(), 'HH24:MI')                                             AS commit_time,
             CLP.port_id                                                                                    		AS port_id,
-            categories.name                                                                                             AS category,
-            categories.id                                                                                               AS category_id,
-            element.name                                                                  AS port,
-            CASE when CLP.port_version IS NULL then ports.version  else CLP.port_version  END AS version,
-            CASE when CLP.port_version is NULL then ports.revision else CLP.port_revision END AS revision,
-            CASE when CLP.port_epoch   is NULL then ports.portepoch else CLP.port_epoch   END AS epoch,
-            element.status                                                                                              AS status,
+            C.name                                                                                             AS category,
+            C.id                                                                                               AS category_id,
+            E.name                                                                  AS port,
+            CASE when CLP.port_version IS NULL then P.version  else CLP.port_version  END AS version,
+            CASE when CLP.port_version is NULL then P.revision else CLP.port_revision END AS revision,
+            CASE when CLP.port_epoch   is NULL then P.portepoch else CLP.port_epoch   END AS epoch,
+            E.status                                                                                              AS status,
             CLP.needs_refresh                                                                              		AS needs_refresh,
-            ports.forbidden                                                                                             AS forbidden,
-            ports.broken                                                                                                AS broken,
-            ports.deprecated                                                                                            AS deprecated,
-            ports.ignore                                                                                                AS ignore,
-            ports.expiration_date                                                                                       AS expiration_date,
-            date_part('epoch', ports.date_added)                                                                        AS date_added,
-            ports.element_id                                                                                            AS element_id,
-            ports.short_description                                                                                     AS short_description,
-            commit_log.svn_revision                                                                                    	AS svn_revision,
+            P.forbidden                                                                                             AS forbidden,
+            P.broken                                                                                                AS broken,
+            P.deprecated                                                                                            AS deprecated,
+            P.ignore                                                                                                AS ignore,
+            P.expiration_date                                                                                       AS expiration_date,
+            date_part('epoch', P.date_added)                                                                        AS date_added,
+            P.element_id                                                                                            AS element_id,
+            P.short_description                                                                                     AS short_description,
+            CL.svn_revision                                                                                    	AS svn_revision,
             R.svn_hostname                                                                                              AS svn_hostname,
             R.path_to_repo                                                                                              AS path_to_repo,
             R.name                                                                                                      AS repo_name,
-            ports_vulnerable.current AS vulnerable_current,
-            ports_vulnerable.past    AS vulnerable_past,
+            PV.current AS vulnerable_current,
+            PV.past    AS vulnerable_past,
             STF.message                                                                                                 AS stf_message,
-            ports.is_interactive                                                                                        AS is_interactive,
-            ports.no_cdrom                                                                                              AS no_cdrom,
-            ports.restricted                                                                                            AS restricted";
+            P.is_interactive                                                                                        AS is_interactive,
+            P.no_cdrom                                                                                              AS no_cdrom,
+            P.restricted                                                                                            AS restricted";
 
         if ($UserID) {
                 $sql .= ",
@@ -95,11 +95,18 @@ class Commits {
         }
 
         $sql .= "
-    FROM commit_log_ports CLP JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
-                              JOIN system_branch SB ON SB.branch_name = '" . pg_escape_string($this->BranchName) . "' AND SB.id = CLB.branch_id
-      LEFT OUTER JOIN sanity_test_failures STF ON STF.commit_log_id = CLP.commit_log_id
-    , commit_log LEFT OUTER JOIN repo R on commit_log.repo_id = R.id, categories, ports LEFT OUTER JOIN ports_vulnerable ON ports.id = ports_vulnerable.port_id, element ";
-
+    FROM commit_log CL JOIN commit_log_ports CLP ON CL.id = CLP.commit_log_id 
+                        AND CL.commit_date BETWEEN '" . pg_escape_string($Date) . "'::timestamptz  + SystemTimeAdjust()
+                                               AND '" . pg_escape_string($Date) . "'::timestamptz  + SystemTimeAdjust() + '1 Day'
+            LEFT OUTER JOIN sanity_test_failures STF ON STF.commit_log_id = CLP.commit_log_id 
+            LEFT OUTER JOIN repo R on CL.repo_id = R.id
+            LEFT OUTER JOIN ports_vulnerable     PV ON CLP.port_id = PV.port_id
+            LEFT OUTER JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
+            LEFT OUTER JOIN system_branch        SB ON SB.branch_name = '" . pg_escape_string($this->BranchName) . "' AND SB.id = CLB.branch_id
+            LEFT OUTER JOIN ports                 P ON P.id           = CLP.port_id
+            LEFT OUTER JOIN categories           C  ON C.id           = P.category_id
+            LEFT OUTER JOIN element              E  on E.id           = P.element_id
+            ";
         if ($UserID) {
                 $sql .= "
           LEFT OUTER JOIN
@@ -109,16 +116,10 @@ class Commits {
            AND watch_list.user_id = " . pg_escape_string($UserID) . "
            AND watch_list.in_service
       GROUP BY wle_element_id) AS TEMP
-           ON TEMP.wle_element_id = element.id";
+           ON TEMP.wle_element_id = E.id";
         }
 
         $sql .= "
-      WHERE commit_log.commit_date         BETWEEN '" . pg_escape_string($Date) . "'::timestamptz  + SystemTimeAdjust()
-                                               AND '" . pg_escape_string($Date) . "'::timestamptz  + SystemTimeAdjust() + '1 Day'
-        AND CLP.commit_log_id = commit_log.id
-        AND CLP.port_id       = ports.id
-        AND categories.id     = ports.category_id
-        AND element.id        = ports.element_id
    ORDER BY 1 desc,
             commit_log_id,
             category,
@@ -152,33 +153,33 @@ class Commits {
             to_char(CL.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')                                         AS commit_date,
             to_char(CL.commit_date - SystemTimeAdjust(), 'HH24:MI')                                             AS commit_time,
             CLP.port_id                                                                                    AS port_id,
-            categories.name                                                                                             AS category,
-            categories.id                                                                                               AS category_id,
-            element.name                                                                  AS port,
-            element_pathname(element.id)                                                                  AS element_pathname,
-            CASE when CLP.port_version IS NULL then ports.version  else CLP.port_version  END AS version,
-            CASE when CLP.port_version is NULL then ports.revision else CLP.port_revision END AS revision,
-            CASE when CLP.port_epoch   is NULL then ports.portepoch else CLP.port_epoch   END AS epoch,
-            element.status                                                                                              AS status,
+            C.name                                                                                             AS category,
+            C.id                                                                                               AS category_id,
+            E.name                                                                  AS port,
+            element_pathname(E.id)                                                                  AS element_pathname,
+            CASE when CLP.port_version IS NULL then P.version  else CLP.port_version  END AS version,
+            CASE when CLP.port_version is NULL then P.revision else CLP.port_revision END AS revision,
+            CASE when CLP.port_epoch   is NULL then P.portepoch else CLP.port_epoch   END AS epoch,
+            E.status                                                                                              AS status,
             CLP.needs_refresh                                                                              AS needs_refresh,
-            ports.forbidden                                                                                             AS forbidden,
-            ports.broken                                                                                                AS broken,
-            ports.deprecated                                                                                            AS deprecated,
-            ports.ignore                                                                                                AS ignore,
-            ports.expiration_date                                                                                       AS expiration_date,
-            date_part('epoch', ports.date_added)                                                                        AS date_added,
-            ports.element_id                                                                                            AS element_id,
-            ports.short_description                                                                                     AS short_description,
+            P.forbidden                                                                                             AS forbidden,
+            P.broken                                                                                                AS broken,
+            P.deprecated                                                                                            AS deprecated,
+            P.ignore                                                                                                AS ignore,
+            P.expiration_date                                                                                       AS expiration_date,
+            date_part('epoch', P.date_added)                                                                        AS date_added,
+            P.element_id                                                                                            AS element_id,
+            P.short_description                                                                                     AS short_description,
             CL.svn_revision                                                                                     	AS svn_revision,
             R.svn_hostname                                                                                              AS svn_hostname,
             R.path_to_repo                                                                                              AS path_to_repo,
             R.name                                                                                                      AS repo_name,
-            ports_vulnerable.current AS vulnerable_current,
-            ports_vulnerable.past    AS vulnerable_past,
+            PV.current AS vulnerable_current,
+            PV.past    AS vulnerable_past,
             STF.message                                                                                                 AS stf_message,
-            ports.is_interactive                                                                                        AS is_interactive,
-            ports.no_cdrom                                                                                              AS no_cdrom,
-            ports.restricted                                                                                            AS restricted";
+            P.is_interactive                                                                                        AS is_interactive,
+            P.no_cdrom                                                                                              AS no_cdrom,
+            P.restricted                                                                                            AS restricted";
 
         if ($UserID) {
                 $sql .= ",
@@ -196,15 +197,15 @@ class Commits {
         if ($this->BranchName == BRANCH_HEAD ) {
             $sql .= "
       (SELECT *
-         FROM commit_log
-        WHERE commit_log.commit_date <= '" . pg_escape_string($Date) . "'::timestamptz  + SystemTimeAdjust() + '1 Day'
-     ORDER BY commit_log.commit_date DESC
+         FROM commit_log CL
+        WHERE CL.commit_date <= '" . pg_escape_string($Date) . "'::timestamptz  + SystemTimeAdjust() + '1 Day'
+     ORDER BY CL.commit_date DESC
         LIMIT " . pg_escape_string($Limit) . ") AS CL ";
         } else {
             $sql .= " commit_log CL ";
         }
 
-        $sql .= "LEFT OUTER JOIN repo R on CL.repo_id = R.id, categories, ports LEFT OUTER JOIN ports_vulnerable ON ports.id = ports_vulnerable.port_id, element ";
+        $sql .= "LEFT OUTER JOIN repo R on CL.repo_id = R.id, categories C, ports P LEFT OUTER JOIN ports_vulnerable PV ON P.id = PV.port_id, element E ";
 
         if ($UserID) {
                 $sql .= "
@@ -215,14 +216,14 @@ class Commits {
            AND watch_list.user_id = " . pg_escape_string($UserID) . "
            AND watch_list.in_service
       GROUP BY wle_element_id) AS TEMP
-           ON TEMP.wle_element_id = element.id";
+           ON TEMP.wle_element_id = E.id";
         }
 
         $sql .= "
       WHERE CLP.commit_log_id = CL.id
-        AND CLP.port_id       = ports.id
-        AND categories.id     = ports.category_id
-        AND element.id        = ports.element_id
+        AND CLP.port_id       = P.id
+        AND C.id     = P.category_id
+        AND E.id        = P.element_id
    ORDER BY 1 desc,
             commit_log_id,
             category,
@@ -244,13 +245,12 @@ class Commits {
 
 	function Count($Date) {
 		$sql = "
-SELECT count(DISTINCT CL.id) AS count
-  FROM commit_log CL JOIN commit_log_ports    CLP ON CLP.commit_log_id = CL.id
-                                                 AND CL.commit_date BETWEEN '" . pg_escape_string($Date) . "'::timestamptz  + SystemTimeAdjust()
-                                                                        AND '" . pg_escape_string($Date) . "'::timestamptz  + SystemTimeAdjust() + '1 Day'
-                     JOIN commit_log_branches CLB ON CL.id             = CLB.commit_log_id
-                     JOIN system_branch       SB  ON SB.branch_name    = '" . pg_escape_string($this->BranchName) . "'
-                                                 AND SB.id             = CLB.branch_id";
+        SELECT count(DISTINCT CL.id) AS count
+          FROM commit_log CL JOIN commit_log_ports CLP ON CL.id = CLP.commit_log_id 
+                        AND CL.commit_date BETWEEN '" . pg_escape_string($Date) . "'::timestamptz  + SystemTimeAdjust()
+                                                AND '" . pg_escape_string($Date) . "'::timestamptz  + SystemTimeAdjust() + '1 Day'
+            LEFT OUTER JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
+            LEFT OUTER JOIN system_branch        SB ON SB.branch_name = '" . pg_escape_string($this->BranchName) . "' AND SB.id = CLB.branch_id";
 
 		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
 

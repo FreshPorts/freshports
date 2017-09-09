@@ -14,7 +14,11 @@
 
 	# we allow the following intervals: today, yesterday, this past week, past 3 months
 
-	$interval = pg_escape_string($_GET["interval"]);
+	if (IsSet($_GET["interval"])) {
+		$interval = pg_escape_string($_GET["interval"]);
+	} else {
+		$interval = '';
+	}
 
 	switch ($interval) {
 		case 'today':
@@ -27,7 +31,9 @@
 			$Interval       = 'past 48 hours';
 			break;
 
+		default:
 		case 'week':
+			$interval       = 'week';
 			$IntervalAdjust = '1 week';
 			$Interval       = 'past 7 days';
 			break;
@@ -43,12 +49,16 @@
 			break;
 
 		case '3months':
-		default:
-			$interval       = '3months';
 			$IntervalAdjust = '3 months';
 			$Interval       = 'past 3 months';
 	}
 
+
+	if (IsSet($_REQUEST['branch'])) {
+		$BranchName = htmlspecialchars($_REQUEST['branch']);
+	} else {
+		$BranchName = BRANCH_HEAD;
+	}
 
 	$Title    = "New ports - " . $Interval;
 
@@ -73,7 +83,11 @@ These are the recently added ports.
 <?
 
 	$visitor = pg_escape_string($_COOKIE["visitor"]);
-	$sort    = pg_escape_string($_GET["sort"]);
+	if (IsSet($_GET["sort"])) {
+		$sort = pg_escape_string($_GET["sort"]);
+	} else {
+		$sort = '';
+	}
 
 	// make sure the value for $sort is valid
 	
@@ -95,31 +109,31 @@ These are the recently added ports.
 	echo "</TD></TR>\n";
 
 	$sql = "
-select TEMP.id,
-       element.name as port,
-       categories.name as category,
-       TEMP.category_id,
-       TEMP.element_id,
-       element_pathname(TEMP.element_id) as element_pathname,
-       TEMP.version as version,
-       TEMP.revision as revision,
-       TEMP.element_id,
-       TEMP.maintainer,
-       TEMP.short_description,
-       TEMP.date_added,
-       TEMP.date_added_raw,
-       TEMP.last_change_log_id,
-       TEMP.package_exists,
-       TEMP.extract_suffix,
-       TEMP.homepage,
-       element.status,
-       TEMP.broken,
-       TEMP.forbidden,
-       TEMP.latest_link,
-       TEMP.license,
-       TEMP.last_commit_id,
-       TEMP.svn_hostname,
-       TEMP.path_to_repo ";
+select NP.id,
+       E.name as port,
+       C.name as category,
+       NP.category_id,
+       NP.element_id,
+       element_pathname(NP.element_id) as element_pathname,
+       NP.version as version,
+       NP.revision as revision,
+       NP.element_id,
+       NP.maintainer,
+       NP.short_description,
+       NP.date_added,
+       NP.date_added_raw,
+       NP.last_change_log_id,
+       NP.package_exists,
+       NP.extract_suffix,
+       NP.homepage,
+       E.status,
+       NP.broken,
+       NP.forbidden,
+       NP.latest_link,
+       NP.license,
+       NP.last_commit_id,
+       R.svn_hostname,
+       R.path_to_repo ";
 
 	if ($User->id) {
 		$sql .= ",
@@ -131,15 +145,15 @@ select TEMP.id,
 
 	$sql .= "
 	 FROM (
-   SELECT ports.id,
-          ports.category_id,
+   SELECT P.id,
+          P.category_id,
           version as version,
           revision as revision,
-          ports.element_id,
+          P.element_id,
           maintainer,
           short_description,
-          to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added,
-          ports.date_added as date_added_raw,
+          to_char(P.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added,
+          P.date_added as date_added_raw,
           last_commit_id as last_change_log_id,
           package_exists,
           extract_suffix,
@@ -148,9 +162,7 @@ select TEMP.id,
           forbidden,
           latest_link,
           license,
-          last_commit_id,
-          R.svn_hostname,
-          R.path_to_repo
+          last_commit_id
           
 ";
 	if ($User->id) {
@@ -161,7 +173,7 @@ select TEMP.id,
          NULL AS onwatchlist ";
         }
 
-	$sql .= "   from ports ";
+	$sql .= "   FROM ports P  WHERE P.date_added  > (SELECT now() - interval '" . pg_escape_string($IntervalAdjust) . "')) AS NP";
 
 	if ($User->id) {
 			$sql .= "
@@ -172,17 +184,20 @@ select TEMP.id,
        AND watch_list.user_id = $User->id
        AND watch_list.in_service
   GROUP BY wle_element_id) AS TEMP2
-       ON TEMP2.wle_element_id = ports.element_id";
+       ON TEMP2.wle_element_id = NP.element_id";
 	}
 	
 	$sql .= "
-               LEFT OUTER JOIN commit_log       CL ON ports.last_commit_id = CL.id
-               LEFT OUTER JOIN repo             R  ON CL.repo_id           = R.id
- WHERE ports.date_added  > (SELECT now() - interval '" . pg_escape_string($IntervalAdjust) . "')) AS
-TEMP, element, categories
- WHERE TEMP.category_id = categories.id
-   and element.status   = 'A'
-   and TEMP.element_id  = element.id
+               LEFT OUTER JOIN commit_log          CL  ON NP.last_commit_id = CL.id
+                          JOIN commit_log_ports    CLP ON CLP.commit_log_id = CL.id 
+                          JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
+                          JOIN system_branch       SB  ON SB.branch_name    = '" . pg_escape_string($BranchName) . "' AND SB.id = CLB.branch_id
+               LEFT OUTER JOIN repo                R   ON CL.repo_id        = R.id
+                          JOIN element             E   ON NP.element_id     = E.id
+                                                      AND E.status          = 'A'
+                          JOIN categories          C   ON C.id              = NP.category_id
+
+
   ";
 
 	$sql .= "\n  order by $sort ";
@@ -191,6 +206,7 @@ TEMP, element, categories
 		echo "<pre>$sql</pre>";
 	}
 
+	$numrows = 0;
 	$result = pg_exec($db, $sql);
 	if (!$result) {
 		echo pg_errormessage();

@@ -31,6 +31,6 @@
 	$page->setDescription('These ports are past their expiration date.  This list never includes deleted ports.');
 
 
-	$page->setSQL("ports.expiration_date is not null and ports.expiration_date <= CURRENT_DATE", $User->id);
+	$page->setSQL("ports.expiration_date IS NOT NULL AND CURRENT_DATE > ports.expiration_date", $User->id);
 
 	$page->display();

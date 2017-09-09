@@ -165,13 +165,6 @@ select NP.id,
           last_commit_id
           
 ";
-	if ($User->id) {
-		$sql .= ",
-         onwatchlist";
-	} else {
-		$sql .= ",
-         NULL AS onwatchlist ";
-        }
 
 	$sql .= "   FROM ports P  WHERE P.date_added  > (SELECT now() - interval '" . pg_escape_string($IntervalAdjust) . "')) AS NP";
 

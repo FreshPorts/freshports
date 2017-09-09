@@ -32,7 +32,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/Creator/RSSCreator20.php'); 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/UniversalFeedCreator.php'); 
 	
-function newsfeed($db, $Format, $WatchListID = 0, $Branch = BRANCH_HEAD) {
+function newsfeed($db, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD) {
 
 	$WatchListID = pg_escape_string($WatchListID);
 	$Format      = pg_escape_string($Format);
@@ -41,9 +41,9 @@ function newsfeed($db, $Format, $WatchListID = 0, $Branch = BRANCH_HEAD) {
 
 	# potential for exploitation here, with $Format
 	if ($WatchListID) {
-		define('NEWSFEEDCACHE', $_SERVER['DOCUMENT_ROOT'] . '/../dynamic/caching/news/news.' . $WatchListID . '.'  . $Format . '.xml');
+		define('NEWSFEEDCACHE', $_SERVER['DOCUMENT_ROOT'] . '/../dynamic/caching/news/news.' . $WatchListID . '.'  . $Format . '.' . $BranchName . '.xml');
 	} else {
-		define('NEWSFEEDCACHE', $_SERVER['DOCUMENT_ROOT'] . '/../dynamic/caching/news/news.' . $Format . '.xml');
+		define('NEWSFEEDCACHE', $_SERVER['DOCUMENT_ROOT'] . '/../dynamic/caching/news/news.' . $Format . '.' . $BranchName. '.xml');
 	}
 
 	$MaxNumberOfPorts = pg_escape_string(MAX_PORTS);
@@ -57,7 +57,7 @@ function newsfeed($db, $Format, $WatchListID = 0, $Branch = BRANCH_HEAD) {
 	#
 	# NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
 
-	$rss->useCached($Format, NEWSFEEDCACHE, time());
+	$rss->useCached($Format, NEWSFEEDCACHE, NEWSFEED_REFRESH_SECONDS);
 
 	$rss->title          = 'FreshPorts news'; 
 	$rss->description    = 'The place for ports'; 
@@ -162,7 +162,7 @@ FROM (
      FROM commit_log JOIN
                (SELECT LCP.commit_log_id
                   FROM latest_commits_ports LCP JOIN commit_log_branches CLB ON LCP.commit_log_id = CLB.commit_log_id
-                                     JOIN system_branch SB ON SB.branch_name = '$Branch' AND SB.id = CLB.branch_id
+                                     JOIN system_branch SB ON SB.branch_name = '$BranchName' AND SB.id = CLB.branch_id
               ORDER BY LCP.commit_date DESC
                  LIMIT $MaxNumberOfPorts) AS LCP
            ON commit_log.id = LCP.commit_log_id) AS LCPCL JOIN commit_log_ports

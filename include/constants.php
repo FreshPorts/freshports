@@ -99,3 +99,9 @@ define('PORT_STATUS_DELETED', 'D');
 
 # used mainly when calling freshports_LinkToDate as a sensible parameter
 define('DATE_FORMAT_D_LONG_MONTH', '');
+
+# used when invoking classes/newsfeed.php::newsfeed() from www/backend/news.php
+define('NO_WATCH_LIST_ID', 0);
+
+# number of seconds a newsfeed will remain before refreshed.
+define('NEWSFEED_REFRESH_SECONDS', 3600);

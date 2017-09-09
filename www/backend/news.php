@@ -13,4 +13,10 @@
 
 	$format = basename($_SERVER['PHP_SELF'], '.php');
 
-	echo newsfeed($db, strtoupper($format));
+	if (IsSet($_REQUEST['branch'])) {
+		$BranchName = htmlspecialchars($_REQUEST['branch']);
+	} else {
+		$BranchName = BRANCH_HEAD;
+	}
+
+	echo newsfeed($db, strtoupper($format), NO_WATCH_LIST_ID, $BranchName);

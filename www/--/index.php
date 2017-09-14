@@ -7,8 +7,15 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/functions.php');
 
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../php-rest-service/RestService/Server.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../php-rest-service/RestService/Client.php');
+use RestService\Server;
 
-$script = $_SERVER['SCRIPT_URL'];
+phpinfo();
+
+
+
+$script = $_SERVER['REQUEST_URI'];
 $query  = $_SERVER['QUERY_STRING'];
 
 $url = parse_url($query);
@@ -16,7 +23,7 @@ $url = parse_url($query);
 parse_str($query, $url_parts);
 
 $Debug = isset($url_parts['Debug']);
-#$Debug = 1;
+$Debug = 1;
 if ($Debug) {
 #    phpinfo();
     echo '<pre>';
@@ -36,9 +43,17 @@ if ($Debug) {
 }
 
 define('SCRIPT_BADGES', '/--/badges/');
-define('SCRIPT_API',    '/--/api/');
+define('SCRIPT_API',    '/--/api/1/search/');
 
 $items = explode('/', $script);
+echo '<pre>';
+var_dump($items);
+echo '</pre>';
+
+echo "script = $script";
+
+# change this entire file so it uses php-rest-service.  In the meantime, do this:
+if (strpos($script, SCRIPT_API) === 0) $script = SCRIPT_API;
 
 switch($script) {
     case SCRIPT_BADGES:
@@ -64,7 +79,30 @@ switch($script) {
         break;
 
     case SCRIPT_API:
-        echo 'api';
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/../api/1/api-search.php');
+        echo '<br>api invoked</br>';
+/*
+Server::create('/--/api')
+    ->addGetRoute('test', function(){
+#    logger('test');
+syslog(LOG_WARNING, 'testing');
+        return 'Yay!';
+    })
+    ->addGetRoute('foo/(.*)', function($bar){
+        return $bar;
+    })
+->run();
+*/
+
+echo '  oh oh';
+
+#var_dump($db);  
+Server::create('/--/api/1/search', 'freshportsAPISearch\Search')
+    ->setDebugMode(DEBUG)
+    ->collectRoutes()
+->run();
+
+echo 'done';
         break;
 
     default:
@@ -77,6 +115,6 @@ switch($script) {
         #echo "\$result='$result'";
 
         if ($result != '') {
-	    require($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing.php');
+	    require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing.php');
         }
 }

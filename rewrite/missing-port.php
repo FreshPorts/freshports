@@ -10,7 +10,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports_updating.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/watch-lists.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/cache.php');
+#	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/cache.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/cache-port.php');
 
 #

@@ -19,15 +19,12 @@ DEFINE('DEFAULT_PAGE_SIZE', 500);
 DEFINE('NEXT_PAGE',		'Next');
 
 	$message_id = '';
-	$commit_id  = '';
 	$page       = '';
 	$page_size  = '';
 	
 	if (IsSet($_GET['message_id'])) $message_id = pg_escape_string($_GET['message_id']);
-	if (IsSet($_GET['commit_id']))  $commit_id  = pg_escape_string($_GET['commit_id']);
 	if (IsSet($_GET['revision']))   $revision   = pg_escape_string($_GET['revision']);
 
-	# I'm quite sure we use only message_id, and never commit_id.
 	if ($message_id != '') {
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
 
@@ -95,33 +92,7 @@ DEFINE('NEXT_PAGE',		'Next');
 
 
 
-	$Title = 'Commit found by ';
-	if ($message_id) {
-		$Title .= 'message id';
-
-		# if found, this will be > 0
-		if (strpos($message_id, MESSAGE_ID_OLD_DOMAIN)) {
-			# yes, we found an old message_id.  Convert it,
-			# and redirect them to the permanent new location
-			#
-			$new_message_id = freshports_MessageIDConvertOldToNew($message_id);
-
-			$URL = $_SERVER['SCRIPT_URI'] . '?' .
-                   str_replace($_SERVER['QUERY_STRING'], "message_id=$message_id", "message_id=$new_message_id");
-
-			freshports_RedirectPermanent($URL);
-			exit;
-		}
-	} else {
-	        if ($revision)
-	        {
-	           $Title .= 'revision';
-                }
-                else
-                {
-                  $Title .= 'commit id';
-                }
-	}
+	$Title = 'Commit found by commit id';
 	if ($Commit->branch != BRANCH_HEAD) {
 	  $Title .= ' on branch ' . $Commit->branch;
 	}
@@ -181,7 +152,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
   </TR>
 <?
 }
-	if ($message_id != '' || $commit_id != '' || $revision != '') {
+	if ($message_id != '' || $revision != '') {
 	
 ?>
 

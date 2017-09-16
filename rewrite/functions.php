@@ -27,14 +27,15 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	if ($Debug) {
 		echo "Debug is turned on.  Only 404 will be returned now because we cannot alter the headers at this time.<br>\n";
 		echo "\$REQUEST_URI='$REQUEST_URI'<br>";
+		phpinfo();
 	}
 
 	$CategoryID = 0;
 
-	$URLParts = parse_url($_SERVER['SCRIPT_URI']);
+	$URLParts = parse_url($_SERVER['REQUEST_URI']);
 	if ($Debug)
 	{
-	  echo 'the URI is <pre>\'' . $_SERVER['SCRIPT_URI'] . "'</pre><br>\n";
+	  echo 'the URI is <pre>\'' . $_SERVER['REQUEST_URI'] . "'</pre><br>\n";
 	  echo 'the url parts are <pre>\'' . print_r($URLParts) . "'</pre><br>\n";
     }
 

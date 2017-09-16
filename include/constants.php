@@ -105,3 +105,5 @@ define('NO_WATCH_LIST_ID', 0);
 
 # number of seconds a newsfeed will remain before refreshed.
 define('NEWSFEED_REFRESH_SECONDS', 3600);
+
+define('BASEDIR', '/var/db/freshports');

@@ -78,7 +78,7 @@ we come in.</P>
 
 <TR><TD>
 
-<P><? echo $FreshPortsTitle; ?> lists the change made to the ports tree. If you wish, <? echo $FreshPortsTitle; ?> can email you 
+<P><? echo $FreshPortsTitle; ?> lists the changes made to the ports tree. If you wish, <? echo $FreshPortsTitle; ?> can email you 
 when your favourite port has been updated.
 </P>
 

@@ -6,7 +6,7 @@
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/ads.php');
+	if ($ShowAds) require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/ads.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../configuration/freshports.conf.php');
 
 	if (IsSet($ShowAnnouncements)) {

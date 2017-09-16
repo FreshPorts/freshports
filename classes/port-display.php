@@ -819,7 +819,7 @@ class port_display {
             if ( $HTML === '' )
             {
                 $div = '<div id="ConfigurePlistDiv">';
-                $div .= "\n" . '<ol class="configure" id="configureplist"><b>pkg-plist</b> from <code class="code">make generate-plist</code><br>' . "\n";
+                $div .= "\n" . '<ol class="configure" id="configureplist">Pseudo-<b>pkg-plist</b> information, but much better, from <code class="code">make generate-plist</code><br>' . "\n";
 
                         $div .= '<a href="#" id="configureplist-Extra-show" class="showLink" onclick="showHide(\'configureplist-Extra\');return false;">Expand this list (' . $NumRows . ' items)</a>';
                         $div .= '<br><span id="configureplist-Extra" class="more">';

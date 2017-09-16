@@ -7,11 +7,13 @@
 	
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/master_slave.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port_dependencies.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port_configure_plist.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
 
 define('port_display_WATCH_LIST_ADD_REMOVE', '%%%$$$WATCHLIST$$$%%%');
 define('port_display_AD',                    '%%%$$$ADGOESHERE$$$%%%');
 define('DEPENDS_SUMMARY', 7 );
+define('PLIST_SUMMARY',   0 );
 
 class port_display {
 
@@ -169,6 +171,7 @@ class port_display {
 		$this->ShowPortCreationDate    = false;
 		$this->ShowPortsMonLink        = false;
 		$this->ShowPkgPlistLink        = false;
+		$this->ShowConfigurePlistLink  = false;
 		$this->ShowShortDescription    = false;
 		$this->ShowWatchListCount      = false;
 		$this->ShowWatchListStatus     = false;
@@ -191,6 +194,7 @@ class port_display {
 		$this->ShowPortCreationDate    = true;
 		$this->ShowPortsMonLink        = true;
 		$this->ShowPkgPlistLink        = true;
+		$this->ShowConfigurePlistLink  = true;
 		$this->ShowPackageLink         = true;
 		$this->ShowShortDescription    = true;
 		$this->ShowWatchListStatus     = true;
@@ -516,6 +520,10 @@ class port_display {
 		   $HTML .= ' <b>:</b> ' . $this->freshports_PkgPlistURL($port->category, $port->port);
 	   }
 
+	   if (defined('CONFIGUREPLISTSHOW')  && ($this->ShowConfigurePlistLink || $this->ShowEverything)) {
+		   $HTML .= '<br>' . $this->ShowConfigurePlist($port);
+	   }
+
 		# only show if we're meant to show, and if the port has not been deleted.
 		if ($this->ShowPackageLink || $this->ShowEverything) {
 			$HTML .= "\n<hr>\n";
@@ -798,4 +806,44 @@ class port_display {
 
         return $HTML;
     }
+
+    function ShowConfigurePlist( $port )
+    {
+        $HTML = '';
+
+        $ConfigurePlist = new PortConfigurePlist( $this->db );
+        $NumRows = $ConfigurePlist->FetchInitialise( $port->id, $type );
+        if ( $NumRows > 0 )
+        {
+            // if this is our first output, put up our standard header
+            if ( $HTML === '' )
+            {
+                $div = '<div id="ConfigurePlistDiv">';
+                $div .= "\n" . '<ol class="configure" id="configureplist"><b>pkg-plist</b> from <code class="code">make generate-plist</code><br>' . "\n";
+
+                        $div .= '<a href="#" id="configureplist-Extra-show" class="showLink" onclick="showHide(\'configureplist-Extra\');return false;">Expand this list (' . $NumRows . ' items)</a>';
+                        $div .= '<br><span id="configureplist-Extra" class="more">';
+                for ( $i = 0; $i < $NumRows; $i++ )
+                {
+	            $ConfigurePlist->FetchNth($i);
+
+                    $div .= '<li>' . $ConfigurePlist->installed_file . "</li>\n";
+                    $div .= '<a href="#" id="configureplist-Extra-hide" class="hideLink" onclick="showHide(\'configureplist-Extra\');return false;">Collapse this list.</a>';
+                    $div .= '</span>';
+                }
+
+                $div .= '</ol></div>';
+
+                $HTML .= $div;
+	    }
+        }
+
+        if ( $HTML === '' )
+        {
+          $HTML .= 'There is no configure plist information for this port<br>';
+        }
+
+        return $HTML;
+    }
+
 }

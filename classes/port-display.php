@@ -828,10 +828,10 @@ class port_display {
 	            $ConfigurePlist->FetchNth($i);
 
                     $div .= '<li>' . $ConfigurePlist->installed_file . "</li>\n";
-                    $div .= '<a href="#" id="configureplist-Extra-hide" class="hideLink" onclick="showHide(\'configureplist-Extra\');return false;">Collapse this list.</a>';
-                    $div .= '</span>';
                 }
 
+                $div .= '<a href="#" id="configureplist-Extra-hide" class="hideLink" onclick="showHide(\'configureplist-Extra\');return false;">Collapse this list.</a>';
+                $div .= '</span>';
                 $div .= '</ol></div>';
 
                 $HTML .= $div;

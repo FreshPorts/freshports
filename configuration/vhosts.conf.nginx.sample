@@ -1,0 +1,34 @@
+server {
+  listen 80;
+  server_name   fp.local;
+  root          /usr/local/www/freshports.org/www/;
+  index        index.php index.html index.htm;
+
+  error_log	/var/log/freshports.org-error.log;
+  access_log	/var/log/freshports.org-access.log combined;
+
+  location / {
+    try_files $uri $uri/ @missing;
+  }
+
+  location ~ \.php$ {
+    fastcgi_split_path_info ^(.+\.php)(/.+)$;
+    fastcgi_pass unix:/var/run/php-fpm.sock;
+    fastcgi_index index.php;
+    fastcgi_param SCRIPT_FILENAME $request_filename;
+    include fastcgi_params;
+  }
+
+  location @missing {
+    rewrite ^ /--/index.php break;
+
+    fastcgi_split_path_info ^(.+\.php)(/.+)$;
+    fastcgi_pass unix:/var/run/php-fpm.sock;
+    fastcgi_index index.php;
+    fastcgi_param SCRIPT_FILENAME $request_filename;
+    include fastcgi_params;
+  }
+
+}
+
+

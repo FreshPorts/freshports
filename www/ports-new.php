@@ -183,7 +183,7 @@ select NP.id,
 	$sql .= "
                LEFT OUTER JOIN commit_log          CL  ON NP.last_commit_id = CL.id
                           JOIN commit_log_ports    CLP ON CLP.commit_log_id = CL.id 
-                          JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
+                          JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id AND CLP.port_id = NP.id
                           JOIN system_branch       SB  ON SB.branch_name    = '" . pg_escape_string($BranchName) . "' AND SB.id = CLB.branch_id
                LEFT OUTER JOIN repo                R   ON CL.repo_id        = R.id
                           JOIN element             E   ON NP.element_id     = E.id

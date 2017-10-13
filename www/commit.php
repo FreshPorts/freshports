@@ -95,33 +95,7 @@ DEFINE('NEXT_PAGE',		'Next');
 
 
 
-	$Title = 'Commit found by ';
-	if ($message_id) {
-		$Title .= 'message id';
-
-		# if found, this will be > 0
-		if (strpos($message_id, MESSAGE_ID_OLD_DOMAIN)) {
-			# yes, we found an old message_id.  Convert it,
-			# and redirect them to the permanent new location
-			#
-			$new_message_id = freshports_MessageIDConvertOldToNew($message_id);
-
-			$URL = $_SERVER['SCRIPT_URI'] . '?' .
-                   str_replace($_SERVER['QUERY_STRING'], "message_id=$message_id", "message_id=$new_message_id");
-
-			freshports_RedirectPermanent($URL);
-			exit;
-		}
-	} else {
-	        if ($revision)
-	        {
-	           $Title .= 'revision';
-                }
-                else
-                {
-                  $Title .= 'commit id';
-                }
-	}
+	$Title = 'Commit found by commit id';
 	if ($Commit->branch != BRANCH_HEAD) {
 	  $Title .= ' on branch ' . $Commit->branch;
 	}

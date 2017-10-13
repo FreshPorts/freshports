@@ -19,15 +19,12 @@ DEFINE('DEFAULT_PAGE_SIZE', 500);
 DEFINE('NEXT_PAGE',		'Next');
 
 	$message_id = '';
-	$commit_id  = '';
 	$page       = '';
 	$page_size  = '';
 	
 	if (IsSet($_GET['message_id'])) $message_id = pg_escape_string($_GET['message_id']);
-	if (IsSet($_GET['commit_id']))  $commit_id  = pg_escape_string($_GET['commit_id']);
 	if (IsSet($_GET['revision']))   $revision   = pg_escape_string($_GET['revision']);
 
-	# I'm quite sure we use only message_id, and never commit_id.
 	if ($message_id != '') {
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
 
@@ -155,7 +152,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
   </TR>
 <?
 }
-	if ($message_id != '' || $commit_id != '' || $revision != '') {
+	if ($message_id != '' || $revision != '') {
 	
 ?>
 

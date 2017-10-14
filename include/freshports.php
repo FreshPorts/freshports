@@ -2180,5 +2180,5 @@ function _forDisplay($string, $flags = NULL, $encoding = FRESHPORTS_ENCODING) {
 define('EVERYTHING', 'FreshPorts has everything you want to know about <a href="http://www.freebsd.org/">FreeBSD</a> software, ports, packages,
 applications, whatever term you want to use.');
 
-openlog('FreshPorts', LOG_PID, LOG_SYSLOG);
+openlog('FreshPorts', LOG_PID, LOG_LOCAL3);
 #syslog(LOG_NOTICE, $_SERVER['SCRIPT_URL']);

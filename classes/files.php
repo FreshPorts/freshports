@@ -49,7 +49,7 @@ class CommitFiles {
 	function Fetch() {
 		if ($this->MessageID == '') {
 			echo 'No message_id supplied';
-			syslog(LOG_ERR, __FILE__  . '::' . __LINE__  . ' No message_id supplied: ' .$_SERVER['SCRIPT_URI']);
+			syslog(LOG_ERR, __FILE__  . '::' . __LINE__  . ' No message_id supplied: ' .$_SERVER['REQUEST_URI']);
 			exit;
 		}
 

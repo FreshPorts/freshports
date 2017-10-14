@@ -5,8 +5,8 @@
 	# Copyright (c) 2006 DVL Software Limited
 	#
 
-define('CACHING_LOCATION',  $_SERVER['DOCUMENT_ROOT'] . '/../dynamic/caching/cache');
-define('SPOOLING_LOCATION', $_SERVER['DOCUMENT_ROOT'] . '/../dynamic/caching/spool');
+define('CACHING_LOCATION',  BASEDIR . '/cache');
+define('SPOOLING_LOCATION', BASEDIR . '/cache/spooling');
 
 // base class for caching
 // Supplies methods for adding, removing, and retrieving.
@@ -138,7 +138,7 @@ class Cache {
 	function _SpoolFileName($key) {
 		$FileName = tempnam($this->SpoolDir, $this->_CleanKey($key) . '.tmp');
 
-		$this->_Log('Cache: creating spool file ' . $FileName);
+		$this->_Log('Cache: creating spool file ' . $FileName . ' hopefully in ' . $this->SpoolDir);
 
 		return $FileName;
 	}

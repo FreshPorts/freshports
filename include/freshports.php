@@ -151,24 +151,42 @@ function PortsFreezeStatus($ColSpan=1) {
 }
 
 
-function freshports_link_to_port($CategoryName, $PortName) {
+function freshports_link_to_port($CategoryName, $PortName, $BranchName = BRANCH_HEAD) {
 
 	$HTML = '';
-	$HTML .= '<a href="/' . $CategoryName . '/">' . $CategoryName . '</a>/';
-	$HTML .= '<a href="/' . $CategoryName . '/' . $PortName . '/">' 
-	            . $PortName . '</a>';
+
+	// create link to category, perhaps on a branch
+	//
+	$HTML .= '<a href="/' . $CategoryName . '/';
+	if ($BranchName != BRANCH_HEAD) {
+	  $HTML .= '?branch=' . htmlentities($BranchName);
+	}
+	$HTML .= '">' . $CategoryName . '</a>/';
+
+	// create link to port, perhaps on a branch
+	//
+	$HTML .= '<a href="/' . $CategoryName . '/' . $PortName . '/';
+	if ($BranchName != BRANCH_HEAD) {
+	  $HTML .= '?branch=' . htmlentities($BranchName);
+	}
+
+	$HTML .= '">' . $PortName . '</a>';
 
 	return $HTML;
 }
 
-function freshports_link_to_port_single($CategoryName, $PortName) {
+function freshports_link_to_port_single($CategoryName, $PortName, $BranchName = BRANCH_HEAD) {
 
 	// This differs from freshports_link_to_port in that you get a single link, not a 
 	// link to both category and port
 
 	$HTML = '';
-	$HTML .= '<a href="/' . $CategoryName . '/' . $PortName . '/">' .
-	                        $CategoryName . '/' . $PortName . '</a>';
+	$HTML .= '<a href="/' . $CategoryName . '/' . $PortName . '/';
+	if ($BranchName != BRANCH_HEAD) {
+	  $HTML .= '?branch=' . htmlentities($BranchName);
+	}
+
+	$HTML .= '">' . $CategoryName . '/' . $PortName . '</a>';
 
 	return $HTML;
 }

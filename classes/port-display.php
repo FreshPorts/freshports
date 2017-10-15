@@ -580,7 +580,7 @@ class port_display {
 			if ($port->IsSlavePort()) {
 				$HTML .= '<dl><dt><b>Master port:</b> ';
 				list($MyCategory, $MyPort) = explode('/', $port->master_port);
-				$HTML .= freshports_link_to_port($MyCategory, $MyPort);
+				$HTML .= freshports_link_to_port($MyCategory, $MyPort, $this->branch);
 				$HTML .= "</dt>\n";
 				$HTML .= "</dl>\n";
 			}
@@ -593,7 +593,7 @@ class port_display {
 				$HTML .= '<span class="slaveports">Slave ports</span>' . "\n" . '<ol class="slaveports" id="slaveports">';
 				for ($i = 0; $i < $NumRows; $i++) {
 					$MasterSlave->FetchNth($i);
-					$HTML .= '<li>' . freshports_link_to_port($MasterSlave->slave_category_name, $MasterSlave->slave_port_name) . '</li>';
+					$HTML .= '<li>' . freshports_link_to_port($MasterSlave->slave_category_name, $MasterSlave->slave_port_name, $this->branch) . '</li>';
 				}
 				$HTML .= "</ol>\n";
 			}
@@ -761,7 +761,7 @@ class port_display {
                 {
 	            $PortDependencies->FetchNth($i);
 
-                    $div .= '<li>' . freshports_link_to_port_single( $PortDependencies->category, $PortDependencies->port );
+                    $div .= '<li>' . freshports_link_to_port_single( $PortDependencies->category, $PortDependencies->port, $this->branch );
                     if ( $PortDependencies->status == 'D')
                     {
                         $div .= '<sup>*</sup>';

@@ -25,9 +25,6 @@ DEFINE('PORTSMONURL',			'http://portsmon.freebsd.org/portoverview.py');
 DEFINE('NOBORDER',              '0');
 DEFINE('BORDER',                '1');
 
-DEFINE('MESSAGE_ID_OLD_DOMAIN', '@freshports.org');
-DEFINE('MESSAGE_ID_NEW_DOMAIN', '@dev.null.freshports.org');
-
 DEFINE('UNMAINTAINTED_ADDRESS', 'ports@freebsd.org');
 
 DEFINE('BACKGROUND_COLOUR', '#8c0707');
@@ -553,13 +550,9 @@ function freshports_Email_Link($message_id) {
 	# if the message id is for freshports, then it's an old message which does not contain
 	# a valid message id which can be found in the mailing list archive.
 	#
-	if (strpos($message_id, MESSAGE_ID_OLD_DOMAIN) || strpos($message_id, MESSAGE_ID_NEW_DOMAIN)) {
-		$HTML = '';
-	} else {
-		$HTML  = '<a href="' . htmlentities($freshports_mail_archive . $message_id) . '">';
-		$HTML .= freshports_Mail_Icon();
-		$HTML .= '</a>';
-	}
+	$HTML  = '<a href="' . htmlentities($freshports_mail_archive . $message_id) . '">';
+	$HTML .= freshports_Mail_Icon();
+	$HTML .= '</a>';
 
 	return $HTML;
 }
@@ -1987,18 +1980,6 @@ function freshports_PortsMonitorURL($Category, $Port) {
 
 
 
-function freshports_MessageIDConvertOldToNew($message_id) {
-	# Any cvs-all message before 2003-02-19 did not contain a message_id.
-	# so we gave them one in the @freshports.org domain.
-	# To avoid spam attempts to deliver email to those addresses,
-	# the message ids have been changed to @dev.null.freshports.org
-	# this code looks for @freshports.org and changes it to @dev.null.freshports.org
-	#
-	$message_id = str_replace(MESSAGE_ID_OLD_DOMAIN, MESSAGE_ID_NEW_DOMAIN, $message_id);
-
-	return $message_id;
-}
-
 function freshports_RedirectPermanent($URL) {
 	#
 	# My thanks to nne van Kesteren who posted this solution
@@ -2217,5 +2198,5 @@ function _forDisplay($string, $flags = NULL, $encoding = FRESHPORTS_ENCODING) {
 define('EVERYTHING', 'FreshPorts has everything you want to know about <a href="http://www.freebsd.org/">FreeBSD</a> software, ports, packages,
 applications, whatever term you want to use.');
 
-openlog('FreshPorts', LOG_PID, LOG_SYSLOG);
+openlog('FreshPorts', LOG_PID, LOG_LOCAL3);
 #syslog(LOG_NOTICE, $_SERVER['SCRIPT_URL']);

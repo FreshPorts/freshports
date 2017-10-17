@@ -7,11 +7,11 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/functions.php');
 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../php-rest-service/RestService/Server.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/../php-rest-service/RestService/Client.php');
-use RestService\Server;
+#require_once($_SERVER['DOCUMENT_ROOT'] . '/../php-rest-service/RestService/Server.php');
+#require_once($_SERVER['DOCUMENT_ROOT'] . '/../php-rest-service/RestService/Client.php');
+#use RestService\Server;
 
-phpinfo();
+#phpinfo();
 
 
 
@@ -23,7 +23,7 @@ $url = parse_url($query);
 parse_str($query, $url_parts);
 
 $Debug = isset($url_parts['Debug']);
-$Debug = 1;
+$Debug = 0;
 if ($Debug) {
 #    phpinfo();
     echo '<pre>';
@@ -46,11 +46,13 @@ define('SCRIPT_BADGES', '/--/badges/');
 define('SCRIPT_API',    '/--/api/1/search/');
 
 $items = explode('/', $script);
+if ($Debug) {
 echo '<pre>';
 var_dump($items);
 echo '</pre>';
 
 echo "script = $script";
+}
 
 # change this entire file so it uses php-rest-service.  In the meantime, do this:
 if (strpos($script, SCRIPT_API) === 0) $script = SCRIPT_API;

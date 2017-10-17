@@ -60,6 +60,7 @@ class Port {
 	var $license_restricted;
 	var $manual_package_build;
 	var $license_perms;
+	var $generate_plist;
 
 	// derived or from other tables
 	var $category;
@@ -155,6 +156,8 @@ class Port {
 		$this->manual_package_build = isset($myrow["manual_package_build"]) ? $myrow["manual_package_build"] : null;
 		$this->license_perms        = isset($myrow["license_perms"])        ? $myrow["license_perms"]        : null;
 
+		$this->generate_plist       = isset($myrow["generate_plist"])       ? $myrow["generate_plist"]   : null;
+
 		$this->port               = $myrow["port"];
 		$this->category           = $myrow["category"];
 		$this->needs_refresh      = isset($myrow["needs_refresh"]) ? $myrow["needs_refresh"] : null;
@@ -240,6 +243,7 @@ select ports.id,
        ports.license_restricted,
        ports.manual_package_build,
        ports.license_perms,
+       ports.generate_plist,
        
        to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, 
        ports.categories as categories,
@@ -357,6 +361,7 @@ select ports.id,
                                ports.license_restricted,
                                ports.manual_package_build,
                                ports.license_perms,
+			       ports.generate_plist,
 		               ports.categories as categories,
 			           element.name     as port, 
 			           categories.name  as category,
@@ -494,6 +499,7 @@ SELECT P.*, element.name    as port
         ports.license_restricted,
         ports.manual_package_build,
         ports.license_perms,
+        ports.generate_plist,
         ports.categories      as categories,
         categories.name       as category_looking_at,
         PRIMARY_CATEGORY.name as category,

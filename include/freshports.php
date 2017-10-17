@@ -760,7 +760,7 @@ if (date("M") == 'Nov' && date("j") <= 12) {
 	$HTML .= '	<td nowrap align="center" CLASS="sans" valign="bottom"><a href="http://www.google.ca/search?q=remembrance+day"><img src="/images/poppy.gif" width="50" height="48" border="0" alt="Remember" title="Remember"><br>I remember</a></td>';
 } else {
 	$HTML .= '	<td>';
-	$HTML .= '<div id="followus"><div class="header">Follow us</div><a href="http://news.freshports.org/">Blog</a><br><a href="https://twitter.com/freshports/">Twitter</a><br><br></div>';
+	$HTML .= '<div id="followus"><div class="header">Follow us</div><a href="https://news.freshports.org/">Blog</a><br><a href="https://twitter.com/freshports/">Twitter</a><br><br></div>';
 
 	$HTML .= '</td>';
 	

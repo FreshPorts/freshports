@@ -34,7 +34,7 @@ class PortConfigurePlist {
          installed_file
     FROM generate_plist
    WHERE port_id = " . pg_escape_string($PortID) . "
-   ORDER BY installed_file";
+   ORDER BY id ASC";
 
 		if ($Debug) echo "<pre>$sql</pre>";
 

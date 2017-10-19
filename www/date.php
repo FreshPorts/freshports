@@ -58,14 +58,14 @@
 					'FreeBSD, index, applications, ports');
 
 	function ArchiveFileName($Date, $BranchName = BRANCH_HEAD) {
-		$File = ARCHIVE_DIRECTORY . '/' . $Date . '.daily.' . $BranchName;
+		$File = DAILY_DIRECTORY . '/' . $Date . '.daily.' . $BranchName;
 		
 		return $File;
 	}
 
 	function ArchiveDirectoryCreate($Date) {
 		$SubDir      = date('Y/m', strtotime($Date));
-		$DirToCreate = ARCHIVE_DIRECTORY . '/' . $SubDir;
+		$DirToCreate = DAILY_DIRECTORY . '/' . $SubDir;
 		if (!file_exists($DirToCreate)) {
 			$old = umask(0);
 			mkdir($DirToCreate, 0770, true);

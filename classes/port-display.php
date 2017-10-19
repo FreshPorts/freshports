@@ -520,9 +520,9 @@ class port_display {
 		   $HTML .= ' <b>:</b> ' . $this->freshports_PkgPlistURL($port->category, $port->port);
 	   }
 
-	   if (defined('CONFIGUREPLISTSHOW')  && ($this->ShowConfigurePlistLink || $this->ShowEverything)) {
+#	   if (defined('CONFIGUREPLISTSHOW')  && ($this->ShowConfigurePlistLink || $this->ShowEverything)) {
 		   $HTML .= '<br>' . $this->ShowConfigurePlist($port);
-	   }
+#	   }
 
 		# only show if we're meant to show, and if the port has not been deleted.
 		if ($this->ShowPackageLink || $this->ShowEverything) {

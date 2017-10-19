@@ -88,7 +88,11 @@ if (!defined('PATH_TO_PORTSDIR')) define('PATH_TO_PORTSDIR', '/usr/local/');  //
 
 define('PORTSDIR_PREFIX',  'PORTS-');
 
-define('ARCHIVE_DIRECTORY', $_SERVER['DOCUMENT_ROOT'] . '/../archives');
+define('BASEDIR', '/var/db/freshports');
+
+define('CACHE_DIRECTORY',    BASEDIR  .'/cache');
+define('DAILY_DIRECTORY',    CACHEDIR .'/daily');
+define('SPOOLING_DIRECTORY', CACHEDIR .'/spooling');
 
 define('DELETE_PACKAGE', 'delete-package');
 
@@ -105,5 +109,3 @@ define('NO_WATCH_LIST_ID', 0);
 
 # number of seconds a newsfeed will remain before refreshed.
 define('NEWSFEED_REFRESH_SECONDS', 3600);
-
-define('BASEDIR', '/var/db/freshports');

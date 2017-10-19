@@ -90,9 +90,9 @@ define('PORTSDIR_PREFIX',  'PORTS-');
 
 define('BASEDIR', '/var/db/freshports');
 
-define('CACHE_DIRECTORY',    BASEDIR  .'/cache');
-define('DAILY_DIRECTORY',    CACHEDIR .'/daily');
-define('SPOOLING_DIRECTORY', CACHEDIR .'/spooling');
+define('CACHE_DIRECTORY',    BASEDIR         .'/cache');
+define('DAILY_DIRECTORY',    CACHE_DIRECTORY .'/daily');
+define('SPOOLING_DIRECTORY', CACHE_DIRECTORY .'/spooling');
 
 define('DELETE_PACKAGE', 'delete-package');
 

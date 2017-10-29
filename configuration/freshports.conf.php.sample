@@ -30,14 +30,8 @@
 
 # $HeaderAdsBurst120x160 - 1 = show add
 
-if (substr($_SERVER['REMOTE_ADDR'], 0, 8) == '10.55.0.') {
-	$ShowAds = 0;
-} else {
-	$ShowAds = 1;
-}
-
 $PrimaryAdSource		= 'PHPPGADS'; # one of: BURST GOOGLE PHPPGADS
-$ShowAds				= 1;
+$ShowAds				= 0;
 $BannerAd				= 1;
 $BannerAdUnder			= 1;
 $BurstFrontPage120x160	= 0;

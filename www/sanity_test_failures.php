@@ -144,7 +144,7 @@ since 10 October 2006.
 <?php
 	$UseCache = FALSE;
 
-	DEFINE('CACHEFILE', $_SERVER['DOCUMENT_ROOT'] . '/../caching/cache/sanity_test_failures.html');
+	DEFINE('CACHEFILE', PAGES_DIRECTORY . '/sanity_test_failures.html');
 
 	if ($User->id == '') {
 		if (file_exists(CACHEFILE) && is_readable(CACHEFILE)) {

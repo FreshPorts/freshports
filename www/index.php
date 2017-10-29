@@ -157,7 +157,7 @@ if ($db) {
 
 	$UseCache = FALSE;
 
-	DEFINE('CACHEFILE', $_SERVER['DOCUMENT_ROOT'] . '/../caching/cache/index.html');
+	DEFINE('CACHEFILE', PAGES_DIRECTORY . '/index.html');
 
 	if ($User->id == '') {
 		if (file_exists(CACHEFILE) && is_readable(CACHEFILE)) {

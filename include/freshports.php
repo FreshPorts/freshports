@@ -129,7 +129,7 @@ function PortsFreezeStatus($ColSpan=1) {
 	#
 	$result = '';
 
-	if (file_exists($_SERVER["DOCUMENT_ROOT"] . "/../dynamic/PortsFreezeIsOn")) {
+	if (file_exists(SIGNALS_DIRECTORY . "/PortsFreezeIsOn")) {
 		$result = '
 <tr>' . freshports_PageBannerText('There is a PORTS FREEZE in effect!', $ColSpan) . '</tr>
 <tr><td';
@@ -1775,14 +1775,14 @@ function freshports_SideBar() {
 </table>
 
 ';
-	if (file_exists($_SERVER["DOCUMENT_ROOT"] . "/../dynamic/vuln-latest.html")) {
+	if (file_exists(HTML_DIRECTORY . '/vuln-latest.html')) {
 $HTML .= '<br>
 <table width="' . $ColumnWidth . '" border="1" cellspacing="0" cellpadding="5">
 	<tr>
 		<td bgcolor="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><big><b>Latest Vulnerabilities</b></big></FONT></td>
 	</tr>
 	<tr><td>
-	' . file_get_contents($_SERVER["DOCUMENT_ROOT"] . "/../dynamic/vuln-latest.html") . "\n" . '
+	' . file_get_contents(HTML_DIRECTORY . '/vuln-latest.html') . "\n" . '
 	</td></tr>
 	<tr><td align="center"><p><sup>*</sup> - modified, not new</p><p><a href="/vuxml.php?all">All vulnerabilities</a></p>
 </table>
@@ -1861,9 +1861,9 @@ $HTML .= '
 ' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/graphs2.php",        "NEW Graphs (Javascript)", "Everyone loves statistics!")   . '<br>
 ' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/stats/",            "Traffic", "Traffic to this website");
 
-	if (file_exists($_SERVER["DOCUMENT_ROOT"] . "/../dynamic/stats.html")) {
+	if (file_exists(HTML_DIRECTORY . '/stats.html')) {
 		$HTML .= '<br>
-' . file_get_contents($_SERVER["DOCUMENT_ROOT"] . "/../dynamic/stats.html") . "\n";
+' . file_get_contents(HTML_DIRECTORY . '/stats.html') . "\n";
 	}
 
 	$HTML .= '

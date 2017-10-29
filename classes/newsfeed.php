@@ -41,9 +41,9 @@ function newsfeed($db, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD) {
 
 	# potential for exploitation here, with $Format
 	if ($WatchListID) {
-		define('NEWSFEEDCACHE', $_SERVER['DOCUMENT_ROOT'] . '/../dynamic/caching/news/news.' . $WatchListID . '.'  . $Format . '.' . $BranchName . '.xml');
+		define('NEWSFEEDCACHE', NEWS_DIRECTORY . '/news.' . $WatchListID . '.'  . $Format . '.' . $BranchName . '.xml');
 	} else {
-		define('NEWSFEEDCACHE', $_SERVER['DOCUMENT_ROOT'] . '/../dynamic/caching/news/news.' . $Format . '.' . $BranchName. '.xml');
+		define('NEWSFEEDCACHE', NEWS_DIRECTORY . '/news.' . $Format . '.' . $BranchName. '.xml');
 	}
 
 	$MaxNumberOfPorts = pg_escape_string(MAX_PORTS);

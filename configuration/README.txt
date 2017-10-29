@@ -4,6 +4,8 @@
 # Copyright (c) 1998-2006 DVL Software Limited
 #
 
+Much of what this documents is now handled by the freshports-www port.
+
 This file documents the directory structure that needs to be present
 for a FreshPorts website and scripts.
 
@@ -13,9 +15,9 @@ You need to do this:
 |file system permissions|
 +-----------------------+
 
-touch dynamic/searchlog.txt
-chgrp www dynamic/searchlog.txt
-chmod g+w dynamic/searchlog.txt
+touch     /var/db/freshports/cache/searchlog.txt
+chgrp www /var/db/freshports/cache/searchlog.txt
+chmod g+w /var/db/freshports/cache/searchlog.txt
 
 The following settings are necessary for a phorum:
 
@@ -27,15 +29,14 @@ chmod g+w phorum-3.3.2a
 |Website configuration|
 +---------------------+
 
-mkdir -p dynamic/caching/cache
-mkdir -p dynamic/caching/categories
-mkdir -p dynamic/caching/news
-mkdir -p dynamic/caching/ports
-mkdir -p dynamic/caching/spool
-mkdir -p dynamic/caching/tmp
+mkdir -p /var/db/freshports/cache/html
+mkdir -p /var/db/freshports/cache/news
+mkdir -p /var/db/freshports/cache/ports
+mkdir -p /var/db/freshports/cache/spooling
+mkdir -p /var/db/freshports/tmp
 
-chown -R www:www dynamic
-chmod -R g+w     dynamic
+chown -R www:www /var/db/freshports/cache
+chmod -R g+w     /var/db/freshports/cache
 
 mkdir scripts-log
 

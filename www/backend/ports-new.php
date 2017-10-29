@@ -13,7 +13,7 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
-	DEFINE('NEWSCACHE', $_SERVER['DOCUMENT_ROOT'] . '/../dynamic/caching/cache/ports-new.rss');
+	DEFINE('NEWSCACHE', NEWS_DIRECTORY . '/ports-new.rss');
 
 	if (file_exists(NEWSCACHE) && is_readable(NEWSCACHE)) {
 		readfile(NEWSCACHE);

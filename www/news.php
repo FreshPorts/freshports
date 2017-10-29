@@ -23,7 +23,7 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
-	DEFINE('NEWSCACHE', $_SERVER['DOCUMENT_ROOT'] . '/../dynamic/caching/cache/news.rss');
+	DEFINE('NEWSCACHE', NEWS_DIRECTORY . '/news.rss');
 
 	header('Content-type: text/xml');
 

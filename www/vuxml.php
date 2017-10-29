@@ -11,7 +11,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 	define('VUXMLURL',     'http://www.vuxml.org/freebsd/');
-	define('VUXMLREVISION', $_SERVER['DOCUMENT_ROOT'] . '/../dynamic/vuxml_revision');
+	define('VUXMLREVISION', HTML_DIRECTORY . '/vuxml_revision');
 
 
 	if (IsSet($_REQUEST['vid'])) {

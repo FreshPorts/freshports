@@ -33,10 +33,6 @@
 
 	RewriteEngine On
 
-        RewriteLogLevel 0
-
-	RewriteLog      /usr/websites/log/freshports.org-rewrite.log
-
 	# we are retiring commits.php and using index.php exclusively
 	RewriteRule	^/commits.php$	/  [R=permanent]
 
@@ -80,47 +76,3 @@
 		mod_gzip_item_include mime ^application/.*xml
 		mod_gzip_item_include mime ^application/x-javascript
 	</IfModule>
-
-
-	RewriteEngine On
-	RewriteLog      /usr/websites/log/freshports.org-rewrite.log
-
-    RewriteCond %{REMOTE_ADDR} 87.119.196.31
-    RewriteRule .*   http://news.freshports.org/2006/11/06/my-what-interesting-search-queries/  [R=permanent]
-
-	RewriteEngine On
-	RewriteLog      /usr/websites/log/freshports.org-rewrite.log
-
-	RewriteCond %{HTTP_USER_AGENT} "MSNPTC/1.0"
-	RewriteRule .*	http://news.freshports.org/2007/11/01/msnptc10/
-
-    RewriteEngine On
-	RewriteCond %{REMOTE_ADDR} 91.212.226.143
-    RewriteRule .*   http://dan.langille.org/2010/04/28/how-many-freshports-accounts-are-enough/  [R=permanent]
-
-    RewriteEngine On
-    include /usr/websites/freshports.org/configuration/phorum-blocked-from-registration.inc
-	RewriteCond %{REMOTE_ADDR} 24.103.37.47
-    RewriteRule ^/phorum/(register.php|profile.php)  http://www.freshports.org/?debug=1 [R=permanent]
-
-    RewriteEngine On
-	RewriteCond %{REMOTE_ADDR} 222.186.26.41   [OR]
-	RewriteCond %{REMOTE_ADDR} 91.212.226.136  [OR]
-	RewriteCond %{REMOTE_ADDR} 94.242.214.7    [OR]
-	RewriteCond %{REMOTE_ADDR} 31.184.236.63   [OR]
-	RewriteCond %{REMOTE_ADDR} 193.105.210.41  [OR]
-	RewriteCond %{REMOTE_ADDR} 94.242.214.6    [OR]
-	RewriteCond %{REMOTE_ADDR} 31.184.236.16   [OR]
-	RewriteCond %{REMOTE_ADDR} 72.20.2.246     [OR]
-	RewriteCond %{REMOTE_ADDR} 31.184.238.21   [OR]
-	RewriteCond %{REMOTE_ADDR} 117.41.184.199  [OR]
-	RewriteCond %{REMOTE_ADDR} 61.160.221.27   [OR]
-	RewriteCond %{REMOTE_ADDR} 46.105.123.87   [OR]
-    RewriteCond %{REMOTE_ADDR} 5.9.152.10      [OR]
-    RewriteCond %{REMOTE_ADDR} 137.175.21.172  [OR]
-    RewriteCond %{REMOTE_ADDR} 46.105.99.160 [OR]
-    RewriteCond %{REMOTE_ADDR} 52.25.244.84 [OR]
-    RewriteCond %{REMOTE_ADDR} 208.115.111.72 [OR]
-    RewriteCond %{REMOTE_ADDR} 193.41.185.185
-
-    RewriteRule .*   http://dan.langille.org/2010/04/28/how-many-freshports-accounts-are-enough/?really  [R=permanent]

@@ -1,8 +1,38 @@
-<html>
-<head>
-<title>FreshPorts News Feeds</title>
-</head>
-<body>
+<?php
+	#
+	# $Id: faq.php,v 1.7 2012-07-21 23:23:57 dan Exp $
+	#
+	# Copyright (c) 1998-2006 DVL Software Limited
+	#
+
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
+
+	freshports_ConditionalGet(freshports_LastModified());
+
+	freshports_Start('FAQ',
+					'freshports - new ports, applications',
+					'FreeBSD, index, applications, ports');
+
+	$ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['SERVER_NAME']);
+
+	GLOBAL $FreshPortsName;
+	GLOBAL $FreshPortsSlogan;
+
+?>
+	<?php echo freshports_MainTable(); ?>
+
+	<tr><td valign="top" width="100%">
+
+	<?php echo freshports_MainContentTable(NOBORDER); ?>
+
+
+<tr>
+	<?php echo freshports_PageBannerText("FreshPorts News Feeds"); ?>
+</tr>
+<TR><TD>
 <h1>FreshPorts News Feeds</h1>
 
 <p>
@@ -32,19 +62,17 @@ $Hostname = $_SERVER['SERVER_NAME'];
 </ol>
 
 <p>
-The above feeds are created using <a href="http://www.bitfolge.de/rsscreator-en.html">FeedCreator</a>.  I hope
-to add Atom 1.0 to FeedCreator. 
+The above feeds are created using <a href="https://github.com/flack/UniversalFeedCreator">UniversalFeedCreator</a>.
+</td></tr>
 
-<p>
-NOTE: <strike>The above feeds may be static for a while.  I've not done anything to refresh the cache.  I'm doing that 
-outside the mechanism provided by FeedCreator, which is quite good by the way.</strike>
+<tr><td>
 
-<p>
-15 July 2006: The feeds should now be updated after each commit.  They are no longer static.
-
-<p>
-22 September 2006: The feeds have been moved to /backend/ instead of /news/.
-The latter conflicted with the category of the same name.
+<?php
+echo freshports_ShowFooter();
+?>
+</td></tr>
+</table>
+</table>
 
 </body>
 </html>

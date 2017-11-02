@@ -47,11 +47,12 @@ function DisplayWatchListNewsFeeds($db, $UserID) {
 	}
 
 	$HTML = '';
+	$Protocol = isset($_SERVER['HTTPS']) ? 'https' : 'http';
 
 	if ($NumRows) {
 		for ($i = 0; $i < $NumRows; $i++) {
 			$WatchList = $WatchLists->FetchNth($i);
-			$URL = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . '?id=' . $WatchList->token . '&format=rss0.91';
+			$URL = $Protocol . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . '?id=' . $WatchList->token . '&format=rss0.91';
 			$HTML .= '<a href="' . $URL . '">' . $WatchList->name . '</a><br>';
 		}
 	}

@@ -327,7 +327,7 @@ if ($search) {
 
 	if ($Debug) echo "into search stuff<BR>\n";
 
-$logfile = NEWS_DIRECTORY . '/searchlog.txt';
+$logfile = CACHE_DIRECTORY . '/searchlog.txt';
 
 # Adjust method if required
 if ($method == 'soundex') {

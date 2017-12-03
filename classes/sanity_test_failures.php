@@ -84,7 +84,7 @@ SELECT S.*, STF.message as stf_message
 		$DisplayCommit->SetDaysMarkedAsNew($this->DaysMarkedAsNew);
 		$DisplayCommit->SetUserID($this->UserID);
 		$DisplayCommit->SetWatchListAsk($this->WatchListAsk);
-		$DisplayCommit->SanityTestFailure = true;
+		$DisplayCommit->ShowLinkToSanityTestFailure = false;
 
 		$RetVal = $DisplayCommit->CreateHTML();
 		

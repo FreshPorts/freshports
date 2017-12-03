@@ -11,6 +11,8 @@
 
 class CacheFile extends Cache {
 
+	const CacheCategory = 'ports';
+
 	var $PageSize = 100;
 
 	function CacheFile() {
@@ -32,7 +34,7 @@ class CacheFile extends Cache {
 	function Add($FileName, $PageNum = 1) {
 		$this->_Log("CacheFile: Adding for $FileName");
 
-		$CacheDir = $this->CacheDir . '/ports/' . dirname($FileName);
+		$CacheDir = $this->CacheDir . '/' . CacheFile::CacheCategory . '/' . dirname($FileName);
 		$Key = $this->_FileKey($FileName, $PageNum);
 		 
 		if (!file_exists($CacheDir)) {
@@ -65,7 +67,7 @@ class CacheFile extends Cache {
 	
 	function _FileKey($FileName, $PageNum = 1) {
 		// might want some parameter checking here
-		$Key = "ports/$FileName.PageSize$this->PageSize.PageNum$PageNum.html";
+		$Key = CacheFile::CacheCategory . "/$FileName.PageSize$this->PageSize.PageNum$PageNum.html";
 
 		return $Key;
 	}

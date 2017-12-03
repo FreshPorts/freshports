@@ -58,8 +58,11 @@ class SanityTestFailures {
 		if (IsSet($this->Filter)) {
 			$sql = "select * from SanityTestFailures($this->UserID, '" . pg_escape_string($this->Filter) . "')";
 		} else {
+			# we don't need/use the value for stf_message here but a non-empty value is required
+			# to get port-display to provide a link to the sanity test failure message.
+			# to reduce the data set set, let's just pull back 1.
 			$sql = "set client_encoding = 'ISO-8859-15';
-SELECT S.*, STF.message as stf_message
+SELECT S.*, 1 as stf_message
   FROM SanityTestFailures(" . pg_escape_string($this->UserID) . ") S LEFT OUTER JOIN sanity_test_failures STF
     ON S.commit_log_id = STF.commit_log_id";
 		}

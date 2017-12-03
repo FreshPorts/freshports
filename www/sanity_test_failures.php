@@ -10,9 +10,15 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/cache-general.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/sanity_test_failures.php');
+	require_once('Pager/Pager.php');
+	
+	define('CACHE_NAME', 'sanity_test_failures');
 
 	$message_id = '';
-	if (IsSet($_GET['message_id'])) $message_id = pg_escape_string($_GET['message_id']);
+#	phpinfo();
+	if (IsSet($_REQUEST['message_id'])) $message_id = pg_escape_string($_REQUEST['message_id']);
 
 	#
 	# If they supply a package name, go for it.
@@ -35,6 +41,7 @@
 					# multiple ports have that package name
 					# search for them all and let the users decide which one they want
 					require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/searches.php');
+					/* $dbh used here, but I see $db elsewhere in this file */
 					$Searches = new Searches($dbh);
 					$Redirect = $Searches->GetLink($package, FRESHPORTS_SEARCH_METHOD_Exact, 1);
 					header('Location: ' . $Redirect);
@@ -46,12 +53,12 @@
 					exit;
 			}
 		}
-	}
+	} /* package */
 
 	freshports_Start($FreshPortsSlogan,
 					$FreshPortsName . ' - new ports, applications',
 					'FreeBSD, index, applications, ports');
-$Debug = 0;
+$Debug = 1;
 
 if ($Debug) echo "\$User->id='$User->id'";
 
@@ -75,7 +82,7 @@ function freshports_SummaryForDay($MinusN) {
       echo '   </TR>';
       echo '   </TABLE>';
    }
-}
+} /* summary for day */
 
 echo freshports_MainTable();
 
@@ -142,20 +149,47 @@ since 10 October 2006.
 ?>
 
 <?php
-	$UseCache = FALSE;
-
-	DEFINE('CACHEFILE', PAGES_DIRECTORY . '/sanity_test_failures.html');
-
-	if ($User->id == '') {
-		if (file_exists(CACHEFILE) && is_readable(CACHEFILE)) {
-			$UseCache = TRUE;
+	$PageNumber = 1;
+	if (IsSet($_SERVER['REDIRECT_QUERY_STRING'])) {
+		parse_str($_SERVER['REDIRECT_QUERY_STRING'], $query_parts);
+		if (IsSet($query_parts['page'])  && Is_Numeric($query_parts['page'])) {
+			$PageNumber = intval($query_parts['page']);
+			if ($PageNumber != $query_parts['page'] || $PageNumber < 1) {
+				$PageNumber = 1;
+			}
 		}
 	}
+	
+	if ($message_id == '') {
+	
+	if ($Debug) echo 'we do not have a message_id';
 
-	if ($UseCache) {
-		readfile(CACHEFILE);
-	} else {
-		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/sanity_test_failures.php');
+	$UseCache = FALSE;
+
+	$Cache = new CacheGeneral();
+	$Cache->PageSize = $User->page_size;
+	$result = $Cache->Retrieve(CACHE_NAME, $PageNumber);
+
+#	DEFINE('CACHEFILE', PAGES_DIRECTORY . '/sanity_test_failures.html');
+#
+#	if ($User->id == '') {
+#		if (file_exists(CACHEFILE) && is_readable(CACHEFILE)) {
+#			$UseCache = TRUE;
+#		}
+#	}
+#
+#	if ($UseCache) {
+#		readfile(CACHEFILE);
+#	} else {
+
+	if (!$result)  {
+		if ($Debug) echo "found something from the cache<br>\n";
+		$HTML = $Cache->CacheDataGet();
+
+		echo $HTML;
+ 	} else {
+		if ($Debug) echo "found NOTHING in cache<br>\n";
+		$HTML = '';
 
 		$SanityTestFailures = new SanityTestFailures($db);
 		$SanityTestFailures->SetMaxNumberOfPorts($MaxNumberOfPorts);
@@ -168,19 +202,42 @@ since 10 October 2006.
 		$SanityTestFailures->CreateHTML();
 
 		echo $SanityTestFailures->HTML;
-	}
+
+		$Cache->CacheDataSet($SanityTestFailures->HTML);
+		 if ($message_id != '') {
+		$Cache->Add(CACHE_NAME, $PageNumber);
+	} /* no result */
+	} /* for no message id */
 	if ($message_id != '') {
+		if ($Debug) echo 'we do have a message_id';
 		echo '<tr><td>';
-		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/sanity_test_failure.php');
-		$SanityTestFailure = new SanityTestFailure($db);
-		if ($SanityTestFailure->FetchByMessageID($message_id) != -1) {
-			echo "\n<h2>Sanity Test Results</h2>\n";
-			echo "\n<blockquote>\n<pre>";
-			echo $SanityTestFailure->message;
-			echo "</pre>\n</blockquote>\n";
+ 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/sanity_test_failure.php');
+
+		echo "\n<h2>Sanity Test Results</h2>\n";
+		echo "\n<blockquote>\n<pre>";
+
+		$Cache = new CacheGeneral();
+		$Cache->PageSize = $User->page_size;
+		$FileName = "sanity_test_failure.$message_id";
+		$result = $Cache->Retrieve($FileName, $PageNumber);
+		if (!$result)  {
+			if ($Debug) echo "found something from the cache<br>\n";
+			$HTML = $Cache->CacheDataGet();
+			echo $HTML;
 		} else {
-			
+			if ($Debug) echo "DID NOT find anything in the cache<br>\n";
+			$SanityTestFailure = new SanityTestFailure($db);
+			if ($SanityTestFailure->FetchByMessageID($message_id) != -1) {
+				$HTML = $SanityTestFailure->message;
+				echo $HTML;
+
+			} else {
+				if ($Debug) echo "found nothing in the database regarding sanity test failures for that message_id<br>\n";
+			}
+			$Cache->CacheDataSet($HTML);
+			$Cache->Add($FileName);
 		}
+		echo "</pre>\n</blockquote>\n";
 		echo '</td></tr>';
 	}
 }

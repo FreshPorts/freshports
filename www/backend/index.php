@@ -12,7 +12,7 @@
 
 	freshports_ConditionalGet(freshports_LastModified());
 
-	freshports_Start('FAQ',
+	freshports_Start('FreshPorts News Feeds',
 					'freshports - new ports, applications',
 					'FreeBSD, index, applications, ports');
 

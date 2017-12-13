@@ -1,34 +1,45 @@
 server {
-  listen 80;
-  server_name   fp.local;
-  root          /usr/local/www/freshports.org/www/;
-  index        index.php index.html index.htm;
+  listen 127.1.0.201:80;
 
-  error_log	/var/log/freshports.org-error.log;
-  access_log	/var/log/freshports.org-access.log combined;
+  server_name   freshports.org;
 
-  location / {
-    try_files $uri $uri/ @missing;
-  }
+  include "/usr/local/etc/freshports/virtualhost-common.conf";
 
-  location ~ \.php$ {
-    fastcgi_split_path_info ^(.+\.php)(/.+)$;
-    fastcgi_pass unix:/var/run/php-fpm.sock;
-    fastcgi_index index.php;
-    fastcgi_param SCRIPT_FILENAME $request_filename;
-    include fastcgi_params;
-  }
-
-  location @missing {
-    rewrite ^ /--/index.php break;
-
-    fastcgi_split_path_info ^(.+\.php)(/.+)$;
-    fastcgi_pass unix:/var/run/php-fpm.sock;
-    fastcgi_index index.php;
-    fastcgi_param SCRIPT_FILENAME $request_filename;
-    include fastcgi_params;
-  }
-
+  return 301 https://$server_name$request_uri;
 }
 
+server {
+  listen 127.1.0.201:80;
+
+  server_name   www.freshports.org;
+
+  include "/usr/local/etc/freshports/virtualhost-common.conf";
+
+  return 301 https://$server_name$request_uri;
+}
+
+server {
+  listen 127.1.0.201:443 ssl http2;
+  
+  server_name   freshports.org;
+
+  include "/usr/local/etc/freshports/virtualhost-common.conf";
+
+  ssl_certificate     /usr/local/etc/ssl/freshports.org.fullchain.cer;
+  ssl_certificate_key /usr/local/etc/ssl/freshports.org.key;
+
+  return 301 https://www.$server_name$request_uri;
+}
+
+server {
+  listen 127.1.0.201:443 ssl http2;
+  
+  server_name   www.freshports.org;
+
+  include "/usr/local/etc/freshports/virtualhost-common.conf";
+  include "/usr/local/etc/freshports/virtualhost-common-ssl.conf";
+
+  ssl_certificate     /usr/local/etc/ssl/freshports.org.fullchain.cer;
+  ssl_certificate_key /usr/local/etc/ssl/freshports.org.key;
+}
 

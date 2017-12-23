@@ -10,43 +10,23 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/cache-general.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/sanity_test_failure.php');  # for fetching the message for one commit
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/sanity_test_failures.php');
+	require_once('Pager/Pager.php');
+	
 
 	$message_id = '';
-	if (IsSet($_GET['message_id'])) $message_id = pg_escape_string($_GET['message_id']);
-
-	#
-	# If they supply a package name, go for it.
-	#
-	if (IsSet($_REQUEST['package'])) {
-		$package = pg_escape_string($_REQUEST['package']);
-		if ($package != '') {
-			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/packages.php');
-
-			$Packages = new Packages($db);
-
-			$CategoryPort = $Packages->GetCategoryPortFromPackageName($package);
-			switch ($CategoryPort) {
-				case "0":
-					# no such port found
-					header('Location: /package.php?package=' . $package . '&notfound');
-					exit;
-
-				case "-1":
-					# multiple ports have that package name
-					# search for them all and let the users decide which one they want
-					require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/searches.php');
-					$Searches = new Searches($dbh);
-					$Redirect = $Searches->GetLink($package, FRESHPORTS_SEARCH_METHOD_Exact, 1);
-					header('Location: ' . $Redirect);
-					exit;
-
-				default:
-					# one port found with that name, show that page.
-					header('Location: /' . $CategoryPort . '/');
-					exit;
-			}
-		}
+	if (IsSet($_REQUEST['message_id'])) {
+		$message_id = pg_escape_string($_REQUEST['message_id']);
+		# avoid path manipulation e.g. ../../
+		# this will come into play when we fetch / save the cached file
+		$message_id = filter_var($message_id, FILTER_SANITIZE_EMAIL);
+		define('CACHE_NAME', "sanity_test_failures.$message_id" );
+	} else {
+		define('CACHE_NAME', 'sanity_test_failures');
 	}
+
 
 	freshports_Start($FreshPortsSlogan,
 					$FreshPortsName . ' - new ports, applications',
@@ -75,7 +55,7 @@ function freshports_SummaryForDay($MinusN) {
       echo '   </TR>';
       echo '   </TABLE>';
    }
-}
+} /* summary for day */
 
 echo freshports_MainTable();
 
@@ -142,47 +122,65 @@ since 10 October 2006.
 ?>
 
 <?php
-	$UseCache = FALSE;
-
-	DEFINE('CACHEFILE', PAGES_DIRECTORY . '/sanity_test_failures.html');
-
-	if ($User->id == '') {
-		if (file_exists(CACHEFILE) && is_readable(CACHEFILE)) {
-			$UseCache = TRUE;
+	$PageNumber = 1;
+	if (IsSet($_SERVER['REDIRECT_QUERY_STRING'])) {
+		parse_str($_SERVER['REDIRECT_QUERY_STRING'], $query_parts);
+		if (IsSet($query_parts['page'])  && Is_Numeric($query_parts['page'])) {
+			$PageNumber = intval($query_parts['page']);
+			if ($PageNumber != $query_parts['page'] || $PageNumber < 1) {
+				$PageNumber = 1;
+			}
 		}
 	}
+	
+	$UseCache = FALSE;
 
-	if ($UseCache) {
-		readfile(CACHEFILE);
-	} else {
-		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/sanity_test_failures.php');
+	$Cache = new CacheGeneral();
+	$Cache->PageSize = $User->page_size;
+	$result = $Cache->Retrieve(CACHE_NAME, $PageNumber);
+
+	if (!$result)  {
+		if ($Debug) echo "found something from the cache<br>\n";
+		$HTML = $Cache->CacheDataGet();
+
+		echo $HTML;
+ 	} else {
+		if ($Debug) echo "found NOTHING in cache<br>\n";
+		$HTML = '';
 
 		$SanityTestFailures = new SanityTestFailures($db);
 		$SanityTestFailures->SetMaxNumberOfPorts($MaxNumberOfPorts);
 		$SanityTestFailures->SetDaysMarkedAsNew ($DaysMarkedAsNew);
 		$SanityTestFailures->SetUserID($User->id);
 		$SanityTestFailures->SetWatchListAsk($User->watch_list_add_remove);
+
 		if ($message_id != '') {
 			$SanityTestFailures->SetMessageID($message_id);
 		}
 		$SanityTestFailures->CreateHTML();
+		$HTML .= $SanityTestFailures->HTML;
 
-		echo $SanityTestFailures->HTML;
-	}
-	if ($message_id != '') {
-		echo '<tr><td>';
-		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/sanity_test_failure.php');
-		$SanityTestFailure = new SanityTestFailure($db);
-		if ($SanityTestFailure->FetchByMessageID($message_id) != -1) {
-			echo "\n<h2>Sanity Test Results</h2>\n";
-			echo "\n<blockquote>\n<pre>";
-			echo $SanityTestFailure->message;
-			echo "</pre>\n</blockquote>\n";
-		} else {
-			
+		if ($message_id != '') {
+			# when displaying for one commit, we need to pull the sanity test message out and display it.
+			# when displaying all sanity test failures, we do not display the failure messages, but instead, show a list
+			# commits, each with a link to show the message.
+
+			# note also, the object we create below is singular, whereas the object we created above is plural.
+			$HTML .= '<tr><td>';
+			$SanityTestFailure = new SanityTestFailure($db);
+			if ($SanityTestFailure->FetchByMessageID($message_id) != -1) {
+				$HTML .= "\n<h2>Sanity Test Results</h2>\n";
+				$HTML .= "\n<blockquote>\n<pre>";
+				$HTML .=  $SanityTestFailure->message;
+				$HTML .= "</pre>\n</blockquote>\n";
+			}
+			$HTML .= '</td></tr>';
 		}
-		echo '</td></tr>';
-	}
+
+		echo $HTML;
+		$Cache->CacheDataSet($HTML);
+		$Cache->Add(CACHE_NAME, $PageNumber);
+	} /* no result */
 }
 
 ?>

@@ -12,7 +12,7 @@
 
 	freshports_ConditionalGet(freshports_LastModified());
 
-	freshports_Start('FAQ',
+	freshports_Start('FreshPorts News Feeds',
 					'freshports - new ports, applications',
 					'FreeBSD, index, applications, ports');
 
@@ -32,7 +32,7 @@
 <tr>
 	<?php echo freshports_PageBannerText("FreshPorts News Feeds"); ?>
 </tr>
-<TR><TD>
+<TR><TD valign="top" width="100%">
 <h1>FreshPorts News Feeds</h1>
 
 <p>
@@ -63,16 +63,19 @@ $Hostname = $_SERVER['SERVER_NAME'];
 
 <p>
 The above feeds are created using <a href="https://github.com/flack/UniversalFeedCreator">UniversalFeedCreator</a>.
-</td></tr>
-
-<tr><td>
+</table>
+</TD>
+  <TD VALIGN="top" WIDTH="*" ALIGN="center">
+  <?
+  echo freshports_SideBar();
+  ?>
+  </td>
+</TR>
+</table>
 
 <?php
 echo freshports_ShowFooter();
 ?>
-</td></tr>
-</table>
-</table>
 
 </body>
 </html>

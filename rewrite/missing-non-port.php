@@ -21,8 +21,8 @@ function freshports_NonPortDescription($db, $element_record) {
 	freshports_ConditionalGet(freshports_LastModified());
 
 	header("HTTP/1.1 200 OK");
-	$Title    = preg_replace('|^/?ports/|', '', $element_record->element_pathname);
-	$FileName = preg_replace('|^/?ports/|', '', $element_record->element_pathname);
+	$Title    = preg_replace('|^/?ports/head/|', '', $element_record->element_pathname);
+	$FileName = preg_replace('|^/?ports/head/|', '', $element_record->element_pathname);
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 

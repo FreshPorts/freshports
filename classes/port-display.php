@@ -127,7 +127,7 @@ class port_display {
 		$this->ShowPackageLink         = false;
 		$this->ShowPortCreationDate    = false;
 		$this->ShowPortsMonLink        = false;
-		$this->ShowConfigurePlistLink  = false;
+		$this->ShowConfigurePlist      = false;
 		$this->ShowShortDescription    = false;
 		$this->ShowWatchListCount      = false;
 		$this->ShowWatchListStatus     = false;
@@ -149,7 +149,6 @@ class port_display {
 		$this->ShowMaintainedBy        = true;
 		$this->ShowPortCreationDate    = true;
 		$this->ShowPortsMonLink        = true;
-		$this->ShowConfigurePlistLink  = true;
 		$this->ShowPackageLink         = true;
 		$this->ShowShortDescription    = true;
 		$this->ShowWatchListStatus     = true;
@@ -471,7 +470,7 @@ class port_display {
 		   $HTML .= ' <b>:</b> ' . freshports_PortsMonitorURL($port->category, $port->port);
 	   }
 
-	   if (defined('CONFIGUREPLISTSHOW')  && ($this->ShowConfigurePlistLink || $this->ShowEverything)) {
+	   if (defined('CONFIGUREPLISTSHOW')  && ($this->ShowConfigurePlist || $this->ShowEverything)) {
 		   $HTML .= '<br>' . $this->ShowConfigurePlist();
 	   }
 

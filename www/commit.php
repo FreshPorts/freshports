@@ -233,7 +233,7 @@ ORDER BY port, element_pathname";
 			$DisplayCommit->Debug = $Debug;
 			$DisplayCommit->SetShowAllPorts(true);
 			$DisplayCommit->SetShowEntireCommit(true);
-			$DisplayCommit->SanityTestFailure = true;
+			$DisplayCommit->ShowLinkToSanityTestFailure = true;
 			$RetVal = $DisplayCommit->CreateHTML();
 	
 			echo $DisplayCommit->HTML;

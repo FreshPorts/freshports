@@ -28,12 +28,6 @@ echo "
 	echo '</TABLE>';
 }
 
-  if ($BannerAd) {
-    echo "\n<CENTER>\n";
-    echo Ad_728x90PhorumTop();
-    echo "</CENTER>\n\n";
-    }
-
 ?>
 
 

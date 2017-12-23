@@ -176,7 +176,7 @@ if ($db) {
 		$LatestCommits->FetchLimit(date('Y-m-d'), isset($User) ? $User->id : null, 100);
 		
 		$DisplayCommit = new DisplayCommit($db, $LatestCommits->LocalResult);
-		$DisplayCommit->SanityTestFailure = true;
+		$DisplayCommit->ShowLinkToSanityTestFailure = true;
 		$RetVal = $DisplayCommit->CreateHTML();
 
 		echo $DisplayCommit->HTML;

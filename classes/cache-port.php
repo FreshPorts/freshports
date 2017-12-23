@@ -16,6 +16,8 @@ define('CACHE_PORT_DETAIL',  'Detail');
 
 class CachePort extends Cache {
 
+	const CacheCategory = 'ports';
+
 	var $PageSize = 100;
 
 	function CachePort() {
@@ -37,7 +39,7 @@ class CachePort extends Cache {
 	function AddPort($Category, $Port, $CacheType = CACHE_PORT_COMMITS, $PageNum = 1, $Branch = BRANCH_HEAD) {
 		$this->_Log("CachePort: Adding for $Category/$Port");
 
-		$CacheDir = $this->CacheDir . '/ports/' . $Category . '/' . $Port;
+		$CacheDir = $this->CacheDir . '/' . CachePort::CacheCategory . '/' . $Category . '/' . $Port;
 		$Key = $this->_PortKey($Category, $Port, $CacheType, $PageNum, $Branch);
 		 
 		if (!file_exists($CacheDir)) {
@@ -70,7 +72,7 @@ class CachePort extends Cache {
 
 	function _PortKey($Category, $Port, $CacheType, $PageNum = 1, $Branch = BRANCH_HEAD) {
 		// might want some parameter checking here
-		$Key = "ports/$Category/$Port/$CacheType.$Branch.PageSize$this->PageSize.PageNum$PageNum.html";
+		$Key = CachePort::CacheCategory . "/$Category/$Port/$CacheType.$Branch.PageSize$this->PageSize.PageNum$PageNum.html";
 
 		return $Key;
 	}

@@ -148,6 +148,18 @@ function PortsFreezeStatus($ColSpan=1) {
 }
 
 
+function freshports_strip_port_suffix($PortName) {
+	# a dependency might look like:
+	# devel/py-setuptools@py27
+	# devel/py-setuptools:configure
+	#
+	# but we can't link to that, so we remove the suffix
+
+	$PortName = strtok($PortName, "@:");
+
+	return $PortName;
+}
+
 function freshports_link_to_port($CategoryName, $PortName, $BranchName = BRANCH_HEAD) {
 
 	$HTML = '';
@@ -162,7 +174,7 @@ function freshports_link_to_port($CategoryName, $PortName, $BranchName = BRANCH_
 
 	// create link to port, perhaps on a branch
 	//
-	$HTML .= '<a href="/' . $CategoryName . '/' . $PortName . '/';
+	$HTML .= '<a href="/' . $CategoryName . '/' . freshports_strip_port_suffix($PortName) . '/';
 	if ($BranchName != BRANCH_HEAD) {
 	  $HTML .= '?branch=' . htmlentities($BranchName);
 	}
@@ -178,7 +190,7 @@ function freshports_link_to_port_single($CategoryName, $PortName, $BranchName = 
 	// link to both category and port
 
 	$HTML = '';
-	$HTML .= '<a href="/' . $CategoryName . '/' . $PortName . '/';
+	$HTML .= '<a href="/' . $CategoryName . '/' . freshports_strip_port_suffix($PortName) . '/';
 	if ($BranchName != BRANCH_HEAD) {
 	  $HTML .= '?branch=' . htmlentities($BranchName);
 	}
@@ -193,7 +205,7 @@ function freshports_link_text_to_port_single($text, $CategoryName, $PortName, $B
 	// This differs from freshports_link_to_port_single in the link text is not necessarily the port name.
 
 	$HTML = '';
-	$HTML .= $text . ' : <a href="/' . $CategoryName . '/' . $PortName . '/';
+	$HTML .= $text . ' : <a href="/' . $CategoryName . '/' . freshports_strip_port_suffix($PortName) . '/';
 	if ($BranchName != BRANCH_HEAD) {
 	  $HTML .= '?branch=' . htmlentities($BranchName);
 	}
@@ -1784,7 +1796,10 @@ $HTML .= '<br>
 	<tr><td>
 	' . file_get_contents(HTML_DIRECTORY . '/vuln-latest.html') . "\n" . '
 	</td></tr>
-	<tr><td align="center"><p><sup>*</sup> - modified, not new</p><p><a href="/vuxml.php?all">All vulnerabilities</a></p>
+	<tr><td align="center">
+		<p><sup>*</sup> - modified, not new</p><p><a href="/vuxml.php?all">All vulnerabilities</a></p>
+		<p>Last updated:<br>' . date('Y-m-d H:i:s', filemtime(HTML_DIRECTORY . '/vuln-latest.html')) . '</p>
+	</td></tr>
 </table>
 <br>';
 	} else {

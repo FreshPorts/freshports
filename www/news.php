@@ -5,16 +5,6 @@
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
 
-	$headers = apache_request_headers();
-/*
-	if(isset($headers['If-Modified-Since'])) {
-		syslog(LOG_NOTICE, 'If-Modified-Since=' . $headers['If-Modified-Since']);
-	}
-
-	if(isset($headers['ETag'])) {
-		syslog(LOG_NOTICE, 'ETag=' . $headers['ETag']);
-	}
-*/
 	DEFINE('MAX_PORTS', 20);
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');

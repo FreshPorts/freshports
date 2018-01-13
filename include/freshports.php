@@ -763,7 +763,16 @@ GLOBAL $FreshPortsLogoHeight;
     {
 	  $HTML .= '<img src="/images/notbug.gif" alt="notbug" title="notbug">';
     }
-    
+
+    if (defined('SHOW_IPV6_LOGO') && SHOW_IPV6_LOGO && filter_var($_SERVER["REMOTE_ADDR"], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+    	$HTML .= "
+
+<!-- IPv6-test.com button BEGIN -->
+<a href='http://ipv6-test.com/validate.php?url=referer'><img src='/images/button-ipv6-big.png' alt='ipv6 ready' title='ipv6 ready' border='0' /></a>
+<!-- IPv6-test.com button END -->
+";
+	}
+
     $HTML .= '<span class="amazon">If you buy from Amazon USA, please support us by using <a href="https://www.amazon.com/?tag=thfrdi0c-20" rel="nofollow">this link</a>.</span>';
 	
 	$HTML .= '</td>';

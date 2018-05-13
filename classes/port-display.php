@@ -535,7 +535,7 @@ class port_display {
 				if (IsSet($port->no_package) && $port->no_package != '') {
 					$HTML .= '<p><b>No <a href="/faq.php#package" TITLE="what is a package?">package</a> is available:</b> ' . $port->no_package . '</p>';
 					} else {
-					if ($port->forbidden || $port->broken || $port->ignore || $port->restricted) {
+					if ($port->forbidden || $port->broken || $port->ignore || $port->restricted || !$port->PackageIsAvailable()) {
 						$HTML .= '<p><b>A <a href="/faq.php#package" TITLE="what is a package?">package</a> is not available for ports marked as: Forbidden / Broken / Ignore / Restricted</b></p>';
 					} else {
 						$HTML .= '<b>To add the <a href="/faq.php#package" TITLE="what is a package?">package</a>:</b> <code class="code">pkg install ' . $port->package_name . '</code></p>';

@@ -266,10 +266,17 @@ create user  reading with password 'Bifrost1718';
 
 alter group reading add user reading;
 
-grant select                         on report_subscriptions           to group reading;
-grant select                         on users                          to group reading;
-
-
+GRANT SELECT                         ON commit_log                     TO GROUP reading;
+GRANT SELECT                         ON commit_log_branches            TO GROUP reading;
+GRANT SELECT                         ON commit_log_ports               TO GROUP reading;
+GRANT SELECT                         ON element                        TO GROUP reading;
+GRANT SELECT                         ON ports                          TO GROUP reading;
+GRANT SELECT                         ON ports_active                   TO GROUP reading;
+GRANT SELECT                         ON ports_categories               TO GROUP reading;
+GRANT SELECT                         ON ports_vulnerable               TO GROUP reading;
+GRANT SELECT                         ON report_subscriptions           TO GROUP reading;
+GRANT SELECT                         ON system_branch                  TO GROUP reading;
+GRANT SELECT                         ON users                          TO GROUP reading;
 
 --
 -- For statistics gathering

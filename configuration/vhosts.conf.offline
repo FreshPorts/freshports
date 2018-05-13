@@ -6,8 +6,8 @@
 	ServerName      www.freshports.org
     ServerAlias	    freshports.org
 
-	ErrorLog        /usr/websites/log/dev.freshports.org-error.log
-	CustomLog       /usr/websites/log/dev.freshports.org-access.log combined
+	ErrorLog        /var/log/nginx/log/dev.freshports.org-error.log
+	CustomLog       /var/log/nginx/log/dev.freshports.org-access.log combined
 
 	ErrorDocument   404 /index.php
 
@@ -20,8 +20,8 @@
 	ServerName      www.freshports.org
     ServerAlias	    freshports.org
 
-	ErrorLog        /usr/websites/log/dev.freshports.org-error.log
-	CustomLog       /usr/websites/log/dev.freshports.org-access.log combined
+	ErrorLog        /var/log/nginx/log/dev.freshports.org-error.log
+	CustomLog       /var/log/nginx/log/dev.freshports.org-access.log combined
 
 	ErrorDocument   404 /index.php
 
@@ -36,8 +36,8 @@
 
 	DocumentRoot    /usr/local/www/freshports.org/www-offline
 
-  ErrorLog        /usr/websites/log/freshports.org-error.log
-  CustomLog       /usr/websites/log/freshports.org-access.log combined
+  ErrorLog        /var/log/nginx/log/freshports.org-error.log
+  CustomLog       /var/log/nginx/log/freshports.org-access.log combined
 
 	ErrorDocument   404 /index.php
 
@@ -54,7 +54,7 @@
          nokeepalive ssl-unclean-shutdown \
          downgrade-1.0 force-response-1.0
 
-  CustomLog "/usr/websites/log/freshports.org-ssl_request.log" \
+  CustomLog "/var/log/nginx/log/freshports.org-ssl_request.log" \
           "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
 
 </VirtualHost>                                  

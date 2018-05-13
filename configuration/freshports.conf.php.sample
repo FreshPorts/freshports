@@ -30,14 +30,8 @@
 
 # $HeaderAdsBurst120x160 - 1 = show add
 
-if (substr($_SERVER['REMOTE_ADDR'], 0, 8) == '10.55.0.') {
-	$ShowAds = 0;
-} else {
-	$ShowAds = 1;
-}
-
 $PrimaryAdSource		= 'PHPPGADS'; # one of: BURST GOOGLE PHPPGADS
-$ShowAds				= 1;
+$ShowAds				= 0;
 $BannerAd				= 1;
 $BannerAdUnder			= 1;
 $BurstFrontPage120x160	= 0;
@@ -66,4 +60,5 @@ define('WRAPCOMMITSATCOLUMN', 80);	# when we wrap long lines, where do we start?
 
 #define('FRESHPORTS_LOG_CACHE_ACTIVITY', 1);
 
-define('SHOW_ANIMATED_BUG', false);
+define('SHOW_ANIMATED_BUG', true);
+define('SHOW_IPV6_LOGO',    true);

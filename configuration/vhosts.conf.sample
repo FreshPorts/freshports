@@ -65,8 +65,8 @@
   SSLEngine on
   SSLCipherSuite ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:-SSLv2:+EXP:+eNULL
 
-  SSLCertificateFile    /usr/local/etc/ssl/www.freshports.org.crt
-  SSLCertificateKeyFile /usr/local/etc/ssl/www.freshports.org.nopassword.key
+  SSLCertificateFile    /usr/local/etc/ssl/www.freshports.org.fullchain.cer
+  SSLCertificateKeyFile /usr/local/etc/ssl/www.freshports.org.key
 
   SSLCertificateChainFile /usr/local/etc/ssl/sub.class2.server.ca.pem
   SSLCACertificateFile    /usr/local/etc/ssl/ca.pem
@@ -92,8 +92,8 @@
   SSLEngine on
   SSLCipherSuite ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:-SSLv2:+EXP:+eNULL
 
-  SSLCertificateFile    /usr/local/etc/ssl/www.freshports.org.crt
-  SSLCertificateKeyFile /usr/local/etc/ssl/www.freshports.org.nopassword.key
+  SSLCertificateFile    /usr/local/etc/ssl/www.freshports.org.fullchain.cer
+  SSLCertificateKeyFile /usr/local/etc/ssl/www.freshports.org.key
 
   SSLCertificateChainFile /usr/local/etc/ssl/sub.class2.server.ca.pem
   SSLCACertificateFile    /usr/local/etc/ssl/ca.pem

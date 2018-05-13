@@ -17,7 +17,7 @@ $Statistics = new PageLoadDetail();
 # These are the default values
 
 $Debug					= 0;
-$ShowAds				= 1;
+$ShowAds				= 0;
 $BannerAd				= 1;
 $BannerAdUnder			= 1;
 $BurstFrontPage120x160	= 1;

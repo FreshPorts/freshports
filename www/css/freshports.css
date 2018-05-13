@@ -5,6 +5,10 @@ BODY, TD, TR, P, UL, OL, LI, INPUT, SELECT, DL, DD, DT, FONT
 
 CODE.code { color: #461b7e}
 PRE.code {  color: #461b7e}
+LI.configure {  color: #461b7e;     display: block;
+    font-family: monospace;}
+span#configureplist-Extra {  color: #461b7e;
+    font-family: monospace;}
 BLOCKQUOTE.code { color: #461b7e}
 TD.sans { font-size: smaller; }
 P.white { color: white; }

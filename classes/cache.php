@@ -5,9 +5,6 @@
 	# Copyright (c) 2006 DVL Software Limited
 	#
 
-define('CACHING_LOCATION',  BASEDIR . '/cache');
-define('SPOOLING_LOCATION', BASEDIR . '/cache/spooling');
-
 // base class for caching
 // Supplies methods for adding, removing, and retrieving.
 //
@@ -19,7 +16,7 @@ class Cache {
 	var $CacheDir;
 	var $SpoolDir;
 
-	function Cache($CacheDir = CACHING_LOCATION, $SpoolDir = SPOOLING_LOCATION) {
+	function Cache($CacheDir = CACHE_DIRECTORY, $SpoolDir = SPOOLING_DIRECTORY) {
 		$this->CacheDir = $CacheDir;
 		$this->SpoolDir = $SpoolDir;
 	}

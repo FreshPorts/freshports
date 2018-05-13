@@ -15,63 +15,56 @@
 					'FreeBSD, index, applications, ports');
 
 	if (!eregi(".*@FreeBSD.org", $User->email)) {
-		echo 'Why are you here?';
-		exit;
-   }
+		# nothing yet
+	} else {
+		if (IsSet($_POST["subscribe"]) && $_POST["subscribe"] && !empty($visitor)) {
+			# if not an email address
+			if (strrpos($_POST["email"], '@') === false) {
+				$committer = pg_escape_string($_POST["email"]);
+		    		$sql = "insert into committer_notify (user_id, committer, status)
+			    			values ($User->id, '$committer', 'A')";
 
-	if (IsSet($_POST["subscribe"]) && $_POST["subscribe"] && !empty($visitor)) {
-	    # if not an email address
-	    if (strrpos($_POST["email"], '@') === false) {
-    		$committer = pg_escape_string($_POST["email"]);
-    		$sql = "insert into committer_notify (user_id, committer, status)
-	    			values ($User->id, '$committer', 'A')";
+				if ($Debug) echo "sql=$sql<br>\n";
 
-    		if ($Debug) {
-	    		echo "sql=$sql<br>\n";
-            }
+				$result = pg_exec($db, $sql) or die("insert query failed " . pg_errormessage());
 
-    		$result = pg_exec($db, $sql) or die("insert query failed " . pg_errormessage());
-
-	    	if (!$result) {
-	        	die("determine committer subscribe failed " . pg_errormessage());
-    		}
-        } else {
-          die("please enter just your login, not your email address");
-        }
-	}
-
-	if (IsSet($_POST["unsubscribe"]) && $_POST["unsubscribe"] && !empty($visitor)) {
-		$committer = pg_escape_string($_POST["email"]);
-		$sql = "delete from committer_notify where user_id = $User->id";
-
-		if ($Debug) {
-			echo "sql=$sql<br>\n";
+			    	if (!$result) {
+		        		die("determine committer subscribe failed " . pg_errormessage());
+	    			}
+			} else {
+				die("please enter just your login, not your email address");
+				}
 		}
 
-		$result = pg_exec($db, $sql) or die("insert query failed " . pg_errormessage());
+		if (IsSet($_POST["unsubscribe"]) && $_POST["unsubscribe"] && !empty($visitor)) {
+			$committer = pg_escape_string($_POST["email"]);
+			$sql = "delete from committer_notify where user_id = $User->id";
 
-		if (!$result) {
-			die("determine committer unsubscribe failed " . pg_errormessage());
-		}
+			if ($Debug) echo "sql=$sql<br>\n";
 
-		Unset($committer);
-	}
+			$result = pg_exec($db, $sql) or die("insert query failed " . pg_errormessage());
+
+			if (!$result) {
+				die("determine committer unsubscribe failed " . pg_errormessage());
+				}
+
+			Unset($committer);
+			}
 
 
-	if (IsSet($_POST["update"]) && $_POST["update"] && !empty($visitor)) {
-		$committer = pg_escape_string($_POST["email"]);
-		$sql = "update committer_notify 
-                   set committer = '$committer'
-                 where user_id   = $User->id";
+		if (IsSet($_POST["update"]) && $_POST["update"] && !empty($visitor)) {
+			$committer = pg_escape_string($_POST["email"]);
+			$sql = "update committer_notify 
+				set committer = '$committer'
+				where user_id   = $User->id";
 
-		if ($Debug) {
-			echo "sql=$sql<br>\n";
-		}
+			if ($Debug) echo "sql=$sql<br>\n";
 
-		$result = pg_exec($db, $sql) or die("insert query failed " . pg_errormessage());
+			$result = pg_exec($db, $sql) or die("insert query failed " . pg_errormessage());
 
-		if (!$result) {
-			die("determine committer subscribe failed " . pg_errormessage());
+			if (!$result) {
+				die("determine committer subscribe failed " . pg_errormessage());
+			}
 		}
 	}
 
@@ -87,6 +80,14 @@
 
 <TR><TD>
 <P>
+<?php
+	if (!eregi(".*@FreeBSD.org", $User->email)) {
+?>
+<p><b><big>This page only works if you are logged in and using a @FreeBSD.org email address.</big></b></p>
+<?php
+	}
+?>
+
 Mistakes happen.  And when they do, they are best corrected quickly.  To that end, FreshPorts
 provides an opt-in service for all FreeBSD committers.  If you subscribe to this service,
 FreshPorts will notify you of any problems it encounters when processing a port change

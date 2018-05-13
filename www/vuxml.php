@@ -11,7 +11,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 	define('VUXMLURL',     'http://www.vuxml.org/freebsd/');
-	define('VUXMLREVISION', $_SERVER['DOCUMENT_ROOT'] . '/../dynamic/vuxml_revision');
+	define('VUXMLREVISION', HTML_DIRECTORY . '/vuxml_revision');
 
 
 	if (IsSet($_REQUEST['vid'])) {
@@ -39,6 +39,8 @@ This page displays <a href="<?php echo VUXMLURL; ?>">vulnerability information</
 		echo "<blockquote><pre>\n";
 		require_once(VUXMLREVISION);
 		echo "</pre></blockquote>\n";
+	} else {
+		echo '<p><b> * * * We have no information on the latest commit to <a href="/security/vuxml/vuln.xml">vuln.xml</a>. This should never happen. * * * </b></p>';
 	}
 
 	if (!IsSet($_REQUEST['list'])) {

@@ -15,22 +15,22 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/Element/FeedDate.php'); 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/Element/FeedHtmlField.php'); 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/Element/HtmlDescribable.php'); 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/Element/FeedImage.php'); 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/Element/FeedItem.php'); 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/Creator/FeedCreator.php'); 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/Creator/AtomCreator03.php'); 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/Creator/HTMLCreator.php'); 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/Creator/JSCreator.php'); 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/Creator/MBOXCreator.php'); 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/Creator/OPMLCreator.php'); 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/Creator/PIECreator01.php'); 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/Creator/RSSCreator091.php'); 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/Creator/RSSCreator10.php'); 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/Creator/RSSCreator20.php'); 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../feedcreator/lib/UniversalFeedCreator.php'); 
+	require_once('/usr/local/share/UniversalFeedCreator/lib/Element/FeedDate.php'); 
+	require_once('/usr/local/share/UniversalFeedCreator/lib/Element/FeedHtmlField.php'); 
+	require_once('/usr/local/share/UniversalFeedCreator/lib/Element/HtmlDescribable.php'); 
+	require_once('/usr/local/share/UniversalFeedCreator/lib/Element/FeedImage.php'); 
+	require_once('/usr/local/share/UniversalFeedCreator/lib/Element/FeedItem.php'); 
+	require_once('/usr/local/share/UniversalFeedCreator/lib/Creator/FeedCreator.php'); 
+	require_once('/usr/local/share/UniversalFeedCreator/lib/Creator/AtomCreator03.php'); 
+	require_once('/usr/local/share/UniversalFeedCreator/lib/Creator/HTMLCreator.php'); 
+	require_once('/usr/local/share/UniversalFeedCreator/lib/Creator/JSCreator.php'); 
+	require_once('/usr/local/share/UniversalFeedCreator/lib/Creator/MBOXCreator.php'); 
+	require_once('/usr/local/share/UniversalFeedCreator/lib/Creator/OPMLCreator.php'); 
+	require_once('/usr/local/share/UniversalFeedCreator/lib/Creator/PIECreator01.php'); 
+	require_once('/usr/local/share/UniversalFeedCreator/lib/Creator/RSSCreator091.php'); 
+	require_once('/usr/local/share/UniversalFeedCreator/lib/Creator/RSSCreator10.php'); 
+	require_once('/usr/local/share/UniversalFeedCreator/lib/Creator/RSSCreator20.php'); 
+	require_once('/usr/local/share/UniversalFeedCreator/lib/UniversalFeedCreator.php'); 
 	
 function newsfeed($db, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD) {
 
@@ -41,9 +41,9 @@ function newsfeed($db, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD) {
 
 	# potential for exploitation here, with $Format
 	if ($WatchListID) {
-		define('NEWSFEEDCACHE', $_SERVER['DOCUMENT_ROOT'] . '/../dynamic/caching/news/news.' . $WatchListID . '.'  . $Format . '.' . $BranchName . '.xml');
+		define('NEWSFEEDCACHE', NEWS_DIRECTORY . '/news.' . $WatchListID . '.'  . $Format . '.' . $BranchName . '.xml');
 	} else {
-		define('NEWSFEEDCACHE', $_SERVER['DOCUMENT_ROOT'] . '/../dynamic/caching/news/news.' . $Format . '.' . $BranchName. '.xml');
+		define('NEWSFEEDCACHE', NEWS_DIRECTORY . '/news.' . $Format . '.' . $BranchName. '.xml');
 	}
 
 	$MaxNumberOfPorts = pg_escape_string(MAX_PORTS);

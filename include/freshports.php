@@ -129,7 +129,7 @@ function PortsFreezeStatus($ColSpan=1) {
 	#
 	$result = '';
 
-	if (file_exists($_SERVER["DOCUMENT_ROOT"] . "/../dynamic/PortsFreezeIsOn")) {
+	if (file_exists(SIGNALS_DIRECTORY . "/PortsFreezeIsOn")) {
 		$result = '
 <tr>' . freshports_PageBannerText('There is a PORTS FREEZE in effect!', $ColSpan) . '</tr>
 <tr><td';
@@ -148,6 +148,18 @@ function PortsFreezeStatus($ColSpan=1) {
 }
 
 
+function freshports_strip_port_suffix($PortName) {
+	# a dependency might look like:
+	# devel/py-setuptools@py27
+	# devel/py-setuptools:configure
+	#
+	# but we can't link to that, so we remove the suffix
+
+	$PortName = strtok($PortName, "@:");
+
+	return $PortName;
+}
+
 function freshports_link_to_port($CategoryName, $PortName, $BranchName = BRANCH_HEAD) {
 
 	$HTML = '';
@@ -162,7 +174,7 @@ function freshports_link_to_port($CategoryName, $PortName, $BranchName = BRANCH_
 
 	// create link to port, perhaps on a branch
 	//
-	$HTML .= '<a href="/' . $CategoryName . '/' . $PortName . '/';
+	$HTML .= '<a href="/' . $CategoryName . '/' . freshports_strip_port_suffix($PortName) . '/';
 	if ($BranchName != BRANCH_HEAD) {
 	  $HTML .= '?branch=' . htmlentities($BranchName);
 	}
@@ -178,7 +190,7 @@ function freshports_link_to_port_single($CategoryName, $PortName, $BranchName = 
 	// link to both category and port
 
 	$HTML = '';
-	$HTML .= '<a href="/' . $CategoryName . '/' . $PortName . '/';
+	$HTML .= '<a href="/' . $CategoryName . '/' . freshports_strip_port_suffix($PortName) . '/';
 	if ($BranchName != BRANCH_HEAD) {
 	  $HTML .= '?branch=' . htmlentities($BranchName);
 	}
@@ -193,7 +205,7 @@ function freshports_link_text_to_port_single($text, $CategoryName, $PortName, $B
 	// This differs from freshports_link_to_port_single in the link text is not necessarily the port name.
 
 	$HTML = '';
-	$HTML .= $text . ' : <a href="/' . $CategoryName . '/' . $PortName . '/';
+	$HTML .= $text . ' : <a href="/' . $CategoryName . '/' . freshports_strip_port_suffix($PortName) . '/';
 	if ($BranchName != BRANCH_HEAD) {
 	  $HTML .= '?branch=' . htmlentities($BranchName);
 	}
@@ -751,7 +763,16 @@ GLOBAL $FreshPortsLogoHeight;
     {
 	  $HTML .= '<img src="/images/notbug.gif" alt="notbug" title="notbug">';
     }
-    
+
+    if (defined('SHOW_IPV6_LOGO') && SHOW_IPV6_LOGO && filter_var($_SERVER["REMOTE_ADDR"], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+    	$HTML .= "
+
+<!-- IPv6-test.com button BEGIN -->
+<a href='http://ipv6-test.com/validate.php?url=referer'><img src='/images/button-ipv6-big.png' alt='ipv6 ready' title='ipv6 ready' border='0' /></a>
+<!-- IPv6-test.com button END -->
+";
+	}
+
     $HTML .= '<span class="amazon">If you buy from Amazon USA, please support us by using <a href="https://www.amazon.com/?tag=thfrdi0c-20" rel="nofollow">this link</a>.</span>';
 	
 	$HTML .= '</td>';
@@ -760,7 +781,7 @@ if (date("M") == 'Nov' && date("j") <= 12) {
 	$HTML .= '	<td nowrap align="center" CLASS="sans" valign="bottom"><a href="http://www.google.ca/search?q=remembrance+day"><img src="/images/poppy.gif" width="50" height="48" border="0" alt="Remember" title="Remember"><br>I remember</a></td>';
 } else {
 	$HTML .= '	<td>';
-	$HTML .= '<div id="followus"><div class="header">Follow us</div><a href="http://news.freshports.org/">Blog</a><br><a href="https://twitter.com/freshports/">Twitter</a><br><br></div>';
+	$HTML .= '<div id="followus"><div class="header">Follow us</div><a href="https://news.freshports.org/">Blog</a><br><a href="https://twitter.com/freshports/">Twitter</a><br><a href="https://freshports.wordpress.com/">Status page</a><br></div>';
 
 	$HTML .= '</td>';
 	
@@ -1775,16 +1796,19 @@ function freshports_SideBar() {
 </table>
 
 ';
-	if (file_exists($_SERVER["DOCUMENT_ROOT"] . "/../dynamic/vuln-latest.html")) {
+	if (file_exists(HTML_DIRECTORY . '/vuln-latest.html')) {
 $HTML .= '<br>
 <table width="' . $ColumnWidth . '" border="1" cellspacing="0" cellpadding="5">
 	<tr>
 		<td bgcolor="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><big><b>Latest Vulnerabilities</b></big></FONT></td>
 	</tr>
 	<tr><td>
-	' . file_get_contents($_SERVER["DOCUMENT_ROOT"] . "/../dynamic/vuln-latest.html") . "\n" . '
+	' . file_get_contents(HTML_DIRECTORY . '/vuln-latest.html') . "\n" . '
 	</td></tr>
-	<tr><td align="center"><p><sup>*</sup> - modified, not new</p><p><a href="/vuxml.php?all">All vulnerabilities</a></p>
+	<tr><td align="center">
+		<p><sup>*</sup> - modified, not new</p><p><a href="/vuxml.php?all">All vulnerabilities</a></p>
+		<p>Last updated:<br>' . date('Y-m-d H:i:s', filemtime(HTML_DIRECTORY . '/vuln-latest.html')) . '</p>
+	</td></tr>
 </table>
 <br>';
 	} else {
@@ -1861,9 +1885,9 @@ $HTML .= '
 ' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/graphs2.php",        "NEW Graphs (Javascript)", "Everyone loves statistics!")   . '<br>
 ' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/stats/",            "Traffic", "Traffic to this website");
 
-	if (file_exists($_SERVER["DOCUMENT_ROOT"] . "/../dynamic/stats.html")) {
+	if (file_exists(HTML_DIRECTORY . '/stats.html')) {
 		$HTML .= '<br>
-' . file_get_contents($_SERVER["DOCUMENT_ROOT"] . "/../dynamic/stats.html") . "\n";
+' . file_get_contents(HTML_DIRECTORY . '/stats.html') . "\n";
 	}
 
 	$HTML .= '

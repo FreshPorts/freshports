@@ -60,6 +60,7 @@ class Port {
 	var $license_restricted;
 	var $manual_package_build;
 	var $license_perms;
+	var $generate_plist;
 
 	// derived or from other tables
 	var $category;
@@ -154,6 +155,8 @@ class Port {
 		$this->license_restricted  =  isset($myrow["license_restricted"])   ? $myrow["license_restricted"]   : null;
 		$this->manual_package_build = isset($myrow["manual_package_build"]) ? $myrow["manual_package_build"] : null;
 		$this->license_perms        = isset($myrow["license_perms"])        ? $myrow["license_perms"]        : null;
+
+		$this->generate_plist       = isset($myrow["generate_plist"])       ? $myrow["generate_plist"]   : null;
 
 		$this->port               = $myrow["port"];
 		$this->category           = $myrow["category"];

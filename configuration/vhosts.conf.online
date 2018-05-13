@@ -5,8 +5,8 @@
 
 	ServerName      dev.freshports.org
 
-	ErrorLog        /usr/websites/log/dev.freshports.org-error.log
-	CustomLog       /usr/websites/log/dev.freshports.org-access.log combined
+	ErrorLog        /var/log/nginx/log/dev.freshports.org-error.log
+	CustomLog       /var/log/nginx/log/dev.freshports.org-access.log combined
 
     Include         /usr/websites/freshports.org/configuration/virtualhost-common.conf
 </VirtualHost>

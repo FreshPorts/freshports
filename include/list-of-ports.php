@@ -35,7 +35,6 @@ function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeade
 		$HTML .= "<br><center>\n" . Ad_728x90() . "\n</center>\n";
 	}
 
-
 	if ($numrows > 0 && $ShowCategoryHeaders) {
 		$HTML .= '<DL>';
 	}

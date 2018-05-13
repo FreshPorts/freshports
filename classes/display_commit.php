@@ -30,7 +30,7 @@ class DisplayCommit {
 	var $ShowAllPorts     = FALSE;	# by default we show only the first few ports.
 	var $ShowEntireCommit = 0;		# by default we show only the first few lines of the commit message.
 	
-	var $SanityTestFailure = FALSE;
+	var $ShowLinkToSanityTestFailure = FALSE;
 
 	function DisplayCommit($dbh, $result) {
 		$this->dbh    = $dbh;
@@ -60,7 +60,7 @@ class DisplayCommit {
 	function CreateHTML() {
 		GLOBAL	$freshports_CommitMsgMaxNumOfLinesToShow;
 		
-		$Debug = 0;
+		$Debug = $this->Debug;
 
 		if (!$this->result) {
 			syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ': no result set supplied');
@@ -110,6 +110,7 @@ class DisplayCommit {
 			// OK, while we have the log change log, let's put the port details here.
 
 			if ($mycommit->commit_log_id != $PreviousCommit->commit_log_id) {
+				if ($Debug) echo "This commit_log_id is different\n";
 				if (($NumberOfPortsInThisCommit > $MaxNumberPortsToShow) && !$this->ShowAllPorts) {
 					$this->HTML .= '<BR>' . freshports_MorePortsToShow($PreviousCommit->message_id, $NumberOfPortsInThisCommit, $MaxNumberPortsToShow);
 				}
@@ -156,10 +157,10 @@ class DisplayCommit {
 
 				if ($mycommit->EncodingLosses()) {
 						$this->HTML .= '&nbsp;' . freshports_Encoding_Errors();
-					}
+				}
 
-				if ($mycommit->stf_message != '') {
-					$this->HTML .= '&nbsp; ' . freshports_SanityTestFailure_Link($mycommit->message_id);
+				if ($mycommit->stf_message != '' && $this->ShowLinkToSanityTestFailure) {
+					$this->HTML .= '&nbsp;' . freshports_SanityTestFailure_Link($mycommit->message_id);
 				}
 				
 #        			echo '<pre>' . print_r($mycommit, true) . '</pre>';

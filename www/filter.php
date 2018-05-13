@@ -134,7 +134,7 @@ A port is marked as new for 10 days.
 
 	$UseCache = FALSE;
 
-	DEFINE('CACHEFILE', $_SERVER['DOCUMENT_ROOT'] . '/../caching/cache/commits.html');
+	DEFINE('CACHEFILE', PAGES_DIRECTORY . '/commits.html');
 
 	if ($User->id == '') {
 		if (file_exists(CACHEFILE) && is_readable(CACHEFILE)) {

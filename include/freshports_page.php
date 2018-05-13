@@ -10,7 +10,7 @@
 
 class freshports_page extends HTML_Page2 {
 
-	var $_ShowAds           = 1;
+	var $_ShowAds           = 0;
 	var $_BannerAd          = 1;
 	var $_ShowAnnouncements = 0;
 	var $_ShowLogo          = 1;

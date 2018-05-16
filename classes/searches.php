@@ -36,7 +36,7 @@ class Searches {
 return '
 	<FORM ACTION="' . $this->SearchPage . '" NAME="f">
 	Enter Keywords:<BR>
-	<INPUT NAME="query"  TYPE="text" SIZE="8">' . $text . '<INPUT TYPE="submit" VALUE="go" NAME="search">
+	<INPUT NAME="query"  TYPE="text" SIZE="8" TABINDEX=1>' . $text . '<INPUT TYPE="submit" VALUE="go" NAME="search" TABINDEX=2>
 	<INPUT NAME="num"             TYPE="hidden" value="' . FRESHPORTS_SEARCH_DEFAULT_Num             . '">
 	<INPUT NAME="stype"           TYPE="hidden" value="' . FRESHPORTS_SEARCH_DEFAULT_Stype           . '">
 	<INPUT NAME="method"          TYPE="hidden" value="' . FRESHPORTS_SEARCH_DEFAULT_Method          . '">

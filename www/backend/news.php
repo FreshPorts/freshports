@@ -19,7 +19,7 @@
 		$BranchName = BRANCH_HEAD;
 	}
 	if ($BranchName === 'quarterly') {
-		$BranchName = date('Y').'Q'.(floor(date('n')/4)+1);
+		$BranchName = date('Y') . 'Q' . (floor(date('n') / 4) + 1);
 	}
 
 	echo newsfeed($db, strtoupper($format), NO_WATCH_LIST_ID, $BranchName);

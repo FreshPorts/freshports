@@ -1,0 +1,1 @@
+/usr/local/etc/freshports/constants.local.php

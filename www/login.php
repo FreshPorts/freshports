@@ -10,8 +10,16 @@
    require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 
    require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
+   require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
 
    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user.php');
+
+if (defined('NO_LOGIN')) {
+  ob_start();
+  header( 'Location: /' );
+  ob_end_flush();
+  exit;
+}
 
 $Debug = 0;
 

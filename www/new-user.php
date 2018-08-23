@@ -12,6 +12,14 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
+
+	if (defined('NO_LOGIN')) {
+		ob_start();
+		header( 'Location: /' );
+		ob_end_flush();
+		exit;
+	}
 
 	if (IsSet($_REQUEST['origin'])) $origin = $_REQUEST['origin'];
 	if (IsSet($_REQUEST['submit'])) $submit = $_REQUEST['submit'];

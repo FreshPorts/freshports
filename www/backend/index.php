@@ -16,8 +16,6 @@
 					'freshports - new ports, applications',
 					'FreeBSD, index, applications, ports');
 
-	$ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['SERVER_NAME']);
-
 	GLOBAL $FreshPortsName;
 	GLOBAL $FreshPortsSlogan;
 
@@ -45,7 +43,7 @@ We have a number of newsfeeds for your consumption:
 
 $Protocol = isset($_SERVER['HTTPS']) ? 'https' : 'http';
 
-$Hostname = $_SERVER['SERVER_NAME'];
+$Hostname = $_SERVER['HTTP_HOST'];
 
 ?>
 

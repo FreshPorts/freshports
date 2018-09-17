@@ -18,7 +18,7 @@
 	GLOBAL $FreshPortsSlogan;
 	GLOBAL $FreshPortsName;
 
-	$ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['SERVER_NAME']);
+	$ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['HTTP_HOST']);
 
 	$HTML  = '<!DOCTYPE rss PUBLIC "-//Netscape Communications//DTD RSS 0.91//EN"' . "\n";
 	$HTML .= '        "http://my.netscape.com/publish/formats/rss-0.91.dtd">'      . "\n";

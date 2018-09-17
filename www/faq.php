@@ -16,7 +16,7 @@
 					'freshports - new ports, applications',
 					'FreeBSD, index, applications, ports');
 
-	$ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['SERVER_NAME']);
+	$ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['HTTP_HOST']);
 
 	GLOBAL $FreshPortsName;
 	GLOBAL $FreshPortsSlogan;

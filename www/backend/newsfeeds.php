@@ -24,7 +24,7 @@
 	');
 
 	$Protocol = isset($_SERVER['HTTPS']) ? 'https' : 'http';
-	$ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['SERVER_NAME']);
+	$ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['HTTP_HOST']);
 
 	$URL  = "$Protocol://$ServerName/backend/news.php";
 	$HREF = "<A HREF=\"$URL\">$URL</A>";

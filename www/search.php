@@ -132,7 +132,7 @@ function WildCardQuery($stype, $Like, $query) {
 	#
 
 	if ($RejectExternalSearches  && $_SERVER["HTTP_REFERER"] != '') {
-		$pos = strpos($_SERVER["HTTP_REFERER"], $protocol . '://' . $_SERVER["SERVER_NAME"]);
+		$pos = strpos($_SERVER["HTTP_REFERER"], $protocol . '://' . $_SERVER["HTTP_HOST"]);
 		if ($pos === FALSE || $pos != 0) {
 			echo "Ouch, something really nasty is going on.  Error code: UAFC.  Please contact the webmaster with this message.";
 			syslog(LOG_NOTICE, "External search form discovered: $_SERVER[HTTP_REFERER] $_SERVER[REMOTE_ADDR]:$_SERVER[REMOTE_PORT]");

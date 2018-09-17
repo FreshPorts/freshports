@@ -627,6 +627,31 @@ class port_display {
 			$HTML .= "</pre>\n<hr>\n";
 		}
 
+		# if there are conflicts
+		if ($this->ShowEverything && ($port->conflicts || $port->conflicts_build || $port->conflicts_install)) {
+			$HTML .= "<b>Conflicts:</b>\n<ul>";
+
+			if ($port->conflicts) {
+				$HTML .= "<li>CONFLICTS: <pre>";
+				$HTML .= $port->conflicts;
+				$HTML .= "</pre>\n</li>\n";
+			}
+
+			if ($port->conflicts_build) {
+				$HTML .= "<li>CONFLICTS_BUILD: <pre>";
+				$HTML .= $port->conflicts_build;
+				$HTML .= "</pre>\n</li>\n";
+			}
+
+			if ($port->conflicts_install) {
+				$HTML .= "<li>CONFLICTS_BUILD: <pre>";
+				$HTML .= $port->conflicts_build;
+				$HTML .= "</pre>\n</li>\n";
+			}
+
+			$HTML .= "</ul>\n";
+		}
+
 		if ($this->ShowEverything && $port->pkgmessage) {
 			$HTML .= "<b>pkg-message:</b>\n<pre>";
 			$HTML .= $port->pkgmessage;

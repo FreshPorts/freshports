@@ -60,6 +60,9 @@ class Port {
 	var $license_restricted;
 	var $manual_package_build;
 	var $license_perms;
+	var $conflicts;
+	var $conflicts_build;
+	var $conflicts_install;
 	var $generate_plist;
 
 	// derived or from other tables
@@ -155,6 +158,9 @@ class Port {
 		$this->license_restricted  =  isset($myrow["license_restricted"])   ? $myrow["license_restricted"]   : null;
 		$this->manual_package_build = isset($myrow["manual_package_build"]) ? $myrow["manual_package_build"] : null;
 		$this->license_perms        = isset($myrow["license_perms"])        ? $myrow["license_perms"]        : null;
+		$this->conflicts            = isset($myrow["conflicts"])            ? $myrow["conflicts"]            : null;
+		$this->conflicts_build      = isset($myrow["conflicts_build"])      ? $myrow["conflicts_build"]      : null;
+		$this->conflicts_install    = isset($myrow["conflicts_install"])    ? $myrow["conflicts_install"]    : null;
 
 		$this->generate_plist       = isset($myrow["generate_plist"])       ? $myrow["generate_plist"]   : null;
 
@@ -242,7 +248,10 @@ select ports.id,
        ports.distinfo,
        ports.license_restricted,
        ports.manual_package_build,
-       ports.license_perms,
+       ports.license_perms
+       ports.conflicts,
+       ports.conflicts_build,
+       ports.conflicts_install,
        
        to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, 
        ports.categories as categories,
@@ -360,6 +369,9 @@ select ports.id,
                                ports.license_restricted,
                                ports.manual_package_build,
                                ports.license_perms,
+                               ports.conflicts,
+                               ports.conflicts_build,
+                               ports.conflicts_install,
 		               ports.categories as categories,
 			           element.name     as port, 
 			           categories.name  as category,
@@ -497,6 +509,9 @@ SELECT P.*, element.name    as port
         ports.license_restricted,
         ports.manual_package_build,
         ports.license_perms,
+        ports.conflicts,
+        ports.conflicts_build,
+        ports.conflicts_install,
         ports.categories      as categories,
         categories.name       as category_looking_at,
         PRIMARY_CATEGORY.name as category,

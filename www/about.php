@@ -24,7 +24,7 @@
 	<?php echo freshports_MainContentTable(NOBORDER); ?>
 
 <TR>
-	<? echo freshports_PageBannerText("About this site"); ?>
+	<?php echo freshports_PageBannerText("About this site"); ?>
 </TR>
 
 <TR><TD>
@@ -40,12 +40,12 @@ We have a few notes about this website.
 
 </TD></TR>
 
-	<? 
+	<?php 
 	echo freshports_BannerSpace();
 	?>
 
 <TR>
-	<?
+	<?php
 	echo freshports_PageBannerText("What is a port?"); 
 	?>
 </TR>
@@ -66,36 +66,36 @@ we come in.</P>
 
 </TD></TR>
 
-	<? 
+	<?php 
 	echo freshports_BannerSpace();
 	?>
 
 <TR>
-	<?
+	<?php
 	echo freshports_PageBannerText("What is $FreshPortsTitle");
 	?>
 </TR>
 
 <TR><TD>
 
-<P><? echo $FreshPortsTitle; ?> lists the changes made to the ports tree. If you wish, <? echo $FreshPortsTitle; ?> can email you 
+<P><?php echo $FreshPortsTitle; ?> lists the changes made to the ports tree. If you wish, <?php echo $FreshPortsTitle; ?> can email you 
 when your favourite port has been updated.
 </P>
 
 <P>
-<? echo $FreshPortsTitle; ?> is not the place to report errors or request changes.  You should do that on the 
-<A HREF="<? echo MAILTO; ?>:freebsd-ports&#64;freebsd.org">FreeBSD Ports mailing list</A>.  We do not maintain ports.  We do not
+<?php echo $FreshPortsTitle; ?> is not the place to report errors or request changes.  You should do that on the 
+<A HREF="<?php echo MAILTO; ?>:freebsd-ports&#64;freebsd.org">FreeBSD Ports mailing list</A>.  We do not maintain ports.  We do not
 create ports.  We do not fix ports.  We just tell you what others have been doing to the Ports tree.
 </P>
 
 </TD></TR>
 
-	<? 
+	<?php 
 	echo freshports_BannerSpace();
 	?>
 
 <TR>
-	<?
+	<?php
 	echo freshports_PageBannerText("OK, whose bright idea was this?");
 	?>
 </TR>
@@ -114,7 +114,7 @@ About the Authors</A> for details of who else helped.</P>
 </TD>
 
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
   </td>
@@ -126,9 +126,10 @@ About the Authors</A> for details of who else helped.</P>
 	$ShowPoweredBy = 1;
 ?>
 
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<TABLE WIDTH="<?php echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
-<? echo freshports_ShowFooter(); ?>
+<?php echo freshports_ShowFooter(); ?>
+<?php echo phpinfo(); ?>
 </TD></TR>
 </TABLE>
 

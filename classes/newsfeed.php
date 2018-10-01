@@ -178,7 +178,7 @@ LIMIT 30";
 #	echo "<pre>$sql</pre>";
 #	exit;
 
-	$ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['SERVER_NAME']);
+	$ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['HTTP_HOST']);
 	
 	$result = pg_query($db, $sql);
 	while ($myrow = pg_fetch_array($result)) {

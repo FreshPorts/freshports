@@ -49,6 +49,19 @@ class port_display {
 	var $ShowWatchListCount;
 	var $ShowWatchListStatus;
 
+	function htmlConflicts($conflicts) {
+	  $HTML = '';
+
+	  $HTML .= "<ul>\n";
+	  $data = preg_split('/\s+/', $conflicts);
+	  foreach($data as $item) {
+	    $HTML .= '<li>' . $item . "</li>\n";
+	  }
+	  $HTML .= "</ul>\n";
+
+	  return $HTML;	
+	}
+
 	function SetPort($port, $branch = BRANCH_HEAD) {
 	  //
 	  // We could derived branch from element_pathname(port->element_id) but let's try passing in branch explicity.
@@ -625,6 +638,31 @@ class port_display {
 			$HTML .= "<b>USES:</b>\n<pre>";
 			$HTML .= $port->uses;
 			$HTML .= "</pre>\n<hr>\n";
+		}
+
+		# if there are conflicts
+		if ($this->ShowEverything && ($port->conflicts || $port->conflicts_build || $port->conflicts_install)) {
+			$HTML .= "<b>Conflicts:</b>\n<ul>";
+
+			if ($port->conflicts) {
+				$HTML .= "<li>CONFLICTS:";
+				$HTML .= $this->htmlConflicts($port->conflicts);
+				$HTML .= "\n</li>\n";
+			}
+
+			if ($port->conflicts_build) {
+				$HTML .= "<li>CONFLICTS_BUILD:";
+				$HTML .= $this->htmlConflicts($port->conflicts_build);
+				$HTML .= "\n</li>\n";
+			}
+
+			if ($port->conflicts_install) {
+				$HTML .= "<li>CONFLICTS_INSTALL:";
+				$HTML .= $this->htmlConflicts($port->conflicts_install);
+				$HTML .= "\n</li>\n";
+			}
+
+			$HTML .= "</ul>\n";
 		}
 
 		if ($this->ShowEverything && $port->pkgmessage) {

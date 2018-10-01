@@ -110,7 +110,7 @@ if (IsSet($submit)) {
                       " \n" .
                       "Your login id is: " . $myrow["name"] . "\n\n" . 
                       "Your password recovery URL is:\n" .
-                      "http://" . $_SERVER["SERVER_NAME"] . "/password-reset-via-token.php?token=" . $token . "\n" .
+                      "http://" . $_SERVER["HTTP_HOST"] . "/password-reset-via-token.php?token=" . $token . "\n" .
                       "\n" .
                       "the request came from " . $_SERVER["REMOTE_ADDR"] . ':' . $_SERVER["REMOTE_PORT"];
 

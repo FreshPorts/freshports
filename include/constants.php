@@ -115,3 +115,6 @@ define('NO_WATCH_LIST_ID', 0);
 
 # number of seconds a newsfeed will remain before refreshed.
 define('NEWSFEED_REFRESH_SECONDS', 3600);
+
+define('MAINTENANCE_PAGE', 'now-in-maintenance-mode.php');
+define('MAINTENANCE_MODE_RERESH_TIME_SECONDS', 180);

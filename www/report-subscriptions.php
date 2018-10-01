@@ -16,6 +16,10 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
+	if (IN_MAINTENCE_MODE) {
+                header('Location: /' . MAINTENANCE_PAGE, TRUE, 307);
+	}
+
 	$ArticleTitle = 'Report subscriptions';
 
 	freshports_Start(	$ArticleTitle,

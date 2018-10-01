@@ -8,3 +8,22 @@
   # constants which 
 
 #define('PATH_TO_PORTSDIR', '/usr/local/');  // must have a trailing /
+
+#define('NO_LOGIN', false);
+
+# set this to true to display the now-in-maintenance-mode.php page
+# users get redirected there if visit the following pages:
+# * bouncing.php
+# * customize.php
+# * committer-opt-in.php
+# * filter-setup.php
+# * forgotten-password.php
+# * new-user.php
+# * password-reset-via-token.php
+# * pkg_upload.php
+# * port-watch.php
+# * report-subscriptions.php
+# * watch-categories.php
+# * watch-list-maintenance.php
+# * watch-list.php
+define('IN_MAINTENCE_MODE', true);

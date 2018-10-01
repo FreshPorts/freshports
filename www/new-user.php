@@ -5,6 +5,10 @@
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
 
+	if (IN_MAINTENCE_MODE) {
+                header('Location: /' . MAINTENANCE_PAGE, TRUE, 307);
+	}
+
 	# for captcha
 	session_start();
 

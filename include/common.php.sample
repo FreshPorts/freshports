@@ -48,4 +48,3 @@ $FreshPortsLogo				= "/images/freshports.jpg";
 $FreshPortsLogoWidth		= 512;
 $FreshPortsLogoHeight		= 110;
 $FreshPortsSlogan			= "The Place For Ports";
-?>

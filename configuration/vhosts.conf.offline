@@ -1,7 +1,7 @@
 <VirtualHost [2001:470:b8ce::1]:80>
 	ServerAdmin     dan@langille.org
 
-	DocumentRoot    /usr/local/www/freshports.org/www-offline
+	DocumentRoot    /usr/local/www/freshports/www-offline
 
 	ServerName      www.freshports.org
     ServerAlias	    freshports.org
@@ -15,7 +15,7 @@
 <VirtualHost 206.127.23.230:80>
 	ServerAdmin     dan@langille.org
 
-	DocumentRoot    /usr/local/www/freshports.org/www-offline
+	DocumentRoot    /usr/local/www/freshports/www-offline
 
 	ServerName      www.freshports.org
     ServerAlias	    freshports.org
@@ -34,14 +34,14 @@
   ServerName      www.freshports.org
     ServerAlias	    freshports.org
 
-	DocumentRoot    /usr/local/www/freshports.org/www-offline
+	DocumentRoot    /usr/local/www/freshports/www-offline
 
   ErrorLog        /var/log/nginx/log/freshports.org-error.log
   CustomLog       /var/log/nginx/log/freshports.org-access.log combined
 
 	ErrorDocument   404 /index.php
 
-  Include         /usr/local/www/freshports.org/configuration/ssl-configuration.conf
+  Include         /usr/local/www/freshports/configuration/ssl-configuration.conf
 
   <FilesMatch "\.(cgi|shtml|phtml|php)$">
     SSLOptions +StdEnvVars

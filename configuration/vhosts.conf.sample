@@ -17,14 +17,14 @@
 <VirtualHost *>
 	ServerAdmin     dan@langille.org
 
-	DocumentRoot    /usr/local/www/freshports.org/www
+	DocumentRoot    /usr/local/www/freshports/www
 
 	ServerName      www.freshports.org
 
 	ErrorLog        /var/log/freshports.org-error.log
 	CustomLog       /var/log/freshports.org-access.log combined
 
-	Include         /usr/local/www/freshports.org/configuration/virtualhost-common.conf
+	Include         /usr/local/www/freshports/configuration/virtualhost-common.conf
 </VirtualHost>
 
 <VirtualHost 206.127.23.230:80>
@@ -44,12 +44,12 @@
 
 	ServerName      www.freshports.org
 
-	DocumentRoot    /usr/local/www/freshports.org/www
+	DocumentRoot    /usr/local/www/freshports/www
 
 	ErrorLog        /var/log/freshports.org-error.log
 	CustomLog       /var/log/freshports.org-access.log combined
 
-	Include         /usr/local/www/freshports.org/configuration/virtualhost-common.conf
+	Include         /usr/local/www/freshports/configuration/virtualhost-common.conf
 
 </VirtualHost>
 
@@ -80,14 +80,14 @@
 
   ServerName      www.freshports.org
 
-  DocumentRoot    /usr/local/www/freshports.org/www
+  DocumentRoot    /usr/local/www/freshports/www
 
   ErrorLog        /var/log/freshports.org-error.log
   CustomLog       /var/log/freshports.org-access.log combined
 
   RewriteLog      /var/log/freshports.org-rewrite.log
 
-  Include         /usr/local/www/freshports.org/configuration/virtualhost-common.conf
+  Include         /usr/local/www/freshports/configuration/virtualhost-common.conf
 
   SSLEngine on
   SSLCipherSuite ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:-SSLv2:+EXP:+eNULL

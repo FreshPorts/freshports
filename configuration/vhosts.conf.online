@@ -1,13 +1,13 @@
 <VirtualHost 10.55.0.67:80  [2001:470:1f07:b80:204:acff:fea3:703d]:80>
 	ServerAdmin     dan@langille.org
 
-	DocumentRoot    /usr/websites/freshports.org/www
+	DocumentRoot    /usr/local/www/freshports/www
 
 	ServerName      dev.freshports.org
 
 	ErrorLog        /var/log/nginx/log/dev.freshports.org-error.log
 	CustomLog       /var/log/nginx/log/dev.freshports.org-access.log combined
 
-    Include         /usr/websites/freshports.org/configuration/virtualhost-common.conf
+	Include         /usr/local/www/freshports/configuration/virtualhost-common.conf
 </VirtualHost>
 

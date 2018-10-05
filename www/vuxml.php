@@ -188,7 +188,7 @@ SELECT V.vid,
 			
 			$Narrative = trim(strip_tags($Description));
 			$Narrative = utf8_decode($Description);
-			$HTML .= $Narrative . ' <a href="' . VUXMLURL . $VID . '.html">more...</a>';
+			$HTML .= '<b>VuXML ID</b> <span class="code">' . $VID . '</span><br>' . $Narrative . ' <a href="' . VUXMLURL . $VID . '.html">more...</a>';
 			$HTML .= '</td><td align="left" valign="top">';
 
 			foreach ($PortArray as $package) {
@@ -197,7 +197,7 @@ SELECT V.vid,
 			}
 			
 
-			$HTML .= '</td></tr>' . "\n";
+			$HTML .= '<br><a href="vuxml.php?vid=' . $VID . '">more detail</a></td></tr>' . "\n";
 
 			return $HTML;
 		}

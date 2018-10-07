@@ -245,6 +245,7 @@ SELECT ports.id,
 	}
 
 	function getLastModified() {
+		# in this code, we are returning date_added because that is more relevant than commit_date with respect to getLastModified()
 		$sql = "
 SELECT gmt_format(max(CL.date_added)) as last_modified " . $this->_FROM_CLAUSE() . $this->_WHERE_CLAUSE();
 

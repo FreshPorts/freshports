@@ -26,7 +26,7 @@ class Commit {
 	var $path_to_repo;
 	var $branch;
 
-	var $last_modified;
+	var $last_commit_date;
 	
 	var $LocalResult;
 
@@ -50,7 +50,7 @@ class Commit {
 		$this->path_to_repo             = $myrow["path_to_repo"];
 		$this->branch                   = $myrow["branch"];
 
-		$this->last_modified		= $myrow["last_modified"];
+		$this->last_commit_date		= $myrow["last_commit_date"];
 	}
 
 	function FetchNth($N) {
@@ -153,7 +153,7 @@ SELECT CL.id as commit_log_id,
        R.svn_hostname,
        R.path_to_repo,
        encoding_losses,
-       GMT_Format(date_added) as last_modified,
+       GMT_Format(CL.commit_date) as last_commit_date,
        STF.message as stf_message,
        SB.branch_name AS branch
   FROM commit_log CL LEFT OUTER JOIN sanity_test_failures STF ON CL.id         = STF.commit_log_id
@@ -173,12 +173,11 @@ SELECT CL.id as commit_log_id,
 		$Debug = 0;
 
 		$sql = "
-SELECT GMT_Format(date_added) as last_modified
-  FROM ports
- WHERE date_added is not null
-  ORDER BY date_added desc 
+SELECT GMT_Format(CL.commit_date) as last_commit_date
+  FROM commit_log_ports CLP
+  JOIN commit_log       CL on CL.id = CLP.commit_log_id
+ ORDER BY CL.commit_date DESC
   LIMIT 1";
-
 #		echo "sql = '<pre>$sql</pre>'<BR>";
 
 		$result = pg_exec($this->dbh, $sql);

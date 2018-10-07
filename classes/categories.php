@@ -1,4 +1,4 @@
-<?php
+	<?php
 	#
 	# $Id: categories.php,v 1.3 2013-04-07 01:19:59 dan Exp $
 	#
@@ -22,12 +22,12 @@ class Category {
 	}
 	
 	function Populate($myrow) {
-		$this->id				= $myrow["id"];
-		$this->is_primary		= $myrow["is_primary"];
-		$this->element_id		= $myrow["element_id"];
-		$this->name				= $myrow["name"];
-		$this->description		= $myrow["description"];
-		$this->last_modified	= $myrow["last_modified"];
+		$this->id		= $myrow["id"];
+		$this->is_primary	= $myrow["is_primary"];
+		$this->element_id	= $myrow["element_id"];
+		$this->name		= $myrow["name"];
+		$this->description	= $myrow["description"];
+		$this->last_commit_date	= $myrow["last_commit_date"];
 	}
 
 	function FetchByID($id) {
@@ -41,13 +41,13 @@ class Category {
 		# last modified port therein
 		#
 		$sql = '
-SELECT C.*, (SELECT MAX(CL.date_added)
+SELECT C.*, (SELECT MAX(CL.commit_date)
                FROM ports            P,
                     commit_log       CL,
                     ports_categories PC
               WHERE PC.port_id       = P.id
                 AND P.last_commit_id = CL.id
-                AND PC.category_id   = C.id) AS last_modified
+                AND PC.category_id   = C.id) AS last_commit_date
   FROM categories C
  WHERE id = ' . pg_escape_string($this->id);
 
@@ -74,13 +74,13 @@ SELECT C.*, (SELECT MAX(CL.date_added)
 			$this->element_id = $element_id;
 		}
 		$sql = '
-SELECT C.*, (SELECT MAX(CL.date_added)
+SELECT C.*, (SELECT MAX(CL.commit_date)
                FROM ports            P,
                     commit_log       CL,
                     ports_categories PC
               WHERE PC.port_id       = P.id
                 AND P.last_commit_id = CL.id
-                AND PC.category_id   = C.id) AS last_modified
+                AND PC.category_id   = C.id) AS last_commit_date
   FROM categories C
  WHERE C.element_id = ' . pg_escape_string($this->element_id);
 		if ($Debug) echo "sql = '$sql'<BR>";
@@ -109,13 +109,13 @@ SELECT C.*, (SELECT MAX(CL.date_added)
 			unset($this->id);
 		}
 		$sql = "
-SELECT C.*, (SELECT MAX(CL.date_added)
+SELECT C.*, (SELECT MAX(CL.commit_date)
                FROM ports            P,
                     commit_log       CL,
                     ports_categories PC
               WHERE PC.port_id       = P.id
                 AND P.last_commit_id = CL.id
-                AND PC.category_id   = C.id) AS last_modified
+                AND PC.category_id   = C.id) AS last_commit_date
   FROM categories C
  WHERE C.name = '" . pg_escape_string($this->name) . "'";
 

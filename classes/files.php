@@ -99,7 +99,7 @@ class CommitFiles {
 	       NULL::text AS no_cdrom,
 	       NULL::text AS expiration_date,
 	       NULL::text AS is_interactive,
-	       GMT_Format(CL.date_added) AS last_modified,
+	       GMT_Format(CL.commit_date) AS last_commit_date,
                R.svn_hostname,
                R.path_to_repo
 	  FROM commit_log               CL

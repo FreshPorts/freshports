@@ -97,7 +97,13 @@ function freshports_cvsweb_Revision_Link($pathname, $revision_name)
 }
 
 function freshports_svnweb_ChangeSet_Link($revision, $hostname, $path) {
+  # I see $path is not used by this function... I wonder why? -- dvl 2018.10.07
   return '<a href="http://' . htmlentities($hostname) . '/changeset/ports/' . htmlentities($revision) .  '">' . freshports_Subversion_Icon('Revision:' . $revision) . '</a>';
+}
+
+function freshports_svnweb_ChangeSet_Link_Text($revision, $hostname, $path) {
+  # I see $path is not used by this function... I wonder why? -- dvl 2018.10.07
+  return '<a href="http://' . htmlentities($hostname) . '/changeset/ports/' . htmlentities($revision) .  '">' . $revision . '</a>';
 }
 
 function freshports_Search_Maintainer($Maintainer) {

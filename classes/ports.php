@@ -63,6 +63,7 @@ class Port {
 	var $conflicts;
 	var $conflicts_build;
 	var $conflicts_install;
+	var $conflicts_matches;
 	var $generate_plist;
 
 	// derived or from other tables
@@ -72,8 +73,8 @@ class Port {
 	var $updated;		// timestamp of last update
 
 	var $onwatchlist;	// count of how many watch lists is this port on for this user. 
-						// not actually fetched directly by this class.
-						// normally used only if you've specified it in your own SQL.
+				// not actually fetched directly by this class.
+				// normally used only if you've specified it in your own SQL.
 
 	var $vulnerable_current;
 	var $vulnerable_past;
@@ -86,7 +87,8 @@ class Port {
 	var $encoding_losses;
 
 	// taken from commit_log based upon ports.last_commit_id
-	var $last_modified;
+	var $last_commit_date;
+	var $svn_revision;
 
 	// for any vulnerabilities
 	var $VuXML_List;
@@ -100,11 +102,7 @@ class Port {
 	var $path_to_repo;
 	var $element_pathname;
 	
-	// used when searching
-	var $last_commit_date;
-	
-
-	function Port($dbh) {
+	function __construct($dbh) {
 		$this->dbh = $dbh;
 		unset($this->VuXML_List);
 	}
@@ -170,7 +168,7 @@ class Port {
 		$this->updated            = isset($myrow["updated"]) ?$myrow["updated"] : null;
 
 		$this->onwatchlist        = $myrow["onwatchlist"];
-		$this->last_modified      = isset($myrow["last_modified"]) ? $myrow["last_modified"] : null;
+		$this->svn_revision       = isset($myrow["svn_revision"])  ? $myrow["svn_revision"]  : null;
 
 		$this->update_description = isset($myrow["update_description"]) ? $myrow["update_description"] : null;
 		$this->message_id         = isset($myrow["message_id"]) ? $myrow["message_id"] : null;
@@ -184,12 +182,14 @@ class Port {
 		// So when looking at lang, we don't want to say, Also listed in lang...  
 		//
 		$this->category_looking_at= isset($myrow["category_looking_at"]) ? $myrow["category_looking_at"] : null;
-		
+
 		$this->svn_hostname       = $myrow['svn_hostname'];
 		$this->path_to_repo       = $myrow['path_to_repo'];
 		$this->element_pathname   = $myrow['element_pathname'];
-		
+
 		$this->last_commit_date   = isset($myrow['last_commit_date']) ? $myrow['last_commit_date'] : null;
+
+		$this->ConflictMatches();
 	}
 
 	function FetchByElementID($element_id, $UserID = 0) {
@@ -252,14 +252,14 @@ select ports.id,
        ports.conflicts,
        ports.conflicts_build,
        ports.conflicts_install,
-       
        to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, 
        ports.categories as categories,
 	    element.name     as port, 
 	    categories.name  as category,
        ports_vulnerable.current as vulnerable_current,
        ports_vulnerable.past    as vulnerable_past,
-       GMT_Format(commit_log.date_added) as last_modified,
+       commit_log.commit_date - SystemTimeAdjust() AS last_commit_date,
+       commit_log.svn_revision,
        R.svn_hostname,
        R.path_to_repo,
        element_pathname(ports.element_id) as element_pathname  ";
@@ -377,7 +377,8 @@ select ports.id,
 			           categories.name  as category,
                        ports_vulnerable.current as vulnerable_current,
                        ports_vulnerable.past    as vulnerable_past,
-                       GMT_Format(commit_log.date_added) as last_modified,
+                       commit_log.commit_date - SystemTimeAdjust() AS last_commit_date,
+                       commit_log.svn_revision,
                        R.svn_hostname,
                        R.path_to_repo,
                        element_pathname(ports.element_id) as element_pathname ";
@@ -519,7 +520,8 @@ SELECT P.*, element.name    as port
         ports_vulnerable.past    as vulnerable_past,
         NULL AS needs_refresh,
         NULL AS updated,
-        NULL AS last_modified,
+        NULL AS last_commit_date,
+        NULL AS svn_revision,
         NULL AS update_description,
         NULL AS message_id,
         NULL AS encoding_losses,
@@ -738,6 +740,28 @@ LEFT OUTER JOIN
 		}
 
 		return $available;
+	}
+
+	function ConflictMatches() {
+		$sql = 'SELECT DISTINCT PackageName(PCM.port_id) as package_name, f.*
+  FROM ports_conflicts_matches PCM
+  JOIN ports_conflicts PC ON PCM.ports_conflicts_id = PC.id
+  JOIN GetPortFromPackageName(PackageName(PCM.port_id)) AS f ON true
+ WHERE PC.port_id = ' . $this ->{'id'};
+
+		if ($Debug) {
+			echo "<pre>$sql</pre>";
+		}
+
+		$result = pg_exec($this->dbh, $sql);
+		if ($result) {
+			$numrows = pg_numrows($result);
+			if ($Debug) echo "FetchByElementID succeeded<BR>";
+			$this->{'conflicts_matches'} = pg_fetch_all($result);
+		} else {
+			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
+		}
+
 	}
 
 }

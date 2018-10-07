@@ -662,7 +662,8 @@ $sqlSelectFields = "
          R.svn_hostname,
          R.path_to_repo,
          P.distinfo,
-         element_pathname(P.element_id) as element_pathname  ";
+         element_pathname(P.element_id) as element_pathname,
+         Cl.svn_revision  ";
          
 $sqlSelectCount = "
   SELECT count(*)";

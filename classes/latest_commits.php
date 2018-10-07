@@ -24,7 +24,7 @@ class LatestCommits {
 	var $LocalResult;
 	var $HTML;
 
-	function LatestCommits($dbh) {
+	function __construct($dbh) {
 		$this->dbh = $dbh;
 	}
 

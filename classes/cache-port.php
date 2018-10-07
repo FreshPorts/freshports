@@ -20,8 +20,8 @@ class CachePort extends Cache {
 
 	var $PageSize = 100;
 
-	function CachePort() {
-		return parent::Cache();
+	function __construct() {
+		return parent::__construct();
 	}
 	
 	function PageSizeSet($PageSize) {

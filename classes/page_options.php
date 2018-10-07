@@ -4,7 +4,7 @@ class ItemsPerPage {
 
   var $Choices = array();
 
-  function ItemsPerPage() {
+  function __construct() {
     $this->Choices = array(10  => 10, 
                            20  => 20, 
                            30  => 30, 

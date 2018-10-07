@@ -14,7 +14,7 @@ class VuXML_References {
 
 	var $dbh;
 
-	function VuXML_References($dbh) {
+	function __construct($dbh) {
 		$this->dbh	= $dbh;
 	}
 

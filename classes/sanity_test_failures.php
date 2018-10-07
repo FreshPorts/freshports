@@ -24,7 +24,7 @@ class SanityTestFailures {
 	var $LocalResult;
 	var $HTML;
 
-	function SanityTestFailures($dbh) {
+	function __construct($dbh) {
 		$this->dbh = $dbh;
 	}
 

@@ -20,7 +20,7 @@ class PortsUnrefreshed {
 	var $reason;
 	var $message_id;
 
-	function PortsUnrefreshed($dbh) {
+	function __construct($dbh) {
 		$this->dbh	= $dbh;
 	}
 

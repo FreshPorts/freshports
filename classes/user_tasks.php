@@ -17,7 +17,7 @@ class UserTasks {
 
 	var $dbh;
 
-	function UserTasks($dbh) {
+	function __construct($dbh) {
 		$this->dbh	= $dbh;
 	}
 

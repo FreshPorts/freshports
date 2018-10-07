@@ -47,7 +47,7 @@ class Commit_Ports {
 	
 #	var $LocalResult;
 
-	function Commit($dbh) {
+	function __construct($dbh) {
 		$this->dbh	= $dbh;
 	}
 

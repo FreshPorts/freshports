@@ -18,7 +18,7 @@ class FilesDisplay {
 
 	var $Debug = 0;
 
-	function FilesDisplay($ResultSet) {
+	function __construct($ResultSet) {
 		$this->ResultSet = $ResultSet;
 		$this->HTML       = '';
 	}

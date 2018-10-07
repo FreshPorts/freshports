@@ -20,7 +20,7 @@ class Announcement {
 
 	var $Debug = 0;
 
-	function Announcement($dbh) {
+	function __construct($dbh) {
 		$this->dbh = $dbh;
 	}
 

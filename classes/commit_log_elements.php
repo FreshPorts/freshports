@@ -22,7 +22,7 @@ class Commit_Log_Elements {
 	var $result;
 	var $Debug;
 
-	function Commit_Log_Elements($dbh) {
+	function __construct($dbh) {
 		$this->dbh	= $dbh;
 	}
 	

@@ -22,7 +22,7 @@ class CommitFiles {
 
 	var $LocalResult;
 
-	function CommitFiles($dbh) {
+	function __construct($dbh) {
 		$this->dbh = $dbh;
 
 		$this->message_id = '';

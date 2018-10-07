@@ -21,7 +21,7 @@ class WatchListElement {
 	var $Debug;
 
 
-	function WatchListElement($dbh) {
+	function __construct($dbh) {
 		$this->dbh	= $dbh;
 		$this->Debug = 0;
 	}

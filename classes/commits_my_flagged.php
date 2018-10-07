@@ -13,7 +13,7 @@ class CommitsMyFlagged extends commits {
 
 	var $UserID;
 
-	function CommitsMyFlagged($dbh) {
+	function __construct($dbh) {
 		parent::Commits($dbh);
 	}
 	

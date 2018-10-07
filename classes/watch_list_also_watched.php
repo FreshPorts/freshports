@@ -17,7 +17,7 @@ class WatchListAlsoWatched {
 
 	var $LocalResult;
 
-	function WatchListAlsoWatched($dbh) {
+	function __construct($dbh) {
 		$this->dbh	= $dbh;
 	}
 	

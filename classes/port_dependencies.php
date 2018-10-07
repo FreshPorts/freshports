@@ -19,7 +19,7 @@ class PortDependencies {
 	var $dbh;
 	var $LocalResult;
 
-	function PortDependencies($dbh) {
+	function __construct($dbh) {
 		$this->dbh	= $dbh;
 	}
 

@@ -15,7 +15,7 @@ class SanityTestFailure {
 	
 	var $dbh;
 
-	function SanityTestFailure($dbh) {
+	function __construct($dbh) {
 		$this->dbh = $dbh;
 	}
 

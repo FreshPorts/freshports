@@ -13,7 +13,7 @@ class WatchLists {
 	var $dbh;
 	var $LocalResult;
 
-	function WatchLists($dbh) {
+	function __construct($dbh) {
 		$this->dbh	= $dbh;
 	}
 

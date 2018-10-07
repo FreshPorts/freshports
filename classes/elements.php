@@ -19,7 +19,7 @@ class Element {
 	var $status;
 	var $pathname;
 
-	function Element($dbh) {
+	function __construct($dbh) {
 		$this->dbh	= $dbh;
 	}
 

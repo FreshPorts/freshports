@@ -16,11 +16,11 @@ class WatchListDeletedPorts {
 
 	var $LocalResult;
 
-	function WatchListDeletedPorts($dbh) {
+	function __construct($dbh) {
 		$this->dbh	= $dbh;
 	}
 
-    function _PopulateValues($myrow) {
+	function _PopulateValues($myrow) {
 		$this->name_old     = $myrow['name_old'];
 		$this->category_old = $myrow['category_old'];
 		$this->name_new     = $myrow['name_new'];

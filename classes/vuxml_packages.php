@@ -13,7 +13,7 @@ class VuXML_Packages {
 
 	var $dbh;
 
-	function VuXML_Packages($dbh) {
+	function __construct($dbh) {
 		$this->dbh	= $dbh;
 	}
 

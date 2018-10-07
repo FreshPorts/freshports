@@ -52,7 +52,7 @@ class CommitRecord {
 
 	var $watch;
 
-	function CommitRecord() {
+	function __construct() {
 	}
 
 	function PopulateValues($myrow) {

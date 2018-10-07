@@ -18,7 +18,7 @@ class PortsUpdating {
 	var $dbh;
 	var $LocalResult;
 
-	function PortsUpdating($dbh) {
+	function __construct($dbh) {
 		$this->dbh	= $dbh;
 	}
 

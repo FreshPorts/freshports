@@ -16,7 +16,7 @@ class Cache {
 	var $CacheDir;
 	var $SpoolDir;
 
-	function Cache($CacheDir = CACHE_DIRECTORY, $SpoolDir = SPOOLING_DIRECTORY) {
+	function __construct($CacheDir = CACHE_DIRECTORY, $SpoolDir = SPOOLING_DIRECTORY) {
 		$this->CacheDir = $CacheDir;
 		$this->SpoolDir = $SpoolDir;
 	}

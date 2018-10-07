@@ -17,7 +17,7 @@ class Category {
 	var $name;
 	var $description;
 
-	function Category($dbh) {
+	function __construct($dbh) {
 		$this->dbh	= $dbh;
 	}
 	

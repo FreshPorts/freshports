@@ -18,7 +18,7 @@ class freshports_page extends HTML_Page2 {
 	var $_db;
 	var $_debug             = 0;
 
-	function freshports_page($attributes = array()) {
+	function __construct($attributes = array()) {
 
 		GLOBAL $ShowAds;
 

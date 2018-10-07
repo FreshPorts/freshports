@@ -16,11 +16,11 @@ class MasterSlave {
 	var $dbh;
 	var $LocalResult;
 
-	function MasterSlave($dbh) {
+	function __construct($dbh) {
 		$this->dbh	= $dbh;
 	}
 
-    function _PopulateValues($myrow) {
+	function _PopulateValues($myrow) {
 		$this->slave_port_id			= $myrow['slave_port_id'];
 		$this->slave_port_name			= $myrow['slave_port_name'];
 		$this->slave_category_id		= $myrow['slave_category_id'];

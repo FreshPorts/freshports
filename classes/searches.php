@@ -27,7 +27,7 @@ class Searches {
 
 	var $dbh;
 
-	function Searches($dbh, $SearchPage = '/search.php') {
+	function __construct($dbh, $SearchPage = '/search.php') {
 		$this->dbh        = $dbh;
 		$this->SearchPage = $SearchPage;
 	}

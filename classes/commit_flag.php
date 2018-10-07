@@ -21,7 +21,7 @@ class CommitFlag {
 	var $_Debug;
 
 
-	function CommitFlag($dbh) {
+	function __construct($dbh) {
 		$this->dbh	= $dbh;
 		$this->_Debug = false;
 	}

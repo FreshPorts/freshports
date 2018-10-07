@@ -22,7 +22,7 @@ class WatchNotice {
 
 	var $dbh;
 
-	function WatchNotice($dbh) {
+	function __construct($dbh) {
 		$this->dbh	= $dbh;
 	}
 

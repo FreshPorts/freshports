@@ -11,7 +11,7 @@ class SystemBranch {
 
   var $dbh;
 
-  function SystemBranch($dbh) {
+  function __construct($dbh) {
     $this->dbh	= $dbh;
   }
 

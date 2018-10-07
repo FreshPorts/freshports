@@ -15,7 +15,7 @@ class VuXML_Names {
 
 	var $dbh;
 
-	function VuXML_Names($dbh) {
+	function __construct($dbh) {
 		$this->dbh	= $dbh;
 	}
 

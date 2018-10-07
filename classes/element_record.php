@@ -20,7 +20,7 @@ class ElementRecord {
 
 	var	$element_pathname;
 
-	function ElementRecord($dbh) {
+	function __construct($dbh) {
 		$this->dbh = $dbh;
 	}
 

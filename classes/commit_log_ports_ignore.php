@@ -18,7 +18,7 @@ class Commit_Log_Ports_Ignore {
 
 	var $result;
 
-	function Commit_Log_Ports_Ignore($dbh) {
+	function __construct($dbh) {
 		$this->dbh	= $dbh;
 	}
 	

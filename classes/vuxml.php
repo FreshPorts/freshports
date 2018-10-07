@@ -26,7 +26,7 @@ class VuXML {
 
 	var $dbh;
 
-	function VuXML($dbh) {
+	function __construct($dbh) {
 		$this->dbh	= $dbh;
 	}
 

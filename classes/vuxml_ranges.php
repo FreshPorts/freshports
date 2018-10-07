@@ -16,7 +16,7 @@ class VuXML_Ranges {
 
 	var $dbh;
 
-	function VuXML_Ranges($dbh) {
+	function __construct($dbh) {
 		$this->dbh	= $dbh;
 	}
 

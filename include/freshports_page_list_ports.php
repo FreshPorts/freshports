@@ -28,6 +28,24 @@ class freshports_page_list_ports extends freshports_page {
 	var $_pageSize    = 100;	# max number of items per page.
 	var $_pageNumber  = 1;		# the page number to display now
 
+	function __construct($attributes = array()) {
+		$this->freshports_page($attributes);
+
+		GLOBAL $User;
+		$this->User = $User;
+		$this->Branch = BRANCH_HEAD;
+
+		$page_number = 1;
+		if (IsSet($_REQUEST['page'])) {
+			$page_number = intval($_REQUEST['page']);
+			if ($page_number != $_REQUEST['page']) {
+				$page_number = 1;
+			}
+		}
+
+		$this->setPageNumber($page_number);
+	}
+
         protected function _FROM_CLAUSE() {
           $_FROM_CLAUSE = "FROM element, categories, ports_vulnerable PV RIGHT OUTER JOIN ports                   ON PV.port_id = ports.id
                                                                          LEFT  OUTER JOIN commit_log CL           ON ports.last_commit_id = CL.id
@@ -47,24 +65,6 @@ class freshports_page_list_ports extends freshports_page {
           return $_WHERE_CLAUSE;
         }
 
-	function freshports_page_list_ports($attributes = array()) {
-		$this->freshports_page($attributes);
-		
-		GLOBAL $User;
-		$this->User = $User;
-		$this->Branch = BRANCH_HEAD;
-
-		$page_number = 1;
-		if (IsSet($_REQUEST['page'])) {
-			$page_number = intval($_REQUEST['page']);
-			if ($page_number != $_REQUEST['page']) {
-				$page_number = 1;
-			}
-		}
-
-		$this->setPageNumber($page_number);
-	}
-	
 	function SetUser($User) {
 		$this->User = $User;
 	}

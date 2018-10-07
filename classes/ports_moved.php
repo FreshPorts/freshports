@@ -20,7 +20,7 @@ class PortsMoved {
 	var $dbh;
 	var $LocalResult;
 
-	function PortsMoved($dbh) {
+	function __construct($dbh) {
 		$this->dbh	= $dbh;
 	}
 

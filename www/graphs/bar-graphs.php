@@ -61,7 +61,7 @@ class dg_BarGraph {
 	var $axis_label;	
 	
 	// main constructor
-	function dg_BarGraph() {
+	function __construct() {
 		$this->width = 400;
 
 		$this->gradient1 = array(0,100,210);

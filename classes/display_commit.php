@@ -32,7 +32,7 @@ class DisplayCommit {
 	
 	var $ShowLinkToSanityTestFailure = FALSE;
 
-	function DisplayCommit($dbh, $result) {
+	function __construct($dbh, $result) {
 		$this->dbh    = $dbh;
 		$this->result = $result;
 	}

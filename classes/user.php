@@ -40,7 +40,7 @@ class User {
 	var $LocalResult;
 
 
-	function User($dbh) {
+	function __construct($dbh) {
 		GLOBAL $DefaultPageSize;	# from include/getvalues.php
 
 		$this->dbh	     = $dbh;

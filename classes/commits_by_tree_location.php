@@ -17,7 +17,7 @@ class CommitsByTreeLocation extends commits {
 	#
 	var $TreePathCondition = '';
 
-	function CommitsByTreeLocation($dbh) {
+	function __construct($dbh) {
 		parent::Commits($dbh);
 	}
 	

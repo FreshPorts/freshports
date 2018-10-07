@@ -12,7 +12,7 @@ class Categories {
 	
 	var $result;
 
-	function Categories($dbh) {
+	function __construct($dbh) {
 		$this->dbh	= $dbh;
 	}
 

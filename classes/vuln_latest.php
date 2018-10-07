@@ -18,7 +18,7 @@ class vuln_latest {
 	var $dbh;
 	var $LocalResult;
 
-	function Vuln_Latest($dbh) {
+	function __construct($dbh) {
 		$this->dbh	= $dbh;
 	}
 

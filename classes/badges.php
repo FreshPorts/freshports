@@ -16,7 +16,7 @@ class port_badge {
     var $port;
 
     # object creation
-    function port_badge(&$db, $port = NULL) {
+    function __construct(&$db, $port = NULL) {
         $this->db   = $db;
         $this->port = $port;
     }

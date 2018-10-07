@@ -13,7 +13,7 @@ class Packages {
 
 	var $dbh;
 
-	function Packages($dbh) {
+	function __construct($dbh) {
 		$this->dbh	= $dbh;
 	}
 

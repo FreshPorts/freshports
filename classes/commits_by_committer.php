@@ -13,7 +13,7 @@ class CommitsByCommitter extends commits {
 
 	var $Committer;
 
-	function CommitsByCommitter($dbh) {
+	function __construct($dbh) {
 		parent::Commits($dbh);
 	}
 	

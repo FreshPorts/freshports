@@ -17,7 +17,7 @@ class PageLoadDetail {
 	var $LocalResult;
 
 
-	function PageLoadDetail() {
+	function __construct() {
 		$this->StartTime = microtime();
 	}
 	

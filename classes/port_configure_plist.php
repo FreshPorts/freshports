@@ -15,7 +15,7 @@ class PortConfigurePlist {
 	var $dbh;
 	var $LocalResult;
 
-	function PortConfigurePlist($dbh) {
+	function __construct($dbh) {
 		$this->dbh	= $dbh;
 	}
 

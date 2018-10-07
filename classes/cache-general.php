@@ -15,8 +15,8 @@ class CacheGeneral extends Cache {
 
 	var $PageSize = 100;
 
-	function CacheFile() {
-		return parent::Cache();
+	function __construct() {
+		return parent::__construct();
 	}
 	
 	function PageSizeSet($PageSize) {

@@ -49,6 +49,14 @@ class port_display {
 	var $ShowWatchListCount;
 	var $ShowWatchListStatus;
 
+	function __construct(&$db, $User = 0) {
+		$this->db   = $db;
+		$this->User = $User;
+		$this->DaysMarkedAsNew = 10;
+
+		$this->SetDetailsNil();
+	}
+
 	function htmlConflicts($conflicts) {
 	  $HTML = '';
 
@@ -108,14 +116,6 @@ class port_display {
           }
 
           return $link;
-	}
-
-	function port_display(&$db, $User = 0) {
-		$this->db   = $db;
-		$this->User = $User;
-		$this->DaysMarkedAsNew = 10;
-
-		$this->SetDetailsNil();
 	}
 
 	function SetDetailsNil() {
@@ -342,39 +342,32 @@ class port_display {
 		}
 
 		// maintainer
-	   if ($port->maintainer && ($this->ShowMaintainedBy || $this->ShowEverything)) {
-    	  if (strtolower($port->maintainer) == UNMAINTAINTED_ADDRESS) {
-        	 $HTML .= '<br>There is no maintainer for this port.<br>';
-	         $HTML .= 'Any concerns regarding this port should be directed to the FreeBSD ' .
-	                   'Ports mailing list via ';
-    	     $HTML .= '<A HREF="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);
-        	 $HTML .= '?subject=FreeBSD%20Port:%20' . $port->category . '/' . $port->port . '" TITLE="email the FreeBSD Ports mailing list">';
-	         $HTML .= freshportsObscureHTML($port->maintainer) . '</A>';
-    	  } else {
-	         $HTML .= '<b>';
+		if ($port->maintainer && ($this->ShowMaintainedBy || $this->ShowEverything)) {
+			if (strtolower($port->maintainer) == UNMAINTAINTED_ADDRESS) {
+				$HTML .= '<br>There is no maintainer for this port.<br>';
+				$HTML .= 'Any concerns regarding this port should be directed to the FreeBSD ' .
+				         'Ports mailing list via ';
+				$HTML .= '<A HREF="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);
+				$HTML .= '?subject=FreeBSD%20Port:%20' . $port->category . '/' . $port->port . '" TITLE="email the FreeBSD Ports mailing list">';
+				$HTML .= freshportsObscureHTML($port->maintainer) . '</A>';
+			} else {
+				$HTML .= '<b>';
 
-	         $HTML .= 'Maintainer:</b> <A HREF="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);
-    	     $HTML .= '?subject=FreeBSD%20Port:%20' . $port->category . '/' . $port->port . '" TITLE="email the maintainer">';
-        	 $HTML .= freshportsObscureHTML($port->maintainer) . '</A>';
-	      }
-      
-    	  $HTML .= ' ' . freshports_Search_Maintainer($port->maintainer) . '<br>';
-	   }
-	   
-	       // last commit date
-	       if (($this->ShowLastCommitDate || $this->ShowEverything) && $port->last_commit_date)
-	       {
-	           $HTML .= '<b>Last commit date:</b> ' . FormatTime($port->last_commit_date, 0, "Y-m-d H:i:s") . '<br>';
-	       }
+				$HTML .= 'Maintainer:</b> <A HREF="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);
+				$HTML .= '?subject=FreeBSD%20Port:%20' . $port->category . '/' . $port->port . '" TITLE="email the maintainer">';
+				$HTML .= freshportsObscureHTML($port->maintainer) . '</A>';
+			}
 
+			$HTML .= ' ' . freshports_Search_Maintainer($port->maintainer) . '<br>';
+		}
 
 		// there are only a few places we want to show the last change.
 		// therefore, we do not check ShowEverything here
 		if ($this->ShowLastChange) {
 			if ($port->updated != 0) {
-	            $HTML .= 'last change committed by ' . freshports_CommitterEmailLink($port->committer);  // separate lines in case committer is null
+				$HTML .= 'last change committed by ' . freshports_CommitterEmailLink($port->committer);  // separate lines in case committer is null
 
-       		    $HTML .= ' ' . freshports_Search_Committer($port->committer);
+				$HTML .= ' ' . freshports_Search_Committer($port->committer);
  
 				$HTML .= ' on <font size="-1">' . $port->updated . '</font>' . "\n";
 
@@ -403,7 +396,27 @@ class port_display {
 		if ($this->ShowDateAdded || $this->ShowEverything) {
 			$HTML .= '<b>Port Added:</b> <font size="-1">';
 			if ($port->date_added) {
-				$HTML .= $port->date_added;
+				#$HTML .= $port->date_added;
+				$HTML .= FormatTime($port->date_added, 0, "Y-m-d H:i:s");
+			} else {
+				$HTML .= "unknown";
+			}
+			$HTML .= '</font><BR>' . "\n";
+		}
+
+		# show the date modified, if asked
+
+		if ($this->ShowLastCommitDate || $this->ShowEverything) {
+			$HTML .= '<b>Last Update:</b> <font size="-1">';
+			if ($port->last_commit_date) {
+				$HTML .= FormatTime($port->last_commit_date, 0, "Y-m-d H:i:s");
+			} else {
+				$HTML .= "unknown";
+			}
+			$HTML .= '</font><br>' . "\n";
+			$HTML .= '<b>SVN Revision:</b> <font size="-1">';
+			if ($port->svn_revision) {
+				$HTML .= freshports_svnweb_ChangeSet_Link_Text($port->svn_revision, $port->svn_hostname, $port->path_to_repo);
 			} else {
 				$HTML .= "unknown";
 			}
@@ -663,6 +676,12 @@ class port_display {
 			}
 
 			$HTML .= "</ul>\n";
+
+			$HTML .= "<b>Conflicts Matches:</b>\n<ul>";
+			foreach($port->conflicts_matches as $match) {
+				$HTML .= "<li>conflicts with " . freshports_link_to_port($match['category'], $match['port']) . '</li>';
+			}
+			$HTML .= '</ul>';
 		}
 
 		if ($this->ShowEverything && $port->pkgmessage) {

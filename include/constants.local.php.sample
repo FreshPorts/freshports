@@ -9,6 +9,7 @@
 
 #define('PATH_TO_PORTSDIR', '/usr/local/');  // must have a trailing /
 
+# comment out this line to allow logins. the value does not matter.
 #define('NO_LOGIN', false);
 
 # set this to true to display the now-in-maintenance-mode.php page

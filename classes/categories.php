@@ -1,4 +1,4 @@
-	<?php
+<?php
 	#
 	# $Id: categories.php,v 1.3 2013-04-07 01:19:59 dan Exp $
 	#

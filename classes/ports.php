@@ -101,6 +101,8 @@ class Port {
 	var $svn_hostname;
 	var $path_to_repo;
 	var $element_pathname;
+
+	private $Debug = 0;
 	
 	function __construct($dbh) {
 		$this->dbh = $dbh;
@@ -193,8 +195,6 @@ class Port {
 	}
 
 	function FetchByElementID($element_id, $UserID = 0) {
-
-		$Debug = 0;
 
 		# fetch a single port based on element_id.
 		# e.g. net/samba
@@ -298,7 +298,7 @@ select ports.id,
 			        and ports.element_id  = element.id ";
 
 
-		if ($Debug) {
+		if ($this->Debug) {
 			echo "<pre>$sql</pre>";
 		}
 
@@ -306,7 +306,7 @@ select ports.id,
 		if ($result) {
 			$numrows = pg_numrows($result);
 			if ($numrows == 1) {
- 				if ($Debug) echo "FetchByElementID succeeded<BR>";
+				if ($this->Debug) echo "FetchByElementID succeeded<BR>";
 				$myrow = pg_fetch_array ($result);
 				$this->_PopulateValues($myrow);
 			} else {
@@ -320,8 +320,6 @@ select ports.id,
 	function FetchByID($id, $UserID = 0) {
 		# fetch a single port based on id
 		# used by missing-port.php
-
-		$Debug = 0;
 
 		$sql = "set client_encoding = 'ISO-8859-15'; select ports.id, 
 		               ports.element_id, 
@@ -422,7 +420,7 @@ ON TEMP.wle_element_id = ports.element_id";
 		          and ports.category_id = categories.id 
 		          and ports.element_id  = element.id ";
 
-		if ($Debug) {
+		if ($this->Debug) {
 			echo "<pre>$sql</pre>";
 		}
 
@@ -430,7 +428,7 @@ ON TEMP.wle_element_id = ports.element_id";
 		if ($result) {
 			$numrows = pg_numrows($result);
 			if ($numrows == 1) {
-				if ($Debug) echo "FetchByID succeeded<BR>";
+				if ($this->Debug) echo "FetchByID succeeded<BR>";
 				$myrow = pg_fetch_array ($result);
 				$this->_PopulateValues($myrow);
 				$result = $this->{'id'};
@@ -446,8 +444,6 @@ ON TEMP.wle_element_id = ports.element_id";
 		# fetch all ports based on category
 		# e.g. id for net
 		
-		$Debug = 0;
-
 		$sql = "set client_encoding = 'ISO-8859-15';";
 		if ($UserID) {
 			$sql .= "SELECT PE.*,
@@ -562,7 +558,7 @@ LEFT OUTER JOIN
 			}
 		}
 
-		if ($Debug) echo "<pre>$sql</pre>";
+		if ($this->Debug) echo "<pre>$sql</pre>";
 
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {
@@ -608,7 +604,7 @@ LEFT OUTER JOIN
 		if ($result) {
 			$numrows = pg_numrows($result);
 			if ($numrows == 1) {
-				if ($Debug) echo "IsOnWatchList succeeded<BR>";
+				if ($this->Debug) echo "IsOnWatchList succeeded<BR>";
 				$result = 1;
 			}
 		} else {
@@ -749,14 +745,14 @@ LEFT OUTER JOIN
   JOIN GetPortFromPackageName(PackageName(PCM.port_id)) AS f ON true
  WHERE PC.port_id = ' . $this ->{'id'};
 
-		if ($Debug) {
+		if ($this->Debug) {
 			echo "<pre>$sql</pre>";
 		}
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
 			$numrows = pg_numrows($result);
-			if ($Debug) echo "FetchByElementID succeeded<BR>";
+			if ($this->Debug) echo "FetchByElementID succeeded<BR>";
 			$this->{'conflicts_matches'} = pg_fetch_all($result);
 		} else {
 			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();

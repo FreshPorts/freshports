@@ -94,7 +94,7 @@ class DisplayCommit {
 		$this->HTML = "";
 
 		# leave it all empty as a comparison point
-		$PreviousCommit = new Commit_Ports();
+		$PreviousCommit = new Commit_Ports($this->db);
 
 		$NumberOfPortsInThisCommit = 0;
 		$MaxNumberPortsToShow      = 10;
@@ -103,7 +103,7 @@ class DisplayCommit {
 			$myrow = pg_fetch_array($this->result, $i);
 			if ($Debug) echo 'processing row ' . $i . ' ' . $myrow['commit_log_id'] . ' ' . $myrow['message_id'] . "<br>\n";
 			unset($mycommit);
-			$mycommit = new Commit_Ports();
+			$mycommit = new Commit_Ports($this->dbh);
 			$mycommit->PopulateValues($myrow);
 
 

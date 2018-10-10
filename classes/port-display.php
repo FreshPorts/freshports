@@ -396,7 +396,6 @@ class port_display {
 		if ($this->ShowDateAdded || $this->ShowEverything) {
 			$HTML .= '<b>Port Added:</b> <font size="-1">';
 			if ($port->date_added) {
-				#$HTML .= $port->date_added;
 				$HTML .= FormatTime($port->date_added, 0, "Y-m-d H:i:s");
 			} else {
 				$HTML .= "unknown";

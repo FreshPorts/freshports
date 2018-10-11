@@ -29,7 +29,7 @@ class freshports_page_list_ports extends freshports_page {
 	var $_pageNumber  = 1;		# the page number to display now
 
 	function __construct($attributes = array()) {
-		$this->freshports_page($attributes);
+		parent::__construct($attributes);
 
 		GLOBAL $User;
 		$this->User = $User;

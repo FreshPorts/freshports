@@ -129,7 +129,6 @@ About the Authors</A> for details of who else helped.</P>
 <TABLE WIDTH="<?php echo $TableWidth; ?>" BORDER="0" ALIGN="center">
 <TR><TD>
 <?php echo freshports_ShowFooter(); ?>
-<?php echo phpinfo(); ?>
 </TD></TR>
 </TABLE>
 

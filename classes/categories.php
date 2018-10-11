@@ -17,7 +17,7 @@ class Category {
 	var $name;
 	var $description;
 
-	var $Debug = 1;
+	var $Debug = 0;
 
 	function __construct($dbh) {
 		$this->dbh	= $dbh;

@@ -17,6 +17,8 @@ class Category {
 	var $name;
 	var $description;
 
+	var $Debug = 1;
+
 	function __construct($dbh) {
 		$this->dbh	= $dbh;
 	}
@@ -31,8 +33,6 @@ class Category {
 	}
 
 	function FetchByID($id) {
-		$Debug = 0;
-
 		if (IsSet($id)) {
 			$this->id = $id;
 		}
@@ -51,13 +51,13 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
   FROM categories C
  WHERE id = ' . pg_escape_string($this->id);
 
-		if ($Debug) echo "sql = '$sql'<BR>";
+		if ($this->Debug) echo "sql = '$sql'<BR>";
 
         $result = pg_exec($this->dbh, $sql);
 		if ($result) {
 			$numrows = pg_numrows($result);
 			if ($numrows == 1) {
-				if ($Debug) echo "fetched by ID succeeded<BR>";
+				if ($this->Debug) echo "fetched by ID succeeded<BR>";
 				$myrow = pg_fetch_array ($result, 0);
 				$this->Populate($myrow);
 			}
@@ -67,8 +67,6 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 	}
 
 	function FetchByElementID($element_id) {
-
-		$Debug = 0;
 
 		if (IsSet($element_id)) {
 			$this->element_id = $element_id;
@@ -83,13 +81,13 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
                 AND PC.category_id   = C.id) AS last_commit_date
   FROM categories C
  WHERE C.element_id = ' . pg_escape_string($this->element_id);
-		if ($Debug) echo "sql = '$sql'<BR>";
+		if ($this->Debug) echo "sql = '$sql'<BR>";
 
         $result = pg_exec($this->dbh, $sql);
 		if ($result) {
 			$numrows = pg_numrows($result);
 			if ($numrows == 1) {
-				if ($Debug) echo "fetched by ID succeeded<BR>";
+				if ($this->Debug) echo "fetched by ID succeeded<BR>";
 				$myrow = pg_fetch_array ($result, 0);
 				$this->Populate($myrow);
 			}
@@ -99,8 +97,6 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 	}
 
 	function FetchByName($Name) {
-
-		$Debug = 0;
 
 		$CategoryID = 0;
 
@@ -119,7 +115,7 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
   FROM categories C
  WHERE C.name = '" . pg_escape_string($this->name) . "'";
 
-		if ($Debug) echo "sql = '$sql'<BR>";
+		if ($this->Debug) echo "sql = '$sql'<BR>";
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
@@ -136,13 +132,11 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 
 	function IsCategoryByName($Name) {
 
-		$Debug = 0;
-
 		Unset($CategoryID);
 
 		$sql = "SELECT id FROM categories where name = '" . pg_escape_string($Name) . "'";
 
-		if ($Debug) echo "sql = '$sql'<BR>";
+		if ($this->Debug) echo "sql = '$sql'<BR>";
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
@@ -158,19 +152,18 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 
 	function PortCount($Name) {
 		$Count = 0;
-		$Debug = 0;
 
 		if (IsSet($Name)) {
 			$this->name = pg_escape_string($Name);
 		}
 		$sql = "select CategoryPortCount('" . pg_escape_string($this->name) . "')";
-		if ($Debug) echo "sql = '$sql'<BR>";
+		if ($this->Debug) echo "sql = '$sql'<BR>";
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
 			$numrows = pg_numrows($result);
 			if ($numrows == 1) {
-				if ($Debug) echo "PortCount succeeded<BR>";
+				if ($this->Debug) echo "PortCount succeeded<BR>";
 				$myrow = pg_fetch_array ($result, 0);
 				$Count = $myrow[0];
 			}
@@ -183,12 +176,11 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 	function UpdateDescription() {
 		GLOBAL $User;
 
-		$Debug = 0;
 		$sql = "UPDATE categories SET description = '" . pg_escape_string($this->description) . "' WHERE id = " . pg_escape_string($this->id) . ' AND is_primary = FALSE';
 		syslog(LOG_NOTICE, 'User \'' . $User->name . '\' at '
 			. pg_escape_string($_SERVER[REMOTE_ADDR]) . ' is changing category \'' 
 			. $this->name . '\' to \'' . $this->description . '\'.');
-		if ($Debug) echo "sql = '$sql'<BR>";
+		if ($this->Debug) echo "sql = '$sql'<BR>";
 
 		$result = pg_exec($this->dbh, $sql);
 

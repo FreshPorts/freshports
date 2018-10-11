@@ -1,5 +1,6 @@
 <?php
 
+
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
@@ -55,7 +56,8 @@ echo "script = $script";
 }
 
 # change this entire file so it uses php-rest-service.  In the meantime, do this:
-if (strpos($script, SCRIPT_API) === 0) $script = SCRIPT_API;
+if (strpos($script, SCRIPT_API)    === 0) $script = SCRIPT_API;
+if (strpos($script, SCRIPT_BADGES) === 0) $script = SCRIPT_BADGES;
 
 switch($script) {
     case SCRIPT_BADGES:

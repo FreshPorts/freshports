@@ -677,8 +677,13 @@ class port_display {
 			$HTML .= "</ul>\n";
 
 			$HTML .= "<b>Conflicts Matches:</b>\n<ul>";
-			foreach($port->conflicts_matches as $match) {
-				$HTML .= "<li>conflicts with " . freshports_link_to_port($match['category'], $match['port']) . '</li>';
+			if (!empty($port->conflicts_matches)) {
+				foreach($port->conflicts_matches as $match) {
+					$HTML .= "<li>conflicts with " . freshports_link_to_port($match['category'], $match['port']) . '</li>';
+				}
+			} else {
+				$HTML .= 'There are no matches for this port.  This is usually an error.';
+				syslog(LOG_ERR, 'There are no matches for this port: ' . $port->element_pathname);
 			}
 			$HTML .= '</ul>';
 		}

@@ -94,7 +94,7 @@ class DisplayCommit {
 		$this->HTML = "";
 
 		# leave it all empty as a comparison point
-		$PreviousCommit = new Commit_Ports($this->db);
+		$PreviousCommit = new Commit_Ports($this->dbh);
 
 		$NumberOfPortsInThisCommit = 0;
 		$MaxNumberPortsToShow      = 10;

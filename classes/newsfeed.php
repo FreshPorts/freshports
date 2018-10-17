@@ -152,7 +152,7 @@ function newsfeed($db, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $Fl
          P.category_id
     FROM (SELECT P1.* 
             FROM ports            P1
-            JOIN element_pathname EP ON P1.element_id = EP.element_id AND EP.pathname LIKE $BranchExpression
+            JOIN element_pathname EP ON P1.element_id = EP.element_id AND EP.pathname LIKE '/ports/head/%'
            WHERE P1.date_added IS NOT NULL ORDER BY P1.date_added DESC LIMIT 20) AS P
     JOIN element    E   ON P.element_id  = E.id
     JOIN categories C   ON P.category_id = C.id
@@ -168,7 +168,7 @@ ORDER BY P.date_added DESC, E.name, category, version";
          P.broken,
          P.deprecated,
          P.element_id                     AS element_id,
-         CASE when CLP.port_version  IS NULL then P.version  else CLP.port_revision END as version,
+         CASE when CLP.port_version  IS NULL then P.version  else CLP.port_version  END as version,
          CASE when CLP.port_revision IS NULL then P.revision else CLP.port_revision END AS revision,
          P.version                        AS ports_version,
          P.revision                       AS ports_revision,
@@ -202,24 +202,24 @@ ORDER BY CL.commit_date DESC, CL.id ASC, E.name, category, version";
 
 			default:
 				$sql = "
-  SELECT C.name    AS category,
+ SELECT C.name    AS category,
          E.name    AS port,
          E.status  AS status,
          P.forbidden,
          P.broken,
          P.deprecated,
          P.element_id                     AS element_id,
-         CASE when CLP.port_version  IS NULL then P.version  else CLP.port_revision END as version,
-         CASE when CLP.port_revision IS NULL then P.revision else CLP.port_revision END AS revision,
+         CASE when CL.port_version  IS NULL then P.version  else CL.port_version  END as version,
+         CASE when CL.port_revision IS NULL then P.revision else CL.port_revision END AS revision,
          P.version                        AS ports_version,
          P.revision                       AS ports_revision,
          P.portepoch                      AS epoch,
          date_part('epoch', P.date_added) AS date_added,
          P.short_description              AS short_description,
          P.category_id,
-         CLP.port_version  AS clp_version,
-         CLP.port_revision AS clp_revision,
-         CLP.needs_refresh AS needs_refresh,
+         CL.port_version  AS clp_version,
+         CL.port_revision AS clp_revision,
+         CL.needs_refresh AS needs_refresh,
          CL.id     AS commit_log_id, 
          CL.commit_date       AS commit_date_raw,
          CL.message_subject,
@@ -229,18 +229,21 @@ ORDER BY CL.commit_date DESC, CL.id ASC, E.name, category, version";
          to_char(CL.commit_date - SystemTimeAdjust(), 'DD Mon')  AS commit_date,
          to_char(CL.commit_date - SystemTimeAdjust(), 'HH24:MI') AS commit_time,
          CL.encoding_losses
-    FROM ports                P
-    JOIN commit_log_ports     CLP ON CLP.port_id       = P.id
-    JOIN commit_log           CL  ON CLP.commit_log_id = CL.id
-    JOIN commit_log_branches  CLB ON CLP.commit_log_id = CLB.commit_log_id
-    JOIN system_branch        SB  ON SB.branch_name    = " . pg_escape_literal($BranchName) . " AND SB.id = CLB.branch_id
+    FROM (SELECT CL1.*, CLP.port_version, CLP.port_revision, CLP.needs_refresh, CLP.port_id
+            FROM commit_log CL1
+            JOIN commit_log_ports    CLP ON CL1.id            = CLP.commit_log_id
+            JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
+            JOIN system_branch       SB  ON SB.branch_name    = " . pg_escape_literal($BranchName) . " AND SB.id = CLB.branch_id
+        ORDER BY CL1.id DESC
+           LIMIT 100) CL
+    JOIN ports                P   ON CL.port_id        = P.id
     JOIN element              E   ON P.element_id      = E.id
     JOIN categories           C   ON P.category_id     = C.id
 ORDER BY CL.commit_date DESC, CL.id ASC, E.name, category, version LIMIT 20";
 		} # switch flavor
 	} # WatchListID	
 
-	echo "<pre>$sql</pre>";
+#	echo "<pre>$sql</pre>";
 
 #	exit;
 
@@ -259,6 +262,7 @@ ORDER BY CL.commit_date DESC, CL.id ASC, E.name, category, version LIMIT 20";
 		$item = new FeedItem();
 
 		switch ($Flavor) {
+                        case 'broken':
 			case 'new':
 				# this is a relative link
 				$link        = freshports_Port_URL($myrow['category'], $myrow['port'], $BranchName);;

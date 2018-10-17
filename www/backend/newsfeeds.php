@@ -40,19 +40,19 @@
 	
 	<p>This RSS feed takes the following optional parameters:
 	<ul>
-	<li><b>MaxArticles</b> : number of ports to report upon (min 1, max 20, default 20)
-	<li><b>date=1</b> : show the commit date
-	<li><b>committer=1</b> : show the committer name
-	<li><b>time=1</b> : show the commit time
+	<li><b>flavor=new</b> : show only new ports (ignores <b>branch</b>).</li>
+	<li><b>flavor=broken</b> : show only new ports (ignores <b>branch</b>).</li>
+	<li><b>branch=2018Q3</b> : show only commits on that branch. If not specified, defaults to <b>head</b>.
 	</ul>
 	<p>
-	A sample URL is ' . $URL . '?MaxArticles=10&amp;committer=1&amp;time=1&amp;date=1
+	Sample URLs include:
+	<ol>
+	<li>' . $URL . 'html.php?branch=2018Q4</li>
+	<li>' . $URL . 'html.php?flavor=broken</li>
+	<li>' . $URL . 'html.php?flavor=new</li>
+	</ol>
 	</p>
 
-	<P>
-	<B>NOTE:</B> - As of 13 November 2003, these parameters are no longer available.  The
-	values they obtained are now supplied by default.
-	</P>
 	</LI>');
 
 	$URL  = "$Protocol://$ServerName/backend/ports-new.php";

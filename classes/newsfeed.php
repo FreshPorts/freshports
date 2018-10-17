@@ -262,7 +262,7 @@ ORDER BY CL.commit_date DESC, CL.id ASC, E.name, category, version LIMIT 20";
 		$item = new FeedItem();
 
 		switch ($Flavor) {
-                        case 'broken':
+			case 'broken':
 			case 'new':
 				# this is a relative link
 				$link        = freshports_Port_URL($myrow['category'], $myrow['port'], $BranchName);;

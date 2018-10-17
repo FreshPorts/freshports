@@ -36,14 +36,7 @@
 	if (!empty($Flavor)) {
 	  switch($Flavor) {
 	    case 'new':
-	    	$OrderBy = " P.date_added DESC, CL.id ASC, E.name, category, version ";
-	    	$Where   = " P.date_added IS NOT NULL ";
-	    	break;
-
 	    case 'broken':
-	    	$Where = " P.broken is not null ";
-	    	break;
-
 	    case 'vulnerable':
 	    	break;
 
@@ -53,5 +46,4 @@
 	  }
 	}
 
-	echo "newfeed values: OrderBy='$OrderBy' Where='$Where' flavor='$Flavor'";
 	echo newsfeed($db, strtoupper($format), NO_WATCH_LIST_ID, $BranchName, $Flavor); #$OrderBy, $Where);

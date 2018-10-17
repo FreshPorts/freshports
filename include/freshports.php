@@ -168,6 +168,8 @@ function freshports_strip_port_suffix($PortName) {
 
 function freshports_link_to_port($CategoryName, $PortName, $BranchName = BRANCH_HEAD) {
 
+	# see also freshports_Port_URL
+
 	$HTML = '';
 
 	// create link to category, perhaps on a branch
@@ -186,6 +188,18 @@ function freshports_link_to_port($CategoryName, $PortName, $BranchName = BRANCH_
 	}
 
 	$HTML .= '">' . $PortName . '</a>';
+
+	return $HTML;
+}
+
+function freshports_Port_URL($CategoryName, $PortName, $BranchName = BRANCH_HEAD) {
+
+	# see also freshports_link_to_port
+
+	$HTML = 'http://' . $_SERVER['HTTP_HOST'] . '/' . $CategoryName . '/' . $PortName . '/';
+	if ($BranchName != BRANCH_HEAD) {
+		$HTML .= '?branch=' . pg_escape_string($BranchName);
+	}
 
 	return $HTML;
 }

@@ -22,4 +22,36 @@
 		$BranchName = date('Y') . 'Q' . (floor(date('n') / 4) + 1);
 	}
 
-	echo newsfeed($db, strtoupper($format), NO_WATCH_LIST_ID, $BranchName);
+	$Flavor = '';
+	if (IsSet($_REQUEST['flavor'])) {
+		$Flavor = htmlspecialchars($_REQUEST['flavor']);
+	}
+
+	if (IsSet($_REQUEST['flavour'])) {
+		$Flavor = htmlspecialchars($_REQUEST['flavour']);
+	}
+
+	$OrderBy = '';
+	$Where   = '';
+	if (!empty($Flavor)) {
+	  switch($Flavor) {
+	    case 'new':
+	    	$OrderBy = " P.date_added DESC, CL.id ASC, E.name, category, version ";
+	    	$Where   = " P.date_added IS NOT NULL ";
+	    	break;
+
+	    case 'broken':
+	    	$Where = " P.broken is not null ";
+	    	break;
+
+	    case 'vulnerable':
+	    	break;
+
+	    default:
+	      syslog(LOG_ERR, "Invalid value for Flavor: '$Flavor'");
+	      $Flavor = null;
+	  }
+	}
+
+	echo "newfeed values: OrderBy='$OrderBy' Where='$Where' flavor='$Flavor'";
+	echo newsfeed($db, strtoupper($format), NO_WATCH_LIST_ID, $BranchName, $Flavor); #$OrderBy, $Where);

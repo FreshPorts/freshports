@@ -32,18 +32,23 @@
 	require_once('/usr/local/share/UniversalFeedCreator/lib/Creator/RSSCreator20.php'); 
 	require_once('/usr/local/share/UniversalFeedCreator/lib/UniversalFeedCreator.php'); 
 	
-function newsfeed($db, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD) {
+function newsfeed($db, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $Flavor = '') { # $OrderBy = '', $Where = '') {
 
 	$WatchListID = pg_escape_string($WatchListID);
 	$Format      = pg_escape_string($Format);
+	$Flavor      = pg_escape_string($Flavor);
 
 	$PHP_SELF = $_SERVER['PHP_SELF'];
 
-	# potential for exploitation here, with $Format
+	# potential for exploitation here, with $WatchListID, $BranchName, $Format & $Flavor
 	if ($WatchListID) {
 		define('NEWSFEEDCACHE', NEWS_DIRECTORY . '/news.' . $WatchListID . '.'  . $Format . '.' . $BranchName . '.xml');
 	} else {
-		define('NEWSFEEDCACHE', NEWS_DIRECTORY . '/news.' . $Format . '.' . $BranchName. '.xml');
+		if (empty($Flavor)) {
+			define('NEWSFEEDCACHE', NEWS_DIRECTORY . '/news.' . $Format . '.' . $BranchName . '.xml');
+		} else {
+			define('NEWSFEEDCACHE', NEWS_DIRECTORY . '/news.' . $Format . '.' . $BranchName . '.' . $Flavor . '.xml');
+		}
 	}
 
 	$MaxNumberOfPorts = pg_escape_string(MAX_PORTS);
@@ -94,6 +99,7 @@ function newsfeed($db, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD) {
 	}
 
 	if ($WatchListID) {
+	# this is for newfeeds based on personal watch lists
 	$sql = "
 	select E.name 			as port, 
 		   P.id 				as id, 
@@ -117,87 +123,170 @@ function newsfeed($db, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD) {
        AND P.element_id      = WLE.element_id
 	   AND P.element_id      = E.id
 	   AND P.category_id     = C.id 
-	   AND WLE.watch_list_id = " . pg_escape_string($WatchListID) . "
-	ORDER BY commit_date_sort DESC, CL.id ASC, E.name, category, version
-	LIMIT 100";
+	   AND WLE.watch_list_id = " . pg_escape_string($WatchListID) .  ' ';
+	   
 	} else {
-	$sql = "
-SELECT PORTELEMENT.*,
-       categories.name AS category
-FROM (
-SELECT LCPPORTS.*,
-       element.name    AS port,
-       element.status  AS status
+		if ($BranchName == BRANCH_HEAD) {
+			$BranchExpression = pg_escape_literal('/ports/' . BRANCH_HEAD .'/%');
+		} else {
+			$BranchExpression =  pg_escape_literal('/ports/branches/' . $BranchName . '/%');
+		}
 
-FROM (
-SELECT LCPCLLCP.*,
-       ports.forbidden,
-       ports.broken,
-       ports.deprecated,
-       ports.element_id                     AS element_id,
-       CASE when clp_version  IS NULL then ports.version  else clp_version  END as version,
-       CASE when clp_revision IS NULL then ports.revision else clp_revision END AS revision,
-       ports.version                        AS ports_version,
-       ports.revision                       AS ports_revision,
-       ports.portepoch                      AS epoch,
-       date_part('epoch', ports.date_added) AS date_added,
-       ports.short_description              AS short_description,
-       ports.category_id
-FROM (
- SELECT LCPCL.*, 
-         port_id,
-         commit_log_ports.port_version  AS clp_version,
-         commit_log_ports.port_revision AS clp_revision,
-         commit_log_ports.needs_refresh AS needs_refresh
-    FROM 
-   (SELECT commit_log.id     AS commit_log_id, 
-           commit_date       AS commit_date_raw,
-           message_subject,
-           message_id,
-           committer,
-           description       AS commit_description,
-           to_char(commit_log.commit_date - SystemTimeAdjust(), 'DD Mon')  AS commit_date,
-           to_char(commit_log.commit_date - SystemTimeAdjust(), 'HH24:MI') AS commit_time,
-           encoding_losses
-     FROM commit_log JOIN
-               (SELECT LCP.commit_log_id
-                  FROM latest_commits_ports LCP JOIN commit_log_branches CLB ON LCP.commit_log_id = CLB.commit_log_id
-                                     JOIN system_branch SB ON SB.branch_name = '$BranchName' AND SB.id = CLB.branch_id
-              ORDER BY LCP.commit_date DESC
-                 LIMIT $MaxNumberOfPorts) AS LCP
-           ON commit_log.id = LCP.commit_log_id) AS LCPCL JOIN commit_log_ports
-                         ON commit_log_ports.commit_log_id = LCPCL.commit_log_id
-                         AND commit_log_ports.commit_log_id > latest_commits_ports_anchor()) AS LCPCLLCP JOIN ports
-ON LCPCLLCP.port_id = ports.id) AS LCPPORTS JOIN element
-ON LCPPORTS.element_id = element.id) AS PORTELEMENT JOIN categories
-ON PORTELEMENT.category_id = categories.id
-ORDER BY commit_date_raw desc, category, port 
-LIMIT 30";
-	}
-	
-#	echo "<pre>$sql</pre>";
+		switch ($Flavor) {
+			case 'new':
+				$sql = "
+  SELECT C.name    AS category,
+         E.name    AS port,
+         E.status  AS status,
+         P.forbidden,
+         P.broken,
+         P.deprecated,
+         P.element_id                     AS element_id,
+         P.version  AS version,
+         P.revision AS revision,
+         P.version                        AS ports_version,
+         P.revision                       AS ports_revision,
+         P.portepoch                      AS epoch,
+         date_part('epoch', P.date_added) AS date_added,
+         P.short_description              AS short_description,
+         P.category_id
+    FROM (SELECT P1.* 
+            FROM ports            P1
+            JOIN element_pathname EP ON P1.element_id = EP.element_id AND EP.pathname LIKE $BranchExpression
+           WHERE P1.date_added IS NOT NULL ORDER BY P1.date_added DESC LIMIT 20) AS P
+    JOIN element    E   ON P.element_id  = E.id
+    JOIN categories C   ON P.category_id = C.id
+ORDER BY P.date_added DESC, E.name, category, version";
+				break;
+
+			case 'broken':
+				$sql = "
+  SELECT C.name    AS category,
+         E.name    AS port,
+         E.status  AS status,
+         P.forbidden,
+         P.broken,
+         P.deprecated,
+         P.element_id                     AS element_id,
+         CASE when CLP.port_version  IS NULL then P.version  else CLP.port_revision END as version,
+         CASE when CLP.port_revision IS NULL then P.revision else CLP.port_revision END AS revision,
+         P.version                        AS ports_version,
+         P.revision                       AS ports_revision,
+         P.portepoch                      AS epoch,
+         date_part('epoch', P.date_added) AS date_added,
+         P.short_description              AS short_description,
+         P.category_id,
+         CLP.port_version  AS clp_version,
+         CLP.port_revision AS clp_revision,
+         CLP.needs_refresh AS needs_refresh,
+         CL.id     AS commit_log_id, 
+         CL.commit_date       AS commit_date_raw,
+         CL.message_subject,
+         CL.message_id,
+         CL.committer,
+         CL.description       AS commit_description,
+         to_char(CL.commit_date - SystemTimeAdjust(), 'DD Mon')  AS commit_date,
+         to_char(CL.commit_date - SystemTimeAdjust(), 'HH24:MI') AS commit_time,
+         CL.encoding_losses
+    FROM (SELECT P1.* 
+            FROM ports            P1
+            JOIN element_pathname EP ON P1.element_id = EP.element_id AND EP.pathname LIKE '/ports/head/%'
+           WHERE P1.broken IS NOT NULL
+             AND P1.status = 'A') AS P
+    JOIN commit_log           CL  ON P.last_commit_id  = CL.id 
+    JOIN commit_log_ports     CLP ON CLP.commit_log_id = CL.id AND P.id = CLP.port_id
+    JOIN element              E   ON P.element_id      = E.id
+    JOIN categories           C   ON P.category_id     = C.id
+ORDER BY CL.commit_date DESC, CL.id ASC, E.name, category, version";
+				break;
+
+			default:
+				$sql = "
+  SELECT C.name    AS category,
+         E.name    AS port,
+         E.status  AS status,
+         P.forbidden,
+         P.broken,
+         P.deprecated,
+         P.element_id                     AS element_id,
+         CASE when CLP.port_version  IS NULL then P.version  else CLP.port_revision END as version,
+         CASE when CLP.port_revision IS NULL then P.revision else CLP.port_revision END AS revision,
+         P.version                        AS ports_version,
+         P.revision                       AS ports_revision,
+         P.portepoch                      AS epoch,
+         date_part('epoch', P.date_added) AS date_added,
+         P.short_description              AS short_description,
+         P.category_id,
+         CLP.port_version  AS clp_version,
+         CLP.port_revision AS clp_revision,
+         CLP.needs_refresh AS needs_refresh,
+         CL.id     AS commit_log_id, 
+         CL.commit_date       AS commit_date_raw,
+         CL.message_subject,
+         CL.message_id,
+         CL.committer,
+         CL.description       AS commit_description,
+         to_char(CL.commit_date - SystemTimeAdjust(), 'DD Mon')  AS commit_date,
+         to_char(CL.commit_date - SystemTimeAdjust(), 'HH24:MI') AS commit_time,
+         CL.encoding_losses
+    FROM ports                P
+    JOIN commit_log_ports     CLP ON CLP.port_id       = P.id
+    JOIN commit_log           CL  ON CLP.commit_log_id = CL.id
+    JOIN commit_log_branches  CLB ON CLP.commit_log_id = CLB.commit_log_id
+    JOIN system_branch        SB  ON SB.branch_name    = " . pg_escape_literal($BranchName) . " AND SB.id = CLB.branch_id
+    JOIN element              E   ON P.element_id      = E.id
+    JOIN categories           C   ON P.category_id     = C.id
+ORDER BY CL.commit_date DESC, CL.id ASC, E.name, category, version LIMIT 20";
+		} # switch flavor
+	} # WatchListID	
+
+	echo "<pre>$sql</pre>";
+
 #	exit;
 
 	$ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['HTTP_HOST']);
 	
+	# get the results
 	$result = pg_query($db, $sql);
+	if (!$result) {
+		syslog(LOG_ERR, 'sql error ' . pg_result_error($result));
+
+		die('We broke the SQL, sorry');
+	}
+
+	# build the information for the feed.
 	while ($myrow = pg_fetch_array($result)) {
 		$item = new FeedItem();
 
-		$CommitURL = freshports_Commit_Link_Port_URL($myrow['message_id'], $myrow['category'], $myrow['port']);
+		switch ($Flavor) {
+			case 'new':
+				# this is a relative link
+				$link        = freshports_Port_URL($myrow['category'], $myrow['port'], $BranchName);;
+				$date        = $myrow['date_added'];
+				$author      = $myrow['maintainer'];
+				$description = $myrow['short_description'];
+				break;
+				
+			default:
+				$link        = freshports_Commit_Link_Port_URL($myrow['message_id'], $myrow['category'], $myrow['port']);
+				$date        = $myrow['commit_date_raw'];
+				$author      = $myrow['committer'] . '@FreeBSD.org (' . $myrow['committer'] . ')';
+				$description = $myrow['commit_description'];
+				break;
+		}
 
 		$item->title = $myrow['category'] . '/' . $myrow["port"] . ' - ' . freshports_PackageVersion($myrow['version'], $myrow['revision'], $myrow['epoch']);
-		$item->link  = $CommitURL;
-		$item->description = trim($myrow['commit_description']);
+		$item->link  = $link;
+		$item->description = trim($description);
 
 		//optional
 		//item->descriptionTruncSize = 500;
 		$item->descriptionHtmlSyndicated = true;
 	
-		$item->date   = strtotime($myrow['commit_date_raw']);
+		$item->date   = strtotime($date);
 		$item->source = $_SERVER['HTTP_HOST']; 
-		$item->author = $myrow['committer'] . '@FreeBSD.org (' . $myrow['committer'] . ')';
-		$item->guid   = $CommitURL; 
+		$item->author = $author;
+		$item->guid   = $link; 
 
 		$rss->addItem($item); 
 	} 

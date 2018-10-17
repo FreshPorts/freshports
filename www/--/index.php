@@ -45,6 +45,7 @@ if ($Debug) {
 
 define('SCRIPT_BADGES', '/--/badges/');
 define('SCRIPT_API',    '/--/api/1/search/');
+define('SCRIPT_STATUS', '/--/status/');
 
 $items = explode('/', $script);
 if ($Debug) {
@@ -58,6 +59,7 @@ echo "script = $script";
 # change this entire file so it uses php-rest-service.  In the meantime, do this:
 if (strpos($script, SCRIPT_API)    === 0) $script = SCRIPT_API;
 if (strpos($script, SCRIPT_BADGES) === 0) $script = SCRIPT_BADGES;
+if (strpos($script, SCRIPT_STATUS) === 0) $script = SCRIPT_STATUS;
 
 switch($script) {
     case SCRIPT_BADGES:
@@ -80,6 +82,30 @@ switch($script) {
             exit;
         }
 
+        break;
+
+    case SCRIPT_STATUS:
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/system_status.php');
+
+        $status = new SystemStatus($db);
+        $count = $status->CommitQueueCount();
+
+        echo 'Number of commits processed today: ' . $count . '<br>';
+
+        if ($status->InMaintenanceMode) {
+            echo 'We are in maintenance mode<br>';
+        } else {
+            echo 'We are in not in maintenance mode<br>';
+        }
+
+        if ($status->LoginsAreAllowed) {
+            echo 'Logins are enabled<br>';
+        } else {
+            echo 'Nobody is allowed to login right now.<br>';
+        }
+
+        require_once("/var/db/freshports/cache/html/backend-status.html");
+        exit;
         break;
 
     case SCRIPT_API:

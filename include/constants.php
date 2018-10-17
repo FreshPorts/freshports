@@ -90,6 +90,10 @@ define('PORTSDIR_PREFIX',  'PORTS-');
 
 define('BASEDIR', '/var/db/freshports');
 
+define('MESSAGE_QUEUES', BASEDIR . '/message-queues');
+
+define('MESSAGE_QUEUE_RECENT', MESSAGE_QUEUES . '/recent');
+
 define('SIGNALS_DIRECTORY',  BASEDIR        . '/signals');    # signals / flags set by backend. some are read by webserver.
 
 define('CACHE_DIRECTORY',    BASEDIR         . '/cache');     # caching of data for web pages

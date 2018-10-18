@@ -48,6 +48,7 @@ class port_display {
 	var $ShowShortDescription;
 	var $ShowWatchListCount;
 	var $ShowWatchListStatus;
+	var $ShowDistInfo;
 
 	function __construct(&$db, $User = 0) {
 		$this->db   = $db;
@@ -144,6 +145,7 @@ class port_display {
 		$this->ShowShortDescription    = false;
 		$this->ShowWatchListCount      = false;
 		$this->ShowWatchListStatus     = false;
+		$this->ShowDistInfo            = false;
 	}
 
 	function SetDetailsFull() {
@@ -538,14 +540,16 @@ class port_display {
 			  $HTML .= '</p>';
 			}
 
-			$HTML .= '<p><b>distinfo:</b>';
+			if ($this->ShowEverything || $this->ShowDistInfo) {
+				$HTML .= '<p><b>distinfo:</b>';
 
-			if ($port->distinfo) {
-				$HTML .= '<blockquote><pre>' . $port->distinfo . '</pre></blockquote>';
-			} else {
-				$HTML .= ' There is no distinfo for this port.';
+				if ($port->distinfo) {
+					$HTML .= '<blockquote><pre>' . $port->distinfo . '</pre></blockquote>';
+				} else {
+					$HTML .= ' There is no distinfo for this port.';
+				}
+				$HTML .= '<p>';
 			}
-			$HTML .= '<p>';
 		}
 
 	   if ($this->ShowEverything || $this->ShowMasterSlave) {

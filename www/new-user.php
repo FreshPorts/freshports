@@ -5,10 +5,6 @@
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
 
-	if (IN_MAINTENCE_MODE) {
-                header('Location: /' . MAINTENANCE_PAGE, TRUE, 307);
-	}
-
 	# for captcha
 	session_start();
 
@@ -17,6 +13,10 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
+
+	if (IN_MAINTENCE_MODE) {
+                header('Location: /' . MAINTENANCE_PAGE, TRUE, 307);
+	}
 
 	if (defined('NO_LOGIN')) {
 		ob_start();

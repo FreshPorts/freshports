@@ -20,25 +20,6 @@ class SystemStatus {
     $this->dbh	= $dbh;
   }
   
-  function CommitQueueCount() {
-    $dir   = MESSAGE_QUEUE_RECENT;
-    $files = scandir($dir);
-    if ($files) {
-      # count the number of .txt files
-      $count = 0;
-      foreach ($files as $file) {
-        if (preg_match('/\.txt$/', $file)) {
-          $count++;
-        }
-      }
-    } else {
-      $count = 'unknown';
-      syslog(LOG_ERR, 'Error could not get file count for message queue recent: ' . MESSAGE_QUEUE_RECENT);
-    }
-    
-    return $count;
-  }
-  
   function InMaintenanceMode() {
     return defined(IN_MAINTENCE_MODE) && IN_MAINTENCE_MODE;
   }

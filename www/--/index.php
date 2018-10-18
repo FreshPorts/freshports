@@ -88,21 +88,23 @@ switch($script) {
         require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/system_status.php');
 
         $status = new SystemStatus($db);
-        $count = $status->CommitQueueCount();
 
-        echo 'Number of commits processed today: ' . $count . '<br>';
+        echo '<p>';
 
         if ($status->InMaintenanceMode) {
             echo 'We are in maintenance mode<br>';
         } else {
-            echo 'We are in not in maintenance mode<br>';
+            echo 'We are in not in maintenance mode';
         }
+
+        echo '</p><p>';
 
         if ($status->LoginsAreAllowed) {
             echo 'Logins are enabled<br>';
         } else {
-            echo 'Nobody is allowed to login right now.<br>';
+            echo 'Nobody is allowed to login right now.';
         }
+        echo '</p>';
 
         require_once("/var/db/freshports/cache/html/backend-status.html");
         exit;

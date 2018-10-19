@@ -8,6 +8,7 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/master_slave.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port_dependencies.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port_configure_plist.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/package_flavors.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
 
 define('port_display_WATCH_LIST_ADD_REMOVE', '%%%$$$WATCHLIST$$$%%%');
@@ -530,6 +531,8 @@ class port_display {
 			}
 			$HTML .= '</p>';
 
+			$HTML .= $this->ShowPackageFlavors();
+
 			if ($port->only_for_archs) {
 			  $HTML .= '<p><b>ONLY_FOR_ARCHS:</b> ';
 			  $HTML .= htmlify($port->only_for_archs);
@@ -841,6 +844,30 @@ class port_display {
 
 		if ( $HTML === '' ) {
 			$HTML .= 'There is no configure plist information for this port<br>';
+		}
+
+		return $HTML;
+	}
+
+	function ShowPackageFlavors() {
+
+		$HTML = '';
+		$PackageFlavors = new PackageFlavors( $this->db );
+		$NumRows = $PackageFlavors->FetchInitialise( $this->port->id );
+		if ( $NumRows > 0 ) {
+			$HTML = '<b>Package flavors</b> (flavor: name)';
+			// if this is our first output, put up our standard header
+			$HTML .= '<ul>';
+			for ( $i = 0; $i < $NumRows; $i++ ) {
+				$PackageFlavors->FetchNth($i);
+
+				$HTML .= '<li>' . $PackageFlavors->flavor_name . ': ' . $PackageFlavors->name . "</li>\n";
+			}
+			$HTML .= '</ul>';
+		}
+
+		if ( NumRows == 0 ) {
+			$HTML .= ' There is no flavor information for this port<br>';
 		}
 
 		return $HTML;

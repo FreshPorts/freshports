@@ -58,9 +58,9 @@ SELECT distinct PA.category, PA.name as port, coalesce(V.date_modified, V.date_e
 
 	function FetchNth($N) {
 		#
-		# call FetchInitialiseTo first.
+		# call FetchInitialise first.
 		# then call this function N times, where N is the number
-		# returned by FetchInitialiseTo
+		# returned by FetchInitialise
 		#
 
 		$myrow = pg_fetch_array($this->LocalResult, $N);

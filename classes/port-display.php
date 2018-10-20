@@ -501,6 +501,8 @@ class port_display {
 		   $HTML .= '<br>' . $this->ShowConfigurePlist();
 	   }
 
+	   $HTML .= '<b>Dependency line</b>: <span class="file">' . $port->package_name . '>0:' . $this->DisplayPlainText() . '</span><br>';
+
 		# only show if we're meant to show, and if the port has not been deleted.
 		if ($this->ShowPackageLink || $this->ShowEverything) {
 			$HTML .= "\n<hr>\n";

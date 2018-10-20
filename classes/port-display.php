@@ -756,111 +756,94 @@ class port_display {
 		return $HTML;
 	}
 	
-    function ShowDependencies( $port )
-    {
-        $HTML = '';
+	function ShowDependencies( $port ) {
+		$HTML = '';
 
-        $PortDependencies = new PortDependencies( $this->db );
-        $Types = array( 'B' => 'Build', 'E' => 'Extract', 'F' => 'Fetch', 'L' => 'Libraries', 'P' => 'Patch', 'R' => 'Run' );
-        foreach ( $Types as $type => $title )
-        {
-            $NumRows = $PortDependencies->FetchInitialise( $port->id, $type );
-            if ( $NumRows > 0 )
-            {
-                // if this is our first output, put up our standard header
-                if ( $HTML === '' )
-                {
-                  if ( $port->IsDeleted() )
-                  {
-                      $HTML .= 'NOTE: dependencies for deleted ports are notoriously suspect<br>';
-                  }
-                  $HTML .= '<p class="required">This port is required by:</p>';
-                }
+		$PortDependencies = new PortDependencies( $this->db );
+		$Types = array( 'B' => 'Build', 'E' => 'Extract', 'F' => 'Fetch', 'L' => 'Libraries', 'P' => 'Patch', 'R' => 'Run' );
+		foreach ( $Types as $type => $title ) {
+			$NumRows = $PortDependencies->FetchInitialise( $port->id, $type );
+			if ( $NumRows > 0 ) {
+				// if this is our first output, put up our standard header
+				if ( $HTML === '' ) {
+					if ( $port->IsDeleted() ) {
+						$HTML .= 'NOTE: dependencies for deleted ports are notoriously suspect<br>';
+					}
+					$HTML .= '<p class="required">This port is required by:</p>';
+				}
 
-                $HTML .= '<span class="required">for ' . $title . "</span>\n";
-                $div = '<div id="RequiredBy' . $title . '">';
-                $div .= "\n" . '<ol class="depends" id="requiredfor"' . $title . '>' . "\n";
+				$HTML .= '<span class="required">for ' . $title . "</span>\n";
+				$div = '<div id="RequiredBy' . $title . '">';
+				$div .= "\n" . '<ol class="depends" id="requiredfor"' . $title . '>' . "\n";
 
-                $deletedPortFound = true;
-                for ( $i = 0; $i < $NumRows; $i++ )
-                {
-	            $PortDependencies->FetchNth($i);
+				$deletedPortFound = true;
+				for ( $i = 0; $i < $NumRows; $i++ ) {
+					$PortDependencies->FetchNth($i);
 
-                    $div .= '<li>' . freshports_link_to_port_single( $PortDependencies->category, $PortDependencies->port, $this->branch );
-                    if ( $PortDependencies->status == 'D')
-                    {
-                        $div .= '<sup>*</sup>';
-                        $deletedPortFound = true;
-                    }
-                    $div .= "</li>\n";
-                    if ( $NumRows > DEPENDS_SUMMARY && $i == DEPENDS_SUMMARY  - 1)
-                    {
-                        $div .= '<a href="#" id="RequiredBy' . $title . 'Extra-show" class="showLink" onclick="showHide(\'RequiredBy' . $title . 'Extra\');return false;">Expand this list (' . $NumRows . ' items)</a>';
-                        $div .= '<span id="RequiredBy' . $title . 'Extra" class="more">';
-                    }
-                }
+					$div .= '<li>' . freshports_link_to_port_single( $PortDependencies->category, $PortDependencies->port, $this->branch );
+					if ( $PortDependencies->status == 'D') {
+						$div .= '<sup>*</sup>';
+						$deletedPortFound = true;
+					}
+					$div .= "</li>\n";
+					if ( $NumRows > DEPENDS_SUMMARY && $i == DEPENDS_SUMMARY  - 1) {
+						$div .= '<a href="#" id="RequiredBy' . $title . 'Extra-show" class="showLink" onclick="showHide(\'RequiredBy' . $title . 'Extra\');return false;">Expand this list (' . $NumRows . ' items)</a>';
+						$div .= '<span id="RequiredBy' . $title . 'Extra" class="more">';
+					}
+				}
 
-                if ( $NumRows > DEPENDS_SUMMARY )
-                {
-                    $div .= '<a href="#" id="RequiredBy' . $title . 'Extra-hide" class="hideLink" onclick="showHide(\'RequiredBy' . $title . 'Extra\');return false;">Collapse this list.</a>';
-                    $div .= '</span>';
-                }
+				if ( $NumRows > DEPENDS_SUMMARY ) {
+					$div .= '<a href="#" id="RequiredBy' . $title . 'Extra-hide" class="hideLink" onclick="showHide(\'RequiredBy' . $title . 'Extra\');return false;">Collapse this list.</a>';
+					$div .= '</span>';
+				}
 
-                $div .= '</ol></div>';
+				$div .= '</ol></div>';
 
-                $HTML .= $div;
-	    }
-        }
+				$HTML .= $div;
+			}
+		}
 
-        if ( $HTML === '' )
-        {
-          $HTML .= 'There are no ports dependent upon this port<br>';
-        }
-        elseif ($deletedPortFound)
-        {
-          $HTML .= '* - deleted ports are only shown under the <em>This port is required by</em> section.  It was harder to do for the <em>Required</em> section.  Perhaps later...';
-        }
+		if ( $HTML === '' ) {
+			$HTML .= 'There are no ports dependent upon this port<br>';
+		} elseif ($deletedPortFound) {
+			$HTML .= '* - deleted ports are only shown under the <em>This port is required by</em> section.  It was harder to do for the <em>Required</em> section.  Perhaps later...';
+		}
 
-        return $HTML;
-    }
+		return $HTML;
+	}
 
-    function ShowConfigurePlist()
-    {
-        $HTML = '';
+	function ShowConfigurePlist() {
+		$HTML = '';
 
-        $ConfigurePlist = new PortConfigurePlist( $this->db );
-        $NumRows = $ConfigurePlist->FetchInitialise( $this->port->id );
-        if ( $NumRows > 0 )
-        {
-            // if this is our first output, put up our standard header
-            if ( $HTML === '' )
-            {
-                $div = '<div id="ConfigurePlistDiv">';
-                $div .= "\n" . '<ol class="configure" id="configureplist">Pseudo-<b>pkg-plist</b> information, but much better, from <code class="code">make generate-plist</code><br>' . "\n";
+		$ConfigurePlist = new PortConfigurePlist( $this->db );
+		$NumRows = $ConfigurePlist->FetchInitialise( $this->port->id );
+		if ( $NumRows > 0 ) {
+			// if this is our first output, put up our standard header
+			if ( $HTML === '' ) {
+				$div = '<div id="ConfigurePlistDiv">';
+				$div .= "\n" . '<ol class="configure" id="configureplist">Pseudo-<b>pkg-plist</b> information, but much better, from <code class="code">make generate-plist</code><br>' . "\n";
 
-                        $div .= '<a href="#" id="configureplist-Extra-show" class="showLink" onclick="showHide(\'configureplist-Extra\');return false;">Expand this list (' . $NumRows . ' items)</a>';
-                        $div .= '<br><span id="configureplist-Extra" class="more">';
-                for ( $i = 0; $i < $NumRows; $i++ )
-                {
-	            $ConfigurePlist->FetchNth($i);
+				$div .= '<a href="#" id="configureplist-Extra-show" class="showLink" onclick="showHide(\'configureplist-Extra\');return false;">Expand this list (' . $NumRows . ' items)</a>';
+				$div .= '<br><span id="configureplist-Extra" class="more">';
+				for ( $i = 0; $i < $NumRows; $i++ ) {
+					$ConfigurePlist->FetchNth($i);
 
-                    $div .= '<li>' . $ConfigurePlist->installed_file . "</li>\n";
-                }
+					$div .= '<li>' . $ConfigurePlist->installed_file . "</li>\n";
+				}
 
-                $div .= '<a href="#" id="configureplist-Extra-hide" class="hideLink" onclick="showHide(\'configureplist-Extra\');return false;">Collapse this list.</a>';
-                $div .= '</span>';
-                $div .= '</ol></div>';
+				$div .= '<a href="#" id="configureplist-Extra-hide" class="hideLink" onclick="showHide(\'configureplist-Extra\');return false;">Collapse this list.</a>';
+				$div .= '</span>';
+				$div .= '</ol></div>';
 
-                $HTML .= $div;
-	    }
-        }
+				$HTML .= $div;
+			}
+		}
 
-        if ( $HTML === '' )
-        {
-          $HTML .= 'There is no configure plist information for this port<br>';
-        }
+		if ( $HTML === '' ) {
+			$HTML .= 'There is no configure plist information for this port<br>';
+		}
 
-        return $HTML;
-    }
+		return $HTML;
+	}
 
 }

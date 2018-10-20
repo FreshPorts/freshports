@@ -458,50 +458,50 @@ class port_display {
 			}
 		}
 		
-	  $HTML .= '<b>License:</b> ';
+		$HTML .= '<b>License:</b> ';
 		if ($port->license) {
 		        $HTML .= htmlentities($port->license);
 		} else {
 		        $HTML .= 'not specified in port';
-    }
+		}
 
-    $HTML .= "<br>\n";
+		$HTML .= "<br>\n";
     
 
-	   # The ad goes here
-	   if ($this->ShowAd || $this->ShowEverything) {
-		   $HTML .= port_display_AD;
-	   }
+		# The ad goes here
+		if ($this->ShowAd || $this->ShowEverything) {
+			$HTML .= port_display_AD;
+		}
 
-	   if ($this->ShowDescriptionLong || $this->ShowEverything) {
-		   $HTML .= '<PRE CLASS="code">' . htmlify(_forDisplay($port->long_description)) . '</PRE>';
-	   }
+		if ($this->ShowDescriptionLong || $this->ShowEverything) {
+			$HTML .= '<PRE CLASS="code">' . htmlify(_forDisplay($port->long_description)) . '</PRE>';
+		}
 
-	   if ($this->ShowChangesLink || $this->ShowEverything) {
-             $HTML .=  $this->link_to_repo();
-	   }
+		if ($this->ShowChangesLink || $this->ShowEverything) {
+			$HTML .=  $this->link_to_repo();
+		}
 
-	   if ($port->PackageExists() && ($this->ShowPackageLink || $this->ShowEverything)) {
-		   // package
-		   $HTML .= ' <b>:</b> ';
-		   $HTML .= '<A HREF="' . FRESHPORTS_FREEBSD_FTP_URL . '/' . freshports_PackageVersion($port->version, $port->revision, $port->epoch);
-		   $HTML .= '.tgz">Package</A>';
-	   }
+		if ($port->PackageExists() && ($this->ShowPackageLink || $this->ShowEverything)) {
+			// package
+			$HTML .= ' <b>:</b> ';
+			$HTML .= '<A HREF="' . FRESHPORTS_FREEBSD_FTP_URL . '/' . freshports_PackageVersion($port->version, $port->revision, $port->epoch);
+			$HTML .= '.tgz">Package</A>';
+		}
 
-	   if ($port->homepage && ($this->ShowHomepageLink || $this->ShowEverything)) {
-		   $HTML .= ' <b>:</b> ';
-		   $HTML .= '<a HREF="' . _forDisplay($port->homepage) . '" TITLE="Homepage for this port">Homepage</a>';
-	   }
+		if ($port->homepage && ($this->ShowHomepageLink || $this->ShowEverything)) {
+			$HTML .= ' <b>:</b> ';
+			$HTML .= '<a HREF="' . _forDisplay($port->homepage) . '" TITLE="Homepage for this port">Homepage</a>';
+		}
 
-	   if (defined('PORTSMONSHOW')  && ($this->ShowPortsMonLink || $this->ShowEverything)) {
-		   $HTML .= ' <b>:</b> ' . freshports_PortsMonitorURL($port->category, $port->port);
-	   }
+		if (defined('PORTSMONSHOW')  && ($this->ShowPortsMonLink || $this->ShowEverything)) {
+			$HTML .= ' <b>:</b> ' . freshports_PortsMonitorURL($port->category, $port->port);
+		}
 
-	   if (defined('CONFIGUREPLISTSHOW')  && ($this->ShowConfigurePlist || $this->ShowEverything)) {
-		   $HTML .= '<br>' . $this->ShowConfigurePlist();
-	   }
+		if (defined('CONFIGUREPLISTSHOW')  && ($this->ShowConfigurePlist || $this->ShowEverything)) {
+			$HTML .= '<br>' . $this->ShowConfigurePlist();
+		}
 
-	   $HTML .= '<b>Dependency line</b>: <span class="file">' . $port->package_name . '>0:' . $this->DisplayPlainText() . '</span><br>';
+		$HTML .= '<b>Dependency line</b>: <span class="file">' . $port->package_name . '>0:' . $this->DisplayPlainText() . '</span><br>';
 
 		# only show if we're meant to show, and if the port has not been deleted.
 		if ($this->ShowPackageLink || $this->ShowEverything) {
@@ -554,7 +554,7 @@ class port_display {
 			}
 		}
 
-	   if ($this->ShowEverything || $this->ShowMasterSlave) {
+		if ($this->ShowEverything || $this->ShowMasterSlave) {
 			#
 			# Display our master port
 			#

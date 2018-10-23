@@ -867,7 +867,7 @@ class port_display {
 		}
 
 		if ( NumRows == 0 ) {
-			$HTML .= ' There is no flavor information for this port<br>';
+			$HTML .= ' There is no flavor information for this port.<br>';
 		}
 
 		return $HTML;

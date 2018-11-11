@@ -855,18 +855,18 @@ class port_display {
 		$PackageFlavors = new PackageFlavors( $this->db );
 		$NumRows = $PackageFlavors->FetchInitialise( $this->port->id );
 		if ( $NumRows > 0 ) {
-			$HTML = '<b>Package flavors</b> (flavor: name)';
+			$HTML = '<b>Package flavors</b> (<span class="file">&lt;flavor&gt;: &lt;package&gt;</span>)';
 			// if this is our first output, put up our standard header
 			$HTML .= '<ul>';
 			for ( $i = 0; $i < $NumRows; $i++ ) {
 				$PackageFlavors->FetchNth($i);
 
-				$HTML .= '<li>' . $PackageFlavors->flavor_name . ': ' . $PackageFlavors->name . "</li>\n";
+				$HTML .= '<li><span class="file">' . $PackageFlavors->flavor_name . ': ' . $PackageFlavors->name . "</span></li>\n";
 			}
 			$HTML .= '</ul>';
 		}
 
-		if ( NumRows == 0 ) {
+		if ( $NumRows == 0 ) {
 			$HTML .= ' There is no flavor information for this port.<br>';
 		}
 

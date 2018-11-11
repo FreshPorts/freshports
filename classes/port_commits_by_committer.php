@@ -15,7 +15,7 @@ class PortCommitsByCommitter extends CommitsByCommitter {
 	var $Committer;
 
 	function __construct($dbh) {
-		parent::Commits($dbh);
+		parent::__construct($dbh);
 	}
 	
 	function GetCountCommits() {

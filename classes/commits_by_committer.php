@@ -14,7 +14,7 @@ class CommitsByCommitter extends commits {
 	var $Committer;
 
 	function __construct($dbh) {
-		parent::Commits($dbh);
+		parent::__construct($dbh);
 	}
 	
 	function CommitterSet($Committer) {

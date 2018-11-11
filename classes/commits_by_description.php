@@ -14,7 +14,7 @@ class CommitsByDescription extends commits {
 	var $Condition = '';
 
 	function __construct($dbh) {
-		parent::Commits($dbh);
+		parent::__construct($dbh);
 	}
 	
 	function ConditionSet($Condition) {

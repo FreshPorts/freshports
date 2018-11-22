@@ -502,7 +502,7 @@ class port_display {
 			$HTML .= '<br>' . $this->ShowConfigurePlist();
 		}
 
-		$HTML .= '<b>Dependency line</b>: <span class="file">' . $port->package_name . '>0:' . $this->DisplayPlainText() . '</span><br>';
+		$HTML .= '<p><b>Dependency line</b>: <span class="file">' . $port->package_name . '>0:' . $this->DisplayPlainText() . '</span></p>';
 
 		# only show if we're meant to show, and if the port has not been deleted.
 		if ($this->ShowPackageLink || $this->ShowEverything) {
@@ -843,7 +843,7 @@ class port_display {
 		}
 
 		if ( $HTML === '' ) {
-			$HTML .= 'There is no configure plist information for this port<br>';
+			$HTML .= '<p>There is no configure plist information for this port.</p>';
 		}
 
 		return $HTML;
@@ -867,7 +867,7 @@ class port_display {
 		}
 
 		if ( $NumRows == 0 ) {
-			$HTML .= ' There is no flavor information for this port.<br>';
+			$HTML .= '<p>There is no flavor information for this port.</p>';
 		}
 
 		return $HTML;

@@ -691,8 +691,8 @@ class port_display {
 					$HTML .= "<li>conflicts with " . freshports_link_to_port($match['category'], $match['port']) . '</li>';
 				}
 			} else {
-				$HTML .= 'There are no matches for this port.  This is usually an error.';
-				syslog(LOG_ERR, 'There are no matches for this port: ' . $port->element_pathname);
+				$HTML .= 'There are no Conflicts Matches for this port.  This is usually an error.';
+				syslog(LOG_ERR, 'There are no Conflicts Matches for this port: ' . $port->element_pathname);
 			}
 			$HTML .= '</ul>';
 		}

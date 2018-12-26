@@ -504,6 +504,45 @@ class port_display {
 
 		$HTML .= '<p><b>Dependency line</b>: <span class="file">' . $port->package_name . '>0:' . $this->DisplayPlainText() . '</span></p>';
 
+		# if there are conflicts
+		if ($this->ShowEverything && ($port->conflicts || $port->conflicts_build || $port->conflicts_install)) {
+			$HTML .= "<b>Conflicts:</b>\n<ul>";
+
+			if ($port->conflicts) {
+				$HTML .= "<li>CONFLICTS:";
+				$HTML .= $this->htmlConflicts($port->conflicts);
+				$HTML .= "\n</li>\n";
+			}
+
+			if ($port->conflicts_build) {
+				$HTML .= "<li>CONFLICTS_BUILD:";
+				$HTML .= $this->htmlConflicts($port->conflicts_build);
+				$HTML .= "\n</li>\n";
+			}
+
+			if ($port->conflicts_install) {
+				$HTML .= "<li>CONFLICTS_INSTALL:";
+				$HTML .= $this->htmlConflicts($port->conflicts_install);
+				$HTML .= "\n</li>\n";
+			}
+
+			$HTML .= "</ul>\n";
+
+			$HTML .= "<b>Conflicts Matches:</b>\n<ul>";
+			if (!empty($port->conflicts_matches)) {
+				foreach($port->conflicts_matches as $match) {
+					$HTML .= "<li>conflicts with " . freshports_link_to_port($match['category'], $match['port']) . '</li>';
+				}
+			} else {
+				$HTML .= 'There are no Conflicts Matches for this port.  This is usually an error.';
+				syslog(LOG_ERR, 'There are no Conflicts Matches for this port: ' . $port->element_pathname);
+			}
+			$HTML .= '</ul>';
+		}
+
+
+
+
 		# only show if we're meant to show, and if the port has not been deleted.
 		if ($this->ShowPackageLink || $this->ShowEverything) {
 			$HTML .= "\n<hr>\n";
@@ -661,45 +700,9 @@ class port_display {
 			$HTML .= "</pre>\n<hr>\n";
 		}
 
-		# if there are conflicts
-		if ($this->ShowEverything && ($port->conflicts || $port->conflicts_build || $port->conflicts_install)) {
-			$HTML .= "<b>Conflicts:</b>\n<ul>";
-
-			if ($port->conflicts) {
-				$HTML .= "<li>CONFLICTS:";
-				$HTML .= $this->htmlConflicts($port->conflicts);
-				$HTML .= "\n</li>\n";
-			}
-
-			if ($port->conflicts_build) {
-				$HTML .= "<li>CONFLICTS_BUILD:";
-				$HTML .= $this->htmlConflicts($port->conflicts_build);
-				$HTML .= "\n</li>\n";
-			}
-
-			if ($port->conflicts_install) {
-				$HTML .= "<li>CONFLICTS_INSTALL:";
-				$HTML .= $this->htmlConflicts($port->conflicts_install);
-				$HTML .= "\n</li>\n";
-			}
-
-			$HTML .= "</ul>\n";
-
-			$HTML .= "<b>Conflicts Matches:</b>\n<ul>";
-			if (!empty($port->conflicts_matches)) {
-				foreach($port->conflicts_matches as $match) {
-					$HTML .= "<li>conflicts with " . freshports_link_to_port($match['category'], $match['port']) . '</li>';
-				}
-			} else {
-				$HTML .= 'There are no Conflicts Matches for this port.  This is usually an error.';
-				syslog(LOG_ERR, 'There are no Conflicts Matches for this port: ' . $port->element_pathname);
-			}
-			$HTML .= '</ul>';
-		}
-
 		if ($this->ShowEverything && $port->pkgmessage) {
 			$HTML .= "<b>pkg-message:</b>\n<pre>";
-			$HTML .= $port->pkgmessage;
+			$HTML .= htmlspecialchars($port->pkgmessage);
 			$HTML .= "</pre>\n<hr>\n";
 		}
 

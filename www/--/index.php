@@ -91,7 +91,7 @@ switch($script) {
 
         echo '<p>';
 
-        if ($status->InMaintenanceMode) {
+        if ($status->InMaintenanceMode()) {
             echo 'We are in maintenance mode<br>';
         } else {
             echo 'We are in not in maintenance mode';
@@ -99,7 +99,7 @@ switch($script) {
 
         echo '</p><p>';
 
-        if ($status->LoginsAreAllowed) {
+        if ($status->LoginsAreAllowed()) {
             echo 'Logins are enabled<br>';
         } else {
             echo 'Nobody is allowed to login right now.';

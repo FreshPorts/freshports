@@ -24,7 +24,7 @@
 		$BranchName = date('Y') . 'Q' . (floor((date('n') - 1) / 3) + 1);
 	}
 	
-	echo $BranchName . '<br>';
+#	echo $BranchName . '<br>';
 
 	$Flavor = '';
 	if (IsSet($_REQUEST['flavor'])) {

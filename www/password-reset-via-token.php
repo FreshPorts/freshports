@@ -98,7 +98,7 @@ if (IsSet($submit)) {
 <TR><TD VALIGN="top" width="100%">
 <TABLE width="100%" border="0">
   <TR>
-    <TD height="20"><script language="php">
+    <TD height="20"><?php
 
 
 if ($errors) {
@@ -160,7 +160,7 @@ echo "</TD>
 </TABLE>";
 }
 
-</script>
+?>
 
 <p>
 

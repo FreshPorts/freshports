@@ -15,7 +15,7 @@ define('HTMLIFY_PROCESS_PRS', true);
 
 function freshports_IsEmailValid($email) {
 	# see also convertMail
-	if (eregi("^[a-z0-9\._+-]+@[a-z0-9\._-]+$", $email)) {
+	if (preg_match("/^[a-z0-9\._+-]+@[a-z0-9\._-]+$/i", $email)) {
 		return TRUE;
 	} else {
 		return FALSE;

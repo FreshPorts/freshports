@@ -307,3 +307,25 @@ GRANT select, delete ON cache_clearing_dates TO GROUP listening;
 
 grant select, insert,         delete on session_variables              to group commits;
 
+
+-- For FreshSource database access
+
+create role freshsource_ro;
+
+grant select on system              to freshsource_ro;
+grant select on latest_commits      to freshsource_ro;
+grant select on security_notice     to freshsource_ro;
+grant select on element             to freshsource_ro;
+grant select on commit_log_elements to freshsource_ro;
+grant select on commit_log          to freshsource_ro;
+grant select on repo                to freshsource_ro;
+grant select on users               to freshsource_ro;
+grant select on watch_notice        to freshsource_ro;
+grant select on watch_list_element  to freshsource_ro;
+grant select on watch_list          to freshsource_ro;
+grant select on watch_list          to freshsource_ro;
+
+grant update (cookie)    on users   to freshsource_ro;
+grant update (lastlogin) on users   to freshsource_ro;
+
+create user freshsource_dev with password '[redacted]' IN ROLE freshsource_ro;

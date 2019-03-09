@@ -18,7 +18,7 @@
 					'freshports - new ports, applications',
 					'FreeBSD, index, applications, ports');
 
-	if (!eregi(".*@FreeBSD.org", $User->email)) {
+	if (!preg_match("/.*@FreeBSD.org/i", $User->email)) {
 		# nothing yet
 	} else {
 		if (IsSet($_POST["subscribe"]) && $_POST["subscribe"] && !empty($visitor)) {
@@ -85,7 +85,7 @@
 <TR><TD>
 <P>
 <?php
-	if (!eregi(".*@FreeBSD.org", $User->email)) {
+	if (!preg_match(".*@FreeBSD.org", $User->email)) {
 ?>
 <p><b><big>This page only works if you are logged in and using a @FreeBSD.org email address.</big></b></p>
 <?php

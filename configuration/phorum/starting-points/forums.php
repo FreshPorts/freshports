@@ -56,7 +56,7 @@
   $PHORUM['UserModifyProf']='1';
 
   // expand all the above into vars for legacy code.
-  while(foreach($PHORUM as $key => $value){
+  foreach ($PHORUM as $key => $value) {
     $$key=$PHORUM[$key];
   }
 
@@ -65,7 +65,3 @@
   $PHORUM['DatabaseName']='fpphorum';
   $PHORUM['DatabaseUser']='dan';
   $PHORUM['DatabasePassword']='';
-
-
-
-?>

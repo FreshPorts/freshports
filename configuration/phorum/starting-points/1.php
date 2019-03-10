@@ -46,8 +46,7 @@
   $PHORUM['ForumNavFontColor']=$PHORUM['default_nav_font_color'];
 
   // expand the array into vars for legacy code.
-  reset($PHORUM); foreach($PHORUM as $key => $value) {
+
+  reset($PHORUM); foreach ($PHORUM as $key => $value) {
     $$key=$PHORUM[$key];
   }
-
-?>

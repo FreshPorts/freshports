@@ -56,7 +56,7 @@
   $PHORUM['UserModifyProf']='1';
 
   // expand all the above into vars for legacy code.
-  while(list($key, $value)=each($PHORUM)){
+  while(foreach($PHORUM as $key => $value){
     $$key=$PHORUM[$key];
   }
 

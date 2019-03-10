@@ -40,7 +40,7 @@ class PackageFlavors {
 		if ($this->LocalResult) {
 			$numrows = pg_numrows($this->LocalResult);
 			if ($numrows == 1) {
-				$myrow = pg_fetch_array($result, 0);
+				$myrow = pg_fetch_array($this->LocalResult, 0);
 			}
 		}
 

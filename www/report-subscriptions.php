@@ -79,7 +79,7 @@
 		
 			reset($reports);
 	
-			while (list($key, $value) = each($reports)) {
+			foreach ($reports as $key => $value) {
 				$TheFrequency = pg_escape_string($_POST['reportfrequency_' . $value]);
 				$value = pg_escape_string($value);
 
@@ -108,7 +108,7 @@
 		$Reports = freshports_ReportNames($db);
 
 		if ($Debug) {
-	        while (list($report_id, $Values) = each($Reports)) {
+	        foeach ($reports as $report_id => $Values) {
 
 				echo '* * * * now processing $report_id = \'' . $report_id . '\'';
 				echo ' and $Values = \'' . $Values . '\'<BR>';
@@ -162,7 +162,7 @@ This page allows you to select the reports you wish to receive and the frequency
 
 		reset($Reports);
 		$numrows = count($Reports);
-		while (list($report_id, $Values) = each($Reports)) {
+		foreach ($Reports as $report_id => $Values) {
 
 			if ($Debug) {
 				echo 'now processing $report_id = \'' . $report_id . '\'';
@@ -194,7 +194,7 @@ This page allows you to select the reports you wish to receive and the frequency
 	
 				$DDLB = '<SELECT NAME="reportfrequency_' . $report_id . '" size="1">';
 
-		   		while (list($frequency_id, $frequency) = each($Frequencies)) {
+		   		foreach ($Frequencies as $frequency_id => $frequency) {
 
 					if ($Debug) {
 						echo '   with $frequency_id = \'' . $frequency_id . '\' and $frequency = \'' . $frequency . '\'<BR>';

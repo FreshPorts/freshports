@@ -43,7 +43,7 @@ if (IsSet($submit)) {
   $Password2 = pg_escape_string( $_POST['Password2'] );
 
   if ($Debug) {
-    while (list($name, $value) = each($HTTP_POST_VARS)) {
+    foreach($HTTP_POST_VARS as $name => $value) {
       echo "$name = $value<br>\n";
     }
   }

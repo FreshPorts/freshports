@@ -87,14 +87,14 @@ if ($_SERVER["HTTP_HOST"] = "admin.freshports.org") {
 
 $Debug = 0;
 if ($submit) {
-   while (list($name, $value) = each($HTTP_POST_VARS)) {
+   foreach ($HTTP_POST_VARS as $name => $value) {
       echo "$name = $value<br>\n";
    }
       
    if ($commits) {
      $CommitCount = count($commits);
      echo "CommitCount= $CommitCount<br>\n";
-     while (list($key, $value) = each($commits)) {
+     foreach ($commits as $key => $value) {
         echo "element $key = '$value'<br>\n";
 
         freshports_Change_Log_Delete($value, $db);

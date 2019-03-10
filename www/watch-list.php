@@ -30,7 +30,7 @@ function RemoveElementFromWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 
 	if ($Debug) echo "I'm removing $ElementID\n<BR>";
 	$WatchListElement = new WatchListElement($db);
-	while (list($key, $WatchListID) = each($WatchListsIDs)) {
+	foreach ($WatchListsIDs as $key => $WatchListID) {
 		$result = $WatchListElement->Delete($UserID, $WatchListID, $ElementID);
 		if ($result == -1) {
 			break;
@@ -43,7 +43,7 @@ function RemoveElementFromWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 	if ($Debug) echo "I'm adding $ElementID\n<BR>";
 	$WatchListElement = new WatchListElement($db);
-	while (list($key, $WatchListID) = each($WatchListsIDs)) {
+	foreach ($WatchListsIDs as $key => $WatchListID) {
 		$result = $WatchListElement->Add($UserID, $WatchListID, $ElementID);
 		if ($result == -1) {
 			break;

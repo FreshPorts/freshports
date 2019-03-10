@@ -51,7 +51,7 @@ if (IsSet($submit)) {
 	}
 
 	if ($Debug) {
-		while (list($name, $value) = each($HTTP_POST_VARS)) {
+		foreach ($HTTP_POST_VARS as $name => $value) {
 			echo "$name = $value<br>\n";
 		}
 	}

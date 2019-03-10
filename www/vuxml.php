@@ -74,7 +74,7 @@ These are the vulnerabilities relating to the commit you have selected:
 
 	$VuXML = new VuXML($db);
 
-	while (list($key, $value) = each($vidArray)) {
+	foreach($vidArray as $key => $value) {
 		$VuXML->FetchByVID($value);
 
 		$URL = VUXMLURL . $value . '.html';

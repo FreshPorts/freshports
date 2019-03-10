@@ -59,7 +59,7 @@ if ($submit) {
     $WatchListElement = new WatchListElement($db);
     // make sure we are pointing at the start of the array.
     reset($categories);
-    while (list($key, $value) = each($categories)) {
+    foreach ($categories as $key => $value) {
       $result = $WatchListElement->Add($User->id, $wlid, $value);
 
 #      ${"category_".$value} = 1;

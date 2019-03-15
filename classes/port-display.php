@@ -141,7 +141,6 @@ class port_display {
 		$this->ShowMasterSlave         = false;
 		$this->ShowPackageLink         = false;
 		$this->ShowPortCreationDate    = false;
-		$this->ShowPortsMonLink        = false;
 		$this->ShowConfigurePlist      = false;
 		$this->ShowShortDescription    = false;
 		$this->ShowWatchListCount      = false;
@@ -164,7 +163,6 @@ class port_display {
 		$this->ShowHomepageLink        = true;
 		$this->ShowMaintainedBy        = true;
 		$this->ShowPortCreationDate    = true;
-		$this->ShowPortsMonLink        = true;
 		$this->ShowPackageLink         = true;
 		$this->ShowShortDescription    = true;
 		$this->ShowWatchListStatus     = true;
@@ -492,10 +490,6 @@ class port_display {
 		if ($port->homepage && ($this->ShowHomepageLink || $this->ShowEverything)) {
 			$HTML .= ' <b>:</b> ';
 			$HTML .= '<a HREF="' . _forDisplay($port->homepage) . '" TITLE="Homepage for this port">Homepage</a>';
-		}
-
-		if (defined('PORTSMONSHOW')  && ($this->ShowPortsMonLink || $this->ShowEverything)) {
-			$HTML .= ' <b>:</b> ' . freshports_PortsMonitorURL($port->category, $port->port);
 		}
 
 		if (defined('CONFIGUREPLISTSHOW')  && ($this->ShowConfigurePlist || $this->ShowEverything)) {

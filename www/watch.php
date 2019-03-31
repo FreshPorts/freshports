@@ -395,7 +395,7 @@ if ($wlid != '') {
 
 } // end if no wlid
 
-</script>
+?>
 </table>
 </td>
 

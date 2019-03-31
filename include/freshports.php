@@ -1487,7 +1487,7 @@ function freshports_DescriptionPrint($description, $encoding_losses, $maxnumline
 	$shortened = freshports_Head($description, $maxnumlines);
 	$HTML  = '<PRE CLASS="code">';
 
-	$HTML .= _forDisplay(freshports_wrap($shortened), $Process_PRs);
+	$HTML .= link_urls(_forDisplay(freshports_wrap($shortened), $Process_PRs));
 
 	$HTML .= '</PRE>';
 
@@ -2244,3 +2244,9 @@ applications, whatever term you want to use.');
 
 openlog('FreshPorts', LOG_PID, LOG_LOCAL3);
 #syslog(LOG_NOTICE, $_SERVER['SCRIPT_URL']);
+
+function link_urls($string) {
+  $res = preg_replace('/https?:\/\/[[:print:]]+/', '<a href="\0" rel="nofollow">\0</a>', $string);
+  $res = preg_replace('/^(PR:[[:blank:]]*)([[:digit:]]+)$/', '\1<a href="https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=\2" rel="nofollow">\2</a>', $res);
+  return $res;
+}

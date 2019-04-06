@@ -120,7 +120,7 @@ function _freshports_PortDisplayHelper($db, $category, $port, $branch, $HasCommi
 		}
 	}
 
-	$port_display = new port_display($db, $User);
+	$port_display = new port_display($db, $User, $branch);
 	$port_display->SetDetailsFull();
 
 	$Cache = new CachePort();
@@ -172,7 +172,7 @@ function _freshports_PortDisplayHelper($db, $category, $port, $branch, $HasCommi
 		$MyPort = new Port($db);
 		$MyPort->FetchByID($port_id, $User->id);
 
-		$port_display->SetPort($MyPort, $branch);
+		$port_display->SetPort($MyPort);
 	
 		$HTML .= $port_display->Display();
 		
@@ -241,7 +241,7 @@ document.body.appendChild(sheet);
 <?php echo freshports_MainContentTable(); ?>
 
 <TR>
-<? echo freshports_PageBannerText("Port details"); ?>
+<? echo freshports_PageBannerText("Port details" . ($branch != BRANCH_HEAD ? ' on branch ' . htmlspecialchars($branch) : '')); ?>
 </TR>
 
 <tr><td valign="top" width="100%">

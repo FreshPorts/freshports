@@ -82,7 +82,8 @@ define('PORTSMONSHOW',        1);
 define('CONFIGUREPLISTSHOW',  1);
 define('DISTFILESSURVEYSHOW', 1);
 
-define('BRANCH_HEAD', 'head');
+define('BRANCH_HEAD',      'head');
+define('BRANCH_QUARTERLY', 'quarterly');
 
 if (!defined('PATH_TO_PORTSDIR')) define('PATH_TO_PORTSDIR', '/usr/local/');  // must have a trailing /
 

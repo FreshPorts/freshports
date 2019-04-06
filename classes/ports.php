@@ -440,7 +440,7 @@ ON TEMP.wle_element_id = ports.element_id";
 		return $result;
 	}
 
-	function FetchByCategoryInitialise($CategoryName, $UserID = 0, $PageSize = 0, $PageNo = 0) {
+	function FetchByCategoryInitialise($CategoryName, $UserID = 0, $PageSize = 0, $PageNo = 0, $Branch = BRANCH_HEAD) {
 		# fetch all ports based on category
 		# e.g. id for net
 		
@@ -530,10 +530,16 @@ SELECT P.*, element.name    as port
         categories, ports_categories, categories PRIMARY_CATEGORY
   WHERE ports_categories.port_id     = ports.id
     AND ports_categories.category_id = categories.id
-    AND categories.name              = '$CategoryName'
+    AND categories.name              = '" . pg_escape_string($CategoryName) . "'
     AND PRIMARY_CATEGORY.id          = ports.category_id ) AS P
    ON (P.element_id     = element.id
-   AND element.status   = 'A') JOIN element_pathname EP ON P.element_id = EP.element_id AND EP.pathname like '/ports/head/%'";
+   AND element.status   = 'A') JOIN element_pathname EP ON P.element_id = EP.element_id AND EP.pathname like '/ports/";
+
+	if ($Branch != BRANCH_HEAD) {
+		$sql .= 'branches/';
+	}
+
+	$sql .= pg_escape_string($Branch) . "/%'";
 
 		if ($UserID) {
 			$sql .= ") AS PE

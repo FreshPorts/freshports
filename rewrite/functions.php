@@ -7,7 +7,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	# otherwise, return a non-false value.
 
 	if (IsSet($_REQUEST['branch'])) {
-		$Branch = htmlspecialchars($_REQUEST['branch']);
+		$Branch = NormalizeBranch(htmlspecialchars($_REQUEST['branch']));
 		define('FRESHPORTS_PORTS_TREE_PREFIX', '/ports/branches/' . $Branch . '/');
 	} else {
 		$Branch = BRANCH_HEAD;
@@ -35,9 +35,9 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	$URLParts = parse_url($_SERVER['REQUEST_URI']);
 	if ($Debug)
 	{
-	  echo 'the URI is <pre>\'' . $_SERVER['REQUEST_URI'] . "'</pre><br>\n";
-	  echo 'the url parts are <pre>\'' . print_r($URLParts) . "'</pre><br>\n";
-    }
+		echo 'the URI is <pre>\'' . $_SERVER['REQUEST_URI'] . "'</pre><br>\n";
+		echo 'the url parts are <pre>\'' . print_r($URLParts) . "'</pre><br>\n";
+	}
 
 	$pathname = $URLParts['path'];
 	if ($Debug) echo "The pathname is '$pathname'<br>";
@@ -57,19 +57,38 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 
 	define('PATH_NAME', $pathname);
 
+	# let's see if this is a category.
+	if ($ElementRecord->FetchByName('/ports/head/' . $pathname)) {
+		$IsElement = true;
+		if ($Debug) echo 'we found an element for that<br>';
+		if ($ElementRecord->IsCategory()) {
+			$IsCategory = true;
+			if ($Debug) echo 'This is a category<br>';
+		} else {
+			if ($Debug) echo 'It is NOT a category<br>';
+		}
+	} else {
+		if ($Debug) echo 'we found no element for that.<br>';
+	}
+
 	if ($Debug) echo "PATH_NAME='" . FRESHPORTS_PORTS_TREE_PREFIX . PATH_NAME . "'<br>";
 
-	if ($ElementRecord->FetchByName(FRESHPORTS_PORTS_TREE_PREFIX . $pathname)) {
-	  $IsElement          = true;
-          $HasCommitsOnBranch = true; // this is true even if the branch is head
-	} else {
-	  if ($Branch != BRANCH_HEAD) {
-            if ($Debug) echo 'trying on head next<br>';
-	    if ($ElementRecord->FetchByName('/ports/head/' . $pathname)) {
-	      $IsElement          = true;
-	      $HasCommitsOnBranch = false;
-	    }
-	  }
+	# if this is not a category, let's check for details on what might be a port
+	if (!$IsCategory) {
+		if ($Debug) echo 'checking ' . FRESHPORTS_PORTS_TREE_PREFIX . $pathname . ' to see what we find<br>';
+		if ($ElementRecord->FetchByName(FRESHPORTS_PORTS_TREE_PREFIX . $pathname)) {
+			if ($Debug) echo 'we found an element for that, therefore, there must be commits!<br>';
+			$IsElement          = true;
+			$HasCommitsOnBranch = true; // this is true even if the branch is head
+		} else {
+			if ($Branch != BRANCH_HEAD) {
+				if ($Debug) echo 'trying on head next<br>';
+				if ($ElementRecord->FetchByName('/ports/head/' . $pathname)) {
+					$IsElement          = true;
+					$HasCommitsOnBranch = false;
+				}
+			}
+		}
 	}
 
 	if ($IsElement) {
@@ -102,10 +121,8 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 			if ($Debug) echo "This is a port!<br>";
 			if ($Debug) echo "Category='$category'<br>";
 			if ($Debug) echo "Port='$port'<br>";
-		}
-		else
-		{
-		 if ($Debug) echo 'The call to ElementRecord indicates this is not a port<br>';
+		} else {
+			if ($Debug) echo 'The call to ElementRecord indicates this is not a port<br>';
 		}
 	} else {
 		if ($Debug) echo 'not an element<br>';
@@ -144,19 +161,17 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 			$result = $REQUEST_URI;
 
 			if ($Debug) echo 'This is a Port but there is no element for it.<br>';
-			
 		}
 
 		if (IsSet($category) && !$IsPort) {
 			# we have a valid category, but no valid port.
 			# we will display the category only if they did *try* to speciy a port.
 			# i.e. they suuplied an invalid port name
-			if ($Debug) echo 'This is a category<br>';
+			if ($Debug) echo 'This is a category &&&<br>';
 
 			if (IsSet($port)) {
 				if ($Debug)  'Invalid port supplied for a valid category<br>';
 			} else {
-				
 				require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
 				$Category = new Category($db);
 				$CategoryID = $Category->FetchByName($category);
@@ -170,18 +185,21 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	if ($Debug) echo 'let us see what we will include now....<br>';
 
 	if ($IsPort) {
-		if ($Debug) echo 'including missing-port ' . $Debug . '<BR>';
+		if ($Debug) echo 'including missing-port<BR>';
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-port.php');
-		if ($Debug) echo 'including missing-port ' . $Debug . '<BR>';
+
+		if ($Debug) echo 'including missing-port<BR>';
 
 		if ($HasCommitsOnBranch) {
 			# if zero is returned, all is well, otherwise, we can't display that category/port.
+			if ($Debug) echo 'invoking invoking freshports_PortDisplay<br>';
 			if (freshports_PortDisplay($db, $category, $port, $Branch)) {
 				echo 'freshports_PortDisplay returned non-zero';
 				return -1;
 			}
 		} else {
 			# if zero is returned, all is well, otherwise, we can't display that category/port.
+			if ($Debug) echo 'invoking invoking freshports_PortDisplayNotOnBranch<br>';
 			if (freshports_PortDisplayNotOnBranch($db, $category, $port, $Branch)) {
 				echo 'freshports_PortDisplay returned non-zero';
 				return -1;
@@ -190,12 +208,12 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	}
 
 	if ($IsCategory && !$IsPort) {
-		if ($Debug) echo 'This is a category<br>';
+		if ($Debug) echo 'This is a category ***<br>';
 		$query_string = $_SERVER["QUERY_STRING"];
 		parse_str($query_string, $url_parts);
 		$page = isset($url_parts['page']) ? intval($url_parts['page']) : 1;
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-category.php');
-		freshports_CategoryByID($db, $CategoryID, $page, $User->page_size);
+		freshports_CategoryByID($db, $CategoryID, $page, $User->page_size, $Branch);
 		exit;
 	}
 

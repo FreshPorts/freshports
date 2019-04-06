@@ -62,9 +62,11 @@ class DisplayCommit {
 		
 		$Debug = $this->Debug;
 
+		$URLBranchSuffix = BranchSuffix($this->BranchName);
+
 		if (!$this->result) {
 			syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ': no result set supplied');
-            die("read from database failed");
+			die("read from database failed");
 			exit;
 		}
 
@@ -189,7 +191,7 @@ class DisplayCommit {
 				}
 
 				$this->HTML .= '<BIG><B>';
-				$this->HTML .= '<A HREF="/' . $mycommit->category . '/' . $mycommit->port . '/">';
+				$this->HTML .= '<A HREF="/' . $mycommit->category . '/' . $mycommit->port . '/' . $URLBranchSuffix . '">';
 				$this->HTML .= $mycommit->port;
 				$this->HTML .= '</A>';
 
@@ -200,7 +202,7 @@ class DisplayCommit {
 
 				$this->HTML .= "</B></BIG>\n";
 
-				$this->HTML .= '<A HREF="/' . $mycommit->category . '/">';
+				$this->HTML .= '<A HREF="/' . $mycommit->category . '/'  . $URLBranchSuffix . '">';
 				$this->HTML .= $mycommit->category. "</A>";
 				$this->HTML .= '&nbsp;';
 

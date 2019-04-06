@@ -16,9 +16,14 @@ GLOBAL $g_NOINDEX;
 
 $g_NOINDEX = 1;  // we should not index category pages. too much clutter.
 
-function freshports_CategoryNextPreviousPage($CategoryName, $PortCount, $PageNo, $PageSize) {
+function freshports_CategoryNextPreviousPage($CategoryName, $PortCount, $PageNo, $PageSize, $Branch = BRANCH_HEAD) {
 
 	echo "Result Page:";
+
+	$queryParms = array();
+	if ($Branch != BRANCH_HEAD) {
+		$queryParms['branch'] = $Branch;
+	}
 
 	$NumPages = ceil($PortCount / $PageSize);
 
@@ -27,15 +32,18 @@ function freshports_CategoryNextPreviousPage($CategoryName, $PortCount, $PageNo,
 			echo "&nbsp;<b>$i</b>";
 			echo "\n";
 		} else {
-			echo '&nbsp;<a href="/' . $CategoryName . '/?page=' . $i .  '">' . $i . '</a>';
-			echo "\n";
+			$queryParms['page'] = $i;
+			echo '&nbsp;<a href="/' . $CategoryName . '/?';
+			echo http_build_query($queryParms, '', '&amp;');
+			echo '">' . $i . '</a>' . "\n";
 		}
 	}
 
 	if ($PageNo == $NumPages) {
 		echo '&nbsp; ' . NEXT_PAGE;
 	} else {
-		echo '&nbsp;<a href="/' . $CategoryName . '/?page=' . ($PageNo + 1) .  '">' . NEXT_PAGE . '</a>';
+		$queryParms['page'] = $PageNo + 1;
+		echo '&nbsp;<a href="/' . $CategoryName . '/?' . http_build_query($queryParms, '', '&amp;') .  '">' . NEXT_PAGE . '</a>';
 		echo "\n";
 	}
 }
@@ -46,14 +54,14 @@ function str_is_int($str) {
 }
 
 
-function freshports_CategoryByID($db, $category_id, $PageNo = 1, $PageSize = DEFAULT_PAGE_SIZE) {
+function freshports_CategoryByID($db, $category_id, $PageNo = 1, $PageSize = DEFAULT_PAGE_SIZE, $Branch = BRANCH_HEAD) {
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
-	$category = new Category($db);
+	$category = new Category($db, $Branch);
 	$category->FetchByID($category_id);
 
 	freshports_ConditionalGet($category->last_modified);
 
-	freshports_CategoryDisplay($db, $category, $PageNo, $PageSize);
+	freshports_CategoryDisplay($db, $category, $PageNo, $PageSize, $Branch);
 }
 
 
@@ -68,7 +76,7 @@ function freshports_CategoryByElementID($db, $element_id, $PageNo = 1, $PageSize
 }
 
 
-function freshports_CategoryDisplay($db, $category, $PageNo = 1, $PageSize = DEFAULT_PAGE_SIZE) {
+function freshports_CategoryDisplay($db, $category, $PageNo = 1, $PageSize = DEFAULT_PAGE_SIZE, $Branch = BRANCH_HEAD) {
 
 	GLOBAL $TableWidth;
 	GLOBAL $User;
@@ -125,7 +133,7 @@ function freshports_CategoryDisplay($db, $category, $PageNo = 1, $PageSize = DEF
 	$title = $category->{'name'};
 
 	# find out how many ports are in this category
-	$PortCount = $category->PortCount($category->name);
+	$PortCount = $category->PortCount($category->name, $Branch);
 
 	GLOBAL $User;
 	if ($Debug) echo "\$User->id='$User->id'";
@@ -136,7 +144,7 @@ function freshports_CategoryDisplay($db, $category, $PageNo = 1, $PageSize = DEF
 
 	$port = new Port($db);
 
-	$numrows = $port->FetchByCategoryInitialise($category->name, $User->id, $PageSize, $PageNo);
+	$numrows = $port->FetchByCategoryInitialise($category->name, $User->id, $PageSize, $PageNo, $Branch);
 
 	?>
 
@@ -147,7 +155,7 @@ function freshports_CategoryDisplay($db, $category, $PageNo = 1, $PageSize = DEF
 	<?php echo freshports_MainContentTable(); ?>
 
 		<tr>
-		 <? echo freshports_PageBannerText('Category listing - ' . $category->{'name'}); ?>
+		 <? echo freshports_PageBannerText('Category listing - ' . $category->{'name'} . ($Branch == BRANCH_HEAD ? '' : ' on branch '. pg_escape_string($Branch))); ?>
 		</tr>
 
 	<tr><td>
@@ -163,7 +171,7 @@ function freshports_CategoryDisplay($db, $category, $PageNo = 1, $PageSize = DEF
 	
 <BIG><BIG><B><?php
 echo $category->{'description'} 
-?></B></BIG></BIG>- Number of ports in this category: <?php
+?></B></BIG></BIG>- Number of ports in this category<?php echo $Branch == BRANCH_HEAD ? '' : ' with commits on branch ' . pg_escape_string($Branch)?>: <?php
 echo $PortCount;
 
 ?>
@@ -180,7 +188,7 @@ if ($ShowAds && $BannerAd) {
 }
 
 echo '<div align="center"><br>';
-freshports_CategoryNextPreviousPage($category->name, $PortCount, $PageNo, $PageSize);
+freshports_CategoryNextPreviousPage($category->name, $PortCount, $PageNo, $PageSize, $Branch);
 echo '</div>';
 
 ?>
@@ -200,7 +208,7 @@ echo '</div>';
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
 
-	$port_display = new port_display($db, $User);
+	$port_display = new port_display($db, $User, $Branch);
 	$port_display->SetDetailsCategory();
 
 	for ($i = 0; $i < $numrows; $i++) {
@@ -221,7 +229,7 @@ echo '</div>';
 <TR><TD>
 <div align="center"><br>
 <?php 
-freshports_CategoryNextPreviousPage($category->name, $PortCount, $PageNo, $PageSize);
+freshports_CategoryNextPreviousPage($category->name, $PortCount, $PageNo, $PageSize, $Branch);
 ?>
 </div> 
 </TD></TR>

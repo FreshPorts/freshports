@@ -18,13 +18,8 @@
 	} else {
 		$BranchName = BRANCH_HEAD;
 	}
-	if ($BranchName === 'quarterly') {
-		# from https://secure.php.net/manual/en/function.date.php
-		# n Numeric representation of a month, without leading zeros 1 through 12
-		$BranchName = date('Y') . 'Q' . (floor((date('n') - 1) / 3) + 1);
-	}
 	
-#	echo $BranchName . '<br>';
+	$BranchName = NormalizeBranch($BranchName);
 
 	$Flavor = '';
 	if (IsSet($_REQUEST['flavor'])) {

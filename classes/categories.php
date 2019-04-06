@@ -11,6 +11,8 @@ class Category {
 
 	var $dbh;
 
+	var $BranchName;
+
 	var $id;
 	var $is_primary;  # will contain either 't' or 'f'
 	var $element_id;
@@ -19,8 +21,38 @@ class Category {
 
 	var $Debug = 0;
 
-	function __construct($dbh) {
-		$this->dbh	= $dbh;
+	protected const FETCH_SQL_HEAD = '
+SELECT C.*, (SELECT MAX(CL.commit_date)
+               FROM ports            P,
+                    commit_log       CL,
+                    ports_categories PC
+              WHERE PC.port_id       = P.id
+                AND P.last_commit_id = CL.id
+                AND PC.category_id   = C.id) AS last_commit_date
+  FROM categories C
+';
+
+	protected const FETCH_SQL_BRANCH_1 = '
+SELECT C.*, (SELECT MAX(CL.commit_date)
+               FROM ports               P,
+                    commit_log          CL,
+                    ports_categories    PC,
+                    commit_log_branches CLB,
+                    system_branch       SB
+              WHERE PC.port_id        = P.id
+                AND P.last_commit_id  = CL.id
+                AND PC.category_id    = C.id
+                AND CLB.commit_log_id = CL.id
+                AND CLB.branch_id     = SB.id
+                AND SB.branch_name    = ';
+
+	protected const FETCH_SQL_BRANCH_2 = ') AS last_commit_date
+  FROM categories C
+';
+
+	function __construct($dbh, $BranchName = BRANCH_HEAD) {
+		$this->dbh	  = $dbh;
+		$this->BranchName = $BranchName;
 	}
 	
 	function Populate($myrow) {
@@ -40,18 +72,9 @@ class Category {
 		# Get the category details, and the date of the
 		# last modified port therein
 		#
-		$sql = '
-SELECT C.*, (SELECT MAX(CL.commit_date)
-               FROM ports            P,
-                    commit_log       CL,
-                    ports_categories PC
-              WHERE PC.port_id       = P.id
-                AND P.last_commit_id = CL.id
-                AND PC.category_id   = C.id) AS last_commit_date
-  FROM categories C
- WHERE id = ' . pg_escape_string($this->id);
+		$sql = $this->ComposeFetchBranchSQL() . ' WHERE id = ' . pg_escape_string($this->id);
 
-		if ($this->Debug) echo "sql = '$sql'<BR>";
+		if ($this->Debug) echo "<pre>1. sql = '$sql'</pre><BR>";
 
         $result = pg_exec($this->dbh, $sql);
 		if ($result) {
@@ -71,17 +94,8 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 		if (IsSet($element_id)) {
 			$this->element_id = $element_id;
 		}
-		$sql = '
-SELECT C.*, (SELECT MAX(CL.commit_date)
-               FROM ports            P,
-                    commit_log       CL,
-                    ports_categories PC
-              WHERE PC.port_id       = P.id
-                AND P.last_commit_id = CL.id
-                AND PC.category_id   = C.id) AS last_commit_date
-  FROM categories C
- WHERE C.element_id = ' . pg_escape_string($this->element_id);
-		if ($this->Debug) echo "sql = '$sql'<BR>";
+		$sql = $this->ComposeFetchBranchSQL() . '  WHERE C.element_id = ' . pg_escape_string($this->element_id);
+		if ($this->Debug) echo "<pre>sql = '$sql'</pre><BR>";
 
         $result = pg_exec($this->dbh, $sql);
 		if ($result) {
@@ -104,18 +118,9 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 			$this->name = pg_escape_string($Name);
 			unset($this->id);
 		}
-		$sql = "
-SELECT C.*, (SELECT MAX(CL.commit_date)
-               FROM ports            P,
-                    commit_log       CL,
-                    ports_categories PC
-              WHERE PC.port_id       = P.id
-                AND P.last_commit_id = CL.id
-                AND PC.category_id   = C.id) AS last_commit_date
-  FROM categories C
- WHERE C.name = '" . pg_escape_string($this->name) . "'";
+		$sql = $this->ComposeFetchBranchSQL() . " WHERE C.name = '" . pg_escape_string($this->name) . "'";
 
-		if ($this->Debug) echo "sql = '$sql'<BR>";
+		if ($this->Debug) echo "<pre>sql = '$sql'</pre><BR>";
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
@@ -150,13 +155,17 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 		return $CategoryID;
 	}
 
-	function PortCount($Name) {
+	function PortCount($Name, $Branch = BRANCH_HEAD) {
 		$Count = 0;
 
 		if (IsSet($Name)) {
 			$this->name = pg_escape_string($Name);
 		}
-		$sql = "select CategoryPortCount('" . pg_escape_string($this->name) . "')";
+		if ($Branch == BRANCH_HEAD) {
+			$sql = "select CategoryPortCount('" . pg_escape_string($this->name) . "')";
+		} else {
+			$sql = "select CategoryPortCount('" . pg_escape_string($this->name) . "', '" . pg_escape_string($Branch) . "')";
+		}
 		if ($this->Debug) echo "sql = '$sql'<BR>";
 
 		$result = pg_exec($this->dbh, $sql);
@@ -191,4 +200,13 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 		return $this->is_primary == 't';
 	}
 
+	protected function ComposeFetchBranchSQL() {
+		if ($this->BranchName == BRANCH_HEAD) {
+		  $sql = self::FETCH_SQL_HEAD;
+		} else {
+		  $sql = self::FETCH_SQL_BRANCH_1 . "'" . pg_escape_string($Branch) . "'" . self::FETCH_SQL_BRANCH_2;
+		}
+
+		return $sql;
+	}
 }

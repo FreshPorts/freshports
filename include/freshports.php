@@ -1399,6 +1399,10 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 		$HTML .= '&nbsp;<a href="/vuxml.php?vid=' . $VuXMLList[$commit->id] . '">' . freshports_VuXML_Icon() . '</a>';
 	}
 
+	if ($commit->branch != BRANCH_HEAD) {
+		$HTML .= '<br>' . htmlspecialchars($commit->branch);
+	}
+
 	$HTML .= "</td>\n";
 	$HTML .= '    <td valign="top">';
 	$HTML .= freshports_CommitterEmailLink($commit->committer) . '&nbsp;' . freshports_Search_Committer($commit->committer);;
@@ -2238,5 +2242,27 @@ openlog('FreshPorts', LOG_PID, LOG_LOCAL3);
 function link_urls($string) {
   $res = preg_replace('/https?:\/\/[[:print:]]+/', '<a href="\0" rel="nofollow">\0</a>', $string);
   $res = preg_replace('/^(PR:[[:blank:]]*)([[:digit:]]+)$/m', '\1<a href="https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=\2" rel="nofollow">\2</a>', $res);
+#  syslog(LOG_NOTICE, 'link_urls: ' . $res);
   return $res;
+}
+
+function NormalizeBranch($Branch = BRANCH_HEAD) {
+  # this function converts 'quarterly' to something like 2019Q2
+  # from https://secure.php.net/manual/en/function.date.php
+  # n Numeric representation of a month, without leading zeros 1 through 12
+  if ($Branch == BRANCH_QUARTERLY) {
+    $Branch = date('Y') . 'Q' . (floor((date('n') - 1) / 3) + 1);
+  }
+
+  return $Branch;
+}
+
+function BranchSuffix($Branch = BRANCH_HEAD) {
+  if ($Branch == BRANCH_HEAD) {
+    $BranchSuffix = '';
+  } else {
+    $BranchSuffix = '?branch=' . htmlspecialchars($Branch);
+  }
+
+  return $BranchSuffix;
 }

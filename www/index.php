@@ -15,7 +15,7 @@
 	$Debug = 0;
 
 	if (IsSet($_REQUEST['branch'])) {
-		$Branch = htmlspecialchars($_REQUEST['branch']);
+		$Branch = NormalizeBranch(htmlspecialchars($_REQUEST['branch']));
 	} else {
 		$Branch = BRANCH_HEAD;
 	}
@@ -125,13 +125,7 @@ if ($db) {
 
 <TR>
 <?php
- if (IsSet($_REQUEST['branch'])) {
-   $BranchName = htmlspecialchars($_REQUEST['branch']);
- } else {
-   $BranchName = BRANCH_HEAD;
- }
-
- if ( $BranchName == BRANCH_HEAD) {
+ if ( $Branch == BRANCH_HEAD) {
    echo freshports_PageBannerText("$MaxNumberOfPortsLong most recent commits", 3);
  } else {
    echo freshports_PageBannerText("Commits from the $Branch branch", 3);
@@ -168,6 +162,7 @@ if ($db) {
 	if ($UseCache) {
 		readfile(CACHEFILE);
 	} else {
+		if ($Debug) echo 'no cache use';
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits.php');
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
 
@@ -176,6 +171,7 @@ if ($db) {
 		$LatestCommits->FetchLimit(date('Y-m-d'), isset($User) ? $User->id : null, 100);
 		
 		$DisplayCommit = new DisplayCommit($db, $LatestCommits->LocalResult);
+		$DisplayCommit->SetBranch($Branch);
 		$DisplayCommit->ShowLinkToSanityTestFailure = true;
 		$RetVal = $DisplayCommit->CreateHTML();
 

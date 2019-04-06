@@ -498,7 +498,14 @@ class port_display {
 			$HTML .= '<br>' . $this->ShowConfigurePlist();
 		}
 
-		$HTML .= '<p><b>Dependency line</b>: <span class="file">' . $port->package_name . '>0:' . $this->DisplayPlainText() . '</span></p>';
+		$HTML .= '<b>Dependency lines</b>:<ul>';
+		$HTML .= '<li><span class="file">' . $port->package_name . '>0:' . $this->DisplayPlainText() . '</span></li>';
+		// pkg_plist_libray_matches is a JSON array
+		$lib_depends = json_decode($port->pkg_plist_libray_matches, true);
+		foreach($lib_depends as $library) {
+			$HTML .= '<li><span class="file">' . preg_replace('/^lib\//', '', $library) . ':' . $this->DisplayPlainText() . '</span></li>';
+		}
+		$HTML .= '</ul>';
 
 		# if there are conflicts
 		if ($this->ShowEverything && ($port->conflicts || $port->conflicts_build || $port->conflicts_install)) {

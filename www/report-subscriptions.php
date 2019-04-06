@@ -108,7 +108,7 @@
 		$Reports = freshports_ReportNames($db);
 
 		if ($Debug) {
-	        foeach ($reports as $report_id => $Values) {
+	        foreach ($reports as $report_id => $Values) {
 
 				echo '* * * * now processing $report_id = \'' . $report_id . '\'';
 				echo ' and $Values = \'' . $Values . '\'<BR>';

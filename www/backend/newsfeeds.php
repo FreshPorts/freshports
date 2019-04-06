@@ -48,6 +48,7 @@
 	Sample URLs include:
 	<ol>
 	<li>' . $URL . 'html.php?branch=2018Q4</li>
+	<li>' . $URL . 'html.php?branch=quarterly</li>
 	<li>' . $URL . 'html.php?flavor=broken</li>
 	<li>' . $URL . 'html.php?flavor=new</li>
 	</ol>

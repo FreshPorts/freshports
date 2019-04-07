@@ -2241,7 +2241,7 @@ openlog('FreshPorts', LOG_PID, LOG_LOCAL3);
 
 function link_urls($string) {
   $res = preg_replace('/https?:\/\/[[:print:]]+/', '<a href="\0" rel="nofollow">\0</a>', $string);
-  $res = preg_replace('/^(PR:[[:blank:]]*)([[:digit:]]+)$/', '\1<a href="https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=\2" rel="nofollow">\2</a>', $res);
+  $res = preg_replace('/^(PR:[[:blank:]]*)([[:digit:]]+)$/m', '\1<a href="https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=\2" rel="nofollow">\2</a>', $res);
 #  syslog(LOG_NOTICE, 'link_urls: ' . $res);
   return $res;
 }

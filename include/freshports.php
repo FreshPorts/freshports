@@ -204,7 +204,7 @@ function freshports_Port_URL($CategoryName, $PortName, $BranchName = BRANCH_HEAD
 	return $HTML;
 }
 
-function freshports_link_to_port_single($CategoryName, $PortName, $BranchName = BRANCH_HEAD) {
+function freshports_link_to_port_single($CategoryName, $PortName, $BranchName = BRANCH_HEAD, $class = '' ) {
 
 	// This differs from freshports_link_to_port in that you get a single link, not a 
 	// link to both category and port
@@ -215,7 +215,13 @@ function freshports_link_to_port_single($CategoryName, $PortName, $BranchName = 
 	  $HTML .= '?branch=' . htmlentities($BranchName);
 	}
 
-	$HTML .= '">' . $CategoryName . '/' . $PortName . '</a>';
+	$HTML .= '"';
+
+	if ($class) {
+		$HTML .= ' class="' . $class . '"';
+	}
+
+	$HTML .= '>' . $CategoryName . '/' . $PortName . '</a>';
 
 	return $HTML;
 }

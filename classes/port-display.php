@@ -500,10 +500,13 @@ class port_display {
 
 		$HTML .= '<b>Dependency lines</b>:<ul>';
 		$HTML .= '<li><span class="file">' . $port->package_name . '>0:' . $this->DisplayPlainText() . '</span></li>';
+
 		// pkg_plist_libray_matches is a JSON array
 		$lib_depends = json_decode($port->pkg_plist_libray_matches, true);
-		foreach($lib_depends as $library) {
-			$HTML .= '<li><span class="file">' . preg_replace('/^lib\//', '', $library) . ':' . $this->DisplayPlainText() . '</span></li>';
+		if (is_array($lib_depends) && count($lib_depends) > 0) {
+			foreach($lib_depends as $library) {
+				$HTML .= '<li><span class="file">' . preg_replace('/^lib\//', '', $library) . ':' . $this->DisplayPlainText() . '</span></li>';
+			}
 		}
 		$HTML .= '</ul>';
 
@@ -788,23 +791,51 @@ class port_display {
 				$div = '<div id="RequiredBy' . $title . '">';
 				$div .= "\n" . '<ol class="depends" id="requiredfor"' . $title . '>' . "\n";
 
-				$deletedPortFound = true;
+				$deletedPortFound = false;  # we found a deleted port
+				$firstDeletedPort = false;  # this is our first deleted port
+				$hidingStarted    = false;  # we can do this only once.
 				for ( $i = 0; $i < $NumRows; $i++ ) {
 					$PortDependencies->FetchNth($i);
 
-					$div .= '<li>' . freshports_link_to_port_single( $PortDependencies->category, $PortDependencies->port, $this->Branch );
-					if ( $PortDependencies->status == 'D') {
+					# just easier than comparing all the time.
+					$thisPortIsDeleted = $PortDependencies->status == 'D';
+
+					# set $firstDeletedPort and $deletedPortFound
+					# if this is a deleted port
+					if ( $thisPortIsDeleted ) {
+						# and we've not already seen a delete port
+						if (!$deletedPortFound) {
+							# we found a deleted port
+							$deletedPortFound = true;
+							# this is our first deleted port
+							$firstDeletedPort = true;
+						} else {
+							$firstDeletedPort = false;
+						} 
+					}
+#					echo "hidingStarted='$hidingStarted', firstDeletedPort='$firstDeletedPort', NumRows='$NumRows', DEPENDS_SUMMARY='" . DEPENDS_SUMMARY . "', i='$i<br>";
+					# if we haven't already starting hiding things and we found a deleted port or we have too many thing to show and we're at the max items to show
+					if ( !$hidingStarted && ( $firstDeletedPort || ( ( $NumRows > DEPENDS_SUMMARY )  && ( $i == DEPENDS_SUMMARY ) ) ) ) {
+						$div .= '<a href="#" id="RequiredBy' . $title . 'Extra-show" class="showLink" onclick="showHide(\'RequiredBy' . 
+						        $title . 'Extra\');return false;">Expand this list (' . $NumRows . ' items / ' . ($NumRows - $i) . ' hidden)</a>';
+						$div .= '<span id="RequiredBy' . $title . 'Extra" class="more">';
+						# yes, we have started hiding things.
+						$hidingStarted = true;
+					}
+
+					if ( $firstDeletedPort ) {
+						$div .= '<hr align="left" width="90">';
+					}
+
+					$div .= '<li>' . freshports_link_to_port_single( $PortDependencies->category, $PortDependencies->port, $this->Branch, $thisPortIsDeleted ? 'red' : '');
+					if ( $thisPortIsDeleted ) {
 						$div .= '<sup>*</sup>';
-						$deletedPortFound = true;
 					}
 					$div .= "</li>\n";
-					if ( $NumRows > DEPENDS_SUMMARY && $i == DEPENDS_SUMMARY  - 1) {
-						$div .= '<a href="#" id="RequiredBy' . $title . 'Extra-show" class="showLink" onclick="showHide(\'RequiredBy' . $title . 'Extra\');return false;">Expand this list (' . $NumRows . ' items)</a>';
-						$div .= '<span id="RequiredBy' . $title . 'Extra" class="more">';
-					}
+
 				}
 
-				if ( $NumRows > DEPENDS_SUMMARY ) {
+				if ( $hidingStarted ) {
 					$div .= '<a href="#" id="RequiredBy' . $title . 'Extra-hide" class="hideLink" onclick="showHide(\'RequiredBy' . $title . 'Extra\');return false;">Collapse this list.</a>';
 					$div .= '</span>';
 				}
@@ -882,4 +913,7 @@ class port_display {
 		return $HTML;
 	}
 
+	function getShortDescription() {
+		return $this->port->short_description;
+	}
 }

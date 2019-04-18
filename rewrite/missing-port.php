@@ -215,7 +215,7 @@ function _freshports_PortDisplayHelper($db, $category, $port, $branch, $HasCommi
 
 	header("HTTP/1.1 200 OK");
 
-	$Title = $category . "/" . $port;
+	$Title = $category . "/" . $port . ': ' . $port_display->getShortDescription();
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 	

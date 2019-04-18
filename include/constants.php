@@ -75,6 +75,8 @@ $freshports_CommitMsgMaxNumOfLinesToShow = 15;
 define('FRESHPORTS_BGCOLOR',   '#FFFFFF');
 define('FRESHPORTS_TEXTCOLOR', '#000000');
 
+define('DELETED_PORT_LINK_COLOR', 'red');
+
 define('FRESHPORTS_VERSION_REVISION_JOINER', '_');
 define('FRESHPORTS_VERSION_EPOCH_JOINER',    ',');
 

@@ -770,7 +770,7 @@ class port_display {
 
 		return $HTML;
 	}
-	
+
 	function ShowDependencies( $port ) {
 		$HTML = '';
 
@@ -789,33 +789,27 @@ class port_display {
 
 				$HTML .= '<span class="required">for ' . $title . "</span>\n";
 				$div = '<div id="RequiredBy' . $title . '">';
-				$div .= "\n" . '<ol class="depends" id="requiredfor"' . $title . '>' . "\n";
+				$div .= "\n" . '<ol class="depends" id="requiredfor' . $title . '">' . "\n";
 
+				$firstDeletedPort = -1;     # we might be able to combine this with deletedPortFound
 				$deletedPortFound = false;  # we found a deleted port
-				$firstDeletedPort = false;  # this is our first deleted port
 				$hidingStarted    = false;  # we can do this only once.
 				for ( $i = 0; $i < $NumRows; $i++ ) {
 					$PortDependencies->FetchNth($i);
 
-					# just easier than comparing all the time.
-					$thisPortIsDeleted = $PortDependencies->status == 'D';
 
-					# set $firstDeletedPort and $deletedPortFound
 					# if this is a deleted port
-					if ( $thisPortIsDeleted ) {
-						# and we've not already seen a delete port
-						if (!$deletedPortFound) {
-							# we found a deleted port
-							$deletedPortFound = true;
-							# this is our first deleted port
-							$firstDeletedPort = true;
-						} else {
-							$firstDeletedPort = false;
-						} 
+					if ($PortDependencies->status == 'D' ) {
+						$firstDeletedPort = $i; # we set this so the next loop knows where to start 
+						# we found a deleted port
+						$deletedPortFound = true;
+
+						# we are done in this loop
+						break;
 					}
-#					echo "hidingStarted='$hidingStarted', firstDeletedPort='$firstDeletedPort', NumRows='$NumRows', DEPENDS_SUMMARY='" . DEPENDS_SUMMARY . "', i='$i<br>";
+
 					# if we haven't already starting hiding things and we found a deleted port or we have too many thing to show and we're at the max items to show
-					if ( !$hidingStarted && ( $firstDeletedPort || ( ( $NumRows > DEPENDS_SUMMARY )  && ( $i == DEPENDS_SUMMARY ) ) ) ) {
+					if ( !$hidingStarted && ( ( ( $NumRows > DEPENDS_SUMMARY )  && ( $i == DEPENDS_SUMMARY ) ) ) ) {
 						$div .= '<a href="#" id="RequiredBy' . $title . 'Extra-show" class="showLink" onclick="showHide(\'RequiredBy' . 
 						        $title . 'Extra\');return false;">Expand this list (' . $NumRows . ' items / ' . ($NumRows - $i) . ' hidden)</a>';
 						$div .= '<span id="RequiredBy' . $title . 'Extra" class="more">';
@@ -823,14 +817,7 @@ class port_display {
 						$hidingStarted = true;
 					}
 
-					if ( $firstDeletedPort ) {
-						$div .= '<hr align="left" width="90">';
-					}
-
-					$div .= '<li>' . freshports_link_to_port_single( $PortDependencies->category, $PortDependencies->port, $this->Branch, $thisPortIsDeleted ? 'red' : '');
-					if ( $thisPortIsDeleted ) {
-						$div .= '<sup>*</sup>';
-					}
+					$div .= '<li>' . freshports_link_to_port_single( $PortDependencies->category, $PortDependencies->port, $this->Branch);
 					$div .= "</li>\n";
 
 				}
@@ -840,7 +827,36 @@ class port_display {
 					$div .= '</span>';
 				}
 
-				$div .= '</ol></div>';
+				$div .= '</ol>';
+
+				# now deal with deleted ports, perhaps this loop and the one above can be conbined, after the two loops are reduced to 1 - active ports 2 - deleted ports
+
+				$div .= "\n";
+
+				if ($deletedPortFound) {
+					# is it port or ports?
+					$PluralSingularSuffix = ($NumRows - $firstDeletedPort) > 1 ? 's' : '';
+
+					$div .= '<ol class="depends" id="requiredfor' . $title . 'Deleted">' . "\n";
+					$div .= "<lh>Deleted ports</lh>\n";
+					$div .= '<a href="#" id="RequiredBy' . $title . 'DeletedExtra-show" class="showLink" onclick="showHide(\'RequiredBy' . 
+				        $title . 'DeletedExtra\');return false;">Expand this list of ' . ($NumRows - $firstDeletedPort) . ' deleted port' . $PluralSingularSuffix . '</a>';
+					$div .= '<span id="RequiredBy' . $title . 'DeletedExtra" class="more">';
+ 					for ( $i = $firstDeletedPort; $i < $NumRows; $i++ ) {
+						$PortDependencies->FetchNth($i);
+
+						$div .= '<li>' . freshports_link_to_port_single( $PortDependencies->category, $PortDependencies->port, $this->Branch, DELETED_PORT_LINK_COLOR);
+						$div .= '<sup>*</sup>';
+						$div .= "</li>\n";
+					}
+
+					$div .= '<a href="#" id="RequiredBy' . $titled . 'DeletedExtra-hide" class="hideLink" onclick="showHide(\'RequiredBy' . $title . 'DeletedExtra\');return false;">Collapse this list of deleted ports.</a>';
+					$div .= '</span>';
+
+					$div .= '</ol>';
+				} # end of deletedPortFound
+
+				$div .= '</div>';
 
 				$HTML .= $div;
 			}

@@ -32,9 +32,10 @@ class DisplayCommit {
 	
 	var $ShowLinkToSanityTestFailure = FALSE;
 
-	function __construct($dbh, $result) {
-		$this->dbh    = $dbh;
-		$this->result = $result;
+	function __construct($dbh, $result, $BranchName = BRANCH_HEAD) {
+		$this->dbh        = $dbh;
+		$this->result     = $result;
+		$this->BranchName = $BranchName;
 	}
 
 	function SetDaysMarkedAsNew($DaysMarkedAsNew) {
@@ -321,6 +322,7 @@ class DisplayCommit {
 	}
 
 	function SetBranch($BranchName) {
+		# usually, this is set during __construct
 		$this->BranchName = $BranchName;
 	}
 	

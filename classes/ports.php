@@ -100,10 +100,13 @@ class Port {
 	var $LocalResult;
 
 	var $committer; 
-	
+
 	var $svn_hostname;
 	var $path_to_repo;
 	var $element_pathname;
+
+	// version on current quarterly branch. see https://github.com/FreshPorts/freshports/issues/115
+	var $quarterly_revision;
 
 	private $Debug = 0;
 	
@@ -193,6 +196,7 @@ class Port {
 		$this->svn_hostname       = $myrow['svn_hostname'];
 		$this->path_to_repo       = $myrow['path_to_repo'];
 		$this->element_pathname   = $myrow['element_pathname'];
+		$this->quarterly_revision = $myrow['quarterly_revision'];
 
 		$this->last_commit_date   = isset($myrow['last_commit_date']) ? $myrow['last_commit_date'] : null;
 
@@ -268,7 +272,8 @@ select ports.id,
        commit_log.svn_revision,
        R.svn_hostname,
        R.path_to_repo,
-       element_pathname(ports.element_id) as element_pathname  ";
+       element_pathname(ports.element_id) as element_pathname,
+       PortVersionOnQuarterlyBranch(ports.id, categories.name || '/' || element.name) AS quarterly_revision  ";
 
 		if ($UserID) {
 			$sql .= ",
@@ -386,7 +391,8 @@ select ports.id,
                        commit_log.svn_revision,
                        R.svn_hostname,
                        R.path_to_repo,
-                       element_pathname(ports.element_id) as element_pathname ";
+                       element_pathname(ports.element_id) as element_pathname,
+                       PortVersionOnQuarterlyBranch(ports.id, categories.name || '/' || element.name) AS quarterly_revision ";
 
 		if ($UserID) {
 			$sql .= ', 
@@ -532,7 +538,8 @@ SELECT P.*, element.name    as port
         NULL AS committer,
         NULL AS path_to_repo,
         NULL AS svn_hostname,
-        NULL AS onwatchlist
+        NULL AS onwatchlist,
+        PortVersionOnQuarterlyBranch(ports.id, categories.name || '/' || element.name) AS quarterly_revision
 
    FROM ports_vulnerable right outer join ports on (ports_vulnerable.port_id = ports.id),
         categories, ports_categories, categories PRIMARY_CATEGORY

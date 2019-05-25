@@ -308,6 +308,8 @@ class port_display {
 		# report a bug related to this port
 		$HTML .= ' ' . freshports_Report_A_Bug($port->category . '/' . $port->port);
 
+		$HTML .=  ' '. $port->quarterly_revision;
+
 		$HTML .= "</DT>\n<DD>";
 		# show forbidden and broken
 		if ($port->forbidden) {

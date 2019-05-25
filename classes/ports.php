@@ -263,8 +263,8 @@ select ports.id,
        ports.conflicts_install,
        to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, 
        ports.categories as categories,
-	    element.name     as port, 
-	    categories.name  as category,
+       element.name     as port, 
+       categories.name  as category,
        ports_vulnerable.current as vulnerable_current,
        ports_vulnerable.past    as vulnerable_past,
        array_to_json(regexp_match(pkg_plist, 'lib/[[:alpha:]]*?\.so')) AS pkg_plist_libray_matches,
@@ -542,11 +542,12 @@ SELECT P.*, element.name    as port
         PortVersionOnQuarterlyBranch(ports.id, categories.name || '/' || element.name) AS quarterly_revision
 
    FROM ports_vulnerable right outer join ports on (ports_vulnerable.port_id = ports.id),
-        categories, ports_categories, categories PRIMARY_CATEGORY
+        categories, ports_categories, categories PRIMARY_CATEGORY, element
   WHERE ports_categories.port_id     = ports.id
     AND ports_categories.category_id = categories.id
     AND categories.name              = '" . pg_escape_string($CategoryName) . "'
-    AND PRIMARY_CATEGORY.id          = ports.category_id ) AS P
+    AND PRIMARY_CATEGORY.id          = ports.category_id
+    AND ports.element_id             = element.id ) AS P
    ON (P.element_id     = element.id
    AND element.status   = 'A') JOIN element_pathname EP ON P.element_id = EP.element_id AND EP.pathname like '/ports/";
 

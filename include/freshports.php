@@ -799,7 +799,7 @@ GLOBAL $FreshPortsLogoHeight;
 ";
 	}
 
-    $HTML .= '<span class="amazon">If you buy from Amazon USA, please support us by using <a href="https://www.amazon.com/?tag=thfrdi0c-20" rel="nofollow">this link</a>.</span>';
+    $HTML .= '<span class="amazon">As an Amazon Associate I earn from <a href=" https://www.amazon.com/gp/product/B07PVTBWX7/ref=as_li_tl?ie=UTF8&tag=thfrdi0c-20&camp=1789&creative=9325&linkCode=as2&creativeASIN=B07PVTBWX7&linkId=8618880c48bcb1b668f9ea20cf64517d" rel="nofollow">qualifying purchases</a>.</span>';
 	
 	$HTML .= '</td>';
 

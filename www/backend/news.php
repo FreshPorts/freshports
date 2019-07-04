@@ -18,9 +18,8 @@
 	} else {
 		$BranchName = BRANCH_HEAD;
 	}
-	if ($BranchName === 'quarterly') {
-		$BranchName = date('Y') . 'Q' . (floor(date('n') / 4) + 1);
-	}
+	
+	$BranchName = NormalizeBranch($BranchName);
 
 	$Flavor = '';
 	if (IsSet($_REQUEST['flavor'])) {

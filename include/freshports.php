@@ -31,7 +31,7 @@ DEFINE('BACKGROUND_COLOUR', '#8c0707');
 
 DEFINE('CLICKTOADD', 'Click to add this to your default watch list[s]');
 
-DEFINE('SPONSORS', 'Servers and bandwidth provided by<br><a href="http://www.nyi.net/" TARGET="_new">New York Internet</a>, <a href="http://www.supernews.com/"  TARGET="_new">SuperNews</a>, and <a href="http://www.rootbsd.net/" TARGET="_new">RootBSD</a>');
+DEFINE('SPONSORS', 'Servers and bandwidth provided by<br><a href="http://www.nyi.net/" TARGET="_new">New York Internet</a>, <a href="http://www.ixsystems.com/"  TARGET="_new">iXsystems</a>, and <a href="http://www.rootbsd.net/" TARGET="_new">RootBSD</a>');
 
 DEFINE('FRESHPORTS_ENCODING', 'UTF-8');
 
@@ -204,7 +204,7 @@ function freshports_Port_URL($CategoryName, $PortName, $BranchName = BRANCH_HEAD
 	return $HTML;
 }
 
-function freshports_link_to_port_single($CategoryName, $PortName, $BranchName = BRANCH_HEAD) {
+function freshports_link_to_port_single($CategoryName, $PortName, $BranchName = BRANCH_HEAD, $class = '' ) {
 
 	// This differs from freshports_link_to_port in that you get a single link, not a 
 	// link to both category and port
@@ -215,7 +215,13 @@ function freshports_link_to_port_single($CategoryName, $PortName, $BranchName = 
 	  $HTML .= '?branch=' . htmlentities($BranchName);
 	}
 
-	$HTML .= '">' . $CategoryName . '/' . $PortName . '</a>';
+	$HTML .= '"';
+
+	if ($class) {
+		$HTML .= ' class="' . $class . '"';
+	}
+
+	$HTML .= '>' . $CategoryName . '/' . $PortName . '</a>';
 
 	return $HTML;
 }
@@ -793,7 +799,7 @@ GLOBAL $FreshPortsLogoHeight;
 ";
 	}
 
-    $HTML .= '<span class="amazon">If you buy from Amazon USA, please support us by using <a href="https://www.amazon.com/?tag=thfrdi0c-20" rel="nofollow">this link</a>.</span>';
+    $HTML .= '<span class="amazon">As an Amazon Associate I earn from qualifying purchases.<br>Want a good read? Try <a target="_blank" href="https://www.amazon.com/gp/product/B07PVTBWX7/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B07PVTBWX7&amp;linkCode=as2&amp;tag=thfrdi0c-20&amp;linkId=f4cffa799f323b5adebf953c7d3f20ea">FreeBSD Mastery: Jails (IT Mastery Book 15)</a><img src="//ir-na.amazon-adsystem.com/e/ir?t=thfrdi0c-20&amp;l=am2&amp;o=1&amp;a=B07PVTBWX7" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></span>';
 	
 	$HTML .= '</td>';
 
@@ -914,6 +920,36 @@ if ($Phorum) {
 function freshports_style($Phorum=0) {
 
 	echo '	<link rel="stylesheet" href="/css/freshports.css" type="text/css">' . "\n";
+
+	# from https://www.w3schools.com/css/css_tooltip.asp
+	# initially planned for Quarterly branch information: https://github.com/FreshPorts/freshports/issues/115
+	echo '<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  left: 105%;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+</style>';
 
 	if ($Phorum) {
 		echo '	<link rel="stylesheet" href="/phorum/' . phorum_get_file_name("css") . '" type="text/css">' . "\n";
@@ -1399,6 +1435,10 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 		$HTML .= '&nbsp;<a href="/vuxml.php?vid=' . $VuXMLList[$commit->id] . '">' . freshports_VuXML_Icon() . '</a>';
 	}
 
+	if ($commit->branch != BRANCH_HEAD) {
+		$HTML .= '<br>' . htmlspecialchars($commit->branch);
+	}
+
 	$HTML .= "</td>\n";
 	$HTML .= '    <td valign="top">';
 	$HTML .= freshports_CommitterEmailLink($commit->committer) . '&nbsp;' . freshports_Search_Committer($commit->committer);;
@@ -1487,7 +1527,7 @@ function freshports_DescriptionPrint($description, $encoding_losses, $maxnumline
 	$shortened = freshports_Head($description, $maxnumlines);
 	$HTML  = '<PRE CLASS="code">';
 
-	$HTML .= _forDisplay(freshports_wrap($shortened), $Process_PRs);
+	$HTML .= link_urls(_forDisplay(freshports_wrap($shortened), $Process_PRs));
 
 	$HTML .= '</PRE>';
 
@@ -2014,16 +2054,6 @@ function PeopleWatchingThisPortAlsoWatch($dbh, $element_id) {
 }
 
 
-function freshports_PortsMonitorURL($Category, $Port) {
-	# we have a problem with + in portnames.
-	# works: http://portsmon.freebsd.org/portoverview.py?category=editors&portname=vim6%2Bruby
-	# fails: http://portsmon.freebsd.org/portoverview.py?category=editors&portname=vim6+ruby
-	#
-	return '<a href="' . PORTSMONURL . '?category=' . urlencode($Category) . '&amp;portname=' . urlencode($Port) . '" title="Ports Monitor">PortsMon</a>';
-}
-
-
-
 function freshports_RedirectPermanent($URL) {
 	#
 	# My thanks to nne van Kesteren who posted this solution
@@ -2244,3 +2274,31 @@ applications, whatever term you want to use.');
 
 openlog('FreshPorts', LOG_PID, LOG_LOCAL3);
 #syslog(LOG_NOTICE, $_SERVER['SCRIPT_URL']);
+
+function link_urls($string) {
+  $res = preg_replace('/https?:\/\/[[:print:]]+/', '<a href="\0" rel="nofollow">\0</a>', $string);
+  $res = preg_replace('/^(PR:[[:blank:]]*)([[:digit:]]+)$/m', '\1<a href="https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=\2" rel="nofollow">\2</a>', $res);
+#  syslog(LOG_NOTICE, 'link_urls: ' . $res);
+  return $res;
+}
+
+function NormalizeBranch($Branch = BRANCH_HEAD) {
+  # this function converts 'quarterly' to something like 2019Q2
+  # from https://secure.php.net/manual/en/function.date.php
+  # n Numeric representation of a month, without leading zeros 1 through 12
+  if ($Branch == BRANCH_QUARTERLY) {
+    $Branch = date('Y') . 'Q' . (floor((date('n') - 1) / 3) + 1);
+  }
+
+  return $Branch;
+}
+
+function BranchSuffix($Branch = BRANCH_HEAD) {
+  if ($Branch == BRANCH_HEAD) {
+    $BranchSuffix = '';
+  } else {
+    $BranchSuffix = '?branch=' . htmlspecialchars($Branch);
+  }
+
+  return $BranchSuffix;
+}

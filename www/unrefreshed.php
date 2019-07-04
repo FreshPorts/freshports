@@ -119,7 +119,7 @@ if (IsSet($_POST['port_id']) && $User->type == SUPER_USER ) {
 	$CommitLogPort       = new Commit_Log_Ports       ($db);
 	$CommitLogPortIgnore = new Commit_Log_Ports_Ignore($db);
 	
-	while (list($key, $port_id) = each($_POST['port_id'])) {
+	foreach ($_POST['port_id'] as $key => $port_id) {
 		$commit_log_id = $_POST['commit_log_id'][$key];
 
 		$ID = $commit_log_id . '_' . $port_id;

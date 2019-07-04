@@ -132,10 +132,12 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 			# check valid new name
 			# check only one watch list supplied
 			if (count($_POST['wlid']) == 1) {
-				list($key, $WatchListIDToRename) = each($_POST['wlid']);
-				$WatchList = new WatchList($db);
-				$NewName = $WatchList->Rename($User->id, $WatchListIDToRename, $_POST['rename_name']);
-				if ($Debug) echo 'I have renamed your list to \'' . pg_escape_string($_POST['rename_name']) . '\'';
+				foreach ($_POST['wlid'] as $key => $WatchListIDToRename) {
+					$WatchList = new WatchList($db);
+					$NewName = $WatchList->Rename($User->id, $WatchListIDToRename, $_POST['rename_name']);
+					if ($Debug) echo 'I have renamed your list to \'' . pg_escape_string($_POST['rename_name']) . '\'';
+					break;
+				}
 			} else {
 				$ErrorMessage = 'Select exactly one watch list to be renamed.  I can\'t handle zero or more than one.';
 			}
@@ -144,7 +146,7 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 		case 'delete':
 			pg_query($db, 'BEGIN');
 			$WatchList = new WatchList($db);
-			while (list($key, $WatchListIDToDelete) = each($_POST['wlid'])) {
+			foreach ($_POST['wlid'] as $key => $WatchListIDToDelete) {
 				if ($Debug) echo "\$key='$key' \$WatchListIDToDelete='$WatchListIDToDelete'<br>";
 				$DeletedWatchListID = $WatchList->Delete($User->id, pg_escape_string($WatchListIDToDelete));
 				if ($DeletedWatchListID != $WatchListIDToDelete) {
@@ -168,7 +170,7 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 		case 'empty':
 			pg_query($db, 'BEGIN');
 			$WatchList = new WatchList($db);
-			while (list($key, $WatchListIDToEmpty) = each($_POST['wlid'])) {
+			foreach ($_POST['wlid'] as $key => $WatchListIDToEmpty) {
 				if ($Debug) echo "\$key='$key' \$WatchListIDToEmpty='$WatchListIDToEmpty'<br>";
 				$EmptydWatchListID = $WatchList->EmptyTheList($User->id, pg_escape_string($WatchListIDToEmpty));
 				if ($EmptydWatchListID != $WatchListIDToEmpty) {

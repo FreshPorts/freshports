@@ -106,7 +106,7 @@ function ConvertStringToArray($PkgInfoString) {
 	$PortArray = array();
 
 	$Lines = explode("\n", $PkgInfoString);
-	while (list($key, $CatPort) = each($Lines)) {
+	foreach ($Lines as $key => $CatPort) {
 		// Get the package name
 
 		$CatPort = trim($CatPort);
@@ -142,7 +142,7 @@ function ProcessPackages($UserID, $PortArray, $dbh) {
 
 	pg_exec($dbh, "BEGIN");
 
-	while (list ($key, $count) = each ($PortArray)) {
+	foreach ($PortArray as $key => $count) {
 
 		# trimming, just in case...
 		$CategoryPort = explode("/", trim($key));

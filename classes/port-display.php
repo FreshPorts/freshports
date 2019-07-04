@@ -21,7 +21,7 @@ class port_display {
 	var $db;
 
 	protected $port;
-	protected $branch;
+	protected $Branch;
 
 	var $User;		# used for matching against watch lists
 	var $DaysMarkedAsNew;
@@ -51,9 +51,10 @@ class port_display {
 	var $ShowWatchListStatus;
 	var $ShowDistInfo;
 
-	function __construct(&$db, $User = 0) {
-		$this->db   = $db;
-		$this->User = $User;
+	function __construct(&$db, $User = 0, $Branch = BRANCH_HEAD) {
+		$this->db     = $db;
+		$this->User   = $User;
+		$this->Branch = NormalizeBranch($Branch);
 		$this->DaysMarkedAsNew = 10;
 
 		$this->SetDetailsNil();
@@ -72,12 +73,11 @@ class port_display {
 	  return $HTML;	
 	}
 
-	function SetPort($port, $branch = BRANCH_HEAD) {
+	function SetPort($port) {
 	  //
 	  // We could derived branch from element_pathname(port->element_id) but let's try passing in branch explicity.
 	  //
-	  $this->port   = $port;
-	  $this->branch = $branch;
+	  $this->port = $port;
 	}
 
 	function link_to_repo() {
@@ -141,7 +141,6 @@ class port_display {
 		$this->ShowMasterSlave         = false;
 		$this->ShowPackageLink         = false;
 		$this->ShowPortCreationDate    = false;
-		$this->ShowPortsMonLink        = false;
 		$this->ShowConfigurePlist      = false;
 		$this->ShowShortDescription    = false;
 		$this->ShowWatchListCount      = false;
@@ -164,7 +163,6 @@ class port_display {
 		$this->ShowHomepageLink        = true;
 		$this->ShowMaintainedBy        = true;
 		$this->ShowPortCreationDate    = true;
-		$this->ShowPortsMonLink        = true;
 		$this->ShowPackageLink         = true;
 		$this->ShowShortDescription    = true;
 		$this->ShowWatchListStatus     = true;
@@ -270,7 +268,11 @@ class port_display {
 		$HTML .= "</b>";
 
 		if ($this->ShowEverything || $this->ShowCategory) {
-			$HTML .= ' <A HREF="/' . $port->category . '/" TITLE="The category for this port">' . $port->category . '</A>';
+			$HTML .= ' <A HREF="/' . $port->category . '/';
+			if ($this->Branch != BRANCH_HEAD) {
+				$HTML .= '?branch=' . htmlspecialchars($this->Branch);
+			}
+			$HTML .= '" TITLE="The category for this port">' . $port->category . '</A>';
 		}
 
 		// indicate if this port has been removed from cvs
@@ -305,6 +307,10 @@ class port_display {
 
 		# report a bug related to this port
 		$HTML .= ' ' . freshports_Report_A_Bug($port->category . '/' . $port->port);
+
+		$HTML .=  ' <div class="tooltip">'. $port->quarterly_revision . '<span class="tooltiptext tooltip-top">Version of this port present on the latest quarterly branch.';
+		if ($port->IsSlavePort()) $HTML .= ' NOTE: Slave port - quarterly revision is most likely wrong.';
+		$HTML .= '</span></div>';
 
 		$HTML .= "</DT>\n<DD>";
 		# show forbidden and broken
@@ -444,13 +450,11 @@ class port_display {
 				$Count = count($CategoriesArray);
 				for ($i = 0; $i < $Count; $i++) {
 					$Category = $CategoriesArray[$i];
-#					$CategoryID = freshports_CategoryIDFromCategory($Category, $this->db);
-#					if ($CategoryID) {
-#						// this is a real category
-						$HTML .= '<a href="/' . $Category . '/">' . $Category . '</a>';
-#					} else {
-#						$HTML .= $Category;
-#					}
+					$HTML .= '<a href="/' . $Category . '/';
+					if ($this->Branch != BRANCH_HEAD) {
+						$HTML .= '?branch=' . htmlspecialchars($this->Branch);
+					}
+					$HTML .= '">' . $Category . '</a>';
 					if ($i < $Count - 1) {
 						$HTML .= " ";
 					}
@@ -494,15 +498,60 @@ class port_display {
 			$HTML .= '<a HREF="' . _forDisplay($port->homepage) . '" TITLE="Homepage for this port">Homepage</a>';
 		}
 
-		if (defined('PORTSMONSHOW')  && ($this->ShowPortsMonLink || $this->ShowEverything)) {
-			$HTML .= ' <b>:</b> ' . freshports_PortsMonitorURL($port->category, $port->port);
-		}
-
 		if (defined('CONFIGUREPLISTSHOW')  && ($this->ShowConfigurePlist || $this->ShowEverything)) {
 			$HTML .= '<br>' . $this->ShowConfigurePlist();
 		}
 
-		$HTML .= '<b>Dependency line</b>: <span class="file">' . $port->package_name . '>0:' . $this->DisplayPlainText() . '</span><br>';
+		$HTML .= '<b>Dependency lines</b>:<ul>';
+		$HTML .= '<li><span class="file">' . $port->package_name . '>0:' . $this->DisplayPlainText() . '</span></li>';
+
+		// pkg_plist_libray_matches is a JSON array
+		$lib_depends = json_decode($port->pkg_plist_libray_matches, true);
+		if (is_array($lib_depends) && count($lib_depends) > 0) {
+			foreach($lib_depends as $library) {
+				$HTML .= '<li><span class="file">' . preg_replace('/^lib\//', '', $library) . ':' . $this->DisplayPlainText() . '</span></li>';
+			}
+		}
+		$HTML .= '</ul>';
+
+		# if there are conflicts
+		if ($this->ShowEverything && ($port->conflicts || $port->conflicts_build || $port->conflicts_install)) {
+			$HTML .= "<b>Conflicts:</b>\n<ul>";
+
+			if ($port->conflicts) {
+				$HTML .= "<li>CONFLICTS:";
+				$HTML .= $this->htmlConflicts($port->conflicts);
+				$HTML .= "\n</li>\n";
+			}
+
+			if ($port->conflicts_build) {
+				$HTML .= "<li>CONFLICTS_BUILD:";
+				$HTML .= $this->htmlConflicts($port->conflicts_build);
+				$HTML .= "\n</li>\n";
+			}
+
+			if ($port->conflicts_install) {
+				$HTML .= "<li>CONFLICTS_INSTALL:";
+				$HTML .= $this->htmlConflicts($port->conflicts_install);
+				$HTML .= "\n</li>\n";
+			}
+
+			$HTML .= "</ul>\n";
+
+			$HTML .= "<b>Conflicts Matches:</b>\n<ul>";
+			if (!empty($port->conflicts_matches)) {
+				foreach($port->conflicts_matches as $match) {
+					$HTML .= "<li>conflicts with " . freshports_link_to_port($match['category'], $match['port']) . '</li>';
+				}
+			} else {
+				$HTML .= 'There are no Conflicts Matches for this port.  This is usually an error.';
+				syslog(LOG_ERR, 'There are no Conflicts Matches for this port: ' . $port->element_pathname);
+			}
+			$HTML .= '</ul>';
+		}
+
+
+
 
 		# only show if we're meant to show, and if the port has not been deleted.
 		if ($this->ShowPackageLink || $this->ShowEverything) {
@@ -572,7 +621,7 @@ class port_display {
 			if ($port->IsSlavePort()) {
 				$HTML .= '<dl><dt><b>Master port:</b> ';
 				list($MyCategory, $MyPort) = explode('/', $port->master_port);
-				$HTML .= freshports_link_to_port($MyCategory, $MyPort, $this->branch);
+				$HTML .= freshports_link_to_port($MyCategory, $MyPort, $this->Branch);
 				$HTML .= "</dt>\n";
 				$HTML .= "</dl>\n";
 			}
@@ -585,7 +634,7 @@ class port_display {
 				$HTML .= '<span class="slaveports">Slave ports</span>' . "\n" . '<ol class="slaveports" id="slaveports">';
 				for ($i = 0; $i < $NumRows; $i++) {
 					$MasterSlave->FetchNth($i);
-					$HTML .= '<li>' . freshports_link_to_port($MasterSlave->slave_category_name, $MasterSlave->slave_port_name, $this->branch) . '</li>';
+					$HTML .= '<li>' . freshports_link_to_port($MasterSlave->slave_category_name, $MasterSlave->slave_port_name, $this->Branch) . '</li>';
 				}
 				$HTML .= "</ol>\n";
 			}
@@ -598,37 +647,37 @@ class port_display {
 
 			if ($port->depends_build) {
 				$HTML .= '<span class="required">Build dependencies:</span>' . "\n" . '<ol class="required" id="requiredtobuild">';
-				$HTML .= freshports_depends_links($this->db, $port->depends_build, $this->branch);
+				$HTML .= freshports_depends_links($this->db, $port->depends_build, $this->Branch);
 				$HTML .= "\n</ol>\n";
 			}
 
 			if ($port->depends_run) {
 				$HTML .= '<span class="required">Runtime dependencies:</span>' . "\n" . '<ol class="required" id="requiredtorun">';
-				$HTML .= freshports_depends_links($this->db, $port->depends_run, $this->branch);
+				$HTML .= freshports_depends_links($this->db, $port->depends_run, $this->Branch);
 				$HTML .= "\n</ol>\n";
 			}
 
 			if ($port->depends_lib) {
 				$HTML .= '<span class="required">Library dependencies:</span>' . "\n" . '<ol class="required" id="requiredlibraries">';
-				$HTML .= freshports_depends_links($this->db, $port->depends_lib, $this->branch);
+				$HTML .= freshports_depends_links($this->db, $port->depends_lib, $this->Branch);
 				$HTML .= "\n</ol>\n";
 			}
 
 			if ($port->fetch_depends) {
 				$HTML .= '<span class="required">Fetch dependencies:</span>' . "\n" . '<ol class="required" id="requiredfetches">';
-				$HTML .= freshports_depends_links($this->db, $port->fetch_depends, $this->branch);
+				$HTML .= freshports_depends_links($this->db, $port->fetch_depends, $this->Branch);
 				$HTML .= "\n</ol>\n";
 			}
 
 			if ($port->patch_depends) {
 				$HTML .= '<span class="required">Patch dependencies:</span>' . "\n" . '<ol class="required" id="requiredpatches">';
-				$HTML .= freshports_depends_links($this->db, $port->patch_depends, $this->branch);
+				$HTML .= freshports_depends_links($this->db, $port->patch_depends, $this->Branch);
 				$HTML .= "\n</ol>\n";
 			}
 
 			if ($port->extract_depends) {
 				$HTML .= '<span class="required">Extract dependencies:</span>' . "\n" . '<ol class="required" id="requiredextracts">';
-				$HTML .= freshports_depends_links($this->db, $port->extract_depends, $this->branch);
+				$HTML .= freshports_depends_links($this->db, $port->extract_depends, $this->Branch);
 				$HTML .= "\n</ol>\n";
 			}
 			
@@ -661,45 +710,9 @@ class port_display {
 			$HTML .= "</pre>\n<hr>\n";
 		}
 
-		# if there are conflicts
-		if ($this->ShowEverything && ($port->conflicts || $port->conflicts_build || $port->conflicts_install)) {
-			$HTML .= "<b>Conflicts:</b>\n<ul>";
-
-			if ($port->conflicts) {
-				$HTML .= "<li>CONFLICTS:";
-				$HTML .= $this->htmlConflicts($port->conflicts);
-				$HTML .= "\n</li>\n";
-			}
-
-			if ($port->conflicts_build) {
-				$HTML .= "<li>CONFLICTS_BUILD:";
-				$HTML .= $this->htmlConflicts($port->conflicts_build);
-				$HTML .= "\n</li>\n";
-			}
-
-			if ($port->conflicts_install) {
-				$HTML .= "<li>CONFLICTS_INSTALL:";
-				$HTML .= $this->htmlConflicts($port->conflicts_install);
-				$HTML .= "\n</li>\n";
-			}
-
-			$HTML .= "</ul>\n";
-
-			$HTML .= "<b>Conflicts Matches:</b>\n<ul>";
-			if (!empty($port->conflicts_matches)) {
-				foreach($port->conflicts_matches as $match) {
-					$HTML .= "<li>conflicts with " . freshports_link_to_port($match['category'], $match['port']) . '</li>';
-				}
-			} else {
-				$HTML .= 'There are no matches for this port.  This is usually an error.';
-				syslog(LOG_ERR, 'There are no matches for this port: ' . $port->element_pathname);
-			}
-			$HTML .= '</ul>';
-		}
-
 		if ($this->ShowEverything && $port->pkgmessage) {
 			$HTML .= "<b>pkg-message:</b>\n<pre>";
-			$HTML .= $port->pkgmessage;
+			$HTML .= htmlspecialchars($port->pkgmessage);
 			$HTML .= "</pre>\n<hr>\n";
 		}
 
@@ -729,8 +742,11 @@ class port_display {
 	}
 
 	function LinkToPort() {
-		$HTML = '<a href="/' . $this->port->category . '/' . $this->port->port . 
-			            '/">' . $this->port->port . '</a>';
+		$HTML = '<a href="/' . $this->port->category . '/' . $this->port->port . '/';
+		if ($this->Branch != BRANCH_HEAD) {
+			$HTML .= '?branch=' . htmlspecialchars($this->Branch);
+		}
+		$HTML .= '">' . $this->port->port . '</a>';
 
 		return $HTML;
 	}
@@ -758,7 +774,7 @@ class port_display {
 
 		return $HTML;
 	}
-	
+
 	function ShowDependencies( $port ) {
 		$HTML = '';
 
@@ -777,30 +793,74 @@ class port_display {
 
 				$HTML .= '<span class="required">for ' . $title . "</span>\n";
 				$div = '<div id="RequiredBy' . $title . '">';
-				$div .= "\n" . '<ol class="depends" id="requiredfor"' . $title . '>' . "\n";
+				$div .= "\n" . '<ol class="depends" id="requiredfor' . $title . '">' . "\n";
 
-				$deletedPortFound = true;
+				$firstDeletedPort = -1;     # we might be able to combine this with deletedPortFound
+				$deletedPortFound = false;  # we found a deleted port
+				$hidingStarted    = false;  # we can do this only once.
 				for ( $i = 0; $i < $NumRows; $i++ ) {
 					$PortDependencies->FetchNth($i);
 
-					$div .= '<li>' . freshports_link_to_port_single( $PortDependencies->category, $PortDependencies->port, $this->branch );
-					if ( $PortDependencies->status == 'D') {
-						$div .= '<sup>*</sup>';
+
+					# if this is a deleted port
+					if ($PortDependencies->status == 'D' ) {
+						$firstDeletedPort = $i; # we set this so the next loop knows where to start 
+						# we found a deleted port
 						$deletedPortFound = true;
+
+						# we are done in this loop
+						break;
 					}
-					$div .= "</li>\n";
-					if ( $NumRows > DEPENDS_SUMMARY && $i == DEPENDS_SUMMARY  - 1) {
-						$div .= '<a href="#" id="RequiredBy' . $title . 'Extra-show" class="showLink" onclick="showHide(\'RequiredBy' . $title . 'Extra\');return false;">Expand this list (' . $NumRows . ' items)</a>';
+
+					# if we haven't already starting hiding things and we found a deleted port or we have too many thing to show and we're at the max items to show
+					if ( !$hidingStarted && ( ( ( $NumRows > DEPENDS_SUMMARY )  && ( $i == DEPENDS_SUMMARY ) ) ) ) {
+						$div .= '<a href="#" id="RequiredBy' . $title . 'Extra-show" class="showLink" onclick="showHide(\'RequiredBy' . 
+						        $title . 'Extra\');return false;">Expand this list (' . $NumRows . ' items / ' . ($NumRows - $i) . ' hidden)</a>';
 						$div .= '<span id="RequiredBy' . $title . 'Extra" class="more">';
+						# yes, we have started hiding things.
+						$hidingStarted = true;
 					}
+
+					$div .= '<li>' . freshports_link_to_port_single( $PortDependencies->category, $PortDependencies->port, $this->Branch);
+					$div .= "</li>\n";
+
 				}
 
-				if ( $NumRows > DEPENDS_SUMMARY ) {
+				if ( $hidingStarted ) {
 					$div .= '<a href="#" id="RequiredBy' . $title . 'Extra-hide" class="hideLink" onclick="showHide(\'RequiredBy' . $title . 'Extra\');return false;">Collapse this list.</a>';
 					$div .= '</span>';
 				}
 
-				$div .= '</ol></div>';
+				$div .= '</ol>';
+
+				# now deal with deleted ports, perhaps this loop and the one above can be conbined, after the two loops are reduced to 1 - active ports 2 - deleted ports
+
+				$div .= "\n";
+
+				if ($deletedPortFound) {
+					# is it port or ports?
+					$PluralSingularSuffix = ($NumRows - $firstDeletedPort) > 1 ? 's' : '';
+
+					$div .= '<ol class="depends" id="requiredfor' . $title . 'Deleted">' . "\n";
+					$div .= "<lh>Deleted ports</lh>\n";
+					$div .= '<a href="#" id="RequiredBy' . $title . 'DeletedExtra-show" class="showLink" onclick="showHide(\'RequiredBy' . 
+				        $title . 'DeletedExtra\');return false;">Expand this list of ' . ($NumRows - $firstDeletedPort) . ' deleted port' . $PluralSingularSuffix . '</a>';
+					$div .= '<span id="RequiredBy' . $title . 'DeletedExtra" class="more">';
+ 					for ( $i = $firstDeletedPort; $i < $NumRows; $i++ ) {
+						$PortDependencies->FetchNth($i);
+
+						$div .= '<li>' . freshports_link_to_port_single( $PortDependencies->category, $PortDependencies->port, $this->Branch, DELETED_PORT_LINK_COLOR);
+						$div .= '<sup>*</sup>';
+						$div .= "</li>\n";
+					}
+
+					$div .= '<a href="#" id="RequiredBy' . $titled . 'DeletedExtra-hide" class="hideLink" onclick="showHide(\'RequiredBy' . $title . 'DeletedExtra\');return false;">Collapse this list of deleted ports.</a>';
+					$div .= '</span>';
+
+					$div .= '</ol>';
+				} # end of deletedPortFound
+
+				$div .= '</div>';
 
 				$HTML .= $div;
 			}
@@ -843,7 +903,7 @@ class port_display {
 		}
 
 		if ( $HTML === '' ) {
-			$HTML .= 'There is no configure plist information for this port<br>';
+			$HTML .= '<p>There is no configure plist information for this port.</p>';
 		}
 
 		return $HTML;
@@ -855,22 +915,25 @@ class port_display {
 		$PackageFlavors = new PackageFlavors( $this->db );
 		$NumRows = $PackageFlavors->FetchInitialise( $this->port->id );
 		if ( $NumRows > 0 ) {
-			$HTML = '<b>Package flavors</b> (flavor: name)';
+			$HTML = '<b>Package flavors</b> (<span class="file">&lt;flavor&gt;: &lt;package&gt;</span>)';
 			// if this is our first output, put up our standard header
 			$HTML .= '<ul>';
 			for ( $i = 0; $i < $NumRows; $i++ ) {
 				$PackageFlavors->FetchNth($i);
 
-				$HTML .= '<li>' . $PackageFlavors->flavor_name . ': ' . $PackageFlavors->name . "</li>\n";
+				$HTML .= '<li><span class="file">' . $PackageFlavors->flavor_name . ': ' . $PackageFlavors->name . "</span></li>\n";
 			}
 			$HTML .= '</ul>';
 		}
 
-		if ( NumRows == 0 ) {
-			$HTML .= ' There is no flavor information for this port<br>';
+		if ( $NumRows == 0 ) {
+			$HTML .= '<p>There is no flavor information for this port.</p>';
 		}
 
 		return $HTML;
 	}
 
+	function getShortDescription() {
+		return $this->port->short_description;
+	}
 }

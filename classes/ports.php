@@ -79,6 +79,9 @@ class Port {
 	var $vulnerable_current;
 	var $vulnerable_past;
 
+	var $pkg_plist_libray_matches;	// items from pkg-plist which match: 'lib/[[:alpha:]]*?\.so'
+	                                // used for listing LIB_DEPENDS
+
 	// not always present/set
 	var $update_description;
 
@@ -97,10 +100,13 @@ class Port {
 	var $LocalResult;
 
 	var $committer; 
-	
+
 	var $svn_hostname;
 	var $path_to_repo;
 	var $element_pathname;
+
+	// version on current quarterly branch. see https://github.com/FreshPorts/freshports/issues/115
+	var $quarterly_revision;
 
 	private $Debug = 0;
 	
@@ -180,6 +186,8 @@ class Port {
 		$this->vulnerable_current = $myrow["vulnerable_current"];
 		$this->vulnerable_past    = $myrow["vulnerable_past"];
 
+		$this->pkg_plist_libray_matches = $myrow["pkg_plist_libray_matches"];
+
 		// We might be looking at category lang.  japanese/gawk is listed in both japanese and lang.
 		// So when looking at lang, we don't want to say, Also listed in lang...  
 		//
@@ -188,6 +196,7 @@ class Port {
 		$this->svn_hostname       = $myrow['svn_hostname'];
 		$this->path_to_repo       = $myrow['path_to_repo'];
 		$this->element_pathname   = $myrow['element_pathname'];
+		$this->quarterly_revision = $myrow['quarterly_revision'];
 
 		$this->last_commit_date   = isset($myrow['last_commit_date']) ? $myrow['last_commit_date'] : null;
 
@@ -254,15 +263,17 @@ select ports.id,
        ports.conflicts_install,
        to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, 
        ports.categories as categories,
-	    element.name     as port, 
-	    categories.name  as category,
+       element.name     as port, 
+       categories.name  as category,
        ports_vulnerable.current as vulnerable_current,
        ports_vulnerable.past    as vulnerable_past,
+       array_to_json(regexp_match(pkg_plist, 'lib/[[:alpha:]]*?\.so')) AS pkg_plist_libray_matches,
        commit_log.commit_date - SystemTimeAdjust() AS last_commit_date,
        commit_log.svn_revision,
        R.svn_hostname,
        R.path_to_repo,
-       element_pathname(ports.element_id) as element_pathname  ";
+       element_pathname(ports.element_id) as element_pathname,
+       PortVersionOnQuarterlyBranch(ports.id, categories.name || '/' || element.name) AS quarterly_revision  ";
 
 		if ($UserID) {
 			$sql .= ",
@@ -375,11 +386,13 @@ select ports.id,
 			           categories.name  as category,
                        ports_vulnerable.current as vulnerable_current,
                        ports_vulnerable.past    as vulnerable_past,
+                       array_to_json(regexp_match(pkg_plist, 'lib/[[:alpha:]]*?\.so')) AS pkg_plist_libray_matches,
                        commit_log.commit_date - SystemTimeAdjust() AS last_commit_date,
                        commit_log.svn_revision,
                        R.svn_hostname,
                        R.path_to_repo,
-                       element_pathname(ports.element_id) as element_pathname ";
+                       element_pathname(ports.element_id) as element_pathname,
+                       PortVersionOnQuarterlyBranch(ports.id, categories.name || '/' || element.name) AS quarterly_revision ";
 
 		if ($UserID) {
 			$sql .= ', 
@@ -440,7 +453,7 @@ ON TEMP.wle_element_id = ports.element_id";
 		return $result;
 	}
 
-	function FetchByCategoryInitialise($CategoryName, $UserID = 0, $PageSize = 0, $PageNo = 0) {
+	function FetchByCategoryInitialise($CategoryName, $UserID = 0, $PageSize = 0, $PageNo = 0, $Branch = BRANCH_HEAD) {
 		# fetch all ports based on category
 		# e.g. id for net
 		
@@ -514,6 +527,7 @@ SELECT P.*, element.name    as port
         PRIMARY_CATEGORY.name as category,
         ports_vulnerable.current as vulnerable_current,
         ports_vulnerable.past    as vulnerable_past,
+        array_to_json(regexp_match(pkg_plist, 'lib/[[:alpha:]]*?\.so')) AS pkg_plist_libray_matches,
         NULL AS needs_refresh,
         NULL AS updated,
         NULL AS last_commit_date,
@@ -524,16 +538,24 @@ SELECT P.*, element.name    as port
         NULL AS committer,
         NULL AS path_to_repo,
         NULL AS svn_hostname,
-        NULL AS onwatchlist
+        NULL AS onwatchlist,
+        PortVersionOnQuarterlyBranch(ports.id, categories.name || '/' || element.name) AS quarterly_revision
 
    FROM ports_vulnerable right outer join ports on (ports_vulnerable.port_id = ports.id),
-        categories, ports_categories, categories PRIMARY_CATEGORY
+        categories, ports_categories, categories PRIMARY_CATEGORY, element
   WHERE ports_categories.port_id     = ports.id
     AND ports_categories.category_id = categories.id
-    AND categories.name              = '$CategoryName'
-    AND PRIMARY_CATEGORY.id          = ports.category_id ) AS P
+    AND categories.name              = '" . pg_escape_string($CategoryName) . "'
+    AND PRIMARY_CATEGORY.id          = ports.category_id
+    AND ports.element_id             = element.id ) AS P
    ON (P.element_id     = element.id
-   AND element.status   = 'A') JOIN element_pathname EP ON P.element_id = EP.element_id AND EP.pathname like '/ports/head/%'";
+   AND element.status   = 'A') JOIN element_pathname EP ON P.element_id = EP.element_id AND EP.pathname like '/ports/";
+
+	if ($Branch != BRANCH_HEAD) {
+		$sql .= 'branches/';
+	}
+
+	$sql .= pg_escape_string($Branch) . "/%'";
 
 		if ($UserID) {
 			$sql .= ") AS PE

@@ -75,6 +75,8 @@ $freshports_CommitMsgMaxNumOfLinesToShow = 15;
 define('FRESHPORTS_BGCOLOR',   '#FFFFFF');
 define('FRESHPORTS_TEXTCOLOR', '#000000');
 
+define('DELETED_PORT_LINK_COLOR', 'red');
+
 define('FRESHPORTS_VERSION_REVISION_JOINER', '_');
 define('FRESHPORTS_VERSION_EPOCH_JOINER',    ',');
 
@@ -82,7 +84,8 @@ define('PORTSMONSHOW',        1);
 define('CONFIGUREPLISTSHOW',  1);
 define('DISTFILESSURVEYSHOW', 1);
 
-define('BRANCH_HEAD', 'head');
+define('BRANCH_HEAD',      'head');
+define('BRANCH_QUARTERLY', 'quarterly');
 
 if (!defined('PATH_TO_PORTSDIR')) define('PATH_TO_PORTSDIR', '/usr/local/');  // must have a trailing /
 

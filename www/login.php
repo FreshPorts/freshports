@@ -42,7 +42,7 @@ if (IsSet($_REQUEST['LOGIN']) && $_REQUEST['UserID']) {
    // process form
 
    if ($Debug) {
-      while (list($name, $value) = each($HTTP_POST_VARS)) {
+      foreach ($HTTP_POST_VARS as $name => $value) {
          echo "$name = $value<BR>\n";
       }
    }
@@ -80,6 +80,7 @@ if (IsSet($_REQUEST['LOGIN']) && $_REQUEST['UserID']) {
 		if ($status == $UserStatusActive) {
 			if ($Debug) {
 				echo "well, debug was on, so I would have taken you to '$origin'<BR>\n";
+				echo "Cookie = $Cookie<BR>\n";
 			} else {
 				$user = new User($db);
 				$Cookie = $user->createUserToken();

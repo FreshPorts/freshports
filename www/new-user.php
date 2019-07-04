@@ -28,7 +28,7 @@
 	if (IsSet($_REQUEST['origin'])) $origin = $_REQUEST['origin'];
 	if (IsSet($_REQUEST['submit'])) $submit = $_REQUEST['submit'];
 
-	$errors = 0;
+	$errors = '';
 
 if ($origin == '/index.php' || $origin == '') {
 	$origin = '/';
@@ -188,8 +188,8 @@ function setfocus() { document.f.UserLogin.focus(); }
 
 <?php echo freshports_MainTable(); ?>
 <TR><TD VALIGN="top" WIDTH="100%">
-<script language="php">
-if ($errors) {
+<?php
+if ($errors != '') {
 echo '<TABLE CELLPADDING=1 CELLSPACING=0 BORDER=0 BGCOLOR="' . BACKGROUND_COLOUR . '" WIDTH=100%>
 <TR>
 <TD>
@@ -224,14 +224,14 @@ echo '<p>If you need help, please post a message on the forum. </p>
 <BR>';
 }
 
-if (!IsSet($submit) && !$errors) {
+if (!IsSet($submit) && $errors != '') {
   // provide default values for an empy form.
   require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 }
 
-</script>
+echo freshports_MainContentTable();
 
-<?php echo freshports_MainContentTable(); ?>
+?>
       <TR>
 		<? echo freshports_PageBannerText("New User Details"); ?>
       </TR>

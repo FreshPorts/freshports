@@ -18,12 +18,12 @@
 	$Debug = 0;
 	if ($Debug) phpinfo();
 
-    $https = ((!empty($_SERVER['HTTPS'])) && ($_SERVER['HTTPS'] != 'off'));
-    if ($https) {
-      $protocol = "https";
-    } else {
-      $protocol = "http";
-    }
+	$https = ((!empty($_SERVER['HTTPS'])) && ($_SERVER['HTTPS'] != 'off'));
+	if ($https) {
+		$protocol = "https";
+	} else {
+		$protocol = "http";
+	}
 
 	if (IsSet($_REQUEST['branch'])) {
 		$Branch = htmlspecialchars($_REQUEST['branch']);
@@ -33,8 +33,12 @@
 
 	freshports_ConditionalGet(freshports_LastModified_Dynamic());
 
+	# results can be sorted by:
 	define('ORDERBYPORT',       'port');
 	define('ORDERBYCATEGORY',   'category');
+	define('ORDERBYLASTUPDATE', 'lastupdate');
+
+	# results are sorted up or down
 	define('ORDERBYASCENDING',  'asc');
 	define('ORDERBYDESCENDING', 'desc');
 
@@ -152,11 +156,11 @@ function WildCardQuery($stype, $Like, $query) {
 	$method				= '';
 	$deleted			= 'excludedeleted';
 	$include_src_commits= INCLUDE_SRC_COMMITS;
-	$casesensitivity	= 'caseinsensitive';
-	$orderby            = ORDERBYCATEGORY;
-	$orderbyupdown		= ORDERBYASCENDING;
-	$output_format      = OUTPUT_FORMAT_HTML;
-	$minimal_output     = 0;
+	$casesensitivity		= 'caseinsensitive';
+	$orderby			= ORDERBYCATEGORY;
+	$orderbyupdown			= ORDERBYASCENDING;
+	$output_format			= OUTPUT_FORMAT_HTML;
+	$minimal_output			= 0;
 
 	// avoid nasty problems by adding slashes
 	if (IsSet($_REQUEST['query']))              $query               = pg_escape_string(trim($_REQUEST['query']));
@@ -459,6 +463,19 @@ switch ($method) {
 
 	default:
 		switch ($orderby) {
+			case ORDERBYLASTUPDATE:
+				switch ($orderbyupdown) {
+					case ORDERBYDESCENDING:
+					default:
+						$sqlOrderBy = "\n ORDER BY last_commit_date desc, E.name";
+						break;
+
+					case ORDERBYASCENDING:
+						$sqlOrderBy = "\n ORDER BY last_commit_date, E.name";
+						break;
+				}
+				break;
+
 			case ORDERBYCATEGORY:
 				switch ($orderbyupdown) {
 					case ORDERBYDESCENDING:
@@ -881,8 +898,9 @@ if ($output_format == OUTPUT_FORMAT_HTML) {
 	<INPUT TYPE=checkbox <? if ($casesensitivity == "casesensitive")   echo 'CHECKED'; ?> VALUE=casesensitive   NAME=casesensitivity> Case sensitive search
 <td valign="middle">
 	Sort by: <SELECT name="orderby">
-		<OPTION VALUE="<?php echo ORDERBYPORT;     ?>" <?if ($orderby == ORDERBYPORT        ) echo 'SELECTED' ?>>Port
-		<OPTION VALUE="<?php echo ORDERBYCATEGORY; ?>" <?if ($orderby == ORDERBYCATEGORY    ) echo 'SELECTED' ?>>Category
+		<OPTION VALUE="<?php echo ORDERBYPORT;       ?>" <?if ($orderby == ORDERBYPORT       ) echo 'SELECTED' ?>>Port
+		<OPTION VALUE="<?php echo ORDERBYCATEGORY;   ?>" <?if ($orderby == ORDERBYCATEGORY   ) echo 'SELECTED' ?>>Category
+		<OPTION VALUE="<?php echo ORDERBYLASTUPDATE; ?>" <?if ($orderby == ORDERBYLASTUPDATE ) echo 'SELECTED' ?>>Last Update
 	</SELECT>
 
 	<SELECT name="orderbyupdown">

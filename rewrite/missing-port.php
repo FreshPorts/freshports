@@ -120,7 +120,7 @@ function _freshports_PortDisplayHelper($db, $category, $port, $branch, $HasCommi
 		}
 	}
 
-	$port_display = new port_display($db, $User);
+	$port_display = new port_display($db, $User, $branch);
 	$port_display->SetDetailsFull();
 
 	$Cache = new CachePort();
@@ -152,6 +152,20 @@ function _freshports_PortDisplayHelper($db, $category, $port, $branch, $HasCommi
 		}
 
 		$HTML = substr($HTML, $EndOfFirstLine + 1);
+
+		# now we extract the short description
+		$EndOfFirstLine = strpos($HTML, "\n");
+		if ($EndOfFirstLine == false) {
+			die('Internal error: I was expecting a short description and found nothing');
+		}
+
+		# short description should be short
+		$ShortDescription = substr($HTML, 0, $EndOfFirstLine);
+		if (empty($ShortDescription) || strlen($ShortDescription) > 100) {
+			syslog(LOG_ERR, "Extract of ShortDescription from cache failed.  Is cache corrupt/deprecated? port was $category/$port");
+			die('sorry, I encountered a problem with the cache.  Please send the URL and this message to the webmaster.');
+		}
+		$HTML = substr($HTML, $EndOfFirstLine + 1);
 	} else {
 		if ($Debug) echo "found NOTHING in cache for '$category/$port' on $branch<br>\n";
 		$HTML = '';
@@ -172,7 +186,7 @@ function _freshports_PortDisplayHelper($db, $category, $port, $branch, $HasCommi
 		$MyPort = new Port($db);
 		$MyPort->FetchByID($port_id, $User->id);
 
-		$port_display->SetPort($MyPort, $branch);
+		$port_display->SetPort($MyPort);
 	
 		$HTML .= $port_display->Display();
 		
@@ -187,12 +201,13 @@ function _freshports_PortDisplayHelper($db, $category, $port, $branch, $HasCommi
 
 		# If we are not reading 
 		if (!$BypassCache || $RefreshCache) {
-			$Cache->CacheDataSet($MyPort->{'element_id'} . "\n" . $HTML);
+			$Cache->CacheDataSet($MyPort->{'element_id'} . "\n" . $MyPort->{'short_description'} . "\n" . $HTML);
 			$Cache->AddPort($MyPort->category, $MyPort->port, CACHE_PORT_DETAIL, $PageNumber, $branch);
 		}
 
-		$ElementID   = $MyPort->{'element_id'};
-		$OnWatchList = $MyPort->{'onwatchlist'};
+		$ElementID        = $MyPort->{'element_id'};
+		$OnWatchList      = $MyPort->{'onwatchlist'};
+		$ShortDescription = $MyPort->{'short_description'};
 	}
 	
 	# At this point, we have the port detail HTML
@@ -215,7 +230,7 @@ function _freshports_PortDisplayHelper($db, $category, $port, $branch, $HasCommi
 
 	header("HTTP/1.1 200 OK");
 
-	$Title = $category . "/" . $port;
+	$Title = $category . "/" . $port . ': ' . $ShortDescription;
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 	
@@ -241,7 +256,7 @@ document.body.appendChild(sheet);
 <?php echo freshports_MainContentTable(); ?>
 
 <TR>
-<? echo freshports_PageBannerText("Port details"); ?>
+<? echo freshports_PageBannerText("Port details" . ($branch != BRANCH_HEAD ? ' on branch ' . htmlspecialchars($branch) : '')); ?>
 </TR>
 
 <tr><td valign="top" width="100%">

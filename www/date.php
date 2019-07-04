@@ -136,7 +136,7 @@
 
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
 
-		$DisplayCommit = new DisplayCommit($db, $commits->LocalResult);
+		$DisplayCommit = new DisplayCommit($db, $commits->LocalResult, $BranchName);
 		$DisplayCommit->ShowLinkToSanityTestFailure = true;
 		$RetVal = $DisplayCommit->CreateHTML();
 

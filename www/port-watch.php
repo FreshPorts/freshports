@@ -84,7 +84,7 @@ if ($submit) {
    	$WatchListElement = new WatchListElement($db);
       // make sure we are pointing at the start of the array.
       reset($ports);
-      while (list($key, $value) = each($ports)) {
+      foreach ($ports as $key => $value) {
       	$WatchListElement->Add($User->id, $wlid, $value);
 
       	# I have no idea why this works... seems to be missing the value of $sql
@@ -118,7 +118,7 @@ if ($submit) {
 	      
 		$result = pg_exec($db, $sql);
 		$numrows = pg_numrows($result);      
-	   // read each value and set the variable accordingly
+                // read each value and set the variable accordingly
 		for ($i = 0; $i < $numrows; $i++) {
 			$myrow = pg_fetch_array($result, $i);
 			// we use these to see if a particular port is selected

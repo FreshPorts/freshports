@@ -199,6 +199,33 @@ ORDER BY P.date_added DESC, E.name, category, version";
     JOIN categories           C   ON P.category_id     = C.id
 ORDER BY CL.commit_date DESC, CL.id ASC, E.name, category, version";
 				break;
+				
+                        case 'vuln':
+                                $sql = "
+  SELECT C.name    AS category,
+         E.name    AS port,
+         E.status  AS status,
+         P.forbidden,
+         P.broken,
+         P.deprecated,
+         P.element_id                     AS element_id,
+         P.version  AS version,
+         P.revision AS revision,
+         P.version                        AS ports_version,
+         P.revision                       AS ports_revision,
+         P.portepoch                      AS epoch,
+         date_part('epoch', P.date_added) AS date_added,
+         P.short_description              AS short_description,
+         P.category_id
+         FROM ports            P
+         JOIN ports_vulnerable PV ON PV.current    > 0            AND PV.port_id = P.id
+         JOIN element_pathname EP ON EP.element_id = P.element_id AND EP.pathname like '/ports/head/%'
+         JOIN element          E  ON P.element_id  = E.id         AND E.status = 'A'
+         JOIN categories       C  ON P.category_id = C.id
+         JOIN commit_log       CL ON CL.id         = P.last_commit_id
+ORDER BY CL.commit_date;
+";
+                                break;
 
 			default:
 				$sql = "
@@ -264,6 +291,7 @@ ORDER BY CL.commit_date DESC, CL.id ASC, E.name, category, version LIMIT 20";
 		switch ($Flavor) {
 			case 'broken':
 			case 'new':
+			case 'vuln':
 				# this is a relative link
 				$link        = freshports_Port_URL($myrow['category'], $myrow['port'], $BranchName);;
 				$date        = $myrow['date_added'];

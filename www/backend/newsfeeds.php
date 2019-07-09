@@ -42,6 +42,7 @@
 	<ul>
 	<li><b>flavor=new</b> : show only new ports (ignores <b>branch</b>).</li>
 	<li><b>flavor=broken</b> : show only new ports (ignores <b>branch</b>).</li>
+	<li><b>flavor=vuln</b> : show only vuln ports (branches should work, let me know if they do not).</li>
 	<li><b>branch=2018Q3</b> : show only commits on that branch. If not specified, defaults to <b>head</b>.
 	</ul>
 	<p>

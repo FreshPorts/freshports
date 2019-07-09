@@ -36,7 +36,7 @@
 	  switch($Flavor) {
 	    case 'new':
 	    case 'broken':
-	    case 'vulnerable':
+	    case 'vuln':
 	    	break;
 
 	    default:

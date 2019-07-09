@@ -89,6 +89,11 @@ switch($script) {
 
         $status = new SystemStatus($db);
 
+        echo "<body>\n";
+        echo "<head>\n";
+        echo '<meta http-equiv="refresh" content="180"> <!-- Refresh every 3 minutes -->' . "\n";
+        echo "</head>\n";
+
         echo '<p>';
 
         if ($status->InMaintenanceMode()) {
@@ -107,6 +112,7 @@ switch($script) {
         echo '</p>';
 
         require_once("/var/db/freshports/cache/html/backend-status.html");
+        echo "</body>\n";
         exit;
         break;
 

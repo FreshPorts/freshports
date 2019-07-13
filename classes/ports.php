@@ -79,7 +79,7 @@ class Port {
 	var $vulnerable_current;
 	var $vulnerable_past;
 
-	var $pkg_plist_libray_matches;	// items from pkg-plist which match: 'lib/[[:alpha:]]*?\.so'
+	var $pkg_plist_library_matches;	// items from pkg-plist which match: 'lib/[[:alpha:]]*?\.so'
 	                                // used for listing LIB_DEPENDS
 
 	// not always present/set
@@ -186,7 +186,7 @@ class Port {
 		$this->vulnerable_current = $myrow["vulnerable_current"];
 		$this->vulnerable_past    = $myrow["vulnerable_past"];
 
-		$this->pkg_plist_libray_matches = $myrow["pkg_plist_libray_matches"];
+		$this->pkg_plist_library_matches = $myrow["pkg_plist_library_matches"];
 
 		// We might be looking at category lang.  japanese/gawk is listed in both japanese and lang.
 		// So when looking at lang, we don't want to say, Also listed in lang...  
@@ -267,7 +267,7 @@ select ports.id,
        categories.name  as category,
        ports_vulnerable.current as vulnerable_current,
        ports_vulnerable.past    as vulnerable_past,
-       array_to_json(regexp_match(pkg_plist, 'lib/[[:alpha:]]*?\.so')) AS pkg_plist_libray_matches,
+       array_to_json(regexp_match(pkg_plist, 'lib/[[:alpha:]]*?\.so')) AS pkg_plist_library_matches,
        commit_log.commit_date - SystemTimeAdjust() AS last_commit_date,
        commit_log.svn_revision,
        R.svn_hostname,
@@ -386,7 +386,7 @@ select ports.id,
 			           categories.name  as category,
                        ports_vulnerable.current as vulnerable_current,
                        ports_vulnerable.past    as vulnerable_past,
-                       array_to_json(regexp_match(pkg_plist, 'lib/[[:alpha:]]*?\.so')) AS pkg_plist_libray_matches,
+                       array_to_json(regexp_match(pkg_plist, 'lib/[[:alpha:]]*?\.so')) AS pkg_plist_library_matches,
                        commit_log.commit_date - SystemTimeAdjust() AS last_commit_date,
                        commit_log.svn_revision,
                        R.svn_hostname,
@@ -527,7 +527,7 @@ SELECT P.*, element.name    as port
         PRIMARY_CATEGORY.name as category,
         ports_vulnerable.current as vulnerable_current,
         ports_vulnerable.past    as vulnerable_past,
-        array_to_json(regexp_match(pkg_plist, 'lib/[[:alpha:]]*?\.so')) AS pkg_plist_libray_matches,
+        array_to_json(regexp_match(pkg_plist, 'lib/[[:alpha:]]*?\.so')) AS pkg_plist_library_matches,
         NULL AS needs_refresh,
         NULL AS updated,
         NULL AS last_commit_date,

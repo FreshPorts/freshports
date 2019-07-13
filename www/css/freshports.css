@@ -7,10 +7,33 @@ IMG#fp-logo { max-width: 100%; height: auto }
 
 CODE.code { color: #461b7e}
 PRE.code {  color: #461b7e; white-space: pre-wrap}
-LI.configure {  color: #461b7e;     display: block;
-    font-family: monospace;}
-span#configureplist-Extra {  color: #461b7e;
-    font-family: monospace;}
+
+.like-pre {
+  color: #461b7e;
+  font-family: monospace;
+  white-space: pre;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-left: 25px;
+}
+
+.configure > li, .pkg-plist  > li {
+    color: #461b7e;
+    font-family: monospace;
+}
+
+
+LI.configure {
+    color: #461b7e;
+    display: block;
+    font-family: monospace;
+}
+
+li#configureplist-Extra {
+    color: #461b7e;
+    font-family: monospace;
+    padding-inline-start: 0px;
+}
 BLOCKQUOTE.code { color: #461b7e}
 TD.sans { font-size: smaller; }
 P.white { color: white; }
@@ -59,14 +82,51 @@ div#followus .header
 }
 
 
-p.required, span.required
+dt.required, p.required, dt.description
 {
     font-weight: bold;
+}
+
+dt.description
+{
+  margin-top: 5px;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+dd.required
+{
+  margin-top: 5px;
+  font-weight: bold;
+  margin-inline-start: 30px;
+}
+
+dt.pkg-plist, dd.pkg-plist, dt.pkgname, dt.flavors
+{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-inline-start: 0px;
+}
+
+dt.notice
+{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-inline-start: 0px;
+  font-size: 15px;
+}
+
+dt.h2
+{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 25px;
 }
 
 ol.required, ol.depends, ol.mastersites
 {
     margin-bottom: 10px;
+    padding-inline-start: 0px;
 }
 
 div.showLink

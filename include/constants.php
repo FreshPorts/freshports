@@ -125,3 +125,5 @@ define('NEWSFEED_REFRESH_SECONDS', 3600);
 
 define('MAINTENANCE_PAGE', 'now-in-maintenance-mode.php');
 define('MAINTENANCE_MODE_RERESH_TIME_SECONDS', 180);
+
+define('ISSUES', 'https://github.com/FreshPorts/freshports/issues');

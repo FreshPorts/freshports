@@ -33,7 +33,7 @@
 All of these graphs require javascript.  Please select the graph you would like to view from the dropdown.
 </P>
 <P>
-If you have suggestions for graphs, please submit them via the forum.
+If you have suggestions for graphs, please submit them via the <a href="<?php echo ISSUES; ?>">issues link</a>.
 </P>
 
 <center>

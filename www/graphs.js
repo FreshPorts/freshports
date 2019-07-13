@@ -44,6 +44,84 @@ function top10committers() {
 	});
 }
 
+function top10committers_src() {
+	$("#title").html("<h3>Top 10 Committers - src</h3>");
+	$("#holder").width(800);
+	$("#holder").height(500);
+	$("#overview").hide();
+	$("#list").hide();
+	$.getJSON("generate_content.php?ds=top10Committers_src()", function(d1) {
+		$.plot($("#holder"), d1,
+			{
+				bars: { show: true },
+				legend: { show: false },
+				xaxis: {
+					ticks: function(axis) {
+						var ret = [];
+						var i = 0;
+						for (i = 0; i < d1.length; i++) {
+							ret.push([i + .5, d1[i].label]);
+						}
+						return ret;
+					}
+				}
+			}
+		);
+	});
+}
+
+function top10committers_doc() {
+	$("#title").html("<h3>Top 10 Committers - doc</h3>");
+	$("#holder").width(800);
+	$("#holder").height(500);
+	$("#overview").hide();
+	$("#list").hide();
+	$.getJSON("generate_content.php?ds=top10Committers_doc()", function(d1) {
+		$.plot($("#holder"), d1,
+			{
+				bars: { show: true },
+				legend: { show: false },
+				xaxis: {
+					ticks: function(axis) {
+						var ret = [];
+						var i = 0;
+						for (i = 0; i < d1.length; i++) {
+							ret.push([i + .5, d1[i].label]);
+						}
+						return ret;
+					}
+				}
+			}
+		);
+	});
+}
+
+function top10committers_ports() {
+	$("#title").html("<h3>Top 10 Committers - ports</h3>");
+	$("#holder").width(800);
+	$("#holder").height(500);
+	$("#overview").hide();
+	$("#list").hide();
+	$.getJSON("generate_content.php?ds=top10Committers_ports()", function(d1) {
+		$.plot($("#holder"), d1,
+			{
+				bars: { show: true },
+				legend: { show: false },
+				xaxis: {
+					ticks: function(axis) {
+						var ret = [];
+						var i = 0;
+						for (i = 0; i < d1.length; i++) {
+							ret.push([i + .5, d1[i].label]);
+						}
+						return ret;
+					}
+				}
+			}
+		);
+	});
+}
+
 /* Taken practically verbatim from Flot examples. */
 function commitsOverTime() {
 	$("#title").html("<h3>Commits Over Time</h3>");

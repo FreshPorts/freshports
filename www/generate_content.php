@@ -38,6 +38,63 @@ switch ($_GET['ds']) {
 		}
 		echo " ]";
 		break;
+	case ('top10Committers_doc()'):
+		$result = pg_query("  SELECT CL.committer, count(*) AS count
+    FROM commit_log CL, repo R
+   WHERE CL.repo_id = R.id
+     AND R.name     = 'doc'
+GROUP BY CL.committer
+ORDER BY count(*) DESC
+   LIMIT 10") or die("Query error. (1)");
+		echo "[ ";
+		$i = 0;
+		while ($row = pg_fetch_row($result)) {
+			echo "{ ";
+			echo "\"label\": \"$row[0]\", ";
+			echo "\"data\": [[$i, $row[1]]] ";
+			echo "}, ";
+			$i++;
+		}
+		echo " ]";
+		break;
+	case ('top10Committers_ports()'):
+		$result = pg_query("  SELECT CL.committer, count(*) AS count
+    FROM commit_log CL, repo R
+   WHERE CL.repo_id = R.id
+     AND R.name     = 'ports'
+GROUP BY CL.committer
+ORDER BY count(*) DESC
+   LIMIT 10") or die("Query error. (1)");
+		echo "[ ";
+		$i = 0;
+		while ($row = pg_fetch_row($result)) {
+			echo "{ ";
+			echo "\"label\": \"$row[0]\", ";
+			echo "\"data\": [[$i, $row[1]]] ";
+			echo "}, ";
+			$i++;
+		}
+		echo " ]";
+		break;
+	case ('top10Committers_src()'):
+		$result = pg_query("  SELECT CL.committer, count(*) AS count
+    FROM commit_log CL, repo R
+   WHERE CL.repo_id = R.id
+     AND R.name     = 'src'
+GROUP BY CL.committer
+ORDER BY count(*) DESC
+   LIMIT 10") or die("Query error. (1)");
+		echo "[ ";
+		$i = 0;
+		while ($row = pg_fetch_row($result)) {
+			echo "{ ";
+			echo "\"label\": \"$row[0]\", ";
+			echo "\"data\": [[$i, $row[1]]] ";
+			echo "}, ";
+			$i++;
+		}
+		echo " ]";
+		break;
 	case ('commitsOverTime()'):
 		$result = pg_query("select date_trunc('day', commit_date) as date, count(commit_date) from commit_log group by date") or die("Query error. (2)");
 		echo "[ ";

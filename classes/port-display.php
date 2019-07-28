@@ -588,7 +588,7 @@ class port_display {
 
 		# only show if we're meant to show, and if the port has not been deleted.
 		if ($this->ShowPackageLink || $this->ShowEverything) {
-			$HTML .= "\n</dl><hr><dl>\n";
+			$HTML .= "\n</dl><dl>\n";
 			if ($port->IsDeleted()) {
 				$HTML .= '<dt>No installation instructions: this port has been deleted.</dt>';
 				$HTML .= '<dt>The package name of this deleted port was: <code class="code">' . $port->latest_link . '</code></dt>';

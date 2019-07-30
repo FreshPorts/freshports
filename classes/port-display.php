@@ -950,7 +950,7 @@ class port_display {
 		$PackageFlavors = new PackageFlavors( $this->db );
 		$NumRows = $PackageFlavors->FetchInitialise( $this->port->id );
 		if ( $NumRows > 0 ) {
-			$HTML = '<dt class="flavors"><b>Package flavors</b> (<span class="file">&lt;flavor&gt;: &lt;package&gt;</span></dt>)';
+			$HTML = '<dt class="flavors"><b>Package flavors</b> (<span class="file">&lt;flavor&gt;: &lt;package&gt;</span>)</dt>';
 			// if this is our first output, put up our standard header
 			$HTML .= '<dd><ul>';
 			for ( $i = 0; $i < $NumRows; $i++ ) {

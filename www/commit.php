@@ -10,7 +10,6 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/cache-commit.php');
 
     $Debug = 0;
 

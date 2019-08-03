@@ -1,4 +1,4 @@
-.<?php
+<?php
 	#
 	# $Id: package.php,v 1.2 2006-12-17 12:06:13 dan Exp $
 	#
@@ -43,8 +43,7 @@ if ($notfound) {
 ?>
 The package specified ('<?php echo $package; ?>') could not be found.  We have a few suggestions.
 <ul>
-<li><a href="<?php echo $Searches->GetDefaultSearchString($package); ?>">Search</a> for ports containing '<?php echo $package; ?>' in their name.
-<li><a href="<?php echo $Searches->GetDefaultSoundsLikeString($package); ?>">Search</a> for ports which sound like '<?php echo $package; ?>'.
+<li><a href="<?php echo $Searches->GetDefaultSearchStringPackage($package); ?>">Search</a> for ports containing '<?php echo $package; ?>' in their name.
 </ul>
 <?php
 } else {

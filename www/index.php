@@ -26,8 +26,8 @@
 	# If they supply a package name, go for it.
 	#
 	if (IsSet($_REQUEST['package'])) {
-	    if ($Debug) echo "package is specfied on the URL<br>\n";
 		$package = pg_escape_string($_REQUEST['package']);
+		if ($Debug) echo "package is specfied on the URL: '$package'<br>\n";
 		if ($package != '') {
 			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/packages.php');
 

@@ -1069,7 +1069,9 @@ switch ($stype) {
 					$HTML .= $port_display->DisplayPlainText() . "\n";
 					break;
 			} // switch
-			$HTML .= '<hr width="100%">';
+			if ($output_format == OUTPUT_FORMAT_HTML) {
+				$HTML .= '<hr width="100%">';
+			}
 		} // for
 
 	    	if ($output_format == OUTPUT_FORMAT_HTML) {

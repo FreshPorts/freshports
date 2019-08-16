@@ -8,6 +8,7 @@
   # constants which 
 
 #define('PATH_TO_PORTSDIR', '/usr/local/');  // must have a trailing /
+#define('FRESHPORTS_LOG_CACHE_ACTIVITY', 1);
 
 # comment out this line to allow logins. the value does not matter.
 #define('NO_LOGIN', false);
@@ -27,4 +28,8 @@
 # * watch-categories.php
 # * watch-list-maintenance.php
 # * watch-list.php
+#
 define('IN_MAINTENCE_MODE', true);
+
+# if defined, and non-empty, parse out the UCL messages
+define('PKG_MESSAGE_UCL', 1);

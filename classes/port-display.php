@@ -64,7 +64,7 @@ class port_display {
 		return substr($text, 0, 1) == '[';
 	}
 
-	function _pkgmessage_ULC($pkgmessage) {
+	function _pkgmessage_UCL($pkgmessage) {
 		$HTML = '<dt><b>pkg-message:</b></dt><dd><dl>';
 		# save the pkgmessage to a temp file
 		# from https://www.php.net/manual/en/function.tmpfile.php
@@ -72,14 +72,14 @@ class port_display {
 		fwrite($temp, $pkgmessage);
 		fseek($temp, 0);
 		$filename = stream_get_meta_data($temp)['uri']; 
-		syslog(LOG_ERR, '_pkgmessage_ULC temp file is : ' . $filename);
+		syslog(LOG_ERR, '_pkgmessage_UCL temp file is : ' . $filename);
 
 		# convert the file to json
 		$json = shell_exec('/usr/local/bin/ucl_tool --in ' . $filename . '  --format json');
 		echo '<pre>' . var_dump($json) . '</pre>';
 		if (is_null($json)) {
 			syslog(LOG_ERR, 'shell_exec returned null');
-			$json = '[ { "message": "WARNING: The FreshPorts parser failed.  ucl_tool failed.  Please report this.", "type": "upgrade" } ]';
+			$json = '[ { "message": "WARNING: The FreshPorts parser failed.  ucl_tool failed.  Please report this.", "type": "ERROR" } ]';
 		} else {
 #			syslog(LOG_ERR, 'shell_exec returned ' . $json);
 		}
@@ -120,7 +120,7 @@ class port_display {
 						break;
 
 					default:
-						syslog(LOG_ERR, '_pkgmessage_ULC found a type is it not prepared for : ' . $thing-type);
+						syslog(LOG_ERR, '_pkgmessage_UCL found a type is it not prepared for : ' . $thing->type);
 						$HTML .= '<dt>' . htmlspecialchars($thing->type) . '</dt><dd class="like-pre">' . htmlspecialchars($thing->message) . '</dd>';
 						$HTML .= "\n";
 						$HTML .= "\n";
@@ -148,7 +148,7 @@ class port_display {
 		# see https://www.freebsd.org/doc/en_US.ISO8859-1/books/porters-handbook/pkg-files.html#porting-message-ucl-short-ex
 		#
 		if (defined('PKG_MESSAGE_UCL') && PKG_MESSAGE_UCL && $this->_isUCL($port->pkgmessage)) {
-			$HTML .= $this->_pkgmessage_ULC($port->pkgmessage);
+			$HTML .= $this->_pkgmessage_UCL($port->pkgmessage);
 		} else {
 			$HTML .= '<dt><b>pkg-message:</b></dt>' . "\n" . '<dd class="like-pre">';
 			$HTML .= htmlspecialchars($port->pkgmessage);

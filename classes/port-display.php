@@ -60,6 +60,104 @@ class port_display {
 		$this->SetDetailsNil();
 	}
 
+	function _isUCL($text) {
+		return substr($text, 0, 1) == '[';
+	}
+
+	function _pkgmessage_ULC($pkgmessage) {
+		$HTML = '<dt><b>pkg-message:</b></dt><dd><dl>';
+		# save the pkgmessage to a temp file
+		# from https://www.php.net/manual/en/function.tmpfile.php
+		$temp = tmpfile();
+		fwrite($temp, $pkgmessage);
+		fseek($temp, 0);
+		$filename = stream_get_meta_data($temp)['uri']; 
+		syslog(LOG_ERR, '_pkgmessage_ULC temp file is : ' . $filename);
+
+		# convert the file to json
+		$json = shell_exec('/usr/local/bin/ucl_tool --in ' . $filename . '  --format json');
+		echo '<pre>' . var_dump($json) . '</pre>';
+		if (is_null($json)) {
+			syslog(LOG_ERR, 'shell_exec returned null');
+			$json = '[ { "message": "WARNING: The FreshPorts parser failed.  ucl_tool failed.  Please report this.", "type": "upgrade" } ]';
+		} else {
+#			syslog(LOG_ERR, 'shell_exec returned ' . $json);
+		}
+
+		$things = json_decode($json);
+		var_dump($things);
+		foreach ($things as $thing) {
+			if (!empty($thing->type)) {
+				switch($thing->type) {
+					case 'install':
+						$HTML .= '<dt>If installing:</dt><dd class="like-pre">' . htmlspecialchars($thing->message) . '</dd>';
+						$HTML .= "\n";
+						$HTML .= "\n";
+						break;
+
+					case 'upgrade':
+						if (!empty($thing->minimum_version) && !empty($thing->maximum_version)) {
+							$HTML .= '<dt>If upgrading from &gt; ' . htmlspecialchars($thing->minimum_version) . ' and &lt; ' . htmlspecialchars($thing->maximum_version) . ':</dt>';
+							$HTML .= '<dd class="like-pre">' . $thing->message . '</dd>';
+						} elseif (!empty($thing->minimum_version)) {
+							$HTML .= '<dt>If upgrading from &gt; ' . htmlspecialchars($thing->minimum_version) . ':</dt>';
+							$HTML .= '<dd class="like-pre">' . htmlspecialchars($thing->message) . '</dd>';
+						} elseif (!empty($thing->maximum_version)) {
+							$HTML .= '<dt>If upgrading from &lt; ' . htmlspecialchars($thing->maximum_version) . ':</dt>';
+							$HTML .= '<dd class="like-pre">' . htmlspecialchars($thing->message) . '</dd>';
+						} else {
+							$HTML .= '<dt>If upgrading</dt>';
+							$HTML .= '<dd class="like-pre">' . htmlspecialchars($thing->message) . '</dd>';
+						}
+						$HTML .= "\n";
+						$HTML .= "\n";
+						break;
+
+					case 'remove':
+						$HTML .= '<dt>If removing:</dt><dd class="like-pre">' . htmlspecialchars($thing->message) . '</dd>';
+						$HTML .= "\n";
+						$HTML .= "\n";
+						break;
+
+					default:
+						syslog(LOG_ERR, '_pkgmessage_ULC found a type is it not prepared for : ' . $thing-type);
+						$HTML .= '<dt>' . htmlspecialchars($thing->type) . '</dt><dd class="like-pre">' . htmlspecialchars($thing->message) . '</dd>';
+						$HTML .= "\n";
+						$HTML .= "\n";
+						break;
+
+				}
+
+			}
+		}
+
+		# remove the temp file
+		fclose($temp);
+
+		$HTML .= '</dl></dd>';
+
+		return $HTML;
+	}
+
+	function _pkgmessage($port) {
+		# construct the HTML to display pkg-message (stored as pkgmessage)
+		$HTML = '';
+
+		#
+		# pkg-message can be plain text or UCL
+		# see https://www.freebsd.org/doc/en_US.ISO8859-1/books/porters-handbook/pkg-files.html#porting-message-ucl-short-ex
+		#
+		if (defined('PKG_MESSAGE_UCL') && PKG_MESSAGE_UCL && $this->_isUCL($port->pkgmessage)) {
+			$HTML .= $this->_pkgmessage_ULC($port->pkgmessage);
+		} else {
+			$HTML .= '<dt><b>pkg-message:</b></dt>' . "\n" . '<dd class="like-pre">';
+			$HTML .= htmlspecialchars($port->pkgmessage);
+			$HTML .= '</dd>' . "\n" . '</dl>' . "\n" . '<hr>' . "\n" . '<dl>';
+		}
+
+		return $HTML;
+	}
+
 	function htmlConflicts($conflicts) {
 	  $HTML = '';
 
@@ -744,9 +842,7 @@ class port_display {
 		}
 
 		if ($this->ShowEverything && $port->pkgmessage) {
-			$HTML .= "<dt><b>pkg-message:</b></dt>\n" . '<dd class="like-pre">';
-			$HTML .= htmlspecialchars($port->pkgmessage);
-			$HTML .= "</dd>\n</dl>\n<hr>\n<dl";
+			$HTML .= $this->_pkgmessage($port);
 		}
 
 		if ($this->ShowEverything || $this->ShowMasterSites) {

@@ -70,13 +70,12 @@ class port_display {
 		# from https://www.php.net/manual/en/function.tmpfile.php
 		$temp = tmpfile();
 		fwrite($temp, $pkgmessage);
-		fseek($temp, 0);
 		$filename = stream_get_meta_data($temp)['uri']; 
-		syslog(LOG_ERR, '_pkgmessage_UCL temp file is : ' . $filename);
+#		syslog(LOG_ERR, '_pkgmessage_UCL temp file is : ' . $filename);
 
 		# convert the file to json
 		$json = shell_exec('/usr/local/bin/ucl_tool --in ' . $filename . '  --format json');
-		echo '<pre>' . var_dump($json) . '</pre>';
+#		echo '<pre>' . var_dump($json) . '</pre>';
 		if (is_null($json)) {
 			syslog(LOG_ERR, 'shell_exec returned null');
 			$json = '[ { "message": "WARNING: The FreshPorts parser failed.  ucl_tool failed.  Please report this.", "type": "ERROR" } ]';
@@ -85,7 +84,7 @@ class port_display {
 		}
 
 		$things = json_decode($json);
-		var_dump($things);
+#		var_dump($things);
 		foreach ($things as $thing) {
 			if (!empty($thing->type)) {
 				switch($thing->type) {

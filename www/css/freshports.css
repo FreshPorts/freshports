@@ -164,3 +164,11 @@ a.hideLink {
 a.showLink:hover, a.hideLink:hover {
     border-bottom: 1px dotted #36f;
 }
+
+li.nostyle {
+    list-style-type: none;
+}
+
+li.extraspace {
+    margin-top: 10px;
+}

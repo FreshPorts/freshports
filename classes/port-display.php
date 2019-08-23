@@ -983,9 +983,9 @@ class port_display {
 					# is it port or ports?
 					$PluralSingularSuffix = ($NumRows - $firstDeletedPort) > 1 ? 's' : '';
 
-					$div .= '<dl><dt><b>Deleted ports which required this port:</b></dt><dd><a href="#" id="RequiredBy' . $title . 'DeletedExtra-show" class="showLink" onclick="showHide(\'RequiredBy' . $title .
-				                'DeletedExtra\');return false;">Expand this list of ' . ($NumRows - $firstDeletedPort) . ' deleted port' . $PluralSingularSuffix . '</a></dd>';
-					$div .= '<dd id="RequiredBy' . $title . 'DeletedExtra" class="more"><ol class="depends" id="requiredfor' . $title . 'Deleted">' . "\n";
+					$div .= '<p><b>Deleted ports which required this port:</b></p><a href="#" id="RequiredBy' . $title . 'DeletedExtra-show" class="showLink" onclick="showHide(\'RequiredBy' . $title .
+				                'DeletedExtra\');return false;">Expand this list of ' . ($NumRows - $firstDeletedPort) . ' deleted port' . $PluralSingularSuffix . '</a>';
+					$div .= '<ol class="depends more" id="RequiredBy' . $title . 'DeletedExtra" style="padding-left: 20px;">' . "\n";
  					for ( $i = $firstDeletedPort; $i < $NumRows; $i++ ) {
 						$PortDependencies->FetchNth($i);
 
@@ -994,19 +994,12 @@ class port_display {
 						$div .= "</li>\n";
 					}
 
+					$div .= '<li class="nostyle"><a href="#" id="RequiredBy' . $titled . 'DeletedExtra-hide" class="hideLink" onclick="showHide(\'RequiredBy' . $title . 'DeletedExtra\');return false;">Collapse this list of deleted ports.</a></li>';
 					$div .= '</ol>';
-					$div .= '<a href="#" id="RequiredBy' . $titled . 'DeletedExtra-hide" class="hideLink" onclick="showHide(\'RequiredBy' . $title . 'DeletedExtra\');return false;">Collapse this list of deleted ports.</a>';
-					$div .= '</dd>';
-					$div .= '</dl>';
 
 				} # end of deletedPortFound
 
-				#
-				# END OF LIST
-				#
-				$div .= '</dl>'; # PortDependencies
-
-				$div .= '</dd>'; # The end of the "required for" XXX section
+				$div .= '</dl>';
 
 				$HTML .= $div;
 			}

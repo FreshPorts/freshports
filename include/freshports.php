@@ -1713,6 +1713,8 @@ alt="powered by apache" border="0" width="259" height="32"></a>
 ';
 	}
 
+	$URI = trim(urlencode($_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']));
+
 	$HTML .= '
 <tr><td>
 <table width="100%">
@@ -1723,9 +1725,9 @@ alt="powered by apache" border="0" width="259" height="32"></a>
 <td align="right" valign="top">
 <small>
 Valid 
-<a href="http://validator.w3.org/check?uri=' . trim(urlencode($_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'])) . '" title="We like to keep our HTML valid" target="_blank">HTML</a>, 
-<a href="http://jigsaw.w3.org/css-validator/check/referer" title="We like to have valid CSS">CSS</a>, and
-<a href="http://feedvalidator.org/check.cgi?url=http://' . $_SERVER['HTTP_HOST'] . '/backend/rss2.0.php" title="Valid RSS is good too">RSS</a>.
+<a href="https://validator.w3.org/check?uri=' . $URI . '" title="We like to keep our HTML valid" target="_blank">HTML</a>, 
+<a href="https://jigsaw.w3.org/css-validator/validator?uri=' .  $URI . '" title="We like to have valid CSS">CSS</a>, and
+<a href="https://feedvalidator.org/check.cgi?url=http://' . $_SERVER['HTTP_HOST'] . '/backend/rss2.0.php" title="Valid RSS is good too">RSS</a>.
 </small>
 <br>' . freshports_copyright() . '
 </td></tr>

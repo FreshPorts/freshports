@@ -928,7 +928,7 @@ class port_display {
 					#
 					# START OF LIST
 					#
-					$div = '<dl><dd id="RequiredBy' . $title . '"><ol class="depends" id="requiredfor' . $title . '">' . "\n";
+					$div = '<dl><dd id="RequiredBy' . $title . '"><ol class="depends" id="requiredfor' . $title . '" style="margin-bottom: 0px">' . "\n";
 
 					$firstDeletedPort = -1;     # we might be able to combine this with deletedPortFound
 					$deletedPortFound = false;  # we found a deleted port
@@ -948,9 +948,10 @@ class port_display {
 
 						# if we haven't already starting hiding things and we found a deleted port or we have too many thing to show and we're at the max items to show
 						if ( !$hidingStarted && ( ( ( $NumRows > DEPENDS_SUMMARY )  && ( $i == DEPENDS_SUMMARY ) ) ) ) {
-							$div .= '<li><a href="#" id="RequiredBy' . $title . 'Extra-show" class="showLink" onclick="showHide(\'RequiredBy' . 
-							        $title . 'Extra\');return false;">Expand this list (' . $NumRows . ' items / ' . ($NumRows - $i) . ' hidden)</a>';
-							$div .= '<span id="RequiredBy' . $title . 'Extra" class="more">';
+							$div .= '</ol>';
+							$div .= '<a href="#" id="RequiredBy' . $title . 'Extra-show" class="showLink" onclick="showHide(\'RequiredBy' . 
+							        $title . 'Extra\');return false;">Expand this list (' . $NumRows . ' items / ' . ($NumRows - DEPENDS_SUMMARY) . ' hidden)</a>';
+							$div .= '<ol id="RequiredBy' . $title . 'Extra" class="depends more" start="' . ($i + 1) . '" style="margin-top: 0px">';
 							# yes, we have started hiding things.
 							$hidingStarted = true;
 						}
@@ -961,9 +962,10 @@ class port_display {
 					}
 
 					if ( $hidingStarted ) {
-						$div .= '<a href="#" id="RequiredBy' . $title . 'Extra-hide" class="hideLink" onclick="showHide(\'RequiredBy' . $title . 'Extra\');return false;">Collapse this list.</a>';
-						$div .= '</span>';
+						$div .= '<li class="nostyle"><a href="#" id="RequiredBy' . $title . 'Extra-hide" class="hideLink" onclick="showHide(\'RequiredBy' . $title . 'Extra\');return false;" >Collapse this list.</a></li>';
 					}
+
+					$div .= '</ol>';
 
 				} else {
 					$deletedPortFound = true;
@@ -981,8 +983,7 @@ class port_display {
 					# is it port or ports?
 					$PluralSingularSuffix = ($NumRows - $firstDeletedPort) > 1 ? 's' : '';
 
-					$div .= '<li class="nostyle extraspace">';
-					$div .= '<dl><dt><b>Deleted ports</b></dt><dd><a href="#" id="RequiredBy' . $title . 'DeletedExtra-show" class="showLink" onclick="showHide(\'RequiredBy' . $title .
+					$div .= '<dl><dt><b>Deleted ports which required this port:</b></dt><dd><a href="#" id="RequiredBy' . $title . 'DeletedExtra-show" class="showLink" onclick="showHide(\'RequiredBy' . $title .
 				                'DeletedExtra\');return false;">Expand this list of ' . ($NumRows - $firstDeletedPort) . ' deleted port' . $PluralSingularSuffix . '</a></dd>';
 					$div .= '<dd id="RequiredBy' . $title . 'DeletedExtra" class="more"><ol class="depends" id="requiredfor' . $title . 'Deleted">' . "\n";
  					for ( $i = $firstDeletedPort; $i < $NumRows; $i++ ) {
@@ -997,14 +998,12 @@ class port_display {
 					$div .= '<a href="#" id="RequiredBy' . $titled . 'DeletedExtra-hide" class="hideLink" onclick="showHide(\'RequiredBy' . $title . 'DeletedExtra\');return false;">Collapse this list of deleted ports.</a>';
 					$div .= '</dd>';
 					$div .= '</dl>';
-					$div .= '</li>';
 
 				} # end of deletedPortFound
 
 				#
 				# END OF LIST
 				#
-				$div .= '</ol>'; # <ol class="depends"
 				$div .= '</dl>'; # PortDependencies
 
 				$div .= '</dd>'; # The end of the "required for" XXX section

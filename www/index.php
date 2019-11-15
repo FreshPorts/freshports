@@ -13,7 +13,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/cache-news.php');
 
 
-	$Debug = 1;
+	$Debug = 0;
 
 	if (IsSet($_REQUEST['branch'])) {
 		$Branch = NormalizeBranch(htmlspecialchars($_REQUEST['branch']));

@@ -10,9 +10,10 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/cache-news.php');
 
 
-	$Debug = 0;
+	$Debug = 1;
 
 	if (IsSet($_REQUEST['branch'])) {
 		$Branch = NormalizeBranch(htmlspecialchars($_REQUEST['branch']));
@@ -148,21 +149,28 @@ if ($db) {
 
 </TD></TR>
 <?php
-
 	$UseCache = FALSE;
-
-	DEFINE('CACHEFILE', PAGES_DIRECTORY . '/index.html');
-
-	if ($User->id == '') {
-		if (file_exists(CACHEFILE) && is_readable(CACHEFILE)) {
-			$UseCache = TRUE;
-		}
+	$FileName = 'index.html';
+	if ($User->id != '') {
+	  echo 'we should look for the user index page';
+	  # if the user is logged in, cache their stuff.
+	  $FileName .= '.' . $User->id;
 	}
 
+	$Cache = new CacheNews(NEWS_DIRECTORY);
+	$Cache->PageSize = $User->page_size;
+	$result = $Cache->Retrieve($FileName);
+	
+	if (!$result) {
+	  syslog(LOG_NOTICE, "found cached file for $FileName");
+	  $UseCache = TRUE;
+	}
+
+
+
 	if ($UseCache) {
-		readfile(CACHEFILE);
+		echo $Cache->CacheDataGet();
 	} else {
-		if ($Debug) echo 'no cache use';
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits.php');
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
 
@@ -176,6 +184,9 @@ if ($db) {
 		$RetVal = $DisplayCommit->CreateHTML();
 
 		echo $DisplayCommit->HTML;
+		
+		$Cache->CacheDataSet($DisplayCommit->HTML);
+		$Cache->Add($FileName);
 	}
 
 }
@@ -234,3 +245,4 @@ echo freshports_ShowFooter();
 
 </body>
 </html>
+$ 

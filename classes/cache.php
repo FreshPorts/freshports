@@ -36,7 +36,9 @@ class Cache {
 	function Retrieve($key) {
 		$result = 0;
 
+		$this->_Log('Cache: retrieving for ' . $key);
 		$CacheFileName = $this->_CacheFileName($key);
+		$this->_Log('Cache: CacheFileName is ' . $CacheFileName);
 		if (file_exists($CacheFileName) && is_readable($CacheFileName)) {
 			// open, read, and return
 			$this->LastModified = filemtime($CacheFileName);
@@ -141,7 +143,7 @@ class Cache {
 	}
 
 	function _CacheFileName($key) {
-		$FileName = $this->CacheDir . '/'. $this->_CleanKey($key);
+		$FileName = $this->CacheDir . '/' . $this->_CleanKey($key);
 
 		return $FileName;
 	}

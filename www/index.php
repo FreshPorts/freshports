@@ -162,7 +162,6 @@ if ($db) {
 	$result = $Cache->Retrieve($FileName);
 	
 	if (!$result) {
-	  syslog(LOG_NOTICE, "found cached file for $FileName");
 	  $UseCache = TRUE;
 	}
 

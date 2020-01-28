@@ -74,10 +74,6 @@ for a full list of features.  The following is a short list of some of the chang
 	</TD></TR>
 
 <TR>
-<TD NOWRAP VALIGN="top" ALIGN="right"><B>Forums are back!</B></TD>
-    <TD>The <A HREF="/phorum/">support forums</A> are back, better than ever</TD></TR>
-
-<TR>
 <TD NOWRAP VALIGN="top" ALIGN="right"><B>pkg_info == watch list</B></TD>
     <TD>pkg_info displays list of the ports installed
         on your system.  Now you can use <A HREF="/pkg_upload.php">our scripts</A>

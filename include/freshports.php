@@ -888,11 +888,6 @@ function freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum=0) {
 	if ($ArticleTitle) {
 		echo " -- $ArticleTitle";
 
-		if ($Phorum) {
-			GLOBAL $ForumName;
-
-			if(isset($ForumName)) echo " - $ForumName";
-		}
 	}
 
 	echo "</TITLE>
@@ -917,17 +912,6 @@ function freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum=0) {
 
 	echo freshports_HEAD_main_items();
 
-if ($Phorum) {
-	GLOBAL $phorumver;
-	GLOBAL $DB;
-	GLOBAL $ForumName;
-
-?>
-	<meta name="PhorumVersion" content="<?php echo $phorumver; ?>">
-	<meta name="PhorumDB" content="<?php echo $DB->type; ?>">
-	<meta name="PHPVersion" content="<?php echo phpversion(); ?>">
-<?php
-}
 	echo freshports_IndexFollow($_SERVER["PHP_SELF"]);
 
 	echo "</HEAD>\n";
@@ -967,9 +951,6 @@ function freshports_style($Phorum=0) {
 }
 </style>';
 
-	if ($Phorum) {
-		echo '	<link rel="stylesheet" href="/phorum/' . phorum_get_file_name("css") . '" type="text/css">' . "\n";
-	}
 }
 
 function freshports_body($ExtraScript = null) {
@@ -1663,11 +1644,7 @@ function freshports_ShowFooter($PhorumBottom = 0) {
 
 	if ($ShowAds) {
 		$HTML .= "<div align=\"center\">\n";
-		if ($PhorumBottom) {
-			$HTML .= Ad_728x90PhorumBottom();
-		} else {
-			$HTML .= Ad_728x90();
-		}
+		$HTML .= Ad_728x90();
 		$HTML .= "</div>\n";
 	}
 
@@ -1697,12 +1674,6 @@ alt="powered by PostgreSQL" border="0" width="164" height="59"></a>
 
 </td></tr>
 <tr><td align="center">
-
-<a href="http://www.phorum.org/"><img src="/phorum/images/phorum.gif"
-alt="powered by phorum" border="0" width="200" height="50"></a>
-
-
-&nbsp;&nbsp;&nbsp;
 
 <a href="http://www.apache.org/"><img src="/images/apache_pb.gif" 
 alt="powered by apache" border="0" width="259" height="32"></a>
@@ -1845,7 +1816,6 @@ function freshports_SideBar() {
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/how-big-is-it.php",   "How big is it?",      "How many pages are in this website?"  ) . '</FONT><br>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/release-2004-10.php", "The latest upgrade!", "Details on the latest website upgrade") . '</FONT><br>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/privacy.php",         "Privacy",             "Our privacy statement"                ) . '</FONT><br>
-	<FONT SIZE="-1"><a href="/phorum/" title="Discussion Forums">Forums</a></FONT><br>
 	<FONT SIZE="-1"><a href="http://news.freshports.org/" title="All the latest FresHPorts news">Blog</a></FONT><br>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/contact.php",         "Contact",             "Contact details"                      ) . '</FONT><br>
 	</td>

@@ -35,9 +35,9 @@ If you need help with a particular port, please go through the
 FreeBSD mailing lists.
 
 <p>
-If you see a problem with the website (incorrect information, spam, 
-errors, etc), please let us know.  The best place for that is the
-<a href="/phorum/">Forums</a>.
+If you see a problem with the website (incorrect information, 
+errors, etc), please let us know.  The best place for that is via a 
+<a href="https://github.com/FreshPorts/freshports/issues">GitHub Issue</a>.
 
 <p>
 If your needs do not fall into the above categories, you can try

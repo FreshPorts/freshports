@@ -226,8 +226,8 @@ to consider the possible implications for other parts of the system.
 <h2>Where to from here</h2>
 
 <p>
-Feedback please, preferably by posting in the 
-<a href="http://www.freshports.org/phorum/read.php?f=1&i=504&t=504">Website Feedback</a> or via
+Feedback please, preferably by posting <a href="https://github.com/FreshPorts/freshports/issues">an issue on GitHub</a>.
+or via
 email to the webmaster of this domain.  
 <p>
 <?

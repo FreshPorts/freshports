@@ -190,8 +190,6 @@ down you must read to find something you didn't already know.</P>
 	<TR><TD>The official mailing list is freebsd-ports&#64;freebsd.org.
 		More information all FreeBSD mailing lists can be obtained
 		from <A HREF="http://www.FreeBSD.org/handbook/eresources.html#ERESOURCES-MAIL">FreeBSD Mailing Lists</A>.
-		You can ask for help there and in our <A HREF="/phorum/">Support
-		Forum</A>.
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
@@ -256,18 +254,6 @@ down you must read to find something you didn't already know.</P>
 
 
 		<P>Please save this graphic on your website.</P>
-	</TD></TR><TR><TD>&nbsp;</TD></TR>
-
-<TR>
-<?php echo freshports_PageBannerText("Why do I need a different login for the Forums?"); ?>
-</TR>
-
-	<TR><TD>
-	You only need a login for the <A HREF="/phorum/">forums</A> if
-	you want to use a login.  A login will ensure that only you can
-	post under the name you enter.  It is a separate login because
-	we didn't write the <A HREF="http://www.phorum.org/">Phorum software</A>
-	used to implement for forums.
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>

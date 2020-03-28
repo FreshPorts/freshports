@@ -329,3 +329,11 @@ grant update (cookie)    on users   to freshsource_ro;
 grant update (lastlogin) on users   to freshsource_ro;
 
 create user freshsource_dev with password '[redacted]' IN ROLE freshsource_ro;
+
+-- For monitoring, e.g. nagios
+
+create group reporting;
+grant select on cache_clearing_dates to group reporting;
+grant select on cache_clearing_ports to group reporting;
+
+grant reporting to nagios;

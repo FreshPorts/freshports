@@ -254,21 +254,22 @@ ORDER BY port, element_pathname";
 
 	echo "</TABLE>\n";
 
-	parse_str($_SERVER['QUERY_STRING'], $query_parts);
+	$url_query = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
+	parse_str($url_query, $url_args);
 
-	$FilesForJustOnePort = IsSet($query_parts['category']) && IsSet($query_parts['port']);
-	$files = isset($query_parts['files']) ? $query_parts['files'] : 'n';
+	$FilesForJustOnePort = IsSet($url_args['category']) && IsSet($url_args['port']);
+	$files = isset($url_args['files']) ? $url_args['files'] : 'n';
 
 	$ShowAllFilesURL = '<a href="' . htmlspecialchars($_SERVER['SCRIPT_URL'] . '?message_id=' .  $message_id . '&files=yes') . '">show all files</a>';
 
 	$HideAllFilesURL = '<a href="' . htmlspecialchars($_SERVER['SCRIPT_URL'] . '?message_id=' .  $message_id) . '">hide all files</a>';
 
 	if ($FilesForJustOnePort) {
-	  // TODO need to validate category/port here!
-    $clean['category'] = $query_parts['category'];
-	  $clean['port']     = $query_parts['port'];
+    // TODO need to validate category/port here!
+    $clean['category'] = $url_args['category'];
+    $clean['port']     = $url_args['port'];
 
-		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
 
     $Category = new Category($database);
     $CategoryID = $Category->FetchByName($clean['category']);
@@ -276,7 +277,7 @@ ORDER BY port, element_pathname";
     {
       die( 'I don\'t know that category: . ' . htmlentities($clean['category']));
     }
-            
+
     require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/element_record.php');
 
     $elementName = '/ports/head/' . $clean['category'] . '/' . $clean['port'];
@@ -288,14 +289,14 @@ ORDER BY port, element_pathname";
     {
       die( 'I don\'t know that port.');
     }
-    
+
     if (!$Element->IsPort())
     {
       die( 'That is not a port.');
     }
-    
-    
-            
+
+
+
 	  $PortURL = '<a href="/' . $clean['category'] . '/' . $clean['port'] . '/">' . $clean['category'] . '/' . $clean['port'] . '</a>';
 	  echo '<p>Showing files for just one port: <big><b>' . $PortURL . '</b></big></p>';
 	  echo "<p>$ShowAllFilesURL</p>";
@@ -303,20 +304,20 @@ ORDER BY port, element_pathname";
 	# if we ask for files=yes or files=y
 	if (!strcasecmp($files, 'yes') || !strcasecmp($files, 'y')) {
 	    echo "<p>$HideAllFilesURL</p>";
-		
+
 		$WhichRepo = freshports_MessageIdToRepoName($message_id);
-		
+
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/files.php');
 
 		$Files = new CommitFiles($database);
 		$Files->Debug = $Debug;
 		$Files->MessageIDSet($message_id);
 		$Files->UserIDSet($User->id);
-		if (IsSet($query_parts['category'])) {
-			$Files->CategorySet(pg_escape_string($query_parts['category']));
+		if (IsSet($url_args['category'])) {
+			$Files->CategorySet(pg_escape_string($url_args['category']));
 		}
-		if (IsSet($query_parts['port'])) {
-			$Files->PortSet(pg_escape_string($query_parts['port']));
+		if (IsSet($url_args['port'])) {
+			$Files->PortSet(pg_escape_string($url_args['port']));
 		}
 
 		$NumRows = $Files->Fetch();

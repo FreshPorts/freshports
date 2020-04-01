@@ -55,11 +55,25 @@ function freshports_NonPortDescription($db, $element_record) {
 	$RefreshCache = substr($_SERVER["REQUEST_URI"], strlen($_SERVER["REQUEST_URI"]) - strlen(REFRESHCACHE)) == REFRESHCACHE;
 
 	$PageNumber = 1;
-	if (IsSet($_SERVER['REDIRECT_QUERY_STRING'])) {
-		parse_str($_SERVER['REDIRECT_QUERY_STRING'], $query_parts);
-		if (IsSet($query_parts['page'])  && Is_Numeric($query_parts['page'])) {
-			$PageNumber = intval($query_parts['page']);
-			if ($PageNumber != $query_parts['page'] || $PageNumber < 1) {
+	if (IsSet($_SERVER['REQUEST_URI'])) {
+		$url_query = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
+		if ($Debug) {
+			echo '<pre>url_query is';
+			var_dump($url_query);
+			echo '</pre>';
+		}
+		parse_str($url_query, $url_args);
+		if ($Debug) {
+			echo '<pre>url_args is';
+			var_dump($url_args);
+			echo '</pre>';
+		}
+
+		if (IsSet($url_args['page']))      $PageNo   = $url_args['page'];
+		if (IsSet($url_args['page_size'])) $PageSize = $url_args['page_size'];
+		if (IsSet($url_args['page'])  && Is_Numeric($url_args['page'])) {
+			$PageNumber = intval($url_args['page']);
+			if ($PageNumber != $url_args['page'] || $PageNumber < 1) {
 				$PageNumber = 1;
 			}
 		}
@@ -111,6 +125,8 @@ function freshports_NonPortDescription($db, $element_record) {
 	# get the count without excuting the whole query
 	# we don't want to pull back all the data.
 	#
+	
+	if ($Debug) echo '$element_record->element_pathname = "' . $element_record->element_pathname . '"<br>';
 	$NumCommits = $Commits->GetCountCommits();
 	$params = array(
 			'mode'        => 'Sliding',
@@ -122,7 +138,7 @@ function freshports_NonPortDescription($db, $element_record) {
 			'spacesBeforeSeparator' => 1,
 			'spacesAfterSeparator'  => 1,
 			'append'                => false,
-			'path'					=> '/' . preg_replace('|^/?ports/|', '', $element_record->element_pathname),
+			'path'			=> '/' . preg_replace('|^/?head/|', '', preg_replace('|^/?ports/|', '', $element_record->element_pathname)),
 			'fileName'              => '?page=%d',
 			'altFirst'              => 'First Page',
 			'firstPageText'         => 'First Page',
@@ -135,7 +151,7 @@ function freshports_NonPortDescription($db, $element_record) {
 	
 	$links = $Pager->GetLinks();
 
-	$NumCommitsHTML = '<tr><td><p align="left">Number of commits found: ' . $NumCommits;
+	$NumCommitsHTML = '<tr><td><p align="left">Number of commits found XX: ' . $NumCommits;
 
 	$Offset = 0;
 	$PageLinks = $links['all'];
@@ -145,13 +161,13 @@ function freshports_NonPortDescription($db, $element_record) {
 		$offset = $Pager->getOffsetByPageId();
 		$NumOnThisPage = $offset[1] - $offset[0] + 1;
 		$Offset = $offset[0] - 1;
-	    $NumCommitsHTML .= " (showing only $NumOnThisPage on this page)";
+		$NumCommitsHTML .= " (showing only $NumOnThisPage on this page)";
 		unset($offset);
 	}
 	
-    if ($PageNumber > 1) {
-      $Commits->SetOffset($Offset);
-    }
+	if ($PageNumber > 1) {
+		$Commits->SetOffset($Offset);
+	}
 
 	$NumCommitsHTML .= '</p>';
 	if ($PageLinksHTML != '') {

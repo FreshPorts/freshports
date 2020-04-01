@@ -209,9 +209,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 
 	if ($IsCategory && !$IsPort) {
 		if ($Debug) echo 'This is a category ***<br>';
-		$query_string = $_SERVER["QUERY_STRING"];
-		parse_str($query_string, $url_parts);
-		$page = isset($url_parts['page']) ? intval($url_parts['page']) : 1;
+		syslog(LOG_NOTICE, 'invoking ' . $_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-category.php');
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-category.php');
 		freshports_CategoryByID($db, $CategoryID, $page, $User->page_size, $Branch);
 		exit;
@@ -223,6 +221,8 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 		freshports_NonPortDescription($db, $ElementRecord);
 		exit;
 	}
+
+	if ($Debug) echo 'we hit rock bottom in ' . __FUNCTION__ . ' of ' . __FILE__;
 
 	return $result;
 }

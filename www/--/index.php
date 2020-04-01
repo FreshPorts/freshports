@@ -16,12 +16,11 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/functions.php');
 
 
 
-$script = $_SERVER['REQUEST_URI'];
-$query  = $_SERVER['QUERY_STRING'];
+$script     = $_SERVER['REQUEST_URI'];
+$url_query  = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
+$url        = parse_url($url_query);
 
-$url = parse_url($query);
-
-parse_str($query, $url_parts);
+parse_str($url_query, $url_parts);
 
 $Debug = isset($url_parts['Debug']);
 $Debug = 0;
@@ -32,8 +31,8 @@ if ($Debug) {
     echo 'script = ';
     var_dump($script);
 
-    echo 'query = ';
-    var_dump($query);
+    echo 'url_query = ';
+    var_dump($url_query);
 
     echo 'url = ';
     var_dump($url);
@@ -83,7 +82,7 @@ switch($script) {
         }
 
         break;
-
+ 
     case SCRIPT_STATUS:
         require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/system_status.php');
 

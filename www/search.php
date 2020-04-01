@@ -219,7 +219,7 @@ function WildCardQuery($stype, $Like, $query) {
         default:
           # bad value.
           # ERROR
-          syslog(LOG_ERR, 'bad search string: ' . $_SERVER['QUERY_STRING']);
+          syslog(LOG_ERR, 'bad search string: ' . $stype]);
           $type = SEARCH_FIELD_NAME;
     }
 	#

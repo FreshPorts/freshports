@@ -84,13 +84,23 @@ function freshports_CategoryDisplay($db, $category, $PageNo = 1, $PageSize = DEF
 	header('HTTP/1.1 200 OK');
 
 	$Debug = 0;
-
-	if (IsSet($_SERVER['REDIRECT_QUERY_STRING'])) {
-		if (IsSet($_SERVER["REDIRECT_QUERY_STRING"])) {
-			parse_str($_SERVER['REDIRECT_QUERY_STRING'], $query_parts);
-			if (IsSet($query_parts['page']))      $PageNo   = $query_parts['page'];
-			if (IsSet($query_parts['page_size'])) $PageSize = $query_parts['page_size'];
+	
+	if (IsSet($_SERVER['REQUEST_URI'])) {
+		$url_query = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
+		if ($Debug) {
+			echo '<pre>url_query is';
+			var_dump($url_query);
+			echo '</pre>';
 		}
+		parse_str($url_query, $url_args);
+		if ($Debug) {
+			echo '<pre>url_args is';
+			var_dump($url_args);
+			echo '</pre>';
+		}
+
+		if (IsSet($url_args['page']))      $PageNo   = $url_args['page'];
+		if (IsSet($url_args['page_size'])) $PageSize = $url_args['page_size'];
 	}
 
 	if (!IsSet($page) || $page == '') {

@@ -123,14 +123,26 @@ since 10 October 2006.
 
 <?php
 	$PageNumber = 1;
-	if (IsSet($_SERVER['REDIRECT_QUERY_STRING'])) {
-		parse_str($_SERVER['REDIRECT_QUERY_STRING'], $query_parts);
-		if (IsSet($query_parts['page'])  && Is_Numeric($query_parts['page'])) {
-			$PageNumber = intval($query_parts['page']);
-			if ($PageNumber != $query_parts['page'] || $PageNumber < 1) {
+	if (IsSet($_SERVER['REQUEST_URI'])) {
+		$url_query = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
+		if ($Debug) {
+			echo '<pre>url_query is';
+			var_dump($url_query);
+			echo '</pre>';
+		}
+		parse_str($url_query, $url_args);
+		if ($Debug) {
+			echo '<pre>url_args is';
+			var_dump($url_args);
+			echo '</pre>';
+		}
+		if (IsSet($url_args['page'])  && Is_Numeric($url_args['page'])) {
+			$PageNumber = intval($url_args['page']);
+			if ($PageNumber != $url_args['page'] || $PageNumber < 1) {
 				$PageNumber = 1;
 			}
 		}
+
 	}
 	
 	$UseCache = FALSE;

@@ -192,14 +192,14 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 
 		if ($HasCommitsOnBranch) {
 			# if zero is returned, all is well, otherwise, we can't display that category/port.
-			if ($Debug) echo 'invoking invoking freshports_PortDisplay<br>';
+			if ($Debug) echo 'invoking freshports_PortDisplay<br>';
 			if (freshports_PortDisplay($db, $category, $port, $Branch)) {
 				echo 'freshports_PortDisplay returned non-zero';
 				return -1;
 			}
 		} else {
 			# if zero is returned, all is well, otherwise, we can't display that category/port.
-			if ($Debug) echo 'invoking invoking freshports_PortDisplayNotOnBranch<br>';
+			if ($Debug) echo 'invoking freshports_PortDisplayNotOnBranch<br>';
 			if (freshports_PortDisplayNotOnBranch($db, $category, $port, $Branch)) {
 				echo 'freshports_PortDisplay returned non-zero';
 				return -1;
@@ -208,8 +208,10 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	}
 
 	if ($IsCategory && !$IsPort) {
-		if ($Debug) echo 'This is a category ***<br>';
-		syslog(LOG_NOTICE, 'invoking ' . $_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-category.php');
+		if ($Debug) {
+			echo 'This is a category ***<br>';
+			syslog(LOG_NOTICE, 'invoking ' . $_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-category.php');
+		}
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-category.php');
 		freshports_CategoryByID($db, $CategoryID, $page, $User->page_size, $Branch);
 		exit;

@@ -6,6 +6,7 @@
 	#
 
 	require_once('cache.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
 
 // base class for caching
 // Supplies methods for adding, removing, and retrieving.

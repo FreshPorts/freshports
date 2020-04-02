@@ -71,7 +71,7 @@ function DisplayPortCommits($port, $PageNumber) {
 
 	GLOBAL $User;
 	$HTML .= freshports_PortCommits($port, $PageNumber, $User->page_size);
-	
+
 	// end of caching
 	
 	return $HTML;
@@ -101,21 +101,23 @@ function _freshports_PortDisplayHelper($db, $category, $port, $branch, $HasCommi
 
 	$Debug = 0;
 	if ($Debug) echo 'into ' . __FILE__ . ' now' . "<br>\n";
+#	if ($Debug) phpinfo();
 
 	$PageNumber = 1;
-	if (isset($_SERVER['QUERY_STRING'])) {
-	   parse_str($_SERVER['QUERY_STRING'], $query_parts);
+	if (IsSet($_SERVER['REQUEST_URI'])) {
+		$url_query = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
+		parse_str($url_query, $url_args);
         } else {
-           $query_parts = null;
+           $url_args = null;
         }
 
 	if ($Debug) {
 	  echo 'query parts';
-	  echo print_r($query_parts, true);
+	  echo print_r($url_args, true);
 	}
-	if (IsSet($query_parts['page'])  && Is_Numeric($query_parts['page'])) {
-		$PageNumber = intval($query_parts['page']);
-		if ($PageNumber != $query_parts['page'] || $PageNumber < 1) {
+	if (IsSet($url_args['page'])  && Is_Numeric($url_args['page'])) {
+		$PageNumber = intval($url_args['page']);
+		if ($PageNumber != $url_args['page'] || $PageNumber < 1) {
 			$PageNumber = 1;
 		}
 	}

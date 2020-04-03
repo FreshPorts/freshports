@@ -8,7 +8,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 
 	GLOBAL $User;
 
-	$Debug  = 1;
+	$Debug  = 0;
 	$result = '';
 
 	$IsPort     = false;

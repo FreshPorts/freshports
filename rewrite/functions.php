@@ -6,17 +6,9 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	# if we can parse it, then do so and return a false value;
 	# otherwise, return a non-false value.
 
-	if (IsSet($_REQUEST['branch'])) {
-		$Branch = NormalizeBranch(htmlspecialchars($_REQUEST['branch']));
-		define('FRESHPORTS_PORTS_TREE_PREFIX', '/ports/branches/' . $Branch . '/');
-	} else {
-		$Branch = BRANCH_HEAD;
-		define('FRESHPORTS_PORTS_TREE_PREFIX', '/ports/head/');
-	}
-
 	GLOBAL $User;
 
-	$Debug  = 0;
+	$Debug  = 1;
 	$result = '';
 
 	$IsPort     = false;
@@ -36,11 +28,28 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	if ($Debug)
 	{
 		echo 'the URI is <pre>\'' . $_SERVER['REQUEST_URI'] . "'</pre><br>\n";
-		echo 'the url parts are <pre>\'' . print_r($URLParts) . "'</pre><br>\n";
+		echo 'the url parts are';
+		echo '<pre>';
+		echo var_dump($URLParts);
+		echo "</pre><br>\n";
 	}
+
 
 	$pathname = $URLParts['path'];
 	if ($Debug) echo "The pathname is '$pathname'<br>";
+
+	# split the query part of the url into the various arguments
+	parse_str($URLParts['query'], $url_args);
+
+
+	if (IsSet($url_args['branch'])) {
+		$Branch = NormalizeBranch(htmlspecialchars($url_args['branch']));
+		define('FRESHPORTS_PORTS_TREE_PREFIX', '/ports/branches/' . $Branch . '/');
+	} else {
+		$Branch = BRANCH_HEAD;
+		define('FRESHPORTS_PORTS_TREE_PREFIX', '/ports/head/');
+	}
+
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/element_record.php');
 

@@ -9,6 +9,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/master_slave.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port_dependencies.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port_configure_plist.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/package_flavors.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/packages.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
 
 define('port_display_WATCH_LIST_ADD_REMOVE', '%%%$$$WATCHLIST$$$%%%');
@@ -45,6 +46,7 @@ class port_display {
 	var $ShowMasterSites;
 	var $ShowMasterSlave;
 	var $ShowPackageLink;
+	var $ShowPackages;
 	var $ShowPortCreationDate;
 	var $ShowShortDescription;
 	var $ShowWatchListCount;
@@ -237,6 +239,7 @@ class port_display {
 		$this->ShowMasterSites         = false;
 		$this->ShowMasterSlave         = false;
 		$this->ShowPackageLink         = false;
+		$this->ShowPackages            = false;
 		$this->ShowPortCreationDate    = false;
 		$this->ShowConfigurePlist      = false;
 		$this->ShowShortDescription    = false;
@@ -733,6 +736,57 @@ class port_display {
 					$HTML .= '<dd>There is no distinfo for this port.</dd>' . "\n";
 				}
 			}
+			if ($this->ShowEverything || $this->ShowPackages) {
+				$HTML .= '<dt><b>Packages:</b></dt>';
+
+				$packages = new Packages($this->db);
+				$numrows = $packages->Fetch($this->port->id);
+		
+				var_dump($numrows);
+				if ($numrows > 0) {
+/* #					echo '<pre>'; var_dump($packages); echo '</pre>';
+					$HTML .= '<dd class="like-pre"><table><tr>';
+					foreach($packages->branches as $branch) {
+						$HTML .= '<td valign="top"><table class="packages"><caption>' . $branch . '</caption><tr><th>ABI</th><th>version</th></tr>';
+						foreach ($packages->{'packages_' . $branch} as $package) {
+							# All values of active ABI are returned (e.g. FreeBSD:12:amd64
+							# package_version will be empty if the port is not build for that ABI
+							$package_version = empty($package['package_version']) ? '-' : $package['package_version'];
+
+							$HTML .= '<tr><td>' . $package['abi']           . '</td>';
+	#						$HTML .=     '<td>' . $package['package_name']  . '</td>';
+							$HTML .=     '<td>' . $package_version          . '</td></tr>';
+						}
+						$HTML .= '</table></td>';
+					}
+					$HTML .= '</table></dd>';
+ */
+#					echo '<pre>'; var_dump($packages); echo '</pre>';
+#					$HTML .= '<dd class="like-pre"><table><tr>';
+#					$HTML .= '<td valign="top"><table class="packages"><tr><th>ABI</th><th>' . $packages->branches[0] . '</th><th>' . $packages->branches[1] . '</th></tr>';
+					$HTML .= '<table class="packages"><caption>packages</caption><tr><th>ABI</th><th>' . $packages->branches[0] . '</th><th>' . $packages->branches[1] . '</th></tr>';
+						foreach ($packages->{'packages'} as $package) {
+							# All values of active ABI are returned (e.g. FreeBSD:12:amd64
+							# package_version will be empty if the port is not build for that ABI
+
+							$package_version1 = empty($package['package_version1']) ? '-' : $package['package_version1'];
+							$package_version2 = empty($package['package_version2']) ? '-' : $package['package_version2'];
+
+							$HTML .= '<tr><td>' . $package['abi']           . '</td>';
+					#						$HTML .=     '<td>' . $package['package_name']  . '</td>';
+							# If showing a - for the version, center align it
+							$HTML .= '<td' . ($package_version1 == '-' ? ' align ="center"' : '') . '><span title="Last update from repo: 2020-04-11 12:34 UTC">' . $package_version1 . '</span></td>';
+							$HTML .= '<td' . ($package_version2 == '-' ? ' align ="center"' : '') . '><span title="Last update from repo: 2020-04-11 12:34 UTC">' . $package_version2 . '</span></td></tr>';
+						}
+#						$HTML .= '</table></td>';
+					#}
+					$HTML .= '</table></dd>';
+					
+				} else {
+					$HTML .= '<dd>No package information in database for this port.</dd>' . "\n";
+				}
+			}
+
 		}
 
 		if ($this->ShowEverything || $this->ShowMasterSlave) {

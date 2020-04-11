@@ -337,3 +337,18 @@ grant select on cache_clearing_dates to group reporting;
 grant select on cache_clearing_ports to group reporting;
 
 grant reporting to nagios;
+
+
+-- for the packages table
+
+CREATE ROLE packaging;
+GRANT SELECT, INSERT         ON abi          TO packaging;
+GRANT SELECT                 ON element      TO packaging;
+GRANT SELECT                 ON packages     TO packaging;
+GRANT SELECT, INSERT, DELETE ON ports        TO packaging;
+GRANT         INSERT         ON packages_raw TO packaging;
+
+GRANT SELECT                 ON packages     TO www;
+GRANT SELECT                 ON abi          TO www;
+
+CREATE USER packager_dev WITH PASSWORD '[redacted]' IN ROLE packaging;

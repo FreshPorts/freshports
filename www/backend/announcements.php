@@ -92,11 +92,11 @@ echo '
   <TR VALIGN=top>
    <TD><img src="/images/warning.gif"></TD>
    <TD width="100%">
-  <p>Some errors have occurred which must be corrected before your login can be created.</p>';
+  <p>Some errors have occurred which must be corrected before your announcement can be saved.</p>';
 
 echo $errors;
 
-echo '<p>If you need help, please post a message on the forum. </p>
+echo '
  </TD>
  </TR>
  </TABLE>

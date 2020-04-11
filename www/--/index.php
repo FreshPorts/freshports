@@ -45,6 +45,7 @@ if ($Debug) {
 define('SCRIPT_BADGES', '/--/badges/');
 define('SCRIPT_API',    '/--/api/1/search/');
 define('SCRIPT_STATUS', '/--/status/');
+define('SCRIPT_JSON',   '/--/json/');
 
 $items = explode('/', $script);
 if ($Debug) {
@@ -59,6 +60,7 @@ echo "script = $script";
 if (strpos($script, SCRIPT_API)    === 0) $script = SCRIPT_API;
 if (strpos($script, SCRIPT_BADGES) === 0) $script = SCRIPT_BADGES;
 if (strpos($script, SCRIPT_STATUS) === 0) $script = SCRIPT_STATUS;
+if (strpos($script, SCRIPT_JSON)   === 0) $script = SCRIPT_JSON;
 
 switch($script) {
     case SCRIPT_BADGES:
@@ -83,6 +85,41 @@ switch($script) {
 
         break;
  
+    case SCRIPT_JSON:
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
+        
+        $category_port = pg_escape_string($url_parts['port']);
+        
+        syslog(LOG_NOTICE, 'category_port=' . $category_port);
+        
+        list($category, $port) = explode('/', $category_port);
+        syslog(LOG_NOTICE, 'category=' . $category);
+        syslog(LOG_NOTICE, 'port=' . $port);
+        
+        $myPort = new Port($db);
+        $result = $myPort->Fetch($category, $port);
+        header('Content-Type: application/json');		
+        if (!empty($result)) {
+            syslog(LOG_NOTICE, 'we got results');
+	    $response = get_object_vars($myPort);
+	    unset($response["dbh"]);
+#	    var_dump($response);
+	    try {
+	       echo json_encode($response);
+	    } catch(JsonException $e ) {
+#	    echo json_last_error_msg();
+	    }
+#	    echo gettype($response);	
+#	    echo json_last_error_msg();
+            exit;
+        } else {
+            syslog(LOG_NOTICE, 'we got errors');
+            $error = ["error" => "Port not found"];
+            echo json_encode($error);
+            exit;
+        }
+        break;
+
     case SCRIPT_STATUS:
         require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/system_status.php');
 

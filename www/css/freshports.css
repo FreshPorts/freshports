@@ -175,4 +175,4 @@ li.extraspace {
 
 .packages    { background-color:#eee; border-collapse:collapse; }
 .packages th { background-color:#000; color:white; }
-.packages td, .packages th { padding:5px; border:1px solid #000; }
+.packages td, .packages th { padding:8px; border:1px solid #000; }

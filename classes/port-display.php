@@ -322,6 +322,35 @@ class port_display {
 		return $result;
 	}
 
+	function packageToolTipText($last_checked, $repo_date, $import_date) {
+		# last_checked - when we last checked for an update
+		# repo_date    - date on packagesite.txz (e.g. http://pkg.freebsd.org/FreeBSD:11:amd64/latest/
+		# import_date  - when the above mentioned data was last parsed into FreshPorts
+
+		$title = "Repo dates\n";
+		if (empty($last_checked)) {
+			$title .= "never checked\n";
+		} else {
+			$title .= date('Y-m-d H:i', strtotime($last_checked)) . " - last checked\n";
+		}
+
+		if (empty($repo_date)) {
+			$title .= "repo not found\n";
+		} else {
+			$title .= date('Y-m-d H:i', strtotime($repo_date)) . " - repo build date\n";
+		}
+
+		if (empty($import_date)) {
+			$title .= "never imported\n";
+		} else {
+			$title .= date('Y-m-d H:i', strtotime($import_date)) . "'$import_date' import date\n";
+		}
+
+		$title .= "All times are UTC";
+
+		return $title;
+	}
+
 	function Display($verbosity_level = 1) {
 
 		# verbosity_level has been defined, but not used.
@@ -744,27 +773,7 @@ class port_display {
 		
 				var_dump($numrows);
 				if ($numrows > 0) {
-/* #					echo '<pre>'; var_dump($packages); echo '</pre>';
-					$HTML .= '<dd class="like-pre"><table><tr>';
-					foreach($packages->branches as $branch) {
-						$HTML .= '<td valign="top"><table class="packages"><caption>' . $branch . '</caption><tr><th>ABI</th><th>version</th></tr>';
-						foreach ($packages->{'packages_' . $branch} as $package) {
-							# All values of active ABI are returned (e.g. FreeBSD:12:amd64
-							# package_version will be empty if the port is not build for that ABI
-							$package_version = empty($package['package_version']) ? '-' : $package['package_version'];
-
-							$HTML .= '<tr><td>' . $package['abi']           . '</td>';
-	#						$HTML .=     '<td>' . $package['package_name']  . '</td>';
-							$HTML .=     '<td>' . $package_version          . '</td></tr>';
-						}
-						$HTML .= '</table></td>';
-					}
-					$HTML .= '</table></dd>';
- */
-#					echo '<pre>'; var_dump($packages); echo '</pre>';
-#					$HTML .= '<dd class="like-pre"><table><tr>';
-#					$HTML .= '<td valign="top"><table class="packages"><tr><th>ABI</th><th>' . $packages->branches[0] . '</th><th>' . $packages->branches[1] . '</th></tr>';
-					$HTML .= '<table class="packages"><caption>packages</caption><tr><th>ABI</th><th>' . $packages->branches[0] . '</th><th>' . $packages->branches[1] . '</th></tr>';
+					$HTML .= '<dd class="like-pre"><table class="packages"><tr><th>ABI</th><th>latest (' . $packages->branches[0] . ')</th><th>quarterly (' . $packages->branches[1] . ')</th></tr>';
 						foreach ($packages->{'packages'} as $package) {
 							# All values of active ABI are returned (e.g. FreeBSD:12:amd64
 							# package_version will be empty if the port is not build for that ABI
@@ -775,11 +784,12 @@ class port_display {
 							$HTML .= '<tr><td>' . $package['abi']           . '</td>';
 					#						$HTML .=     '<td>' . $package['package_name']  . '</td>';
 							# If showing a - for the version, center align it
-							$HTML .= '<td' . ($package_version1 == '-' ? ' align ="center"' : '') . '><span title="Last update from repo: 2020-04-11 12:34 UTC">' . $package_version1 . '</span></td>';
-							$HTML .= '<td' . ($package_version2 == '-' ? ' align ="center"' : '') . '><span title="Last update from repo: 2020-04-11 12:34 UTC">' . $package_version2 . '</span></td></tr>';
+							$title = $this->packageToolTipText($package['last_checked1'], $package['repo_date1'], $package['import_date1']);
+							$HTML .= '<td' . ($package_version1 == '-' ? ' align ="center"' : '') . '><span title="' . $title . '">' . $package_version1 . '</span></td>';
+
+							$title = $this->packageToolTipText($package['last_checked2'], $package['repo_date2'], $package['import_date2']);
+							$HTML .= '<td' . ($package_version2 == '-' ? ' align ="center"' : '') . '><span title="' . $title . '">' . $package_version2 . '</span></td></tr>';
 						}
-#						$HTML .= '</table></td>';
-					#}
 					$HTML .= '</table></dd>';
 					
 				} else {

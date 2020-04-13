@@ -48,11 +48,11 @@ define('SCRIPT_STATUS', '/--/status/');
 
 $items = explode('/', $script);
 if ($Debug) {
-echo '<pre>';
-var_dump($items);
-echo '</pre>';
+  echo '<pre>';
+  var_dump($items);
+  echo '</pre>';
 
-echo "script = $script";
+  echo "script = $script";
 }
 
 # change this entire file so it uses php-rest-service.  In the meantime, do this:

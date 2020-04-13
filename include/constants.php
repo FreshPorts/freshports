@@ -127,3 +127,7 @@ define('MAINTENANCE_PAGE', 'now-in-maintenance-mode.php');
 define('MAINTENANCE_MODE_RERESH_TIME_SECONDS', 180);
 
 define('ISSUES', 'https://github.com/FreshPorts/freshports/issues');
+
+# for packages
+
+const PACKAGE_SETS = array('latest', 'quarterly');

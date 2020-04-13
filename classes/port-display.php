@@ -770,31 +770,105 @@ class port_display {
 
 				$packages = new Packages($this->db);
 				$numrows = $packages->Fetch($this->port->id);
-		
-				var_dump($numrows);
+
 				if ($numrows > 0) {
-					$HTML .= '<dd class="like-pre"><table class="packages"><tr><th>ABI</th><th>latest (' . $packages->branches[0] . ')</th><th>quarterly (' . $packages->branches[1] . ')</th></tr>';
-						foreach ($packages->{'packages'} as $package) {
+					$HTML .= '<dd class="like-pre">';
+					# if we have multiple packages, we create an enclosing table
+
+					$MultiplePackageNames = count($packages->packages) > 1;
+
+					if ($MultiplePackageNames) {
+						$HTML .= '<table><tr>';
+					}
+
+					foreach($packages->packages as $package_name => $package) {
+
+						#echo '<pre>This is the package information for ' . $package_name . ' ***<br>'; var_export($package); echo '</pre>';
+
+						if ($MultiplePackageNames) {
+							$HTML .= '<td valign="top">';
+						}
+
+						$HTML .= '<table class="packages"><caption>' . $package_name . '</caption><tr><th>ABI</th><th>latest</th><th>quarterly</th></tr>';
+						foreach($package as $package_line) {
 							# All values of active ABI are returned (e.g. FreeBSD:12:amd64
 							# package_version will be empty if the port is not build for that ABI
 
-							$package_version1 = empty($package['package_version1']) ? '-' : $package['package_version1'];
-							$package_version2 = empty($package['package_version2']) ? '-' : $package['package_version2'];
+							$package_version1 = empty($package_line['package_version1']) ? '-' : $package_line['package_version1'];
+							$package_version2 = empty($package_line['package_version2']) ? '-' : $package_line['package_version2'];
 
-							$HTML .= '<tr><td>' . $package['abi']           . '</td>';
-					#						$HTML .=     '<td>' . $package['package_name']  . '</td>';
+							$HTML .= '<tr><td>' . $package_line['abi'] . '</td>';
+
 							# If showing a - for the version, center align it
-							$title = $this->packageToolTipText($package['last_checked1'], $package['repo_date1'], $package['import_date1']);
+							$title = $this->packageToolTipText($package_line['last_checked1'], $package_line['repo_date1'], $package_line['import_date1']);
 							$HTML .= '<td' . ($package_version1 == '-' ? ' align ="center"' : '') . '><span title="' . $title . '">' . $package_version1 . '</span></td>';
 
-							$title = $this->packageToolTipText($package['last_checked2'], $package['repo_date2'], $package['import_date2']);
+							$title = $this->packageToolTipText($package_line['last_checked2'], $package_line['repo_date2'], $package_line['import_date2']);
 							$HTML .= '<td' . ($package_version2 == '-' ? ' align ="center"' : '') . '><span title="' . $title . '">' . $package_version2 . '</span></td></tr>';
 						}
-					$HTML .= '</table></dd>';
-					
+						$HTML .= '</table>';
+						if ($MultiplePackageNames) {
+							$HTML .= '</td>';
+						}
+
+					}	
+
+					if (count($packages->packages) > 1) {
+						$HTML .= '</tr></table>';
+					}
+
+					$HTML .= '</dd>';
+
 				} else {
 					$HTML .= '<dd>No package information in database for this port.</dd>' . "\n";
 				}
+
+				// if ($numrows > 0) {
+				// 	$package_names = array();
+				// 	# get the number of unique package names
+				// 	# if more than one, e.g. py27-django-storages & py37-django-storages, we need an extra column in the table
+				// 	foreach ($packages->{'packages'} as $package) {
+				// 		$package_names[$package['package_version1']] = $package['package_version1'];
+				// 		$package_names[$package['package_version2']] = $package['package_version2'];
+				// 	}
+
+				// 	$ShowPackageName = count($package_names) > 1;
+
+				// 	# the table headers
+				// 	$HTML .= '<dd class="like-pre"><table class="packages"><tr><th>ABI</th>';
+				// 	if ($ShowPackageName) {
+				// 		$HTML .= '<th>package name</th>';
+				// 	}
+				// 	$HTML .= '<th>latest</th><th>quarterly</th></tr>';
+
+
+				// 	foreach ($packages->{'packages'} as $package) {
+				// 			# All values of active ABI are returned (e.g. FreeBSD:12:amd64
+				// 			# package_version will be empty if the port is not build for that ABI
+
+				// 			$package_version1 = empty($package['package_version1']) ? '-' : $package['package_version1'];
+				// 			$package_version2 = empty($package['package_version2']) ? '-' : $package['package_version2'];
+
+				// 			$HTML .= '<tr><td>' . $package['abi'] . '</td>';
+
+				// 			if ($ShowPackageName) {
+				// 				$HTML .= '<td>' . $package['package_name1']  . '</td>';
+				// 			}
+
+				// 			# If showing a - for the version, center align it
+				// 			$title = $this->packageToolTipText($package['last_checked1'], $package['repo_date1'], $package['import_date1']);
+				// 			$HTML .= '<td' . ($package_version1 == '-' ? ' align ="center"' : '') . '><span title="' . $title . '">' . $package_version1 . '</span></td>';
+
+				// 			$title = $this->packageToolTipText($package['last_checked2'], $package['repo_date2'], $package['import_date2']);
+				// 			$HTML .= '<td' . ($package_version2 == '-' ? ' align ="center"' : '') . '><span title="' . $title . '">' . $package_version2 . '</span></td></tr>';
+				// 		}
+				// 	$HTML .= '</table></dd>';
+					
+				// } else {
+				// 	$HTML .= '<dd>No package information in database for this port.</dd>' . "\n";
+				// }
+
+
 			}
 
 		}

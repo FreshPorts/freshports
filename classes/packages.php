@@ -10,78 +10,88 @@
 class Packages {
 
 	var $id;       # the port id for this set of packages
-#	var $packages; # list of packages (ABI text, package_name text, package_version text)
-#	var $packages; # list of packages (ABI text, package_name text, package_version text)
 
-	var $branches;
-	var $packages;
+	var $package_names = array();
 	var $dbh;
 
 	function __construct($dbh) {  
 		$this->dbh	= $dbh;
-
-		$this->branches =  array(NormalizeBranch(BRANCH_HEAD), NormalizeBranch(BRANCH_QUARTERLY));
 	}
 
 	function Fetch($PortID) {
 		# fetch all rows in ports_updating with id = $PortID
 
+		$this->id = $PortID;
+
 		$Debug     = 0;
 		$TotalRows = 0;
 
-		if ($Debug) "<pre>" . ' the branches are ' . var_dump($this->branches) . '</pre>';
-/*
-		foreach($this->branches as $branch) {
-			$branch_escaped = pg_escape_literal($branch);
-			$PortID_escaped = pg_escape_literal($PortID);
-			$sql = "SELECT * FROM PortPackages({$PortID_escaped}, {$branch_escaped})";
+		# accumulate list of package names available for this port (e.g. py27-django-storages and py36-django-storages)
+		$sql = "SELECT package_name FROM PackagesGetPackageNamesForPort($PortID) ORDER BY package_name";
+		if ($Debug) echo "<pre>Get package names for this port: $sql</pre>";
 
-			if ($Debug) echo "<pre>$sql</pre>";
+		$result = pg_exec($this->dbh, $sql);
+		if ($result) {
+			$numrows = pg_numrows($result);
+			if ($Debug) echo "<pre>$numrows packages found</pre>";
+			if ($numrows > 0) {
+				$packages = pg_fetch_all($result);
 
-			$result = pg_exec($this->dbh, $sql);
-			if ($result) {
-				$numrows = pg_numrows($result);
-				if ($Debug) echo "<pre>$numrows</pre>";
-				if ($numrows > 0) {
-					$this->{'packages_'. $branch} = pg_fetch_all($result);
-					if ($Debug) {
-						echo "<pre>";
-						var_dump($this->{'packages_' . $branch});
-						echo "</pre>";
-					}
-					$TotalRows += $numrows;
+				# convert the array of arrays to an array of package names
+				# We could do this with: 
+				#    $package_names = array_column($records, 'packages')
+				#    $names = array_combine($package_names, $package_names);
+				# but I think the following is easier to follow.
+				#
+				foreach($packages as $package) {
+					$this->{'packages'}[$package['package_name']] = array();
 				}
-			} else {
-				echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
-			}
-*/
-		$branch_head      = NormalizeBranch(BRANCH_HEAD);
-		$branch_quarterly = NormalizeBranch(BRANCH_QUARTERLY);
 
-		$branch_head_escaped       = pg_escape_literal($branch_head);
-		$branch_quarterly_escaped = pg_escape_literal($branch_quarterly);
+				if ($Debug) {
+					echo "<pre>The package names are:<br>";
+					var_export($this->{'packages'});
+					echo "</pre>";
+				}
+
+			}
+		} else {
+			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
+		}
+
+#		exit("Stopping because we are testing PackagesGetPackageNamesForPort()");
 		
-		$sql = "SELECT * FROM PortPackages($PortID, {$branch_head_escaped}, {$branch_quarterly_escaped})";
+#		$sql = "SELECT * FROM PortPackages($PortID, {$branch_head_escaped}, {$branch_quarterly_escaped})";
+		$sql = "SELECT * FROM PortPackages($PortID) ORDER BY package_name1, abi";
 
 		if ($Debug) echo "<pre>$sql</pre>";
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
 			$numrows = pg_numrows($result);
-			if ($Debug) echo "<pre>$numrows</pre>";
+			if ($Debug) echo "<pre>$numrows returned from PortPackages()</pre>";
 			if ($numrows > 0) {
-				$this->{'packages'} = pg_fetch_all($result);
+				$packages = pg_fetch_all($result);
 				if ($Debug) {
-					echo "<pre>";
-					var_dump($this->{'packages'});
+					echo "<pre>This was fetched from PortPackages:<br>";
+#					var_export($packages);
 					echo "</pre>";
 				}
+				foreach($packages as $package) {
+					$this->{'packages'}[$package['package_name1']][] = $package;
+				}
+				if ($Debug) {
+					echo "<pre>PortPackages was converted into this:<br>";
+					var_export($this->{'packages'});
+					echo "</pre>";
+				}
+
 				$TotalRows += $numrows;
 			}
 		} else {
 			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
 		}
-#		} # foreach
+
+#		exit("Stopping because we are testing PackagesGetPackageNamesForPort()");
 
 		return $TotalRows;
 	}

@@ -343,7 +343,7 @@ class port_display {
 		if (empty($import_date)) {
 			$title .= "never imported\n";
 		} else {
-			$title .= date('Y-m-d H:i', strtotime($import_date)) . "'$import_date' import date\n";
+			$title .= date('Y-m-d H:i', strtotime($import_date)) . " - import date\n";
 		}
 
 		$title .= "All times are UTC";
@@ -791,20 +791,25 @@ class port_display {
 
 						$HTML .= '<table class="packages"><caption>' . $package_name . '</caption><tr><th>ABI</th><th>latest</th><th>quarterly</th></tr>';
 						foreach($package as $package_line) {
+
+							if ($Debug) {
+								echo '<pre>'; var_export($package_line); echo '</pre>';
+							}
+
 							# All values of active ABI are returned (e.g. FreeBSD:12:amd64
 							# package_version will be empty if the port is not build for that ABI
 
-							$package_version1 = empty($package_line['package_version1']) ? '-' : $package_line['package_version1'];
-							$package_version2 = empty($package_line['package_version2']) ? '-' : $package_line['package_version2'];
+							$package_version_latest    = empty($package_line['package_version_latest'])    ? '-' : $package_line['package_version_latest'];
+							$package_version_quarterly = empty($package_line['package_version_quarterly']) ? '-' : $package_line['package_version_quarterly'];
 
 							$HTML .= '<tr><td>' . $package_line['abi'] . '</td>';
 
 							# If showing a - for the version, center align it
-							$title = $this->packageToolTipText($package_line['last_checked1'], $package_line['repo_date1'], $package_line['import_date1']);
-							$HTML .= '<td' . ($package_version1 == '-' ? ' align ="center"' : '') . '><span title="' . $title . '">' . $package_version1 . '</span></td>';
+							$title = $this->packageToolTipText($package_line['last_checked_latest'], $package_line['repo_date_latest'], $package_line['import_date_latest']);
+							$HTML .= '<td' . ($package_version_latest == '-' ? ' align ="center"' : '') . '><span title="' . $title . '">' . $package_version_latest . '</span></td>';
 
-							$title = $this->packageToolTipText($package_line['last_checked2'], $package_line['repo_date2'], $package_line['import_date2']);
-							$HTML .= '<td' . ($package_version2 == '-' ? ' align ="center"' : '') . '><span title="' . $title . '">' . $package_version2 . '</span></td></tr>';
+							$title = $this->packageToolTipText($package_line['last_checked_quarterly'], $package_line['repo_date_quarterly'], $package_line['import_date_quarterly']);
+							$HTML .= '<td' . ($package_version_quarterly == '-' ? ' align ="center"' : '') . '><span title="' . $title . '">' . $package_version_quarterly . '</span></td></tr>';
 						}
 						$HTML .= '</table>';
 						if ($MultiplePackageNames) {

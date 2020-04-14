@@ -258,18 +258,18 @@ document.body.appendChild(sheet);
 <?php echo freshports_MainContentTable(); ?>
 
 <TR>
-<? echo freshports_PageBannerText("Port details" . ($branch != BRANCH_HEAD ? ' on branch ' . htmlspecialchars($branch) : '')); ?>
+<?php echo freshports_PageBannerText("Port details" . ($branch != BRANCH_HEAD ? ' on branch ' . htmlspecialchars($branch) : '')); ?>
 </TR>
 
 <tr><td valign="top" width="100%">
 
-<?
+<?php
 	echo $HTML;
 ?>
 
 </TD>
   <TD VALIGN="top" WIDTH="*" ALIGN="center">
-  <?
+  <?php
   echo freshports_SideBar();
   ?>
   </td>
@@ -277,16 +277,15 @@ document.body.appendChild(sheet);
 
 </TABLE>
 
-<?
+<?php
 	echo freshports_ShowFooter();
 ?>
 
 </body>
 </html>
 
-<?
+<?php
 
 return 0;
 
 }
-

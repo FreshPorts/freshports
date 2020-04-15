@@ -91,13 +91,7 @@ function _freshports_PortDisplayHelper($db, $category, $port, $branch, $HasCommi
 	GLOBAL $User;
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
-
-	# these two options must be the last on the line.  And as such are mutually exclusive
-	define('BYPASSCACHE',  'bypasscache=1');  # do not read the cache for display
-	define('REFRESHCACHE', 'refreshcache=1'); # refresh the cache
-
-	$BypassCache  = substr($_SERVER["REQUEST_URI"], strlen($_SERVER["REQUEST_URI"]) - strlen(BYPASSCACHE))  == BYPASSCACHE;
-	$RefreshCache = substr($_SERVER["REQUEST_URI"], strlen($_SERVER["REQUEST_URI"]) - strlen(REFRESHCACHE)) == REFRESHCACHE;
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
 
 	$Debug = 0;
 	if ($Debug) echo 'into ' . __FILE__ . ' now' . "<br>\n";
@@ -113,8 +107,29 @@ function _freshports_PortDisplayHelper($db, $category, $port, $branch, $HasCommi
 
 	if ($Debug) {
 	  echo 'query parts';
-	  echo print_r($url_args, true);
+	  echo '<pre>' . var_export($url_args, true) . '</pre>';
 	}
+
+	# allowing the code to bypass and/or not update the cache is only permitted
+	# with FRESHPORTS_LOG_CACHE_ACTIVITY set
+	$BypassCache  = 0; # by default, we do not bypass the cache
+	$RefreshCache = 1; # by default, we refresh the cache
+
+	# if allowed, look to see if we are allowed to change the default values.
+	# this prevents abuse by non-developers.
+	if (defined('FRESHPORTS_LOG_CACHE_ACTIVITY')) {
+		if ($Debug) echo 'checking for cache instructions<br>';
+		if (IsSet($url_args['bypasscache'])  && $url_args['bypasscache']  == '1') $BypassCache  = 1;
+		if (IsSet($url_args['refreshcache']) && $url_args['refreshcache'] == '0') $RefreshCache = 0;
+	} else {
+		if ($Debug) echo 'cache instructions are not enabled<br>';
+	}
+
+	if ($Debug) {
+		echo "\$BypassCache='$BypassCache'<br>";
+		echo "\$RefreshCache='$RefreshCache'<br>";
+	}
+
 	if (IsSet($url_args['page'])  && Is_Numeric($url_args['page'])) {
 		$PageNumber = intval($url_args['page']);
 		if ($PageNumber != $url_args['page'] || $PageNumber < 1) {
@@ -127,9 +142,20 @@ function _freshports_PortDisplayHelper($db, $category, $port, $branch, $HasCommi
 
 	$Cache = new CachePort();
 	$Cache->PageSize = $User->page_size;
-	$result = $Cache->RetrievePort($category, $port, CACHE_PORT_DETAIL, $PageNumber, $branch);
-	if (!$result && !$BypassCache && !$RefreshCache) {
-		if ($Debug) echo "found something from the cache<br>\n";
+	if (!$BypassCache) {
+		$result = $Cache->RetrievePort($category, $port, CACHE_PORT_DETAIL, $PageNumber, $branch);
+		if ($Debug) {
+			if (!$result) {
+				if ($Debug) echo "found something from the cache<br>\n";
+			} else {
+				echo "found NOTHING in cache for '$category/$port' on $branch<br>\n";
+			}
+		}
+	} else {
+		$result = -1;
+	}
+
+	if (!$result) {
 		$HTML = $Cache->CacheDataGet();
 		#
 		# we need to know the element_id of this port
@@ -169,7 +195,6 @@ function _freshports_PortDisplayHelper($db, $category, $port, $branch, $HasCommi
 		}
 		$HTML = substr($HTML, $EndOfFirstLine + 1);
 	} else {
-		if ($Debug) echo "found NOTHING in cache for '$category/$port' on $branch<br>\n";
 		$HTML = '';
 		//
 		// sometimes they want to see a port on a branch, but there have been no commits against that port on that branch
@@ -201,17 +226,20 @@ function _freshports_PortDisplayHelper($db, $category, $port, $branch, $HasCommi
 			$HTML .= "<h2>There are no commits on branch $branch for this port</h2>";
 		}
 
-		# If we are not reading 
-		if (!$BypassCache || $RefreshCache) {
+		# only save if we are supposed to save... usually for debugging
+		if ($RefreshCache) {
+			if ($Debug) echo 'saving to cache<br>';
 			$Cache->CacheDataSet($MyPort->{'element_id'} . "\n" . $MyPort->{'short_description'} . "\n" . $HTML);
 			$Cache->AddPort($MyPort->category, $MyPort->port, CACHE_PORT_DETAIL, $PageNumber, $branch);
+		} else {
+			if ($Debug) echo 'not saving to cache, as instructed<br>';
 		}
 
 		$ElementID        = $MyPort->{'element_id'};
 		$OnWatchList      = $MyPort->{'onwatchlist'};
 		$ShortDescription = $MyPort->{'short_description'};
 	}
-	
+
 	# At this point, we have the port detail HTML
 
 	$HTML = $port_display->ReplaceWatchListToken($OnWatchList, $HTML, $ElementID);

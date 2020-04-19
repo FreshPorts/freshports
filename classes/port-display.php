@@ -226,11 +226,13 @@ class port_display {
  		$this->ShowAd                  = false;
 		$this->ShowCategory            = false;
 		$this->ShowChangesLink         = false;
+		$this->ShowConfigurePlist      = false;
 		$this->ShowDateAdded           = false;
 		$this->ShowDescriptionShort    = false;
 		$this->ShowDescriptionLong     = false;
 		$this->ShowDescriptionLink     = false;
 		$this->ShowDepends             = false;
+		$this->ShowDistInfo            = false;
 		$this->ShowDownloadPortLink    = false;
 		$this->ShowHomepageLink        = false;
 		$this->ShowLastChange          = false;
@@ -241,16 +243,78 @@ class port_display {
 		$this->ShowPackageLink         = false;
 		$this->ShowPackages            = false;
 		$this->ShowPortCreationDate    = false;
-		$this->ShowConfigurePlist      = false;
 		$this->ShowShortDescription    = false;
 		$this->ShowWatchListCount      = false;
 		$this->ShowWatchListStatus     = false;
-		$this->ShowDistInfo            = false;
 	}
 
 	function SetDetailsFull() {
 		$this->SetDetailsNil();
 		$this->ShowEverything = true;
+	}
+
+	function SetDetailsPackages() {
+		$this->SetDetailsNil();
+		$this->ShowEverything          = false;
+		$this->ShowPackages            = true;
+	}		
+
+	function SetDetailsBeforePackages() {
+		$this->ShowEverything          = false;
+
+ 		$this->LinkToPort              = false;
+ 		$this->ShowAd                  = false;
+		$this->ShowCategory            = true;
+		$this->ShowChangesLink         = true;
+		$this->ShowConfigurePlist      = true;
+		$this->ShowDateAdded           = true;
+		$this->ShowDescriptionShort    = false;
+		$this->ShowDescriptionLong     = true;
+		$this->ShowDescriptionLink     = false;
+		$this->ShowDepends             = false;
+		$this->ShowDistInfo            = true;
+		$this->ShowDownloadPortLink    = false;
+		$this->ShowHomepageLink        = true;
+		$this->ShowLastChange          = false;
+		$this->ShowLastCommitDate      = true;
+		$this->ShowMaintainedBy        = true;
+		$this->ShowMasterSites         = false;
+		$this->ShowMasterSlave         = false;
+		$this->ShowPackageLink         = true;
+		$this->ShowPackages            = false;
+		$this->ShowPortCreationDate    = false;
+		$this->ShowShortDescription    = true;
+		$this->ShowWatchListCount      = true;
+		$this->ShowWatchListStatus     = false;
+	}
+
+	function SetDetailsAfterPackages() {
+		$this->ShowEverything          = false;
+
+ 		$this->LinkToPort              = true;
+ 		$this->ShowAd                  = true;
+		$this->ShowCategory            = false;
+		$this->ShowChangesLink         = false;
+		$this->ShowConfigurePlist      = false;
+		$this->ShowDateAdded           = false;
+		$this->ShowDescriptionShort    = true;
+		$this->ShowDescriptionLong     = false;
+		$this->ShowDescriptionLink     = true;
+		$this->ShowDepends             = true;
+		$this->ShowDistInfo            = false;
+		$this->ShowDownloadPortLink    = true;
+		$this->ShowHomepageLink        = false;
+		$this->ShowLastChange          = true;
+		$this->ShowLastCommitDate      = false;
+		$this->ShowMaintainedBy        = false;
+		$this->ShowMasterSites         = true;
+		$this->ShowMasterSlave         = true;
+		$this->ShowPackageLink         = false;
+		$this->ShowPackages            = true;
+		$this->ShowPortCreationDate    = true;
+		$this->ShowShortDescription    = false;
+		$this->ShowWatchListCount      = false;
+		$this->ShowWatchListStatus     = true;
 	}
 
 	function SetDetailsSearch() {
@@ -351,55 +415,61 @@ class port_display {
 		return $title;
 	}
 
-	function Display($verbosity_level = 1) {
+	function Display() {
 
-		# verbosity_level has been defined, but not used.
 		$port = $this->port;
 
 		$HTML = '';
 #		$HTML = $this->JavascriptInclude();
 
 		$MarkedAsNew = "N";
-		# start the description list for this port
- 		$HTML .= "<dl>\n";
 
-		# first term/name, is the port itself		
-		$HTML .= "<dt>";
+		###################################################
+		### END of items for SetDetailsBeforePackages() ###
+		###################################################
 
-		$HTML .= port_display_WATCH_LIST_ADD_REMOVE;
+		if ($this->ShowEverything || $this->ShowShortDescription || $this->ShowCategory) {
+			# start the description list for this port
+	 		$HTML .= "<dl>\n";
 
-		$HTML .= '<big><b>';
+			# first term/name, is the port itself		
+			$HTML .= "<dt>";
 
-		if ($this->LinkToPort) {
-			$HTML .= $this->LinkToPort();
-		} else {
-			$HTML .= $port->port;
-		}
+			$HTML .= port_display_WATCH_LIST_ADD_REMOVE;
 
-		$HTML .= "</b></big>";
+			$HTML .= '<big><b>';
 
-		// description
-		if ($port->short_description && ($this->ShowShortDescription || $this->ShowEverything)) {
-			$HTML .= ' <span class="fp_description_short">' . htmlify(_forDisplay($port->short_description)) . '</span>';
-			$HTML .= "<br>\n";
-		}
-		
-		$HTML .= "</dt>\n";
-
-		# version
-		$HTML .= "<dt><b>";
-		$PackageVersion = freshports_PackageVersion($port->{'version'}, $port->{'revision'}, $port->{'epoch'});
-		if (strlen($PackageVersion) > 0) {
-			$HTML .= ' ' . $PackageVersion;
-		}
-
-		if (IsSet($port->category_looking_at)) {
-			if ($port->category_looking_at != $port->category) {
-				$HTML .= '<sup>*</sup>';
+			if ($this->LinkToPort) {
+				$HTML .= $this->LinkToPort();
+			} else {
+				$HTML .= $port->port;
 			}
-		}
 
-		$HTML .= "</b>";
+			$HTML .= "</b></big>";
+
+			// description
+			if ($port->short_description && ($this->ShowShortDescription || $this->ShowEverything)) {
+				$HTML .= ' <span class="fp_description_short">' . htmlify(_forDisplay($port->short_description)) . '</span>';
+				$HTML .= "<br>\n";
+			}
+			
+			$HTML .= "</dt>\n";
+
+			# version
+			$HTML .= "<dt><b>";
+			$PackageVersion = freshports_PackageVersion($port->{'version'}, $port->{'revision'}, $port->{'epoch'});
+			if (strlen($PackageVersion) > 0) {
+				$HTML .= ' ' . $PackageVersion;
+			}
+
+			if (IsSet($port->category_looking_at)) {
+				if ($port->category_looking_at != $port->category) {
+					$HTML .= '<sup>*</sup>';
+				}
+			}
+
+			$HTML .= "</b>";
+		}
 
 		if ($this->ShowEverything || $this->ShowCategory) {
 			$HTML .= ' <A HREF="/' . $port->category . '/';
@@ -765,74 +835,88 @@ class port_display {
 					$HTML .= '<dd>There is no distinfo for this port.</dd>' . "\n";
 				}
 			}
-			if ($this->ShowEverything || $this->ShowPackages) {
-				$HTML .= '<dt><b>Packages:</b></dt>';
 
-				$packages = new Packages($this->db);
-				$numrows = $packages->Fetch($this->port->id);
 
-				if ($numrows > 0) {
-					$HTML .= '<dd>';
-					$HTML .= '<div class="scrollmenu">';
 
-					# if we have multiple packages, we create an enclosing table
-					$MultiplePackageNames = count($packages->packages) > 1;
 
-					if ($MultiplePackageNames) {
+		}
+        ###################################################
+		### END of items for SetDetailsBeforePackages() ###
+		###################################################
+
+
+		###############################################
+		### START of items for SetDetailsPackages() ###
+		###############################################
+
+		if ($this->ShowEverything || $this->ShowPackages) {
+			$HTML .= '<dt><b>Packages:</b></dt>';
+			
+#				require_once('/var/db/freshports/cache/packages/' . $port->category . '/' . $port->port . '.html');
+
+			$packages = new Packages($this->db);
+			$numrows = $packages->Fetch($this->port->id);
+
+			if ($numrows > 0) {
+				$HTML .= '<dd>';
+				$HTML .= '<div class="scrollmenu">';
+
+				# if we have multiple packages, we create an enclosing table
+				$MultiplePackageNames = count($packages->packages) > 1;
+
+				if ($MultiplePackageNames) {
 #						$HTML .= '<div style="overflow: scroll;"';
 #						$HTML .= '<table class="packages"><tr>';
+				}
+
+				foreach($packages->packages as $package_name => $package) {
+
+					#echo '<pre>This is the package information for ' . $package_name . ' ***<br>'; var_export($package); echo '</pre>';
+
+					if ($MultiplePackageNames) {
+#							$HTML .= '<td valign="top">';
 					}
 
-					foreach($packages->packages as $package_name => $package) {
+					$HTML .= '<table class="packages"><caption>' . $package_name . '</caption><tr><th>ABI</th><th>latest</th><th>quarterly</th></tr>';
+					foreach($package as $package_line) {
 
-						#echo '<pre>This is the package information for ' . $package_name . ' ***<br>'; var_export($package); echo '</pre>';
-
-						if ($MultiplePackageNames) {
-#							$HTML .= '<td valign="top">';
+						if ($Debug) {
+							echo '<pre>'; var_export($package_line); echo '</pre>';
 						}
 
-						$HTML .= '<table class="packages"><caption>' . $package_name . '</caption><tr><th>ABI</th><th>latest</th><th>quarterly</th></tr>';
-						foreach($package as $package_line) {
+						# All values of active ABI are returned (e.g. FreeBSD:12:amd64
+						# package_version will be empty if the port is not build for that ABI
 
-							if ($Debug) {
-								echo '<pre>'; var_export($package_line); echo '</pre>';
-							}
+						$package_version_latest    = empty($package_line['package_version_latest'])    ? '-' : $package_line['package_version_latest'];
+						$package_version_quarterly = empty($package_line['package_version_quarterly']) ? '-' : $package_line['package_version_quarterly'];
 
-							# All values of active ABI are returned (e.g. FreeBSD:12:amd64
-							# package_version will be empty if the port is not build for that ABI
+						$HTML .= '<tr><td>' . $package_line['abi'] . '</td>';
 
-							$package_version_latest    = empty($package_line['package_version_latest'])    ? '-' : $package_line['package_version_latest'];
-							$package_version_quarterly = empty($package_line['package_version_quarterly']) ? '-' : $package_line['package_version_quarterly'];
+						# If showing a - for the version, center align it
+						$title = $this->packageToolTipText($package_line['last_checked_latest'], $package_line['repo_date_latest'], $package_line['import_date_latest']);
+						$HTML .= '<td class="version" ' . ($package_version_latest == '-' ? ' align ="center"' : '') . '><span title="' . $title . '">' . $package_version_latest . '</span></td>';
 
-							$HTML .= '<tr><td>' . $package_line['abi'] . '</td>';
-
-							# If showing a - for the version, center align it
-							$title = $this->packageToolTipText($package_line['last_checked_latest'], $package_line['repo_date_latest'], $package_line['import_date_latest']);
-							$HTML .= '<td class="version" ' . ($package_version_latest == '-' ? ' align ="center"' : '') . '><span title="' . $title . '">' . $package_version_latest . '</span></td>';
-
-							$title = $this->packageToolTipText($package_line['last_checked_quarterly'], $package_line['repo_date_quarterly'], $package_line['import_date_quarterly']);
-							$HTML .= '<td class="version" ' . ($package_version_quarterly == '-' ? ' align ="center"' : '') . '><span title="' . $title . '">' . $package_version_quarterly . '</span></td></tr>';
-						}
-						$HTML .= '</table>';
-						if ($MultiplePackageNames) {
+						$title = $this->packageToolTipText($package_line['last_checked_quarterly'], $package_line['repo_date_quarterly'], $package_line['import_date_quarterly']);
+						$HTML .= '<td class="version" ' . ($package_version_quarterly == '-' ? ' align ="center"' : '') . '><span title="' . $title . '">' . $package_version_quarterly . '</span></td></tr>';
+					}
+					$HTML .= '</table>';
+					if ($MultiplePackageNames) {
 #							$HTML .= '</td>';
 #							$HTML .= '</div>';
-						}
-
-					}	
-
-					if (count($packages->packages) > 1) {
-#						$HTML .= '</tr></table>';
 					}
 
-					$HTML .= '</div>';
-					$HTML .= '</dd>';
+				}	
 
-				} else {
-					$HTML .= '<dd>No package information in database for this port.</dd>' . "\n";
+				if (count($packages->packages) > 1) {
+#						$HTML .= '</tr></table>';
 				}
-			}
 
+				$HTML .= '</div>';
+				$HTML .= '</dd>';
+
+			} else {
+				$HTML .= '<dd>No package information in database for this port.</dd>' . "\n";
+			}
 		}
 
 		if ($this->ShowEverything || $this->ShowMasterSlave) {

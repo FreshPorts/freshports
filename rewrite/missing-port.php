@@ -20,6 +20,10 @@ GLOBAL $g_NOFOLLOW;
 
 $g_NOFOLLOW = 1;
 
+const CachePortPart1    = 'CachePortPart1';
+const CachePortPart2    = 'CachePortPart2';
+const CachePortPackages = 'CachePortPackages';
+
 function DisplayPortCommits($port, $PageNumber) {
 	$HTML = '';
 	
@@ -85,30 +89,9 @@ function freshports_PortDisplayNotOnBranch($db, $category, $port, $branch) {
 	return _freshports_PortDisplayHelper($db, $category, $port, $branch, false);
 }
 
-function _freshports_PortDisplayHelper($db, $category, $port, $branch, $HasCommitsOnBranch = true) {
-	GLOBAL $TableWidth;
-	GLOBAL $FreshPortsTitle;
-	GLOBAL $User;
+function _freshPorts_GetPortDisplay($MyPort, $WhichPart, &$LastModified) {
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
-
-	$Debug = 0;
-	if ($Debug) echo 'into ' . __FILE__ . ' now' . "<br>\n";
-#	if ($Debug) phpinfo();
-
-	$PageNumber = 1;
-	if (IsSet($_SERVER['REQUEST_URI'])) {
-		$url_query = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
-		parse_str($url_query, $url_args);
-        } else {
-           $url_args = null;
-        }
-
-	if ($Debug) {
-	  echo 'query parts';
-	  echo '<pre>' . var_export($url_args, true) . '</pre>';
-	}
+	# convert $WhichPart
 
 	# allowing the code to bypass and/or not update the cache is only permitted
 	# with FRESHPORTS_LOG_CACHE_ACTIVITY set
@@ -130,20 +113,25 @@ function _freshports_PortDisplayHelper($db, $category, $port, $branch, $HasCommi
 		echo "\$RefreshCache='$RefreshCache'<br>";
 	}
 
-	if (IsSet($url_args['page'])  && Is_Numeric($url_args['page'])) {
-		$PageNumber = intval($url_args['page']);
-		if ($PageNumber != $url_args['page'] || $PageNumber < 1) {
-			$PageNumber = 1;
-		}
-	}
-
 	$port_display = new port_display($db, $User, $branch);
+	switch($WhichPart) {
+		case CachePort::CachePortPart1:
+			$port_display->SetDetailsBeforePackages();
+			break;
+			
+		case CachePort::CachePortPart2:
+			$port_display->SetDetailsAfterPackages();
+			break;
+
+		default:
+			exit('unknown WhichPart passed to ' . __FUNCTION__ . ' in ' . __FILE__  . $WhichPart);
+	}
 	$port_display->SetDetailsFull();
 
 	$Cache = new CachePort();
 	$Cache->PageSize = $User->page_size;
 	if (!$BypassCache) {
-		$result = $Cache->RetrievePort($category, $port, CACHE_PORT_DETAIL, $PageNumber, $branch);
+		$result = $Cache->RetrievePort($category, $port, CACHE_PORT_DETAIL, $PageNumber, $branch, $WhichPart);
 		if ($Debug) {
 			if (!$result) {
 				if ($Debug) echo "found something from the cache<br>\n";
@@ -210,9 +198,6 @@ function _freshports_PortDisplayHelper($db, $category, $port, $branch, $HasCommi
 
 		if ($Debug) echo "$category/$port $port_id found by freshports_GetPortID on $branch<br>";
 
-		$MyPort = new Port($db);
-		$MyPort->FetchByID($port_id, $User->id);
-
 		$port_display->SetPort($MyPort);
 	
 		$HTML .= $port_display->Display();
@@ -229,16 +214,63 @@ function _freshports_PortDisplayHelper($db, $category, $port, $branch, $HasCommi
 		# only save if we are supposed to save... usually for debugging
 		if ($RefreshCache) {
 			if ($Debug) echo 'saving to cache<br>';
+			#
+			# we prepend the element_id and short description for use when we pull that back from the cache
+			# the element_id is used with the user's watch lists to indictate if the port is on or off a watch list
+			# the short description is used in the page title.
+			#
 			$Cache->CacheDataSet($MyPort->{'element_id'} . "\n" . $MyPort->{'short_description'} . "\n" . $HTML);
-			$Cache->AddPort($MyPort->category, $MyPort->port, CACHE_PORT_DETAIL, $PageNumber, $branch);
+			$Cache->AddPort($MyPort->category, $MyPort->port, CACHE_PORT_DETAIL, $PageNumber, $branch, $Cache::CachePartOne);
 		} else {
 			if ($Debug) echo 'not saving to cache, as instructed<br>';
 		}
 
-		$ElementID        = $MyPort->{'element_id'};
-		$OnWatchList      = $MyPort->{'onwatchlist'};
-		$ShortDescription = $MyPort->{'short_description'};
 	}
+}
+
+function _freshports_PortDisplayHelper($db, $category, $port, $branch, $HasCommitsOnBranch = true) {
+	GLOBAL $TableWidth;
+	GLOBAL $FreshPortsTitle;
+	GLOBAL $User;
+
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-packages-display.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
+
+	$Debug = 0;
+	if ($Debug) echo 'into ' . __FILE__ . ' now' . "<br>\n";
+#	if ($Debug) phpinfo();
+
+	$PageNumber = 1;
+	if (IsSet($_SERVER['REQUEST_URI'])) {
+		$url_query = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
+		parse_str($url_query, $url_args);
+        } else {
+           $url_args = null;
+        }
+
+	if ($Debug) {
+	  echo 'query parts';
+	  echo '<pre>' . var_export($url_args, true) . '</pre>';
+	}
+
+	if (IsSet($url_args['page'])  && Is_Numeric($url_args['page'])) {
+		$PageNumber = intval($url_args['page']);
+		if ($PageNumber != $url_args['page'] || $PageNumber < 1) {
+			$PageNumber = 1;
+		}
+	}
+	$MyPort = new Port($db);
+	$MyPort->FetchByID($port_id, $User->id);
+
+	$ElementID        = $MyPort->{'element_id'};
+	$OnWatchList      = $MyPort->{'onwatchlist'};
+	$ShortDescription = $MyPort->{'short_description'};
+
+
+	$HTML_Part1    = $this->_freshPorts_GetPortDisplay($MyPort, CachePort::CachePortPart1, $LastModified);
+#	$HTML_Packages = $this->_freshPorts_GetPortDisplay($MyPort, CachePortPackages);
+	$HTML_Part2    = $this->_freshPorts_GetPortDisplay($MyPort, CachePort::CachePortPart2, $LastModified);
 
 	# At this point, we have the port detail HTML
 
@@ -254,7 +286,7 @@ function _freshports_PortDisplayHelper($db, $category, $port, $branch, $HasCommi
 		$HTML_For_Ad = '';
 	}
 
-	$HTML = $port_display->ReplaceAdvertismentToken($HTML, $HTML_For_Ad);
+	$HTML_Part1 = $port_display->ReplaceAdvertismentToken($HTML_Part1, $HTML_For_Ad);
 
 	freshports_ConditionalGetUnix($Cache->LastModifiedGet());
 

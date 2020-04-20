@@ -42,7 +42,7 @@ class CachePort extends Cache {
 	function AddPort($Category, $Port, $CacheType = CACHE_PORT_COMMITS, $PageNum = 1, $Branch = BRANCH_HEAD, $CachePart) {
 		$this->_Log("CachePort: Adding for $Category/$Port");
 
-		$CacheDir = $this->CacheDir . '/' . CachePort::CacheCategory . '/' . $Category . '/' . $Port;
+		$CacheDir = $this->CacheDir . '/' . self::CacheCategory . '/' . $Category . '/' . $Port;
 		$Key = $this->_PortKey($Category, $Port, $CacheType, $PageNum, $Branch, $CachePart);
 		 
 		if (!file_exists($CacheDir)) {
@@ -82,7 +82,7 @@ class CachePort extends Cache {
 			default:
 				exit('unknown CachePart passed to ' . __FUNCTION__ . ' in ' . __FILE__  . $CachePart);
 		}
-		$Key = CachePort::CacheCategory . "/$Category/$Port/$CacheType.$CachePart.$Branch.PageSize$this->PageSize.PageNum$PageNum.html";
+		$Key = self::CacheCategory . "/$Category/$Port/$CacheType.$CachePart.$Branch.PageSize$this->PageSize.PageNum$PageNum.html";
 
 		return $Key;
 	}

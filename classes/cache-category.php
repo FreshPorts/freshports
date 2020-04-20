@@ -37,7 +37,7 @@ class CacheCategory extends Cache {
 	function AddCategory($Category, $User, $PageNum = 1, $Branch = BRANCH_HEAD) {
 		$this->_Log("CacheCategory: Adding for $Category page $PageNum");
 
-		$CacheDir = $this->CacheDir . '/' . CacheCategory::CacheCategory . '/' . $Category;
+		$CacheDir = $this->CacheDir . '/' . self::CacheCategory . '/' . $Category;
 		$Key = $this->_CategoryKey($Category, $User, $PageNum, $Branch);
 		 
 		if (!file_exists($CacheDir)) {
@@ -70,7 +70,7 @@ class CacheCategory extends Cache {
 
 	function _CategoryKey($Category, $User = 0, $PageNum = 1, $Branch = BRANCH_HEAD) {
 		// might want some parameter checking here
-		$Key = CacheCategory::CacheCategory . "/$Category/$Category.$User.$Branch.PageSize$this->PageSize.PageNum$PageNum.html";
+		$Key = self::CacheCategory . "/$Category/$Category.$User.$Branch.PageSize$this->PageSize.PageNum$PageNum.html";
 
 		$this->_Log("CacheCategory: Key created is $Key");
 

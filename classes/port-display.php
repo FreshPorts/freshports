@@ -724,7 +724,6 @@ class port_display {
 
 		# sometimes the description can get very wide. This causes problems on mobile.
 		if ($this->ShowDescriptionLong || $this->ShowEverything) {
-			echo 'SHOWING THE DESCRIPTION!';
 			$HTML .= '<dt class="description">Description:</dt><dd class="like-pre">' . htmlify(_forDisplay($port->long_description)) . '</dd>';
 		}
 

@@ -96,7 +96,6 @@ function _freshports_PortDisplayHelper($db, $category, $port, $branch, $HasCommi
 	GLOBAL $User;
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-packages-display.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
 
 	$Debug = 0;

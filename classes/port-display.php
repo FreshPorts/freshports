@@ -4,7 +4,7 @@
 	#
 	# Copyright (c) 2005-2006 DVL Software Limited
 	#
-	
+
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/master_slave.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port_dependencies.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port_configure_plist.php');
@@ -76,7 +76,7 @@ class port_display {
 		# from https://www.php.net/manual/en/function.tmpfile.php
 		$temp = tmpfile();
 		fwrite($temp, $pkgmessage);
-		$filename = stream_get_meta_data($temp)['uri']; 
+		$filename = stream_get_meta_data($temp)['uri'];
 #		syslog(LOG_ERR, '_pkgmessage_UCL temp file is : ' . $filename);
 
 		# convert the file to json
@@ -164,16 +164,16 @@ class port_display {
 	}
 
 	function htmlConflicts($conflicts) {
-	  $HTML = '';
+		$HTML = '';
 
-	  $HTML .= "<ul>\n";
-	  $data = preg_split('/\s+/', $conflicts);
-	  foreach($data as $item) {
-	    $HTML .= '<li>' . $item . "</li>\n";
-	  }
-	  $HTML .= "</ul>\n";
+		$HTML .= "<ul>\n";
+		$data = preg_split('/\s+/', $conflicts);
+		foreach($data as $item) {
+			$HTML .= '<li>' . $item . "</li>\n";
+		}
+		$HTML .= "</ul>\n";
 
-	  return $HTML;	
+		return $HTML;
 	}
 
 	function SetPort($port) {
@@ -265,7 +265,7 @@ class port_display {
 		$this->SetDetailsNil();
 		$this->ShowEverything          = false;
 		$this->ShowPackages            = true;
-	}		
+	}
 
 	function SetDetailsBeforePackages() {
 		$this->ShowEverything          = false;
@@ -390,13 +390,13 @@ class port_display {
 		$this->ShowShortDescription = true;
 		$this->ShowWatchListStatus  = true;
 	}
-	
+
 	function JavascriptInclude()
 	{
 	  return '
 	  <script type="text/javascript" src="/javascript/jquery-1.5.min.js"></script>
 	  <script type="text/javascript" src="/javascript/freshports.js"></script>
-';	  
+';
 	}
 
 	function DisplayPlainText() {
@@ -451,7 +451,7 @@ class port_display {
 			# start the description list for this port
 	 		$HTML .= "<dl>\n";
 
-			# first term/name, is the port itself		
+			# first term/name, is the port itself
 			$HTML .= "<dt>";
 
 			$HTML .= port_display_WATCH_LIST_ADD_REMOVE;
@@ -471,7 +471,7 @@ class port_display {
 				$HTML .= ' <span class="fp_description_short">' . htmlify(_forDisplay($port->short_description)) . '</span>';
 				$HTML .= "<br>\n";
 			}
-			
+
 			$HTML .= "</dt>\n";
 
 			# version
@@ -545,7 +545,7 @@ class port_display {
 
 			$HTML .= "<dt>\n";
 
-			# various details about this port		
+			# various details about this port
 			$HTML .= "<dd>";
 
 			# show forbidden and broken
@@ -616,7 +616,7 @@ class port_display {
 				$HTML .= 'last change committed by ' . freshports_CommitterEmailLink($port->committer);  // separate lines in case committer is null
 
 				$HTML .= ' ' . freshports_Search_Committer($port->committer);
- 
+
 				$HTML .= ' on <font size="-1">' . $port->updated . '</font>' . "\n";
 
 				$HTML .= freshports_Email_Link($port->message_id);
@@ -627,11 +627,11 @@ class port_display {
 
 				$HTML .= ' ' . freshports_Commit_Link($port->message_id);
 				$HTML .= ' ' . freshports_Commit_Link_Port($port->message_id, $port->category, $port->port);
-				
+
 				GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;
 
-				$HTML .= freshports_PortDescriptionPrint($port->update_description, $port->encoding_losses, 
-			 				$freshports_CommitMsgMaxNumOfLinesToShow, 
+				$HTML .= freshports_PortDescriptionPrint($port->update_description, $port->encoding_losses,
+			 				$freshports_CommitMsgMaxNumOfLinesToShow,
 			 				freshports_MoreCommitMsgToShow($port->message_id,
 	 				       $freshports_CommitMsgMaxNumOfLinesToShow));
 			} else {
@@ -879,8 +879,6 @@ class port_display {
 
 		if ($this->ShowEverything || $this->ShowPackages) {
 			$HTML .= '<dt><b>Packages:</b></dt>';
-			
-#				require_once('/var/db/freshports/cache/packages/' . $port->category . '/' . $port->port . '.html');
 
 			$packages = new Packages($this->db);
 			$numrows = $packages->Fetch($this->port->id);
@@ -892,18 +890,8 @@ class port_display {
 				# if we have multiple packages, we create an enclosing table
 				$MultiplePackageNames = count($packages->packages) > 1;
 
-				if ($MultiplePackageNames) {
-#						$HTML .= '<div style="overflow: scroll;"';
-#						$HTML .= '<table class="packages"><tr>';
-				}
 
 				foreach($packages->packages as $package_name => $package) {
-
-					#echo '<pre>This is the package information for ' . $package_name . ' ***<br>'; var_export($package); echo '</pre>';
-
-					if ($MultiplePackageNames) {
-#							$HTML .= '<td valign="top">';
-					}
 
 					$HTML .= '<table class="packages"><caption>' . $package_name . '</caption><tr><th>ABI</th><th>latest</th><th>quarterly</th></tr>';
 					foreach($package as $package_line) {
@@ -927,16 +915,8 @@ class port_display {
 						$title = $this->packageToolTipText($package_line['last_checked_quarterly'], $package_line['repo_date_quarterly'], $package_line['import_date_quarterly']);
 						$HTML .= '<td class="version" ' . ($package_version_quarterly == '-' ? ' align ="center"' : '') . '><span title="' . $title . '">' . $package_version_quarterly . '</span></td></tr>';
 					}
-					$HTML .= '</table>';
-					if ($MultiplePackageNames) {
-#							$HTML .= '</td>';
-#							$HTML .= '</div>';
-					}
+					$HTML .= '</table>&nbsp;';
 
-				}	
-
-				if (count($packages->packages) > 1) {
-#						$HTML .= '</tr></table>';
 				}
 
 				$HTML .= '</div>';
@@ -965,7 +945,7 @@ class port_display {
 				$HTML .= freshports_link_to_port($MyCategory, $MyPort, $this->Branch);
 				$HTML .= "</dt>\n";
 			}
-	
+
 			#
 			# Display our slave ports
 			#
@@ -979,7 +959,7 @@ class port_display {
 				$HTML .= "</ol></dd>\n";
 			}
 		}
-	
+
 		if ($this->ShowDepends || $this->ShowEverything) {
 			$HTML .= "</dl>\n<hr><dl>\n";
 			if ($port->depends_build || $port->depends_run || $port->depends_lib) {
@@ -1022,7 +1002,7 @@ class port_display {
 				$HTML .= freshports_depends_links($this->db, $port->extract_depends, $this->Branch);
 				$HTML .= "\n</ol></dd>\n";
 			}
-			
+
 			# XXX when adding new depends above, be sure to update the array in ShowDependencies()
 
 			$HTML .= $this->ShowDependencies( $port );
@@ -1038,7 +1018,7 @@ class port_display {
 			}
 			$HTML .= "</dd>";
 		}
-		
+
 		if (($this->ShowEverything || $this->ShowUses) && $port->uses) {
 			$HTML .= "</dl><hr><dl><dt><b>USES:</b></dt>\n" . '<dd class="like-pre">';
 			$HTML .= $port->uses;
@@ -1080,10 +1060,10 @@ class port_display {
 
 		return $HTML;
 	}
-	
+
 	function ReplaceWatchListToken($OnWatchList, $HTML, $ElementID) {
 		$Watch_HTML = '';
-		
+
 		if ($this->User && $this->User->id && ($this->ShowEverything || $this->ShowWatchListStatus)) {
 			if ($OnWatchList) {
 				$Watch_HTML .= freshports_Watch_Link_Remove($this->User->watch_list_add_remove, $OnWatchList, $ElementID);
@@ -1091,9 +1071,9 @@ class port_display {
 				$Watch_HTML .= freshports_Watch_Link_Add   ($this->User->watch_list_add_remove, $OnWatchList, $ElementID);
 			}
 		}
-		
+
 		$Watch_HTML .= ' ';
-		
+
 		$HTML = str_replace(port_display_WATCH_LIST_ADD_REMOVE, $Watch_HTML, $HTML);
 
 		return $HTML;
@@ -1126,7 +1106,7 @@ class port_display {
 
 				# everything "required for" XXX goes under this section.
 				$HTML .= '<dd class="required">for ' . $title . "\n";
-				
+
 				# Let's fetch the first port, and see if it's deleted.  If it is, we don't need this first loop
 				$PortDependencies->FetchNth(0);
 				if ($PortDependencies->status != 'D' ) {
@@ -1143,7 +1123,7 @@ class port_display {
 
 						# if this is a deleted port
 						if ($PortDependencies->status == 'D' ) {
-							$firstDeletedPort = $i; # we set this so the next loop knows where to start 
+							$firstDeletedPort = $i; # we set this so the next loop knows where to start
 							# we found a deleted port
 							$deletedPortFound = true;
 
@@ -1154,7 +1134,7 @@ class port_display {
 						# if we haven't already starting hiding things and we found a deleted port or we have too many thing to show and we're at the max items to show
 						if ( !$hidingStarted && ( ( ( $NumRows > DEPENDS_SUMMARY )  && ( $i == DEPENDS_SUMMARY ) ) ) ) {
 							$div .= '</ol>';
-							$div .= '<a href="#" id="RequiredBy' . $title . 'Extra-show" class="showLink" onclick="showHide(\'RequiredBy' . 
+							$div .= '<a href="#" id="RequiredBy' . $title . 'Extra-show" class="showLink" onclick="showHide(\'RequiredBy' .
 							        $title . 'Extra\');return false;">Expand this list (' . $NumRows . ' items / ' . ($NumRows - DEPENDS_SUMMARY) . ' hidden)</a>';
 							$div .= '<ol id="RequiredBy' . $title . 'Extra" class="depends more" start="' . ($i + 1) . '" style="margin-top: 0px">';
 							# yes, we have started hiding things.

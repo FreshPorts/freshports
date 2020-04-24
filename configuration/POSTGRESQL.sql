@@ -344,10 +344,12 @@ grant reporting to nagios;
 CREATE ROLE packaging;
 GRANT SELECT, INSERT         ON abi                   TO packaging;
 GRANT SELECT                 ON element               TO packaging;
-GRANT SELECT                 ON packages              TO packaging;
+GRANT INSERT                 ON package_imports       TO packaging;
+GRANT SELECT, UPDATE, INSERT, DELETE ON packages              TO packaging;
 GRANT SELECT, INSERT, DELETE ON ports                 TO packaging;
+GRANT SELECT                 ON ports_origin          TO packaging;
 GRANT SELECT                 ON system_branch         TO packaging;
-GRANT SELECT, INSERT, DELETE ON packages_raw          TO packaging;
+GRANT SELECT, UPDATE, INSERT, DELETE ON packages_raw          TO packaging;
 
 GRANT SELECT, UPDATE         ON packages_last_checked TO packaging;
 

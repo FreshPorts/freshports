@@ -36,7 +36,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../configuration/status-config.php');
 
 echo '<table border="1">' . "\n";
-echo '<tr><td></td><td align="center" colspan="' . count($sites) . '">sites</td></tr>' . "\n";
+echo '<tr><td></td><td align="center" colspan="' . count($sites) . '">sites - yeah, we can\'t do this yet from the front end</td></tr>' . "\n";
 echo '<tr><td>queues</td>';
 foreach ($sites as $site) {
 	echo '<td><b>' . $site . '</b></td>';
@@ -62,16 +62,51 @@ foreach ($queues as $queue => $pattern) {
 }
 
 echo "</table>\n";
+
+$sql = "select * from GetPackageStatus()";
+$result = pg_exec($db, $sql);
+if ($result) {
+	$numrows = pg_numrows($result);
+	if ($numrows) {
+		echo '<table border="1" cellpadding="5" cellspacing="3">' . "\n";
+		echo "<caption>The package imports</caption><tr>
+		<td><b>ABI</b>
+		<td><b>package set</b></td>
+		<td><b>repo build date</b></td>
+		<td><b>processed date</b></td>
+		</tr>\n";
+	
+		$i=0;
+		$GlobalHideLastChange = "N";
+		for ($i = 0; $i < $numrows; $i++) {
+			$myrow = pg_fetch_array ($result, $i);
+			echo '<tr>
+			<td align="right">' . $myrow['abi_name'] . '</td>
+			<td align="right">' . $myrow['package_set'] . '</td>
+			<td align="right">' . $myrow['repo_date'] . '</td>
+			<td align="right">' . $myrow['processed_date'] . '</td>
+			</tr>' . "\n";
+		}
+
+		echo "</table>\n";
+
+
+	}
+}
+
 ?>
-</td></tr>
-</TABLE>
+<ul>
+<li><b>repo build date</b> - date repo was last build</li>
+<li><b>processed date</b> - when this information was imported into FreshPorts</li>
+</ul>
+</table>
 
 <p><sup>*</sup>The processed queue is cleared out daily.
 
 <h2>Last login count</h2>
 
 <?php
-$sql = "select * from LoginCounts(7)";
+$sql = "select * from LoginCounts(10)";
 $result = pg_exec($db, $sql);
 if ($result) {
 	$numrows = pg_numrows($result);

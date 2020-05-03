@@ -391,42 +391,34 @@ class port_display {
 		$this->ShowWatchListStatus  = true;
 	}
 
-	function JavascriptInclude()
-	{
-	  return '
-	  <script type="text/javascript" src="/javascript/jquery-1.5.min.js"></script>
-	  <script type="text/javascript" src="/javascript/freshports.js"></script>
-';
-	}
-
 	function DisplayPlainText() {
 		$result = $this->port->category . '/' . $this->port->port;
 
 		return $result;
 	}
 
-	function packageToolTipText($last_checked, $repo_date, $import_date) {
-		# last_checked - when we last checked for an update
-		# repo_date    - date on packagesite.txz (e.g. http://pkg.freebsd.org/FreeBSD:11:amd64/latest/
-		# import_date  - when the above mentioned data was last parsed into FreshPorts
+	function packageToolTipText($last_checked, $repo_date, $processed_date) {
+		# last_checked    - when we last checked for an update
+		# repo_date       - date on packagesite.txz (e.g. http://pkg.freebsd.org/FreeBSD:11:amd64/latest/
+		# processed_date  - when the above mentioned data was last parsed into FreshPorts
 
 		$title = "Repo dates\n";
 		if (empty($last_checked)) {
 			$title .= "never checked\n";
 		} else {
-			$title .= date('Y-m-d H:i', strtotime($last_checked)) . " - last checked\n";
+			$title .= $last_checked . " - last checked\n";
 		}
 
 		if (empty($repo_date)) {
 			$title .= "repo not found\n";
 		} else {
-			$title .= date('Y-m-d H:i', strtotime($repo_date)) . " - repo build date\n";
+			$title .= $repo_date . " - repo build date\n";
 		}
 
-		if (empty($import_date)) {
+		if (empty($processed_date)) {
 			$title .= "never imported\n";
 		} else {
-			$title .= date('Y-m-d H:i', strtotime($import_date)) . " - import date\n";
+			$title .= $processed_date . " - processed date\n";
 		}
 
 		$title .= "All times are UTC";
@@ -439,7 +431,6 @@ class port_display {
 		$port = $this->port;
 
 		$HTML = '';
-#		$HTML = $this->JavascriptInclude();
 
 		$MarkedAsNew = "N";
 
@@ -909,10 +900,10 @@ class port_display {
 						$HTML .= '<tr><td>' . $package_line['abi'] . '</td>';
 
 						# If showing a - for the version, center align it
-						$title = $this->packageToolTipText($package_line['last_checked_latest'], $package_line['repo_date_latest'], $package_line['import_date_latest']);
-						$HTML .= '<td class="version" ' . ($package_version_latest == '-' ? ' align ="center"' : '') . '><span title="' . $title . '">' . $package_version_latest . '</span></td>';
+						$title = $this->packageToolTipText($package_line['last_checked_latest'], $package_line['repo_date_latest'], $package_line['processed_date_latest']);
+						$HTML .= '<td class="version" ' . ($package_version_latest    == '-' ? ' align ="center"' : '') . '><span title="' . $title . '">' . $package_version_latest    . '</span></td>';
 
-						$title = $this->packageToolTipText($package_line['last_checked_quarterly'], $package_line['repo_date_quarterly'], $package_line['import_date_quarterly']);
+						$title = $this->packageToolTipText($package_line['last_checked_quarterly'], $package_line['repo_date_quarterly'], $package_line['processed_date_quarterly']);
 						$HTML .= '<td class="version" ' . ($package_version_quarterly == '-' ? ' align ="center"' : '') . '><span title="' . $title . '">' . $package_version_quarterly . '</span></td></tr>';
 					}
 					$HTML .= '</table>&nbsp;';

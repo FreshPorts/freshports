@@ -14,9 +14,9 @@
 					'freshports - new ports, applications',
 					'FreeBSD, index, applications, ports');
 ?>
-	<script src="jquery-1.2.6.min.js"></script>
-	<script src="jquery.flot.pack.js"></script>
-	<script src="graphs.js"></script>
+	<script src="/javascript/jquery-3.5.0.min.js"></script>
+	<script src="/javascript/jquery.flot.js"></script>
+	<script src="/javascript/graphs.js"></script>
 
 	<?php echo freshports_MainTable(); ?>
 

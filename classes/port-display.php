@@ -504,7 +504,8 @@ class port_display {
 		}
 
 		# if you add content to this IF statement, you may need to addition more conditions to the if
-		if ($port->forbidden || $port->broken || $port->deprecated || $port->expiration_date || $port->ignore || $port->restricted || $port->no_cdrom || $port->is_interactive) {
+		if (($this->ShowEverything || $this->ShowBasicInfo) && 
+		    ($port->forbidden || $port->broken || $port->deprecated || $port->expiration_date || $port->ignore || $port->restricted || $port->no_cdrom || $port->is_interactive)) {
 
 			$HTML .= "<dt>\n";
 
@@ -533,15 +534,15 @@ class port_display {
 			}
 
 			if ($port->ignore) {
-				$HTML .= freshports_Ignore_Icon_Link($port->ignore)         . ' IGNORE: '     . htmlify(_forDisplay($port->ignore))     . "<br>"; ;
+				$HTML .= freshports_Ignore_Icon_Link($port->ignore)         . ' IGNORE: '     . htmlify(_forDisplay($port->ignore))     . '<br>'; ;
 			}
 
 			if ($port->restricted) {
-				$HTML .= freshports_Restricted_Icon_Link($port->restricted) . ' RESTRICTED: '     . htmlify(_forDisplay($port->restricted)) . '<br>';
+				$HTML .= freshports_Restricted_Icon_Link($port->restricted) . ' RESTRICTED: ' . htmlify(_forDisplay($port->restricted)) . '<br>';
 			}
 
 			if ($port->no_cdrom) {
-				$HTML .= freshports_No_CDROM_Icon_Link($port->no_cdrom)      . ' NO CDROM: '     . htmlify(_forDisplay($port->no_cdrom))   . '<br>';
+				$HTML .= freshports_No_CDROM_Icon_Link($port->no_cdrom)      . ' NO CDROM: '  . htmlify(_forDisplay($port->no_cdrom))   . '<br>';
 			}
 
 			if ($port->is_interactive) {

@@ -4,11 +4,12 @@
 	#
 	# Copyright (c) 2005-2006 DVL Software Limited
 	#
-	
+
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/master_slave.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port_dependencies.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port_configure_plist.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/package_flavors.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/packages.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
 
 define('port_display_WATCH_LIST_ADD_REMOVE', '%%%$$$WATCHLIST$$$%%%');
@@ -30,13 +31,16 @@ class port_display {
 
 	var $LinkToPort;
 	var $ShowAd;
+	var $ShowBasicInfo;
 	var $ShowCategory;
 	var $ShowChangesLink;
+	var $ShowConfig;
+	var $ShowConflicts;
 	var $ShowDateAdded;
-	var $ShowDescriptionShort;
-	var $ShowDescriptionLong;
-	var $ShowDescriptionLink;
 	var $ShowDepends;
+	var $ShowDescriptionLink;
+	var $ShowDescriptionLong;
+	var $ShowDistInfo;
 	var $ShowDownloadPortLink;
 	var $ShowHomepageLink;
 	var $ShowLastChange;        # who made the last change - useful for knowing last commit
@@ -45,11 +49,13 @@ class port_display {
 	var $ShowMasterSites;
 	var $ShowMasterSlave;
 	var $ShowPackageLink;
+	var $ShowPackages;
+	var $ShowPKGMessage;
 	var $ShowPortCreationDate;
 	var $ShowShortDescription;
+	var $ShowUses;
 	var $ShowWatchListCount;
 	var $ShowWatchListStatus;
-	var $ShowDistInfo;
 
 	function __construct(&$db, $User = 0, $Branch = BRANCH_HEAD) {
 		$this->db     = $db;
@@ -70,7 +76,7 @@ class port_display {
 		# from https://www.php.net/manual/en/function.tmpfile.php
 		$temp = tmpfile();
 		fwrite($temp, $pkgmessage);
-		$filename = stream_get_meta_data($temp)['uri']; 
+		$filename = stream_get_meta_data($temp)['uri'];
 #		syslog(LOG_ERR, '_pkgmessage_UCL temp file is : ' . $filename);
 
 		# convert the file to json
@@ -158,16 +164,16 @@ class port_display {
 	}
 
 	function htmlConflicts($conflicts) {
-	  $HTML = '';
+		$HTML = '';
 
-	  $HTML .= "<ul>\n";
-	  $data = preg_split('/\s+/', $conflicts);
-	  foreach($data as $item) {
-	    $HTML .= '<li>' . $item . "</li>\n";
-	  }
-	  $HTML .= "</ul>\n";
+		$HTML .= "<ul>\n";
+		$data = preg_split('/\s+/', $conflicts);
+		foreach($data as $item) {
+			$HTML .= '<li>' . $item . "</li>\n";
+		}
+		$HTML .= "</ul>\n";
 
-	  return $HTML;	
+		return $HTML;
 	}
 
 	function SetPort($port) {
@@ -220,15 +226,19 @@ class port_display {
 	function SetDetailsNil() {
 		$this->ShowEverything          = false;
 
- 		$this->LinkToPort              = false;
- 		$this->ShowAd                  = false;
+		$this->LinkToPort              = false;
+		$this->ShowAd                  = false;
+		$this->ShowBasicInfo           = false;
 		$this->ShowCategory            = false;
 		$this->ShowChangesLink         = false;
+		$this->ShowConfig              = false;
+		$this->ShowConfigurePlist      = false;
+		$this->ShowConflicts           = false;
 		$this->ShowDateAdded           = false;
-		$this->ShowDescriptionShort    = false;
-		$this->ShowDescriptionLong     = false;
-		$this->ShowDescriptionLink     = false;
 		$this->ShowDepends             = false;
+		$this->ShowDescriptionLink     = false;
+		$this->ShowDescriptionLong     = false;
+		$this->ShowDistInfo            = false;
 		$this->ShowDownloadPortLink    = false;
 		$this->ShowHomepageLink        = false;
 		$this->ShowLastChange          = false;
@@ -237,12 +247,13 @@ class port_display {
 		$this->ShowMasterSites         = false;
 		$this->ShowMasterSlave         = false;
 		$this->ShowPackageLink         = false;
+		$this->ShowPackages            = false;
+		$this->ShowPKGMessage          = false;
 		$this->ShowPortCreationDate    = false;
-		$this->ShowConfigurePlist      = false;
 		$this->ShowShortDescription    = false;
+		$this->ShowUses                = false;
 		$this->ShowWatchListCount      = false;
 		$this->ShowWatchListStatus     = false;
-		$this->ShowDistInfo            = false;
 	}
 
 	function SetDetailsFull() {
@@ -250,20 +261,93 @@ class port_display {
 		$this->ShowEverything = true;
 	}
 
+	function SetDetailsPackages() {
+		$this->SetDetailsNil();
+		$this->ShowEverything          = false;
+		$this->ShowPackages            = true;
+	}
+
+	function SetDetailsBeforePackages() {
+		$this->ShowEverything          = false;
+
+		$this->LinkToPort              = false;
+		$this->ShowAd                  = false;
+		$this->ShowBasicInfo           = true;
+		$this->ShowCategory            = true;
+		$this->ShowChangesLink         = true;
+		$this->ShowConfig              = false;
+		$this->ShowConfigurePlist      = false;
+		$this->ShowConflicts           = true;
+		$this->ShowDateAdded           = true;
+		$this->ShowDepends             = false;
+		$this->ShowDescriptionLink     = false;
+		$this->ShowDescriptionLong     = true;
+		$this->ShowDistInfo            = true;
+		$this->ShowDownloadPortLink    = false;
+		$this->ShowHomepageLink        = true;
+		$this->ShowLastChange          = true;
+		$this->ShowLastCommitDate      = true;
+		$this->ShowMaintainedBy        = true;
+		$this->ShowMasterSites         = false;
+		$this->ShowMasterSlave         = false;
+		$this->ShowPackageLink         = true;
+		$this->ShowPackages            = false;
+		$this->ShowPKGMessage          = false;
+		$this->ShowPortCreationDate    = false;
+		$this->ShowShortDescription    = true;
+		$this->ShowUses                = false;
+		$this->ShowWatchListCount      = true;
+		$this->ShowWatchListStatus     = false;
+	}
+
+	function SetDetailsAfterPackages() {
+		$this->ShowEverything          = false;
+
+		$this->LinkToPort              = true;
+		$this->ShowAd                  = true;
+		$this->ShowBasicInfo           = false;
+		$this->ShowCategory            = false;
+		$this->ShowChangesLink         = false;
+		$this->ShowConflicts           = false;
+		$this->ShowConfig              = true;
+		$this->ShowConfigurePlist      = false;
+		$this->ShowDateAdded           = false;
+		$this->ShowDepends             = true;
+		$this->ShowDescriptionLink     = false;
+		$this->ShowDescriptionLong     = false;
+		$this->ShowDistInfo            = false;
+		$this->ShowDownloadPortLink    = true;
+		$this->ShowHomepageLink        = false;
+		$this->ShowLastChange          = false;
+		$this->ShowLastCommitDate      = false;
+		$this->ShowMaintainedBy        = false;
+		$this->ShowMasterSites         = true;
+		$this->ShowMasterSlave         = true;
+		$this->ShowPackageLink         = false;
+		$this->ShowPackages            = false;
+		$this->ShowPKGMessage          = true;
+		$this->ShowPortCreationDate    = true;
+		$this->ShowShortDescription    = false;
+		$this->ShowUses                = true;
+		$this->ShowWatchListCount      = false;
+		$this->ShowWatchListStatus     = true;
+	}
+
 	function SetDetailsSearch() {
 		$this->SetDetailsNil();
- 		$this->LinkToPort              = true;
+		$this->LinkToPort              = true;
+		$this->ShowBasicInfo           = true;
 		$this->ShowCategory            = true;
 		$this->ShowChangesLink         = true;
 		$this->ShowDescriptionLink     = true;
 		$this->ShowDownloadPortLink    = true;
 		$this->ShowHomepageLink        = true;
+		$this->ShowLastCommitDate      = true;
 		$this->ShowMaintainedBy        = true;
-		$this->ShowPortCreationDate    = true;
 		$this->ShowPackageLink         = true;
+		$this->ShowPortCreationDate    = true;
 		$this->ShowShortDescription    = true;
 		$this->ShowWatchListStatus     = true;
-		$this->ShowLastCommitDate      = true;
 	}
 
 	function SetDetailsReports() {
@@ -284,33 +368,27 @@ class port_display {
 	function SetDetailsCategory() {
 		$this->SetDetailsNil();
 
- 		$this->LinkToPort           = true;
+		$this->LinkToPort           = true;
+		$this->ShowBasicInfo        = true;
+		$this->ShowDateAdded        = true;
 		$this->ShowDescriptionLink  = true;
 		$this->ShowMaintainedBy     = true;
 		$this->ShowPortCreationDate = true;
 		$this->ShowShortDescription = true;
 		$this->ShowWatchListStatus  = true;
-		$this->ShowDateAdded        = true;
 	}
 
 	function SetDetailsIndex() {
 		$this->SetDetailsNil();
 
- 		$this->LinkToPort           = true;
+		$this->LinkToPort           = true;
+		$this->ShowBasicInfo        = true;
+		$this->ShowDateAdded        = true;
 		$this->ShowDescriptionLink  = true;
 		$this->ShowMaintainedBy     = true;
 		$this->ShowPortCreationDate = true;
 		$this->ShowShortDescription = true;
 		$this->ShowWatchListStatus  = true;
-		$this->ShowDateAdded        = true;
-	}
-	
-	function JavascriptInclude()
-	{
-	  return '
-	  <script type="text/javascript" src="/javascript/jquery-1.5.min.js"></script>
-	  <script type="text/javascript" src="/javascript/freshports.js"></script>
-';	  
 	}
 
 	function DisplayPlainText() {
@@ -319,55 +397,89 @@ class port_display {
 		return $result;
 	}
 
-	function Display($verbosity_level = 1) {
+	function packageToolTipText($last_checked, $repo_date, $processed_date) {
+		# last_checked    - when we last checked for an update
+		# repo_date       - date on packagesite.txz (e.g. http://pkg.freebsd.org/FreeBSD:11:amd64/latest/
+		# processed_date  - when the above mentioned data was last parsed into FreshPorts
 
-		# verbosity_level has been defined, but not used.
+		$title = "Repo dates\n";
+		if (empty($last_checked)) {
+			$title .= "never checked\n";
+		} else {
+			$title .= $last_checked . " - last checked\n";
+		}
+
+		if (empty($repo_date)) {
+			$title .= "repo not found\n";
+		} else {
+			$title .= $repo_date . " - repo build date\n";
+		}
+
+		if (empty($processed_date)) {
+			$title .= "never imported\n";
+		} else {
+			$title .= $processed_date . " - processed date\n";
+		}
+
+		$title .= "All times are UTC";
+
+		return $title;
+	}
+
+	function Display() {
+
 		$port = $this->port;
 
 		$HTML = '';
-#		$HTML = $this->JavascriptInclude();
 
 		$MarkedAsNew = "N";
-		# start the description list for this port
- 		$HTML .= "<dl>\n";
 
-		# first term/name, is the port itself		
-		$HTML .= "<dt>";
+		###################################################
+		### END of items for SetDetailsBeforePackages() ###
+		###################################################
 
-		$HTML .= port_display_WATCH_LIST_ADD_REMOVE;
+		if ($this->ShowEverything || $this->ShowShortDescription || $this->ShowCategory) {
+			# start the description list for this port
+	 		$HTML .= "<dl>\n";
 
-		$HTML .= '<big><b>';
+			# first term/name, is the port itself
+			$HTML .= "<dt>";
 
-		if ($this->LinkToPort) {
-			$HTML .= $this->LinkToPort();
-		} else {
-			$HTML .= $port->port;
-		}
+			$HTML .= port_display_WATCH_LIST_ADD_REMOVE;
 
-		$HTML .= "</b></big>";
+			$HTML .= '<big><b>';
 
-		// description
-		if ($port->short_description && ($this->ShowShortDescription || $this->ShowEverything)) {
-			$HTML .= ' <span class="fp_description_short">' . htmlify(_forDisplay($port->short_description)) . '</span>';
-			$HTML .= "<br>\n";
-		}
-		
-		$HTML .= "</dt>\n";
-
-		# version
-		$HTML .= "<dt><b>";
-		$PackageVersion = freshports_PackageVersion($port->{'version'}, $port->{'revision'}, $port->{'epoch'});
-		if (strlen($PackageVersion) > 0) {
-			$HTML .= ' ' . $PackageVersion;
-		}
-
-		if (IsSet($port->category_looking_at)) {
-			if ($port->category_looking_at != $port->category) {
-				$HTML .= '<sup>*</sup>';
+			if ($this->LinkToPort) {
+				$HTML .= $this->LinkToPort();
+			} else {
+				$HTML .= $port->port;
 			}
-		}
 
-		$HTML .= "</b>";
+			$HTML .= "</b></big>";
+
+			// description
+			if ($port->short_description && ($this->ShowShortDescription || $this->ShowEverything)) {
+				$HTML .= ' <span class="fp_description_short">' . htmlify(_forDisplay($port->short_description)) . '</span>';
+				$HTML .= "<br>\n";
+			}
+
+			$HTML .= "</dt>\n";
+
+			# version
+			$HTML .= "<dt><b>";
+			$PackageVersion = freshports_PackageVersion($port->{'version'}, $port->{'revision'}, $port->{'epoch'});
+			if (strlen($PackageVersion) > 0) {
+				$HTML .= ' ' . $PackageVersion;
+			}
+
+			if (IsSet($port->category_looking_at)) {
+				if ($port->category_looking_at != $port->category) {
+					$HTML .= '<sup>*</sup>';
+				}
+			}
+
+			$HTML .= "</b>";
+		}
 
 		if ($this->ShowEverything || $this->ShowCategory) {
 			$HTML .= ' <A HREF="/' . $port->category . '/';
@@ -377,50 +489,54 @@ class port_display {
 			$HTML .= '" TITLE="The category for this port">' . $port->category . '</A>';
 		}
 
-		// indicate if this port has been removed from cvs
-		if ($port->IsDeleted()) {
-			$HTML .= " " . freshports_Deleted_Icon_Link() . "\n";
-		}
+		if ($this->ShowEverything || $this->ShowBasicInfo) {
+			// indicate if this port has been removed from cvs
+			if ($port->IsDeleted()) {
+				$HTML .= " " . freshports_Deleted_Icon_Link() . "\n";
+			}
 
-		// indicate if this port needs refreshing from CVS
-		if ($port->{'needs_refresh'}) {
-			$HTML .= " " . freshports_Refresh_Icon_Link() . "\n";
-		}
+			// indicate if this port needs refreshing from CVS
+			if ($port->{'needs_refresh'}) {
+				$HTML .= " " . freshports_Refresh_Icon_Link() . "\n";
+			}
 
-		if ($port->{'date_added'} > Time() - 3600 * 24 * $this->DaysMarkedAsNew) {
-			$MarkedAsNew = "Y";
-			$HTML .= freshports_New_Icon() . "\n";
+			if ($port->{'date_added'} > Time() - 3600 * 24 * $this->DaysMarkedAsNew) {
+				$MarkedAsNew = "Y";
+				$HTML .= freshports_New_Icon() . "\n";
+			}
 		}
 
 		if ($this->ShowEverything || $this->ShowWatchListCount) {
 			$HTML .= ' ' . freshPorts_WatchListCount_Icon_Link() . '=' . $port->WatchListCount();
 		}
 
-		$HTML .= ' ' . freshports_Search_Depends_All($port->category . '/' . $port->port);
+		if ($this->ShowEverything || $this->ShowBasicInfo) {
+			$HTML .= ' ' . freshports_Search_Depends_All($port->category . '/' . $port->port);
 
-		# if this port is, or every has been, vulnerable, display the right skull
-		# and a link to the list of all such vulnerabilities
-		if ($port->IsVulnerable() || $port->WasVulnerable()) {
-			$HTML .= ' ' . freshports_VuXML_Link($port->package_name, $port->IsVulnerable());
+
+			# if this port is, or every has been, vulnerable, display the right skull
+			# and a link to the list of all such vulnerabilities
+			if ($port->IsVulnerable() || $port->WasVulnerable()) {
+				$HTML .= ' ' . freshports_VuXML_Link($port->package_name, $port->IsVulnerable());
+			}
+
+			# search for bugs related to this port
+			$HTML .= ' ' . freshports_Search_For_Bugs($port->category . '/' . $port->port);
+
+			# report a bug related to this port
+			$HTML .= ' ' . freshports_Report_A_Bug($port->category . '/' . $port->port);
+
+			$HTML .=  ' <span class="tooltip">'. $port->quarterly_revision . '<span class="tooltiptext tooltip-top">Version of this port present on the latest quarterly branch.';
+			if ($port->IsSlavePort()) $HTML .= ' NOTE: Slave port - quarterly revision is most likely wrong.';
+			$HTML .= '</span></span>';
 		}
-
-		# search for bugs related to this port
-		$HTML .= ' ' . freshports_Search_For_Bugs($port->category . '/' . $port->port);
-
-		# report a bug related to this port
-		$HTML .= ' ' . freshports_Report_A_Bug($port->category . '/' . $port->port);
-
-		$HTML .=  ' <span class="tooltip">'. $port->quarterly_revision . '<span class="tooltiptext tooltip-top">Version of this port present on the latest quarterly branch.';
-		if ($port->IsSlavePort()) $HTML .= ' NOTE: Slave port - quarterly revision is most likely wrong.';
-		$HTML .= '</span></span>';
-
 
 		# if you add content to this IF statement, you may need to addition more conditions to the if
 		if ($port->forbidden || $port->broken || $port->deprecated || $port->expiration_date || $port->ignore || $port->restricted || $port->no_cdrom || $port->is_interactive) {
 
 			$HTML .= "<dt>\n";
 
-			# various details about this port		
+			# various details about this port
 			$HTML .= "<dd>";
 
 			# show forbidden and broken
@@ -491,7 +607,7 @@ class port_display {
 				$HTML .= 'last change committed by ' . freshports_CommitterEmailLink($port->committer);  // separate lines in case committer is null
 
 				$HTML .= ' ' . freshports_Search_Committer($port->committer);
- 
+
 				$HTML .= ' on <font size="-1">' . $port->updated . '</font>' . "\n";
 
 				$HTML .= freshports_Email_Link($port->message_id);
@@ -502,11 +618,11 @@ class port_display {
 
 				$HTML .= ' ' . freshports_Commit_Link($port->message_id);
 				$HTML .= ' ' . freshports_Commit_Link_Port($port->message_id, $port->category, $port->port);
-				
+
 				GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;
 
-				$HTML .= freshports_PortDescriptionPrint($port->update_description, $port->encoding_losses, 
-			 				$freshports_CommitMsgMaxNumOfLinesToShow, 
+				$HTML .= freshports_PortDescriptionPrint($port->update_description, $port->encoding_losses,
+			 				$freshports_CommitMsgMaxNumOfLinesToShow,
 			 				freshports_MoreCommitMsgToShow($port->message_id,
 	 				       $freshports_CommitMsgMaxNumOfLinesToShow));
 			} else {
@@ -546,49 +662,51 @@ class port_display {
 			$HTML .= '</font></dt>' . "\n";
 		}
 
-		# this is interesting... I do not recall writing this.
-		# I wonder if it works.
-		$HTML .= PeopleWatchingThisPortAlsoWatch($this->db, $port->element_id);
+		if ($this->ShowEverything || $this->ShowBasicInfo) {
+			# this is interesting... I do not recall writing this.
+			# I wonder if it works.
+			$HTML .= PeopleWatchingThisPortAlsoWatch($this->db, $port->element_id);
 
-		if ($port->categories) {
-			// remove the primary category and remove any double spaces or trailing/leading spaces
-			// this ensures that explode gives us the right stuff
-			if (IsSet($port->category_looking_at)) {
-				$CategoryToRemove = $port->category_looking_at;
-			} else {
-				$CategoryToRemove = $port->category;
-			}
-			$Categories = str_replace($CategoryToRemove, '', $port->categories);
-			$Categories = str_replace('  ', ' ', $Categories);
-			$Categories = trim($Categories);
-			if ($Categories) {
-				$HTML .= "<dt><b>Also Listed In:</b> ";
-				$CategoriesArray = explode(" ", $Categories);
-				$Count = count($CategoriesArray);
-				for ($i = 0; $i < $Count; $i++) {
-					$Category = $CategoriesArray[$i];
-					$HTML .= '<a href="/' . $Category . '/';
-					if ($this->Branch != BRANCH_HEAD) {
-						$HTML .= '?branch=' . htmlspecialchars($this->Branch);
-					}
-					$HTML .= '">' . $Category . '</a>';
-					if ($i < $Count - 1) {
-						$HTML .= " ";
-					}
+			if ($port->categories) {
+				// remove the primary category and remove any double spaces or trailing/leading spaces
+				// this ensures that explode gives us the right stuff
+				if (IsSet($port->category_looking_at)) {
+					$CategoryToRemove = $port->category_looking_at;
+				} else {
+					$CategoryToRemove = $port->category;
 				}
-				$HTML .= "</dt>\n";
+				$Categories = str_replace($CategoryToRemove, '', $port->categories);
+				$Categories = str_replace('  ', ' ', $Categories);
+				$Categories = trim($Categories);
+				if ($Categories) {
+					$HTML .= "<dt><b>Also Listed In:</b> ";
+					$CategoriesArray = explode(" ", $Categories);
+					$Count = count($CategoriesArray);
+					for ($i = 0; $i < $Count; $i++) {
+						$Category = $CategoriesArray[$i];
+						$HTML .= '<a href="/' . $Category . '/';
+						if ($this->Branch != BRANCH_HEAD) {
+							$HTML .= '?branch=' . htmlspecialchars($this->Branch);
+						}
+						$HTML .= '">' . $Category . '</a>';
+						if ($i < $Count - 1) {
+							$HTML .= " ";
+						}
+					}
+					$HTML .= "</dt>\n";
+				}
 			}
-		}
-		
-		$HTML .= '<dt><b>License:</b> ';
-		if ($port->license) {
-		        $HTML .= htmlentities($port->license);
-		} else {
-		        $HTML .= 'not specified in port';
+
+			$HTML .= '<dt><b>License:</b> ';
+			if ($port->license) {
+			        $HTML .= htmlentities($port->license);
+			} else {
+			        $HTML .= 'not specified in port';
+			}
+
+			$HTML .= "</dt>\n";
 		}
 
-		$HTML .= "</dt>\n";
-    
 
 		# The ad goes here, but we haven't used ads in a very long time.
 		if ($this->ShowAd || $this->ShowEverything) {
@@ -628,21 +746,24 @@ class port_display {
 			$HTML .= $this->ShowConfigurePlist();
 		}
 
-		$HTML .= '<dt class="pkg-plist"><b>Dependency lines</b>:</dt>';
-		$HTML .= '<dd class="pkg-plist">' . "\n" . '<ul class="pkg-plist"><li class="file">' . $port->package_name . '>0:' . $this->DisplayPlainText() . '</li>';
+		if ($this->ShowEverything || $this->ShowBasicInfo) {
 
-		// pkg_plist_library_matches is a JSON array
-		$lib_depends = json_decode($port->pkg_plist_library_matches, true);
-		if (is_array($lib_depends) && count($lib_depends) > 0) {
-			foreach($lib_depends as $library) {
-				# XXX this span should be replaced with some CSS
-				$HTML .= '<li>' . preg_replace('/^lib\//', '', $library) . ':' . $this->DisplayPlainText() . '</li>';
+			$HTML .= '<dt class="pkg-plist"><b>Dependency lines</b>:</dt>';
+			$HTML .= '<dd class="pkg-plist">' . "\n" . '<ul class="pkg-plist"><li class="file">' . $port->package_name . '>0:' . $this->DisplayPlainText() . '</li>';
+
+			// pkg_plist_library_matches is a JSON array
+			$lib_depends = json_decode($port->pkg_plist_library_matches, true);
+			if (is_array($lib_depends) && count($lib_depends) > 0) {
+				foreach($lib_depends as $library) {
+					# XXX this span should be replaced with some CSS
+					$HTML .= '<li>' . preg_replace('/^lib\//', '', $library) . ':' . $this->DisplayPlainText() . '</li>';
+				}
 			}
+			$HTML .= '</ul></dd>';
 		}
-		$HTML .= '</ul></dd>';
 
 		# if there are conflicts
-		if ($this->ShowEverything && ($port->conflicts || $port->conflicts_build || $port->conflicts_install)) {
+		if (($this->ShowEverything || $this->ShowConflicts) && ($port->conflicts || $port->conflicts_build || $port->conflicts_install)) {
 			$HTML .= "<dt><b>Conflicts:</b></dt>";
 
 			if ($port->conflicts) {
@@ -733,6 +854,68 @@ class port_display {
 					$HTML .= '<dd>There is no distinfo for this port.</dd>' . "\n";
 				}
 			}
+
+
+
+
+		}
+		###################################################
+		### END of items for SetDetailsBeforePackages() ###
+		###################################################
+
+
+		###############################################
+		### START of items for SetDetailsPackages() ###
+		###############################################
+
+		if ($this->ShowEverything || $this->ShowPackages) {
+			$HTML .= '<dt><b>Packages:</b></dt>';
+
+			$packages = new Packages($this->db);
+			$numrows = $packages->Fetch($this->port->id);
+
+			if ($numrows > 0) {
+				$HTML .= '<dd>';
+				$HTML .= '<div class="scrollmenu">';
+
+				# if we have multiple packages, we create an enclosing table
+				$MultiplePackageNames = count($packages->packages) > 1;
+
+
+				foreach($packages->packages as $package_name => $package) {
+
+					$HTML .= '<table class="packages"><caption>' . $package_name . '</caption><tr><th>ABI</th><th>latest</th><th>quarterly</th></tr>';
+					foreach($package as $package_line) {
+
+						if ($Debug) {
+							echo '<pre>'; var_export($package_line); echo '</pre>';
+						}
+
+						# All values of active ABI are returned (e.g. FreeBSD:12:amd64
+						# package_version will be empty if the port is not build for that ABI
+
+						$package_version_latest    = empty($package_line['package_version_latest'])    ? '-' : $package_line['package_version_latest'];
+						$package_version_quarterly = empty($package_line['package_version_quarterly']) ? '-' : $package_line['package_version_quarterly'];
+
+						$HTML .= '<tr><td>' . $package_line['abi'] . '</td>';
+
+						# If showing a - for the version, center align it
+						$title = $this->packageToolTipText($package_line['last_checked_latest'], $package_line['repo_date_latest'], $package_line['processed_date_latest']);
+						$HTML .= '<td class="version" ' . ($package_version_latest    == '-' ? ' align ="center"' : '') . '><span title="' . $title . '">' . $package_version_latest    . '</span></td>';
+
+						$title = $this->packageToolTipText($package_line['last_checked_quarterly'], $package_line['repo_date_quarterly'], $package_line['processed_date_quarterly']);
+						$HTML .= '<td class="version" ' . ($package_version_quarterly == '-' ? ' align ="center"' : '') . '><span title="' . $title . '">' . $package_version_quarterly . '</span></td></tr>';
+					}
+					$HTML .= '</table>&nbsp;';
+
+				}
+
+				$HTML .= '</div>';
+				$HTML .= '</dd>';
+
+			} else {
+				$HTML .= '<dd>No package information in database for this port.</dd>' . "\n";
+			}
 		}
 
 		if ($this->ShowEverything || $this->ShowMasterSlave) {
@@ -753,7 +936,7 @@ class port_display {
 				$HTML .= freshports_link_to_port($MyCategory, $MyPort, $this->Branch);
 				$HTML .= "</dt>\n";
 			}
-	
+
 			#
 			# Display our slave ports
 			#
@@ -767,7 +950,7 @@ class port_display {
 				$HTML .= "</ol></dd>\n";
 			}
 		}
-	
+
 		if ($this->ShowDepends || $this->ShowEverything) {
 			$HTML .= "</dl>\n<hr><dl>\n";
 			if ($port->depends_build || $port->depends_run || $port->depends_lib) {
@@ -810,20 +993,13 @@ class port_display {
 				$HTML .= freshports_depends_links($this->db, $port->extract_depends, $this->Branch);
 				$HTML .= "\n</ol></dd>\n";
 			}
-			
+
 			# XXX when adding new depends above, be sure to update the array in ShowDependencies()
 
 			$HTML .= $this->ShowDependencies( $port );
 		}
 
-		if ($this->ShowDescriptionShort && ($this->ShowDescriptionLink || $this->ShowEverything)) {
-			// Long description
-			$HTML .= '<A HREF="/' . $port->category . '/' . $port->port .'/">Description</a>';
-
-			$HTML .= ' <b>:</b> ';
-		}
-		
-		if ($this->ShowEverything) {
+		if ($this->ShowEverything || $this->ShowConfig) {
 			$HTML .= "</dl>\n<hr>\n<dl>";
 			$HTML .= "<dt><b>Configuration Options</b></dt>\n" . '<dd class="like-pre">';
 			if ($port->showconfig) {
@@ -833,14 +1009,14 @@ class port_display {
 			}
 			$HTML .= "</dd>";
 		}
-		
-		if ($this->ShowEverything && $port->uses) {
+
+		if (($this->ShowEverything || $this->ShowUses) && $port->uses) {
 			$HTML .= "</dl><hr><dl><dt><b>USES:</b></dt>\n" . '<dd class="like-pre">';
 			$HTML .= $port->uses;
 			$HTML .= "</dd>\n</dl>\n<hr>\n<dl>";
 		}
 
-		if ($this->ShowEverything && $port->pkgmessage) {
+		if (($this->ShowEverything || $this->ShowPKGMessage) && $port->pkgmessage) {
 			$HTML .= $this->_pkgmessage($port);
 		}
 
@@ -875,10 +1051,10 @@ class port_display {
 
 		return $HTML;
 	}
-	
+
 	function ReplaceWatchListToken($OnWatchList, $HTML, $ElementID) {
 		$Watch_HTML = '';
-		
+
 		if ($this->User && $this->User->id && ($this->ShowEverything || $this->ShowWatchListStatus)) {
 			if ($OnWatchList) {
 				$Watch_HTML .= freshports_Watch_Link_Remove($this->User->watch_list_add_remove, $OnWatchList, $ElementID);
@@ -886,9 +1062,9 @@ class port_display {
 				$Watch_HTML .= freshports_Watch_Link_Add   ($this->User->watch_list_add_remove, $OnWatchList, $ElementID);
 			}
 		}
-		
+
 		$Watch_HTML .= ' ';
-		
+
 		$HTML = str_replace(port_display_WATCH_LIST_ADD_REMOVE, $Watch_HTML, $HTML);
 
 		return $HTML;
@@ -921,7 +1097,7 @@ class port_display {
 
 				# everything "required for" XXX goes under this section.
 				$HTML .= '<dd class="required">for ' . $title . "\n";
-				
+
 				# Let's fetch the first port, and see if it's deleted.  If it is, we don't need this first loop
 				$PortDependencies->FetchNth(0);
 				if ($PortDependencies->status != 'D' ) {
@@ -938,7 +1114,7 @@ class port_display {
 
 						# if this is a deleted port
 						if ($PortDependencies->status == 'D' ) {
-							$firstDeletedPort = $i; # we set this so the next loop knows where to start 
+							$firstDeletedPort = $i; # we set this so the next loop knows where to start
 							# we found a deleted port
 							$deletedPortFound = true;
 
@@ -949,7 +1125,7 @@ class port_display {
 						# if we haven't already starting hiding things and we found a deleted port or we have too many thing to show and we're at the max items to show
 						if ( !$hidingStarted && ( ( ( $NumRows > DEPENDS_SUMMARY )  && ( $i == DEPENDS_SUMMARY ) ) ) ) {
 							$div .= '</ol>';
-							$div .= '<a href="#" id="RequiredBy' . $title . 'Extra-show" class="showLink" onclick="showHide(\'RequiredBy' . 
+							$div .= '<a href="#" id="RequiredBy' . $title . 'Extra-show" class="showLink" onclick="showHide(\'RequiredBy' .
 							        $title . 'Extra\');return false;">Expand this list (' . $NumRows . ' items / ' . ($NumRows - DEPENDS_SUMMARY) . ' hidden)</a>';
 							$div .= '<ol id="RequiredBy' . $title . 'Extra" class="depends more" start="' . ($i + 1) . '" style="margin-top: 0px">';
 							# yes, we have started hiding things.

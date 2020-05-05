@@ -18,6 +18,8 @@ define('CACHE_PORT_DETAIL',  'Detail');
 class CachePort extends Cache {
 
 	const CacheCategory = 'ports';
+	const CachePartOne  = 'Part1';
+	const CachePartTwo  = 'Part2';
 
 	var $PageSize = 100;
 
@@ -29,19 +31,19 @@ class CachePort extends Cache {
 		$this->PageSize = $PageSize;
 	}
 
-	function RetrievePort($Category, $Port, $CacheType = CACHE_PORT_COMMITS, $PageNum = 1, $Branch = BRANCH_HEAD) {
-		$this->_Log("CachePort: Retrieving for $Category/$Port");
-		$Key = $this->_PortKey($Category, $Port, $CacheType, $PageNum, $Branch);
+	function RetrievePort($Category, $Port, $CacheType = CACHE_PORT_COMMITS, $PageNum = 1, $Branch = BRANCH_HEAD, $CachePart) {
+		$this->_Log("CachePort: Retrieving for $Category/$Port/$CachePart");
+		$Key = $this->_PortKey($Category, $Port, $CacheType, $PageNum, $Branch, $CachePart);
 		$result = parent::Retrieve($Key);
 
 		return $result;
 	}
 
-	function AddPort($Category, $Port, $CacheType = CACHE_PORT_COMMITS, $PageNum = 1, $Branch = BRANCH_HEAD) {
+	function AddPort($Category, $Port, $CacheType = CACHE_PORT_COMMITS, $PageNum = 1, $Branch = BRANCH_HEAD, $CachePart) {
 		$this->_Log("CachePort: Adding for $Category/$Port");
 
-		$CacheDir = $this->CacheDir . '/' . CachePort::CacheCategory . '/' . $Category . '/' . $Port;
-		$Key = $this->_PortKey($Category, $Port, $CacheType, $PageNum, $Branch);
+		$CacheDir = $this->CacheDir . '/' . self::CacheCategory . '/' . $Category . '/' . $Port;
+		$Key = $this->_PortKey($Category, $Port, $CacheType, $PageNum, $Branch, $CachePart);
 		 
 		if (!file_exists($CacheDir)) {
 			$this->_Log("CachePort: creating directory $CacheDir");
@@ -65,15 +67,22 @@ class CachePort extends Cache {
 		# the wild card allows us to remove all cache entries for this port
 		# regardless of the CacheType or page number
 		#
-		$Key = $this->_PortKey($Category, $Port, '*', '*', '*');
+		$Key = $this->_PortKey($Category, $Port, '*', '*', '*', '*');
 		$result = parent::Remove($Key, $data);
 
 		return $result;
 	}
 
-	function _PortKey($Category, $Port, $CacheType, $PageNum = 1, $Branch = BRANCH_HEAD) {
+	function _PortKey($Category, $Port, $CacheType, $PageNum = 1, $Branch = BRANCH_HEAD, $CachePart) {
 		// might want some parameter checking here
-		$Key = CachePort::CacheCategory . "/$Category/$Port/$CacheType.$Branch.PageSize$this->PageSize.PageNum$PageNum.html";
+		switch($CachePart) {
+			case self::CachePartOne:
+			case self::CachePartTwo:
+				break;
+			default:
+				exit('unknown CachePart passed to ' . __FUNCTION__ . ' in ' . __FILE__  . $CachePart);
+		}
+		$Key = self::CacheCategory . "/$Category/$Port/$CacheType.$CachePart.$Branch.PageSize$this->PageSize.PageNum$PageNum.html";
 
 		return $Key;
 	}

@@ -34,7 +34,7 @@ class CacheFile extends Cache {
 	function Add($FileName, $PageNum = 1) {
 		$this->_Log("CacheFile: Adding for $FileName");
 
-		$CacheDir = $this->CacheDir . '/' . CacheFile::CacheCategory . '/' . dirname($FileName);
+		$CacheDir = $this->CacheDir . '/' . self::CacheCategory . '/' . dirname($FileName);
 		$Key = $this->_FileKey($FileName, $PageNum);
 		 
 		if (!file_exists($CacheDir)) {
@@ -67,7 +67,7 @@ class CacheFile extends Cache {
 	
 	function _FileKey($FileName, $PageNum = 1) {
 		// might want some parameter checking here
-		$Key = CacheFile::CacheCategory . "/$FileName.PageSize$this->PageSize.PageNum$PageNum.html";
+		$Key = self::CacheCategory . "/$FileName.PageSize$this->PageSize.PageNum$PageNum.html";
 
 		return $Key;
 	}

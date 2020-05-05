@@ -172,3 +172,36 @@ li.nostyle {
 li.extraspace {
     margin-top: 10px;
 }
+
+.packages { 
+  background-color:#eee;
+  border-collapse:collapse; 
+  display: inline-block;
+}
+
+.packages th { background-color:#000; color:white; }
+.packages td, .packages th { padding:8px; border:1px solid #000; }
+
+
+# for horizontal scrolling of package tables - re https://www.w3schools.com/howto/howto_css_menu_horizontal_scroll.asp#contact
+
+div.scrollmenu {
+  background-color: #333;
+  overflow: scroll;
+  white-space: nowrap;
+}
+
+div.scrollmenu table {
+  display: inline-block;
+}
+
+
+
+td.version:hover {
+  background-color: #777;
+}
+
+
+
+  
+  

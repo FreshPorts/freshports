@@ -39,7 +39,7 @@ class CacheCommit extends Cache {
 	function AddCommit($MessageId, $PageNum = 1) {
 		$this->_Log("CacheCommit: Adding for $MessageId $PageNum");
 
-		$CacheDir = $this->CacheDir . '/' . CacheCommit::CacheCategory . '/' . $MessageId;
+		$CacheDir = $this->CacheDir . '/' . self::CacheCategory . '/' . $MessageId;
 		$Key = $this->_CommitKey($MessageId, $PageNum);
 		 
 		if (!file_exists($CacheDir)) {
@@ -72,7 +72,7 @@ class CacheCommit extends Cache {
 
 	function _CommitKey($MessageId, $PageNum = 1) {
 		// might want some parameter checking here
-		$Key = CacheCommit::CacheCategory . "/$MessageId.PageSize$this->PageSize.PageNum$PageNum.html";
+		$Key = self::CacheCategory . "/$MessageId.PageSize$this->PageSize.PageNum$PageNum.html";
 
 		return $Key;
 	}

@@ -268,73 +268,43 @@ class port_display {
 	}
 
 	function SetDetailsBeforePackages() {
-		$this->ShowEverything          = false;
+		$this->SetDetailsNil();
 
-		$this->LinkToPort              = false;
-		$this->ShowAd                  = false;
 		$this->ShowBasicInfo           = true;
 		$this->ShowCategory            = true;
 		$this->ShowChangesLink         = true;
-		$this->ShowConfig              = false;
 		$this->ShowConfigurePlist      = true;
 		$this->ShowConflicts           = true;
 		$this->ShowDateAdded           = true;
-		$this->ShowDepends             = false;
-		$this->ShowDescriptionLink     = false;
 		$this->ShowDescriptionLong     = true;
 		$this->ShowDistInfo            = true;
-		$this->ShowDownloadPortLink    = false;
 		$this->ShowHomepageLink        = true;
-		$this->ShowLastChange          = false;
 		$this->ShowLastCommitDate      = true;
 		$this->ShowMaintainedBy        = true;
-		$this->ShowMasterSites         = false;
-		$this->ShowMasterSlave         = false;
 		$this->ShowPackageLink         = true;
-		$this->ShowPackages            = false;
-		$this->ShowPKGMessage          = false;
-		$this->ShowPortCreationDate    = false;
 		$this->ShowShortDescription    = true;
-		$this->ShowUses                = false;
 		$this->ShowWatchListCount      = true;
-		$this->ShowWatchListStatus     = false;
 	}
 
 	function SetDetailsAfterPackages() {
-		$this->ShowEverything          = false;
+		$this->SetDetailsNil();
 
 		$this->LinkToPort              = true;
 		$this->ShowAd                  = true;
-		$this->ShowBasicInfo           = false;
-		$this->ShowCategory            = false;
-		$this->ShowChangesLink         = false;
 		$this->ShowConfig              = true;
-		$this->ShowConfigurePlist      = false;
-		$this->ShowConflicts           = false;
-		$this->ShowDateAdded           = false;
 		$this->ShowDepends             = true;
-		$this->ShowDescriptionLink     = false;
-		$this->ShowDescriptionLong     = false;
-		$this->ShowDistInfo            = false;
 		$this->ShowDownloadPortLink    = true;
-		$this->ShowHomepageLink        = false;
-		$this->ShowLastChange          = false;
-		$this->ShowLastCommitDate      = false;
-		$this->ShowMaintainedBy        = false;
 		$this->ShowMasterSites         = true;
 		$this->ShowMasterSlave         = true;
-		$this->ShowPackageLink         = false;
-		$this->ShowPackages            = false;
 		$this->ShowPKGMessage          = true;
 		$this->ShowPortCreationDate    = true;
-		$this->ShowShortDescription    = false;
 		$this->ShowUses                = true;
-		$this->ShowWatchListCount      = false;
 		$this->ShowWatchListStatus     = true;
 	}
 
 	function SetDetailsSearch() {
 		$this->SetDetailsNil();
+
 		$this->LinkToPort              = true;
 		$this->ShowBasicInfo           = true;
 		$this->ShowCategory            = true;
@@ -352,6 +322,7 @@ class port_display {
 
 	function SetDetailsReports() {
 		$this->SetDetailsNil();
+
 		$this->SetDetailsSearch();
 
 		$this->ShowDateAdded = true;
@@ -359,6 +330,7 @@ class port_display {
 
 	function SetDetailsWatchList() {
 		$this->SetDetailsNil();
+
 		$this->SetDetailsSearch();
 
 		$this->ShowDateAdded  = true;

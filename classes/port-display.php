@@ -285,7 +285,7 @@ class port_display {
 		$this->ShowDistInfo            = true;
 		$this->ShowDownloadPortLink    = false;
 		$this->ShowHomepageLink        = true;
-		$this->ShowLastChange          = true;
+		$this->ShowLastChange          = false;
 		$this->ShowLastCommitDate      = true;
 		$this->ShowMaintainedBy        = true;
 		$this->ShowMasterSites         = false;
@@ -600,6 +600,7 @@ class port_display {
 		}
 
 		// there are only a few places we want to show the last change.
+		// e.g. www/watch.php
 		// therefore, we do not check ShowEverything here
 		if ($this->ShowLastChange) {
 			$HTML .= "<dt>\n";

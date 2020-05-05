@@ -437,7 +437,7 @@ ON TEMP.wle_element_id = ports.element_id";
 			echo "<pre>$sql</pre>";
 		}
 
-        $result = pg_exec($this->dbh, $sql);
+		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
 			$numrows = pg_numrows($result);
 			if ($numrows == 1) {

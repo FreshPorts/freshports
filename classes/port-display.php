@@ -276,7 +276,7 @@ class port_display {
 		$this->ShowCategory            = true;
 		$this->ShowChangesLink         = true;
 		$this->ShowConfig              = false;
-		$this->ShowConfigurePlist      = false;
+		$this->ShowConfigurePlist      = true;
 		$this->ShowConflicts           = true;
 		$this->ShowDateAdded           = true;
 		$this->ShowDepends             = false;
@@ -308,9 +308,9 @@ class port_display {
 		$this->ShowBasicInfo           = false;
 		$this->ShowCategory            = false;
 		$this->ShowChangesLink         = false;
-		$this->ShowConflicts           = false;
 		$this->ShowConfig              = true;
 		$this->ShowConfigurePlist      = false;
+		$this->ShowConflicts           = false;
 		$this->ShowDateAdded           = false;
 		$this->ShowDepends             = true;
 		$this->ShowDescriptionLink     = false;

@@ -36,6 +36,7 @@ All of these graphs require javascript.  Please select the graph you would like 
 If you have suggestions for graphs, please submit them via the <a href="<?php echo ISSUES; ?>">issues link</a>.
 </P>
 
+
 <center>
 <?php
   if ($ShowAds) echo Ad_728x90();
@@ -43,6 +44,30 @@ If you have suggestions for graphs, please submit them via the <a href="<?php ec
 </center>
 
 </TD></TR>
+
+<tr><td>
+<h2>HEADS UP!</h2>
+
+<p>
+These graphs are broken. Help is needed to get them working again.
+<p>
+
+Some starting points:
+
+<ul>
+<li><a href="https://github.com/FreshPorts/freshports/blob/master/www/graphs2.php">This is the source code</a> for this page.</li>
+<li><a href="https://github.com/FreshPorts/freshports/blob/1.40/www/graphs2.php">This is the last working version</a> of this page.</li>
+<li><a href="https://github.com/FreshPorts/freshports/blob/1.40/www/jquery-1.2.6.min.js">jquery-1.2.6.min.js</a> used by the above.</li>
+<li><a href="https://github.com/FreshPorts/freshports/blob/1.40/www/jquery.flot.pack.js">jquery.flot.pack.js</a> used by the above.</li>
+<li><a href="https://github.com/FreshPorts/freshports/blob/master/www/javascript/graphs.js">graphs.js</a> as relocated to /javascript/</li>
+<li><a href="https://github.com/FreshPorts/freshports/tree/master/www/javascript">the javascript</a> I thought would appropriately replace jquery.flot.pack.js & jquery-1.2.6.min.js</li>
+</ul>
+
+Thank you for your help.
+
+
+<p>
+</td></tr>
 
 <TR><TD>
 

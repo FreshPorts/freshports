@@ -2021,7 +2021,6 @@ function PeopleWatchingThisPortAlsoWatch($dbh, $element_id) {
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_list_also_watched.php');
 
 	$HTML = '';
-	return $HTML;
 
 	$AlsoWatched = new WatchListAlsoWatched($dbh);
 	$numrows = $AlsoWatched->WatchersAlsoWatch($element_id);

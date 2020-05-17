@@ -34,7 +34,7 @@ class UserTasks {
 			$numrows = pg_numrows($result);
 			for ($i = 0; $i < $numrows; $i++) {
 				$myrow = pg_fetch_array ($result, $i);
-				$this->tasks{$myrow['name']} = $myrow['id'];
+				$this->tasks[$myrow['name']] = $myrow['id'];
 #				echo "\$myrow[name]='$myrow[name]' = $myrow[id]<br>\n";
 #				echo "\$this->tasks{$myrow[name]} = '$this->tasks{$myrow[name]}'<br>\n";
 			}

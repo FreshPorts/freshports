@@ -1118,7 +1118,9 @@ class port_display {
 					$div .= '</ol>';
 
 				} else {
+					# the first port was deleted. Therefore, they are all deleted.
 					$deletedPortFound = true;
+					$firstDeletedPort = 0;
 					$div = '';
 				}
 

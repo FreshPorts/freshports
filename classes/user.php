@@ -188,7 +188,7 @@ class User {
 #			die('getting the tasks now');
 		}
 
-		if (IsSet($this->UserTasks{$task})) {
+		if (IsSet($this->UserTasks[$task])) {
 			return TRUE;
 		} else {
 			return FALSE;

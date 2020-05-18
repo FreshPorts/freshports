@@ -309,11 +309,11 @@ ORDER BY CL.commit_date DESC, CL.id ASC, E.name, category, version LIMIT 20";
 
 		$item->title = $myrow['category'] . '/' . $myrow["port"] . ' - ' . freshports_PackageVersion($myrow['version'], $myrow['revision'], $myrow['epoch']);
 		$item->link  = $link;
-		$item->description = trim($description);
+		$item->description = nl2br(htmlspecialchars(trim($description)));
 
 		//optional
 		//item->descriptionTruncSize = 500;
-		$item->descriptionHtmlSyndicated = true;
+		$item->descriptionHtmlSyndicated = false;
 	
 		$item->date   = strtotime($date);
 		$item->source = $_SERVER['HTTP_HOST']; 

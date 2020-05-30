@@ -23,6 +23,16 @@
 
 	if ($Debug) echo 'Branch is ' . $Branch . '<br>';
 
+	$OnLoad = 'setfocus()';
+?>
+
+<script language="JavaScript" type="text/javascript">
+<!--
+function setfocus() { document.f.query.focus(); }
+// -->
+</script>
+
+<?php
 	#
 	# If they supply a package name, go for it.
 	#

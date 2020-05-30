@@ -498,6 +498,9 @@ class port_display {
 			# report a bug related to this port
 			$HTML .= ' ' . freshports_Report_A_Bug($port->category . '/' . $port->port);
 
+			# link to https://repology.org : re https://github.com/FreshPorts/freshports/issues/148
+			$HTML .= ' ' . freshports_Repology_Link($port->category . '/' . $port->port);
+
 			$HTML .=  ' <span class="tooltip">'. $port->quarterly_revision . '<span class="tooltiptext tooltip-top">Version of this port present on the latest quarterly branch.';
 			if ($port->IsSlavePort()) $HTML .= ' NOTE: Slave port - quarterly revision is most likely wrong.';
 			$HTML .= '</span></span>';

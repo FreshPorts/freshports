@@ -515,6 +515,10 @@ function freshports_Encoding_Errors_Link() {
 	return '<a href="/' . FAQLINK . '#encodingerrors">' . freshports_Encoding_Errors() . '<a>';
 }
 
+function freshports_Repology_Icon() {
+	return '<img src="/images/repology.png" alt="View this port on Repology." title="View this port on Repology." border="0" width="16" height="16">';
+}
+
 function freshports_VuXML_Icon() {
 	return '<img src="/images/vuxml.gif" alt="This port version is marked as vulnerable." title="This port version is marked as vulnerable." border="0" width="13" height="16">';
 }
@@ -539,6 +543,14 @@ function freshports_VuXML_Link($PackageName, $HasCurrentVulns) {
 	} else {
 		$HTML .= freshports_VuXML_Icon_Faded();
 	}
+	$HTML .= '</a>';
+
+	return $HTML;
+}
+
+function freshports_Repology_Link($CategoryNamePortName) {
+	$HTML = '<a href="https://repology.org/tools/project-by?repo=freebsd&amp;name_type=srcname&amp;target_page=project_versions&amp;name=' . $CategoryNamePortName . '">';
+	$HTML .= freshports_Repology_Icon();
 	$HTML .= '</a>';
 
 	return $HTML;

@@ -64,7 +64,7 @@
 	<li><p>An RSS feed that lists only new ports:  ' . $HREF . ' </p></li>
 
 	<li><p>A Personal News feed for each of your watch lists. Look for the link under
-		the <code>Login</code> box after you have logged in.</li>
+		the <code>Watch Lists</code> box after you have logged in.</li>
 
 	<li><p>The blog for this website, <a href="https://news.freshports.org/">FreshPorts News</a>.
 

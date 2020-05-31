@@ -24,15 +24,6 @@
 	if ($Debug) echo 'Branch is ' . $Branch . '<br>';
 
 	$OnLoad = 'setfocus()';
-?>
-
-<script language="JavaScript" type="text/javascript">
-<!--
-function setfocus() { document.f.query.focus(); }
-// -->
-</script>
-
-<?php
 	#
 	# If they supply a package name, go for it.
 	#
@@ -71,6 +62,15 @@ function setfocus() { document.f.query.focus(); }
 	{
 	    if ($Debug) echo "package is not specified on the URL<br>\n";
     }
+?>
+
+<script language="JavaScript" type="text/javascript">
+<!--
+function setfocus() { document.f.query.focus(); }
+// -->
+</script>
+
+<?php
 
 	freshports_Start($FreshPortsSlogan,
 					$FreshPortsName . ' - new ports, applications',

@@ -37,8 +37,9 @@ class Packages {
 			echo 'Packages SQL failed: ' . $result . pg_last_error();
 		}
 
-        return $this->CategoryPort;
+	        return $this->CategoryPort;
 	}
+
 	function Fetch($PortID) {
 		# fetch all rows in ports_updating with id = $PortID
 

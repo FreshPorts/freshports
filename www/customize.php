@@ -38,7 +38,7 @@ if (!$visitor) {
 if (IsSet($submit)) {
 	$Debug = 0;
 
-// process form
+	// process form
 
 	$email				= pg_escape_string($_POST['email']);
 	$Password1			= $_POST['Password1'];
@@ -78,10 +78,10 @@ if (IsSet($submit)) {
 			$myrow = pg_fetch_array ($result, 0);
 
 			$sql = "
-UPDATE users
-   SET email          = '$email',
-       number_of_days = $numberofdays,
-       page_size      = $page_size";
+ UPDATE users
+    SET email          = '$email',
+        number_of_days = $numberofdays,
+        page_size      = $page_size";
 
 			// if they are changing the email, reset the bouncecount.
 			if ($myrow["email"] != $email) {
@@ -156,7 +156,7 @@ echo '<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="' . BACKGROUND_COLOUR . '" widt
 
 echo $errors;
 
-echo '<p>If you need help, please post a message on the forum. </p>
+echo '<p>If you need help, please email postmaster@. </p>
  </TD>
  </TR>
  </TABLE>

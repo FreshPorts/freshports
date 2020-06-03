@@ -70,7 +70,7 @@ if ($_REQUEST['wlid']) {
 <tr><td>
 This screen contains a list of the port categories. The categories with a * beside them contain ports which are
 on your watch list. When a port changes in one of your watch categories, you will be notified by email if you have selected a 
-notification frequency within your <a href="customize.php">personal preferences</a>.
+notification frequency within <a href="customize.php">your account</a>.
 </td>
 
 <td valign="top">

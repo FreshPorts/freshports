@@ -187,7 +187,7 @@ if ($LoginFailed) {
  <li>The password is incorrect
  <li>Both of the above
  </ul>
- <p>If you need help, please ask in the forum. </p>
+ <p>If you need help, please email postmaster@. </p>
  </TD>
  </TR>
  </TABLE>

@@ -131,3 +131,7 @@ define('ISSUES', 'https://github.com/FreshPorts/freshports/issues');
 # for packages
 
 const PACKAGE_SETS = array('latest', 'quarterly');
+
+const USES_PYTHON = 'python';
+
+const PYTHON_PKGNAMEPREFIX = 'PYTHON_PKGNAMEPREFIX';

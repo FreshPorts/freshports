@@ -228,25 +228,29 @@ ORDER BY CL.commit_date;
                                 break;
 
 			default:
+			        # the goal, the latest 100 commits against ports, and one port from that commit.
+			        # We start with the last 200 commits added to the system, because we're likely to get 100 ports from that.
+			        # The lateral join is to get just one port from the commit_log_ports table
+			        # we order by port.id so we get the same results on each query
 				$sql = "
- SELECT C.name    AS category,
+SELECT  C.name    AS category,
          E.name    AS port,
          E.status  AS status,
-         P.forbidden,
-         P.broken,
-         P.deprecated,
-         P.element_id                     AS element_id,
-         CASE when CL.port_version  IS NULL then P.version  else CL.port_version  END as version,
-         CASE when CL.port_revision IS NULL then P.revision else CL.port_revision END AS revision,
-         P.version                        AS ports_version,
-         P.revision                       AS ports_revision,
-         P.portepoch                      AS epoch,
-         date_part('epoch', P.date_added) AS date_added,
-         P.short_description              AS short_description,
-         P.category_id,
-         CL.port_version  AS clp_version,
-         CL.port_revision AS clp_revision,
-         CL.needs_refresh AS needs_refresh,
+         CLP.forbidden,
+         CLP.broken,
+         CLP.deprecated,
+         CLP.element_id,
+         CLP.version,
+         CLP.revision,
+         CLP.ports_version,
+         CLP.ports_revision,
+         CLP.epoch,
+         CLP.date_added,
+         CLP.short_description,
+         CLP.category_id,
+         CLP.clp_version,
+         CLP.clp_revision,
+         CLP.needs_refresh AS needs_refresh,
          CL.id     AS commit_log_id, 
          CL.commit_date       AS commit_date_raw,
          CL.message_subject,
@@ -256,17 +260,33 @@ ORDER BY CL.commit_date;
          to_char(CL.commit_date - SystemTimeAdjust(), 'DD Mon')  AS commit_date,
          to_char(CL.commit_date - SystemTimeAdjust(), 'HH24:MI') AS commit_time,
          CL.encoding_losses
-    FROM (SELECT CL1.*, CLP.port_version, CLP.port_revision, CLP.needs_refresh, CLP.port_id
-            FROM commit_log CL1
-            JOIN commit_log_ports    CLP ON CL1.id            = CLP.commit_log_id
-            JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
-            JOIN system_branch       SB  ON SB.branch_name    = " . pg_escape_literal($BranchName) . " AND SB.id = CLB.branch_id
-        ORDER BY CL1.id DESC
-           LIMIT 100) CL
-    JOIN ports                P   ON CL.port_id        = P.id
-    JOIN element              E   ON P.element_id      = E.id
-    JOIN categories           C   ON P.category_id     = C.id
-ORDER BY CL.commit_date DESC, CL.id ASC, E.name, category, version LIMIT 20";
+    FROM (SELECT *
+            FROM commit_log
+        ORDER BY id DESC
+           LIMIT 200) AS CL
+    JOIN LATERAL ( select CLP1.commit_log_id, P.forbidden, P.broken, P.deprecated, P.element_id,
+                          CASE when CLP1.port_version  IS NULL then P.version  else CLP1.port_version  END as version,
+                          CASE when CLP1.port_revision IS NULL then P.revision else CLP1.port_revision END AS revision,
+                          P.version                        AS ports_version,
+                          P.revision                       AS ports_revision,
+                          P.portepoch                      AS epoch,
+                          date_part('epoch', P.date_added) AS date_added,
+                          P.short_description              AS short_description,
+                          P.category_id,
+                          CLP1.port_version  AS clp_version,
+                          CLP1.port_revision AS clp_revision,
+                          CLP1.needs_refresh AS needs_refresh
+                     from commit_log_ports CLP1, ports P 
+                    where CLP1.commit_log_id = CL.id
+                      and CLP1.port_id   = P.id
+                  ORDER BY P.id 
+                     LIMIT 1) AS CLP on true
+    JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
+    JOIN system_branch       SB  ON SB.branch_name    = " . pg_escape_literal($BranchName) . " AND SB.id = CLB.branch_id
+    JOIN element             E   ON CLP.element_id    = E.id
+    JOIN categories          C   ON CLP.category_id   = C.id
+	LIMIT 500";
+
 		} # switch flavor
 	} # WatchListID	
 

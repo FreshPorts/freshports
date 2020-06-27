@@ -119,7 +119,7 @@ echo '<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="' . BACKGROUND_COLOUR . '" widt
 
 echo $errors;
 
-echo '<p>If you need help, please post a message on the forum. </p>
+echo '<p>If you need help, please email postmaster@. </p>
  </TD>
  </TR>
  </TABLE>

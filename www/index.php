@@ -23,7 +23,10 @@
 
 	if ($Debug) echo 'Branch is ' . $Branch . '<br>';
 
-	$OnLoad = 'setfocus()';
+	if ($User->set_focus_search) {
+		$OnLoad = 'setfocus()';
+	}
+
 	#
 	# If they supply a package name, go for it.
 	#

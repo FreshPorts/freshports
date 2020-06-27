@@ -10,6 +10,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/page_options.php'); # needed to validate page_size
 	
 	if (IN_MAINTENCE_MODE) {
                 header('Location: /' . MAINTENANCE_PAGE, TRUE, 307);
@@ -23,7 +24,7 @@
 
 if (IsSet($_REQUEST['origin'])) $origin	= $_REQUEST['origin'];
 if (IsSet($_REQUEST['submit'])) $submit = $_REQUEST['submit'];
-$visitor	= pg_escape_string($_COOKIE['visitor']);
+$visitor = pg_escape_string($_COOKIE['visitor']);
 
 if ($origin == '/index.php' || $origin == '') {
 	$origin = '/';
@@ -46,8 +47,20 @@ if (IsSet($submit)) {
 	$numberofdays			= pg_escape_string($_POST['numberofdays']);
 	$page_size			= pg_escape_string($_POST['page_size']);
 
+	# this is a checkbox
+	if (IsSet($_POST['set_focus_search'])) {
+		$set_focus_search = 'true';
+	} else {
+		$set_focus_search = 'false';
+	}
+
 	if (!is_numeric($numberofdays) || $numberofdays < 0 || $numberofdays > 9) {
 		$numberofdays = 9;
+	}
+
+	$PageOptions = new ItemsPerPage();
+	if (!is_numeric($page_size) || !array_key_exists($page_size, $PageOptions->Choices)) {
+		$page_size = DEFAULT_NUMBER_OF_COMMITS;
 	}
 
 	if ($Debug) {
@@ -78,10 +91,11 @@ if (IsSet($submit)) {
 			$myrow = pg_fetch_array ($result, 0);
 
 			$sql = "
- UPDATE users
-    SET email          = '$email',
-        number_of_days = $numberofdays,
-        page_size      = $page_size";
+UPDATE users
+   SET email            = '$email',
+       number_of_days   = $numberofdays,
+       page_size        = $page_size,
+       set_focus_search = $set_focus_search";
 
 			// if they are changing the email, reset the bouncecount.
 			if ($myrow["email"] != $email) {
@@ -120,9 +134,10 @@ if (IsSet($submit)) {
 	}
 } else {
 
-	$email			= $User->email;
-	$numberofdays	= $User->number_of_days;
-	$page_size		= $User->page_size;
+	$email            = $User->email;
+	$numberofdays     = $User->number_of_days;
+	$page_size        = $User->page_size;
+	$set_focus_search = $User->set_focus_search;
 }
 
 #	echo '<br>the page size is ' . $page_size . ' : ' . $email;

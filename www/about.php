@@ -12,8 +12,9 @@
 
 	freshports_ConditionalGet(freshports_LastModified());
 
-	freshports_Start("About this site",
-					"freshports - new ports, applications",
+	$Title = 'About this site';
+	freshports_Start($Title,
+					$Title,
 					"FreeBSD, index, applications, ports");
 
 ?>

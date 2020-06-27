@@ -23,8 +23,9 @@
 
 	define('NUMCOLUMNS', 7);
 
-	freshports_Start('Watch categories',
-					'freshports - new ports, applications',
+	$Title = 'Watch Categories';
+	freshports_Start($Title,
+					$TItle,
 					'FreeBSD, index, applications, ports');
 
 $Debug = 0;

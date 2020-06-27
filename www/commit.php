@@ -97,7 +97,7 @@ DEFINE('NEXT_PAGE',		'Next');
 	  $Title .= ' on branch ' . $Commit->branch;
 	}
 	freshports_Start($Title,
-					$FreshPortsName . ' - new ports, applications',
+					$Title,
 					'FreeBSD, index, applications, ports');
 
 function str_is_int($str) {

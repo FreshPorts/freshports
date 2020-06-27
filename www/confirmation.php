@@ -11,8 +11,9 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
-	freshports_Start('Account confirmation',
-					'freshports - new ports, applications',
+	$Title = 'Account confirmation';
+	freshports_Start($Title,
+					$Title,
 					'FreeBSD, index, applications, ports');
 	$Debug = 0;
 

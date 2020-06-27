@@ -27,9 +27,9 @@
 		define('CACHE_NAME', 'sanity_test_failures');
 	}
 
-
-	freshports_Start($FreshPortsSlogan,
-					$FreshPortsName . ' - new ports, applications',
+	$Title = 'Sanity Test Failures';
+	freshports_Start($FreshPortsSlogan . " - $Title",
+					$Title,
 					'FreeBSD, index, applications, ports');
 $Debug = 0;
 

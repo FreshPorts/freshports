@@ -27,7 +27,7 @@ function freshports_NonPortDescription($db, $element_record) {
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 	freshports_Start($Title,
-	        		"$FreshPortsTitle - new ports, applications",
+					$Title,
 					"FreeBSD, index, applications, ports");
 
 ?>

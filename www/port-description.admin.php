@@ -147,7 +147,7 @@ $NumRows = mysql_num_rows($result);
    }
 
    freshports_Start($Title,
-               'freshports - new ports, applications',
+               $Title,
                'FreeBSD, index, applications, ports');
 ?>
 

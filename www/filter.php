@@ -47,8 +47,9 @@
 		}
 	}
 
-	freshports_Start($FreshPortsSlogan,
-					$FreshPortsName . ' - new ports, applications',
+	$Title = 'watch list categories';
+	freshports_Start($FreshPortsSlogan . " - $Title",
+					$Title,
 					'FreeBSD, index, applications, ports');
 	$Debug = 1;
 if ($Debug) echo "\$User->id='$User->id'";

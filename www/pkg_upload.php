@@ -16,8 +16,9 @@
                 header('Location: /' . MAINTENANCE_PAGE, TRUE, 307);
 	}
 
-	freshports_Start('Uploading pkg_info',
-					$FreshPortsName . ' - new ports, applications',
+	$Title = 'Uploading pkg_info';
+	freshports_Start($Title,
+					$Title,
 					'FreeBSD, index, applications, ports');
 $Debug = 1;
 if ($Debug) {

@@ -13,7 +13,7 @@
 	$Title = "New Release - 22 February 2002";
 
 	freshports_Start($Title,
-					'freshports - new ports, applications',
+					$Title,
 					'FreeBSD, index, applications, ports');
 
 ?>

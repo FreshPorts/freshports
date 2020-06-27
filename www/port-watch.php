@@ -126,8 +126,9 @@ if ($submit) {
 		}
    }
 
-   freshports_Start($category,
-               "freshports - new ports, applications",
+   $Title = 'Watch List ' . $category;
+   freshports_Start($Title,
+               $Title,
                "FreeBSD, index, applications, ports");
 }
 ?>

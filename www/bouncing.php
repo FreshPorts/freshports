@@ -46,8 +46,9 @@ if ($submit) {
       echo 'Something went terribly wrong there.<br>';
    }
 }
-   freshports_Start("your email is bouncing",
-               "freshports - new ports, applications",
+   $Title = 'your email is bouncing';
+   freshports_Start($Title,
+               $Title,
                "FreeBSD, index, applications, ports");
 
 ?>

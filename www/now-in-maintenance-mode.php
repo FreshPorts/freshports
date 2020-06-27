@@ -17,8 +17,9 @@
 	} else {
 		header('Location: /', TRUE, 307);
 	}
-	freshports_Start('Maintenance Mode',
-					'freshports - new ports, applications',
+	$Title = 'Maintenance Mode';
+	freshports_Start($Title,
+					$Title,
 					'FreeBSD, index, applications, ports');
 
 	$ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['HTTP_HOST']);

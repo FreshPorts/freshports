@@ -15,7 +15,7 @@
 	freshports_ConditionalGet(freshports_LastModified());
 
 	freshports_Start($Title,
-					"freshports - new ports, applications",
+					$Title,
 					"FreeBSD, index, applications, ports");
 
 ?>

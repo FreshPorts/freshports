@@ -149,8 +149,9 @@ if (IsSet($_GET["resend"])) {
 
 <?php
 	$OnLoad = 'setfocus()';
-   freshports_Start('Login',
-               'freshports - new ports, applications',
+	$Title = 'Login';
+	freshports_Start($Title,
+               $Title,
                'FreeBSD, index, applications, ports');
 
 ?>

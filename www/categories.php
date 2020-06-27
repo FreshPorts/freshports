@@ -18,8 +18,9 @@
 
 	freshports_ConditionalGet($Commit->last_modified);
 
-	freshports_Start('Categories',
-					'freshports - new ports, applications',
+	$Title = 'Categories';
+	freshports_Start($Title,
+					$Title,
 					'FreeBSD, index, applications, ports');
 					
 	$Debug = 0;

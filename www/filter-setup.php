@@ -76,8 +76,10 @@ if ($submit) {
   exit;  /* Make sure that code below does not get executed when we redirect. */
       
 }
-	freshports_Start('Watch categories',
-					'freshports - new ports, applications',
+
+	$Title = 'Watch categories';
+	freshports_Start($Title,
+					$Title,
 					'FreeBSD, index, applications, ports');
 
 $Debug = 0;

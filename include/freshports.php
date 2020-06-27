@@ -757,8 +757,8 @@ GLOBAL $ShowAnnouncements;
 
 	freshports_body($ExtraScript);
 
-   echo freshports_Logo();
-   freshports_navigation_bar_top();
+	echo freshports_Logo();
+	freshports_navigation_bar_top();
 
 	if (IsSet($ShowAnnouncements)) {
 

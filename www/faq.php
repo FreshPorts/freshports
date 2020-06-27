@@ -12,8 +12,9 @@
 
 	freshports_ConditionalGet(freshports_LastModified());
 
-	freshports_Start('FAQ',
-					'freshports - new ports, applications',
+	$Title = 'Frequently Asked Questions';
+	freshports_Start('FAQ' . " ($Title)",
+					$Title,
 					'FreeBSD, index, applications, ports');
 
 	$ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['HTTP_HOST']);

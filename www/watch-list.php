@@ -64,8 +64,9 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/watch-lists.php');
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
 
-		freshports_Start('Watch list maintenance',
-						'freshports - new ports, applications',
+		$Title = 'Watch list maintenance';
+		freshports_Start($Title,
+						$TItle,
 						'FreeBSD, index, applications, ports');
 		?>
 

@@ -10,8 +10,9 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
-	freshports_Start('Statistics - everyone loves a graph',
-					'freshports - new ports, applications',
+	$Title = 'Statistics - everyone loves a graph';
+	freshports_Start($Title,
+					$Title,
 					'FreeBSD, index, applications, ports');
 ?>
 	<?php echo freshports_MainTable(); ?>

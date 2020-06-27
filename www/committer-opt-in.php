@@ -14,8 +14,9 @@
                 header('Location: /' . MAINTENANCE_PAGE, TRUE, 307);
 	}
 
-	freshports_Start('Committer opt-in',
-					'freshports - new ports, applications',
+	$Title = 'Committer opt-in';
+	freshports_Start($Title,
+					$Title,
 					'FreeBSD, index, applications, ports');
 
 	if (!preg_match("/.*@FreeBSD.org/i", $User->email)) {

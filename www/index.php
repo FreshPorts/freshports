@@ -71,9 +71,9 @@ function setfocus() { document.f.query.focus(); }
 </script>
 
 <?php
-
-	freshports_Start($FreshPortsSlogan,
-					$FreshPortsName . ' - new ports, applications',
+	$Title = 'Most recent commits';
+	freshports_Start($FreshPortsSlogan . " - $Title",
+					$Title,
 					'FreeBSD, index, applications, ports');
 if ($Debug) echo "\$User->id='$User->id'";
 

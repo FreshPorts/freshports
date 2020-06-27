@@ -14,7 +14,7 @@
 	$Title = 'Search by package';
 
 	freshports_Start("$Title",
-					"freshports - new ports, applications",
+					$Title,
 					"FreeBSD, index, applications, ports");
 
 	if (IsSet($_REQUEST['notfound'])) $notfound = 1;

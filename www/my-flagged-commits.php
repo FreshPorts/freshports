@@ -12,9 +12,9 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 	require_once('Pager/Pager.php');
 
-
-	freshports_Start($FreshPortsSlogan,
-					$FreshPortsName . ' - new ports, applications',
+	$Title = 'My flagged commits';
+	freshports_Start($FreshPortsSlogan . " - $Title",
+					$Title,
 					'FreeBSD, index, applications, ports');
 $Debug = 0;
 

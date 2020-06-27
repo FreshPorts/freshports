@@ -127,8 +127,9 @@ if (IsSet($submit)) {
 
 #	echo '<br>the page size is ' . $page_size . ' : ' . $email;
 
-	freshports_Start('Customize User Account',
-						'freshports - new ports, applications',
+	$Title = 'Customize User Account';
+	freshports_Start($Title,
+						$Title,
 						'FreeBSD, index, applications, ports');
 ?>
 

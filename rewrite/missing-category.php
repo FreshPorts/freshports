@@ -165,7 +165,7 @@ function freshports_CategoryDisplay($db, $category, $PageNumber = 1, $PageSize =
 			$WatchListCount = $WatchLists->IsOnWatchList($User->id, $category->element_id);
 		}
 
-		$title = $category->name;
+		$Title = $category->name;
 
 		# find out how many ports are in this category
 		$PortCount = $category->PortCount($category->name, $Branch);
@@ -267,8 +267,8 @@ $category->description . '
 	freshports_ConditionalGetUnix($Cache->LastModifiedGet());
 	header('HTTP/1.1 200 OK');
 
-	freshports_Start($title,
-					'freshports - new ports, applications',
+	freshports_Start($Title,
+					$category->description,
 					'FreeBSD, index, applications, ports');
 
 

@@ -727,8 +727,9 @@ class port_display {
 
 			$HTML .= '<dt class="pkg-plist"><b>Dependency lines</b>:</dt>';
 			$HTML .= '<dd class="pkg-plist">' . "\n" . '<ul class="pkg-plist"><li class="file">';
-			// if USES= contains pythong
-			if (in_array(USES_PYTHON, preg_split('/\s+/', $port->uses))) {
+			// if USES= contains python
+			// We split on both whitespace and : to cater for python:3.6+
+			if (in_array(USES_PYTHON, preg_split('/\s+|:/', $port->uses))) {
 				// split off the prefix, everthing before the first -, inclusive
 				$package_name_parts=explode('-', $port->package_name, 2);
 				$HTML .=  '${PYTHON_PKGNAMEPREFIX}' . $package_name_parts[1];

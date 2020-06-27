@@ -46,8 +46,23 @@
 		}
 	}
 
+	$num          = $MaxNumberOfPortsLong;
+	$days         = $NumberOfDays;
+	$dailysummary = 7;
+
+	if (IsSet($_REQUEST['num']))          $num          = pg_escape_string($_REQUEST["num"]);
+	if (IsSet($_REQUEST['dailysummary'])) $dailysummary = pg_escape_string($_REQUEST["dailysummary"]);
+	if (IsSet($_REQUEST['days']))         $days         = pg_escape_string($_REQUEST["days"]);
+
+	if (Is_Numeric($num)) {
+		$MaxNumberOfPortsLong = min($MaxNumberOfPortsLong, max(10, $num));
+	} else {
+		$num = MaxNumberOfPortsLong;
+	}
+
+	$Title = "$MaxNumberOfPortsLong most recent commits";
 	freshports_Start($FreshPortsSlogan,
-					$FreshPortsName . ' - new ports, applications',
+					$Title,
 					'FreeBSD, index, applications, ports');
 $Debug = 0;
 
@@ -77,19 +92,6 @@ function freshports_SummaryForDay($MinusN) {
 
 echo freshports_MainTable();
 
-$num          = $MaxNumberOfPortsLong;
-$days         = $NumberOfDays;
-$dailysummary = 7;
-
-if (IsSet($_REQUEST['num']))          $num          = pg_escape_string($_REQUEST["num"]);
-if (IsSet($_REQUEST['dailysummary'])) $dailysummary = pg_escape_string($_REQUEST["dailysummary"]);
-if (IsSet($_REQUEST['days']))         $days         = pg_escape_string($_REQUEST["days"]);
-
-if (Is_Numeric($num)) {
-	$MaxNumberOfPortsLong = min($MaxNumberOfPortsLong, max(10, $num));
-} else {
-	$num = MaxNumberOfPortsLong;
-}
 
 if (Is_Numeric($days)) {
 	$NumberOfDays = min($NumberOfDays, max(0, $days));
@@ -111,7 +113,7 @@ if ($db) {
 <?php echo freshports_MainContentTable(); ?>
 
 <TR>
-<? echo freshports_PageBannerText("$MaxNumberOfPortsLong most recent commits", 3); ?>
+<? echo freshports_PageBannerText($Title, 3); ?>
         <? //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPortsLong) ?>
 </TR>
 <TR><TD>

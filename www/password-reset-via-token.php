@@ -89,8 +89,9 @@ if (IsSet($submit)) {
 
 #	echo '<br>the page size is ' . $page_size . ' : ' . $email;
 
-	freshports_Start('Reset password via token',
-						'freshports - new ports, applications',
+        $Title = 'Reset password via token';
+	freshports_Start($Title,
+						$Title,
 						'FreeBSD, index, applications, ports');
 ?>
 
@@ -118,7 +119,7 @@ echo '<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="' . BACKGROUND_COLOUR . '" widt
 
 echo $errors;
 
-echo '<p>If you need help, please post a message on the forum. </p>
+echo '<p>If you need help, please email postmaster@. </p>
  </TD>
  </TR>
  </TABLE>

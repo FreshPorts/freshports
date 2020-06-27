@@ -12,8 +12,9 @@
 
 	freshports_ConditionalGet(freshports_LastModified());
 
-	freshports_Start('Contact',
-					'freshports - new ports, applications',
+	$Title = 'Contact';
+	freshports_Start($Title,
+					$Title,
 					'FreeBSD, index, applications, ports');
 
 ?>
@@ -31,6 +32,9 @@
 
 <P>
 This is a pretty big website.  Roughly 600,000 pages as of Oct 2007.
+And 1.8 million as of June 2020.
+
+<p>
 If you need help with a particular port, please go through the
 FreeBSD mailing lists.
 

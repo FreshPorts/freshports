@@ -126,8 +126,9 @@ if ($submit) {
 		}
    }
 
-   freshports_Start($category,
-               "freshports - new ports, applications",
+   $Title = 'Watch List ' . $category;
+   freshports_Start($Title,
+               $Title,
                "FreeBSD, index, applications, ports");
 }
 ?>
@@ -278,7 +279,7 @@ This page operates on a single watch list at a time.
 that are on your selected watch list.</LI>
 <LI>The entries with a tick beside them are your on the selected watch list.</LI>
 <LI>When one of the ports in your watch list changes, you will be notified by email if
-you have selected a notification frequency within your <a href="customize.php">personal preferences</a>.
+you have selected a notification frequency within your <a href="customize.php">account settings</a>.
 </LI>
 <LI>[D] indicates a port which has been removed from the tree.</LI>
 <LI><sup>*</sup> indicates a port which resides in another cateogory but lists this category as a secondary.</LI>

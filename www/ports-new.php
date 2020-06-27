@@ -63,7 +63,7 @@
 	$Title    = "New ports - " . $Interval;
 
 	freshports_Start($Title,
-					"freshports - new ports, applications",
+					$Title,
 					"FreeBSD, index, applications, ports");
 
 ?>

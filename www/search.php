@@ -272,8 +272,9 @@ if (!IsSet($_REQUEST['query'])) {
 }
 
 if ($output_format == OUTPUT_FORMAT_HTML) {
-	freshports_Start('Search',
-					'freshports - new ports, applications',
+	$Title = 'Search';
+	freshports_Start($Title,
+					$Title,
 					'FreeBSD, index, applications, ports');
 
 ?>

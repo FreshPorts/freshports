@@ -12,8 +12,9 @@
 
 	freshports_ConditionalGet(freshports_LastModified());
 
-	freshports_Start('How big is it?',
-					'freshports - new ports, applications',
+	$Title = 'How big is it?';
+	freshports_Start($Title,
+					$Title,
 					'FreeBSD, index, applications, ports');
 
 	$Total = 0;

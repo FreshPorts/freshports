@@ -86,7 +86,7 @@ class User {
 				freshports_CookieClear();
 				syslog(LOG_ERR, "Could not find user details for '$Cookie' from '" . 
 				        $_SERVER['REMOTE_ADDR'] . "' for '". $SERVER['REQUEST_URI'] . "'.");
-				die('Your user details were not found.  You have been logged out.  Please reload this page.');
+				die('Your user details were not found.  You have been logged out.  Please return to the <a href="/">home page</a>.');
 			}
 		} else {
 			$numrows = -1;
@@ -126,6 +126,7 @@ class User {
 		$this->set_focus_search         = $myrow['set_focus_search'] == 't' ? true : false;
 
 		$this->page_size                 = $myrow['page_size'];
+
 		if (!IsSet($this->page_size) || $this->page_size == '') {
 			GLOBAL $DefaultPageSize; # from configuration/freshports.conf.php
 			                         # and also set in include/getvalues.php
@@ -160,7 +161,8 @@ class User {
 		# we should have some checks here to verify that this WatchListID belongs to this user		
 		$sql = 'UPDATE users 
 		          set last_watch_list_chosen = \'' . pg_escape_string($WatchListID) . '\'
-		        WHERE id                     =   ' . $this->id;
+		        WHERE id                     =   ' . $this->id . '
+		          AND escape_string($WatchListID) IN (SELECT id FROM watch_list WHERE user_id = users.id)';
 		
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {

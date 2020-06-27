@@ -52,6 +52,7 @@
 
 	$Title = "Watch List";
 	if ($wlid != '') {
+		if ($Debug) echo "Fetching for \$wlid='$wlid'";
 		$WatchList = new WatchList($db);
 		$WatchList->Fetch($User->id, $wlid);
 
@@ -59,7 +60,7 @@
 	}
 
 	freshports_Start($Title,
-					'freshports - new ports, applications',
+					$Title,
 					'FreeBSD, index, applications, ports');
 
 	$PortsUpdating   = new PortsUpdating($db);

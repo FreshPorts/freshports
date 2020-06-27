@@ -134,3 +134,7 @@ const PACKAGE_SETS = array('latest', 'quarterly');
 
 # the default nubmer of commits to show
 define('DEFAULT_NUMBER_OF_COMMITS', 100);
+
+const USES_PYTHON = 'python';
+
+const PYTHON_PKGNAMEPREFIX = 'PYTHON_PKGNAMEPREFIX';

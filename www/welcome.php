@@ -10,8 +10,9 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
-	freshports_Start('New User',
-					'freshports - new ports, applications',
+	$Title = 'New User';
+	freshports_Start($Title,
+					$Title,
 					'FreeBSD, index, applications, ports');
 
 	$origin = $_GET["origin"];

@@ -175,8 +175,9 @@ if (IsSet($submit)) {
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 }
 
-   freshports_Start('New User',
-               'freshports - new ports, applications',
+	$Title = 'New User';
+	freshports_Start($Title,
+               $Title,
                'FreeBSD, index, applications, ports');
 ?>
 
@@ -211,7 +212,7 @@ echo '<TABLE CELLPADDING=1 CELLSPACING=0 BORDER=0 BGCOLOR="' . BACKGROUND_COLOUR
 */
 echo $errors;
 
-echo '<p>If you need help, please post a message on the forum. </p>
+echo '<p>If you need help, please email postmaster@. </p>
  </TD>
  </TR>
  </TABLE>

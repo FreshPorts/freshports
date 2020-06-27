@@ -46,8 +46,9 @@ if ($submit) {
       echo 'Something went terribly wrong there.<br>';
    }
 }
-   freshports_Start("your email is bouncing",
-               "freshports - new ports, applications",
+   $Title = 'your email is bouncing';
+   freshports_Start($Title,
+               $Title,
                "FreeBSD, index, applications, ports");
 
 ?>
@@ -82,7 +83,7 @@ messages, you should update your email address on the customization page.</p>
   <li>There was a problem with your email but it's been fixed.</li>
 </ol>
 
-<p>If your email address has changed, please update it on the <a href="customize.php">customize</a> page.</p>
+<p>If your email address has changed, please update it in your <a href="customize.php">account settings</a>.</p>
 
 <p>If there was a problem with your email, such as your server was down, you can 
 tell FreshPorts that you want it to start using your email address again by pressing 

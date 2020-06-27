@@ -15,7 +15,7 @@
 	$Title = "New Release - 29 April 2003";
 
 	freshports_Start($Title,
-					"freshports - new ports, applications",
+					$Title,
 					"FreeBSD, index, applications, ports");
 
 ?>
@@ -172,8 +172,8 @@ the page very slow, especially for those on dial up.  Therefore, we've introduce
 paging to the <a href="/categories.php">categories</a> page.
 
 <p>
-You can set the paging length via the 
-<a href="/customize.php">customization</> page.
+You can set the paging length via  
+<a href="/customize.php">your account</> settings.
 </P>
 </TD></TR>
 

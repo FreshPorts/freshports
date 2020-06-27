@@ -149,8 +149,9 @@ if (IsSet($_GET["resend"])) {
 
 <?php
 	$OnLoad = 'setfocus()';
-   freshports_Start('Login',
-               'freshports - new ports, applications',
+	$Title = 'Login';
+	freshports_Start($Title,
+               $Title,
                'FreeBSD, index, applications, ports');
 
 ?>
@@ -187,7 +188,7 @@ if ($LoginFailed) {
  <li>The password is incorrect
  <li>Both of the above
  </ul>
- <p>If you need help, please ask in the forum. </p>
+ <p>If you need help, please email postmaster@. </p>
  </TD>
  </TR>
  </TABLE>

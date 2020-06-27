@@ -36,7 +36,7 @@
 
 
 	freshports_Start($Title . ' - ' . $CategoryName,
-					'freshports - new ports, applications',
+					$Title,
 					'FreeBSD, index, applications, ports');
 
 ?>

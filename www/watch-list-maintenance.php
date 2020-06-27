@@ -33,8 +33,9 @@ if (!$visitor) {
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_lists.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user.php');
 
-	freshports_Start('Watch list maintenance',
-					'freshports - new ports, applications',
+	$Title = 'Watch list maintenance';
+	freshports_Start($Title,
+					$Title,
 					'FreeBSD, index, applications, ports');
 					
 #phpinfo();

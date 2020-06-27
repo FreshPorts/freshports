@@ -10,8 +10,9 @@
 
 	freshports_ConditionalGet(freshports_LastModified());
 
-	freshports_Start('pkg_info >> watch list',
-					'freshports - new ports, applications',
+	$Title = 'pkg_info >> watch list';
+	freshports_Start($Title,
+					$Title,
 					'FreeBSD, index, applications, ports');
 
 ?>

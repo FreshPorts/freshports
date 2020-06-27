@@ -76,8 +76,10 @@ if ($submit) {
   exit;  /* Make sure that code below does not get executed when we redirect. */
       
 }
-	freshports_Start('Watch categories',
-					'freshports - new ports, applications',
+
+	$Title = 'Watch categories';
+	freshports_Start($Title,
+					$Title,
 					'FreeBSD, index, applications, ports');
 
 $Debug = 0;
@@ -121,7 +123,7 @@ if ($_REQUEST['wlid']) {
 <tr><td>
 This screen contains a list of the port categories. A * indicates a category that contains ports which are
 on your watch list. When a port changes in one of your watch categories, you will be notified by email if you have selected a 
-notification frequency within your <a href="customize.php">personal preferences</a>.
+notification frequency within your <a href="customize.php">account settings</a>.
 
 <p>
 Virtual categories cannot be watched and their checkboxes will be disabled.

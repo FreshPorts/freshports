@@ -75,5 +75,11 @@ if ( $_SERVER['SCRIPT_NAME'] == '/new-user.php' )
     </TABLE>
 </FORM>
 
-<p>For your reporting needs, please visit <A HREF="/report-subscriptions.php">Report Subscriptions</A></p>.
-
+<?php
+if ( $_SERVER['SCRIPT_NAME'] != '/new-user.php' )
+{
+?>
+<p>For your reporting needs, please visit <A HREF="/report-subscriptions.php">Report Subscriptions</A>.</p>
+<h2><a href="/delete-account.php"><big>Delete my account</big></a></h2>
+<?php
+}

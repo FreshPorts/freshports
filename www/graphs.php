@@ -10,8 +10,9 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
-	freshports_Start('Statistics - everyone loves a graph',
-					'freshports - new ports, applications',
+	$Title = 'Statistics - everyone loves a graph';
+	freshports_Start($Title,
+					$Title,
 					'FreeBSD, index, applications, ports');
 ?>
 	<?php echo freshports_MainTable(); ?>
@@ -31,7 +32,7 @@ trained worms.  As such, they are liable to be filled with errors and riddled wi
 are advised not to make life decisions based on this information.
 </P>
 <P>
-If you have suggestions for graphs, please submit them via the forum.
+If you have suggestions for graphs, please raise an issue.
 </P>
 
 <h3>NOTE that many graphs are clickable and will take you to the category, port, etc.</h3>

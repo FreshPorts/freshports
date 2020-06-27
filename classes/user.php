@@ -34,6 +34,7 @@ class User {
 	var $last_watch_list_chosen;
 	var $page_size;
 	var $filter;
+	var $set_focus_search;
 
 	var $UserTasks;
 
@@ -104,26 +105,29 @@ class User {
 		# returned by Fetch.
 		#
 
-		$this->id						= $myrow['id'];
-		$this->name						= $myrow['name'];
-		$this->password					= isset($myrow['password']) ? $myrow['password'] : null;
-		$this->cookie					= $myrow['cookie'];
-		$this->firstlogin				= $myrow['firstlogin'];
-		$this->lastlogin				= $myrow['lastlogin'];
-		$this->email					= $myrow['email'];
-		$this->watch_notice_id			= $myrow['watch_notice_id'];
-		$this->emailsitenotices_yn		= $myrow['emailsitenotices_yn'];
-		$this->emailbouncecount			= $myrow['emailbouncecount'];
-		$this->type						= $myrow['type'];
-		$this->status					= $myrow['status'];
-		$this->ip_address				= $myrow['ip_address'];
-		$this->number_of_commits		= $myrow['number_of_commits'];
-		$this->number_of_days			= $myrow['number_of_days'];
+		$this->id			= $myrow['id'];
+		$this->name			= $myrow['name'];
+		$this->password			= isset($myrow['password']) ? $myrow['password'] : null;
+		$this->cookie			= $myrow['cookie'];
+		$this->firstlogin		= $myrow['firstlogin'];
+		$this->lastlogin		= $myrow['lastlogin'];
+		$this->email			= $myrow['email'];
+		$this->watch_notice_id		= $myrow['watch_notice_id'];
+		$this->emailsitenotices_yn	= $myrow['emailsitenotices_yn'];
+		$this->emailbouncecount		= $myrow['emailbouncecount'];
+		$this->type			= $myrow['type'];
+		$this->status			= $myrow['status'];
+		$this->ip_address		= $myrow['ip_address'];
+		$this->number_of_commits	= $myrow['number_of_commits'];
+		$this->number_of_days		= $myrow['number_of_days'];
 		$this->watch_list_add_remove	= $myrow['watch_list_add_remove'];
 		$this->last_watch_list_chosen	= $myrow['last_watch_list_chosen'];
-		$this->filter					= isset($myrow['filter']) ? $myrow['filter'] : null;
+		$this->filter			= isset($myrow['filter']) ? $myrow['filter'] : null;
+#		echo 'set_focus_search is ' . $myrow['set_focus_search'];
+		$this->set_focus_search		= $myrow['set_focus_search'] == 't' ? true : false;
+#		echo 'set_focus_search is ' . $this->set_focus_search;
 
-		$this->page_size				= $myrow['page_size'];
+		$this->page_size		= $myrow['page_size'];
 		if (!IsSet($this->page_size) || $this->page_size == '') {
 			GLOBAL $DefaultPageSize;	# from configuration/freshports.conf.php
 										# and also set in include/getvalues.php

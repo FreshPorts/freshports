@@ -50,7 +50,7 @@
 	define('OUTPUT_FORMAT_PLAIN_TEXT',  'plaintext');
 
 	$PageNumber = 1;
-	$PageSize   = 100;
+	$PageSize   = DEFAULT_NUMBER_OF_COMMITS;
 
 	if (IsSet($_REQUEST['page'])) {
 		$PageNumber = intval($_REQUEST['page']);

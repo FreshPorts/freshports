@@ -857,7 +857,7 @@ class port_display {
 		###############################################
 
 		if ($this->ShowEverything || $this->ShowPackages) {
-			$HTML .= '<dt><b>Packages:</b></dt>';
+			$HTML .= '<dt><b>Packages: </b>(move your mouse over the cells for more information)</dt>';
 
 			$packages = new Packages($this->db);
 			$numrows = $packages->Fetch($this->port->id);
@@ -889,10 +889,11 @@ class port_display {
 
 						# If showing a - for the version, center align it
 						$title = $this->packageToolTipText($package_line['last_checked_latest'], $package_line['repo_date_latest'], $package_line['processed_date_latest']);
-						$HTML .= '<td class="version" ' . ($package_version_latest    == '-' ? ' align ="center"' : '') . '><span title="' . $title . '">' . $package_version_latest    . '</span></td>';
+						$HTML .= '<td class="version" ' . ($package_version_latest    == '-' ? ' align ="center"' : '') . ' title="' . $title . '">' . $package_version_latest    . '</td>';
 
 						$title = $this->packageToolTipText($package_line['last_checked_quarterly'], $package_line['repo_date_quarterly'], $package_line['processed_date_quarterly']);
-						$HTML .= '<td class="version" ' . ($package_version_quarterly == '-' ? ' align ="center"' : '') . '><span title="' . $title . '">' . $package_version_quarterly . '</span></td></tr>';
+						$HTML .= '<td class="version" ' . ($package_version_quarterly == '-' ? ' align ="center"' : '') . ' title="' . $title . '">' . $package_version_quarterly . '</td>';
+						$HTML .= '</tr>';
 					}
 					$HTML .= '</table>&nbsp;';
 

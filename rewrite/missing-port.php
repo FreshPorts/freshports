@@ -290,6 +290,7 @@ function _freshports_PortDisplayHelper($db, $category, $port, $branch, $HasCommi
 		$HTMLPortPart2 = $Cache->CacheDataGet();
 	} else {
 		$HTMLPortPart2 = '';
+		# this comment may not be relevant here. It duplicates one above.
 		//
 		// sometimes they want to see a port on a branch, but there have been no commits against that port on that branch
 		// therefore, we display head. We display head because that's what will be on the branch by default, given no
@@ -368,6 +369,7 @@ function _freshports_PortDisplayHelper($db, $category, $port, $branch, $HasCommi
 		$HTMLPortPackages = $CachePackages->CacheDataGet();
 	} else {
 		$HTMLPortPackages = '';
+		# this comment may not be relevant here. It duplicates one above.
 		//
 		// sometimes they want to see a port on a branch, but there have been no commits against that port on that branch
 		// therefore, we display head. We display head because that's what will be on the branch by default, given no

@@ -21,7 +21,7 @@ DEFINE('NEXT_PAGE',		'Next');
 	$message_id = '';
 	$page       = '';
 	$page_size  = '';
-	
+
 	if (IsSet($_GET['message_id'])) $message_id = pg_escape_string($_GET['message_id']);
 	if (IsSet($_GET['revision']))   $revision   = pg_escape_string($_GET['revision']);
 
@@ -51,7 +51,7 @@ DEFINE('NEXT_PAGE',		'Next');
 		if ($Debug) echo 'oh... got something back there: <pre>'. print_r($message_id_array, true) . '</pre>';
           }
 	}
-	
+
 
 	if (IsSet($_REQUEST['page']))      $PageNo   = $_REQUEST['page'];
 	if (IsSet($_REQUEST['page_size'])) $PageSize = $_REQUEST['page_size'];
@@ -174,7 +174,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
             $Commit->FetchNth(0);
             $clean_revision = htmlentities($Commit->svn_revision);
             // e.g. http://svnweb.freebsd.org/base?view=revision&revision=177821
-            echo '<a href="http://' . htmlentities($Commit->svn_hostname) . htmlentities($Commit->path_to_repo) . '?view=revision&amp;revision=' . $clean_revision . 
+            echo '<a href="http://' . htmlentities($Commit->repo_hostname) . htmlentities($Commit->path_to_repo) . '?view=revision&amp;revision=' . $clean_revision . 
                  '">' . $clean_revision . '</a>';
 
             echo "<ol>\n";

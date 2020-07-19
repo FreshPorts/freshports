@@ -60,6 +60,12 @@ define('FRESHPORTS_FREEBSD_SVN_URL' , 'http://svnweb.FreeBSD.org');
 define('FREEBSD_REPO_SVN', 'svn');
 define('FREEBSD_REPO_CVS', 'cvs');
 
+// these constants came in with git
+// these values are from the repo.repository table
+
+define('FREEBSD_REPOSITORY_GIT',        'git');
+define('FREEBSD_REPOSITORY_SUBVERSION', 'subversion');
+
 // path to the ftp server
 define('FRESHPORTS_FREEBSD_FTP_URL', 'ftp://ftp.freebsd.org/pub/FreeBSD/ports/i386/packages/All/');
 
@@ -110,6 +116,7 @@ define('SPOOLING_DIRECTORY', CACHE_DIRECTORY . '/spooling');  # cache spooling
 define('DELETE_PACKAGE', 'delete-package');
 
 define('DEFAULT_SVN_REPO', 'svn.freebsd.org');
+define('DEFAULT_GIT_REPO', 'github.com');
 
 define('PORT_STATUS_ACTIVE',  'A');
 define('PORT_STATUS_DELETED', 'D');

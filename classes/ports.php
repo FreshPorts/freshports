@@ -101,7 +101,9 @@ class Port {
 
 	var $committer; 
 
-	var $svn_hostname;
+	var $repository;
+	var $repo_hostname;
+	var $git_hostname; # not yet populated
 	var $path_to_repo;
 	var $element_pathname;
 
@@ -193,7 +195,9 @@ class Port {
 		//
 		$this->category_looking_at= isset($myrow["category_looking_at"]) ? $myrow["category_looking_at"] : null;
 
-		$this->svn_hostname       = $myrow['svn_hostname'];
+		$this->repository         = $myrow['repository'];
+		$this->repo_hostname      = $myrow['repo_hostname'];
+#		$this->git_hostname       = '';
 		$this->path_to_repo       = $myrow['path_to_repo'];
 		$this->element_pathname   = $myrow['element_pathname'];
 		$this->quarterly_revision = $myrow['quarterly_revision'];
@@ -270,7 +274,8 @@ select ports.id,
        array_to_json(regexp_match(pkg_plist, 'lib/[[:alpha:]]*?\.so')) AS pkg_plist_library_matches,
        commit_log.commit_date - SystemTimeAdjust() AS last_commit_date,
        commit_log.svn_revision,
-       R.svn_hostname,
+       R.repository,
+       R.repo_hostname,
        R.path_to_repo,
        element_pathname(ports.element_id) as element_pathname,
        PortVersionOnQuarterlyBranch(ports.id, categories.name || '/' || element.name) AS quarterly_revision  ";
@@ -389,7 +394,8 @@ select ports.id,
                        array_to_json(regexp_match(pkg_plist, 'lib/[[:alpha:]]*?\.so')) AS pkg_plist_library_matches,
                        commit_log.commit_date - SystemTimeAdjust() AS last_commit_date,
                        commit_log.svn_revision,
-                       R.svn_hostname,
+                       R.repository,
+                       R.repo_hostname,
                        R.path_to_repo,
                        element_pathname(ports.element_id) as element_pathname,
                        PortVersionOnQuarterlyBranch(ports.id, categories.name || '/' || element.name) AS quarterly_revision ";
@@ -537,7 +543,8 @@ SELECT P.*, element.name    as port
         NULL AS encoding_losses,
         NULL AS committer,
         NULL AS path_to_repo,
-        NULL AS svn_hostname,
+        NULL AS repository
+        NULL AS repo_hostname,
         NULL AS onwatchlist,
         PortVersionOnQuarterlyBranch(ports.id, categories.name || '/' || element.name) AS quarterly_revision
 

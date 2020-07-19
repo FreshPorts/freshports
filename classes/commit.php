@@ -22,13 +22,19 @@ class Commit {
 	var $date_added;
 	var $stf_message;
 	var $svn_revision;
-	var $svn_hostname;
+	var $repository;
+	var $repo_hostname;
 	var $path_to_repo;
 	var $branch;
 
 	var $last_commit_date;
-	
+
 	var $LocalResult;
+
+	# the message_id for all the emails which originated from subversion contain freebsd.org
+	# For git commits, we put the full has into message_id . Commits from git do not contain that value.
+	# This is used to decide if commits are from svn or from git
+	const MESSAGE_ID_DOMAIN = 'freebsd.org';
 
 	function __construct($dbh) {
 		$this->dbh	= $dbh;
@@ -46,7 +52,8 @@ class Commit {
 		$this->date_added		= $myrow["date_added"];
 		$this->stf_message		= $myrow["stf_message"];
 		$this->svn_revision             = $myrow["svn_revision"];
-		$this->svn_hostname             = $myrow["svn_hostname"];
+		$this->repository               = $myrow["repository"];
+		$this->repo_hostname            = $myrow["repo_hostname"];
 		$this->path_to_repo             = $myrow["path_to_repo"];
 		$this->branch                   = $myrow["branch"];
 
@@ -150,7 +157,8 @@ SELECT CL.id as commit_log_id,
        CL.description AS commit_description,
        CL.system_id,
        svn_revision,
-       R.svn_hostname,
+       R.repository,
+       R.repo_hostname,
        R.path_to_repo,
        encoding_losses,
        GMT_Format(CL.commit_date) as last_commit_date,

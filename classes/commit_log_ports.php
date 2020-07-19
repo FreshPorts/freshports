@@ -23,7 +23,7 @@ class Commit_Log_Ports {
 	var $port_epoch;
 	var $needs_refresh;
 	var $stf_message;
-	var $svn_hostname;
+	var $repo_hostname;
 	var $path_to_repo;
 
 	var $result;
@@ -87,7 +87,7 @@ class Commit_Log_Ports {
 		$sql = "
    SELECT CL.id,
           CL.svn_revision,
-          R.svn_hostname,
+          R.repo_hostname,
           R.path_to_repo,
           port_id,
           message_id,
@@ -149,7 +149,7 @@ class Commit_Log_Ports {
 		$this->port_epoch		= $myrow["port_epoch"];
 		$this->needs_refresh		= $myrow["needs_refresh"];
 		$this->stf_message		= $myrow["stf_message"];
-		$this->svn_hostname             = $myrow["svn_hostname"];
+		$this->repo_hostname            = $myrow["repo_hostname"];
 		$this->path_to_repo             = $myrow["path_to_repo"];
 	}
 

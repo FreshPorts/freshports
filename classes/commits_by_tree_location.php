@@ -213,9 +213,10 @@ ORDER BY CL.commit_date DESC ";
 			NULL AS not_for_archs,
 			NULL AS stf_message,
 			commit_log_elements.revision_name as revision,
-			R.name         AS repo_name,
-			R.svn_hostname AS svn_hostname,
-			R.path_to_repo AS path_to_repo ";
+			R.name          AS repo_name,
+			R.repository    AS repository,
+			R.repo_hostname AS repo_hostname,
+			R.path_to_repo  AS path_to_repo ";
 		if ($this->UserID) {
 				$sql .= ",
 		        onwatchlist ";

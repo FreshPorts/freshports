@@ -183,18 +183,59 @@ class port_display {
 	  $this->port = $port;
 	}
 
-	function link_to_repo() {
+	function link_to_repo_svn() {
           # we want something like
           # http://svn.freebsd.org/ports/head/x11-wm/awesome/
           $link_title = 'SVNWeb';
           $link = 'https://';
-          if (!empty($this->port->svn_hostname)) {
-            $link .= $this->port->svn_hostname;
+          if (!empty($this->port->repo_hostname)) {
+            $link .= $this->port->repo_hostname;
           } else {
             $link .= DEFAULT_SVN_REPO;
           }
 
           $link .= $this->port->element_pathname . '/';
+          if ($this->port->IsDeleted()) {
+            #
+	    # If the port has been deleted, let's link to the last commit.
+	    # Deleted ports don't change much.  It's easier to do this here
+	    # than to do it for ALL ports.
+	    #
+            require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
+
+            $commit = new Commit($this->db);
+            $commit->FetchById($this->port->last_commit_id);
+
+            if (!empty($commit->svn_revision)) {
+              $link .= '?pathrev=' . ($commit->svn_revision - 1);
+            } else {
+              # if there is no last revision, we can't link to it.
+	      $link = null;
+            }
+          }
+
+          if (!empty($link)) {
+            $link = '<a href="' . $link . '">' . $link_title . '</a>';
+          } else {
+            $link = '<strike>SVNWeb</strike>';
+          }
+
+          return $link;
+	}
+
+	function link_to_repo_git() {
+          # we want something like
+          # https://github.com/freebsd/freebsd-ports/tree/master/x11-wm/awesome
+          $link_title = 'git';
+          $link = 'https://';
+          if (!empty($this->port->git_hostname)) {
+            $link .= $this->port->git_hostname;
+          } else {
+            $link .= DEFAULT_GIT_REPO;
+            $link .= '/freebsd/freebsd-ports/tree/master/';
+          }
+
+          $link .= $this->port->category . '/' . $this->port->port;
           if ($this->port->IsDeleted()) {
             #
 	    # If the port has been deleted, let's link to the last commit.
@@ -632,7 +673,7 @@ class port_display {
 			$HTML .= '</font></dt>' . "\n";
 			$HTML .= '<dt><b>SVN Revision:</b> <font size="-1">';
 			if ($port->svn_revision) {
-				$HTML .= freshports_svnweb_ChangeSet_Link_Text($port->svn_revision, $port->svn_hostname, $port->path_to_repo);
+				$HTML .= freshports_svnweb_ChangeSet_Link_Text($port->svn_revision, $port->repo_hostname, $port->path_to_repo);
 			} else {
 				$HTML .= "unknown";
 			}
@@ -701,7 +742,9 @@ class port_display {
 			$HTML .= '<dt>';
 
 			if ($this->ShowChangesLink || $this->ShowEverything) {
-				$HTML .= $this->link_to_repo();
+				$HTML .= $this->link_to_repo_svn();
+				$HTML .= ' : ';
+				$HTML .= $this->link_to_repo_git();
 			}
 
 			if ($port->PackageExists() && ($this->ShowPackageLink || $this->ShowEverything)) {

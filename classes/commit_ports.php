@@ -38,7 +38,8 @@ class Commit_Ports {
 	var $short_description;
 	var $onwatchlist;
 	var $stf_message;
-	var $svn_hostname;
+	var $repository;
+	var $repo_hostname;
 	var $path_to_repo;
 	var $repo_name;
 
@@ -81,7 +82,8 @@ class Commit_Ports {
 		$this->short_description	= $myrow["short_description"];
 		$this->onwatchlist		= $myrow["onwatchlist"];
 		$this->stf_message		= $myrow["stf_message"];
-		$this->svn_hostname             = $myrow["svn_hostname"];
+		$this->repository               = $myrow["repository"];
+		$this->repo_hostname            = $myrow["repo_hostname"];
 		$this->path_to_repo             = $myrow["path_to_repo"];
 		$this->repo_name                = $myrow["repo_name"];
 	}
@@ -184,7 +186,8 @@ SELECT CL.id as commit_log_id,
        CL.description AS commit_description,
        CL.system_id,
        svn_revision,
-       R.svn_hostname,
+       R.repository,
+       R.repo_hostname,
        R.path_to_repo,
        encoding_losses,
        GMT_Format(CL.commit_date) as last_commit_date,

@@ -47,7 +47,8 @@ class CommitRecord {
 	var $stf_message;
 	var $svn_revision;
 	var $repo_name;
-	var $svn_hostname;
+	var $repository;
+	var $repo_hostname;
 	var $path_to_repo;
 
 	var $watch;
@@ -94,7 +95,8 @@ class CommitRecord {
 		$this->stf_message		= $myrow['stf_message'];
 		$this->svn_revision             = $myrow['svn_revision'];
 		$this->repo_name                = $myrow['repo_name'];
-		$this->svn_hostname             = $myrow['svn_hostname'];
+		$this->repo_hostname            = $myrow['repo_hostname'];
+		$this->repository               = $myrow['repository'];
 		$this->path_to_repo             = $myrow['path_to_repo'];
 	}
 

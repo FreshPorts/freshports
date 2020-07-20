@@ -30,10 +30,12 @@ switch ($_GET['ds']) {
 		echo "[ ";
 		$i = 0;
 		while ($row = pg_fetch_row($result)) {
+			if ($i > 0)
+				echo ", ";
 			echo "{ ";
 			echo "\"label\": \"$row[0]\", ";
 			echo "\"data\": [[$i, $row[1]]] ";
-			echo "}, ";
+			echo "}";
 			$i++;
 		}
 		echo " ]";
@@ -49,10 +51,12 @@ ORDER BY count(*) DESC
 		echo "[ ";
 		$i = 0;
 		while ($row = pg_fetch_row($result)) {
+			if ($i > 0)
+				echo ", ";
 			echo "{ ";
 			echo "\"label\": \"$row[0]\", ";
 			echo "\"data\": [[$i, $row[1]]] ";
-			echo "}, ";
+			echo "}";
 			$i++;
 		}
 		echo " ]";
@@ -68,10 +72,12 @@ ORDER BY count(*) DESC
 		echo "[ ";
 		$i = 0;
 		while ($row = pg_fetch_row($result)) {
+			if ($i > 0)
+				echo ", ";
 			echo "{ ";
 			echo "\"label\": \"$row[0]\", ";
 			echo "\"data\": [[$i, $row[1]]] ";
-			echo "}, ";
+			echo "}";
 			$i++;
 		}
 		echo " ]";
@@ -87,10 +93,12 @@ ORDER BY count(*) DESC
 		echo "[ ";
 		$i = 0;
 		while ($row = pg_fetch_row($result)) {
+			if ($i > 0)
+				echo ", ";
 			echo "{ ";
 			echo "\"label\": \"$row[0]\", ";
 			echo "\"data\": [[$i, $row[1]]] ";
-			echo "}, ";
+			echo "}";
 			$i++;
 		}
 		echo " ]";
@@ -98,9 +106,13 @@ ORDER BY count(*) DESC
 	case ('commitsOverTime()'):
 		$result = pg_query("select date_trunc('day', commit_date) as date, count(commit_date) from commit_log group by date") or die("Query error. (2)");
 		echo "[ ";
+		$i = 0;
 		while ($row = pg_fetch_row($result)) {
+			if ($i > 0)
+				echo ", ";
 			$epoch = milliepoch($row[0]);
-			echo "[ $epoch, $row[1] ], ";
+			echo "[ $epoch, $row[1] ]";
+			$i++;
 		}
 		echo " ]";
 		break;
@@ -137,10 +149,12 @@ ORDER BY count(*) DESC
 		echo "[ ";
 		$i = 0;
 		while ($row = pg_fetch_row($result)) {
+			if ($i > 0)
+				echo ",";
 			echo "{ ";
 			echo "\"label\": \"$row[1]\", ";
 			echo "\"data\": [[$i, $row[0]]] ";
-			echo "}, ";
+			echo "} ";
 			$i++;
 		}
 		echo " ]";
@@ -148,33 +162,41 @@ ORDER BY count(*) DESC
 	case ('brokenPorts()'):
 		/* Seriously? */
 		$result = pg_query("select to_char(F.date, 'YYYY-MM-DD'), F.value as forbidden, B.value as broken, E.value as expired, N.value as new from daily_stats DSF, daily_stats DSB, daily_stats DSE, daily_stats DSN, daily_stats_data as F, daily_stats_data as B, daily_stats_data as E, daily_stats_data as N where (F.daily_stats_id = DSF.id and DSF.title = 'Forbidden ports') and (B.daily_stats_id = DSB.id and DSB.title = 'Broken ports') and (E.daily_stats_id = DSE.id and DSE.title = 'Expired Ports') and (N.daily_stats_id = DSN.id and DSN.title ='New ports') and F.date = B.date and B.date = E.date and E.date = N.date order by F.date desc limit 90") or die ("Query error. (5)");
-		echo "{\n";
-		$forbidden = "  \"forbidden\": {\n    \"label\": \"forbidden\",\n    \"data\": [";
-		$broken = "  \"broken\": {\n    \"label\": \"broken\",\n    \"data\": [";
-		$expired = "  \"expired\": {\n    \"label\": \"expired\",\n    \"data\": [";
-		$new = "  \"new\": {\n     \"label\": \"new\",\n    \"data\": [";
 		while ($row = pg_fetch_row($result)) {
 			$epoch = milliepoch($row[0]);
 			/* Not the cleanest - extra commas. :( */
-			$forbidden .= "[$epoch, $row[1]],";
-			$broken .= "[$epoch, $row[2]],";
-			$expired .= "[$epoch, $row[3]],";
-			$new .= "[$epoch, $row[4]],";
+			if ($forbidden)
+				$forbidden .= ", ";
+			$forbidden .= "[$epoch, $row[1]]";
+			if ($broken)
+				$broken .= ", ";
+			$broken .= "[$epoch, $row[2]]";
+			if ($expired)
+				$expired .= ", ";
+			$expired .= "[$epoch, $row[3]]";
+			if ($new)
+				$new .= ", ";
+			$new .= "[$epoch, $row[4]]";
 		}
-		echo "$forbidden]\n  },\n";
-		echo "$broken]\n  },\n";
-		echo "$expired]\n  },\n";
-		echo "$new]\n  }\n";
+		echo "{\n";
+		echo "  \"forbidden\": {\n    \"label\": \"forbidden\",\n	\"data\": [$forbidden]\n  },\n";
+		echo "  \"broken\": {\n    \"label\": \"broken\",\n    \"data\": [$broken]\n  },\n";
+		echo "  \"expired\": {\n    \"label\": \"expired\",\n    \"data\": [$expired]\n  },\n";
+		echo "  \"new\": {\n     \"label\": \"new\",\n    \"data\": [$new]\n  }\n";
 		echo "}";
 		break;
 	case ('portCount()'):
 		$result = pg_query("select date_trunc('day', date), value from daily_stats, daily_stats_data where daily_stats_data.daily_stats_id = daily_stats.id and title = 'Port count' order by daily_stats_data.date") or die ("Query error. (6)");
-		echo "[";
+		echo "[ ";
+		$i = 0;
 		while ($row = pg_fetch_row($result)) {
 			$epoch = milliepoch($row[0]);
-			echo "[$epoch, $row[1]],";
+			if ($i > 0)
+				echo ", ";
+			echo "[$epoch, $row[1]]";
+			$i++;
 		}
-		echo "]";
+		echo " ]";
 		break;
 	default:
 		echo "ERROR! BAD DS!";

@@ -162,6 +162,7 @@ ORDER BY count(*) DESC
 	case ('brokenPorts()'):
 		/* Seriously? */
 		$result = pg_query("select to_char(F.date, 'YYYY-MM-DD'), F.value as forbidden, B.value as broken, E.value as expired, N.value as new from daily_stats DSF, daily_stats DSB, daily_stats DSE, daily_stats DSN, daily_stats_data as F, daily_stats_data as B, daily_stats_data as E, daily_stats_data as N where (F.daily_stats_id = DSF.id and DSF.title = 'Forbidden ports') and (B.daily_stats_id = DSB.id and DSB.title = 'Broken ports') and (E.daily_stats_id = DSE.id and DSE.title = 'Expired Ports') and (N.daily_stats_id = DSN.id and DSN.title ='New ports') and F.date = B.date and B.date = E.date and E.date = N.date order by F.date desc limit 90") or die ("Query error. (5)");
+		$forbidden = $broken = $expired = $new = "";
 		while ($row = pg_fetch_row($result)) {
 			$epoch = milliepoch($row[0]);
 			/* Not the cleanest - extra commas. :( */

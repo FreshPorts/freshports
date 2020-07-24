@@ -2265,7 +2265,14 @@ function _forDisplay($string, $flags = NULL, $encoding = FRESHPORTS_ENCODING) {
   # does special magic for outputing stuff to a webpage.
   # e.g. htmlspecialchars($port->long_description, ENT_COMPAT | ENT_HTML401, 'ISO-8859-15')
 	    
-  return htmlspecialchars($string, $flags, $encoding);
+  $encoded =  htmlspecialchars($string, $flags, $encoding);
+  
+  if (empty($encoded)) {
+     syslog(LOG_ERR, "htmlspecialchars in _forDisplay() failed for '$string'");
+     $encoded = $string;
+  }
+
+  return $encoded;
 }
 
 define('EVERYTHING', 'FreshPorts has everything you want to know about <a href="http://www.freebsd.org/">FreeBSD</a> software, ports, packages,

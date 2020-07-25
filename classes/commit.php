@@ -15,6 +15,7 @@ class Commit {
 	var $commit_date_raw;
 	var $encoding_losses;
 	var $message_id;
+	var $commit_hash_short;
 	var $committer;
 	var $commit_description;
 	var $commit_date;
@@ -41,23 +42,24 @@ class Commit {
 	}
 
 	function PopulateValues($myrow) {
-		$this->commit_log_id		= $myrow["commit_log_id"];
-		$this->commit_date_raw		= $myrow["commit_date_raw"];
-		$this->encoding_losses		= $myrow["encoding_losses"];
-		$this->message_id		= $myrow["message_id"];
-		$this->committer		= $myrow["committer"];
-		$this->commit_description	= $myrow["commit_description"];
-		$this->commit_date		= $myrow["commit_date"];
-		$this->commit_time		= $myrow["commit_time"];
-		$this->date_added		= $myrow["date_added"];
-		$this->stf_message		= $myrow["stf_message"];
-		$this->svn_revision             = $myrow["svn_revision"];
-		$this->repository               = $myrow["repository"];
-		$this->repo_hostname            = $myrow["repo_hostname"];
-		$this->path_to_repo             = $myrow["path_to_repo"];
-		$this->branch                   = $myrow["branch"];
+		$this->commit_log_id      = $myrow["commit_log_id"];
+		$this->commit_date_raw    = $myrow["commit_date_raw"];
+		$this->encoding_losses    = $myrow["encoding_losses"];
+		$this->message_id         = $myrow["message_id"];
+		$this->commit_hash_short  = $myrow["commit_hash_short"];
+		$this->committer          = $myrow["committer"];
+		$this->commit_description = $myrow["commit_description"];
+		$this->commit_date        = $myrow["commit_date"];
+		$this->commit_time        = $myrow["commit_time"];
+		$this->date_added         = $myrow["date_added"];
+		$this->stf_message        = $myrow["stf_message"];
+		$this->svn_revision       = $myrow["svn_revision"];
+		$this->repository         = $myrow["repository"];
+		$this->repo_hostname      = $myrow["repo_hostname"];
+		$this->path_to_repo       = $myrow["path_to_repo"];
+		$this->branch             = $myrow["branch"];
 
-		$this->last_commit_date		= $myrow["last_commit_date"];
+		$this->last_commit_date   = $myrow["last_commit_date"];
 	}
 
 	function FetchNth($N) {
@@ -147,6 +149,7 @@ class Commit {
 		$sql = "
 SELECT CL.id as commit_log_id,
        message_id,
+       commit_hash_short,
        message_date,
        CL.commit_date - SystemTimeAdjust()               AS commit_date_raw,
        to_char(commit_date - SystemTimeAdjust(), 'DD Mon YYYY')  as commit_date,

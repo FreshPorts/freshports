@@ -87,6 +87,7 @@ class Port {
 
 	// so far used by ports-deleted.php and include/list-of-ports.php
 	var $message_id;
+	var $commit_hash_short;
 	var $encoding_losses;
 
 	// taken from commit_log based upon ports.last_commit_id
@@ -181,9 +182,10 @@ class Port {
 		$this->svn_revision       = isset($myrow["svn_revision"])  ? $myrow["svn_revision"]  : null;
 
 		$this->update_description = isset($myrow["update_description"]) ? $myrow["update_description"] : null;
-		$this->message_id         = isset($myrow["message_id"]) ? $myrow["message_id"] : null;
-		$this->encoding_losses    = isset($myrow["encoding_losses"]) ? $myrow["encoding_losses"] : null;
-		$this->committer          = isset($myrow["committer"]) ? $myrow["committer"] : null;
+		$this->message_id         = isset($myrow["message_id"])         ? $myrow["message_id"]         : null;
+		$this->commit_hash_short  = isset($myrow["commit_hash_short"])  ? $myrow["commit_hash_short"]  : null;
+		$this->encoding_losses    = isset($myrow["encoding_losses"])    ? $myrow["encoding_losses"]    : null;
+		$this->committer          = isset($myrow["committer"])          ? $myrow["committer"]          : null;
 
 		$this->vulnerable_current = $myrow["vulnerable_current"];
 		$this->vulnerable_past    = $myrow["vulnerable_past"];
@@ -365,15 +367,15 @@ select ports.id,
 		               ports.no_latest_link,
 		               ports.no_package,
 		               ports.package_name,
-	                   ports.restricted,
-	                   ports.no_cdrom,
-	                   ports.expiration_date,
-	                   ports.is_interactive,
-	                   ports.only_for_archs,
-	                   ports.not_for_archs,
-			           ports.status,
-			           ports.showconfig,
-			           ports.license,
+	                       ports.restricted,
+    	                       ports.no_cdrom,
+	                       ports.expiration_date,
+	                       ports.is_interactive,
+	                       ports.only_for_archs,
+	                       ports.not_for_archs,
+			       ports.status,
+			       ports.showconfig,
+			       ports.license,
 			       ports.fetch_depends,
 			       ports.extract_depends,
 			       ports.patch_depends,
@@ -540,6 +542,7 @@ SELECT P.*, element.name    as port
         NULL AS svn_revision,
         NULL AS update_description,
         NULL AS message_id,
+        NULL AS commit_hash_short,
         NULL AS encoding_losses,
         NULL AS committer,
         NULL AS path_to_repo,

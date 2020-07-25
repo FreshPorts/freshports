@@ -105,8 +105,11 @@ function freshports_cvsweb_Revision_Link($pathname, $revision_name)
 }
 
 function freshports_git_commit_Link($revision, $hostname, $path) {
-  # I see $path is not used by this function... I wonder why? -- dvl 2018.10.07
   return '<a href="http://' . htmlentities($hostname) . $path . '/commit/' . htmlentities($revision) .  '">' . freshports_Git_Icon('commit hash:' . $revision) . '</a>';
+}
+
+function freshports_git_commit_Link_Hash($revision, $hostname, $path) {
+  return '<a href="http://' . htmlentities($hostname) . $path . '/commit/' . htmlentities($revision) .  '" class="hash">' . $revision . '</a>';
 }
 
 function freshports_svnweb_ChangeSet_Link($revision, $hostname, $path) {
@@ -329,7 +332,7 @@ function freshports_Subversion_Icon($Title = 'Subversion') {
 	return '<img src="/images/subversion.jpg" alt="' . $Title . '" title="' . $Title . '" border="0" width="16" height="16" vspace="1">';
 }
 
-function freshports_Git_Icon($Title = 'Subversion') {
+function freshports_Git_Icon($Title = 'git') {
 	return '<img src="/images/git.png" alt="' . $Title . '" title="' . $Title . '" border="0" width="22" height="22" vspace="1">';
 }
 
@@ -1461,7 +1464,7 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	$HTML .= '<br>';
 
 	if ($GitCommit) {
-			$HTML .= freshports_git_commit_Link($commit->svn_revision, $commit->repo_hostname, $commit->path_to_repo);
+			$HTML .= freshports_git_commit_Link_Hash($commit->commit_hash_short, $commit->repo_hostname, $commit->path_to_repo);
 	} else {
 		if (isset($commit->svn_revision)) {
 			$HTML .= freshports_svnweb_ChangeSet_Link($commit->svn_revision, $commit->repo_hostname, $commit->path_to_repo);

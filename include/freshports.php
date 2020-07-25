@@ -2266,8 +2266,10 @@ function _forDisplay($string, $flags = NULL, $encoding = FRESHPORTS_ENCODING) {
   # e.g. htmlspecialchars($port->long_description, ENT_COMPAT | ENT_HTML401, 'ISO-8859-15')
 	    
   $encoded =  htmlspecialchars($string, $flags, $encoding);
-  
-  if (empty($encoded)) {
+
+  # if htmlspecialchars() fails, you get an empty string.
+  # Report that, but only if the original was not emptry.
+  if (empty($encoded) && !empty($string)) {
      syslog(LOG_ERR, "htmlspecialchars in _forDisplay() failed for '$string'");
      $encoded = $string;
   }

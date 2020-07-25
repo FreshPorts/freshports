@@ -186,7 +186,7 @@ class FilesDisplay {
                     # https://github.com/freebsd/freebsd-ports/commits/0957c7db9bf1fc4313cdefdcdc2608a0c965dda7sysutils/goaccess/Makefile
                     $url_text = freshports_Convert_Subversion_Path_To_Git($myrow["pathname"]);
                     $this->HTML .= ' <a href="http://' . $myrow['repo_hostname'] . $myrow["path_to_repo"] . '/commits/' . $myrow["revision_name"] . '/'. $url_text . '" title="Commit history">';
-#                   $this->HTML .= ' ' . freshports_git_commit_Link($myrow["revision_name"], $myrow['repo_hostname'], myrow["pathname"]);
+#                   $this->HTML .= freshports_git_commit_Link($myrow["revision_name"], $myrow['repo_hostname'], myrow["pathname"]);
                     break;
             }
 

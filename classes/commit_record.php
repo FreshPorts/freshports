@@ -13,6 +13,7 @@ class CommitRecord {
 	var $commit_date_raw;
 	var $message_subject;
 	var $message_id;
+	var $commit_hash_short;
 	var $committer;
 	var $commit_description;
 	var $commit_date;
@@ -61,6 +62,7 @@ class CommitRecord {
 		$this->commit_date_raw		= $myrow['commit_date_raw'];
 		$this->message_subject		= $myrow['message_subject'];
 		$this->message_id		= $myrow['message_id'];
+		$this->commit_hash_short	= $myrow['commit_hash_short'];
 		$this->committer		= $myrow['committer'];
 		$this->commit_description	= $myrow['commit_description'];
 		$this->commit_date		= $myrow['commit_date'];

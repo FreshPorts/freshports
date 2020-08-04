@@ -2287,10 +2287,15 @@ function NormalizeBranch($Branch = BRANCH_HEAD) {
   # this function converts 'quarterly' to something like 2019Q2
   # from https://secure.php.net/manual/en/function.date.php
   # n Numeric representation of a month, without leading zeros 1 through 12
+  
   if ($Branch == BRANCH_QUARTERLY) {
     $Branch = date('Y') . 'Q' . (floor((date('n') - 1) / 3) + 1);
   }
 
+  if ($Branch != BRANCH_HEAD && !preg_match("/^\d{4}Q[1-4]$/", $Branch)) {
+     # if not head or YYYYQN, then default to branch
+     $Branch = BRANCH_HEAD;
+  }
   return $Branch;
 }
 

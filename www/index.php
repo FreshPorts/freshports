@@ -20,6 +20,9 @@
 	} else {
 		$Branch = BRANCH_HEAD;
 	}
+	#
+	# at this point, we know Branch has been sanitized.  See NormalizeBranch()
+	#
 
 	if ($Debug) echo 'Branch is ' . $Branch . '<br>';
 
@@ -160,7 +163,7 @@ if ($db) {
 </TD></TR>
 <?php
 	$UseCache = FALSE;
-	$FileName = 'index.html';
+	$FileName = "index.html.$Branch";
 	if ($User->id != '') {
 	  echo 'we should look for the user index page';
 	  # if the user is logged in, cache their stuff.

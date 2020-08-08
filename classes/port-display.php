@@ -70,6 +70,10 @@ class port_display {
 		return substr($text, 0, 1) == '[';
 	}
 
+	function _isGitCommit($revision) {
+		return strlen($revision) >= MIN_GIT_HASH_LENGTH;
+	}
+
 	function _pkgmessage_UCL($pkgmessage) {
 		$HTML = '<dt><b>pkg-message:</b></dt><dd><dl>';
 		# save the pkgmessage to a temp file
@@ -187,12 +191,7 @@ class port_display {
           # we want something like
           # http://svn.freebsd.org/ports/head/x11-wm/awesome/
           $link_title = 'SVNWeb';
-          $link = 'https://';
-          if (!empty($this->port->repo_hostname)) {
-            $link .= $this->port->repo_hostname;
-          } else {
-            $link .= DEFAULT_SVN_REPO;
-          }
+          $link = 'https://' . DEFAULT_SVN_REPO;
 
           $link .= $this->port->element_pathname . '/';
           if ($this->port->IsDeleted()) {
@@ -207,7 +206,18 @@ class port_display {
             $commit->FetchById($this->port->last_commit_id);
 
             if (!empty($commit->svn_revision)) {
-              $link .= '?pathrev=' . ($commit->svn_revision - 1);
+              if ($this->_isGitCommit($commit->svn_revision)) {
+                # no modification to the link, because we cannot use this commit
+                # the user will get Unknown location: /head/devel/py-Pint
+                # We could search for the last known subversion commit
+                # but we aren't. Yet.
+                # Instead, we show them a strikethrough.
+		$link = null;
+               } else {
+                # For subversion, we link to the revision one less
+                # so that the user has something to see
+	        $link .= '?pathrev=' . ($commit->svn_revision - 1);
+	      }
             } else {
               # if there is no last revision, we can't link to it.
 	      $link = null;
@@ -232,10 +242,10 @@ class port_display {
             $link .= $this->port->git_hostname;
           } else {
             $link .= DEFAULT_GIT_REPO;
-            $link .= '/freebsd/freebsd-ports/tree/master/';
+            # Yeah, this won't show the expected results if we're viewing ?branch=2020Q3, but close enough.
+            $link .= '/freebsd/freebsd-ports';
           }
 
-          $link .= $this->port->category . '/' . $this->port->port;
           if ($this->port->IsDeleted()) {
             #
 	    # If the port has been deleted, let's link to the last commit.
@@ -248,17 +258,35 @@ class port_display {
             $commit->FetchById($this->port->last_commit_id);
 
             if (!empty($commit->svn_revision)) {
-              $link .= '?pathrev=' . ($commit->svn_revision - 1);
+              if ($this->_isGitCommit($commit->svn_revision)) {
+                # no modification to the link, because we cannot use this commit
+                # the user will get Unknown location: /head/devel/py-Pint
+                # We could search for the last known subversion commit
+                # but we aren't. Yet.
+                # Instead, we show them a strikethrough.
+		$link .= '/commit/' . htmlentities($commit->commit_hash_short);
+
+               } else {
+                # For subversion, we link to the revision one less
+                # so that the user has something to see.
+                # But this is a git commit, so we can't do that.
+                # We show them a striketrough instead.
+	        $link = null;
+	      }
             } else {
               # if there is no last revision, we can't link to it.
 	      $link = null;
             }
+          } else {
+            # this is a usual link
+            $link .= '/tree/master/' . $this->port->category . '/' .  $this->port->port;
           }
+
 
           if (!empty($link)) {
             $link = '<a href="' . $link . '">' . $link_title . '</a>';
           } else {
-            $link = '<strike>SVNWeb</strike>';
+            $link = '<strike>git</strike>';
           }
 
           return $link;
@@ -673,7 +701,7 @@ class port_display {
 			$HTML .= '</font></dt>' . "\n";
 			$HTML .= '<dt><b>Commit Hash:</b> <font size="-1">';
 			if ($port->svn_revision) {
-				$HTML .= freshports_svnweb_ChangeSet_Link_Text($port->svn_revision, $port->repo_hostname, $port->path_to_repo);
+				$HTML .= freshports_git_commit_Link_Hash($port->svn_revision, $port->repo_hostname, $port->path_to_repo);
 			} else {
 				$HTML .= "unknown";
 			}
@@ -742,6 +770,8 @@ class port_display {
 			$HTML .= '<dt>';
 
 			if ($this->ShowChangesLink || $this->ShowEverything) {
+				# we link to both svn and git because we can
+				# we could reduce this to just one link at some time in the future.
 				$HTML .= $this->link_to_repo_svn();
 				$HTML .= ' : ';
 				$HTML .= $this->link_to_repo_git();

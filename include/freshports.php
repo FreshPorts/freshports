@@ -1399,18 +1399,21 @@ function freshports_PortCommits($port, $PageNumber = 1, $NumCommitsPerPage = 100
 	$Commits->LimitSet($NumCommitsPerPage);
 	$Commits->OffsetSet($Offset);
 	$NumRows = $Commits->FetchInitialise($port->id);
-	$port->LoadVulnerabilities();
+	# if no commits on this branch, don't fet 
+	if ($NumRows > 0) {
+		$port->LoadVulnerabilities();
 
-	$Commits->FetchNthCommit(0);
+		$Commits->FetchNthCommit(0);
 
-	$HTML .= freshports_CheckForOutdatedVulnClaim($Commits, $port, $port->VuXML_List);
+		$HTML .= freshports_CheckForOutdatedVulnClaim($Commits, $port, $port->VuXML_List);
 
-	$HTML .= freshports_PortCommitsHeader($port);
+		$HTML .= freshports_PortCommitsHeader($port);
 
-	$LastVersion = '';
-	for ($i = 0; $i < $NumRows; $i++) {
-		$Commits->FetchNthCommit($i);
-		$HTML .= freshports_PortCommitPrint($Commits, $port->category, $port->port, $port->VuXML_List);
+		$LastVersion = '';
+		for ($i = 0; $i < $NumRows; $i++) {
+			$Commits->FetchNthCommit($i);
+			$HTML .= freshports_PortCommitPrint($Commits, $port->category, $port->port, $port->VuXML_List);
+		}
 	}
 
 	$HTML .= freshports_PortCommitsFooter($port);
@@ -1464,7 +1467,7 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	$HTML .= '<br>';
 
 	if ($GitCommit) {
-			$HTML .= freshports_git_commit_Link_Hash($commit->commit_hash_short, $commit->repo_hostname, $commit->path_to_repo);
+		$HTML .= freshports_git_commit_Link_Hash($commit->commit_hash_short, $commit->repo_hostname, $commit->path_to_repo);
 	} else {
 		if (isset($commit->svn_revision)) {
 			$HTML .= freshports_svnweb_ChangeSet_Link($commit->svn_revision, $commit->repo_hostname, $commit->path_to_repo);
@@ -2320,10 +2323,15 @@ function NormalizeBranch($Branch = BRANCH_HEAD) {
   # this function converts 'quarterly' to something like 2019Q2
   # from https://secure.php.net/manual/en/function.date.php
   # n Numeric representation of a month, without leading zeros 1 through 12
+
   if ($Branch == BRANCH_QUARTERLY) {
     $Branch = date('Y') . 'Q' . (floor((date('n') - 1) / 3) + 1);
   }
 
+  if ($Branch != BRANCH_HEAD && !preg_match("/^\d{4}Q[1-4]$/", $Branch)) {
+     # if not head or YYYYQN, then default to branch
+     $Branch = BRANCH_HEAD;
+  }
   return $Branch;
 }
 

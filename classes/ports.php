@@ -546,7 +546,7 @@ SELECT P.*, element.name    as port
         NULL AS encoding_losses,
         NULL AS committer,
         NULL AS path_to_repo,
-        NULL AS repository
+        NULL AS repository,
         NULL AS repo_hostname,
         NULL AS onwatchlist,
         PortVersionOnQuarterlyBranch(ports.id, categories.name || '/' || element.name) AS quarterly_revision

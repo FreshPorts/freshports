@@ -692,7 +692,7 @@ class port_display {
 
 		# sometimes the description can get very wide. This causes problems on mobile.
 		if ($this->ShowDescriptionLong || $this->ShowEverything) {
-			$HTML .= '<dt class="description">Description:</dt><dd class="like-pre">' . htmlify(_forDisplay($port->long_description)) . '</dd>';
+			$HTML .= '<dt class="description" id="description">Description:</dt><dd class="like-pre">' . htmlify(_forDisplay($port->long_description)) . '</dd>';
 		}
 
 		# this if covers several items, and wraps them in dt tags
@@ -725,7 +725,7 @@ class port_display {
 
 		if ($this->ShowEverything || $this->ShowBasicInfo) {
 
-			$HTML .= '<dt class="pkg-plist"><b>Dependency lines</b>:</dt>';
+			$HTML .= '<dt class="pkg-plist" id="dependency"><b>Dependency lines</b>:</dt>';
 			$HTML .= '<dd class="pkg-plist">' . "\n" . '<ul class="pkg-plist"><li class="file">';
 			// if USES= contains python
 			// We split on both whitespace and : to cater for python:3.6+
@@ -834,7 +834,7 @@ class port_display {
 			}
 
 			if ($this->ShowEverything || $this->ShowDistInfo) {
-				$HTML .= '<dt><b>distinfo:</b></dt>';
+				$HTML .= '<dt id="distinfo"><b>distinfo:</b></dt>';
 
 				if ($port->distinfo) {
 					$HTML .= '<dd class="like-pre">' . $port->distinfo . '</dd>';
@@ -857,7 +857,7 @@ class port_display {
 		###############################################
 
 		if ($this->ShowEverything || $this->ShowPackages) {
-			$HTML .= '<dt><b>Packages: </b>(move your mouse over the cells for more information)</dt>';
+			$HTML .= '<dt id="packages"><b>Packages: </b>(move your mouse over the cells for more information)</dt>';
 
 			$packages = new Packages($this->db);
 			$numrows = $packages->Fetch($this->port->id);
@@ -943,7 +943,7 @@ class port_display {
 		if ($this->ShowDepends || $this->ShowEverything) {
 			$HTML .= "</dl>\n<hr><dl>\n";
 			if ($port->depends_build || $port->depends_run || $port->depends_lib) {
-				$HTML .= '<dt class="h2">Dependencies</dt>';
+				$HTML .= '<dt class="h2" id="dependencies">Dependencies</dt>';
 				$HTML .= '<dt class="notice">NOTE: FreshPorts displays only information on required and default dependencies.  Optional dependencies are not covered.</dt>';
 			}
 
@@ -990,7 +990,7 @@ class port_display {
 
 		if ($this->ShowEverything || $this->ShowConfig) {
 			$HTML .= "</dl>\n<hr>\n<dl>";
-			$HTML .= "<dt><b>Configuration Options</b></dt>\n" . '<dd class="like-pre">';
+			$HTML .= '<dt id="config"><b>Configuration Options</b></dt>' . "\n" . '<dd class="like-pre">';
 			if ($port->showconfig) {
 				$HTML .= $port->showconfig;
 			} else {
@@ -1000,7 +1000,7 @@ class port_display {
 		}
 
 		if (($this->ShowEverything || $this->ShowUses) && $port->uses) {
-			$HTML .= "</dl><hr><dl><dt><b>USES:</b></dt>\n" . '<dd class="like-pre">';
+			$HTML .= '</dl><hr><dl><dt id="uses"><b>USES:</b></dt>' . "\n" . '<dd class="like-pre">';
 			$HTML .= $port->uses;
 			$HTML .= "</dd>\n</dl>\n<hr>\n<dl>";
 		}
@@ -1010,7 +1010,7 @@ class port_display {
 		}
 
 		if ($this->ShowEverything || $this->ShowMasterSites) {
-			$HTML .= '<dt><b>Master Sites:</b></dt>' . "\n" . '<dd>';
+			$HTML .= '<dt id="sites"><b>Master Sites:</b></dt>' . "\n" . '<dd>';
 
 			if (!empty($port->master_sites)) {
 
@@ -1232,7 +1232,7 @@ class port_display {
 		$PackageFlavors = new PackageFlavors( $this->db );
 		$NumRows = $PackageFlavors->FetchInitialise( $this->port->id );
 		if ( $NumRows > 0 ) {
-			$HTML = '<dt class="flavors"><b>Package flavors</b> (<span class="file">&lt;flavor&gt;: &lt;package&gt;</span>)</dt>';
+			$HTML = '<dt class="flavors" id="flavors"><b>Package flavors</b> (<span class="file">&lt;flavor&gt;: &lt;package&gt;</span>)</dt>';
 			// if this is our first output, put up our standard header
 			$HTML .= '<dd><ul>';
 			for ( $i = 0; $i < $NumRows; $i++ ) {
@@ -1244,7 +1244,7 @@ class port_display {
 		}
 
 		if ( $NumRows == 0 ) {
-			$HTML .= '<dt class="flavors"><b>Flavors:</b> there is no flavor information for this port.</dt>';
+			$HTML .= '<dt class="flavors" id="flavors"><b>Flavors:</b> there is no flavor information for this port.</dt>';
 		}
 
 		return $HTML;

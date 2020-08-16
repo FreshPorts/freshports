@@ -18,33 +18,45 @@ class ElementRecord {
 	var $iscategory;
 	var $isport;
 
-	var	$element_pathname;
+	var $element_pathname;
 
 	function __construct($dbh) {
 		$this->dbh = $dbh;
 	}
 
 	function PopulateValues($myrow) {
-		$this->id				= $myrow['id'];
-		$this->name				= $myrow['name'];
-		$this->type				= $myrow['type'];
-		$this->status			= $myrow['status'];
-		$this->iscategory		= $myrow['iscategory'];
-		$this->isport			= $myrow['isport'];
+		$this->id         = $myrow['id'];
+		$this->name       = $myrow['name'];
+		$this->type       = $myrow['type'];
+		$this->status     = $myrow['status'];
+		$this->iscategory = $myrow['iscategory'];
+		$this->isport     = $myrow['isport'];
 
 		$this->element_pathname	= $myrow['element_pathname'];
 	}
 
-	function FetchByName($Name) {
+	function FetchByName($Name, $caseSensitive = true) {
+		$Debug = 0;
+
+		if ($Debug) echo "looking for '$Name' and caseSensitive is '$caseSensitive'<br>";
 		if (IsSet($Name)) {
 			$this->element_pathname = $Name;
 			$this->id = '';
 		}
-		$sql = "select * from elementGet('" . pg_escape_string($Name) . "')";
 
-		$result = pg_exec($this->dbh, $sql);
+		if ($caseSensitive) {
+			$sql = "select * from elementGet('" . pg_escape_string($Name) . "')";
+			if ($Debug) echo "invoking $sql<br>";
+			$result = pg_exec($this->dbh, $sql);
+		} else {
+			$result = pg_query_params($this->dbh, 'select * from elementGetCaseInsensitive($1)', array($Name));
+		}
+
 		if ($result) {
+			if ($Debug) echo "we got a result<br>";
+
 			$numrows = pg_numrows($result);
+			if ($Debug) echo "we have '$numrows' rows<br>";
 			if ($numrows == 1) {
 				$myrow = pg_fetch_array ($result, 0);
 				$this->PopulateValues($myrow);

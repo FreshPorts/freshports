@@ -1010,15 +1010,22 @@ class port_display {
 		}
 
 		if ($this->ShowEverything || $this->ShowMasterSites) {
-			$HTML .= '<dt><b>Master Sites:</b></dt>' . "\n" . '<dd><ol class="mastersites" id="mastersites">' . "\n";
+			$HTML .= '<dt><b>Master Sites:</b></dt>' . "\n" . '<dd>';
+
 			if (!empty($port->master_sites)) {
 
-			  $MasterSites = explode(' ', $port->master_sites);
-			  asort($MasterSites);
-			  foreach ($MasterSites as $Site) {
-				$HTML .= '<li>' . htmlify(_forDisplay($Site)) . "</li>\n";
-			  }
+				$MasterSites = explode(' ', $port->master_sites);
+				asort($MasterSites);
+				$HTML .= '<a href="#" id="mastersites-Extra-show" class="showLink" onclick="showHide(\'mastersites-Extra\');return false;">Expand this list (' . count($MasterSites) . ' items)</a>';
+				$HTML .= '<dd id="mastersites-Extra" class="more mastersites">';
+				$HTML .= '<ol class="mastersites" id="mastersites">' . "\n";
+				$HTML .= '<a href="#" id="mastersites-Extra-hide" class="hideLink" onclick="showHide(\'mastersites-Extra\');return false;">Collapse this list.</a>';
+				foreach ($MasterSites as $Site) {
+					$HTML .= '<li>' . htmlify(_forDisplay($Site)) . "</li>\n";
+			  	}
 
+				$HTML .= '<a href="#" id="mastersites-Extra-hide" class="hideLink" onclick="showHide(\'mastersites-Extra\');return false;">Collapse this list.</a>';
+				$HTML .= '</dd>';
 			} else {
 			  $HTML .= '<li>There is no master site for this port.</li>';
 			}
@@ -1117,6 +1124,7 @@ class port_display {
 							$div .= '<a href="#" id="RequiredBy' . $title . 'Extra-show" class="showLink" onclick="showHide(\'RequiredBy' .
 							        $title . 'Extra\');return false;">Expand this list (' . $NumRows . ' items / ' . ($NumRows - DEPENDS_SUMMARY) . ' hidden)</a>';
 							$div .= '<ol id="RequiredBy' . $title . 'Extra" class="depends more" start="' . ($i + 1) . '" style="margin-top: 0px">';
+							$div .= '<li class="nostyle"><a href="#" id="RequiredBy' . $title . 'Extra-hide" class="hideLink" onclick="showHide(\'RequiredBy' . $title . 'Extra\');return false;" >Collapse this list.</a></li>';
 							# yes, we have started hiding things.
 							$hidingStarted = true;
 						}
@@ -1194,6 +1202,7 @@ class port_display {
 				$div .= '<a href="#" id="configureplist-Extra-show" class="showLink" onclick="showHide(\'configureplist-Extra\');return false;">Expand this list (' . $NumRows . ' items)</a>';
 				$div .= '</dd>';
 				$div .= '<dd id="configureplist-Extra" class="more pkg-plist">';
+				$div .= '<a href="#" id="configureplist-Extra-hide" class="hideLink" onclick="showHide(\'configureplist-Extra\');return false;">Collapse this list.</a>';
 				$div .= "\n" . '<ol class="configure" id="configureplist">' . "\n";
 
 				for ( $i = 0; $i < $NumRows; $i++ ) {

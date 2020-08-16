@@ -115,6 +115,7 @@ function freshports_WatchListCountDefault($db, $UserID) {
 	return $myrow["count"];
 }
 
+# XXX I have no idea why UPDATING is in watch-lists.php
 function freshports_UpdatingOutput($NumRowsUpdating, $PortsUpdating, $port) {
 	$HTML = '';
 	
@@ -126,9 +127,23 @@ function freshports_UpdatingOutput($NumRowsUpdating, $PortsUpdating, $port) {
 		$HTML .= "These upgrade notes are taken from <a href=\"/UPDATING\">/usr/ports/UPDATING</a>";
 		$HTML .= "<ul>\n";
 
+
+		$Hiding = false;
 		for ($i = 0; $i < $NumRowsUpdating; $i++) {
 			$PortsUpdating->FetchNth($i);
+			if ($i == 1) {
+				$Hiding = true;
+				$HTML .= '<a href="#" id="UPDATING-Extra-show" class="showLink" onclick="showHide(\'UPDATING-Extra\');return false;">Expand this list (' . $NumRows . ' items)</a>';
+				$HTML .= '<span id="UPDATING-Extra" class="more UPDATING">';
+				$HTML .= '<a href="#" id="UPDATING-Extra-hide" class="hideLink" onclick="showHide(\'UPDATING-Extra\');return false;">Collapse this list.</a><br><br><br>';
+			}
+
 			$HTML .= '<li>' . freshports_PortsUpdating($port, $PortsUpdating) . "</li>\n";
+		}
+		if ($Hiding) {
+			$HTML .= '<a href="#" id="UPDATING-Extra-hide" class="hideLink" onclick="showHide(\'UPDATING-Extra\');return false;">Collapse this list.</a>';
+			$HTML .= '</span>';
+
 		}
 
 		$HTML .= "</ul>\n";

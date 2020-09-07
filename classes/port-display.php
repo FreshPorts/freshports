@@ -16,6 +16,7 @@ define('port_display_WATCH_LIST_ADD_REMOVE', '%%%$$$WATCHLIST$$$%%%');
 define('port_display_AD',                    '%%%$$$ADGOESHERE$$$%%%');
 define('DEPENDS_SUMMARY', 7 );
 define('PLIST_SUMMARY',   0 );
+define('DISTINFO_LINES',   3 );
 
 class port_display {
 
@@ -56,6 +57,16 @@ class port_display {
 	var $ShowUses;
 	var $ShowWatchListCount;
 	var $ShowWatchListStatus;
+
+	# taken from https://www.php.net/manual/en/function.strpos.php
+	function strpos_nth(string $string, string $needle, int $occurrence, int $offset = null) {
+	        if ((0 < $occurrence) && ($length = strlen($needle))) {
+		        do {
+		        } while ((false !== $offset = strpos($string, $needle, $offset)) && --$occurrence && ($offset += $length));
+		        return $offset;
+	        }
+	        return false;
+	}
 
 	function __construct(&$db, $User = 0, $Branch = BRANCH_HEAD) {
 		$this->db     = $db;
@@ -837,7 +848,27 @@ class port_display {
 				$HTML .= '<dt id="distinfo"><b>distinfo:</b></dt>';
 
 				if ($port->distinfo) {
-					$HTML .= '<dd class="like-pre">' . $port->distinfo . '</dd>';
+					$distinfo_line_count = substr_count( $port->distinfo, "\n" );
+					if ($distinfo_line_count <= DISTINFO_LINES) {
+						$HTML .= '<dd class="like-pre">';
+						$HTML .= $port->distinfo;
+						$HTML .= '</dd>';
+					} else {
+						# show only the first three lines, collpse the rest
+						$nth_line = $this->strpos_nth($port->distinfo, "\n", 3);
+
+						$HTML .= '<dd class="like-pre">';
+						$HTML .= substr($port->distinfo, 0, $nth_line);
+						$HTML .= '<p><a href="#" id="distinfo-Extra-show" class="showLink" onclick="showHide(\'distinfo-Extra\');return false;">Expand this list (' . ($distinfo_line_count - DISTINFO_LINES + 1) . ' items)</a></p>';
+						$HTML .= '</dd>';
+
+						$HTML .= '<dd id="distinfo-Extra" class="more distinfo like-pre">';
+						$HTML .= '<p><a href="#" id="distinfo-Extra-hide" class="hideLink" onclick="showHide(\'distinfo-Extra\');return false;">Collapse this list.</a></p>';
+						$HTML .= substr($port->distinfo, $nth_line + 1);
+
+						$HTML .= '<p><a href="#" id="distinfo-Extra-hide" class="hideLink" onclick="showHide(\'distinfo-Extra\');return false;">Collapse this list.</a></p>';
+						$HTML .= '</dd>';
+					}
 				} else {
 					$HTML .= '<dd>There is no distinfo for this port.</dd>' . "\n";
 				}

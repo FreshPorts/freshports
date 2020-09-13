@@ -105,33 +105,6 @@ function str_is_int($str) {
 	return ($str == $var);
 }
 
-// this function may be unused
-function freshports_CommitNextPreviousPage($URL, $NumRowsTotal, $PageNo, $PageSize) {
-
-	$HTML .= "Result Page:";
-
-	$NumPages = ceil($NumRowsTotal / $PageSize);
-
-	for ($i = 1; $i <= $NumPages; $i++) {
-		if ($i == $PageNo) {
-			$HTML .= "&nbsp;<b>$i</b>";
-			$HTML .= "\n";
-		} else {
-			$HTML .= '&nbsp;<a href="' . $URL . '&page=' . $i .  '">' . $i . '</a>';
-			$HTML .= "\n";
-		}
-	}
-
-	if ($PageNo == $NumPages) {
-		$HTML .= '&nbsp; ' . NEXT_PAGE;
-	} else {
-		$HTML .= '&nbsp;<a href="' . $URL . '&page=' . ($PageNo + 1) .  '">' . NEXT_PAGE . '</a>';
-		$HTML .= "\n";
-	}
-
-	return $HTML;
-}
-
 if ($Debug) echo "UserID='$User->id'";
 
 ?>

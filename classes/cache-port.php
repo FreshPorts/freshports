@@ -92,6 +92,6 @@ class CachePort extends Cache {
 	function _CacheFileName($key) {
 		return $this->CacheDir . '/'. $key;
 	}
-	
+
 
 }

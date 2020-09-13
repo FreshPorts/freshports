@@ -143,6 +143,7 @@ class Cache {
 	}
 
 	function _CacheFileName($key) {
+		# remember: this function is often overridden in the descendant class
 		$FileName = $this->CacheDir . '/' . $this->_CleanKey($key);
 
 		return $FileName;

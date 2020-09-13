@@ -60,6 +60,8 @@ class FilesDisplay {
 		}
 
 		$this->HTML .= freshports_PageBannerText($title, 4);
+		
+		$this->HTML .= "</TR>\n";
 
 		$this->HTML .= "
 		<TR>

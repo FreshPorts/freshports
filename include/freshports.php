@@ -21,7 +21,7 @@ DEFINE('COPYRIGHTHOLDER',       'Dan Langille');
 DEFINE('COPYRIGHTHOLDERURL',    'https://www.langille.org/');
 DEFINE('URL2LINK_CUTOFF_LEVEL', 0);
 DEFINE('FAQLINK',               'faq.php');
-DEFINE('PORTSMONURL',			'http://portsmon.freebsd.org/portoverview.py');
+DEFINE('PORTSMONURL',		'http://portsmon.freebsd.org/portoverview.py');
 DEFINE('NOBORDER',              '0');
 DEFINE('BORDER',                '1');
 
@@ -2268,7 +2268,7 @@ function _forDisplay($string, $flags = NULL, $encoding = FRESHPORTS_ENCODING) {
   $encoded =  htmlspecialchars($string, $flags, $encoding);
 
   # if htmlspecialchars() fails, you get an empty string.
-  # Report that, but only if the original was not emptry.
+  # Report that, but only if the original was not empty.
   if (empty($encoded) && !empty($string)) {
      syslog(LOG_ERR, "htmlspecialchars in _forDisplay() failed for '$string'");
      $encoded = $string;

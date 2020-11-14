@@ -919,7 +919,7 @@ class port_display {
 		###############################################
 
 		if ($this->ShowEverything || $this->ShowPackages) {
-			$HTML .= '<dt><b>Packages:</b></dt>';
+			$HTML .= '<dt id="packages"><b>Packages:</b></dt>';
 
 			$packages = new Packages($this->db);
 			$numrows = $packages->Fetch($this->port->id);
@@ -1178,6 +1178,7 @@ class port_display {
 							$div .= '<a href="#" id="RequiredBy' . $title . 'Extra-show" class="showLink" onclick="showHide(\'RequiredBy' .
 							        $title . 'Extra\');return false;">Expand this list (' . $NumRows . ' items / ' . ($NumRows - DEPENDS_SUMMARY) . ' hidden)</a>';
 							$div .= '<ol id="RequiredBy' . $title . 'Extra" class="depends more" start="' . ($i + 1) . '" style="margin-top: 0px">';
+							$div .= '<li class="nostyle"><a href="#" id="RequiredBy' . $title . 'Extra-hide2" class="hideLink" onclick="showHide(\'RequiredBy' . $title . 'Extra\');return false;" >Collapse this list.</a></li>';
 							# yes, we have started hiding things.
 							$hidingStarted = true;
 						}

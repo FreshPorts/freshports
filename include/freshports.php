@@ -108,8 +108,8 @@ function freshports_git_commit_Link($revision, $hostname, $path) {
   return '<a href="http://' . htmlentities($hostname) . $path . '/commit/' . htmlentities($revision) .  '">' . freshports_Git_Icon('commit hash:' . $revision) . '</a>';
 }
 
-function freshports_git_commit_Link_Hash($revision, $hostname, $path) {
-  return '<a href="http://' . htmlentities($hostname) . $path . '/commit/' . htmlentities($revision) .  '" class="hash">' . $revision . '</a>';
+function freshports_git_commit_Link_Hash($hash, $link_text, $hostname, $path) {
+  return '<a href="http://' . htmlentities($hostname) . $path . '/commit/' . htmlentities($hash) .  '" class="hash">' . $link_text . '</a>';
 }
 
 function freshports_svnweb_ChangeSet_Link($revision, $hostname, $path) {
@@ -1467,10 +1467,10 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	$HTML .= '<br>';
 
 	if ($GitCommit) {
-		$HTML .= freshports_git_commit_Link_Hash($commit->commit_hash_short, $commit->repo_hostname, $commit->path_to_repo);
+		$HTML .= freshports_git_commit_Link_Hash($commit->message_id, $commit->commit_hash_short, $commit->repo_hostname, $commit->path_to_repo);
 	} else {
 		if (isset($commit->svn_revision)) {
-			$HTML .= freshports_svnweb_ChangeSet_Link($commit->svn_revision, $commit->repo_hostname, $commit->path_to_repo);
+			$HTML .= freshports_svnweb_ChangeSet_Link($commit->svn_revision, $commit->commit_hash_short, $commit->repo_hostname, $commit->path_to_repo);
 	        }
 	}
 

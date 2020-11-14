@@ -246,6 +246,7 @@ class port_display {
             $link .= '/freebsd/freebsd-ports';
           }
 
+          # echo 'link so far is ' . $link . '<br>';
           if ($this->port->IsDeleted()) {
             #
 	    # If the port has been deleted, let's link to the last commit.
@@ -271,17 +272,19 @@ class port_display {
                 # so that the user has something to see.
                 # But this is a git commit, so we can't do that.
                 # We show them a striketrough instead.
+                echo 'oh, we are going null #1';
 	        $link = null;
 	      }
             } else {
               # if there is no last revision, we can't link to it.
+              echo 'oh, we are going null #2';
 	      $link = null;
             }
           } else {
             # this is a usual link
             $link .= '/tree/master/' . $this->port->category . '/' .  $this->port->port;
           }
-
+          # echo 'hmm, still going with ' . $link . '<br>';
 
           if (!empty($link)) {
             $link = '<a href="' . $link . '">' . $link_title . '</a>';
@@ -289,6 +292,7 @@ class port_display {
             $link = '<strike>git</strike>';
           }
 
+          # echo 'returning ' . $link . '<br>';
           return $link;
 	}
 
@@ -701,7 +705,8 @@ class port_display {
 			$HTML .= '</font></dt>' . "\n";
 			$HTML .= '<dt><b>Commit Hash:</b> <font size="-1">';
 			if ($port->svn_revision) {
-				$HTML .= freshports_git_commit_Link_Hash($port->svn_revision, $port->repo_hostname, $port->path_to_repo);
+#				print "'$port->svn_revision', '$port->commit_hash_short', '$port->repo_hostname', '$port->path_to_rep'";
+				$HTML .= freshports_git_commit_Link_Hash($port->svn_revision, $port->commit_hash_short, $port->repo_hostname, $port->path_to_repo);
 			} else {
 				$HTML .= "unknown";
 			}

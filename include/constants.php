@@ -51,10 +51,10 @@ $Sequence_User_ID				= 'users_id_seq';
 #
 
 // path to the CVS repository
-define('FRESHPORTS_FREEBSD_CVS_URL' , 'http://www.FreeBSD.org/cgi/cvsweb.cgi');
+define('FRESHPORTS_FREEBSD_CVS_URL' , 'https://www.FreeBSD.org/cgi/cvsweb.cgi');
 
 // path to the SVN repository
-define('FRESHPORTS_FREEBSD_SVN_URL' , 'http://svnweb.FreeBSD.org');
+define('FRESHPORTS_FREEBSD_SVN_URL' , 'https://svnweb.FreeBSD.org');
 
 // which repo do we want?
 define('FREEBSD_REPO_SVN', 'svn');
@@ -65,7 +65,7 @@ define('FRESHPORTS_FREEBSD_FTP_URL', 'ftp://ftp.freebsd.org/pub/FreeBSD/ports/i3
 
 
 // path to the cvs-all mailing list archive
-$freshports_mail_archive = "http://www.freebsd.org/cgi/mid.cgi?db=mid&id=";
+$freshports_mail_archive = "https://www.freebsd.org/cgi/mid.cgi?db=mid&id=";
 
 #
 # max number of lines to show in a commit

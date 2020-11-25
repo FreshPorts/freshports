@@ -196,7 +196,7 @@ class port_display {
 
 	function link_to_repo() {
           # we want something like
-          # http://svn.freebsd.org/ports/head/x11-wm/awesome/
+          # https://svn.freebsd.org/ports/head/x11-wm/awesome/
           $link_title = 'SVNWeb';
           $link = 'https://';
           if (!empty($this->port->svn_hostname)) {
@@ -382,7 +382,7 @@ class port_display {
 
 	function packageToolTipText($last_checked, $repo_date, $processed_date) {
 		# last_checked    - when we last checked for an update
-		# repo_date       - date on packagesite.txz (e.g. http://pkg.freebsd.org/FreeBSD:11:amd64/latest/
+		# repo_date       - date on packagesite.txz (e.g. https://pkg.freebsd.org/FreeBSD:11:amd64/latest/
 		# processed_date  - when the above mentioned data was last parsed into FreshPorts
 
 		$title = "Repo dates\n";

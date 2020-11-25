@@ -178,7 +178,7 @@ echo "</td></tr>\n";
 		echo '<a href="?updating">View watched ports + entries from </code>/usr/ports/UPDATING</code></a>';
 	} else {
 		if ($IncludeUpdating) {
-			echo '<a href="http://' .  $_SERVER['HTTP_HOST'] .  $_SERVER['PHP_SELF'] . '">View all watched ports</a>';
+			echo '<a href="https://' .  $_SERVER['HTTP_HOST'] .  $_SERVER['PHP_SELF'] . '">View all watched ports</a>';
 		} else {
 			echo '<a href="?updating">View all watched ports + entries from </code>/usr/ports/UPDATING</code></a>';
 		}
@@ -187,7 +187,7 @@ echo "</td></tr>\n";
 	echo "\n<br>\n";
 
 	if ($OnlyThoseWithUpdatingEntries) {
-		echo '<a href="http://' .  $_SERVER['HTTP_HOST'] .  $_SERVER['PHP_SELF'] . '">View all watched ports.</a>';
+		echo '<a href="https://' .  $_SERVER['HTTP_HOST'] .  $_SERVER['PHP_SELF'] . '">View all watched ports.</a>';
 	} else {
 		echo '<a href="?updatingonly">View only watched ports with entries in </code>/usr/ports/UPDATING</code></a>';
 	}

@@ -122,7 +122,7 @@ NOTES:
 
 <ul>
 <li>The official list of categories is in the 
-<a href="http://www.freebsd.org/doc/en_US.ISO8859-1/books/porters-handbook/makefile-categories.html#PORTING-CATEGORIES">Porters Handbook</a>.
+<a href="https://www.freebsd.org/doc/en_US.ISO8859-1/books/porters-handbook/makefile-categories.html#PORTING-CATEGORIES">Porters Handbook</a>.
 <li>Primary categories are those which physically reside on disk.
 <li>Only virtual categories need to have their description values set.
 <li>FreshPorts will automatically obtain the description for physical categoriers from <code class="code">ports/pkg/COMMENT</code>.

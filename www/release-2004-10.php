@@ -39,7 +39,7 @@
 
 <p>
 This page is rather dated.  Most news is now published on the
-<a href="http://news.freshports.org/">FreshPorts Blog</a>.
+<a href="https://news.freshports.org/">FreshPorts Blog</a>.
 
 <p>
 This is the biggest release of FreshPorts since 
@@ -88,10 +88,10 @@ well, it's been deleted.  It was a square with a X in it.
 <TR><TD>
 
 <P>
-The <a href="http://www.vuxml.org/freebsd/">VuXML</a> project documents
-security issues that affect the <a href="http://www.freebsd.org/">FreeBSD</a>
+The <a href="https://www.vuxml.org/freebsd/">VuXML</a> project documents
+security issues that affect the <a href="https://www.freebsd.org/">FreeBSD</a>
 operating system or applications in the
-<a href="http://www.freebsd.org/ports/">FreeBSD Ports Collection</a>.
+<a href="https://www.freebsd.org/ports/">FreeBSD Ports Collection</a>.
 This documentation takes the form of of an XML file provided by the 
 <a href="/security/vuxml/">vuxml</a> port.  FreshPorts now integrates 
 the information from that file with the commit history of each affect port.
@@ -126,9 +126,9 @@ can link to the Firefox port using this link:
 
 $HostName = $_SERVER['HTTP_HOST'];
 
-echo '<a href="http://';
+echo '<a href="https://';
 echo $HostName;
-echo '/?package=firefox">http://';
+echo '/?package=firefox">https://';
 echo $HostName;
 echo '/?package=firefox</a>';
 ?>
@@ -141,13 +141,13 @@ and redirects you to the correct location.  In this case, it takes to you to
 
 $HostName = $_SERVER['HTTP_HOST'];
 
-echo '<a href="http://';
+echo '<a href="https://';
 echo $HostName;
-echo '/www/firefox/">http://';
+echo '/www/firefox/">https://';
 echo $HostName;
 echo '/www/firefox/</a>';
-?>.  Ahh, the magic of <a href="http://www.php.net">PHP</a> and
-<a href="http://www.postgresql.org/">PostgreSQL</a>!
+?>.  Ahh, the magic of <a href="https://www.php.net">PHP</a> and
+<a href="https://www.postgresql.org/">PostgreSQL</a>!
 
 </TD></TR>
 

@@ -133,7 +133,7 @@ function freshports_UpdatingOutput($NumRowsUpdating, $PortsUpdating, $port) {
 			$PortsUpdating->FetchNth($i);
 			if ($i == 1) {
 				$Hiding = true;
-				$HTML .= '<a href="#" id="UPDATING-Extra-show" class="showLink" onclick="showHide(\'UPDATING-Extra\');return false;">Expand this list (' . $NumRows . ' items)</a>';
+				$HTML .= '<a href="#" id="UPDATING-Extra-show" class="showLink" onclick="showHide(\'UPDATING-Extra\');return false;">Expand this list (' . $NumRowsUpdating . ' items)</a>';
 				$HTML .= '<span id="UPDATING-Extra" class="more UPDATING">';
 				$HTML .= '<a href="#" id="UPDATING-Extra-hide" class="hideLink" onclick="showHide(\'UPDATING-Extra\');return false;">Collapse this list.</a><br><br><br>';
 			}

@@ -512,6 +512,8 @@ class port_display {
 			# link to https://repology.org : re https://github.com/FreshPorts/freshports/issues/148
 			$HTML .= ' ' . freshports_Repology_Link($port->category . '/' . $port->port);
 
+			$HTML.= ' ' . freshports_Fallout_Link($port->category, $port->port);
+
 			$HTML .=  ' <span class="tooltip">'. $port->quarterly_revision . '<span class="tooltiptext tooltip-top">Version of this port present on the latest quarterly branch.';
 			if ($port->IsSlavePort()) $HTML .= ' NOTE: Slave port - quarterly revision is most likely wrong.';
 			$HTML .= '</span></span>';
@@ -647,6 +649,7 @@ class port_display {
 			} else {
 				$HTML .= "unknown";
 			}
+
 			$HTML .= '</font></dt>' . "\n";
 		}
 
@@ -1155,7 +1158,7 @@ class port_display {
 							$div .= '<a href="#" id="RequiredBy' . $title . 'Extra-show" class="showLink" onclick="showHide(\'RequiredBy' .
 							        $title . 'Extra\');return false;">Expand this list (' . $NumRows . ' items / ' . ($NumRows - DEPENDS_SUMMARY) . ' hidden)</a>';
 							$div .= '<ol id="RequiredBy' . $title . 'Extra" class="depends more" start="' . ($i + 1) . '" style="margin-top: 0px">';
-							$div .= '<li class="nostyle"><a href="#" id="RequiredBy' . $title . 'Extra-hide" class="hideLink" onclick="showHide(\'RequiredBy' . $title . 'Extra\');return false;" >Collapse this list.</a></li>';
+							$div .= '<a href="#" id="RequiredBy' . $title . 'Extra-hide" class="hideLink" onclick="showHide(\'RequiredBy' . $title . 'Extra\');return false;" >Collapse this list. </a>';
 							# yes, we have started hiding things.
 							$hidingStarted = true;
 						}

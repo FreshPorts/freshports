@@ -96,6 +96,11 @@ function freshports_cvsweb_Revision_Link($pathname, $revision_name)
   return $HTML;
 }
 
+function freshports_Fallout_Link($category, $port) {
+  # re https://github.com/FreshPorts/freshports/issues/181
+  return '<a href="https://portsfallout.com/fallout?port=' . rawurlencode($category . '/' . $port . '$') . '">' . freshports_Fallout_Icon() . '</a>';
+}
+
 function freshports_svnweb_ChangeSet_Link($revision, $hostname, $path) {
   # I see $path is not used by this function... I wonder why? -- dvl 2018.10.07
   return '<a href="http://' . htmlentities($hostname) . '/changeset/ports/' . htmlentities($revision) .  '">' . freshports_Subversion_Icon('Revision:' . $revision) . '</a>';
@@ -310,6 +315,10 @@ return '
   </tr>
 ';
 
+}
+
+function freshports_Fallout_Icon() {
+	return '<img src="/images/fallout-16x16.png" alt="pkg-fallout" title="pkg-fallout" border="0" width="16" height="16" vspace="1">';
 }
 
 function freshports_Subversion_Icon($Title = 'Subversion') {

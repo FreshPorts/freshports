@@ -171,7 +171,6 @@ class DisplayCommit {
 				if ($mycommit->svn_revision != '') {
 					$this->HTML .= '&nbsp; ' . freshports_svnweb_ChangeSet_Link($mycommit->svn_revision, $mycommit->svn_hostname, $mycommit->path_to_repo);
 				}
-				
 				$this->HTML .= "<br>\n";
 
 			}
@@ -268,6 +267,7 @@ class DisplayCommit {
 					$this->HTML .= freshports_Is_Interactive_Icon_Link($mycommit->is_interactive) . '&nbsp;';
 				}
 
+				$this->HTML.=  freshports_Fallout_Link($mycommit->category, $mycommit->port) . '&nbsp;';
 			} else {
 				# This is a non-port element... 
 				$this->HTML .= $mycommit->revision . ' ';

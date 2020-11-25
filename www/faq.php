@@ -263,7 +263,10 @@ down you must read to find something you didn't already know.</P>
 
 	<TR><TD>
 	There are a few symbols you will see in this website.
-	<BLOCKQUOTE>
+
+	<P><?php echo freshports_Fallout_Icon() ?>
+		Fallout: a link to search the pkg-fallout archives for this port.</P>
+
 	<P><?php echo freshports_New_Icon() ?>
 		New: This port has been recently added.  A port is marked as new for 10 days.</P>
 
@@ -394,7 +397,6 @@ make: fatal errors encountered -- cannot continue
 	list.
 	</P>
 
-	</BLOCKQUOTE>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>

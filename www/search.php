@@ -48,6 +48,7 @@
 
 	define('OUTPUT_FORMAT_HTML',        'html');
 	define('OUTPUT_FORMAT_PLAIN_TEXT',  'plaintext');
+	define('OUTPUT_FORMAT_DEPENDS',     'depends');
 
 	$PageNumber = 1;
 	$PageSize   = DEFAULT_NUMBER_OF_COMMITS;
@@ -103,6 +104,26 @@ $SearchTypeToFieldMap = array(
 
 $sqlExtraFields = ''; # will hold extra fields we need, such as watch list
                       # or soundex function needed for ORDER BY
+
+function Category_Ports_To_In_Clause($a_Ports) {
+  # convert: graphics/acidwarp-sdl devel/gitlab-runner games/ace-of-penguins devel/py-pytest-rerunfailures
+  #      to: IN ('/ports/head/graphics/acidwarp-sdl', '/ports/head/devel/gitlab-runner', '/ports/head/games/ace-of-penguins', '/ports/head/devel/py-pytest-rerunfailures')
+  # for use in searching.
+  #
+
+  $ports = explode(' ', $a_Ports);
+
+  $where = 'IN (';
+  foreach($ports as &$port) {
+    $port = '/ports/head/' . pg_escape_string($port);
+  }
+  $where .= ')';
+
+  $where = "IN ('" . implode("', '", $ports) . "')";
+
+  return $where;
+}
+
 
 function WildCardQuery($stype, $Like, $query) {
   GLOBAL $SearchTypeToFieldMap;
@@ -253,6 +274,7 @@ function WildCardQuery($stype, $Like, $query) {
 switch ($output_format) {
 	case OUTPUT_FORMAT_HTML:
 	case OUTPUT_FORMAT_PLAIN_TEXT:
+	case OUTPUT_FORMAT_DEPENDS:
 		# valid; do nothing
 		break;
 
@@ -262,7 +284,7 @@ switch ($output_format) {
 		break;
 }
 
-if ($output_format == OUTPUT_FORMAT_PLAIN_TEXT) {
+if ($output_format == OUTPUT_FORMAT_PLAIN_TEXT || $output_format == OUTPUT_FORMAT_DEPENDS) {
   # tell the browser to display plain text
   header('Content-Type: text/plain');
 }
@@ -358,7 +380,10 @@ $sqlSetAll = false;
 if ($Debug) echo "at line " . __LINE__ . " stype='$stype'<br>";
 
 
-switch ($method) {
+if ($output_format == OUTPUT_FORMAT_DEPENDS) {
+  $sqlUserSuppliedPortsList = Category_Ports_To_In_Clause($query);
+} else {
+  switch ($method) {
 	case 'prefix':
 		$WildCardMatch = "$query%";
 		if ($casesensitivity == 'casesensitive') {
@@ -421,7 +446,9 @@ switch ($method) {
 		$sqlUserSpecifiedCondition = "\n     levenshtein($FieldName, '" . pg_escape_string($query) . "') < " . VEVENSHTEIN_MATCH;
 		$sqlSoundsLikeOrderBy = "levenshtein($FieldName, '" . pg_escape_string($query) . "')";
 		break;
-}
+  }
+
+} # not OUTPUT_FORMAT_DEPENDS
 
 if ($Debug) echo "at line " . __LINE__ . " sqlUserSpecifiedCondition='$sqlUserSpecifiedCondition'<br>";
 
@@ -445,7 +472,10 @@ switch ($stype) {
 				# do not break here...
 		
 			case 'excludedeleted':
-				$sqlUserSpecifiedCondition .= " and E.status = 'A' ";
+				if ($output_format != OUTPUT_FORMAT_DEPENDS) {
+					$sqlUserSpecifiedCondition .= " and";
+				}
+				$sqlUserSpecifiedCondition .= " E.status = 'A' ";
 		}
 		break;
 }
@@ -705,6 +735,13 @@ $sqlSelectCount = "
        categories C, element E
 ";                                       	
 
+	if ($output_format == OUTPUT_FORMAT_DEPENDS) {
+		$sqlFrom .= "
+JOIN element_pathname EP on E.id = EP.element_id
+  AND EP.pathname $sqlUserSuppliedPortsList
+";
+	}
+
 $sqlWatchListFrom = '';
 	if ($User->id) {
 			$sqlWatchListFrom .= "
@@ -922,6 +959,7 @@ if ($output_format == OUTPUT_FORMAT_HTML) {
   <b>Output format</b>:<br>
   <input type="radio" name="format" value="<?php echo OUTPUT_FORMAT_HTML       . '"'; if ($output_format == OUTPUT_FORMAT_HTML)       echo 'checked'; ?>> HTML<br>
   <input type="radio" name="format" value="<?php echo OUTPUT_FORMAT_PLAIN_TEXT . '"'; if ($output_format == OUTPUT_FORMAT_PLAIN_TEXT) echo 'checked'; ?>> Plain Text<br>
+  <input type="radio" name="format" value="<?php echo OUTPUT_FORMAT_DEPENDS    . '"'; if ($output_format == OUTPUT_FORMAT_DEPENDS)    echo 'checked'; ?>> Depends<br>
 </td>
 <td>
 <INPUT TYPE=checkbox VALUE=1   NAME=effort> Maximum Effort
@@ -1069,6 +1107,10 @@ switch ($stype) {
 
 				case OUTPUT_FORMAT_PLAIN_TEXT:
 					$HTML .= $port_display->DisplayPlainText() . "\n";
+					break;
+
+				case OUTPUT_FORMAT_DEPENDS:
+					$HTML .= $port_display->DisplayDependencyLine() . "\n";
 					break;
 			} // switch
 			if ($output_format == OUTPUT_FORMAT_HTML) {

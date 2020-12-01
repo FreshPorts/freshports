@@ -113,7 +113,7 @@ class CommitFiles {
 	
 		if ($ForJustOnePort) { 
 			$sql .= "
-	   AND element_pathname(E.id) ILIKE  element_pathname(element_id('" .  pg_escape_string($this->Category)  . "', '" . pg_escape_string($this->Port) . "')) || '%'"; 
+	   AND element_pathname(E.id) LIKE '%/" . pg_escape_string($this->Category)  . '/' . pg_escape_string($this->Port) . "%'";
 		}
 		
 		$sql .= ") AS A

@@ -30,7 +30,7 @@ function FreshPortsChart($title, $axislabel, $values, $labels, $urls, $file = "-
 		$c->gradient1  = array(180,0,0); // from dark red
 		$c->gradient2  = array(255,255,0); // to bright yellow
 
-		$c->footer = "(c) http://www.FreshPorts.org/                               " . date("Y-m-d G:i:s");
+		$c->footer = "(c) https://www.FreshPorts.org/                               " . date("Y-m-d G:i:s");
 		return $c->show($file);
 }
 

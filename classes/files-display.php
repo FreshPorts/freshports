@@ -105,11 +105,11 @@ class FilesDisplay {
 
                     case FREEBSD_REPO_SVN:
                         $this->HTML .= ' ';
-    	        		$previousRevision =  $this->GetPreviousRevision( $myrow["revision_name"] );
-                        # we want something like http://svnweb.freebsd.org/ports/head/www/p5-App-Nopaste/Makefile?r1=300951&r2=300950&pathrev=300951
-            			$this->HTML .= ' <A HREF="http://' . $myrow['svn_hostname'] . $myrow["pathname"] . '?r1=' . 
-            			    $myrow["revision_name"] . '&amp;r2=' . $previousRevision . '&amp;pathrev=' . $myrow["revision_name"] . '">';
-        		    	$this->HTML .= freshports_Diff_Icon() . '</a> ';
+                        $previousRevision =  $this->GetPreviousRevision( $myrow["revision_name"] );
+			# we want something like https://svnweb.freebsd.org/ports/head/www/p5-App-Nopaste/Makefile?r1=300951&r2=300950&pathrev=300951
+			$this->HTML .= ' <A HREF="https://' . $myrow['svn_hostname'] . $myrow["pathname"] . '?r1=' . 
+			$myrow["revision_name"] . '&amp;r2=' . $previousRevision . '&amp;pathrev=' . $myrow["revision_name"] . '">';
+			$this->HTML .= freshports_Diff_Icon() . '</a> ';
                         break;
                 }
             }
@@ -122,9 +122,9 @@ class FilesDisplay {
 
                 case FREEBSD_REPO_SVN:
                     # we want something like
-                    # http://svn.freebsd.org/ports/head/x11-wm/awesome/Makefile
-        			$this->HTML .= ' <A HREF="http://' . $myrow['svn_hostname'] . $myrow["pathname"] . '?annotate=' . $myrow["revision_name"] . '">';
-		        	$this->HTML .= freshports_Revision_Icon() . '</a> ';
+                    # https://svn.freebsd.org/ports/head/x11-wm/awesome/Makefile
+        	    $this->HTML .= ' <A HREF="https://' . $myrow['svn_hostname'] . $myrow["pathname"] . '?annotate=' . $myrow["revision_name"] . '">';
+		    $this->HTML .= freshports_Revision_Icon() . '</a> ';
                     break;
                     
                 default:
@@ -143,8 +143,8 @@ class FilesDisplay {
 
                 case FREEBSD_REPO_SVN:
                     # we want something like
-                    # http://svnweb.freebsd.org/ports/head/textproc/bsddiff/Makefile?view=log#rev300953
-        			$this->HTML .= ' <A HREF="http://' . $myrow['svn_hostname'] . $myrow["pathname"] . '?view=log#rev' . $myrow["revision_name"] . '">';
+                    # https://svnweb.freebsd.org/ports/head/textproc/bsddiff/Makefile?view=log#rev300953
+        	    $this->HTML .= ' <A HREF="https://' . $myrow['svn_hostname'] . $myrow["pathname"] . '?view=log#rev' . $myrow["revision_name"] . '">';
                     break;
             }
 

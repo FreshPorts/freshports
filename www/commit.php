@@ -180,8 +180,8 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 			echo "We have multiple emails for that revision: ";
 			$Commit->FetchNth(0);
 			$clean_revision = htmlentities($Commit->svn_revision);
-			// e.g. http://svnweb.freebsd.org/base?view=revision&revision=177821
-			echo '<a href="http://' . htmlentities($Commit->svn_hostname) . htmlentities($Commit->path_to_repo) . '?view=revision&amp;revision=' . $clean_revision . 
+			// e.g. https://svnweb.freebsd.org/base?view=revision&revision=177821
+			echo '<a href="https://' . htmlentities($Commit->svn_hostname) . htmlentities($Commit->path_to_repo) . '?view=revision&amp;revision=' . $clean_revision . 
 				'">' . $clean_revision . '</a>';
 
 			echo "<ol>\n";

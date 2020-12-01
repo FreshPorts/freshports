@@ -28,7 +28,7 @@
 
 	$HTML .= '<channel>'                                                                        . "\n";
 	$HTML .= '  <title>' . "$FreshPortsName -- $FreshPortsSlogan" . '</title>'                  . "\n";
-	$HTML .= '  <link>http://' . $ServerName . '/</link>'                                       . "\n";
+	$HTML .= '  <link>https://' . $ServerName . '/</link>'                                       . "\n";
 	$HTML .= '  <description>The easiest place to find ports</description>'                     . "\n";
 	$HTML .= '  <language>en-us</language>'                                                     . "\n";
 	$HTML .= '  <copyright>Copyright ' . COPYRIGHTYEARS . ', DVL Software Limited.</copyright>' . "\n";
@@ -37,8 +37,8 @@
 
 	$HTML .= '  <image>'                                                                       . "\n";
 	$HTML .= '    <title>FreshPorts - The place for ports</title>'                             . "\n";
-	$HTML .= '    <url>http://'  . $_SERVER["HTTP_HOST"] . '/images/freshports_mini.jpg</url>' . "\n";
-	$HTML .= '    <link>http://' . $_SERVER["HTTP_HOST"] . '/</link>'                          . "\n";
+	$HTML .= '    <url>https://'  . $_SERVER["HTTP_HOST"] . '/images/freshports_mini.jpg</url>' . "\n";
+	$HTML .= '    <link>https://' . $_SERVER["HTTP_HOST"] . '/</link>'                          . "\n";
 	$HTML .= '    <width>128</width>'                                                          . "\n";
 	$HTML .= '    <height>28</height>'                                                         . "\n";
 	$HTML .= '    <description>FreshPorts - The place for ports</description>'                 . "\n";
@@ -175,7 +175,7 @@ limit 30";
 
 		$HTML .= '</title>'                                                                                       . "\n";
 
-		$HTML .= '    <link>http://' . $ServerName . '/' . htmlentities($myrow["category"] . '/' . $myrow["port"]) . '/</link>' . "\n";
+		$HTML .= '    <link>https://' . $ServerName . '/' . htmlentities($myrow["category"] . '/' . $myrow["port"]) . '/</link>' . "\n";
 		$HTML .= '    <description>' . htmlspecialchars(trim($myrow["commit_description"])) . '</description>'    . "\n";
 
 		$HTML .= '  </item>'                                                                                      . "\n";

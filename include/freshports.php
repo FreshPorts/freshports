@@ -108,6 +108,10 @@ function freshports_git_commit_Link($revision, $hostname, $path) {
   return '<a href="http://' . htmlentities($hostname) . $path . '/commit/' . htmlentities($revision) .  '">' . freshports_Git_Icon('commit hash:' . $revision) . '</a>';
 }
 
+function freshports_git_commit_Link_diff($revision, $hostname, $path) {
+  return '<a href="http://' . htmlentities($hostname) . $path . '/commit/' . htmlentities($revision) .  '">' . freshports_Diff_Icon() . '</a>';
+}
+
 function freshports_git_commit_Link_Hash($hash, $link_text, $hostname, $path) {
   return '<a href="http://' . htmlentities($hostname) . $path . '/commit/' . htmlentities($hash) .  '" class="hash">' . $link_text . '</a>';
 }

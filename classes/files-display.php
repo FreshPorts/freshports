@@ -150,11 +150,7 @@ class FilesDisplay {
 
                     case FREEBSD_REPOSITORY_GIT:
                         $this->HTML .= ' ';
-    	        	$previousRevision = $this->GetPreviousRevision( $myrow["revision_name"] );
-                        # we want something like http://svnweb.freebsd.org/ports/head/www/p5-App-Nopaste/Makefile?r1=300951&r2=300950&pathrev=300951
-            		$this->HTML .= ' <A HREF="http://' . $myrow['repo_hostname'] . $myrow["pathname"] . '?r1=' . 
-            		$myrow["revision_name"] . '&amp;r2=' . $previousRevision . '&amp;pathrev=' . $myrow["revision_name"] . '">';
-        		$this->HTML .= freshports_Diff_Icon() . '</a> ';
+			$this->HTML .= freshports_git_commit_Link_diff($myrow['message_id'], $myrow['repo_hostname'], $myrow['path_to_repo']);
                         break;
                 }
             }

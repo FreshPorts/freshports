@@ -46,7 +46,7 @@ class DisplayCommit {
 	}
 
 	function IsGitCommit($message_id) {
-		return strpos($message_id, $this->MESSAGE_ID_DOMAIN) == false;
+		return strpos($message_id,self::MESSAGE_ID_DOMAIN) == false;
 	}
 
 	function SetDaysMarkedAsNew($DaysMarkedAsNew) {

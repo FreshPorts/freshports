@@ -272,7 +272,7 @@ class port_display {
                 # so that the user has something to see.
                 # But this is a git commit, so we can't do that.
                 # We show them a striketrough instead.
-                echo 'oh, we are going null #1';
+                # echo 'oh, we are going null #1';
 	        $link = null;
 	      }
             } else {

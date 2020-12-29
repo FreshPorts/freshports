@@ -15,4 +15,7 @@ At present, this repo contains only the website code.  It does not contain the
 database or commit-loading code. You won't be able to run your own
 FreshPorts website with what's here now.
 
+Branched to subversion-only before merging the git work in from the
+git_freshports branch
+
 See also: https://github.com/dlangille/freshports/issues

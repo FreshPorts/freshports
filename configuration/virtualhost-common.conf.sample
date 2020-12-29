@@ -1,4 +1,3 @@
-  server_name   www.freshports.org;
   root          /usr/local/www/freshports/www/;
   index         index.php index.html;
 

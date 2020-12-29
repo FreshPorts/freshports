@@ -12,8 +12,9 @@
 
 	freshports_ConditionalGet(freshports_LastModified());
 
-	freshports_Start('How big is it?',
-					'freshports - new ports, applications',
+	$Title = 'How big is it?';
+	freshports_Start($Title,
+					$Title,
 					'FreeBSD, index, applications, ports');
 
 	$Total = 0;
@@ -23,7 +24,7 @@ function format_number($Value) {
 }
 
 #
-# grabbed from http://ca3.php.net/manual/en/function.number-format.php
+# grabbed from https://ca3.php.net/manual/en/function.number-format.php
 # was attributed there to: Thanks to "php dot net at alan-smith dot no-ip dot com" and "service at dual-creators dot de".	
 #
 function human_readable($size)
@@ -417,7 +418,7 @@ echo format_number($Value) . '<br>';
 <?php $GooglePages = 8058044651; ?>
 That gives a grand total of <?php echo number_format($Total) ?> pages.  On my last count, that's 
 about <?php echo number_format($Total / $GooglePages * 100, 6) ?>% of the
-web pages on <a href="http://www.Google.com/">Google</a><small><sup><a href="#1">1</a></sup></small>
+web pages on <a href="https://www.Google.com/">Google</a><small><sup><a href="#1">1</a></sup></small>
 </P>
 
 <p>

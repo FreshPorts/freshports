@@ -31,7 +31,7 @@ DEFINE('BACKGROUND_COLOUR', '#8c0707');
 
 DEFINE('CLICKTOADD', 'Click to add this to your default watch list[s]');
 
-DEFINE('SPONSORS', 'Servers and bandwidth provided by<br><a href="http://www.nyi.net/" TARGET="_new">New York Internet</a>, <a href="http://www.ixsystems.com/"  TARGET="_new">iXsystems</a>, and <a href="http://www.rootbsd.net/" TARGET="_new">RootBSD</a>');
+DEFINE('SPONSORS', 'Servers and bandwidth provided by<br><a href="https://www.nyi.net/" TARGET="_new">New York Internet</a>, <a href="https://www.ixsystems.com/"  TARGET="_new">iXsystems</a>, and <a href="https://www.rootbsd.net/" TARGET="_new">RootBSD</a>');
 
 DEFINE('FRESHPORTS_ENCODING', 'UTF-8');
 
@@ -116,14 +116,19 @@ function freshports_git_commit_Link_Hash($hash, $link_text, $hostname, $path) {
   return '<a href="http://' . htmlentities($hostname) . $path . '/commit/' . htmlentities($hash) .  '" class="hash">' . $link_text . '</a>';
 }
 
+function freshports_Fallout_Link($category, $port) {
+  # re https://github.com/FreshPorts/freshports/issues/181
+  return '<a href="https://portsfallout.com/fallout?port=' . rawurlencode($category . '/' . $port . '$') . '">' . freshports_Fallout_Icon() . '</a>';
+}
+
 function freshports_svnweb_ChangeSet_Link($revision, $hostname, $path) {
   # I see $path is not used by this function... I wonder why? -- dvl 2018.10.07
-  return '<a href="http://' . htmlentities($hostname) . '/changeset/ports/' . htmlentities($revision) .  '">' . freshports_Subversion_Icon('Revision:' . $revision) . '</a>';
+  return '<a href="https://' . htmlentities($hostname) . '/changeset/ports/' . htmlentities($revision) .  '">' . freshports_Subversion_Icon('Revision:' . $revision) . '</a>';
 }
 
 function freshports_svnweb_ChangeSet_Link_Text($revision, $hostname, $path) {
   # I see $path is not used by this function... I wonder why? -- dvl 2018.10.07
-  return '<a href="http://' . htmlentities($hostname) . '/changeset/ports/' . htmlentities($revision) .  '">' . $revision . '</a>';
+  return '<a href="https://' . htmlentities($hostname) . '/changeset/ports/' . htmlentities($revision) .  '">' . $revision . '</a>';
 }
 
 function freshports_Search_Maintainer($Maintainer) {
@@ -163,7 +168,7 @@ function PortsFreezeStatus($ColSpan=1) {
 			$result .= ' colspan="' . $ColSpan . '"';
 		}
 		$result .= '>
-<p>A <a href="http://www.freebsd.org/doc/en/articles/committers-guide/ports.html">ports freeze</a>
+<p>A <a href="https://www.freebsd.org/doc/en/articles/committers-guide/ports.html">ports freeze</a>
  means that commits will be few and far between and only by approval.
 </p>
 </td></tr>
@@ -216,7 +221,7 @@ function freshports_Port_URL($CategoryName, $PortName, $BranchName = BRANCH_HEAD
 
 	# see also freshports_link_to_port
 
-	$HTML = 'http://' . $_SERVER['HTTP_HOST'] . '/' . $CategoryName . '/' . $PortName . '/';
+	$HTML = 'https://' . $_SERVER['HTTP_HOST'] . '/' . $CategoryName . '/' . $PortName . '/';
 	if ($BranchName != BRANCH_HEAD) {
 		$HTML .= '?branch=' . pg_escape_string($BranchName);
 	}
@@ -330,6 +335,10 @@ return '
   </tr>
 ';
 
+}
+
+function freshports_Fallout_Icon() {
+	return '<img src="/images/fallout-16x16.png" alt="pkg-fallout" title="pkg-fallout" border="0" width="16" height="16" vspace="1">';
 }
 
 function freshports_Subversion_Icon($Title = 'Subversion') {
@@ -693,7 +702,7 @@ function freshports_Commit_Link($message_id, $LinkText = '') {
 
 function freshports_Commit_Link_Port_URL($MessageID, $Category, $Port) {
 
-	$HTML = 'http://' . $_SERVER['HTTP_HOST'] . '/commit.php?category=' . $Category . '&port=' . $Port . '&files=yes&message_id=' . $MessageID;
+	$HTML = 'https://' . $_SERVER['HTTP_HOST'] . '/commit.php?category=' . $Category . '&port=' . $Port . '&files=yes&message_id=' . $MessageID;
 
 	return $HTML;
 }
@@ -785,8 +794,8 @@ GLOBAL $ShowAnnouncements;
 
 	freshports_body($ExtraScript);
 
-   echo freshports_Logo();
-   freshports_navigation_bar_top();
+	echo freshports_Logo();
+	freshports_navigation_bar_top();
 
 	if (IsSet($ShowAnnouncements)) {
 
@@ -834,7 +843,7 @@ GLOBAL $FreshPortsLogoHeight;
     	$HTML .= "
 
 <!-- IPv6-test.com button BEGIN -->
-<a href='http://ipv6-test.com/validate.php?url=referer'><img src='/images/button-ipv6-big.png' alt='ipv6 ready' title='ipv6 ready' border='0' /></a>
+<a href='https://ipv6-test.com/validate.php?url=referer'><img src='/images/button-ipv6-big.png' alt='ipv6 ready' title='ipv6 ready' border='0' /></a>
 <!-- IPv6-test.com button END -->
 ";
 	}
@@ -844,7 +853,7 @@ GLOBAL $FreshPortsLogoHeight;
 	$HTML .= '</td>';
 
 if (date("M") == 'Nov' && date("j") <= 12) {
-	$HTML .= '	<td nowrap align="center" CLASS="sans" valign="bottom"><a href="http://www.google.ca/search?q=remembrance+day"><img src="/images/poppy.gif" width="50" height="48" border="0" alt="Remember" title="Remember"><br>I remember</a></td>';
+	$HTML .= '	<td nowrap align="center" CLASS="sans" valign="bottom"><a href="https://www.google.ca/search?q=remembrance+day"><img src="/images/poppy.gif" width="50" height="48" border="0" alt="Remember" title="Remember"><br>I remember</a></td>';
 } else {
 	$HTML .= '	<td>';
 	$HTML .= '<div id="followus"><div class="header">Follow us</div><a href="https://news.freshports.org/">Blog</a><br><a href="https://twitter.com/freshports/">Twitter</a><br><a href="https://freshports.wordpress.com/">Status page</a><br></div>';
@@ -881,7 +890,7 @@ function freshports_HEAD_main_items() {
 	<LINK REL="SHORTCUT ICON" HREF="/favicon.ico">
 	<meta name="MSSmartTagsPreventParsing" content="TRUE">
 
-	<link rel="alternate" type="application/rss+xml" title="FreshPorts - The Place For Ports" href="http://' . $_SERVER['HTTP_HOST'] . '/backend/rss2.0.php">
+	<link rel="alternate" type="application/rss+xml" title="FreshPorts - The Place For Ports" href="https://' . $_SERVER['HTTP_HOST'] . '/backend/rss2.0.php">
 
 	<link rel="apple-touch-icon" sizes="57x57" href="/images/apple-icon-57x57.png">
 	<link rel="apple-touch-icon" sizes="60x60" href="/images/apple-icon-60x60.png">
@@ -1578,7 +1587,7 @@ function freshports_DescriptionPrint($description, $encoding_losses, $maxnumline
 	$shortened = freshports_Head($description, $maxnumlines);
 	$HTML  = '<PRE CLASS="code">';
 
-	$HTML .= link_urls(_forDisplay(freshports_wrap($shortened), $Process_PRs));
+	$HTML .= htmlify(_forDisplay(freshports_wrap($shortened)), $Process_PRs);
 
 	$HTML .= '</PRE>';
 
@@ -1670,12 +1679,12 @@ function freshports_UserSendToken($UserID, $dbh) {
 	                "Your token is: $token\n".
     	            "\n".
         	        "Please point your browser at\n".
-					"http://" . $_SERVER["HTTP_HOST"] . "/confirmation.php?token=$token\n" .
+					"https://" . $_SERVER["HTTP_HOST"] . "/confirmation.php?token=$token\n" .
 	                "\n".
     	            "the request came from " . $_SERVER["REMOTE_ADDR"] . ":" . $_SERVER["REMOTE_PORT"] ."\n".
 					"\n".
 					"-- \n".
-					"FreshPorts - http://" . $_SERVER["HTTP_HOST"] . "/ -- $FreshPortsSlogan";
+					"FreshPorts - https://" . $_SERVER["HTTP_HOST"] . "/ -- $FreshPortsSlogan";
 
 		$result = mail($email, "FreshPorts - user registration", $message,
 					"From: webmaster@" . $_SERVER["HTTP_HOST"] . "\nReply-To: webmaster@" . $_SERVER["HTTP_HOST"] . "\nX-Mailer: PHP/" . phpversion());
@@ -1713,23 +1722,23 @@ function freshports_ShowFooter($PhorumBottom = 0) {
 
 <td align="center">
 
-<a href="http://www.freebsd.org/"><img src="/images/pbfbsd2.gif"
+<a href="https://www.freebsd.org/"><img src="/images/pbfbsd2.gif"
 alt="powered by FreeBSD" border="0" width="171" height="64"></a>
 
 &nbsp;
 
-<a href="http://www.php.net/"><img src="/images/php-med-trans-light.gif"
+<a href="https://www.php.net/"><img src="/images/php-med-trans-light.gif"
 alt="powered by php" border="0" width="95" height="50"></a>
 &nbsp;
 
-<a href="http://www.postgresql.org/"><img src="/images/pg-power.jpg"
+<a href="https://www.postgresql.org/"><img src="/images/pg-power.jpg"
 alt="powered by PostgreSQL" border="0" width="164" height="59"></a>
 
 
 </td></tr>
 <tr><td align="center">
 
-<a href="http://www.apache.org/"><img src="/images/apache_pb.gif" 
+<a href="https://www.apache.org/"><img src="/images/apache_pb.gif" 
 alt="powered by apache" border="0" width="259" height="32"></a>
 
 <HR>
@@ -1752,7 +1761,7 @@ alt="powered by apache" border="0" width="259" height="32"></a>
 Valid 
 <a href="https://validator.w3.org/check?uri=' . $URI . '" title="We like to keep our HTML valid" target="_blank">HTML</a>, 
 <a href="https://jigsaw.w3.org/css-validator/validator?uri=' .  $URI . '" title="We like to have valid CSS">CSS</a>, and
-<a href="https://feedvalidator.org/check.cgi?url=http://' . $_SERVER['HTTP_HOST'] . '/backend/rss2.0.php" title="Valid RSS is good too">RSS</a>.
+<a href="https://feedvalidator.org/check.cgi?url=https://' . $_SERVER['HTTP_HOST'] . '/backend/rss2.0.php" title="Valid RSS is good too">RSS</a>.
 </small>
 <br>' . freshports_copyright() . '
 </td></tr>
@@ -1777,7 +1786,7 @@ Valid
 }
 
 function freshports_GoogleAnalytics() {
-	$HTML = '<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+	$HTML = '<script src="https://www.google-analytics.com/urchin.js" type="text/javascript">
 </script>
 <script type="text/javascript">
 _uacct = "UA-408525-1";
@@ -1870,7 +1879,7 @@ function freshports_SideBar() {
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/how-big-is-it.php",   "How big is it?",      "How many pages are in this website?"  ) . '</FONT><br>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/release-2004-10.php", "The latest upgrade!", "Details on the latest website upgrade") . '</FONT><br>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/privacy.php",         "Privacy",             "Our privacy statement"                ) . '</FONT><br>
-	<FONT SIZE="-1"><a href="http://news.freshports.org/" title="All the latest FresHPorts news">Blog</a></FONT><br>
+	<FONT SIZE="-1"><a href="https://news.freshports.org/" title="All the latest FreshPorts news">Blog</a></FONT><br>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/contact.php",         "Contact",             "Contact details"                      ) . '</FONT><br>
 	</td>
 	</tr>
@@ -2098,7 +2107,7 @@ function PeopleWatchingThisPortAlsoWatch($dbh, $element_id) {
 function freshports_RedirectPermanent($URL) {
 	#
 	# My thanks to nne van Kesteren who posted this solution
-	# at http://annevankesteren.nl/archives/2005/01/permanent-redirect
+	# at https://annevankesteren.nl/archives/2005/01/permanent-redirect
 	#
 
 	header("HTTP/1.1 301 Moved Permanently");
@@ -2128,8 +2137,8 @@ function freshports_LastModified_Dynamic() {
 
 function freshports_ConditionalGetUnix($UnixTime) {
 	// A PHP implementation of conditional get, see 
-	//   http://fishbowl.pastiche.org/archives/001132.html
-	// Based upon code from http://simon.incutio.com/archive/2003/04/23/conditionalGet
+	//   https://fishbowl.pastiche.org/archives/001132.html
+	// Based upon code from https://simon.incutio.com/archive/2003/04/23/conditionalGet
 
 	$ETag         = gmdate('Y-m-d H:i:s', $UnixTime);
 	$LastModified = gmdate(LAST_MODIFIED_FORMAT, $UnixTime);
@@ -2170,15 +2179,15 @@ function freshports_ConditionalGetUnix($UnixTime) {
 
 function freshports_ConditionalGet($LastModified) {
 	// A PHP implementation of conditional get, see 
-	//   http://fishbowl.pastiche.org/archives/001132.html
-	// Based upon code from http://simon.incutio.com/archive/2003/04/23/conditionalGet
+	//   https://fishbowl.pastiche.org/archives/001132.html
+	// Based upon code from https://simon.incutio.com/archive/2003/04/23/conditionalGet
 
 	$UnixTime = strtotime($LastModified);
 	freshports_ConditionalGetUnix($UnixTime);
 }
 
 #
-# obtained from http://ca3.php.net/manual/en/function.is-int.php 
+# obtained from https://ca3.php.net/manual/en/function.is-int.php 
 # on 2 August 2005. Posted by phpContrib (A T) esurfers d o t c o m
 # on 06-Nov-2003 03:42
 
@@ -2284,7 +2293,7 @@ function freshports_pathname_to_repo_name($WhichRepo, $pathname)
   switch($WhichRepo)
   {
     case FREEBSD_REPO_SVN:
-      # given ports/www/p5-App-Nopaste/Makefile, we want something like: http://svn.freebsd.org/ports/head/www/p5-App-Nopaste/Makefile
+      # given ports/www/p5-App-Nopaste/Makefile, we want something like: https://svn.freebsd.org/ports/head/www/p5-App-Nopaste/Makefile
       $RepoName = $RepoNames[$WhichRepo];
       $match    = $AdjustPathname[$WhichRepo]['match'];
       $replace  = $AdjustPathname[$WhichRepo]['replace'];
@@ -2300,28 +2309,30 @@ function freshports_pathname_to_repo_name($WhichRepo, $pathname)
 }
 
 function _forDisplay($string, $flags = NULL, $encoding = FRESHPORTS_ENCODING) {
-  # can't put this in the header.  See http://php.net/manual/en/functions.arguments.php
+  # can't put this in the header.  See https://php.net/manual/en/functions.arguments.php
   if ($flags === NULL) {
     $flags = ENT_COMPAT | ENT_HTML401;
   }
   # does special magic for outputing stuff to a webpage.
   # e.g. htmlspecialchars($port->long_description, ENT_COMPAT | ENT_HTML401, 'ISO-8859-15')
 	    
-  return htmlspecialchars($string, $flags, $encoding);
+  $encoded =  htmlspecialchars($string, $flags, $encoding);
+
+  # if htmlspecialchars() fails, you get an empty string.
+  # Report that, but only if the original was not empty.
+  if (empty($encoded) && !empty($string)) {
+     syslog(LOG_ERR, "htmlspecialchars in _forDisplay() failed for '$string'");
+     $encoded = $string;
+  }
+
+  return $encoded;
 }
 
-define('EVERYTHING', 'FreshPorts has everything you want to know about <a href="http://www.freebsd.org/">FreeBSD</a> software, ports, packages,
+define('EVERYTHING', 'FreshPorts has everything you want to know about <a href="https://www.freebsd.org/">FreeBSD</a> software, ports, packages,
 applications, whatever term you want to use.');
 
 openlog('FreshPorts', LOG_PID, LOG_LOCAL3);
 #syslog(LOG_NOTICE, $_SERVER['SCRIPT_URL']);
-
-function link_urls($string) {
-  $res = preg_replace('/https?:\/\/[[:print:]]+/', '<a href="\0" rel="nofollow">\0</a>', $string);
-  $res = preg_replace('/^(PR:[[:blank:]]*)([[:digit:]]+)$/m', '\1<a href="https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=\2" rel="nofollow">\2</a>', $res);
-#  syslog(LOG_NOTICE, 'link_urls: ' . $res);
-  return $res;
-}
 
 function NormalizeBranch($Branch = BRANCH_HEAD) {
   # this function converts 'quarterly' to something like 2019Q2

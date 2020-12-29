@@ -12,8 +12,9 @@
 
 	freshports_ConditionalGet(freshports_LastModified());
 
-	freshports_Start("About this site",
-					"freshports - new ports, applications",
+	$Title = 'About this site';
+	freshports_Start($Title,
+					$Title,
 					"FreeBSD, index, applications, ports");
 
 ?>
@@ -53,7 +54,7 @@ We have a few notes about this website.
 <TR><TD>
 
 <P>A port is the term used to describe a collection of files which makes it extremely
-easy to install an application.  As it says in the <A HREF="http://www.freebsd.org/ports/">
+easy to install an application.  As it says in the <A HREF="https://www.freebsd.org/ports/">
 FreeBSD Ports description</A>: <em>Installing an application is as simple as downloading 
 the port, unpacking it and typing <b>make</b> in the port directory</em>. If you want an application, 
 the port is the Way To Go(TM)</P>
@@ -62,7 +63,7 @@ the port is the Way To Go(TM)</P>
 And you love that new application.  And you want to know when the port is updated.  That's where
 we come in.</P>
 
-<P>For more information about the Ports tree, see <A HREF="http://www.freebsd.org/ports/">http://www.freebsd.org/ports/</A>.</P>
+<P>For more information about the Ports tree, see <A HREF="https://www.freebsd.org/ports/">https://www.freebsd.org/ports/</A>.</P>
 
 </TD></TR>
 
@@ -102,10 +103,10 @@ create ports.  We do not fix ports.  We just tell you what others have been doin
 
 <TR><TD>
 <P>This site was created by Dan Langille.  His other web feats include 
-<A HREF="http://www.freebsddiary.org/">The FreeBSD Diary</A>, <a 
-href="http://www.racingsystem.com">The Racing System</A>, 
-<a href="http://www.bsdcan.org/">BSDCan</a>, and an ability
-to avoid reading the inane comments on <A HREF="http://slashdot.org">slashdot</A>.
+<A HREF="https://www.freebsddiary.org/">The FreeBSD Diary</A>, <a 
+href="https://www.racingsystem.com">The Racing System</A>, 
+<a href="https://www.bsdcan.org/">BSDCan</a>, and an ability
+to avoid reading the inane comments on <A HREF="https://slashdot.org">slashdot</A>.
 But Dan didn't create the site all by himself.  Have a look at <A HREF="authors.php">
 About the Authors</A> for details of who else helped.</P>
 </TD></TR>

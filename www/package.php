@@ -14,7 +14,7 @@
 	$Title = 'Search by package';
 
 	freshports_Start("$Title",
-					"freshports - new ports, applications",
+					$Title,
 					"FreeBSD, index, applications, ports");
 
 	if (IsSet($_REQUEST['notfound'])) $notfound = 1;
@@ -40,10 +40,11 @@
 
 <?php
 if ($notfound) {
+$packages_html = htmlspecialchars($package);
 ?>
-The package specified ('<?php echo $package; ?>') could not be found.  We have a few suggestions.
+The package specified ('<?php echo $packages_html; ?>') could not be found.  We have a few suggestions.
 <ul>
-<li><a href="<?php echo $Searches->GetDefaultSearchStringPackage($package); ?>">Search</a> for ports containing '<?php echo $package; ?>' in their name.
+<li><a href="<?php echo $Searches->GetDefaultSearchStringPackage($packages_html); ?>">Search</a> for ports containing '<?php echo $packages_html; ?>' in their name.
 </ul>
 <?php
 } else {

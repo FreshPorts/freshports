@@ -10,12 +10,19 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
-	freshports_Start('Statistics - everyone loves a graph',
-					'freshports - new ports, applications',
+	$Title = 'Statistics 2 - everyone loves a graph';
+	freshports_Start($Title,
+					$Title,
 					'FreeBSD, index, applications, ports');
 ?>
 	<script src="/javascript/jquery-3.5.0.min.js"></script>
+	<script src="/javascript/jquery.canvaswrapper.js"></script>
+	<script src="/javascript/jquery.colorhelpers.js"></script>
 	<script src="/javascript/jquery.flot.js"></script>
+	<script src="/javascript/jquery.flot.saturated.js"></script>
+	<script src="/javascript/jquery.flot.browser.js"></script>
+	<script src="/javascript/jquery.flot.drawSeries.js"></script>
+	<script src="/javascript/jquery.flot.uiConstants.js"></script>
 	<script src="/javascript/graphs.js"></script>
 
 	<?php echo freshports_MainTable(); ?>

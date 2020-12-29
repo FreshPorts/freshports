@@ -17,9 +17,10 @@ define('CACHE_PORT_DETAIL',  'Detail');
 
 class CachePort extends Cache {
 
-	const CacheCategory = 'ports';
-	const CachePartOne  = 'Part1';
-	const CachePartTwo  = 'Part2';
+	const CacheCategory  = 'ports';
+	const CachePartOne   = 'Part1';
+	const CachePartTwo   = 'Part2';
+	const CachePartThree = 'Part3';
 
 	var $PageSize = 100;
 
@@ -78,6 +79,7 @@ class CachePort extends Cache {
 		switch($CachePart) {
 			case self::CachePartOne:
 			case self::CachePartTwo:
+			case self::CachePartThree:
 				break;
 			default:
 				exit('unknown CachePart passed to ' . __FUNCTION__ . ' in ' . __FILE__  . $CachePart);
@@ -90,6 +92,6 @@ class CachePort extends Cache {
 	function _CacheFileName($key) {
 		return $this->CacheDir . '/'. $key;
 	}
-	
+
 
 }

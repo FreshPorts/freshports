@@ -128,8 +128,9 @@ if (IsSet($submit)) {
    }
 }
 
-   freshports_Start('Forgotten password',
-               'freshports - new ports, applications',
+   $Title = 'Forgotten password';
+   freshports_Start($Title,
+               $Title,
                'FreeBSD, index, applications, ports');
 ?>
 

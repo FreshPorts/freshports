@@ -230,7 +230,7 @@ You may wish to help me test new FreshPorts features or even just get a sneak
 peek at them.  If so, I urge you to join the new Beta mailing list.  This
 will be a low volume list which broadcasts details of new features which
 you can try out before they hit the main website.  To subscribe, follow
-the directions found on the <a href="http://lists.freshports.org/mailman/listinfo/">FreshPorts mailing list website</a>
+the directions found on the <a href="https://lists.freshports.org/mailman/listinfo/">FreshPorts mailing list website</a>
 
 <hr>
 

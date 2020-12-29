@@ -53,8 +53,9 @@
 
 	freshports_ConditionalGet($last_modified);
 
-	freshports_Start($FreshPortsSlogan,
-					$FreshPortsName . ' - new ports, applications',
+	$Title = "Commits for $Date" ;
+	freshports_Start($FreshPortsSlogan . ' - ' . $Title,
+					$Title,
 					'FreeBSD, index, applications, ports');
 
 	function ArchiveFileName($Date, $BranchName = BRANCH_HEAD) {

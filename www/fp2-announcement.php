@@ -13,7 +13,7 @@
 	$Title = "New Release - 22 February 2002";
 
 	freshports_Start($Title,
-					'freshports - new ports, applications',
+					$Title,
 					'FreeBSD, index, applications, ports');
 
 ?>
@@ -97,7 +97,7 @@ The following items deal with the technical changes which have occurred.
 <TR>
 <TD NOWRAP VALIGN="top" ALIGN="right"><B>database</B></TD>
 	<TD>
-	FreshPorts now uses <A HREF="http://www.postgresql.org/">PostgreSQL</A>.  Why?  Because
+	FreshPorts now uses <A HREF="https://www.postgresql.org/">PostgreSQL</A>.  Why?  Because
 	of stored procedures and transactions (yes, we know mySQL now has transactions, but it
 	didn't when we started this...).
 	</TD></TR>
@@ -106,7 +106,7 @@ The following items deal with the technical changes which have occurred.
 <TD NOWRAP VALIGN="top" ALIGN="right"><B>XML</B></TD>
 	<TD>
 	Input for FreshPorts is first converted to XML, then processed.  This will be of great
-	benefit to <A HREF="http://www.FreshSource.org/">FreshSource</A> which is the next big
+	benefit to <A HREF="https://www.FreshSource.org/">FreshSource</A> which is the next big
 	project.
 	</TD></TR>
 

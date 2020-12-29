@@ -1,5 +1,21 @@
 <?php
 
+function PathnameDiffers($Path1, $Path2) {
+    # if the two paths are different, we might want to redirect
+    # if one path ends in a / and the other does not, adjust them
+    if (substr($Path1, -1) == '/') {
+        if (substr($Path2, -1) != '/') {
+	    $Path2 .= '/';
+	}
+    } else {
+        if (substr($Path2, -1) == '/') {
+	    $Path1 .= '/';
+	}
+    }
+
+    return $Path1 != $Path2;
+}
+
 function freshports_Parse404URI($REQUEST_URI, $db) {
 	#
 	# we have a pending 404
@@ -64,12 +80,36 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 		$pathname = substr($pathname, 6);
 	}
 
+	# remove trailing /
+	$pathname = rtrim($pathname, '/');
+
 	define('PATH_NAME', $pathname);
 
 	# let's see if this is a category.
-	if ($ElementRecord->FetchByName('/ports/head/' . $pathname)) {
+	if ($ElementRecord->FetchByName(FRESHPORTS_PORTS_TREE_PREFIX . PATH_NAME, 0)) {
 		$IsElement = true;
 		if ($Debug) echo 'we found an element for that<br>';
+		if ($Debug) echo "we have: '$ElementRecord->element_pathname'<br>";
+		if ($Debug) echo " we had: '" . FRESHPORTS_PORTS_TREE_PREFIX . PATH_NAME . "'<br>";
+		if (PathnameDiffers($ElementRecord->element_pathname . '/', FRESHPORTS_PORTS_TREE_PREFIX . PATH_NAME)) {
+			# in a case insensitive search, we want to redirect if the case was wrong
+			if ($Debug) echo "we are redirecting to '" . $ElementRecord->element_pathname . "/'<br>";
+			if ($Debug) echo 'which normalizes to ' . str_replace(FRESHPORTS_PORTS_TREE_PREFIX, '/', $ElementRecord->element_pathname . '/<br>');
+			$https = ((!empty($_SERVER['HTTPS'])) && ($_SERVER['HTTPS'] != 'off'));
+			if ($https) {
+				$protocol = "https";
+			} else {
+				$protocol = "http";
+			}
+
+			header("HTTP/1.1 301 Moved Permanently");
+			header('Location: ' . $protocol . '://' . $_SERVER['HTTP_HOST'] . str_replace(FRESHPORTS_PORTS_TREE_PREFIX, '/', $ElementRecord->element_pathname . '/'));
+			exit;
+		}
+	}
+
+	if ($IsElement) {
+		if ($Debug) echo 'checking if this is a Category<br>';
 		if ($ElementRecord->IsCategory()) {
 			$IsCategory = true;
 			if ($Debug) echo 'This is a category<br>';
@@ -84,15 +124,16 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 
 	# if this is not a category, let's check for details on what might be a port
 	if (!$IsCategory) {
-		if ($Debug) echo 'checking ' . FRESHPORTS_PORTS_TREE_PREFIX . $pathname . ' to see what we find<br>';
-		if ($ElementRecord->FetchByName(FRESHPORTS_PORTS_TREE_PREFIX . $pathname)) {
+		if ($Debug) echo 'checking ' . FRESHPORTS_PORTS_TREE_PREFIX . PATH_NAME . ' to see what we find<br>';
+		# if ($ElementRecord->FetchByName(FRESHPORTS_PORTS_TREE_PREFIX . PATH_NAME, 0)) {
+		if ($IsElement) {
 			if ($Debug) echo 'we found an element for that, therefore, there must be commits!<br>';
 			$IsElement          = true;
 			$HasCommitsOnBranch = true; // this is true even if the branch is head
 		} else {
 			if ($Branch != BRANCH_HEAD) {
 				if ($Debug) echo 'trying on head next<br>';
-				if ($ElementRecord->FetchByName('/ports/head/' . $pathname)) {
+				if ($ElementRecord->FetchByName(FRESHPORTS_PORTS_TREE_PREFIX . PATH_NAME, 0)) {
 					$IsElement          = true;
 					$HasCommitsOnBranch = false;
 				}
@@ -122,6 +163,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 
 		if ($ElementRecord->IsPort()) {
 			$IsPort = true;
+
 			# we don't use list($category, $port) so we don't have to worry
 			# about extra bits
 			$PathParts = explode('/', PATH_NAME);

@@ -28,19 +28,19 @@ class CacheCommit extends Cache {
 		$this->PageSize = $PageSize;
 	}
 
-	function RetrieveCommit($MessageId, $PageNum = 1) {
-		$this->_Log("CacheCommit: Retrieving for $MessageId $PageNum");
-		$Key = $this->_CommitKey($MessageId, $PageNum);
+	function RetrieveCommit($MessageId, $category = '', $port = '', $files = 'n') {
+		$this->_Log("CacheCommit: Retrieving for message_id='$MessageId' category='$category' port='$port' files='$files'");
+		$Key = $this->_CommitKey($MessageId, $category, $port, $files);
 		$result = parent::Retrieve($Key);
 
 		return $result;
 	}
 
-	function AddCommit($MessageId, $PageNum = 1) {
-		$this->_Log("CacheCommit: Adding for $MessageId $PageNum");
+	function AddCommit($MessageId, $category = '', $port = '', $files = 'n') {
+		$this->_Log("CacheCommit: Adding for message_id='$MessageId' category='$category' port='$port' files='$files'");
 
 		$CacheDir = $this->CacheDir . '/' . self::CacheCategory . '/' . $MessageId;
-		$Key = $this->_CommitKey($MessageId, $PageNum);
+		$Key = $this->_CommitKey($MessageId, $category, $port, $files);
 		 
 		if (!file_exists($CacheDir)) {
 			$this->_Log("CacheCommit: creating directory $CacheDir");
@@ -64,15 +64,15 @@ class CacheCommit extends Cache {
 		# the wild card allows us to remove all cache entries for this port
 		# regardless of the CacheType or page number
 		#
-		$Key = $this->_CommitKey($MessageId, $PageNum);
+		$Key = $this->_CommitKey($MessageId, $category, $port, $files);
 		$result = parent::Remove($Key, $data);
 
 		return $result;
 	}
 
-	function _CommitKey($MessageId, $PageNum = 1) {
+	function _CommitKey($MessageId, $category, $port, $files) {
 		// might want some parameter checking here
-		$Key = self::CacheCategory . "/$MessageId.PageSize$this->PageSize.PageNum$PageNum.html";
+		$Key = self::CacheCategory . "/$MessageId/$MessageId.$category.$port.$files.html";
 
 		return $Key;
 	}
@@ -80,6 +80,6 @@ class CacheCommit extends Cache {
 	function _CacheFileName($key) {
 		return $this->CacheDir . '/'. $key;
 	}
-	
+
 
 }

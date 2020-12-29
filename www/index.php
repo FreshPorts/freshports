@@ -26,7 +26,10 @@
 
 	if ($Debug) echo 'Branch is ' . $Branch . '<br>';
 
-	$OnLoad = 'setfocus()';
+	if ($User->set_focus_search) {
+		$OnLoad = 'setfocus()';
+	}
+
 	#
 	# If they supply a package name, go for it.
 	#
@@ -74,9 +77,9 @@ function setfocus() { document.f.query.focus(); }
 </script>
 
 <?php
-
-	freshports_Start($FreshPortsSlogan,
-					$FreshPortsName . ' - new ports, applications',
+	$Title = 'Most recent commits';
+	freshports_Start($FreshPortsSlogan . " - $Title",
+					$Title,
 					'FreeBSD, index, applications, ports');
 if ($Debug) echo "\$User->id='$User->id'";
 
@@ -165,7 +168,7 @@ if ($db) {
 	$UseCache = FALSE;
 	$FileName = "index.html.$Branch";
 	if ($User->id != '') {
-	  echo 'we should look for the user index page';
+	  if ($Debug) echo 'we should look for the user index page';
 	  # if the user is logged in, cache their stuff.
 	  $FileName .= '.' . $User->id;
 	}

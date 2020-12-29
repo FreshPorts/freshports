@@ -10,8 +10,8 @@
 	header("HTTP/1.1 404 NOT FOUND");
 
 	$Title = 'Document not found';
-	freshports_Start($Title,
-					$FreshPortsTitle . ' - new ports, applications',
+	freshports_Start($Title . ' 404 page',
+					$FreshPortsTitle . ' - 404 page',
 					'FreeBSD, index, applications, ports');
 					
 ?>

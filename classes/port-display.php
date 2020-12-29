@@ -16,6 +16,7 @@ define('port_display_WATCH_LIST_ADD_REMOVE', '%%%$$$WATCHLIST$$$%%%');
 define('port_display_AD',                    '%%%$$$ADGOESHERE$$$%%%');
 define('DEPENDS_SUMMARY', 7 );
 define('PLIST_SUMMARY',   0 );
+define('DISTINFO_LINES',   3 );
 
 class port_display {
 
@@ -56,6 +57,16 @@ class port_display {
 	var $ShowUses;
 	var $ShowWatchListCount;
 	var $ShowWatchListStatus;
+
+	# taken from https://www.php.net/manual/en/function.strpos.php
+	function strpos_nth(string $string, string $needle, int $occurrence, int $offset = null) {
+	        if ((0 < $occurrence) && ($length = strlen($needle))) {
+		        do {
+		        } while ((false !== $offset = strpos($string, $needle, $offset)) && --$occurrence && ($offset += $length));
+		        return $offset;
+	        }
+	        return false;
+	}
 
 	function __construct(&$db, $User = 0, $Branch = BRANCH_HEAD) {
 		$this->db     = $db;
@@ -189,7 +200,7 @@ class port_display {
 
 	function link_to_repo_svn() {
           # we want something like
-          # http://svn.freebsd.org/ports/head/x11-wm/awesome/
+          # https://svn.freebsd.org/ports/head/x11-wm/awesome/
           $link_title = 'SVNWeb';
           $link = 'https://' . DEFAULT_SVN_REPO;
 
@@ -442,9 +453,34 @@ class port_display {
 		return $result;
 	}
 
+	function DisplayDependencyLine() {
+		$port = $this->port;
+
+		$HTML = '';
+
+		// if USES= contains python
+		$USES_PYTHON = in_array(USES_PYTHON, preg_split('/\s+|:/', $port->uses));
+
+		// We split on both whitespace and : to cater for python:3.6+
+		if ($USES_PYTHON) {
+			// split off the prefix, everthing before the first -, inclusive
+			$package_name_parts=explode('-', $port->package_name, 2);
+			$HTML .=  '${PYTHON_PKGNAMEPREFIX}' . $package_name_parts[1];
+		} else {
+			$HTML .= $port->package_name;
+		}
+
+		$HTML .= '>0:' . $this->DisplayPlainText();
+		if ($USES_PYTHON) {
+			$HTML .= '@${PY_FLAVOR}';
+		}
+
+		return $HTML;
+	}
+
 	function packageToolTipText($last_checked, $repo_date, $processed_date) {
 		# last_checked    - when we last checked for an update
-		# repo_date       - date on packagesite.txz (e.g. http://pkg.freebsd.org/FreeBSD:11:amd64/latest/
+		# repo_date       - date on packagesite.txz (e.g. https://pkg.freebsd.org/FreeBSD:11:amd64/latest/
 		# processed_date  - when the above mentioned data was last parsed into FreshPorts
 
 		$title = "Repo dates\n";
@@ -573,6 +609,8 @@ class port_display {
 
 			# link to https://repology.org : re https://github.com/FreshPorts/freshports/issues/148
 			$HTML .= ' ' . freshports_Repology_Link($port->category . '/' . $port->port);
+
+			$HTML.= ' ' . freshports_Fallout_Link($port->category, $port->port);
 
 			$HTML .=  ' <span class="tooltip">'. $port->quarterly_revision . '<span class="tooltiptext tooltip-top">Version of this port present on the latest quarterly branch.';
 			if ($port->IsSlavePort()) $HTML .= ' NOTE: Slave port - quarterly revision is most likely wrong.';
@@ -710,6 +748,7 @@ class port_display {
 			} else {
 				$HTML .= "unknown";
 			}
+
 			$HTML .= '</font></dt>' . "\n";
 		}
 
@@ -766,7 +805,7 @@ class port_display {
 
 		# sometimes the description can get very wide. This causes problems on mobile.
 		if ($this->ShowDescriptionLong || $this->ShowEverything) {
-			$HTML .= '<dt class="description">Description:</dt><dd class="like-pre">' . htmlify(_forDisplay($port->long_description)) . '</dd>';
+			$HTML .= '<dt class="description" id="description">Description:</dt><dd class="like-pre">' . htmlify(_forDisplay($port->long_description)) . '</dd>';
 		}
 
 		# this if covers several items, and wraps them in dt tags
@@ -803,8 +842,10 @@ class port_display {
 
 		if ($this->ShowEverything || $this->ShowBasicInfo) {
 
-			$HTML .= '<dt class="pkg-plist"><b>Dependency lines</b>:</dt>';
-			$HTML .= '<dd class="pkg-plist">' . "\n" . '<ul class="pkg-plist"><li class="file">' . $port->package_name . '>0:' . $this->DisplayPlainText() . '</li>';
+
+			$HTML .= '<dd class="pkg-plist">' . "\n" . '<ul class="pkg-plist"><li class="file">';
+			$HTML .= $this->DisplayDependencyLine();
+			$HTML .= '</li>';
 
 			// pkg_plist_library_matches is a JSON array
 			$lib_depends = json_decode($port->pkg_plist_library_matches, true);
@@ -901,10 +942,30 @@ class port_display {
 			}
 
 			if ($this->ShowEverything || $this->ShowDistInfo) {
-				$HTML .= '<dt><b>distinfo:</b></dt>';
+				$HTML .= '<dt id="distinfo"><b>distinfo:</b></dt>';
 
 				if ($port->distinfo) {
-					$HTML .= '<dd class="like-pre">' . $port->distinfo . '</dd>';
+					$distinfo_line_count = substr_count( $port->distinfo, "\n" );
+					if ($distinfo_line_count <= DISTINFO_LINES) {
+						$HTML .= '<dd class="like-pre">';
+						$HTML .= $port->distinfo;
+						$HTML .= '</dd>';
+					} else {
+						# show only the first three lines, collpse the rest
+						$nth_line = $this->strpos_nth($port->distinfo, "\n", 3);
+
+						$HTML .= '<dd class="like-pre">';
+						$HTML .= substr($port->distinfo, 0, $nth_line);
+						$HTML .= '<p><a href="#" id="distinfo-Extra-show" class="showLink" onclick="showHide(\'distinfo-Extra\');return false;">Expand this list (' . ($distinfo_line_count - DISTINFO_LINES + 1) . ' items)</a></p>';
+						$HTML .= '</dd>';
+
+						$HTML .= '<dd id="distinfo-Extra" class="more distinfo like-pre">';
+						$HTML .= '<p><a href="#" id="distinfo-Extra-hide" class="hideLink" onclick="showHide(\'distinfo-Extra\');return false;">Collapse this list.</a></p>';
+						$HTML .= substr($port->distinfo, $nth_line + 1);
+
+						$HTML .= '<p><a href="#" id="distinfo-Extra-hide" class="hideLink" onclick="showHide(\'distinfo-Extra\');return false;">Collapse this list.</a></p>';
+						$HTML .= '</dd>';
+					}
 				} else {
 					$HTML .= '<dd>There is no distinfo for this port.</dd>' . "\n";
 				}
@@ -924,7 +985,7 @@ class port_display {
 		###############################################
 
 		if ($this->ShowEverything || $this->ShowPackages) {
-			$HTML .= '<dt id="packages"><b>Packages:</b></dt>';
+			$HTML .= '<dt id="packages"><b>Packages: </b>(move your mouse over the cells for more information)</dt>';
 
 			$packages = new Packages($this->db);
 			$numrows = $packages->Fetch($this->port->id);
@@ -956,10 +1017,11 @@ class port_display {
 
 						# If showing a - for the version, center align it
 						$title = $this->packageToolTipText($package_line['last_checked_latest'], $package_line['repo_date_latest'], $package_line['processed_date_latest']);
-						$HTML .= '<td class="version" ' . ($package_version_latest    == '-' ? ' align ="center"' : '') . '><span title="' . $title . '">' . $package_version_latest    . '</span></td>';
+						$HTML .= '<td class="version" ' . ($package_version_latest    == '-' ? ' align ="center"' : '') . ' title="' . $title . '">' . $package_version_latest    . '</td>';
 
 						$title = $this->packageToolTipText($package_line['last_checked_quarterly'], $package_line['repo_date_quarterly'], $package_line['processed_date_quarterly']);
-						$HTML .= '<td class="version" ' . ($package_version_quarterly == '-' ? ' align ="center"' : '') . '><span title="' . $title . '">' . $package_version_quarterly . '</span></td></tr>';
+						$HTML .= '<td class="version" ' . ($package_version_quarterly == '-' ? ' align ="center"' : '') . ' title="' . $title . '">' . $package_version_quarterly . '</td>';
+						$HTML .= '</tr>';
 					}
 					$HTML .= '</table>&nbsp;';
 
@@ -1009,7 +1071,7 @@ class port_display {
 		if ($this->ShowDepends || $this->ShowEverything) {
 			$HTML .= "</dl>\n<hr><dl>\n";
 			if ($port->depends_build || $port->depends_run || $port->depends_lib) {
-				$HTML .= '<dt class="h2">Dependencies</dt>';
+				$HTML .= '<dt class="h2" id="dependencies">Dependencies</dt>';
 				$HTML .= '<dt class="notice">NOTE: FreshPorts displays only information on required and default dependencies.  Optional dependencies are not covered.</dt>';
 			}
 
@@ -1056,7 +1118,7 @@ class port_display {
 
 		if ($this->ShowEverything || $this->ShowConfig) {
 			$HTML .= "</dl>\n<hr>\n<dl>";
-			$HTML .= "<dt><b>Configuration Options</b></dt>\n" . '<dd class="like-pre">';
+			$HTML .= '<dt id="config"><b>Configuration Options</b></dt>' . "\n" . '<dd class="like-pre">';
 			if ($port->showconfig) {
 				$HTML .= $port->showconfig;
 			} else {
@@ -1066,7 +1128,7 @@ class port_display {
 		}
 
 		if (($this->ShowEverything || $this->ShowUses) && $port->uses) {
-			$HTML .= "</dl><hr><dl><dt><b>USES:</b></dt>\n" . '<dd class="like-pre">';
+			$HTML .= '</dl><hr><dl><dt id="uses"><b>USES:</b></dt>' . "\n" . '<dd class="like-pre">';
 			$HTML .= $port->uses;
 			$HTML .= "</dd>\n</dl>\n<hr>\n<dl>";
 		}
@@ -1076,15 +1138,22 @@ class port_display {
 		}
 
 		if ($this->ShowEverything || $this->ShowMasterSites) {
-			$HTML .= '<dt><b>Master Sites:</b></dt>' . "\n" . '<dd><ol class="mastersites" id="mastersites">' . "\n";
+			$HTML .= '<dt id="sites"><b>Master Sites:</b></dt>' . "\n" . '<dd>';
+
 			if (!empty($port->master_sites)) {
 
-			  $MasterSites = explode(' ', $port->master_sites);
-			  asort($MasterSites);
-			  foreach ($MasterSites as $Site) {
-				$HTML .= '<li>' . htmlify(_forDisplay($Site)) . "</li>\n";
-			  }
+				$MasterSites = explode(' ', $port->master_sites);
+				asort($MasterSites);
+				$HTML .= '<a href="#" id="mastersites-Extra-show" class="showLink" onclick="showHide(\'mastersites-Extra\');return false;">Expand this list (' . count($MasterSites) . ' items)</a>';
+				$HTML .= '<dd id="mastersites-Extra" class="more mastersites">';
+				$HTML .= '<ol class="mastersites" id="mastersites">' . "\n";
+				$HTML .= '<a href="#" id="mastersites-Extra-hide" class="hideLink" onclick="showHide(\'mastersites-Extra\');return false;">Collapse this list.</a>';
+				foreach ($MasterSites as $Site) {
+					$HTML .= '<li>' . htmlify(_forDisplay($Site)) . "</li>\n";
+			  	}
 
+				$HTML .= '<a href="#" id="mastersites-Extra-hide" class="hideLink" onclick="showHide(\'mastersites-Extra\');return false;">Collapse this list.</a>';
+				$HTML .= '</dd>';
 			} else {
 			  $HTML .= '<li>There is no master site for this port.</li>';
 			}
@@ -1183,7 +1252,7 @@ class port_display {
 							$div .= '<a href="#" id="RequiredBy' . $title . 'Extra-show" class="showLink" onclick="showHide(\'RequiredBy' .
 							        $title . 'Extra\');return false;">Expand this list (' . $NumRows . ' items / ' . ($NumRows - DEPENDS_SUMMARY) . ' hidden)</a>';
 							$div .= '<ol id="RequiredBy' . $title . 'Extra" class="depends more" start="' . ($i + 1) . '" style="margin-top: 0px">';
-							$div .= '<li class="nostyle"><a href="#" id="RequiredBy' . $title . 'Extra-hide2" class="hideLink" onclick="showHide(\'RequiredBy' . $title . 'Extra\');return false;" >Collapse this list.</a></li>';
+							$div .= '<a href="#" id="RequiredBy' . $title . 'Extra-hide" class="hideLink" onclick="showHide(\'RequiredBy' . $title . 'Extra\');return false;" >Collapse this list. </a>';
 							# yes, we have started hiding things.
 							$hidingStarted = true;
 						}
@@ -1261,6 +1330,7 @@ class port_display {
 				$div .= '<a href="#" id="configureplist-Extra-show" class="showLink" onclick="showHide(\'configureplist-Extra\');return false;">Expand this list (' . $NumRows . ' items)</a>';
 				$div .= '</dd>';
 				$div .= '<dd id="configureplist-Extra" class="more pkg-plist">';
+				$div .= '<a href="#" id="configureplist-Extra-hide" class="hideLink" onclick="showHide(\'configureplist-Extra\');return false;">Collapse this list.</a>';
 				$div .= "\n" . '<ol class="configure" id="configureplist">' . "\n";
 
 				for ( $i = 0; $i < $NumRows; $i++ ) {
@@ -1290,7 +1360,7 @@ class port_display {
 		$PackageFlavors = new PackageFlavors( $this->db );
 		$NumRows = $PackageFlavors->FetchInitialise( $this->port->id );
 		if ( $NumRows > 0 ) {
-			$HTML = '<dt class="flavors"><b>Package flavors</b> (<span class="file">&lt;flavor&gt;: &lt;package&gt;</span>)</dt>';
+			$HTML = '<dt class="flavors" id="flavors"><b>Package flavors</b> (<span class="file">&lt;flavor&gt;: &lt;package&gt;</span>)</dt>';
 			// if this is our first output, put up our standard header
 			$HTML .= '<dd><ul>';
 			for ( $i = 0; $i < $NumRows; $i++ ) {
@@ -1302,7 +1372,7 @@ class port_display {
 		}
 
 		if ( $NumRows == 0 ) {
-			$HTML .= '<dt class="flavors"><b>Flavors:</b> there is no flavor information for this port.</dt>';
+			$HTML .= '<dt class="flavors" id="flavors"><b>Flavors:</b> there is no flavor information for this port.</dt>';
 		}
 
 		return $HTML;

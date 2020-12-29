@@ -12,8 +12,9 @@
 
 	freshports_ConditionalGet(freshports_LastModified());
 
-	freshports_Start('The Authors',
-					'freshports - new ports, applications',
+	$Title = 'The Authors';
+	freshports_Start($Title,
+					$Title,
 					'FreeBSD, index, applications, ports');
 
 ?>
@@ -33,13 +34,13 @@
 ?>
 </CENTER>
 
-<p><a href="http://www.langille.org/">Dan Langille</a> thought up the idea, found the data sources, bugged people to 
+<p><a href="https://www.langille.org/">Dan Langille</a> thought up the idea, found the data sources, bugged people to 
 write scripts, and did the html and database work. But he certainly didn't 
 do it alone.</p>
 
 <p>
 The details of day-to-day changes, bug fixes, challenges, and new features
-are documented on the <a href="http://news.freshports.org/">news blog</a>.
+are documented on the <a href="https://news.freshports.org/">news blog</a>.
 
 <H2>FreshPorts 2</H2>
 
@@ -54,7 +55,7 @@ are documented on the <a href="http://news.freshports.org/">news blog</a>.
 <LI>Jonathan Sage helped to reclaim some missing ports by writing some perl code to pull
     things out of CVS.</LI>
 
-<LI>Dan Peterson showed me the wonders of <A HREF="http://cr.yp.to/daemontools.html">Daemon Tools</A>
+<LI>Dan Peterson showed me the wonders of <A HREF="https://cr.yp.to/daemontools.html">Daemon Tools</A>
     which handles the processing of incoming messages and refreshes the main web page.</LI>
 
 <LI>Josef Karthauser for helping me through the cvs-all log format and for greatly simplifying the
@@ -95,7 +96,7 @@ also showed me the PERL dbi->quote() function.</LI>
 
 <LI>John Beige did the logo you see at the top of the page.</LI>
 
-<LI>Wolfram Schneider's <a href="http://www.freebsd.org/cgi/ports.cgi">FreeBSD Ports Changes</a>
+<LI>Wolfram Schneider's <a href="https://www.freebsd.org/cgi/ports.cgi">FreeBSD Ports Changes</a>
 page provided much of the basis for this site.</LI>
 	
 <LI>Jay gave me the box on which FreshPorts runs.  Thanks.</LI>

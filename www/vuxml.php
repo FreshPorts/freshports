@@ -10,7 +10,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
-	define('VUXMLURL',     'http://www.vuxml.org/freebsd/');
+	define('VUXMLURL',     'https://www.vuxml.org/freebsd/');
 	define('VUXMLREVISION', HTML_DIRECTORY . '/vuxml_revision');
 
 

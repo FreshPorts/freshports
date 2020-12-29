@@ -46,7 +46,7 @@ class VuXML {
 				$this->FetchPackages();
 				$this->FetchReferences();
 			} else {
-				die('I found ' . $numrows . ' entries for ' . $VID . '. There should be only one.');
+				die('<p>I found ' . $numrows . ' entries for ' . htmlspecialchars($VID) . '.</p><p>There should be only one.</p>');
 			}
 		} else {
 			echo 'VuXML SQL failed: ' . $result . pg_last_error();

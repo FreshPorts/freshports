@@ -12,8 +12,9 @@
 
 	freshports_ConditionalGet(freshports_LastModified());
 
-	freshports_Start('FAQ',
-					'freshports - new ports, applications',
+	$Title = 'Frequently Asked Questions';
+	freshports_Start('FAQ' . " ($Title)",
+					$Title,
 					'FreeBSD, index, applications, ports');
 
 	$ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['HTTP_HOST']);
@@ -81,8 +82,8 @@ down you must read to find something you didn't already know.</P>
 
 	<TR><TD>
 	<p>
-	You should be familiar with the <a href="http://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/ports.html">Ports</a>
-	section of <a href="http://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/index.html">The FreeBSD Handbook</a>.
+	You should be familiar with the <a href="https://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/ports.html">Ports</a>
+	section of <a href="https://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/index.html">The FreeBSD Handbook</a>.
 	Pay careful attention to the difference between a port and a package.
 
 	<h2>Definitions for the hopelessly lazy</h2>
@@ -169,7 +170,7 @@ down you must read to find something you didn't already know.</P>
 	instructions for building the application, and the installation
 	procedure.  Removing an installed port is also easy.  For full
 	details on how to use ports, please refer to the official port
-	documents in the <A HREF="http://www.FreeBSD.org/handbook/">FreeBSD
+	documents in the <A HREF="https://www.FreeBSD.org/handbook/">FreeBSD
 	Handbook</A>.
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
@@ -189,7 +190,7 @@ down you must read to find something you didn't already know.</P>
 
 	<TR><TD>The official mailing list is freebsd-ports&#64;freebsd.org.
 		More information all FreeBSD mailing lists can be obtained
-		from <A HREF="http://www.FreeBSD.org/handbook/eresources.html#ERESOURCES-MAIL">FreeBSD Mailing Lists</A>.
+		from <A HREF="https://www.FreeBSD.org/handbook/eresources.html#ERESOURCES-MAIL">FreeBSD Mailing Lists</A>.
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
@@ -197,7 +198,7 @@ down you must read to find something you didn't already know.</P>
 </TR>
 
 	<TR><TD>For full information on how to obtain the ports which appear on
-	this website, please see <A HREF="http://www.FreeBSD.org/ports/">FreeBSD Ports</A>.
+	this website, please see <A HREF="https://www.FreeBSD.org/ports/">FreeBSD Ports</A>.
 	The easiest way to get a port is via cvsup.  An abbreviated example is
 
 	<BLOCKQUOTE>
@@ -212,7 +213,7 @@ down you must read to find something you didn't already know.</P>
 	<TR><TD>
 	The source code for the entire FreeBSD operating system and the Ports tree
 	are stored in the official <A HREF="<?echo FRESHPORTS_FREEBSD_CVS_URL; ?>">FreeBSD 
-	repository</A>.  Each time a change is committed to this <A HREF="http://cvshome.org/">CVS</A>
+	repository</A>.  Each time a change is committed to this CVS (at one time, this was a link to cvshome.org, which is no longer related to a repo)
 	repository, a mail message is sent out to the cvs-all mailing list.  FreshPorts
 	takes these mail messages, parses them, and then loads them into a database.
 	In theory, it's fairly straight forward.  In practice, there's much more to
@@ -237,7 +238,7 @@ down you must read to find something you didn't already know.</P>
 		HTML is a good place to start:
 
 		<BLOCKQUOTE>
-		<CODE CLASS="code">&lt;A HREF="http://www.freshports.org/"&gt;FreshPorts&lt;/A&gt;</CODE>
+		<CODE CLASS="code">&lt;A HREF="https://www.freshports.org/"&gt;FreshPorts&lt;/A&gt;</CODE>
 		</BLOCKQUOTE>
 
 		<P>Here is a banner which you are free to use to link to this site:</P>
@@ -262,7 +263,10 @@ down you must read to find something you didn't already know.</P>
 
 	<TR><TD>
 	There are a few symbols you will see in this website.
-	<BLOCKQUOTE>
+
+	<P><?php echo freshports_Fallout_Icon() ?>
+		Fallout: a link to search the pkg-fallout archives for this port.</P>
+
 	<P><?php echo freshports_New_Icon() ?>
 		New: This port has been recently added.  A port is marked as new for 10 days.</P>
 
@@ -354,10 +358,10 @@ make: fatal errors encountered -- cannot continue
 	for this version of the file.
 	</P>
 
-	<P><?php echo freshports_VuXML_Icon(); ?> <a href="http://www.vuxml.org/freebsd/">VuXML</a> vulnerability.  Click icon for details.
+	<P><?php echo freshports_VuXML_Icon(); ?> <a href="https://www.vuxml.org/freebsd/">VuXML</a> vulnerability.  Click icon for details.
 	</P>
 
-	<P><?php echo freshports_VuXML_Icon_Faded(); ?> A past <a href="http://www.vuxml.org/freebsd/">VuXML</a> vulnerability.  Click icon for details.
+	<P><?php echo freshports_VuXML_Icon_Faded(); ?> A past <a href="https://www.vuxml.org/freebsd/">VuXML</a> vulnerability.  Click icon for details.
 	</P>
 
 	<P><a name="restricted"><?php echo freshports_Restricted_Icon(); ?></a> This port has some restrictions on it.
@@ -393,7 +397,6 @@ make: fatal errors encountered -- cannot continue
 	list.
 	</P>
 
-	</BLOCKQUOTE>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
@@ -404,8 +407,8 @@ make: fatal errors encountered -- cannot continue
 	<P>
 	Many things changed between FP1 and FP2. The most major change
 	was in the underlying database schema.  Not only did we move
-	from <A HREF="http://www.mysql.org/">mySQL</A> to
-	<A HREF="http://www.postgresql.org/">PostgreSQL</A>, we made major
+	from <A HREF="https://www.mysql.org/">mySQL</A> to
+	<A HREF="https://www.postgresql.org/">PostgreSQL</A>, we made major
 	changes to the tables and the way in which the ports are stored
 	in the database.  As a result of these changes, many internal IDs
 	and values are no longer valid.  Therefore, URLs such as
@@ -434,11 +437,11 @@ make: fatal errors encountered -- cannot continue
 
 	<TR><TD>
 	<P>
-<a href="http://<?php echo $ServerName ?>/">http://<?php echo $ServerName ?>/</a> is the main page of 
+<a href="https://<?php echo $ServerName ?>/">https://<?php echo $ServerName ?>/</a> is the main page of 
 this website.  It contains a lot of information.  You can trim this information by using parameters.
 
 <p>
-Try this URL: <a href="http://<?php echo $ServerName ?>/index.php?num=30&amp;days=0">http://<?php echo $ServerName ?>/index.php?num=30&amp;days=0</a>
+Try this URL: <a href="https://<?php echo $ServerName ?>/index.php?num=30&amp;days=0">https://<?php echo $ServerName ?>/index.php?num=30&amp;days=0</a>
 
 <ul>
 <li>
@@ -466,17 +469,17 @@ Here are a few examples:
 
 <tr>
 <td>The last ten ports</td>
-<td nowrap valign="top"><a href="http://<?php echo $ServerName ?>/index.php?num=10">http://<?php echo $ServerName ?>/index.php?<b>num=10</b></a><br></td>
+<td nowrap valign="top"><a href="https://<?php echo $ServerName ?>/index.php?num=10">https://<?php echo $ServerName ?>/index.php?<b>num=10</b></a><br></td>
 </tr>
 
 <tr>
 <td>Same as above, but show only two days of previous commits</td>
-<td nowrap valign="top"><a href="http://<?php echo $ServerName ?>/index.php?num=10&amp;days=2">http://<?php echo $ServerName ?>/index.php?num=10&amp;<b>days=2</b></a><br></td>
+<td nowrap valign="top"><a href="https://<?php echo $ServerName ?>/index.php?num=10&amp;days=2">https://<?php echo $ServerName ?>/index.php?num=10&amp;<b>days=2</b></a><br></td>
 </tr>
 
 <tr>
 <td>Same as above, but show summaries instead of a link to another page</td>
-<td nowrap valign="top"><a href="http://<?php echo $ServerName ?>/index.php?num=10&amp;dailysummary=2">http://<?php echo $ServerName ?>/index.php?num=10&amp;<b>dailysummary=2</b></a></td>
+<td nowrap valign="top"><a href="https://<?php echo $ServerName ?>/index.php?num=10&amp;dailysummary=2">https://<?php echo $ServerName ?>/index.php?num=10&amp;<b>dailysummary=2</b></a></td>
 </tr>
 
 </table>
@@ -495,12 +498,12 @@ Here are a few examples:
 
    <TR><TD>
    <P>
-	Yes, you can.  <a href="http://<?php echo $ServerName ?>/date.php">http://<?php echo $ServerName ?>/date.php</a>
+	Yes, you can.  <a href="https://<?php echo $ServerName ?>/date.php">https://<?php echo $ServerName ?>/date.php</a>
 	displays all the commits for today (relative to the current server time).  
 
 	<p>
 	You can also pass a parameter and view the commits for a given day.  For example, 
-	<a href="http://<?php echo $ServerName ?>/date.php?date=2002/11/19">http://<?php echo $ServerName ?>/date.php?date=2002/11/19</a>
+	<a href="https://<?php echo $ServerName ?>/date.php?date=2002/11/19">https://<?php echo $ServerName ?>/date.php?date=2002/11/19</a>
 	will show all the commits for 19 November 2002
 
 	<p>
@@ -683,7 +686,7 @@ they allow you to bookmark your favorite search.  That is why a GET is used
 instead of a POST.
 
 <p>
-It also makes it easier to <a href="http://validator.w3.org/">validate the HTML</a>
+It also makes it easier to <a href="https://validator.w3.org/">validate the HTML</a>
 if you can provide a URL that exercises all the options that require testing.
 
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
@@ -713,7 +716,7 @@ if you can provide a URL that exercises all the options that require testing.
 </table>
 
 	For all of the above origins, you can obtain the value using 
-	<a href="http://www.freebsd.org/cgi/man.cgi?query=make&amp;apropos=0&amp;sektion=0&amp;manpath=FreeBSD+5.3-RELEASE+and+Ports&amp;format=html"><code class="code">make</code></a>.
+	<a href="https://www.freebsd.org/cgi/man.cgi?query=make&amp;apropos=0&amp;sektion=0&amp;manpath=FreeBSD+5.3-RELEASE+and+Ports&amp;format=html"><code class="code">make</code></a>.
 	For example:
 
 <blockquote><code class="code">
@@ -771,7 +774,7 @@ NOTE: This slave port may no longer be vulnerable to issues shown below because 
 <p>
 Slave ports can be updated with a commit against the master port.  A commit
 against the master port will affect any slave ports.  If a
-<a href="http://www.vuxml.org/freebsd/">VuXML</a> vulnerability has been recorded
+<a href="https://www.vuxml.org/freebsd/">VuXML</a> vulnerability has been recorded
 against a slave port, any fix would be applied to the master port.
 However, the commit to the master port would not appear under the slave port,
 thereby giving a false impression
@@ -791,7 +794,7 @@ The above notice serves as a reminder that the slave port may no longer be vulne
 Each port displays the master sites from which its distfiles can be downloaded.  This
 information is obtained from "make master-sites-all".  However, this is not the only
 list of master sites that a port knows about.  Edwin Groothuis explains it in this
-<a href="http://docs.freebsd.org/cgi/mid.cgi?20041219204057.GE63708">email</a>.
+<a href="https://docs.freebsd.org/cgi/mid.cgi?20041219204057.GE63708">email</a>.
 
 <p>
 In short, FreshPorts displays the list of master sites that should contain all

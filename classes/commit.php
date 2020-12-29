@@ -111,6 +111,11 @@ class Commit {
 	}
 
 	function FetchByRevision($revision) {
+		# treat r362638 and 362638 the same
+		# We don't use r internally, so strip it.
+		if (strtolower(substr($revision, 0, 1)) == 'r') {
+			$revision = (substr($revision, 1));
+		}
 		$Where = "svn_revision = '" . pg_escape_string($revision) . "'";
 
 		$result = $this->FetchByIDHelper($Where);

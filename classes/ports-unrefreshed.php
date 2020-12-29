@@ -19,20 +19,22 @@ class PortsUnrefreshed {
 	var $date_ignored;
 	var $reason;
 	var $message_id;
+	var $commit_hash_short;
 
 	function __construct($dbh) {
 		$this->dbh	= $dbh;
 	}
 
 	function _PopulateValues($myrow) {
-		$this->port_id       = $myrow["port_id"];
-		$this->port_name     = $myrow["port_name"];
-		$this->category_id   = $myrow["category_id"];
-		$this->category_name = $myrow["category_name"];
-		$this->commit_log_id = $myrow["commit_log_id"];
-		$this->date_ignored  = $myrow["date_ignored"];
-		$this->reason        = $myrow["reason"];
-		$this->message_id    = $myrow["message_id"];
+		$this->port_id           = $myrow["port_id"];
+		$this->port_name         = $myrow["port_name"];
+		$this->category_id       = $myrow["category_id"];
+		$this->category_name     = $myrow["category_name"];
+		$this->commit_log_id     = $myrow["commit_log_id"];
+		$this->date_ignored      = $myrow["date_ignored"];
+		$this->reason            = $myrow["reason"];
+		$this->message_id        = $myrow["message_id"];
+		$this->commit_hash_short = $myrow["commit_hash_short"];
 	}
 
 	function FetchAll() {
@@ -48,7 +50,8 @@ select ports.id         as port_id,
        commit_log_ports.commit_log_id,
        commit_log_ports_ignore.date_ignored,
        commit_log_ports_ignore.reason,
-       commit_log.message_id
+       commit_log.message_id,
+       commit_log.commit_hash_short
   from ports, categories, element, commit_log, commit_log_ports LEFT OUTER JOIN commit_log_ports_ignore
          ON (commit_log_ports.commit_log_id = commit_log_ports_ignore.commit_log_id AND
              commit_log_ports.port_id       = commit_log_ports_ignore.port_id)

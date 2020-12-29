@@ -18,7 +18,7 @@ class CommitFiles {
 	var $category;
 	var $port;
 
-	var $Debug = 0;
+	var $Debug = 1;
 
 	var $LocalResult;
 
@@ -85,6 +85,7 @@ class CommitFiles {
 	       NULL::text AS port_status,
 	       CL.committer, 
 	       CL.message_id, 
+	       CL.commit_hash_short, 
 	       CL.encoding_losses, 
 	       CL.description, 
 	       CLE.revision_name AS revision_name,
@@ -100,7 +101,8 @@ class CommitFiles {
 	       NULL::text AS expiration_date,
 	       NULL::text AS is_interactive,
 	       GMT_Format(CL.commit_date) AS last_commit_date,
-               R.svn_hostname,
+               R.repository,
+               R.repo_hostname,
                R.path_to_repo
 	  FROM commit_log               CL
 	       LEFT OUTER JOIN repo R on CL.repo_id = R.id,

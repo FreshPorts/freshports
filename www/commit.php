@@ -21,7 +21,7 @@ DEFINE('NEXT_PAGE',		'Next');
 	$message_id = '';
 	$page       = '';
 	$page_size  = '';
-	
+
 	if (IsSet($_GET['message_id'])) $message_id = pg_escape_string($_GET['message_id']);
 	if (IsSet($_GET['revision']))   $revision   = pg_escape_string($_GET['revision']);
 
@@ -174,23 +174,44 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 	$database = $db;
 	if ($database ) {
 	
-		if (!empty($revision) && count($message_id_array)) {
-			// we have multiple messages for that commit
-			echo '<tr><TD VALIGN="top">';
-			echo "We have multiple emails for that revision: ";
-			$Commit->FetchNth(0);
-			$clean_revision = htmlentities($Commit->svn_revision);
-			// e.g. https://svnweb.freebsd.org/base?view=revision&revision=177821
-			echo '<a href="https://' . htmlentities($Commit->svn_hostname) . htmlentities($Commit->path_to_repo) . '?view=revision&amp;revision=' . $clean_revision . 
-				'">' . $clean_revision . '</a>';
+	  if (!empty($revision) && count($message_id_array))
+	  {
+	    // we have multiple messages for that commit
+            echo '<tr><TD VALIGN="top">';
+            echo "We have multiple emails for that revision: ";
+            $Commit->FetchNth(0);
+            $clean_revision = htmlentities($Commit->svn_revision);
+            // e.g. http://svnweb.freebsd.org/base?view=revision&revision=177821
+            echo '<a href="http://' . htmlentities($Commit->repo_hostname) . htmlentities($Commit->path_to_repo) . '?view=revision&amp;revision=' . $clean_revision . 
+                 '">' . $clean_revision . '</a>';
 
-			echo "<ol>\n";
-			foreach($message_id_array as $i => $message_id) {
-				$Commit->FetchNth($i);
-				$clean_message_id = htmlentities($Commit->message_id);
-				echo '<li><a href="/commit.php?message_id=' . $clean_message_id . '">' . htmlentities($clean_message_id) . '</a></li>' . "\n";
-			}
-			echo "</ol></TD></tr>";
+            echo "<ol>\n";
+            foreach($message_id_array as $i => $message_id)
+            {
+              $Commit->FetchNth($i);
+              $clean_message_id = htmlentities($Commit->message_id);
+              echo '<li><a href="/commit.php?message_id=' . $clean_message_id . '">' . htmlentities($clean_message_id) . '</a></li>' . "\n";
+            }
+            echo "</ol></TD></tr>";
+	    
+	  }
+	  else
+	  {
+#
+# we limit the select to recent things by using a date
+# otherwise, it joins the whole table and that takes quite a while
+#
+#$numrows=400;
+
+	$sql = "select freshports_commit_count_elements('" . pg_escape_string($message_id) . "') as count";
+
+	if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
+
+	$result = pg_exec($database, $sql);
+	if ($result) {
+		$numrows = pg_numrows($result);
+		if ($numrows == 1) { 
+			$myrow = pg_fetch_array ($result, 0);
 		} else {
 			if ($HTML == '')  {
 

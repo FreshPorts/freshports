@@ -35,11 +35,12 @@ if (IsSet($submit)) {
 
 	// process form
 
-	$email				= pg_escape_string($_POST['email']);
-	$Password1			= $_POST['Password1'];
-	$Password2			= $_POST['Password2'];
-	$numberofdays			= pg_escape_string($_POST['numberofdays']);
-	$page_size			= pg_escape_string($_POST['page_size']);
+	$email         = pg_escape_string($_POST['email']);
+	$Password      = $_POST['Password'];
+	$Password1     = $_POST['Password1'];
+	$Password2     = $_POST['Password2'];
+	$numberofdays  = pg_escape_string($_POST['numberofdays']);
+	$page_size     = pg_escape_string($_POST['page_size']);
 
 	# this is a checkbox
 	if (IsSet($_POST['set_focus_search'])) {
@@ -71,10 +72,26 @@ if (IsSet($submit)) {
 		$errors .= 'That email address doesn\'t look right to me<BR>';
 		$OK = 0;
 	}
+	
+	# new passwords supplied, but not existing password
+	if ($Password1 && $Password2 && !$Password) {
+		$errors .= 'If changing your password, remember to supply your existing password first.<BR>';
+		$OK = 0;
+	}
 
 	if ($Password1 != $Password2) {
-		$errors .= 'The password was not confirmed.  It must be entered twice.<BR>';
+		$errors .= 'The new password was not confirmed.  It must be entered twice.<BR>';
 		$OK = 0;
+	}
+
+	# if no errors so far, and all three password fields are populated
+	if ($OK && $Password && $Password1 && $Password) {
+		$result = getLoginDetails($db, LOGIN_QUERY, $User->name, $Password);
+		# there must be only 1 row in there.
+		if (pg_numrows($result) != 1) {
+			$errors .= 'That is NOT your current password.<br>';
+			$OK = 0;
+		}
 	}
 
 	if ($OK) {
@@ -103,7 +120,6 @@ UPDATE users
 			$sql .= " where cookie = '$visitor'";
 
 			if ($Debug) {
-#			phpinfo();
 				echo '<pre>' . htmlentities($sql) . '</ore>';
 			}
 
@@ -192,7 +208,7 @@ echo '<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="' . BACKGROUND_COLOUR . '" WIDT
 <TR BGCOLOR="#ffffff">
 <TD>';
 
-echo '<p>If you wish to change your password, supply your new password twice.  Otherwise, leave it blank.</p><br>';
+echo '<p>If you wish to change your password, first type your existing password, then your new password twice.  Otherwise, leave them all blank.</p><br>';
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 $Customize=1;

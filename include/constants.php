@@ -153,6 +153,8 @@ const PYTHON_PKGNAMEPREFIX = 'PYTHON_PKGNAMEPREFIX';
 # www/search.php
 # classes/ports_by_pkg_plist.php
 
+const LOGIN_QUERY = 'LOGIN';
+
 const SEARCH_SELECT_FIELD = '
   select CL.commit_date - SystemTimeAdjust() AS last_commit_date, 
          P.id,
@@ -189,3 +191,5 @@ const SEARCH_SELECT_FIELD = '
          element_pathname(P.element_id) as element_pathname,
          Cl.svn_revision,
          P.uses  ';
+
+const LOGIN_QUERY = 'LOGIN';

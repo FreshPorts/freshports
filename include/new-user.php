@@ -12,14 +12,19 @@
 <TABLE width="*" border="0" cellpadding="1">
           <TR>
             <TD VALIGN="top">
-<?php if (!IsSet($Customize)) { ?>
+<?php if (IsSet($Customize)) { ?>
+               Current password:<br>
+               <INPUT TYPE="PASSWORD" NAME="Password" VALUE="<?php if (IsSet($Password)) echo htmlentities($Password) ?>" size="20"><br><br>
+
+<?php } else { ?>
+
               <INPUT TYPE="hidden" NAME="ADD" VALUE="1">
               User ID:<br>
               <INPUT SIZE="15" NAME="UserLogin" VALUE="<?php if (IsSet($UserLogin)) echo htmlentities($UserLogin) ?>"><br><br>
 <?php } ?>
-               Password:<br>
+               New password:<br>
                <INPUT TYPE="PASSWORD" NAME="Password1" VALUE="<?php if (IsSet($Password1)) echo htmlentities($Password1) ?>" size="20"><br><br>
-               Confirm Password:<br>
+               New password again:<br>
                <INPUT TYPE="PASSWORD" NAME="Password2" VALUE="<?php if (IsSet($Password2)) echo htmlentities($Password2) ?>" size="20">
             </TD>
             <TD VALIGN="top">

@@ -31,7 +31,7 @@ DEFINE('BACKGROUND_COLOUR', '#8c0707');
 
 DEFINE('CLICKTOADD', 'Click to add this to your default watch list[s]');
 
-DEFINE('SPONSORS', 'Servers and bandwidth provided by<br><a href="https://www.nyi.net/" TARGET="_new">New York Internet</a>, <a href="https://www.ixsystems.com/"  TARGET="_new">iXsystems</a>, and <a href="https://www.rootbsd.net/" TARGET="_new">RootBSD</a>');
+DEFINE('SPONSORS', 'Servers and bandwidth provided by<br><a href="https://www.nyi.net/" rel="noopener noreferrer" TARGET="_new">New York Internet</a>, <a href="https://www.ixsystems.com/"  rel="noopener noreferrer" TARGET="_new">iXsystems</a>, and <a href="https://www.rootbsd.net/" rel="noopener noreferrer" TARGET="_new">RootBSD</a>');
 
 DEFINE('FRESHPORTS_ENCODING', 'UTF-8');
 
@@ -57,13 +57,13 @@ function freshports_Search_For_Bugs($CategoryPort) {
   $SearchURL = "https://bugs.freebsd.org/bugzilla/buglist.cgi?component=Individual%20Port%28s%29&amp;list_id=28394&amp;product=Ports%20%26%20Packages&amp;query_format=advanced&amp;resolution=---" . 
     "&amp;short_desc=" . urlencode($CategoryPort) . "&amp;short_desc_type=allwordssubstr";
 
-  return '<a href="' . $SearchURL . '"  rel="nofollow">' . freshports_Bugs_Find_Icon() . '</a>';
+  return '<a href="' . $SearchURL . '"  rel="nofollow noopener noreferrer"">' . freshports_Bugs_Find_Icon() . '</a>';
 }
 
 function freshports_Report_A_Bug($CategoryPort) {
   $SearchURL = "https://bugs.freebsd.org/bugzilla/enter_bug.cgi?component=Individual%20Port%28s%29&amp;product=Ports%20%26%20Packages&amp;short_desc=" . urlencode($CategoryPort);
 
-  return '<a href="' . $SearchURL . '"  rel="nofollow">' . freshports_Bugs_Report_Icon() . '</a>';
+  return '<a href="' . $SearchURL . '"  rel="noopener noreferrer nofollow">' . freshports_Bugs_Report_Icon() . '</a>';
 }
 
 function freshports_SanityTestFailure_Link($message_id) {
@@ -73,7 +73,7 @@ function freshports_SanityTestFailure_Link($message_id) {
 function freshports_cvsweb_Diff_Link($pathname, $previousRevision, $revision_name)
 {
   $pathname = str_replace('/ports/head/', '/ports/', $pathname);
-  $HTML  = '<A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $pathname . '.diff?r1=' . $previousRevision . ';r2=' . $revision_name . '">';
+  $HTML  = '<A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $pathname . '.diff?r1=' . $previousRevision . ';r2=' . $revision_name . ' " rel="noopener noreferrer">';
   $HTML .= freshports_Diff_Icon() . '</a> ';
 
   return $HTML;
@@ -82,7 +82,7 @@ function freshports_cvsweb_Diff_Link($pathname, $previousRevision, $revision_nam
 function freshports_cvsweb_Annotate_Link($pathname, $revision_name)
 {
   $pathname = str_replace('/ports/head/', '/ports/', $pathname);
-  $HTML  = ' <A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $pathname . '?annotate=' . $revision_name . '">';
+  $HTML  = ' <A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $pathname . '?annotate=' . $revision_name . ' " rel="noopener noreferrer">';
   $HTML .= freshports_Revision_Icon() . '</a>';
 
   return $HTML;
@@ -91,24 +91,24 @@ function freshports_cvsweb_Annotate_Link($pathname, $revision_name)
 function freshports_cvsweb_Revision_Link($pathname, $revision_name)
 {
   $pathname = str_replace('/ports/head/', '/ports/', $pathname);
-  $HTML = '<A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $pathname . '#rev' . $revision_name . '">';
+  $HTML = '<A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $pathname . '#rev' . $revision_name . '" rel="noopener noreferrer">';
 
   return $HTML;
 }
 
 function freshports_Fallout_Link($category, $port) {
   # re https://github.com/FreshPorts/freshports/issues/181
-  return '<a href="https://portsfallout.com/fallout?port=' . rawurlencode($category . '/' . $port . '$') . '">' . freshports_Fallout_Icon() . '</a>';
+  return '<a href="https://portsfallout.com/fallout?port=' . rawurlencode($category . '/' . $port . '$') . '" rel="noopener noreferrer">' . freshports_Fallout_Icon() . '</a>';
 }
 
 function freshports_svnweb_ChangeSet_Link($revision, $hostname, $path) {
   # I see $path is not used by this function... I wonder why? -- dvl 2018.10.07
-  return '<a href="https://' . htmlentities($hostname) . '/changeset/ports/' . htmlentities($revision) .  '">' . freshports_Subversion_Icon('Revision:' . $revision) . '</a>';
+  return '<a href="https://' . htmlentities($hostname) . '/changeset/ports/' . htmlentities($revision) .  '" rel="noopener noreferrer">' . freshports_Subversion_Icon('Revision:' . $revision) . '</a>';
 }
 
 function freshports_svnweb_ChangeSet_Link_Text($revision, $hostname, $path) {
   # I see $path is not used by this function... I wonder why? -- dvl 2018.10.07
-  return '<a href="https://' . htmlentities($hostname) . '/changeset/ports/' . htmlentities($revision) .  '">' . $revision . '</a>';
+  return '<a href="https://' . htmlentities($hostname) . '/changeset/ports/' . htmlentities($revision) .  '" rel="noopener noreferrer">' . $revision . '</a>';
 }
 
 function freshports_Search_Maintainer($Maintainer) {
@@ -148,7 +148,7 @@ function PortsFreezeStatus($ColSpan=1) {
 			$result .= ' colspan="' . $ColSpan . '"';
 		}
 		$result .= '>
-<p>A <a href="https://www.freebsd.org/doc/en/articles/committers-guide/ports.html">ports freeze</a>
+<p>A <a href="https://www.freebsd.org/doc/en/articles/committers-guide/ports.html" rel="noopener noreferrer">ports freeze</a>
  means that commits will be few and far between and only by approval.
 </p>
 </td></tr>
@@ -558,7 +558,7 @@ function freshports_VuXML_Link($PackageName, $HasCurrentVulns) {
 }
 
 function freshports_Repology_Link($CategoryNamePortName) {
-	$HTML = '<a href="https://repology.org/tools/project-by?repo=freebsd&amp;name_type=srcname&amp;target_page=project_versions&amp;name=' . $CategoryNamePortName . '">';
+	$HTML = '<a href="https://repology.org/tools/project-by?repo=freebsd&amp;name_type=srcname&amp;target_page=project_versions&amp;name=' . $CategoryNamePortName . '" rel="noopener noreferrer">';
 	$HTML .= freshports_Repology_Icon();
 	$HTML .= '</a>';
 
@@ -609,7 +609,7 @@ function freshports_Email_Link($message_id) {
 	# if the message id is for freshports, then it's an old message which does not contain
 	# a valid message id which can be found in the mailing list archive.
 	#
-	$HTML  = '<a href="' . htmlentities($freshports_mail_archive . $message_id) . '">';
+	$HTML  = '<a href="' . htmlentities($freshports_mail_archive . $message_id) . '" rel="noopener noreferrer">';
 	$HTML .= freshports_Mail_Icon();
 	$HTML .= '</a>';
 
@@ -649,7 +649,7 @@ function freshports_CVS_Link($element_name, $revision) {
 	if (substr($element_name, 0, 1) != '/') {
 		$element_name = '/' . $element_name;
 	}
-	$HTML  = '<a href="' . FRESHPORTS_FREEBSD_CVS_URL . $element_name . '?rev=' . $revision . '&amp;content-type=text/x-cvsweb-markup">';
+	$HTML  = '<a href="' . FRESHPORTS_FREEBSD_CVS_URL . $element_name . '?rev=' . $revision . '&amp;content-type=text/x-cvsweb-markup" rel="noopener noreferrer">';
 	$HTML .= freshports_CVS_Icon();
 	$HTML .= '</a>';
 
@@ -815,20 +815,20 @@ GLOBAL $FreshPortsLogoHeight;
     	$HTML .= "
 
 <!-- IPv6-test.com button BEGIN -->
-<a href='https://ipv6-test.com/validate.php?url=referer'><img src='/images/button-ipv6-big.png' alt='ipv6 ready' title='ipv6 ready' border='0' /></a>
+<a href='https://ipv6-test.com/validate.php?url=referer' rel='noopener noreferrer'><img src='/images/button-ipv6-big.png' alt='ipv6 ready' title='ipv6 ready' border='0' /></a>
 <!-- IPv6-test.com button END -->
 ";
 	}
 
-    $HTML .= '<span class="amazon">As an Amazon Associate I earn from qualifying purchases.<br>Want a good read? Try <a target="_blank" href="https://www.amazon.com/gp/product/B07PVTBWX7/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B07PVTBWX7&amp;linkCode=as2&amp;tag=thfrdi0c-20&amp;linkId=f4cffa799f323b5adebf953c7d3f20ea">FreeBSD Mastery: Jails (IT Mastery Book 15)</a><img src="//ir-na.amazon-adsystem.com/e/ir?t=thfrdi0c-20&amp;l=am2&amp;o=1&amp;a=B07PVTBWX7" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></span>';
+    $HTML .= '<span class="amazon">As an Amazon Associate I earn from qualifying purchases.<br>Want a good read? Try <a target="_blank" rel="noopener noreferrer" href="https://www.amazon.com/gp/product/B07PVTBWX7/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B07PVTBWX7&amp;linkCode=as2&amp;tag=thfrdi0c-20&amp;linkId=f4cffa799f323b5adebf953c7d3f20ea">FreeBSD Mastery: Jails (IT Mastery Book 15)</a><img src="//ir-na.amazon-adsystem.com/e/ir?t=thfrdi0c-20&amp;l=am2&amp;o=1&amp;a=B07PVTBWX7" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></span>';
 	
 	$HTML .= '</td>';
 
 if (date("M") == 'Nov' && date("j") <= 12) {
-	$HTML .= '	<td nowrap align="center" CLASS="sans" valign="bottom"><a href="https://www.google.ca/search?q=remembrance+day"><img src="/images/poppy.gif" width="50" height="48" border="0" alt="Remember" title="Remember"><br>I remember</a></td>';
+	$HTML .= '	<td nowrap align="center" CLASS="sans" valign="bottom"><a href="https://www.google.ca/search?q=remembrance+day" rel="noopener noreferrer"><img src="/images/poppy.gif" width="50" height="48" border="0" alt="Remember" title="Remember"><br>I remember</a></td>';
 } else {
 	$HTML .= '	<td>';
-	$HTML .= '<div id="followus"><div class="header">Follow us</div><a href="https://news.freshports.org/">Blog</a><br><a href="https://twitter.com/freshports/">Twitter</a><br><a href="https://freshports.wordpress.com/">Status page</a><br></div>';
+	$HTML .= '<div id="followus"><div class="header">Follow us</div><a href="https://news.freshports.org/" rel="noopener noreferrer">Blog</a><br><a href="https://twitter.com/freshports/" rel="noopener noreferrer">Twitter</a><br><a href="https://freshports.wordpress.com/" rel="noopener noreferrer">Status page</a><br></div>';
 
 	$HTML .= '</td>';
 	
@@ -1214,7 +1214,7 @@ function freshports_navigation_bar_top() {
 }
 
 function freshports_copyright() {
-	return '<small><a href="/legal.php" target="_top" title="This material is copyrighted">Copyright</a> &copy; ' . COPYRIGHTYEARS . ' <a href="' . COPYRIGHTHOLDERURL . '">' . COPYRIGHTHOLDER . '</a>. All rights reserved.</small>';
+	return '<small><a href="/legal.php" target="_top" title="This material is copyrighted">Copyright</a> &copy; ' . COPYRIGHTYEARS . ' <a href="' . COPYRIGHTHOLDERURL . '" rel="noopener noreferrer">' . COPYRIGHTHOLDER . '</a>. All rights reserved.</small>';
 }
 
 function FormatTime($Time, $Adjustment, $Format) {
@@ -1680,24 +1680,24 @@ function freshports_ShowFooter($PhorumBottom = 0) {
 
 <td align="center">
 
-<a href="https://www.freebsd.org/"><img src="/images/pbfbsd2.gif"
+<a href="https://www.freebsd.org/" rel="noopener noreferrer"><img src="/images/pbfbsd2.gif"
 alt="powered by FreeBSD" border="0" width="171" height="64"></a>
 
 &nbsp;
 
-<a href="https://www.php.net/"><img src="/images/php-med-trans-light.gif"
+<a href="https://www.php.net/" rel="noopener noreferrer"><img src="/images/php-med-trans-light.gif"
 alt="powered by php" border="0" width="95" height="50"></a>
 &nbsp;
 
-<a href="https://www.postgresql.org/"><img src="/images/pg-power.jpg"
+<a href="https://www.postgresql.org/" rel="noopener noreferrer"><img src="/images/pg-power.jpg"
 alt="powered by PostgreSQL" border="0" width="164" height="59"></a>
 
 
 </td></tr>
 <tr><td align="center">
 
-<a href="https://www.apache.org/"><img src="/images/apache_pb.gif" 
-alt="powered by apache" border="0" width="259" height="32"></a>
+<a href="https://www.nginx.org/" rel="noopener noreferrer"><img src="/images/nginx.gif" 
+alt="powered by nginx" border="0" width="121" height="32"></a>
 
 <HR>
 
@@ -1717,9 +1717,9 @@ alt="powered by apache" border="0" width="259" height="32"></a>
 <td align="right" valign="top">
 <small>
 Valid 
-<a href="https://validator.w3.org/check?uri=' . $URI . '" title="We like to keep our HTML valid" target="_blank">HTML</a>, 
-<a href="https://jigsaw.w3.org/css-validator/validator?uri=' .  $URI . '" title="We like to have valid CSS">CSS</a>, and
-<a href="https://feedvalidator.org/check.cgi?url=https://' . $_SERVER['HTTP_HOST'] . '/backend/rss2.0.php" title="Valid RSS is good too">RSS</a>.
+<a href="https://validator.w3.org/check?uri=' . $URI . '" title="We like to keep our HTML valid" target="_blank" rel="noopener noreferrer">HTML</a>, 
+<a href="https://jigsaw.w3.org/css-validator/validator?uri=' .  $URI . '" title="We like to have valid CSS" rel="noopener noreferrer">CSS</a>, and
+<a href="https://feedvalidator.org/check.cgi?url=https://' . $_SERVER['HTTP_HOST'] . '/backend/rss2.0.php" title="Valid RSS is good too" rel="noopener noreferrer">RSS</a>.
 </small>
 <br>' . freshports_copyright() . '
 </td></tr>
@@ -1837,7 +1837,7 @@ function freshports_SideBar() {
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/how-big-is-it.php",   "How big is it?",      "How many pages are in this website?"  ) . '</FONT><br>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/release-2004-10.php", "The latest upgrade!", "Details on the latest website upgrade") . '</FONT><br>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/privacy.php",         "Privacy",             "Our privacy statement"                ) . '</FONT><br>
-	<FONT SIZE="-1"><a href="https://news.freshports.org/" title="All the latest FreshPorts news">Blog</a></FONT><br>
+	<FONT SIZE="-1"><a href="https://news.freshports.org/" title="All the latest FreshPorts news" rel="noopener noreferrer">Blog</a></FONT><br>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/contact.php",         "Contact",             "Contact details"                      ) . '</FONT><br>
 	</td>
 	</tr>
@@ -2286,7 +2286,7 @@ function _forDisplay($string, $flags = NULL, $encoding = FRESHPORTS_ENCODING) {
   return $encoded;
 }
 
-define('EVERYTHING', 'FreshPorts has everything you want to know about <a href="https://www.freebsd.org/">FreeBSD</a> software, ports, packages,
+define('EVERYTHING', 'FreshPorts has everything you want to know about <a href="https://www.freebsd.org/" rel="noopener noreferrer">FreeBSD</a> software, ports, packages,
 applications, whatever term you want to use.');
 
 openlog('FreshPorts', LOG_PID, LOG_LOCAL3);

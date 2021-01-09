@@ -41,7 +41,7 @@ FreeBSD mailing lists.
 <p>
 If you see a problem with the website (incorrect information, 
 errors, etc), please let us know.  The best place for that is via a 
-<a href="https://github.com/FreshPorts/freshports/issues">GitHub Issue</a>.
+<a href="https://github.com/FreshPorts/freshports/issues" rel="noopener noreferrer">GitHub Issue</a>.
 
 <p>
 If your needs do not fall into the above categories, you can try

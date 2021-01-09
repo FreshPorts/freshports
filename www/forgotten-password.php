@@ -87,7 +87,7 @@ if (IsSet($submit)) {
         if ($myrow["emailbouncecount"] > 0) {
            $error = "Sorry, but previous email to you has bounced, so we're not sure it's going to get to you.  But we sent it out
 						anyway.  Please contact " .
-                    'the <A HREF="' . MAILTO . ':webmaster&#64;freshports.org?subject=I forgot my password">webmaster</A> for help
+                    'the <A HREF="' . MAILTO . ':webmaster&#64;freshports.org?subject=I forgot my password" rel="noopener noreferrer">webmaster</A> for help
                     if it doesn\'t arrive.';
            $OKToMail = 1;
            syslog(LOG_NOTICE, "Forgotten password: previous email to '" . $myrow['email'] . "' bounced");
@@ -95,7 +95,7 @@ if (IsSet($submit)) {
 
         if ($myrow["email"] == "") {
           $error = 'Guess what?  You never gave us an email address.  So I guess you must ' . 
-              'contact the <A HREF="' . MAILTO . ':webmaster&#64;freshports.org?subject=I forgot my password">webmaster</A> for help.';
+              'contact the <A HREF="' . MAILTO . ':webmaster&#64;freshports.org?subject=I forgot my password" rel="noopener noreferrer">webmaster</A> for help.';
               $OKToMail = 0;
           syslog(LOG_NOTICE, "Forgotten password: '" . $myrow['name'] . "' never supplied an email.");
         }
@@ -232,7 +232,7 @@ if ($MailSent) {
 ?>
 <p>
 A password recovery URL has been sent to the address we have on file.  If you still can't get logged in
-please contact <A HREF="<? echo MAILTO; ?>:webmaster&#64;freshports.org?subject=I forgot my password">the webmaster</A>
+please contact <A HREF="<? echo MAILTO; ?>:webmaster&#64;freshports.org?subject=I forgot my password" rel="noopener noreferrer">the webmaster</A>
 and we'll see what we can do.
 </p>
 <? } else {  ?>

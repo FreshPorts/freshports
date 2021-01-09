@@ -41,7 +41,7 @@ function freshports_NonPortDescription($db, $element_record) {
 <? echo freshports_PageBannerText('non port: ' . $Title); ?>
 </TR>
 <tr><td>
-<a HREF="<?php echo FRESHPORTS_FREEBSD_SVN_URL . $element_record->element_pathname; ?>?view=log">SVNWeb</a>
+<a HREF="<?php echo FRESHPORTS_FREEBSD_SVN_URL . $element_record->element_pathname; ?>?view=log" rel="noopener noreferrer">SVNWeb</a>
 </td></tr>
 
 <?

@@ -21,7 +21,7 @@ DEFINE('COPYRIGHTHOLDER',       'Dan Langille');
 DEFINE('COPYRIGHTHOLDERURL',    'https://www.langille.org/');
 DEFINE('URL2LINK_CUTOFF_LEVEL', 0);
 DEFINE('FAQLINK',               'faq.php');
-DEFINE('PORTSMONURL',		'http://portsmon.freebsd.org/portoverview.py');
+DEFINE('PORTSMONURL',           'http://portsmon.freebsd.org/portoverview.py');
 DEFINE('NOBORDER',              '0');
 DEFINE('BORDER',                '1');
 
@@ -31,7 +31,7 @@ DEFINE('BACKGROUND_COLOUR', '#8c0707');
 
 DEFINE('CLICKTOADD', 'Click to add this to your default watch list[s]');
 
-DEFINE('SPONSORS', 'Servers and bandwidth provided by<br><a href="http://www.nyi.net/" TARGET="_new">New York Internet</a>, <a href="http://www.ixsystems.com/"  TARGET="_new">iXsystems</a>, and <a href="http://www.rootbsd.net/" TARGET="_new">RootBSD</a>');
+DEFINE('SPONSORS', 'Servers and bandwidth provided by<br><a href="https://www.nyi.net/" TARGET="_new">New York Internet</a>, <a href="https://www.ixsystems.com/"  TARGET="_new">iXsystems</a>, and <a href="https://www.rootbsd.net/" TARGET="_new">RootBSD</a>');
 
 DEFINE('FRESHPORTS_ENCODING', 'UTF-8');
 
@@ -79,6 +79,14 @@ function freshports_cvsweb_Diff_Link($pathname, $previousRevision, $revision_nam
   return $HTML;
 }
 
+function freshports_Convert_Subversion_Path_To_Git($pathname)
+{
+  # the pathnames in the FreshPorts database reflect the physical pathname on disk
+  # yeah, repo changes means different paths. Hopefully, we can do that all
+  # external to the database instead of in the database.
+  return str_replace('/ports/head/', '', $pathname);
+}
+
 function freshports_cvsweb_Annotate_Link($pathname, $revision_name)
 {
   $pathname = str_replace('/ports/head/', '/ports/', $pathname);
@@ -96,6 +104,18 @@ function freshports_cvsweb_Revision_Link($pathname, $revision_name)
   return $HTML;
 }
 
+function freshports_git_commit_Link($revision, $hostname, $path) {
+  return '<a href="http://' . htmlentities($hostname) . $path . '/commit/' . htmlentities($revision) .  '">' . freshports_Git_Icon('commit hash:' . $revision) . '</a>';
+}
+
+function freshports_git_commit_Link_diff($revision, $hostname, $path) {
+  return '<a href="http://' . htmlentities($hostname) . $path . '/commit/' . htmlentities($revision) .  '">' . freshports_Diff_Icon() . '</a>';
+}
+
+function freshports_git_commit_Link_Hash($hash, $link_text, $hostname, $path) {
+  return '<a href="http://' . htmlentities($hostname) . $path . '/commit/' . htmlentities($hash) .  '" class="hash">' . $link_text . '</a>';
+}
+
 function freshports_Fallout_Link($category, $port) {
   # re https://github.com/FreshPorts/freshports/issues/181
   return '<a href="https://portsfallout.com/fallout?port=' . rawurlencode($category . '/' . $port . '$') . '">' . freshports_Fallout_Icon() . '</a>';
@@ -103,12 +123,12 @@ function freshports_Fallout_Link($category, $port) {
 
 function freshports_svnweb_ChangeSet_Link($revision, $hostname, $path) {
   # I see $path is not used by this function... I wonder why? -- dvl 2018.10.07
-  return '<a href="http://' . htmlentities($hostname) . '/changeset/ports/' . htmlentities($revision) .  '">' . freshports_Subversion_Icon('Revision:' . $revision) . '</a>';
+  return '<a href="https://' . htmlentities($hostname) . '/changeset/ports/' . htmlentities($revision) .  '">' . freshports_Subversion_Icon('Revision:' . $revision) . '</a>';
 }
 
 function freshports_svnweb_ChangeSet_Link_Text($revision, $hostname, $path) {
   # I see $path is not used by this function... I wonder why? -- dvl 2018.10.07
-  return '<a href="http://' . htmlentities($hostname) . '/changeset/ports/' . htmlentities($revision) .  '">' . $revision . '</a>';
+  return '<a href="https://' . htmlentities($hostname) . '/changeset/ports/' . htmlentities($revision) .  '">' . $revision . '</a>';
 }
 
 function freshports_Search_Maintainer($Maintainer) {
@@ -148,7 +168,7 @@ function PortsFreezeStatus($ColSpan=1) {
 			$result .= ' colspan="' . $ColSpan . '"';
 		}
 		$result .= '>
-<p>A <a href="http://www.freebsd.org/doc/en/articles/committers-guide/ports.html">ports freeze</a>
+<p>A <a href="https://www.freebsd.org/doc/en/articles/committers-guide/ports.html">ports freeze</a>
  means that commits will be few and far between and only by approval.
 </p>
 </td></tr>
@@ -201,7 +221,7 @@ function freshports_Port_URL($CategoryName, $PortName, $BranchName = BRANCH_HEAD
 
 	# see also freshports_link_to_port
 
-	$HTML = 'http://' . $_SERVER['HTTP_HOST'] . '/' . $CategoryName . '/' . $PortName . '/';
+	$HTML = 'https://' . $_SERVER['HTTP_HOST'] . '/' . $CategoryName . '/' . $PortName . '/';
 	if ($BranchName != BRANCH_HEAD) {
 		$HTML .= '?branch=' . pg_escape_string($BranchName);
 	}
@@ -323,6 +343,10 @@ function freshports_Fallout_Icon() {
 
 function freshports_Subversion_Icon($Title = 'Subversion') {
 	return '<img src="/images/subversion.jpg" alt="' . $Title . '" title="' . $Title . '" border="0" width="16" height="16" vspace="1">';
+}
+
+function freshports_Git_Icon($Title = 'git') {
+	return '<img src="/images/git.png" alt="' . $Title . '" title="' . $Title . '" border="0" width="22" height="22" vspace="1">';
 }
 
 function freshports_SanityTestFailure_Icon($Title = 'Sanity Test Failure') {
@@ -540,6 +564,10 @@ function freshports_Revision_Icon() {
 	return '<img src="/images/revision.jpg" alt="View revision" title="view revision" border="0" width="11" height="15" align="top">';
 }
 
+function freshports_Annotate_Icon() {
+	return '<img src="/images/annotate.png" alt="Annotate / Blame" title="Annotate / Blame" border="0" width="20" height="20" align="middle">';
+}
+
 function freshports_Diff_Icon() {
 	return '<img src="/images/diff.png" alt="View diff" title="view diff" border="0" width="15" height="11" align="top">';
 }
@@ -674,7 +702,7 @@ function freshports_Commit_Link($message_id, $LinkText = '') {
 
 function freshports_Commit_Link_Port_URL($MessageID, $Category, $Port) {
 
-	$HTML = 'http://' . $_SERVER['HTTP_HOST'] . '/commit.php?category=' . $Category . '&port=' . $Port . '&files=yes&message_id=' . $MessageID;
+	$HTML = 'https://' . $_SERVER['HTTP_HOST'] . '/commit.php?category=' . $Category . '&port=' . $Port . '&files=yes&message_id=' . $MessageID;
 
 	return $HTML;
 }
@@ -815,7 +843,7 @@ GLOBAL $FreshPortsLogoHeight;
     	$HTML .= "
 
 <!-- IPv6-test.com button BEGIN -->
-<a href='http://ipv6-test.com/validate.php?url=referer'><img src='/images/button-ipv6-big.png' alt='ipv6 ready' title='ipv6 ready' border='0' /></a>
+<a href='https://ipv6-test.com/validate.php?url=referer'><img src='/images/button-ipv6-big.png' alt='ipv6 ready' title='ipv6 ready' border='0' /></a>
 <!-- IPv6-test.com button END -->
 ";
 	}
@@ -825,7 +853,7 @@ GLOBAL $FreshPortsLogoHeight;
 	$HTML .= '</td>';
 
 if (date("M") == 'Nov' && date("j") <= 12) {
-	$HTML .= '	<td nowrap align="center" CLASS="sans" valign="bottom"><a href="http://www.google.ca/search?q=remembrance+day"><img src="/images/poppy.gif" width="50" height="48" border="0" alt="Remember" title="Remember"><br>I remember</a></td>';
+	$HTML .= '	<td nowrap align="center" CLASS="sans" valign="bottom"><a href="https://www.google.ca/search?q=remembrance+day"><img src="/images/poppy.gif" width="50" height="48" border="0" alt="Remember" title="Remember"><br>I remember</a></td>';
 } else {
 	$HTML .= '	<td>';
 	$HTML .= '<div id="followus"><div class="header">Follow us</div><a href="https://news.freshports.org/">Blog</a><br><a href="https://twitter.com/freshports/">Twitter</a><br><a href="https://freshports.wordpress.com/">Status page</a><br></div>';
@@ -862,7 +890,7 @@ function freshports_HEAD_main_items() {
 	<LINK REL="SHORTCUT ICON" HREF="/favicon.ico">
 	<meta name="MSSmartTagsPreventParsing" content="TRUE">
 
-	<link rel="alternate" type="application/rss+xml" title="FreshPorts - The Place For Ports" href="http://' . $_SERVER['HTTP_HOST'] . '/backend/rss2.0.php">
+	<link rel="alternate" type="application/rss+xml" title="FreshPorts - The Place For Ports" href="https://' . $_SERVER['HTTP_HOST'] . '/backend/rss2.0.php">
 
 	<link rel="apple-touch-icon" sizes="57x57" href="/images/apple-icon-57x57.png">
 	<link rel="apple-touch-icon" sizes="60x60" href="/images/apple-icon-60x60.png">
@@ -1384,18 +1412,21 @@ function freshports_PortCommits($port, $PageNumber = 1, $NumCommitsPerPage = 100
 	$Commits->LimitSet($NumCommitsPerPage);
 	$Commits->OffsetSet($Offset);
 	$NumRows = $Commits->FetchInitialise($port->id);
-	$port->LoadVulnerabilities();
+	# if no commits on this branch, don't fet 
+	if ($NumRows > 0) {
+		$port->LoadVulnerabilities();
 
-	$Commits->FetchNthCommit(0);
+		$Commits->FetchNthCommit(0);
 
-	$HTML .= freshports_CheckForOutdatedVulnClaim($Commits, $port, $port->VuXML_List);
+		$HTML .= freshports_CheckForOutdatedVulnClaim($Commits, $port, $port->VuXML_List);
 
-	$HTML .= freshports_PortCommitsHeader($port);
+		$HTML .= freshports_PortCommitsHeader($port);
 
-	$LastVersion = '';
-	for ($i = 0; $i < $NumRows; $i++) {
-		$Commits->FetchNthCommit($i);
-		$HTML .= freshports_PortCommitPrint($Commits, $port->category, $port->port, $port->VuXML_List);
+		$LastVersion = '';
+		for ($i = 0; $i < $NumRows; $i++) {
+			$Commits->FetchNthCommit($i);
+			$HTML .= freshports_PortCommitPrint($Commits, $port->category, $port->port, $port->VuXML_List);
+		}
 	}
 
 	$HTML .= freshports_PortCommitsFooter($port);
@@ -1411,6 +1442,10 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;
 	GLOBAL $User;
 
+
+	# if the message_id does not contain freebsd.org, it's a git commit
+	#
+	$GitCommit = strpos($commit->message_id, 'freebsd.org') == false;
 	$HTML = '';
 
 	# print a single commit for a port
@@ -1422,7 +1457,10 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	if ($commit->{'needs_refresh'}) {
 		$HTML .= " " . freshports_Refresh_Icon_Link() . "\n";
 	}
-	$HTML .= freshports_Email_Link($commit->message_id);
+
+	if (!$GitCommit) {
+		$HTML .= freshports_Email_Link($commit->message_id);
+	}
 
 #	$HTML .= '&nbsp;&nbsp;'. freshports_Commit_Link($commit->message_id);
 
@@ -1436,14 +1474,18 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	# output the VERSION and REVISION
 	$PackageVersion = freshports_PackageVersion($commit->{'port_version'},  $commit->{'port_revision'},  $commit->{'port_epoch'});
 	if (strlen($PackageVersion) > 0) {
-    	$HTML .= '&nbsp;&nbsp;<big><b>' . $PackageVersion . '</b></big>';
+		$HTML .= '&nbsp;&nbsp;<big><b>' . $PackageVersion . '</b></big>';
 	}
 
 	$HTML .= '<br>';
 
-	if (isset($commit->svn_revision)) {
-	  $HTML .= freshports_svnweb_ChangeSet_Link($commit->svn_revision, $commit->svn_hostname, $commit->path_to_repo);
-        }
+	if ($GitCommit) {
+		$HTML .= freshports_git_commit_Link_Hash($commit->message_id, $commit->commit_hash_short, $commit->repo_hostname, $commit->path_to_repo);
+	} else {
+		if (isset($commit->svn_revision)) {
+			$HTML .= freshports_svnweb_ChangeSet_Link($commit->svn_revision, $commit->commit_hash_short, $commit->repo_hostname, $commit->path_to_repo);
+	        }
+	}
 
 	if ($commit->stf_message != '') {
 		$HTML .= '&nbsp; ' . freshports_SanityTestFailure_Link($commit->message_id);
@@ -1597,7 +1639,7 @@ function freshports_wrap($text, $length = WRAPCOMMITSATCOLUMN) {
 }
 
 function freshports_PageBannerText($Text, $ColSpan=1) {
-	return '<td align="left" bgcolor="' . BACKGROUND_COLOUR . '" height="29" COLSPAN="' . $ColSpan . ' "><FONT COLOR="#FFFFFF"><big><big>' . $Text . '</big></big></FONT></td>' . "\n";
+	return '<td align="left" bgcolor="' . BACKGROUND_COLOUR . '" height="29" COLSPAN="' . $ColSpan . '"><FONT COLOR="#FFFFFF"><big><big>' . $Text . '</big></big></FONT></td>' . "\n";
 }
 
 
@@ -1637,12 +1679,12 @@ function freshports_UserSendToken($UserID, $dbh) {
 	                "Your token is: $token\n".
     	            "\n".
         	        "Please point your browser at\n".
-					"http://" . $_SERVER["HTTP_HOST"] . "/confirmation.php?token=$token\n" .
+					"https://" . $_SERVER["HTTP_HOST"] . "/confirmation.php?token=$token\n" .
 	                "\n".
     	            "the request came from " . $_SERVER["REMOTE_ADDR"] . ":" . $_SERVER["REMOTE_PORT"] ."\n".
 					"\n".
 					"-- \n".
-					"FreshPorts - http://" . $_SERVER["HTTP_HOST"] . "/ -- $FreshPortsSlogan";
+					"FreshPorts - https://" . $_SERVER["HTTP_HOST"] . "/ -- $FreshPortsSlogan";
 
 		$result = mail($email, "FreshPorts - user registration", $message,
 					"From: webmaster@" . $_SERVER["HTTP_HOST"] . "\nReply-To: webmaster@" . $_SERVER["HTTP_HOST"] . "\nX-Mailer: PHP/" . phpversion());
@@ -1680,23 +1722,23 @@ function freshports_ShowFooter($PhorumBottom = 0) {
 
 <td align="center">
 
-<a href="http://www.freebsd.org/"><img src="/images/pbfbsd2.gif"
+<a href="https://www.freebsd.org/"><img src="/images/pbfbsd2.gif"
 alt="powered by FreeBSD" border="0" width="171" height="64"></a>
 
 &nbsp;
 
-<a href="http://www.php.net/"><img src="/images/php-med-trans-light.gif"
+<a href="https://www.php.net/"><img src="/images/php-med-trans-light.gif"
 alt="powered by php" border="0" width="95" height="50"></a>
 &nbsp;
 
-<a href="http://www.postgresql.org/"><img src="/images/pg-power.jpg"
+<a href="https://www.postgresql.org/"><img src="/images/pg-power.jpg"
 alt="powered by PostgreSQL" border="0" width="164" height="59"></a>
 
 
 </td></tr>
 <tr><td align="center">
 
-<a href="http://www.apache.org/"><img src="/images/apache_pb.gif" 
+<a href="https://www.apache.org/"><img src="/images/apache_pb.gif" 
 alt="powered by apache" border="0" width="259" height="32"></a>
 
 <HR>
@@ -1719,7 +1761,7 @@ alt="powered by apache" border="0" width="259" height="32"></a>
 Valid 
 <a href="https://validator.w3.org/check?uri=' . $URI . '" title="We like to keep our HTML valid" target="_blank">HTML</a>, 
 <a href="https://jigsaw.w3.org/css-validator/validator?uri=' .  $URI . '" title="We like to have valid CSS">CSS</a>, and
-<a href="https://feedvalidator.org/check.cgi?url=http://' . $_SERVER['HTTP_HOST'] . '/backend/rss2.0.php" title="Valid RSS is good too">RSS</a>.
+<a href="https://feedvalidator.org/check.cgi?url=https://' . $_SERVER['HTTP_HOST'] . '/backend/rss2.0.php" title="Valid RSS is good too">RSS</a>.
 </small>
 <br>' . freshports_copyright() . '
 </td></tr>
@@ -1744,7 +1786,7 @@ Valid
 }
 
 function freshports_GoogleAnalytics() {
-	$HTML = '<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+	$HTML = '<script src="https://www.google-analytics.com/urchin.js" type="text/javascript">
 </script>
 <script type="text/javascript">
 _uacct = "UA-408525-1";
@@ -1837,7 +1879,7 @@ function freshports_SideBar() {
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/how-big-is-it.php",   "How big is it?",      "How many pages are in this website?"  ) . '</FONT><br>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/release-2004-10.php", "The latest upgrade!", "Details on the latest website upgrade") . '</FONT><br>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/privacy.php",         "Privacy",             "Our privacy statement"                ) . '</FONT><br>
-	<FONT SIZE="-1"><a href="http://news.freshports.org/" title="All the latest FresHPorts news">Blog</a></FONT><br>
+	<FONT SIZE="-1"><a href="https://news.freshports.org/" title="All the latest FreshPorts news">Blog</a></FONT><br>
 	<FONT SIZE="-1">' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/contact.php",         "Contact",             "Contact details"                      ) . '</FONT><br>
 	</td>
 	</tr>
@@ -2065,7 +2107,7 @@ function PeopleWatchingThisPortAlsoWatch($dbh, $element_id) {
 function freshports_RedirectPermanent($URL) {
 	#
 	# My thanks to nne van Kesteren who posted this solution
-	# at http://annevankesteren.nl/archives/2005/01/permanent-redirect
+	# at https://annevankesteren.nl/archives/2005/01/permanent-redirect
 	#
 
 	header("HTTP/1.1 301 Moved Permanently");
@@ -2095,8 +2137,8 @@ function freshports_LastModified_Dynamic() {
 
 function freshports_ConditionalGetUnix($UnixTime) {
 	// A PHP implementation of conditional get, see 
-	//   http://fishbowl.pastiche.org/archives/001132.html
-	// Based upon code from http://simon.incutio.com/archive/2003/04/23/conditionalGet
+	//   https://fishbowl.pastiche.org/archives/001132.html
+	// Based upon code from https://simon.incutio.com/archive/2003/04/23/conditionalGet
 
 	$ETag         = gmdate('Y-m-d H:i:s', $UnixTime);
 	$LastModified = gmdate(LAST_MODIFIED_FORMAT, $UnixTime);
@@ -2137,15 +2179,15 @@ function freshports_ConditionalGetUnix($UnixTime) {
 
 function freshports_ConditionalGet($LastModified) {
 	// A PHP implementation of conditional get, see 
-	//   http://fishbowl.pastiche.org/archives/001132.html
-	// Based upon code from http://simon.incutio.com/archive/2003/04/23/conditionalGet
+	//   https://fishbowl.pastiche.org/archives/001132.html
+	// Based upon code from https://simon.incutio.com/archive/2003/04/23/conditionalGet
 
 	$UnixTime = strtotime($LastModified);
 	freshports_ConditionalGetUnix($UnixTime);
 }
 
 #
-# obtained from http://ca3.php.net/manual/en/function.is-int.php 
+# obtained from https://ca3.php.net/manual/en/function.is-int.php 
 # on 2 August 2005. Posted by phpContrib (A T) esurfers d o t c o m
 # on 06-Nov-2003 03:42
 
@@ -2251,10 +2293,10 @@ function freshports_pathname_to_repo_name($WhichRepo, $pathname)
   switch($WhichRepo)
   {
     case FREEBSD_REPO_SVN:
-      # given ports/www/p5-App-Nopaste/Makefile, we want something like: http://svn.freebsd.org/ports/head/www/p5-App-Nopaste/Makefile
+      # given ports/www/p5-App-Nopaste/Makefile, we want something like: https://svn.freebsd.org/ports/head/www/p5-App-Nopaste/Makefile
       $RepoName = $RepoNames[$WhichRepo];
-      $match   = $AdjustPathname[$WhichRepo]['match'];
-      $replace = $AdjustPathname[$WhichRepo]['replace'];
+      $match    = $AdjustPathname[$WhichRepo]['match'];
+      $replace  = $AdjustPathname[$WhichRepo]['replace'];
       $repo_file_name = $RepoName . '/head/' . preg_replace($match, $replace, $pathname);
       break;
 
@@ -2267,7 +2309,7 @@ function freshports_pathname_to_repo_name($WhichRepo, $pathname)
 }
 
 function _forDisplay($string, $flags = NULL, $encoding = FRESHPORTS_ENCODING) {
-  # can't put this in the header.  See http://php.net/manual/en/functions.arguments.php
+  # can't put this in the header.  See https://php.net/manual/en/functions.arguments.php
   if ($flags === NULL) {
     $flags = ENT_COMPAT | ENT_HTML401;
   }
@@ -2286,7 +2328,7 @@ function _forDisplay($string, $flags = NULL, $encoding = FRESHPORTS_ENCODING) {
   return $encoded;
 }
 
-define('EVERYTHING', 'FreshPorts has everything you want to know about <a href="http://www.freebsd.org/">FreeBSD</a> software, ports, packages,
+define('EVERYTHING', 'FreshPorts has everything you want to know about <a href="https://www.freebsd.org/">FreeBSD</a> software, ports, packages,
 applications, whatever term you want to use.');
 
 openlog('FreshPorts', LOG_PID, LOG_LOCAL3);
@@ -2296,7 +2338,7 @@ function NormalizeBranch($Branch = BRANCH_HEAD) {
   # this function converts 'quarterly' to something like 2019Q2
   # from https://secure.php.net/manual/en/function.date.php
   # n Numeric representation of a month, without leading zeros 1 through 12
-  
+
   if ($Branch == BRANCH_QUARTERLY) {
     $Branch = date('Y') . 'Q' . (floor((date('n') - 1) / 3) + 1);
   }

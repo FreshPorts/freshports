@@ -31,7 +31,7 @@
 	// click out of bars (too high or too low)
 	if ($i==0 || $i==count($map)) {
 		if (!isset($_SERVER["HTTP_REFERER"]) || $_SERVER["HTTP_REFERER"] == '') {
-			header("Location: http://".$_SERVER['HTTP_HOST']);
+			header("Location: https://".$_SERVER['HTTP_HOST']);
 		} else {
 			header("Location: $HTTP_REFERER");
 	    }
@@ -40,5 +40,5 @@
 
 	$URL = $map_p[$i-1];
 
-	header("Location: http://" . $_SERVER['HTTP_HOST'] . "$URL");
+	header("Location: https://" . $_SERVER['HTTP_HOST'] . "$URL");
 ?>

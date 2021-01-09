@@ -35,10 +35,10 @@ BSD Today - <a href="http://www.bsdtoday.com/2000/May/News146.html">Keeping trac
 </p>
 
 <p>
-slashdot - <a href="http://slashdot.org/article.pl?sid=00/05/10/1014226">BSD: FreshPorts</a>
+slashdot - <a href="https://slashdot.org/article.pl?sid=00/05/10/1014226">BSD: FreshPorts</a>
 </p>
 
-Daily Daemon News - <a href="http://daily.daemonnews.org/view_story.php3?story_id=889"><? echo $FreshPortsTitle; ?> site announncement</a>
+Daily Daemon News - <a href="https://daily.daemonnews.org/view_story.php3?story_id=889"><? echo $FreshPortsTitle; ?> site announncement</a>
 </TD>
 </TR>
 </TABLE>

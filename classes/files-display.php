@@ -65,11 +65,18 @@ class FilesDisplay {
 
 		$this->HTML .= "
 		<TR>
-			<TD><b>Action</b></TD><TD><B>Revision</B></TD><td><b>Links</b></td><TD><b>File</b></TD>
+			<TD><b>Action</b></TD><TD><B>Revision</B></TD><td><b>Annotate/etc</b></td><TD><b>File</b></TD>
 		</TR>\n";
 
 		for ($i = 0; $i < $NumRows; $i++) {
 			$myrow = pg_fetch_array($this->ResultSet, $i);
+
+			if ($this->Debug) {
+				echo '<pre>';
+				var_dump($myrow);
+				echo '</pre>';
+			}
+
 			$this->HTML .= "<TR>\n";
 
 			switch ($myrow["change_type"]) {
@@ -93,68 +100,102 @@ class FilesDisplay {
 			$this->HTML .= '  <TD>' . $myrow["revision_name"];
             $this->HTML .= "</TD>";
             
-            $this->HTML .= '<td>';
-            if ( $Change_Type == "modify" ) {
-                switch($WhichRepo)
-                {
-                    case FREEBSD_REPO_CVS:
-                        $this->HTML .= ' ';
-                        $previousRevision =  $this->GetPreviousRevision( $myrow["revision_name"] );
-                        $this->HTML .= freshports_cvsweb_Diff_Link($myrow["pathname"] , $previousRevision, $myrow["revision_name"]);
-        		    	break;
-
-                    case FREEBSD_REPO_SVN:
-                        $this->HTML .= ' ';
-    	        		$previousRevision =  $this->GetPreviousRevision( $myrow["revision_name"] );
-                        # we want something like http://svnweb.freebsd.org/ports/head/www/p5-App-Nopaste/Makefile?r1=300951&r2=300950&pathrev=300951
-            			$this->HTML .= ' <A HREF="http://' . $myrow['svn_hostname'] . $myrow["pathname"] . '?r1=' . 
-            			    $myrow["revision_name"] . '&amp;r2=' . $previousRevision . '&amp;pathrev=' . $myrow["revision_name"] . '">';
-        		    	$this->HTML .= freshports_Diff_Icon() . '</a> ';
-                        break;
-                }
-            }
-            
-            switch($WhichRepo)
+            $this->HTML .= '<td valign="middle">';
+#           switch($WhichRepo)
+            switch($myrow['repository'])
             {
-                case FREEBSD_REPO_CVS:
+#               case FREEBSD_REPO_CVS:
+		default:
                     $this->HTML .= freshports_cvsweb_Annotate_Link($myrow["pathname"] , $myrow["revision_name"]); 
                     break;
 
-                case FREEBSD_REPO_SVN:
+#               case FREEBSD_REPO_SVN:
+                case FREEBSD_REPOSITORY_SUBVERSION:
                     # we want something like
                     # http://svn.freebsd.org/ports/head/x11-wm/awesome/Makefile
-        			$this->HTML .= ' <A HREF="http://' . $myrow['svn_hostname'] . $myrow["pathname"] . '?annotate=' . $myrow["revision_name"] . '">';
-		        	$this->HTML .= freshports_Revision_Icon() . '</a> ';
+                    $this->HTML .= ' <A HREF="http://' . $myrow['repo_hostname'] . $myrow["pathname"] . '?annotate=' . $myrow["revision_name"] . '">';
+		    $this->HTML .= freshports_Revision_Icon() . '</a> ';
                     break;
-                    
-                default:
-		    $this->HTML .= 'unknown: \'' . htmlentities($WhichRepo) . '\'';
+
+                case FREEBSD_REPOSITORY_GIT:
+                    # we want something like
+                    # https://github.com/freebsd/freebsd-ports/blame/0957c7db9bf1fc4313cdefdcdc2608a0c965dda7/sysutils/goaccess/Makefile
+                    $this->HTML .= ' <A HREF="http://' . $myrow['repo_hostname'] . $myrow["path_to_repo"] . '/blame/' . $myrow["revision_name"] . '/' .  freshports_Convert_Subversion_Path_To_Git($myrow["pathname"]) . '">';
+		    $this->HTML .= freshports_Annotate_Icon() . '</a> ';
+                    break;
+
+#                default:
+#		    $this->HTML .= 'unknown: \'' . htmlentities($WhichRepo) . '\'';
+            }
+
+
+            if ( $Change_Type == "modify" ) {
+#               switch($WhichRepo)
+                switch($myrow['repository'])
+                {
+#		    case FREEBSD_REPO_CVS:
+                    default:
+                        $this->HTML .= ' ';
+                        $previousRevision =  $this->GetPreviousRevision( $myrow["revision_name"] );
+                        $this->HTML .= freshports_cvsweb_Diff_Link($myrow["pathname"] , $previousRevision, $myrow["revision_name"]);
+                        break;
+
+#                   case FREEBSD_REPO_SVN:
+                    case FREEBSD_REPOSITORY_SUBVERSION:
+                        $this->HTML .= ' ';
+    	        	$previousRevision = $this->GetPreviousRevision( $myrow["revision_name"] );
+                        # we want something like http://svnweb.freebsd.org/ports/head/www/p5-App-Nopaste/Makefile?r1=300951&r2=300950&pathrev=300951
+            		$this->HTML .= ' <A HREF="http://' . $myrow['repo_hostname'] . $myrow["pathname"] . '?r1=' . 
+            		$myrow["revision_name"] . '&amp;r2=' . $previousRevision . '&amp;pathrev=' . $myrow["revision_name"] . '">';
+        		$this->HTML .= freshports_Diff_Icon() . '</a> ';
+                        break;
+
+                    case FREEBSD_REPOSITORY_GIT:
+                        $this->HTML .= ' ';
+			$this->HTML .= freshports_git_commit_Link_diff($myrow['message_id'], $myrow['repo_hostname'], $myrow['path_to_repo']);
+                        break;
+                }
             }
 
             $this->HTML .= '</td>';
+            $this->HTML .= '  <TD WIDTH="100%" VALIGN="middle">';
             
-			$this->HTML .= '  <TD WIDTH="100%" VALIGN="middle">';
-
-            switch($WhichRepo)
+#           switch($WhichRepo)
+            switch($myrow['repository'])
             {
-                case FREEBSD_REPO_CVS:
-                    $this->HTML .= freshports_cvsweb_Revision_Link($myrow["pathname"] , $myrow["revision_name"]); 
+#               case FREEBSD_REPO_CVS:
+                default:
+                    $this->HTML .= freshports_cvsweb_Revision_Link($myrow["pathname"] , $myrow["revision_name"]);
+                    $url_text = $myrow["pathname"];
                     break;
 
-                case FREEBSD_REPO_SVN:
+#               case FREEBSD_REPO_SVN:
+                case FREEBSD_REPOSITORY_SUBVERSION:
                     # we want something like
                     # http://svnweb.freebsd.org/ports/head/textproc/bsddiff/Makefile?view=log#rev300953
-        			$this->HTML .= ' <A HREF="http://' . $myrow['svn_hostname'] . $myrow["pathname"] . '?view=log#rev' . $myrow["revision_name"] . '">';
+                    $this->HTML .= ' <A HREF="http://' . $myrow['repo_hostname'] . $myrow["pathname"] . '?view=log#rev' . $myrow["revision_name"] . '">';
+                    $url_text = $myrow["pathname"];
+                    break;
+
+                case FREEBSD_REPOSITORY_GIT:
+                    # we want something like
+                    # https://github.com/freebsd/freebsd-ports/commit/0957c7db9bf1fc4313cdefdcdc2608a0c965dda7
+                    # https://github.com/freebsd/freebsd-ports/commits/0957c7db9bf1fc4313cdefdcdc2608a0c965dda7/sysutils/goaccess/Makefile
+                    # https://github.com/freebsd/freebsd-ports/commits/0957c7db9bf1fc4313cdefdcdc2608a0c965dda7sysutils/goaccess/Makefile
+                    $url_text = freshports_Convert_Subversion_Path_To_Git($myrow["pathname"]);
+                    $this->HTML .= ' <a href="http://' . $myrow['repo_hostname'] . $myrow["path_to_repo"] . '/commits/' . $myrow["revision_name"] . '/'. $url_text . '" title="Commit history">';
+#                   $this->HTML .= freshports_git_commit_Link($myrow["revision_name"], $myrow['repo_hostname'], myrow["pathname"]);
                     break;
             }
 
-			$this->HTML .= '<CODE CLASS="code">' . $myrow["pathname"] . "</CODE></A></TD>";
-			$this->HTML .= "</TR>\n";
-		}
+            # we once had $myrow["pathname"] here, until git came in, and we needed to convert the pathname.
+            $this->HTML .= '<CODE CLASS="code">' . $url_text . "</CODE></a></TD>";
+            $this->HTML .= "</TR>\n";
+         }
 		
-		$this->HTML .= "</table>";
+	$this->HTML .= "</table>";
 		
-		return $this->HTML;
+	return $this->HTML;
 	}
 
 

@@ -51,21 +51,27 @@ $Sequence_User_ID				= 'users_id_seq';
 #
 
 // path to the CVS repository
-define('FRESHPORTS_FREEBSD_CVS_URL' , 'http://www.FreeBSD.org/cgi/cvsweb.cgi');
+define('FRESHPORTS_FREEBSD_CVS_URL' , 'https://www.FreeBSD.org/cgi/cvsweb.cgi');
 
 // path to the SVN repository
-define('FRESHPORTS_FREEBSD_SVN_URL' , 'http://svnweb.FreeBSD.org');
+define('FRESHPORTS_FREEBSD_SVN_URL' , 'https://svnweb.FreeBSD.org');
 
 // which repo do we want?
 define('FREEBSD_REPO_SVN', 'svn');
 define('FREEBSD_REPO_CVS', 'cvs');
+
+// these constants came in with git
+// these values are from the repo.repository table
+
+define('FREEBSD_REPOSITORY_GIT',        'git');
+define('FREEBSD_REPOSITORY_SUBVERSION', 'subversion');
 
 // path to the ftp server
 define('FRESHPORTS_FREEBSD_FTP_URL', 'ftp://ftp.freebsd.org/pub/FreeBSD/ports/i386/packages/All/');
 
 
 // path to the cvs-all mailing list archive
-$freshports_mail_archive = "http://www.freebsd.org/cgi/mid.cgi?db=mid&id=";
+$freshports_mail_archive = "https://www.freebsd.org/cgi/mid.cgi?db=mid&id=";
 
 #
 # max number of lines to show in a commit
@@ -109,7 +115,8 @@ define('SPOOLING_DIRECTORY', CACHE_DIRECTORY . '/spooling');  # cache spooling
 
 define('DELETE_PACKAGE', 'delete-package');
 
-define('DEFAULT_SVN_REPO', 'svn.freebsd.org');
+define('DEFAULT_SVN_REPO', 'svnweb.freebsd.org');
+define('DEFAULT_GIT_REPO', 'github.com');
 
 define('PORT_STATUS_ACTIVE',  'A');
 define('PORT_STATUS_DELETED', 'D');
@@ -127,6 +134,9 @@ define('MAINTENANCE_PAGE', 'now-in-maintenance-mode.php');
 define('MAINTENANCE_MODE_RERESH_TIME_SECONDS', 180);
 
 define('ISSUES', 'https://github.com/FreshPorts/freshports/issues');
+
+# a git hash is 160 bytes, which is expressed as 40 characters in hex
+define('MIN_GIT_HASH_LENGTH', 40);
 
 # for packages
 

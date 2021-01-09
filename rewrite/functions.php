@@ -86,7 +86,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	define('PATH_NAME', $pathname);
 
 	# let's see if this is a category.
-	if ($ElementRecord->FetchByName(FRESHPORTS_PORTS_TREE_PREFIX . PATH_NAME, 0)) {
+	if ($ElementRecord->FetchByName(FRESHPORTS_PORTS_TREE_PREFIX . PATH_NAME, 1)) {
 		$IsElement = true;
 		if ($Debug) echo 'we found an element for that<br>';
 		if ($Debug) echo "we have: '$ElementRecord->element_pathname'<br>";

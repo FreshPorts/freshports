@@ -478,6 +478,24 @@ class port_display {
 		return $HTML;
 	}
 
+	function DisplayDependencyLineLibraries($PlainText = false) {
+		$port = $this->port;
+
+		$HTML = '';
+
+		// pkg_plist_library_matches is a JSON array
+		$lib_depends = json_decode($port->pkg_plist_library_matches, true);
+		if (is_array($lib_depends) && count($lib_depends) > 0) {
+			foreach($lib_depends as $library) {
+				if (!$PlainText) $HTML .= '<li>';
+				$HTML .= preg_replace('/^lib\//', '', $library) . ':' . $this->DisplayPlainText();
+				if (!$PlainText) $HTML .= '</li>';
+			}
+		}
+
+		return $HTML;
+	}
+
 	function packageToolTipText($last_checked, $repo_date, $processed_date) {
 		# last_checked    - when we last checked for an update
 		# repo_date       - date on packagesite.txz (e.g. https://pkg.freebsd.org/FreeBSD:11:amd64/latest/
@@ -842,6 +860,18 @@ class port_display {
 
 		if ($this->ShowEverything || $this->ShowBasicInfo) {
 
+			$HTML .= '<dt class="pkg-plist" id="dependency"><b>Dependency lines</b>:</dt>';
+			$HTML .= '<dd class="pkg-plist">' . "\n" . '<ul class="pkg-plist"><li class="file">';
+
+			// if USES= contains python
+			// We split on both whitespace and : to cater for python:3.6+
+			if (in_array(USES_PYTHON, preg_split('/\s+|:/', $port->uses))) {
+				// split off the prefix, everthing before the first -, inclusive
+				$package_name_parts=explode('-', $port->package_name, 2);
+				$HTML .=  '${PYTHON_PKGNAMEPREFIX}' . $package_name_parts[1];
+			} else {
+				$HTML .= $port->package_name;
+			}
 
 			$HTML .= '<dd class="pkg-plist">' . "\n" . '<ul class="pkg-plist"><li class="file">';
 			$HTML .= $this->DisplayDependencyLine();
@@ -855,6 +885,9 @@ class port_display {
 					$HTML .= '<li>' . preg_replace('/^lib\//', '', $library) . ':' . $this->DisplayPlainText() . '</li>';
 				}
 			}
+			$HTML .= $this->DisplayDependencyLine();
+			$HTML .= '</li>';
+			$HTML .= $this->DisplayDependencyLineLibraries();
 			$HTML .= '</ul></dd>';
 		}
 

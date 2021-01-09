@@ -21,7 +21,7 @@ DEFINE('NEXT_PAGE',		'Next');
 	$message_id = '';
 	$page       = '';
 	$page_size  = '';
-
+	
 	if (IsSet($_GET['message_id'])) $message_id = pg_escape_string($_GET['message_id']);
 	if (IsSet($_GET['revision']))   $revision   = pg_escape_string($_GET['revision']);
 
@@ -46,7 +46,6 @@ DEFINE('NEXT_PAGE',		'Next');
 	# if found, we redirect using the message_id
         if ($message_id == '' && $revision != '')
         {
-		if ($Debug) echo 'we have no message_id and we have a revision<br>';
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
 
 		$Commit = new Commit($db);
@@ -72,18 +71,18 @@ DEFINE('NEXT_PAGE',		'Next');
 		if (!$result) {
 			if ($Debug) echo 'found something from the cache for ' . $message_id . "<br>\n";
 		} else {
-			if ($Debug) echo "found NOTHING in cache for '" . $message_id . "'<br>\n";
+			echo "found NOTHING in cache for '" . $message_id . "'<br>\n";
 		}
 	}
 
 	if (!$result) {
 		$HTML = $Cache->CacheDataGet();
+		$cached = true;
 	} else {
-
+		$cached = false;
 		if ($message_id != '') {
 			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
 
-			if ($Debug) echo 'invoking FetchByMessageId for '. $message_id . '<br>';
 			$Commit = new Commit($db);
 			$Commit->FetchByMessageId($message_id);
 			freshports_ConditionalGet($Commit->last_modified);
@@ -162,8 +161,10 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
   </TR>
 <?
 }
-	if ($message_id != '' || $revision != '') {
-		if ($Debug) echo 'one of message_id and revision is not blank<br>';
+	if ($cached) {
+		echo $HTML;
+	} else {
+	if ($cached || ($message_id != '' || $revision != '')) {
 	
 ?>
 
@@ -175,31 +176,29 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 
 #	$numrows = $MaxNumberOfPorts;
 	$database = $db;
-	if ($database ) {
+	if ( $database ) {
 	
-		if (!empty($revision) && count($message_id_array))
-		{
-			if ($Debug) echo 'revision is not blank and we have something in message_id_array<br>';
+		if (!empty($revision) && count($message_id_array)) {
 			// we have multiple messages for that commit
 			echo '<tr><TD VALIGN="top">';
 			echo "We have multiple emails for that revision: ";
 			$Commit->FetchNth(0);
 			$clean_revision = htmlentities($Commit->svn_revision);
 			// e.g. http://svnweb.freebsd.org/base?view=revision&revision=177821
-			echo '<a href="http://' . htmlentities($Commit->repo_hostname) . htmlentities($Commit->path_to_repo) . '?view=revision&amp;revision=' . $clean_revision . '">' . $clean_revision . '</a>';
+			echo '<a href="http://' . htmlentities($Commit->svn_hostname) . htmlentities($Commit->path_to_repo) . '?view=revision&amp;revision=' . $clean_revision . 
+				'">' . $clean_revision . '</a>';
 
 			echo "<ol>\n";
-			foreach($message_id_array as $i => $message_id)
-			{
+			foreach($message_id_array as $i => $message_id) {
 				$Commit->FetchNth($i);
 				$clean_message_id = htmlentities($Commit->message_id);
 				echo '<li><a href="/commit.php?message_id=' . $clean_message_id . '">' . htmlentities($clean_message_id) . '</a></li>' . "\n";
 			}
 			echo "</ol></TD></tr>";
-	    
-		} // if (!empty($revision) && count($message_id_array))
-		else
-		{
+
+
+		} else {
+
 			if ($HTML == '')  {
 
 				$HTML = '';
@@ -263,80 +262,79 @@ ORDER BY port, element_pathname";
 					exit;
 				}
 
-				$HTML .=  "</TABLE>\n";
+			$HTML .=  "</TABLE>\n";
 
-				$ShowAllFilesURL = '<a href="' . htmlspecialchars($_SERVER['SCRIPT_URL'] . '?message_id=' .  $message_id . '&files=yes') . '">show all files</a>';
+			$ShowAllFilesURL = '<a href="' . htmlspecialchars($_SERVER['SCRIPT_URL'] . '?message_id=' .  $message_id . '&files=yes') . '">show all files</a>';
 
-				$HideAllFilesURL = '<a href="' . htmlspecialchars($_SERVER['SCRIPT_URL'] . '?message_id=' .  $message_id) . '">hide all files</a>';
+			$HideAllFilesURL = '<a href="' . htmlspecialchars($_SERVER['SCRIPT_URL'] . '?message_id=' .  $message_id) . '">hide all files</a>';
 
-				if ($FilesForJustOnePort) {
-					// TODO need to validate category/port here!
-					require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
+			if ($FilesForJustOnePort) {
+				// TODO need to validate category/port here!
+				require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
 
-					$Category = new Category($database);
-					$CategoryID = $Category->FetchByName($clean['category']);
-					if (!$CategoryID) {
-						die( 'I don\'t know that category: . ' . htmlentities($clean['category']));
-					}
+				$Category = new Category($database);
+				$CategoryID = $Category->FetchByName($clean['category']);
+				if (!$CategoryID) {
+					die( 'I don\'t know that category: . ' . htmlentities($clean['category']));
+				}
 
-					require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/element_record.php');
+				require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/element_record.php');
 
-					$elementName = '/ports/head/' . $clean['category'] . '/' . $clean['port'];
+				$elementName = '/ports/head/' . $clean['category'] . '/' . $clean['port'];
 
-					$Element = new ElementRecord($database);
-					$ElementID = $Element->FetchByName($elementName);
+				$Element = new ElementRecord($database);
+				$ElementID = $Element->FetchByName($elementName);
 
-					if (!$ElementID) {
-						die( 'I don\'t know that port.');
-					}
+				if (!$ElementID) {
+					die( 'I don\'t know that port.');
+				}
 
-					if (!$Element->IsPort()) {
-						die( 'That is not a port.');
-					}
+				if (!$Element->IsPort()) {
+					die( 'That is not a port.');
+				}
 
 
-					$PortURL = '<a href="/' . $clean['category'] . '/' . $clean['port'] . '/">' . $clean['category'] . '/' . $clean['port'] . '</a>';
-					$HTML .=  '<p>Showing files for just one port: <big><b>' . $PortURL . '</b></big></p>';
-					$HTML .=  "<p>$ShowAllFilesURL</p>";
-				} # FilesForJustOnePort
+				$PortURL = '<a href="/' . $clean['category'] . '/' . $clean['port'] . '/">' . $clean['category'] . '/' . $clean['port'] . '</a>';
+				$HTML .=  '<p>Showing files for just one port: <big><b>' . $PortURL . '</b></big></p>';
+				$HTML .=  "<p>$ShowAllFilesURL</p>";
+			} # FilesForJustOnePort
 
-				# if we ask for files=yes or files=y
-				if (!strcasecmp($files, 'y')) {
-					$HTML .=  "<p>$HideAllFilesURL</p>";
+			# if we ask for files=yes or files=y
+			if (!strcasecmp($files, 'y')) {
+				$HTML .=  "<p>$HideAllFilesURL</p>";
 
-					$WhichRepo = freshports_MessageIdToRepoName($message_id);
+				$WhichRepo = freshports_MessageIdToRepoName($message_id);
 
-					require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/files.php');
+				require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/files.php');
 
-					$Files = new CommitFiles($database);
-					$Files->Debug = $Debug;
-					$Files->MessageIDSet($message_id);
-					$Files->UserIDSet($User->id);
+				$Files = new CommitFiles($database);
+				$Files->Debug = $Debug;
+				$Files->MessageIDSet($message_id);
+				$Files->UserIDSet($User->id);
+				if (IsSet($url_args['category'])) {
+					$Files->CategorySet(pg_escape_string($url_args['category']));
+				}
 
-					if (IsSet($url_args['category'])) {
-						$Files->CategorySet(pg_escape_string($url_args['category']));
-					}
+				if (IsSet($url_args['port'])) {
+					$Files->PortSet(pg_escape_string($url_args['port']));
+				}
 
-					if (IsSet($url_args['port'])) {
-						$Files->PortSet(pg_escape_string($url_args['port']));
-					}
+				$NumRows = $Files->Fetch();
+				if ($Debug) echo 'numrows = ' . $NumRows;
 
-					$NumRows = $Files->Fetch();
-					if ($Debug) echo 'numrows = ' . $NumRows;
+				require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/files-display.php');
 
-					require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/files-display.php');
+				$FilesDisplay = new FilesDisplay($Files->LocalResult);
 
-					$FilesDisplay = new FilesDisplay($Files->LocalResult);
+				$HTML .= '<br>' . $FilesDisplay->CreateHTML($WhichRepo);
+#				$HTML = $FilesDisplay->CreateHTML($WhichRepo);
+			} else {
+				$HTML .=  "<p>$ShowAllFilesURL</p>";
+			} # files == 'y'
 
-					$HTML .= '<br>' . $FilesDisplay->CreateHTML($WhichRepo);
-#					$HTML = $FilesDisplay->CreateHTML($WhichRepo);
-				} else {
-					$HTML .=  "<p>$ShowAllFilesURL</p>";
-				} # files == 'y'
-
-				# save the HTML
-				$Cache->CacheDataSet($HTML);
-				$Cache->AddCommit($message_id, $clean['category'], $clean['port'], $files);
+			# save the HTML
+			$Cache->CacheDataSet($HTML);
+			$Cache->AddCommit($message_id, $clean['category'], $clean['port'], $files);
 			} // $HTML != ''
 		} # count($message_id_array)
 
@@ -344,13 +342,11 @@ ORDER BY port, element_pathname";
 
 	} else {
 		$HTML .=  "no connection";
-	} #  if ($database )
-
-	}
-	else # if ($message_id != '' || $revision != '')
-	{
+	} # if ($database )
+	} else {
 		echo '<tr><td valign="top" width="100%">nothing supplied, nothing found!</td>';
-	} # !empty($revision) && count($message_id_array))
+	} # if ($message_id != '' || $revision != '')
+	}  # if ($cached)
 
 
 ?>

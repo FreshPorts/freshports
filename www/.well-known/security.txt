@@ -1,0 +1,12 @@
+#
+# If you want to report a security issue, you can use the contact details
+# below. You can also report it via https://www.openbugbounty.org where I
+# have an account - DLangille
+#
+# The digital signature for this file can be found at:
+# https://www.freshports.org/.well-known/security.txt.sig
+
+Contact: dan@langille.org
+Encryption: https://www.freshports.org/.well-known/pgp-key.txt
+Preferred-Languages: en
+Canonical: https://www.freshports.org/.well-known/security.txt

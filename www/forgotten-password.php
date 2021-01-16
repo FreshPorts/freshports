@@ -249,9 +249,9 @@ we're only dealing with your FreshPorts login, not a financial transaction....</
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST">
       <input type="hidden" name="custom_settings" value="1"><input type="hidden" name="LOGIN" value="1">
       <p>User ID:<br>
-      <input SIZE="15" NAME="UserID" value="<? if (IsSet($UserID)) echo $UserID ?>"></p>
+      <input SIZE="15" NAME="UserID" value="<? if (IsSet($UserID)) echo htmlentities($UserID) ?>"></p>
       <p>email address:<br>
-      <input NAME="eMail" VALUE = "<? if (IsSet($eMail)) echo $eMail ?>" SIZE="20"></p>
+      <input NAME="eMail" VALUE = "<? if (IsSet($eMail)) echo htmlentities($eMail) ?>" SIZE="20"></p>
       <p><input TYPE="submit" VALUE="eMail Me!" name=submit>
 </form>
 <? } ?>

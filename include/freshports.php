@@ -1820,7 +1820,7 @@ function freshports_SideBar() {
 	if (IsSet($visitor)) {
 		GLOBAL $User;
 
-		$HTML .= '<FONT SIZE="-1">Logged in as ' . $User->name . "</FONT><br>";
+		$HTML .= '<FONT SIZE="-1">Logged in as ' . htmlentities($User->name) . "</FONT><br>";
 
 		if ($User->emailbouncecount > 0) {
 			$HTML .= '<img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif"  border="0" height="32" width="32"><img src="/images/warning.gif" border="0"height="32" width="32"><br>';

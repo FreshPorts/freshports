@@ -122,7 +122,7 @@ function freshports_UpdatingOutput($NumRowsUpdating, $PortsUpdating, $port) {
 	if ($NumRowsUpdating > 0) {
 		$HTML .= '<TABLE BORDER="1" width="100%" CELLSPACING="0" CELLPADDING="5">' . "\n";
 		$HTML .= "<TR>\n";
-		$HTML .= freshports_PageBannerText("Notes from UPDATING", 1);
+		$HTML .= freshports_PageBannerText('<a id="updating">Notes from UPDATING', 1);
 		$HTML .= "<tr><td>\n";
 		$HTML .= "These upgrade notes are taken from <a href=\"/UPDATING\">/usr/ports/UPDATING</a>";
 		$HTML .= "<ul>\n";

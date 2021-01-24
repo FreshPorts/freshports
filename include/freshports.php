@@ -1356,8 +1356,8 @@ function freshports_PortCommits($port, $PageNumber = 1, $NumCommitsPerPage = 100
 			'spacesBeforeSeparator' => 1,
 			'spacesAfterSeparator'  => 1,
 			'append'                => false,
-			'path'					=> '/' . $port->category . '/' . $port->port,
-			'fileName'              => '?page=%d',
+			'path'			=> '/' . $port->category . '/' . $port->port,
+			'fileName'              => '?page=%d#history', 	# there are two places #history is set.  This is #1
 			'altFirst'              => 'First Page',
 			'firstPageText'         => 'First Page',
 			'altLast'               => 'Last Page',
@@ -1384,7 +1384,8 @@ function freshports_PortCommits($port, $PageNumber = 1, $NumCommitsPerPage = 100
 
 	$links = $Pager->GetLinks();
 
-	$NumCommitsHTML = '<p align="left">Number of commits found: ' . $NumCommits;
+	# there are two places #history is set.  This is #2
+	$NumCommitsHTML = '<p align="left"><a id="history">Number of commits found: ' . $NumCommits;
 
 	$Offset = 0;
 	$PageLinks = $links['all'];

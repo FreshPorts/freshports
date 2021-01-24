@@ -82,7 +82,7 @@ class port_display {
 	}
 
 	function _pkgmessage_UCL($pkgmessage) {
-		$HTML = '<dt><b>pkg-message:</b></dt><dd><dl>';
+		$HTML = '<dt><b><a id="message">pkg-message:</b></dt><dd><dl>';
 		# save the pkgmessage to a temp file
 		# from https://www.php.net/manual/en/function.tmpfile.php
 		$temp = tmpfile();
@@ -829,7 +829,7 @@ class port_display {
 				$HTML .= '<dt>No installation instructions: this port has been deleted.</dt>';
 				$HTML .= '<dt>The package name of this deleted port was: <code class="code">' . $port->latest_link . '</code></dt>';
 			} else {
-				$HTML .= '<dt><b>To install <a href="/faq.php#port" TITLE="what is a port?">the port</a>:</b> <code class="code">cd /usr/ports/'  . $port->category . '/' . $port->port . '/ && make install clean</code></dt>';
+				$HTML .= '<dt><b><a id="add">To install <a href="/faq.php#port" TITLE="what is a port?">the port</a>:</b> <code class="code">cd /usr/ports/'  . $port->category . '/' . $port->port . '/ && make install clean</code></dt>';
 				if (IsSet($port->no_package) && $port->no_package != '') {
 					$HTML .= '<dt><b>No <a href="/faq.php#package" TITLE="what is a package?">package</a> is available:</b> ' . $port->no_package . '</dt>';
 					} else {
@@ -998,37 +998,37 @@ class port_display {
 			}
 
 			if ($port->depends_build) {
-				$HTML .= '<dt class="required">Build dependencies:</dt><dd>' . "\n" . '<ol class="required" id="requiredtobuild">';
+				$HTML .= '<dt class="required"><a id="requiredbuild">Build dependencies:</dt><dd>' . "\n" . '<ol class="required" id="requiredtobuild">';
 				$HTML .= freshports_depends_links($this->db, $port->depends_build, $this->Branch);
 				$HTML .= "\n</ol></dd>\n";
 			}
 
 			if ($port->depends_run) {
-				$HTML .= '<dt class="required">Runtime dependencies:</dt><dd>' . "\n" . '<ol class="required" id="requiredtorun">';
+				$HTML .= '<dt class="required"><a id="requiredrun">Runtime dependencies:</dt><dd>' . "\n" . '<ol class="required" id="requiredtorun">';
 				$HTML .= freshports_depends_links($this->db, $port->depends_run, $this->Branch);
 				$HTML .= "\n</ol></dd>\n";
 			}
 
 			if ($port->depends_lib) {
-				$HTML .= '<dt class="required">Library dependencies:</dt><dd>' . "\n" . '<ol class="required" id="requiredlibraries">';
+				$HTML .= '<dt class="required"><a id="requiredlib">Library dependencies:</dt><dd>' . "\n" . '<ol class="required" id="requiredlibraries">';
 				$HTML .= freshports_depends_links($this->db, $port->depends_lib, $this->Branch);
 				$HTML .= "\n</ol></dd>\n";
 			}
 
 			if ($port->fetch_depends) {
-				$HTML .= '<dt class="required">Fetch dependencies:</dt><dd>' . "\n" . '<ol class="required" id="requiredfetches">';
+				$HTML .= '<dt class="required"><a id="requiredfetch">Fetch dependencies:</dt><dd>' . "\n" . '<ol class="required" id="requiredfetches">';
 				$HTML .= freshports_depends_links($this->db, $port->fetch_depends, $this->Branch);
 				$HTML .= "\n</ol></dd>\n";
 			}
 
 			if ($port->patch_depends) {
-				$HTML .= '<dt class="required">Patch dependencies:</dt><dd>' . "\n" . '<ol class="required" id="requiredpatches">';
+				$HTML .= '<dt class="required"><a id="requiredpatch">Patch dependencies:</dt><dd>' . "\n" . '<ol class="required" id="requiredpatches">';
 				$HTML .= freshports_depends_links($this->db, $port->patch_depends, $this->Branch);
 				$HTML .= "\n</ol></dd>\n";
 			}
 
 			if ($port->extract_depends) {
-				$HTML .= '<dt class="required">Extract dependencies:</dt><dd>' . "\n" . '<ol class="required" id="requiredextracts">';
+				$HTML .= '<dt class="required"><a id="requiredextract">Extract dependencies:</dt><dd>' . "\n" . '<ol class="required" id="requiredextracts">';
 				$HTML .= freshports_depends_links($this->db, $port->extract_depends, $this->Branch);
 				$HTML .= "\n</ol></dd>\n";
 			}

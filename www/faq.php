@@ -48,7 +48,7 @@ down you must read to find something you didn't already know.</P>
 <TR><TD>&nbsp;</TD></TR>
 
 <TR>
-
+<a id="what">
 <?php echo freshports_PageBannerText("What is this website about?"); ?>
 
 	<TR><TD>
@@ -58,6 +58,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
+<a id="how">
 <?php echo freshports_PageBannerText("How do I use this?"); ?>
 </TR>
 
@@ -77,6 +78,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
+<a id="definitions">
 <?php echo freshports_PageBannerText("Some definitions"); ?>
 </TR>
 
@@ -88,7 +90,7 @@ down you must read to find something you didn't already know.</P>
 
 	<h2>Definitions for the hopelessly lazy</h2>
 
-	<h3><a name="port">What is a port?</a></h3>
+	<h3><a id="port">What is a port?</a></h3>
 	<p>
 	If you install the port, the source will be downloaded, patched if necessary,
 	compiled and installed.  You will have a chance to set any optional configuration
@@ -99,7 +101,7 @@ down you must read to find something you didn't already know.</P>
 	<p>
 	It is because of these compile time options that I prefer ports over packages.
 
-	<h3><a name="package">What is a package?</a></h3>
+	<h3><a id="package">What is a package?</a></h3>
 	<p>
 	A package is a compiled port.  It is a binary.  When you install the package, 
 	you will download a binary and it will be installed.
@@ -116,6 +118,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
+<a id="watch-modify">
 <?php echo freshports_PageBannerText("How do I modify my watch list?"); ?>
 </TR>
 
@@ -139,6 +142,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
+<a id="watch-empty">
 <?php echo freshports_PageBannerText("How do I empty my watch list?"); ?>
 </TR>
 
@@ -149,6 +153,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
+<a id="unsubscribe">
 <?php echo freshports_PageBannerText("How do I delete my account?"); ?>
 </TR>
 
@@ -160,6 +165,7 @@ down you must read to find something you didn't already know.</P>
 
 
 <TR>
+<a id="port-what">
 <?php echo freshports_PageBannerText("What is a port?"); ?>
 </TR>
 
@@ -175,6 +181,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
+<a id="ports-origin">
 <?php echo freshports_PageBannerText("Where do ports come from?"); ?>
 </TR>
 
@@ -185,6 +192,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
+<a id="port-contact">
 <?php echo freshports_PageBannerText("Who do I talk to about a port?"); ?>
 </TR>
 
@@ -194,6 +202,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
+<a id="port-get">
 <?php echo freshports_PageBannerText("How do I get these ports?"); ?>
 </TR>
 
@@ -207,6 +216,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
+<a id="fp-site-update">
 <?php echo freshports_PageBannerText("How is the website updated?"); ?>
 </TR>
 
@@ -222,6 +232,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
+<a id="rev-number-unknown">
 <?php echo freshports_PageBannerText("What does unknown mean for a revision number?"); ?>
 </TR>
 
@@ -230,7 +241,8 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
-<?php echo freshports_PageBannerText("How can I link to your site?"); ?>
+<a id="fp-site-link">
+<?php echo freshports_PageBannerText("Can I link to your site?"); ?>
 </TR>
 
 	<TR><TD>Yes, thank you, you can.  No need to ask us.  Just go ahead and do it.
@@ -258,6 +270,7 @@ down you must read to find something you didn't already know.</P>
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
+<a id="symbols">
 <?php echo freshports_PageBannerText("What do these symbols mean?"); ?>
 </TR>
 
@@ -270,30 +283,30 @@ down you must read to find something you didn't already know.</P>
 	<P><?php echo freshports_New_Icon() ?>
 		New: This port has been recently added.  A port is marked as new for 10 days.</P>
 
-	<P><a name="forbidden"><?php echo freshports_Forbidden_Icon() ?></a>
+	<P><a id="forbidden"><?php echo freshports_Forbidden_Icon() ?></a>
 		Forbidden: The port is marked as forbidden.  If you view the port details,
 		you will see why.  Most often, it is because of a security exploit. Packages for a forbidden port are not built
         by the package cluster.  Therefore, <code>pkg install</code> will not work.</P>
 
-	<P><a name="broken"><?php echo freshports_Broken_Icon() ?></a>
+	<P><a id="broken"><?php echo freshports_Broken_Icon() ?></a>
 		Broken: The port is marked as broken.  Perhaps it won't compile.  Maybe
 		it doesn't work under FreeBSD right now.  If you view the port details,
 		you will see the reason why. Packages for a broken port are not built
         by the package cluster.  Therefore, <code>pkg install</code> will not work.</P>
 
-	<P><a name="deprecated"><?php echo freshports_Deprecated_Icon() ?></a>
+	<P><a id="deprecated"><?php echo freshports_Deprecated_Icon() ?></a>
 		Deprecated: The port is marked as deprecated.  Perhaps it has exceeded
 		its lifetime or is obselete. </P>
 
-	<P><a name="expiration"><?php echo freshports_Expiration_Icon() ?></a>
+	<P><a id="expiration"><?php echo freshports_Expiration_Icon() ?></a>
 		Expiration Date: The port has an expiration date. A port may be removed from the
         tree after this date. Often added in conjunction with Deprecated. </P>
 
-	<P><a name="expired"><?php echo freshports_Expired_Icon() ?></a>
+	<P><a id="expired"><?php echo freshports_Expired_Icon() ?></a>
 		Expired: The port has passed the expiration date. A port may be removed from the
         tree after this date. Often added in conjunction with Deprecated. </P>
 
-	<P><a name="ignore"><?php echo freshports_Ignore_Icon() ?></a>
+	<P><a id="ignore"><?php echo freshports_Ignore_Icon() ?></a>
 		Ignore: The port is marked as ignore.  It probably does not build. Packages for an ignored port are not built
         by the package cluster.  Therefore, <code>pkg install</code> will not work.</P>
 
@@ -301,7 +314,7 @@ down you must read to find something you didn't already know.</P>
 		Files: If you click on this graphic, you will be taken to the list of files
 		touched by the commit in question.</P>
 
-	<P><a name="refresh"><?php echo freshports_Refresh_Icon(); ?></a> Refresh: 
+	<P><a id="refresh"><?php echo freshports_Refresh_Icon(); ?></a> Refresh: 
 		The system is in the process of refreshing that port by inspecting
 		the ports tree.  You should rarely see this.</P>
 		<p>If you do see one, chances are that the port contains an error
@@ -321,7 +334,7 @@ make: fatal errors encountered -- cannot continue
 		then the problem has been fixed. The refresh icons will go away after
 		FreshPorts has dealt with the old commits.  This may take a few hours.
 
-	<P><a name="deleted"><?php echo freshports_Deleted_Icon(); ?></a> Deleted:  This port has been removed from the ports tree.</P>
+	<P><a id="deleted"><?php echo freshports_Deleted_Icon(); ?></a> Deleted:  This port has been removed from the ports tree.</P>
 
 	<P><?php echo freshports_Mail_Icon(); ?>
 		Commit message: This link will take you to the original cvs-all message in the FreeBSD mailing list archives.
@@ -346,11 +359,11 @@ make: fatal errors encountered -- cannot continue
 	<P><?php echo freshports_Watch_Icon_Add(); ?> Add item to your default watch lists: This port is not on any of your  default watch lists.  Click
 		this icon to add the port to your default watch lists.  This icon appears only if you are logged in.</P>
 
-	<P><a name="encodingerrors"><?php echo freshports_Encoding_Errors(); ?></a> Encoding Errors (not all of the commit message was ASCII): Some of the
+	<P><a id="encodingerrors"><?php echo freshports_Encoding_Errors(); ?></a> Encoding Errors (not all of the commit message was ASCII): Some of the
 		commit message may be altered because of character conversion problems.  We display only UTF-8 and remove
 		the offending characters.  These errors may occur in the log message or elsewhere in the commit email.</P>
 
-	<P><a name="watchlistcount"><?php echo freshports_WatchListCount_Icon(); ?></a> Watch List Count (WLC): This is the number of watch lists which are watching 
+	<P><a id="watchlistcount"><?php echo freshports_WatchListCount_Icon(); ?></a> Watch List Count (WLC): This is the number of watch lists which are watching 
 	this port.  This might give you an idea of the popularity of the port.
 	</P>
 
@@ -364,13 +377,13 @@ make: fatal errors encountered -- cannot continue
 	<P><?php echo freshports_VuXML_Icon_Faded(); ?> A past <a href="https://www.vuxml.org/freebsd/">VuXML</a> vulnerability.  Click icon for details.
 	</P>
 
-	<P><a name="restricted"><?php echo freshports_Restricted_Icon(); ?></a> This port has some restrictions on it.
+	<P><a id="restricted"><?php echo freshports_Restricted_Icon(); ?></a> This port has some restrictions on it.
 	</P>
 
-	<P><a name="no_cdrom"><?php echo freshports_No_CDROM_Icon(); ?></a> This port has some restrictions with respect to being included on a CD-ROM.
+	<P><a id="no_cdrom"><?php echo freshports_No_CDROM_Icon(); ?></a> This port has some restrictions with respect to being included on a CD-ROM.
 	</P>
 
-	<P><a name="is_interactive"><?php echo freshports_Is_Interactive_Icon(); ?></a> This port will require interaction during installation.
+	<P><a id="is_interactive"><?php echo freshports_Is_Interactive_Icon(); ?></a> This port will require interaction during installation.
 	</P>
 
 	<P><?php echo freshports_Revision_Icon(); ?> Revision details.  Click on the Files icon in the commit history and
@@ -400,6 +413,7 @@ make: fatal errors encountered -- cannot continue
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
+<a id="bookmarks-old">
 <?php echo freshports_PageBannerText("Why don't my old bookmarks work?"); ?>
 </TR>
 
@@ -422,6 +436,7 @@ make: fatal errors encountered -- cannot continue
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
+<a id="feeds">
 <?php echo freshports_PageBannerText("Do you have any news feeds?"); ?>
 </TR>
 
@@ -432,6 +447,7 @@ make: fatal errors encountered -- cannot continue
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
+<a id="fp-site-mainpage">
 <?php echo freshports_PageBannerText("Can the main page load any faster?"); ?>
 </TR>
 
@@ -493,6 +509,7 @@ Here are a few examples:
 </TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
+<a id="commits-day">
 <?php echo freshports_PageBannerText("How can I view the commits for a particular day?"); ?>
 </TR>
 
@@ -513,6 +530,7 @@ Here are a few examples:
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
+<a id="watch-issue-add">
 <?php echo freshports_PageBannerText("Why can't I add a port to my watch list?"); ?>
 </TR>
 
@@ -536,6 +554,7 @@ Here are a few examples:
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
+<a id="watch-issue-appearance">
 <?php echo freshports_PageBannerText("Why doesn't this port appear on my watch list?"); ?>
 </TR>
 
@@ -545,6 +564,7 @@ Here are a few examples:
    </TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
+<a id="portmoves">
 <?php echo freshports_PageBannerText("What are Port Moves?"); ?>
 </TR>
 
@@ -568,6 +588,7 @@ Here are a few examples:
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
+<a id="updating">
 <?php echo freshports_PageBannerText("What is /usr/ports/UPDATING?"); ?>
 </TR>
 
@@ -586,6 +607,7 @@ example of what to expect.
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
+<a id="master-slave">
 <?php echo freshports_PageBannerText("What are Master/Slave ports?"); ?>
 </TR>
 
@@ -641,6 +663,7 @@ example of what to expect.
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
+<a id="toadd">
 <?php echo freshports_PageBannerText('What is this "to add the package" stuff?'); ?>
 </TR>
 
@@ -671,6 +694,7 @@ pkg install XFree86-clients
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
+<a id="fp-search-get">
 <?php echo freshports_PageBannerText('Why does the search page use GET and not POST?'); ?>
 </TR>
 
@@ -692,6 +716,7 @@ if you can provide a URL that exercises all the options that require testing.
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
+<a id="searchfields">
 <?php echo freshports_PageBannerText('What are all those fields I can search on?'); ?>
 </TR>
 
@@ -733,6 +758,7 @@ example <code class="code">/usr/ports/sysutils/bacula/pkg-descr</code>.
 
 
 <TR>
+<a id="people-watch">
 <?php echo freshports_PageBannerText('Where did this "People watching this port, also watch" feature come from?'); ?>
 </TR>
 
@@ -760,6 +786,7 @@ All of this takes about 55ms.
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
+<a id="master-updated">
 <?php echo freshports_PageBannerText('What do you mean, the master port has been updated?'); ?>
 </TR>
 
@@ -786,6 +813,7 @@ The above notice serves as a reminder that the slave port may no longer be vulne
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
+<a id="determine-master">
 <?php echo freshports_PageBannerText('How does FreshPorts determine the master sites?'); ?>
 </TR>
 
@@ -803,6 +831,7 @@ the distfiles.  That is why we use that value, and not one of the other options.
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
+<a id="mailto-clear">
 <?php echo freshports_PageBannerText('Why don\'t you obscure email addresses?'); ?>
 </TR>
 
@@ -824,6 +853,7 @@ In short, it doesn't make sense to obscure that which is freely available elsewh
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
+<a id="portversion-differ">
 <?php echo freshports_PageBannerText('Why does the PORTVERSION at the top of page differ from that of the first commit?'); ?>
 </TR>
 
@@ -841,37 +871,44 @@ now that the Master has been upgraded.
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
 <TR>
+<a id="anchors">
 <?php echo freshports_PageBannerText('What HTML anchors exist?'); ?>
 </TR>
 
    <TR><TD>
-   <P>
-   
-   
-<p>
-This is a list of anchors on a port page. They can be useful for linking to a particular section of the page.
-</p>
+   <p>Anchors in port pages include: </p>
 
-For example, this link takes you to the commit history for security/acme.sh:
+<ul>
+	<li>description</li>
+	<li>add</li>
+	<li>flavors</li>
+	<li>distinfo</li>
+	<li>packages</li>
+	<li>dependencies</li>
+	<li>requiredbuild</li>
+	<li>requiredrun</li>
+	<li>requiredlib</li>
+	<li>requiredfetch</li>
+	<li>requiredpatch</li>
+	<li>requiredextract</li>
+	<li>config</li>
+	<li>uses</li>
+	<li>sites</li>
+	<li>message</li>
+	<li>updating</li>
+	<li>history</li>
+</ol>
+
+<p>
+	Anchors make it easier to link to sections within pages. 
+</p>
+<p>
+	For example, this link – note the <code class="code">#history</code> at its tail – takes you to the commit history for security/acme.sh: 
+</p>
 
 <blockquote><a href="/security/acme.sh/#history">security/acme.sh/#history</a></blockquote>
 
-<p>This is a convenient way to link to the data you want to see.  Enjoy.
-
-<ul>
-<li>pkg-message</li>
-<li>add</li>
-<li>requiredbuild</li>
-<li>requiredrun</li>
-<li>requiredlib</li>
-<li>requiredfetch</li>
-<li>requiredpatch</li>
-<li>requiredextract</li>
-<li>history</li>
-<li>updating</li>
-</ol>
-
-<p>We can add more upon request.</p>
+<p>Enjoy. We can add more upon request.</p>
 
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 

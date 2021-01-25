@@ -840,6 +840,41 @@ now that the Master has been upgraded.
 
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 
+<TR>
+<?php echo freshports_PageBannerText('What HTML anchors exist?'); ?>
+</TR>
+
+   <TR><TD>
+   <P>
+   
+   
+<p>
+This is a list of anchors on a port page. They can be useful for linking to a particular section of the page.
+</p>
+
+For example, this link takes you to the commit history for security/acme.sh:
+
+<blockquote><a href="/security/acme.sh/#history">security/acme.sh/#history</a></blockquote>
+
+<p>This is a convenient way to link to the data you want to see.  Enjoy.
+
+<ul>
+<li>pkg-message</li>
+<li>add</li>
+<li>requiredbuild</li>
+<li>requiredrun</li>
+<li>requiredlib</li>
+<li>requiredfetch</li>
+<li>requiredpatch</li>
+<li>requiredextract</li>
+<li>history</li>
+<li>updating</li>
+</ol>
+
+<p>We can add more upon request.</p>
+
+	</TD></TR><TR><TD>&nbsp;</TD></TR>
+
 </table>
 </td>
 

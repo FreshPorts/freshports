@@ -31,6 +31,7 @@
 	require_once('/usr/local/share/UniversalFeedCreator/lib/Creator/RSSCreator10.php'); 
 	require_once('/usr/local/share/UniversalFeedCreator/lib/Creator/RSSCreator20.php'); 
 	require_once('/usr/local/share/UniversalFeedCreator/lib/UniversalFeedCreator.php'); 
+	require_once('/usr/local/share/UniversalFeedCreator/lib/constants.php'); 
 	
 function newsfeed($db, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $Flavor = '') { # $OrderBy = '', $Where = '') {
 

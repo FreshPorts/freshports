@@ -908,7 +908,12 @@ now that the Master has been upgraded.
 
 <blockquote><a href="/security/acme.sh/#history">security/acme.sh/#history</a></blockquote>
 
-<p>Enjoy. We can add more upon request.</p>
+<p>
+	Browser extensions such as <a href="https://github.com/Rob--W/display-anchors#readme">Display #Anchors</a> and <a href="https://addons.mozilla.org/addon/anchors-reveal/">Anchors Reveal</a> can help to visualise anchors that would otherwise be invisible. 
+</p>
+<p>
+	Enjoy. We can add more anchors upon request.
+</p>
 
 	</TD></TR><TR><TD>&nbsp;</TD></TR>
 

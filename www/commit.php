@@ -175,6 +175,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 <?php
 
 #	$numrows = $MaxNumberOfPorts;
+	$DoTheSave = true;
 	$database = $db;
 	if ( $database ) {
 	
@@ -256,6 +257,7 @@ ORDER BY port, element_pathname";
 					} else {
 						$HTML .=  '<tr><TD VALIGN="top"><P>Sorry, nothing found in the database....</P>' . "\n";
 						$HTML .=  "</TD></tr>";
+						$DoTheSave = false;
 					}
 				} else {
 					syslog(LOG_NOTICE, __FILE__ . '::' . __LINE__ . ': ' . pg_last_error());
@@ -333,8 +335,10 @@ ORDER BY port, element_pathname";
 			} # files == 'y'
 
 			# save the HTML
-			$Cache->CacheDataSet($HTML);
-			$Cache->AddCommit($message_id, $clean['category'], $clean['port'], $files);
+			if ($DoTheSave) {
+				$Cache->CacheDataSet($HTML);
+				$Cache->AddCommit($message_id, $clean['category'], $clean['port'], $files);
+			}
 			} // $HTML != ''
 		} # count($message_id_array)
 

@@ -39,7 +39,8 @@ class CacheCommit extends Cache {
 	function AddCommit($MessageId, $category = '', $port = '', $files = 'n') {
 		$this->_Log("CacheCommit: Adding for message_id='$MessageId' category='$category' port='$port' files='$files'");
 
-		$CacheDir = $this->CacheDir . '/' . self::CacheCategory . '/' . $MessageId;
+		# We create a directory based on the message-id, and store all cache items related to that message-id under that directory.
+		$CacheDir = $this->CacheDir . '/' . self::CacheCategory . '/' . $this->_cleanKey($MessageId);
 		$Key = $this->_CommitKey($MessageId, $category, $port, $files);
 		 
 		if (!file_exists($CacheDir)) {

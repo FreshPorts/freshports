@@ -72,7 +72,8 @@ class CacheCommit extends Cache {
 
 	function _CommitKey($MessageId, $category, $port, $files) {
 		// might want some parameter checking here
-		$Key = self::CacheCategory . "/$MessageId/$MessageId.$category.$port.$files.html";
+		$CleanMessageId = $this->_CleanKey($MessageId);
+		$Key = self::CacheCategory . "/$CleanMessageId/$CleanMessageId." . $this->_CleanKey($category) . '.' . $this->_CleanKey($port) . '.' . $this->_CleanKey($files) . '.html';
 
 		return $Key;
 	}

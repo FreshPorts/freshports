@@ -123,13 +123,7 @@ class Cache {
 	function _CleanKey($key) {
 		// convert /../ to .
 		
-		$new_key = $key;
-		$new_key = str_replace('/../', '', $new_key);
-		$new_key = str_replace('../',  '', $new_key);
-		$new_key = str_replace('/..',  '', $new_key);
-		$new_key = str_replace('..',   '', $new_key);
-
-		$new_key = str_replace('/',   '.', $new_key);
+		$new_key = preg_replace( '/[^a-z0-9]+/', '-', strtolower( $key ) );
 
 		return $new_key;
 	}

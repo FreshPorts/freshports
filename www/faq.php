@@ -897,7 +897,7 @@ now that the Master has been upgraded.
 	<li>message</li>
 	<li>updating</li>
 	<li>history</li>
-</ol>
+</ul>
 
 <p>
 	Anchors make it easier to link to sections within pages. 

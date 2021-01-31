@@ -834,6 +834,8 @@ now that the Master has been upgraded.
 	<li>flavors</li>
 	<li>distinfo</li>
 	<li>packages</li>
+	<li>masterport</li>
+	<li>slaveports</li>
 	<li>dependencies</li>
 	<li>requiredbuild</li>
 	<li>requiredrun</li>

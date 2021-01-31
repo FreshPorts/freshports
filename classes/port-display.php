@@ -1081,7 +1081,7 @@ class port_display {
 			}
 
 			if ($port->IsSlavePort()) {
-				$HTML .= '<dt><b>Master port:</b> ';
+				$HTML .= '<dt><span class="masterport" id="masterport"><b>Master port</b>: </span>';
 				list($MyCategory, $MyPort) = explode('/', $port->master_port);
 				$HTML .= freshports_link_to_port($MyCategory, $MyPort, $this->Branch);
 				$HTML .= "</dt>\n";
@@ -1092,7 +1092,7 @@ class port_display {
 			#
 
 			if ($NumRows > 0) {
-				$HTML .= '<dt><span class="slaveports">Slave ports</span></dt><dd>' . "\n" . '<ol class="slaveports" id="slaveports">';
+				$HTML .= '<dt><span class="slaveports" id="slaveports">Slave ports:</span></dt><dd>' . "\n" . '<ol class="slaveports">';
 				for ($i = 0; $i < $NumRows; $i++) {
 					$MasterSlave->FetchNth($i);
 					$HTML .= '<li>' . freshports_link_to_port($MasterSlave->slave_category_name, $MasterSlave->slave_port_name, $this->Branch) . '</li>';

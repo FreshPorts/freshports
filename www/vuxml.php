@@ -5,6 +5,10 @@
 	# Copyright (c) 2004 DVL Software Limited
 	#
 
+	if (IsSet($_REQUEST['all']) && strlen($_REQUEST['all'])) {
+		echo "Just what do you think you're doing, Dave?";
+		exit;
+	}
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
@@ -176,7 +180,6 @@ SELECT V.vid,
 
 
 	if (IsSet($_REQUEST['all'])) {
-
 		function vuxml_name_link($VID, $Date, $Description, $PortArray, $IsNew) {
 			$HTML = '<tr><td nowrap valign="top">';
 			

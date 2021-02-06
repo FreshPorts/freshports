@@ -1437,13 +1437,13 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	# output the VERSION and REVISION
 	$PackageVersion = freshports_PackageVersion($commit->{'port_version'},  $commit->{'port_revision'},  $commit->{'port_epoch'});
 	if (strlen($PackageVersion) > 0) {
-    	$HTML .= '&nbsp;&nbsp;<big><b>' . $PackageVersion . '</b></big>';
+		$HTML .= '&nbsp;&nbsp;<big><b>' . $PackageVersion . '</b></big>';
 	}
 
 	$HTML .= '<br>';
 
 	if (isset($commit->svn_revision)) {
-	  $HTML .= freshports_svnweb_ChangeSet_Link($commit->svn_revision, $commit->svn_hostname, $commit->path_to_repo);
+		$HTML .= freshports_svnweb_ChangeSet_Link($commit->svn_revision, $commit->svn_hostname, $commit->path_to_repo);
         }
 
 	if ($commit->stf_message != '') {

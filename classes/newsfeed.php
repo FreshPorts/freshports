@@ -116,7 +116,8 @@ function newsfeed($db, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $Fl
            CLP.port_epoch as epoch,
            CL.committer,
            CL.commit_date as commit_date_sort,
-           CL.message_id
+           CL.message_id,
+           CL.commit_hash_short
 	  FROM watch_list_element WLE, element E, categories C, ports P,
            commit_log CL, commit_log_ports CLP
 	 WHERE CLP.commit_log_id = CL.id
@@ -184,6 +185,7 @@ ORDER BY P.date_added DESC, E.name, category, version";
          CL.commit_date       AS commit_date_raw,
          CL.message_subject,
          CL.message_id,
+         CL.commit_hash_short,
          CL.committer,
          CL.description       AS commit_description,
          to_char(CL.commit_date - SystemTimeAdjust(), 'DD Mon')  AS commit_date,
@@ -256,6 +258,7 @@ SELECT  C.name    AS category,
          CL.commit_date       AS commit_date_raw,
          CL.message_subject,
          CL.message_id,
+         CL.commit_hash_short,
          CL.committer,
          CL.description       AS commit_description,
          to_char(CL.commit_date - SystemTimeAdjust(), 'DD Mon')  AS commit_date,

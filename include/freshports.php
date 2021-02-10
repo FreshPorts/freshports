@@ -21,7 +21,7 @@ DEFINE('COPYRIGHTHOLDER',       'Dan Langille');
 DEFINE('COPYRIGHTHOLDERURL',    'https://www.langille.org/');
 DEFINE('URL2LINK_CUTOFF_LEVEL', 0);
 DEFINE('FAQLINK',               'faq.php');
-DEFINE('PORTSMONURL',		'http://portsmon.freebsd.org/portoverview.py');
+DEFINE('PORTSMONURL',           'http://portsmon.freebsd.org/portoverview.py');
 DEFINE('NOBORDER',              '0');
 DEFINE('BORDER',                '1');
 
@@ -79,6 +79,14 @@ function freshports_cvsweb_Diff_Link($pathname, $previousRevision, $revision_nam
   return $HTML;
 }
 
+function freshports_Convert_Subversion_Path_To_Git($pathname)
+{
+  # the pathnames in the FreshPorts database reflect the physical pathname on disk
+  # yeah, repo changes means different paths. Hopefully, we can do that all
+  # external to the database instead of in the database.
+  return str_replace('/ports/head/', '', $pathname);
+}
+
 function freshports_cvsweb_Annotate_Link($pathname, $revision_name)
 {
   $pathname = str_replace('/ports/head/', '/ports/', $pathname);
@@ -94,6 +102,18 @@ function freshports_cvsweb_Revision_Link($pathname, $revision_name)
   $HTML = '<A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $pathname . '#rev' . $revision_name . '">';
 
   return $HTML;
+}
+
+function freshports_git_commit_Link($revision, $hostname, $path) {
+  return '<a href="http://' . htmlentities($hostname) . $path . '/commit/' . htmlentities($revision) .  '">' . freshports_Git_Icon('commit hash:' . $revision) . '</a>';
+}
+
+function freshports_git_commit_Link_diff($revision, $hostname, $path) {
+  return '<a href="http://' . htmlentities($hostname) . $path . '/commit/' . htmlentities($revision) .  '">' . freshports_Diff_Icon() . '</a>';
+}
+
+function freshports_git_commit_Link_Hash($hash, $link_text, $hostname, $path) {
+  return '<a href="http://' . htmlentities($hostname) . $path . '/commit/' . htmlentities($hash) .  '" class="hash">' . $link_text . '</a>';
 }
 
 function freshports_Fallout_Link($category, $port) {
@@ -325,6 +345,10 @@ function freshports_Subversion_Icon($Title = 'Subversion') {
 	return '<img src="/images/subversion.jpg" alt="' . $Title . '" title="' . $Title . '" border="0" width="16" height="16" vspace="1">';
 }
 
+function freshports_Git_Icon($Title = 'git') {
+	return '<img src="/images/git.png" alt="' . $Title . '" title="' . $Title . '" border="0" width="22" height="22" vspace="1">';
+}
+
 function freshports_SanityTestFailure_Icon($Title = 'Sanity Test Failure') {
 	return '<img src="/images/stf.gif" alt="' . $Title . '" title="' . $Title . '" border="0" width="13" height="13" vspace="1">';
 }
@@ -538,6 +562,10 @@ function freshports_VuXML_Icon_Faded() {
 
 function freshports_Revision_Icon() {
 	return '<img src="/images/revision.jpg" alt="View revision" title="view revision" border="0" width="11" height="15" align="top">';
+}
+
+function freshports_Annotate_Icon() {
+	return '<img src="/images/annotate.png" alt="Annotate / Blame" title="Annotate / Blame" border="0" width="20" height="20" align="middle">';
 }
 
 function freshports_Diff_Icon() {
@@ -1385,18 +1413,21 @@ function freshports_PortCommits($port, $PageNumber = 1, $NumCommitsPerPage = 100
 	$Commits->LimitSet($NumCommitsPerPage);
 	$Commits->OffsetSet($Offset);
 	$NumRows = $Commits->FetchInitialise($port->id);
-	$port->LoadVulnerabilities();
+	# if no commits on this branch, don't fet 
+	if ($NumRows > 0) {
+		$port->LoadVulnerabilities();
 
-	$Commits->FetchNthCommit(0);
+		$Commits->FetchNthCommit(0);
 
-	$HTML .= freshports_CheckForOutdatedVulnClaim($Commits, $port, $port->VuXML_List);
+		$HTML .= freshports_CheckForOutdatedVulnClaim($Commits, $port, $port->VuXML_List);
 
-	$HTML .= freshports_PortCommitsHeader($port);
+		$HTML .= freshports_PortCommitsHeader($port);
 
-	$LastVersion = '';
-	for ($i = 0; $i < $NumRows; $i++) {
-		$Commits->FetchNthCommit($i);
-		$HTML .= freshports_PortCommitPrint($Commits, $port->category, $port->port, $port->VuXML_List);
+		$LastVersion = '';
+		for ($i = 0; $i < $NumRows; $i++) {
+			$Commits->FetchNthCommit($i);
+			$HTML .= freshports_PortCommitPrint($Commits, $port->category, $port->port, $port->VuXML_List);
+		}
 	}
 
 	$HTML .= freshports_PortCommitsFooter($port);
@@ -1412,6 +1443,10 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;
 	GLOBAL $User;
 
+
+	# if the message_id does not contain freebsd.org, it's a git commit
+	#
+	$GitCommit = strpos($commit->message_id, 'freebsd.org') == false;
 	$HTML = '';
 
 	# print a single commit for a port
@@ -1423,7 +1458,10 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	if ($commit->{'needs_refresh'}) {
 		$HTML .= " " . freshports_Refresh_Icon_Link() . "\n";
 	}
-	$HTML .= freshports_Email_Link($commit->message_id);
+
+	if (!$GitCommit) {
+		$HTML .= freshports_Email_Link($commit->message_id);
+	}
 
 #	$HTML .= '&nbsp;&nbsp;'. freshports_Commit_Link($commit->message_id);
 
@@ -1442,9 +1480,13 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 
 	$HTML .= '<br>';
 
-	if (isset($commit->svn_revision)) {
-		$HTML .= freshports_svnweb_ChangeSet_Link($commit->svn_revision, $commit->svn_hostname, $commit->path_to_repo);
-        }
+	if ($GitCommit) {
+		$HTML .= freshports_git_commit_Link_Hash($commit->message_id, $commit->commit_hash_short, $commit->repo_hostname, $commit->path_to_repo);
+	} else {
+		if (isset($commit->svn_revision)) {
+			$HTML .= freshports_svnweb_ChangeSet_Link($commit->svn_revision, $commit->commit_hash_short, $commit->repo_hostname, $commit->path_to_repo);
+	        }
+	}
 
 	if ($commit->stf_message != '') {
 		$HTML .= '&nbsp; ' . freshports_SanityTestFailure_Link($commit->message_id);
@@ -1598,7 +1640,7 @@ function freshports_wrap($text, $length = WRAPCOMMITSATCOLUMN) {
 }
 
 function freshports_PageBannerText($Text, $ColSpan=1) {
-	return '<td align="left" bgcolor="' . BACKGROUND_COLOUR . '" height="29" COLSPAN="' . $ColSpan . ' "><FONT COLOR="#FFFFFF"><big><big>' . $Text . '</big></big></FONT></td>' . "\n";
+	return '<td align="left" bgcolor="' . BACKGROUND_COLOUR . '" height="29" COLSPAN="' . $ColSpan . '"><FONT COLOR="#FFFFFF"><big><big>' . $Text . '</big></big></FONT></td>' . "\n";
 }
 
 
@@ -2254,8 +2296,8 @@ function freshports_pathname_to_repo_name($WhichRepo, $pathname)
     case FREEBSD_REPO_SVN:
       # given ports/www/p5-App-Nopaste/Makefile, we want something like: https://svn.freebsd.org/ports/head/www/p5-App-Nopaste/Makefile
       $RepoName = $RepoNames[$WhichRepo];
-      $match   = $AdjustPathname[$WhichRepo]['match'];
-      $replace = $AdjustPathname[$WhichRepo]['replace'];
+      $match    = $AdjustPathname[$WhichRepo]['match'];
+      $replace  = $AdjustPathname[$WhichRepo]['replace'];
       $repo_file_name = $RepoName . '/head/' . preg_replace($match, $replace, $pathname);
       break;
 
@@ -2297,7 +2339,7 @@ function NormalizeBranch($Branch = BRANCH_HEAD) {
   # this function converts 'quarterly' to something like 2019Q2
   # from https://secure.php.net/manual/en/function.date.php
   # n Numeric representation of a month, without leading zeros 1 through 12
-  
+
   if ($Branch == BRANCH_QUARTERLY) {
     $Branch = date('Y') . 'Q' . (floor((date('n') - 1) / 3) + 1);
   }

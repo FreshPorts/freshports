@@ -13,6 +13,7 @@ class CommitRecord {
 	var $commit_date_raw;
 	var $message_subject;
 	var $message_id;
+	var $commit_hash_short;
 	var $committer;
 	var $commit_description;
 	var $commit_date;
@@ -47,7 +48,8 @@ class CommitRecord {
 	var $stf_message;
 	var $svn_revision;
 	var $repo_name;
-	var $svn_hostname;
+	var $repository;
+	var $repo_hostname;
 	var $path_to_repo;
 
 	var $watch;
@@ -60,6 +62,7 @@ class CommitRecord {
 		$this->commit_date_raw		= $myrow['commit_date_raw'];
 		$this->message_subject		= $myrow['message_subject'];
 		$this->message_id		= $myrow['message_id'];
+		$this->commit_hash_short	= $myrow['commit_hash_short'];
 		$this->committer		= $myrow['committer'];
 		$this->commit_description	= $myrow['commit_description'];
 		$this->commit_date		= $myrow['commit_date'];
@@ -94,7 +97,8 @@ class CommitRecord {
 		$this->stf_message		= $myrow['stf_message'];
 		$this->svn_revision             = $myrow['svn_revision'];
 		$this->repo_name                = $myrow['repo_name'];
-		$this->svn_hostname             = $myrow['svn_hostname'];
+		$this->repo_hostname            = $myrow['repo_hostname'];
+		$this->repository               = $myrow['repository'];
 		$this->path_to_repo             = $myrow['path_to_repo'];
 	}
 

@@ -14,7 +14,6 @@ class Commit_Log_Ports {
 	var $id;
 	var $svn_revision;
 	var $message_id;
-	var $commit_hash_short;
 	var $commit_date;
 	var $description;
 	var $committer;
@@ -24,7 +23,7 @@ class Commit_Log_Ports {
 	var $port_epoch;
 	var $needs_refresh;
 	var $stf_message;
-	var $repo_hostname;
+	var $svn_hostname;
 	var $path_to_repo;
 
 	var $result;
@@ -88,11 +87,10 @@ class Commit_Log_Ports {
 		$sql = "
    SELECT CL.id,
           CL.svn_revision,
-          R.repo_hostname,
+          R.svn_hostname,
           R.path_to_repo,
           port_id,
           message_id,
-          commit_hash_short,
           to_char(commit_date - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') AS commit_date,
           CL.description,
           committer,
@@ -138,22 +136,21 @@ class Commit_Log_Ports {
 
 		$myrow = pg_fetch_array($this->result, $N);
 
-		$this->id                 = $myrow["id"];
-		$this->svn_revision       = $myrow["svn_revision"];
-		$this->port_id	          = $myrow["port_id"];
-		$this->message_id         = $myrow["message_id"];
-		$this->commit_hash_short  = $myrow["commit_hash_short"];
-		$this->commit_date        = $myrow["commit_date"];
-		$this->description        = $myrow["description"];
-		$this->committer          = $myrow["committer"];
-		$this->encoding_losses    = $myrow["encoding_losses"];
-		$this->port_version       = $myrow["port_version"];
-		$this->port_revision      = $myrow["port_revision"];
-		$this->port_epoch         = $myrow["port_epoch"];
-		$this->needs_refresh      = $myrow["needs_refresh"];
-		$this->stf_message        = $myrow["stf_message"];
-		$this->repo_hostname      = $myrow["repo_hostname"];
-		$this->path_to_repo       = $myrow["path_to_repo"];
+		$this->id			= $myrow["id"];
+		$this->svn_revision		= $myrow["svn_revision"];
+		$this->port_id			= $myrow["port_id"];
+		$this->message_id		= $myrow["message_id"];
+		$this->commit_date		= $myrow["commit_date"];
+		$this->description		= $myrow["description"];
+		$this->committer		= $myrow["committer"];
+		$this->encoding_losses		= $myrow["encoding_losses"];
+		$this->port_version		= $myrow["port_version"];
+		$this->port_revision		= $myrow["port_revision"];
+		$this->port_epoch		= $myrow["port_epoch"];
+		$this->needs_refresh		= $myrow["needs_refresh"];
+		$this->stf_message		= $myrow["stf_message"];
+		$this->svn_hostname             = $myrow["svn_hostname"];
+		$this->path_to_repo             = $myrow["path_to_repo"];
 	}
 
 	function NeedsRefreshClear() {

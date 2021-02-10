@@ -9,7 +9,6 @@ class Commit_Ports {
 	var $commit_date_raw;
 	var $encoding_losses;
 	var $message_id;
-	var $commit_hash_short;
 	var $committer;
 	var $commit_description;
 	var $commit_date;
@@ -39,8 +38,7 @@ class Commit_Ports {
 	var $short_description;
 	var $onwatchlist;
 	var $stf_message;
-	var $repository;
-	var $repo_hostname;
+	var $svn_hostname;
 	var $path_to_repo;
 	var $repo_name;
 
@@ -49,45 +47,43 @@ class Commit_Ports {
 	}
 
 	function PopulateValues($myrow) {
-		$this->commit_log_id      = $myrow["commit_log_id"];
-		$this->commit_date_raw    = $myrow["commit_date_raw"];
-		$this->encoding_losses    = $myrow["encoding_losses"];
-		$this->message_id         = $myrow["message_id"];
-		$this->commit_hash_short  = $myrow["commit_hash_short"];
-		$this->committer          = $myrow["committer"];
-		$this->commit_description = $myrow["commit_description"];
-		$this->commit_date        = $myrow["commit_date"];
-		$this->commit_time        = $myrow["commit_time"];
-		$this->port_id            = $myrow["port_id"];
-		$this->category           = $myrow["category"];
-		$this->category_id        = $myrow["category_id"];
-		$this->port               = $myrow["port"];
-		$this->version            = $myrow["version"];
-		$this->revision           = $myrow["revision"];
-		$this->svn_revision       = $myrow["svn_revision"];
-		$this->epoch              = $myrow["epoch"];
-		$this->status             = $myrow["status"];
-		$this->needs_refresh      = $myrow["needs_refresh"];
-		$this->forbidden          = $myrow["forbidden"];
-		$this->broken             = $myrow["broken"];
-		$this->deprecated         = $myrow["deprecated"];
-		$this->expiration_date    = $myrow["expiration_date"];
-		$this->ignore             = $myrow["ignore"];
-		$this->is_interactive     = $myrow["is_interactive"];
-		$this->no_cdrom           = $myrow["no_cdrom"];
-		$this->restricted         = $myrow["restricted"];
-		$this->vulnerable_current = $myrow["vulnerable_current"];
-		$this->vulnerable_past    = $myrow["vulnerable_past"];
-		$this->date_added         = $myrow["date_added"];
-		$this->element_id         = $myrow["element_id"];
-		$this->element_pathname   = $myrow["element_pathname"];
-		$this->short_description  = $myrow["short_description"];
-		$this->onwatchlist        = $myrow["onwatchlist"];
-		$this->stf_message        = $myrow["stf_message"];
-		$this->repository         = $myrow["repository"];
-		$this->repo_hostname      = $myrow["repo_hostname"];
-		$this->path_to_repo       = $myrow["path_to_repo"];
-		$this->repo_name          = $myrow["repo_name"];
+		$this->commit_log_id		= $myrow["commit_log_id"];
+		$this->commit_date_raw		= $myrow["commit_date_raw"];
+		$this->encoding_losses		= $myrow["encoding_losses"];
+		$this->message_id		= $myrow["message_id"];
+		$this->committer		= $myrow["committer"];
+		$this->commit_description	= $myrow["commit_description"];
+		$this->commit_date		= $myrow["commit_date"];
+		$this->commit_time		= $myrow["commit_time"];
+		$this->port_id			= $myrow["port_id"];
+		$this->category			= $myrow["category"];
+		$this->category_id		= $myrow["category_id"];
+		$this->port			= $myrow["port"];
+		$this->version			= $myrow["version"];
+		$this->revision			= $myrow["revision"];
+		$this->svn_revision		= $myrow["svn_revision"];
+		$this->epoch			= $myrow["epoch"];
+		$this->status			= $myrow["status"];
+		$this->needs_refresh		= $myrow["needs_refresh"];
+		$this->forbidden		= $myrow["forbidden"];
+		$this->broken			= $myrow["broken"];
+		$this->deprecated		= $myrow["deprecated"];
+		$this->expiration_date		= $myrow["expiration_date"];
+		$this->ignore			= $myrow["ignore"];
+		$this->is_interactive		= $myrow["is_interactive"];
+		$this->no_cdrom			= $myrow["no_cdrom"];
+		$this->restricted		= $myrow["restricted"];
+		$this->vulnerable_current	= $myrow["vulnerable_current"];
+		$this->vulnerable_past		= $myrow["vulnerable_past"];
+		$this->date_added		= $myrow["date_added"];
+		$this->element_id		= $myrow["element_id"];
+		$this->element_pathname		= $myrow["element_pathname"];
+		$this->short_description	= $myrow["short_description"];
+		$this->onwatchlist		= $myrow["onwatchlist"];
+		$this->stf_message		= $myrow["stf_message"];
+		$this->svn_hostname             = $myrow["svn_hostname"];
+		$this->path_to_repo             = $myrow["path_to_repo"];
+		$this->repo_name                = $myrow["repo_name"];
 	}
 
 	function FetchNth($N) {
@@ -178,7 +174,6 @@ class Commit_Ports {
 		$sql = "
 SELECT CL.id as commit_log_id,
        message_id,
-       commit_hash_short,
        message_date,
        CL.commit_date - SystemTimeAdjust()               AS commit_date_raw,
        to_char(commit_date - SystemTimeAdjust(), 'DD Mon YYYY')  as commit_date,
@@ -189,8 +184,7 @@ SELECT CL.id as commit_log_id,
        CL.description AS commit_description,
        CL.system_id,
        svn_revision,
-       R.repository,
-       R.repo_hostname,
+       R.svn_hostname,
        R.path_to_repo,
        encoding_losses,
        GMT_Format(CL.commit_date) as last_commit_date,

@@ -81,10 +81,6 @@ class port_display {
 		return substr($text, 0, 1) == '[';
 	}
 
-	function _isGitCommit($revision) {
-		return strlen($revision) >= MIN_GIT_HASH_LENGTH;
-	}
-
 	function _pkgmessage_UCL($pkgmessage) {
 		$HTML = '<dt><b><a id="message">pkg-message:</b></dt><dd><dl>';
 		# save the pkgmessage to a temp file
@@ -198,11 +194,16 @@ class port_display {
 	  $this->port = $port;
 	}
 
-	function link_to_repo_svn() {
+	function link_to_repo() {
           # we want something like
           # https://svn.freebsd.org/ports/head/x11-wm/awesome/
           $link_title = 'SVNWeb';
-          $link = 'https://' . DEFAULT_SVN_REPO;
+          $link = 'https://';
+          if (!empty($this->port->svn_hostname)) {
+            $link .= $this->port->svn_hostname;
+          } else {
+            $link .= DEFAULT_SVN_REPO;
+          }
 
           $link .= $this->port->element_pathname . '/';
           if ($this->port->IsDeleted()) {
@@ -217,18 +218,7 @@ class port_display {
             $commit->FetchById($this->port->last_commit_id);
 
             if (!empty($commit->svn_revision)) {
-              if ($this->_isGitCommit($commit->svn_revision)) {
-                # no modification to the link, because we cannot use this commit
-                # the user will get Unknown location: /head/devel/py-Pint
-                # We could search for the last known subversion commit
-                # but we aren't. Yet.
-                # Instead, we show them a strikethrough.
-		$link = null;
-               } else {
-                # For subversion, we link to the revision one less
-                # so that the user has something to see
-	        $link .= '?pathrev=' . ($commit->svn_revision - 1);
-	      }
+              $link .= '?pathrev=' . ($commit->svn_revision - 1);
             } else {
               # if there is no last revision, we can't link to it.
 	      $link = null;
@@ -241,69 +231,6 @@ class port_display {
             $link = '<strike>SVNWeb</strike>';
           }
 
-          return $link;
-	}
-
-	function link_to_repo_git() {
-          # we want something like
-          # https://github.com/freebsd/freebsd-ports/tree/master/x11-wm/awesome
-          $link_title = 'git';
-          $link = 'https://';
-          if (!empty($this->port->git_hostname)) {
-            $link .= $this->port->git_hostname;
-          } else {
-            $link .= DEFAULT_GIT_REPO;
-            # Yeah, this won't show the expected results if we're viewing ?branch=2020Q3, but close enough.
-            $link .= '/freebsd/freebsd-ports';
-          }
-
-          # echo 'link so far is ' . $link . '<br>';
-          if ($this->port->IsDeleted()) {
-            #
-	    # If the port has been deleted, let's link to the last commit.
-	    # Deleted ports don't change much.  It's easier to do this here
-	    # than to do it for ALL ports.
-	    #
-            require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
-
-            $commit = new Commit($this->db);
-            $commit->FetchById($this->port->last_commit_id);
-
-            if (!empty($commit->svn_revision)) {
-              if ($this->_isGitCommit($commit->svn_revision)) {
-                # no modification to the link, because we cannot use this commit
-                # the user will get Unknown location: /head/devel/py-Pint
-                # We could search for the last known subversion commit
-                # but we aren't. Yet.
-                # Instead, we show them a strikethrough.
-		$link .= '/commit/' . htmlentities($commit->commit_hash_short);
-
-               } else {
-                # For subversion, we link to the revision one less
-                # so that the user has something to see.
-                # But this is a git commit, so we can't do that.
-                # We show them a striketrough instead.
-                # echo 'oh, we are going null #1';
-	        $link = null;
-	      }
-            } else {
-              # if there is no last revision, we can't link to it.
-              echo 'oh, we are going null #2';
-	      $link = null;
-            }
-          } else {
-            # this is a usual link
-            $link .= '/tree/master/' . $this->port->category . '/' .  $this->port->port;
-          }
-          # echo 'hmm, still going with ' . $link . '<br>';
-
-          if (!empty($link)) {
-            $link = '<a href="' . $link . '">' . $link_title . '</a>';
-          } else {
-            $link = '<strike>git</strike>';
-          }
-
-          # echo 'returning ' . $link . '<br>';
           return $link;
 	}
 
@@ -473,24 +400,6 @@ class port_display {
 		$HTML .= '>0:' . $this->DisplayPlainText();
 		if ($USES_PYTHON) {
 			$HTML .= '@${PY_FLAVOR}';
-		}
-
-		return $HTML;
-	}
-
-	function DisplayDependencyLineLibraries($PlainText = false) {
-		$port = $this->port;
-
-		$HTML = '';
-
-		// pkg_plist_library_matches is a JSON array
-		$lib_depends = json_decode($port->pkg_plist_library_matches, true);
-		if (is_array($lib_depends) && count($lib_depends) > 0) {
-			foreach($lib_depends as $library) {
-				if (!$PlainText) $HTML .= '<li>';
-				$HTML .= preg_replace('/^lib\//', '', $library) . ':' . $this->DisplayPlainText();
-				if (!$PlainText) $HTML .= '</li>';
-			}
 		}
 
 		return $HTML;
@@ -759,10 +668,9 @@ class port_display {
 				$HTML .= "unknown";
 			}
 			$HTML .= '</font></dt>' . "\n";
-			$HTML .= '<dt><b>Commit Hash:</b> <font size="-1">';
+			$HTML .= '<dt><b>SVN Revision:</b> <font size="-1">';
 			if ($port->svn_revision) {
-#				print "'$port->svn_revision', '$port->commit_hash_short', '$port->repo_hostname', '$port->path_to_rep'";
-				$HTML .= freshports_git_commit_Link_Hash($port->svn_revision, $port->commit_hash_short, $port->repo_hostname, $port->path_to_repo);
+				$HTML .= freshports_svnweb_ChangeSet_Link_Text($port->svn_revision, $port->svn_hostname, $port->path_to_repo);
 			} else {
 				$HTML .= "unknown";
 			}
@@ -832,11 +740,7 @@ class port_display {
 			$HTML .= '<dt>';
 
 			if ($this->ShowChangesLink || $this->ShowEverything) {
-				# we link to both svn and git because we can
-				# we could reduce this to just one link at some time in the future.
-				$HTML .= $this->link_to_repo_svn();
-				$HTML .= ' : ';
-				$HTML .= $this->link_to_repo_git();
+				$HTML .= $this->link_to_repo();
 			}
 
 			if ($port->PackageExists() && ($this->ShowPackageLink || $this->ShowEverything)) {
@@ -860,18 +764,6 @@ class port_display {
 
 		if ($this->ShowEverything || $this->ShowBasicInfo) {
 
-			$HTML .= '<dt class="pkg-plist" id="dependency"><b>Dependency lines</b>:</dt>';
-			$HTML .= '<dd class="pkg-plist">' . "\n" . '<ul class="pkg-plist"><li class="file">';
-
-			// if USES= contains python
-			// We split on both whitespace and : to cater for python:3.6+
-			if (in_array(USES_PYTHON, preg_split('/\s+|:/', $port->uses))) {
-				// split off the prefix, everthing before the first -, inclusive
-				$package_name_parts=explode('-', $port->package_name, 2);
-				$HTML .=  '${PYTHON_PKGNAMEPREFIX}' . $package_name_parts[1];
-			} else {
-				$HTML .= $port->package_name;
-			}
 
 			$HTML .= '<dd class="pkg-plist">' . "\n" . '<ul class="pkg-plist"><li class="file">';
 			$HTML .= $this->DisplayDependencyLine();
@@ -885,9 +777,6 @@ class port_display {
 					$HTML .= '<li>' . preg_replace('/^lib\//', '', $library) . ':' . $this->DisplayPlainText() . '</li>';
 				}
 			}
-			$HTML .= $this->DisplayDependencyLine();
-			$HTML .= '</li>';
-			$HTML .= $this->DisplayDependencyLineLibraries();
 			$HTML .= '</ul></dd>';
 		}
 

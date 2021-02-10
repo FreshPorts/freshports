@@ -87,7 +87,6 @@ class Port {
 
 	// so far used by ports-deleted.php and include/list-of-ports.php
 	var $message_id;
-	var $commit_hash_short;
 	var $encoding_losses;
 
 	// taken from commit_log based upon ports.last_commit_id
@@ -102,9 +101,7 @@ class Port {
 
 	var $committer; 
 
-	var $repository;
-	var $repo_hostname;
-	var $git_hostname; # not yet populated
+	var $svn_hostname;
 	var $path_to_repo;
 	var $element_pathname;
 
@@ -182,10 +179,9 @@ class Port {
 		$this->svn_revision       = isset($myrow["svn_revision"])  ? $myrow["svn_revision"]  : null;
 
 		$this->update_description = isset($myrow["update_description"]) ? $myrow["update_description"] : null;
-		$this->message_id         = isset($myrow["message_id"])         ? $myrow["message_id"]         : null;
-		$this->commit_hash_short  = isset($myrow["commit_hash_short"])  ? $myrow["commit_hash_short"]  : null;
-		$this->encoding_losses    = isset($myrow["encoding_losses"])    ? $myrow["encoding_losses"]    : null;
-		$this->committer          = isset($myrow["committer"])          ? $myrow["committer"]          : null;
+		$this->message_id         = isset($myrow["message_id"]) ? $myrow["message_id"] : null;
+		$this->encoding_losses    = isset($myrow["encoding_losses"]) ? $myrow["encoding_losses"] : null;
+		$this->committer          = isset($myrow["committer"]) ? $myrow["committer"] : null;
 
 		$this->vulnerable_current = $myrow["vulnerable_current"];
 		$this->vulnerable_past    = $myrow["vulnerable_past"];
@@ -197,9 +193,7 @@ class Port {
 		//
 		$this->category_looking_at= isset($myrow["category_looking_at"]) ? $myrow["category_looking_at"] : null;
 
-		$this->repository         = $myrow['repository'];
-		$this->repo_hostname      = $myrow['repo_hostname'];
-#		$this->git_hostname       = '';
+		$this->svn_hostname       = $myrow['svn_hostname'];
 		$this->path_to_repo       = $myrow['path_to_repo'];
 		$this->element_pathname   = $myrow['element_pathname'];
 		$this->quarterly_revision = $myrow['quarterly_revision'];
@@ -276,9 +270,7 @@ select ports.id,
        array_to_json(regexp_match(pkg_plist, 'lib/[[:alpha:]]*?\.so')) AS pkg_plist_library_matches,
        commit_log.commit_date - SystemTimeAdjust() AS last_commit_date,
        commit_log.svn_revision,
-       commit_log.commit_hash_short,
-       R.repository,
-       R.repo_hostname,
+       R.svn_hostname,
        R.path_to_repo,
        element_pathname(ports.element_id) as element_pathname,
        PortVersionOnQuarterlyBranch(ports.id, categories.name || '/' || element.name) AS quarterly_revision  ";
@@ -368,15 +360,15 @@ select ports.id,
 		               ports.no_latest_link,
 		               ports.no_package,
 		               ports.package_name,
-	                       ports.restricted,
-    	                       ports.no_cdrom,
-	                       ports.expiration_date,
-	                       ports.is_interactive,
-	                       ports.only_for_archs,
-	                       ports.not_for_archs,
-			       ports.status,
-			       ports.showconfig,
-			       ports.license,
+	                   ports.restricted,
+	                   ports.no_cdrom,
+	                   ports.expiration_date,
+	                   ports.is_interactive,
+	                   ports.only_for_archs,
+	                   ports.not_for_archs,
+			           ports.status,
+			           ports.showconfig,
+			           ports.license,
 			       ports.fetch_depends,
 			       ports.extract_depends,
 			       ports.patch_depends,
@@ -397,9 +389,7 @@ select ports.id,
                        array_to_json(regexp_match(pkg_plist, 'lib/[[:alpha:]]*?\.so')) AS pkg_plist_library_matches,
                        commit_log.commit_date - SystemTimeAdjust() AS last_commit_date,
                        commit_log.svn_revision,
-		       commit_log.commit_hash_short,
-                       R.repository,
-                       R.repo_hostname,
+                       R.svn_hostname,
                        R.path_to_repo,
                        element_pathname(ports.element_id) as element_pathname,
                        PortVersionOnQuarterlyBranch(ports.id, categories.name || '/' || element.name) AS quarterly_revision ";
@@ -544,12 +534,10 @@ SELECT P.*, element.name    as port
         NULL AS svn_revision,
         NULL AS update_description,
         NULL AS message_id,
-        NULL AS commit_hash_short,
         NULL AS encoding_losses,
         NULL AS committer,
         NULL AS path_to_repo,
-        NULL AS repository,
-        NULL AS repo_hostname,
+        NULL AS svn_hostname,
         NULL AS onwatchlist,
         PortVersionOnQuarterlyBranch(ports.id, categories.name || '/' || element.name) AS quarterly_revision
 

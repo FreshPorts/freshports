@@ -675,8 +675,9 @@ switch ($stype) {
     
   default:
 $sqlSelectFields = "
-  select CL.commit_date - SystemTimeAdjust() AS last_commit_date,
-         P.id,
+  select distinct
+         CL.commit_date - SystemTimeAdjust() AS last_commit_date, 
+         P.id, 
          E.name as port,
          C.name as category, 
          C.id as category_id, 
@@ -706,15 +707,12 @@ $sqlSelectFields = "
          P.no_package,
          P.license,
          P.last_commit_id,
-         R.repository,
-         R.repo_hostname,
+         R.svn_hostname,
          R.path_to_repo,
          P.distinfo,
          element_pathname(P.element_id) as element_pathname,
          Cl.svn_revision,
-         P.uses,
-         P.pkg_plist,
-         array_to_json(regexp_match(P.pkg_plist, 'lib/[[:alpha:]]*?\.so')) AS pkg_plist_library_matches ";
+         P.uses  ";
          
 $sqlSelectCount = "
   SELECT count(*)";
@@ -1113,10 +1111,6 @@ switch ($stype) {
 
 				case OUTPUT_FORMAT_DEPENDS:
 					$HTML .= $port_display->DisplayDependencyLine() . "\n";
-					$tmp   = $port_display->DisplayDependencyLineLibraries(true);
-					if (!empty($tmp)) {
-						$HTML .= $tmp . "\n";
-					}
 					break;
 			} // switch
 			if ($output_format == OUTPUT_FORMAT_HTML) {

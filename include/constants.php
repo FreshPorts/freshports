@@ -60,12 +60,6 @@ define('FRESHPORTS_FREEBSD_SVN_URL' , 'https://svnweb.FreeBSD.org');
 define('FREEBSD_REPO_SVN', 'svn');
 define('FREEBSD_REPO_CVS', 'cvs');
 
-// these constants came in with git
-// these values are from the repo.repository table
-
-define('FREEBSD_REPOSITORY_GIT',        'git');
-define('FREEBSD_REPOSITORY_SUBVERSION', 'subversion');
-
 // path to the ftp server
 define('FRESHPORTS_FREEBSD_FTP_URL', 'ftp://ftp.freebsd.org/pub/FreeBSD/ports/i386/packages/All/');
 
@@ -115,8 +109,7 @@ define('SPOOLING_DIRECTORY', CACHE_DIRECTORY . '/spooling');  # cache spooling
 
 define('DELETE_PACKAGE', 'delete-package');
 
-define('DEFAULT_SVN_REPO', 'svnweb.freebsd.org');
-define('DEFAULT_GIT_REPO', 'github.com');
+define('DEFAULT_SVN_REPO', 'svn.freebsd.org');
 
 define('PORT_STATUS_ACTIVE',  'A');
 define('PORT_STATUS_DELETED', 'D');
@@ -134,9 +127,6 @@ define('MAINTENANCE_PAGE', 'now-in-maintenance-mode.php');
 define('MAINTENANCE_MODE_RERESH_TIME_SECONDS', 180);
 
 define('ISSUES', 'https://github.com/FreshPorts/freshports/issues');
-
-# a git hash is 160 bytes, which is expressed as 40 characters in hex
-define('MIN_GIT_HASH_LENGTH', 40);
 
 # for packages
 

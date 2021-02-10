@@ -150,10 +150,6 @@ span.file {
     font-family: monospace;
 }
 
-a.hash {
-    font-family: monospace;
-}
-
 a.showLink, a.hideLink {
     text-decoration: none;
     color: #36f;

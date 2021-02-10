@@ -69,7 +69,6 @@ class PortCommitsByCommitter extends CommitsByCommitter {
 			CL.id                                                                          AS commit_log_id,
 			CL.encoding_losses                                                             AS encoding_losses,
 			CL.message_id                                                                  AS message_id,
-			CL.commit_hash_short                                                           AS commit_hash_short,
 			CL.committer                                                                   AS committer,
 			CL.description                                                                 AS commit_description,
 			to_char(CL.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')                    AS commit_date,

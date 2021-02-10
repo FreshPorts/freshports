@@ -10,7 +10,7 @@
 	require($_SERVER["DOCUMENT_ROOT"] . "/../include/databaselogin.php");
 	require($_SERVER["DOCUMENT_ROOT"] . "/../include/getvalues.php");
 
-	DEFINE('MAX_COMMITS', 250);
+	DEFINE('MAX_COMMITS', 150);
 
 	$Debug = 0;
 
@@ -30,9 +30,7 @@ WITH recent_commits AS (
   SELECT CL.id,
          to_char(CL.commit_date, 'YYYY-MM-DD-HH24') as commit_date,
          CL.committer,
-         CL.system_id,
-         CL.message_id,
-         CL.commit_date as commit_date_raw
+         CL.system_iD
     FROM commit_log CL
    WHERE CL.date_added < now() - INTERVAL '1 minutes'
 ORDER BY CL.commit_date DESC
@@ -40,15 +38,13 @@ ORDER BY CL.commit_date DESC
   SELECT RC.commit_date,
          RC.committer,
          RC.system_id,
-         EP.pathname as element_pathname,
-         RC.commit_date_raw
+         EP.pathname as element_pathname
     FROM recent_commits RC JOIN commit_log_elements CLE ON RC.id = CLE.commit_log_id
                            JOIN element             E   ON CLE.element_id = E.id AND E.directory_file_flag != 'D'
                            JOIN element_pathname    EP  ON E.id = EP.element_id
-                                                       AND (EP.pathname LIKE '/base/head/%' OR EP.pathname LIKE '/ports/%' or EP.pathname LIKE '/doc/head/%')
+                                                       AND (EP.pathname LIKE '/base/head/%' OR EP.pathname LIKE '/ports/head/%' or EP.pathname LIKE '/doc/head/%')
 ORDER BY RC.commit_date DESC,
          RC.committer,
-         RC.commit_date_raw,
          element_pathname;
 ";
 

@@ -32,21 +32,10 @@ class DisplayCommit {
 	
 	var $ShowLinkToSanityTestFailure = FALSE;
 
-	# the message_id for all the emails which originated from subversion contain freebsd.org
-	# For git commits, we put the full has into message_id . Commits from git do not contain that value.
-	# This is used to decide if commits are from svn or from git.
-	# Commits imported before we started saving message_id are in the null.freshports.org
-	# so we just look for .org
-	const MESSAGE_ID_DOMAIN = '.org';
-
 	function __construct($dbh, $result, $BranchName = BRANCH_HEAD) {
 		$this->dbh        = $dbh;
 		$this->result     = $result;
 		$this->BranchName = $BranchName;
-	}
-
-	function IsGitCommit($message_id) {
-		return strpos($message_id,self::MESSAGE_ID_DOMAIN) == false;
 	}
 
 	function SetDaysMarkedAsNew($DaysMarkedAsNew) {
@@ -158,11 +147,7 @@ class DisplayCommit {
 				$this->HTML .= '[ ' . $mycommit->commit_time . ' ' . freshports_CommitterEmailLink($mycommit->committer) . ' ]';
 				$this->HTML .= '</SMALL>';
 				$this->HTML .= '&nbsp;';
-				if ($this->IsGitCommit($mycommit->message_id)) {
-					# do nothing
-				} else {
-					$this->HTML .= freshports_Email_Link($mycommit->message_id);
-				}
+				$this->HTML .= freshports_Email_Link($mycommit->message_id);
 
 				$this->HTML .= '&nbsp;';
 				if ($this->UserID) {
@@ -182,15 +167,9 @@ class DisplayCommit {
 				}
 				
 #        			echo '<pre>' . print_r($mycommit, true) . '</pre>';
-
-					
+	
 				if ($mycommit->svn_revision != '') {
-					if ($this->IsGitCommit($mycommit->message_id)) {
-						$this->HTML .= '&nbsp; ' .       freshports_git_commit_Link($mycommit->svn_revision,                               $mycommit->repo_hostname, $mycommit->path_to_repo);
-						$this->HTML .= '&nbsp; ' .  freshports_git_commit_Link_Hash($mycommit->svn_revision, $mycommit->commit_hash_short, $mycommit->repo_hostname, $mycommit->path_to_repo). '&nbsp';
-					} else {
-						$this->HTML .= '&nbsp; ' . freshports_svnweb_ChangeSet_Link($mycommit->svn_revision, $mycommit->repo_hostname, $mycommit->path_to_repo);
-					}
+					$this->HTML .= '&nbsp; ' . freshports_svnweb_ChangeSet_Link($mycommit->svn_revision, $mycommit->svn_hostname, $mycommit->path_to_repo);
 				}
 				$this->HTML .= "<br>\n";
 

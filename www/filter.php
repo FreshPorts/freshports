@@ -51,7 +51,7 @@
 	freshports_Start($FreshPortsSlogan . " - $Title",
 					$Title,
 					'FreeBSD, index, applications, ports');
-	$Debug = 0;
+	$Debug = 1;
 if ($Debug) echo "\$User->id='$User->id'";
 
 function freshports_SummaryForDay($MinusN) {

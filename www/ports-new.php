@@ -132,8 +132,7 @@ select NP.id,
        NP.latest_link,
        NP.license,
        NP.last_commit_id,
-       R.repository,
-       R.repo_hostname,
+       R.svn_hostname,
        R.path_to_repo ";
 
 	if ($User->id) {

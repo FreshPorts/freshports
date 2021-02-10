@@ -45,7 +45,6 @@ class CommitsByCommitter extends commits {
 			commit_log.id                                      AS commit_log_id,
 			commit_log.encoding_losses                         AS encoding_losses,
 			commit_log.message_id                              AS message_id,
-			commit_log.commit_hash_short                       AS commit_hash_short,
 			commit_log.committer                               AS committer,
 			commit_log.description                             AS commit_description,
 			to_char(commit_log.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')  AS commit_date,

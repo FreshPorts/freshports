@@ -77,9 +77,8 @@ DEFINE('NEXT_PAGE',		'Next');
 
 	if (!$result) {
 		$HTML = $Cache->CacheDataGet();
-		$cached = true;
 	} else {
-		$cached = false;
+
 		if ($message_id != '') {
 			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
 
@@ -161,10 +160,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
   </TR>
 <?
 }
-	if ($cached) {
-		echo $HTML;
-	} else {
-	if ($cached || ($message_id != '' || $revision != '')) {
+	if ($message_id != '' || $revision != '') {
 	
 ?>
 
@@ -177,7 +173,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 #	$numrows = $MaxNumberOfPorts;
 	$DoTheSave = true;
 	$database = $db;
-	if ( $database ) {
+	if ($database ) {
 	
 		if (!empty($revision) && count($message_id_array)) {
 			// we have multiple messages for that commit
@@ -185,8 +181,8 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 			echo "We have multiple emails for that revision: ";
 			$Commit->FetchNth(0);
 			$clean_revision = htmlentities($Commit->svn_revision);
-			// e.g. http://svnweb.freebsd.org/base?view=revision&revision=177821
-			echo '<a href="http://' . htmlentities($Commit->svn_hostname) . htmlentities($Commit->path_to_repo) . '?view=revision&amp;revision=' . $clean_revision . 
+			// e.g. https://svnweb.freebsd.org/base?view=revision&revision=177821
+			echo '<a href="https://' . htmlentities($Commit->svn_hostname) . htmlentities($Commit->path_to_repo) . '?view=revision&amp;revision=' . $clean_revision . 
 				'">' . $clean_revision . '</a>';
 
 			echo "<ol>\n";
@@ -196,10 +192,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 				echo '<li><a href="/commit.php?message_id=' . $clean_message_id . '">' . htmlentities($clean_message_id) . '</a></li>' . "\n";
 			}
 			echo "</ol></TD></tr>";
-
-
 		} else {
-
 			if ($HTML == '')  {
 
 				$HTML = '';
@@ -316,7 +309,6 @@ ORDER BY port, element_pathname";
 				if (IsSet($url_args['category'])) {
 					$Files->CategorySet(pg_escape_string($url_args['category']));
 				}
-
 				if (IsSet($url_args['port'])) {
 					$Files->PortSet(pg_escape_string($url_args['port']));
 				}
@@ -347,10 +339,10 @@ ORDER BY port, element_pathname";
 	} else {
 		$HTML .=  "no connection";
 	} # if ($database )
+
 	} else {
 		echo '<tr><td valign="top" width="100%">nothing supplied, nothing found!</td>';
 	} # if ($message_id != '' || $revision != '')
-	}  # if ($cached)
 
 
 ?>

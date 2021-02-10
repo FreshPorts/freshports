@@ -1,28 +1,24 @@
+
+
   root          /usr/local/www/freshports/www/;
-  index         index.php index.html;
+  index         index.php index.html index.htm;
 
   error_log	/var/log/nginx/freshports.org-error.log;
   access_log	/var/log/nginx/freshports.org-access.log combined;
 
-  location / {
-    try_files $uri $uri/ @missing;
+  location ~ /(login|forgotten-password|password-reset-via-token.php).php  {
+    limit_req zone=auth_limit burst=5;
+    include /usr/local/etc/freshports/php-processing.conf;
+  }
+
+  location ~ ^/phorum/(.*)$ {
+    try_files $uri /--/forums-gone.php;
   }
 
   location ~ \.php$ {
-    fastcgi_split_path_info ^(.+\.php)(/.+)$;
-    fastcgi_pass unix:/var/run/php-fpm.sock;
-    fastcgi_index index.php;
-    fastcgi_param SCRIPT_FILENAME $request_filename;
-    include fastcgi_params;
+    include /usr/local/etc/freshports/php-processing.conf;
   }
 
-  location @missing {
-    rewrite ^ /--/index.php break;
-
-    fastcgi_split_path_info ^(.+\.php)(/.+)$;
-    fastcgi_pass unix:/var/run/php-fpm.sock;
-    fastcgi_index index.php;
-    fastcgi_param SCRIPT_FILENAME $request_filename;
-    include fastcgi_params;
+  location / {
+    try_files $uri $uri/ /--/index.php;
   }
-

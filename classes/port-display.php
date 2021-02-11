@@ -764,7 +764,7 @@ class port_display {
 
 		if ($this->ShowEverything || $this->ShowBasicInfo) {
 
-
+			$HTML .= '<dt class="pkg-plist"><b>Dependency lines</b>:</dt>';
 			$HTML .= '<dd class="pkg-plist">' . "\n" . '<ul class="pkg-plist"><li class="file">';
 			$HTML .= $this->DisplayDependencyLine();
 			$HTML .= '</li>';

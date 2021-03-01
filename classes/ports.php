@@ -116,75 +116,75 @@ class Port {
 	}
 
 	function _PopulateValues($myrow) {
-		$this->id                 = $myrow["id"];
-		$this->element_id         = $myrow["element_id"];
-		$this->category_id        = $myrow["category_id"];
-		$this->short_description  = $myrow["short_description"];
-		$this->long_description   = isset($myrow["long_description"]) ? $myrow["long_description"] : null;
-		$this->version            = $myrow["version"];
-		$this->revision           = $myrow["revision"];
-		$this->epoch              = $myrow["epoch"];
-		$this->maintainer         = $myrow["maintainer"];
-		$this->homepage           = $myrow["homepage"];
-		$this->master_sites       = isset($myrow["master_sites"]) ? $myrow["master_sites"] : null;
-		$this->extract_suffix     = $myrow["extract_suffix"];
-		$this->package_exists     = $myrow["package_exists"];
-		
-		$this->depends_build      = isset($myrow["depends_build"]) ? $myrow["depends_build"] : null;
-		$this->depends_run        = isset($myrow["depends_run"]) ? $myrow["depends_run"] : null;
-		$this->depends_lib        = isset($myrow["depends_lib"]) ? $myrow["depends_lib"] : null;
-		$this->last_commit_id     = isset($myrow["last_commit_id"]) ? $myrow["last_commit_id"] : null;
-		$this->found_in_index     = isset($myrow["found_in_index"]) ? $myrow["found_in_index"] : null;
-		$this->forbidden          = $myrow["forbidden"];
-		$this->broken             = $myrow["broken"];
-		$this->deprecated         = $myrow["deprecated"];
-		$this->ignore             = $myrow["ignore"];
-		$this->date_added         = isset($myrow["date_added"]) ? $myrow["date_added"] : null;
-		$this->categories         = isset($myrow["categories"]) ? $myrow["categories"] : null;
-		$this->master_port        = $myrow["master_port"];
-		$this->latest_link        = isset($myrow["latest_link"])    ? $myrow["latest_link"]    : null;
-		$this->no_latest_link     = isset($myrow["no_latest_link"]) ? $myrow["no_latest_link"] : null;
-		$this->no_package         = $myrow["no_package"];
-		$this->package_name       = $myrow["package_name"];
-		$this->restricted         = $myrow["restricted"];
-		$this->no_cdrom           = $myrow["no_cdrom"];
-		$this->expiration_date    = $myrow["expiration_date"];
-		$this->is_interactive     = isset($myrow["is_interactive"]) ? $myrow["is_interactive"] : null;
-		$this->only_for_archs     = isset($myrow["only_for_archs"]) ? $myrow["only_for_archs"] : null;
-		$this->not_for_archs      = isset($myrow["not_for_archs"]) ? $myrow["not_for_archs"] : null;
-		$this->status             = $myrow["status"];
-		$this->showconfig         = isset($myrow["showconfig"]) ? $myrow["showconfig"] : null;
-		$this->license            = $myrow["license"];
-		$this->fetch_depends      = isset($myrow["fetch_depends"])   ? $myrow["fetch_depends"]   : null;
-		$this->extract_depends    = isset($myrow["extract_depends"]) ? $myrow["extract_depends"] : null;
-		$this->patch_depends      = isset($myrow["patch_depends"])   ? $myrow["patch_depends"]   : null;
-		$this->uses               = isset($myrow["uses"])            ? $myrow["uses"]            : null;
-		$this->pkgmessage         = isset($myrow["pkgmessage"])      ? $myrow["pkgmessage"]      : null;
-		$this->distinfo           = isset($myrow["distinfo"])        ? $myrow["distinfo"]        : null;
-		$this->license_restricted  =  isset($myrow["license_restricted"])   ? $myrow["license_restricted"]   : null;
+		$this->id                   = $myrow["id"];
+		$this->element_id           = $myrow["element_id"];
+		$this->category_id          = $myrow["category_id"];
+		$this->short_description    = $myrow["short_description"];
+		$this->long_description     = isset($myrow["long_description"]) ? $myrow["long_description"] : null;
+		$this->version              = $myrow["version"];
+		$this->revision             = $myrow["revision"];
+		$this->epoch                = $myrow["epoch"];
+		$this->maintainer           = $myrow["maintainer"];
+		$this->homepage             = $myrow["homepage"];
+		$this->master_sites         = isset($myrow["master_sites"]) ? $myrow["master_sites"] : null;
+		$this->extract_suffix       = $myrow["extract_suffix"];
+		$this->package_exists       = $myrow["package_exists"];
+
+		$this->depends_build        = isset($myrow["depends_build"])  ? $myrow["depends_build"]  : null;
+		$this->depends_run          = isset($myrow["depends_run"])    ? $myrow["depends_run"]    : null;
+		$this->depends_lib          = isset($myrow["depends_lib"])    ? $myrow["depends_lib"]    : null;
+		$this->last_commit_id       = isset($myrow["last_commit_id"]) ? $myrow["last_commit_id"] : null;
+		$this->found_in_index       = isset($myrow["found_in_index"]) ? $myrow["found_in_index"] : null;
+		$this->forbidden            = $myrow["forbidden"];
+		$this->broken               = $myrow["broken"];
+		$this->deprecated           = $myrow["deprecated"];
+		$this->ignore               = $myrow["ignore"];
+		$this->date_added           = isset($myrow["date_added"])     ? $myrow["date_added"]     : null;
+		$this->categories           = isset($myrow["categories"])     ? $myrow["categories"]     : null;
+		$this->master_port          = $myrow["master_port"];
+		$this->latest_link          = isset($myrow["latest_link"])    ? $myrow["latest_link"]    : null;
+		$this->no_latest_link       = isset($myrow["no_latest_link"]) ? $myrow["no_latest_link"] : null;
+		$this->no_package           = $myrow["no_package"];
+		$this->package_name         = $myrow["package_name"];
+		$this->restricted           = $myrow["restricted"];
+		$this->no_cdrom             = $myrow["no_cdrom"];
+		$this->expiration_date      = $myrow["expiration_date"];
+		$this->is_interactive       = isset($myrow["is_interactive"]) ? $myrow["is_interactive"] : null;
+		$this->only_for_archs       = isset($myrow["only_for_archs"]) ? $myrow["only_for_archs"] : null;
+		$this->not_for_archs        = isset($myrow["not_for_archs"])  ? $myrow["not_for_archs"]  : null;
+		$this->status               = $myrow["status"];
+		$this->showconfig           = isset($myrow["showconfig"])     ? $myrow["showconfig"]     : null;
+		$this->license              = $myrow["license"];
+		$this->fetch_depends        = isset($myrow["fetch_depends"])        ? $myrow["fetch_depends"]        : null;
+		$this->extract_depends      = isset($myrow["extract_depends"])      ? $myrow["extract_depends"]      : null;
+		$this->patch_depends        = isset($myrow["patch_depends"])        ? $myrow["patch_depends"]        : null;
+		$this->uses                 = isset($myrow["uses"])                 ? $myrow["uses"]                 : null;
+		$this->pkgmessage           = isset($myrow["pkgmessage"])           ? $myrow["pkgmessage"]           : null;
+		$this->distinfo             = isset($myrow["distinfo"])             ? $myrow["distinfo"]             : null;
+		$this->license_restricted   = isset($myrow["license_restricted"])   ? $myrow["license_restricted"]   : null;
 		$this->manual_package_build = isset($myrow["manual_package_build"]) ? $myrow["manual_package_build"] : null;
 		$this->license_perms        = isset($myrow["license_perms"])        ? $myrow["license_perms"]        : null;
 		$this->conflicts            = isset($myrow["conflicts"])            ? $myrow["conflicts"]            : null;
 		$this->conflicts_build      = isset($myrow["conflicts_build"])      ? $myrow["conflicts_build"]      : null;
 		$this->conflicts_install    = isset($myrow["conflicts_install"])    ? $myrow["conflicts_install"]    : null;
 
-		$this->generate_plist       = isset($myrow["generate_plist"])       ? $myrow["generate_plist"]   : null;
+		$this->generate_plist       = isset($myrow["generate_plist"])       ? $myrow["generate_plist"]        : null;
 
-		$this->port               = $myrow["port"];
-		$this->category           = $myrow["category"];
-		$this->needs_refresh      = isset($myrow["needs_refresh"]) ? $myrow["needs_refresh"] : null;
-		$this->updated            = isset($myrow["updated"]) ?$myrow["updated"] : null;
+		$this->port                 = $myrow["port"];
+		$this->category             = $myrow["category"];
+		$this->needs_refresh        = isset($myrow["needs_refresh"]) ? $myrow["needs_refresh"] : null;
+		$this->updated              = isset($myrow["updated"])       ? $myrow["updated"]       : null;
 
-		$this->onwatchlist        = $myrow["onwatchlist"];
-		$this->svn_revision       = isset($myrow["svn_revision"])  ? $myrow["svn_revision"]  : null;
+		$this->onwatchlist          = $myrow["onwatchlist"];
+		$this->svn_revision         = isset($myrow["svn_revision"])  ? $myrow["svn_revision"]  : null;
 
-		$this->update_description = isset($myrow["update_description"]) ? $myrow["update_description"] : null;
-		$this->message_id         = isset($myrow["message_id"]) ? $myrow["message_id"] : null;
-		$this->encoding_losses    = isset($myrow["encoding_losses"]) ? $myrow["encoding_losses"] : null;
-		$this->committer          = isset($myrow["committer"]) ? $myrow["committer"] : null;
+		$this->update_description   = isset($myrow["update_description"]) ? $myrow["update_description"] : null;
+		$this->message_id           = isset($myrow["message_id"])         ? $myrow["message_id"]         : null;
+		$this->encoding_losses      = isset($myrow["encoding_losses"])    ? $myrow["encoding_losses"]    : null;
+		$this->committer            = isset($myrow["committer"])          ? $myrow["committer"]          : null;
 
-		$this->vulnerable_current = $myrow["vulnerable_current"];
-		$this->vulnerable_past    = $myrow["vulnerable_past"];
+		$this->vulnerable_current   = $myrow["vulnerable_current"];
+		$this->vulnerable_past      = $myrow["vulnerable_past"];
 
 		$this->pkg_plist_library_matches = $myrow["pkg_plist_library_matches"];
 
@@ -360,15 +360,15 @@ select ports.id,
 		               ports.no_latest_link,
 		               ports.no_package,
 		               ports.package_name,
-	                   ports.restricted,
-	                   ports.no_cdrom,
-	                   ports.expiration_date,
-	                   ports.is_interactive,
-	                   ports.only_for_archs,
-	                   ports.not_for_archs,
-			           ports.status,
-			           ports.showconfig,
-			           ports.license,
+	                       ports.restricted,
+	                       ports.no_cdrom,
+	                       ports.expiration_date,
+	                       ports.is_interactive,
+	                       ports.only_for_archs,
+	                       ports.not_for_archs,
+			       ports.status,
+			       ports.showconfig,
+			       ports.license,
 			       ports.fetch_depends,
 			       ports.extract_depends,
 			       ports.patch_depends,
@@ -382,17 +382,17 @@ select ports.id,
                                ports.conflicts_build,
                                ports.conflicts_install,
 		               ports.categories as categories,
-			           element.name     as port, 
-			           categories.name  as category,
-                       ports_vulnerable.current as vulnerable_current,
-                       ports_vulnerable.past    as vulnerable_past,
-                       array_to_json(regexp_match(pkg_plist, 'lib/[[:alpha:]]*?\.so')) AS pkg_plist_library_matches,
-                       commit_log.commit_date - SystemTimeAdjust() AS last_commit_date,
-                       commit_log.svn_revision,
-                       R.svn_hostname,
-                       R.path_to_repo,
-                       element_pathname(ports.element_id) as element_pathname,
-                       PortVersionOnQuarterlyBranch(ports.id, categories.name || '/' || element.name) AS quarterly_revision ";
+		               element.name     as port, 
+		               categories.name  as category,
+                               ports_vulnerable.current as vulnerable_current,
+                               ports_vulnerable.past    as vulnerable_past,
+                               array_to_json(regexp_match(pkg_plist, 'lib/[[:alpha:]]*?\.so')) AS pkg_plist_library_matches,
+                               commit_log.commit_date - SystemTimeAdjust() AS last_commit_date,
+                               commit_log.svn_revision,
+                               R.svn_hostname,
+                               R.path_to_repo,
+                               element_pathname(ports.element_id) as element_pathname,
+                               PortVersionOnQuarterlyBranch(ports.id, categories.name || '/' || element.name) AS quarterly_revision ";
 
 		if ($UserID) {
 			$sql .= ', 

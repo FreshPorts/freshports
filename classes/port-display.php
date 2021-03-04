@@ -712,7 +712,14 @@ class port_display {
 			if ($port->updated != 0) {
 				$HTML .= 'last change committed by ' . freshports_CommitterEmailLink($port->committer);  // separate lines in case committer is null
 
-				$HTML .= ' ' . freshports_Search_Committer($port->committer);
+				$HTML .= ' xxxxx ' . freshports_Search_Committer($port->committer);
+				# display committer name
+				# but only if it's not the same as the committer.
+				# usually commiter is just the user name
+				# sometime the committer name is set to the user name
+				if (!empty($port->committer_name) && $port->committer_name!= $port->committer) {
+					$HTML .= ' (' . freshports_Search_Committer($port->committer_name) . ')';
+				}
 
 				$HTML .= ' on <font size="-1">' . $port->updated . '</font>' . "\n";
 

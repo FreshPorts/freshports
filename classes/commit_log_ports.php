@@ -18,6 +18,10 @@ class Commit_Log_Ports {
 	var $commit_date;
 	var $description;
 	var $committer;
+	var $committer_name;
+	var $committer_email;
+	var $author_name;
+	var $author_email;
 	var $encoding_losses;
 	var $port_version;
 	var $port_revision;
@@ -96,6 +100,10 @@ class Commit_Log_Ports {
           to_char(commit_date - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') AS commit_date,
           CL.description,
           committer,
+          committer_name,
+          committer_email,
+          author_name,
+          author_email,
           encoding_losses,
           port_version,
           port_revision,
@@ -146,6 +154,10 @@ class Commit_Log_Ports {
 		$this->commit_date        = $myrow["commit_date"];
 		$this->description        = $myrow["description"];
 		$this->committer          = $myrow["committer"];
+		$this->committer_name     = $myrow["committer_name"];
+		$this->committer_email    = $myrow["committer_email"];
+		$this->author_name        = $myrow["author_name"];
+		$this->author_email       = $myrow["author_email"];
 		$this->encoding_losses    = $myrow["encoding_losses"];
 		$this->port_version       = $myrow["port_version"];
 		$this->port_revision      = $myrow["port_revision"];

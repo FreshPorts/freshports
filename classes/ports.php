@@ -65,7 +65,6 @@ class Port {
 	var $conflicts_build;
 	var $conflicts_install;
 	var $conflicts_matches;
-	var $generate_plist;
 
 	// derived or from other tables
 	var $category;

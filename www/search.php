@@ -735,6 +735,8 @@ switch ($stype) {
 
 
   default:
+
+
 $sqlSelectCount = "
   SELECT count(*)";
   

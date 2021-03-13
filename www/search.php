@@ -714,7 +714,9 @@ $sqlSelectFields = "
          Cl.svn_revision,
          P.uses,
          P.pkg_plist,
-         array_to_json(regexp_match(P.pkg_plist, 'lib/[[:alpha:]]*?\.so')) AS pkg_plist_library_matches ";
+         array_to_json(regexp_match(P.pkg_plist, 'lib/[[:alpha:]]*?\.so')) AS pkg_plist_library_matches,
+         CL.message_id,
+         CL.commit_hash_short ";
          
 $sqlSelectCount = "
   SELECT count(*)";

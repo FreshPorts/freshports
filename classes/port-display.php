@@ -1158,11 +1158,19 @@ class port_display {
 
 		if ($this->ShowEverything || $this->ShowConfig) {
 			$HTML .= "</dl>\n<hr>\n<dl>";
-			$HTML .= '<dt id="config"><b>Configuration Options</b></dt>' . "\n" . '<dd class="like-pre">';
+			$HTML .= '<dt id="config"><b>Configuration Options</b>:</dt>' . "\n" . '<dd class="like-pre">';
 			if ($port->showconfig) {
 				$HTML .= $port->showconfig;
 			} else {
 				$HTML .= '     No options to configure';
+			}
+			$HTML .= "</dd>";
+
+			$HTML .= '<dt id="options"><b>Options name</b>:</dt>' . "\n" . '<dd class="like-pre">';
+			if (!empty($port->options_name)) {
+				$HTML .= $port->options_name;
+			} else {
+				$HTML .= 'N/A';
 			}
 			$HTML .= "</dd>";
 		}

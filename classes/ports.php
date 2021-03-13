@@ -50,6 +50,7 @@ class Port {
 	var $not_for_archs;
 	var $status;
 	var $showconfig;
+	var $options_name;
 	var $license;
 	var $fetch_depends;
 	var $extract_depends;
@@ -157,6 +158,7 @@ class Port {
 		$this->not_for_archs      = isset($myrow["not_for_archs"]) ? $myrow["not_for_archs"] : null;
 		$this->status             = $myrow["status"];
 		$this->showconfig         = isset($myrow["showconfig"]) ? $myrow["showconfig"] : null;
+		$this->options_name       = isset($myrow["options_name"]) ? $myrow["options_name"] : null;
 		$this->license            = $myrow["license"];
 		$this->fetch_depends      = isset($myrow["fetch_depends"])   ? $myrow["fetch_depends"]   : null;
 		$this->extract_depends    = isset($myrow["extract_depends"]) ? $myrow["extract_depends"] : null;
@@ -254,6 +256,7 @@ select ports.id,
        ports.not_for_archs,
        ports.status,
        ports.showconfig,
+       ports.options_name,
        ports.license,
        ports.fetch_depends,
        ports.extract_depends,
@@ -376,6 +379,7 @@ select ports.id,
 	                       ports.not_for_archs,
 			       ports.status,
 			       ports.showconfig,
+			       ports.options_name,
 			       ports.license,
 			       ports.fetch_depends,
 			       ports.extract_depends,
@@ -519,6 +523,7 @@ SELECT P.*, element.name    as port
         ports.not_for_archs,
         ports.status,
         ports.showconfig,
+        ports.options_name,
         ports.license,
         ports.fetch_depends,
         ports.extract_depends,

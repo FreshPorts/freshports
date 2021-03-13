@@ -93,19 +93,19 @@ return '
 #
 
 	function GetDefaultSoundsLikeString($text) {
-        return $this->GetDefaultMethodString($text, FRESHPORTS_SEARCH_METHOD_Soundex);
+		return $this->GetDefaultMethodString($text, FRESHPORTS_SEARCH_METHOD_Soundex);
 	}
 
 	function GetDefaultPackageSoundsLikeString($text) {
-        return $this->GetDefaultMethodString($text, FRESHPORTS_SEARCH_METHOD_Soundex);
+		return $this->GetDefaultMethodString($text, FRESHPORTS_SEARCH_METHOD_Soundex);
 	}
 
 	function GetDefaultPackage($text) {
-        return $this->GetDefaultMethodString($text, FRESHPORTS_SEARCH_METHOD_Soundex);
+		return $this->GetDefaultMethodString($text, FRESHPORTS_SEARCH_METHOD_Soundex);
 	}
 
 	function GetLink($name, $search_type, $package = 0) {
-        return $this->GetDefaultMethodStringPackage($name, $search_type);
+		return $this->GetDefaultMethodStringPackage($name, $search_type);
 	}
 
 }

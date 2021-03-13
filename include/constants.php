@@ -138,3 +138,44 @@ define('DEFAULT_NUMBER_OF_COMMITS', 100);
 const USES_PYTHON = 'python';
 
 const PYTHON_PKGNAMEPREFIX = 'PYTHON_PKGNAMEPREFIX';
+
+# used by
+# www/search.php
+# classes/ports_by_pkg_plist.php
+
+const SEARCH_SELECT_FIELD = '
+  select CL.commit_date - SystemTimeAdjust() AS last_commit_date, 
+         P.id,
+         E.name as port,
+         C.name as category,
+         C.id as category_id,
+         P.version as version,
+         P.revision as revision,
+         P.portepoch as epoch,
+         P.maintainer,
+         P.short_description,
+         P.package_exists,
+         P.extract_suffix,
+         P.homepage,
+         E.status,
+         P.element_id,
+         P.broken,
+         P.deprecated,
+         P.ignore,
+         PV.current as vulnerable_current,
+         PV.past    as vulnerable_past,
+         P.forbidden,
+         P.master_port,
+         P.latest_link,
+         P.no_package,
+         P.package_name,
+         P.restricted,
+         P.no_cdrom,
+         P.expiration_date,
+         P.no_package,
+         P.license,
+         P.last_commit_id,
+         P.distinfo,
+         element_pathname(P.element_id) as element_pathname,
+         Cl.svn_revision,
+         P.uses  ';

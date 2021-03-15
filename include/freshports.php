@@ -1357,7 +1357,8 @@ function freshports_PortCommits($port, $PageNumber = 1, $NumCommitsPerPage = 100
 	$links = $Pager->GetLinks();
 
 	# there are two places #history is set.  This is #2
-	$NumCommitsHTML = '<p align="left"><a id="history">Number of commits found: ' . $NumCommits;
+	$HTML .= '<a id="history"> </a>';
+	$NumCommitsHTML = '<p align="left">Number of commits found: ' . $NumCommits;
 
 	$Offset = 0;
 	$PageLinks = $links['all'];

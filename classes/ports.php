@@ -65,6 +65,7 @@ class Port {
 	var $conflicts_build;
 	var $conflicts_install;
 	var $conflicts_matches;
+	var $generate_plist;
 
 	// derived or from other tables
 	var $category;
@@ -171,6 +172,7 @@ class Port {
 		$this->conflicts            = isset($myrow["conflicts"])            ? $myrow["conflicts"]            : null;
 		$this->conflicts_build      = isset($myrow["conflicts_build"])      ? $myrow["conflicts_build"]      : null;
 		$this->conflicts_install    = isset($myrow["conflicts_install"])    ? $myrow["conflicts_install"]    : null;
+		$this->generate_plist       = isset($myrow["generate_plist"])       ? $myrow["generate_plist"]       : null;
 
 		$this->port                 = $myrow["port"];
 		$this->category             = $myrow["category"];
@@ -397,7 +399,7 @@ select ports.id,
 		               pkg_plist(ports.id) AS pkg_plist_library_matches,
 		               commit_log.commit_date - SystemTimeAdjust() AS last_commit_date,
 		               commit_log.svn_revision,
-		               R.svn_hostname,
+		               R.repo_hostname,
 		               R.path_to_repo,
 		               element_pathname(ports.element_id) as element_pathname,
 		               PortVersionOnQuarterlyBranch(ports.id, categories.name || '/' || element.name) AS quarterly_revision ";

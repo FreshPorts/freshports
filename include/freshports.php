@@ -1762,8 +1762,6 @@ function freshports_SideBar() {
 	GLOBAL $User;
 	$ColumnWidth = 160;
 
-	$OriginLocal = rawurlencode($_SERVER["REQUEST_URI"]);
-
 	$HTML = '
   <table width="' . $ColumnWidth . '" border="1" cellspacing="0" cellpadding="5">
         <tr>
@@ -1784,33 +1782,21 @@ function freshports_SideBar() {
 
 		if ($User->emailbouncecount > 0) {
 			$HTML .= '<img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif"  border="0" height="32" width="32"><img src="/images/warning.gif" border="0"height="32" width="32"><br>';
-			$HTML .= '<FONT SIZE="-1">your email is <a href="/bouncing.php?origin=' . $OriginLocal. '">bouncing</a></FONT><br>';
+			$HTML .= '<FONT SIZE="-1">your email is <a href="/bouncing.php">bouncing</a></FONT><br>';
 			$HTML .= '<img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><br>';
 		}
-		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/customize.php',        "?origin=$OriginLocal", "Your Account", "Your account"              ) . '</FONT><br>';
+		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/customize.php',        "", "Your Account", "Your account"              ) . '</FONT><br>';
 
 		if (preg_match("/.*@FreeBSD.org/i", $User->email)) {
 			$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/committer-opt-in.php', '', "Committer Opt-in", "Committers can receive reports of Sanity Test Failures"       ) . '</FONT><br>';
 		}
 
 
-		# for a logout, where we go depends on where we are now
-		#
-		switch ($_SERVER["PHP_SELF"]) {
-			case "customize.php":
-			case "watch-categories.php":
-			case "watch.php":
-				$args = "?origin=$OriginLocal";
-				break;
-
-			default:
-				$args = '';
-		}
-		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/logout.php',                 $args,                  "Logout",                  "Logout of the website"                  ) . '</FONT><br>';
-		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/my-flagged-commits.php',                 $args,      "My Flagged Commits",      "List of commits you have flagged"       ) . '</FONT><br>';
+		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/logout.php',                 '', "Logout",                  "Logout of the website"                  ) . '</FONT><br>';
+		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/my-flagged-commits.php',     '', "My Flagged Commits",      "List of commits you have flagged"       ) . '</FONT><br>';
 	} else {
-		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/login.php',                  "?origin=$OriginLocal", "User Login",              "Login to the website"                   ) . '</FONT><br>';
-		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/new-user.php',               "?origin=$OriginLocal", "Create account",          "Create an account"                      ) . '</FONT><br>';
+		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/login.php',                  "", "User Login",              "Login to the website"                   ) . '</FONT><br>';
+		$HTML .= '<FONT SIZE="-1">' . freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/new-user.php',               "", "Create account",          "Create an account"                      ) . '</FONT><br>';
 	}
 
 	$HTML .= '

@@ -18,21 +18,15 @@
 
 	GLOBAL $User;
 
-	$origin          = '/';
 	$errors          = 0;
 	$AccountModified = 0;
 
-if (IsSet($_REQUEST['origin'])) $origin	= $_REQUEST['origin'];
 if (IsSet($_REQUEST['submit'])) $submit = $_REQUEST['submit'];
 $visitor = pg_escape_string($_COOKIE['visitor']);
 
-if ($origin == '/index.php' || $origin == '') {
-	$origin = '/';
-}
-
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {
-	header('Location: /login.php?origin=' . $_SERVER['PHP_SELF']);  /* Redirect browser to PHP web site */
+	header('Location: /login.php');  /* Redirect browser to PHP web site */
 	exit;  /* Make sure that code below does not get executed when we redirect. */
 }
 
@@ -121,9 +115,9 @@ UPDATE users
 
 		if ($AccountModified == 1) {
 			if ($Debug) {
-				echo "I would have taken you to '$origin' now, but debugging is on<br>\n";
+				echo "I would have taken you to '' now, but debugging is on<br>\n";
 			} else {
-				header("Location: $origin");
+				header("Location: /");
 				exit;  /* Make sure that code below does not get executed when we redirect. */
 			}
 		} else {

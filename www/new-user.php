@@ -25,14 +25,9 @@
 		exit;
 	}
 
-	if (IsSet($_REQUEST['origin'])) $origin = $_REQUEST['origin'];
 	if (IsSet($_REQUEST['submit'])) $submit = $_REQUEST['submit'];
 
 	$errors = '';
-
-if ($origin == '/index.php' || $origin == '') {
-	$origin = '/';
-}
 
 if (IsSet($submit)) {
 
@@ -49,11 +44,11 @@ if (IsSet($submit)) {
 
 	$errors = "";
 
-	$UserLogin				= $_REQUEST["UserLogin"];
-	$email					= $_REQUEST["email"];
-	$Password1				= $_REQUEST["Password1"];
-	$Password2				= $_REQUEST["Password2"];
-	$numberofdays			= $_REQUEST["numberofdays"];
+	$UserLogin    = $_REQUEST["UserLogin"];
+	$email        = $_REQUEST["email"];
+	$Password1    = $_REQUEST["Password1"];
+	$Password2    = $_REQUEST["Password2"];
+	$numberofdays = $_REQUEST["numberofdays"];
 	
 	if ($UserLogin == '') {
 		$errors .= "Please enter a user id.<BR>";
@@ -165,7 +160,7 @@ if (IsSet($submit)) {
 	}
 
 	if ($UserCreated) {
-		header("Location: welcome.php?origin=" . $origin);  /* Redirect browser to PHP web site */
+		header("Location: welcome.php");  /* Redirect browser to PHP web site */
 		exit;  /* Make sure that code below does not get executed when we redirect. */
 	}
 } else {

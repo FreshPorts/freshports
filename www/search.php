@@ -768,7 +768,7 @@ JOIN element_pathname EP on E.id = EP.element_id
       AND P.element_id   = E.id ' ;
 
 
-$AddRemoveExtra  = "&&origin=" . $_SERVER['SCRIPT_NAME'] . "?query=" . $query. "+stype=$stype+num=$num+method=$method";
+$AddRemoveExtra  = "?query=" . $query. "+stype=$stype+num=$num+method=$method";
 if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<BR>";
 $AddRemoveExtra = pg_escape_string($AddRemoveExtra);
 if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<BR>";

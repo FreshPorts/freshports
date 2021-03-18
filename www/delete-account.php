@@ -17,21 +17,15 @@
 
 	GLOBAL $User;
 
-	$origin          = '/';
 	$errors          = 0;
 	$AccountModified = 0;
 
-if (IsSet($_REQUEST['origin'])) $origin	= $_REQUEST['origin'];
 if (IsSet($_REQUEST['submit'])) $submit = $_REQUEST['submit'];
 $visitor	= pg_escape_string($_COOKIE['visitor']);
 
-if ($origin == '/index.php' || $origin == '') {
-	$origin = '/';
-}
-
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {
-	header('Location: /login.php?origin=' . $_SERVER['PHP_SELF']);  /* Redirect browser to PHP web site */
+	header('Location: /login.php');  /* Redirect browser to PHP web site */
 	exit;  /* Make sure that code below does not get executed when we redirect. */
 }
 
@@ -141,7 +135,7 @@ echo '<p>To delete your account, please enter you account name and click on <i>d
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 ?>
-<form action="<?php echo $_SERVER["PHP_SELF"] . "?origin=" . htmlentities($origin) ?>" method="POST" NAME=f>
+<form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
 <TABLE width="*" border="0" cellpadding="1">
           <TR>
             <TD VALIGN="top">

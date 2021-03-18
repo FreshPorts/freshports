@@ -16,13 +16,8 @@
 
 	$Debug = 0;
 
-	$origin		= $_GET["origin"];
 	$submit		= $_POST["submit"];
 	$visitor	= $_COOKIE["visitor"];
-
-if ($origin == "/index.php" || $origin == "") {
-	$origin = "/";
-}
 
 if ($submit) {
    $sql = "update users set emailbouncecount = 0 where cookie = '" . pg_escape_string($visitor) . "'";
@@ -33,13 +28,10 @@ if ($submit) {
    $result = pg_exec($db, $sql);
    if ($result) {
       if ($Debug) {
-         echo "I would have taken you to '" . htmlentities($origin) . "' now, but debugging is on<br>\n";
+         echo "I would have taken you to '' now, but debugging is on<br>\n";
       } else {
          // Redirect browser to PHP web site
-         if ($origin == "/index.php" || $origin == '') {
-            $origin = "/";
-         }
-         header("Location: $origin");
+         header("Location: /");
          exit;  /* Make sure that code below does not get executed when we redirect. */
       }
    } else {
@@ -91,7 +83,7 @@ the button below.</p>
 
 </td></tr>
 <tr><td><CENTER>
-<form action="<?php echo $_SERVER["PHP_SELF"] . "?origin=" . htmlentities($origin) ?>" method="POST">
+<form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST">
 <input TYPE="submit" VALUE="There was a problem, but it's fixed now" name="submit">
 </form>
 </CENTER>

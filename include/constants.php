@@ -188,4 +188,9 @@ const SEARCH_SELECT_FIELD = '
          P.distinfo,
          element_pathname(P.element_id) as element_pathname,
          Cl.svn_revision,
-         P.uses  ';
+         CL.commit_hash_short,
+         CL.message_id,
+         P.uses,
+         R.repository,
+         R.repo_hostname,
+         R.path_to_repo   ';

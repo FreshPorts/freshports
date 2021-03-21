@@ -773,12 +773,17 @@ class port_display {
 				$HTML .= "unknown";
 			}
 			$HTML .= '</font></dt>' . "\n";
-			$HTML .= '<dt><b>Commit Hash:</b> <font size="-1">';
-			if ($port->svn_revision) {
-#				print "'$port->svn_revision', '$port->commit_hash_short', '$port->repo_hostname', '$port->path_to_rep'";
+
+			if (strpos($port->message_id, 'freebsd.org') === false) {
+				$HTML .= '<dt><b>Commit Hash:</b> <font size="-1">';
 				$HTML .= freshports_git_commit_Link_Hash($port->svn_revision, $port->commit_hash_short, $port->repo_hostname, $port->path_to_repo);
 			} else {
-				$HTML .= "unknown";
+				$HTML .= '<dt><b>SVN Revision:</b> <font size="-1">';
+				if (isset($port->svn_revision)) {
+					$HTML .= freshports_svnweb_ChangeSet_Link_Text($port->svn_revision, $port->repo_hostname, $port->path_to_repo);
+				} else {
+					$HTML .= 'UNKNOWN';
+			        }
 			}
 
 			$HTML .= '</font></dt>' . "\n";

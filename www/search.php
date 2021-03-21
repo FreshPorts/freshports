@@ -16,7 +16,7 @@
 	require_once('Pager/Pager.php');
 
 	$Debug = 0;
-	if ($Debug) phpinfo();
+#	if ($Debug) phpinfo();
 
 	$https = ((!empty($_SERVER['HTTPS'])) && ($_SERVER['HTTPS'] != 'off'));
 	if ($https) {
@@ -535,6 +535,25 @@ switch ($method) {
 				break;
 		}
 }
+
+# grab the constant
+$sqlSelectFields = SEARCH_SELECT_FIELD;
+
+# and this
+
+$sqlWatchListFrom = '';
+	if ($User->id) {
+			$sqlWatchListFrom .= "
+      LEFT OUTER JOIN
+ (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
+    FROM watch_list JOIN watch_list_element
+        ON watch_list.id      = watch_list_element.watch_list_id
+       AND watch_list.user_id = $User->id
+       AND watch_list.in_service
+  GROUP BY wle_element_id) AS TEMP
+       ON TEMP.wle_element_id = E.id";
+	}
+
 	
 
 
@@ -566,8 +585,8 @@ switch ($stype) {
 			'totalItems'  => $NumFound,
 			'urlVar'      => 'page',
 			'currentPage' => $PageNumber,
-			'spacesBeforeSeparator' => 1,
-			'spacesAfterSeparator'  => 1,
+			'spacesBeforeSeparator' => 2,
+			'spacesAfterSeparator'  => 2,
 		);
 	# use @ to suppress: Non-static method Pager::factory() should not be called statically
 	$Pager = @Pager::factory($params);
@@ -582,7 +601,7 @@ switch ($stype) {
 
     $NumFetches = $Commits->Fetch();
     break;
-    
+
   case SEARCH_FIELD_COMMITMESSAGE:
     require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits_by_description.php');
     require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
@@ -604,8 +623,8 @@ switch ($stype) {
 			'totalItems'  => $NumFound,
 			'urlVar'      => 'page',
 			'currentPage' => $PageNumber,
-			'spacesBeforeSeparator' => 1,
-			'spacesAfterSeparator'  => 1,
+			'spacesBeforeSeparator' => 2,
+			'spacesAfterSeparator'  => 2,
 		);
 	# use @ to suppress: Non-static method Pager::factory() should not be called statically
 	$Pager = @Pager::factory($params);
@@ -629,20 +648,20 @@ switch ($stype) {
 	$Commits->UserIDSet($User->id);
 	if ($sqlSetAll) {
 	  if ($Debug) echo 'invoking TreePathConditionSetAll() with ' . $sqlUserSpecifiedCondition;
-      $Commits->TreePathConditionSetAll($sqlUserSpecifiedCondition);
-    } else {
+	  $Commits->TreePathConditionSetAll($sqlUserSpecifiedCondition);
+	} else {
 	  if ($Debug) echo 'invoking TreePathConditionSet() with ' . $sqlUserSpecifiedCondition;
-      $Commits->TreePathConditionSet($sqlUserSpecifiedCondition);
-    }
+	  $Commits->TreePathConditionSet($sqlUserSpecifiedCondition);
+	}
 
-    $Commits->Debug = $Debug;
+	$Commits->Debug = $Debug;
 
 	if (substr($query, 0, 7) == '/ports/') {
-	    $NumberOfCommits = $Commits->GetCountPortCommits();
+	  $NumberOfCommits = $Commits->GetCountPortCommits();
 	} else {
-	    $NumberOfCommits = $Commits->GetCountCommits();
+	  $NumberOfCommits = $Commits->GetCountCommits();
 	}
-    if ($Debug) echo 'number of commits = ' . $NumberOfCommits . "<br>\n";
+	if ($Debug) echo 'number of commits = ' . $NumberOfCommits . "<br>\n";
 
 	$NumFound = $NumberOfCommits;
 	$params = array(
@@ -652,8 +671,8 @@ switch ($stype) {
 			'totalItems'  => $NumFound,
 			'urlVar'      => 'page',
 			'currentPage' => $PageNumber,
-			'spacesBeforeSeparator' => 1,
-			'spacesAfterSeparator'  => 1,
+			'spacesBeforeSeparator' => 2,
+			'spacesAfterSeparator'  => 2,
 		);
 	# use @ to suppress: Non-static method Pager::factory() should not be called statically
 	$Pager = @Pager::factory($params);
@@ -661,61 +680,61 @@ switch ($stype) {
 	$offset = $Pager->getOffsetByPageId();
 	$NumOnThisPage = $offset[1] - $offset[0] + 1;
 
-    if ($PageNumber > 1) {
-      $Commits->SetOffset($offset[0] - 1);
-    }
-    $Commits->SetLimit($PageSize);
+	if ($PageNumber > 1) {
+	    $Commits->SetOffset($offset[0] - 1);
+	}
+	$Commits->SetLimit($PageSize);
 
 	if (substr($query, 0, 7) == '/ports/') {
 	    $NumFetches = $Commits->FetchPortCommits();
 	} else {
 	    $NumFetches = $Commits->Fetch();
 	}
-    break;
+        break;
+
+  case SEARCH_FIELD_PKG_PLIST:
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports_by_pkg_plist.php');
+	$Ports = new PortsByPkgPlist($db);
+	$Ports->PkgPlistSet($query);
     
+	$Ports->Debug = $Debug;
+
+	$NumFound = $Ports->GetQueryCount();
+	if ($Debug) {
+		echo 'number of ports = ' . $NumFound . "<br>\n";
+		echo 'page size = ' . $PageSize . "<br>\n";
+		echo 'page size = ' . $PageNumber . "<br>\n";
+	}
+
+	$params = array(
+			'mode'        => 'Sliding',
+			'perPage'     => $PageSize,
+			'delta'       => 5,
+			'totalItems'  => $NumFound,
+			'urlVar'      => 'page',
+			'currentPage' => $PageNumber,
+			'spacesBeforeSeparator' => 2,
+			'spacesAfterSeparator'  => 2,
+		);
+	# use @ to suppress: Non-static method Pager::factory() should not be called statically
+	$Pager = @Pager::factory($params);
+
+	$offset = $Pager->getOffsetByPageId();
+	$NumOnThisPage = $offset[1] - $offset[0] + 1;
+
+	if ($PageNumber > 1) {
+		$Ports->SetOffset($offset[0] - 1);
+	}
+	$Ports->SetLimit($PageSize);
+
+	$NumFetches = $Ports->FetchPorts($User->id, $sqlOrderBy);
+
+	# $result get used later on to display the search results via classes/port-display.php
+	$result = $Ports->LocalResult;
+	break;
+
+
   default:
-$sqlSelectFields = "
-  select CL.commit_date - SystemTimeAdjust() AS last_commit_date,
-         P.id,
-         E.name as port,
-         C.name as category, 
-         C.id as category_id, 
-         P.version as version, 
-         P.revision as revision, 
-         P.portepoch as epoch, 
-         P.maintainer, 
-         P.short_description, 
-         P.package_exists, 
-         P.extract_suffix, 
-         P.homepage, 
-         E.status, 
-         P.element_id, 
-         P.broken, 
-         P.deprecated, 
-         P.ignore, 
-         PV.current as vulnerable_current,
-         PV.past    as vulnerable_past,
-         P.forbidden,
-         P.master_port,
-         P.latest_link,
-         P.no_package,
-         P.package_name,
-         P.restricted,
-         P.no_cdrom,
-         P.expiration_date,
-         P.no_package,
-         P.license,
-         P.last_commit_id,
-         R.repository,
-         R.repo_hostname,
-         R.path_to_repo,
-         P.distinfo,
-         element_pathname(P.element_id) as element_pathname,
-         Cl.svn_revision,
-         P.uses,
-         P.pkg_plist,
-         array_to_json(regexp_match(P.pkg_plist, 'lib/[[:alpha:]]*?\.so')) AS pkg_plist_library_matches ";
-         
 $sqlSelectCount = "
   SELECT count(*)";
   
@@ -744,25 +763,12 @@ JOIN element_pathname EP on E.id = EP.element_id
 ";
 	}
 
-$sqlWatchListFrom = '';
-	if ($User->id) {
-			$sqlWatchListFrom .= "
-      LEFT OUTER JOIN
- (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
-    FROM watch_list JOIN watch_list_element
-        ON watch_list.id      = watch_list_element.watch_list_id
-       AND watch_list.user_id = $User->id
-       AND watch_list.in_service
-  GROUP BY wle_element_id) AS TEMP
-       ON TEMP.wle_element_id = E.id";
-	}
-
 	$sqlWhere = '
     WHERE P.category_id  = C.id
       AND P.element_id   = E.id ' ;
 
 
-$AddRemoveExtra  = "&&origin=" . $_SERVER['SCRIPT_NAME'] . "?query=" . $query. "+stype=$stype+num=$num+method=$method";
+$AddRemoveExtra  = "?query=" . $query. "+stype=$stype+num=$num+method=$method";
 if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<BR>";
 $AddRemoveExtra = pg_escape_string($AddRemoveExtra);
 if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<BR>";
@@ -783,7 +789,7 @@ if (!$result) {
 }
 
 $NumRows = pg_numrows($result);
-$myrow = pg_fetch_array ($result);
+$myrow = pg_fetch_array($result);
 $NumFound = $myrow[0];
 
 	$params = array(
@@ -793,8 +799,8 @@ $NumFound = $myrow[0];
 			'totalItems'  => $NumFound,
 			'urlVar'      => 'page',
 			'currentPage' => $PageNumber,
-			'spacesBeforeSeparator' => 1,
-			'spacesAfterSeparator'  => 1,
+			'spacesBeforeSeparator' => 2,
+			'spacesAfterSeparator'  => 2,
 		);
 
 	# use @ to suppress: Non-static method Pager::factory() should not be called statically
@@ -832,7 +838,7 @@ if (!$result) {
 
 $NumFetches = pg_numrows($result);
 
-} // end of non-committer search
+} // end of non-committer search  ## I think this is the end of the default option
 
 $fp = fopen($logfile, "a");
 if ($fp) {
@@ -919,8 +925,7 @@ if ($output_format == OUTPUT_FORMAT_HTML) {
 		<OPTION VALUE="soundex" <?if ($method == "soundex") echo 'SELECTED' ?>>sounds like
 	</SELECT>
 
-	<INPUT NAME="query" size="40"  VALUE="<? echo
-	htmlentities($query)?>">
+	<INPUT NAME="query" size="40"  VALUE="<? echo htmlentities($query)?>">
 
 <?php
     require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/page_options.php');
@@ -1097,7 +1102,8 @@ switch ($stype) {
 				$port_display->SetDetailsSearch();
 				break;
 		}
-	
+
+		if ($Debug) echo 'NumFetches = ' . $NumFetches;
 		for ($i = 0; $i < $NumFetches; $i++) {
 			$Port->FetchNth($i);
 			$port_display->SetPort($Port);

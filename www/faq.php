@@ -803,8 +803,15 @@ every email address on FreshPorts is already somewhere else first. For example:
 
 <p>
 In short, it doesn't make sense to obscure that which is freely available elsewhere.
+</p>
+
+<p>
+Similarly, we do not entertain requests to remove information from our website. We only report upon what exists elsewhere.
+	</TD></TR><TR><TD>&nbsp;</TD></TR>
+
 	</TD></TR>
 <TR><TD><a id="portversion-differ">&nbsp;</a></TD></TR>
+
 <TR>
 <?php echo freshports_PageBannerText('Why does the PORTVERSION at the top of page differ from that of the first commit?'); ?>
 </TR>

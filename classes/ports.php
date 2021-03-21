@@ -50,6 +50,7 @@ class Port {
 	var $not_for_archs;
 	var $status;
 	var $showconfig;
+	var $options_name;
 	var $license;
 	var $fetch_depends;
 	var $extract_depends;
@@ -79,8 +80,8 @@ class Port {
 	var $vulnerable_current;
 	var $vulnerable_past;
 
-	var $pkg_plist_library_matches;	// items from pkg-plist which match: 'lib/[[:alpha:]]*?\.so'
-	                                // used for listing LIB_DEPENDS
+	var $pkg_plist_library_matches;	// items from generate_plist.installed_file which match: 'lib/[^/]*?\.so''
+	                                // used for listing LIB_DEPENDS. This information was previously in ports.pkg_plist
 
 	// not always present/set
 	var $update_description;
@@ -157,6 +158,7 @@ class Port {
 		$this->not_for_archs      = isset($myrow["not_for_archs"]) ? $myrow["not_for_archs"] : null;
 		$this->status             = $myrow["status"];
 		$this->showconfig         = isset($myrow["showconfig"]) ? $myrow["showconfig"] : null;
+		$this->options_name       = isset($myrow["options_name"]) ? $myrow["options_name"] : null;
 		$this->license            = $myrow["license"];
 		$this->fetch_depends      = isset($myrow["fetch_depends"])   ? $myrow["fetch_depends"]   : null;
 		$this->extract_depends    = isset($myrow["extract_depends"]) ? $myrow["extract_depends"] : null;
@@ -170,13 +172,12 @@ class Port {
 		$this->conflicts            = isset($myrow["conflicts"])            ? $myrow["conflicts"]            : null;
 		$this->conflicts_build      = isset($myrow["conflicts_build"])      ? $myrow["conflicts_build"]      : null;
 		$this->conflicts_install    = isset($myrow["conflicts_install"])    ? $myrow["conflicts_install"]    : null;
+		$this->generate_plist       = isset($myrow["generate_plist"])       ? $myrow["generate_plist"]       : null;
 
-		$this->generate_plist       = isset($myrow["generate_plist"])       ? $myrow["generate_plist"]   : null;
-
-		$this->port               = $myrow["port"];
-		$this->category           = $myrow["category"];
-		$this->needs_refresh      = isset($myrow["needs_refresh"]) ? $myrow["needs_refresh"] : null;
-		$this->updated            = isset($myrow["updated"]) ?$myrow["updated"] : null;
+		$this->port                 = $myrow["port"];
+		$this->category             = $myrow["category"];
+		$this->needs_refresh        = isset($myrow["needs_refresh"]) ? $myrow["needs_refresh"] : null;
+		$this->updated              = isset($myrow["updated"])       ? $myrow["updated"]       : null;
 
 		$this->onwatchlist        = $myrow["onwatchlist"];
 		$this->svn_revision       = isset($myrow["svn_revision"])  ? $myrow["svn_revision"]  : null;
@@ -254,6 +255,7 @@ select ports.id,
        ports.not_for_archs,
        ports.status,
        ports.showconfig,
+       ports.options_name,
        ports.license,
        ports.fetch_depends,
        ports.extract_depends,
@@ -273,7 +275,7 @@ select ports.id,
        categories.name  as category,
        ports_vulnerable.current as vulnerable_current,
        ports_vulnerable.past    as vulnerable_past,
-       array_to_json(regexp_match(pkg_plist, 'lib/[[:alpha:]]*?\.so')) AS pkg_plist_library_matches,
+       pkg_plist(ports.id) AS pkg_plist_library_matches,
        commit_log.commit_date - SystemTimeAdjust() AS last_commit_date,
        commit_log.svn_revision,
        commit_log.commit_hash_short,
@@ -368,41 +370,39 @@ select ports.id,
 		               ports.no_latest_link,
 		               ports.no_package,
 		               ports.package_name,
-	                       ports.restricted,
-    	                       ports.no_cdrom,
-	                       ports.expiration_date,
-	                       ports.is_interactive,
-	                       ports.only_for_archs,
-	                       ports.not_for_archs,
-			       ports.status,
-			       ports.showconfig,
-			       ports.license,
-			       ports.fetch_depends,
-			       ports.extract_depends,
-			       ports.patch_depends,
-			       ports.uses,
-			       ports.pkgmessage,
-			       ports.distinfo,
-                               ports.license_restricted,
-                               ports.manual_package_build,
-                               ports.license_perms,
-                               ports.conflicts,
-                               ports.conflicts_build,
-                               ports.conflicts_install,
+		               ports.restricted,
+		               ports.no_cdrom,
+		               ports.expiration_date,
+		               ports.is_interactive,
+		               ports.only_for_archs,
+		               ports.not_for_archs,
+		               ports.status,
+		               ports.showconfig,
+		               ports.license,
+		               ports.fetch_depends,
+		               ports.extract_depends,
+		               ports.patch_depends,
+		               ports.uses,
+		               ports.pkgmessage,
+		               ports.distinfo,
+		               ports.license_restricted,
+		               ports.manual_package_build,
+		               ports.license_perms,
+		               ports.conflicts,
+		               ports.conflicts_build,
+		               ports.conflicts_install,
 		               ports.categories as categories,
-			           element.name     as port, 
-			           categories.name  as category,
-                       ports_vulnerable.current as vulnerable_current,
-                       ports_vulnerable.past    as vulnerable_past,
-                       array_to_json(regexp_match(pkg_plist, 'lib/[[:alpha:]]*?\.so')) AS pkg_plist_library_matches,
-                       commit_log.commit_date - SystemTimeAdjust() AS last_commit_date,
-                       commit_log.svn_revision,
-		       commit_log.commit_hash_short,
-                       R.repository,
-                       R.repo_hostname,
-                       R.path_to_repo,
-                       element_pathname(ports.element_id) as element_pathname,
-                       PortVersionOnQuarterlyBranch(ports.id, categories.name || '/' || element.name) AS quarterly_revision ";
+		               element.name     as port, 
+		               categories.name  as category,
+		               ports_vulnerable.current as vulnerable_current,
+		               ports_vulnerable.past    as vulnerable_past,
+		               pkg_plist(ports.id) AS pkg_plist_library_matches,
+		               commit_log.commit_date - SystemTimeAdjust() AS last_commit_date,
+		               commit_log.svn_revision,
+		               R.repo_hostname,
+		               R.path_to_repo,
+		               element_pathname(ports.element_id) as element_pathname,
+		               PortVersionOnQuarterlyBranch(ports.id, categories.name || '/' || element.name) AS quarterly_revision ";
 
 		if ($UserID) {
 			$sql .= ', 
@@ -519,6 +519,7 @@ SELECT P.*, element.name    as port
         ports.not_for_archs,
         ports.status,
         ports.showconfig,
+        ports.options_name,
         ports.license,
         ports.fetch_depends,
         ports.extract_depends,
@@ -537,7 +538,7 @@ SELECT P.*, element.name    as port
         PRIMARY_CATEGORY.name as category,
         ports_vulnerable.current as vulnerable_current,
         ports_vulnerable.past    as vulnerable_past,
-        array_to_json(regexp_match(pkg_plist, 'lib/[[:alpha:]]*?\.so')) AS pkg_plist_library_matches,
+        pkg_plist(ports.id) AS pkg_plist_library_matches,
         NULL AS needs_refresh,
         NULL AS updated,
         NULL AS last_commit_date,
@@ -547,6 +548,10 @@ SELECT P.*, element.name    as port
         NULL AS commit_hash_short,
         NULL AS encoding_losses,
         NULL AS committer,
+        NULL AS committer_name,
+        NULL AS committer_email,
+        NULL AS author_name,
+        NULL AS author_email,
         NULL AS path_to_repo,
         NULL AS repository,
         NULL AS repo_hostname,
@@ -559,7 +564,7 @@ SELECT P.*, element.name    as port
     AND ports_categories.category_id = categories.id
     AND categories.name              = '" . pg_escape_string($CategoryName) . "'
     AND PRIMARY_CATEGORY.id          = ports.category_id
-    AND ports.element_id             = element.id ) AS P
+    AND ports.element_id             = element.id) AS P
    ON (P.element_id     = element.id
    AND element.status   = 'A') JOIN element_pathname EP ON P.element_id = EP.element_id AND EP.pathname like '/ports/";
 
@@ -686,6 +691,8 @@ LEFT OUTER JOIN
 		$result = 0;
 
 		$sql = 'select watch_list_count(' . pg_escape_string($this->element_id) . ')';
+
+		if ($this->Debug) echo $sql;
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {

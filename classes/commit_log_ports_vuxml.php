@@ -58,12 +58,12 @@ select CLPV.id,
 
 		$myrow = pg_fetch_array($this->result, $N);
 
-		$this->id				= $myrow['id'];
-		$this->commit_log_id	= $myrow['commit_log_id'];
-		$this->port_id			= $myrow['port_id'];
-		$this->vuxml_id			= $myrow['vuxml_id'];
+		$this->id            = $myrow['id'];
+		$this->commit_log_id = $myrow['commit_log_id'];
+		$this->port_id       = $myrow['port_id'];
+		$this->vuxml_id      = $myrow['vuxml_id'];
 
-		$this->vid				= $myrow['vid'];
+		$this->vid           = $myrow['vid'];
 	}
 
 	function VuXML_List_Get($port_id) {

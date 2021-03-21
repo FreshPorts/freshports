@@ -6,7 +6,7 @@
 	#
 
 	if (!$_COOKIE['visitor']) {
-		header('Location: /login.php?origin=' . $_SERVER['PHP_SELF']);  /* Redirect browser to PHP web site */
+		header('Location: /login.php');  /* Redirect browser to PHP web site */
 		exit;  /* Make sure that code below does not get executed when we redirect. */
 	}
 

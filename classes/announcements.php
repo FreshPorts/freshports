@@ -190,7 +190,8 @@ SELECT *
              end_date
         FROM announcements
        WHERE (start_date <= CURRENT_TIMESTAMP OR start_date IS NULL)
-         AND (end_date   >= CURRENT_TIMESTAMP OR end_date   IS NULL)";
+         AND (end_date   >= CURRENT_TIMESTAMP OR end_date   IS NULL)
+    ORDER BY start_date ASC";
 
 #		echo '<pre>' . $sql . '</pre>';
 

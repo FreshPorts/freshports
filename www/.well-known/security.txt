@@ -6,7 +6,10 @@
 # The digital signature for this file can be found at:
 # https://www.freshports.org/.well-known/security.txt.sig
 
-Contact: dan@langille.org
+Contact: https://www.freshports.org/contact.php
+Expires: Sun, 1 Jan 2023 00:0 -0400
 Encryption: https://www.freshports.org/.well-known/pgp-key.txt
+Acknowledgments: https://www.freshports.org/security-policy.php
 Preferred-Languages: en
 Canonical: https://www.freshports.org/.well-known/security.txt
+Policy: https://www.freshports.org/security-policy.php

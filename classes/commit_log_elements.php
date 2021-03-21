@@ -17,6 +17,10 @@ class Commit_Log_Elements {
 	var $commit_date;
 	var $description;
 	var $committer;
+	var $committer_name;
+	var $committer_email;
+	var $author_name;
+	var $author_email;
 	var $encoding_losses;
 	var $revision_name;
 
@@ -39,6 +43,10 @@ select commit_log_elements.element_id,
        to_char(commit_date - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS')  as commit_date,
        commit_log.description,
        committer,
+       committer_name,
+       committer_email,
+       author_name,
+       author_email,
        encoding_losses,
        revision_name
   from commit_log, commit_log_elements
@@ -72,6 +80,10 @@ select commit_log_elements.element_id,
 		$this->commit_date        = $myrow["commit_date"];
 		$this->description        = $myrow["description"];
 		$this->committer          = $myrow["committer"];
+		$this->committer_name     = $myrow["committer_name"];
+		$this->committer_email    = $myrow["committer_email"];
+		$this->author_name        = $myrow["author_name"];
+		$this->author_email       = $myrow["author_email"];
 		$this->encoding_losses    = $myrow["encoding_losses"];
 		$this->revision_name      = $myrow["revision_name"];
 	}

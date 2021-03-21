@@ -155,7 +155,11 @@ class DisplayCommit {
 				$this->HTML .= "<TR><TD>\n";
 
 				$this->HTML .= '<SMALL>';
-				$this->HTML .= '[ ' . $mycommit->commit_time . ' ' . freshports_CommitterEmailLink($mycommit->committer) . ' ]';
+				$this->HTML .= '[ ' . $mycommit->commit_time . ' ' . freshports_CommitterEmailLink($mycommit->committer);
+				if (!empty($mycommit->committer_name) && ($mycommit->committer_name != $mycommit->committer)) {
+					$this->HTML .= ' (' . $mycommit->committer_name . ')';
+				}
+				$this->HTML .= ' ]';
 				$this->HTML .= '</SMALL>';
 				$this->HTML .= '&nbsp;';
 				if ($this->IsGitCommit($mycommit->message_id)) {

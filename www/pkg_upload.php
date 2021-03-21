@@ -257,7 +257,7 @@ function ChooseWatchLists($UserID, $db) {
 	if (!$visitor) {
 		?>
 		<P>
-		You must <A HREF="/login.php?origin=<?echo $_SERVER["PHP_SELF"] ?>">login</A> before you can upload your package information.
+		You must <A HREF="/login.php">login</A> before you can upload your package information.
 		</P>
 		<?
  	} else {

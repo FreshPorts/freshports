@@ -122,32 +122,33 @@ function freshports_UpdatingOutput($NumRowsUpdating, $PortsUpdating, $port) {
 	if ($NumRowsUpdating > 0) {
 		$HTML .= '<TABLE BORDER="1" width="100%" CELLSPACING="0" CELLPADDING="5">' . "\n";
 		$HTML .= "<TR>\n";
-		$HTML .= freshports_PageBannerText('<a id="updating">Notes from UPDATING', 1);
-		$HTML .= "<tr><td>\n";
-		$HTML .= "These upgrade notes are taken from <a href=\"/UPDATING\">/usr/ports/UPDATING</a>";
-		$HTML .= "<ul>\n";
-
+		$HTML .= freshports_PageBannerText('<a id="updating">Notes from UPDATING</a>', 1);
+		$HTML .= "<tr><td><dl>\n";
+		$HTML .= "<dt>These upgrade notes are taken from <a href=\"/UPDATING\">/usr/ports/UPDATING</a></dt>";
+		$HTML .= "<dd><ul>\n";
 
 		$Hiding = false;
 		for ($i = 0; $i < $NumRowsUpdating; $i++) {
 			$PortsUpdating->FetchNth($i);
 			if ($i == 1) {
 				$Hiding = true;
-				$HTML .= '<a href="#" id="UPDATING-Extra-show" class="showLink" onclick="showHide(\'UPDATING-Extra\');return false;">Expand this list (' . $NumRowsUpdating . ' items)</a>';
-				$HTML .= '<span id="UPDATING-Extra" class="more UPDATING">';
-				$HTML .= '<a href="#" id="UPDATING-Extra-hide" class="hideLink" onclick="showHide(\'UPDATING-Extra\');return false;">Collapse this list.</a><br><br><br>';
+				# end the old list, start a new list
+				$HTML .= "</ul></dd>\n";
+				$HTML .= '<dt><a href="#" id="UPDATING-Extra-show" class="showLink" onclick="showHide(\'UPDATING-Extra\');return false;">Expand this list (' . ($NumRowsUpdating - 1) . ' items)</a></dt>';
+				$HTML .= '<dd id="UPDATING-Extra" class="more UPDATING">';
+
+				# start the new list of all hidden items
+				$HTML .= "<ul>\n";
 			}
 
 			$HTML .= '<li>' . freshports_PortsUpdating($port, $PortsUpdating) . "</li>\n";
 		}
 		if ($Hiding) {
-			$HTML .= '<a href="#" id="UPDATING-Extra-hide" class="hideLink" onclick="showHide(\'UPDATING-Extra\');return false;">Collapse this list.</a>';
-			$HTML .= '</span>';
-
+			$HTML .= '<li class="nostyle"><a href="#" id="UPDATING-Extra-hide2" class="hideLink" onclick="showHide(\'UPDATING-Extra\');return false;">Collapse this list.</a></li>';
 		}
 
-		$HTML .= "</ul>\n";
-		$HTML .= "</td></tr>\n";
+		$HTML .= "</ul></dd>";
+		$HTML .= "</dl></td></tr>\n";
 		$HTML .= "</table>\n";
 	}
 

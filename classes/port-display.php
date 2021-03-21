@@ -86,7 +86,7 @@ class port_display {
 	}
 
 	function _pkgmessage_UCL($pkgmessage) {
-		$HTML = '<dt><b><a id="message">pkg-message:</b></dt><dd><dl>';
+		$HTML = '<dt><b><a id="message">pkg-message:</a></b></dt><dd><dl>';
 		# save the pkgmessage to a temp file
 		# from https://www.php.net/manual/en/function.tmpfile.php
 		$temp = tmpfile();
@@ -172,7 +172,7 @@ class port_display {
 		} else {
 			$HTML .= '<dt><b>pkg-message:</b></dt>' . "\n" . '<dd class="like-pre">';
 			$HTML .= htmlspecialchars($port->pkgmessage);
-			$HTML .= '</dd>' . "\n" . '</dl>' . "\n" . '<hr>' . "\n" . '<dl>';
+			$HTML .= "</dd>\n</dl>\n<hr>\n<dl>";
 		}
 
 		return $HTML;
@@ -544,10 +544,10 @@ class port_display {
 		### END of items for SetDetailsBeforePackages() ###
 		###################################################
 
-		if ($this->ShowEverything || $this->ShowShortDescription || $this->ShowCategory) {
-			# start the description list for this port
-	 		$HTML .= "<dl>\n";
+		# start the description list for this port
+		$HTML .= "<dl>\n";
 
+		if ($this->ShowEverything || $this->ShowShortDescription || $this->ShowCategory) {
 			# first term/name, is the port itself
 			$HTML .= "<dt>";
 
@@ -787,6 +787,7 @@ class port_display {
 		if ($this->ShowEverything || $this->ShowBasicInfo) {
 			# this is interesting... I do not recall writing this.
 			# I wonder if it works.
+
 			$HTML .= PeopleWatchingThisPortAlsoWatch($this->db, $port->element_id);
 
 			if ($port->categories) {
@@ -832,7 +833,7 @@ class port_display {
 
 		# The ad goes here, but we haven't used ads in a very long time.
 		if ($this->ShowAd || $this->ShowEverything) {
-			$HTML .= port_display_AD;
+			$HTML .= '<dt>' . port_display_AD . '</dt>';
 		}
 
 		# sometimes the description can get very wide. This causes problems on mobile.
@@ -957,7 +958,7 @@ class port_display {
 				$HTML .= '<dt>No installation instructions: this port has been deleted.</dt>';
 				$HTML .= '<dt>The package name of this deleted port was: <code class="code">' . $port->latest_link . '</code></dt>';
 			} else {
-				$HTML .= '<dt><b><a id="add">To install <a href="/faq.php#port" TITLE="what is a port?">the port</a>:</b> <code class="code">cd /usr/ports/'  . $port->category . '/' . $port->port . '/ && make install clean</code></dt>';
+				$HTML .= '<dt><b><a id="add">To install</a> <a href="/faq.php#port" TITLE="what is a port?">the port</a>:</b> <code class="code">cd /usr/ports/'  . $port->category . '/' . $port->port . '/ && make install clean</code></dt>';
 				if (IsSet($port->no_package) && $port->no_package != '') {
 					$HTML .= '<dt><b>No <a href="/faq.php#package" TITLE="what is a package?">package</a> is available:</b> ' . $port->no_package . '</dt>';
 					} else {
@@ -1013,15 +1014,13 @@ class port_display {
 						$HTML .= '<p><a href="#" id="distinfo-Extra-hide" class="hideLink" onclick="showHide(\'distinfo-Extra\');return false;">Collapse this list.</a></p>';
 						$HTML .= substr($port->distinfo, $nth_line + 1);
 
-						$HTML .= '<p><a href="#" id="distinfo-Extra-hide" class="hideLink" onclick="showHide(\'distinfo-Extra\');return false;">Collapse this list.</a></p>';
+						$HTML .= '<p><a href="#" class="hideLink" onclick="showHide(\'distinfo-Extra\');return false;">Collapse this list.</a></p>';
 						$HTML .= '</dd>';
 					}
 				} else {
 					$HTML .= '<dd>There is no distinfo for this port.</dd>' . "\n";
 				}
 			}
-
-
 
 
 		}
@@ -1035,7 +1034,7 @@ class port_display {
 		###############################################
 
 		if ($this->ShowEverything || $this->ShowPackages) {
-			$HTML .= '<dt id="packages"><b>Packages: </b>(move your mouse over the cells for more information)</dt>';
+			$HTML .= '<dt id="packages"><b>Packages:</b> (move your mouse over the cells for more information)</dt>';
 
 			$packages = new Packages($this->db);
 			$numrows = $packages->Fetch($this->port->id);
@@ -1126,37 +1125,37 @@ class port_display {
 			}
 
 			if ($port->depends_build) {
-				$HTML .= '<dt class="required"><a id="requiredbuild">Build dependencies:</dt><dd>' . "\n" . '<ol class="required" id="requiredtobuild">';
+				$HTML .= '<dt class="required"><a id="requiredbuild">Build dependencies:</a></dt><dd>' . "\n" . '<ol class="required" id="requiredtobuild">';
 				$HTML .= freshports_depends_links($this->db, $port->depends_build, $this->Branch);
 				$HTML .= "\n</ol></dd>\n";
 			}
 
 			if ($port->depends_run) {
-				$HTML .= '<dt class="required"><a id="requiredrun">Runtime dependencies:</dt><dd>' . "\n" . '<ol class="required" id="requiredtorun">';
+				$HTML .= '<dt class="required"><a id="requiredrun">Runtime dependencies:</a></dt><dd>' . "\n" . '<ol class="required" id="requiredtorun">';
 				$HTML .= freshports_depends_links($this->db, $port->depends_run, $this->Branch);
 				$HTML .= "\n</ol></dd>\n";
 			}
 
 			if ($port->depends_lib) {
-				$HTML .= '<dt class="required"><a id="requiredlib">Library dependencies:</dt><dd>' . "\n" . '<ol class="required" id="requiredlibraries">';
+				$HTML .= '<dt class="required"><a id="requiredlib">Library dependencies:</a></dt><dd>' . "\n" . '<ol class="required" id="requiredlibraries">';
 				$HTML .= freshports_depends_links($this->db, $port->depends_lib, $this->Branch);
 				$HTML .= "\n</ol></dd>\n";
 			}
 
 			if ($port->fetch_depends) {
-				$HTML .= '<dt class="required"><a id="requiredfetch">Fetch dependencies:</dt><dd>' . "\n" . '<ol class="required" id="requiredfetches">';
+				$HTML .= '<dt class="required"><a id="requiredfetch">Fetch dependencies:</a></dt><dd>' . "\n" . '<ol class="required" id="requiredfetches">';
 				$HTML .= freshports_depends_links($this->db, $port->fetch_depends, $this->Branch);
 				$HTML .= "\n</ol></dd>\n";
 			}
 
 			if ($port->patch_depends) {
-				$HTML .= '<dt class="required"><a id="requiredpatch">Patch dependencies:</dt><dd>' . "\n" . '<ol class="required" id="requiredpatches">';
+				$HTML .= '<dt class="required"><a id="requiredpatch">Patch dependencies:</a></dt><dd>' . "\n" . '<ol class="required" id="requiredpatches">';
 				$HTML .= freshports_depends_links($this->db, $port->patch_depends, $this->Branch);
 				$HTML .= "\n</ol></dd>\n";
 			}
 
 			if ($port->extract_depends) {
-				$HTML .= '<dt class="required"><a id="requiredextract">Extract dependencies:</dt><dd>' . "\n" . '<ol class="required" id="requiredextracts">';
+				$HTML .= '<dt class="required"><a id="requiredextract">Extract dependencies:</a></dt><dd>' . "\n" . '<ol class="required" id="requiredextracts">';
 				$HTML .= freshports_depends_links($this->db, $port->extract_depends, $this->Branch);
 				$HTML .= "\n</ol></dd>\n";
 			}
@@ -1196,29 +1195,33 @@ class port_display {
 		}
 
 		if ($this->ShowEverything || $this->ShowMasterSites) {
-			$HTML .= '<dt id="sites"><b>Master Sites:</b></dt>' . "\n" . '<dd>';
+			$HTML .= '<dt id="sites"><b>Master Sites:</b></dt>' . "\n";
 
 			if (!empty($port->master_sites)) {
 
 				$MasterSites = explode(' ', $port->master_sites);
 				asort($MasterSites);
-				$HTML .= '<a href="#" id="mastersites-Extra-show" class="showLink" onclick="showHide(\'mastersites-Extra\');return false;">Expand this list (' . count($MasterSites) . ' items)</a>';
+
+				$HTML .= '<dd><a href="#" id="mastersites-Extra-show" class="showLink" onclick="showHide(\'mastersites-Extra\');return false;">Expand this list (' . count($MasterSites) . ' items)</a>';
 				$HTML .= '<dd id="mastersites-Extra" class="more mastersites">';
-				$HTML .= '<ol class="mastersites" id="mastersites">' . "\n";
 				$HTML .= '<a href="#" id="mastersites-Extra-hide" class="hideLink" onclick="showHide(\'mastersites-Extra\');return false;">Collapse this list.</a>';
+				$HTML .= '<ol class="mastersites" id="mastersites">' . "\n";
+
 				foreach ($MasterSites as $Site) {
 					$HTML .= '<li>' . htmlify(_forDisplay($Site)) . "</li>\n";
 			  	}
 
-				$HTML .= '<a href="#" id="mastersites-Extra-hide" class="hideLink" onclick="showHide(\'mastersites-Extra\');return false;">Collapse this list.</a>';
+				$HTML .= '</ol>';
+				$HTML .= '<a href="#" class="hideLink" onclick="showHide(\'mastersites-Extra\');return false;">Collapse this list.</a>';
 				$HTML .= '</dd>';
 			} else {
-			  $HTML .= '<li>There is no master site for this port.</li>';
+			  $HTML .= '<dd><ol class="mastersites" id="mastersites"><li>There is no master site for this port.</li></ol></dd>';
 			}
-			$HTML .= "</ol>\n</dd>\n";
 
-		}
+		} # ShowMasterSites
 
+		# You don't want to show this every time.
+		# this condition matches the one at the top of the page.
 		$HTML .= "</dl>\n";
 
 		return $HTML;
@@ -1260,37 +1263,31 @@ class port_display {
 
 	function ShowDependencies( $port ) {
 		$HTML = '';
-		$div  = ''; # we us this empty bit when the first port in the list is a delete port.  It tells us to open the list
 
 		$PortDependencies = new PortDependencies( $this->db );
 		$Types = array( 'B' => 'Build', 'E' => 'Extract', 'F' => 'Fetch', 'L' => 'Libraries', 'P' => 'Patch', 'R' => 'Run' );
 		foreach ( $Types as $type => $title ) {
+			$div  = ''; # we use this empty bit when the first port in the list is a deleted port.  It tells us to open the list via <dl>
 			$NumRows = $PortDependencies->FetchInitialise( $port->id, $type );
 			if ( $NumRows > 0 ) {
-				// if this is our first output, put up our standard header
-
-				# the start of the DT This port is required by: section
-				if ( $HTML === '' ) {
-					if ( $port->IsDeleted() ) {
-						$HTML .= '<dt>NOTE: dependencies for deleted ports are notoriously suspect</dt>';
-					}
-					$HTML .= '<dt class="required">This port is required by:</dt>';
-				}
-
 				# everything "required for" XXX goes under this section.
+				# Each one of Build, Extract, etc, gets this.
 				$HTML .= '<dd class="required">for ' . $title . "\n";
 
 				# Let's fetch the first port, and see if it's deleted.  If it is, we don't need this first loop
 				$PortDependencies->FetchNth(0);
 				if ($PortDependencies->status != 'D' ) {
 					#
-					# START OF LIST
+					# START OF LIST for this type of Required 
 					#
-					$div = '<dl><dd id="RequiredBy' . $title . '"><ol class="depends" id="requiredfor' . $title . '" style="margin-bottom: 0px">' . "\n";
+					$div = '<dl>
+					        <dd id="RequiredBy' . $title . '">StartOfList
+					            <ol class="depends" id="requiredfor' . $title . '" style="margin-bottom: 0px">' . "\n";
 
 					$firstDeletedPort = -1;     # we might be able to combine this with deletedPortFound
 					$deletedPortFound = false;  # we found a deleted port
 					$hidingStarted    = false;  # we can do this only once.
+					$SetTheListNumber = '';
 					for ( $i = 0; $i < $NumRows; $i++ ) {
 						$PortDependencies->FetchNth($i);
 
@@ -1308,23 +1305,27 @@ class port_display {
 						if ( !$hidingStarted && ( ( ( $NumRows > DEPENDS_SUMMARY )  && ( $i == DEPENDS_SUMMARY ) ) ) ) {
 							$div .= '</ol>';
 							$div .= '<a href="#" id="RequiredBy' . $title . 'Extra-show" class="showLink" onclick="showHide(\'RequiredBy' .
-							        $title . 'Extra\');return false;">Expand this list (' . $NumRows . ' items / ' . ($NumRows - DEPENDS_SUMMARY) . ' hidden)</a>';
+							        $title . 'Extra\');return false;">Expand this list (' . $NumRows . ' items / ' . ($NumRows - DEPENDS_SUMMARY) . ' hidden - sorry, this count includes any deleted ports)</a>';
 							$div .= '<ol id="RequiredBy' . $title . 'Extra" class="depends more" start="' . ($i + 1) . '" style="margin-top: 0px">';
-							$div .= '<a href="#" id="RequiredBy' . $title . 'Extra-hide" class="hideLink" onclick="showHide(\'RequiredBy' . $title . 'Extra\');return false;" >Collapse this list. </a>';
+							$div .= '<li class="nostyle"><a href="#" id="RequiredBy' . $title . 'Extra-hide" class="hideLink" onclick="showHide(\'RequiredBy' . $title . 'Extra\');return false;" >Collapse this list). </a></li>';
 							# yes, we have started hiding things.
 							$hidingStarted = true;
+							# we use this to skip a number, the one take up by the Collapse link above.
+							$SetTheListNumber = ' value="' . (DEPENDS_SUMMARY + 1) . '"';
 						}
 
-						$div .= '<li>' . freshports_link_to_port_single( $PortDependencies->category, $PortDependencies->port, $this->Branch);
+						$div .= '<li' . $SetTheListNumber . '>'. freshports_link_to_port_single( $PortDependencies->category, $PortDependencies->port, $this->Branch);
 						$div .= "</li>\n";
 
-					}
+						$SetTheListNumber = '';
+
+					} # for
 
 					if ( $hidingStarted ) {
-						$div .= '<li class="nostyle"><a href="#" id="RequiredBy' . $title . 'Extra-hide" class="hideLink" onclick="showHide(\'RequiredBy' . $title . 'Extra\');return false;" >Collapse this list.</a></li>';
+						$div .= '<li class="nostyle"><a href="#" class="hideLink" onclick="showHide(\'RequiredBy' . $title . 'Extra\');return false;" >Collapse this list.</a></li>';
 					}
 
-					$div .= '</ol>';
+					$div .= '</ol></dd></dl>'; # we always close off this list here.
 
 				} else {
 					# the first port was deleted. Therefore, they are all deleted.
@@ -1336,16 +1337,16 @@ class port_display {
 				# now deal with deleted ports, perhaps this loop and the one above can be conbined, after the two loops are reduced to 1 - active ports 2 - deleted ports
 
 				if ($deletedPortFound) {
-					if ($div == '') {
-						# if this is empty, WE ARE the first delete port
-						$div = '<dl><dd id="RequiredBy' . $title . '"><ol class="depends" id="requiredfor' . $title . '">' . "\n";
-					}
 
 					# is it port or ports?
 					$PluralSingularSuffix = ($NumRows - $firstDeletedPort) > 1 ? 's' : '';
 
-					$div .= '<p><b>Deleted ports which required this port:</b></p><a href="#" id="RequiredBy' . $title . 'DeletedExtra-show" class="showLink" onclick="showHide(\'RequiredBy' . $title .
+						$div .= '<dl><dt id="RequiredBy' . $title . 'Deleted"></dt><dd class="depends" id="requiredfor' . $title . 'Deleted" style="margin-bottom: 0px">' . "\n";
+
+					$div .= '<dd><p><b>Deleted ports which required this port:</b></p>';
+					$div .= '<a href="#" id="RequiredBy' . $title . 'DeletedExtra-show" class="showLink" onclick="showHide(\'RequiredBy' . $title .
 				                'DeletedExtra\');return false;">Expand this list of ' . ($NumRows - $firstDeletedPort) . ' deleted port' . $PluralSingularSuffix . '</a>';
+
 					$div .= '<ol class="depends more" id="RequiredBy' . $title . 'DeletedExtra" style="padding-left: 20px;">' . "\n";
  					for ( $i = $firstDeletedPort; $i < $NumRows; $i++ ) {
 						$PortDependencies->FetchNth($i);
@@ -1355,20 +1356,27 @@ class port_display {
 						$div .= "</li>\n";
 					}
 
-					$div .= '<li class="nostyle"><a href="#" id="RequiredBy' . $titled . 'DeletedExtra-hide" class="hideLink" onclick="showHide(\'RequiredBy' . $title . 'DeletedExtra\');return false;">Collapse this list of deleted ports.</a></li>';
-					$div .= '</ol>';
+					$div .= '<li class="nostyle"><a href="#" id="RequiredBy' . $title . 'DeletedExtra-hide2" class="hideLink" onclick="showHide(\'RequiredBy' . $title . 'DeletedExtra\');return false;">Collapse this list of deleted ports.</a></li>';
+					$div .= '</ol></dd></dl>';
 
-				} # end of deletedPortFound
-
-				$div .= '</dl>';
+				}
 
 				$HTML .= $div;
+
+				$HTML .= '</dd>'; # required class, with text 'for Build' (for example)
 			}
 		}
 
 		if ( $HTML === '' ) {
 			$HTML .= '<dt>There are no ports dependent upon this port</dt>';
 		} elseif ($deletedPortFound) {
+			# add some stuff to the front of what we have
+			if ( $port->IsDeleted() ) {
+				$HTML = '<dt>NOTE: dependencies for deleted ports are notoriously suspect</dt>' . $HTML;
+			}
+			$HTML = '<dt class="required">This port is required by:</dt>' . $HTML;
+
+			# and to the end...
 			$HTML .= '<dt>* - deleted ports are only shown under the <em>This port is required by</em> section.  It was harder to do for the <em>Required</em> section.  Perhaps later...</dt>';
 		}
 
@@ -1383,7 +1391,7 @@ class port_display {
 		if ( $NumRows > 0 ) {
 			// if this is our first output, put up our standard header
 			if ( $HTML === '' ) {
-				$div = "\n" . '<dt class="pkg-plist"><b>pkg-plist:</b> as obtained via: <code class="code">make generate-plist</code></dt>';
+				$div = "\n" . '<dt class="pkg-plist"><a id="pkg-plist"><b>pkg-plist:</b></a> as obtained via: <code class="code">make generate-plist</code></dt>';
 				$div .= '<dd class="pkg-plist">';
 				$div .= '<a href="#" id="configureplist-Extra-show" class="showLink" onclick="showHide(\'configureplist-Extra\');return false;">Expand this list (' . $NumRows . ' items)</a>';
 				$div .= '</dd>';
@@ -1398,7 +1406,7 @@ class port_display {
 				}
 
 				$div .= '</ol>';
-				$div .= '<a href="#" id="configureplist-Extra-hide" class="hideLink" onclick="showHide(\'configureplist-Extra\');return false;">Collapse this list.</a>';
+				$div .= '<a href="#" class="hideLink" onclick="showHide(\'configureplist-Extra\');return false;">Collapse this list.</a>';
 				$div .= '</dd>';
 
 				$HTML .= $div;
@@ -1406,7 +1414,8 @@ class port_display {
 		}
 
 		if ( $HTML === '' ) {
-			$HTML .= '<p>There is no configure plist information for this port.</p>';
+			$HTML .= "\n" . '<dt class="pkg-plist"><a id="pkg-plist"><b>pkg-plist:</b></a> as obtained via: <code class="code">make generate-plist</code></dt>';
+			$HTML .= '<dd>There is no configure plist information for this port.</dd>';
 		}
 
 		return $HTML;

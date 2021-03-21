@@ -843,7 +843,7 @@ GLOBAL $FreshPortsLogoHeight;
     	$HTML .= "
 
 <!-- IPv6-test.com button BEGIN -->
-<a href='https://ipv6-test.com/validate.php?url=referer'><img src='/images/button-ipv6-big.png' alt='ipv6 ready' title='ipv6 ready' border='0' /></a>
+<a href='https://ipv6-test.com/validate.php?url=referer'><img src='/images/button-ipv6-big.png' alt='ipv6 ready' title='ipv6 ready' border='0'></a>
 <!-- IPv6-test.com button END -->
 ";
 	}
@@ -1384,8 +1384,8 @@ function freshports_PortCommits($port, $PageNumber = 1, $NumCommitsPerPage = 100
 
 	$links = $Pager->GetLinks();
 
-	# there are two places #history is set.  This is #2
-	$NumCommitsHTML = '<p align="left"><a id="history">Number of commits found: ' . $NumCommits;
+	# the opening <p> is prepended later
+	$NumCommitsHTML = 'Number of commits found: ' . $NumCommits;
 
 	$Offset = 0;
 	$PageLinks = $links['all'];
@@ -1406,7 +1406,8 @@ function freshports_PortCommits($port, $PageNumber = 1, $NumCommitsPerPage = 100
 		$PageLinksHTML = '';
 	}
 
-	$HTML .= $NumCommitsHTML . $PageLinksHTML;
+	# this is the 1st of 2 places where NumCommitsHTML is used.
+	$HTML .= '<p align="left"><a id="history"></a>' . $NumCommitsHTML . $PageLinksHTML;
 
 	if ($Commits->Debug) echo "PageNumber='$PageNumber'<br>Offset='$Offset'<br>";
 	
@@ -1432,7 +1433,9 @@ function freshports_PortCommits($port, $PageNumber = 1, $NumCommitsPerPage = 100
 
 	$HTML .= freshports_PortCommitsFooter($port);
 	
-	$HTML .= $NumCommitsHTML . $PageLinksHTML;
+	# this is the 2nd of 2 places where NumCommitsHTML is used.
+	# no id=history here
+	$HTML .= '<p align="left">' . $NumCommitsHTML . $PageLinksHTML;
 
 	return $HTML;
 }
@@ -2075,7 +2078,7 @@ function PeopleWatchingThisPortAlsoWatch($dbh, $element_id) {
 	$AlsoWatched = new WatchListAlsoWatched($dbh);
 	$numrows = $AlsoWatched->WatchersAlsoWatch($element_id);
 	if ($numrows) {
-		$HTML .= '<p><b>People watching this port, also watch:</b> ';
+		$HTML .= '<dt><b>People watching this port, also watch:</b>: ';
 		for ($i = 0; $i < $numrows; $i++) {
 			$AlsoWatched->FetchNth($i);
 			$HTML .= $AlsoWatched->URL;
@@ -2083,7 +2086,7 @@ function PeopleWatchingThisPortAlsoWatch($dbh, $element_id) {
 				$HTML .= ', ';
 			}
 		}
-		$HTML .= '</p>';
+		$HTML .= '</dt>';
 	}
 
 	return $HTML;

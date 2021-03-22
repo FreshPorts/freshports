@@ -698,25 +698,27 @@ class port_display {
 				} else {
 					$CategoryToRemove = $port->category;
 				}
-				$Categories = str_replace($CategoryToRemove, '', $port->categories);
-				$Categories = str_replace('  ', ' ', $Categories);
-				$Categories = trim($Categories);
-				if ($Categories) {
-					$HTML .= "<dt><b>Also Listed In:</b> ";
-					$CategoriesArray = explode(" ", $Categories);
-					$Count = count($CategoriesArray);
-					for ($i = 0; $i < $Count; $i++) {
-						$Category = $CategoriesArray[$i];
-						$HTML .= '<a href="/' . $Category . '/';
+
+				# display the other categories, if they exist.
+				$CategoriesArray = array_diff(explode(" ", $port->categories), array($CategoryToRemove));
+				$Count = count($CategoriesArray);
+				if ($Count > 0) {
+					$OtherCategories = "<dt><b>Also Listed In:</b> ";
+
+					# sort the list by name
+					asort($CategoriesArray);
+
+					foreach ($CategoriesArray as $Category) {
+						$OtherCategories .= '<a href="/' . $Category . '/';
 						if ($this->Branch != BRANCH_HEAD) {
-							$HTML .= '?branch=' . htmlspecialchars($this->Branch);
+							$OtherCategories .= '?branch=' . htmlspecialchars($this->Branch);
 						}
-						$HTML .= '">' . $Category . '</a>';
-						if ($i < $Count - 1) {
-							$HTML .= " ";
-						}
+						$OtherCategories .= '">' . $Category . '</a> ';
 					}
 					$HTML .= "</dt>\n";
+
+					# get rid of that trailing space from above.
+					$HTML .= rtrim($OtherCategories);
 				}
 			}
 

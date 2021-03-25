@@ -922,13 +922,13 @@ function freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum=0) {
 	<META NAME=\"description\" CONTENT=\"";
 
 	if ($Description) {
-		echo $Description;
+		echo htmlspecialchars($Description);
 	} else {
-		echo $ArticleTitle;
+		echo htmlspecialchars($ArticleTitle);
 	}
 
 	echo "\">
-	<META NAME=\"keywords\"    CONTENT=\"$Keywords\">
+	<META NAME=\"keywords\"    CONTENT=\"" . htmlspecialchars($Keywords) . "\">
 ";
 
 	echo freshports_HEAD_main_items();

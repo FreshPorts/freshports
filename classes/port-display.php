@@ -1288,7 +1288,7 @@ class port_display {
 					# START OF LIST for this type of Required 
 					#
 					$div = '<dl>
-					        <dd id="RequiredBy' . $title . '">StartOfList
+					        <dd id="RequiredBy' . $title . '">
 					            <ol class="depends" id="requiredfor' . $title . '" style="margin-bottom: 0px">' . "\n";
 
 					$firstDeletedPort = -1;     # we might be able to combine this with deletedPortFound

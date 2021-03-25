@@ -254,7 +254,7 @@ select ports.id,
        ports.distinfo,
        ports.license_restricted,
        ports.manual_package_build,
-       ports.license_perms
+       ports.license_perms,
        ports.conflicts,
        ports.conflicts_build,
        ports.conflicts_install,

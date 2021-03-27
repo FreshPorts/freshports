@@ -1,3 +1,5 @@
+limit_req_zone $binary_remote_addr zone=auth_limit:20m rate=5r/m;
+
 server {
   listen 127.163.0.80:80;
   listen [fd00::80]:80;

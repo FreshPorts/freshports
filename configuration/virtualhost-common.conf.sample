@@ -8,7 +8,7 @@
 
   location ~ /(login|forgotten-password|password-reset-via-token.php).php  {
     limit_req zone=auth_limit burst=5;
-    include /usr/local/www/configuration/freshports/php-processing.conf;
+    include /usr/local/www/freshports/configuration/php-processing.conf;
   }
 
   location ~ ^/phorum/(.*)$ {
@@ -16,7 +16,7 @@
   }
 
   location ~ \.php$ {
-    include /usr/local/www/configuration/freshports/php-processing.conf;
+    include /usr/local/www/freshports/configuration/php-processing.conf;
   }
 
   location / {

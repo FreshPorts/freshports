@@ -60,6 +60,12 @@ define('FRESHPORTS_FREEBSD_SVN_URL' , 'https://svnweb.FreeBSD.org');
 define('FREEBSD_REPO_SVN', 'svn');
 define('FREEBSD_REPO_CVS', 'cvs');
 
+
+
+
+
+
+
 // path to the ftp server
 define('FRESHPORTS_FREEBSD_FTP_URL', 'ftp://ftp.freebsd.org/pub/FreeBSD/ports/i386/packages/All/');
 
@@ -111,6 +117,7 @@ define('DELETE_PACKAGE', 'delete-package');
 
 define('DEFAULT_SVN_REPO', 'svn.freebsd.org');
 
+
 define('PORT_STATUS_ACTIVE',  'A');
 define('PORT_STATUS_DELETED', 'D');
 
@@ -127,6 +134,9 @@ define('MAINTENANCE_PAGE', 'now-in-maintenance-mode.php');
 define('MAINTENANCE_MODE_RERESH_TIME_SECONDS', 180);
 
 define('ISSUES', 'https://github.com/FreshPorts/freshports/issues');
+
+
+
 
 # for packages
 

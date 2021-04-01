@@ -160,18 +160,18 @@ class User {
 
 		# we should have some checks here to verify that this WatchListID belongs to this user		
 		$sql = 'UPDATE users 
-		          set last_watch_list_chosen = \'' . pg_escape_string($WatchListID) . '\'
-		        WHERE id                     =   ' . $this->id . '
-		          AND escape_string($WatchListID) IN (SELECT id FROM watch_list WHERE user_id = users.id)';
+		          set last_watch_list_chosen = $1
+		        WHERE id                     = $2
+		          AND $2 IN (SELECT id FROM watch_list WHERE user_id = users.id)';
 		
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, $sql, array($WatchListID, $this->id));
 		if ($this->LocalResult) {
 			$numrows = pg_affected_rows($this->LocalResult);
 			$this->last_watch_list_chosen = pg_escape_string($WatchListID);
 		} else {
 			$numrows = -1;
 			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': ' . pg_last_error());
-			die('something terrible has happened');
+			die('something terrible has happened' . $sql);
 		}
 
 		return $numrows;

@@ -367,6 +367,7 @@ class port_display {
 		$this->ShowMaintainedBy        = true;
 		$this->ShowPackageLink         = true;
 		$this->ShowShortDescription    = true;
+		$this->ShowWatchListStatus     = true;
 		$this->ShowWatchListCount      = true;
 	}
 
@@ -383,7 +384,6 @@ class port_display {
 		$this->ShowPKGMessage          = true;
 		$this->ShowPortCreationDate    = true;
 		$this->ShowUses                = true;
-		$this->ShowWatchListStatus     = true;
 	}
 
 	function SetDetailsSearch() {

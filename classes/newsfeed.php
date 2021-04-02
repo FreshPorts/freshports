@@ -244,7 +244,7 @@ ORDER BY CL.commit_date;
 			        # The lateral join is to get just one port from the commit_log_ports table
 			        # we order by port.id so we get the same results on each query
 				$sql = "
-SELECT  C.name    AS category,
+ SELECT  C.name    AS category,
          E.name    AS port,
          E.status  AS status,
          CLP.forbidden,
@@ -276,10 +276,12 @@ SELECT  C.name    AS category,
          to_char(CL.commit_date - SystemTimeAdjust(), 'DD Mon')  AS commit_date,
          to_char(CL.commit_date - SystemTimeAdjust(), 'HH24:MI') AS commit_time,
          CL.encoding_losses
-    FROM (SELECT *
-            FROM commit_log
-        ORDER BY id DESC
-           LIMIT 200) AS CL
+    FROM (select cl.* 
+            from commit_log cl
+           where exists (select *
+                           from commit_log_ports clp
+                          where clp.commit_log_id = cl.id)
+           order by cl.commit_date desc limit 100 ) AS CL
     JOIN LATERAL ( select CLP1.commit_log_id, P.forbidden, P.broken, P.deprecated, P.element_id,
                           CASE when CLP1.port_version  IS NULL then P.version  else CLP1.port_version  END as version,
                           CASE when CLP1.port_revision IS NULL then P.revision else CLP1.port_revision END AS revision,
@@ -301,13 +303,14 @@ SELECT  C.name    AS category,
     JOIN system_branch       SB  ON SB.branch_name    = " . pg_escape_literal($BranchName) . " AND SB.id = CLB.branch_id
     JOIN element             E   ON CLP.element_id    = E.id
     JOIN categories          C   ON CLP.category_id   = C.id
+    ORDER BY CL.commit_date desc
 	LIMIT 500";
 
 		} # switch flavor
 	} # WatchListID	
 
 #	echo "<pre>$sql</pre>";
-
+#
 #	exit;
 
 	$ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['HTTP_HOST']);

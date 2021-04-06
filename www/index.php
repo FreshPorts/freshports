@@ -191,7 +191,7 @@ if ($db) {
 
 		$LatestCommits = new Commits($db);
 		$LatestCommits->SetBranch($Branch);
-		$LatestCommits->FetchLimit(date('Y-m-d'), isset($User) ? $User->id : null, 100);
+		$LatestCommits->FetchLimit(isset($User) ? $User->id : null, 100);
 		
 		$DisplayCommit = new DisplayCommit($db, $LatestCommits->LocalResult);
 		$DisplayCommit->SetBranch($Branch);

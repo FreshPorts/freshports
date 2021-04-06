@@ -120,7 +120,7 @@
 
 		$commits = new Commits($db);
 		$commits->SetBranch($BranchName);
-		$NumRows = $commits->Fetch($Date, isset($User) ? $User->id : null);
+		$NumRows = $commits->FetchCommitsOnADay($Date, isset($User) ? $User->id : null);
 	
 		#echo '<br>NumRows = ' . $NumRows;
 

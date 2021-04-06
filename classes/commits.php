@@ -47,7 +47,8 @@ class Commits {
 		$this->BranchName = $BranchName;
 	}
 
-	function Fetch($Date, $UserID) {
+        
+	function FetchCommitsOnADay($Date, $UserID) {
 		$sql = "
         SELECT DISTINCT
             CL.commit_date - SystemTimeAdjust()                                                                 AS commit_date_raw,
@@ -147,7 +148,7 @@ class Commits {
 		return $numrows;
 	}
 
-	function FetchLimit($Date, $UserID, $Limit) {
+	function FetchLimit($UserID, $Limit) {
 		$sql = "
         SELECT DISTINCT
             CL.commit_date - SystemTimeAdjust()                                                                 AS commit_date_raw,
@@ -208,9 +209,11 @@ class Commits {
 
         if ($this->BranchName == BRANCH_HEAD ) {
             $sql .= "
-      (SELECT *
-         FROM commit_log CL
-        WHERE CL.commit_date <= '" . pg_escape_string($Date) . "'::timestamptz  + SystemTimeAdjust() + '1 Day'
+      (SELECT cl.*
+         FROM commit_log cl
+        WHERE EXISTS (select *
+                        from commit_log_ports clp
+                        where clp.commit_log_id = cl.id)
      ORDER BY CL.commit_date DESC
         LIMIT " . pg_escape_string($Limit) . ") AS CL ";
         } else {

@@ -246,7 +246,8 @@ class port_display {
 
 	function link_to_repo_git() {
           # we want something like
-          # https://github.com/freebsd/freebsd-ports/tree/master/x11-wm/awesome
+          # was: https://github.com/freebsd/freebsd-ports/tree/master/x11-wm/awesome
+          # now: https://cgit.freebsd.org/ports/tree/x11-wm/awesome
           $link_title = 'git';
           $link = 'https://';
           if (!empty($this->port->git_hostname)) {

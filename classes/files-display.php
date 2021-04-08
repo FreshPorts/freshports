@@ -119,9 +119,10 @@ class FilesDisplay {
 
                 case FREEBSD_REPOSITORY_GIT:
                     # we want something like
-                    # https://github.com/freebsd/freebsd-ports/blame/0957c7db9bf1fc4313cdefdcdc2608a0c965dda7/sysutils/goaccess/Makefile
-                    $this->HTML .= ' <A HREF="http://' . $myrow['repo_hostname'] . $myrow["path_to_repo"] . '/blame/' . $myrow["revision_name"] . '/' .  freshports_Convert_Subversion_Path_To_Git($myrow["pathname"]) . '">';
-		    $this->HTML .= freshports_Annotate_Icon() . '</a> ';
+                    # was: https://github.com/freebsd/freebsd-ports/blame/0957c7db9bf1fc4313cdefdcdc2608a0c965dda7/sysutils/goaccess/Makefile
+                    # now: https://cgit.freebsd.org/ports/blame/multimedia/plexmediaserver-plexpass/Makefile
+                    $this->HTML .= ' <A HREF="http://' . $myrow['repo_hostname'] . $myrow["path_to_repo"] . '/blame/' . freshports_Convert_Subversion_Path_To_Git($myrow["pathname"]) . '?id=' . $myrow["revision_name"] . '">';
+                    $this->HTML .= freshports_Annotate_Icon() . '</a> ';
                     break;
 
 #                default:
@@ -181,9 +182,10 @@ class FilesDisplay {
                     # we want something like
                     # https://github.com/freebsd/freebsd-ports/commit/0957c7db9bf1fc4313cdefdcdc2608a0c965dda7
                     # https://github.com/freebsd/freebsd-ports/commits/0957c7db9bf1fc4313cdefdcdc2608a0c965dda7/sysutils/goaccess/Makefile
-                    # https://github.com/freebsd/freebsd-ports/commits/0957c7db9bf1fc4313cdefdcdc2608a0c965dda7sysutils/goaccess/Makefile
+                    # was: https://github.com/freebsd/freebsd-ports/commits/0957c7db9bf1fc4313cdefdcdc2608a0c965dda7sysutils/goaccess/Makefile
+                    # now: https://cgit.freebsd.org/ports/log/multimedia/plexmediaserver-plexpass/Makefile
                     $url_text = freshports_Convert_Subversion_Path_To_Git($myrow["pathname"]);
-                    $this->HTML .= ' <a href="http://' . $myrow['repo_hostname'] . $myrow["path_to_repo"] . '/commits/' . $myrow["revision_name"] . '/'. $url_text . '" title="Commit history">';
+                    $this->HTML .= ' <a href="http://' . $myrow['repo_hostname'] . $myrow["path_to_repo"] . '/log/' . $url_text . '" title="Commit history">';
 #                   $this->HTML .= freshports_git_commit_Link($myrow["revision_name"], $myrow['repo_hostname'], myrow["pathname"]);
                     break;
             }

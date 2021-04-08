@@ -289,7 +289,7 @@ class port_display {
 	      }
             } else {
               # if there is no last revision, we can't link to it.
-              echo 'oh, we are going null #2';
+              if ($Debug) echo 'oh, we are going null #2';
 	      $link = null;
             }
           } else {

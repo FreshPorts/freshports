@@ -193,7 +193,7 @@ class DisplayCommit {
 						$this->HTML .= '&nbsp; ' .       freshports_git_commit_Link($mycommit->svn_revision,                               $mycommit->repo_hostname, $mycommit->path_to_repo);
 						$this->HTML .= '&nbsp; ' .  freshports_git_commit_Link_Hash($mycommit->svn_revision, $mycommit->commit_hash_short, $mycommit->repo_hostname, $mycommit->path_to_repo). '&nbsp';
 					} else {
-						$this->HTML .= '&nbsp; ' . freshports_svnweb_ChangeSet_Link($mycommit->svn_revision, $mycommit->repo_hostname, $mycommit->path_to_repo);
+						$this->HTML .= '&nbsp; ' . freshports_svnweb_ChangeSet_Link($mycommit->svn_revision, $mycommit->repo_hostname);
 					}
 				}
 				$this->HTML .= "<br>\n";

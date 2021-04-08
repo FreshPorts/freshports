@@ -121,13 +121,11 @@ function freshports_Fallout_Link($category, $port) {
   return '<a href="https://portsfallout.com/fallout?port=' . rawurlencode($category . '/' . $port . '$') . '">' . freshports_Fallout_Icon() . '</a>';
 }
 
-function freshports_svnweb_ChangeSet_Link($revision, $hostname, $path) {
-  # I see $path is not used by this function... I wonder why? -- dvl 2018.10.07
+function freshports_svnweb_ChangeSet_Link($revision, $hostname) {
   return '<a href="https://' . htmlentities($hostname) . '/changeset/ports/' . htmlentities($revision) .  '">' . freshports_Subversion_Icon('Revision:' . $revision) . '</a>';
 }
 
-function freshports_svnweb_ChangeSet_Link_Text($revision, $hostname, $path) {
-  # I see $path is not used by this function... I wonder why? -- dvl 2018.10.07
+function freshports_svnweb_ChangeSet_Link_Text($revision, $hostname) {
   return '<a href="https://' . htmlentities($hostname) . '/changeset/ports/' . htmlentities($revision) .  '">' . $revision . '</a>';
 }
 
@@ -1466,29 +1464,26 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 		$HTML .= freshports_Email_Link($commit->message_id);
 	}
 
-#	$HTML .= '&nbsp;&nbsp;'. freshports_Commit_Link($commit->message_id);
-
 	if ($commit->EncodingLosses()) {
 		$HTML .= '&nbsp;'. freshports_Encoding_Errors_Link();
 	}
-	$HTML .= ' ';
+	$HTML .= '&nbsp;';
 
 	$HTML .= freshports_Commit_Link_Port($commit->message_id, $category, $port);
+	$HTML .= '&nbsp;';
+
+	if ($GitCommit) {
+		$HTML .= freshports_git_commit_Link($commit->message_id, $commit->repo_hostname, $commit->path_to_repo);
+	} else {
+		if (isset($commit->svn_revision)) {
+			$HTML .= freshports_svnweb_ChangeSet_Link($commit->svn_revision, $commit->repo_hostname);
+	        }
+	}
 
 	# output the VERSION and REVISION
 	$PackageVersion = freshports_PackageVersion($commit->{'port_version'},  $commit->{'port_revision'},  $commit->{'port_epoch'});
 	if (strlen($PackageVersion) > 0) {
 		$HTML .= '&nbsp;&nbsp;<big><b>' . $PackageVersion . '</b></big>';
-	}
-
-	$HTML .= '<br>';
-
-	if ($GitCommit) {
-		$HTML .= freshports_git_commit_Link_Hash($commit->message_id, $commit->commit_hash_short, $commit->repo_hostname, $commit->path_to_repo);
-	} else {
-		if (isset($commit->svn_revision)) {
-			$HTML .= freshports_svnweb_ChangeSet_Link($commit->svn_revision, $commit->commit_hash_short, $commit->repo_hostname, $commit->path_to_repo);
-	        }
 	}
 
 	if ($commit->stf_message != '') {

@@ -781,7 +781,7 @@ class port_display {
 			} else {
 				$HTML .= '<dt><b>SVN Revision:</b> <font size="-1">';
 				if (isset($port->svn_revision)) {
-					$HTML .= freshports_svnweb_ChangeSet_Link_Text($port->svn_revision, $port->repo_hostname, $port->path_to_repo);
+					$HTML .= freshports_svnweb_ChangeSet_Link_Text($port->svn_revision, $port->repo_hostname);
 				} else {
 					$HTML .= 'UNKNOWN';
 			        }

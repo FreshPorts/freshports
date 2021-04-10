@@ -54,9 +54,9 @@ $Hostname = $_SERVER['HTTP_HOST'];
 <li><a href="mbox.php">mbox</a>
 <li><a href="opml.php">opml</a>
 <li><a href="pie0.1.php">PIE 0.1</a>
-<li><a href="rss0.91.php">RSS 0.91</a> [ <a href="http://feedvalidator.org/check.cgi?url=<?php echo $Protocol; ?>%3A//<?php echo $Hostname; ?>/backend/rss0.91.php">RSS Feed validator</a> ]
-<li><a href="rss1.0.php">RSS 1.0</a>   [ <a href="http://feedvalidator.org/check.cgi?url=<?php echo $Protocol; ?>%3A//<?php echo $Hostname; ?>/backend/rss1.0.php">RSS Feed validator</a>  ]
-<li><a href="rss2.0.php">RSS 2.0</a>   [ <a href="http://feedvalidator.org/check.cgi?url=<?php echo $Protocol; ?>%3A//<?php echo $Hostname; ?>/backend/rss2.0.php">RSS Feed validator</a>  ]
+<li><a href="rss0.91.php">RSS 0.91</a> [ <a href="https://validator.w3.org/feed/check.cgi?url=<?php echo rawurlencode("{$Protocol}://{$Hostname}/backend/rss0.91.php"); ?>">RSS Feed validator</a> ]
+<li><a href="rss1.0.php">RSS 1.0</a>   [ <a href="https://validator.w3.org/feed/check.cgi?url=<?php echo rawurlencode("{$Protocol}://{$Hostname}/backend/rss1.0.php"); ?>">RSS Feed validator</a>  ]
+<li><a href="rss2.0.php">RSS 2.0</a>   [ <a href="https://validator.w3.org/feed/check.cgi?url=<?php echo rawurlencode("{$Protocol}://{$Hostname}/backend/rss2.0.php"); ?>">RSS Feed validator</a>  ]
 </ol>
 
 <p>

@@ -1,0 +1,28 @@
+# this server redirects from:
+#
+# * http://freshports.net
+# * https://freshports.net
+# * http://www.freshports.net
+# * https://www.freshports.net
+#
+# to https://www.freshports.org
+
+server {
+  listen 127.163.0.80:80;
+  listen [fd00::80]:80;
+  listen 127.163.0.80:443 ssl http2;
+  listen [fd00::80]:443   ssl http2;
+  
+  server_name   freshports.net www.freshports.net;
+
+  error_log	/var/log/nginx/freshports.net-error.log;
+  access_log	/var/log/nginx/freshports.net-access.log combined;
+
+  include "/usr/local/etc/freshports/virtualhost-common-ssl.conf";
+
+  ssl_certificate     /usr/local/etc/ssl/freshports.net.fullchain.cer;
+  ssl_certificate_key /usr/local/etc/ssl/freshports.net.key;
+
+  return 301 https://www.freshports.org$request_uri;
+}
+

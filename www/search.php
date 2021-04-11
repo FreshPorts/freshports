@@ -289,10 +289,6 @@ if ($output_format == OUTPUT_FORMAT_PLAIN_TEXT || $output_format == OUTPUT_FORMA
   header('Content-Type: text/plain');
 }
 
-if (!IsSet($_REQUEST['query'])) {
-	$OnLoad = 'setfocus()';
-}
-
 if ($output_format == OUTPUT_FORMAT_HTML) {
 	$Title = 'Search';
 	freshports_Start($Title,
@@ -301,11 +297,6 @@ if ($output_format == OUTPUT_FORMAT_HTML) {
 
 ?>
 
-<script language="JavaScript" type="text/javascript">
-<!--
-function setfocus() { document.search.query.focus(); }
-// -->
-</script>
 
 <?php echo freshports_MainTable(); ?>
 <tr><td valign="top" width="100%">
@@ -1158,7 +1149,13 @@ if ($output_format == OUTPUT_FORMAT_HTML) {
 echo freshports_ShowFooter();
 
 ?>
-
+<? if (!IsSet($_REQUEST['query'])) { ?>
+<script language="JavaScript" type="text/javascript">
+<!--
+document.search.query.focus();
+// -->
+</script>
+<? } ?>
 </body>
 </html>
 

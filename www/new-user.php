@@ -176,12 +176,6 @@ if (IsSet($submit)) {
                'FreeBSD, index, applications, ports');
 ?>
 
-<SCRIPT TYPE="text/javascript">
-<!--
-function setfocus() { document.f.UserLogin.focus(); }
-// -->
-</SCRIPT>
-
 <?php echo freshports_MainTable(); ?>
 <TR><TD VALIGN="top" WIDTH="100%">
 <?php

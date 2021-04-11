@@ -15,7 +15,7 @@
 <?php if (!IsSet($Customize)) { ?>
               <INPUT TYPE="hidden" NAME="ADD" VALUE="1">
               User ID:<br>
-              <INPUT SIZE="15" NAME="UserLogin" VALUE="<?php if (IsSet($UserLogin)) echo htmlentities($UserLogin) ?>"><br><br>
+              <INPUT SIZE="15" NAME="UserLogin" VALUE="<?php if (IsSet($UserLogin)) echo htmlentities($UserLogin) ?>" autofocus=""><br><br>
 <?php } ?>
                Password:<br>
                <INPUT TYPE="PASSWORD" NAME="Password1" VALUE="<?php if (IsSet($Password1)) echo htmlentities($Password1) ?>" size="20"><br><br>

@@ -134,19 +134,12 @@ if (IsSet($_GET["resend"])) {
 
 
 <?php
-	$OnLoad = 'setfocus()';
 	$Title = 'Login';
 	freshports_Start($Title,
                $Title,
                'FreeBSD, index, applications, ports');
 
 ?>
-
-<script language="JavaScript" type="text/javascript">
-<!--
-function setfocus() { document.l.UserID.focus(); }
-// -->
-</script>
 
 <?php echo freshports_MainTable(); ?>
  <TR>

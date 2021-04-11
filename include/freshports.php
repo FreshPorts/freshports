@@ -1002,17 +1002,9 @@ function freshports_style($Phorum=0) {
 
 function freshports_body($ExtraScript = null) {
 
-GLOBAL $OnLoad;
 GLOBAL $Debug;
 
-echo "\n" . '<BODY bgcolor="#FFFFFF" TEXT="#000000" ';
-
-# should we have an onload?
-if ($OnLoad) {
-	echo ' onLoad="' . $OnLoad . '"';
-}
-
-echo ">\n\n";
+echo "\n" . '<BODY bgcolor="#FFFFFF" TEXT="#000000">';
 
 # most often used for page setup, hiding elements, etc
 if (!empty($ExtraScript)) {

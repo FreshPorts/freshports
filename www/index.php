@@ -26,10 +26,6 @@
 
 	if ($Debug) echo 'Branch is ' . $Branch . '<br>';
 
-	if ($User->set_focus_search) {
-		$OnLoad = 'setfocus()';
-	}
-
 	#
 	# If they supply a package name, go for it.
 	#
@@ -69,13 +65,6 @@
 	    if ($Debug) echo "package is not specified on the URL<br>\n";
     }
 ?>
-
-<script language="JavaScript" type="text/javascript">
-<!--
-function setfocus() { document.f.query.focus(); }
-// -->
-</script>
-
 <?php
 	$Title = 'Most recent commits';
 	freshports_Start($FreshPortsSlogan . " - $Title",
@@ -257,6 +246,12 @@ echo '&lt; ' . $Yesterday . ' &gt;';
 <?
 echo freshports_ShowFooter();
 ?>
-
+<? if ($User->set_focus_search) { ?>
+	<script language="JavaScript" type="text/javascript">
+	<!--
+	document.f.query.focus();
+	// -->
+	</script>
+<? } ?>
 </body>
 </html>

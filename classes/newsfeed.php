@@ -63,6 +63,8 @@ function newsfeed($db, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $Fl
 	#
 	# NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
 
+	# Commenting out ths next line is useful for Debugging.
+	#
 	$rss->useCached($Format, NEWSFEEDCACHE, NEWSFEED_REFRESH_SECONDS);
 
 	$rss->title          = 'FreshPorts news'; 

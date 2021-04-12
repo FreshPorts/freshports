@@ -37,7 +37,7 @@ DEFINE('FRESHPORTS_ENCODING', 'UTF-8');
 
 if ($Debug) echo "'" . $_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php<br>';
 
-date_default_timezone_set('Europe/London');
+date_default_timezone_set('UTC');
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php');
 

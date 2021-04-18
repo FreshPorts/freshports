@@ -236,7 +236,7 @@ td.version:hover {
 
 /*
   from https://www.w3schools.com/css/css_tooltip.asp
-  1initially planned for Quarterly branch information: https://github.com/FreshPorts/freshports/issues/115
+  Initially planned for Quarterly branch information: https://github.com/FreshPorts/freshports/issues/115
 */
 .tooltip {
   position: relative;

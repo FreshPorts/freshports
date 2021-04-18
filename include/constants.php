@@ -193,3 +193,10 @@ const SEARCH_SELECT_FIELD = '
          P.uses  ';
 
 const LOGIN_QUERY = 'LOGIN';
+
+# passed to pgcrypto gen_salt when creating or updating user passwords in the database
+# used by
+# www/new-user.php
+# www/customize.php
+define('PW_HASH_METHOD', 'md5');
+define('PW_HASH_COST', 0);

@@ -6,6 +6,7 @@
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
@@ -85,7 +86,7 @@ if (IsSet($submit)) {
 	}
 
 	# if no errors so far, and all three password fields are populated
-	if ($OK && $Password && $Password1 && $Password) {
+	if ($OK && $Password && $Password1 && $Password2) {
 		$result = getLoginDetails($db, LOGIN_QUERY, $User->name, $Password);
 		# there must be only 1 row in there.
 		if (pg_numrows($result) != 1) {
@@ -114,7 +115,8 @@ UPDATE users
 			}
 
 			if ($Password1 != '') {
-				$sql .= ", password_hash = crypt('" . 	pg_escape_string($Password1) . "', gen_salt('md5'))";
+				$sql .= ", password_hash = crypt('" . pg_escape_string($Password1) . "'";
+				$sql .= ", gen_salt('" . PW_HASH_METHOD . "', " . PW_HASH_COST ."))";
 			}
 
 			$sql .= " where cookie = '$visitor'";

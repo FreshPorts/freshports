@@ -846,7 +846,7 @@ GLOBAL $FreshPortsLogoHeight;
 ";
 	}
 
-    $HTML .= '<span class="amazon">As an Amazon Associate I earn from qualifying purchases.<br>Want a good read? Try <a target="_blank" rel="noopener noreferrer" href="https://www.amazon.com/gp/product/B07PVTBWX7/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B07PVTBWX7&amp;linkCode=as2&amp;tag=thfrdi0c-20&amp;linkId=f4cffa799f323b5adebf953c7d3f20ea">FreeBSD Mastery: Jails (IT Mastery Book 15)</a><img src="//ir-na.amazon-adsystem.com/e/ir?t=thfrdi0c-20&amp;l=am2&amp;o=1&amp;a=B07PVTBWX7" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></span>';
+    $HTML .= '<span class="amazon">As an Amazon Associate I earn from qualifying purchases.<br>Want a good read? Try <a target="_blank" rel="noopener noreferrer" href="https://www.amazon.com/gp/product/B07PVTBWX7/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B07PVTBWX7&amp;linkCode=as2&amp;tag=thfrdi0c-20&amp;linkId=f4cffa799f323b5adebf953c7d3f20ea">FreeBSD Mastery: Jails (IT Mastery Book 15)</a><img src="//ir-ca.amazon-adsystem.com/e/ir?t=thfrdi0c-20&amp;l=am2&amp;o=1&amp;a=B07PVTBWX7" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></span>';
 	
 	$HTML .= '</td>';
 

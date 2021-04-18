@@ -97,7 +97,7 @@ if (IsSet($_REQUEST['LOGIN']) && $_REQUEST['UserID']) {
 				if ($status == $UserStatusUnconfirmed) {
 					$error .= 'Your account needs to be enabled by following the directions in the email we have sent to you.' . "<BR>\n";
 					$error .= 'To have your activation details resent to the email address you supplied, click on the resend button' . "<BR>\n";
-					$error .= '<form action="' . $_SERVER["PHP_SELF"] . ' method="POST">' . "\n";
+					$error .= '<form action="' . $_SERVER["PHP_SELF"] . '" method="POST">' . "\n";
 					$error .= '<input type="hidden" name="user" value="' . htmlentities($UserID) . '">' . "\n";
 					$error .= '<input TYPE="submit" VALUE="Resend" name=resend>' . "\n";
 					$error .= '</form>' . "\n";

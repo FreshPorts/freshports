@@ -886,7 +886,6 @@ function freshports_HEAD_charset() {
 function freshports_HEAD_main_items() {
 	return '
 	<LINK REL="SHORTCUT ICON" HREF="/favicon.ico">
-	<meta name="MSSmartTagsPreventParsing" content="TRUE">
 
 	<link rel="alternate" type="application/rss+xml" title="FreshPorts - The Place For Ports" href="https://' . $_SERVER['HTTP_HOST'] . '/backend/rss2.0.php">
 

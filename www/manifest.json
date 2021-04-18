@@ -1,5 +1,12 @@
 {
- "name": "App",
+ "name": "FreshPorts",
+ "description": "FreshPorts has everything you want to know about FreeBSD software, ports, packages, applications, whatever term you want to use.",
+ "categories": ["utilities", "security", "news"],
+ "lang": "en",
+ "start_url": "/",
+ "display": "browser",
+ "background_color": "#FFFFFF",
+ "theme_color": "#FFFFFF",
  "icons": [
   {
    "src": "\/images\/android-icon-36x36.png",

@@ -263,3 +263,15 @@ td.version:hover {
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
+>>>>>>> 5833e162 (Migrate tooltip CSS from inline to CSS file)
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  left: 105%;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}

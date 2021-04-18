@@ -198,5 +198,5 @@ const LOGIN_QUERY = 'LOGIN';
 # used by
 # www/new-user.php
 # www/customize.php
-define('PW_HASH_METHOD', 'md5');
-define('PW_HASH_COST', 0);
+define('PW_HASH_METHOD', 'bf');
+define('PW_HASH_COST', 14);

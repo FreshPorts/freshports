@@ -187,7 +187,7 @@ li.extraspace {
 .packages td, .packages th { padding:8px; border:1px solid #000; }
 
 
-# for horizontal scrolling of package tables - re https://www.w3schools.com/howto/howto_css_menu_horizontal_scroll.asp#contact
+/* for horizontal scrolling of package tables - re https://www.w3schools.com/howto/howto_css_menu_horizontal_scroll.asp#contact */
 
 div.scrollmenu {
   background-color: #333;
@@ -206,6 +206,35 @@ td.version:hover {
 }
 
 
+/*
+  from https://www.w3schools.com/css/css_tooltip.asp
+  1initially planned for Quarterly branch information: https://github.com/FreshPorts/freshports/issues/115
+*/
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  left: 105%;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
 
   
   

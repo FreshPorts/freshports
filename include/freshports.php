@@ -57,7 +57,7 @@ function freshports_Search_For_Bugs($CategoryPort) {
   $SearchURL = "https://bugs.freebsd.org/bugzilla/buglist.cgi?component=Individual%20Port%28s%29&amp;list_id=28394&amp;product=Ports%20%26%20Packages&amp;query_format=advanced&amp;resolution=---" . 
     "&amp;short_desc=" . urlencode($CategoryPort) . "&amp;short_desc_type=allwordssubstr";
 
-  return '<a href="' . $SearchURL . '"  rel="nofollow noopener noreferrer"">' . freshports_Bugs_Find_Icon() . '</a>';
+  return '<a href="' . $SearchURL . '"  rel="nofollow noopener noreferrer">' . freshports_Bugs_Find_Icon() . '</a>';
 }
 
 function freshports_Report_A_Bug($CategoryPort) {
@@ -1780,7 +1780,7 @@ function freshports_SideBar() {
 		$HTML .= '<FONT SIZE="-1">Logged in as ' . htmlentities($User->name) . "</FONT><br>";
 
 		if ($User->emailbouncecount > 0) {
-			$HTML .= '<img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif"  border="0" height="32" width="32"><img src="/images/warning.gif" border="0"height="32" width="32"><br>';
+			$HTML .= '<img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif"  border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><br>';
 			$HTML .= '<FONT SIZE="-1">your email is <a href="/bouncing.php">bouncing</a></FONT><br>';
 			$HTML .= '<img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><br>';
 		}
@@ -2010,7 +2010,7 @@ function DisplayAnnouncements($Announcement) {
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
 
 	$HTML = '';
-	$HTML .= '<table width="100%"cellpadding="4" cellspacing="0" border="0">' . "\n";
+	$HTML .= '<table width="100%" cellpadding="4" cellspacing="0" border="0">' . "\n";
 
 	$NumRows = $Announcement->NumRows();
 

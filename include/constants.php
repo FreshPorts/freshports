@@ -192,11 +192,11 @@ const SEARCH_SELECT_FIELD = '
          Cl.svn_revision,
          P.uses  ';
 
-const LOGIN_QUERY = 'LOGIN';
 
 # passed to pgcrypto gen_salt when creating or updating user passwords in the database
 # used by
 # www/new-user.php
 # www/customize.php
-define('PW_HASH_METHOD', 'bf');
-define('PW_HASH_COST', 14);
+const HASH_UPDATE_QUERY = 'HASH_UPDATE';
+const PW_HASH_METHOD = 'bf';
+const PW_HASH_COST = 14;

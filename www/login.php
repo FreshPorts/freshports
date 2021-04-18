@@ -49,8 +49,22 @@ if (IsSet($_REQUEST['LOGIN']) && $_REQUEST['UserID']) {
 	} else {
 		$row    = pg_fetch_array($result,0);
 		$status = $row["status"];
+		$insecure_hash = $row["insecure_hash"];
 
-		if ($Debug) echo "\$status = $status\n<BR>";
+		if ($Debug) echo "\$status = $status\n<BR>\$insecure_hash = $insecure_hash\n<BR>";
+
+		// now that we have the correct password, upgrade from the insecure hash if required
+		if ($insecure_hash === 't' && PW_HASH_METHOD === 'bf') {
+			$sql = 'UPDATE users SET password_hash = crypt($2, gen_salt($3, $4)) WHERE lower(name) = lower($1)';
+			if ($Debug || 0) {
+				echo '<pre>' . htmlentities($sql) . '<pre>';
+			}
+
+			$result = pg_prepare($db, HASH_UPDATE_QUERY, $sql) or die('query failed ' . pg_errormessage());
+			if ($result) {
+				$result = pg_execute($db, HASH_UPDATE_QUERY, array($UserID, $Password, PW_HASH_METHOD, PW_HASH_COST)) or die('query failed ' . pg_errormessage());
+			}
+		}
 
 		GLOBAL $UserStatusActive;
 		GLOBAL $UserStatusDisabled;

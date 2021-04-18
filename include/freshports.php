@@ -968,7 +968,6 @@ function freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum=0) {
 }
 
 function freshports_style($Phorum=0) {
-
 	$version = substr(hash_file('sha1', $_SERVER['DOCUMENT_ROOT'] . '/css/freshports.css'), 0, 8);
 	echo '	<link rel="stylesheet" href="/css/freshports.css?v=' . $version . '" type="text/css">' . "\n";
 }

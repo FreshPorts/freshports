@@ -72,9 +72,9 @@ if (IsSet($_REQUEST['LOGIN']) && $_REQUEST['UserID']) {
 				$result = pg_exec($db, $sql) or die('query failed ' . pg_errormessage());
 
 				SetCookie(USER_COOKIE_NAME, $Cookie, array(
-					'expires' => time() + 60*60*24*120,
-					'path' => '/',
-					'secure' => (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'),
+					'expires'  => time() + 60*60*24*120,
+					'path'     => '/',
+					'secure'   => (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'),
 					'httponly' => TRUE,
 					// it's probably common for users to navigate from other sites like portscout
 					// we want them to still be logged in if that's the case

@@ -211,7 +211,7 @@ needed.
 
 </TABLE>
 
-<TABLE WIDTH="<?php echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<TABLE WIDTH="<?php echo $TableWidth; ?>" class="borderless" ALIGN="center">
 <TR><TD>
 <?php echo freshports_ShowFooter(); ?>
 </TD></TR>

@@ -49,7 +49,7 @@ If you have suggestions for graphs, please raise an issue.
 
 <TR><TD>
 
-<TABLE WIDTH="100%" BORDER="0">
+<TABLE class="fullwidth borderless">
 <TR>
 <TD WIDTH="300" VALIGN="top">
 <?

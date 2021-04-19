@@ -22,8 +22,8 @@ DEFINE('COPYRIGHTHOLDERURL',    'https://www.langille.org/');
 DEFINE('URL2LINK_CUTOFF_LEVEL', 0);
 DEFINE('FAQLINK',               'faq.php');
 DEFINE('PORTSMONURL',           'http://portsmon.freebsd.org/portoverview.py');
-DEFINE('NOBORDER',              '0');
-DEFINE('BORDER',                '1');
+DEFINE('NOBORDER',              'borderless');
+DEFINE('BORDER',                'bordered');
 
 DEFINE('UNMAINTAINTED_ADDRESS', 'ports@freebsd.org');
 
@@ -44,7 +44,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php');
 function freshports_MainTable() {
 	GLOBAL $TableWidth;
 
-	return '<table width="' . $TableWidth . '" border="0">
+	return '<table width="' . $TableWidth . '" class="borderless">
 ';
 }
 
@@ -139,13 +139,13 @@ function freshports_Search_Committer($Committer) {
 	      freshports_Search_Icon('search for other commits by this committer') . '</a>';
 }
 
-function freshports_MainContentTable($Border=1, $ColSpan=1) {
-	return '<table width="100%" border="' . $Border . '" cellspacing="0" cellpadding="8">' . 
+function freshports_MainContentTable($Classes=BORDER, $ColSpan=1) {
+	return '<table class="fullwidth ' . $Classes . '" cellpadding="8">' . 
 		PortsFreezeStatus($ColSpan);
 }
 
 function  freshports_ErrorContentTable() {
-	echo '<table width="100%" border="1" align="center" cellpadding="1" cellspacing="0">
+	echo '<table class="fullwidth bordered" align="center" cellpadding="1">
 ';
 }
 
@@ -820,7 +820,7 @@ GLOBAL $FreshPortsLogoHeight;
 #echo "$LocalTimeAdjustment<br>";
 
 	$HTML = '<br>
-<table width="' . $TableWidth . '" border="0" align="center">
+<table width="' . $TableWidth . '" class="borderless" align="center">
 <tr>
 	<td><a href="';
 
@@ -1029,7 +1029,7 @@ if (!empty($ExtraScript)) {
 
 		if ($BannerAd == 1) echo 'banner is on';
 
-		echo '<table border="1">';
+		echo '<table class="bordered">';
 		echo '<tr><td>ShowAds</td><td>'               . $ShowAds               . '</td></tr>';
 		echo '<tr><td>BannerAd</td><td>'              . $BannerAd              . '</td></tr>';
 		echo '<tr><td>BannerAdUnder</td><td>'         . $BannerAdUnder         . '</td></tr>';
@@ -1248,7 +1248,7 @@ function freshports_PortCommitsHeader($port) {
 	
 	$HTML = '';
 
-	$HTML .= '<table border="1" width="100%" cellspacing="0" cellpadding="5">' . "\n";
+	$HTML .= '<table class="fullwidth bordered" cellpadding="5">' . "\n";
 	$HTML .= "<tr>\n";
 
 	$Columns = 3;
@@ -1692,7 +1692,7 @@ function freshports_ShowFooter($PhorumBottom = 0) {
 	GLOBAL $ShowPoweredBy;
 	GLOBAL $ShowAds;
 
-	$HTML = '<table width="' . $TableWidth . '" border="0" align="center">
+	$HTML = '<table width="' . $TableWidth . '" class="borderless" align="center">
 <tr><td>';
 
 
@@ -1704,7 +1704,7 @@ function freshports_ShowFooter($PhorumBottom = 0) {
 
 	$HTML .= '
 <HR>
-<table width="98%" border="0">
+<table width="98%" class="borderless">
 ';
 
 	if (IsSet($ShowPoweredBy)) {
@@ -1743,7 +1743,7 @@ alt="powered by nginx" width="121" height="32"></a>
 
 	$HTML .= '
 <tr><td>
-<table width="100%">
+<table class="fullwdith">
 <tr>
 <td align="left"  valign="top">
 <small>' . SPONSORS . '</small>
@@ -1795,7 +1795,7 @@ function freshports_SideBar() {
 	$ColumnWidth = 160;
 
 	$HTML = '
-  <table width="' . $ColumnWidth . '" border="1" cellspacing="0" cellpadding="5">
+  <table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
         <tr>
          <td bgcolor="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><big><b>Login</b></big></FONT></td>
         </tr>
@@ -1844,7 +1844,7 @@ function freshports_SideBar() {
 </div>';
 
 	$HTML .= '	
-<table width="' . $ColumnWidth . '" border="1" cellspacing="0" cellpadding="5">
+<table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
 	<tr>
 		<td bgcolor="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><big><b>This site</b></big></FONT></td>
 	</tr>
@@ -1863,7 +1863,7 @@ function freshports_SideBar() {
 	</tr>
 </table>
 <br>
-<table width="' . $ColumnWidth . '" border="1" cellspacing="0" cellpadding="5">
+<table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
 	<tr>
 		<td bgcolor="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><big><b>Search</b></big></FONT></td>
 	</tr>
@@ -1887,7 +1887,7 @@ function freshports_SideBar() {
 ';
 	if (file_exists(HTML_DIRECTORY . '/vuln-latest.html')) {
 $HTML .= '<br>
-<table width="' . $ColumnWidth . '" border="1" cellspacing="0" cellpadding="5">
+<table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
 	<tr>
 		<td bgcolor="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><big><b>Latest Vulnerabilities</b></big></FONT></td>
 	</tr>
@@ -1906,7 +1906,7 @@ $HTML .= '<br>
 
 	$HTML .= '
 
-<table width="' . $ColumnWidth . '" border="1" cellspacing="0" cellpadding="5">
+<table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
 	<tr>
 		<td bgcolor="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><big><b>Ports</b></big></FONT></td>
 	</tr>
@@ -1928,7 +1928,7 @@ if (IsSet($visitor)) {
 
 
 $HTML .= '<br>
-<table width="' . $ColumnWidth . '" border="1" cellspacing="0" cellpadding="5">
+<table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
 	<tr>
 		<td bgcolor="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><big><b>Watch Lists</b></big></FONT></td>
 	</tr>
@@ -1952,7 +1952,7 @@ $HTML .= '
 	GLOBAL $ShowAds;
 
 	if ($ShowAds) {
-		$HTML .= '<br><table border="0" cellpadding="5">
+		$HTML .= '<br><table class="borderless" cellpadding="5">
 		  <tr><td align="center">
 		';
 		$HTML .= Ad_160x600();
@@ -1963,7 +1963,7 @@ $HTML .= '
 
 	$HTML .= '<br>
 
-<table width="' . $ColumnWidth . '" border="1" cellspacing="0" cellpadding="5">
+<table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
 	<tr>
 		<td COLSPAN="2" bgcolor="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><big><b>Statistics</b></big></FONT></td>
 	</tr>
@@ -2010,15 +2010,15 @@ function freshports_LinkToDate($Date, $Text = '', $BranchName = BRANCH_HEAD) {
 
 function freshports_ErrorMessage($Title, $ErrorMessage) {
 	$HTML = '
-<table width="100%" border="1" align="center" cellpadding="1" cellspacing="0" border="1">
+<table class="fullwidth bordered" align="center" cellpadding="1">
 <tr><td valign=TOP>
-<table width="100%">
+<table class="fullwidth">
 <tr>
 	' . freshports_PageBannerText($Title) . '
 </tr>
 <tr bgcolor="#ffffff">
 <td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <table class="fullwidth borderless" cellpadding="0">
   <tr valign=top>
    <td><img src="/images/warning.gif"></td>
    <td width="100%">
@@ -2043,7 +2043,7 @@ function DisplayAnnouncements($Announcement) {
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
 
 	$HTML = '';
-	$HTML .= '<table width="100%" cellpadding="4" cellspacing="0" border="0">' . "\n";
+	$HTML .= '<table class="fullwidth borderless" cellpadding="4">' . "\n";
 
 	$NumRows = $Announcement->NumRows();
 

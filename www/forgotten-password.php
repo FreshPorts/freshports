@@ -134,23 +134,23 @@ if (IsSet($submit)) {
                'FreeBSD, index, applications, ports');
 ?>
 
-<TABLE WIDTH="100%" BORDER="0">
+<TABLE class="fullwidth borderless">
  <TR>
     <TD>
-<TABLE WIDTH="100%" BORDER="0">
+<TABLE class="fullwidth borderless">
 <TR><TD VALIGN="top" WIDTH="100%">
 <?
 
 if (IsSet($error) and $error != '') {
-      echo '<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="' . BACKGROUND_COLOUR . '" WIDTH="100%">
+      echo '<TABLE CELLPADDING="1" class="fullwidth borderless" BGCOLOR="' . BACKGROUND_COLOUR . '">
             <TR>
             <TD>
-               <TABLE WIDTH="100%" BORDER="0" CELLPADDING="1">
+               <TABLE class="fullwidth borderless" CELLPADDING="1">
                   <TR BGCOLOR="' . BACKGROUND_COLOUR . '"><TD><b><FONT COLOR="#ffffff" SIZE="+2">We have a problem!</FONT></b></TD>
                  </TR> 
                  <TR BGCOLOR="#ffffff">
             <TD>
-              <TABLE WIDTH="100%" CELLPADDING="3" BORDER="0">
+              <TABLE class="fullwidth borderless" CELLPADDING="3">
               <TR VALIGN="middle">
                <TD><img src="/images/warning.gif" ALT="warning!"></TD>
                <TD WIDTH="100%">
@@ -169,15 +169,15 @@ if (IsSet($error) and $error != '') {
 } else {
 
    if ($LoginFailed || $eMailFailed) {
-      echo '<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="' . BACKGROUND_COLOUR . '" WIDTH="100%">
+      echo '<TABLE CELLPADDING="1" class="fullwidth borderless" BGCOLOR="' . BACKGROUND_COLOUR . '">
             <TR>
             <TD>
-               <TABLE WIDTH="100%" BORDER="0" CELLPADDING="1">
+               <TABLE class="fullwidth borderless" CELLPADDING="1">
                   <TR BGCOLOR="' . BACKGROUND_COLOUR . '"><TD><b><FONT COLOR="#ffffff" SIZE="+2">UserID not found!</FONT></b></TD>
                  </TR>
                  <TR BGCOLOR="#ffffff">
             <TD>
-              <TABLE WIDTH="100%" CELLPADDING="3" BORDER="0">
+              <TABLE class="fullwidth borderless" CELLPADDING="3">
               <TR VALIGN=top>
                <TD><img src="/images/warning.gif" ALT="warning!"></TD>
                <TD WIDTH="100%">
@@ -211,10 +211,10 @@ if (IsSet($error) and $error != '') {
 }
 ?>
 
-<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="<?php echo BACKGROUND_COLOUR; ?>" WIDTH="100%"> <TR> <TD>
+<TABLE CELLPADDING="1" class="fullwidth borderless" BGCOLOR="<?php echo BACKGROUND_COLOUR; ?>"> <TR> <TD>
 
 
-<TABLE WIDTH="100%" BORDER="0" CELLPADDING="5" BGCOLOR="<?php echo BACKGROUND_COLOUR; ?>">
+<TABLE class="fullwidth borderless" CELLPADDING="5" BGCOLOR="<?php echo BACKGROUND_COLOUR; ?>">
 
 <TR BGCOLOR="<?php echo BACKGROUND_COLOUR; ?>"><TD BGCOLOR="<?php echo BACKGROUND_COLOUR; ?>"><FONT COLOR="#ffffff" SIZE="+2">
 <?

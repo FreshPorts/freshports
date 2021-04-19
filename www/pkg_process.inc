@@ -41,16 +41,16 @@ function HandleFileUpload($FormFileName, $Destination) {
 
 function DisplayError($error) {
 ?>
-	<TABLE WIDTH="100%" ALIGN="center" CELLPADDING="1" CELLSPACING="0" BORDER="1">
+	<TABLE class="fullwidth bordered" ALIGN="center" CELLPADDING="1">
 	<TR><TD VALIGN=TOP>
-		<TABLE WIDTH="100%">
+		<TABLE class="fullwidth">
 			<TR>
 			    <? echo freshports_PageBannerText("NOTICE"); ?>
 			</TR>
 
 			<TR BGCOLOR="#ffffff">
 				<TD>
-					<TABLE WIDTH="100%" CELLPADDING="0" CELLSPACING="0" BORDER="0">
+					<TABLE class="fullwidth borderless" CELLPADDING="0">
 						<TR VALIGN="top">
 							<TD VALIGN="middle"><IMG SRC="/images/warning.gif" ALT="warning"></TD>
 							<TD VALIGN="middle" width="100%">
@@ -215,7 +215,7 @@ function UploadDisplayStagingResultsMatches($UserID, $WatchListID, $dbh) {
 		if ($numrows) {
 			?>
 
-			<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5">
+			<TABLE ALIGN="center" class="bordered" CELLPADDING="5">
 			<TR><TD COLSPAN="2"><B>Port name</B> <SMALL>(<? echo $numrows ?> port<?php if ($numrows > 1) echo 's'; ?>)</SMALL></TD><TD ALIGN="center"><SMALL>Add</SMALL></TD></TR>
 
 			<?
@@ -272,7 +272,7 @@ function UploadDisplayStagingResultsMatchesNo($UserID, $dbh) {
 		if ($numrows) {
 			?>
 
-			<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5">
+			<TABLE ALIGN="center" class="bordered" CELLPADDING="5">
 			<TR><TD><B>Port name</B> <SMALL>(<? echo $numrows ?> port<?php if ($numrows > 1) echo 's'; ?>)</SMALL></TD><TD><SMALL>search</SMALL></TD></TR>
 
 			<?
@@ -316,7 +316,7 @@ function UploadDisplayStagingResultsMatchesDuplicates($UserID, $WatchListID, $db
 		if ($numrows) {
 			?>
 
-			<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5">
+			<TABLE ALIGN="center" class="bordered" CELLPADDING="5">
 			<TR><TD><B>Port name</B></TD><TD><B>Count</B></TD><TD ALIGN="center"><SMALL>Add</SMALL></TD></TR>
 
 			<?
@@ -378,7 +378,7 @@ function UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $dbh) {
 		if ($numrows) {
 			?>
 
-			<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5">
+			<TABLE ALIGN="center" class="bordered" CELLPADDING="5">
 			<TR><TD><B>Port name</B></TD><TD ALIGN="center"><SMALL>Add</SMALL></TD></TR>
 
 			<?

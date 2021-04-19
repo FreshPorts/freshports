@@ -67,7 +67,7 @@ This page displays <a href="<?php echo VUXMLURL; ?>">vulnerability information</
 These are the vulnerabilities relating to the commit you have selected:
 </p>
 
-<table cellpadding="5" border="1" cellspacing="0">
+<table cellpadding="5" class="bordered">
 <tr><th align="left"><b>VuXML ID</b></th><th align="left"><b>Description</b></th></tr>
 <?php
 	if (!IsSet($vidArray)) {
@@ -137,7 +137,7 @@ SELECT V.vid,
 			$Count       = 0;
 			$NumPackages = 0;
 			$VIDs        = array();
-			echo '<table border="1">' . "\n";
+			echo '<table class="bordered">' . "\n";
 			echo '<th colspan="3">VuXML entries as processed by FreshPorts</th>';
 			echo '<tr><td><b>';
 			echo 'package';
@@ -230,7 +230,7 @@ ORDER BY coalesce(V.date_modified, V.date_entry, V.date_discovery)::date desc, V
 				$LastVID     = '';
 				$NumPackages = 0;
 				$VIDs        = 0;
-				echo '<table border="1" cellpadding="5" cellspacing="0">' . "\n";
+				echo '<table class="bordered" cellpadding="5">' . "\n";
 				echo '<th colspan="3">VuXML entries as processed by FreshPorts</th>';
 				echo '<tr><td><b>Date</b></td><td><b>';
 				echo 'Decscription';

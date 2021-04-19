@@ -39,7 +39,7 @@ for a full list of features.  The following is a short list of some of the chang
 </P>
 
 
-<TABLE WIDTH="100%" CELLPADDING="4" CELLSPACING="4">
+<TABLE class="fullwidth" CELLPADDING="4" CELLSPACING="4">
 <TR>
 <TD NOWRAP VALIGN="top" ALIGN="right"><B>Face lift</B></TD>
 	<TD>
@@ -93,7 +93,7 @@ for a full list of features.  The following is a short list of some of the chang
 <H2>Technical changes</H2>
 The following items deal with the technical changes which have occurred.
 
-<TABLE WIDTH="100%" CELLPADDING="4" CELLSPACING="4">
+<TABLE class="fullwidth" CELLPADDING="4" CELLSPACING="4">
 <TR>
 <TD NOWRAP VALIGN="top" ALIGN="right"><B>database</B></TD>
 	<TD>

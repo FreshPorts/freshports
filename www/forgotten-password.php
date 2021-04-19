@@ -142,11 +142,11 @@ if (IsSet($submit)) {
 <?
 
 if (IsSet($error) and $error != '') {
-      echo '<TABLE CELLPADDING="1" class="fullwidth borderless" BGCOLOR="' . BACKGROUND_COLOUR . '">
+      echo '<TABLE CELLPADDING="1" class="fullwidth borderless accent">
             <TR>
             <TD>
                <TABLE class="fullwidth borderless" CELLPADDING="1">
-                  <TR BGCOLOR="' . BACKGROUND_COLOUR . '"><TD><b><FONT COLOR="#ffffff" SIZE="+2">We have a problem!</FONT></b></TD>
+                  <TR class="accent"><TD><b><FONT COLOR="#ffffff" SIZE="+2">We have a problem!</FONT></b></TD>
                  </TR> 
                  <TR BGCOLOR="#ffffff">
             <TD>
@@ -169,11 +169,11 @@ if (IsSet($error) and $error != '') {
 } else {
 
    if ($LoginFailed || $eMailFailed) {
-      echo '<TABLE CELLPADDING="1" class="fullwidth borderless" BGCOLOR="' . BACKGROUND_COLOUR . '">
+      echo '<TABLE CELLPADDING="1" class="fullwidth borderless accent">
             <TR>
             <TD>
                <TABLE class="fullwidth borderless" CELLPADDING="1">
-                  <TR BGCOLOR="' . BACKGROUND_COLOUR . '"><TD><b><FONT COLOR="#ffffff" SIZE="+2">UserID not found!</FONT></b></TD>
+                  <TR class="accent"><TD><b><FONT COLOR="#ffffff" SIZE="+2">UserID not found!</FONT></b></TD>
                  </TR>
                  <TR BGCOLOR="#ffffff">
             <TD>
@@ -211,12 +211,12 @@ if (IsSet($error) and $error != '') {
 }
 ?>
 
-<TABLE CELLPADDING="1" class="fullwidth borderless" BGCOLOR="<?php echo BACKGROUND_COLOUR; ?>"> <TR> <TD>
+<TABLE CELLPADDING="1" class="fullwidth borderless accent"> <TR> <TD>
 
 
-<TABLE class="fullwidth borderless" CELLPADDING="5" BGCOLOR="<?php echo BACKGROUND_COLOUR; ?>">
+<TABLE class="fullwidth borderless accent" CELLPADDING="5">
 
-<TR BGCOLOR="<?php echo BACKGROUND_COLOUR; ?>"><TD BGCOLOR="<?php echo BACKGROUND_COLOUR; ?>"><FONT COLOR="#ffffff" SIZE="+2">
+<TR class="accent" ><TD class="accent"><FONT COLOR="#ffffff" SIZE="+2">
 <?
 if ($MailSent) {
    echo "Mail sent to your address";

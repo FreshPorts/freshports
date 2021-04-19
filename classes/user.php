@@ -200,7 +200,8 @@ class User {
 	}
 
 	function createUserToken() {
-		return hash('sha256', uniqid(rand(), true));
+		$token = hash('sha256', uniqid(random_int(0, getrandmax()), true))
+		return $token;
 	}
 
 }

@@ -25,7 +25,7 @@
 
 	<?php echo freshports_MainContentTable(NOBORDER); ?>
   <TR>
-    <TD bgcolor="<?php echo BACKGROUND_COLOUR; ?>" height="32"><FONT COLOR="#FFFFFF" SIZE="+1">LEGAL NOTICE</FONT></TD>
+    <TD class="accent" height="32"><FONT COLOR="#FFFFFF" SIZE="+1">LEGAL NOTICE</FONT></TD>
   </TR>
   <TR><TD>This page contains our obligatory legal notice.  I really don't like having to say
           these things, but given the nature of some people, I must.  For the rest of you,
@@ -33,7 +33,7 @@
   </TD></TR>
   <TR><TD height="20"></TD></TR>
   <TR>
-    <TD BGCOLOR="<?php echo BACKGROUND_COLOUR; ?>" height="32"><FONT COLOR="#FFFFFF" SIZE="+1">COPYRIGHT</FONT></TD>
+    <TD class="accent" height="32"><FONT COLOR="#FFFFFF" SIZE="+1">COPYRIGHT</FONT></TD>
   </TR>
   <TR><TD>
   <p>Copyright <?php echo COPYRIGHTYEARS; ?> Dan Langille All rights reserved.&nbsp; Copyright in
@@ -49,7 +49,7 @@
   </TD></TR>
   <TR><TD height="20"></TD></TR>
   <TR>
-    <TD BGCOLOR="<?php echo BACKGROUND_COLOUR; ?>" height="32"><FONT COLOR="#FFFFFF" SIZE="+1">CONTENT AND LIABILITY DISCLAIMER</FONT></TD>     
+    <TD class="accent" height="32"><FONT COLOR="#FFFFFF" SIZE="+1">CONTENT AND LIABILITY DISCLAIMER</FONT></TD>
   </TR>
   <TR><TD>
   <p>Dan Langille shall not be responsible for any errors or omissions contained at
@@ -68,7 +68,7 @@
   </TD></TR>
   <TR><TD height="20"></TD></TR>
   <TR>
-    <TD BGCOLOR="<?php echo BACKGROUND_COLOUR; ?>" height="32"><FONT COLOR="#FFFFFF" SIZE="+1">FEEDBACK INFORMATION</FONT></TD>
+    <TD class="accent" height="32"><FONT COLOR="#FFFFFF" SIZE="+1">FEEDBACK INFORMATION</FONT></TD>
   </TR>
   <TR><TD>
   <p>Any information provided to Dan Langille in connection with any Dan Langille
@@ -78,7 +78,7 @@
   </TD></TR>
   <TR><TD height="20"></TD></TR>
   <TR>
-    <TD BGCOLOR="<?php echo BACKGROUND_COLOUR; ?>" height="32"><FONT COLOR="#FFFFFF" SIZE="+1">TRADEMARKS</FONT></TD>
+    <TD class="accent" height="32"><FONT COLOR="#FFFFFF" SIZE="+1">TRADEMARKS</FONT></TD>
   </TR>
   <TR><TD>
   <p>All Dan Langille's product names are trademarks or registered trademarks of Dan Langille

@@ -84,11 +84,11 @@ if (IsSet($submit)) {
 
 
 if ($errors) {
-echo '<TABLE CELLPADDING="1" class="fullwidth borderless" BGCOLOR="' . BACKGROUND_COLOUR . '">
+echo '<TABLE CELLPADDING="1" class="fullwidth borderless accent">
 <TR>
 <TD>
 <TABLE class="fullwidth borderless" CELLPADDING="1">
-<TR BGCOLOR="' . BACKGROUND_COLOUR . '"><TD><b><font color="#ffffff" size=+0>Deleted Failed!</font></b></TD>
+<TR class="accent"><TD><b><font color="#ffffff" size=+0>Deleted Failed!</font></b></TD>
 </TR>
 <TR BGCOLOR="#ffffff">
 <TD>
@@ -113,12 +113,12 @@ echo '<p>If you need help, please email postmaster@. </p>
 <br>';
 }  // if ($errors)
 
-echo '<TABLE CELLPADDING="1" class="fullwidth borderless" BGCOLOR="' . BACKGROUND_COLOUR . '">
+echo '<TABLE CELLPADDING="1" class="fullwidth borderless accent">
 <TR>
 <TD VALIGN="top">
 <TABLE class="fullwidth borderless" CELLPADDING="1">
 <TR>
-<TD BGCOLOR="' . BACKGROUND_COLOUR . '" HEIGHT="29" COLSPAN="1"><FONT COLOR="#FFFFFF"><BIG><BIG>Customize</BIG></BIG></FONT></TD>
+<TD class="accent" HEIGHT="29" COLSPAN="1"><FONT COLOR="#FFFFFF"><BIG><BIG>Customize</BIG></BIG></FONT></TD>
 </TR>
 <TR BGCOLOR="#ffffff">
 <TD>';

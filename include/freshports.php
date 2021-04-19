@@ -731,7 +731,13 @@ function freshports_MoreCommitMsgToShow($message_id, $NumberOfLinesShown) {
 }
 
 function freshports_CookieClear() {
-	SetCookie(USER_COOKIE_NAME, '', 0, '/');
+	SetCookie(USER_COOKIE_NAME, '', array(
+		'expires' => 1, // 0 makes it a session cookie, we actually want it to delete soon
+		'path' => '/',
+		'secure' => (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'),
+		'httponly' => TRUE,
+		'samesite' => 'Lax',
+	));
 }
 
 function freshportsObscureHTML($email) {

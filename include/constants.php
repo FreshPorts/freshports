@@ -38,6 +38,7 @@ $UserStatusUnconfirmed = "U";
 
 $ProblemSolverEmailAddress	= "webmaster@freshports.org";
 
+if (!defined('USER_COOKIE_NAME')) define('USER_COOKIE_NAME', "visitor");
 
 #
 # SEQUENCES

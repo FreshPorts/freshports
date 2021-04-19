@@ -6,6 +6,7 @@
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
 	
 GLOBAL $User;
 $User = new User($db);
@@ -60,8 +61,8 @@ $User->id	= 0;
 // This is used to determine whether or not the cach can be used.
 $DefaultMaxArticles = $MaxArticles;
 
-if (IsSet($_COOKIE["visitor"])) {
-	$visitor = $_COOKIE["visitor"];
+if (IsSet($_COOKIE[USER_COOKIE_NAME])) {
+	$visitor = $_COOKIE[USER_COOKIE_NAME];
 }
 if (!empty($visitor)) {
 	

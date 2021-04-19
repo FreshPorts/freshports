@@ -85,7 +85,7 @@ if (IsSet($_REQUEST['LOGIN']) && $_REQUEST['UserID']) {
 				# if we were doing this in a user object, we could retry when there was a cookie collision and we get a unique index error
 				$result = pg_exec($db, $sql) or die('query failed ' . pg_errormessage());
 
-				SetCookie("visitor", $Cookie, time() + 60*60*24*120, '/');
+				SetCookie(USER_COOKIE_NAME, $Cookie, time() + 60*60*24*120, '/');
 				header("Location: /");
 				// Make sure that code below does not get executed when we redirect.
 				exit;

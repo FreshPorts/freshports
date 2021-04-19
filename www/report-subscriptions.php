@@ -143,7 +143,7 @@
   <TR>
 
 <TD WIDTH="100%" VALIGN="top">
-<TABLE WIDTH="100%" BORDER="0" CELLPADDING="1">
+<TABLE class="fullwidth borderless" CELLPADDING="1">
 <TR>
 <TD BGCOLOR="<?php echo BACKGROUND_COLOUR; ?>" HEIGHT="29" COLSPAN="1"><FONT COLOR="#FFFFFF"><BIG><BIG><? echo $ArticleTitle; ?></BIG></BIG></FONT></TD>
 </TR>
@@ -155,7 +155,7 @@ This page allows you to select the reports you wish to receive and the frequency
 </p>
 
 <FORM ACTION="<?php echo $_SERVER["PHP_SELF"] ;?>" METHOD="POST" NAME=f>
-	<TABLE CELLPADDING="3" CELLSPACING="0" BORDER="1">
+	<TABLE CELLPADDING="3" class="bordered">
 	<TR><TD><BIG><B>Report Name</B></BIG></TD><TD><BIG><B>Frequency</B></BIG></TD><TD><BIG><B>Description</B></BIG></TD></TR>
 	<?
 

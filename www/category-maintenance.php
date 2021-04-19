@@ -40,9 +40,9 @@
 					'FreeBSD, index, applications, ports');
 
 ?>
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<TABLE WIDTH="<? echo $TableWidth; ?>" class="borderless" ALIGN="center">
 <TR><TD VALIGN="top" WIDTH="100%">
-<TABLE WIDTH="100%" BORDER="0">
+<TABLE class="fullwidth borderless">
 
 <TR>
 	<? echo freshports_PageBannerText($Title . ' - ' . $CategoryName); ?>
@@ -63,7 +63,7 @@ if (!$IsPrimary) {
 }
 ?>
 
-<table cellpadding="5" cellspacing="0" border="1">
+<table cellpadding="5" class="bordered">
 <tr><td><b>id</b></td><td><b>is_primary</b></td><td><b>element_id</b></td><td><b>name</b></td><td><b>description</b></td></tr>
 <tr><?php
 echo '<td>' . $Category->id          . '</td>';

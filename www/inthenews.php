@@ -20,7 +20,7 @@
 ?>
 	<?php echo freshports_MainTable(); ?>
 <tr><td valign="top" width="100%">
-<table width="100%" border="0">
+<table class="fullwidth borderless">
   <tr>
 	<? echo freshports_PageBannerText("In the news"); ?>
   </tr>

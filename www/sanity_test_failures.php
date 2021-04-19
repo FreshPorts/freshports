@@ -42,7 +42,7 @@ function freshports_SummaryForDay($MinusN) {
    $File = $BaseDirectory . "/" . date("Y/m/d", $Now - 60*60*24*$MinusN) . ".inc";
 //   echo "$File<br>\n";
    if (file_exists($File)) {
-      echo '<br><TABLE WIDTH="152" BORDER="1" CELLSPACING="0" CELLPADDING="5">';
+      echo '<br><TABLE WIDTH="152" class="bordered" CELLPADDING="5">';
       echo '  <TR>';
       echo '<TD bgcolor="' . BACKGROUND_COLOUR . '" height="30"><font color="#FFFFFF" SIZE="+1">';
       echo date("l j M", $Now - 60*60*24*$MinusN);
@@ -212,7 +212,7 @@ since 10 October 2006.
 		if ($NumberOfDays) {
 			$Today = time();
 			echo '
-<TABLE WIDTH="155" BORDER="1" CELLSPACING="0" CELLPADDING="5">
+<TABLE WIDTH="155" class="bordered" CELLPADDING="5">
 	<TR>
 		<TD BGCOLOR="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><BIG><B>Previous days</B></BIG></FONT></TD>
 	</TR>

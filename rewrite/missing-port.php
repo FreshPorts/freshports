@@ -38,7 +38,7 @@ function DisplayPortCommits($port, $PageNumber) {
 	$NumRowsTo      = $PortsMovedTo->FetchInitialiseTo($port->id);
 
 	if ($NumRowsFrom + $NumRowsTo > 0) {
-		$HTML .= '<TABLE BORDER="1" width="100%" CELLSPACING="0" CELLPADDING="5">' . "\n";
+		$HTML .= '<TABLE class="fullwidth bordered" CELLPADDING="5">' . "\n";
 		$HTML .= "<TR>\n";
 		$HTML .= freshports_PageBannerText("Port Moves", 1);
 		$HTML .= "<tr><td>\n";

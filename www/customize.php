@@ -168,11 +168,19 @@ UPDATE users
 
 
 if ($errors) {
+<<<<<<< HEAD
 echo '<TABLE CELLPADDING="1" class="fullwidth bordeless accent">
 <TR>
 <TD>
 <TABLE class="fullwidth borderless" CELLPADDING="1">
 <TR class="accent"><TD><b><font color="#ffffff" size=+0>Access Code Failed!</font></b></TD>
+=======
+echo '<TABLE CELLPADDING="1" class="fullwidth bordeless" BGCOLOR="' . BACKGROUND_COLOUR . '">
+<TR>
+<TD>
+<TABLE class="fullwidth borderless" CELLPADDING="1">
+<TR BGCOLOR="' . BACKGROUND_COLOUR . '"><TD><b><font color="#ffffff" size=+0>Access Code Failed!</font></b></TD>
+>>>>>>> 7d09eb11 (Move usage of border attribute on tables to CSS class)
 </TR>
 <TR BGCOLOR="#ffffff">
 <TD>

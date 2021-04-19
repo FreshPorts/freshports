@@ -199,6 +199,10 @@ div.scrollmenu table {
   display: inline-block;
 }
 
+a > img {
+  border: 0;
+}
+
 
 
 td.version:hover {

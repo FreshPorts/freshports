@@ -24,7 +24,7 @@ function Ad_PhpPgAdsBase($Zone, $N) {
       document.write ("&amp;referer=" + escape(document.referrer));
    document.write ("\'><" + "/script>");
 //-->
-</script><noscript><a href=\'http://ads.unixathome.org/phpPgAds/adclick.php?n=' . $N . '\' target=\'_blank\'><img src=\'http://ads.unixathome.org/phpPgAds/adview.php?what=zone:' . $Zone . '&amp;n=' . $Zone . '\' border=\'0\' alt=\'\'></a></noscript>
+</script><noscript><a href=\'http://ads.unixathome.org/phpPgAds/adclick.php?n=' . $N . '\' target=\'_blank\'><img src=\'http://ads.unixathome.org/phpPgAds/adview.php?what=zone:' . $Zone . '&amp;n=' . $Zone . '\' alt=\'\'></a></noscript>
 
 	';
 	

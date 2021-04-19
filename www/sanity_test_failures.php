@@ -44,7 +44,7 @@ function freshports_SummaryForDay($MinusN) {
    if (file_exists($File)) {
       echo '<br><TABLE WIDTH="152" class="bordered" CELLPADDING="5">';
       echo '  <TR>';
-      echo '<TD bgcolor="' . BACKGROUND_COLOUR . '" height="30"><font color="#FFFFFF" SIZE="+1">';
+      echo '<TD class="accent" height="30"><font color="#FFFFFF" SIZE="+1">';
       echo date("l j M", $Now - 60*60*24*$MinusN);
       echo '</font></TD>';
       echo '       </TR>';
@@ -214,7 +214,7 @@ since 10 October 2006.
 			echo '
 <TABLE WIDTH="155" class="bordered" CELLPADDING="5">
 	<TR>
-		<TD BGCOLOR="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><BIG><B>Previous days</B></BIG></FONT></TD>
+		<TD class="accent" height="30"><FONT COLOR="#FFFFFF"><BIG><B>Previous days</B></BIG></FONT></TD>
 	</TR>
 	<TR><TD>
 ';

@@ -6,6 +6,7 @@
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
@@ -26,7 +27,7 @@
 	if (IsSet($_POST['submit'])) {
 		$submit = pg_escape_string($_POST['submit']);
 	}
-	$visitor = $_COOKIE['visitor'];
+	$visitor = $_COOKIE[USER_COOKIE_NAME];
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {

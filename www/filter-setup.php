@@ -6,6 +6,7 @@
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
@@ -86,7 +87,7 @@ $Debug = 0;
 
 if ($Debug) # phpinfo();
 
-$visitor = $_COOKIE["visitor"];
+$visitor = $_COOKIE[USER_COOKIE_NAME];
 
 if ($_REQUEST['wlid']) {
 		# they clicked on the GO button and we have to apply the 

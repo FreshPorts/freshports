@@ -6,6 +6,7 @@
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
@@ -15,7 +16,7 @@
                 header('Location: /' . MAINTENANCE_PAGE, TRUE, 307);
 	}
 
-$visitor = $_COOKIE['visitor'];
+$visitor = $_COOKIE[USER_COOKIE_NAME];
 
 unset($add_name);
 unset($rename_name);

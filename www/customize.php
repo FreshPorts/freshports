@@ -22,7 +22,7 @@
 	$AccountModified = 0;
 
 if (IsSet($_REQUEST['submit'])) $submit = $_REQUEST['submit'];
-$visitor = pg_escape_string($_COOKIE['visitor']);
+$visitor = pg_escape_string($_COOKIE[USER_COOKIE_NAME]);
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {

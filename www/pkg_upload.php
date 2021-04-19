@@ -6,6 +6,7 @@
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 
@@ -253,7 +254,7 @@ function ChooseWatchLists($UserID, $db) {
 #	if ($Debug) phpinfo();
 
 	# you can only be here if you are logged in!
-	$visitor = $_COOKIE["visitor"];
+	$visitor = $_COOKIE[USER_COOKIE_NAME];
 	if (!$visitor) {
 		?>
 		<P>

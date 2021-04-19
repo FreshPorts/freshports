@@ -191,8 +191,8 @@ $HTML .= '<tr><td valign="top" ALIGN="center">' . "\n";
 
 if ($numrows) {
 	
-	$HTML .= '<table border="0">' . "\n" . '<tr><td>' . "\n";
-	$HTML .= '<table border="0">' . "\n" . '<tr><td>' . "\n";
+	$HTML .= '<table class="borderless">' . "\n" . '<tr><td>' . "\n";
+	$HTML .= '<table class="borderless">' . "\n" . '<tr><td>' . "\n";
 
 	$HTML .= '<form action="' . $_SERVER["PHP_SELF"] . '" method="POST">' . "\n";
    // save the number of categories for when we submit
@@ -200,7 +200,7 @@ if ($numrows) {
    $HTML .= '<input type="hidden" name="category" value="' . $category . '">' . "\n";
    $HTML .= '<input type="hidden" name="wlid"     value="' . $wlid     . '">' . "\n";
 
-   $HTML .= "\n" . '<TABLE BORDER="1" CELLSPACING="0" CELLPADDING="5">' . "\n<tr>\n";
+   $HTML .= "\n" . '<TABLE class="bordered" CELLPADDING="5">' . "\n<tr>\n";
    $RowCount = ceil($NumPorts / (double) 4);
    $Row = 0;
    for ($i = 0; $i < $NumPorts; $i++) {
@@ -254,7 +254,7 @@ if ($numrows) {
 </table>
 
 <td valign="top">
-<table border="0"><tr><td>Select...</td></tr><tr><td>
+<table class="borderless"><tr><td>Select...</td></tr><tr><td>
    
 <?php
 	$Extra = '<input type="hidden" name="category" value="' . $category . '">';

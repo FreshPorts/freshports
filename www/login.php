@@ -151,13 +151,13 @@ if ($LoginFailed) {
 <?php echo freshports_ErrorContentTable(); ?>
 
 <TR><TD VALIGN=TOP>
-<TABLE WIDTH="100%">
+<TABLE class="fullwidth">
 <TR>
 	<? echo freshports_PageBannerText("Login Failed!") ?>
 </TR>
 <TR BGCOLOR="#ffffff">
 <TD>
-  <TABLE WIDTH="100%" CELLPADDING=0 CELLSPACING=0 BORDER=0>
+  <TABLE class="fullwidth borderless" CELLPADDING="0">
   <TR valign=top>
    <TD><img src="/images/warning.gif"></TD>
    <TD WIDTH="100%">
@@ -185,14 +185,14 @@ if ($error) {
 ?>
 <?php echo freshports_ErrorContentTable(); ?>
 <TR><TD VALIGN=TOP>
-<TABLE WIDTH="100%">
+<TABLE class="fullwidth">
 <TR>
     <? echo freshports_PageBannerText("NOTICE"); ?>
 </TR>
 
 <TR BGCOLOR="#ffffff">
 <TD>
-  <TABLE WIDTH="100%" CELLPADDING=0 BORDER=0>
+  <TABLE class="fullwidth borderless" CELLPADDING=0>
   <TR valign=top>
    <TD><img src="/images/warning.gif"></TD>
    <TD WIDTH="100%">
@@ -213,7 +213,7 @@ if ($error) {
 
 
 
-echo '<TABLE WIDTH="100%" BORDER="1" CELLPADDING="1" CELLSPACING="0" BGCOLOR="' . BACKGROUND_COLOUR . '">';
+echo '<TABLE class="fullwidth bordered" CELLPADDING="1" BGCOLOR="' . BACKGROUND_COLOUR . '">';
 
 echo '<TR BGCOLOR="' . BACKGROUND_COLOUR . '">';
 

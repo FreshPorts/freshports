@@ -77,7 +77,7 @@ function freshports_WatchListDDLBForm($db, $UserID, $WatchListID, $Extra = '') {
 	
 	$HTML = '
 <form action="' . $_SERVER["PHP_SELF"] . '" method="POST" NAME=f>
-<table border="0">
+<table class="borderless">
 <tr>
 <td valign="top" nowrap align="right">
 <small>
@@ -120,7 +120,7 @@ function freshports_UpdatingOutput($NumRowsUpdating, $PortsUpdating, $port) {
 	$HTML = '';
 	
 	if ($NumRowsUpdating > 0) {
-		$HTML .= '<TABLE BORDER="1" width="100%" CELLSPACING="0" CELLPADDING="5">' . "\n";
+		$HTML .= '<TABLE class="fullwidth bordered" CELLPADDING="5">' . "\n";
 		$HTML .= "<TR>\n";
 		$HTML .= freshports_PageBannerText('<a id="updating">Notes from UPDATING</a>', 1);
 		$HTML .= "<tr><td><dl>\n";

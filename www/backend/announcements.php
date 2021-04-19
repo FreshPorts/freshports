@@ -82,14 +82,14 @@ if (IsSet($_REQUEST['edit'])) {
                'FreeBSD, index, applications, ports');
 ?>
 
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<TABLE WIDTH="<? echo $TableWidth; ?>" class="borderless" ALIGN="center">
 <TR><TD VALIGN="top" width="100%">
 <?php
 
 
 if (isset($errors)) {
 echo '
-  <TABLE width="100%" CELLPADDING="3" BORDER="0">
+  <TABLE CELLPADDING="3" class="fullwidth borderless">
   <TR VALIGN=top>
    <TD><img src="/images/warning.gif"></TD>
    <TD width="100%">
@@ -104,7 +104,7 @@ echo '
 <br>';
 }
 
-echo '<TABLE CELLPADDING="1" CELLSPACING="3" BORDER="0" BGCOLOR="' . BACKGROUND_COLOUR . '" WIDTH="100%">
+echo '<TABLE CELLPADDING="1" CELLSPACING="3" class="fullwidth borderless" BGCOLOR="' . BACKGROUND_COLOUR . '">
 <TR>
 <TD BGCOLOR="' . BACKGROUND_COLOUR . '" COLSPAN="1"><FONT COLOR="#FFFFFF"><BIG><BIG>' . $Title . '</BIG></BIG></FONT></TD>
 </TR>
@@ -116,7 +116,7 @@ echo 'Current annoucements<blockquote>';
 $HTML  = '';
 $HTML .= '<form action="' . $_SERVER["PHP_SELF"] . '" method="POST">' . "\n";
 
-$HTML .= '<table cellpadding="4" cellspacing="0" border="1">' . "\n";
+$HTML .= '<table cellpadding="4" class="bordered">' . "\n";
 
 $HTML .= '<tr><td><b>Announcement Text (can be HTML)</b></td><td><b>Start Date</b></td><td><b>End Date</b></td></tr>' . "\n";
 
@@ -170,7 +170,7 @@ echo "<p></blockquote></TD>
 
 function MyDisplayAnnouncements($Announcement) {
         $HTML = '';
-	$HTML .= '<table cellpadding="4" cellspacing="0" border="1">' . "\n";
+	$HTML .= '<table cellpadding="4" class="bordered">' . "\n";
 	$HTML .= '<tr><td><b>Announcement Text</b></td><td><b>Start Date</b></td><td><b>End Date</b></td><td><b>Edit</b></td><td><b>Delete</b</td></tr>' . "\n";
 
 	$NumRows = $Announcement->NumRows();

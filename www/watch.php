@@ -71,12 +71,12 @@
 <?php echo freshports_MainTable(); ?>
 
 <tr><td valign="top" width="100%">
-<table width="100%" border="0">
+<table class="fullwidth borderless">
 <tr>
 	<? echo freshports_PageBannerText($Title); ?>
 </tr>
 <tr><td valign="top">
-<table border=0 width="100%">
+<table class="fullwidth borderless">
 <tr><td>
 <?php
 if ($wlid == '') {
@@ -113,7 +113,7 @@ $rowcount = $WatchListDeletedPorts->FetchInitialise($wlid);
 if ($rowcount)
 {
 echo '<hr><p>Some of your watched ports have moved.  You are still watching the old ports.</p>';
-echo '<table border="1" cellpadding="5" cellspacing="0">';
+echo '<table class="bordered" cellpadding="5">';
 echo '<tr><td><b>Old Port</b></td><td><b>Replaced by</b></td></tr>';
 for ($i = 0; $i < $rowcount; $i++) {
 	$WatchListDeletedPorts->FetchNth($i);

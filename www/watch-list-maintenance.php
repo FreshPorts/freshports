@@ -255,11 +255,11 @@ $ErrorMessage .= CheckForNoDefaultAndAddToDefault($db, $User);
 	}
 ?>
 <tr><td>
-<table WIDTH="100%" BORDER="0">
+<table class="fullwidth borderless">
 <tr><td valign="top">
 
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
-<TABLE WIDTH="100%" BORDER="1" CELLSPACING="0" CELLPADDING="5">
+<TABLE class="fullwidth bordered" CELLPADDING="5">
 <TR><td nowrap><BIG><b>Watch Lists</b></BIG></td><td><BIG><b>Actions</b></BIG> (scroll down for instructions)</td></tr>
   <TR>
     <TD valign="top">
@@ -295,7 +295,7 @@ $ErrorMessage .= CheckForNoDefaultAndAddToDefault($db, $User);
 
 </td><td valign="top">
 
-<TABLE WIDTH="100%" BORDER="1" CELLSPACING="0" CELLPADDING="5">
+<TABLE class="fullwidth bordered" CELLPADDING="5">
 <TR><td><BIG><b>Options</b></BIG></td></tr>
   <TR>
 <td valign="top" nowrap>

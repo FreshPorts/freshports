@@ -20,10 +20,10 @@
 
 ?>
 
-<TABLE width="<? echo $TableWidth ?>" border="0" ALIGN="center">
+<TABLE width="<? echo $TableWidth ?>" class="borderless" ALIGN="center">
 
 <TR><TD valign="top" width="100%">
-<TABLE width="100%" border="0">
+<TABLE class="fullwidth borderless">
 <TR>
 	<? echo freshports_PageBannerText($Title); ?>
 </TR>
@@ -35,7 +35,7 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../configuration/status-config.php');
 
-echo '<table border="1">' . "\n";
+echo '<table class="bordered">' . "\n";
 echo '<tr><td></td><td align="center" colspan="' . count($sites) . '">sites - yeah, we can\'t do this yet from the front end</td></tr>' . "\n";
 echo '<tr><td>queues</td>';
 foreach ($sites as $site) {
@@ -68,7 +68,7 @@ $result = pg_exec($db, $sql);
 if ($result) {
 	$numrows = pg_numrows($result);
 	if ($numrows) {
-		echo '<table border="1" cellpadding="5" cellspacing="3">' . "\n";
+		echo '<table class="bordered" cellpadding="5" cellspacing="3">' . "\n";
 		echo "<caption>The package imports</caption><tr>
 		<td><b>ABI</b>
 		<td><b>package set</b></td>
@@ -111,7 +111,7 @@ $result = pg_exec($db, $sql);
 if ($result) {
 	$numrows = pg_numrows($result);
 	if ($numrows) {
-		echo '<table border="1">' . "\n";
+		echo '<table class="bordered">' . "\n";
 		echo "<tr><td><b>Days</b><td><b>Users</b></td></tr>\n";
 	
 		$i=0;

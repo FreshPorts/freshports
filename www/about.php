@@ -127,7 +127,7 @@ About the Authors</A> for details of who else helped.</P>
 	$ShowPoweredBy = 1;
 ?>
 
-<TABLE WIDTH="<?php echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<TABLE WIDTH="<?php echo $TableWidth; ?>" class="borderless" ALIGN="center">
 <TR><TD>
 <?php echo freshports_ShowFooter(); ?>
 </TD></TR>

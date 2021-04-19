@@ -85,7 +85,16 @@ if (IsSet($_REQUEST['LOGIN']) && $_REQUEST['UserID']) {
 				# if we were doing this in a user object, we could retry when there was a cookie collision and we get a unique index error
 				$result = pg_exec($db, $sql) or die('query failed ' . pg_errormessage());
 
-				SetCookie(USER_COOKIE_NAME, $Cookie, time() + 60*60*24*120, '/');
+				SetCookie(USER_COOKIE_NAME, $Cookie, array(
+					'expires' => time() + 60*60*24*120,
+					'path' => '/',
+					'secure' => (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'),
+					'httponly' => TRUE,
+					// it's probably common for users to navigate from other sites like portscout
+					// we want them to still be logged in if that's the case
+					'samesite' => 'Lax',
+				));
+
 				header("Location: /");
 				// Make sure that code below does not get executed when we redirect.
 				exit;

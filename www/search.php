@@ -928,7 +928,7 @@ if ($output_format == OUTPUT_FORMAT_HTML) {
 
 	<BR><br>
 
-<table cellpadding="5" cellspacing="0" border="1">
+<table cellpadding="5" class="bordered">
 <tr>
 <td valign="middle">
 	<INPUT TYPE=checkbox <? if ($deleted == INCLUDE_DELETED_PORTS) echo 'CHECKED'; ?> VALUE=<?php echo INCLUDE_DELETED_PORTS; ?> NAME=deleted> Include deleted ports

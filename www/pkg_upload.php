@@ -64,7 +64,7 @@ function DisplayUploadForm($db, $UserID) {
 	copy/paste the results into a form.
 	</p>
 
-	<table border="1" cellpadding="5" cellspacing="0" width="100%">
+	<table class="fullwidth bordered" cellpadding="5">
 	<tr>
 	<td valign="top">
 	<h2>Uploading a file</h2>
@@ -151,7 +151,7 @@ echo freshports_WatchListDDLB($db, $UserID);
 
 function DisplayStagingArea($UserID, $WatchListID, $db) {
 
-	echo '<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5">';
+	echo '<TABLE ALIGN="center" class="bordered" CELLPADDING="5">';
 ?>
 
 	<TR><TD COLSPAN="4"><BIG>The following information is in your Staging Area.  To save it to a Watch List, 
@@ -160,7 +160,7 @@ function DisplayStagingArea($UserID, $WatchListID, $db) {
 
 	<TR><TD COLSPAN="4">
 	<FORM ACTION="<? echo $_SERVER["PHP_SELF"]; ?>" method="POST">
-	<table width="100%" border="0">
+	<table class="fullwidth borderless">
 	<tr><td align="center">
 			<INPUT TYPE="submit" VALUE="Update watch list"  NAME="update_watch_list" SIZE="40">
 			&nbsp;&nbsp;&nbsp;
@@ -209,14 +209,14 @@ function DisplayStagingArea($UserID, $WatchListID, $db) {
 
 function ChooseWatchLists($UserID, $db) {
 
-	echo '<TABLE width="100%" ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="5"><TR>';
+	echo '<TABLE class="fullwidth bordered" ALIGN="center" CELLPADDING="5"><TR>';
 ?>
 
 	<TR><TD colspan="3"><BIG>Your staging area contains your uploaded information.  Please choose a watch list, and click on Go.
 		 <SMALL><A HREF="/help.php">help</A></SMALL></TD></TR>
 
 	<TR><TD>
-	<table width="100%" border="0"><tr><td>
+	<table class="fullwidth borderless"><tr><td>
 			<FORM ACTION="<? echo $_SERVER["PHP_SELF"]; ?>" method="POST">
 			<P ALIGN="center">
  			<INPUT TYPE="submit" VALUE="Empty staging area" NAME="clear">

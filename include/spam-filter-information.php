@@ -11,7 +11,7 @@
 of incoming email, these reports will be coming from the following domains:
 </p>
 
-<TABLE CELLSPACING="0" CELLPADDING="5" BORDER="1">
+<TABLE class="bordered" CELLPADDING="5">
 <TR><TD>domain</TD><TD>reason</TD></TR>
 <TR><TD NOWRAP><CODE CLASS="code">freshports.org</CODE></TD><TD>All reports originate from that domain.</TD></TR>
 <TR><TD NOWRAP><CODE CLASS="code">unixathome.org</CODE></TD><TD>The websites are hosted on a box in that domain.</TD></TR>

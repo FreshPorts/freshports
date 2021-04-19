@@ -78,7 +78,7 @@ Thank you for your help.
 
 <TR><TD>
 
-<TABLE WIDTH="100%" BORDER="0">
+<TABLE class="fullwidth borderless">
 <TR align="center">
 <TD WIDTH="300" VALIGN="top">
 <?php

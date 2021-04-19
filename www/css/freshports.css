@@ -203,7 +203,21 @@ a > img {
   border: 0;
 }
 
+table.fullwidth {
+  width: 100%;
+}
 
+table.borderless {
+  border: 0 none black;
+}
+
+table.bordered {
+  border: 1px outset black;
+}
+
+table.bordered > tbody > tr > td {
+  border: 1px inset black;
+}
 
 td.version:hover {
   background-color: #777;

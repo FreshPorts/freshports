@@ -213,9 +213,9 @@ if ($error) {
 
 
 
-echo '<TABLE class="fullwidth bordered" CELLPADDING="1" BGCOLOR="' . BACKGROUND_COLOUR . '">';
+echo '<TABLE class="fullwidth bordered accent" CELLPADDING="1">';
 
-echo '<TR BGCOLOR="' . BACKGROUND_COLOUR . '">';
+echo '<TR class="accent">';
 
 echo freshports_PageBannerText("Login");
 echo '</TR>';

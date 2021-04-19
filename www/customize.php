@@ -166,11 +166,11 @@ UPDATE users
 
 
 if ($errors) {
-echo '<TABLE CELLPADDING="1" class="fullwidth bordeless" BGCOLOR="' . BACKGROUND_COLOUR . '">
+echo '<TABLE CELLPADDING="1" class="fullwidth bordeless accent">
 <TR>
 <TD>
 <TABLE class="fullwidth borderless" CELLPADDING="1">
-<TR BGCOLOR="' . BACKGROUND_COLOUR . '"><TD><b><font color="#ffffff" size=+0>Access Code Failed!</font></b></TD>
+<TR class="accent"><TD><b><font color="#ffffff" size=+0>Access Code Failed!</font></b></TD>
 </TR>
 <TR BGCOLOR="#ffffff">
 <TD>
@@ -198,12 +198,12 @@ if ($AccountModified) {
    echo "Your account details were successfully updated.";
 } else {
 
-echo '<TABLE CELLPADDING="1" class="fullwidth borderless" BGCOLOR="' . BACKGROUND_COLOUR . '">
+echo '<TABLE CELLPADDING="1" class="fullwidth borderless accent">
 <TR>
 <TD VALIGN="top">
 <TABLE class="fullwidth borderless" CELLPADDING="1">
 <TR>
-<TD BGCOLOR="' . BACKGROUND_COLOUR . '" HEIGHT="29" COLSPAN="1"><FONT COLOR="#FFFFFF"><BIG><BIG>Customize</BIG></BIG></FONT></TD>
+<TD class="accent" HEIGHT="29" COLSPAN="1"><FONT COLOR="#FFFFFF"><BIG><BIG>Customize</BIG></BIG></FONT></TD>
 </TR>
 <TR BGCOLOR="#ffffff">
 <TD>';

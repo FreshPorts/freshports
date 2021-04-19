@@ -104,9 +104,9 @@ echo '
 <br>';
 }
 
-echo '<TABLE CELLPADDING="1" CELLSPACING="3" class="fullwidth borderless" BGCOLOR="' . BACKGROUND_COLOUR . '">
+echo '<TABLE CELLPADDING="1" CELLSPACING="3" class="fullwidth borderless accent">
 <TR>
-<TD BGCOLOR="' . BACKGROUND_COLOUR . '" COLSPAN="1"><FONT COLOR="#FFFFFF"><BIG><BIG>' . $Title . '</BIG></BIG></FONT></TD>
+<TD class="accent" COLSPAN="1"><FONT COLOR="#FFFFFF"><BIG><BIG>' . $Title . '</BIG></BIG></FONT></TD>
 </TR>
 <TR BGCOLOR="#ffffff">
 <TD>';

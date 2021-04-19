@@ -1636,7 +1636,7 @@ function freshports_wrap($text, $length = WRAPCOMMITSATCOLUMN) {
 }
 
 function freshports_PageBannerText($Text, $ColSpan=1) {
-	return '<td align="left" bgcolor="' . BACKGROUND_COLOUR . '" height="29" COLSPAN="' . $ColSpan . '"><FONT COLOR="#FFFFFF"><big><big>' . $Text . '</big></big></FONT></td>' . "\n";
+	return '<td align="left" class="accent" height="29" COLSPAN="' . $ColSpan . '"><FONT COLOR="#FFFFFF"><big><big>' . $Text . '</big></big></FONT></td>' . "\n";
 }
 
 
@@ -1803,7 +1803,7 @@ function freshports_SideBar() {
 	$HTML = '
   <table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
         <tr>
-         <td bgcolor="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><big><b>Login</b></big></FONT></td>
+         <td class="accent" height="30"><FONT COLOR="#FFFFFF"><big><b>Login</b></big></FONT></td>
         </tr>
         <tr>
 
@@ -1852,7 +1852,7 @@ function freshports_SideBar() {
 	$HTML .= '	
 <table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
 	<tr>
-		<td bgcolor="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><big><b>This site</b></big></FONT></td>
+		<td class="accent" height="30"><FONT COLOR="#FFFFFF"><big><b>This site</b></big></FONT></td>
 	</tr>
 	<tr>
 	<td valign="top">
@@ -1871,7 +1871,7 @@ function freshports_SideBar() {
 <br>
 <table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
 	<tr>
-		<td bgcolor="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><big><b>Search</b></big></FONT></td>
+		<td class="accent" height="30"><FONT COLOR="#FFFFFF"><big><b>Search</b></big></FONT></td>
 	</tr>
 	<tr>
 
@@ -1895,7 +1895,7 @@ function freshports_SideBar() {
 $HTML .= '<br>
 <table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
 	<tr>
-		<td bgcolor="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><big><b>Latest Vulnerabilities</b></big></FONT></td>
+		<td class="accent" height="30"><FONT COLOR="#FFFFFF"><big><b>Latest Vulnerabilities</b></big></FONT></td>
 	</tr>
 	<tr><td>
 	' . file_get_contents(HTML_DIRECTORY . '/vuln-latest.html') . "\n" . '
@@ -1914,7 +1914,7 @@ $HTML .= '<br>
 
 <table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
 	<tr>
-		<td bgcolor="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><big><b>Ports</b></big></FONT></td>
+		<td class="accent" height="30"><FONT COLOR="#FFFFFF"><big><b>Ports</b></big></FONT></td>
 	</tr>
 	<tr>
 	<td valign="top">
@@ -1936,7 +1936,7 @@ if (IsSet($visitor)) {
 $HTML .= '<br>
 <table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
 	<tr>
-		<td bgcolor="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><big><b>Watch Lists</b></big></FONT></td>
+		<td class="accent" height="30"><FONT COLOR="#FFFFFF"><big><b>Watch Lists</b></big></FONT></td>
 	</tr>
 	<tr>
 	<td valign="top">';
@@ -1971,7 +1971,7 @@ $HTML .= '
 
 <table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
 	<tr>
-		<td COLSPAN="2" bgcolor="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><big><b>Statistics</b></big></FONT></td>
+		<td COLSPAN="2" class="accent" height="30"><FONT COLOR="#FFFFFF"><big><b>Statistics</b></big></FONT></td>
 	</tr>
 	<tr>
 	<td valign="top">

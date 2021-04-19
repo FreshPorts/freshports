@@ -145,7 +145,7 @@ class DisplayCommit {
 				$MaxNumberPortsToShow      = 10;
 
 				if ($mycommit->commit_date != $PreviousCommit->commit_date) {
-					$this->HTML .= '<TR><TD COLSPAN="3" BGCOLOR="' . BACKGROUND_COLOUR . '" HEIGHT="0">' . "\n";
+					$this->HTML .= '<TR><TD class="accent" COLSPAN="3" HEIGHT="0">' . "\n";
 					$this->HTML .= '   <FONT COLOR="#FFFFFF"><BIG>' . FormatTime($mycommit->commit_date, 0, "D, j M Y") . '</BIG></FONT>' . "\n";
 					$this->HTML .= '</TD></TR>' . "\n\n";
 				}

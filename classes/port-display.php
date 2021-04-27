@@ -463,11 +463,8 @@ class port_display {
 		$USES_PYTHON = in_array(USES_PYTHON, preg_split('/\s+|:/', $port->uses));
 
                 if ($USES_PYTHON) {
-                        // split off the prefix, everthing before the first -, inclusive
-                        $package_name_parts = explode('-', $port->package_name, 2);
-                        # if after the split, we are left with the package name, we don't have a python port.
-                        # we could just look for py- but that means hardcoding it... perhaps not a bad thing.
-                        $Is_A_Python_Port = $package_name_parts[0] !== $port->package_name;
+			# it is a python port if it starts with py-37, for example.
+                        $Is_A_Python_Port = preg_match('/^py[0-9][0-9]/', $port->package_name);
                 } else {
                         $Is_A_Python_Port = false;
                 }

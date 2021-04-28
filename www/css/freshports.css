@@ -222,6 +222,7 @@ table.borderless {
 
 table.bordered {
   border: 1px outset black;
+  border-spacing: 0;
 }
 
 table.bordered > tbody > tr > td {

@@ -962,7 +962,40 @@ function freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum=0) {
 }
 
 function freshports_style($Phorum=0) {
-	echo '	<link rel="stylesheet" href="/css/freshports.css" type="text/css">' . "\n";
+
+	$version = substr(hash_file('sha1', $_SERVER['DOCUMENT_ROOT'] . '/css/freshports.css'), 0, 8);
+	echo '	<link rel="stylesheet" href="/css/freshports.css?v=' . $version . '" type="text/css">' . "\n";
+
+	# from https://www.w3schools.com/css/css_tooltip.asp
+	# initially planned for Quarterly branch information: https://github.com/FreshPorts/freshports/issues/115
+	echo '<style type="text/css">
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  left: 105%;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+</style>';
+
 }
 
 function freshports_body($ExtraScript = null) {

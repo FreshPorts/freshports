@@ -1,6 +1,15 @@
+:root {
+  --beastie-red: #8c0707;
+}
+
 BODY, TD, TR, P, UL, OL, LI, INPUT, SELECT, DL, DD, DT, FONT
 {
     font-size: 12px;
+}
+
+.accent {
+  background-color: #8c0707;
+  background-color: var(--beastie-red);
 }
 
 IMG#fp-logo { max-width: 100%; height: auto }
@@ -199,7 +208,26 @@ div.scrollmenu table {
   display: inline-block;
 }
 
+a > img {
+  border: 0;
+}
 
+table.fullwidth {
+  width: 100%;
+}
+
+table.borderless {
+  border: 0 none black;
+}
+
+table.bordered {
+  border: 1px outset black;
+  border-spacing: 0;
+}
+
+table.bordered > tbody > tr > td {
+  border: 1px inset black;
+}
 
 td.version:hover {
   background-color: #777;

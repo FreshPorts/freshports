@@ -43,7 +43,7 @@ class FilesDisplay {
 		}
 
 		$this->HTML .= '
-<table border="1" width="100%" CELLSPACING="0" CELLPADDING="5">
+<table class="fullwidth bordered" CELLPADDING="5">
 <TR>
 ';
 		switch ($NumRows) {

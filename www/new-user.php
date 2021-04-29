@@ -180,15 +180,15 @@ if (IsSet($submit)) {
 <TR><TD VALIGN="top" WIDTH="100%">
 <?php
 if ($errors != '') {
-echo '<TABLE CELLPADDING=1 CELLSPACING=0 BORDER=0 BGCOLOR="' . BACKGROUND_COLOUR . '" WIDTH=100%>
+echo '<TABLE CELLPADDING=1 class="fullwidth borderless accent">
 <TR>
 <TD>
-<TABLE WIDTH=100% BORDER=0 CELLPADDING=1>
-<TR BGCOLOR="' . BACKGROUND_COLOUR . '"><TD><B><FONT color="#ffffff" size=+0>Access Code Failed!</FONT></B></TD>
+<TABLE class="fullwidth borderless" CELLPADDING=1>
+<TR class="accent"><TD><B><FONT color="#ffffff" size=+0>Access Code Failed!</FONT></B></TD>
 </TR>
 <TR BGCOLOR="#ffffff">
 <TD>
-  <TABLE WIDTH=100% CELLPADDING=3 CELLSPACING=0 BORDER=0>
+  <TABLE class="fullwidth borderless" CELLPADDING=3>
   <TR VALIGN=top>
    <TD><IMG SRC="/images/warning.gif"></TD>
    <TD WIDTH=100%>

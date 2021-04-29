@@ -158,23 +158,23 @@ UPDATE users
 						'FreeBSD, index, applications, ports');
 ?>
 
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<TABLE WIDTH="<? echo $TableWidth; ?>" class="borderless" ALIGN="center">
 <TR><TD VALIGN="top" width="100%">
-<TABLE width="100%" border="0">
+<TABLE class="fullwidth borderless">
   <TR>
     <TD height="20"><?php
 
 
 if ($errors) {
-echo '<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="' . BACKGROUND_COLOUR . '" width="100%">
+echo '<TABLE CELLPADDING="1" class="fullwidth bordeless accent">
 <TR>
 <TD>
-<TABLE width="100%" BORDER="0" CELLPADDING="1">
-<TR BGCOLOR="' . BACKGROUND_COLOUR . '"><TD><b><font color="#ffffff" size=+0>Access Code Failed!</font></b></TD>
+<TABLE class="fullwidth borderless" CELLPADDING="1">
+<TR class="accent"><TD><b><font color="#ffffff" size=+0>Access Code Failed!</font></b></TD>
 </TR>
 <TR BGCOLOR="#ffffff">
 <TD>
-  <TABLE width="100%" CELLPADDING="3" BORDER="0">
+  <TABLE class="fullwidth borderless" CELLPADDING="3">
   <TR VALIGN=top>
    <TD><img src="/images/warning.gif"></TD>
    <TD width="100%">
@@ -198,12 +198,12 @@ if ($AccountModified) {
    echo "Your account details were successfully updated.";
 } else {
 
-echo '<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="' . BACKGROUND_COLOUR . '" WIDTH="100%">
+echo '<TABLE CELLPADDING="1" class="fullwidth borderless accent">
 <TR>
 <TD VALIGN="top">
-<TABLE WIDTH="100%" BORDER="0" CELLPADDING="1">
+<TABLE class="fullwidth borderless" CELLPADDING="1">
 <TR>
-<TD BGCOLOR="' . BACKGROUND_COLOUR . '" HEIGHT="29" COLSPAN="1"><FONT COLOR="#FFFFFF"><BIG><BIG>Customize</BIG></BIG></FONT></TD>
+<TD class="accent" HEIGHT="29" COLSPAN="1"><FONT COLOR="#FFFFFF"><BIG><BIG>Customize</BIG></BIG></FONT></TD>
 </TR>
 <TR BGCOLOR="#ffffff">
 <TD>';

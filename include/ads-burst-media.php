@@ -32,7 +32,7 @@ function Ad_PhpPgAdsBase($Zone, $N) {
       document.write ("&amp;referer=" + escape(document.referrer));
    document.write ("\'><" + "/script>");
 //-->
-</script><noscript><a href=\'http://ads.unixathome.org/phpPgAds/adclick.php?n=' . $N . '\' target=\'_top\'><img src=\'http://ads.unixathome.org/phpPgAds/adview.php?what=zone:' . $Zone . '&amp;n=' . $N . '\' border=\'0\' alt=\'\'></a></noscript>
+</script><noscript><a href=\'http://ads.unixathome.org/phpPgAds/adclick.php?n=' . $N . '\' target=\'_top\'><img src=\'http://ads.unixathome.org/phpPgAds/adview.php?what=zone:' . $Zone . '&amp;n=' . $N . '\' alt=\'\'></a></noscript>
 ';
 }
 
@@ -44,7 +44,7 @@ rnum=Math.round(Math.random() * 100000); ts=String.fromCharCode(60);
 if (window.self != window.top) { nf=\'\' } else { nf=\'NF/\' };
 document.write(ts+\'script src="http://www.burstnet.com/cgi-bin/ads/cb4556a.cgi/v=2.1S/sz=125x125A/\'+rnum+\'/\'+nf+\'RETURN-CODE/JS/">\'+ts+\'/script>\');
 </script><noscript><a href="http://www.burstnet.com/ads/cb4556a-map.cgi/ns/v=2.1S/sz=125x125A/" target="_top">
-<img src="http://www.burstnet.com/cgi-bin/ads/cb4556a.cgi/ns/v=2.1S/sz=125x125A/" border="0" alt="Click Here"></a>
+<img src="http://www.burstnet.com/cgi-bin/ads/cb4556a.cgi/ns/v=2.1S/sz=125x125A/" alt="Click Here"></a>
 </noscript>
 <!-- END BURST CODE -->
 ';
@@ -60,7 +60,7 @@ if (window.self != window.top) { nf=\'\' } else { nf=\'NF/\' };
 document.write(ts+\'script src="http://www.burstnet.com/cgi-bin/ads/ad4556a.cgi/v=2.1S/sz=468x60A/\'+rnum+\'/NI/\'+nf+\'RETURN-CODE/JS/">\'+ts+\'/script>\');
 
 </script><noscript><a href="http://www.burstnet.com/ads/ad4556a-map.cgi/ns/v=2.1S/sz=468x60A/" target="_top">
-<img src="http://www.burstnet.com/cgi-bin/ads/ad4556a.cgi/ns/v=2.1S/sz=468x60A/" border="0" alt="Click Here"></a>
+<img src="http://www.burstnet.com/cgi-bin/ads/ad4556a.cgi/ns/v=2.1S/sz=468x60A/" alt="Click Here"></a>
 </noscript>
 <!-- END BURST CODE -->
   ';
@@ -76,7 +76,7 @@ if (window.self != window.top) { nf=\'\' } else { nf=\'NF/\' };
 document.write(ts+\'script src="http://www.burstnet.com/cgi-bin/ads/ad4556a.cgi/v=2.1S/sz=468x60A|728x90A/\'+rnum+\'/NI/\'+nf+\'RETURN-CODE/JS/">\'+ts+\'/script>\');
 
 </script><noscript><a href="http://www.burstnet.com/ads/ad4556a-map.cgi/ns/v=2.1S/sz=468x60A|728x90A/" target="_top">
-<img src="http://www.burstnet.com/cgi-bin/ads/ad4556a.cgi/ns/v=2.1S/sz=468x60A|728x90A/" border="0" alt="Click Here"></a>
+<img src="http://www.burstnet.com/cgi-bin/ads/ad4556a.cgi/ns/v=2.1S/sz=468x60A|728x90A/" alt="Click Here"></a>
 </noscript>
 <!-- END BURST CODE -->
   ';
@@ -102,7 +102,7 @@ rnum=Math.round(Math.random() * 100000); ts=String.fromCharCode(60);
 if (window.self != window.top) { nf=\'\' } else { nf=\'NF/\' };
 document.write(ts+\'script src="http://www.burstnet.com/cgi-bin/ads/sk4556a.cgi/v=2.1S/sz=120x600A/\'+rnum+\'/\'+nf+\'RETURN-CODE/JS/">\'+ts+\'/script>\');
 </script><noscript><a href="http://www.burstnet.com/ads/sk4556a-map.cgi/ns/v=2.1S/sz=120x600A/" target="_top">
-<img src="http://www.burstnet.com/cgi-bin/ads/sk4556a.cgi/ns/v=2.1S/sz=120x600A/" border="0" alt="Click Here"></a>
+<img src="http://www.burstnet.com/cgi-bin/ads/sk4556a.cgi/ns/v=2.1S/sz=120x600A/" alt="Click Here"></a>
 </noscript>
 <!-- END BURST CODE -->
   ';
@@ -116,7 +116,7 @@ function Ad_160x600() {
   if (window.self != window.top) { nf=\'\' } else { nf=\'NF/\' };
   document.write(ts+\'script src="http://www.burstnet.com/cgi-bin/ads/sk4556a.cgi/v=2.1S/sz=120x600A|160x600A/\'+rnum+\'/\'+nf+\'RETURN-CODE/JS/">\'+ts+\'/script>\');
   </script><noscript><a href="http://www.burstnet.com/ads/sk4556a-map.cgi/ns/v=2.1S/sz=120x600A|160x600A/" target="_top">
-  <img src="http://www.burstnet.com/cgi-bin/ads/sk4556a.cgi/ns/v=2.1S/sz=120x600A|160x600A/" border="0" alt="Click Here"></a>
+  <img src="http://www.burstnet.com/cgi-bin/ads/sk4556a.cgi/ns/v=2.1S/sz=120x600A|160x600A/" alt="Click Here"></a>
   </noscript>
   <!-- END BURST CODE -->
   
@@ -131,7 +131,7 @@ function Ad_468x60_Below() {
   if (window.self != window.top) { nf=\'\' } else { nf=\'NF/\' };
   document.write(ts+\'script src="http://www.burstnet.com/cgi-bin/ads/ba4556a.cgi/v=2.1S/sz=468x60B/\'+rnum+\'/\'+nf+\'RETURN-CODE/JS/">\'+ts+\'/script>\');
   </script><noscript><a href="http://www.burstnet.com/ads/ba4556a-map.cgi/ns/v=2.1S/sz=468x60B/" target="_top">
-  <img src="http://www.burstnet.com/cgi-bin/ads/ba4556a.cgi/ns/v=2.1S/sz=468x60B/" border="0" alt="Click Here"></a>
+  <img src="http://www.burstnet.com/cgi-bin/ads/ba4556a.cgi/ns/v=2.1S/sz=468x60B/" alt="Click Here"></a>
   </noscript>
   <!-- END BURST CODE -->
   
@@ -146,7 +146,7 @@ function Ad_300x250() {
   if (window.self != window.top) { nf=\'\' } else { nf=\'NF/\' };
   document.write(ts+\'script src="http://www.burstnet.com/cgi-bin/ads/ad4556a.cgi/v=2.1S/sz=300x250A/NZ/\'+rnum+\'/\'+nf+\'RETURN-CODE/JS/">\'+ts+\'/script>\');
   </script><noscript><a href="http://www.burstnet.com/ads/ad4556a-map.cgi/ns/v=2.1S/sz=300x250A/" target="_top">
-  <img src="http://www.burstnet.com/cgi-bin/ads/ad4556a.cgi/ns/v=2.1S/sz=300x250A/" border="0" alt="Click Here"></a>
+  <img src="http://www.burstnet.com/cgi-bin/ads/ad4556a.cgi/ns/v=2.1S/sz=300x250A/" alt="Click Here"></a>
   </noscript>
   <!-- END BURST CODE -->
   ';

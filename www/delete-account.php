@@ -76,23 +76,23 @@ if (IsSet($submit)) {
 						'FreeBSD, index, applications, ports');
 ?>
 
-<TABLE WIDTH="<? echo $TableWidth; ?>" BORDER="0" ALIGN="center">
+<TABLE WIDTH="<? echo $TableWidth; ?>" class="borderless" ALIGN="center">
 <TR><TD VALIGN="top" width="100%">
-<TABLE width="100%" border="0">
+<TABLE class="fullwidth borderless">
   <TR>
     <TD height="20"><?php
 
 
 if ($errors) {
-echo '<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="' . BACKGROUND_COLOUR . '" width="100%">
+echo '<TABLE CELLPADDING="1" class="fullwidth borderless accent">
 <TR>
 <TD>
-<TABLE width="100%" BORDER="0" CELLPADDING="1">
-<TR BGCOLOR="' . BACKGROUND_COLOUR . '"><TD><b><font color="#ffffff" size=+0>Deleted Failed!</font></b></TD>
+<TABLE class="fullwidth borderless" CELLPADDING="1">
+<TR class="accent"><TD><b><font color="#ffffff" size=+0>Deleted Failed!</font></b></TD>
 </TR>
 <TR BGCOLOR="#ffffff">
 <TD>
-  <TABLE width="100%" CELLPADDING="3" BORDER="0">
+  <TABLE class="fullwidth borderless" CELLPADDING="3">
   <TR VALIGN=top>
    <TD><img src="/images/warning.gif"></TD>
    <TD width="100%">
@@ -113,12 +113,12 @@ echo '<p>If you need help, please email postmaster@. </p>
 <br>';
 }  // if ($errors)
 
-echo '<TABLE CELLPADDING="1" BORDER="0" BGCOLOR="' . BACKGROUND_COLOUR . '" WIDTH="100%">
+echo '<TABLE CELLPADDING="1" class="fullwidth borderless accent">
 <TR>
 <TD VALIGN="top">
-<TABLE WIDTH="100%" BORDER="0" CELLPADDING="1">
+<TABLE class="fullwidth borderless" CELLPADDING="1">
 <TR>
-<TD BGCOLOR="' . BACKGROUND_COLOUR . '" HEIGHT="29" COLSPAN="1"><FONT COLOR="#FFFFFF"><BIG><BIG>Customize</BIG></BIG></FONT></TD>
+<TD class="accent" HEIGHT="29" COLSPAN="1"><FONT COLOR="#FFFFFF"><BIG><BIG>Customize</BIG></BIG></FONT></TD>
 </TR>
 <TR BGCOLOR="#ffffff">
 <TD>';
@@ -136,7 +136,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 ?>
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
-<TABLE width="*" border="0" cellpadding="1">
+<TABLE width="*" class="borderless" cellpadding="1">
           <TR>
             <TD VALIGN="top">
                <p>The account name is: <?php echo $User->name; ?><p>

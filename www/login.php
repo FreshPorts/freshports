@@ -83,7 +83,7 @@ if (IsSet($_REQUEST['LOGIN']) && $_REQUEST['UserID']) {
 				if ($status == $UserStatusUnconfirmed) {
 					$error .= 'Your account needs to be enabled by following the directions in the email we have sent to you.' . "<BR>\n";
 					$error .= 'To have your activation details resent to the email address you supplied, click on the resend button' . "<BR>\n";
-					$error .= '<form action="' . $_SERVER["PHP_SELF"] . ' method="POST">' . "\n";
+					$error .= '<form action="' . $_SERVER["PHP_SELF"] . '" method="POST">' . "\n";
 					$error .= '<input type="hidden" name="user" value="' . htmlentities($UserID) . '">' . "\n";
 					$error .= '<input TYPE="submit" VALUE="Resend" name=resend>' . "\n";
 					$error .= '</form>' . "\n";
@@ -142,13 +142,13 @@ if ($LoginFailed) {
 <?php echo freshports_ErrorContentTable(); ?>
 
 <TR><TD VALIGN=TOP>
-<TABLE WIDTH="100%">
+<TABLE class="fullwidth">
 <TR>
 	<? echo freshports_PageBannerText("Login Failed!") ?>
 </TR>
 <TR BGCOLOR="#ffffff">
 <TD>
-  <TABLE WIDTH="100%" CELLPADDING=0 CELLSPACING=0 BORDER=0>
+  <TABLE class="fullwidth borderless" CELLPADDING="0">
   <TR valign=top>
    <TD><img src="/images/warning.gif"></TD>
    <TD WIDTH="100%">
@@ -176,14 +176,14 @@ if ($error) {
 ?>
 <?php echo freshports_ErrorContentTable(); ?>
 <TR><TD VALIGN=TOP>
-<TABLE WIDTH="100%">
+<TABLE class="fullwidth">
 <TR>
     <? echo freshports_PageBannerText("NOTICE"); ?>
 </TR>
 
 <TR BGCOLOR="#ffffff">
 <TD>
-  <TABLE WIDTH="100%" CELLPADDING=0 BORDER=0>
+  <TABLE class="fullwidth borderless" CELLPADDING=0>
   <TR valign=top>
    <TD><img src="/images/warning.gif"></TD>
    <TD WIDTH="100%">
@@ -204,9 +204,9 @@ if ($error) {
 
 
 
-echo '<TABLE WIDTH="100%" BORDER="1" CELLPADDING="1" CELLSPACING="0" BGCOLOR="' . BACKGROUND_COLOUR . '">';
+echo '<TABLE class="fullwidth bordered accent" CELLPADDING="1">';
 
-echo '<TR BGCOLOR="' . BACKGROUND_COLOUR . '">';
+echo '<TR class="accent">';
 
 echo freshports_PageBannerText("Login");
 echo '</TR>';

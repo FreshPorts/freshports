@@ -22,12 +22,10 @@ DEFINE('COPYRIGHTHOLDERURL',    'https://www.langille.org/');
 DEFINE('URL2LINK_CUTOFF_LEVEL', 0);
 DEFINE('FAQLINK',               'faq.php');
 DEFINE('PORTSMONURL',           'http://portsmon.freebsd.org/portoverview.py');
-DEFINE('NOBORDER',              '0');
-DEFINE('BORDER',                '1');
+DEFINE('NOBORDER',              'borderless');
+DEFINE('BORDER',                'bordered');
 
 DEFINE('UNMAINTAINTED_ADDRESS', 'ports@freebsd.org');
-
-DEFINE('BACKGROUND_COLOUR', '#8c0707');
 
 DEFINE('CLICKTOADD', 'Click to add this to your default watch list[s]');
 
@@ -44,7 +42,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php');
 function freshports_MainTable() {
 	GLOBAL $TableWidth;
 
-	return '<table width="' . $TableWidth . '" border="0">
+	return '<table width="' . $TableWidth . '" class="borderless">
 ';
 }
 
@@ -57,7 +55,7 @@ function freshports_Search_For_Bugs($CategoryPort) {
   $SearchURL = "https://bugs.freebsd.org/bugzilla/buglist.cgi?component=Individual%20Port%28s%29&amp;list_id=28394&amp;product=Ports%20%26%20Packages&amp;query_format=advanced&amp;resolution=---" . 
     "&amp;short_desc=" . urlencode($CategoryPort) . "&amp;short_desc_type=allwordssubstr";
 
-  return '<a href="' . $SearchURL . '"  rel="nofollow noopener noreferrer"">' . freshports_Bugs_Find_Icon() . '</a>';
+  return '<a href="' . $SearchURL . '"  rel="nofollow noopener noreferrer">' . freshports_Bugs_Find_Icon() . '</a>';
 }
 
 function freshports_Report_A_Bug($CategoryPort) {
@@ -139,13 +137,13 @@ function freshports_Search_Committer($Committer) {
 	      freshports_Search_Icon('search for other commits by this committer') . '</a>';
 }
 
-function freshports_MainContentTable($Border=1, $ColSpan=1) {
-	return '<table width="100%" border="' . $Border . '" cellspacing="0" cellpadding="8">' . 
+function freshports_MainContentTable($Classes=BORDER, $ColSpan=1) {
+	return '<table class="fullwidth ' . $Classes . '" cellpadding="8">' . 
 		PortsFreezeStatus($ColSpan);
 }
 
 function  freshports_ErrorContentTable() {
-	echo '<table width="100%" border="1" align="center" cellpadding="1" cellspacing="0">
+	echo '<table class="fullwidth bordered" align="center" cellpadding="1">
 ';
 }
 
@@ -336,43 +334,43 @@ return '
 }
 
 function freshports_Fallout_Icon() {
-	return '<img src="/images/fallout-16x16.png" alt="pkg-fallout" title="pkg-fallout" border="0" width="16" height="16" vspace="1">';
+	return '<img src="/images/fallout-16x16.png" alt="pkg-fallout" title="pkg-fallout" width="16" height="16" vspace="1">';
 }
 
 function freshports_Subversion_Icon($Title = 'Subversion') {
-	return '<img src="/images/subversion.jpg" alt="' . $Title . '" title="' . $Title . '" border="0" width="16" height="16" vspace="1">';
+	return '<img src="/images/subversion.jpg" alt="' . $Title . '" title="' . $Title . '" width="16" height="16" vspace="1">';
 }
 
 function freshports_Git_Icon($Title = 'git') {
-	return '<img src="/images/git.png" alt="' . $Title . '" title="' . $Title . '" border="0" width="22" height="22" vspace="1">';
+	return '<img src="/images/git.png" alt="' . $Title . '" title="' . $Title . '" width="22" height="22" vspace="1">';
 }
 
 function freshports_SanityTestFailure_Icon($Title = 'Sanity Test Failure') {
-	return '<img src="/images/stf.gif" alt="' . $Title . '" title="' . $Title . '" border="0" width="13" height="13" vspace="1">';
+	return '<img src="/images/stf.gif" alt="' . $Title . '" title="' . $Title . '" width="13" height="13" vspace="1">';
 }
 
 function freshports_Ascending_Icon($Title = 'Ascending Order') {
-	return '<img src="/images/ascending.gif" alt="' . $Title . '" title="' . $Title . '" border="0" width="9" height="9" align="middle">';
+	return '<img src="/images/ascending.gif" alt="' . $Title . '" title="' . $Title . '" width="9" height="9" align="middle">';
 }
 
 function freshports_Descending_Icon($Title = 'Descending Order') {
-	return '<img src="/images/descending.gif" alt="' . $Title . '" title="' . $Title . '" border="0" width="9" height="9" align="middle">';
+	return '<img src="/images/descending.gif" alt="' . $Title . '" title="' . $Title . '" width="9" height="9" align="middle">';
 }
 
 function freshports_Search_Icon($Title = 'Search') {
-	return '<img src="/images/search.jpg" alt="' . $Title . '" title="' . $Title . '" border="0" width="17" height="17" align="top">';
+	return '<img src="/images/search.jpg" alt="' . $Title . '" title="' . $Title . '" width="17" height="17" align="top">';
 }
 
 function freshports_Bugs_Find_Icon($Title = 'Find issues related to this port') {
-	return '<img src="/images/bug.gif" alt="' . $Title . '" title="' . $Title . '" border="0" width="16" height="16" align="top">';
+	return '<img src="/images/bug.gif" alt="' . $Title . '" title="' . $Title . '" width="16" height="16" align="top">';
 }
 
 function freshports_Bugs_Report_Icon($Title = 'Report an issue related to this port') {
-	return '<img src="/images/bug_report.gif" alt="' . $Title . '" title="' . $Title . '" border="0" width="16" height="16" align="top">';
+	return '<img src="/images/bug_report.gif" alt="' . $Title . '" title="' . $Title . '" width="16" height="16" align="top">';
 }
 
 function freshports_WatchListCount_Icon() {
-	return '<img src="/images/sum.gif" alt="on this many watch lists" title="on this many watch lists" border="0" width="8" height="11">';
+	return '<img src="/images/sum.gif" alt="on this many watch lists" title="on this many watch lists" width="8" height="11">';
 }
 
 function freshports_WatchListCount_Icon_Link() {
@@ -380,11 +378,11 @@ function freshports_WatchListCount_Icon_Link() {
 }
 
 function freshports_Files_Icon() {
-	return '<img src="/images/logs.gif" alt="files touched by this commit" title="files touched by this commit" border="0" width="17" height="20">';
+	return '<img src="/images/logs.gif" alt="files touched by this commit" title="files touched by this commit" width="17" height="20">';
 }
 
 function freshports_Refresh_Icon() {
-	return '<img src="/images/refresh.gif" alt="Refresh" title="Refresh - this port is being refreshed, or make failed to run error-free." border="0" width="15" height="18">';
+	return '<img src="/images/refresh.gif" alt="Refresh" title="Refresh - this port is being refreshed, or make failed to run error-free." width="15" height="18">';
 }
 
 function freshports_Refresh_Icon_Link() {
@@ -392,7 +390,7 @@ function freshports_Refresh_Icon_Link() {
 }
 
 function freshports_Deleted_Icon() {
-	return '<img src="/images/deleted.gif" alt="Deleted" title="Deleted" border="0" width="21" height="18">';
+	return '<img src="/images/deleted.gif" alt="Deleted" title="Deleted" width="21" height="18">';
 }
 
 function freshports_Deleted_Icon_Link() {
@@ -415,7 +413,7 @@ function freshports_Forbidden_Icon($HoverText = '') {
 	$Alt       = "Forbidden";
 	$HoverText = freshports_HoverTextCleaner($Alt, $HoverText);
 
-	return '<img src="/images/forbidden.gif" alt="' . $Alt . '" title="' . $HoverText . '" border="0" width="20" height="20">';
+	return '<img src="/images/forbidden.gif" alt="' . $Alt . '" title="' . $HoverText . '" width="20" height="20">';
 }
 
 function freshports_Forbidden_Icon_Link($HoverText = '') {
@@ -426,7 +424,7 @@ function freshports_Broken_Icon($HoverText = '') {
 	$Alt       = "Broken";
 	$HoverText = freshports_HoverTextCleaner($Alt, $HoverText);
 
-	return '<img src="/images/broken.gif" alt="' . $Alt . '" title="' . $HoverText . '" border="0" width="17" height="16">';
+	return '<img src="/images/broken.gif" alt="' . $Alt . '" title="' . $HoverText . '" width="17" height="16">';
 }
 
 function freshports_Broken_Icon_Link($HoverText = '') {
@@ -437,7 +435,7 @@ function freshports_Deprecated_Icon($HoverText = '') {
 	$Alt       = "Deprecated";
 	$HoverText = freshports_HoverTextCleaner($Alt, $HoverText);
 
-	return '<img src="/images/deprecated.gif" alt="' . $Alt . '" title="' . $HoverText . '" border="0" width="18" height="18">';
+	return '<img src="/images/deprecated.gif" alt="' . $Alt . '" title="' . $HoverText . '" width="18" height="18">';
 }
 
 function freshports_Deprecated_Icon_Link($HoverText = '') {
@@ -448,7 +446,7 @@ function freshports_Expired_Icon($HoverText = '') {
 	$Alt       = "Expired";
 	$HoverText = freshports_HoverTextCleaner($Alt, $HoverText);
 
-	return '<img src="/images/expired.gif" alt="' . $Alt . '" title="' . $HoverText . '" border="0" width="16" height="16">';
+	return '<img src="/images/expired.gif" alt="' . $Alt . '" title="' . $HoverText . '" width="16" height="16">';
 }
 
 function freshports_Expired_Icon_Link($HoverText = '') {
@@ -459,7 +457,7 @@ function freshports_Expiration_Icon($HoverText = '') {
 	$Alt       = "Expiration Date";
 	$HoverText = freshports_HoverTextCleaner($Alt, $HoverText);
 
-	return '<img src="/images/expiration.gif" alt="' . $Alt . '" title="' . $HoverText . '" border="0" width="16" height="16">';
+	return '<img src="/images/expiration.gif" alt="' . $Alt . '" title="' . $HoverText . '" width="16" height="16">';
 }
 
 function freshports_Expiration_Icon_Link($HoverText = '') {
@@ -470,7 +468,7 @@ function freshports_Restricted_Icon($HoverText = '') {
 	$Alt       = "Restricted";
 	$HoverText = freshports_HoverTextCleaner($Alt, $HoverText);
 
-	return '<img src="/images/restricted.jpg" alt="' . $Alt . '" title="' . $HoverText . '" border="0" width="16" height="16">';
+	return '<img src="/images/restricted.jpg" alt="' . $Alt . '" title="' . $HoverText . '" width="16" height="16">';
 }
 
 function freshports_Restricted_Icon_Link($HoverText = '') {
@@ -481,7 +479,7 @@ function freshports_Is_Interactive_Icon($HoverText = '') {
 	$Alt       = "Is Interactive";
 	$HoverText = freshports_HoverTextCleaner($Alt, $HoverText);
 
-	return '<img src="/images/crt.gif" alt="' . $Alt . '" title="' . $HoverText . '" border="0" width="16" height="16" align="top">';
+	return '<img src="/images/crt.gif" alt="' . $Alt . '" title="' . $HoverText . '" width="16" height="16" align="top">';
 }
 
 function freshports_Is_Interactive_Icon_Link($HoverText = '') {
@@ -492,7 +490,7 @@ function freshports_No_CDROM_Icon($HoverText = '') {
 	$Alt       = "NO CDROM";
 	$HoverText = freshports_HoverTextCleaner($Alt, $HoverText);
 
-	return '<img src="/images/no_cdrom.jpg" alt="' . $Alt . '" title="' . $HoverText . '" border="0" width="16" height="16">';
+	return '<img src="/images/no_cdrom.jpg" alt="' . $Alt . '" title="' . $HoverText . '" width="16" height="16">';
 }
 
 function freshports_No_CDROM_Icon_Link($HoverText = '') {
@@ -503,7 +501,7 @@ function freshports_Ignore_Icon($HoverText = '') {
 	$Alt       = "Ignore";
 	$HoverText = freshports_HoverTextCleaner($Alt, $HoverText);
 
-	return '<img src="/images/ignored.png" alt="' . $Alt . '" title="' . $HoverText . '" border="0" width="20" height="21;">';
+	return '<img src="/images/ignored.png" alt="' . $Alt . '" title="' . $HoverText . '" width="20" height="21;">';
 }
 
 function freshports_Ignore_Icon_Link($HoverText = '') {
@@ -511,35 +509,35 @@ function freshports_Ignore_Icon_Link($HoverText = '') {
 }
 
 function freshports_New_Icon() {
-	return '<img src="/images/new.gif" alt="new!" title="new!" border="0" width="28" height="11" HSPACE="2">';
+	return '<img src="/images/new.gif" alt="new!" title="new!" width="28" height="11" HSPACE="2">';
 }
 
 function freshports_Mail_Icon() {
-	return '<img src="/images/envelope10.gif" alt="Original commit" title="Original commit message" border="0" width="32" height="18">';
+	return '<img src="/images/envelope10.gif" alt="Original commit" title="Original commit message" width="32" height="18">';
 }
 
 function freshports_Commit_Icon() {
-	return '<img src="/images/copy.gif" alt="Commit details" title="FreshPorts commit message" border="0" width="16" height="16">';
+	return '<img src="/images/copy.gif" alt="Commit details" title="FreshPorts commit message" width="16" height="16">';
 }
 
 function freshports_CVS_Icon() {
-	return '<img src="/images/cvs.png" alt="CVS log" title="CVS log" border="0" width="19" height="17">';
+	return '<img src="/images/cvs.png" alt="CVS log" title="CVS log" width="19" height="17">';
 }
 
 function freshports_Watch_Icon() {
-	return '<img src="/images/watch-remove.gif" alt="Click to remove this from your default watch list[s]" title="Click to remove this from your default watch list[s]" border="0" width="16" height="16">';
+	return '<img src="/images/watch-remove.gif" alt="Click to remove this from your default watch list[s]" title="Click to remove this from your default watch list[s]" width="16" height="16">';
 }
 
 function freshports_Watch_Icon_Add() {
-	return '<img src="/images/watch-add.gif" alt="' . CLICKTOADD . '" title="' . CLICKTOADD . '" border="0" width="16" height="16">';
+	return '<img src="/images/watch-add.gif" alt="' . CLICKTOADD . '" title="' . CLICKTOADD . '" width="16" height="16">';
 }
 
 function freshports_Watch_Icon_Empty() {
-	return '<img src="/images/watch-empty.gif" alt="" title="" border="0" width="16" height="1">';
+	return '<img src="/images/watch-empty.gif" alt="" title="" width="16" height="1">';
 }
 
 function freshports_Encoding_Errors() {
-	return '<img src="/images/error.gif" alt="Encoding Errors (not all of the commit message was ASCII)" title="Encoding Errors (not all of the commit message was ASCII)" border="0" width="16" height="16">';
+	return '<img src="/images/error.gif" alt="Encoding Errors (not all of the commit message was ASCII)" title="Encoding Errors (not all of the commit message was ASCII)" width="16" height="16">';
 }
 
 function freshports_Encoding_Errors_Link() {
@@ -547,27 +545,27 @@ function freshports_Encoding_Errors_Link() {
 }
 
 function freshports_Repology_Icon() {
-	return '<img src="/images/repology.png" alt="View this port on Repology." title="View this port on Repology." border="0" width="16" height="16">';
+	return '<img src="/images/repology.png" alt="View this port on Repology." title="View this port on Repology." width="16" height="16">';
 }
 
 function freshports_VuXML_Icon() {
-	return '<img src="/images/vuxml.gif" alt="This port version is marked as vulnerable." title="This port version is marked as vulnerable." border="0" width="13" height="16">';
+	return '<img src="/images/vuxml.gif" alt="This port version is marked as vulnerable." title="This port version is marked as vulnerable." width="13" height="16">';
 }
 
 function freshports_VuXML_Icon_Faded() {
-	return '<img src="/images/vuxml-faded.gif" alt="An older version of this port was marked as vulnerable." title="An older version of this port was marked as vulnerable." border="0" width="13" height="16">';
+	return '<img src="/images/vuxml-faded.gif" alt="An older version of this port was marked as vulnerable." title="An older version of this port was marked as vulnerable." width="13" height="16">';
 }
 
 function freshports_Revision_Icon() {
-	return '<img src="/images/revision.jpg" alt="View revision" title="view revision" border="0" width="11" height="15" align="top">';
+	return '<img src="/images/revision.jpg" alt="View revision" title="view revision" width="11" height="15" align="top">';
 }
 
 function freshports_Annotate_Icon() {
-	return '<img src="/images/annotate.png" alt="Annotate / Blame" title="Annotate / Blame" border="0" width="20" height="20" align="middle">';
+	return '<img src="/images/annotate.png" alt="Annotate / Blame" title="Annotate / Blame" width="20" height="20" align="middle">';
 }
 
 function freshports_Diff_Icon() {
-	return '<img src="/images/diff.png" alt="View diff" title="view diff" border="0" width="15" height="11" align="top">';
+	return '<img src="/images/diff.png" alt="View diff" title="view diff" width="15" height="11" align="top">';
 }
 
 
@@ -643,11 +641,11 @@ function freshports_Email_Link($message_id) {
 }
 
 function freshports_Commit_Flagged_Icon($Title = 'Commit Flagged') {
-	return '<img src="/images/commit-flagged.gif" alt="' . $Title . '" title="' . $Title . '" border="0" width="16" height="16" align="middle">';
+	return '<img src="/images/commit-flagged.gif" alt="' . $Title . '" title="' . $Title . '" width="16" height="16" align="middle">';
 }
 
 function freshports_Commit_Flagged_Not_Icon($Title = 'Commit Not Flagged') {
-	return '<img src="/images/commit-flagged-not.gif" alt="' . $Title . '" title="' . $Title . '" border="0" width="16" height="16" align="middle">';
+	return '<img src="/images/commit-flagged-not.gif" alt="' . $Title . '" title="' . $Title . '" width="16" height="16" align="middle">';
 }
 
 function freshports_Commit_Flagged_Link($message_id) {
@@ -716,7 +714,7 @@ function freshports_Commit_Link_Port($MessageID, $Category, $Port) {
 
 function freshports_MorePortsToShow($message_id, $NumberOfPortsInThisCommit, $MaxNumberPortsToShow) {
 	$HTML  = "(Only the first $MaxNumberPortsToShow of $NumberOfPortsInThisCommit ports in this commit are shown above. ";
-	$HTML .= freshports_Commit_Link($message_id, '<img src="/images/play.gif" alt="View all ports for this commit" title="View all ports for this commit" border="0" width="13" height="13">');
+	$HTML .= freshports_Commit_Link($message_id, '<img src="/images/play.gif" alt="View all ports for this commit" title="View all ports for this commit" width="13" height="13">');
 	$HTML .= ")";
 
 	return $HTML;
@@ -724,7 +722,7 @@ function freshports_MorePortsToShow($message_id, $NumberOfPortsInThisCommit, $Ma
 
 function freshports_MoreCommitMsgToShow($message_id, $NumberOfLinesShown) {
 	$HTML  = "(Only the first $NumberOfLinesShown lines of the commit message are shown above ";
-	$HTML .= freshports_Commit_Link($message_id, '<img src="/images/play.gif" alt="View all of this commit message" title="View all of this commit message" border="0" width="13" height="13">');
+	$HTML .= freshports_Commit_Link($message_id, '<img src="/images/play.gif" alt="View all of this commit message" title="View all of this commit message" width="13" height="13">');
 	$HTML .= ")";
 
 	return $HTML;
@@ -820,7 +818,7 @@ GLOBAL $FreshPortsLogoHeight;
 #echo "$LocalTimeAdjustment<br>";
 
 	$HTML = '<br>
-<table width="' . $TableWidth . '" border="0" align="center">
+<table width="' . $TableWidth . '" class="borderless" align="center">
 <tr>
 	<td><a href="';
 
@@ -829,7 +827,7 @@ GLOBAL $FreshPortsLogoHeight;
 	} else {
 		$HTML .= '/';
 	}
-	$HTML .= '"><img id="fp-logo" src="' . $FreshPortsLogo . '" alt="' . $FreshPortsName . ' -- ' . $FreshPortsSlogan . '" title="' . $FreshPortsName . ' -- ' . $FreshPortsSlogan . '" width="' . $FreshPortsLogoWidth . '" height="' . $FreshPortsLogoHeight . '" border="0"></a>
+	$HTML .= '"><img id="fp-logo" src="' . $FreshPortsLogo . '" alt="' . $FreshPortsName . ' -- ' . $FreshPortsSlogan . '" title="' . $FreshPortsName . ' -- ' . $FreshPortsSlogan . '" width="' . $FreshPortsLogoWidth . '" height="' . $FreshPortsLogoHeight . '"></a>
 ';
 
     if (defined('SHOW_ANIMATED_BUG') && SHOW_ANIMATED_BUG)
@@ -841,17 +839,17 @@ GLOBAL $FreshPortsLogoHeight;
     	$HTML .= "
 
 <!-- IPv6-test.com button BEGIN -->
-<a href='https://ipv6-test.com/validate.php?url=referer' rel='noopener noreferrer'><img src='/images/button-ipv6-big.png' alt='ipv6 ready' title='ipv6 ready' border='0'></a>
+<a href='https://ipv6-test.com/validate.php?url=referer' rel='noopener noreferrer'><img src='/images/button-ipv6-big.png' alt='ipv6 ready' title='ipv6 ready'></a>
 <!-- IPv6-test.com button END -->
 ";
 	}
 
-    $HTML .= '<span class="amazon">As an Amazon Associate I earn from qualifying purchases.<br>Want a good read? Try <a target="_blank" rel="noopener noreferrer" href="https://www.amazon.com/gp/product/B07PVTBWX7/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B07PVTBWX7&amp;linkCode=as2&amp;tag=thfrdi0c-20&amp;linkId=f4cffa799f323b5adebf953c7d3f20ea">FreeBSD Mastery: Jails (IT Mastery Book 15)</a><img src="//ir-na.amazon-adsystem.com/e/ir?t=thfrdi0c-20&amp;l=am2&amp;o=1&amp;a=B07PVTBWX7" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></span>';
+    $HTML .= '<span class="amazon">As an Amazon Associate I earn from qualifying purchases.<br>Want a good read? Try <a target="_blank" rel="noopener noreferrer" href="https://www.amazon.com/gp/product/B07PVTBWX7/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B07PVTBWX7&amp;linkCode=as2&amp;tag=thfrdi0c-20&amp;linkId=f4cffa799f323b5adebf953c7d3f20ea">FreeBSD Mastery: Jails (IT Mastery Book 15)</a><img src="//ir-na.amazon-adsystem.com/e/ir?t=thfrdi0c-20&amp;l=am2&amp;o=1&amp;a=B07PVTBWX7" width="1" height="1" alt="" style="border:none !important; margin:0px !important;"></span>';
 	
 	$HTML .= '</td>';
 
 if (date("M") == 'Nov' && date("j") <= 12) {
-	$HTML .= '	<td nowrap align="center" CLASS="sans" valign="bottom"><a href="https://www.google.ca/search?q=remembrance+day" rel="noopener noreferrer"><img src="/images/poppy.gif" width="50" height="48" border="0" alt="Remember" title="Remember"><br>I remember</a></td>';
+	$HTML .= '	<td nowrap align="center" CLASS="sans" valign="bottom"><a href="https://www.google.ca/search?q=remembrance+day" rel="noopener noreferrer"><img src="/images/poppy.gif" width="50" height="48" alt="Remember" title="Remember"><br>I remember</a></td>';
 } else {
 	$HTML .= '	<td>';
 	$HTML .= '<div id="followus"><div class="header">Follow us</div><a href="https://news.freshports.org/" rel="noopener noreferrer">Blog</a><br><a href="https://twitter.com/freshports/" rel="noopener noreferrer">Twitter</a><br><a href="https://freshports.wordpress.com/" rel="noopener noreferrer">Status page</a><br></div>';
@@ -966,7 +964,8 @@ function freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum=0) {
 
 function freshports_style($Phorum=0) {
 
-	echo '	<link rel="stylesheet" href="/css/freshports.css" type="text/css">' . "\n";
+	$version = substr(hash_file('sha1', $_SERVER['DOCUMENT_ROOT'] . '/css/freshports.css'), 0, 8);
+	echo '	<link rel="stylesheet" href="/css/freshports.css?v=' . $version . '" type="text/css">' . "\n";
 
 	# from https://www.w3schools.com/css/css_tooltip.asp
 	# initially planned for Quarterly branch information: https://github.com/FreshPorts/freshports/issues/115
@@ -1029,7 +1028,7 @@ if (!empty($ExtraScript)) {
 
 		if ($BannerAd == 1) echo 'banner is on';
 
-		echo '<table border="1">';
+		echo '<table class="bordered">';
 		echo '<tr><td>ShowAds</td><td>'               . $ShowAds               . '</td></tr>';
 		echo '<tr><td>BannerAd</td><td>'              . $BannerAd              . '</td></tr>';
 		echo '<tr><td>BannerAdUnder</td><td>'         . $BannerAdUnder         . '</td></tr>';
@@ -1248,7 +1247,7 @@ function freshports_PortCommitsHeader($port) {
 	
 	$HTML = '';
 
-	$HTML .= '<table border="1" width="100%" cellspacing="0" cellpadding="5">' . "\n";
+	$HTML .= '<table class="fullwidth bordered" cellpadding="5">' . "\n";
 	$HTML .= "<tr>\n";
 
 	$Columns = 3;
@@ -1630,7 +1629,7 @@ function freshports_wrap($text, $length = WRAPCOMMITSATCOLUMN) {
 }
 
 function freshports_PageBannerText($Text, $ColSpan=1) {
-	return '<td align="left" bgcolor="' . BACKGROUND_COLOUR . '" height="29" COLSPAN="' . $ColSpan . '"><FONT COLOR="#FFFFFF"><big><big>' . $Text . '</big></big></FONT></td>' . "\n";
+	return '<td align="left" class="accent" height="29" COLSPAN="' . $ColSpan . '"><FONT COLOR="#FFFFFF"><big><big>' . $Text . '</big></big></FONT></td>' . "\n";
 }
 
 
@@ -1692,7 +1691,7 @@ function freshports_ShowFooter($PhorumBottom = 0) {
 	GLOBAL $ShowPoweredBy;
 	GLOBAL $ShowAds;
 
-	$HTML = '<table width="' . $TableWidth . '" border="0" align="center">
+	$HTML = '<table width="' . $TableWidth . '" class="borderless" align="center">
 <tr><td>';
 
 
@@ -1704,7 +1703,7 @@ function freshports_ShowFooter($PhorumBottom = 0) {
 
 	$HTML .= '
 <HR>
-<table width="98%" border="0">
+<table width="98%" class="borderless">
 ';
 
 	if (IsSet($ShowPoweredBy)) {
@@ -1714,23 +1713,23 @@ function freshports_ShowFooter($PhorumBottom = 0) {
 <td align="center">
 
 <a href="https://www.freebsd.org/" rel="noopener noreferrer"><img src="/images/pbfbsd2.gif"
-alt="powered by FreeBSD" border="0" width="171" height="64"></a>
+alt="powered by FreeBSD" width="171" height="64"></a>
 
 &nbsp;
 
 <a href="https://www.php.net/" rel="noopener noreferrer"><img src="/images/php-med-trans-light.gif"
-alt="powered by php" border="0" width="95" height="50"></a>
+alt="powered by php" width="95" height="50"></a>
 &nbsp;
 
 <a href="https://www.postgresql.org/" rel="noopener noreferrer"><img src="/images/pg-power.jpg"
-alt="powered by PostgreSQL" border="0" width="164" height="59"></a>
+alt="powered by PostgreSQL" width="164" height="59"></a>
 
 
 </td></tr>
 <tr><td align="center">
 
 <a href="https://www.nginx.org/" rel="noopener noreferrer"><img src="/images/nginx.gif" 
-alt="powered by nginx" border="0" width="121" height="32"></a>
+alt="powered by nginx" width="121" height="32"></a>
 
 <HR>
 
@@ -1743,7 +1742,7 @@ alt="powered by nginx" border="0" width="121" height="32"></a>
 
 	$HTML .= '
 <tr><td>
-<table width="100%">
+<table class="fullwidth">
 <tr>
 <td align="left"  valign="top">
 <small>' . SPONSORS . '</small>
@@ -1795,9 +1794,9 @@ function freshports_SideBar() {
 	$ColumnWidth = 160;
 
 	$HTML = '
-  <table width="' . $ColumnWidth . '" border="1" cellspacing="0" cellpadding="5">
+  <table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
         <tr>
-         <td bgcolor="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><big><b>Login</b></big></FONT></td>
+         <td class="accent" height="30"><FONT COLOR="#FFFFFF"><big><b>Login</b></big></FONT></td>
         </tr>
         <tr>
 
@@ -1813,7 +1812,7 @@ function freshports_SideBar() {
 		$HTML .= '<FONT SIZE="-1">Logged in as ' . htmlentities($User->name) . "</FONT><br>";
 
 		if ($User->emailbouncecount > 0) {
-			$HTML .= '<img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif"  border="0" height="32" width="32"><img src="/images/warning.gif" border="0"height="32" width="32"><br>';
+			$HTML .= '<img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif"  border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><br>';
 			$HTML .= '<FONT SIZE="-1">your email is <a href="/bouncing.php">bouncing</a></FONT><br>';
 			$HTML .= '<img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><br>';
 		}
@@ -1844,9 +1843,9 @@ function freshports_SideBar() {
 </div>';
 
 	$HTML .= '	
-<table width="' . $ColumnWidth . '" border="1" cellspacing="0" cellpadding="5">
+<table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
 	<tr>
-		<td bgcolor="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><big><b>This site</b></big></FONT></td>
+		<td class="accent" height="30"><FONT COLOR="#FFFFFF"><big><b>This site</b></big></FONT></td>
 	</tr>
 	<tr>
 	<td valign="top">
@@ -1863,9 +1862,9 @@ function freshports_SideBar() {
 	</tr>
 </table>
 <br>
-<table width="' . $ColumnWidth . '" border="1" cellspacing="0" cellpadding="5">
+<table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
 	<tr>
-		<td bgcolor="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><big><b>Search</b></big></FONT></td>
+		<td class="accent" height="30"><FONT COLOR="#FFFFFF"><big><b>Search</b></big></FONT></td>
 	</tr>
 	<tr>
 
@@ -1887,9 +1886,9 @@ function freshports_SideBar() {
 ';
 	if (file_exists(HTML_DIRECTORY . '/vuln-latest.html')) {
 $HTML .= '<br>
-<table width="' . $ColumnWidth . '" border="1" cellspacing="0" cellpadding="5">
+<table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
 	<tr>
-		<td bgcolor="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><big><b>Latest Vulnerabilities</b></big></FONT></td>
+		<td class="accent" height="30"><FONT COLOR="#FFFFFF"><big><b>Latest Vulnerabilities</b></big></FONT></td>
 	</tr>
 	<tr><td>
 	' . file_get_contents(HTML_DIRECTORY . '/vuln-latest.html') . "\n" . '
@@ -1906,9 +1905,9 @@ $HTML .= '<br>
 
 	$HTML .= '
 
-<table width="' . $ColumnWidth . '" border="1" cellspacing="0" cellpadding="5">
+<table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
 	<tr>
-		<td bgcolor="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><big><b>Ports</b></big></FONT></td>
+		<td class="accent" height="30"><FONT COLOR="#FFFFFF"><big><b>Ports</b></big></FONT></td>
 	</tr>
 	<tr>
 	<td valign="top">
@@ -1928,9 +1927,9 @@ if (IsSet($visitor)) {
 
 
 $HTML .= '<br>
-<table width="' . $ColumnWidth . '" border="1" cellspacing="0" cellpadding="5">
+<table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
 	<tr>
-		<td bgcolor="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><big><b>Watch Lists</b></big></FONT></td>
+		<td class="accent" height="30"><FONT COLOR="#FFFFFF"><big><b>Watch Lists</b></big></FONT></td>
 	</tr>
 	<tr>
 	<td valign="top">';
@@ -1952,7 +1951,7 @@ $HTML .= '
 	GLOBAL $ShowAds;
 
 	if ($ShowAds) {
-		$HTML .= '<br><table border="0" cellpadding="5">
+		$HTML .= '<br><table class="borderless" cellpadding="5">
 		  <tr><td align="center">
 		';
 		$HTML .= Ad_160x600();
@@ -1963,9 +1962,9 @@ $HTML .= '
 
 	$HTML .= '<br>
 
-<table width="' . $ColumnWidth . '" border="1" cellspacing="0" cellpadding="5">
+<table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
 	<tr>
-		<td COLSPAN="2" bgcolor="' . BACKGROUND_COLOUR . '" height="30"><FONT COLOR="#FFFFFF"><big><b>Statistics</b></big></FONT></td>
+		<td COLSPAN="2" class="accent" height="30"><FONT COLOR="#FFFFFF"><big><b>Statistics</b></big></FONT></td>
 	</tr>
 	<tr>
 	<td valign="top">
@@ -2010,15 +2009,15 @@ function freshports_LinkToDate($Date, $Text = '', $BranchName = BRANCH_HEAD) {
 
 function freshports_ErrorMessage($Title, $ErrorMessage) {
 	$HTML = '
-<table width="100%" border="1" align="center" cellpadding="1" cellspacing="0" border="1">
+<table class="fullwidth bordered" align="center" cellpadding="1">
 <tr><td valign=TOP>
-<table width="100%">
+<table class="fullwidth">
 <tr>
 	' . freshports_PageBannerText($Title) . '
 </tr>
 <tr bgcolor="#ffffff">
 <td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <table class="fullwidth borderless" cellpadding="0">
   <tr valign=top>
    <td><img src="/images/warning.gif"></td>
    <td width="100%">
@@ -2043,7 +2042,7 @@ function DisplayAnnouncements($Announcement) {
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
 
 	$HTML = '';
-	$HTML .= '<table width="100%"cellpadding="4" cellspacing="0" border="0">' . "\n";
+	$HTML .= '<table class="fullwidth borderless" cellpadding="4">' . "\n";
 
 	$NumRows = $Announcement->NumRows();
 

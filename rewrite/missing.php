@@ -21,7 +21,7 @@
 <TD WIDTH="100%" VALIGN="top">
 <?php echo freshports_MainContentTable(); ?>
 <TR>
-    <TD BGCOLOR="<?php echo BACKGROUND_COLOUR; ?>" HEIGHT="29"><FONT COLOR="#FFFFFF"><BIG><BIG>
+    <TD class="accent" HEIGHT="29"><FONT COLOR="#FFFFFF"><BIG><BIG>
 <?
    echo "$FreshPortsTitle -- $Title";
 ?>

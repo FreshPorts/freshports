@@ -889,25 +889,25 @@ if ($output_format == OUTPUT_FORMAT_HTML) {
 
 <form ACTION="<? echo $_SERVER["PHP_SELF"] ?>" name="search" >
 	<SELECT NAME="stype" size="1">
-		<OPTION VALUE="<?php echo SEARCH_FIELD_COMMITMESSAGE        . '"'; if ($stype == SEARCH_FIELD_COMMITMESSAGE)        echo 'SELECTED'; ?>>Commit Message</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_COMMITTER            . '"'; if ($stype == SEARCH_FIELD_COMMITTER)            echo 'SELECTED'; ?>>Committer</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_DEPENDS_BUILD        . '"'; if ($stype == SEARCH_FIELD_DEPENDS_BUILD)        echo 'SELECTED'; ?>>Depends Build</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_DEPENDS_LIB          . '"'; if ($stype == SEARCH_FIELD_DEPENDS_LIB)          echo 'SELECTED'; ?>>Depends Lib</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_DEPENDS_RUN          . '"'; if ($stype == SEARCH_FIELD_DEPENDS_RUN)          echo 'SELECTED'; ?>>Depends Run</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_DEPENDS_ALL          . '"'; if ($stype == SEARCH_FIELD_DEPENDS_ALL)          echo 'SELECTED'; ?>>Depends Build/Lib/Run</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_LATEST_LINK          . '"'; if ($stype == SEARCH_FIELD_LATEST_LINK)          echo 'SELECTED'; ?>>Latest Link</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_LONGDESCRIPTION      . '"'; if ($stype == SEARCH_FIELD_LONGDESCRIPTION)      echo 'SELECTED'; ?>>Long Description</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_LICENSE_PERMS        . '"'; if ($stype == SEARCH_FIELD_LICENSE_PERMS)        echo 'SELECTED'; ?>>LICENSE_PERMS</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_LICENSE_RESTRICTED   . '"'; if ($stype == SEARCH_FIELD_LICENSE_RESTRICTED)   echo 'SELECTED'; ?>>_LICENSE_RESTRICTED</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_MAKEFILE             . '"'; if ($stype == SEARCH_FIELD_MAKEFILE)             echo 'SELECTED'; ?>>Makefile (ports only)</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_MAINTAINER           . '"'; if ($stype == SEARCH_FIELD_MAINTAINER)           echo 'SELECTED'; ?>>Maintainer</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_MANUAL_PACKAGE_BUILD . '"'; if ($stype == SEARCH_FIELD_MANUAL_PACKAGE_BUILD) echo 'SELECTED'; ?>>MANUAL_PACKAGE_BUILD</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_MESSAGEID            . '"'; if ($stype == SEARCH_FIELD_MESSAGEID)            echo 'SELECTED'; ?>>Message ID</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_PACKAGE              . '"'; if ($stype == SEARCH_FIELD_PACKAGE)              echo 'SELECTED'; ?>>Package Name</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_PKG_PLIST            . '"'; if ($stype == SEARCH_FIELD_PKG_PLIST)            echo 'SELECTED'; ?>>pkg-plist</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_NAME                 . '"'; if ($stype == SEARCH_FIELD_NAME)                 echo 'SELECTED'; ?>>Port Name</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_SHORTDESCRIPTION     . '"'; if ($stype == SEARCH_FIELD_SHORTDESCRIPTION)     echo 'SELECTED'; ?>>Short Description</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_PATHNAME             . '"'; if ($stype == SEARCH_FIELD_PATHNAME)             echo 'SELECTED'; ?>>Under a pathname</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_COMMITMESSAGE        . '"'; if ($stype == SEARCH_FIELD_COMMITMESSAGE)        echo ' SELECTED'; ?>>Commit Message</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_COMMITTER            . '"'; if ($stype == SEARCH_FIELD_COMMITTER)            echo ' SELECTED'; ?>>Committer</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_DEPENDS_BUILD        . '"'; if ($stype == SEARCH_FIELD_DEPENDS_BUILD)        echo ' SELECTED'; ?>>Depends Build</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_DEPENDS_LIB          . '"'; if ($stype == SEARCH_FIELD_DEPENDS_LIB)          echo ' SELECTED'; ?>>Depends Lib</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_DEPENDS_RUN          . '"'; if ($stype == SEARCH_FIELD_DEPENDS_RUN)          echo ' SELECTED'; ?>>Depends Run</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_DEPENDS_ALL          . '"'; if ($stype == SEARCH_FIELD_DEPENDS_ALL)          echo ' SELECTED'; ?>>Depends Build/Lib/Run</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_LATEST_LINK          . '"'; if ($stype == SEARCH_FIELD_LATEST_LINK)          echo ' SELECTED'; ?>>Latest Link</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_LONGDESCRIPTION      . '"'; if ($stype == SEARCH_FIELD_LONGDESCRIPTION)      echo ' SELECTED'; ?>>Long Description</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_LICENSE_PERMS        . '"'; if ($stype == SEARCH_FIELD_LICENSE_PERMS)        echo ' SELECTED'; ?>>LICENSE_PERMS</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_LICENSE_RESTRICTED   . '"'; if ($stype == SEARCH_FIELD_LICENSE_RESTRICTED)   echo ' SELECTED'; ?>>_LICENSE_RESTRICTED</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_MAKEFILE             . '"'; if ($stype == SEARCH_FIELD_MAKEFILE)             echo ' SELECTED'; ?>>Makefile (ports only)</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_MAINTAINER           . '"'; if ($stype == SEARCH_FIELD_MAINTAINER)           echo ' SELECTED'; ?>>Maintainer</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_MANUAL_PACKAGE_BUILD . '"'; if ($stype == SEARCH_FIELD_MANUAL_PACKAGE_BUILD) echo ' SELECTED'; ?>>MANUAL_PACKAGE_BUILD</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_MESSAGEID            . '"'; if ($stype == SEARCH_FIELD_MESSAGEID)            echo ' SELECTED'; ?>>Message ID</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_PACKAGE              . '"'; if ($stype == SEARCH_FIELD_PACKAGE)              echo ' SELECTED'; ?>>Package Name</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_PKG_PLIST            . '"'; if ($stype == SEARCH_FIELD_PKG_PLIST)            echo ' SELECTED'; ?>>pkg-plist</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_NAME                 . '"'; if ($stype == SEARCH_FIELD_NAME)                 echo ' SELECTED'; ?>>Port Name</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_SHORTDESCRIPTION     . '"'; if ($stype == SEARCH_FIELD_SHORTDESCRIPTION)     echo ' SELECTED'; ?>>Short Description</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_PATHNAME             . '"'; if ($stype == SEARCH_FIELD_PATHNAME)             echo ' SELECTED'; ?>>Under a pathname</OPTION>
 	</SELECT> 
 
 	<SELECT name=method>
@@ -928,7 +928,7 @@ if ($output_format == OUTPUT_FORMAT_HTML) {
 
 	<BR><br>
 
-<table cellpadding="5" cellspacing="0" border="1">
+<table cellpadding="5" class="bordered">
 <tr>
 <td valign="middle">
 	<INPUT TYPE=checkbox <? if ($deleted == INCLUDE_DELETED_PORTS) echo 'CHECKED'; ?> VALUE=<?php echo INCLUDE_DELETED_PORTS; ?> NAME=deleted> Include deleted ports
@@ -957,9 +957,9 @@ if ($output_format == OUTPUT_FORMAT_HTML) {
 </tr>
 <tr><td colspan="2">
   <b>Output format</b>:<br>
-  <input type="radio" name="format" value="<?php echo OUTPUT_FORMAT_HTML       . '"'; if ($output_format == OUTPUT_FORMAT_HTML)       echo 'checked'; ?>> HTML<br>
-  <input type="radio" name="format" value="<?php echo OUTPUT_FORMAT_PLAIN_TEXT . '"'; if ($output_format == OUTPUT_FORMAT_PLAIN_TEXT) echo 'checked'; ?>> Plain Text<br>
-  <input type="radio" name="format" value="<?php echo OUTPUT_FORMAT_DEPENDS    . '"'; if ($output_format == OUTPUT_FORMAT_DEPENDS)    echo 'checked'; ?>> Depends<br>
+  <input type="radio" name="format" value="<?php echo OUTPUT_FORMAT_HTML       . '"'; if ($output_format == OUTPUT_FORMAT_HTML)       echo ' checked'; ?>> HTML<br>
+  <input type="radio" name="format" value="<?php echo OUTPUT_FORMAT_PLAIN_TEXT . '"'; if ($output_format == OUTPUT_FORMAT_PLAIN_TEXT) echo ' checked'; ?>> Plain Text<br>
+  <input type="radio" name="format" value="<?php echo OUTPUT_FORMAT_DEPENDS    . '"'; if ($output_format == OUTPUT_FORMAT_DEPENDS)    echo ' checked'; ?>> Depends<br>
 </td>
 <td>
 <INPUT TYPE=checkbox VALUE=1   NAME=effort> Maximum Effort

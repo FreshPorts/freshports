@@ -118,7 +118,7 @@ if ($_REQUEST['wlid']) {
 <tr><td valign="top" width="100%">
 
 
-<table width="100%" border="0">
+<table class="fullwidth borderless">
 <?php # list of categories table start ?>
 <tr><td>
 This screen contains a list of the port categories. A * indicates a category that contains ports which are
@@ -130,7 +130,7 @@ Virtual categories cannot be watched and their checkboxes will be disabled.
 </td>
 
 <td valign="top">
-<table border="0">
+<table class="borderless">
 <?php # ddlb start ?>
 <tr><td>Select...</td></tr>
 <tr><td align="left">
@@ -210,7 +210,7 @@ for ($i = 0; $i < $numrows; $i++) {
 
 # categories list start
 
-$HTML .= "\n" . '<TABLE BORDER="1" CELLSPACING="0" CELLPADDING="5">' . "\n";
+$HTML .= "\n" . '<TABLE class="bordered" CELLPADDING="5">' . "\n";
 $HTML .= '<tr>';
 // get the list of categories to display
 $sql = "

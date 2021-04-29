@@ -6,6 +6,7 @@
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
@@ -82,7 +83,7 @@ These are the recently added ports.
 </TD></TR>
 <?
 
-	$visitor = pg_escape_string($_COOKIE["visitor"]);
+	$visitor = pg_escape_string($_COOKIE[USER_COOKIE_NAME]);
 	if (IsSet($_GET["sort"])) {
 		$sort = pg_escape_string($_GET["sort"]);
 	} else {

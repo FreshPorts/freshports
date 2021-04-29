@@ -6,6 +6,7 @@
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
@@ -17,7 +18,7 @@
 
 $origin		= isset($_REQUEST['origin']) ? $_REQUEST['origin'] : null;
 $submit 	= isset($_REQUEST['submit']) ? $_REQUEST['submit'] : null;
-$visitor	= isset($_COOKIE['visitor']) ? $_COOKIE['visitor'] : null;
+$visitor	= isset($_COOKIE[USER_COOKIE_NAME]) ? $_COOKIE[USER_COOKIE_NAME] : null;
 
 if ($origin == '/index.php' || $origin == '') {
 	$origin = '/';

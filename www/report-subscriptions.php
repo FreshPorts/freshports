@@ -5,16 +5,17 @@
 	# Copyright (c) 1998-2006 DVL Software Limited
 	#
 
-	if (!$_COOKIE['visitor']) {
-		header('Location: /login.php');  /* Redirect browser to PHP web site */
-		exit;  /* Make sure that code below does not get executed when we redirect. */
-	}
-
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
+
+	if (!$_COOKIE[USER_COOKIE_NAME]) {
+		header('Location: /login.php');  /* Redirect browser to PHP web site */
+		exit;  /* Make sure that code below does not get executed when we redirect. */
+	}
 
 	if (IN_MAINTENCE_MODE) {
                 header('Location: /' . MAINTENANCE_PAGE, TRUE, 307);

@@ -5,6 +5,7 @@
 	# Copyright (c) 1998-2003 DVL Software Limited
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 
@@ -13,15 +14,13 @@
 
 	freshports_CookieClear();
 
-        if (IsSet($_COOKIE["visitor"])) {
-                $visitor = $_COOKIE["visitor"];
+	if (IsSet($_COOKIE[USER_COOKIE_NAME])) {
+		$visitor = $_COOKIE[USER_COOKIE_NAME];
 
-                $sql = "UPDATE users SET cookie = 'nocookie' WHERE cookie = '" . pg_escape_string($_COOKIE["visitor"]) . "'";
-#                echo $sql;
+		$sql = "UPDATE users SET cookie = 'nocookie' WHERE cookie = '" . pg_escape_string($_COOKIE[USER_COOKIE_NAME]) . "'";
+		#echo $sql;
 		$result = pg_exec($db, $sql);
-		if (!$result) {
-                }
-        }
+	}
 
 	if (IsSet($_GET['origin'])) {
 		$origin = $_GET['origin'];

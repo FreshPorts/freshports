@@ -2312,15 +2312,16 @@ function BranchSuffix($Branch = BRANCH_HEAD) {
 
 function getLoginDetails($db, $statementName, $UserID, $Password) {
 
-   $sql = 'select * from users where lower(name) = lower($1) and password_hash = crypt($2, password_hash)';
-    if ($Debug || 0) {
-      echo '<pre>' . htmlentities($sql) . '<pre>';
-   }
+  $sql = 'select *, password_hash not like \'$2_$' . PW_HASH_COST . '$%\' as insecure_hash ' .
+    'from users where lower(name) = lower($1) and password_hash = crypt($2, password_hash)';
+  if ($Debug || 0) {
+    echo '<pre>' . htmlentities($sql) . '<pre>';
+  }
 
-   $result = pg_prepare($db, $statementName, $sql) or die('query failed ' . pg_errormessage());
-   if ($result) {
-      $result = pg_execute($db, $statementName, array($UserID, $Password))  or die('query failed ' . pg_errormessage());
-   }
+  $result = pg_prepare($db, $statementName, $sql) or die('query failed ' . pg_errormessage());
+  if ($result) {
+    $result = pg_execute($db, $statementName, array($UserID, $Password))  or die('query failed ' . pg_errormessage());
+  }
 
-   return $result;
+  return $result;
 }

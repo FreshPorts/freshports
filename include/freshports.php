@@ -1742,7 +1742,7 @@ alt="powered by nginx" width="121" height="32"></a>
 
 	$HTML .= '
 <tr><td>
-<table class="fullwdith">
+<table class="fullwidth">
 <tr>
 <td align="left"  valign="top">
 <small>' . SPONSORS . '</small>

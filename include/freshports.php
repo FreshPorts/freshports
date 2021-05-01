@@ -499,7 +499,7 @@ function freshports_Ignore_Icon($HoverText = '') {
 	$Alt       = "Ignore";
 	$HoverText = freshports_HoverTextCleaner($Alt, $HoverText);
 
-	return '<img src="/images/ignored.png" alt="' . $Alt . '" title="' . $HoverText . '" width="20" height="21;">';
+	return '<img src="/images/ignored.png" alt="' . $Alt . '" title="' . $HoverText . '" width="20" height="21">';
 }
 
 function freshports_Ignore_Icon_Link($HoverText = '') {

@@ -2,6 +2,10 @@
   --beastie-red: #8c0707;
 }
 
+body {
+  color: black;
+}
+
 BODY, TD, TR, P, UL, OL, LI, INPUT, SELECT, DL, DD, DT, FONT
 {
     font-size: 12px;

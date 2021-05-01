@@ -976,7 +976,7 @@ function freshports_body($ExtraScript = null) {
 
 GLOBAL $Debug;
 
-echo "\n" . '<BODY bgcolor="#FFFFFF" TEXT="#000000">';
+echo "\n" . '<BODY bgcolor="#FFFFFF">';
 
 # most often used for page setup, hiding elements, etc
 if (!empty($ExtraScript)) {

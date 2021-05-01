@@ -179,8 +179,8 @@ function MyDisplayAnnouncements($Announcement) {
 		$Announcement->FetchNth($i);
 		$HTML .= '<tr>' . "\n";
 		$HTML .= '<td>' . $Announcement->TextGet()      . '</td>';
-		$HTML .= '<td>' . ($Announcement->StartDateGet() != '' ? $Announcement->StartDateGet() : '&nbsp') . '</td>';
-		$HTML .= '<td>' . ($Announcement->EndDateGet()   != '' ? $Announcement->EndDateGet()   : '&nbsp') . '</td>';
+		$HTML .= '<td>' . ($Announcement->StartDateGet() != '' ? $Announcement->StartDateGet() : '&nbsp;') . '</td>';
+		$HTML .= '<td>' . ($Announcement->EndDateGet()   != '' ? $Announcement->EndDateGet()   : '&nbsp;') . '</td>';
 		$HTML .= '<td><a href="' . $_SERVER['PHP_SELF']  . '?edit='   . $Announcement->IDGet() . '">Edit</a></td>';
 		$HTML .= '<td><a href="' . $_SERVER['PHP_SELF']  . '?delete=' . $Announcement->IDGet() . '">Delete</a></td>';
       $HTML .= '</tr>' . "\n";

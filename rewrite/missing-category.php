@@ -83,7 +83,6 @@ function freshports_CategoryDisplay($db, $category, $PageNumber = 1, $PageSize =
 
 #		var_dump($category);
 #
-	GLOBAL $TableWidth;
 	GLOBAL $User;
 
 	$Debug = 0;

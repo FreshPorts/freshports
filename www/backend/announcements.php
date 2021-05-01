@@ -82,7 +82,7 @@ if (IsSet($_REQUEST['edit'])) {
                'FreeBSD, index, applications, ports');
 ?>
 
-<TABLE WIDTH="<? echo $TableWidth; ?>" class="borderless" ALIGN="center">
+<TABLE class="fullwidth borderless" ALIGN="center">
 <TR><TD VALIGN="top" width="100%">
 <?php
 

@@ -40,9 +40,7 @@ date_default_timezone_set('UTC');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php');
 
 function freshports_MainTable() {
-	GLOBAL $TableWidth;
-
-	return '<table width="' . $TableWidth . '" class="borderless">
+	return '<table class="fullwidth borderless">
 ';
 }
 
@@ -813,7 +811,6 @@ GLOBAL $ShowAnnouncements;
 }
 
 function freshports_Logo() {
-GLOBAL $TableWidth;
 GLOBAL $LocalTimeAdjustment;
 GLOBAL $FreshPortsName;
 GLOBAL $FreshPortsLogo;
@@ -824,7 +821,7 @@ GLOBAL $FreshPortsLogoHeight;
 #echo "$LocalTimeAdjustment<br>";
 
 	$HTML = '<br>
-<table width="' . $TableWidth . '" class="borderless" align="center">
+<table class="fullwidth borderless" align="center">
 <tr>
 	<td><a href="';
 
@@ -1659,12 +1656,11 @@ function freshports_UserSendToken($UserID, $dbh) {
 }
 
 function freshports_ShowFooter($PhorumBottom = 0) {
-	GLOBAL $TableWidth;
 	GLOBAL $Statistics;
 	GLOBAL $ShowPoweredBy;
 	GLOBAL $ShowAds;
 
-	$HTML = '<table width="' . $TableWidth . '" class="borderless" align="center">
+	$HTML = '<table class="fullwidth borderless" align="center">
 <tr><td>';
 
 

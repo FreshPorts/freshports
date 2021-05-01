@@ -44,8 +44,6 @@ class freshports_page extends HTML_Page2 {
 		$this->addStyleSheet('/css/freshports.css?v=' . $version);
 
 		$this->addFavicon('/favicon.ico');
-
-		$this->setBodyAttributes(array('BGCOLOR' => '#FFFFFF', 'TEXT' => '#000000'));
 	}
 
 	function setDB($db) {

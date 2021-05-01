@@ -108,7 +108,7 @@ echo '<TABLE CELLPADDING="1" CELLSPACING="3" class="fullwidth borderless">
 <TR>
 <TD class="accent" COLSPAN="1">' . $Title . '</TD>
 </TR>
-<TR BGCOLOR="#ffffff">
+<TR>
 <TD>';
 
 echo 'Current annoucements<blockquote>';

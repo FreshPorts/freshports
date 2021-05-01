@@ -973,7 +973,7 @@ function freshports_body($ExtraScript = null) {
 
 GLOBAL $Debug;
 
-echo "\n" . '<BODY bgcolor="#FFFFFF">';
+echo "\n" . '<BODY>';
 
 # most often used for page setup, hiding elements, etc
 if (!empty($ExtraScript)) {
@@ -1984,7 +1984,7 @@ function freshports_ErrorMessage($Title, $ErrorMessage) {
 <tr>
 	' . freshports_PageBannerText($Title) . '
 </tr>
-<tr bgcolor="#ffffff">
+<tr>
 <td>
   <table class="fullwidth borderless" cellpadding="0">
   <tr valign=top>

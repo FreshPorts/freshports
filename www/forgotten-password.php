@@ -148,7 +148,7 @@ if (IsSet($error) and $error != '') {
                <TABLE class="fullwidth borderless" CELLPADDING="1">
                  <TR class="accent"><TD><b>We have a problem!</b></TD>
                  </TR> 
-                 <TR BGCOLOR="#ffffff">
+                 <TR>
             <TD>
               <TABLE class="fullwidth borderless" CELLPADDING="3">
               <TR VALIGN="middle">
@@ -175,7 +175,7 @@ if (IsSet($error) and $error != '') {
                <TABLE class="fullwidth borderless" CELLPADDING="1">
                  <TR class="accent"><TD><b>UserID not found!</b></TD>
                  </TR>
-                 <TR BGCOLOR="#ffffff">
+                 <TR>
             <TD>
               <TABLE class="fullwidth borderless" CELLPADDING="3">
               <TR VALIGN=top>
@@ -226,7 +226,7 @@ if ($MailSent) {
 ?>
 </TD></TR>
 
-<TR><TD BGCOLOR="#ffffff">
+<TR><TD>
 <?
 if ($MailSent) {
 ?>

@@ -174,7 +174,7 @@ echo '<TABLE CELLPADDING="1" class="fullwidth borderless">
 <TABLE class="fullwidth borderless" CELLPADDING="1">
 <TR class="accent"><TD><b>Access Code Failed!</b></TD>
 </TR>
-<TR BGCOLOR="#ffffff">
+<TR>
 <TD>
   <TABLE class="fullwidth borderless" CELLPADDING="3">
   <TR VALIGN=top>
@@ -207,7 +207,7 @@ echo '<TABLE CELLPADDING="1" class="fullwidth borderless">
 <TR>
 <TD class="accent" HEIGHT="29" COLSPAN="1"><BIG>Customize</BIG></TD>
 </TR>
-<TR BGCOLOR="#ffffff">
+<TR>
 <TD>';
 
 echo '<p>If you wish to change your password, first type your existing password, then your new password twice.  Otherwise, leave them all blank.</p><br>';

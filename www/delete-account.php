@@ -91,7 +91,7 @@ echo '<TABLE CELLPADDING="1" class="fullwidth borderless">
 <TABLE class="fullwidth borderless" CELLPADDING="1">
 <TR class="accent"><TD><b>Delete Failed!</b></TD>
 </TR>
-<TR BGCOLOR="#ffffff">
+<TR>
 <TD>
   <TABLE class="fullwidth borderless" CELLPADDING="3">
   <TR VALIGN=top>
@@ -121,7 +121,7 @@ echo '<TABLE CELLPADDING="1" class="fullwidth borderless">
 <TR>
 <TD class="accent" HEIGHT="29" COLSPAN="1"><BIG>Customize</BIG></TD>
 </TR>
-<TR BGCOLOR="#ffffff">
+<TR>
 <TD>';
 
 

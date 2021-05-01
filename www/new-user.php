@@ -187,7 +187,7 @@ echo '<TABLE CELLPADDING=1 class="fullwidth borderless">
 <TABLE class="fullwidth borderless" CELLPADDING=1>
 <TR class="accent"><TD><B>Access Code Failed!</B></TD>
 </TR>
-<TR BGCOLOR="#ffffff">
+<TR>
 <TD>
   <TABLE class="fullwidth borderless" CELLPADDING=3>
   <TR VALIGN=top>

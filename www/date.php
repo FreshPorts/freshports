@@ -128,7 +128,7 @@
 
 		if ($NumRows == 0) {
 			$HTML .= '<TR><TD class="accent" COLSPAN="3" HEIGHT="0">' . "\n";
-			$HTML .= '   <FONT COLOR="#FFFFFF"><BIG>' . FormatTime($Date, 0, "D, j M Y") . '</BIG></FONT>' . "\n";
+			$HTML .= '   ' . FormatTime($Date, 0, "D, j M Y") . "\n";
 			$HTML .= '</TD></TR>' . "\n\n";
 			$HTML .= '<TR><TD>No commits found for that date</TD></TR>';
 		}

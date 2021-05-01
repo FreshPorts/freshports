@@ -77,9 +77,9 @@ function freshports_SummaryForDay($MinusN) {
    if (file_exists($File)) {
       echo '<br><TABLE WIDTH="152" class="bordered" CELLPADDING="5">';
       echo '  <TR>';
-      echo '<TD class="accent" height="30"><font color="#FFFFFF" SIZE="+1">';
+      echo '<TD class="accent" height="30">';
       echo date("l j M", $Now - 60*60*24*$MinusN);
-      echo '</font></TD>';
+      echo '</TD>';
       echo '       </TR>';
       echo '        <TR>';
       echo '         <TD>';
@@ -187,7 +187,7 @@ A port is marked as new for 10 days.
 			echo '
 <TABLE WIDTH="155" class="bordered" CELLPADDING="5">
 	<TR>
-		<TD class="accent" height="30"><FONT COLOR="#FFFFFF"><BIG><B>Previous days</B></BIG></FONT></TD>
+		<TD class="accent" height="30"><B>Previous days</B></TD>
 	</TR>
 	<TR><TD>
 ';

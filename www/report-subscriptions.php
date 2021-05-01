@@ -146,7 +146,7 @@
 <TD WIDTH="100%" VALIGN="top">
 <TABLE class="fullwidth borderless" CELLPADDING="1">
 <TR>
-<TD class="accent" HEIGHT="29" COLSPAN="1"><FONT COLOR="#FFFFFF"><BIG><BIG><? echo $ArticleTitle; ?></BIG></BIG></FONT></TD>
+<TD class="accent" HEIGHT="29" COLSPAN="1"><BIG><? echo $ArticleTitle; ?></BIG></TD>
 </TR>
 <TR>
 <TD>

@@ -14,6 +14,8 @@ BODY, TD, TR, P, UL, OL, LI, INPUT, SELECT, DL, DD, DT, FONT
 .accent {
   background-color: #8c0707;
   background-color: var(--beastie-red);
+  color: white;
+  font-size: larger;
 }
 
 IMG#fp-logo { max-width: 100%; height: auto }

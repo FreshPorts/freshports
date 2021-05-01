@@ -103,11 +103,11 @@ if (IsSet($submit)) {
 
 
 if ($errors) {
-echo '<TABLE CELLPADDING="1" class="fullwidth borderless accent">
+echo '<TABLE CELLPADDING="1" class="fullwidth borderless">
 <TR>
 <TD>
 <TABLE class="fullwidth borderless" CELLPADDING="1">
-<TR class="accent"><TD><b><font color="#ffffff" size=+0>Access Code Failed!</font></b></TD>
+<TR class="accent"><TD><b>Access Code Failed!</b></TD>
 </TR>
 <TR BGCOLOR="#ffffff">
 <TD>
@@ -137,12 +137,12 @@ if ($PasswordReset) {
 
 } else {
 
-echo '<TABLE CELLPADDING="1" class="fullwidth borderless accent">
+echo '<TABLE CELLPADDING="1" class="fullwidth borderless">
 <TR>
 <TD VALIGN="top">
 <TABLE class="fullwidth borderless" CELLPADDING="1">
 <TR>
-<TD class="accent" HEIGHT="29" COLSPAN="1"><FONT COLOR="#FFFFFF"><BIG><BIG>Reset password via token</BIG></BIG></FONT></TD>
+<TD class="accent" HEIGHT="29" COLSPAN="1"><BIG>Reset password via token</BIG></TD>
 </TR>
 <TR BGCOLOR="#ffffff">
 <TD>';

@@ -1089,10 +1089,6 @@ function freshports_SideBarHTML($Self, $URL, $Label, $Title) {
    return $HTML;
 }
 
-function freshports_SideBarHTMLParm($Self, $URL, $Parm, $Label, $Title) {
-   return freshPorts_SideBarHTML($Self, $URL . $Parm, $Label, $Title);
-}
-
 function freshports_YNToCheckbox($Value) {
 // this function takes a Y/N value and converts it to
 // HTML suitable for a checkbox.
@@ -1779,18 +1775,18 @@ function freshports_SideBar() {
 			$HTML .= '<FONT SIZE="-1">your email is <a href="/bouncing.php">bouncing</a></FONT><br>';
 			$HTML .= '<img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><br>';
 		}
-		$HTML .= freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/customize.php',        "", "Your Account", "Your account"              ) . '<br>';
+		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/customize.php', "Your Account", "Your account") . '<br>';
 
 		if (preg_match("/.*@FreeBSD.org/i", $User->email)) {
-			$HTML .= freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/committer-opt-in.php', '', "Committer Opt-in", "Committers can receive reports of Sanity Test Failures"       ) . '<br>';
+			$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/committer-opt-in.php', "Committer Opt-in", "Committers can receive reports of Sanity Test Failures") . '<br>';
 		}
 
 
-		$HTML .= freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/logout.php',                 '', "Logout",                  "Logout of the website"                  ) . '<br>';
-		$HTML .= freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/my-flagged-commits.php',     '', "My Flagged Commits",      "List of commits you have flagged"       ) . '<br>';
+		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/logout.php',             "Logout",                  "Logout of the website"            ) . '<br>';
+		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/my-flagged-commits.php', "My Flagged Commits",      "List of commits you have flagged" ) . '<br>';
 	} else {
-		$HTML .= freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/login.php',                  "", "User Login",              "Login to the website"                   ) . '<br>';
-		$HTML .= freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/new-user.php',               "", "Create account",          "Create an account"                      ) . '<br>';
+		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/login.php',              "User Login",              "Login to the website"             ) . '<br>';
+		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/new-user.php',           "Create account",          "Create an account"                ) . '<br>';
 	}
 
 	$HTML .= '
@@ -1812,15 +1808,15 @@ function freshports_SideBar() {
 	</tr>
 	<tr>
 	<td valign="top">
-	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/about.php",           "What is FreshPorts?", "A bit of background on FreshPorts"    ) . '<br>
-	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/authors.php",         "About the authors",   "Who wrote this stuff?"                ) . '<br>
-	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], ISSUES       ,          "Issues",              "Report a website problem"             ) . '<br>
-	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/faq.php",             "FAQ",                 "Frequently Asked Questions"           ) . '<br>
-	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/how-big-is-it.php",   "How big is it?",      "How many pages are in this website?"  ) . '<br>
+	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/about.php",           "What is FreshPorts?", "A bit of background on FreshPorts"               ) . '<br>
+	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/authors.php",         "About the authors",   "Who wrote this stuff?"                           ) . '<br>
+	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], ISSUES,                 "Issues",              "Report a website problem"                        ) . '<br>
+	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/faq.php",             "FAQ",                 "Frequently Asked Questions"                      ) . '<br>
+	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/how-big-is-it.php",   "How big is it?",      "How many pages are in this website?"             ) . '<br>
 	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/security-policy.php", "Security Policy",     "Are you a security researcher? Please read this.") . '<br>
-	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/privacy.php",         "Privacy",             "Our privacy statement"                ) . '<br>
+	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/privacy.php",         "Privacy",             "Our privacy statement"                           ) . '<br>
 	<a href="https://news.freshports.org/" title="All the latest FreshPorts news" rel="noopener noreferrer">Blog</a><br>
-	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/contact.php",         "Contact",             "Contact details"                      ) . '<br>
+	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/contact.php",         "Contact",             "Contact details"                                 ) . '<br>
 	</td>
 	</tr>
 </table>
@@ -1841,7 +1837,7 @@ function freshports_SideBar() {
 	$Searches = new Searches($dbh);
 	$HTML .= $Searches->GetFormSimple('&nbsp;');
 
-	$HTML .= freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/search.php', '', "more...", "Advanced Searching options") . '<br>
+	$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/search.php', "more...", "Advanced Searching options") . '<br>
 	</td>
 </tr>
 </table>
@@ -1875,11 +1871,11 @@ $HTML .= '<br>
 	<tr>
 	<td valign="top">
 
-	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/",                     "Home",             "FreshPorts Home page"       )   . '<br>
-	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/categories.php",       "Categories",       "List of all Port categories")   . '<br>
-	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/ports-deleted.php",    "Deleted ports",    "All deleted ports"          )   . '<br>
-	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/sanity_test_failures.php",    "Sanity Test Failures",    "Things that didn't go quite right..."          )   . '<br>
-	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/backend/newsfeeds.php",    "Newsfeeds",    "Newsfeeds for just about everything"          )   . '<br>
+	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/",                         "Home",                 "FreshPorts Home page"                ) . '<br>
+	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/categories.php",           "Categories",           "List of all Port categories"         ) . '<br>
+	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/ports-deleted.php",        "Deleted ports",        "All deleted ports"                   ) . '<br>
+	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/sanity_test_failures.php", "Sanity Test Failures", "Things that didn't go quite right...") . '<br>
+	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/backend/newsfeeds.php",    "Newsfeeds",            "Newsfeeds for just about everything" ) . '<br>
 	
 	</td>
 	</tr>
@@ -1897,12 +1893,12 @@ $HTML .= '<br>
 	<tr>
 	<td valign="top">';
 
-		$HTML .= freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/pkg_upload.php',             '',                     "Upload",               "Upoad a file containing a list of ports you want to add to your watch list") . '<br>';
-		$HTML .= freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/watch-categories.php',       '',                     "Categories",           "Search through categories for ports to add to your watch list"             ) . '<br>';
-		$HTML .= freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/watch-list-maintenance.php', '',                     "Maintain",             "Maintain your watch list[s]"                                               ) . '<br>';
-		$HTML .= freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/watch.php',                  '',                     "Ports",                "Your list of watched ports"                                                ) . '<br>';
-		$HTML .= freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/backend/watch-list.php',     '',                     "Personal Newsfeeds",   "A list of news feeds for your watched lists"                               ) . '<br>';
-		$HTML .= freshports_SideBarHTMLParm($_SERVER["PHP_SELF"], '/report-subscriptions.php',   '',                     "Report Subscriptions", "Maintain your list of subscriptions"                                       ) . '<br>';
+		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/pkg_upload.php',             "Upload",               "Upoad a file containing a list of ports you want to add to your watch list") . '<br>';
+		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/watch-categories.php',       "Categories",           "Search through categories for ports to add to your watch list"             ) . '<br>';
+		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/watch-list-maintenance.php', "Maintain",             "Maintain your watch list[s]"                                               ) . '<br>';
+		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/watch.php',                  "Ports",                "Your list of watched ports"                                                ) . '<br>';
+		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/backend/watch-list.php',     "Personal Newsfeeds",   "A list of news feeds for your watched lists"                               ) . '<br>';
+		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/report-subscriptions.php',   "Report Subscriptions", "Maintain your list of subscriptions"                                       ) . '<br>';
 
 $HTML .= '		
 	</td>
@@ -1932,9 +1928,9 @@ $HTML .= '
 	<tr>
 	<td valign="top">
 
-' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/graphs.php",        "Graphs", "Everyone loves statistics!")   . '<br>
-' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/graphs2.php",        "NEW Graphs (Javascript)", "Everyone loves statistics!")   . '<br>
-' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/stats/",            "Traffic", "Traffic to this website");
+' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/graphs.php",  "Graphs",                  "Everyone loves statistics!") . '<br>
+' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/graphs2.php", "NEW Graphs (Javascript)", "Everyone loves statistics!") . '<br>
+' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/stats/",      "Traffic",                 "Traffic to this website"   );
 
 	if (file_exists(HTML_DIRECTORY . '/stats.html')) {
 		$HTML .= '<br>

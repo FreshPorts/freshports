@@ -1929,8 +1929,7 @@ $HTML .= '
 	<td valign="top">
 
 ' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/graphs.php",  "Graphs",                  "Everyone loves statistics!") . '<br>
-' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/graphs2.php", "NEW Graphs (Javascript)", "Everyone loves statistics!") . '<br>
-' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/stats/",      "Traffic",                 "Traffic to this website"   );
+' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/graphs2.php", "NEW Graphs (Javascript)", "Everyone loves statistics!");
 
 	if (file_exists(HTML_DIRECTORY . '/stats.html')) {
 		$HTML .= '<br>

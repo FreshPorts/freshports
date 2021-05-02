@@ -1933,7 +1933,7 @@ $HTML .= '
 
 <table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
 	<tr>
-		<th COLSPAN="2" class="accent" height="30">Statistics</th>
+		<th class="accent" height="30">Statistics</th>
 	</tr>
 	<tr>
 	<td valign="top">

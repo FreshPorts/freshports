@@ -1765,7 +1765,7 @@ function freshports_SideBar() {
 	$HTML = '
   <table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
         <tr>
-         <td class="accent" height="30"><b>Login</b></td>
+         <th class="accent" height="30">Login</th>
         </tr>
         <tr>
 
@@ -1814,7 +1814,7 @@ function freshports_SideBar() {
 	$HTML .= '	
 <table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
 	<tr>
-		<td class="accent" height="30"><b>This site</b></td>
+		<th class="accent" height="30">This site</th>
 	</tr>
 	<tr>
 	<td valign="top">
@@ -1833,7 +1833,7 @@ function freshports_SideBar() {
 <br>
 <table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
 	<tr>
-		<td class="accent" height="30"><b>Search</b></td>
+		<th class="accent" height="30">Search</th>
 	</tr>
 	<tr>
 
@@ -1857,7 +1857,7 @@ function freshports_SideBar() {
 $HTML .= '<br>
 <table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
 	<tr>
-		<td class="accent" height="30"><b>Latest Vulnerabilities</b></td>
+		<th class="accent" height="30">Latest Vulnerabilities</th>
 	</tr>
 	<tr><td>
 	' . file_get_contents(HTML_DIRECTORY . '/vuln-latest.html') . "\n" . '
@@ -1876,7 +1876,7 @@ $HTML .= '<br>
 
 <table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
 	<tr>
-		<td class="accent" height="30"><b>Ports</b></td>
+		<th class="accent" height="30">Ports</th>
 	</tr>
 	<tr>
 	<td valign="top">
@@ -1898,7 +1898,7 @@ if (IsSet($visitor)) {
 $HTML .= '<br>
 <table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
 	<tr>
-		<td class="accent" height="30"><b>Watch Lists</b></td>
+		<th class="accent" height="30">Watch Lists</th>
 	</tr>
 	<tr>
 	<td valign="top">';
@@ -1933,7 +1933,7 @@ $HTML .= '
 
 <table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
 	<tr>
-		<td COLSPAN="2" class="accent" height="30"><b>Statistics</b></td>
+		<th COLSPAN="2" class="accent" height="30">Statistics</th>
 	</tr>
 	<tr>
 	<td valign="top">

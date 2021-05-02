@@ -105,7 +105,7 @@ If you have suggestions for graphs, please raise an issue.
 </TABLE>
 </TD>
 
-  <TD VALIGN="top" WIDTH="*" ALIGN="center">
+  <TD class="sidebar" VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
 	echo freshports_SideBar();
 	?>

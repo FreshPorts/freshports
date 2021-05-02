@@ -105,7 +105,7 @@ A port is marked as new for 10 days.
 ?>
 </TABLE>
 </TD>
-  <TD VALIGN="top" WIDTH="*" ALIGN="center">
+  <TD class="sidebar" VALIGN="top" WIDTH="*" ALIGN="center">
    <? echo freshports_SideBar(); ?>
 
 <BR>

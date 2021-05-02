@@ -203,7 +203,7 @@ if ($NumCommits > 0) {
 
 </td>
 
-  <TD VALIGN="top" WIDTH="*" ALIGN="center">
+  <TD class="sidebar" VALIGN="top" WIDTH="*" ALIGN="center">
 
 	<?
 	echo freshports_SideBar();

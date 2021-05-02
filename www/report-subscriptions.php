@@ -245,7 +245,7 @@ the directions found on the <a href="https://lists.freshports.org/mailman/listin
 
 	</TD>
 
-  <TD VALIGN="top" WIDTH="*" ALIGN="center">
+  <TD class="sidebar" VALIGN="top" WIDTH="*" ALIGN="center">
   <?
   echo freshports_SideBar();
   ?>

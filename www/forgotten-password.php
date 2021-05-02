@@ -264,7 +264,7 @@ we're only dealing with your FreshPorts login, not a financial transaction....</
 </TABLE>
 </TD>
 
-  <TD VALIGN="top" WIDTH="*" ALIGN="center">
+  <TD class="sidebar" VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
 	echo freshports_SideBar();
 	?>

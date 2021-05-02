@@ -44,7 +44,7 @@
 </BLOCKQUOTE>
 	</TD>
 
-  <TD VALIGN="top" WIDTH="*" ALIGN="center">
+  <TD class="sidebar" VALIGN="top" WIDTH="*" ALIGN="center">
 	<?
 	echo freshports_SideBar();
 	?>

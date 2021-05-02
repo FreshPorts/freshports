@@ -63,7 +63,7 @@ $Hostname = $_SERVER['HTTP_HOST'];
 The above feeds are created using <a href="https://github.com/flack/UniversalFeedCreator">UniversalFeedCreator</a>.
 </table>
 </TD>
-  <TD VALIGN="top" WIDTH="*" ALIGN="center">
+  <TD class="sidebar" VALIGN="top" WIDTH="*" ALIGN="center">
   <?
   echo freshports_SideBar();
   ?>

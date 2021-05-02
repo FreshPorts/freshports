@@ -483,7 +483,7 @@ document.body.appendChild(sheet);
 ?>
 
 </TD>
-  <TD class="sidebar" VALIGN="top" WIDTH="*" ALIGN="center">
+  <td class="sidebar">
   <?php
   echo freshports_SideBar();
   ?>

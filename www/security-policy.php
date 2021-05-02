@@ -42,7 +42,7 @@ acknowledge the work you do and the findings you present.
 </TABLE>
 </TD>
 
-  <TD class="sidebar" VALIGN="top" WIDTH="*" ALIGN="center">
+  <td class="sidebar">
   <?
   echo freshports_SideBar();
   ?>

@@ -355,7 +355,7 @@ ORDER BY port, element_pathname";
 
 ?>
 
-  <TD class="sidebar" VALIGN="top" WIDTH="*" ALIGN="center">
+  <td class="sidebar">
 
 	<?
 	echo freshports_SideBar();

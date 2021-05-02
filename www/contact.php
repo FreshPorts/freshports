@@ -50,7 +50,7 @@ email: dan (at) langille.org.
 </TABLE>
 </TD>
 
-  <TD class="sidebar" VALIGN="top" WIDTH="*" ALIGN="center">
+  <td class="sidebar">
   <?
   echo freshports_SideBar();
   ?>

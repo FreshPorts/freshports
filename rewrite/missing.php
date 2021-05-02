@@ -47,7 +47,7 @@ Perhaps a <A HREF="/categories.php">list of categories</A> or <A HREF="/search.p
 </TABLE>
 </TD>
 
-  <TD class="sidebar" VALIGN="top" WIDTH="*" ALIGN="center">
+  <td class="sidebar">
   <?
   echo freshports_SideBar();
   ?>

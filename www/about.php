@@ -114,7 +114,7 @@ About the Authors</A> for details of who else helped.</P>
 </TABLE>
 </TD>
 
-  <TD class="sidebar" VALIGN="top" WIDTH="*" ALIGN="center">
+  <td class="sidebar">
 	<?php
 	echo freshports_SideBar();
 	?>

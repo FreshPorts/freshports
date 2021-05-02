@@ -156,7 +156,7 @@ NOTES
 </TD>
 </tr>
 </table>
-  <TD class="sidebar" VALIGN="top" WIDTH="*" ALIGN="center">
+  <td class="sidebar">
   <?
   echo freshports_SideBar();
   ?>

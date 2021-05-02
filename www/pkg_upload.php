@@ -486,7 +486,7 @@ if ($Debug) echo '<br>' . __LINE__ . '<br>';
 </TABLE>
 </TD>
 
-  <TD class="sidebar" VALIGN="top" WIDTH="*" ALIGN="center">
+  <td class="sidebar">
 	<?
 	echo freshports_SideBar();
 	?>

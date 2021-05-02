@@ -1137,7 +1137,7 @@ if ($output_format == OUTPUT_FORMAT_HTML) {
 
 </td>
 
-  <TD class="sidebar" VALIGN="top" WIDTH="*" ALIGN="center">
+  <td class="sidebar">
   <?
   echo freshports_SideBar();
   ?>

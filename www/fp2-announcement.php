@@ -115,7 +115,7 @@ The following items deal with the technical changes which have occurred.
 </TD></TR>
 </TABLE>
 </TD>
-  <TD class="sidebar" VALIGN="top" WIDTH="*" ALIGN="center">
+  <td class="sidebar">
 
 	<?
 	echo freshports_SideBar();

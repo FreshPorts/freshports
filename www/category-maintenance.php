@@ -142,7 +142,7 @@ Well, I'm sorry to advise you that this page is intentionally left blank.
 </TABLE>
 </TD>
 
-  <TD class="sidebar" VALIGN="top" WIDTH="*" ALIGN="center">
+  <td class="sidebar">
   <?
   echo freshports_SideBar();
   ?>

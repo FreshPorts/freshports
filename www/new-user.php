@@ -265,6 +265,7 @@ Your cooperation with the above will make my life easier.  Thank you.
 	echo freshports_SideBar();
 	?>
 
+</td>
 </TR>
 </TABLE>
 

@@ -171,7 +171,7 @@ A port is marked as new for 10 days.
 ?>
 </TABLE>
 </TD>
-  <TD class="sidebar" VALIGN="top" WIDTH="*" ALIGN="center">
+  <td class="sidebar">
    <? echo freshports_SideBar(); ?>
 
 <BR>
@@ -202,7 +202,7 @@ A port is marked as new for 10 days.
 		}
 	}
 ?>
- </TD>
+ </td>
 </TR>
 </TABLE>
 

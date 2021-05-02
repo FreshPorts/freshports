@@ -198,7 +198,7 @@ since 10 October 2006.
 ?>
 </TABLE>
 </TD>
-  <TD class="sidebar" VALIGN="top" WIDTH="*" ALIGN="center">
+  <td class="sidebar">
    <? echo freshports_SideBar(); ?>
 
 <BR>
@@ -229,7 +229,7 @@ since 10 October 2006.
 		}
 	}
 ?>
- </TD>
+ </td>
 </TR>
 </TABLE>
 

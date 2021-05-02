@@ -369,7 +369,7 @@ When clicking on Add/Remove for a port,<br> the action should affect
 </p>
 </td></tr></table>
 </td>
-<td class="sidebar" valign="top">
+<td class="sidebar">
 	<?
 	echo freshports_SideBar();
 	?>

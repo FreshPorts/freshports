@@ -59,7 +59,7 @@ This page will reload every <?php echo MAINTENANCE_MODE_RERESH_TIME_SECONDS; ?> 
 </TABLE>
 </TD>
 
-  <TD class="sidebar" VALIGN="top" WIDTH="*" ALIGN="center">
+  <td class="sidebar">
 	<?
 	echo freshports_SideBar();
 	?>

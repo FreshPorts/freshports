@@ -198,7 +198,7 @@ if ($db) {
 ?>
 </TABLE>
 </TD>
-  <TD class="sidebar" VALIGN="top" WIDTH="*" ALIGN="center">
+  <td class="sidebar">
    <? echo freshports_SideBar(); ?>
 
 <BR>
@@ -229,7 +229,7 @@ if ($db) {
 		}
 	}
 ?>
- </TD>
+ </td>
 </TR>
 </TABLE>
 

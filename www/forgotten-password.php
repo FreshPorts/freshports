@@ -173,7 +173,7 @@ if (IsSet($error) and $error != '') {
             <TR>
             <TD>
                <TABLE class="fullwidth borderless" CELLPADDING="1">
-                 <TR class="accent"><TD><b>UserID not found!</b></TD>
+                 <TR class="accent"><TD><b>User ID not found!</b></TD>
                  </TR>
                  <TR>
             <TD>

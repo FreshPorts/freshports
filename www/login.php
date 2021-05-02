@@ -229,7 +229,7 @@ if ($error) {
 
 echo '<TABLE class="fullwidth bordered" CELLPADDING="1">';
 
-echo '<TR class="accent">';
+echo '<TR>';
 
 echo freshports_PageBannerText("Login");
 echo '</TR>';

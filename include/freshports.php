@@ -1599,7 +1599,7 @@ function freshports_wrap($text, $length = WRAPCOMMITSATCOLUMN) {
 }
 
 function freshports_PageBannerText($Text, $ColSpan=1) {
-	return '<td align="left" class="accent" height="29" COLSPAN="' . $ColSpan . '">' . $Text . '</td>' . "\n";
+	return '<td align="left" class="accent" height="29" COLSPAN="' . $ColSpan . '"><big>' . $Text . '</big></td>' . "\n";
 }
 
 
@@ -1765,7 +1765,7 @@ function freshports_SideBar() {
 	$HTML = '
   <table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
         <tr>
-         <td class="accent" height="30"><b>Login</b></FONT></td>
+         <td class="accent" height="30"><b>Login</b></td>
         </tr>
         <tr>
 

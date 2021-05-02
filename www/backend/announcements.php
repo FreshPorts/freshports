@@ -106,7 +106,7 @@ echo '
 
 echo '<TABLE CELLPADDING="1" CELLSPACING="3" class="fullwidth borderless">
 <TR>
-<TD class="accent" COLSPAN="1">' . $Title . '</TD>
+<TD class="accent" COLSPAN="1"><big>' . $Title . '</big></TD>
 </TR>
 <TR>
 <TD>';

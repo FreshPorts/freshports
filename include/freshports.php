@@ -1090,13 +1090,7 @@ function freshports_SideBarHTML($Self, $URL, $Label, $Title) {
 }
 
 function freshports_SideBarHTMLParm($Self, $URL, $Parm, $Label, $Title) {
-   if ($Self == $URL || ($Self == '/index.php' && $URL == '/')) {
-      $HTML = $Label;
-   } else {
-      $HTML = '<a href="' . $URL . $Parm . '" title="' . $Title . '">' . $Label . '</a>';
-   }
-      
-   return $HTML;
+   return freshPorts_SideBarHTML($Self, $URL . $Parm, $Label, $Title);
 }
 
 function freshports_YNToCheckbox($Value) {

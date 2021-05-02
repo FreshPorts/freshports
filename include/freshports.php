@@ -1804,7 +1804,7 @@ function freshports_SideBar() {
    </tr>
    </table>
 
-' . '<div align="center">';
+' . '<div>';
 
 	$HTML .='
 

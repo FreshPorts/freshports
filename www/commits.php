@@ -113,7 +113,7 @@ if ($db) {
 <?php echo freshports_MainContentTable(); ?>
 
 <TR>
-<? echo freshports_PageBannerText($Title, 3); ?>
+<? echo freshports_PageBannerText($Title); ?>
         <? //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPortsLong) ?>
 </TR>
 <TR><TD>

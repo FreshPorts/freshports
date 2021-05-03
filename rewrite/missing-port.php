@@ -40,7 +40,7 @@ function DisplayPortCommits($port, $PageNumber) {
 	if ($NumRowsFrom + $NumRowsTo > 0) {
 		$HTML .= '<TABLE class="fullwidth bordered" CELLPADDING="5">' . "\n";
 		$HTML .= "<TR>\n";
-		$HTML .= freshports_PageBannerText("Port Moves", 1);
+		$HTML .= freshports_PageBannerText("Port Moves");
 		$HTML .= "<tr><td>\n";
 		$HTML .= "<ul>\n";
 	}

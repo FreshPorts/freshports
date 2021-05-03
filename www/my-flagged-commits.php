@@ -76,7 +76,7 @@ if ($db) {
 <?php echo freshports_MainContentTable(); ?>
 
 <TR>
-<? echo freshports_PageBannerText("My flagged commits", 3); ?>
+<? echo freshports_PageBannerText("My flagged commits"); ?>
         <? //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPortsLong) ?>
 </TR>
 <TR><TD>

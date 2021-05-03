@@ -1753,7 +1753,7 @@ function freshports_SideBar() {
 	$ColumnWidth = 160;
 
 	$HTML = '
-  <table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
+  <table width="' . $ColumnWidth . '" class="bordered">
         <tr>
          <th class="accent" height="30">Login</th>
         </tr>
@@ -1802,7 +1802,7 @@ function freshports_SideBar() {
 </div>';
 
 	$HTML .= '	
-<table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
+<table width="' . $ColumnWidth . '" class="bordered">
 	<tr>
 		<th class="accent" height="30">This site</th>
 	</tr>
@@ -1821,7 +1821,7 @@ function freshports_SideBar() {
 	</tr>
 </table>
 <br>
-<table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
+<table width="' . $ColumnWidth . '" class="bordered">
 	<tr>
 		<th class="accent" height="30">Search</th>
 	</tr>
@@ -1845,7 +1845,7 @@ function freshports_SideBar() {
 ';
 	if (file_exists(HTML_DIRECTORY . '/vuln-latest.html')) {
 $HTML .= '<br>
-<table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
+<table width="' . $ColumnWidth . '" class="bordered">
 	<tr>
 		<th class="accent" height="30">Latest Vulnerabilities</th>
 	</tr>
@@ -1864,7 +1864,7 @@ $HTML .= '<br>
 
 	$HTML .= '
 
-<table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
+<table width="' . $ColumnWidth . '" class="bordered">
 	<tr>
 		<th class="accent" height="30">Ports</th>
 	</tr>
@@ -1886,7 +1886,7 @@ if (IsSet($visitor)) {
 
 
 $HTML .= '<br>
-<table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
+<table width="' . $ColumnWidth . '" class="bordered">
 	<tr>
 		<th class="accent" height="30">Watch Lists</th>
 	</tr>
@@ -1910,7 +1910,7 @@ $HTML .= '
 	GLOBAL $ShowAds;
 
 	if ($ShowAds) {
-		$HTML .= '<br><table class="borderless" cellpadding="5">
+		$HTML .= '<br><table class="borderless">
 		  <tr><td align="center">
 		';
 		$HTML .= Ad_160x600();
@@ -1921,7 +1921,7 @@ $HTML .= '
 
 	$HTML .= '<br>
 
-<table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
+<table width="' . $ColumnWidth . '" class="bordered">
 	<tr>
 		<th class="accent" height="30">Statistics</th>
 	</tr>

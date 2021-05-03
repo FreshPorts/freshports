@@ -17,6 +17,10 @@ BODY, TD, TR, P, UL, OL, LI, INPUT, SELECT, DL, DD, DT, FONT
   text-align: center;
 }
 
+.sidebar td, .sidebar th {
+  padding: 5px;
+}
+
 .sidebar th {
   text-align: left;
   font-weight: bolder;

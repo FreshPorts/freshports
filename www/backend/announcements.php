@@ -140,7 +140,7 @@ $HTML .= '</tr>'  . "\n";
 
 $HTML .= '<tr>'  . "\n";
 
-$HTML .= '<td><b>Plain text Version</b>'  . "\n";
+$HTML .= '<td colspan="3"><b>Plain text Version</b>'  . "\n";
 $HTML .= '<TEXTAREA NAME="announcement_plain" ROWS="10" COLS="60">'          . "\n";
 $HTML .= htmlspecialchars($Announcement->TextPlainGet());
 $HTML .= '</TEXTAREA>';

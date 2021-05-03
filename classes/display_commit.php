@@ -145,9 +145,9 @@ class DisplayCommit {
 				$MaxNumberPortsToShow      = 10;
 
 				if ($mycommit->commit_date != $PreviousCommit->commit_date) {
-					$this->HTML .= '<TR><TD class="accent" COLSPAN="3" HEIGHT="0">' . "\n";
+					$this->HTML .= '<tr><td class="accent">' . "\n";
 					$this->HTML .= '   ' . FormatTime($mycommit->commit_date, 0, "D, j M Y") . "\n";
-					$this->HTML .= '</TD></TR>' . "\n\n";
+					$this->HTML .= "</td></tr>\n\n";
 				}
 
 				GLOBAL $freshports_mail_archive;

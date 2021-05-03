@@ -205,6 +205,7 @@ function DisplayStagingArea($UserID, $WatchListID, $db) {
 	UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $db);
 	echo '</TD>';
 
+	echo '</TR>';
 	echo '</TABLE>';
 }
 
@@ -213,7 +214,7 @@ function ChooseWatchLists($UserID, $db) {
 	echo '<TABLE class="fullwidth bordered" ALIGN="center" CELLPADDING="5"><TR>';
 ?>
 
-	<TR><TD colspan="3"><BIG>Your staging area contains your uploaded information.  Please choose a watch list, and click on Go.
+	<TR><TD><BIG>Your staging area contains your uploaded information.  Please choose a watch list, and click on Go.
 		 <SMALL><A HREF="/help.php">help</A></SMALL></TD></TR>
 
 	<TR><TD>

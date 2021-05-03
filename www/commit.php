@@ -155,7 +155,7 @@ if ($Debug) echo "UserID='$User->id'";
 if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 ?>
   <TR>
-    <TD colspan="2">
+    <TD>
        <? include ("announcement.txt"); ?>
     </TD>
   </TR>
@@ -169,7 +169,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 ?>
 
 <TR>
-	<? echo freshports_PageBannerText($Title, 3); ?>
+	<? echo freshports_PageBannerText($Title); ?>
 </TR>
 
 <?php

@@ -935,6 +935,7 @@ if ($output_format == OUTPUT_FORMAT_HTML) {
 </td>
 <td valign="middle">
 	<INPUT TYPE=checkbox <? if ($casesensitivity == "casesensitive")   echo 'CHECKED'; ?> VALUE=casesensitive   NAME=casesensitivity> Case sensitive search
+</td>
 <td valign="middle">
 	Sort by: <SELECT name="orderby">
 		<OPTION VALUE="<?php echo ORDERBYPORT;       ?>" <?if ($orderby == ORDERBYPORT       ) echo 'SELECTED' ?>>Port
@@ -989,7 +990,6 @@ if ($output_format == OUTPUT_FORMAT_HTML) {
   </td>
 </tr>
 
-</td>
 </table>
 </form>
 

@@ -127,10 +127,10 @@
 		$HTML = '';
 
 		if ($NumRows == 0) {
-			$HTML .= '<TR><TD class="accent" COLSPAN="3" HEIGHT="0">' . "\n";
+			$HTML .= '<tr><td class="accent">' . "\n";
 			$HTML .= '   ' . FormatTime($Date, 0, "D, j M Y") . "\n";
-			$HTML .= '</TD></TR>' . "\n\n";
-			$HTML .= '<TR><TD>No commits found for that date</TD></TR>';
+			$HTML .= '</td></tr>' . "\n\n";
+			$HTML .= '<tr><td>No commits found for that date</td></tr>';
 		}
 		
 		unset($ThisCommitLogID);

@@ -12,6 +12,10 @@ BODY, TD, TR, P, UL, OL, LI, INPUT, SELECT, DL, DD, DT, FONT
     font-size: 12px;
 }
 
+table.maincontent > tbody > tr > td {
+  padding: 8px;
+}
+
 td.content {
   width: 100%;
   vertical-align: top;

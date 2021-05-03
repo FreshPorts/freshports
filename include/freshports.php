@@ -136,7 +136,7 @@ function freshports_Search_Committer($Committer) {
 }
 
 function freshports_MainContentTable($Classes=BORDER, $ColSpan=1) {
-	return '<table class="fullwidth ' . $Classes . '" cellpadding="8">' . 
+	return '<table class="maincontent fullwidth ' . $Classes . '">' .
 		PortsFreezeStatus($ColSpan);
 }
 

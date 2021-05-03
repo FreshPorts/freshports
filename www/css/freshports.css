@@ -225,6 +225,13 @@ li.extraspace {
 .packages th { background-color:#000; color:white; }
 .packages td, .packages th { padding:8px; border:1px solid #000; }
 
+.footer .sponsors {
+  text-align: left;
+}
+
+.footer .copyright {
+  text-align: right;
+}
 
 /* for horizontal scrolling of package tables - re https://www.w3schools.com/howto/howto_css_menu_horizontal_scroll.asp#contact */
 

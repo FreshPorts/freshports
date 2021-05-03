@@ -821,7 +821,7 @@ GLOBAL $FreshPortsLogoHeight;
 #echo "$LocalTimeAdjustment<br>";
 
 	$HTML = '<br>
-<table class="fullwidth borderless" align="center">
+<table class="fullwidth borderless">
 <tr>
 	<td><a href="';
 
@@ -1589,7 +1589,7 @@ function freshports_wrap($text, $length = WRAPCOMMITSATCOLUMN) {
 }
 
 function freshports_PageBannerText($Text, $ColSpan=1) {
-	return '<td align="left" class="accent" COLSPAN="' . $ColSpan . '"><big>' . $Text . '</big></td>' . "\n";
+	return '<td class="accent" COLSPAN="' . $ColSpan . '"><big>' . $Text . '</big></td>' . "\n";
 }
 
 
@@ -1650,7 +1650,7 @@ function freshports_ShowFooter($PhorumBottom = 0) {
 	GLOBAL $ShowPoweredBy;
 	GLOBAL $ShowAds;
 
-	$HTML = '<table class="fullwidth borderless" align="center">
+	$HTML = '<table class="footer fullwidth borderless">
 <tr><td>';
 
 
@@ -1703,10 +1703,10 @@ alt="powered by nginx" width="121" height="32"></a>
 <tr><td>
 <table class="fullwidth">
 <tr>
-<td align="left"  valign="top">
+<td class="sponsors">
 <small>' . SPONSORS . '</small>
 </td>
-<td align="right" valign="top">
+<td class="copyright">
 <small>
 Valid 
 <a href="https://validator.w3.org/check?uri=' . $URI . '" title="We like to keep our HTML valid" target="_blank" rel="noopener noreferrer">HTML</a>,

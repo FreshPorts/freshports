@@ -1750,10 +1750,9 @@ urchinTracker();
 function freshports_SideBar() {
 
 	GLOBAL $User;
-	$ColumnWidth = 160;
 
 	$HTML = '
-  <table width="' . $ColumnWidth . '" class="bordered">
+  <table class="bordered">
         <tr>
          <th class="accent">Login</th>
         </tr>
@@ -1802,12 +1801,12 @@ function freshports_SideBar() {
 </div>';
 
 	$HTML .= '	
-<table width="' . $ColumnWidth . '" class="bordered">
+<table class="bordered">
 	<tr>
 		<th class="accent">This site</th>
 	</tr>
 	<tr>
-	<td valign="top">
+	<td>
 	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/about.php",           "What is FreshPorts?", "A bit of background on FreshPorts"               ) . '
 	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/authors.php",         "About the authors",   "Who wrote this stuff?"                           ) . '
 	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], ISSUES,                 "Issues",              "Report a website problem"                        ) . '
@@ -1821,7 +1820,7 @@ function freshports_SideBar() {
 	</tr>
 </table>
 <br>
-<table width="' . $ColumnWidth . '" class="bordered">
+<table class="bordered">
 	<tr>
 		<th class="accent">Search</th>
 	</tr>
@@ -1845,7 +1844,7 @@ function freshports_SideBar() {
 ';
 	if (file_exists(HTML_DIRECTORY . '/vuln-latest.html')) {
 $HTML .= '<br>
-<table width="' . $ColumnWidth . '" class="bordered">
+<table class="bordered">
 	<tr>
 		<th class="accent">Latest Vulnerabilities</th>
 	</tr>
@@ -1864,12 +1863,12 @@ $HTML .= '<br>
 
 	$HTML .= '
 
-<table width="' . $ColumnWidth . '" class="bordered">
+<table class="bordered">
 	<tr>
 		<th class="accent">Ports</th>
 	</tr>
 	<tr>
-	<td valign="top">
+	<td>
 
 	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/",                         "Home",                 "FreshPorts Home page"                ) . '
 	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/categories.php",           "Categories",           "List of all Port categories"         ) . '
@@ -1886,12 +1885,12 @@ if (IsSet($visitor)) {
 
 
 $HTML .= '<br>
-<table width="' . $ColumnWidth . '" class="bordered">
+<table class="bordered">
 	<tr>
 		<th class="accent">Watch Lists</th>
 	</tr>
 	<tr>
-	<td valign="top">';
+	<td>';
 
 		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/pkg_upload.php',             "Upload",               "Upoad a file containing a list of ports you want to add to your watch list");
 		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/watch-categories.php',       "Categories",           "Search through categories for ports to add to your watch list"             );
@@ -1921,12 +1920,12 @@ $HTML .= '
 
 	$HTML .= '<br>
 
-<table width="' . $ColumnWidth . '" class="bordered">
+<table class="bordered">
 	<tr>
 		<th class="accent">Statistics</th>
 	</tr>
 	<tr>
-	<td valign="top">
+	<td>
 
 ' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/graphs.php",  "Graphs",                  "Everyone loves statistics!") . '
 ' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/graphs2.php", "NEW Graphs (Javascript)", "Everyone loves statistics!");

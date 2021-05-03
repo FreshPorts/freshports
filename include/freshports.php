@@ -29,7 +29,7 @@ DEFINE('UNMAINTAINTED_ADDRESS', 'ports@freebsd.org');
 
 DEFINE('CLICKTOADD', 'Click to add this to your default watch list[s]');
 
-DEFINE('SPONSORS', 'Servers and bandwidth provided by<br><a href="https://www.nyi.net/" rel="noopener noreferrer" TARGET="_new">New York Internet</a>, <a href="https://www.ixsystems.com/"  rel="noopener noreferrer" TARGET="_new">iXsystems</a>, and <a href="https://www.rootbsd.net/" rel="noopener noreferrer" TARGET="_new">RootBSD</a>');
+DEFINE('SPONSORS', 'Servers and bandwidth provided by<br><a href="https://www.nyi.net/" rel="noopener noreferrer" TARGET="_blank">New York Internet</a>, <a href="https://www.ixsystems.com/"  rel="noopener noreferrer" TARGET="_blank">iXsystems</a>, and <a href="https://www.rootbsd.net/" rel="noopener noreferrer" TARGET="_blank">RootBSD</a>');
 
 DEFINE('FRESHPORTS_ENCODING', 'UTF-8');
 
@@ -40,9 +40,7 @@ date_default_timezone_set('UTC');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php');
 
 function freshports_MainTable() {
-	GLOBAL $TableWidth;
-
-	return '<table width="' . $TableWidth . '" class="borderless">
+	return '<table class="fullwidth borderless">
 ';
 }
 
@@ -501,7 +499,7 @@ function freshports_Ignore_Icon($HoverText = '') {
 	$Alt       = "Ignore";
 	$HoverText = freshports_HoverTextCleaner($Alt, $HoverText);
 
-	return '<img src="/images/ignored.png" alt="' . $Alt . '" title="' . $HoverText . '" width="20" height="21;">';
+	return '<img src="/images/ignored.png" alt="' . $Alt . '" title="' . $HoverText . '" width="20" height="21">';
 }
 
 function freshports_Ignore_Icon_Link($HoverText = '') {
@@ -813,7 +811,6 @@ GLOBAL $ShowAnnouncements;
 }
 
 function freshports_Logo() {
-GLOBAL $TableWidth;
 GLOBAL $LocalTimeAdjustment;
 GLOBAL $FreshPortsName;
 GLOBAL $FreshPortsLogo;
@@ -824,7 +821,7 @@ GLOBAL $FreshPortsLogoHeight;
 #echo "$LocalTimeAdjustment<br>";
 
 	$HTML = '<br>
-<table width="' . $TableWidth . '" class="borderless" align="center">
+<table class="fullwidth borderless" align="center">
 <tr>
 	<td><a href="';
 
@@ -976,7 +973,7 @@ function freshports_body($ExtraScript = null) {
 
 GLOBAL $Debug;
 
-echo "\n" . '<BODY bgcolor="#FFFFFF" TEXT="#000000">';
+echo "\n" . '<BODY>';
 
 # most often used for page setup, hiding elements, etc
 if (!empty($ExtraScript)) {
@@ -1602,7 +1599,7 @@ function freshports_wrap($text, $length = WRAPCOMMITSATCOLUMN) {
 }
 
 function freshports_PageBannerText($Text, $ColSpan=1) {
-	return '<td align="left" class="accent" height="29" COLSPAN="' . $ColSpan . '"><FONT COLOR="#FFFFFF"><big><big>' . $Text . '</big></big></FONT></td>' . "\n";
+	return '<td align="left" class="accent" height="29" COLSPAN="' . $ColSpan . '"><big>' . $Text . '</big></td>' . "\n";
 }
 
 
@@ -1659,12 +1656,11 @@ function freshports_UserSendToken($UserID, $dbh) {
 }
 
 function freshports_ShowFooter($PhorumBottom = 0) {
-	GLOBAL $TableWidth;
 	GLOBAL $Statistics;
 	GLOBAL $ShowPoweredBy;
 	GLOBAL $ShowAds;
 
-	$HTML = '<table width="' . $TableWidth . '" class="borderless" align="center">
+	$HTML = '<table class="fullwidth borderless" align="center">
 <tr><td>';
 
 
@@ -1769,7 +1765,7 @@ function freshports_SideBar() {
 	$HTML = '
   <table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
         <tr>
-         <td class="accent" height="30"><FONT COLOR="#FFFFFF"><big><b>Login</b></big></FONT></td>
+         <td class="accent" height="30"><b>Login</b></td>
         </tr>
         <tr>
 
@@ -1818,7 +1814,7 @@ function freshports_SideBar() {
 	$HTML .= '	
 <table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
 	<tr>
-		<td class="accent" height="30"><FONT COLOR="#FFFFFF"><big><b>This site</b></big></FONT></td>
+		<td class="accent" height="30"><b>This site</b></td>
 	</tr>
 	<tr>
 	<td valign="top">
@@ -1837,7 +1833,7 @@ function freshports_SideBar() {
 <br>
 <table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
 	<tr>
-		<td class="accent" height="30"><FONT COLOR="#FFFFFF"><big><b>Search</b></big></FONT></td>
+		<td class="accent" height="30"><b>Search</b></td>
 	</tr>
 	<tr>
 
@@ -1861,7 +1857,7 @@ function freshports_SideBar() {
 $HTML .= '<br>
 <table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
 	<tr>
-		<td class="accent" height="30"><FONT COLOR="#FFFFFF"><big><b>Latest Vulnerabilities</b></big></FONT></td>
+		<td class="accent" height="30"><b>Latest Vulnerabilities</b></td>
 	</tr>
 	<tr><td>
 	' . file_get_contents(HTML_DIRECTORY . '/vuln-latest.html') . "\n" . '
@@ -1880,7 +1876,7 @@ $HTML .= '<br>
 
 <table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
 	<tr>
-		<td class="accent" height="30"><FONT COLOR="#FFFFFF"><big><b>Ports</b></big></FONT></td>
+		<td class="accent" height="30"><b>Ports</b></td>
 	</tr>
 	<tr>
 	<td valign="top">
@@ -1902,7 +1898,7 @@ if (IsSet($visitor)) {
 $HTML .= '<br>
 <table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
 	<tr>
-		<td class="accent" height="30"><FONT COLOR="#FFFFFF"><big><b>Watch Lists</b></big></FONT></td>
+		<td class="accent" height="30"><b>Watch Lists</b></td>
 	</tr>
 	<tr>
 	<td valign="top">';
@@ -1937,7 +1933,7 @@ $HTML .= '
 
 <table width="' . $ColumnWidth . '" class="bordered" cellpadding="5">
 	<tr>
-		<td COLSPAN="2" class="accent" height="30"><FONT COLOR="#FFFFFF"><big><b>Statistics</b></big></FONT></td>
+		<td COLSPAN="2" class="accent" height="30"><b>Statistics</b></td>
 	</tr>
 	<tr>
 	<td valign="top">
@@ -1988,7 +1984,7 @@ function freshports_ErrorMessage($Title, $ErrorMessage) {
 <tr>
 	' . freshports_PageBannerText($Title) . '
 </tr>
-<tr bgcolor="#ffffff">
+<tr>
 <td>
   <table class="fullwidth borderless" cellpadding="0">
   <tr valign=top>

@@ -13,7 +13,6 @@
 	require_once('Pager/Pager.php');
 	
 function freshports_NonPortDescription($db, $element_record) {
-	GLOBAL $TableWidth;
 	GLOBAL $FreshPortsTitle;
 
 	$Debug = 0;

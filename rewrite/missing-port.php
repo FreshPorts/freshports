@@ -91,7 +91,6 @@ function _freshPorts_GetPortDisplay() {
 }
 
 function _freshports_PortDisplayHelper($db, $category, $port, $branch, $HasCommitsOnBranch = true) {
-	GLOBAL $TableWidth;
 	GLOBAL $FreshPortsTitle;
 	GLOBAL $User;
 

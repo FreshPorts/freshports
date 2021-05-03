@@ -169,7 +169,7 @@ if ($LoginFailed) {
 <TR>
 	<? echo freshports_PageBannerText("Login Failed!") ?>
 </TR>
-<TR BGCOLOR="#ffffff">
+<TR>
 <TD>
   <TABLE class="fullwidth borderless" CELLPADDING="0">
   <TR valign=top>
@@ -204,7 +204,7 @@ if ($error) {
     <? echo freshports_PageBannerText("NOTICE"); ?>
 </TR>
 
-<TR BGCOLOR="#ffffff">
+<TR>
 <TD>
   <TABLE class="fullwidth borderless" CELLPADDING=0>
   <TR valign=top>
@@ -227,14 +227,14 @@ if ($error) {
 
 
 
-echo '<TABLE class="fullwidth bordered accent" CELLPADDING="1">';
+echo '<TABLE class="fullwidth bordered" CELLPADDING="1">';
 
-echo '<TR class="accent">';
+echo '<TR>';
 
 echo freshports_PageBannerText("Login");
 echo '</TR>';
 
-echo '<TR><TD BGCOLOR="#ffffff">';
+echo '<TR><TD>';
 include ($_SERVER['DOCUMENT_ROOT'] . "/../include/login.php");
 
 echo "Your browser must allow cookies for this login to work.";

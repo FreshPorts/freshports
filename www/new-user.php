@@ -181,13 +181,13 @@ if (IsSet($submit)) {
 <TR><TD VALIGN="top" WIDTH="100%">
 <?php
 if ($errors != '') {
-echo '<TABLE CELLPADDING=1 class="fullwidth borderless accent">
+echo '<TABLE CELLPADDING=1 class="fullwidth borderless">
 <TR>
 <TD>
 <TABLE class="fullwidth borderless" CELLPADDING=1>
-<TR class="accent"><TD><B><FONT color="#ffffff" size=+0>Access Code Failed!</FONT></B></TD>
+<TR class="accent"><TD><B>Access Code Failed!</B></TD>
 </TR>
-<TR BGCOLOR="#ffffff">
+<TR>
 <TD>
   <TABLE class="fullwidth borderless" CELLPADDING=3>
   <TR VALIGN=top>

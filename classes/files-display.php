@@ -24,7 +24,6 @@ class FilesDisplay {
 	}
 
 	function CreateHTML($WhichRepo) {
-		GLOBAL $TableWidth;
 		GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;
 		GLOBAL $DaysMarkedAsNew;
 

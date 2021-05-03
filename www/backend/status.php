@@ -20,7 +20,7 @@
 
 ?>
 
-<TABLE width="<? echo $TableWidth ?>" class="borderless" ALIGN="center">
+<TABLE class="fullwidth borderless" ALIGN="center">
 
 <TR><TD valign="top" width="100%">
 <TABLE class="fullwidth borderless">

@@ -77,7 +77,7 @@ if (IsSet($submit)) {
 						'FreeBSD, index, applications, ports');
 ?>
 
-<TABLE WIDTH="<? echo $TableWidth; ?>" class="borderless" ALIGN="center">
+<TABLE class="fullwidth borderless" ALIGN="center">
 <TR><TD VALIGN="top" width="100%">
 <TABLE class="fullwidth borderless">
   <TR>
@@ -85,13 +85,13 @@ if (IsSet($submit)) {
 
 
 if ($errors) {
-echo '<TABLE CELLPADDING="1" class="fullwidth borderless accent">
+echo '<TABLE CELLPADDING="1" class="fullwidth borderless">
 <TR>
 <TD>
 <TABLE class="fullwidth borderless" CELLPADDING="1">
-<TR class="accent"><TD><b><font color="#ffffff" size=+0>Deleted Failed!</font></b></TD>
+<TR class="accent"><TD><b>Delete Failed!</b></TD>
 </TR>
-<TR BGCOLOR="#ffffff">
+<TR>
 <TD>
   <TABLE class="fullwidth borderless" CELLPADDING="3">
   <TR VALIGN=top>
@@ -114,14 +114,14 @@ echo '<p>If you need help, please email postmaster@. </p>
 <br>';
 }  // if ($errors)
 
-echo '<TABLE CELLPADDING="1" class="fullwidth borderless accent">
+echo '<TABLE CELLPADDING="1" class="fullwidth borderless">
 <TR>
 <TD VALIGN="top">
 <TABLE class="fullwidth borderless" CELLPADDING="1">
 <TR>
-<TD class="accent" HEIGHT="29" COLSPAN="1"><FONT COLOR="#FFFFFF"><BIG><BIG>Customize</BIG></BIG></FONT></TD>
+<TD class="accent" HEIGHT="29" COLSPAN="1"><BIG>Customize</BIG></TD>
 </TR>
-<TR BGCOLOR="#ffffff">
+<TR>
 <TD>';
 
 

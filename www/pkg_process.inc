@@ -48,7 +48,7 @@ function DisplayError($error) {
 			    <? echo freshports_PageBannerText("NOTICE"); ?>
 			</TR>
 
-			<TR BGCOLOR="#ffffff">
+			<TR>
 				<TD>
 					<TABLE class="fullwidth borderless" CELLPADDING="0">
 						<TR VALIGN="top">

@@ -202,7 +202,7 @@ the following fields.
 
 </TABLE>
 
-<TABLE WIDTH="<?php echo $TableWidth; ?>" class="borderless" ALIGN="center">
+<TABLE class="fullwidth borderless" ALIGN="center">
 <TR><TD>
 <?php echo freshports_ShowFooter(); ?>
 </TD></TR>

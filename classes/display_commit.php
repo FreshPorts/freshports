@@ -146,7 +146,7 @@ class DisplayCommit {
 
 				if ($mycommit->commit_date != $PreviousCommit->commit_date) {
 					$this->HTML .= '<TR><TD class="accent" COLSPAN="3" HEIGHT="0">' . "\n";
-					$this->HTML .= '   <FONT COLOR="#FFFFFF"><BIG>' . FormatTime($mycommit->commit_date, 0, "D, j M Y") . '</BIG></FONT>' . "\n";
+					$this->HTML .= '   ' . FormatTime($mycommit->commit_date, 0, "D, j M Y") . "\n";
 					$this->HTML .= '</TD></TR>' . "\n\n";
 				}
 
@@ -190,8 +190,8 @@ class DisplayCommit {
 					
 				if ($mycommit->svn_revision != '') {
 					if ($this->IsGitCommit($mycommit->message_id)) {
-						$this->HTML .= '&nbsp; ' .       freshports_git_commit_Link($mycommit->svn_revision,                               $mycommit->repo_hostname, $mycommit->path_to_repo);
-						$this->HTML .= '&nbsp; ' .  freshports_git_commit_Link_Hash($mycommit->svn_revision, $mycommit->commit_hash_short, $mycommit->repo_hostname, $mycommit->path_to_repo). '&nbsp';
+						$this->HTML .= '&nbsp; ' .      freshports_git_commit_Link($mycommit->svn_revision,                               $mycommit->repo_hostname, $mycommit->path_to_repo);
+						$this->HTML .= '&nbsp; ' . freshports_git_commit_Link_Hash($mycommit->svn_revision, $mycommit->commit_hash_short, $mycommit->repo_hostname, $mycommit->path_to_repo) . '&nbsp;';
 					} else {
 						$this->HTML .= '&nbsp; ' . freshports_svnweb_ChangeSet_Link($mycommit->svn_revision, $mycommit->repo_hostname);
 					}

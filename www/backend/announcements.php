@@ -82,7 +82,7 @@ if (IsSet($_REQUEST['edit'])) {
                'FreeBSD, index, applications, ports');
 ?>
 
-<TABLE WIDTH="<? echo $TableWidth; ?>" class="borderless" ALIGN="center">
+<TABLE class="fullwidth borderless" ALIGN="center">
 <TR><TD VALIGN="top" width="100%">
 <?php
 
@@ -104,11 +104,11 @@ echo '
 <br>';
 }
 
-echo '<TABLE CELLPADDING="1" CELLSPACING="3" class="fullwidth borderless accent">
+echo '<TABLE CELLPADDING="1" CELLSPACING="3" class="fullwidth borderless">
 <TR>
-<TD class="accent" COLSPAN="1"><FONT COLOR="#FFFFFF"><BIG><BIG>' . $Title . '</BIG></BIG></FONT></TD>
+<TD class="accent" COLSPAN="1"><big>' . $Title . '</big></TD>
 </TR>
-<TR BGCOLOR="#ffffff">
+<TR>
 <TD>';
 
 echo 'Current annoucements<blockquote>';
@@ -179,8 +179,8 @@ function MyDisplayAnnouncements($Announcement) {
 		$Announcement->FetchNth($i);
 		$HTML .= '<tr>' . "\n";
 		$HTML .= '<td>' . $Announcement->TextGet()      . '</td>';
-		$HTML .= '<td>' . ($Announcement->StartDateGet() != '' ? $Announcement->StartDateGet() : '&nbsp') . '</td>';
-		$HTML .= '<td>' . ($Announcement->EndDateGet()   != '' ? $Announcement->EndDateGet()   : '&nbsp') . '</td>';
+		$HTML .= '<td>' . ($Announcement->StartDateGet() != '' ? $Announcement->StartDateGet() : '&nbsp;') . '</td>';
+		$HTML .= '<td>' . ($Announcement->EndDateGet()   != '' ? $Announcement->EndDateGet()   : '&nbsp;') . '</td>';
 		$HTML .= '<td><a href="' . $_SERVER['PHP_SELF']  . '?edit='   . $Announcement->IDGet() . '">Edit</a></td>';
 		$HTML .= '<td><a href="' . $_SERVER['PHP_SELF']  . '?delete=' . $Announcement->IDGet() . '">Delete</a></td>';
       $HTML .= '</tr>' . "\n";

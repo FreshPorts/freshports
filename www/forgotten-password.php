@@ -142,13 +142,13 @@ if (IsSet($submit)) {
 <?
 
 if (IsSet($error) and $error != '') {
-      echo '<TABLE CELLPADDING="1" class="fullwidth borderless accent">
+      echo '<TABLE CELLPADDING="1" class="fullwidth borderless">
             <TR>
             <TD>
                <TABLE class="fullwidth borderless" CELLPADDING="1">
-                 <TR class="accent"><TD><b><FONT COLOR="#ffffff" SIZE="+2">We have a problem!</FONT></b></TD>
+                 <TR class="accent"><TD><b>We have a problem!</b></TD>
                  </TR> 
-                 <TR BGCOLOR="#ffffff">
+                 <TR>
             <TD>
               <TABLE class="fullwidth borderless" CELLPADDING="3">
               <TR VALIGN="middle">
@@ -169,13 +169,13 @@ if (IsSet($error) and $error != '') {
 } else {
 
    if ($LoginFailed || $eMailFailed) {
-      echo '<TABLE CELLPADDING="1" class="fullwidth borderless accent">
+      echo '<TABLE CELLPADDING="1" class="fullwidth borderless">
             <TR>
             <TD>
                <TABLE class="fullwidth borderless" CELLPADDING="1">
-                 <TR class="accent"><TD><b><FONT COLOR="#ffffff" SIZE="+2">UserID not found!</FONT></b></TD>
+                 <TR class="accent"><TD><b>User ID not found!</b></TD>
                  </TR>
-                 <TR BGCOLOR="#ffffff">
+                 <TR>
             <TD>
               <TABLE class="fullwidth borderless" CELLPADDING="3">
               <TR VALIGN=top>
@@ -211,12 +211,12 @@ if (IsSet($error) and $error != '') {
 }
 ?>
 
-<TABLE CELLPADDING="1" class="fullwidth borderless accent"> <TR> <TD>
+<TABLE CELLPADDING="1" class="fullwidth borderless"> <TR> <TD>
 
 
-<TABLE class="fullwidth borderless accent" CELLPADDING="5">
+<TABLE class="fullwidth borderless" CELLPADDING="5">
 
-<TR class="accent" ><TD class="accent"><FONT COLOR="#ffffff" SIZE="+2">
+<TR class="accent" ><TD class="accent">
 <?
 if ($MailSent) {
    echo "Mail sent to your address";
@@ -224,9 +224,9 @@ if ($MailSent) {
    echo "Forgotten your password?";
 }
 ?>
-</FONT></TD></TR>
+</TD></TR>
 
-<TR><TD BGCOLOR="#ffffff">
+<TR><TD>
 <?
 if ($MailSent) {
 ?>

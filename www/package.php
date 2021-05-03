@@ -70,7 +70,7 @@ The package specified ('<?php echo $packages_html; ?>') could not be found.  We 
 	$ShowPoweredBy = 1;
 ?>
 
-<TABLE WIDTH="<? echo $TableWidth; ?>" class="borderless" ALIGN="center">
+<TABLE class="fullwidth borderless" ALIGN="center">
 <TR><TD>
 <? echo freshports_ShowFooter(); ?>
 </TD></TR>

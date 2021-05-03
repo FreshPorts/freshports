@@ -89,7 +89,7 @@ if (Is_Numeric($dailysummary)) {
 
 if ($db) {
 ?>
-<TR><TD VALIGN="top" WIDTH="100%">
+<TR><td class="content">
 
 <?php echo freshports_MainContentTable(); ?>
 

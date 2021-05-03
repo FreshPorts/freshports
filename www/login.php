@@ -157,7 +157,7 @@ if (IsSet($_GET["resend"])) {
 
 <?php echo freshports_MainTable(); ?>
  <TR>
-    <TD VALIGN="top" WIDTH="100%">
+    <td class="content">
 <?
 if ($LoginFailed) {
 ?>
@@ -248,7 +248,7 @@ echo"
 #echo '<BR><A HREF="forgotten-password.php">Forgotten your password?</a>';
 
 ?>
-</TD>
+</td>
 
   <td class="sidebar">
 	<?

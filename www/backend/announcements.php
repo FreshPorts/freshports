@@ -83,7 +83,7 @@ if (IsSet($_REQUEST['edit'])) {
 ?>
 
 <TABLE class="fullwidth borderless" ALIGN="center">
-<TR><TD VALIGN="top" width="100%">
+<TR><td class="content">
 <?php
 
 

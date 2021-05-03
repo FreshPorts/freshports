@@ -175,7 +175,7 @@ function freshports_CategoryDisplay($db, $category, $PageNumber = 1, $PageSize =
 
 		$HTML = freshports_MainTable();
 
-		$HTML .= '<tr><td valign="top" width="100%">';
+		$HTML .= '<tr><td class="content">';
 
 		$HTML .= freshports_MainContentTable() . '
 

@@ -178,7 +178,7 @@ if ($NumCommits > 0) {
 
 <?php echo freshports_MainTable(); ?>
 
-<TR><TD VALIGN="top" WIDTH="100%">
+<TR><td class="content">
 <?php
 
 echo freshports_MainContentTable();

@@ -147,7 +147,7 @@ if ($Debug) echo "UserID='$User->id'";
 
 	<?php echo freshports_MainTable(); ?>
 
-	<tr><td valign="top" width="100%">
+	<tr><td class="content">
 
 	<?php echo freshports_MainContentTable(BORDER); ?>
 
@@ -348,7 +348,7 @@ ORDER BY port, element_pathname";
 		$HTML .=  "no connection";
 	} # if ($database )
 	} else {
-		echo '<tr><td valign="top" width="100%">nothing supplied, nothing found!</td>';
+		echo '<tr><td class="content">nothing supplied, nothing found!</td>';
 	} # if ($message_id != '' || $revision != '')
 	}  # if ($cached)
 

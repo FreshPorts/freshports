@@ -18,7 +18,7 @@
 ?>
 	<?php echo freshports_MainTable(); ?>
 
-	<tr><td valign="top" width="100%">
+	<tr><td class="content">
 
 	<?php echo freshports_MainContentTable(NOBORDER); ?>
 <TR>
@@ -162,7 +162,7 @@ your staging area before uploading again.
 
 	
 </TABLE>
-</TD>
+</td>
 
   <td class="sidebar">
 	<?

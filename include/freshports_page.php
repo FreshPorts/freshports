@@ -67,7 +67,7 @@ class freshports_page extends HTML_Page2 {
 			}
 		}
 
-		$HTML .= freshports_MainTable() . "\n<tr><td width='100%' valign='top'>\n" .
+		$HTML .= freshports_MainTable() . "\n<tr><td class=\"content\">\n" .
 		         freshports_MainContentTable() . "\n<tr>\n" .
 		         freshports_PageBannerText($this->_title);
 

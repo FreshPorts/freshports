@@ -12,6 +12,11 @@ BODY, TD, TR, P, UL, OL, LI, INPUT, SELECT, DL, DD, DT, FONT
     font-size: 12px;
 }
 
+td.content {
+  width: 100%;
+  vertical-align: top;
+}
+
 .sidebar {
   vertical-align: top;
   text-align: center;

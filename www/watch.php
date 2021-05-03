@@ -70,7 +70,7 @@
 
 <?php echo freshports_MainTable(); ?>
 
-<tr><td valign="top" width="100%">
+<tr><td class="content">
 <table class="fullwidth borderless">
 <tr>
 	<? echo freshports_PageBannerText($Title); ?>

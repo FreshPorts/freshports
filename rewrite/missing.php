@@ -29,7 +29,7 @@
 </TR>
 
 <TR>
-<TD WIDTH="100%" VALIGN="top">
+<td class="content">
 <P>
 Sorry, but I don't know anything about that.
 </P>
@@ -42,7 +42,7 @@ Sorry, but I don't know anything about that.
 Perhaps a <A HREF="/categories.php">list of categories</A> or <A HREF="/search.php">the search page</A> might be helpful.
 </P>
 
-</TD>
+</td>
 </TR>
 </TABLE>
 </TD>

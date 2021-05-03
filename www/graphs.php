@@ -17,7 +17,7 @@
 ?>
 	<?php echo freshports_MainTable(); ?>
 
-	<tr><td valign="top" width="100%">
+	<tr><td class="content">
 
 	<?php echo freshports_MainContentTable(); ?>
 
@@ -103,7 +103,7 @@ If you have suggestions for graphs, please raise an issue.
 </TD></TR>
 
 </TABLE>
-</TD>
+</td>
 
   <td class="sidebar">
 	<?

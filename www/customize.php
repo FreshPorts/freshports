@@ -161,7 +161,7 @@ UPDATE users
 ?>
 
 <TABLE class="fullwidth borderless" ALIGN="center">
-<TR><TD VALIGN="top" width="100%">
+<TR><td class="content">
 <TABLE class="fullwidth borderless">
   <TR>
     <TD height="20"><?php
@@ -232,7 +232,7 @@ echo "</TD>
 
 </TD>
 </TABLE>
-</TD>
+</td>
 
   <td class="sidebar">
 	<?

@@ -71,7 +71,7 @@ $dailysummary = 7;
 
 if ($db) {
 ?>
-<TR><TD VALIGN="top" WIDTH="100%">
+<TR><td class="content">
 
 <?php echo freshports_MainContentTable(); ?>
 
@@ -104,7 +104,7 @@ A port is marked as new for 10 days.
 
 ?>
 </TABLE>
-</TD>
+</td>
   <td class="sidebar">
    <? echo freshports_SideBar(); ?>
 

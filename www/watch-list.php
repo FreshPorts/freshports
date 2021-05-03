@@ -72,13 +72,13 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 
 	<?php echo freshports_MainTable(); ?>
 
-	<tr><td valign="top" width="100%">
+	<tr><td class="content">
 
 	<?php echo freshports_MainContentTable(); ?>
 <TR>
 	<? echo freshports_PageBannerText("Watch list maintenance"); ?>
 </TR>
-<TR><TD valign="top" width="100%">
+<TR><td class="content">
 <?php
 		if ($ErrorMessage) {
 			echo freshports_ErrorMessage("Let\'s try that again!", $ErrorMessage);

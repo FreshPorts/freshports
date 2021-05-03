@@ -92,7 +92,7 @@ function DBSize($db) {
 ?>
 	<?php echo freshports_MainTable(); ?>
 
-	<tr><td valign="top" width="100%">
+	<tr><td class="content">
 
 	<?php echo freshports_MainContentTable(NOBORDER); ?>
 

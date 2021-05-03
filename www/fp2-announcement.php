@@ -19,7 +19,7 @@
 ?>
 	<?php echo freshports_MainTable(); ?>
 
-	<tr><td valign="top" width="100%">
+	<tr><td class="content">
 
 	<?php echo freshports_MainContentTable(NOBORDER); ?>
 
@@ -114,7 +114,7 @@ The following items deal with the technical changes which have occurred.
 
 </TD></TR>
 </TABLE>
-</TD>
+</td>
   <td class="sidebar">
 
 	<?

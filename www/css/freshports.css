@@ -22,6 +22,10 @@ BODY, TD, TR, P, UL, OL, LI, INPUT, SELECT, DL, DD, DT, FONT
   font-weight: bolder;
 }
 
+.sidebar p {
+  text-align: center;
+}
+
 .accent {
   background-color: #8c0707;
   background-color: var(--beastie-red);

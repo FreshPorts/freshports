@@ -464,13 +464,15 @@ class port_display {
 
                 if ($USES_PYTHON) {
 			# it is a python port if it starts with py-37, for example.
-                        $Is_A_Python_Port = preg_match('/^py[0-9][0-9]/', $port->package_name);
+                        $Is_A_Python_Port = preg_match('/^py[0-9][0-9]-(.*)/', $port->package_name, $matches);
+                        
+                        # if a match for py37-django-js-asset, $matches[0]=> "py37-django-js-asset", $matches[1]=> "django-js-asset"
                 } else {
                         $Is_A_Python_Port = false;
                 }
 
                 if ($Is_A_Python_Port) {
-                        $HTML .=  '${PYTHON_PKGNAMEPREFIX}' . $package_name_parts[1];
+                        $HTML .=  '${PYTHON_PKGNAMEPREFIX}' . $matches[1];
                 } else {
                         $HTML .= $port->package_name;
                 }

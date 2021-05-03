@@ -142,7 +142,7 @@ echo '<TABLE CELLPADDING="1" class="fullwidth borderless">
 <TD VALIGN="top">
 <TABLE class="fullwidth borderless" CELLPADDING="1">
 <TR>
-<TD class="accent" COLSPAN="1"><BIG>Reset password via token</BIG></TD>
+<td class="accent"><BIG>Reset password via token</BIG></td>
 </TR>
 <TR>
 <TD>';

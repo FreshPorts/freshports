@@ -119,7 +119,7 @@ echo '<TABLE CELLPADDING="1" class="fullwidth borderless">
 <TD VALIGN="top">
 <TABLE class="fullwidth borderless" CELLPADDING="1">
 <TR>
-<TD class="accent" COLSPAN="1"><BIG>Customize</BIG></TD>
+<td class="accent"><BIG>Customize</BIG></td>
 </TR>
 <TR>
 <TD>';

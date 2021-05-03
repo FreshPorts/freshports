@@ -21,11 +21,11 @@
 <TD WIDTH="100%" VALIGN="top">
 <?php echo freshports_MainContentTable(); ?>
 <TR>
-    <TD class="accent" HEIGHT="29"><BIG>
+    <td class="accent"><BIG>
 <?
    echo "$FreshPortsTitle -- $Title";
 ?>
-</BIG></TD>
+</BIG></td>
 </TR>
 
 <TR>

@@ -1376,15 +1376,18 @@ class port_display {
 
 		if ( $HTML === '' ) {
 			$HTML .= '<dt>There are no ports dependent upon this port</dt>';
-		} elseif ($deletedPortFound) {
-			# add some stuff to the front of what we have
-			if ( $port->IsDeleted() ) {
-				$HTML = '<dt>NOTE: dependencies for deleted ports are notoriously suspect</dt>' . $HTML;
-			}
+		} else {
 			$HTML = '<dt class="required">This port is required by:</dt>' . $HTML;
+			if ($deletedPortFound) {
+				# add some stuff to the front of what we have
+				if ( $port->IsDeleted() ) {
+					$HTML = '<dt>NOTE: dependencies for deleted ports are notoriously suspect</dt>' . $HTML;
+					}
+				$HTML = '<dt class="required">This port is required by:</dt>' . $HTML;
 
-			# and to the end...
-			$HTML .= '<dt>* - deleted ports are only shown under the <em>This port is required by</em> section.  It was harder to do for the <em>Required</em> section.  Perhaps later...</dt>';
+				# and to the end...
+				$HTML .= '<dt>* - deleted ports are only shown under the <em>This port is required by</em> section.  It was harder to do for the <em>Required</em> section.  Perhaps later...</dt>';
+			}
 		}
 
 		return $HTML;

@@ -200,7 +200,7 @@ function freshports_NonPortDescription($db, $element_record) {
 ?>
 
 </TD>
-  <TD VALIGN="top" WIDTH="*" ALIGN="center">
+  <td class="sidebar">
   <?
   echo freshports_SideBar();
   ?>

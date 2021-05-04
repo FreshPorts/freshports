@@ -12,11 +12,34 @@ BODY, TD, TR, P, UL, OL, LI, INPUT, SELECT, DL, DD, DT, FONT
     font-size: 12px;
 }
 
+.sidebar {
+  vertical-align: top;
+  text-align: center;
+}
+
+.sidebar > table {
+  width: 160px;
+}
+
+.sidebar td, .sidebar th {
+  padding: 5px;
+}
+
+.sidebar th {
+  text-align: left;
+  font-weight: bolder;
+}
+
+.sidebar p {
+  text-align: center;
+}
+
 .accent {
   background-color: #8c0707;
   background-color: var(--beastie-red);
   color: white;
   font-size: larger;
+  height: 30px;
 }
 
 IMG#fp-logo { max-width: 100%; height: auto }
@@ -226,7 +249,7 @@ table.bordered {
   border-spacing: 0;
 }
 
-table.bordered > tbody > tr > td {
+table.bordered > tbody > tr > td, table.bordered > tbody > tr > th {
   border: 1px inset black;
 }
 

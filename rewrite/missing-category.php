@@ -293,7 +293,7 @@ if ($ShowAds && $BannerAd) {
 
 	echo $HTML;
 ?>	
-  <TD VALIGN="top" WIDTH="*" ALIGN="center">
+  <td class="sidebar">
   <?
   echo freshports_SideBar();
   ?>

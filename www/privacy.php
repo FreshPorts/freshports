@@ -54,7 +54,7 @@ We use third-party advertising companies to serve ads when you visit our Web sit
 </TABLE>
 </TD>
 
-  <TD VALIGN="top" WIDTH="*" ALIGN="center">
+  <td class="sidebar">
   <?
   echo freshports_SideBar();
   ?>

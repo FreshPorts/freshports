@@ -73,7 +73,7 @@ class freshports_page extends HTML_Page2 {
 
 		$this->prependBodyContent($HTML);
 
-		$this->addBodyContent("\n</table><td valign=\"top\">" . freshports_SideBar() . "</td></tr></table>\n" . freshports_ShowFooter());
+		$this->addBodyContent("\n</table><td class=\"sidebar\">" . freshports_SideBar() . "</td></tr></table>\n" . freshports_ShowFooter());
 
 		return parent::toHTML();
 	}

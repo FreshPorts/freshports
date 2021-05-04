@@ -218,7 +218,7 @@ freshports_echo_HTML_flush();
 echo $HTML;                                                   
 ?>
 
-  <TD VALIGN="top" WIDTH="*" ALIGN="center">
+  <td class="sidebar">
 	<?
 	echo freshports_SideBar();
 	?>

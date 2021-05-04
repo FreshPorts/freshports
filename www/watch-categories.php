@@ -188,7 +188,7 @@ echo "</table>\n";
 <?php # main article table finish ?>
 </td>
 
-  <TD VALIGN="top" WIDTH="*" ALIGN="center">
+  <td class="sidebar">
   <?
   echo freshports_SideBar();
   ?>

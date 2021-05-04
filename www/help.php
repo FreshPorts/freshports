@@ -164,7 +164,7 @@ your staging area before uploading again.
 </TABLE>
 </TD>
 
-  <TD VALIGN="top" WIDTH="*" ALIGN="center">
+  <td class="sidebar">
 	<?
 	echo freshports_SideBar();
 	?>

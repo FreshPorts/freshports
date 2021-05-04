@@ -116,7 +116,7 @@ name just so it stays a secret.</LI>
 </TABLE>
 </td>
 
-  <TD VALIGN="top" WIDTH="*" ALIGN="center">
+  <td class="sidebar">
 	<?
 	echo freshports_SideBar();
 	?>

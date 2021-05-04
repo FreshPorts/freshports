@@ -128,7 +128,7 @@ if ($result) {
 
 <sup>*</sup>The users column indicates the number of logged-in users who last accessed the system on that day.
 
-  <TD VALIGN="top" WIDTH="*" ALIGN="center">
+  <td class="sidebar">
 	<?
 	echo freshports_SideBar();
 	?>

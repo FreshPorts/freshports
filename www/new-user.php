@@ -259,12 +259,13 @@ Your cooperation with the above will make my life easier.  Thank you.
   </TR>
 </TABLE>
 </TD>
-<td>
+<td class="sidebar">
 
 	<?
 	echo freshports_SideBar();
 	?>
 
+</td>
 </TR>
 </TABLE>
 

@@ -29,7 +29,7 @@
 <TR><TD>
 
 <P>
-I appreciate the contributions of the security reserachers who have helped out on this
+I appreciate the contributions of the security researchers who have helped out on this
 website. Please be aware that this is not a for-profit website. It is a hobby. It is something I
 do in my spare time. It is run as a service to the open source community.
 
@@ -42,7 +42,7 @@ acknowledge the work you do and the findings you present.
 </TABLE>
 </TD>
 
-  <TD VALIGN="top" WIDTH="*" ALIGN="center">
+  <td class="sidebar">
   <?
   echo freshports_SideBar();
   ?>

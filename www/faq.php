@@ -878,7 +878,7 @@ now that the Master has been upgraded.
 </table>
 </td>
 
-  <TD VALIGN="top" WIDTH="*" ALIGN="center">
+  <td class="sidebar">
 	<?php
 	echo freshports_SideBar();
 	?>

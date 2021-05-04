@@ -57,7 +57,7 @@ The package specified ('<?php echo $packages_html; ?>') could not be found.  We 
 </TABLE>
 </TD>
 
-  <TD VALIGN="top" WIDTH="*" ALIGN="center">
+  <td class="sidebar">
 	<?
 	echo freshports_SideBar();
 	?>

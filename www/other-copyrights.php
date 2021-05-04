@@ -22,7 +22,7 @@
 	<?php echo freshports_MainTable(); ?>
 
   <TR>
-	<TD VALIGN="top" WIDTH="100%">
+	<td class="content">
 	<P>
 	The copyright on the daemon you see in the website logo is as follows:
 	</P>
@@ -42,7 +42,7 @@
 	or via email at mckusick&#64;mckusick.com<BR>
 
 </BLOCKQUOTE>
-	</TD>
+	</td>
 
   <td class="sidebar">
 	<?

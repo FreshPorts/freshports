@@ -41,7 +41,7 @@
 
 ?>
 <TABLE class="fullwidth borderless" ALIGN="center">
-<TR><TD VALIGN="top" WIDTH="100%">
+<TR><td class="content">
 <TABLE class="fullwidth borderless">
 
 <TR>
@@ -140,7 +140,7 @@ Well, I'm sorry to advise you that this page is intentionally left blank.
 ?>
 </TD></TR>
 </TABLE>
-</TD>
+</td>
 
   <td class="sidebar">
   <?

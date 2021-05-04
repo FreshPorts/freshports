@@ -36,7 +36,7 @@
 
 
 <?php echo freshports_MainTable(); ?>
-<tr><td VALIGN=TOP width="100%">
+<tr><td class="content">
 <TABLE class="fullwidth">
 <TR>
 	<? echo freshports_PageBannerText("Account confirmation"); ?>

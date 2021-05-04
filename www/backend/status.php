@@ -22,7 +22,7 @@
 
 <TABLE class="fullwidth borderless" ALIGN="center">
 
-<TR><TD valign="top" width="100%">
+<TR><td class="content">
 <TABLE class="fullwidth borderless">
 <TR>
 	<? echo freshports_PageBannerText($Title); ?>

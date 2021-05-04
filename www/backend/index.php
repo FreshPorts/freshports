@@ -22,7 +22,7 @@
 ?>
 	<?php echo freshports_MainTable(); ?>
 
-	<tr><td valign="top" width="100%">
+	<tr><td class="content">
 
 	<?php echo freshports_MainContentTable(NOBORDER); ?>
 
@@ -30,7 +30,7 @@
 <tr>
 	<?php echo freshports_PageBannerText("FreshPorts News Feeds"); ?>
 </tr>
-<TR><TD valign="top" width="100%">
+<TR><td class="content">
 <h1>FreshPorts News Feeds</h1>
 
 <p>

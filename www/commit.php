@@ -147,7 +147,7 @@ if ($Debug) echo "UserID='$User->id'";
 
 	<?php echo freshports_MainTable(); ?>
 
-	<tr><td valign="top" width="100%">
+	<tr><td class="content">
 
 	<?php echo freshports_MainContentTable(BORDER); ?>
 
@@ -155,7 +155,7 @@ if ($Debug) echo "UserID='$User->id'";
 if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 ?>
   <TR>
-    <TD colspan="2">
+    <TD>
        <? include ("announcement.txt"); ?>
     </TD>
   </TR>
@@ -169,7 +169,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 ?>
 
 <TR>
-	<? echo freshports_PageBannerText($Title, 3); ?>
+	<? echo freshports_PageBannerText($Title); ?>
 </TR>
 
 <?php
@@ -348,7 +348,7 @@ ORDER BY port, element_pathname";
 		$HTML .=  "no connection";
 	} # if ($database )
 	} else {
-		echo '<tr><td valign="top" width="100%">nothing supplied, nothing found!</td>';
+		echo '<tr><td class="content">nothing supplied, nothing found!</td>';
 	} # if ($message_id != '' || $revision != '')
 	}  # if ($cached)
 

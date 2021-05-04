@@ -125,16 +125,16 @@ if (Is_Numeric($dailysummary)) {
 
 if ($db) {
 ?>
-<TR><TD VALIGN="top" WIDTH="100%">
+<TR><td class="content">
 
 <?php echo freshports_MainContentTable(); ?>
 
 <TR>
 <?php
  if ( $Branch == BRANCH_HEAD) {
-   echo freshports_PageBannerText("$MaxNumberOfPortsLong most recent commits", 3);
+   echo freshports_PageBannerText("$MaxNumberOfPortsLong most recent commits");
  } else {
-   echo freshports_PageBannerText("Commits from the $Branch branch", 3);
+   echo freshports_PageBannerText("Commits from the $Branch branch");
  }
  
 ?>
@@ -197,7 +197,7 @@ if ($db) {
 
 ?>
 </TABLE>
-</TD>
+</td>
   <td class="sidebar">
    <? echo freshports_SideBar(); ?>
 

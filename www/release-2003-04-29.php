@@ -21,7 +21,7 @@
 ?>
 	<?php echo freshports_MainTable(); ?>
 
-	<tr><td valign="top" width="100%">
+	<tr><td class="content">
 
 	<?php echo freshports_MainContentTable(NOBORDER); ?>
 
@@ -46,7 +46,7 @@ to this new version.
 </TD></TR>
 
 <TR>
-<td align="left" valign="top" width="100%"></td>
+<td class="content"></td>
 </tr>
 
 	<?php 

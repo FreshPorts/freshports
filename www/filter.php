@@ -107,12 +107,12 @@ if (Is_Numeric($dailysummary)) {
 
 if ($db) {
 ?>
-<TR><TD VALIGN="top" WIDTH="100%">
+<TR><td class="content">
 
 <?php echo freshports_MainContentTable(); ?>
 
 <TR>
-<? echo freshports_PageBannerText("$MaxNumberOfPortsLong most recent commits", 3); ?>
+<? echo freshports_PageBannerText("$MaxNumberOfPortsLong most recent commits"); ?>
         <? //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPortsLong) ?>
 </TR>
 <TR><TD>
@@ -170,7 +170,7 @@ A port is marked as new for 10 days.
 
 ?>
 </TABLE>
-</TD>
+</td>
   <td class="sidebar">
    <? echo freshports_SideBar(); ?>
 

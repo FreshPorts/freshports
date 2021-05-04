@@ -40,7 +40,7 @@ function DisplayPortCommits($port, $PageNumber) {
 	if ($NumRowsFrom + $NumRowsTo > 0) {
 		$HTML .= '<TABLE class="fullwidth bordered" CELLPADDING="5">' . "\n";
 		$HTML .= "<TR>\n";
-		$HTML .= freshports_PageBannerText("Port Moves", 1);
+		$HTML .= freshports_PageBannerText("Port Moves");
 		$HTML .= "<tr><td>\n";
 		$HTML .= "<ul>\n";
 	}
@@ -468,7 +468,7 @@ document.body.appendChild(sheet);
 
 <?php echo freshports_MainTable(); ?>
 
-<tr><TD VALIGN="top" width="100%">
+<tr><td class="content">
 
 <?php echo freshports_MainContentTable(); ?>
 
@@ -476,7 +476,7 @@ document.body.appendChild(sheet);
 <?php echo freshports_PageBannerText("Port details" . ($branch != BRANCH_HEAD ? ' on branch ' . htmlspecialchars($branch) : '')); ?>
 </TR>
 
-<tr><td valign="top" width="100%">
+<tr><td class="content">
 
 <?php
 	echo $HTMLPortPart2 . $HTMLPortPackages . $HTMLPortPart3;

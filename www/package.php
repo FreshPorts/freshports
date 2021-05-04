@@ -27,7 +27,7 @@
 ?>
 	<?php echo freshports_MainTable(); ?>
 
-	<tr><td valign="top" width="100%">
+	<tr><td class="content">
 
 	<?php echo freshports_MainContentTable(); ?>
 
@@ -55,7 +55,7 @@ The package specified ('<?php echo $packages_html; ?>') could not be found.  We 
 </TD></TR>
 
 </TABLE>
-</TD>
+</td>
 
   <td class="sidebar">
 	<?

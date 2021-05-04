@@ -109,14 +109,14 @@ if ($_REQUEST['wlid']) {
 ?>
 	<?php echo freshports_MainTable(); ?>
 
-	<tr><td valign="top" width="100%">
+	<tr><td class="content">
 
 	<?php echo freshports_MainContentTable(NOBORDER); ?>
 <?php # article table start ?>
   <tr>
 	<? echo freshports_PageBannerText("Watch List - categories"); ?>
   </tr>
-<tr><td valign="top" width="100%">
+<tr><td class="content">
 
 
 <table class="fullwidth borderless">
@@ -141,6 +141,7 @@ if ($Debug) echo 'when calling freshports_WatchListDDLBForm, $wlid = \'' . $wlid
 echo freshports_WatchListDDLBForm($db, $User->id, $wlid);
 
 ?>
+</td>
 </tr></table>
 
 <?php # ddlb finish ?>
@@ -152,7 +153,7 @@ echo freshports_WatchListDDLBForm($db, $User->id, $wlid);
 </td></tr>
 
 
-<tr><td colspan="2">
+<tr><td>
 &nbsp;
 </td></tr>
 <?php
@@ -169,8 +170,6 @@ $sql = "
 
 if ($Debug) echo "<pre>$sql</pre>";
 
-
-echo '<tr><td align="center">' . "\n";
 
 $result  = pg_exec ($db, $sql);
 $numrows = pg_numrows($result);
@@ -212,7 +211,7 @@ for ($i = 0; $i < $numrows; $i++) {
 # categories list start
 
 $HTML .= "\n" . '<TABLE class="bordered" CELLPADDING="5">' . "\n";
-$HTML .= '<tr>';
+$HTML .= '<tr><td>';
 // get the list of categories to display
 $sql = "
     select categories.id          as category_id, 

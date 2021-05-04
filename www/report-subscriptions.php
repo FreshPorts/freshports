@@ -143,10 +143,10 @@
 
   <TR>
 
-<TD WIDTH="100%" VALIGN="top">
+<TD class="content">
 <TABLE class="fullwidth borderless" CELLPADDING="1">
 <TR>
-<TD class="accent" HEIGHT="29" COLSPAN="1"><BIG><? echo $ArticleTitle; ?></BIG></TD>
+<td class="accent"><BIG><? echo $ArticleTitle; ?></BIG></td>
 </TR>
 <TR>
 <TD>

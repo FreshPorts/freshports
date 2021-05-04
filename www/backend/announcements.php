@@ -83,7 +83,7 @@ if (IsSet($_REQUEST['edit'])) {
 ?>
 
 <TABLE class="fullwidth borderless" ALIGN="center">
-<TR><TD VALIGN="top" width="100%">
+<TR><td class="content">
 <?php
 
 
@@ -106,7 +106,7 @@ echo '
 
 echo '<TABLE CELLPADDING="1" CELLSPACING="3" class="fullwidth borderless">
 <TR>
-<TD class="accent" COLSPAN="1"><big>' . $Title . '</big></TD>
+<td class="accent"><big>' . $Title . '</big></td>
 </TR>
 <TR>
 <TD>';
@@ -140,7 +140,7 @@ $HTML .= '</tr>'  . "\n";
 
 $HTML .= '<tr>'  . "\n";
 
-$HTML .= '<td><b>Plain text Version</b>'  . "\n";
+$HTML .= '<td colspan="3"><b>Plain text Version</b>'  . "\n";
 $HTML .= '<TEXTAREA NAME="announcement_plain" ROWS="10" COLS="60">'          . "\n";
 $HTML .= htmlspecialchars($Announcement->TextPlainGet());
 $HTML .= '</TEXTAREA>';

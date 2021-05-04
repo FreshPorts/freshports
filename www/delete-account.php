@@ -78,7 +78,7 @@ if (IsSet($submit)) {
 ?>
 
 <TABLE class="fullwidth borderless" ALIGN="center">
-<TR><TD VALIGN="top" width="100%">
+<TR><td class="content">
 <TABLE class="fullwidth borderless">
   <TR>
     <TD height="20"><?php
@@ -119,7 +119,7 @@ echo '<TABLE CELLPADDING="1" class="fullwidth borderless">
 <TD VALIGN="top">
 <TABLE class="fullwidth borderless" CELLPADDING="1">
 <TR>
-<TD class="accent" HEIGHT="29" COLSPAN="1"><BIG>Customize</BIG></TD>
+<td class="accent"><BIG>Customize</BIG></td>
 </TR>
 <TR>
 <TD>';
@@ -167,7 +167,7 @@ echo "</TD>
 ?>
 </TD>
 </TABLE>
-</TD>
+</td>
 
   <td class="sidebar">
 	<?

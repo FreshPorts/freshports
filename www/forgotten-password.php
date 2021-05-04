@@ -138,7 +138,7 @@ if (IsSet($submit)) {
  <TR>
     <TD>
 <TABLE class="fullwidth borderless">
-<TR><TD VALIGN="top" WIDTH="100%">
+<TR><td class="content">
 <?
 
 if (IsSet($error) and $error != '') {
@@ -262,7 +262,7 @@ we're only dealing with your FreshPorts login, not a financial transaction....</
 </TD>
 </TR>
 </TABLE>
-</TD>
+</td>
 
   <td class="sidebar">
 	<?

@@ -55,9 +55,9 @@
 	echo freshports_MainTable();
 ?>
 
-<tr><td colspan="<?php echo $ColSpan; ?>" valign="top" width="100%">
+<tr><td class="content">
 
-<?php echo freshports_MainContentTable(BORDER, 6); ?>
+<?php echo freshports_MainContentTable(BORDER, $ColSpan); ?>
 
   <tr>
 	<? echo freshports_PageBannerText("$FreshPortsTitle - list of categories", $ColSpan); ?>
@@ -152,7 +152,7 @@ if ($sort == "last_update") {
 $HTML .= freshports_echo_HTML('</tr>');
 
 if (!$result) {
-   print pg_errormessage() . "<br>\n";
+   echo "<tr><td colspan=\"$ColSpan\"" . pg_errormessage() . "</td></tr></table>\n";
    exit;
 } else {
 	$NumTopics	   = 0;
@@ -198,7 +198,7 @@ if (!$result) {
 		}
       }
     } else {
-        $HTML .= "<tr><td colspan=5>No categories statistics found.  I bet the refresh script is not running.</td></tr>";
+        $HTML .= "<tr><td colspan=\"$ColSpan\">No categories statistics found.  I bet the refresh script is not running.</td></tr>";
     }
 }
 
@@ -209,7 +209,7 @@ if ($AllowedToEdit) {
 
 $HTML .= freshports_echo_HTML("<td ALIGN=\"right\"><b>$NumPorts</b></td><td colspan=\"2\">($CategoryCount categories)</td></tr>");
 
-$HTML .= freshports_echo_HTML("<tr><td colspan=\"5\">Hmmm, I'm not so sure this port count is accurate. Dan Langille 27 April 2003</td></tr>");
+$HTML .= freshports_echo_HTML("<tr><td colspan=\"$ColSpan\">Hmmm, I'm not so sure this port count is accurate. Dan Langille 27 April 2003</td></tr>");
 
 $HTML .= freshports_echo_HTML('</table>');
 

@@ -30,7 +30,17 @@ td.content {
   width: 160px;
 }
 
-.sidebar td, .sidebar th {
+.sidebar > table:first-child td {
+  white-space: nowrap;
+}
+
+.sidebar > table table td:nth-child(2) {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.sidebar > table > tbody > tr > td,
+.sidebar > table > tbody > tr > th {
   padding: 5px;
 }
 
@@ -233,6 +243,15 @@ li.extraspace {
 
 .packages th { background-color:#000; color:white; }
 .packages td, .packages th { padding:8px; border:1px solid #000; }
+
+.footer {
+  text-align: center;
+}
+
+.footer > tbody > tr > td > table {
+  width: 98%;
+  margin: 0 auto;
+}
 
 .footer .sponsors {
   text-align: left;

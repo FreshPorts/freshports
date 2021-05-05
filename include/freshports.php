@@ -1655,21 +1655,21 @@ function freshports_ShowFooter($PhorumBottom = 0) {
 
 
 	if ($ShowAds) {
-		$HTML .= "<div align=\"center\">\n";
+		$HTML .= "<div>\n";
 		$HTML .= Ad_728x90();
 		$HTML .= "</div>\n";
 	}
 
 	$HTML .= '
 <HR>
-<table width="98%" class="borderless">
+<table class="borderless">
 ';
 
 	if (IsSet($ShowPoweredBy)) {
 		$HTML .= '
 <tr>
 
-<td align="center">
+<td>
 
 <a href="https://www.freebsd.org/" rel="noopener noreferrer"><img src="/images/pbfbsd2.gif"
 alt="powered by FreeBSD" width="171" height="64"></a>
@@ -1685,7 +1685,7 @@ alt="powered by PostgreSQL" width="164" height="59"></a>
 
 
 </td></tr>
-<tr><td align="center">
+<tr><td>
 
 <a href="https://www.nginx.org/" rel="noopener noreferrer"><img src="/images/nginx.gif" 
 alt="powered by nginx" width="121" height="32"></a>
@@ -1758,7 +1758,7 @@ function freshports_SideBar() {
         </tr>
         <tr>
 
-         <td NOWRAP>';
+         <td>';
 
 	if (IsSet($_COOKIE[USER_COOKIE_NAME])) {
 		$visitor = $_COOKIE[USER_COOKIE_NAME];
@@ -1851,7 +1851,7 @@ $HTML .= '<br>
 	<tr><td>
 	' . file_get_contents(HTML_DIRECTORY . '/vuln-latest.html') . "\n" . '
 	</td></tr>
-	<tr><td align="center">
+	<tr><td>
 		<p><sup>*</sup> - modified, not new</p><p><a href="/vuxml.php?all">All vulnerabilities</a></p>
 		<p>Last updated:<br>' . date('Y-m-d H:i:s', filemtime(HTML_DIRECTORY . '/vuln-latest.html')) . '</p>
 	</td></tr>

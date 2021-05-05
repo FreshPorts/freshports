@@ -1851,7 +1851,7 @@ $HTML .= '<br>
 	<tr><td>
 	' . file_get_contents(HTML_DIRECTORY . '/vuln-latest.html') . "\n" . '
 	</td></tr>
-	<tr><td align="center">
+	<tr><td>
 		<p><sup>*</sup> - modified, not new</p><p><a href="/vuxml.php?all">All vulnerabilities</a></p>
 		<p>Last updated:<br>' . date('Y-m-d H:i:s', filemtime(HTML_DIRECTORY . '/vuln-latest.html')) . '</p>
 	</td></tr>

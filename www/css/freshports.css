@@ -30,7 +30,8 @@ td.content {
   width: 160px;
 }
 
-.sidebar td, .sidebar th {
+.sidebar > table > tbody > tr > td,
+.sidebar > table > tbody > tr > th {
   padding: 5px;
 }
 

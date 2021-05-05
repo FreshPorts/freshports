@@ -30,6 +30,15 @@ td.content {
   width: 160px;
 }
 
+.sidebar > table:first-child td {
+  white-space: nowrap;
+}
+
+.sidebar > table table td:nth-child(2) {
+  text-align: right;
+  white-space: nowrap;
+}
+
 .sidebar > table > tbody > tr > td,
 .sidebar > table > tbody > tr > th {
   padding: 5px;

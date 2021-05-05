@@ -1758,7 +1758,7 @@ function freshports_SideBar() {
         </tr>
         <tr>
 
-         <td NOWRAP>';
+         <td>';
 
 	if (IsSet($_COOKIE[USER_COOKIE_NAME])) {
 		$visitor = $_COOKIE[USER_COOKIE_NAME];

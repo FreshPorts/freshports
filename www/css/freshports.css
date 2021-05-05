@@ -235,6 +235,15 @@ li.extraspace {
 .packages th { background-color:#000; color:white; }
 .packages td, .packages th { padding:8px; border:1px solid #000; }
 
+.footer {
+  text-align: center;
+}
+
+.footer > tbody > tr > td > table {
+  width: 98%;
+  margin: 0 auto;
+}
+
 .footer .sponsors {
   text-align: left;
 }

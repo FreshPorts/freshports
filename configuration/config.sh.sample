@@ -1,8 +1,3 @@
 #!/bin/sh
-#
-# FreshPorts Configurations items for shell scripts on the website
-#
 
-LOGGER="/usr/bin/logger -p local3.info"
-
-ZFS_CACHING_PARENT="nvd/freshports/devgit-nginx01/var/db/freshports/cache"
+fp_zfs_caching_parent='nvd/freshports/devgit-nginx01/var/db/freshports/cache'

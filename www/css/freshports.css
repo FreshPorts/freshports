@@ -61,6 +61,14 @@ td.content {
   height: 30px;
 }
 
+.icon {
+  max-height: 20px;
+  max-width: 20px;
+  height: auto;
+  vertical-align: middle;
+  margin: 1px;
+}
+
 IMG#fp-logo { max-width: 100%; height: auto }
 
 CODE.code { color: #461b7e}

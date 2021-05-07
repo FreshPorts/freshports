@@ -45,8 +45,8 @@
 are arranged from general to specific.  The more you know, the further
 down you must read to find something you didn't already know.</P>
 </TD></TR>
-<TR><TD><a id="what">&nbsp;</a></TD></TR>
-<TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR id="what">
 <?php echo freshports_PageBannerText("What is this website about?"); ?>
 
 	<TR><TD>
@@ -54,8 +54,8 @@ down you must read to find something you didn't already know.</P>
 	favorite software.  When a new version of the software is available,
 	FreshPorts will send you an email telling you about the change.
 	</TD></TR>
-<TR><TD><a id="how">&nbsp;</a></TD></TR>
-<TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR id="how">
 <?php echo freshports_PageBannerText("How do I use this?"); ?>
 </TR>
 
@@ -73,8 +73,8 @@ down you must read to find something you didn't already know.</P>
 	will contain headers with the list name.  You can use that for any
 	filtering you may want to do (e.g. procmail).
 	</TD></TR>
-<TR><TD><a id="definitions">&nbsp;</a></TD></TR>
-<TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR id="definitions">
 <?php echo freshports_PageBannerText("Some definitions"); ?>
 </TR>
 
@@ -86,7 +86,7 @@ down you must read to find something you didn't already know.</P>
 
 	<h2>Definitions for the hopelessly lazy</h2>
 
-	<h3><a id="port">What is a port?</a></h3>
+	<h3 id="port">What is a port?</h3>
 	<p>
 	If you install the port, the source will be downloaded, patched if necessary,
 	compiled and installed.  You will have a chance to set any optional configuration
@@ -97,7 +97,7 @@ down you must read to find something you didn't already know.</P>
 	<p>
 	It is because of these compile time options that I prefer ports over packages.
 
-	<h3><a id="package">What is a package?</a></h3>
+	<h3 id="package">What is a package?</h3>
 	<p>
 	A package is a compiled port.  It is a binary.  When you install the package, 
 	you will download a binary and it will be installed.
@@ -112,8 +112,8 @@ down you must read to find something you didn't already know.</P>
 	prevent binary distribution.
 
 	</TD></TR>
-<TR><TD><a id="watch-modify">&nbsp;</a></TD></TR>
-<TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR id="watch-modify">
 <?php echo freshports_PageBannerText("How do I modify my watch list?"); ?>
 </TR>
 
@@ -135,8 +135,8 @@ down you must read to find something you didn't already know.</P>
 	One-click watch list maintenance operates only upon your default
 	watch lists.  You can set one or more watch lists as being default.
 	</TD></TR>
-<TR><TD><a id="watch-empty">&nbsp;</a></TD></TR>
-<TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR id="watch-empty">
 <?php echo freshports_PageBannerText("How do I empty my watch list?"); ?>
 </TR>
 
@@ -145,8 +145,8 @@ down you must read to find something you didn't already know.</P>
 	Select the watch lists you wish to empty, and follow the instructions
 	provided.
 	</TD></TR>
-<TR><TD><a id="unsubscribe">&nbsp;</a></TD></TR>
-<TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR id="unsubscribe">
 <?php echo freshports_PageBannerText("How do I delete my account?"); ?>
 </TR>
 
@@ -154,8 +154,8 @@ down you must read to find something you didn't already know.</P>
 	You can't.  But you can unsubscribe from all of the reports
 	and you'll never hear from us again.
 	</TD></TR>
-<TR><TD><a id="port-what">&nbsp;</a></TD></TR>
-<TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR id="port-what">
 <?php echo freshports_PageBannerText("What is a port?"); ?>
 </TR>
 
@@ -169,8 +169,8 @@ down you must read to find something you didn't already know.</P>
 	documents in the <A HREF="https://www.FreeBSD.org/handbook/">FreeBSD
 	Handbook</A>.
 	</TD></TR
-><TR><TD><a id="ports-origin">&nbsp;</a></TD></TR>
-<TR>
+><TR><TD>&nbsp;</TD></TR>
+<TR id="ports-origin">
 <?php echo freshports_PageBannerText("Where do ports come from?"); ?>
 </TR>
 
@@ -179,8 +179,8 @@ down you must read to find something you didn't already know.</P>
 	not create ports; we just tell you about the latest changes.  The
 	FreeBSD Ports team creates, maintains, and upgrades the ports.
 	</TD></TR>
-<TR><TD><a id="port-contact">&nbsp;</a></TD></TR>
-<TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR id="port-contact">
 <?php echo freshports_PageBannerText("Who do I talk to about a port?"); ?>
 </TR>
 
@@ -188,8 +188,8 @@ down you must read to find something you didn't already know.</P>
 		More information all FreeBSD mailing lists can be obtained
 		from <A HREF="https://www.FreeBSD.org/handbook/eresources.html#ERESOURCES-MAIL">FreeBSD Mailing Lists</A>.
 	</TD></TR>
-<TR><TD><a id="port-get">&nbsp;</a></TD></TR>
-<TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR id="port-get">
 <?php echo freshports_PageBannerText("How do I get these ports?"); ?>
 </TR>
 
@@ -201,8 +201,8 @@ down you must read to find something you didn't already know.</P>
 	<CODE CLASS="code">cvsup -h cvsup.your.fav.server /usr/share/examples/cvsup/ports-supfile</CODE>
 	</BLOCKQUOTE>
 	</TD></TR>
-<TR><TD><a id="fp-site-update">&nbsp;</a></TD></TR>
-<TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR id="fp-site-update">
 <?php echo freshports_PageBannerText("How is the website updated?"); ?>
 </TR>
 
@@ -216,16 +216,16 @@ down you must read to find something you didn't already know.</P>
 	it than first meets the eye.  The website is updated as soon as the message
 	arrives.
 	</TD></TR>
-<TR><TD><a id="rev-number-unknown">&nbsp;</a></TD></TR>
-<TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR id="rev-number-unknown">
 <?php echo freshports_PageBannerText("What does unknown mean for a revision number?"); ?>
 </TR>
 
 	<TR><TD>It means the data has been converted from an earlier
 		version of the FreshPorts database that did not record this information.
 	</TD></TR>
-<TR><TD><a id="fp-site-link">&nbsp;</a></TD></TR>
-<TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR id="fp-site-link">
 <?php echo freshports_PageBannerText("Can I link to your site?"); ?>
 </TR>
 
@@ -252,56 +252,62 @@ down you must read to find something you didn't already know.</P>
 
 		<P>Please save this graphic on your website.</P>
 	</TD></TR>
-<TR><TD><a id="symbols">&nbsp;</a></TD></TR>
-<TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR id="symbols">
 <?php echo freshports_PageBannerText("What do these symbols mean?"); ?>
 </TR>
 
 	<TR><TD>
 	There are a few symbols you will see in this website.
 
-	<P><?php echo freshports_Fallout_Icon() ?>
+	<P id="fallout"><?php echo freshports_Fallout_Icon(); ?>
 		Fallout: a link to search the pkg-fallout archives for this port.</P>
 
-	<P><?php echo freshports_New_Icon() ?>
-		New: This port has been recently added.  A port is marked as new for 10 days.</P>
+	<P id="bugs-find"><?php echo freshports_Bugs_Find_Icon(); ?>
+		Find Bugs: a link to search for open Problem Reports (issues/bugs) for this port.</P>
 
-	<P><a id="forbidden"><?php echo freshports_Forbidden_Icon() ?></a>
-		Forbidden: The port is marked as forbidden.  If you view the port details,
-		you will see why.  Most often, it is because of a security exploit. Packages for a forbidden port are not built
-        by the package cluster.  Therefore, <code>pkg install</code> will not work.</P>
+	<P id="bugs-add"><?php echo freshports_Bugs_Find_Icon(); ?>
+		New Bug: a link to open a new Problem Reports (issue/bug) for this port.</P>
 
-	<P><a id="broken"><?php echo freshports_Broken_Icon() ?></a>
-		Broken: The port is marked as broken.  Perhaps it won't compile.  Maybe
-		it doesn't work under FreeBSD right now.  If you view the port details,
+	<P id="new"><?php echo freshports_New_Icon(); ?>
+		New: This port has been recently added. A port is marked as new for 10 days.</P>
+
+	<P id="forbidden"><?php echo freshports_Forbidden_Icon(); ?>
+		Forbidden: The port is marked as forbidden. If you view the port details,
+		you will see why. Most often, it is because of a security exploit. Packages for a forbidden port are not built
+        by the package cluster. Therefore, <code>pkg install</code> will not work.</P>
+
+	<P id="broken"><?php echo freshports_Broken_Icon(); ?>
+		Broken: The port is marked as broken. Perhaps it won't compile. Maybe
+		it doesn't work under FreeBSD right now. If you view the port details,
 		you will see the reason why. Packages for a broken port are not built
-        by the package cluster.  Therefore, <code>pkg install</code> will not work.</P>
+        by the package cluster. Therefore, <code>pkg install</code> will not work.</P>
 
-	<P><a id="deprecated"><?php echo freshports_Deprecated_Icon() ?></a>
-		Deprecated: The port is marked as deprecated.  Perhaps it has exceeded
-		its lifetime or is obselete. </P>
+	<P id="deprecated"><?php echo freshports_Deprecated_Icon(); ?>
+		Deprecated: The port is marked as deprecated. Perhaps it has exceeded
+		its lifetime or is obselete.</P>
 
-	<P><a id="expiration"><?php echo freshports_Expiration_Icon() ?></a>
+	<P id="expiration"><?php echo freshports_Expiration_Icon(); ?>
 		Expiration Date: The port has an expiration date. A port may be removed from the
-        tree after this date. Often added in conjunction with Deprecated. </P>
+        tree after this date. Often added in conjunction with Deprecated.</P>
 
-	<P><a id="expired"><?php echo freshports_Expired_Icon() ?></a>
+	<P id="expired"><?php echo freshports_Expired_Icon(); ?>
 		Expired: The port has passed the expiration date. A port may be removed from the
-        tree after this date. Often added in conjunction with Deprecated. </P>
+        tree after this date. Often added in conjunction with Deprecated.</P>
 
-	<P><a id="ignore"><?php echo freshports_Ignore_Icon() ?></a>
-		Ignore: The port is marked as ignore.  It probably does not build. Packages for an ignored port are not built
-        by the package cluster.  Therefore, <code>pkg install</code> will not work.</P>
+	<P id="ignore"><?php echo freshports_Ignore_Icon(); ?>
+		Ignore: The port is marked as ignore. It probably does not build. Packages for an ignored port are not built
+        by the package cluster. Therefore, <code>pkg install</code> will not work.</P>
 
-	<P><?php echo freshports_Files_Icon(); ?>
+	<P id="files"><?php echo freshports_Files_Icon(); ?>
 		Files: If you click on this graphic, you will be taken to the list of files
 		touched by the commit in question.</P>
 
-	<P><a id="refresh"><?php echo freshports_Refresh_Icon(); ?></a> Refresh: 
-		The system is in the process of refreshing that port by inspecting
-		the ports tree.  You should rarely see this.</P>
+	<P id="refresh"><?php echo freshports_Refresh_Icon(); ?>
+		Refresh: The system is in the process of refreshing that port by inspecting
+		the ports tree. You should rarely see this.</P>
 		<p>If you do see one, chances are that the port contains an error
-		that prevents make(1) from running.  For example:
+		that prevents make(1) from running. For example:
 
 <blockquote><code class="code">
 $ make -V PORTVERSION<br>
@@ -312,90 +318,109 @@ make: fatal errors encountered -- cannot continue
 		<p>
 		In such circumstances, the port committer is notified (if they have
 		opted in to the FreshPorts Sanity Check Report) and they should
-		fix the problem as soon as possible.  Once you see a more recent
+		fix the problem as soon as possible. Once you see a more recent
 		commit without a refresh icon,
 		then the problem has been fixed. The refresh icons will go away after
-		FreshPorts has dealt with the old commits.  This may take a few hours.
+		FreshPorts has dealt with the old commits. This may take a few hours.</p>
 
-	<P><a id="deleted"><?php echo freshports_Deleted_Icon(); ?></a> Deleted:  This port has been removed from the ports tree.</P>
+	<P id="deleted"><?php echo freshports_Deleted_Icon(); ?>
+		Deleted: This port has been removed from the ports tree.</P>
 
-	<P><?php echo freshports_Mail_Icon(); ?>
+	<P id="mail"><?php echo freshports_Mail_Icon(); ?>
 		Commit message: This link will take you to the original cvs-all message in the FreeBSD mailing list archives.
-		Note that it can take a few minutes for the message to appear in the archives.  This link will not appear
+		Note that it can take a few minutes for the message to appear in the archives. This link will not appear
 		for commit messages before 3 March 2002 (which is the date FreshPorts started to store the message-id).</P>
 
-	<P><?php echo freshports_Commit_Icon(); ?> FreshPorts commit message: This will take you to the FreshPorts commit
-		message and allow you to see all other ports which were affected by this commit.   This link will not appear
+	<P id="commit"><?php echo freshports_Commit_Icon(); ?>
+		FreshPorts commit message: This will take you to the FreshPorts commit
+		message and allow you to see all other ports which were affected by this commit. This link will not appear
         for commit messages before 3 March 2002 (which is the date FreshPorts started to store the message-id).
         <br>
         <br>
-        NOTE: This link has been made redundant by recent advances in the Files link.  See next icon.
+        NOTE: This link has been made redundant by recent advances in the Files link. See next icon.
         </P>
 
-	<P><?php echo freshports_Files_Icon(); ?>
-		Files: If you click on this graphic, you will be taken to the list of files
-		touched by the commit in question.</P>
+	<P id="watch"><?php echo freshports_Watch_Icon(); ?>
+		Item is on one of your default watch lists: This port is on one of your default watch lists. Click
+		this icon to remove the port from your default watch lists. This icon appears only if you are logged in.</P>
 
-	<P><?php echo freshports_Watch_Icon(); ?> Item is on one of your default watch lists: This port is on one of your default watch lists.  Click
-		this icon to remove the port from your default watch lists.  This icon appears only if you are logged in.</P>
+	<P id="watch-add"><?php echo freshports_Watch_Icon_Add(); ?>
+		Add item to your default watch lists: This port is not on any of your default watch lists. Click
+		this icon to add the port to your default watch lists. This icon appears only if you are logged in.</P>
 
-	<P><?php echo freshports_Watch_Icon_Add(); ?> Add item to your default watch lists: This port is not on any of your  default watch lists.  Click
-		this icon to add the port to your default watch lists.  This icon appears only if you are logged in.</P>
+	<P id="encodingerrors"><?php echo freshports_Encoding_Errors(); ?>
+		Encoding Errors (not all of the commit message was ASCII): Some of the
+		commit message may be altered because of character conversion problems. We display only UTF-8 and remove
+		the offending characters. These errors may occur in the log message or elsewhere in the commit email.</P>
 
-	<P><a id="encodingerrors"><?php echo freshports_Encoding_Errors(); ?></a> Encoding Errors (not all of the commit message was ASCII): Some of the
-		commit message may be altered because of character conversion problems.  We display only UTF-8 and remove
-		the offending characters.  These errors may occur in the log message or elsewhere in the commit email.</P>
+	<P id="watchlistcount"><?php echo freshports_WatchListCount_Icon(); ?>
+		Watch List Count (WLC): This is the number of watch lists which are watching
+		this port. This might give you an idea of the popularity of the port.</P>
 
-	<P><a id="watchlistcount"><?php echo freshports_WatchListCount_Icon(); ?></a> Watch List Count (WLC): This is the number of watch lists which are watching 
-	this port.  This might give you an idea of the popularity of the port.
-	</P>
+	<P id="git"><?php echo freshports_Git_Icon(); ?>
+		Git Repository: This link will take you to the Git Repository entry
+		for this version of the file.</P>
 
-	<P><?php echo freshports_CVS_Icon(); ?> CVS Repository: This link will take you to the CVS Repository entry
-	for this version of the file.
-	</P>
+	<P id="svn"><?php echo freshports_Subversion_Icon(); ?>
+		SVN Repository: This link will take you to the Subversion Repository entry
+		for this version of the file.</P>
 
-	<P><?php echo freshports_VuXML_Icon(); ?> <a href="https://www.vuxml.org/freebsd/">VuXML</a> vulnerability.  Click icon for details.
-	</P>
+	<P id="cvs"><?php echo freshports_CVS_Icon(); ?>
+		CVS Repository: This link will take you to the CVS Repository entry
+		for this version of the file.</P>
 
-	<P><?php echo freshports_VuXML_Icon_Faded(); ?> A past <a href="https://www.vuxml.org/freebsd/">VuXML</a> vulnerability.  Click icon for details.
-	</P>
+	<P id="vuxml"><?php echo freshports_VuXML_Icon(); ?>
+		<a href="https://www.vuxml.org/freebsd/">VuXML</a> vulnerability. Click icon for details.</P>
 
-	<P><a id="restricted"><?php echo freshports_Restricted_Icon(); ?></a> This port has some restrictions on it.
-	</P>
+	<P id="vuxml-past"><?php echo freshports_VuXML_Icon_Faded(); ?>
+		A past <a href="https://www.vuxml.org/freebsd/">VuXML</a> vulnerability. Click icon for details.</P>
 
-	<P><a id="no_cdrom"><?php echo freshports_No_CDROM_Icon(); ?></a> This port has some restrictions with respect to being included on a CD-ROM.
-	</P>
+	<P id="restricted"><?php echo freshports_Restricted_Icon(); ?>
+		This port has some restrictions on it.</P>
 
-	<P><a id="is_interactive"><?php echo freshports_Is_Interactive_Icon(); ?></a> This port will require interaction during installation.
-	</P>
+	<P id="no_cdrom"><?php echo freshports_No_CDROM_Icon(); ?>
+		This port has some restrictions with respect to being included on a CD-ROM.</P>
 
-	<P><?php echo freshports_Revision_Icon(); ?> Revision details.  Click on the Files icon in the commit history and
-	you'll see what files in this port were touched by this commit.  Click on the Revision details to view the
-	revision of the file associated this commit.
-	</P>
+	<P id="is_interactive"><?php echo freshports_Is_Interactive_Icon(); ?>
+		This port will require interaction during installation.</P>
 
-	<P><?php echo freshports_Diff_Icon(); ?> Diff.  Click on the Files icon in the commit history and
-	you'll see what files in this port were touched by this commit.  Click on the Diff icon to view the
-	diff between this revision of the file and the previous revision..
-	</P>
+	<P id="depends"><?php echo freshports_Search_Icon(); ?>
+		Dependency Search: Action depends on context. Click on this icon to search for ports depending on the
+		current port, ports maintained by the current maintainer, or other commits by the current comitter.</P>
 
-	<P><?php echo freshports_SanityTestFailure_Icon(); ?> Sanity Test Failures.  The maintainers and committers are
-	good.   But sometimes a mistake slips through.  This records the mistake to make it easier for others to correct
-	it if it goes unnoticed.  If you see this icon next to a commit, it failed a Sanity Test.
-	</P>
+	<P id="revision"><?php echo freshports_Revision_Icon(); ?>
+		Revision details. Click on the Files icon in the commit history and
+		you'll see what files in this port were touched by this commit. Click on the Revision details to view the
+		revision of the file associated this commit.</P>
 
-	<P><?php echo freshports_Commit_Flagged_Icon(); ?> Flagged Commit.  This commit is on your list of flagged
-	commits.Why would you flag a commit?  Perhaps you want to review that commit.  Perhaps you want to MFC it later.
-	Click on this icon to remove the commit from your flag list.
-	</P>
-	
-    <P><?php echo freshports_Commit_Flagged_Not_Icon(); ?> Click on this icon to add the commit to your flagged
-	list.
-	</P>
+	<P id="annotate"><?php echo freshports_Annotate_Icon(); ?>
+		Annotate: If you click on this graphic, you will be taken to a view of the file in question, with a
+		listing of the commits that last changed each line.</P>
+
+	<P id="diff"><?php echo freshports_Diff_Icon(); ?>
+		Diff. Click on the Files icon in the commit history and
+		you'll see what files in this port were touched by this commit. Click on the Diff icon to view the
+		diff between this revision of the file and the previous revision.</P>
+
+	<P id="sanity-failure"><?php echo freshports_SanityTestFailure_Icon(); ?>
+		Sanity Test Failures. The maintainers and committers are
+		good. But sometimes a mistake slips through. This records the mistake to make it easier for others to correct
+		it if it goes unnoticed. If you see this icon next to a commit, it failed a Sanity Test.</P>
+
+	<P id="commit-flagged"><?php echo freshports_Commit_Flagged_Icon(); ?>
+		Flagged Commit. This commit is on your list of flagged
+		commits. Why would you flag a commit? Perhaps you want to review that commit. Perhaps you want to MFC it later.
+		Click on this icon to remove the commit from your flag list.</P>
+
+	<P id="commit-unflagged"><?php echo freshports_Commit_Flagged_Not_Icon(); ?>
+		Click on this icon to add the commit to your flagged list.</P>
+
+	<P id="ascending"><?php echo freshports_Ascending_Icon(); echo freshports_Descending_Icon(); ?>
+		Ascending / Descending: These icons appear on particular tables and allow changing the order rows are sorted by.</P>
 
 	</TD></TR>
-<TR><TD><a id="bookmarks-old">&nbsp;</a></TD></TR>
-<TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR id="bookmarks-old">
 <?php echo freshports_PageBannerText("Why don't my old bookmarks work?"); ?>
 </TR>
 
@@ -416,8 +441,8 @@ make: fatal errors encountered -- cannot continue
 	and permanent.  They are of the form &lt;category&gt;/&lt;port&gt;.
 	</P>
 	</TD></TR>
-<TR><TD><a id="feeds">&nbsp;</a></TD></TR>
-<TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR id="feeds">
 <?php echo freshports_PageBannerText("Do you have any news feeds?"); ?>
 </TR>
 
@@ -426,8 +451,8 @@ make: fatal errors encountered -- cannot continue
 	Yes.  Read <a href="/newsfeeds.php">all about it</a>!
 
 	</TD></TR>
-<TR><TD><a id="fp-site-mainpage">&nbsp;</a></TD></TR>
-<TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR id="fp-site-mainpage">
 <?php echo freshports_PageBannerText("Can the main page load any faster?"); ?>
 </TR>
 
@@ -478,8 +503,8 @@ Here are a few examples:
 <b>NOTE:</b> Effective 13 November 2003, these parameters are no longer available.
 </P>
 </TD></TR>
-<TR><TD><a id="commits-day">&nbsp;</a></TD></TR>
-<TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR id="commits-day">
 <?php echo freshports_PageBannerText("How can I view the commits for a particular day?"); ?>
 </TR>
 
@@ -497,8 +522,8 @@ Here are a few examples:
 	The date should be of the format YYYY/MM/DD but I'm sure different formats
 	will work.  If the code has trouble figuring out what date you mean, it will guess and let you know it adjusted the date.
 
-	</TD></TR><TR><TD><a id="watch-issue-add">&nbsp;</a></TD></TR>
-<TR>
+	</TD></TR><TR><TD>&nbsp;</TD></TR>
+<TR id="watch-issue-add">
 <?php echo freshports_PageBannerText("Why can't I add a port to my watch list?"); ?>
 </TR>
 
@@ -517,11 +542,11 @@ Here are a few examples:
 	that is one on of your default watch lists.  If the port is on one of your non-default
 	watch list, the <?php echo freshports_Watch_Icon_Add(); ?> icon will appear instead.
 	If you do not see what you expect, try setting the default watch lists in your
-	 <a href="/watch-list-maintenance.php">watch list settings</a>.
+	<a href="/watch-list-maintenance.php">watch list settings</a>.
 
 	</TD></TR>
-<TR><TD><a id="watch-issue-appearance">&nbsp;</a></TD></TR>
-<TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR id="watch-issue-appearance">
 <?php echo freshports_PageBannerText("Why doesn't this port appear on my watch list?"); ?>
 </TR>
 
@@ -529,8 +554,8 @@ Here are a few examples:
    <P>
    Please refer to the above question.
    </TD></TR>
-<TR><TD><a id="portmoves">&nbsp;</a></TD></TR>
-<TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR id="portmoves">
 <?php echo freshports_PageBannerText("What are Port Moves?"); ?>
 </TR>
 
@@ -552,8 +577,8 @@ Here are a few examples:
 
 
 	</TD></TR>
-<TR><TD><a id="updating">&nbsp;</a></TD></TR>
-<TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR id="updating">
 <?php echo freshports_PageBannerText("What is /usr/ports/UPDATING?"); ?>
 </TR>
 
@@ -570,8 +595,8 @@ The <a href="/net/openldap22-client/">net/openldap22-client</a> port is a good
 example of what to expect.
 
 	</TD></TR>
-<TR><TD><a id="master-slave">&nbsp;</a></TD></TR>
-<TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR id="master-slave">
 <?php echo freshports_PageBannerText("What are Master/Slave ports?"); ?>
 </TR>
 
@@ -625,8 +650,8 @@ example of what to expect.
 	is comitted to the tree.
 
 	</TD></TR>
-<TR><TD><a id="toadd">&nbsp;</a></TD></TR>
-<TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR id="toadd">
 <?php echo freshports_PageBannerText('What is this "to add the package" stuff?'); ?>
 </TR>
 
@@ -655,8 +680,8 @@ pkg install XFree86-clients
 	cluster.  Therefore, there is no package for <code>pkg install</code> to use.
 	
 	</TD></TR>
-<TR><TD><a id="fp-search-get">&nbsp;</a></TD></TR>
-<TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR id="fp-search-get">
 <?php echo freshports_PageBannerText('Why does the search page use GET and not POST?'); ?>
 </TR>
 
@@ -676,8 +701,8 @@ It also makes it easier to <a href="https://validator.w3.org/">validate the HTML
 if you can provide a URL that exercises all the options that require testing.
 
 	</TD></TR>
-<TR><TD><a id="searchfields">&nbsp;</a></TD></TR>
-<TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR id="searchfields">
 <?php echo freshports_PageBannerText('What are all those fields I can search on?'); ?>
 </TR>
 
@@ -715,8 +740,8 @@ $
 <sup>1</sup> This value is obtained from a file in the port directory.  For
 example <code class="code">/usr/ports/sysutils/bacula/pkg-descr</code>.
 	</TD></TR>
-<TR><TD><a id="people-watch">&nbsp;</a></TD></TR>
-<TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR id="people-watch">
 <?php echo freshports_PageBannerText('Where did this "People watching this port, also watch" feature come from?'); ?>
 </TR>
 
@@ -741,8 +766,8 @@ This information is obtained by:
 <p>
 All of this takes about 55ms.
 	</TD></TR>
-<TR><TD><a id="master-updated">&nbsp;</a></TD></TR>
-<TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR id="master-updated">
 <?php echo freshports_PageBannerText('What do you mean, the master port has been updated?'); ?>
 </TR>
 
@@ -766,8 +791,8 @@ that the slave port was still vulnerable.
 <p>
 The above notice serves as a reminder that the slave port may no longer be vulnerable.
 	</TD></TR>
-<TR><TD><a id="determine-master">&nbsp;</a></TD></TR>
-<TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR id="determine-master">
 <?php echo freshports_PageBannerText('How does FreshPorts determine the master sites?'); ?>
 </TR>
 
@@ -783,8 +808,8 @@ In short, FreshPorts displays the list of master sites that should contain all
 the distfiles.  That is why we use that value, and not one of the other options.
 
 	</TD></TR>
-<TR><TD><a id="mailto-clear">&nbsp;</a></TD></TR>
-<TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR id="mailto-clear">
 <?php echo freshports_PageBannerText('Why don\'t you obscure email addresses?'); ?>
 </TR>
 
@@ -809,9 +834,9 @@ In short, it doesn't make sense to obscure that which is freely available elsewh
 Similarly, we do not entertain requests to remove information from our website. We only report upon what exists elsewhere.
 	</TD></TR>
 
-<TR><TD><a id="portversion-differ">&nbsp;</a></TD></TR>
+<TR><TD>&nbsp;</TD></TR>
 
-<TR>
+<TR id="portversion-differ">
 <?php echo freshports_PageBannerText('Why does the PORTVERSION at the top of page differ from that of the first commit?'); ?>
 </TR>
 
@@ -826,8 +851,8 @@ when its Master port is updated.    This refresh updates the PORTVERSION at the 
 page.  This update reflects the REVISION you would get if you were to install the Slave port
 now that the Master has been upgraded.
 	</TD></TR>
-<TR><TD><a id="anchors">&nbsp;</a></TD></TR>
-<TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR id="anchors">
 <?php echo freshports_PageBannerText('What HTML anchors exist?'); ?>
 </TR>
 

@@ -348,23 +348,23 @@ function freshports_SanityTestFailure_Icon($Title = 'Sanity Test Failure') {
 }
 
 function freshports_Ascending_Icon($Title = 'Ascending Order') {
-	return '<img class="icon" src="/images/ascending.gif" alt="' . $Title . '" title="' . $Title . '" width="9" height="9" align="middle">';
+	return '<img class="icon" src="/images/ascending.gif" alt="' . $Title . '" title="' . $Title . '" width="9" height="9">';
 }
 
 function freshports_Descending_Icon($Title = 'Descending Order') {
-	return '<img class="icon" src="/images/descending.gif" alt="' . $Title . '" title="' . $Title . '" width="9" height="9" align="middle">';
+	return '<img class="icon" src="/images/descending.gif" alt="' . $Title . '" title="' . $Title . '" width="9" height="9">';
 }
 
 function freshports_Search_Icon($Title = 'Search') {
-	return '<img class="icon" src="/images/search.jpg" alt="' . $Title . '" title="' . $Title . '" width="17" height="17" align="top">';
+	return '<img class="icon" src="/images/search.jpg" alt="' . $Title . '" title="' . $Title . '" width="17" height="17">';
 }
 
 function freshports_Bugs_Find_Icon($Title = 'Find issues related to this port') {
-	return '<img class="icon" src="/images/bug.gif" alt="' . $Title . '" title="' . $Title . '" width="16" height="16" align="top">';
+	return '<img class="icon" src="/images/bug.gif" alt="' . $Title . '" title="' . $Title . '" width="16" height="16">';
 }
 
 function freshports_Bugs_Report_Icon($Title = 'Report an issue related to this port') {
-	return '<img class="icon" src="/images/bug_report.gif" alt="' . $Title . '" title="' . $Title . '" width="16" height="16" align="top">';
+	return '<img class="icon" src="/images/bug_report.gif" alt="' . $Title . '" title="' . $Title . '" width="16" height="16">';
 }
 
 function freshports_WatchListCount_Icon() {
@@ -477,7 +477,7 @@ function freshports_Is_Interactive_Icon($HoverText = '') {
 	$Alt       = "Is Interactive";
 	$HoverText = freshports_HoverTextCleaner($Alt, $HoverText);
 
-	return '<img class="icon" src="/images/crt.gif" alt="' . $Alt . '" title="' . $HoverText . '" width="16" height="16" align="top">';
+	return '<img class="icon" src="/images/crt.gif" alt="' . $Alt . '" title="' . $HoverText . '" width="16" height="16">';
 }
 
 function freshports_Is_Interactive_Icon_Link($HoverText = '') {
@@ -563,7 +563,7 @@ function freshports_Annotate_Icon() {
 }
 
 function freshports_Diff_Icon() {
-	return '<img class="icon" src="/images/diff.png" alt="View diff" title="view diff" width="15" height="11" align="top">';
+	return '<img class="icon" src="/images/diff.png" alt="View diff" title="view diff" width="15" height="11">';
 }
 
 

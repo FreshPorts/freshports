@@ -535,7 +535,7 @@ function freshports_Watch_Icon_Empty() {
 }
 
 function freshports_Encoding_Errors() {
-	return '<img src="/images/error.gif" alt="Encoding Errors (not all of the commit message was ASCII)" title="Encoding Errors (not all of the commit message was ASCII)" width="16" height="16">';
+	return '<img class="icon" src="/images/error.gif" alt="Encoding Errors (not all of the commit message was ASCII)" title="Encoding Errors (not all of the commit message was ASCII)" width="16" height="16">';
 }
 
 function freshports_Encoding_Errors_Link() {
@@ -712,7 +712,7 @@ function freshports_Commit_Link_Port($MessageID, $Category, $Port) {
 
 function freshports_MorePortsToShow($message_id, $NumberOfPortsInThisCommit, $MaxNumberPortsToShow) {
 	$HTML  = "(Only the first $MaxNumberPortsToShow of $NumberOfPortsInThisCommit ports in this commit are shown above. ";
-	$HTML .= freshports_Commit_Link($message_id, '<img src="/images/play.gif" alt="View all ports for this commit" title="View all ports for this commit" width="13" height="13">');
+	$HTML .= freshports_Commit_Link($message_id, '<img class="icon" src="/images/play.gif" alt="View all ports for this commit" title="View all ports for this commit" width="13" height="13">');
 	$HTML .= ")";
 
 	return $HTML;
@@ -720,7 +720,7 @@ function freshports_MorePortsToShow($message_id, $NumberOfPortsInThisCommit, $Ma
 
 function freshports_MoreCommitMsgToShow($message_id, $NumberOfLinesShown) {
 	$HTML  = "(Only the first $NumberOfLinesShown lines of the commit message are shown above ";
-	$HTML .= freshports_Commit_Link($message_id, '<img src="/images/play.gif" alt="View all of this commit message" title="View all of this commit message" width="13" height="13">');
+	$HTML .= freshports_Commit_Link($message_id, '<img class="icon" src="/images/play.gif" alt="View all of this commit message" title="View all of this commit message" width="13" height="13">');
 	$HTML .= ")";
 
 	return $HTML;

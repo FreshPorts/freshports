@@ -332,19 +332,19 @@ return '
 }
 
 function freshports_Fallout_Icon() {
-	return '<img class="icon" src="/images/fallout-16x16.png" alt="pkg-fallout" title="pkg-fallout" width="16" height="16" vspace="1">';
+	return '<img class="icon" src="/images/fallout-16x16.png" alt="pkg-fallout" title="pkg-fallout" width="16" height="16">';
 }
 
 function freshports_Subversion_Icon($Title = 'Subversion') {
-	return '<img class="icon" src="/images/subversion.jpg" alt="' . $Title . '" title="' . $Title . '" width="16" height="16" vspace="1">';
+	return '<img class="icon" src="/images/subversion.jpg" alt="' . $Title . '" title="' . $Title . '" width="16" height="16">';
 }
 
 function freshports_Git_Icon($Title = 'git') {
-	return '<img class="icon" src="/images/git.png" alt="' . $Title . '" title="' . $Title . '" width="22" height="22" vspace="1">';
+	return '<img class="icon" src="/images/git.png" alt="' . $Title . '" title="' . $Title . '" width="22" height="22">';
 }
 
 function freshports_SanityTestFailure_Icon($Title = 'Sanity Test Failure') {
-	return '<img class="icon" src="/images/stf.gif" alt="' . $Title . '" title="' . $Title . '" width="13" height="13" vspace="1">';
+	return '<img class="icon" src="/images/stf.gif" alt="' . $Title . '" title="' . $Title . '" width="13" height="13">';
 }
 
 function freshports_Ascending_Icon($Title = 'Ascending Order') {
@@ -507,7 +507,7 @@ function freshports_Ignore_Icon_Link($HoverText = '') {
 }
 
 function freshports_New_Icon() {
-	return '<img class="icon" src="/images/new.gif" alt="new!" title="new!" width="28" height="11" HSPACE="2">';
+	return '<img class="icon" src="/images/new.gif" alt="new!" title="new!" width="28" height="11">';
 }
 
 function freshports_Mail_Icon() {
@@ -555,11 +555,11 @@ function freshports_VuXML_Icon_Faded() {
 }
 
 function freshports_Revision_Icon() {
-	return '<img class="icon" src="/images/revision.jpg" alt="View revision" title="view revision" width="11" height="15" align="top">';
+	return '<img class="icon" src="/images/revision.jpg" alt="View revision" title="view revision" width="11" height="15">';
 }
 
 function freshports_Annotate_Icon() {
-	return '<img class="icon" src="/images/annotate.png" alt="Annotate / Blame" title="Annotate / Blame" width="20" height="20" align="middle">';
+	return '<img class="icon" src="/images/annotate.png" alt="Annotate / Blame" title="Annotate / Blame" width="20" height="20">';
 }
 
 function freshports_Diff_Icon() {
@@ -639,11 +639,11 @@ function freshports_Email_Link($message_id) {
 }
 
 function freshports_Commit_Flagged_Icon($Title = 'Commit Flagged') {
-	return '<img class="icon" src="/images/commit-flagged.gif" alt="' . $Title . '" title="' . $Title . '" width="16" height="16" align="middle">';
+	return '<img class="icon" src="/images/commit-flagged.gif" alt="' . $Title . '" title="' . $Title . '" width="16" height="16">';
 }
 
 function freshports_Commit_Flagged_Not_Icon($Title = 'Commit Not Flagged') {
-	return '<img class="icon" src="/images/commit-flagged-not.gif" alt="' . $Title . '" title="' . $Title . '" width="16" height="16" align="middle">';
+	return '<img class="icon" src="/images/commit-flagged-not.gif" alt="' . $Title . '" title="' . $Title . '" width="16" height="16">';
 }
 
 function freshports_Commit_Flagged_Link($message_id) {

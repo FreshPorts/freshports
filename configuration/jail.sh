@@ -1,3 +1,8 @@
+#!/bin/sh
+
+# This script is deprecated.
+
+# it remains as a reminder.
 
 mkdir -p /usr/FreshPorts/ports-jail/usr/ports    \
          /usr/FreshPorts/ports-jail/usr/share/mk \

@@ -266,7 +266,7 @@ down you must read to find something you didn't already know.</P>
 	<P id="bugs-find"><?php echo freshports_Bugs_Find_Icon(); ?>
 		Find Bugs: a link to search for open Problem Reports (issues/bugs) for this port.</P>
 
-	<P id="bugs-add"><?php echo freshports_Bugs_Find_Icon(); ?>
+	<P id="bugs-add"><?php echo freshports_Bugs_Report_Icon(); ?>
 		New Bug: a link to open a new Problem Reports (issue/bug) for this port.</P>
 
 	<P id="new"><?php echo freshports_New_Icon(); ?>

@@ -31,11 +31,9 @@
 
 <TR><TD>
 
-<CENTER>
 <?php
-	if ($ShowAds) echo Ad_728x90();
+	if ($ShowAds) echo '<CENTER>' . Ad_728x90() . '</CENTER>';
 ?>
-</CENTER>
 
 <p>
 This page is rather dated.  Most news is now published on the
@@ -53,20 +51,12 @@ and ideas which lead to the changes I've made.
 </TD></TR>
 
 <TR>
-<td class="content"></td>
-</tr>
-
-	<?php 
-	echo freshports_BannerSpace();
-	?>
-
-<TR>
 	<?
 	echo freshports_PageBannerText('Deleted icon changed'); 
 	?>
 </TR>
 
-<TR><TD>
+<TR><TD class="textcontent">
 
 <P>
 The deleted icon has changed.  It is now <?php
@@ -75,17 +65,13 @@ well, it's been deleted.  It was a square with a X in it.
 
 </TD></TR>
 
-	<?php 
-	echo freshports_BannerSpace();
-	?>
-
 <TR>
 	<?
 	echo freshports_PageBannerText('VuXML');
 	?>
 </TR>
 
-<TR><TD>
+<TR><TD class="textcontent">
 
 <P>
 The <a href="https://www.vuxml.org/freebsd/">VuXML</a> project documents
@@ -111,12 +97,11 @@ me to understand the inner workings of the vuln XML data.
 
 </TD></TR>
 
-	<?
-	echo freshports_BannerSpace();
-	echo '<tr>' . freshports_PageBannerText('Link by package') . '</tr>';
-	?>
+<TR>
+<?  echo freshports_PageBannerText('Link by package'); ?>
+</TR>
 
-<TR><TD>
+<TR><TD class="textcontent">
 <P>
 You can now link to FreshPorts using just the package name.  For example, you
 can link to the Firefox port using this link:
@@ -151,12 +136,11 @@ echo '/www/firefox/</a>';
 
 </TD></TR>
 
-<?	echo freshports_BannerSpace(); ?>
 <TR>
 <?	echo freshports_PageBannerText('Revision details'); ?>
 </TR>
 
-<TR><TD>
+<TR><TD class="textcontent">
 <P>
 If you click on the Files icon (<?php echo freshports_Files_Icon(); ?>) in the
 Commit History for any port, you'll see a new link.  This link is represented
@@ -164,12 +148,11 @@ by the Revision Details icon (<?php echo freshports_Revision_Icon(); ?>).
 </P>
 </TD></TR>
 
-<?	echo freshports_BannerSpace(); ?>
 <TR>
 <?	echo freshports_PageBannerText('Expanded search options'); ?>
 </TR>
 
-<TR><TD>
+<TR><TD class="textcontent">
 <P>
 The <a href="/search.php">search page</a> now allows you to search by 
 the following fields.
@@ -202,7 +185,7 @@ the following fields.
 
 </TABLE>
 
-<TABLE class="fullwidth borderless" ALIGN="center">
+<TABLE class="fullwidth borderless">
 <TR><TD>
 <?php echo freshports_ShowFooter(); ?>
 </TD></TR>

@@ -28,11 +28,9 @@
 	<? echo freshports_PageBannerText("About the authors"); ?>
   </tr>
 <TR><TD>
-<CENTER>
 <?php
-	if ($ShowAds) echo Ad_728x90();
+	if ($ShowAds) echo '<CENTER>' . Ad_728x90() . '</CENTER>';
 ?>
-</CENTER>
 
 <p><a href="https://www.langille.org/" rel="noopener noreferrer">Dan Langille</a> thought up the idea, found the data sources, bugged people to 
 write scripts, and did the html and database work. But he certainly didn't 

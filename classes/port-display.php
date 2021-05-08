@@ -553,7 +553,7 @@ class port_display {
 
 			$HTML .= port_display_WATCH_LIST_ADD_REMOVE;
 
-			$HTML .= '<big><b>';
+			$HTML .= '<span class="element-details">';
 
 			if ($this->LinkToPort) {
 				$HTML .= $this->LinkToPort();
@@ -561,7 +561,7 @@ class port_display {
 				$HTML .= $port->port;
 			}
 
-			$HTML .= "</b></big>";
+			$HTML .= "</span>";
 
 			// description
 			if ($port->short_description && ($this->ShowShortDescription || $this->ShowEverything)) {

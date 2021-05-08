@@ -61,12 +61,43 @@ td.content {
   height: 30px;
 }
 
+.accent > span {
+  font-size: larger;
+}
+
 .icon {
   max-height: 20px;
   max-width: 20px;
   height: auto;
   vertical-align: middle;
   margin: 1px;
+}
+
+.commit-details {
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+.commit-details .meta {
+  font-size: smaller;
+}
+
+.commit-details .element-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.element-details {
+  font-size: larger;
+  font-weight: bold;
+}
+
+.element-details > span {
+  font-size: larger;
+}
+
+table.maincontent td.textcontent {
+  padding-bottom: 2em;
 }
 
 IMG#fp-logo { max-width: 100%; height: auto }

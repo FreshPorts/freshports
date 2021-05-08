@@ -39,11 +39,9 @@ If you have suggestions for graphs, please raise an issue.
 
 <HR>
 
-<center>
 <?php
-  if ($ShowAds) echo Ad_728x90();
+  if ($ShowAds) echo '<CENTER>' . Ad_728x90() . '</CENTER>';
 ?>
-</center>
 
 </TD></TR>
 

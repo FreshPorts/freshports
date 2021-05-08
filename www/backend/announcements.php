@@ -104,7 +104,7 @@ echo '
 <br>';
 }
 
-echo '<TABLE CELLPADDING="1" CELLSPACING="3" class="fullwidth borderless">
+echo '<TABLE CELLSPACING="3" class="fullwidth borderless">
 <TR>
 <td class="accent"><big>' . $Title . '</big></td>
 </TR>

@@ -28,30 +28,23 @@
 	<?php echo freshports_PageBannerText("About this site"); ?>
 </TR>
 
-<TR><TD>
+<TR><TD class="textcontent">
 <P>
 We have a few notes about this website.
 </P>
 
-<CENTER>
 <?php
-	if ($ShowAds) echo Ad_728x90();
+	if ($ShowAds) echo '<CENTER>' . Ad_728x90() . '</CENTER>';
 ?>
-</CENTER>
 
 </TD></TR>
-
-	<?php 
-	echo freshports_BannerSpace();
-	?>
-
 <TR>
 	<?php
 	echo freshports_PageBannerText("What is a port?"); 
 	?>
 </TR>
 
-<TR><TD>
+<TR><TD class="textcontent">
 
 <P>A port is the term used to describe a collection of files which makes it extremely
 easy to install an application.  As it says in the <A HREF="https://www.freebsd.org/ports/">
@@ -66,18 +59,13 @@ we come in.</P>
 <P>For more information about the Ports tree, see <A HREF="https://www.freebsd.org/ports/">https://www.freebsd.org/ports/</A>.</P>
 
 </TD></TR>
-
-	<?php 
-	echo freshports_BannerSpace();
-	?>
-
 <TR>
 	<?php
 	echo freshports_PageBannerText("What is $FreshPortsTitle");
 	?>
 </TR>
 
-<TR><TD>
+<TR><TD class="textcontent">
 
 <P><?php echo $FreshPortsTitle; ?> lists the changes made to the ports tree. If you wish, <?php echo $FreshPortsTitle; ?> can email you 
 when your favourite port has been updated.
@@ -90,18 +78,13 @@ create ports.  We do not fix ports.  We just tell you what others have been doin
 </P>
 
 </TD></TR>
-
-	<?php 
-	echo freshports_BannerSpace();
-	?>
-
 <TR>
 	<?php
 	echo freshports_PageBannerText("OK, whose bright idea was this?");
 	?>
 </TR>
 
-<TR><TD>
+<TR><TD class="textcontent">
 <P>This site was created by Dan Langille.  His other web feats include 
 <A HREF="https://www.freebsddiary.org/">The FreeBSD Diary</A>, <a 
 href="https://www.racingsystem.com">The Racing System</A>, 
@@ -127,7 +110,7 @@ About the Authors</A> for details of who else helped.</P>
 	$ShowPoweredBy = 1;
 ?>
 
-<TABLE class="fullwidth borderless" ALIGN="center">
+<TABLE class="fullwidth borderless">
 <TR><TD>
 <?php echo freshports_ShowFooter(); ?>
 </TD></TR>

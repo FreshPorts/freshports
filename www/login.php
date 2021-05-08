@@ -227,7 +227,7 @@ if ($error) {
 
 
 
-echo '<TABLE class="fullwidth bordered" CELLPADDING="1">';
+echo '<TABLE class="fullwidth bordered">';
 
 echo '<TR>';
 

@@ -126,11 +126,13 @@ class DisplayCommit {
 			if ($mycommit->commit_log_id != $PreviousCommit->commit_log_id) {
 				if ($Debug) echo "This commit_log_id is different\n";
 				if (($NumberOfPortsInThisCommit > $MaxNumberPortsToShow) && !$this->ShowAllPorts) {
-					$this->HTML .= '<BR>' . freshports_MorePortsToShow($PreviousCommit->message_id, $NumberOfPortsInThisCommit, $MaxNumberPortsToShow);
+					$this->HTML .= '</ul>' . freshports_MorePortsToShow($PreviousCommit->message_id, $NumberOfPortsInThisCommit, $MaxNumberPortsToShow);
+				} else if ($i > 0) {
+					$this->HTML .= '</ul>';
 				}
 				$TooManyPorts = false;
 				if ($i > 0) {
-					$this->HTML .= "\n<BLOCKQUOTE>";
+					$this->HTML .= "\n<BLOCKQUOTE class=\"description\">";
 					$this->HTML .= freshports_CommitDescriptionPrint(
 			                    $PreviousCommit->commit_description,
 			                    $PreviousCommit->encoding_losses,
@@ -152,15 +154,15 @@ class DisplayCommit {
 
 				GLOBAL $freshports_mail_archive;
 
-				$this->HTML .= "<TR><TD>\n";
+				$this->HTML .= "<TR><TD class=\"commit-details\">\n";
 
-				$this->HTML .= '<SMALL>';
+				$this->HTML .= '<span class="meta">';
 				$this->HTML .= '[ ' . $mycommit->commit_time . ' ' . freshports_CommitterEmailLink($mycommit->committer);
 				if (!empty($mycommit->committer_name) && ($mycommit->committer_name != $mycommit->committer)) {
 					$this->HTML .= ' (' . $mycommit->committer_name . ')';
 				}
 				$this->HTML .= ' ]';
-				$this->HTML .= '</SMALL>';
+				$this->HTML .= '</span>';
 				$this->HTML .= '&nbsp;';
 				if ($this->IsGitCommit($mycommit->message_id)) {
 					# do nothing
@@ -196,7 +198,7 @@ class DisplayCommit {
 						$this->HTML .= '&nbsp; ' . freshports_svnweb_ChangeSet_Link($mycommit->svn_revision, $mycommit->repo_hostname);
 					}
 				}
-				$this->HTML .= "<br>\n";
+				$this->HTML .= "<ul class=\"element-list\">\n";
 
 			}
 
@@ -206,6 +208,7 @@ class DisplayCommit {
 			}
 
 			if (!$TooManyPorts) {
+				$this->HTML .= '<li>';
 				if (IsSet($mycommit->category) && $mycommit->category != '') {
 				if ($this->UserID) {
 					if ($mycommit->watch) {
@@ -215,7 +218,7 @@ class DisplayCommit {
 					}
 				}
 
-				$this->HTML .= '<BIG><B>';
+				$this->HTML .= '<span class="element-details">';
 				$this->HTML .= '<A HREF="/' . $mycommit->category . '/' . $mycommit->port . '/' . $URLBranchSuffix . '">';
 				$this->HTML .= $mycommit->port;
 				$this->HTML .= '</A>';
@@ -225,7 +228,7 @@ class DisplayCommit {
 					$this->HTML .= ' ' . $PackageVersion;
 				}
 
-				$this->HTML .= "</B></BIG>\n";
+				$this->HTML .= "</span>\n";
 
 				$this->HTML .= '<A HREF="/' . $mycommit->category . '/'  . $URLBranchSuffix . '">';
 				$this->HTML .= $mycommit->category. "</A>";
@@ -296,7 +299,7 @@ class DisplayCommit {
 			} else {
 				# This is a non-port element... 
 				$this->HTML .= $mycommit->revision . ' ';
-				$this->HTML .= '<big><B>';
+				$this->HTML .= '<span class="element-details">';
 				$PathName = preg_replace('|^/?ports/|', '', $mycommit->element_pathname);
 #				echo "'$PathName' " . "'" . $mycommit->repo_name . "'";
 				switch($mycommit->repo_name)
@@ -307,15 +310,13 @@ class DisplayCommit {
 				}
 				if ($PathName != $mycommit->element_pathname) {
 					$this->HTML .= '<a href="/' . str_replace('%2F', '/', urlencode($PathName)) . '">' . $PathName . '</a>';
-					$this->HTML .= "</B></BIG>\n";
+					$this->HTML .= "</span>\n";
 				} else {
 					$this->HTML .= '<a href="' . FRESHPORTS_FREEBSD_CVS_URL . $PathName . '#rev' . $mycommit->revision . '">' . $PathName . '</a>';
-					$this->HTML .= "</B></BIG>\n";
+					$this->HTML .= "</span>\n";
 				}
 			}
-			$this->HTML .= htmlify(_forDisplay($mycommit->short_description)) . "\n";
-
-			$this->HTML .= "<BR>\n";
+			$this->HTML .= htmlify(_forDisplay($mycommit->short_description)) . "</li>\n";
 
 			GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;			
 			if ($this->ShowEntireCommit) {
@@ -328,11 +329,13 @@ class DisplayCommit {
 
 			$PreviousCommit = $mycommit;
 		}
-		
+
 		if (($NumberOfPortsInThisCommit > $MaxNumberPortsToShow) && !$this->ShowAllPorts) {
-			$this->HTML .= '<BR>' . freshports_MorePortsToShow($PreviousCommit->message_id, $NumberOfPortsInThisCommit, $MaxNumberPortsToShow);
+			$this->HTML .= '</ul>' . freshports_MorePortsToShow($PreviousCommit->message_id, $NumberOfPortsInThisCommit, $MaxNumberPortsToShow);
+		} else {
+			$this->HTML .= '</ul>';
 		}
-		$this->HTML .= "\n<BLOCKQUOTE>";
+		$this->HTML .= "\n<BLOCKQUOTE class=\"description\">";
 		$this->HTML .= freshports_CommitDescriptionPrint(
                     $PreviousCommit->commit_description,
                     $PreviousCommit->encoding_losses,

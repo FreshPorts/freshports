@@ -141,7 +141,7 @@ function freshports_MainContentTable($Classes=BORDER, $ColSpan=1) {
 }
 
 function  freshports_ErrorContentTable() {
-	echo '<table class="fullwidth bordered" align="center" cellpadding="1">
+	echo '<table class="fullwidth bordered" align="center">
 ';
 }
 
@@ -319,16 +319,6 @@ function freshports_IndexFollow($URI) {
 	}
 
 	return $HTML;
-}
-
-function freshports_BannerSpace() {
-
-return '
-  <tr>
-    <td height="10"></td>
-  </tr>
-';
-
 }
 
 function freshports_Fallout_Icon() {
@@ -874,7 +864,7 @@ function freshports_HTML_Start() {
 GLOBAL $Debug;
 
 echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<HTML>
+<html lang="en">
 ';
 }
 
@@ -1402,7 +1392,7 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	$HTML = '';
 
 	# print a single commit for a port
-	$HTML .= "<tr><td valign='top' NOWRAP>";
+	$HTML .= "<tr><td class=\"commit-details\">";
 	
 
 	$HTML .= $commit->commit_date . '<br>';
@@ -1434,7 +1424,7 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	# output the VERSION and REVISION
 	$PackageVersion = freshports_PackageVersion($commit->{'port_version'},  $commit->{'port_revision'},  $commit->{'port_epoch'});
 	if (strlen($PackageVersion) > 0) {
-		$HTML .= '&nbsp;&nbsp;<big><b>' . $PackageVersion . '</b></big>';
+		$HTML .= '&nbsp;&nbsp;<span class="element-details">' . $PackageVersion . '</span>';
 	}
 
 	if ($commit->stf_message != '') {
@@ -1589,7 +1579,7 @@ function freshports_wrap($text, $length = WRAPCOMMITSATCOLUMN) {
 }
 
 function freshports_PageBannerText($Text, $ColSpan=1) {
-	return '<td class="accent" COLSPAN="' . $ColSpan . '"><big>' . $Text . '</big></td>' . "\n";
+	return '<td class="accent" COLSPAN="' . $ColSpan . '"><span>' . $Text . '</span></td>' . "\n";
 }
 
 
@@ -1965,7 +1955,7 @@ function freshports_LinkToDate($Date, $Text = '', $BranchName = BRANCH_HEAD) {
 
 function freshports_ErrorMessage($Title, $ErrorMessage) {
 	$HTML = '
-<table class="fullwidth bordered" align="center" cellpadding="1">
+<table class="fullwidth bordered" align="center">
 <tr><td valign=TOP>
 <table class="fullwidth">
 <tr>

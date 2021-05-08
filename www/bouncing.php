@@ -83,11 +83,10 @@ tell FreshPorts that you want it to start using your email address again by pres
 the button below.</p>
 
 </td></tr>
-<tr><td><CENTER>
+<tr><td>
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST">
 <input TYPE="submit" VALUE="There was a problem, but it's fixed now" name="submit">
 </form>
-</CENTER>
 </td></tr>
 </table>
 </td>

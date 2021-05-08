@@ -83,7 +83,7 @@
 	<? echo freshports_PageBannerText("Committer opt-in"); ?>
 </TR>
 
-<TR><TD>
+<TR><TD class="textcontent">
 <P>
 <?php
 	if (!preg_match(".*@FreeBSD.org", $User->email)) {
@@ -103,10 +103,6 @@ which you committed.  In the past, such problems are related to syntax errors in
 One committer referred to this service as an automated nagging mentor...
 </P>
 </TD></TR>
-
-<?
-	echo freshports_BannerSpace();
-?>
 
 <TR>
 	<?

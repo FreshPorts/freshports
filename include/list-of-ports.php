@@ -31,7 +31,7 @@ function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeade
 	$HTML  = $PortCountText;
 	$HTML .= "<TR><TD>\n";
 
-	if ($$ShowAds) {
+	if ($ShowAds) {
 		$HTML .= "<br><center>\n" . Ad_728x90() . "\n</center>\n";
 	}
 
@@ -55,7 +55,7 @@ function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeade
 						$HTML .= '<DT>';
 				}
 
-				$HTML .= '<BIG><BIG><B><a href="/' . $Category . '/">' . $Category . '</a></B></BIG></BIG>';
+				$HTML .= '<span class="element-details"><span><a href="/' . $Category . '/">' . $Category . '</a></span></span>';
 				if ($ShowCategoryHeaders) {
 					$HTML .= "</DT>\n<DD>";
 				}

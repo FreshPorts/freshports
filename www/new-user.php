@@ -181,10 +181,10 @@ if (IsSet($submit)) {
 <TR><td class="content">
 <?php
 if ($errors != '') {
-echo '<TABLE CELLPADDING=1 class="fullwidth borderless">
+echo '<TABLE class="fullwidth borderless">
 <TR>
 <TD>
-<TABLE class="fullwidth borderless" CELLPADDING=1>
+<TABLE class="fullwidth borderless">
 <TR class="accent"><TD><B>Access Code Failed!</B></TD>
 </TR>
 <TR>

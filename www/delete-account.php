@@ -85,10 +85,10 @@ if (IsSet($submit)) {
 
 
 if ($errors) {
-echo '<TABLE CELLPADDING="1" class="fullwidth borderless">
+echo '<TABLE class="fullwidth borderless">
 <TR>
 <TD>
-<TABLE class="fullwidth borderless" CELLPADDING="1">
+<TABLE class="fullwidth borderless">
 <TR class="accent"><TD><b>Delete Failed!</b></TD>
 </TR>
 <TR>
@@ -114,10 +114,10 @@ echo '<p>If you need help, please email postmaster@. </p>
 <br>';
 }  // if ($errors)
 
-echo '<TABLE CELLPADDING="1" class="fullwidth borderless">
+echo '<TABLE class="fullwidth borderless">
 <TR>
 <TD VALIGN="top">
-<TABLE class="fullwidth borderless" CELLPADDING="1">
+<TABLE class="fullwidth borderless">
 <TR>
 <td class="accent"><BIG>Customize</BIG></td>
 </TR>
@@ -137,7 +137,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 ?>
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
-<TABLE width="*" class="borderless" cellpadding="1">
+<TABLE width="*" class="borderless">
           <TR>
             <TD VALIGN="top">
                <p>The account name is: <?php echo $User->name; ?><p>

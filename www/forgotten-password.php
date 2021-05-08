@@ -142,10 +142,10 @@ if (IsSet($submit)) {
 <?
 
 if (IsSet($error) and $error != '') {
-      echo '<TABLE CELLPADDING="1" class="fullwidth borderless">
+      echo '<TABLE class="fullwidth borderless">
             <TR>
             <TD>
-               <TABLE class="fullwidth borderless" CELLPADDING="1">
+               <TABLE class="fullwidth borderless">
                  <TR class="accent"><TD><b>We have a problem!</b></TD>
                  </TR> 
                  <TR>
@@ -169,10 +169,10 @@ if (IsSet($error) and $error != '') {
 } else {
 
    if ($LoginFailed || $eMailFailed) {
-      echo '<TABLE CELLPADDING="1" class="fullwidth borderless">
+      echo '<TABLE class="fullwidth borderless">
             <TR>
             <TD>
-               <TABLE class="fullwidth borderless" CELLPADDING="1">
+               <TABLE class="fullwidth borderless">
                  <TR class="accent"><TD><b>User ID not found!</b></TD>
                  </TR>
                  <TR>
@@ -211,7 +211,7 @@ if (IsSet($error) and $error != '') {
 }
 ?>
 
-<TABLE CELLPADDING="1" class="fullwidth borderless"> <TR> <TD>
+<TABLE class="fullwidth borderless"> <TR> <TD>
 
 
 <TABLE class="fullwidth borderless" CELLPADDING="5">

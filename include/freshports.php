@@ -141,7 +141,7 @@ function freshports_MainContentTable($Classes=BORDER, $ColSpan=1) {
 }
 
 function  freshports_ErrorContentTable() {
-	echo '<table class="fullwidth bordered" align="center" cellpadding="1">
+	echo '<table class="fullwidth bordered" align="center">
 ';
 }
 
@@ -1965,7 +1965,7 @@ function freshports_LinkToDate($Date, $Text = '', $BranchName = BRANCH_HEAD) {
 
 function freshports_ErrorMessage($Title, $ErrorMessage) {
 	$HTML = '
-<table class="fullwidth bordered" align="center" cellpadding="1">
+<table class="fullwidth bordered" align="center">
 <tr><td valign=TOP>
 <table class="fullwidth">
 <tr>

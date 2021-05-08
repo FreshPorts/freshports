@@ -144,7 +144,7 @@
   <TR>
 
 <TD class="content">
-<TABLE class="fullwidth borderless" CELLPADDING="1">
+<TABLE class="fullwidth borderless">
 <TR>
 <td class="accent"><BIG><? echo $ArticleTitle; ?></BIG></td>
 </TR>

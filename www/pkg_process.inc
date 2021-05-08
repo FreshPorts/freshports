@@ -41,7 +41,7 @@ function HandleFileUpload($FormFileName, $Destination) {
 
 function DisplayError($error) {
 ?>
-	<TABLE class="fullwidth bordered" ALIGN="center" CELLPADDING="1">
+	<TABLE class="fullwidth bordered" ALIGN="center">
 	<TR><TD VALIGN=TOP>
 		<TABLE class="fullwidth">
 			<TR>

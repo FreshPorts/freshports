@@ -9,7 +9,7 @@
 ?>
 
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
-<TABLE width="*" class="borderless" cellpadding="1">
+<TABLE width="*" class="borderless">
           <TR>
             <TD VALIGN="top">
 <?php if (IsSet($Customize)) { ?>

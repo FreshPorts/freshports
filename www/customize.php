@@ -168,10 +168,10 @@ UPDATE users
 
 
 if ($errors) {
-echo '<TABLE CELLPADDING="1" class="fullwidth borderless">
+echo '<TABLE class="fullwidth borderless">
 <TR>
 <TD>
-<TABLE class="fullwidth borderless" CELLPADDING="1">
+<TABLE class="fullwidth borderless">
 <TR class="accent"><TD><b>Access Code Failed!</b></TD>
 </TR>
 <TR>
@@ -200,10 +200,10 @@ if ($AccountModified) {
    echo "Your account details were successfully updated.";
 } else {
 
-echo '<TABLE CELLPADDING="1" class="fullwidth borderless">
+echo '<TABLE class="fullwidth borderless">
 <TR>
 <TD VALIGN="top">
-<TABLE class="fullwidth borderless" CELLPADDING="1">
+<TABLE class="fullwidth borderless">
 <TR>
 <td class="accent"><BIG>Customize</BIG></td>
 </TR>

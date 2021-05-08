@@ -35,11 +35,9 @@
 </tr>
 <TR><TD class="textcontent">
 
-<CENTER>
 <?php
-    if ($ShowAds) echo Ad_728x90();
+    if ($ShowAds) echo '<CENTER>' . Ad_728x90() . '</CENTER>';
 ?>
-</CENTER>
 
 <P>This page contains the FAQ for FreshPorts. Hopefully the questions
 are arranged from general to specific.  The more you know, the further

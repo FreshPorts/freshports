@@ -30,11 +30,9 @@
 </TR>
 <TR><TD>
 
-<CENTER>
 <?php
-	if ($ShowAds) echo Ad_728x90();
+	if ($ShowAds) echo '<CENTER>' . Ad_728x90() . '</CENTER>';
 ?>
-</CENTER>
 
 <P>All the information we
     gather is for our own use.  We do not release it to anyone else.</P>

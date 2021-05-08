@@ -72,13 +72,11 @@ categories are indicated by <?php echo VIRTUAL; ?>.
 You can sort each column by clicking on the header.  e.g. click on <b>Category</b> to sort by category.
 </P>
 
-<center>
 <?php
   if ($ShowAds && $BannerAd) {
-    echo Ad_728x90();
+    echo '<CENTER>' . Ad_728x90() . '</CENTER>';
   }
 ?>
-</center>
 
 
 <?php

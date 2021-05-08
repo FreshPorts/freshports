@@ -44,11 +44,9 @@ If you have suggestions for graphs, please submit them via the <a href="<?php ec
 </P>
 
 
-<center>
 <?php
-  if ($ShowAds) echo Ad_728x90();
+  if ($ShowAds) echo '<CENTER>' . Ad_728x90() . '</CENTER>';
 ?>
-</center>
 
 </TD></TR>
 

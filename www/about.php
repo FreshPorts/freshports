@@ -33,11 +33,9 @@
 We have a few notes about this website.
 </P>
 
-<CENTER>
 <?php
-	if ($ShowAds) echo Ad_728x90();
+	if ($ShowAds) echo '<CENTER>' . Ad_728x90() . '</CENTER>';
 ?>
-</CENTER>
 
 </TD></TR>
 <TR>

@@ -31,11 +31,9 @@
 
 <TR><TD>
 
-<CENTER>
 <?php
-	if ($ShowAds) echo Ad_728x90();
+	if ($ShowAds) echo '<CENTER>' . Ad_728x90() . '</CENTER>';
 ?>
-</CENTER>
 
 <p>
 This page is rather dated.  Most news is now published on the

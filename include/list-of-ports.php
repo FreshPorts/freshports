@@ -31,7 +31,7 @@ function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeade
 	$HTML  = $PortCountText;
 	$HTML .= "<TR><TD>\n";
 
-	if ($$ShowAds) {
+	if ($ShowAds) {
 		$HTML .= "<br><center>\n" . Ad_728x90() . "\n</center>\n";
 	}
 

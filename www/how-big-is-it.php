@@ -102,11 +102,9 @@ function DBSize($db) {
 
 <TR><TD class="textcontent">
 
-<CENTER>
 <?php
-	if ($ShowAds) echo Ad_728x90();
+	if ($ShowAds) echo '<CENTER>' . Ad_728x90() . '</CENTER>';
 ?>
-</CENTER>
 
 <P>
 It was a few days ago that I was thinking about search engines crawling through this website.

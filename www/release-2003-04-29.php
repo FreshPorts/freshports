@@ -157,7 +157,7 @@ paging to the <a href="/categories.php">categories</a> page.
 
 <p>
 You can set the paging length via  
-<a href="/customize.php">your account</> settings.
+<a href="/customize.php">your account</a> settings.
 </P>
 </TD></TR>
 
@@ -194,7 +194,7 @@ needed.
 
 </TABLE>
 
-<TABLE class="fullwidth borderless" ALIGN="center">
+<TABLE class="fullwidth borderless">
 <TR><TD>
 <?php echo freshports_ShowFooter(); ?>
 </TD></TR>

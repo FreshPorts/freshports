@@ -185,7 +185,7 @@ the following fields.
 
 </TABLE>
 
-<TABLE class="fullwidth borderless" ALIGN="center">
+<TABLE class="fullwidth borderless">
 <TR><TD>
 <?php echo freshports_ShowFooter(); ?>
 </TD></TR>

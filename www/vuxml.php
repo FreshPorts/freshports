@@ -24,7 +24,7 @@
 		$vidArray = explode('|', $vid);
 	}
 ?>
-<html>
+<html lang="en">
 <head>
 <title>FreshPorts - VuXML</title>
 <meta name="robots" content="nofollow">

@@ -96,6 +96,10 @@ td.content {
   font-size: larger;
 }
 
+table.maincontent td.textcontent {
+  padding-bottom: 2em;
+}
+
 
 IMG#fp-logo { max-width: 100%; height: auto }
 

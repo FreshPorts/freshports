@@ -33,7 +33,7 @@
 <tr>
 	<?php echo freshports_PageBannerText("FAQ"); ?>
 </tr>
-<TR><TD>
+<TR><TD class="textcontent">
 
 <CENTER>
 <?php
@@ -45,21 +45,19 @@
 are arranged from general to specific.  The more you know, the further
 down you must read to find something you didn't already know.</P>
 </TD></TR>
-<TR><TD>&nbsp;</TD></TR>
 <TR id="what">
 <?php echo freshports_PageBannerText("What is this website about?"); ?>
 
-	<TR><TD>
+	<TR><TD class="textcontent">
 	This website will help you keep up with the latest releases of your
 	favorite software.  When a new version of the software is available,
 	FreshPorts will send you an email telling you about the change.
 	</TD></TR>
-<TR><TD>&nbsp;</TD></TR>
 <TR id="how">
 <?php echo freshports_PageBannerText("How do I use this?"); ?>
 </TR>
 
-	<TR><TD>
+	<TR><TD class="textcontent">
 	<p>
 	Your primary FreshPorts tool is your <b>watch list</b>.  This is the
 	collection of ports which you have selected for FreshPorts to
@@ -73,12 +71,11 @@ down you must read to find something you didn't already know.</P>
 	will contain headers with the list name.  You can use that for any
 	filtering you may want to do (e.g. procmail).
 	</TD></TR>
-<TR><TD>&nbsp;</TD></TR>
 <TR id="definitions">
 <?php echo freshports_PageBannerText("Some definitions"); ?>
 </TR>
 
-	<TR><TD>
+	<TR><TD class="textcontent">
 	<p>
 	You should be familiar with the <a href="https://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/ports.html">Ports</a>
 	section of <a href="https://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/index.html">The FreeBSD Handbook</a>.
@@ -112,12 +109,11 @@ down you must read to find something you didn't already know.</P>
 	prevent binary distribution.
 
 	</TD></TR>
-<TR><TD>&nbsp;</TD></TR>
 <TR id="watch-modify">
 <?php echo freshports_PageBannerText("How do I modify my watch list?"); ?>
 </TR>
 
-	<TR><TD>
+	<TR><TD class="textcontent">
 	There are three easy ways to modify your watch list:
 	<OL>
 	<LI>Wherever you see a port, you can click on the Add 
@@ -135,31 +131,28 @@ down you must read to find something you didn't already know.</P>
 	One-click watch list maintenance operates only upon your default
 	watch lists.  You can set one or more watch lists as being default.
 	</TD></TR>
-<TR><TD>&nbsp;</TD></TR>
 <TR id="watch-empty">
 <?php echo freshports_PageBannerText("How do I empty my watch list?"); ?>
 </TR>
 
-	<TR><TD>
+	<TR><TD class="textcontent">
 	Via <a href="/watch-list-maintenance.php">Watch List Maintenance</a>.
 	Select the watch lists you wish to empty, and follow the instructions
 	provided.
 	</TD></TR>
-<TR><TD>&nbsp;</TD></TR>
 <TR id="unsubscribe">
 <?php echo freshports_PageBannerText("How do I delete my account?"); ?>
 </TR>
 
-	<TR><TD>
+	<TR><TD class="textcontent">
 	You can't.  But you can unsubscribe from all of the reports
 	and you'll never hear from us again.
 	</TD></TR>
-<TR><TD>&nbsp;</TD></TR>
 <TR id="port-what">
 <?php echo freshports_PageBannerText("What is a port?"); ?>
 </TR>
 
-	<TR><TD>
+	<TR><TD class="textcontent">
 	A port is a simple easy way to install an application.
 	A port is a collection of files.  These files contain the location
 	of the source file, any patches which must be applied,
@@ -168,32 +161,29 @@ down you must read to find something you didn't already know.</P>
 	details on how to use ports, please refer to the official port
 	documents in the <A HREF="https://www.FreeBSD.org/handbook/">FreeBSD
 	Handbook</A>.
-	</TD></TR
-><TR><TD>&nbsp;</TD></TR>
+	</TD></TR>
 <TR id="ports-origin">
 <?php echo freshports_PageBannerText("Where do ports come from?"); ?>
 </TR>
 
-	<TR><TD>Ports are created by other FreeBSD volunteers, just like you
+	<TR><TD class="textcontent">Ports are created by other FreeBSD volunteers, just like you
 	and just like the creators of FreshPorts.  The FreshPorts team does
 	not create ports; we just tell you about the latest changes.  The
 	FreeBSD Ports team creates, maintains, and upgrades the ports.
 	</TD></TR>
-<TR><TD>&nbsp;</TD></TR>
 <TR id="port-contact">
 <?php echo freshports_PageBannerText("Who do I talk to about a port?"); ?>
 </TR>
 
-	<TR><TD>The official mailing list is freebsd-ports&#64;freebsd.org.
+	<TR><TD class="textcontent">The official mailing list is freebsd-ports&#64;freebsd.org.
 		More information all FreeBSD mailing lists can be obtained
 		from <A HREF="https://www.FreeBSD.org/handbook/eresources.html#ERESOURCES-MAIL">FreeBSD Mailing Lists</A>.
 	</TD></TR>
-<TR><TD>&nbsp;</TD></TR>
 <TR id="port-get">
 <?php echo freshports_PageBannerText("How do I get these ports?"); ?>
 </TR>
 
-	<TR><TD>For full information on how to obtain the ports which appear on
+	<TR><TD class="textcontent">For full information on how to obtain the ports which appear on
 	this website, please see <A HREF="https://www.FreeBSD.org/ports/">FreeBSD Ports</A>.
 	The easiest way to get a port is via cvsup.  An abbreviated example is
 
@@ -201,12 +191,11 @@ down you must read to find something you didn't already know.</P>
 	<CODE CLASS="code">cvsup -h cvsup.your.fav.server /usr/share/examples/cvsup/ports-supfile</CODE>
 	</BLOCKQUOTE>
 	</TD></TR>
-<TR><TD>&nbsp;</TD></TR>
 <TR id="fp-site-update">
 <?php echo freshports_PageBannerText("How is the website updated?"); ?>
 </TR>
 
-	<TR><TD>
+	<TR><TD class="textcontent">
 	The source code for the entire FreeBSD operating system and the Ports tree
 	are stored in the official <A HREF="<?echo FRESHPORTS_FREEBSD_CVS_URL; ?>">FreeBSD 
 	repository</A>.  Each time a change is committed to this CVS (at one time, this was a link to cvshome.org, which is no longer related to a repo)
@@ -216,20 +205,18 @@ down you must read to find something you didn't already know.</P>
 	it than first meets the eye.  The website is updated as soon as the message
 	arrives.
 	</TD></TR>
-<TR><TD>&nbsp;</TD></TR>
 <TR id="rev-number-unknown">
 <?php echo freshports_PageBannerText("What does unknown mean for a revision number?"); ?>
 </TR>
 
-	<TR><TD>It means the data has been converted from an earlier
+	<TR><TD class="textcontent">It means the data has been converted from an earlier
 		version of the FreshPorts database that did not record this information.
 	</TD></TR>
-<TR><TD>&nbsp;</TD></TR>
 <TR id="fp-site-link">
 <?php echo freshports_PageBannerText("Can I link to your site?"); ?>
 </TR>
 
-	<TR><TD>Yes, thank you, you can.  No need to ask us.  Just go ahead and do it.
+	<TR><TD class="textcontent">Yes, thank you, you can.  No need to ask us.  Just go ahead and do it.
 		We prefer the name FreshPorts (one word, mixed case). The following 
 		HTML is a good place to start:
 
@@ -252,12 +239,11 @@ down you must read to find something you didn't already know.</P>
 
 		<P>Please save this graphic on your website.</P>
 	</TD></TR>
-<TR><TD>&nbsp;</TD></TR>
 <TR id="symbols">
 <?php echo freshports_PageBannerText("What do these symbols mean?"); ?>
 </TR>
 
-	<TR><TD>
+	<TR><TD class="textcontent">
 	There are a few symbols you will see in this website.
 
 	<P id="fallout"><?php echo freshports_Fallout_Icon(); ?>
@@ -419,12 +405,11 @@ make: fatal errors encountered -- cannot continue
 		Ascending / Descending: These icons appear on particular tables and allow changing the order rows are sorted by.</P>
 
 	</TD></TR>
-<TR><TD>&nbsp;</TD></TR>
 <TR id="bookmarks-old">
 <?php echo freshports_PageBannerText("Why don't my old bookmarks work?"); ?>
 </TR>
 
-	<TR><TD>
+	<TR><TD class="textcontent">
 	<P>
 	Many things changed between FP1 and FP2. The most major change
 	was in the underlying database schema.  Not only did we move
@@ -441,22 +426,20 @@ make: fatal errors encountered -- cannot continue
 	and permanent.  They are of the form &lt;category&gt;/&lt;port&gt;.
 	</P>
 	</TD></TR>
-<TR><TD>&nbsp;</TD></TR>
 <TR id="feeds">
 <?php echo freshports_PageBannerText("Do you have any news feeds?"); ?>
 </TR>
 
-	<TR><TD>
+	<TR><TD class="textcontent">
 	<P>
 	Yes.  Read <a href="/newsfeeds.php">all about it</a>!
 
 	</TD></TR>
-<TR><TD>&nbsp;</TD></TR>
 <TR id="fp-site-mainpage">
 <?php echo freshports_PageBannerText("Can the main page load any faster?"); ?>
 </TR>
 
-	<TR><TD>
+	<TR><TD class="textcontent">
 	<P>
 <a href="https://<?php echo $ServerName ?>/">https://<?php echo $ServerName ?>/</a> is the main page of 
 this website.  It contains a lot of information.  You can trim this information by using parameters.
@@ -503,12 +486,11 @@ Here are a few examples:
 <b>NOTE:</b> Effective 13 November 2003, these parameters are no longer available.
 </P>
 </TD></TR>
-<TR><TD>&nbsp;</TD></TR>
 <TR id="commits-day">
 <?php echo freshports_PageBannerText("How can I view the commits for a particular day?"); ?>
 </TR>
 
-   <TR><TD>
+   <TR><TD class="textcontent">
    <P>
 	Yes, you can.  <a href="https://<?php echo $ServerName ?>/date.php">https://<?php echo $ServerName ?>/date.php</a>
 	displays all the commits for today (relative to the current server time).  
@@ -522,12 +504,12 @@ Here are a few examples:
 	The date should be of the format YYYY/MM/DD but I'm sure different formats
 	will work.  If the code has trouble figuring out what date you mean, it will guess and let you know it adjusted the date.
 
-	</TD></TR><TR><TD>&nbsp;</TD></TR>
+	</TD></TR>
 <TR id="watch-issue-add">
 <?php echo freshports_PageBannerText("Why can't I add a port to my watch list?"); ?>
 </TR>
 
-   <TR><TD>
+   <TR><TD class="textcontent">
    <P>
 	You have clicked on the <?php echo freshports_Watch_Icon_Add(); ?> icon and 
 	it doesn't change to a <?php echo freshports_Watch_Icon(); ?>.  Yes, I've
@@ -545,21 +527,19 @@ Here are a few examples:
 	<a href="/watch-list-maintenance.php">watch list settings</a>.
 
 	</TD></TR>
-<TR><TD>&nbsp;</TD></TR>
 <TR id="watch-issue-appearance">
 <?php echo freshports_PageBannerText("Why doesn't this port appear on my watch list?"); ?>
 </TR>
 
-   <TR><TD>
+   <TR><TD class="textcontent">
    <P>
    Please refer to the above question.
    </TD></TR>
-<TR><TD>&nbsp;</TD></TR>
 <TR id="portmoves">
 <?php echo freshports_PageBannerText("What are Port Moves?"); ?>
 </TR>
 
-   <TR><TD>
+   <TR><TD class="textcontent">
    <P>
 	Some ports (for example <a href="/net/">net</a>/<a href="/net/gift/">gift</a>) will have a section titled "Port Moves".
 	FreshPorts obtains information about ports from the commits to the 
@@ -577,12 +557,11 @@ Here are a few examples:
 
 
 	</TD></TR>
-<TR><TD>&nbsp;</TD></TR>
 <TR id="updating">
 <?php echo freshports_PageBannerText("What is /usr/ports/UPDATING?"); ?>
 </TR>
 
-   <TR><TD>
+   <TR><TD class="textcontent">
    <P>
 <code class="code">/usr/ports/UPDATING</code> is similar to
 <code class="code">/usr/src/UPDATING</code>, but for ports,
@@ -595,12 +574,11 @@ The <a href="/net/openldap22-client/">net/openldap22-client</a> port is a good
 example of what to expect.
 
 	</TD></TR>
-<TR><TD>&nbsp;</TD></TR>
 <TR id="master-slave">
 <?php echo freshports_PageBannerText("What are Master/Slave ports?"); ?>
 </TR>
 
-   <TR><TD>
+   <TR><TD class="textcontent">
    <P>
 	Some ports are so similar to another port that it makes sense to maintain just one port
 	and specify the differences in the other port.  This is slightly similar to the way 
@@ -650,12 +628,11 @@ example of what to expect.
 	is comitted to the tree.
 
 	</TD></TR>
-<TR><TD>&nbsp;</TD></TR>
 <TR id="toadd">
 <?php echo freshports_PageBannerText('What is this "to add the package" stuff?'); ?>
 </TR>
 
-	<TR><TD>
+	<TR><TD class="textcontent">
 	<P>
 	Included within the port description is the instruction for adding the package.
 	This information can be important when the package name does not match the
@@ -680,12 +657,11 @@ pkg install XFree86-clients
 	cluster.  Therefore, there is no package for <code>pkg install</code> to use.
 	
 	</TD></TR>
-<TR><TD>&nbsp;</TD></TR>
 <TR id="fp-search-get">
 <?php echo freshports_PageBannerText('Why does the search page use GET and not POST?'); ?>
 </TR>
 
-   <TR><TD>
+   <TR><TD class="textcontent">
    <P>
 If you visit the <a href="/search.php">search</a> page, and you run a search,
 you'll find that the URL becomes very long.  For example, 
@@ -701,12 +677,11 @@ It also makes it easier to <a href="https://validator.w3.org/">validate the HTML
 if you can provide a URL that exercises all the options that require testing.
 
 	</TD></TR>
-<TR><TD>&nbsp;</TD></TR>
 <TR id="searchfields">
 <?php echo freshports_PageBannerText('What are all those fields I can search on?'); ?>
 </TR>
 
-   <TR><TD>
+   <TR><TD class="textcontent">
    <P>
 	For those familiar with the FreeBSD ports structure, the following fields indicate their origin:
 
@@ -740,12 +715,11 @@ $
 <sup>1</sup> This value is obtained from a file in the port directory.  For
 example <code class="code">/usr/ports/sysutils/bacula/pkg-descr</code>.
 	</TD></TR>
-<TR><TD>&nbsp;</TD></TR>
 <TR id="people-watch">
 <?php echo freshports_PageBannerText('Where did this "People watching this port, also watch" feature come from?'); ?>
 </TR>
 
-   <TR><TD>
+   <TR><TD class="textcontent">
    <P>
 Like many FreshPorts features, this idea came from someone else.  Florent 
 Thoumie mentioned something about extending the ports system to include 
@@ -766,12 +740,11 @@ This information is obtained by:
 <p>
 All of this takes about 55ms.
 	</TD></TR>
-<TR><TD>&nbsp;</TD></TR>
 <TR id="master-updated">
 <?php echo freshports_PageBannerText('What do you mean, the master port has been updated?'); ?>
 </TR>
 
-   <TR><TD>
+   <TR><TD class="textcontent">
    <P>
 For some slave ports, you may see a message like this, just above the <b>Commit History</b>:
 
@@ -791,12 +764,11 @@ that the slave port was still vulnerable.
 <p>
 The above notice serves as a reminder that the slave port may no longer be vulnerable.
 	</TD></TR>
-<TR><TD>&nbsp;</TD></TR>
 <TR id="determine-master">
 <?php echo freshports_PageBannerText('How does FreshPorts determine the master sites?'); ?>
 </TR>
 
-   <TR><TD>
+   <TR><TD class="textcontent">
    <P>
 Each port displays the master sites from which its distfiles can be downloaded.  This
 information is obtained from "make master-sites-all".  However, this is not the only
@@ -808,12 +780,11 @@ In short, FreshPorts displays the list of master sites that should contain all
 the distfiles.  That is why we use that value, and not one of the other options.
 
 	</TD></TR>
-<TR><TD>&nbsp;</TD></TR>
 <TR id="mailto-clear">
 <?php echo freshports_PageBannerText('Why don\'t you obscure email addresses?'); ?>
 </TR>
 
-   <TR><TD>
+   <TR><TD class="textcontent">
    <P>
 FreshPorts used to obscure email addresses, but we don't any more.  We realised that
 every email address on FreshPorts is already somewhere else first. For example:
@@ -834,13 +805,12 @@ In short, it doesn't make sense to obscure that which is freely available elsewh
 Similarly, we do not entertain requests to remove information from our website. We only report upon what exists elsewhere.
 	</TD></TR>
 
-<TR><TD>&nbsp;</TD></TR>
 
 <TR id="portversion-differ">
 <?php echo freshports_PageBannerText('Why does the PORTVERSION at the top of page differ from that of the first commit?'); ?>
 </TR>
 
-   <TR><TD>
+   <TR><TD class="textcontent">
    <P>
    This question refers to a port page.
    
@@ -851,12 +821,11 @@ when its Master port is updated.    This refresh updates the PORTVERSION at the 
 page.  This update reflects the REVISION you would get if you were to install the Slave port
 now that the Master has been upgraded.
 	</TD></TR>
-<TR><TD>&nbsp;</TD></TR>
 <TR id="anchors">
 <?php echo freshports_PageBannerText('What HTML anchors exist?'); ?>
 </TR>
 
-   <TR><TD>
+   <TR><TD class="textcontent">
    <p>Anchors in port pages include: </p>
 
 <ul>
@@ -898,8 +867,7 @@ now that the Master has been upgraded.
 	Enjoy. We can add more anchors upon request.
 </p>
 
-	</TD></TR><TR><TD>&nbsp;</TD></TR>
-
+	</TD></TR>
 </table>
 </td>
 

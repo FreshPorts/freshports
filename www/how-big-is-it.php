@@ -100,7 +100,7 @@ function DBSize($db) {
 	<? echo freshports_PageBannerText("How big is it"); ?>
 </TR>
 
-<TR><TD>
+<TR><TD class="textcontent">
 
 <CENTER>
 <?php
@@ -118,19 +118,12 @@ there are.  Roughly.  This will not be 100% accurate, but it will be close.
 </TD></TR>
 
 <TR>
-<td>
-
-<?
-	echo freshports_BannerSpace();
-?>
-
-<TR>
 	<? 
 	echo freshports_PageBannerText("Pages on disk"); 
 	?>
 </TR>
 
-<TR><TD>
+<TR><TD class="textcontent">
 
 <P>
 First, let's count the number of pages on disk:
@@ -144,9 +137,7 @@ $Total += $Files;
 ?>
 </code></blockquote>
 
-<?
-	echo freshports_BannerSpace();
-?>
+</TD></TR>
 
 <TR>
 	<? 
@@ -154,7 +145,7 @@ $Total += $Files;
 	?>
 </TR>
 
-<TR><TD>
+<TR><TD class="textcontent">
 
 <P>
 There is a page for each category:
@@ -172,18 +163,13 @@ echo format_number($Value) . '<br>'
 (1 row)<br>
 </code></blockquote>
 </TD></TR>
-
-<?
-	echo freshports_BannerSpace();
-?>
-
 <TR>
 	<? 
 	echo freshports_PageBannerText("Number of ports"); 
 	?>
 </TR>
 
-<TR><TD>
+<TR><TD class="textcontent">
 
 <P>
 There are ports, and there are deleted ports. I'll show both:
@@ -214,17 +200,13 @@ echo format_number($Value) . '<br>';
 </code></blockquote>
 </TD></TR>
 
-<?
-	echo freshports_BannerSpace();
-?>
-
 <TR>
 	<? 
 	echo freshports_PageBannerText("Number of files in the ports tree"); 
 	?>
 </TR>
 
-<TR><TD>
+<TR><TD class="textcontent">
 
 <P>
 There is a page for each file in the ports tree:
@@ -257,17 +239,13 @@ $Total += $Value;
 Count last performed at <?php echo $DateLastChecked; ?>
 </TD></TR>
 
-<?
-	echo freshports_BannerSpace();
-?>
-
 <TR>
 	<? 
 	echo freshports_PageBannerText("Number of commits"); 
 	?>
 </TR>
 
-<TR><TD>
+<TR><TD class="textcontent">
 
 <P>
 There is a page for each commit:
@@ -286,17 +264,13 @@ echo format_number($Value) . '<br>';
 </code></blockquote>
 </TD></TR>
 
-<?
-	echo freshports_BannerSpace();
-?>
-
 <TR>
 	<? 
 	echo freshports_PageBannerText("Number of ports for each commit"); 
 	?>
 </TR>
 
-<TR><TD>
+<TR><TD class="textcontent">
 
 <P>
 For each commit, you can view the files modified by that commit for a particular port:
@@ -315,17 +289,13 @@ echo format_number($Value) . '<br>';
 </code></blockquote>
 </TD></TR>
 
-<?
-	echo freshports_BannerSpace();
-?>
-
 <TR>
 	<? 
 	echo freshports_PageBannerText("How many days?"); 
 	?>
 </TR>
 
-<TR><TD>
+<TR><TD class="textcontent">
 
 <P>
 For each day, there is a page showing the commits for that day.  How many days do we have?
@@ -344,17 +314,13 @@ echo format_number($Value) . '<br>';
 </code></blockquote>
 </TD></TR>
 
-<?
-	echo freshports_BannerSpace();
-?>
-
 <TR>
 	<? 
 	echo freshports_PageBannerText("How many users?"); 
 	?>
 </TR>
 
-<TR><TD>
+<TR><TD class="textcontent">
 
 <P>
 Each user has a page:
@@ -373,17 +339,13 @@ echo format_number($Value) . '<br>';
 </code></blockquote>
 </TD></TR>
 
-<?
-	echo freshports_BannerSpace();
-?>
-
 <TR>
 	<? 
 	echo freshports_PageBannerText("How many watch lists?"); 
 	?>
 </TR>
 
-<TR><TD>
+<TR><TD class="textcontent">
 
 <P>
 For each watch list, there is a page:
@@ -402,17 +364,13 @@ echo format_number($Value) . '<br>';
 </code></blockquote>
 </TD></TR>
 
-<?
-	echo freshports_BannerSpace();
-?>
-
 <TR>
 	<? 
 	echo freshports_PageBannerText("Estimated total"); 
 	?>
 </TR>
 
-<TR><TD>
+<TR><TD class="textcontent">
 
 <P>
 <?php $GooglePages = 8058044651; ?>
@@ -425,14 +383,10 @@ web pages on <a href="https://www.Google.com/">Google</a><small><sup><a href="#1
 <h2>Notes</h2>
 <ul>
 <li>These statistics are updated daily.
-<li><sup>1</sup><a name="1"></a>The number of Google pages used in this calculation is <?php echo number_format($GooglePages) ?>.
+<li id="1"><sup>1</sup>The number of Google pages used in this calculation is <?php echo number_format($GooglePages) ?>.
 </ul>
 
 </td></tr>
-
-<?
-	echo freshports_BannerSpace();
-?>
 
 <TR>
 	<? 
@@ -440,7 +394,7 @@ web pages on <a href="https://www.Google.com/">Google</a><small><sup><a href="#1
 	?>
 </TR>
 
-<TR><TD>
+<TR><TD class="textcontent">
 
 <P>
 The total space used by the FreshPorts database is:

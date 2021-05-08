@@ -29,7 +29,7 @@
 	<?php echo freshports_PageBannerText($Title); ?>
 </TR>
 
-<TR><TD>
+<TR><TD class="textcontent">
 <P>
 This is the biggest release of FreshPorts since 
 <a href="/fp2-announcement.php">FreshPorts 2</a> was released.
@@ -46,20 +46,12 @@ to this new version.
 </TD></TR>
 
 <TR>
-<td class="content"></td>
-</tr>
-
-	<?php 
-	echo freshports_BannerSpace();
-	?>
-
-<TR>
 	<?
 	echo freshports_PageBannerText("Multiple Watch Lists"); 
 	?>
 </TR>
 
-<TR><TD>
+<TR><TD class="textcontent">
 
 <P>
 When FreshPorts started, a watch list was a single entity.  That was to 
@@ -76,17 +68,13 @@ me.
 
 </TD></TR>
 
-	<?php 
-	echo freshports_BannerSpace();
-	?>
-
 <TR>
 	<?
 	echo freshports_PageBannerText("Virtual categories");
 	?>
 </TR>
 
-<TR><TD>
+<TR><TD class="textcontent">
 
 <P>
 FreshPorts now caters for virtual categories.  What's a virtual category?
@@ -111,24 +99,22 @@ description for the new category.
 
 </TD></TR>
 
-<?php echo freshports_BannerSpace(); ?>
 <TR>
 <?php echo freshports_PageBannerText("Newsfeed changes"); ?>
 </TR>
 
-<TR><TD>
+<TR><TD class="textcontent">
 <P>
 The newsfeed now contains the version/revision information for the port.
 For more information on news feeds, please read the <a href="/faq.php">FAQ</a>.
 </P>
 </TD></TR>
 
-<?php echo freshports_BannerSpace(); ?>
 <TR>
 <?php echo freshports_PageBannerText("Security Notifications"); ?>
 </TR>
 
-<TR><TD>
+<TR><TD class="textcontent">
 <P>
 FreshPorts has a new <a href="/report-subscriptions.php">subscription</a>
 entry.  If you subscribe to the new Security Notification report, you will
@@ -146,12 +132,11 @@ to subscribe to the announcements list for whatever software you use.
 </P>
 </TD></TR>
 
-<?php echo freshports_BannerSpace(); ?>
 <TR>
 <?php echo freshports_PageBannerText("Master websites"); ?>
 </TR>
 
-<TR><TD>
+<TR><TD class="textcontent">
 <P>
 You can now view the master websites for the port.  Each
 ports has a list of websites from which their source can be downloaded.
@@ -160,12 +145,11 @@ it's never been available until now.
 </P>
 </TD></TR>
 
-<?php echo freshports_BannerSpace(); ?>
 <TR>
 <?php echo freshports_PageBannerText("Category paging"); ?>
 </TR>
 
-<TR><TD>
+<TR><TD class="textcontent">
 <P>
 Some categories have a very large number of ports.  This can make loading
 the page very slow, especially for those on dial up.  Therefore, we've introduced
@@ -177,12 +161,11 @@ You can set the paging length via
 </P>
 </TD></TR>
 
-<?php echo freshports_BannerSpace(); ?>
 <TR>
 <?php echo freshports_PageBannerText("Faster pages"); ?>
 </TR>
 
-<TR><TD>
+<TR><TD class="textcontent">
 <P>
 Much work has gone into finding faster ways to extract data
 from the FreshPorts database.  Thanks to the amazing capabilities

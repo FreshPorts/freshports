@@ -55,7 +55,6 @@ This page will reload every <?php echo MAINTENANCE_MODE_RERESH_TIME_SECONDS; ?> 
 
 </TD></TR>
 
-</TD>
 </TABLE>
 </TD>
 

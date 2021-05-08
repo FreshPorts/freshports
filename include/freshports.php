@@ -321,16 +321,6 @@ function freshports_IndexFollow($URI) {
 	return $HTML;
 }
 
-function freshports_BannerSpace() {
-
-return '
-  <tr>
-    <td height="10"></td>
-  </tr>
-';
-
-}
-
 function freshports_Fallout_Icon() {
 	return '<img class="icon" src="/images/fallout-16x16.png" alt="pkg-fallout" title="pkg-fallout" width="16" height="16">';
 }

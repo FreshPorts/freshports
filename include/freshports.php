@@ -1402,7 +1402,7 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	$HTML = '';
 
 	# print a single commit for a port
-	$HTML .= "<tr><td valign='top' NOWRAP>";
+	$HTML .= "<tr><td class=\"commit-details\">";
 	
 
 	$HTML .= $commit->commit_date . '<br>';
@@ -1434,7 +1434,7 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	# output the VERSION and REVISION
 	$PackageVersion = freshports_PackageVersion($commit->{'port_version'},  $commit->{'port_revision'},  $commit->{'port_epoch'});
 	if (strlen($PackageVersion) > 0) {
-		$HTML .= '&nbsp;&nbsp;<big><b>' . $PackageVersion . '</b></big>';
+		$HTML .= '&nbsp;&nbsp;<span class="element-details">' . $PackageVersion . '</span>';
 	}
 
 	if ($commit->stf_message != '') {
@@ -1589,7 +1589,7 @@ function freshports_wrap($text, $length = WRAPCOMMITSATCOLUMN) {
 }
 
 function freshports_PageBannerText($Text, $ColSpan=1) {
-	return '<td class="accent" COLSPAN="' . $ColSpan . '"><big>' . $Text . '</big></td>' . "\n";
+	return '<td class="accent" COLSPAN="' . $ColSpan . '"><span>' . $Text . '</span></td>' . "\n";
 }
 
 

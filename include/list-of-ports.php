@@ -55,7 +55,7 @@ function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeade
 						$HTML .= '<DT>';
 				}
 
-				$HTML .= '<BIG><BIG><B><a href="/' . $Category . '/">' . $Category . '</a></B></BIG></BIG>';
+				$HTML .= '<span class="element-details"><span><a href="/' . $Category . '/">' . $Category . '</a></span></span>';
 				if ($ShowCategoryHeaders) {
 					$HTML .= "</DT>\n<DD>";
 				}

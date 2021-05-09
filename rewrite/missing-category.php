@@ -185,7 +185,7 @@ function freshports_CategoryDisplay($db, $category, $PageNumber = 1, $PageSize =
 
 	<tr><td>';
 
-		if ($category->IsPrimary()) {
+		if ($category->IsPrimary() && $User->id) {
 			if ($WatchListCount) {
 				$HTML .= freshports_Watch_Link_Remove('', 0, $category->element_id);
 			} else {

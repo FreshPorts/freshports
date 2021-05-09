@@ -184,7 +184,7 @@ if (!$result) {
 
 		$HTML .= '<td valign="top" ALIGN="right">' . $myrow["count"] . '</td>';
 		$HTML .= '<td valign="top">' . $myrow["description"] . '</td>';
-		$HTML .= '<td valign="top" nowrap><font size="-1">' . $myrow["lastupdate"] . '</font></td>';
+		$HTML .= '<td valign="top" nowrap>' . $myrow["lastupdate"] . '</td>';
 		$HTML .= "</tr>\n";
 
 

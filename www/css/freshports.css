@@ -104,6 +104,12 @@ table.maincontent td.textcontent {
   vertical-align: top;
 }
 
+.category-list th {
+  text-align: left;
+  font-weight: bold;
+  vertical-aligN: top;
+}
+
 IMG#fp-logo { max-width: 100%; height: auto }
 
 CODE.code { color: #461b7e}

@@ -118,33 +118,33 @@ $result = pg_exec($db, $sql);
 $HTML = '<tr>';
 
 if ($sort == "category") {
-   $HTML .= '<td><b>Category</b> ' . freshports_Ascending_Icon() . '</td>';
+   $HTML .= '<th>Category ' . freshports_Ascending_Icon() . '</th>';
 } else {
-   $HTML .= '<td><a href="categories.php?sort=category"><b>Category<b></a></td>';
+   $HTML .= '<th><a href="categories.php?sort=category">Category</a></th>';
 }
 
 
 if ($AllowedToEdit) {
-	$HTML .= '<td><b>Action</b></td>';
+	$HTML .= '<th>Action</th>';
 }
 	
 
 if ($sort == "count") {
-   $HTML .= '<td align="center"><b>Count</b> ' . freshports_Ascending_Icon() . '</td>';
+   $HTML .= '<th align="center">Count ' . freshports_Ascending_Icon() . '</th>';
 } else {
-   $HTML .= '<td><a href="categories.php?sort=count"><b>Count</b></a></td>';
+   $HTML .= '<th><a href="categories.php?sort=count">Count</a></th>';
 }
 
 if ($sort == "description") {
-   $HTML .= '<td><b>Description</b> ' . freshports_Ascending_Icon() . '</td>';
+   $HTML .= '<th>Description ' . freshports_Ascending_Icon() . '</td>';
 } else {
-   $HTML .= '<td><a href="categories.php?sort=description"><b>Description</b></a></td>';
+   $HTML .= '<th><a href="categories.php?sort=description">Description</a></th>';
 }
 
 if ($sort == "last_update") {
-   $HTML .= '<td nowrap><b>Last Update</b> ' . freshports_Ascending_Icon() . '</td>';
+   $HTML .= '<th nowrap>Last Update ' . freshports_Ascending_Icon() . '</th>';
 } else {
-   $HTML .= '<td nowrap><a href="categories.php?sort=lastupdate"><b>Last Update</b></a></td>';
+   $HTML .= '<th nowrap><a href="categories.php?sort=lastupdate">Last Update</a></th>';
 }
 
 $HTML .= '</tr>';

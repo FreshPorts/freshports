@@ -210,120 +210,121 @@ class DisplayCommit {
 			if (!$TooManyPorts) {
 				$this->HTML .= '<li>';
 				if (IsSet($mycommit->category) && $mycommit->category != '') {
-				if ($this->UserID) {
-					if ($mycommit->watch) {
-						$this->HTML .= ' '. freshports_Watch_Link_Remove($this->WatchListAsk, $mycommit->watch, $mycommit->element_id) . ' ';
-					} else {
+					if ($this->UserID) {
+						if ($mycommit->watch) {
+							$this->HTML .= ' '. freshports_Watch_Link_Remove($this->WatchListAsk, $mycommit->watch, $mycommit->element_id) . ' ';
+						} else {
 						$this->HTML .= ' '. freshports_Watch_Link_Add   ($this->WatchListAsk, $mycommit->watch, $mycommit->element_id) . ' ';
+						}
 					}
-				}
 
-				$this->HTML .= '<span class="element-details">';
-				$this->HTML .= '<A HREF="/' . $mycommit->category . '/' . $mycommit->port . '/' . $URLBranchSuffix . '">';
-				$this->HTML .= $mycommit->port;
-				$this->HTML .= '</A>';
+					$this->HTML .= '<span class="element-details">';
+					$this->HTML .= '<A HREF="/' . $mycommit->category . '/' . $mycommit->port . '/' . $URLBranchSuffix . '">';
+					$this->HTML .= $mycommit->port;
+					$this->HTML .= '</A>';
 
-				$PackageVersion = freshports_PackageVersion($mycommit->version, $mycommit->revision, $mycommit->epoch);
-				if (strlen($PackageVersion) > 0) {
-					$this->HTML .= ' ' . $PackageVersion;
-				}
+					$PackageVersion = freshports_PackageVersion($mycommit->version, $mycommit->revision, $mycommit->epoch);
+					if (strlen($PackageVersion) > 0) {
+						$this->HTML .= ' ' . $PackageVersion;
+						}
 
-				$this->HTML .= "</span>\n";
+					$this->HTML .= "</span>\n";
 
-				$this->HTML .= '<A HREF="/' . $mycommit->category . '/'  . $URLBranchSuffix . '">';
-				$this->HTML .= $mycommit->category. "</A>";
-				$this->HTML .= '&nbsp;';
+					$this->HTML .= '<A HREF="/' . $mycommit->category . '/'  . $URLBranchSuffix . '">';
+					$this->HTML .= $mycommit->category. "</A>";
+					$this->HTML .= '&nbsp;';
 
-				// indicate if this port has been removed from cvs
-				if ($mycommit->status == "D") {
-					$this->HTML .= " " . freshports_Deleted_Icon_Link() . "\n";
-				}
+					// indicate if this port has been removed from cvs
+					if ($mycommit->status == "D") {
+						$this->HTML .= " " . freshports_Deleted_Icon_Link() . "\n";
+					}
 
-				// indicate if this port needs refreshing from CVS
-				if ($mycommit->needs_refresh) {
-					$this->HTML .= " " . freshports_Refresh_Icon_Link() . "\n";
-				}
-				if ($mycommit->date_added > Time() - 3600 * 24 * $this->DaysMarkedAsNew) {
-					$MarkedAsNew = "Y";
-					$this->HTML .= freshports_New_Icon() . "\n";
-				}
+					// indicate if this port needs refreshing from CVS
+					if ($mycommit->needs_refresh) {
+						$this->HTML .= " " . freshports_Refresh_Icon_Link() . "\n";
+					}
+					if ($mycommit->date_added > Time() - 3600 * 24 * $this->DaysMarkedAsNew) {
+						$MarkedAsNew = "Y";
+						$this->HTML .= freshports_New_Icon() . "\n";
+					}
 
-				if ($mycommit->forbidden) {
-					$this->HTML .= ' ' . freshports_Forbidden_Icon_Link() . "\n";
-				}
+					if ($mycommit->forbidden) {
+						$this->HTML .= ' ' . freshports_Forbidden_Icon_Link() . "\n";
+					}
 
-				if ($mycommit->broken) {
-					$this->HTML .= ' '. freshports_Broken_Icon_Link() . "\n";
-				}
+					if ($mycommit->broken) {
+						$this->HTML .= ' '. freshports_Broken_Icon_Link() . "\n";
+					}
 
-				if ($mycommit->deprecated) {
-					$this->HTML .= ' '. freshports_Deprecated_Icon_Link() . "\n";
-				}
+					if ($mycommit->deprecated) {
+						$this->HTML .= ' '. freshports_Deprecated_Icon_Link() . "\n";
+					}
 
-				if ($mycommit->expiration_date) {
-					if (date('Y-m-d') >= $mycommit->expiration_date) {
-						$this->HTML .= freshports_Expired_Icon_Link($mycommit->expiration_date) . "\n";
+					if ($mycommit->expiration_date) {
+						if (date('Y-m-d') >= $mycommit->expiration_date) {
+							$this->HTML .= freshports_Expired_Icon_Link($mycommit->expiration_date) . "\n";
+						} else {
+							$this->HTML .= freshports_Expiration_Icon_Link($mycommit->expiration_date) . "\n";
+						}
+					}
+
+					if ($mycommit->ignore) {
+						$this->HTML .= ' '. freshports_Ignore_Icon_Link() . "\n";
+					}
+
+					$this->HTML .= freshports_Commit_Link_Port($mycommit->message_id, $mycommit->category, $mycommit->port);
+					$this->HTML .= "&nbsp;";
+
+					if ($mycommit->vulnerable_current) {
+						$this->HTML .= '&nbsp;' . freshports_VuXML_Icon() . '&nbsp;';
 					} else {
-						$this->HTML .= freshports_Expiration_Icon_Link($mycommit->expiration_date) . "\n";
+						if ($mycommit->vulnerable_past) {
+							$this->HTML .= '&nbsp;' . freshports_VuXML_Icon_Faded() . '&nbsp;';
+							}
+					}
+
+					if ($mycommit->restricted) {
+						$this->HTML .= freshports_Restricted_Icon_Link($mycommit->restricted) . '&nbsp;';
+					}
+
+					if ($mycommit->no_cdrom) {
+						$this->HTML .= freshports_No_CDROM_Icon_Link($mycommit->no_cdrom) . '&nbsp;';
+					}
+
+					if ($mycommit->is_interactive) {
+						$this->HTML .= freshports_Is_Interactive_Icon_Link($mycommit->is_interactive) . '&nbsp;';
+					}
+
+					$this->HTML.=  freshports_Fallout_Link($mycommit->category, $mycommit->port) . '&nbsp;';
+				} else {
+					# This is a non-port element... 
+					$this->HTML .= $mycommit->revision . ' ';
+					$this->HTML .= '<span class="element-details">';
+					$PathName = preg_replace('|^/?ports/|', '', $mycommit->element_pathname);
+#					echo "'$PathName' " . "'" . $mycommit->repo_name . "'";
+					switch ($mycommit->repo_name)
+					{
+					    case 'ports':
+					        $PathName = preg_replace('|^head/|', '', $PathName);
+					        break;
+					}
+
+					if ($PathName != $mycommit->element_pathname) {
+						$this->HTML .= '<a href="/' . str_replace('%2F', '/', urlencode($PathName)) . '">' . $PathName . '</a>';
+						$this->HTML .= "</span>\n";
+					} else {
+						$this->HTML .= '<a href="' . FRESHPORTS_FREEBSD_CVS_URL . $PathName . '#rev' . $mycommit->revision . '">' . $PathName . '</a>';
+						$this->HTML .= "</span>\n";
 					}
 				}
+				$this->HTML .= htmlify(_forDisplay($mycommit->short_description)) . "</li>\n";
 
-				if ($mycommit->ignore) {
-					$this->HTML .= ' '. freshports_Ignore_Icon_Link() . "\n";
-				}
-
-				$this->HTML .= freshports_Commit_Link_Port($mycommit->message_id, $mycommit->category, $mycommit->port);
-				$this->HTML .= "&nbsp;";
-
-				if ($mycommit->vulnerable_current) {
-					$this->HTML .= '&nbsp;' . freshports_VuXML_Icon() . '&nbsp;';
+				GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;			
+				if ($this->ShowEntireCommit) {
+					$Lines = 0;
 				} else {
-					if ($mycommit->vulnerable_past) {
-						$this->HTML .= '&nbsp;' . freshports_VuXML_Icon_Faded() . '&nbsp;';
-					}
+					$Lines = $freshports_CommitMsgMaxNumOfLinesToShow;
 				}
-
-				if ($mycommit->restricted) {
-					$this->HTML .= freshports_Restricted_Icon_Link($mycommit->restricted) . '&nbsp;';
-				}
-
-				if ($mycommit->no_cdrom) {
-					$this->HTML .= freshports_No_CDROM_Icon_Link($mycommit->no_cdrom) . '&nbsp;';
-				}
-
-				if ($mycommit->is_interactive) {
-					$this->HTML .= freshports_Is_Interactive_Icon_Link($mycommit->is_interactive) . '&nbsp;';
-				}
-
-				$this->HTML.=  freshports_Fallout_Link($mycommit->category, $mycommit->port) . '&nbsp;';
-			} else {
-				# This is a non-port element... 
-				$this->HTML .= $mycommit->revision . ' ';
-				$this->HTML .= '<span class="element-details">';
-				$PathName = preg_replace('|^/?ports/|', '', $mycommit->element_pathname);
-#				echo "'$PathName' " . "'" . $mycommit->repo_name . "'";
-				switch($mycommit->repo_name)
-				{
-				    case 'ports':
-				        $PathName = preg_replace('|^head/|', '', $PathName);
-				        break;
-				}
-				if ($PathName != $mycommit->element_pathname) {
-					$this->HTML .= '<a href="/' . str_replace('%2F', '/', urlencode($PathName)) . '">' . $PathName . '</a>';
-					$this->HTML .= "</span>\n";
-				} else {
-					$this->HTML .= '<a href="' . FRESHPORTS_FREEBSD_CVS_URL . $PathName . '#rev' . $mycommit->revision . '">' . $PathName . '</a>';
-					$this->HTML .= "</span>\n";
-				}
-			}
-			$this->HTML .= htmlify(_forDisplay($mycommit->short_description)) . "</li>\n";
-
-			GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;			
-			if ($this->ShowEntireCommit) {
-				$Lines = 0;
-			} else {
-				$Lines = $freshports_CommitMsgMaxNumOfLinesToShow;
-			}
 			} # !$TooManyPorts
 			
 

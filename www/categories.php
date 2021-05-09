@@ -201,12 +201,12 @@ if (!$result) {
     }
 }
 
-$HTML .= '<tr><td><b>port count:</b></td>';
+$HTML .= '<tr><td class="summary-cell">port count:</td>';
 if ($AllowedToEdit) {
 	$HTML .= '<td>&nbsp;</td>';
 }
 
-$HTML .= "<td class=\"numeric-cell\"><b>$NumPorts</b></td><td colspan=\"2\">($CategoryCount categories)</td></tr>";
+$HTML .= "<td class=\"numeric-cell summary-cell\">$NumPorts</td><td colspan=\"2\">($CategoryCount categories)</td></tr>";
 
 $HTML .= "<tr><td colspan=\"$ColSpan\">Hmmm, I'm not so sure this port count is accurate. Dan Langille 27 April 2003</td></tr>";
 

@@ -118,6 +118,10 @@ td.numeric-cell {
   text-align: right;
 }
 
+td.summary-cell {
+  font-weight: bold;
+}
+
 IMG#fp-logo { max-width: 100%; height: auto }
 
 CODE.code { color: #461b7e}

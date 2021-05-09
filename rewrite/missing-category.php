@@ -196,9 +196,9 @@ function freshports_CategoryDisplay($db, $category, $PageNumber = 1, $PageSize =
 
 
 		$HTML .= '
-<BIG><BIG><B>' . 
+<span class="element-details"><span>' .
 $category->description . '
-</B></BIG></BIG>- Number of ports in this category' . ($Branch == BRANCH_HEAD ? '' : ' with commits on branch ' . pg_escape_string($Branch)) . ': ' . $PortCount . '
+</span></span> - Number of ports in this category' . ($Branch == BRANCH_HEAD ? '' : ' with commits on branch ' . pg_escape_string($Branch)) . ': ' . $PortCount . '
 
 <p>
 	Ports marked with a <sup>*</sup> actually reside within another category but

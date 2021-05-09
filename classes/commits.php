@@ -24,7 +24,7 @@ class Commits {
 	var $UserID            = 0;
 	var $BranchName;
 
-	var $Debug = 0;
+	var $Debug = 1;
 
 	function __construct($dbh, $BranchName = BRANCH_HEAD) {
 		$this->dbh        = $dbh;
@@ -126,9 +126,12 @@ class Commits {
            ON TEMP.wle_element_id = E.id";
         }
 
+        # we once ordered by 1 desc, commit_log.id - but that would give different results between dev and test if a commit had to be rerun on dev
+        # and therefore had a higher commit id than commits which preceeded it.
+        # The goal of sorting by message_id is to keep together all ports for a given commit keep.
         $sql .= "
    ORDER BY 1 desc,
-            commit_log_id,
+            CL.message_id,
             category,
             port";
 
@@ -240,7 +243,7 @@ class Commits {
         AND C.id     = P.category_id
         AND E.id        = P.element_id
    ORDER BY 1 desc,
-            commit_log_id,
+            CL.message_id,
             category,
             port";
 

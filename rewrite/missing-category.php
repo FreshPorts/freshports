@@ -224,7 +224,7 @@ $category->description . '
 
 		$ShowShortDescription	= "Y";
 
-		$HTML .= freshports_echo_HTML("<TR>\n<TD>\n");
+		$HTML .= "<TR>\n<TD>\n";
 
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
 

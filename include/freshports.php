@@ -1024,16 +1024,6 @@ function freshports_Category_Name($CategoryID, $db) {
 	return $myrow["name"];
 }
 
-
-function freshports_echo_HTML($text) {
-//   echo $text;
-   return $text;
-}
-
-function freshports_echo_HTML_flush() {
-#   echo $HTML_Temp;
-}
-
 function freshports_in_array($value, $array) {
   $Count = count($array);
   for ($i = 0; $i < $Count; $i++) {

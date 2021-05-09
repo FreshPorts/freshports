@@ -115,39 +115,39 @@ if ($Debug) echo '<pre>' . $sql, "</pre>\n";
 
 $result = pg_exec($db, $sql);
 
-$HTML = freshports_echo_HTML('<tr>');
+$HTML = '<tr>';
 
 if ($sort == "category") {
-   $HTML .= freshports_echo_HTML('<td><b>Category</b> ' . freshports_Ascending_Icon() . '</td>');
+   $HTML .= '<td><b>Category</b> ' . freshports_Ascending_Icon() . '</td>';
 } else {
-   $HTML .= freshports_echo_HTML('<td><a href="categories.php?sort=category"><b>Category<b></a></td>');
+   $HTML .= '<td><a href="categories.php?sort=category"><b>Category<b></a></td>';
 }
 
 
 if ($AllowedToEdit) {
-	$HTML .= freshports_echo_HTML('<td><b>Action</b></td>');
+	$HTML .= '<td><b>Action</b></td>';
 }
 	
 
 if ($sort == "count") {
-   $HTML .= freshports_echo_HTML('<td align="center"><b>Count</b> ' . freshports_Ascending_Icon() . '</td>');
+   $HTML .= '<td align="center"><b>Count</b> ' . freshports_Ascending_Icon() . '</td>';
 } else {
-   $HTML .= freshports_echo_HTML('<td><a href="categories.php?sort=count"><b>Count</b></a></td>');
+   $HTML .= '<td><a href="categories.php?sort=count"><b>Count</b></a></td>';
 }
 
 if ($sort == "description") {
-   $HTML .= freshports_echo_HTML('<td><b>Description</b> ' . freshports_Ascending_Icon() . '</td>');
+   $HTML .= '<td><b>Description</b> ' . freshports_Ascending_Icon() . '</td>';
 } else {
-   $HTML .= freshports_echo_HTML('<td><a href="categories.php?sort=description"><b>Description</b></a></td>');
+   $HTML .= '<td><a href="categories.php?sort=description"><b>Description</b></a></td>';
 }
 
 if ($sort == "last_update") {
-   $HTML .= freshports_echo_HTML('<td nowrap><b>Last Update</b> ' . freshports_Ascending_Icon() . '</td>');
+   $HTML .= '<td nowrap><b>Last Update</b> ' . freshports_Ascending_Icon() . '</td>';
 } else {
-   $HTML .= freshports_echo_HTML('<td nowrap><a href="categories.php?sort=lastupdate"><b>Last Update</b></a></td>');
+   $HTML .= '<td nowrap><a href="categories.php?sort=lastupdate"><b>Last Update</b></a></td>';
 }
 
-$HTML .= freshports_echo_HTML('</tr>');
+$HTML .= '</tr>';
 
 if (!$result) {
    echo "<tr><td colspan=\"$ColSpan\"" . pg_errormessage() . "</td></tr></table>\n";
@@ -160,7 +160,7 @@ if (!$result) {
     if ($NumRows) {
       for ($i = 0; $i < $NumRows; $i++) {
         $myrow = pg_fetch_array($result, $i);
-		$HTML .= freshports_echo_HTML('<tr>');
+		$HTML .= '<tr>';
 		$HTML .= '<td align="top" nowrap>';
         if ($User->id) {
           if ($Primary[$myrow["is_primary"]]) {
@@ -175,17 +175,17 @@ if (!$result) {
 		}
 		$HTML .= ' ';
 
-		$HTML .= freshports_echo_HTML('<a href="/' . $myrow["category"] . '/">' . $myrow["category"] . '</a>' . $Primary[$myrow["is_primary"]]);
+		$HTML .= '<a href="/' . $myrow["category"] . '/">' . $myrow["category"] . '</a>' . $Primary[$myrow["is_primary"]];
 		
 		$HTML .= '</td>';
 		if ($AllowedToEdit) {
-			$HTML .= freshports_echo_HTML('<td valign="top"><a href="/category-maintenance.php?category=' . $myrow["category"] . '">update</a></td>');
+			$HTML .= '<td valign="top"><a href="/category-maintenance.php?category=' . $myrow["category"] . '">update</a></td>';
 		}
 
-		$HTML .= freshports_echo_HTML('<td valign="top" ALIGN="right">' . $myrow["count"] . '</td>');
-		$HTML .= freshports_echo_HTML('<td valign="top">' . $myrow["description"] . '</td>');
-		$HTML .= freshports_echo_HTML('<td valign="top" nowrap><font size="-1">' . $myrow["lastupdate"] . '</font></td>');
-		$HTML .= freshports_echo_HTML("</tr>\n");
+		$HTML .= '<td valign="top" ALIGN="right">' . $myrow["count"] . '</td>';
+		$HTML .= '<td valign="top">' . $myrow["description"] . '</td>';
+		$HTML .= '<td valign="top" nowrap><font size="-1">' . $myrow["lastupdate"] . '</font></td>';
+		$HTML .= "</tr>\n";
 
 
 		# count only the ports in primary categories
@@ -200,18 +200,16 @@ if (!$result) {
     }
 }
 
-$HTML .= freshports_echo_HTML('<tr><td><b>port count:</b></td>');
+$HTML .= '<tr><td><b>port count:</b></td>';
 if ($AllowedToEdit) {
-	$HTML .= freshports_echo_HTML('<td>&nbsp;</td>');
+	$HTML .= '<td>&nbsp;</td>';
 }
 
-$HTML .= freshports_echo_HTML("<td ALIGN=\"right\"><b>$NumPorts</b></td><td colspan=\"2\">($CategoryCount categories)</td></tr>");
+$HTML .= "<td ALIGN=\"right\"><b>$NumPorts</b></td><td colspan=\"2\">($CategoryCount categories)</td></tr>";
 
-$HTML .= freshports_echo_HTML("<tr><td colspan=\"$ColSpan\">Hmmm, I'm not so sure this port count is accurate. Dan Langille 27 April 2003</td></tr>");
+$HTML .= "<tr><td colspan=\"$ColSpan\">Hmmm, I'm not so sure this port count is accurate. Dan Langille 27 April 2003</td></tr>";
 
-$HTML .= freshports_echo_HTML('</table>');
-
-freshports_echo_HTML_flush();
+$HTML .= '</table>';
 
 echo $HTML;                                                   
 ?>

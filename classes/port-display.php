@@ -641,12 +641,14 @@ class port_display {
 			if ($port->IsSlavePort()) $HTML .= ' NOTE: Slave port - quarterly revision is most likely wrong.';
 			$HTML .= '</span></span>';
 		}
+		if ($this->ShowEverything || $this->ShowShortDescription || $this->ShowCategory) {
+			// this dt was opened before all the icons, just before the start of the version number
+			$HTML .= '</dt>';
+		}
 
 		# if you add content to this IF statement, you may need to addition more conditions to the if
 		if (($this->ShowEverything || $this->ShowBasicInfo) && 
 		    ($port->forbidden || $port->broken || $port->deprecated || $port->expiration_date || $port->ignore || $port->restricted || $port->no_cdrom || $port->is_interactive)) {
-
-			$HTML .= "<dt>\n";
 
 			# various details about this port
 			$HTML .= "<dd>";
@@ -699,16 +701,16 @@ class port_display {
 				         'Ports mailing list via ';
 				$HTML .= '<A HREF="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);
 				$HTML .= '?subject=FreeBSD%20Port:%20' . $port->category . '/' . $port->port . '" TITLE="email the FreeBSD Ports mailing list">';
-				$HTML .= freshportsObscureHTML($port->maintainer) . '</A></dd>';
+				$HTML .= freshportsObscureHTML($port->maintainer) . '</A> ' . freshports_Search_Maintainer($port->maintainer) . '</dd>';
 			} else {
 				$HTML .= '<dt><b>';
 
 				$HTML .= 'Maintainer:</b> <A HREF="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);
 				$HTML .= '?subject=FreeBSD%20Port:%20' . $port->category . '/' . $port->port . '" TITLE="email the maintainer">';
-				$HTML .= freshportsObscureHTML($port->maintainer) . '</A>';
+				$HTML .= freshportsObscureHTML($port->maintainer) . '</A> ';
+				$HTML .= freshports_Search_Maintainer($port->maintainer) . '</dt>';
 			}
 
-			$HTML .= ' ' . freshports_Search_Maintainer($port->maintainer) . '</dt>';
 		}
 
 		// there are only a few places we want to show the last change.
@@ -820,10 +822,9 @@ class port_display {
 						}
 						$OtherCategories .= '">' . $Category . '</a> ';
 					}
-					$HTML .= "</dt>\n";
 
 					# get rid of that trailing space from above.
-					$HTML .= rtrim($OtherCategories);
+					$HTML .= rtrim($OtherCategories) . "</dt>\n";
 				}
 			}
 

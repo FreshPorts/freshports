@@ -202,7 +202,7 @@ $category->description . '
 
 <p>
 	Ports marked with a <sup>*</sup> actually reside within another category but
-	have <b>' . $category->name . '</b> listed as a secondary category.';
+	have <strong>' . $category->name . '</strong> listed as a secondary category.';
 
 		GLOBAL $ShowAds, $BannerAd;
 
@@ -210,7 +210,7 @@ $category->description . '
 			$HTML .= "<br><center>\n" . Ad_728x90() . "\n</center>\n";
 		}
 
-		$HTML .= '<div align="center"><br>' . 
+		$HTML .= '<div class="pagination">' .
 			freshports_CategoryNextPreviousPage($category->name, $PortCount, $PageNumber, $PageSize, $Branch)  . 
 			'</div>';
 
@@ -245,7 +245,7 @@ $category->description . '
 		$HTML .= '
 </TD></TR>
 <TR><TD>
-<div align="center"><br>' . 
+<div class="pagination">' .
 
 			freshports_CategoryNextPreviousPage($category->name, $PortCount, $PageNumber, $PageSize, $Branch) . '
 
@@ -286,8 +286,6 @@ if ($ShowAds && $BannerAd) {
 	echo "<br><center>\n" . Ad_728x90() . "\n</center>\n";
 }
 ?>
-
-	</td></tr>
 
 <?php
 

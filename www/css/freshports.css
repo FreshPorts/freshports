@@ -122,6 +122,11 @@ td.summary-cell {
   font-weight: bold;
 }
 
+.pagination {
+  margin: 1em auto 0;
+  text-align: center;
+}
+
 IMG#fp-logo { max-width: 100%; height: auto }
 
 CODE.code { color: #461b7e}

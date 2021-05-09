@@ -21,7 +21,7 @@
 	freshports_Start($Title,
 					$Title,
 					'FreeBSD, index, applications, ports');
-$Debug = 1;
+$Debug = 0;
 if ($Debug) {
 #phpinfo();
 #exit;

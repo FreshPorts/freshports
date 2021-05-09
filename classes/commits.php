@@ -24,7 +24,7 @@ class Commits {
 	var $UserID            = 0;
 	var $BranchName;
 
-	var $Debug = 1;
+	var $Debug = 0;
 
 	function __construct($dbh, $BranchName = BRANCH_HEAD) {
 		$this->dbh        = $dbh;

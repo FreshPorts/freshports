@@ -18,7 +18,7 @@ class CommitFiles {
 	var $category;
 	var $port;
 
-	var $Debug = 1;
+	var $Debug = 0;
 
 	var $LocalResult;
 

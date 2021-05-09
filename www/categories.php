@@ -57,19 +57,19 @@
 
 <tr><td class="content">
 
-<?php echo freshports_MainContentTable(BORDER + ' category-list', $ColSpan); ?>
+<?php echo freshports_MainContentTable(BORDER); ?>
 
   <tr>
-	<? echo freshports_PageBannerText("$FreshPortsTitle - list of categories", $ColSpan); ?>
+	<? echo freshports_PageBannerText("$FreshPortsTitle - list of categories"); ?>
   </tr>
-<tr><td COLSPAN="<?php echo $ColSpan; ?>">
+<tr><td>
 <P>
 This page lists the categories and can be sorted by various criteria.  Virtual
 categories are indicated by <?php echo VIRTUAL; ?>.
 </P>
 
 <P>
-You can sort each column by clicking on the header.  e.g. click on <b>Category</b> to sort by category.
+You can sort each column by clicking on the header.  e.g. click on <strong>Category</strong> to sort by category.
 </P>
 
 <?php
@@ -78,6 +78,7 @@ You can sort each column by clicking on the header.  e.g. click on <b>Category</
   }
 ?>
 
+<table class="category-list fullwidth bordered">
 
 <?php
 $sort = IsSet($_REQUEST['sort']) ? pg_escape_string($_REQUEST['sort']) : '';
@@ -130,27 +131,27 @@ if ($AllowedToEdit) {
 	
 
 if ($sort == "count") {
-   $HTML .= '<th align="center">Count ' . freshports_Ascending_Icon() . '</th>';
+   $HTML .= '<th>Count ' . freshports_Ascending_Icon() . '</th>';
 } else {
    $HTML .= '<th><a href="categories.php?sort=count">Count</a></th>';
 }
 
 if ($sort == "description") {
-   $HTML .= '<th>Description ' . freshports_Ascending_Icon() . '</td>';
+   $HTML .= '<th>Description ' . freshports_Ascending_Icon() . '</th>';
 } else {
    $HTML .= '<th><a href="categories.php?sort=description">Description</a></th>';
 }
 
 if ($sort == "last_update") {
-   $HTML .= '<th nowrap>Last Update ' . freshports_Ascending_Icon() . '</th>';
+   $HTML .= '<th>Last Update ' . freshports_Ascending_Icon() . '</th>';
 } else {
-   $HTML .= '<th nowrap><a href="categories.php?sort=lastupdate">Last Update</a></th>';
+   $HTML .= '<th><a href="categories.php?sort=lastupdate">Last Update</a></th>';
 }
 
 $HTML .= '</tr>';
 
 if (!$result) {
-   echo "<tr><td colspan=\"$ColSpan\"" . pg_errormessage() . "</td></tr></table>\n";
+   echo "<tr><td colspan=\"$ColSpan\"" . pg_errormessage() . "</td></tr></table></td></td></table>\n";
    exit;
 } else {
 	$NumTopics	   = 0;
@@ -161,7 +162,7 @@ if (!$result) {
       for ($i = 0; $i < $NumRows; $i++) {
         $myrow = pg_fetch_array($result, $i);
 		$HTML .= '<tr>';
-		$HTML .= '<td nowrap>';
+		$HTML .= '<td>';
         if ($User->id) {
           if ($Primary[$myrow["is_primary"]]) {
             $HTML .= freshports_Watch_Icon_Empty();
@@ -184,7 +185,7 @@ if (!$result) {
 
 		$HTML .= '<td ALIGN="right">' . $myrow["count"] . '</td>';
 		$HTML .= '<td>' . $myrow["description"] . '</td>';
-		$HTML .= '<td nowrap>' . $myrow["lastupdate"] . '</td>';
+		$HTML .= '<td>' . $myrow["lastupdate"] . '</td>';
 		$HTML .= "</tr>\n";
 
 
@@ -209,7 +210,7 @@ $HTML .= "<td ALIGN=\"right\"><b>$NumPorts</b></td><td colspan=\"2\">($CategoryC
 
 $HTML .= "<tr><td colspan=\"$ColSpan\">Hmmm, I'm not so sure this port count is accurate. Dan Langille 27 April 2003</td></tr>";
 
-$HTML .= '</table>';
+$HTML .= '</table></td></tr></table>';
 
 echo $HTML;                                                   
 ?>

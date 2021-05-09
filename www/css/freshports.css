@@ -100,8 +100,12 @@ table.maincontent td.textcontent {
   padding-bottom: 2em;
 }
 
-.category-list td:not(.accent) {
+.category-list td {
   vertical-align: top;
+}
+
+.category-list td:last-child, .category-list th:last-child {
+  white-space: nowrap;
 }
 
 .category-list th {

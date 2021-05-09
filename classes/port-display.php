@@ -170,7 +170,7 @@ class port_display {
 		if (defined('PKG_MESSAGE_UCL') && PKG_MESSAGE_UCL && $this->_isUCL($port->pkgmessage)) {
 			$HTML .= $this->_pkgmessage_UCL($port->pkgmessage);
 		} else {
-			$HTML .= '<dt><b>pkg-message:</b></dt>' . "\n" . '<dd class="like-pre">';
+			$HTML .= "<dt><b>pkg-message:</b></dt>\n" . '<dd class="like-pre">';
 			$HTML .= htmlspecialchars($port->pkgmessage);
 			$HTML .= "</dd>\n</dl>\n<hr>\n<dl>";
 		}
@@ -730,7 +730,7 @@ class port_display {
 					$HTML .= ' (' . freshports_Search_Committer($port->committer_name) . ')';
 				}
 
-				$HTML .= ' on <font size="-1">' . $port->updated . '</font>' . "\n";
+				$HTML .= ' on ' . $port->updated . "\n";
 
 				$HTML .= freshports_Email_Link($port->message_id);
 
@@ -756,31 +756,31 @@ class port_display {
 		# show the date added, if asked
 
 		if ($this->ShowDateAdded || $this->ShowEverything) {
-			$HTML .= '<dt><b>Port Added:</b> <font size="-1">';
+			$HTML .= '<dt><b>Port Added:</b> ';
 			if ($port->date_added) {
 				$HTML .= FormatTime($port->date_added, 0, "Y-m-d H:i:s");
 			} else {
 				$HTML .= "unknown";
 			}
-			$HTML .= '</font></dt>' . "\n";
+			$HTML .= "</dt>\n";
 		}
 
 		# show the date modified, if asked
 
 		if ($this->ShowLastCommitDate || $this->ShowEverything) {
-			$HTML .= '<dt><b>Last Update:</b> <font size="-1">';
+			$HTML .= '<dt><b>Last Update:</b> ';
 			if ($port->last_commit_date) {
 				$HTML .= FormatTime($port->last_commit_date, 0, "Y-m-d H:i:s");
 			} else {
 				$HTML .= "unknown";
 			}
-			$HTML .= '</font></dt>' . "\n";
+			$HTML .= "</dt>\n";
 
 			if (strpos($port->message_id, 'freebsd.org') === false) {
-				$HTML .= '<dt><b>Commit Hash:</b> <font size="-1">';
+				$HTML .= '<dt><b>Commit Hash:</b> ';
 				$HTML .= freshports_git_commit_Link_Hash($port->svn_revision, $port->commit_hash_short, $port->repo_hostname, $port->path_to_repo);
 			} else {
-				$HTML .= '<dt><b>SVN Revision:</b> <font size="-1">';
+				$HTML .= '<dt><b>SVN Revision:</b> ';
 				if (isset($port->svn_revision)) {
 					$HTML .= freshports_svnweb_ChangeSet_Link_Text($port->svn_revision, $port->repo_hostname);
 				} else {
@@ -788,7 +788,7 @@ class port_display {
 			        }
 			}
 
-			$HTML .= '</font></dt>' . "\n";
+			$HTML .= "</dt>\n";
 		}
 
 		if ($this->ShowEverything || $this->ShowBasicInfo) {
@@ -1026,7 +1026,7 @@ class port_display {
 						$HTML .= '</dd>';
 					}
 				} else {
-					$HTML .= '<dd>There is no distinfo for this port.</dd>' . "\n";
+					$HTML .= "<dd>There is no distinfo for this port.</dd>\n";
 				}
 			}
 
@@ -1088,7 +1088,7 @@ class port_display {
 				$HTML .= '</dd>';
 
 			} else {
-				$HTML .= '<dd>No package information in database for this port.</dd>' . "\n";
+				$HTML .= "<dd>No package information in database for this port.</dd>\n";
 			}
 		}
 

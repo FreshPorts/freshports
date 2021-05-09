@@ -859,7 +859,7 @@ $HTML .= '
 function freshports_HTML_Start() {
 GLOBAL $Debug;
 
-echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+echo HTML_DOCTYPE . '
 <html lang="en">
 ';
 }

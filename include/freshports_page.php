@@ -7,6 +7,7 @@
 
 	set_include_path('/usr/local/share/pear');
 	require_once("HTML/Page2.php");
+	require_once('constants.php');
 
 class freshports_page extends HTML_Page2 {
 
@@ -27,7 +28,7 @@ class freshports_page extends HTML_Page2 {
 
 		$this->HTML_Page2($attributes);
 
-		$this->setMetaData('author',           'Dan Langille');
+		$this->setMetaData('author',           COPYRIGHTHOLDER);
 		$this->setMetaData('description',      'FreshPorts - new ports, applications');
 		$this->setMetaData('keywords',         'FreeBSD, index, applications, ports');
 
@@ -104,5 +105,11 @@ class freshports_page extends HTML_Page2 {
 
 	function setDebug($Debug) {
 		$this->_debug = $Debug;
+	}
+
+	function _getDoctype() {
+		// HTML_Page2 generates inconsistent doctype with the rest of the site
+		// Since we're in quirks mode this breaks the styles for some pages
+		return HTML_DOCTYPE;
 	}
 }

@@ -183,7 +183,7 @@ if (!$result) {
 			$HTML .= '<td><a href="/category-maintenance.php?category=' . $myrow["category"] . '">update</a></td>';
 		}
 
-		$HTML .= '<td ALIGN="right">' . $myrow["count"] . '</td>';
+		$HTML .= '<td class="numeric-cell">' . $myrow["count"] . '</td>';
 		$HTML .= '<td>' . $myrow["description"] . '</td>';
 		$HTML .= '<td>' . $myrow["lastupdate"] . '</td>';
 		$HTML .= "</tr>\n";
@@ -206,7 +206,7 @@ if ($AllowedToEdit) {
 	$HTML .= '<td>&nbsp;</td>';
 }
 
-$HTML .= "<td ALIGN=\"right\"><b>$NumPorts</b></td><td colspan=\"2\">($CategoryCount categories)</td></tr>";
+$HTML .= "<td class=\"numeric-cell\"><b>$NumPorts</b></td><td colspan=\"2\">($CategoryCount categories)</td></tr>";
 
 $HTML .= "<tr><td colspan=\"$ColSpan\">Hmmm, I'm not so sure this port count is accurate. Dan Langille 27 April 2003</td></tr>";
 

@@ -135,9 +135,8 @@ function freshports_Search_Committer($Committer) {
 	      freshports_Search_Icon('search for other commits by this committer') . '</a>';
 }
 
-function freshports_MainContentTable($Classes=BORDER, $ColSpan=1) {
-	return '<table class="maincontent fullwidth ' . $Classes . '">' .
-		PortsFreezeStatus($ColSpan);
+function freshports_MainContentTable($Classes=BORDER) {
+	return '<table class="maincontent fullwidth ' . $Classes . '">' . PortsFreezeStatus();
 }
 
 function  freshports_ErrorContentTable() {
@@ -146,7 +145,7 @@ function  freshports_ErrorContentTable() {
 }
 
 
-function PortsFreezeStatus($ColSpan=1) {
+function PortsFreezeStatus() {
 	#
 	# this function checks to see if there is a port freeze on.
 	# if there is, it returns text that indicates same.
@@ -156,12 +155,9 @@ function PortsFreezeStatus($ColSpan=1) {
 
 	if (file_exists(SIGNALS_DIRECTORY . "/PortsFreezeIsOn")) {
 		$result = '
-<tr>' . freshports_PageBannerText('There is a PORTS FREEZE in effect!', $ColSpan) . '</tr>
-<tr><td';
-		if ($ColSpan > 1) {
-			$result .= ' colspan="' . $ColSpan . '"';
-		}
-		$result .= '>
+<tr>' . freshports_PageBannerText('There is a PORTS FREEZE in effect!') . '</tr>
+<tr><td>';
+		$result .= '
 <p>A <a href="https://www.freebsd.org/doc/en/articles/committers-guide/ports.html" rel="noopener noreferrer">ports freeze</a>
  means that commits will be few and far between and only by approval.
 </p>

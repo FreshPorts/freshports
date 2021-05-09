@@ -114,6 +114,10 @@ table.maincontent td.textcontent {
   vertical-aligN: top;
 }
 
+td.numeric-cell {
+  text-align: right;
+}
+
 IMG#fp-logo { max-width: 100%; height: auto }
 
 CODE.code { color: #461b7e}

@@ -185,7 +185,7 @@ function freshports_CategoryDisplay($db, $category, $PageNumber = 1, $PageSize =
 
 	<tr><td>';
 
-		if ($category->IsPrimary()) {
+		if ($category->IsPrimary() && $User->id) {
 			if ($WatchListCount) {
 				$HTML .= freshports_Watch_Link_Remove('', 0, $category->element_id);
 			} else {
@@ -196,13 +196,13 @@ function freshports_CategoryDisplay($db, $category, $PageNumber = 1, $PageSize =
 
 
 		$HTML .= '
-<BIG><BIG><B>' . 
+<span class="element-details"><span>' .
 $category->description . '
-</B></BIG></BIG>- Number of ports in this category' . ($Branch == BRANCH_HEAD ? '' : ' with commits on branch ' . pg_escape_string($Branch)) . ': ' . $PortCount . '
+</span></span> - Number of ports in this category' . ($Branch == BRANCH_HEAD ? '' : ' with commits on branch ' . pg_escape_string($Branch)) . ': ' . $PortCount . '
 
 <p>
 	Ports marked with a <sup>*</sup> actually reside within another category but
-	have <b>' . $category->name . '</b> listed as a secondary category.';
+	have <strong>' . $category->name . '</strong> listed as a secondary category.';
 
 		GLOBAL $ShowAds, $BannerAd;
 
@@ -210,7 +210,7 @@ $category->description . '
 			$HTML .= "<br><center>\n" . Ad_728x90() . "\n</center>\n";
 		}
 
-		$HTML .= '<div align="center"><br>' . 
+		$HTML .= '<div class="pagination">' .
 			freshports_CategoryNextPreviousPage($category->name, $PortCount, $PageNumber, $PageSize, $Branch)  . 
 			'</div>';
 
@@ -224,7 +224,7 @@ $category->description . '
 
 		$ShowShortDescription	= "Y";
 
-		$HTML .= freshports_echo_HTML("<TR>\n<TD>\n");
+		$HTML .= "<TR>\n<TD>\n";
 
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
 
@@ -245,7 +245,7 @@ $category->description . '
 		$HTML .= '
 </TD></TR>
 <TR><TD>
-<div align="center"><br>' . 
+<div class="pagination">' .
 
 			freshports_CategoryNextPreviousPage($category->name, $PortCount, $PageNumber, $PageSize, $Branch) . '
 
@@ -286,8 +286,6 @@ if ($ShowAds && $BannerAd) {
 	echo "<br><center>\n" . Ad_728x90() . "\n</center>\n";
 }
 ?>
-
-	</td></tr>
 
 <?php
 

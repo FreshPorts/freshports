@@ -170,7 +170,7 @@ class port_display {
 		if (defined('PKG_MESSAGE_UCL') && PKG_MESSAGE_UCL && $this->_isUCL($port->pkgmessage)) {
 			$HTML .= $this->_pkgmessage_UCL($port->pkgmessage);
 		} else {
-			$HTML .= '<dt><b>pkg-message:</b></dt>' . "\n" . '<dd class="like-pre">';
+			$HTML .= "<dt><b>pkg-message:</b></dt>\n" . '<dd class="like-pre">';
 			$HTML .= htmlspecialchars($port->pkgmessage);
 			$HTML .= "</dd>\n</dl>\n<hr>\n<dl>";
 		}
@@ -641,12 +641,14 @@ class port_display {
 			if ($port->IsSlavePort()) $HTML .= ' NOTE: Slave port - quarterly revision is most likely wrong.';
 			$HTML .= '</span></span>';
 		}
+		if ($this->ShowEverything || $this->ShowShortDescription || $this->ShowCategory) {
+			// this dt was opened before all the icons, just before the start of the version number
+			$HTML .= '</dt>';
+		}
 
 		# if you add content to this IF statement, you may need to addition more conditions to the if
 		if (($this->ShowEverything || $this->ShowBasicInfo) && 
 		    ($port->forbidden || $port->broken || $port->deprecated || $port->expiration_date || $port->ignore || $port->restricted || $port->no_cdrom || $port->is_interactive)) {
-
-			$HTML .= "<dt>\n";
 
 			# various details about this port
 			$HTML .= "<dd>";
@@ -699,16 +701,16 @@ class port_display {
 				         'Ports mailing list via ';
 				$HTML .= '<A HREF="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);
 				$HTML .= '?subject=FreeBSD%20Port:%20' . $port->category . '/' . $port->port . '" TITLE="email the FreeBSD Ports mailing list">';
-				$HTML .= freshportsObscureHTML($port->maintainer) . '</A></dd>';
+				$HTML .= freshportsObscureHTML($port->maintainer) . '</A> ' . freshports_Search_Maintainer($port->maintainer) . '</dd>';
 			} else {
 				$HTML .= '<dt><b>';
 
 				$HTML .= 'Maintainer:</b> <A HREF="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);
 				$HTML .= '?subject=FreeBSD%20Port:%20' . $port->category . '/' . $port->port . '" TITLE="email the maintainer">';
-				$HTML .= freshportsObscureHTML($port->maintainer) . '</A>';
+				$HTML .= freshportsObscureHTML($port->maintainer) . '</A> ';
+				$HTML .= freshports_Search_Maintainer($port->maintainer) . '</dt>';
 			}
 
-			$HTML .= ' ' . freshports_Search_Maintainer($port->maintainer) . '</dt>';
 		}
 
 		// there are only a few places we want to show the last change.
@@ -728,7 +730,7 @@ class port_display {
 					$HTML .= ' (' . freshports_Search_Committer($port->committer_name) . ')';
 				}
 
-				$HTML .= ' on <font size="-1">' . $port->updated . '</font>' . "\n";
+				$HTML .= ' on ' . $port->updated . "\n";
 
 				$HTML .= freshports_Email_Link($port->message_id);
 
@@ -754,31 +756,31 @@ class port_display {
 		# show the date added, if asked
 
 		if ($this->ShowDateAdded || $this->ShowEverything) {
-			$HTML .= '<dt><b>Port Added:</b> <font size="-1">';
+			$HTML .= '<dt><b>Port Added:</b> ';
 			if ($port->date_added) {
 				$HTML .= FormatTime($port->date_added, 0, "Y-m-d H:i:s");
 			} else {
 				$HTML .= "unknown";
 			}
-			$HTML .= '</font></dt>' . "\n";
+			$HTML .= "</dt>\n";
 		}
 
 		# show the date modified, if asked
 
 		if ($this->ShowLastCommitDate || $this->ShowEverything) {
-			$HTML .= '<dt><b>Last Update:</b> <font size="-1">';
+			$HTML .= '<dt><b>Last Update:</b> ';
 			if ($port->last_commit_date) {
 				$HTML .= FormatTime($port->last_commit_date, 0, "Y-m-d H:i:s");
 			} else {
 				$HTML .= "unknown";
 			}
-			$HTML .= '</font></dt>' . "\n";
+			$HTML .= "</dt>\n";
 
 			if (strpos($port->message_id, 'freebsd.org') === false) {
-				$HTML .= '<dt><b>Commit Hash:</b> <font size="-1">';
+				$HTML .= '<dt><b>Commit Hash:</b> ';
 				$HTML .= freshports_git_commit_Link_Hash($port->svn_revision, $port->commit_hash_short, $port->repo_hostname, $port->path_to_repo);
 			} else {
-				$HTML .= '<dt><b>SVN Revision:</b> <font size="-1">';
+				$HTML .= '<dt><b>SVN Revision:</b> ';
 				if (isset($port->svn_revision)) {
 					$HTML .= freshports_svnweb_ChangeSet_Link_Text($port->svn_revision, $port->repo_hostname);
 				} else {
@@ -786,7 +788,7 @@ class port_display {
 			        }
 			}
 
-			$HTML .= '</font></dt>' . "\n";
+			$HTML .= "</dt>\n";
 		}
 
 		if ($this->ShowEverything || $this->ShowBasicInfo) {
@@ -820,10 +822,9 @@ class port_display {
 						}
 						$OtherCategories .= '">' . $Category . '</a> ';
 					}
-					$HTML .= "</dt>\n";
 
 					# get rid of that trailing space from above.
-					$HTML .= rtrim($OtherCategories);
+					$HTML .= rtrim($OtherCategories) . "</dt>\n";
 				}
 			}
 
@@ -1025,7 +1026,7 @@ class port_display {
 						$HTML .= '</dd>';
 					}
 				} else {
-					$HTML .= '<dd>There is no distinfo for this port.</dd>' . "\n";
+					$HTML .= "<dd>There is no distinfo for this port.</dd>\n";
 				}
 			}
 
@@ -1087,7 +1088,7 @@ class port_display {
 				$HTML .= '</dd>';
 
 			} else {
-				$HTML .= '<dd>No package information in database for this port.</dd>' . "\n";
+				$HTML .= "<dd>No package information in database for this port.</dd>\n";
 			}
 		}
 

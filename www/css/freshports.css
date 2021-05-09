@@ -100,6 +100,33 @@ table.maincontent td.textcontent {
   padding-bottom: 2em;
 }
 
+.category-list td {
+  vertical-align: top;
+}
+
+.category-list td:last-child, .category-list th:last-child {
+  white-space: nowrap;
+}
+
+.category-list th {
+  text-align: left;
+  font-weight: bold;
+  vertical-aligN: top;
+}
+
+td.numeric-cell {
+  text-align: right;
+}
+
+td.summary-cell {
+  font-weight: bold;
+}
+
+.pagination {
+  margin: 1em auto 0;
+  text-align: center;
+}
+
 IMG#fp-logo { max-width: 100%; height: auto }
 
 CODE.code { color: #461b7e}

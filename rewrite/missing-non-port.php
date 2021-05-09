@@ -150,7 +150,7 @@ function freshports_NonPortDescription($db, $element_record) {
 	
 	$links = $Pager->GetLinks();
 
-	$NumCommitsHTML = '<tr><td><p align="left">Number of commits found XX: ' . $NumCommits;
+	$NumCommitsHTML = '<tr><td><p align="left">Number of commits found: ' . $NumCommits;
 
 	$Offset = 0;
 	$PageLinks = $links['all'];

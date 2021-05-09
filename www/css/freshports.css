@@ -100,6 +100,10 @@ table.maincontent td.textcontent {
   padding-bottom: 2em;
 }
 
+.category-list td:not(.accent) {
+  vertical-align: top;
+}
+
 IMG#fp-logo { max-width: 100%; height: auto }
 
 CODE.code { color: #461b7e}

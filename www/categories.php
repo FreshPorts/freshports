@@ -57,12 +57,12 @@
 
 <tr><td class="content">
 
-<?php echo freshports_MainContentTable(BORDER, $ColSpan); ?>
+<?php echo freshports_MainContentTable(BORDER + ' category-list', $ColSpan); ?>
 
   <tr>
 	<? echo freshports_PageBannerText("$FreshPortsTitle - list of categories", $ColSpan); ?>
   </tr>
-<tr><td COLSPAN="<?php echo $ColSpan; ?>" valign="top">
+<tr><td COLSPAN="<?php echo $ColSpan; ?>">
 <P>
 This page lists the categories and can be sorted by various criteria.  Virtual
 categories are indicated by <?php echo VIRTUAL; ?>.
@@ -161,7 +161,7 @@ if (!$result) {
       for ($i = 0; $i < $NumRows; $i++) {
         $myrow = pg_fetch_array($result, $i);
 		$HTML .= '<tr>';
-		$HTML .= '<td align="top" nowrap>';
+		$HTML .= '<td nowrap>';
         if ($User->id) {
           if ($Primary[$myrow["is_primary"]]) {
             $HTML .= freshports_Watch_Icon_Empty();
@@ -179,12 +179,12 @@ if (!$result) {
 		
 		$HTML .= '</td>';
 		if ($AllowedToEdit) {
-			$HTML .= '<td valign="top"><a href="/category-maintenance.php?category=' . $myrow["category"] . '">update</a></td>';
+			$HTML .= '<td><a href="/category-maintenance.php?category=' . $myrow["category"] . '">update</a></td>';
 		}
 
-		$HTML .= '<td valign="top" ALIGN="right">' . $myrow["count"] . '</td>';
-		$HTML .= '<td valign="top">' . $myrow["description"] . '</td>';
-		$HTML .= '<td valign="top" nowrap>' . $myrow["lastupdate"] . '</td>';
+		$HTML .= '<td ALIGN="right">' . $myrow["count"] . '</td>';
+		$HTML .= '<td>' . $myrow["description"] . '</td>';
+		$HTML .= '<td nowrap>' . $myrow["lastupdate"] . '</td>';
 		$HTML .= "</tr>\n";
 
 

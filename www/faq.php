@@ -842,6 +842,7 @@ now that the Master has been upgraded.
 	<li>requiredpatch</li>
 	<li>requiredextract</li>
 	<li>config</li>
+	<li>options</li>
 	<li>uses</li>
 	<li>sites</li>
 	<li>message</li>

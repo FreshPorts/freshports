@@ -88,7 +88,7 @@ If you have suggestions for graphs, please raise an issue.
 			<?
 		} else {
 			?>
-			<IMG SRC="/graphs/graph.php?id=<? echo $id; ?>" TITLE="graph goes here!" ALT="graph goes here!">
+			<IMG SRC="/graphs/graph.php?id=<? echo htmlentities($id); ?>" TITLE="graph goes here!" ALT="graph goes here!">
 			<?
 		}
 	}

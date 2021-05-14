@@ -25,7 +25,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
  * and then format the JSON object. 
  */
 switch ($_GET['ds']) {
-	case ('top10Committers()'):
+	case ('top10committers()'):
 		$result = pg_query("select committer, count(committer) from commit_log group by committer order by count(committer) desc limit 10") or die("Query error. (1)");
 		echo "[ ";
 		$i = 0;
@@ -40,7 +40,7 @@ switch ($_GET['ds']) {
 		}
 		echo " ]";
 		break;
-	case ('top10Committers_doc()'):
+	case ('top10committers_doc()'):
 		$result = pg_query("  SELECT CL.committer, count(*) AS count
     FROM commit_log CL, repo R
    WHERE CL.repo_id = R.id
@@ -61,7 +61,7 @@ ORDER BY count(*) DESC
 		}
 		echo " ]";
 		break;
-	case ('top10Committers_ports()'):
+	case ('top10committers_ports()'):
 		$result = pg_query("  SELECT CL.committer, count(*) AS count
     FROM commit_log CL, repo R
    WHERE CL.repo_id = R.id
@@ -82,7 +82,7 @@ ORDER BY count(*) DESC
 		}
 		echo " ]";
 		break;
-	case ('top10Committers_src()'):
+	case ('top10committers_src()'):
 		$result = pg_query("  SELECT CL.committer, count(*) AS count
     FROM commit_log CL, repo R
    WHERE CL.repo_id = R.id

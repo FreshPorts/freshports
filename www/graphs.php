@@ -49,7 +49,7 @@ If you have suggestions for graphs, please raise an issue.
 
 <TABLE class="fullwidth borderless">
 <TR>
-<TD WIDTH="300" VALIGN="top">
+<TD class="graph-sidebar">
 <?
 	$id = $_GET["id"];
 	$sql = "select id, title, is_clickable from graphs order by title";
@@ -73,6 +73,7 @@ If you have suggestions for graphs, please raise an issue.
 			echo "data to show you.  For you see, nobody has bothered to populate the graphs table.";
 		}
 	} else {
+		echo '<p>There was unfortunately an error while fetching the list of graphs from the database.</p>';
 	}
 ?>
 </TD>

@@ -77,9 +77,9 @@ Thank you for your help.
 
 <TR><TD>
 
-<TABLE class="fullwidth borderless">
-<TR align="center">
-<TD WIDTH="300" VALIGN="top">
+<TABLE class="graphs fullwidth borderless">
+<TR>
+<TD class="graph-sidebar">
 <?php
 	$sql = "select title, label from graphs where json=true order by title";
 	$result = pg_exec($db, $sql);
@@ -101,10 +101,10 @@ Thank you for your help.
 ?>
 </TD>
 </TR>
-<TR align="center">
+<TR>
 <TD>
 <div id="title"></div>
-<div id="overview" style="width:400;height:100"></div>
+<div id="overview"></div>
 <table>
 <tr valign="top">
 <td>

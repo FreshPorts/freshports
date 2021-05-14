@@ -151,6 +151,10 @@ td.summary-cell {
   vertical-align: top;
 }
 
+.graphs label {
+  cursor: pointer;
+}
+
 .graphs #title, .graphs #overview {
   text-align: center;
 }

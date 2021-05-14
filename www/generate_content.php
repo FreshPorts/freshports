@@ -91,9 +91,7 @@ ORDER BY count(*) DESC
 		$result = pg_query("select extract(epoch from date_trunc('day', commit_date)) * 1000 as date, count(commit_date) from commit_log group by date") or die("Query error. (2)");
 		$data = array();
 		while ($row = pg_fetch_row($result)) {
-			$data[] = array(
-				"data" => [[intval($row[0]), intval($row[1])]],
-			);
+			$data[] = [intval($row[0]), intval($row[1])];
 		}
 		echo json_encode(array($data));
 		break;

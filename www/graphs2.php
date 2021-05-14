@@ -106,7 +106,7 @@ Thank you for your help.
 <div id="title"></div>
 <div id="overview"></div>
 <table>
-<tr valign="top">
+<tr>
 <td>
 <div id="list"></div>
 </td>

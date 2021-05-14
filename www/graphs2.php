@@ -23,6 +23,7 @@
 	<script src="/javascript/jquery.flot.browser.js"></script>
 	<script src="/javascript/jquery.flot.drawSeries.js"></script>
 	<script src="/javascript/jquery.flot.uiConstants.js"></script>
+	<script src="/javascript/jquery.flot.time.js"></script>
 	<script src="/javascript/graphs.js"></script>
 
 	<?php echo freshports_MainTable(); ?>

@@ -10,17 +10,20 @@
  * graph.
  */
 (function drawGraphs(){
+	// where to pull the JSON data from
 	var DATASOURCE_URI = "generate_content.php?ds=";
+	// common graph settings for "Top 10 X reports"
 	var TOP10_GRAPH = function (data) {
 		return {
 			series: {
 				bars: { show: true, align: "center" }
 			},
 			legend: { show: false },
-			grid: { hoverable: true },
 			xaxis: {
 				showTickLabels: "all",
 				showMinorTicks: false,
+				// build categorical labels for ticks
+				// presumes series already sorted in datasource
 				ticks: function () {
 					var ret = [];
 					for (var i = 0; i < data.length; i++) {
@@ -65,9 +68,12 @@
 			subtitle: '(Data is aggregated to commits per month)',
 			list: '<select multiple size="20" id="committers"></select><br><input type="button" value="Draw Graph!"/>',
 			opts: function(data) {
+				// populate the list of committers
 				$.each(data, function(key) {
 					$("#committers").append('<option value="' + key + '">' + key + '</option>');
 				});
+
+				// show the data for the selected committers
 				$("input").bind("click", function updateGraph() {
 					var committerData = [];
 
@@ -84,30 +90,29 @@
 									lines: { show: true }
 								},
 								xaxis:     { mode: "time", timeformat: "%Y-%m", timeBase: "milliseconds" },
-								selection: { mode: "x" },
-								legend:    { show: true, sorted: true, position: "ne" },
-								grid:      { hoverable: true }
+								selection: { mode: "x" }
 							}
 						);
 				});
 
+				// this isn't valid as options, but draws an empty grid at least
 				return data;
 			}
 		},
 		"brokenPorts()": {
 			title: 'Broken/Expired/Forbidden/New Ports',
 			subtitle: '(Limited to last 90 days)',
-			list: '<!--  filter list -->',
+			list: '<!--  filter list -->', // we add to this in opts()
 			opts: function(data) {
 				var options = {
 					series: {
 						lines: { show: true }
 					},
 					yaxis:  { min: 0 },
-					xaxis:  { mode: "time", timeformat: "%b %e", timeBase: "milliseconds" },
-					legend: { show: true, position: "ne", sorted: true }
+					xaxis:  { mode: "time", timeformat: "%b %e", timeBase: "milliseconds" }
 				};
 
+				// populate the list of filters
 				var listContainer = $("#list");
 				$.each(data, function(i, val) {
 					val.color = i;
@@ -115,6 +120,7 @@
 					++i;
 				});
 
+				// only show the selected series
 				listContainer.find("input").click(function plotAccordingToChoices() {
 					var series = [];
 
@@ -146,6 +152,7 @@
 					selection: { mode: "x" }
 				};
 
+				// mini graph above the main graph
 				var overview = $.plot($("#overview"), data, {
 					series: {
 						lines: { show: true, linewidth: 1 }
@@ -193,12 +200,14 @@
 
 		$("#title").html(["<h3>", report.title, "</h3>"].join(""));
 		if (report.subtitle) $("#title").append(report.subtitle);
+		// there's a delay while we wait for the data, hide the old controls until we have it
 		$("#overview").hide();
 		$("#list").hide();
 		if (!report.opts) return;
 
 		$("#holder").hide();
 		$.getJSON(DATASOURCE_URI + fn, function(data) {
+			// now we're about to draw the new graph, show the controls again if needed
 			report.overview && $("#overview").show();
 			report.list && $("#list").html(report.list).show();
 

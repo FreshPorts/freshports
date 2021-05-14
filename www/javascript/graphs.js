@@ -83,10 +83,10 @@
 								series: {
 									lines: { show: true }
 								},
-								xaxis: { mode: "time", timeformat: "%Y-%m", timeBase: "milliseconds" },
+								xaxis:     { mode: "time", timeformat: "%Y-%m", timeBase: "milliseconds" },
 								selection: { mode: "x" },
-								legend: { show: true, sorted: true, position: "ne" },
-								grid: { hoverable: true }
+								legend:    { show: true, sorted: true, position: "ne" },
+								grid:      { hoverable: true }
 							}
 						);
 				});
@@ -103,8 +103,8 @@
 					series: {
 						lines: { show: true }
 					},
-					yaxis: { min: 0 },
-					xaxis: { mode: "time", timeformat: "%b %e", timeBase: "milliseconds" },
+					yaxis:  { min: 0 },
+					xaxis:  { mode: "time", timeformat: "%b %e", timeBase: "milliseconds" },
 					legend: { show: true, position: "ne", sorted: true }
 				};
 

@@ -142,15 +142,15 @@ ORDER BY count(*) DESC
 
 		while ($row = pg_fetch_array($result)) {
 			$forbidden[] = array(intval($row["date"]), intval($row["forbidden"]));
-			$broken[] = array(intval($row["date"]), intval($row["broken"]));
-			$expired[] = array(intval($row["date"]), intval($row["expired"]));
-			$new[] = array(intval($row["date"]), intval($row["new"]));
+			$broken[]    = array(intval($row["date"]), intval($row["broken"]));
+			$expired[]   = array(intval($row["date"]), intval($row["expired"]));
+			$new[]       = array(intval($row["date"]), intval($row["new"]));
 		}
 		echo json_encode(array(
 			array("label" => "forbidden", "data" => $forbidden),
-			array("label" => "broken", "data" => $broken),
-			array("label" => "expired", "data" => $expired),
-			array("label" => "new", "data" => $new),
+			array("label" => "broken",    "data" => $broken),
+			array("label" => "expired",   "data" => $expired),
+			array("label" => "new",       "data" => $new),
 		));
 		break;
 	case ('portCount()'):

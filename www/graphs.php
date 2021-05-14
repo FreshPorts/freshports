@@ -49,11 +49,12 @@ If you have suggestions for graphs, please raise an issue.
 
 <TABLE class="fullwidth borderless">
 <TR>
-<TD WIDTH="300" VALIGN="top">
+<TD class="graph-sidebar">
 <?
 	$id = $_GET["id"];
 	$sql = "select id, title, is_clickable from graphs order by title";
-	$result = pg_exec($db, $sql);
+	$title = "graph goes here!";
+	$result = pg_query($db, $sql);
     if ($result) {
     	$numrows = pg_numrows($result);
 		if ($numrows) { 
@@ -62,6 +63,7 @@ If you have suggestions for graphs, please raise an issue.
 				$myrow = pg_fetch_array ($result, $i);
 				echo '<LI><A HREF="' . $_SERVER["PHP_SELF"] . '?id=' . $myrow["id"] . '">' . $myrow["title"] . '</A></LI>' . "\n";
 				if ($myrow["id"] == $id) {
+					$title = htmlentities($myrow["title"]);
 					$is_clickable = $myrow["is_clickable"];
 				}
 #				echo $myrow["id"] .  ' '  . $myrow["is_clickable"] . '<BR>';
@@ -73,6 +75,7 @@ If you have suggestions for graphs, please raise an issue.
 			echo "data to show you.  For you see, nobody has bothered to populate the graphs table.";
 		}
 	} else {
+		echo '<p>There was unfortunately an error while fetching the list of graphs from the database.</p>';
 	}
 ?>
 </TD>
@@ -83,12 +86,12 @@ If you have suggestions for graphs, please raise an issue.
 			?>
 			<FORM ACTION="/graphs/graphclick.php" METHOD="get">
 			<INPUT TYPE="hidden" NAME="id"    VALUE="<? echo $id; ?>">
-			<INPUT NAME="graph"  TYPE="image" SRC="/graphs/graph.php?id=<? echo $id; ?>" TITLE="graph goes here!" ALT="graph goes here!">
+			<INPUT NAME="graph"  TYPE="image" SRC="/graphs/graph.php?id=<? echo $id; ?>" TITLE="<? echo $title; ?>" ALT="<? echo $title; ?>">
 			</FORM>
 			<?
 		} else {
 			?>
-			<IMG SRC="/graphs/graph.php?id=<? echo htmlentities($id); ?>" TITLE="graph goes here!" ALT="graph goes here!">
+			<IMG SRC="/graphs/graph.php?id=<? echo htmlentities($id); ?>" TITLE="<? echo $title; ?>" ALT="<? echo $title; ?>">
 			<?
 		}
 	}

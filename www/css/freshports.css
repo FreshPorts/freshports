@@ -111,7 +111,7 @@ table.maincontent td.textcontent {
 .category-list th {
   text-align: left;
   font-weight: bold;
-  vertical-aligN: top;
+  vertical-align: top;
 }
 
 td.numeric-cell {
@@ -125,6 +125,37 @@ td.summary-cell {
 .pagination {
   margin: 1em auto 0;
   text-align: center;
+}
+
+.graph-sidebar {
+  vertical-align: top;
+  width: 300px;
+}
+
+.graph-sidebar select {
+  display: block;
+  width: 300px;
+  margin: auto;
+}
+
+.graphs #holder {
+  width: 800px;
+  height: 500px;
+}
+
+.graphs table {
+  margin: auto;
+  vertical-align: top;
+}
+
+.graphs #title, .graphs #overview {
+  text-align: center;
+}
+
+.graphs #overview {
+  width: 400px;
+  height: 100px;
+  margin: auto;
 }
 
 IMG#fp-logo { max-width: 100%; height: auto }

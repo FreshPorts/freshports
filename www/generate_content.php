@@ -6,7 +6,7 @@
 # This code will generate JSON objects that can be used by the flot
 # graphing library to draw the graphs.
 
-header("Content-type: application/x-javascript");
+header("Content-type: application/json");
 
 // XXX: Which of these are necessary?
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
@@ -27,18 +27,14 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 switch ($_GET['ds']) {
 	case ('top10committers()'):
 		$result = pg_query("select committer, count(committer) from commit_log group by committer order by count(committer) desc limit 10") or die("Query error. (1)");
-		echo "[ ";
-		$i = 0;
+		$data = array();
 		while ($row = pg_fetch_row($result)) {
-			if ($i > 0)
-				echo ", ";
-			echo "{ ";
-			echo "\"label\": \"$row[0]\", ";
-			echo "\"data\": [[$i, $row[1]]] ";
-			echo "}";
-			$i++;
+			$data[] = array(
+				"label" => $row[0],
+				"data" => [[count($data), intval($row[1])]],
+			);
 		}
-		echo " ]";
+		echo json_encode($data);
 		break;
 	case ('top10committers_doc()'):
 		$result = pg_query("  SELECT CL.committer, count(*) AS count
@@ -48,18 +44,14 @@ switch ($_GET['ds']) {
 GROUP BY CL.committer
 ORDER BY count(*) DESC
    LIMIT 10") or die("Query error. (1)");
-		echo "[ ";
-		$i = 0;
+		$data = array();
 		while ($row = pg_fetch_row($result)) {
-			if ($i > 0)
-				echo ", ";
-			echo "{ ";
-			echo "\"label\": \"$row[0]\", ";
-			echo "\"data\": [[$i, $row[1]]] ";
-			echo "}";
-			$i++;
+			$data[] = array(
+				"label" => $row[0],
+				"data" => [[count($data), intval($row[1])]],
+			);
 		}
-		echo " ]";
+		echo json_encode($data);
 		break;
 	case ('top10committers_ports()'):
 		$result = pg_query("  SELECT CL.committer, count(*) AS count
@@ -69,18 +61,14 @@ ORDER BY count(*) DESC
 GROUP BY CL.committer
 ORDER BY count(*) DESC
    LIMIT 10") or die("Query error. (1)");
-		echo "[ ";
-		$i = 0;
+		$data = array();
 		while ($row = pg_fetch_row($result)) {
-			if ($i > 0)
-				echo ", ";
-			echo "{ ";
-			echo "\"label\": \"$row[0]\", ";
-			echo "\"data\": [[$i, $row[1]]] ";
-			echo "}";
-			$i++;
+			$data[] = array(
+				"label" => $row[0],
+				"data" => [[count($data), intval($row[1])]],
+			);
 		}
-		echo " ]";
+		echo json_encode($data);
 		break;
 	case ('top10committers_src()'):
 		$result = pg_query("  SELECT CL.committer, count(*) AS count
@@ -90,128 +78,89 @@ ORDER BY count(*) DESC
 GROUP BY CL.committer
 ORDER BY count(*) DESC
    LIMIT 10") or die("Query error. (1)");
-		echo "[ ";
-		$i = 0;
+		$data = array();
 		while ($row = pg_fetch_row($result)) {
-			if ($i > 0)
-				echo ", ";
-			echo "{ ";
-			echo "\"label\": \"$row[0]\", ";
-			echo "\"data\": [[$i, $row[1]]] ";
-			echo "}";
-			$i++;
+			$data[] = array(
+				"label" => $row[0],
+				"data" => [[count($data), intval($row[1])]],
+			);
 		}
-		echo " ]";
+		echo json_encode($data);
 		break;
 	case ('commitsOverTime()'):
-		$result = pg_query("select date_trunc('day', commit_date) as date, count(commit_date) from commit_log group by date") or die("Query error. (2)");
-		echo "[ ";
-		$i = 0;
+		$result = pg_query("select extract(epoch from date_trunc('day', commit_date)) * 1000 as date, count(commit_date) from commit_log group by date") or die("Query error. (2)");
+		$data = array();
 		while ($row = pg_fetch_row($result)) {
-			if ($i > 0)
-				echo ", ";
-			$epoch = milliepoch($row[0]);
-			echo "[ $epoch, $row[1] ]";
-			$i++;
+			$data[] = array(
+				"data" => [[intval($row[0]), intval($row[1])]],
+			);
 		}
-		echo " ]";
+		echo json_encode(array($data));
 		break;
 	case ('commitsOverTimeByCommitter()'):
-		$result = pg_query("select date_trunc('month', commit_date) as date, committer, count(committer) as num from commit_log group by date, committer order by committer") or die ("Query error. (3)");
+		$result = pg_query("select extract(epoch from date_trunc('month', commit_date)) * 1000 as date, committer, count(committer) as num from commit_log group by date, committer order by committer") or die ("Query error. (3)");
+		$data = array();
+		$committer = array();
 		$old = "";
-		$seen = TRUE;
-		echo "{ \n";
 		while ($row = pg_fetch_row($result)) {
-			$epoch = milliepoch($row[0]);
 			if ($old == $row[1]) {
-				echo ", [ $epoch, $row[2] ]";
-			}
-			else {
+				$committer[] = array(intval($row[0]), intval($row[2]));
+			} else {
+				if ($committer) {
+					$data[$old] = array("label" => $old, "data" => $committer);
+					$committer = array();
+				}
 				$old = $row[1];
-				if (!$seen) {
-					echo "]\n";
-					echo "    },\n";
-				}
-				else {
-					$seen = FALSE;
-				}
-				echo "    \"$row[1]\": { \n";
-				echo "        \"label\": \"$row[1]\", \n";
-				echo "        \"data\": [[ $epoch, $row[2] ]";
+				$committer[] = array(intval($row[0]), intval($row[2]));
 			}
 		}
-		echo "]\n";
-		echo "    }\n";
-		echo "}";
+		if ($committer) {
+			$data[$old] = array("label" => $old, "data" => $committer);
+			$committer = array();
+		}
+		echo json_encode($data);
 		break;
 	case ('portsByCategory()'):
 		$result = pg_query("select count(p.port_id), c.name from categories c left join ports_categories p on (c.id = p.category_id) group by c.name order by count desc limit 10") or die ("Query error. (4)");
-		echo "[ ";
-		$i = 0;
+		$data = array();
 		while ($row = pg_fetch_row($result)) {
-			if ($i > 0)
-				echo ",";
-			echo "{ ";
-			echo "\"label\": \"$row[1]\", ";
-			echo "\"data\": [[$i, $row[0]]] ";
-			echo "} ";
-			$i++;
+			$data[] = array(
+				"label" => $row[1],
+				"data" => [[count($data), intval($row[0])]],
+			);
 		}
-		echo " ]";
+		echo json_encode($data);
 		break;
 	case ('brokenPorts()'):
 		/* Seriously? */
-		$result = pg_query("select to_char(F.date, 'YYYY-MM-DD'), F.value as forbidden, B.value as broken, E.value as expired, N.value as new from daily_stats DSF, daily_stats DSB, daily_stats DSE, daily_stats DSN, daily_stats_data as F, daily_stats_data as B, daily_stats_data as E, daily_stats_data as N where (F.daily_stats_id = DSF.id and DSF.title = 'Forbidden ports') and (B.daily_stats_id = DSB.id and DSB.title = 'Broken ports') and (E.daily_stats_id = DSE.id and DSE.title = 'Expired Ports') and (N.daily_stats_id = DSN.id and DSN.title ='New ports') and F.date = B.date and B.date = E.date and E.date = N.date order by F.date desc limit 90") or die ("Query error. (5)");
-		$forbidden = $broken = $expired = $new = "";
-		while ($row = pg_fetch_row($result)) {
-			$epoch = milliepoch($row[0]);
-			/* Not the cleanest - extra commas. :( */
-			if ($forbidden)
-				$forbidden .= ", ";
-			$forbidden .= "[$epoch, $row[1]]";
-			if ($broken)
-				$broken .= ", ";
-			$broken .= "[$epoch, $row[2]]";
-			if ($expired)
-				$expired .= ", ";
-			$expired .= "[$epoch, $row[3]]";
-			if ($new)
-				$new .= ", ";
-			$new .= "[$epoch, $row[4]]";
+		$result = pg_query("select extract(epoch from date_trunc('day', F.date)) * 1000 as date, F.value as forbidden, B.value as broken, E.value as expired, N.value as new from daily_stats DSF, daily_stats DSB, daily_stats DSE, daily_stats DSN, daily_stats_data as F, daily_stats_data as B, daily_stats_data as E, daily_stats_data as N where (F.daily_stats_id = DSF.id and DSF.title = 'Forbidden ports') and (B.daily_stats_id = DSB.id and DSB.title = 'Broken ports') and (E.daily_stats_id = DSE.id and DSE.title = 'Expired Ports') and (N.daily_stats_id = DSN.id and DSN.title ='New ports') and F.date = B.date and B.date = E.date and E.date = N.date order by F.date desc limit 90") or die ("Query error. (5)");
+
+		$forbidden = array();
+		$broken = array();
+		$expired = array();
+		$new = array();
+
+		while ($row = pg_fetch_array($result)) {
+			$forbidden[] = array(intval($row["date"]), intval($row["forbidden"]));
+			$broken[] = array(intval($row["date"]), intval($row["broken"]));
+			$expired[] = array(intval($row["date"]), intval($row["expired"]));
+			$new[] = array(intval($row["date"]), intval($row["new"]));
 		}
-		echo "{\n";
-		echo "  \"forbidden\": {\n    \"label\": \"forbidden\",\n	\"data\": [$forbidden]\n  },\n";
-		echo "  \"broken\": {\n    \"label\": \"broken\",\n    \"data\": [$broken]\n  },\n";
-		echo "  \"expired\": {\n    \"label\": \"expired\",\n    \"data\": [$expired]\n  },\n";
-		echo "  \"new\": {\n     \"label\": \"new\",\n    \"data\": [$new]\n  }\n";
-		echo "}";
+		echo json_encode(array(
+			array("label" => "forbidden", "data" => $forbidden),
+			array("label" => "broken", "data" => $broken),
+			array("label" => "expired", "data" => $expired),
+			array("label" => "new", "data" => $new),
+		));
 		break;
 	case ('portCount()'):
-		$result = pg_query("select date_trunc('day', date), value from daily_stats, daily_stats_data where daily_stats_data.daily_stats_id = daily_stats.id and title = 'Port count' order by daily_stats_data.date") or die ("Query error. (6)");
-		echo "[ ";
-		$i = 0;
+		$result = pg_query("select extract(epoch from date_trunc('day', date)) * 1000, value from daily_stats, daily_stats_data where daily_stats_data.daily_stats_id = daily_stats.id and title = 'Port count' order by daily_stats_data.date") or die ("Query error. (6)");
+		$data = array();
 		while ($row = pg_fetch_row($result)) {
-			$epoch = milliepoch($row[0]);
-			if ($i > 0)
-				echo ", ";
-			echo "[$epoch, $row[1]]";
-			$i++;
+			$data[] = array(intval($row[0]), intval($row[1]));
 		}
-		echo " ]";
+		echo json_encode(array($data));
 		break;
 	default:
 		echo "ERROR! BAD DS!";
 }
-
-/*
- * Convert to epoch in milliseconds.
- * This is probably not the best way to do it.
- */
-function milliepoch($time) {
-	$conv = mktime(0, 0, 0, substr($time, 5, 2), substr($time, 8, 2), substr($time, 0, 4));
-	$ret = date('U', $conv);
-	/* Debugging: Proves we are right - you get the dates back! */
-	//$ret = date('M/d/Y', $conv);
-	return ($ret *= 1000);
-}
-?>

@@ -82,7 +82,7 @@ Thank you for your help.
 <TD class="graph-sidebar">
 <?php
 	$sql = "select title, label from graphs where json=true order by title";
-	$result = pg_exec($db, $sql);
+	$result = pg_query($db, $sql);
     if ($result) {
     	$numrows = pg_numrows($result);
 		if ($numrows) { 

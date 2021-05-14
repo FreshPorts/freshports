@@ -53,7 +53,7 @@ If you have suggestions for graphs, please raise an issue.
 <?
 	$id = $_GET["id"];
 	$sql = "select id, title, is_clickable from graphs order by title";
-	$result = pg_exec($db, $sql);
+	$result = pg_query($db, $sql);
     if ($result) {
     	$numrows = pg_numrows($result);
 		if ($numrows) { 

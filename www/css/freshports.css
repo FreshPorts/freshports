@@ -145,7 +145,14 @@ td.summary-cell {
 
 .graphs table {
   margin: auto;
+}
+
+.graphs table td {
   vertical-align: top;
+}
+
+.graphs label {
+  cursor: pointer;
 }
 
 .graphs #title, .graphs #overview {

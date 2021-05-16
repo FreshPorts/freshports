@@ -2,18 +2,8 @@
 
 function PathnameDiffers($Path1, $Path2) {
     # if the two paths are different, we might want to redirect
-    # if one path ends in a / and the other does not, adjust them
-    if (substr($Path1, -1) == '/') {
-        if (substr($Path2, -1) != '/') {
-	    $Path2 .= '/';
-	}
-    } else {
-        if (substr($Path2, -1) == '/') {
-	    $Path1 .= '/';
-	}
-    }
-
-    return $Path1 != $Path2;
+    # compare the two paths, ignoring any trailing slashes
+    return rtrim($Path1, '/') != rtrim($Path2, '/');
 }
 
 function freshports_Parse404URI($REQUEST_URI, $db) {

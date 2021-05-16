@@ -1280,7 +1280,7 @@ class port_display {
 			if ( $NumRows > 0 ) {
 				# everything "required for" XXX goes under this section.
 				# Each one of Build, Extract, etc, gets this.
-				$HTML .= '<dd class="required">for ' . $title . "\n";
+				$HTML .= '<dd class="required"><dl><dt>for ' . $title . "</dt>\n";
 
 				# Let's fetch the first port, and see if it's deleted.  If it is, we don't need this first loop
 				$PortDependencies->FetchNth(0);
@@ -1288,8 +1288,7 @@ class port_display {
 					#
 					# START OF LIST for this type of Required 
 					#
-					$div = '<dl>
-					        <dd id="RequiredBy' . $title . '">
+					$div = '<dd id="RequiredBy' . $title . '">
 					            <ol class="depends" id="requiredfor' . $title . '" style="margin-bottom: 0px">' . "\n";
 
 					$firstDeletedPort = -1;     # we might be able to combine this with deletedPortFound

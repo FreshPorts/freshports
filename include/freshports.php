@@ -1426,11 +1426,11 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	}
 
 	$HTML .= "</td>\n";
-	$HTML .= '    <td valign="top">';
+	$HTML .= '    <td class="commit-details">';
 	$HTML .= freshports_CommitterEmailLink($commit->committer) . '&nbsp;' . freshports_Search_Committer($commit->committer);;
 
 	$HTML .= "</td>\n";
-	$HTML .= '    <td valign="top" width="*">';
+	$HTML .= '    <td class="commit-details">';
 
 	$HTML .= freshports_CommitDescriptionPrint($commit->description, $commit->encoding_losses, $freshports_CommitMsgMaxNumOfLinesToShow, freshports_MoreCommitMsgToShow($commit->message_id, $freshports_CommitMsgMaxNumOfLinesToShow));
 

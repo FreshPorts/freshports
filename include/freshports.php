@@ -1178,7 +1178,7 @@ function FormatTime($Time, $Adjustment, $Format) {
 
 function freshports_UpdatingOutput($NumRowsUpdating, $PortsUpdating, $port) {
 	$HTML = '';
-	
+
 	if ($NumRowsUpdating > 0) {
 		$HTML .= '<TABLE class="ports-updating fullwidth bordered">' . "\n";
 		$HTML .= "<TR>\n";

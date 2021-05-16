@@ -148,6 +148,27 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 			if ($Debug) echo "This is a port!<br>";
 			if ($Debug) echo "Category='$category'<br>";
 			if ($Debug) echo "Port='$port'<br>";
+
+			if ($Debug) echo 'including missing-port<BR>';
+			require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-port.php');
+
+			if ($Debug) echo 'including missing-port<BR>';
+
+			if ($HasCommitsOnBranch) {
+				# if zero is returned, all is well, otherwise, we can't display that category/port.
+				if ($Debug) echo 'invoking freshports_PortDisplay<br>';
+				if (freshports_PortDisplay($db, $category, $port, $Branch)) {
+					echo 'freshports_PortDisplay returned non-zero';
+					return -1;
+				}
+			} else {
+				# if zero is returned, all is well, otherwise, we can't display that category/port.
+				if ($Debug) echo 'invoking freshports_PortDisplayNotOnBranch<br>';
+				if (freshports_PortDisplayNotOnBranch($db, $category, $port, $Branch)) {
+					echo 'freshports_PortDisplay returned non-zero';
+					return -1;
+				}
+			}
 		} else {
 			if ($Debug) echo 'The call to ElementRecord indicates this is not a port<br>';
 		}
@@ -184,13 +205,11 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 		}
 
 		if (IsSet($port)) {
-			$IsPort = false;
 			$result = $REQUEST_URI;
-
 			if ($Debug) echo 'This is a Port but there is no element for it.<br>';
 		}
 
-		if (IsSet($category) && !$IsPort) {
+		if (IsSet($category)) {
 			# we have a valid category, but no valid port.
 			# we will display the category only if they did *try* to speciy a port.
 			# i.e. they suuplied an invalid port name
@@ -211,30 +230,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 
 	if ($Debug) echo 'let us see what we will include now....<br>';
 
-	if ($IsPort) {
-		if ($Debug) echo 'including missing-port<BR>';
-		require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-port.php');
-
-		if ($Debug) echo 'including missing-port<BR>';
-
-		if ($HasCommitsOnBranch) {
-			# if zero is returned, all is well, otherwise, we can't display that category/port.
-			if ($Debug) echo 'invoking freshports_PortDisplay<br>';
-			if (freshports_PortDisplay($db, $category, $port, $Branch)) {
-				echo 'freshports_PortDisplay returned non-zero';
-				return -1;
-			}
-		} else {
-			# if zero is returned, all is well, otherwise, we can't display that category/port.
-			if ($Debug) echo 'invoking freshports_PortDisplayNotOnBranch<br>';
-			if (freshports_PortDisplayNotOnBranch($db, $category, $port, $Branch)) {
-				echo 'freshports_PortDisplay returned non-zero';
-				return -1;
-			}
-		}
-	}
-
-	if ($IsCategory && !$IsPort) {
+	if ($IsCategory) {
 		if ($Debug) {
 			echo 'This is a category ***<br>';
 			syslog(LOG_NOTICE, 'invoking ' . $_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-category.php');

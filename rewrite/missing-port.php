@@ -78,20 +78,7 @@ function DisplayPortCommits($port, $PageNumber) {
 	return $HTML;
 }
 
-function freshports_PortDisplay($db, $category, $port, $branch) {
-	return _freshports_PortDisplayHelper($db, $category, $port, $branch);
-}
-
-function freshports_PortDisplayNotOnBranch($db, $category, $port, $branch) {
-	return _freshports_PortDisplayHelper($db, $category, $port, $branch, false);
-}
-
-function _freshPorts_GetPortDisplay() {
-
-}
-
-function _freshports_PortDisplayHelper($db, $category, $port, $branch, $HasCommitsOnBranch = true) {
-	GLOBAL $FreshPortsTitle;
+function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBranch = true) {
 	GLOBAL $User;
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
@@ -498,6 +485,5 @@ document.body.appendChild(sheet);
 
 <?php
 
-return 0;
-
+return false;
 }

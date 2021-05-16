@@ -170,27 +170,20 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 
 			if ($Debug) echo 'including missing-port<BR>';
 
-			if ($HasCommitsOnBranch) {
+			if ($Debug) echo 'invoking freshports_PortDisplay<br>';
+			$result = freshports_PortDisplay($db, $category, $port, $Branch, $HasCommitsOnBranch);
+			if ($result) {
 				# if zero is returned, all is well, otherwise, we can't display that category/port.
-				if ($Debug) echo 'invoking freshports_PortDisplay<br>';
-				if (freshports_PortDisplay($db, $category, $port, $Branch)) {
-					echo 'freshports_PortDisplay returned non-zero';
-					return -1;
+				if ($Debug) {
+					echo "freshports_PortDisplay returned non-zero, had commits on branch: $HasCommitsOnBranch";
 				}
-			} else {
-				# if zero is returned, all is well, otherwise, we can't display that category/port.
-				if ($Debug) echo 'invoking freshports_PortDisplayNotOnBranch<br>';
-				if (freshports_PortDisplayNotOnBranch($db, $category, $port, $Branch)) {
-					echo 'freshports_PortDisplay returned non-zero';
-					return -1;
-				}
+				return $result;
 			}
 		} else {
 			if ($Debug) echo 'The call to ElementRecord indicates this is not a port<br>';
 			if ($Debug) echo 'This is an element<br>';
 			require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-non-port.php');
-			freshports_NonPortDescription($db, $ElementRecord);
-			exit;
+			return freshports_NonPortDescription($db, $ElementRecord);
 		}
 	} else {
 		if ($Debug) echo 'not an element<br>';
@@ -253,8 +246,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 			syslog(LOG_NOTICE, 'invoking ' . $_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-category.php');
 		}
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-category.php');
-		freshports_CategoryByID($db, $CategoryID, $page, $User->page_size, $Branch);
-		exit;
+		return freshports_CategoryByID($db, $CategoryID, $page, $User->page_size, $Branch);
 	}
 
 	if ($Debug) echo 'we hit rock bottom in ' . __FUNCTION__ . ' of ' . __FILE__;

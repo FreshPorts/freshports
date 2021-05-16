@@ -217,4 +217,5 @@ function freshports_NonPortDescription($db, $element_record) {
 </html>
 
 <?
+	return false;
 } # end of freshports_NonPortDescription

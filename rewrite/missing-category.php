@@ -308,4 +308,5 @@ if ($ShowAds && $BannerAd) {
 
 	<?php
 
+	return false;
 	}

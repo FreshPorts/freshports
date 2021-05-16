@@ -73,6 +73,18 @@ td.content {
   margin: 1px;
 }
 
+.commit-list th {
+  text-align: left;
+}
+
+.commit-list td, .commit-list th {
+  padding: 5px;
+}
+
+.commit-list td:first-child, .commit-list th:first-child {
+  width: 180px;
+}
+
 .commit-details {
   vertical-align: top;
   white-space: nowrap;

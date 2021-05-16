@@ -1183,7 +1183,7 @@ function freshports_PortCommitsHeader($port) {
 	
 	$HTML = '';
 
-	$HTML .= '<table class="fullwidth bordered" cellpadding="5">' . "\n";
+	$HTML .= '<table class="commit-list fullwidth bordered">' . "\n";
 	$HTML .= "<tr>\n";
 
 	$Columns = 3;
@@ -1198,7 +1198,7 @@ function freshports_PortCommitsHeader($port) {
 		$HTML .= '</td></tr>';
 	}
 
-	$HTML .= '<tr><td width="180"><b>Date</b></td><td><b>By</b></td><td><b>Description</b></td>';
+	$HTML .= '<tr><th>Date</th><th>By</th><th>Description</th>';
 
 	$HTML .= "</tr>\n";
 

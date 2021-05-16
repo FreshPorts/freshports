@@ -1264,7 +1264,11 @@ class port_display {
 	}
 
 	function ReplaceAdvertismentToken($HTML, $Ad) {
-		$HTML = str_replace(port_display_AD, $Ad, $HTML);
+		if ($Ad) {
+			$HTML = str_replace(port_display_AD, $Ad, $HTML);
+		} else {
+			$HTML = str_replace('<dt>' . port_display_AD . '</dt>', '', $HTML);
+		}
 
 		return $HTML;
 	}

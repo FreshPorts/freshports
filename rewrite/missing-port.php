@@ -293,9 +293,6 @@ function _freshports_PortDisplayHelper($db, $category, $port, $branch, $HasCommi
 
 	GLOBAL $ShowAds, $BannerAd;
 
-	GLOBAL $ShowAds;
-	GLOBAL $BannerAd;
-
 	if ($ShowAds && $BannerAd) {
 		$HTML_For_Ad = "<hr><center>\n" . Ad_728x90PortDescription() . "\n</center>\n<hr>\n";
 	} else{

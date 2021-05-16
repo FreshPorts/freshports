@@ -143,7 +143,7 @@ echo 'done';
         break;
 
     default:
-        $result = freshports_Parse404URI($_SERVER['REQUEST_URI'], $db);
+        $not_found = freshports_Parse404URI($_SERVER['REQUEST_URI'], $db);
 
         # if you get here, we could not find anything in the database, so let's run 
         # the 404 code.
@@ -151,7 +151,7 @@ echo 'done';
         # XXX move missing.php out of DOCUMENT_ROOT
         #echo "\$result='$result'";
 
-        if ($result != '') {
-	    require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing.php');
+        if ($not_found) {
+            require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing.php');
         }
 }

@@ -78,20 +78,7 @@ function DisplayPortCommits($port, $PageNumber) {
 	return $HTML;
 }
 
-function freshports_PortDisplay($db, $category, $port, $branch) {
-	return _freshports_PortDisplayHelper($db, $category, $port, $branch);
-}
-
-function freshports_PortDisplayNotOnBranch($db, $category, $port, $branch) {
-	return _freshports_PortDisplayHelper($db, $category, $port, $branch, false);
-}
-
-function _freshPorts_GetPortDisplay() {
-
-}
-
-function _freshports_PortDisplayHelper($db, $category, $port, $branch, $HasCommitsOnBranch = true) {
-	GLOBAL $FreshPortsTitle;
+function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBranch = true) {
 	GLOBAL $User;
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
@@ -292,9 +279,6 @@ function _freshports_PortDisplayHelper($db, $category, $port, $branch, $HasCommi
 	$HTMLPortPart2 = $port_display->ReplaceWatchListToken($OnWatchList, $HTMLPortPart2, $ElementID);
 
 	GLOBAL $ShowAds, $BannerAd;
-
-	GLOBAL $ShowAds;
-	GLOBAL $BannerAd;
 
 	if ($ShowAds && $BannerAd) {
 		$HTML_For_Ad = "<hr><center>\n" . Ad_728x90PortDescription() . "\n</center>\n<hr>\n";
@@ -501,6 +485,5 @@ document.body.appendChild(sheet);
 
 <?php
 
-return 0;
-
+return false;
 }

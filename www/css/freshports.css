@@ -396,6 +396,10 @@ td.version:hover {
   background-color: #777;
 }
 
+.packages .version.noversion {
+  text-align: center;
+}
+
 
 /*
   from https://www.w3schools.com/css/css_tooltip.asp

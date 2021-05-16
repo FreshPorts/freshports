@@ -118,7 +118,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 			$HasCommitsOnBranch = true; // this is true even if the branch is head
 		}
 	# okay, let's try on head...
-	} else if ($Branch != BRANCH_HEAD) {	
+	} else if ($Branch != BRANCH_HEAD) {
 		if ($Debug) echo 'trying on head next<br>';
 		if ($Debug) echo 'checking ' . FRESHPORTS_PORTS_HEAD_PREFIX . PATH_NAME . ' to see what we find<br>';
 		if ($ElementRecord->FetchByName(FRESHPORTS_PORTS_HEAD_PREFIX . PATH_NAME, false)) {
@@ -217,7 +217,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 			if ($Debug) echo "Port is '$port'<br>";
 		}
 
-		if (IsSet($port) && $Debug) echo 'This is a Port but there is no element for it.<br>';}
+		if (IsSet($port) && $Debug) echo 'This is a Port but there is no element for it.<br>';
 
 		if (IsSet($category)) {
 			# we have a valid category, but no valid port.

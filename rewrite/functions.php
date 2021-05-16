@@ -35,7 +35,6 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	$Debug  = 0;
 	$result = false;
 
-	$IsPort     = false;
 	$IsCategory = false;
 	$IsElement  = false;
 	$HasCommitsOnBranch = false;
@@ -94,12 +93,12 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	define('PATH_NAME', $pathname);
 	if ($Debug) echo "PATH_NAME='" . FRESHPORTS_PORTS_TREE_PREFIX . PATH_NAME . "'<br>";
 
-	# let's see if this is a category.
+	# let's see if this exists on the target branch
 	if ($ElementRecord->FetchByName(FRESHPORTS_PORTS_TREE_PREFIX . PATH_NAME, false)) {
 		$IsElement = true;
 		if ($Debug) echo 'we found an element for that<br>';
 		if ($Debug) echo "we have: '$ElementRecord->element_pathname'<br>";
-		if ($Debug) echo " we had: '" . FRESHPORTS_PORTS_TREE_PREFIX . PATH_NAME . "'<br>";
+		if ($Debug) echo "we had: '" . FRESHPORTS_PORTS_TREE_PREFIX . PATH_NAME . "'<br>";
 
 		# in a case insensitive search, we want to redirect if the case was wrong
 		if (PathnameDiffers($ElementRecord->element_pathname, FRESHPORTS_PORTS_TREE_PREFIX . PATH_NAME)) {
@@ -118,9 +117,9 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 			if ($Debug) echo 'we found an element for that, therefore, there must be commits!<br>';
 			$HasCommitsOnBranch = true; // this is true even if the branch is head
 		}
+	# okay, let's try on head...
 	} else if ($Branch != BRANCH_HEAD) {	
 		if ($Debug) echo 'trying on head next<br>';
-		# if this is not a category, let's check for details on what might be a port
 		if ($Debug) echo 'checking ' . FRESHPORTS_PORTS_HEAD_PREFIX . PATH_NAME . ' to see what we find<br>';
 		if ($ElementRecord->FetchByName(FRESHPORTS_PORTS_HEAD_PREFIX . PATH_NAME, false)) {
 			# again, we want to fix the case if it's wrong
@@ -132,7 +131,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 			}
 			$IsElement          = true;
 			$HasCommitsOnBranch = false; // we had to fall back to head to find this element
-			$IsCategory = $ElementRecord->IsCategory();
+			$IsCategory         = $ElementRecord->IsCategory();
 		}
 	} else {
 		if ($Debug) echo 'we found no element for that.<br>';
@@ -157,8 +156,6 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 		}
 
 		if ($ElementRecord->IsPort()) {
-			$IsPort = true;
-
 			# we don't use list($category, $port) so we don't have to worry
 			# about extra bits
 			$PathParts = explode('/', PATH_NAME);
@@ -227,16 +224,13 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 			if ($Debug) echo "Port is '$port'<br>";
 		}
 
-		if (IsSet($port)) {
-			$result = $REQUEST_URI;
-			if ($Debug) echo 'This is a Port but there is no element for it.<br>';
-		}
+		if (IsSet($port) && $Debug) echo 'This is a Port but there is no element for it.<br>';}
 
 		if (IsSet($category)) {
 			# we have a valid category, but no valid port.
-			# we will display the category only if they did *try* to speciy a port.
-			# i.e. they suuplied an invalid port name
-			if ($Debug) echo 'This is a category &&&<br>';
+			# we will display the category only if they did *try* to specify a port.
+			# i.e. they supplied an invalid port name
+			if ($Debug) echo 'This is a category <br>';
 
 			if (IsSet($port)) {
 				if ($Debug)  'Invalid port supplied for a valid category<br>';

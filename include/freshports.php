@@ -1176,6 +1176,45 @@ function FormatTime($Time, $Adjustment, $Format) {
 	return date($Format, strtotime($Time) + $Adjustment);
 }
 
+function freshports_UpdatingOutput($NumRowsUpdating, $PortsUpdating, $port) {
+	$HTML = '';
+
+	if ($NumRowsUpdating > 0) {
+		$HTML .= '<TABLE class="ports-updating fullwidth bordered">' . "\n";
+		$HTML .= "<TR>\n";
+		$HTML .= freshports_PageBannerText('<a id="updating">Notes from UPDATING</a>');
+		$HTML .= "<tr><td><dl>\n";
+		$HTML .= "<dt>These upgrade notes are taken from <a href=\"/UPDATING\">/usr/ports/UPDATING</a></dt>";
+		$HTML .= "<dd><ul>\n";
+
+		$Hiding = false;
+		for ($i = 0; $i < $NumRowsUpdating; $i++) {
+			$PortsUpdating->FetchNth($i);
+			if ($i == 1) {
+				$Hiding = true;
+				# end the old list, start a new list
+				$HTML .= "</ul></dd>\n";
+				$HTML .= '<dt><a href="#" id="UPDATING-Extra-show" class="showLink" onclick="showHide(\'UPDATING-Extra\');return false;">Expand this list (' . ($NumRowsUpdating - 1) . ' items)</a></dt>';
+				$HTML .= '<dd id="UPDATING-Extra" class="more UPDATING">';
+
+				# start the new list of all hidden items
+				$HTML .= "<ul>\n";
+			}
+
+			$HTML .= '<li>' . freshports_PortsUpdating($port, $PortsUpdating) . "</li>\n";
+		}
+		if ($Hiding) {
+			$HTML .= '<li class="nostyle"><a href="#" id="UPDATING-Extra-hide2" class="hideLink" onclick="showHide(\'UPDATING-Extra\');return false;">Collapse this list.</a></li>';
+		}
+
+		$HTML .= "</ul></dd>";
+		$HTML .= "</dl></td></tr>\n";
+		$HTML .= "</table>\n";
+	}
+
+	return $HTML;
+}
+
 function freshports_PortCommitsHeader($port) {
 	# print the header for the commits for a port
 
@@ -1183,7 +1222,7 @@ function freshports_PortCommitsHeader($port) {
 	
 	$HTML = '';
 
-	$HTML .= '<table class="fullwidth bordered" cellpadding="5">' . "\n";
+	$HTML .= '<table class="commit-list fullwidth bordered">' . "\n";
 	$HTML .= "<tr>\n";
 
 	$Columns = 3;
@@ -1198,7 +1237,7 @@ function freshports_PortCommitsHeader($port) {
 		$HTML .= '</td></tr>';
 	}
 
-	$HTML .= '<tr><td width="180"><b>Date</b></td><td><b>By</b></td><td><b>Description</b></td>';
+	$HTML .= '<tr><th>Date</th><th>By</th><th>Description</th>';
 
 	$HTML .= "</tr>\n";
 
@@ -1326,13 +1365,13 @@ function freshports_PortCommits($port, $PageNumber = 1, $NumCommitsPerPage = 100
 	$NumCommitsHTML .= '</p>';
 
 	if ($PageLinks != '') {
-		$PageLinksHTML = '<p align="center">' . $PageLinks . '</p>';
+		$PageLinksHTML = '<p class="pagination">' . $PageLinks . '</p>';
 	} else {
 		$PageLinksHTML = '';
 	}
 
 	# this is the 1st of 2 places where NumCommitsHTML is used.
-	$HTML .= '<p align="left"><a id="history"></a>' . $NumCommitsHTML . $PageLinksHTML;
+	$HTML .= '<p id="history">' . $NumCommitsHTML . $PageLinksHTML;
 
 	if ($Commits->Debug) echo "PageNumber='$PageNumber'<br>Offset='$Offset'<br>";
 	
@@ -1360,7 +1399,7 @@ function freshports_PortCommits($port, $PageNumber = 1, $NumCommitsPerPage = 100
 	
 	# this is the 2nd of 2 places where NumCommitsHTML is used.
 	# no id=history here
-	$HTML .= '<p align="left">' . $NumCommitsHTML . $PageLinksHTML;
+	$HTML .= '<p>' . $NumCommitsHTML . $PageLinksHTML;
 
 	return $HTML;
 }
@@ -1426,11 +1465,11 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	}
 
 	$HTML .= "</td>\n";
-	$HTML .= '    <td valign="top">';
+	$HTML .= '    <td class="commit-details">';
 	$HTML .= freshports_CommitterEmailLink($commit->committer) . '&nbsp;' . freshports_Search_Committer($commit->committer);;
 
 	$HTML .= "</td>\n";
-	$HTML .= '    <td valign="top" width="*">';
+	$HTML .= '    <td class="commit-details">';
 
 	$HTML .= freshports_CommitDescriptionPrint($commit->description, $commit->encoding_losses, $freshports_CommitMsgMaxNumOfLinesToShow, freshports_MoreCommitMsgToShow($commit->message_id, $freshports_CommitMsgMaxNumOfLinesToShow));
 

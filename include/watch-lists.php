@@ -115,46 +115,6 @@ function freshports_WatchListCountDefault($db, $UserID) {
 	return $myrow["count"];
 }
 
-# XXX I have no idea why UPDATING is in watch-lists.php
-function freshports_UpdatingOutput($NumRowsUpdating, $PortsUpdating, $port) {
-	$HTML = '';
-	
-	if ($NumRowsUpdating > 0) {
-		$HTML .= '<TABLE class="fullwidth bordered" CELLPADDING="5">' . "\n";
-		$HTML .= "<TR>\n";
-		$HTML .= freshports_PageBannerText('<a id="updating">Notes from UPDATING</a>');
-		$HTML .= "<tr><td><dl>\n";
-		$HTML .= "<dt>These upgrade notes are taken from <a href=\"/UPDATING\">/usr/ports/UPDATING</a></dt>";
-		$HTML .= "<dd><ul>\n";
-
-		$Hiding = false;
-		for ($i = 0; $i < $NumRowsUpdating; $i++) {
-			$PortsUpdating->FetchNth($i);
-			if ($i == 1) {
-				$Hiding = true;
-				# end the old list, start a new list
-				$HTML .= "</ul></dd>\n";
-				$HTML .= '<dt><a href="#" id="UPDATING-Extra-show" class="showLink" onclick="showHide(\'UPDATING-Extra\');return false;">Expand this list (' . ($NumRowsUpdating - 1) . ' items)</a></dt>';
-				$HTML .= '<dd id="UPDATING-Extra" class="more UPDATING">';
-
-				# start the new list of all hidden items
-				$HTML .= "<ul>\n";
-			}
-
-			$HTML .= '<li>' . freshports_PortsUpdating($port, $PortsUpdating) . "</li>\n";
-		}
-		if ($Hiding) {
-			$HTML .= '<li class="nostyle"><a href="#" id="UPDATING-Extra-hide2" class="hideLink" onclick="showHide(\'UPDATING-Extra\');return false;">Collapse this list.</a></li>';
-		}
-
-		$HTML .= "</ul></dd>";
-		$HTML .= "</dl></td></tr>\n";
-		$HTML .= "</table>\n";
-	}
-
-	return $HTML;
-}
-
 function freshports_WatchListVerifyToken($db, $token) {
 	$id = '';
 

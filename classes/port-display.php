@@ -1074,10 +1074,10 @@ class port_display {
 
 						# If showing a - for the version, center align it
 						$title = $this->packageToolTipText($package_line['last_checked_latest'], $package_line['repo_date_latest'], $package_line['processed_date_latest']);
-						$HTML .= '<td class="version" ' . ($package_version_latest    == '-' ? ' align ="center"' : '') . ' title="' . $title . '">' . $package_version_latest    . '</td>';
+						$HTML .= '<td class="version ' . ($package_version_latest    == '-' ? 'noversion' : '') . '" title="' . $title . '">' . $package_version_latest    . '</td>';
 
 						$title = $this->packageToolTipText($package_line['last_checked_quarterly'], $package_line['repo_date_quarterly'], $package_line['processed_date_quarterly']);
-						$HTML .= '<td class="version" ' . ($package_version_quarterly == '-' ? ' align ="center"' : '') . ' title="' . $title . '">' . $package_version_quarterly . '</td>';
+						$HTML .= '<td class="version ' . ($package_version_quarterly == '-' ? 'noversion' : '') . '" title="' . $title . '">' . $package_version_quarterly . '</td>';
 						$HTML .= '</tr>';
 					}
 					$HTML .= '</table>&nbsp;';
@@ -1264,7 +1264,11 @@ class port_display {
 	}
 
 	function ReplaceAdvertismentToken($HTML, $Ad) {
-		$HTML = str_replace(port_display_AD, $Ad, $HTML);
+		if ($Ad) {
+			$HTML = str_replace(port_display_AD, $Ad, $HTML);
+		} else {
+			$HTML = str_replace('<dt>' . port_display_AD . '</dt>', '', $HTML);
+		}
 
 		return $HTML;
 	}
@@ -1280,7 +1284,7 @@ class port_display {
 			if ( $NumRows > 0 ) {
 				# everything "required for" XXX goes under this section.
 				# Each one of Build, Extract, etc, gets this.
-				$HTML .= '<dd class="required">for ' . $title . "\n";
+				$HTML .= '<dd class="required"><dl><dt>for ' . $title . "</dt>\n";
 
 				# Let's fetch the first port, and see if it's deleted.  If it is, we don't need this first loop
 				$PortDependencies->FetchNth(0);
@@ -1288,8 +1292,7 @@ class port_display {
 					#
 					# START OF LIST for this type of Required 
 					#
-					$div = '<dl>
-					        <dd id="RequiredBy' . $title . '">
+					$div = '<dd id="RequiredBy' . $title . '">
 					            <ol class="depends" id="requiredfor' . $title . '" style="margin-bottom: 0px">' . "\n";
 
 					$firstDeletedPort = -1;     # we might be able to combine this with deletedPortFound

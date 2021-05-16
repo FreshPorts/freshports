@@ -73,6 +73,20 @@ td.content {
   margin: 1px;
 }
 
+.commit-list th {
+  text-align: left;
+}
+
+.commit-list td, .commit-list th,
+.ports-moved td, .ports-moved th,
+.ports-updating td, .ports-updating th {
+  padding: 5px;
+}
+
+.commit-list td:first-child, .commit-list th:first-child {
+  width: 180px;
+}
+
 .commit-details {
   vertical-align: top;
   white-space: nowrap;
@@ -394,6 +408,10 @@ table.bordered > tbody > tr > td, table.bordered > tbody > tr > th {
 
 td.version:hover {
   background-color: #777;
+}
+
+.packages .version.noversion {
+  text-align: center;
 }
 
 

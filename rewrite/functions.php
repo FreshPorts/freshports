@@ -75,11 +75,12 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	if ($Debug) echo "PATH_NAME='" . FRESHPORTS_PORTS_TREE_PREFIX . PATH_NAME . "'<br>";
 
 	# let's see if this is a category.
-	if ($ElementRecord->FetchByName(FRESHPORTS_PORTS_TREE_PREFIX . PATH_NAME, 1)) {
+	if ($ElementRecord->FetchByName(FRESHPORTS_PORTS_TREE_PREFIX . PATH_NAME, false)) {
 		$IsElement = true;
 		if ($Debug) echo 'we found an element for that<br>';
 		if ($Debug) echo "we have: '$ElementRecord->element_pathname'<br>";
 		if ($Debug) echo " we had: '" . FRESHPORTS_PORTS_TREE_PREFIX . PATH_NAME . "'<br>";
+
 		if (PathnameDiffers($ElementRecord->element_pathname . '/', FRESHPORTS_PORTS_TREE_PREFIX . PATH_NAME)) {
 			# in a case insensitive search, we want to redirect if the case was wrong
 			if ($Debug) echo "we are redirecting to '" . $ElementRecord->element_pathname . "/'<br>";
@@ -93,7 +94,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 
 			header("HTTP/1.1 301 Moved Permanently");
 			header('Location: ' . $protocol . '://' . $_SERVER['HTTP_HOST'] . str_replace(FRESHPORTS_PORTS_TREE_PREFIX, '/', $ElementRecord->element_pathname . '/'));
-			exit;
+			return false;
 		}
 
 		if ($Debug) echo 'checking if this is a Category<br>';

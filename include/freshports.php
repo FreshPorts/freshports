@@ -1326,13 +1326,13 @@ function freshports_PortCommits($port, $PageNumber = 1, $NumCommitsPerPage = 100
 	$NumCommitsHTML .= '</p>';
 
 	if ($PageLinks != '') {
-		$PageLinksHTML = '<p align="center">' . $PageLinks . '</p>';
+		$PageLinksHTML = '<p class="pagination">' . $PageLinks . '</p>';
 	} else {
 		$PageLinksHTML = '';
 	}
 
 	# this is the 1st of 2 places where NumCommitsHTML is used.
-	$HTML .= '<p align="left"><a id="history"></a>' . $NumCommitsHTML . $PageLinksHTML;
+	$HTML .= '<p id="history">' . $NumCommitsHTML . $PageLinksHTML;
 
 	if ($Commits->Debug) echo "PageNumber='$PageNumber'<br>Offset='$Offset'<br>";
 	
@@ -1360,7 +1360,7 @@ function freshports_PortCommits($port, $PageNumber = 1, $NumCommitsPerPage = 100
 	
 	# this is the 2nd of 2 places where NumCommitsHTML is used.
 	# no id=history here
-	$HTML .= '<p align="left">' . $NumCommitsHTML . $PageLinksHTML;
+	$HTML .= '<p>' . $NumCommitsHTML . $PageLinksHTML;
 
 	return $HTML;
 }

@@ -95,9 +95,9 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 	if (IsSet($_SERVER['REQUEST_URI'])) {
 		$url_query = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
 		parse_str($url_query, $url_args);
-        } else {
-           $url_args = null;
-        }
+	} else {
+		$url_args = null;
+	}
 
 	if ($Debug) {
 	  echo 'query parts';

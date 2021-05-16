@@ -171,6 +171,10 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 			}
 		} else {
 			if ($Debug) echo 'The call to ElementRecord indicates this is not a port<br>';
+			if ($Debug) echo 'This is an element<br>';
+			require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-non-port.php');
+			freshports_NonPortDescription($db, $ElementRecord);
+			exit;
 		}
 	} else {
 		if ($Debug) echo 'not an element<br>';
@@ -237,13 +241,6 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 		}
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-category.php');
 		freshports_CategoryByID($db, $CategoryID, $page, $User->page_size, $Branch);
-		exit;
-	}
-
-	if ($IsElement && !$IsPort) {
-		if ($Debug) echo 'This is an element<br>';
-		require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-non-port.php');
-		freshports_NonPortDescription($db, $ElementRecord);
 		exit;
 	}
 

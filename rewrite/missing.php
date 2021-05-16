@@ -18,14 +18,14 @@
 
 <?php echo freshports_MainTable(); ?>
 <TR>
-<TD WIDTH="100%" VALIGN="top">
+<TD class="content">
 <?php echo freshports_MainContentTable(); ?>
 <TR>
-    <td class="accent"><BIG>
+    <td class="accent"><span>
 <?
    echo "$FreshPortsTitle -- $Title";
 ?>
-</BIG></td>
+</span></td>
 </TR>
 
 <TR>

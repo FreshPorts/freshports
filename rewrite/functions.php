@@ -72,6 +72,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	$pathname = rtrim($pathname, '/');
 
 	define('PATH_NAME', $pathname);
+	if ($Debug) echo "PATH_NAME='" . FRESHPORTS_PORTS_TREE_PREFIX . PATH_NAME . "'<br>";
 
 	# let's see if this is a category.
 	if ($ElementRecord->FetchByName(FRESHPORTS_PORTS_TREE_PREFIX . PATH_NAME, 1)) {
@@ -94,43 +95,31 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 			header('Location: ' . $protocol . '://' . $_SERVER['HTTP_HOST'] . str_replace(FRESHPORTS_PORTS_TREE_PREFIX, '/', $ElementRecord->element_pathname . '/'));
 			exit;
 		}
-	}
 
-	if ($IsElement) {
 		if ($Debug) echo 'checking if this is a Category<br>';
 		if ($ElementRecord->IsCategory()) {
 			$IsCategory = true;
 			if ($Debug) echo 'This is a category<br>';
 		} else {
 			if ($Debug) echo 'It is NOT a category<br>';
+			if ($Debug) echo 'we found an element for that, therefore, there must be commits!<br>';
+			$HasCommitsOnBranch = true; // this is true even if the branch is head
 		}
 	} else {
 		if ($Debug) echo 'we found no element for that.<br>';
-	}
-
-	if ($Debug) echo "PATH_NAME='" . FRESHPORTS_PORTS_TREE_PREFIX . PATH_NAME . "'<br>";
-
-	# if this is not a category, let's check for details on what might be a port
-	if (!$IsCategory) {
-		if ($Debug) echo 'checking ' . FRESHPORTS_PORTS_TREE_PREFIX . PATH_NAME . ' to see what we find<br>';
-		# if ($ElementRecord->FetchByName(FRESHPORTS_PORTS_TREE_PREFIX . PATH_NAME, 0)) {
-		if ($IsElement) {
-			if ($Debug) echo 'we found an element for that, therefore, there must be commits!<br>';
-			$IsElement          = true;
-			$HasCommitsOnBranch = true; // this is true even if the branch is head
-		} else {
-			if ($Branch != BRANCH_HEAD) {
-				if ($Debug) echo 'trying on head next<br>';
-				if ($ElementRecord->FetchByName(FRESHPORTS_PORTS_TREE_PREFIX . PATH_NAME, 0)) {
-					$IsElement          = true;
-					$HasCommitsOnBranch = false;
-				}
+		if ($Branch != BRANCH_HEAD) {
+			if ($Debug) echo 'trying on head next<br>';
+			# if this is not a category, let's check for details on what might be a port
+			if ($Debug) echo 'checking ' . FRESHPORTS_PORTS_TREE_PREFIX . PATH_NAME . ' to see what we find<br>';
+			if ($ElementRecord->FetchByName(FRESHPORTS_PORTS_TREE_PREFIX . PATH_NAME, 0)) {
+				$IsElement          = true;
+				$HasCommitsOnBranch = false;
+				$IsCategory = $ElementRecord->IsCategory();
 			}
 		}
 	}
 
 	if ($IsElement) {
-		$IsElement = true;
 		if ($Debug) {
 			echo 'Yes, we found an element for that path!<br>';
 			echo '<pre>';
@@ -138,8 +127,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 			echo '</pre>';
 		}
 
-		if ($ElementRecord->IsCategory()) {
-			$IsCategory = true;
+		if ($IsCategory) {
 			if ($Debug) echo 'This is a category<br>';
 
 			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');

@@ -238,7 +238,7 @@ class port_display {
           if (!empty($link)) {
             $link = '<a href="' . $link . '">' . $link_title . '</a>';
           } else {
-            $link = '<strike>SVNWeb</strike>';
+            $link = '<del>SVNWeb</del>';
           }
 
           return $link;
@@ -301,7 +301,7 @@ class port_display {
           if (!empty($link)) {
             $link = '<a href="' . $link . '">' . $link_title . '</a>';
           } else {
-            $link = '<strike>git</strike>';
+            $link = '<del>git</del>';
           }
 
           # echo 'returning ' . $link . '<br>';
@@ -1133,37 +1133,37 @@ class port_display {
 			}
 
 			if ($port->depends_build) {
-				$HTML .= '<dt class="required"><a id="requiredbuild">Build dependencies:</a></dt><dd>' . "\n" . '<ol class="required" id="requiredtobuild">';
+				$HTML .= '<dt class="required" id="requiredbuild">Build dependencies:</dt><dd>' . "\n" . '<ol class="required" id="requiredtobuild">';
 				$HTML .= freshports_depends_links($this->db, $port->depends_build, $this->Branch);
 				$HTML .= "\n</ol></dd>\n";
 			}
 
 			if ($port->depends_run) {
-				$HTML .= '<dt class="required"><a id="requiredrun">Runtime dependencies:</a></dt><dd>' . "\n" . '<ol class="required" id="requiredtorun">';
+				$HTML .= '<dt class="required" id="requiredrun">Runtime dependencies:</dt><dd>' . "\n" . '<ol class="required" id="requiredtorun">';
 				$HTML .= freshports_depends_links($this->db, $port->depends_run, $this->Branch);
 				$HTML .= "\n</ol></dd>\n";
 			}
 
 			if ($port->depends_lib) {
-				$HTML .= '<dt class="required"><a id="requiredlib">Library dependencies:</a></dt><dd>' . "\n" . '<ol class="required" id="requiredlibraries">';
+				$HTML .= '<dt class="required" id="requiredlib">Library dependencies:</dt><dd>' . "\n" . '<ol class="required" id="requiredlibraries">';
 				$HTML .= freshports_depends_links($this->db, $port->depends_lib, $this->Branch);
 				$HTML .= "\n</ol></dd>\n";
 			}
 
 			if ($port->fetch_depends) {
-				$HTML .= '<dt class="required"><a id="requiredfetch">Fetch dependencies:</a></dt><dd>' . "\n" . '<ol class="required" id="requiredfetches">';
+				$HTML .= '<dt class="required" id="requiredfetch">Fetch dependencies:</dt><dd>' . "\n" . '<ol class="required" id="requiredfetches">';
 				$HTML .= freshports_depends_links($this->db, $port->fetch_depends, $this->Branch);
 				$HTML .= "\n</ol></dd>\n";
 			}
 
 			if ($port->patch_depends) {
-				$HTML .= '<dt class="required"><a id="requiredpatch">Patch dependencies:</a></dt><dd>' . "\n" . '<ol class="required" id="requiredpatches">';
+				$HTML .= '<dt class="required" id="requiredpatch">Patch dependencies:</dt><dd>' . "\n" . '<ol class="required" id="requiredpatches">';
 				$HTML .= freshports_depends_links($this->db, $port->patch_depends, $this->Branch);
 				$HTML .= "\n</ol></dd>\n";
 			}
 
 			if ($port->extract_depends) {
-				$HTML .= '<dt class="required"><a id="requiredextract">Extract dependencies:</a></dt><dd>' . "\n" . '<ol class="required" id="requiredextracts">';
+				$HTML .= '<dt class="required" id="requiredextract">Extract dependencies:</dt><dd>' . "\n" . '<ol class="required" id="requiredextracts">';
 				$HTML .= freshports_depends_links($this->db, $port->extract_depends, $this->Branch);
 				$HTML .= "\n</ol></dd>\n";
 			}
@@ -1336,7 +1336,7 @@ class port_display {
 						$div .= '<li class="nostyle"><a href="#" class="hideLink" onclick="showHide(\'RequiredBy' . $title . 'Extra\');return false;" >Collapse this list.</a></li>';
 					}
 
-					$div .= '</ol></dd></dl>'; # we always close off this list here.
+					$div .= '</ol></dd>'; # we always close off this list here.
 
 				} else {
 					# the first port was deleted. Therefore, they are all deleted.
@@ -1352,9 +1352,9 @@ class port_display {
 					# is it port or ports?
 					$PluralSingularSuffix = ($NumRows - $firstDeletedPort) > 1 ? 's' : '';
 
-						$div .= '<dl><dt id="RequiredBy' . $title . 'Deleted"></dt><dd class="depends" id="requiredfor' . $title . 'Deleted" style="margin-bottom: 0px">' . "\n";
+					$div .= '<dd id="RequiredBy' . $title . 'Deleted" class="depends">' . "\n";
 
-					$div .= '<dd><p><b>Deleted ports which required this port:</b></p>';
+					$div .= '<p><b>Deleted ports which required this port:</b></p>';
 					$div .= '<a href="#" id="RequiredBy' . $title . 'DeletedExtra-show" class="showLink" onclick="showHide(\'RequiredBy' . $title .
 				                'DeletedExtra\');return false;">Expand this list of ' . ($NumRows - $firstDeletedPort) . ' deleted port' . $PluralSingularSuffix . '</a>';
 
@@ -1368,28 +1368,28 @@ class port_display {
 					}
 
 					$div .= '<li class="nostyle"><a href="#" id="RequiredBy' . $title . 'DeletedExtra-hide2" class="hideLink" onclick="showHide(\'RequiredBy' . $title . 'DeletedExtra\');return false;">Collapse this list of deleted ports.</a></li>';
-					$div .= '</ol></dd></dl>';
+					$div .= '</ol></dd>';
 
 				}
 
 				$HTML .= $div;
 
-				$HTML .= '</dd>'; # required class, with text 'for Build' (for example)
+				$HTML .= '</dl></dd>'; # required class, with text 'for Build' (for example)
 			}
 		}
 
 		if ( $HTML === '' ) {
-			$HTML .= '<dt>There are no ports dependent upon this port</dt>';
+			$HTML .= '<dd>There are no ports dependent upon this port</dd>';
 		} else {
 			$HTML = '<dt class="required">This port is required by:</dt>' . $HTML;
 			if ($deletedPortFound) {
 				# add some stuff to the front of what we have
 				if ( $port->IsDeleted() ) {
-					$HTML = '<dt>NOTE: dependencies for deleted ports are notoriously suspect</dt>' . $HTML;
+					$HTML = '<dd>NOTE: dependencies for deleted ports are notoriously suspect</dd>' . $HTML;
 				}
 
 				# and to the end...
-				$HTML .= '<dt>* - deleted ports are only shown under the <em>This port is required by</em> section.  It was harder to do for the <em>Required</em> section.  Perhaps later...</dt>';
+				$HTML .= '<dd>* - deleted ports are only shown under the <em>This port is required by</em> section.  It was harder to do for the <em>Required</em> section.  Perhaps later...</dd>';
 			}
 		}
 

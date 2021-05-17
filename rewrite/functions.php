@@ -151,11 +151,8 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
 			$Category = new Category($db);
 			$CategoryID = $Category->FetchByElementID($ElementRecord->id);
-		} else {
+		} else if ($ElementRecord->IsPort()) {
 			if ($Debug) echo 'That path does not point at a category!<br>';
-		}
-
-		if ($ElementRecord->IsPort()) {
 			# we don't use list($category, $port) so we don't have to worry
 			# about extra bits
 			$PathParts = explode('/', PATH_NAME);

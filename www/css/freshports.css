@@ -80,7 +80,8 @@ td.content {
 .commit-list td, .commit-list th,
 .ports-moved td, .ports-moved th,
 .ports-updating td, .ports-updating th,
-.files-list td, .files-list th {
+.files-list td, .files-list th,
+.textcontent table td, .textcontent table th {
   padding: 5px;
 }
 

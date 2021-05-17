@@ -504,9 +504,9 @@ class port_display {
 	}
 
 	function packageToolTipText($last_checked, $repo_date, $processed_date) {
+		# last_checked    - when we last checked for an update
 		# repo_date       - date on packagesite.txz (e.g. https://pkg.freebsd.org/FreeBSD:11:amd64/latest/
 		# processed_date  - when the above mentioned data was last parsed into FreshPorts
-		# last_checked    - when we last checked for an update
 
 		$title = "Repo dates\n";
 		if (empty($repo_date)) {

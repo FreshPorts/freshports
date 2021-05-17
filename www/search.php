@@ -1150,7 +1150,7 @@ echo freshports_ShowFooter();
 
 ?>
 <? if (!IsSet($_REQUEST['query'])) { ?>
-<script language="JavaScript" type="text/javascript">
+<script type="text/javascript">
 <!--
 document.search.query.focus();
 // -->

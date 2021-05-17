@@ -426,6 +426,7 @@ table.bordered > tbody > tr > td, table.bordered > tbody > tr > th {
 
 td.version:hover {
   background-color: #777;
+  color: white;
 }
 
 .packages .version.noversion, .footer, .maintenance, .fp-banner {

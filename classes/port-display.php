@@ -509,22 +509,22 @@ class port_display {
 		# processed_date  - when the above mentioned data was last parsed into FreshPorts
 
 		$title = "Repo dates\n";
-		if (empty($last_checked)) {
-			$title .= "never checked\n";
-		} else {
-			$title .= $last_checked . " - last checked\n";
-		}
-
 		if (empty($repo_date)) {
 			$title .= "repo not found\n";
 		} else {
-			$title .= $repo_date . " - repo build date\n";
+			$title .= $repo_date . " - packages last built\n";
 		}
 
 		if (empty($processed_date)) {
 			$title .= "never imported\n";
 		} else {
-			$title .= $processed_date . " - processed date\n";
+			$title .= $processed_date . " - processed by FreshPorts\n";
+		}
+
+		if (empty($last_checked)) {
+			$title .= "never checked\n";
+		} else {
+			$title .= $last_checked . " - last checked by FreshPorts\n";
 		}
 
 		$title .= "All times are UTC";

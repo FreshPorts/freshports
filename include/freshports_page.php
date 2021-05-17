@@ -32,12 +32,6 @@ class freshports_page extends HTML_Page2 {
 		$this->setMetaData('description',      'FreshPorts - new ports, applications');
 		$this->setMetaData('keywords',         'FreeBSD, index, applications, ports');
 
-		$this->setMetaData('Pragma',           'no-cache', TRUE);
-		$this->setMetaData('Cache-Control',    'no-cache', TRUE);
-		$this->setMetaData('Pragma-directive', 'no-cache', TRUE);
-		$this->setMetaData('cache-directive',  'no-cache', TRUE);
-		$this->setMetaData('Expires',          '0',        TRUE);
-
 		$this->setMetaData('robots', 'noarchive');
 		$this->setMetaData('robots', 'noindex');
 

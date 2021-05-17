@@ -181,7 +181,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 	
 		if (!empty($revision) && count($message_id_array)) {
 			// we have multiple messages for that commit
-			echo '<tr><TD VALIGN="top">';
+			echo '<tr><TD class="content">';
 			echo "We have multiple emails for that revision: ";
 			$Commit->FetchNth(0);
 			$clean_revision = htmlentities($Commit->svn_revision);
@@ -253,9 +253,9 @@ ORDER BY port, element_pathname";
 						$RetVal = $DisplayCommit->CreateHTML();
 	
 						$HTML .= $DisplayCommit->HTML;
-						$HTML .= '<tr><TD VALIGN="top"><p>Number of ports [&amp; non-ports] in this commit: ' . $NumFilesTouched . '</p></td></tr>';
+						$HTML .= '<tr><TD><p>Number of ports [&amp; non-ports] in this commit: ' . $NumFilesTouched . '</p></td></tr>';
 					} else {
-						$HTML .=  '<tr><TD VALIGN="top"><P>Sorry, nothing found in the database....</P>' . "\n";
+						$HTML .=  '<tr><TD><P>Sorry, nothing found in the database....</P>' . "\n";
 						$HTML .=  "</TD></tr>";
 						$DoTheSave = false;
 					}
@@ -297,7 +297,7 @@ ORDER BY port, element_pathname";
 
 
 				$PortURL = '<a href="/' . $clean['category'] . '/' . $clean['port'] . '/">' . $clean['category'] . '/' . $clean['port'] . '</a>';
-				$HTML .=  '<p>Showing files for just one port: <big><b>' . $PortURL . '</b></big></p>';
+				$HTML .=  '<p>Showing files for just one port: <span class="element-details">' . $PortURL . '</span></p>';
 				$HTML .=  "<p>$ShowAllFilesURL</p>";
 			} # FilesForJustOnePort
 

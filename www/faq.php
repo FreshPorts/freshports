@@ -224,7 +224,7 @@ down you must read to find something you didn't already know.</P>
 
 		<P>Here is a banner which you are free to use to link to this site:</P>
 
-		<P ALIGN="center">
+		<P class="fp-banner">
 		<img src="images/freshports-banner.gif" alt="<?php echo "$FreshPortsName -- $FreshPortsSlogan"; ?>" title="<?php echo "$FreshPortsName -- $FreshPortsSlogan"; ?>" width="468" height="60">
 		</P>
 
@@ -246,6 +246,9 @@ down you must read to find something you didn't already know.</P>
 
 	<P id="fallout"><?php echo freshports_Fallout_Icon(); ?>
 		Fallout: a link to search the pkg-fallout archives for this port.</P>
+
+	<P id="repology"><?php echo freshports_Repology_Icon(); ?>
+		Repology: a link to search the Repology packaging hub for this port.</P>
 
 	<P id="bugs-find"><?php echo freshports_Bugs_Find_Icon(); ?>
 		Find Bugs: a link to search for open Problem Reports (issues/bugs) for this port.</P>
@@ -461,22 +464,22 @@ of a link to a page of commits for that day.
 
 Here are a few examples:
 <blockquote>
-<table class="bordered" CELLPADDING="5">
+<table class="bordered">
 <tr>
 <td><b>Description</b></td>
-<td nowrap valign="top"><b>URL</b></td>
+<td><b>URL</b></td>
 </tr>
 <tr>
 <td>The last ten ports</td>
-<td nowrap valign="top"><a href="https://<?php echo $ServerName ?>/index.php?num=10">https://<?php echo $ServerName ?>/index.php?<b>num=10</b></a><br></td>
+<td><a href="https://<?php echo $ServerName ?>/index.php?num=10">https://<?php echo $ServerName ?>/index.php?<b>num=10</b></a><br></td>
 </tr>
 <tr>
 <td>Same as above, but show only two days of previous commits</td>
-<td nowrap valign="top"><a href="https://<?php echo $ServerName ?>/index.php?num=10&amp;days=2">https://<?php echo $ServerName ?>/index.php?num=10&amp;<b>days=2</b></a><br></td>
+<td><a href="https://<?php echo $ServerName ?>/index.php?num=10&amp;days=2">https://<?php echo $ServerName ?>/index.php?num=10&amp;<b>days=2</b></a><br></td>
 </tr>
 <tr>
 <td>Same as above, but show summaries instead of a link to another page</td>
-<td nowrap valign="top"><a href="https://<?php echo $ServerName ?>/index.php?num=10&amp;dailysummary=2">https://<?php echo $ServerName ?>/index.php?num=10&amp;<b>dailysummary=2</b></a></td>
+<td><a href="https://<?php echo $ServerName ?>/index.php?num=10&amp;dailysummary=2">https://<?php echo $ServerName ?>/index.php?num=10&amp;<b>dailysummary=2</b></a></td>
 </tr>
 </table>
 </blockquote>
@@ -682,8 +685,9 @@ if you can provide a URL that exercises all the options that require testing.
    <TR><TD class="textcontent">
    <P>
 	For those familiar with the FreeBSD ports structure, the following fields indicate their origin:
+   </P>
 
-<table cellpadding="5" class="borderless">
+<table class="borderless">
 <tr><td><b>Field</b></td><td><b>Origin</b></td></tr>
 <tr><td>Port Name</td><td><code class="code">PORTNAME</code></td></tr>
 <tr><td>Package Name</td><td><code class="code">PKGNAME</code></td></tr>

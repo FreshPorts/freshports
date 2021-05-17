@@ -73,18 +73,40 @@ td.content {
   margin: 1px;
 }
 
-.commit-list th {
+.commit-list th, .files-list th {
   text-align: left;
 }
 
 .commit-list td, .commit-list th,
 .ports-moved td, .ports-moved th,
-.ports-updating td, .ports-updating th {
+.ports-updating td, .ports-updating th,
+.files-list td, .files-list th,
+.search-options td, .search-options th,
+.textcontent table td, .textcontent table th {
   padding: 5px;
+}
+
+.announce-notes {
+  border-spacing: 4px;
+}
+
+.announce-notes td, .announce-notes th {
+  padding: 4px;
+}
+
+.announce-notes th {
+  font-weight: bold;
+  text-align: right;
+  vertical-align: top;
+  white-space: nowrap;
 }
 
 .commit-list td:first-child, .commit-list th:first-child {
   width: 180px;
+}
+
+.files-list td:last-child {
+  width: 100%;
 }
 
 .commit-details {
@@ -362,10 +384,6 @@ li.extraspace {
 .packages th { background-color:#000; color:white; }
 .packages td, .packages th { padding:8px; border:1px solid #000; }
 
-.footer {
-  text-align: center;
-}
-
 .footer > tbody > tr > td > table {
   width: 98%;
   margin: 0 auto;
@@ -410,7 +428,7 @@ td.version:hover {
   background-color: #777;
 }
 
-.packages .version.noversion {
+.packages .version.noversion, .footer, .maintenance, .fp-banner {
   text-align: center;
 }
 

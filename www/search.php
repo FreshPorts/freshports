@@ -304,7 +304,7 @@ if ($output_format == OUTPUT_FORMAT_HTML) {
   <tr>
 	<? echo freshports_PageBannerText("Search FreshPorts using Google"); ?>
   </tr>
-<tr><td valign="top">
+<tr><td><div class="gcse-search"></div>
 <?
 } // end of HTML only output
 
@@ -884,7 +884,7 @@ if ($output_format == OUTPUT_FORMAT_HTML) {
   <tr>
 	<? echo freshports_PageBannerText("The FreshPorts Search"); ?>
   </tr>
-<tr><td valign="top">
+<tr><td>
 
 
 <form ACTION="<? echo $_SERVER["PHP_SELF"] ?>" name="search" >
@@ -928,15 +928,15 @@ if ($output_format == OUTPUT_FORMAT_HTML) {
 
 	<BR><br>
 
-<table cellpadding="5" class="bordered">
+<table class="search-options bordered">
 <tr>
-<td valign="middle">
+<td>
 	<INPUT TYPE=checkbox <? if ($deleted == INCLUDE_DELETED_PORTS) echo 'CHECKED'; ?> VALUE=<?php echo INCLUDE_DELETED_PORTS; ?> NAME=deleted> Include deleted ports
 </td>
-<td valign="middle">
+<td>
 	<INPUT TYPE=checkbox <? if ($casesensitivity == "casesensitive")   echo 'CHECKED'; ?> VALUE=casesensitive   NAME=casesensitivity> Case sensitive search
 </td>
-<td valign="middle">
+<td>
 	Sort by: <SELECT name="orderby">
 		<OPTION VALUE="<?php echo ORDERBYPORT;       ?>" <?if ($orderby == ORDERBYPORT       ) echo 'SELECTED' ?>>Port
 		<OPTION VALUE="<?php echo ORDERBYCATEGORY;   ?>" <?if ($orderby == ORDERBYCATEGORY   ) echo 'SELECTED' ?>>Category
@@ -1150,7 +1150,7 @@ echo freshports_ShowFooter();
 
 ?>
 <? if (!IsSet($_REQUEST['query'])) { ?>
-<script language="JavaScript" type="text/javascript">
+<script type="text/javascript">
 <!--
 document.search.query.focus();
 // -->

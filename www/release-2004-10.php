@@ -157,7 +157,7 @@ by the Revision Details icon (<?php echo freshports_Revision_Icon(); ?>).
 The <a href="/search.php">search page</a> now allows you to search by 
 the following fields.
 <blockquote>
-<table cellpadding="5" class="borderless">
+<table class="borderless">
 <tr><td><b>Field</b></td><td><b>Origin</b></td></tr>
 <tr><td>Port Name</td><td><code class="code">PORTNAME</code></td></tr>
 <tr><td>Package Name</td><td><code class="code">PKGNAME</code></td></tr>

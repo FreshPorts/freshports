@@ -413,7 +413,7 @@ td.version:hover {
   color: white;
 }
 
-.packages .version.noversion, .footer, .maintenance {
+.packages .version.noversion, .footer, .maintenance, .fp-banner {
   text-align: center;
 }
 

@@ -39,9 +39,9 @@ for a full list of features.  The following is a short list of some of the chang
 </P>
 
 
-<TABLE class="fullwidth" CELLPADDING="4" CELLSPACING="4">
+<TABLE class="announce-notes fullwidth">
 <TR>
-<TD NOWRAP VALIGN="top" ALIGN="right"><B>Face lift</B></TD>
+<TH>Face lift</TH>
 	<TD>
 	I think you can see that the fonts
 	have changed, and some page layouts are different.  It's
@@ -49,43 +49,43 @@ for a full list of features.  The following is a short list of some of the chang
 	</TD></TR>
 
 <TR>
-<TD NOWRAP VALIGN="top" ALIGN="right"><B>full commit messages</B></TD>
+<TH>full commit messages</TH>
     <TD>The switch to XML input allows us to capture more data.  And provide
 	you with a link to the original commit message.  <? echo freshports_Mail_Icon(); ?>
 	</TD></TR>
 
 <TR>
-<TD NOWRAP VALIGN="top" ALIGN="right"><B>directory structure</B></TD>
+<TH>directory structure</TH>
     <TD>You know the path to your favourite ports via /usr/ports.  Use the
         same path in FreshPorts (e.g <A HREF="/sysutils/portupgrade/">sysutils/portupgrade</A>).
     </TD></TR>
 
 <TR>
-<TD NOWRAP VALIGN="top" ALIGN="right"><B>one-click add/remove</B></TD>
+<TH>one-click add/remove</TH>
     <TD>See a port you like? You can add it to your watch list with
         a single click. <? echo freshports_Watch_Icon_Add(); ?>
     </TD></TR>
 
 <TR>
-<TD NOWRAP VALIGN="top" ALIGN="right"><B>link to commit details</B></TD>
+<TH>link to commit details</TH>
     <TD>Want to know what files were changed in this commit?  It's now
     just one click away.  One more click will take to you the FreeBSD
     CVS repository. <? echo freshports_Files_Icon(); ?>
 	</TD></TR>
 
 <TR>
-<TD NOWRAP VALIGN="top" ALIGN="right"><B>pkg_info == watch list</B></TD>
+<TH>pkg_info == watch list</TH>
     <TD>pkg_info displays list of the ports installed
         on your system.  Now you can use <A HREF="/pkg_upload.php">our scripts</A>
         to use this data to upgrade your watch list!
     </TD></TR>
 
 <TR>
-<TD NOWRAP VALIGN="top" ALIGN="right"><B>Search</B></TD>
+<TH>Search</TH>
     <TD>There is now a search on the front page.. in fact, it should be on every page!</TD></TR>
 
 <TR>
-<TD NOWRAP VALIGN="top" ALIGN="right"><B>Graphs are back</B></TD>
+<TH>Graphs are back</TH>
     <TD>We've improved the <A HREF="/graphs.php">graphs</A>.  They are now data driven.  All we need to do is
 		add the SQL to the database, and your query is there.  Just ask us for what you want.!</TD></TR>
 </TABLE>
@@ -93,9 +93,9 @@ for a full list of features.  The following is a short list of some of the chang
 <H2>Technical changes</H2>
 The following items deal with the technical changes which have occurred.
 
-<TABLE class="fullwidth" CELLPADDING="4" CELLSPACING="4">
+<TABLE class="announce-notes fullwidth">
 <TR>
-<TD NOWRAP VALIGN="top" ALIGN="right"><B>database</B></TD>
+<TH>database</TH>
 	<TD>
 	FreshPorts now uses <A HREF="https://www.postgresql.org/">PostgreSQL</A>.  Why?  Because
 	of stored procedures and transactions (yes, we know mySQL now has transactions, but it
@@ -103,7 +103,7 @@ The following items deal with the technical changes which have occurred.
 	</TD></TR>
 
 <TR>
-<TD NOWRAP VALIGN="top" ALIGN="right"><B>XML</B></TD>
+<TH>XML</TH>
 	<TD>
 	Input for FreshPorts is first converted to XML, then processed.  This will be of great
 	benefit to <A HREF="https://www.FreshSource.org/">FreshSource</A> which is the next big

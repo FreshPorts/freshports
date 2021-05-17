@@ -86,6 +86,21 @@ td.content {
   padding: 5px;
 }
 
+.announce-notes {
+  border-spacing: 4px;
+}
+
+.announce-notes td, .announce-notes th {
+  padding: 4px;
+}
+
+.announce-notes th {
+  font-weight: bold;
+  text-align: right;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
 .commit-list td:first-child, .commit-list th:first-child {
   width: 180px;
 }

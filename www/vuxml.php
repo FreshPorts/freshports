@@ -23,6 +23,7 @@
 
 		$vidArray = explode('|', $vid);
 	}
+	echo HTML_DOCTYPE;
 ?>
 <html lang="en">
 <head>

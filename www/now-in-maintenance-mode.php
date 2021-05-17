@@ -49,7 +49,7 @@ The website is now in maintenance mode. No updates are allowed during this proce
 This page will reload every <?php echo MAINTENANCE_MODE_RERESH_TIME_SECONDS; ?> seconds. When maintence mode finishes, this page will be redirect to the home page.
 </p>
 
-<p align="center">
+<p class="maintenance">
 <img src="images/work-in-progress.jpg" width="640" height="480" alt="work in progress">
 </p>
 

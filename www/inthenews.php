@@ -26,7 +26,7 @@
   </tr>
 
 <TR>
-<TD VALIGN="top">
+<TD>
 <p>This page is just a place for me to record the <? echo $FreshPortsTitle; ?> articles which appear
 on other sites.  Links are recorded in reverse chronological order (i.e. newest first).
 </p>

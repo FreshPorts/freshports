@@ -25,17 +25,16 @@
 
 	<?php echo freshports_MainContentTable(NOBORDER); ?>
   <TR>
-    <TD class="accent" height="32">LEGAL NOTICE</TD>
+    <TD class="accent">LEGAL NOTICE</TD>
   </TR>
   <TR><TD>This page contains our obligatory legal notice.  I really don't like having to say
           these things, but given the nature of some people, I must.  For the rest of you,
           if you respect my work and my right to it, you'll have no problem.  Thanks.
   </TD></TR>
-  <TR><TD height="20"></TD></TR>
   <TR>
-    <TD class="accent" height="32">COPYRIGHT</TD>
+    <TD class="accent">COPYRIGHT</TD>
   </TR>
-  <TR><TD>
+  <TR><TD class="textcontent">
   <p>Copyright <?php echo COPYRIGHTYEARS; ?> Dan Langille All rights reserved.&nbsp; Copyright in
   this document is owned by Dan Langille. &nbsp; Any person is hereby authorized to
   view, copy, print, and distribute this document subject to the following conditions: <ol>
@@ -47,9 +46,8 @@
   subject of other Intellectual Property rights reserved by Dan Langille and are not
   licensed hereunder.</p>
   </TD></TR>
-  <TR><TD height="20"></TD></TR>
   <TR>
-    <TD class="accent" height="32">CONTENT AND LIABILITY DISCLAIMER</TD>
+    <TD class="accent">CONTENT AND LIABILITY DISCLAIMER</TD>
   </TR>
   <TR><TD>
   <p>Dan Langille shall not be responsible for any errors or omissions contained at
@@ -66,9 +64,8 @@
   contained in it, whether such damages arise in contract, negligence, tort, under statute,
   in equity, at law or otherwise. </p>
   </TD></TR>
-  <TR><TD height="20"></TD></TR>
   <TR>
-    <TD class="accent" height="32">FEEDBACK INFORMATION</TD>
+    <TD class="accent">FEEDBACK INFORMATION</TD>
   </TR>
   <TR><TD>
   <p>Any information provided to Dan Langille in connection with any Dan Langille
@@ -76,9 +73,8 @@
   on a non-confidential basis. Dan Langille shall be free to use such information on
   an unrestricted basis. </p>
   </TD></TR>
-  <TR><TD height="20"></TD></TR>
   <TR>
-    <TD class="accent" height="32">TRADEMARKS</TD>
+    <TD class="accent">TRADEMARKS</TD>
   </TR>
   <TR><TD>
   <p>All Dan Langille's product names are trademarks or registered trademarks of Dan Langille

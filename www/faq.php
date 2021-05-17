@@ -464,7 +464,7 @@ of a link to a page of commits for that day.
 
 Here are a few examples:
 <blockquote>
-<table class="bordered" CELLPADDING="5">
+<table class="bordered">
 <tr>
 <td><b>Description</b></td>
 <td nowrap valign="top"><b>URL</b></td>
@@ -686,7 +686,7 @@ if you can provide a URL that exercises all the options that require testing.
    <P>
 	For those familiar with the FreeBSD ports structure, the following fields indicate their origin:
 
-<table cellpadding="5" class="borderless">
+<table class="borderless">
 <tr><td><b>Field</b></td><td><b>Origin</b></td></tr>
 <tr><td>Port Name</td><td><code class="code">PORTNAME</code></td></tr>
 <tr><td>Package Name</td><td><code class="code">PKGNAME</code></td></tr>

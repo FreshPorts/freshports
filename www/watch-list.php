@@ -20,7 +20,7 @@
 	if ($_POST["Origin"]) {
 		$Origin = pg_escape_string($_POST["Origin"]);
 	} else {
-		$Origin = $_SERVER["HTTP_REFERER"];
+		$Origin = $_SERVER["HTTP_REFERER"] ? $_SERVER["HTTP_REFERER"] : '/';
 	}
 	$Redirect = 1;
 #phpinfo();

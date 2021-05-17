@@ -238,7 +238,7 @@ class port_display {
           if (!empty($link)) {
             $link = '<a href="' . $link . '">' . $link_title . '</a>';
           } else {
-            $link = '<strike>SVNWeb</strike>';
+            $link = '<del>SVNWeb</del>';
           }
 
           return $link;
@@ -301,7 +301,7 @@ class port_display {
           if (!empty($link)) {
             $link = '<a href="' . $link . '">' . $link_title . '</a>';
           } else {
-            $link = '<strike>git</strike>';
+            $link = '<del>git</del>';
           }
 
           # echo 'returning ' . $link . '<br>';

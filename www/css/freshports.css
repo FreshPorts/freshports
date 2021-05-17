@@ -81,6 +81,7 @@ td.content {
 .ports-moved td, .ports-moved th,
 .ports-updating td, .ports-updating th,
 .files-list td, .files-list th,
+.search-options td, .search-options th,
 .textcontent table td, .textcontent table th {
   padding: 5px;
 }

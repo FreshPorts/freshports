@@ -297,7 +297,7 @@ ORDER BY port, element_pathname";
 
 
 				$PortURL = '<a href="/' . $clean['category'] . '/' . $clean['port'] . '/">' . $clean['category'] . '/' . $clean['port'] . '</a>';
-				$HTML .=  '<p>Showing files for just one port: <big><b>' . $PortURL . '</b></big></p>';
+				$HTML .=  '<p>Showing files for just one port: <span class="element-details">' . $PortURL . '</span></p>';
 				$HTML .=  "<p>$ShowAllFilesURL</p>";
 			} # FilesForJustOnePort
 

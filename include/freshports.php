@@ -246,7 +246,7 @@ function freshports_link_text_to_port_single($text, $CategoryName, $PortName, $B
 	// This differs from freshports_link_to_port_single in the link text is not necessarily the port name.
 
 	$HTML = '';
-	$HTML .= $text . ' : <a href="/' . $CategoryName . '/' . freshports_strip_port_suffix($PortName) . '/';
+	$HTML .= htmlentities($text) . ' : <a href="/' . $CategoryName . '/' . freshports_strip_port_suffix($PortName) . '/';
 	if ($BranchName != BRANCH_HEAD) {
 	  $HTML .= '?branch=' . htmlentities($BranchName);
 	}

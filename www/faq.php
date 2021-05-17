@@ -247,6 +247,9 @@ down you must read to find something you didn't already know.</P>
 	<P id="fallout"><?php echo freshports_Fallout_Icon(); ?>
 		Fallout: a link to search the pkg-fallout archives for this port.</P>
 
+	<P id="repology"><?php echo freshports_Repology_Icon(); ?>
+		Repology: a link to search the Repology packaging hub for this port.</P>
+
 	<P id="bugs-find"><?php echo freshports_Bugs_Find_Icon(); ?>
 		Find Bugs: a link to search for open Problem Reports (issues/bugs) for this port.</P>
 

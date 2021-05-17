@@ -42,7 +42,7 @@ class FilesDisplay {
 		}
 
 		$this->HTML .= '
-<table class="fullwidth bordered" CELLPADDING="5">
+<table class="files-list fullwidth bordered">
 <TR>
 ';
 		switch ($NumRows) {
@@ -64,7 +64,7 @@ class FilesDisplay {
 
 		$this->HTML .= "
 		<TR>
-			<TD><b>Action</b></TD><TD><B>Revision</B></TD><td><b>Annotate/etc</b></td><TD><b>File</b></TD>
+			<th>Action</th><th>Revision</th><th>Annotate/etc</th><th>File</th>
 		</TR>\n";
 
 		for ($i = 0; $i < $NumRows; $i++) {
@@ -99,7 +99,7 @@ class FilesDisplay {
 			$this->HTML .= '  <TD>' . $myrow["revision_name"];
             $this->HTML .= "</TD>";
             
-            $this->HTML .= '<td valign="middle">';
+            $this->HTML .= '<td>';
 #           switch($WhichRepo)
             switch($myrow['repository'])
             {
@@ -158,7 +158,7 @@ class FilesDisplay {
             }
 
             $this->HTML .= '</td>';
-            $this->HTML .= '  <TD WIDTH="100%" VALIGN="middle">';
+            $this->HTML .= '  <TD>';
             
 #           switch($WhichRepo)
             switch($myrow['repository'])

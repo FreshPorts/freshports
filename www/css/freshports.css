@@ -73,18 +73,23 @@ td.content {
   margin: 1px;
 }
 
-.commit-list th {
+.commit-list th, .files-list th {
   text-align: left;
 }
 
 .commit-list td, .commit-list th,
 .ports-moved td, .ports-moved th,
-.ports-updating td, .ports-updating th {
+.ports-updating td, .ports-updating th,
+.files-list td, .files-list th {
   padding: 5px;
 }
 
 .commit-list td:first-child, .commit-list th:first-child {
   width: 180px;
+}
+
+.files-list td:last-child {
+  width: 100%;
 }
 
 .commit-details {

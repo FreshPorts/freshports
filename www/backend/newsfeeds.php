@@ -19,7 +19,7 @@
 	$page->setTitle('Newsfeeds');
 
 	$page->addBodyContent('
-	</tr><TR><TD valign="top">
+	</tr><TR><TD>
 	We have five newsfeeds:
 	');
 
@@ -38,7 +38,7 @@
 	$HREF = "<A HREF=\"$URL\">$URL</A>";
 	$page->addBodyContent($HREF . '
 	
-	<p>This RSS feed takes the following optional parameters:
+	<p>This RSS feed takes the following optional parameters:</p>
 	<ul>
 	<li><b>flavor=new</b> : show only new ports (ignores <b>branch</b>).</li>
 	<li><b>flavor=broken</b> : show only new ports (ignores <b>branch</b>).</li>
@@ -47,13 +47,13 @@
 	</ul>
 	<p>
 	Sample URLs include:
+	</p>
 	<ol>
 	<li>' . $URL . 'html.php?branch=2018Q4</li>
 	<li>' . $URL . 'html.php?branch=quarterly</li>
 	<li>' . $URL . 'html.php?flavor=broken</li>
 	<li>' . $URL . 'html.php?flavor=new</li>
 	</ol>
-	</p>
 
 	</LI>');
 

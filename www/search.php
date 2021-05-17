@@ -304,7 +304,7 @@ if ($output_format == OUTPUT_FORMAT_HTML) {
   <tr>
 	<? echo freshports_PageBannerText("Search FreshPorts using Google"); ?>
   </tr>
-<tr><td valign="top">
+<tr><td><div class="gcse-search"></div>
 <?
 } // end of HTML only output
 

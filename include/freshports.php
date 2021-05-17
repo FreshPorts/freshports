@@ -525,7 +525,7 @@ function freshports_Encoding_Errors() {
 }
 
 function freshports_Encoding_Errors_Link() {
-	return '<a href="/' . FAQLINK . '#encodingerrors">' . freshports_Encoding_Errors() . '<a>';
+	return '<a href="/' . FAQLINK . '#encodingerrors">' . freshports_Encoding_Errors() . '</a>';
 }
 
 function freshports_Repology_Icon() {

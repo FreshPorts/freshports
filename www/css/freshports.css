@@ -424,9 +424,23 @@ table.bordered > tbody > tr > td, table.bordered > tbody > tr > th {
   border: 1px inset black;
 }
 
-td.version:hover {
+td.version:hover, td.version:focus {
   background-color: #777;
   color: white;
+  position: relative;
+}
+
+td.version:hover::after, td.version:focus::after {
+  content: attr(data-title);
+  position: absolute;
+  width: auto;
+  padding: .5em;
+  border: 1px solid black;
+  font-family: monospace;
+  text-align: left;
+  white-space: pre;
+  background-color: white;
+  color: black;
 }
 
 .packages .version.noversion, .footer, .maintenance, .fp-banner {

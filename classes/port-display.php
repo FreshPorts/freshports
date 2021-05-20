@@ -508,7 +508,7 @@ class port_display {
 		# repo_date       - date on packagesite.txz (e.g. https://pkg.freebsd.org/FreeBSD:11:amd64/latest/
 		# processed_date  - when the above mentioned data was last parsed into FreshPorts
 
-		$title = "Repo dates\n";
+		$title = "Repo dates\n\n";
 		if (empty($repo_date)) {
 			$title .= "repo not found\n";
 		} else {
@@ -527,7 +527,7 @@ class port_display {
 			$title .= $last_checked . " - last checked by FreshPorts\n";
 		}
 
-		$title .= "All times are UTC";
+		$title .= "\nAll times are UTC";
 
 		return $title;
 	}

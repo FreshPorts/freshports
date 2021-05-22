@@ -1743,7 +1743,7 @@ Valid
 		$HTML .= freshports_GoogleAnalytics();
 	}
 	
-	$HTML .= '<script src="/javascript/freshports.js" type="text/javascript"></script>';
+	$HTML .= '<script src="/javascript/freshports.js"></script>';
 
 	$Statistics->Save();
 
@@ -1751,9 +1751,9 @@ Valid
 }
 
 function freshports_GoogleAnalytics() {
-	$HTML = '<script src="https://www.google-analytics.com/urchin.js" type="text/javascript">
+	$HTML = '<script src="https://www.google-analytics.com/urchin.js">
 </script>
-<script type="text/javascript">
+<script>
 _uacct = "UA-408525-1";
 urchinTracker();
 </script>

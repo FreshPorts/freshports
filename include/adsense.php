@@ -10,7 +10,7 @@
 function AdSense120x600() {
 
 return '
-<script type="text/javascript"><!--
+<script><!--
 google_ad_client = "pub-0711826105743221";
 google_ad_width = 120;
 google_ad_height = 600;
@@ -23,7 +23,7 @@ google_color_link = "000000";
 google_color_url = "000099";
 google_color_text = "003366";
 //--></script>
-<script type="text/javascript"
+<script
   src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>
 ';
@@ -32,7 +32,7 @@ google_color_text = "003366";
 function AdSense125x125() {
 
 return '
-<script type="text/javascript"><!--
+<script><!--
 google_ad_client = "pub-0711826105743221";
 google_ad_width = 125;
 google_ad_height = 125;
@@ -45,7 +45,7 @@ google_color_link = "000000";
 google_color_url = "000099";
 google_color_text = "003366";
 //--></script>
-<script type="text/javascript"
+<script
   src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>
 ';
@@ -54,7 +54,7 @@ google_color_text = "003366";
 function AdSense160x600() {
 
 return '
-<script type="text/javascript"><!--
+<script><!--
 google_ad_client = "pub-0711826105743221";
 google_ad_width = 160;
 google_ad_height = 600;
@@ -67,7 +67,7 @@ google_color_link = "000000";
 google_color_url = "000099";
 google_color_text = "003366";
 //--></script>
-<script type="text/javascript"
+<script
   src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>
 ';
@@ -76,7 +76,7 @@ google_color_text = "003366";
 function AdSense300x250() {
 
 return '
-<script type="text/javascript"><!--
+<script><!--
 google_ad_client = "pub-0711826105743221";
 google_ad_width = 300;
 google_ad_height = 250;
@@ -89,7 +89,7 @@ google_color_link = "000000";
 google_color_url = "000099";
 google_color_text = "003366";
 //--></script>
-<script type="text/javascript"
+<script
   src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>
 ';
@@ -98,7 +98,7 @@ google_color_text = "003366";
 function AdSense468x60() {
 
 return '
-<script type="text/javascript"><!--
+<script><!--
 google_ad_client = "pub-0711826105743221";
 google_ad_width = 468;
 google_ad_height = 60;
@@ -111,7 +111,7 @@ google_color_link = "000000";
 google_color_url = "000099";
 google_color_text = "003366";
 //--></script>
-<script type="text/javascript"
+<script
   src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>
 ';
@@ -120,7 +120,7 @@ google_color_text = "003366";
 function AdSense728x90() {
 
 return '
-<script type="text/javascript"><!--
+<script><!--
 google_ad_client = "pub-0711826105743221";
 google_alternate_color = "FFFFFF";
 google_ad_width = 728;
@@ -134,7 +134,7 @@ google_color_link = "0000FF";
 google_color_url = "008000";
 google_color_text = "000000";
 //--></script>
-<script type="text/javascript"
+<script
   src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>
  ';

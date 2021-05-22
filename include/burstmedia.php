@@ -13,7 +13,7 @@ function BurstMediaAd() {
 return '
 
 <!-- BEGIN RICH-MEDIA BURST! CODE -->
-<script type="text/javascript">
+<script>
 rnum=Math.round(Math.random() * 100000);
 
 document.write(\'<scr\'+\'ipt src="http://www.burstnet.com/cgi-bin/ads/ad4556a.cgi/v=2.0S/sz=468x60A|728x90A/\'+rnum+\'/NI/RETURN-CODE/JS/"><\/scr\'+\'ipt>\');
@@ -34,7 +34,7 @@ function BurstSkyscraperAd() {
 return '
 
 <!-- BEGIN RICH-MEDIA BURST! CODE -->
-<script type="text/javascript">
+<script>
 rnum=Math.round(Math.random() * 100000);
 document.write(\'<scr\'+\'ipt src="http://www.burstnet.com/cgi-bin/ads/sk4556a.cgi/v=2.0S/sz=120x600A|160x600A/\'+rnum+\'/RETURN-CODE/JS/"><\/scr\'+\'ipt>\');
 </script>
@@ -55,7 +55,7 @@ function Burst_125x125() {
 return '
 
 <!-- BEGIN RICH-MEDIA BURST! CODE -->
-<script type="text/javascript">
+<script>
 rnum=Math.round(Math.random() * 100000);
 document.write(\'<scr\'+\'ipt src="http://www.burstnet.com/cgi-bin/ads/cb4556a.cgi/v=2.0S/sz=125x125A/\'+rnum+\'/RETURN-CODE/JS/"><\/scr\'+\'ipt>\');
 </script>
@@ -72,7 +72,7 @@ function Burst_468x60_Below() {
 return '
 
 <!-- BEGIN RICH-MEDIA BURST! CODE -->
-<script type="text/javascript">
+<script>
 rnum=Math.round(Math.random() * 100000);
 document.write(\'<scr\'+\'ipt src="http://www.burstnet.com/cgi-bin/ads/ba4556a.cgi/v=2.0S/sz=468x60B/\'+rnum+\'/RETURN-CODE/JS/"><\/scr\'+\'ipt>\');
 </script>
@@ -92,7 +92,7 @@ GLOBAL $ShowAds;
 return '
 
 <!-- BEGIN RICH-MEDIA BURST! CODE -->
-<script type="text/javascript">
+<script>
 rnum=Math.round(Math.random() * 100000);
 document.write(\'<scr\'+\'ipt src="http://www.burstnet.com/cgi-bin/ads/ad4556a.cgi/v=2.0S/sz=300x250A/\'+rnum+\'/RETURN-CODE/JS/"><\/scr\'+\'ipt>\');
 </script>

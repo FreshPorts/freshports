@@ -20,13 +20,13 @@ function Ad_PhpPgAdsBase($Zone, $N) {
 
   return 
 '
-<script language=\'JavaScript\' type=\'text/javascript\' src=\'http://ads.unixathome.org/phpPgAds/adx.js\'></script>
-<script language=\'JavaScript\' type=\'text/javascript\'>
+<script src=\'http://ads.unixathome.org/phpPgAds/adx.js\'></script>
+<script>
 <!--
    if (!document.phpAds_used) document.phpAds_used = \',\';
    phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
    
-   document.write ("<" + "script language=\'JavaScript\' type=\'text/javascript\' src=\'");
+   document.write ("<" + "script src=\'");
    document.write ("http://ads.unixathome.org/phpPgAds/adjs.php?n=" + phpAds_random);
    document.write ("&amp;what=zone:' . $Zone . '");
    document.write ("&amp;exclude=" + document.phpAds_used);
@@ -44,7 +44,7 @@ function Ad_125x125() {
 
 function Ad_468x60() {
 #  return Ad_PhpPgAdsBase(44, 'addffeb2');
-return '<script type="text/javascript"><!--
+return '<script><!--
 google_ad_client = "pub-0711826105743221";
 google_alternate_ad_url = "http://ads.unixathome.org/AdSense/defaults/728x90.html";
 google_ad_width = 728;
@@ -58,14 +58,14 @@ google_color_link = "000000";
 google_color_url = "000099";
 google_color_text = "003366";
 //--></script>
-<script type="text/javascript"
+<script
   src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>';
 }
 
 function Ad_728x90() {
 #  return Ad_PhpPgAdsBase(42, 'a6a018dd');
-  return '<script type="text/javascript"><!--
+  return '<script><!--
   google_ad_client = "pub-0711826105743221";
   google_alternate_ad_url = "http://ads.unixathome.org/AdSense/defaults/728x90.html";
   google_ad_width = 728;
@@ -79,13 +79,13 @@ function Ad_728x90() {
   google_color_url = "000099";
   google_color_text = "003366";
   //--></script>
-  <script type="text/javascript"
+  <script
     src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
     </script>';
 }
 
 function Ad_728x90PortDescription() {
-return '<script type="text/javascript"><!--
+return '<script><!--
 google_ad_client = "pub-0711826105743221";
 google_alternate_ad_url = "http://ads.unixathome.org/AdSense/defaults/728x90.html";
 google_ad_width = 728;
@@ -99,7 +99,7 @@ google_color_link = "000000";
 google_color_url = "000099";
 google_color_text = "003366";
 //--></script>
-<script type="text/javascript"
+<script
   src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>';
 }

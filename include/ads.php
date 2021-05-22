@@ -35,7 +35,7 @@
 function Ad_Referral_120x60() {
   if (rand(0,1) == 1) {
   return '
-  <script type="text/javascript"><!--
+  <script><!--
   google_ad_client = "pub-0711826105743221";
   google_ad_width = 120;
   google_ad_height = 60;
@@ -43,12 +43,12 @@ function Ad_Referral_120x60() {
   google_cpa_choice = "CAAQrNukgwIaCDvcYORRSkDWKKTP6n4";
   google_ad_channel = "7878385579";
   //--></script>
-  <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+  <script src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
   </script>
   ';
   } else {
   return '
-  <script type="text/javascript"><!--
+  <script><!--
   google_ad_client = "pub-0711826105743221";
   google_ad_width = 120;
   google_ad_height = 60;
@@ -56,7 +56,7 @@ function Ad_Referral_120x60() {
   google_cpa_choice = "CAAQzdGWhAIaCAhe1XbaOP58KIHD93M";
   google_ad_channel = "7878385579";
   //--></script>
-  <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+  <script src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
   </script>
   ';
   }

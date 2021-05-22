@@ -436,7 +436,7 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 	
 	$ExtraScript = "
-<script type=\"text/javascript\">
+<script>
 var sheet = document.createElement('style')
 sheet.innerHTML = \".more {display: none;}\";
 document.body.appendChild(sheet);

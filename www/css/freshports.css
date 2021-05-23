@@ -95,6 +95,7 @@ td.content {
 .ports-updating td, .ports-updating th,
 .files-list td, .files-list th,
 .search-options td, .search-options th,
+.spam-info td, .spam-info th,
 .textcontent table td, .textcontent table th {
   padding: 5px;
 }
@@ -224,6 +225,10 @@ td.captcha {
 
 .captcha table {
   margin: auto;
+}
+
+.spam-info {
+  margin-top: 1em;
 }
 
 IMG#fp-logo { max-width: 100%; height: auto }

@@ -98,7 +98,7 @@ if (IsSet($submit)) {
 	if ($OK) {
 		// get the existing email in case we need to reset the bounce count
 		$sql = "select email from users where cookie = '$visitor'";
-		$result = pg_exec($db, $sql);
+		$result = pg_query($db, $sql);
 		if ($result) {
 			$myrow = pg_fetch_array ($result, 0);
 
@@ -122,10 +122,10 @@ UPDATE users
 			$sql .= " where cookie = '$visitor'";
 
 			if ($Debug) {
-				echo '<pre>' . htmlentities($sql) . '</ore>';
+				echo '<pre>' . htmlentities($sql) . '</pre>';
 			}
 
-			$result = pg_exec($db, $sql);
+			$result = pg_query($db, $sql);
 			if ($result) {
 				$AccountModified = 1;
 			}
@@ -158,54 +158,32 @@ UPDATE users
 	freshports_Start($Title,
 						$Title,
 						'FreeBSD, index, applications, ports');
+	echo freshports_MainTable();
 ?>
 
-<TABLE class="fullwidth borderless" ALIGN="center">
 <TR><td class="content">
-<TABLE class="fullwidth borderless">
-  <TR>
-    <TD height="20"><?php
-
+<?php echo freshports_MainContentTable(NOBORDER);
 
 if ($errors) {
-echo '<TABLE class="fullwidth borderless">
+echo '<TR><TD class="accent">Access Code Failed!</TD></TR>
 <TR>
 <TD>
-<TABLE class="fullwidth borderless">
-<TR class="accent"><TD><b>Access Code Failed!</b></TD>
-</TR>
-<TR>
-<TD>
-  <TABLE class="fullwidth borderless" CELLPADDING="3">
-  <TR VALIGN=top>
-   <TD><img src="/images/warning.gif"></TD>
-   <TD width="100%">
-  <p>Some errors have occurred which must be corrected before your login can be created.</p>';
+   <TD class="textcontent"><p><img src="/images/warning.gif"> Some errors have occurred which must be corrected before your login can be created.</p>';
 
 echo $errors;
 
 echo '<p>If you need help, please email postmaster@. </p>
- </TD>
- </TR>
- </TABLE>
 </TD>
-</TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>
-<br>';
+</TR>';
 }
 if ($AccountModified) {
-   echo "Your account details were successfully updated.";
+echo '<TR><TD class="accent">Account updated!</TD></TR>
+   <tr><td class="textcontent">Your account details were successfully updated.</td></tr>';
 } else {
 
-echo '<TABLE class="fullwidth borderless">
+echo '
 <TR>
-<TD VALIGN="top">
-<TABLE class="fullwidth borderless">
-<TR>
-<td class="accent"><BIG>Customize</BIG></td>
+<td class="accent"><span>Customize</span></td>
 </TR>
 <TR>
 <TD>';
@@ -218,19 +196,18 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/new-user.php');
 
 echo "</TD>
 </TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>";
+";
 }
 
 ?>
 
-<p>
+<tr>
+<td>
 
 <?php require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/spam-filter-information.php'); ?>
 
 </TD>
+</TR>
 </TABLE>
 </td>
 

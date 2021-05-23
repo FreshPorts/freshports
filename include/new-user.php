@@ -9,9 +9,9 @@
 ?>
 
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
-<TABLE width="*" class="borderless">
+<TABLE class="borderless">
           <TR>
-            <TD VALIGN="top">
+            <TD>
 <?php if (IsSet($Customize)) { ?>
                Current password:<br>
                <INPUT TYPE="PASSWORD" NAME="Password" VALUE="<?php if (IsSet($Password)) echo htmlentities($Password) ?>" size="20"><br><br>
@@ -70,10 +70,10 @@ if ( $_SERVER['SCRIPT_NAME'] == '/new-user.php' )
 {
 ?>
 
-<tr><td align="center">CAPTCHA:<br>
+<tr><td class="captcha">CAPTCHA:<br>
   (antispam code, 3 black symbols)<br>
   <table><tr><td><img src="/images/captcha/captcha.php" alt="captcha image"></td><td><input type="text" name="captcha" size="3" maxlength="3"></td></tr></table>
-</td></tr>
+</td><td></td></tr>
 <?php
 }
 ?>    
@@ -85,6 +85,6 @@ if ( $_SERVER['SCRIPT_NAME'] != '/new-user.php' )
 {
 ?>
 <p>For your reporting needs, please visit <A HREF="/report-subscriptions.php">Report Subscriptions</A>.</p>
-<h2><a href="/delete-account.php"><big>Delete my account</big></a></h2>
+<h2><a href="/delete-account.php">Delete my account</a></h2>
 <?php
 }

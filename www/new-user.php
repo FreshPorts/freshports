@@ -185,15 +185,11 @@ echo '<TABLE class="fullwidth borderless">
 <TR>
 <TD>
 <TABLE class="fullwidth borderless">
-<TR class="accent"><TD><B>Access Code Failed!</B></TD>
+<TR class="accent"><TD>Access Code Failed!</TD>
 </TR>
 <TR>
 <TD>
-  <TABLE class="fullwidth borderless" CELLPADDING=3>
-  <TR VALIGN=top>
-   <TD><IMG SRC="/images/warning.gif"></TD>
-   <TD WIDTH=100%>
-  <p>Some errors have occurred which must be corrected before your login can be created.</p>';
+  <p><IMG SRC="/images/warning.gif"> Some errors have occurred which must be corrected before your login can be created.</p>';
 
 /*
   while (list($name, $value) = each($HTTP_POST_VARS)) {
@@ -203,9 +199,6 @@ echo '<TABLE class="fullwidth borderless">
 echo $errors;
 
 echo '<p>If you need help, please email postmaster@. </p>
- </TD>
- </TR>
- </TABLE>
 </TD>
 </TR>
 </TABLE>
@@ -229,7 +222,7 @@ echo freshports_MainContentTable();
       <TR>
         <TD>
 
-<P><BIG><BIG>Please observe the following points:</BIG></BIG>
+<p class="element-details"><span>Please observe the following points:</span></p>
 
 <ul>
 <li>

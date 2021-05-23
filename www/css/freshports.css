@@ -218,6 +218,14 @@ td.summary-cell {
   margin: auto;
 }
 
+td.captcha {
+  text-align: center;
+}
+
+.captcha table {
+  margin: auto;
+}
+
 IMG#fp-logo { max-width: 100%; height: auto }
 
 CODE.code { color: #461b7e}

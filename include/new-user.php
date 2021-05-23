@@ -13,25 +13,25 @@
           <TR>
             <TD>
 <?php if (IsSet($Customize)) { ?>
-               Current password:<br>
-               <INPUT TYPE="PASSWORD" NAME="Password" VALUE="<?php if (IsSet($Password)) echo htmlentities($Password) ?>" size="20"><br><br>
+              <label>Current password:<br>
+              <INPUT TYPE="PASSWORD" NAME="Password" VALUE="<?php if (IsSet($Password)) echo htmlentities($Password) ?>" size="20"></label><br><br>
 
 <?php } else { ?>
 
               <INPUT TYPE="hidden" NAME="ADD" VALUE="1">
-              User ID:<br>
-              <INPUT SIZE="15" NAME="UserLogin" VALUE="<?php if (IsSet($UserLogin)) echo htmlentities($UserLogin) ?>" autofocus=""><br><br>
+              <label>User ID:<br>
+              <INPUT SIZE="15" NAME="UserLogin" VALUE="<?php if (IsSet($UserLogin)) echo htmlentities($UserLogin) ?>" autofocus=""></label><br><br>
 <?php } ?>
-               New password:<br>
-               <INPUT TYPE="PASSWORD" NAME="Password1" VALUE="<?php if (IsSet($Password1)) echo htmlentities($Password1) ?>" size="20"><br><br>
-               New password again:<br>
-               <INPUT TYPE="PASSWORD" NAME="Password2" VALUE="<?php if (IsSet($Password2)) echo htmlentities($Password2) ?>" size="20">
+              <label>New password:<br>
+              <INPUT TYPE="PASSWORD" NAME="Password1" VALUE="<?php if (IsSet($Password1)) echo htmlentities($Password1) ?>" size="20"></label><br><br>
+              <label>New password again:<br>
+              <INPUT TYPE="PASSWORD" NAME="Password2" VALUE="<?php if (IsSet($Password2)) echo htmlentities($Password2) ?>" size="20"></label>
             </TD>
-            <TD VALIGN="top">
-               email address (required):<br>
-               <INPUT SIZE="35" NAME="email" VALUE="<?php if (IsSet($email)) echo htmlentities($email) ?>">
+            <TD>
+              <label>Email Address (required):<br>
+              <INPUT type="email" SIZE="35" NAME="email" required VALUE="<?php if (IsSet($email)) echo htmlentities($email) ?>"></label>
 
-Number of Days to show in side-bar: 
+Number of Days to show in side-bar:
 
 <SELECT NAME="numberofdays" size="1">
     <OPTION <?php if ($numberofdays == "0") echo "selected " ?> VALUE="0">0</OPTION>
@@ -46,9 +46,12 @@ Number of Days to show in side-bar:
     <OPTION <?php if ($numberofdays == "9") echo "selected " ?> VALUE="9">9</OPTION>
 </SELECT>
 
+<label>
 Set focus to search box: <input type="checkbox" id="set_focus_search" name="set_focus_search" value="set_focus_search"<?php if ($set_focus_search) echo ' checked'; ?>>
+</label>
 
-<br><br><BR>
+
+<br><br><br>
 
 Number of results to display per page (e.g commits per page):
 <?php
@@ -57,7 +60,7 @@ Number of results to display per page (e.g commits per page):
 	  echo $PageOptions->DDLB_Choices('page_size', $page_size);
 
 ?>
-<br><br><BR>
+<br><br><br>
             <INPUT TYPE="submit" VALUE="<? if (IsSet($Customize)) { echo "update";} else { echo "create";} ?> account" NAME="submit">
             <INPUT TYPE="reset"  VALUE="reset form">
             </TD>

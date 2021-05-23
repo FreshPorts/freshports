@@ -71,24 +71,21 @@
 <?php echo freshports_MainTable(); ?>
 
 <tr><td class="content">
-<table class="fullwidth borderless">
+<?php echo freshports_MainContentTable(NOBORDER); ?>
 <tr>
 	<? echo freshports_PageBannerText($Title); ?>
 </tr>
-<tr><td valign="top">
-<table class="fullwidth borderless">
 <tr><td>
 <?php
 if ($wlid == '') {
 	echo 'You have no watch lists.';
 } else {
 ?>
-These are the ports which are on your <a href="watch-categories.php">watch list</A>. 
-That link also occurs on the right hand side of this page, under Login.
+These are the ports which are on your <a href="/watch-categories.php">watch list</A>.
+That link also appears on the right hand side of this page, under Login.
 <?php
 }
 ?>
-</td><td valign="top" nowrap align="right">
 
 <?php
 
@@ -97,41 +94,35 @@ if ($wlid != '') {
 }
 
 ?>
-
-</td></tr>
-</table>
 </td></tr>
 <?php
 
 // make sure the value for $sort is valid
 
 echo "<tr><td>";
-if ($wlid == '') {
-} else {
-$WatchListDeletedPorts = new WatchListDeletedPorts($db);
-$rowcount = $WatchListDeletedPorts->FetchInitialise($wlid);
-if ($rowcount)
-{
-echo '<hr><p>Some of your watched ports have moved.  You are still watching the old ports.</p>';
-echo '<table class="bordered" cellpadding="5">';
-echo '<tr><td><b>Old Port</b></td><td><b>Replaced by</b></td></tr>';
-for ($i = 0; $i < $rowcount; $i++) {
-	$WatchListDeletedPorts->FetchNth($i);
+if ($wlid) {
+	$WatchListDeletedPorts = new WatchListDeletedPorts($db);
+	$rowcount = $WatchListDeletedPorts->FetchInitialise($wlid);
+	if ($rowcount) {
+		echo '<hr><p>Some of your watched ports have moved.  You are still watching the old ports.</p>';
+		echo '<table class="bordered" cellpadding="5">';
+		echo '<tr><td><b>Old Port</b></td><td><b>Replaced by</b></td></tr>';
+		for ($i = 0; $i < $rowcount; $i++) {
+			$WatchListDeletedPorts->FetchNth($i);
 
-	$OldPort = $WatchListDeletedPorts->category_old . '/' . $WatchListDeletedPorts->name_old;
-	$NewPort = $WatchListDeletedPorts->category_new . '/' . $WatchListDeletedPorts->name_new;
-	$OldURL = '<a href="/' . $OldPort . '/">' . $OldPort . '</a>';
-	$NewURL = '<a href="/' . $NewPort . '/">' . $NewPort . '</a>';
+			$OldPort = $WatchListDeletedPorts->category_old . '/' . $WatchListDeletedPorts->name_old;
+			$NewPort = $WatchListDeletedPorts->category_new . '/' . $WatchListDeletedPorts->name_new;
+			$OldURL = '<a href="/' . $OldPort . '/">' . $OldPort . '</a>';
+			$NewURL = '<a href="/' . $NewPort . '/">' . $NewPort . '</a>';
 
-	echo "<tr><td>$OldURL</td><td>$NewURL</td></td>";
-}
-echo '</table>';
+			echo "<tr><td>$OldURL</td><td>$NewURL</td></td>";
+		}
+		echo '</table>';
 
-echo '<p>You should visit the <i>Replaced By</i> link first, add that port to your watch list, then 
+		echo '<p>You should visit the <i>Replaced By</i> link first, add that port to your watch list, then
 visit the <i>Old Port</i> link and remove it from your watch list. <hr>';
 
-}
-
+	}
 }
 
 if ($wlid != '') {
@@ -176,12 +167,12 @@ echo "</td></tr>\n";
 <?php
 	if ($wlid != '') {
 	if ($OnlyThoseWithUpdatingEntries) {
-		echo '<a href="?updating">View watched ports + entries from </code>/usr/ports/UPDATING</code></a>';
+		echo '<a href="?updating">View watched ports + entries from <code>/usr/ports/UPDATING</code></a>';
 	} else {
 		if ($IncludeUpdating) {
 			echo '<a href="https://' .  $_SERVER['HTTP_HOST'] .  $_SERVER['PHP_SELF'] . '">View all watched ports</a>';
 		} else {
-			echo '<a href="?updating">View all watched ports + entries from </code>/usr/ports/UPDATING</code></a>';
+			echo '<a href="?updating">View all watched ports + entries from <code>/usr/ports/UPDATING</code></a>';
 		}
 	}
 
@@ -190,7 +181,7 @@ echo "</td></tr>\n";
 	if ($OnlyThoseWithUpdatingEntries) {
 		echo '<a href="https://' .  $_SERVER['HTTP_HOST'] .  $_SERVER['PHP_SELF'] . '">View all watched ports.</a>';
 	} else {
-		echo '<a href="?updatingonly">View only watched ports with entries in </code>/usr/ports/UPDATING</code></a>';
+		echo '<a href="?updatingonly">View only watched ports with entries in <code>/usr/ports/UPDATING</code></a>';
 	}
 	}
 
@@ -315,8 +306,8 @@ if ($wlid != '') {
 	$TextNumRowsFound .= ' found';
 
 
-	$TextNumRowsFound .= '</small>';
-	echo "</p>\n<tr><td>";
+	$TextNumRowsFound .= '</small></p>';
+	echo "\n<tr><td>";
 
 	if ($numrows > 0) {
 		// Display the first row count only if there is a port.
@@ -359,7 +350,7 @@ if ($wlid != '') {
 					echo '<DT>';
 				}
 
-				echo '<BIG><BIG><B><a href="/' . $Category . '/">' . $Category . '</a></B></BIG></BIG>';
+				echo '<span class="element-details><span><a href="/' . $Category . '/">' . $Category . '</a></span></span>';
 				if ($ShowCategoryHeaders) {
 					echo "</DT>\n<DD>";
 				}
@@ -393,7 +384,7 @@ if ($wlid != '') {
 		echo '<small> on your watch list (but only showing ' . ($numrows - $NumSkipped) . ')</small>';
 	}
 
-	echo "</p>\n</td></tr>\n";
+	echo "\n</td></tr>\n";
 
 } // end if no wlid
 

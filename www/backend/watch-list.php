@@ -37,7 +37,6 @@ function DisplayNewsFeed($db, $format, $token) {
 function DisplayWatchListNewsFeeds($db, $UserID) {
 	$Debug = 0;
 
-	echo '<h1>These are your newsfeeds</h1>';
 	$WatchLists = new WatchLists($db);
 	$NumRows = $WatchLists->Fetch($UserID);
 
@@ -57,8 +56,6 @@ function DisplayWatchListNewsFeeds($db, $UserID) {
 		}
 	}
 
-	$HTML .= '</select>';
-	
 	$HTML .= "<p>You can use these formats:
 	
 	<ul>
@@ -99,5 +96,35 @@ function DisplayWatchListNewsFeeds($db, $UserID) {
 			exit;  /* Make sure that code below does not get executed when we redirect. */
 		}
 
+		$Title = "Watch List Feeds";
+		freshports_Start($Title, $Title, 'FreeBSD, index, applications, ports');
+		echo freshports_MainTable();
+		echo '<tr><td class="content">';
+		echo freshports_MainContentTable();
+		echo '<tr>';
+		echo freshports_PageBannerText('These are your news feeds');
+		echo '</tr><TR><TD class="textcontent">';
+
 		DisplayWatchListNewsFeeds($db, $User->id);
-	}
+		?>
+	</TD></TR>
+</table>
+</td>
+
+  <td class="sidebar">
+	<?php
+	echo freshports_SideBar();
+	?>
+  </td>
+
+</tr>
+</table>
+
+<?php
+echo freshports_ShowFooter();
+?>
+
+</body>
+</html>
+<?php
+	} ?>

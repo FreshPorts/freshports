@@ -91,12 +91,30 @@ td.content {
 }
 
 .commit-list td, .commit-list th,
+.pkg-upload-info > tbody > tr > td, .pkg-upload-info > tbody > tr > th,
+.pkg-upload-info table.bordered td, .pkg-upload-info table.bordered th,
 .ports-moved td, .ports-moved th,
 .ports-updating td, .ports-updating th,
 .files-list td, .files-list th,
 .search-options td, .search-options th,
+.spam-info td, .spam-info th,
+.watch-categories td, .watch-categories th,
+.watch-maintenance table td, .watch-maintenance table th,
 .textcontent table td, .textcontent table th {
   padding: 5px;
+}
+
+.watch-maintenance td {
+  vertical-align: top;
+}
+
+.watch-maintenance input[type="submit"] {
+  width: 85px;
+  height: 24px;
+}
+
+.report-list td, .report-list th {
+  padding: 3px;
 }
 
 .announce-notes {
@@ -122,7 +140,7 @@ td.content {
   width: 100%;
 }
 
-.commit-details {
+.commit-details, .report-list td {
   vertical-align: top;
   white-space: nowrap;
 }
@@ -216,6 +234,52 @@ td.summary-cell {
   width: 400px;
   height: 100px;
   margin: auto;
+}
+
+td.captcha {
+  text-align: center;
+}
+
+.captcha table {
+  margin: auto;
+}
+
+.spam-info, .pkg-upload-info {
+  margin-top: 1em;
+}
+
+.pkg-upload-info table.bordered {
+  margin: auto;
+}
+
+.pkg-upload-controls {
+  display: block;
+  margin: auto;
+  text-align: center;
+}
+
+.pkg-upload-controls > input, .pkg-upload-controls > select {
+  vertical-align: middle;
+}
+
+.pkg-upload-info td {
+  vertical-align: top;
+}
+
+table.maincontent table.watch-categories {
+  margin: 2em auto;
+}
+
+.watch-categories td {
+  vertical-align: top;
+}
+
+.watchlist-selector {
+  float: right;
+}
+
+input[type="image"], .watchlist-selector select {
+  vertical-align: middle;
 }
 
 IMG#fp-logo { max-width: 100%; height: auto }

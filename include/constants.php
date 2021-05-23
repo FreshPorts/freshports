@@ -202,4 +202,4 @@ const HASH_UPDATE_QUERY = 'HASH_UPDATE';
 if (!defined('PW_HASH_METHOD')) define('PW_HASH_METHOD', 'bf');
 if (!defined('PW_HASH_COST')) define('PW_HASH_COST', 14);
 
-define('HTML_DOCTYPE', '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">');
+define('HTML_DOCTYPE', '<!DOCTYPE html>');

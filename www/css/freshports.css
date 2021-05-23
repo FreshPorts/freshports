@@ -2,6 +2,10 @@
   --beastie-red: #8c0707;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   background-color: white;
   color: black;
@@ -16,6 +20,10 @@ table.maincontent > tbody > tr > td {
   padding: 8px;
 }
 
+.maincontent p {
+  margin-block-end: 0;
+}
+
 td.content {
   width: 100%;
   vertical-align: top;
@@ -28,6 +36,7 @@ td.content {
 
 .sidebar > table {
   width: 160px;
+  text-align: left;
 }
 
 .sidebar > table:first-child td {
@@ -51,6 +60,10 @@ td.content {
 
 .sidebar p {
   text-align: center;
+}
+
+.sidebar form {
+  margin-bottom: 1em;
 }
 
 .accent {
@@ -102,7 +115,7 @@ td.content {
 }
 
 .commit-list td:first-child, .commit-list th:first-child {
-  width: 180px;
+  width: 192px;
 }
 
 .files-list td:last-child {
@@ -130,6 +143,10 @@ td.content {
 
 .element-details > span {
   font-size: larger;
+}
+
+table.maincontent td > *:first-child, .commit-list td > *:first-child {
+  margin-block-start: 0;
 }
 
 table.maincontent td.textcontent {
@@ -381,12 +398,17 @@ li.extraspace {
   display: inline-block;
 }
 
+.packages caption { font-size: initial; }
 .packages th { background-color:#000; color:white; }
 .packages td, .packages th { padding:8px; border:1px solid #000; }
 
 .footer > tbody > tr > td > table {
   width: 98%;
   margin: 0 auto;
+}
+
+.footer small {
+  display: block;
 }
 
 .footer .sponsors {

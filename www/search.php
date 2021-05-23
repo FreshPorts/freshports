@@ -862,7 +862,7 @@ $Port->LocalResult = $result;
 if ($output_format == OUTPUT_FORMAT_HTML) {
 ?>
 <!-- SiteSearch Google -->
-<script type="text/javascript">
+<script>
   (function() {
     var cx = '015787766717316021231:u1yjof0lhkk';
     var gcse = document.createElement('script');
@@ -1150,7 +1150,7 @@ echo freshports_ShowFooter();
 
 ?>
 <? if (!IsSet($_REQUEST['query'])) { ?>
-<script type="text/javascript">
+<script>
 <!--
 document.search.query.focus();
 // -->

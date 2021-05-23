@@ -29,7 +29,7 @@ DEFINE('UNMAINTAINTED_ADDRESS', 'ports@freebsd.org');
 
 DEFINE('CLICKTOADD', 'Click to add this to your default watch list[s]');
 
-DEFINE('SPONSORS', 'Servers and bandwidth provided by<br><a href="https://www.nyi.net/" rel="noopener noreferrer" TARGET="_blank">New York Internet</a>, <a href="https://www.ixsystems.com/"  rel="noopener noreferrer" TARGET="_blank">iXsystems</a>, and <a href="https://www.rootbsd.net/" rel="noopener noreferrer" TARGET="_blank">RootBSD</a>');
+DEFINE('SPONSORS', 'Servers and bandwidth provided by <br><a href="https://www.nyi.net/" rel="noopener noreferrer" TARGET="_blank">New York Internet</a>, <a href="https://www.ixsystems.com/"  rel="noopener noreferrer" TARGET="_blank">iXsystems</a>, and <a href="https://www.rootbsd.net/" rel="noopener noreferrer" TARGET="_blank">RootBSD</a>');
 
 DEFINE('FRESHPORTS_ENCODING', 'UTF-8');
 
@@ -1728,7 +1728,7 @@ Valid
 <a href="https://jigsaw.w3.org/css-validator/validator?uri=' .  $URI . '" title="We like to have valid CSS" rel="noopener noreferrer">CSS</a>, and
 <a href="https://validator.w3.org/feed/check.cgi?url=' . rawurlencode("{$URIBase}/backend/rss2.0.php") . '" title="Valid RSS is good too" rel="noopener noreferrer">RSS</a>.
 </small>
-<br>' . freshports_copyright() . '
+' . freshports_copyright() . '
 </td></tr>
 </table>
 </td></tr>
@@ -1743,7 +1743,7 @@ Valid
 		$HTML .= freshports_GoogleAnalytics();
 	}
 	
-	$HTML .= '<script src="/javascript/freshports.js" type="text/javascript"></script>';
+	$HTML .= '<script src="/javascript/freshports.js"></script>';
 
 	$Statistics->Save();
 
@@ -1751,9 +1751,9 @@ Valid
 }
 
 function freshports_GoogleAnalytics() {
-	$HTML = '<script src="https://www.google-analytics.com/urchin.js" type="text/javascript">
+	$HTML = '<script src="https://www.google-analytics.com/urchin.js">
 </script>
-<script type="text/javascript">
+<script>
 _uacct = "UA-408525-1";
 urchinTracker();
 </script>

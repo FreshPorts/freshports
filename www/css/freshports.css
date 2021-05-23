@@ -91,6 +91,8 @@ td.content {
 }
 
 .commit-list td, .commit-list th,
+.pkg-upload-info > tbody > tr > td, .pkg-upload-info > tbody > tr > th,
+.pkg-upload-info table.bordered td, .pkg-upload-info table.bordered th,
 .ports-moved td, .ports-moved th,
 .ports-updating td, .ports-updating th,
 .files-list td, .files-list th,
@@ -242,8 +244,26 @@ td.captcha {
   margin: auto;
 }
 
-.spam-info {
+.spam-info, .pkg-upload-info {
   margin-top: 1em;
+}
+
+.pkg-upload-info table.bordered {
+  margin: auto;
+}
+
+.pkg-upload-controls {
+  display: block;
+  margin: auto;
+  text-align: center;
+}
+
+.pkg-upload-controls > input, .pkg-upload-controls > select {
+  vertical-align: middle;
+}
+
+.pkg-upload-info td {
+  vertical-align: top;
 }
 
 table.maincontent table.watch-categories {

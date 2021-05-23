@@ -41,7 +41,7 @@ function HandleFileUpload($FormFileName, $Destination) {
 
 function DisplayError($error) {
 ?>
-	<TABLE class="fullwidth bordered" ALIGN="center">
+	<TABLE class="fullwidth bordered">
 	<TR><TD VALIGN=TOP>
 		<TABLE class="fullwidth">
 			<TR>
@@ -50,14 +50,8 @@ function DisplayError($error) {
 
 			<TR>
 				<TD>
-					<TABLE class="fullwidth borderless" CELLPADDING="0">
-						<TR VALIGN="top">
-							<TD VALIGN="middle"><IMG SRC="/images/warning.gif" ALT="warning"></TD>
-							<TD VALIGN="middle" width="100%">
-							<? echo $error ?>
-							</TD>
-						</TR>
-					</TABLE>
+					<IMG SRC="/images/warning.gif" ALT="warning">
+					<? echo $error ?>
 				</TD>
 			</TR>
 		</TABLE>
@@ -215,7 +209,7 @@ function UploadDisplayStagingResultsMatches($UserID, $WatchListID, $dbh) {
 		if ($numrows) {
 			?>
 
-			<TABLE ALIGN="center" class="bordered" CELLPADDING="5">
+			<TABLE class="bordered">
 			<TR><TD COLSPAN="2"><B>Port name</B> <SMALL>(<? echo $numrows ?> port<?php if ($numrows > 1) echo 's'; ?>)</SMALL></TD><TD ALIGN="center"><SMALL>Add</SMALL></TD></TR>
 
 			<?
@@ -272,7 +266,7 @@ function UploadDisplayStagingResultsMatchesNo($UserID, $dbh) {
 		if ($numrows) {
 			?>
 
-			<TABLE ALIGN="center" class="bordered" CELLPADDING="5">
+			<TABLE class="bordered">
 			<TR><TD><B>Port name</B> <SMALL>(<? echo $numrows ?> port<?php if ($numrows > 1) echo 's'; ?>)</SMALL></TD><TD><SMALL>search</SMALL></TD></TR>
 
 			<?
@@ -316,7 +310,7 @@ function UploadDisplayStagingResultsMatchesDuplicates($UserID, $WatchListID, $db
 		if ($numrows) {
 			?>
 
-			<TABLE ALIGN="center" class="bordered" CELLPADDING="5">
+			<TABLE class="bordered">
 			<TR><TD><B>Port name</B></TD><TD><B>Count</B></TD><TD ALIGN="center"><SMALL>Add</SMALL></TD></TR>
 
 			<?
@@ -378,14 +372,14 @@ function UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $dbh) {
 		if ($numrows) {
 			?>
 
-			<TABLE ALIGN="center" class="bordered" CELLPADDING="5">
+			<TABLE class="bordered">
 			<TR><TD><B>Port name</B></TD><TD ALIGN="center"><SMALL>Add</SMALL></TD></TR>
 
 			<?
 			for ($i = 0; $i < $numrows; $i++) {
 				$row = pg_fetch_array($result, $i);
 
-				echo '<TR><TD ALIGN="left">';
+				echo '<TR><TD>';
 				echo LinkToPort($row["category"], $row["port"]);
 				echo '</TD>';
 

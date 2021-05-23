@@ -70,7 +70,7 @@
 	}
 
 function freshports_WatchListSelectGoButton($name = 'watch_list_select') {
-	return '	<input type="image" name="' . $name . '" value="GO" src="/images/go.gif" alt="Go" align="middle" title="Display the selected watch list">';
+	return '	<input type="image" name="' . $name . '" src="/images/go.gif" alt="Go" title="Display the selected watch list">';
 }
 
 function freshports_WatchListDDLBForm($db, $UserID, $WatchListID, $Extra = '') {
@@ -79,16 +79,14 @@ function freshports_WatchListDDLBForm($db, $UserID, $WatchListID, $Extra = '') {
 <form action="' . $_SERVER["PHP_SELF"] . '" method="POST" NAME=f>
 <table class="borderless">
 <tr>
-<td valign="top" nowrap align="right">
-<small>
+<td>
 ';
 
 	$HTML .= freshports_WatchListDDLB($db, $UserID, $WatchListID);
 
 $HTML .=  '
-</small>
 </td>
-<td valign="top" nowrap align="left">
+<td>
 '  . freshports_WatchListSelectGoButton() . $Extra .
 '</td></tr></table></form>
 ';

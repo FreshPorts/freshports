@@ -96,6 +96,7 @@ td.content {
 .files-list td, .files-list th,
 .search-options td, .search-options th,
 .spam-info td, .spam-info th,
+.watch-categories td, .watch-categories th,
 .textcontent table td, .textcontent table th {
   padding: 5px;
 }
@@ -229,6 +230,18 @@ td.captcha {
 
 .spam-info {
   margin-top: 1em;
+}
+
+table.maincontent table.watch-categories {
+  margin: 2em auto;
+}
+
+.watch-categories td {
+  vertical-align: top;
+}
+
+input[type="image"] {
+  vertical-align: middle;
 }
 
 IMG#fp-logo { max-width: 100%; height: auto }

@@ -76,19 +76,13 @@ function freshports_WatchListSelectGoButton($name = 'watch_list_select') {
 function freshports_WatchListDDLBForm($db, $UserID, $WatchListID, $Extra = '') {
 	
 	$HTML = '
-<form action="' . $_SERVER["PHP_SELF"] . '" method="POST" NAME=f>
-<table class="borderless">
-<tr>
-<td>
+<form class="watchlist-selector" action="' . $_SERVER["PHP_SELF"] . '" method="POST" NAME=f>
 ';
 
 	$HTML .= freshports_WatchListDDLB($db, $UserID, $WatchListID);
 
 $HTML .=  '
-</td>
-<td>
-'  . freshports_WatchListSelectGoButton() . $Extra .
-'</td></tr></table></form>
+'  . freshports_WatchListSelectGoButton() . $Extra .  '</form>
 ';
 
 	return $HTML;

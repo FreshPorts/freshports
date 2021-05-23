@@ -254,7 +254,11 @@ table.maincontent table.watch-categories {
   vertical-align: top;
 }
 
-input[type="image"] {
+.watchlist-selector {
+  float: right;
+}
+
+input[type="image"], .watchlist-selector select {
   vertical-align: middle;
 }
 

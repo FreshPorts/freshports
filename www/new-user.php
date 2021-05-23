@@ -119,26 +119,27 @@ if (IsSet($submit)) {
 		$sql = "select * from users where name = '" . pg_escape_string(strtolower($UserLogin)) . "'";
 		syslog(LOG_ERR, "FreshPorts new user: $sql");
 
-		$result = pg_exec($db, $sql) or die('query failed');
+		$result = pg_query($db, $sql) or die('query failed');
 
 		// create user id if not found
 		if(!pg_numrows($result)) {
 			syslog(LOG_ERR, "FreshPorts new user: '$UserLogin', '$email', " . $_SERVER["REMOTE_ADDR"] . ' confirmed: user id is new');
 
 			$UserID = freshports_GetNextValue($Sequence_User_ID, $db);
-			if (IsSet($UserID)) {			
-				$sql = "insert into users (id, name, cookie, email, " . 
-						"watch_notice_id, emailsitenotices_yn, type, ip_address, number_of_days, password_hash) values (";
-				$sql .= pg_escape_string($UserID) . ", '" . pg_escape_string($UserLogin) . "', 'nocookie', '" . 
-					pg_escape_string($email) . "', '1', 'N', 'U', '" . pg_escape_string($_SERVER["REMOTE_ADDR"]) . "', " .
-					pg_escape_string($numberofdays) . ", " .
-					"crypt('" . pg_escape_string($Password1) . "' , gen_salt('" . PW_HASH_METHOD ."', " . PW_HASH_COST .")))";
+			if (IsSet($UserID)) {
+				$sql = "insert into " .
+					"users (id, name, cookie, email, watch_notice_id, emailsitenotices_yn, type, ip_address, number_of_days, password_hash) " .
+					"values ($1, $2, $3, $4, $5::integer, $6, $7, $8, $9::integer, crypt($10, gen_salt($11, $12::integer)))";
 
 				syslog(LOG_ERR, "FreshPorts new user: '$UserID', '$UserLogin', '$email', " . $_SERVER["REMOTE_ADDR"]);
 
 				$errors .= "<BR>sql=" . $sql;
 
-				$result = pg_exec($db, $sql);
+				$result = pg_query_params($db, $sql, array(
+					$UserID, $UserLogin, 'nocookie', $email, 1, 'N', 'U', $_SERVER["REMOTE_ADDR"],
+					$numberofdays, $Password1, PW_HASH_METHOD, PW_HASH_COST
+				));
+
 				if ($result) {
 					$UserCreated = 1;
 

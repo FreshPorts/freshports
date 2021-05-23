@@ -508,26 +508,23 @@ class port_display {
 		# repo_date       - date on packagesite.txz (e.g. https://pkg.freebsd.org/FreeBSD:11:amd64/latest/
 		# processed_date  - when the above mentioned data was last parsed into FreshPorts
 
-		$title = "Repo dates\n\n";
 		if (empty($repo_date)) {
 			$title .= "repo not found\n";
 		} else {
-			$title .= $repo_date . " - packages last built\n";
+			$title .= $repo_date . " &#8211; package last built\n";
 		}
 
 		if (empty($processed_date)) {
 			$title .= "never imported\n";
 		} else {
-			$title .= $processed_date . " - processed by FreshPorts\n";
+			$title .= $processed_date . " &#8211; processed by FreshPorts\n";
 		}
 
 		if (empty($last_checked)) {
-			$title .= "never checked\n";
+			$title .= "never checked";
 		} else {
-			$title .= $last_checked . " - last checked by FreshPorts\n";
+			$title .= $last_checked . " &#8211; last checked by FreshPorts";
 		}
-
-		$title .= "\nAll times are UTC";
 
 		return $title;
 	}
@@ -1042,7 +1039,7 @@ class port_display {
 		###############################################
 
 		if ($this->ShowEverything || $this->ShowPackages) {
-			$HTML .= '<dt id="packages"><b>Packages:</b> (move your mouse over the cells for more information)</dt>';
+			$HTML .= '<dt id="packages"><b>Packages</b> (timestamps in pop-ups are UTC):</dt>';
 
 			$packages = new Packages($this->db);
 			$numrows = $packages->Fetch($this->port->id);

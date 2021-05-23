@@ -101,6 +101,10 @@ td.content {
   padding: 5px;
 }
 
+.report-list td, .report-list th {
+  padding: 3px;
+}
+
 .announce-notes {
   border-spacing: 4px;
 }
@@ -124,7 +128,7 @@ td.content {
   width: 100%;
 }
 
-.commit-details {
+.commit-details, .report-list td {
   vertical-align: top;
   white-space: nowrap;
 }

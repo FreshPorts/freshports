@@ -36,11 +36,11 @@
 		          from report_frequency
 		         order by id';
 
-		$result = pg_exec($dbh, $sql);
+		$result = pg_query($dbh, $sql);
 		if ($result) {
 			$numrows = pg_numrows($result);
 			for ($i = 0; $i < $numrows; $i++) {
-				$myrow = pg_fetch_array ($result, $i);
+				$myrow = pg_fetch_array($result, $i);
 				# we don't include don't notify me.
 				if ($myrow['frequency'] != 'Z') {
 					$Frequencies[$myrow['id']] = $myrow['description'];
@@ -57,7 +57,7 @@
 		if ($result) {
 			$numrows = pg_numrows($result);
 			for ($i = 0; $i < $numrows; $i++) {
-				$myrow = pg_fetch_array ($result, $i);
+				$myrow = pg_fetch_array($result, $i);
 				$Values['name']				= $myrow['name'];
 				$Values['needs_frequency']	= $myrow['needs_frequency'];
 				$Values['description']		= $myrow['description'];
@@ -69,11 +69,11 @@
 	}
 
 	if (IsSet($_POST['submit']) && $_POST['submit'] == 'update') {
-		pg_exec($db, 'begin');
+		pg_query($db, 'begin');
 		$sql = "DELETE from report_subscriptions
     	         WHERE user_id = $User->id";
 
-		$result  = pg_exec($db, $sql);
+		$result = pg_query($db, $sql);
 
 		$reports = $_REQUEST['reports'];
 		if (Is_Array($reports)) {
@@ -92,7 +92,7 @@
 					$sql = "INSERT INTO report_subscriptions(report_id, user_id) values ($value, $User->id)";
 				}
 				if ($Debug) echo "\$sql='$sql'<BR>\n";
-				$result = pg_exec ($db, $sql);
+				$result = pg_query($db, $sql);
 	
 				if (!$result) {
 					echo 'OUCH, that\'s not very nice.  something went wrong: ' . pg_errormessage() . "  $sql";
@@ -102,7 +102,7 @@
 			}
 		}
 	
-		pg_exec($db, 'commit');
+		pg_query($db, 'commit');
 
 	}
 
@@ -146,7 +146,7 @@
 <TD class="content">
 <TABLE class="fullwidth borderless">
 <TR>
-<td class="accent"><BIG><? echo $ArticleTitle; ?></BIG></td>
+<td class="accent"><span><? echo $ArticleTitle; ?></span></td>
 </TR>
 <TR>
 <TD>
@@ -156,8 +156,8 @@ This page allows you to select the reports you wish to receive and the frequency
 </p>
 
 <FORM ACTION="<?php echo $_SERVER["PHP_SELF"] ;?>" METHOD="POST" NAME=f>
-	<TABLE CELLPADDING="3" class="bordered">
-	<TR><TD><BIG><B>Report Name</B></BIG></TD><TD><BIG><B>Frequency</B></BIG></TD><TD><BIG><B>Description</B></BIG></TD></TR>
+	<TABLE class="report-list bordered">
+	<TR><TD class="element-details">Report Name</TD><TD class="element-details">Frequency</TD><TD class="element-details">Description</TD></TR>
 	<?
 
 
@@ -175,20 +175,20 @@ This page allows you to select the reports you wish to receive and the frequency
 			$thefrequency		= $Values["frequency"];
 		
 			echo '<TR>';
-     		echo '<TD VALIGN="top" NOWRAP>';
-			echo '<INPUT TYPE="checkbox" NAME="reports[]" value="' . $report_id . '"';
+			echo '<TD>';
+			echo '<label><INPUT TYPE="checkbox" NAME="reports[]" value="' . $report_id . '"';
 			if ($Values["selected"]) {
 				echo ' checked';
 			}
 			echo '> ' . $name;
-			echo '</TD>';
+			echo '</label></TD>';
 
 			if ($Debug) {
 				echo '$Values["frequency"]=\'' . $Values["frequency"] . '\'';
 				echo 'now processing $report_id = \'' . $report_id . '\'';
 			}
 
-            echo '<TD VALIGN="top" NOWRAP>';
+            echo '<TD>';
 			if ($needs_frequency == 't') {
 				reset($Frequencies);
 				$numrows = count($Frequencies);
@@ -225,7 +225,7 @@ This page allows you to select the reports you wish to receive and the frequency
 
 <hr>
 <p>
-<big><big>Beta mailing list</big></big>
+<h2>Beta mailing list</h2>
 <p>
 You may wish to help me test new FreshPorts features or even just get a sneak
 peek at them.  If so, I urge you to join the new Beta mailing list.  This

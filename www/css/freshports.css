@@ -97,8 +97,18 @@ td.content {
 .search-options td, .search-options th,
 .spam-info td, .spam-info th,
 .watch-categories td, .watch-categories th,
+.watch-maintenance table td, .watch-maintenance table th,
 .textcontent table td, .textcontent table th {
   padding: 5px;
+}
+
+.watch-maintenance td {
+  vertical-align: top;
+}
+
+.watch-maintenance input[type="submit"] {
+  width: 85px;
+  height: 24px;
 }
 
 .report-list td, .report-list th {

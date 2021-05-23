@@ -255,37 +255,37 @@ $ErrorMessage .= CheckForNoDefaultAndAddToDefault($db, $User);
 	}
 ?>
 <tr><td>
-<table class="fullwidth borderless">
-<tr><td valign="top">
+<table class="watch-maintenance fullwidth borderless">
+<tr><td>
 
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
-<TABLE class="fullwidth bordered" CELLPADDING="5">
-<TR><td nowrap><BIG><b>Watch Lists</b></BIG></td><td><BIG><b>Actions</b></BIG> (scroll down for instructions)</td></tr>
+<TABLE class="fullwidth bordered">
+<TR><td class="element-details">Watch Lists</td><td><span class="element-details">Actions</span> (scroll down for instructions)</td></tr>
   <TR>
-    <TD valign="top">
+    <TD>
 <?php
 	echo freshports_WatchListDDLB($db, $User->id, '', 10, TRUE);
 ?>
     </TD>
     <TD>
-    <INPUT id=add         style="WIDTH: 85px; HEIGHT: 24px" type=submit size=48 value="Add"          name=add>&nbsp;&nbsp;&nbsp; 
-    <INPUT id=add_name    name=add_name    <?php if (IsSet($add_name))    echo 'value="' . $add_name    . '" '; ?>size=10><small><sup>(1)</sup></small><BR>
-    <INPUT id=rename      style="WIDTH: 85px; HEIGHT: 24px" type=submit size=23 value="Rename"       name=rename>&nbsp;&nbsp;&nbsp; 
-    <INPUT id=rename_name name=rename_name <?php if (IsSet($rename_name)) echo 'value="' . $rename_name . '" '; ?>size=10><small><sup>(1)</sup></small><BR>
+    <INPUT id=add         type=submit size=48 value="Add"          name=add>&nbsp;&nbsp;&nbsp;
+    <INPUT id=add_name    name=add_name    <?php if (IsSet($add_name))    echo 'value="' . $add_name    . '" '; ?>pattern="[a-zA-Z0-9]+" size=10><small><sup>(1)</sup></small><BR>
+    <INPUT id=rename      type=submit size=23 value="Rename"       name=rename>&nbsp;&nbsp;&nbsp;
+    <INPUT id=rename_name name=rename_name <?php if (IsSet($rename_name)) echo 'value="' . $rename_name . '" '; ?>pattern="[a-zA-Z0-9]+" size=10><small><sup>(1)</sup></small><BR>
     <?php echo "&nbsp;<small>(1) - only $ValidCharacters</small>" ?>
 		<br>
 
     <br>
-    <INPUT id=delete      style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29 value="Delete"       name=delete><br>
-    <INPUT id=delete_all  style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29 value="Delete All"   name=delete_all><br>
+    <INPUT id=delete      type=submit size=29 value="Delete"       name=delete><br>
+    <INPUT id=delete_all  type=submit size=29 value="Delete All"   name=delete_all><br>
     <br>
-    <INPUT id=empty       style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29 value="Empty"        name=empty><br>
-    <INPUT id=empty_all   style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29 value="Empty All"    name=empty_all><br>
+    <INPUT id=empty       type=submit size=29 value="Empty"        name=empty><br>
+    <INPUT id=empty_all   type=submit size=29 value="Empty All"    name=empty_all><br>
     <br>
-    <INPUT id=default     style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29 value="Set Default"  name=set_default><br>
+    <INPUT id=default     type=submit size=29 value="Set Default"  name=set_default><br>
     <br>
 
-    Confirm: <INPUT id=confirm name=confirm size=10>
+    <label>Confirm: <INPUT id=confirm name=confirm pattern="(Delete|Empty)( All)?" size=10></label>
 	 <br>(case sensitive)
 
     </TD>
@@ -293,17 +293,17 @@ $ErrorMessage .= CheckForNoDefaultAndAddToDefault($db, $User);
 </table>
 </form>
 
-</td><td valign="top">
+</td><td>
 
-<TABLE class="fullwidth bordered" CELLPADDING="5">
-<TR><td><BIG><b>Options</b></BIG></td></tr>
+<TABLE class="fullwidth bordered">
+<TR><td class="element-details">Options</td></tr>
   <TR>
-<td valign="top" nowrap>
+<td>
 When clicking on Add/Remove for a port,<br> the action should affect
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
 <INPUT type=radio name=addremove value=default<?php if ($User->watch_list_add_remove == 'default') echo ' checked'; ?>>&nbsp;the default watch list[s]<BR>
 <INPUT type=radio name=addremove value=ask<?php     if ($User->watch_list_add_remove == 'ask')     echo ' checked'; ?>>&nbsp;Ask for watch list name[s] each time<br>
-<INPUT style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29 value="Set options"  name=set_options>
+<INPUT type=submit size=29 value="Set options"  name=set_options>
  </form>
 </td>
     </TR>
@@ -315,7 +315,7 @@ When clicking on Add/Remove for a port,<br> the action should affect
 
 <H2>Information</H2>
 <ul>
-<li>Names do not have to unique but it is advisable.
+<li>Names do not have to be unique but it is advisable.
 <li>Valid characters are: <?php echo $ValidCharacters; ?>
 <li>Please contact the webmaster if you want more than 5 lists.
 </ul>
@@ -347,7 +347,7 @@ When clicking on Add/Remove for a port,<br> the action should affect
 	<li><b>Set Default</b> - Sets the default watch list[s].  The default watch list[s] is/are used when:
 			<ul>
 			<li>you click on the add/remove links
-			<li>when displaying a port, the add/remove link reflects whether or not  
+			<li>when displaying a port, the add/remove link reflects whether or not that port is on this list
 			</ul>
 	</ul>
 	
@@ -359,9 +359,9 @@ When clicking on Add/Remove for a port,<br> the action should affect
 </ul>
 
 <p>
-		<sup>*</sup>These items confirmation by typing the button name in the 
+		<sup>*</sup>These items require confirmation by typing the button name in the 
 			confirmation text box (case sensitive).  Be careful: these actions cannot be undone.
-    For example, when deleting or emptying a row, you must confirm your action by typing
+    For example, when deleting or emptying a list, you must confirm your action by typing
     the button name into this field (e.g. if you click on <b>Empty All</b>",
     you must type <b>Empty All</b> into the box below in order for the action
     to be completed). This is case sensitive.<br>

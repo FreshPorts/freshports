@@ -1,7 +1,10 @@
   ssl_protocols TLSv1.2 TLSv1.3;
 
   ssl_prefer_server_ciphers on; 
-  
+
+  ssl_stapling on;
+  ssl_stapling_verify on;
+
   ssl_ciphers EECDH+ECDSA+AESGCM:EECDH+aRSA+AESGCM:EECDH+ECDSA+SHA512:EECDH+ECDSA+SHA384:EECDH+ECDSA+SHA256:ECDH+AESGCM:ECDH+AES256:DH+AESGCM:DH+AES256:RSA+AESGCM:!aNULL:!eNULL:!LOW:!RC4:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS;
   ssl_ecdh_curve secp384r1; # Requires nginx >= 1.1.0
   ssl_session_timeout  10m;

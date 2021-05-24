@@ -340,7 +340,7 @@ if ($Debug) echo "UserID='$User->id'";
 			$HTML .=  "no connection";
 		} # if ($database )
 	} else { # if ($message_id != '' || $revision != '')
-		echo '<tr><td class="content">nothing supplied, nothing found!</td>';
+		echo '<tr><td class="content">nothing supplied, nothing found!</td></tr></table></td>';
 	} # if ($cached)
 
 

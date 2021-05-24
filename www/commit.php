@@ -166,7 +166,6 @@ if ($Debug) echo "UserID='$User->id'";
 	} else if ($message_id != '' || $revision != '') {
 		echo '<tr>' . freshports_PageBannerText($Title) . '</tr>';
 
-		#$numrows = $MaxNumberOfPorts;
 		$DoTheSave = true;
 		$database = $db;
 		if ($database) {
@@ -195,13 +194,6 @@ if ($Debug) echo "UserID='$User->id'";
 				if ($HTML == '')  {
 
 					$HTML = '';
-
-					# this comment makes no sense now...
-					#
-					# we limit the select to recent things by using a date
-					# otherwise, it joins the whole table and that takes quite a while
-					#
-					#$numrows=400;
 
 					$sql = 'select freshports_commit_count_elements($1) as count';
 					if ($Debug) echo "\n<pre>sql=$sql</pre>\n";

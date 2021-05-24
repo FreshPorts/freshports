@@ -335,7 +335,7 @@ if ($Debug) echo "UserID='$User->id'";
 			echo $HTML;
 
 		} else {
-			$HTML .=  "no connection";
+			echo '<tr><td class="content">Database connection could not be established!</td></tr></table></td>';
 		} # if ($database )
 	} else { # if ($message_id != '' || $revision != '')
 		echo '<tr><td class="content">nothing supplied, nothing found!</td></tr></table></td>';

@@ -203,15 +203,14 @@ if ($Debug) echo "UserID='$User->id'";
 					#
 					#$numrows=400;
 
-					$sql = "select freshports_commit_count_elements('" . pg_escape_string($message_id) . "') as count";
-
+					$sql = 'select freshports_commit_count_elements($1) as count';
 					if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 
-					$result = pg_exec($database, $sql);
+					$result = pg_query_params($database, $sql, array($message_id));
 					if ($result) {
 						$numrows = pg_numrows($result);
 						if ($numrows == 1) { 
-							$myrow = pg_fetch_array ($result, 0);
+							$myrow = pg_fetch_array($result, 0);
 						} else {
 							die('could not determine the number of commit elements');
 						}
@@ -219,18 +218,25 @@ if ($Debug) echo "UserID='$User->id'";
 						$NumFilesTouched = $myrow['count'];
 					}
 
-					$ActualPageNum = ($PageNo - 1 ) * $PageSize;
+					$ActualPageNum = ($PageNo - 1) * $PageSize;
 
-					$sql ="set client_encoding = 'ISO-8859-15';
-	SELECT FPC.*, STF.message as stf_message
-	FROM freshports_commit('" . pg_escape_string($message_id) . "', " . pg_escape_string($PageSize) . ", " . pg_escape_string($ActualPageNum) . ", $User->id) FPC
-	LEFT OUTER JOIN sanity_test_failures STF
-	ON FPC.commit_log_id = STF.commit_log_id
-	ORDER BY port, element_pathname";
+					$client_encoding = pg_client_encoding($database);
+					// not sure why we need iso-8859-15 specifically
+					pg_set_client_encoding($database, 'ISO-8859-15');
+					$sql ='SELECT FPC.*, STF.message as stf_message
+						FROM freshports_commit($1, $2, $3, $4::integer) FPC
+						LEFT OUTER JOIN sanity_test_failures STF
+						ON FPC.commit_log_id = STF.commit_log_id
+						ORDER BY port, element_pathname';
 
 					if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 
-					$result = pg_exec($database, $sql);
+					$result = pg_query_params($database, $sql, array(
+						$message_id, $PageSize, $ActualPageNum, $User->id,
+					));
+
+					// restore original client encoding
+					pg_set_client_encoding($database, $client_encoding);
 
 					if ($result) {
 						$numrows = pg_numrows($result);

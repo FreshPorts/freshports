@@ -162,6 +162,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 <?
 }
 	if ($cached) {
+		echo '<tr>' . freshports_PageBannerText($Title) . '</tr>';
 		echo $HTML;
 	} else {
 	if ($cached || ($message_id != '' || $revision != '')) {

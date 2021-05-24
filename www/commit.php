@@ -165,14 +165,7 @@ if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
 		echo $HTML;
 	} else {
 	if ($cached || ($message_id != '' || $revision != '')) {
-	
-?>
-
-<TR>
-	<? echo freshports_PageBannerText($Title); ?>
-</TR>
-
-<?php
+	echo '<tr>' . freshports_PageBannerText($Title) . '</tr>';
 
 #	$numrows = $MaxNumberOfPorts;
 	$DoTheSave = true;

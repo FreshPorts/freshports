@@ -454,6 +454,13 @@ class port_display {
 		return $result;
 	}
 
+	function Is_A_Python_Port() {
+		# find out of the python port starts with pyXX-
+		$Is_A_Python_Port = preg_match('/^py[0-9][0-9]-(.*)/', $this->port->package_name, $matches);
+
+		return $Is_A_Python_Port;
+	}
+
 	function DisplayDependencyLine() {
 		$port = $this->port;
 
@@ -464,8 +471,7 @@ class port_display {
 
                 if ($USES_PYTHON) {
 			# it is a python port if it starts with py-37, for example.
-                        $Is_A_Python_Port = preg_match('/^py[0-9][0-9]-(.*)/', $port->package_name, $matches);
-                        
+                        $Is_A_Python_Port = $this->Is_A_Python_Port();
                         # if a match for py37-django-js-asset, $matches[0]=> "py37-django-js-asset", $matches[1]=> "django-js-asset"
                 } else {
                         $Is_A_Python_Port = false;
@@ -970,7 +976,13 @@ class port_display {
 					if ($port->forbidden || $port->broken || $port->ignore || $port->restricted || !$port->PackageIsAvailable()) {
 						$HTML .= '<dt><b>A <a href="/faq.php#package" TITLE="what is a package?">package</a> is not available for ports marked as: Forbidden / Broken / Ignore / Restricted</b></dt>';
 					} else {
-						$HTML .= '<dt><b>To add the <a href="/faq.php#package" TITLE="what is a package?">package</a>:</b> <code class="code">pkg install ' . $port->package_name . '</code></dt>';
+						$HTML .= '<dt><b>To add the <a href="/faq.php#package" TITLE="what is a package?">package</a>, run one of these commands:</b>';
+						$HTML .= '<ul><li><code class="code">pkg install ' . $port->category . '/' . $port->port . '</code></li>';
+						$HTML .= '<li><code class="code">pkg install ' . $port->package_name . '</code></li></ol>';
+						if ($this->Is_A_Python_Port()) {
+							$HTML .= 'NOTE: This is a Python port. Instead of <code class="code">' . $port->package_name . ' listed in the above command, you can pick from the names under the <a href="#packages">Packages</a> section.';
+						}
+						$HTML .= '</dt>';
 					}
 				}
 			}

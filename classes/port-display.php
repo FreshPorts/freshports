@@ -976,13 +976,13 @@ class port_display {
 					if ($port->forbidden || $port->broken || $port->ignore || $port->restricted || !$port->PackageIsAvailable()) {
 						$HTML .= '<dt><b>A <a href="/faq.php#package" TITLE="what is a package?">package</a> is not available for ports marked as: Forbidden / Broken / Ignore / Restricted</b></dt>';
 					} else {
-						$HTML .= '<dt><b>To add the <a href="/faq.php#package" TITLE="what is a package?">package</a>, run one of these commands:</b>';
-						$HTML .= '<ul><li><code class="code">pkg install ' . $port->category . '/' . $port->port . '</code></li>';
-						$HTML .= '<li><code class="code">pkg install ' . $port->package_name . '</code></li></ol>';
+						$HTML .= '<dt><b>To add the <a href="/faq.php#package" TITLE="what is a package?">package</a>, run one of these commands:</b></dt>';
+						$HTML .= '<dd><ul><li><code class="code">pkg install ' . $port->category . '/' . $port->port . '</code></li>';
+						$HTML .= '<li><code class="code">pkg install ' . $port->package_name . '</code></li></ul>';
 						if ($this->Is_A_Python_Port()) {
-							$HTML .= 'NOTE: This is a Python port. Instead of <code class="code">' . $port->package_name . ' listed in the above command, you can pick from the names under the <a href="#packages">Packages</a> section.';
+							$HTML .= 'NOTE: This is a Python port. Instead of <code class="code">' . $port->package_name . '</code> listed in the above command, you can pick from the names under the <a href="#packages">Packages</a> section.';
 						}
-						$HTML .= '</dt>';
+						$HTML .= '</dd>';
 					}
 				}
 			}

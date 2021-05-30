@@ -134,31 +134,19 @@
 					$Title,
 					'FreeBSD, index, applications, ports');
 
-function str_is_int($str) {
-	$var = intval($str);
-	return ($str == $var);
-}
+	function str_is_int($str) {
+		$var = intval($str);
+		return ($str == $var);
+	}
 
-if ($Debug) echo "UserID='$User->id'";
+	if ($Debug) echo "UserID='$User->id'";
 
-?>
-
-	<?php echo freshports_MainTable(); ?>
+	echo freshports_MainTable(); ?>
 
 	<tr><td class="content">
 
-	<?php echo freshports_MainContentTable(BORDER); ?>
-
-<?
-	if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
-?>
-  <TR>
-    <TD>
-       <? include ("announcement.txt"); ?>
-    </TD>
-  </TR>
-<?
-	}
+	<?php
+	echo freshports_MainContentTable(BORDER);
 
 	if ($cached) {
 		echo '<tr>' . freshports_PageBannerText($Title) . '</tr>';

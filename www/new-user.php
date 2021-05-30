@@ -92,18 +92,18 @@ if (IsSet($submit)) {
 
 	if ( isset( $_POST["captcha"] ) )
 	{
-  	if ( $_SESSION["captcha"] == $_POST["captcha"] )
-  	{
-      //CAPTHCA is valid; proceed the message: save to database, send by e-mail ...
-      // echo 'CAPTHCA is valid; proceed the message';
-    }
-	  else
-	  {
-	    $errors .= 'Your CAPTHCA code is not valid<br>';
-	    syslog(LOG_ERR, "FreshPorts captcha failure: '" . $UserLogin . "', '" . $email . "', "  . $_SERVER['REMOTE_ADDR']);
-	    $OK = 0;
-	  }
-  }
+		if ( $_SESSION["captcha"] == $_POST["captcha"] )
+		{
+			//CAPTHCA is valid; proceed the message: save to database, send by e-mail ...
+			// echo 'CAPTHCA is valid; proceed the message';
+		}
+		else
+		{
+			$errors .= 'Your CAPTHCA code is not valid<br>';
+			syslog(LOG_ERR, "FreshPorts captcha failure: '" . $UserLogin . "', '" . $email . "', "  . $_SERVER['REMOTE_ADDR']);
+			$OK = 0;
+		}
+	}
 
 
 

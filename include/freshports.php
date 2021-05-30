@@ -775,6 +775,8 @@ GLOBAL $ShowAds;
 GLOBAL $BannerAd;
 GLOBAL $ShowAnnouncements;
 
+	header('X-Accel-Buffering: no');
+
 	freshports_HTML_Start();
 	freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum);
 
@@ -794,6 +796,8 @@ GLOBAL $ShowAnnouncements;
 		}
 	}
 
+	ob_flush();
+	flush();
 }
 
 function freshports_Logo() {

@@ -16,14 +16,7 @@
 					'FreeBSD, index, applications, ports');
 ?>
 	<script src="/javascript/jquery-3.6.0.min.js" defer></script>
-	<script src="/javascript/jquery.canvaswrapper.js" defer></script>
-	<script src="/javascript/jquery.colorhelpers.js" defer></script>
-	<script src="/javascript/jquery.flot.js" defer></script>
-	<script src="/javascript/jquery.flot.saturated.js" defer></script>
-	<script src="/javascript/jquery.flot.browser.js" defer></script>
-	<script src="/javascript/jquery.flot.drawSeries.js" defer></script>
-	<script src="/javascript/jquery.flot.uiConstants.js" defer></script>
-	<script src="/javascript/jquery.flot.time.js" defer></script>
+	<script src="/javascript/jquery.flot.min.js" defer></script>
 	<script src="/javascript/graphs.js" defer></script>
 
 	<?php echo freshports_MainTable(); ?>

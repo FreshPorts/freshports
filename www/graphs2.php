@@ -15,7 +15,7 @@
 					$Title,
 					'FreeBSD, index, applications, ports');
 ?>
-	<script src="/javascript/jquery-3.5.0.min.js"></script>
+	<script src="/javascript/jquery-3.6.0.min.js"></script>
 	<script src="/javascript/jquery.canvaswrapper.js"></script>
 	<script src="/javascript/jquery.colorhelpers.js"></script>
 	<script src="/javascript/jquery.flot.js"></script>

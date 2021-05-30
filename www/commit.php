@@ -234,7 +234,7 @@
 							$HTML .= '<tr><TD><p>Number of ports [&amp; non-ports] in this commit: ' . $NumFilesTouched . '</p></td></tr>';
 						} else {
 							$HTML .=  '<tr><TD><P>Sorry, nothing found in the database....</P>' . "\n";
-							$HTML .=  "</TD></tr>";
+							$HTML .=  '</td></tr>';
 							$DoTheSave = false;
 						}
 					} else {
@@ -242,7 +242,7 @@
 						exit;
 					}
 
-					$HTML .=  "</TABLE>\n";
+					$HTML .=  "<tr><td>\n";
 
 					$ShowAllFilesURL = '<a href="' . htmlspecialchars($_SERVER['SCRIPT_URL'] . '?message_id=' .  $message_id . '&files=yes') . '">show all files</a>';
 
@@ -317,6 +317,8 @@
 						$Cache->CacheDataSet($HTML);
 						$Cache->AddCommit($message_id, $clean['category'], $clean['port'], $files);
 					}
+
+					$HTML .= "\n</table></td>\n";
 				} // $HTML != ''
 			} # count($message_id_array)
 

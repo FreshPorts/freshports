@@ -135,7 +135,9 @@ select NP.id,
        NP.last_commit_id,
        R.repository,
        R.repo_hostname,
-       R.path_to_repo ";
+       R.path_to_repo,
+       NP.uses,
+       NP.package_name ";
 
 	if ($User->id) {
 		$sql .= ",
@@ -164,7 +166,9 @@ select NP.id,
           forbidden,
           latest_link,
           license,
-          last_commit_id
+          last_commit_id,
+          uses,
+          package_name
           
 ";
 

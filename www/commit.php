@@ -134,31 +134,19 @@
 					$Title,
 					'FreeBSD, index, applications, ports');
 
-function str_is_int($str) {
-	$var = intval($str);
-	return ($str == $var);
-}
+	function str_is_int($str) {
+		$var = intval($str);
+		return ($str == $var);
+	}
 
-if ($Debug) echo "UserID='$User->id'";
+	if ($Debug) echo "UserID='$User->id'";
 
-?>
-
-	<?php echo freshports_MainTable(); ?>
+	echo freshports_MainTable(); ?>
 
 	<tr><td class="content">
 
-	<?php echo freshports_MainContentTable(BORDER); ?>
-
-<?
-	if (file_exists("announcement.txt") && filesize("announcement.txt") > 4) {
-?>
-  <TR>
-    <TD>
-       <? include ("announcement.txt"); ?>
-    </TD>
-  </TR>
-<?
-	}
+	<?php
+	echo freshports_MainContentTable(BORDER);
 
 	if ($cached) {
 		echo '<tr>' . freshports_PageBannerText($Title) . '</tr>';
@@ -246,7 +234,7 @@ if ($Debug) echo "UserID='$User->id'";
 							$HTML .= '<tr><TD><p>Number of ports [&amp; non-ports] in this commit: ' . $NumFilesTouched . '</p></td></tr>';
 						} else {
 							$HTML .=  '<tr><TD><P>Sorry, nothing found in the database....</P>' . "\n";
-							$HTML .=  "</TD></tr>";
+							$HTML .=  '</td></tr>';
 							$DoTheSave = false;
 						}
 					} else {
@@ -254,7 +242,7 @@ if ($Debug) echo "UserID='$User->id'";
 						exit;
 					}
 
-					$HTML .=  "</TABLE>\n";
+					$HTML .=  "<tr><td>\n";
 
 					$ShowAllFilesURL = '<a href="' . htmlspecialchars($_SERVER['SCRIPT_URL'] . '?message_id=' .  $message_id . '&files=yes') . '">show all files</a>';
 
@@ -329,6 +317,8 @@ if ($Debug) echo "UserID='$User->id'";
 						$Cache->CacheDataSet($HTML);
 						$Cache->AddCommit($message_id, $clean['category'], $clean['port'], $files);
 					}
+
+					$HTML .= "\n</table></td>\n";
 				} // $HTML != ''
 			} # count($message_id_array)
 

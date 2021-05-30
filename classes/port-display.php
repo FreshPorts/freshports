@@ -969,20 +969,20 @@ class port_display {
 				$HTML .= '<dt>No installation instructions: this port has been deleted.</dt>';
 				$HTML .= '<dt>The package name of this deleted port was: <code class="code">' . $port->latest_link . '</code></dt>';
 			} else {
-				$HTML .= '<dt><b><a id="add">To install</a> <a href="/faq.php#port" TITLE="what is a port?">the port</a>:</b> <code class="code">cd /usr/ports/'  . $port->category . '/' . $port->port . '/ && make install clean</code></dt>';
+				$HTML .= '<dt id="add"><b>To install <a href="/faq.php#port" TITLE="what is a port?">the port</a>:</b> <kbd class="code">cd /usr/ports/'  . $port->category . '/' . $port->port . '/ && make install clean</kbd></dt>';
 				if (IsSet($port->no_package) && $port->no_package != '') {
 					$HTML .= '<dt><b>No <a href="/faq.php#package" TITLE="what is a package?">package</a> is available:</b> ' . $port->no_package . '</dt>';
 					} else {
 					if ($port->forbidden || $port->broken || $port->ignore || $port->restricted || !$port->PackageIsAvailable()) {
 						$HTML .= '<dt><b>A <a href="/faq.php#package" TITLE="what is a package?">package</a> is not available for ports marked as: Forbidden / Broken / Ignore / Restricted</b></dt>';
 					} else {
-						$HTML .= '<dt><b>To add the <a href="/faq.php#package" TITLE="what is a package?">package</a>, run one of these commands:</b>';
-						$HTML .= '<ul><li><code class="code">pkg install ' . $port->category . '/' . $port->port . '</code></li>';
-						$HTML .= '<li><code class="code">pkg install ' . $port->package_name . '</code></li></ol>';
+						$HTML .= '<dt><b>To add the <a href="/faq.php#package" TITLE="what is a package?">package</a>, run one of these commands:</b></dt>';
+						$HTML .= '<dd><ul><li><kbd class="code">pkg install ' . $port->category . '/' . $port->port . '</kbd></li>';
+						$HTML .= '<li><kbd class="code">pkg install ' . $port->package_name . '</kbd></li></ul>';
 						if ($this->Is_A_Python_Port()) {
-							$HTML .= 'NOTE: This is a Python port. Instead of <code class="code">' . $port->package_name . ' listed in the above command, you can pick from the names under the <a href="#packages">Packages</a> section.';
+							$HTML .= 'NOTE: This is a Python port. Instead of <kbd class="code">' . $port->package_name . '</kbd> listed in the above command, you can pick from the names under the <a href="#packages">Packages</a> section.';
 						}
-						$HTML .= '</dt>';
+						$HTML .= '</dd>';
 					}
 				}
 			}

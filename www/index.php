@@ -246,12 +246,5 @@ echo '&lt; ' . $Yesterday . ' &gt;';
 <?
 echo freshports_ShowFooter();
 ?>
-<? if ($User->set_focus_search) { ?>
-	<script>
-	<!--
-	document.f.query.focus();
-	// -->
-	</script>
-<? } ?>
 </body>
 </html>

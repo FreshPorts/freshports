@@ -825,7 +825,7 @@ GLOBAL $FreshPortsLogoHeight;
 
     if (defined('SHOW_ANIMATED_BUG') && SHOW_ANIMATED_BUG)
     {
-	  $HTML .= '<img src="/images/notbug.gif" alt="notbug" title="notbug">';
+	  $HTML .= '<img src="/images/notbug.gif" width="56" height="50" alt="notbug" title="notbug">';
     }
 
     if (defined('SHOW_IPV6_LOGO') && SHOW_IPV6_LOGO && filter_var($_SERVER["REMOTE_ADDR"], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
@@ -1747,7 +1747,7 @@ Valid
 		$HTML .= freshports_GoogleAnalytics();
 	}
 	
-	$HTML .= '<script src="/javascript/freshports.js"></script>';
+	$HTML .= '<script src="/javascript/freshports.js" defer></script>';
 
 	$Statistics->Save();
 
@@ -1853,7 +1853,7 @@ function freshports_SideBar() {
 
 
 	$Searches = new Searches($dbh);
-	$HTML .= $Searches->GetFormSimple('&nbsp;');
+	$HTML .= $Searches->GetFormSimple('&nbsp;', $User->set_focus_search);
 
 	$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/search.php', "more...", "Advanced Searching options") . '
 	</td>

@@ -32,11 +32,12 @@ class Searches {
 		$this->SearchPage = $SearchPage;
 	}
 
-	function GetFormSimple($text) {
+	function GetFormSimple($text, $autofocus=false) {
 return '
 	<FORM ACTION="' . $this->SearchPage . '" NAME="f">
 	Enter Keywords:<BR>
-	<INPUT NAME="query"  TYPE="text" SIZE="8" TABINDEX=1>' . $text . '<INPUT TYPE="submit" VALUE="go" NAME="search" TABINDEX=2>
+	<INPUT NAME="query"  TYPE="search" SIZE="8" TABINDEX=1' . ($autofocus ? ' autofocus' : '') . '>' .
+	$text . '<INPUT TYPE="submit" VALUE="go" NAME="search" TABINDEX=2>
 	<INPUT NAME="num"             TYPE="hidden" value="' . FRESHPORTS_SEARCH_DEFAULT_Num             . '">
 	<INPUT NAME="stype"           TYPE="hidden" value="' . FRESHPORTS_SEARCH_DEFAULT_Stype           . '">
 	<INPUT NAME="method"          TYPE="hidden" value="' . FRESHPORTS_SEARCH_DEFAULT_Method          . '">

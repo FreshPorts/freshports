@@ -32,10 +32,11 @@ DEFINE('CLICKTOADD', 'Click to add this to your default watch list[s]');
 DEFINE('SPONSORS', 'Servers and bandwidth provided by <br><a href="https://www.nyi.net/" rel="noopener noreferrer" TARGET="_blank">New York Internet</a>, <a href="https://www.ixsystems.com/"  rel="noopener noreferrer" TARGET="_blank">iXsystems</a>, and <a href="https://www.rootbsd.net/" rel="noopener noreferrer" TARGET="_blank">RootBSD</a>');
 
 DEFINE('FRESHPORTS_ENCODING', 'UTF-8');
+DEFINE('FRESHPORTS_TIMEZONE', 'UTC');
 
 if ($Debug) echo "'" . $_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php<br>';
 
-date_default_timezone_set('UTC');
+date_default_timezone_set(FRESHPORTS_TIMEZONE);
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php');
 
@@ -859,12 +860,22 @@ $HTML .= '
 	return $HTML;
 }
 
+function freshports_detect_holidays($now) {
+	$month = date("n", $now);
+
+	// June is LGBTQ+ Pride Month
+	if ($month == "06") return "pride";
+
+	return '';
+}
 
 function freshports_HTML_Start() {
 GLOBAL $Debug;
 
+$holiday = freshports_detect_holidays(time());
+
 echo HTML_DOCTYPE . '
-<html lang="en">
+<html lang="en"' . ($holiday ? ' class="holiday ' . $holiday . '"' : '') . '>
 ';
 }
 

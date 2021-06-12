@@ -6,6 +6,26 @@
   box-sizing: border-box;
 }
 
+/* pride month */
+.holiday.pride {
+  background: repeating-linear-gradient(
+    #cc66ff 0, #cc66ff 2em,
+    #ff6699 2em, #ff6699 4em,
+    #ff0000 4em, #ff0000 6em,
+    #ff9900 6em, #ff9900 8em,
+    #ffff00 8em, #ffff00 10em,
+    #009900 10em, #009900 12em,
+    #0099cc 12em, #0099cc 14em,
+    #330099 14em, #330099 16em,
+    #990099 16em, #990099 18em
+  );
+  height: 100%;
+}
+
+.holiday.pride body > table {
+  background-color: white;
+}
+
 body {
   background-color: white;
   color: black;

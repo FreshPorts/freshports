@@ -517,7 +517,7 @@ class port_display {
 		if (empty($repo_date)) {
 			$title .= "repo not found\n";
 		} else {
-			$title .= $repo_date . " &#8211; package last built\n";
+			$title .= $repo_date . " &#8211; repo build date\n";
 		}
 
 		if (empty($processed_date)) {

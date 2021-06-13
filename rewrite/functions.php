@@ -94,7 +94,35 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	if ($Debug) echo "PATH_NAME='" . FRESHPORTS_PORTS_TREE_PREFIX . PATH_NAME . "'<br>";
 
 	# let's see if this exists on the target branch
-	if ($ElementRecord->FetchByName(FRESHPORTS_PORTS_TREE_PREFIX . PATH_NAME, false)) {
+	
+	# first, search case senstive
+	if ($Debug) echo 'doing a case sensitive search first<br>';
+	$element_id = $ElementRecord->FetchByName(FRESHPORTS_PORTS_TREE_PREFIX . PATH_NAME);
+	if ($Debug) {
+		if (isset($element_id)) {
+			echo "found '$element_id' doing a case sensitive search first<br>";
+		} else {
+			echo 'null returned from ElementRecord->FetchByName<br>';
+		}
+	}
+	if (!isset($element_id)) {
+		if ($Debug) echo 'nothing found, try a case insensitive next<br>';
+		# we did not find a match, try case insensitive
+		$element_id = $ElementRecord->FetchByName(FRESHPORTS_PORTS_TREE_PREFIX . PATH_NAME, false);
+	        if (!isset($element_id)) {
+	        	# still no match - do nothing
+			if ($Debug) echo 'still nothing found<br>';
+		} elseif ($element_id == -1 ) {
+			if ($Debug) echo 'multiple matches - let\'s try search<br>';
+			# we have multiple matches - redirect to search
+			header('Location: '. 
+			
+			'/search.php?stype=name&method=match&query=inn-CURRENT&num=10&deleted=includedeleted&orderby=category&orderbyupdown=asc&search=Search&format=html&branch=head');
+		}
+
+	}
+	
+	if (isset($element_id)) {
 		$IsElement = true;
 		if ($Debug) echo 'we found an element for that<br>';
 		if ($Debug) echo "we have: '$ElementRecord->element_pathname'<br>";

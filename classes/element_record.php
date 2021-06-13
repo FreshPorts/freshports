@@ -37,11 +37,13 @@ class ElementRecord {
 
 	function FetchByName($Name, $caseSensitive = true) {
 		$Debug = 0;
+		
+		# unset this so we can see we don't get anything.
+		$this->id = null;
 
 		if ($Debug) echo "looking for '$Name' and caseSensitive is '$caseSensitive'<br>";
 		if (IsSet($Name)) {
 			$this->element_pathname = $Name;
-			$this->id = '';
 		}
 
 		if ($caseSensitive) {
@@ -57,9 +59,15 @@ class ElementRecord {
 
 			$numrows = pg_numrows($result);
 			if ($Debug) echo "we have '$numrows' rows<br>";
-			if ($numrows == 1) {
+			if ($numrows == 0 ) {
+				# nothing to do here
+			}
+			elseif ($numrows == 1) {
 				$myrow = pg_fetch_array ($result, 0);
 				$this->PopulateValues($myrow);
+			} else {
+				# multiple values
+				return -1;
 			}
 		}
 

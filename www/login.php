@@ -144,14 +144,11 @@ if (IsSet($_GET["resend"])) {
 		$error .= "Hmmm, I know nothing about you.  That can't be right.  Please contact $ProblemSolverEmailAddress.";
 	}
 }
-?>
 
-
-<?php
-	$Title = 'Login';
-	freshports_Start($Title,
-               $Title,
-               'FreeBSD, index, applications, ports');
+$Title = 'Login';
+freshports_Start($Title,
+                 $Title,
+                 'FreeBSD, index, applications, ports');
 
 ?>
 

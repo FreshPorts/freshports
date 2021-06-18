@@ -198,7 +198,9 @@ const SEARCH_SELECT_FIELD = '
 # used by
 # www/new-user.php
 # www/customize.php
-const HASH_UPDATE_QUERY = 'HASH_UPDATE';
+const HASH_UPDATE_QUERY         = 'HASH_UPDATE';
+const RESEND_CONFIRMATION_QUERY = 'RESEND_CONFIRMATION';
+
 if (!defined('PW_HASH_METHOD')) define('PW_HASH_METHOD', 'bf');
 if (!defined('PW_HASH_COST')) define('PW_HASH_COST', 14);
 

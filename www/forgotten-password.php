@@ -29,7 +29,7 @@ if (IsSet($submit)) {
    $error = '';
 
    if ($Debug) {
-      foreach ($HTTP_POST_VARS as $name => $value) {
+      foreach ($_REQUEST as $name => $value) {
          echo "$name = $value<br>\n";
       }
    }

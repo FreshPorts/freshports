@@ -34,7 +34,7 @@ if (IsSet($submit)) {
 	// process form
 
 	/*
-	while (list($name, $value) = each($HTTP_POST_VARS)) {
+	while (list($name, $value) = each($_REQUEST)) {
 		echo "$name = $value<BR>\n";
 	}
 	*/
@@ -193,7 +193,7 @@ echo '<TABLE class="fullwidth borderless">
   <p><IMG SRC="/images/warning.gif"> Some errors have occurred which must be corrected before your login can be created.</p>';
 
 /*
-  while (list($name, $value) = each($HTTP_POST_VARS)) {
+  while (list($name, $value) = each($_REQUEST)) {
     echo "$name = $value<BR>\n";
   }
 */

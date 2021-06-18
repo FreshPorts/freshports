@@ -19,7 +19,7 @@
 
 	$ResultConfirm = 999;
 
-	$token = $_GET['token'];
+	$token = $_REQUEST['token'];
 	if (IsSet($token)) {
 		$token = pg_escape_string($token);
 		if ($Debug) echo "I'm confirming with token $token\n<BR>";

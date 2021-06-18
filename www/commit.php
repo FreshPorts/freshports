@@ -22,8 +22,8 @@
 	$page       = '';
 	$page_size  = '';
 	
-	if (IsSet($_GET['message_id'])) $message_id = pg_escape_string($_GET['message_id']);
-	if (IsSet($_GET['revision']))   $revision   = pg_escape_string($_GET['revision']);
+	if (IsSet($_REQUEST['message_id'])) $message_id = pg_escape_string($_REQUEST['message_id']);
+	if (IsSet($_REQUEST['revision']))   $revision   = pg_escape_string($_REQUEST['revision']);
 
 	$url_query = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
 	parse_str($url_query, $url_args);

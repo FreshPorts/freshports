@@ -15,8 +15,8 @@
 
 	# we allow the following intervals: today, yesterday, this past week, past 3 months
 
-	if (IsSet($_GET["interval"])) {
-		$interval = pg_escape_string($_GET["interval"]);
+	if (IsSet($_REQUEST["interval"])) {
+		$interval = pg_escape_string($_REQUEST["interval"]);
 	} else {
 		$interval = '';
 	}
@@ -84,8 +84,8 @@ These are the recently added ports.
 <?
 
 	$visitor = pg_escape_string($_COOKIE[USER_COOKIE_NAME]);
-	if (IsSet($_GET["sort"])) {
-		$sort = pg_escape_string($_GET["sort"]);
+	if (IsSet($_REQUEST["sort"])) {
+		$sort = pg_escape_string($_REQUEST["sort"]);
 	} else {
 		$sort = '';
 	}

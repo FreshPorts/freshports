@@ -22,15 +22,5 @@
 		$result = pg_exec($db, $sql);
 	}
 
-	if (IsSet($_GET['origin'])) {
-		$origin = $_GET['origin'];
-	} else {
-		$origin = '';
-	}
-
-	if ($origin == '/index.php') {                   
-		$origin = '';                                 
-	}
-
-	header("Location: /$origin");  /* Redirect browser to PHP web site */
+	header("Location: /");  /* Redirect browser to PHP web site */
 	exit;  /* Make sure that code below does not get executed when we redirect. */

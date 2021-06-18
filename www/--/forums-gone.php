@@ -16,8 +16,6 @@
 					'freshports - new ports, applications',
 					'FreeBSD, index, applications, ports');
 
-	$origin = $_GET["origin"];
-
 	echo freshports_MainTable();
 ?>
 

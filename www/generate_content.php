@@ -24,7 +24,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
  * Given a ds (dataset) parameter we execute the corresponding query
  * and then format the JSON object. 
  */
-switch ($_GET['ds']) {
+switch ($_REQUEST['ds']) {
 	case ('top10committers()'):
 		$result = pg_query("select committer, count(committer) from commit_log group by committer order by count(committer) desc limit 10") or die("Query error. (1)");
 		$data = array();

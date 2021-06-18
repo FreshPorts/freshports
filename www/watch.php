@@ -129,8 +129,8 @@ if ($wlid != '') {
 
 echo "\nThis page is ";
 
-if (IsSet($_GET["sort"])) {
-	$sort = $_GET["sort"];
+if (IsSet($_REQUEST["sort"])) {
+	$sort = $_REQUEST["sort"];
 } else {
 	$sort = '';
 }

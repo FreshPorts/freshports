@@ -5,8 +5,6 @@
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
-	
-	if (IsSet($_GET['origin'])) $origin = $_GET["origin"];
 ?>
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" name="l">
       <input type="hidden" name="custom_settings" value="1"><input type="hidden" name="LOGIN" value="1">

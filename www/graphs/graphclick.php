@@ -5,9 +5,9 @@
 
 	$cache_dir = "/tmp/";
 
-	$id      = $_GET["id"];
-	$graph_x = $_GET["graph_x"];
-	$graph_y = $_GET["graph_y"];
+	$id      = $_REQUEST["id"];
+	$graph_x = $_REQUEST["graph_x"];
+	$graph_y = $_REQUEST["graph_y"];
 
 
 	if (!isset($id)) $id=0;

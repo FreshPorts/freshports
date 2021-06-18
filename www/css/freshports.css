@@ -8,7 +8,7 @@
 
 /* pride month */
 .holiday.pride {
-  background: repeating-linear-gradient(
+  background-image: linear-gradient(
     #cc66ff 0, #cc66ff 2em,
     #ff6699 2em, #ff6699 4em,
     #ff0000 4em, #ff0000 6em,
@@ -19,6 +19,10 @@
     #330099 14em, #330099 16em,
     #990099 16em, #990099 18em
   );
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 18em;
   height: 100%;
 }
 

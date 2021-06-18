@@ -40,11 +40,6 @@
 	If you do not receive that email, please attempt to login and you
 	will have an opportunity to resend the notification.
 	</P>
-
-	<P>
-	Click <a href="<?php echo htmlentities($origin) ?>">here</a> to return to your previous page.
-	</P>
-
 </TD></TR>
 </TABLE>
 </TD>

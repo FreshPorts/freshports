@@ -312,13 +312,13 @@
 						$HTML .=  "<p>$ShowAllFilesURL</p>";
 					} # files == 'y'
 
+					$HTML .= "\n</table></td>\n";
+
 					# save the HTML
 					if ($DoTheSave) {
 						$Cache->CacheDataSet($HTML);
 						$Cache->AddCommit($message_id, $clean['category'], $clean['port'], $files);
 					}
-
-					$HTML .= "\n</table></td>\n";
 				} // $HTML != ''
 			} # count($message_id_array)
 

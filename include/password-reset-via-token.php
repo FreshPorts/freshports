@@ -5,7 +5,6 @@
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
-	if (IsSet($_REQUEST["origin"])) $origin = $_REQUEST["origin"];
 	GLOBAL $numberofdays;
 	GLOBAL $page_size;
 ?>

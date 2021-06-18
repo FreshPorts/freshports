@@ -17,22 +17,16 @@
 
 	GLOBAL $User;
 
-	$origin        = '/';
 	$errors        = 0;
 	$PasswordReset = 0;
 	
 	# user does not know password. Has been sent a token.
 	# Match that token against a user id, then let them reset the password
 
-if (IsSet($_REQUEST['origin'])) $origin	= pg_escape_string( $_REQUEST['origin'] );
 if (IsSet($_REQUEST['submit'])) $submit = pg_escape_string( $_REQUEST['submit'] );
 if (IsSet($_REQUEST['token']))  $token  = pg_escape_string( $_REQUEST['token'] );
 
 syslog(LOG_NOTICE, "Password reset page: loaded with: " . $token);
-
-if ($origin == '/index.php' || $origin == '') {
-	$origin = '/';
-}
 
 if (IsSet($submit)) {
   $Debug = 0;
@@ -78,7 +72,7 @@ if (IsSet($submit)) {
 
     if ($PasswordReset == 1) {
       if ($Debug) {
-        echo "I would have taken you to '$origin' now, but debugging is on<br>\n";
+        echo "I would have taken you to / now, but debugging is on<br>\n";
       }
     } else {
       $errors .= 'Something went terribly wrong there.<br>';

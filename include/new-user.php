@@ -5,7 +5,6 @@
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
-	if (IsSet($_REQUEST["origin"])) $origin = $_REQUEST["origin"];
 ?>
 
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>

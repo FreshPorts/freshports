@@ -16,13 +16,8 @@
 
 	GLOBAL $User;
 
-$origin		= isset($_REQUEST['origin']) ? $_REQUEST['origin'] : null;
-$submit 	= isset($_REQUEST['submit']) ? $_REQUEST['submit'] : null;
-$visitor	= isset($_COOKIE[USER_COOKIE_NAME]) ? $_COOKIE[USER_COOKIE_NAME] : null;
-
-if ($origin == '/index.php' || $origin == '') {
-	$origin = '/';
-}
+$submit  = isset($_REQUEST['submit'])        ? $_REQUEST['submit']        : null;
+$visitor = isset($_COOKIE[USER_COOKIE_NAME]) ? $_COOKIE[USER_COOKIE_NAME] : null;
 
 // if we don't know who they are, we'll make sure they login first
 if (!$User->id) {

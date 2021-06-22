@@ -211,9 +211,9 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 	if (!$result) {
 		$HTMLPortPart2 = $Cache->CacheDataGet();
 		#
+		# this code is similar to that around line 81 in www/commit.php
 		# we need to know the element_id of this port
 		# and the whether or not it is on the person's watch list
-		# let's create a special function for that!
 		#
 		$EndOfFirstLine = strpos($HTMLPortPart2, "\n");
 		if ($EndOfFirstLine == false) {

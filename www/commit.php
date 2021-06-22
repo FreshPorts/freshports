@@ -76,6 +76,18 @@
 	if (!$result) {
 		$HTML = $Cache->CacheDataGet();
 		$cached = true;
+		#
+		# this code is similar to that around line 237 in rewrite/missing-port.php
+		# we need to know the branch of this commit
+		#
+		$EndOfFirstLine = strpos($HTML, "\n");
+		if ($EndOfFirstLine == false) {
+			die('Internal error: I was expecting a Commit Branch and found nothing');
+		}
+		# extract the Commit Branch from the cache
+		$CommitBranch = substr($HTML, 0, $EndOfFirstLine);
+		# now remove the first line
+		$HTML = substr($HTML, $EndOfFirstLine + 1);
 	} else {
 		$cached = false;
 		if ($message_id != '') {
@@ -84,6 +96,7 @@
 			$Commit = new Commit($db);
 			$Commit->FetchByMessageId($message_id);
 			freshports_ConditionalGet($Commit->last_modified);
+			$CommitBranch = $Commit->branch;
 		}
 	}
 
@@ -127,8 +140,8 @@
 
 
 	$Title = 'Commit found by commit id';
-	if ($Commit->branch != BRANCH_HEAD) {
-		$Title .= ' on branch ' . $Commit->branch;
+	if ($CommitBranch != BRANCH_HEAD) {
+		$Title .= ' on branch ' . $CommitBranch;
 	}
 	freshports_Start($Title,
 					$Title,
@@ -316,7 +329,9 @@
 
 					# save the HTML
 					if ($DoTheSave) {
-						$Cache->CacheDataSet($HTML);
+						# save the branch, because we need that later
+						# see https://github.com/FreshPorts/freshports/issues/154
+						$Cache->CacheDataSet($CommitBranch . "\n" . $HTML);
 						$Cache->AddCommit($message_id, $clean['category'], $clean['port'], $files);
 					}
 				} // $HTML != ''

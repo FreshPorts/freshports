@@ -56,7 +56,7 @@
 		}
 		freshports_ConditionalGet($Commit->last_modified);
 
-	if ($Debug) echo 'oh... got something back there: <pre>'. print_r($message_id_array, true) . '</pre>';
+		if ($Debug) echo 'oh... got something back there: <pre>'. print_r($message_id_array, true) . '</pre>';
 	}
 
 	$HTML = '';

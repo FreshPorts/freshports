@@ -454,7 +454,7 @@ class port_display {
 		return $result;
 	}
 
-	function Is_A_Python_Port() {
+	function Is_A_Python_Port(&$matches) {
 		# find out of the python port starts with pyXX-
 		$Is_A_Python_Port = preg_match('/^py[0-9][0-9]-(.*)/', $this->port->package_name, $matches);
 
@@ -471,7 +471,7 @@ class port_display {
 
                 if ($USES_PYTHON) {
 			# it is a python port if it starts with py-37, for example.
-                        $Is_A_Python_Port = $this->Is_A_Python_Port();
+                        $Is_A_Python_Port = $this->Is_A_Python_Port($matches);
                         # if a match for py37-django-js-asset, $matches[0]=> "py37-django-js-asset", $matches[1]=> "django-js-asset"
                 } else {
                         $Is_A_Python_Port = false;
@@ -979,7 +979,7 @@ class port_display {
 						$HTML .= '<dt><b>To add the <a href="/faq.php#package" TITLE="what is a package?">package</a>, run one of these commands:</b></dt>';
 						$HTML .= '<dd><ul><li><kbd class="code">pkg install ' . $port->category . '/' . $port->port . '</kbd></li>';
 						$HTML .= '<li><kbd class="code">pkg install ' . $port->package_name . '</kbd></li></ul>';
-						if ($this->Is_A_Python_Port()) {
+						if ($this->Is_A_Python_Port($matches)) {
 							$HTML .= 'NOTE: This is a Python port. Instead of <kbd class="code">' . $port->package_name . '</kbd> listed in the above command, you can pick from the names under the <a href="#packages">Packages</a> section.';
 						}
 						$HTML .= '</dd>';

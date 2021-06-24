@@ -76,12 +76,16 @@ function freshports_cvsweb_Diff_Link($pathname, $previousRevision, $revision_nam
   return $HTML;
 }
 
-function freshports_Convert_Subversion_Path_To_Git($pathname)
+function freshports_Convert_Subversion_Path_To_Git($pathname, $branch = BRANCH_HEAD)
 {
   # the pathnames in the FreshPorts database reflect the physical pathname on disk
   # yeah, repo changes means different paths. Hopefully, we can do that all
   # external to the database instead of in the database.
-  return str_replace('/ports/head/', '', $pathname);
+  if ($branch == BRANCH_HEAD) {
+    return str_replace('/ports/head/',             '', $pathname);
+  } else {
+    return str_replace("/ports/branches/$branch/", '', $pathname);
+  }
 }
 
 function freshports_cvsweb_Annotate_Link($pathname, $revision_name)

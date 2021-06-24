@@ -30,7 +30,7 @@ class FilesDisplay {
 		$this->HTML = '';
 
 		if (!$this->ResultSet) {
-            die("read from database failed");
+			die("read from database failed");
 			exit;
 		}
 
@@ -100,15 +100,12 @@ class FilesDisplay {
             $this->HTML .= "</TD>";
             
             $this->HTML .= '<td>';
-#           switch($WhichRepo)
             switch($myrow['repository'])
             {
-#               case FREEBSD_REPO_CVS:
 		default:
                     $this->HTML .= freshports_cvsweb_Annotate_Link($myrow["pathname"] , $myrow["revision_name"]); 
                     break;
 
-#               case FREEBSD_REPO_SVN:
                 case FREEBSD_REPOSITORY_SUBVERSION:
                     # we want something like
                     # http://svn.freebsd.org/ports/head/x11-wm/awesome/Makefile
@@ -120,27 +117,32 @@ class FilesDisplay {
                     # we want something like
                     # was: https://github.com/freebsd/freebsd-ports/blame/0957c7db9bf1fc4313cdefdcdc2608a0c965dda7/sysutils/goaccess/Makefile
                     # now: https://cgit.freebsd.org/ports/blame/multimedia/plexmediaserver-plexpass/Makefile
-                    $this->HTML .= ' <A HREF="http://' . $myrow['repo_hostname'] . $myrow["path_to_repo"] . '/blame/' . freshports_Convert_Subversion_Path_To_Git($myrow["pathname"]) . '?id=' . $myrow["revision_name"] . '">';
+                    
+                    # branch: https://cgit.freebsd.org/ports/blame/www/gitea/Makefile?h=2021Q2&id=3ce47d16f7eb5c00b470603c307fa52bb9ca920b
+                    $this->HTML .= ' <A HREF="http://' . $myrow['repo_hostname'] . $myrow["path_to_repo"] . '/blame/';
+                    $this->HTML .= freshports_Convert_Subversion_Path_To_Git($myrow["pathname"], $myrow['branch']) . '?';
+                    if ($myrow['branch'] != BRANCH_HEAD ) {
+                        $this->HTML .= 'h=' . $myrow['branch'] . '&';
+                    }
+                    $this->HTML .= 'id=' . $myrow["revision_name"];
+                    $this->HTML .= '">';
+                    
+                    # getting: https://cgit.freebsd.org/ports/blame/ /ports/branches/2021Q2/www/gitea/Makefile?id=5ceea227c504d2892d91c1aa8d8d81ff15b22fc3&h=
+                    #          http://cgit.freebsd.org/ports/blame// ports/branches/2021Q2/www/gitea/Makefile?id=5ceea227c504d2892d91c1aa8d8d81ff15b22fc3&h=
                     $this->HTML .= freshports_Annotate_Icon() . '</a> ';
                     break;
-
-#                default:
-#		    $this->HTML .= 'unknown: \'' . htmlentities($WhichRepo) . '\'';
             }
 
 
             if ( $Change_Type == "modify" ) {
-#               switch($WhichRepo)
                 switch($myrow['repository'])
                 {
-#		    case FREEBSD_REPO_CVS:
                     default:
                         $this->HTML .= ' ';
                         $previousRevision =  $this->GetPreviousRevision( $myrow["revision_name"] );
                         $this->HTML .= freshports_cvsweb_Diff_Link($myrow["pathname"] , $previousRevision, $myrow["revision_name"]);
                         break;
 
-#                   case FREEBSD_REPO_SVN:
                     case FREEBSD_REPOSITORY_SUBVERSION:
                         $this->HTML .= ' ';
     	        	$previousRevision = $this->GetPreviousRevision( $myrow["revision_name"] );
@@ -160,16 +162,13 @@ class FilesDisplay {
             $this->HTML .= '</td>';
             $this->HTML .= '  <TD>';
             
-#           switch($WhichRepo)
             switch($myrow['repository'])
             {
-#               case FREEBSD_REPO_CVS:
                 default:
                     $this->HTML .= freshports_cvsweb_Revision_Link($myrow["pathname"] , $myrow["revision_name"]);
                     $url_text = $myrow["pathname"];
                     break;
 
-#               case FREEBSD_REPO_SVN:
                 case FREEBSD_REPOSITORY_SUBVERSION:
                     # we want something like
                     # http://svnweb.freebsd.org/ports/head/textproc/bsddiff/Makefile?view=log#rev300953
@@ -183,9 +182,8 @@ class FilesDisplay {
                     # https://github.com/freebsd/freebsd-ports/commits/0957c7db9bf1fc4313cdefdcdc2608a0c965dda7/sysutils/goaccess/Makefile
                     # was: https://github.com/freebsd/freebsd-ports/commits/0957c7db9bf1fc4313cdefdcdc2608a0c965dda7sysutils/goaccess/Makefile
                     # now: https://cgit.freebsd.org/ports/log/multimedia/plexmediaserver-plexpass/Makefile
-                    $url_text = freshports_Convert_Subversion_Path_To_Git($myrow["pathname"]);
+                    $url_text = freshports_Convert_Subversion_Path_To_Git($myrow["pathname"], $myrow['branch']);
                     $this->HTML .= ' <a href="http://' . $myrow['repo_hostname'] . $myrow["path_to_repo"] . '/log/' . $url_text . '" title="Commit history">';
-#                   $this->HTML .= freshports_git_commit_Link($myrow["revision_name"], $myrow['repo_hostname'], myrow["pathname"]);
                     break;
             }
 

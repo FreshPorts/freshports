@@ -107,9 +107,12 @@ class CommitFiles {
 	       GMT_Format(CL.commit_date) AS last_commit_date,
                R.repository,
                R.repo_hostname,
-               R.path_to_repo
-	  FROM commit_log               CL
-	       LEFT OUTER JOIN repo R on CL.repo_id = R.id,
+               R.path_to_repo,
+               SB.branch_name as branch
+	  FROM commit_log                CL
+	       LEFT OUTER JOIN repo       R on CL.repo_id    = R.id
+	       JOIN commit_log_branches CLB on CL.id         = CLB.commit_log_id
+	       JOIN system_branch        SB on CLB.branch_id = SB.id,
 	       commit_log_elements      CLE,
 	       element                  E
 	 WHERE CL.message_id              = '" . pg_escape_string($this->MessageID) . "'

@@ -158,7 +158,7 @@
 
 	<tr><td class="content">
 
-	<?php
+<?php
 	echo freshports_MainContentTable(BORDER);
 
 	if ($cached) {

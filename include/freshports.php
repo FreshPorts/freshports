@@ -102,15 +102,15 @@ function freshports_cvsweb_Revision_Link($pathname, $revision_name)
 }
 
 function freshports_git_commit_Link($revision, $hostname, $path) {
-  return '<a href="http://' . htmlentities($hostname) . $path . '/commit/?id=' . htmlentities($revision) .  '">' . freshports_Git_Icon('commit hash:' . $revision) . '</a>';
+  return '<a href="https://' . htmlentities($hostname) . $path . '/commit/?id=' . htmlentities($revision) .  '">' . freshports_Git_Icon('commit hash:' . $revision) . '</a>';
 }
 
 function freshports_git_commit_Link_diff($revision, $hostname, $path) {
-  return '<a href="http://' . htmlentities($hostname) . $path . '/commit/?id=' . htmlentities($revision) .  '">' . freshports_Diff_Icon() . '</a>';
+  return '<a href="https://' . htmlentities($hostname) . $path . '/commit/?id=' . htmlentities($revision) .  '">' . freshports_Diff_Icon() . '</a>';
 }
 
 function freshports_git_commit_Link_Hash($hash, $link_text, $hostname, $path) {
-  return '<a href="http://' . htmlentities($hostname) . $path . '/commit/?id=' . htmlentities($hash) .  '" class="hash">' . $link_text . '</a>';
+  return '<a href="https://' . htmlentities($hostname) . $path . '/commit/?id=' . htmlentities($hash) .  '" class="hash">' . $link_text . '</a>';
 }
 
 function freshports_Fallout_Link($category, $port) {

@@ -1,5 +1,27 @@
 :root {
   --beastie-red: #8c0707;
+  --background-color: white;
+  --body-text: black;
+  --accent-text: white;
+  --code-text: #461b7e;
+  --link-color: #36f;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: #1e1e1e;
+    --body-text: #c9d9d9;
+    --code-text: #9e6edd;
+    --link-color: rgb(51, 156, 255);
+  }
+
+  a:link {
+    color: var(--link-color);
+  }
+
+  a:visited {
+    color: var(--code-text);
+  }
 }
 
 * {
@@ -8,7 +30,7 @@
 
 /* pride month */
 .holiday.pride {
-  background: repeating-linear-gradient(
+  background-image: linear-gradient(
     #cc66ff 0, #cc66ff 2em,
     #ff6699 2em, #ff6699 4em,
     #ff0000 4em, #ff0000 6em,
@@ -19,16 +41,25 @@
     #330099 14em, #330099 16em,
     #990099 16em, #990099 18em
   );
+  background-attachment: fixed;
+  background-color: white;
+  background-color: var(--background-color);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 18em;
   height: 100%;
 }
 
 .holiday.pride body > table {
   background-color: white;
+  background-color: var(--background-color);
 }
 
 body {
   background-color: white;
+  background-color: var(--background-color);
   color: black;
+  color: var(--body-text);
 }
 
 BODY, TD, TR, P, UL, OL, LI, INPUT, SELECT, DL, DD, DT, FONT
@@ -90,6 +121,7 @@ td.content {
   background-color: #8c0707;
   background-color: var(--beastie-red);
   color: white;
+  color: var(--accent-text);
   font-size: larger;
   height: 30px;
 }
@@ -304,11 +336,20 @@ input[type="image"], .watchlist-selector select {
 
 IMG#fp-logo { max-width: 100%; height: auto }
 
-CODE.code, kbd.code { color: #461b7e}
-PRE.code {  color: #461b7e; white-space: pre-wrap; word-break: break-word; }
+CODE.code, kbd.code {
+  color: #461b7e;
+  color: var(--code-text);
+}
+PRE.code {
+  color: #461b7e;
+  color: var(--code-text);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
 
 .like-pre {
   color: #461b7e;
+  color: var(--code-text);
   font-family: monospace;
   white-space: pre;
   margin-top: 15px;
@@ -318,26 +359,43 @@ PRE.code {  color: #461b7e; white-space: pre-wrap; word-break: break-word; }
 
 .configure > li, .pkg-plist  > li {
     color: #461b7e;
+    color: var(--code-text);
     font-family: monospace;
 }
 
 
 LI.configure {
     color: #461b7e;
+    color: var(--code-text);
     display: block;
     font-family: monospace;
 }
 
 li#configureplist-Extra {
     color: #461b7e;
+    color: var(--code-text);
     font-family: monospace;
     padding-inline-start: 0px;
 }
-BLOCKQUOTE.code { color: #461b7e}
+BLOCKQUOTE.code {
+  color: #461b7e;
+  color: var(--code-text);
+}
 TD.sans { font-size: smaller; }
-P.white { color: white; }
-P.blackhead { color: black; font-weight: 900; }
-P.whitehead { color: white; font-weight: 900; }
+P.white {
+  color: white;
+  color: var(--background-color);
+}
+P.blackhead {
+  color: black;
+  color: var(--body-text);
+  font-weight: 900;
+}
+P.whitehead {
+  color: white;
+  color: var(--background-color);
+  font-weight: 900;
+}
 P.yellow { color: #FFCC33; }
 A:hover { color: #666666; }
 A.white { color: white; text-decoration: none; font-size: smaller; }
@@ -456,6 +514,7 @@ a.hash {
 a.showLink, a.hideLink {
     text-decoration: none;
     color: #36f;
+    color: var(--link-color);
     padding-left: 16px;
     background: transparent url(/images/expand.gif) no-repeat left;
 }
@@ -466,6 +525,7 @@ a.hideLink {
 
 a.showLink:hover, a.hideLink:hover {
     border-bottom: 1px dotted #36f;
+    border-bottom: 1px dotted var(--link-color);
 }
 
 li.nostyle {
@@ -478,13 +538,23 @@ li.extraspace {
 
 .packages { 
   background-color:#eee;
+  background-color: var(--background-color);
   border-collapse:collapse; 
   display: inline-block;
 }
 
 .packages caption { font-size: initial; }
-.packages th { background-color:#000; color:white; }
-.packages td, .packages th { padding:8px; border:1px solid #000; }
+.packages th {
+  background-color:#000;
+  background-color: var(--body-text);
+  color: white;
+  color: var(--background-color);
+}
+.packages td, .packages th {
+  padding:8px;
+  border:1px solid #000;
+  border:1px solid var(--body-text);
+}
 
 .footer > tbody > tr > td > table {
   width: 98%;
@@ -519,20 +589,24 @@ table.fullwidth {
 
 table.borderless {
   border: 0 none black;
+  border: 0 none var(--body-text);
 }
 
 table.bordered {
   border: 1px outset black;
+  border: 1px outset var(--body-text);
   border-spacing: 0;
 }
 
 table.bordered > tbody > tr > td, table.bordered > tbody > tr > th {
   border: 1px inset black;
+  border: 1px inset var(--body-text);
 }
 
 td.version:hover, td.version:focus {
   background-color: #777;
   color: white;
+  color: var(--background-color);
   position: relative;
 }
 
@@ -542,11 +616,14 @@ td.version:hover::after, td.version:focus::after {
   width: auto;
   padding: .5em;
   border: 1px solid black;
+  border: 1px solid var(--body-text);
   font-family: monospace;
   text-align: left;
   white-space: pre;
   background-color: white;
+  background-color: var(--background-color);
   color: black;
+  color: var(--body-text);
 }
 
 .packages .version.noversion, .footer, .maintenance, .fp-banner {
@@ -562,13 +639,16 @@ td.version:hover::after, td.version:focus::after {
   position: relative;
   display: inline-block;
   border-bottom: 1px dotted black;
+  border-bottom: 1px dotted var(--body-text);
 }
 
 .tooltip .tooltiptext {
   visibility: hidden;
   width: 120px;
   background-color: black;
+  background-color: var(--body-text);
   color: #fff;
+  color: var(--background-color);
   text-align: center;
   border-radius: 6px;
   padding: 5px 0;

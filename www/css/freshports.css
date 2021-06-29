@@ -41,7 +41,6 @@
     #330099 14em, #330099 16em,
     #990099 16em, #990099 18em
   );
-  background-attachment: fixed;
   background-color: white;
   background-color: var(--background-color);
   background-position: center;

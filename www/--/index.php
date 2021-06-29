@@ -94,23 +94,32 @@ switch($script) {
         echo "</head>\n";
 
         echo '<p>';
-
         if ($status->InMaintenanceMode()) {
-            echo 'We are in maintenance mode<br>';
+            echo 'We are in maintenance mode.';
         } else {
-            echo 'We are in not in maintenance mode';
+            echo 'We are in not in maintenance mode.';
         }
 
         echo '</p><p>';
 
         if ($status->LoginsAreAllowed()) {
-            echo 'Logins are enabled<br>';
+            echo 'Logins are enabled.';
         } else {
             echo 'Nobody is allowed to login right now.';
         }
         echo '</p>';
 
-        require_once("/var/db/freshports/cache/html/backend-status.html");
+        define('STATUS_FILE', "/var/db/freshports/cache/html/backend-status.html");
+
+        require_once(STATUS_FILE);
+
+        echo '<hr>';
+
+        echo "<p>This status was last updated at " . gmdate('Y-m-d H:i:sO', filemtime(STATUS_FILE)) . '</p>';
+        echo "<p>It should never be more than 4 minutes old.</p>";
+        echo '<p>This page automatically reloads every 3 minutes.</p>';
+        echo '<p>The contents are generated every 3 minutes by the backend server.</p>';
+
         echo "</body>\n";
         exit;
         break;

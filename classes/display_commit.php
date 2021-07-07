@@ -198,6 +198,11 @@ class DisplayCommit {
 						$this->HTML .= '&nbsp; ' . freshports_svnweb_ChangeSet_Link($mycommit->svn_revision, $mycommit->repo_hostname);
 					}
 				}
+
+				if ($this->BranchName != $mycommit->branch){
+					$this->HTML .=  ' <span class="commit-branch">' . $mycommit->branch . '</span>';
+				}
+
 				$this->HTML .= "<ul class=\"element-list\">\n";
 
 			}

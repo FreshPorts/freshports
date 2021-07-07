@@ -140,7 +140,8 @@
 
 
 	$Title = 'Commit found by commit id';
-	if ($CommitBranch != BRANCH_HEAD) {
+	if (!empty($Commit->branch) && $Commit->branch != BRANCH_HEAD) {
+
 		$Title .= ' on branch ' . $CommitBranch;
 	}
 	freshports_Start($Title,

@@ -91,7 +91,8 @@ class Commits {
             STF.message                                                                                         AS stf_message,
             P.is_interactive                                                                                    AS is_interactive,
             P.no_cdrom                                                                                          AS no_cdrom,
-            P.restricted                                                                                        AS restricted";
+            P.restricted                                                                                        AS restricted,
+            SB.branch_name                                                                                      AS branch";
 
         if ($UserID) {
                 $sql .= ",
@@ -106,13 +107,13 @@ class Commits {
                         AND CL.commit_date BETWEEN '" . pg_escape_string($Date) . "'::timestamptz  + SystemTimeAdjust()
                                                AND '" . pg_escape_string($Date) . "'::timestamptz  + SystemTimeAdjust() + '1 Day'
             LEFT OUTER JOIN sanity_test_failures STF ON STF.commit_log_id = CLP.commit_log_id 
-            LEFT OUTER JOIN repo R on CL.repo_id = R.id
+            JOIN repo R on CL.repo_id = R.id
             LEFT OUTER JOIN ports_vulnerable     PV ON CLP.port_id = PV.port_id
-            LEFT OUTER JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
-            LEFT OUTER JOIN system_branch        SB ON SB.branch_name = '" . pg_escape_string($this->BranchName) . "' AND SB.id = CLB.branch_id
-            LEFT OUTER JOIN ports                 P ON P.id           = CLP.port_id
-            LEFT OUTER JOIN categories           C  ON C.id           = P.category_id
-            LEFT OUTER JOIN element              E  on E.id           = P.element_id
+            JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
+            JOIN system_branch        SB ON SB.id = CLB.branch_id
+            JOIN ports                 P ON P.id           = CLP.port_id
+            JOIN categories           C  ON C.id           = P.category_id
+            JOIN element              E  on E.id           = P.element_id
             ";
         if ($UserID) {
                 $sql .= "
@@ -195,7 +196,8 @@ class Commits {
             STF.message                                                                                         AS stf_message,
             P.is_interactive                                                                                    AS is_interactive,
             P.no_cdrom                                                                                          AS no_cdrom,
-            P.restricted                                                                                        AS restricted";
+            P.restricted                                                                                        AS restricted,
+            SB.branch_name                                                                                      AS branch";
 
         if ($UserID) {
                 $sql .= ",
@@ -207,7 +209,7 @@ class Commits {
 
         $sql .= "
     FROM commit_log_ports CLP JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
-                              JOIN system_branch SB ON SB.branch_name = '" . pg_escape_string($this->BranchName) . "' AND SB.id = CLB.branch_id
+                              JOIN system_branch        SB ON SB.id = CLB.branch_id
       LEFT OUTER JOIN sanity_test_failures STF ON STF.commit_log_id = CLP.commit_log_id, ";
 
         if ($this->BranchName == BRANCH_HEAD ) {
@@ -267,8 +269,8 @@ class Commits {
           FROM commit_log CL JOIN commit_log_ports CLP ON CL.id = CLP.commit_log_id 
                         AND CL.commit_date BETWEEN '" . pg_escape_string($Date) . "'::timestamptz  + SystemTimeAdjust()
                                                 AND '" . pg_escape_string($Date) . "'::timestamptz  + SystemTimeAdjust() + '1 Day'
-            LEFT OUTER JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
-            LEFT OUTER JOIN system_branch        SB ON SB.branch_name = '" . pg_escape_string($this->BranchName) . "' AND SB.id = CLB.branch_id";
+            JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
+            JOIN system_branch        SB ON SB.id = CLB.branch_id";
 
 		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
 
@@ -309,7 +311,7 @@ class Commits {
 		$sql = "
 SELECT gmt_format(max(CL.date_added)) AS last_modified
   FROM commit_log CL, commit_log_ports CLP JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
-                                           JOIN system_branch SB ON SB.branch_name = '" . pg_escape_string($this->BranchName) . "' AND SB.id = CLB.branch_id
+                                           JOIN system_branch        SB ON SB.id             = CLB.branch_id
  WHERE CL.id = CLP.commit_log_id
    AND CL.commit_date BETWEEN '" . pg_escape_string($Date) . "'::timestamptz  + SystemTimeAdjust()
                           AND '" . pg_escape_string($Date) . "'::timestamptz  + SystemTimeAdjust() + '1 Day'";

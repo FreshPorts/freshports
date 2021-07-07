@@ -35,6 +35,7 @@ class Commit_Ports {
 	var $is_interactive;
 	var $no_cdrom;
 	var $restricted;
+	var $branch;
 	var $vulnerable_past;
 	var $vulnerable_current;
 	var $date_added;
@@ -84,6 +85,7 @@ class Commit_Ports {
 		$this->is_interactive     = $myrow["is_interactive"];
 		$this->no_cdrom           = $myrow["no_cdrom"];
 		$this->restricted         = $myrow["restricted"];
+		$this->branch             = $myrow["branch"];
 		$this->vulnerable_current = $myrow["vulnerable_current"];
 		$this->vulnerable_past    = $myrow["vulnerable_past"];
 		$this->date_added         = $myrow["date_added"];

@@ -663,3 +663,11 @@ td.version:hover::after, td.version:focus::after {
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
+
+.commit-branch {
+    border-radius: 6px;
+    padding: 0 6px;
+    background-color: darkred;
+    border-style: none;
+    color: white;
+}

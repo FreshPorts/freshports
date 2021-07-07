@@ -207,10 +207,10 @@ class port_display {
           $link .= $this->port->element_pathname . '/';
           if ($this->port->IsDeleted()) {
             #
-	    # If the port has been deleted, let's link to the last commit.
-	    # Deleted ports don't change much.  It's easier to do this here
-	    # than to do it for ALL ports.
-	    #
+            # If the port has been deleted, let's link to the last commit.
+            # Deleted ports don't change much.  It's easier to do this here
+            # than to do it for ALL ports.
+            #
             require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
 
             $commit = new Commit($this->db);
@@ -261,10 +261,10 @@ class port_display {
           # echo 'link so far is ' . $link . '<br>';
           if ($this->port->IsDeleted()) {
             #
-	    # If the port has been deleted, let's link to the last commit.
-	    # Deleted ports don't change much.  It's easier to do this here
-	    # than to do it for ALL ports.
-	    #
+            # If the port has been deleted, let's link to the last commit
+            # Deleted ports don't change much.  It's easier to do this here
+            # than to do it for ALL ports.
+            #
             require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
 
             $commit = new Commit($this->db);
@@ -277,25 +277,24 @@ class port_display {
                 # We could search for the last known subversion commit
                 # but we aren't. Yet.
                 # Instead, we show them a strikethrough.
-		$link .= '/commit/' . htmlentities($commit->commit_hash_short);
-
-               } else {
+                $link .= '/commit/' . htmlentities($commit->commit_hash_short);
+              } else {
                 # For subversion, we link to the revision one less
                 # so that the user has something to see.
                 # But this is a git commit, so we can't do that.
                 # We show them a striketrough instead.
                 # echo 'oh, we are going null #1';
-	        $link = null;
-	      }
+	            $link = null;
+	          }
             } else {
               # if there is no last revision, we can't link to it.
               if ($Debug) echo 'oh, we are going null #2';
-	      $link = null;
+              $link = null;
             }
           } else {
             # this is a usual link
             $link .= '/tree/master/' . $this->port->category . '/' .  $this->port->port;
-          }
+          } # IsDeleted
           # echo 'hmm, still going with ' . $link . '<br>';
 
           if (!empty($link)) {
@@ -749,7 +748,7 @@ class port_display {
 				$HTML .= freshports_PortDescriptionPrint($port->update_description, $port->encoding_losses,
 			 				$freshports_CommitMsgMaxNumOfLinesToShow,
 			 				freshports_MoreCommitMsgToShow($port->message_id,
-	 				       $freshports_CommitMsgMaxNumOfLinesToShow));
+							$freshports_CommitMsgMaxNumOfLinesToShow));
 			} else {
 				$HTML .= "no changes recorded in FreshPorts<br>\n";
 			}

@@ -1,3 +1,5 @@
+# this sets rate limiting
+
 limit_req_zone $binary_remote_addr zone=auth_limit:20m rate=5r/m;
 
 server {
@@ -29,6 +31,7 @@ server {
   server_name   freshports.org;
 
   include "/usr/local/etc/freshports/virtualhost-common.conf";
+  include "/usr/local/etc/freshports/virtualhost-common-ssl.conf";
 
   ssl_certificate     /usr/local/etc/ssl/aws-1.freshports.org.fullchain.cer;
   ssl_certificate_key /usr/local/etc/ssl/aws-1.freshports.org.key;

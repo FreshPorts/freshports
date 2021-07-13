@@ -542,9 +542,9 @@ class port_display {
 
 		$MarkedAsNew = "N";
 
-		###################################################
-		### END of items for SetDetailsBeforePackages() ###
-		###################################################
+		#####################################################
+		### START of items for SetDetailsBeforePackages() ###
+		#####################################################
 
 		# start the description list for this port
 		$HTML .= "<dl>\n";

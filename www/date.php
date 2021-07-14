@@ -33,7 +33,7 @@
 		$Date = date('Y/m/d');
 	}
 	list($year, $month, $day) = explode('/', $Date);
-	if (!CheckDate($month, $day, $year)) {
+	if (!(is_int($year) && is_int(month) && is_int($day)) || !CheckDate($month, $day, $year)) {
 		$DateMessage = 'date adjusted to something realistic';
 		$Date = date('Y/m/d');
 	} else {
@@ -116,6 +116,7 @@
 	}
 
 	function ArchiveCreate($Date, $DateMessage, $db, $User, $BranchName) {
+		# I notice that $DateMessage is not used.
 		GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;
 
 		$commits = new Commits($db);

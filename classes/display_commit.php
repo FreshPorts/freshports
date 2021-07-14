@@ -224,14 +224,18 @@ class DisplayCommit {
 					}
 
 					$this->HTML .= '<span class="element-details">';
-					$this->HTML .= '<A HREF="/' . $mycommit->category . '/' . $mycommit->port . '/' . $URLBranchSuffix . '">';
+					$this->HTML .= '<A HREF="/' . $mycommit->category . '/' . $mycommit->port . '/' . $URLBranchSuffix;
+					if ($mycommit->branch != BRANCH_HEAD) {
+						$this->HTML .= '?branch=' . $mycommit->branch;
+					}
+					$this->HTML .= '">';
 					$this->HTML .= $mycommit->port;
 					$this->HTML .= '</A>';
 
 					$PackageVersion = freshports_PackageVersion($mycommit->version, $mycommit->revision, $mycommit->epoch);
 					if (strlen($PackageVersion) > 0) {
 						$this->HTML .= ' ' . $PackageVersion;
-						}
+					}
 
 					$this->HTML .= "</span>\n";
 

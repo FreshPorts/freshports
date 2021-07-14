@@ -117,7 +117,7 @@ define('SPOOLING_DIRECTORY', CACHE_DIRECTORY . '/spooling');  # cache spooling
 define('DELETE_PACKAGE', 'delete-package');
 
 define('DEFAULT_SVN_REPO', 'svnweb.freebsd.org');
-define('DEFAULT_GIT_REPO', 'github.com');
+define('DEFAULT_GIT_REPO', 'cgit.freebsd.org');
 
 define('PORT_STATUS_ACTIVE',  'A');
 define('PORT_STATUS_DELETED', 'D');

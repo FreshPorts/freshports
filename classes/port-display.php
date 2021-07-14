@@ -255,7 +255,7 @@ class port_display {
           } else {
             $link .= DEFAULT_GIT_REPO;
             # Yeah, this won't show the expected results if we're viewing ?branch=2020Q3, but close enough.
-            $link .= '/freebsd/freebsd-ports';
+            $link .= '/ports';
           }
 
           # echo 'link so far is ' . $link . '<br>';
@@ -293,11 +293,14 @@ class port_display {
             }
           } else {
             # this is a usual link
-            $link .= '/tree/master/' . $this->port->category . '/' .  $this->port->port;
+            $link .= '/tree/' . $this->port->category . '/' .  $this->port->port;
           } # IsDeleted
           # echo 'hmm, still going with ' . $link . '<br>';
 
           if (!empty($link)) {
+            if ($this->Branch != BRANCH_HEAD) {
+              $link .= '?h=' . $this->Branch;
+            }
             $link = '<a href="' . $link . '">' . $link_title . '</a>';
           } else {
             $link = '<del>git</del>';

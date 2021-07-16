@@ -2342,3 +2342,37 @@ function getLoginDetails($db, $statementName, $UserID, $Password) {
 
   return $result;
 }
+
+function checkAcceptedMaxLoad($PageName) {
+  switch($PageName) {
+    case '/search.php':
+      $MaxLoad = defined('MAX_LOAD_SEARCH') ? MAX_LOAD_SEARCH : 0.5 ;
+      break;
+
+    case '/commit.php':
+      $MaxLoad = defined('MAX_LOAD_COMMIT') ? MAX_LOAD_COMMIT : 0.4;
+      break;
+
+    default:
+      $MaxLoad = 0;
+      break;
+  }
+
+  return $MaxLoad;
+}
+
+function checkLoadBeforeProceeding() {
+  GLOBAL $User;
+  
+  if ($User->id) {
+    return;
+  }
+  $MaxLoad = checkAcceptedMaxLoad($_SERVER['PHP_SELF']);
+  if ($MaxLoad) {
+    $load = sys_getloadavg();
+    if ($load[0] > $MaxLoad) {
+      header('HTTP/1.1 503 Too busy, try again later. You should never see this mesasge if you are logged in.');
+      die('Server too busy. Please try again later.  You should never see this message if you are logged in.');
+    }
+  }
+}

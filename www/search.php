@@ -15,6 +15,8 @@
 
 	require_once('Pager/Pager.php');
 
+	checkLoadBeforeProceeding();
+
 	$Debug = 0;
 #	if ($Debug) phpinfo();
 

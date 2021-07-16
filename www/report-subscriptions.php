@@ -58,10 +58,10 @@
 			$numrows = pg_numrows($result);
 			for ($i = 0; $i < $numrows; $i++) {
 				$myrow = pg_fetch_array($result, $i);
-				$Values['name']				= $myrow['name'];
-				$Values['needs_frequency']	= $myrow['needs_frequency'];
-				$Values['description']		= $myrow['description'];
-				$Reports[$myrow['id']]		= $Values;
+				$Values['name']            = $myrow['name'];
+				$Values['needs_frequency'] = $myrow['needs_frequency'];
+				$Values['description']     = $myrow['description'];
+				$Reports[$myrow['id']]     = $Values;
 			}
 		}
 

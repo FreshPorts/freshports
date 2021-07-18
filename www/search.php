@@ -28,7 +28,7 @@
 	}
 
 	if (IsSet($_REQUEST['branch'])) {
-		$Branch = htmlspecialchars($_REQUEST['branch']);
+		$Branch = NormalizeBranch(htmlspecialchars($_REQUEST['branch']));
 	} else {
 		$Branch = BRANCH_HEAD;
 	}

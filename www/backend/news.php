@@ -14,7 +14,7 @@
 	$format = basename($_SERVER['PHP_SELF'], '.php');
 
 	if (IsSet($_REQUEST['branch'])) {
-		$BranchName = htmlspecialchars($_REQUEST['branch']);
+		$BranchName = NormalizeBranch(htmlspecialchars($_REQUEST['branch']));
 	} else {
 		$BranchName = BRANCH_HEAD;
 	}

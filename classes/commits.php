@@ -110,7 +110,13 @@ class Commits {
             JOIN repo R on CL.repo_id = R.id
             LEFT OUTER JOIN ports_vulnerable     PV ON CLP.port_id = PV.port_id
             JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
-            JOIN system_branch        SB ON SB.id = CLB.branch_id
+            JOIN system_branch        SB ON SB.id = CLB.branch_id ";
+
+        # allow for quarterly branches
+        # see also the Count() function below
+        if ($this->BranchName != BRANCH_HEAD) $sql .= " AND SB.branch_name = '" . pg_escape_string($this->BranchName)  . "'\n";
+
+        $sql .= "
             JOIN ports                 P ON P.id           = CLP.port_id
             JOIN categories           C  ON C.id           = P.category_id
             JOIN element              E  on E.id           = P.element_id
@@ -271,6 +277,10 @@ class Commits {
                                                 AND '" . pg_escape_string($Date) . "'::timestamptz  + SystemTimeAdjust() + '1 Day'
             JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
             JOIN system_branch        SB ON SB.id = CLB.branch_id";
+
+                # allow for quarterly branches
+                # see also the FetchCommitsOnADay() function above
+                if ($this->BranchName != BRANCH_HEAD) $sql .= " AND SB.branch_name = '" . pg_escape_string($this->BranchName)  . "'\n";
 
 		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
 

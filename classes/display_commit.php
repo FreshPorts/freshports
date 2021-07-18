@@ -199,7 +199,9 @@ class DisplayCommit {
 					}
 				}
 
-				if ($this->BranchName != $mycommit->branch){
+				# The first comparison was here before the second, which was added as part of
+				# https://github.com/FreshPorts/freshports/issues/221 - date.php is not quarterly aware
+				if ($this->BranchName != $mycommit->branch || $this->BranchName != BRANCH_HEAD) {
 					$this->HTML .=  ' <span class="commit-branch">' . $mycommit->branch . '</span>';
 				}
 

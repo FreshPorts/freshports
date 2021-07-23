@@ -227,7 +227,7 @@ class DisplayCommit {
 
 					$this->HTML .= '<span class="element-details">';
 					$this->HTML .= '<A HREF="/' . $mycommit->category . '/' . $mycommit->port . '/' . $URLBranchSuffix;
-					if ($mycommit->branch != BRANCH_HEAD) {
+					if ($mycommit->branch && $mycommit->branch != BRANCH_HEAD) {
 						$this->HTML .= '?branch=' . $mycommit->branch;
 					}
 					$this->HTML .= '">';

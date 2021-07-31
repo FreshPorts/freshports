@@ -28,12 +28,13 @@
 
 	$DateMessage = '';
 
+	if ($Debug) { echo "\$Date='$Date'\n"; }
 	if ($Date == '' || strtotime($Date) == -1) {
 		$DateMessage = 'date assumed';
 		$Date = date('Y/m/d');
 	}
 	list($year, $month, $day) = explode('/', $Date);
-	if (!(is_int($year) && is_int(month) && is_int($day)) || !CheckDate($month, $day, $year)) {
+	if (!(is_numeric($year) && is_numeric($month) && is_numeric($day)) || !CheckDate($month, $day, $year)) {
 		$DateMessage = 'date adjusted to something realistic';
 		$Date = date('Y/m/d');
 	} else {

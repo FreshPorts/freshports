@@ -35,10 +35,6 @@ Sorry, but I don't know anything about that.
 </P>
 
 <P>
-<? echo htmlentities($result) ?>
-</P>
-
-<P>
 Perhaps a <A HREF="/categories.php">list of categories</A> or <A HREF="/search.php">the search page</A> might be helpful.
 </P>
 

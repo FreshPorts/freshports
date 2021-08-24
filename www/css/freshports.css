@@ -9,10 +9,10 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background-color: #1e1e1e;
+    --background-color: #151515;
     --body-text: #c9d9d9;
-    --code-text: #9e6edd;
-    --link-color: rgb(51, 156, 255);
+    --code-text: #dfc7ff;
+    --link-color: #33cdff;
   }
 
   a:link {

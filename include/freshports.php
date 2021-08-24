@@ -1397,7 +1397,7 @@ function freshports_PortCommits($port, $PageNumber = 1, $NumCommitsPerPage = 100
 	$Commits->LimitSet($NumCommitsPerPage);
 	$Commits->OffsetSet($Offset);
 	$NumRows = $Commits->FetchInitialise($port->id);
-	# if no commits on this branch, don't fet 
+	# if no commits on this branch, don't fetch
 	if ($NumRows > 0) {
 		$port->LoadVulnerabilities();
 

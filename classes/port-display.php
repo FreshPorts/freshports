@@ -16,7 +16,7 @@ define('port_display_WATCH_LIST_ADD_REMOVE', '%%%$$$WATCHLIST$$$%%%');
 define('port_display_AD',                    '%%%$$$ADGOESHERE$$$%%%');
 define('DEPENDS_SUMMARY', 7 );
 define('PLIST_SUMMARY',   0 );
-define('DISTINFO_LINES',   3 );
+define('DISTINFO_LINES',  3 );
 
 class port_display {
 
@@ -86,26 +86,31 @@ class port_display {
 	}
 
 	function _pkgmessage_UCL($pkgmessage) {
+		#
+		# see also _pkgmessage()
+		#
+		$Debug = 0;
+
 		$HTML = '<dt><b><a id="message">pkg-message:</a></b></dt><dd><dl>';
 		# save the pkgmessage to a temp file
 		# from https://www.php.net/manual/en/function.tmpfile.php
 		$temp = tmpfile();
 		fwrite($temp, $pkgmessage);
 		$filename = stream_get_meta_data($temp)['uri'];
-#		syslog(LOG_ERR, '_pkgmessage_UCL temp file is : ' . $filename);
+		if ($Debug) syslog(LOG_ERR, '_pkgmessage_UCL temp file is : ' . $filename);
 
 		# convert the file to json
 		$json = shell_exec('/usr/local/bin/ucl_tool --in ' . $filename . '  --format json');
-#		echo '<pre>' . var_dump($json) . '</pre>';
+		if ($Debug) echo '<pre>' . var_dump($json) . '</pre>';
 		if (is_null($json)) {
 			syslog(LOG_ERR, 'shell_exec returned null');
 			$json = '[ { "message": "WARNING: The FreshPorts parser failed.  ucl_tool failed.  Please report this.", "type": "ERROR" } ]';
 		} else {
-#			syslog(LOG_ERR, 'shell_exec returned ' . $json);
+			if ($Debug) syslog(LOG_ERR, 'shell_exec returned ' . $json);
 		}
 
 		$things = json_decode($json);
-#		var_dump($things);
+		if ($Debug) var_dump($things);
 		foreach ($things as $thing) {
 			if (!empty($thing->type)) {
 				switch($thing->type) {
@@ -160,7 +165,10 @@ class port_display {
 	}
 
 	function _pkgmessage($port) {
+		#
 		# construct the HTML to display pkg-message (stored as pkgmessage)
+		# see also _pkgmessage_UCL()
+		#
 		$HTML = '';
 
 		#
@@ -170,7 +178,7 @@ class port_display {
 		if (defined('PKG_MESSAGE_UCL') && PKG_MESSAGE_UCL && $this->_isUCL($port->pkgmessage)) {
 			$HTML .= $this->_pkgmessage_UCL($port->pkgmessage);
 		} else {
-			$HTML .= "<dt><b>pkg-message:</b></dt>\n" . '<dd class="like-pre">';
+			$HTML .= "<dt id=\"message\"><b>pkg-message: </b></dt>\n" . '<dd class="like-pre">';
 			$HTML .= htmlspecialchars($port->pkgmessage);
 			$HTML .= "</dd>\n</dl>\n<hr>\n<dl>";
 		}
@@ -974,7 +982,7 @@ class port_display {
 				$HTML .= '<dt id="add"><b>To install <a href="/faq.php#port" TITLE="what is a port?">the port</a>:</b> <kbd class="code">cd /usr/ports/'  . $port->category . '/' . $port->port . '/ && make install clean</kbd></dt>';
 				if (IsSet($port->no_package) && $port->no_package != '') {
 					$HTML .= '<dt><b>No <a href="/faq.php#package" TITLE="what is a package?">package</a> is available:</b> ' . $port->no_package . '</dt>';
-					} else {
+				} else {
 					if ($port->forbidden || $port->broken || $port->ignore || $port->restricted || !$port->PackageIsAvailable()) {
 						$HTML .= '<dt><b>A <a href="/faq.php#package" TITLE="what is a package?">package</a> is not available for ports marked as: Forbidden / Broken / Ignore / Restricted</b></dt>';
 					} else {
@@ -1053,12 +1061,12 @@ class port_display {
 		###############################################
 
 		if ($this->ShowEverything || $this->ShowPackages) {
-			$HTML .= '<dt id="packages"><b>Packages</b> (timestamps in pop-ups are UTC):</dt>';
 
 			$packages = new Packages($this->db);
 			$numrows = $packages->Fetch($this->port->id);
 
 			if ($numrows > 0) {
+				$HTML .= '<dt id="packages"><b>Packages</b> (timestamps in pop-ups are UTC):</dt>';
 				$HTML .= '<dd>';
 				$HTML .= '<div class="scrollmenu">';
 
@@ -1099,7 +1107,7 @@ class port_display {
 				$HTML .= '</dd>';
 
 			} else {
-				$HTML .= "<dd>No package information in database for this port.</dd>\n";
+				$HTML .= '<dd id="packages"><b>No package information for this port in our database</b></dd>';
 			}
 		}
 
@@ -1209,8 +1217,12 @@ class port_display {
 			$HTML .= "</dd>\n</dl>\n<hr>\n<dl>";
 		}
 
-		if (($this->ShowEverything || $this->ShowPKGMessage) && $port->pkgmessage) {
-			$HTML .= $this->_pkgmessage($port);
+		if (($this->ShowEverything || $this->ShowPKGMessage)) {
+			if ($port->pkgmessage) {
+				$HTML .= $this->_pkgmessage($port);
+			} else {
+				$HTML .= '<dt id="message"><b>FreshPorts was unable to extract/find any pkg message</b></dt>';
+			}
 		}
 
 		if ($this->ShowEverything || $this->ShowMasterSites) {

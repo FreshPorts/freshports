@@ -216,14 +216,19 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 		# and the whether or not it is on the person's watch list
 		#
 		$EndOfFirstLine = strpos($HTMLPortPart2, "\n");
+		# XXX debug
+#		$EndOfFirstLine = false; 
 		if ($EndOfFirstLine == false) {
-			die('Internal error: I was expecting an ElementID and found nothing');
+			syslog(LOG_ERR, "Internal error: I was expecting an ElementID and found nothing for $category/$port");
+			die("Internal error: I was expecting an ElementID and found nothing for $category/$port");
 		}
 		# extract the ElementID from the cache
 		$ElementID = intval(substr($HTMLPortPart2, 0, $EndOfFirstLine));
+		# XXX debug
+#		$ElementID = 0;
 		if ($ElementID == 0) {
 			syslog(LOG_ERR, "Extract of ElementID from cache failed.  Is cache corrupt/deprecated? port was $category/$port");
-			die('sorry, I encountered a problem with the cache.  Please send the URL and this message to the webmaster.');
+			die("Extract of ElementID from cache failed.  Is cache corrupt/deprecated? port was $category/$port. Please send the URL and this message to the webmaster.");
 		}
 
 		if ($User->id) {
@@ -236,15 +241,20 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 
 		# now we extract the short description
 		$EndOfFirstLine = strpos($HTMLPortPart2, "\n");
+		# XXX debug
+#		$EndOfFirstLine = false;
 		if ($EndOfFirstLine == false) {
-			die('Internal error: I was expecting a short description and found nothing');
+			syslog(LOG_ERR, "Internal error: I was expecting a short description and found nothing for $category/$port");
+			die("Internal error: I was expecting a short description and found nothing for $category/$port");
 		}
 
 		# short description should be short
 		$ShortDescription = substr($HTMLPortPart2, 0, $EndOfFirstLine);
+		# XXX debug
+#		unset($ShortDescription);
 		if (empty($ShortDescription) || strlen($ShortDescription) > 100) {
 			syslog(LOG_ERR, "Extract of ShortDescription from cache failed.  Is cache corrupt/deprecated? port was $category/$port");
-			die('sorry, I encountered a problem with the cache.  Please send the URL and this message to the webmaster.');
+			die("Extract of ShortDescription from cache failed.  Is cache corrupt/deprecated? port was $category/$port. Please send the URL and this message to the webmaster.");
 		}
 		$HTMLPortPart2 = substr($HTMLPortPart2, $EndOfFirstLine + 1);
 	} else {

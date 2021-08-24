@@ -67,6 +67,8 @@ class Cache {
 		$SpoolFileHandle = fopen($SpoolFileName, 'w');
 		if ($SpoolFileHandle) {
 			// write $data to file
+			// returns the number of bytes written, or false on error
+			// nothing write is still an error for us
 			if (fwrite($SpoolFileHandle, $this->CacheData)) {
 				// close $SpoolFileHandle
 				fclose($SpoolFileHandle);

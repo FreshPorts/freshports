@@ -267,27 +267,27 @@ function freshports_link_text_to_port_single($text, $CategoryName, $PortName, $B
 
 
 function freshports_IndexFollow($URI) {
-#	$NOINDEX["/index.php"]				= 1;
-	$NOINDEX["/date.php"]				= 1;
+#	$NOINDEX["/index.php"]             = 1;
+	$NOINDEX["/date.php"]              = 1;
 
-	$NOINDEX['/ports-broken.php']		= 1;
-	$NOINDEX['/ports-deleted.php']		= 1;
-	$NOINDEX['/ports-forbidden.php']	= 1;
-	$NOINDEX['/ports-deprecated.php']	= 1;
-	$NOINDEX['/ports-ignore.php']		= 1;
-	$NOINDEX['/ports-new.php']			= 1;
-	$NOINDEX['/search.php']				= 1;
+	$NOINDEX['/ports-broken.php']      = 1;
+	$NOINDEX['/ports-deleted.php']     = 1;
+	$NOINDEX['/ports-forbidden.php']   = 1;
+	$NOINDEX['/ports-deprecated.php']  = 1;
+	$NOINDEX['/ports-ignore.php']      = 1;
+	$NOINDEX['/ports-new.php']         = 1;
+	$NOINDEX['/search.php']            = 1;
 
 
-	$NOFOLLOW["/date.php"]				= 1;
-	$NOFOLLOW['/ports-deleted.php']		= 1;
-	$NOFOLLOW['/graphs.php']			= 1;
-	$NOFOLLOW['/ports-deleted.php']		= 1;
-	$NOFOLLOW['/commit.php']			= 1;
+	$NOFOLLOW["/date.php"]             = 1;
+	$NOFOLLOW['/ports-deleted.php']    = 1;
+	$NOFOLLOW['/graphs.php']           = 1;
+	$NOFOLLOW['/ports-deleted.php']    = 1;
+	$NOFOLLOW['/commit.php']           = 1;
 
-	$NOFOLLOW['/new-user.php']			= 1;
-	$NOFOLLOW['/login.php']				= 1;
-	$NOFOLLOW['/search.php']			= 1;
+	$NOFOLLOW['/new-user.php']         = 1;
+	$NOFOLLOW['/login.php']            = 1;
+	$NOFOLLOW['/search.php']           = 1;
 
 
 	# well, OK, so it may not be a URI... but it's close

@@ -180,8 +180,9 @@ if ($db) {
 
 		$LatestCommits = new Commits($db);
 		$LatestCommits->SetBranch($Branch);
+
 		$LatestCommits->FetchLimit(isset($User) ? $User->id : null, 100);
-		
+
 		$DisplayCommit = new DisplayCommit($db, $LatestCommits->LocalResult);
 		$DisplayCommit->SetBranch($Branch);
 		$DisplayCommit->ShowLinkToSanityTestFailure = true;
@@ -238,7 +239,7 @@ if ($db) {
 <?php
 define('RELATIVE_DATE_24HOURS', 24 * 60 * 60);	# seconds in a day
 $Date = date('Y/m/d');
-$Yesterday = freshports_LinkToDate(strtotime($Date) - RELATIVE_DATE_24HOURS, "Yesterday's Commits");
+$Yesterday = freshports_LinkToDate(strtotime($Date) - RELATIVE_DATE_24HOURS, "Yesterday's Commits", $Branch);
 
 echo '&lt; ' . $Yesterday . ' &gt;';
 ?>

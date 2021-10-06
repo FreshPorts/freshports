@@ -253,8 +253,8 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 		# XXX debug
 #		unset($ShortDescription);
 		if (empty($ShortDescription) || strlen($ShortDescription) > 100) {
-			syslog(LOG_ERR, "Extract of ShortDescription from cache failed.  Is cache corrupt/deprecated? port was $category/$port");
-			die("Extract of ShortDescription from cache failed.  Is cache corrupt/deprecated? port was $category/$port. Please send the URL and this message to the webmaster.");
+			syslog(LOG_ERR, "Internal error: Extract of ShortDescription from cache failed.  Is cache corrupt/deprecated? port was $category/$port");
+			die("Internal error: Extract of ShortDescription from cache failed.  Is cache corrupt/deprecated? port was $category/$port. Please send the URL and this message to the webmaster.");
 		}
 		$HTMLPortPart2 = substr($HTMLPortPart2, $EndOfFirstLine + 1);
 	} else {

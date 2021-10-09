@@ -13,3 +13,4 @@ Acknowledgments: https://www.freshports.org/security-policy.php
 Preferred-Languages: en
 Canonical: https://www.freshports.org/.well-known/security.txt
 Policy: https://www.freshports.org/security-policy.php
+OpenBugBounty: https://openbugbounty.org/bugbounty/DLangille/

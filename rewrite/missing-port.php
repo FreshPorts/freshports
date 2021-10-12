@@ -176,6 +176,9 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 		$MyPort->FetchByID($port_id, $User->id);
 
 		$HTMLPortPart1 .= $MyPort->long_description;
+		if (empty($HTMLPortPart1)) {
+			$HTMLPortPart1 = 'a long description could not be found for this port';
+		}
 
 		# only save if we are supposed to save... usually for debugging
 		if ($RefreshCache) {
@@ -252,7 +255,7 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 		$ShortDescription = substr($HTMLPortPart2, 0, $EndOfFirstLine);
 		# XXX debug
 #		unset($ShortDescription);
-		if (empty($ShortDescription) || strlen($ShortDescription) > 100) {
+		if (empty($ShortDescription) || strlen($ShortDescription) > 130) {
 			syslog(LOG_ERR, "Internal error: Extract of ShortDescription from cache failed.  Is cache corrupt/deprecated? port was $category/$port");
 			die("Internal error: Extract of ShortDescription from cache failed.  Is cache corrupt/deprecated? port was $category/$port. Please send the URL and this message to the webmaster.");
 		}
@@ -273,7 +276,11 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 			# the element_id is used with the user's watch lists to indictate if the port is on or off a watch list
 			# the short description is used in the page title.
 			#
-			$Cache->CacheDataSet($MyPort->{'element_id'} . "\n" . $MyPort->{'short_description'} . "\n" . $HTMLPortPart2);
+			$myShortDescription = $MyPort->{'short_description'};
+			if (empty($myShortDescription)) {
+				$myShortDescription = 'A short description could not be found for this port';
+			}
+			$Cache->CacheDataSet($MyPort->{'element_id'} . "\n" . $myShortDescription . "\n" . $HTMLPortPart2);
 			$Cache->AddPort($MyPort->category, $MyPort->port, CACHE_PORT_DETAIL, $PageNumber, $branch, $Cache::CachePartTwo);
 		} else {
 			if ($Debug) echo 'not saving to cache, as instructed<br>';

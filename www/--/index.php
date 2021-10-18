@@ -113,6 +113,8 @@ switch($script) {
 
         require_once(STATUS_FILE);
 
+        passthru("/usr/sbin/service fp_listen status", $fp_listen_result);
+
         echo '<hr>';
 
         echo "<p>This status was last updated at " . gmdate('Y-m-d H:i:sO', filemtime(STATUS_FILE)) . '</p>';
@@ -121,7 +123,6 @@ switch($script) {
         echo '<p>The contents are generated every 3 minutes by the backend server.</p>';
 
         echo "</body>\n";
-        exit;
         break;
 
     case SCRIPT_API:

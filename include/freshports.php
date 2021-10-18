@@ -1623,7 +1623,7 @@ function freshports_wrap($text, $length = WRAPCOMMITSATCOLUMN) {
 }
 
 function freshports_PageBannerText($Text, $ColSpan=1) {
-	return '<td class="accent" COLSPAN="' . $ColSpan . '"><span>' . $Text . '</span></td>' . "\n";
+	return '<td class="accent" COLSPAN="' . $ColSpan . '"><span>' . htmlentities($Text) . '</span></td>' . "\n";
 }
 
 

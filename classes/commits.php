@@ -218,18 +218,23 @@ class Commits {
                               JOIN system_branch        SB ON SB.id = CLB.branch_id
       LEFT OUTER JOIN sanity_test_failures STF ON STF.commit_log_id = CLP.commit_log_id, ";
 
-        if ($this->BranchName == BRANCH_HEAD ) {
-            $sql .= "
+        $sql .= "
       (SELECT cl.*
          FROM commit_log cl
-        WHERE EXISTS (select *
+        WHERE EXISTS ";
+        if ($this->BranchName == BRANCH_HEAD ) {
+        # XXX we can change this....
+           $sql .= "(select *
                         from commit_log_ports clp
-                        where clp.commit_log_id = cl.id)
+                        where clp.commit_log_id = cl.id)";
+        } else {
+           $sql .= "(select *
+                        from commit_log_branches clb where branch_id = (select id from system_branch where branch_name = '" . pg_escape_string($this->BranchName) . "')
+                        AND clb.commit_log_id = cl.id)";
+        }
+        $sql .= "
      ORDER BY CL.commit_date DESC
         LIMIT " . pg_escape_string($Limit) . ") AS CL ";
-        } else {
-            $sql .= " commit_log CL ";
-        }
 
         $sql .= "LEFT OUTER JOIN repo R on CL.repo_id = R.id, categories C, ports P LEFT OUTER JOIN ports_vulnerable PV ON P.id = PV.port_id, element E ";
 
@@ -255,7 +260,8 @@ class Commits {
             category,
             port";
 
-		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
+		if ($this->Debug);
+		 echo '<pre>' . $sql . '</pre>';
 
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {

@@ -39,16 +39,16 @@ if (IsSet($_REQUEST['wlid'])) {
 		# they clicked on the GO button and we have to apply the 
 		# watch staging area against the watch list.
 		$wlid = pg_escape_string($_REQUEST["wlid"]);
-		if ($Debug) echo "setting SetLastWatchListChosen => \$wlid='$wlid'";
+		if ($Debug) echo "setting SetLastWatchListChosen => \$wlid='" . htmlentities($wlid) . "'";
 		$User->SetLastWatchListChosen($wlid);
-		if ($Debug) echo "\$wlid='$wlid'";
+		if ($Debug) echo "\$wlid='" . htmlentities($wlid) . "'";
 } else {
 	$wlid = $User->last_watch_list_chosen;
 	if ($Debug) echo "\$wlid='$wlid'";
 	if ($wlid == '') {
 		$WatchLists = new WatchLists($db);
 		$wlid = $WatchLists->GetDefaultWatchListID($User->id);
-		if ($Debug) echo "GetDefaultWatchListID => \$wlid='$wlid'";
+		if ($Debug) echo "GetDefaultWatchListID => \$wlid='" . htmlentities($wlid) . "'";
 	}
 }
 
@@ -64,7 +64,7 @@ if (IsSet($_REQUEST['category'])) {
 
 	$CategoryID = $Category->FetchByName($category);
 	if (!$CategoryID) {
-		$msg = "category '$category' not found";
+		$msg = "category '" . htmlentities($category) . "' not found";
 		syslog(LOG_ERR, $msg . " User = '" . $User->id . "' in " . __FILE__ . ':' . __LINE__);
 		die($msg);
 	}
@@ -99,8 +99,8 @@ if ($submit) {
    }
    
    pg_exec($db, "COMMIT");
-      
-   header("Location: port-watch.php?category=$category&wlid=$wlid");  /* Redirect browser to PHP web site */
+
+   header("Location: port-watch.php?category=" . htmlentities($category) . "&wlid=" . htmlentities($wlid));  /* Redirect browser to PHP web site */
    exit;  /* Make sure that code below does not get executed when we redirect. */
       
 } else {
@@ -127,7 +127,7 @@ if ($submit) {
 		}
    }
 
-   $Title = 'Watch List ' . $category;
+   $Title = 'Watch List ' . htmlentities($category);
    freshports_Start($Title,
                $Title,
                "FreeBSD, index, applications, ports");
@@ -184,7 +184,7 @@ if ($numrows) {
 
 $HTML .= '<tr><td><b>' . $numrows . ' ports found (';
 if ($NumVirtual != 0) {
-	$HTML .=  ($numrows - $NumVirtual) . ' primary, ' . $NumVirtual . ' secondary)</b></td></tr>';
+	$HTML .=  ($numrows - $NumVirtual) . ' primary, ' . htmlentities($NumVirtual) . ' secondary)</b></td></tr>';
 }
 $HTML .= '<tr><td valign="top" ALIGN="center">' . "\n";
 
@@ -197,8 +197,8 @@ if ($numrows) {
 	$HTML .= '<form action="' . $_SERVER["PHP_SELF"] . '" method="POST">' . "\n";
    // save the number of categories for when we submit
    $HTML .= '<input type="hidden" name="NumPorts" value="' . $NumPorts . '">' . "\n";
-   $HTML .= '<input type="hidden" name="category" value="' . $category . '">' . "\n";
-   $HTML .= '<input type="hidden" name="wlid"     value="' . $wlid     . '">' . "\n";
+   $HTML .= '<input type="hidden" name="category" value="' . htmlentities($category) . '">' . "\n";
+   $HTML .= '<input type="hidden" name="wlid"     value="' . htmlentities($wlid)     . '">' . "\n";
 
    $HTML .= "\n" . '<TABLE class="bordered" CELLPADDING="5">' . "\n<tr>\n";
    $RowCount = ceil($NumPorts / (double) 4);
@@ -215,7 +215,7 @@ if ($numrows) {
          $HTML .= '<td valign="top" nowrap>';
       }
 
-      $HTML .= '<input type="checkbox" name="ports[]" value="'. $rows[$i]["id"] .'"';
+      $HTML .= '<input type="checkbox" name="ports[]" value="'. htmlentities($rows[$i]["id"]) .'"';
 
       if (IsSet(${"port_".$rows[$i]["id"]})) {
          $HTML .= " checked ";
@@ -223,7 +223,7 @@ if ($numrows) {
 
       $HTML .= '>';
 
-      $HTML .= ' <a href="/' . $rows[$i]["primary_category"] . '/' . $rows[$i]["port"] . '/">' . $rows[$i]["port"] . '</a>';
+      $HTML .= ' <a href="/' . htmlentities($rows[$i]["primary_category"]) . '/' . htmlentities($rows[$i]["port"]) . '/">' . htmlentities($rows[$i]["port"]) . '</a>';
 
 		if ($rows[$i]["status"] == 'D') {
 			$HTML .= " [D]";
@@ -247,7 +247,7 @@ if ($numrows) {
 <br>
 <input TYPE="submit" VALUE="update watch list" name="submit">
 <input TYPE="reset"  VALUE="reset form">
-<input type="hidden" name="watch_list_id" value="<?php echo $wlid; ?>">
+<input type="hidden" name="watch_list_id" value="<?php echo htmlentities($wlid); ?>">
 
 </div>
 </form>

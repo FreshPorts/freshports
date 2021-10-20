@@ -260,8 +260,7 @@ class Commits {
             category,
             port";
 
-		if ($this->Debug);
-		 echo '<pre>' . $sql . '</pre>';
+		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
 
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {

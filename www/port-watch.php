@@ -257,7 +257,7 @@ if ($numrows) {
 <table class="borderless"><tr><td>Select...</td></tr><tr><td>
    
 <?php
-	$Extra = '<input type="hidden" name="category" value="' . $category . '">';
+	$Extra = '<input type="hidden" name="category" value="' . htmlentities($category) . '">';
 	echo freshports_WatchListDDLBForm($db, $User->id, $wlid, $Extra);
 ?>
   </td></tr></table>
@@ -276,7 +276,7 @@ if ($numrows) {
 <UL>
 <LI>
 This page operates on a single watch list at a time.
-<LI>This page shows you the ports in a category (<em><?echo $category ?></em>)
+<LI>This page shows you the ports in a category (<em><?echo htmlentities($category) ?></em>)
 that are on your selected watch list.</LI>
 <LI>The entries with a tick beside them are your on the selected watch list.</LI>
 <LI>When one of the ports in your watch list changes, you will be notified by email if

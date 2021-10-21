@@ -28,7 +28,7 @@
 	$sql = "
 WITH recent_commits AS (
   SELECT CL.id,
-         to_char(CL.commit_date, 'YYYY-MM-DD-HH24') as commit_date,
+         to_char(CL.commit_date, 'YYYY-MM-DD-HH24:MI:SS') as commit_date,
          CL.committer,
          CL.system_id,
          CL.message_id,

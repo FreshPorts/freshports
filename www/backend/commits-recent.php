@@ -67,7 +67,7 @@ ORDER BY RC.commit_date DESC,
 	$numrows = pg_numrows($result);
 	for ($i = 0; $i < $numrows; $i++) {
 		$myrow = pg_fetch_array($result, $i);
-		print $myrow["commit_date"] . "\t" . $myrow["committer"]  . "\t" . $myrow["system_id"] . "\t" . $myrow["element_pathname"] . "\n";
+		print $myrow["commit_date"] . "\t" . $myrow["committer"]  . "\t" . $myrow["system_id"] . "\t" . $myrow["element_pathname"] . "\t" . $myrow["commit_date_raw"] . "\n";
 	}
 
 	$Statistics->Save();

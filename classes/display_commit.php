@@ -291,7 +291,7 @@ class DisplayCommit {
 					} else {
 						if ($mycommit->vulnerable_past) {
 							$this->HTML .= '&nbsp;' . freshports_VuXML_Icon_Faded() . '&nbsp;';
-							}
+						}
 					}
 
 					if ($mycommit->restricted) {

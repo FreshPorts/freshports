@@ -2278,7 +2278,7 @@ function freshports_pathname_to_repo_name($WhichRepo, $pathname)
 function _forDisplay($string, $flags = NULL, $encoding = FRESHPORTS_ENCODING) {
   # can't put this in the header.  See https://php.net/manual/en/functions.arguments.php
   if ($flags === NULL) {
-    $flags = ENT_COMPAT | ENT_HTML401;
+    $flags = ENT_IGNORE | ENT_QUOTES | ENT_HTML5;
   }
   # does special magic for outputing stuff to a webpage.
   # e.g. htmlspecialchars($port->long_description, ENT_COMPAT | ENT_HTML401, 'ISO-8859-15')
@@ -2288,7 +2288,7 @@ function _forDisplay($string, $flags = NULL, $encoding = FRESHPORTS_ENCODING) {
   # if htmlspecialchars() fails, you get an empty string.
   # Report that, but only if the original was not empty.
   if (empty($encoded) && !empty($string)) {
-     syslog(LOG_ERR, "htmlspecialchars in _forDisplay() failed for '$string'");
+     syslog(LOG_ERR, "htmlspecialchars in _forDisplay() with \$encoding='$encoding' failed for '$string'");
      $encoded = $string;
   }
 

@@ -99,7 +99,7 @@ These are the vulnerabilities relating to the commit you have selected:
 		function vuxml_name_link($VID, $Name, $Count) {
 			$HTML = '<tr><td>';
 
-			$HTML .= '<a href="/vuxml.php?vid=' . $VID . '">' . $Name . '</a></td><td align="center">';
+			$HTML .= '<a href="/vuxml.php?vid=' . urlencode($VID) . '">' . $Name . '</a></td><td align="center">';
 			if ($Count > 1) {
 				$HTML .= ' (' . $Count . ')';
 			} else {

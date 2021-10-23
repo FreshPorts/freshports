@@ -1476,11 +1476,11 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	}
 
 	if (IsSet($VuXMLList[$commit->id])) {
-		$HTML .= '&nbsp;<a href="/vuxml.php?vid=' . $VuXMLList[$commit->id] . '">' . freshports_VuXML_Icon() . '</a>';
+		$HTML .= '&nbsp;<a href="/vuxml.php?vid=' . urlencode($VuXMLList[$commit->id]) . '">' . freshports_VuXML_Icon() . '</a>';
 	}
 
 	if ($commit->branch != BRANCH_HEAD) {
-		$HTML .= '<br>' . htmlspecialchars($commit->branch);
+		$HTML .= '<br>' . urlencode($commit->branch);
 	}
 
 	$HTML .= "</td>\n";

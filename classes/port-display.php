@@ -976,15 +976,15 @@ class port_display {
 		if ($this->ShowPackageLink || $this->ShowEverything) {
 			$HTML .= "\n</dl><dl>\n";
 			if ($port->IsDeleted()) {
-				$HTML .= '<dt>No installation instructions: this port has been deleted.</dt>';
-				$HTML .= '<dt>The package name of this deleted port was: <code class="code">' . $port->latest_link . '</code></dt>';
+				$HTML .= '<dt>No installation instructions:</dt><dd>This port has been deleted.</dd>';
+				$HTML .= '<dd>The package name of this deleted port was: <code class="code">' . $port->latest_link . '</code></dd>';
 			} else {
-				$HTML .= '<dt id="add"><b>To install <a href="/faq.php#port" TITLE="what is a port?">the port</a>:</b> <kbd class="code">cd /usr/ports/'  . $port->category . '/' . $port->port . '/ && make install clean</kbd></dt>';
+				$HTML .= '<dt id="add"><b>To install <a href="/faq.php#port" TITLE="what is a port?">the port</a>:</b></dt><dd> <kbd class="code">cd /usr/ports/'  . $port->category . '/' . $port->port . '/ && make install clean</kbd></dd>';
 				if (IsSet($port->no_package) && $port->no_package != '') {
 					$HTML .= '<dt><b>No <a href="/faq.php#package" TITLE="what is a package?">package</a> is available:</b> ' . $port->no_package . '</dt>';
 				} else {
 					if ($port->forbidden || $port->broken || $port->ignore || $port->restricted || !$port->PackageIsAvailable()) {
-						$HTML .= '<dt><b>A <a href="/faq.php#package" TITLE="what is a package?">package</a> is not available for ports marked as: Forbidden / Broken / Ignore / Restricted</b></dt>';
+						$HTML .= '<dt><b>A <a href="/faq.php#package" TITLE="what is a package?">package</a> is not available for ports marked as:</dt><dd>Forbidden / Broken / Ignore / Restricted</b></dd>';
 					} else {
 						$HTML .= '<dt><b>To add the <a href="/faq.php#package" TITLE="what is a package?">package</a>, run one of these commands:</b></dt>';
 						$HTML .= '<dd><ul><li><kbd class="code">pkg install ' . $port->category . '/' . $port->port . '</kbd></li>';
@@ -1107,7 +1107,8 @@ class port_display {
 				$HTML .= '</dd>';
 
 			} else {
-				$HTML .= '<dd id="packages"><b>No package information for this port in our database</b></dd>';
+				$HTML .= '<dt id="packages"><b>No package information for this port in our database</b></dt>';
+				$HTML .= '<dd>Sometimes this happens. Not all ports have packages.</dd>';
 			}
 		}
 

@@ -458,6 +458,14 @@ class port_display {
 		$this->ShowWatchListStatus  = true;
 	}
 
+	function SetDetailsMinimal() {
+		$this->SetDetailsNil();
+
+		$this->LinkToPort           = true;
+		$this->ShowShortDescription = true;
+		$this->ShowWatchListStatus  = true;
+	}
+
 	function DisplayPlainText() {
 		$result = $this->port->category . '/' . $this->port->port;
 

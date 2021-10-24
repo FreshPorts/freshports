@@ -79,6 +79,7 @@ define('SEARCH_FIELD_MANUAL_PACKAGE_BUILD', 'manual_pacakge_bulid');
 define('SEARCH_FIELD_NAME',                 'name');
 define('SEARCH_FIELD_PACKAGE',              'package');
 define('SEARCH_FIELD_PATHNAME',             'tree');
+define('SEARCH_FIELD_PKG_MESSAGE',          'pkg-message');
 define('SEARCH_FIELD_PKG_PLIST',            'pkg-plist');
 define('SEARCH_FIELD_SHORTDESCRIPTION',     'shortdescription');
 
@@ -100,6 +101,7 @@ $SearchTypeToFieldMap = array(
     SEARCH_FIELD_NAME                 => 'E.name',
     SEARCH_FIELD_PACKAGE              => 'P.package_name',
     SEARCH_FIELD_PKG_PLIST            => 'P.pkg_plist',
+    SEARCH_FIELD_PKG_MESSAGE          => 'P.pkgmessage',
     SEARCH_FIELD_PATHNAME             => 'EP.pathname',
     SEARCH_FIELD_SHORTDESCRIPTION     => 'P.short_description',
 );
@@ -235,6 +237,7 @@ function WildCardQuery($stype, $Like, $query) {
 		case SEARCH_FIELD_PACKAGE:
 		case SEARCH_FIELD_PATHNAME:
 		case SEARCH_FIELD_PKG_PLIST:
+		case SEARCH_FIELD_PKG_MESSAGE:
 		case SEARCH_FIELD_SHORTDESCRIPTION:
           # all is well.  we have a valid value.
           break;
@@ -686,9 +689,20 @@ switch ($stype) {
         break;
 
   case SEARCH_FIELD_PKG_PLIST:
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports_by_pkg_plist.php');
-	$Ports = new PortsByPkgPlist($db);
-	$Ports->PkgPlistSet($query);
+  case SEARCH_FIELD_PKG_MESSAGE:
+	switch ($stype) {
+		case SEARCH_FIELD_PKG_PLIST:
+			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports_by_pkg_plist.php');
+			$Ports = new PortsByPkgPlist($db);
+			$Ports->PkgPlistSet($query);
+			break;
+
+		case SEARCH_FIELD_PKG_MESSAGE:
+			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports_by_pkg_message.php');
+			$Ports = new PortsByPkgMessage($db);
+			$Ports->PkgMessageSet($query);
+			break;
+	}
     
 	$Ports->Debug = $Debug;
 
@@ -907,6 +921,7 @@ if ($output_format == OUTPUT_FORMAT_HTML) {
 		<OPTION VALUE="<?php echo SEARCH_FIELD_MESSAGEID            . '"'; if ($stype == SEARCH_FIELD_MESSAGEID)            echo ' SELECTED'; ?>>Message ID</OPTION>
 		<OPTION VALUE="<?php echo SEARCH_FIELD_PACKAGE              . '"'; if ($stype == SEARCH_FIELD_PACKAGE)              echo ' SELECTED'; ?>>Package Name</OPTION>
 		<OPTION VALUE="<?php echo SEARCH_FIELD_PKG_PLIST            . '"'; if ($stype == SEARCH_FIELD_PKG_PLIST)            echo ' SELECTED'; ?>>pkg-plist</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_PKG_MESSAGE          . '"'; if ($stype == SEARCH_FIELD_PKG_MESSAGE)          echo ' SELECTED'; ?>>pkg-message</OPTION>
 		<OPTION VALUE="<?php echo SEARCH_FIELD_NAME                 . '"'; if ($stype == SEARCH_FIELD_NAME)                 echo ' SELECTED'; ?>>Port Name</OPTION>
 		<OPTION VALUE="<?php echo SEARCH_FIELD_SHORTDESCRIPTION     . '"'; if ($stype == SEARCH_FIELD_SHORTDESCRIPTION)     echo ' SELECTED'; ?>>Short Description</OPTION>
 		<OPTION VALUE="<?php echo SEARCH_FIELD_PATHNAME             . '"'; if ($stype == SEARCH_FIELD_PATHNAME)             echo ' SELECTED'; ?>>Under a pathname</OPTION>
@@ -1092,6 +1107,7 @@ switch ($stype) {
 		switch ($minimal_output) {
 			case 1:
 				$port_display->SetDetailsNil();
+				$port_display->SetDetailsMinimal();
 				break;
 			default:
 				$port_display->SetDetailsSearch();

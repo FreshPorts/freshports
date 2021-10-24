@@ -22,15 +22,15 @@ $BannerFontSize         = "+1";
 $BannerWidth            = "100%";
 $TableWidth             = "100%";
 $DateFormatDefault      = "j M Y";
-$TimeFormatDefault		= "H:i:s";
+$TimeFormatDefault      = "H:i:s";
 
-$FreshPortsTitle		= "FreshPorts";
+$FreshPortsTitle        = "FreshPorts";
 
-$WatchNoticeFrequencyDaily			= "D";
-$WatchNoticeFrequencyWeekly			= "W";
-$WatchNoticeFrequencyFortnightly	= "F";
-$WatchNoticeFrequencyMonthly		= "M";
-$WatchNoticeFrequencyNever			= "Z";
+$WatchNoticeFrequencyDaily       = "D";
+$WatchNoticeFrequencyWeekly      = "W";
+$WatchNoticeFrequencyFortnightly = "F";
+$WatchNoticeFrequencyMonthly     = "M";
+$WatchNoticeFrequencyNever       = "Z";
 
 $UserStatusActive      = "A";
 $UserStatusDisabled    = "D";
@@ -44,8 +44,8 @@ if (!defined('USER_COOKIE_NAME')) define('USER_COOKIE_NAME', "visitor");
 # SEQUENCES
 #
 
-$Sequence_Watch_List_ID			= 'watch_list_id_seq';
-$Sequence_User_ID				= 'users_id_seq';
+$Sequence_Watch_List_ID = 'watch_list_id_seq';
+$Sequence_User_ID       = 'users_id_seq';
 
 #
 # external URLs
@@ -192,6 +192,7 @@ const SEARCH_SELECT_FIELD = '
          P.distinfo,
          element_pathname(P.element_id) as element_pathname,
          Cl.svn_revision,
+         P.pkgmessage,
          P.uses  ';
 
 
@@ -203,6 +204,6 @@ const HASH_UPDATE_QUERY         = 'HASH_UPDATE';
 const RESEND_CONFIRMATION_QUERY = 'RESEND_CONFIRMATION';
 
 if (!defined('PW_HASH_METHOD')) define('PW_HASH_METHOD', 'bf');
-if (!defined('PW_HASH_COST')) define('PW_HASH_COST', 14);
+if (!defined('PW_HASH_COST'))   define('PW_HASH_COST', 14);
 
 define('HTML_DOCTYPE', '<!DOCTYPE html>');

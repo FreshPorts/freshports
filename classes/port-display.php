@@ -415,6 +415,12 @@ class port_display {
 		$this->ShowWatchListStatus     = true;
 	}
 
+	function SetDetailsPkgMessage() {
+		$this->SetDetailsNil();
+		$this->SetDetailsSearch();
+		$this->ShowPKGMessage          = true;
+	}
+
 	function SetDetailsReports() {
 		$this->SetDetailsNil();
 

@@ -797,8 +797,8 @@ if (!$result) {
   die('something went terribly wrong.  Sorry.');
 }
 
-$NumRows = pg_numrows($result);
-$myrow = pg_fetch_array($result);
+$NumRows  = pg_numrows($result);
+$myrow    = pg_fetch_array($result);
 $NumFound = $myrow[0];
 
 	$params = array(
@@ -1111,6 +1111,10 @@ switch ($stype) {
 				break;
 			default:
 				$port_display->SetDetailsSearch();
+				if ($stype == SEARCH_FIELD_PKG_MESSAGE) {
+					if ($Debug) echo 'SEARCH_FIELD_PKG_MESSAGE is in effect';
+					$port_display->SetDetailsPkgMessage();
+				}
 				break;
 		}
 

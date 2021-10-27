@@ -109,49 +109,74 @@ class port_display {
 			if ($Debug) syslog(LOG_ERR, 'shell_exec returned ' . $json);
 		}
 
-		$things = json_decode($json);
-		if ($Debug) var_dump($things);
-		foreach ($things as $thing) {
-			if (!empty($thing->type)) {
-				switch($thing->type) {
-					case 'install':
-						$HTML .= '<dt>If installing:</dt><dd class="like-pre">' . htmlspecialchars($thing->message) . '</dd>';
-						$HTML .= "\n";
-						$HTML .= "\n";
-						break;
-
-					case 'upgrade':
-						if (!empty($thing->minimum_version) && !empty($thing->maximum_version)) {
-							$HTML .= '<dt>If upgrading from &gt; ' . htmlspecialchars($thing->minimum_version) . ' and &lt; ' . htmlspecialchars($thing->maximum_version) . ':</dt>';
-							$HTML .= '<dd class="like-pre">' . $thing->message . '</dd>';
-						} elseif (!empty($thing->minimum_version)) {
-							$HTML .= '<dt>If upgrading from &gt; ' . htmlspecialchars($thing->minimum_version) . ':</dt>';
-							$HTML .= '<dd class="like-pre">' . htmlspecialchars($thing->message) . '</dd>';
-						} elseif (!empty($thing->maximum_version)) {
-							$HTML .= '<dt>If upgrading from &lt; ' . htmlspecialchars($thing->maximum_version) . ':</dt>';
-							$HTML .= '<dd class="like-pre">' . htmlspecialchars($thing->message) . '</dd>';
-						} else {
-							$HTML .= '<dt>If upgrading</dt>';
-							$HTML .= '<dd class="like-pre">' . htmlspecialchars($thing->message) . '</dd>';
-						}
-						$HTML .= "\n";
-						$HTML .= "\n";
-						break;
-
-					case 'remove':
-						$HTML .= '<dt>If removing:</dt><dd class="like-pre">' . htmlspecialchars($thing->message) . '</dd>';
-						$HTML .= "\n";
-						$HTML .= "\n";
-						break;
-
-					default:
-						syslog(LOG_ERR, '_pkgmessage_UCL found a type is it not prepared for : ' . $thing->type);
-						$HTML .= '<dt>' . htmlspecialchars($thing->type) . '</dt><dd class="like-pre">' . htmlspecialchars($thing->message) . '</dd>';
-						$HTML .= "\n";
-						$HTML .= "\n";
-						break;
-
+		$pkg_message_parts = json_decode($json);
+		if ($Debug) var_dump($pkg_message_parts);
+		foreach ($pkg_message_parts as $part) {
+			if (!empty($part->type)) {
+				# sometimes we get arrays, for install/upgrade
+				# make sure we always have an array for the later join to create $Actions
+				if (is_array($part->type)) {
+					# see https://news.freshports.org/2021/10/14/pkg-message-ucl-type-gives-_pkgmessage_ucl-found-a-type-is-it-not-prepared-for-array/
+					# and https://github.com/FreshPorts/freshports/issues/345
+					#
+					if ($Debug) echo 'we have an array';
+					$types = $part->type;
+				} else {
+					if ($Debug) echo 'creating an array';
+					$types = array($part->type);
 				}
+
+				# Build the action phrase (install, remove, etc)
+				$Actions .= 'For ' . join(' or ', $types);
+
+				if (is_array($part->type)) {
+					$HTML .= "<dt>$Actions:</dt>" . '<dd class="like-pre">' . htmlspecialchars($part->message) . '</dd>';
+					$HTML .= "\n";
+					$HTML .= "\n";
+				} else {
+
+					foreach ($types as $type) {
+						switch($type) {
+							case 'install':
+								$HTML .= "<dt>$Actions:</dt>" . '<dd class="like-pre">' . htmlspecialchars($part->message) . '</dd>';
+								$HTML .= "\n";
+								$HTML .= "\n";
+								break;
+
+							case 'upgrade':
+								if (!empty($part->minimum_version) && !empty($part->maximum_version)) {
+									$HTML .= '<dt>If upgrading from &gt; ' . htmlspecialchars($part->minimum_version) . ' and &lt; ' . htmlspecialchars($part->maximum_version) . ':</dt>';
+									$HTML .= '<dd class="like-pre">' . $part->message . '</dd>';
+								} elseif (!empty($part->minimum_version)) {
+									$HTML .= '<dt>If upgrading from &gt; ' . htmlspecialchars($part->minimum_version) . ':</dt>';
+									$HTML .= '<dd class="like-pre">' . htmlspecialchars($part->message) . '</dd>';
+								} elseif (!empty($part->maximum_version)) {
+									$HTML .= '<dt>If upgrading from &lt; ' . htmlspecialchars($part->maximum_version) . ':</dt>';
+									$HTML .= '<dd class="like-pre">' . htmlspecialchars($part->message) . '</dd>';
+								} else {
+									$HTML .= '<dt>If upgrading</dt>';
+									$HTML .= '<dd class="like-pre">' . htmlspecialchars($part->message) . '</dd>';
+								}
+								$HTML .= "\n";
+								$HTML .= "\n";
+								break;
+
+							case 'remove':
+								$HTML .= '<dt>If removing:</dt><dd class="like-pre">' . htmlspecialchars($part->message) . '</dd>';
+								$HTML .= "\n";
+								$HTML .= "\n";
+								break;
+
+							default:
+								syslog(LOG_ERR, '_pkgmessage_UCL found a type is it not prepared for : ' . $type . ' in ' . $pkgmessage);
+								$HTML .= '<dt>' . htmlspecialchars($part->type) . '</dt><dd class="like-pre">' . htmlspecialchars($part->message) . '</dd>';
+							$HTML .= "\n";
+							$HTML .= "\n";
+							break;
+
+						} # switch
+					} # foreach
+				} # if (is_array($part->type))
 
 			}
 		}
@@ -991,7 +1016,6 @@ class port_display {
 			$HTML .= "\n</dl><dl>\n";
 			if ($port->IsDeleted()) {
 				$HTML .= '<dt>No installation instructions:</dt><dd>This port has been deleted.</dd>';
-				$HTML .= '<dd>The package name of this deleted port was: <code class="code">' . $port->latest_link . '</code></dd>';
 			} else {
 				$HTML .= '<dt id="add"><b>To install <a href="/faq.php#port" TITLE="what is a port?">the port</a>:</b></dt><dd> <kbd class="code">cd /usr/ports/'  . $port->category . '/' . $port->port . '/ && make install clean</kbd></dd>';
 				if (IsSet($port->no_package) && $port->no_package != '') {

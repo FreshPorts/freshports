@@ -695,12 +695,14 @@ switch ($stype) {
 			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports_by_pkg_plist.php');
 			$Ports = new PortsByPkgPlist($db);
 			$Ports->PkgPlistSet($query);
+			$Ports->IncludeDeletedPorts($deleted == INCLUDE_DELETED_PORTS);
 			break;
 
 		case SEARCH_FIELD_PKG_MESSAGE:
 			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports_by_pkg_message.php');
 			$Ports = new PortsByPkgMessage($db);
 			$Ports->PkgMessageSet($query);
+			$Ports->IncludeDeletedPorts($deleted == INCLUDE_DELETED_PORTS);
 			break;
 	}
     
@@ -1036,7 +1038,7 @@ Special searches:
 	<INPUT NAME="deleted"         TYPE="hidden" value="excludedeleted">
 	<INPUT NAME="start"           TYPE="hidden" value="1">
   	<INPUT NAME="casesensitivity" TYPE="hidden" value="caseinsensitive">
-    <INPUT TYPE="submit" VALUE="Ports I Maintain" NAME="search">
+        <INPUT TYPE="submit" VALUE="Ports I Maintain" NAME="search">
 	</FORM>
 
 </ul>
@@ -1054,15 +1056,15 @@ if ($NumFetches == 0) {
      $HTML .= " no results found<br>\n";
    }
 } else {
-	if ($stype == 'committer' || $stype == 'commitmessage' || $stype == 'tree') {
-	  $NumFetches = min($num, $NumberOfCommits);
-	  if ($NumFetches != $NumberOfCommits) {
-		$MoreToShow = 1;
+      if ($stype == 'committer' || $stype == 'commitmessage' || $stype == 'tree') {
+          $NumFetches = min($num, $NumberOfCommits);
+          if ($NumFetches != $NumberOfCommits) {
+          $MoreToShow = 1;
       } else {
-		$MoreToShow = 0;
+          $MoreToShow = 0;
       }
 
-	  $NumPortsFound = 'Number of commits: ' . $NumberOfCommits;
+      $NumPortsFound = 'Number of commits: ' . $NumberOfCommits;
       if ($NumFound > $PageSize) {
 	    $NumPortsFound .= " (showing only $NumOnThisPage on this page)";
 	  }

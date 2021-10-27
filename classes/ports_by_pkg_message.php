@@ -13,10 +13,11 @@
 class PortsByPkgMessage extends Port {
 
 	var $Query;
+	var $PortStatus = PORT_STATUS_ACTIVE;
 	var $Limit  = 0;
 	var $Offset = 0;
 
-	var $Debug = 1;
+	var $Debug = 0;
 	
 	var $LocalResult = null;
 	
@@ -26,7 +27,8 @@ class PortsByPkgMessage extends Port {
     FROM
         ports
     WHERE
-        pkgmessage_textsearchable @@ websearch_to_tsquery($1)
+        pkgmessage_textsearchable  @@ websearch_to_tsquery($1) OR
+        pkgmessage_textsearchable2 @@ websearch_to_tsquery($1)
 )';
 
 	function __construct($dbh) {
@@ -37,10 +39,20 @@ class PortsByPkgMessage extends Port {
 		$this->Query = $Query;
 	}
 
+	function IncludeDeletedPorts($IncludeDeletedPorts = false) {
+		if ($IncludeDeletedPorts) {
+			$this->PortStatus = PORT_STATUS_DELETED;
+			if ($Debug) echo 'deleted';
+		} else {
+			$this->PortStatus = PORT_STATUS_ACTIVE;
+			if ($Debug) echo 'active';
+		}
+	}
+
 	function GetQueryCount() {
 		$count = 0;
 		
-		$sql = $this::WITH_CLAUSE . 'select count(*) as count from short_list, ports_active P, element_pathname EP WHERE P.id = short_list.port_id
+		$sql = $this::WITH_CLAUSE . 'select count(*) as count from short_list, ports P, element_pathname EP WHERE P.id = short_list.port_id
    AND P.element_id = EP.element_id and EP.pathname like \'/ports/head/%\'';
 		if ($this->Debug) echo "<pre>$sql</pre> with <pre>$this->Query</pre>";
 		$result = pg_query_params($this->dbh, $sql, array($this->Query));
@@ -84,9 +96,12 @@ class PortsByPkgMessage extends Port {
  WHERE P.id = short_list.port_id
    AND P.element_id = EP.element_id and EP.pathname like '/ports/head/%'
    AND P.category_id  = C.id
-   AND P.element_id   = E.id  AND E.status = 'A'" ;
+   AND P.element_id   = E.id ";
 
-
+		if ($this->PortStatus == PORT_STATUS_ACTIVE) {
+			# restrict this to active ports only
+			$sqlWhere .= " AND E.status = 'A'" ;
+		}
 
    		# the CTE (Common Table Expression) exists because the LIMIT would hit performance
 		$sql = "WITH t as (" . $this::WITH_CLAUSE . SEARCH_SELECT_FIELD . $sqlFrom . $sqlWatchListFrom . 

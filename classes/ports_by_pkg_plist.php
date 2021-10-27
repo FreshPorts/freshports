@@ -13,6 +13,7 @@
 class PortsByPkgPlist extends Port {
 
 	var $Query;
+	var $PortStatus = PORT_STATUS_ACTIVE;
 	var $Limit  = 0;
 	var $Offset = 0;
 
@@ -37,6 +38,16 @@ class PortsByPkgPlist extends Port {
 	
 	function PkgPlistSet($Query) {
 		$this->Query = $Query;
+	}
+
+	function IncludeDeletedPorts($IncludeDeletedPorts = false) {
+		if ($IncludeDeletedPorts) {
+			$this->PortStatus = PORT_STATUS_DELETED;
+			if ($Debug) echo 'deleted';
+		} else {
+			$this->PortStatus = PORT_STATUS_ACTIVE;
+			if ($Debug) echo 'active';
+		}
 	}
 
 	function GetQueryCount() {
@@ -86,9 +97,12 @@ class PortsByPkgPlist extends Port {
  WHERE P.id = short_list.port_id
    AND P.element_id = EP.element_id and EP.pathname like '/ports/head/%'
    AND P.category_id  = C.id
-   AND P.element_id   = E.id  AND E.status = 'A'" ;
+   AND P.element_id   = E.id " ;
 
-
+		if ($this->PortStatus == PORT_STATUS_ACTIVE) {
+			# restrict this to active ports only
+			$sqlWhere .= " AND E.status = 'A'" ;
+		}
 
    		# the CTE (Common Table Expression) exists because the LIMIT would hit performance
 		$sql = "WITH t as (" . $this::WITH_CLAUSE . SEARCH_SELECT_FIELD . $sqlFrom . $sqlWatchListFrom . 

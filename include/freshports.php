@@ -1201,7 +1201,7 @@ function freshports_UpdatingOutput($NumRowsUpdating, $PortsUpdating, $port) {
 	if ($NumRowsUpdating > 0) {
 		$HTML .= '<TABLE class="ports-updating fullwidth bordered">' . "\n";
 		$HTML .= "<TR>\n";
-		$HTML .= freshports_PageBannerText('<a id="updating">Notes from UPDATING</a>');
+		$HTML .= freshports_PageBannerTextWithID('Notes from UPDATING', 'updating');
 		$HTML .= "<tr><td><dl>\n";
 		$HTML .= "<dt>These upgrade notes are taken from <a href=\"/UPDATING\">/usr/ports/UPDATING</a></dt>";
 		$HTML .= "<dd><ul>\n";
@@ -1246,7 +1246,7 @@ function freshports_PortCommitsHeader($port) {
 
 	$Columns = 3;
 
-	$HTML .= freshports_PageBannerText("Commit History - (may be incomplete: see SVNWeb link above for full details)", $Columns);
+	$HTML .= freshports_PageBannerTextColSpan("Commit History - (may be incomplete: see SVNWeb link above for full details)", $Columns);
 
 	if ($port->IsSlavePort()) {
 		$HTML .= '<tr><td colspan="' . $Columns . '">'; 
@@ -1622,8 +1622,33 @@ function freshports_wrap($text, $length = WRAPCOMMITSATCOLUMN) {
 	return implode("\n", $lines);
 }
 
-function freshports_PageBannerText($Text, $ColSpan=1) {
-	return '<td class="accent" COLSPAN="' . $ColSpan . '"><span>' . htmlentities($Text) . '</span></td>' . "\n";
+function freshports_PageBannerText($Text) {
+	return freshports_PageBannerTextColSpan($Text, 1);
+}
+
+
+function freshports_PageBannerTextWithID($Text, $ID) {
+	return freshports_PageBannerTextColSpanWithID($Text, 1, $ID);
+}
+
+
+function freshports_PageBannerTextColSpan($Text, $ColSpan) {
+	return freshports_PageBannerTextColSpanWithID($Text, $ColSpan, null);
+}
+
+
+function freshports_PageBannerTextColSpanWithID($Text, $ColSpan=1, $ID) {
+	$HTML = '<td class="accent" COLSPAN="' . $ColSpan . '"><span>';
+	if (!empty($ID)) {
+	  $HTML .= '<a id="' . htmlentities($ID) . '">';
+	}
+	$HTML .= htmlentities($Text);
+	if (!empty($ID)) {
+	  $HTML .= '</a>';
+        }
+        $HTML .= '</span></td>' . "\n";
+
+        return $HTML;
 }
 
 

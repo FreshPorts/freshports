@@ -26,7 +26,7 @@ function DisplayNewsFeed($db, $format, $token) {
 	if ($wlid == '') {
 		syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . 
 			' watch list token requested by ' . $_SERVER['REMOTE_ADDR'] . 
-			' not found ' . $token);
+			' not found ' . "'$token'");
 		header('HTTP/1.1 404 NOT FOUND');
 		exit; 
 	}

@@ -157,9 +157,37 @@ class DisplayCommit {
 				$this->HTML .= "<TR><TD class=\"commit-details\">\n";
 
 				$this->HTML .= '<span class="meta">';
-				$this->HTML .= '[ ' . $mycommit->commit_time . ' ' . freshports_CommitterEmailLink_Old($mycommit->committer);
-				if (!empty($mycommit->committer_name) && ($mycommit->committer_name != $mycommit->committer)) {
-					$this->HTML .= ' (' . $mycommit->committer_name . ')';
+				$this->HTML .= '[ ' . $mycommit->commit_time . ' ';
+
+				#
+				# THIS CODE IS SIMILAR TO THAT IN classes/display_commit.php & classes/port-display.php
+				#
+				#
+				# the commmiter may not be the author
+				# committer name and author name came into the database with git.
+				# For other commits, such as git or cvs, those fields will not be present.
+				# committer will always be present.
+				#
+				$CommitterIsNotAuthor = !empty($mycommit->author_name) && !empty($mycommit->committer_name) && $mycommit->author_name != $mycommit->committer_name;
+
+				# if no author name, it's an older commit, and we have only committer
+				if (empty($mycommit->committer_name)) {
+					$this->HTML .= freshports_CommitterEmailLink_Old($mycommit->committer);
+				} else {
+			                # if we are going to show the author, we need to label the committer too.
+					if ($CommitterIsNotAuthor) {
+						$this->HTML .= 'Committer:&nbsp;';
+					}
+					$this->HTML .= freshports_AuthorEmailLink($mycommit->committer_name, $mycommit->committer_email);
+					# display the committer id, just because
+					$this->HTML .= '&nbsp;(' . $mycommit->committer . ')';
+				}
+
+				# after the committer, display a search-by-commiter link
+				$this->HTML .= '&nbsp;' . freshports_Search_Committer($mycommit->committer);
+
+				if ($CommitterIsNotAuthor) {
+					$this->HTML .= '&nbsp;Author:&nbsp;' . freshports_AuthorEmailLink($mycommit->author_name, $mycommit->author_email);
 				}
 				$this->HTML .= ' ]';
 				$this->HTML .= '</span>';
@@ -180,7 +208,7 @@ class DisplayCommit {
 				}
 
 				if ($mycommit->EncodingLosses()) {
-						$this->HTML .= '&nbsp;' . freshports_Encoding_Errors();
+					$this->HTML .= '&nbsp;' . freshports_Encoding_Errors();
 				}
 
 				if ($mycommit->stf_message != '' && $this->ShowLinkToSanityTestFailure) {

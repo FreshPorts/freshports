@@ -1526,6 +1526,9 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	$HTML .= '    <td class="commit-details">';
 
 	#
+	# THIS CODE IS SIMILAR TO THAT IN classes/display_commit.php & classes/port-display.php
+	#
+	#
 	# the commmiter may not be the author
 	# committer name and author name came into the database with git.
 	# For other commits, such as git or cvs, those fields will not be present.
@@ -1539,16 +1542,18 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
         } else {
                 # if we are going to show the author, we need to label the committer too.
 		if ($CommitterIsNotAuthor) {
-			$HTML .= 'Committer: ';
+			$HTML .= 'Committer:&nbsp;';
 		}
 		$HTML .= freshports_AuthorEmailLink($commit->committer_name, $commit->committer_email);
+		# display the committer id, just because
+		$HTML .= '&nbsp;(' . $commit->committer . ')';
 	}
 
 	# after the committer, display a search-by-commiter link
 	$HTML .= '&nbsp;' . freshports_Search_Committer($commit->committer);
 
 	if ($CommitterIsNotAuthor) {
-		$HTML .= '<br>Author: ' . freshports_AuthorEmailLink($commit->author_name, $commit->author_email);
+		$HTML .= '<br>Author:&nbsp;' . freshports_AuthorEmailLink($commit->author_name, $commit->author_email);
 	}
 
 	$HTML .= "</td>\n";

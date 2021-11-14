@@ -102,6 +102,12 @@ class Port {
 
 	var $committer; 
 
+	// needed for watch.php
+	var $committer_name;
+	var $committer_email;
+	var $author_name;
+	var $author_email;
+
 	var $repository;
 	var $repo_hostname;
 	var $git_hostname; # not yet populated
@@ -186,6 +192,10 @@ class Port {
 		$this->commit_hash_short    = isset($myrow["commit_hash_short"])  ? $myrow["commit_hash_short"]  : null;
 		$this->encoding_losses      = isset($myrow["encoding_losses"])    ? $myrow["encoding_losses"]    : null;
 		$this->committer            = isset($myrow["committer"])          ? $myrow["committer"]          : null;
+		$this->committer_name       = isset($myrow["committer_name"])     ? $myrow["committer_name"]     : null;
+		$this->committer_email      = isset($myrow["committer_email"])    ? $myrow["committer_email"]    : null;
+		$this->author_name          = isset($myrow["author_name"])        ? $myrow["author_name"]        : null;
+		$this->author_email         = isset($myrow["author_email"])       ? $myrow["author_email"]       : null;
 
 		$this->vulnerable_current   = $myrow["vulnerable_current"];
 		$this->vulnerable_past      = $myrow["vulnerable_past"];

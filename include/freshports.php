@@ -12,6 +12,9 @@
 	if (IsSet($ShowAnnouncements)) {
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/announcements.php');
 	}
+
+	require_once('/usr/local/share/phpmailer/PHPMailerAutoload.php');
+
 #
 # special HTMLified mailto to foil spam harvesters
 #
@@ -1656,22 +1659,45 @@ function freshports_UserSendToken($UserID, $dbh) {
 		CloseLog();
 
 		$message =  "Someone, perhaps you, supplied your email address as their\n".
-					"FreshPorts login. If that wasn't you, and this message becomes\n".
-				    "a nuisance, please forward this message to webmaster@" . $_SERVER["HTTP_HOST"] . "\n".
-					"and we will take care of it for you.\n".
-                    " \n".
-	                "Your token is: $token\n".
-    	            "\n".
-        	        "Please point your browser at\n".
-					"https://" . $_SERVER["HTTP_HOST"] . "/confirmation.php?token=$token\n" .
-	                "\n".
-    	            "the request came from " . $_SERVER["REMOTE_ADDR"] . ":" . $_SERVER["REMOTE_PORT"] ."\n".
-					"\n".
-					"-- \n".
-					"FreshPorts - https://" . $_SERVER["HTTP_HOST"] . "/ -- $FreshPortsSlogan";
+		            "FreshPorts login. If that wasn't you, and this message becomes\n".
+		            "a nuisance, please forward this message to " . PROBLEM_SOLVER_EMAIL_ADDRESS . "\n".
+		            "and we will take care of it for you.\n".
+                            " \n".
+	                    "Your token is: $token\n".
+                            "\n".
+                            "Please point your browser at\n". "https://" . $_SERVER["HTTP_HOST"] . "/confirmation.php?token=$token\n" .
+	                    "\n".
+                            "The request came from " . $_SERVER["REMOTE_ADDR"] ."\n".
+		            "\n".
+		            "-- \n".
+		           "FreshPorts - https://" . $_SERVER["HTTP_HOST"] . "/ -- $FreshPortsSlogan";
 
-		$result = mail($email, "FreshPorts - user registration", $message,
-					"From: webmaster@" . $_SERVER["HTTP_HOST"] . "\nReply-To: webmaster@" . $_SERVER["HTTP_HOST"] . "\nX-Mailer: PHP/" . phpversion());
+                try {
+                  $mail = new PHPMailer;
+
+                  // Settings
+                  $mail->IsSMTP();
+                  $mail->Host       = MAIL_SERVER;                   // SMTP server
+                  $mail->Port       = 25;                            // set the SMTP port for the smtp server
+                  $mail->SMTPDebug  = 3;                             // enables SMTP debug information (for testing)
+
+                  // Content
+                  $mail->ContentType = 'text/plain';
+                  $mail->Subject     = 'FreshPorts - user registration';
+                  $mail->Body        = $message;
+
+                  $mail->setFrom   (PROBLEM_SOLVER_EMAIL_ADDRESS, 'FreshPorts');
+                  $mail->addReplyTo(PROBLEM_SOLVER_EMAIL_ADDRESS, 'FreshPorts');
+
+                  $mail->addAddress($email);
+
+                  if ($mail->send()) {
+                  } else {
+                    syslog(LOG_ERR, "freshports_UserSendToken send() failed with: " . $mail->ErrorInfo);
+                  }
+                } catch (phpmailerException $e) {
+                  syslog(LOG_ERR, "freshports_UserSendToken has this error with PHPMailer: " . $e->errorMessage());
+                }
 	} else {
 		$result = 0;
 	}

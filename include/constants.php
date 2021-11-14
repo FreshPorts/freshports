@@ -36,7 +36,7 @@ $UserStatusActive      = "A";
 $UserStatusDisabled    = "D";
 $UserStatusUnconfirmed = "U";
 
-$ProblemSolverEmailAddress	= "webmaster@freshports.org";
+define('PROBLEM_SOLVER_EMAIL_ADDRESS', 'webmaster@freshports.org');
 
 if (!defined('USER_COOKIE_NAME')) define('USER_COOKIE_NAME', "visitor");
 
@@ -147,6 +147,7 @@ const PACKAGE_SETS = array('latest', 'quarterly');
 define('DEFAULT_NUMBER_OF_COMMITS', 100);
 
 const USES_PYTHON = 'python';
+const USES_PHP    = 'php';
 
 const PYTHON_PKGNAMEPREFIX = 'PYTHON_PKGNAMEPREFIX';
 

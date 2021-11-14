@@ -33,3 +33,8 @@ define('IN_MAINTENCE_MODE', true);
 
 # if defined, and non-empty, parse out the UCL messages
 define('PKG_MESSAGE_UCL', 1);
+
+define('MAX_LOAD_SEARCH', 3.75);
+define('MAX_LOAD_COMMIT', 3.752);
+
+define('MAIL_SERVER', 'localhost');

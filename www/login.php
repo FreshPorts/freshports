@@ -102,7 +102,7 @@ if (IsSet($_REQUEST['LOGIN']) && $_REQUEST['UserID']) {
       }
    } else {
       if ($status == $UserStatusDisabled) {
-         $error .= "Your account has been disabled.  Please contact $ProblemSolverEmailAddress.";
+         $error .= 'Your account has been disabled.  Please contact ' . PROBLEM_SOLVER_EMAIL_ADDRESS;
       } else {
          if ($status == $UserStatusUnconfirmed) {
             $error .= 'Your account needs to be enabled by following the directions in the email we have sent to you.' . "<BR>\n";
@@ -141,10 +141,10 @@ if (IsSet($_REQUEST["resend"])) {
       if (freshports_UserSendToken($ID, $db)) {
          $error .= 'You should soon receive an email at the mail address you supplied. It will contain instructions to enable your account.';
       } else {
-         $error .= 'I\'m sorry but I couldn\'t send your token.  Please contact ' . $ProblemSolverEmailAddress . '.';
+         $error .= 'I\'m sorry but I couldn\'t send your token.  Please contact ' . PROBLEM_SOLVER_EMAIL_ADDRESS . '.';
       }
    } else {
-      $error .= "Hmmm, I know nothing about you.  That can't be right.  Please contact $ProblemSolverEmailAddress.";
+      $error .= 'Hmmm, I know nothing about you.  That can\'t be right.  Please contact ' . PROBLEM_SOLVER_EMAIL_ADDRESS;
    }
 }
 

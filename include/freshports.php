@@ -1679,7 +1679,7 @@ function freshports_UserSendToken($UserID, $dbh) {
                   $mail->IsSMTP();
                   $mail->Host       = MAIL_SERVER;                   // SMTP server
                   $mail->Port       = 25;                            // set the SMTP port for the smtp server
-                  $mail->SMTPDebug  = 3;                             // enables SMTP debug information (for testing)
+                  $mail->SMTPDebug  = 0;                             // enables SMTP debug information (for testing)
 
                   // Content
                   $mail->ContentType = 'text/plain';

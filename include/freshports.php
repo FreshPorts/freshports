@@ -732,7 +732,12 @@ function freshportsObscureHTML($email) {
 	return htmlentities($email);
 }
 
-function freshports_CommitterEmailLink($committer) {
+#
+# this is the link used when commiter_name is not present
+# in the commit_log table - such commits are typically
+# svn or cvs - with git, we have commiter_name & commiter_email
+#
+function freshports_CommitterEmailLink_Old($committer) {
 	#
 	# in an attempt to reduce spam, encode the mailto
 	# so the spambots get rubbish, but it works OK in
@@ -769,6 +774,40 @@ function freshports_CommitterEmailLinkExtra($committer, $extrabits) {
 	return $HTML;
 }
 
+
+function freshports_AuthorEmailLink($author_name, $author_email) {
+	#
+	# in an attempt to reduce spam, encode the mailto
+	# so the spambots get rubbish, but it works OK in
+	# the browser.
+	#
+
+	$new_addr = "";
+	$addr = $author_email;
+
+	$new_addr = freshportsObscureHTML($addr);
+
+	$HTML = '<a href="' . MAILTO . ':' . $new_addr . '" title="authored by this person">' . $author_name . '</a>';
+
+	return $HTML;
+}
+
+function freshports_CommitterEmailLink($committer_name, $committer_email) {
+	#
+	# in an attempt to reduce spam, encode the mailto
+	# so the spambots get rubbish, but it works OK in
+	# the browser.
+	#
+
+	$new_addr = "";
+	$addr = $committer_email;
+
+	$new_addr = freshportsObscureHTML($addr);
+
+	$HTML = '<a href="' . MAILTO . ':' . $new_addr . '" title="committed by this person">' . $committer_name . '</a>';
+
+	return $HTML;
+}
 
 
 
@@ -1485,7 +1524,32 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 
 	$HTML .= "</td>\n";
 	$HTML .= '    <td class="commit-details">';
-	$HTML .= freshports_CommitterEmailLink($commit->committer) . '&nbsp;' . freshports_Search_Committer($commit->committer);;
+
+	#
+	# the commmiter may not be the author
+	# committer name and author name came into the database with git.
+	# For other commits, such as git or cvs, those fields will not be present.
+	# committer will always be present.
+	#
+	$CommitterIsNotAuthor = !empty($commit->author_name) && !empty($commit->committer_name) && $commit->author_name != $commit->committer_name;
+
+	# if no author name, it's an older commit, and we have only committer
+	if (empty($commit->committer_name)) {
+		$HTML .= freshports_CommitterEmailLink_Old($commit->committer);
+        } else {
+                # if we are going to show the author, we need to label the committer too.
+		if ($CommitterIsNotAuthor) {
+			$HTML .= 'Committer: ';
+		}
+		$HTML .= freshports_AuthorEmailLink($commit->committer_name, $commit->committer_email);
+	}
+
+	# after the committer, display a search-by-commiter link
+	$HTML .= '&nbsp;' . freshports_Search_Committer($commit->committer);
+
+	if ($CommitterIsNotAuthor) {
+		$HTML .= '<br>Author: ' . freshports_AuthorEmailLink($commit->author_name, $commit->author_email);
+	}
 
 	$HTML .= "</td>\n";
 	$HTML .= '    <td class="commit-details">';

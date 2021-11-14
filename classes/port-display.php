@@ -746,7 +746,7 @@ class port_display {
 		if ($this->ShowLastChange) {
 			$HTML .= "<dt>\n";
 			if ($port->updated != 0) {
-				$HTML .= 'last change committed by ' . freshports_CommitterEmailLink($port->committer);  // separate lines in case committer is null
+				$HTML .= 'last change committed by ' . freshports_CommitterEmailLink_Old($port->committer);  // separate lines in case committer is null
 
 				$HTML .= ' xxxxx ' . freshports_Search_Committer($port->committer);
 				# display committer name

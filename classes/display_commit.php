@@ -157,7 +157,7 @@ class DisplayCommit {
 				$this->HTML .= "<TR><TD class=\"commit-details\">\n";
 
 				$this->HTML .= '<span class="meta">';
-				$this->HTML .= '[ ' . $mycommit->commit_time . ' ' . freshports_CommitterEmailLink($mycommit->committer);
+				$this->HTML .= '[ ' . $mycommit->commit_time . ' ' . freshports_CommitterEmailLink_Old($mycommit->committer);
 				if (!empty($mycommit->committer_name) && ($mycommit->committer_name != $mycommit->committer)) {
 					$this->HTML .= ' (' . $mycommit->committer_name . ')';
 				}

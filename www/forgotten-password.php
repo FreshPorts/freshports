@@ -8,6 +8,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
+	require_once('/usr/local/share/phpmailer/PHPMailerAutoload.php');
 
 	if (IN_MAINTENCE_MODE) {
                 header('Location: /' . MAINTENANCE_PAGE, TRUE, 307);
@@ -106,23 +107,46 @@ if (IsSet($submit)) {
           $token_row = pg_fetch_array ($token_result, 0);
           $token = $token_row["token"];
           
-           # send out email
-           $message = "Someone, perhaps you, requested that you be emailed your password.\n".
-                      "If that wasn't you, and this message becomes a nuisance, please\n".
-                      "forward this message to webmaster@freshports.org and we will take\n". 
-                      "care of it for you.\n" .
-                      " \n" .
-                      "Your login id is: " . $myrow["name"] . "\n\n" . 
-                      "Your password recovery URL is:\n" .
-                      "http://" . $_SERVER["HTTP_HOST"] . "/password-reset-via-token.php?token=" . $token . "\n" .
-                      "\n" .
-                      "the request came from " . $_SERVER["REMOTE_ADDR"] . ':' . $_SERVER["REMOTE_PORT"];
+          # send out email
+          $message = "Someone, perhaps you, requested that you be emailed your password.\n".
+                     "If that wasn't you, and this message becomes a nuisance, please\n".
+                     "forward this message to webmaster@freshports.org and we will take\n". 
+                     "care of it for you.\n" .
+                     " \n" .
+                     "Your login id is: " . $myrow["name"] . "\n\n" . 
+                     "Your password recovery URL is:\n" .
+                     "http://" . $_SERVER["HTTP_HOST"] . "/password-reset-via-token.php?token=" . $token . "\n" .
+                     "\n" .
+                     "the request came from " . $_SERVER["REMOTE_ADDR"] . ':' . $_SERVER["REMOTE_PORT"];
 
-           mail($myrow["email"], "FreshPorts - password", $message,
-           "From: webmaster@freshports.org\nReply-To: webmaster@freshports.org\nX-Mailer: PHP/" . phpversion());
+          try {
+            $mail = new PHPMailer;
 
-           $MailSent = 1;
-          syslog(LOG_NOTICE, "Forgotten password: email for '" . $myrow['name'] . "' sent to '" . $myrow['email'] . "': " . $token);
+            // Settings
+            $mail->IsSMTP();
+            $mail->Host       = MAIL_SERVER;                   // SMTP server
+            $mail->Port       = 25;                            // set the SMTP port for the smtp server
+            $mail->SMTPDebug  = 0;                             // enables SMTP debug information (for testing)
+
+            // Content
+            $mail->ContentType = 'text/plain';
+            $mail->Subject     = 'FreshPorts - password';
+            $mail->Body        = $message;
+
+            $mail->setFrom   (PROBLEM_SOLVER_EMAIL_ADDRESS, 'FreshPorts');
+            $mail->addReplyTo(PROBLEM_SOLVER_EMAIL_ADDRESS, 'FreshPorts');
+
+            $mail->addAddress($myrow["email"]);
+
+            if ($mail->send()) {
+              $MailSent = 1;
+              syslog(LOG_NOTICE, "Forgotten password: email for '" . $myrow['name'] . "' sent to '" . $myrow['email'] . "': " . $token);
+            } else {
+              syslog(LOG_ERR, "freshports_UserSendToken send() failed with: " . $mail->ErrorInfo);
+            }
+          } catch (phpmailerException $e) {
+            syslog(LOG_ERR, "forgotten-password.php has this error with PHPMailer: " . $e->errorMessage());
+          }
         }
       }
    }

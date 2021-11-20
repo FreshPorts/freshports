@@ -763,10 +763,6 @@ class port_display {
 				if (empty($port->committer_name)) {
 					$HTML .= freshports_CommitterEmailLink_Old($port->committer);
 				} else {
-			                # if we are going to show the author, we need to label the committer too.
-					if ($CommitterIsNotAuthor) {
-						$HTML .= 'Committer:&nbsp;';
-					}
 					$HTML .= freshports_AuthorEmailLink($port->committer_name, $port->committer_email);
 					# display the committer id, just because
 					$HTML .= '&nbsp;(' . $port->committer . ')';

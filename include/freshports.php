@@ -1540,10 +1540,6 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	if (empty($commit->committer_name)) {
 		$HTML .= freshports_CommitterEmailLink_Old($commit->committer);
         } else {
-                # if we are going to show the author, we need to label the committer too.
-		if ($CommitterIsNotAuthor) {
-			$HTML .= 'Committer:&nbsp;';
-		}
 		$HTML .= freshports_AuthorEmailLink($commit->committer_name, $commit->committer_email);
 		# display the committer id, just because
 		$HTML .= '&nbsp;(' . $commit->committer . ')';

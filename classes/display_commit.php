@@ -174,10 +174,6 @@ class DisplayCommit {
 				if (empty($mycommit->committer_name)) {
 					$this->HTML .= freshports_CommitterEmailLink_Old($mycommit->committer);
 				} else {
-			                # if we are going to show the author, we need to label the committer too.
-					if ($CommitterIsNotAuthor) {
-						$this->HTML .= 'Committer:&nbsp;';
-					}
 					$this->HTML .= freshports_AuthorEmailLink($mycommit->committer_name, $mycommit->committer_email);
 					# display the committer id, just because
 					$this->HTML .= '&nbsp;(' . $mycommit->committer . ')';

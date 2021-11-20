@@ -771,16 +771,36 @@ class port_display {
 		if ($this->ShowLastChange) {
 			$HTML .= "<dt>\n";
 			if ($port->updated != 0) {
-				$HTML .= 'last change committed by ' . freshports_CommitterEmailLink($port->committer);  // separate lines in case committer is null
+				$HTML .= 'last change committed by&nbsp;';
 
-				$HTML .= ' xxxxx ' . freshports_Search_Committer($port->committer);
-				# display committer name
-				# but only if it's not the same as the committer.
-				# usually commiter is just the user name
-				# sometime the committer name is set to the user name
-				if (!empty($port->committer_name) && $port->committer_name!= $port->committer) {
-					$HTML .= ' (' . freshports_Search_Committer($port->committer_name) . ')';
+				#
+				# THIS CODE IS SIMILAR TO THAT IN classes/display_commit.php & include/freshports.php
+				#
+				#
+				# the commmiter may not be the author
+				# committer name and author name came into the database with git.
+				# For other commits, such as git or cvs, those fields will not be present.
+				# committer will always be present.
+				#
+				$CommitterIsNotAuthor = !empty($port->author_name) && !empty($port->committer_name) && $port->author_name != $port->committer_name;
+
+				# if no author name, it's an older commit, and we have only committer
+				if (empty($port->committer_name)) {
+					$HTML .= freshports_CommitterEmailLink_Old($port->committer);
+				} else {
+					$HTML .= freshports_AuthorEmailLink($port->committer_name, $port->committer_email);
+					# display the committer id, just because
+					$HTML .= '&nbsp;(' . $port->committer . ')';
 				}
+
+				# after the committer, display a search-by-commiter link
+				$HTML .= '&nbsp;' . freshports_Search_Committer($port->committer);
+
+				if ($CommitterIsNotAuthor) {
+					$HTML .= '&nbsp;Author:&nbsp;' . freshports_AuthorEmailLink($port->author_name, $port->author_email);
+				}
+
+
 
 				$HTML .= ' on ' . $port->updated . "\n";
 

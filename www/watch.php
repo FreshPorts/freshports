@@ -195,9 +195,13 @@ if ($wlid != '') {
 	$sql = "
 	SELECT temp.*,
 		to_char(max(commit_log.commit_date) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') 	as updated,
-		commit_log.committer, commit_log.description 														as update_description, 
-		commit_log.message_id, max(commit_log.commit_date) 												as commit_date_sort_field,
-		commit_log.committer
+		commit_log.committer,
+		commit_log.description        								as update_description,
+		commit_log.message_id, max(commit_log.commit_date) 					as commit_date_sort_field,
+		commit_log.committer_name,
+		commit_log.committer_email,
+		commit_log.author_name,
+		commit_log.author_email
 	from commit_log
 		RIGHT OUTER JOIN
 	(
@@ -240,12 +244,16 @@ if ($wlid != '') {
 	on (TEMP.last_commit_id = commit_log.id) 
 	
 	GROUP BY temp.port,
-			 temp.id, 
+		temp.id,
 	         temp.category, 
 	         temp.category_id, 
 	         temp.version, 
 	         temp.revision, 
 	         commit_log.committer, 
+	         commit_log.committer_name,
+	         commit_log.committer_email,
+	         commit_log.author_name,
+	         commit_log.author_email,
 	         update_description, 
 	         temp.element_id, 
 	         temp.maintainer, 
@@ -279,7 +287,7 @@ if ($wlid != '') {
 	
 	$result = pg_exec($db, $sql);
 	if (!$result) {
-		echo pg_errormessage();
+		echo "there was an error: " . pg_errormessage();
 	}
 
 	// get the list of topics, which we need to modify the order
@@ -369,7 +377,7 @@ if ($wlid != '') {
 			echo freshports_UpdatingOutput($NumRowsUpdating, $PortsUpdating, $port);
 		}
 		
-		echo '<BR>';
+		echo '<hr>';
 	}
 
 	if ($ShowCategoryHeaders) {

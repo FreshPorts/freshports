@@ -58,7 +58,7 @@ class FilesDisplay {
 				$title =  $NumRows . ' files found';
 		}
 
-		$this->HTML .= freshports_PageBannerText($title, 4);
+		$this->HTML .= freshports_PageBannerTextColSpan($title, 4);
 		
 		$this->HTML .= "</TR>\n";
 

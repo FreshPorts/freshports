@@ -735,7 +735,12 @@ function freshportsObscureHTML($email) {
 	return htmlentities($email);
 }
 
-function freshports_CommitterEmailLink($committer) {
+#
+# this is the link used when commiter_name is not present
+# in the commit_log table - such commits are typically
+# svn or cvs - with git, we have commiter_name & commiter_email
+#
+function freshports_CommitterEmailLink_Old($committer) {
 	#
 	# in an attempt to reduce spam, encode the mailto
 	# so the spambots get rubbish, but it works OK in
@@ -772,6 +777,40 @@ function freshports_CommitterEmailLinkExtra($committer, $extrabits) {
 	return $HTML;
 }
 
+
+function freshports_AuthorEmailLink($author_name, $author_email) {
+	#
+	# in an attempt to reduce spam, encode the mailto
+	# so the spambots get rubbish, but it works OK in
+	# the browser.
+	#
+
+	$new_addr = "";
+	$addr = $author_email;
+
+	$new_addr = freshportsObscureHTML($addr);
+
+	$HTML = '<a href="' . MAILTO . ':' . $new_addr . '" title="authored by this person">' . $author_name . '</a>';
+
+	return $HTML;
+}
+
+function freshports_CommitterEmailLink($committer_name, $committer_email) {
+	#
+	# in an attempt to reduce spam, encode the mailto
+	# so the spambots get rubbish, but it works OK in
+	# the browser.
+	#
+
+	$new_addr = "";
+	$addr = $committer_email;
+
+	$new_addr = freshportsObscureHTML($addr);
+
+	$HTML = '<a href="' . MAILTO . ':' . $new_addr . '" title="committed by this person">' . $committer_name . '</a>';
+
+	return $HTML;
+}
 
 
 
@@ -1204,7 +1243,7 @@ function freshports_UpdatingOutput($NumRowsUpdating, $PortsUpdating, $port) {
 	if ($NumRowsUpdating > 0) {
 		$HTML .= '<TABLE class="ports-updating fullwidth bordered">' . "\n";
 		$HTML .= "<TR>\n";
-		$HTML .= freshports_PageBannerText('<a id="updating">Notes from UPDATING</a>');
+		$HTML .= freshports_PageBannerTextWithID('Notes from UPDATING', 'updating');
 		$HTML .= "<tr><td><dl>\n";
 		$HTML .= "<dt>These upgrade notes are taken from <a href=\"/UPDATING\">/usr/ports/UPDATING</a></dt>";
 		$HTML .= "<dd><ul>\n";
@@ -1249,7 +1288,7 @@ function freshports_PortCommitsHeader($port) {
 
 	$Columns = 3;
 
-	$HTML .= freshports_PageBannerText("Commit History - (may be incomplete: see SVNWeb link above for full details)", $Columns);
+	$HTML .= freshports_PageBannerTextColSpan("Commit History - (may be incomplete: see SVNWeb link above for full details)", $Columns);
 
 	if ($port->IsSlavePort()) {
 		$HTML .= '<tr><td colspan="' . $Columns . '">'; 
@@ -1488,7 +1527,33 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 
 	$HTML .= "</td>\n";
 	$HTML .= '    <td class="commit-details">';
-	$HTML .= freshports_CommitterEmailLink($commit->committer) . '&nbsp;' . freshports_Search_Committer($commit->committer);;
+
+	#
+	# THIS CODE IS SIMILAR TO THAT IN classes/display_commit.php & classes/port-display.php
+	#
+	#
+	# the commmiter may not be the author
+	# committer name and author name came into the database with git.
+	# For other commits, such as git or cvs, those fields will not be present.
+	# committer will always be present.
+	#
+	$CommitterIsNotAuthor = !empty($commit->author_name) && !empty($commit->committer_name) && $commit->author_name != $commit->committer_name;
+
+	# if no author name, it's an older commit, and we have only committer
+	if (empty($commit->committer_name)) {
+		$HTML .= freshports_CommitterEmailLink_Old($commit->committer);
+        } else {
+		$HTML .= freshports_AuthorEmailLink($commit->committer_name, $commit->committer_email);
+		# display the committer id, just because
+		$HTML .= '&nbsp;(' . $commit->committer . ')';
+	}
+
+	# after the committer, display a search-by-commiter link
+	$HTML .= '&nbsp;' . freshports_Search_Committer($commit->committer);
+
+	if ($CommitterIsNotAuthor) {
+		$HTML .= '<br>Author:&nbsp;' . freshports_AuthorEmailLink($commit->author_name, $commit->author_email);
+	}
 
 	$HTML .= "</td>\n";
 	$HTML .= '    <td class="commit-details">';
@@ -1625,8 +1690,33 @@ function freshports_wrap($text, $length = WRAPCOMMITSATCOLUMN) {
 	return implode("\n", $lines);
 }
 
-function freshports_PageBannerText($Text, $ColSpan=1) {
-	return '<td class="accent" COLSPAN="' . $ColSpan . '"><span>' . htmlentities($Text) . '</span></td>' . "\n";
+function freshports_PageBannerText($Text) {
+	return freshports_PageBannerTextColSpan($Text, 1);
+}
+
+
+function freshports_PageBannerTextWithID($Text, $ID) {
+	return freshports_PageBannerTextColSpanWithID($Text, 1, $ID);
+}
+
+
+function freshports_PageBannerTextColSpan($Text, $ColSpan) {
+	return freshports_PageBannerTextColSpanWithID($Text, $ColSpan, null);
+}
+
+
+function freshports_PageBannerTextColSpanWithID($Text, $ColSpan=1, $ID) {
+	$HTML = '<td class="accent" COLSPAN="' . $ColSpan . '"><span>';
+	if (!empty($ID)) {
+	  $HTML .= '<a id="' . htmlentities($ID) . '">';
+	}
+	$HTML .= htmlentities($Text);
+	if (!empty($ID)) {
+	  $HTML .= '</a>';
+        }
+        $HTML .= '</span></td>' . "\n";
+
+        return $HTML;
 }
 
 

@@ -100,7 +100,7 @@ $Title = 'Sanity Test Failure';
 if ($message_id == '') {
 	$Title .= 's';
 }
-echo freshports_PageBannerText($Title, 3);
+echo freshports_PageBannerTextColSpan($Title, 3);
 ?>
 </TR>
 <?php

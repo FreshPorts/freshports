@@ -276,7 +276,9 @@ ORDER BY CL.commit_date;
             from commit_log cl
            where exists (select *
                            from commit_log_ports clp
-                          where clp.commit_log_id = cl.id)
+                           join commit_log_branches clb on clp.commit_log_id = clb.commit_log_id
+                           join system_branch sb on sb.id = clb.branch_id
+                          where clp.commit_log_id = cl.id and sb.branch_name = " . pg_escape_literal($BranchName) . ")
            order by cl.commit_date desc limit 100 ) AS CL
     JOIN LATERAL ( select CLP1.commit_log_id, P.forbidden, P.broken, P.deprecated, P.element_id,
                           CASE when CLP1.port_version  IS NULL then P.version  else CLP1.port_version  END as version,
@@ -295,8 +297,6 @@ ORDER BY CL.commit_date;
                       and CLP1.port_id   = P.id
                   ORDER BY P.id 
                      LIMIT 1) AS CLP on true
-    JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
-    JOIN system_branch       SB  ON SB.branch_name    = " . pg_escape_literal($BranchName) . " AND SB.id = CLB.branch_id
     JOIN element             E   ON CLP.element_id    = E.id
     JOIN categories          C   ON CLP.category_id   = C.id
     ORDER BY CL.commit_date desc

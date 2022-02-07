@@ -134,12 +134,6 @@ function newsfeed($db, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $Fl
 	   AND WLE.watch_list_id = " . pg_escape_string($WatchListID) .  ' ';
 	   
 	} else {
-		if ($BranchName == BRANCH_HEAD) {
-			$BranchExpression = pg_escape_literal('/ports/' . BRANCH_HEAD .'/%');
-		} else {
-			$BranchExpression =  pg_escape_literal('/ports/branches/' . $BranchName . '/%');
-		}
-
 		switch ($Flavor) {
 			case 'new':
 				$sql = "

@@ -890,6 +890,8 @@ GLOBAL $FreshPortsLogoHeight;
 
 if (date("M") == 'Nov' && date("j") <= 12) {
 	$HTML .= '	<td nowrap align="center" CLASS="sans" valign="bottom"><a href="https://www.google.ca/search?q=remembrance+day" rel="noopener noreferrer"><img src="/images/poppy.gif" width="50" height="48" alt="Remember" title="Remember"><br>I remember</a></td>';
+} elseif (defined('UKRAINE') && UKRAINE) {
+	$HTML .= '	<td nowrap align="center" CLASS="sans" valign="bottom"><img src="/images/ukraine.png" width="133" height="100" alt="Ukraine" title="Ukraine"></td>';
 } else {
 	$HTML .= '	<td>';
 	$HTML .= '<div id="followus"><div class="header">Follow us</div><a href="https://news.freshports.org/" rel="noopener noreferrer">Blog</a><br><a href="https://twitter.com/freshports/" rel="noopener noreferrer">Twitter</a><br><a href="https://freshports.wordpress.com/" rel="noopener noreferrer">Status page</a><br></div>';

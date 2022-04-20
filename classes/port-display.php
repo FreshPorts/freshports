@@ -1048,7 +1048,7 @@ class port_display {
 						$HTML .= '<dd><ul><li><kbd class="code">pkg install ' . $port->category . '/' . $port->port . '</kbd></li>';
 						$HTML .= '<li><kbd class="code">pkg install ' . $port->package_name . '</kbd></li></ul>';
 						$HTML .= 'NOTE: If this package has multiple flavors (see below), then use one of them instead of the name specified above.';
-						
+
 						if ($this->Is_A_Python_Port($matches)) {
 							$HTML .= 'NOTE: This is a Python port. Instead of <kbd class="code">' . $port->package_name . '</kbd> listed in the above command, you can pick from the names under the <a href="#packages">Packages</a> section.';
 						}

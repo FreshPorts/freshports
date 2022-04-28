@@ -1053,7 +1053,7 @@ if ($search) {
 
 if ($NumFetches == 0) {
    if ($output_format == OUTPUT_FORMAT_HTML) {
-     $HTML .= " no results found<br>\n";
+     $HTML .= " <strong style=\"color:var(--beastie-red)\">No ports found</strong><br>\n";
    }
 } else {
       if ($stype == 'committer' || $stype == 'commitmessage' || $stype == 'tree') {

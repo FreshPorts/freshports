@@ -101,7 +101,7 @@ class Commit {
 
 	function FetchById($commit_log_id) {
 	        $Debug = 0;
-		$Where = "CL.id = " . pg_escape_string($commit_log_id);
+		$Where = "CL.id = " . pg_escape_string($this->dbh, $commit_log_id);
 
 		$result = $this->FetchByIDHelper($Where);
 

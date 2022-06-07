@@ -12,8 +12,12 @@
 // Supplies methods for adding, removing, and retrieving.
 //
 
-define('CACHE_PORT_COMMITS', 'Commits');
-define('CACHE_PORT_DETAIL',  'Detail');
+if (!defined('CACHE_PORT_COMMITS')) {
+	define('CACHE_PORT_COMMITS', 'Commits');
+}
+if (!defined('CACHE_PORT_DETAIL')) {
+	define('CACHE_PORT_DETAIL',  'Detail');
+}
 
 class CachePort extends Cache {
 

@@ -1709,12 +1709,14 @@ function freshports_PageBannerTextColSpan($Text, $ColSpan) {
 }
 
 
-function freshports_PageBannerTextColSpanWithID($Text, $ColSpan=1, $ID) {
+function freshports_PageBannerTextColSpanWithID($Text, $ColSpan, $ID) {
 	$HTML = '<td class="accent" COLSPAN="' . $ColSpan . '"><span>';
 	if (!empty($ID)) {
 	  $HTML .= '<a id="' . htmlentities($ID) . '">';
 	}
-	$HTML .= htmlentities($Text);
+	if (!empty($Text)) {
+		$HTML .= htmlentities($Text);
+	}
 	if (!empty($ID)) {
 	  $HTML .= '</a>';
         }

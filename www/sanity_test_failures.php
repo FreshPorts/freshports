@@ -130,7 +130,9 @@ since 10 October 2006.
 			var_dump($url_query);
 			echo '</pre>';
 		}
-		parse_str($url_query, $url_args);
+		if (!empty($url_query)) {
+			parse_str($url_query, $url_args);
+		}
 		if ($Debug) {
 			echo '<pre>url_args is';
 			var_dump($url_args);

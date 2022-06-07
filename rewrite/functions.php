@@ -61,7 +61,9 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	if ($Debug) echo "The pathname is '$pathname'<br>";
 
 	# split the query part of the url into the various arguments
-	parse_str($URLParts['query'], $url_args);
+	if (IsSet($URLParts['query'])) {
+		parse_str($URLParts['query'], $url_args);
+	}
 
 
 	define('FRESHPORTS_PORTS_HEAD_PREFIX', '/ports/' . BRANCH_HEAD . '/');

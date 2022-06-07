@@ -46,26 +46,26 @@ class Commit {
 	}
 
 	function PopulateValues($myrow) {
-		$this->commit_log_id      = $myrow["commit_log_id"];
-		$this->commit_date_raw    = $myrow["commit_date_raw"];
-		$this->encoding_losses    = $myrow["encoding_losses"];
-		$this->message_id         = $myrow["message_id"];
-		$this->commit_hash_short  = $myrow["commit_hash_short"];
-		$this->committer          = $myrow["committer"];
-		$this->committer_name     = $myrow["committer_name"];
-		$this->committer_email    = $myrow["committer_email"];
-		$this->author_name        = $myrow["author_name"];
-		$this->author_email       = $myrow["author_email"];
-		$this->commit_description = $myrow["commit_description"];
-		$this->commit_date        = $myrow["commit_date"];
-		$this->commit_time        = $myrow["commit_time"];
-		$this->date_added         = $myrow["date_added"];
-		$this->stf_message        = $myrow["stf_message"];
-		$this->svn_revision       = $myrow["svn_revision"];
-		$this->repository         = $myrow["repository"];
-		$this->repo_hostname      = $myrow["repo_hostname"];
-		$this->path_to_repo       = $myrow["path_to_repo"];
-		$this->branch             = $myrow["branch"];
+		$this->commit_log_id      = $myrow["commit_log_id"] ?? '';
+		$this->commit_date_raw    = $myrow["commit_date_raw"] ?? '';
+		$this->encoding_losses    = $myrow["encoding_losses"] ?? '';
+		$this->message_id         = $myrow["message_id"] ?? '';
+		$this->commit_hash_short  = $myrow["commit_hash_short"] ?? '';
+		$this->committer          = $myrow["committer"] ?? '';
+		$this->committer_name     = $myrow["committer_name"] ?? '';
+		$this->committer_email    = $myrow["committer_email"] ?? '';
+		$this->author_name        = $myrow["author_name"] ?? '';
+		$this->author_email       = $myrow["author_email"] ?? '';
+		$this->commit_description = $myrow["commit_description"] ?? '';
+		$this->commit_date        = $myrow["commit_date"] ?? '';
+		$this->commit_time        = $myrow["commit_time"] ?? '';
+		$this->date_added         = $myrow["date_added"] ?? '';
+		$this->stf_message        = $myrow["stf_message"] ?? '';
+		$this->svn_revision       = $myrow["svn_revision"] ?? '';
+		$this->repository         = $myrow["repository"] ?? '';
+		$this->repo_hostname      = $myrow["repo_hostname"] ?? '';
+		$this->path_to_repo       = $myrow["path_to_repo"] ?? '';
+		$this->branch             = $myrow["branch"] ?? '';
 
 		$this->last_commit_date   = $myrow["last_commit_date"];
 	}

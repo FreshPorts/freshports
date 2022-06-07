@@ -2274,8 +2274,10 @@ function freshports_ConditionalGet($LastModified) {
 	//   https://fishbowl.pastiche.org/archives/001132.html
 	// Based upon code from https://simon.incutio.com/archive/2003/04/23/conditionalGet
 
-	$UnixTime = strtotime($LastModified);
-	freshports_ConditionalGetUnix($UnixTime);
+	if (!empty($LastModified)) {
+		$UnixTime = strtotime($LastModified);
+		freshports_ConditionalGetUnix($UnixTime);
+	}
 }
 
 #

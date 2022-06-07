@@ -67,10 +67,10 @@ INSERT INTO page_load_detail(page_name,
                              ip_address,
                              full_url,
                              rendering_time)
-                     values ('" . pg_escape_string($_SERVER['SCRIPT_NAME']) . "',
+                     values ('" . pg_escape_string($this->dbh, $_SERVER['SCRIPT_NAME']) . "',
                              $UserID,
-                             '" . pg_escape_string($_SERVER['REMOTE_ADDR']) . "',
-                             '" . pg_escape_string($_SERVER["REQUEST_URI"]) . "',
+                             '" . pg_escape_string($this->dbh, $_SERVER['REMOTE_ADDR']) . "',
+                             '" . pg_escape_string($this->dbh, $_SERVER["REQUEST_URI"]) . "',
                              '" . $this->ElapsedTime() . " seconds')";
 		if ($Debug) echo "CODE <pre>$sql</pre>";
 		$result = pg_exec($this->dbh, $sql);

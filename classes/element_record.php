@@ -47,7 +47,7 @@ class ElementRecord {
 		}
 
 		if ($caseSensitive) {
-			$sql = "select * from elementGet('" . pg_escape_string($Name) . "')";
+			$sql = "select * from elementGet('" . pg_escape_string($this->dbh, $Name) . "')";
 			if ($Debug) echo "invoking $sql<br>";
 			$result = pg_exec($this->dbh, $sql);
 		} else {

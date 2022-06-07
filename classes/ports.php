@@ -200,7 +200,9 @@ class Port {
 		$this->vulnerable_current   = $myrow["vulnerable_current"];
 		$this->vulnerable_past      = $myrow["vulnerable_past"];
 
-		$this->pkg_plist_library_matches = $myrow["pkg_plist_library_matches"];
+		if (IsSet($this->pkg_plist_library_matches)) {
+			$this->pkg_plist_library_matches = $myrow["pkg_plist_library_matches"];
+		}
 
 		// We might be looking at category lang.  japanese/gawk is listed in both japanese and lang.
 		// So when looking at lang, we don't want to say, Also listed in lang...  
@@ -212,7 +214,9 @@ class Port {
 #		$this->git_hostname         = '';
 		$this->path_to_repo         = $myrow['path_to_repo'];
 		$this->element_pathname     = $myrow['element_pathname'];
-		$this->quarterly_revision   = $myrow['quarterly_revision'];
+		if (isset($this->quarterly_revision)) {
+			$this->quarterly_revision = $myrow['quarterly_revision'];
+		}
 
 		$this->last_commit_date     = isset($myrow['last_commit_date']) ? $myrow['last_commit_date'] : null;
 

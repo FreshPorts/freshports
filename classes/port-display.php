@@ -321,7 +321,7 @@ class port_display {
 	          }
             } else {
               # if there is no last revision, we can't link to it.
-              if ($Debug) echo 'oh, we are going null #2';
+              if (!empty($Debug)) echo 'oh, we are going null #2';
               $link = null;
             }
           } else {
@@ -516,9 +516,11 @@ class port_display {
 		$HTML = '';
 
 		// if USES= contains python
-		$USES_PYTHON = in_array(USES_PYTHON, preg_split('/\s+|:/', $port->uses));
+		if (!empty($port->uses)) {
+			$USES_PYTHON = in_array(USES_PYTHON, preg_split('/\s+|:/', $port->uses));
+		}
 
-                if ($USES_PYTHON) {
+                if (!empty($USES_PYTHON)) {
 			# it is a python port if it starts with py-37, for example.
                         $Is_A_Python_Port = $this->Is_A_Python_Port($matches);
                         # if a match for py37-django-js-asset, $matches[0]=> "py37-django-js-asset", $matches[1]=> "django-js-asset"
@@ -848,16 +850,18 @@ class port_display {
 			}
 			$HTML .= "</dt>\n";
 
-			if (strpos($port->message_id, 'freebsd.org') === false) {
-				$HTML .= '<dt><b>Commit Hash:</b> ';
-				$HTML .= freshports_git_commit_Link_Hash($port->svn_revision, $port->commit_hash_short, $port->repo_hostname, $port->path_to_repo);
-			} else {
-				$HTML .= '<dt><b>SVN Revision:</b> ';
-				if (isset($port->svn_revision)) {
-					$HTML .= freshports_svnweb_ChangeSet_Link_Text($port->svn_revision, $port->repo_hostname);
+			if (!empty($port->message_id)) {
+				if (strpos($port->message_id, 'freebsd.org') === false) {
+					$HTML .= '<dt><b>Commit Hash:</b> ';
+					$HTML .= freshports_git_commit_Link_Hash($port->svn_revision, $port->commit_hash_short, $port->repo_hostname, $port->path_to_repo);
 				} else {
-					$HTML .= 'UNKNOWN';
-			        }
+					$HTML .= '<dt><b>SVN Revision:</b> ';
+					if (isset($port->svn_revision)) {
+						$HTML .= freshports_svnweb_ChangeSet_Link_Text($port->svn_revision, $port->repo_hostname);
+					} else {
+						$HTML .= 'UNKNOWN';
+			       	}
+				}
 			}
 
 			$HTML .= "</dt>\n";
@@ -955,12 +959,14 @@ class port_display {
 
 		if ($this->ShowEverything || $this->ShowBasicInfo) {
 			// pkg_plist_library_matches is a JSON array
-			$lib_depends = json_decode($port->pkg_plist_library_matches, true);
-			$HasLibraries = is_array($lib_depends) && count($lib_depends) > 0;
+			if (!empty($port->pkg_plist_library_matches)) {
+				$lib_depends = json_decode($port->pkg_plist_library_matches, true);
+				$HasLibraries = is_array($lib_depends) && count($lib_depends) > 0;
+			}
 			$HTML .= '<dt class="pkg-plist"><b>Dependency lines</b>:</dt>';
 			$HTML .= '<dd class="pkg-plist">' . "\n";
 
-			if ($HasLibraries) {
+			if (!empty($HasLibraries)) {
 				$HTML .= '<ul class="pkg-plist"><li>For RUN/BUILD depends:';
 			}
 
@@ -968,7 +974,7 @@ class port_display {
 			$HTML .= '<li class="file">' . $this->DisplayDependencyLine();
 			$HTML .= '</li></ul>';
 
-			if ($HasLibraries) {
+			if (!empty($HasLibraries)) {
 				# close tags for RUN/BUILD depends
 				$HTML .= "</li></ul>\n";
 				# open tags for LIB DEPEND
@@ -976,7 +982,7 @@ class port_display {
 				$HTML .= '<ul class="pkg-plist">';
 			}
 
-			if ($HasLibraries) {
+			if (!empty($HasLibraries)) {
 				foreach($lib_depends as $library) {
 					# XXX this span should be replaced with some CSS
 					$HTML .= '<li>' . preg_replace('/^lib\//', '', $library) . ':' . $this->DisplayPlainText() . '</li>';

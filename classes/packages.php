@@ -25,7 +25,7 @@ class Packages {
 
 		$result = pg_query($this->dbh, $sql);
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			# there should only be one row.
 			if ($numrows == 1) {
 				$myrow = pg_fetch_array ($result, 0);
@@ -54,7 +54,7 @@ class Packages {
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			if ($Debug) echo "<pre>$numrows returned from PortPackages()</pre>";
 			if ($numrows > 0) {
 				$packages = pg_fetch_all($result);

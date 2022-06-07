@@ -28,7 +28,7 @@ class VuXML_Ranges {
 
 		$result = pg_query($this->dbh, $sql);
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			for ($i = 0; $i < $numrows; $i++) {
 				$myrow = pg_fetch_array ($result, $i);
 				$this->PopulateValues($myrow);

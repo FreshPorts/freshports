@@ -62,11 +62,11 @@
 	if (!$result) {
 		echo pg_errormessage();
 	} else {
-		$numrows = pg_numrows($result);
+		$numrows = pg_num_rows($result);
 #		echo "There are $numrows to fetch<BR>\n";
 	}
 
-	$numrows = pg_numrows($result);
+	$numrows = pg_num_rows($result);
 	for ($i = 0; $i < $numrows; $i++) {
 		$myrow = pg_fetch_array($result, $i);
 		if (!$git) print $myrow["message_id"];

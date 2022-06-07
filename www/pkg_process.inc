@@ -157,7 +157,7 @@ function ProcessPackages($UserID, $PortArray, $dbh) {
 		$sql = 'select WatchListStagingAddItem(' . pg_escape_string($UserID) . ', \'' . 
 					pg_escape_string($Category) . '\', \'' . pg_escape_string($Port) . '\', ' . pg_escape_string($count) . ')';
 		$result = pg_exec($dbh, $sql);
-		if ($result && pg_numrows($result)) {
+		if ($result && pg_num_rows($result)) {
 			# do nothing
 		} else {
 			echo pg_errormessage() . " sql = $sql";
@@ -171,7 +171,7 @@ function ProcessPackages($UserID, $PortArray, $dbh) {
 
 		$sql = "select WatchListStagingProcess(" . pg_escape_string($UserID) . ")";
 		$result = pg_exec($dbh, $sql);
-		if ($result && pg_numrows($result)) {
+		if ($result && pg_num_rows($result)) {
 			# do nothing.  All is well
 		} else {
 			echo pg_errormessage() . " sql = $sql";
@@ -205,7 +205,7 @@ function UploadDisplayStagingResultsMatches($UserID, $WatchListID, $dbh) {
 	$result = pg_exec($dbh, $sql);
 
 	if ($result) {
-		$numrows = pg_numrows($result);
+		$numrows = pg_num_rows($result);
 		if ($numrows) {
 			?>
 
@@ -262,7 +262,7 @@ function UploadDisplayStagingResultsMatchesNo($UserID, $dbh) {
 	$result = pg_exec($dbh, $sql);
 
 	if ($result) {
-		$numrows = pg_numrows($result);
+		$numrows = pg_num_rows($result);
 		if ($numrows) {
 			?>
 
@@ -306,7 +306,7 @@ function UploadDisplayStagingResultsMatchesDuplicates($UserID, $WatchListID, $db
 	$result = pg_exec($dbh, $sql);
 
 	if ($result) {
-		$numrows = pg_numrows($result);
+		$numrows = pg_num_rows($result);
 		if ($numrows) {
 			?>
 
@@ -368,7 +368,7 @@ function UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $dbh) {
 #	syslog(LOG_NOTICE, "UploadDisplayWatchListItemsNotInStagingArea for WatchListID: $WatchListID");
 
 	if ($result) {
-		$numrows = pg_numrows($result);
+		$numrows = pg_num_rows($result);
 		if ($numrows) {
 			?>
 

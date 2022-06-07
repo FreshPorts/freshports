@@ -42,7 +42,7 @@ class WatchNotice {
 
         $result = pg_exec($this->dbh, $sql);
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
 #				echo "fetched by ID succeeded<BR>";
 				$myrow = pg_fetch_array ($result, 0);
@@ -64,7 +64,7 @@ class WatchNotice {
 
         $result = pg_exec($this->dbh, $sql);
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
 #				echo "fetched by Frequency succeeded<BR>";
 				$myrow = pg_fetch_array ($result, 0);

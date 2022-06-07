@@ -36,7 +36,7 @@ function StagingAlreadyInUse($UserID, $dbh) {
 	$sql = "select WatchListStagingExists($UserID)";
 
 	$result = pg_exec($dbh, $sql);
-	if ($result && pg_numrows($result)) {
+	if ($result && pg_num_rows($result)) {
 		$row = pg_fetch_array($result, 0);
 		if ($row[0] == 0) {
 			$Result = 0;

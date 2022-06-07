@@ -142,7 +142,7 @@ limit 30";
 		exit;
 	}
 
-	$numrows = pg_numrows($result);
+	$numrows = pg_num_rows($result);
 	for ($i = 0; $i < $numrows; $i++) {
 		$myrow = pg_fetch_array ($result, $i);
 		$HTML .= "\n";

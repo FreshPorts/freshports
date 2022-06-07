@@ -57,7 +57,7 @@ class ElementRecord {
 		if ($result) {
 			if ($Debug) echo "we got a result<br>";
 
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			if ($Debug) echo "we have '$numrows' rows<br>";
 			if ($numrows == 0 ) {
 				# nothing to do here

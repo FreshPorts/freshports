@@ -48,7 +48,7 @@ ORDER BY slave_category_name, slave_port_name";
             echo pg_errormessage() . " $sql";
           }
 
-          $numrows = pg_numrows($this->LocalResult);
+          $numrows = pg_num_rows($this->LocalResult);
 
           return $numrows;
 	}

@@ -57,7 +57,7 @@ if (!file_exists($filename) || filemtime($filename)+$period<time())	{
 	$data = @pg_exec($db, "select query, title, label, is_clickable from graphs where id = $id")
 		or die("PGERR 1: " . pg_ErrorMessage());
 	
-	if (pg_numrows($data) == 0)
+	if (pg_num_rows($data) == 0)
 		die("GRAPH: invalid id");
 
 	$r = pg_fetch_row($data, $i);
@@ -77,7 +77,7 @@ if (!file_exists($filename) || filemtime($filename)+$period<time())	{
 	$l = array();
 	$u = array();
 
-	for ($i=0; $i<pg_numrows($data); $i++) {
+	for ($i=0; $i<pg_num_rows($data); $i++) {
 		$r = pg_fetch_row($data, $i);
 		array_push($v, $r[1]);
 		array_push($l, $r[0]."  ");

@@ -59,7 +59,7 @@ function IsLoginValid($user, $pw, &$retval) {
 	if ($database) {
 		$result = pg_exec($database, $query);
 
-		if ($result && pg_numrows($result)) {
+		if ($result && pg_num_rows($result)) {
 			$row = pg_fetch_array($result,0);
 			$retval = $row[0];
 		}

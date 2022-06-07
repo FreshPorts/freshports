@@ -58,7 +58,7 @@ ORDER BY date desc"
 
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {
-			$numrows = pg_numrows($this->LocalResult);
+			$numrows = pg_num_rows($this->LocalResult);
 			if ($numrows == 1) {
 				$myrow = pg_fetch_array ($this->LocalResult);
 #				$this->_PopulateValues($myrow);
@@ -96,7 +96,7 @@ ORDER BY date desc"
 
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {
-			$numrows = pg_numrows($this->LocalResult);
+			$numrows = pg_num_rows($this->LocalResult);
 			if ($numrows == 1) {
 				$myrow = pg_fetch_array ($this->LocalResult);
 #				$this->_PopulateValues($myrow);

@@ -132,7 +132,7 @@ class Commit_Log_Ports {
 			syslog(LOG_ERR, pg_errormessage() . " $sql");
 			die('that query failed.  details have been logged');
 		}
-		$numrows = pg_numrows($this->result);
+		$numrows = pg_num_rows($this->result);
 
 		return $numrows;
 	}

@@ -159,7 +159,7 @@ class CommitFiles {
 			exit;
 		}
 
-		$NumRows = pg_numrows($this->LocalResult);
+		$NumRows = pg_num_rows($this->LocalResult);
 		return $NumRows;
 	}
 }

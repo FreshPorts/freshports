@@ -28,7 +28,7 @@ class Categories {
 
 		$this->result = pg_query($this->dbh, $sql);
 		if ($this->result) {
-			$numrows = pg_numrows($this->result);
+			$numrows = pg_num_rows($this->result);
 		} else {
 			$numrows = 0;
 		}

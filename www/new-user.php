@@ -122,7 +122,7 @@ if (IsSet($submit)) {
 		$result = pg_query($db, $sql) or die('query failed');
 
 		// create user id if not found
-		if(!pg_numrows($result)) {
+		if(!pg_num_rows($result)) {
 			syslog(LOG_ERR, "FreshPorts new user: '$UserLogin', '$email', " . $_SERVER["REMOTE_ADDR"] . ' confirmed: user id is new');
 
 			$UserID = freshports_GetNextValue($Sequence_User_ID, $db);

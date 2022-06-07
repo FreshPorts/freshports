@@ -37,7 +37,7 @@ class VuXML {
 
 		$result = pg_query($this->dbh, $sql);
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			# there should only be one row.
 			if ($numrows == 1) {
 				$myrow = pg_fetch_array ($result, 0);

@@ -157,7 +157,7 @@ if (!$result) {
 	$NumTopics	   = 0;
 	$NumPorts      = 0;
 	$CategoryCount = 0;
-	$NumRows = pg_numrows($result);
+	$NumRows = pg_num_rows($result);
     if ($NumRows) {
       for ($i = 0; $i < $NumRows; $i++) {
         $myrow = pg_fetch_array($result, $i);

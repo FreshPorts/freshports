@@ -46,7 +46,7 @@ GROUP BY users.max_number_watch_lists";
 
 		$this->LocalResult = pg_query($this->dbh, $query);
 		if ($this->LocalResult) {
-			$numrows = pg_numrows($this->LocalResult);
+			$numrows = pg_num_rows($this->LocalResult);
 			if ($numrows == 1) {
 				$myrow = pg_fetch_array($this->LocalResult, 0);
 				$Count = $myrow[0];
@@ -244,7 +244,7 @@ UPDATE watch_list
 		}
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {
-			$numrows = pg_numrows($this->LocalResult);
+			$numrows = pg_num_rows($this->LocalResult);
 			if ($numrows > 0) {
 				$myrow = pg_fetch_array($this->LocalResult, 0);
 				$this->PopulateValues($myrow);

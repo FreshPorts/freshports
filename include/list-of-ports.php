@@ -17,7 +17,7 @@ function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeade
 
 	$LastCategory         = '';
 	$GlobalHideLastChange = 'N';
-	$numrows = pg_numrows($result);
+	$numrows = pg_num_rows($result);
 	if ($PortCount == -1) {
 		$PortCount = $numrows;
 	}

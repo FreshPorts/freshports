@@ -25,7 +25,7 @@ class SystemBranch {
 
     $result = pg_exec($this->dbh, $sql);
     if ($result) {
-      $numrows = pg_numrows($result);
+      $numrows = pg_num_rows($result);
         if ($numrows > 0) {
         for ($i = 1; $i <= $numrows; $i++) {
           $myrow = pg_fetch_array($result, $i - 1);

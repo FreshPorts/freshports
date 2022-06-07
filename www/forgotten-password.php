@@ -55,7 +55,7 @@ if (IsSet($submit)) {
 
       $result = pg_exec($db, $sql) or die('query failed ' . pg_errormessage());
 
-      if (!pg_numrows($result)) {
+      if (!pg_num_rows($result)) {
          $LoginFailed = 1;
       }
    } else {
@@ -74,13 +74,13 @@ if (IsSet($submit)) {
 
          $result = pg_exec($db, $sql) or die('query failed ' . pg_errormessage());
 
-         if (!pg_numrows($result)) {
+         if (!pg_num_rows($result)) {
             $eMailFailed = 1;
          }
       }
    }
 
-   if (pg_numrows($result)) {
+   if (pg_num_rows($result)) {
       // there is a result.  Let's fetch it, or rather, all of them
       while ( $myrow = pg_fetch_array ($result) ) {
 

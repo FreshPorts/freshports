@@ -799,7 +799,7 @@ if (!$result) {
   die('something went terribly wrong.  Sorry.');
 }
 
-$NumRows  = pg_numrows($result);
+$NumRows  = pg_num_rows($result);
 $myrow    = pg_fetch_array($result);
 $NumFound = $myrow[0];
 
@@ -847,7 +847,7 @@ if (!$result) {
   die('something went terribly wrong.  Sorry.');
 }
 
-$NumFetches = pg_numrows($result);
+$NumFetches = pg_num_rows($result);
 
 } // end of non-committer search  ## I think this is the end of the default option
 

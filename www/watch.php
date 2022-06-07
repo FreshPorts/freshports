@@ -299,7 +299,7 @@ if ($wlid != '') {
 
 	$LastCategory='';
 	$GlobalHideLastChange = 'N';
-	$numrows = pg_numrows($result);
+	$numrows = pg_num_rows($result);
 
 	$TextNumRowsFound = '<p><small>';
 	if ($numrows > 1) {

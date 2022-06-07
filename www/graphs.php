@@ -56,7 +56,7 @@ If you have suggestions for graphs, please raise an issue.
 	$title = "graph goes here!";
 	$result = pg_query($db, $sql);
     if ($result) {
-    	$numrows = pg_numrows($result);
+    	$numrows = pg_num_rows($result);
 		if ($numrows) { 
 			echo '<UL>';
 			for ($i = 0; $i < $numrows; $i++) {

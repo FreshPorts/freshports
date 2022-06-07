@@ -34,7 +34,7 @@ class FilesDisplay {
 			exit;
 		}
 
-		$NumRows = pg_numrows($this->ResultSet);
+		$NumRows = pg_num_rows($this->ResultSet);
 		if ($this->Debug) echo __FILE__ . ':' . __LINE__ . " Number of rows = $NumRows<br>\n";
 		if (!$NumRows) { 
 			$this->HTML = "<TR><TD>\n<P>Sorry, nothing found in the database....</P>\n</td></tr>\n";

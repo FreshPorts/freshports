@@ -44,7 +44,7 @@ if (IsSet($_REQUEST['LOGIN']) && $_REQUEST['UserID']) {
 
    // test for existance of user id
    $result = getLoginDetails($db, LOGIN_QUERY, $UserID, $Password);
-   if (!pg_numrows($result)) {
+   if (!pg_num_rows($result)) {
       $LoginFailed = 1;
    } else {
       $row    = pg_fetch_array($result,0);
@@ -135,7 +135,7 @@ if (IsSet($_REQUEST["resend"])) {
       $result = pg_execute($db, RESEND_CONFIRMATION_QUERY, array($User)) or die('query failed ' . pg_errormessage());
    }
 
-   if (pg_numrows($result)) {
+   if (pg_num_rows($result)) {
       $row = pg_fetch_array($result,0);
       $ID  = $row["id"];
       if (freshports_UserSendToken($ID, $db)) {

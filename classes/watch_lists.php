@@ -75,7 +75,7 @@ DELETE FROM watch_list
 
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {
-			$numrows = pg_numrows($this->LocalResult);
+			$numrows = pg_num_rows($this->LocalResult);
 #			echo "That would give us $numrows rows";
 		} else {
 			$numrows = -1;
@@ -165,7 +165,7 @@ DELETE FROM watch_list
 		$WatchListID = '';
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
 				$myrow = pg_fetch_array($result, 0);
 				$WatchListID = $myrow["id"];
@@ -205,7 +205,7 @@ DELETE FROM watch_list
       	$ListCount = 0;
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
 				$myrow = pg_fetch_array($result, 0);
 				$ListCount = $myrow['listcount'];

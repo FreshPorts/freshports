@@ -55,7 +55,7 @@ function StatsSQL($db, $Title) {
 
 	$result = pg_exec($db, $sql);
 	if ($result) {
-		$numrows = pg_numrows($result);
+		$numrows = pg_num_rows($result);
 		if ($numrows) {
 			$myrow  = pg_fetch_array ($result, 0);
 			$Value  = $myrow[0];
@@ -75,7 +75,7 @@ function DBSize($db) {
 
 	$result = pg_exec($db, $sql);
 	if ($result) {
-		$numrows = pg_numrows($result);
+		$numrows = pg_num_rows($result);
 		if ($numrows) {
 			$myrow  = pg_fetch_array ($result, 0);
 			$Value  = $myrow[0];

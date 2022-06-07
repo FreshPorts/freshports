@@ -32,7 +32,7 @@ class Element {
 
         $result = pg_exec($this->dbh, $sql);
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
 				if ($Debug) echo "fetched by ID succeeded<BR>";
 				$myrow = pg_fetch_array ($result, 0);
@@ -57,7 +57,7 @@ class Element {
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
 				$myrow = pg_fetch_array ($result, 0);
 				$this->id = $myrow["id"];

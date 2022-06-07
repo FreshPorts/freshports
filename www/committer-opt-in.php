@@ -127,7 +127,7 @@ if (!empty($visitor)) {
 	if ($result) {
 		echo 'You are: ';
 		if ($Debug) echo "we found a result there...\n<br>";
-		$numrows = pg_numrows($result);
+		$numrows = pg_num_rows($result);
 		if ($numrows) {
 			$myrow = pg_fetch_array ($result, 0);
 			if ($myrow) {

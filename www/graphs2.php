@@ -77,7 +77,7 @@ Thank you for your help.
 	$sql = "select title, label from graphs where json=true order by title";
 	$result = pg_query($db, $sql);
     if ($result) {
-    	$numrows = pg_numrows($result);
+    	$numrows = pg_num_rows($result);
 		if ($numrows) { 
 			echo '<select>';
 			for ($i = 0; $i < $numrows; $i++) {

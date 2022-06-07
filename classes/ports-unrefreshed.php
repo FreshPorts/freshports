@@ -67,7 +67,7 @@ order by category_name, port_name";
 
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {
-			$numrows = pg_numrows($this->LocalResult);
+			$numrows = pg_num_rows($this->LocalResult);
 		} else {
 			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
 		}

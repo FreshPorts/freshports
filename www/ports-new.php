@@ -210,7 +210,7 @@ select NP.id,
 	if (!$result) {
 		echo pg_errormessage();
 	} else {
-		$numrows = pg_numrows($result);
+		$numrows = pg_num_rows($result);
 	}
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/list-of-ports.php');

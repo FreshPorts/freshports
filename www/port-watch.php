@@ -118,7 +118,7 @@ if ($submit) {
 	   and watch_list_element.element_id    = ports.element_id";
 	      
 		$result = pg_exec($db, $sql);
-		$numrows = pg_numrows($result);      
+		$numrows = pg_num_rows($result);      
                 // read each value and set the variable accordingly
 		for ($i = 0; $i < $numrows; $i++) {
 			$myrow = pg_fetch_array($result, $i);
@@ -163,7 +163,7 @@ if ($Debug) echo "<pre>$sql</pre>\n";
 
 $result = pg_exec($db, $sql);
 
-$numrows = pg_numrows($result);
+$numrows = pg_num_rows($result);
 
 
 if ($numrows) {

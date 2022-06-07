@@ -60,7 +60,7 @@ class User {
 		if ($this->LocalResult) {
 			$myrow = pg_fetch_array($this->LocalResult, 0);
 			$this->PopulateValues($myrow);
-			$numrows = pg_numrows($this->LocalResult);
+			$numrows = pg_num_rows($this->LocalResult);
 		} else {
 			$numrows = -1;
 			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': ' . pg_last_error());
@@ -78,7 +78,7 @@ class User {
 
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {
-			$numrows = pg_numrows($this->LocalResult);
+			$numrows = pg_num_rows($this->LocalResult);
 			if ($numrows == 1) {
 				$myrow = pg_fetch_array($this->LocalResult, 0);
 				$this->PopulateValues($myrow);

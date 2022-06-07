@@ -170,7 +170,7 @@ SELECT *
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
 				if ($this->Debug) echo "fetched by ID succeeded<BR>";
 				$myrow = pg_fetch_array ($result, 0);
@@ -199,7 +199,7 @@ SELECT *
 
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {
-			$numrows = pg_numrows($this->LocalResult);
+			$numrows = pg_num_rows($this->LocalResult);
 #			echo "That would give us $numrows rows";
 		} else {
 			$numrows = -1;
@@ -225,7 +225,7 @@ SELECT *
 
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {
-			$numrows = pg_numrows($this->LocalResult);
+			$numrows = pg_num_rows($this->LocalResult);
 #			echo "That would give us $numrows rows";
 		} else {
 			$numrows = -1;
@@ -236,7 +236,7 @@ SELECT *
 	}
 
 	function NumRows() {
-		return pg_numrows($this->LocalResult);
+		return pg_num_rows($this->LocalResult);
 	}
 
 	function FetchNth($N) {
@@ -265,7 +265,7 @@ SELECT *
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {
-			$numrows = pg_numrows($this->LocalResult);
+			$numrows = pg_num_rows($this->LocalResult);
 #			echo "That would give us $numrows rows";
 			for ($i = 0; $i < $numrows; $i++) {
 				$myrow = pg_fetch_array($result, $i);

@@ -131,7 +131,7 @@ SELECT V.vid,
    	
 		$result = pg_exec($db, $sql);
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 
 			$LastName    = '';
 			$LastVID     = '';
@@ -222,7 +222,7 @@ ORDER BY coalesce(V.date_modified, V.date_entry, V.date_discovery)::date desc, V
 
 		$result = pg_exec($db, $sql);
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			if ($numrows == 0) {
 				echo '<p>no vulnerabilities found.  it looks as if the data is missing.</p>';
 			} else {

@@ -1098,7 +1098,7 @@ function freshports_PortIDFromPortCategory($category, $port, $db) {
 	$sql = "select pathname_id('ports/" . pg_escape_string($category) . '/' . pg_escape_string($port) . "') as id";
 
 	$result = pg_exec($db, $sql);
-	if (pg_numrows($result)) {
+	if (pg_num_rows($result)) {
 		$myrow = pg_fetch_array($result, 0);
 		$PortID = $myrow["id"];
 	}
@@ -1110,7 +1110,7 @@ function freshports_CategoryIDFromCategory($category, $db) {
    $sql = "select categories.id from categories where categories.name = '" . pg_escape_string($category) . "'";
 
    $result = pg_exec($db, $sql);
-   if(pg_numrows($result)) {
+   if(pg_num_rows($result)) {
       $myrow = pg_fetch_array($result, 0);
       $CategoryID = $myrow["id"];
    }
@@ -1658,7 +1658,7 @@ function freshports_GetNextValue($sequence, $dbh) {
 #	echo "\$sql = '$sql'<br>";
 
 	$result = pg_exec($dbh, $sql);
-	if ($result && pg_numrows($result)) {
+	if ($result && pg_num_rows($result)) {
 		$row       = pg_fetch_array($result,0);
 		$NextValue = $row[0];
 	} else {
@@ -1737,7 +1737,7 @@ function freshports_UserSendToken($UserID, $dbh) {
 #	echo "\$sql = '$sql'<br>";
 
 	$result = pg_exec($dbh, $sql);
-	if ($result && pg_numrows($result)) {
+	if ($result && pg_num_rows($result)) {
 		$row   = pg_fetch_array($result,0);
 		$email = $row[0];
 		$token = $row[1];
@@ -2302,7 +2302,7 @@ function freshports_GetPortID($db, $category, $port, $branch) {
 		die('something terrible has happened!');
 	}
 
-	if (pg_numrows($result)) {
+	if (pg_num_rows($result)) {
 	  $myrow = pg_fetch_array($result, 0);
 	  $port_id = $myrow['port_id'];
 	} else {

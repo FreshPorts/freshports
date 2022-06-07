@@ -38,7 +38,7 @@
 
 		$result = pg_query($dbh, $sql);
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			for ($i = 0; $i < $numrows; $i++) {
 				$myrow = pg_fetch_array($result, $i);
 				# we don't include don't notify me.
@@ -55,7 +55,7 @@
 		$sql = 'select id, name, description, needs_frequency from reports order by name';
 		$result = pg_exec($dbh, $sql);
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			for ($i = 0; $i < $numrows; $i++) {
 				$myrow = pg_fetch_array($result, $i);
 				$Values['name']            = $myrow['name'];
@@ -121,7 +121,7 @@
 				 WHERE user_id = $User->id
 				 ORDER BY report_id ";
 		$result = pg_exec ($db, $sql);
-		$numrows = pg_numrows($result);
+		$numrows = pg_num_rows($result);
 		for ($i = 0; $i < $numrows; $i++) {
 			$myrow = pg_fetch_array ($result, $i);
 

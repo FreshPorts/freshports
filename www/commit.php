@@ -204,7 +204,7 @@
 
 					$result = pg_query_params($database, $sql, array($message_id));
 					if ($result) {
-						$numrows = pg_numrows($result);
+						$numrows = pg_num_rows($result);
 						if ($numrows == 1) { 
 							$myrow = pg_fetch_array($result, 0);
 						} else {
@@ -235,7 +235,7 @@
 					pg_set_client_encoding($database, $client_encoding);
 
 					if ($result) {
-						$numrows = pg_numrows($result);
+						$numrows = pg_num_rows($result);
 						if ($numrows) {
 							require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
 

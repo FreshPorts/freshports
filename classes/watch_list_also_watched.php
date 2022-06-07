@@ -37,7 +37,7 @@ class WatchListAlsoWatched {
 		if ($Debug) echo "<pre>$sql</pre>";
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {
-			$numrows = pg_numrows($this->LocalResult);
+			$numrows = pg_num_rows($this->LocalResult);
 		} else {
 			$numrows = 0;
 			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();

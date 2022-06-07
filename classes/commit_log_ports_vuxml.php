@@ -44,7 +44,7 @@ select CLPV.id,
 		if (!$this->result) {
 			echo pg_errormessage() . " $sql";
 		}
-		$numrows = pg_numrows($this->result);
+		$numrows = pg_num_rows($this->result);
 
 		return $numrows;
 	}

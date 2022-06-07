@@ -62,11 +62,11 @@ ORDER BY RC.commit_date_raw DESC,
 	if (!$result) {
 		echo pg_errormessage();
 	} else {
-		$numrows = pg_numrows($result);
+		$numrows = pg_num_rows($result);
 #		echo "There are $numrows to fetch<BR>\n";
 	}
 
-	$numrows = pg_numrows($result);
+	$numrows = pg_num_rows($result);
 	for ($i = 0; $i < $numrows; $i++) {
 		$myrow = pg_fetch_array($result, $i);
 		print $myrow["commit_date"] . "\t" . $myrow["committer"]  . "\t" . $myrow["system_id"] . "\t" . $myrow["element_pathname"] . "\t" . $myrow["commit_date_raw"] . "\t" . $myrow["message_id"] . "\n";

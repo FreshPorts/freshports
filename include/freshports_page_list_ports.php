@@ -260,7 +260,7 @@ SELECT gmt_format(max(CL.date_added)) as last_modified " . $this->_FROM_CLAUSE()
 
 		$result = pg_exec($this->_db, $sql);
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			#
 			# here we are doing a max. Even if we have nothing in the result set,
 			# we will still get a null value.
@@ -302,7 +302,7 @@ SELECT gmt_format(max(CL.date_added)) as last_modified " . $this->_FROM_CLAUSE()
 		if (!$this->_result) {
 			echo pg_errormessage();
 		} else {
-			$numrows = pg_numrows($this->_result);
+			$numrows = pg_num_rows($this->_result);
 #			echo "There are $numrows to fetch<BR>\n";
 		}
 		

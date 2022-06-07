@@ -335,7 +335,7 @@ select ports.id,
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
 				if ($this->Debug) echo "FetchByElementID succeeded<BR>";
 				$myrow = pg_fetch_array ($result);
@@ -464,7 +464,7 @@ ON TEMP.wle_element_id = ports.element_id";
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
 				if ($this->Debug) echo "FetchByID succeeded<BR>";
 				$myrow = pg_fetch_array ($result);
@@ -617,7 +617,7 @@ LEFT OUTER JOIN
 
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {
-			$numrows = pg_numrows($this->LocalResult);
+			$numrows = pg_num_rows($this->LocalResult);
 			if ($numrows == 1) {
 #				echo "fetched by ID succeeded<BR>";
 				$myrow = pg_fetch_array ($this->LocalResult);
@@ -657,7 +657,7 @@ LEFT OUTER JOIN
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
 				if ($this->Debug) echo "IsOnWatchList succeeded<BR>";
 				$result = 1;
@@ -679,7 +679,7 @@ LEFT OUTER JOIN
 		$sql = "select GetPortID('" . pg_escape_string($Category) . "', '"  . pg_escape_string($Port) . "') as port_id";
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
 				$myrow = pg_fetch_row($result);
 				$PortID = $myrow[0];
@@ -712,7 +712,7 @@ LEFT OUTER JOIN
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			if ($numrows >= 1) {
 				$myrow = pg_fetch_row($result);
 				$result = $myrow[0];
@@ -808,7 +808,7 @@ LEFT OUTER JOIN
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			if ($this->Debug) echo "FetchByElementID succeeded<BR>";
 			$this->{'conflicts_matches'} = pg_fetch_all($result);
 		} else {

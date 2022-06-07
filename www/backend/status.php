@@ -66,7 +66,7 @@ echo "</table>\n";
 $sql = "select * from GetPackageStatus()";
 $result = pg_exec($db, $sql);
 if ($result) {
-	$numrows = pg_numrows($result);
+	$numrows = pg_num_rows($result);
 	if ($numrows) {
 		echo '<table class="bordered" cellpadding="5" cellspacing="3">' . "\n";
 		echo "<caption>The package imports</caption><tr>
@@ -109,7 +109,7 @@ if ($result) {
 $sql = "select * from LoginCounts(10)";
 $result = pg_exec($db, $sql);
 if ($result) {
-	$numrows = pg_numrows($result);
+	$numrows = pg_num_rows($result);
 	if ($numrows) {
 		echo '<table class="bordered">' . "\n";
 		echo "<tr><td><b>Days</b><td><b>Users</b></td></tr>\n";

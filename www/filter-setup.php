@@ -172,7 +172,7 @@ if ($Debug) echo "<pre>$sql</pre>";
 
 
 $result  = pg_exec ($db, $sql);
-$numrows = pg_numrows($result);
+$numrows = pg_num_rows($result);
 
 if ($Debug) echo "num categories being watched = $numrows<BR>";
 
@@ -198,7 +198,7 @@ if ($Debug) echo "<pre>$sql</pre>";
 echo '<tr><td align="center">' . "\n";
 
 $result  = pg_exec ($db, $sql);
-$numrows = pg_numrows($result);
+$numrows = pg_num_rows($result);
 
 if ($Debug) echo "num categories being watched = $numrows<BR>";
 
@@ -222,7 +222,7 @@ $sql = "
   order by category";
 
 $result  = pg_exec($db, $sql);  
-$numrows = pg_numrows($result);
+$numrows = pg_num_rows($result);
 $NumCategories = 0;
 for ($i = 0; $i < $numrows; $i++) {
 	$myrow = pg_fetch_array($result, $i);

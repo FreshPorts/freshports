@@ -37,7 +37,7 @@ class WatchNotice {
 		if (IsSet($id)) {
 			$this->id = $id;
 		}
-		$sql = "select * from watch_notice where id = " . pg_escape_string($this->id);
+		$sql = "select * from watch_notice where id = " . pg_escape_string($this->dbh, $this->id);
 #		echo "sql = '$sql'<BR>";
 
         $result = pg_exec($this->dbh, $sql);
@@ -58,7 +58,7 @@ class WatchNotice {
 		if (IsSet($frequency)) {
 			$this->frequency = $frequency;
 		}
-		$sql = "select * from watch_notice where frequency = '" . pg_escape_string($this->frequency) . "'";
+		$sql = "select * from watch_notice where frequency = '" . pg_escape_string($this->dbh, $this->frequency) . "'";
 
 #		echo "sql = '$sql'<BR>";
 

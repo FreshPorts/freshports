@@ -21,7 +21,7 @@
 
 	$token = $_REQUEST['token'];
 	if (IsSet($token)) {
-		$token = pg_escape_string($token);
+		$token = pg_escape_string($db, $token);
 		if ($Debug) echo "I'm confirming with token $token\n<BR>";
 		$sql = "select ConfirmUserAccount('$token')";
 		$result = pg_exec($db, $sql);

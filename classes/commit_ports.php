@@ -114,7 +114,7 @@ class Commit_Ports {
 
 	function FetchByMessageId($message_id) {
 	        $Debug = 0;
-		$Where = "message_id = '" . pg_escape_string($message_id) . "'";
+		$Where = "message_id = '" . pg_escape_string($this->dbh, $message_id) . "'";
 
 		$result = $this->FetchByIDHelper($Where);
 		
@@ -132,7 +132,7 @@ class Commit_Ports {
 
 	function FetchById($commit_log_id) {
 	        $Debug = 0;
-		$Where = "CL.id = " . pg_escape_string($commit_log_id);
+		$Where = "CL.id = " . pg_escape_string($this->dbh, $commit_log_id);
 
 		$result = $this->FetchByIDHelper($Where);
 
@@ -150,7 +150,7 @@ class Commit_Ports {
 	}
 
 	function FetchByRevision($revision) {
-		$Where = "svn_revision = '" . pg_escape_string($revision) . "'";
+		$Where = "svn_revision = '" . pg_escape_string($this->dbh, $revision) . "'";
 
 		$result = $this->FetchByIDHelper($Where);
 		

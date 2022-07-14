@@ -57,29 +57,29 @@ function str_is_int($str) {
 }
 
 
-function freshports_CategoryByID($db, $category_id, $PageNumber = 1, $PageSize = DEFAULT_PAGE_SIZE, $Branch = BRANCH_HEAD) {
+function freshports_CategoryByID($dbh, $category_id, $PageNumber = 1, $PageSize = DEFAULT_PAGE_SIZE, $Branch = BRANCH_HEAD) {
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
-	$category = new Category($db, $Branch);
+	$category = new Category($dbh, $Branch);
 	$category->FetchByID($category_id);
 
 	freshports_ConditionalGet($category->last_modified);
 
-	freshports_CategoryDisplay($db, $category, $PageNumber, $PageSize, $Branch);
+	freshports_CategoryDisplay($dbh, $category, $PageNumber, $PageSize, $Branch);
 }
 
 
-function freshports_CategoryByElementID($db, $element_id, $PageNumber = 1, $PageSize = DEFAULT_PAGE_SIZE) {
+function freshports_CategoryByElementID($dbh, $element_id, $PageNumber = 1, $PageSize = DEFAULT_PAGE_SIZE) {
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
-	$category = new Category($db);
+	$category = new Category($dbh);
 	$category->FetchByElementID($element_id);
 
 	freshports_ConditionalGet($category->last_modified);
 
-	freshports_CategoryDisplay($db, $category, $PageNumber, $PageSize);
+	freshports_CategoryDisplay($dbh, $category, $PageNumber, $PageSize);
 }
 
 
-function freshports_CategoryDisplay($db, $category, $PageNumber = 1, $PageSize = DEFAULT_PAGE_SIZE, $Branch = BRANCH_HEAD) {
+function freshports_CategoryDisplay($dbh, $category, $PageNumber = 1, $PageSize = DEFAULT_PAGE_SIZE, $Branch = BRANCH_HEAD) {
 
 #		var_dump($category);
 #
@@ -160,7 +160,7 @@ function freshports_CategoryDisplay($db, $category, $PageNumber = 1, $PageSize =
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_lists.php');
 
 		if ($category->IsPrimary()) {
-			$WatchLists = new WatchLists($db);
+			$WatchLists = new WatchLists($dbh);
 			$WatchListCount = $WatchLists->IsOnWatchList($User->id, $category->element_id);
 		}
 
@@ -169,7 +169,7 @@ function freshports_CategoryDisplay($db, $category, $PageNumber = 1, $PageSize =
 		# find out how many ports are in this category
 		$PortCount = $category->PortCount($category->name, $Branch);
 		
-		$port = new Port($db);
+		$port = new Port($dbh);
 
 		$numrows = $port->FetchByCategoryInitialise($category->name, $User->id, $PageSize, $PageNumber, $Branch);
 
@@ -180,7 +180,7 @@ function freshports_CategoryDisplay($db, $category, $PageNumber = 1, $PageSize =
 		$HTML .= freshports_MainContentTable() . '
 
 		<tr>
-		  ' . freshports_PageBannerText('Category listing - ' . $category->name . ($Branch == BRANCH_HEAD ? '' : ' on branch '. pg_escape_string($Branch))) . '
+		  ' . freshports_PageBannerText('Category listing - ' . $category->name . ($Branch == BRANCH_HEAD ? '' : ' on branch '. pg_escape_string($dbh, $Branch))) . '
 		</tr>
 
 	<tr><td>';
@@ -198,7 +198,7 @@ function freshports_CategoryDisplay($db, $category, $PageNumber = 1, $PageSize =
 		$HTML .= '
 <span class="element-details"><span>' .
 $category->description . '
-</span></span> - Number of ports in this category' . ($Branch == BRANCH_HEAD ? '' : ' with commits on branch ' . pg_escape_string($Branch)) . ': ' . $PortCount . '
+</span></span> - Number of ports in this category' . ($Branch == BRANCH_HEAD ? '' : ' with commits on branch ' . pg_escape_string($dbh, $Branch)) . ': ' . $PortCount . '
 
 <p>
 	Ports marked with a <sup>*</sup> actually reside within another category but
@@ -228,7 +228,7 @@ $category->description . '
 
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
 
-		$port_display = new port_display($db, $User, $Branch);
+		$port_display = new port_display($dbh, $User, $Branch);
 		$port_display->SetDetailsCategory();
 
 		for ($i = 0; $i < $numrows; $i++) {

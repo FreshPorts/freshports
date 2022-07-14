@@ -72,7 +72,7 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 		# Get the category details, and the date of the
 		# last modified port therein
 		#
-		$sql = $this->ComposeFetchBranchSQL() . ' WHERE id = ' . pg_escape_string($this->id);
+		$sql = $this->ComposeFetchBranchSQL() . ' WHERE id = ' . pg_escape_string($this->dbh, $this->id);
 
 		if ($this->Debug) echo "<pre>1. sql = '$sql'</pre><BR>";
 
@@ -94,7 +94,7 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 		if (IsSet($element_id)) {
 			$this->element_id = $element_id;
 		}
-		$sql = $this->ComposeFetchBranchSQL() . '  WHERE C.element_id = ' . pg_escape_string($this->element_id);
+		$sql = $this->ComposeFetchBranchSQL() . '  WHERE C.element_id = ' . pg_escape_string($this->dbh, $this->element_id);
 		if ($this->Debug) echo "<pre>sql = '$sql'</pre><BR>";
 
         $result = pg_exec($this->dbh, $sql);
@@ -115,10 +115,10 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 		$CategoryID = 0;
 
 		if (IsSet($Name)) {
-			$this->name = pg_escape_string($Name);
+			$this->name = pg_escape_string($this->dbh, $Name);
 			unset($this->id);
 		}
-		$sql = $this->ComposeFetchBranchSQL() . " WHERE C.name = '" . pg_escape_string($this->name) . "'";
+		$sql = $this->ComposeFetchBranchSQL() . " WHERE C.name = '" . pg_escape_string($this->dbh, $this->name) . "'";
 
 		if ($this->Debug) echo "<pre>sql = '$sql'</pre><BR>";
 
@@ -139,7 +139,7 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 
 		Unset($CategoryID);
 
-		$sql = "SELECT id FROM categories where name = '" . pg_escape_string($Name) . "'";
+		$sql = "SELECT id FROM categories where name = '" . pg_escape_string($this->dbh, $Name) . "'";
 
 		if ($this->Debug) echo "sql = '$sql'<BR>";
 
@@ -159,12 +159,12 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 		$Count = 0;
 
 		if (IsSet($Name)) {
-			$this->name = pg_escape_string($Name);
+			$this->name = pg_escape_string($this->dbh, $Name);
 		}
 		if ($Branch == BRANCH_HEAD) {
-			$sql = "select CategoryPortCount('" . pg_escape_string($this->name) . "')";
+			$sql = "select CategoryPortCount('" . pg_escape_string($this->dbh, $this->name) . "')";
 		} else {
-			$sql = "select CategoryPortCount('" . pg_escape_string($this->name) . "', '" . pg_escape_string($Branch) . "')";
+			$sql = "select CategoryPortCount('" . pg_escape_string($this->dbh, $this->name) . "', '" . pg_escape_string($this->dbh, $Branch) . "')";
 		}
 		if ($this->Debug) echo "sql = '$sql'<BR>";
 
@@ -185,9 +185,9 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 	function UpdateDescription() {
 		GLOBAL $User;
 
-		$sql = "UPDATE categories SET description = '" . pg_escape_string($this->description) . "' WHERE id = " . pg_escape_string($this->id) . ' AND is_primary = FALSE';
+		$sql = "UPDATE categories SET description = '" . pg_escape_string($this->dbh, $this->description) . "' WHERE id = " . pg_escape_string($this->dbh, $this->id) . ' AND is_primary = FALSE';
 		syslog(LOG_NOTICE, 'User \'' . $User->name . '\' at '
-			. pg_escape_string($_SERVER[REMOTE_ADDR]) . ' is changing category \'' 
+			. pg_escape_string($this->dbh, $_SERVER[REMOTE_ADDR]) . ' is changing category \'' 
 			. $this->name . '\' to \'' . $this->description . '\'.');
 		if ($this->Debug) echo "sql = '$sql'<BR>";
 
@@ -204,7 +204,7 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 		if ($this->BranchName == BRANCH_HEAD) {
 		  $sql = self::FETCH_SQL_HEAD;
 		} else {
-		  $sql = self::FETCH_SQL_BRANCH_1 . "'" . pg_escape_string($Branch) . "'" . self::FETCH_SQL_BRANCH_2;
+		  $sql = self::FETCH_SQL_BRANCH_1 . "'" . pg_escape_string($this->dbh, $Branch) . "'" . self::FETCH_SQL_BRANCH_2;
 		}
 
 		return $sql;

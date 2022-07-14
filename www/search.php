@@ -119,7 +119,7 @@ function Category_Ports_To_In_Clause($a_Ports) {
 
   $where = 'IN (';
   foreach($ports as &$port) {
-    $port = '/ports/head/' . pg_escape_string($port);
+    $port = '/ports/head/' . pg_escape_string($db, $port);
   }
   $where .= ')';
 
@@ -136,11 +136,11 @@ function WildCardQuery($stype, $Like, $query) {
 
   switch ($stype) {
     case SEARCH_FIELD_PATHNAME:
-      $sql .= " $Like '" . pg_escape_string($query) . "'";
+      $sql .= " $Like '" . pg_escape_string($db, $query) . "'";
       break;
 
     case SEARCH_FIELD_DEPENDS_ALL:
-      $sql .= "\n     (P.depends_build $Like '" . pg_escape_string($query) . "' OR P.depends_lib $Like '" . pg_escape_string($query) . "' OR P.depends_run $Like '" . pg_escape_string($query) . "')";
+      $sql .= "\n     (P.depends_build $Like '" . pg_escape_string($db, $query) . "' OR P.depends_lib $Like '" . pg_escape_string($db, $query) . "' OR P.depends_run $Like '" . pg_escape_string($db, $query) . "')";
       break;
 
     default:
@@ -148,7 +148,7 @@ function WildCardQuery($stype, $Like, $query) {
         syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . " unknown stype supplied: '$stype'");
         $stype = SEARCH_FIELD_NAME;
       }
-      $sql .= "\n     " .  $SearchTypeToFieldMap[$stype] . " $Like '" . pg_escape_string($query) . "'";
+      $sql .= "\n     " .  $SearchTypeToFieldMap[$stype] . " $Like '" . pg_escape_string($db, $query) . "'";
       break;
 	}
 
@@ -188,19 +188,19 @@ function WildCardQuery($stype, $Like, $query) {
 	$minimal_output			= 0;
 
 	// avoid nasty problems by adding slashes
-	if (IsSet($_REQUEST['query']))              $query               = pg_escape_string(trim($_REQUEST['query']));
-	if (IsSet($_REQUEST['stype']))              $stype               = pg_escape_string(trim($_REQUEST['stype']));
-	if (IsSet($_REQUEST['num']))                $num                 = intval(pg_escape_string(trim($_REQUEST['num'])));
-	if (IsSet($_REQUEST['category']))           $category            = pg_escape_string(trim($_REQUEST['category']));
-	if (IsSet($_REQUEST['port']))               $port                = pg_escape_string(trim($_REQUEST['port']));
-	if (IsSet($_REQUEST['method']))             $method              = pg_escape_string(trim($_REQUEST['method']));
-	if (IsSet($_REQUEST['deleted']))            $deleted		 = pg_escape_string(trim($_REQUEST['deleted']));
+	if (IsSet($_REQUEST['query']))              $query               = pg_escape_string($db, trim($_REQUEST['query']));
+	if (IsSet($_REQUEST['stype']))              $stype               = pg_escape_string($db, trim($_REQUEST['stype']));
+	if (IsSet($_REQUEST['num']))                $num                 = intval(pg_escape_string($db, trim($_REQUEST['num'])));
+	if (IsSet($_REQUEST['category']))           $category            = pg_escape_string($db, trim($_REQUEST['category']));
+	if (IsSet($_REQUEST['port']))               $port                = pg_escape_string($db, trim($_REQUEST['port']));
+	if (IsSet($_REQUEST['method']))             $method              = pg_escape_string($db, trim($_REQUEST['method']));
+	if (IsSet($_REQUEST['deleted']))            $deleted		 = pg_escape_string($db, trim($_REQUEST['deleted']));
 	if (!IsSet($_REQUEST[INCLUDE_SRC_COMMITS])) $include_src_commits = '';
-	if (IsSet($_REQUEST['casesensitivity']))    $casesensitivity	 = pg_escape_string(trim($_REQUEST['casesensitivity']));
-	if (IsSet($_REQUEST['orderby']))            $orderby		 = pg_escape_string(trim($_REQUEST['orderby']));
-	if (IsSet($_REQUEST['orderbyupdown']))      $orderbyupdown       = pg_escape_string(trim($_REQUEST['orderbyupdown']));
-	if (IsSet($_REQUEST['format']))             $output_format       = pg_escape_string(trim($_REQUEST['format']));
-	if (IsSet($_REQUEST['minimal']))            $minimal_output      = pg_escape_string(trim($_REQUEST['minimal']));
+	if (IsSet($_REQUEST['casesensitivity']))    $casesensitivity	 = pg_escape_string($db, trim($_REQUEST['casesensitivity']));
+	if (IsSet($_REQUEST['orderby']))            $orderby		 = pg_escape_string($db, trim($_REQUEST['orderby']));
+	if (IsSet($_REQUEST['orderbyupdown']))      $orderbyupdown       = pg_escape_string($db, trim($_REQUEST['orderbyupdown']));
+	if (IsSet($_REQUEST['format']))             $output_format       = pg_escape_string($db, trim($_REQUEST['format']));
+	if (IsSet($_REQUEST['minimal']))            $minimal_output      = pg_escape_string($db, trim($_REQUEST['minimal']));
 
 	# we have a problem with people doing this:
 	#
@@ -415,9 +415,9 @@ if ($output_format == OUTPUT_FORMAT_DEPENDS) {
 		switch ($stype) {
 			case SEARCH_FIELD_DEPENDS_ALL:
 				if ($casesensitivity == 'casesensitive') {
-					$sqlUserSpecifiedCondition = "\n     (P.depends_build = '" . pg_escape_string($query) . "' OR P.depends_lib = '" . pg_escape_string($query) . "' OR P.depends_run = '" . pg_escape_string($query) . "')";
+					$sqlUserSpecifiedCondition = "\n     (P.depends_build = '" . pg_escape_string($db, $query) . "' OR P.depends_lib = '" . pg_escape_string($db, $query) . "' OR P.depends_run = '" . pg_escape_string($db, $query) . "')";
 				} else {
-					$sqlUserSpecifiedCondition = "\n     (lower(P.depends_build) = lower('" . pg_escape_string($query) . "') OR lower(P.depends_lib) = lower('" . pg_escape_string($query) . "') OR lower(P.depends_run) = lower('" . pg_escape_string($query) . "'))";
+					$sqlUserSpecifiedCondition = "\n     (lower(P.depends_build) = lower('" . pg_escape_string($db, $query) . "') OR lower(P.depends_lib) = lower('" . pg_escape_string($db, $query) . "') OR lower(P.depends_run) = lower('" . pg_escape_string($db, $query) . "'))";
 				}
 				break;
 
@@ -428,9 +428,9 @@ if ($output_format == OUTPUT_FORMAT_DEPENDS) {
 				   die('you are probably doing this wrong');
 				}
 				if ($casesensitivity == 'casesensitive') {
-					$sqlUserSpecifiedCondition = "     $FieldName = '" . pg_escape_string($query) . "'";
+					$sqlUserSpecifiedCondition = "     $FieldName = '" . pg_escape_string($db, $query) . "'";
 				} else {
-					$sqlUserSpecifiedCondition = "     lower($FieldName) = lower('" . pg_escape_string($query) . "')";
+					$sqlUserSpecifiedCondition = "     lower($FieldName) = lower('" . pg_escape_string($db, $query) . "')";
 				}
 				break;
 		}
@@ -439,8 +439,8 @@ if ($output_format == OUTPUT_FORMAT_DEPENDS) {
 	case 'soundex':
 	    $sqlSetAll = true;
 		$FieldName = $SearchTypeToFieldMap[$stype];
-		$sqlUserSpecifiedCondition = "\n     levenshtein($FieldName, '" . pg_escape_string($query) . "') < " . VEVENSHTEIN_MATCH;
-		$sqlSoundsLikeOrderBy = "levenshtein($FieldName, '" . pg_escape_string($query) . "')";
+		$sqlUserSpecifiedCondition = "\n     levenshtein($FieldName, '" . pg_escape_string($db, $query) . "') < " . VEVENSHTEIN_MATCH;
+		$sqlSoundsLikeOrderBy = "levenshtein($FieldName, '" . pg_escape_string($db, $query) . "')";
 		break;
   }
 
@@ -762,7 +762,7 @@ $sqlSelectCount = "
                LEFT OUTER JOIN commit_log          CL  ON P.last_commit_id = CL.id
                LEFT OUTER JOIN repo                R   ON CL.repo_id       = R.id
                LEFT OUTER JOIN commit_log_branches CLB ON CL.id            = CLB.commit_log_id
-                          JOIN system_branch       SB  ON SB.branch_name   = '" . pg_escape_string($Branch) . "'
+                          JOIN system_branch       SB  ON SB.branch_name   = '" . pg_escape_string($db, $Branch) . "'
                                                       AND SB.id            = CLB.branch_id,
        categories C, element E
 ";                                       	
@@ -781,7 +781,7 @@ JOIN element_pathname EP on E.id = EP.element_id
 
 $AddRemoveExtra  = "?query=" . $query. "+stype=$stype+num=$num+method=$method";
 if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<BR>";
-$AddRemoveExtra = pg_escape_string($AddRemoveExtra);
+$AddRemoveExtra = pg_escape_string($db, $AddRemoveExtra);
 if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<BR>";
 
 

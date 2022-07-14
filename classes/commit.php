@@ -84,7 +84,7 @@ class Commit {
 
 	function FetchByMessageId($message_id) {
 	        $Debug = 0;
-		$Where = "message_id = '" . pg_escape_string($message_id) . "'";
+		$Where = "message_id = '" . pg_escape_string($this->dbh, $message_id) . "'";
 
 		$result = $this->FetchByIDHelper($Where);
 		
@@ -124,7 +124,7 @@ class Commit {
 		if (strtolower(substr($revision, 0, 1)) == 'r') {
 			$revision = (substr($revision, 1));
 		}
-		$Where = "svn_revision = '" . pg_escape_string($revision) . "'";
+		$Where = "svn_revision = '" . pg_escape_string($this->dbh, $revision) . "'";
 
 		$result = $this->FetchByIDHelper($Where);
 		

@@ -38,7 +38,7 @@ SELECT P.id          AS slave_port_id,
                       LEFT OUTER JOIN commit_log_branches CLB ON CL.id            = CLB.commit_log_id
                                  JOIN system_branch       SB  ON SB.branch_name   = 'head'
                                                              AND SB.id            = CLB.branch_id
- WHERE P.master_port = '". pg_escape_string($MasterName). "'
+ WHERE P.master_port = '". pg_escape_string($this->dbh, $MasterName). "'
 ORDER BY slave_category_name, slave_port_name";
 
 		#echo "sql = <pre>$sql</pre>";

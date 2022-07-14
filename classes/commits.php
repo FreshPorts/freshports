@@ -104,8 +104,8 @@ class Commits {
 
         $sql .= "
     FROM commit_log CL JOIN commit_log_ports CLP ON CL.id = CLP.commit_log_id 
-                        AND CL.commit_date BETWEEN '" . pg_escape_string($Date) . "'::timestamptz  + SystemTimeAdjust()
-                                               AND '" . pg_escape_string($Date) . "'::timestamptz  + SystemTimeAdjust() + '1 Day'
+                        AND CL.commit_date BETWEEN '" . pg_escape_string($this->dbh, $Date) . "'::timestamptz  + SystemTimeAdjust()
+                                               AND '" . pg_escape_string($this->dbh, $Date) . "'::timestamptz  + SystemTimeAdjust() + '1 Day'
             LEFT OUTER JOIN sanity_test_failures STF ON STF.commit_log_id = CLP.commit_log_id 
             JOIN repo R on CL.repo_id = R.id
             LEFT OUTER JOIN ports_vulnerable     PV ON CLP.port_id = PV.port_id
@@ -114,7 +114,7 @@ class Commits {
 
         # allow for quarterly branches
         # see also the Count() function below
-        if ($this->BranchName != BRANCH_HEAD) $sql .= " AND SB.branch_name = '" . pg_escape_string($this->BranchName)  . "'\n";
+        if ($this->BranchName != BRANCH_HEAD) $sql .= " AND SB.branch_name = '" . pg_escape_string($this->dbh, $this->BranchName)  . "'\n";
 
         $sql .= "
             JOIN ports                 P ON P.id           = CLP.port_id
@@ -127,7 +127,7 @@ class Commits {
      (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
         FROM watch_list JOIN watch_list_element 
             ON watch_list.id      = watch_list_element.watch_list_id
-           AND watch_list.user_id = " . pg_escape_string($UserID) . "
+           AND watch_list.user_id = " . pg_escape_string($this->dbh, $UserID) . "
            AND watch_list.in_service
       GROUP BY wle_element_id) AS TEMP
            ON TEMP.wle_element_id = E.id";
@@ -229,12 +229,12 @@ class Commits {
                         where clp.commit_log_id = cl.id)";
         } else {
            $sql .= "(select *
-                        from commit_log_branches clb where branch_id = (select id from system_branch where branch_name = '" . pg_escape_string($this->BranchName) . "')
+                        from commit_log_branches clb where branch_id = (select id from system_branch where branch_name = '" . pg_escape_string($this->dbh, $this->BranchName) . "')
                         AND clb.commit_log_id = cl.id)";
         }
         $sql .= "
      ORDER BY CL.commit_date DESC
-        LIMIT " . pg_escape_string($Limit) . ") AS CL ";
+        LIMIT " . pg_escape_string($this->dbh, $Limit) . ") AS CL ";
 
         $sql .= "LEFT OUTER JOIN repo R on CL.repo_id = R.id, categories C, ports P LEFT OUTER JOIN ports_vulnerable PV ON P.id = PV.port_id, element E ";
 
@@ -244,7 +244,7 @@ class Commits {
      (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
         FROM watch_list JOIN watch_list_element 
             ON watch_list.id      = watch_list_element.watch_list_id
-           AND watch_list.user_id = " . pg_escape_string($UserID) . "
+           AND watch_list.user_id = " . pg_escape_string($this->dbh, $UserID) . "
            AND watch_list.in_service
       GROUP BY wle_element_id) AS TEMP
            ON TEMP.wle_element_id = E.id";
@@ -278,14 +278,14 @@ class Commits {
 		$sql = "
         SELECT count(DISTINCT CL.id) AS count
           FROM commit_log CL JOIN commit_log_ports CLP ON CL.id = CLP.commit_log_id 
-                        AND CL.commit_date BETWEEN '" . pg_escape_string($Date) . "'::timestamptz  + SystemTimeAdjust()
-                                                AND '" . pg_escape_string($Date) . "'::timestamptz  + SystemTimeAdjust() + '1 Day'
+                        AND CL.commit_date BETWEEN '" . pg_escape_string($this->dbh, $Date) . "'::timestamptz  + SystemTimeAdjust()
+                                               AND '" . pg_escape_string($this->dbh, $Date) . "'::timestamptz  + SystemTimeAdjust() + '1 Day'
             JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
             JOIN system_branch        SB ON SB.id = CLB.branch_id";
 
                 # allow for quarterly branches
                 # see also the FetchCommitsOnADay() function above
-                if ($this->BranchName != BRANCH_HEAD) $sql .= " AND SB.branch_name = '" . pg_escape_string($this->BranchName)  . "'\n";
+                if ($this->BranchName != BRANCH_HEAD) $sql .= " AND SB.branch_name = '" . pg_escape_string($this->dbh, $this->BranchName)  . "'\n";
 
 		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
 
@@ -328,8 +328,8 @@ SELECT gmt_format(max(CL.date_added)) AS last_modified
   FROM commit_log CL, commit_log_ports CLP JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
                                            JOIN system_branch        SB ON SB.id             = CLB.branch_id
  WHERE CL.id = CLP.commit_log_id
-   AND CL.commit_date BETWEEN '" . pg_escape_string($Date) . "'::timestamptz  + SystemTimeAdjust()
-                          AND '" . pg_escape_string($Date) . "'::timestamptz  + SystemTimeAdjust() + '1 Day'";
+   AND CL.commit_date BETWEEN '" . pg_escape_string($this->dbh, $Date) . "'::timestamptz  + SystemTimeAdjust()
+                          AND '" . pg_escape_string($this->dbh, $Date) . "'::timestamptz  + SystemTimeAdjust() + '1 Day'";
 		
 		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
 		$result = pg_exec($this->dbh, $sql);

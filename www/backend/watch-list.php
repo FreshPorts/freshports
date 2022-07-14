@@ -68,11 +68,11 @@ function DisplayWatchListNewsFeeds($db, $UserID) {
 }
 
 	if (IsSet($_REQUEST['id'])) {
-		$token = pg_escape_string($_REQUEST['id']);
+		$token = pg_escape_string($db, $_REQUEST['id']);
 	}
 
 	if (IsSet($_REQUEST['format'])) {
-		$format = pg_escape_string($_REQUEST['format']);
+		$format = pg_escape_string($db, $_REQUEST['format']);
 	}
 
 	# validate incoming format	

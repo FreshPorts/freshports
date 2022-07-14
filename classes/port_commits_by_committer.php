@@ -25,7 +25,7 @@ class PortCommitsByCommitter extends CommitsByCommitter {
 		SELECT count(distinct CL.id) as count 
 		  FROM commit_log CL, commit_log_ports CLP 
 		 WHERE CL.id = CLP.commit_log_id
-		   AND committer = '" . pg_escape_string($this->Committer) . "'";
+		   AND committer = '" . pg_escape_string($this->dbh, $this->Committer) . "'";
 
 		if ($this->Debug) echo "<pre>$sql</pre>";
 		$result = pg_exec($this->dbh, $sql);
@@ -47,7 +47,7 @@ class PortCommitsByCommitter extends CommitsByCommitter {
 		SELECT count(*) as count 
 		  FROM commit_log CL, commit_log_ports CLP 
 		 WHERE CL.id = CLP.commit_log_id
-		   AND committer = '" . pg_escape_string($this->Committer) . "'";
+		   AND committer = '" . pg_escape_string($this->dbh, $this->Committer) . "'";
 		;
 		if ($this->Debug) echo "<pre>$sql</pre>";
 		$result = pg_exec($this->dbh, $sql);
@@ -106,7 +106,7 @@ class PortCommitsByCommitter extends CommitsByCommitter {
 		}
 
 		$sql .= "
-    FROM commit_log_ports CLP JOIN (SELECT * FROM commit_log WHERE commit_log.committer = '" . pg_escape_string($this->Committer) . "' ORDER BY commit_date DESC ";
+    FROM commit_log_ports CLP JOIN (SELECT * FROM commit_log WHERE commit_log.committer = '" . pg_escape_string($this->dbh, $this->Committer) . "' ORDER BY commit_date DESC ";
     
 		if ($this->Limit) {
 			$sql .= " LIMIT " . $this->Limit;
@@ -126,7 +126,7 @@ class PortCommitsByCommitter extends CommitsByCommitter {
 	 (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
 	    FROM watch_list JOIN watch_list_element 
 	        ON watch_list.id      = watch_list_element.watch_list_id
-	       AND watch_list.user_id = " . pg_escape_string($this->UserID) . "
+	       AND watch_list.user_id = " . pg_escape_string($this->dbh, $this->UserID) . "
 	       AND watch_list.in_service		
 	  GROUP BY wle_element_id) AS TEMP
 	       ON TEMP.wle_element_id = E.id";

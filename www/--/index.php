@@ -67,7 +67,7 @@ switch($script) {
         require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/badges.php');
         require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
         
-        $category_port = pg_escape_string($url_parts['port']);
+        $category_port = pg_escape_string($db, $url_parts['port']);
         
         list($category, $port) = explode('/', $category_port);
         $myPort = new Port($db);

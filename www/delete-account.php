@@ -22,7 +22,7 @@
 	$AccountModified = 0;
 
 if (IsSet($_REQUEST['submit'])) $submit = $_REQUEST['submit'];
-$visitor	= pg_escape_string($_COOKIE[USER_COOKIE_NAME]);
+$visitor	= pg_escape_string($db, $_COOKIE[USER_COOKIE_NAME]);
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {
@@ -37,7 +37,7 @@ if (IsSet($submit)) {
     // process form
     syslog(LOG_ERR, 'into '. __FILE__);
 
-	$confirmation = pg_escape_string($_POST['confirmation']);
+	$confirmation = pg_escape_string($db, $_POST['confirmation']);
 
 	if ($confirmation ==  $User->name) {
 		$result = pg_exec($db, "BEGIN");

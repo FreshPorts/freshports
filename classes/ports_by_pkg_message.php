@@ -120,7 +120,7 @@ class PortsByPkgMessage extends Port {
 		}
 
 		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
-		$this->LocalResult = pg_query_params($this->dbh, $sql, array(htmlspecialchars(pg_escape_string($this->Query))));
+		$this->LocalResult = pg_query_params($this->dbh, $sql, array(htmlspecialchars(pg_escape_string($this->dbh, $this->Query))));
 		if ($this->LocalResult) {
 			$numrows = pg_num_rows($this->LocalResult);
 			if ($this->Debug) echo "That would give us $numrows rows";

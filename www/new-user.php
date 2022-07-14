@@ -116,7 +116,7 @@ if (IsSet($submit)) {
 	if ($OK) {
 		// test for existance of user id
 
-		$sql = "select * from users where name = '" . pg_escape_string(strtolower($UserLogin)) . "'";
+		$sql = "select * from users where name = '" . pg_escape_string($db, strtolower($UserLogin)) . "'";
 		syslog(LOG_ERR, "FreshPorts new user: $sql");
 
 		$result = pg_query($db, $sql) or die('query failed');

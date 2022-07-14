@@ -23,7 +23,7 @@
 	$AccountModified = 0;
 
 if (IsSet($_REQUEST['submit'])) $submit = $_REQUEST['submit'];
-$visitor = pg_escape_string($_COOKIE[USER_COOKIE_NAME]);
+$visitor = pg_escape_string($db, $_COOKIE[USER_COOKIE_NAME]);
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {
@@ -36,12 +36,12 @@ if (IsSet($submit)) {
 
 	// process form
 
-	$email         = pg_escape_string($_POST['email']);
+	$email         = pg_escape_string($db, $_POST['email']);
 	$Password      = $_POST['Password'];
 	$Password1     = $_POST['Password1'];
 	$Password2     = $_POST['Password2'];
-	$numberofdays  = pg_escape_string($_POST['numberofdays']);
-	$page_size     = pg_escape_string($_POST['page_size']);
+	$numberofdays  = pg_escape_string($db, $_POST['numberofdays']);
+	$page_size     = pg_escape_string($db, $_POST['page_size']);
 
 	# this is a checkbox
 	if (IsSet($_POST['set_focus_search'])) {
@@ -115,7 +115,7 @@ UPDATE users
 			}
 
 			if ($Password1 != '') {
-				$sql .= ", password_hash = crypt('" . pg_escape_string($Password1) . "'";
+				$sql .= ", password_hash = crypt('" . pg_escape_string($db, $Password1) . "'";
 				$sql .= ", gen_salt('" . PW_HASH_METHOD . "', " . PW_HASH_COST ."))";
 			}
 

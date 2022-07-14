@@ -24,7 +24,7 @@ class CommitsByCommitter extends commits {
 	function GetCountCommits() {
 		$count = 0;
 		
-		$sql = "select count(*) as count from commit_log where committer = '" . pg_escape_string($this->Committer) . "'";
+		$sql = "select count(*) as count from commit_log where committer = '" . pg_escape_string($this->dbh, $this->Committer) . "'";
 		if ($this->Debug) echo "<pre>$sql</pre>";
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
@@ -99,7 +99,7 @@ class CommitsByCommitter extends commits {
 		$sql .= "
 	  WHERE commit_log.id IN (SELECT tmp.id FROM (SELECT DISTINCT CL.id, CL.commit_date
   FROM commit_log CL
- WHERE CL.committer  = '" . pg_escape_string($this->Committer) . "'
+ WHERE CL.committer  = '" . pg_escape_string($this->dbh, $this->Committer) . "'
 ORDER BY CL.commit_date DESC ";
 
    		if ($this->Limit) {

@@ -38,7 +38,7 @@ $visitor = $_COOKIE[USER_COOKIE_NAME];
 if ($_REQUEST['wlid']) {
 		# they clicked on the GO button and we have to apply the 
 		# watch staging area against the watch list.
-		$wlid = pg_escape_string($_REQUEST["wlid"]);
+		$wlid = pg_escape_string($db, $_REQUEST["wlid"]);
 		if ($Debug) echo "setting SetLastWatchListChosen => \$wlid='$wlid'";
 		$User->SetLastWatchListChosen($wlid);
 		if ($Debug) echo "\$wlid='$wlid'";
@@ -103,7 +103,7 @@ if ($wlid != '') {
 $sql = "
    select distinct(ports_categories.category_id) as category_id
      from watch_list, watch_list_element, ports, ports_categories
-    WHERE watch_list.id      = " . pg_escape_string($wlid) . "
+    WHERE watch_list.id      = " . pg_escape_string($db, $wlid) . "
       and watch_list.user_id = $User->id
       and watch_list.id      = watch_list_element.watch_list_id
       and ports.element_id   = watch_list_element.element_id

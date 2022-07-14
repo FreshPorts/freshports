@@ -60,7 +60,7 @@ class Commit_Log_Ports {
      FROM commit_log           CL,
           commit_log_ports     CLP
     WHERE CL.id       = CLP.commit_log_id
-      AND CLP.port_id = " . pg_escape_string($port_id);
+      AND CLP.port_id = " . pg_escape_string($this->dbh, $port_id);
 
 		if ($this->Debug) echo "\$sql='<pre>$sql</pre><br>\n";
 		$this->result = pg_exec($this->dbh, $sql);
@@ -115,15 +115,15 @@ class Commit_Log_Ports {
           sanity_test_failures STF on 
             CLP.commit_log_id = STF.commit_log_id
     WHERE CL.id       = CLP.commit_log_id
-      AND CLP.port_id = " . pg_escape_string($port_id) . "
+      AND CLP.port_id = " . pg_escape_string($this->dbh, $port_id) . "
  ORDER BY CL.commit_date desc ";
  
  		if ($this->Limit) {
- 			$sql .= ' LIMIT ' . pg_escape_string($this->Limit);
+ 			$sql .= ' LIMIT ' . pg_escape_string($this->dbh, $this->Limit);
 		}
 
 		if ($this->Offset) {
-			$sql .= ' OFFSET ' . pg_escape_string($this->Offset);
+			$sql .= ' OFFSET ' . pg_escape_string($this->dbh, $this->Offset);
 		}
 
 		if ($this->Debug) echo "\$sql='<pre>$sql</pre><br>\n";
@@ -174,8 +174,8 @@ class Commit_Log_Ports {
 		$sql = "
 UPDATE commit_log_ports
    SET needs_refresh = 0
- WHERE commit_log_id = " . pg_escape_string($this->commit_log_id) . "
-   AND port_id       = " . pg_escape_string($this->port_id);
+ WHERE commit_log_id = " . pg_escape_string($this->dbh, $this->commit_log_id) . "
+   AND port_id       = " . pg_escape_string($this->dbh, $this->port_id);
 
 		if ($this->Debug) echo "\$sql='<pre>$sql</pre><br>\n";
 		

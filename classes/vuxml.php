@@ -32,7 +32,7 @@ class VuXML {
 
 	function FetchByVID($VID) {
 		$this->vid = $VID;
-		$sql = "select * from vuxml where vid = '" . pg_escape_string($VID) . "'";
+		$sql = "select * from vuxml where vid = '" . pg_escape_string($this->dbh, $VID) . "'";
 #		echo "<pre>sql = '$sql'</pre><BR>";
 
 		$result = pg_query($this->dbh, $sql);

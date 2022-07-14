@@ -21,7 +21,7 @@
 	# Get the date we are going to work with.
 	#
 	if (IsSet($_REQUEST['date'])) {
-		$Date = pg_escape_string($_REQUEST['date']);
+		$Date = pg_escape_string($db, $_REQUEST['date']);
 	} else {
 		$Date = '';
 	}

@@ -56,12 +56,12 @@ class LatestCommits {
 		GLOBAL	$freshports_CommitMsgMaxNumOfLinesToShow;
 
 		if (IsSet($this->Filter)) {
-			$sql = "select * from LatestCommitsFiltered($this->MaxNumberOfPorts, $this->UserID, '" . pg_escape_string($this->Filter) . "')";
+			$sql = "select * from LatestCommitsFiltered($this->MaxNumberOfPorts, $this->UserID, '" . pg_escape_string($this->dbh, $this->Filter) . "')";
 		} else {
 #			$sql = "select * from LatestCommits($this->MaxNumberOfPorts, $this->UserID)";
 			$sql = "
   SELECT LC.*, STF.message AS stf_message
-    FROM LatestCommits(" . pg_escape_string($this->MaxNumberOfPorts) . ", 0, '" . pg_escape_string($this->BranchName) . "') LC LEFT OUTER JOIN sanity_test_failures STF
+    FROM LatestCommits(" . pg_escape_string($this->dbh, $this->MaxNumberOfPorts) . ", 0, '" . pg_escape_string($this->dbh, $this->BranchName) . "') LC LEFT OUTER JOIN sanity_test_failures STF
       ON LC.commit_log_id = STF.commit_log_id
 ORDER BY LC.commit_date_raw DESC, LC.category, LC.port, element_pathname";
 		}

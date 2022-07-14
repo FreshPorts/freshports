@@ -81,8 +81,8 @@
 			reset($reports);
 	
 			foreach ($reports as $key => $value) {
-				$TheFrequency = pg_escape_string($_POST['reportfrequency_' . $value]);
-				$value = pg_escape_string($value);
+				$TheFrequency = pg_escape_string($db, $_POST['reportfrequency_' . $value]);
+				$value = pg_escape_string($db, $value);
 
 				if ($Debug) echo '$TheFrequency=\'' . $TheFrequency . '\'';
 				if ($Debug) echo "\$key='$key' \$value='$value' \$User->id='$User->id' \$frequencies[\$key]=" . $TheFrequency . '<BR>';

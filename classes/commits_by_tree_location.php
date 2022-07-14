@@ -127,7 +127,7 @@ class CommitsByTreeLocation extends commits {
 	 (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
 	    FROM watch_list JOIN watch_list_element 
 	        ON watch_list.id      = watch_list_element.watch_list_id
-	       AND watch_list.user_id = " . pg_escape_string($this->UserID) . "
+	       AND watch_list.user_id = " . pg_escape_string($this->dbh, $this->UserID) . "
 	       AND watch_list.in_service		
 	  GROUP BY wle_element_id) AS TEMP
 	       ON TEMP.wle_element_id = element.id";
@@ -142,11 +142,11 @@ class CommitsByTreeLocation extends commits {
 ORDER BY CL.commit_date DESC ";
 
    		if ($this->Limit) {
-			$sql .= " LIMIT " . pg_escape_string($this->Limit);
+			$sql .= " LIMIT " . pg_escape_string($this->dbh, $this->Limit);
 		}
 		
 		if ($this->Offset) {
-			$sql .= " OFFSET " . pg_escape_string($this->Offset);
+			$sql .= " OFFSET " . pg_escape_string($this->dbh, $this->Offset);
 		}
 
 
@@ -244,7 +244,7 @@ ORDER BY CL.commit_date DESC ";
 	 (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
 	    FROM watch_list JOIN watch_list_element 
 	        ON watch_list.id      = watch_list_element.watch_list_id
-	       AND watch_list.user_id = " . pg_escape_string($this->UserID) . "
+	       AND watch_list.user_id = " . pg_escape_string($this->dbh, $this->UserID) . "
 	       AND watch_list.in_service		
 	  GROUP BY wle_element_id) AS TEMP
 	       ON TEMP.wle_element_id = element.id";
@@ -259,11 +259,11 @@ ORDER BY CL.commit_date DESC ";
 ORDER BY CL.commit_date DESC ";
 
 		if ($this->Limit) {
-			$sql .= "\nLIMIT " . pg_escape_string($this->Limit);
+			$sql .= "\nLIMIT " . pg_escape_string($this->dbh, $this->Limit);
 		}
 		
 		if ($this->Offset) {
-			$sql .= "\nOFFSET " . pg_escape_string($this->Offset);
+			$sql .= "\nOFFSET " . pg_escape_string($this->dbh, $this->Offset);
 		}
 
    		$sql .= ") AS tmp)

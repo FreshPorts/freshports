@@ -115,14 +115,14 @@ class CommitFiles {
 	       JOIN system_branch        SB on CLB.branch_id = SB.id,
 	       commit_log_elements      CLE,
 	       element                  E
-	 WHERE CL.message_id              = '" . pg_escape_string($this->MessageID) . "'
+	 WHERE CL.message_id              = '" . pg_escape_string($this->dbh, $this->MessageID) . "'
 	   AND CL.id                      = CLE.commit_log_id
 	   AND CLE.element_id             = E.id";
 
 	
 		if ($ForJustOnePort) { 
 			$sql .= "
-	   AND element_pathname(E.id) LIKE '%/" . pg_escape_string($this->Category)  . '/' . pg_escape_string($this->Port) . "%'";
+	   AND element_pathname(E.id) LIKE '%/" . pg_escape_string($this->dbh, $this->Category)  . '/' . pg_escape_string($this->dbh, $this->Port) . "%'";
 		}
 		
 		$sql .= ") AS A
@@ -137,7 +137,7 @@ class CommitFiles {
 		 (SELECT element_id AS wle_element_id, COUNT(watch_list_id) AS onwatchlist
 		    FROM watch_list JOIN watch_list_element 
 		        ON watch_list.id      = watch_list_element.watch_list_id
-		       AND watch_list.user_id = " . pg_escape_string($this->UserID) . "
+		       AND watch_list.user_id = " . pg_escape_string($this->dbh, $this->UserID) . "
 	          AND watch_list.in_service
 		  GROUP BY wle_element_id) AS B
 		       ON B.wle_element_id = A.element_id

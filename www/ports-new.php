@@ -16,7 +16,7 @@
 	# we allow the following intervals: today, yesterday, this past week, past 3 months
 
 	if (IsSet($_REQUEST["interval"])) {
-		$interval = pg_escape_string($_REQUEST["interval"]);
+		$interval = pg_escape_string($db, $_REQUEST["interval"]);
 	} else {
 		$interval = '';
 	}
@@ -83,9 +83,9 @@ These are the recently added ports.
 </TD></TR>
 <?
 
-	$visitor = pg_escape_string($_COOKIE[USER_COOKIE_NAME]);
+	$visitor = pg_escape_string($db, $_COOKIE[USER_COOKIE_NAME]);
 	if (IsSet($_REQUEST["sort"])) {
-		$sort = pg_escape_string($_REQUEST["sort"]);
+		$sort = pg_escape_string($db, $_REQUEST["sort"]);
 	} else {
 		$sort = '';
 	}
@@ -172,7 +172,7 @@ select NP.id,
           
 ";
 
-	$sql .= "   FROM ports P  WHERE P.date_added  > (SELECT now() - interval '" . pg_escape_string($IntervalAdjust) . "')) AS NP";
+	$sql .= "   FROM ports P  WHERE P.date_added  > (SELECT now() - interval '" . pg_escape_string($db, $IntervalAdjust) . "')) AS NP";
 
 	if ($User->id) {
 			$sql .= "
@@ -190,7 +190,7 @@ select NP.id,
                LEFT OUTER JOIN commit_log          CL  ON NP.last_commit_id = CL.id
                           JOIN commit_log_ports    CLP ON CLP.commit_log_id = CL.id 
                           JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id AND CLP.port_id = NP.id
-                          JOIN system_branch       SB  ON SB.branch_name    = '" . pg_escape_string($BranchName) . "' AND SB.id = CLB.branch_id
+                          JOIN system_branch       SB  ON SB.branch_name    = '" . pg_escape_string($db, $BranchName) . "' AND SB.id = CLB.branch_id
                LEFT OUTER JOIN repo                R   ON CL.repo_id        = R.id
                           JOIN element             E   ON NP.element_id     = E.id
                                                       AND E.status          = 'A'

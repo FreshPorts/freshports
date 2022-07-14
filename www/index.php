@@ -30,7 +30,7 @@
 	# If they supply a package name, go for it.
 	#
 	if (IsSet($_REQUEST['package'])) {
-		$package = pg_escape_string($_REQUEST['package']);
+		$package = pg_escape_string($db, $_REQUEST['package']);
 		if ($Debug) echo "package is specfied on the URL: '$package'<br>\n";
 		if ($package != '') {
 			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/packages.php');
@@ -100,9 +100,9 @@ $num          = $MaxNumberOfPortsLong;
 $days         = $NumberOfDays;
 $dailysummary = 7;
 
-if (In_Array('num',          $_REQUEST)) $num          = pg_escape_string($_REQUEST["num"]);
-if (In_Array('dailysummary', $_REQUEST)) $dailysummary = pg_escape_string($_REQUEST["dailysummary"]);
-if (In_Array('days',         $_REQUEST)) $days         = pg_escape_string($_REQUEST["days"]);
+if (In_Array('num',          $_REQUEST)) $num          = pg_escape_string($db, $_REQUEST["num"]);
+if (In_Array('dailysummary', $_REQUEST)) $dailysummary = pg_escape_string($db, $_REQUEST["dailysummary"]);
+if (In_Array('days',         $_REQUEST)) $days         = pg_escape_string($db, $_REQUEST["days"]);
 
 if (Is_Numeric($num)) {
 	$MaxNumberOfPortsLong = min($MaxNumberOfPortsLong, max(10, $num));

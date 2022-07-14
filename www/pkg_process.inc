@@ -154,8 +154,8 @@ function ProcessPackages($UserID, $PortArray, $dbh) {
 		$Category = $CategoryPort[0];
 		$Port     = $CategoryPort[1];
 
-		$sql = 'select WatchListStagingAddItem(' . pg_escape_string($UserID) . ', \'' . 
-					pg_escape_string($Category) . '\', \'' . pg_escape_string($Port) . '\', ' . pg_escape_string($count) . ')';
+		$sql = 'select WatchListStagingAddItem(' . pg_escape_string($dbh, $UserID) . ', \'' . 
+					pg_escape_string($dbh, $Category) . '\', \'' . pg_escape_string($dbh, $Port) . '\', ' . pg_escape_string($dbh, $count) . ')';
 		$result = pg_exec($dbh, $sql);
 		if ($result && pg_num_rows($result)) {
 			# do nothing
@@ -169,7 +169,7 @@ function ProcessPackages($UserID, $PortArray, $dbh) {
 	if ($ok) {
 		# All is well.
 
-		$sql = "select WatchListStagingProcess(" . pg_escape_string($UserID) . ")";
+		$sql = "select WatchListStagingProcess(" . pg_escape_string($dbh, $UserID) . ")";
 		$result = pg_exec($dbh, $sql);
 		if ($result && pg_num_rows($result)) {
 			# do nothing.  All is well
@@ -197,7 +197,7 @@ function UploadDisplayStagingResultsMatches($UserID, $WatchListID, $dbh) {
 			   FROM	watch_list_staging LEFT OUTER JOIN watch_list_element
 						ON  watch_list_staging.element_id    = watch_list_element.element_id
 						AND $WatchListID                     = watch_list_element.watch_list_id
-			  WHERE " . pg_escape_string($UserID) . "    = watch_list_staging.user_id
+			  WHERE " . pg_escape_string($dbh, $UserID) . "    = watch_list_staging.user_id
 			    AND item_count = 1
 				AND watch_list_staging.element_id IS NOT NULL
 			  ORDER BY category, port";
@@ -252,7 +252,7 @@ function UploadDisplayStagingResultsMatchesNo($UserID, $dbh) {
 	$begintime = time();
 	$sql = " SELECT category, port, item_count, from_pkg_info, from_watch_list, watch_list_staging.element_id
 			     FROM watch_list_staging
-			    WHERE " . pg_escape_string($UserID) . "    = watch_list_staging.user_id
+			    WHERE " . pg_escape_string($dbh, $UserID) . "    = watch_list_staging.user_id
 			      AND item_count = 1
 				   AND watch_list_staging.element_id IS NULL
 			 ORDER BY category, port";
@@ -296,7 +296,7 @@ function UploadDisplayStagingResultsMatchesDuplicates($UserID, $WatchListID, $db
 			     FROM watch_list_staging LEFT OUTER JOIN watch_list_element
 					     	 ON  watch_list_staging.element_id = watch_list_element.element_id
 						    AND $WatchListID                   = watch_list_element.watch_list_id
-			    WHERE " . pg_escape_string($UserID) . "    = watch_list_staging.user_id
+			    WHERE " . pg_escape_string($dbh, $UserID) . "    = watch_list_staging.user_id
 			      AND item_count > 1
 				   AND watch_list_staging.element_id IS NOT NULL
 			 ORDER BY category, port";
@@ -403,8 +403,8 @@ function UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $dbh) {
 function MoveStagingToWatchList($UserID, $WatchListID, $dbh) {
 	$ok  = TRUE;
 
-	$UserID      = pg_escape_string($UserID);
-	$WatchListID = pg_escape_string($WatchListID);
+	$UserID      = pg_escape_string($dbh, $UserID);
+	$WatchListID = pg_escape_string($dbh, $WatchListID);
 
 	$Debug = 0;
 
@@ -466,8 +466,8 @@ function CopyStagingToWatchList($dbh, $UserID, $WatchListID, $Overwrite = TRUE) 
 	$ok  = TRUE;
 	$begintime = time();
 
-	$UserID      = pg_escape_string($UserID);
-	$WatchListID = pg_escape_string($WatchListID);
+	$UserID      = pg_escape_string($dbh, $UserID);
+	$WatchListID = pg_escape_string($dbh, $WatchListID);
 
 	$result = pg_exec($dbh, 'BEGIN');
 	if (!$result) {
@@ -523,7 +523,7 @@ function CopyStagingToWatchList($dbh, $UserID, $WatchListID, $Overwrite = TRUE) 
 function StagingAreaClear($UserID, $dbh) {
 	$ok = TRUE;
 
-	$UserID = pg_escape_string($UserID);
+	$UserID = pg_escape_string($dbh, $UserID);
 
 	$result = pg_exec($dbh, "BEGIN");
 	if ($result) {

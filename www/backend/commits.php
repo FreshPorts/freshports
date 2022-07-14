@@ -15,7 +15,7 @@
 	$Debug = 0;
 
 	if (IsSet($_REQUEST['n'])) {
-		$MaxCommits = pg_escape_string($_REQUEST['n']);
+		$MaxCommits = pg_escape_string($db, $_REQUEST['n']);
 	}
 	if (IsSet($_REQUEST['git'])) {
 		$git = true;

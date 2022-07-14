@@ -29,7 +29,7 @@ if ($Debug) {
 
 function StagingAlreadyInUse($UserID, $dbh) {
 
-        $UserID = pg_escape_string($UserID);
+        $UserID = pg_escape_string($dbh, $UserID);
 
 	$Result = 1;	// yes, already in progress.
 
@@ -280,7 +280,7 @@ if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 				$ports = $_REQUEST["ports"];
 				# save these things to the watch list
 				# and clear out part of the staging area.
-				$WatchListID = pg_escape_string($_REQUEST['wlid']);
+				$WatchListID = pg_escape_string($dbh, $_REQUEST['wlid']);
 				if (!IsSet($WatchListID) || $WatchListID === '') {
 					syslog(LOG_NOTICE, "No watch list ID was supplied.  I cannot continue.  " .
 					    __FILE__ . '::' . __LINE__ . " User id = " . $User->id);
@@ -310,7 +310,7 @@ if ($Debug) echo '<br>' . __LINE__ . '<br>';
 				if ($Debug) echo 'you selected a list<br>';
 				# they clicked on the GO button and we have to apply the 
 				# watch staging area against the watch list.
-				$WatchListID = pg_escape_string($_REQUEST['wlid']);
+				$WatchListID = pg_escape_string($dbh, $_REQUEST['wlid']);
 				if ($Debug) echo "setting SetLastWatchListChosen => \$wlid='$WatchListID'";
 				$User->SetLastWatchListChosen($WatchListID);
 			} else {
@@ -355,7 +355,7 @@ if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 						if (ProcessPackages($User->id, $PortArray, $db)) {
 if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 							# we are not using the staging list
-							$WatchListID = pg_escape_string($_REQUEST['wlid']);
+							$WatchListID = pg_escape_string($dbh, $_REQUEST['wlid']);
 							if ($Debug) echo ' you clicked on update_watch_list';
 
 							if ($_REQUEST['replaceappend'] == 'replace') {
@@ -421,7 +421,7 @@ if ($Debug) echo '<pre>' . $_REQUEST['copypaste'] . '</pre>';
                   $PortArray = ConvertStringToArray($_REQUEST['copypaste']);
                   if (ProcessPackages($User->id, $PortArray, $db)) {
 #                  if ($Debug) phpinfo();
-					$WatchListID = pg_escape_string($_REQUEST['wlid']);
+					$WatchListID = pg_escape_string($dbh, $_REQUEST['wlid']);
 					if ($_REQUEST['replaceappend'] == 'replace') {
 					  $Overwrite = TRUE;
 					} else {

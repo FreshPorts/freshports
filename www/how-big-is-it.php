@@ -49,7 +49,7 @@ function StatsSQL($db, $Title) {
 	$sql = "select value, date 
              from daily_stats_data, daily_stats 
             where daily_stats_id = daily_stats.id 
-              and daily_stats.title = '" . pg_escape_string($Title) . "' 
+              and daily_stats.title = '" . pg_escape_string($db, $Title) . "' 
          ORDER BY date DESC
             LIMIT 1";
 

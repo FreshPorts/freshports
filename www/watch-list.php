@@ -18,7 +18,7 @@
 	$Debug = 0;
 
 	if ($_POST["Origin"]) {
-		$Origin = pg_escape_string($_POST["Origin"]);
+		$Origin = pg_escape_string($db, $_POST["Origin"]);
 	} else {
 		$Origin = $_SERVER["HTTP_REFERER"] ? $_SERVER["HTTP_REFERER"] : '/';
 	}
@@ -90,14 +90,14 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 			$Action     = "remove";
 			$Verb       = 'removed';
 			$FromTo     = 'from';
-			$Object     = pg_escape_string($_REQUEST["remove"]);
+			$Object     = pg_escape_string($db, $_REQUEST["remove"]);
 		} else {
 			if (IsSet($_REQUEST["add"])) {
 				$ButtonName = "Update";
 				$Action     = "add";
 				$Verb       = 'added';
 				$FromTo     = 'to';
-				$Object     = pg_escape_string($_REQUEST["add"]);
+				$Object     = pg_escape_string($db, $_REQUEST["add"]);
 			} else {
 				die("I don't know whether you are removing or adding, so I'll just stop here shall I?");
 			}
@@ -177,7 +177,7 @@ echo freshports_ShowFooter();
 		if (IsSet($_REQUEST['Update'])) {
 			pg_exec($db, 'BEGIN');
 			$Error = '';
-			$ElementID = pg_escape_string($_REQUEST['Update']);
+			$ElementID = pg_escape_string($db, $_REQUEST['Update']);
 			$WatchListElement = new WatchListElement($db);
 
 			if ($Debug) echo "userid = '$User->id' and ElementID = '$ElementID'<br>";
@@ -214,7 +214,7 @@ echo freshports_ShowFooter();
 			if (IsSet($_REQUEST['add'])) {
 				pg_exec($db, 'BEGIN');
 				$Error = '';
-				$ElementID = pg_escape_string($_REQUEST['add']);
+				$ElementID = pg_escape_string($db, $_REQUEST['add']);
 				if ($ElementID == '') {
 					die('The target for addition was not supplied');
 				}
@@ -229,7 +229,7 @@ echo freshports_ShowFooter();
 			} else {
 				if (IsSet($_REQUEST['remove'])) {
 					pg_exec($db, 'BEGIN');
-					$ElementID = pg_escape_string($_REQUEST['remove']);
+					$ElementID = pg_escape_string($db, $_REQUEST['remove']);
 					if ($ElementID == '') {
 						die('The target for removal was not supplied');
 					}

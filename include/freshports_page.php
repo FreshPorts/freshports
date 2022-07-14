@@ -64,7 +64,7 @@ class freshports_page extends HTML_Page2 {
 
 		$HTML .= freshports_MainTable() . "\n<tr><td class=\"content\">\n" .
 		         freshports_MainContentTable() . "\n<tr>\n" .
-		         freshports_PageBannerText($this->_title);
+		         freshports_PageBannerText($this->getTitle());
 
 		$this->prependBodyContent($HTML);
 

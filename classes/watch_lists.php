@@ -52,8 +52,8 @@ DELETE FROM watch_list
                    NULL as watch_list_count
 			  FROM watch_list LEFT OUTER JOIN watch_list_element
 			    ON watch_list_element.watch_list_id = watch_list.id
-			   AND watch_list_element.element_id    = " . pg_escape_string($element_id) . "
-			 WHERE user_id = " . pg_escape_string($UserID) . "
+			   AND watch_list_element.element_id    = " . pg_escape_string($this->dbh, $element_id) . "
+			 WHERE user_id = " . pg_escape_string($this->dbh, $UserID) . "
 		 GROUP BY id, user_id, name, in_service, element_id, token
 		 ORDER BY name";
 		} else {
@@ -65,7 +65,7 @@ DELETE FROM watch_list
 			       token,
                    NULL as watch_list_count
 			  FROM watch_list
-			 WHERE user_id = " . pg_escape_string($UserID) . "
+			 WHERE user_id = " . pg_escape_string($this->dbh, $UserID) . "
 		 ORDER BY name";
 		}
 
@@ -111,14 +111,14 @@ DELETE FROM watch_list
 		$max = count($WatchListIDs);
 		$sql = 'UPDATE watch_list
 		           SET in_service = FALSE
-		         WHERE user_id = ' . pg_escape_string($UserID);
+		         WHERE user_id = ' . pg_escape_string($this->dbh, $UserID);
 
 		if ($Debug) echo "<pre>$sql</pre>";
 		$result = pg_exec($this->dbh, $sql);
 		if ($result && $max) {
 			$sql = 'UPDATE watch_list
 		           SET in_service = TRUE
-		         WHERE user_id = ' . pg_escape_string($UserID) . '
+		         WHERE user_id = ' . pg_escape_string($this->dbh, $UserID) . '
 		           AND id IN (';
 
 			for ($i = 0; $i < $max; $i++) {
@@ -157,7 +157,7 @@ DELETE FROM watch_list
    SELECT id,
           in_service
      FROM watch_list
-    WHERE user_id = " . pg_escape_string($UserID) . "
+    WHERE user_id = " . pg_escape_string($this->dbh, $UserID) . "
  ORDER BY name";
 
 		if ($Debug) echo "<pre>$sql</pre>";
@@ -198,9 +198,9 @@ DELETE FROM watch_list
 		$sql = "
    SELECT count(WLE.watch_list_id) AS listcount
      FROM watch_list WL, watch_list_element WLE
-    WHERE WL.user_id     = " . pg_escape_string($UserID) . "
+    WHERE WL.user_id     = " . pg_escape_string($this->dbh, $UserID) . "
       AND WL.id          = WLE.watch_list_id
-      AND WLE.element_id = " . pg_escape_string($ElementID);
+      AND WLE.element_id = " . pg_escape_string($this->dbh, $ElementID);
 
       	$ListCount = 0;
 		$result = pg_exec($this->dbh, $sql);

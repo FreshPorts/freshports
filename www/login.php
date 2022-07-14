@@ -82,7 +82,7 @@ if (IsSet($_REQUEST['LOGIN']) && $_REQUEST['UserID']) {
          $Cookie = $user->createUserToken();
          # we should use $user to save this...
 
-         $sql = "UPDATE users SET cookie = '" . pg_escape_string($Cookie) . "' WHERE id = " . pg_escape_string($row['id']);
+         $sql = "UPDATE users SET cookie = '" . pg_escape_string($db, $Cookie) . "' WHERE id = " . pg_escape_string($db, $row['id']);
          # if we were doing this in a user object, we could retry when there was a cookie collision and we get a unique index error
          $result = pg_exec($db, $sql) or die('query failed ' . pg_errormessage());
 
@@ -121,7 +121,7 @@ if (IsSet($_REQUEST['LOGIN']) && $_REQUEST['UserID']) {
 
 if (IsSet($_REQUEST["resend"])) {
 
-   $User = pg_escape_string($_REQUEST["user"]);
+   $User = pg_escape_string($db, $_REQUEST["user"]);
 
    // get user id for that name
    $sql = 'select id from users where lower(name) = lower($1)';

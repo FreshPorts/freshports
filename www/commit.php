@@ -24,8 +24,8 @@
 	$page       = '';
 	$page_size  = '';
 	
-	if (IsSet($_REQUEST['message_id'])) $message_id = pg_escape_string($_REQUEST['message_id']);
-	if (IsSet($_REQUEST['revision']))   $revision   = pg_escape_string($_REQUEST['revision']);
+	if (IsSet($_REQUEST['message_id'])) $message_id = pg_escape_string($db, $_REQUEST['message_id']);
+	if (IsSet($_REQUEST['revision']))   $revision   = pg_escape_string($db, $_REQUEST['revision']);
 
 	$url_query = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
 	parse_str($url_query, $url_args);
@@ -308,11 +308,11 @@
 						$Files->MessageIDSet($message_id);
 						$Files->UserIDSet($User->id);
 						if (IsSet($url_args['category'])) {
-							$Files->CategorySet(pg_escape_string($url_args['category']));
+							$Files->CategorySet(pg_escape_string($database, $url_args['category']));
 						}
 
 						if (IsSet($url_args['port'])) {
-							$Files->PortSet(pg_escape_string($url_args['port']));
+							$Files->PortSet(pg_escape_string($database, $url_args['port']));
 						}
 
 						$NumRows = $Files->Fetch();

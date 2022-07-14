@@ -51,7 +51,7 @@ class freshports_page_list_ports extends freshports_page {
                                                                          LEFT  OUTER JOIN commit_log CL           ON ports.last_commit_id = CL.id
                                                                          LEFT  OUTER JOIN repo R                  ON CL.repo_id = R.id
                                                                          LEFT  OUTER JOIN commit_log_branches CLB ON CL.id            = CLB.commit_log_id
-                                                                                     JOIN system_branch       SB  ON SB.branch_name   = '" . pg_escape_string($this->Branch) . "'
+                                                                                     JOIN system_branch       SB  ON SB.branch_name   = '" . pg_escape_string($this->_db, $this->Branch) . "'
                                                                                                                  AND SB.id            = CLB.branch_id";
           return $_FROM_CLAUSE;
 	}
@@ -60,7 +60,7 @@ class freshports_page_list_ports extends freshports_page {
 
 	  $_WHERE_CLAUSE = " WHERE ports.element_id  = element.id
   AND ports.category_id = categories.id 
-  AND ports.status      = '" . pg_escape_string($this->getStatus()) . "'";
+  AND ports.status      = '" . pg_escape_string($this->_db, $this->getStatus()) . "'";
 
           return $_WHERE_CLAUSE;
         }
@@ -228,7 +228,7 @@ SELECT ports.id,
  (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
     FROM watch_list JOIN watch_list_element
         ON watch_list.id      = watch_list_element.watch_list_id
-       AND watch_list.user_id = ' . pg_escape_string($UserID) . '
+       AND watch_list.user_id = ' . pg_escape_string($this->_db, $UserID) . '
        AND watch_list.in_service
   GROUP BY wle_element_id) AS TEMP
        ON TEMP.wle_element_id = ports.element_id';

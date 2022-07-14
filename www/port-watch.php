@@ -25,7 +25,7 @@
 	$HTML   = '';
 
 	if (IsSet($_POST['submit'])) {
-		$submit = pg_escape_string($_POST['submit']);
+		$submit = pg_escape_string($db, $_POST['submit']);
 	}
 	$visitor = $_COOKIE[USER_COOKIE_NAME];
 
@@ -38,7 +38,7 @@ if (!$visitor) {
 if (IsSet($_REQUEST['wlid'])) {
 		# they clicked on the GO button and we have to apply the 
 		# watch staging area against the watch list.
-		$wlid = pg_escape_string($_REQUEST["wlid"]);
+		$wlid = pg_escape_string($db, $_REQUEST["wlid"]);
 		if ($Debug) echo "setting SetLastWatchListChosen => \$wlid='" . htmlentities($wlid) . "'";
 		$User->SetLastWatchListChosen($wlid);
 		if ($Debug) echo "\$wlid='" . htmlentities($wlid) . "'";
@@ -60,7 +60,7 @@ if (!freshports_IsInt($wlid)) {
 
 $Category = new Category($db);
 if (IsSet($_REQUEST['category'])) {
-	$category = pg_escape_string($_REQUEST['category']);
+	$category = pg_escape_string($db, $_REQUEST['category']);
 
 	$CategoryID = $Category->FetchByName($category);
 	if (!$CategoryID) {

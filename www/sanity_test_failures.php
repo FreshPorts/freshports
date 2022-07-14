@@ -18,7 +18,7 @@
 
 	$message_id = '';
 	if (IsSet($_REQUEST['message_id'])) {
-		$message_id = pg_escape_string($_REQUEST['message_id']);
+		$message_id = pg_escape_string($db, $_REQUEST['message_id']);
 		# avoid path manipulation e.g. ../../
 		# this will come into play when we fetch / save the cached file
 		$message_id = filter_var($message_id, FILTER_SANITIZE_EMAIL);
@@ -63,9 +63,9 @@ $num          = $MaxNumberOfPorts;
 $days         = $NumberOfDays;
 $dailysummary = 7;
 
-if (In_Array('num',          $_REQUEST)) $num		= pg_escape_string($_REQUEST["num"]);
-if (In_Array('dailysummary', $_REQUEST)) $dailysummary	= pg_escape_string($_REQUEST["dailysummary"]);
-if (In_Array('days',         $_REQUEST)) $days		= pg_escape_string($_REQUEST["days"]);
+if (In_Array('num',          $_REQUEST)) $num		= pg_escape_string($db, $_REQUEST["num"]);
+if (In_Array('dailysummary', $_REQUEST)) $dailysummary	= pg_escape_string($db, $_REQUEST["dailysummary"]);
+if (In_Array('days',         $_REQUEST)) $days		= pg_escape_string($db, $_REQUEST["days"]);
 
 
 if (Is_Numeric($num)) {

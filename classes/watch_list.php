@@ -35,7 +35,7 @@ class WatchList {
 
 		$return = 0;
 
-		$Name = pg_escape_string($Name);
+		$Name = pg_escape_string($this->dbh, $Name);
 		
 		$query = "
 SELECT count(watch_list.id), users.max_number_watch_lists
@@ -106,7 +106,7 @@ GROUP BY users.max_number_watch_lists";
 
 		$query  = '
 DELETE FROM watch_list 
- WHERE id = ' . pg_escape_string($WatchListID) .'
+ WHERE id = ' . pg_escape_string($this->dbh, $WatchListID) .'
    AND user_id = ' . $UserID;
 
 		if ($Debug) echo $query;
@@ -206,8 +206,8 @@ DELETE FROM watch_list_element
 
 		$query  = '
 UPDATE watch_list 
-   SET name = \'' . pg_escape_string($NewName) . '\' 
- WHERE id = ' . pg_escape_string($WatchListID) . '
+   SET name = \'' . pg_escape_string($this->dbh, $NewName) . '\' 
+ WHERE id = ' . pg_escape_string($this->dbh, $WatchListID) . '
    AND watch_list.user_id = ' . $UserID;
 		if ($Debug) echo $query;
 		$result = pg_query($this->dbh, $query);
@@ -232,8 +232,8 @@ UPDATE watch_list
 		       token,
                NULL as watch_list_count
 		  FROM watch_list
-		 WHERE id      = " . pg_escape_string($ID) . "
-		   AND user_id = " . pg_escape_string($UserID);
+		 WHERE id      = " . pg_escape_string($this->dbh, $ID) . "
+		   AND user_id = " . pg_escape_string($this->dbh, $UserID);
 
 #		echo '<pre>' . $sql . '</pre>';
 

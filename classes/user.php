@@ -54,7 +54,7 @@ class User {
 		$sql = "
 		SELECT *
 		  FROM users
-		 WHERE id = " . pg_escape_string($ID);
+		 WHERE id = " . pg_escape_string($this->dbh, $ID);
 
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {
@@ -74,7 +74,7 @@ class User {
 	function FetchByCookie($Cookie) {
 		$sql = "SELECT users.*
 		          FROM users
-				 WHERE cookie = '" . pg_escape_string($Cookie) . "'";
+				 WHERE cookie = '" . pg_escape_string($this->dbh, $Cookie) . "'";
 
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {
@@ -138,13 +138,13 @@ class User {
 	function SetWatchListAddRemove($WatchListAddRemove) {
 		
 		$sql = 'UPDATE users 
-		          set watch_list_add_remove = \'' . pg_escape_string($WatchListAddRemove) . '\'
+		          set watch_list_add_remove = \'' . pg_escape_string($this->dbh, $WatchListAddRemove) . '\'
 		        WHERE id                    =   ' . $this->id;
 
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {
 			$numrows = pg_affected_rows($this->LocalResult);
-			$this->watch_list_add_remove = pg_escape_string($WatchListAddRemove);
+			$this->watch_list_add_remove = pg_escape_string($this->dbh, $WatchListAddRemove);
 		} else {
 			$numrows = -1;
 			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': ' . pg_last_error());
@@ -167,7 +167,7 @@ class User {
 		$this->LocalResult = pg_query_params($this->dbh, $sql, array($WatchListID, $this->id));
 		if ($this->LocalResult) {
 			$numrows = pg_affected_rows($this->LocalResult);
-			$this->last_watch_list_chosen = pg_escape_string($WatchListID);
+			$this->last_watch_list_chosen = pg_escape_string($this->dbh, $WatchListID);
 		} else {
 			$numrows = -1;
 			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': ' . pg_last_error());

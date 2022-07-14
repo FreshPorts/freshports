@@ -34,7 +34,7 @@
 	if (IsSet($_POST["watch_list_select_x"]) && IsSet($_POST["watch_list_select_y"])) {
 		# they clicked on the GO button and we have to apply the 
 		# watch staging area against the watch list.
-		$wlid = pg_escape_string($_POST["wlid"]);
+		$wlid = pg_escape_string($db, $_POST["wlid"]);
 		if ($Debug) echo "setting SetLastWatchListChosen => \$wlid='$wlid'";
 		$User->SetLastWatchListChosen($wlid);
 		if ($Debug) echo "\$wlid='$wlid'";
@@ -237,7 +237,7 @@ if ($wlid != '') {
 	 WHERE ports.category_id                = categories.id 
 	   and watch_list_element.element_id    = ports.element_id 
 		and ports.element_id                 = element.id
-	   and watch_list_element.watch_list_id = " . pg_escape_string($wlid) . "
+	   and watch_list_element.watch_list_id = " . pg_escape_string($db, $wlid) . "
 	
 	
 	) as TEMP

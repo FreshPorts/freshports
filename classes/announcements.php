@@ -77,7 +77,7 @@ class Announcement {
 
 		$sql = '
 DELETE from announcements
- WHERE id = ' . pg_escape_string($this->id);
+ WHERE id = ' . pg_escape_string($this->dbh, $this->id);
 
 		$this->result = pg_exec($this->dbh, $sql);
 		if (!$this->result) {
@@ -102,14 +102,14 @@ DELETE from announcements
 			$sql .= ', end_date';
 		}
 
-		$sql .= ") values ('" . pg_escape_string($this->text) . "', '" . pg_escape_string($this->text_plain) . "'";
+		$sql .= ") values ('" . pg_escape_string($this->dbh, $this->text) . "', '" . pg_escape_string($this->dbh, $this->text_plain) . "'";
 
 		if ($this->start_date != '') {
-			$sql .= ", '" . pg_escape_string($this->start_date) . "'";
+			$sql .= ", '" . pg_escape_string($this->dbh, $this->start_date) . "'";
 		}
 
 		if ($this->end_date != '') {
-			$sql .= ", '" . pg_escape_string($this->end_date) . "'";
+			$sql .= ", '" . pg_escape_string($this->dbh, $this->end_date) . "'";
 		}
 
 		$sql .= ")";
@@ -129,23 +129,23 @@ DELETE from announcements
 	function Update() {
 		# delete the ignore entry for this commit/port combination
 
-		$sql = "UPDATE announcements set text = '" . pg_escape_string($this->text) . 
-		          "', text_plain = '" . pg_escape_string($this->text_plain) . "', start_date = ";
+		$sql = "UPDATE announcements set text = '" . pg_escape_string($this->dbh, $this->text) . 
+		          "', text_plain = '" . pg_escape_string($this->dbh, $this->text_plain) . "', start_date = ";
 
 		if ($this->start_date != '') {
-			$sql .= "'" . pg_escape_string($this->start_date) . "'";
+			$sql .= "'" . pg_escape_string($this->dbh, $this->start_date) . "'";
 		} else {
 			$sql .= 'NULL';
 		}
 
 		$sql .= ", end_date = ";		
 		if ($this->end_date != '') {
-			$sql .= "'" . pg_escape_string($this->end_date) . "'";
+			$sql .= "'" . pg_escape_string($this->dbh, $this->end_date) . "'";
 		} else {
 			$sql .= 'NULL';
 		}
 
-		$sql .= ' where id = ' . pg_escape_string($this->id);
+		$sql .= ' where id = ' . pg_escape_string($this->dbh, $this->id);
 
 #		echo "<pre>$sql</pre>";
 
@@ -164,7 +164,7 @@ DELETE from announcements
 		$sql = '
 SELECT *
   FROM announcements
- WHERE id = ' . pg_escape_string($id);
+ WHERE id = ' . pg_escape_string($this->dbh, $id);
 
 #		echo "sql = '<pre>$sql</pre>'<BR>";
 

@@ -33,11 +33,11 @@
 	require_once('/usr/local/share/UniversalFeedCreator/lib/UniversalFeedCreator.php'); 
 	require_once('/usr/local/share/UniversalFeedCreator/lib/constants.php'); 
 	
-function newsfeed($db, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $Flavor = '') { # $OrderBy = '', $Where = '') {
+function newsfeed($dbh, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $Flavor = '') { # $OrderBy = '', $Where = '') {
 
-	$WatchListID = pg_escape_string($WatchListID);
-	$Format      = pg_escape_string($Format);
-	$Flavor      = pg_escape_string($Flavor);
+	$WatchListID = pg_escape_string($dbh, $WatchListID);
+	$Format      = pg_escape_string($dbh, $Format);
+	$Flavor      = pg_escape_string($dbh, $Flavor);
 
 	$PHP_SELF = $_SERVER['PHP_SELF'];
 
@@ -52,7 +52,7 @@ function newsfeed($db, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $Fl
 		}
 	}
 
-	$MaxNumberOfPorts = pg_escape_string(MAX_PORTS);
+	$MaxNumberOfPorts = pg_escape_string($dbh, MAX_PORTS);
 
 	$rss = new UniversalFeedCreator(); 
 
@@ -131,7 +131,7 @@ function newsfeed($db, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $Fl
        AND P.element_id      = WLE.element_id
 	   AND P.element_id      = E.id
 	   AND P.category_id     = C.id 
-	   AND WLE.watch_list_id = " . pg_escape_string($WatchListID) .  ' ';
+	   AND WLE.watch_list_id = " . pg_escape_string($dbh, $WatchListID) .  ' ';
 	   
 	} else {
 		switch ($Flavor) {
@@ -312,7 +312,7 @@ ORDER BY CL.commit_date;
 	$ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['HTTP_HOST']);
 	
 	# get the results
-	$result = pg_query($db, $sql);
+	$result = pg_query($dbh, $sql);
 	if (!$result) {
 		syslog(LOG_ERR, 'sql error ' . pg_result_error($result));
 
@@ -328,7 +328,7 @@ ORDER BY CL.commit_date;
 			case 'new':
 			case 'vuln':
 				# this is a relative link
-				$link        = freshports_Port_URL($myrow['category'], $myrow['port'], $BranchName);;
+				$link        = freshports_Port_URL($dbh, $myrow['category'], $myrow['port'], $BranchName);;
 				$date        = $myrow['date_added'];
 				$author      = $myrow['maintainer'];
 				$description = $myrow['short_description'];

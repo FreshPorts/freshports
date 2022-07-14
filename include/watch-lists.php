@@ -39,7 +39,7 @@
 		if ($NumRows) {
 			for ($i = 0; $i < $NumRows; $i++) {
 				$WatchList = $WatchLists->FetchNth($i);
-				$HTML .= '<option value="' . htmlspecialchars(pg_escape_string($WatchList->id)) . '"';
+				$HTML .= '<option value="' . htmlspecialchars(pg_escape_string($dbh, $WatchList->id)) . '"';
 				if ($selected == '') {
 					if ($element_id && $WatchList->watch_list_count > 0) {
 						$HTML .= ' selected';
@@ -49,7 +49,7 @@
 						$HTML .= ' selected';
 					}
 				}
-				$HTML .= '>' . htmlspecialchars(pg_escape_string($WatchList->name));
+				$HTML .= '>' . htmlspecialchars(pg_escape_string($dbh, $WatchList->name));
 				if ($show_active && $WatchList->in_service == 't') {
 					$HTML .= '*';
 				}
@@ -89,12 +89,12 @@ $HTML .=  '
 
 }
 
-function freshports_WatchListCountDefault($db, $UserID) {
-	$sql = "select WatchListCountDefault(" . pg_escape_string($UserID) . ") as count";
+function freshports_WatchListCountDefault($dbh, $UserID) {
+	$sql = "select WatchListCountDefault(" . pg_escape_string($dbh, $UserID) . ") as count";
 
 #	echo $sql;
 
-	$result = pg_exec($db, $sql);
+	$result = pg_exec($dbh, $sql);
 	if (!$result) {
 		echo "error " . pg_errormessage();
 		exit;
@@ -107,14 +107,14 @@ function freshports_WatchListCountDefault($db, $UserID) {
 	return $myrow["count"];
 }
 
-function freshports_WatchListVerifyToken($db, $token) {
+function freshports_WatchListVerifyToken($dbh, $token) {
 	$id = '';
 
-	$sql = "SELECT id from watch_list where token = '" . pg_escape_string($token) . "'";
+	$sql = "SELECT id from watch_list where token = '" . pg_escape_string($dbh, $token) . "'";
 
 #	echo $sql;
 
-	$result = pg_exec($db, $sql);
+	$result = pg_exec($dbh, $sql);
 	if ($result) {
 		$numrows = pg_num_rows($result);
 		switch ($numrows) {

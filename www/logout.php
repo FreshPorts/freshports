@@ -17,7 +17,7 @@
 	if (IsSet($_COOKIE[USER_COOKIE_NAME])) {
 		$visitor = $_COOKIE[USER_COOKIE_NAME];
 
-		$sql = "UPDATE users SET cookie = 'nocookie' WHERE cookie = '" . pg_escape_string($_COOKIE[USER_COOKIE_NAME]) . "'";
+		$sql = "UPDATE users SET cookie = 'nocookie' WHERE cookie = '" . pg_escape_string($db, $_COOKIE[USER_COOKIE_NAME]) . "'";
 		#echo $sql;
 		$result = pg_exec($db, $sql);
 	}

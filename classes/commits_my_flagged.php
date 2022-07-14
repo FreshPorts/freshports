@@ -24,7 +24,7 @@ class CommitsMyFlagged extends commits {
 	function GetCountCommits() {
 		$count = 0;
 		
-		$sql = "select count(*) as count from commits_flagged where user_id = '" . pg_escape_string($this->UserID) . "'";
+		$sql = "select count(*) as count from commits_flagged where user_id = '" . pg_escape_string($this->dbh, $this->UserID) . "'";
 		if ($this->Debug) echo "<pre>$sql</pre>";
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
@@ -46,7 +46,7 @@ class CommitsMyFlagged extends commits {
 		  FROM commit_log CL, commit_log_ports CLP, commits_flagged CF
 		 WHERE CL.id      = CF.commit_log_id
 		   AND CL.id      = CLP.commit_log_id
-		   AND CF.user_id = '" . pg_escape_string($this->UserID) . "'";
+		   AND CF.user_id = '" . pg_escape_string($this->dbh, $this->UserID) . "'";
 
 		if ($this->Debug) echo "<pre>$sql</pre>";
 		$result = pg_exec($this->dbh, $sql);
@@ -69,7 +69,7 @@ class CommitsMyFlagged extends commits {
 		  FROM commit_log CL, commit_log_ports CLP, commits_flagged CF
 		 WHERE CL.id      = CF.commit_log_id
 		   AND CL.id      = CLP.commit_log_id
-		   AND CF.user_id = '" . pg_escape_string($this->UserID) . "'";
+		   AND CF.user_id = '" . pg_escape_string($this->dbh, $this->UserID) . "'";
 		;
 		if ($this->Debug) echo "<pre>$sql</pre>";
 		$result = pg_exec($this->dbh, $sql);
@@ -147,7 +147,7 @@ class CommitsMyFlagged extends commits {
 	    AND commit_log_ports.port_id       = ports.id
 	    AND categories.id                  = ports.category_id
 	    AND element.id                     = ports.element_id
-	    AND CF.user_id                     = " . pg_escape_string($this->UserID) . "
+	    AND CF.user_id                     = " . pg_escape_string($this->dbh, $this->UserID) . "
 	    AND CF.commit_log_id               = commit_log.id
    ORDER BY 1 desc,
 			commit_log_id,
@@ -155,11 +155,11 @@ class CommitsMyFlagged extends commits {
 			port";
 			
 		if ($this->Limit) {
-			$sql .= " LIMIT " . pg_escape_string($this->Limit);
+			$sql .= " LIMIT " . pg_escape_string($this->dbh, $this->Limit);
 		}
 		
 		if ($this->Offset) {
-			$sql .= " OFFSET " . pg_escape_string($this->Offset);
+			$sql .= " OFFSET " . pg_escape_string($this->dbh, $this->Offset);
 		}
 
 

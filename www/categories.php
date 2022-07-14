@@ -81,7 +81,7 @@ You can sort each column by clicking on the header.  e.g. click on <strong>Categ
 <table class="category-list fullwidth bordered">
 
 <?php
-$sort = IsSet($_REQUEST['sort']) ? pg_escape_string($_REQUEST['sort']) : '';
+$sort = IsSet($_REQUEST['sort']) ? pg_escape_string($db, $_REQUEST['sort']) : '';
 
 switch ($sort) {
    case 'category':
@@ -109,7 +109,7 @@ $sql = "
          CS.port_count          AS count
     FROM categories C JOIN category_stats CS ON (C.id = CS.category_id)";
 
-$sql .=  " ORDER BY " . pg_escape_string($sort);
+$sql .=  " ORDER BY " . pg_escape_string($db, $sort);
 
 if ($Debug) echo '<pre>' . $sql, "</pre>\n";
 //echo $sort, "\n";

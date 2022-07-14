@@ -53,7 +53,7 @@ function Cleanup() {
 */
 function IsLoginValid($user, $pw, &$retval) {
 	$retval = false;
-	$query = "select IsLoginValid('" . pg_escape_string($user) . "','" . pg_escape_string($pw) . "')";
+	$query = "select IsLoginValid('" . pg_escape_string($database, $user) . "','" . pg_escape_string($database, $pw) . "')";
 	$database =& DBConnect();
 
 	if ($database) {
@@ -80,7 +80,7 @@ function IsLoginValid($user, $pw, &$retval) {
 */
 function CleanPorts($watchID) {
 	$retval = true;
-	$query = "delete from watch_list_element where watch_list_id = " . pg_escape_string($watchID);
+	$query = "delete from watch_list_element where watch_list_id = " . pg_escape_string($database, $watchID);
 	$database =& DBConnect();
 
 	echo "Cleaning out old ports<BR>\n";
@@ -121,7 +121,7 @@ function AddPortsToList($ports, $userID) {
 		}
 		// optimize this
 		foreach ($ports as $port) {
-			$query = "select WatchListAdd(" . pg_escape_string($userID) . ", '" . pg_escape_string($port) . "')";
+			$query = "select WatchListAdd(" . pg_escape_string($database, $userID) . ", '" . pg_escape_string($database, $port) . "')";
 			$result = @pg_exec($database, $query);
 
 			if (!$result) {

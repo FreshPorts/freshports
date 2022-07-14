@@ -48,8 +48,8 @@ class PortDependencies {
          LEFT OUTER JOIN ports      ON ports.id         = port_dependencies.port_id
          LEFT OUTER JOIN categories ON categories.id    = ports.category_id
          LEFT OUTER JOIN element    ON ports.element_id = element.id
-   WHERE port_id_dependent_upon = " . pg_escape_string($PortID) . "
-     AND dependency_type = '" . pg_escape_string($depends_type) . "'
+   WHERE port_id_dependent_upon = " . pg_escape_string($this->dbh, $PortID) . "
+     AND dependency_type = '" . pg_escape_string($this->dbh, $depends_type) . "'
 ORDER BY status, category, port ";
 
 		if ($Debug) echo "<pre>$sql</pre>";

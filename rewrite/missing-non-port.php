@@ -12,7 +12,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/cache-file.php');
 	require_once('Pager/Pager.php');
 	
-function freshports_NonPortDescription($db, $element_record) {
+function freshports_NonPortDescription($dbh, $element_record) {
 	GLOBAL $FreshPortsTitle;
 
 	$Debug = 0;
@@ -103,7 +103,7 @@ function freshports_NonPortDescription($db, $element_record) {
 		}
 
 		if ($User->id) {
-			$OnWatchList = freshports_OnWatchList($db, $User->id, $ElementID);
+			$OnWatchList = freshports_OnWatchList($dbh, $User->id, $ElementID);
 		} else {
 			$OnWatchList = 0;
 		}
@@ -114,11 +114,11 @@ function freshports_NonPortDescription($db, $element_record) {
 		$HTML = '';
 
 
-	$Commits = new CommitsByTreeLocation($db);
+	$Commits = new CommitsByTreeLocation($dbh);
 	$Commits->SetLimit($Cache->PageSize);
 	$Commits->Debug = $Debug;
 	$Commits->UserIDSet($User->id);
-	$Commits->TreePathConditionSet("= '" . pg_escape_string($element_record->element_pathname) . "'");
+	$Commits->TreePathConditionSet("= '" . pg_escape_string($dbh, $element_record->element_pathname) . "'");
     
 	#	
 	# get the count without excuting the whole query
@@ -180,7 +180,7 @@ function freshports_NonPortDescription($db, $element_record) {
 	if ($Commits->Debug) echo "PageNumber='$PageNumber'<br>Offset='$Offset'<br>";
 
 	$NumFetches = $Commits->Fetch();
-	$DisplayCommit = new DisplayCommit($db, $Commits->LocalResult);
+	$DisplayCommit = new DisplayCommit($dbh, $Commits->LocalResult);
 	$HTML .= $DisplayCommit->CreateHTML();
 
 	$HTML .= $NumCommitsHTML;

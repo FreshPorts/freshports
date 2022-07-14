@@ -21,7 +21,7 @@
 	$visitor	= $_COOKIE[USER_COOKIE_NAME];
 
 if ($submit) {
-   $sql = "update users set emailbouncecount = 0 where cookie = '" . pg_escape_string($visitor) . "'";
+   $sql = "update users set emailbouncecount = 0 where cookie = '" . pg_escape_string($db, $visitor) . "'";
    if ($Debug) {
       echo $sql;
    }

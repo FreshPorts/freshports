@@ -2,13 +2,14 @@
 	#
 	# $Id: forgotten-password.php,v 1.3 2010-09-17 14:38:29 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2022 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
-	require_once('/usr/local/share/phpmailer/PHPMailerAutoload.php');
+	require_once('/usr/local/share/phpmailer/PHPMailer.php');
+	require_once('/usr/local/share/phpmailer/SMTP.php');
 
 	if (IN_MAINTENCE_MODE) {
                 header('Location: /' . MAINTENANCE_PAGE, TRUE, 307);
@@ -120,7 +121,7 @@ if (IsSet($submit)) {
                      "the request came from " . $_SERVER["REMOTE_ADDR"] . ':' . $_SERVER["REMOTE_PORT"];
 
           try {
-            $mail = new PHPMailer;
+            $mail = new PHPMailer\PHPMailer\PHPMailer;
 
             // Settings
             $mail->IsSMTP();

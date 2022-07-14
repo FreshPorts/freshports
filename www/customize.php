@@ -2,7 +2,7 @@
 	#
 	# $Id: customize.php,v 1.3 2008-08-06 13:36:16 dan Exp $
 	#
-	# Copyright (c) 1998-2004 DVL Software Limited
+	# Copyright (c) 1998-2022 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
@@ -45,9 +45,9 @@ if (IsSet($submit)) {
 
 	# this is a checkbox
 	if (IsSet($_POST['set_focus_search'])) {
-		$set_focus_search = 'true';
+		$set_focus_search = true;
 	} else {
-		$set_focus_search = 'false';
+		$set_focus_search = false;
 	}
 
 	if (!is_numeric($numberofdays) || $numberofdays < 0 || $numberofdays > 9) {

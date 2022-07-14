@@ -2,8 +2,16 @@
 	#
 	# $Id: new-user.php,v 1.3 2011-08-21 15:10:59 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2022 DVL Software Limited
 	#
+	
+	
+	# These are customization features (see www/customize.php) and are needed
+	# by include/new-user.php - but with a new user, they must be set here.
+	$set_focus_search = $set_focus_search ?? false;
+	$page_size        = $page_size        ?? 0;
+	$numberofdays     = $numberofdays     ?? 0;
+
 
 ?>
 

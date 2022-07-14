@@ -2,7 +2,7 @@
 	#
 	# $Id: freshports.php,v 1.51 2013-05-12 14:47:12 dan Exp $
 	#
-	# Copyright (c) 1998-2007 DVL Software Limited
+	# Copyright (c) 1998-2022 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
@@ -13,7 +13,8 @@
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/announcements.php');
 	}
 
-	require_once('/usr/local/share/phpmailer/PHPMailerAutoload.php');
+	require_once('/usr/local/share/phpmailer/PHPMailer.php');
+	require_once('/usr/local/share/phpmailer/SMTP.php');
 
 #
 # special HTMLified mailto to foil spam harvesters
@@ -1769,7 +1770,7 @@ function freshports_UserSendToken($UserID, $dbh) {
 		           "FreshPorts - https://" . $_SERVER["HTTP_HOST"] . "/ -- $FreshPortsSlogan";
 
                 try {
-                  $mail = new PHPMailer;
+                  $mail = new PHPMailer\PHPMailer\PHPMailer;
 
                   // Settings
                   $mail->IsSMTP();
@@ -2458,7 +2459,7 @@ function getLoginDetails($dbh, $statementName, $UserID, $Password) {
 
   $sql = 'select *, password_hash not like \'$2_$' . PW_HASH_COST . '$%\' as insecure_hash ' .
     'from users where lower(name) = lower($1) and password_hash = crypt($2, password_hash)';
-  if ($Debug || 0) {
+  if (IsSet($Debug) && $Debug || 0) {
     echo '<pre>' . htmlentities($sql) . '<pre>';
   }
 

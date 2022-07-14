@@ -2,7 +2,7 @@
 	#
 	# $Id: cache-port.php,v 1.6 2007-06-04 02:16:33 dan Exp $
 	#
-	# Copyright (c) 2006-2007 DVL Software Limited
+	# Copyright (c) 2006-2022 DVL Software Limited
 	#
 
 	require_once('cache-port.php');
@@ -11,13 +11,6 @@
 // base class for caching
 // Supplies methods for adding, removing, and retrieving.
 //
-
-if (!defined('CACHE_PORT_COMMITS')) {
-	define('CACHE_PORT_COMMITS', 'Commits');
-}
-if (!defined('CACHE_PORT_DETAIL')) {
-	define('CACHE_PORT_DETAIL',  'Detail');
-}
 
 class CachePortPackages extends Cache {
 

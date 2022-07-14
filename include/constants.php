@@ -2,7 +2,7 @@
 	#
 	# $Id: constants.php,v 1.6 2012-12-21 18:20:53 dan Exp $
 	#
-	# Copyright (c) 1998-2006 DVL Software Limited
+	# Copyright (c) 1998-2022 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');

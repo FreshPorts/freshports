@@ -62,98 +62,98 @@
 		}
 	}
 
-define('SEARCH_FIELD_COMMITMESSAGE',        'commitmessage');
-define('SEARCH_FIELD_COMMITTER',            'committer');
-define('SEARCH_FIELD_DEPENDS_ALL',          'depends_all');
-define('SEARCH_FIELD_DEPENDS_BUILD',        'depends_build');
-define('SEARCH_FIELD_DEPENDS_LIB',          'depends_lib');
-define('SEARCH_FIELD_DEPENDS_RUN',          'depends_run');
-define('SEARCH_FIELD_LATEST_LINK',          'latest_link');
-define('SEARCH_FIELD_LONGDESCRIPTION',      'longdescription');
-define('SEARCH_FIELD_LICENSE_PERMS',        'license_perms');
-define('SEARCH_FIELD_LICENSE_RESTRICTED',   'license_restricted');
-define('SEARCH_FIELD_MAINTAINER',           'maintainer');
-define('SEARCH_FIELD_MAKEFILE',             'makefile');
-define('SEARCH_FIELD_MESSAGEID',            'message_id');
-define('SEARCH_FIELD_MANUAL_PACKAGE_BUILD', 'manual_pacakge_bulid');
-define('SEARCH_FIELD_NAME',                 'name');
-define('SEARCH_FIELD_PACKAGE',              'package');
-define('SEARCH_FIELD_PATHNAME',             'tree');
-define('SEARCH_FIELD_PKG_MESSAGE',          'pkg-message');
-define('SEARCH_FIELD_PKG_PLIST',            'pkg-plist');
-define('SEARCH_FIELD_SHORTDESCRIPTION',     'shortdescription');
+	define('SEARCH_FIELD_COMMITMESSAGE',        'commitmessage');
+	define('SEARCH_FIELD_COMMITTER',            'committer');
+	define('SEARCH_FIELD_DEPENDS_ALL',          'depends_all');
+	define('SEARCH_FIELD_DEPENDS_BUILD',        'depends_build');
+	define('SEARCH_FIELD_DEPENDS_LIB',          'depends_lib');
+	define('SEARCH_FIELD_DEPENDS_RUN',          'depends_run');
+	define('SEARCH_FIELD_LATEST_LINK',          'latest_link');
+	define('SEARCH_FIELD_LONGDESCRIPTION',      'longdescription');
+	define('SEARCH_FIELD_LICENSE_PERMS',        'license_perms');
+	define('SEARCH_FIELD_LICENSE_RESTRICTED',   'license_restricted');
+	define('SEARCH_FIELD_MAINTAINER',           'maintainer');
+	define('SEARCH_FIELD_MAKEFILE',             'makefile');
+	define('SEARCH_FIELD_MESSAGEID',            'message_id');
+	define('SEARCH_FIELD_MANUAL_PACKAGE_BUILD', 'manual_pacakge_bulid');
+	define('SEARCH_FIELD_NAME',                 'name');
+	define('SEARCH_FIELD_PACKAGE',              'package');
+	define('SEARCH_FIELD_PATHNAME',             'tree');
+	define('SEARCH_FIELD_PKG_MESSAGE',          'pkg-message');
+	define('SEARCH_FIELD_PKG_PLIST',            'pkg-plist');
+	define('SEARCH_FIELD_SHORTDESCRIPTION',     'shortdescription');
 
 	
-$SearchTypeToFieldMap = array(
-    SEARCH_FIELD_COMMITMESSAGE        => 'CL.description',
-    SEARCH_FIELD_COMMITTER            => 'CL.committer',
-    SEARCH_FIELD_DEPENDS_ALL          => 'P.depends_all',
-    SEARCH_FIELD_DEPENDS_BUILD        => 'P.depends_build',
-    SEARCH_FIELD_DEPENDS_LIB          => 'P.depends_lib',
-    SEARCH_FIELD_DEPENDS_RUN          => 'P.depends_run',
-    SEARCH_FIELD_LATEST_LINK          => 'P.latest_link',
-    SEARCH_FIELD_LONGDESCRIPTION      => 'P.long_description',
-    SEARCH_FIELD_LICENSE_PERMS        => 'P.license_perms',
-    SEARCH_FIELD_LICENSE_RESTRICTED   => 'P.license_restricted',
-    SEARCH_FIELD_MAINTAINER           => 'P.maintainer',
-    SEARCH_FIELD_MAKEFILE             => 'P.makefile',
-    SEARCH_FIELD_MANUAL_PACKAGE_BUILD => 'P.manual_package_build',
-    SEARCH_FIELD_NAME                 => 'E.name',
-    SEARCH_FIELD_PACKAGE              => 'P.package_name',
-    SEARCH_FIELD_PKG_PLIST            => 'P.pkg_plist',
-    SEARCH_FIELD_PKG_MESSAGE          => 'P.pkgmessage',
-    SEARCH_FIELD_PATHNAME             => 'EP.pathname',
-    SEARCH_FIELD_SHORTDESCRIPTION     => 'P.short_description',
-);
+	$SearchTypeToFieldMap = array(
+	    SEARCH_FIELD_COMMITMESSAGE        => 'CL.description',
+	    SEARCH_FIELD_COMMITTER            => 'CL.committer',
+	    SEARCH_FIELD_DEPENDS_ALL          => 'P.depends_all',
+	    SEARCH_FIELD_DEPENDS_BUILD        => 'P.depends_build',
+	    SEARCH_FIELD_DEPENDS_LIB          => 'P.depends_lib',
+	    SEARCH_FIELD_DEPENDS_RUN          => 'P.depends_run',
+	    SEARCH_FIELD_LATEST_LINK          => 'P.latest_link',
+	    SEARCH_FIELD_LONGDESCRIPTION      => 'P.long_description',
+	    SEARCH_FIELD_LICENSE_PERMS        => 'P.license_perms',
+	    SEARCH_FIELD_LICENSE_RESTRICTED   => 'P.license_restricted',
+	    SEARCH_FIELD_MAINTAINER           => 'P.maintainer',
+	    SEARCH_FIELD_MAKEFILE             => 'P.makefile',
+	    SEARCH_FIELD_MANUAL_PACKAGE_BUILD => 'P.manual_package_build',
+	    SEARCH_FIELD_NAME                 => 'E.name',
+	    SEARCH_FIELD_PACKAGE              => 'P.package_name',
+	    SEARCH_FIELD_PKG_PLIST            => 'P.pkg_plist',
+	    SEARCH_FIELD_PKG_MESSAGE          => 'P.pkgmessage',
+	    SEARCH_FIELD_PATHNAME             => 'EP.pathname',
+	    SEARCH_FIELD_SHORTDESCRIPTION     => 'P.short_description',
+	);
 
-$sqlExtraFields = ''; # will hold extra fields we need, such as watch list
-                      # or soundex function needed for ORDER BY
+	$sqlExtraFields = ''; # will hold extra fields we need, such as watch list
+	                      # or soundex function needed for ORDER BY
 
-function Category_Ports_To_In_Clause($a_Ports) {
-  # convert: graphics/acidwarp-sdl devel/gitlab-runner games/ace-of-penguins devel/py-pytest-rerunfailures
-  #      to: IN ('/ports/head/graphics/acidwarp-sdl', '/ports/head/devel/gitlab-runner', '/ports/head/games/ace-of-penguins', '/ports/head/devel/py-pytest-rerunfailures')
-  # for use in searching.
-  #
+	function Category_Ports_To_In_Clause($a_Ports) {
+	  # convert: graphics/acidwarp-sdl devel/gitlab-runner games/ace-of-penguins devel/py-pytest-rerunfailures
+	  #      to: IN ('/ports/head/graphics/acidwarp-sdl', '/ports/head/devel/gitlab-runner', '/ports/head/games/ace-of-penguins', '/ports/head/devel/py-pytest-rerunfailures')
+	  # for use in searching.
+	  #
 
-  $ports = explode(' ', $a_Ports);
+	  $ports = explode(' ', $a_Ports);
 
-  $where = 'IN (';
-  foreach($ports as &$port) {
-    $port = '/ports/head/' . pg_escape_string($db, $port);
-  }
-  $where .= ')';
+	  $where = 'IN (';
+	  foreach($ports as &$port) {
+	    $port = '/ports/head/' . pg_escape_string($db, $port);
+	  }
+	  $where .= ')';
 
-  $where = "IN ('" . implode("', '", $ports) . "')";
+	  $where = "IN ('" . implode("', '", $ports) . "')";
 
-  return $where;
-}
-
-
-function WildCardQuery($db, $stype, $Like, $query) {
-  GLOBAL $SearchTypeToFieldMap;
-  # return the clause for this particular type of query
-  $sql = '';
-
-  switch ($stype) {
-    case SEARCH_FIELD_PATHNAME:
-      $sql .= " $Like '" . pg_escape_string($db, $query) . "'";
-      break;
-
-    case SEARCH_FIELD_DEPENDS_ALL:
-      $sql .= "\n     (P.depends_build $Like '" . pg_escape_string($db, $query) . "' OR P.depends_lib $Like '" . pg_escape_string($db, $query) . "' OR P.depends_run $Like '" . pg_escape_string($db, $query) . "')";
-      break;
-
-    default:
-      if (!IsSet($SearchTypeToFieldMap[$stype])) {
-        syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . " unknown stype supplied: '$stype'");
-        $stype = SEARCH_FIELD_NAME;
-      }
-      $sql .= "\n     " .  $SearchTypeToFieldMap[$stype] . " $Like '" . pg_escape_string($db, $query) . "'";
-      break;
+	  return $where;
 	}
 
-	return $sql;
-}
+
+	function WildCardQuery($db, $stype, $Like, $query) {
+	  GLOBAL $SearchTypeToFieldMap;
+	  # return the clause for this particular type of query
+	  $sql = '';
+	
+	  switch ($stype) {
+	    case SEARCH_FIELD_PATHNAME:
+	      $sql .= " $Like '" . pg_escape_string($db, $query) . "'";
+	      break;
+
+	    case SEARCH_FIELD_DEPENDS_ALL:
+	      $sql .= "\n     (P.depends_build $Like '" . pg_escape_string($db, $query) . "' OR P.depends_lib $Like '" . pg_escape_string($db, $query) . "' OR P.depends_run $Like '" . pg_escape_string($db, $query) . "')";
+	      break;
+
+	    default:
+	      if (!IsSet($SearchTypeToFieldMap[$stype])) {
+	        syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . " unknown stype supplied: '$stype'");
+	        $stype = SEARCH_FIELD_NAME;
+	      }
+	      $sql .= "\n     " .  $SearchTypeToFieldMap[$stype] . " $Like '" . pg_escape_string($db, $query) . "'";
+	      break;
+		}
+
+		return $sql;
+	}
 
 	#
 	# I became annoyed with people creating their own search pages instead of using
@@ -239,15 +239,16 @@ function WildCardQuery($db, $stype, $Like, $query) {
 		case SEARCH_FIELD_PKG_PLIST:
 		case SEARCH_FIELD_PKG_MESSAGE:
 		case SEARCH_FIELD_SHORTDESCRIPTION:
-          # all is well.  we have a valid value.
-          break;
+	          # all is well.  we have a valid value.
+	          break;
 
-        default:
-          # bad value.
-          # ERROR
-          syslog(LOG_ERR, 'bad search string: ' . $stype);
-          $type = SEARCH_FIELD_NAME;
-    }
+	        default:
+	          # bad value.
+	          # ERROR
+	          syslog(LOG_ERR, 'bad search string: ' . $stype);
+	          $type = SEARCH_FIELD_NAME;
+	}
+
 	#
 	# ensure deleted has an appropriate value
 	#
@@ -275,271 +276,270 @@ function WildCardQuery($db, $stype, $Like, $query) {
 			# do not break here...
 	}
 
-// validate $output_format
-switch ($output_format) {
-	case OUTPUT_FORMAT_HTML:
-	case OUTPUT_FORMAT_PLAIN_TEXT:
-	case OUTPUT_FORMAT_DEPENDS:
-		# valid; do nothing
-		break;
-
-	default:
-		# some strange value
-		$output_format = OUTPUT_FORMAT_HTML;
-		break;
-}
-
-if ($output_format == OUTPUT_FORMAT_PLAIN_TEXT || $output_format == OUTPUT_FORMAT_DEPENDS) {
-  # tell the browser to display plain text
-  header('Content-Type: text/plain');
-}
-
-if ($output_format == OUTPUT_FORMAT_HTML) {
-	$Title = 'Search';
-	freshports_Start($Title,
-					$Title,
-					'FreeBSD, index, applications, ports');
-
-?>
-
-
-<?php echo freshports_MainTable(); ?>
-<tr><td class="content">
-<?php echo freshports_MainContentTable(); ?>
-  <tr>
-	<? echo freshports_PageBannerText("Search FreshPorts using Google"); ?>
-  </tr>
-<tr><td><div class="gcse-search"></div>
-<?
-} // end of HTML only output
-
-
-#
-# ensure that our parameters have default values
-#
-
-if ($num < 1 or $num > 500) {
-	$num = 10;
-}
-
-$PageSize = $num;
-
-if ($stype  == '') $stype  = 'name';
-if ($method == '') $method = 'match';
-
-if ($Debug) {
-	echo "'$query' && '$stype' && '$num' && '$method'\n<BR>";
-
-	if ($query && $stype && $num) {
-		echo "yes, we have parameters\n<BR>";
-	}
-}
-
-#
-# we can take parameters.  if so, make it look like a post
-#
-
-if (IsSet($_REQUEST['query'])) {
-	$search = $_REQUEST['query'];
-}
-if (!IsSet($search) && ($query && $stype && $num && $method)) {
-	$search = TRUE;
-}
-
-if ($search) {
-
-	if ($Debug) echo "into search stuff<BR>\n";
-
-$logfile = CACHE_DIRECTORY . '/searchlog.txt';
-
-# Adjust method if required
-if ($method == 'soundex') {
-	switch ($stype) {
-		case SEARCH_FIELD_COMMITTER:
-		case SEARCH_FIELD_MAINTAINER:
-		case SEARCH_FIELD_NAME:
-		case SEARCH_FIELD_PACKAGE:
+	// validate $output_format
+	switch ($output_format) {
+		case OUTPUT_FORMAT_HTML:
+		case OUTPUT_FORMAT_PLAIN_TEXT:
+		case OUTPUT_FORMAT_DEPENDS:
+			# valid; do nothing
 			break;
 
 		default:
-			$method = 'match';
-			if ($output_format == OUTPUT_FORMAT_HTML ) {
-				$HTML .= "<p><b>NOTE</b>: Instead of using 'sounds like' as instructed, the system used 'containing'.  See the notes above for why this is done.</p>";
-			}
+			# some strange value
+			$output_format = OUTPUT_FORMAT_HTML;
 			break;
 	}
-}
 
-# are we setting the whole SQL condition or just the operator and the value?
-$sqlSetAll = false;
+	if ($output_format == OUTPUT_FORMAT_PLAIN_TEXT || $output_format == OUTPUT_FORMAT_DEPENDS) {
+	  # tell the browser to display plain text
+	  header('Content-Type: text/plain');
+	}
 
-if ($Debug) echo "at line " . __LINE__ . " stype='$stype'<br>";
+	// start of HTML output
+	if ($output_format == OUTPUT_FORMAT_HTML) {
+		$Title = 'Search';
+		freshports_Start($Title,
+					$Title,
+					'FreeBSD, index, applications, ports');
+
+		echo freshports_MainTable();
+?>
+<tr><td class="content">
+<?php echo freshports_MainContentTable(); ?>
+  <tr>
+	<?php echo freshports_PageBannerText("Search FreshPorts using Google"); ?>
+  </tr>
+<tr><td><div class="gcse-search"></div>
+<?php
+	} // end of HTML only output
 
 
-if ($output_format == OUTPUT_FORMAT_DEPENDS) {
-  $sqlUserSuppliedPortsList = Category_Ports_To_In_Clause($query);
-} else {
-  switch ($method) {
-	case 'prefix':
-		$WildCardMatch = "$query%";
-		if ($casesensitivity == 'casesensitive') {
-			$Like = 'LIKE';
-		} else {
-			$Like = 'ILIKE';
+	#
+	# ensure that our parameters have default values
+	#
+
+	if ($num < 1 or $num > 500) {
+		$num = 10;
+	}
+
+	$PageSize = $num;
+
+	if ($stype  == '') $stype  = 'name';
+	if ($method == '') $method = 'match';
+
+	if ($Debug) {
+		echo "'$query' && '$stype' && '$num' && '$method'\n<BR>";
+
+		if ($query && $stype && $num) {
+			echo "yes, we have parameters\n<BR>";
 		}
-		$sqlUserSpecifiedCondition = WildCardQuery($db, $stype, $Like, $WildCardMatch);
-		break;
+	}
 
-	case 'match':
-		$WildCardMatch = "%$query%";
-		if ($casesensitivity == 'casesensitive') {
-			$Like = 'LIKE';
-		} else {
-			$Like = 'ILIKE';
+	#
+	# we can take parameters.  if so, make it look like a post
+	#
+
+	if (IsSet($_REQUEST['query'])) {
+		$search = $_REQUEST['query'];
+	}
+	if (!IsSet($search) && ($query && $stype && $num && $method)) {
+		$search = TRUE;
+	}
+
+	if ($search) {
+
+		if ($Debug) echo "into search stuff<BR>\n";
+
+		$logfile = CACHE_DIRECTORY . '/searchlog.txt';
+
+		# Adjust method if required
+		if ($method == 'soundex') {
+			switch ($stype) {
+				case SEARCH_FIELD_COMMITTER:
+				case SEARCH_FIELD_MAINTAINER:
+				case SEARCH_FIELD_NAME:
+				case SEARCH_FIELD_PACKAGE:
+					break;
+
+				default:
+					$method = 'match';
+					if ($output_format == OUTPUT_FORMAT_HTML ) {
+						$HTML .= "<p><b>NOTE</b>: Instead of using 'sounds like' as instructed, the system used 'containing'.  See the notes above for why this is done.</p>";
+					}
+					break;
+			}
 		}
-		$sqlUserSpecifiedCondition = WildCardQuery($db, $stype, $Like, $WildCardMatch);
-		break;
 
-	case 'suffix':
-		$WildCardMatch = "%$query";
-		if ($casesensitivity == 'casesensitive') {
-			$Like = 'LIKE';
+		# are we setting the whole SQL condition or just the operator and the value?
+		$sqlSetAll = false;
+
+		if ($Debug) echo "at line " . __LINE__ . " stype='$stype'<br>";
+
+
+		if ($output_format == OUTPUT_FORMAT_DEPENDS) {
+		  $sqlUserSuppliedPortsList = Category_Ports_To_In_Clause($query);
 		} else {
-			$Like = 'ILIKE';
-		}
-		$sqlUserSpecifiedCondition = WildCardQuery($db, $stype, $Like, $WildCardMatch);
-		break;
+		  switch ($method) {
+			case 'prefix':
+				$WildCardMatch = "$query%";
+				if ($casesensitivity == 'casesensitive') {
+					$Like = 'LIKE';
+				} else {
+					$Like = 'ILIKE';
+				}
+				$sqlUserSpecifiedCondition = WildCardQuery($db, $stype, $Like, $WildCardMatch);
+				break;
 
-	default:
-	case 'exact':
+			case 'match':
+				$WildCardMatch = "%$query%";
+				if ($casesensitivity == 'casesensitive') {
+					$Like = 'LIKE';
+				} else {
+					$Like = 'ILIKE';
+				}
+				$sqlUserSpecifiedCondition = WildCardQuery($db, $stype, $Like, $WildCardMatch);
+				break;
+
+			case 'suffix':
+				$WildCardMatch = "%$query";
+				if ($casesensitivity == 'casesensitive') {
+					$Like = 'LIKE';
+				} else {
+					$Like = 'ILIKE';
+				}
+				$sqlUserSpecifiedCondition = WildCardQuery($db, $stype, $Like, $WildCardMatch);
+				break;
+
+			default:
+				case 'exact':
+					switch ($stype) {
+						case SEARCH_FIELD_DEPENDS_ALL:
+							if ($casesensitivity == 'casesensitive') {
+								$sqlUserSpecifiedCondition = "\n     (P.depends_build = '" . pg_escape_string($db, $query) . "' OR P.depends_lib = '" . pg_escape_string($db, $query) . "' OR P.depends_run = '" . pg_escape_string($db, $query) . "')";
+							} else {
+								$sqlUserSpecifiedCondition = "\n     (lower(P.depends_build) = lower('" . pg_escape_string($db, $query) . "') OR lower(P.depends_lib) = lower('" . pg_escape_string($db, $query) . "') OR lower(P.depends_run) = lower('" . pg_escape_string($db, $query) . "'))";
+							}
+							break;
+
+						default:
+					                $sqlSetAll = true;
+							$FieldName = $SearchTypeToFieldMap[$stype];
+							if (empty($FieldName)) {
+							   die('you are probably doing this wrong');
+							}
+							if ($casesensitivity == 'casesensitive') {
+								$sqlUserSpecifiedCondition = "     $FieldName = '" . pg_escape_string($db, $query) . "'";
+							} else {
+								$sqlUserSpecifiedCondition = "     lower($FieldName) = lower('" . pg_escape_string($db, $query) . "')";
+							}
+							break;
+					}
+					break;
+
+				case 'soundex':
+				    $sqlSetAll = true;
+					$FieldName = $SearchTypeToFieldMap[$stype];
+					$sqlUserSpecifiedCondition = "\n     levenshtein($FieldName, '" . pg_escape_string($db, $query) . "') < " . VEVENSHTEIN_MATCH;
+					$sqlSoundsLikeOrderBy = "levenshtein($FieldName, '" . pg_escape_string($db, $query) . "')";
+					break;
+		  }
+
+		} # not OUTPUT_FORMAT_DEPENDS
+
+		if ($Debug) echo "at line " . __LINE__ . " sqlUserSpecifiedCondition='$sqlUserSpecifiedCondition'<br>";
+
+		#
+		# include/exclude deleted ports
+		#
+
 		switch ($stype) {
-			case SEARCH_FIELD_DEPENDS_ALL:
-				if ($casesensitivity == 'casesensitive') {
-					$sqlUserSpecifiedCondition = "\n     (P.depends_build = '" . pg_escape_string($db, $query) . "' OR P.depends_lib = '" . pg_escape_string($db, $query) . "' OR P.depends_run = '" . pg_escape_string($db, $query) . "')";
-				} else {
-					$sqlUserSpecifiedCondition = "\n     (lower(P.depends_build) = lower('" . pg_escape_string($db, $query) . "') OR lower(P.depends_lib) = lower('" . pg_escape_string($db, $query) . "') OR lower(P.depends_run) = lower('" . pg_escape_string($db, $query) . "'))";
-				}
+			case SEARCH_FIELD_COMMITMESSAGE:
+			case SEARCH_FIELD_PATHNAME:
 				break;
 
 			default:
-                $sqlSetAll = true;
-				$FieldName = $SearchTypeToFieldMap[$stype];
-				if (empty($FieldName)) {
-				   die('you are probably doing this wrong');
-				}
-				if ($casesensitivity == 'casesensitive') {
-					$sqlUserSpecifiedCondition = "     $FieldName = '" . pg_escape_string($db, $query) . "'";
-				} else {
-					$sqlUserSpecifiedCondition = "     lower($FieldName) = lower('" . pg_escape_string($db, $query) . "')";
+				switch ($deleted) {
+					case INCLUDE_DELETED_PORTS:
+						# do nothing
+						break;
+		
+					default:
+						$deleted = 'excludedeleted';
+						# do not break here...
+		
+					case 'excludedeleted':
+						if ($output_format != OUTPUT_FORMAT_DEPENDS) {
+							$sqlUserSpecifiedCondition .= " and";
+						}
+						$sqlUserSpecifiedCondition .= " E.status = 'A' ";
 				}
 				break;
 		}
-		break;
 
-	case 'soundex':
-	    $sqlSetAll = true;
-		$FieldName = $SearchTypeToFieldMap[$stype];
-		$sqlUserSpecifiedCondition = "\n     levenshtein($FieldName, '" . pg_escape_string($db, $query) . "') < " . VEVENSHTEIN_MATCH;
-		$sqlSoundsLikeOrderBy = "levenshtein($FieldName, '" . pg_escape_string($db, $query) . "')";
-		break;
-  }
 
-} # not OUTPUT_FORMAT_DEPENDS
+		#
+		# How are we ordering the output?
+		# NOTE that searching by 'sounds like' requires a special approach
+		#
 
-if ($Debug) echo "at line " . __LINE__ . " sqlUserSpecifiedCondition='$sqlUserSpecifiedCondition'<br>";
-
-#
-# include/exclude deleted ports
-#
-
-switch ($stype) {
-	case SEARCH_FIELD_COMMITMESSAGE:
-	case SEARCH_FIELD_PATHNAME:
-		break;
-
-	default:
-		switch ($deleted) {
-			case INCLUDE_DELETED_PORTS:
-				# do nothing
+		switch ($method) {
+			case 'soundex':
+				$sqlOrderBy = "\n ORDER BY " . $sqlSoundsLikeOrderBy;
+				$sqlExtraFields .= ', ' . $sqlSoundsLikeOrderBy;
 				break;
-		
+
 			default:
-				$deleted = 'excludedeleted';
-				# do not break here...
+				switch ($orderby) {
+					case ORDERBYLASTUPDATE:
+						switch ($orderbyupdown) {
+							case ORDERBYDESCENDING:
+							default:
+								$sqlOrderBy = "\n ORDER BY last_commit_date desc, E.name";
+								break;
+
+							case ORDERBYASCENDING:
+								$sqlOrderBy = "\n ORDER BY last_commit_date, E.name";
+								break;
+						}
+						break;
+
+					case ORDERBYCATEGORY:
+						switch ($orderbyupdown) {
+							case ORDERBYDESCENDING:
+							default:
+								$sqlOrderBy = "\n ORDER BY C.name desc, E.name";
+								break;
 		
-			case 'excludedeleted':
-				if ($output_format != OUTPUT_FORMAT_DEPENDS) {
-					$sqlUserSpecifiedCondition .= " and";
+							case ORDERBYASCENDING:
+								$sqlOrderBy = "\n ORDER BY C.name, E.name";
+								break;
+						}
+						break;
+		
+					case ORDERBYPORT:
+					default:
+						switch ($orderbyupdown) {
+							case ORDERBYDESCENDING:
+							default:
+								$sqlOrderBy = "\n ORDER BY E.name desc, C.name";
+								break;
+		
+							case ORDERBYASCENDING:
+								$sqlOrderBy = "\n ORDER BY E.name, C.name";
+								break;
+						}
+						break;
 				}
-				$sqlUserSpecifiedCondition .= " E.status = 'A' ";
 		}
-		break;
-}
 
+		# grab the constant
+		$sqlSelectFields = SEARCH_SELECT_FIELD;
 
-#
-# How are we ordering the output?
-# NOTE that searching by 'sounds like' requires a special approach
-#
+		# and this
 
-switch ($method) {
-	case 'soundex':
-		$sqlOrderBy = "\n ORDER BY " . $sqlSoundsLikeOrderBy;
-		$sqlExtraFields .= ', ' . $sqlSoundsLikeOrderBy;
-		break;
-
-	default:
-		switch ($orderby) {
-			case ORDERBYLASTUPDATE:
-				switch ($orderbyupdown) {
-					case ORDERBYDESCENDING:
-					default:
-						$sqlOrderBy = "\n ORDER BY last_commit_date desc, E.name";
-						break;
-
-					case ORDERBYASCENDING:
-						$sqlOrderBy = "\n ORDER BY last_commit_date, E.name";
-						break;
-				}
-				break;
-
-			case ORDERBYCATEGORY:
-				switch ($orderbyupdown) {
-					case ORDERBYDESCENDING:
-					default:
-						$sqlOrderBy = "\n ORDER BY C.name desc, E.name";
-						break;
-		
-					case ORDERBYASCENDING:
-						$sqlOrderBy = "\n ORDER BY C.name, E.name";
-						break;
-				}
-				break;
-		
-			case ORDERBYPORT:
-			default:
-				switch ($orderbyupdown) {
-					case ORDERBYDESCENDING:
-					default:
-						$sqlOrderBy = "\n ORDER BY E.name desc, C.name";
-						break;
-		
-					case ORDERBYASCENDING:
-						$sqlOrderBy = "\n ORDER BY E.name, C.name";
-						break;
-				}
-				break;
-		}
-}
-
-# grab the constant
-$sqlSelectFields = SEARCH_SELECT_FIELD;
-
-# and this
-
-$sqlWatchListFrom = '';
-	if ($User->id) {
-			$sqlWatchListFrom .= "
+		$sqlWatchListFrom = '';
+			if ($User->id) {
+					$sqlWatchListFrom .= "
       LEFT OUTER JOIN
  (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
     FROM watch_list JOIN watch_list_element
@@ -548,216 +548,210 @@ $sqlWatchListFrom = '';
        AND watch_list.in_service
   GROUP BY wle_element_id) AS TEMP
        ON TEMP.wle_element_id = E.id";
-	}
+			}
 
 	
 
 
-switch ($stype) {
-  case SEARCH_FIELD_COMMITTER:
-    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
+		switch ($stype) {
+		  case SEARCH_FIELD_COMMITTER:
+		    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
 
-    if ($include_src_commits) {
-      echo 'searching src';
-      require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits_by_committer.php');
-      $Commits = new CommitsByCommitter($db);
-    } else {
-      echo 'not searching src';
-      require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port_commits_by_committer.php');
-      $Commits = new PortCommitsByCommitter($db);
-    }
-    $Commits->CommitterSet($query);
+		    if ($include_src_commits) {
+		      echo 'searching src';
+		      require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits_by_committer.php');
+		      $Commits = new CommitsByCommitter($db);
+		    } else {
+		      echo 'not searching src';
+		      require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port_commits_by_committer.php');
+		      $Commits = new PortCommitsByCommitter($db);
+		    }
+		    $Commits->CommitterSet($query);
     
-    $Commits->Debug = $Debug;
+		    $Commits->Debug = $Debug;
   
-    $NumberOfCommits = $Commits->GetCountCommits($query);
-    if ($Debug) echo 'number of commits = ' . $NumberOfCommits . "<br>\n";
+		    $NumberOfCommits = $Commits->GetCountCommits($query);
+		    if ($Debug) echo 'number of commits = ' . $NumberOfCommits . "<br>\n";
 
-	$NumFound = $NumberOfCommits;
-	$params = array(
-			'mode'        => 'Sliding',
-			'perPage'     => $PageSize,
-			'delta'       => 5,
-			'totalItems'  => $NumFound,
-			'urlVar'      => 'page',
-			'currentPage' => $PageNumber,
-			'spacesBeforeSeparator' => 2,
-			'spacesAfterSeparator'  => 2,
-		);
-	# use @ to suppress: Non-static method Pager::factory() should not be called statically
-	$Pager = @Pager::factory($params);
+			$NumFound = $NumberOfCommits;
+			$params = array(
+					'mode'        => 'Sliding',
+					'perPage'     => $PageSize,
+					'delta'       => 5,
+					'totalItems'  => $NumFound,
+					'urlVar'      => 'page',
+					'currentPage' => $PageNumber,
+					'spacesBeforeSeparator' => 2,
+					'spacesAfterSeparator'  => 2,
+				);
+			# use @ to suppress: Non-static method Pager::factory() should not be called statically
+			$Pager = @Pager::factory($params);
 
-	$offset = $Pager->getOffsetByPageId();
-	$NumOnThisPage = $offset[1] - $offset[0] + 1;
+			$offset = $Pager->getOffsetByPageId();
+			$NumOnThisPage = $offset[1] - $offset[0] + 1;
 
-    if ($PageNumber > 1) {
-      $Commits->SetOffset($offset[0] - 1);
-    }
-    $Commits->SetLimit($PageSize);
+		    if ($PageNumber > 1) {
+		      $Commits->SetOffset($offset[0] - 1);
+		    }
+		    $Commits->SetLimit($PageSize);
 
-    $NumFetches = $Commits->Fetch();
-    break;
+		    $NumFetches = $Commits->Fetch();
+		    break;
 
-  case SEARCH_FIELD_COMMITMESSAGE:
-    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits_by_description.php');
-    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
+		  case SEARCH_FIELD_COMMITMESSAGE:
+		    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits_by_description.php');
+		    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
   
-    $Commits = new CommitsByDescription($db);
-    $Commits->ConditionSet($sqlUserSpecifiedCondition);
-    $Commits->UserIDSet($User->id);
+		    $Commits = new CommitsByDescription($db);
+		    $Commits->ConditionSet($sqlUserSpecifiedCondition);
+		    $Commits->UserIDSet($User->id);
 
-    $Commits->Debug = $Debug;
+		    $Commits->Debug = $Debug;
 
-    $NumberOfCommits = $Commits->GetCountCommits();
-    if ($Debug) echo 'number of commits = ' . $NumberOfCommits . "<br>\n";
+		    $NumberOfCommits = $Commits->GetCountCommits();
+		    if ($Debug) echo 'number of commits = ' . $NumberOfCommits . "<br>\n";
 
-	$NumFound = $NumberOfCommits;
-	$params = array(
-			'mode'        => 'Sliding',
-			'perPage'     => $PageSize,
-			'delta'       => 5,
-			'totalItems'  => $NumFound,
-			'urlVar'      => 'page',
-			'currentPage' => $PageNumber,
-			'spacesBeforeSeparator' => 2,
-			'spacesAfterSeparator'  => 2,
-		);
-	# use @ to suppress: Non-static method Pager::factory() should not be called statically
-	$Pager = @Pager::factory($params);
+			$NumFound = $NumberOfCommits;
+			$params = array(
+					'mode'        => 'Sliding',
+					'perPage'     => $PageSize,
+					'delta'       => 5,
+					'totalItems'  => $NumFound,
+					'urlVar'      => 'page',
+					'currentPage' => $PageNumber,
+					'spacesBeforeSeparator' => 2,
+					'spacesAfterSeparator'  => 2,
+				);
+			# use @ to suppress: Non-static method Pager::factory() should not be called statically
+			$Pager = @Pager::factory($params);
 
-	$offset = $Pager->getOffsetByPageId();
-	$NumOnThisPage = $offset[1] - $offset[0] + 1;
+			$offset = $Pager->getOffsetByPageId();
+			$NumOnThisPage = $offset[1] - $offset[0] + 1;
 
-    if ($PageNumber > 1) {
-      $Commits->SetOffset($offset[0] - 1);
-    }
-    $Commits->SetLimit($PageSize);
-  
-    $NumFetches = $Commits->Fetch();
-    break;
+		    if ($PageNumber > 1) {
+		      $Commits->SetOffset($offset[0] - 1);
+		    }
+		    $Commits->SetLimit($PageSize);
+
+		    $NumFetches = $Commits->Fetch();
+		    break;
     
-  case SEARCH_FIELD_PATHNAME:
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits_by_tree_location.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
+		  case SEARCH_FIELD_PATHNAME:
+			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits_by_tree_location.php');
+			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
 
-	$Commits = new CommitsByTreeLocation($db);
-	$Commits->UserIDSet($User->id);
-	if ($sqlSetAll) {
-	  if ($Debug) echo 'invoking TreePathConditionSetAll() with ' . $sqlUserSpecifiedCondition;
-	  $Commits->TreePathConditionSetAll($sqlUserSpecifiedCondition);
-	} else {
-	  if ($Debug) echo 'invoking TreePathConditionSet() with ' . $sqlUserSpecifiedCondition;
-	  $Commits->TreePathConditionSet($sqlUserSpecifiedCondition);
-	}
+			$Commits = new CommitsByTreeLocation($db);
+			$Commits->UserIDSet($User->id);
+			if ($sqlSetAll) {
+			  if ($Debug) echo 'invoking TreePathConditionSetAll() with ' . $sqlUserSpecifiedCondition;
+			  $Commits->TreePathConditionSetAll($sqlUserSpecifiedCondition);
+			} else {
+			  if ($Debug) echo 'invoking TreePathConditionSet() with ' . $sqlUserSpecifiedCondition;
+			  $Commits->TreePathConditionSet($sqlUserSpecifiedCondition);
+			}
 
-	$Commits->Debug = $Debug;
+			$Commits->Debug = $Debug;
 
-	if (substr($query, 0, 7) == '/ports/') {
-	  $NumberOfCommits = $Commits->GetCountPortCommits();
-	} else {
-	  $NumberOfCommits = $Commits->GetCountCommits();
-	}
-	if ($Debug) echo 'number of commits = ' . $NumberOfCommits . "<br>\n";
+			if (substr($query, 0, 7) == '/ports/') {
+			  $NumberOfCommits = $Commits->GetCountPortCommits();
+			} else {
+			  $NumberOfCommits = $Commits->GetCountCommits();
+			}
+			if ($Debug) echo 'number of commits = ' . $NumberOfCommits . "<br>\n";
 
-	$NumFound = $NumberOfCommits;
-	$params = array(
-			'mode'        => 'Sliding',
-			'perPage'     => $PageSize,
-			'delta'       => 5,
-			'totalItems'  => $NumFound,
-			'urlVar'      => 'page',
-			'currentPage' => $PageNumber,
-			'spacesBeforeSeparator' => 2,
-			'spacesAfterSeparator'  => 2,
-		);
-	# use @ to suppress: Non-static method Pager::factory() should not be called statically
-	$Pager = @Pager::factory($params);
+			$NumFound = $NumberOfCommits;
+			$params = array(
+					'mode'        => 'Sliding',
+					'perPage'     => $PageSize,
+					'delta'       => 5,
+					'totalItems'  => $NumFound,
+					'urlVar'      => 'page',
+					'currentPage' => $PageNumber,
+					'spacesBeforeSeparator' => 2,
+					'spacesAfterSeparator'  => 2,
+				);
+			# use @ to suppress: Non-static method Pager::factory() should not be called statically
+			$Pager = @Pager::factory($params);
 
-	$offset = $Pager->getOffsetByPageId();
-	$NumOnThisPage = $offset[1] - $offset[0] + 1;
+			$offset = $Pager->getOffsetByPageId();
+			$NumOnThisPage = $offset[1] - $offset[0] + 1;
 
-	if ($PageNumber > 1) {
-	    $Commits->SetOffset($offset[0] - 1);
-	}
-	$Commits->SetLimit($PageSize);
+			if ($PageNumber > 1) {
+			    $Commits->SetOffset($offset[0] - 1);
+			}
+			$Commits->SetLimit($PageSize);
 
-	if (substr($query, 0, 7) == '/ports/') {
-	    $NumFetches = $Commits->FetchPortCommits();
-	} else {
-	    $NumFetches = $Commits->Fetch();
-	}
-        break;
+			if (substr($query, 0, 7) == '/ports/') {
+			    $NumFetches = $Commits->FetchPortCommits();
+			} else {
+			    $NumFetches = $Commits->Fetch();
+			}
+		        break;
 
-  case SEARCH_FIELD_PKG_PLIST:
-  case SEARCH_FIELD_PKG_MESSAGE:
-	switch ($stype) {
-		case SEARCH_FIELD_PKG_PLIST:
-			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports_by_pkg_plist.php');
-			$Ports = new PortsByPkgPlist($db);
-			$Ports->PkgPlistSet($query);
-			$Ports->IncludeDeletedPorts($deleted == INCLUDE_DELETED_PORTS);
+		  case SEARCH_FIELD_PKG_PLIST:
+		  case SEARCH_FIELD_PKG_MESSAGE:
+			switch ($stype) {
+				case SEARCH_FIELD_PKG_PLIST:
+					require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports_by_pkg_plist.php');
+					$Ports = new PortsByPkgPlist($db);
+					$Ports->PkgPlistSet($query);
+					$Ports->IncludeDeletedPorts($deleted == INCLUDE_DELETED_PORTS);
+					break;
+
+				case SEARCH_FIELD_PKG_MESSAGE:
+					require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports_by_pkg_message.php');
+					$Ports = new PortsByPkgMessage($db);
+					$Ports->PkgMessageSet($query);
+					$Ports->IncludeDeletedPorts($deleted == INCLUDE_DELETED_PORTS);
+					break;
+			}
+    
+			$Ports->Debug = $Debug;
+
+			$NumFound = $Ports->GetQueryCount();
+			if ($Debug) {
+				echo 'number of ports = ' . $NumFound . "<br>\n";
+				echo 'page size = ' . $PageSize . "<br>\n";
+				echo 'page size = ' . $PageNumber . "<br>\n";
+			}
+
+			$params = array(
+					'mode'        => 'Sliding',
+					'perPage'     => $PageSize,
+					'delta'       => 5,
+					'totalItems'  => $NumFound,
+					'urlVar'      => 'page',
+					'currentPage' => $PageNumber,
+					'spacesBeforeSeparator' => 2,
+					'spacesAfterSeparator'  => 2,
+				);
+			# use @ to suppress: Non-static method Pager::factory() should not be called statically
+			$Pager = @Pager::factory($params);
+
+			$offset = $Pager->getOffsetByPageId();
+			$NumOnThisPage = $offset[1] - $offset[0] + 1;
+
+			if ($PageNumber > 1) {
+				$Ports->SetOffset($offset[0] - 1);
+			}
+			$Ports->SetLimit($PageSize);
+
+			$NumFetches = $Ports->FetchPorts($User->id, $sqlOrderBy);
+
+			# $result get used later on to display the search results via classes/port-display.php
+			$result = $Ports->LocalResult;
 			break;
 
-		case SEARCH_FIELD_PKG_MESSAGE:
-			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports_by_pkg_message.php');
-			$Ports = new PortsByPkgMessage($db);
-			$Ports->PkgMessageSet($query);
-			$Ports->IncludeDeletedPorts($deleted == INCLUDE_DELETED_PORTS);
-			break;
-	}
-    
-	$Ports->Debug = $Debug;
 
-	$NumFound = $Ports->GetQueryCount();
-	if ($Debug) {
-		echo 'number of ports = ' . $NumFound . "<br>\n";
-		echo 'page size = ' . $PageSize . "<br>\n";
-		echo 'page size = ' . $PageNumber . "<br>\n";
-	}
+		  default:
+			$sqlSelectCount = "\n  SELECT count(*)";
+			if ($User->id) {
+				$sqlExtraFields .= ",\nonwatchlist";
+		        } else {
+				$sqlExtraFields .= ",\nNULL AS onwatchlist";
+		        }
 
-	$params = array(
-			'mode'        => 'Sliding',
-			'perPage'     => $PageSize,
-			'delta'       => 5,
-			'totalItems'  => $NumFound,
-			'urlVar'      => 'page',
-			'currentPage' => $PageNumber,
-			'spacesBeforeSeparator' => 2,
-			'spacesAfterSeparator'  => 2,
-		);
-	# use @ to suppress: Non-static method Pager::factory() should not be called statically
-	$Pager = @Pager::factory($params);
-
-	$offset = $Pager->getOffsetByPageId();
-	$NumOnThisPage = $offset[1] - $offset[0] + 1;
-
-	if ($PageNumber > 1) {
-		$Ports->SetOffset($offset[0] - 1);
-	}
-	$Ports->SetLimit($PageSize);
-
-	$NumFetches = $Ports->FetchPorts($User->id, $sqlOrderBy);
-
-	# $result get used later on to display the search results via classes/port-display.php
-	$result = $Ports->LocalResult;
-	break;
-
-
-  default:
-
-
-$sqlSelectCount = "
-  SELECT count(*)";
-  
-	if ($User->id) {
-		$sqlExtraFields .= ",
-         onwatchlist";
-        } else {
-		$sqlExtraFields .= ",
-         NULL AS onwatchlist";
-        }
-
-	$sqlFrom = "
+			$sqlFrom = "
   FROM ports P LEFT OUTER JOIN ports_vulnerable    PV  ON PV.port_id       = P.id
                LEFT OUTER JOIN commit_log          CL  ON P.last_commit_id = CL.id
                LEFT OUTER JOIN repo                R   ON CL.repo_id       = R.id
@@ -767,117 +761,116 @@ $sqlSelectCount = "
        categories C, element E
 ";                                       	
 
-	if ($output_format == OUTPUT_FORMAT_DEPENDS) {
-		$sqlFrom .= "
+			if ($output_format == OUTPUT_FORMAT_DEPENDS) {
+				$sqlFrom .= "
 JOIN element_pathname EP on E.id = EP.element_id
   AND EP.pathname $sqlUserSuppliedPortsList
 ";
-	}
+			}
 
-	$sqlWhere = '
+			$sqlWhere = '
     WHERE P.category_id  = C.id
       AND P.element_id   = E.id ' ;
 
 
-$AddRemoveExtra  = "?query=" . $query. "+stype=$stype+num=$num+method=$method";
-if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<BR>";
-$AddRemoveExtra = pg_escape_string($db, $AddRemoveExtra);
-if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<BR>";
+			$AddRemoveExtra  = "?query=" . $query. "+stype=$stype+num=$num+method=$method";
+			if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<BR>";
+			$AddRemoveExtra = pg_escape_string($db, $AddRemoveExtra);
+			if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<BR>";
 
 
-### how many rows is this?
+			### how many rows is this?
 
-$sql = $sqlSelectCount . $sqlFrom .  $sqlWhere . ' AND ' . $sqlUserSpecifiedCondition;
+			$sql = $sqlSelectCount . $sqlFrom .  $sqlWhere . ' AND ' . $sqlUserSpecifiedCondition;
 
-if ($Debug) {
-	echo "<pre>$sql<pre>\n";
-}
+			if ($Debug) {
+				echo "<pre>$sql<pre>\n";
+			}
 
-$result  = pg_exec($db, $sql);
-if (!$result) {
-  syslog(LOG_NOTICE, pg_errormessage() . ': ' . $sql);
-  die('something went terribly wrong.  Sorry.');
-}
+			$result  = pg_exec($db, $sql);
+			if (!$result) {
+			  syslog(LOG_NOTICE, pg_errormessage() . ': ' . $sql);
+			  die('something went terribly wrong.  Sorry.');
+			}
 
-$NumRows  = pg_num_rows($result);
-$myrow    = pg_fetch_array($result);
-$NumFound = $myrow[0];
+			$NumRows  = pg_num_rows($result);
+			$myrow    = pg_fetch_array($result);
+			$NumFound = $myrow[0];
 
-	$params = array(
-			'mode'        => 'Sliding',
-			'perPage'     => $PageSize,
-			'delta'       => 5,
-			'totalItems'  => $NumFound,
-			'urlVar'      => 'page',
-			'currentPage' => $PageNumber,
-			'spacesBeforeSeparator' => 2,
-			'spacesAfterSeparator'  => 2,
-		);
+			$params = array(
+					'mode'        => 'Sliding',
+					'perPage'     => $PageSize,
+					'delta'       => 5,
+					'totalItems'  => $NumFound,
+					'urlVar'      => 'page',
+					'currentPage' => $PageNumber,
+					'spacesBeforeSeparator' => 2,
+					'spacesAfterSeparator'  => 2,
+				);
 
-	# use @ to suppress: Non-static method Pager::factory() should not be called statically
-	$Pager = @Pager::factory($params);
+			# use @ to suppress: Non-static method Pager::factory() should not be called statically
+			$Pager = @Pager::factory($params);
 
-$sqlOffsetLimit = '';
+			$sqlOffsetLimit = '';
 
-if ($output_format == OUTPUT_FORMAT_HTML) {
-$offset = $Pager->getOffsetByPageId();
-$NumOnThisPage = $offset[1] - $offset[0] + 1;
-if ($PageNumber > 1) {
-	$sqlOffsetLimit .= "\nOFFSET " . ($offset[0] - 1);
-	unset($offset);
-}
+			if ($output_format == OUTPUT_FORMAT_HTML) {
+				$offset = $Pager->getOffsetByPageId();
+				$NumOnThisPage = $offset[1] - $offset[0] + 1;
+				if ($PageNumber > 1) {
+					$sqlOffsetLimit .= "\nOFFSET " . ($offset[0] - 1);
+					unset($offset);
+				}
 
-if ($PageSize) {
-	$sqlOffsetLimit .= "\nLIMIT " . $PageSize;
-}
+				if ($PageSize) {
+					$sqlOffsetLimit .= "\nLIMIT " . $PageSize;
+				}
 
-} // HTML format
+			} // HTML format
+
+			$sql = $sqlSelectFields . $sqlExtraFields . $sqlFrom . $sqlWatchListFrom . 
+			        $sqlWhere . ' AND ' . $sqlUserSpecifiedCondition . $sqlOrderBy . $sqlOffsetLimit;
+
+			if ($Debug) {
+				echo "<pre>$sql<pre>\n";
+				}
+
+			$result  = pg_exec($db, $sql);
+			if (!$result) {
+				syslog(LOG_NOTICE, pg_errormessage() . ': ' . $sql);
+				die('something went terribly wrong.  Sorry.');
+			}
+
+			$NumFetches = pg_num_rows($result);
+
+			} // end of non-committer search  ## I think this is the end of the default option
+
+		$fp = fopen($logfile, "a");
+		if ($fp) {
+			switch ($method) {
+				case 'match':
+				case 'tree':
+				case 'exact':
+				case 'soundex':
+					fwrite($fp, date("Y-m-d H:i:s") . " $stype : $method : $query : $num : $NumFetches : $deleted : $casesensitivity\n");
+					break;
+
+				default: 
+					fwrite($fp, date("Y-m-d H:i:s") . " $stype : $method : $category/$port : $num : $NumFetches : $deleted\n");
+			}
+			fclose($fp);
+		} else {
+			print "Please let postmaster@freshports.org know that the search log could not be opened.  This does not affect the search results.\n";
+			define_syslog_variables();
+			syslog(LOG_ERR, "FreshPorts could not open the search log file: $logfile");
+		}
 
 
-$sql = $sqlSelectFields . $sqlExtraFields . $sqlFrom . $sqlWatchListFrom . 
-        $sqlWhere . ' AND ' . $sqlUserSpecifiedCondition . $sqlOrderBy . $sqlOffsetLimit;
+		$Port = new Port($db);
+		$Port->LocalResult = $result;
 
-if ($Debug) {
-	echo "<pre>$sql<pre>\n";
-}
-
-$result  = pg_exec($db, $sql);
-if (!$result) {
-  syslog(LOG_NOTICE, pg_errormessage() . ': ' . $sql);
-  die('something went terribly wrong.  Sorry.');
-}
-
-$NumFetches = pg_num_rows($result);
-
-} // end of non-committer search  ## I think this is the end of the default option
-
-$fp = fopen($logfile, "a");
-if ($fp) {
-	switch ($method) {
-		case 'match':
-		case 'tree':
-		case 'exact':
-		case 'soundex':
-			fwrite($fp, date("Y-m-d H:i:s") . " $stype : $method : $query : $num : $NumFetches : $deleted : $casesensitivity\n");
-			break;
-
-		default: 
-			fwrite($fp, date("Y-m-d H:i:s") . " $stype : $method : $category/$port : $num : $NumFetches : $deleted\n");
 	}
-	fclose($fp);
-} else {
-	print "Please let postmaster@freshports.org know that the search log could not be opened.  This does not affect the search results.\n";
-	define_syslog_variables();
-	syslog(LOG_ERR, "FreshPorts could not open the search log file: $logfile");
-}
 
-
-$Port = new Port($db);
-$Port->LocalResult = $result;
-
-}
-
-if ($output_format == OUTPUT_FORMAT_HTML) {
+	if ($output_format == OUTPUT_FORMAT_HTML) {
 ?>
 <!-- SiteSearch Google -->
 <script>
@@ -900,12 +893,12 @@ if ($output_format == OUTPUT_FORMAT_HTML) {
 
 <?php echo freshports_MainContentTable(); ?>
   <tr>
-	<? echo freshports_PageBannerText("The FreshPorts Search"); ?>
+	<?php echo freshports_PageBannerText("The FreshPorts Search"); ?>
   </tr>
 <tr><td>
 
 
-<form ACTION="<? echo $_SERVER["PHP_SELF"] ?>" name="search" >
+<form ACTION="<?php echo $_SERVER["PHP_SELF"] ?>" name="search" >
 	<SELECT NAME="stype" size="1">
 		<OPTION VALUE="<?php echo SEARCH_FIELD_COMMITMESSAGE        . '"'; if ($stype == SEARCH_FIELD_COMMITMESSAGE)        echo ' SELECTED'; ?>>Commit Message</OPTION>
 		<OPTION VALUE="<?php echo SEARCH_FIELD_COMMITTER            . '"'; if ($stype == SEARCH_FIELD_COMMITTER)            echo ' SELECTED'; ?>>Committer</OPTION>
@@ -930,19 +923,19 @@ if ($output_format == OUTPUT_FORMAT_HTML) {
 	</SELECT> 
 
 	<SELECT name=method>
-		<OPTION VALUE="exact"   <?if ($method == "exact"  ) echo 'SELECTED' ?>>equal to
-		<OPTION VALUE="prefix"  <?if ($method == "prefix" ) echo 'SELECTED' ?>>starting with
-		<OPTION VALUE="match"   <?if ($method == "match"  ) echo 'SELECTED' ?>>containing
-		<OPTION VALUE="suffix"  <?if ($method == "suffix" ) echo 'SELECTED' ?>>ending with
-		<OPTION VALUE="soundex" <?if ($method == "soundex") echo 'SELECTED' ?>>sounds like
+		<OPTION VALUE="exact"   <?php if ($method == "exact"  ) echo 'SELECTED' ?>>equal to
+		<OPTION VALUE="prefix"  <?php if ($method == "prefix" ) echo 'SELECTED' ?>>starting with
+		<OPTION VALUE="match"   <?php if ($method == "match"  ) echo 'SELECTED' ?>>containing
+		<OPTION VALUE="suffix"  <?php if ($method == "suffix" ) echo 'SELECTED' ?>>ending with
+		<OPTION VALUE="soundex" <?php if ($method == "soundex") echo 'SELECTED' ?>>sounds like
 	</SELECT>
 
-	<INPUT NAME="query" size="40"  VALUE="<? echo htmlentities($query)?>">
+	<INPUT NAME="query" size="40"  VALUE="<?php echo htmlentities($query)?>">
 
 <?php
-    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/page_options.php');
-    $PageOptions = new ItemsPerPage();
-    echo $PageOptions->DDLB_Choices('num', $num, 'results');
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/page_options.php');
+		$PageOptions = new ItemsPerPage();
+		echo $PageOptions->DDLB_Choices('num', $num, 'results');
 ?>
 
 	<BR><br>
@@ -950,21 +943,21 @@ if ($output_format == OUTPUT_FORMAT_HTML) {
 <table class="search-options bordered">
 <tr>
 <td>
-	<INPUT TYPE=checkbox <? if ($deleted == INCLUDE_DELETED_PORTS) echo 'CHECKED'; ?> VALUE=<?php echo INCLUDE_DELETED_PORTS; ?> NAME=deleted> Include deleted ports
+	<INPUT TYPE=checkbox <?php if ($deleted == INCLUDE_DELETED_PORTS) echo 'CHECKED'; ?> VALUE=<?php echo INCLUDE_DELETED_PORTS; ?> NAME=deleted> Include deleted ports
 </td>
 <td>
-	<INPUT TYPE=checkbox <? if ($casesensitivity == "casesensitive")   echo 'CHECKED'; ?> VALUE=casesensitive   NAME=casesensitivity> Case sensitive search
+	<INPUT TYPE=checkbox <?php if ($casesensitivity == "casesensitive")   echo 'CHECKED'; ?> VALUE=casesensitive   NAME=casesensitivity> Case sensitive search
 </td>
 <td>
 	Sort by: <SELECT name="orderby">
-		<OPTION VALUE="<?php echo ORDERBYPORT;       ?>" <?if ($orderby == ORDERBYPORT       ) echo 'SELECTED' ?>>Port
-		<OPTION VALUE="<?php echo ORDERBYCATEGORY;   ?>" <?if ($orderby == ORDERBYCATEGORY   ) echo 'SELECTED' ?>>Category
-		<OPTION VALUE="<?php echo ORDERBYLASTUPDATE; ?>" <?if ($orderby == ORDERBYLASTUPDATE ) echo 'SELECTED' ?>>Last Update
+		<OPTION VALUE="<?php echo ORDERBYPORT;       ?>" <?php if ($orderby == ORDERBYPORT       ) echo 'SELECTED' ?>>Port
+		<OPTION VALUE="<?php echo ORDERBYCATEGORY;   ?>" <?php if ($orderby == ORDERBYCATEGORY   ) echo 'SELECTED' ?>>Category
+		<OPTION VALUE="<?php echo ORDERBYLASTUPDATE; ?>" <?php if ($orderby == ORDERBYLASTUPDATE ) echo 'SELECTED' ?>>Last Update
 	</SELECT>
 
 	<SELECT name="orderbyupdown">
-		<OPTION VALUE="<?php echo ORDERBYASCENDING;  ?>" <?if ($orderbyupdown == ORDERBYASCENDING  ) echo 'SELECTED' ?>>ascending
-		<OPTION VALUE="<?php echo ORDERBYDESCENDING; ?>" <?if ($orderbyupdown == ORDERBYDESCENDING ) echo 'SELECTED' ?>>descending
+		<OPTION VALUE="<?php echo ORDERBYASCENDING;  ?>" <?php if ($orderbyupdown == ORDERBYASCENDING  ) echo 'SELECTED' ?>>ascending
+		<OPTION VALUE="<?php echo ORDERBYDESCENDING; ?>" <?php if ($orderbyupdown == ORDERBYDESCENDING ) echo 'SELECTED' ?>>descending
 	</SELECT>
 </td>
 <td>
@@ -972,7 +965,7 @@ if ($output_format == OUTPUT_FORMAT_HTML) {
 </td>
 </tr><tr>
 <td colspan="4">
-	<INPUT TYPE=checkbox <? if ($include_src_commits == INCLUDE_SRC_COMMITS) echo 'CHECKED'; ?> VALUE=<?php echo INCLUDE_SRC_COMMITS; ?> NAME=<?php echo INCLUDE_SRC_COMMITS; ?>> Include /src tree
+	<INPUT TYPE=checkbox <?php if ($include_src_commits == INCLUDE_SRC_COMMITS) echo 'CHECKED'; ?> VALUE=<?php echo INCLUDE_SRC_COMMITS; ?> NAME=<?php echo INCLUDE_SRC_COMMITS; ?>> Include /src tree
 </td>
 </tr>
 <tr><td colspan="2">
@@ -985,7 +978,7 @@ if ($output_format == OUTPUT_FORMAT_HTML) {
 <INPUT TYPE=checkbox VALUE=1   NAME=effort> Maximum Effort
 </td>
 <td>
-<INPUT TYPE=checkbox <? if ($minimal_output == "1")   echo 'CHECKED'; ?> VALUE=1   NAME=minimal> Minimal output
+<INPUT TYPE=checkbox <?php if ($minimal_output == "1")   echo 'CHECKED'; ?> VALUE=1   NAME=minimal> Minimal output
 </td>
 </tr>
 <tr>
@@ -993,17 +986,17 @@ if ($output_format == OUTPUT_FORMAT_HTML) {
     <b>Branch</b>:<br>
       <SELECT NAME="branch" size="1">
         <OPTION VALUE="<?php
-          echo BRANCH_HEAD . '"';
-          if ($Branch == BRANCH_HEAD) echo ' SELECTED'; echo '>' . BRANCH_HEAD;
-          echo '</OPTION>';
+        	echo BRANCH_HEAD . '"';
+        	if ($Branch == BRANCH_HEAD) echo ' SELECTED'; echo '>' . BRANCH_HEAD;
+        	echo '</OPTION>';
 
-          $system_branch = new SystemBranch($db);
-          $branches = $system_branch->getBranchNames();
-          foreach($branches as $branch_name) {
-            echo '<OPTION VALUE="' . $branch_name . '"';
-            if ($Branch == $branch_name) echo ' SELECTED';
-            echo '>' . $branch_name . '</OPTION>';
-          }
+        	$system_branch = new SystemBranch($db);
+        	$branches = $system_branch->getBranchNames();
+        	foreach($branches as $branch_name) {
+        		echo '<OPTION VALUE="' . $branch_name . '"';
+			if ($Branch == $branch_name) echo ' SELECTED';
+			echo '>' . $branch_name . '</OPTION>';
+		}
           ?>
       </SELECT>
   </td>
@@ -1024,7 +1017,7 @@ if ($output_format == OUTPUT_FORMAT_HTML) {
 
 <?php
 
-if ($User->id != '') {
+		if ($User->id != '') {
 ?>
 <p>
 Special searches:
@@ -1043,146 +1036,154 @@ Special searches:
 
 </ul>
 <?php
-} // end User->id
+		} // end User->id
 
-if ($search) {
-  echo "<tr><td>\n";
-}
-
-}  // end of putting out HTML output
-
-if ($NumFetches == 0) {
-   if ($output_format == OUTPUT_FORMAT_HTML) {
-     $HTML .= " no results found<br>\n";
-   }
-} else {
-      if ($stype == 'committer' || $stype == 'commitmessage' || $stype == 'tree') {
-          $NumFetches = min($num, $NumberOfCommits);
-          if ($NumFetches != $NumberOfCommits) {
-          $MoreToShow = 1;
-      } else {
-          $MoreToShow = 0;
-      }
-
-      $NumPortsFound = 'Number of commits: ' . $NumberOfCommits;
-      if ($NumFound > $PageSize) {
-	    $NumPortsFound .= " (showing only $NumOnThisPage on this page)";
-	  }
-	} else {
-	  if ($NumFetches != $NumRows) {
-		$MoreToShow = 1;
-      } else {
-		$MoreToShow = 0;
-      }
-
-      $NumPortsFound = 'Number of ports: ' . $NumFound;
-      if ($NumFound > $PageSize) {
-	    $NumPortsFound .= " (showing only $NumOnThisPage on this page)";
-	  }
-	}
-
-switch ($stype) {
-	case SEARCH_FIELD_COMMITTER:
-	case SEARCH_FIELD_COMMITMESSAGE:
-	case SEARCH_FIELD_PATHNAME:
-		$DisplayCommit = new DisplayCommit($db, $Commits->LocalResult);
-		$links = $Pager->GetLinks();
-		
-		$HTML .= $NumPortsFound . ' ' . $links['all'];
-		$HTML .= $DisplayCommit->CreateHTML();
-		$HTML .= '<tr><td>' . $NumPortsFound . ' ' . $links['all'] . '</td></tr>';
-		break;
-
-	default:
-		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
-
-		$links = $Pager->GetLinks();
-
-		if ($output_format == OUTPUT_FORMAT_HTML) {
-			$HTML .= $NumPortsFound . ' ' . $links['all'];
-		}
-		
-		GLOBAL $User;
-
-		$port_display = new port_display($db, $User);
-
-		switch ($minimal_output) {
-			case 1:
-				$port_display->SetDetailsNil();
-				$port_display->SetDetailsMinimal();
-				break;
-			default:
-				$port_display->SetDetailsSearch();
-				if ($stype == SEARCH_FIELD_PKG_MESSAGE) {
-					if ($Debug) echo 'SEARCH_FIELD_PKG_MESSAGE is in effect';
-					$port_display->SetDetailsPkgMessage();
-				}
-				break;
+		if ($search) {
+			echo "<tr><td>\n";
 		}
 
-		if ($Debug) echo 'NumFetches = ' . $NumFetches;
-		for ($i = 0; $i < $NumFetches; $i++) {
-			$Port->FetchNth($i);
-			$port_display->SetPort($Port);
-			switch ($output_format) {
-				case OUTPUT_FORMAT_HTML:
-					$Port_HTML = $port_display->Display();
-					$HTML .= $port_display->ReplaceWatchListToken($Port->{'onwatchlist'}, $Port_HTML, $Port->{'element_id'});
+	}  // end of putting out HTML output
+	if ($search) {
+		if (IsSet($NumFetches) && $NumFetches == 0) {
+		   if ($output_format == OUTPUT_FORMAT_HTML) {
+		     $HTML .= " no results found<br>\n";
+		   }
+		} else {
+		      if ($stype == 'committer' || $stype == 'commitmessage' || $stype == 'tree') {
+		          $NumFetches = min($num, $NumberOfCommits);
+		          if ($NumFetches != $NumberOfCommits) {
+		            $MoreToShow = 1;
+		          } else {
+		             $MoreToShow = 0;
+		          }
+	
+		          $NumPortsFound = 'Number of commits: ' . $NumberOfCommits;
+		          if ($NumFound > $PageSize) {
+		            $NumPortsFound .= " (showing only $NumOnThisPage on this page)";
+			  }
+		      } else {
+		        if (IsSet($NumFetches) && $NumFetches != $NumRows) {
+		           $MoreToShow = 1;
+		        } else {
+		           $MoreToShow = 0;
+		        }
+
+
+		        $NumPortsFound = 'Number of ports: ' . ($NumFound ?? 0);
+		        if ($NumFound > $PageSize) {
+		          $NumPortsFound .= " (showing only $NumOnThisPage on this page)";
+		        }
+
+			switch ($stype) {
+				case SEARCH_FIELD_COMMITTER:
+				case SEARCH_FIELD_COMMITMESSAGE:
+				case SEARCH_FIELD_PATHNAME:
+					$DisplayCommit = new DisplayCommit($db, $Commits->LocalResult);
+					$links = $Pager->GetLinks();
+				
+					$HTML .= $NumPortsFound . ' ' . $links['all'];
+					$HTML .= $DisplayCommit->CreateHTML();
+					$HTML .= '<tr><td>' . $NumPortsFound . ' ' . $links['all'] . '</td></tr>';
 					break;
 
-				case OUTPUT_FORMAT_PLAIN_TEXT:
-					$HTML .= $port_display->DisplayPlainText() . "\n";
-					break;
+				default:
+					require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
 
-				case OUTPUT_FORMAT_DEPENDS:
-					$HTML .= $port_display->DisplayDependencyLine() . "\n";
-					$tmp   = $port_display->DisplayDependencyLineLibraries(true);
-					if (!empty($tmp)) {
-						$HTML .= $tmp . "\n";
+					$links = $Pager->GetLinks();
+
+					if ($output_format == OUTPUT_FORMAT_HTML) {
+						$HTML .= $NumPortsFound . ' ' . $links['all'];
 					}
-					break;
-			} // switch
-			if ($output_format == OUTPUT_FORMAT_HTML) {
-				$HTML .= '<hr width="100%">';
+		
+					GLOBAL $User;
+
+					$port_display = new port_display($db, $User);
+
+					switch ($minimal_output) {
+						case 1:
+							$port_display->SetDetailsNil();
+							$port_display->SetDetailsMinimal();
+							break;
+						default:
+							$port_display->SetDetailsSearch();
+							if ($stype == SEARCH_FIELD_PKG_MESSAGE) {
+								if ($Debug) echo 'SEARCH_FIELD_PKG_MESSAGE is in effect';
+								$port_display->SetDetailsPkgMessage();
+							}
+							break;
+					}
+	
+					if ($Debug) echo 'NumFetches = ' . $NumFetches;
+					for ($i = 0; $i < $NumFetches; $i++) {
+						$Port->FetchNth($i);
+						$port_display->SetPort($Port);
+						switch ($output_format) {
+							case OUTPUT_FORMAT_HTML:
+								$Port_HTML = $port_display->Display();
+								$HTML .= $port_display->ReplaceWatchListToken($Port->{'onwatchlist'}, $Port_HTML, $Port->{'element_id'});
+								break;
+
+							case OUTPUT_FORMAT_PLAIN_TEXT:
+								$HTML .= $port_display->DisplayPlainText() . "\n";
+								break;
+
+							case OUTPUT_FORMAT_DEPENDS:
+								$HTML .= $port_display->DisplayDependencyLine() . "\n";
+								$tmp   = $port_display->DisplayDependencyLineLibraries(true);
+								if (!empty($tmp)) {
+									$HTML .= $tmp . "\n";
+								}
+								break;
+						} // switch
+						if ($output_format == OUTPUT_FORMAT_HTML) {
+							$HTML .= '<hr width="100%">';
+						}
+					} // for
+
+				    	if ($output_format == OUTPUT_FORMAT_HTML) {
+						$HTML .= $NumPortsFound . ' ' . $links['all'];
+					}
+				}
 			}
-		} // for
 
-	    	if ($output_format == OUTPUT_FORMAT_HTML) {
-			$HTML .= $NumPortsFound . ' ' . $links['all'];
-		}
-	}
-}
-
-echo $HTML;
-
-if ($output_format == OUTPUT_FORMAT_HTML) {
+			echo $HTML;
+			
+			} /* if  search */
+		
+			if ($output_format == OUTPUT_FORMAT_HTML) {
 ?>
 </table>
 
 </td>
 
   <td class="sidebar">
-  <?
-  echo freshports_SideBar();
+  <?php
+				echo freshports_SideBar();
   ?>
   </td>
 
 </tr>
 </table>
-<?
+<?php
 echo freshports_ShowFooter();
 
 ?>
-<? if (!IsSet($_REQUEST['query'])) { ?>
+<?php
+				if (!IsSet($_REQUEST['query'])) { ?>
 <script>
 <!--
 document.search.query.focus();
 // -->
 </script>
-<? } ?>
+<?php
+				} 
+
+			}
+
+?>
 </body>
 </html>
 
 <?php
 
-} // end of HTML output
+		} // end of HTML output

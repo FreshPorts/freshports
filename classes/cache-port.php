@@ -33,7 +33,7 @@ class CachePort extends Cache {
 		$this->PageSize = $PageSize;
 	}
 
-	function RetrievePort($Category, $Port, $CacheType = CACHE_PORT_DETAIL, $PageNum = 1, $Branch = BRANCH_HEAD, $CachePart) {
+	function RetrievePort($Category, $Port, $CacheType = CACHE_PORT_DETAIL, $PageNum = 1, $Branch = BRANCH_HEAD, $CachePart = CachePort::CachePartOne) {
 		$this->_Log("CachePort: Retrieving for $Category/$Port/$CachePart");
 		$Key = $this->_PortKey($Category, $Port, $CacheType, $PageNum, $Branch, $CachePart);
 		$result = parent::Retrieve($Key);
@@ -41,7 +41,7 @@ class CachePort extends Cache {
 		return $result;
 	}
 
-	function AddPort($Category, $Port, $CacheType = CACHE_PORT_DETAIL, $PageNum = 1, $Branch = BRANCH_HEAD, $CachePart) {
+	function AddPort($Category, $Port, $CacheType = CACHE_PORT_DETAIL, $PageNum = 1, $Branch = BRANCH_HEAD, $CachePart = CachePort::CachePartOne) {
 		$this->_Log("CachePort: Adding for $Category/$Port");
 
 		$CacheDir = $this->CacheDir . '/' . self::CacheCategory . '/' . $Category . '/' . $Port;
@@ -75,7 +75,7 @@ class CachePort extends Cache {
 		return $result;
 	}
 
-	function _PortKey($Category, $Port, $CacheType, $PageNum = 1, $Branch = BRANCH_HEAD, $CachePart) {
+	function _PortKey($Category, $Port, $CacheType, $PageNum = 1, $Branch = BRANCH_HEAD, $CachePart = CachePort::CachePartOne) {
 		// might want some parameter checking here
 		switch($CachePart) {
 			case self::CachePartOne:

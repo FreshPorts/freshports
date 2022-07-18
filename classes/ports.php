@@ -209,10 +209,10 @@ class Port {
 		//
 		$this->category_looking_at  = isset($myrow["category_looking_at"]) ? $myrow["category_looking_at"] : null;
 
-		$this->repository           = $myrow['repository'];
-		$this->repo_hostname        = $myrow['repo_hostname'];
+		$this->repository           = $myrow['repository']    ?? null;
+		$this->repo_hostname        = $myrow['repo_hostname'] ?? null;
 #		$this->git_hostname         = '';
-		$this->path_to_repo         = $myrow['path_to_repo'];
+		$this->path_to_repo         = $myrow['path_to_repo']  ?? null;
 		$this->element_pathname     = $myrow['element_pathname'];
 		if (isset($this->quarterly_revision)) {
 			$this->quarterly_revision = $myrow['quarterly_revision'];
@@ -765,7 +765,7 @@ LEFT OUTER JOIN
 
 	function PackageIsAvailable() {
 		$available = true;
-		if (strpos($this->{'license_restricted'}, DELETE_PACKAGE) !== false) {
+		if (IsSet($this->{'license_restricted'}) && strpos($this->{'license_restricted'}, DELETE_PACKAGE) !== false) {
 			# false === not found
 			# non false = found
 			$available = false;
@@ -781,7 +781,7 @@ LEFT OUTER JOIN
 
 	function PackageNotAvailableReason() {
 		$available = '';
-		if (strpos($this->{'license_restricted'}, DELETE_PACKAGE) !== false) {
+		if (IsSet($this->{'license_restricted'}) && strpos($this->{'license_restricted'}, DELETE_PACKAGE) !== false) {
 			# false === not found
 			# non false = found
 			$available = '_LICENSE_RESTRICTED = ' . $this->{'license_restricted'};

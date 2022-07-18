@@ -1526,7 +1526,7 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 		$HTML .= '&nbsp;<a href="/vuxml.php?vid=' . urlencode($VuXMLList[$commit->id]) . '">' . freshports_VuXML_Icon() . '</a>';
 	}
 
-	if ($commit->branch != BRANCH_HEAD) {
+	if (IsSet($commit->branch) && $commit->branch != BRANCH_HEAD) {
 		$HTML .= '<br>' . urlencode($commit->branch);
 	}
 

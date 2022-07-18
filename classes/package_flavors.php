@@ -23,7 +23,7 @@ class PackageFlavors {
 	function _PopulateValues($myrow) {
 		$this->id            = $myrow['id'];
 		$this->port_id       = $myrow['port_id'];
-		$this->flavor        = $myrow['flavor'];
+		$this->flavor        = $myrow['flavor'] ?? null;
 		$this->flavor_id     = $myrow['flavor_id'];
 		$this->flavor_name   = $myrow['flavor_name'];
 		$this->name          = $myrow['name'];

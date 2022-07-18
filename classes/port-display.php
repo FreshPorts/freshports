@@ -110,6 +110,7 @@ class port_display {
 		}
 
 		$pkg_message_parts = json_decode($json);
+		$Actions = '';
 		if ($Debug) var_dump($pkg_message_parts);
 		foreach ($pkg_message_parts as $part) {
 			if (!empty($part->type)) {
@@ -565,6 +566,8 @@ class port_display {
 		# repo_date       - date on packagesite.txz (e.g. https://pkg.freebsd.org/FreeBSD:11:amd64/latest/
 		# processed_date  - when the above mentioned data was last parsed into FreshPorts
 
+		$title = '';
+
 		if (empty($repo_date)) {
 			$title .= "repo not found\n";
 		} else {
@@ -589,6 +592,8 @@ class port_display {
 	function Display() {
 
 		$port = $this->port;
+
+		$Debug = 0;
 
 		$HTML = '';
 

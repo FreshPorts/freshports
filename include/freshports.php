@@ -1313,14 +1313,15 @@ function freshports_PortCommitsHeader($port) {
 function freshports_PackageVersion($PortVersion, $PortRevision, $PortEpoch) {
 	$PackageVersion = '';
 
-	if (strlen($PortVersion) > 0) {
-    	$PackageVersion .= $PortVersion;
+	if (IsSet($PortVersion) && strlen($PortVersion) > 0) {
+		$PackageVersion .= $PortVersion;
+	        
 		if (strlen($PortRevision) > 0 && $PortRevision != "0") {
-    		$PackageVersion .= FRESHPORTS_VERSION_REVISION_JOINER . $PortRevision;
+    			$PackageVersion .= FRESHPORTS_VERSION_REVISION_JOINER . $PortRevision;
 		}
 
 		if (!empty($PortEpoch)) {
-    		$PackageVersion .= FRESHPORTS_VERSION_EPOCH_JOINER . $PortEpoch;
+    			$PackageVersion .= FRESHPORTS_VERSION_EPOCH_JOINER . $PortEpoch;
 		}
 	}
 
@@ -2411,7 +2412,7 @@ function _forDisplay($string, $flags = NULL, $encoding = FRESHPORTS_ENCODING) {
   # does special magic for outputing stuff to a webpage.
   # e.g. htmlspecialchars($port->long_description, ENT_COMPAT | ENT_HTML401, 'ISO-8859-15')
 	    
-  $encoded =  htmlspecialchars($string, $flags, $encoding);
+  $encoded = htmlspecialchars($string ?? '', $flags, $encoding);
 
   # if htmlspecialchars() fails, you get an empty string.
   # Report that, but only if the original was not empty.

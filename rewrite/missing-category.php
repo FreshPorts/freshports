@@ -19,7 +19,7 @@ $g_NOINDEX = 1;  // we should not index category pages. too much clutter.
 
 function freshports_CategoryNextPreviousPage($CategoryName, $PortCount, $PageNumber, $PageSize, $Branch = BRANCH_HEAD) {
 
-	$HTML .= "Result Page:";
+	$HTML = "Result Page:";
 
 	$queryParms = array();
 	if ($Branch != BRANCH_HEAD) {
@@ -62,7 +62,8 @@ function freshports_CategoryByID($dbh, $category_id, $PageNumber = 1, $PageSize 
 	$category = new Category($dbh, $Branch);
 	$category->FetchByID($category_id);
 
-	freshports_ConditionalGet($category->last_modified);
+# The category class does not condtain 'last_modified' - we'd need to get this from the cached file.
+#	freshports_ConditionalGet($category->last_modified);
 
 	freshports_CategoryDisplay($dbh, $category, $PageNumber, $PageSize, $Branch);
 }
@@ -94,7 +95,9 @@ function freshports_CategoryDisplay($dbh, $category, $PageNumber = 1, $PageSize 
 			var_dump($url_query);
 			echo '</pre>';
 		}
-		parse_str($url_query, $url_args);
+		if (IsSet($url_query)) {
+			parse_str($url_query, $url_args);
+		}
 		if ($Debug) {
 			echo '<pre>url_args is';
 			var_dump($url_args);
@@ -266,7 +269,7 @@ $category->description . '
 	freshports_ConditionalGetUnix($Cache->LastModifiedGet());
 	header('HTTP/1.1 200 OK');
 
-	freshports_Start($Title,
+	freshports_Start($category->name,
 					$category->description,
 					'FreeBSD, index, applications, ports');
 

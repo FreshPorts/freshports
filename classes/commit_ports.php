@@ -58,7 +58,7 @@ class Commit_Ports {
 		$this->commit_date_raw    = $myrow["commit_date_raw"];
 		$this->encoding_losses    = $myrow["encoding_losses"];
 		$this->message_id         = $myrow["message_id"];
-		$this->commit_hash_short  = $myrow["commit_hash_short"];
+		$this->commit_hash_short  = $myrow["commit_hash_short"]  ?? null;
 		$this->committer          = $myrow["committer"];
 		$this->committer_name     = $myrow["committer_name"];
 		$this->committer_email    = $myrow["committer_email"];
@@ -85,12 +85,12 @@ class Commit_Ports {
 		$this->is_interactive     = $myrow["is_interactive"];
 		$this->no_cdrom           = $myrow["no_cdrom"];
 		$this->restricted         = $myrow["restricted"];
-		$this->branch             = $myrow["branch"];
+		$this->branch             = $myrow["branch"] ?? null;
 		$this->vulnerable_current = $myrow["vulnerable_current"];
 		$this->vulnerable_past    = $myrow["vulnerable_past"];
 		$this->date_added         = $myrow["date_added"];
 		$this->element_id         = $myrow["element_id"];
-		$this->element_pathname   = $myrow["element_pathname"];
+		$this->element_pathname   = $myrow["element_pathname"] ?? null;
 		$this->short_description  = $myrow["short_description"];
 		$this->onwatchlist        = $myrow["onwatchlist"];
 		$this->stf_message        = $myrow["stf_message"];

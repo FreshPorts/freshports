@@ -124,7 +124,7 @@ SELECT V.vid,
    AND VA.vuxml_id          = V.id";
    
    	if (IsSet($_REQUEST['package'])) {
-   		$sql .= "\n   AND lower(VN.name) = '" . pg_escape_string($db, $db, strtolower($_REQUEST['package'])) . "'";
+   		$sql .= "\n   AND lower(VN.name) = '" . pg_escape_string($db, strtolower($_REQUEST['package'])) . "'";
    	}
 
    	$sql .= "\nORDER BY lower(VN.name), V.vid\n";

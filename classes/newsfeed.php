@@ -278,7 +278,7 @@ ORDER BY CL.commit_date;
                            from commit_log_ports clp
                            join commit_log_branches clb on clp.commit_log_id = clb.commit_log_id
                            join system_branch sb on sb.id = clb.branch_id
-                          where clp.commit_log_id = cl.id and sb.branch_name = " . pg_escape_literal($BranchName) . ")
+                          where clp.commit_log_id = cl.id and sb.branch_name = " . pg_escape_literal($dbh, $BranchName) . ")
            order by cl.commit_date desc limit 100 ) AS CL
     JOIN LATERAL ( select CLP1.commit_log_id, P.forbidden, P.broken, P.deprecated, P.element_id,
                           CASE when CLP1.port_version  IS NULL then P.version  else CLP1.port_version  END as version,
@@ -330,7 +330,7 @@ ORDER BY CL.commit_date;
 				# this is a relative link
 				$link        = freshports_Port_URL($dbh, $myrow['category'], $myrow['port'], $BranchName);;
 				$date        = $myrow['date_added'];
-				$author      = $myrow['maintainer'];
+				$author      = $myrow['maintainer'] ?? '';
 				$description = $myrow['short_description'];
 				break;
 				

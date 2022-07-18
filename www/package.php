@@ -22,7 +22,7 @@
 
 	$package  = pg_escape_string($db, $_REQUEST['package']);
 
-	$Searches = new Searches($dbh);
+	$Searches = new Searches($db);
 
 ?>
 	<?php echo freshports_MainTable(); ?>

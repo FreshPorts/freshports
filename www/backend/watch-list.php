@@ -76,7 +76,7 @@ function DisplayWatchListNewsFeeds($db, $UserID) {
 	}
 
 	# validate incoming format	
-	switch (strtolower($format)) {
+	switch (strtolower($format ?? '')) {
 		case 'rss1.0':
 		case 'rss2.0':
 			# all good.

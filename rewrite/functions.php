@@ -63,6 +63,8 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	# split the query part of the url into the various arguments
 	if (IsSet($URLParts['query'])) {
 		parse_str($URLParts['query'], $url_args);
+	} else {
+		$url_args = array();
 	}
 
 
@@ -273,7 +275,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 			syslog(LOG_NOTICE, 'invoking ' . $_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-category.php');
 		}
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-category.php');
-		return freshports_CategoryByID($db, $CategoryID, $page, $User->page_size, $Branch);
+		return freshports_CategoryByID($db, $CategoryID, 1, $User->page_size, $Branch);
 	}
 
 	if ($Debug) echo 'we hit rock bottom in ' . __FUNCTION__ . ' of ' . __FILE__;

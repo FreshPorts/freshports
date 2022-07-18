@@ -61,7 +61,9 @@ function freshports_NonPortDescription($dbh, $element_record) {
 			var_dump($url_query);
 			echo '</pre>';
 		}
-		parse_str($url_query, $url_args);
+		if (IsSet($url_query)) {
+			parse_str($url_query, $url_args);
+		}
 		if ($Debug) {
 			echo '<pre>url_args is';
 			var_dump($url_args);
@@ -70,6 +72,7 @@ function freshports_NonPortDescription($dbh, $element_record) {
 
 		if (IsSet($url_args['page']))      $PageNo   = $url_args['page'];
 		if (IsSet($url_args['page_size'])) $PageSize = $url_args['page_size'];
+
 		if (IsSet($url_args['page'])  && Is_Numeric($url_args['page'])) {
 			$PageNumber = intval($url_args['page']);
 			if ($PageNumber != $url_args['page'] || $PageNumber < 1) {

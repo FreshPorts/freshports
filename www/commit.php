@@ -97,7 +97,8 @@
 
 			$Commit = new Commit($db);
 			$Commit->FetchByMessageId($message_id);
-			freshports_ConditionalGet($Commit->last_modified);
+# commit does not have a last_modified - yet.
+#			freshports_ConditionalGet($Commit->last_modified);
 			$CommitBranch = $Commit->branch;
 		}
 	}
@@ -260,9 +261,9 @@
 
 					$HTML .=  "<tr><td>\n";
 
-					$ShowAllFilesURL = '<a href="' . htmlspecialchars($_SERVER['SCRIPT_URL'] . '?message_id=' .  $message_id . '&files=yes') . '">show all files</a>';
+					$ShowAllFilesURL = '<a href="' . htmlspecialchars(($_SERVER['SCRIPT_URL'] ?? '') . '?message_id=' .  $message_id . '&files=yes') . '">show all files</a>';
 
-					$HideAllFilesURL = '<a href="' . htmlspecialchars($_SERVER['SCRIPT_URL'] . '?message_id=' .  $message_id) . '">hide all files</a>';
+					$HideAllFilesURL = '<a href="' . htmlspecialchars(($_SERVER['SCRIPT_URL'] ?? '') . '?message_id=' .  $message_id) . '">hide all files</a>';
 
 					if ($FilesForJustOnePort) {
 						// TODO need to validate category/port here!

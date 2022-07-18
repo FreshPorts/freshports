@@ -129,7 +129,7 @@ function Category_Ports_To_In_Clause($a_Ports) {
 }
 
 
-function WildCardQuery($stype, $Like, $query) {
+function WildCardQuery($db, $stype, $Like, $query) {
   GLOBAL $SearchTypeToFieldMap;
   # return the clause for this particular type of query
   $sql = '';
@@ -387,7 +387,7 @@ if ($output_format == OUTPUT_FORMAT_DEPENDS) {
 		} else {
 			$Like = 'ILIKE';
 		}
-		$sqlUserSpecifiedCondition = WildCardQuery($stype, $Like, $WildCardMatch);
+		$sqlUserSpecifiedCondition = WildCardQuery($db, $stype, $Like, $WildCardMatch);
 		break;
 
 	case 'match':
@@ -397,7 +397,7 @@ if ($output_format == OUTPUT_FORMAT_DEPENDS) {
 		} else {
 			$Like = 'ILIKE';
 		}
-		$sqlUserSpecifiedCondition = WildCardQuery($stype, $Like, $WildCardMatch);
+		$sqlUserSpecifiedCondition = WildCardQuery($db, $stype, $Like, $WildCardMatch);
 		break;
 
 	case 'suffix':
@@ -407,7 +407,7 @@ if ($output_format == OUTPUT_FORMAT_DEPENDS) {
 		} else {
 			$Like = 'ILIKE';
 		}
-		$sqlUserSpecifiedCondition = WildCardQuery($stype, $Like, $WildCardMatch);
+		$sqlUserSpecifiedCondition = WildCardQuery($db, $stype, $Like, $WildCardMatch);
 		break;
 
 	default:

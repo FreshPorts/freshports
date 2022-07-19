@@ -796,53 +796,61 @@ JOIN element_pathname EP on E.id = EP.element_id
 			$NumRows  = pg_num_rows($result);
 			$myrow    = pg_fetch_array($result);
 			$NumFound = $myrow[0];
-
-			$params = array(
-					'mode'        => 'Sliding',
-					'perPage'     => $PageSize,
-					'delta'       => 5,
-					'totalItems'  => $NumFound,
-					'urlVar'      => 'page',
-					'currentPage' => $PageNumber,
-					'spacesBeforeSeparator' => 2,
-					'spacesAfterSeparator'  => 2,
-				);
-
-			# use @ to suppress: Non-static method Pager::factory() should not be called statically
-			$Pager = @Pager::factory($params);
-
-			$sqlOffsetLimit = '';
-
-			if ($output_format == OUTPUT_FORMAT_HTML) {
-				$offset = $Pager->getOffsetByPageId();
-				$NumOnThisPage = $offset[1] - $offset[0] + 1;
-				if ($PageNumber > 1) {
-					$sqlOffsetLimit .= "\nOFFSET " . ($offset[0] - 1);
-					unset($offset);
-				}
-
-				if ($PageSize) {
-					$sqlOffsetLimit .= "\nLIMIT " . $PageSize;
-				}
-
-			} // HTML format
-
-			$sql = $sqlSelectFields . $sqlExtraFields . $sqlFrom . $sqlWatchListFrom . 
-			        $sqlWhere . ' AND ' . $sqlUserSpecifiedCondition . $sqlOrderBy . $sqlOffsetLimit;
-
+			
 			if ($Debug) {
-				echo "<pre>$sql<pre>\n";
-				}
-
-			$result  = pg_exec($db, $sql);
-			if (!$result) {
-				syslog(LOG_NOTICE, pg_errormessage() . ': ' . $sql);
-				die('something went terribly wrong.  Sorry.');
+				echo "\$NumFound = '$NumFound'<br>";
 			}
 
-			$NumFetches = pg_num_rows($result);
+			$NumFetches = 0;
+			if ($NumFound > 0) {
 
-			} // end of non-committer search  ## I think this is the end of the default option
+				$params = array(
+						'mode'        => 'Sliding',
+						'perPage'     => $PageSize,
+						'delta'       => 5,
+						'totalItems'  => $NumFound,
+						'urlVar'      => 'page',
+						'currentPage' => $PageNumber,
+						'spacesBeforeSeparator' => 2,
+						'spacesAfterSeparator'  => 2,
+				);
+
+				# use @ to suppress: Non-static method Pager::factory() should not be called statically
+				$Pager = @Pager::factory($params);
+
+				$sqlOffsetLimit = '';
+
+				if ($output_format == OUTPUT_FORMAT_HTML) {
+					$offset = $Pager->getOffsetByPageId();
+					$NumOnThisPage = $offset[1] - $offset[0] + 1;
+					if ($PageNumber > 1) {
+						$sqlOffsetLimit .= "\nOFFSET " . ($offset[0] - 1);
+						unset($offset);
+					}
+
+					if ($PageSize) {
+						$sqlOffsetLimit .= "\nLIMIT " . $PageSize;
+					}
+
+				} // HTML format
+
+				$sql = $sqlSelectFields . $sqlExtraFields . $sqlFrom . $sqlWatchListFrom . 
+				        $sqlWhere . ' AND ' . $sqlUserSpecifiedCondition . $sqlOrderBy . $sqlOffsetLimit;
+
+				if ($Debug) {
+					echo "<pre>$sql<pre>\n";
+				}
+
+				$result  = pg_exec($db, $sql);
+				if (!$result) {
+					syslog(LOG_NOTICE, pg_errormessage() . ': ' . $sql);
+					die('something went terribly wrong.  Sorry.');
+				}
+
+				$NumFetches = pg_num_rows($result);
+			} # $NumFound > 0
+
+		} // end of non-committer search  ## I think this is the end of the default option
 
 		$fp = fopen($logfile, "a");
 		if ($fp) {

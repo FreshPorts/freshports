@@ -60,14 +60,14 @@ if (!file_exists($filename) || filemtime($filename)+$period<time())	{
 	if (pg_num_rows($data) == 0)
 		die("GRAPH: invalid id");
 
-	$r = pg_fetch_row($data, $i);
+	$r = pg_fetch_row($data);
 
 	$query        = $r[0];
 	$title        = $r[1];
 	$axislabel    = $r[2];
 	$is_clickable = $r[3];
 
-	pg_freeresult($data);
+	pg_free_result($data);
 
 	// get graph data
 	$data = @pg_exec($db, $query)
@@ -80,11 +80,11 @@ if (!file_exists($filename) || filemtime($filename)+$period<time())	{
 	for ($i=0; $i<pg_num_rows($data); $i++) {
 		$r = pg_fetch_row($data, $i);
 		array_push($v, $r[1]);
-		array_push($l, $r[0]."  ");
-		array_push($u, $r[2]);
+		array_push($l, $r[0] . "  ");
+		array_push($u, $r[2] ?? 0);
 	}
 	
-	pg_freeresult($data);
+	pg_free_result($data);
 	
 	// draw
 	$map = FreshPortsChart($title, $axislabel, $v, $l, $u, $filename);
@@ -96,7 +96,7 @@ if (!file_exists($filename) || filemtime($filename)+$period<time())	{
 		fclose($fp);
 	}
 	
-	pg_close();
+	pg_close($db);
 }
 
 

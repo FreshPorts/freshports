@@ -43,10 +43,10 @@ class PortsByPkgPlist extends Port {
 	function IncludeDeletedPorts($IncludeDeletedPorts = false) {
 		if ($IncludeDeletedPorts) {
 			$this->PortStatus = PORT_STATUS_DELETED;
-			if ($Debug) echo 'deleted';
+			if ($this->Debug) echo 'deleted';
 		} else {
 			$this->PortStatus = PORT_STATUS_ACTIVE;
-			if ($Debug) echo 'active';
+			if ($this->Debug) echo 'active';
 		}
 	}
 
@@ -81,7 +81,7 @@ class PortsByPkgPlist extends Port {
 
 
 		$sqlWatchListFrom = '';
-		if ($User->id) {
+		if (IsSet($User) && $User->id) {
 			$sqlWatchListFrom .= "
       LEFT OUTER JOIN
  (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist

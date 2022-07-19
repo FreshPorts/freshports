@@ -51,12 +51,12 @@ If you have suggestions for graphs, please raise an issue.
 <TR>
 <TD class="graph-sidebar">
 <?
-	$id = $_REQUEST["id"];
+	$id = $_REQUEST["id"] ?? '';
 	$sql = "select id, title, is_clickable from graphs order by title";
 	$title = "graph goes here!";
 	$result = pg_query($db, $sql);
-    if ($result) {
-    	$numrows = pg_num_rows($result);
+	if ($result) {
+		$numrows = pg_num_rows($result);
 		if ($numrows) { 
 			echo '<UL>';
 			for ($i = 0; $i < $numrows; $i++) {

@@ -73,49 +73,51 @@ if (IsSet($_REQUEST['LOGIN']) && $_REQUEST['UserID']) {
 
    if ($Debug) echo "\$UserStatusActive = '$UserStatusActive'\n<BR>";
 
-   if ($status == $UserStatusActive) {
-      if ($Debug) {
-         echo "well, debug was on, so I would have taken you to '/'<BR>\n";
-         echo "Cookie = $Cookie<BR>\n";
-      } else {
-         $user = new User($db);
-         $Cookie = $user->createUserToken();
-         # we should use $user to save this...
+   if (!$LoginFailed) {
+	   if ($status == $UserStatusActive) {
+	      if ($Debug) {
+	         echo "well, debug was on, so I would have taken you to '/'<BR>\n";
+	         echo "Cookie = $Cookie<BR>\n";
+	      } else {
+	         $user = new User($db);
+	         $Cookie = $user->createUserToken();
+	         # we should use $user to save this...
 
-         $sql = "UPDATE users SET cookie = '" . pg_escape_string($db, $Cookie) . "' WHERE id = " . pg_escape_string($db, $row['id']);
-         # if we were doing this in a user object, we could retry when there was a cookie collision and we get a unique index error
-         $result = pg_exec($db, $sql) or die('query failed ' . pg_errormessage());
+	         $sql = "UPDATE users SET cookie = '" . pg_escape_string($db, $Cookie) . "' WHERE id = " . pg_escape_string($db, $row['id']);
+	         # if we were doing this in a user object, we could retry when there was a cookie collision and we get a unique index error
+	         $result = pg_exec($db, $sql) or die('query failed ' . pg_errormessage());
 
-         SetCookie(USER_COOKIE_NAME, $Cookie, array(
-           'expires'  => time() + 60*60*24*120,
-           'path'     => '/',
-           'secure'   => (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'),
-           'httponly' => TRUE,
-           // it's probably common for users to navigate from other sites like portscout
-           // we want them to still be logged in if that's the case
-           'samesite' => 'Lax',
-           ));
+	         SetCookie(USER_COOKIE_NAME, $Cookie, array(
+	           'expires'  => time() + 60*60*24*120,
+	           'path'     => '/',
+	           'secure'   => (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'),
+	           'httponly' => TRUE,
+	           // it's probably common for users to navigate from other sites like portscout
+	           // we want them to still be logged in if that's the case
+	           'samesite' => 'Lax',
+	           ));
 
-         header("Location: /");
-         //    Make sure that code below does not get executed when we redirect.
-         exit;
-      }
-   } else {
-      if ($status == $UserStatusDisabled) {
-         $error .= 'Your account has been disabled.  Please contact ' . PROBLEM_SOLVER_EMAIL_ADDRESS;
-      } else {
-         if ($status == $UserStatusUnconfirmed) {
-            $error .= 'Your account needs to be enabled by following the directions in the email we have sent to you.' . "<BR>\n";
-            $error .= 'To have your activation details resent to the email address you supplied, click on the resend button' . "<BR>\n";
-            $error .= '<form action="' . $_SERVER["PHP_SELF"] . '" method="POST">' . "\n";
-            $error .= '<input type="hidden" name="user" value="' . htmlentities($UserID) . '">' . "\n";
-            $error .= '<input TYPE="submit" VALUE="Resend" name=resend>' . "\n";
-            $error .= '</form>' . "\n";
-         } else {
-            $error .= "I have no idea what your account status is.";
-         }
-      }
-   }
+	         header("Location: /");
+	         //    Make sure that code below does not get executed when we redirect.
+	         exit;
+	      }
+	   } else {
+	      if (!$LoginFailed && $status == $UserStatusDisabled) {
+	         $error .= 'Your account has been disabled.  Please contact ' . PROBLEM_SOLVER_EMAIL_ADDRESS;
+	      } else {
+	         if ($status == $UserStatusUnconfirmed) {
+	            $error .= 'Your account needs to be enabled by following the directions in the email we have sent to you.' . "<BR>\n";
+	            $error .= 'To have your activation details resent to the email address you supplied, click on the resend button' . "<BR>\n";
+	            $error .= '<form action="' . $_SERVER["PHP_SELF"] . '" method="POST">' . "\n";
+	            $error .= '<input type="hidden" name="user" value="' . htmlentities($UserID) . '">' . "\n";
+	            $error .= '<input TYPE="submit" VALUE="Resend" name=resend>' . "\n";
+	            $error .= '</form>' . "\n";
+	         } else {
+	            $error .= "I have no idea what your account status is.";
+	         }
+	      }
+	   }
+   } # !$LoginFailed
 }
 
 

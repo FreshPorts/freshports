@@ -204,7 +204,7 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 		if ($this->BranchName == BRANCH_HEAD) {
 		  $sql = self::FETCH_SQL_HEAD;
 		} else {
-		  $sql = self::FETCH_SQL_BRANCH_1 . "'" . pg_escape_string($this->dbh, $Branch) . "'" . self::FETCH_SQL_BRANCH_2;
+		  $sql = self::FETCH_SQL_BRANCH_1 . "'" . pg_escape_string($this->dbh, $this->BranchName) . "'" . self::FETCH_SQL_BRANCH_2;
 		}
 
 		return $sql;

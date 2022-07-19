@@ -1070,7 +1070,7 @@ Special searches:
 		            $NumPortsFound .= " (showing only $NumOnThisPage on this page)";
 			  }
 		      } else {
-		        if (IsSet($NumFetches) && $NumFetches != $NumRows) {
+		        if (IsSet($NumFetches) && IsSet($NumRows) && $NumFetches != $NumRows) {
 		           $MoreToShow = 1;
 		        } else {
 		           $MoreToShow = 0;

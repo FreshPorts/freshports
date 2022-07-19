@@ -16,7 +16,8 @@
 	$Commit = new Commit($db);
 	$Commit->DateNewestPort();
 
-	freshports_ConditionalGet($Commit->last_modified);
+# Categories does not have that field, yet.
+#	freshports_ConditionalGet($Commit->last_modified);
 
 	$Title = 'Categories';
 	freshports_Start($Title,

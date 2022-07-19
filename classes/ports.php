@@ -139,32 +139,32 @@ class Port {
 		$this->extract_suffix       = $myrow["extract_suffix"];
 		$this->package_exists       = $myrow["package_exists"];
 		
-		$this->depends_build        = $myrow["depends_build"]   ?? null;
-		$this->depends_run          = $myrow["depends_run"]     ?? null;
-		$this->depends_lib          = $myrow["depends_lib"]     ?? null;
-		$this->last_commit_id       = $myrow["last_commit_id"]  ?? null;
-		$this->found_in_index       = $myrow["found_in_index"]  ?? null;
+		$this->depends_build        = $myrow["depends_build"]        ?? null;
+		$this->depends_run          = $myrow["depends_run"]          ?? null;
+		$this->depends_lib          = $myrow["depends_lib"]          ?? null;
+		$this->last_commit_id       = $myrow["last_commit_id"]       ?? null;
+		$this->found_in_index       = $myrow["found_in_index"]       ?? null;
 		$this->forbidden            = $myrow["forbidden"];
-		$this->broken               = $myrow["broken"]          ?? null;
-		$this->deprecated           = $myrow["deprecated"]      ?? null;
-		$this->ignore               = $myrow["ignore"]          ?? null;
-		$this->date_added           = $myrow["date_added"]      ?? null;
-		$this->categories           = $myrow["categories"]      ?? null;
-		$this->master_port          = $myrow["master_port"]     ?? null;
-		$this->latest_link          = $myrow["latest_link"]     ?? null;
-		$this->no_latest_link       = $myrow["no_latest_link"]  ?? null;
-		$this->no_package           = $myrow["no_package"]      ?? null;
+		$this->broken               = $myrow["broken"]               ?? null;
+		$this->deprecated           = $myrow["deprecated"]           ?? null;
+		$this->ignore               = $myrow["ignore"]               ?? null;
+		$this->date_added           = $myrow["date_added"]           ?? null;
+		$this->categories           = $myrow["categories"]           ?? null;
+		$this->master_port          = $myrow["master_port"]          ?? null;
+		$this->latest_link          = $myrow["latest_link"]          ?? null;
+		$this->no_latest_link       = $myrow["no_latest_link"]       ?? null;
+		$this->no_package           = $myrow["no_package"]           ?? null;
 		$this->package_name         = $myrow["package_name"];
-		$this->restricted           = $myrow["restricted"]      ?? null;
-		$this->no_cdrom             = $myrow["no_cdrom"]        ?? null;
-		$this->expiration_date      = $myrow["expiration_date"] ?? null;
-		$this->is_interactive       = $myrow["is_interactive"]  ?? null;
-		$this->only_for_archs       = $myrow["only_for_archs"]  ?? null;
-		$this->not_for_archs        = $myrow["not_for_archs"]   ?? null;
+		$this->restricted           = $myrow["restricted"]           ?? null;
+		$this->no_cdrom             = $myrow["no_cdrom"]             ?? null;
+		$this->expiration_date      = $myrow["expiration_date"]      ?? null;
+		$this->is_interactive       = $myrow["is_interactive"]       ?? null;
+		$this->only_for_archs       = $myrow["only_for_archs"]       ?? null;
+		$this->not_for_archs        = $myrow["not_for_archs"]        ?? null;
 		$this->status               = $myrow["status"];
-		$this->showconfig           = $myrow["showconfig"]      ?? null;
-		$this->options_name         = $myrow["options_name"]    ?? null;
-		$this->license              = $myrow["license"];
+		$this->showconfig           = $myrow["showconfig"]           ?? null;
+		$this->options_name         = $myrow["options_name"]         ?? null;
+		$this->license              = $myrow["license"]              ?? null;
 		$this->fetch_depends        = $myrow["fetch_depends"]        ?? null;
 		$this->extract_depends      = $myrow["extract_depends"]      ?? null;
 		$this->patch_depends        = $myrow["patch_depends"]        ?? null;
@@ -181,24 +181,24 @@ class Port {
 
 		$this->port                 = $myrow["port"];
 		$this->category             = $myrow["category"];
-		$this->needs_refresh        = $myrow["needs_refresh"] ?? null;
-		$this->updated              = $myrow["updated"]       ?? null;
+		$this->needs_refresh        = $myrow["needs_refresh"]        ?? null;
+		$this->updated              = $myrow["updated"]              ?? null;
 
-		$this->onwatchlist          = $myrow["onwatchlist"];
-		$this->svn_revision         = $myrow["svn_revision"]  ?? null;
+		$this->onwatchlist          = $myrow["onwatchlist"]          ?? null;
+		$this->svn_revision         = $myrow["svn_revision"]         ?? null;
 
-		$this->update_description   = $myrow["update_description"] ?? null;
-		$this->message_id           = $myrow["message_id"]         ?? null;
-		$this->commit_hash_short    = $myrow["commit_hash_short"]  ?? null;
-		$this->encoding_losses      = $myrow["encoding_losses"]    ?? null;
-		$this->committer            = $myrow["committer"]          ?? null;
-		$this->committer_name       = $myrow["committer_name"]     ?? null;
-		$this->committer_email      = $myrow["committer_email"]    ?? null;
-		$this->author_name          = $myrow["author_name"]        ?? null;
-		$this->author_email         = $myrow["author_email"]       ?? null;
+		$this->update_description   = $myrow["update_description"]   ?? null;
+		$this->message_id           = $myrow["message_id"]           ?? null;
+		$this->commit_hash_short    = $myrow["commit_hash_short"]    ?? null;
+		$this->encoding_losses      = $myrow["encoding_losses"]      ?? null;
+		$this->committer            = $myrow["committer"]            ?? null;
+		$this->committer_name       = $myrow["committer_name"]       ?? null;
+		$this->committer_email      = $myrow["committer_email"]      ?? null;
+		$this->author_name          = $myrow["author_name"]          ?? null;
+		$this->author_email         = $myrow["author_email"]         ?? null;
 
-		$this->vulnerable_current   = $myrow["vulnerable_current"] ?? null;
-		$this->vulnerable_past      = $myrow["vulnerable_past"]    ?? null;
+		$this->vulnerable_current   = $myrow["vulnerable_current"]   ?? null;
+		$this->vulnerable_past      = $myrow["vulnerable_past"]      ?? null;
 
 		if (IsSet($this->pkg_plist_library_matches)) {
 			$this->pkg_plist_library_matches = $myrow["pkg_plist_library_matches"];
@@ -209,11 +209,11 @@ class Port {
 		//
 		$this->category_looking_at  = isset($myrow["category_looking_at"]) ? $myrow["category_looking_at"] : null;
 
-		$this->repository           = $myrow['repository']    ?? null;
-		$this->repo_hostname        = $myrow['repo_hostname'] ?? null;
+		$this->repository           = $myrow['repository']       ?? null;
+		$this->repo_hostname        = $myrow['repo_hostname']    ?? null;
 #		$this->git_hostname         = '';
-		$this->path_to_repo         = $myrow['path_to_repo']  ?? null;
-		$this->element_pathname     = $myrow['element_pathname'];
+		$this->path_to_repo         = $myrow['path_to_repo']     ?? null;
+		$this->element_pathname     = $myrow['element_pathname'] ?? null;
 		if (isset($this->quarterly_revision)) {
 			$this->quarterly_revision = $myrow['quarterly_revision'];
 		}

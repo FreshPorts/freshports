@@ -62,13 +62,13 @@ class CacheCommit extends Cache {
 		# the wild card allows us to remove all cache entries for this port
 		# regardless of the CacheType or page number
 		#
-		$Key = $this->_CommitKey($MessageId, $category, $port, $files);
+		$Key = $this->_CommitKey($MessageId);
 		$result = parent::Remove($Key, $data);
 
 		return $result;
 	}
 
-	function _CommitKey($MessageId, $category, $port, $files) {
+	function _CommitKey($MessageId, $category = '', $port = '', $files = 'n') {
 		// might want some parameter checking here
 		$CleanMessageId = $this->_CleanKey($MessageId);
 		$Key = self::CacheCategory . "/$CleanMessageId/$CleanMessageId." . $this->_CleanKey($category) . '.' . $this->_CleanKey($port) . '.' . $this->_CleanKey($files) . '.html';

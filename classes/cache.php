@@ -2,7 +2,7 @@
 	#
 	# $Id: cache.php,v 1.4 2008-01-26 23:41:05 dan Exp $
 	#
-	# Copyright (c) 2006 DVL Software Limited
+	# Copyright (c) 2006-2022 DVL Software Limited
 	#
 
 // base class for caching
@@ -53,7 +53,7 @@ class Cache {
 				$result = -1;
 			}
 		} else {
-			$this->_Log('Cache: FAILED Retrieve NOT FOUND ' .$CacheFileName);
+			$this->_Log('Cache: FAILED Retrieve NOT FOUND ' . $CacheFileName);
 			$result = -2;
 		}
 		
@@ -113,9 +113,9 @@ class Cache {
 		// rm $Filename
 		if (unlink($Filename)) {
 			// success
-			$this->_Log('Cache: Remove ' .$CacheFileName);
+			$this->_Log('Cache: Remove ' . $CacheFileName);
 		} else {
-			$this->_Log('Cache: FAILED Remove ' .$CacheFileName);
+			$this->_Log('Cache: FAILED Remove ' . $CacheFileName);
 			$result = -1;
 		}
 		
@@ -124,8 +124,9 @@ class Cache {
 
 	function _CleanKey($key) {
 		// convert /../ to .
-		
-		$new_key = preg_replace( '/[^a-z0-9]+/', '-', strtolower( $key ) );
+		$this->_Log('Cache: cleaning  ' . ($key ?? '<NULL>') );
+
+		$new_key = preg_replace( '/[^a-z0-9]+/', '-', strtolower( $key ?? '' ) );
 
 		return $new_key;
 	}

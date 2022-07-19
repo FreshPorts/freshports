@@ -2,7 +2,7 @@
 	#
 	# $Id: commit.php,v 1.11 2013-04-10 18:47:47 dan Exp $
 	#
-	# Copyright (c) 1998-2006 DVL Software Limited
+	# Copyright (c) 1998-2022 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
@@ -29,12 +29,12 @@
 
 	$url_query = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
 	$url_args  = array();
-	if (IsSet$url_query)) {
+	if (IsSet($url_query)) {
 		parse_str($url_query, $url_args);
 	}
 
-	$clean['category'] = $url_args['category'];
-	$clean['port']     = $url_args['port'];
+	$clean['category'] = $url_args['category'] ?? null;
+	$clean['port']     = $url_args['port']     ?? null;
 
 	$FilesForJustOnePort = IsSet($url_args['category']) && IsSet($url_args['port']);
 	$files = isset($url_args['files']) ? $url_args['files'] : 'n';

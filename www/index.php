@@ -48,7 +48,7 @@
 					# multiple ports have that package name
 					# search for them all and let the users decide which one they want
 					require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/searches.php');
-					$Searches = new Searches($dbh);
+					$Searches = new Searches($db);
 					$Redirect = $Searches->GetLink($package, FRESHPORTS_SEARCH_METHOD_Exact, 1);
 					header('Location: ' . $Redirect);
 					exit;
@@ -64,8 +64,7 @@
 	{
 	    if ($Debug) echo "package is not specified on the URL<br>\n";
     }
-?>
-<?php
+
 	$Title = 'Most recent commits';
 	freshports_Start($FreshPortsSlogan . " - $Title",
 					$Title,

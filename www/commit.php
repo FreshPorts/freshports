@@ -49,7 +49,7 @@
 
 	# if message_id is not provided, but revision is, fetch the corresponding message_id
 	# if found, we redirect using the message_id
-	if ($message_id == '' && $revision != '') {
+	if ($message_id == '' && IsSet($revision) && $revision != '') {
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
 
 		$Commit = new Commit($db);
@@ -171,7 +171,7 @@
 	if ($cached) {
 		echo '<tr>' . freshports_PageBannerText($Title) . '</tr>';
 		echo $HTML;
-	} else if ($message_id != '' || $revision != '') {
+	} else if ($message_id != '' || (IsSet($revision) && $revision != '')) {
 		echo '<tr>' . freshports_PageBannerText($Title) . '</tr>';
 
 		$DoTheSave = true;

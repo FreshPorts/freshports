@@ -1992,7 +1992,7 @@ function freshports_SideBar() {
 
 
 	$Searches = new Searches($dbh);
-	$HTML .= $Searches->GetFormSimple('&nbsp;', $User->set_focus_search);
+	$HTML .= $Searches->GetFormSimple('&nbsp;', IsSet($User) && $User->set_focus_search);
 
 	if ($_SERVER["PHP_SELF"] != '/search.php') {
 		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/search.php', "more...", "Advanced Searching options");

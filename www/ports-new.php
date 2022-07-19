@@ -83,7 +83,7 @@ These are the recently added ports.
 </TD></TR>
 <?
 
-	$visitor = pg_escape_string($db, $_COOKIE[USER_COOKIE_NAME]);
+	$visitor = pg_escape_string($db, $_COOKIE[USER_COOKIE_NAME] ?? '');
 	if (IsSet($_REQUEST["sort"])) {
 		$sort = pg_escape_string($db, $_REQUEST["sort"]);
 	} else {

@@ -58,7 +58,7 @@ class PageLoadDetail {
 
 		$Debug = 0;
 
-		$UserID = $User->id == '' ? "NULL" : $User->id;
+		$UserID = IsSet($User) && $User->id == '' ? "NULL" : $User->id;
 #		echo "\$UserID='$UserID'<br>";
 
 		$sql = "

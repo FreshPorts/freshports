@@ -61,6 +61,8 @@ function freshports_NonPortDescription($dbh, $element_record) {
 			var_dump($url_query);
 			echo '</pre>';
 		}
+
+		$url_args = array();
 		if (IsSet($url_query)) {
 			parse_str($url_query, $url_args);
 		}

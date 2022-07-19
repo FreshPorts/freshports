@@ -57,14 +57,13 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	}
 
 
-	$pathname = $URLParts['path'];
+	$pathname = $URLParts['path'] ?? '';
 	if ($Debug) echo "The pathname is '$pathname'<br>";
 
 	# split the query part of the url into the various arguments
+	$url_args = array();
 	if (IsSet($URLParts['query'])) {
 		parse_str($URLParts['query'], $url_args);
-	} else {
-		$url_args = array();
 	}
 
 

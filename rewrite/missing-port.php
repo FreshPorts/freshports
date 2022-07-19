@@ -92,13 +92,13 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 #	if ($Debug) phpinfo();
 
 	$PageNumber = 1;
+	$url_args = array();
 	if (IsSet($_SERVER['REQUEST_URI'])) {
 		$url_query = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
+		
 		if (!empty($url_query)) {
 			parse_str($url_query, $url_args);
 		}
-	} else {
-		$url_args = null;
 	}
 
 	if ($Debug) {

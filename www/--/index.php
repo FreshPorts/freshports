@@ -16,10 +16,11 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/functions.php');
 
 
 
-$script     = $_SERVER['REQUEST_URI'];
-$url_query  = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
+$script    = $_SERVER['REQUEST_URI'];
+$url_query = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
+$url_parts = array();
 if (!empty($url_query)) {
-	$url        = parse_url($url_query);
+	$url = parse_url($url_query);
 
 	parse_str($url_query, $url_parts);
 }

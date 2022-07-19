@@ -95,6 +95,7 @@ function freshports_CategoryDisplay($dbh, $category, $PageNumber = 1, $PageSize 
 			var_dump($url_query);
 			echo '</pre>';
 		}
+		$url_args = array();
 		if (IsSet($url_query)) {
 			parse_str($url_query, $url_args);
 		}

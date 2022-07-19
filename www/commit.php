@@ -28,7 +28,10 @@
 	if (IsSet($_REQUEST['revision']))   $revision   = pg_escape_string($db, $_REQUEST['revision']);
 
 	$url_query = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
-	parse_str($url_query, $url_args);
+	$url_args  = array();
+	if (IsSet$url_query)) {
+		parse_str($url_query, $url_args);
+	}
 
 	$clean['category'] = $url_args['category'];
 	$clean['port']     = $url_args['port'];

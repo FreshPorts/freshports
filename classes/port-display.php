@@ -59,7 +59,7 @@ class port_display {
 	var $ShowWatchListStatus;
 
 	# taken from https://www.php.net/manual/en/function.strpos.php
-	function strpos_nth(string $string, string $needle, int $occurrence, int $offset = null) {
+	function strpos_nth(string $string, string $needle, int $occurrence, int $offset = 0) {
 	        if ((0 < $occurrence) && ($length = strlen($needle))) {
 		        do {
 		        } while ((false !== $offset = strpos($string, $needle, $offset)) && --$occurrence && ($offset += $length));

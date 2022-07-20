@@ -135,6 +135,8 @@ if (IsSet($_REQUEST["sort"])) {
 	$sort = '';
 }
 
+$cache_file = '';
+
 switch ($sort) {
    case "port":
       $sort = "port";

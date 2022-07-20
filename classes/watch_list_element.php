@@ -187,8 +187,6 @@ select id, " . pg_escape_string($this->dbh, $ElementID) . "
 			$return = -1;
 		}
 
-		error_reporting($PreviousReportingLevel);
-
 		return $return;
 	}
 

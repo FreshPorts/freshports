@@ -73,7 +73,7 @@ class Commit_Ports {
 		$this->port               = $myrow["port"];
 		$this->version            = $myrow["version"];
 		$this->revision           = $myrow["revision"];
-		$this->svn_revision       = $myrow["svn_revision"];
+		$this->svn_revision       = $myrow["svn_revision"] ?? null;
 		$this->epoch              = $myrow["epoch"];
 		$this->status             = $myrow["status"];
 		$this->needs_refresh      = $myrow["needs_refresh"];
@@ -82,22 +82,22 @@ class Commit_Ports {
 		$this->deprecated         = $myrow["deprecated"];
 		$this->expiration_date    = $myrow["expiration_date"];
 		$this->ignore             = $myrow["ignore"];
-		$this->is_interactive     = $myrow["is_interactive"];
-		$this->no_cdrom           = $myrow["no_cdrom"];
-		$this->restricted         = $myrow["restricted"];
+		$this->is_interactive     = $myrow["is_interactive"] ?? null;
+		$this->no_cdrom           = $myrow["no_cdrom"]       ?? null;
+		$this->restricted         = $myrow["restricted"]     ?? null;
 		$this->branch             = $myrow["branch"] ?? null;
-		$this->vulnerable_current = $myrow["vulnerable_current"];
-		$this->vulnerable_past    = $myrow["vulnerable_past"];
+		$this->vulnerable_current = $myrow["vulnerable_current"] ?? null;
+		$this->vulnerable_past    = $myrow["vulnerable_past"]    ?? null;
 		$this->date_added         = $myrow["date_added"];
 		$this->element_id         = $myrow["element_id"];
 		$this->element_pathname   = $myrow["element_pathname"] ?? null;
 		$this->short_description  = $myrow["short_description"];
-		$this->onwatchlist        = $myrow["onwatchlist"];
+		$this->onwatchlist        = $myrow["onwatchlist"]      ?? null;
 		$this->stf_message        = $myrow["stf_message"];
-		$this->repository         = $myrow["repository"];
-		$this->repo_hostname      = $myrow["repo_hostname"];
-		$this->path_to_repo       = $myrow["path_to_repo"];
-		$this->repo_name          = $myrow["repo_name"];
+		$this->repository         = $myrow["repository"]       ?? null;
+		$this->repo_hostname      = $myrow["repo_hostname"]    ?? null;
+		$this->path_to_repo       = $myrow["path_to_repo"]     ?? null;
+		$this->repo_name          = $myrow["repo_name"]        ?? null;
 	}
 
 	function FetchNth($N) {

@@ -17,7 +17,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_list_deleted_ports.php');
 
 	// if we don't know who they are, we'll make sure they login first
-	if (!IsSet(visitor) || !$visitor) {
+	if (!IsSet($visitor) || !$visitor) {
 		header("Location: /login.php");  /* Redirect browser to PHP web site */
 		exit;  /* Make sure that code below does not get executed when we redirect. */
 	}

@@ -150,7 +150,10 @@ select " . pg_escape_string($this->dbh, $WatchListID) . ", " . pg_escape_string(
 			}
 		}
 
-		error_reporting($PreviousReportingLevel);
+		# I found this sometimes has no value
+		if (IsSet($PreviousReportingLevel)) {
+			error_reporting($PreviousReportingLevel);
+		}
 
 		return $return;
 	}

@@ -83,7 +83,7 @@
 	define('SEARCH_FIELD_PKG_PLIST',            'pkg-plist');
 	define('SEARCH_FIELD_SHORTDESCRIPTION',     'shortdescription');
 
-	
+
 	$SearchTypeToFieldMap = array(
 	    SEARCH_FIELD_COMMITMESSAGE        => 'CL.description',
 	    SEARCH_FIELD_COMMITTER            => 'CL.committer',
@@ -133,7 +133,7 @@
 	  GLOBAL $SearchTypeToFieldMap;
 	  # return the clause for this particular type of query
 	  $sql = '';
-	
+
 	  switch ($stype) {
 	    case SEARCH_FIELD_PATHNAME:
 	      $sql .= " $Like '" . pg_escape_string($db, $query) . "'";
@@ -150,9 +150,9 @@
 	      }
 	      $sql .= "\n     " .  $SearchTypeToFieldMap[$stype] . " $Like '" . pg_escape_string($db, $query) . "'";
 	      break;
-		}
+	  }
 
-		return $sql;
+	  return $sql;
 	}
 
 	#
@@ -462,11 +462,11 @@
 					case INCLUDE_DELETED_PORTS:
 						# do nothing
 						break;
-		
+
 					default:
 						$deleted = 'excludedeleted';
 						# do not break here...
-		
+
 					case 'excludedeleted':
 						if ($output_format != OUTPUT_FORMAT_DEPENDS) {
 							$sqlUserSpecifiedCondition .= " and";
@@ -509,13 +509,13 @@
 							default:
 								$sqlOrderBy = "\n ORDER BY C.name desc, E.name";
 								break;
-		
+
 							case ORDERBYASCENDING:
 								$sqlOrderBy = "\n ORDER BY C.name, E.name";
 								break;
 						}
 						break;
-		
+
 					case ORDERBYPORT:
 					default:
 						switch ($orderbyupdown) {
@@ -523,7 +523,7 @@
 							default:
 								$sqlOrderBy = "\n ORDER BY E.name desc, C.name";
 								break;
-		
+
 							case ORDERBYASCENDING:
 								$sqlOrderBy = "\n ORDER BY E.name, C.name";
 								break;
@@ -550,7 +550,7 @@
        ON TEMP.wle_element_id = E.id";
 			}
 
-	
+
 
 
 		switch ($stype) {
@@ -558,23 +558,24 @@
 		    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
 
 		    if ($include_src_commits) {
-		      echo 'searching src';
+		      if ($Debug) echo 'searching src';
 		      require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits_by_committer.php');
 		      $Commits = new CommitsByCommitter($db);
 		    } else {
-		      echo 'not searching src';
+		      if ($Debug) echo 'not searching src';
 		      require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port_commits_by_committer.php');
 		      $Commits = new PortCommitsByCommitter($db);
 		    }
+		    if ($Debug) echo 'searching by committer for ' . $query;
 		    $Commits->CommitterSet($query);
-    
+
 		    $Commits->Debug = $Debug;
-  
-		    $NumberOfCommits = $Commits->GetCountCommits($query);
+
+		    $NumberOfCommits = $Commits->GetCountCommits();
 		    if ($Debug) echo 'number of commits = ' . $NumberOfCommits . "<br>\n";
 
-			$NumFound = $NumberOfCommits;
-			$params = array(
+		    $NumFound = $NumberOfCommits;
+		    $params = array(
 					'mode'        => 'Sliding',
 					'perPage'     => $PageSize,
 					'delta'       => 5,
@@ -583,12 +584,12 @@
 					'currentPage' => $PageNumber,
 					'spacesBeforeSeparator' => 2,
 					'spacesAfterSeparator'  => 2,
-				);
-			# use @ to suppress: Non-static method Pager::factory() should not be called statically
-			$Pager = @Pager::factory($params);
+		    );
+		    # use @ to suppress: Non-static method Pager::factory() should not be called statically
+		    $Pager = @Pager::factory($params);
 
-			$offset = $Pager->getOffsetByPageId();
-			$NumOnThisPage = $offset[1] - $offset[0] + 1;
+		    $offset = $Pager->getOffsetByPageId();
+		    $NumOnThisPage = $offset[1] - $offset[0] + 1;
 
 		    if ($PageNumber > 1) {
 		      $Commits->SetOffset($offset[0] - 1);
@@ -596,12 +597,13 @@
 		    $Commits->SetLimit($PageSize);
 
 		    $NumFetches = $Commits->Fetch();
+#		    $result     = $Commits->LocalResult;
 		    break;
 
 		  case SEARCH_FIELD_COMMITMESSAGE:
 		    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits_by_description.php');
 		    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
-  
+
 		    $Commits = new CommitsByDescription($db);
 		    $Commits->ConditionSet($sqlUserSpecifiedCondition);
 		    $Commits->UserIDSet($User->id);
@@ -634,8 +636,9 @@
 		    $Commits->SetLimit($PageSize);
 
 		    $NumFetches = $Commits->Fetch();
+#		    $result     = $Commits->LocalResult;
 		    break;
-    
+
 		  case SEARCH_FIELD_PATHNAME:
 			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits_by_tree_location.php');
 			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
@@ -686,6 +689,7 @@
 			} else {
 			    $NumFetches = $Commits->Fetch();
 			}
+#			$result = $Commits->LocalResult;
 		        break;
 
 		  case SEARCH_FIELD_PKG_PLIST:
@@ -705,7 +709,7 @@
 					$Ports->IncludeDeletedPorts($deleted == INCLUDE_DELETED_PORTS);
 					break;
 			}
-    
+
 			$Ports->Debug = $Debug;
 
 			$NumFound = $Ports->GetQueryCount();
@@ -759,7 +763,7 @@
                           JOIN system_branch       SB  ON SB.branch_name   = '" . pg_escape_string($db, $Branch) . "'
                                                       AND SB.id            = CLB.branch_id,
        categories C, element E
-";                                       	
+";
 
 			if ($output_format == OUTPUT_FORMAT_DEPENDS) {
 				$sqlFrom .= "
@@ -796,7 +800,7 @@ JOIN element_pathname EP on E.id = EP.element_id
 			$NumRows  = pg_num_rows($result);
 			$myrow    = pg_fetch_array($result);
 			$NumFound = $myrow[0];
-			
+
 			if ($Debug) {
 				echo "\$NumFound = '$NumFound'<br>";
 			}
@@ -834,7 +838,7 @@ JOIN element_pathname EP on E.id = EP.element_id
 
 				} // HTML format
 
-				$sql = $sqlSelectFields . $sqlExtraFields . $sqlFrom . $sqlWatchListFrom . 
+				$sql = $sqlSelectFields . $sqlExtraFields . $sqlFrom . $sqlWatchListFrom .
 				        $sqlWhere . ' AND ' . $sqlUserSpecifiedCondition . $sqlOrderBy . $sqlOffsetLimit;
 
 				if ($Debug) {
@@ -862,7 +866,7 @@ JOIN element_pathname EP on E.id = EP.element_id
 					fwrite($fp, date("Y-m-d H:i:s") . " $stype : $method : $query : $num : $NumFetches : $deleted : $casesensitivity\n");
 					break;
 
-				default: 
+				default:
 					fwrite($fp, date("Y-m-d H:i:s") . " $stype : $method : $category/$port : $num : $NumFetches : $deleted\n");
 			}
 			fclose($fp);
@@ -928,7 +932,7 @@ JOIN element_pathname EP on E.id = EP.element_id
 		<OPTION VALUE="<?php echo SEARCH_FIELD_NAME                 . '"'; if ($stype == SEARCH_FIELD_NAME)                 echo ' SELECTED'; ?>>Port Name</OPTION>
 		<OPTION VALUE="<?php echo SEARCH_FIELD_SHORTDESCRIPTION     . '"'; if ($stype == SEARCH_FIELD_SHORTDESCRIPTION)     echo ' SELECTED'; ?>>Short Description</OPTION>
 		<OPTION VALUE="<?php echo SEARCH_FIELD_PATHNAME             . '"'; if ($stype == SEARCH_FIELD_PATHNAME)             echo ' SELECTED'; ?>>Under a pathname</OPTION>
-	</SELECT> 
+	</SELECT>
 
 	<SELECT name=method>
 		<OPTION VALUE="exact"   <?php if ($method == "exact"  ) echo 'SELECTED' ?>>equal to
@@ -1018,7 +1022,7 @@ JOIN element_pathname EP on E.id = EP.element_id
 <li><small>Case sensitivity is ignored for "sounds like" and output is ordered by the soundex.</small></li>
 <li><small>When searching on 'Message ID', the type of match is ignored.</small></li>
 <li><small>When searching on 'Commit Message' only 'containing' is used.</small></li>
-<li><small>When searching  by 'Under a pathname', your path must start with something like /ports/, /doc/, or /src/. All 
+<li><small>When searching  by 'Under a pathname', your path must start with something like /ports/, /doc/, or /src/. All
       commits under that point will be returned. The selected match type is ignored and defaults to 'Starts with'.</small></li>
 <li><small>Searching for 'sounds like' is only valid for Committer, Maintainer, Package Name, and Port Name.</small></li>
 </ul>
@@ -1051,24 +1055,29 @@ Special searches:
 		}
 
 	}  // end of putting out HTML output
-	if ($search) {
+	
+	if ($search || 1) {
 		if (IsSet($NumFetches) && $NumFetches == 0) {
+		if ($Debug) echo 'nothing found';
 		   if ($output_format == OUTPUT_FORMAT_HTML) {
 		     $HTML .= " no results found<br>\n";
 		   }
 		} else {
 		      if ($stype == 'committer' || $stype == 'commitmessage' || $stype == 'tree') {
 		          $NumFetches = min($num, $NumberOfCommits);
+		          if ($Debug) echo 'here we are';
 		          if ($NumFetches != $NumberOfCommits) {
 		            $MoreToShow = 1;
 		          } else {
 		             $MoreToShow = 0;
 		          }
-	
+
 		          $NumPortsFound = 'Number of commits: ' . $NumberOfCommits;
 		          if ($NumFound > $PageSize) {
 		            $NumPortsFound .= " (showing only $NumOnThisPage on this page)";
 			  }
+			  
+			  if ($Debug) echo "NumPortsFound = '$NumPortsFound'<br>";
 		      } else {
 		        if (IsSet($NumFetches) && IsSet($NumRows) && $NumFetches != $NumRows) {
 		           $MoreToShow = 1;
@@ -1081,14 +1090,17 @@ Special searches:
 		        if ($NumFound > $PageSize) {
 		          $NumPortsFound .= " (showing only $NumOnThisPage on this page)";
 		        }
+		}
 
+			if ($Debug) echo 'here we are2';
 			switch ($stype) {
 				case SEARCH_FIELD_COMMITTER:
 				case SEARCH_FIELD_COMMITMESSAGE:
 				case SEARCH_FIELD_PATHNAME:
+					if ($Debug) echo 'time to display!';
 					$DisplayCommit = new DisplayCommit($db, $Commits->LocalResult);
 					$links = $Pager->GetLinks();
-				
+
 					$HTML .= $NumPortsFound . ' ' . $links['all'];
 					$HTML .= $DisplayCommit->CreateHTML();
 					$HTML .= '<tr><td>' . $NumPortsFound . ' ' . $links['all'] . '</td></tr>';
@@ -1102,7 +1114,7 @@ Special searches:
 					if ($output_format == OUTPUT_FORMAT_HTML) {
 						$HTML .= $NumPortsFound . ' ' . $links['all'];
 					}
-		
+
 					GLOBAL $User;
 
 					$port_display = new port_display($db, $User);
@@ -1120,7 +1132,7 @@ Special searches:
 							}
 							break;
 					}
-	
+
 					if ($Debug) echo 'NumFetches = ' . $NumFetches;
 					for ($i = 0; $i < $NumFetches; $i++) {
 						$Port->FetchNth($i);
@@ -1151,14 +1163,16 @@ Special searches:
 				    	if ($output_format == OUTPUT_FORMAT_HTML) {
 						$HTML .= $NumPortsFound . ' ' . $links['all'];
 					}
-				}
-			}
-
-			echo $HTML;
+#			}
 			
-			} /* if  search */
+		      }
 		
-			if ($output_format == OUTPUT_FORMAT_HTML) {
+		      if ($Debug) echo 'WHAT IS THIS?';
+		      echo $HTML;
+
+		} /* if  search */
+
+		if ($output_format == OUTPUT_FORMAT_HTML) {
 ?>
 </table>
 
@@ -1166,7 +1180,7 @@ Special searches:
 
   <td class="sidebar">
   <?php
-				echo freshports_SideBar();
+			echo freshports_SideBar();
   ?>
   </td>
 
@@ -1177,16 +1191,16 @@ echo freshports_ShowFooter();
 
 ?>
 <?php
-				if (!IsSet($_REQUEST['query'])) { ?>
+			if (!IsSet($_REQUEST['query'])) { ?>
 <script>
 <!--
 document.search.query.focus();
 // -->
 </script>
 <?php
-				} 
-
 			}
+
+		}
 
 ?>
 </body>
@@ -1194,4 +1208,4 @@ document.search.query.focus();
 
 <?php
 
-		} // end of HTML output
+	} // $search

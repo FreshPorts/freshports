@@ -5,7 +5,7 @@
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
-$Debug = 0;
+$Debug = 1;
 
 DEFINE('SUPER_USER', 'S');
 DEFINE('USER',       'U');
@@ -85,7 +85,7 @@ class User {
 			} else {
 				freshports_CookieClear();
 				syslog(LOG_ERR, "Could not find user details for '$Cookie' from '" . 
-				        $_SERVER['REMOTE_ADDR'] . "' for '". $SERVER['REQUEST_URI'] . "'.");
+				        $_SERVER['REMOTE_ADDR'] . "' for '". $_SERVER['REQUEST_URI'] . "'.");
 				die('Your user details were not found.  You have been logged out.  Please return to the <a href="/">home page</a>.');
 			}
 		} else {

@@ -16,14 +16,14 @@ class CommitsByCommitter extends commits {
 	function __construct($dbh) {
 		parent::__construct($dbh);
 	}
-	
+
 	function CommitterSet($Committer) {
 		$this->Committer = $Committer;
 	}
 
 	function GetCountCommits() {
 		$count = 0;
-		
+
 		$sql = "select count(*) as count from commit_log where committer = '" . pg_escape_string($this->dbh, $this->Committer) . "'";
 		if ($this->Debug) echo "<pre>$sql</pre>";
 		$result = pg_exec($this->dbh, $sql);
@@ -88,14 +88,14 @@ class CommitsByCommitter extends commits {
 				$sql .= "
 	      LEFT OUTER JOIN
 	 (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
-	    FROM watch_list JOIN watch_list_element 
+	    FROM watch_list JOIN watch_list_element
 	        ON watch_list.id      = watch_list_element.watch_list_id
 	       AND watch_list.user_id = " . $this->UserID . "
-	       AND watch_list.in_service		
+	       AND watch_list.in_service
 	  GROUP BY wle_element_id) AS TEMP
 	       ON TEMP.wle_element_id = element.id";
 		}
-		
+
 		$sql .= "
 	  WHERE commit_log.id IN (SELECT tmp.id FROM (SELECT DISTINCT CL.id, CL.commit_date
   FROM commit_log CL
@@ -105,7 +105,7 @@ ORDER BY CL.commit_date DESC ";
    		if ($this->Limit) {
 			$sql .= " LIMIT " . $this->Limit;
 		}
-		
+
 		if ($this->Offset) {
 			$sql .= " OFFSET " . $this->Offset;
 		}
@@ -118,7 +118,7 @@ ORDER BY CL.commit_date DESC ";
 	    AND commit_log_elements.element_id    = element.id
    ORDER BY 1 desc,
 			commit_log_id";
-			
+
 		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
 
 		$this->LocalResult = pg_exec($this->dbh, $sql);

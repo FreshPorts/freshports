@@ -17,7 +17,7 @@
 
 	$Debug = 0;
 
-	if ($_POST["Origin"]) {
+	if (IsSet($_POST["Origin"])) {
 		$Origin = pg_escape_string($db, $_POST["Origin"]);
 	} else {
 		$Origin = $_SERVER["HTTP_REFERER"] ? $_SERVER["HTTP_REFERER"] : '/';

@@ -77,7 +77,7 @@ class Packages {
 				$TotalRows += $numrows;
 			}
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
+			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_result_error($this->dbh);
 		}
 
 #		exit("Stopping because we are testing PackagesGetPackageNamesForPort()");

@@ -54,7 +54,7 @@ if (IsSet($submit)) {
          echo "<pre>$sql</pre>\n";
       }
 
-      $result = pg_exec($db, $sql) or die('query failed ' . pg_errormessage());
+      $result = pg_exec($db, $sql) or die('query failed ' . pg_result_error($db));
 
       if (!pg_num_rows($result)) {
          $LoginFailed = 1;
@@ -73,7 +73,7 @@ if (IsSet($submit)) {
 
          if ($Debug) echo "$sql<br>\n";
 
-         $result = pg_exec($db, $sql) or die('query failed ' . pg_errormessage());
+         $result = pg_exec($db, $sql) or die('query failed ' . pg_result_error($db));
 
          if (!pg_num_rows($result)) {
             $eMailFailed = 1;
@@ -104,7 +104,7 @@ if (IsSet($submit)) {
 
         if ($OKToMail) {
           $sql = "insert into user_password_reset (user_id, ip_address) values (" . pg_escape_string($db, $myrow["id"]) . ", '" . pg_escape_string($db, $_SERVER['REMOTE_ADDR']) . "') returning token";
-          $token_result = pg_exec($db, $sql) or die('password token creation failed ' . pg_errormessage());
+          $token_result = pg_exec($db, $sql) or die('password token creation failed ' . pg_result_error($db));
           $token_row = pg_fetch_array ($token_result, 0);
           $token = $token_row["token"];
           

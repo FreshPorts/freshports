@@ -81,7 +81,7 @@ DELETE from announcements
 
 		$this->result = pg_exec($this->dbh, $sql);
 		if (!$this->result) {
-			echo pg_errormessage() . " $sql";
+			echo pg_result_error($this->dbh) . " $sql";
 		}
 		$numrows = pg_affected_rows($this->result);
 
@@ -118,7 +118,7 @@ DELETE from announcements
 
 		$this->result = pg_exec($this->dbh, $sql);
 		if (!$this->result) {
-			echo pg_errormessage() . " $sql";
+			echo pg_result_error($this->dbh) . " $sql";
 		}
 		$numrows = pg_affected_rows($this->result);
 
@@ -151,7 +151,7 @@ DELETE from announcements
 
 		$this->result = pg_exec($this->dbh, $sql);
 		if (!$this->result) {
-			echo pg_errormessage() . " $sql";
+			echo pg_result_error($this->dbh) . " $sql";
 		}
 		$numrows = pg_affected_rows($this->result);
 

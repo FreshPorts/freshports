@@ -29,7 +29,7 @@
 			$row = pg_fetch_array($result,0);
 			$ResultConfirm = $row[0];
 		} else {
-			echo pg_errormessage() . $sql;
+			echo pg_result_error($db) . $sql;
 		}
 	}
 ?>

@@ -1075,7 +1075,7 @@ function freshports_Category_Name($CategoryID, $dbh) {
 
 	$result = pg_exec($dbh, $sql);
 	if (!$result) {
-		echo "error " . pg_errormessage();
+		echo "error " . pg_result_error($dbh);
 		exit;
 	}
 
@@ -1666,7 +1666,7 @@ function freshports_GetNextValue($sequence, $dbh) {
 		$row       = pg_fetch_array($result,0);
 		$NextValue = $row[0];
 	} else {
-		pg_errormessage() . ' sql = $sql';
+		pg_result_error($dbh) . ' sql = $sql';
 	}
 
 	return $NextValue;
@@ -1748,7 +1748,7 @@ function freshports_UserSendToken($UserID, $dbh) {
 		$email = $row[0];
 		$token = $row[1];
 	} else {
-		pg_errormessage() . ' sql = $sql';
+		pg_result_error($dbh) . ' sql = $sql';
 	}
 
 	if (IsSet($token)) {
@@ -2325,7 +2325,7 @@ function freshports_GetElementID($dbh, $category, $port) {
 
 	$result = pg_exec($dbh, $sql);
 	if (!$result) {
-		echo "error " . pg_errormessage();
+		echo "error " . pg_result_error($dbh);
 		exit;
 	}
 
@@ -2339,7 +2339,7 @@ function freshports_OnWatchList($dbh, $UserID, $ElementID) {
 
 	$result = pg_exec($dbh, $sql);
 	if (!$result) {
-		echo "error " . pg_errormessage();
+		echo "error " . pg_result_error($dbh);
 		exit;
 	}
 
@@ -2464,9 +2464,9 @@ function getLoginDetails($dbh, $statementName, $UserID, $Password) {
     echo '<pre>' . htmlentities($sql) . '<pre>';
   }
 
-  $result = pg_prepare($dbh, $statementName, $sql) or die('query failed ' . pg_errormessage());
+  $result = pg_prepare($dbh, $statementName, $sql) or die('query failed ' . pg_result_error($dbh));
   if ($result) {
-    $result = pg_execute($dbh, $statementName, array($UserID, $Password))  or die('query failed ' . pg_errormessage());
+    $result = pg_execute($dbh, $statementName, array($UserID, $Password))  or die('query failed ' . pg_result_error($dbh));
   }
 
   return $result;

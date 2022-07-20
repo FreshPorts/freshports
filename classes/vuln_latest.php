@@ -50,7 +50,7 @@ SELECT distinct PA.category, PA.name as port, coalesce(V.date_modified, V.date_e
 				$myrow = pg_fetch_array ($this->LocalResult);
 			}
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
+			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_result_error($this->dbh);
 		}
 
 		return $numrows;

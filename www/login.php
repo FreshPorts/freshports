@@ -60,9 +60,9 @@ if (IsSet($_REQUEST['LOGIN']) && $_REQUEST['UserID']) {
             echo '<pre>' . htmlentities($sql) . '<pre>';
          }
 
-         $result = pg_prepare($db, HASH_UPDATE_QUERY, $sql) or die('query failed ' . pg_errormessage());
+         $result = pg_prepare($db, HASH_UPDATE_QUERY, $sql) or die('query failed ' . pg_result_error($db));
          if ($result) {
-            $result = pg_execute($db, HASH_UPDATE_QUERY, array($UserID, $Password, PW_HASH_METHOD, PW_HASH_COST)) or die('query failed ' . pg_errormessage());
+            $result = pg_execute($db, HASH_UPDATE_QUERY, array($UserID, $Password, PW_HASH_METHOD, PW_HASH_COST)) or die('query failed ' . pg_result_error($db));
          }
       }
    }
@@ -85,7 +85,7 @@ if (IsSet($_REQUEST['LOGIN']) && $_REQUEST['UserID']) {
 
 	         $sql = "UPDATE users SET cookie = '" . pg_escape_string($db, $Cookie) . "' WHERE id = " . pg_escape_string($db, $row['id']);
 	         # if we were doing this in a user object, we could retry when there was a cookie collision and we get a unique index error
-	         $result = pg_exec($db, $sql) or die('query failed ' . pg_errormessage());
+	         $result = pg_exec($db, $sql) or die('query failed ' . pg_result_error($db));
 
 	         SetCookie(USER_COOKIE_NAME, $Cookie, array(
 	           'expires'  => time() + 60*60*24*120,
@@ -132,9 +132,9 @@ if (IsSet($_REQUEST["resend"])) {
       echo "$sql<BR>\n";
    }
 
-   $result = pg_prepare($db, RESEND_CONFIRMATION_QUERY, $sql) or die('query failed ' . pg_errormessage());
+   $result = pg_prepare($db, RESEND_CONFIRMATION_QUERY, $sql) or die('query failed ' . pg_result_error($db));
    if ($result) {
-      $result = pg_execute($db, RESEND_CONFIRMATION_QUERY, array($User)) or die('query failed ' . pg_errormessage());
+      $result = pg_execute($db, RESEND_CONFIRMATION_QUERY, array($User)) or die('query failed ' . pg_result_error($db));
    }
 
    if (pg_num_rows($result)) {

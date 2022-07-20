@@ -40,7 +40,7 @@ class WatchListDeletedPorts {
 		if ($this->LocalResult) {
 			$numrows = pg_num_rows($this->LocalResult);
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
+			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_result_error($this->dbh);
 		}
 
 		return $numrows;

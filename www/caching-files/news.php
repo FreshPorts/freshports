@@ -138,7 +138,7 @@ limit 30";
 
 	$result = pg_exec ($db, $sql);
 	if (!$result) {
-		echo '<pre>' . $sql . '</pre>error = ' . pg_errormessage();
+		echo '<pre>' . $sql . '</pre>error = ' . pg_result_error($db);
 		exit;
 	}
 

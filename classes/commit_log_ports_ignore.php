@@ -46,7 +46,7 @@ DELETE from commit_log_ports_ignore
 		
 		$this->result = pg_exec($this->dbh, $sql);
 		if (!$this->result) {
-			echo pg_errormessage() . " $sql";
+			echo pg_result_error($this->dbh) . " $sql";
 		}
 		$numrows = pg_affected_rows($this->result);
 
@@ -65,7 +65,7 @@ INSERT INTO commit_log_ports_ignore (commit_log_id, port_id, reason)
 		
 		$this->result = pg_exec($this->dbh, $sql);
 		if (!$this->result) {
-			echo pg_errormessage() . " $sql";
+			echo pg_result_error($this->dbh) . " $sql";
 		}
 		$numrows = pg_affected_rows($this->result);
 

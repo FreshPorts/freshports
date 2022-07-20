@@ -58,7 +58,7 @@ select commit_log_elements.element_id,
 
 		$this->result = pg_exec($this->dbh, $sql);
 		if (!$this->result) {
-			echo pg_errormessage() . " $sql";
+			echo pg_result_error($this->dbh) . " $sql";
 		}
 		$numrows = pg_num_rows($this->result);
 

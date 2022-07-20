@@ -40,7 +40,7 @@ class WatchListAlsoWatched {
 			$numrows = pg_num_rows($this->LocalResult);
 		} else {
 			$numrows = 0;
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
+			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_result_error($this->dbh);
 		}
 
 		return $numrows;

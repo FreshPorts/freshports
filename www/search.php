@@ -793,7 +793,7 @@ JOIN element_pathname EP on E.id = EP.element_id
 
 			$result  = pg_exec($db, $sql);
 			if (!$result) {
-			  syslog(LOG_NOTICE, pg_errormessage() . ': ' . $sql);
+			  syslog(LOG_NOTICE, pg_result_error($db) . ': ' . $sql);
 			  die('something went terribly wrong.  Sorry.');
 			}
 
@@ -847,7 +847,7 @@ JOIN element_pathname EP on E.id = EP.element_id
 
 				$result  = pg_exec($db, $sql);
 				if (!$result) {
-					syslog(LOG_NOTICE, pg_errormessage() . ': ' . $sql);
+					syslog(LOG_NOTICE, pg_result_error($db) . ': ' . $sql);
 					die('something went terribly wrong.  Sorry.');
 				}
 

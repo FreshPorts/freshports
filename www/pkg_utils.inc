@@ -1,4 +1,4 @@
-<?
+<?php
 	#
 	# $Id: pkg_utils.inc,v 1.6 2006-12-17 12:06:13 dan Exp $
 	#
@@ -88,7 +88,7 @@ function CleanPorts($watchID) {
 		$result = pg_exec($database, $query);
 
 		if (!$result) {
-			$error = pg_errormessage($database);
+			$error = pg_result_error($database);
 			echo "$error<BR>\n";
 			$retval = false;
 		}
@@ -125,7 +125,7 @@ function AddPortsToList($ports, $userID) {
 			$result = @pg_exec($database, $query);
 
 			if (!$result) {
-				$errorMsg = pg_errormessage($database);
+				$errorMsg = pg_result_error($database);
 				if (strpos($errorMsg, 'Cannot insert a duplicate key')) {
 					$dups++;
 				}
@@ -162,4 +162,3 @@ function AddPortsToList($ports, $userID) {
 	return true;
 }
 // }}}
-?>

@@ -348,7 +348,7 @@ select ports.id,
 				die(__CLASS__ . ':' . __FUNCTION__ . " got $numrows rows at line " . __LINE__);
 			}
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
+			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_result_error($this->dbh);
 		}
 	}
 
@@ -476,7 +476,7 @@ ON TEMP.wle_element_id = ports.element_id";
 				$result = $this->{'id'};
 			}
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
+			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_result_error($this->dbh);
 		}
 
 		return $result;
@@ -629,7 +629,7 @@ LEFT OUTER JOIN
 
 			}
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
+			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_result_error($this->dbh);
 		}
 
 		return $numrows;
@@ -667,7 +667,7 @@ LEFT OUTER JOIN
 				$result = 1;
 			}
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
+			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_result_error($this->dbh);
 		}
 
 		return $result;
@@ -697,7 +697,7 @@ LEFT OUTER JOIN
 				echo 'that port was not found:' . $Category . '/' . $Port;
 			}
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
+			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_result_error($this->dbh);
 		}
 
 		return $result;
@@ -722,7 +722,7 @@ LEFT OUTER JOIN
 				$result = $myrow[0];
 			}
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
+			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_result_error($this->dbh);
 		}
 
 		return $result;
@@ -816,7 +816,7 @@ LEFT OUTER JOIN
 			if ($this->Debug) echo "FetchByElementID succeeded<BR>";
 			$this->{'conflicts_matches'} = pg_fetch_all($result);
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
+			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_result_error($this->dbh);
 		}
 
 	}

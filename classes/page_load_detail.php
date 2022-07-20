@@ -77,7 +77,7 @@ INSERT INTO page_load_detail(page_name,
 		if ($result) {
 			$return = 1;
 		} else {
-			echo "error " . pg_errormessage();
+			echo "error " . pg_result_error($this->dbh);
 			$return = -1;
 		}
 

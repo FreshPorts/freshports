@@ -1056,7 +1056,7 @@ Special searches:
 
 	}  // end of putting out HTML output
 	
-	if ($search || 1) {
+	if ($search) {
 		if (IsSet($NumFetches) && $NumFetches == 0) {
 		if ($Debug) echo 'nothing found';
 		   if ($output_format == OUTPUT_FORMAT_HTML) {
@@ -1075,9 +1075,9 @@ Special searches:
 		          $NumPortsFound = 'Number of commits: ' . $NumberOfCommits;
 		          if ($NumFound > $PageSize) {
 		            $NumPortsFound .= " (showing only $NumOnThisPage on this page)";
-			  }
+			      }
 			  
-			  if ($Debug) echo "NumPortsFound = '$NumPortsFound'<br>";
+			      if ($Debug) echo "NumPortsFound = '$NumPortsFound'<br>";
 		      } else {
 		        if (IsSet($NumFetches) && IsSet($NumRows) && $NumFetches != $NumRows) {
 		           $MoreToShow = 1;
@@ -1085,12 +1085,11 @@ Special searches:
 		           $MoreToShow = 0;
 		        }
 
-
 		        $NumPortsFound = 'Number of ports: ' . ($NumFound ?? 0);
 		        if ($NumFound > $PageSize) {
 		          $NumPortsFound .= " (showing only $NumOnThisPage on this page)";
 		        }
-		}
+		      }
 
 			if ($Debug) echo 'here we are2';
 			switch ($stype) {
@@ -1170,7 +1169,7 @@ Special searches:
 		      if ($Debug) echo 'WHAT IS THIS?';
 		      echo $HTML;
 
-		} /* if  search */
+		} /* NumFetches  != 0 */
 
 		if ($output_format == OUTPUT_FORMAT_HTML) {
 ?>
@@ -1198,9 +1197,9 @@ document.search.query.focus();
 // -->
 </script>
 <?php
-			}
+			} /* query is provided */
 
-		}
+		} /* OUTPUT_FORMAT_HTML */
 
 ?>
 </body>

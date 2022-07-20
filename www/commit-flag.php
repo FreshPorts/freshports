@@ -12,10 +12,10 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit_flag.php');
 
 	$Debug = 0;
-	if ($_POST["Origin"]) {
+	if (IsSet($_POST["Origin"])) {
 		$Origin = pg_escape_string($db, $_POST["Origin"]);
 	} else {
-		$Origin = $_SERVER["HTTP_REFERER"];
+		$Origin = $_SERVER["HTTP_REFERER"] ?? '/';
 	}
 	$Redirect = 1;
 #phpinfo();
@@ -75,7 +75,7 @@
 			die("I don't know what I was supposed to do there!");
 	}
 
-#	echo 'when done, I will return to ' . $HTTP_SERVER_VARS['HTTP_REFERER'];
+#	echo 'when done, I will return to ' . $Origin;
 	if ($Redirect) {
 		if ($Origin) {
 			if ($Debug) echo "Origin supplied is $Origin\n<BR>";

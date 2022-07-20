@@ -20,7 +20,7 @@
 	if (IsSet($_POST["Origin"])) {
 		$Origin = pg_escape_string($db, $_POST["Origin"]);
 	} else {
-		$Origin = $_SERVER["HTTP_REFERER"] ? $_SERVER["HTTP_REFERER"] : '/';
+		$Origin = $_SERVER["HTTP_REFERER"] ?? '/';
 	}
 	$Redirect = 1;
 #phpinfo();
@@ -236,9 +236,9 @@ echo freshports_ShowFooter();
 
 					$WatchListElement = new WatchListElement($db);
 					if ($WatchListElement->DeleteFromDefault($User->id, $ElementID) >= 0) {
-						pg_exec('COMMIT');
+						pg_exec($db, 'COMMIT');
 					} else {
-						pg_exec('ROLLBACK');
+						pg_exec($db, 'ROLLBACK');
 						die(pg_last_error());
 					}
 				} else {
@@ -248,7 +248,7 @@ echo freshports_ShowFooter();
 		}
 	} // end if Ask
 
-#	echo 'when done, I will return to ' . $HTTP_SERVER_VARS['HTTP_REFERER'];
+#	echo 'when done, I will return to ' . $Origin;
 	if ($Redirect) {
 		if ($Origin) {
 			if ($Debug) echo "Origin supplied is $Origin\n<BR>";

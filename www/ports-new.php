@@ -1,115 +1,118 @@
 <?php
-	#
-	# $Id: ports-new.php,v 1.2 2006-12-17 12:06:15 dan Exp $
-	#
-	# Copyright (c) 1998-2003 DVL Software Limited
-	#
+#
+# $Id: ports-new.php,v 1.2 2006-12-17 12:06:15 dan Exp $
+#
+# Copyright (c) 1998-2003 DVL Software Limited
+#
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
-	$Debug = 0;
+$Debug = 0;
 
-	# we allow the following intervals: today, yesterday, this past week, past 3 months
+# we allow the following intervals: today, yesterday, this past week, past 3 months
 
-	if (IsSet($_REQUEST["interval"])) {
-		$interval = pg_escape_string($db, $_REQUEST["interval"]);
-	} else {
-		$interval = '';
-	}
+if (isset($_REQUEST["interval"])) {
+    $interval = pg_escape_string($db, $_REQUEST["interval"]);
+} else {
+    $interval = '';
+}
 
-	switch ($interval) {
-		case 'today':
-			$IntervalAdjust = '1 day';
-			$Interval       = 'past 24 hours';
-			break;
+switch ($interval) {
+    case 'today':
+        $IntervalAdjust = '1 day';
+        $Interval = 'past 24 hours';
+        break;
 
-		case 'yesterday':
-			$IntervalAdjust = '2 days';
-			$Interval       = 'past 48 hours';
-			break;
+    case 'yesterday':
+        $IntervalAdjust = '2 days';
+        $Interval = 'past 48 hours';
+        break;
 
-		default:
-		case 'week':
-			$interval       = 'week';
-			$IntervalAdjust = '1 week';
-			$Interval       = 'past 7 days';
-			break;
+    default:
+    case 'week':
+        $interval = 'week';
+        $IntervalAdjust = '1 week';
+        $Interval = 'past 7 days';
+        break;
 
-		case 'fortnight':
-			$IntervalAdjust = '2 weeks';
-			$Interval       = 'past 2 weeks';
-			break;
+    case 'fortnight':
+        $IntervalAdjust = '2 weeks';
+        $Interval = 'past 2 weeks';
+        break;
 
-		case 'month':
-			$IntervalAdjust = '1 month';
-			$Interval       = 'past month';
-			break;
+    case 'month':
+        $IntervalAdjust = '1 month';
+        $Interval = 'past month';
+        break;
 
-		case '3months':
-			$IntervalAdjust = '3 months';
-			$Interval       = 'past 3 months';
-	}
+    case '3months':
+        $IntervalAdjust = '3 months';
+        $Interval = 'past 3 months';
+}
 
 
-	if (IsSet($_REQUEST['branch'])) {
-		$BranchName = NormalizeBranch(htmlspecialchars($_REQUEST['branch']));
-	} else {
-		$BranchName = BRANCH_HEAD;
-	}
+if (isset($_REQUEST['branch'])) {
+    $BranchName = NormalizeBranch(htmlspecialchars($_REQUEST['branch']));
+} else {
+    $BranchName = BRANCH_HEAD;
+}
 
-	$Title    = "New ports - " . $Interval;
+$Title = "New ports - " . $Interval;
 
-	freshports_Start($Title,
-					$Title,
-					"FreeBSD, index, applications, ports");
+freshports_Start($Title,
+    $Title,
+    "FreeBSD, index, applications, ports");
 
 ?>
 
-	<?php echo freshports_MainTable(); ?>
+<?php echo freshports_MainTable(); ?>
 
-	<tr><td class="content">
+<tr>
+    <td class="content">
 
-	<?php echo freshports_MainContentTable(); ?>
+        <?php echo freshports_MainContentTable(); ?>
 
 <TR>
-	<? echo freshports_PageBannerText($Title); ?>
+    <? echo freshports_PageBannerText($Title); ?>
 </TR>
-<TR><TD>
-These are the recently added ports.
-</TD></TR>
+<TR>
+    <TD>
+        These are the recently added ports.
+    </TD>
+</TR>
 <?
 
-	$visitor = pg_escape_string($db, $_COOKIE[USER_COOKIE_NAME] ?? '');
-	if (IsSet($_REQUEST["sort"])) {
-		$sort = pg_escape_string($db, $_REQUEST["sort"]);
-	} else {
-		$sort = '';
-	}
+$visitor = pg_escape_string($db, $_COOKIE[USER_COOKIE_NAME] ?? '');
+if (isset($_REQUEST["sort"])) {
+    $sort = pg_escape_string($db, $_REQUEST["sort"]);
+} else {
+    $sort = '';
+}
 
-	// make sure the value for $sort is valid
-	
-	echo "<TR><TD>\nThis page is ";
-	
-	switch ($sort) {
-		case "dateadded":
-			$sort = "date_added_raw desc, category, port";
-			echo 'sorted by date added.  <A HREF="' . $_SERVER["PHP_SELF"] . '?interval=' . $interval . '&amp;sort=category">Sort by category</A>';
-			$ShowCategoryHeaders = 0;
-			break;
-	
-		default:
-			$sort ="category, port";
-			echo 'sorted by category.  <A HREF="' . $_SERVER["PHP_SELF"] . '?interval=' . $interval . '&amp;sort=dateadded">Sort by date added</A>';
-			$ShowCategoryHeaders = 1;
-	}
-	
-	echo "</TD></TR>\n";
+// make sure the value for $sort is valid
 
-	$sql = "
+echo "<TR><TD>\nThis page is ";
+
+switch ($sort) {
+    case "dateadded":
+        $sort = "date_added_raw desc, category, port";
+        echo 'sorted by date added.  <A HREF="' . $_SERVER["PHP_SELF"] . '?interval=' . $interval . '&amp;sort=category">Sort by category</A>';
+        $ShowCategoryHeaders = 0;
+        break;
+
+    default:
+        $sort = "category, port";
+        echo 'sorted by category.  <A HREF="' . $_SERVER["PHP_SELF"] . '?interval=' . $interval . '&amp;sort=dateadded">Sort by date added</A>';
+        $ShowCategoryHeaders = 1;
+}
+
+echo "</TD></TR>\n";
+
+$sql = "
 select NP.id,
        E.name as port,
        C.name as category,
@@ -139,15 +142,15 @@ select NP.id,
        NP.uses,
        NP.package_name ";
 
-	if ($User->id) {
-		$sql .= ",
+if ($User->id) {
+    $sql .= ",
          onwatchlist";
-	} else {
-		$sql .= ",
+} else {
+    $sql .= ",
          NULL AS onwatchlist ";
-	}
+}
 
-	$sql .= "
+$sql .= "
 	 FROM (
    SELECT P.id,
           P.category_id,
@@ -172,10 +175,10 @@ select NP.id,
           
 ";
 
-	$sql .= "   FROM ports P  WHERE P.date_added  > (SELECT now() - interval '" . pg_escape_string($db, $IntervalAdjust) . "')) AS NP";
+$sql .= "   FROM ports P  WHERE P.date_added  > (SELECT now() - interval '" . pg_escape_string($db, $IntervalAdjust) . "')) AS NP";
 
-	if ($User->id) {
-			$sql .= "
+if ($User->id) {
+    $sql .= "
       LEFT OUTER JOIN
  (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
     FROM watch_list JOIN watch_list_element
@@ -184,9 +187,9 @@ select NP.id,
        AND watch_list.in_service
   GROUP BY wle_element_id) AS TEMP2
        ON TEMP2.wle_element_id = NP.element_id";
-	}
-	
-	$sql .= "
+}
+
+$sql .= "
                LEFT OUTER JOIN commit_log          CL  ON NP.last_commit_id = CL.id
                           JOIN commit_log_ports    CLP ON CLP.commit_log_id = CL.id 
                           JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id AND CLP.port_id = NP.id
@@ -199,32 +202,32 @@ select NP.id,
 
   ";
 
-	$sql .= "\n  order by $sort ";
+$sql .= "\n  order by $sort ";
 
-	if ($Debug) {
-		echo "<pre>$sql</pre>";
-	}
+if ($Debug) {
+    echo "<pre>$sql</pre>";
+}
 
-	$numrows = 0;
-	$result = pg_exec($db, $sql);
-	if (!$result) {
-		echo pg_result_error($db);
-	} else {
-		$numrows = pg_num_rows($result);
-	}
+$numrows = 0;
+$result = pg_exec($db, $sql);
+if (!$result) {
+    echo pg_result_error($db);
+} else {
+    $numrows = pg_num_rows($result);
+}
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/list-of-ports.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/list-of-ports.php');
 
-	echo freshports_ListOfPorts($result, $db, 'Y', $ShowCategoryHeaders, $User, $numrows);
+echo freshports_ListOfPorts($result, $db, 'Y', $ShowCategoryHeaders, $User, $numrows);
 ?>
 
 </TABLE>
 
-  <td class="sidebar">
-	<?
-	echo freshports_SideBar();
-	?>
-  </td>
+<td class="sidebar">
+    <?
+    echo freshports_SideBar();
+    ?>
+</td>
 
 </TR>
 </TABLE>

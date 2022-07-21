@@ -196,90 +196,96 @@ echo "</td></tr>\n";
 
 if ($wlid != '') {
 	$sql = "
-	SELECT temp.*,
-		to_char(max(commit_log.commit_date) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') 	as updated,
-		commit_log.committer,
-		commit_log.description        								as update_description,
-		commit_log.message_id, max(commit_log.commit_date) 					as commit_date_sort_field,
-		commit_log.committer_name,
-		commit_log.committer_email,
-		commit_log.author_name,
-		commit_log.author_email
-	from commit_log
-		RIGHT OUTER JOIN
-	(
-	
-	select element.name 			as port, 
-			 ports.id 				as id, 
+
+WITH selected_ports AS (
+	select element.name 		as port, 
+	       ports.id 		as id, 
 	       categories.name 		as category, 
 	       categories.id 		as category_id, 
 	       ports.version 		as version, 
 	       ports.revision 		as revision, 
-	       element.id 			as element_id, 
+	       element.id 		as element_id, 
 	       ports.maintainer, 
 	       ports.short_description, 
 	       ports.last_commit_id, 
 	       ports.package_exists, 
 	       ports.extract_suffix, 
 	       ports.homepage, 
-		   to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') 		as date_added, 
+	       to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') 		as date_added, 
 	       element.status, 
 	       ports.broken, 
 	       ports.deprecated, 
 	       ports.ignore, 
 	       ports.forbidden, 
-           ports.master_port,
-           ports.latest_link,
-           ports.no_package,
-           ports.package_name,
-           ports.restricted,
-           ports.no_cdrom,
-           ports.expiration_date,
-	       1 as onwatchlist 
-	       from watch_list_element, element, categories, ports
+	       ports.master_port,
+	       ports.latest_link,
+	       ports.no_package,
+	       ports.package_name,
+	       ports.restricted,
+	       ports.no_cdrom,
+	       ports.expiration_date,
+	       1 as onwatchlist
+	  FROM watch_list_element, element, categories, ports
 	 WHERE ports.category_id                = categories.id 
 	   and watch_list_element.element_id    = ports.element_id 
-		and ports.element_id                 = element.id
-	   and watch_list_element.watch_list_id = " . pg_escape_string($db, $wlid) . "
+		and ports.element_id            = element.id
+	   and watch_list_element.watch_list_id = " .  pg_escape_string($db, $wlid) . "
 	
+)
+
+SELECT selected_ports.*,
+		to_char(max(commit_log.commit_date) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') 	as last_commit_date,
+		commit_log.committer,
+		commit_log.description        								as update_description,
+		commit_log.message_id, 
+		commit_log.svn_revision, 
+		commit_log.commit_hash_short,
+		max(commit_log.commit_date) 					                        as commit_date_sort_field,
+		commit_log.committer_name,
+		commit_log.committer_email,
+		commit_log.author_name,
+		commit_log.author_email,
+                R.repo_hostname
+	from selected_ports LEFT OUTER JOIN commit_log on selected_ports.last_commit_id = commit_log.id
+                            LEFT OUTER JOIN repo R     on commit_log.repo_id = R.id
 	
-	) as TEMP
-	on (TEMP.last_commit_id = commit_log.id) 
-	
-	GROUP BY temp.port,
-		temp.id,
-	         temp.category, 
-	         temp.category_id, 
-	         temp.version, 
-	         temp.revision, 
+	GROUP BY selected_ports.port,
+	         selected_ports.id,
+	         selected_ports.category, 
+	         selected_ports.category_id, 
+	         selected_ports.version, 
+	         selected_ports.revision, 
 	         commit_log.committer, 
 	         commit_log.committer_name,
 	         commit_log.committer_email,
 	         commit_log.author_name,
 	         commit_log.author_email,
 	         update_description, 
-	         temp.element_id, 
-	         temp.maintainer, 
-	         temp.short_description, 
-	         temp.date_added, 
-	         temp.last_commit_id, 
-	         commit_log.message_id, 
-	         temp.package_exists, 
-	         temp.extract_suffix, 
-	         temp.homepage, 
-	         temp.status, 
-	         temp.broken, 
-	         temp.deprecated, 
-	         temp.ignore, 
-	         temp.forbidden, 
-	         temp.master_port,
-	         temp.latest_link,
-	         temp.no_package,
-	         temp.package_name,
-	         temp.restricted,
-	         temp.no_cdrom,
-	         temp.expiration_date,
-	         temp.onwatchlist  
+	         selected_ports.element_id, 
+	         selected_ports.maintainer, 
+	         selected_ports.short_description, 
+	         selected_ports.date_added, 
+	         selected_ports.last_commit_id,
+	         commit_log.message_id,
+	         commit_log.svn_revision,
+	         commit_log.commit_hash_short,
+	         selected_ports.package_exists, 
+	         selected_ports.extract_suffix, 
+	         selected_ports.homepage, 
+	         selected_ports.status, 
+	         selected_ports.broken, 
+	         selected_ports.deprecated, 
+	         selected_ports.ignore, 
+	         selected_ports.forbidden, 
+	         selected_ports.master_port,
+	         selected_ports.latest_link,
+	         selected_ports.no_package,
+	         selected_ports.package_name,
+	         selected_ports.restricted,
+	         selected_ports.no_cdrom,
+	         selected_ports.expiration_date,
+	         selected_ports.onwatchlist,
+                 r.repo_hostname
 	";
 	
 	$sql .= " order by $sort ";

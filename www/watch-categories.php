@@ -17,7 +17,7 @@
 	}
 
 	// if we don't know who they are, we'll make sure they login first
-	if (!$visitor) {
+	if (IsSet($visitor) && !$visitor) {
 		header("Location: /login.php");  /* Redirect browser to PHP web site */
 		exit;  /* Make sure that code below does not get executed when we redirect. */
 	}
@@ -26,19 +26,25 @@
 
 	$Title = 'Watch Categories';
 	freshports_Start($Title,
-					$TItle,
+					$Title,
 					'FreeBSD, index, applications, ports');
 
 $Debug = 0;
 
 if ($Debug) # phpinfo();
 
-$visitor = $_COOKIE[USER_COOKIE_NAME];
+$visitor = $_COOKIE[USER_COOKIE_NAME] ?? null;
+if (!IsSet($visitor)) {
 
-if ($_REQUEST['wlid']) {
+	echo freshports_ShowFooter();
+
+	die('why are you here?');
+}
+
+if (IsSet($_REQUEST['wlid']) && $_REQUEST['wlid']) {
 		# they clicked on the GO button and we have to apply the 
 		# watch staging area against the watch list.
-		$wlid = pg_escape_string($db, $_REQUEST["wlid"]);
+		$wlid = pg_escape_string($db, $_REQUEST['wlid']);
 		if ($Debug) echo "setting SetLastWatchListChosen => \$wlid='$wlid'";
 		$User->SetLastWatchListChosen($wlid);
 		if ($Debug) echo "\$wlid='$wlid'";
@@ -121,8 +127,8 @@ if ($Debug) echo "num categories being watched = $numrows<BR>";
 
 for ($i = 0; $i < $numrows; $i++) {
 	$myrow = pg_fetch_array($result, $i);
-	$WatchedCategories{$myrow["category_id"]} = ' *';
-	if ($Debug) echo "category " . $myrow["category_id"] . " = " . $WatchedCategories{$myrow["category_id"]} . '<BR>';
+	$WatchedCategories[$myrow['category_id']] = ' *';
+	if ($Debug) echo "category " . $myrow['category_id'] . " = " . $WatchedCategories[$myrow['category_id']] . '<BR>';
 }
 
 # categories list start
@@ -161,9 +167,9 @@ for ($i = 0; $i < $NumCategories; $i++) {
       $HTML .= '<td>';
    }
 
-   $HTML .= ' <a href="/port-watch.php?category=' . $rows[$i]["category"] . '&amp;wlid=' . $wlid . '">' . $rows[$i]["category"] . '</a>';
+   $HTML .= ' <a href="/port-watch.php?category=' . $rows[$i]['category'] . '&amp;wlid=' . $wlid . '">' . $rows[$i]['category'] . '</a>';
 
-   $HTML .= $WatchedCategories{$rows[$i]["category_id"]};
+   $HTML .= $WatchedCategories[$rows[$i]['category_id']] ?? '';
    $HTML .= "<br>\n";
 }
 

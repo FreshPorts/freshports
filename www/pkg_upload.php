@@ -277,10 +277,11 @@ if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 			if ($Debug) echo 'staging area is in use<br>';
 			$DisplayStagingArea = TRUE;
 			if ($_REQUEST["update_watch_list"]) {
-				$ports = $_REQUEST["ports"];
+#phpinfo();
+#				$ports = $_REQUEST["ports"];
 				# save these things to the watch list
 				# and clear out part of the staging area.
-				$WatchListID = pg_escape_string($dbh, $_REQUEST['wlid']);
+				$WatchListID = pg_escape_string($db, $_REQUEST['wlid']);
 				if (!IsSet($WatchListID) || $WatchListID === '') {
 					syslog(LOG_NOTICE, "No watch list ID was supplied.  I cannot continue.  " .
 					    __FILE__ . '::' . __LINE__ . " User id = " . $User->id);
@@ -288,7 +289,6 @@ if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 				} 
 
 				if ($Debug) echo ' you clicked on update_watch_list';
-#phpinfo();
 				if (MoveStagingToWatchList($User->id, $WatchListID, $db)) {
 					$DisplayStagingArea = FALSE;
 					$StagingInUse       = FALSE;
@@ -296,7 +296,7 @@ if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 				}
 			}
 if ($Debug) echo '<br>' . __LINE__ . '<br>';
-			if ($_REQUEST["clear"]) {
+			if (IsSet($_REQUEST["clear"])) {
 				if ($Debug) echo " you pressed clear!<br>";
 				if (StagingAreaClear($User->id, $db)) {
 					$StagingInUse		= FALSE;
@@ -310,7 +310,7 @@ if ($Debug) echo '<br>' . __LINE__ . '<br>';
 				if ($Debug) echo 'you selected a list<br>';
 				# they clicked on the GO button and we have to apply the 
 				# watch staging area against the watch list.
-				$WatchListID = pg_escape_string($dbh, $_REQUEST['wlid']);
+				$WatchListID = pg_escape_string($db, $_REQUEST['wlid']);
 				if ($Debug) echo "setting SetLastWatchListChosen => \$wlid='$WatchListID'";
 				$User->SetLastWatchListChosen($WatchListID);
 			} else {

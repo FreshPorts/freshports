@@ -211,7 +211,7 @@ DELETE FROM watch_list
 				$ListCount = $myrow['listcount'];
 			}
 		} else {
-			die(pg_result_error($result) . "<pre>$sql</pre>");
+			die(pg_last_error($result) . "<pre>$sql</pre>");
 		}
 				
 		return $ListCount;

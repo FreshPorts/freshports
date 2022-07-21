@@ -65,7 +65,7 @@ class Commit_Log_Ports {
 		if ($this->Debug) echo "\$sql='<pre>$sql</pre><br>\n";
 		$this->result = pg_exec($this->dbh, $sql);
 		if (!$this->result) {
-			syslog(LOG_ERR, pg_result_error($this->dbh) . " $sql");
+			syslog(LOG_ERR, pg_last_error($this->dbh) . " $sql");
 			die('that query failed.  details have been logged');
 		}
 
@@ -129,7 +129,7 @@ class Commit_Log_Ports {
 		if ($this->Debug) echo "\$sql='<pre>$sql</pre><br>\n";
 		$this->result = pg_exec($this->dbh, $sql);
 		if (!$this->result) {
-			syslog(LOG_ERR, pg_result_error($this->dbh) . " $sql");
+			syslog(LOG_ERR, pg_last_error($this->dbh) . " $sql");
 			die('that query failed.  details have been logged');
 		}
 		$numrows = pg_num_rows($this->result);
@@ -181,7 +181,7 @@ UPDATE commit_log_ports
 		
 		$this->result = pg_exec($this->dbh, $sql);
 		if (!$this->result) {
-			syslog(LOG_ERR, pg_result_error($this->dbh) . " $sql");
+			syslog(LOG_ERR, pg_last_error($this->dbh) . " $sql");
 			die('that query failed.  details have been logged');
 		} else {
 			$this->needs_refresh = 0;

@@ -42,7 +42,7 @@ select CLPV.id,
 #		echo "\$sql='<pre>$sql</pre><br>\n";
 		$this->result = pg_exec($this->dbh, $sql);
 		if (!$this->result) {
-			echo pg_result_error($this->dbh) . " $sql";
+			echo pg_last_error($this->dbh) . " $sql";
 		}
 		$numrows = pg_num_rows($this->result);
 

@@ -67,7 +67,7 @@ if (IsSet($_COOKIE[USER_COOKIE_NAME])) {
 if (!empty($visitor)) {
 	
 	if ($User->FetchByCookie($visitor) != 1) {
-		if ($Debug) echo "we didn't find anyone with that login... " . pg_result_error($db)() . "\n<br>";
+		if ($Debug) echo "we didn't find anyone with that login... " . pg_last_error($db)() . "\n<br>";
 		if ($Debug) echo ' no cookie found for that person ';
 		# we were given a cookie which didn't refer to a cookie we found.
 		freshports_CookieClear();

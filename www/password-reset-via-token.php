@@ -76,7 +76,7 @@ if (IsSet($submit)) {
       }
     } else {
       $errors .= 'Something went terribly wrong there.<br>';
-      syslog(LOG_NOTICE, "Password reset page: Password reset went wrong " . $sql . ' ' . pg_result_error($db));
+      syslog(LOG_NOTICE, "Password reset page: Password reset went wrong " . $sql . ' ' . pg_last_error($db));
     }
   }
 }

@@ -88,7 +88,7 @@ function CleanPorts($watchID) {
 		$result = pg_exec($database, $query);
 
 		if (!$result) {
-			$error = pg_result_error($database);
+			$error = pg_last_error($database);
 			echo "$error<BR>\n";
 			$retval = false;
 		}
@@ -125,7 +125,7 @@ function AddPortsToList($ports, $userID) {
 			$result = @pg_exec($database, $query);
 
 			if (!$result) {
-				$errorMsg = pg_result_error($database);
+				$errorMsg = pg_last_error($database);
 				if (strpos($errorMsg, 'Cannot insert a duplicate key')) {
 					$dups++;
 				}

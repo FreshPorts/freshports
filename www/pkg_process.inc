@@ -160,7 +160,7 @@ function ProcessPackages($UserID, $PortArray, $dbh) {
 		if ($result && pg_num_rows($result)) {
 			# do nothing
 		} else {
-			echo pg_result_error($dbh) . " sql = $sql";
+			echo pg_last_error($dbh) . " sql = $sql";
 			$ok = FALSE;
 			break;
 		}
@@ -174,7 +174,7 @@ function ProcessPackages($UserID, $PortArray, $dbh) {
 		if ($result && pg_num_rows($result)) {
 			# do nothing.  All is well
 		} else {
-			echo pg_result_error($dbh) . " sql = $sql";
+			echo pg_last_error($dbh) . " sql = $sql";
 			$ok = FALSE;
 		}
 	}
@@ -455,7 +455,7 @@ function MoveStagingToWatchList($UserID, $WatchListID, $dbh) {
 		if ($Debug) syslog(LOG_NOTICE, 'commit');
 		pg_exec($dbh, "COMMIT");
 	} else {
-		echo pg_result_error($dbh) . " sql = $sql";
+		echo pg_last_error($dbh) . " sql = $sql";
 		pg_exec($dbh, "ROLLBACK");
 	}
 
@@ -511,7 +511,7 @@ function CopyStagingToWatchList($dbh, $UserID, $WatchListID, $Overwrite = TRUE) 
 #		syslog(LOG_NOTICE, 'commit');
 		pg_exec($dbh, "COMMIT");
 	} else {
-		echo pg_result_error($dbh) . " sql = $sql";
+		echo pg_last_error($dbh) . " sql = $sql";
 		pg_exec($dbh, "ROLLBACK");
 	}
 
@@ -539,7 +539,7 @@ function StagingAreaClear($UserID, $dbh) {
 	if ($result && $ok) {
 		pg_exec($dbh, "COMMIT");
 	} else {
-		echo pg_result_error($dbh) . " sql = $sql";
+		echo pg_last_error($dbh) . " sql = $sql";
 		pg_exec($dbh, "ROLLBACK");
 	}
 

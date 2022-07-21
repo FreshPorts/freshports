@@ -95,7 +95,7 @@
 				$result = pg_query($db, $sql);
 	
 				if (!$result) {
-					echo 'OUCH, that\'s not very nice.  something went wrong: ' . pg_result_error($db) . "  $sql";
+					echo 'OUCH, that\'s not very nice.  something went wrong: ' . pg_last_error($db) . "  $sql";
 					pg_exec($db, 'rollback');
 					exit;
 				}

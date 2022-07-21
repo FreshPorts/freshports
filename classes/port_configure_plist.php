@@ -47,7 +47,7 @@ class PortConfigurePlist {
 
 			}
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_result_error($this->dbh);
+			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
 		}
 
 		return $numrows;

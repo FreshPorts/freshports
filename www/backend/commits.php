@@ -60,7 +60,7 @@
 
 	$result = pg_exec($db, $sql);
 	if (!$result) {
-		echo pg_result_error($db);
+		echo pg_last_error($db);
 	} else {
 		$numrows = pg_num_rows($result);
 #		echo "There are $numrows to fetch<BR>\n";

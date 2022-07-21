@@ -42,7 +42,7 @@ function StagingAlreadyInUse($UserID, $dbh) {
 			$Result = 0;
 		}
 	} else {
-		echo pg_result_error($dbh) . " sql = $sql";
+		echo pg_last_error($dbh) . " sql = $sql";
 	}
 
 	return $Result;

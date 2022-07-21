@@ -16,7 +16,7 @@
 
 	$result = pg_exec($db, $sql);
 	if (!$result) {
-	   print pg_result_error($db) . "<br>\n";
+	   print pg_last_error($db) . "<br>\n";
 	   exit;
 	}
 ?>

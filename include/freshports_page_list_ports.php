@@ -166,7 +166,7 @@ class freshports_page_list_ports extends freshports_page {
 			$numrows = $myrow[0];
 #			echo "There are $numrows to fetch<BR>\n";
 		} else {
-			echo pg_result_error($this->_db);
+			echo pg_last_error($this->_db);
 		}
 		
 		return $numrows;
@@ -300,7 +300,7 @@ SELECT gmt_format(max(CL.date_added)) as last_modified " . $this->_FROM_CLAUSE()
 
 		$this->_result = pg_exec($this->_db, $this->getSQL());
 		if (!$this->_result) {
-			echo pg_result_error($this->_db);
+			echo pg_last_error($this->_db);
 		} else {
 			$numrows = pg_num_rows($this->_result);
 #			echo "There are $numrows to fetch<BR>\n";

@@ -314,7 +314,7 @@ ORDER BY CL.commit_date;
 	# get the results
 	$result = pg_query($dbh, $sql);
 	if (!$result) {
-		syslog(LOG_ERR, 'sql error ' . pg_result_error($result));
+		syslog(LOG_ERR, 'sql error ' . pg_last_error($result));
 
 		die('We broke the SQL, sorry');
 	}

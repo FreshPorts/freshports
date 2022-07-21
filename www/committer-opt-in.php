@@ -31,10 +31,10 @@
 
 				if ($Debug) echo "sql=$sql<br>\n";
 
-				$result = pg_exec($db, $sql) or die("insert query failed " . pg_result_error($db));
+				$result = pg_exec($db, $sql) or die("insert query failed " . pg_last_error($db));
 
 			    	if (!$result) {
-		        		die("determine committer subscribe failed " . pg_result_error($db));
+		        		die("determine committer subscribe failed " . pg_last_error($db));
 	    			}
 			} else {
 				die("please enter just your login, not your email address");
@@ -47,10 +47,10 @@
 
 			if ($Debug) echo "sql=$sql<br>\n";
 
-			$result = pg_exec($db, $sql) or die("insert query failed " . pg_result_error($db));
+			$result = pg_exec($db, $sql) or die("insert query failed " . pg_last_error($db));
 
 			if (!$result) {
-				die("determine committer unsubscribe failed " . pg_result_error($db));
+				die("determine committer unsubscribe failed " . pg_last_error($db));
 				}
 
 			Unset($committer);
@@ -65,10 +65,10 @@
 
 			if ($Debug) echo "sql=$sql<br>\n";
 
-			$result = pg_exec($db, $sql) or die("insert query failed " . pg_result_error($db));
+			$result = pg_exec($db, $sql) or die("insert query failed " . pg_last_error($db));
 
 			if (!$result) {
-				die("determine committer subscribe failed " . pg_result_error($db));
+				die("determine committer subscribe failed " . pg_last_error($db));
 			}
 		}
 	}
@@ -122,7 +122,7 @@ if (!empty($visitor)) {
 		echo "sql=$sql<br>\n";
 	}
 
-	$result = pg_exec($db, $sql) or die("determine committer query failed " . pg_result_error($db));
+	$result = pg_exec($db, $sql) or die("determine committer query failed " . pg_last_error($db));
 
 	if ($result) {
 		echo 'You are: ';

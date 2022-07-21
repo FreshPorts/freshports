@@ -152,7 +152,7 @@ if ($sort == "last_update") {
 $HTML .= '</tr>';
 
 if (!$result) {
-   echo "<tr><td colspan=\"$ColSpan\"" . pg_result_error($db) . "</td></tr></table></td></td></table>\n";
+   echo "<tr><td colspan=\"$ColSpan\"" . pg_last_error($db) . "</td></tr></table></td></td></table>\n";
    exit;
 } else {
 	$NumTopics	   = 0;

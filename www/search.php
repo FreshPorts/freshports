@@ -17,7 +17,7 @@
 
 	checkLoadBeforeProceeding();
 
-	$Debug = 0;
+	$Debug = 1;
 #	if ($Debug) phpinfo();
 
 	$https = ((!empty($_SERVER['HTTPS'])) && ($_SERVER['HTTPS'] != 'off'));
@@ -597,7 +597,7 @@
 		    $Commits->SetLimit($PageSize);
 
 		    $NumFetches = $Commits->Fetch();
-#		    $result     = $Commits->LocalResult;
+		    $result     = $Commits->LocalResult;
 		    break;
 
 		  case SEARCH_FIELD_COMMITMESSAGE:
@@ -793,7 +793,7 @@ JOIN element_pathname EP on E.id = EP.element_id
 
 			$result  = pg_exec($db, $sql);
 			if (!$result) {
-			  syslog(LOG_NOTICE, pg_result_error($db) . ': ' . $sql);
+			  syslog(LOG_NOTICE, pg_last_error($db) . ': ' . $sql);
 			  die('something went terribly wrong.  Sorry.');
 			}
 
@@ -847,7 +847,7 @@ JOIN element_pathname EP on E.id = EP.element_id
 
 				$result  = pg_exec($db, $sql);
 				if (!$result) {
-					syslog(LOG_NOTICE, pg_result_error($db) . ': ' . $sql);
+					syslog(LOG_NOTICE, pg_last_error($db) . ': ' . $sql);
 					die('something went terribly wrong.  Sorry.');
 				}
 

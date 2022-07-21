@@ -141,7 +141,7 @@ UPDATE users
 		} else {
 			$errors .= 'Something went terribly wrong there.<br>';
 			$errors .= $sql . "<br>\n";
-			$errors .= pg_result_error($db);
+			$errors .= pg_last_error($db);
 		}
 	}
 } else {

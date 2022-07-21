@@ -58,7 +58,7 @@ class PageLoadDetail {
 
 		$Debug = 0;
 
-		$UserID = IsSet($User) && $User->id == '' ? "NULL" : $User->id;
+		$UserID = IsSet($User) && IsSet($User->id) && $User->id == '' ? "NULL" : $User->id;
 #		echo "\$UserID='$UserID'<br>";
 
 		$sql = "
@@ -77,7 +77,7 @@ INSERT INTO page_load_detail(page_name,
 		if ($result) {
 			$return = 1;
 		} else {
-			echo "error " . pg_result_error($this->dbh);
+			echo "error " . pg_last_error($this->dbh);
 			$return = -1;
 		}
 

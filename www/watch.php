@@ -289,7 +289,7 @@ if ($wlid != '') {
 	
 	$result = pg_exec($db, $sql);
 	if (!$result) {
-		echo "there was an error: " . pg_result_error($db);
+		echo "there was an error: " . pg_last_error($db);
 	}
 
 	// get the list of topics, which we need to modify the order

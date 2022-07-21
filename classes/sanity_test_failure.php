@@ -49,7 +49,7 @@ SELECT STF.id,
 				die(__CLASS__ . ':' . __FUNCTION__ . " got $numrows rows at line " . __LINE__);
 			}
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_result_error($this->dbh);
+			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
 		}
 
 		return $id;

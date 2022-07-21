@@ -64,7 +64,7 @@ function StatsSQL($db, $Title) {
 		    $Value  = '';
 		}
 	} else {
-		$Value = pg_result_error($db);
+		$Value = pg_last_error($db);
 	}
 
 	return $Value;
@@ -83,7 +83,7 @@ function DBSize($db) {
 			$Value = 'numrows = ' . $numrows . ' ' . $sql;;
 		}
 	} else {
-		$Value = pg_result_error($db);
+		$Value = pg_last_error($db);
 	}
 
 	return $Value;

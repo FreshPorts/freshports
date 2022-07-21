@@ -99,7 +99,7 @@ LIMIT 30";
 
 	$result = pg_exec ($db, $sql);
 	if (!$result) {
-		echo '<pre>' . $sql . '</pre>error = ' . pg_result_error($db);
+		echo '<pre>' . $sql . '</pre>error = ' . pg_last_error($db);
 		exit;
 	}
 

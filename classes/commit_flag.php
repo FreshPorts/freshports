@@ -81,7 +81,7 @@ SELECT $UserID as user_id,
 			$return = 1;
 		} else {
 			# If this isn't a duplicate key error, then break
-			if (stristr(pg_last_error(), "Cannot insert a duplicate key") == '') {
+			if (stristr(pg_last_error($this->dbh), "Cannot insert a duplicate key") == '') {
 				$return = -1;
 			} else {
 				$return = 1;
@@ -104,7 +104,7 @@ SELECT $UserID as user_id,
 			$numrows = pg_num_rows($this->LocalResult);
 		} else {
 			$numrows = -1;
-			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': ' . pg_last_error());
+			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': ' . pg_last_error($this->dbh));
 			die('something terrible has happened');
 		}
 

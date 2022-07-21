@@ -136,7 +136,7 @@ DELETE FROM watch_list
 			$numrows = pg_affected_rows($result);
 		} else {
 			$numrows = -1;
-			die(pg_last_error() . '<pre>' . $sql . '</pre>');
+			die(pg_last_error($this->dbh) . '<pre>' . $sql . '</pre>');
 		}
 
 		return $numrows;
@@ -185,7 +185,7 @@ DELETE FROM watch_list
 				}
 			}
 		} else {
-			die(pg_last_error() . '<pre>' . $sql . '</pre>');
+			die(pg_last_error($this->dbh) . '<pre>' . $sql . '</pre>');
 		}
 
 		return $WatchListID;

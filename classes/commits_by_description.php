@@ -107,7 +107,7 @@ class CommitsByDescription extends commits {
 			if ($this->Debug) echo "That would give us $numrows rows";
 		} else {
 			$numrows = -1;
-			syslog(LOG_ERR, 'pg_exec failed: ' . pg_last_error() . $sql);
+			syslog(LOG_ERR, 'pg_exec failed: ' . pg_last_error($this->dbh) . $sql);
 		}
 
 		return $numrows;

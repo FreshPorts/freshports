@@ -32,7 +32,7 @@ class VuXML_References {
 				$this->PopulateValues($myrow);
 			}
 		} else {
-			echo 'VuXML_References SQL failed: ' . $result . pg_last_error();
+			echo 'VuXML_References SQL failed: ' . $result . pg_last_error($this->dbh);
 		}
 
         return $this->id;

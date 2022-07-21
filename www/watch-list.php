@@ -183,7 +183,7 @@ echo freshports_ShowFooter();
 			if ($Debug) echo "userid = '$User->id' and ElementID = '$ElementID'<br>";
 
 			if ($WatchListElement->DeleteElementFromWatchLists($User->id, $ElementID) == -1) {
-				$Error = 'removing element failed : Please try again, and if the problem persists, please contact the webmaster: ' . pg_last_error();
+				$Error = 'removing element failed : Please try again, and if the problem persists, please contact the webmaster: ' . pg_last_error($db);
 			}
 			if ($Debug) {
 				echo "Error is '$Error'<br>";
@@ -200,7 +200,7 @@ echo freshports_ShowFooter();
 
 				if ($Debug) echo "userid = $User->id and ElementID = $ElementID <br>";
 				if (AddElementToWatchLists($db, $User->id, $ElementID, $_REQUEST['wlid']) == -1) {
-					$Error = 'adding element failed : Please try again, and if the problem persists, please contact the webmaster: ' . pg_last_error();
+					$Error = 'adding element failed : Please try again, and if the problem persists, please contact the webmaster: ' . pg_last_error($db);
 				}
 			}
 
@@ -224,7 +224,7 @@ echo freshports_ShowFooter();
 					pg_exec($db, 'COMMIT');
 				} else {
 					pg_exec($db, 'ROLLBACK');
-					die(pg_last_error());
+					die(pg_last_error($db));
 				}
 			} else {
 				if (IsSet($_REQUEST['remove'])) {
@@ -239,7 +239,7 @@ echo freshports_ShowFooter();
 						pg_exec($db, 'COMMIT');
 					} else {
 						pg_exec($db, 'ROLLBACK');
-						die(pg_last_error());
+						die(pg_last_error($db));
 					}
 				} else {
 					die("I don't know what I was supposed to do there!");

@@ -63,7 +63,7 @@ class User {
 			$numrows = pg_num_rows($this->LocalResult);
 		} else {
 			$numrows = -1;
-			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': ' . pg_last_error());
+			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': ' . pg_last_error($this->dbh));
 			die('something terrible has happened');
 		}
 
@@ -90,7 +90,7 @@ class User {
 			}
 		} else {
 			$numrows = -1;
-			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': ' . pg_last_error());
+			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': ' . pg_last_error($this->dbh));
 			die('something terrible has happened');
 		}
 
@@ -147,7 +147,7 @@ class User {
 			$this->watch_list_add_remove = pg_escape_string($this->dbh, $WatchListAddRemove);
 		} else {
 			$numrows = -1;
-			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': ' . pg_last_error());
+			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': ' . pg_last_error($this->dbh));
 			die('something terrible has happened');
 		}
 
@@ -170,7 +170,7 @@ class User {
 			$this->last_watch_list_chosen = pg_escape_string($this->dbh, $WatchListID);
 		} else {
 			$numrows = -1;
-			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': ' . pg_last_error());
+			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': ' . pg_last_error($this->dbh));
 			die('something terrible has happened' . $sql);
 		}
 

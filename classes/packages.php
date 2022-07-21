@@ -34,7 +34,7 @@ class Packages {
 				$this->CategoryPort = '';
 			}
 		} else {
-			echo 'Packages SQL failed: ' . $result . pg_last_error();
+			echo 'Packages SQL failed: ' . $result . pg_last_error($this->dbh);
 		}
 
 	        return $this->CategoryPort;

@@ -52,7 +52,7 @@
 				pg_exec($db, 'COMMIT');
 			} else {
 				pg_exec($db, 'ROLLBACK');
-				die(pg_last_error());
+				die(pg_last_error($db));
 			}
 			break;
 			
@@ -67,7 +67,7 @@
 				pg_exec('COMMIT');
 			} else {
 				pg_exec('ROLLBACK');
-				die(pg_last_error());
+				die(pg_last_error($db));
 			}
 			break;
 				

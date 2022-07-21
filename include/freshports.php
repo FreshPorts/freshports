@@ -2306,7 +2306,7 @@ function freshports_GetPortID($dbh, $category, $port, $branch) {
 	if ($Debug) echo $sql . '<br>';
 	$result = pg_exec($dbh, $sql);
 	if (!$result) {
-		syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ': ' . pg_last_error() . ' - ' . $sql);
+		syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ': ' . pg_last_error($this->dbh) . ' - ' . $sql);
 		die('something terrible has happened!');
 	}
 

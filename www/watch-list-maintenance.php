@@ -152,7 +152,7 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 				if ($Debug) echo "\$key='$key' \$WatchListIDToDelete='$WatchListIDToDelete'<br>";
 				$DeletedWatchListID = $WatchList->Delete($User->id, pg_escape_string($db, $WatchListIDToDelete));
 				if ($DeletedWatchListID != $WatchListIDToDelete) {
-					die("Failed to deleted '$WatchListIDToDelete' (return value '$DeletedWatchListID')" . pg_last_error());
+					die("Failed to deleted '$WatchListIDToDelete' (return value '$DeletedWatchListID')" . pg_last_error($db));
 				}
 				if ($Debug) echo 'I have deleted watch list id = ' . $WatchListIDToDelete . '<br>';
 			}
@@ -176,7 +176,7 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 				if ($Debug) echo "\$key='$key' \$WatchListIDToEmpty='$WatchListIDToEmpty'<br>";
 				$EmptydWatchListID = $WatchList->EmptyTheList($User->id, pg_escape_string($db, $WatchListIDToEmpty));
 				if ($EmptydWatchListID != $WatchListIDToEmpty) {
-					die("Failed to Empty '$WatchListIDToEmpty' (return value '$EmptydWatchListID')" . pg_last_error());
+					die("Failed to Empty '$WatchListIDToEmpty' (return value '$EmptydWatchListID')" . pg_last_error($db));
 				}
 				if ($Debug) echo 'I have emptied watch list id = ' . $WatchListIDToEmpty . '<br>';
 			}
@@ -188,7 +188,7 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 			$WatchList = new WatchList($db);
 			$NumRows = $WatchList->EmptyAllLists($User->id, pg_escape_string($db, $WatchListIDToEmpty));
 			if (!IsSet($NumRows)) {
-				die("Failed to Empty '$WatchListIDToEmpty' (return value '$EmptydWatchListID')" . pg_last_error());
+				die("Failed to Empty '$WatchListIDToEmpty' (return value '$EmptydWatchListID')" . pg_last_error($db));
 			}
 			if ($Debug) echo 'I have emptied all the watch lists.<br>';
 

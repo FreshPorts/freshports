@@ -35,7 +35,7 @@ class VuXML_Packages {
 			$this->FetchRanges();
 
 		} else {
-			echo 'VuXML_Packages SQL failed: ' . $result . pg_last_error();
+			echo 'VuXML_Packages SQL failed: ' . $result . pg_last_error($this->dbh);
 		}
 
         return $this->id;

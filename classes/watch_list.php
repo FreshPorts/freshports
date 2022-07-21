@@ -90,7 +90,7 @@ GROUP BY users.max_number_watch_lists";
 				die("I couldn't find your watch list details... sorry");
 			}
 		} else {
-			syslog(LOG_ERR, "Error finding watch list count for user $UserID - " . $_SERVER['PHP_SELF'] . ' ' . pg_last_error());
+			syslog(LOG_ERR, "Error finding watch list count for user $UserID - " . $_SERVER['PHP_SELF'] . ' ' . pg_last_error($this->dbh));
 			die('Error finding watch list count for user');
 		}
 

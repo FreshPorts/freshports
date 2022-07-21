@@ -33,7 +33,7 @@ class VuXML_Names {
 				$this->PopulateValues($myrow);
 			}
 		} else {
-			echo 'VuXML_Names SQL failed: ' . $result . pg_last_error();
+			echo 'VuXML_Names SQL failed: ' . $result . pg_last_error($this->dbh);
 		}
 
         return $this->id;

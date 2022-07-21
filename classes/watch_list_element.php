@@ -143,7 +143,7 @@ select " . pg_escape_string($this->dbh, $WatchListID) . ", " . pg_escape_string(
 			$return = 1;
 		} else {
 			# If this isn't a duplicate key error, then break
-			if (stristr(pg_last_error(), "Cannot insert a duplicate key") == '') {
+			if (stristr(pg_last_error($this->dbh), "Cannot insert a duplicate key") == '') {
 				$return = -1;
 			} else {
 				$return = 1;

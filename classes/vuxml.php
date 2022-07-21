@@ -49,7 +49,7 @@ class VuXML {
 				die('I found ' . $numrows . ' entries for ' . htmlentities($VID) . '. There should be only one.');
 			}
 		} else {
-			echo 'VuXML SQL failed: ' . $result . pg_last_error();
+			echo 'VuXML SQL failed: ' . $result . pg_last_error($this->dbh);
 		}
 
         return $this->id;

@@ -155,7 +155,7 @@ class CommitFiles {
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 
 		if (!$this->LocalResult) {
-			syslog(LOG_ERR, __FILE__  . '::' . __LINE__  . ' ' . pg_last_error());
+			syslog(LOG_ERR, __FILE__  . '::' . __LINE__  . ' ' . pg_last_error($this->dbh));
 			exit;
 		}
 

@@ -258,7 +258,7 @@
 							$DoTheSave = false;
 						}
 					} else {
-						syslog(LOG_NOTICE, __FILE__ . '::' . __LINE__ . ': ' . pg_last_error());
+						syslog(LOG_NOTICE, __FILE__ . '::' . __LINE__ . ': ' . pg_last_error($db));
 						exit;
 					}
 

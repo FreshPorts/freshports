@@ -141,6 +141,7 @@ switch ($sort) {
    case "port":
       $sort = "port";
       echo 'sorted by port.  but you can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=updated">last update</a> or <a href="' . $_SERVER["PHP_SELF"] . '?sort=category">category</a>';
+      $ShowCategoryHeaders = 0;
       $cache_file .= ".port";
       break;
 

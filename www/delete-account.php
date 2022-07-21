@@ -20,6 +20,7 @@
 
 	$errors          = 0;
 	$AccountModified = 0;
+	$deleted         = 0;
 
 if (IsSet($_REQUEST['submit'])) $submit = $_REQUEST['submit'];
 $visitor	= pg_escape_string($db, $_COOKIE[USER_COOKIE_NAME]);

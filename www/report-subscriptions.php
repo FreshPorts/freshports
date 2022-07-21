@@ -12,7 +12,7 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
-	if (!$_COOKIE[USER_COOKIE_NAME]) {
+	if (!IsSet($_COOKIE[USER_COOKIE_NAME])) {
 		header('Location: /login.php');  /* Redirect browser to PHP web site */
 		exit;  /* Make sure that code below does not get executed when we redirect. */
 	}

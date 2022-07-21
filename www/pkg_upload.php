@@ -239,7 +239,7 @@ function ChooseWatchLists($UserID, $db) {
 #	if ($Debug) phpinfo();
 
 	# you can only be here if you are logged in!
-	$visitor = $_COOKIE[USER_COOKIE_NAME];
+	$visitor = $_COOKIE[USER_COOKIE_NAME] ?? null;
 	if (!$visitor) {
 		?>
 		<P>

@@ -17,7 +17,7 @@
 
 	checkLoadBeforeProceeding();
 
-	$Debug = 1;
+	$Debug = 0;
 #	if ($Debug) phpinfo();
 
 	$https = ((!empty($_SERVER['HTTPS'])) && ($_SERVER['HTTPS'] != 'off'));

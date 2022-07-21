@@ -42,10 +42,10 @@ if (!$visitor) {
 #phpinfo();
 $Debug = 0;
 
-$ConfirmationNeeded{'delete'}     = 1;
-$ConfirmationNeeded{'delete_all'} = 1;
-$ConfirmationNeeded{'empty'}      = 1;
-$ConfirmationNeeded{'empty_all'}  = 1;
+$ConfirmationNeeded['delete']     = 1;
+$ConfirmationNeeded['delete_all'] = 1;
+$ConfirmationNeeded['empty']      = 1;
+$ConfirmationNeeded['empty_all']  = 1;
 
 $UserClickedOn = '';
 $ErrorMessage  = '';

@@ -667,7 +667,7 @@ class port_display {
 
 			# date_added is in 22 Jan 2021 17:34:22 format. Convert it to  a unix timestamp
 			# for comparison
-			if (strtotime($port->{'date_added'}) > (Time() - 3600 * 24 * $this->DaysMarkedAsNew)) {
+			if (IsSet($port->{'date_added'}) && strtotime($port->{'date_added'}) > (Time() - 3600 * 24 * $this->DaysMarkedAsNew)) {
 				echo 'Yes, that is a new port<br>';
 				$MarkedAsNew = "Y";
 				$HTML .= freshports_New_Icon() . "\n";

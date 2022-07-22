@@ -17,7 +17,7 @@ function _generateRandom($length=6)
 		, array(97,122) //lowercase chars
 //		, array(65,90) //uppercase chars
 	);
-	srand ((double) microtime() * 1000000);
+	srand((int) ((double) microtime() * 1000000));
 	$random_string = "";
 	for($i=0;$i<$length;$i++){
 		$i1=rand(0,sizeof($_rand_src)-1);

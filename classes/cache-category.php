@@ -40,7 +40,7 @@ class CacheCategory extends Cache {
 		$CacheDir = $this->CacheDir . '/' . self::CacheCategory . '/' . $Category;
 		$Key = $this->_CategoryKey($Category, $User, $PageNum, $Branch);
 		 
-		if (!file_exists($CacheDir)) {
+		if (!is_dir($CacheDir)) {
 			$this->_Log("CacheCategory: creating directory $CacheDir");
 			$old_mask = umask(0000);
 			if (!mkdir($CacheDir, 0774, true)) {

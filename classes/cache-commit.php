@@ -40,7 +40,7 @@ class CacheCommit extends Cache {
 		$CacheDir = $this->CacheDir . '/' . self::CacheCategory . '/' . $this->_cleanKey($MessageId);
 		$Key = $this->_CommitKey($MessageId, $category, $port, $files);
 		 
-		if (!file_exists($CacheDir)) {
+		if (!is_dir($CacheDir)) {
 			$this->_Log("CacheCommit: creating directory $CacheDir");
 			$old_mask = umask(0000);
 			if (!mkdir($CacheDir, 0774, true)) {

@@ -68,7 +68,7 @@
 	function ArchiveDirectoryCreate($Date) {
 		$SubDir      = date('Y/m', strtotime($Date));
 		$DirToCreate = DAILY_DIRECTORY . '/' . $SubDir;
-		if (!file_exists($DirToCreate)) {
+		if (!is_dir($DirToCreate)) {
 			$old = umask(0);
 			mkdir($DirToCreate, 0770, true);
 			umask($old);

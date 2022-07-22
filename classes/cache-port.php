@@ -47,7 +47,7 @@ class CachePort extends Cache {
 		$CacheDir = $this->CacheDir . '/' . self::CacheCategory . '/' . $Category . '/' . $Port;
 		$Key = $this->_PortKey($Category, $Port, $CacheType, $PageNum, $Branch, $CachePart);
 		 
-		if (!file_exists($CacheDir)) {
+		if (!is_dir($CacheDir)) {
 			$this->_Log("CachePort: creating directory $CacheDir");
 			$old_mask = umask(0000);
 			if (!mkdir($CacheDir, 0774, true)) {

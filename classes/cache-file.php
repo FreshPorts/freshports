@@ -37,7 +37,7 @@ class CacheFile extends Cache {
 		$CacheDir = $this->CacheDir . '/' . self::CacheCategory . '/' . dirname($FileName);
 		$Key = $this->_FileKey($FileName, $PageNum);
 		 
-		if (!file_exists($CacheDir)) {
+		if (!is_dir($CacheDir)) {
 			$this->_Log("CacheFile: creating directory $CacheDir");
 			$old_mask = umask(0000);
 			if (!mkdir($CacheDir, 0774, true)) {

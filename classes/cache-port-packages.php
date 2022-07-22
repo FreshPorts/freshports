@@ -34,7 +34,7 @@ class CachePortPackages extends Cache {
 		$CacheDir = $this->CacheDir . '/' . self::CacheCategory . '/' . $Category;
 		$Key = $this->_PortPackagesKey($Category, $Port);
 		 
-		if (!file_exists($CacheDir)) {
+		if (!is_dir($CacheDir)) {
 			$this->_Log("CachePortPackages: creating directory $CacheDir");
 			$old_mask = umask(0000);
 			if (!mkdir($CacheDir, 0774, true)) {

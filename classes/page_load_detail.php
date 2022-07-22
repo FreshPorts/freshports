@@ -58,7 +58,7 @@ class PageLoadDetail {
 
 		$Debug = 0;
 
-		$UserId = 'NULL';
+		$UserID = 'NULL';
 		if (IsSet($User) && IsSet($User->id) && $User->id !== '') {
 			$UserID = $User->id;
 		}

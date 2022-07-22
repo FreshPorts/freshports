@@ -689,7 +689,7 @@
 			} else {
 			    $NumFetches = $Commits->Fetch();
 			}
-#			$result = $Commits->LocalResult;
+			$result = $Commits->LocalResult;
 		        break;
 
 		  case SEARCH_FIELD_PKG_PLIST:

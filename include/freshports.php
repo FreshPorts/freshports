@@ -1316,7 +1316,7 @@ function freshports_PackageVersion($PortVersion, $PortRevision, $PortEpoch) {
 	if (IsSet($PortVersion) && strlen($PortVersion) > 0) {
 		$PackageVersion .= $PortVersion;
 	        
-		if (strlen($PortRevision) > 0 && $PortRevision != "0") {
+		if (IsSet($PortRevision) && strlen($PortRevision) > 0 && $PortRevision != "0") {
     			$PackageVersion .= FRESHPORTS_VERSION_REVISION_JOINER . $PortRevision;
 		}
 

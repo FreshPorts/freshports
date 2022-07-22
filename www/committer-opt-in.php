@@ -14,12 +14,14 @@
                 header('Location: /' . MAINTENANCE_PAGE, TRUE, 307);
 	}
 
+	const FREEBSD_EMAIL_REGEX = '/.*@FreeBSD.org/i';
+
 	$Title = 'Committer opt-in';
 	freshports_Start($Title,
 					$Title,
 					'FreeBSD, index, applications, ports');
 
-	if (!preg_match("/.*@FreeBSD.org/i", $User->email)) {
+	if (IsSet($User->email) && !preg_match(FREEBSD_EMAIL_REGEX, $User->email)) {
 		# nothing yet
 	} else {
 		if (IsSet($_POST["subscribe"]) && $_POST["subscribe"] && !empty($visitor)) {
@@ -86,7 +88,7 @@
 <TR><TD class="textcontent">
 <P>
 <?php
-	if (!preg_match(".*@FreeBSD.org", $User->email)) {
+	if (!IsSet($User->email) || !preg_match(FREEBSD_EMAIL_REGEX, $User->email)) {
 ?>
 <p><b><big>This page only works if you are logged in and using a @FreeBSD.org email address.</big></b></p>
 <?php
@@ -103,6 +105,11 @@ which you committed.  In the past, such problems are related to syntax errors in
 One committer referred to this service as an automated nagging mentor...
 </P>
 </TD></TR>
+
+<?php
+
+if (IsSet($User->email)) {
+?>
 
 <TR>
 	<?
@@ -148,9 +155,9 @@ if (!empty($visitor)) {
 
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
                your freefall login:
-               <INPUT SIZE="35" NAME="email" VALUE="<?echo $committer ?>"><BR><BR>
+               <INPUT SIZE="35" NAME="email" VALUE="<?echo $committer ?? '' ?>"><BR><BR>
 <?
-			if ($numrows) {
+			if (IsSet($numrows) && $numrows) {
 ?>
 				<INPUT TYPE="submit" VALUE="update"      NAME="Update my address"> 
 				<INPUT TYPE="submit" VALUE="unsubscribe" NAME="unsubscribe">
@@ -169,6 +176,10 @@ if (!empty($visitor)) {
 </p>
 
 </TD></TR>
+
+<?php
+} // $User->email
+?>
 
 </TABLE>
 </TD>

@@ -17,10 +17,15 @@
 					$Title,
 					"FreeBSD, index, applications, ports");
 
+	$notfound = 0;
 	if (IsSet($_REQUEST['notfound'])) $notfound = 1;
 	if (IsSet($_REQUEST['multiple'])) $multiple = 1;
 
-	$package  = pg_escape_string($db, $_REQUEST['package']);
+	if (IsSet($_REQUEST['package'])) {
+		$package  = pg_escape_string($db, $_REQUEST['package']);
+	} else {
+		$package = '';
+	}
 
 	$Searches = new Searches($db);
 

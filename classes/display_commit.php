@@ -238,14 +238,22 @@ class DisplayCommit {
 				$TooManyPorts = true;
 			}
 
+			if ($Debug) echo 'at too many';
+
 			if (!$TooManyPorts) {
 				$this->HTML .= '<li>';
 				if (IsSet($mycommit->category) && $mycommit->category != '') {
+					if ($Debug) echo 'category is set';
 					if ($this->UserID) {
-						if ($mycommit->watch) {
-							$this->HTML .= ' '. freshports_Watch_Link_Remove($this->WatchListAsk, $mycommit->watch, $mycommit->element_id) . ' ';
+						#
+						# if they are watching the port, display the toggle to remove it from the watch list.
+						# if they aren't, let they add it.
+						#
+						$OnWatchList = IsSet($mycommit->onwatchlist) && $mycommit->onwatchlist;
+						if ($OnWatchList) {
+							$this->HTML .= ' '. freshports_Watch_Link_Remove($this->WatchListAsk, $OnWatchList, $mycommit->element_id) . ' ';
 						} else {
-						$this->HTML .= ' '. freshports_Watch_Link_Add   ($this->WatchListAsk, $mycommit->watch, $mycommit->element_id) . ' ';
+							$this->HTML .= ' '. freshports_Watch_Link_Add   ($this->WatchListAsk, $OnWatchList, $mycommit->element_id) . ' ';
 						}
 					}
 

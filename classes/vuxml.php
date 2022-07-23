@@ -32,7 +32,8 @@ class VuXML {
 
 	function FetchByVID($VID) {
 		$this->vid = $VID;
-		$sql = "select * from vuxml where vid = '" . pg_escape_string($this->dbh, $VID) . "'";
+		# let's try to avoid:  PHP Warning:  pg_query(): Query failed: ERROR:  invalid byte sequence for encoding &quot;UTF8&quot;: 0xfc
+		$sql = "set client_encoding = 'ISO-8859-15'; select * from vuxml where vid = '" . pg_escape_string($this->dbh, $VID) . "'";
 #		echo "<pre>sql = '$sql'</pre><BR>";
 
 		$result = pg_query($this->dbh, $sql);
@@ -85,7 +86,11 @@ class VuXML {
 		if (IsSet($this->date_entry))     echo "Entry     " . $this->date_entry     . '<br>';
 		if (IsSet($this->date_modified))  echo "Modified  " . $this->date_modified  . '<br>';
 
-		$this->packages->display();
+		if (IsSet($this->packages)) {
+			$this->packages->display();
+		} else {
+			echo 'no package data found - did an error occur?';
+		}
 		$this->references->display();
 	}
 

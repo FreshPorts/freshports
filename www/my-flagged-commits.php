@@ -16,15 +16,19 @@
 	freshports_Start($FreshPortsSlogan . " - $Title",
 					$Title,
 					'FreeBSD, index, applications, ports');
-$Debug = 0;
+	$Debug = 0;
 
-if ($Debug) echo "\$User->id='$User->id'";
+	if ($Debug) echo "\$User->id='$User->id'";
 
-echo freshports_MainTable();
+	echo freshports_MainTable();
 
-$num          = $MaxNumberOfPortsLong;
-$days         = $NumberOfDays;
-$dailysummary = 7;
+	$num           = $MaxNumberOfPortsLong;
+	$days          = $NumberOfDays;
+	$dailysummary  = 7;
+	$PageSize      = 100;
+	$PageNumber    = 1;
+	$NumPortsFound = 0;
+	$HTML          = '';
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits_my_flagged.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
@@ -34,8 +38,8 @@ $dailysummary = 7;
 	$CommitsMyFlagged->UserIDSet($User->id);
 	$NumberCommits = $CommitsMyFlagged->Fetch();
 
-    $NumberCommits = $CommitsMyFlagged->GetCountPortCommits();
-    if ($Debug) echo 'number of commits = ' . $NumberCommits . "<br>\n";
+	$NumberCommits = $CommitsMyFlagged->GetCountPortCommits();
+	if ($Debug) echo 'number of commits = ' . $NumberCommits . "<br>\n";
 
 	$NumFound = $NumberCommits;
 	$params = array(
@@ -55,10 +59,11 @@ $dailysummary = 7;
 	$offset = $Pager->getOffsetByPageId();
 	$NumOnThisPage = $offset[1] - $offset[0] + 1;
 
-    if ($PageNumber > 1) {
-      $Commits->SetOffset($offset[0] - 1);
-    }
-    $CommitsMyFlagged->SetLimit($PageSize);
+	if ($PageNumber > 1) {
+		$Commits->SetOffset($offset[0] - 1);
+		}
+
+	$CommitsMyFlagged->SetLimit($PageSize);
 
 	$DisplayCommit = new DisplayCommit($db, $CommitsMyFlagged->LocalResult);
 	$DisplayCommit->Debug = $Debug;
@@ -69,7 +74,7 @@ $dailysummary = 7;
 	$HTML .= $DisplayCommit->CreateHTML();
 
 
-if ($db) {
+	if ($db) {
 ?>
 <TR><td class="content">
 
@@ -85,11 +90,11 @@ if ($db) {
 A port is marked as new for 10 days.
 
 <?php
-	if ($ShowAds && $BannerAd) {
-		echo "</td></tr>\n<tr><td>\n<CENTER>\n";
-		echo Ad_728x90();
-		echo "</CENTER>\n\n";
-	}
+		if ($ShowAds && $BannerAd) {
+			echo "</td></tr>\n<tr><td>\n<CENTER>\n";
+			echo Ad_728x90();
+			echo "</CENTER>\n\n";
+		}
 ?>
 
 
@@ -100,8 +105,7 @@ A port is marked as new for 10 days.
 	$UseCache = FALSE;
 
 	echo $HTML;
-}
-
+	} # $dbd
 ?>
 </TABLE>
 </td>
@@ -117,7 +121,7 @@ A port is marked as new for 10 days.
 <BR>
 
 <?
-echo freshports_ShowFooter();
+	echo freshports_ShowFooter();
 ?>
 
 </body>

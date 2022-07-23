@@ -43,7 +43,12 @@ class CacheCommit extends Cache {
 		if (!is_dir($CacheDir)) {
 			$this->_Log("CacheCommit: creating directory $CacheDir");
 			$old_mask = umask(0000);
-			if (!mkdir($CacheDir, 0774, true)) {
+			#
+			# we use @mkdir because we still this even if we check:
+			# [23-Jul-2022 02:59:21 UTC] PHP Warning:  mkdir(): File exists in /usr/local/www/freshports/classes/cache-port.php on line 53
+			# concurrency.
+			#
+			if (!@mkdir($CacheDir, 0774, true)) {
 				$this->_Log("CacheCommit: unable to create directory $CacheDir");
 			}
 			umask($old_mask);

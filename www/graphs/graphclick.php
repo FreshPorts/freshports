@@ -18,7 +18,7 @@
 	}
 
 	foreach ($map as $m) {
-		list($y,$p) = split(":",$m);
+		list($y,$p) = explode(":",$m);
 		$map_y[] = $y;
 		$map_p[] = $p;
 	}

@@ -86,7 +86,7 @@ if ($_POST['set_options']) {
 # Error checking
 #
 if ($UserClickedOn) {
-	if ($ConfirmationNeeded[$UserClickedOn}]) {
+	if ($ConfirmationNeeded[$UserClickedOn]]) {
 		if ($_POST['confirm'] != $_POST[$UserClickedOn]) {
 			$ErrorMessage = 'You did not supply the confirmation text';
 		}

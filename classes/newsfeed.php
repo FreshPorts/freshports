@@ -35,6 +35,10 @@
 	
 function newsfeed($dbh, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $Flavor = '') { # $OrderBy = '', $Where = '') {
 
+	# avoid: [24-Jul-2022 12:36:25 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /usr/local/www/freshports/classes/newsfeed.php:353) in /usr/local/share/UniversalFeedCreator/lib/Creator/FeedCreator.php on line 215
+	# some watch lists can be large
+	$old_value = ini_set('memory_limit', '512M');
+
 	$WatchListID = pg_escape_string($dbh, $WatchListID);
 	$Format      = pg_escape_string($dbh, $Format);
 	$Flavor      = pg_escape_string($dbh, $Flavor);

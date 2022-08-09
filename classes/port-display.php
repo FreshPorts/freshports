@@ -111,9 +111,16 @@ class port_display {
 
 		$pkg_message_parts = json_decode($json);
 		$Actions = '';
-		if ($Debug) var_dump($pkg_message_parts);
+		if ($Debug) {
+			echo 'this is the var_dump:<pre>';
+			var_dump($pkg_message_parts);
+			echo '</pre>';
+		}
 		foreach ($pkg_message_parts as $part) {
-			if (!empty($part->type)) {
+			if (empty($part->type)) {
+				if ($Debug) syslog(LOG_ERR, '$part->type is empty');
+				$HTML .= '<dd class="like-pre">' . htmlspecialchars($part->message) . '</dd>';
+			} else {
 				# sometimes we get arrays, for install/upgrade
 				# make sure we always have an array for the later join to create $Actions
 				if (is_array($part->type)) {
@@ -171,9 +178,9 @@ class port_display {
 							default:
 								syslog(LOG_ERR, '_pkgmessage_UCL found a type is it not prepared for : ' . $type . ' in ' . $pkgmessage);
 								$HTML .= '<dt>' . htmlspecialchars($part->type) . '</dt><dd class="like-pre">' . htmlspecialchars($part->message) . '</dd>';
-							$HTML .= "\n";
-							$HTML .= "\n";
-							break;
+								$HTML .= "\n";
+								$HTML .= "\n";
+								break;
 
 						} # switch
 					} # foreach

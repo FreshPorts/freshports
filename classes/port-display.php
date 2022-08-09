@@ -1070,7 +1070,7 @@ class port_display {
 						$HTML .= 'NOTE: If this package has multiple flavors (see below), then use one of them instead of the name specified above.';
 
 						if ($this->Is_A_Python_Port($matches)) {
-							$HTML .= 'NOTE: This is a Python port. Instead of <kbd class="code">' . $port->package_name . '</kbd> listed in the above command, you can pick from the names under the <a href="#packages">Packages</a> section.';
+							$HTML .= '<br>NOTE: This is a Python port. Instead of <kbd class="code">' . $port->package_name . '</kbd> listed in the above command, you can pick from the names under the <a href="#packages">Packages</a> section.';
 						}
 						$HTML .= '</dd>';
 					}

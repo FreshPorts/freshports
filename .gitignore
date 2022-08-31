@@ -1,3 +1,4 @@
+.ideas
 configuration/config.sh
 configuration/status-config.php
 configuration/vhosts.conf.nginx

@@ -45,9 +45,9 @@ if (IsSet($submit)) {
 
 	# this is a checkbox
 	if (IsSet($_POST['set_focus_search'])) {
-		$set_focus_search = true;
+		$set_focus_search = 'true';
 	} else {
-		$set_focus_search = false;
+		$set_focus_search = 'false';
 	}
 
 	if (!is_numeric($numberofdays) || $numberofdays < 0 || $numberofdays > 9) {

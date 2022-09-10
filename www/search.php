@@ -18,6 +18,8 @@
 	checkLoadBeforeProceeding();
 
 	$Debug = 0;
+# this should only be referenced after it has been set.
+#	$sqlUserSpecifiedCondition = '';
 #	if ($Debug) phpinfo();
 
 	$https = ((!empty($_SERVER['HTTPS'])) && ($_SERVER['HTTPS'] != 'off'));
@@ -109,7 +111,7 @@
 	$sqlExtraFields = ''; # will hold extra fields we need, such as watch list
 	                      # or soundex function needed for ORDER BY
 
-	function Category_Ports_To_In_Clause($a_Ports) {
+	function Category_Ports_To_In_Clause($a_db, $a_Ports) {
 	  # convert: graphics/acidwarp-sdl devel/gitlab-runner games/ace-of-penguins devel/py-pytest-rerunfailures
 	  #      to: IN ('/ports/head/graphics/acidwarp-sdl', '/ports/head/devel/gitlab-runner', '/ports/head/games/ace-of-penguins', '/ports/head/devel/py-pytest-rerunfailures')
 	  # for use in searching.
@@ -119,7 +121,7 @@
 
 	  $where = 'IN (';
 	  foreach($ports as &$port) {
-	    $port = '/ports/head/' . pg_escape_string($db, $port);
+	    $port = '/ports/head/' . pg_escape_string($a_db, $port);
 	  }
 	  $where .= ')';
 
@@ -328,7 +330,7 @@
 	if ($method == '') $method = 'match';
 
 	if ($Debug) {
-		echo "'$query' && '$stype' && '$num' && '$method'\n<BR>";
+		echo "query='$query' && stype='$stype' && num='$num' && method='$method'\n<BR>";
 
 		if ($query && $stype && $num) {
 			echo "yes, we have parameters\n<BR>";
@@ -377,7 +379,8 @@
 
 
 		if ($output_format == OUTPUT_FORMAT_DEPENDS) {
-		  $sqlUserSuppliedPortsList = Category_Ports_To_In_Clause($query);
+		  if ($Debug) echo "output_format is OUTPUT_FORMAT_DEPENDS\n";
+		  $sqlUserSuppliedPortsList = Category_Ports_To_In_Clause($db, $query);
 		} else {
 		  switch ($method) {
 			case 'prefix':
@@ -397,6 +400,7 @@
 				} else {
 					$Like = 'ILIKE';
 				}
+				if ($Debug) echo "invoking WildCardQuery for match\n";
 				$sqlUserSpecifiedCondition = WildCardQuery($db, $stype, $Like, $WildCardMatch);
 				break;
 
@@ -446,7 +450,7 @@
 
 		} # not OUTPUT_FORMAT_DEPENDS
 
-		if ($Debug) echo "at line " . __LINE__ . " sqlUserSpecifiedCondition='$sqlUserSpecifiedCondition'<br>";
+		if ($Debug && IsSet($sqlUserSpecifiedCondition)) echo "at line " . __LINE__ . " sqlUserSpecifiedCondition='$sqlUserSpecifiedCondition'<br>";
 
 		#
 		# include/exclude deleted ports
@@ -1086,7 +1090,7 @@ Special searches:
 		        }
 
 		        $NumPortsFound = 'Number of ports: ' . ($NumFound ?? 0);
-		        if ($NumFound > $PageSize) {
+		        if ($NumFound > $PageSize && $output_format !== OUTPUT_FORMAT_PLAIN_TEXT) {
 		          $NumPortsFound .= " (showing only $NumOnThisPage on this page)";
 		        }
 		      }
@@ -1201,10 +1205,12 @@ document.search.query.focus();
 
 		} /* OUTPUT_FORMAT_HTML */
 
+		if ($output_format !== OUTPUT_FORMAT_PLAIN_TEXT) {
 ?>
 </body>
 </html>
 
 <?php
+		}
 
 	} // $search

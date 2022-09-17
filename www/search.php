@@ -647,6 +647,9 @@
 			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits_by_tree_location.php');
 			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
 
+			if (empty($sqlUserSpecifiedCondition)) {
+				exit("Sorry, but you messed something up in your manually created query");
+			}
 			$Commits = new CommitsByTreeLocation($db);
 			$Commits->UserIDSet($User->id);
 			if ($sqlSetAll) {

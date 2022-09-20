@@ -66,7 +66,7 @@ GROUP BY users.max_number_watch_lists";
 					while ($Attempts > 0 and !$result) {
 						$query  = "insert into watch_list (id, user_id, name) values ($NextValue, $UserID, '$Name')";
 						$result = pg_query($this->dbh, $query);
-						if (!result) {
+						if (!$result) {
 							syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ' inserting into watch_list failed on attempt ' . $Attempts . '.  collision on token column suspected.');
 						}
 						$Attempts--;
@@ -76,7 +76,7 @@ GROUP BY users.max_number_watch_lists";
 					if ($result && pg_affected_rows($result) == 1) {
 						$return = $NextValue;
 					}
-					if (!result) {
+					if (!$result) {
 						syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ' failed to insert into watch_list.  collision on token column suspected.').
 						die('Sorry, I was unable to create you a watch list.  Please try again, and if failure persist, please contast the webmaster.');
 					}
@@ -109,7 +109,7 @@ DELETE FROM watch_list
  WHERE id = ' . pg_escape_string($this->dbh, $WatchListID) .'
    AND user_id = ' . $UserID;
 
-		if ($Debug) echo $query;
+		if (0) echo $query;
 		$result = pg_query($this->dbh, $query);
 
 		# that worked and we updated exactly one row

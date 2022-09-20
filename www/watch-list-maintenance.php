@@ -41,43 +41,47 @@ $WatchListNameMessage = 'Watch list names must contain only A..Z, a..z, or 0..9.
 #phpinfo();
 $Debug = 0;
 
-$ConfirmationNeeded['delete']     = 1;
-$ConfirmationNeeded['delete_all'] = 1;
-$ConfirmationNeeded['empty']      = 1;
-$ConfirmationNeeded['empty_all']  = 1;
+$ConfirmationNeeded['delete']      = 1;
+$ConfirmationNeeded['delete_all']  = 1;
+$ConfirmationNeeded['empty']       = 1;
+$ConfirmationNeeded['empty_all']   = 1;
+$ConfirmationNeeded['add']         = 0;
+$ConfirmationNeeded['rename']      = 0;
+$ConfirmationNeeded['set_default'] = 0;
+$ConfirmationNeeded['set_options'] = 0;
 
 $UserClickedOn = '';
 $ErrorMessage  = '';
 
-if ($_POST['delete']) {
+if (IsSet($_POST['delete'])) {
 	$UserClickedOn = 'delete';
 }
 
-if ($_POST['delete_all']) {
+if (IsSet($_POST['delete_all'])) {
 	$UserClickedOn = 'delete_all';
 }
 
-if ($_POST['empty']) {
+if (IsSet($_POST['empty'])) {
 	$UserClickedOn = 'empty';
 }
 
-if ($_POST['empty_all']) {
+if (IsSet($_POST['empty_all'])) {
 	$UserClickedOn = 'empty_all';
 }
 
-if ($_POST['add']) {
+if (IsSet($_POST['add'])) {
 	$UserClickedOn = 'add';
 }
 
-if ($_POST['rename']) {
+if (IsSet($_POST['rename'])) {
 	$UserClickedOn = 'rename';
 }
 
-if ($_POST['set_default']) {
+if (IsSet($_POST['set_default'])) {
 	$UserClickedOn = 'set_default';
 }
 
-if ($_POST['set_options']) {
+if (IsSet($_POST['set_options'])) {
 	$UserClickedOn = 'set_options';
 }
 
@@ -248,14 +252,14 @@ $ErrorMessage .= CheckForNoDefaultAndAddToDefault($db, $User);
 	<? echo freshports_PageBannerText("Watch list maintenance"); ?>
 </TR>
 
+<tr><td>
+<table class="watch-maintenance fullwidth borderless">
+<tr><td>
 <?php
 	if ($ErrorMessage != '') {
 		echo freshports_ErrorMessage("Let's try that again!", $ErrorMessage);
 	}
 ?>
-<tr><td>
-<table class="watch-maintenance fullwidth borderless">
-<tr><td>
 
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
 <TABLE class="fullwidth bordered">

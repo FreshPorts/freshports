@@ -109,8 +109,16 @@ function freshports_cvsweb_Revision_Link($pathname, $revision_name)
   return $HTML;
 }
 
-function freshports_git_commit_Link($revision, $hostname, $path) {
+function freshports_git_commit_Link_freebsd($revision, $hostname, $path) {
   return '<a href="https://' . htmlentities($hostname) . $path . '/commit/?id=' . htmlentities($revision) .  '">' . freshports_Git_Icon('commit hash:' . $revision) . '</a>';
+}
+
+function freshports_git_commit_Link_github($revision, $hostname, $path) {
+  return '<a href="https://github.com/FreeBSD/freebsd-ports/commit/' . htmlentities($revision) .  '">' . freshports_GitHub_Icon('commit hash:' . $revision) . '</a>';
+}
+
+function freshports_git_commit_Link_gitlab($revision, $hostname, $path) {
+  return '<a href="https://gitlab.com/FreeBSD/freebsd-ports/-/commit/' . htmlentities($revision) .  '">' . freshports_GitLab_Icon('commit hash:' . $revision) . '</a>';
 }
 
 function freshports_git_commit_Link_diff($revision, $hostname, $path) {
@@ -331,11 +339,24 @@ function freshports_Fallout_Icon() {
 }
 
 function freshports_Subversion_Icon($Title = 'Subversion') {
-	return '<img class="icon" src="/images/subversion.jpg" alt="' . $Title . '" title="' . $Title . '" width="16" height="16">';
+	return '<img class="icon" src="/images/subversion.png" alt="' . $Title . '" title="' . $Title . '" width="32" height="28">';
 }
 
 function freshports_Git_Icon($Title = 'git') {
 	return '<img class="icon" src="/images/git.png" alt="' . $Title . '" title="' . $Title . '" width="22" height="22">';
+}
+
+function freshports_GitHub_Icon($Title = 'git') {
+	return '<img class="icon" src="/images/github.svg" alt="' . $Title . '" title="' . $Title . '" width="22" height="22">';
+}
+
+function freshports_GitLab_Icon($Title = 'git') {
+	return '<img class="icon" src="/images/gitlab.svg" alt="' . $Title . '" title="' . $Title . '" width="22" height="22">';
+}
+
+function freshports_Homepage_Icon($Title = 'Homepage') {
+#	return '<span alt="' . $Title . '" title="' . $Title . '">&#127968;</span>';
+	return '<img class="icon" src="/images/home.svg" alt="' . $Title . '" title="' . $Title . '" width="22" height="22">';
 }
 
 function freshports_SanityTestFailure_Icon($Title = 'Sanity Test Failure') {
@@ -1303,7 +1324,7 @@ function freshports_PortCommitsHeader($port) {
 		$HTML .= '</td></tr>';
 	}
 
-	$HTML .= '<tr><th>Date</th><th>By</th><th>Description</th>';
+	$HTML .= '<tr><th>Commit</th><th>Credits</th><th>Log message</th>';
 
 	$HTML .= "</tr>\n";
 
@@ -1487,7 +1508,23 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	$HTML .= "<tr><td class=\"commit-details\">";
 	
 
+	# output the VERSION and REVISION
+	$PackageVersion = freshports_PackageVersion($commit->{'port_version'},  $commit->{'port_revision'},  $commit->{'port_epoch'});
+	if (strlen($PackageVersion) > 0) {
+		$HTML .= '<span class="element-details">' . $PackageVersion . '</span><br>';
+	}
+
 	$HTML .= $commit->commit_date . '<br>';
+	if ($GitCommit) {
+		$HTML .= freshports_git_commit_Link_freebsd($commit->message_id, $commit->repo_hostname, $commit->path_to_repo);
+		$HTML .= freshports_git_commit_Link_github ($commit->message_id, $commit->repo_hostname, $commit->path_to_repo);
+		$HTML .= freshports_git_commit_Link_gitlab ($commit->message_id, $commit->repo_hostname, $commit->path_to_repo);
+	} else {
+		if (isset($commit->svn_revision)) {
+			$HTML .= freshports_svnweb_ChangeSet_Link($commit->svn_revision, $commit->repo_hostname);
+	        }
+	}
+
 	// indicate if this port needs refreshing from CVS
 	if ($commit->{'needs_refresh'}) {
 		$HTML .= " " . freshports_Refresh_Icon_Link() . "\n";
@@ -1503,24 +1540,9 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	$HTML .= '&nbsp;';
 
 	$HTML .= freshports_Commit_Link_Port($commit->message_id, $category, $port);
-	$HTML .= '&nbsp;';
-
-	if ($GitCommit) {
-		$HTML .= freshports_git_commit_Link($commit->message_id, $commit->repo_hostname, $commit->path_to_repo);
-	} else {
-		if (isset($commit->svn_revision)) {
-			$HTML .= freshports_svnweb_ChangeSet_Link($commit->svn_revision, $commit->repo_hostname);
-	        }
-	}
-
-	# output the VERSION and REVISION
-	$PackageVersion = freshports_PackageVersion($commit->{'port_version'},  $commit->{'port_revision'},  $commit->{'port_epoch'});
-	if (strlen($PackageVersion) > 0) {
-		$HTML .= '&nbsp;&nbsp;<span class="element-details">' . $PackageVersion . '</span>';
-	}
 
 	if ($commit->stf_message != '') {
-		$HTML .= '&nbsp; ' . freshports_SanityTestFailure_Link($commit->message_id);
+		$HTML .= '&nbsp;' . freshports_SanityTestFailure_Link($commit->message_id);
 	}
 
 	if (IsSet($VuXMLList[$commit->id])) {

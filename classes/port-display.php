@@ -277,7 +277,7 @@ class port_display {
           }
 
           if (!empty($link)) {
-            $link = '<a href="' . $link . '">' . $link_title . '</a>';
+            $link = '<a href="' . $link . '">' . freshports_Subversion_Icon($link_title) . '</a>';
           } else {
             $link = '<del>SVNWeb</del>';
           }
@@ -285,11 +285,11 @@ class port_display {
           return $link;
 	}
 
-	function link_to_repo_git() {
+	function _link_to_repo_git_freebsd() {
           # we want something like
           # was: https://github.com/freebsd/freebsd-ports/tree/master/x11-wm/awesome
           # now: https://cgit.freebsd.org/ports/tree/x11-wm/awesome
-          $link_title = 'git';
+          $link_title = 'cgit';
           $link = 'https://';
           if (!empty($this->port->git_hostname)) {
             $link .= $this->port->git_hostname;
@@ -325,8 +325,8 @@ class port_display {
                 # But this is a git commit, so we can't do that.
                 # We show them a striketrough instead.
                 # echo 'oh, we are going null #1';
-	            $link = null;
-	          }
+	        $link = null;
+	      }
             } else {
               # if there is no last revision, we can't link to it.
               if (!empty($Debug)) echo 'oh, we are going null #2';
@@ -342,9 +342,132 @@ class port_display {
             if ($this->Branch != BRANCH_HEAD) {
               $link .= '?h=' . $this->Branch;
             }
-            $link = '<a href="' . $link . '">' . $link_title . '</a>';
+#            $link = '<a href="' . $link . '">' . $link_title . '</a>';
+            $link = '<a href="' . $link . '">' . freshports_Git_Icon($link_title) . '</a>';
           } else {
-            $link = '<del>git</del>';
+            $link = '<del>cgit</del>';
+          }
+
+          # echo 'returning ' . $link . '<br>';
+          return $link;
+	}
+
+	function _link_to_repo_git_github() {
+          # we want something like https://github.com/freebsd/freebsd-ports/tree/main/x11-wm/awesome
+          $link_title = 'github';
+          $link = 'https://';
+          $link .= DEFAULT_GITHUB;
+          # Yeah, this won't show the expected results if we're viewing ?branch=2020Q3, but close enough.
+          $link .= '/freebsd/freebsd-ports';
+
+          # echo 'link so far is ' . $link . '<br>';
+          if ($this->port->IsDeleted()) {
+            #
+            # If the port has been deleted, let's link to the last commit
+            # Deleted ports don't change much.  It's easier to do this here
+            # than to do it for ALL ports.
+            #
+            require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
+
+            $commit = new Commit($this->db);
+            $commit->FetchById($this->port->last_commit_id);
+
+            if (!empty($commit->svn_revision)) {
+              if ($this->_isGitCommit($commit->svn_revision)) {
+                # no modification to the link, because we cannot use this commit
+                # the user will get Unknown location: /head/devel/py-Pint
+                # We could search for the last known subversion commit
+                # but we aren't. Yet.
+                # Instead, we show them a strikethrough.
+                $link .= '/commit/' . htmlentities($commit->commit_hash_short);
+              } else {
+                # For subversion, we link to the revision one less
+                # so that the user has something to see.
+                # But this is a git commit, so we can't do that.
+                # We show them a striketrough instead.
+                # echo 'oh, we are going null #1';
+	        $link = null;
+              }
+            } else {
+              # if there is no last revision, we can't link to it.
+              if (!empty($Debug)) echo 'oh, we are going null #2';
+              $link = null;
+            }
+          } else {
+            # this is a usual link
+            $link .= '/tree/main/' . $this->port->category . '/' .  $this->port->port;
+          } # IsDeleted
+          # echo 'hmm, still going with ' . $link . '<br>';
+
+          if (!empty($link)) {
+            if ($this->Branch != BRANCH_HEAD) {
+              $link .= '?h=' . $this->Branch;
+            }
+#            $link = '<a href="' . $link . '">' . $link_title . '</a>';
+            $link = '<a href="' . $link . '">' . freshports_GitHub_Icon($link_title) . '</a>';
+          } else {
+            $link = '<del>github</del>';
+          }
+
+          # echo 'returning ' . $link . '<br>';
+          return $link;
+	}
+
+	function _link_to_repo_git_gitlab() {
+          # we want something like https://gitlab.com/FreeBSD/freebsd-ports/-/tree/main/sysutils/anvil
+          $link_title = 'gitlab';
+          $link = 'https://';
+          $link .= DEFAULT_GITLAB;
+          # Yeah, this won't show the expected results if we're viewing ?branch=2020Q3, but close enough.
+          $link .= '/freebsd/freebsd-ports';
+
+          # echo 'link so far is ' . $link . '<br>';
+          if ($this->port->IsDeleted()) {
+            #
+            # If the port has been deleted, let's link to the last commit
+            # Deleted ports don't change much.  It's easier to do this here
+            # than to do it for ALL ports.
+            #
+            require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
+
+            $commit = new Commit($this->db);
+            $commit->FetchById($this->port->last_commit_id);
+
+            if (!empty($commit->svn_revision)) {
+              if ($this->_isGitCommit($commit->svn_revision)) {
+                # no modification to the link, because we cannot use this commit
+                # the user will get Unknown location: /head/devel/py-Pint
+                # We could search for the last known subversion commit
+                # but we aren't. Yet.
+                # Instead, we show them a strikethrough.
+                $link .= '/commit/' . htmlentities($commit->commit_hash_short);
+              } else {
+                # For subversion, we link to the revision one less
+                # so that the user has something to see.
+                # But this is a git commit, so we can't do that.
+                # We show them a striketrough instead.
+                # echo 'oh, we are going null #1';
+	        $link = null;
+              }
+            } else {
+              # if there is no last revision, we can't link to it.
+              if (!empty($Debug)) echo 'oh, we are going null #2';
+              $link = null;
+            }
+          } else {
+            # this is a usual link
+            $link .= '/-/tree/main/' . $this->port->category . '/' .  $this->port->port;
+          } # IsDeleted
+          # echo 'hmm, still going with ' . $link . '<br>';
+
+          if (!empty($link)) {
+            if ($this->Branch != BRANCH_HEAD) {
+              $link .= '?h=' . $this->Branch;
+            }
+#            $link = '<a href="' . $link . '">' . $link_title . '</a>';
+            $link = '<a href="' . $link . '">' . freshports_GitLab_Icon($link_title) . '</a>';
+          } else {
+            $link = '<del>github</del>';
           }
 
           # echo 'returning ' . $link . '<br>';
@@ -641,7 +764,7 @@ class port_display {
 			$HTML .= "<dt><b>";
 			$PackageVersion = freshports_PackageVersion($port->{'version'}, $port->{'revision'}, $port->{'epoch'});
 			if (strlen($PackageVersion) > 0) {
-				$HTML .= ' ' . $PackageVersion;
+				$HTML .= ' <a href="#history">' . $PackageVersion . '</a>';
 			}
 
 			if (IsSet($port->category_looking_at)) {
@@ -944,12 +1067,21 @@ class port_display {
 		if (($this->ShowChangesLink || $this->ShowEverything) || ($port->PackageExists() && ($this->ShowPackageLink || $this->ShowEverything)) || ($port->homepage && ($this->ShowHomepageLink || $this->ShowEverything))) {
 			$HTML .= '<dt>';
 
+			if ($port->homepage && ($this->ShowHomepageLink || $this->ShowEverything)) {
+				$HTML .= '<a HREF="' . _forDisplay($port->homepage) . '" TITLE="Homepage for this port">' . freshports_Homepage_Icon() . '</a>';
+				$HTML .= ICON_SEPARATOR;
+			}
+
 			if ($this->ShowChangesLink || $this->ShowEverything) {
 				# we link to both svn and git because we can
 				# we could reduce this to just one link at some time in the future.
+				$HTML .= $this->_link_to_repo_git_freebsd();
+				$HTML .= ICON_SEPARATOR;
+				$HTML .= $this->_link_to_repo_git_github();
+				$HTML .= ICON_SEPARATOR;
+				$HTML .= $this->_link_to_repo_git_gitlab();
+				$HTML .= ICON_SEPARATOR;
 				$HTML .= $this->link_to_repo_svn();
-				$HTML .= ' : ';
-				$HTML .= $this->link_to_repo_git();
 			}
 
 			if ($port->PackageExists() && ($this->ShowPackageLink || $this->ShowEverything)) {
@@ -957,11 +1089,6 @@ class port_display {
 				$HTML .= ' <b>:</b> ';
 				$HTML .= '<A HREF="' . FRESHPORTS_FREEBSD_FTP_URL . '/' . freshports_PackageVersion($port->version, $port->revision, $port->epoch);
 				$HTML .= '.tgz">Package</A>';
-			}
-
-			if ($port->homepage && ($this->ShowHomepageLink || $this->ShowEverything)) {
-				$HTML .= ' <b>:</b> ';
-				$HTML .= '<a HREF="' . _forDisplay($port->homepage) . '" TITLE="Homepage for this port">Homepage</a>';
 			}
 
 			$HTML .= '</dt>';

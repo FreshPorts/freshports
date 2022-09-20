@@ -118,6 +118,8 @@ define('DELETE_PACKAGE', 'delete-package');
 
 define('DEFAULT_SVN_REPO', 'svnweb.freebsd.org');
 define('DEFAULT_GIT_REPO', 'cgit.freebsd.org');
+define('DEFAULT_GITHUB',   'github.com');
+define('DEFAULT_GITLAB',   'gitlab.com');
 
 define('PORT_STATUS_ACTIVE',  'A');
 define('PORT_STATUS_DELETED', 'D');
@@ -208,3 +210,5 @@ if (!defined('PW_HASH_METHOD')) define('PW_HASH_METHOD', 'bf');
 if (!defined('PW_HASH_COST'))   define('PW_HASH_COST', 14);
 
 define('HTML_DOCTYPE', '<!DOCTYPE html>');
+
+define('ICON_SEPARATOR', ' &ndash; ');

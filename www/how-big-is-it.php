@@ -215,8 +215,7 @@ $Value = 115803;
 $DateLastChecked =  "2007/02/12 01:58:58"; # default value, found at time of writing.
 
 $PortFileCount = HTML_DIRECTORY . '/PortsTreeCount';
-if (file_exists($PortFileCount) && is_readable($PortFileCount) &&
-    filesize($PortFileCount) < 1000) {
+if (file_exists($PortFileCount) && is_readable($PortFileCount) && filesize($PortFileCount) < 1000) {
   $FileContents = trim(file_get_contents($PortFileCount));
   if (is_numeric($FileContents)) {
     if (intval($FileContents) == $FileContents) {

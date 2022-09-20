@@ -355,7 +355,7 @@ if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 						if (ProcessPackages($User->id, $PortArray, $db)) {
 if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 							# we are not using the staging list
-							$WatchListID = pg_escape_string($dbh, $_REQUEST['wlid']);
+							$WatchListID = pg_escape_string($db, $_REQUEST['wlid']);
 							if ($Debug) echo ' you clicked on update_watch_list';
 
 							if ($_REQUEST['replaceappend'] == 'replace') {
@@ -421,7 +421,7 @@ if ($Debug) echo '<pre>' . $_REQUEST['copypaste'] . '</pre>';
                   $PortArray = ConvertStringToArray($_REQUEST['copypaste']);
                   if (ProcessPackages($User->id, $PortArray, $db)) {
 #                  if ($Debug) phpinfo();
-					$WatchListID = pg_escape_string($dbh, $_REQUEST['wlid']);
+					$WatchListID = pg_escape_string($db, $_REQUEST['wlid']);
 					if ($_REQUEST['replaceappend'] == 'replace') {
 					  $Overwrite = TRUE;
 					} else {

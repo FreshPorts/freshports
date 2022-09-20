@@ -16,7 +16,12 @@
                 header('Location: /' . MAINTENANCE_PAGE, TRUE, 307);
 	}
 
-$visitor = $_COOKIE[USER_COOKIE_NAME];
+$visitor = $_COOKIE[USER_COOKIE_NAME] ?? '';
+// if we don't know who they are, we'll make sure they login first
+if (!$visitor) {
+        header('Location: /login.php');  /* Redirect browser to PHP web site */
+        exit;  /* Make sure that code below does not get executed when we redirect. */
+}
 
 unset($add_name);
 unset($rename_name);
@@ -24,12 +29,6 @@ unset($rename_name);
 $ValidCharacters = 'a-z, A-Z, and 0-9';
 
 $WatchListNameMessage = 'Watch list names must contain only A..Z, a..z, or 0..9.';
-
-// if we don't know who they are, we'll make sure they login first
-if (!$visitor) {
-        header('Location: /login.php');  /* Redirect browser to PHP web site */
-        exit;  /* Make sure that code below does not get executed when we redirect. */
-}
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_lists.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user.php');
@@ -86,7 +85,7 @@ if ($_POST['set_options']) {
 # Error checking
 #
 if ($UserClickedOn) {
-	if ($ConfirmationNeeded[$UserClickedOn]]) {
+	if ($ConfirmationNeeded[$UserClickedOn]) {
 		if ($_POST['confirm'] != $_POST[$UserClickedOn]) {
 			$ErrorMessage = 'You did not supply the confirmation text';
 		}

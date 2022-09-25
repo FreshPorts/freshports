@@ -85,7 +85,7 @@ class port_display {
 		return strlen($revision) >= MIN_GIT_HASH_LENGTH;
 	}
 
-	function _pkgmessage_UCL($pkgmessage) {
+	function _pkgmessage_UCL($port) {
 		#
 		# see also _pkgmessage()
 		#
@@ -95,7 +95,7 @@ class port_display {
 		# save the pkgmessage to a temp file
 		# from https://www.php.net/manual/en/function.tmpfile.php
 		$temp = tmpfile();
-		fwrite($temp, $pkgmessage);
+		fwrite($temp, $port->pkgmessage);
 		$filename = stream_get_meta_data($temp)['uri'];
 		if ($Debug) syslog(LOG_ERR, '_pkgmessage_UCL temp file is : ' . $filename);
 
@@ -176,7 +176,7 @@ class port_display {
 								break;
 
 							default:
-								syslog(LOG_ERR, '_pkgmessage_UCL found a type is it not prepared for : ' . $type . ' in ' . $pkgmessage);
+								syslog(LOG_ERR, '_pkgmessage_UCL found a type is it not prepared for : ' . $type . ' in ' . $port->pkgmessage);
 								$HTML .= '<dt>' . htmlspecialchars($part->type) . '</dt><dd class="like-pre">' . htmlspecialchars($part->message) . '</dd>';
 								$HTML .= "\n";
 								$HTML .= "\n";
@@ -192,6 +192,7 @@ class port_display {
 		# remove the temp file
 		fclose($temp);
 
+		$HTML .= 'WWW: <a HREF="' . _forDisplay($port->homepage) . '" TITLE="Homepage for this port">' . _forDisplay($port->homepage) . '</a>';
 		$HTML .= '</dl></dd>';
 
 		return $HTML;
@@ -209,7 +210,7 @@ class port_display {
 		# see https://www.freebsd.org/doc/en_US.ISO8859-1/books/porters-handbook/pkg-files.html#porting-message-ucl-short-ex
 		#
 		if (defined('PKG_MESSAGE_UCL') && PKG_MESSAGE_UCL && $this->_isUCL($port->pkgmessage)) {
-			$HTML .= $this->_pkgmessage_UCL($port->pkgmessage);
+			$HTML .= $this->_pkgmessage_UCL($port);
 		} else {
 			$HTML .= "<dt id=\"message\"><b>pkg-message: </b></dt>\n" . '<dd class="like-pre">';
 			$HTML .= htmlspecialchars($port->pkgmessage);
@@ -406,7 +407,7 @@ class port_display {
 #            $link = '<a href="' . $link . '">' . $link_title . '</a>';
             $link = '<a href="' . $link . '">' . freshports_GitHub_Icon($link_title) . '</a>';
           } else {
-            $link = '<del>github</del>';
+            $link = '<del>GitHub</del>';
           }
 
           # echo 'returning ' . $link . '<br>';
@@ -467,7 +468,7 @@ class port_display {
 #            $link = '<a href="' . $link . '">' . $link_title . '</a>';
             $link = '<a href="' . $link . '">' . freshports_GitLab_Icon($link_title) . '</a>';
           } else {
-            $link = '<del>github</del>';
+            $link = '<del>GitLab</del>';
           }
 
           # echo 'returning ' . $link . '<br>';
@@ -505,6 +506,7 @@ class port_display {
 		$this->ShowUses                = false;
 		$this->ShowWatchListCount      = false;
 		$this->ShowWatchListStatus     = false;
+		$this->UseFullPathNames        = false;
 	}
 
 	function SetDetailsFull() {
@@ -569,6 +571,12 @@ class port_display {
 		$this->ShowPortCreationDate    = true;
 		$this->ShowShortDescription    = true;
 		$this->ShowWatchListStatus     = true;
+
+		# when showing links such as #history, include the full path to the port
+		# because we are linking to another page. Otherwise, just use #history
+		# because the link is on this page.
+		#
+		$this->UseFullPathNames        = true;
 	}
 
 	function SetDetailsPkgMessage() {
@@ -764,7 +772,11 @@ class port_display {
 			$HTML .= "<dt><b>";
 			$PackageVersion = freshports_PackageVersion($port->{'version'}, $port->{'revision'}, $port->{'epoch'});
 			if (strlen($PackageVersion) > 0) {
-				$HTML .= ' <a href="#history">' . $PackageVersion . '</a>';
+				$HTML .= ' <a href="';
+				if ($this->UseFullPathNames) {
+					$HTML .= '/' . htmlentities($this->port->category) . '/' .  htmlentities($this->port->port) . '/';
+				}
+				$HTML .= '#history">' . $PackageVersion . '</a>';
 			}
 
 			if (IsSet($port->category_looking_at)) {
@@ -1138,7 +1150,7 @@ class port_display {
 
 		# if there are conflicts
 		if (($this->ShowEverything || $this->ShowConflicts) && ($port->conflicts || $port->conflicts_build || $port->conflicts_install)) {
-			$HTML .= "<dt><b>Conflicts:</b></dt>";
+			$HTML .= '<dt id="conflicts"><b>Conflicts:</b></dt>';
 
 			if ($port->conflicts) {
 				$HTML .= "<dd>CONFLICTS:";
@@ -1273,7 +1285,7 @@ class port_display {
 			$numrows = $packages->Fetch($this->port->id);
 
 			if ($numrows > 0) {
-				$HTML .= '<dt id="packages"><b>Packages</b> (timestamps in pop-ups are UTC):</dt>';
+				$HTML .= '<dt id="packages" class="h2"><b>Packages</b> (timestamps in pop-ups are UTC):</dt>';
 				$HTML .= '<dd>';
 				$HTML .= '<div class="scrollmenu">';
 
@@ -1395,10 +1407,15 @@ class port_display {
 				$HTML .= "\n</ol></dd>\n";
 			}
 
+			if (!($port->depends_build || $port->depends_run || $port->depends_lib)) {
+				$HTML .= '<dt class="h3" id="dependencies">This port has no dependencies</dt>';
+			}
+
 			# XXX when adding new depends above, be sure to update the array in ShowDependencies()
 
 			$HTML .= $this->ShowDependencies( $port );
 		}
+
 
 		if ($this->ShowEverything || $this->ShowConfig) {
 			$HTML .= "</dl>\n<hr>\n<dl>";
@@ -1523,7 +1540,7 @@ class port_display {
 					#
 					# START OF LIST for this type of Required 
 					#
-					$div = '<dd id="RequiredBy' . $title . '">
+					$div = '<dd>
 					            <ol class="depends" id="requiredfor' . $title . '" style="margin-bottom: 0px">' . "\n";
 
 					$firstDeletedPort = -1;     # we might be able to combine this with deletedPortFound
@@ -1610,9 +1627,9 @@ class port_display {
 		}
 
 		if ( $HTML === '' ) {
-			$HTML .= '<dd>There are no ports dependent upon this port</dd>';
+			$HTML .= '<dt class="h3" id="required">There are no ports dependent upon this port</dt>';
 		} else {
-			$HTML = '<dt class="required">This port is required by:</dt>' . $HTML;
+			$HTML = '<dt class="required" id="required">This port is required by:</dt>' . $HTML;
 			if ($deletedPortFound) {
 				# add some stuff to the front of what we have
 				if ( $port->IsDeleted() ) {
@@ -1635,7 +1652,7 @@ class port_display {
 		if ( $NumRows > 0 ) {
 			// if this is our first output, put up our standard header
 			if ( $HTML === '' ) {
-				$div = "\n" . '<dt class="pkg-plist"><a id="pkg-plist"><b>pkg-plist:</b></a> as obtained via: <code class="code">make generate-plist</code></dt>';
+				$div = "\n" . '<dt id="pkg-plist" class="pkg-plist"><a id="pkg-plist"><b>pkg-plist:</b></a> as obtained via: <code class="code">make generate-plist</code></dt>';
 				$div .= '<dd class="pkg-plist">';
 				$div .= '<a href="#" id="configureplist-Extra-show" class="showLink" onclick="showHide(\'configureplist-Extra\');return false;">Expand this list (' . $NumRows . ' items)</a>';
 				$div .= '</dd>';

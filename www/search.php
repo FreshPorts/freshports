@@ -133,6 +133,7 @@
 
 	function WildCardQuery($db, $stype, $Like, $query) {
 	  GLOBAL $SearchTypeToFieldMap;
+
 	  # return the clause for this particular type of query
 	  $sql = '';
 
@@ -171,7 +172,7 @@
 		}
 	}
 
-	$search = FALSE;
+	$WeHaveToSearch = FALSE;
 	$HTML   = '';
 
 	// If these items are missing from the URL, we want them to have a value
@@ -189,8 +190,13 @@
 	$output_format			= OUTPUT_FORMAT_HTML;
 	$minimal_output			= 0;
 
-	// avoid nasty problems by adding slashes
-	if (IsSet($_REQUEST['query']))              $query               = pg_escape_string($db, trim($_REQUEST['query']));
+
+	# No special treatment for $query. Whenever it is output: htmlentities(). Whenever it is used in a query: pg_escape_string()
+	# re: https://github.com/FreshPorts/freshports/issues/358
+	#
+	if (IsSet($_REQUEST['query']))              $query               = trim($_REQUEST['query']);
+
+	// avoid nasty problems by escaping them - I'm not even sure this is proper.
 	if (IsSet($_REQUEST['stype']))              $stype               = pg_escape_string($db, trim($_REQUEST['stype']));
 	if (IsSet($_REQUEST['num']))                $num                 = intval(pg_escape_string($db, trim($_REQUEST['num'])));
 	if (IsSet($_REQUEST['category']))           $category            = pg_escape_string($db, trim($_REQUEST['category']));
@@ -217,7 +223,7 @@
 	}
 
 	if ($stype == SEARCH_FIELD_MESSAGEID) {
-		header('Location: ' . $protocol . '://' . $_SERVER['HTTP_HOST'] . "/commit.php?message_id=$query");
+		header('Location: ' . $protocol . '://' . $_SERVER['HTTP_HOST'] . "/commit.php?message_id=" . htmlentities($query));
 		exit;
 	}
 
@@ -330,7 +336,7 @@
 	if ($method == '') $method = 'match';
 
 	if ($Debug) {
-		echo "query='$query' && stype='$stype' && num='$num' && method='$method'\n<BR>";
+		echo "query='" . htmlentities($query) . "' && stype='$stype' && num='$num' && method='$method'\n<BR>";
 
 		if ($query && $stype && $num) {
 			echo "yes, we have parameters\n<BR>";
@@ -342,13 +348,13 @@
 	#
 
 	if (IsSet($_REQUEST['query'])) {
-		$search = $_REQUEST['query'];
+		$WeHaveToSearch = $_REQUEST['query'];
 	}
-	if (!IsSet($search) && ($query && $stype && $num && $method)) {
-		$search = TRUE;
+	if (!IsSet($WeHaveToSearch) && ($query && $stype && $num && $method)) {
+		$WeHaveToSearch = TRUE;
 	}
 
-	if ($search) {
+	if ($WeHaveToSearch) {
 
 		if ($Debug) echo "into search stuff<BR>\n";
 
@@ -570,7 +576,7 @@
 		      require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port_commits_by_committer.php');
 		      $Commits = new PortCommitsByCommitter($db);
 		    }
-		    if ($Debug) echo 'searching by committer for ' . $query;
+		    if ($Debug) echo 'searching by committer for ' . htmlentities($query);
 		    $Commits->CommitterSet($query);
 
 		    $Commits->Debug = $Debug;
@@ -784,7 +790,7 @@ JOIN element_pathname EP on E.id = EP.element_id
       AND P.element_id   = E.id ' ;
 
 
-			$AddRemoveExtra  = "?query=" . $query. "+stype=$stype+num=$num+method=$method";
+			$AddRemoveExtra  = "?query=" . htmlentities($query). "+stype=$stype+num=$num+method=$method";
 			if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<BR>";
 			$AddRemoveExtra = pg_escape_string($db, $AddRemoveExtra);
 			if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<BR>";
@@ -1057,13 +1063,13 @@ Special searches:
 <?php
 		} // end User->id
 
-		if ($search) {
+		if ($WeHaveToSearch) {
 			echo "<tr><td>\n";
 		}
 
 	}  // end of putting out HTML output
 	
-	if ($search) {
+	if ($WeHaveToSearch) {
 		if (IsSet($NumFetches) && $NumFetches == 0) {
 		if ($Debug) echo 'nothing found';
 		   if ($output_format == OUTPUT_FORMAT_HTML) {
@@ -1216,4 +1222,4 @@ document.search.query.focus();
 <?php
 		}
 
-	} // $search
+	} // $WeHaveToSearch

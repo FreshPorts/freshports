@@ -481,6 +481,13 @@ dt.h2
   font-size: 25px;
 }
 
+dt.h3
+{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
 ol.required, ol.depends, ol.mastersites
 {
     margin-bottom: 10px;

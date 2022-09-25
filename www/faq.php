@@ -838,6 +838,7 @@ now that the Master has been upgraded.
 	<li>packages</li>
 	<li>masterport</li>
 	<li>slaveports</li>
+	<li>pkg-plist</li>
 	<li>dependencies</li>
 	<li>requiredbuild</li>
 	<li>requiredrun</li>
@@ -845,6 +846,15 @@ now that the Master has been upgraded.
 	<li>requiredfetch</li>
 	<li>requiredpatch</li>
 	<li>requiredextract</li>
+	<li>required</li>
+	<li>RequiredByBuild</li>
+	<li>RequiredByExtract</li>
+	<li>RequiredByFetch</li>
+	<li>RequiredByLibraries</li>
+	<li>RequiredByPatch</li>
+	<li>RequiredByRun</li>
+	<li>requiredfor</li>
+	<li>conflicts</li>
 	<li>config</li>
 	<li>options</li>
 	<li>uses</li>

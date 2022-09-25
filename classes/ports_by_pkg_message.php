@@ -54,8 +54,8 @@ class PortsByPkgMessage extends Port {
 		
 		$sql = $this::WITH_CLAUSE . 'select count(*) as count from short_list, ports P, element_pathname EP WHERE P.id = short_list.port_id
    AND P.element_id = EP.element_id and EP.pathname like \'/ports/head/%\'';
-		if ($this->Debug) echo "<pre>$sql</pre> with <pre>$this->Query</pre>";
-		$result = pg_query_params($this->dbh, $sql, array($this->Query));
+		if ($this->Debug) echo "<pre>$sql</pre> with <pre>" . htmlentities($this->Query) . "</pre>";
+		$result = pg_query_params($this->dbh, $sql, array(pg_escape_string($this->dbh, $this->Query)));
 		if ($result) {
 			$myrow = pg_fetch_array($result);
 			$count = $myrow['count'];
@@ -120,7 +120,7 @@ class PortsByPkgMessage extends Port {
 		}
 
 		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
-		$this->LocalResult = pg_query_params($this->dbh, $sql, array(htmlspecialchars(pg_escape_string($this->dbh, $this->Query))));
+		$this->LocalResult = pg_query_params($this->dbh, $sql, array(pg_escape_string($this->dbh, $this->Query)));
 		if ($this->LocalResult) {
 			$numrows = pg_num_rows($this->LocalResult);
 			if ($this->Debug) echo "That would give us $numrows rows";

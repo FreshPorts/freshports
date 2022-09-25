@@ -355,7 +355,6 @@ function freshports_GitLab_Icon($Title = 'git') {
 }
 
 function freshports_Homepage_Icon($Title = 'Homepage') {
-#	return '<span alt="' . $Title . '" title="' . $Title . '">&#127968;</span>';
 	return '<img class="icon" src="/images/home.svg" alt="' . $Title . '" title="' . $Title . '" width="22" height="22">';
 }
 

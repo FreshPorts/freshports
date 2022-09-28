@@ -1313,7 +1313,7 @@ function freshports_PortCommitsHeader($port) {
 
 	$Columns = 3;
 
-	$HTML .= freshports_PageBannerTextColSpan("Commit History - (may be incomplete: see SVNWeb link above for full details)", $Columns);
+	$HTML .= freshports_PageBannerTextColSpan("Commit History - (may be incomplete: for full details, see links to repositories near top of page)", $Columns);
 
 	if ($port->IsSlavePort()) {
 		$HTML .= '<tr><td colspan="' . $Columns . '">'; 

@@ -131,8 +131,8 @@ td.content {
 }
 
 .icon {
-  max-height: 20px;
-  max-width: 20px;
+  max-height: 30px;
+  max-width: 30px;
   height: auto;
   vertical-align: middle;
   margin: 1px;
@@ -455,7 +455,6 @@ dt.description
 dd.required
 {
   margin-top: 5px;
-  font-weight: bold;
   margin-inline-start: 30px;
 }
 

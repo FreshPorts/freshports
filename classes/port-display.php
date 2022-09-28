@@ -700,9 +700,9 @@ class port_display {
 	}
 
 	function packageToolTipText($last_checked, $repo_date, $processed_date) {
-		# last_checked    - when we last checked for an update
 		# repo_date       - date on packagesite.txz (e.g. https://pkg.freebsd.org/FreeBSD:11:amd64/latest/
 		# processed_date  - when the above mentioned data was last parsed into FreshPorts
+		# last_checked    - when we last checked for an update
 
 		$title = '';
 
@@ -1280,12 +1280,13 @@ class port_display {
 		###############################################
 
 		if ($this->ShowEverything || $this->ShowPackages) {
+			$HTML .= "<hr>\n";
 
 			$packages = new Packages($this->db);
 			$numrows = $packages->Fetch($this->port->id);
 
 			if ($numrows > 0) {
-				$HTML .= '<dt id="packages" class="h2"><b>Packages</b> (timestamps in pop-ups are UTC):</dt>';
+				$HTML .= '<dt id="packages" class="h3"><b>Packages</b> (timestamps in pop-ups are UTC):</dt>';
 				$HTML .= '<dd>';
 				$HTML .= '<div class="scrollmenu">';
 
@@ -1312,10 +1313,10 @@ class port_display {
 
 						# If showing a - for the version, center align it
 						$title = $this->packageToolTipText($package_line['last_checked_latest'], $package_line['repo_date_latest'], $package_line['processed_date_latest']);
-						$HTML .= '<td tabindex="-1" class="version ' . ($package_version_latest    == '-' ? 'noversion' : '') . '" data-title="' . $title . '">' . $package_version_latest    . '</td>';
+						$HTML .= '<td tabindex="-1" class="version ' . ($package_version_latest    == '-' ? 'noversion' : '') . '" data-title="' . $title . '">' . ($package_version_latest    == '-' ? freshports_Fallout_Link($this->port->category, $this->port->port) : $package_version_latest)    . '</td>';
 
 						$title = $this->packageToolTipText($package_line['last_checked_quarterly'], $package_line['repo_date_quarterly'], $package_line['processed_date_quarterly']);
-						$HTML .= '<td tabindex="-1" class="version ' . ($package_version_quarterly == '-' ? 'noversion' : '') . '" data-title="' . $title . '">' . $package_version_quarterly . '</td>';
+						$HTML .= '<td tabindex="-1" class="version ' . ($package_version_quarterly == '-' ? 'noversion' : '') . '" data-title="' . $title . '">' . ($package_version_quarterly == '-' ? freshports_Fallout_Link($this->port->category, $this->port->port) : $package_version_quarterly) . '</td>';
 						$HTML .= '</tr>';
 					}
 					$HTML .= '</table>&nbsp;';
@@ -1408,7 +1409,7 @@ class port_display {
 			}
 
 			if (!($port->depends_build || $port->depends_run || $port->depends_lib)) {
-				$HTML .= '<dt class="h3" id="dependencies">This port has no dependencies</dt>';
+				$HTML .= '<dt class="h3" id="dependencies">This port has no dependencies.</dt>';
 			}
 
 			# XXX when adding new depends above, be sure to update the array in ShowDependencies()
@@ -1602,7 +1603,7 @@ class port_display {
 
 					$div .= '<dd id="RequiredBy' . $title . 'Deleted" class="depends">' . "\n";
 
-					$div .= '<p><b>Deleted ports which required this port:</b></p>';
+					$div .= '<p>Deleted ports which required this port:</p>';
 					$div .= '<a href="#" id="RequiredBy' . $title . 'DeletedExtra-show" class="showLink" onclick="showHide(\'RequiredBy' . $title .
 				                'DeletedExtra\');return false;">Expand this list of ' . ($NumRows - $firstDeletedPort) . ' deleted port' . $PluralSingularSuffix . '</a>';
 
@@ -1627,9 +1628,9 @@ class port_display {
 		}
 
 		if ( $HTML === '' ) {
-			$HTML .= '<dt class="h3" id="required">There are no ports dependent upon this port</dt>';
+			$HTML .= '<dt class="h3" id="requiredby">There are no ports dependent upon this port</dt>';
 		} else {
-			$HTML = '<dt class="required" id="required">This port is required by:</dt>' . $HTML;
+			$HTML = '<dt class="h3" id="requiredby">This port is required by:</dt>' . $HTML;
 			if ($deletedPortFound) {
 				# add some stuff to the front of what we have
 				if ( $port->IsDeleted() ) {

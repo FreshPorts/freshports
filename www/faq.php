@@ -846,7 +846,7 @@ now that the Master has been upgraded.
 	<li>requiredfetch</li>
 	<li>requiredpatch</li>
 	<li>requiredextract</li>
-	<li>required</li>
+	<li>requiredby</li>
 	<li>RequiredByBuild</li>
 	<li>RequiredByExtract</li>
 	<li>RequiredByFetch</li>

@@ -339,7 +339,7 @@ function freshports_Fallout_Icon() {
 }
 
 function freshports_Subversion_Icon($Title = 'Subversion') {
-	return '<img class="icon" src="/images/subversion.png" alt="' . $Title . '" title="' . $Title . '" width="32" height="28">';
+	return '<img class="icon" src="/images/subversion.png" alt="' . $Title . '" title="' . $Title . '" width="32" height="32">';
 }
 
 function freshports_Git_Icon($Title = 'git') {
@@ -355,7 +355,7 @@ function freshports_GitLab_Icon($Title = 'git') {
 }
 
 function freshports_Homepage_Icon($Title = 'Homepage') {
-	return '<img class="icon" src="/images/home.svg" alt="' . $Title . '" title="' . $Title . '" width="22" height="22">';
+	return '<img class="icon" src="/images/home.svg" alt="' . $Title . '" title="' . $Title . '" width="24" height="24">';
 }
 
 function freshports_SanityTestFailure_Icon($Title = 'Sanity Test Failure') {

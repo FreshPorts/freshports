@@ -192,6 +192,7 @@ class port_display {
 		# remove the temp file
 		fclose($temp);
 
+		# this code is also duplicated within _pkgmessage()
 		$HTML .= 'WWW: <a HREF="' . _forDisplay($port->homepage) . '" TITLE="Homepage for this port">' . _forDisplay($port->homepage) . '</a>';
 		$HTML .= '</dl></dd>';
 
@@ -214,6 +215,9 @@ class port_display {
 		} else {
 			$HTML .= "<dt id=\"message\"><b>pkg-message: </b></dt>\n" . '<dd class="like-pre">';
 			$HTML .= htmlspecialchars($port->pkgmessage);
+
+			# this code is also duplicated within _pkgmessage_UCL()
+			$HTML .= 'WWW: <a HREF="' . _forDisplay($port->homepage) . '" TITLE="Homepage for this port">' . _forDisplay($port->homepage) . '</a>';
 			$HTML .= "</dd>\n</dl>\n<hr>\n<dl>";
 		}
 
@@ -1447,7 +1451,7 @@ class port_display {
 			if ($port->pkgmessage) {
 				$HTML .= $this->_pkgmessage($port);
 			} else {
-				$HTML .= '<dt id="message"><b>FreshPorts was unable to extract/find any pkg message</b></dt>';
+				$HTML .= '<dt id="message"><b>FreshPorts was unable to extract/find any pkg message</b></dt><br>';
 			}
 		}
 

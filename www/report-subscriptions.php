@@ -70,28 +70,27 @@
 
 	if (IsSet($_POST['submit']) && $_POST['submit'] == 'update') {
 		pg_query($db, 'begin');
-		$sql = "DELETE from report_subscriptions
-    	         WHERE user_id = $User->id";
+		$sql = "DELETE from report_subscriptions WHERE user_id = $User->id";
 
 		$result = pg_query($db, $sql);
 
-		$reports = $_REQUEST['reports'];
+		$reports = ($_REQUEST['reports'] ?? '');
 		if (Is_Array($reports)) {
 		
 			reset($reports);
 	
 			foreach ($reports as $key => $value) {
-				$TheFrequency = pg_escape_string($db, $_POST['reportfrequency_' . $value]);
+				$TheFrequency = pg_escape_string($db, $_POST['reportfrequency_' . $value] ?? '');
 				$value = pg_escape_string($db, $value);
 
-				if ($Debug) echo '$TheFrequency=\'' . $TheFrequency . '\'';
-				if ($Debug) echo "\$key='$key' \$value='$value' \$User->id='$User->id' \$frequencies[\$key]=" . $TheFrequency . '<BR>';
+				if ($Debug) echo '$TheFrequency=\'' . $TheFrequency . '\' ';
+				if ($Debug) echo "\$key='$key' \$value='$value' \$User->id='$User->id' \$frequencies[\$key]='" . $TheFrequency . "'<br>";
 				if (IsSet($TheFrequency) && $TheFrequency <> '') {
 					$sql = "INSERT INTO report_subscriptions(report_id, user_id, report_frequency_id) values ($value, $User->id, $TheFrequency)";
 				} else {
 					$sql = "INSERT INTO report_subscriptions(report_id, user_id) values ($value, $User->id)";
 				}
-				if ($Debug) echo "\$sql='$sql'<BR>\n";
+				if ($Debug) echo "\$sql='$sql'<br><br>\n";
 				$result = pg_query($db, $sql);
 	
 				if (!$result) {
@@ -109,11 +108,13 @@
 		$Reports = freshports_ReportNames($db);
 
 		if ($Debug) {
-	        foreach ($reports as $report_id => $Values) {
+			echo 'Dumping the $reports stuff we have:<br>';
+		        foreach ($reports as $report_id => $Values) {
 
 				echo '* * * * now processing $report_id = \'' . $report_id . '\'';
-				echo ' and $Values = \'' . $Values . '\'<BR>';
+				echo ' and $Values = <pre>' . var_dump($Values) . '</pre><br>';
 			}
+			echo 'end of dump ----<br><br><br>';
 		}
 		# read the values from the db
 		$sql = "SELECT report_id, report_frequency_id
@@ -122,6 +123,8 @@
 				 ORDER BY report_id ";
 		$result = pg_exec ($db, $sql);
 		$numrows = pg_num_rows($result);
+
+		if ($Debug) echo 'reading report_subscriptions from the database for this user:<br>';
 		for ($i = 0; $i < $numrows; $i++) {
 			$myrow = pg_fetch_array ($result, $i);
 
@@ -129,12 +132,12 @@
 
 			$Values['frequency'] = $myrow['report_frequency_id'];
 			$Values['selected']  = 1;
-			if ($Debug) echo '# # # reading from DB: $Values = \'' . $Values . '\' and $Values ["frequency"] = \'' . $Values ["frequency"] . '\'<BR>';
+			if ($Debug) echo '# # # reading from DB: $Values = <pre>' . var_dump($Values) . '</pre> and $Values ["frequency"] = \'' . $Values ["frequency"] . '\'<br>';
 
 			$Reports[$myrow["report_id"]] = $Values;
 		}
 
-	if ($Debug) echo "\$frequencies_3='$frequencies_3'<BR>\n";
+	if ($Debug) echo "\$frequencies_3='" . ($frequencies_3 ?? '') . "'<br>\n";
 
 	$Frequencies = freshports_ReportFrequencies($db);
 ?>
@@ -169,15 +172,15 @@ This page allows you to select the reports you wish to receive and the frequency
 				echo 'now processing $report_id = \'' . $report_id . '\'';
 			}
 
-			$name				= $Values["name"];
-			$needs_frequency	= $Values["needs_frequency"];
-			$description		= $Values["description"];
-			$thefrequency		= $Values["frequency"];
+			$name            = $Values["name"];
+			$needs_frequency = $Values["needs_frequency"];
+			$description     = $Values["description"];
+			$thefrequency    = ($Values["frequency"] ?? '');
 		
 			echo '<TR>';
 			echo '<TD>';
 			echo '<label><INPUT TYPE="checkbox" NAME="reports[]" value="' . $report_id . '"';
-			if ($Values["selected"]) {
+			if (IsSet($Values["selected"])) {
 				echo ' checked';
 			}
 			echo '> ' . $name;
@@ -198,10 +201,10 @@ This page allows you to select the reports you wish to receive and the frequency
 		   		foreach ($Frequencies as $frequency_id => $frequency) {
 
 					if ($Debug) {
-						echo '   with $frequency_id = \'' . $frequency_id . '\' and $frequency = \'' . $frequency . '\'<BR>';
+						echo '   with $frequency_id = \'' . $frequency_id . '\' and $frequency = \'' . $frequency . '\'<br>';
 					}
 					$DDLB .= '<OPTION ';
-					if ($Values["frequency"] == $frequency_id) {
+					if (IsSet($Values["frequency"]) && $Values["frequency"] == $frequency_id) {
 						$DDLB .= 'SELECTED ';
 					}
 					$DDLB .= 'VALUE="' . $frequency_id . '">' . $frequency . '</OPTION>' . "\n";
@@ -235,7 +238,7 @@ the directions found on the <a href="https://lists.freshports.org/mailman/listin
 
 <hr>
 
-<BR><BR>
+<br><br>
 	&nbsp;&nbsp;<INPUT TYPE="submit" VALUE="update" NAME="submit">
 </FORM>
 

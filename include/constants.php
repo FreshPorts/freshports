@@ -120,6 +120,7 @@ define('DEFAULT_SVN_REPO', 'svnweb.freebsd.org');
 define('DEFAULT_GIT_REPO', 'cgit.freebsd.org');
 define('DEFAULT_GITHUB',   'github.com');
 define('DEFAULT_GITLAB',   'gitlab.com');
+define('DEFAULT_CODEBERG', 'codeberg.org');
 
 define('PORT_STATUS_ACTIVE',  'A');
 define('PORT_STATUS_DELETED', 'D');

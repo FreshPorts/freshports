@@ -121,6 +121,10 @@ function freshports_git_commit_Link_gitlab($revision, $hostname, $path) {
   return '<a href="https://gitlab.com/FreeBSD/freebsd-ports/-/commit/' . htmlentities($revision) .  '">' . freshports_GitLab_Icon('commit hash:' . $revision) . '</a>';
 }
 
+function freshports_git_commit_Link_codeberg($revision, $hostname, $path) {
+  return '<a href="https://codeberg.org/FreeBSD/freebsd-ports/commit/' . htmlentities($revision) .  '">' . freshports_Codeberg_Icon('commit hash:' . $revision) . '</a>';
+}
+
 function freshports_git_commit_Link_diff($revision, $hostname, $path) {
   return '<a href="https://' . htmlentities($hostname) . $path . '/commit/?id=' . htmlentities($revision) .  '">' . freshports_Diff_Icon() . '</a>';
 }
@@ -335,7 +339,11 @@ function freshports_IndexFollow($URI) {
 }
 
 function freshports_Fallout_Icon() {
-	return '<img class="icon" src="/images/fallout-16x16.png" alt="pkg-fallout" title="pkg-fallout" width="16" height="16">';
+	return '<img class="icon" src="/images/fallout.svg" alt="pkg-fallout" title="pkg-fallout" width="22" height="22">';
+}
+
+function freshports_Codeberg_Icon($Title = 'Codeberg') {
+	return '<img class="icon" src="/images/codeberg.svg" alt="' . $Title . '" title="' . $Title . '" width="22" height="22">';
 }
 
 function freshports_Subversion_Icon($Title = 'Subversion') {
@@ -1515,9 +1523,10 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 
 	$HTML .= $commit->commit_date . '<br>';
 	if ($GitCommit) {
-		$HTML .= freshports_git_commit_Link_freebsd($commit->message_id, $commit->repo_hostname, $commit->path_to_repo);
-		$HTML .= freshports_git_commit_Link_github ($commit->message_id, $commit->repo_hostname, $commit->path_to_repo);
-		$HTML .= freshports_git_commit_Link_gitlab ($commit->message_id, $commit->repo_hostname, $commit->path_to_repo);
+		$HTML .= freshports_git_commit_Link_freebsd ($commit->message_id, $commit->repo_hostname, $commit->path_to_repo);
+		$HTML .= freshports_git_commit_Link_codeberg($commit->message_id, $commit->repo_hostname, $commit->path_to_repo);
+		$HTML .= freshports_git_commit_Link_github  ($commit->message_id, $commit->repo_hostname, $commit->path_to_repo);
+		$HTML .= freshports_git_commit_Link_gitlab  ($commit->message_id, $commit->repo_hostname, $commit->path_to_repo);
 	} else {
 		if (isset($commit->svn_revision)) {
 			$HTML .= freshports_svnweb_ChangeSet_Link($commit->svn_revision, $commit->repo_hostname);

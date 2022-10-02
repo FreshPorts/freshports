@@ -131,11 +131,11 @@ td.content {
 }
 
 .icon {
-  max-height: 30px;
-  max-width: 30px;
+  max-height: 22px;
+  max-width: 22px;
   height: auto;
-  vertical-align: middle;
-  margin: 1px;
+  vertical-align: bottom;
+  margin: 2px;
 }
 
 .commit-list th, .files-list th {

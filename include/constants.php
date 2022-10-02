@@ -122,6 +122,10 @@ define('DEFAULT_GITHUB',   'github.com');
 define('DEFAULT_GITLAB',   'gitlab.com');
 define('DEFAULT_CODEBERG', 'codeberg.org');
 
+define('DEFAULT_ICON_SIZE', 22);
+define('FALLOUT_SMALLER_ICON_SIZE', 16);
+define('FALLOUT_TITLE', 'Fallout');
+
 define('PORT_STATUS_ACTIVE',  'A');
 define('PORT_STATUS_DELETED', 'D');
 

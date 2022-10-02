@@ -135,7 +135,7 @@ function freshports_git_commit_Link_Hash($hash, $link_text, $hostname, $path) {
 
 function freshports_Fallout_Link($category, $port) {
   # re https://github.com/FreshPorts/freshports/issues/181
-  return '<a href="https://portsfallout.com/fallout?port=' . rawurlencode($category . '/' . $port . '$') . '" rel="noopener noreferrer">' . freshports_Fallout_Icon() . '</a>';
+  return '<a href="https://portsfallout.com/fallout?port=' . rawurlencode($category . '/' . $port . '$') . '" rel="noopener noreferrer">' . freshports_Fallout_Icon(FALLOUT_TITLE, FALLOUT_SMALLER_ICON_SIZE) . '</a>';
 }
 
 function freshports_svnweb_ChangeSet_Link($revision, $hostname) {
@@ -338,31 +338,31 @@ function freshports_IndexFollow($URI) {
 	return $HTML;
 }
 
-function freshports_Fallout_Icon() {
-	return '<img class="icon" src="/images/fallout.svg" alt="pkg-fallout" title="pkg-fallout" width="22" height="22">';
+function freshports_Fallout_Icon($Title = FALLOUT_TITLE, $size = DEFAULT_ICON_SIZE) {
+	return '<img class="icon" src="/images/fallout.svg" alt="pkg-fallout" title="pkg-fallout" width="' . $size . '" height="' . $size . '">';
 }
 
-function freshports_Codeberg_Icon($Title = 'Codeberg') {
-	return '<img class="icon" src="/images/codeberg.svg" alt="' . $Title . '" title="' . $Title . '" width="22" height="22">';
+function freshports_Codeberg_Icon($Title = 'Codeberg', $size = DEFAULT_ICON_SIZE) {
+	return '<img class="icon" src="/images/codeberg.svg" alt="' . $Title . '" title="' . $Title . '" width="' . $size . '" height="' . $size . '">';
 }
 
 function freshports_Subversion_Icon($Title = 'Subversion') {
 	return '<img class="icon" src="/images/subversion.png" alt="' . $Title . '" title="' . $Title . '" width="32" height="32">';
 }
 
-function freshports_Git_Icon($Title = 'git') {
-	return '<img class="icon" src="/images/git.png" alt="' . $Title . '" title="' . $Title . '" width="22" height="22">';
+function freshports_Git_Icon($Title = 'git', $size = DEFAULT_ICON_SIZE) {
+	return '<img class="icon" src="/images/git.png" alt="' . $Title . '" title="' . $Title . '" width="' . $size . '" height="' . $size . '">';
 }
 
-function freshports_GitHub_Icon($Title = 'git') {
-	return '<img class="icon" src="/images/github.svg" alt="' . $Title . '" title="' . $Title . '" width="22" height="22">';
+function freshports_GitHub_Icon($Title = 'git', $size = DEFAULT_ICON_SIZE) {
+	return '<img class="icon" src="/images/github.svg" alt="' . $Title . '" title="' . $Title . '" width="' . $size . '" height="' . $size . '">';
 }
 
-function freshports_GitLab_Icon($Title = 'git') {
-	return '<img class="icon" src="/images/gitlab.svg" alt="' . $Title . '" title="' . $Title . '" width="22" height="22">';
+function freshports_GitLab_Icon($Title = 'git', $size = DEFAULT_ICON_SIZE) {
+	return '<img class="icon" src="/images/gitlab.svg" alt="' . $Title . '" title="' . $Title . '" width="' . $size . '" height="' . $size . '">';
 }
 
-function freshports_Homepage_Icon($Title = 'Homepage') {
+function freshports_Homepage_Icon($Title = 'Homepage', $size = DEFAULT_ICON_SIZE + 2) {
 	return '<img class="icon" src="/images/home.svg" alt="' . $Title . '" title="' . $Title . '" width="24" height="24">';
 }
 

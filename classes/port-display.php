@@ -359,7 +359,7 @@ class port_display {
 
 	function _link_to_repo_git_github() {
           # we want something like https://github.com/freebsd/freebsd-ports/tree/main/x11-wm/awesome
-          $link_title = 'github';
+          $link_title = 'GitHub';
           $link = 'https://';
           $link .= DEFAULT_GITHUB;
           # Yeah, this won't show the expected results if we're viewing ?branch=2020Q3, but close enough.
@@ -420,7 +420,7 @@ class port_display {
 
 	function _link_to_repo_git_codeberg() {
           # we want something like https://codeberg.org/FreeBSD/freebsd-ports/commit/5fe8e9128dadba571e8db3b5d56079ff8ab10736
-          $link_title = 'codeberg';
+          $link_title = 'Codeberg';
           $link = 'https://';
           $link .= DEFAULT_CODEBERG;
           # Yeah, this won't show the expected results if we're viewing ?branch=2020Q3, but close enough.
@@ -481,7 +481,7 @@ class port_display {
 
 	function _link_to_repo_git_gitlab() {
           # we want something like https://gitlab.com/FreeBSD/freebsd-ports/-/tree/main/sysutils/anvil
-          $link_title = 'gitlab';
+          $link_title = 'GitLab';
           $link = 'https://';
           $link .= DEFAULT_GITLAB;
           # Yeah, this won't show the expected results if we're viewing ?branch=2020Q3, but close enough.
@@ -1146,7 +1146,7 @@ class port_display {
 
 			if ($port->homepage && ($this->ShowHomepageLink || $this->ShowEverything)) {
 				$HTML .= '<a HREF="' . _forDisplay($port->homepage) . '" TITLE="Homepage for this port">' . freshports_Homepage_Icon() . '</a>';
-				$HTML .= ICON_SEPARATOR;
+				$HTML .= '&nbsp;&nbsp;&nbsp;&nbsp;';
 			}
 
 			if ($this->ShowChangesLink || $this->ShowEverything) {

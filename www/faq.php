@@ -245,7 +245,7 @@ down you must read to find something you didn't already know.</P>
 	There are a few symbols you will see in this website.
 
 	<P id="fallout"><?php echo freshports_Fallout_Icon(); ?>
-		Fallout: a link to search the pkg-fallout archives for this port.</P>
+		Fallout: a link to search the <a href="https://lists.freebsd.org/archives/freebsd-pkg-fallout/">freebsd-pkg-fallout archives</a>. If the resulting fallout list is empty: the port may have been skipped due to fallout of a related port.</P>
 
 	<P id="repology"><?php echo freshports_Repology_Icon(); ?>
 		Repology: a link to search the Repology packaging hub for this port.</P>

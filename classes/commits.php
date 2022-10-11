@@ -138,7 +138,7 @@ class Commits {
         # The goal of sorting by message_id is to keep together all ports for a given commit keep.
         $sql .= "
    ORDER BY 1 desc,
-            CL.message_id,
+            CL.id desc,
             category,
             port";
 
@@ -233,7 +233,7 @@ class Commits {
                         AND clb.commit_log_id = cl.id)";
         }
         $sql .= "
-     ORDER BY CL.commit_date DESC
+     ORDER BY CL.commit_date DESC, CL.id DESC
         LIMIT " . pg_escape_string($this->dbh, $Limit) . ") AS CL ";
 
         $sql .= "LEFT OUTER JOIN repo R on CL.repo_id = R.id, categories C, ports P LEFT OUTER JOIN ports_vulnerable PV ON P.id = PV.port_id, element E ";
@@ -256,7 +256,7 @@ class Commits {
         AND C.id     = P.category_id
         AND E.id        = P.element_id
    ORDER BY 1 desc,
-            CL.message_id,
+            CL.id DESC,
             category,
             port";
 

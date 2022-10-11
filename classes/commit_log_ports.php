@@ -116,7 +116,7 @@ class Commit_Log_Ports {
             CLP.commit_log_id = STF.commit_log_id
     WHERE CL.id       = CLP.commit_log_id
       AND CLP.port_id = " . pg_escape_string($this->dbh, $port_id) . "
- ORDER BY CL.commit_date desc ";
+ ORDER BY CL.commit_date desc, CL.id desc ";
  
  		if ($this->Limit) {
  			$sql .= ' LIMIT ' . pg_escape_string($this->dbh, $this->Limit);

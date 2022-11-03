@@ -433,7 +433,7 @@ make: fatal errors encountered -- cannot continue
 
 	<TR><TD class="textcontent">
 	<P>
-	Yes.  Read <a href="/newsfeeds.php">all about it</a>!
+	Yes.  Read <a href="/backend/newsfeeds.php">all about it</a>!
 
 	</TD></TR>
 <TR id="fp-site-mainpage">

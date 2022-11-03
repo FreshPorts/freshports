@@ -323,7 +323,7 @@ class port_display {
                 # We could search for the last known subversion commit
                 # but we aren't. Yet.
                 # Instead, we show them a strikethrough.
-                $link .= '/commit/' . htmlentities($commit->commit_hash_short);
+                $link .= '/commit/?id=' . htmlentities($commit->commit_hash_short);
               } else {
                 # For subversion, we link to the revision one less
                 # so that the user has something to see.

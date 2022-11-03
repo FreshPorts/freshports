@@ -406,7 +406,7 @@
 				} else {
 					$Like = 'ILIKE';
 				}
-				if ($Debug) echo "invoking WildCardQuery for match\n";
+				if ($Debug) echo 'invoking WildCardQuery for match<br>';
 				$sqlUserSpecifiedCondition = WildCardQuery($db, $stype, $Like, $WildCardMatch);
 				break;
 
@@ -456,7 +456,7 @@
 
 		} # not OUTPUT_FORMAT_DEPENDS
 
-		if ($Debug && IsSet($sqlUserSpecifiedCondition)) echo "at line " . __LINE__ . " sqlUserSpecifiedCondition='$sqlUserSpecifiedCondition'<br>";
+		if ($Debug && IsSet($sqlUserSpecifiedCondition)) echo "at line " . __LINE__ . " sqlUserSpecifiedCondition is: $sqlUserSpecifiedCondition<br>";
 
 		#
 		# include/exclude deleted ports
@@ -711,6 +711,7 @@
 				case SEARCH_FIELD_PKG_PLIST:
 					require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports_by_pkg_plist.php');
 					$Ports = new PortsByPkgPlist($db);
+					$Ports->setDebug($Debug);
 					$Ports->PkgPlistSet($query);
 					$Ports->IncludeDeletedPorts($deleted == INCLUDE_DELETED_PORTS);
 					break;

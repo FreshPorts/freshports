@@ -17,8 +17,6 @@ class PortsByPkgPlist extends Port {
 	var $Limit  = 0;
 	var $Offset = 0;
 
-	var $Debug = 1;
-	
 	var $LocalResult = null;
 	
 	const WITH_CLAUSE = 'WITH short_list AS MATERIALIZED (
@@ -43,10 +41,10 @@ class PortsByPkgPlist extends Port {
 	function IncludeDeletedPorts($IncludeDeletedPorts = false) {
 		if ($IncludeDeletedPorts) {
 			$this->PortStatus = PORT_STATUS_DELETED;
-			if ($this->Debug) echo 'deleted';
+			if (parent::getDebug()) echo 'deleted';
 		} else {
 			$this->PortStatus = PORT_STATUS_ACTIVE;
-			if ($this->Debug) echo 'active';
+			if (parent::getDebug()) echo 'active';
 		}
 	}
 
@@ -55,7 +53,8 @@ class PortsByPkgPlist extends Port {
 		
 		$sql = $this::WITH_CLAUSE . 'select count(*) as count from short_list, ports_active P, element_pathname EP WHERE P.id = short_list.port_id
    AND P.element_id = EP.element_id and EP.pathname like \'/ports/head/%\'';
-		if ($this->Debug) echo "<pre>$sql</pre> with <pre>" . htmlentities($this->Query) . '</pre>";
+		if ($this->getDebug()) echo "<br>sql is <br>$sql<br>";
+		if ($this->getDebug()) "query is '" . htmlentities($this->Query) . "'";
 		$result = pg_query_params($this->dbh, $sql, array(pg_escape_string($this->dbh, $this->Query)));
 		if ($result) {
 			$myrow = pg_fetch_array($result);
@@ -120,11 +119,11 @@ class PortsByPkgPlist extends Port {
 			$sql .= " OFFSET " . $this->Offset;
 		}
 
-		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
+		if (parent::getDebug()) echo '<pre>' . $sql . '</pre>';
 		$this->LocalResult = pg_query_params($this->dbh, $sql, array(pg_escape_string($this->dbh, $this->Query)));
 		if ($this->LocalResult) {
 			$numrows = pg_num_rows($this->LocalResult);
-			if ($this->Debug) echo "That would give us $numrows rows";
+			if (parent::getDebug()) echo "That would give us $numrows rows";
 		} else {
 			$numrows = -1;
 			echo 'pg_exec failed: ' . "<pre>$sql</pre>";

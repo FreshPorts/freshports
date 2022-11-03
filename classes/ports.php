@@ -223,6 +223,14 @@ class Port {
 		$this->ConflictMatches();
 	}
 
+	function setDebug($Debug) {
+		$this->Debug = $Debug;
+	}
+
+	function getDebug() {
+		return $this->Debug;
+	}
+
 	function FetchByElementID($element_id, $UserID = 0) {
 
 		# fetch a single port based on element_id.

@@ -678,3 +678,12 @@ td.version:hover::after, td.version:focus::after {
     border-style: none;
     color: white;
 }
+
+
+.fallout {
+    width: 32px;
+    height: 32px;
+    background-image: url(fallout.svg);
+    background-size: 100%;
+    background-repeat: no-repeat;
+}

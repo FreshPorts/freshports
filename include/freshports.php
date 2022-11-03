@@ -339,7 +339,7 @@ function freshports_IndexFollow($URI) {
 }
 
 function freshports_Fallout_Icon($Title = FALLOUT_TITLE, $size = DEFAULT_ICON_SIZE) {
-	return '<img class="icon" src="/images/fallout.svg" alt="pkg-fallout" title="pkg-fallout" width="' . $size . '" height="' . $size . '">';
+	return '<img class="icon fallout" src="/images/fallout.svg" alt="pkg-fallout" title="pkg-fallout" width="' . $size . '" height="' . $size . '">';
 }
 
 function freshports_Codeberg_Icon($Title = 'Codeberg', $size = DEFAULT_ICON_SIZE) {

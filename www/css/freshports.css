@@ -683,7 +683,7 @@ td.version:hover::after, td.version:focus::after {
 .fallout {
     width: 32px;
     height: 32px;
-    background-image: url(fallout.svg);
+    background-image: url(/images/fallout.svg);
     background-size: 100%;
     background-repeat: no-repeat;
 }

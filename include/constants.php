@@ -217,3 +217,5 @@ if (!defined('PW_HASH_COST'))   define('PW_HASH_COST', 14);
 define('HTML_DOCTYPE', '<!DOCTYPE html>');
 
 define('ICON_SEPARATOR', ' &#166; ');
+
+define('VUXML_LATEST', HTML_DIRECTORY . '/vuln-latest.html');

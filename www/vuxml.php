@@ -15,8 +15,6 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 	define('VUXMLURL',     'https://www.vuxml.org/freebsd/');
-	define('VUXMLREVISION', HTML_DIRECTORY . '/vuxml_revision');
-
 
 	if (IsSet($_REQUEST['vid'])) {
 		$vid = pg_escape_string($db, $_REQUEST['vid']);
@@ -39,13 +37,10 @@ This page displays <a href="<?php echo VUXMLURL; ?>">vulnerability information</
 </p>
 
 <?php
-	if (file_exists(VUXMLREVISION) && is_readable(VUXMLREVISION)) {
-		echo '<p>The last <a href="/security/vuxml/vuln.xml">vuln.xml</a> file processed by FreshPorts is:</p>';
-		echo "<blockquote><pre>\n";
-		require_once(VUXMLREVISION);
-		echo "</pre></blockquote>\n";
+	if (file_exists(VUXML_LATEST) && is_readable(VUXML_LATEST)) {
+		echo '<p>The VUXML data was last processed by FreshPorts on ' . date('Y-m-d H:i:s T', filemtime(VUXML_LATEST)) . '</p>';
 	} else {
-		echo '<p><b> * * * We have no information on the latest commit to <a href="/security/vuxml/vuln.xml">vuln.xml</a>. This should never happen. * * * </b></p>';
+		echo '<p><b> * * * We have no information on when we last processed VUXML. This should never happen. * * * </b></p>';
 	}
 
 	if (!IsSet($_REQUEST['list'])) {

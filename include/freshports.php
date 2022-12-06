@@ -2033,18 +2033,18 @@ function freshports_SideBar() {
 </table>
 
 ';
-	if (file_exists(HTML_DIRECTORY . '/vuln-latest.html')) {
+	if (file_exists(VUXML_LATEST)) {
 $HTML .= '<br>
 <table class="bordered">
 	<tr>
 		<th class="accent">Latest Vulnerabilities</th>
 	</tr>
 	<tr><td>
-	' . file_get_contents(HTML_DIRECTORY . '/vuln-latest.html') . "\n" . '
+	' . file_get_contents(VUXML_LATEST) . "\n" . '
 	</td></tr>
 	<tr><td>
 		<p><sup>*</sup> - modified, not new</p><p><a href="/vuxml.php?all">All vulnerabilities</a></p>
-		<p>Last updated:<br>' . date('Y-m-d H:i:s', filemtime(HTML_DIRECTORY . '/vuln-latest.html')) . '</p>
+		<p>Last updated:<br>' . date('Y-m-d H:i:s T', filemtime(VUXML_LATEST)) . '</p>
 	</td></tr>
 </table>
 <br>';

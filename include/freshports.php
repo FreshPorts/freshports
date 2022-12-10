@@ -2044,7 +2044,7 @@ $HTML .= '<br>
 	</td></tr>
 	<tr><td>
 		<p><sup>*</sup> - modified, not new</p><p><a href="/vuxml.php?all">All vulnerabilities</a></p>
-		<p>Last updated:<br>' . date('Y-m-d H:i:s T', filemtime(VUXML_LATEST)) . '</p>
+		<p>Last processed:<br>' . date('Y-m-d H:i:s T', filemtime(VUXML_LATEST)) . '</p>
 	</td></tr>
 </table>
 <br>';

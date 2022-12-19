@@ -1434,7 +1434,7 @@ class port_display {
 
 		if ($this->ShowDepends || $this->ShowEverything) {
 			$HTML .= "</dl>\n<hr><dl>\n";
-			if ($port->depends_build || $port->depends_run || $port->depends_lib) {
+			if ($port->depends_build || $port->depends_run || $port->depends_lib || $port->fetch_depends || $port->patch_depends || $port->extract_depends) {
 				$HTML .= '<dt class="h2" id="dependencies">Dependencies</dt>';
 				$HTML .= '<dt class="notice">NOTE: FreshPorts displays only information on required and default dependencies.  Optional dependencies are not covered.</dt>';
 			}
@@ -1475,7 +1475,7 @@ class port_display {
 				$HTML .= "\n</ol></dd>\n";
 			}
 
-			if (!($port->depends_build || $port->depends_run || $port->depends_lib)) {
+			if (!($port->depends_build || $port->depends_run || $port->depends_lib || $port->fetch_depends || $port->patch_depends || $port->extract_depends)) {
 				$HTML .= '<dt class="h3" id="dependencies">This port has no dependencies.</dt>';
 			}
 

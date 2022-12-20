@@ -841,6 +841,7 @@ now that the Master has been upgraded.
 	<li>pkg-plist</li>
 	<li>dependencies</li>
 	<li>requiredbuild</li>
+	<li>requiredtest</li>
 	<li>requiredrun</li>
 	<li>requiredlib</li>
 	<li>requiredfetch</li>

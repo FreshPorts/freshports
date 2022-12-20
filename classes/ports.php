@@ -55,6 +55,7 @@ class Port {
 	var $fetch_depends;
 	var $extract_depends;
 	var $patch_depends;
+	var $test_depends;
 	var $uses;
 	var $pkgmessage;
 	var $distinfo;
@@ -168,6 +169,7 @@ class Port {
 		$this->fetch_depends        = $myrow["fetch_depends"]        ?? null;
 		$this->extract_depends      = $myrow["extract_depends"]      ?? null;
 		$this->patch_depends        = $myrow["patch_depends"]        ?? null;
+		$this->test_depends         = $myrow["test_depends"]         ?? null;
 		$this->uses                 = $myrow["uses"]                 ?? null;
 		$this->pkgmessage           = $myrow["pkgmessage"]           ?? null;
 		$this->distinfo             = $myrow["distinfo"]             ?? null;
@@ -281,6 +283,7 @@ select ports.id,
        ports.fetch_depends,
        ports.extract_depends,
        ports.patch_depends,
+       ports.test_depends,
        ports.uses,
        ports.pkgmessage,
        ports.distinfo,
@@ -406,6 +409,7 @@ select ports.id,
 		               ports.fetch_depends,
 		               ports.extract_depends,
 		               ports.patch_depends,
+		               ports.test_depends,
 		               ports.uses,
 		               ports.pkgmessage,
 		               ports.distinfo,
@@ -551,6 +555,7 @@ SELECT P.*, element.name    as port
         ports.fetch_depends,
         ports.extract_depends,
         ports.patch_depends,
+        ports.test_depends,
         ports.uses,
         ports.pkgmessage,
         ports.distinfo,

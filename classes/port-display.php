@@ -1434,7 +1434,7 @@ class port_display {
 
 		if ($this->ShowDepends || $this->ShowEverything) {
 			$HTML .= "</dl>\n<hr><dl>\n";
-			if ($port->depends_build || $port->depends_run || $port->depends_lib || $port->fetch_depends || $port->patch_depends || $port->extract_depends) {
+			if ($port->depends_build || $port->depends_run || $port->depends_lib || $port->fetch_depends || $port->patch_depends || $port->extract_depends || $port->test_depends) {
 				$HTML .= '<dt class="h2" id="dependencies">Dependencies</dt>';
 				$HTML .= '<dt class="notice">NOTE: FreshPorts displays only information on required and default dependencies.  Optional dependencies are not covered.</dt>';
 			}
@@ -1442,6 +1442,12 @@ class port_display {
 			if ($port->depends_build) {
 				$HTML .= '<dt class="required" id="requiredbuild">Build dependencies:</dt><dd>' . "\n" . '<ol class="required" id="requiredtobuild">';
 				$HTML .= freshports_depends_links($this->db, $port->depends_build, $this->Branch);
+				$HTML .= "\n</ol></dd>\n";
+			}
+
+			if ($port->test_depends) {
+				$HTML .= '<dt class="required" id="requiredtest">Test dependencies:</dt><dd>' . "\n" . '<ol class="required" id="requiredtotest">';
+				$HTML .= freshports_depends_links($this->db, $port->test_depends, $this->Branch);
 				$HTML .= "\n</ol></dd>\n";
 			}
 

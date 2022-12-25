@@ -28,7 +28,7 @@ class DisplayCommit {
 	var $FlaggedCommits;
 	
 	var $ShowAllPorts     = FALSE;	# by default we show only the first few ports.
-	var $ShowEntireCommit = 0;		# by default we show only the first few lines of the commit message.
+	var $ShowEntireCommit = 0;	# by default we show only the first few lines of the commit message.
 	
 	var $ShowLinkToSanityTestFailure = FALSE;
 

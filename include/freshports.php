@@ -900,7 +900,12 @@ GLOBAL $FreshPortsLogoHeight;
 	}
 	$HTML .= '"><img id="fp-logo" src="' . $FreshPortsLogo . '" alt="' . $FreshPortsName . ' -- ' . $FreshPortsSlogan . '" title="' . $FreshPortsName . ' -- ' . $FreshPortsSlogan . '" width="' . $FreshPortsLogoWidth . '" height="' . $FreshPortsLogoHeight . '"></a>
 ';
+    define('HEAD_FILE', $_SERVER['DOCUMENT_ROOT'] . '/../.git/HEAD');
 
+    if (file_exists(HEAD_FILE)) {
+      # taken from https://stackoverflow.com/questions/7447472/how-could-i-display-the-current-git-branch-name-at-the-top-of-the-page-of-my-de
+      $HTML .= '<br>Branch is <span class="file">' . implode('/', array_slice(explode('/', file_get_contents(HEAD_FILE)), 2)) . '</span>';
+    }
     if (defined('SHOW_ANIMATED_BUG') && SHOW_ANIMATED_BUG)
     {
 	  $HTML .= '<img src="/images/notbug.gif" width="56" height="50" alt="notbug" title="notbug">';

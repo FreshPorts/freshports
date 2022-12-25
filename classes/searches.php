@@ -10,7 +10,6 @@ define('FRESHPORTS_SEARCH_METHOD_Match',   'match');
 define('FRESHPORTS_SEARCH_METHOD_Exact',   'exact');
 
 define('FRESHPORTS_SEARCH_STYPE_Package',           'package');
-define('FRESHPORTS_SEARCH_STYPE_LatestLink',        'latest_link');
 
 
 define('FRESHPORTS_SEARCH_DEFAULT_Num',             10);

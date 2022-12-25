@@ -38,8 +38,6 @@ class Port {
 	var $date_added;
 	var $categories;
 	var $master_port;
-	var $latest_link;
-	var $no_latest_link;
 	var $no_package;
 	var $package_name;
 	var $restricted;
@@ -152,8 +150,6 @@ class Port {
 		$this->date_added           = $myrow["date_added"]           ?? null;
 		$this->categories           = $myrow["categories"]           ?? null;
 		$this->master_port          = $myrow["master_port"]          ?? null;
-		$this->latest_link          = $myrow["latest_link"]          ?? null;
-		$this->no_latest_link       = $myrow["no_latest_link"]       ?? null;
 		$this->no_package           = $myrow["no_package"]           ?? null;
 		$this->package_name         = $myrow["package_name"];
 		$this->restricted           = $myrow["restricted"]           ?? null;
@@ -266,8 +262,6 @@ select ports.id,
        ports.deprecated, 
        ports.ignore, 
        ports.master_port,
-       ports.latest_link,
-       ports.no_latest_link,
        ports.no_package,
        ports.package_name,
        ports.restricted,
@@ -392,8 +386,6 @@ select ports.id,
 		               ports.ignore, 
 		               to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added,
 		               ports.master_port,
-		               ports.latest_link,
-		               ports.no_latest_link,
 		               ports.no_package,
 		               ports.package_name,
 		               ports.restricted,
@@ -538,8 +530,6 @@ SELECT P.*, element.name    as port
         ports.ignore,
         to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added,
         ports.master_port,
-        ports.latest_link,
-        ports.no_latest_link,
         ports.no_package,
         ports.package_name,
         ports.restricted,

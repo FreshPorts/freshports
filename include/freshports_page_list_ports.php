@@ -208,8 +208,7 @@ SELECT ports.id,
        R.repository,
        R.repo_hostname,
        null AS epoch,
-       null AS onwatchlist,
-       latest_link ";
+       null AS onwatchlist";
 
 		if ($UserID) {
 			$this->_sql .= ",

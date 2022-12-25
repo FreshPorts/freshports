@@ -29,7 +29,7 @@
 # * watch-list-maintenance.php
 # * watch-list.php
 #
-define('IN_MAINTENCE_MODE', true);
+define('IN_MAINTENANCE_MODE', true);
 
 # if defined, and non-empty, parse out the UCL messages
 define('PKG_MESSAGE_UCL', 1);

@@ -21,7 +21,7 @@ class SystemStatus {
   }
   
   function InMaintenanceMode() {
-    return defined('IN_MAINTENCE_MODE') && IN_MAINTENCE_MODE;
+    return defined('IN_MAINTENANCE_MODE') && IN_MAINTENANCE_MODE;
   }
 
   function LoginsAreAllowed() {

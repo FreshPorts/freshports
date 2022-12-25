@@ -17,7 +17,7 @@
 		exit;  /* Make sure that code below does not get executed when we redirect. */
 	}
 
-	if (IN_MAINTENCE_MODE) {
+	if (IN_MAINTENANCE_MODE) {
                 header('Location: /' . MAINTENANCE_PAGE, TRUE, 307);
 	}
 

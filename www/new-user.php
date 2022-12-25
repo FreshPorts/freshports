@@ -14,7 +14,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
 
-	if (IN_MAINTENCE_MODE) {
+	if (IN_MAINTENANCE_MODE) {
                 header('Location: /' . MAINTENANCE_PAGE, TRUE, 307);
 	}
 

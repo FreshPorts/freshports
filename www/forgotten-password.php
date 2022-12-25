@@ -11,7 +11,7 @@
 	require_once('/usr/local/share/phpmailer/PHPMailer.php');
 	require_once('/usr/local/share/phpmailer/SMTP.php');
 
-	if (IN_MAINTENCE_MODE) {
+	if (IN_MAINTENANCE_MODE) {
                 header('Location: /' . MAINTENANCE_PAGE, TRUE, 307);
 	}
 

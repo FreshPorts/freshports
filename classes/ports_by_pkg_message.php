@@ -21,15 +21,15 @@ class PortsByPkgMessage extends Port {
 	
 	var $LocalResult = null;
 	
-	const WITH_CLAUSE = "WITH short_list AS MATERIALIZED (
+	const WITH_CLAUSE = 'WITH short_list AS MATERIALIZED (
     SELECT
         DISTINCT id as port_id
     FROM
         ports
     WHERE
-        pkgmessage @@ websearch_to_tsquery('english', $1) OR
-        pkgmessage @@ websearch_to_tsquery('simple',  $1)
-)";
+        pkgmessage @@ websearch_to_tsquery(\'english\', $1) OR
+        pkgmessage @@ websearch_to_tsquery(\'simple\',  $1)
+)';
 
 	function __construct($dbh) {
 		parent::__construct($dbh);

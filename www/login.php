@@ -14,8 +14,13 @@
 
    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user.php');
 
+if (IN_MAINTENANCE_MODE) {
+   header('Location: /' . MAINTENANCE_PAGE, TRUE, 307);
+}
+
 if (defined('NO_LOGIN')) {
    ob_start();
+
    header( 'Location: /' );
    ob_end_flush();
    exit;

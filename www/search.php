@@ -84,6 +84,7 @@
 	define('SEARCH_FIELD_PKG_MESSAGE',          'pkg-message');
 	define('SEARCH_FIELD_PKG_PLIST',            'pkg-plist');
 	define('SEARCH_FIELD_SHORTDESCRIPTION',     'shortdescription');
+	define('SEARCH_FIELD_USES',                 'uses');
 
 
 	$SearchTypeToFieldMap = array(
@@ -106,6 +107,7 @@
 	    SEARCH_FIELD_PKG_MESSAGE          => 'P.pkgmessage',
 	    SEARCH_FIELD_PATHNAME             => 'EP.pathname',
 	    SEARCH_FIELD_SHORTDESCRIPTION     => 'P.short_description',
+	    SEARCH_FIELD_USES                 => 'P.uses',
 	);
 
 	$sqlExtraFields = ''; # will hold extra fields we need, such as watch list
@@ -247,6 +249,7 @@
 		case SEARCH_FIELD_PKG_PLIST:
 		case SEARCH_FIELD_PKG_MESSAGE:
 		case SEARCH_FIELD_SHORTDESCRIPTION:
+		case SEARCH_FIELD_USES:
 	          # all is well.  we have a valid value.
 	          break;
 
@@ -707,6 +710,7 @@
 
 		  case SEARCH_FIELD_PKG_PLIST:
 		  case SEARCH_FIELD_PKG_MESSAGE:
+		  case SEARCH_FIELD_USES:
 			switch ($stype) {
 				case SEARCH_FIELD_PKG_PLIST:
 					require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports_by_pkg_plist.php');
@@ -720,6 +724,13 @@
 					require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports_by_pkg_message.php');
 					$Ports = new PortsByPkgMessage($db);
 					$Ports->PkgMessageSet($query);
+					$Ports->IncludeDeletedPorts($deleted == INCLUDE_DELETED_PORTS);
+					break;
+
+				case SEARCH_FIELD_USES:
+					require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports_by_uses.php');
+					$Ports = new PortsByUses($db);
+					$Ports->UsesSet($query);
 					$Ports->IncludeDeletedPorts($deleted == INCLUDE_DELETED_PORTS);
 					break;
 			}
@@ -946,6 +957,7 @@ JOIN element_pathname EP on E.id = EP.element_id
 		<OPTION VALUE="<?php echo SEARCH_FIELD_NAME                 . '"'; if ($stype == SEARCH_FIELD_NAME)                 echo ' SELECTED'; ?>>Port Name</OPTION>
 		<OPTION VALUE="<?php echo SEARCH_FIELD_SHORTDESCRIPTION     . '"'; if ($stype == SEARCH_FIELD_SHORTDESCRIPTION)     echo ' SELECTED'; ?>>Short Description</OPTION>
 		<OPTION VALUE="<?php echo SEARCH_FIELD_PATHNAME             . '"'; if ($stype == SEARCH_FIELD_PATHNAME)             echo ' SELECTED'; ?>>Under a pathname</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_USES                 . '"'; if ($stype == SEARCH_FIELD_USES)                 echo ' SELECTED'; ?>>USES</OPTION>
 	</SELECT>
 
 	<SELECT name=method>
@@ -1074,7 +1086,7 @@ Special searches:
 		if (IsSet($NumFetches) && $NumFetches == 0) {
 		if ($Debug) echo 'nothing found';
 		   if ($output_format == OUTPUT_FORMAT_HTML) {
-		     $HTML .= " no results found<br>\n";
+		     $HTML .= " no results found<br>\n"
 		   }
 		} else {
 		      if ($stype == 'committer' || $stype == 'commitmessage' || $stype == 'tree') {

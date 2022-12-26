@@ -1086,7 +1086,7 @@ Special searches:
 		if (IsSet($NumFetches) && $NumFetches == 0) {
 		if ($Debug) echo 'nothing found';
 		   if ($output_format == OUTPUT_FORMAT_HTML) {
-		     $HTML .= " no results found<br>\n"
+		     $HTML .= " no results found<br>\n";
 		   }
 		} else {
 		      if ($stype == 'committer' || $stype == 'commitmessage' || $stype == 'tree') {

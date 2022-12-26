@@ -1,4 +1,4 @@
-<?php
+?php
 	#
 	# $Id: search.php,v 1.15 2013-04-08 12:15:52 dan Exp $
 	#
@@ -1081,12 +1081,16 @@ Special searches:
 		}
 
 	}  // end of putting out HTML output
+
+	if ($Debug) echo 'in debug mode';
+
+	if ($Debug && $WeHaveToSearch) echo ' we have to search';
 	
 	if ($WeHaveToSearch) {
 		if (IsSet($NumFetches) && $NumFetches == 0) {
-		if ($Debug) echo 'nothing found';
+		   if ($Debug) echo 'nothing found';
 		   if ($output_format == OUTPUT_FORMAT_HTML) {
-		     $HTML .= " no results found<br>\n"
+		     $HTML .= " <strong style=\"color:var(--beastie-red)\">No results found</strong><br>\n";
 		   }
 		} else {
 		      if ($stype == 'committer' || $stype == 'commitmessage' || $stype == 'tree') {
@@ -1198,6 +1202,8 @@ Special searches:
 		} /* NumFetches  != 0 */
 
 		if ($output_format == OUTPUT_FORMAT_HTML) {
+			echo $HTML;
+
 ?>
 </table>
 

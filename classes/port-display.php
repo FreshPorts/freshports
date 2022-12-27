@@ -134,8 +134,12 @@ class port_display {
 					$types = array($part->type);
 				}
 
+				#
 				# Build the action phrase (install, remove, etc)
-				$Actions .= 'For ' . join(' or ', $types);
+				# I think the orginal intention of doing $Actions .= was catering
+				# for the same message for multiple actions (e.g. for install, upgrade)
+				# 
+				$Actions = 'For ' . join(' or ', $types);
 
 				if (is_array($part->type)) {
 					$HTML .= "<dt>$Actions:</dt>" . '<dd class="like-pre">' . htmlspecialchars($part->message) . '</dd>';

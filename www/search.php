@@ -70,7 +70,6 @@
 	define('SEARCH_FIELD_DEPENDS_BUILD',        'depends_build');
 	define('SEARCH_FIELD_DEPENDS_LIB',          'depends_lib');
 	define('SEARCH_FIELD_DEPENDS_RUN',          'depends_run');
-	define('SEARCH_FIELD_LATEST_LINK',          'latest_link');
 	define('SEARCH_FIELD_LONGDESCRIPTION',      'longdescription');
 	define('SEARCH_FIELD_LICENSE_PERMS',        'license_perms');
 	define('SEARCH_FIELD_LICENSE_RESTRICTED',   'license_restricted');
@@ -94,7 +93,6 @@
 	    SEARCH_FIELD_DEPENDS_BUILD        => 'P.depends_build',
 	    SEARCH_FIELD_DEPENDS_LIB          => 'P.depends_lib',
 	    SEARCH_FIELD_DEPENDS_RUN          => 'P.depends_run',
-	    SEARCH_FIELD_LATEST_LINK          => 'P.latest_link',
 	    SEARCH_FIELD_LONGDESCRIPTION      => 'P.long_description',
 	    SEARCH_FIELD_LICENSE_PERMS        => 'P.license_perms',
 	    SEARCH_FIELD_LICENSE_RESTRICTED   => 'P.license_restricted',
@@ -236,7 +234,6 @@
 		case SEARCH_FIELD_DEPENDS_BUILD:
 		case SEARCH_FIELD_DEPENDS_LIB:
 		case SEARCH_FIELD_DEPENDS_RUN:
-		case SEARCH_FIELD_LATEST_LINK:
 		case SEARCH_FIELD_LONGDESCRIPTION:
 		case SEARCH_FIELD_LICENSE_PERMS:
 		case SEARCH_FIELD_LICENSE_RESTRICTED:
@@ -943,7 +940,6 @@ JOIN element_pathname EP on E.id = EP.element_id
 		<OPTION VALUE="<?php echo SEARCH_FIELD_DEPENDS_LIB          . '"'; if ($stype == SEARCH_FIELD_DEPENDS_LIB)          echo ' SELECTED'; ?>>Depends Lib</OPTION>
 		<OPTION VALUE="<?php echo SEARCH_FIELD_DEPENDS_RUN          . '"'; if ($stype == SEARCH_FIELD_DEPENDS_RUN)          echo ' SELECTED'; ?>>Depends Run</OPTION>
 		<OPTION VALUE="<?php echo SEARCH_FIELD_DEPENDS_ALL          . '"'; if ($stype == SEARCH_FIELD_DEPENDS_ALL)          echo ' SELECTED'; ?>>Depends Build/Lib/Run</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_LATEST_LINK          . '"'; if ($stype == SEARCH_FIELD_LATEST_LINK)          echo ' SELECTED'; ?>>Latest Link</OPTION>
 		<OPTION VALUE="<?php echo SEARCH_FIELD_LONGDESCRIPTION      . '"'; if ($stype == SEARCH_FIELD_LONGDESCRIPTION)      echo ' SELECTED'; ?>>Long Description</OPTION>
 		<OPTION VALUE="<?php echo SEARCH_FIELD_LICENSE_PERMS        . '"'; if ($stype == SEARCH_FIELD_LICENSE_PERMS)        echo ' SELECTED'; ?>>LICENSE_PERMS</OPTION>
 		<OPTION VALUE="<?php echo SEARCH_FIELD_LICENSE_RESTRICTED   . '"'; if ($stype == SEARCH_FIELD_LICENSE_RESTRICTED)   echo ' SELECTED'; ?>>_LICENSE_RESTRICTED</OPTION>

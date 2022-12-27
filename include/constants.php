@@ -187,7 +187,6 @@ const SEARCH_SELECT_FIELD = '
          PV.past    as vulnerable_past,
          P.forbidden,
          P.master_port,
-         P.latest_link,
          P.no_package,
          P.package_name,
          P.restricted,

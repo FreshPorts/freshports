@@ -25,9 +25,9 @@ class PortsByPkgPlist extends Port {
     FROM
         generate_plist
     WHERE
-        textsearchable_index_col  @@ websearch_to_tsquery($1)
-     OR textsearchable_index_col2 @@ websearch_to_tsquery($1)
-     OR textsearchable_index_col3 @@ websearch_to_tsquery($1)
+        textsearchable_index_col  @@ websearch_to_tsquery(\'english\', $1)
+     OR textsearchable_index_col2 @@ websearch_to_tsquery(\'english\', $1)
+     OR textsearchable_index_col3 @@ websearch_to_tsquery(\'english\', $1)
 )';
 
 	function __construct($dbh) {

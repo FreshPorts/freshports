@@ -360,7 +360,10 @@ make: fatal errors encountered -- cannot continue
 		<a href="https://www.vuxml.org/freebsd/">VuXML</a> vulnerability. Click icon for details.</P>
 
 	<P id="vuxml-past"><?php echo freshports_VuXML_Icon_Faded(); ?>
-		A past <a href="https://www.vuxml.org/freebsd/">VuXML</a> vulnerability. Click icon for details.</P>
+		A past <a href="https://www.vuxml.org/freebsd/">VuXML</a> vulnerability. Click icon for details. 
+		NOTE: A feature of security/vuxml is it names the packages which a given vuln affects. If
+		the port changes its package name, past vulnerabilities won't show up in FreshPorts.
+		That's because FreshPorts does not store historical package names.</P>
 
 	<P id="restricted"><?php echo freshports_Restricted_Icon(); ?>
 		This port has some restrictions on it.</P>

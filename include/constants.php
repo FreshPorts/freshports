@@ -219,5 +219,5 @@ define('ICON_SEPARATOR', ' &#166; ');
 
 define('VUXML_LATEST', HTML_DIRECTORY . '/vuln-latest.html');
 
-
-define('LAST_SUBVERSION_COMMIT', '2022-10-25 18:42:09');
+# re https://cgit.freebsd.org/ports/commit/?id=4010f7bbc03638d71781ce091bf40a0907fa12fe
+define('LAST_SUBVERSION_COMMIT', '2021-03-31 03:12:20');

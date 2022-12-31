@@ -218,3 +218,6 @@ define('HTML_DOCTYPE', '<!DOCTYPE html>');
 define('ICON_SEPARATOR', ' &#166; ');
 
 define('VUXML_LATEST', HTML_DIRECTORY . '/vuln-latest.html');
+
+
+define('LAST_SUBVERSION_COMMIT', '2022-10-25 18:42:09');

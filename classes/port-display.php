@@ -288,8 +288,15 @@ class port_display {
           if (!empty($link)) {
             $link = '<a href="' . $link . '">' . freshports_Subversion_Icon($link_title) . '</a>';
           } else {
-            $link = '<del>SVNWeb</del>';
+            $link = $this->link_to_repo_svn_greyed();
           }
+
+          return $link;
+	}
+
+	function link_to_repo_svn_greyed() {
+          $link_title = 'SVNWeb - no subversion history for this port';
+          $link = freshports_Subversion_Icon_Greyed($link_title);
 
           return $link;
 	}
@@ -1164,7 +1171,11 @@ class port_display {
 				$HTML .= ICON_SEPARATOR;
 				$HTML .= $this->_link_to_repo_git_gitlab();
 				$HTML .= ICON_SEPARATOR;
-				$HTML .= $this->link_to_repo_svn();
+				if (IsSet($port->{'date_added'}) && strtotime($port->{'date_added'}) < strtotime(LAST_SUBVERSION_COMMIT)) {
+					$HTML .= $this->link_to_repo_svn();
+				} else {
+					$HTML .= $this->link_to_repo_svn_greyed();
+				}
 			}
 
 			if ($port->PackageExists() && ($this->ShowPackageLink || $this->ShowEverything)) {

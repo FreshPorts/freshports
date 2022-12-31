@@ -350,6 +350,10 @@ function freshports_Subversion_Icon($Title = 'Subversion') {
 	return '<img class="icon" src="/images/subversion.png" alt="' . $Title . '" title="' . $Title . '" width="32" height="32">';
 }
 
+function freshports_Subversion_Icon_Greyed($Title = 'Subversion') {
+	return '<img class="icon" src="/images/subversion-greyed.png" alt="' . $Title . '" title="' . $Title . '" width="32" height="32">';
+}
+
 function freshports_Git_Icon($Title = 'git', $size = DEFAULT_ICON_SIZE) {
 	return '<img class="icon" src="/images/git.png" alt="' . $Title . '" title="' . $Title . '" width="' . $size . '" height="' . $size . '">';
 }

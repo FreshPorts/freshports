@@ -84,17 +84,32 @@ function url_shorten($Arr) {
 	return $Arr[1] . '">' . $URL . '</a>';
 }
 
+# I couldn't find a conditional which would allow optional use
+require_once($_SERVER['DOCUMENT_ROOT'] .  '/../vendor/autoload.php');
+use VStelmakh\UrlHighlight\UrlHighlight;
+
+
 function htmlify($String, $Process_PRs = false) {
+	#
+	# we have our old code and this new stuff: UrlHighlight
+	#
+	if (defined('USE_NEW_HTMLIFY') && USE_NEW_HTMLIFY) {
+		$urlHighlight = new UrlHighlight();
 
-#
-# URLs to test with: http://www.freshports.org/commit.php?message_id=200206232029.g5NKT1O13181@freefall.freebsd.org
-#
-	$del_t = array("&quot;", "&#34;", "&gt;", "&#62;", "\/\.\s","\)", ",\s", "\s", "$");
-	$delimiters = "(".join("|",$del_t).")";
+		$String = $urlHighlight->highlightUrls($String);
+	} else {
+		#
+		# URLs to test with: http://www.freshports.org/commit.php?message_id=200206232029.g5NKT1O13181@freefall.freebsd.org
+		#
+		$del_t = array("&quot;", "&#34;", "&gt;", "&#62;", "\/\.\s","\)", ",\s", "\s", "$");
+		$delimiters = "(".join("|",$del_t).")";
 
-	$String = preg_replace_callback("/((http|ftp|https):\/\/.*?)($delimiters)/i",                    'url2link',    $String);
-	$String = preg_replace_callback("/(<a href=(\"|')(http|ftp|https):\/\/.*?)(\">|'>)(.*?)<\/a>/i", 'url_shorten', $String);
-	$String = preg_replace_callback("/([\w+=\-.!]+@[\w\-]+(\.[\w\-]+)+)/",                           'mail2link',   $String);
+		$String = preg_replace_callback("/((http|ftp|https):\/\/.*?)($delimiters)/i",                    'url2link',    $String);
+		$String = preg_replace_callback("/(<a href=(\"|')(http|ftp|https):\/\/.*?)(\">|'>)(.*?)<\/a>/i", 'url_shorten', $String);
+		$String = preg_replace_callback("/([\w+=\-.!]+@[\w\-]+(\.[\w\-]+)+)/",                           'mail2link',   $String);
+	}
+
+	# this is our own code
 	if ($Process_PRs) {
 		$String = preg_replace_callback("/\bPR[:\#]?\s*(\d+)([,\s\nand]*(\d+))*/",                      'pr2link',     $String);
 		$String = preg_replace_callback("/[\w\s]+((advocacy|alpha|bin|conf|docs|gnu|i386|ia64|java|kern|misc|ports|powerpc|sparc64|standards|www)\/\d+)/", 'pr2link', $String);

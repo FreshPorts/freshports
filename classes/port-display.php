@@ -1410,7 +1410,9 @@ class port_display {
 
 			} else {
 				$HTML .= '<dt id="packages"><b>No package information for this port in our database</b></dt>';
-				$HTML .= '<dd>Sometimes this happens. Not all ports have packages.</dd>';
+				$HTML .= '<dd>Sometimes this happens. Not all ports have packages.';
+				if ($MarkedAsNew) $HTML .= ' This is doubly so for new ports, like this one.';
+				$HTML .= '</dd>';
 			}
 		}
 

@@ -1194,9 +1194,9 @@ Special searches:
 
 		} /* NumFetches  != 0 */
 
-		if ($output_format == OUTPUT_FORMAT_HTML) {
-		
 			echo $HTML;
+		if ($output_format == OUTPUT_FORMAT_HTML) {
+
 ?>
 </table>
 
@@ -1227,7 +1227,7 @@ document.search.query.focus();
 		} /* OUTPUT_FORMAT_HTML */
 
 		if ($output_format !== OUTPUT_FORMAT_PLAIN_TEXT) {
-?>
+?>¨
 </body>
 </html>
 

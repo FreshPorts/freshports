@@ -27,8 +27,8 @@ class PortsByPkgMessage extends Port {
     FROM
         ports
     WHERE
-        pkgmessage @@ websearch_to_tsquery(\'english\', $1) OR
-        pkgmessage @@ websearch_to_tsquery(\'simple\',  $1)
+        to_tsvector(\'english\'::regconfig, pkgmessage) @@ websearch_to_tsquery(\'english\', $1) OR
+        to_tsvector(\'english\'::regconfig, pkgmessage) @@ websearch_to_tsquery(\'simple\',  $1)
 )';
 
 	function __construct($dbh) {

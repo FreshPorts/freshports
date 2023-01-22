@@ -687,3 +687,6 @@ td.version:hover::after, td.version:focus::after {
     background-size: 100%;
     background-repeat: no-repeat;
 }
+
+
+.nomaintainer { color: blueviolet; font-size: 20px; }

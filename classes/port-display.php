@@ -975,7 +975,7 @@ class port_display {
 		// maintainer
 		if ($port->maintainer && ($this->ShowMaintainedBy || $this->ShowEverything)) {
 			if (strtolower($port->maintainer) == UNMAINTAINTED_ADDRESS) {
-				$HTML .= '<dt>There is no maintainer for this port.</dt>';
+				$HTML .= '<dt class="nomaintainer">There is no maintainer for this port.</dt>';
 				$HTML .= '<dd>Any concerns regarding this port should be directed to the FreeBSD ' .
 				         'Ports mailing list via ';
 				$HTML .= '<A HREF="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);

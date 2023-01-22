@@ -5,7 +5,7 @@
 	# Copyright (c) 1998-2007 DVL Software Limited
 	#
 
-define('HTMLIFY_PROCESS_PRS', true);
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.local.php');
 
 #
 # The code below was donated by Steve Kacsmark <stevek@guide.chi.il.us>.
@@ -86,17 +86,26 @@ function url_shorten($Arr) {
 
 # I couldn't find a conditional which would allow optional use
 require_once($_SERVER['DOCUMENT_ROOT'] .  '/../vendor/autoload.php');
+use VStelmakh\UrlHighlight\Encoder\HtmlSpecialcharsEncoder;
 use VStelmakh\UrlHighlight\UrlHighlight;
 
+require_once($_SERVER['DOCUMENT_ROOT'] .  '/../include/lib_autolink/lib_autolink.php');
 
-function htmlify($String, $Process_PRs = false) {
+function htmlify($input, $Process_PRs = false) {
 	#
 	# we have our old code and this new stuff: UrlHighlight
 	#
-	if (defined('USE_NEW_HTMLIFY') && USE_NEW_HTMLIFY) {
-		$urlHighlight = new UrlHighlight();
+	if (defined('HTMLIFY_USE_URL_HIGHLIGHT') && HTMLIFY_USE_URL_HIGHLIGHT) {
+		$encoder = new HtmlSpecialcharsEncoder();
+		$urlHighlight = new UrlHighlight(null, null, $encoder);
 
-		$String = $urlHighlight->highlightUrls($String);
+		$escaped = htmlentities($input);
+		$htmlified = $urlHighlight->highlightUrls($escaped);
+#		$htmlified = $urlHighlight->highlightUrls($input);
+	} elseif (defined('HTMLIFY_USE_LIB_AUTOLINK') && HTMLIFY_USE_LIB_AUTOLINK) {
+		$GLOBALS['autolink_options']['strip_protocols'] = false;
+		$htmlified = autolink($input, URL2LINK_CUTOFF_LEVEL);
+#		$htmlified = autolink_email($htmlified);
 	} else {
 		#
 		# URLs to test with: http://www.freshports.org/commit.php?message_id=200206232029.g5NKT1O13181@freefall.freebsd.org
@@ -104,18 +113,18 @@ function htmlify($String, $Process_PRs = false) {
 		$del_t = array("&quot;", "&#34;", "&gt;", "&#62;", "\/\.\s","\)", ",\s", "\s", "$");
 		$delimiters = "(".join("|",$del_t).")";
 
-		$String = preg_replace_callback("/((http|ftp|https):\/\/.*?)($delimiters)/i",                    'url2link',    $String);
-		$String = preg_replace_callback("/(<a href=(\"|')(http|ftp|https):\/\/.*?)(\">|'>)(.*?)<\/a>/i", 'url_shorten', $String);
-		$String = preg_replace_callback("/([\w+=\-.!]+@[\w\-]+(\.[\w\-]+)+)/",                           'mail2link',   $String);
+		$htmlified = preg_replace_callback("/((http|ftp|https):\/\/.*?)($delimiters)/i",                    'url2link',    $input);
+		$htmlified = preg_replace_callback("/(<a href=(\"|')(http|ftp|https):\/\/.*?)(\">|'>)(.*?)<\/a>/i", 'url_shorten', $htmlified);
+		$htmlified = preg_replace_callback("/([\w+=\-.!]+@[\w\-]+(\.[\w\-]+)+)/",                           'mail2link',   $htmlified);
 	}
 
 	# this is our own code
 	if ($Process_PRs) {
-		$String = preg_replace_callback("/\bPR[:\#]?\s*(\d+)([,\s\nand]*(\d+))*/",                      'pr2link',     $String);
-		$String = preg_replace_callback("/[\w\s]+((advocacy|alpha|bin|conf|docs|gnu|i386|ia64|java|kern|misc|ports|powerpc|sparc64|standards|www)\/\d+)/", 'pr2link', $String);
+		$htmlified = preg_replace_callback("/\bPR[:\#]?\s+(\d+)([,\s\nand]*(\d+))*/",                      'pr2link',     $htmlified);
+		$htmlified = preg_replace_callback("/[\w\s]+((advocacy|alpha|bin|conf|docs|gnu|i386|ia64|java|kern|misc|ports|powerpc|sparc64|standards|www)\/\d+)/", 'pr2link', $htmlified);
 	}
 
-	return $String;
+	return $htmlified;
 }
 
 

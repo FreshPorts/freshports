@@ -41,4 +41,8 @@ define('MAIL_SERVER', 'localhost');
 
 define('UKRAINE', '1');
 
-define('USE_NEW_HTMLIFY', true);
+#
+# for include/htmlify.php
+#
+define('USE_NEW_HTMLIFY',     true);
+define('HTMLIFY_PROCESS_PRS', true);

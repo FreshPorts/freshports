@@ -76,15 +76,15 @@
 
 	if ($db) {
 ?>
-<TR><td class="content">
+<tr><td class="content">
 
 <?php echo freshports_MainContentTable(); ?>
 
-<TR>
-<? echo freshports_PageBannerText("My flagged commits"); ?>
-        <? //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPortsLong) ?>
-</TR>
-<TR><TD>
+<tr>
+<?php echo freshports_PageBannerText("My flagged commits"); ?>
+        <?php //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPortsLong) ?>
+</tr>
+<tr><TD>
 <p><?php echo EVERYTHING; ?>
 <p>
 A port is marked as new for 10 days.
@@ -99,7 +99,7 @@ A port is marked as new for 10 days.
 
 
 
-</TD></TR>
+</td></tr>
 <?php
 
 	$UseCache = FALSE;
@@ -107,20 +107,20 @@ A port is marked as new for 10 days.
 	echo $HTML;
 	} # $dbd
 ?>
-</TABLE>
+</table>
 </td>
   <td class="sidebar">
-   <? echo freshports_SideBar(); ?>
+   <?php echo freshports_SideBar(); ?>
 
-<BR>
+<br>
 
  </td>
-</TR>
-</TABLE>
+</tr>
+</table>
 
-<BR>
+<br>
 
-<?
+<?php
 	echo freshports_ShowFooter();
 ?>
 

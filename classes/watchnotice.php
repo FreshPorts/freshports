@@ -38,13 +38,13 @@ class WatchNotice {
 			$this->id = $id;
 		}
 		$sql = "select * from watch_notice where id = " . pg_escape_string($this->dbh, $this->id);
-#		echo "sql = '$sql'<BR>";
+#		echo "sql = '$sql'<br>";
 
         $result = pg_exec($this->dbh, $sql);
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
-#				echo "fetched by ID succeeded<BR>";
+#				echo "fetched by ID succeeded<br>";
 				$myrow = pg_fetch_array ($result, 0);
 				$this->_PopulateValues($myrow);
 			}
@@ -60,13 +60,13 @@ class WatchNotice {
 		}
 		$sql = "select * from watch_notice where frequency = '" . pg_escape_string($this->dbh, $this->frequency) . "'";
 
-#		echo "sql = '$sql'<BR>";
+#		echo "sql = '$sql'<br>";
 
         $result = pg_exec($this->dbh, $sql);
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
-#				echo "fetched by Frequency succeeded<BR>";
+#				echo "fetched by Frequency succeeded<br>";
 				$myrow = pg_fetch_array ($result, 0);
 				$this->_PopulateValues($myrow);
 			}

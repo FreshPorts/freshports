@@ -39,7 +39,7 @@
 <tr>
 	<?php echo freshports_PageBannerText("Maintenance Mode"); ?>
 </tr>
-<TR><TD>
+<TR><td>
 
 <p>
 The website is now in maintenance mode. No updates are allowed during this process.
@@ -53,19 +53,19 @@ This page will reload every <?php echo MAINTENANCE_MODE_RERESH_TIME_SECONDS; ?> 
 <img src="images/work-in-progress.jpg" width="640" height="480" alt="work in progress">
 </p>
 
-</TD></TR>
+</td></TR>
 
-</TABLE>
-</TD>
+</table>
+</td>
 
   <td class="sidebar">
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
   </td>
 
 </TR>
-</TABLE>
+</table>
 
 <?php
 echo freshports_ShowFooter();

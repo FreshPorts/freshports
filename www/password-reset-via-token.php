@@ -47,7 +47,7 @@ if (IsSet($submit)) {
   $errors = '';
 
   if ( !$Password1 || ( $Password1 != $Password2 ) ) {
-    $errors .= 'The password was not confirmed.  It must be entered twice.<BR>';
+    $errors .= 'The password was not confirmed.  It must be entered twice.<br>';
     syslog(LOG_NOTICE, "Password reset page: password not confirmed for " . $token);
     $OK = 0;
   }
@@ -89,40 +89,40 @@ if (IsSet($submit)) {
 						'FreeBSD, index, applications, ports');
 ?>
 
-<TABLE class="fullwidth borderless" ALIGN="center">
-<TR><td class="content">
-<TABLE class="fullwidth borderless">
-  <TR>
-    <TD height="20"><?php
+<table class="fullwidth borderless" ALIGN="center">
+<tr><td class="content">
+<table class="fullwidth borderless">
+  <tr>
+    <td height="20"><?php
 
 
 if ($errors) {
-echo '<TABLE class="fullwidth borderless">
-<TR>
-<TD>
-<TABLE class="fullwidth borderless">
-<TR class="accent"><TD><b>Access Code Failed!</b></TD>
-</TR>
-<TR>
-<TD>
-  <TABLE class="fullwidth borderless" CELLPADDING="3">
-  <TR VALIGN=top>
-   <TD><img src="/images/warning.gif"></TD>
-   <TD width="100%">
+echo '<table class="fullwidth borderless">
+<tr>
+<td>
+<table class="fullwidth borderless">
+<tr class="accent"><td><b>Access Code Failed!</b></td>
+</tr>
+<tr>
+<td>
+  <table class="fullwidth borderless" CELLPADDING="3">
+  <tr VALIGN=top>
+   <td><img src="/images/warning.gif"></td>
+   <td width="100%">
   <p>Some errors have occurred which must be corrected before your login can be created.</p>';
 
 echo $errors;
 
 echo '<p>If you need help, please email postmaster@. </p>
- </TD>
- </TR>
- </TABLE>
-</TD>
-</TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>
+ </td>
+ </tr>
+ </table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
 <br>';
 }
 
@@ -131,15 +131,15 @@ if ($PasswordReset) {
 
 } else {
 
-echo '<TABLE class="fullwidth borderless">
-<TR>
-<TD VALIGN="top">
-<TABLE class="fullwidth borderless">
-<TR>
+echo '<table class="fullwidth borderless">
+<tr>
+<td VALIGN="top">
+<table class="fullwidth borderless">
+<tr>
 <td class="accent"><BIG>Reset password via token</BIG></td>
-</TR>
-<TR>
-<TD>';
+</tr>
+<tr>
+<td>';
 
 echo '<p>Please enter your new password twice.</p><br>';
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
@@ -147,32 +147,32 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 $Customize=1;
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/password-reset-via-token.php');
 
-echo "</TD>
-</TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>";
+echo "</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>";
 }
 
 ?>
 
 <p>
 
-</TD>
-</TABLE>
+</td>
+</table>
 </td>
 
   <td class="sidebar">
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
   </td>
 
-</TR>
-</TABLE>
+</tr>
+</table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

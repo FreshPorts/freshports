@@ -73,7 +73,7 @@
 				$last_bit = array_pop($bits);
 				if (preg_match("!<a\s!i", $last_bit)){
 
-					#echo "fail 1 at $cursor<br />\n";
+					#echo "fail 1 at $cursor<br >\n";
 
 					$ok = 0;
 					$cursor += $fail_len;
@@ -91,7 +91,7 @@
 				if ($pre){
 					if (!preg_match('![\s\(\[\{>\pZ\p{Cc}]$!s', $pre)){
 
-						#echo "fail 2 at $cursor ($pre)<br />\n";
+						#echo "fail 2 at $cursor ($pre)<br >\n";
 
 						$ok = 0;
 						$cursor += $fail_len;
@@ -173,7 +173,7 @@
 					$buffer .= "<a href=\"{$link_url_enc}\"$currentTagfill>{$display_url_enc}</a>";
 
 				}else{
-					#echo "fail 3 at $cursor<br />\n";
+					#echo "fail 3 at $cursor<br >\n";
 
 					$ok = 0;
 					$cursor += $fail_len;
@@ -251,7 +251,7 @@
 				$last_bit = array_pop($bits);
 				if (preg_match("!<a\s!i", $last_bit)){
 
-					#echo "fail 1 at $cursor<br />\n";
+					#echo "fail 1 at $cursor<br >\n";
 
 					$ok = 0;
 					$cursor += $fail_len;
@@ -276,7 +276,7 @@
 
 				}else{
 
-					#echo "fail 2 at $cursor ($pre)<br />\n";
+					#echo "fail 2 at $cursor ($pre)<br >\n";
 
 					$ok = 0;
 					$cursor += $fail_len;
@@ -299,7 +299,7 @@
 					$post = substr($post, $len);
 
 				}else{
-					#echo "fail 3 at $cursor ($post)<br />\n";
+					#echo "fail 3 at $cursor ($post)<br >\n";
 
 					$ok = 0;
 					$cursor += $fail_len;

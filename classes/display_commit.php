@@ -85,7 +85,7 @@ class DisplayCommit {
 		$NumRows = pg_num_rows($this->result);
 		if ($this->Debug) echo __FILE__ . ':' . __LINE__ . " Number of rows = $NumRows<br>\n";
 		if (!$NumRows) { 
-			$this->HTML = "<TR><TD>\n<P>Sorry, nothing found in the database....</P>\n</td></tr>\n";
+			$this->HTML = "<tr><td>\n<P>Sorry, nothing found in the database....</P>\n</td></tr>\n";
 			return $this->HTML;
 		}
 		
@@ -132,14 +132,14 @@ class DisplayCommit {
 				}
 				$TooManyPorts = false;
 				if ($i > 0) {
-					$this->HTML .= "\n<BLOCKQUOTE class=\"description\">";
+					$this->HTML .= "\n<blockquote class=\"description\">";
 					$this->HTML .= freshports_CommitDescriptionPrint(
 			                    $PreviousCommit->commit_description,
 			                    $PreviousCommit->encoding_losses,
 			                    $Lines,
 			                    freshports_MoreCommitMsgToShow($PreviousCommit->message_id, $Lines));
 					# close off the previous commit first
-					$this->HTML .= "\n</BLOCKQUOTE>\n</TD></TR>\n\n\n";
+					$this->HTML .= "\n</blockquote>\n</td></tr>\n\n\n";
 				}
 				# count the number of ports in this commit.
 				# first time into the loop, this will be executed.
@@ -154,7 +154,7 @@ class DisplayCommit {
 
 				GLOBAL $freshports_mail_archive;
 
-				$this->HTML .= "<TR><TD class=\"commit-details\">\n";
+				$this->HTML .= "<tr><td class=\"commit-details\">\n";
 
 				$this->HTML .= '<span class="meta">';
 				$this->HTML .= '[ ' . $mycommit->commit_time . ' ';
@@ -260,13 +260,13 @@ class DisplayCommit {
 					}
 
 					$this->HTML .= '<span class="element-details">';
-					$this->HTML .= '<A HREF="/' . $mycommit->category . '/' . $mycommit->port . '/' . $URLBranchSuffix;
+					$this->HTML .= '<a href="/' . $mycommit->category . '/' . $mycommit->port . '/' . $URLBranchSuffix;
 					if ($mycommit->branch && $mycommit->branch != BRANCH_HEAD) {
 						$this->HTML .= '?branch=' . $mycommit->branch;
 					}
 					$this->HTML .= '">';
 					$this->HTML .= $mycommit->port;
-					$this->HTML .= '</A>';
+					$this->HTML .= '</a>';
 
 					$PackageVersion = freshports_PackageVersion($mycommit->version, $mycommit->revision, $mycommit->epoch);
 					if (strlen($PackageVersion) > 0) {
@@ -275,8 +275,8 @@ class DisplayCommit {
 
 					$this->HTML .= "</span>\n";
 
-					$this->HTML .= '<A HREF="/' . $mycommit->category . '/'  . $URLBranchSuffix . '">';
-					$this->HTML .= $mycommit->category. "</A>";
+					$this->HTML .= '<a href="/' . $mycommit->category . '/'  . $URLBranchSuffix . '">';
+					$this->HTML .= $mycommit->category. "</a>";
 					$this->HTML .= '&nbsp;';
 
 					// indicate if this port has been removed from cvs
@@ -381,14 +381,14 @@ class DisplayCommit {
 		} else {
 			$this->HTML .= '</ul>';
 		}
-		$this->HTML .= "\n<BLOCKQUOTE class=\"description\">";
+		$this->HTML .= "\n<blockquote class=\"description\">";
 		$this->HTML .= freshports_CommitDescriptionPrint(
                     $PreviousCommit->commit_description,
                     $PreviousCommit->encoding_losses,
                     $Lines,
                     freshports_MoreCommitMsgToShow($PreviousCommit->message_id, $Lines));
 		# close off the last commit
-		$this->HTML .= "\n</BLOCKQUOTE>\n</TD></TR>\n\n\n";
+		$this->HTML .= "\n</blockquote>\n</td></tr>\n\n\n";
 
 		unset($mycommit);
 		

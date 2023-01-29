@@ -70,18 +70,18 @@ if (IsSet($submit)) {
 	$errors = '';
 
 	if (!freshports_IsEmailValid($email)) {
-		$errors .= 'That email address doesn\'t look right to me<BR>';
+		$errors .= 'That email address doesn\'t look right to me<br>';
 		$OK = 0;
 	}
 	
 	# new passwords supplied, but not existing password
 	if ($Password1 && $Password2 && !$Password) {
-		$errors .= 'If changing your password, remember to supply your existing password first.<BR>';
+		$errors .= 'If changing your password, remember to supply your existing password first.<br>';
 		$OK = 0;
 	}
 
 	if ($Password1 != $Password2) {
-		$errors .= 'The new password was not confirmed.  It must be entered twice.<BR>';
+		$errors .= 'The new password was not confirmed.  It must be entered twice.<br>';
 		$OK = 0;
 	}
 
@@ -165,19 +165,19 @@ UPDATE users
 <?php echo freshports_MainContentTable(NOBORDER);
 
 if ($errors) {
-echo '<TR><TD class="accent">Access Code Failed!</TD></TR>
+echo '<TR><td class="accent">Access Code Failed!</td></TR>
 <TR>
-<TD>
-   <TD class="textcontent"><p><img src="/images/warning.gif"> Some errors have occurred which must be corrected before your login can be created.</p>';
+<td>
+   <td class="textcontent"><p><img src="/images/warning.gif"> Some errors have occurred which must be corrected before your login can be created.</p>';
 
 echo $errors;
 
 echo '<p>If you need help, please email postmaster@. </p>
-</TD>
+</td>
 </TR>';
 }
 if ($AccountModified) {
-echo '<TR><TD class="accent">Account updated!</TD></TR>
+echo '<TR><td class="accent">Account updated!</td></TR>
    <tr><td class="textcontent">Your account details were successfully updated.</td></tr>';
 } else {
 
@@ -186,7 +186,7 @@ echo '
 <td class="accent"><span>Customize</span></td>
 </TR>
 <TR>
-<TD>';
+<td>';
 
 echo '<p>If you wish to change your password, first type your existing password, then your new password twice.  Otherwise, leave them all blank.</p><br>';
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
@@ -194,7 +194,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 $Customize=1;
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/new-user.php');
 
-echo "</TD>
+echo "</td>
 </TR>
 ";
 }
@@ -206,21 +206,21 @@ echo "</TD>
 
 <?php require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/spam-filter-information.php'); ?>
 
-</TD>
+</td>
 </TR>
-</TABLE>
+</table>
 </td>
 
   <td class="sidebar">
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
   </td>
 
 </TR>
-</TABLE>
+</table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

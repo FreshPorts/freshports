@@ -21,7 +21,7 @@ class Packages {
 	function GetCategoryPortFromPackageName($package) {
 		$this->package = $package;
 		$sql = "select GetCategoryPortFromPackageName('" . pg_escape_string($this->dbh, $package) . "') as categoryport";
-#		echo "<pre>sql = '$sql'</pre><BR>";
+#		echo "<pre>sql = '$sql'</pre><br>";
 
 		$result = pg_query($this->dbh, $sql);
 		if ($result) {

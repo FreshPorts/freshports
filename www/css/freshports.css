@@ -378,7 +378,7 @@ li#configureplist-Extra {
     font-family: monospace;
     padding-inline-start: 0px;
 }
-BLOCKQUOTE.code {
+blockquote.code {
   color: #461b7e;
   color: var(--code-text);
 }
@@ -690,3 +690,15 @@ td.version:hover::after, td.version:focus::after {
 
 
 .nomaintainer { color: blueviolet; font-size: 20px; }
+
+.hcentered { text-align: center; }
+
+.hleft { text-align: left; }
+
+.vtop { vertical-align: top; }
+
+.vcentered { vertical-align: middle; }
+
+.vbottom { vertical-align: bottom; }
+
+.nowrap { white-space: nowrap; }

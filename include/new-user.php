@@ -16,9 +16,9 @@
 ?>
 
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
-<TABLE class="borderless">
-          <TR>
-            <TD>
+<table class="borderless">
+          <tr>
+            <td>
 <?php if (IsSet($Customize)) { ?>
               <label>Current password:<br>
               <INPUT TYPE="PASSWORD" NAME="Password" VALUE="<?php if (IsSet($Password)) echo htmlentities($Password) ?>" size="20"></label><br><br>
@@ -33,8 +33,8 @@
               <INPUT TYPE="PASSWORD" NAME="Password1" VALUE="<?php if (IsSet($Password1)) echo htmlentities($Password1) ?>" size="20"></label><br><br>
               <label>New password again:<br>
               <INPUT TYPE="PASSWORD" NAME="Password2" VALUE="<?php if (IsSet($Password2)) echo htmlentities($Password2) ?>" size="20"></label>
-            </TD>
-            <TD>
+            </td>
+            <td>
               <label>Email Address (required):<br>
               <INPUT type="email" SIZE="35" NAME="email" required VALUE="<?php if (IsSet($email)) echo htmlentities($email) ?>"></label>
 
@@ -68,10 +68,10 @@ Number of results to display per page (e.g commits per page):
 
 ?>
 <br><br><br>
-            <INPUT TYPE="submit" VALUE="<? if (IsSet($Customize)) { echo "update";} else { echo "create";} ?> account" NAME="submit">
+            <INPUT TYPE="submit" VALUE="<?php if (IsSet($Customize)) { echo "update";} else { echo "create";} ?> account" NAME="submit">
             <INPUT TYPE="reset"  VALUE="reset form">
-            </TD>
-          </TR>
+            </td>
+          </tr>
 <?php
 
 # include this CAPTCHA only for new registrations
@@ -87,14 +87,14 @@ if ( $_SERVER['SCRIPT_NAME'] == '/new-user.php' )
 <?php
 }
 ?>    
-    </TABLE>
+    </table>
 </FORM>
 
 <?php
 if ( $_SERVER['SCRIPT_NAME'] != '/new-user.php' )
 {
 ?>
-<p>For your reporting needs, please visit <A HREF="/report-subscriptions.php">Report Subscriptions</A>.</p>
+<p>For your reporting needs, please visit <a href="/report-subscriptions.php">Report Subscriptions</a>.</p>
 <h2><a href="/delete-account.php">Delete my account</a></h2>
 <?php
 }

@@ -1,4 +1,4 @@
-<?
+<?php
 	#
 	# $Id: graphclick.php,v 1.2 2006-12-17 12:06:25 dan Exp $
 	#

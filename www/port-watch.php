@@ -140,7 +140,7 @@ if ($submit) {
 
 	<?php echo freshports_MainContentTable(); ?>
   <tr>
-	<? echo freshports_PageBannerText("Watch List - " . $category) ?>
+	<?php echo freshports_PageBannerText("Watch List - " . $category) ?>
   </tr>
 
 <?php
@@ -186,7 +186,7 @@ $HTML .= '<tr><td><b>' . $numrows . ' ports found (';
 if ($NumVirtual != 0) {
 	$HTML .=  ($numrows - $NumVirtual) . ' primary, ' . htmlentities($NumVirtual) . ' secondary)</b></td></tr>';
 }
-$HTML .= '<tr><td valign="top" ALIGN="center">' . "\n";
+$HTML .= '<tr><td class="vtop hcentered">' . "\n";
 
 
 if ($numrows) {
@@ -200,7 +200,7 @@ if ($numrows) {
    $HTML .= '<input type="hidden" name="category" value="' . htmlentities($category) . '">' . "\n";
    $HTML .= '<input type="hidden" name="wlid"     value="' . htmlentities($wlid)     . '">' . "\n";
 
-   $HTML .= "\n" . '<TABLE class="bordered" CELLPADDING="5">' . "\n<tr>\n";
+   $HTML .= "\n" . '<table class="bordered" CELLPADDING="5">' . "\n<tr>\n";
    $RowCount = ceil($NumPorts / (double) 4);
    $Row = 0;
    for ($i = 0; $i < $NumPorts; $i++) {
@@ -212,7 +212,7 @@ if ($numrows) {
       }
 
       if ($Row == 1) {
-         $HTML .= '<td valign="top" nowrap>';
+         $HTML .= '<td clss="vtop nowrap">';
       }
 
       $HTML .= '<input type="checkbox" name="ports[]" value="'. htmlentities($rows[$i]["id"]) .'"';
@@ -243,7 +243,7 @@ if ($numrows) {
    echo $HTML;
 ?>
 
-<div align="center">
+<div class="hcentered">
 <br>
 <input TYPE="submit" VALUE="update watch list" name="submit">
 <input TYPE="reset"  VALUE="reset form">
@@ -253,7 +253,7 @@ if ($numrows) {
 </form>
 </table>
 
-<td valign="top">
+<td class="vtop">
 <table class="borderless"><tr><td>Select...</td></tr><tr><td>
    
 <?php
@@ -272,25 +272,25 @@ if ($numrows) {
 
 
 ?>
-<tr><td align="left" valign="top">
+<tr><td class="hleft vtop">
 <UL>
-<LI>
+<li>
 This page operates on a single watch list at a time.
-<LI>This page shows you the ports in a category (<em><?echo htmlentities($category) ?></em>)
-that are on your selected watch list.</LI>
-<LI>The entries with a tick beside them are your on the selected watch list.</LI>
-<LI>When one of the ports in your watch list changes, you will be notified by email if
+<li>This page shows you the ports in a category (<em><?php echo htmlentities($category) ?></em>)
+that are on your selected watch list.</li>
+<li>The entries with a tick beside them are your on the selected watch list.</li>
+<li>When one of the ports in your watch list changes, you will be notified by email if
 you have selected a notification frequency within your <a href="customize.php">account settings</a>.
-</LI>
-<LI>[D] indicates a port which has been removed from the tree.</LI>
-<LI><sup>*</sup> indicates a port which resides in another cateogory but lists this category as a secondary.</LI>
+</li>
+<li>[D] indicates a port which has been removed from the tree.</li>
+<li><sup>*</sup> indicates a port which resides in another cateogory but lists this category as a secondary.</li>
 </UL>
 </table>
 
 </td>
 
   <td class="sidebar">
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
   </td>
@@ -298,7 +298,7 @@ you have selected a notification frequency within your <a href="customize.php">a
 </tr>
 </table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

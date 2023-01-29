@@ -78,11 +78,11 @@
 #	echo 'when done, I will return to ' . $Origin;
 	if ($Redirect) {
 		if ($Origin) {
-			if ($Debug) echo "Origin supplied is $Origin\n<BR>";
+			if ($Debug) echo "Origin supplied is $Origin\n<br>";
 			$Origin = str_replace(' ', '&', $Origin);
 		}
 
-		if ($Debug) echo "redirecting to $Origin\n<BR>";
+		if ($Debug) echo "redirecting to $Origin\n<br>";
 
 		header("Location: $Origin");  /* Redirect browser to PHP web site */
 		exit;  /* Make sure that code below does not get executed when we redirect. */

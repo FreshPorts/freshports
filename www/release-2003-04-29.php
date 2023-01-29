@@ -25,11 +25,11 @@
 
 	<?php echo freshports_MainContentTable(NOBORDER); ?>
 
-<TR>
+<tr>
 	<?php echo freshports_PageBannerText($Title); ?>
-</TR>
+</tr>
 
-<TR><TD class="textcontent">
+<tr><td class="textcontent">
 <P>
 This is the biggest release of FreshPorts since 
 <a href="/fp2-announcement.php">FreshPorts 2</a> was released.
@@ -43,15 +43,15 @@ how to use FreshPorts... which will lead to a new release.
 <p>
 My thanks to the people who contributed code, ideas, and time
 to this new version.
-</TD></TR>
+</td></tr>
 
-<TR>
-	<?
+<tr>
+	<?php
 	echo freshports_PageBannerText("Multiple Watch Lists"); 
 	?>
-</TR>
+</tr>
 
-<TR><TD class="textcontent">
+<tr><td class="textcontent">
 
 <P>
 When FreshPorts started, a watch list was a single entity.  That was to 
@@ -66,15 +66,15 @@ how that goes and then we'll look at raising that limit.  If you have a pressing
 need, I'm willing to consider changes on a case by case basis.  Just contact
 me.
 
-</TD></TR>
+</td></tr>
 
-<TR>
-	<?
+<tr>
+	<?php
 	echo freshports_PageBannerText("Virtual categories");
 	?>
-</TR>
+</tr>
 
-<TR><TD class="textcontent">
+<tr><td class="textcontent">
 
 <P>
 FreshPorts now caters for virtual categories.  What's a virtual category?
@@ -97,24 +97,24 @@ As new virtual categories are added, trusted FreshPorts users can set the
 description for the new category.
 </P>
 
-</TD></TR>
+</td></tr>
 
-<TR>
+<tr>
 <?php echo freshports_PageBannerText("Newsfeed changes"); ?>
-</TR>
+</tr>
 
-<TR><TD class="textcontent">
+<tr><td class="textcontent">
 <P>
 The newsfeed now contains the version/revision information for the port.
 For more information on news feeds, please read the <a href="/faq.php">FAQ</a>.
 </P>
-</TD></TR>
+</td></tr>
 
-<TR>
+<tr>
 <?php echo freshports_PageBannerText("Security Notifications"); ?>
-</TR>
+</tr>
 
-<TR><TD class="textcontent">
+<tr><td class="textcontent">
 <P>
 FreshPorts has a new <a href="/report-subscriptions.php">subscription</a>
 entry.  If you subscribe to the new Security Notification report, you will
@@ -130,26 +130,26 @@ report.
 NOTE: Do not rely up on this service for your security purposes.  You are urged
 to subscribe to the announcements list for whatever software you use.
 </P>
-</TD></TR>
+</td></tr>
 
-<TR>
+<tr>
 <?php echo freshports_PageBannerText("Master websites"); ?>
-</TR>
+</tr>
 
-<TR><TD class="textcontent">
+<tr><td class="textcontent">
 <P>
 You can now view the master websites for the port.  Each
 ports has a list of websites from which their source can be downloaded.
 This information has always been recorded within FreshPorts, but 
 it's never been available until now.
 </P>
-</TD></TR>
+</td></tr>
 
-<TR>
+<tr>
 <?php echo freshports_PageBannerText("Category paging"); ?>
-</TR>
+</tr>
 
-<TR><TD class="textcontent">
+<tr><td class="textcontent">
 <P>
 Some categories have a very large number of ports.  This can make loading
 the page very slow, especially for those on dial up.  Therefore, we've introduced
@@ -159,13 +159,13 @@ paging to the <a href="/categories.php">categories</a> page.
 You can set the paging length via  
 <a href="/customize.php">your account</a> settings.
 </P>
-</TD></TR>
+</td></tr>
 
-<TR>
+<tr>
 <?php echo freshports_PageBannerText("Faster pages"); ?>
-</TR>
+</tr>
 
-<TR><TD class="textcontent">
+<tr><td class="textcontent">
 <P>
 Much work has gone into finding faster ways to extract data
 from the FreshPorts database.  Thanks to the amazing capabilities
@@ -180,25 +180,25 @@ this cache table.  Instead, they now access the main tables directly.  This
 means the website is faster overall and the background process is no longer
 needed.
 </P>
-</TD></TR>
+</td></tr>
 
 
-</TABLE>
-</TD>
+</table>
+</td>
 
   <td class="sidebar">
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
   </td>
 
-</TABLE>
+</table>
 
-<TABLE class="fullwidth borderless">
-<TR><TD>
+<table class="fullwidth borderless">
+<tr><td>
 <?php echo freshports_ShowFooter(); ?>
-</TD></TR>
-</TABLE>
+</td></tr>
+</table>
 
 </BODY>
 </HTML>

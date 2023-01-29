@@ -29,7 +29,7 @@
 function RemoveElementFromWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 	$Debug = 0;
 
-	if ($Debug) echo "I'm removing $ElementID\n<BR>";
+	if ($Debug) echo "I'm removing $ElementID\n<br>";
 	$WatchListElement = new WatchListElement($db);
 	foreach ($WatchListsIDs as $key => $WatchListID) {
 		$result = $WatchListElement->Delete($UserID, $WatchListID, $ElementID);
@@ -42,7 +42,7 @@ function RemoveElementFromWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 }
 
 function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
-	if ($Debug) echo "I'm adding $ElementID\n<BR>";
+	if ($Debug) echo "I'm adding $ElementID\n<br>";
 	$WatchListElement = new WatchListElement($db);
 	foreach ($WatchListsIDs as $key => $WatchListID) {
 		$result = $WatchListElement->Add($UserID, $WatchListID, $ElementID);
@@ -76,10 +76,10 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 	<tr><td class="content">
 
 	<?php echo freshports_MainContentTable(); ?>
-<TR>
-	<? echo freshports_PageBannerText("Watch list maintenance"); ?>
-</TR>
-<TR><td class="content">
+<tr>
+	<?php echo freshports_PageBannerText("Watch list maintenance"); ?>
+</tr>
+<tr><td class="content">
 <?php
 		if ($ErrorMessage) {
 			echo freshports_ErrorMessage("Let\'s try that again!", $ErrorMessage);
@@ -158,14 +158,14 @@ NOTES
 </tr>
 </table>
   <td class="sidebar">
-  <?
+  <?php
   echo freshports_SideBar();
   ?>
   </td>
 
-</TABLE>
+</table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 
@@ -252,11 +252,11 @@ echo freshports_ShowFooter();
 #	echo 'when done, I will return to ' . $Origin;
 	if ($Redirect) {
 		if ($Origin) {
-			if ($Debug) echo "Origin supplied is $Origin\n<BR>";
+			if ($Debug) echo "Origin supplied is $Origin\n<br>";
 			$Origin = str_replace(' ', '&', $Origin);
 		}
 
-		if ($Debug) echo "redirecting to $Origin\n<BR>";
+		if ($Debug) echo "redirecting to $Origin\n<br>";
 
 		header("Location: $Origin");  /* Redirect browser to PHP web site */
 		exit;  /* Make sure that code below does not get executed when we redirect. */

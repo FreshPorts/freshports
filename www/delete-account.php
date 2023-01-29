@@ -78,52 +78,52 @@ if (IsSet($submit)) {
 						'FreeBSD, index, applications, ports');
 ?>
 
-<TABLE class="fullwidth borderless" ALIGN="center">
-<TR><td class="content">
-<TABLE class="fullwidth borderless">
-  <TR>
-    <TD height="20"><?php
+<table class="fullwidth borderless" ALIGN="center">
+<tr><td class="content">
+<table class="fullwidth borderless">
+  <tr>
+    <td height="20"><?php
 
 
 if ($errors) {
-echo '<TABLE class="fullwidth borderless">
-<TR>
-<TD>
-<TABLE class="fullwidth borderless">
-<TR class="accent"><TD><b>Delete Failed!</b></TD>
-</TR>
-<TR>
-<TD>
-  <TABLE class="fullwidth borderless" CELLPADDING="3">
-  <TR VALIGN=top>
-   <TD><img src="/images/warning.gif"></TD>
-   <TD width="100%">
+echo '<table class="fullwidth borderless">
+<tr>
+<td>
+<table class="fullwidth borderless">
+<tr class="accent"><td><b>Delete Failed!</b></td>
+</tr>
+<tr>
+<td>
+  <table class="fullwidth borderless" CELLPADDING="3">
+  <tr VALIGN=top>
+   <td><img src="/images/warning.gif"></td>
+   <td width="100%">
   <p>The deleted failed.</p>';
 
 echo $errors;
 
 echo '<p>If you need help, please email postmaster@. </p>
- </TD>
- </TR>
- </TABLE>
-</TD>
-</TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>
+ </td>
+ </tr>
+ </table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
 <br>';
 }  // if ($errors)
 
-echo '<TABLE class="fullwidth borderless">
-<TR>
-<TD VALIGN="top">
-<TABLE class="fullwidth borderless">
-<TR>
+echo '<table class="fullwidth borderless">
+<tr>
+<td VALIGN="top">
+<table class="fullwidth borderless">
+<tr>
 <td class="accent"><BIG>Customize</BIG></td>
-</TR>
-<TR>
-<TD>';
+</tr>
+<tr>
+<td>';
 
 
 if ($deleted) {
@@ -138,9 +138,9 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 ?>
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
-<TABLE width="*" class="borderless">
-          <TR>
-            <TD VALIGN="top">
+<table width="*" class="borderless">
+          <tr>
+            <td VALIGN="top">
                <p>The account name is: <?php echo $User->name; ?><p>
                User Name: <INPUT SIZE="15" NAME="confirmation" VALUE="">
             </td>
@@ -153,33 +153,33 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
             </td>
         </tr>
   
-    </TABLE>
+    </table>
 </FORM>
 
 <?php
 } // if ($deleted)
-echo "</TD>
-</TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>";
+echo "</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>";
 
 ?>
-</TD>
-</TABLE>
+</td>
+</table>
 </td>
 
   <td class="sidebar">
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
   </td>
 
-</TR>
-</TABLE>
+</tr>
+</table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

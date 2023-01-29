@@ -39,7 +39,7 @@ function mail2link($Arr) {
 
 	$addr = $Arr[0];
 
-	$addr = "<A HREF=\"mailto:$addr\">$addr</A>";
+	$addr = "<a href=\"mailto:$addr\">$addr</a>";
 
 	return $addr;
 }
@@ -57,7 +57,7 @@ function url2link($Arr) {
 	$new_html  = html_entity_decode($html);
 	$new_html  = htmlentities($new_html);
 
-	return '<A HREF="' . $new_html . '" REL="NOFOLLOW">' . $html . '</A>' . $Arr[3];
+	return '<a href="' . $new_html . '" REL="NOFOLLOW">' . $html . '</a>' . $Arr[3];
 }
 
 function url_shorten($Arr) {

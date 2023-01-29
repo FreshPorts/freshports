@@ -19,7 +19,7 @@
 	$page->setTitle('Newsfeeds');
 
 	$page->addBodyContent('
-	</tr><TR><TD>
+	</tr><tr><td>
 	We have five newsfeeds:
 	');
 
@@ -27,15 +27,15 @@
 	$ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['HTTP_HOST']);
 
 	$URL  = "$Protocol://$ServerName/backend/news.php";
-	$HREF = "<A HREF=\"$URL\">$URL</A>";
+	$HREF = "<a href=\"$URL\">$URL</a>";
 
 	$page->addBodyContent('
-	<OL>
-	<LI>An RSS feed : ' . $HREF . '
+	<ol>
+	<li>An RSS feed : ' . $HREF . '
 	<p>Take your pick of different formats:');
 	
 	$URL  = "$Protocol://$ServerName/backend/";
-	$HREF = "<A HREF=\"$URL\">$URL</A>";
+	$HREF = "<a href=\"$URL\">$URL</a>";
 	$page->addBodyContent($HREF . '
 	
 	<p>This RSS feed takes the following optional parameters:</p>
@@ -55,10 +55,10 @@
 	<li>' . $URL . 'html.php?flavor=new</li>
 	</ol>
 
-	</LI>');
+	</li>');
 
 	$URL  = "$Protocol://$ServerName/backend/ports-new.php";
-	$HREF = "<A HREF=\"$URL\">$URL</A>";
+	$HREF = "<a href=\"$URL\">$URL</a>";
 
 	$page->addBodyContent('
 	<li><p>An RSS feed that lists only new ports:  ' . $HREF . ' </p></li>
@@ -68,6 +68,6 @@
 
 	<li><p>The blog for this website, <a href="https://news.freshports.org/">FreshPorts News</a>.
 
-	</OL>');
+	</ol>');
 
 	$page->display();

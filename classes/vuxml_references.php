@@ -22,7 +22,7 @@ class VuXML_References {
 		$sql = "SELECT vuxml_references.*
 	              FROM vuxml_references
 	             WHERE vuxml_references.vuxml_id = " . pg_escape_string($this->dbh, $vuxml_id);
-#		echo "<pre>sql = '$sql'</pre><BR>";
+#		echo "<pre>sql = '$sql'</pre><br>";
 
 		$result = pg_query($this->dbh, $sql);
 		if ($result) {

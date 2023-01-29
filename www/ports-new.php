@@ -76,15 +76,15 @@ freshports_Start($Title,
 
         <?php echo freshports_MainContentTable(); ?>
 
-<TR>
-    <? echo freshports_PageBannerText($Title); ?>
-</TR>
-<TR>
-    <TD>
+<tr>
+    <?php echo freshports_PageBannerText($Title); ?>
+</tr>
+<tr>
+    <td>
         These are the recently added ports.
-    </TD>
-</TR>
-<?
+    </td>
+</tr>
+<?php
 
 $visitor = pg_escape_string($db, $_COOKIE[USER_COOKIE_NAME] ?? '');
 if (isset($_REQUEST["sort"])) {
@@ -95,22 +95,22 @@ if (isset($_REQUEST["sort"])) {
 
 // make sure the value for $sort is valid
 
-echo "<TR><TD>\nThis page is ";
+echo "<tr><td>\nThis page is ";
 
 switch ($sort) {
     case "dateadded":
         $sort = "date_added_raw desc, category, port";
-        echo 'sorted by date added.  <A HREF="' . $_SERVER["PHP_SELF"] . '?interval=' . $interval . '&amp;sort=category">Sort by category</A>';
+        echo 'sorted by date added.  <a href="' . $_SERVER["PHP_SELF"] . '?interval=' . $interval . '&amp;sort=category">Sort by category</a>';
         $ShowCategoryHeaders = 0;
         break;
 
     default:
         $sort = "category, port";
-        echo 'sorted by category.  <A HREF="' . $_SERVER["PHP_SELF"] . '?interval=' . $interval . '&amp;sort=dateadded">Sort by date added</A>';
+        echo 'sorted by category.  <a href="' . $_SERVER["PHP_SELF"] . '?interval=' . $interval . '&amp;sort=dateadded">Sort by date added</a>';
         $ShowCategoryHeaders = 1;
 }
 
-echo "</TD></TR>\n";
+echo "</td></tr>\n";
 
 $sql = "
 select NP.id,
@@ -219,18 +219,18 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/list-of-ports.php');
 echo freshports_ListOfPorts($result, $db, 'Y', $ShowCategoryHeaders, $User, $numrows);
 ?>
 
-</TABLE>
+</table>
 
 <td class="sidebar">
-    <?
+    <?php
     echo freshports_SideBar();
     ?>
 </td>
 
-</TR>
-</TABLE>
+</tr>
+</table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

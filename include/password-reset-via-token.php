@@ -10,9 +10,9 @@
 ?>
 
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
-<TABLE width="*" class="borderless">
-          <TR>
-            <TD VALIGN="top">
+<table width="*" class="borderless">
+          <tr>
+            <td VALIGN="top">
               <INPUT TYPE="hidden" NAME="token" VALUE="<?php echo $token ?>">
                Password:<br>
                <INPUT TYPE="PASSWORD" NAME="Password1" VALUE="<?php if (IsSet($Password1)) echo htmlentities($Password1) ?>" size="20"><br><br>
@@ -21,7 +21,7 @@
                <br><br>
             <INPUT TYPE="submit" VALUE="Set password" NAME="submit">
             </TD>
-          </TR>
-</TABLE>
+          </tr>
+</table>
 </FORM>
 

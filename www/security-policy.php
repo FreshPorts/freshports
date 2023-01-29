@@ -23,10 +23,10 @@
 	<?php echo freshports_MainContentTable(); ?>
 
 
-<TR>
+<tr>
 	<? echo freshports_PageBannerText($Title); ?>
-</TR>
-<TR><TD>
+</tr>
+<tr><td>
 
 <P>
 I appreciate the contributions of the security researchers who have helped out on this
@@ -38,20 +38,20 @@ With that in mind, do not expect to make a living getting bounties on this websi
 I will list your contributions here. Your contribution can be anonymous if you wish. I am happy to
 acknowledge the work you do and the findings you present.
 
-</TD></TR>
-</TABLE>
-</TD>
+</td></tr>
+</table>
+</td>
 
   <td class="sidebar">
-  <?
+  <?php
   echo freshports_SideBar();
   ?>
   </td>
 
-</TR>
-</TABLE>
+</tr>
+</table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

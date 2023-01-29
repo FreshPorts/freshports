@@ -21,7 +21,7 @@ class VuXML_Packages {
 		$sql = "SELECT vuxml_affected.*
 	              FROM vuxml_affected
 	             WHERE vuxml_affected.vuxml_id = " . pg_escape_string($this->dbh, $vuxml_id);
-#		echo "<pre>sql = '$sql'</pre><BR>";
+#		echo "<pre>sql = '$sql'</pre><br>";
 
 		$result = pg_query($this->dbh, $sql);
 		if ($result) {

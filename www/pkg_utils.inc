@@ -83,13 +83,13 @@ function CleanPorts($watchID) {
 	$query = "delete from watch_list_element where watch_list_id = " . pg_escape_string($database, $watchID);
 	$database =& DBConnect();
 
-	echo "Cleaning out old ports<BR>\n";
+	echo "Cleaning out old ports<br>\n";
 	if ($database) {
 		$result = pg_exec($database, $query);
 
 		if (!$result) {
 			$error = pg_last_error($database);
-			echo "$error<BR>\n";
+			echo "$error<br>\n";
 			$retval = false;
 		}
 	}
@@ -143,15 +143,15 @@ function AddPortsToList($ports, $userID) {
 	}
 
 	echo "<P>Your pkg_info data has been uploaded and your watch list has been updated as follows:</P>";
-	echo "Added $successful new ports<BR>\n";
+	echo "Added $successful new ports<br>\n";
 	if ($dups) {
-		echo "$dups ports in your update were already on your watch list.<BR>\n";
+		echo "$dups ports in your update were already on your watch list.<br>\n";
 	}
 	if (count($errorLog) > 0) {
 		epp("<pre>");
 		epp("ERROR LOG");
 		foreach ($errorLog as $error) {
-			echo $error . "<BR>\n";
+			echo $error . "<br>\n";
 		}
 #		print_r($errorLog);
    		epp("</pre>");

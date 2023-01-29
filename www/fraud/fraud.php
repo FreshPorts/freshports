@@ -11,14 +11,14 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 ?>
-<TABLE class="fullwidth borderless" ALIGN="center">
-<TR><td VALIGN=TOP>
-<TABLE class="fullwidth borderless" ALIGN="left">
-<TR>
-	<? echo freshports_PageBannerText("Fraud - This is not FreshPorts.org!"); ?>
-</TR>
+<table class="fullwidth borderless" ALIGN="center">
+<tr><td VALIGN=TOP>
+<table class="fullwidth borderless" ALIGN="left">
+<tr>
+	<?php echo freshports_PageBannerText("Fraud - This is not FreshPorts.org!"); ?>
+</tr>
 
-<TR><TD>
+<tr><td>
 <P>
 Someone is trying to scam you.  Please note the URL you are at and compare it to where
 you want to be.  I suspect you may be at freshports.net, not FreshPorts.org.  
@@ -26,8 +26,8 @@ you want to be.  I suspect you may be at freshports.net, not FreshPorts.org.
 <p>
 Please read <a href="/fraud/">this</a> for more information about how freshports.net
 tries to scam money from unsuspecting people.
-</TD></TR>
-</TABLE>
+</td></tr>
+</table>
 
 </BODY>
 </HTML>

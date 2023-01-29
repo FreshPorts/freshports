@@ -121,7 +121,7 @@ class Commit_Ports {
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
-				if ($Debug) echo "fetched by ID succeeded<BR>";
+				if ($Debug) echo "fetched by ID succeeded<br>";
 				$myrow = pg_fetch_array ($result, 0);
 #				$a = $b;
 				$this->PopulateValues($myrow);
@@ -139,7 +139,7 @@ class Commit_Ports {
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
-				if ($Debug) echo "fetched by ID succeeded<BR>";
+				if ($Debug) echo "fetched by ID succeeded<br>";
 				$myrow = pg_fetch_array ($result, 0);
 				$this->PopulateValues($myrow);
 			}
@@ -217,7 +217,7 @@ SELECT CL.id as commit_log_id,
  WHERE " . $Where;
 
 
-    if ($Debug) echo "sql = '<pre>$sql</pre>'<BR>";
+    if ($Debug) echo "sql = '<pre>$sql</pre>'<br>";
 
 		$result = pg_exec($this->dbh, $sql);
 		return $result;
@@ -232,13 +232,13 @@ SELECT GMT_Format(CL.commit_date) as last_commit_date
   JOIN commit_log       CL on CL.id = CLP.commit_log_id
  ORDER BY CL.commit_date DESC
   LIMIT 1";
-#		echo "sql = '<pre>$sql</pre>'<BR>";
+#		echo "sql = '<pre>$sql</pre>'<br>";
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
-				if ($Debug) echo "fetched by ID succeeded<BR>";
+				if ($Debug) echo "fetched by ID succeeded<br>";
 				$myrow = pg_fetch_array ($result, 0);
 				$this->PopulateValues($myrow);
 			}

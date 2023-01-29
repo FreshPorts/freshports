@@ -144,24 +144,24 @@
 
 <?php echo freshports_MainTable(); ?>
 
-  <TR>
+  <tr>
 
-<TD class="content">
-<TABLE class="fullwidth borderless">
-<TR>
-<td class="accent"><span><? echo $ArticleTitle; ?></span></td>
-</TR>
-<TR>
-<TD>
+<td class="content">
+<table class="fullwidth borderless">
+<tr>
+<td class="accent"><span><?php echo $ArticleTitle; ?></span></td>
+</tr>
+<tr>
+<td>
 
 <p>
 This page allows you to select the reports you wish to receive and the frequency of the report.
 </p>
 
 <FORM ACTION="<?php echo $_SERVER["PHP_SELF"] ;?>" METHOD="POST" NAME=f>
-	<TABLE class="report-list bordered">
-	<TR><TD class="element-details">Report Name</TD><TD class="element-details">Frequency</TD><TD class="element-details">Description</TD></TR>
-	<?
+	<table class="report-list bordered">
+	<tr><td class="element-details">Report Name</td><td class="element-details">Frequency</td><td class="element-details">Description</td></tr>
+	<?php
 
 
 		reset($Reports);
@@ -177,21 +177,21 @@ This page allows you to select the reports you wish to receive and the frequency
 			$description     = $Values["description"];
 			$thefrequency    = ($Values["frequency"] ?? '');
 		
-			echo '<TR>';
-			echo '<TD>';
+			echo '<tr>';
+			echo '<td>';
 			echo '<label><INPUT TYPE="checkbox" NAME="reports[]" value="' . $report_id . '"';
 			if (IsSet($Values["selected"])) {
 				echo ' checked';
 			}
 			echo '> ' . $name;
-			echo '</label></TD>';
+			echo '</label></td>';
 
 			if ($Debug) {
 				echo '$Values["frequency"]=\'' . $Values["frequency"] . '\'';
 				echo 'now processing $report_id = \'' . $report_id . '\'';
 			}
 
-            echo '<TD>';
+            echo '<td>';
 			if ($needs_frequency == 't') {
 				reset($Frequencies);
 				$numrows = count($Frequencies);
@@ -216,13 +216,13 @@ This page allows you to select the reports you wish to receive and the frequency
 			} else {
 			  echo 'nil';
 			}
-			echo '</TD>';
-			echo "<TD>" . $description . " </TD>";
-			echo "</TR>\n";
+			echo '</td>';
+			echo "<td>" . $description . " </td>";
+			echo "</tr>\n";
 		}
 
 	?>
-	</TABLE>
+	</table>
 
 <?php require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/spam-filter-information.php'); ?>
 
@@ -242,24 +242,24 @@ the directions found on the <a href="https://lists.freshports.org/mailman/listin
 	&nbsp;&nbsp;<INPUT TYPE="submit" VALUE="update" NAME="submit">
 </FORM>
 
-</TD>
-</TR>
-</TABLE>
+</td>
+</tr>
+</table>
 
-	</TD>
+	</td>
 
   <td class="sidebar">
-  <?
+  <?php
   echo freshports_SideBar();
   ?>
   </td>
 
-  </TR>
+  </tr>
 
-</TABLE>
+</table>
 
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

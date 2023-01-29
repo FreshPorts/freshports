@@ -24,11 +24,11 @@
 
 	<?php echo freshports_MainContentTable(NOBORDER); ?>
 
-<TR>
+<tr>
 	<?php echo freshports_PageBannerText("About this site"); ?>
-</TR>
+</tr>
 
-<TR><TD class="textcontent">
+<tr><td class="textcontent">
 <P>
 We have a few notes about this website.
 </P>
@@ -37,18 +37,18 @@ We have a few notes about this website.
 	if ($ShowAds) echo '<CENTER>' . Ad_728x90() . '</CENTER>';
 ?>
 
-</TD></TR>
-<TR>
+</td></tr>
+<tr>
 	<?php
 	echo freshports_PageBannerText("What is a port?"); 
 	?>
-</TR>
+</tr>
 
-<TR><TD class="textcontent">
+<tr><td class="textcontent">
 
 <P>A port is the term used to describe a collection of files which makes it extremely
-easy to install an application.  As it says in the <A HREF="https://www.freebsd.org/ports/">
-FreeBSD Ports description</A>: <em>Installing an application is as simple as downloading 
+easy to install an application.  As it says in the <a href="https://www.freebsd.org/ports/">
+FreeBSD Ports description</a>: <em>Installing an application is as simple as downloading
 the port, unpacking it and typing <b>make</b> in the port directory</em>. If you want an application, 
 the port is the Way To Go(TM)</P>
 
@@ -56,16 +56,16 @@ the port is the Way To Go(TM)</P>
 And you love that new application.  And you want to know when the port is updated.  That's where
 we come in.</P>
 
-<P>For more information about the Ports tree, see <A HREF="https://www.freebsd.org/ports/">https://www.freebsd.org/ports/</A>.</P>
+<P>For more information about the Ports tree, see <a href="https://www.freebsd.org/ports/">https://www.freebsd.org/ports/</a>.</P>
 
-</TD></TR>
-<TR>
+</td></tr>
+<tr>
 	<?php
 	echo freshports_PageBannerText("What is $FreshPortsTitle");
 	?>
-</TR>
+</tr>
 
-<TR><TD class="textcontent">
+<tr><td class="textcontent">
 
 <P><?php echo $FreshPortsTitle; ?> lists the changes made to the ports tree. If you wish, <?php echo $FreshPortsTitle; ?> can email you 
 when your favourite port has been updated.
@@ -73,29 +73,28 @@ when your favourite port has been updated.
 
 <P>
 <?php echo $FreshPortsTitle; ?> is not the place to report errors or request changes.  You should do that on the 
-<A HREF="<?php echo MAILTO; ?>:freebsd-ports&#64;freebsd.org">FreeBSD Ports mailing list</A>.  We do not maintain ports.  We do not
+<a href="<?php echo MAILTO; ?>:freebsd-ports&#64;freebsd.org">FreeBSD Ports mailing list</a>.  We do not maintain ports.  We do not
 create ports.  We do not fix ports.  We just tell you what others have been doing to the Ports tree.
 </P>
 
-</TD></TR>
-<TR>
+</td></tr>
+<tr>
 	<?php
 	echo freshports_PageBannerText("OK, whose bright idea was this?");
 	?>
-</TR>
+</tr>
 
-<TR><TD class="textcontent">
+<tr><td class="textcontent">
 <P>This site was created by Dan Langille.  His other web feats include 
-<A HREF="https://www.freebsddiary.org/">The FreeBSD Diary</A>, <a 
-href="https://www.racingsystem.com">The Racing System</A>, 
+<a href="https://www.freebsddiary.org/">The FreeBSD Diary</a>, <a href="https://www.racingsystem.com">The Racing System</a>, 
 <a href="https://www.bsdcan.org/">BSDCan</a>, and an ability
-to avoid reading the inane comments on <A HREF="https://slashdot.org">slashdot</A>.
-But Dan didn't create the site all by himself.  Have a look at <A HREF="authors.php">
-About the Authors</A> for details of who else helped.</P>
-</TD></TR>
+to avoid reading the inane comments on <a href="https://slashdot.org">slashdot</a>.
+But Dan didn't create the site all by himself.  Have a look at <a href="authors.php">
+About the Authors</a> for details of who else helped.</P>
+</td></tr>
 
-</TABLE>
-</TD>
+</table>
+</td>
 
   <td class="sidebar">
 	<?php
@@ -103,18 +102,18 @@ About the Authors</A> for details of who else helped.</P>
 	?>
   </td>
 
-</TABLE>
+</table>
 
 <?php
 	GLOBAL $ShowPoweredBy;
 	$ShowPoweredBy = 1;
 ?>
 
-<TABLE class="fullwidth borderless">
-<TR><TD>
+<table class="fullwidth borderless">
+<tr><td>
 <?php echo freshports_ShowFooter(); ?>
-</TD></TR>
-</TABLE>
+</td></tr>
+</table>
 
 </BODY>
 </HTML>

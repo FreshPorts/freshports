@@ -166,13 +166,13 @@ SELECT *
   FROM announcements
  WHERE id = ' . pg_escape_string($this->dbh, $id);
 
-#		echo "sql = '<pre>$sql</pre>'<BR>";
+#		echo "sql = '<pre>$sql</pre>'<br>";
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
-				if ($this->Debug) echo "fetched by ID succeeded<BR>";
+				if ($this->Debug) echo "fetched by ID succeeded<br>";
 				$myrow = pg_fetch_array ($result, 0);
 				$this->PopulateValues($myrow);
 			}
@@ -195,7 +195,7 @@ SELECT *
 
 #		echo '<pre>' . $sql . '</pre>';
 
-		if ($this->Debug)	echo "commits::Fetch sql = '$sql'<BR>";
+		if ($this->Debug)	echo "commits::Fetch sql = '$sql'<br>";
 
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {
@@ -221,7 +221,7 @@ SELECT *
 
 #		echo '<pre>' . $sql . '</pre>';
 
-		if ($this->Debug)	echo "commits::Fetch sql = '$sql'<BR>";
+		if ($this->Debug)	echo "commits::Fetch sql = '$sql'<br>";
 
 		$this->LocalResult = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {
@@ -261,7 +261,7 @@ SELECT *
 
 #		echo '<pre>' . $sql . '</pre>';
 
-		if ($this->Debug) echo "commits::Fetch sql = '$sql'<BR>";
+		if ($this->Debug) echo "commits::Fetch sql = '$sql'<br>";
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($this->LocalResult) {

@@ -14,7 +14,7 @@
           </tr>
         </table>
 
-<?
+<?php
 require ("phpPollConfig.php3");
 require ("phpPollUI.php3");
 

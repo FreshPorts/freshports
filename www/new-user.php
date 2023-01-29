@@ -35,7 +35,7 @@ if (IsSet($submit)) {
 
 	/*
 	while (list($name, $value) = each($_REQUEST)) {
-		echo "$name = $value<BR>\n";
+		echo "$name = $value<br>\n";
 	}
 	*/
 
@@ -51,7 +51,7 @@ if (IsSet($submit)) {
 	$numberofdays = $_REQUEST["numberofdays"];
 	
 	if ($UserLogin == '') {
-		$errors .= "Please enter a user id.<BR>";
+		$errors .= "Please enter a user id.<br>";
 		$OK = 0;
 	}
 
@@ -62,7 +62,7 @@ if (IsSet($submit)) {
 	}
 
 	if (!freshports_IsEmailValid($email)) {
-		$errors .= "That email address doesn't look right to me<BR>";
+		$errors .= "That email address doesn't look right to me<br>";
 		$OK = 0;
 	}
 
@@ -73,11 +73,11 @@ if (IsSet($submit)) {
 	}
 
 	if ($Password1 != $Password2) {
-		$errors .= "The password was not confirmed.  It must be entered twice.<BR>";
+		$errors .= "The password was not confirmed.  It must be entered twice.<br>";
 		$OK = 0;
 	} else {
 		if ($Password1 == '') {
-			$errors .= 'A password must be supplied<BR>';
+			$errors .= 'A password must be supplied<br>';
 			$OK = 0;
 		}
 	}
@@ -133,7 +133,7 @@ if (IsSet($submit)) {
 
 				syslog(LOG_ERR, "FreshPorts new user: '$UserID', '$UserLogin', '$email', " . $_SERVER["REMOTE_ADDR"]);
 
-				$errors .= "<BR>sql=" . $sql;
+				$errors .= "<br>sql=" . $sql;
 
 				$result = pg_query_params($db, $sql, array(
 					$UserID, $UserLogin, 'nocookie', $email, 1, 'N', 'U', $_SERVER["REMOTE_ADDR"],
@@ -157,7 +157,7 @@ if (IsSet($submit)) {
 			}
 
 	    } else {
-			$errors .= 'That User ID is already in use.  Please select a different  User ID.<BR>';
+			$errors .= 'That User ID is already in use.  Please select a different  User ID.<br>';
     	}
 	}
 
@@ -179,34 +179,34 @@ if (IsSet($submit)) {
 ?>
 
 <?php echo freshports_MainTable(); ?>
-<TR><td class="content">
+<tr><td class="content">
 <?php
 if ($errors != '') {
-echo '<TABLE class="fullwidth borderless">
-<TR>
-<TD>
-<TABLE class="fullwidth borderless">
-<TR class="accent"><TD>Access Code Failed!</TD>
-</TR>
-<TR>
-<TD>
+echo '<table class="fullwidth borderless">
+<tr>
+<td>
+<table class="fullwidth borderless">
+<tr class="accent"><td>Access Code Failed!</td>
+</tr>
+<tr>
+<td>
   <p><IMG SRC="/images/warning.gif"> Some errors have occurred which must be corrected before your login can be created.</p>';
 
 /*
   while (list($name, $value) = each($_REQUEST)) {
-    echo "$name = $value<BR>\n";
+    echo "$name = $value<br>\n";
   }
 */
 echo $errors;
 
 echo '<p>If you need help, please email postmaster@. </p>
-</TD>
-</TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>
-<BR>';
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<br>';
 }
 
 if (!IsSet($submit) && $errors != '') {
@@ -217,11 +217,11 @@ if (!IsSet($submit) && $errors != '') {
 echo freshports_MainContentTable();
 
 ?>
-      <TR>
-		<? echo freshports_PageBannerText("New User Details"); ?>
-      </TR>
-      <TR>
-        <TD>
+      <tr>
+		<?php echo freshports_PageBannerText("New User Details"); ?>
+      </tr>
+      <tr>
+        <td>
 
 <p class="element-details"><span>Please observe the following points:</span></p>
 
@@ -231,7 +231,7 @@ You must supply a valid email address. Instructions to enable your account
 will be emailed to you at that address.
 
 <li>If you have a spam filter, please allow all
-mail from <CODE CLASS="code">unixathome.org</CODE> and <CODE CLASS="code">freshports.org</CODE>.
+mail from <code class="code">unixathome.org</code> and <code class="code">freshports.org</code>.
 
 <li>Please disable any auto-responders for the above domains.  I get enough email
 without being told when you'll be back from holiday or who else I can contact...
@@ -245,25 +245,25 @@ Your cooperation with the above will make my life easier.  Thank you.
 
 <hr>
 
-<? require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/new-user.php'); ?>
+<?php require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/new-user.php'); ?>
 
 	<hr>
 
-    </TD>
-  </TR>
-</TABLE>
-</TD>
+    </td>
+  </tr>
+</table>
+</td>
 <td class="sidebar">
 
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
 
 </td>
-</TR>
-</TABLE>
+</tr>
+</table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

@@ -248,9 +248,9 @@ $ErrorMessage .= CheckForNoDefaultAndAddToDefault($db, $User);
 	<tr><td class="content">
 
 	<?php echo freshports_MainContentTable(); ?>
-<TR>
-	<? echo freshports_PageBannerText("Watch list maintenance"); ?>
-</TR>
+<tr>
+	<?php echo freshports_PageBannerText("Watch list maintenance"); ?>
+</tr>
 
 <tr><td>
 <table class="watch-maintenance fullwidth borderless">
@@ -262,19 +262,19 @@ $ErrorMessage .= CheckForNoDefaultAndAddToDefault($db, $User);
 ?>
 
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
-<TABLE class="fullwidth bordered">
-<TR><td class="element-details">Watch Lists</td><td><span class="element-details">Actions</span> (scroll down for instructions)</td></tr>
-  <TR>
-    <TD>
+<table class="fullwidth bordered">
+<tr><td class="element-details">Watch Lists</td><td><span class="element-details">Actions</span> (scroll down for instructions)</td></tr>
+  <tr>
+    <td>
 <?php
 	echo freshports_WatchListDDLB($db, $User->id, '', 10, TRUE);
 ?>
-    </TD>
-    <TD>
+    </td>
+    <td>
     <INPUT id=add         type=submit size=48 value="Add"          name=add>&nbsp;&nbsp;&nbsp;
-    <INPUT id=add_name    name=add_name    <?php if (IsSet($add_name))    echo 'value="' . $add_name    . '" '; ?>pattern="[a-zA-Z0-9]+" size=10><small><sup>(1)</sup></small><BR>
+    <INPUT id=add_name    name=add_name    <?php if (IsSet($add_name))    echo 'value="' . $add_name    . '" '; ?>pattern="[a-zA-Z0-9]+" size=10><small><sup>(1)</sup></small><br>
     <INPUT id=rename      type=submit size=23 value="Rename"       name=rename>&nbsp;&nbsp;&nbsp;
-    <INPUT id=rename_name name=rename_name <?php if (IsSet($rename_name)) echo 'value="' . $rename_name . '" '; ?>pattern="[a-zA-Z0-9]+" size=10><small><sup>(1)</sup></small><BR>
+    <INPUT id=rename_name name=rename_name <?php if (IsSet($rename_name)) echo 'value="' . $rename_name . '" '; ?>pattern="[a-zA-Z0-9]+" size=10><small><sup>(1)</sup></small><br>
     <?php echo "&nbsp;<small>(1) - only $ValidCharacters</small>" ?>
 		<br>
 
@@ -291,26 +291,26 @@ $ErrorMessage .= CheckForNoDefaultAndAddToDefault($db, $User);
     <label>Confirm: <INPUT id=confirm name=confirm pattern="(Delete|Empty)( All)?" size=10></label>
 	 <br>(case sensitive)
 
-    </TD>
+    </td>
 </tr>
 </table>
 </form>
 
 </td><td>
 
-<TABLE class="fullwidth bordered">
-<TR><td class="element-details">Options</td></tr>
-  <TR>
+<table class="fullwidth bordered">
+<tr><td class="element-details">Options</td></tr>
+  <tr>
 <td>
 When clicking on Add/Remove for a port,<br> the action should affect
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
-<INPUT type=radio name=addremove value=default<?php if ($User->watch_list_add_remove == 'default') echo ' checked'; ?>>&nbsp;the default watch list[s]<BR>
+<INPUT type=radio name=addremove value=default<?php if ($User->watch_list_add_remove == 'default') echo ' checked'; ?>>&nbsp;the default watch list[s]<br>
 <INPUT type=radio name=addremove value=ask<?php     if ($User->watch_list_add_remove == 'ask')     echo ' checked'; ?>>&nbsp;Ask for watch list name[s] each time<br>
 <INPUT type=submit size=29 value="Set options"  name=set_options>
  </form>
 </td>
-    </TR>
-</TABLE>
+    </tr>
+</table>
 
 </td></tr>
 
@@ -373,14 +373,14 @@ When clicking on Add/Remove for a port,<br> the action should affect
 </td></tr></table>
 </td>
 <td class="sidebar">
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
 </td>
 </tr>
 </table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

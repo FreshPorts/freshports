@@ -237,7 +237,7 @@ UPDATE watch_list
 
 #		echo '<pre>' . $sql . '</pre>';
 
-		if ($Debug)	echo "WatchLists::Fetch sql = '$sql'<BR>";
+		if ($Debug)	echo "WatchLists::Fetch sql = '$sql'<br>";
 
 		if ($ID == '') {
 			syslog(LOG_NOTICE, "classes/watch_list.php::line 213 \$UserID='$UserID', \$ID='$ID'");

@@ -230,7 +230,7 @@ Feedback please, preferably by posting <a href="https://github.com/FreshPorts/fr
 or via
 email to the webmaster of this domain.  
 <p>
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

@@ -30,7 +30,7 @@
 <tr>
 	<?php echo freshports_PageBannerText("FreshPorts News Feeds"); ?>
 </tr>
-<TR><td class="content">
+<tr><td class="content">
 <h1>FreshPorts News Feeds</h1>
 
 <p>
@@ -64,11 +64,11 @@ The above feeds are created using <a href="https://github.com/flack/UniversalFee
 </table>
 </TD>
   <td class="sidebar">
-  <?
+  <?php
   echo freshports_SideBar();
   ?>
   </td>
-</TR>
+</tr>
 </table>
 
 <?php

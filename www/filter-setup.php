@@ -115,7 +115,7 @@ if ($_REQUEST['wlid']) {
 	<?php echo freshports_MainContentTable(NOBORDER); ?>
 <?php # article table start ?>
   <tr>
-	<? echo freshports_PageBannerText("Watch List - categories"); ?>
+	<?php echo freshports_PageBannerText("Watch List - categories"); ?>
   </tr>
 <tr><td class="content">
 
@@ -131,7 +131,7 @@ notification frequency within your <a href="customize.php">account settings</a>.
 Virtual categories cannot be watched and their checkboxes will be disabled.
 </td>
 
-<td valign="top">
+<td class="vtop">
 <table class="borderless">
 <?php # ddlb start ?>
 <tr><td>Select...</td></tr>
@@ -175,12 +175,12 @@ if ($Debug) echo "<pre>$sql</pre>";
 $result  = pg_exec ($db, $sql);
 $numrows = pg_num_rows($result);
 
-if ($Debug) echo "num categories being watched = $numrows<BR>";
+if ($Debug) echo "num categories being watched = $numrows<br>";
 
 for ($i = 0; $i < $numrows; $i++) {
 	$myrow = pg_fetch_array($result, $i);
 	$WatchedCategories{$myrow["category_id"]} = ' *';
-	if ($Debug) echo "category " . $myrow["category_id"] . " = " . $WatchedCategories{$myrow["category_id"]} . '<BR>';
+	if ($Debug) echo "category " . $myrow["category_id"] . " = " . $WatchedCategories{$myrow["category_id"]} . '<br>';
 }
 
 # Get a list of the categories that are being watched
@@ -196,22 +196,22 @@ $sql = "
 if ($Debug) echo "<pre>$sql</pre>";
 
 
-echo '<tr><td align="center">' . "\n";
+echo '<tr><td class="vcentered">' . "\n";
 
 $result  = pg_exec ($db, $sql);
 $numrows = pg_num_rows($result);
 
-if ($Debug) echo "num categories being watched = $numrows<BR>";
+if ($Debug) echo "num categories being watched = $numrows<br>";
 
 for ($i = 0; $i < $numrows; $i++) {
 	$myrow = pg_fetch_array($result, $i);
 	$FilteredCategories{$myrow["category_element_id"]} = ' $';
-	if ($Debug) echo "category " . $myrow["category_element_id"] . " = " . $FilteredCategories{$myrow["category_element_id"]} . '<BR>';
+	if ($Debug) echo "category " . $myrow["category_element_id"] . " = " . $FilteredCategories{$myrow["category_element_id"]} . '<br>';
 }
 
 # categories list start
 
-$HTML .= "\n" . '<TABLE class="bordered" CELLPADDING="5">' . "\n";
+$HTML .= "\n" . '<table class="bordered" CELLPADDING="5">' . "\n";
 $HTML .= '<tr><td>';
 // get the list of categories to display
 $sql = "
@@ -248,7 +248,7 @@ for ($i = 0; $i < $NumCategories; $i++) {
    }
 
    if ($Row == 1) {
-      $HTML .= '<td valign="top">';
+      $HTML .= '<td class="vtop">';
    }
 
    $HTML .= '<input type="checkbox" name="categories[]"';
@@ -298,7 +298,7 @@ echo "</table>\n";
 </td>
 
   <td class="sidebar">
-  <?
+  <?php
   echo freshports_SideBar();
   ?>
   </td>
@@ -307,7 +307,7 @@ echo "</table>\n";
 </table>
 <?php # main table finish ?>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

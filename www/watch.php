@@ -73,7 +73,7 @@
 <tr><td class="content">
 <?php echo freshports_MainContentTable(NOBORDER); ?>
 <tr>
-	<? echo freshports_PageBannerText($Title); ?>
+	<?php echo freshports_PageBannerText($Title); ?>
 </tr>
 <tr><td>
 <?php
@@ -81,7 +81,7 @@ if ($wlid == '') {
 	echo 'You have no watch lists.';
 } else {
 ?>
-These are the ports which are on your <a href="/watch-categories.php">watch list</A>.
+These are the ports which are on your <a href="/watch-categories.php">watch list</a>.
 That link also appears on the right hand side of this page, under Login.
 <?php
 }
@@ -334,7 +334,7 @@ SELECT selected_ports.*,
 	}
 
 	if ($ShowCategoryHeaders) {
-		echo '<DL>';
+		echo '<dl>';
 	}
 
 
@@ -357,17 +357,17 @@ SELECT selected_ports.*,
 	
 			if ($LastCategory != $Category) {
 				if ($i > 0) {
-					echo "\n</DD>\n";
+					echo "\n</dd>\n";
 				}
 
 				$LastCategory = $Category;
 				if ($ShowCategoryHeaders) {
-					echo '<DT>';
+					echo '<dt>';
 				}
 
 				echo '<span class="element-details><span><a href="/' . $Category . '/">' . $Category . '</a></span></span>';
 				if ($ShowCategoryHeaders) {
-					echo "</DT>\n<DD>";
+					echo "</dt>\n<dd>";
 				}
 			}
 		}
@@ -388,7 +388,7 @@ SELECT selected_ports.*,
 	}
 
 	if ($ShowCategoryHeaders) {
-		echo "\n</DD>\n</DL>\n";
+		echo "\n</dd>\n</dl>\n";
 	}
 
 	echo "</td></tr>\n";
@@ -408,7 +408,7 @@ SELECT selected_ports.*,
 </td>
 
   <td class="sidebar">
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
   </td>
@@ -416,7 +416,7 @@ SELECT selected_ports.*,
 </tr>
 </table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

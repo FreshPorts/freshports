@@ -37,13 +37,13 @@ class FilesDisplay {
 		$NumRows = pg_num_rows($this->ResultSet);
 		if ($this->Debug) echo __FILE__ . ':' . __LINE__ . " Number of rows = $NumRows<br>\n";
 		if (!$NumRows) { 
-			$this->HTML = "<TR><TD>\n<P>Sorry, nothing found in the database....</P>\n</td></tr>\n";
+			$this->HTML = "<tr><td>\n<P>Sorry, nothing found in the database....</P>\n</td></tr>\n";
 			return $this->HTML;
 		}
 
 		$this->HTML .= '
 <table class="files-list fullwidth bordered">
-<TR>
+<tr>
 ';
 		switch ($NumRows) {
 			case 0:
@@ -60,12 +60,12 @@ class FilesDisplay {
 
 		$this->HTML .= freshports_PageBannerTextColSpan($title, 4);
 		
-		$this->HTML .= "</TR>\n";
+		$this->HTML .= "</tr>\n";
 
 		$this->HTML .= "
-		<TR>
+		<tr>
 			<th>Action</th><th>Revision</th><th>Annotate/etc</th><th>File</th>
-		</TR>\n";
+		</tr>\n";
 
 		for ($i = 0; $i < $NumRows; $i++) {
 			$myrow = pg_fetch_array($this->ResultSet, $i);
@@ -76,7 +76,7 @@ class FilesDisplay {
 				echo '</pre>';
 			}
 
-			$this->HTML .= "<TR>\n";
+			$this->HTML .= "<tr>\n";
 
 			switch ($myrow["change_type"]) {
 				case "M":
@@ -95,9 +95,9 @@ class FilesDisplay {
 					$Change_Type = $myrow["change_type"] ; 
 			}
 
-			$this->HTML .= "  <TD>" . $Change_Type . "</TD>";
-			$this->HTML .= '  <TD>' . $myrow["revision_name"];
-            $this->HTML .= "</TD>";
+			$this->HTML .= "  <td>" . $Change_Type . "</td>";
+			$this->HTML .= '  <td>' . $myrow["revision_name"];
+            $this->HTML .= "</td>";
             
             $this->HTML .= '<td>';
             switch($myrow['repository'])
@@ -109,7 +109,7 @@ class FilesDisplay {
                 case FREEBSD_REPOSITORY_SUBVERSION:
                     # we want something like
                     # http://svn.freebsd.org/ports/head/x11-wm/awesome/Makefile
-                    $this->HTML .= ' <A HREF="http://' . $myrow['repo_hostname'] . $myrow["pathname"] . '?annotate=' . $myrow["revision_name"] . '">';
+                    $this->HTML .= ' <a href="http://' . $myrow['repo_hostname'] . $myrow["pathname"] . '?annotate=' . $myrow["revision_name"] . '">';
 		    $this->HTML .= freshports_Revision_Icon() . '</a> ';
                     break;
 
@@ -119,7 +119,7 @@ class FilesDisplay {
                     # now: https://cgit.freebsd.org/ports/blame/multimedia/plexmediaserver-plexpass/Makefile
                     
                     # branch: https://cgit.freebsd.org/ports/blame/www/gitea/Makefile?h=2021Q2&id=3ce47d16f7eb5c00b470603c307fa52bb9ca920b
-                    $this->HTML .= ' <A HREF="http://' . $myrow['repo_hostname'] . $myrow["path_to_repo"] . '/blame/';
+                    $this->HTML .= ' <a href="http://' . $myrow['repo_hostname'] . $myrow["path_to_repo"] . '/blame/';
                     $this->HTML .= freshports_Convert_Subversion_Path_To_Git($myrow["pathname"], $myrow['branch']) . '?';
                     if ($myrow['branch'] != BRANCH_HEAD ) {
                         $this->HTML .= 'h=' . $myrow['branch'] . '&';
@@ -147,7 +147,7 @@ class FilesDisplay {
                         $this->HTML .= ' ';
     	        	$previousRevision = $this->GetPreviousRevision( $myrow["revision_name"] );
                         # we want something like http://svnweb.freebsd.org/ports/head/www/p5-App-Nopaste/Makefile?r1=300951&r2=300950&pathrev=300951
-            		$this->HTML .= ' <A HREF="http://' . $myrow['repo_hostname'] . $myrow["pathname"] . '?r1=' . 
+                        $this->HTML .= ' <a href="http://' . $myrow['repo_hostname'] . $myrow["pathname"] . '?r1=' . 
             		$myrow["revision_name"] . '&amp;r2=' . $previousRevision . '&amp;pathrev=' . $myrow["revision_name"] . '">';
         		$this->HTML .= freshports_Diff_Icon() . '</a> ';
                         break;
@@ -160,7 +160,7 @@ class FilesDisplay {
             }
 
             $this->HTML .= '</td>';
-            $this->HTML .= '  <TD>';
+            $this->HTML .= '  <td>';
             
             switch($myrow['repository'])
             {
@@ -172,7 +172,7 @@ class FilesDisplay {
                 case FREEBSD_REPOSITORY_SUBVERSION:
                     # we want something like
                     # http://svnweb.freebsd.org/ports/head/textproc/bsddiff/Makefile?view=log#rev300953
-                    $this->HTML .= ' <A HREF="http://' . $myrow['repo_hostname'] . $myrow["pathname"] . '?view=log#rev' . $myrow["revision_name"] . '">';
+                    $this->HTML .= ' <a href="http://' . $myrow['repo_hostname'] . $myrow["pathname"] . '?view=log#rev' . $myrow["revision_name"] . '">';
                     $url_text = $myrow["pathname"];
                     break;
 
@@ -188,8 +188,8 @@ class FilesDisplay {
             }
 
             # we once had $myrow["pathname"] here, until git came in, and we needed to convert the pathname.
-            $this->HTML .= '<CODE CLASS="code">' . $url_text . "</CODE></a></TD>";
-            $this->HTML .= "</TR>\n";
+            $this->HTML .= '<code class="code">' . $url_text . "</code></a></td>";
+            $this->HTML .= "</tr>\n";
          }
 		
 	$this->HTML .= "</table>";

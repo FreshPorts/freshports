@@ -21,7 +21,7 @@ class SystemBranch {
 
     $sql = "select branch_name from system_branch where branch_name ilike '20%Q%' ORDER BY branch_name";
 
-#   echo "sql = '$sql'<BR>";
+#   echo "sql = '$sql'<br>";
 
     $result = pg_exec($this->dbh, $sql);
     if ($result) {

@@ -83,7 +83,7 @@ if (!empty($visitor)) {
 			#
 
 			freshports_CookieClear();
-			echo 'Database error: Account details corrupted.  Please contact ' . PROBLEM_SOLVER_EMAIL_ADDRESS . '.<BR>';
+			echo 'Database error: Account details corrupted.  Please contact ' . PROBLEM_SOLVER_EMAIL_ADDRESS . '.<br>';
 			echo 'You have been logged out.';
 			exit;
 		}
@@ -99,5 +99,5 @@ if (!empty($visitor)) {
 		echo "UserName = $User->name\n<br>UserID=$User->id<br>\n";
 	}
 } else {
-	if ($Debug) echo "we have no \$visitor\n<BR>";
+	if ($Debug) echo "we have no \$visitor\n<br>";
 }

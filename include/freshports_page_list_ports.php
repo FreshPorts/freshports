@@ -164,7 +164,7 @@ class freshports_page_list_ports extends freshports_page {
 		if ($result) {
 			$myrow = pg_fetch_array ($result);
 			$numrows = $myrow[0];
-#			echo "There are $numrows to fetch<BR>\n";
+#			echo "There are $numrows to fetch<br>\n";
 		} else {
 			echo pg_last_error($this->_db);
 		}
@@ -302,7 +302,7 @@ SELECT gmt_format(max(CL.date_added)) as last_modified " . $this->_FROM_CLAUSE()
 			echo pg_last_error($this->_db);
 		} else {
 			$numrows = pg_num_rows($this->_result);
-#			echo "There are $numrows to fetch<BR>\n";
+#			echo "There are $numrows to fetch<br>\n";
 		}
 		
 		return $numrows;
@@ -403,11 +403,11 @@ SELECT gmt_format(max(CL.date_added)) as last_modified " . $this->_FROM_CLAUSE()
 	}
 
 	function toHTML() {
-		$this->addBodyContent('<TR><TD>' . $this->getDescription() . '</TD></TR>');
+		$this->addBodyContent('<tr><td>' . $this->getDescription() . '</td></tr>');
 
 		// make sure the value for $sort is valid
 
-		$SortStatement = "<TR><TD>\nThis page is " . $this->getSortedbyHTML() . "</TD></TR>\n";
+		$SortStatement = "<tr><td>\nThis page is " . $this->getSortedbyHTML() . "</td></tr>\n";
 
 		$this->addBodyContent($SortStatement); 
 
@@ -417,7 +417,7 @@ SELECT gmt_format(max(CL.date_added)) as last_modified " . $this->_FROM_CLAUSE()
 
 		$PageLinks = $this->pageLinks();
 		if ($PageLinks != '') {
-			$this->AddBodyContent('<tr><td align="center">');
+			$this->AddBodyContent('<tr><td class="vcentered">');
 			$this->AddBodyContent($PageLinks);
 			$this->AddBodyContent('</td></tr>');
 		}
@@ -427,7 +427,7 @@ SELECT gmt_format(max(CL.date_added)) as last_modified " . $this->_FROM_CLAUSE()
 		$this->addBodyContent($SortStatement); 
 
 		if ($PageLinks != '') {
-			$this->AddBodyContent('<tr><td align="center">');
+			$this->AddBodyContent('<tr><td class="vcentered">');
 			$this->AddBodyContent($PageLinks);
 			$this->AddBodyContent('</td></tr>');
 		}

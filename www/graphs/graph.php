@@ -104,7 +104,7 @@ header("Content-type: image/png");
 readfile($filename);
 
 
-//  CREATE TABLE "graph" ("id" integer NOT NULL, "query" text NOT NULL,
+//  CREATE table "graph" ("id" integer NOT NULL, "query" text NOT NULL,
 //  "title" text NOT NULL);
 
 // insert into graph (id, query, title) values (0,'select category,

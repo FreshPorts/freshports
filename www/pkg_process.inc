@@ -10,7 +10,7 @@
 $Debug=0;
 
 function LinkToPort($category, $port) {
-	return '<A HREF="/' . $category . '/' . $port . '/">' . $category . '/' . $port . '</A>';
+	return '<a href="/' . $category . '/' . $port . '/">' . $category . '/' . $port . '</a>';
 }
 
 
@@ -23,10 +23,10 @@ function HandleFileUpload($FormFileName, $Destination) {
 
 	if (is_uploaded_file($_FILES[$FormFileName]['tmp_name'])) {
 		$filename = $_FILES[$FormFileName]['tmp_name'];
-#		print "$filename was uploaded successfully<BR>";
+#		print "$filename was uploaded successfully<br>";
 		$realname = $_FILES[$FormFileName]['name'];
-#		print "realname is $realname<BR>";
-#		print "copying file to $Destination<BR>";
+#		print "realname is $realname<br>";
+#		print "copying file to $Destination<br>";
 		copy($_FILES[$FormFileName]['tmp_name'], $Destination);
 		$result = 1;
 	} else {
@@ -41,25 +41,25 @@ function HandleFileUpload($FormFileName, $Destination) {
 
 function DisplayError($error) {
 ?>
-	<TABLE class="fullwidth bordered">
-	<TR><TD VALIGN=TOP>
-		<TABLE class="fullwidth">
-			<TR>
-			    <? echo freshports_PageBannerText("NOTICE"); ?>
-			</TR>
+	<table class="fullwidth bordered">
+	<tr><td VALIGN=TOP>
+		<table class="fullwidth">
+			<tr>
+			    <?php echo freshports_PageBannerText("NOTICE"); ?>
+			</tr>
 
-			<TR>
-				<TD>
+			<tr>
+				<td>
 					<IMG SRC="/images/warning.gif" ALT="warning">
-					<? echo $error ?>
-				</TD>
-			</TR>
-		</TABLE>
-	</TD>
-	</TR>
-	</TABLE>
+					<?php echo $error ?>
+				</td>
+			</tr>
+		</table>
+	</td>
+	</tr>
+	</table>
 
-<?
+<?php
 }
 
 
@@ -146,7 +146,7 @@ function ProcessPackages($UserID, $PortArray, $dbh) {
 			#
 			DisplayError('<P>OUCH, That does not look like the right output to me.  Please ensure you
 								have the correct file format and try again (see step 1). </P>
-							<P>This is the first line I found: <CODE CLASS="code">' . $key . '</CODE></P>');
+							<P>This is the first line I found: <code class="code">' . $key . '</code></P>');
 			$ok = FALSE;
 			break;
 		}
@@ -209,32 +209,32 @@ function UploadDisplayStagingResultsMatches($UserID, $WatchListID, $dbh) {
 		if ($numrows) {
 			?>
 
-			<TABLE class="bordered">
-			<TR><TD COLSPAN="2"><B>Port name</B> <SMALL>(<? echo $numrows ?> port<?php if ($numrows > 1) echo 's'; ?>)</SMALL></TD><TD ALIGN="center"><SMALL>Add</SMALL></TD></TR>
+			<table class="bordered">
+			<tr><td colspan="2"><B>Port name</B> <small>(<?php echo $numrows ?> port<?php if ($numrows > 1) echo 's'; ?>)</small></td><td ALIGN="center"><small>Add</small></td></tr>
 
-			<?
+			<?php
 			for ($i = 0; $i < $numrows; $i++) {
 				$row = pg_fetch_array($result, $i);
-				echo '<TR>';
+				echo '<tr>';
 
-				echo '<TD>';
+				echo '<td>';
 				echo LinkToPort($row["category"], $row["port"]);
-				echo '</TD>';
+				echo '</td>';
 
-				echo '<TD ALIGN="center">';
+				echo '<td ALIGN="center">';
 				if ($row["onwatchlist"]) {
 					echo 'W';
 				} else {
 					echo '&nbsp;';
 				}
-				echo '</TD>';
+				echo '</td>';
 
-				echo '<TD ALIGN="center"><INPUT TYPE="checkbox" NAME="ports[]" VALUE="' . $row["element_id"] . '" CHECKED></TD>';
+				echo '<td ALIGN="center"><INPUT TYPE="checkbox" NAME="ports[]" VALUE="' . $row["element_id"] . '" CHECKED></td>';
 
-				echo '</TR>' . "\n";
+				echo '</tr>' . "\n";
 			}
 			
-			echo '</TABLE>';
+			echo '</table>';
 
 #			echo 'that took '. (time() - $begintime) . ' seconds to process ' . $numrows . ' rows';
 		} else {
@@ -266,18 +266,18 @@ function UploadDisplayStagingResultsMatchesNo($UserID, $dbh) {
 		if ($numrows) {
 			?>
 
-			<TABLE class="bordered">
-			<TR><TD><B>Port name</B> <SMALL>(<? echo $numrows ?> port<?php if ($numrows > 1) echo 's'; ?>)</SMALL></TD><TD><SMALL>search</SMALL></TD></TR>
+			<table class="bordered">
+			<tr><td><B>Port name</B> <small>(<?php echo $numrows ?> port<?php if ($numrows > 1) echo 's'; ?>)</small></td><td><small>search</small></td></tr>
 
-			<?
+			<?php
 			for ($i = 0; $i < $numrows; $i++) {
 				$row = pg_fetch_array($result, $i);
-				echo '<TR>';
-				echo '<TD><FONT COLOR="red">' . $row["category"] . '/' . $row["port"] . '</FONT></TD>';
-				echo '<TD ALIGN="center"><A HREF="/search.php?query=' . $row["port"] . '&amp;stype=name&amp;num=10&amp;method=soundex&amp;staging=1">?</A></TD>';
-				echo '</TR>';
+				echo '<tr>';
+				echo '<td><FONT COLOR="red">' . $row["category"] . '/' . $row["port"] . '</FONT></td>';
+				echo '<td ALIGN="center"><a href="/search.php?query=' . $row["port"] . '&amp;stype=name&amp;num=10&amp;method=soundex&amp;staging=1">?</a></td>';
+				echo '</tr>';
 			}
-			echo '</TABLE>';
+			echo '</table>';
 
 #			echo 'that took '. (time() - $begintime) . ' seconds to process ' . $numrows . ' rows';
 		} else {
@@ -310,28 +310,28 @@ function UploadDisplayStagingResultsMatchesDuplicates($UserID, $WatchListID, $db
 		if ($numrows) {
 			?>
 
-			<TABLE class="bordered">
-			<TR><TD><B>Port name</B></TD><TD><B>Count</B></TD><TD ALIGN="center"><SMALL>Add</SMALL></TD></TR>
+			<table class="bordered">
+			<tr><td><B>Port name</B></td><td><B>Count</B></td><td ALIGN="center"><small>Add</small></td></tr>
 
-			<?
+			<?php
 			for ($i = 0; $i < $numrows; $i++) {
 				$row = pg_fetch_array($result, $i);
-				echo '<TR>';
+				echo '<tr>';
 
-				echo '<TD>';
+				echo '<td>';
 				echo LinkToPort($row["category"], $row["port"]);
-				echo '</TD>';
+				echo '</td>';
 
-				echo '<TD ALIGN="center">';
+				echo '<td ALIGN="center">';
 				echo $row["item_count"];
-				echo '</TD>';
+				echo '</td>';
 
-				echo '<TD ALIGN="center"><INPUT TYPE="checkbox" NAME="ports[]" VALUE="' . $row["element_id"] . '" CHECKED></TD>';
+				echo '<td ALIGN="center"><INPUT TYPE="checkbox" NAME="ports[]" VALUE="' . $row["element_id"] . '" CHECKED></td>';
 
-				echo '</TR>';
+				echo '</tr>';
 			
 			}
-			echo '</TABLE>';
+			echo '</table>';
 
 #			echo 'that took '. (time() - $begintime) . ' seconds to process ' . $numrows . ' rows';
 		} else {
@@ -372,22 +372,22 @@ function UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $dbh) {
 		if ($numrows) {
 			?>
 
-			<TABLE class="bordered">
-			<TR><TD><B>Port name</B></TD><TD ALIGN="center"><SMALL>Add</SMALL></TD></TR>
+			<table class="bordered">
+			<tr><td><B>Port name</B></td><td ALIGN="center"><small>Add</small></td></tr>
 
-			<?
+			<?php
 			for ($i = 0; $i < $numrows; $i++) {
 				$row = pg_fetch_array($result, $i);
 
-				echo '<TR><TD>';
+				echo '<tr><td>';
 				echo LinkToPort($row["category"], $row["port"]);
-				echo '</TD>';
+				echo '</td>';
 
-				echo '<TD ALIGN="center"><INPUT TYPE="checkbox" NAME="ports[]" VALUE="' . $row["element_id"] . '" CHECKED></TD>';
+				echo '<td ALIGN="center"><INPUT TYPE="checkbox" NAME="ports[]" VALUE="' . $row["element_id"] . '" CHECKED></td>';
 
-				echo '</TR>' . "\n";
+				echo '</tr>' . "\n";
 			}
-			echo '</TABLE>';
+			echo '</table>';
 
 #			echo 'that took '. (time() - $begintime) . ' seconds to process ' . $numrows . ' rows';
 		} else {

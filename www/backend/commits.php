@@ -63,7 +63,7 @@
 		echo pg_last_error($db);
 	} else {
 		$numrows = pg_num_rows($result);
-#		echo "There are $numrows to fetch<BR>\n";
+#		echo "There are $numrows to fetch<br>\n";
 	}
 
 	$numrows = pg_num_rows($result);

@@ -25,11 +25,11 @@
 
 	<?php echo freshports_MainContentTable(); ?>
 
-<TR>
-	<? echo freshports_PageBannerText("Statistics - everyone loves a graph"); ?>
-</TR>
+<tr>
+	<?php echo freshports_PageBannerText("Statistics - everyone loves a graph"); ?>
+</tr>
 
-<TR><TD>
+<tr><td>
 <P>
 All of these graphs require javascript.  Please select the graph you would like to view from the dropdown.
 </P>
@@ -42,7 +42,7 @@ If you have suggestions for graphs, please submit them via the <a href="<?php ec
   if ($ShowAds) echo '<CENTER>' . Ad_728x90() . '</CENTER>';
 ?>
 
-</TD></TR>
+</td></tr>
 
 <tr><td>
 <h2>HEADS UP!</h2>
@@ -68,11 +68,11 @@ Thank you for your help.
 <p>
 </td></tr>
 
-<TR><TD>
+<tr><td>
 
-<TABLE class="graphs fullwidth borderless">
-<TR>
-<TD class="graph-sidebar">
+<table class="graphs fullwidth borderless">
+<tr>
+<td class="graph-sidebar">
 <?php
 	$sql = "select title, label from graphs where json=true order by title";
 	$result = pg_query($db, $sql);
@@ -92,10 +92,10 @@ Thank you for your help.
 		}
 	}
 ?>
-</TD>
-</TR>
-<TR>
-<TD>
+</td>
+</tr>
+<tr>
+<td>
 <div id="title"></div>
 <div id="overview"></div>
 <table>
@@ -108,26 +108,26 @@ Thank you for your help.
 </td>
 </tr>
 </table>
-</TD>
-</TR>
-</TABLE>
+</td>
+</tr>
+</table>
 
 
-</TD></TR>
+</td></tr>
 
-</TABLE>
+</table>
 </td>
 
   <td class="sidebar">
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
   </td>
 
-</TR>
-</TABLE>
+</tr>
+</table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

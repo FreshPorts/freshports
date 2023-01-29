@@ -336,10 +336,10 @@
 	if ($method == '') $method = 'match';
 
 	if ($Debug) {
-		echo "query='" . htmlentities($query) . "' && stype='$stype' && num='$num' && method='$method'\n<BR>";
+		echo "query='" . htmlentities($query) . "' && stype='$stype' && num='$num' && method='$method'\n<br>";
 
 		if ($query && $stype && $num) {
-			echo "yes, we have parameters\n<BR>";
+			echo "yes, we have parameters\n<br>";
 		}
 	}
 
@@ -356,7 +356,7 @@
 
 	if ($WeHaveToSearch) {
 
-		if ($Debug) echo "into search stuff<BR>\n";
+		if ($Debug) echo "into search stuff<br>\n";
 
 		$logfile = CACHE_DIRECTORY . '/searchlog.txt';
 
@@ -800,9 +800,9 @@ JOIN element_pathname EP on E.id = EP.element_id
 
 
 			$AddRemoveExtra  = "?query=" . htmlentities($query). "+stype=$stype+num=$num+method=$method";
-			if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<BR>";
+			if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<br>";
 			$AddRemoveExtra = pg_escape_string($db, $AddRemoveExtra);
-			if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<BR>";
+			if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<br>";
 
 
 			### how many rows is this?
@@ -972,7 +972,7 @@ JOIN element_pathname EP on E.id = EP.element_id
 		echo $PageOptions->DDLB_Choices('num', $num, 'results');
 ?>
 
-	<BR><br>
+	<br><br>
 
 <table class="search-options bordered">
 <tr>

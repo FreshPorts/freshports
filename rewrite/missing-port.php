@@ -38,8 +38,8 @@ function DisplayPortCommits($port, $PageNumber) {
 	$NumRowsTo      = $PortsMovedTo->FetchInitialiseTo($port->id);
 
 	if ($NumRowsFrom + $NumRowsTo > 0) {
-		$HTML .= '<TABLE class="ports-moved fullwidth bordered">' . "\n";
-		$HTML .= "<TR>\n";
+		$HTML .= '<table class="ports-moved fullwidth bordered">' . "\n";
+		$HTML .= "<tr>\n";
 		$HTML .= freshports_PageBannerText("Port Moves");
 		$HTML .= "<tr><td>\n";
 		$HTML .= "<ul>\n";
@@ -354,7 +354,7 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 
 		$HTMLPortPart3 .= $port_display->Display();
 
-		$HTMLPortPart3 .= "</TD></TR>\n</TABLE>\n\n";
+		$HTMLPortPart3 .= "</TD></tr>\n</table>\n\n";
 
 		if ($HasCommitsOnBranch) {
 			# we are displaying the 
@@ -475,9 +475,9 @@ document.body.appendChild(sheet);
 
 <?php echo freshports_MainContentTable(); ?>
 
-<TR>
+<tr>
 <?php echo freshports_PageBannerText("Port details" . ($branch != BRANCH_HEAD ? ' on branch ' . htmlspecialchars($branch) : '')); ?>
-</TR>
+</tr>
 
 <tr><td class="content">
 
@@ -491,9 +491,9 @@ document.body.appendChild(sheet);
   echo freshports_SideBar();
   ?>
   </td>
-</TR>
+</tr>
 
-</TABLE>
+</table>
 
 <?php
 	echo freshports_ShowFooter();

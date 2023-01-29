@@ -40,14 +40,14 @@
 					'FreeBSD, index, applications, ports');
 
 ?>
-<TABLE class="fullwidth borderless" ALIGN="center">
-<TR><td class="content">
-<TABLE class="fullwidth borderless">
+<table class="fullwidth borderless" ALIGN="center">
+<tr><td class="content">
+<table class="fullwidth borderless">
 
-<TR>
-	<? echo freshports_PageBannerText($Title . ' - ' . $CategoryName); ?>
-</TR>
-<TR><TD>
+<tr>
+	<?php echo freshports_PageBannerText($Title . ' - ' . $CategoryName); ?>
+</tr>
+<tr><td>
 <p>
 <?php
 if ($User->IsTaskAllowed(FRESHPORTS_TASKS_CATEGORY_VIRTUAL_DESCRIPTION_SET)) {
@@ -98,7 +98,7 @@ echo '</td>';
 <?php
 if (!$IsPrimary) {
 ?>
-<tr><td colspan="5" align="center">
+<tr><td colspan="5" class="vcentered">
 <p>
 <INPUT id=default     style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29 value="Update"  name="update">
 <INPUT TYPE="hidden" NAME="category" VALUE="<?php echo $CategoryName; ?>">
@@ -138,20 +138,20 @@ Well, I'm sorry to advise you that this page is intentionally left blank.
 <?php
 }
 ?>
-</TD></TR>
-</TABLE>
+</td></tr>
+</table>
 </td>
 
   <td class="sidebar">
-  <?
+  <?php
   echo freshports_SideBar();
   ?>
   </td>
 
-</TR>
-</TABLE>
+</tr>
+</table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

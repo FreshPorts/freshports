@@ -36,14 +36,14 @@ function freshports_NonPortDescription($dbh, $element_record) {
 	<tr><td class="content">
 
 	<?php echo freshports_MainContentTable(); ?>
-<TR>
-<? echo freshports_PageBannerText('non port: ' . $Title); ?>
-</TR>
+<tr>
+<?php echo freshports_PageBannerText('non port: ' . $Title); ?>
+</tr>
 <tr><td>
-<a HREF="<?php echo FRESHPORTS_FREEBSD_SVN_URL . $element_record->element_pathname; ?>?view=log" rel="noopener noreferrer">SVNWeb</a>
+<a href="<?php echo FRESHPORTS_FREEBSD_SVN_URL . $element_record->element_pathname; ?>?view=log" rel="noopener noreferrer">SVNWeb</a>
 </td></tr>
 
-<?
+<?php
 	GLOBAL $User;
 
 	# these two options must be the last on the line.  And as such are mutually exclusive
@@ -206,21 +206,21 @@ function freshports_NonPortDescription($dbh, $element_record) {
 
 </TD>
   <td class="sidebar">
-  <?
+  <?php
   echo freshports_SideBar();
   ?>
   </td>
-</TR>
+</tr>
 
-</TABLE>
+</table>
 
-<?
+<?php
 	echo freshports_ShowFooter();
 ?>
 
 </body>
 </html>
 
-<?
+<?php
 	return false;
 } # end of freshports_NonPortDescription

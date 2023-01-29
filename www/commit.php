@@ -180,7 +180,7 @@
 	
 			if (!empty($revision) && count($message_id_array)) {
 				// we have multiple messages for that commit
-				echo '<tr><TD class="content">';
+				echo '<tr><td class="content">';
 				echo "We have multiple emails for that revision: ";
 				$Commit->FetchNth(0);
 				$clean_revision = htmlentities($Commit->svn_revision);
@@ -194,7 +194,7 @@
 					$clean_message_id = htmlentities($Commit->message_id);
 					echo '<li><a href="/commit.php?message_id=' . $clean_message_id . '">' . htmlentities($clean_message_id) . '</a></li>' . "\n";
 				}
-				echo "</ol></TD></tr>";
+				echo "</ol></td></tr>";
 
 
 			} else {
@@ -251,9 +251,9 @@
 							$RetVal = $DisplayCommit->CreateHTML();
 	
 							$HTML .= $DisplayCommit->HTML;
-							$HTML .= '<tr><TD><p>Number of ports [&amp; non-ports] in this commit: ' . $NumFilesTouched . '</p></td></tr>';
+							$HTML .= '<tr><td><p>Number of ports [&amp; non-ports] in this commit: ' . $NumFilesTouched . '</p></td></tr>';
 						} else {
-							$HTML .=  '<tr><TD><P>Sorry, nothing found in the database....</P>' . "\n";
+							$HTML .=  '<tr><td><P>Sorry, nothing found in the database....</P>' . "\n";
 							$HTML .=  '</td></tr>';
 							$DoTheSave = false;
 						}
@@ -358,17 +358,17 @@
 
   <td class="sidebar">
 
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
 
   </td>
-</TR>
-</TABLE>
+</tr>
+</table>
 
-<BR>
+<br>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

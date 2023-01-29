@@ -21,11 +21,11 @@
 	<tr><td class="content">
 
 	<?php echo freshports_MainContentTable(); ?>
-  <TR>
+  <tr>
 	<?php echo freshports_PageBannerText("Account created"); ?>
-  </TR>
+  </tr>
 	<TR>
-	<TD>
+	<td>
 	<P>
 	Your account has been created.
 	</P>
@@ -38,19 +38,19 @@
 	If you do not receive that email, please attempt to login and you
 	will have an opportunity to resend the notification.
 	</P>
-</TD></TR>
-</TABLE>
-</TD>
+</td></TR>
+</table>
+</td>
 
   <td class="sidebar">
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
   </td>
 </TR>
-</TABLE>
+</table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

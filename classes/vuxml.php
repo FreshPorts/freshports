@@ -34,7 +34,7 @@ class VuXML {
 		$this->vid = $VID;
 		# let's try to avoid:  PHP Warning:  pg_query(): Query failed: ERROR:  invalid byte sequence for encoding &quot;UTF8&quot;: 0xfc
 		$sql = "set client_encoding = 'ISO-8859-15'; select * from vuxml where vid = '" . pg_escape_string($this->dbh, $VID) . "'";
-#		echo "<pre>sql = '$sql'</pre><BR>";
+#		echo "<pre>sql = '$sql'</pre><br>";
 
 		$result = pg_query($this->dbh, $sql);
 		if ($result) {

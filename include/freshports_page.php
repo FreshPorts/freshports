@@ -39,6 +39,7 @@ class freshports_page extends HTML_Page2 {
 		$this->addStyleSheet('/css/freshports.css?v=' . $version);
 
 		$this->addFavicon('/favicon.ico');
+		$this->setDocType('HTML 4.01 Strict');
 	}
 
 	function setDB($db) {
@@ -76,8 +77,7 @@ class freshports_page extends HTML_Page2 {
 	function assignDefaultAttributes(&$attributes) {
 		# if no value, give it a default value
 		if (!$attributes || !is_array($attributes)) {
-
-			$attributes['doctype'] = 'HTML 4.01 Transitional';
+			$attributes['doctype'] = 'html';
 		}
 
 		if (!IsSet($attributes['doctype'])) {

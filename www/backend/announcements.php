@@ -77,34 +77,34 @@ if (IsSet($_REQUEST['edit'])) {
                'FreeBSD, index, applications, ports');
 ?>
 
-<TABLE class="fullwidth borderless" ALIGN="center">
-<TR><td class="content">
+<table class="fullwidth borderless" ALIGN="center">
+<tr><td class="content">
 <?php
 
 
 if (isset($errors)) {
 echo '
-  <TABLE CELLPADDING="3" class="fullwidth borderless">
-  <TR VALIGN=top>
-   <TD><img src="/images/warning.gif"></TD>
-   <TD width="100%">
+  <table CELLPADDING="3" class="fullwidth borderless">
+  <tr VALIGN=top>
+   <td><img src="/images/warning.gif"></td>
+   <td width="100%">
   <p>Some errors have occurred which must be corrected before your announcement can be saved.</p>';
 
 echo $errors;
 
 echo '
- </TD>
- </TR>
- </TABLE>
+ </td>
+ </tr>
+ </table>
 <br>';
 }
 
-echo '<TABLE CELLSPACING="3" class="fullwidth borderless">
-<TR>
+echo '<table CELLSPACING="3" class="fullwidth borderless">
+<tr>
 <td class="accent"><big>' . $Title . '</big></td>
-</TR>
-<TR>
-<TD>';
+</tr>
+<tr>
+<td>';
 
 echo 'Current annoucements<blockquote>';
 
@@ -123,11 +123,11 @@ $HTML .= $Announcement->TextGet();
 $HTML .= '</TEXTAREA>';
 $HTML .= '</td>'  . "\n";
 
-$HTML .= '<td valign="top">'  . "\n";
+$HTML .= '<td class="vtop">'  . "\n";
 $HTML .= '<INPUT id="start_date" name="start_date" value="' . $Announcement->StartDateGet() . '" size=25>' . "\n";
 $HTML .= '</td>'  . "\n";
 
-$HTML .= '<td valign="top">'  . "\n";
+$HTML .= '<td class="vtop">'  . "\n";
 $HTML .= '<INPUT id="end_date"   name="end_date"   value="' . $Announcement->EndDateGet()   . '" size=25>' . "\n";
 $HTML .= '</td>'  . "\n";
 
@@ -147,7 +147,7 @@ $ControlName  = IsSet($_REQUEST['edit']) ? 'update' : 'add';
 $ControlValue = IsSet($_REQUEST['edit']) ? 'Update' : 'Add';
 
 $HTML .= '<tr><td colspan="3">'  . "\n";
-$HTML .= '<div align="center"><INPUT id="' . $ControlName . '" style="WIDTH: 85px; HEIGHT: 24px" type="submit" size="29" value="' . $ControlValue . '"';
+$HTML .= '<div class="vcentered"><INPUT id="' . $ControlName . '" style="WIDTH: 85px; HEIGHT: 24px" type="submit" size="29" value="' . $ControlValue . '"';
 $HTML .= ' name="' . $ControlName . '"></div>' . "\n";
 $HTML .= '</tr>'  . "\n";
 
@@ -159,9 +159,9 @@ $HTML .= '</form>';
 
 echo $HTML;
 
-echo "<p></blockquote></TD>
-</TR>
-</TABLE>";
+echo "<p></blockquote></td>
+</tr>
+</table>";
 
 function MyDisplayAnnouncements($Announcement) {
         $HTML = '';
@@ -217,18 +217,18 @@ if ($NumRows > 0) {
 
 <p>
 
-</TD>
+</td>
 
   <td class="sidebar">
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
   </td>
 
-</TR>
-</TABLE>
+</tr>
+</table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

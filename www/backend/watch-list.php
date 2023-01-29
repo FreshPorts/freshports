@@ -103,11 +103,11 @@ function DisplayWatchListNewsFeeds($db, $UserID) {
 		echo freshports_MainContentTable();
 		echo '<tr>';
 		echo freshports_PageBannerText('These are your news feeds');
-		echo '</tr><TR><TD class="textcontent">';
+		echo '</tr><tr><td class="textcontent">';
 
 		DisplayWatchListNewsFeeds($db, $User->id);
 		?>
-	</TD></TR>
+	</td></tr>
 </table>
 </td>
 

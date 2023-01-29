@@ -220,15 +220,15 @@ $category->description . '
 
 		$HTML .= '</td></tr>';
 
-	        if ($Debug) {
-        	        echo "\$CategoryID = '$CategoryID'<BR>\n";;
-        	        echo "GlobalHideLastChange = $GlobalHideLastChange<BR>\n";
-	                echo "\$numrows = $numrows<BR>\n";
+		if ($Debug) {
+			echo "\$CategoryID = '$CategoryID'<br>\n";;
+			echo "GlobalHideLastChange = $GlobalHideLastChange<br>\n";
+			echo "\$numrows = $numrows<br>\n";
 		}
 
 		$ShowShortDescription	= "Y";
 
-		$HTML .= "<TR>\n<TD>\n";
+		$HTML .= "<tr>\n<td>\n";
 
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
 
@@ -247,15 +247,15 @@ $category->description . '
 		} // end for
 
 		$HTML .= '
-</TD></TR>
-<TR><TD>
+</td></tr>
+<tr><td>
 <div class="pagination">' .
 
 			freshports_CategoryNextPreviousPage($category->name, $PortCount, $PageNumber, $PageSize, $Branch) . '
 
 </div> 
-</TD></TR>
-</TABLE>
+</td></tr>
+</table>
 ';
 
 	### finish building HTML for caching
@@ -296,12 +296,12 @@ if ($ShowAds && $BannerAd) {
 	echo $HTML;
 ?>	
   <td class="sidebar">
-  <?
+  <?php
   echo freshports_SideBar();
   ?>
   </td>
-</TR>
-</TABLE>
+</tr>
+</table>
 
 <?php
 	echo freshports_ShowFooter();
@@ -310,7 +310,7 @@ if ($ShowAds && $BannerAd) {
 	</body>
 	</html>
 
-	<?php
+<?php
 
 	return false;
-	}
+}

@@ -68,7 +68,7 @@ if (IsSet($_REQUEST['wlid']) && $_REQUEST['wlid']) {
 	<?php echo freshports_MainContentTable(NOBORDER); ?>
 <?php # article table start ?>
   <tr>
-	<? echo freshports_PageBannerText("Watch List - categories"); ?>
+	<?php echo freshports_PageBannerText("Watch List - categories"); ?>
   </tr>
 <tr><td class="content">
 
@@ -123,17 +123,17 @@ echo '<tr><td>' . "\n";
 $result  = pg_query($db, $sql);
 $numrows = pg_num_rows($result);
 
-if ($Debug) echo "num categories being watched = $numrows<BR>";
+if ($Debug) echo "num categories being watched = $numrows<br>";
 
 for ($i = 0; $i < $numrows; $i++) {
 	$myrow = pg_fetch_array($result, $i);
 	$WatchedCategories[$myrow['category_id']] = ' *';
-	if ($Debug) echo "category " . $myrow['category_id'] . " = " . $WatchedCategories[$myrow['category_id']] . '<BR>';
+	if ($Debug) echo "category " . $myrow['category_id'] . " = " . $WatchedCategories[$myrow['category_id']] . '<br>';
 }
 
 # categories list start
 
-$HTML  = "\n" . '<TABLE class="watch-categories bordered">' . "\n";
+$HTML  = "\n" . '<table class="watch-categories bordered">' . "\n";
 $HTML .= '<tr>';
 // get the list of categories to display
 $sql = "
@@ -188,7 +188,7 @@ echo "</table>\n";
 </td>
 
   <td class="sidebar">
-  <?
+  <?php
   echo freshports_SideBar();
   ?>
   </td>
@@ -197,7 +197,7 @@ echo "</table>\n";
 </table>
 <?php # main table finish ?>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

@@ -24,7 +24,7 @@ class VuXML_Ranges {
 		$sql = "SELECT vuxml_ranges.*
 	              FROM vuxml_ranges
 	             WHERE vuxml_ranges.vuxml_affected_id = " . pg_escape_string($this->dbh, $vuxml_affected_id);
-#		echo "<pre>sql = '$sql'</pre><BR>";
+#		echo "<pre>sql = '$sql'</pre><br>";
 
 		$result = pg_query($this->dbh, $sql);
 		if ($result) {

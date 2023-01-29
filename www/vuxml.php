@@ -64,7 +64,7 @@ These are the vulnerabilities relating to the commit you have selected:
 </p>
 
 <table cellpadding="5" class="bordered">
-<tr><th align="left"><b>VuXML ID</b></th><th align="left"><b>Description</b></th></tr>
+<tr><th class="hleft"><b>VuXML ID</b></th><th class="vleft"><b>Description</b></th></tr>
 <?php
 	if (!IsSet($vidArray)) {
 		$vuln = $_REQUEST['vuln'];
@@ -78,7 +78,7 @@ These are the vulnerabilities relating to the commit you have selected:
 		$VuXML->FetchByVID($value);
 
 		$URL = VUXMLURL . $value . '.html';
-		echo '<tr><td valign="top" nowrap><a href="' . $URL . '">' . $value . '</a></td><td>';
+		echo '<tr><td class="vtop" nowrap><a href="' . $URL . '">' . $value . '</a></td><td>';
 		$VuXML->display();
 		
 		echo "</td></tr>\n";
@@ -94,14 +94,14 @@ These are the vulnerabilities relating to the commit you have selected:
 		function vuxml_name_link($VID, $Name, $Count) {
 			$HTML = '<tr><td>';
 
-			$HTML .= '<a href="/vuxml.php?vid=' . urlencode($VID) . '">' . $Name . '</a></td><td align="center">';
+			$HTML .= '<a href="/vuxml.php?vid=' . urlencode($VID) . '">' . $Name . '</a></td><td class="hcentered">';
 			if ($Count > 1) {
 				$HTML .= ' (' . $Count . ')';
 			} else {
 				$HTML .= '&nbsp;';
 			}
 
-			$HTML .= '</td><td align="center">';
+			$HTML .= '</td><td class="hcentered">';
 			$HTML .= '<a href="/?package=' . $Name . '">port</a>';
 			$HTML .= '</td></tr>' . "\n";
 
@@ -137,9 +137,9 @@ SELECT V.vid,
 			echo '<th colspan="3">VuXML entries as processed by FreshPorts</th>';
 			echo '<tr><td><b>';
 			echo 'package';
-			echo '</b></td><td align="center"><b>';
+			echo '</b></td><td class="hcentered"><b>';
 			echo 'vuln count<br>[blank means (1)]';
-			echo '</b></td><td align="center"><b>Port(s)</b></td></tr>' . "\n";
+			echo '</b></td><td class="hcentered"><b>Port(s)</b></td></tr>' . "\n";
 			for ($i = 0; $i < $numrows; $i++) {
 				$myrow = pg_fetch_array ($result, $i);
 
@@ -177,18 +177,18 @@ SELECT V.vid,
 
 	if (IsSet($_REQUEST['all'])) {
 		function vuxml_name_link($VID, $Date, $Description, $PortArray, $IsNew) {
-			$HTML = '<tr><td nowrap valign="top">';
+			$HTML = '<tr><td class="vtop nowrap">';
 			
 			$HTML .= $Date;
 			if ($IsNew == 'f') {
 				$HTML .= '<sup>*</sup>';
 			}
-			$HTML .= '</td><td valign="top">';
+			$HTML .= '</td><td class="vtop">';
 			
 			$Narrative = trim(strip_tags($Description));
 			$Narrative = utf8_decode($Description);
 			$HTML .= '<b>VuXML ID</b> <span class="code">' . $VID . '</span><br>' . $Narrative . ' <a href="' . VUXMLURL . $VID . '.html">more...</a>';
-			$HTML .= '</td><td align="left" valign="top">';
+			$HTML .= '</td><td class="hleft vtop">';
 
 			foreach ($PortArray as $package) {
 				$HTML .= '<a href="/?package=' . $package . '">' . $package . '</a> ';
@@ -230,7 +230,7 @@ ORDER BY coalesce(V.date_modified, V.date_entry, V.date_discovery)::date desc, V
 				echo '<th colspan="3">VuXML entries as processed by FreshPorts</th>';
 				echo '<tr><td><b>Date</b></td><td><b>';
 				echo 'Decscription';
-				echo '</b></td><td align="center"><b>Port(s)</b></td></tr>' . "\n";
+				echo '</b></td><td class="hcentered"><b>Port(s)</b></td></tr>' . "\n";
 				for ($i = 0; $i < $numrows; $i++) {
 					$myrow = pg_fetch_array($result, $i);
 

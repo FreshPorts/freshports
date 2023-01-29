@@ -1,4 +1,4 @@
-<?
+<?php
 # $Id: generate_content.php,v 1.1 2008-10-10 19:44:15 dan Exp $
 #
 # Copyright (c) 2008 Wesley Shields <wxs@FreeBSD.org>

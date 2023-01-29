@@ -23,7 +23,7 @@ class VuXML_Names {
 		$sql = "SELECT vuxml_names.*, GetCategoryPortFromPackageName(name) as package_link
 	              FROM vuxml_names
 	             WHERE vuxml_names.vuxml_affected_id = " . pg_escape_string($this->dbh, $vuxml_affected_id);
-#		echo "<pre>sql = '$sql'</pre><BR>";
+#		echo "<pre>sql = '$sql'</pre><br>";
 
 		$result = pg_query($this->dbh, $sql);
 		if ($result) {

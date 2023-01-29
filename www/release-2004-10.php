@@ -25,11 +25,11 @@
 
 	<?php echo freshports_MainContentTable(NOBORDER); ?>
 
-<TR>
+<tr>
 	<?php echo freshports_PageBannerText($Title); ?>
-</TR>
+</tr>
 
-<TR><TD>
+<tr><td>
 
 <?php
 	if ($ShowAds) echo '<CENTER>' . Ad_728x90() . '</CENTER>';
@@ -48,30 +48,30 @@ are in no particular order.
 <p>
 As always, my thanks to those people who provided suggestions
 and ideas which lead to the changes I've made.
-</TD></TR>
+</td></tr>
 
-<TR>
-	<?
+<tr>
+	<?php
 	echo freshports_PageBannerText('Deleted icon changed'); 
 	?>
-</TR>
+</tr>
 
-<TR><TD class="textcontent">
+<tr><td class="textcontent">
 
 <P>
 The deleted icon has changed.  It is now <?php
 echo freshports_Deleted_Icon(); ?>.  I would show you what it used to be, but,
 well, it's been deleted.  It was a square with a X in it.
 
-</TD></TR>
+</td></tr>
 
-<TR>
-	<?
+<tr>
+	<?php
 	echo freshports_PageBannerText('VuXML');
 	?>
-</TR>
+</tr>
 
-<TR><TD class="textcontent">
+<tr><td class="textcontent">
 
 <P>
 The <a href="https://www.vuxml.org/freebsd/">VuXML</a> project documents
@@ -95,13 +95,13 @@ in FreshPorts.  Also thank the VuXML team for their work and for helping
 me to understand the inner workings of the vuln XML data.
 </P>
 
-</TD></TR>
+</td></tr>
 
-<TR>
-<?  echo freshports_PageBannerText('Link by package'); ?>
-</TR>
+<tr>
+<?php  echo freshports_PageBannerText('Link by package'); ?>
+</tr>
 
-<TR><TD class="textcontent">
+<tr><td class="textcontent">
 <P>
 You can now link to FreshPorts using just the package name.  For example, you
 can link to the Firefox port using this link:
@@ -134,25 +134,25 @@ echo '/www/firefox/</a>';
 ?>.  Ahh, the magic of <a href="https://www.php.net">PHP</a> and
 <a href="https://www.postgresql.org/">PostgreSQL</a>!
 
-</TD></TR>
+</td></tr>
 
-<TR>
-<?	echo freshports_PageBannerText('Revision details'); ?>
-</TR>
+<tr>
+<?php	echo freshports_PageBannerText('Revision details'); ?>
+</tr>
 
-<TR><TD class="textcontent">
+<tr><td class="textcontent">
 <P>
 If you click on the Files icon (<?php echo freshports_Files_Icon(); ?>) in the
 Commit History for any port, you'll see a new link.  This link is represented
 by the Revision Details icon (<?php echo freshports_Revision_Icon(); ?>).
 </P>
-</TD></TR>
+</td></tr>
 
-<TR>
-<?	echo freshports_PageBannerText('Expanded search options'); ?>
-</TR>
+<tr>
+<?php	echo freshports_PageBannerText('Expanded search options'); ?>
+</tr>
 
-<TR><TD class="textcontent">
+<tr><td class="textcontent">
 <P>
 The <a href="/search.php">search page</a> now allows you to search by 
 the following fields.
@@ -172,24 +172,24 @@ the following fields.
 </table>
 </blockquote>
 
-</TD></TR>
+</td></tr>
 
-</TABLE>
+</table>
 </td>
 
   <td class="sidebar">
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
   </td>
 
-</TABLE>
+</table>
 
-<TABLE class="fullwidth borderless">
-<TR><TD>
+<table class="fullwidth borderless">
+<tr><td>
 <?php echo freshports_ShowFooter(); ?>
-</TD></TR>
-</TABLE>
+</td></tr>
+</table>
 
 </BODY>
 </HTML>

@@ -25,9 +25,9 @@
 	<?php echo freshports_MainContentTable(); ?>
 
   <tr>
-	<? echo freshports_PageBannerText("About the authors"); ?>
+	<?php echo freshports_PageBannerText("About the authors"); ?>
   </tr>
-<TR><TD>
+<tr><td>
 <?php
 	if ($ShowAds) echo '<CENTER>' . Ad_728x90() . '</CENTER>';
 ?>
@@ -47,22 +47,22 @@ are documented on the <a href="https://news.freshports.org/" rel="noopener noref
 
 <UL>
 <LI>Adam Herzog wrote the XML DTD and the perl script which converts the raw email to XML.</LI>
-<LI>Marcin Gryszkalis did the underlying work for the the <A HREF="/graphs.php">graphs</A>.  He
+<LI>Marcin Gryszkalis did the underlying work for the the <a href="/graphs.php">graphs</a>.  He
     also helped out with the htmlifying of the log message (so you can click on PR and email and URLs).</LI>
 
 <LI>Jonathan Sage helped to reclaim some missing ports by writing some perl code to pull
     things out of CVS.</LI>
 
-<LI>Dan Peterson showed me the wonders of <A HREF="https://cr.yp.to/daemontools.html" rel="noopener noreferrer">Daemon Tools</A>
-    which handles the processing of incoming messages and refreshes the main web page.</LI>
+<li>Dan Peterson showed me the wonders of <a href="https://cr.yp.to/daemontools.html" rel="noopener noreferrer">Daemon Tools</a>
+    which handles the processing of incoming messages and refreshes the main web page.</li>
 
-<LI>Josef Karthauser for helping me through the cvs-all log format and for greatly simplifying the
-	job of FP2.</LI>
+<li>Josef Karthauser for helping me through the cvs-all log format and for greatly simplifying the
+	job of FP2.</li>
 
-<LI>Titus Manea again always has great ideas.  His knowledge base of *nix far exceeds my own.</LI>
+<li>Titus Manea again always has great ideas.  His knowledge base of *nix far exceeds my own.</li>
 
-<LI>Ade Lovett for grilling me about my need for daemons and leading me to discover Daemon Tools via Dan P.
-	And for his mega-commits which prompted me to show abbreviated commits.</LI>
+<li>Ade Lovett for grilling me about my need for daemons and leading me to discover Daemon Tools via Dan P.
+	And for his mega-commits which prompted me to show abbreviated commits.</li>
 
 </UL>
 
@@ -71,51 +71,51 @@ are documented on the <a href="https://news.freshports.org/" rel="noopener noref
 
 <UL>
 
-<LI>Olaf wrote did the perl script for the log catcher.</LI>
+<li>Olaf wrote did the perl script for the log catcher.</li>
 
-<LI>Titus Manea wrote the awk code for the log catcher and the log munger.</LI>
+<li>Titus Manea wrote the awk code for the log catcher and the log munger.</li>
 
-<LI>Adriel helped me with perl syntax.</LI>
+<li>Adriel helped me with perl syntax.</li>
 
-<LI>Will Andrews talked over data sources with me.</LI>
+<li>Will Andrews talked over data sources with me.</li>
 
-<LI>John Polstra and Satoshi Asami provided insight into cvs and ports as well
-as encouragement.</LI>
+<li>John Polstra and Satoshi Asami provided insight into cvs and ports as well
+as encouragement.</li>
 
-<LI>Jeremy Shaffner hung around, criticized, and suggested security improvements.</LI>
+<li>Jeremy Shaffner hung around, criticized, and suggested security improvements.</li>
 
-<LI>Brian Mitchell did some prototype coding for me.</LI>
+<li>Brian Mitchell did some prototype coding for me.</li>
 
-<LI>David Bushong did a FreshBSD site which is a freshmeat-look site.</LI>
+<li>David Bushong did a FreshBSD site which is a freshmeat-look site.</li>
 
-<LI>lzh on undernet #perl helped me with my perl knowledge.  Some of his examples 
+<li>lzh on undernet #perl helped me with my perl knowledge.  Some of his examples
 form the basis for some of the most important parts of the system.  Aquitaine
-also showed me the PERL dbi->quote() function.</LI>
+also showed me the PERL dbi->quote() function.</li>
 
-<LI>John Beige did the logo you see at the top of the page.</LI>
+<li>John Beige did the logo you see at the top of the page.</li>
 
-<LI>Wolfram Schneider's <a href="https://www.freebsd.org/cgi/ports.cgi" rel="noopener noreferrer">FreeBSD Ports Changes</a>
-page provided much of the basis for this site.</LI>
+<li>Wolfram Schneider's <a href="https://www.freebsd.org/cgi/ports.cgi" rel="noopener noreferrer">FreeBSD Ports Changes</a>
+page provided much of the basis for this site.</li>
 	
-<LI>Jay gave me the box on which FreshPorts runs.  Thanks.</LI>
+<li>Jay gave me the box on which FreshPorts runs.  Thanks.</li>
 
 <li>Will Andrews told me about <code class="code">make -V</code>.
 This eventually led to the sanity checks that annoy Ports committers
 and ensure users encounter fewer problems.
 
-<LI>And various people on undernet's #nz.general and #freebsd helped me with 
+<li>And various people on undernet's #nz.general and #freebsd helped me with
 scripts and ideas.  That's not to mention that channel on efnet which I won't 
-name just so it stays a secret.</LI>
+name just so it stays a secret.</li>
 
 </UL>
 
-</TD>
-</TR>
-</TABLE>
+</td>
+</tr>
+</table>
 </td>
 
   <td class="sidebar">
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
   </td>
@@ -123,7 +123,7 @@ name just so it stays a secret.</LI>
 </tr>
 </table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

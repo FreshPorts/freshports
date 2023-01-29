@@ -22,21 +22,21 @@ function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeade
 		$PortCount = $numrows;
 	}
 
-	$PortCountText = "<TR><TD>$PortCount ports found.";
+	$PortCountText = "<tr><td>$PortCount ports found.";
 	if ($numrows != $PortCount) {
 		$PortCountText .= " (showing only $numrows ports on this page)";
 	}
-	$PortCountText .= "</TD></TR>\n";
+	$PortCountText .= "</td></tr>\n";
 
 	$HTML  = $PortCountText;
-	$HTML .= "<TR><TD>\n";
+	$HTML .= "<tr><td>\n";
 
 	if (IsSet($ShowAds)) {
 		$HTML .= "<br><center>\n" . Ad_728x90() . "\n</center>\n";
 	}
 
 	if ($numrows > 0 && $ShowCategoryHeaders) {
-		$HTML .= '<DL>';
+		$HTML .= '<dl>';
 	}
 
 	for ($i = 0; $i < $numrows; $i++) {
@@ -47,17 +47,17 @@ function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeade
 
 			if ($LastCategory != $Category) {
 				if ($i > 0) {
-					$HTML .= "\n</DD>\n";
+					$HTML .= "\n</dd>\n";
 				}
 
 				$LastCategory = $Category;
 				if ($ShowCategoryHeaders) {
-						$HTML .= '<DT>';
+						$HTML .= '<dt>';
 				}
 
 				$HTML .= '<span class="element-details"><span><a href="/' . $Category . '/">' . $Category . '</a></span></span>';
 				if ($ShowCategoryHeaders) {
-					$HTML .= "</DT>\n<DD>";
+					$HTML .= "</dt>\n<dd>";
 				}
 			}
 		}
@@ -68,14 +68,14 @@ function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeade
 		
 		$HTML .= $port_display->ReplaceWatchListToken($port->{'onwatchlist'}, $Port_HTML, $port->{'element_id'});
 
-		$HTML .= '<BR>';
+		$HTML .= '<br>';
 	}
 
 	if ($numrows && $ShowCategoryHeaders) {
-		$HTML .= "\n</DD>\n</DL>\n";
+		$HTML .= "\n</dd>\n</dl>\n";
 	}
 
-	$HTML .= "</TD></TR>\n";
+	$HTML .= "</td></tr>\n";
 
 	$HTML .= $PortCountText;
 

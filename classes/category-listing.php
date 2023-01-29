@@ -24,7 +24,7 @@ class Categories {
       AND WL.id          = WLE.watch_list_id
       AND WLE.element_id = C.element_id";
 
-#		echo "<pre>sql = '$sql'</pre><BR>";
+#		echo "<pre>sql = '$sql'</pre><br>";
 
 		$this->result = pg_query($this->dbh, $sql);
 		if ($this->result) {

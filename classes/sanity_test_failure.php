@@ -20,9 +20,9 @@ class SanityTestFailure {
 	}
 
 	function _PopulateValues($myrow) {
-		$this->id					= $myrow['id'];
-		$this->commit_log_id		= $myrow['commit_log_id'];
-		$this->message				= $myrow['message'];
+		$this->id		= $myrow['id'];
+		$this->commit_log_id	= $myrow['commit_log_id'];
+		$this->message		= $myrow['message'];
 	}
 	
 	function FetchByMessageID($message_id) {
@@ -41,7 +41,7 @@ SELECT STF.id,
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
-				if ($Debug) echo "fetched by ID succeeded<BR>";
+				if ($Debug) echo "fetched by ID succeeded<br>k";
 				$myrow = pg_fetch_array ($result);
 				$this->_PopulateValues($myrow);
 				$id = $this->id;

@@ -21,11 +21,11 @@
 
 	<?php echo freshports_MainContentTable(); ?>
 
-<TR>
-	<? echo freshports_PageBannerText("Statistics - everyone loves a graph"); ?>
-</TR>
+<tr>
+	<?php echo freshports_PageBannerText("Statistics - everyone loves a graph"); ?>
+</tr>
 
-<TR><TD>
+<tr><td>
 <P>
 All graphs are at most 4 hours old.  The data used in these graphs are compiled by a large team of 
 trained worms.  As such, they are liable to be filled with errors and riddled with castings.  You
@@ -43,14 +43,14 @@ If you have suggestions for graphs, please raise an issue.
   if ($ShowAds) echo '<CENTER>' . Ad_728x90() . '</CENTER>';
 ?>
 
-</TD></TR>
+</td></tr>
 
-<TR><TD>
+<tr><td>
 
-<TABLE class="fullwidth borderless">
-<TR>
-<TD class="graph-sidebar">
-<?
+<table class="fullwidth borderless">
+<tr>
+<td class="graph-sidebar">
+<?php
 	$id = $_REQUEST["id"] ?? '';
 	$sql = "select id, title, is_clickable from graphs order by title";
 	$title = "graph goes here!";
@@ -61,12 +61,12 @@ If you have suggestions for graphs, please raise an issue.
 			echo '<UL>';
 			for ($i = 0; $i < $numrows; $i++) {
 				$myrow = pg_fetch_array ($result, $i);
-				echo '<LI><A HREF="' . $_SERVER["PHP_SELF"] . '?id=' . $myrow["id"] . '">' . $myrow["title"] . '</A></LI>' . "\n";
+				echo '<li><a href="' . $_SERVER["PHP_SELF"] . '?id=' . $myrow["id"] . '">' . $myrow["title"] . '</a></li>' . "\n";
 				if ($myrow["id"] == $id) {
 					$title = htmlentities($myrow["title"]);
 					$is_clickable = $myrow["is_clickable"];
 				}
-#				echo $myrow["id"] .  ' '  . $myrow["is_clickable"] . '<BR>';
+#				echo $myrow["id"] .  ' '  . $myrow["is_clickable"] . '<br>';
 			}
 			echo '</UL>';
 		} else {
@@ -78,44 +78,44 @@ If you have suggestions for graphs, please raise an issue.
 		echo '<p>There was unfortunately an error while fetching the list of graphs from the database.</p>';
 	}
 ?>
-</TD>
-<TD>
-<?
+</td>
+<td>
+<?php
 	if ($id) {
 		if ($is_clickable == "t" ) {
 			?>
 			<FORM ACTION="/graphs/graphclick.php" METHOD="get">
-			<INPUT TYPE="hidden" NAME="id"    VALUE="<? echo $id; ?>">
-			<INPUT NAME="graph"  TYPE="image" SRC="/graphs/graph.php?id=<? echo $id; ?>" TITLE="<? echo $title; ?>" ALT="<? echo $title; ?>">
+			<INPUT TYPE="hidden" NAME="id"    VALUE="<?php echo $id; ?>">
+			<INPUT NAME="graph"  TYPE="image" SRC="/graphs/graph.php?id=<?php echo $id; ?>" title="<?php echo $title; ?>" alt="<?php echo $title; ?>">
 			</FORM>
-			<?
+			<?php
 		} else {
 			?>
-			<IMG SRC="/graphs/graph.php?id=<? echo htmlentities($id); ?>" TITLE="<? echo $title; ?>" ALT="<? echo $title; ?>">
-			<?
+			<IMG SRC="/graphs/graph.php?id=<?php echo htmlentities($id); ?>" title="<?php echo $title; ?>" alt="<?php echo $title; ?>">
+			<?php
 		}
 	}
 ?>
-</TD>
-</TR>
-</TABLE>
+</td>
+</tr>
+</table>
 
 
-</TD></TR>
+</td></tr>
 
-</TABLE>
+</table>
 </td>
 
   <td class="sidebar">
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
   </td>
 
-</TR>
-</TABLE>
+</tr>
+</table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

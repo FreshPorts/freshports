@@ -15,14 +15,14 @@
 					"FreeBSD, index, applications, ports");
 
 ?>
-<TABLE class="fullwidth borderless" ALIGN="center">
-<TR><td VALIGN=TOP>
-<TABLE class="fullwidth borderless" ALIGN="left">
-<TR>
-	<? echo freshports_PageBannerText("Fraud"); ?>
-</TR>
+<table class="fullwidth borderless" ALIGN="center">
+<tr><td VALIGN=TOP>
+<table class="fullwidth borderless" ALIGN="left">
+<tr>
+	<?php echo freshports_PageBannerText("Fraud"); ?>
+</tr>
 
-<TR><TD>
+<tr><td>
 <P>
 On 4 December 2003 at about 16:30 EST, I received email which told me about
 freshports.net.  This website was attempting to pass itself off as FreshPorts and 
@@ -61,8 +61,8 @@ Here a few supporting documents:
 <h3>Correspondence</h3>
 <ul>
 <li><a href="/fraud/first-email.php">My request to them</a>
-<li><a href="/fraud/their-reply.php">Their reply<a/>
-<li><a href="/fraud/second-email.php">Remaining email of 5 December 2003<a/>
+<li><a href="/fraud/their-reply.php">Their reply</a>
+<li><a href="/fraud/second-email.php">Remaining email of 5 December 2003</a>
 </ul>
 
 See also <a href="http://www.freebsddiary.org/freshports-fraud.php">this FreeBSD Diary article</a>.
@@ -92,14 +92,14 @@ domain back to the registrar.
 
 </td></tr>
 
-</TABLE>
+</table>
 
 
-<TABLE class="fullwidth borderless" ALIGN="center">
-<TR><TD>
-<? echo freshports_ShowFooter(); ?>
-</TD></TR>
-</TABLE>
+<table class="fullwidth borderless" ALIGN="center">
+<tr><td>
+<?php echo freshports_ShowFooter(); ?>
+</td></tr>
+</table>
 
 </BODY>
 </HTML>

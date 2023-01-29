@@ -346,7 +346,7 @@ select ports.id,
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
-				if ($this->Debug) echo "FetchByElementID succeeded<BR>";
+				if ($this->Debug) echo "FetchByElementID succeeded<br>";
 				$myrow = pg_fetch_array ($result);
 				$this->_PopulateValues($myrow);
 			} else {
@@ -474,7 +474,7 @@ ON TEMP.wle_element_id = ports.element_id";
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
-				if ($this->Debug) echo "FetchByID succeeded<BR>";
+				if ($this->Debug) echo "FetchByID succeeded<br>";
 				$myrow = pg_fetch_array ($result);
 				$this->_PopulateValues($myrow);
 				$result = $this->{'id'};
@@ -626,7 +626,7 @@ LEFT OUTER JOIN
 		if ($this->LocalResult) {
 			$numrows = pg_num_rows($this->LocalResult);
 			if ($numrows == 1) {
-#				echo "fetched by ID succeeded<BR>";
+#				echo "fetched by ID succeeded<br>";
 				$myrow = pg_fetch_array ($this->LocalResult);
 				$this->_PopulateValues($myrow);
 
@@ -666,7 +666,7 @@ LEFT OUTER JOIN
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
-				if ($this->Debug) echo "IsOnWatchList succeeded<BR>";
+				if ($this->Debug) echo "IsOnWatchList succeeded<br>";
 				$result = 1;
 			}
 		} else {
@@ -816,7 +816,7 @@ LEFT OUTER JOIN
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
 			$numrows = pg_num_rows($result);
-			if ($this->Debug) echo "FetchByElementID succeeded<BR>";
+			if ($this->Debug) echo "FetchByElementID succeeded<br>";
 			$this->{'conflicts_matches'} = pg_fetch_all($result);
 		} else {
 			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);

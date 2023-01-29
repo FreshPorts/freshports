@@ -42,18 +42,18 @@ function freshports_SummaryForDay($MinusN) {
    $File = $BaseDirectory . "/" . date("Y/m/d", $Now - 60*60*24*$MinusN) . ".inc";
 //   echo "$File<br>\n";
    if (file_exists($File)) {
-      echo '<br><TABLE WIDTH="152" class="bordered" CELLPADDING="5">';
-      echo '  <TR>';
-      echo '<TD class="accent" height="30">';
+      echo '<br><table WIDTH="152" class="bordered" CELLPADDING="5">';
+      echo '  <tr>';
+      echo '<td class="accent" height="30">';
       echo date("l j M", $Now - 60*60*24*$MinusN);
-      echo '</TD>';
-      echo '       </TR>';
-      echo '        <TR>';
-      echo '         <TD>';
+      echo '</td>';
+      echo '       </tr>';
+      echo '        <tr>';
+      echo '         <td>';
       include($File);
-      echo '   </TD>';
-      echo '   </TR>';
-      echo '   </TABLE>';
+      echo '   </td>';
+      echo '   </tr>';
+      echo '   </table>';
    }
 } /* summary for day */
 
@@ -89,29 +89,29 @@ if (Is_Numeric($dailysummary)) {
 
 if ($db) {
 ?>
-<TR><td class="content">
+<tr><td class="content">
 
 <?php echo freshports_MainContentTable(); ?>
 
-<TR>
+<tr>
 <?php
 $Title = 'Sanity Test Failure';
 
 if ($message_id == '') {
 	$Title .= 's';
 }
-echo freshports_PageBannerTextColSpan($Title, 3);
+echo freshports_PageBannerTextColSpan($Title, 1);
 ?>
-</TR>
+</tr>
 <?php
 if ($message_id == '') {
 ?>
-<TR><TD>
+<tr><td>
 <p>These are the sanity test failures found by FreshPorts.  Sanity tests have
 been in place for several years, but have only been saved in the database
 since 10 October 2006.
 </p>
-</TD></TR>
+</td></tr>
 <?php
 }
 	if ($ShowAds && $BannerAd) {
@@ -199,13 +199,13 @@ since 10 October 2006.
 }
 
 ?>
-</TABLE>
-</TD>
+</table>
+</td>
   <td class="sidebar">
-   <? echo freshports_SideBar(); ?>
+   <?php echo freshports_SideBar(); ?>
 
-<BR>
-<?
+<br>
+<?php
 
 	if ($dailysummary) {
 		for ($i = 0; $i < $dailysummary; $i++) {
@@ -215,30 +215,30 @@ since 10 October 2006.
 		if ($NumberOfDays) {
 			$Today = time();
 			echo '
-<TABLE WIDTH="155" class="bordered" CELLPADDING="5">
-	<TR>
-		<TD class="accent" height="30"><B>Previous days</B></TD>
-	</TR>
-	<TR><TD>
+<table WIDTH="155" class="bordered" CELLPADDING="5">
+	<tr>
+		<td class="accent" height="30"><B>Previous days</B></td>
+	</tr>
+	<tr><td>
 ';
 			for ($i = 1; $i <= $NumberOfDays; $i++) {
 				echo freshports_LinkToDate($Today - $i * 86400) . "<br>\n";
 			}
 			echo '
-	</TD></TR>
-</TABLE>
+	</td></tr>
+</table>
 
 ';
 		}
 	}
 ?>
  </td>
-</TR>
-</TABLE>
+</tr>
+</table>
 
-<BR>
+<br>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

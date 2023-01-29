@@ -81,11 +81,11 @@
 	<tr><td class="content">
 
 	<?php echo freshports_MainContentTable(NOBORDER); ?>
-<TR>
-	<? echo freshports_PageBannerText("Committer opt-in"); ?>
-</TR>
+<tr>
+	<?php echo freshports_PageBannerText("Committer opt-in"); ?>
+</tr>
 
-<TR><TD class="textcontent">
+<tr><td class="textcontent">
 <P>
 <?php
 	if (!IsSet($User->email) || !preg_match(FREEBSD_EMAIL_REGEX, $User->email)) {
@@ -104,22 +104,22 @@ which you committed.  In the past, such problems are related to syntax errors in
 <P>
 One committer referred to this service as an automated nagging mentor...
 </P>
-</TD></TR>
+</td></tr>
 
 <?php
 
 if (IsSet($User->email)) {
 ?>
 
-<TR>
-	<?
+<tr>
+	<?php
 	echo freshports_PageBannerText("Your opt-in status");
 	?>
-</TR>
+</tr>
 
-<TR><TD>
+<tr><td>
 <P>
-<?
+<?php
 if (!empty($visitor)) {
 	$sql = "select committer
 			  from committer_notify
@@ -155,17 +155,17 @@ if (!empty($visitor)) {
 
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
                your freefall login:
-               <INPUT SIZE="35" NAME="email" VALUE="<?echo $committer ?? '' ?>"><BR><BR>
-<?
+               <INPUT SIZE="35" NAME="email" VALUE="<?php echo $committer ?? '' ?>"><br><br>
+<?php
 			if (IsSet($numrows) && $numrows) {
 ?>
 				<INPUT TYPE="submit" VALUE="update"      NAME="Update my address"> 
 				<INPUT TYPE="submit" VALUE="unsubscribe" NAME="unsubscribe">
-<?
+<?php
 			} else {
 ?>
 				<INPUT TYPE="submit"  VALUE="subscribe" NAME="subscribe">
-<?
+<?php
 			}
 ?>
 
@@ -175,24 +175,24 @@ if (!empty($visitor)) {
 <BIG>Please do not include @FreeBSD.org in your login name.</BIG>
 </p>
 
-</TD></TR>
+</td></tr>
 
 <?php
 } // $User->email
 ?>
 
-</TABLE>
-</TD>
+</table>
+</td>
 
   <td class="sidebar">
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
   </td>
 
-</TABLE>
+</table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

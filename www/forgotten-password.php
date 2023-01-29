@@ -89,7 +89,7 @@ if (IsSet($submit)) {
         if ($myrow["emailbouncecount"] > 0) {
            $error = "Sorry, but previous email to you has bounced, so we're not sure it's going to get to you.  But we sent it out
 						anyway.  Please contact " .
-                    'the <A HREF="' . MAILTO . ':webmaster&#64;freshports.org?subject=I forgot my password" rel="noopener noreferrer">webmaster</A> for help
+                    'the <a href="' . MAILTO . ':webmaster&#64;freshports.org?subject=I forgot my password" rel="noopener noreferrer">webmaster</a> for help
                     if it doesn\'t arrive.';
            $OKToMail = 1;
            syslog(LOG_NOTICE, "Forgotten password: previous email to '" . $myrow['email'] . "' bounced");
@@ -97,7 +97,7 @@ if (IsSet($submit)) {
 
         if ($myrow["email"] == "") {
           $error = 'Guess what?  You never gave us an email address.  So I guess you must ' . 
-              'contact the <A HREF="' . MAILTO . ':webmaster&#64;freshports.org?subject=I forgot my password" rel="noopener noreferrer">webmaster</A> for help.';
+              'contact the <a href="' . MAILTO . ':webmaster&#64;freshports.org?subject=I forgot my password" rel="noopener noreferrer">webmaster</a> for help.';
               $OKToMail = 0;
           syslog(LOG_NOTICE, "Forgotten password: '" . $myrow['name'] . "' never supplied an email.");
         }
@@ -159,53 +159,53 @@ if (IsSet($submit)) {
                'FreeBSD, index, applications, ports');
 ?>
 
-<TABLE class="fullwidth borderless">
- <TR>
-    <TD>
-<TABLE class="fullwidth borderless">
-<TR><td class="content">
-<?
+<table class="fullwidth borderless">
+ <tr>
+    <td>
+<table class="fullwidth borderless">
+<tr><td class="content">
+<?php
 
 if (IsSet($error) and $error != '') {
-      echo '<TABLE class="fullwidth borderless">
-            <TR>
-            <TD>
-               <TABLE class="fullwidth borderless">
-                 <TR class="accent"><TD><b>We have a problem!</b></TD>
-                 </TR> 
-                 <TR>
-            <TD>
-              <TABLE class="fullwidth borderless" CELLPADDING="3">
-              <TR VALIGN="middle">
-               <TD><img src="/images/warning.gif" ALT="warning!"></TD>
-               <TD WIDTH="100%">
+      echo '<table class="fullwidth borderless">
+            <tr>
+            <td>
+               <table class="fullwidth borderless">
+                 <tr class="accent"><td><b>We have a problem!</b></td>
+                 </tr> 
+                 <tr>
+            <td>
+              <table class="fullwidth borderless" CELLPADDING="3">
+              <tr VALIGN="middle">
+               <td><img src="/images/warning.gif" ALT="warning!"></td>
+               <td WIDTH="100%">
             <p>';
       echo $error;     
-      echo '</TD>
-       </TR>
-       </TABLE>
-      </TD>
-      </TR>
-      </TABLE>
-      </TD>
-      </TR>
-      </TABLE>
+      echo '</td>
+       </tr>
+       </table>
+      </td>
+      </tr>
+      </table>
+      </td>
+      </tr>
+      </table>
       <br>';
 } else {
 
    if ($LoginFailed || $eMailFailed) {
-      echo '<TABLE class="fullwidth borderless">
-            <TR>
-            <TD>
-               <TABLE class="fullwidth borderless">
-                 <TR class="accent"><TD><b>User ID not found!</b></TD>
-                 </TR>
-                 <TR>
-            <TD>
-              <TABLE class="fullwidth borderless" CELLPADDING="3">
-              <TR VALIGN=top>
-               <TD><img src="/images/warning.gif" ALT="warning!"></TD>
-               <TD WIDTH="100%">
+      echo '<table class="fullwidth borderless">
+            <tr>
+            <td>
+               <table class="fullwidth borderless">
+                 <tr class="accent"><td><b>User ID not found!</b></td>
+                 </tr>
+                 <tr>
+            <td>
+              <table class="fullwidth borderless" CELLPADDING="3">
+              <tr VALIGN=top>
+               <td><img src="/images/warning.gif" ALT="warning!"></td>
+               <td WIDTH="100%">
               <p>The ';
 
       if ($LoginFailed) {
@@ -222,45 +222,45 @@ if (IsSet($error) and $error != '') {
       }
       echo ' instead?</p>
        <p>If you need help, please ask in the forum. </p>
-       </TD>
-       </TR>
-       </TABLE>
-      </TD>
-      </TR>
-      </TABLE>
-      </TD>
-      </TR>
-      </TABLE>
+       </td>
+       </tr>
+       </table>
+      </td>
+      </tr>
+      </table>
+      </td>
+      </tr>
+      </table>
       <br>';
       }
 }
 ?>
 
-<TABLE class="fullwidth borderless"> <TR> <TD>
+<table class="fullwidth borderless"> <tr> <td>
 
 
-<TABLE class="fullwidth borderless" CELLPADDING="5">
+<table class="fullwidth borderless" CELLPADDING="5">
 
-<TR class="accent" ><TD class="accent">
-<?
+<tr class="accent" ><td class="accent">
+<?php
 if ($MailSent) {
    echo "Mail sent to your address";
 } else {
    echo "Forgotten your password?";
 }
 ?>
-</TD></TR>
+</td></tr>
 
-<TR><TD>
-<?
+<tr><td>
+<?php
 if ($MailSent) {
 ?>
 <p>
 A password recovery URL has been sent to the address we have on file.  If you still can't get logged in
-please contact <A HREF="<? echo MAILTO; ?>:webmaster&#64;freshports.org?subject=I forgot my password" rel="noopener noreferrer">the webmaster</A>
+please contact <a href="<?php echo MAILTO; ?>:webmaster&#64;freshports.org?subject=I forgot my password" rel="noopener noreferrer">the webmaster</a>
 and we'll see what we can do.
 </p>
-<? } else {  ?>
+<?php } else {  ?>
 
 
 <p>If you've forgotten your password, don't worry.  We've got that covered.</p>
@@ -274,33 +274,33 @@ we're only dealing with your FreshPorts login, not a financial transaction....</
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST">
       <input type="hidden" name="custom_settings" value="1"><input type="hidden" name="LOGIN" value="1">
       <p>User ID:<br>
-      <input SIZE="15" NAME="UserID" value="<? if (IsSet($UserID)) echo htmlentities($UserID) ?>"></p>
+      <input SIZE="15" NAME="UserID" value="<?php if (IsSet($UserID)) echo htmlentities($UserID) ?>"></p>
       <p>email address:<br>
-      <input NAME="eMail" VALUE = "<? if (IsSet($eMail)) echo htmlentities($eMail) ?>" SIZE="20"></p>
+      <input NAME="eMail" VALUE = "<?php if (IsSet($eMail)) echo htmlentities($eMail) ?>" SIZE="20"></p>
       <p><input TYPE="submit" VALUE="eMail Me!" name=submit>
 </form>
-<? } ?>
-</TD>
+<?php } ?>
+</td>
 
-</TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>
+</tr>
+</table>
+</td>
+</tr>
+</table>
 </td>
 
   <td class="sidebar">
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
   </td>
 
-</TR>
-</TABLE> 
-</TD></TR>
-</TABLE>
+</tr>
+</table>
+</td></tr>
+</table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

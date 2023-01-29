@@ -74,7 +74,7 @@ function freshports_SanityTestFailure_Link($message_id) {
 function freshports_cvsweb_Diff_Link($pathname, $previousRevision, $revision_name)
 {
   $pathname = str_replace('/ports/head/', '/ports/', $pathname);
-  $HTML  = '<A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $pathname . '.diff?r1=' . $previousRevision . ';r2=' . $revision_name . ' " rel="noopener noreferrer">';
+  $HTML  = '<a href="' . FRESHPORTS_FREEBSD_CVS_URL . $pathname . '.diff?r1=' . $previousRevision . ';r2=' . $revision_name . ' " rel="noopener noreferrer">';
   $HTML .= freshports_Diff_Icon() . '</a> ';
 
   return $HTML;
@@ -95,7 +95,7 @@ function freshports_Convert_Subversion_Path_To_Git($pathname, $branch = BRANCH_H
 function freshports_cvsweb_Annotate_Link($pathname, $revision_name)
 {
   $pathname = str_replace('/ports/head/', '/ports/', $pathname);
-  $HTML  = ' <A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $pathname . '?annotate=' . $revision_name . ' " rel="noopener noreferrer">';
+  $HTML  = ' <a href="' . FRESHPORTS_FREEBSD_CVS_URL . $pathname . '?annotate=' . $revision_name . ' " rel="noopener noreferrer">';
   $HTML .= freshports_Revision_Icon() . '</a>';
 
   return $HTML;
@@ -104,7 +104,7 @@ function freshports_cvsweb_Annotate_Link($pathname, $revision_name)
 function freshports_cvsweb_Revision_Link($pathname, $revision_name)
 {
   $pathname = str_replace('/ports/head/', '/ports/', $pathname);
-  $HTML = '<A HREF="' . FRESHPORTS_FREEBSD_CVS_URL . $pathname . '#rev' . $revision_name . '" rel="noopener noreferrer">';
+  $HTML = '<a href="' . FRESHPORTS_FREEBSD_CVS_URL . $pathname . '#rev' . $revision_name . '" rel="noopener noreferrer">';
 
   return $HTML;
 }
@@ -147,12 +147,12 @@ function freshports_svnweb_ChangeSet_Link_Text($revision, $hostname) {
 }
 
 function freshports_Search_Maintainer($Maintainer) {
-	return '<a href="/search.php?stype=maintainer&amp;method=exact&amp;query=' . htmlentities($Maintainer) . '">' .
+	return '<a href="/search.php?stype=maintainer&amp;method=exact&amp;query=' . urlencode($Maintainer) . '">' .
 	      freshports_Search_Icon('search for ports maintained by this maintainer') . '</a>';
 }
 
 function freshports_Search_Committer($Committer) {
-	return '<a href="/search.php?stype=committer&amp;method=exact&amp;query=' . htmlentities($Committer) . '">' .
+	return '<a href="/search.php?stype=committer&amp;method=exact&amp;query=' . urlencode($Committer) . '">' .
 	      freshports_Search_Icon('search for other commits by this committer') . '</a>';
 }
 
@@ -161,7 +161,7 @@ function freshports_MainContentTable($Classes=BORDER) {
 }
 
 function  freshports_ErrorContentTable() {
-	echo '<table class="fullwidth bordered" align="center">
+	echo '<table class="fullwidth bordered centered">
 ';
 }
 
@@ -781,7 +781,8 @@ function freshports_CommitterEmailLink_Old($committer) {
 	#
 
 	$new_addr = "";
-	$addr = $committer . "@FreeBSD.org";
+	# Sometimes we see 'marck (doc committer)' or 'dumbbell (src committer)'
+	$addr = strtok($committer, ' ') . "@FreeBSD.org";
 
 	$new_addr = freshportsObscureHTML($addr);
 
@@ -801,7 +802,8 @@ function freshports_CommitterEmailLinkExtra($committer, $extrabits) {
 	#
 
 	$new_addr = "";
-	$addr = $committer . "@FreeBSD.org";
+	# Sometimes we see 'marck (doc committer)' or 'dumbbell (src committer)'
+	$addr = strtok($committer, ' ') . "@FreeBSD.org";
 
 	$new_addr = freshportsObscureHTML($addr);
 
@@ -929,9 +931,9 @@ GLOBAL $FreshPortsLogoHeight;
 	$HTML .= '</td>';
 
 if (date("M") == 'Nov' && date("j") <= 12) {
-	$HTML .= '	<td nowrap align="center" CLASS="sans" valign="bottom"><a href="https://www.google.ca/search?q=remembrance+day" rel="noopener noreferrer"><img src="/images/poppy.gif" width="50" height="48" alt="Remember" title="Remember"><br>I remember</a></td>';
+	$HTML .= '	<td class="sans nowrap vbottom hcentered"><a href="https://www.google.ca/search?q=remembrance+day" rel="noopener noreferrer"><img src="/images/poppy.gif" width="50" height="48" alt="Remember" title="Remember"><br>I remember</a></td>';
 } elseif (defined('UKRAINE') && UKRAINE) {
-	$HTML .= '	<td nowrap align="center" CLASS="sans" valign="bottom"><img src="/images/ukraine.png" width="133" height="100" alt="Ukraine" title="Ukraine"></td>';
+	$HTML .= '	<td class="sans nowrap vbottom hcentered"><img src="/images/ukraine.png" width="133" height="100" alt="Ukraine" title="Ukraine"></td>';
 } else {
 	$HTML .= '	<td>';
 	$HTML .= '<div id="followus"><div class="header">Follow us</div><a href="https://news.freshports.org/" rel="noopener noreferrer">Blog</a><br><a href="https://twitter.com/freshports/" rel="noopener noreferrer">Twitter</a><br><a href="https://freshports.wordpress.com/" rel="noopener noreferrer">Status page</a><br></div><a rel="me" href="https://bsd.network/@dvl">Mastodon</a>';
@@ -975,7 +977,7 @@ function freshports_HEAD_charset() {
 
 function freshports_HEAD_main_items() {
 	return '
-	<LINK REL="SHORTCUT ICON" HREF="/favicon.ico">
+	<LINK REL="SHORTCUT ICON" href="/favicon.ico">
 
 	<link rel="alternate" type="application/rss+xml" title="FreshPorts - The Place For Ports" href="https://' . $_SERVER['HTTP_HOST'] . '/backend/rss2.0.php">
 
@@ -1283,8 +1285,8 @@ function freshports_UpdatingOutput($NumRowsUpdating, $PortsUpdating, $port) {
 	$HTML = '';
 
 	if ($NumRowsUpdating > 0) {
-		$HTML .= '<TABLE class="ports-updating fullwidth bordered">' . "\n";
-		$HTML .= "<TR>\n";
+		$HTML .= '<table class="ports-updating fullwidth bordered">' . "\n";
+		$HTML .= "<tr>\n";
 		$HTML .= freshports_PageBannerTextWithID('Notes from UPDATING', 'updating');
 		$HTML .= "<tr><td><dl>\n";
 		$HTML .= "<dt>These upgrade notes are taken from <a href=\"/UPDATING\">/usr/ports/UPDATING</a></dt>";
@@ -1682,11 +1684,11 @@ function freshports_DescriptionPrint($description, $encoding_losses, $maxnumline
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
 
 	$shortened = freshports_Head($description, $maxnumlines);
-	$HTML  = '<PRE CLASS="code">';
+	$HTML  = '<pre class="code">';
 
 	$HTML .= htmlify(_forDisplay(freshports_wrap($shortened)), $Process_PRs);
 
-	$HTML .= '</PRE>';
+	$HTML .= '</pre>';
 
 	if (strlen($shortened) < strlen($description)) {
 		$HTML .= $URL;
@@ -1751,7 +1753,7 @@ function freshports_PageBannerTextColSpan($Text, $ColSpan) {
 
 
 function freshports_PageBannerTextColSpanWithID($Text, $ColSpan, $ID) {
-	$HTML = '<td class="accent" COLSPAN="' . $ColSpan . '"><span>';
+	$HTML = '<td class="accent" colspan="' . $ColSpan . '"><span>';
 	if (!empty($ID)) {
 	  $HTML .= '<a id="' . htmlentities($ID) . '">';
 	}
@@ -1869,7 +1871,7 @@ function freshports_ShowFooter($PhorumBottom = 0) {
 <td>
 
 <a href="https://www.freebsd.org/" rel="noopener noreferrer"><img src="/images/pbfbsd2.gif"
-alt="powered by FreeBSD" width="171" height="64"></a>
+alt="powered by FreeBSD" width="171" height="64">/</a>
 
 &nbsp;
 
@@ -1967,7 +1969,7 @@ function freshports_SideBar() {
 		$HTML .= 'Logged in as ' . htmlentities($User->name) . "<br>";
 
 		if ($User->emailbouncecount > 0) {
-			$HTML .= '<img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif"  border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><br>';
+			$HTML .= '<img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><br>';
 			$HTML .= 'your email is <a href="/bouncing.php">bouncing</a><br>';
 			$HTML .= '<img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><br>';
 		}
@@ -2110,7 +2112,7 @@ $HTML .= '
 
 	if ($ShowAds) {
 		$HTML .= '<br><table class="borderless">
-		  <tr><td align="center">
+		  <tr><td class="vcentered">
 		';
 		$HTML .= Ad_160x600();
 		$HTML .= '</td></tr>
@@ -2165,8 +2167,8 @@ function freshports_LinkToDate($Date, $Text = '', $BranchName = BRANCH_HEAD) {
 
 function freshports_ErrorMessage($Title, $ErrorMessage) {
 	$HTML = '
-<table class="fullwidth bordered" align="center">
-<tr><td valign=TOP>
+<table class="fullwidth bordered vcentered">
+<tr><td class="vtop">
 <table class="fullwidth">
 <tr>
 	' . freshports_PageBannerText($Title) . '
@@ -2174,7 +2176,7 @@ function freshports_ErrorMessage($Title, $ErrorMessage) {
 <tr>
 <td>
   <table class="fullwidth borderless" cellpadding="0">
-  <tr valign=top>
+  <tr class="vtop">
    <td><img src="/images/warning.gif"></td>
    <td width="100%">
   <p>' .  "WARNING: $ErrorMessage" . '</p>

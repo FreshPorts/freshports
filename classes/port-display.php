@@ -197,7 +197,7 @@ class port_display {
 		fclose($temp);
 
 		# this code is also duplicated within _pkgmessage()
-		$HTML .= 'WWW: <a HREF="' . _forDisplay($port->homepage) . '" TITLE="Homepage for this port">' . _forDisplay($port->homepage) . '</a>';
+		$HTML .= '<dd>WWW: <a href="' . _forDisplay($port->homepage) . '" title="Homepage for this port">' . _forDisplay($port->homepage) . '</a></dd>';
 		$HTML .= '</dl></dd>';
 
 		return $HTML;
@@ -221,7 +221,7 @@ class port_display {
 			$HTML .= htmlspecialchars($port->pkgmessage);
 
 			# this code is also duplicated within _pkgmessage_UCL()
-			$HTML .= 'WWW: <a HREF="' . _forDisplay($port->homepage) . '" TITLE="Homepage for this port">' . _forDisplay($port->homepage) . '</a>';
+			$HTML .= 'WWW: <a href="' . _forDisplay($port->homepage) . '" title="Homepage for this port">' . _forDisplay($port->homepage) . '</a>';
 			$HTML .= "</dd>\n</dl>\n<hr>\n<dl>";
 		}
 
@@ -865,11 +865,11 @@ class port_display {
 		}
 
 		if ($this->ShowEverything || $this->ShowCategory) {
-			$HTML .= ' <A HREF="/' . $port->category . '/';
+			$HTML .= ' <a href="/' . $port->category . '/';
 			if ($this->Branch != BRANCH_HEAD) {
 				$HTML .= '?branch=' . htmlspecialchars($this->Branch);
 			}
-			$HTML .= '" TITLE="The category for this port">' . $port->category . '</A>';
+			$HTML .= '" title="The category for this port">' . $port->category . '</a>';
 		}
 
 		if ($this->ShowEverything || $this->ShowBasicInfo) {
@@ -978,15 +978,15 @@ class port_display {
 				$HTML .= '<dt class="nomaintainer">There is no maintainer for this port.</dt>';
 				$HTML .= '<dd>Any concerns regarding this port should be directed to the FreeBSD ' .
 				         'Ports mailing list via ';
-				$HTML .= '<A HREF="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);
-				$HTML .= '?subject=FreeBSD%20Port:%20' . $port->category . '/' . $port->port . '" TITLE="email the FreeBSD Ports mailing list">';
-				$HTML .= freshportsObscureHTML($port->maintainer) . '</A> ' . freshports_Search_Maintainer($port->maintainer) . '</dd>';
+				$HTML .= '<a href="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);
+				$HTML .= '?subject=FreeBSD%20Port:%20' . $port->category . '/' . $port->port . '" title="email the FreeBSD Ports mailing list">';
+				$HTML .= freshportsObscureHTML($port->maintainer) . '</a> ' . freshports_Search_Maintainer($port->maintainer) . '</dd>';
 			} else {
 				$HTML .= '<dt><b>';
 
-				$HTML .= 'Maintainer:</b> <A HREF="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);
-				$HTML .= '?subject=FreeBSD%20Port:%20' . $port->category . '/' . $port->port . '" TITLE="email the maintainer">';
-				$HTML .= freshportsObscureHTML($port->maintainer) . '</A> ';
+				$HTML .= 'Maintainer:</b> <a href="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);
+				$HTML .= '?subject=FreeBSD%20Port:%20' . $port->category . '/' . $port->port . '" title="email the maintainer">';
+				$HTML .= freshportsObscureHTML($port->maintainer) . '</a> ';
 				$HTML .= freshports_Search_Maintainer($port->maintainer) . '</dt>';
 			}
 
@@ -1085,11 +1085,10 @@ class port_display {
 						$HTML .= freshports_svnweb_ChangeSet_Link_Text($port->svn_revision, $port->repo_hostname);
 					} else {
 						$HTML .= 'UNKNOWN';
-			       	}
+					}
 				}
+				$HTML .= "</dt>\n";
 			}
-
-			$HTML .= "</dt>\n";
 		}
 
 		if ($this->ShowEverything || $this->ShowBasicInfo) {
@@ -1156,7 +1155,7 @@ class port_display {
 			$HTML .= '<dt>';
 
 			if ($port->homepage && ($this->ShowHomepageLink || $this->ShowEverything)) {
-				$HTML .= '<a HREF="' . _forDisplay($port->homepage) . '" TITLE="Homepage for this port">' . freshports_Homepage_Icon() . '</a>';
+				$HTML .= '<a href="' . _forDisplay($port->homepage) . '" title="Homepage for this port">' . freshports_Homepage_Icon() . '</a>';
 				$HTML .= '&nbsp;&nbsp;&nbsp;&nbsp;';
 			}
 
@@ -1181,8 +1180,8 @@ class port_display {
 			if ($port->PackageExists() && ($this->ShowPackageLink || $this->ShowEverything)) {
 				// package
 				$HTML .= ' <b>:</b> ';
-				$HTML .= '<A HREF="' . FRESHPORTS_FREEBSD_FTP_URL . '/' . freshports_PackageVersion($port->version, $port->revision, $port->epoch);
-				$HTML .= '.tgz">Package</A>';
+				$HTML .= '<a href="' . FRESHPORTS_FREEBSD_FTP_URL . '/' . freshports_PackageVersion($port->version, $port->revision, $port->epoch);
+				$HTML .= '.tgz">Package</a>';
 			}
 
 			$HTML .= '</dt>';
@@ -1278,14 +1277,14 @@ class port_display {
 			if ($port->IsDeleted()) {
 				$HTML .= '<dt>No installation instructions:</dt><dd>This port has been deleted.</dd>';
 			} else {
-				$HTML .= '<dt id="add"><b>To install <a href="/faq.php#port" TITLE="what is a port?">the port</a>:</b></dt><dd> <kbd class="code">cd /usr/ports/'  . $port->category . '/' . $port->port . '/ && make install clean</kbd></dd>';
+				$HTML .= '<dt id="add"><b>To install <a href="/faq.php#port" title="what is a port?">the port</a>:</b></dt><dd> <kbd class="code">cd /usr/ports/'  . $port->category . '/' . $port->port . '/ && make install clean</kbd></dd>';
 				if (IsSet($port->no_package) && $port->no_package != '') {
-					$HTML .= '<dt><b>No <a href="/faq.php#package" TITLE="what is a package?">package</a> is available:</b> ' . $port->no_package . '</dt>';
+					$HTML .= '<dt><b>No <a href="/faq.php#package" title="what is a package?">package</a> is available:</b> ' . $port->no_package . '</dt>';
 				} else {
 					if ($port->forbidden || $port->broken || $port->ignore || $port->restricted || !$port->PackageIsAvailable()) {
-						$HTML .= '<dt><b>A <a href="/faq.php#package" TITLE="what is a package?">package</a> is not available for ports marked as:</dt><dd>Forbidden / Broken / Ignore / Restricted</b></dd>';
+						$HTML .= '<dt><b>A <a href="/faq.php#package" title="what is a package?">package</a> is not available for ports marked as:</dt><dd>Forbidden / Broken / Ignore / Restricted</b></dd>';
 					} else {
-						$HTML .= '<dt><b>To add the <a href="/faq.php#package" TITLE="what is a package?">package</a>, run one of these commands:</b></dt>';
+						$HTML .= '<dt><b>To add the <a href="/faq.php#package" title="what is a package?">package</a>, run one of these commands:</b></dt>';
 						$HTML .= '<dd><ul><li><kbd class="code">pkg install ' . $port->category . '/' . $port->port . '</kbd></li>';
 						$HTML .= '<li><kbd class="code">pkg install ' . $port->package_name . '</kbd></li></ul>';
 						$HTML .= 'NOTE: If this package has multiple flavors (see below), then use one of them instead of the name specified above.';
@@ -1362,13 +1361,11 @@ class port_display {
 		###############################################
 
 		if ($this->ShowEverything || $this->ShowPackages) {
-			$HTML .= "<hr>\n";
-
 			$packages = new Packages($this->db);
 			$numrows = $packages->Fetch($this->port->id);
 
 			if ($numrows > 0) {
-				$HTML .= '<dt id="packages" class="h3"><b>Packages</b> (timestamps in pop-ups are UTC):</dt>';
+				$HTML .= '<dt id="packages" class="h3"><hr><b>Packages</b> (timestamps in pop-ups are UTC):</dt>';
 				$HTML .= '<dd>';
 				$HTML .= '<div class="scrollmenu">';
 
@@ -1409,7 +1406,7 @@ class port_display {
 				$HTML .= '</dd>';
 
 			} else {
-				$HTML .= '<dt id="packages"><b>No package information for this port in our database</b></dt>';
+				$HTML .= '<dt id="packages"><hr><b>No package information for this port in our database</b></dt>';
 				$HTML .= '<dd>Sometimes this happens. Not all ports have packages.';
 				if ($MarkedAsNew) $HTML .= ' This is doubly so for new ports, like this one.';
 				$HTML .= '</dd>';
@@ -1537,7 +1534,7 @@ class port_display {
 			if ($port->pkgmessage) {
 				$HTML .= $this->_pkgmessage($port);
 			} else {
-				$HTML .= '<dt id="message"><b>FreshPorts was unable to extract/find any pkg message</b></dt><br>';
+				$HTML .= '<dt id="message"><b>FreshPorts was unable to extract/find any pkg message</b><br></dt>';
 			}
 		}
 
@@ -1743,7 +1740,7 @@ class port_display {
 		if ( $NumRows > 0 ) {
 			// if this is our first output, put up our standard header
 			if ( $HTML === '' ) {
-				$div = "\n" . '<dt id="pkg-plist" class="pkg-plist"><a id="pkg-plist"><b>pkg-plist:</b></a> as obtained via: <code class="code">make generate-plist</code></dt>';
+				$div = "\n" . '<dt id="pkg-plist" class="pkg-plist"><b>pkg-plist:</b> as obtained via: <code class="code">make generate-plist</code></dt>';
 				$div .= '<dd class="pkg-plist">';
 				$div .= '<a href="#" id="configureplist-Extra-show" class="showLink" onclick="showHide(\'configureplist-Extra\');return false;">Expand this list (' . $NumRows . ' items)</a>';
 				$div .= '</dd>';

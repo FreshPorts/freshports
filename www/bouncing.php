@@ -64,8 +64,8 @@ on the customization page (see the link on the right hand side of the page).</p>
 to us.  So we have stopped sending out messages to you.  If you wish to continue to receive such
 messages, you should update your email address on the customization page.</p>
 </td></tr>
-<TR><TD HEIGHT="20">
-</TD></TR>
+<tr><td HEIGHT="20">
+</td></tr>
 <tr>
 <?php echo freshports_PageBannerText("How to fix the problem"); ?>
 </tr>
@@ -92,7 +92,7 @@ the button below.</p>
 </td>
 
   <td class="sidebar">
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
   </td>
@@ -100,7 +100,7 @@ the button below.</p>
 </tr>
 </table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

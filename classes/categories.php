@@ -74,13 +74,13 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 		#
 		$sql = $this->ComposeFetchBranchSQL() . ' WHERE id = ' . pg_escape_string($this->dbh, $this->id);
 
-		if ($this->Debug) echo "<pre>1. sql = '$sql'</pre><BR>";
+		if ($this->Debug) echo "<pre>1. sql = '$sql'</pre><br>";
 
         $result = pg_exec($this->dbh, $sql);
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
-				if ($this->Debug) echo "fetched by ID succeeded<BR>";
+				if ($this->Debug) echo "fetched by ID succeeded<br>";
 				$myrow = pg_fetch_array ($result, 0);
 				$this->Populate($myrow);
 			}
@@ -95,13 +95,13 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 			$this->element_id = $element_id;
 		}
 		$sql = $this->ComposeFetchBranchSQL() . '  WHERE C.element_id = ' . pg_escape_string($this->dbh, $this->element_id);
-		if ($this->Debug) echo "<pre>sql = '$sql'</pre><BR>";
+		if ($this->Debug) echo "<pre>sql = '$sql'</pre><br>";
 
         $result = pg_exec($this->dbh, $sql);
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
-				if ($this->Debug) echo "fetched by ID succeeded<BR>";
+				if ($this->Debug) echo "fetched by ID succeeded<br>";
 				$myrow = pg_fetch_array ($result, 0);
 				$this->Populate($myrow);
 			}
@@ -120,7 +120,7 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 		}
 		$sql = $this->ComposeFetchBranchSQL() . " WHERE C.name = '" . pg_escape_string($this->dbh, $this->name) . "'";
 
-		if ($this->Debug) echo "<pre>sql = '$sql'</pre><BR>";
+		if ($this->Debug) echo "<pre>sql = '$sql'</pre><br>";
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
@@ -141,7 +141,7 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 
 		$sql = "SELECT id FROM categories where name = '" . pg_escape_string($this->dbh, $Name) . "'";
 
-		if ($this->Debug) echo "sql = '$sql'<BR>";
+		if ($this->Debug) echo "sql = '$sql'<br>";
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
@@ -166,13 +166,13 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 		} else {
 			$sql = "select CategoryPortCount('" . pg_escape_string($this->dbh, $this->name) . "', '" . pg_escape_string($this->dbh, $Branch) . "')";
 		}
-		if ($this->Debug) echo "sql = '$sql'<BR>";
+		if ($this->Debug) echo "sql = '$sql'<br>";
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
-				if ($this->Debug) echo "PortCount succeeded<BR>";
+				if ($this->Debug) echo "PortCount succeeded<br>";
 				$myrow = pg_fetch_array ($result, 0);
 				$Count = $myrow[0];
 			}
@@ -189,7 +189,7 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 		syslog(LOG_NOTICE, 'User \'' . $User->name . '\' at '
 			. pg_escape_string($this->dbh, $_SERVER[REMOTE_ADDR]) . ' is changing category \'' 
 			. $this->name . '\' to \'' . $this->description . '\'.');
-		if ($this->Debug) echo "sql = '$sql'<BR>";
+		if ($this->Debug) echo "sql = '$sql'<br>";
 
 		$result = pg_exec($this->dbh, $sql);
 

@@ -96,11 +96,11 @@ function DBSize($db) {
 
 	<?php echo freshports_MainContentTable(NOBORDER); ?>
 
-<TR>
-	<? echo freshports_PageBannerText("How big is it"); ?>
-</TR>
+<tr>
+	<?php echo freshports_PageBannerText("How big is it"); ?>
+</tr>
 
-<TR><TD class="textcontent">
+<tr><td class="textcontent">
 
 <?php
 	if ($ShowAds) echo '<CENTER>' . Ad_728x90() . '</CENTER>';
@@ -113,15 +113,15 @@ just a simple matter of counting files on disk.  Most of the web pages are creat
 in the database.  One recent evening, I started to design a formula to find out how many web pages
 there are.  Roughly.  This will not be 100% accurate, but it will be close.
 </P>
-</TD></TR>
+</td></tr>
 
-<TR>
-	<? 
+<tr>
+	<?php
 	echo freshports_PageBannerText("Pages on disk"); 
 	?>
-</TR>
+</tr>
 
-<TR><TD class="textcontent">
+<tr><td class="textcontent">
 
 <P>
 First, let's count the number of pages on disk:
@@ -135,15 +135,15 @@ $Total += $Files;
 ?>
 </code></blockquote>
 
-</TD></TR>
+</td></tr>
 
-<TR>
-	<? 
+<tr>
+	<?php
 	echo freshports_PageBannerText("Number of categories"); 
 	?>
-</TR>
+</tr>
 
-<TR><TD class="textcontent">
+<tr><td class="textcontent">
 
 <P>
 There is a page for each category:
@@ -160,14 +160,14 @@ echo format_number($Value) . '<br>'
 ?>
 (1 row)<br>
 </code></blockquote>
-</TD></TR>
-<TR>
-	<? 
+</td></tr>
+<tr>
+	<?php
 	echo freshports_PageBannerText("Number of ports"); 
 	?>
-</TR>
+</tr>
 
-<TR><TD class="textcontent">
+<tr><td class="textcontent">
 
 <P>
 There are ports, and there are deleted ports. I'll show both:
@@ -196,15 +196,15 @@ echo format_number($Value) . '<br>';
 ?>
 (1 row)<br>
 </code></blockquote>
-</TD></TR>
+</td></tr>
 
-<TR>
-	<? 
+<tr>
+	<?php
 	echo freshports_PageBannerText("Number of files in the ports tree"); 
 	?>
-</TR>
+</tr>
 
-<TR><TD class="textcontent">
+<tr><td class="textcontent">
 
 <P>
 There is a page for each file in the ports tree:
@@ -234,15 +234,15 @@ $Total += $Value;
 </code></blockquote>
 
 Count last performed at <?php echo $DateLastChecked; ?>
-</TD></TR>
+</td></tr>
 
-<TR>
-	<? 
+<tr>
+	<?php
 	echo freshports_PageBannerText("Number of commits"); 
 	?>
-</TR>
+</tr>
 
-<TR><TD class="textcontent">
+<tr><td class="textcontent">
 
 <P>
 There is a page for each commit:
@@ -259,15 +259,15 @@ echo format_number($Value) . '<br>';
 ?>
 (1 row)<br>
 </code></blockquote>
-</TD></TR>
+</td></tr>
 
-<TR>
-	<? 
+<tr>
+	<?php
 	echo freshports_PageBannerText("Number of ports for each commit"); 
 	?>
-</TR>
+</tr>
 
-<TR><TD class="textcontent">
+<tr><td class="textcontent">
 
 <P>
 For each commit, you can view the files modified by that commit for a particular port:
@@ -284,15 +284,15 @@ echo format_number($Value) . '<br>';
 ?>
 (1 row)<br>
 </code></blockquote>
-</TD></TR>
+</td></tr>
 
-<TR>
-	<? 
+<tr>
+	<?php
 	echo freshports_PageBannerText("How many days?"); 
 	?>
-</TR>
+</tr>
 
-<TR><TD class="textcontent">
+<tr><td class="textcontent">
 
 <P>
 For each day, there is a page showing the commits for that day.  How many days do we have?
@@ -309,15 +309,15 @@ echo format_number($Value) . '<br>';
 ?>
 (1 row)<br>
 </code></blockquote>
-</TD></TR>
+</td></tr>
 
-<TR>
-	<? 
+<tr>
+	<?php
 	echo freshports_PageBannerText("How many users?"); 
 	?>
-</TR>
+</tr>
 
-<TR><TD class="textcontent">
+<tr><td class="textcontent">
 
 <P>
 Each user has a page:
@@ -334,15 +334,15 @@ echo format_number($Value) . '<br>';
 ?>
 (1 row)<br>
 </code></blockquote>
-</TD></TR>
+</td></tr>
 
-<TR>
-	<? 
+<tr>
+	<?php
 	echo freshports_PageBannerText("How many watch lists?"); 
 	?>
-</TR>
+</tr>
 
-<TR><TD class="textcontent">
+<tr><td class="textcontent">
 
 <P>
 For each watch list, there is a page:
@@ -359,15 +359,15 @@ echo format_number($Value) . '<br>';
 ?>
 (1 row)<br>
 </code></blockquote>
-</TD></TR>
+</td></tr>
 
-<TR>
-	<? 
+<tr>
+	<?php
 	echo freshports_PageBannerText("Estimated total"); 
 	?>
-</TR>
+</tr>
 
-<TR><TD class="textcontent">
+<tr><td class="textcontent">
 
 <P>
 <?php $GooglePages = 8058044651; ?>
@@ -385,13 +385,13 @@ web pages on <a href="https://www.Google.com/">Google</a><small><sup><a href="#1
 
 </td></tr>
 
-<TR>
-	<? 
+<tr>
+	<?php
 	echo freshports_PageBannerText("How much diskspace?"); 
 	?>
-</TR>
+</tr>
 
-<TR><TD class="textcontent">
+<tr><td class="textcontent">
 
 <P>
 The total space used by the FreshPorts database is:
@@ -410,23 +410,23 @@ echo number_format($Value) . '<br>';
 
 <p>That's bytes...
 <p>This value might be easier to parse: <?php echo human_readable($Value); ?>
-</TD></TR>
+</td></tr>
 
 
-</TABLE>
-</TD>
+</table>
+</td>
 
   <td class="sidebar">
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
   </td>
 
-</TABLE>
+</table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 
-</BODY>
-</HTML>
+</body>
+</html>

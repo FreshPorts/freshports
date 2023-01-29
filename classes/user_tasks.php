@@ -27,7 +27,7 @@ class UserTasks {
 			$this->id = $user_id;
 		}
 		$sql = "select id, name from user_tasks, tasks where user_id = " . pg_escape_string($this->dbh, $this->id) . " and user_tasks.task_id = tasks.id";
-#		echo "<pre>sql = '$sql'</pre><BR>";
+#		echo "<pre>sql = '$sql'</pre><br>";
 
 		$result = pg_exec($this->dbh, $sql);
 		if ($result) {

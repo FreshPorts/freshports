@@ -61,7 +61,7 @@
 <?php echo freshports_MainContentTable(BORDER); ?>
 
   <tr>
-	<? echo freshports_PageBannerText("$FreshPortsTitle - list of categories"); ?>
+	<?php echo freshports_PageBannerText("$FreshPortsTitle - list of categories"); ?>
   </tr>
 <tr><td>
 <P>
@@ -217,7 +217,7 @@ echo $HTML;
 ?>
 
   <td class="sidebar">
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
   </td>
@@ -225,7 +225,7 @@ echo $HTML;
 </tr>
 </table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

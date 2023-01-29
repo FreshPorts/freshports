@@ -180,7 +180,7 @@ if ($NumCommits > 0) {
 
 <?php echo freshports_MainTable(); ?>
 
-<TR><td class="content">
+<tr><td class="content">
 <?php
 
 echo freshports_MainContentTable();
@@ -207,7 +207,7 @@ if ($NumCommits > 0) {
 
   <td class="sidebar">
 
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
 
@@ -215,7 +215,7 @@ if ($NumCommits > 0) {
 </tr>
 </table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

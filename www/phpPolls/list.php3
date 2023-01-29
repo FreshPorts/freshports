@@ -1,4 +1,4 @@
-<? 
+<?php 
 //
 // this script displays a list of all available polls
 // 
@@ -29,7 +29,7 @@ h2 {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14pt; color
   </td>
 </tr>
 
-<?
+<?php
 $allPolls = poll_listPolls();
 for ($count = 0; $count < count($allPolls); $count++) {
   $id = $allPolls[$count][0];

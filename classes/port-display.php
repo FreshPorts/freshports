@@ -818,7 +818,7 @@ class port_display {
 		#####################################################
 
 		# start the description list for this port
-		$HTML .= "<dl>\n";
+		$HTML .= "<dl class=\"port-description\">\n";
 
 		if ($this->ShowEverything || $this->ShowShortDescription || $this->ShowCategory) {
 			# first term/name, is the port itself
@@ -1273,7 +1273,7 @@ class port_display {
 
 		# only show if we're meant to show, and if the port has not been deleted.
 		if ($this->ShowPackageLink || $this->ShowEverything) {
-			$HTML .= "\n</dl><dl>\n";
+#			$HTML .= "\n</dl><dl>\n";
 			if ($port->IsDeleted()) {
 				$HTML .= '<dt>No installation instructions:</dt><dd>This port has been deleted.</dd>';
 			} else {
@@ -1422,7 +1422,7 @@ class port_display {
 			$NumRows = $MasterSlave->FetchByMaster($port->category . '/' . $port->port);
 
 			if ($port->IsSlavePort() || $NumRows > 0) {
-				$HTML .= "\n</dl><hr>\n<dl>";
+#				$HTML .= "\n</dl><hr>\n<dl>";
 			}
 
 			if ($port->IsSlavePort()) {
@@ -1447,7 +1447,7 @@ class port_display {
 		}
 
 		if ($this->ShowDepends || $this->ShowEverything) {
-			$HTML .= "</dl>\n<hr><dl>\n";
+#			$HTML .= "</dl>\n<hr><dl>\n";
 			if ($port->depends_build || $port->depends_run || $port->depends_lib || $port->fetch_depends || $port->patch_depends || $port->extract_depends || $port->test_depends) {
 				$HTML .= '<dt class="h2" id="dependencies">Dependencies</dt>';
 				$HTML .= '<dt class="notice">NOTE: FreshPorts displays only information on required and default dependencies.  Optional dependencies are not covered.</dt>';
@@ -1506,8 +1506,8 @@ class port_display {
 
 
 		if ($this->ShowEverything || $this->ShowConfig) {
-			$HTML .= "</dl>\n<hr>\n<dl>";
-			$HTML .= '<dt id="config"><b>Configuration Options</b>:</dt>' . "\n" . '<dd class="like-pre">';
+#			$HTML .= "\n<dl>";
+			$HTML .= '<dt id="config"><hr>' . "\n" . '<b>Configuration Options</b>:</dt>' . "\n" . '<dd class="like-pre">';
 			if ($port->showconfig) {
 				$HTML .= $port->showconfig;
 			} else {
@@ -1525,9 +1525,11 @@ class port_display {
 		}
 
 		if (($this->ShowEverything || $this->ShowUses) && $port->uses) {
-			$HTML .= '</dl><hr><dl><dt id="uses"><b>USES:</b></dt>' . "\n" . '<dd class="like-pre">';
+#			$HTML .= '</dl><hr><dl>';
+			$HTML .= '<dt id="uses"><b>USES:</b></dt>' . "\n" . '<dd class="like-pre">';
 			$HTML .= $port->uses;
-			$HTML .= "</dd>\n</dl>\n<hr>\n<dl>";
+			$HTML .= "</dd>\n";
+#			$HTML .= "</dl>\n<hr>\n<dl>";
 		}
 
 		if (($this->ShowEverything || $this->ShowPKGMessage)) {

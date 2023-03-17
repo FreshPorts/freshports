@@ -131,7 +131,7 @@ if ($db) {
 <tr>
 <?php
  if ( $Branch == BRANCH_HEAD) {
-   echo freshports_PageBannerText("$MaxNumberOfPortsLong most recent commits");
+   echo freshports_PageBannerText("$MaxNumberOfPortsLong most recent commits (all timestamps are UTC)");
  } else {
    echo freshports_PageBannerText("Commits from the $Branch branch");
  }

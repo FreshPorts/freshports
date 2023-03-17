@@ -112,7 +112,7 @@ if ($db) {
 <?php echo freshports_MainContentTable(); ?>
 
 <tr>
-<?php echo freshports_PageBannerText("$MaxNumberOfPortsLong most recent commits"); ?>
+<?php echo freshports_PageBannerText("$MaxNumberOfPortsLong most recent commits (all timestamps are UTC)"); ?>
         <?php //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPortsLong) ?>
 </tr>
 <tr><td>

@@ -60,7 +60,7 @@
 		$num = MaxNumberOfPortsLong;
 	}
 
-	$Title = "$MaxNumberOfPortsLong most recent commits";
+	$Title = "$MaxNumberOfPortsLong most recent commits (all timestamps are UTC)";
 	freshports_Start($FreshPortsSlogan,
 					$Title,
 					'FreeBSD, index, applications, ports');

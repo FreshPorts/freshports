@@ -504,6 +504,21 @@ span.amazon
   font-size: 20px;
 }
 
+span.timezone
+{
+  float:     middle;
+}
+
+span.logo
+{
+  float:     left;
+}
+
+span.branch
+{
+  float:     left;
+}
+
 span.fp_description_short
 {
   font-size:   16px;

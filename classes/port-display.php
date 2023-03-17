@@ -197,7 +197,10 @@ class port_display {
 		fclose($temp);
 
 		# this code is also duplicated within _pkgmessage()
-		$HTML .= '<dd>WWW: <a href="' . _forDisplay($port->homepage) . '" title="Homepage for this port">' . _forDisplay($port->homepage) . '</a></dd>';
+
+		foreach (preg_split('/\s+/', $port->homepage, -1, PREG_SPLIT_NO_EMPTY) as $page) {
+			$HTML .= '<dd>WWW: <a href="' . _forDisplay($page) . '" title="Homepage for this port">' . _forDisplay($port->homepage) . '</a></dd>';
+		}
 		$HTML .= '</dl></dd>';
 
 		return $HTML;
@@ -221,7 +224,9 @@ class port_display {
 			$HTML .= htmlspecialchars($port->pkgmessage);
 
 			# this code is also duplicated within _pkgmessage_UCL()
-			$HTML .= 'WWW: <a href="' . _forDisplay($port->homepage) . '" title="Homepage for this port">' . _forDisplay($port->homepage) . '</a>';
+			foreach (preg_split('/\s+/', $port->homepage, -1, PREG_SPLIT_NO_EMPTY) as $page) {
+				$HTML .= 'WWW: <a href="' . _forDisplay($page) . '" title="Homepage for this port">' . _forDisplay($port->homepage) . '</a>';
+			}
 			$HTML .= "</dd>\n</dl>\n<hr>\n<dl>";
 		}
 
@@ -1155,7 +1160,9 @@ class port_display {
 			$HTML .= '<dt>';
 
 			if ($port->homepage && ($this->ShowHomepageLink || $this->ShowEverything)) {
-				$HTML .= '<a href="' . _forDisplay($port->homepage) . '" title="Homepage for this port">' . freshports_Homepage_Icon() . '</a>';
+				foreach (preg_split('/\s+/', $port->homepage, -1, PREG_SPLIT_NO_EMPTY) as $page) {
+					$HTML .= '<a href="' . _forDisplay($page) . '" title="Homepage for this port">' . freshports_Homepage_Icon() . '</a>';
+				}
 				$HTML .= '&nbsp;&nbsp;&nbsp;&nbsp;';
 			}
 

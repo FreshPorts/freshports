@@ -244,6 +244,15 @@ down you must read to find something you didn't already know.</P>
 	<tr><td class="textcontent">
 	There are a few symbols you will see in this website.
 
+	<P id="home"><?php echo freshports_Homepage_Icon(); ?>
+		Homepage: a link to the Project Page / home page for this port. A port can have more
+		<a href="https://github.com/FreshPorts/freshports/issues/434">than one homepage</a> While I personally think the
+		<a href="https://docs.freebsd.org/en/books/porters-handbook/makefiles/#makefile-www">documentation</a> does
+		not specifically allow for this, I think it arose when
+		 <a href="https://cgit.freebsd.org/ports/commit/?id=b7f05445c00f2625aa19b4154ebcbce5ed2daa52">WWW was moved</a>
+		 from <span class="file">pkg-descr</apsn>
+		to <span class="file">Makefile<span>.</P>
+
 	<P id="fallout"><?php echo freshports_Fallout_Icon(); ?>
 		Fallout: a link to search the <a href="https://lists.freebsd.org/archives/freebsd-pkg-fallout/">freebsd-pkg-fallout archives</a>. If the resulting fallout list is empty: the port may have been skipped due to fallout of a related port.</P>
 

@@ -176,19 +176,19 @@
 	$HTML   = '';
 
 	// If these items are missing from the URL, we want them to have a value
-	$query				= '';
-	$stype				= 'name';
-	$num				= $User->page_size;
-	$category			= '';
-	$port				= '';
-	$method				= '';
-	$deleted			= 'excludedeleted';
-	$include_src_commits= INCLUDE_SRC_COMMITS;
-	$casesensitivity		= 'caseinsensitive';
-	$orderby			= ORDERBYCATEGORY;
-	$orderbyupdown			= ORDERBYASCENDING;
-	$output_format			= OUTPUT_FORMAT_HTML;
-	$minimal_output			= 0;
+	$query               = '';
+	$stype               = 'name';
+	$num                 = $User->page_size;
+	$category            = '';
+	$port                = '';
+	$method              = '';
+	$deleted             = 'excludedeleted';
+	$include_src_commits = INCLUDE_SRC_COMMITS;
+	$casesensitivity     = 'caseinsensitive';
+	$orderby             = ORDERBYCATEGORY;
+	$orderbyupdown       = ORDERBYASCENDING;
+	$output_format       = OUTPUT_FORMAT_HTML;
+	$minimal_output      = 0;
 
 
 	# No special treatment for $query. Whenever it is output: htmlentities(). Whenever it is used in a query: pg_escape_string()
@@ -608,6 +608,12 @@
 
 		    $NumFetches = $Commits->Fetch();
 		    $result     = $Commits->LocalResult;
+		    if ($Debug) {
+		        if ($result) {
+		             echo "
+<br>we have a result for SEARCH_FIELD_COMMITTER<br>\n";
+			}
+		    }
 		    break;
 
 		  case SEARCH_FIELD_COMMITMESSAGE:
@@ -646,7 +652,13 @@
 		    $Commits->SetLimit($PageSize);
 
 		    $NumFetches = $Commits->Fetch();
-#		    $result     = $Commits->LocalResult;
+		    $result     = $Commits->LocalResult;
+		    if ($Debug) {
+		        if ($result) {
+		            echo "
+<br>we have a result for SEARCH_FIELD_COMMITMESSAGE<br>\n";
+			}
+		    }
 		    break;
 
 		  case SEARCH_FIELD_PATHNAME:
@@ -703,6 +715,13 @@
 			    $NumFetches = $Commits->Fetch();
 			}
 			$result = $Commits->LocalResult;
+			if ($Debug) {
+				if ($result) {
+					echo "
+<br>we have a result for SEARCH_FIELD_PATHNAME<br>\n";
+				}
+			}
+
 		        break;
 
 		  case SEARCH_FIELD_PKG_PLIST:
@@ -766,6 +785,12 @@
 
 			# $result get used later on to display the search results via classes/port-display.php
 			$result = $Ports->LocalResult;
+			if ($Debug) {
+				if ($result) {
+					echo "
+<br>we have a result for SEARCH_FIELD_USES<br>\n";
+				}
+			}
 			break;
 
 
@@ -874,6 +899,12 @@ JOIN element_pathname EP on E.id = EP.element_id
 				}
 
 				$NumFetches = pg_num_rows($result);
+				if ($Debug) {
+					if ($result) {
+						echo "
+<br>we have a result for 'default'<br>\n";
+					}
+				}
 			} # $NumFound > 0
 
 		} // end of non-committer search  ## I think this is the end of the default option

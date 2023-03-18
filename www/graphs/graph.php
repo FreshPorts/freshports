@@ -38,7 +38,7 @@ function FreshPortsChart($title, $axislabel, $values, $labels, $urls, $file = "-
 // parameters:
 // id=number of graph
 
-$id = pg_escape_string($db, $_REQUEST["id"]);
+$id = intval(pg_escape_string($db, $_REQUEST["id"]));
 
 // assume that we always have graph of id=0
 if (!isset($id)) $id=0;
@@ -55,7 +55,7 @@ if (!file_exists($filename) || filemtime($filename)+$period<time())	{
 
 	// XXX CHANGE THE QUERY XXX
 	$data = @pg_exec($db, "select query, title, label, is_clickable from graphs where id = $id")
-		or die("PGERR 1: " . pg_ErrorMessage());
+		or die("PGERR 1: " . pg_ErrorMessage($db));
 	
 	if (pg_num_rows($data) == 0)
 		die("GRAPH: invalid id");

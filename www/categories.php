@@ -28,7 +28,7 @@
 
 	DEFINE('VIRTUAL', '<sup>*</sup>'); 
 	$Primary['t'] = '';
-    $Primary['f'] = VIRTUAL;
+	$Primary['f'] = VIRTUAL;
 
 	$AllowedToEdit = $User->IsTaskAllowed(FRESHPORTS_TASKS_CATEGORY_VIRTUAL_DESCRIPTION_SET);
 

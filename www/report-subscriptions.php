@@ -80,8 +80,12 @@
 			reset($reports);
 	
 			foreach ($reports as $key => $value) {
-				$TheFrequency = pg_escape_string($db, $_POST['reportfrequency_' . $value] ?? '');
-				$value = pg_escape_string($db, $value);
+				$value = intval($value);
+				# if empty, it'll go to zero
+				$TheFrequency = intval(pg_escape_string($db, $_POST['reportfrequency_' . $value] ?? ''));
+
+				# if zero, make it an empty string
+				$TheFrequency = $TheFrequency == 0 ? '' : $TheFrequency;
 
 				if ($Debug) echo '$TheFrequency=\'' . $TheFrequency . '\' ';
 				if ($Debug) echo "\$key='$key' \$value='$value' \$User->id='$User->id' \$frequencies[\$key]='" . $TheFrequency . "'<br>";

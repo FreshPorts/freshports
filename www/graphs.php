@@ -51,7 +51,7 @@ If you have suggestions for graphs, please raise an issue.
 <tr>
 <td class="graph-sidebar">
 <?php
-	$id = $_REQUEST["id"] ?? '';
+	$id = intval($_REQUEST["id"]) ?? '';
 	$sql = "select id, title, is_clickable from graphs order by title";
 	$title = "graph goes here!";
 	$result = pg_query($db, $sql);

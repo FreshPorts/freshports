@@ -40,8 +40,8 @@ if (IsSet($submit)) {
 	$Password      = $_POST['Password'];
 	$Password1     = $_POST['Password1'];
 	$Password2     = $_POST['Password2'];
-	$numberofdays  = pg_escape_string($db, $_POST['numberofdays']);
-	$page_size     = pg_escape_string($db, $_POST['page_size']);
+	$numberofdays  = pg_escape_string($db, intval($_POST['numberofdays']));
+	$page_size     = pg_escape_string($db, intval($_POST['page_size']));
 
 	# this is a checkbox
 	if (IsSet($_POST['set_focus_search'])) {

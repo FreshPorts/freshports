@@ -16,9 +16,6 @@
 
 	GLOBAL $User;
 
-$submit  = isset($_REQUEST['submit'])        ? $_REQUEST['submit']        : null;
-$visitor = isset($_COOKIE[USER_COOKIE_NAME]) ? $_COOKIE[USER_COOKIE_NAME] : null;
-
 // if we don't know who they are, we'll make sure they login first
 if (!$User->id) {
 	header('Location: /login.php');  /* Redirect browser to PHP web site */
@@ -32,10 +29,10 @@ if (!$User->IsTaskAllowed(FRESHPORTS_TASKS_ANNOUNCEMENTS_MAINTAIN)) {
 if (IsSet($_REQUEST['add'])) {
 	$Announcement = new Announcement($db);
 
-	$Announcement->TextSet     ($_REQUEST['announcement']);
-	$Announcement->TextPlainSet($_REQUEST['announcement_plain']);
-	$Announcement->StartDateSet($_REQUEST['start_date']);
-	$Announcement->EndDateSet  ($_REQUEST['end_date']);
+	$Announcement->TextSet     (pg_escape_string($db, $_REQUEST['announcement']));
+	$Announcement->TextPlainSet(pg_escape_string($db, $_REQUEST['announcement_plain']));
+	$Announcement->StartDateSet(pg_escape_string($db, $_REQUEST['start_date']));
+	$Announcement->EndDateSet  (pg_escape_string($db, $_REQUEST['end_date']));
 
 	$Announcement->Insert();
 	Unset($Announcement);
@@ -44,11 +41,11 @@ if (IsSet($_REQUEST['add'])) {
 if (IsSet($_REQUEST['update'])) {
 	$Announcement = new Announcement($db);
 
-	$Announcement->TextSet     ($_REQUEST['announcement']);
-	$Announcement->TextPlainSet($_REQUEST['announcement_plain']);
-	$Announcement->StartDateSet($_REQUEST['start_date']);
-	$Announcement->EndDateSet  ($_REQUEST['end_date']);
-	$Announcement->IDSet       ($_REQUEST['id']);
+	$Announcement->TextSet     (pg_escape_string($db, $_REQUEST['announcement']));
+	$Announcement->TextPlainSet(pg_escape_string($db, $_REQUEST['announcement_plain']));
+	$Announcement->StartDateSet(pg_escape_string($db, $_REQUEST['start_date']));
+	$Announcement->EndDateSet  (pg_escape_string($db, $_REQUEST['end_date']));
+	$Announcement->IDSet       (pg_escape_string($db, intval($_REQUEST['id'])));
 
 	$Announcement->Update();
 	Unset($Announcement);
@@ -57,7 +54,7 @@ if (IsSet($_REQUEST['update'])) {
 if (IsSet($_REQUEST['delete'])) {
 	$Announcement = new Announcement($db);
 
-	$Announcement->IDSet($_REQUEST['delete']);
+	$Announcement->IDSet(intval(pg_escape_string($db, $_REQUEST['delete'])));
 
 	$Announcement->Delete();
 	Unset($Announcement);
@@ -67,7 +64,7 @@ if (IsSet($_REQUEST['delete'])) {
 $Announcement = new Announcement($db);
 
 if (IsSet($_REQUEST['edit'])) {
-	$Announcement->Fetch($_REQUEST['edit']);
+	$Announcement->Fetch(intval(pg_escape_string($db, $_REQUEST['edit'])));
 }
 
 	#echo '<br>the page size is ' . $page_size . ' : ' . $email;

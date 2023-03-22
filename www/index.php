@@ -99,9 +99,9 @@ $num          = $MaxNumberOfPortsLong;
 $days         = $NumberOfDays;
 $dailysummary = 7;
 
-if (In_Array('num',          $_REQUEST)) $num          = pg_escape_string($db, $_REQUEST["num"]);
-if (In_Array('dailysummary', $_REQUEST)) $dailysummary = pg_escape_string($db, $_REQUEST["dailysummary"]);
-if (In_Array('days',         $_REQUEST)) $days         = pg_escape_string($db, $_REQUEST["days"]);
+if (In_Array('num',          $_REQUEST)) $num          = pg_escape_string($db, intval($_REQUEST["num"]));
+if (In_Array('dailysummary', $_REQUEST)) $dailysummary = pg_escape_string($db, intval($_REQUEST["dailysummary"]));
+if (In_Array('days',         $_REQUEST)) $days         = pg_escape_string($db, intval($_REQUEST["days"]));
 
 if (Is_Numeric($num)) {
 	$MaxNumberOfPortsLong = min($MaxNumberOfPortsLong, max(10, $num));

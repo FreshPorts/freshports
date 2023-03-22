@@ -178,7 +178,7 @@ echo freshports_ShowFooter();
 		if (IsSet($_REQUEST['Update'])) {
 			pg_exec($db, 'BEGIN');
 			$Error = '';
-			$ElementID = pg_escape_string($db, $_REQUEST['Update']);
+			$ElementID = pg_escape_string($db, intval($_REQUEST['Update']));
 			$WatchListElement = new WatchListElement($db);
 
 			if ($Debug) echo "userid = '$User->id' and ElementID = '$ElementID'<br>";
@@ -200,7 +200,7 @@ echo freshports_ShowFooter();
 			if ($Error == '' && IsSet($_REQUEST['wlid'])) {
 
 				if ($Debug) echo "userid = $User->id and ElementID = $ElementID <br>";
-				if (AddElementToWatchLists($db, $User->id, $ElementID, $_REQUEST['wlid']) == -1) {
+				if (AddElementToWatchLists($db, $User->id, $ElementID, intval($_REQUEST['wlid'])) == -1) {
 					$Error = 'adding element failed : Please try again, and if the problem persists, please contact the webmaster: ' . pg_last_error($db);
 				}
 			}
@@ -215,7 +215,7 @@ echo freshports_ShowFooter();
 			if (IsSet($_REQUEST['add'])) {
 				pg_exec($db, 'BEGIN');
 				$Error = '';
-				$ElementID = pg_escape_string($db, $_REQUEST['add']);
+				$ElementID = intval(pg_escape_string($db, $_REQUEST['add']));
 				if ($ElementID == '') {
 					die('The target for addition was not supplied');
 				}
@@ -230,7 +230,7 @@ echo freshports_ShowFooter();
 			} else {
 				if (IsSet($_REQUEST['remove'])) {
 					pg_exec($db, 'BEGIN');
-					$ElementID = pg_escape_string($db, $_REQUEST['remove']);
+					$ElementID = intval(pg_escape_string($db, $_REQUEST['remove']));
 					if ($ElementID == '') {
 						die('The target for removal was not supplied');
 					}

@@ -50,9 +50,9 @@
 	$days         = $NumberOfDays;
 	$dailysummary = 7;
 
-	if (IsSet($_REQUEST['num']))          $num          = pg_escape_string($db, $_REQUEST["num"]);
-	if (IsSet($_REQUEST['dailysummary'])) $dailysummary = pg_escape_string($db, $_REQUEST["dailysummary"]);
-	if (IsSet($_REQUEST['days']))         $days         = pg_escape_string($db, $_REQUEST["days"]);
+	if (IsSet($_REQUEST['num']))          $num          = pg_escape_string($db, intval($_REQUEST["num"]));
+	if (IsSet($_REQUEST['dailysummary'])) $dailysummary = pg_escape_string($db, intval($_REQUEST["dailysummary"]));
+	if (IsSet($_REQUEST['days']))         $days         = pg_escape_string($db, intval($_REQUEST["days"]));
 
 	if (Is_Numeric($num)) {
 		$MaxNumberOfPortsLong = min($MaxNumberOfPortsLong, max(10, $num));
@@ -159,7 +159,7 @@ A port is marked as new for 10 days.
 		$LatestCommits->SetMaxNumberOfPorts($MaxNumberOfPortsLong);
 		$LatestCommits->SetDaysMarkedAsNew ($DaysMarkedAsNew);
 		$LatestCommits->SetUserID($User->id);
-		$LatestCommits->SetBranch($Branch);
+		$LatestCommits->SetBranch(pg_escape_string($db, $Branch));
 		$LatestCommits->SetWatchListAsk($User->watch_list_add_remove);
 		$LatestCommits->CreateHTML();
 

@@ -16,6 +16,7 @@
                 header('Location: /' . MAINTENANCE_PAGE, TRUE, 307);
 	}
 
+$Debug = 0;
 $visitor = $_COOKIE[USER_COOKIE_NAME] ?? '';
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {
@@ -98,22 +99,22 @@ if ($UserClickedOn) {
 	if ($ErrorMessage == '') {
 		switch ($UserClickedOn) {
 			case 'add':
-				if (pg_escape_string($db, $_POST['add_name']) == '') {
+				$add_name = pg_escape_string($db, $_POST['add_name']);
+				if ($add_name == '') {
 					$ErrorMessage = 'When creating a new list, you must supply a name.';
 				}
-				if (preg_match("/[^a-zA-Z0-9]/", $_POST['add_name'])) {
+				if (preg_match("/[^a-zA-Z0-9]/", $add_name)) {
 					$ErrorMessage = $WatchListNameMessage;
-					$add_name     = $_POST['add_name'];
 				}
 				break;
 
 			case 'rename':
-				if (pg_escape_string($db, $_POST['rename_name']) == '') {
+				$rename_name  = pg_escape_string($db, $_POST['rename_name']);
+				if ($rename_name == '') {
 					$ErrorMessage = 'When renaming an existing list, you must supply a name.';
 				}
-				if (preg_match("/[^a-zA-Z0-9]/", $_POST['rename_name'])) {
+				if (preg_match("/[^a-zA-Z0-9]/", $rename_name)) {
 					$ErrorMessage = $WatchListNameMessage;
-					$rename_name  = $_POST['rename_name'];
 				}
 				break;
 		}
@@ -129,18 +130,21 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 	switch ($UserClickedOn) {
 		case 'add':
 			$WatchList = new WatchList($db);
-			$NewWatchListID = $WatchList->Create($User->id, pg_escape_string($db, $_POST['add_name']));
-			if ($Debug) echo 'I just created \'' . pg_escape_string($db, $_POST['add_name']) . '\' with ID = \'' . $NewWatchListID . '\'';
+			$NewWatchListID = $WatchList->Create($User->id, $add_name);
+			if ($Debug) echo 'I just created \'' . $add_name . '\' with ID = \'' . $NewWatchListID . '\'';
+			$add_name = '';
 			break;
 
 		case 'rename':
 			# check valid new name
 			# check only one watch list supplied
-			if (count($_POST['wlid']) == 1) {
+			if (isset($_POST['wlid']) && count($_POST['wlid']) == 1) {
 				foreach ($_POST['wlid'] as $key => $WatchListIDToRename) {
+					$WatchListIDToRename = intval($WatchListIDToRename);
 					$WatchList = new WatchList($db);
-					$NewName = $WatchList->Rename($User->id, $WatchListIDToRename, $_POST['rename_name']);
-					if ($Debug) echo 'I have renamed your list to \'' . pg_escape_string($db, $_POST['rename_name']) . '\'';
+					$NewName = $WatchList->Rename($User->id, $WatchListIDToRename, $rename_name);
+					if ($Debug) echo 'I have renamed your list to \'' . $rename_name . '\'';
+					$rename_name = '';
 					break;
 				}
 			} else {
@@ -152,8 +156,9 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 			pg_query($db, 'BEGIN');
 			$WatchList = new WatchList($db);
 			foreach ($_POST['wlid'] as $key => $WatchListIDToDelete) {
+				$WatchListIDToDelete = intval($WatchListIDToDelete);
 				if ($Debug) echo "\$key='$key' \$WatchListIDToDelete='$WatchListIDToDelete'<br>";
-				$DeletedWatchListID = $WatchList->Delete($User->id, pg_escape_string($db, $WatchListIDToDelete));
+				$DeletedWatchListID = $WatchList->Delete($User->id, $WatchListIDToDelete);
 				if ($DeletedWatchListID != $WatchListIDToDelete) {
 					die("Failed to deleted '$WatchListIDToDelete' (return value '$DeletedWatchListID')" . pg_last_error($db));
 				}
@@ -176,8 +181,9 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 			pg_query($db, 'BEGIN');
 			$WatchList = new WatchList($db);
 			foreach ($_POST['wlid'] as $key => $WatchListIDToEmpty) {
+				$WatchListIDToEmpty = intval($WatchListIDToEmpty);
 				if ($Debug) echo "\$key='$key' \$WatchListIDToEmpty='$WatchListIDToEmpty'<br>";
-				$EmptydWatchListID = $WatchList->EmptyTheList($User->id, pg_escape_string($db, $WatchListIDToEmpty));
+				$EmptydWatchListID = $WatchList->EmptyTheList($User->id, $WatchListIDToEmpty);
 				if ($EmptydWatchListID != $WatchListIDToEmpty) {
 					die("Failed to Empty '$WatchListIDToEmpty' (return value '$EmptydWatchListID')" . pg_last_error($db));
 				}
@@ -202,7 +208,7 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 			if ($Debug) echo 'I have set your default lists.<br>';
 			pg_query($db, 'BEGIN');
 			$WatchLists = new WatchLists($db);
-			$numrows = $WatchLists->In_Service_Set($User->id, $_POST['wlid']);
+			$numrows = $WatchLists->In_Service_Set($User->id, intval($_POST['wlid']));
 			if ($Debug) echo "$numrows watchlists were affected by that action";
 			if ($numrows >= 0) {
 				pg_query($db, 'COMMIT');
@@ -212,9 +218,12 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 			break;
 
 		case 'set_options':
-			if ($Debug) echo 'I have set options to: ' . pg_escape_string($db, $_POST['addremove']);
+			# assign valid values to $option based on what is supplied
+			$option = $_POST['addremove'] == 'default' ? 'default' : 'ask';
 
-			$User->SetWatchListAddRemove(pg_escape_string($db, $_POST['addremove']));
+			if ($Debug) echo 'I have set options to: ' . $option;
+
+			$User->SetWatchListAddRemove(pg_escape_string($db, $option));
 			break;
 
 		default:
@@ -272,9 +281,9 @@ $ErrorMessage .= CheckForNoDefaultAndAddToDefault($db, $User);
     </td>
     <td>
     <INPUT id=add         type=submit size=48 value="Add"          name=add>&nbsp;&nbsp;&nbsp;
-    <INPUT id=add_name    name=add_name    <?php if (IsSet($add_name))    echo 'value="' . $add_name    . '" '; ?>pattern="[a-zA-Z0-9]+" size=10><small><sup>(1)</sup></small><br>
+    <INPUT id=add_name    name=add_name    <?php if (IsSet($add_name))    echo 'value="' . htmlspecialchars($add_name)    . '" '; ?>pattern="[a-zA-Z0-9]+" size=10><small><sup>(1)</sup></small><br>
     <INPUT id=rename      type=submit size=23 value="Rename"       name=rename>&nbsp;&nbsp;&nbsp;
-    <INPUT id=rename_name name=rename_name <?php if (IsSet($rename_name)) echo 'value="' . $rename_name . '" '; ?>pattern="[a-zA-Z0-9]+" size=10><small><sup>(1)</sup></small><br>
+    <INPUT id=rename_name name=rename_name <?php if (IsSet($rename_name)) echo 'value="' . htmlspecialchars($rename_name) . '" '; ?>pattern="[a-zA-Z0-9]+" size=10><small><sup>(1)</sup></small><br>
     <?php echo "&nbsp;<small>(1) - only $ValidCharacters</small>" ?>
 		<br>
 

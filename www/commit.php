@@ -33,8 +33,8 @@
 		parse_str($url_query, $url_args);
 	}
 
-	$clean['category'] = $url_args['category'] ?? null;
-	$clean['port']     = $url_args['port']     ?? null;
+	$clean['category'] = pg_escape_string($db, $url_args['category']) ?? null;
+	$clean['port']     = pg_escape_string($db, $url_args['port'])     ?? null;
 
 	$FilesForJustOnePort = IsSet($url_args['category']) && IsSet($url_args['port']);
 	$files = isset($url_args['files']) ? $url_args['files'] : 'n';
@@ -106,8 +106,8 @@
 		}
 	}
 
-	if (IsSet($_REQUEST['page']))      $PageNo   = $_REQUEST['page'];
-	if (IsSet($_REQUEST['page_size'])) $PageSize = $_REQUEST['page_size'];
+	if (IsSet($_REQUEST['page']))      $PageNo   = intval($_REQUEST['page']);
+	if (IsSet($_REQUEST['page_size'])) $PageSize = intval($_REQUEST['page_size']);
 
 	if ($Debug) {
 		echo "\$page      = '$page'<br>\n";

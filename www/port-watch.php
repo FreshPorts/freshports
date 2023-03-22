@@ -38,7 +38,7 @@ if (!$visitor) {
 if (IsSet($_REQUEST['wlid'])) {
 		# they clicked on the GO button and we have to apply the 
 		# watch staging area against the watch list.
-		$wlid = pg_escape_string($db, $_REQUEST["wlid"]);
+		$wlid = pg_escape_string($db, intval($_REQUEST["wlid"]));
 		if ($Debug) echo "setting SetLastWatchListChosen => \$wlid='" . htmlentities($wlid) . "'";
 		$User->SetLastWatchListChosen($wlid);
 		if ($Debug) echo "\$wlid='" . htmlentities($wlid) . "'";
@@ -86,13 +86,13 @@ if ($submit) {
       // make sure we are pointing at the start of the array.
       reset($ports);
       foreach ($ports as $key => $value) {
-      	$WatchListElement->Add($User->id, $wlid, $value);
+      	$WatchListElement->Add($User->id, $wlid, intval($value));
 
       	# I have no idea why this works... seems to be missing the value of $sql
          $result = pg_exec ($db, $sql);
          ${"port_".$value} = 1;
          if (!$result) {
-         	syslog(LOG_ERR, $_SERVER["PHP_SELF"] . ": could not clear watch list '$wlid' owned by '$User->id' of element '$value' in " . __FILE__ . ':' . __LINE__);
+         	syslog(LOG_ERR, $_SERVER["PHP_SELF"] . ": could not clear watch list '$wlid' owned by '$User->id' of element '" . intval($value) . "' in " . __FILE__ . ':' . __LINE__);
          	die("error clear list before saving");
          }
       }

@@ -221,7 +221,6 @@ if (IsSet($error) and $error != '') {
          echo "User ID";
       }
       echo ' instead?</p>
-       <p>If you need help, please ask in the forum. </p>
        </td>
        </tr>
        </table>

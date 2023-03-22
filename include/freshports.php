@@ -2180,7 +2180,6 @@ function freshports_ErrorMessage($Title, $ErrorMessage) {
    <td><img src="/images/warning.gif"></td>
    <td width="100%">
   <p>' .  "WARNING: $ErrorMessage" . '</p>
- <p>If you need help, please ask in the forum. </p>
  </td>
  </tr>
  </table>

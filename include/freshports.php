@@ -1929,7 +1929,7 @@ Valid
 	
 	$HTML .= '<script src="/javascript/freshports.js" defer></script>';
 
-	$Statistics->Save();
+	if ($Statistics) $Statistics->Save();
 
 	return $HTML;
 }

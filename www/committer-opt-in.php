@@ -27,13 +27,13 @@
 		if (IsSet($_POST["subscribe"]) && $_POST["subscribe"] && !empty($visitor)) {
 			# if not an email address
 			if (strrpos($_POST["email"], '@') === false) {
-				$committer = pg_escape_string($db, $_POST["email"]);
-		    		$sql = "insert into committer_notify (user_id, committer, status)
-			    			values ($User->id, '$committer', 'A')";
+				$committer = $_POST["email"];
+				
+		    		$sql = 'insert into committer_notify (user_id, committer, status) values ($User->id, $1, $2)';
 
 				if ($Debug) echo "sql=$sql<br>\n";
 
-				$result = pg_exec($db, $sql) or die("insert query failed " . pg_last_error($db));
+				$result = pg_query_params($db, $sql, array($committer. 'A'))  or die("insert query failed " . pg_last_error($db));
 
 			    	if (!$result) {
 		        		die("determine committer subscribe failed " . pg_last_error($db));
@@ -44,30 +44,27 @@
 		}
 
 		if (IsSet($_POST["unsubscribe"]) && $_POST["unsubscribe"] && !empty($visitor)) {
-			$committer = pg_escape_string($db, $_POST["email"]);
-			$sql = "delete from committer_notify where user_id = $User->id";
+			$sql = 'delete from committer_notify where user_id = $1';
 
 			if ($Debug) echo "sql=$sql<br>\n";
 
-			$result = pg_exec($db, $sql) or die("insert query failed " . pg_last_error($db));
+			$result = pg_query_params($db, $sql, array($User->id))  or die("delete query failed " . pg_last_error($db));
 
 			if (!$result) {
 				die("determine committer unsubscribe failed " . pg_last_error($db));
 				}
-
-			Unset($committer);
 			}
 
 
 		if (IsSet($_POST["update"]) && $_POST["update"] && !empty($visitor)) {
-			$committer = pg_escape_string($db, $_POST["email"]);
-			$sql = "update committer_notify 
-				set committer = '$committer'
-				where user_id   = $User->id";
+			$committer = $_POST["email"];
+			$sql = 'update committer_notify 
+				set committer = $1
+				where user_id   = $2';
 
 			if ($Debug) echo "sql=$sql<br>\n";
 
-			$result = pg_exec($db, $sql) or die("insert query failed " . pg_last_error($db));
+			$result = pg_query_params($db, $sql, array($committer, $User->id))  or die("update query failed " . pg_last_error($db));
 
 			if (!$result) {
 				die("determine committer subscribe failed " . pg_last_error($db));
@@ -121,15 +118,15 @@ if (IsSet($User->email)) {
 <P>
 <?php
 if (!empty($visitor)) {
-	$sql = "select committer
+	$sql = 'select committer
 			  from committer_notify
-			 where user_id = $User->id";
+			 where user_id = $1';
 
 	if ($Debug) {
 		echo "sql=$sql<br>\n";
 	}
 
-	$result = pg_exec($db, $sql) or die("determine committer query failed " . pg_last_error($db));
+	$result = pg_query_params($db, $sql, array($$User->id))  or die("select query failed " . pg_last_error($db));
 
 	if ($result) {
 		echo 'You are: ';

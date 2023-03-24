@@ -11,6 +11,7 @@
 	require_once('/usr/local/share/phpmailer/PHPMailer.php');
 	require_once('/usr/local/share/phpmailer/SMTP.php');
 
+
 	if (IN_MAINTENANCE_MODE) {
                 header('Location: /' . MAINTENANCE_PAGE, TRUE, 307);
 	}
@@ -38,8 +39,8 @@ if (IsSet($submit)) {
 
    $OK = 1;
 
-   $UserID = pg_escape_string($db,  $_REQUEST["UserID"] );
-   $eMail  = pg_escape_string($db,  strtolower( $_REQUEST["eMail"] ) );
+   $UserID = pg_escape_string($db, $_REQUEST["UserID"] );
+   $eMail  = pg_escape_string($db, strtolower( $_REQUEST["eMail"] ) );
 
    if ($UserID) {
       $error = '';
@@ -48,13 +49,15 @@ if (IsSet($submit)) {
          echo $UserID . "<br>\n";
       }
 
-      $sql = "select * from users where name = '" . $UserID . "'";
+      $sql = 'select * from users where name = $1';
 
       if ($Debug) {
          echo "<pre>$sql</pre>\n";
       }
 
-      $result = pg_exec($db, $sql) or die('query failed ' . pg_last_error($db));
+      $result = pg_prepare($db, FORGOTTEN_PASSWORD_QUERY1, $sql) or die('query failed ' . pg_last_error($db));
+      
+      $result = pg_execute($db, FORGOTTEN_PASSWORD_QUERY1, array($UserID));
 
       if (!pg_num_rows($result)) {
          $LoginFailed = 1;
@@ -65,15 +68,13 @@ if (IsSet($submit)) {
 
          if ($Debug) echo $eMail . "<br>\n";
 
-         $sql = "select * from users where lower(email) = '" . $eMail . "'";
-			if ($Debug) {
-				echo "<pre>This is the \$sql='$sql'</pre>\n";
-				echo "<pre>$sql</pre>\n";
-			}
+         $sql = 'select * from users where lower(email) = $1';
 
          if ($Debug) echo "$sql<br>\n";
 
-         $result = pg_exec($db, $sql) or die('query failed ' . pg_last_error($db));
+         $result = pg_prepare($db, FORGOTTEN_PASSWORD_QUERY2, $sql)  or die('query failed ' . pg_last_error($db));
+
+         $result = pg_execute($db, FORGOTTEN_PASSWORD_QUERY2, array($eMail)) or die('query failed ' . pg_last_error($db));
 
          if (!pg_num_rows($result)) {
             $eMailFailed = 1;
@@ -89,7 +90,7 @@ if (IsSet($submit)) {
         if ($myrow["emailbouncecount"] > 0) {
            $error = "Sorry, but previous email to you has bounced, so we're not sure it's going to get to you.  But we sent it out
 						anyway.  Please contact " .
-                    'the <a href="' . MAILTO . ':webmaster&#64;freshports.org?subject=I forgot my password" rel="noopener noreferrer">webmaster</a> for help
+                    'the <a href="' . MAILTO . ':' . htmleentities(PROBLEM_SOLVER_EMAIL_ADDRESS . '?subject=I forgot my password') . '" rel="noopener noreferrer">webmaster</a> for help
                     if it doesn\'t arrive.';
            $OKToMail = 1;
            syslog(LOG_NOTICE, "Forgotten password: previous email to '" . $myrow['email'] . "' bounced");
@@ -97,19 +98,20 @@ if (IsSet($submit)) {
 
         if ($myrow["email"] == "") {
           $error = 'Guess what?  You never gave us an email address.  So I guess you must ' . 
-              'contact the <a href="' . MAILTO . ':webmaster&#64;freshports.org?subject=I forgot my password" rel="noopener noreferrer">webmaster</a> for help.';
+              'contact the <a href="' . MAILTO . ':' . htmleentities(PROBLEM_SOLVER_EMAIL_ADDRESS . '?subject=I forgot my password') . '" rel="noopener noreferrer">webmaster</a> for help.';
               $OKToMail = 0;
           syslog(LOG_NOTICE, "Forgotten password: '" . $myrow['name'] . "' never supplied an email.");
         }
 
         if ($OKToMail) {
-          $sql = "insert into user_password_reset (user_id, ip_address) values (" . pg_escape_string($db, $myrow["id"]) . ", '" . pg_escape_string($db, $_SERVER['REMOTE_ADDR']) . "') returning token";
-          $token_result = pg_exec($db, $sql) or die('password token creation failed ' . pg_last_error($db));
+          $sql = 'insert into user_password_reset (user_id, ip_address) values ($1, $2) returning token';
+          $token_result = pg_prepare($db, FORGOTTEN_PASSWORD_QUERY3, $sql) or die('query failed ' . pg_last_error($db));
+          $token_result = pg_execute($db, FORGOTTEN_PASSWORD_QUERY3, array($myrow["id"], $_SERVER['REMOTE_ADDR'])) or die('password token creation failed ' . pg_last_error($db));
           $token_row = pg_fetch_array ($token_result, 0);
           $token = $token_row["token"];
           
           # send out email
-          $message = "Someone, perhaps you, requested that you be emailed your password.\n".
+          $message = "Someone, perhaps you, requested to reset your password.\n".
                      "If that wasn't you, and this message becomes a nuisance, please\n".
                      "forward this message to webmaster@freshports.org and we will take\n". 
                      "care of it for you.\n" .
@@ -131,11 +133,11 @@ if (IsSet($submit)) {
 
             // Content
             $mail->ContentType = 'text/plain';
-            $mail->Subject     = 'FreshPorts - password';
+            $mail->Subject     = WEBSITE_NAME . '- password';
             $mail->Body        = $message;
 
-            $mail->setFrom   (PROBLEM_SOLVER_EMAIL_ADDRESS, 'FreshPorts');
-            $mail->addReplyTo(PROBLEM_SOLVER_EMAIL_ADDRESS, 'FreshPorts');
+            $mail->setFrom   (PROBLEM_SOLVER_EMAIL_ADDRESS, WEBSITE_NAME);
+            $mail->addReplyTo(PROBLEM_SOLVER_EMAIL_ADDRESS, WEBSITE_NAME);
 
             $mail->addAddress($myrow["email"]);
 

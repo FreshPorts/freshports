@@ -7,6 +7,7 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.local.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.app.php');
 
 #
 # colours for the banners (not really banners, but headings)
@@ -36,7 +37,6 @@ $UserStatusActive      = "A";
 $UserStatusDisabled    = "D";
 $UserStatusUnconfirmed = "U";
 
-define('PROBLEM_SOLVER_EMAIL_ADDRESS', 'webmaster@freshports.org');
 
 if (!defined('USER_COOKIE_NAME')) define('USER_COOKIE_NAME', "visitor");
 

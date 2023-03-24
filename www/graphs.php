@@ -51,7 +51,8 @@ If you have suggestions for graphs, please raise an issue.
 <tr>
 <td class="graph-sidebar">
 <?php
-	$id = intval($_REQUEST["id"]) ?? '';
+	$id = $_REQUEST["id"] ?? '';
+	$id = intval($id);
 	$sql = "select id, title, is_clickable from graphs order by title";
 	$title = "graph goes here!";
 	$result = pg_query($db, $sql);
@@ -81,7 +82,8 @@ If you have suggestions for graphs, please raise an issue.
 </td>
 <td>
 <?php
-	if ($id) {
+	# $is_clickable will get set if graph == $id is found
+	if ($id && IsSet($is_clickable)) {
 		if ($is_clickable == "t" ) {
 			?>
 			<FORM ACTION="/graphs/graphclick.php" METHOD="get">
@@ -94,6 +96,10 @@ If you have suggestions for graphs, please raise an issue.
 			<IMG SRC="/graphs/graph.php?id=<?php echo htmlentities($id); ?>" title="<?php echo $title; ?>" alt="<?php echo $title; ?>">
 			<?php
 		}
+	} else {
+		echo "Oh. This is rather embarassing.  I have no idea how this could have happened. ";
+		echo "I do hope you will understand.  Please don't tell anyone.  But I don't have any ";
+		echo "data to show you.  For you see, I know nothing about that graph id.";
 	}
 ?>
 </td>

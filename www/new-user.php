@@ -14,6 +14,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
 
+
 	if (IN_MAINTENANCE_MODE) {
                 header('Location: /' . MAINTENANCE_PAGE, TRUE, 307);
 	}
@@ -255,9 +256,7 @@ Your cooperation with the above will make my life easier.  Thank you.
 </td>
 <td class="sidebar">
 
-	<?php
-	echo freshports_SideBar();
-	?>
+	<?php echo freshports_SideBar(); ?>
 
 </td>
 </tr>

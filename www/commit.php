@@ -24,8 +24,8 @@
 	$page       = '';
 	$page_size  = '';
 	
-	if (IsSet($_REQUEST['message_id'])) $message_id = pg_escape_string($db, $_REQUEST['message_id']);
-	if (IsSet($_REQUEST['revision']))   $revision   = pg_escape_string($db, $_REQUEST['revision']);
+	$message_id = pg_escape_string($db, $_REQUEST['message_id'] ?? '');
+	$revision   = pg_escape_string($db, $_REQUEST['revision']   ?? '');
 
 	$url_query = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
 	$url_args  = array();
@@ -33,8 +33,8 @@
 		parse_str($url_query, $url_args);
 	}
 
-	$clean['category'] = pg_escape_string($db, $url_args['category']) ?? null;
-	$clean['port']     = pg_escape_string($db, $url_args['port'])     ?? null;
+	$clean['category'] = pg_escape_string($db, $url_args['category'] ?? '');
+	$clean['port']     = pg_escape_string($db, $url_args['port']     ?? '');
 
 	$FilesForJustOnePort = IsSet($url_args['category']) && IsSet($url_args['port']);
 	$files = isset($url_args['files']) ? $url_args['files'] : 'n';

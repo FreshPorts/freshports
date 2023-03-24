@@ -27,7 +27,6 @@
 	$dailysummary  = 7;
 	$PageSize      = 100;
 	$PageNumber    = 1;
-	$NumPortsFound = 0;
 	$HTML          = '';
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits_my_flagged.php');
@@ -61,7 +60,7 @@
 
 	if ($PageNumber > 1) {
 		$Commits->SetOffset($offset[0] - 1);
-		}
+	}
 
 	$CommitsMyFlagged->SetLimit($PageSize);
 
@@ -70,7 +69,8 @@
 	$DisplayCommit->SetUserID($User->id);
 	$links = $Pager->GetLinks();
 		
-	$HTML .= $NumPortsFound . ' ' . $links['all'];
+
+	$HTML .= $links['all'];
 	$HTML .= $DisplayCommit->CreateHTML();
 
 

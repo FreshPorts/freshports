@@ -11,6 +11,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
 
+
 	if (IN_MAINTENANCE_MODE) {
                 header('Location: /' . MAINTENANCE_PAGE, TRUE, 307);
 	}
@@ -53,12 +54,13 @@ if (IsSet($submit)) {
   }
 
   if ($OK) {
-    $sql = "SELECT reset_password_token('". $Password1 . "', '" . $token . "') AS rowcount";
+    $sql = 'SELECT reset_password_token($1, $2) AS rowcount';
     if ($Debug) {
       echo $sql;
     }
 
-    $result = pg_exec($db, $sql);
+    $result = pg_prepare($db, FORGOTTEN_PASSWORD_QUERY4, $sql) or die('query failed ' . pg_last_error($db));
+    $result = pg_execute($db, FORGOTTEN_PASSWORD_QUERY4, array( $Password1, $token )) or die('query failed ' . pg_last_error($db));
     if ($result) {
       $myrow = pg_fetch_array ($result);
       if ($myrow['rowcount'] == 1) {
@@ -164,9 +166,7 @@ echo "</td>
 </td>
 
   <td class="sidebar">
-	<?php
-	echo freshports_SideBar();
-	?>
+	<?php echo freshports_SideBar(); ?>
   </td>
 
 </tr>

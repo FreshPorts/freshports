@@ -231,9 +231,7 @@
 
 					if ($Debug) echo "\n<pre>sql=$sql</pre>\n";
 
-					$result = pg_query_params($database, $sql, array(
-						$message_id, $PageSize, $ActualPageNum, $User->id,
-					));
+					$result = pg_query_params($database, $sql, array($message_id, $PageSize, $ActualPageNum, $User->id,));
 
 					// restore original client encoding
 					pg_set_client_encoding($database, $client_encoding);

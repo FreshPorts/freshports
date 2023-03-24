@@ -29,11 +29,11 @@
 			if (strrpos($_POST["email"], '@') === false) {
 				$committer = $_POST["email"];
 				
-		    		$sql = 'insert into committer_notify (user_id, committer, status) values ($User->id, $1, $2)';
+		    		$sql = 'insert into committer_notify (user_id, committer, status) values ($1, $2, $3)';
 
 				if ($Debug) echo "sql=$sql<br>\n";
 
-				$result = pg_query_params($db, $sql, array($committer. 'A'))  or die("insert query failed " . pg_last_error($db));
+				$result = pg_query_params($db, $sql, array($User->id, $committer, 'A'))  or die("insert query failed " . pg_last_error($db));
 
 			    	if (!$result) {
 		        		die("determine committer subscribe failed " . pg_last_error($db));
@@ -126,7 +126,7 @@ if (!empty($visitor)) {
 		echo "sql=$sql<br>\n";
 	}
 
-	$result = pg_query_params($db, $sql, array($$User->id))  or die("select query failed " . pg_last_error($db));
+	$result = pg_query_params($db, $sql, array($User->id))  or die("select query failed " . pg_last_error($db));
 
 	if ($result) {
 		echo 'You are: ';

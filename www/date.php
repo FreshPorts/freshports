@@ -28,11 +28,15 @@
 
 	$DateMessage = '';
 
-	if ($Debug) { echo "\$Date='$Date'\n"; }
-	if ($Date == '' || strtotime($Date) == -1) {
+	if ($Debug) {
+		echo "\$Date='$Date'\n";
+		echo 'strtotime($Date) returns "' . strtotime($Date) . '"<br>';
+	}
+	if ($Date == '' || strtotime($Date) === false) {
 		$DateMessage = 'date assumed';
 		$Date = date('Y/m/d');
 	}
+
 	list($year, $month, $day) = explode('/', $Date);
 	if (!(is_numeric($year) && is_numeric($month) && is_numeric($day)) || !CheckDate($month, $day, $year)) {
 		$DateMessage = 'date adjusted to something realistic';

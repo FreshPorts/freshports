@@ -33,7 +33,7 @@ $error       = '';
 
 if ($Debug) phpinfo();
 
-if (IsSet($_REQUEST['LOGIN']) && $_REQUEST['UserID'] && IsSet($_REQUEST['Password'])) {
+if (IsSet($_REQUEST['LOGIN']) && IsSet($_REQUEST['UserID']) && IsSet($_REQUEST['Password'])) {
    // process form
 
    if ($Debug) {

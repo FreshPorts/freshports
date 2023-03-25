@@ -974,8 +974,8 @@ JOIN element_pathname EP on E.id = EP.element_id
 		<OPTION VALUE="<?php echo SEARCH_FIELD_LICENSE_PERMS        . '"'; if ($stype == SEARCH_FIELD_LICENSE_PERMS)        echo ' SELECTED'; ?>>LICENSE_PERMS</OPTION>
 		<OPTION VALUE="<?php echo SEARCH_FIELD_LICENSE_RESTRICTED   . '"'; if ($stype == SEARCH_FIELD_LICENSE_RESTRICTED)   echo ' SELECTED'; ?>>_LICENSE_RESTRICTED</OPTION>
 		<OPTION VALUE="<?php echo SEARCH_FIELD_LONGDESCRIPTION      . '"'; if ($stype == SEARCH_FIELD_LONGDESCRIPTION)      echo ' SELECTED'; ?>>Long Description</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_MAKEFILE             . '"'; if ($stype == SEARCH_FIELD_MAKEFILE)             echo ' SELECTED'; ?>>Makefile (ports only)</OPTION>
 		<OPTION VALUE="<?php echo SEARCH_FIELD_MAINTAINER           . '"'; if ($stype == SEARCH_FIELD_MAINTAINER)           echo ' SELECTED'; ?>>Maintainer</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_MAKEFILE             . '"'; if ($stype == SEARCH_FIELD_MAKEFILE)             echo ' SELECTED'; ?>>Makefile (ports only)</OPTION>
 		<OPTION VALUE="<?php echo SEARCH_FIELD_MANUAL_PACKAGE_BUILD . '"'; if ($stype == SEARCH_FIELD_MANUAL_PACKAGE_BUILD) echo ' SELECTED'; ?>>MANUAL_PACKAGE_BUILD</OPTION>
 		<OPTION VALUE="<?php echo SEARCH_FIELD_MESSAGEID            . '"'; if ($stype == SEARCH_FIELD_MESSAGEID)            echo ' SELECTED'; ?>>Message ID</OPTION>
 		<OPTION VALUE="<?php echo SEARCH_FIELD_PACKAGE              . '"'; if ($stype == SEARCH_FIELD_PACKAGE)              echo ' SELECTED'; ?>>Package Name</OPTION>

@@ -126,7 +126,7 @@ if (IsSet($_REQUEST['LOGIN']) && $_REQUEST['UserID']) {
 }
 
 
-if (IsSet($_REQUEST["resend"])) {
+if (IsSet($_REQUEST["resend"]) && IsSet($_REQUEST["user"])) {
 
    $User = pg_escape_string($db, $_REQUEST["user"]);
 

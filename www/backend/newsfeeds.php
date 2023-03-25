@@ -14,6 +14,8 @@
 
 	$page = new freshports_page();
 
+	$page->setDebug(0);
+
 	$page->setDB($db);
 
 	$page->setTitle('Newsfeeds');

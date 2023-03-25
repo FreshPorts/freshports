@@ -13,8 +13,11 @@ class WatchLists {
 	var $dbh;
 	var $LocalResult;
 
+	var $Debug;
+
 	function __construct($dbh) {
 		$this->dbh	= $dbh;
+		$this->Debug	= 0;
 	}
 
 	function DeleteAllLists($UserID) {
@@ -27,7 +30,7 @@ class WatchLists {
 DELETE FROM watch_list 
  WHERE user_id = ' . $UserID;
 
-		if ($Debug) echo $query;
+		if ($this->Debug) echo $query;
 		$result = pg_query($this->dbh, $query);
 
 		# that worked and we updated exactly one row
@@ -39,7 +42,7 @@ DELETE FROM watch_list
 	}
 
 	function Fetch($UserID, $element_id = 0) {
-		$Debug = 0;
+		$this->Debug = 0;
 
 		if ($element_id) {
 			$sql = "
@@ -69,7 +72,7 @@ DELETE FROM watch_list
 		 ORDER BY name";
 		}
 
-		if ($Debug) {
+		if ($this->Debug) {
 			echo 'WatchLists::Fetch sql = <pre>' . $sql . '</pre>';
 		}
 
@@ -113,7 +116,7 @@ DELETE FROM watch_list
 		           SET in_service = FALSE
 		         WHERE user_id = ' . pg_escape_string($this->dbh, $UserID);
 
-		if ($Debug) echo "<pre>$sql</pre>";
+		if ($this->Debug) echo "<pre>$sql</pre>";
 		$result = pg_exec($this->dbh, $sql);
 		if ($result && $max) {
 			$sql = 'UPDATE watch_list
@@ -129,7 +132,7 @@ DELETE FROM watch_list
 			$sql = substr($sql, 0, strlen($sql) - 2);
 
 			$sql .= ')';
-			if ($Debug) echo "<pre>$sql</pre>";
+			if ($this->Debug) echo "<pre>$sql</pre>";
 			$result = pg_exec($this->dbh, $sql);
 		}
 		if ($result) {
@@ -151,8 +154,6 @@ DELETE FROM watch_list
 		# otherwise, return an empty string.
 		#
 
-		$Debug = 0;
-
 		$sql = "
    SELECT id,
           in_service
@@ -160,7 +161,7 @@ DELETE FROM watch_list
     WHERE user_id = " . pg_escape_string($this->dbh, $UserID) . "
  ORDER BY name";
 
-		if ($Debug) echo "<pre>$sql</pre>";
+		if ($this->Debug) echo "<pre>$sql</pre>";
 
 		$WatchListID = '';
 		$result = pg_exec($this->dbh, $sql);

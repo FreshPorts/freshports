@@ -17,6 +17,31 @@
 	}
 
 $Debug = 0;
+define('MAX_WLID_SIZE', 50);
+
+if ($Debug) echo phpinfo();
+
+# first validate the wlid parameter.
+
+if (array_key_exists('wlid', $_REQUEST) and is_array($_REQUEST['wlid'])) {
+	if ($Debug) echo 'wlid is an array<br>';
+	$wlid = $_REQUEST['wlid'];
+
+	if ($Debug) echo 'There are ' . count($wlid) . ' items in $wlid<br>';
+	if (count($wlid) > MAX_WLID_SIZE) {
+		syslog(LOG_ERR, __FILE__ . ' found more than ' . MAX_WLID_SIZE . ' entries in wlid - that should never happen');
+		exit;
+	}
+
+	# now, make sure everything in there is an integer
+	foreach($wlid as $key => $value) {
+		$wlid[intval($key)] = intval($value);
+	}
+} else {
+	if ($Debug) echo 'wlid is not an array<br>';
+	$wlid = array();
+}
+
 $visitor = $_COOKIE[USER_COOKIE_NAME] ?? '';
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {
@@ -130,6 +155,7 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 	switch ($UserClickedOn) {
 		case 'add':
 			$WatchList = new WatchList($db);
+			$WatchList->Debug = $Debug;
 			$NewWatchListID = $WatchList->Create($User->id, $add_name);
 			if ($Debug) echo 'I just created \'' . $add_name . '\' with ID = \'' . $NewWatchListID . '\'';
 			$add_name = '';
@@ -138,10 +164,11 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 		case 'rename':
 			# check valid new name
 			# check only one watch list supplied
-			if (isset($_POST['wlid']) && count($_POST['wlid']) == 1) {
-				foreach ($_POST['wlid'] as $key => $WatchListIDToRename) {
+			if (count($wlid) == 1) {
+				foreach ($wlid as $key => $WatchListIDToRename) {
 					$WatchListIDToRename = intval($WatchListIDToRename);
 					$WatchList = new WatchList($db);
+					$WatchList->Debug = $Debug;
 					$NewName = $WatchList->Rename($User->id, $WatchListIDToRename, $rename_name);
 					if ($Debug) echo 'I have renamed your list to \'' . $rename_name . '\'';
 					$rename_name = '';
@@ -155,7 +182,8 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 		case 'delete':
 			pg_query($db, 'BEGIN');
 			$WatchList = new WatchList($db);
-			foreach ($_POST['wlid'] as $key => $WatchListIDToDelete) {
+			$WatchList->Debug = $Debug;
+			foreach ($wlid as $key => $WatchListIDToDelete) {
 				$WatchListIDToDelete = intval($WatchListIDToDelete);
 				if ($Debug) echo "\$key='$key' \$WatchListIDToDelete='$WatchListIDToDelete'<br>";
 				$DeletedWatchListID = $WatchList->Delete($User->id, $WatchListIDToDelete);
@@ -170,6 +198,7 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 		case 'delete_all':
 			pg_query($db, 'BEGIN');
 			$WatchLists = new WatchLists($db);
+			$WatchLists->Debug = $Debug;
 			if ($WatchLists->DeleteAllLists($User->id) == 1) {
 				pg_query($db, 'COMMIT');
 			} else {
@@ -180,7 +209,8 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 		case 'empty':
 			pg_query($db, 'BEGIN');
 			$WatchList = new WatchList($db);
-			foreach ($_POST['wlid'] as $key => $WatchListIDToEmpty) {
+			$WatchList->Debug = $Debug;
+			foreach ($wlid as $key => $WatchListIDToEmpty) {
 				$WatchListIDToEmpty = intval($WatchListIDToEmpty);
 				if ($Debug) echo "\$key='$key' \$WatchListIDToEmpty='$WatchListIDToEmpty'<br>";
 				$EmptydWatchListID = $WatchList->EmptyTheList($User->id, $WatchListIDToEmpty);
@@ -195,6 +225,7 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 		case 'empty_all':
 			pg_query($db, 'BEGIN');
 			$WatchList = new WatchList($db);
+			$WatchList->Debug = $Debug;
 			$NumRows = $WatchList->EmptyAllLists($User->id, pg_escape_string($db, $WatchListIDToEmpty));
 			if (!IsSet($NumRows)) {
 				die("Failed to Empty '$WatchListIDToEmpty' (return value '$EmptydWatchListID')" . pg_last_error($db));
@@ -208,7 +239,8 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 			if ($Debug) echo 'I have set your default lists.<br>';
 			pg_query($db, 'BEGIN');
 			$WatchLists = new WatchLists($db);
-			$numrows = $WatchLists->In_Service_Set($User->id, intval($_POST['wlid']));
+			$WatchLists->Debug = $Debug;
+			$numrows = $WatchLists->In_Service_Set($User->id, $wlid);
 			if ($Debug) echo "$numrows watchlists were affected by that action";
 			if ($numrows >= 0) {
 				pg_query($db, 'COMMIT');

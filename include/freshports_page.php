@@ -20,13 +20,12 @@ class freshports_page extends HTML_Page2 {
 	var $_debug             = 0;
 
 	function __construct($attributes = array()) {
+		$this->HTML_Page2($attributes);
 
 		GLOBAL $ShowAds;
 
 		$this->_ShowAds = $ShowAds;
 		$this->assignDefaultAttributes($attributes);
-
-		$this->HTML_Page2($attributes);
 
 		$this->setMetaData('author',           COPYRIGHTHOLDER);
 		$this->setMetaData('description',      'FreshPorts - new ports, applications');

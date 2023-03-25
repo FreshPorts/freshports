@@ -198,8 +198,11 @@ class port_display {
 
 		# this code is also duplicated within _pkgmessage()
 
-		foreach (preg_split('/\s+/', $port->homepage, -1, PREG_SPLIT_NO_EMPTY) as $page) {
-			$HTML .= '<dd>WWW: <a href="' . _forDisplay($page) . '" title="Homepage for this port">' . _forDisplay($port->homepage) . '</a></dd>';
+		# homepage is not always present. e.g. security/gnome-keyring
+		if ($port->homepage) {
+			foreach (preg_split('/\s+/', $port->homepage, -1, PREG_SPLIT_NO_EMPTY) as $page) {
+				$HTML .= '<dd>WWW: <a href="' . _forDisplay($page) . '" title="Homepage for this port">' . _forDisplay($port->homepage) . '</a></dd>';
+			}
 		}
 		$HTML .= '</dl></dd>';
 
@@ -224,8 +227,12 @@ class port_display {
 			$HTML .= htmlspecialchars($port->pkgmessage);
 
 			# this code is also duplicated within _pkgmessage_UCL()
-			foreach (preg_split('/\s+/', $port->homepage, -1, PREG_SPLIT_NO_EMPTY) as $page) {
-				$HTML .= 'WWW: <a href="' . _forDisplay($page) . '" title="Homepage for this port">' . _forDisplay($port->homepage) . '</a>';
+
+			# homepage is not always present. e.g. security/gnome-keyring
+			if ($port->homepage) {
+				foreach (preg_split('/\s+/', $port->homepage, -1, PREG_SPLIT_NO_EMPTY) as $page) {
+					$HTML .= 'WWW: <a href="' . _forDisplay($page) . '" title="Homepage for this port">' . _forDisplay($port->homepage) . '</a>';
+				}
 			}
 			$HTML .= "</dd>\n</dl>\n<hr>\n<dl>";
 		}

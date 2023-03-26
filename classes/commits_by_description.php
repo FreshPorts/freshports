@@ -64,7 +64,7 @@ class CommitsByDescription extends commits {
 		}
 
 		$sql .= "
-    FROM commit_log_ports, (SELECT * FROM commit_log CL WHERE " . $this->Condition;
+    FROM commit_log_ports, (SELECT * FROM commit_log CL JOIN commit_log_ports CLP on CL.id = CLP.commit_log_id WHERE " . $this->Condition;
     
 			
 		if ($this->Limit) {
@@ -119,7 +119,7 @@ class CommitsByDescription extends commits {
 		
 		$sql = "
 		SELECT count(*) as count 
-		  FROM commit_log CL
+		  FROM commit_log CL JOIN commit_log_ports CLP on CL.id = CLP.commit_log_id
 		 WHERE " . $this->Condition;
 
 		if ($this->Debug) echo "<pre>$sql</pre>";

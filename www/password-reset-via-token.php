@@ -59,8 +59,7 @@ if (IsSet($submit)) {
       echo $sql;
     }
 
-    $result = pg_prepare($db, FORGOTTEN_PASSWORD_QUERY4, $sql) or die('query failed ' . pg_last_error($db));
-    $result = pg_execute($db, FORGOTTEN_PASSWORD_QUERY4, array( $Password1, $token )) or die('query failed ' . pg_last_error($db));
+    $result = pg_query_params($db, $sql, array( $Password1, $token )) or die('query failed ' . pg_last_error($db));
     if ($result) {
       $myrow = pg_fetch_array ($result);
       if ($myrow['rowcount'] == 1) {

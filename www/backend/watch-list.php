@@ -16,6 +16,15 @@
 
 	$Debug = 0;
 
+	if (!IsSet($_COOKIE[USER_COOKIE_NAME])) {
+		header('Location: /login.php');  /* Redirect browser to PHP web site */
+		exit;  /* Make sure that code below does not get executed when we redirect. */
+	}
+
+	if (IN_MAINTENANCE_MODE) {
+                header('Location: /' . MAINTENANCE_PAGE, TRUE, 307);
+	}
+
 function DisplayNewsFeed($db, $format, $token) {
 	$Debug = 0;
 

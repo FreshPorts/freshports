@@ -110,12 +110,12 @@ $sql = "
          CS.port_count          AS count
     FROM categories C JOIN category_stats CS ON (C.id = CS.category_id)";
 
-$sql .=  " ORDER BY " . pg_escape_string($db, $sort);
+$sql .=  " ORDER BY $1";
 
 if ($Debug) echo '<pre>' . $sql, "</pre>\n";
 //echo $sort, "\n";
 
-$result = pg_exec($db, $sql);
+$result = pg_query_params($db, $sql, array($sort));
 
 $HTML = '<tr>';
 

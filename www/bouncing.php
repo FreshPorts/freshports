@@ -17,16 +17,16 @@
 
 	$Debug = 0;
 
-	$submit		= $_POST["submit"];
+	$submit		= $_POST["submit"] ?? '';
 	$visitor	= $_COOKIE[USER_COOKIE_NAME];
 
 if ($submit) {
-   $sql = "update users set emailbouncecount = 0 where cookie = '" . pg_escape_string($db, $visitor) . "'";
+   $sql = "update users set emailbouncecount = 0 where cookie = $1";
    if ($Debug) {
       echo $sql;
    }
       
-   $result = pg_exec($db, $sql);
+   $result = pg_query_params($db, $sql, array($visitor));
    if ($result) {
       if ($Debug) {
          echo "I would have taken you to '' now, but debugging is on<br>\n";

@@ -42,6 +42,7 @@ function RemoveElementFromWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 }
 
 function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
+	GLOBAL $Debug;
 	if ($Debug) echo "I'm adding $ElementID\n<br>";
 	$WatchListElement = new WatchListElement($db);
 	foreach ($WatchListsIDs as $key => $WatchListID) {
@@ -67,7 +68,7 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 
 		$Title = 'Watch list maintenance';
 		freshports_Start($Title,
-						$TItle,
+						$Title,
 						'FreeBSD, index, applications, ports');
 		?>
 
@@ -81,9 +82,9 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 </tr>
 <tr><td class="content">
 <?php
-		if ($ErrorMessage) {
-			echo freshports_ErrorMessage("Let\'s try that again!", $ErrorMessage);
-		}
+#		if ($ErrorMessage) {
+#			echo freshports_ErrorMessage("Let\'s try that again!", $ErrorMessage);
+#		}
 	
 		$PostURL = $_SERVER["PHP_SELF"];
 		if (IsSet($_REQUEST["remove"])) {
@@ -135,7 +136,7 @@ Please select the watch lists which should contain this port:
 		<INPUT TYPE="hidden" NAME="Origin" VALUE="<?php echo $Origin?>">
 		<INPUT TYPE="hidden" NAME="Update" VALUE="<?php echo $Object?>">
 <?php
-		if ($WatchListID) {
+		if (IsSet($WatchListID)) {
 			echo '		<INPUT TYPE="hidden" NAME="wlid" VALUE="' . $WatchListID . '">';
 		}
 ?>
@@ -200,7 +201,7 @@ echo freshports_ShowFooter();
 			if ($Error == '' && IsSet($_REQUEST['wlid'])) {
 
 				if ($Debug) echo "userid = $User->id and ElementID = $ElementID <br>";
-				if (AddElementToWatchLists($db, $User->id, $ElementID, intval($_REQUEST['wlid'])) == -1) {
+				if (AddElementToWatchLists($db, $User->id, $ElementID, $_REQUEST['wlid'])== -1) {
 					$Error = 'adding element failed : Please try again, and if the problem persists, please contact the webmaster: ' . pg_last_error($db);
 				}
 			}

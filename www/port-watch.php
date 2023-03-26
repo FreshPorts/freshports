@@ -113,11 +113,11 @@ if ($submit) {
    select watch_list_element.element_id 
 	  from watch_list_element, watch_list, ports 
 	 where watch_list_element.watch_list_id = watch_list.id  
-	   and watch_list.user_id               = $User->id 
-	   and watch_list.id                    = $wlid
+	   and watch_list.user_id               = $1
+	   and watch_list.id                    = $2
 	   and watch_list_element.element_id    = ports.element_id";
 	      
-		$result = pg_exec($db, $sql);
+		$result = pg_query_params($db, $sql, array($User->id, $wlid));
 		$numrows = pg_num_rows($result);      
                 // read each value and set the variable accordingly
 		for ($i = 0; $i < $numrows; $i++) {
@@ -149,10 +149,10 @@ $sql = "
   SELECT element.id, 
          element.name    AS port, 
          element.status,
-         CASE WHEN ports.category_id = $Category->id THEN '' ELSE '&nbsp;<sup>*</sup>' END AS virtual,
+         CASE WHEN ports.category_id = $1 THEN '' ELSE '&nbsp;<sup>*</sup>' END AS virtual,
          PRIMARY_CATEGORY.name as primary_category
     FROM ports, ports_categories, element, categories PRIMARY_CATEGORY
-   WHERE ports_categories.category_id = $Category->id
+   WHERE ports_categories.category_id = $1
      AND ports_categories.port_id     = ports.id
      AND ports.element_id             = element.id
      AND element.status               = 'A'
@@ -161,7 +161,7 @@ ORDER BY port, primary_category";
 
 if ($Debug) echo "<pre>$sql</pre>\n";
 
-$result = pg_exec($db, $sql);
+$result = pg_query_params($db, $sql, array($Category->id));
 
 $numrows = pg_num_rows($result);
 

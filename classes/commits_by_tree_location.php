@@ -42,7 +42,7 @@ class CommitsByTreeLocation extends commits {
 			   AND CL.id         = CLPE.commit_log_id";
    
 		if ($this->Debug) echo "<pre>$sql</pre>";
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query($this->dbh, $sql);
 		if ($result) {
 			$myrow = pg_fetch_array($result);
 			$count = $myrow['count'];
@@ -65,7 +65,7 @@ class CommitsByTreeLocation extends commits {
 			   AND CL.id         = CLE.commit_log_id";
    
 		if ($this->Debug) echo "<pre>$sql</pre>";
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query($this->dbh, $sql);
 		if ($result) {
 			$myrow = pg_fetch_array($result);
 			$count = $myrow['count'];
@@ -78,6 +78,7 @@ class CommitsByTreeLocation extends commits {
 	}
 
 	function FetchPortCommits() {
+		$params = array();
 		$sql = "
 	 SELECT commit_log.commit_date - SystemTimeAdjust()                                                                         AS commit_date_raw,
 			commit_log.id                                                                                               AS commit_log_id,
@@ -122,15 +123,16 @@ class CommitsByTreeLocation extends commits {
     FROM commit_log_ports, commit_log, categories, ports, element ";
 
 		if ($this->UserID) {
-				$sql .= "
+			$sql .= "
 	      LEFT OUTER JOIN
 	 (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
 	    FROM watch_list JOIN watch_list_element 
 	        ON watch_list.id      = watch_list_element.watch_list_id
-	       AND watch_list.user_id = " . pg_escape_string($this->dbh, $this->UserID) . "
+	       AND watch_list.user_id = $" . count($params) + 1 . "
 	       AND watch_list.in_service		
 	  GROUP BY wle_element_id) AS TEMP
 	       ON TEMP.wle_element_id = element.id";
+			$params[] = $this->UserID;
 		}
 
 		$sql .= "
@@ -142,11 +144,13 @@ class CommitsByTreeLocation extends commits {
 ORDER BY CL.commit_date DESC ";
 
    		if ($this->Limit) {
-			$sql .= " LIMIT " . pg_escape_string($this->dbh, $this->Limit);
+			$sql .= " LIMIT $" . count($params) + 1;
+			$params[] = $this->Limit;
 		}
 		
 		if ($this->Offset) {
-			$sql .= " OFFSET " . pg_escape_string($this->dbh, $this->Offset);
+			$sql .= " OFFSET $" . count($params) + 1;
+			$params[] = $this->Offset;
 		}
 
 
@@ -163,7 +167,7 @@ ORDER BY CL.commit_date DESC ";
 			
 		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
 
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, $sql, $params);
 		if ($this->LocalResult) {
 			$numrows = pg_num_rows($this->LocalResult);
 			if ($this->Debug) echo "That would give us $numrows rows";
@@ -178,6 +182,7 @@ ORDER BY CL.commit_date DESC ";
 	# neither of these arguments are used in this function
 	# they are present to be compatible with the parent class
 	function Fetch($date = null, $UserID = null) {
+		$params = array();
 		$sql = "
 		SELECT DISTINCT
 			CL.commit_date - SystemTimeAdjust()                                                                 AS commit_date_raw,
@@ -239,15 +244,16 @@ ORDER BY CL.commit_date DESC ";
     FROM commit_log_elements, commit_log CL LEFT OUTER JOIN repo R on  CL.repo_id = R.id, element_pathname, element ";
 
 		if ($this->UserID) {
-				$sql .= "
+			$sql .= "
 	      LEFT OUTER JOIN
 	 (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
 	    FROM watch_list JOIN watch_list_element 
 	        ON watch_list.id      = watch_list_element.watch_list_id
-	       AND watch_list.user_id = " . pg_escape_string($this->dbh, $this->UserID) . "
+	       AND watch_list.user_id = $" . count($params) + 1 . "
 	       AND watch_list.in_service		
 	  GROUP BY wle_element_id) AS TEMP
 	       ON TEMP.wle_element_id = element.id";
+			$params[] = $this->UserID;
 		}
 
 		$sql .= "
@@ -259,11 +265,13 @@ ORDER BY CL.commit_date DESC ";
 ORDER BY CL.commit_date DESC ";
 
 		if ($this->Limit) {
-			$sql .= "\nLIMIT " . pg_escape_string($this->dbh, $this->Limit);
+			$sql .= "\nLIMIT $" . count($params) + 1;
+			$params[] = $this->Limit;
 		}
 		
 		if ($this->Offset) {
-			$sql .= "\nOFFSET " . pg_escape_string($this->dbh, $this->Offset);
+			$sql .= "\nOFFSET $" . count($params) + 1;
+			$params[] = $this->Offset;
 		}
 
    		$sql .= ") AS tmp)
@@ -278,7 +286,7 @@ ORDER BY CL.commit_date DESC ";
 
 		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
 
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, $sql, $params);
 		if ($this->LocalResult) {
 			$numrows = pg_num_rows($this->LocalResult);
 			if ($this->Debug) echo "That would give us $numrows rows";

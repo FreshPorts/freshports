@@ -87,7 +87,7 @@ if (IsSet($submit)) {
 
 	# if no errors so far, and all three password fields are populated
 	if ($OK && $Password && $Password1 && $Password2) {
-		$result = getLoginDetails($db, LOGIN_QUERY, $User->name, $Password);
+		$result = getLoginDetails($db, $User->name, $Password);
 		# there must be only 1 row in there.
 		if (pg_num_rows($result) != 1) {
 			$errors .= 'That is NOT your current password.<br>';

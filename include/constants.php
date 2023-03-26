@@ -162,8 +162,6 @@ const PYTHON_PKGNAMEPREFIX = 'PYTHON_PKGNAMEPREFIX';
 # www/search.php
 # classes/ports_by_pkg_plist.php
 
-const LOGIN_QUERY = 'LOGIN';
-
 const SEARCH_SELECT_FIELD = '
   select CL.commit_date - SystemTimeAdjust() AS last_commit_date, 
          P.id,
@@ -207,28 +205,6 @@ const SEARCH_SELECT_FIELD = '
 # used by
 # www/new-user.php
 # www/customize.php
-const HASH_UPDATE_QUERY         = 'HASH_UPDATE';
-const RESEND_CONFIRMATION_QUERY = 'RESEND_CONFIRMATION';
-
-# used by FreshSource commit.php
-const COMMIT_QUERY = 'COMMIT';
-
-# used by www/confirmation.php
-const TOKEN_CONFIRM_QUERY = 'TOKEN_CONFIRM_QUERY';
-
-# used by www/logout.php
-const LOGOUT_QUERY = 'LOGOUT_QUERY';
-
-# used by www/forgotten-password.php
-const FORGOTTEN_PASSWORD_QUERY1 = 'FORGOTTEN_PASSWORD_QUERY1';
-const FORGOTTEN_PASSWORD_QUERY2 = 'FORGOTTEN_PASSWORD_QUERY2';
-const FORGOTTEN_PASSWORD_QUERY3 = 'FORGOTTEN_PASSWORD_QUERY3';
-
-# used by www/password-reset-via-token.php
-const FORGOTTEN_PASSWORD_QUERY4 = 'FORGOTTEN_PASSWORD_QUERY4';
-
-# used by www/repo.php
-const REPO_QUERY = 'REPO_QUERY';
 
 if (!defined('PW_HASH_METHOD')) define('PW_HASH_METHOD', 'bf');
 if (!defined('PW_HASH_COST'))   define('PW_HASH_COST', 14);

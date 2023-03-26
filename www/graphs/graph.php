@@ -54,7 +54,7 @@ if (!file_exists($filename) || filemtime($filename)+$period<time())	{
 	GLOBAL $db;
 
 	// XXX CHANGE THE QUERY XXX
-	$data = @pg_exec($db, "select query, title, label, is_clickable from graphs where id = $id")
+	$data = pg_query_params($db, "select query, title, label, is_clickable from graphs where id = $1", array($id))
 		or die("PGERR 1: " . pg_ErrorMessage($db));
 	
 	if (pg_num_rows($data) == 0)
@@ -70,7 +70,7 @@ if (!file_exists($filename) || filemtime($filename)+$period<time())	{
 	pg_free_result($data);
 
 	// get graph data
-	$data = @pg_exec($db, $query)
+	$data = pg_exec($db, $query)
 		or die("PGERR 2: " . pg_ErrorMessage());
 
 	$v = array();

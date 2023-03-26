@@ -37,7 +37,7 @@ WITH recent_commits AS (
    WHERE CL.date_added < now() - INTERVAL '1 minutes'
 ORDER BY CL.commit_date DESC,
          CL.message_id
-   LIMIT $MaxCommits)
+   LIMIT $1)
   SELECT RC.commit_date,
          RC.committer,
          RC.system_id,
@@ -58,7 +58,7 @@ ORDER BY RC.commit_date_raw DESC,
 		echo "<pre>$sql</pre>\n";
 	}
 
-	$result = pg_exec($db, $sql);
+	$result = pg_query_params($db, $sql, array($MaxCommits));
 	if (!$result) {
 		echo pg_last_error($db);
 	} else {

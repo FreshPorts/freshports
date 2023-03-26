@@ -276,7 +276,7 @@ if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 		if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 			if ($Debug) echo 'staging area is in use<br>';
 			$DisplayStagingArea = TRUE;
-			if (array_key_exists($_REQUEST["update_watch_list"])) {
+			if (IsSet($_REQUEST["update_watch_list"])) {
 #phpinfo();
 #				$ports = $_REQUEST["ports"];
 				# save these things to the watch list
@@ -305,7 +305,7 @@ if ($Debug) echo '<br>' . __LINE__ . '<br>';
 				}
 			}
 			
-			if (array_key_exists($_REQUEST['wlid'])) {
+			if (IsSet($_REQUEST['wlid'])) {
 if ($Debug) echo '<br>' . __LINE__ . '<br>';
 				if ($Debug) echo 'you selected a list<br>';
 				# they clicked on the GO button and we have to apply the 

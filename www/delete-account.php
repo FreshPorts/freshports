@@ -22,8 +22,8 @@
 	$AccountModified = 0;
 	$deleted         = 0;
 
-if (IsSet($_REQUEST['submit'])) $submit = $_REQUEST['submit'];
-$visitor	= pg_escape_string($db, $_COOKIE[USER_COOKIE_NAME]);
+$submit = $_REQUEST['submit'] ?? '';
+$visitor = pg_escape_string($db, $_COOKIE[USER_COOKIE_NAME]);
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {
@@ -31,22 +31,22 @@ if (!$visitor) {
 	exit;  /* Make sure that code below does not get executed when we redirect. */
 }
 
-if (IsSet($submit)) {
+if ($submit) {
     #phpinfo();
     $Debug = 0;
 
     // process form
     syslog(LOG_ERR, 'into '. __FILE__);
 
-	$confirmation = pg_escape_string($db, $_POST['confirmation']);
+	$confirmation = $_POST['confirmation'] ?? '';
 
 	if ($confirmation ==  $User->name) {
 		$result = pg_exec($db, "BEGIN");
         
 		// Delete from the user table. The database will take care of the rest
 #		$sql = "DELETE FROM users WHERE cookie = '$visitor'";
-		$sql = "SELECT DeleteUser('$User->id')";
-		$result = pg_exec($db, $sql);
+		$sql = "SELECT DeleteUser($1)";
+		$result = pg_query_params($db, $sql, array($User->id));
 		if ($result) {
 			$numrows = pg_affected_rows($result);
 			if ($numrows == 1) {

@@ -17,16 +17,16 @@ class Categories {
 	}
 
 	function GetAllCategoriesOnWatchLists($UserID) {
-		$sql = "
+		$sql = '
    SELECT distinct C.id AS category_id
      FROM watch_list WL, watch_list_element WLE, categories C
-    WHERE WL.user_id     = $UserID
+    WHERE WL.user_id     = $1
       AND WL.id          = WLE.watch_list_id
-      AND WLE.element_id = C.element_id";
+      AND WLE.element_id = C.element_id';
 
 #		echo "<pre>sql = '$sql'</pre><br>";
 
-		$this->result = pg_query($this->dbh, $sql);
+		$this->result = pg_query_params($this->dbh, $sql, array($UserID));
 		if ($this->result) {
 			$numrows = pg_num_rows($this->result);
 		} else {

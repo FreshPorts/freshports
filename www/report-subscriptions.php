@@ -90,12 +90,14 @@
 				if ($Debug) echo '$TheFrequency=\'' . $TheFrequency . '\' ';
 				if ($Debug) echo "\$key='$key' \$value='$value' \$User->id='$User->id' \$frequencies[\$key]='" . $TheFrequency . "'<br>";
 				if (IsSet($TheFrequency) && $TheFrequency <> '') {
-					$sql = "INSERT INTO report_subscriptions(report_id, user_id, report_frequency_id) values ($value, $User->id, $TheFrequency)";
+					$sql = "INSERT INTO report_subscriptions(report_id, user_id, report_frequency_id) values ($1, $2, $3)";
+					$params = array($value, $User->id, $TheFrequency);
 				} else {
-					$sql = "INSERT INTO report_subscriptions(report_id, user_id) values ($value, $User->id)";
+					$sql = "INSERT INTO report_subscriptions(report_id, user_id) values ($1, $2)";
+					$params = array($value, $User->id);
 				}
 				if ($Debug) echo "\$sql='$sql'<br><br>\n";
-				$result = pg_query($db, $sql);
+				$result = pg_query_params($db, $sql, $params);
 	
 				if (!$result) {
 					echo 'OUCH, that\'s not very nice.  something went wrong: ' . pg_last_error($db) . "  $sql";
@@ -123,9 +125,9 @@
 		# read the values from the db
 		$sql = "SELECT report_id, report_frequency_id
 				  FROM report_subscriptions
-				 WHERE user_id = $User->id
+				 WHERE user_id = $1
 				 ORDER BY report_id ";
-		$result = pg_exec ($db, $sql);
+		$result = pg_query_params($db, $sql, array($User->id));
 		$numrows = pg_num_rows($result);
 
 		if ($Debug) echo 'reading report_subscriptions from the database for this user:<br>';

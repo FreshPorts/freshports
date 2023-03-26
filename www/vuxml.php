@@ -110,7 +110,7 @@ These are the vulnerabilities relating to the commit you have selected:
 
 	
 
-
+		$params = array();
 		$sql = "
 SELECT V.vid,
        VN.name
@@ -119,12 +119,13 @@ SELECT V.vid,
    AND VA.vuxml_id          = V.id";
    
    	if (IsSet($_REQUEST['package'])) {
-   		$sql .= "\n   AND lower(VN.name) = '" . pg_escape_string($db, strtolower($_REQUEST['package'])) . "'";
+		$sql .= "\n   AND lower(VN.name) = $1";
+		$params = array(strtolower($_REQUEST['package']));
    	}
 
    	$sql .= "\nORDER BY lower(VN.name), V.vid\n";
    	
-		$result = pg_exec($db, $sql);
+		$result = pg_query_params($db, $sql, $params);
 		if ($result) {
 			$numrows = pg_num_rows($result);
 

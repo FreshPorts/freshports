@@ -23,8 +23,8 @@
 	if (IsSet($token)) {
 		$token = pg_escape_string($db, $token);
 		if ($Debug) echo "I'm confirming with token $token\n<br>";
-		$sql = "select ConfirmUserAccount('$token')";
-		$result = pg_exec($db, $sql);
+		$sql = "select ConfirmUserAccount($1)";
+		$result = pg_query_params($db, $sql, array($token));
 		if ($result) {
 			$row = pg_fetch_array($result,0);
 			$ResultConfirm = $row[0];

@@ -670,6 +670,7 @@
 			}
 			$Commits = new CommitsByTreeLocation($db);
 			$Commits->UserIDSet($User->id);
+			$Commits->Debug = $Debug;
 			if ($sqlSetAll) {
 			  if ($Debug) echo 'invoking TreePathConditionSetAll() with ' . $sqlUserSpecifiedCondition;
 			  $Commits->TreePathConditionSetAll($sqlUserSpecifiedCondition);

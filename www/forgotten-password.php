@@ -18,16 +18,13 @@
 
 $Debug = 0;
 
-
-if (IsSet($_POST['submit'])) {
-	$submit = $_POST['submit'];
-}
+$submit = $_POST['submit'] ?? '';
 
 $MailSent    = 0;
 $LoginFailed = 0;
 $eMailFailed = 0;
 
-if (IsSet($submit)) {
+if ($submit) {
    // process form
    $error = '';
 
@@ -55,9 +52,7 @@ if (IsSet($submit)) {
          echo "<pre>$sql</pre>\n";
       }
 
-      $result = pg_prepare($db, FORGOTTEN_PASSWORD_QUERY1, $sql) or die('query failed ' . pg_last_error($db));
-      
-      $result = pg_execute($db, FORGOTTEN_PASSWORD_QUERY1, array($UserID));
+      $result = pg_query_params($db, $sql, array($UserID)) or die('query failed ' . pg_last_error($db));
 
       if (!pg_num_rows($result)) {
          $LoginFailed = 1;
@@ -72,9 +67,7 @@ if (IsSet($submit)) {
 
          if ($Debug) echo "$sql<br>\n";
 
-         $result = pg_prepare($db, FORGOTTEN_PASSWORD_QUERY2, $sql)  or die('query failed ' . pg_last_error($db));
-
-         $result = pg_execute($db, FORGOTTEN_PASSWORD_QUERY2, array($eMail)) or die('query failed ' . pg_last_error($db));
+         $result = pg_query_params($db, $sql, array($eMail)) or die('query failed ' . pg_last_error($db));
 
          if (!pg_num_rows($result)) {
             $eMailFailed = 1;
@@ -105,8 +98,7 @@ if (IsSet($submit)) {
 
         if ($OKToMail) {
           $sql = 'insert into user_password_reset (user_id, ip_address) values ($1, $2) returning token';
-          $token_result = pg_prepare($db, FORGOTTEN_PASSWORD_QUERY3, $sql) or die('query failed ' . pg_last_error($db));
-          $token_result = pg_execute($db, FORGOTTEN_PASSWORD_QUERY3, array($myrow["id"], $_SERVER['REMOTE_ADDR'])) or die('password token creation failed ' . pg_last_error($db));
+          $token_result = pg_query_params($db, $sql, array($myrow["id"], $_SERVER['REMOTE_ADDR'])) or die('password token creation failed ' . pg_last_error($db));
           $token_row = pg_fetch_array ($token_result, 0);
           $token = $token_row["token"];
           
@@ -291,9 +283,7 @@ we're only dealing with your FreshPorts login, not a financial transaction....</
 </td>
 
   <td class="sidebar">
-	<?php
-	echo freshports_SideBar();
-	?>
+	<?php 	echo freshports_SideBar();	?>
   </td>
 
 </tr>

@@ -32,11 +32,11 @@ class VuXML {
 
 	function FetchByVID($VID) {
 		$this->vid = $VID;
-		
-		$sql = 'set client_encoding = \'ISO-8859-15\'; select * from vuxml where vid = $1';
+		pg_query($this->dbh, "set client_encoding = 'ISO-8859-15'");
+		$sql = 'select * from vuxml where vid = $1';
 #		echo "<pre>sql = '$sql'</pre><br>";
 
-		$result = pg_query_params(($this->dbh, $sql, array($VID));
+		$result = pg_query_params($this->dbh, $sql, array($VID));
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			# there should only be one row.

@@ -16,11 +16,12 @@ $Debug = 0;
 # we allow the following intervals: today, yesterday, this past week, past 3 months
 
 if (isset($_REQUEST["interval"])) {
-    $interval = pg_escape_string($db, $_REQUEST["interval"]);
+    $interval = $_REQUEST["interval"];
 } else {
     $interval = '';
 }
 
+# note $interval being used to set $Interval and $interval
 switch ($interval) {
     case 'today':
         $IntervalAdjust = '1 day';
@@ -112,6 +113,8 @@ switch ($sort) {
 
 echo "</td></tr>\n";
 
+# we might add in other parameters below.
+$params = array($IntervalAdjust, $BranchName);
 $sql = "
 select NP.id,
        E.name as port,
@@ -173,7 +176,8 @@ $sql .= "
           
 ";
 
-$sql .= "   FROM ports P  WHERE P.date_added  > (SELECT now() - interval '" . pg_escape_string($db, $IntervalAdjust) . "')) AS NP";
+# we need the single quotes for the interval operation, not for quoting.
+$sql .= "   FROM ports P  WHERE P.date_added  > (SELECT now() - $1::interval)) AS NP";
 
 if ($User->id) {
     $sql .= "
@@ -181,17 +185,19 @@ if ($User->id) {
  (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
     FROM watch_list JOIN watch_list_element
         ON watch_list.id      = watch_list_element.watch_list_id
-       AND watch_list.user_id = $User->id
+       AND watch_list.user_id = $3
        AND watch_list.in_service
   GROUP BY wle_element_id) AS TEMP2
        ON TEMP2.wle_element_id = NP.element_id";
+
+       $params[] = intval($User->id);
 }
 
 $sql .= "
                LEFT OUTER JOIN commit_log          CL  ON NP.last_commit_id = CL.id
                           JOIN commit_log_ports    CLP ON CLP.commit_log_id = CL.id 
                           JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id AND CLP.port_id = NP.id
-                          JOIN system_branch       SB  ON SB.branch_name    = '" . pg_escape_string($db, $BranchName) . "' AND SB.id = CLB.branch_id
+                          JOIN system_branch       SB  ON SB.branch_name    = $2  AND SB.id = CLB.branch_id
                LEFT OUTER JOIN repo                R   ON CL.repo_id        = R.id
                           JOIN element             E   ON NP.element_id     = E.id
                                                       AND E.status          = 'A'
@@ -207,7 +213,7 @@ if ($Debug) {
 }
 
 $numrows = 0;
-$result = pg_exec($db, $sql);
+$result = pg_query_params($db, $sql, $params);
 if (!$result) {
     echo pg_last_error($db);
 } else {

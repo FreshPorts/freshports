@@ -14,6 +14,7 @@
 
    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user.php');
 
+
 if (IN_MAINTENANCE_MODE) {
    header('Location: /' . MAINTENANCE_PAGE, TRUE, 307);
 }
@@ -48,11 +49,11 @@ if (IsSet($_REQUEST['LOGIN']) && IsSet($_REQUEST['UserID']) && IsSet($_REQUEST['
    $Password  = $_REQUEST['Password'];
 
    // test for existance of user id
-   $result = getLoginDetails($db, LOGIN_QUERY, $UserID, $Password);
+   $result = getLoginDetails($db, $UserID, $Password);
    if (!pg_num_rows($result)) {
       $LoginFailed = 1;
    } else {
-      $row    = pg_fetch_array($result,0);
+      $row    = pg_fetch_array($result, 0);
       $status = $row["status"];
       $insecure_hash = $row["insecure_hash"];
 
@@ -65,10 +66,7 @@ if (IsSet($_REQUEST['LOGIN']) && IsSet($_REQUEST['UserID']) && IsSet($_REQUEST['
             echo '<pre>' . htmlentities($sql) . '<pre>';
          }
 
-         $result = pg_prepare($db, HASH_UPDATE_QUERY, $sql) or die('query failed ' . pg_last_error($db));
-         if ($result) {
-            $result = pg_execute($db, HASH_UPDATE_QUERY, array($UserID, $Password, PW_HASH_METHOD, PW_HASH_COST)) or die('query failed ' . pg_last_error($db));
-         }
+         $result = pg_query_params($db, $sql, array($UserID, $Password, PW_HASH_METHOD, PW_HASH_COST)) or die('query failed ' . pg_last_error($db));
       }
    }
 
@@ -88,9 +86,9 @@ if (IsSet($_REQUEST['LOGIN']) && IsSet($_REQUEST['UserID']) && IsSet($_REQUEST['
 	         $Cookie = $user->createUserToken();
 	         # we should use $user to save this...
 
-	         $sql = "UPDATE users SET cookie = '" . pg_escape_string($db, $Cookie) . "' WHERE id = " . pg_escape_string($db, $row['id']);
+	         $sql = "UPDATE users SET cookie = $1 WHERE id = $2";
 	         # if we were doing this in a user object, we could retry when there was a cookie collision and we get a unique index error
-	         $result = pg_exec($db, $sql) or die('query failed ' . pg_last_error($db));
+	         $result = pg_query_params($db, $sql, array($Cookie, $row['id'])) or die('query failed ' . pg_last_error($db));
 
 	         SetCookie(USER_COOKIE_NAME, $Cookie, array(
 	           'expires'  => time() + 60*60*24*120,
@@ -137,10 +135,7 @@ if (IsSet($_REQUEST["resend"]) && IsSet($_REQUEST["user"])) {
       echo "$sql<br>\n";
    }
 
-   $result = pg_prepare($db, RESEND_CONFIRMATION_QUERY, $sql) or die('query failed ' . pg_last_error($db));
-   if ($result) {
-      $result = pg_execute($db, RESEND_CONFIRMATION_QUERY, array($User)) or die('query failed ' . pg_last_error($db));
-   }
+   $result = pg_query_params($db, $sql, array($User)) or die('query failed ' . pg_last_error($db));
 
    if (pg_num_rows($result)) {
       $row = pg_fetch_array($result,0);
@@ -252,15 +247,13 @@ echo"
 </table>
 ";
 
-#echo '<br><a href="forgotten-password.php">Forgotten your password?</a>';
+echo '<br><a href="forgotten-password.php">Forgotten your password?</a>';
 
 ?>
 </td>
 
   <td class="sidebar">
-	<?php
-	echo freshports_SideBar();
-	?>
+	<?php 	echo freshports_SideBar(); 	?>
   </td>
 
 </tr>

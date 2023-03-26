@@ -140,6 +140,7 @@ function newsfeed($dbh, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $F
 	   $params = array($WatchListID);
 
 	} else {
+		# no WatchListID supplied
 		switch ($Flavor) {
 			case 'new':
 				$sql = '
@@ -164,6 +165,7 @@ function newsfeed($dbh, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $F
     JOIN element    E   ON P.element_id  = E.id
     JOIN categories C   ON P.category_id = C.id
 ORDER BY P.date_added DESC, E.name, category, version';
+				$params = array();
 				break;
 
 			case 'broken':
@@ -208,6 +210,7 @@ ORDER BY P.date_added DESC, E.name, category, version';
     JOIN element              E   ON P.element_id      = E.id
     JOIN categories           C   ON P.category_id     = C.id
 ORDER BY CL.commit_date DESC, CL.id ASC, E.name, category, version';
+				$params = array();
 				break;
 
                         case 'vuln':
@@ -233,6 +236,7 @@ ORDER BY CL.commit_date DESC, CL.id ASC, E.name, category, version';
          JOIN commit_log       CL ON CL.id         = P.last_commit_id
 ORDER BY CL.commit_date;
 ';
+				$params = array();
                                 break;
 
 			default:

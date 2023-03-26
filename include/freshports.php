@@ -2496,7 +2496,7 @@ function BranchSuffix($Branch = BRANCH_HEAD) {
   return $BranchSuffix;
 }
 
-function getLoginDetails($dbh, $statementName, $UserID, $Password) {
+function getLoginDetails($dbh, $UserID, $Password) {
 
   $sql = 'select *, password_hash not like \'$2_$' . PW_HASH_COST . '$%\' as insecure_hash ' .
     'from users where lower(name) = lower($1) and password_hash = crypt($2, password_hash)';
@@ -2504,10 +2504,7 @@ function getLoginDetails($dbh, $statementName, $UserID, $Password) {
     echo '<pre>' . htmlentities($sql) . '<pre>';
   }
 
-  $result = pg_prepare($dbh, $statementName, $sql) or die('query failed ' . pg_last_error($dbh));
-  if ($result) {
-    $result = pg_execute($dbh, $statementName, array($UserID, $Password))  or die('query failed ' . pg_last_error($dbh));
-  }
+  $result = pg_query_params($dbh, $sql, array($UserID, $Password))  or die('query failed ' . pg_last_error($dbh));
 
   return $result;
 }

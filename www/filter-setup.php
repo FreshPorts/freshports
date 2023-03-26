@@ -163,8 +163,8 @@ if ($wlid != '') {
 $sql = "
    select distinct(ports_categories.category_id) as category_id
      from watch_list, watch_list_element, ports, ports_categories
-    WHERE watch_list.id      = " . $wlid . "
-      and watch_list.user_id = $User->id
+    WHERE watch_list.id      = $1
+      and watch_list.user_id = $2
       and watch_list.id      = watch_list_element.watch_list_id
       and ports.element_id   = watch_list_element.element_id
       AND ports_categories.port_id = ports.id";
@@ -172,7 +172,7 @@ $sql = "
 if ($Debug) echo "<pre>$sql</pre>";
 
 
-$result  = pg_exec ($db, $sql);
+$result  = pg_query_params($db, $sql, array($wlid, $User->id));
 $numrows = pg_num_rows($result);
 
 if ($Debug) echo "num categories being watched = $numrows<br>";
@@ -188,8 +188,8 @@ for ($i = 0; $i < $numrows; $i++) {
 $sql = "
    select distinct(categories.element_id) as category_element_id
      from watch_list, watch_list_element, categories
-    WHERE watch_list.id         = " . $wlid . "
-      and watch_list.user_id    = $User->id
+    WHERE watch_list.id         = $1
+      and watch_list.user_id    = $2
       and watch_list.id         = watch_list_element.watch_list_id
       and categories.element_id = watch_list_element.element_id";
 
@@ -198,7 +198,7 @@ if ($Debug) echo "<pre>$sql</pre>";
 
 echo '<tr><td class="vcentered">' . "\n";
 
-$result  = pg_exec ($db, $sql);
+$result  = pg_query_params($db, $sql, array($wlid, $User->id));
 $numrows = pg_num_rows($result);
 
 if ($Debug) echo "num categories being watched = $numrows<br>";

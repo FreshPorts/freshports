@@ -58,8 +58,8 @@ class VuXML_Ranges {
 #			echo "   vuxml_affected_id  = '" . $this->vuxml_affected_id[$i] . " ";
 			echo "<blockquote>" . ($this->operator1[$i] == 'lt' ? '<' : $this->operator1[$i])          . " ";
 			echo htmlentities($this->version1[$i])          . " ";
-			echo htmlentities($this->operator2[$i])         . " ";
-			echo htmlentities($this->version2[$i])          . "</blockquote><br>\n";
+			echo htmlentities($this->operator2[$i] ?? '')   . " ";
+			echo htmlentities($this->version2[$i]  ?? '')   . "</blockquote><br>\n";
 		}
 	}
 

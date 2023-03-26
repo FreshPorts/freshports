@@ -137,6 +137,7 @@ if (IsSet($_REQUEST["sort"])) {
 
 $cache_file = '';
 
+# this sanitizes $sort / $_REQUEST["sort"]
 switch ($sort) {
    case "port":
       $sort = "port";
@@ -228,9 +229,10 @@ WITH selected_ports AS (
 	 WHERE ports.category_id                = categories.id 
 	   and watch_list_element.element_id    = ports.element_id 
 		and ports.element_id            = element.id
-	   and watch_list_element.watch_list_id = " .  pg_escape_string($db, $wlid) . "
-	
+	   and watch_list_element.watch_list_id = $1
 )
+
+$params = array($wlid);
 
 SELECT selected_ports.*,
 		to_char(max(commit_log.commit_date) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') 	as last_commit_date,
@@ -292,7 +294,8 @@ SELECT selected_ports.*,
 	   echo "<pre>$sql</pre>";
 	}
 	
-	$result = pg_exec($db, $sql);
+	$result = pg_query_params($db, $sql, array($wlid));
+
 	if (!$result) {
 		echo "there was an error: " . pg_last_error($db);
 	}

@@ -433,7 +433,7 @@
 
 						default:
 					                $sqlSetAll = true;
-							$FieldName = $SearchTypeToFieldMap[$stype];
+							$FieldName = $SearchTypeToFieldMap[$stype] ?? null;
 							if (empty($FieldName)) {
 							   die('you are probably doing this wrong');
 							}

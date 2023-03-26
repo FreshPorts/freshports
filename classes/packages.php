@@ -20,10 +20,10 @@ class Packages {
 
 	function GetCategoryPortFromPackageName($package) {
 		$this->package = $package;
-		$sql = "select GetCategoryPortFromPackageName('" . pg_escape_string($this->dbh, $package) . "') as categoryport";
+		$sql = 'select GetCategoryPortFromPackageName($1) as categoryport';
 #		echo "<pre>sql = '$sql'</pre><br>";
 
-		$result = pg_query($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($package));
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			# there should only be one row.

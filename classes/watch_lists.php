@@ -28,10 +28,10 @@ class WatchLists {
 
 		$query  = '
 DELETE FROM watch_list 
- WHERE user_id = ' . $UserID;
+ WHERE user_id = $1';
 
 		if ($this->Debug) echo $query;
-		$result = pg_query($this->dbh, $query);
+		$result = pg_query_params($this->dbh, $query, array($UserID));
 
 		# that worked and we updated exactly one row
 		if ($result) {

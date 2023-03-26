@@ -32,11 +32,11 @@ class VuXML {
 
 	function FetchByVID($VID) {
 		$this->vid = $VID;
-		# let's try to avoid:  PHP Warning:  pg_query(): Query failed: ERROR:  invalid byte sequence for encoding &quot;UTF8&quot;: 0xfc
-		$sql = "set client_encoding = 'ISO-8859-15'; select * from vuxml where vid = '" . pg_escape_string($this->dbh, $VID) . "'";
+		
+		$sql = 'set client_encoding = \'ISO-8859-15\'; select * from vuxml where vid = $1';
 #		echo "<pre>sql = '$sql'</pre><br>";
 
-		$result = pg_query($this->dbh, $sql);
+		$result = pg_query_params(($this->dbh, $sql, array($VID));
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			# there should only be one row.
@@ -48,9 +48,10 @@ class VuXML {
 				$this->FetchReferences();
 			} else {
 				die('I found ' . $numrows . ' entries for ' . htmlentities($VID) . '. There should be only one.');
+				syslog(LOG_ERR, 'I found ' . $numrows . ' entries for ' . htmlentities($VID) . '. There should be only one.');
 			}
 		} else {
-			echo 'VuXML SQL failed: ' . $result . pg_last_error($this->dbh);
+			syslog(LOG_ERR, 'VuXML SQL failed: ' . $result . pg_last_error($this->dbh));
 		}
 
         return $this->id;

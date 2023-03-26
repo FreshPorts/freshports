@@ -18,12 +18,12 @@ class VuXML_Packages {
 	}
 
 	function FetchByVID($vuxml_id) {
-		$sql = "SELECT vuxml_affected.*
+		$sql = 'SELECT vuxml_affected.*
 	              FROM vuxml_affected
-	             WHERE vuxml_affected.vuxml_id = " . pg_escape_string($this->dbh, $vuxml_id);
-#		echo "<pre>sql = '$sql'</pre><br>";
+	             WHERE vuxml_affected.vuxml_id = $1';
+#		echo q"<pre>sql = '$sql'</pre><br>";
 
-		$result = pg_query($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($vuxml_id));
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			for ($i = 0; $i < $numrows; $i++) {
@@ -35,7 +35,7 @@ class VuXML_Packages {
 			$this->FetchRanges();
 
 		} else {
-			echo 'VuXML_Packages SQL failed: ' . $result . pg_last_error($this->dbh);
+			syslog(LOG_ERR, 'VuXML_Packages SQL failed: ' . $result . pg_last_error($this->dbh));
 		}
 
         return $this->id;

@@ -107,7 +107,7 @@ function newsfeed($dbh, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $F
 
 	if ($WatchListID) {
 	# this is for newfeeds based on personal watch lists
-	$sql = "
+	$sql = '
 	select E.name 			as port, 
 		   P.id 				as id, 
 	       C.name 		as category, 
@@ -115,8 +115,8 @@ function newsfeed($dbh, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $F
 	       P.version 		as version, 
 	       P.revision 		as revision, 
 	       E.id 			as element_id,
-           to_char(CL.commit_date - SystemTimeAdjust(), 'DD Mon')  AS commit_date,
-           to_char(CL.commit_date - SystemTimeAdjust(), 'HH24:MI') AS commit_time,
+           to_char(CL.commit_date - SystemTimeAdjust(), \'DD Mon\')  AS commit_date,
+           to_char(CL.commit_date - SystemTimeAdjust(), \'HH24:MI\') AS commit_time,
            commit_date          AS commit_date_raw,
            CL.description       AS commit_description,
            CLP.port_epoch as epoch,
@@ -135,12 +135,14 @@ function newsfeed($dbh, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $F
        AND P.element_id      = WLE.element_id
 	   AND P.element_id      = E.id
 	   AND P.category_id     = C.id 
-	   AND WLE.watch_list_id = " . pg_escape_string($dbh, $WatchListID) .  ' ';
-	   
+	   AND WLE.watch_list_id = $1';
+
+	   $params = array($WatchListID);
+
 	} else {
 		switch ($Flavor) {
 			case 'new':
-				$sql = "
+				$sql = '
   SELECT C.name    AS category,
          E.name    AS port,
          E.status  AS status,
@@ -153,20 +155,19 @@ function newsfeed($dbh, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $F
          P.version                        AS ports_version,
          P.revision                       AS ports_revision,
          P.portepoch                      AS epoch,
-         date_part('epoch', P.date_added) AS date_added,
+         date_part(\'epoch\', P.date_added) AS date_added,
          P.short_description              AS short_description,
          P.category_id
     FROM (SELECT P1.* 
-            FROM ports            P1
-            JOIN element_pathname EP ON P1.element_id = EP.element_id AND EP.pathname LIKE '/ports/head/%'
+            FROM ports_active            P1
            WHERE P1.date_added IS NOT NULL ORDER BY P1.date_added DESC LIMIT 20) AS P
     JOIN element    E   ON P.element_id  = E.id
     JOIN categories C   ON P.category_id = C.id
-ORDER BY P.date_added DESC, E.name, category, version";
+ORDER BY P.date_added DESC, E.name, category, version';
 				break;
 
 			case 'broken':
-				$sql = "
+				$sql = '
   SELECT C.name    AS category,
          E.name    AS port,
          E.status  AS status,
@@ -179,7 +180,7 @@ ORDER BY P.date_added DESC, E.name, category, version";
          P.version                        AS ports_version,
          P.revision                       AS ports_revision,
          P.portepoch                      AS epoch,
-         date_part('epoch', P.date_added) AS date_added,
+         date_part(\'epoch\', P.date_added) AS date_added,
          P.short_description              AS short_description,
          P.category_id,
          CLP.port_version  AS clp_version,
@@ -196,23 +197,21 @@ ORDER BY P.date_added DESC, E.name, category, version";
          CL.author_name,
          CL.author_email,
          CL.description       AS commit_description,
-         to_char(CL.commit_date - SystemTimeAdjust(), 'DD Mon')  AS commit_date,
-         to_char(CL.commit_date - SystemTimeAdjust(), 'HH24:MI') AS commit_time,
+         to_char(CL.commit_date - SystemTimeAdjust(), \'DD Mon\')  AS commit_date,
+         to_char(CL.commit_date - SystemTimeAdjust(), \'HH24:MI\') AS commit_time,
          CL.encoding_losses
     FROM (SELECT P1.* 
-            FROM ports            P1
-            JOIN element_pathname EP ON P1.element_id = EP.element_id AND EP.pathname LIKE '/ports/head/%'
-           WHERE P1.broken IS NOT NULL
-             AND P1.status = 'A') AS P
+            FROM ports_active            P1
+           WHERE P1.broken IS NOT NULL) AS P
     JOIN commit_log           CL  ON P.last_commit_id  = CL.id 
     JOIN commit_log_ports     CLP ON CLP.commit_log_id = CL.id AND P.id = CLP.port_id
     JOIN element              E   ON P.element_id      = E.id
     JOIN categories           C   ON P.category_id     = C.id
-ORDER BY CL.commit_date DESC, CL.id ASC, E.name, category, version";
+ORDER BY CL.commit_date DESC, CL.id ASC, E.name, category, version';
 				break;
-				
+
                         case 'vuln':
-                                $sql = "
+                                $sql = '
   SELECT C.name    AS category,
          E.name    AS port,
          E.status  AS status,
@@ -225,17 +224,15 @@ ORDER BY CL.commit_date DESC, CL.id ASC, E.name, category, version";
          P.version                        AS ports_version,
          P.revision                       AS ports_revision,
          P.portepoch                      AS epoch,
-         date_part('epoch', P.date_added) AS date_added,
+         date_part(\'epoch\', P.date_added) AS date_added,
          P.short_description              AS short_description,
          P.category_id
-         FROM ports            P
+         FROM ports_active            P
          JOIN ports_vulnerable PV ON PV.current    > 0            AND PV.port_id = P.id
-         JOIN element_pathname EP ON EP.element_id = P.element_id AND EP.pathname like '/ports/head/%'
-         JOIN element          E  ON P.element_id  = E.id         AND E.status = 'A'
          JOIN categories       C  ON P.category_id = C.id
          JOIN commit_log       CL ON CL.id         = P.last_commit_id
 ORDER BY CL.commit_date;
-";
+';
                                 break;
 
 			default:
@@ -243,7 +240,7 @@ ORDER BY CL.commit_date;
 			        # We start with the last 200 commits added to the system, because we're likely to get 100 ports from that.
 			        # The lateral join is to get just one port from the commit_log_ports table
 			        # we order by port.id so we get the same results on each query
-				$sql = "
+				$sql = '
  SELECT  C.name    AS category,
          E.name    AS port,
          E.status  AS status,
@@ -273,8 +270,8 @@ ORDER BY CL.commit_date;
          CL.author_name,
          CL.author_email,
          CL.description       AS commit_description,
-         to_char(CL.commit_date - SystemTimeAdjust(), 'DD Mon')  AS commit_date,
-         to_char(CL.commit_date - SystemTimeAdjust(), 'HH24:MI') AS commit_time,
+         to_char(CL.commit_date - SystemTimeAdjust(), \'DD Mon\')  AS commit_date,
+         to_char(CL.commit_date - SystemTimeAdjust(), \'HH24:MI\') AS commit_time,
          CL.encoding_losses
     FROM (select cl.* 
             from commit_log cl
@@ -282,7 +279,7 @@ ORDER BY CL.commit_date;
                            from commit_log_ports clp
                            join commit_log_branches clb on clp.commit_log_id = clb.commit_log_id
                            join system_branch sb on sb.id = clb.branch_id
-                          where clp.commit_log_id = cl.id and sb.branch_name = " . pg_escape_literal($dbh, $BranchName) . ")
+                          where clp.commit_log_id = cl.id and sb.branch_name = $1)
            order by cl.commit_date desc limit 100 ) AS CL
     JOIN LATERAL ( select CLP1.commit_log_id, P.forbidden, P.broken, P.deprecated, P.element_id,
                           CASE when CLP1.port_version  IS NULL then P.version  else CLP1.port_version  END as version,
@@ -290,7 +287,7 @@ ORDER BY CL.commit_date;
                           P.version                        AS ports_version,
                           P.revision                       AS ports_revision,
                           P.portepoch                      AS epoch,
-                          date_part('epoch', P.date_added) AS date_added,
+                          date_part(\'epoch\', P.date_added) AS date_added,
                           P.short_description              AS short_description,
                           P.category_id,
                           CLP1.port_version  AS clp_version,
@@ -304,7 +301,9 @@ ORDER BY CL.commit_date;
     JOIN element             E   ON CLP.element_id    = E.id
     JOIN categories          C   ON CLP.category_id   = C.id
     ORDER BY CL.commit_date desc
-	LIMIT 500";
+	LIMIT 500';
+
+                            $params = array($BranchName);
 
 		} # switch flavor
 	} # WatchListID	
@@ -316,9 +315,9 @@ ORDER BY CL.commit_date;
 	$ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['HTTP_HOST']);
 	
 	# get the results
-	$result = pg_query($dbh, $sql);
+        $result = pg_query_params($dbh, $sql, $params);
 	if (!$result) {
-		syslog(LOG_ERR, 'sql error ' . pg_last_error($result));
+		syslog(LOG_ERR, 'sql error ' . pg_last_error($dbh));
 
 		die('We broke the SQL, sorry');
 	}

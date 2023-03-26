@@ -21,12 +21,12 @@ class VuXML_Ranges {
 	}
 
 	function FetchByVuXMLAffectedID($vuxml_affected_id) {
-		$sql = "SELECT vuxml_ranges.*
+		$sql = 'SELECT vuxml_ranges.*
 	              FROM vuxml_ranges
-	             WHERE vuxml_ranges.vuxml_affected_id = " . pg_escape_string($this->dbh, $vuxml_affected_id);
+	             WHERE vuxml_ranges.vuxml_affected_id = $1';
 #		echo "<pre>sql = '$sql'</pre><br>";
 
-		$result = pg_query($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($vuxml_affected_id));
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			for ($i = 0; $i < $numrows; $i++) {
@@ -34,7 +34,7 @@ class VuXML_Ranges {
 				$this->PopulateValues($myrow);
 			}
 		} else {
-			echo 'VuXML_Ranges SQL failed: ' . $result . pg_last_error($this->dbh);
+			syslog(LOG_ERR, 'VuXML_Ranges SQL failed: ' . $result . pg_last_error($this->dbh));
 		}
 
         return $this->id;
@@ -56,10 +56,10 @@ class VuXML_Ranges {
 	
 #			echo "   id                 = '" . $this->id[$i]                . " ";
 #			echo "   vuxml_affected_id  = '" . $this->vuxml_affected_id[$i] . " ";
-			echo "<blockquote>" . $this->operator1[$i]         . " ";
-			echo $this->version1[$i]          . " ";
-			echo $this->operator2[$i]         . " ";
-			echo $this->version2[$i]          . "</blockquote><br>\n";
+			echo "<blockquote>" . ($this->operator1[$i] == 'lt' ? '<' : $this->operator1[$i])          . " ";
+			echo htmlentities($this->version1[$i])          . " ";
+			echo htmlentities($this->operator2[$i])         . " ";
+			echo htmlentities($this->version2[$i])          . "</blockquote><br>\n";
 		}
 	}
 

@@ -22,8 +22,8 @@
 	$BranchName = NormalizeBranch($BranchName);
 
 	$Flavor = '';
-	if (IsSet($_REQUEST['flavour'])) {
-		$Flavor = htmlspecialchars(pg_escape_string($db, pg_escape_string($db, $_REQUEST['flavour'])));
+	if (IsSet($_REQUEST['flavor'])) {
+		$Flavor = htmlspecialchars(pg_escape_string($db, pg_escape_string($db, $_REQUEST['flavor'])));
 	}
 
 	$OrderBy = '';

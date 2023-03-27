@@ -478,8 +478,14 @@
 						# do not break here...
 
 					case 'excludedeleted':
+						# not really sure of the logic here
 						if ($output_format != OUTPUT_FORMAT_DEPENDS) {
 							$sqlUserSpecifiedCondition .= " and";
+						}
+						# but I know on this query, we get an error if we don't set $sqlUserSpecifiedCondition first.
+						# search.php?stype=name&method=match&query=signal&num=10&orderby=category&orderbyupdown=asc&search=Search&format=depends&branch=head
+						if (!IsSet($sqlUserSpecifiedCondition)) {
+							$sqlUserSpecifiedCondition = '';
 						}
 						$sqlUserSpecifiedCondition .= " E.status = 'A' ";
 				}
@@ -1258,7 +1264,7 @@ document.search.query.focus();
 
 		} /* OUTPUT_FORMAT_HTML */
 
-		if ($output_format !== OUTPUT_FORMAT_PLAIN_TEXT) {
+		if ($output_format == OUTPUT_FORMAT_HTML) {
 ?>¨
 </body>
 </html>

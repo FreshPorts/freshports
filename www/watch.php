@@ -232,8 +232,6 @@ WITH selected_ports AS (
 	   and watch_list_element.watch_list_id = $1
 )
 
-$params = array($wlid);
-
 SELECT selected_ports.*,
 		to_char(max(commit_log.commit_date) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') 	as last_commit_date,
 		commit_log.committer,
@@ -288,6 +286,8 @@ SELECT selected_ports.*,
                  r.repo_hostname
 	";
 	
+	$params = array($wlid);
+
 	$sql .= " order by $sort ";
 	
 	if ($Debug) {

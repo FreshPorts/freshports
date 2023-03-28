@@ -78,6 +78,27 @@ function DisplayPortCommits($port, $PageNumber) {
 	return $HTML;
 }
 
+#
+# if during freshports_PortDisplay(), we don't have the port fetched from the database and we need it
+# this function gets invoked. Sometimes you have some cached items but not others
+#
+function _GetThatPort($db, $Debug, $category, $port, $branch, $UserID) {
+	$MyPort = null;
+
+	$port_id = freshports_GetPortID($db, $category, $port, $branch);
+	if (!IsSet($port_id)) {
+		if ($Debug) echo "$category/$port is not a port according to freshports_GetPortID<br>\n";
+		return $MyPort;
+	}
+
+	if ($Debug) echo "$category/$port $port_id found by freshports_GetPortID on $branch<br>\n";
+
+	$MyPort = new Port($db);
+	$MyPort->FetchByID($port_id, $UserID);
+
+	return $MyPort;
+}
+
 function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBranch = true) {
 	GLOBAL $User;
 
@@ -144,6 +165,7 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 	$Cache = new CachePort();
 	$Cache->PageSize = $User->page_size;
 	if (!$BypassCache) {
+		# returns zero if found
 		$result = $Cache->RetrievePort($category, $port, CACHE_PORT_DETAIL, $PageNumber, $branch, CachePort::CachePartOne);
 		if ($Debug) {
 			if (!$result) {
@@ -160,22 +182,22 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 		$HTMLPortPart1 = $Cache->CacheDataGet();
 	} else {
 		$HTMLPortPart1 = '';
+
+		//
+		// When processing cache, there might be race conditions where one part of the cache exists, but others do not
+		// Therefore, we read from the database only if we must.
 		//
 		// sometimes they want to see a port on a branch, but there have been no commits against that port on that branch
 		// therefore, we display head. We display head because that's what will be on the branch by default, given no
 		// commits.
 		//
-		$port_id = freshports_GetPortID($db, $category, $port, $HasCommitsOnBranch ? $branch : BRANCH_HEAD);
-		if (!IsSet($port_id)) {
-			if ($Debug) echo "$category/$port is not a port according to freshports_GetPortID<br>\n";
-
-			return -1;
+		if (Empty($MyPort)) {
+			$MyPort = _GetThatPort($db, $Debug, $category, $port, $HasCommitsOnBranch ? $branch : BRANCH_HEAD, $User->id);
+			if (!$MyPort) {
+				syslog(LOG_ERR, 'Fatal error: Could not fetch that port from the database on ' . __LINE__ . ' of ' . __FILE__);
+				return -1;
+			}
 		}
-
-		if ($Debug) echo "$category/$port $port_id found by freshports_GetPortID on $branch<br>";
-
-		$MyPort = new Port($db);
-		$MyPort->FetchByID($port_id, $User->id);
 
 		$HTMLPortPart1 .= $MyPort->long_description;
 		if (empty($HTMLPortPart1)) {
@@ -201,6 +223,7 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 	$Cache = new CachePort();
 	$Cache->PageSize = $User->page_size;
 	if (!$BypassCache) {
+		# returns zero if found
 		$result = $Cache->RetrievePort($category, $port, CACHE_PORT_DETAIL, $PageNumber, $branch, CachePort::CachePartTwo);
 		if ($Debug) {
 			if (!$result) {
@@ -265,6 +288,22 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 	} else {
 		$HTMLPortPart2 = '';
 
+		//
+		// When processing cache, there might be race conditions where one part of the cache exists, but others do not
+		// Therefore, we read from the database only if we must.
+		//
+		// sometimes they want to see a port on a branch, but there have been no commits against that port on that branch
+		// therefore, we display head. We display head because that's what will be on the branch by default, given no
+		// commits.
+		//
+		if (Empty($MyPort)) {
+			$MyPort = _GetThatPort($db, $Debug, $category, $port, $HasCommitsOnBranch ? $branch : BRANCH_HEAD, $User->id);
+			if (!$MyPort) {
+				syslog(LOG_ERR, 'Fatal error: Could not fetch that port from the database on ' . __LINE__ . ' of ' . __FILE__);
+				return -1;
+			}
+		}
+
 		$port_display->SetPort($MyPort);
 		$port_display->SetDetailsBeforePackages();
 	
@@ -314,6 +353,7 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 	################################################################################################
 
 	if (!$BypassCache) {
+		# returns zero if found
 		$result = $Cache->RetrievePort($category, $port, CACHE_PORT_DETAIL, $PageNumber, $branch, CachePort::CachePartThree);
 		if ($Debug) {
 			if (!$result) {
@@ -330,23 +370,21 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 		$HTMLPortPart3 = $Cache->CacheDataGet();
 	} else {
 		$HTMLPortPart3 = '';
+
+		//
+		// When processing cache, there might be race conditions where one part of the cache exists, but others do not
+		// Therefore, we read from the database only if we must.
 		//
 		// sometimes they want to see a port on a branch, but there have been no commits against that port on that branch
 		// therefore, we display head. We display head because that's what will be on the branch by default, given no
 		// commits.
 		//
 		if (Empty($MyPort)) {
-			$port_id = freshports_GetPortID($db, $category, $port, $HasCommitsOnBranch ? $branch : BRANCH_HEAD);
-			if (!IsSet($port_id)) {
-				if ($Debug) echo "$category/$port is not a port according to freshports_GetPortID<br>\n";
-
+			$MyPort = _GetThatPort($db, $Debug, $category, $port, $HasCommitsOnBranch ? $branch : BRANCH_HEAD, $User->id);
+			if (!$MyPort) {
+				syslog(LOG_ERR, 'Fatal error: Could not fetch that port from the database on ' . __LINE__ . ' of ' . __FILE__);
 				return -1;
 			}
-
-			if ($Debug) echo "$category/$port $port_id found by freshports_GetPortID on $branch<br>";
-
-			$MyPort = new Port($db);
-			$MyPort->FetchByID($port_id, $User->id);
 		}
 
 		$port_display->SetPort($MyPort);
@@ -392,6 +430,7 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 
 	$CachePackages = new CachePortPackages();
 	if (!$BypassCache) {
+		# returns zero if found
 		$result = $CachePackages->RetrievePortPackages($category, $port);
 		if ($Debug) {
 			if (!$result) {
@@ -408,25 +447,23 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 		$HTMLPortPackages = $CachePackages->CacheDataGet();
 	} else {
 		$HTMLPortPackages = '';
-		# this comment may not be relevant here. It duplicates one above.
+
+		//
+		// When processing cache, there might be race conditions where one part of the cache exists, but others do not
+		// Therefore, we read from the database only if we must.
 		//
 		// sometimes they want to see a port on a branch, but there have been no commits against that port on that branch
 		// therefore, we display head. We display head because that's what will be on the branch by default, given no
 		// commits.
 		//
 		if (Empty($MyPort)) {
-			$port_id = freshports_GetPortID($db, $category, $port, $HasCommitsOnBranch ? $branch : BRANCH_HEAD);
-			if (!IsSet($port_id)) {
-				if ($Debug) echo "$category/$port is not a port according to freshports_GetPortID<br>\n";
-
+			$MyPort = _GetThatPort($db, $Debug, $category, $port, $HasCommitsOnBranch ? $branch : BRANCH_HEAD, $User->id);
+			if (!$MyPort) {
+				syslog(LOG_ERR, 'Fatal error: Could not fetch that port from the database on ' . __LINE__ . ' of ' . __FILE__);
 				return -1;
 			}
-
-			if ($Debug) echo "$category/$port $port_id found by freshports_GetPortID on $branch<br>";
-
-			$MyPort = new Port($db);
-			$MyPort->FetchByID($port_id, $User->id);
 		}
+
 		$port_display->SetPort($MyPort);
 		$port_display->SetDetailsPackages();
 

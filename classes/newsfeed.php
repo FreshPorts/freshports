@@ -62,13 +62,28 @@ function newsfeed($dbh, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $F
 
 	# NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
 	#
-	# this next call may wind up using the cached and the 
-	# rest of the function may never be use executed.
+	# this next call may wind up using the cached file and
+	# the rest of the function may never be executed.
 	#
 	# NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
 
-	# Commenting out ths next line is useful for Debugging.
+	# Commenting out this next line is useful for Debugging.
+	# This will read the cached file file, and it meets the freshness
+	# standard (not too old), supply it to the user.
+	# Otherwise, we fall through and create a new feed.
 	#
+	# there is a race condition within UniversalFeedCreator/lib/Creator/FeedCreator.php:
+	# useCached() checks for file existence and calls _redirect()
+	# if the cache is cleared in that tile, _redirect() will product this error:
+	#
+	# [28-Mar-2023 23:39:05 UTC] PHP Warning:  readfile(/var/db/freshports/cache/news/news.NEWS.head.xml): Failed to open stream: No such file or directory in /usr/local/share/UniversalFeedCreator/lib/Creator/FeedCreator.php on line 217
+	#
+	# That will give the user a bad feed:
+	#
+        # [IPv6 address redacted]- - [28/Mar/2023:23:39:05 +0000] "GET /backend/news.php HTTP/2.0" 200 234 "https://www.freshports.org" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"
+        #
+        # Perhaps we should not be clearing out the cache that way. Perhap we should just let it get stale
+        #
 	$rss->useCached($Format, NEWSFEEDCACHE, NEWSFEED_REFRESH_SECONDS);
 
 	$rss->title          = 'FreshPorts news'; 

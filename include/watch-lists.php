@@ -90,11 +90,11 @@ $HTML .=  '
 }
 
 function freshports_WatchListCountDefault($dbh, $UserID) {
-	$sql = "select WatchListCountDefault(" . pg_escape_string($dbh, $UserID) . ") as count";
+	$sql = "select WatchListCountDefault($1) as count";
 
 #	echo $sql;
 
-	$result = pg_exec($dbh, $sql);
+	$result = pg_query_params($dbh, $sql, array($UserID));
 	if (!$result) {
 		echo "error " . pg_last_error($dbh);
 		exit;
@@ -110,11 +110,11 @@ function freshports_WatchListCountDefault($dbh, $UserID) {
 function freshports_WatchListVerifyToken($dbh, $token) {
 	$id = '';
 
-	$sql = "SELECT id from watch_list where token = '" . pg_escape_string($dbh, $token) . "'";
+	$sql = "SELECT id from watch_list where token = $1";
 
 #	echo $sql;
 
-	$result = pg_exec($dbh, $sql);
+	$result = pg_query_params($dbh, $sql, array($token));
 	if ($result) {
 		$numrows = pg_num_rows($result);
 		switch ($numrows) {

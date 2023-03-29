@@ -16,13 +16,14 @@
 
 	$Debug = 0;
 
-	if (!IsSet($_COOKIE[USER_COOKIE_NAME])) {
-		header('Location: /login.php');  /* Redirect browser to PHP web site */
-		exit;  /* Make sure that code below does not get executed when we redirect. */
-	}
+	# NOTE: login not required to access this page; a valid token is required
 
 	if (IN_MAINTENANCE_MODE) {
-                header('Location: /' . MAINTENANCE_PAGE, TRUE, 307);
+		# usually we redirect to the maintenance page but this is an
+		# RSS feed.
+		header('HTTP/1.1 503 Service Temporarily Unavailable');
+		header('Status: 503 Service Temporarily Unavailable');
+		header('Retry-After: 300');//300 seconds
 	}
 
 function DisplayNewsFeed($db, $format, $token) {

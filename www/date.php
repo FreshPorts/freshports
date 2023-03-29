@@ -20,41 +20,47 @@
 	#
 	# Get the date we are going to work with.
 	#
-	if (IsSet($_REQUEST['date']) && preg_match('!^\d+\/\d+\/\d+$!', $_REQUEST['date'])) {
-		$Date = pg_escape_string($db, $_REQUEST['date']);
-		$orig_date = $Date;
+	$Date      = '';
+	$orig_date = $Date;
+	if (IsSet($_REQUEST['date'])) {
+		if ($Debug) echo "found a value<br>\n";
+		if (preg_match('!^\d{4}\/\d+\/\d+$!', $_REQUEST['date'])) {
+			$Date = pg_escape_string($db, $_REQUEST['date']);
+			$orig_date = $Date;
+		} else {
+			if ($Debug) echo "date parameter does not match regex\n<br>";
+		}
 	} else {
 		if ($Debug) echo "date parameter not provided or does not match regex\n<br>";
-		$Date = '';
 	}
 
-	$DateMessage = '';
-
-	if ($Debug) {
-		echo "\$Date='" , htmlentities($Date) . "'\n<br>";
-		echo 'strtotime($Date) returns "' . strtotime($Date) . '"<br>';
-	}
 	if ($Date == '' || strtotime($Date) === false) {
-		$DateMessage = 'date assumed';
 		$Date = date('Y/m/d');
 	}
 
 	list($year, $month, $day) = explode('/', $Date);
-	if (!(is_numeric($year) && is_numeric($month) && is_numeric($day)) || !CheckDate($month, $day, $year)) {
-		$DateMessage = 'date adjusted to something realistic';
-		$Date = date('Y/m/d');
-	} else {
+	if ($Debug) echo "year=$year<br>month=$month<br>day=$day<br>\n";
+	if (is_numeric($year) && is_numeric($month) && is_numeric($day) && CheckDate($month, $day, $year)) {
+		if ($Debug) echo "That date passed sanity checking<br>\n";
 		$Date = date('Y/m/d', strtotime($Date));
+
+		# no sense looking at tomorrow..	
+		if ($Date > date('Y/m/d')) {
+			$Date = date('Y/m/d');
+		}
+	} else {
+		if ($Debug) "that day fails the sanity check<br>\n";
+		$Date = date('Y/m/d');
 	}
 
-
 	if ($Debug) {
-		echo "The date we are using is $Date\n<br>";
 		echo "The date we were given was $orig_date\n<br>";
+		echo "The date we are using is $Date\n<br>";
 	}
 	
 	if (IsSet($orig_date) && $orig_date != $Date) {
 		# we are going to redirect
+		if ($Debug) echo 'We are redirecting';
 		header('HTTP/1.1 301 Moved Permanently'); 
 		header('Location: ' . $_SERVER['SCRIPT_NAME'] . '?date=' . $Date);
 		exit;
@@ -135,8 +141,7 @@
 		return $HTML;
 	}
 
-	function ArchiveCreate($Date, $DateMessage, $db, $User, $BranchName) {
-		# I notice that $DateMessage is not used.
+	function ArchiveCreate($Date, $db, $User, $BranchName) {
 		GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;
 
 		$commits = new Commits($db);
@@ -207,7 +212,7 @@ echo freshports_MainContentTable();
 if (ArchiveExists($Date, $BranchName)) {
   $HTML = ArchiveGet($Date, $BranchName);
 } else {
-  $HTML = ArchiveCreate($Date, $DateMessage, $db, $User, $BranchName);
+  $HTML = ArchiveCreate($Date, $db, $User, $BranchName);
   ArchiveSave($Date, $HTML, $BranchName);
 }
 

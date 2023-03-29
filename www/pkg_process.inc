@@ -426,7 +426,7 @@ function MoveStagingToWatchList($UserID, $WatchListID, $dbh) {
 	if ($ok) {
 		if ($Debug) syslog(LOG_NOTICE, 'MoveStagingToWatchList: line ' . __LINE__);
 		$sql = "select MigrateStagingAreaToWatchList($1)";
-		$result = pg_query_params($dbh, $sql, array(WatchListID));
+		$result = pg_query_params($dbh, $sql, array($WatchListID));
 		if (!$result) {
 			$ok = FALSE;
 		}

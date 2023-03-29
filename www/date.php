@@ -20,16 +20,18 @@
 	#
 	# Get the date we are going to work with.
 	#
-	if (IsSet($_REQUEST['date'])) {
+	if (IsSet($_REQUEST['date']) && preg_match('!^\d+\/\d+\/\d+$!', $_REQUEST['date'])) {
 		$Date = pg_escape_string($db, $_REQUEST['date']);
+		$orig_date = $Date;
 	} else {
+		if ($Debug) echo "date parameter not provided or does not match regex\n<br>";
 		$Date = '';
 	}
 
 	$DateMessage = '';
 
 	if ($Debug) {
-		echo "\$Date='$Date'\n";
+		echo "\$Date='" , htmlentities($Date) . "'\n<br>";
 		echo 'strtotime($Date) returns "' . strtotime($Date) . '"<br>';
 	}
 	if ($Date == '' || strtotime($Date) === false) {
@@ -43,6 +45,19 @@
 		$Date = date('Y/m/d');
 	} else {
 		$Date = date('Y/m/d', strtotime($Date));
+	}
+
+
+	if ($Debug) {
+		echo "The date we are using is $Date\n<br>";
+		echo "The date we were given was $orig_date\n<br>";
+	}
+	
+	if (IsSet($orig_date) && $orig_date != $Date) {
+		# we are going to redirect
+		header('HTTP/1.1 301 Moved Permanently'); 
+		header('Location: ' . $_SERVER['SCRIPT_NAME'] . '?date=' . $Date);
+		exit;
 	}
 
 	if (IsSet($_REQUEST['branch'])) {

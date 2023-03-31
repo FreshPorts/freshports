@@ -1088,7 +1088,17 @@ class port_display {
 			$HTML .= "</dt>\n";
 
 			if (!empty($port->message_id)) {
-				if (strpos($port->message_id, 'freebsd.org') === false) {
+				#
+				# Checking for freebsd.org in the message id harks back to subversion days.
+				# That's when FreshPorts received and parsed emails from the mailing lists.
+				# Message-ID was taken from the email headers.
+				# Thus, this if is checking to see if this is a subversion email, and if not, assume it is a git commit.
+				# However, there is a another class of commits which did not store message_id.
+				# When that column was added, existing commits were given a value similar to: fp1.9826@dev.null.freshports.org
+				# This if says: if not a subversion commit, display the git commit.
+				#
+				if (strpos($port->message_id, LOOKS_LIKE_SUBVERSON) === false && strpos($port->message_id, PREDATES_MESSAGE_ID) === false) {
+				# !empty($port->commit_hash_short)) {
 					$HTML .= '<dt><b>Commit Hash:</b> ';
 					$HTML .= freshports_git_commit_Link_Hash($port->svn_revision, $port->commit_hash_short, $port->repo_hostname, $port->path_to_repo);
 				} else {

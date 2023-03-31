@@ -217,3 +217,9 @@ define('VUXML_LATEST', HTML_DIRECTORY . '/vuln-latest.html');
 
 # re https://cgit.freebsd.org/ports/commit/?id=4010f7bbc03638d71781ce091bf40a0907fa12fe
 define('LAST_SUBVERSION_COMMIT', '2021-03-31 03:12:20');
+
+# looks like a subversion commit? The ports.message_id column contains the email message-id value
+define('LOOKS_LIKE_SUBVERSON', 'freebsd.org');
+
+# When that column was added to the table, existing entries were given a value similar to fp1.9826@dev.null.freshports.org
+define('PREDATES_MESSAGE_ID',  'dev.null.freshports.org');

@@ -1096,6 +1096,7 @@ class port_display {
 				# However, there is a another class of commits which did not store message_id.
 				# When that column was added, existing commits were given a value similar to: fp1.9826@dev.null.freshports.org
 				# This if says: if not a subversion commit, display the git commit.
+				# e.g. https://www.freshports.org/devel/mips64orion-rtems-gdb/
 				#
 				if (strpos($port->message_id, LOOKS_LIKE_SUBVERSON) === false && strpos($port->message_id, PREDATES_MESSAGE_ID) === false) {
 				# !empty($port->commit_hash_short)) {

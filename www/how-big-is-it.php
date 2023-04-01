@@ -73,7 +73,7 @@ function StatsSQL($db, $Title) {
 function DBSize($db) {
 	$sql = "select pg_database_size(current_database())";
 
-	$result = pg_exec($db, $sql);
+	$result = pg_query_params($db, $sql, array());
 	if ($result) {
 		$numrows = pg_num_rows($result);
 		if ($numrows) {

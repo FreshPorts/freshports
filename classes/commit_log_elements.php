@@ -7,6 +7,7 @@
 
 
 // base class for commit_log_elements
+# it seems this class is not used. dvl - 2023-04-01
 class Commit_Log_Elements {
 
 	var $dbh;
@@ -36,7 +37,7 @@ class Commit_Log_Elements {
 		# get ready to fetch all the commit_log_elements for this element
 		# return the number of commits found
 
-		$sql = "
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "
 select commit_log_elements.element_id, 
        message_id,
        commit_hash_short,
@@ -51,12 +52,12 @@ select commit_log_elements.element_id,
        revision_name
   from commit_log, commit_log_elements
  where commit_log.id                  = commit_log_elements.commit_log_id
-   and commit_log_elements.element_id = " . pg_escape_string($this->dbh, $element_id) . "
+   and commit_log_elements.element_id = $1
  order by commit_log.commit_date desc ";
 
 		if ($Debug) echo "\$sql='<pre>$sql</pre><br>\n";
 
-		$this->result = pg_exec($this->dbh, $sql);
+		$this->result = pg_query_params($this->dbh, $sql, array($element_id));
 		if (!$this->result) {
 			echo pg_last_error($this->dbh) . " $sql";
 		}

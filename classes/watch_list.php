@@ -224,7 +224,7 @@ UPDATE watch_list
 	function Fetch($UserID, $ID) {
 		$Debug = 0;
 
-		$sql = "
+		$sql = '
 		SELECT id,
 		       user_id,
 		       name,
@@ -232,8 +232,8 @@ UPDATE watch_list
 		       token,
                NULL as watch_list_count
 		  FROM watch_list
-		 WHERE id      = " . pg_escape_string($this->dbh, $ID) . "
-		   AND user_id = " . pg_escape_string($this->dbh, $UserID);
+		 WHERE id      = $1
+		   AND user_id = $2';
 
 #		echo '<pre>' . $sql . '</pre>';
 
@@ -242,7 +242,7 @@ UPDATE watch_list
 		if ($ID == '') {
 			syslog(LOG_NOTICE, "classes/watch_list.php::line 213 \$UserID='$UserID', \$ID='$ID'");
 		}
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, $sql, array($ID, $UserID));
 		if ($this->LocalResult) {
 			$numrows = pg_num_rows($this->LocalResult);
 			if ($numrows > 0) {
@@ -252,7 +252,7 @@ UPDATE watch_list
 #			echo "That would give us $numrows rows";
 		} else {
 			$numrows = -1;
-			echo 'pg_exec failed: ' . $sql;
+			echo 'pg_query_params failed: ' . $sql;
 		}
 
 		return $numrows;

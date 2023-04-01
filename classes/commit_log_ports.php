@@ -55,15 +55,15 @@ class Commit_Log_Ports {
 
 		# how many commits do we have for this port?
 
-		$sql = "
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "
    SELECT count(*)
      FROM commit_log           CL,
           commit_log_ports     CLP
     WHERE CL.id       = CLP.commit_log_id
-      AND CLP.port_id = " . pg_escape_string($this->dbh, $port_id);
+      AND CLP.port_id = $1";
 
 		if ($this->Debug) echo "\$sql='<pre>$sql</pre><br>\n";
-		$this->result = pg_exec($this->dbh, $sql);
+		$this->result = pg_query_params($this->dbh, $sql, array($port_id));
 		if (!$this->result) {
 			syslog(LOG_ERR, pg_last_error($this->dbh) . " $sql");
 			die('that query failed.  details have been logged');
@@ -89,7 +89,8 @@ class Commit_Log_Ports {
 		# get ready to fetch all the commit_log_ports for this port
 		# return the number of commits found
 
-		$sql = "
+		$params = array($port_id);
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "
    SELECT CL.id,
           CL.svn_revision,
           R.repo_hostname,
@@ -115,19 +116,21 @@ class Commit_Log_Ports {
           sanity_test_failures STF on 
             CLP.commit_log_id = STF.commit_log_id
     WHERE CL.id       = CLP.commit_log_id
-      AND CLP.port_id = " . pg_escape_string($this->dbh, $port_id) . "
+      AND CLP.port_id = $1
  ORDER BY CL.commit_date desc, CL.id desc ";
  
  		if ($this->Limit) {
- 			$sql .= ' LIMIT ' . pg_escape_string($this->dbh, $this->Limit);
+			$sql .= " LIMIT $" . count($params) + 1;
+			$params[] = $this->Limit;
 		}
 
 		if ($this->Offset) {
-			$sql .= ' OFFSET ' . pg_escape_string($this->dbh, $this->Offset);
+			$sql .= " OFFSET $" . count($params) + 1;
+			$params[] = $this->Offset;
 		}
 
 		if ($this->Debug) echo "\$sql='<pre>$sql</pre><br>\n";
-		$this->result = pg_exec($this->dbh, $sql);
+		$this->result = pg_query_params($this->dbh, $sql, $params);
 		if (!$this->result) {
 			syslog(LOG_ERR, pg_last_error($this->dbh) . " $sql");
 			die('that query failed.  details have been logged');
@@ -170,16 +173,17 @@ class Commit_Log_Ports {
 
 	function NeedsRefreshClear() {
 		# Clear the needs_refresh flag for this commit/port combination
+		# yeah, not used: dvl 2023-04-01
 
-		$sql = "
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "
 UPDATE commit_log_ports
    SET needs_refresh = 0
- WHERE commit_log_id = " . pg_escape_string($this->dbh, $this->commit_log_id) . "
-   AND port_id       = " . pg_escape_string($this->dbh, $this->port_id);
+ WHERE commit_log_id = $1
+   AND port_id       = $2";
 
 		if ($this->Debug) echo "\$sql='<pre>$sql</pre><br>\n";
 		
-		$this->result = pg_exec($this->dbh, $sql);
+		$this->result = pg_query_params($this->dbh, $sql, array($this->commit_log_id, $this->port_id));
 		if (!$this->result) {
 			syslog(LOG_ERR, pg_last_error($this->dbh) . " $sql");
 			die('that query failed.  details have been logged');

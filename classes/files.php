@@ -115,14 +115,16 @@ class CommitFiles {
 	       JOIN system_branch        SB on CLB.branch_id = SB.id,
 	       commit_log_elements      CLE,
 	       element                  E
-	 WHERE CL.message_id              = '" . pg_escape_string($this->dbh, $this->MessageID) . "'
+	 WHERE CL.message_id              = $1
 	   AND CL.id                      = CLE.commit_log_id
 	   AND CLE.element_id             = E.id";
+	   	$params = array($this->MessageID);
 
 	
-		if ($ForJustOnePort) { 
+		if ($ForJustOnePort) {
+	   		$params[] = '%/' . $this->Category . '/' . $this->Port . '%';
 			$sql .= "
-	   AND element_pathname(E.id) LIKE '%/" . pg_escape_string($this->dbh, $this->Category)  . '/' . pg_escape_string($this->dbh, $this->Port) . "%'";
+	   AND element_pathname(E.id) LIKE $" . count($params);
 		}
 		
 		$sql .= ") AS A
@@ -133,11 +135,12 @@ class CommitFiles {
 		# if the watch list id is provided (i.e. they are logged in and have a watch list id...)
 		#
 		if ($this->UserID) {
+			$params[] = $this->UserID;
 			$sql .= "
 		 (SELECT element_id AS wle_element_id, COUNT(watch_list_id) AS onwatchlist
 		    FROM watch_list JOIN watch_list_element 
 		        ON watch_list.id      = watch_list_element.watch_list_id
-		       AND watch_list.user_id = " . pg_escape_string($this->dbh, $this->UserID) . "
+		       AND watch_list.user_id = $" . count($params) . "
 	          AND watch_list.in_service
 		  GROUP BY wle_element_id) AS B
 		       ON B.wle_element_id = A.element_id
@@ -152,7 +155,7 @@ class CommitFiles {
 	
 		if ($this->Debug) echo '<PRE>' . $sql . '</PRE>';
 
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, $sql, $params);
 
 		if (!$this->LocalResult) {
 			syslog(LOG_ERR, __FILE__  . '::' . __LINE__  . ' ' . pg_last_error($this->dbh));

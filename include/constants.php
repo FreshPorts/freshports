@@ -223,3 +223,5 @@ define('LOOKS_LIKE_SUBVERSON', 'freebsd.org');
 
 # When that column was added to the table, existing entries were given a value similar to fp1.9826@dev.null.freshports.org
 define('PREDATES_MESSAGE_ID',  'dev.null.freshports.org');
+
+define('FILE_AND_FUNCTION_ID', "-- " . __FILE__ . '::' . __FUNCTION__ . "\n");

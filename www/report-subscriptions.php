@@ -53,7 +53,7 @@
 
 	function freshports_ReportNames($dbh) {
 		$sql = 'select id, name, description, needs_frequency from reports order by name';
-		$result = pg_exec($dbh, $sql);
+		$result = pg_query_params($dbh, $sql, array());
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			for ($i = 0; $i < $numrows; $i++) {

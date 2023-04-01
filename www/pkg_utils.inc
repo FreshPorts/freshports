@@ -52,12 +52,13 @@ function Cleanup() {
 *
 */
 function IsLoginValid($user, $pw, &$retval) {
+	# not sure this is used: dvl 2023-04-01
 	$retval = false;
 	$query = "select IsLoginValid($1, $2)";
 	$database =& DBConnect();
 
 	if ($database) {
-		$result = pg_exec_params($database, $query, array($user, $pw));
+		$result = pg_query_params($database, $query, array($user, $pw));
 
 		if ($result && pg_num_rows($result)) {
 			$row = pg_fetch_array($result,0);
@@ -79,13 +80,14 @@ function IsLoginValid($user, $pw, &$retval) {
 *
 */
 function CleanPorts($watchID) {
+	# not sure this is used: dvl 2023-04-01
 	$retval = true;
 	$query = "delete from watch_list_element where watch_list_id = $1";
 	$database =& DBConnect();
 
 	echo "Cleaning out old ports<br>\n";
 	if ($database) {
-		$result = pg_exec_params($database, $query, array($watchID));
+		$result = pg_query_params($database, $query, array($watchID));
 
 		if (!$result) {
 			$error = pg_last_error($database);
@@ -108,6 +110,7 @@ function CleanPorts($watchID) {
 *
 */
 function AddPortsToList($ports, $userID) {
+	# not sure this is used: dvl 2023-04-01
 	$source = "AddPortsToList";
 	$successful = 0;
 	$dups = 0;
@@ -122,7 +125,7 @@ function AddPortsToList($ports, $userID) {
 		// optimize this
 		foreach ($ports as $port) {
 			$query = "select WatchListAdd($1, $2)";
-			$result = @pg_exec_params($database, $query, array($userID, $port));
+			$result = @pg_query_params($database, $query, array($userID, $port));
 
 			if (!$result) {
 				$errorMsg = pg_last_error($database);

@@ -230,7 +230,7 @@ class Port {
 	}
 
 	function FetchByElementID($element_id, $UserID = 0) {
-
+	
 		# fetch a single port based on element_id.
 		# e.g. net/samba
 		#
@@ -238,8 +238,7 @@ class Port {
 
 		$this->element_id = $element_id;
 
-		$sql = "set client_encoding = 'ISO-8859-15';
-select ports.id,
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . "\nselect ports.id,
        ports.element_id,
        ports.category_id       as category_id, 
        ports.short_description as short_description, 
@@ -305,44 +304,48 @@ select ports.id,
        PortVersionOnQuarterlyBranch(ports.id, categories.name || '/' || element.name) AS quarterly_revision  ";
 
 		if ($UserID) {
-			$sql .= ",
-	        TEMP.onwatchlist";
+			$sql .= ',
+	        TEMP.onwatchlist';
 		}
 		else
 		{
-			$sql .= ",
-			0 as onwatchlist";
+			$sql .= ',
+			0 as onwatchlist';
 		}
 
-		$sql .= "
+		$sql .= '
        from categories, element, ports_vulnerable right outer join ports 
                        on (ports_vulnerable.port_id = ports.id)
                left outer join commit_log on ports.last_commit_id = commit_log.id 
-               LEFT OUTER JOIN repo R ON commit_log.repo_id = R.id ";
+               LEFT OUTER JOIN repo R ON commit_log.repo_id = R.id ';
 
 		if ($UserID) {
-			$sql .= "
+			$sql .= '
 	      LEFT OUTER JOIN
 	 (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
 	    FROM watch_list JOIN watch_list_element 
 	        ON watch_list.id      = watch_list_element.watch_list_id
-	       AND watch_list.user_id = " . pg_escape_string($this->dbh, $UserID) . "
+	       AND watch_list.user_id = $2
            AND watch_list.in_service
 	  GROUP BY element_id) AS TEMP
-	       ON TEMP.wle_element_id = ports.element_id";
+	       ON TEMP.wle_element_id = ports.element_id';
+	       		$params = array($this->element_id, $UserID);
+		} else {
+			$params = array($this->element_id);
 		}
 	
 
-		$sql .= " WHERE element.id        = " . pg_escape_string($this->dbh, $this->element_id) . " 
+		$sql .= ' WHERE element.id        = $1
 			        and ports.category_id = categories.id 
-			        and ports.element_id  = element.id ";
+			        and ports.element_id  = element.id ';
 
 
 		if ($this->Debug) {
 			echo "<pre>$sql</pre>";
 		}
 
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, "set client_encoding = 'ISO-8859-15'", array()) or die('query failed ' . pg_last_error($this->dbh));
+		$result = pg_query_params($this->dbh, $sql, $params);
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
@@ -353,7 +356,7 @@ select ports.id,
 				die(__CLASS__ . ':' . __FUNCTION__ . " got $numrows rows at line " . __LINE__);
 			}
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
+			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
 		}
 	}
 
@@ -361,7 +364,7 @@ select ports.id,
 		# fetch a single port based on id
 		# used by missing-port.php
 
-		$sql = "set client_encoding = 'ISO-8859-15'; select ports.id, 
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . "select ports.id, 
 		               ports.element_id,
 		               element_pathname(ports.element_id)        as element_pathname,
 		               ports.category_id       as category_id,
@@ -440,29 +443,31 @@ END as onwatchlist';
 		}
 
 
-		$sql .= " from categories, element, ports_vulnerable right outer join ports
+		$sql .=' from categories, element, ports_vulnerable right outer join ports
                        on (ports_vulnerable.port_id = ports.id)
                left outer join commit_log on ports.last_commit_id = commit_log.id 
-               LEFT OUTER JOIN repo R ON commit_log.repo_id = R.id ";
+               LEFT OUTER JOIN repo R ON commit_log.repo_id = R.id ';
 
 		#
 		# if the watch list id is provided (i.e. they are logged in and have a watch list id...)
 		#
 		if ($UserID) {
-			$sql .="
+			$sql .='
 LEFT OUTER JOIN (
 SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
     FROM watch_list JOIN watch_list_element
         ON watch_list.id      = watch_list_element.watch_list_id
-       AND watch_list.user_id = " . pg_escape_string($this->dbh, $UserID) . "
+       AND watch_list.user_id = $2
        AND watch_list.in_service
   GROUP BY element_id
 ) AS TEMP
-ON TEMP.wle_element_id = ports.element_id";
-
+ON TEMP.wle_element_id = ports.element_id';
+			$params = array($id, $UserID);
+		} else {
+			$params = array($id);
 		}
 
-		$sql .= "\nWHERE ports.id        = " . pg_escape_string($this->dbh, $id) . " 
+		$sql .= "\nWHERE ports.id        = $1
 		          and ports.category_id = categories.id 
 		          and ports.element_id  = element.id ";
 
@@ -470,17 +475,18 @@ ON TEMP.wle_element_id = ports.element_id";
 			echo "<pre>$sql</pre>";
 		}
 
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, "set client_encoding = 'ISO-8859-15'", array()) or die('query failed ' . pg_last_error($this->dbh));
+		$result = pg_query_params($this->dbh, $sql, $params);
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
 				if ($this->Debug) echo "FetchByID succeeded<br>";
 				$myrow = pg_fetch_array ($result);
 				$this->_PopulateValues($myrow);
-				$result = $this->{'id'};
+				$result = $this->id;
 			}
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
+			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
 		}
 
 		return $result;
@@ -490,7 +496,7 @@ ON TEMP.wle_element_id = ports.element_id";
 		# fetch all ports based on category
 		# e.g. id for net
 		
-		$sql = "set client_encoding = 'ISO-8859-15';";
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n";
 		if ($UserID) {
 			$sql .= "SELECT PE.*,
 
@@ -585,17 +591,21 @@ SELECT P.*, element.name    as port
         categories, ports_categories, categories PRIMARY_CATEGORY, element
   WHERE ports_categories.port_id     = ports.id
     AND ports_categories.category_id = categories.id
-    AND categories.name              = '" . pg_escape_string($this->dbh, $CategoryName) . "'
+    AND categories.name              = $1
     AND PRIMARY_CATEGORY.id          = ports.category_id
     AND ports.element_id             = element.id) AS P
    ON (P.element_id     = element.id
-   AND element.status   = 'A') JOIN element_pathname EP ON P.element_id = EP.element_id AND EP.pathname like '/ports/";
+   AND element.status   = 'A') JOIN element_pathname EP ON P.element_id = EP.element_id AND EP.pathname like $2";
+   
+   	$params = array($CategoryName, '/ports/');
 
 	if ($Branch != BRANCH_HEAD) {
 		$sql .= 'branches/';
+		# php arrays are zero-based
+		$params[1] .= 'branches/';
 	}
 
-	$sql .= pg_escape_string($this->dbh, $Branch) . "/%'";
+	$params[1] .= $Branch . '/%';
 
 		if ($UserID) {
 			$sql .= ") AS PE
@@ -604,25 +614,29 @@ LEFT OUTER JOIN
          COUNT(watch_list_id) as watchlistcount
     FROM watch_list JOIN watch_list_element
       ON watch_list.id      = watch_list_element.watch_list_id
-     AND watch_list.user_id = " . pg_escape_string($this->dbh, $UserID) . "
+     AND watch_list.user_id = $3
      AND watch_list.in_service
  GROUP BY wle_element_id) AS TEMP
   ON TEMP.wle_element_id = PE.element_id";
-    	}
-
+  			$params[] = $UserID;
+	    	}
+  		
 		$sql .= " ORDER by port ";
 		
 #echo "\$PageSize='$PageSize'\n";
 		if ($PageSize) {
-			$sql .= " LIMIT $PageSize";
+			$sql .= ' LIMIT $' . (count($params) + 1);
+			$params[] =  $PageSize;
 			if ($PageNo) {
-				$sql .= ' OFFSET ' . pg_escape_string($this->dbh, ($PageNo - 1 ) * $PageSize);
+				$sql .= ' OFFSET $' . (count($params) + 1);
+				$params[] = ($PageNo - 1 ) * $PageSize;
 			}
 		}
 
 		if ($this->Debug) echo "<pre>$sql</pre>";
 
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, "set client_encoding = 'ISO-8859-15'", array()) or die('query failed ' . pg_last_error($this->dbh));
+		$this->LocalResult = pg_query_params($this->dbh, $sql, $params);
 		if ($this->LocalResult) {
 			$numrows = pg_num_rows($this->LocalResult);
 			if ($numrows == 1) {
@@ -632,7 +646,7 @@ LEFT OUTER JOIN
 
 			}
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
+			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
 		}
 
 		return $numrows;
@@ -654,15 +668,16 @@ LEFT OUTER JOIN
 		# return non-zero if this port is on the supplied watch list ID.
 		# zero otherwise.
 		#
-
+		# I suspect this function is unused : dvl 2023-03-31
 		$result = 0;
 
-		$sql = "	select element_id
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n". 
+		                      ' select element_id
 					  from watch_list_element
-					 where watch_list_id = " . pg_escape_string($this->dbh, $WatchListID) . "
-					   and element_id    = " . pg_escape_string($this->dbh, $this->element_id);
+					 where watch_list_id = $1
+					   and element_id    = $2';
 
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($WatchListID, $this->element_id));
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
@@ -670,7 +685,7 @@ LEFT OUTER JOIN
 				$result = 1;
 			}
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
+			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
 		}
 
 		return $result;
@@ -681,10 +696,12 @@ LEFT OUTER JOIN
 		# introduced for virtual categories.
 		# given a category port combination, let's get the port id
 		# and then fetch
+		# NOTE: 2023-03-31 The system doesn't allow you to fetch category/port where category is virtual
+		# I see this used in www/--/index.php though
 		#
 
-		$sql = "select GetPortID('" . pg_escape_string($this->dbh, $Category) . "', '"  . pg_escape_string($this->dbh, $Port) . "') as port_id";
-		$result = pg_exec($this->dbh, $sql);
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . 'select GetPortID($1, $2) as port_id';
+		$result = pg_query_params($this->dbh, $sql, params($Category, $Port));
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
@@ -700,7 +717,7 @@ LEFT OUTER JOIN
 				echo 'that port was not found:' . $Category . '/' . $Port;
 			}
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
+			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
 		}
 
 		return $result;
@@ -713,11 +730,11 @@ LEFT OUTER JOIN
 
 		$result = 0;
 
-		$sql = 'select watch_list_count(' . pg_escape_string($this->dbh, $this->element_id) . ')';
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . 'select watch_list_count($1)';
 
 		if ($this->Debug) echo $sql;
 
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($this->element_id));
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($numrows >= 1) {
@@ -725,7 +742,7 @@ LEFT OUTER JOIN
 				$result = $myrow[0];
 			}
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
+			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
 		}
 
 		return $result;
@@ -763,19 +780,19 @@ LEFT OUTER JOIN
 	}
 	
 	function IsDeleted() {
-		return $this->{'status'} == "D";
+		return $this->status == "D";
 	}
 
 	function PackageIsAvailable() {
 		$available = true;
-		if (IsSet($this->{'license_restricted'}) && strpos($this->{'license_restricted'}, DELETE_PACKAGE) !== false) {
+		if (IsSet($this->license_restricted) && strpos($this->license_restricted, DELETE_PACKAGE) !== false) {
 			# false === not found
 			# non false = found
 			$available = false;
 		}
 
 		# if either of these are non-black, there is no package
-		if (!empty($this->{'no_package'}) || !empty($this->{'manual_package_build'})) {
+		if (!empty($this->no_package) || !empty($this->manual_package_build)) {
 			$available = false;
 		}
 
@@ -784,42 +801,42 @@ LEFT OUTER JOIN
 
 	function PackageNotAvailableReason() {
 		$available = '';
-		if (IsSet($this->{'license_restricted'}) && strpos($this->{'license_restricted'}, DELETE_PACKAGE) !== false) {
+		if (IsSet($this->license_restricted) && strpos($this->license_restricted, DELETE_PACKAGE) !== false) {
 			# false === not found
 			# non false = found
-			$available = '_LICENSE_RESTRICTED = ' . $this->{'license_restricted'};
+			$available = '_LICENSE_RESTRICTED = ' . $this->license_restricted;
 		}
 
 		# if either of these are non-black, there is no package
-		if (!empty($this->{'no_package'}) || !empty($this->{'manual_package_build'})) {
-			$available = 'NO_PACKAGE = ' . $this->{'no_package'};
+		if (!empty($this->no_package) || !empty($this->manual_package_build)) {
+			$available = 'NO_PACKAGE = ' . $this->no_package;
 		}
 
-		if (!empty($this->{'manual_package_build'})) {
-			$available = 'MANUAL_PACKAGE_BUILD = ' . $this->{'manual_package_build'};
+		if (!empty($this->manual_package_build)) {
+			$available = 'MANUAL_PACKAGE_BUILD = ' . $this->manual_package_build;
 		}
 
 		return $available;
 	}
 
 	function ConflictMatches() {
-		$sql = 'SELECT DISTINCT PackageName(PCM.port_id) as package_name, f.*
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . 'SELECT DISTINCT PackageName(PCM.port_id) as package_name, f.*
   FROM ports_conflicts_matches PCM
   JOIN ports_conflicts PC ON PCM.ports_conflicts_id = PC.id
   JOIN GetPortFromPackageName(PackageName(PCM.port_id)) AS f ON true
- WHERE PC.port_id = ' . $this ->{'id'};
+ WHERE PC.port_id = $1';
 
 		if ($this->Debug) {
 			echo "<pre>$sql</pre>";
 		}
 
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($this->id));
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($this->Debug) echo "FetchByElementID succeeded<br>";
-			$this->{'conflicts_matches'} = pg_fetch_all($result);
+			$this->conflicts_matches = pg_fetch_all($result);
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
+			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
 		}
 
 	}

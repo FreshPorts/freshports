@@ -65,19 +65,15 @@ class PageLoadDetail {
 
 #		echo "\$UserID='$UserID'<br>";
 
-		$sql = "
+		$sql = '
 INSERT INTO page_load_detail(page_name,
                              user_id,
                              ip_address,
                              full_url,
                              rendering_time)
-                     values ('" . pg_escape_string($this->dbh, $_SERVER['SCRIPT_NAME']) . "',
-                             $UserID,
-                             '" . pg_escape_string($this->dbh, $_SERVER['REMOTE_ADDR']) . "',
-                             '" . pg_escape_string($this->dbh, $_SERVER["REQUEST_URI"]) . "',
-                             '" . $this->ElapsedTime() . " seconds')";
+                     values ($1, $2, $3, $4, $5)';
 		if ($Debug) echo "CODE <pre>$sql</pre>";
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($_SERVER['SCRIPT_NAME'], $UserID, $_SERVER['REMOTE_ADDR'], $_SERVER["REQUEST_URI"],  $this->ElapsedTime() . ' seconds'));
 		if ($result) {
 			$return = 1;
 		} else {

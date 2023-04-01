@@ -64,9 +64,9 @@
 			pg_exec($db, 'BEGIN');
 			$CommitFlag = new CommitFlag($db);
 			if ($CommitFlag->Delete($User->id, $message_id) >= 0) {
-				pg_exec('COMMIT');
+				pg_exec($db, 'COMMIT');
 			} else {
-				pg_exec('ROLLBACK');
+				pg_exec($db, 'ROLLBACK');
 				die(pg_last_error($db));
 			}
 			break;
@@ -89,5 +89,3 @@
 	}
 
 #	phpinfo();
-
-?>

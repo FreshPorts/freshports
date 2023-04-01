@@ -49,6 +49,7 @@ class Commits {
 
         
 	function FetchCommitsOnADay($Date, $UserID) {
+		$params = array();
 		$sql = "
         SELECT DISTINCT
             CL.commit_date - SystemTimeAdjust()                                                                 AS commit_date_raw,
@@ -102,10 +103,11 @@ class Commits {
             NULL AS onwatchlist ";
         }
 
+        $params[] = $Date;
         $sql .= "
     FROM commit_log CL JOIN commit_log_ports CLP ON CL.id = CLP.commit_log_id 
-                        AND CL.commit_date BETWEEN '" . pg_escape_string($this->dbh, $Date) . "'::timestamptz  + SystemTimeAdjust()
-                                               AND '" . pg_escape_string($this->dbh, $Date) . "'::timestamptz  + SystemTimeAdjust() + '1 Day'
+                        AND CL.commit_date BETWEEN $" . count($params) . "::timestamptz  + SystemTimeAdjust()
+                                               AND $" . count($params) . "::timestamptz  + SystemTimeAdjust() + '1 Day'
             LEFT OUTER JOIN sanity_test_failures STF ON STF.commit_log_id = CLP.commit_log_id 
             JOIN repo R on CL.repo_id = R.id
             LEFT OUTER JOIN ports_vulnerable     PV ON CLP.port_id = PV.port_id
@@ -114,20 +116,25 @@ class Commits {
 
         # allow for quarterly branches
         # see also the Count() function below
-        if ($this->BranchName != BRANCH_HEAD) $sql .= " AND SB.branch_name = '" . pg_escape_string($this->dbh, $this->BranchName)  . "'\n";
+        if ($this->BranchName != BRANCH_HEAD) {
+            $params[] = $this->BranchName;
+            $sql .= " AND SB.branch_name = $" . count($params) . "\n";
+        }
 
         $sql .= "
-            JOIN ports                 P ON P.id           = CLP.port_id
+            JOIN ports                P  ON P.id           = CLP.port_id
             JOIN categories           C  ON C.id           = P.category_id
-            JOIN element              E  on E.id           = P.element_id
+            JOIN element              E  ON E.id           = P.element_id
             ";
+
         if ($UserID) {
+                $params[] = $UserID;
                 $sql .= "
           LEFT OUTER JOIN
      (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
         FROM watch_list JOIN watch_list_element 
             ON watch_list.id      = watch_list_element.watch_list_id
-           AND watch_list.user_id = " . pg_escape_string($this->dbh, $UserID) . "
+           AND watch_list.user_id = $" . count($params) . "
            AND watch_list.in_service
       GROUP BY wle_element_id) AS TEMP
            ON TEMP.wle_element_id = E.id";
@@ -146,19 +153,20 @@ class Commits {
 
 		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
 
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, $sql, $params);
 		if ($this->LocalResult) {
 			$numrows = pg_num_rows($this->LocalResult);
 			if ($this->Debug) echo "That would give us $numrows rows";
 		} else {
 			$numrows = -1;
-			echo 'pg_exec failed: ' . "<pre>$sql</pre>";
+			echo 'pg_query_params failed: ' . "<pre>$sql</pre>";
 		}
 
 		return $numrows;
 	}
 
 	function FetchLimit($UserID, $Limit) {
+		$params = array();
 		$sql = "
         SELECT DISTINCT
             CL.commit_date - SystemTimeAdjust()                                                                 AS commit_date_raw,
@@ -205,56 +213,61 @@ class Commits {
             P.restricted                                                                                        AS restricted,
             SB.branch_name                                                                                      AS branch";
 
-        if ($UserID) {
-                $sql .= ",
-            onwatchlist ";
-        } else {
-                $sql .= ",
+		if ($UserID) {
+			$sql .= ",
+	    onwatchlist ";
+                } else {
+                	$sql .= ",
             NULL AS onwatchlist ";
-        }
+                }
 
-        $sql .= "
+                $sql .= "
     FROM commit_log_ports CLP JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
                               JOIN system_branch        SB ON SB.id = CLB.branch_id
       LEFT OUTER JOIN sanity_test_failures STF ON STF.commit_log_id = CLP.commit_log_id, ";
 
-        $sql .= "
+		$sql .= "
       (SELECT cl.*
          FROM commit_log cl
         WHERE EXISTS ";
-        if ($this->BranchName == BRANCH_HEAD ) {
-        # XXX we can change this....
-           $sql .= "(select *
+
+	        if ($this->BranchName == BRANCH_HEAD ) {
+	        # XXX we can change this....
+	           $sql .= "(select *
                         from commit_log_ports clp
                         where clp.commit_log_id = cl.id)";
-        } else {
-           $sql .= "(select *
-                        from commit_log_branches clb where branch_id = (select id from system_branch where branch_name = '" . pg_escape_string($this->dbh, $this->BranchName) . "')
+		} else {
+			$parms[] = $this->BranchName;
+			$sql .= "(select *
+                        from commit_log_branches clb where branch_id = (select id from system_branch where branch_name = $" . count($params) . ")
                         AND clb.commit_log_id = cl.id)";
-        }
-        $sql .= "
+		}
+
+	        $params[]  = $Limit;
+	        $sql .= "
      ORDER BY CL.commit_date DESC, CL.id DESC
-        LIMIT " . pg_escape_string($this->dbh, $Limit) . ") AS CL ";
+        LIMIT $" . count($params) . ") AS CL ";
 
-        $sql .= "LEFT OUTER JOIN repo R on CL.repo_id = R.id, categories C, ports P LEFT OUTER JOIN ports_vulnerable PV ON P.id = PV.port_id, element E ";
+	        $sql .= "LEFT OUTER JOIN repo R on CL.repo_id = R.id, categories C, ports P LEFT OUTER JOIN ports_vulnerable PV ON P.id = PV.port_id, element E ";
 
-        if ($UserID) {
-                $sql .= "
+	        if ($UserID) {
+			$params[] = $UserID;
+			$sql .= "
           LEFT OUTER JOIN
      (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
         FROM watch_list JOIN watch_list_element 
             ON watch_list.id      = watch_list_element.watch_list_id
-           AND watch_list.user_id = " . pg_escape_string($this->dbh, $UserID) . "
+           AND watch_list.user_id = $" . count($params) . "
            AND watch_list.in_service
       GROUP BY wle_element_id) AS TEMP
            ON TEMP.wle_element_id = E.id";
-        }
+		}
 
-        $sql .= "
+		$sql .= "
       WHERE CLP.commit_log_id = CL.id
         AND CLP.port_id       = P.id
-        AND C.id     = P.category_id
-        AND E.id        = P.element_id
+        AND C.id              = P.category_id
+        AND E.id              = P.element_id
    ORDER BY 1 desc,
             CL.id DESC,
             category,
@@ -262,34 +275,38 @@ class Commits {
 
 		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
 
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, $sql, $params);
 		if ($this->LocalResult) {
 			$numrows = pg_num_rows($this->LocalResult);
 			if ($this->Debug) echo "That would give us $numrows rows";
 		} else {
 			$numrows = -1;
-			echo 'pg_exec failed: ' . "<pre>$sql</pre>";
+			echo 'pg_query_params failed: ' . "<pre>$sql</pre>";
 		}
 
 		return $numrows;
 	}
 
 	function Count($Date) {
+	        $params = array($Date);
 		$sql = "
         SELECT count(DISTINCT CL.id) AS count
           FROM commit_log CL JOIN commit_log_ports CLP ON CL.id = CLP.commit_log_id 
-                        AND CL.commit_date BETWEEN '" . pg_escape_string($this->dbh, $Date) . "'::timestamptz  + SystemTimeAdjust()
-                                               AND '" . pg_escape_string($this->dbh, $Date) . "'::timestamptz  + SystemTimeAdjust() + '1 Day'
+                        AND CL.commit_date BETWEEN $1::timestamptz  + SystemTimeAdjust()
+                                               AND $1::timestamptz  + SystemTimeAdjust() + '1 Day'
             JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
             JOIN system_branch        SB ON SB.id = CLB.branch_id";
 
                 # allow for quarterly branches
                 # see also the FetchCommitsOnADay() function above
-                if ($this->BranchName != BRANCH_HEAD) $sql .= " AND SB.branch_name = '" . pg_escape_string($this->dbh, $this->BranchName)  . "'\n";
+                if ($this->BranchName != BRANCH_HEAD) {
+                  $params[] = $this->BranchName;
+                  $sql .= " AND SB.branch_name = $2\n";
+                }
 
 		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
 
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, $sql, $params);
 		if ($this->LocalResult) {
 			$myrow = pg_fetch_array($this->LocalResult);
 			$count = $myrow['count'];
@@ -328,11 +345,11 @@ SELECT gmt_format(max(CL.date_added)) AS last_modified
   FROM commit_log CL, commit_log_ports CLP JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
                                            JOIN system_branch        SB ON SB.id             = CLB.branch_id
  WHERE CL.id = CLP.commit_log_id
-   AND CL.commit_date BETWEEN '" . pg_escape_string($this->dbh, $Date) . "'::timestamptz  + SystemTimeAdjust()
-                          AND '" . pg_escape_string($this->dbh, $Date) . "'::timestamptz  + SystemTimeAdjust() + '1 Day'";
+   AND CL.commit_date BETWEEN $1::timestamptz  + SystemTimeAdjust()
+                          AND $1::timestamptz  + SystemTimeAdjust() + '1 Day'";
 		
 		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($Date));
 		if ($result) {
 			$myrow = pg_fetch_array($result);
 			$last_modified = $myrow['last_modified'];

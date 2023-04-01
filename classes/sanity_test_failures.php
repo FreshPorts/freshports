@@ -56,26 +56,31 @@ class SanityTestFailures {
 		GLOBAL	$freshports_CommitMsgMaxNumOfLinesToShow;
 
 		if (IsSet($this->Filter)) {
-			$sql = "select * from SanityTestFailures($this->UserID, '" . pg_escape_string($this->dbh, $this->Filter) . "')";
+			$sql = 'select * from SanityTestFailures($1, $2)';
+			$params = array($this->UserID, $this->Filter);
 		} else {
 			# we don't need/use the value for stf_message here but a non-empty value is required
 			# to get port-display to provide a link to the sanity test failure message.
 			# to reduce the data set set, let's just pull back 1.
-			$sql = "set client_encoding = 'ISO-8859-15';
+			$sql = "
 SELECT S.*, 1 as stf_message
-  FROM SanityTestFailures(" . pg_escape_string($this->dbh, $this->UserID) . ") S LEFT OUTER JOIN sanity_test_failures STF
+  FROM SanityTestFailures($1) S LEFT OUTER JOIN sanity_test_failures STF
     ON S.commit_log_id = STF.commit_log_id";
+    			$params = array($this->UserID);
 		}
 		
 		if ($this->MessageID != '') {
-			$sql .= " WHERE message_id = '" . pg_escape_string($this->dbh, $this->MessageID) . "'";
+			$sql .= ' WHERE message_id = $' . count($params) + 1;
+			$params[] = $this->MessageID;
 		}
 
 		$sql .= " ORDER BY S.commit_date_raw DESC, S.category, S.port";
 		
 		if ($this->Debug) echo "\n<p>sql=$sql</p>\n";
 
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, "set client_encoding = 'ISO-8859-15'", array()) or die('query failed ' . pg_last_error($this->dbh));
+
+		$result = pg_query_params($this->dbh, $sql, $params);
 		if (!$result) {
             die("read from database failed");
 			exit;

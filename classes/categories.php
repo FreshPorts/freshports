@@ -72,11 +72,11 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 		# Get the category details, and the date of the
 		# last modified port therein
 		#
-		$sql = $this->ComposeFetchBranchSQL() . ' WHERE id = ' . pg_escape_string($this->dbh, $this->id);
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . $this->ComposeFetchBranchSQL() . ' WHERE id = $1';
 
 		if ($this->Debug) echo "<pre>1. sql = '$sql'</pre><br>";
 
-        $result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($this->id));
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
@@ -94,10 +94,10 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 		if (IsSet($element_id)) {
 			$this->element_id = $element_id;
 		}
-		$sql = $this->ComposeFetchBranchSQL() . '  WHERE C.element_id = ' . pg_escape_string($this->dbh, $this->element_id);
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . $this->ComposeFetchBranchSQL() . '  WHERE C.element_id = $1';
 		if ($this->Debug) echo "<pre>sql = '$sql'</pre><br>";
 
-        $result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($this->element_id));
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
@@ -118,11 +118,11 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 			$this->name = pg_escape_string($this->dbh, $Name);
 			unset($this->id);
 		}
-		$sql = $this->ComposeFetchBranchSQL() . " WHERE C.name = '" . pg_escape_string($this->dbh, $this->name) . "'";
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . $this->ComposeFetchBranchSQL() . " WHERE C.name = $1";
 
 		if ($this->Debug) echo "<pre>sql = '$sql'</pre><br>";
 
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($this->name));
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
@@ -136,14 +136,15 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 	}
 
 	function IsCategoryByName($Name) {
+		# I suspect this is unused - dvl 2023-04-01
 
 		Unset($CategoryID);
 
-		$sql = "SELECT id FROM categories where name = '" . pg_escape_string($this->dbh, $Name) . "'";
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . "SELECT id FROM categories where name = $1";
 
 		if ($this->Debug) echo "sql = '$sql'<br>";
 
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($Name));
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
@@ -158,17 +159,20 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 	function PortCount($Name, $Branch = BRANCH_HEAD) {
 		$Count = 0;
 
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n";
 		if (IsSet($Name)) {
 			$this->name = pg_escape_string($this->dbh, $Name);
 		}
 		if ($Branch == BRANCH_HEAD) {
-			$sql = "select CategoryPortCount('" . pg_escape_string($this->dbh, $this->name) . "')";
+			$params = array($this->name);
+			$sql .= "select CategoryPortCount($1)";
 		} else {
-			$sql = "select CategoryPortCount('" . pg_escape_string($this->dbh, $this->name) . "', '" . pg_escape_string($this->dbh, $Branch) . "')";
+			$params = array($this->name, $Branch);
+			$sql .= "select CategoryPortCount($1, $2)";
 		}
 		if ($this->Debug) echo "sql = '$sql'<br>";
 
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, $params);
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
@@ -185,13 +189,13 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 	function UpdateDescription() {
 		GLOBAL $User;
 
-		$sql = "UPDATE categories SET description = '" . pg_escape_string($this->dbh, $this->description) . "' WHERE id = " . pg_escape_string($this->dbh, $this->id) . ' AND is_primary = FALSE';
+		$sql = "UPDATE categories SET description = $1 WHERE id = $2 AND is_primary = FALSE";
 		syslog(LOG_NOTICE, 'User \'' . $User->name . '\' at '
 			. pg_escape_string($this->dbh, $_SERVER[REMOTE_ADDR]) . ' is changing category \'' 
 			. $this->name . '\' to \'' . $this->description . '\'.');
 		if ($this->Debug) echo "sql = '$sql'<br>";
 
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($this->description, $this->id));
 
 		return  pg_affected_rows($result);
 	}

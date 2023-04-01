@@ -22,6 +22,7 @@ class CommitsByDescription extends commits {
 	}
 
 	function Fetch() {
+		$params = array();
 		$sql = "
 		SELECT DISTINCT
 			commit_log.commit_date - SystemTimeAdjust()                                                                  AS commit_date_raw,
@@ -65,26 +66,28 @@ class CommitsByDescription extends commits {
 
 		$sql .= "
     FROM commit_log_ports, (SELECT * FROM commit_log CL JOIN commit_log_ports CLP on CL.id = CLP.commit_log_id WHERE " . $this->Condition;
-    
-			
+
 		if ($this->Limit) {
-			$sql .= " LIMIT " . $this->Limit;
+			$params[] = $this->Limit;
+			$sql .= ' LIMIT $' . count($params);
 		}
 		
 		if ($this->Offset) {
-			$sql .= " OFFSET " . $this->Offset;
+			$params[] = $this->Offset;
+			$sql .= ' OFFSET $' . count($params);
 		}
 
 
     $sql .= ") AS commit_log, categories, ports, element ";
 
 		if ($this->UserID) {
-				$sql .= "
+			$params[] = $this->UserID;
+			$sql .= "
 	      LEFT OUTER JOIN
 	 (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
 	    FROM watch_list JOIN watch_list_element 
 	        ON watch_list.id      = watch_list_element.watch_list_id
-	       AND watch_list.user_id = " . pg_escape_string($this->dbh, $this->UserID) . "
+	       AND watch_list.user_id = $" . count($params) . "
 	       AND watch_list.in_service		
 	  GROUP BY wle_element_id) AS TEMP
 	       ON TEMP.wle_element_id = element.id";
@@ -102,13 +105,13 @@ class CommitsByDescription extends commits {
 
 		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
 
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, $sql, $params);
 		if ($this->LocalResult) {
 			$numrows = pg_num_rows($this->LocalResult);
 			if ($this->Debug) echo "That would give us $numrows rows";
 		} else {
 			$numrows = -1;
-			syslog(LOG_ERR, 'pg_exec failed: ' . pg_last_error($this->dbh) . $sql);
+			syslog(LOG_ERR, 'pg_query_params failed: ' . pg_last_error($this->dbh) . $sql);
 		}
 
 		return $numrows;
@@ -117,13 +120,13 @@ class CommitsByDescription extends commits {
 	function GetCountCommits() {
 		$count = 0;
 		
-		$sql = "
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "
 		SELECT count(*) as count 
 		  FROM commit_log CL JOIN commit_log_ports CLP on CL.id = CLP.commit_log_id
 		 WHERE " . $this->Condition;
 
 		if ($this->Debug) echo "<pre>$sql</pre>";
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array());
 		if ($result) {
 			$myrow = pg_fetch_array($result);
 			$count = $myrow['count'];

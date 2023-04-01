@@ -845,7 +845,8 @@ JOIN element_pathname EP on E.id = EP.element_id
 				echo "<pre>$sql<pre>\n";
 			}
 
-			$result  = pg_exec($db, $sql);
+			# this may be interesting to figure out params.
+			$result  = pg_query_params($db, $sql, array());
 			if (!$result) {
 			  syslog(LOG_NOTICE, pg_last_error($db) . ': ' . $sql);
 			  die('something went terribly wrong.  Sorry.');

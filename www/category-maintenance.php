@@ -14,7 +14,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
 
 	$Title        = 'Category maintenance';
-	$CategoryName = pg_escape_string($db, $_REQUEST['category']);
+	$CategoryName = pg_escape_string($db, $_REQUEST['category'] ?? '');
 
 	$Category = new Category($db);
 	$CategoryID = $Category->FetchByName($CategoryName);

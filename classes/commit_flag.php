@@ -35,11 +35,11 @@ class CommitFlag {
 		# The "subselect" ensures the user can only delete things from their
 		# own watch list
 		#
-		$sql = "DELETE FROM " . pg_escape_string($this->dbh, $this->_TableName) . "
-		         WHERE user_id       = pg_escape_string($this->dbh, $UserID)
-		           AND commit_log_id = (SELECT id from commit_log where message_id = '" . pg_escape_string($this->dbh, $CommitLogID) . "')";
+		$sql = 'DELETE FROM ' . $this->_TableName . '
+		         WHERE user_id       = $1
+		           AND commit_log_id = (SELECT id from commit_log where message_id = $2)';
 		if ($this->_Debug) echo "<pre>$sql</pre>";
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($UserID, $CommitLogID));
 
 		# that worked and we updated exactly one row
 		if ($result) {
@@ -66,17 +66,17 @@ class CommitFlag {
 		# The subselect ensures the user can only add things to their
 		# own watch list
 		#
-		$sql = "
-INSERT INTO $this->_TableName
-SELECT $UserID as user_id, 
-	   (SELECT id from commit_log where message_id = '" . pg_escape_string($this->dbh, $CommitLogID) . "') as commit_log_id
+		$sql = '
+INSERT INTO '. $this->_TableName . '
+SELECT $1 as user_id, 
+	   (SELECT id from commit_log where message_id = $2) as commit_log_id
  WHERE not exists (
     SELECT T.user_id, T.commit_log_id
-      FROM " . pg_escape_string($this->dbh, $this->_TableName) . " T
-     WHERE T.user_id       = " . pg_escape_string($this->dbh, $UserID) . "
-       AND T.commit_log_id = (SELECT id from commit_log where message_id = '" . pg_escape_string($this->dbh, $CommitLogID) . "'))";
+      FROM ' . $this->_TableName . ' T
+     WHERE T.user_id       = $1
+       AND T.commit_log_id = (SELECT id from commit_log where message_id = $2))';
 		if ($this->_Debug) echo "<pre>$sql</pre>";
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($UserID, $CommitLogID));
 		if ($result) {
 			$return = 1;
 		} else {
@@ -94,12 +94,12 @@ SELECT $UserID as user_id,
 	}
 	
 	function Fetch($UserID) {
-		$sql = "
+		$sql = '
 		SELECT *
-		  FROM " . pg_escape_string($this->dbh, $this->_TableName) . " T
-		 WHERE T.user_id = " . pg_escape_string($this->dbh, $UserID);
+		  FROM '. $this->_TableName . ' T
+		 WHERE T.user_id = $1';
 
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, $sql, array($UserID));
 		if ($this->LocalResult) {
 			$numrows = pg_num_rows($this->LocalResult);
 		} else {

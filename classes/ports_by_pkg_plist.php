@@ -126,7 +126,7 @@ class PortsByPkgPlist extends Port {
 			if (parent::getDebug()) echo "That would give us $numrows rows";
 		} else {
 			$numrows = -1;
-			echo 'pg_exec failed: ' . "<pre>$sql</pre>";
+			echo 'pg_query_params failed: ' . "<pre>$sql</pre>";
 		}
 
 		return $numrows;

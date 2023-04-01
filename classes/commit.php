@@ -159,7 +159,8 @@ class Commit {
 	protected function FetchByIDHelper($Where) {
 		$Debug = 0;
 
-		$sql = "
+		$params = array();
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "
 SELECT CL.id as commit_log_id,
        message_id,
        commit_hash_short,
@@ -193,14 +194,15 @@ SELECT CL.id as commit_log_id,
 
     if ($Debug) echo "sql = '<pre>$sql</pre>'<br>";
 
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, $params);
+
 		return $result;
 	}
 
 	function DateNewestPort() {
 		$Debug = 0;
 
-		$sql = "
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "
 SELECT GMT_Format(CL.commit_date) as last_commit_date
   FROM commit_log_ports CLP
   JOIN commit_log       CL on CL.id = CLP.commit_log_id
@@ -208,7 +210,7 @@ SELECT GMT_Format(CL.commit_date) as last_commit_date
   LIMIT 1";
 #		echo "sql = '<pre>$sql</pre>'<br>";
 
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array());
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {

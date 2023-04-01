@@ -50,13 +50,13 @@ if ($submit) {
 		if ($result) {
 			$numrows = pg_affected_rows($result);
 			if ($numrows == 1) {
-                pg_exec($db, "COMMIT");
-                # clear the cookie so they don't get "Your user details were not found. You have been logged out. Please return to the home page."
-                freshports_CookieClear();
+				pg_exec($db, "COMMIT");
+				# clear the cookie so they don't get "Your user details were not found. You have been logged out. Please return to the home page."
+				freshports_CookieClear();
 				$deleted = 1;
 			} else {
-                pg_exec($db, "ROLLBACK");
-                $errors = 'I really tried to delete your account. I failed. Sorry.';
+				pg_exec($db, "ROLLBACK");
+				$errors = 'I really tried to delete your account. I failed. Sorry.';
 				syslog(LOG_ERR, 'attempted to delete user failed ' . $User->name . ' failed when trying to delete ' . $numrows . ' rows.');
             }
         } else {

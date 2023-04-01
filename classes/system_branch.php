@@ -23,7 +23,7 @@ class SystemBranch {
 
 #   echo "sql = '$sql'<br>";
 
-    $result = pg_exec($this->dbh, $sql);
+    $result = pg_query_params($this->dbh, $sql, array());
     if ($result) {
       $numrows = pg_num_rows($result);
         if ($numrows > 0) {

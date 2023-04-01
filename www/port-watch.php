@@ -88,8 +88,9 @@ if ($submit) {
       foreach ($ports as $key => $value) {
       	$WatchListElement->Add($User->id, $wlid, intval($value));
 
-      	# I have no idea why this works... seems to be missing the value of $sql
-         $result = pg_exec ($db, $sql);
+# Perhaps because it has no effect
+#      	# I have no idea why this works... seems to be missing the value of $sql
+#         $result = pg_exec ($db, $sql);
          ${"port_".$value} = 1;
          if (!$result) {
          	syslog(LOG_ERR, $_SERVER["PHP_SELF"] . ": could not clear watch list '$wlid' owned by '$User->id' of element '" . intval($value) . "' in " . __FILE__ . ':' . __LINE__);

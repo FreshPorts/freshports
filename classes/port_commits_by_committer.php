@@ -20,15 +20,15 @@ class PortCommitsByCommitter extends CommitsByCommitter {
 	
 	function GetCountCommits() {
 		$count = 0;
-		
-		$sql = "
+
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . '
 		SELECT count(distinct CL.id) as count 
 		  FROM commit_log CL, commit_log_ports CLP 
 		 WHERE CL.id = CLP.commit_log_id
-		   AND committer = '" . pg_escape_string($this->dbh, $this->Committer) . "'";
+		   AND committer = $1';
 
 		if ($this->Debug) echo "<pre>$sql</pre>";
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($this->Committer));
 		if ($result) {
 			$myrow = pg_fetch_array($result);
 			$count = $myrow['count'];
@@ -41,16 +41,19 @@ class PortCommitsByCommitter extends CommitsByCommitter {
 	}
 
 	function GetCountPortsTouched() {
+		#
+		# NOTE: I think this function is unused - dvl 2023-03-31
+		#
 		$count = 0;
 		
-		$sql = "
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . '
 		SELECT count(*) as count 
 		  FROM commit_log CL, commit_log_ports CLP 
 		 WHERE CL.id = CLP.commit_log_id
-		   AND committer = '" . pg_escape_string($this->dbh, $this->Committer) . "'";
+		   AND committer = $1';
 		;
 		if ($this->Debug) echo "<pre>$sql</pre>";
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($this->Committer));
 		if ($result) {
 			$myrow = pg_fetch_array($result);
 			$count = $myrow['count'];
@@ -63,7 +66,7 @@ class PortCommitsByCommitter extends CommitsByCommitter {
 	}
 
 	function Fetch($Date = null, $UserID = null) {
-		$sql = "set client_encoding = 'ISO-8859-15';
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . "
 		SELECT DISTINCT
 			CL.commit_date - SystemTimeAdjust()                                            AS commit_date_raw,
 			CL.id                                                                          AS commit_log_id,
@@ -105,15 +108,19 @@ class PortCommitsByCommitter extends CommitsByCommitter {
 		        NULL AS onwatchlist ";
 		}
 
-		$sql .= "
-    FROM commit_log_ports CLP JOIN (SELECT * FROM commit_log WHERE commit_log.committer = '" . pg_escape_string($this->dbh, $this->Committer) . "' ORDER BY commit_date DESC ";
+		$sql .= '
+    FROM commit_log_ports CLP JOIN (SELECT * FROM commit_log WHERE commit_log.committer = $1  ORDER BY commit_date DESC ';
+    
+    		$params = array($this->Committer);
     
 		if ($this->Limit) {
-			$sql .= " LIMIT " . $this->Limit;
+			$params[] = $this->Limit;
+			$sql .= ' LIMIT $' . count($params);
 		}
 		
 		if ($this->Offset) {
-			$sql .= " OFFSET " . $this->Offset;
+			$params[] = $this->Offset;
+			$sql .= ' OFFSET $' . count($params);
 		}
 
     
@@ -121,37 +128,37 @@ class PortCommitsByCommitter extends CommitsByCommitter {
           LEFT OUTER JOIN sanity_test_failures STF ON STF.commit_log_id = CLP.commit_log_id, categories C, ports P, element E ";
 
 		if ($this->UserID) {
-				$sql .= "
+				$params[] = $this->UserID;
+				$sql .= '
 	      LEFT OUTER JOIN
 	 (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
 	    FROM watch_list JOIN watch_list_element 
 	        ON watch_list.id      = watch_list_element.watch_list_id
-	       AND watch_list.user_id = " . pg_escape_string($this->dbh, $this->UserID) . "
+	       AND watch_list.user_id = $' . count($params) . '
 	       AND watch_list.in_service		
 	  GROUP BY wle_element_id) AS TEMP
-	       ON TEMP.wle_element_id = E.id";
+	       ON TEMP.wle_element_id = E.id';
 		}
 		
-		$sql .= "
+		$sql .= '
 	  WHERE CLP.port_id = P.id
 	    AND C.id        = P.category_id
 	    AND E.id        = P.element_id
-   ORDER BY 1 desc,
-			commit_log_id,
-			category,
-			port";
-			
-
+	    ORDER BY 1 desc,
+	               commit_log_id,
+	               category,
+	               port';
 
 		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
 
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, "set client_encoding = 'ISO-8859-15'", array()) or die('query failed ' . pg_last_error($this->dbh));
+		$this->LocalResult = pg_query_params($this->dbh, $sql, $params);
 		if ($this->LocalResult) {
 			$numrows = pg_num_rows($this->LocalResult);
 			if ($this->Debug) echo "That would give us $numrows rows";
 		} else {
 			$numrows = -1;
-			echo 'pg_exec failed: ' . "<pre>$sql</pre>";
+			echo 'pg_query_params failed: ' . "<pre>$sql</pre>";
 		}
 
 		return $numrows;

@@ -29,15 +29,15 @@ class SanityTestFailure {
 		$Debug = 0;
 		$id    = -1;
 
-		$sql = "
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "
 SELECT STF.id,
        STF.commit_log_id,
        STF.message
   FROM sanity_test_failures STF, commit_log CL
- WHERE CL.message_id     = '" . pg_escape_string($this->dbh, $message_id) . "'
+ WHERE CL.message_id     = $1
    AND STF.commit_log_id = CL.id";
    
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($message_id));
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
@@ -49,7 +49,7 @@ SELECT STF.id,
 				die(__CLASS__ . ':' . __FUNCTION__ . " got $numrows rows at line " . __LINE__);
 			}
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
+			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
 		}
 
 		return $id;

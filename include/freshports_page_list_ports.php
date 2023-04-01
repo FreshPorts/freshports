@@ -160,7 +160,7 @@ class freshports_page_list_ports extends freshports_page {
 
 	function getRowCount() {
 		$numrows = -1;
-		$result = pg_exec($this->_db, $this->getSQLCount());
+		$result = pg_query_params($this->_db, $this->getSQLCount(), array());
 		if ($result) {
 			$myrow = pg_fetch_array ($result);
 			$numrows = $myrow[0];
@@ -257,7 +257,7 @@ SELECT gmt_format(max(CL.date_added)) as last_modified " . $this->_FROM_CLAUSE()
 
 #		echo '<pre>' . $sql . '</pre>';
 
-		$result = pg_exec($this->_db, $sql);
+		$result = pg_query_params($this->_db, $sql, array());
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			#
@@ -271,11 +271,11 @@ SELECT gmt_format(max(CL.date_added)) as last_modified " . $this->_FROM_CLAUSE()
 
 			if ($numrows != 1 || $last_modified == '') {
 				$sql = 'select gmt_format(LatestCommitDatePorts()) as last_modified';
-				$result = pg_exec($this->_db, $sql);
+				$result = pg_query_params($this->_db, $sql, array());
 				if (!$result) {
 					# if the above failed, give them the current date time
 					$sql = 'select GMT_Format(CURRENT_TIMESTAMP) as last_modified';
-					$result = pg_exec($this->_db, $sql);
+					$result = pg_query_params($this->_db, $sql, array());
 					if (!$result) {
 						die('could not get last_modified value: ' . __FILE__);
 					}
@@ -297,7 +297,7 @@ SELECT gmt_format(max(CL.date_added)) as last_modified " . $this->_FROM_CLAUSE()
 			echo '<pre>' . $this->getSQL() . '</pre>';
 		}
 
-		$this->_result = pg_exec($this->_db, $this->getSQL());
+		$this->_result = pg_query_params($this->_db, $this->getSQL(), array());
 		if (!$this->_result) {
 			echo pg_last_error($this->_db);
 		} else {

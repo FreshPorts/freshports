@@ -50,7 +50,7 @@ class Commit_Ports {
 	var $repo_name;
 
 	function __construct($dbh) {
-		$this->dbh	= $dbh;
+		$this->dbh = $dbh;
 	}
 
 	function PopulateValues($myrow) {
@@ -123,10 +123,11 @@ class Commit_Ports {
 			if ($numrows == 1) {
 				if ($Debug) echo "fetched by ID succeeded<br>";
 				$myrow = pg_fetch_array ($result, 0);
-#				$a = $b;
 				$this->PopulateValues($myrow);
 			}
-		}		if ($Debug) echo 'message_id is ' . $this->message_id;
+		}
+		if ($Debug) echo 'message_id is ' . $this->message_id;
+
 		return $this->message_id;
 	}
 
@@ -144,8 +145,8 @@ class Commit_Ports {
 				$this->PopulateValues($myrow);
 			}
 		}
-
 		if ($Debug) echo 'message_id is ' . $this->message_id;
+
 		return $this->message_id;
 	}
 
@@ -185,7 +186,8 @@ class Commit_Ports {
 	protected function FetchByIDHelper($Where) {
 		$Debug = 0;
 
-		$sql = "
+		$params = array();
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "
 SELECT CL.id as commit_log_id,
        message_id,
        commit_hash_short,
@@ -217,16 +219,17 @@ SELECT CL.id as commit_log_id,
  WHERE " . $Where;
 
 
-    if ($Debug) echo "sql = '<pre>$sql</pre>'<br>";
+		if ($Debug) echo "sql = '<pre>$sql</pre>'<br>";
 
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, $params);
+
 		return $result;
 	}
 
 	function DateNewestPort() {
 		$Debug = 0;
 
-		$sql = "
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "
 SELECT GMT_Format(CL.commit_date) as last_commit_date
   FROM commit_log_ports CLP
   JOIN commit_log       CL on CL.id = CLP.commit_log_id
@@ -234,7 +237,7 @@ SELECT GMT_Format(CL.commit_date) as last_commit_date
   LIMIT 1";
 #		echo "sql = '<pre>$sql</pre>'<br>";
 
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array());
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {

@@ -123,6 +123,7 @@ class CommitsByTreeLocation extends commits {
     FROM commit_log_ports, commit_log, categories, ports, element ";
 
 		if ($this->UserID) {
+			$params[] = $this->UserID;
 			$sql .= "
 	      LEFT OUTER JOIN
 	 (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
@@ -132,7 +133,6 @@ class CommitsByTreeLocation extends commits {
 	       AND watch_list.in_service		
 	  GROUP BY wle_element_id) AS TEMP
 	       ON TEMP.wle_element_id = element.id";
-			$params[] = $this->UserID;
 		}
 
 		$sql .= "
@@ -173,7 +173,7 @@ ORDER BY CL.commit_date DESC ";
 			if ($this->Debug) echo "That would give us $numrows rows";
 		} else {
 			$numrows = -1;
-			echo 'pg_exec failed: ' . "<pre>$sql</pre>";
+			echo 'pg_query_params failed: ' . "<pre>$sql</pre>";
 		}
 
 		return $numrows;
@@ -292,7 +292,7 @@ ORDER BY CL.commit_date DESC ";
 			if ($this->Debug) echo "That would give us $numrows rows";
 		} else {
 			$numrows = -1;
-			echo 'pg_exec failed: ' . "<pre>$sql</pre>";
+			echo 'pg_query_params failed: ' . "<pre>$sql</pre>";
 		}
 
 		return $numrows;

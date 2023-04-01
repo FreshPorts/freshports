@@ -22,6 +22,7 @@
 
 	echo freshports_MainTable();
 
+	# known problem: this page does not page at all - dvl 2023-04-01
 	$num           = $MaxNumberOfPortsLong;
 	$days          = $NumberOfDays;
 	$dailysummary  = 7;

@@ -51,12 +51,12 @@ class User {
 	
 
 	function Fetch($ID) {
-		$sql = "
+		$sql = '
 		SELECT *
 		  FROM users
-		 WHERE id = " . pg_escape_string($this->dbh, $ID);
+		 WHERE id = $1';
 
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, $sql, array($ID));
 		if ($this->LocalResult) {
 			$myrow = pg_fetch_array($this->LocalResult, 0);
 			$this->PopulateValues($myrow);
@@ -72,11 +72,11 @@ class User {
 
 
 	function FetchByCookie($Cookie) {
-		$sql = "SELECT users.*
+		$sql = 'SELECT users.*
 		          FROM users
-				 WHERE cookie = '" . pg_escape_string($this->dbh, $Cookie) . "'";
+				 WHERE cookie = $1';
 
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, $sql, array($Cookie));
 		if ($this->LocalResult) {
 			$numrows = pg_num_rows($this->LocalResult);
 			if ($numrows == 1) {
@@ -138,10 +138,10 @@ class User {
 	function SetWatchListAddRemove($WatchListAddRemove) {
 		
 		$sql = 'UPDATE users 
-		          set watch_list_add_remove = \'' . pg_escape_string($this->dbh, $WatchListAddRemove) . '\'
-		        WHERE id                    =   ' . $this->id;
+		          set watch_list_add_remove =  $1
+		        WHERE id                    =  $2';
 
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, $sql, array($WatchListAddRemove, $this->id));
 		if ($this->LocalResult) {
 			$numrows = pg_affected_rows($this->LocalResult);
 			$this->watch_list_add_remove = pg_escape_string($this->dbh, $WatchListAddRemove);

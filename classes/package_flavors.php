@@ -32,11 +32,11 @@ class PackageFlavors {
 
 	function FetchInitialise($PortID) {
 		# this returns package flavors with the default pacakge first
-		$sql = "SELECT * FROM PackageFlavors($PortID)";
+		$sql = 'SELECT * FROM PackageFlavors($1)';
 		
 #		echo "<pre>$sql</pre>";
 
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, $sql, array($PortID));
 		if ($this->LocalResult) {
 			$numrows = pg_num_rows($this->LocalResult);
 			if ($numrows == 1) {

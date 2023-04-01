@@ -1108,11 +1108,11 @@ if (!empty($ExtraScript)) {
 }
 
 function freshports_Category_Name($CategoryID, $dbh) {
-	$sql = "select name from categories where id = " . pg_escape_string($dbh, $CategoryID);
+	$sql = 'select name from categories where id = $1';
 
 //	echo $sql;
 
-	$result = pg_exec($dbh, $sql);
+	$result = pg_query_params($dbh, $sql, array($CategoryID));
 	if (!$result) {
 		echo "error " . pg_last_error($dbh);
 		exit;
@@ -1137,9 +1137,9 @@ function freshports_in_array($value, $array) {
 }
 
 function freshports_PortIDFromPortCategory($category, $port, $dbh) {
-	$sql = "select pathname_id('ports/" . pg_escape_string($dbh, $category) . '/' . pg_escape_string($dbh, $port) . "') as id";
+	$sql = 'select pathname_id($1) as id';
 
-	$result = pg_exec($dbh, $sql);
+	$result = pg_query_params($dbh, $sql, array('ports/' . $category. '/' . $port));
 	if (pg_num_rows($result)) {
 		$myrow = pg_fetch_array($result, 0);
 		$PortID = $myrow["id"];
@@ -1149,9 +1149,9 @@ function freshports_PortIDFromPortCategory($category, $port, $dbh) {
 }
 
 function freshports_CategoryIDFromCategory($category, $dbh) {
-   $sql = "select categories.id from categories where categories.name = '" . pg_escape_string($dbh, $category) . "'";
+   $sql = 'select categories.id from categories where categories.name = $1';
 
-   $result = pg_exec($dbh, $sql);
+   $result = pg_query_params($dbh, $sql, array($category));
    if(pg_num_rows($result)) {
       $myrow = pg_fetch_array($result, 0);
       $CategoryID = $myrow["id"];
@@ -1698,11 +1698,11 @@ function freshports_DescriptionPrint($description, $encoding_losses, $maxnumline
 }
 
 function freshports_GetNextValue($sequence, $dbh) {
-	$sql = "select nextval('" . pg_escape_string($dbh, $sequence) . "')";
+	$sql = 'select nextval($1)';
 
 #	echo "\$sql = '$sql'<br>";
 
-	$result = pg_exec($dbh, $sql);
+	$result = pg_query_params($dbh, $sql, array($sequence));
 	if ($result && pg_num_rows($result)) {
 		$row       = pg_fetch_array($result,0);
 		$NextValue = $row[0];
@@ -1776,14 +1776,14 @@ function freshports_UserSendToken($UserID, $dbh) {
 
 	GLOBAL $FreshPortsSlogan;
 
-	$sql = "select email, token 
+	$sql = 'select email, token 
 	          from users, user_confirmations
-	         where users.id = " . pg_escape_string($dbh, $UserID) . "
-	           and users.id = user_confirmations.user_id";
+	         where users.id = $1
+	           and users.id = user_confirmations.user_id';
 
 #	echo "\$sql = '$sql'<br>";
 
-	$result = pg_exec($dbh, $sql);
+	$result = pg_query_params($dbh, $sql, array($UserID));
 	if ($result && pg_num_rows($result)) {
 		$row   = pg_fetch_array($result,0);
 		$email = $row[0];
@@ -2333,18 +2333,17 @@ function freshports_IsInt($x) {
 
 function freshports_GetPortID($dbh, $category, $port, $branch) {
 	$Debug = 0;
-	$sql = "select Port_ID('" . pg_escape_string($dbh, $category) . "', '" . pg_escape_string($dbh, $port) . "')";
-
-	$sql = "select id AS port_id from ports where element_id = pathname_id('/ports";
+	$sql = 'select id AS port_id from ports where element_id = pathname_id($1)';
+	$pathname = '/ports';
 
 	if ($branch != BRANCH_HEAD) {
-	  $sql .= '/branches';
+	  $pathname .= '/branches';
 	}
 
-	$sql .= '/' . pg_escape_string($dbh, $branch) . '/' .  pg_escape_string($dbh, $category) . '/' . pg_escape_string($dbh, $port) . "')";
+	$pathname .= "/$branch/$category/$port";
 
 	if ($Debug) echo $sql . '<br>';
-	$result = pg_exec($dbh, $sql);
+	$result = pg_query_params($dbh, $sql, array($pathname));
 	if (!$result) {
 		syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ': ' . pg_last_error($this->dbh) . ' - ' . $sql);
 		die('something terrible has happened!');
@@ -2361,9 +2360,9 @@ function freshports_GetPortID($dbh, $category, $port, $branch) {
 }
 
 function freshports_GetElementID($dbh, $category, $port) {
-	$sql = "select Element_ID('" . pg_escape_string($dbh, $category) . "', '" . pg_escape_string($dbh, $port) . "')";
+	$sql = 'select Element_ID($1, $2)';
 
-	$result = pg_exec($dbh, $sql);
+	$result = pg_query_params($dbh, $sql, array($category, $port));
 	if (!$result) {
 		echo "error " . pg_last_error($dbh);
 		exit;
@@ -2375,9 +2374,9 @@ function freshports_GetElementID($dbh, $category, $port) {
 }
 
 function freshports_OnWatchList($dbh, $UserID, $ElementID) {
-	$sql = "select OnWatchList(" . pg_escape_string($dbh, $UserID) . ", " . pg_escape_string($dbh, $ElementID) . ")";
+	$sql = 'select OnWatchList($1, $2)';
 
-	$result = pg_exec($dbh, $sql);
+	$result = pg_query_params($dbh, $sql, array($UserID, $ElementID));
 	if (!$result) {
 		echo "error " . pg_last_error($dbh);
 		exit;

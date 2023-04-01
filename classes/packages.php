@@ -48,11 +48,11 @@ class Packages {
 		$Debug     = 0;
 		$TotalRows = 0;
 
-		$sql = "SELECT * FROM PortPackages($PortID)";
+		$sql = 'SELECT * FROM PortPackages($1)';
 
 		if ($Debug) echo "<pre>$sql</pre>";
 
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($PortID));
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($Debug) echo "<pre>$numrows returned from PortPackages()</pre>";
@@ -77,7 +77,7 @@ class Packages {
 				$TotalRows += $numrows;
 			}
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
+			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
 		}
 
 #		exit("Stopping because we are testing PackagesGetPackageNamesForPort()");

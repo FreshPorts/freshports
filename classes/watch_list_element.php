@@ -35,14 +35,14 @@ class WatchListElement {
 		# The "subselect" ensures the user can only delete things from their
 		# own watch list
 		#
-		$sql = "DELETE FROM watch_list_element
+		$sql = 'DELETE FROM watch_list_element
                  USING watch_list
-		         WHERE watch_list_element.element_id    = " . pg_escape_string($this->dbh, $ElementID)   . "
-		           AND watch_list.id                    = " . pg_escape_string($this->dbh, $WatchListID) . "
-		           AND watch_list.user_id               = " . pg_escape_string($this->dbh, $UserID)      . "
-		           AND watch_list_element.watch_list_id = watch_list.id";
+		         WHERE watch_list_element.element_id    = $1
+		           AND watch_list.id                    = $2
+		           AND watch_list.user_id               = $3
+		           AND watch_list_element.watch_list_id = watch_list.id';
 		if ($this->Debug) echo "<pre>$sql</pre>";
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($ElementID, $WatchListID, $UserID));
 
 		# that worked and we updated exactly one row
 		if ($result) {
@@ -65,13 +65,13 @@ class WatchListElement {
 		# own watch list
 		#
 
-		$sql = "DELETE FROM watch_list_element
+		$sql = 'DELETE FROM watch_list_element
                  USING watch_list
-		         WHERE watch_list_element.element_id    = " . pg_escape_string($this->dbh, $ElementID) . "
-		           AND watch_list.user_id               = " . pg_escape_string($this->dbh, $UserID)    . "
-		           AND watch_list_element.watch_list_id = watch_list.id";
+		         WHERE watch_list_element.element_id    = $1
+		           AND watch_list.user_id               = $2
+		           AND watch_list_element.watch_list_id = watch_list.id';
 		if ($this->Debug) echo "<pre>$sql</pre>";
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($ElementID, $UserID));
 
 		# that worked and we updated exactly one row
 		if ($result) {
@@ -92,15 +92,15 @@ class WatchListElement {
 		# The "subselect" ensures the user can only delete things from their
 		# own watch list
 		#
-		$sql = "DELETE FROM watch_list_element
+		$sql = 'DELETE FROM watch_list_element
                  USING watch_list
-		         WHERE watch_list_element.element_id    = " . pg_escape_string($this->dbh, $ElementID) . "
+		         WHERE watch_list_element.element_id    = $1
 		           AND watch_list.in_service            = TRUE
-		           AND watch_list.user_id               = " . pg_escape_string($this->dbh, $UserID)    . "
-		           AND watch_list_element.watch_list_id = watch_list.id";
+		           AND watch_list.user_id               = $2
+		           AND watch_list_element.watch_list_id = watch_list.id';
 
 		if ($this->Debug) echo "<pre>$sql</pre>";
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($ElementID, $UserID));
 
 		# that worked and we updated exactly one row
 		if ($result) {
@@ -126,19 +126,19 @@ class WatchListElement {
 		# The subselect ensures the user can only add things to their
 		# own watch list
 		#
-		$sql = "
+		$sql = '
 INSERT INTO watch_list_element 
-select " . pg_escape_string($this->dbh, $WatchListID) . ", " . pg_escape_string($this->dbh, $ElementID) . "
+select $1, $2
   from watch_list 
- where user_id = " . pg_escape_string($this->dbh, $UserID)      . "
-   and id      = " . pg_escape_string($this->dbh, $WatchListID) . "
+ where user_id = $3
+   and id      = $1
    and not exists (
     SELECT watch_list_element.watch_list_id, watch_list_element.element_id
       FROM watch_list_element
-     WHERE watch_list_element.watch_list_id = " . pg_escape_string($this->dbh, $WatchListID) . "
-       AND watch_list_element.element_id    = " . pg_escape_string($this->dbh, $ElementID)   . ')';
+     WHERE watch_list_element.watch_list_id = $1
+       AND watch_list_element.element_id    = $2)';
 		if ($this->Debug) echo "<pre>$sql</pre>";
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($WatchListID, $ElementID, $UserID));
 		if ($result) {
 			$return = 1;
 		} else {
@@ -167,20 +167,20 @@ select " . pg_escape_string($this->dbh, $WatchListID) . ", " . pg_escape_string(
 		# The subselect ensures the user can only add things to their
 		# own watch list and avoid duplicate key problems.
 		#
-		$sql = "
+		$sql = '
 INSERT INTO watch_list_element 
-select id, " . pg_escape_string($this->dbh, $ElementID) . "
+select id, $1
   from watch_list 
  where in_service = TRUE 
-   and user_id = " . pg_escape_string($this->dbh, $UserID) . "
+   and user_id = $2
    and not exists (
     SELECT *
       FROM watch_list_element
      WHERE watch_list_element.watch_list_id = watch_list.id
-       AND watch_list_element.element_id    = " . pg_escape_string($this->dbh, $ElementID) . ")";
+       AND watch_list_element.element_id    = $1';
 
 		if ($this->Debug) echo "<pre>$sql</pre>";
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($ElementID, $UserID));
 		if ($result) {
 			$return = 1;
 		} else {
@@ -197,10 +197,10 @@ select id, " . pg_escape_string($this->dbh, $ElementID) . "
 		# returned by Fetch.
 		#
 
-		$this->watch_list_id	= $myrow["watch_list_id"];
-		$this->element_id		= $myrow["element_id"];
+		$this->watch_list_id    = $myrow["watch_list_id"];
+		$this->element_id       = $myrow["element_id"];
 
-		$this->watch_list_count	= $myrow["watch_list_count"];
-		$this->user_id			= $myrow["user_id"];
+		$this->watch_list_count = $myrow["watch_list_count"];
+		$this->user_id          = $myrow["user_id"];
 	}
 }

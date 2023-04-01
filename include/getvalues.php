@@ -90,9 +90,9 @@ if (!empty($visitor)) {
 
 		if ($Debug) echo "we found a row there...\n<br>";
 		// record their last login
-		$sql = "update users set lastlogin = current_timestamp where id = $User->id";
+		$sql = 'update users set lastlogin = current_timestamp where id =$1';
 //		echo $sql, "<br>";
-		$result = pg_exec($db, $sql);
+		$result = pg_query_params($db, $sql, array($User->id));
 
 	}
 	if ($Debug) {

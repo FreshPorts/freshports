@@ -33,38 +33,9 @@
 <tr><td>
 <?php
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../configuration/status-config.php');
-
-echo '<table class="bordered">' . "\n";
-echo '<tr><td></td><td class="vcentered" colspan="' . count($sites) . '">sites - yeah, we can\'t do this yet from the front end</td></tr>' . "\n";
-echo '<tr><td>queues</td>';
-foreach ($sites as $site) {
-	echo '<td><b>' . $site . '</b></td>';
-}
-echo "</tr>\n";
-
-foreach ($queues as $queue => $pattern) {
-	echo '<tr><td><b>' . $queue_names[$queue] . '</b></td>';
-	foreach ($sites as $site) {
-		$command = "find $base/$site/msgs/FreeBSD/$queue/";
-		if ($pattern) {
-			$command .= " -name \"$pattern\"";
-		}
-		$command .= ' | wc -l';
-
-		# the above command will return 1 for an empty directory.
-		# so adjust appropriately
-
-		$count = exec($command) - 1;
-		echo '<td align="right">' . $count . '</td>';
-	}
-	echo "</tr>\n";
-}
-
-echo "</table>\n";
 
 $sql = "select * from GetPackageStatus()";
-$result = pg_exec($db, $sql);
+$result = pg_query_params($db, $sql, array());
 if ($result) {
 	$numrows = pg_num_rows($result);
 	if ($numrows) {
@@ -107,7 +78,7 @@ if ($result) {
 
 <?php
 $sql = "select * from LoginCounts(10)";
-$result = pg_exec($db, $sql);
+$result = pg_query_params($db, $sql, array());
 if ($result) {
 	$numrows = pg_num_rows($result);
 	if ($numrows) {

@@ -222,7 +222,7 @@ $sql = "
       from categories
   order by category";
 
-$result  = pg_exec($db, $sql);  
+$result  = pg_query_params($db, $sql, array());
 $numrows = pg_num_rows($result);
 $NumCategories = 0;
 for ($i = 0; $i < $numrows; $i++) {

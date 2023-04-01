@@ -70,7 +70,7 @@ if (!file_exists($filename) || filemtime($filename)+$period<time())	{
 	pg_free_result($data);
 
 	// get graph data
-	$data = pg_exec($db, $query)
+	$data = pg_query_params($db, $query, array())
 		or die("PGERR 2: " . pg_ErrorMessage());
 
 	$v = array();

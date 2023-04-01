@@ -27,21 +27,21 @@ class Element {
 		if (IsSet($id)) {
 			$this->id = $id;
 		}
-		$sql = "select *, element_pathname(id) as pathname from element where id = " . pg_escape_string($this->dbh, $this->id);
+		$sql = "select *, element_pathname(id) as pathname from element where id = $1";
 		if ($Debug) echo "sql = '$sql'<br>";
 
-        $result = pg_exec($this->dbh, $sql);
+	        $result = pg_query_params($this->dbh, $sql, array($this->id));
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
 				if ($Debug) echo "fetched by ID succeeded<br>";
 				$myrow = pg_fetch_array ($result, 0);
-				$this->id					= $myrow["id"];
-				$this->name					= $myrow["name"];
-				$this->parent_id			= $myrow["parent_id"];
-				$this->directory_file_flag	= $myrow["directory_file_flag"];
-				$this->status				= $myrow["status"];
-				$this->pathname				= $myrow["pathname"];
+				$this->id                  = $myrow["id"];
+				$this->name                = $myrow["name"];
+				$this->parent_id           = $myrow["parent_id"];
+				$this->directory_file_flag = $myrow["directory_file_flag"];
+				$this->status              = $myrow["status"];
+				$this->pathname            = $myrow["pathname"];
 			}
 		}
 
@@ -51,11 +51,11 @@ class Element {
 	
 	function FetchByName($pathname) {
 		# obtain the element based on the pathname supplied
-		$sql = "select Pathname_ID('" . pg_escape_string($this->dbh, $pathname) . "') as id";
+		$sql = "select Pathname_ID($1) as id";
 
 		if ($Debug)	echo "Element::FetchByName sql = '$sql'<br>";
 
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_paramsc($this->dbh, $sql, array($pathname));
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
@@ -68,7 +68,7 @@ class Element {
 				}
 			}
 		} else {
-			echo 'pg_exec failed: ' . $sql;
+			echo 'pg_query_params failed: ' . $sql;
 		}
 	}
 }

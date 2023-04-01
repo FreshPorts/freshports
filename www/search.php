@@ -1231,9 +1231,10 @@ Special searches:
 			if ($Debug) echo 'WHAT IS THIS?';
 
 		} /* NumFetches  != 0 */
+	} // $WeHaveToSearch
 
-			echo $HTML;
-		if ($output_format == OUTPUT_FORMAT_HTML) {
+	echo $HTML;
+	if (!$WeHaveToSearch || $output_format == OUTPUT_FORMAT_HTML) {
 
 ?>
 </table>
@@ -1242,34 +1243,31 @@ Special searches:
 
   <td class="sidebar">
   <?php
-			echo freshports_SideBar();
+		echo freshports_SideBar();
   ?>
   </td>
 
 </tr>
 </table>
 <?php
-echo freshports_ShowFooter();
+		echo freshports_ShowFooter();
 
 ?>
 <?php
-			if (!IsSet($_REQUEST['query'])) { ?>
+		if (!IsSet($_REQUEST['query'])) { ?>
 <script>
 <!--
 document.search.query.focus();
 // -->
 </script>
 <?php
-			} /* query is provided */
+		} /* query is provided */
 
-		} /* OUTPUT_FORMAT_HTML */
-
-		if ($output_format == OUTPUT_FORMAT_HTML) {
-?>¨
+?>
 </body>
 </html>
 
 <?php
-		}
+	} /* OUTPUT_FORMAT_HTML */
 
-	} // $WeHaveToSearch
+

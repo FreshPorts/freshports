@@ -223,6 +223,22 @@ table.maincontent td.textcontent {
   padding-bottom: 2em;
 }
 
+table.cellpadding0 td, table.cellpadding0 th {
+  padding: 0px;
+}
+
+table.cellpadding3 td, table.cellpadding3 th {
+  padding: 3px;
+}
+
+table.cellpadding4 td, table.cellpadding4 th {
+  padding: 4px;
+}
+
+table.cellpadding5 td, table.cellpadding5 th {
+  padding: 5px;
+}
+
 .category-list td {
   vertical-align: top;
 }

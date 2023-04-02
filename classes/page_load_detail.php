@@ -58,22 +58,35 @@ class PageLoadDetail {
 
 		$Debug = 0;
 
-		$UserID = 'NULL';
+		$UserID = null;
 		if (IsSet($User) && IsSet($User->id) && $User->id !== '') {
 			$UserID = $User->id;
 		}
 
 #		echo "\$UserID='$UserID'<br>";
-
-		$sql = '
+		$params = array($_SERVER['SCRIPT_NAME']);
+		if (!empty($UserID)) {
+			$params[] = $UserID;
+			$sql = '
 INSERT INTO page_load_detail(page_name,
                              user_id,
                              ip_address,
                              full_url,
                              rendering_time)
                      values ($1, $2, $3, $4, $5)';
-		if ($Debug) echo "CODE <pre>$sql</pre>";
-		$result = pg_query_params($this->dbh, $sql, array($_SERVER['SCRIPT_NAME'], $UserID, $_SERVER['REMOTE_ADDR'], $_SERVER["REQUEST_URI"],  $this->ElapsedTime() . ' seconds'));
+		} else {
+			$sql = '
+INSERT INTO page_load_detail(page_name,
+                             ip_address,
+                             full_url,
+                             rendering_time)
+                     values ($1, $2, $3, $4)';
+		}
+		$params[] = $_SERVER['REMOTE_ADDR'];
+		$params[] = $_SERVER['REQUEST_URI'];
+		$params[] = $this->ElapsedTime() . ' seconds';
+		if ($Debug) echo $sql;
+		$result = pg_query_params($this->dbh, $sql, $params);
 		if ($result) {
 			$return = 1;
 		} else {

@@ -167,6 +167,9 @@ select $1, $2
 		# The subselect ensures the user can only add things to their
 		# own watch list and avoid duplicate key problems.
 		#
+		# Looking at this today, I'd use an ON CONFLICT clause.
+		# dvl - 2023-04-01
+		#
 		$sql = '
 INSERT INTO watch_list_element 
 select id, $1
@@ -177,7 +180,7 @@ select id, $1
     SELECT *
       FROM watch_list_element
      WHERE watch_list_element.watch_list_id = watch_list.id
-       AND watch_list_element.element_id    = $1';
+       AND watch_list_element.element_id    = $1)';
 
 		if ($this->Debug) echo "<pre>$sql</pre>";
 		$result = pg_query_params($this->dbh, $sql, array($ElementID, $UserID));

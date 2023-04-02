@@ -50,7 +50,7 @@ class Commits {
         
 	function FetchCommitsOnADay($Date, $UserID) {
 		$params = array();
-		$sql = "
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "
         SELECT DISTINCT
             CL.commit_date - SystemTimeAdjust()                                                                 AS commit_date_raw,
             CL.id                                                                                               AS commit_log_id,
@@ -167,7 +167,7 @@ class Commits {
 
 	function FetchLimit($UserID, $Limit) {
 		$params = array();
-		$sql = "
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "
         SELECT DISTINCT
             CL.commit_date - SystemTimeAdjust()                                                                 AS commit_date_raw,
             CL.id                                                                                               AS commit_log_id,
@@ -289,7 +289,7 @@ class Commits {
 
 	function Count($Date) {
 	        $params = array($Date);
-		$sql = "
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "
         SELECT count(DISTINCT CL.id) AS count
           FROM commit_log CL JOIN commit_log_ports CLP ON CL.id = CLP.commit_log_id 
                         AND CL.commit_date BETWEEN $1::timestamptz  + SystemTimeAdjust()
@@ -340,7 +340,7 @@ class Commits {
 		# default to the current GMT time
 		$last_modified = gmdate(LAST_MODIFIED_FORMAT);
 
-		$sql = "
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "
 SELECT gmt_format(max(CL.date_added)) AS last_modified
   FROM commit_log CL, commit_log_ports CLP JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
                                            JOIN system_branch        SB ON SB.id             = CLB.branch_id

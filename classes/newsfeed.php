@@ -122,7 +122,7 @@ function newsfeed($dbh, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $F
 
 	if ($WatchListID) {
 	# this is for newfeeds based on personal watch lists
-	$sql = '
+	$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . '::WatchListID 
 	select E.name 			as port, 
 		   P.id 				as id, 
 	       C.name 		as category, 
@@ -132,7 +132,7 @@ function newsfeed($dbh, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $F
 	       E.id 			as element_id,
            to_char(CL.commit_date - SystemTimeAdjust(), \'DD Mon\')  AS commit_date,
            to_char(CL.commit_date - SystemTimeAdjust(), \'HH24:MI\') AS commit_time,
-           commit_date          AS commit_date_raw,
+           commit_date          AS news_date,
            CL.description       AS commit_description,
            CLP.port_epoch as epoch,
            CL.committer,
@@ -158,7 +158,7 @@ function newsfeed($dbh, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $F
 		# no WatchListID supplied
 		switch ($Flavor) {
 			case 'new':
-				$sql = '
+				$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . '::new
   SELECT C.name    AS category,
          E.name    AS port,
          E.status  AS status,
@@ -171,7 +171,7 @@ function newsfeed($dbh, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $F
          P.version                        AS ports_version,
          P.revision                       AS ports_revision,
          P.portepoch                      AS epoch,
-         date_part(\'epoch\', P.date_added) AS date_added,
+         P.date_added                     AS news_date,
          P.short_description              AS short_description,
          P.category_id
     FROM (SELECT P1.* 
@@ -184,7 +184,7 @@ ORDER BY P.date_added DESC, E.name, category, version';
 				break;
 
 			case 'broken':
-				$sql = '
+				$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . '::broken
   SELECT C.name    AS category,
          E.name    AS port,
          E.status  AS status,
@@ -204,7 +204,7 @@ ORDER BY P.date_added DESC, E.name, category, version';
          CLP.port_revision AS clp_revision,
          CLP.needs_refresh AS needs_refresh,
          CL.id     AS commit_log_id, 
-         CL.commit_date       AS commit_date_raw,
+         CL.commit_date       AS news_date,
          CL.message_subject,
          CL.message_id,
          CL.commit_hash_short,
@@ -229,10 +229,10 @@ ORDER BY CL.commit_date DESC, CL.id ASC, E.name, category, version';
 				break;
 
                         case 'vuln':
-                                $sql = '
+                                $sql = "-- " . __FILE__ . '::' . __FUNCTION__ . '::vuln
   SELECT C.name    AS category,
-         E.name    AS port,
-         E.status  AS status,
+         P.name    AS port,
+         P.status  AS status,
          P.forbidden,
          P.broken,
          P.deprecated,
@@ -243,6 +243,7 @@ ORDER BY CL.commit_date DESC, CL.id ASC, E.name, category, version';
          P.revision                       AS ports_revision,
          P.portepoch                      AS epoch,
          date_part(\'epoch\', P.date_added) AS date_added,
+         CL.commit_date                   AS news_date,
          P.short_description              AS short_description,
          P.category_id
          FROM ports_active            P
@@ -259,7 +260,7 @@ ORDER BY CL.commit_date;
 			        # We start with the last 200 commits added to the system, because we're likely to get 100 ports from that.
 			        # The lateral join is to get just one port from the commit_log_ports table
 			        # we order by port.id so we get the same results on each query
-				$sql = '
+				$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . '::default
  SELECT  C.name    AS category,
          E.name    AS port,
          E.status  AS status,
@@ -279,7 +280,7 @@ ORDER BY CL.commit_date;
          CLP.clp_revision,
          CLP.needs_refresh AS needs_refresh,
          CL.id     AS commit_log_id, 
-         CL.commit_date       AS commit_date_raw,
+         CL.commit_date       AS news_date,
          CL.message_subject,
          CL.message_id,
          CL.commit_hash_short,
@@ -351,14 +352,14 @@ ORDER BY CL.commit_date;
 			case 'vuln':
 				# this is a relative link
 				$link        = freshports_Port_URL($dbh, $myrow['category'], $myrow['port'], $BranchName);;
-				$date        = $myrow['date_added'];
+				$date        = $myrow['news_date'];
 				$author      = $myrow['maintainer'] ?? '';
 				$description = $myrow['short_description'];
 				break;
 				
 			default:
 				$link        = freshports_Commit_Link_Port_URL($myrow['message_id'], $myrow['category'], $myrow['port']);
-				$date        = $myrow['commit_date_raw'];
+				$date        = $myrow['news_date'];
 				$author      = $myrow['committer'] . '@FreeBSD.org (' . $myrow['committer'] . ')';
 				$description = $myrow['commit_description'];
 				break;
@@ -372,7 +373,9 @@ ORDER BY CL.commit_date;
 		//item->descriptionTruncSize = 500;
 		$item->descriptionHtmlSyndicated = false;
 	
-		$item->date   = strtotime($date);
+		if (!empty($date)) {
+			$item->date   = strtotime($date);
+                }
 		$item->source = $_SERVER['HTTP_HOST']; 
 		$item->author = $author;
 		$item->guid   = $link; 

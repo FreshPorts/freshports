@@ -237,7 +237,7 @@ class Commits {
                         from commit_log_ports clp
                         where clp.commit_log_id = cl.id)";
 		} else {
-			$parms[] = $this->BranchName;
+			$params[] = $this->BranchName;
 			$sql .= "(select *
                         from commit_log_branches clb where branch_id = (select id from system_branch where branch_name = $" . count($params) . ")
                         AND clb.commit_log_id = cl.id)";

@@ -11,7 +11,7 @@
 DEFINE('MAX_PAGE_SIZE',     500);
 DEFINE('DEFAULT_PAGE_SIZE', 100);
 
-DEFINE('NEXT_PAGE',		'Next');
+DEFINE('NEXT_PAGE', 'Next');
 
 GLOBAL $g_NOINDEX;
 
@@ -202,7 +202,7 @@ function freshports_CategoryDisplay($dbh, $category, $PageNumber = 1, $PageSize 
 		$HTML .= '
 <span class="element-details"><span>' .
 $category->description . '
-</span></span> - Number of ports in this category' . ($Branch == BRANCH_HEAD ? '' : ' with commits on branch ' . pg_escape_string($dbh, $Branch)) . ': ' . $PortCount . '
+</span></span> - Number of ports in this category' . ($Branch == BRANCH_HEAD ? '' : ' (with commits on branch <b>' . htmlentities($Branch)) . '</b>): ' . $PortCount . '
 
 <p>
 	Ports marked with a <sup>*</sup> actually reside within another category but

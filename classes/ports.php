@@ -495,7 +495,8 @@ ON TEMP.wle_element_id = ports.element_id';
 	function FetchByCategoryInitialise($CategoryName, $UserID = 0, $PageSize = 0, $PageNo = 0, $Branch = BRANCH_HEAD) {
 		# fetch all ports based on category
 		# e.g. id for net
-		
+
+		$params = array();		
 		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n";
 		if ($UserID) {
 			$sql .= "SELECT PE.*,
@@ -597,15 +598,18 @@ SELECT P.*, element.name    as port
    ON (P.element_id     = element.id
    AND element.status   = 'A') JOIN element_pathname EP ON P.element_id = EP.element_id AND EP.pathname like $2";
    
-   	$params = array($CategoryName, '/ports/');
+	   	$params[] = $CategoryName;
 
-	if ($Branch != BRANCH_HEAD) {
-		$sql .= 'branches/';
-		# php arrays are zero-based
-		$params[1] .= 'branches/';
-	}
+		# create a pathname to compare against   	
+	   	$param_pathname = '/ports/';
 
-	$params[1] .= $Branch . '/%';
+		if ($Branch != BRANCH_HEAD) {
+			$param_pathname .= 'branches/';
+			# php arrays are zero-based
+		}
+
+		$param_pathname .= $Branch . '/%';
+		$params[] = $param_pathname;
 
 		if ($UserID) {
 			$sql .= ") AS PE
@@ -618,18 +622,20 @@ LEFT OUTER JOIN
      AND watch_list.in_service
  GROUP BY wle_element_id) AS TEMP
   ON TEMP.wle_element_id = PE.element_id";
+
   			$params[] = $UserID;
 	    	}
   		
 		$sql .= " ORDER by port ";
 		
-#echo "\$PageSize='$PageSize'\n";
+#		echo "\$PageSize='$PageSize'\n";
+
 		if ($PageSize) {
-			$sql .= ' LIMIT $' . (count($params) + 1);
 			$params[] =  $PageSize;
+			$sql .= ' LIMIT $' . count($params);
 			if ($PageNo) {
-				$sql .= ' OFFSET $' . (count($params) + 1);
 				$params[] = ($PageNo - 1 ) * $PageSize;
+				$sql .= ' OFFSET $' . count($params);
 			}
 		}
 

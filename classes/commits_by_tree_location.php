@@ -34,7 +34,7 @@ class CommitsByTreeLocation extends commits {
 	function GetCountPortCommits() {
 		$count = 0;
 
-		$sql = "
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "
 			SELECT count(DISTINCT CL.id) AS    count
 			  FROM element_pathname EP, commit_log_ports_elements CLPE, commit_log CL
 			 WHERE $this->TreePathCondition
@@ -57,7 +57,7 @@ class CommitsByTreeLocation extends commits {
 	function GetCountCommits() {
 		$count = 0;
 
-		$sql = "
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ ."
 			SELECT count(DISTINCT CL.id) AS                 count
 			  FROM element_pathname EP, commit_log_elements CLE, commit_log CL
 			 WHERE $this->TreePathCondition
@@ -79,7 +79,7 @@ class CommitsByTreeLocation extends commits {
 
 	function FetchPortCommits() {
 		$params = array();
-		$sql = "
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ ."
 	 SELECT commit_log.commit_date - SystemTimeAdjust()                                                                         AS commit_date_raw,
 			commit_log.id                                                                                               AS commit_log_id,
 			commit_log.encoding_losses                                                                                  AS encoding_losses,
@@ -183,7 +183,7 @@ ORDER BY CL.commit_date DESC ";
 	# they are present to be compatible with the parent class
 	function Fetch($date = null, $UserID = null) {
 		$params = array();
-		$sql = "
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "
 		SELECT DISTINCT
 			CL.commit_date - SystemTimeAdjust()                                                                 AS commit_date_raw,
 			CL.id                                                                                               AS commit_log_id,

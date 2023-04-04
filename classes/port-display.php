@@ -1307,18 +1307,35 @@ class port_display {
 					$HTML .= '<dt><b>No <a href="/faq.php#package" title="what is a package?">package</a> is available:</b> ' . $port->no_package . '</dt>';
 				} else {
 					if ($port->forbidden || $port->broken || $port->ignore || $port->restricted || !$port->PackageIsAvailable()) {
-						$HTML .= '<dt><b>A <a href="/faq.php#package" title="what is a package?">package</a> is not available for ports marked as:</dt><dd>Forbidden / Broken / Ignore / Restricted</b></dd>';
-					} else {
-						$HTML .= '<dt><b>To add the <a href="/faq.php#package" title="what is a package?">package</a>, run one of these commands:</b></dt>';
-						$HTML .= '<dd><ul><li><kbd class="code">pkg install ' . $port->category . '/' . $port->port . '</kbd></li>';
-						$HTML .= '<li><kbd class="code">pkg install ' . $port->package_name . '</kbd></li></ul>';
-						$HTML .= 'NOTE: If this package has multiple flavors (see below), then use one of them instead of the name specified above.';
+						$HTML .= '<dt>We doubt a <b><a href="/faq.php#package" title="what is a package?">package</a></b> is available for this port because we see it marked as as:</dt><dd>';
 
-						if ($this->Is_A_Python_Port($matches)) {
-							$HTML .= '<br>NOTE: This is a Python port. Instead of <kbd class="code">' . $port->package_name . '</kbd> listed in the above command, you can pick from the names under the <a href="#packages">Packages</a> section.';
-						}
-						$HTML .= '</dd>';
+						$Spacing = ' and ';
+						$Spacing = '';
+						$NoPackageReasons = '';
+
+						$HTML .= "<ul>\n";
+						if ($port->forbidden)  $NoPackageReasons .= "<li>Forbidden</li>$Spacing";
+						if ($port->broken)     $NoPackageReasons .= "<li>Broken</li>$Spacing";
+						if ($port->ignore)     $NoPackageReasons .= "<li>Ignore</li>$Spacing";
+						if ($port->restricted) $NoPackageReasons .= "<li>Restricted</li>$Spacing";
+						if (!$port->PackageIsAvailable()) $NoPackageReasons .= "<li>Package not available</li>$Spacing";
+#						# remove trailing ' &ndash; '
+#						$NoPackageReasons = substr($NoPackageReasons, 0, strlen($NoPackageReasons) - strlen($Spacing));
+#
+						$HTML .= $NoPackageReasons;
+#						$HTML .= '</dd>';
+						$HTML .= "</ul>\n";
+						$HTML .= 'Packages are normally not provided for ports that are marked as above.</dd>';
 					}
+					$HTML .= '<dt><b>To add the <a href="/faq.php#package" title="what is a package?">package</a>, run one of these commands:</b></dt>';
+					$HTML .= '<dd><ul><li><kbd class="code">pkg install ' . $port->category . '/' . $port->port . '</kbd></li>';
+					$HTML .= '<li><kbd class="code">pkg install ' . $port->package_name . '</kbd></li></ul>';
+					$HTML .= 'NOTE: If this package has multiple flavors (see below), then use one of them instead of the name specified above.';
+
+					if ($this->Is_A_Python_Port($matches)) {
+						$HTML .= '<br>NOTE: This is a Python port. Instead of <kbd class="code">' . $port->package_name . '</kbd> listed in the above command, you can pick from the names under the <a href="#packages">Packages</a> section.';
+					}
+					$HTML .= '</dd>';
 				}
 			}
 

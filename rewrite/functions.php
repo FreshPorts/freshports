@@ -82,16 +82,17 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	$ElementRecord = new ElementRecord($db);
 
 	# first goal, remove leading / and leading ports/
-	if (substr($pathname, 0, 1) == '/') {
-		$pathname = substr($pathname, 1);
-	}
+	$pathname = ltrim($pathname, '/');
+	if ($Debug) echo "The pathname is '$pathname'<br>";
 
 	if (preg_match('|^ports/|', $pathname)) {
 		$pathname = substr($pathname, 6);
+		if ($Debug) echo "The pathname is '$pathname'<br>";
 	}
 
 	# remove trailing /
 	$pathname = rtrim($pathname, '/');
+	if ($Debug) echo "The pathname is '$pathname'<br>";
 
 	define('PATH_NAME', $pathname);
 	if ($Debug) echo "PATH_NAME='" . FRESHPORTS_PORTS_TREE_PREFIX . PATH_NAME . "'<br>";

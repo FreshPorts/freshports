@@ -2175,7 +2175,7 @@ function freshports_ErrorMessage($Title, $ErrorMessage) {
 </tr>
 <tr>
 <td>
-  <table class="fullwidth borderless" cellpadding="0">
+  <table class="fullwidth borderless" class="cellpadding0">
   <tr class="vtop">
    <td><img src="/images/warning.gif"></td>
    <td width="100%">
@@ -2199,7 +2199,7 @@ function DisplayAnnouncements($Announcement) {
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
 
 	$HTML = '';
-	$HTML .= '<table class="fullwidth borderless" cellpadding="4">' . "\n";
+	$HTML .= '<table class="fullwidth borderless" class="cellpadding4">' . "\n";
 
 	$NumRows = $Announcement->NumRows();
 

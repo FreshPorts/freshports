@@ -105,7 +105,7 @@ if ($wlid) {
 	$rowcount = $WatchListDeletedPorts->FetchInitialise($wlid);
 	if ($rowcount) {
 		echo '<hr><p>Some of your watched ports have moved.  You are still watching the old ports.</p>';
-		echo '<table class="bordered" cellpadding="5">';
+		echo '<table class="bordered" class="cellpadding5">';
 		echo '<tr><td><b>Old Port</b></td><td><b>Replaced by</b></td></tr>';
 		for ($i = 0; $i < $rowcount; $i++) {
 			$WatchListDeletedPorts->FetchNth($i);

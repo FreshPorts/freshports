@@ -39,7 +39,7 @@ $result = pg_query_params($db, $sql, array());
 if ($result) {
 	$numrows = pg_num_rows($result);
 	if ($numrows) {
-		echo '<table class="bordered" cellpadding="5" cellspacing="3">' . "\n";
+		echo '<table class="bordered" class="cellpadding5" cellspacing="3">' . "\n";
 		echo "<caption>The package imports</caption><tr>
 		<td><b>ABI</b>
 		<td><b>package set</b></td>

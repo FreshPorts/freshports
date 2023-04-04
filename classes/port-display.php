@@ -1309,21 +1309,13 @@ class port_display {
 					if ($port->forbidden || $port->broken || $port->ignore || $port->restricted || !$port->PackageIsAvailable()) {
 						$HTML .= '<dt>We doubt a <b><a href="/faq.php#package" title="what is a package?">package</a></b> is available for this port because we see it marked as as:</dt><dd>';
 
-						$Spacing = ' and ';
-						$Spacing = '';
-						$NoPackageReasons = '';
-
 						$HTML .= "<ul>\n";
-						if ($port->forbidden)  $NoPackageReasons .= "<li>Forbidden</li>$Spacing";
-						if ($port->broken)     $NoPackageReasons .= "<li>Broken</li>$Spacing";
-						if ($port->ignore)     $NoPackageReasons .= "<li>Ignore</li>$Spacing";
-						if ($port->restricted) $NoPackageReasons .= "<li>Restricted</li>$Spacing";
-						if (!$port->PackageIsAvailable()) $NoPackageReasons .= "<li>Package not available</li>$Spacing";
-#						# remove trailing ' &ndash; '
-#						$NoPackageReasons = substr($NoPackageReasons, 0, strlen($NoPackageReasons) - strlen($Spacing));
-#
-						$HTML .= $NoPackageReasons;
-#						$HTML .= '</dd>';
+						if ($port->forbidden)  $HTML .= '<li><b>Forbidden</b></li>';
+						if ($port->broken)     $HTML .= '<li><b>Broken</b></li>';
+						if ($port->ignore)     $HTML .= '<li><b>Ignore</b></li>';
+						if ($port->restricted) $HTML .= '<li><b>Restricted</b></li>';
+						if (!$port->PackageIsAvailable()) $HTML .= '<li><b>Package not available</b></li>';
+
 						$HTML .= "</ul>\n";
 						$HTML .= 'Packages are normally not provided for ports that are marked as above.</dd>';
 					}

@@ -108,7 +108,7 @@ echo 'Current annoucements<blockquote>';
 $HTML  = '';
 $HTML .= '<form action="' . $_SERVER["PHP_SELF"] . '" method="POST">' . "\n";
 
-$HTML .= '<table cellpadding="4" class="bordered">' . "\n";
+$HTML .= '<table class="cellpadding4" class="bordered">' . "\n";
 
 $HTML .= '<tr><td><b>Announcement Text (can be HTML)</b></td><td><b>Start Date</b></td><td><b>End Date</b></td></tr>' . "\n";
 
@@ -162,7 +162,7 @@ echo "<p></blockquote></td>
 
 function MyDisplayAnnouncements($Announcement) {
         $HTML = '';
-	$HTML .= '<table cellpadding="4" class="bordered">' . "\n";
+	$HTML .= '<table class="cellpadding4" class="bordered">' . "\n";
 	$HTML .= '<tr><td><b>Announcement Text</b></td><td><b>Start Date</b></td><td><b>End Date</b></td><td><b>Edit</b></td><td><b>Delete</b</td></tr>' . "\n";
 
 	$NumRows = $Announcement->NumRows();

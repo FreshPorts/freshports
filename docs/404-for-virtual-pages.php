@@ -173,7 +173,7 @@ In brief, these tables look like this:
 
 <blockquote>
 <h3>Categories table</h3>
-<table border="1" cellspacing="0" cellpadding="3">
+<table border="1" cellspacing="0" class="cellpadding3">
 <tr><td><b>Field name</b></td><td><b>type</b></td></tr>
 <tr><td>id</td><td>int</td></tr>
 <tr><td>name</td><td>text</td></tr>
@@ -181,7 +181,7 @@ In brief, these tables look like this:
 </table>
 
 <h3>Ports table</h3>
-<table border="1" cellspacing="0" cellpadding="3">
+<table border="1" cellspacing="0" class="cellpadding3">
 <tr><td><b>Field name</b></td><td><b>type</b></td></tr>
 <tr><td>id</td><td>int</td></tr>
 <tr><td>category_id</td><td>int</td></tr>
@@ -200,7 +200,7 @@ will look similar to this:
 
 <blockquote>
 <h3>ports_category</h3>
-<table border="1" cellspacing="0" cellpadding="3">
+<table border="1" cellspacing="0" class="cellpadding3">
 <tr><td><b>Field name</b></td><td><b>type</b></td><td><b>referential integrity</b></td></tr>
 <tr><td>port_id</td><td>int</td><td>linked to ports table</td></tr>
 <tr><td>category_id</td><td>id</td><td>linked to categories table</td></tr>

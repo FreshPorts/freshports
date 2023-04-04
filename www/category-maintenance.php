@@ -63,7 +63,7 @@ if (!$IsPrimary) {
 }
 ?>
 
-<table cellpadding="5" class="bordered">
+<table class="cellpadding5" class="bordered">
 <tr><td><b>id</b></td><td><b>is_primary</b></td><td><b>element_id</b></td><td><b>name</b></td><td><b>description</b></td></tr>
 <tr><?php
 echo '<td>' . $Category->id          . '</td>';

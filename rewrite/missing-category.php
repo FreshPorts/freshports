@@ -184,7 +184,7 @@ function freshports_CategoryDisplay($dbh, $category, $PageNumber = 1, $PageSize 
 		$HTML .= freshports_MainContentTable() . '
 
 		<tr>
-		  ' . freshports_PageBannerText('Category listing - ' . $category->name . ($Branch == BRANCH_HEAD ? '' : ' on branch '. pg_escape_string($dbh, $Branch))) . '
+		  ' . freshports_PageBannerText('Category listing - ' . $category->name . ($Branch == BRANCH_HEAD ? '' : ': ports with commits on branch '. pg_escape_string($dbh, $Branch))) . '
 		</tr>
 
 	<tr><td>';

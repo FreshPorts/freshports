@@ -223,9 +223,9 @@ class Port {
 
 	function GetBranchPath($Branch) {
 		if ($Branch === BRANCH_HEAD) {
-			$path = '/ports/head';
+			$path = FRESHPORTS_PORTS_TREE_HEAD_PREFIX;
 		} else {
-			$path = '/ports/branches/' . $Branch;
+			$path = FRESHPORTS_PORTS_TREE_BRANCH_PREFIX . '/' . $Branch;
 		}
 
 		return $path;
@@ -350,7 +350,7 @@ class Port {
 
 
 		if ($this->Debug) {
-			echo "<pre>$sql</pre>";
+			echo "<pre>$sql</pre><br>";
 		}
 
 		$result = pg_query_params($this->dbh, "set client_encoding = 'ISO-8859-15'", array()) or die('query failed ' . pg_last_error($this->dbh));
@@ -506,8 +506,12 @@ ON TEMP.wle_element_id = ports.element_id';
 	}
 
 	function FetchByCategoryPortBranch($Category, $Port, $Branch, $UserID = 0) {
-		# fetch a single port based on id
-		# used by missing-port.php
+		# fetch a single port based on Category/Name on a Branch.
+		# used by new-url-parsing.php
+		# returns true if found, false otherwise
+
+		# b for boolean
+		$bResult = false;
 
 		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . "select ports.id, 
 		               ports.element_id,
@@ -640,13 +644,13 @@ ON TEMP.wle_element_id = ports.element_id';
 				}
 				$myrow = pg_fetch_array ($result);
 				$this->_PopulateValues($myrow);
-				$result = $this->id;
+				$bResult = true;
 			}
 		} else {
 			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
 		}
 
-		return $result;
+		return $bResult;
 	}
 
 	function FetchByCategoryInitialise($CategoryName, $UserID = 0, $PageSize = 0, $PageNo = 0, $Branch = BRANCH_HEAD) {
@@ -898,7 +902,7 @@ LEFT OUTER JOIN
 
 		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . 'select watch_list_count($1)';
 
-		if ($this->Debug) echo $sql;
+		if ($this->Debug) echo $sql . '<br>';
 
 		$result = pg_query_params($this->dbh, $sql, array($this->element_id));
 		if ($result) {

@@ -99,7 +99,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 
 	# let's see if this exists on the target branch
 	
-	# first, search case senstive
+	# first, search case sensitive
 	if ($Debug) echo 'doing a case sensitive search first<br>';
 	$element_id = $ElementRecord->FetchByName(FRESHPORTS_PORTS_TREE_PREFIX . PATH_NAME);
 	if ($Debug) {
@@ -125,7 +125,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 		}
 
 	}
-	
+
 	if (isset($element_id)) {
 		$IsElement = true;
 		if ($Debug) echo 'we found an element for that<br>';
@@ -264,7 +264,8 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 					$IsCategory = true;
 				}
 			}
-		}
+ 		}
+	}
 	}
 
 	if ($Debug) echo 'let us see what we will include now....<br>';

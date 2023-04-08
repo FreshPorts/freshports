@@ -555,8 +555,16 @@ function freshports_PortDisplayNew($db, $MyPort, $category, $port,  $url_args, $
 	$PageNumber = 1;
 
 	if ($Debug) {
+		echo "looking at '$category/$port on branch $Branch which ";
+		if ($HasCommitsOnBranch) {
+			echo "should have commits";
+		} else {
+			echo "should not have commits";
+		}
+		echo '<br>';
 		echo 'query parts';
 		echo '<pre>' . var_export($url_args, true) . '</pre>';
+
 	}
 
 	# allowing the code to bypass and/or not update the cache is only permitted
@@ -827,7 +835,7 @@ function freshports_PortDisplayNew($db, $MyPort, $category, $port,  $url_args, $
 		$HTMLPortPart3 .= "</TD></tr>\n</table>\n\n";
 
 		if ($HasCommitsOnBranch) {
-			# we are displaying the 
+			# we are displaying the commits from the branch
 			$HTMLPortPart3 .= DisplayPortCommits($MyPort, $PageNumber);
 		} else {
 			$HTMLPortPart3 .= "<h2>There are no commits on branch $Branch for this port</h2>";

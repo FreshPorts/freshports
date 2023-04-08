@@ -223,3 +223,7 @@ define('LOOKS_LIKE_SUBVERSON', 'freebsd.org');
 
 # When that column was added to the table, existing entries were given a value similar to fp1.9826@dev.null.freshports.org
 define('PREDATES_MESSAGE_ID',  'dev.null.freshports.org');
+
+# the head of the ports tree in the database
+define('FRESHPORTS_PORTS_TREE_HEAD_PREFIX',   '/ports/head');
+define('FRESHPORTS_PORTS_TREE_BRANCH_PREFIX', '/ports/branches');

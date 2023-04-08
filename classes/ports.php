@@ -657,6 +657,8 @@ ON TEMP.wle_element_id = ports.element_id';
 		# fetch all ports based on category
 		# e.g. id for net
 
+#		die("into " . __FUNCTION__ . 'with branch = ' . $Branch);
+
 		$params = array();		
 		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n";
 		if ($UserID) {

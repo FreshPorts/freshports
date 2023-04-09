@@ -1,12 +1,12 @@
 <?php
 
-function PathnameDiffers($Path1, $Path2) {
+function PathnameDiffers($Path1, $Path2):string {
     # if the two paths are different, we might want to redirect
     # compare the two paths, ignoring any trailing slashes
     return rtrim($Path1, '/') != rtrim($Path2, '/');
 }
 
-function RedirectIncorrectPathCase($destination, $args = array()) {
+function RedirectIncorrectPathCase($destination, $args = array()):never {
 	#
 	# this function is used to redirect when a path name is encountered which is not quite right.
 	# For example, /sysutils/Anvil will redirect to /sysutils/anvil, correcting the case
@@ -22,7 +22,7 @@ function RedirectIncorrectPathCase($destination, $args = array()) {
 	exit;
 }
 
-function freshports_Parse404URI($REQUEST_URI, $db):void {
+function freshports_Parse404URI($REQUEST_URI, $db):never {
 	# 
 	# We have a pending 404
 	# Meaning, the URI did not find a corresponding file on disk in the WWWDIR
@@ -36,9 +36,7 @@ function freshports_Parse404URI($REQUEST_URI, $db):void {
 	# We should never return from this function.
 	#
 
-	GLOBAL $User;
-
-	$Debug  = 0;
+	$Debug = 0;
 
 	# start off assuming a 404 - some non-false value	
 	$result = -1;
@@ -88,13 +86,31 @@ function freshports_Parse404URI($REQUEST_URI, $db):void {
 		parse_str($URLParts['query'], $url_args);
 	}
 
+	if ($Debug)
+	{
+		if (count($url_args)) {
+			echo 'the URI is <pre>\'' . $_SERVER['REQUEST_URI'] . "'</pre><br>\n";
+			echo 'the url args are';
+			echo '<pre>';
+			var_dump($url_args);
+			echo "</pre><br>\n";
+
+		} else {
+			echo 'There are no arguments to this URI<br>';
+		}
+	}
+
 	# If not specified, branch is HEAD.
 	if (IsSet($url_args['branch'])) {
+		if ($Debug) echo 'branch is defined within $url_args<br>';
 		# this might still be BRANCH_HEAD
 		$Branch = NormalizeBranch(htmlspecialchars($url_args['branch']));
 	} else {
+		if ($Debug) echo 'branch is not supplied within $url_args<br>';
 		$Branch = BRANCH_HEAD;
 	}
+
+	if ($Debug) echo "\$Branch ='$Branch'<br>\n";
 
 
 #	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/element_record.php');
@@ -105,7 +121,7 @@ function freshports_Parse404URI($REQUEST_URI, $db):void {
 	$pathname = ltrim($pathname, '/');
 	if ($Debug) echo "The pathname is '$pathname'<br>";
 
-	if (preg_match('|^ports/|', $pathname)) {
+	if (str_starts_with($pathname, 'ports/')) {
 		$pathname = substr($pathname, 6);
 		if ($Debug) echo "The pathname is '$pathname'<br>";
 	}
@@ -156,7 +172,7 @@ function freshports_Parse404URI($REQUEST_URI, $db):void {
 	die($msg);
 }
 
-function Try_Displaying_Category($db, $path_parts, $url_args, $Branch) {
+function Try_Displaying_Category($db, $path_parts, $url_args, $Branch):void {
 	#
 	# $db - PostgreSQL database handle
 	# path_parts - array of path. e.g. sysutils/anvil/Makefile
@@ -165,8 +181,6 @@ function Try_Displaying_Category($db, $path_parts, $url_args, $Branch) {
 	#
 	# Do not return from this function if what we find is a category
 	#
-
-	GLOBAL $User;
 
 	if (!is_array($path_parts) || count($path_parts) != 1) {
 		$msg = 'Fatal error: ' . __FILE__ . '::' . __FUNCTION__ . ' invoked with invalid parameters';
@@ -184,7 +198,7 @@ function Try_Displaying_Category($db, $path_parts, $url_args, $Branch) {
 
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-category.php');
 		# We may have to pass in page size / page number from URL
-		freshports_CategoryDisplay($db, $Category, 1, $User->page_size, $Branch);
+		freshports_CategoryDisplayNew($db, $Category, $url_args, $Branch);
 		exit;
 	}
 }
@@ -311,7 +325,7 @@ function Try_Searching_Element_Case_Insensitive($db, $path_parts, $url_args, $Br
 	}
 
 	# We found something while searching - determine the correct search terms
-	if ($Debug) echo var_dump($ElementRecord);
+	if ($Debug)  var_dump($ElementRecord);
 
 	if ($ElementRecord->IsCategory()) {
 		# XXX we should redirect, to the correct URL here

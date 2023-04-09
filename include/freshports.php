@@ -197,7 +197,7 @@ function freshports_strip_port_suffix($PortName) {
 	#
 	# but we can't link to that, so we remove the suffix
 
-	$PortName = strtok($PortName, "@:");
+	$PortName = strtok($PortName ?? '', "@:");
 
 	return $PortName;
 }

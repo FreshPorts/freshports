@@ -1195,18 +1195,48 @@ function freshports_ONToYN($Value) {
 function freshports_depends_links($dbh, $DependsList, $BranchName = BRANCH_HEAD) {
 	$Debug = 0;
 
+	if ($Debug) {
+		echo '$DependsList is <pre>';
+		var_dump($DependsList);
+		echo '</pre>';
+	}
+
 	// sometimes they have multiple spaces in the data...
-	$temp = str_replace('  ', ' ', $DependsList);
-      
+	// The trim removes any leading/trailing spaces
+	$temp = trim(preg_replace('!\s+!', ' ', $DependsList));
+
+	if (empty($temp))
+	{
+		# sometimes we get trailing spaces.
+		return '';
+	}
+
+
+	if ($Debug) {
+		echo '$temp is <pre>';
+		var_dump($temp);
+		echo '</pre>';
+	}
+
 	// split each depends up into different bits
 	$depends = explode(' ', $temp);
+	if ($Debug) {
+		echo '$depends is <pre>';
+		var_dump($depends);
+		echo '</pre>';
+	}
 	$Count = count($depends);
 	$HTML  = '';
 	foreach ($depends as $depend) {
 		// split one depends into the library and the port name (/usr/ports/<category>/<port>)
-		if ($Debug) echo "depends is $depend<br>";
+		if ($Debug) echo "depends is '$depend'<br>";
 
 		$DependsArray = explode(':', $depend);
+		if ($Debug) {
+			echo '$DependsArray is <pre>';
+			var_dump($DependsArray);
+			echo '</pre>';
+		}
 
 		// now extract the port and category from this port name
 		// it might look like: /usr/local/bin/perl5.16.3:/usr/local/PORTS-head/lang/perl5.16

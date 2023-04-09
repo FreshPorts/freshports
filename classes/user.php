@@ -5,7 +5,7 @@
 	# Copyright (c) 1998-2003 DVL Software Limited
 	#
 
-$Debug = 1;
+$Debug = 0;
 
 DEFINE('SUPER_USER', 'S');
 DEFINE('USER',       'U');

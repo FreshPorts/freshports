@@ -40,7 +40,7 @@ class PortsUnrefreshed {
 	function FetchAll() {
 		# fetch all unrefreshed ports
 		
-		$Debug = 1;
+		$Debug = 0;
 
 		$sql = "
 select ports.id         as port_id,

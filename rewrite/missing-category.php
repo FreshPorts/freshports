@@ -323,7 +323,7 @@ function freshports_CategoryDisplayNew($dbh, $category, $url_parts, $Branch = BR
 #
 	GLOBAL $User;
 
-	$Debug = 1;
+	$Debug = 0;
 
 	$PageNumber = $url_parts['page']      ?? 1;
 	$PageSize   = $url_parts['page_size'] ?? $User->page_size;

@@ -41,7 +41,7 @@ function newsfeed($dbh, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $F
 
 	$WatchListID = pg_escape_string($dbh, $WatchListID);
 	$Format      = pg_escape_string($dbh, $Format);
-	$Flavor      = pg_escape_string($dbh, $Flavor);
+	$Flavor      = pg_escape_string($dbh, $Flavor ?? '');
 
 	$PHP_SELF = $_SERVER['PHP_SELF'];
 

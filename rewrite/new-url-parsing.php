@@ -7,6 +7,10 @@ function PathnameDiffers($Path1, $Path2) {
 }
 
 function RedirectIncorrectPathCase($destination, $args = array()) {
+	#
+	# this function is used to redirect when a path name is encountered which is not quite right.
+	# For example, /sysutils/Anvil will redirect to /sysutils/anvil, correcting the case
+	#
 	header("HTTP/1.1 301 Moved Permanently");
 
 	$query = '';
@@ -15,10 +19,10 @@ function RedirectIncorrectPathCase($destination, $args = array()) {
 	}
 
 	header('Location: ' . $destination . $query);
-	return false;
+	exit;
 }
 
-function freshports_Parse404URI($REQUEST_URI, $db) {
+function freshports_Parse404URI($REQUEST_URI, $db):void {
 	# 
 	# We have a pending 404
 	# Meaning, the URI did not find a corresponding file on disk in the WWWDIR
@@ -29,11 +33,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	# * something else in the ports tree
 	# * not found
 	#
-	# If we can parse it, then do so and return a false value;
-	# otherwise, return a non-false value.
-	#
-	# false = processed, found something which matches
-	# non-false = failed, found nothing, 404
+	# We should never return from this function.
 	#
 
 	GLOBAL $User;
@@ -45,6 +45,17 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 
 	$IsCategory = false;
 	$IsElement  = false;
+
+	# Why do we care if there are commits for this port on the branch?
+	# If there are commits on the branch, that port exists on that branch.
+	# That's how a port gets onto a branch - a commit.
+	# This differs from git/subversion in which a branch is created by copying from head.
+	# In the FreshPorts database, a branch is created when something is committed to that branch.
+	# Thus, if there are no commits on the branch, the port does not exist on that branch (i.e in the database).
+	# Therefore, when displaying such a port on the branch, we need to display the port from head (which
+	# will always exist, by definition). Well, if it's not on head, it does not exist, but that's
+	# different use case.
+	#
 	$HasCommitsOnBranch = false;
 	$CategoryID = 0;
 
@@ -134,10 +145,15 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	Try_Searching_Element_Case_Insensitive($db, $path_parts, $url_args, $Branch);
     if ($Debug) echo "'$pathname' on $Branch was not an element case insenstive<br>";
 
-
 	if ($Debug) echo 'we hit rock bottom at ' . __FILE__ . '::' . __FUNCTION__;
+	# We have no options left: 404
+	$FreshPortsTitle = 'FreshPorts';
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing.php');
 
-	return true;
+	# this exit should never be hit
+	$msg = 'Fatal error: ' . __FILE__ . '::' . __FUNCTION__ . '::' . __LINE__ . ' we should never get this far in the code.';
+	syslog(LOG_ERR, $msg);
+	die($msg);
 }
 
 function Try_Displaying_Category($db, $path_parts, $url_args, $Branch) {
@@ -153,8 +169,9 @@ function Try_Displaying_Category($db, $path_parts, $url_args, $Branch) {
 	GLOBAL $User;
 
 	if (!is_array($path_parts) || count($path_parts) != 1) {
-		syslog(LOG_ERR, 'Fatal error: ' . __FILE__ . '::' . __FUNCTION__ . ' invoked with invalid parameters');
-		die(__FILE__ . '::' . __FUNCTION__ . ' invoked with invalid parameters');
+		$msg = 'Fatal error: ' . __FILE__ . '::' . __FUNCTION__ . ' invoked with invalid parameters';
+		syslog(LOG_ERR, $msg);
+		die($msg);
 	}
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
@@ -168,6 +185,7 @@ function Try_Displaying_Category($db, $path_parts, $url_args, $Branch) {
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-category.php');
 		# We may have to pass in page size / page number from URL
 		freshports_CategoryDisplay($db, $Category, 1, $User->page_size, $Branch);
+		exit;
 	}
 }
 
@@ -189,8 +207,9 @@ function Try_Displaying_Port($db, $path_parts, $url_args, $Branch) {
 	$HasCommitsOnBranch = $Branch == BRANCH_HEAD;
 
 	if (!is_array($path_parts) || count($path_parts) != 2) {
-		syslog(LOG_ERR, 'Fatal error: ' . __FILE__ . '::' . __FUNCTION__ . ' invoked with invalid parameters');
-		die(__FILE__ . '::' . __FUNCTION__ . ' invoked with invalid parameters');
+		$msg = 'Fatal error: ' . __FILE__ . '::' . __FUNCTION__ . ' invoked with invalid parameters';
+		syslog(LOG_ERR, $msg);
+		die($msg);
 	}
 
 	$category = $path_parts[0];
@@ -201,7 +220,7 @@ function Try_Displaying_Port($db, $path_parts, $url_args, $Branch) {
 	$result = $MyPort->FetchByCategoryPortBranch($category, $port, $Branch, $User->id);
 	if (!$result) {
 		if ($Debug) echo htmlentities("$category/$port") . ' was not found on branch ' . htmlentities($Branch);
-		# try on head, if found, just no commits on branch
+		# try on head, if found, it's just that this port has no commits on branch
 		$HasCommitsOnBranch = false;
 		$result = $MyPort->FetchByCategoryPortBranch($category, $port, BRANCH_HEAD, $User->id);
 		if ($Debug) {
@@ -219,7 +238,8 @@ function Try_Displaying_Port($db, $path_parts, $url_args, $Branch) {
         require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-port.php');
 		# display $result
 		# if we fetched you here, we got commits on that branch
-        $result = freshports_PortDisplayNew($db, $MyPort, $category, $port, $url_args, $Branch, $HasCommitsOnBranch);
+        freshports_PortDisplayNew($db, $MyPort, $category, $port, $url_args, $Branch, $HasCommitsOnBranch);
+		exit;
     }
 }
 
@@ -248,8 +268,9 @@ function Try_Displaying_Element($db, $path_parts, $url_args, $Branch) {
 	if ($Debug) echo "found element with element_id = '$element_id' while doing a case sensitive search<br>";
 
 	if ($element_id === -1) {
-		syslog(LOG_ERR, 'Multiple matches found on case insensitive search. This error should never happen: ' . __FILE__ . '::' . __FUNCTION__);
-		die('Multiple matches found for this search. This error should never happen.' .  __FILE__ . '::' . __FUNCTION__);
+		$msg = 'Multiple matches found on case insensitive search. This error should never happen: ' . __FILE__ . '::' . __FUNCTION__;
+		syslog(LOG_ERR, $msg);
+		die($msg);
 	}
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-non-port.php');
@@ -284,8 +305,9 @@ function Try_Searching_Element_Case_Insensitive($db, $path_parts, $url_args, $Br
 	if ($Debug) echo "found element with element_id = '$element_id' while doing a case insensitive search<br>";
 
 	if ($element_id === -1) {
-		syslog(LOG_ERR, 'Multiple matches found on case insensitive search. This error should never happen: ' . __FILE__ . '::' . __FUNCTION__);
-		die('Multiple matches found for this search. This error should never happen.' .  __FILE__ . '::' . __FUNCTION__);
+		$msg = 'Multiple matches found on case insensitive search. This error should never happen: ' . __FILE__ . '::' . __FUNCTION__;
+		syslog(LOG_ERR, $msg);
+		die($msg);
 	}
 
 	# We found something while searching - determine the correct search terms
@@ -294,7 +316,7 @@ function Try_Searching_Element_Case_Insensitive($db, $path_parts, $url_args, $Br
 	if ($ElementRecord->IsCategory()) {
 		# XXX we should redirect, to the correct URL here
 		if ($Debug) echo "We found a category<br>";
-		RedirectIncorrectPathCase('/' . $ElementRecord->name, $args = array());
+		RedirectIncorrectPathCase('/' . $ElementRecord->name . '/', $args = array());
 		# this exit should never be hit
 		exit('FATAL error: RedirectIncorrectPathCase() returned');
 	}
@@ -314,18 +336,16 @@ function Try_Searching_Element_Case_Insensitive($db, $path_parts, $url_args, $Br
 			$Port      = $new_path_parts[4];
 		}
 
-		RedirectIncorrectPathCase("/$Category/$Port", $url_args);
-		# this exit should never be hit
-		exit('FATAL error: RedirectIncorrectPathCase() returned');
+		RedirectIncorrectPathCase("/$Category/$Port/", $url_args);
 
-		$new_path_parts = array($ElementRecord->element_pathname, $path_parts[1]);
-		Try_Displaying_Port($db, $path_parts, $url_args, $Branch);
-		syslog(LOG_ERR, 'FATAL ERROR: If we just found a port, the above Try_Displaying_Port() call should never return: ' . __FILE__ . '::' . __FUNCTION__ . '::' . __LINE__);
-		die('FATAL ERROR: If we just found a port, the above Try_Displaying_Port() call should never return: ' . __FILE__ . '::' . __FUNCTION__ . '::' . __LINE__);
+		# this exit should never be hit
+		$msg = 'Fatal error: ' . __FILE__ . '::' . __FUNCTION__ . '::' . __LINE__ . ' we should never get this far in the code.';
+		syslog(LOG_ERR, $msg);
+		die($msg);
 	}
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-non-port.php');
-	freshports_NonPortDescription($db, $ElementRecord);
-	exit;
-	die('debugging mode. stopping in ' . __FILE__ . '::' . __FUNCTION__);
+	# this exit should never be hit
+	$msg = 'Fatal error: ' . __FILE__ . '::' . __FUNCTION__ . '::' . __LINE__ . ' we should never get this far in the code.';
+	syslog(LOG_ERR, $msg);
+	die($msg);
 }

@@ -131,40 +131,32 @@ switch($script) {
     case SCRIPT_API:
         require_once($_SERVER['DOCUMENT_ROOT'] . '/../api/1/api-search.php');
         echo '<br>api invoked</br>';
-/*
-Server::create('/--/api')
-    ->addGetRoute('test', function(){
-#    logger('test');
-syslog(LOG_WARNING, 'testing');
-        return 'Yay!';
-    })
-    ->addGetRoute('foo/(.*)', function($bar){
-        return $bar;
-    })
-->run();
-*/
 
-echo '  oh oh';
+		/*
+		Server::create('/--/api')
+			->addGetRoute('test', function(){
+		#    logger('test');
+		syslog(LOG_WARNING, 'testing');
+				return 'Yay!';
+			})
+			->addGetRoute('foo/(.*)', function($bar){
+				return $bar;
+			})
+		->run();
+		*/
 
-#var_dump($db);  
-Server::create('/--/api/1/search', 'freshportsAPISearch\Search')
-    ->setDebugMode(DEBUG)
-    ->collectRoutes()
-->run();
+		echo '  oh oh';
 
-echo 'done';
+		#var_dump($db);
+		Server::create('/--/api/1/search', 'freshportsAPISearch\Search')
+			->setDebugMode(DEBUG)
+			->collectRoutes()
+		->run();
+
+		echo 'done';
         break;
 
     default:
-        $not_found = freshports_Parse404URI($_SERVER['REQUEST_URI'], $db);
-
-        # if you get here, we could not find anything in the database, so let's run 
-        # the 404 code.
-        #
-        # XXX move missing.php out of DOCUMENT_ROOT
-        #echo "\$result='$result'";
-
-        if ($not_found) {
-            require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing.php');
-        }
+		# we should never return from this function.
+		freshports_Parse404URI($_SERVER['REQUEST_URI'], $db);
 }

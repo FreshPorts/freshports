@@ -21,7 +21,7 @@ GLOBAL $g_NOFOLLOW;
 
 $g_NOFOLLOW = 1;
 
-function DisplayPortCommits($port, $PageNumber) {
+function DisplayPortCommits($port, $PageNumber):string {
 	$HTML = '';
 	
 	$PortsUpdating   = new PortsUpdating($port->dbh);
@@ -79,7 +79,7 @@ function DisplayPortCommits($port, $PageNumber) {
 }
 
 #
-# if during freshports_PortDisplay(), we don't have the port fetched from the database and we need it
+# If during freshports_PortDisplay(), we do not have the port fetched from the database and we need it
 # this function gets invoked. Sometimes you have some cached items but not others
 #
 function _GetThatPort($db, $Debug, $category, $port, $branch, $UserID) {
@@ -109,6 +109,10 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 	$Debug = 0;
 
 	$MyPort = null;
+
+	# If a port has no commits on a branch, we can't display that port.
+	# In that circumstance, we display from head.
+	$ReadFromThisBranch = $HasCommitsOnBranch ? $Branch : BRANCH_HEAD;
 
 	if ($Debug) echo 'into ' . __FILE__ . ' now' . "<br>\n";
 #	if ($Debug) phpinfo();
@@ -170,7 +174,7 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 		$result = $Cache->RetrievePort($category, $port, CACHE_PORT_DETAIL, $PageNumber, $branch, CachePort::CachePartOne);
 		if ($Debug) {
 			if (!$result) {
-				if ($Debug) echo 'found something from the cache for ' . CachePort::CachePartOne . "<br>\n";
+				echo 'found something from the cache for ' . CachePort::CachePartOne . "<br>\n";
 			} else {
 				echo "found NOTHING in cache for '$category/$port'" . CachePort::CachePartOne . " on $branch<br>\n";
 			}
@@ -228,7 +232,7 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 		$result = $Cache->RetrievePort($category, $port, CACHE_PORT_DETAIL, $PageNumber, $branch, CachePort::CachePartTwo);
 		if ($Debug) {
 			if (!$result) {
-				if ($Debug) echo 'found something from the cache for ' . CachePort::CachePartTwo . "<br>\n";
+				echo 'found something from the cache for ' . CachePort::CachePartTwo . "<br>\n";
 			} else {
 				echo "found NOTHING in cache for '$category/$port'" . CachePort::CachePartTwo . " on $branch<br>\n";
 			}
@@ -242,7 +246,7 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 		#
 		# this code is similar to that around line 81 in www/commit.php
 		# we need to know the element_id of this port
-		# and the whether or not it is on the person's watch list
+		# and if it is on the person's watch list
 		#
 		$EndOfFirstLine = strpos($HTMLPortPart2, "\n");
 		# XXX debug
@@ -298,7 +302,7 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 		// commits.
 		//
 		if (empty($MyPort)) {
-			$MyPort = _GetThatPort($db, $Debug, $category, $port, $HasCommitsOnBranch ? $branch : BRANCH_HEAD, $User->id);
+			$MyPort = _GetThatPort($db, $Debug, $category, $port, $ReadFromThisBranch, $User->id);
 			if (!$MyPort) {
 				syslog(LOG_ERR, 'Fatal error: Could not fetch that port from the database on ' . __LINE__ . ' of ' . __FILE__);
 				return -1;
@@ -358,7 +362,7 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 		$result = $Cache->RetrievePort($category, $port, CACHE_PORT_DETAIL, $PageNumber, $branch, CachePort::CachePartThree);
 		if ($Debug) {
 			if (!$result) {
-				if ($Debug) echo 'found something from the cache for ' . CachePort::CachePartThree . "<br>\n";
+				echo 'found something from the cache for ' . CachePort::CachePartThree . "<br>\n";
 			} else {
 				echo "found NOTHING in cache for '$category/$port'" . CachePort::CachePartThree . " on $branch<br>\n";
 			}
@@ -381,7 +385,7 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 		// commits.
 		//
 		if (empty($MyPort)) {
-			$MyPort = _GetThatPort($db, $Debug, $category, $port, $HasCommitsOnBranch ? $branch : BRANCH_HEAD, $User->id);
+			$MyPort = _GetThatPort($db, $Debug, $category, $port, $ReadFromThisBranch, $User->id);
 			if (!$MyPort) {
 				syslog(LOG_ERR, 'Fatal error: Could not fetch that port from the database on ' . __LINE__ . ' of ' . __FILE__);
 				return -1;
@@ -435,7 +439,7 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 		$result = $CachePackages->RetrievePortPackages($category, $port);
 		if ($Debug) {
 			if (!$result) {
-				if ($Debug) echo "found something from the cache for packages<br>\n";
+				echo "found something from the cache for packages<br>\n";
 			} else {
 				echo "found NOTHING in cache for '$category/$port' packages on $branch<br>\n";
 			}
@@ -458,9 +462,10 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 		// commits.
 		//
 		if (empty($MyPort)) {
-			$MyPort = _GetThatPort($db, $Debug, $category, $port, $HasCommitsOnBranch ? $branch : BRANCH_HEAD, $User->id);
+			$MyPort = _GetThatPort($db, $Debug, $category, $port, $ReadFromThisBranch, $User->id);
 			if (!$MyPort) {
-				syslog(LOG_ERR, 'Fatal error: Could not fetch that port from the database on ' . __LINE__ . ' of ' . __FILE__);
+				$msg = 'Fatal error: Could not fetch that port from the database on ' . __LINE__ . ' of ' . __FILE__;
+				syslog(LOG_ERR, $msg);
 				return -1;
 			}
 		}
@@ -540,12 +545,16 @@ document.body.appendChild(sheet);
 	<?php
 }
 
-function freshports_PortDisplayNew($db, $MyPort, $category, $port,  $url_args, $Branch, $HasCommitsOnBranch)
+function freshports_PortDisplayNew($db, $MyPort, $category, $port, $url_args, $Branch, $HasCommitsOnBranch)
 {
 	global $User;
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
+
+	# If a port has no commits on a branch, we can't display that port.
+	# In that circumstance, we display from head.
+	$ReadFromThisBranch = $HasCommitsOnBranch ? $Branch : BRANCH_HEAD;
 
 	$Debug = 0;
 
@@ -632,7 +641,7 @@ function freshports_PortDisplayNew($db, $MyPort, $category, $port,  $url_args, $
 		// commits.
 		//
 		if (empty($MyPort)) {
-			$MyPort = _GetThatPort($db, $Debug, $category, $port, $HasCommitsOnBranch ? $Branch : BRANCH_HEAD, $User->id);
+			$MyPort = _GetThatPort($db, $Debug, $category, $port, $ReadFromThisBranch, $User->id);
 			if (!$MyPort) {
 				syslog(LOG_ERR, 'Fatal error: Could not fetch that port from the database on ' . __LINE__ . ' of ' . __FILE__);
 				return -1;
@@ -667,7 +676,7 @@ function freshports_PortDisplayNew($db, $MyPort, $category, $port,  $url_args, $
 		$result = $Cache->RetrievePort($category, $port, CACHE_PORT_DETAIL, $PageNumber, $Branch, CachePort::CachePartTwo);
 		if ($Debug) {
 			if (!$result) {
-				if ($Debug) echo 'found something from the cache for ' . CachePort::CachePartTwo . "<br>\n";
+				echo 'found something from the cache for ' . CachePort::CachePartTwo . "<br>\n";
 			} else {
 				echo "found NOTHING in cache for '$category/$port'" . CachePort::CachePartTwo . " on $Branch<br>\n";
 			}
@@ -681,22 +690,24 @@ function freshports_PortDisplayNew($db, $MyPort, $category, $port,  $url_args, $
 		#
 		# this code is similar to that around line 81 in www/commit.php
 		# we need to know the element_id of this port
-		# and the whether or not it is on the person's watch list
+		# and if it is on the person's watch list
 		#
 		$EndOfFirstLine = strpos($HTMLPortPart2, "\n");
 		# XXX debug
 #		$EndOfFirstLine = false; 
 		if ($EndOfFirstLine == false) {
-			syslog(LOG_ERR, "Internal error: I was expecting an ElementID and found nothing for $category/$port");
-			die("Internal error: I was expecting an ElementID and found nothing for $category/$port");
+			$msg = "Internal error: I was expecting an ElementID and found nothing for $category/$port";
+			syslog(LOG_ERR, $msg);
+			die($msg);
 		}
 		# extract the ElementID from the cache
 		$ElementID = intval(substr($HTMLPortPart2, 0, $EndOfFirstLine));
 		# XXX debug
 #		$ElementID = 0;
 		if ($ElementID == 0) {
-			syslog(LOG_ERR, "Extract of ElementID from cache failed.  Is cache corrupt/deprecated? port was $category/$port");
-			die("Extract of ElementID from cache failed.  Is cache corrupt/deprecated? port was $category/$port. Please send the URL and this message to the webmaster.");
+			$msg = "Extract of ElementID from cache failed.  Is cache corrupt/deprecated? port was $category/$port";
+			syslog(LOG_ERR, $msg);
+			die($msg);
 		}
 
 		if ($User->id) {
@@ -712,8 +723,9 @@ function freshports_PortDisplayNew($db, $MyPort, $category, $port,  $url_args, $
 		# XXX debug
 #		$EndOfFirstLine = false;
 		if ($EndOfFirstLine == false) {
-			syslog(LOG_ERR, "Internal error: I was expecting a short description and found nothing for $category/$port");
-			die("Internal error: I was expecting a short description and found nothing for $category/$port");
+			$msg = "Internal error: I was expecting a short description and found nothing for $category/$port";
+			syslog(LOG_ERR, $msg);
+			die($msg);
 		}
 
 		# short description should be short
@@ -721,8 +733,9 @@ function freshports_PortDisplayNew($db, $MyPort, $category, $port,  $url_args, $
 		# XXX debug
 #		unset($ShortDescription);
 		if (empty($ShortDescription) || strlen($ShortDescription) > 130) {
-			syslog(LOG_ERR, "Internal error: Extract of ShortDescription from cache failed.  Is cache corrupt/deprecated? port was $category/$port");
-			die("Internal error: Extract of ShortDescription from cache failed.  Is cache corrupt/deprecated? port was $category/$port. Please send the URL and this message to the webmaster.");
+			$msg = "Internal error: Extract of ShortDescription from cache failed.  Is cache corrupt/deprecated? port was $category/$port";
+			syslog(LOG_ERR, $msg);
+			die($msg);
 		}
 		$HTMLPortPart2 = substr($HTMLPortPart2, $EndOfFirstLine + 1);
 	} else {
@@ -737,9 +750,10 @@ function freshports_PortDisplayNew($db, $MyPort, $category, $port,  $url_args, $
 		// commits.
 		//
 		if (empty($MyPort)) {
-			$MyPort = _GetThatPort($db, $Debug, $category, $port, $HasCommitsOnBranch ? $Branch : BRANCH_HEAD, $User->id);
+			$MyPort = _GetThatPort($db, $Debug, $category, $port, $ReadFromThisBranch, $User->id);
 			if (!$MyPort) {
-				syslog(LOG_ERR, 'Fatal error: Could not fetch that port from the database on ' . __LINE__ . ' of ' . __FILE__);
+				$msg = 'Fatal error: Could not fetch that port from the database on ' . __LINE__ . ' of ' . __FILE__;
+				syslog(LOG_ERR, $msg);
 				return -1;
 			}
 		}
@@ -797,7 +811,7 @@ function freshports_PortDisplayNew($db, $MyPort, $category, $port,  $url_args, $
 		$result = $Cache->RetrievePort($category, $port, CACHE_PORT_DETAIL, $PageNumber, $Branch, CachePort::CachePartThree);
 		if ($Debug) {
 			if (!$result) {
-				if ($Debug) echo 'found something from the cache for ' . CachePort::CachePartThree . "<br>\n";
+				echo 'found something from the cache for ' . CachePort::CachePartThree . "<br>\n";
 			} else {
 				echo "found NOTHING in cache for '$category/$port'" . CachePort::CachePartThree . " on $Branch<br>\n";
 			}
@@ -820,9 +834,10 @@ function freshports_PortDisplayNew($db, $MyPort, $category, $port,  $url_args, $
 		// commits.
 		//
 		if (empty($MyPort)) {
-			$MyPort = _GetThatPort($db, $Debug, $category, $port, $HasCommitsOnBranch ? $Branch : BRANCH_HEAD, $User->id);
+			$MyPort = _GetThatPort($db, $Debug, $category, $port, $ReadFromThisBranch, $User->id);
 			if (!$MyPort) {
-				syslog(LOG_ERR, 'Fatal error: Could not fetch that port from the database on ' . __LINE__ . ' of ' . __FILE__);
+				$msg = 'Fatal error: Could not fetch that port from the database on ' . __LINE__ . ' of ' . __FILE__;
+				syslog(LOG_ERR, $msg);
 				return -1;
 			}
 		}
@@ -874,7 +889,7 @@ function freshports_PortDisplayNew($db, $MyPort, $category, $port,  $url_args, $
 		$result = $CachePackages->RetrievePortPackages($category, $port);
 		if ($Debug) {
 			if (!$result) {
-				if ($Debug) echo "found something from the cache for packages<br>\n";
+				echo "found something from the cache for packages<br>\n";
 			} else {
 				echo "found NOTHING in cache for '$category/$port' packages on $Branch<br>\n";
 			}
@@ -897,9 +912,10 @@ function freshports_PortDisplayNew($db, $MyPort, $category, $port,  $url_args, $
 		// commits.
 		//
 		if (empty($MyPort)) {
-			$MyPort = _GetThatPort($db, $Debug, $category, $port, $HasCommitsOnBranch ? $Branch : BRANCH_HEAD, $User->id);
+			$MyPort = _GetThatPort($db, $Debug, $category, $port, $ReadFromThisBranch, $User->id);
 			if (!$MyPort) {
-				syslog(LOG_ERR, 'Fatal error: Could not fetch that port from the database on ' . __LINE__ . ' of ' . __FILE__);
+				$msg = 'Fatal error: Could not fetch that port from the database on ' . __LINE__ . ' of ' . __FILE__;
+				syslog(LOG_ERR, $msg);
 				return -1;
 			}
 		}

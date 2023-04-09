@@ -83,7 +83,7 @@ if ($submit) {
         if ($myrow["emailbouncecount"] > 0) {
            $error = "Sorry, but previous email to you has bounced, so we're not sure it's going to get to you.  But we sent it out
 						anyway.  Please contact " .
-                    'the <a href="' . MAILTO . ':' . htmleentities(PROBLEM_SOLVER_EMAIL_ADDRESS . '?subject=I forgot my password') . '" rel="noopener noreferrer">webmaster</a> for help
+                    'the <a href="' . MAILTO . ':' . htmlentities(PROBLEM_SOLVER_EMAIL_ADDRESS . '?subject=I forgot my password') . '" rel="noopener noreferrer">webmaster</a> for help
                     if it doesn\'t arrive.';
            $OKToMail = 1;
            syslog(LOG_NOTICE, "Forgotten password: previous email to '" . $myrow['email'] . "' bounced");
@@ -91,7 +91,7 @@ if ($submit) {
 
         if ($myrow["email"] == "") {
           $error = 'Guess what?  You never gave us an email address.  So I guess you must ' . 
-              'contact the <a href="' . MAILTO . ':' . htmleentities(PROBLEM_SOLVER_EMAIL_ADDRESS . '?subject=I forgot my password') . '" rel="noopener noreferrer">webmaster</a> for help.';
+              'contact the <a href="' . MAILTO . ':' . htmlentities(PROBLEM_SOLVER_EMAIL_ADDRESS . '?subject=I forgot my password') . '" rel="noopener noreferrer">webmaster</a> for help.';
               $OKToMail = 0;
           syslog(LOG_NOTICE, "Forgotten password: '" . $myrow['name'] . "' never supplied an email.");
         }

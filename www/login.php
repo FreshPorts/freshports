@@ -48,7 +48,7 @@ if (IsSet($_REQUEST['LOGIN']) && IsSet($_REQUEST['UserID']) && IsSet($_REQUEST['
    $UserID    = $_REQUEST['UserID'];
    $Password  = $_REQUEST['Password'];
 
-   // test for existance of user id
+   // test for existence of user id
    $result = getLoginDetails($db, $UserID, $Password);
    if (!pg_num_rows($result)) {
       $LoginFailed = 1;

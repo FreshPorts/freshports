@@ -51,7 +51,7 @@ class User {
 	
 
 	function Fetch($ID) {
-		$sql = '
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" .'
 		SELECT *
 		  FROM users
 		 WHERE id = $1';
@@ -72,7 +72,7 @@ class User {
 
 
 	function FetchByCookie($Cookie) {
-		$sql = 'SELECT users.*
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . 'SELECT users.*
 		          FROM users
 				 WHERE cookie = $1';
 
@@ -137,7 +137,7 @@ class User {
 	
 	function SetWatchListAddRemove($WatchListAddRemove) {
 		
-		$sql = 'UPDATE users 
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" .'UPDATE users 
 		          set watch_list_add_remove =  $1
 		        WHERE id                    =  $2';
 
@@ -157,19 +157,20 @@ class User {
 	function SetLastWatchListChosen($WatchListID) {
 
 		$Debug = 0;
+		$numrows = -1;
 
-		# we should have some checks here to verify that this WatchListID belongs to this user		
-		$sql = 'UPDATE users 
+		# Update only if that watch list id belongs to that user.
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . 'UPDATE users U
 		          set last_watch_list_chosen = $1
 		        WHERE id                     = $2
-		          AND $2 IN (SELECT id FROM watch_list WHERE user_id = users.id)';
+		          AND $1 IN (SELECT id FROM watch_list WHERE user_id = $2)';
 		
 		$this->LocalResult = pg_query_params($this->dbh, $sql, array($WatchListID, $this->id));
 		if ($this->LocalResult) {
 			$numrows = pg_affected_rows($this->LocalResult);
+			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': setting ' );
 			$this->last_watch_list_chosen = pg_escape_string($this->dbh, $WatchListID);
 		} else {
-			$numrows = -1;
 			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': ' . pg_last_error($this->dbh));
 			die('something terrible has happened' . $sql);
 		}

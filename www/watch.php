@@ -36,7 +36,14 @@
 		# watch staging area against the watch list.
 		$wlid = intval(pg_escape_string($db, $_POST["wlid"]));
 		if ($Debug) echo "setting SetLastWatchListChosen => \$wlid='$wlid'";
-		$User->SetLastWatchListChosen($wlid);
+		pg_query_params($db, 'BEGIN', array());
+		$numrows = $User->SetLastWatchListChosen($wlid);
+		if ($numrows === 1) {
+			pg_query_params($db, 'COMMIT', array());
+		} else {
+			pg_query_params($db, 'ROLLBACK', array());
+			syslog(LOG_NOTICE, 'Fatal error: ' . __FILE__ . '::' . __FUNCTION__ . '::' . __LINE__ . ' setting $wlid=' . htmlentities($wlid) . ' failed - ' . pg_last_error(($db)) . htmlentities(($numrows)));
+		}
 		if ($Debug) echo "\$wlid='$wlid'";
 	} else {
 		$wlid = $User->last_watch_list_chosen;
@@ -196,7 +203,7 @@ echo "</td></tr>\n";
 
 
 if ($wlid != '') {
-	$sql = "
+	$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" ."
 
 WITH selected_ports AS (
 	select element.name 		as port, 

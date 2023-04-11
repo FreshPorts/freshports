@@ -26,6 +26,7 @@
 		header('Retry-After: 300');//300 seconds
 	}
 
+
 function DisplayNewsFeed($db, $format, $token) {
 	$Debug = 0;
 
@@ -85,7 +86,13 @@ function DisplayWatchListNewsFeeds($db, $UserID) {
 		$format = pg_escape_string($db, $_REQUEST['format']);
 	}
 
-	# validate incoming format	
+	if (empty($visitor) && empty($token)) {
+		header('HTTP/1.0 401 Unauthorized');
+		exit;  /* Make sure that code below does not get executed when we redirect. */
+	}
+
+
+# validate incoming format
 	switch (strtolower($format ?? '')) {
 		case 'rss1.0':
 		case 'rss2.0':
@@ -101,10 +108,6 @@ function DisplayWatchListNewsFeeds($db, $UserID) {
 		DisplayNewsFeed($db, $format, $token);
 	} else {
 		// if we don't know who they are, we'll make sure they login first
-		if (!$visitor) {
-			header("Location: /login.php");
-			exit;  /* Make sure that code below does not get executed when we redirect. */
-		}
 
 		$Title = "Watch List Feeds";
 		freshports_Start($Title, $Title, 'FreeBSD, index, applications, ports');

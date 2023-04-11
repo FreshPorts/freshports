@@ -266,7 +266,6 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 			}
  		}
 	}
-	}
 
 	if ($Debug) echo 'let us see what we will include now....<br>';
 

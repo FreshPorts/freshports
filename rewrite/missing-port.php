@@ -112,7 +112,7 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 
 	# If a port has no commits on a branch, we can't display that port.
 	# In that circumstance, we display from head.
-	$ReadFromThisBranch = $HasCommitsOnBranch ? $Branch : BRANCH_HEAD;
+	$ReadFromThisBranch = $HasCommitsOnBranch ? $branch : BRANCH_HEAD;
 
 	if ($Debug) echo 'into ' . __FILE__ . ' now' . "<br>\n";
 #	if ($Debug) phpinfo();

@@ -773,6 +773,9 @@ class port_display {
 		$port = $this->port;
 
 		$HTML = '';
+		if (empty($port->pkg_plist_library_matches)) {
+			return $HTML;
+		}
 
 		// pkg_plist_library_matches is a JSON array
 		$lib_depends = json_decode($port->pkg_plist_library_matches, true);

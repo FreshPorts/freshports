@@ -221,6 +221,15 @@ class Port {
 		$this->ConflictMatches();
 	}
 
+	function GetBranchPath($Branch) {
+		if ($Branch === BRANCH_HEAD) {
+			$path = FRESHPORTS_PORTS_TREE_HEAD_PREFIX;
+		} else {
+			$path = FRESHPORTS_PORTS_TREE_BRANCH_PREFIX . '/' . $Branch;
+		}
+
+		return $path;
+	}
 	function setDebug($Debug) {
 		$this->Debug = $Debug;
 	}
@@ -341,7 +350,7 @@ class Port {
 
 
 		if ($this->Debug) {
-			echo "<pre>$sql</pre>";
+			echo "<pre>$sql</pre><br>";
 		}
 
 		$result = pg_query_params($this->dbh, "set client_encoding = 'ISO-8859-15'", array()) or die('query failed ' . pg_last_error($this->dbh));
@@ -349,7 +358,9 @@ class Port {
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
-				if ($this->Debug) echo "FetchByElementID succeeded<br>";
+				if ($this->Debug) {
+					echo __FUNCTION__ . " succeeded<br>";
+				}
 				$myrow = pg_fetch_array ($result);
 				$this->_PopulateValues($myrow);
 			} else {
@@ -480,7 +491,9 @@ ON TEMP.wle_element_id = ports.element_id';
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
-				if ($this->Debug) echo "FetchByID succeeded<br>";
+				if ($this->Debug) {
+					echo __FUNCTION__ . " succeeded<br>";
+				}
 				$myrow = pg_fetch_array ($result);
 				$this->_PopulateValues($myrow);
 				$result = $this->id;
@@ -492,9 +505,159 @@ ON TEMP.wle_element_id = ports.element_id';
 		return $result;
 	}
 
+	function FetchByCategoryPortBranch($Category, $Port, $Branch, $UserID = 0) {
+		# fetch a single port based on Category/Name on a Branch.
+		# used by new-url-parsing.php
+		# returns true if found, false otherwise
+
+		# b for boolean
+		$bResult = false;
+
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . "select ports.id, 
+		               ports.element_id,
+		               element_pathname(ports.element_id)        as element_pathname,
+		               ports.category_id       as category_id,
+		               ports.short_description as short_description, 
+		               ports.long_description, 
+		               ports.version           as version,
+		               ports.revision          as revision, 
+		               ports.portepoch         as epoch, 
+		               ports.maintainer,
+		               ports.homepage, 
+		               ports.master_sites, 
+		               ports.extract_suffix, 
+		               ports.package_exists,
+		               ports.depends_build, 
+		               ports.depends_run, 
+		               ports.depends_lib, 
+		               ports.last_commit_id, 
+		               ports.found_in_index,
+		               ports.forbidden, 
+		               ports.broken, 
+		               ports.deprecated, 
+		               ports.ignore, 
+		               to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added,
+		               ports.master_port,
+		               ports.no_package,
+		               ports.package_name,
+		               ports.restricted,
+		               ports.no_cdrom,
+		               ports.expiration_date,
+		               ports.is_interactive,
+		               ports.only_for_archs,
+		               ports.not_for_archs,
+		               ports.status,
+		               ports.showconfig,
+		               ports.options_name,
+		               ports.license,
+		               ports.fetch_depends,
+		               ports.extract_depends,
+		               ports.patch_depends,
+		               ports.test_depends,
+		               ports.uses,
+		               ports.pkgmessage,
+		               ports.distinfo,
+		               ports.license_restricted,
+		               ports.manual_package_build,
+		               ports.license_perms,
+		               ports.conflicts,
+		               ports.conflicts_build,
+		               ports.conflicts_install,
+		               ports.categories as categories,
+		               element.name     as port, 
+		               categories.name  as category,
+		               ports_vulnerable.current as vulnerable_current,
+		               ports_vulnerable.past    as vulnerable_past,
+		               pkg_plist(ports.id) AS pkg_plist_library_matches,
+		               commit_log.commit_date - SystemTimeAdjust() AS last_commit_date,
+		               commit_log.svn_revision,
+		               commit_log.commit_hash_short,
+		               commit_log.message_id,
+		               R.repository,
+		               R.repo_hostname,
+		               R.path_to_repo,
+		               element_pathname(ports.element_id) as element_pathname,
+		               PortVersionOnQuarterlyBranch(ports.id, categories.name || '/' || element.name) AS quarterly_revision ";
+
+		if ($UserID) {
+			$sql .= ', 
+CASE WHEN TEMP.onwatchlist IS NULL
+THEN 0 ELSE 1
+END as onwatchlist';
+		}
+		else
+		{
+		   $sql .= ',
+		   0 as onwatchlist';
+		}
+
+
+		$params[] = $Port;
+		$sql .=' from ports join element    on element.name = $' . count($params) . ' and ports.element_id = element.id ' . "\n";
+		
+		$params[] = $Category;
+		$sql .= '
+		                    join categories on categories.id = ports.category_id and categories.name = $' . count($params) . "\n";
+		
+		# this identifies the branch we are on
+		# For now, just head.
+		$params[] = $this->GetBranchPath($Branch) . '/' . $Category  . '/' . $Port;
+		$sql .= '
+		                    join element_pathname on ports.element_id = element_pathname.element_id and element_pathname.pathname = $' . count($params) . "\n";
+		                    
+		$sql .= ' left outer join ports_vulnerable on (ports_vulnerable.port_id = ports.id)
+               left outer join commit_log on ports.last_commit_id = commit_log.id 
+               LEFT OUTER JOIN repo R ON commit_log.repo_id = R.id ';
+
+		#
+		# if the watch list id is provided (i.e. they are logged in and have a watch list id...)
+		#
+		if ($UserID) {
+			$params[] = $UserID;
+			$sql .='
+LEFT OUTER JOIN (
+SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
+    FROM watch_list JOIN watch_list_element
+        ON watch_list.id      = watch_list_element.watch_list_id
+       AND watch_list.user_id = $' . count($params) . '
+       AND watch_list.in_service
+  GROUP BY element_id
+) AS TEMP
+ON TEMP.wle_element_id = ports.element_id';
+		}
+
+#		$sql .= "\nWHERE ports.id        = $1
+#		          and ports.category_id = categories.id 
+#		          and ports.element_id  = element.id ";
+#
+		if ($this->Debug) {
+			echo "<pre>$sql</pre>";
+		}
+
+		$result = pg_query_params($this->dbh, "set client_encoding = 'ISO-8859-15'", array()) or die('query failed ' . pg_last_error($this->dbh));
+		$result = pg_query_params($this->dbh, $sql, $params);
+		if ($result) {
+			$numrows = pg_num_rows($result);
+			if ($numrows == 1) {
+				if ($this->Debug) {
+					echo __FUNCTION__ . " succeeded<br>";
+				}
+				$myrow = pg_fetch_array ($result);
+				$this->_PopulateValues($myrow);
+				$bResult = true;
+			}
+		} else {
+			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
+		}
+
+		return $bResult;
+	}
+
 	function FetchByCategoryInitialise($CategoryName, $UserID = 0, $PageSize = 0, $PageNo = 0, $Branch = BRANCH_HEAD) {
 		# fetch all ports based on category
 		# e.g. id for net
+
+#		die("into " . __FUNCTION__ . 'with branch = ' . $Branch);
 
 		$params = array();		
 		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n";
@@ -546,7 +709,7 @@ SELECT P.*, element.name    as port
         ports.only_for_archs,
         ports.not_for_archs,
         ports.status,
-        ports.showconfig,
+        ports.showconfig, 
         ports.options_name,
         ports.license,
         ports.fetch_depends,
@@ -646,10 +809,11 @@ LEFT OUTER JOIN
 		if ($this->LocalResult) {
 			$numrows = pg_num_rows($this->LocalResult);
 			if ($numrows == 1) {
-#				echo "fetched by ID succeeded<br>";
+				if ($this->Debug) {
+					echo __FUNCTION__ . " succeeded<br>";
+				}
 				$myrow = pg_fetch_array ($this->LocalResult);
 				$this->_PopulateValues($myrow);
-
 			}
 		} else {
 			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
@@ -687,7 +851,9 @@ LEFT OUTER JOIN
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
-				if ($this->Debug) echo "IsOnWatchList succeeded<br>";
+				if ($this->Debug) {
+					echo __FUNCTION__ . " succeeded<br>";
+				}
 				$result = 1;
 			}
 		} else {
@@ -738,7 +904,7 @@ LEFT OUTER JOIN
 
 		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . 'select watch_list_count($1)';
 
-		if ($this->Debug) echo $sql;
+		if ($this->Debug) echo $sql . '<br>';
 
 		$result = pg_query_params($this->dbh, $sql, array($this->element_id));
 		if ($result) {
@@ -839,7 +1005,9 @@ LEFT OUTER JOIN
 		$result = pg_query_params($this->dbh, $sql, array($this->id));
 		if ($result) {
 			$numrows = pg_num_rows($result);
-			if ($this->Debug) echo "FetchByElementID succeeded<br>";
+			if ($this->Debug) {
+				echo __FUNCTION__ . " succeeded<br>";
+			}
 			$this->conflicts_matches = pg_fetch_all($result);
 		} else {
 			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);

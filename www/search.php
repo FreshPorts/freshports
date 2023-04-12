@@ -839,7 +839,10 @@ JOIN element_pathname EP on E.id = EP.element_id
 
 			### how many rows is this?
 
-			$sql = $sqlSelectCount . $sqlFrom .  $sqlWhere . ' AND ' . $sqlUserSpecifiedCondition;
+			$sql = $sqlSelectCount . $sqlFrom .  $sqlWhere;
+			if (!empty($sqlUserSpecifiedCondition)) {
+				$sql .=  ' AND ' . $sqlUserSpecifiedCondition;
+			}
 
 			if ($Debug) {
 				echo "<pre>$sql<pre>\n";
@@ -893,8 +896,10 @@ JOIN element_pathname EP on E.id = EP.element_id
 
 				} // HTML format
 
-				$sql = $sqlSelectFields . $sqlExtraFields . $sqlFrom . $sqlWatchListFrom .
-				        $sqlWhere . ' AND ' . $sqlUserSpecifiedCondition . $sqlOrderBy . $sqlOffsetLimit;
+				$sql = $sqlSelectFields . $sqlExtraFields . $sqlFrom . $sqlWatchListFrom . $sqlWhere;
+				if (!empty($sqlUserSpecifiedCondition)) {
+					$sql .= ' AND ' . $sqlUserSpecifiedCondition . $sqlOrderBy . $sqlOffsetLimit;
+				}
 
 				if ($Debug) {
 					echo "<pre>$sql<pre>\n";

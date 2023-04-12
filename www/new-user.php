@@ -117,13 +117,13 @@ if (IsSet($submit)) {
 	if ($OK) {
 		// test for existance of user id
 
-		$sql = "select * from users where name = '" . pg_escape_string($db, strtolower($UserLogin)) . "'";
+		$sql = 'select * from users where name = $1';
 		syslog(LOG_ERR, "FreshPorts new user: $sql");
 
-		$result = pg_query($db, $sql) or die('query failed');
+		$result = pg_query_params($db, $sql, array($UserLogin)) or die('query failed');
 
 		// create user id if not found
-		if(!pg_num_rows($result)) {
+		if (!pg_num_rows($result)) {
 			syslog(LOG_ERR, "FreshPorts new user: '$UserLogin', '$email', " . $_SERVER["REMOTE_ADDR"] . ' confirmed: user id is new');
 
 			$UserID = freshports_GetNextValue($Sequence_User_ID, $db);

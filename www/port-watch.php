@@ -27,7 +27,7 @@
 	if (IsSet($_POST['submit'])) {
 		$submit = pg_escape_string($db, $_POST['submit']);
 	}
-	$visitor = $_COOKIE[USER_COOKIE_NAME];
+	$visitor = $_COOKIE[USER_COOKIE_NAME] ?? null;
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {

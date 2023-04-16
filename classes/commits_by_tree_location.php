@@ -110,7 +110,8 @@ class CommitsByTreeLocation extends commits {
 			ports.expiration_date                                                                                       AS expiration_date,
 			date_part('epoch', ports.date_added)                                                                        AS date_added,
 			ports.element_id                                                                                            AS element_id,
-			ports.short_description                                                                                     AS short_description";
+			ports.short_description                                                                                     AS short_description,
+			null                                                                                                        AS stf_message";
 		if ($this->UserID) {
 				$sql .= ",
 		        onwatchlist ";
@@ -129,7 +130,7 @@ class CommitsByTreeLocation extends commits {
 	 (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
 	    FROM watch_list JOIN watch_list_element 
 	        ON watch_list.id      = watch_list_element.watch_list_id
-	       AND watch_list.user_id = $" . count($params) + 1 . "
+	       AND watch_list.user_id = $" . count($params) . "
 	       AND watch_list.in_service		
 	  GROUP BY wle_element_id) AS TEMP
 	       ON TEMP.wle_element_id = element.id";
@@ -244,16 +245,16 @@ ORDER BY CL.commit_date DESC ";
     FROM commit_log_elements, commit_log CL LEFT OUTER JOIN repo R on  CL.repo_id = R.id, element_pathname, element ";
 
 		if ($this->UserID) {
+			$params[] = $this->UserID;
 			$sql .= "
 	      LEFT OUTER JOIN
 	 (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
 	    FROM watch_list JOIN watch_list_element 
 	        ON watch_list.id      = watch_list_element.watch_list_id
-	       AND watch_list.user_id = $" . count($params) + 1 . "
+	       AND watch_list.user_id = $" . count($params) . "
 	       AND watch_list.in_service		
 	  GROUP BY wle_element_id) AS TEMP
 	       ON TEMP.wle_element_id = element.id";
-			$params[] = $this->UserID;
 		}
 
 		$sql .= "

@@ -1996,16 +1996,16 @@ function freshports_SideBar() {
 	if (IsSet($visitor)) {
 		GLOBAL $User;
 
-		$HTML .= 'Logged in as ' . htmlentities($User->name) . "<br>";
+		$HTML .= 'Logged in as ' . htmlentities($User->name ?? '**unknown**') . "<br>";
 
-		if ($User->emailbouncecount > 0) {
+		if ($User->emailbouncecount ?? 0 > 0) {
 			$HTML .= '<img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><br>';
 			$HTML .= 'your email is <a href="/bouncing.php">bouncing</a><br>';
 			$HTML .= '<img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><br>';
 		}
 		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/customize.php', "Your Account", "Your account");
 
-		if (preg_match("/.*@FreeBSD.org/i", $User->email)) {
+		if (preg_match("/.*@FreeBSD.org/i", $User->email ?? '')) {
 			$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/committer-opt-in.php', "Committer Opt-in", "Committers can receive reports of Sanity Test Failures");
 		}
 

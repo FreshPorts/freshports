@@ -45,11 +45,11 @@ if (IsSet($submit)) {
 
 	$errors = "";
 
-	$UserLogin    = $_REQUEST["UserLogin"];
-	$email        = $_REQUEST["email"];
-	$Password1    = $_REQUEST["Password1"];
-	$Password2    = $_REQUEST["Password2"];
-	$numberofdays = $_REQUEST["numberofdays"];
+	$UserLogin    = $_REQUEST["UserLogin"]    ?? '';
+	$email        = $_REQUEST["email"]        ?? '';
+	$Password1    = $_REQUEST["Password1"]    ?? '';
+	$Password2    = $_REQUEST["Password2"]    ?? '';
+	$numberofdays = $_REQUEST["numberofdays"] ?? '';
 	
 	if ($UserLogin == '') {
 		$errors .= "Please enter a user id.<br>";

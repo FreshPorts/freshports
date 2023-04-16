@@ -60,7 +60,7 @@ class CommitsByCommitter extends commits {
 			NULL                                               AS category,
 			NULL                                               AS category_id,
 			NULL                                               AS port,
-			element_pathname(element.id)                       AS pathname,
+			element_pathname(element.id)                       AS element_pathname,
 			NULL AS version,
 			commit_log_elements.revision_name AS revision,
 			NULL AS epoch,

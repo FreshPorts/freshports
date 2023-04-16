@@ -40,6 +40,8 @@ function FreshPortsChart($title, $axislabel, $values, $labels, $urls, $file = "-
 
 $id = intval(pg_escape_string($db, $_REQUEST["id"]));
 
+if ($id == 31) die('Sorry, graph 31 is broken');
+
 // assume that we always have graph of id=0
 if (!isset($id)) $id=0;
 

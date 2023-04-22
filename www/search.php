@@ -384,9 +384,10 @@
 		if ($Debug) echo "at line " . __LINE__ . " stype='$stype'<br>";
 
 
-		if ($output_format == OUTPUT_FORMAT_DEPENDS) {
+		if ($output_format == OUTPUT_FORMAT_DEPENDS && $stype == SEARCH_FIELD_NAME) {
 		  if ($Debug) echo "output_format is OUTPUT_FORMAT_DEPENDS\n";
 		  $sqlUserSuppliedPortsList = Category_Ports_To_In_Clause($db, $query);
+		  if ($Debug) echo "sqlUserSuppliedPortsList is '$sqlUserSuppliedPortsList'\n";
 		} else {
 		  switch ($method) {
 			case 'prefix':
@@ -1050,7 +1051,7 @@ JOIN element_pathname EP on E.id = EP.element_id
   <b>Output format</b>:<br>
   <input type="radio" name="format" value="<?php echo OUTPUT_FORMAT_HTML       . '"'; if ($output_format == OUTPUT_FORMAT_HTML)       echo ' checked'; ?>> HTML<br>
   <input type="radio" name="format" value="<?php echo OUTPUT_FORMAT_PLAIN_TEXT . '"'; if ($output_format == OUTPUT_FORMAT_PLAIN_TEXT) echo ' checked'; ?>> Plain Text<br>
-  <input type="radio" name="format" value="<?php echo OUTPUT_FORMAT_DEPENDS    . '"'; if ($output_format == OUTPUT_FORMAT_DEPENDS)    echo ' checked'; ?>> Depends<br>
+  <input type="radio" name="format" value="<?php echo OUTPUT_FORMAT_DEPENDS    . '"'; if ($output_format == OUTPUT_FORMAT_DEPENDS)    echo ' checked'; ?>> Depends (only works with <b>Port Name</b>)<br>
 </td>
 <td>
 <INPUT TYPE=checkbox VALUE=1   NAME=effort> Maximum Effort

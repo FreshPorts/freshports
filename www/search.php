@@ -906,6 +906,7 @@ JOIN element_pathname EP on E.id = EP.element_id
 					echo "<pre>$sql<pre>\n";
 				}
 
+				pg_exec($db, "set client_encoding = 'ISO-8859-15'");
 				$result  = pg_exec($db, $sql);
 				if (!$result) {
 					syslog(LOG_NOTICE, pg_last_error($db) . ': ' . $sql);

@@ -44,10 +44,15 @@ class Cache {
 			$this->LastModified = filemtime($CacheFileName);
 			$CacheFileHandle = fopen($CacheFileName, 'r');
 			if ($CacheFileHandle) {
-				$this->CacheData = fread($CacheFileHandle, filesize ($CacheFileName));
-				fclose($CacheFileHandle);
-				$this->_Log('Cache: Retrieve ' . $CacheFileName);
-				
+				$filesize = filesize($CacheFileName);
+				if ($filesize) {
+					$this->CacheData = fread($CacheFileHandle, $filesize);
+					fclose($CacheFileHandle);
+					$this->_Log('Cache: Retrieve ' . $CacheFileName);
+				}  else {
+					$this->_Log('Cache: CRITICAL filesize is zero/false: ' . $CacheFileName, true);
+					$result = -3;
+				}
 			} else {
 				$this->_Log('Cache: FAILED Retrieve file open ' . $CacheFileName);
 				$result = -1;
@@ -145,10 +150,12 @@ class Cache {
 
 		return $FileName;
 	}
-	
-	function _Log($activity) {
+
+	function _Log($activity, $always_log = false) {
 		// log the above message
-		if (defined('FRESHPORTS_LOG_CACHE_ACTIVITY')) {
+		# Logging cache takes up a lot of room. It is off by default
+		# But we always log errors, for example.
+		if (defined('FRESHPORTS_LOG_CACHE_ACTIVITY') || $always_log) {
 			syslog(LOG_NOTICE, $activity);
 		}
 	}

@@ -22,11 +22,13 @@ function RedirectIncorrectPathCase($destination, $args = array()):never {
 	exit;
 }
 
-function freshports_Parse404URI($REQUEST_URI, $db):never {
-	# 
+function freshports_Parse404URI($url, $db):never {
+	#
+	# $url is something like https://dev.freshports.org/sysutils/anvil/ for example.
+	#
 	# We have a pending 404
-	# Meaning, the URI did not find a corresponding file on disk in the WWWDIR
-	# We examine the URI to see if if matches a database entry.
+	# Meaning, the URL did not find a corresponding file on disk in the WWWDIR
+	# We examine the URL to see if if matches a database entry.
 	# Depending on how many items are in the path, it could be:
 	# * a FreeBSD category
 	# * a FreeBSD port
@@ -37,6 +39,8 @@ function freshports_Parse404URI($REQUEST_URI, $db):never {
 	#
 
 	$Debug = 0;
+
+	if ($Debug) echo '<br>into ' . __FILE__ . '::' . __FUNCTION__ . "with $url<br>";
 
 	# start off assuming a 404 - some non-false value	
 	$result = -1;
@@ -58,18 +62,17 @@ function freshports_Parse404URI($REQUEST_URI, $db):never {
 	$CategoryID = 0;
 
 	if ($Debug) {
-		echo 'Debug is turned on '. __FILE__ . '::' . __FUNCTION__ . "Only 404 will be returned now because we cannot alter the headers at this time.<br>\n";
-		echo "\$REQUEST_URI='$REQUEST_URI'<br>";
+		echo '<br>Debug is turned on for:<br>'. __FILE__ . '::' . __FUNCTION__ . "<br>Only 404 will be returned now because we cannot alter the headers at this time.<br>\n";
 #		phpinfo();
 	}
 
-	$URLParts = parse_url($_SERVER['REQUEST_URI']);
+	$URLParts = parse_url($url);
 	if ($Debug)
 	{
-		echo 'the URI is <pre>\'' . $_SERVER['REQUEST_URI'] . "'</pre><br>\n";
+		echo "the URL is '" . $url . "'<br>\n";
 		echo 'the url parts are';
 		echo '<pre>';
-        var_dump($URLParts);
+		var_dump($URLParts);
 		echo "</pre><br>\n";
 	}
 
@@ -89,7 +92,7 @@ function freshports_Parse404URI($REQUEST_URI, $db):never {
 	if ($Debug)
 	{
 		if (count($url_args)) {
-			echo 'the URI is <pre>\'' . $_SERVER['REQUEST_URI'] . "'</pre><br>\n";
+			echo 'For the URL <pre>\'' . $url . "'</pre><br>\n";
 			echo 'the url args are';
 			echo '<pre>';
 			var_dump($url_args);
@@ -119,22 +122,24 @@ function freshports_Parse404URI($REQUEST_URI, $db):never {
 
 	# first goal, remove leading '/' and leading 'ports/'
 	$pathname = ltrim($pathname, '/');
-	if ($Debug) echo "The pathname is '$pathname'<br>";
+	if ($Debug) echo "After triming leading slashes, the pathname is '$pathname'<br>";
 
 	if (str_starts_with($pathname, 'ports/')) {
 		$pathname = substr($pathname, 6);
-		if ($Debug) echo "The pathname is '$pathname'<br>";
+		if ($Debug) echo "After removing 'ports/', the pathname is '$pathname'<br>";
 	}
 
 	# remove trailing /
 	$pathname = rtrim($pathname, '/');
-	if ($Debug) echo "The pathname is '$pathname'<br>";
+	if ($Debug) echo "after trimming trailing slashes: the pathname is '$pathname'<br>";
 
-	if ($Debug) echo "$pathname='" . $pathname . "'<br>";
-	
 	# split the path into separate directories along the path
 	$path_parts = explode('/', $pathname);
-	if ($Debug) echo '<pre>' . var_dump($path_parts) . '</pre>';
+	if ($Debug) {
+		echo '<pre>$path_parts:<br>';
+		var_dump($path_parts);
+		echo '</pre>';
+	}
 	
 	if (count($path_parts) == 1) {
 		if ($Debug) echo "trying that as a category<br>";
@@ -153,13 +158,13 @@ function freshports_Parse404URI($REQUEST_URI, $db):never {
 	if ($Debug) echo "trying that as an element<br>";
 	# if this is an element, this function does not return
 	Try_Displaying_Element($db, $path_parts, $url_args, $Branch);
-    if ($Debug) echo "'$pathname' on $Branch was not an alement<br>";
+	if ($Debug) echo "'$pathname' on $Branch was not an alement<br>";
 
 	# try case insensitive searching
 	if ($Debug) echo "trying a case insensitive search<br>";
 	# if a match is found, this function does not return
 	Try_Searching_Element_Case_Insensitive($db, $path_parts, $url_args, $Branch);
-    if ($Debug) echo "'$pathname' on $Branch was not an element case insenstive<br>";
+	if ($Debug) echo "'$pathname' on $Branch was not an element case insenstive<br>";
 
 	if ($Debug) echo 'we hit rock bottom at ' . __FILE__ . '::' . __FUNCTION__;
 	# We have no options left: 404
@@ -272,6 +277,10 @@ function Try_Displaying_Element($db, $path_parts, $url_args, $Branch) {
 
 	$ElementRecord = new ElementRecord($db);
 	# this is case sensitive
+	if ($Debug) {
+		echo 'into ' . __FUNCTION__;
+		var_dump($path_parts);
+	}
 	$element_id = $ElementRecord->FetchByName(FRESHPORTS_PORTS_TREE_HEAD_PREFIX . '/' . implode('/', $path_parts));
 	if (!isset($element_id)) {
 		if ($Debug) echo 'null returned from ElementRecord->FetchByName<br>';

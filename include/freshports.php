@@ -2063,7 +2063,14 @@ function freshports_SideBar() {
 
 
 	$Searches = new Searches($dbh);
-	$HTML .= $Searches->GetFormSimple('&nbsp;', IsSet($User) && $User->set_focus_search);
+	#
+	# if $visitor is set, they are logged in, so we can check for set_focus_search
+	# false, or empty string, evaluates to empty
+	# https://www.php.net/manual/en/language.types.boolean.php#language.types.boolean.casting
+	#
+	# fixes [29-Apr-2023 23:58:55 UTC] PHP Warning:  Attempt to read property "set_focus_search" on string in /usr/local/www/freshports/include/freshports.php on line 2066
+	#
+	$HTML .= $Searches->GetFormSimple('&nbsp;', IsSet($visitor) && !empty($User->set_focus_search));
 
 	if ($_SERVER["PHP_SELF"] != '/search.php') {
 		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/search.php', "more...", "Advanced Searching options");

@@ -171,10 +171,8 @@ function freshports_Parse404URI($url, $db):never {
 	$FreshPortsTitle = 'FreshPorts';
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing.php');
 
-	# this exit should never be hit
-	$msg = 'Fatal error: ' . __FILE__ . '::' . __FUNCTION__ . '::' . __LINE__ . ' we should never get this far in the code.';
-	syslog(LOG_ERR, $msg);
-	die($msg);
+	# this is the bottom, We're done. The above page create a 404.
+	exit;
 }
 
 function Try_Displaying_Category($db, $path_parts, $url_args, $Branch):void {

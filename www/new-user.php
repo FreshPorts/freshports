@@ -93,7 +93,7 @@ if (IsSet($submit)) {
 
 	if (isset($_POST["captcha"] ) )
 	{
-		if (IsSet($_SESSION["captcha"]) && IsSet($_POST["captcha") && $_SESSION["captcha"] == $_POST["captcha"] )
+		if (IsSet($_SESSION["captcha"]) && IsSet($_POST["captcha"]) && $_SESSION["captcha"] == $_POST["captcha"] )
 		{
 			//CAPTHCA is valid; proceed the message: save to database, send by e-mail ...
 			// echo 'CAPTHCA is valid; proceed the message';

@@ -212,9 +212,7 @@ class Port {
 #		$this->git_hostname         = '';
 		$this->path_to_repo         = $myrow['path_to_repo']     ?? null;
 		$this->element_pathname     = $myrow['element_pathname'] ?? null;
-		if (isset($this->quarterly_revision)) {
-			$this->quarterly_revision = $myrow['quarterly_revision'];
-		}
+		$this->quarterly_revision   = $myrow['quarterly_revision'] ?? null;
 
 		$this->last_commit_date     = isset($myrow['last_commit_date']) ? $myrow['last_commit_date'] : null;
 

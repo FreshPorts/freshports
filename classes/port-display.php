@@ -826,7 +826,14 @@ class port_display {
 
 		$HTML = '';
 
-		$MarkedAsNew = "N";
+		$MarkedAsNew = false;
+
+
+		# date_added is in 22 Jan 2021 17:34:22 format. Convert it to  a unix timestamp
+		# for comparison
+		if (IsSet($port->{'date_added'}) && strtotime($port->{'date_added'}) > (Time() - 3600 * 24 * $this->DaysMarkedAsNew)) {
+			$MarkedAsNew = true;
+		}
 
 		#####################################################
 		### START of items for SetDetailsBeforePackages() ###
@@ -898,10 +905,7 @@ class port_display {
 				$HTML .= " " . freshports_Refresh_Icon_Link() . "\n";
 			}
 
-			# date_added is in 22 Jan 2021 17:34:22 format. Convert it to  a unix timestamp
-			# for comparison
-			if (IsSet($port->{'date_added'}) && strtotime($port->{'date_added'}) > (Time() - 3600 * 24 * $this->DaysMarkedAsNew)) {
-				$MarkedAsNew = "Y";
+			if ($MarkedAsNew) {
 				$HTML .= freshports_New_Icon() . "\n";
 			}
 		}
@@ -931,8 +935,20 @@ class port_display {
 
 			$HTML.= ' ' . freshports_Fallout_Link($port->category, $port->port);
 
-			$HTML .=  ' <span class="tooltip">'. $port->quarterly_revision . '<span class="tooltiptext tooltip-top">Version of this port present on the latest quarterly branch.';
-			if ($port->IsSlavePort()) $HTML .= ' NOTE: Slave port - quarterly revision is most likely wrong.';
+			$HTML .=  ' <span class="tooltip">';
+			if (empty($port->quarterly_revision)) {
+				$HTML .= 'Port not present on quarterly';
+				if (date("Y-m-d", strtotime($port->date_added)) > FirstDateOfCurrentQuarter()) {
+					$ToolTipText = 'This is expected as this port was created during this quarter.';
+				} else {
+					$ToolTipText = 'This missing version is most likely a FreshPorts error.';
+				}
+			} else {
+				$HTML .= $port->quarterly_revision;
+				$ToolTipText = 'Version of this port present on the latest quarterly branch.';
+				if ($port->IsSlavePort()) $ToolTip = ' NOTE: Slave port - quarterly revision is most likely wrong.';
+			}
+			$HTML .= '<span class="tooltiptext tooltip-top">' . $ToolTipText;
 			$HTML .= '</span></span>';
 		}
 		if ($this->ShowEverything || $this->ShowShortDescription || $this->ShowCategory) {

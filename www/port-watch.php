@@ -150,14 +150,14 @@ $sql = "
   SELECT element.id, 
          element.name    AS port, 
          element.status,
-         CASE WHEN ports.category_id = $1 THEN '' ELSE '&nbsp;<sup>*</sup>' END AS virtual,
+         CASE WHEN P.category_id = $1 THEN '' ELSE '&nbsp;<sup>*</sup>' END AS virtual,
          PRIMARY_CATEGORY.name as primary_category
-    FROM ports, ports_categories, element, categories PRIMARY_CATEGORY
+    FROM ports_active P, ports_categories, element, categories PRIMARY_CATEGORY
    WHERE ports_categories.category_id = $1
-     AND ports_categories.port_id     = ports.id
-     AND ports.element_id             = element.id
+     AND ports_categories.port_id     = P.id
+     AND P.element_id                 = element.id
      AND element.status               = 'A'
-     AND PRIMARY_CATEGORY.id          = ports.category_id
+     AND PRIMARY_CATEGORY.id          = P.category_id
 ORDER BY port, primary_category";
 
 if ($Debug) echo "<pre>$sql</pre>\n";
@@ -213,7 +213,7 @@ if ($numrows) {
       }
 
       if ($Row == 1) {
-         $HTML .= '<td clss="vtop nowrap">';
+         $HTML .= '<td class="vtop nowrap">';
       }
 
       $HTML .= '<input type="checkbox" name="ports[]" value="'. htmlentities($rows[$i]["id"]) .'"';

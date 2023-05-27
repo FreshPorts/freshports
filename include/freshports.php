@@ -2578,3 +2578,10 @@ function checkLoadBeforeProceeding() {
     }
   }
 }
+
+function FirstDateOfCurrentQuarter() {
+	$month = date("n");
+	$yearQuarter = ($month % 4) * 4;
+
+	return date("Y-m-d", strtotime(date("Y") . '-' . $yearQuarter . '-01'));
+}

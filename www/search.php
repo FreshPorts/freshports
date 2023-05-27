@@ -1111,7 +1111,7 @@ Special searches:
 	<INPUT NAME="deleted"         TYPE="hidden" value="excludedeleted">
 	<INPUT NAME="start"           TYPE="hidden" value="1">
   	<INPUT NAME="casesensitivity" TYPE="hidden" value="caseinsensitive">
-        <INPUT TYPE="submit" VALUE="Ports I Maintain" NAME="search">
+    <INPUT NAME="search"          TYPE="submit" value="Ports I Maintain">
 	</FORM>
 
 </ul>

@@ -938,7 +938,7 @@ class port_display {
 			$HTML .=  ' <span class="tooltip">';
 			if (empty($port->quarterly_revision)) {
 				$HTML .= 'Port not present on quarterly';
-				if (date("Y-m-d", strtotime($port->date_added)) > FirstDateOfCurrentQuarter()) {
+				if (IsSet($port->date_added) && date("Y-m-d", strtotime($port->date_added)) > FirstDateOfCurrentQuarter()) {
 					$ToolTipText = 'This is expected as this port was created during this quarter.';
 				} else {
 					$ToolTipText = 'This missing version is most likely a FreshPorts error.';

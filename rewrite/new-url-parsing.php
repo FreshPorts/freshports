@@ -332,7 +332,11 @@ function Try_Searching_Element_Case_Insensitive($db, $path_parts, $url_args, $Br
 	}
 
 	# We found something while searching - determine the correct search terms
-	if ($Debug)  var_dump($ElementRecord);
+	if ($Debug)  {
+		echo '<pre>';
+		var_dump($ElementRecord);
+		echo '</pre>';
+	}
 
 	if ($ElementRecord->IsCategory()) {
 		# XXX we should redirect, to the correct URL here
@@ -363,6 +367,19 @@ function Try_Searching_Element_Case_Insensitive($db, $path_parts, $url_args, $Br
 		$msg = 'Fatal error: ' . __FILE__ . '::' . __FUNCTION__ . '::' . __LINE__ . ' we should never get this far in the code.';
 		syslog(LOG_ERR, $msg);
 		die($msg);
+	}
+
+	$PortsPrefix = '/ports/' . $Branch;
+	if ($Debug) echo 'PortsPrefix = ' . $PortsPrefix . '<br>';
+
+	# if we get here, we know it's a valid element, just the wrong case. Let's redirect to the correct page.
+	$pos = strpos($ElementRecord->element_pathname, $PortsPrefix);
+	# this should start with that string
+	if ($pos === 0) {
+		$RelocateTo = str_ireplace($PortsPrefix, '', $ElementRecord->element_pathname);
+		if ($Debug) echo 'redirecting to ' . $RelocateTo . '<br>';
+		header( 'Location: ' . $RelocateTo);
+		exit;
 	}
 
 	# this exit should never be hit

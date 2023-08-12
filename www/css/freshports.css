@@ -737,3 +737,5 @@ table.packages {
 .vbottom { vertical-align: bottom; }
 
 .nowrap { white-space: nowrap; }
+
+.cmd { color: #007a00; font-family: monospace; }

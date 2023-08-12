@@ -48,3 +48,5 @@ define('HTMLIFY_USE_URL_HIGHLIGHT',     false);
 define('HTMLIFY_USE_LIB_AUTOLINK',      true);
 
 define('HTMLIFY_PROCESS_PRS', true);
+
+define('INCLUDE_GOOGLE_GTAG', false);

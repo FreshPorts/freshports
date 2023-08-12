@@ -977,7 +977,7 @@ function freshports_HEAD_charset() {
 
 function freshports_HEAD_main_items() {
 	return '
-	<LINK REL="SHORTCUT ICON" href="/favicon.ico">
+	<link rel="SHORTCUT ICON" href="/favicon.ico">
 
 	<link rel="alternate" type="application/rss+xml" title="FreshPorts - The Place For Ports" href="https://' . $_SERVER['HTTP_HOST'] . '/backend/rss2.0.php">
 
@@ -1020,15 +1020,27 @@ function freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum=0) {
 
 	GLOBAL $FreshPortsName;
 
-	echo "<HEAD>
-	<TITLE>" . $FreshPortsName;
+	echo "<head>\n";
+	if (defined('INCLUDE_GOOGLE_GTAG') && INCLUDE_GOOGLE_GTAG) {
+                echo "<!-- Google tag (gtag.js) -->
+<script async src=\"https://www.googletagmanager.com/gtag/js?id=G-XD83WKV7CC\"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-XD83WKV7CC');
+</script>";
+	}
+	echo "
+	<title>" . $FreshPortsName;
 
 	if ($ArticleTitle) {
 		echo " -- $ArticleTitle";
 
 	}
 
-	echo "</TITLE>
+	echo "</title>
 ";
 
 	freshports_style($Phorum);
@@ -1036,7 +1048,7 @@ function freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum=0) {
 	echo freshports_HEAD_charset();
 
 	echo "
-	<META NAME=\"description\" CONTENT=\"";
+	<meta name=\"description\" content=\"";
 
 	if ($Description) {
 		echo htmlspecialchars($Description);
@@ -1045,14 +1057,14 @@ function freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum=0) {
 	}
 
 	echo "\">
-	<META NAME=\"keywords\"    CONTENT=\"" . htmlspecialchars($Keywords) . "\">
+	<meta name=\"keywords\"    content=\"" . htmlspecialchars($Keywords) . "\">
 ";
 
 	echo freshports_HEAD_main_items();
 
 	echo freshports_IndexFollow($_SERVER["PHP_SELF"]);
 
-	echo "</HEAD>\n";
+	echo "</head>\n";
 }
 
 function freshports_style($Phorum=0) {

@@ -562,13 +562,16 @@ Here are a few examples:
    <P>
 	Some ports (for example <a href="/net/">net</a>/<a href="/net/gift/">gift</a>) will have a section titled "Port Moves".
 	FreshPorts obtains information about ports from the commits to the 
-	<a href="<?php echo DEFAULT_GIT_REPO ?>">repository</a>.  However, not all
-	changes to ports occur because of commits.  A manual change to the repository,
-	often referred to as a repo-copy, can move a port from one category to another.
-	Such a change is done to ensure the port history is retained.
+	<a href="<?php echo DEFAULT_GIT_REPO ?>">repository</a>.
+
+	<p> With <span class="cmd">subversion</span>, there could be a  manual change to the repository, not creating a commit email.
+	Such moves were often referred to as a <i>repo-copy</i>, and might have moved a port from one category to another.
+	Such a change was done to ensure the port history is retained.
+
+	<p>With <span class="cmd">git</span>, <i>repo-copies</i> do not occur; the changes are accomplished via commits.
 
 	<p>
-	Repo-copies are documented in <a href="/MOVED">/usr/ports/MOVED</a>.  FreshPorts parses this file and records
+	Such moves/commits are documented in <a href="/MOVED">/usr/ports/MOVED</a>.  FreshPorts parses this file and records
 	these changes in its database.
 
 	<p>

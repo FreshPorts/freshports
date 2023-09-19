@@ -168,6 +168,11 @@ class Commits {
 	function FetchLimit($UserID, $Limit) {
 		$params = array();
 		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "
+with recent_commits AS (
+select id as commit_log_id, message_date
+  from commit_log CL
+ORDER BY CL.message_date desc
+  LIMIT 100)
         SELECT DISTINCT
             CL.commit_date - SystemTimeAdjust()                                                                 AS commit_date_raw,
             CL.id                                                                                               AS commit_log_id,
@@ -222,7 +227,7 @@ class Commits {
                 }
 
                 $sql .= "
-    FROM commit_log_ports CLP JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
+    FROM recent_commits RC JOIN commit_log_ports CLP on RC.commit_log_id = CLP.commit_log_id LEFT OUTER JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
                               JOIN system_branch        SB ON SB.id = CLB.branch_id
       LEFT OUTER JOIN sanity_test_failures STF ON STF.commit_log_id = CLP.commit_log_id, ";
 
@@ -243,10 +248,9 @@ class Commits {
                         AND clb.commit_log_id = cl.id)";
 		}
 
-	        $params[]  = $Limit;
 	        $sql .= "
      ORDER BY CL.commit_date DESC, CL.id DESC
-        LIMIT $" . count($params) . ") AS CL ";
+        ) AS CL ";
 
 	        $sql .= "LEFT OUTER JOIN repo R on CL.repo_id = R.id, categories C, ports P LEFT OUTER JOIN ports_vulnerable PV ON P.id = PV.port_id, element E ";
 

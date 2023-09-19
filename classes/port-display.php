@@ -1445,10 +1445,14 @@ class port_display {
 
 						# If showing a - for the version, center align it
 						$title = $this->packageToolTipText($package_line['last_checked_latest'], $package_line['repo_date_latest'], $package_line['processed_date_latest']);
-						$HTML .= '<td tabindex="-1" class="version ' . ($package_version_latest    == '-' ? 'noversion' : '') . '" data-title="' . $title . '">' . ($package_version_latest    == '-' ? freshports_Fallout_Link($this->port->category, $this->port->port) : $package_version_latest)    . '</td>';
+						$HTML .= '<td tabindex="-1" class="version ' . ($package_version_latest    == '-' ? 'noversion' : '') . '" data-title="' . $title . '">';
+						$HTML .= $package_version_latest;
+						$HTML .= '</td>';
 
 						$title = $this->packageToolTipText($package_line['last_checked_quarterly'], $package_line['repo_date_quarterly'], $package_line['processed_date_quarterly']);
-						$HTML .= '<td tabindex="-1" class="version ' . ($package_version_quarterly == '-' ? 'noversion' : '') . '" data-title="' . $title . '">' . ($package_version_quarterly == '-' ? freshports_Fallout_Link($this->port->category, $this->port->port) : $package_version_quarterly) . '</td>';
+						$HTML .= '<td tabindex="-1" class="version ' . ($package_version_quarterly == '-' ? 'noversion' : '') . '" data-title="' . $title . '">';
+						$HTML .= $package_version_quarterly;
+						$HTML .= '</td>';
 						$HTML .= '</tr>';
 					}
 					$HTML .= '</table>&nbsp;';

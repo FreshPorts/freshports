@@ -1124,9 +1124,9 @@ Special searches:
 
 	}  // end of putting out HTML output
 
-	if ($Debug) echo 'in debug mode';
+	if ($Debug) echo 'in debug mode<br>';
 
-	if ($Debug && $WeHaveToSearch) echo ' we have to search';
+	if ($Debug && $WeHaveToSearch) echo 'we have to search<br>';
 
 	if ($WeHaveToSearch) {
 		if (IsSet($NumFetches) && $NumFetches == 0) {
@@ -1137,7 +1137,7 @@ Special searches:
 		} else {
 		      if ($stype == 'committer' || $stype == 'commitmessage' || $stype == 'tree') {
 		          $NumFetches = min($num, $NumberOfCommits);
-		          if ($Debug) echo 'here we are';
+		          if ($Debug) echo 'here we are<br>';
 		          if ($NumFetches != $NumberOfCommits) {
 		            $MoreToShow = 1;
 		          } else {
@@ -1163,7 +1163,7 @@ Special searches:
 		        }
 		      }
 
-			if ($Debug) echo 'here we are2';
+			if ($Debug) echo 'here we are2<br>';
 			switch ($stype) {
 				case SEARCH_FIELD_COMMITTER:
 				case SEARCH_FIELD_COMMITMESSAGE:
@@ -1204,7 +1204,7 @@ Special searches:
 							break;
 					}
 
-					if ($Debug) echo 'NumFetches = ' . $NumFetches;
+					if ($Debug) echo 'NumFetches = ' . $NumFetches . '<br>';
 					for ($i = 0; $i < $NumFetches; $i++) {
 						$Port->FetchNth($i);
 						$port_display->SetPort($Port);
@@ -1236,7 +1236,7 @@ Special searches:
 					}
 			}
 		
-			if ($Debug) echo 'WHAT IS THIS?';
+			if ($Debug) echo 'WHAT IS THIS?<br>';
 
 		} /* NumFetches  != 0 */
 	} // $WeHaveToSearch

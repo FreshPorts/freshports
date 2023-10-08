@@ -320,7 +320,7 @@ class dg_BarGraph {
 		$x = $this->margin_t;
 		for ($i = 0; $i < count($this->values); $i++) {
 			if ($this->values[$i] >= 0) {
-syslog(LOG_ERR, $this->values[$i]);
+#syslog(LOG_ERR, $this->values[$i]);
 				$v = ($this->values[$i] * $field_width) / $rmax;
 
 				if ($v) {
@@ -394,5 +394,3 @@ syslog(LOG_ERR, $this->values[$i]);
 	}
 
 }
-
-?>

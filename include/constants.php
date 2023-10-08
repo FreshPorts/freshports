@@ -162,7 +162,7 @@ const PYTHON_PKGNAMEPREFIX = 'PYTHON_PKGNAMEPREFIX';
 # www/search.php
 # classes/ports_by_pkg_plist.php
 
-const SEARCH_SELECT_FIELD = '
+const SEARCH_SELECT_FIELD = "
   select CL.commit_date - SystemTimeAdjust() AS last_commit_date, 
          P.id,
          E.name as port,
@@ -198,7 +198,9 @@ const SEARCH_SELECT_FIELD = '
          element_pathname(P.element_id) as element_pathname,
          Cl.svn_revision,
          P.pkgmessage,
-         P.uses  ';
+         to_char(P.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, 
+         PortVersionOnQuarterlyBranch(P.id, C.name || '/' || E.name) AS quarterly_revision,
+         P.uses  ";
 
 
 # passed to pgcrypto gen_salt when creating or updating user passwords in the database

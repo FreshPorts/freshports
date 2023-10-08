@@ -175,7 +175,7 @@ down you must read to find something you didn't already know.</P>
 
 	<tr><td class="textcontent">The official mailing list is freebsd-ports&#64;freebsd.org.
 		More information all FreeBSD mailing lists can be obtained
-		from <a href="https://www.FreeBSD.org/handbook/eresources.html#ERESOURCES-MAIL">FreeBSD Mailing Lists</a>.
+		from <a href="https://www.FreeBSD.org/handbook/eresources.html#eresources-mail">FreeBSD Mailing Lists</a>.
 	</td></tr>
 <tr id="port-get">
 <?php echo freshports_PageBannerText("How do I get these ports?"); ?>
@@ -183,10 +183,10 @@ down you must read to find something you didn't already know.</P>
 
 	<tr><td class="textcontent">For full information on how to obtain the ports which appear on
 	this website, please see <a href="https://www.FreeBSD.org/ports/">FreeBSD Ports</a>.
-	The easiest way to get a port is via cvsup.  An abbreviated example is
+	The easiest way to get a port is via <span class="cmd">git</span>.  An abbreviated example is:
 
 	<blockquote>
-	<code class="code">cvsup -h cvsup.your.fav.server /usr/share/examples/cvsup/ports-supfile</code>
+	<code class="code">git clone https://git.FreeBSD.org/ports.git /usr/ports</code>
 	</blockquote>
 	</td></tr>
 <tr id="fp-site-update">
@@ -195,13 +195,16 @@ down you must read to find something you didn't already know.</P>
 
 	<tr><td class="textcontent">
 	The source code for the entire FreeBSD operating system and the Ports tree
-	are stored in the official <a href="<?echo FRESHPORTS_FREEBSD_CVS_URL; ?>">FreeBSD 
-	repository</a>.  Each time a change is committed to this CVS (at one time, this was a link to cvshome.org, which is no longer related to a repo)
-	repository, a mail message is sent out to the cvs-all mailing list.  FreshPorts
-	takes these mail messages, parses them, and then loads them into a database.
+	are stored in the official <a href="https://<?echo DEFAULT_GIT_REPO; ?>">FreeBSD 
+	repository</a>.  The FreshPorts nodes then use <span class="cmd">git</span> to detect changes and load
+	the new commits into its database.
+
+	<p>	
+	In the past, FreshPorts would parse the emails sent out for each commmit
+	and then load the information into a database.
 	In theory, it's fairly straight forward.  In practice, there's much more to
-	it than first meets the eye.  The website is updated as soon as the message
-	arrives.
+	it than first meets the eye.  The website was updated as soon as the message
+	arrived.
 	</td></tr>
 <tr id="rev-number-unknown">
 <?php echo freshports_PageBannerText("What does unknown mean for a revision number?"); ?>
@@ -323,7 +326,9 @@ make: fatal errors encountered -- cannot continue
 		Deleted: This port has been removed from the ports tree.</P>
 
 	<P id="mail"><?php echo freshports_Mail_Icon(); ?>
-		Commit message: This link will take you to the original cvs-all message in the FreeBSD mailing list archives.
+		These icons for for older commits. At one time, FreshPorts parsed emails.
+		This icon will appear alongside commits before the repo moved from <span class="cmd">subversion</span> to <span class="cmd">git</span>.
+		They appear along side the commit message in the comit history. This link will take you to the original message in the FreeBSD mailing list archives.
 		Note that it can take a few minutes for the message to appear in the archives. This link will not appear
 		for commit messages before 3 March 2002 (which is the date FreshPorts started to store the message-id).</P>
 
@@ -362,8 +367,9 @@ make: fatal errors encountered -- cannot continue
 		for this version of the file.</P>
 
 	<P id="cvs"><?php echo freshports_CVS_Icon(); ?>
-		CVS Repository: This link will take you to the CVS Repository entry
-		for this version of the file.</P>
+		CVS Repository: Deprecated, and historical. Probably does not appear much any more.
+		This link will take you to the CVS Repository entry
+		for this version of the file. This is for much older commits.</P>
 
 	<P id="vuxml"><?php echo freshports_VuXML_Icon(); ?>
 		<a href="https://www.vuxml.org/freebsd/">VuXML</a> vulnerability. Click icon for details.</P>
@@ -556,13 +562,16 @@ Here are a few examples:
    <P>
 	Some ports (for example <a href="/net/">net</a>/<a href="/net/gift/">gift</a>) will have a section titled "Port Moves".
 	FreshPorts obtains information about ports from the commits to the 
-	<a href="<?php echo FRESHPORTS_FREEBSD_CVS_URL; ?>">CVS Repository</a>.  However, not all
-	changes to ports occur because of commits.  A manual change to the repository,
-	often referred to as a repo-copy, can move a port from one category to another.
-	Such a change is done to ensure the port history is retained.
+	<a href="<?php echo DEFAULT_GIT_REPO ?>">repository</a>.
+
+	<p> With <span class="cmd">subversion</span>, there could be a  manual change to the repository, not creating a commit email.
+	Such moves were often referred to as a <i>repo-copy</i>, and might have moved a port from one category to another.
+	Such a change was done to ensure the port history is retained.
+
+	<p>With <span class="cmd">git</span>, <i>repo-copies</i> do not occur; the changes are accomplished via commits.
 
 	<p>
-	Repo-copies are documented in <a href="/MOVED">/usr/ports/MOVED</a>.  FreshPorts parses this file and records
+	Such moves/commits are documented in <a href="/MOVED">/usr/ports/MOVED</a>.  FreshPorts parses this file and records
 	these changes in its database.
 
 	<p>
@@ -808,7 +817,9 @@ every email address on FreshPorts is already somewhere else first. For example:
 <li>portsmon
 <li>fenner's output
 <li>GNATS
-<li>cvsweb
+<li>cvsweb (now deprecated)
+<li><span class="cmd">subversion</span> (still online, but replaced by <span class="cmd">git</span>)
+<li><span class="cmd">git</span>
 </ul>
 
 <p>

@@ -202,11 +202,12 @@ DELETE FROM watch_list_element
 		#
 		# Delete a watch list
 		#
-		unset($return);
+		$return = null;
+		Global $Debug;
 
 		$query  = '
 UPDATE watch_list 
-   SET name = $1)
+   SET name = $1
  WHERE id = $2
    AND watch_list.user_id = $3';
 		if ($Debug) echo $query;

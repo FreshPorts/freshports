@@ -40,6 +40,10 @@ function FreshPortsChart($title, $axislabel, $values, $labels, $urls, $file = "-
 
 $id = intval(pg_escape_string($db, $_REQUEST["id"]));
 
+if ($id == 31) die('Sorry, graph 31 is broken');
+if ($id == 32) die('Sorry, graph 32 is broken');
+if ($id == 8)  die('Sorry, graph 8 is broken');
+
 // assume that we always have graph of id=0
 if (!isset($id)) $id=0;
 
@@ -112,6 +116,3 @@ readfile($filename);
 // watch_list_element where ports_active.element_id =
 // watch_list_element.element_id group by category, name order by 3 desc
 // limit 20','Most Watched Ports');
-
-
-?>

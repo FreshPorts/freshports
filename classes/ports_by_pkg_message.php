@@ -52,8 +52,12 @@ class PortsByPkgMessage extends Port {
 	function GetQueryCount() {
 		$count = 0;
 		
-		$sql = $this::WITH_CLAUSE . 'select count(*) as count from short_list, ports P, element_pathname EP WHERE P.id = short_list.port_id
-   AND P.element_id = EP.element_id and EP.pathname like \'/ports/head/%\'';
+		$sql = $this::WITH_CLAUSE . 'select count(*) as count from short_list, ports P, element E, element_pathname EP WHERE P.id = short_list.port_id
+   AND P.element_id = EP.element_id and EP.pathname like \'/ports/head/%\' and P.element_id = E.id';
+		if ($this->PortStatus == PORT_STATUS_ACTIVE) {
+			# restrict this to active ports only
+			$sql .= " AND E.status = 'A'" ;
+		}
 		if ($this->Debug) echo "<pre>$sql</pre> with <pre>" . htmlentities($this->Query) . "</pre>";
 		$result = pg_query_params($this->dbh, $sql, array(pg_escape_string($this->dbh, $this->Query)));
 		if ($result) {

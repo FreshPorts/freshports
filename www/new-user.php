@@ -45,12 +45,12 @@ if (IsSet($submit)) {
 
 	$errors = "";
 
-	$UserLogin    = $_REQUEST["UserLogin"];
-	$email        = $_REQUEST["email"];
-	$Password1    = $_REQUEST["Password1"];
-	$Password2    = $_REQUEST["Password2"];
-	$numberofdays = $_REQUEST["numberofdays"];
-	
+	$UserLogin    = $_REQUEST["UserLogin"]    ?? '';
+	$email        = $_REQUEST["email"]        ?? '';
+	$Password1    = $_REQUEST["Password1"]    ?? '';
+	$Password2    = $_REQUEST["Password2"]    ?? '';
+	$numberofdays = $_REQUEST["numberofdays"] ?? '';
+
 	if ($UserLogin == '') {
 		$errors .= "Please enter a user id.<br>";
 		$OK = 0;
@@ -91,9 +91,9 @@ if (IsSet($submit)) {
 		$numberofdays = 0;
 	}
 
-	if ( isset( $_POST["captcha"] ) )
+	if (isset($_POST["captcha"] ) )
 	{
-		if ( $_SESSION["captcha"] == $_POST["captcha"] )
+		if (IsSet($_SESSION["captcha"]) && IsSet($_POST["captcha"]) && $_SESSION["captcha"] == $_POST["captcha"] )
 		{
 			//CAPTHCA is valid; proceed the message: save to database, send by e-mail ...
 			// echo 'CAPTHCA is valid; proceed the message';

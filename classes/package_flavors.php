@@ -31,7 +31,7 @@ class PackageFlavors {
 	}
 
 	function FetchInitialise($PortID) {
-		# this returns package flavors with the default pacakge first
+		# this returns package flavors with the default package first
 		$sql = 'SELECT * FROM PackageFlavors($1)';
 		
 #		echo "<pre>$sql</pre>";

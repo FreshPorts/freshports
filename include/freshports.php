@@ -977,7 +977,7 @@ function freshports_HEAD_charset() {
 
 function freshports_HEAD_main_items() {
 	return '
-	<LINK REL="SHORTCUT ICON" href="/favicon.ico">
+	<link rel="SHORTCUT ICON" href="/favicon.ico">
 
 	<link rel="alternate" type="application/rss+xml" title="FreshPorts - The Place For Ports" href="https://' . $_SERVER['HTTP_HOST'] . '/backend/rss2.0.php">
 
@@ -1020,15 +1020,27 @@ function freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum=0) {
 
 	GLOBAL $FreshPortsName;
 
-	echo "<HEAD>
-	<TITLE>" . $FreshPortsName;
+	echo "<head>\n";
+	if (defined('INCLUDE_GOOGLE_GTAG') && INCLUDE_GOOGLE_GTAG) {
+                echo "<!-- Google tag (gtag.js) -->
+<script async src=\"https://www.googletagmanager.com/gtag/js?id=G-XD83WKV7CC\"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-XD83WKV7CC');
+</script>";
+	}
+	echo "
+	<title>" . $FreshPortsName;
 
 	if ($ArticleTitle) {
 		echo " -- $ArticleTitle";
 
 	}
 
-	echo "</TITLE>
+	echo "</title>
 ";
 
 	freshports_style($Phorum);
@@ -1036,7 +1048,7 @@ function freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum=0) {
 	echo freshports_HEAD_charset();
 
 	echo "
-	<META NAME=\"description\" CONTENT=\"";
+	<meta name=\"description\" content=\"";
 
 	if ($Description) {
 		echo htmlspecialchars($Description);
@@ -1045,14 +1057,14 @@ function freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum=0) {
 	}
 
 	echo "\">
-	<META NAME=\"keywords\"    CONTENT=\"" . htmlspecialchars($Keywords) . "\">
+	<meta name=\"keywords\"    content=\"" . htmlspecialchars($Keywords) . "\">
 ";
 
 	echo freshports_HEAD_main_items();
 
 	echo freshports_IndexFollow($_SERVER["PHP_SELF"]);
 
-	echo "</HEAD>\n";
+	echo "</head>\n";
 }
 
 function freshports_style($Phorum=0) {
@@ -1996,16 +2008,16 @@ function freshports_SideBar() {
 	if (IsSet($visitor)) {
 		GLOBAL $User;
 
-		$HTML .= 'Logged in as ' . htmlentities($User->name) . "<br>";
+		$HTML .= 'Logged in as ' . htmlentities($User->name ?? '**unknown**') . "<br>";
 
-		if ($User->emailbouncecount > 0) {
+		if ($User->emailbouncecount ?? 0 > 0) {
 			$HTML .= '<img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><br>';
 			$HTML .= 'your email is <a href="/bouncing.php">bouncing</a><br>';
 			$HTML .= '<img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><br>';
 		}
 		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/customize.php', "Your Account", "Your account");
 
-		if (preg_match("/.*@FreeBSD.org/i", $User->email)) {
+		if (preg_match("/.*@FreeBSD.org/i", $User->email ?? '')) {
 			$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/committer-opt-in.php', "Committer Opt-in", "Committers can receive reports of Sanity Test Failures");
 		}
 
@@ -2063,7 +2075,14 @@ function freshports_SideBar() {
 
 
 	$Searches = new Searches($dbh);
-	$HTML .= $Searches->GetFormSimple('&nbsp;', IsSet($User) && $User->set_focus_search);
+	#
+	# if $visitor is set, they are logged in, so we can check for set_focus_search
+	# false, or empty string, evaluates to empty
+	# https://www.php.net/manual/en/language.types.boolean.php#language.types.boolean.casting
+	#
+	# fixes [29-Apr-2023 23:58:55 UTC] PHP Warning:  Attempt to read property "set_focus_search" on string in /usr/local/www/freshports/include/freshports.php on line 2066
+	#
+	$HTML .= $Searches->GetFormSimple('&nbsp;', IsSet($visitor) && !empty($User->set_focus_search));
 
 	if ($_SERVER["PHP_SELF"] != '/search.php') {
 		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/search.php', "more...", "Advanced Searching options");
@@ -2570,4 +2589,11 @@ function checkLoadBeforeProceeding() {
       die('Server too busy. Please try again later.  You should never see this message if you are logged in.');
     }
   }
+}
+
+function FirstDateOfCurrentQuarter() {
+	$month = date("n");
+	$yearQuarter = ($month % 4) * 4;
+
+	return date("Y-m-d", strtotime(date("Y") . '-' . $yearQuarter . '-01'));
 }

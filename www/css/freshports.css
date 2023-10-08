@@ -668,6 +668,10 @@ td.version:hover::after, td.version:focus::after {
   text-align: center;
 }
 
+table.packages {
+  vertical-align: top;
+}
+
 
 /*
   from https://www.w3schools.com/css/css_tooltip.asp
@@ -733,3 +737,5 @@ td.version:hover::after, td.version:focus::after {
 .vbottom { vertical-align: bottom; }
 
 .nowrap { white-space: nowrap; }
+
+.cmd { color: #007a00; font-family: monospace; }

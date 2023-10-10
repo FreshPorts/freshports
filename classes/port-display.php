@@ -842,10 +842,10 @@ class port_display {
 		# start the description list for this port
 		$HTML .= "<dl class=\"port-description\">\n";
 
+
 		if ($this->ShowEverything || $this->ShowShortDescription || $this->ShowCategory) {
 			# first term/name, is the port itself
 			$HTML .= "<dt>";
-
 			$HTML .= port_display_WATCH_LIST_ADD_REMOVE;
 
 			$HTML .= '<span class="element-details">';

@@ -49,7 +49,15 @@ class Commit_Ports {
 	var $path_to_repo;
 	var $repo_name;
 
-	function __construct($dbh) {
+	# this comes from the commit_log_ports_element table - useful for non-port elements
+	# will equal $element_id for ports
+	var $clpe_element_id;
+
+	# full pathname of clpe_element_id
+	# will equal $element_pathname for ports
+	var $clpe_element_id_pathname;
+
+    function __construct($dbh) {
 		$this->dbh = $dbh;
 	}
 
@@ -85,7 +93,7 @@ class Commit_Ports {
 		$this->is_interactive     = $myrow["is_interactive"] ?? null;
 		$this->no_cdrom           = $myrow["no_cdrom"]       ?? null;
 		$this->restricted         = $myrow["restricted"]     ?? null;
-		$this->branch             = $myrow["branch"] ?? null;
+		$this->branch             = $myrow["branch"]             ?? null;
 		$this->vulnerable_current = $myrow["vulnerable_current"] ?? null;
 		$this->vulnerable_past    = $myrow["vulnerable_past"]    ?? null;
 		$this->date_added         = $myrow["date_added"];
@@ -98,6 +106,10 @@ class Commit_Ports {
 		$this->repo_hostname      = $myrow["repo_hostname"]    ?? null;
 		$this->path_to_repo       = $myrow["path_to_repo"]     ?? null;
 		$this->repo_name          = $myrow["repo_name"]        ?? null;
+
+		# for non-ports, these will differ from element_id and element_pathname
+		$this->clpe_element_id          = $myrow['clpe_element_id']           ?? null;
+		$this->clpe_element_id_pathname = $myrow['clpe_element_id_pathname']  ?? null;
 	}
 
 	function FetchNth($N) {

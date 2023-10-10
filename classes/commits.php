@@ -175,7 +175,7 @@ class Commits {
 			$sql .= "
 with recent_commits AS
 (WITH RC AS
-  (select * from commit_log where message_id in ('eb9f07125e7dba4f6666f8542632ee636970b272', '7d8ac44c90242ecd1656ce0c5a5c68910afb712b', '1e49125934332178017a2508fa182865b47d890f') order by commit_date DESC limit 1000)
+  (select * from commit_log order by commit_date DESC limit 1000)
   SELECT distinct RC.*, CLPE.element_id AS clpe_element_id
     FROM commit_log_ports_elements CLPE, RC
    WHERE CLPE.commit_log_id = RC.id
@@ -188,7 +188,9 @@ with recent_commits AS
 with recent_commits AS
 (WITH CL AS
   (select * from commit_log order by commit_date DESC limit 5000)
-  select distinct CL.* from CL join commit_log_branches clb on clb.branch_id = (select id from system_branch where branch_name = $" . (count($params) - 1). ") and CL.id = CLB.commit_log_id
+  select distinct CL.*, CLPE.element_id AS clpe_element_id from CL join commit_log_branches clb on clb.branch_id =
+        (select id from system_branch where branch_name = $" . (count($params) - 1). ") and CL.id = CLB.commit_log_id
+        JOIN commit_log_ports_elements CLPE on CLPE.commit_log_id = CL.id
    LIMIT $" . count($params) . ')';
 		}
 

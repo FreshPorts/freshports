@@ -26,6 +26,13 @@
 
 	if ($Debug) echo 'Branch is ' . $Branch . '<br>';
 
+	if ($Debug) var_dump($User);
+
+	# we use this near the top of the page and at the bottom.
+	define('RELATIVE_DATE_24HOURS', 24 * 60 * 60);	# seconds in a day
+	$Date = date('Y/m/d');
+	$Yesterday = freshports_LinkToDate(strtotime($Date) - RELATIVE_DATE_24HOURS, "Yesterday's Commits", $Branch);
+
 	#
 	# If they supply a package name, go for it.
 	#
@@ -150,6 +157,12 @@ if ($db) {
 	}
 ?>
 
+<p>
+<?php
+            echo '&lt; ' . $Yesterday . ' &gt;';
+?>
+</p>
+
 
 </td></tr>
 <?php
@@ -180,7 +193,11 @@ if ($db) {
 		$LatestCommits = new Commits($db);
 		$LatestCommits->SetBranch($Branch);
 
-		$LatestCommits->FetchLimit(isset($User) ? $User->id : null, 100);
+		if (isset($User)) {
+			$LatestCommits->FetchLimit($User->id, $User->page_size);
+		} else {
+			$LatestCommits->FetchLimit(null,      100);
+		}
 
 		$DisplayCommit = new DisplayCommit($db, $LatestCommits->LocalResult);
 		$DisplayCommit->SetBranch($Branch);
@@ -236,10 +253,6 @@ if ($db) {
 <br>
 
 <?php
-define('RELATIVE_DATE_24HOURS', 24 * 60 * 60);	# seconds in a day
-$Date = date('Y/m/d');
-$Yesterday = freshports_LinkToDate(strtotime($Date) - RELATIVE_DATE_24HOURS, "Yesterday's Commits", $Branch);
-
 echo '&lt; ' . $Yesterday . ' &gt;';
 ?>
 

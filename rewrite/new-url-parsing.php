@@ -238,7 +238,7 @@ function Try_Displaying_Port($db, $path_parts, $url_args, $Branch) {
 	if ($result) {
 		# found on branch. A port is only ever found on a FreshPorts branch if there is a commit.
 		$HasCommitsOnBranch = true;
-		if ($DEBUG) echo htmlentities("$category/$port") . ' was found on branch ' . htmlentities($Branch);
+		if ($Debug) echo htmlentities("$category/$port") . ' was found on branch ' . htmlentities($Branch);
 	} else {
 		# not found, means no commits for this port on that branch
 		$HasCommitsOnBranch = false;

@@ -44,7 +44,7 @@
 		if ($Debug) echo "That date passed sanity checking<br>\n";
 		$Date = date('Y/m/d', strtotime($Date));
 
-		# no sense looking at tomorrow..	
+		# no sense looking at tomorrow..
 		if ($Date > date('Y/m/d')) {
 			$Date = date('Y/m/d');
 		}
@@ -57,14 +57,6 @@
 		echo "The date we were given was $orig_date\n<br>";
 		echo "The date we are using is $Date\n<br>";
 	}
-	
-	if (IsSet($orig_date) && $orig_date != $Date) {
-		# we are going to redirect
-		if ($Debug) echo 'We are redirecting';
-		header('HTTP/1.1 301 Moved Permanently'); 
-		header('Location: ' . $_SERVER['SCRIPT_NAME'] . '?date=' . $Date);
-		exit;
-	}
 
 	if (IsSet($_REQUEST['branch'])) {
 		$BranchName = NormalizeBranch(NormalizeBranch(htmlspecialchars($_REQUEST['branch'])));
@@ -72,10 +64,28 @@
 		$BranchName = BRANCH_HEAD;
 	}
 
+	if (IsSet($orig_date) && $orig_date != $Date) {
+		# we are going to redirect
+		if ($Debug) echo 'We are redirecting';
+		header('HTTP/1.1 301 Moved Permanently');
+		# this should include branch
+		$Location = 'Location: ' . $_SERVER['SCRIPT_NAME'] . '?date=' . $Date;
+		if ($BranchName != BRANCH_HEAD) {
+			$Location .= '&branch=' . $BranchName;
+		}
+		header($Location);
+		exit;
+	}
+
+	if ($Debug) {
+		if (IsSet($_REQUEST['branch'])) echo 'Branch we got is: ' . htmlspecialchars($_REQUEST['branch']) . '<br>';
+		echo 'Branch we use is: ' . htmlspecialchars($BranchName) . '<br>';
+	}
+
 	$commits = new Commits($db, $BranchName);
 	$commits->Debug = $Debug;
-	$last_modified = $commits->LastModified($Date);
-	$NumCommits    = $commits->Count($Date);
+	$last_modified  = $commits->LastModified($Date);
+	$NumCommits     = $commits->Count($Date);
 
 	freshports_ConditionalGet($last_modified);
 
@@ -86,7 +96,7 @@
 
 	function ArchiveFileName($Date, $BranchName = BRANCH_HEAD) {
 		$File = DAILY_DIRECTORY . '/' . $Date . '.daily.' . $BranchName;
-		
+
 		return $File;
 	}
 
@@ -116,7 +126,7 @@
 
 	function ArchiveSave($Date, $HTML, $BranchName = BRANCH_HEAD) {
 		# saves the archive away...
-		
+
 		ArchiveDirectoryCreate($Date);
 		$File = ArchiveFileName($Date, $BranchName);
 
@@ -126,14 +136,14 @@
 		$old = umask(0);
 		chmod($File, 0664);
 		umask($old);
-		
+
 	}
 
 	function ArchiveGet($Date, $BranchName = BRANCH_HEAD) {
 		# saves the archive away...
-		
+
 		$File = ArchiveFileName($Date, $BranchName);
-		
+
 		$myfile = fopen($File, 'r');
 		$HTML = fread($myfile, filesize($File));
 		fclose($myfile);
@@ -147,7 +157,7 @@
 		$commits = new Commits($db);
 		$commits->SetBranch($BranchName);
 		$NumRows = $commits->FetchCommitsOnADay($Date, isset($User) ? $User->id : null);
-	
+
 		#echo '<br>NumRows = ' . $NumRows;
 
 		$HTML = '';
@@ -158,7 +168,7 @@
 			$HTML .= '</td></tr>' . "\n\n";
 			$HTML .= '<tr><td>No commits found for that date</td></tr>';
 		}
-		
+
 		unset($ThisCommitLogID);
 
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
@@ -235,7 +245,7 @@ if ($NumCommits > 0) {
 	echo freshports_SideBar();
 	?>
 
-  </td>	
+  </td>
 </tr>
 </table>
 

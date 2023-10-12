@@ -213,9 +213,8 @@ with recent_commits AS
             C.name                                                                                              AS category,
             C.id                                                                                                AS category_id,
             E.name                                                                                              AS port,
-            element_pathname(E.id)                                                                              AS element_pathname,
-            clpe_element_id,
-            element_pathname(clpe_element_id)                                                                   AS clpe_element_id_pathname,
+            element_pathname(clpe_element_id)                                                                   AS element_pathname,
+            clpe_element_id                                                                                     AS element_id,
             CASE when CLP.port_version IS NULL then P.version  else CLP.port_version  END                       AS version,
             CASE when CLP.port_version is NULL then P.revision else CLP.port_revision END                       AS revision,
             CASE when CLP.port_epoch   is NULL then P.portepoch else CLP.port_epoch   END                       AS epoch,
@@ -227,7 +226,6 @@ with recent_commits AS
             P.ignore                                                                                            AS ignore,
             P.expiration_date                                                                                   AS expiration_date,
             date_part('epoch', P.date_added)                                                                    AS date_added,
-            P.element_id                                                                                        AS element_id,
             P.short_description                                                                                 AS short_description,
             RC.svn_revision                                                                                     AS svn_revision,
             R.repo_hostname                                                                                     AS repo_hostname,
@@ -253,14 +251,14 @@ with recent_commits AS
                 $sql .= "
     FROM recent_commits RC
     LEFT OUTER JOIN commit_log_branches CLB  ON RC.id             = CLB.commit_log_id
-    LEFT OUTER JOIN commit_log_ports CLP     on CLB.commit_log_id = CLP.commit_log_id
+    LEFT OUTER JOIN system_branch SB         ON SB.id             = CLB.branch_id
+    LEFT OUTER JOIN ports P                  ON P.element_id      = clpe_element_id
+    LEFT OUTER JOIN commit_log_ports CLP     ON P.id              = CLP.port_id and CLP.commit_log_id = RC.id
+    LEFT OUTER JOIN element E                ON E.id              = P.element_id
+    LEFT OUTER JOIN categories C             ON C.id              = P.category_id
     LEFT OUTER JOIN repo R                   on RC.repo_id        = R.id
     LEFT OUTER JOIN sanity_test_failures STF ON STF.commit_log_id = RC.id
-    LEFT OUTER JOIN system_branch SB         ON SB.id             = CLB.branch_id
-    LEFT OUTER JOIN ports P                  ON CLP.port_id       = P.id
-    LEFT OUTER JOIN ports_vulnerable PV      ON P.id              = PV.port_id
-    LEFT OUTER JOIN categories C             ON C.id              = P.category_id
-    LEFT OUTER JOIN element E                ON E.id              = P.element_id";
+    LEFT OUTER JOIN ports_vulnerable PV      ON P.id              = PV.port_id";
 
 	        if ($UserID) {
 			$params[] = $UserID;

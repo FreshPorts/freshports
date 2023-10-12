@@ -12,7 +12,7 @@
 // base class for displaying commits
 class DisplayCommit {
 
-	var $Debug = 1;
+	var $Debug = 0;
 	var $dbh;
 
 	var $result;
@@ -262,7 +262,8 @@ class DisplayCommit {
 					}
 
 					$this->HTML .= '<span class="element-details">';
-					$this->HTML .= '<a href="/' . $mycommit->category . '/' . $mycommit->port . '/' . $URLBranchSuffix;
+#					$this->HTML .= '<a href="/' . $mycommit->category . '/' . $mycommit->port . '/' . $URLBranchSuffix;
+					$this->HTML .= '<a href="/' . $mycommit->category . '/' . $mycommit->port . '/';
 					if ($mycommit->branch && $mycommit->branch != BRANCH_HEAD) {
 						$this->HTML .= '?branch=' . $mycommit->branch;
 					}
@@ -347,7 +348,7 @@ class DisplayCommit {
 					# This is a non-port element... 
 					$this->HTML .= $mycommit->revision . ' ';
 					$this->HTML .= '<span class="element-details">';
-					$PathName = preg_replace('|^/?ports/|', '', $mycommit->clpe_element_id_pathname);
+					$PathName = preg_replace('|^/?ports/|', '', $mycommit->element_pathname);
 #					echo "'$PathName' " . "'" . $mycommit->repo_name . "'";
 					switch ($mycommit->repo_name)
 					{
@@ -368,7 +369,7 @@ class DisplayCommit {
 						$QueryArgs = '';
 					}
 
-					if ($PathName != $mycommit->clpe_element_id_pathname) {
+					if ($PathName != $mycommit->element_pathname) {
 						$this->HTML .= '<a href="/' . str_replace('%2F', '/', urlencode($PathName)) . $QueryArgs . '">' . $PathName. '</a>';
 						$this->HTML .= "</span>\n";
 					} else {

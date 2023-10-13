@@ -32,6 +32,7 @@
 	define('RELATIVE_DATE_24HOURS', 24 * 60 * 60);	# seconds in a day
 	$Date = date('Y/m/d');
 	$Yesterday = freshports_LinkToDate(strtotime($Date) - RELATIVE_DATE_24HOURS, "Yesterday's Commits", $Branch);
+	$Quarterly = '&lt; <a href="/?branch=quarterly">Quarterly Branch</a> &gt;';
 
 	#
 	# If they supply a package name, go for it.
@@ -159,7 +160,7 @@ if ($db) {
 
 <p>
 <?php
-            echo '&lt; ' . $Yesterday . ' &gt;';
+            echo '&lt; ' . $Yesterday . ' &gt;' . $Quarterly;
 ?>
 </p>
 
@@ -253,7 +254,7 @@ if ($db) {
 <br>
 
 <?php
-echo '&lt; ' . $Yesterday . ' &gt;';
+echo '&lt; ' . $Yesterday . ' &gt;' . $Quarterly;
 ?>
 
 <?php

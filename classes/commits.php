@@ -69,6 +69,7 @@ class Commits {
             C.name                                                                                              AS category,
             C.id                                                                                                AS category_id,
             E.name                                                                                              AS port,
+            element_pathname(CLPE.element_id)                                                                   AS element_pathname,
             CASE when CLP.port_version IS NULL then P.version  else CLP.port_version  END                       AS version,
             CASE when CLP.port_version is NULL then P.revision else CLP.port_revision END                       AS revision,
             CASE when CLP.port_epoch   is NULL then P.portepoch else CLP.port_epoch   END                       AS epoch,
@@ -80,7 +81,7 @@ class Commits {
             P.ignore                                                                                            AS ignore,
             P.expiration_date                                                                                   AS expiration_date,
             date_part('epoch', P.date_added)                                                                    AS date_added,
-            P.element_id                                                                                        AS element_id,
+            CLPE.element_id                                                                                        AS element_id,
             P.short_description                                                                                 AS short_description,
             CL.svn_revision                                                                                     AS svn_revision,
             R.repository                                                                                        AS repository,
@@ -105,27 +106,27 @@ class Commits {
 
         $params[] = $Date;
         $sql .= "
-    FROM commit_log CL JOIN commit_log_ports CLP ON CL.id = CLP.commit_log_id 
-                        AND CL.commit_date BETWEEN $" . count($params) . "::timestamptz  + SystemTimeAdjust()
-                                               AND $" . count($params) . "::timestamptz  + SystemTimeAdjust() + '1 Day'
-            LEFT OUTER JOIN sanity_test_failures STF ON STF.commit_log_id = CLP.commit_log_id 
-            JOIN repo R on CL.repo_id = R.id
-            LEFT OUTER JOIN ports_vulnerable     PV ON CLP.port_id = PV.port_id
-            JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
-            JOIN system_branch        SB ON SB.id = CLB.branch_id ";
+    FROM commit_log CL JOIN commit_log_ports_elements CLPE ON CLPE.commit_log_id = CL.id
+                        AND CL.commit_date >= $" . count($params) . "::timestamptz  + SystemTimeAdjust()
+                        AND CL.commit_date <  $" . count($params) . "::timestamptz  + SystemTimeAdjust() + '1 Day'
+    LEFT OUTER JOIN commit_log_branches CLB  ON CL.id             = CLB.commit_log_id
+               JOIN system_branch SB         ON SB.id             = CLB.branch_id";
 
-        # allow for quarterly branches
-        # see also the Count() function below
-        if ($this->BranchName != BRANCH_HEAD) {
-            $params[] = $this->BranchName;
-            $sql .= " AND SB.branch_name = $" . count($params) . "\n";
-        }
+		# allow for quarterly branches
+		# see also the Count() function below
+		if ($this->BranchName != BRANCH_HEAD) {
+			$params[] = $this->BranchName;
+			$sql .= " AND SB.branch_name = $" . count($params);
+		}
 
-        $sql .= "
-            JOIN ports                P  ON P.id           = CLP.port_id
-            JOIN categories           C  ON C.id           = P.category_id
-            JOIN element              E  ON E.id           = P.element_id
-            ";
+		$sql .= "
+    LEFT OUTER JOIN ports P                  ON P.element_id      = CLPE.element_id
+    LEFT OUTER JOIN commit_log_ports CLP     ON P.id              = CLP.port_id and CLP.commit_log_id = CL.id
+    LEFT OUTER JOIN element E                ON E.id              = P.element_id
+    LEFT OUTER JOIN categories C             ON C.id              = P.category_id
+    LEFT OUTER JOIN repo R                   on CL.repo_id        = R.id
+    LEFT OUTER JOIN sanity_test_failures STF ON STF.commit_log_id = CL.id
+    LEFT OUTER JOIN ports_vulnerable PV      ON P.id              = PV.port_id";
 
         if ($UserID) {
                 $params[] = $UserID;
@@ -140,7 +141,14 @@ class Commits {
            ON TEMP.wle_element_id = E.id";
         }
 
-        # we once ordered by 1 desc, commit_log.id - but that would give different results between dev and test if a commit had to be rerun on dev
+		# allow for quarterly branches
+		# see also the Count() function below
+		if ($this->BranchName != BRANCH_HEAD) {
+			$params[] = $this->BranchName;
+			$sql .= " AND SB.branch_name = $" . count($params) . "\n";
+		}
+
+		# we once ordered by 1 desc, commit_log.id - but that would give different results between dev and test if a commit had to be rerun on dev
         # and therefore had a higher commit id than commits which preceeded it.
         # The goal of sorting by message_id is to keep together all ports for a given commit keep.
         $sql .= "
@@ -166,27 +174,55 @@ class Commits {
 	}
 
 	function FetchLimit($UserID, $Limit) {
+
 		$params = array();
-		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__;
+
+		if ($this->BranchName == BRANCH_HEAD ) {
+			$params[] = $Limit;
+			$sql .= "
+with recent_commits AS
+(WITH RC AS
+  (select * from commit_log order by commit_date DESC limit 1000)
+  SELECT distinct RC.*, CLPE.element_id AS clpe_element_id
+    FROM commit_log_ports_elements CLPE, RC
+   WHERE CLPE.commit_log_id = RC.id
+   ORDER by RC.commit_date DESC
+   LIMIT $" . count($params) . ')';
+		} else {
+			$params[] = $this->BranchName;
+			$params[] = $Limit;
+			$sql .= "
+with recent_commits AS
+(WITH CL AS
+  (select * from commit_log order by commit_date DESC limit 5000)
+  select distinct CL.*, CLPE.element_id AS clpe_element_id from CL join commit_log_branches clb on clb.branch_id =
+        (select id from system_branch where branch_name = $" . (count($params) - 1). ") and CL.id = CLB.commit_log_id
+        JOIN commit_log_ports_elements CLPE on CLPE.commit_log_id = CL.id
+   LIMIT $" . count($params) . ')';
+		}
+
+		$sql .= "
         SELECT DISTINCT
-            CL.commit_date - SystemTimeAdjust()                                                                 AS commit_date_raw,
-            CL.id                                                                                               AS commit_log_id,
-            CL.encoding_losses                                                                                  AS encoding_losses,
-            CL.message_id                                                                                       AS message_id,
-            CL.commit_hash_short                                                                                AS commit_hash_short,
-            CL.committer                                                                                        AS committer,
-            CL.committer_name                                                                                   AS committer_name,
-            CL.committer_email                                                                                  AS committer_email,
-            CL.author_name                                                                                      AS author_name,
-            CL.author_email                                                                                     AS author_email,
-            CL.description                                                                                      AS commit_description,
-            to_char(CL.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')                                         AS commit_date,
-            to_char(CL.commit_date - SystemTimeAdjust(), 'HH24:MI')                                             AS commit_time,
+            RC.commit_date - SystemTimeAdjust()                                                                 AS commit_date_raw,
+            RC.id                                                                                               AS commit_log_id,
+            RC.encoding_losses                                                                                  AS encoding_losses,
+            RC.message_id                                                                                       AS message_id,
+            RC.commit_hash_short                                                                                AS commit_hash_short,
+            RC.committer                                                                                        AS committer,
+            RC.committer_name                                                                                   AS committer_name,
+            RC.committer_email                                                                                  AS committer_email,
+            RC.author_name                                                                                      AS author_name,
+            RC.author_email                                                                                     AS author_email,
+            RC.description                                                                                      AS commit_description,
+            to_char(RC.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')                                         AS commit_date,
+            to_char(RC.commit_date - SystemTimeAdjust(), 'HH24:MI')                                             AS commit_time,
             CLP.port_id                                                                                         AS port_id,
             C.name                                                                                              AS category,
             C.id                                                                                                AS category_id,
             E.name                                                                                              AS port,
-            element_pathname(E.id)                                                                              AS element_pathname,
+            element_pathname(clpe_element_id)                                                                   AS element_pathname,
+            clpe_element_id                                                                                     AS element_id,
             CASE when CLP.port_version IS NULL then P.version  else CLP.port_version  END                       AS version,
             CASE when CLP.port_version is NULL then P.revision else CLP.port_revision END                       AS revision,
             CASE when CLP.port_epoch   is NULL then P.portepoch else CLP.port_epoch   END                       AS epoch,
@@ -198,9 +234,8 @@ class Commits {
             P.ignore                                                                                            AS ignore,
             P.expiration_date                                                                                   AS expiration_date,
             date_part('epoch', P.date_added)                                                                    AS date_added,
-            P.element_id                                                                                        AS element_id,
             P.short_description                                                                                 AS short_description,
-            CL.svn_revision                                                                                     AS svn_revision,
+            RC.svn_revision                                                                                     AS svn_revision,
             R.repo_hostname                                                                                     AS repo_hostname,
             R.repository                                                                                        AS repository,
             R.path_to_repo                                                                                      AS path_to_repo,
@@ -222,33 +257,16 @@ class Commits {
                 }
 
                 $sql .= "
-    FROM commit_log_ports CLP JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
-                              JOIN system_branch        SB ON SB.id = CLB.branch_id
-      LEFT OUTER JOIN sanity_test_failures STF ON STF.commit_log_id = CLP.commit_log_id, ";
-
-		$sql .= "
-      (SELECT cl.*
-         FROM commit_log cl
-        WHERE EXISTS ";
-
-	        if ($this->BranchName == BRANCH_HEAD ) {
-	        # XXX we can change this....
-	           $sql .= "(select *
-                        from commit_log_ports clp
-                        where clp.commit_log_id = cl.id)";
-		} else {
-			$params[] = $this->BranchName;
-			$sql .= "(select *
-                        from commit_log_branches clb where branch_id = (select id from system_branch where branch_name = $" . count($params) . ")
-                        AND clb.commit_log_id = cl.id)";
-		}
-
-	        $params[]  = $Limit;
-	        $sql .= "
-     ORDER BY CL.commit_date DESC, CL.id DESC
-        LIMIT $" . count($params) . ") AS CL ";
-
-	        $sql .= "LEFT OUTER JOIN repo R on CL.repo_id = R.id, categories C, ports P LEFT OUTER JOIN ports_vulnerable PV ON P.id = PV.port_id, element E ";
+    FROM recent_commits RC
+    LEFT OUTER JOIN commit_log_branches CLB  ON RC.id             = CLB.commit_log_id
+               JOIN system_branch SB         ON SB.id             = CLB.branch_id
+    LEFT OUTER JOIN ports P                  ON P.element_id      = clpe_element_id
+    LEFT OUTER JOIN commit_log_ports CLP     ON P.id              = CLP.port_id and CLP.commit_log_id = RC.id
+    LEFT OUTER JOIN element E                ON E.id              = P.element_id
+    LEFT OUTER JOIN categories C             ON C.id              = P.category_id
+    LEFT OUTER JOIN repo R                   on RC.repo_id        = R.id
+    LEFT OUTER JOIN sanity_test_failures STF ON STF.commit_log_id = RC.id
+    LEFT OUTER JOIN ports_vulnerable PV      ON P.id              = PV.port_id";
 
 	        if ($UserID) {
 			$params[] = $UserID;
@@ -264,12 +282,8 @@ class Commits {
 		}
 
 		$sql .= "
-      WHERE CLP.commit_log_id = CL.id
-        AND CLP.port_id       = P.id
-        AND C.id              = P.category_id
-        AND E.id              = P.element_id
    ORDER BY 1 desc,
-            CL.id DESC,
+            RC.id DESC,
             category,
             port";
 
@@ -278,7 +292,10 @@ class Commits {
 		$this->LocalResult = pg_query_params($this->dbh, $sql, $params);
 		if ($this->LocalResult) {
 			$numrows = pg_num_rows($this->LocalResult);
-			if ($this->Debug) echo "That would give us $numrows rows";
+			if ($this->Debug) echo "That would give us $numrows rows, which might be more than the number of commits, if that commit touched more items than just one port.";
+			if ($numrows < $Limit) syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ': we should have ' . $Limit . 
+			    ' commits. We got ' . $numrows);
+
 		} else {
 			$numrows = -1;
 			echo 'pg_query_params failed: ' . "<pre>$sql</pre>";

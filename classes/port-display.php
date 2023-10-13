@@ -842,10 +842,10 @@ class port_display {
 		# start the description list for this port
 		$HTML .= "<dl class=\"port-description\">\n";
 
+
 		if ($this->ShowEverything || $this->ShowShortDescription || $this->ShowCategory) {
 			# first term/name, is the port itself
 			$HTML .= "<dt>";
-
 			$HTML .= port_display_WATCH_LIST_ADD_REMOVE;
 
 			$HTML .= '<span class="element-details">';
@@ -1035,7 +1035,7 @@ class port_display {
 				# THIS CODE IS SIMILAR TO THAT IN classes/display_commit.php & include/freshports.php
 				#
 				#
-				# the commmiter may not be the author
+				# the committer may not be the author
 				# committer name and author name came into the database with git.
 				# For other commits, such as git or cvs, those fields will not be present.
 				# committer will always be present.
@@ -1632,9 +1632,6 @@ class port_display {
 
 	function LinkToPort() {
 		$HTML = '<a href="/' . $this->port->category . '/' . $this->port->port . '/';
-		if ($this->Branch != BRANCH_HEAD) {
-			$HTML .= '?branch=' . htmlspecialchars($this->Branch);
-		}
 		$HTML .= '">' . $this->port->port . '</a>';
 
 		return $HTML;

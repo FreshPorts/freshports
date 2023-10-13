@@ -49,7 +49,7 @@ class Commit_Ports {
 	var $path_to_repo;
 	var $repo_name;
 
-	function __construct($dbh) {
+    function __construct($dbh) {
 		$this->dbh = $dbh;
 	}
 
@@ -85,7 +85,7 @@ class Commit_Ports {
 		$this->is_interactive     = $myrow["is_interactive"] ?? null;
 		$this->no_cdrom           = $myrow["no_cdrom"]       ?? null;
 		$this->restricted         = $myrow["restricted"]     ?? null;
-		$this->branch             = $myrow["branch"] ?? null;
+		$this->branch             = $myrow["branch"]             ?? null;
 		$this->vulnerable_current = $myrow["vulnerable_current"] ?? null;
 		$this->vulnerable_past    = $myrow["vulnerable_past"]    ?? null;
 		$this->date_added         = $myrow["date_added"];

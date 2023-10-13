@@ -33,9 +33,9 @@ class DisplayCommit {
 	var $ShowLinkToSanityTestFailure = FALSE;
 
 	# the message_id for all the emails which originated from subversion contain freebsd.org
-	# For git commits, we put the full has into message_id . Commits from git do not contain that value.
+	# For git commits, we put the full has into message_id. Commits from git do not contain that value.
 	# This is used to decide if commits are from svn or from git.
-	# Commits imported before we started saving message_id are in the null.freshports.org
+	# Commits imported before we started saving message_id are in the null.freshports.org domain,
 	# so we just look for .org
 	const MESSAGE_ID_DOMAIN = '.org';
 
@@ -70,7 +70,7 @@ class DisplayCommit {
 	}
 
 	function CreateHTML() {
-		GLOBAL	$freshports_CommitMsgMaxNumOfLinesToShow;
+		GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;
 		
 		$Debug = $this->Debug;
 
@@ -112,13 +112,15 @@ class DisplayCommit {
 
 		$NumberOfPortsInThisCommit = 0;
 		$MaxNumberPortsToShow      = 10;
-		$TooManyPorts = false;	# we might not show all of a commit, just for the really big ones.
+		$TooManyPorts = false;	# we might not show all of a commit, just for the big ones.
 		for ($i = 0; $i < $NumRows; $i++) {
 			$myrow = pg_fetch_array($this->result, $i);
 			if ($Debug) echo 'processing row ' . $i . ' ' . $myrow['commit_log_id'] . ' ' . $myrow['message_id'] . "<br>\n";
 			unset($mycommit);
 			$mycommit = new Commit_Ports($this->dbh);
 			$mycommit->PopulateValues($myrow);
+
+#            var_dump($mycommit);
 
 
 			// OK, while we have the log change log, let's put the port details here.
@@ -163,7 +165,7 @@ class DisplayCommit {
 				# THIS CODE IS SIMILAR TO THAT IN classes/display_commit.php & classes/port-display.php
 				#
 				#
-				# the commmiter may not be the author
+				# the committer may not be the author
 				# committer name and author name came into the database with git.
 				# For other commits, such as git or cvs, those fields will not be present.
 				# committer will always be present.
@@ -260,7 +262,8 @@ class DisplayCommit {
 					}
 
 					$this->HTML .= '<span class="element-details">';
-					$this->HTML .= '<a href="/' . $mycommit->category . '/' . $mycommit->port . '/' . $URLBranchSuffix;
+#					$this->HTML .= '<a href="/' . $mycommit->category . '/' . $mycommit->port . '/' . $URLBranchSuffix;
+					$this->HTML .= '<a href="/' . $mycommit->category . '/' . $mycommit->port . '/';
 					if ($mycommit->branch && $mycommit->branch != BRANCH_HEAD) {
 						$this->HTML .= '?branch=' . $mycommit->branch;
 					}
@@ -349,13 +352,25 @@ class DisplayCommit {
 #					echo "'$PathName' " . "'" . $mycommit->repo_name . "'";
 					switch ($mycommit->repo_name)
 					{
-					    case 'ports':
-					        $PathName = preg_replace('|^head/|', '', $PathName);
+						case 'ports':
+							// strip off the leading directories
+						    if (!empty($mycommit->branch) && $mycommit->branch == BRANCH_HEAD) {
+						    	$PathName = preg_replace('|^head/|', '', $PathName);
+						    } else {
+								$PathName = preg_replace('|^branches/' . $mycommit->branch . '/|', '', $PathName);
+							}
 					        break;
 					}
 
+					# this next line might want to go higher in the code if it's needed up there
+					if ($this->BranchName != $mycommit->branch || $this->BranchName != BRANCH_HEAD) {
+						$QueryArgs= '?branch=' . $mycommit->branch;
+					} else {
+						$QueryArgs = '';
+					}
+
 					if ($PathName != $mycommit->element_pathname) {
-						$this->HTML .= '<a href="/' . str_replace('%2F', '/', urlencode($PathName)) . '">' . $PathName . '</a>';
+						$this->HTML .= '<a href="/' . str_replace('%2F', '/', urlencode($PathName)) . $QueryArgs . '">' . $PathName. '</a>';
 						$this->HTML .= "</span>\n";
 					} else {
 						$this->HTML .= '<a href="' . FRESHPORTS_FREEBSD_CVS_URL . $PathName . '#rev' . $mycommit->revision . '">' . $PathName . '</a>';

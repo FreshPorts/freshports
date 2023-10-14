@@ -346,7 +346,6 @@ class DisplayCommit {
 					$this->HTML.=  freshports_Fallout_Link($mycommit->category, $mycommit->port) . '&nbsp;';
 				} else {
 					# This is a non-port element... 
-					$this->HTML .= $mycommit->revision . ' ';
 					$this->HTML .= '<span class="element-details">';
 					$PathName = preg_replace('|^/?ports/|', '', $mycommit->element_pathname);
 					if ($Debug) echo "PathName='$PathName' " . " reponame='" . $mycommit->repo_name . "'<br>";

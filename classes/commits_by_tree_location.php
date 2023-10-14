@@ -257,6 +257,10 @@ ORDER BY CL.commit_date DESC ";
 	       ON TEMP.wle_element_id = element.id";
 		}
 
+		# I tried to make '$this->TreePathCondition' a parameter. I was blocked by this error:
+		# Warning: pg_query_params(): Query failed: ERROR: invalid input syntax for type boolean: ""EP.pathname = '/ports/head/MOVED'"" in /usr/local/www/freshports/classes/commits_by_tree_location.php on line 291
+		# pg_query_params failed:
+
 		$sql .= "
 	  WHERE CL.id IN (SELECT tmp.ID FROM (SELECT DISTINCT CL.id, CL.commit_date
   FROM element_pathname EP, commit_log_elements CLE, commit_log CL

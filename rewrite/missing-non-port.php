@@ -142,7 +142,7 @@ function freshports_NonPortDescription($dbh, $element_record) {
 			'spacesBeforeSeparator' => 1,
 			'spacesAfterSeparator'  => 1,
 			'append'                => false,
-			'path'			=> '/' . preg_replace('|^/?head/|', '', preg_replace('|^/?ports/|', '', $element_record->element_pathname)),
+			'path'                  => '/' . preg_replace('|^/?head/|', '', preg_replace('|^/?ports/|', '', $element_record->element_pathname)),
 			'fileName'              => '?page=%d',
 			'altFirst'              => 'First Page',
 			'firstPageText'         => 'First Page',

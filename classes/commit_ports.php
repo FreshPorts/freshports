@@ -113,7 +113,7 @@ class Commit_Ports {
 
 
 	function FetchByMessageId($message_id) {
-	        $Debug = 0;
+		$Debug = 0;
 		$Where = "message_id = '" . pg_escape_string($this->dbh, $message_id) . "'";
 
 		$result = $this->FetchByIDHelper($Where);

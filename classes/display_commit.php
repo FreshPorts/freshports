@@ -120,13 +120,13 @@ class DisplayCommit {
 			$mycommit = new Commit_Ports($this->dbh);
 			$mycommit->PopulateValues($myrow);
 
-#            var_dump($mycommit);
+#			echo '<pre>'; var_dump($mycommit); echo '</pre>';
 
 
 			// OK, while we have the log change log, let's put the port details here.
 
 			if ($mycommit->commit_log_id != $PreviousCommit->commit_log_id) {
-				if ($Debug) echo "This commit_log_id is different\n";
+				if ($Debug) echo 'This commit_log_id is different<br>';
 				if (($NumberOfPortsInThisCommit > $MaxNumberPortsToShow) && !$this->ShowAllPorts) {
 					$this->HTML .= '</ul>' . freshports_MorePortsToShow($PreviousCommit->message_id, $NumberOfPortsInThisCommit, $MaxNumberPortsToShow);
 				} else if ($i > 0) {
@@ -229,7 +229,7 @@ class DisplayCommit {
 
 				# The first comparison was here before the second, which was added as part of
 				# https://github.com/FreshPorts/freshports/issues/221 - date.php is not quarterly aware
-				if ($this->BranchName != $mycommit->branch || $this->BranchName != BRANCH_HEAD) {
+				if (!empty($mycommit->branch) && $this->BranchName != $mycommit->branch || $this->BranchName != BRANCH_HEAD) {
 					$this->HTML .=  ' <span class="commit-branch">' . $mycommit->branch . '</span>';
 				}
 
@@ -242,7 +242,7 @@ class DisplayCommit {
 				$TooManyPorts = true;
 			}
 
-			if ($Debug) echo 'at too many';
+			if ($Debug) echo 'at too many<br>';
 
 			if (!$TooManyPorts) {
 				$this->HTML .= '<li>';
@@ -349,17 +349,20 @@ class DisplayCommit {
 					$this->HTML .= $mycommit->revision . ' ';
 					$this->HTML .= '<span class="element-details">';
 					$PathName = preg_replace('|^/?ports/|', '', $mycommit->element_pathname);
-#					echo "'$PathName' " . "'" . $mycommit->repo_name . "'";
+					if ($Debug) echo "PathName='$PathName' " . " reponame='" . $mycommit->repo_name . "'<br>";
 					switch ($mycommit->repo_name)
 					{
 						case 'ports':
 							// strip off the leading directories
-						    if (!empty($mycommit->branch) && $mycommit->branch == BRANCH_HEAD) {
-						    	$PathName = preg_replace('|^head/|', '', $PathName);
-						    } else {
+							if ($Debug && !empty($mycommit->branch)) echo 'Branch is ' . $mycommit->branch . '<br>';
+							if (empty($mycommit->branch) || $mycommit->branch == BRANCH_HEAD) {
+								if ($Debug) echo 'replacing head<br>';
+								$PathName = preg_replace('|^head/|', '', $PathName);
+							} else {
+								if ($Debug) echo 'replacing branches<br>';
 								$PathName = preg_replace('|^branches/' . $mycommit->branch . '/|', '', $PathName);
 							}
-					        break;
+							break;
 					}
 
 					# this next line might want to go higher in the code if it's needed up there

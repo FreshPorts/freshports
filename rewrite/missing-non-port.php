@@ -126,7 +126,7 @@ function freshports_NonPortDescription($dbh, $element_record) {
 	$Commits->TreePathConditionSet("= '" . pg_escape_string($dbh, $element_record->element_pathname) . "'");
     
 	#	
-	# get the count without excuting the whole query
+	# get the count without executing the whole query
 	# we don't want to pull back all the data.
 	#
 	

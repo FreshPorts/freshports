@@ -39,9 +39,6 @@ function freshports_NonPortDescription($dbh, $element_record) {
 <tr>
 <?php echo freshports_PageBannerText('non port: ' . $Title); ?>
 </tr>
-<tr><td>
-<a href="<?php echo FRESHPORTS_FREEBSD_SVN_URL . $element_record->element_pathname; ?>?view=log" rel="noopener noreferrer">SVNWeb</a>
-</td></tr>
 
 <?php
 	GLOBAL $User;

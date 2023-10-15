@@ -370,7 +370,6 @@ class port_display {
             if ($this->Branch != BRANCH_HEAD) {
               $link .= '?h=' . $this->Branch;
             }
-#            $link = '<a href="' . $link . '">' . $link_title . '</a>';
             $link = '<a href="' . $link . '">' . freshports_Git_Icon($link_title) . '</a>';
           } else {
             $link = '<del>cgit</del>';
@@ -431,7 +430,6 @@ class port_display {
             if ($this->Branch != BRANCH_HEAD) {
               $link .= '?h=' . $this->Branch;
             }
-#            $link = '<a href="' . $link . '">' . $link_title . '</a>';
             $link = '<a href="' . $link . '">' . freshports_GitHub_Icon($link_title) . '</a>';
           } else {
             $link = '<del>GitHub</del>';
@@ -492,7 +490,6 @@ class port_display {
             if ($this->Branch != BRANCH_HEAD) {
               $link .= '?h=' . $this->Branch;
             }
-#            $link = '<a href="' . $link . '">' . $link_title . '</a>';
             $link = '<a href="' . $link . '">' . freshports_Codeberg_Icon($link_title) . '</a>';
           } else {
             $link = '<del>GitHub</del>';
@@ -553,7 +550,6 @@ class port_display {
             if ($this->Branch != BRANCH_HEAD) {
               $link .= '?h=' . $this->Branch;
             }
-#            $link = '<a href="' . $link . '">' . $link_title . '</a>';
             $link = '<a href="' . $link . '">' . freshports_GitLab_Icon($link_title) . '</a>';
           } else {
             $link = '<del>GitLab</del>';

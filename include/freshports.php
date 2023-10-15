@@ -164,7 +164,28 @@ function freshports_git_commit_Link_gitlab($revision, $hostname, $path) {
 }
 
 function freshports_git_commit_Link_codeberg($revision, $hostname, $path) {
-  return '<a href="https://codeberg.org/FreeBSD/freebsd-ports/commit/' . htmlentities($revision) .  '">' . freshports_Codeberg_Icon('commit hash:' . $revision) . '</a>';
+	$url = 'https://codeberg.org/FreeBSD/';
+
+	switch ($path) {
+		case '/ports':
+			$url .= 'freebsd-ports';
+			break;
+
+		case '/doc':
+			$url .= 'freebsd-doc';
+			break;
+
+		case '/src':
+			$url .= 'freebsd-src';
+			break;
+
+		default:
+			$url .= 'UNKOWN_PATH';
+			break;
+	}
+
+	$url .= '/commit/' . htmlentities($revision);
+  return '<a href="' . $url . '">' . freshports_Codeberg_Icon('commit hash:' . $revision) . '</a>';
 }
 
 function freshports_git_commit_Link_diff($revision, $hostname, $path) {

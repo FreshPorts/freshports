@@ -219,9 +219,9 @@ class DisplayCommit {
 				if ($mycommit->svn_revision != '') {
 					if ($this->IsGitCommit($mycommit->message_id)) {
 						$this->HTML .= '&nbsp; ' . freshports_git_commit_Link_freebsd($mycommit->svn_revision,                               $mycommit->repo_hostname, $mycommit->path_to_repo);
-						$this->HTML .= '&nbsp; ' . freshports_git_commit_Link_gitlab ($mycommit->svn_revision,                               $mycommit->repo_hostname, $mycommit->path_to_repo);
 						$this->HTML .= '&nbsp; ' . freshports_git_commit_Link_codeberg($mycommit->svn_revision,                               $mycommit->repo_hostname, $mycommit->path_to_repo);
 						$this->HTML .= '&nbsp; ' . freshports_git_commit_Link_github ($mycommit->svn_revision,                               $mycommit->repo_hostname, $mycommit->path_to_repo);
+						$this->HTML .= '&nbsp; ' . freshports_git_commit_Link_gitlab ($mycommit->svn_revision,                               $mycommit->repo_hostname, $mycommit->path_to_repo);
 						$this->HTML .= '&nbsp; ' . freshports_git_commit_Link_Hash   ($mycommit->svn_revision, $mycommit->commit_hash_short, $mycommit->repo_hostname, $mycommit->path_to_repo) . '&nbsp;';
 					} else {
 						$this->HTML .= '&nbsp; ' . freshports_svnweb_ChangeSet_Link($mycommit->svn_revision, $mycommit->repo_hostname);

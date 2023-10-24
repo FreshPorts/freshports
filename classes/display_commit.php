@@ -218,11 +218,11 @@ class DisplayCommit {
 					
 				if ($mycommit->svn_revision != '') {
 					if ($this->IsGitCommit($mycommit->message_id)) {
-						$this->HTML .= '&nbsp; ' . freshports_git_commit_Link_freebsd($mycommit->svn_revision,                               $mycommit->repo_hostname, $mycommit->path_to_repo);
+						$this->HTML .= '&nbsp; ' . freshports_git_commit_Link_freebsd ($mycommit->svn_revision,                               $mycommit->repo_hostname, $mycommit->path_to_repo);
 						$this->HTML .= '&nbsp; ' . freshports_git_commit_Link_codeberg($mycommit->svn_revision,                               $mycommit->repo_hostname, $mycommit->path_to_repo);
-						$this->HTML .= '&nbsp; ' . freshports_git_commit_Link_github ($mycommit->svn_revision,                               $mycommit->repo_hostname, $mycommit->path_to_repo);
-						$this->HTML .= '&nbsp; ' . freshports_git_commit_Link_gitlab ($mycommit->svn_revision,                               $mycommit->repo_hostname, $mycommit->path_to_repo);
-						$this->HTML .= '&nbsp; ' . freshports_git_commit_Link_Hash   ($mycommit->svn_revision, $mycommit->commit_hash_short, $mycommit->repo_hostname, $mycommit->path_to_repo) . '&nbsp;';
+						$this->HTML .= '&nbsp; ' . freshports_git_commit_Link_github  ($mycommit->svn_revision,                               $mycommit->repo_hostname, $mycommit->path_to_repo);
+						$this->HTML .= '&nbsp; ' . freshports_git_commit_Link_gitlab  ($mycommit->svn_revision,                               $mycommit->repo_hostname, $mycommit->path_to_repo);
+						$this->HTML .= '&nbsp; ' . freshports_git_commit_Link_Hash    ($mycommit->svn_revision, $mycommit->commit_hash_short, $mycommit->repo_hostname, $mycommit->path_to_repo) . '&nbsp;';
 					} else {
 						$this->HTML .= '&nbsp; ' . freshports_svnweb_ChangeSet_Link($mycommit->svn_revision, $mycommit->repo_hostname);
 					}
@@ -376,9 +376,17 @@ class DisplayCommit {
 						$this->HTML .= '<a href="/' . str_replace('%2F', '/', urlencode($PathName)) . $QueryArgs . '">' . $PathName. '</a>';
 						$this->HTML .= "</span>\n";
 					} else {
-						$this->HTML .= '<a href="' . FRESHPORTS_FREEBSD_CVS_URL . $PathName . '#rev' . $mycommit->revision . '">' . $PathName . '</a>';
+						#$this->HTML .= 'XXXXXX <a href="' . FRESHPORTS_FREEBSD_CVS_URL . $PathName . '#rev' . $mycommit->revision . '">' . $PathName . '</a>';
+						$this->HTML .= $PathName;
 						$this->HTML .= "</span>\n";
 					}
+
+					$this->HTML .= '&nbsp; ' . freshports_git_Link_freebsd ($mycommit->repo_hostname, $mycommit->path_to_repo, $PathName);
+					$this->HTML .= '&nbsp; ' . freshports_git_Link_codeberg($mycommit->repo_hostname, $mycommit->path_to_repo, $PathName);
+					$this->HTML .= '&nbsp; ' . freshports_git_Link_github  ($mycommit->repo_hostname, $mycommit->path_to_repo, $PathName);
+					$this->HTML .= '&nbsp; ' . freshports_git_Link_gitlab  ($mycommit->repo_hostname, $mycommit->path_to_repo, $PathName);
+
+
 				}
 				$this->HTML .= htmlify(_forDisplay($mycommit->short_description)) . "</li>\n";
 

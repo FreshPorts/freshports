@@ -109,60 +109,12 @@ function freshports_cvsweb_Revision_Link($pathname, $revision_name)
   return $HTML;
 }
 
+# cgit
 function freshports_git_commit_Link_freebsd($revision, $hostname, $path) {
-  return '<a href="https://' . htmlentities($hostname) . $path . '/commit/?id=' . htmlentities($revision) .  '">' . freshports_Git_Icon('commit hash:' . $revision) . '</a>';
+  return '<a href="https://' . htmlentities($hostname) . $path . '/commit/?id=' . htmlentities($revision) .  '">' . freshports_Git_Icon('commit hash: ' . $revision) . '</a>';
 }
 
-function freshports_git_commit_Link_github($revision, $hostname, $path) {
-	$url = 'https://github.com/FreeBSD/';
-
-	switch ($path) {
-		case '/ports':
-			$url .= 'freebsd-ports';
-			break;
-
-		case '/doc':
-			$url .= 'freebsd-doc';
-			break;
-
-		case '/src':
-			$url .= 'freebsd-src';
-			break;
-
-		default:
-			$url .= 'UNKOWN_PATH';
-			break;
-	}
-
-	$url .= '/commit/' . htmlentities($revision);
-	return '<a href="' . $url. '">' . freshports_GitHub_Icon('commit hash:' . $revision) . '</a>';
-}
-
-function freshports_git_commit_Link_gitlab($revision, $hostname, $path) {
-	$url = 'https://gitlab.com/FreeBSD/';
-
-	switch ($path) {
-		case '/ports':
-			$url .= 'freebsd-ports';
-			break;
-
-		case '/doc':
-			$url .= 'freebsd-doc';
-			break;
-
-		case '/src':
-			$url .= 'freebsd-src';
-			break;
-
-		default:
-			$url .= 'UNKOWN_PATH';
-			break;
-	}
-
-	$url .= '/commit/' . htmlentities($revision);
-	return '<a href="' . $url . '">' . freshports_GitLab_Icon('commit hash:' . $revision) . '</a>';
-}
-
+# codeberg
 function freshports_git_commit_Link_codeberg($revision, $hostname, $path) {
 	$url = 'https://codeberg.org/FreeBSD/';
 
@@ -185,8 +137,147 @@ function freshports_git_commit_Link_codeberg($revision, $hostname, $path) {
 	}
 
 	$url .= '/commit/' . htmlentities($revision);
-  return '<a href="' . $url . '">' . freshports_Codeberg_Icon('commit hash:' . $revision) . '</a>';
+  return '<a href="' . $url . '">' . freshports_Codeberg_Icon('commit hash: ' . $revision) . '</a>';
 }
+
+# github
+function freshports_git_commit_Link_github($revision, $hostname, $path) {
+	$url = 'https://github.com/FreeBSD/';
+
+	switch ($path) {
+		case '/ports':
+			$url .= 'freebsd-ports';
+			break;
+
+		case '/doc':
+			$url .= 'freebsd-doc';
+			break;
+
+		case '/src':
+			$url .= 'freebsd-src';
+			break;
+
+		default:
+			$url .= 'UNKOWN_PATH';
+			break;
+	}
+
+	$url .= '/commit/' . htmlentities($revision);
+	return '<a href="' . $url. '">' . freshports_GitHub_Icon('commit hash: ' . $revision) . '</a>';
+}
+
+# git lab
+function freshports_git_commit_Link_gitlab($revision, $hostname, $path) {
+	$url = 'https://gitlab.com/FreeBSD/';
+
+	switch ($path) {
+		case '/ports':
+			$url .= 'freebsd-ports';
+			break;
+
+		case '/doc':
+			$url .= 'freebsd-doc';
+			break;
+
+		case '/src':
+			$url .= 'freebsd-src';
+			break;
+
+		default:
+			$url .= 'UNKOWN_PATH';
+			break;
+	}
+
+	$url .= '/commit/' . htmlentities($revision);
+	return '<a href="' . $url . '">' . freshports_GitLab_Icon('commit hash: ' . $revision) . '</a>';
+}
+
+# cgit
+function freshports_git_Link_freebsd($hostname, $path, $pathname) {
+  return '<a href="https://' . htmlentities($hostname) . $path . '/log/' . $pathname .  '">' . freshports_Git_Icon('commit log for: ' . $pathname) . '</a>';
+}
+
+# codeberg
+function freshports_git_Link_codeberg($hostname, $path, $pathname) {
+	$url = 'https://codeberg.org/FreeBSD/';
+
+	switch ($path) {
+		case '/ports':
+			$url .= 'freebsd-ports';
+			break;
+
+		case '/doc':
+			$url .= 'freebsd-doc';
+			break;
+
+		case '/src':
+			$url .= 'freebsd-src';
+			break;
+
+		default:
+			$url .= 'UNKOWN_PATH';
+			break;
+	}
+
+	$url .= '/commits/branch/main/' . $pathname;
+        return '<a href="' . $url . '">' . freshports_Codeberg_Icon('commit log for: ' . $pathname) . '</a>';
+}
+
+# github
+function freshports_git_Link_github($hostname, $path, $pathname) {
+	$url = 'https://github.com/FreeBSD/';
+
+	switch ($path) {
+		case '/ports':
+			$url .= 'freebsd-ports';
+			break;
+
+		case '/doc':
+			$url .= 'freebsd-doc';
+			break;
+
+		case '/src':
+			$url .= 'freebsd-src';
+			break;
+
+		default:
+			$url .= 'UNKOWN_PATH';
+			break;
+	}
+
+	$url .= '/commits/main' . $pathname;
+	return '<a href="' . $url. '">' . freshports_GitHub_Icon('commit log for: ' . $pathname) . '</a>';
+}
+
+# git lab
+function freshports_git_Link_gitlab($hostname, $path, $pathname) {
+	$url = 'https://gitlab.com/FreeBSD/';
+
+	switch ($path) {
+		case '/ports':
+			$url .= 'freebsd-ports';
+			break;
+
+		case '/doc':
+			$url .= 'freebsd-doc';
+			break;
+
+		case '/src':
+			$url .= 'freebsd-src';
+			break;
+
+		default:
+			$url .= 'UNKOWN_PATH';
+			break;
+	}
+
+	$url .= '/-/commits/main/' . $pathname;
+	return '<a href="' . $url . '">' . freshports_GitLab_Icon('commit log for: ' . $pathname) . '</a>';
+}
+
+
+
+
 
 function freshports_git_commit_Link_diff($revision, $hostname, $path) {
   return '<a href="https://' . htmlentities($hostname) . $path . '/commit/?id=' . htmlentities($revision) .  '">' . freshports_Diff_Icon() . '</a>';
@@ -1649,11 +1740,6 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	        }
 	}
 
-	// indicate if this port needs refreshing from CVS
-	if ($commit->{'needs_refresh'}) {
-		$HTML .= " " . freshports_Refresh_Icon_Link() . "\n";
-	}
-
 	if (!$GitCommit) {
 		$HTML .= freshports_Email_Link($commit->message_id);
 	}
@@ -1671,6 +1757,11 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 
 	if (IsSet($VuXMLList[$commit->id])) {
 		$HTML .= '&nbsp;<a href="/vuxml.php?vid=' . urlencode($VuXMLList[$commit->id]) . '">' . freshports_VuXML_Icon() . '</a>';
+	}
+
+	// indicate if this port needs refreshing from CVS
+	if ($commit->{'needs_refresh'}) {
+		$HTML .= " " . freshports_Refresh_Icon_Link() . "\n";
 	}
 
 	if (IsSet($commit->branch) && $commit->branch != BRANCH_HEAD) {

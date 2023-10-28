@@ -132,7 +132,7 @@ function freshports_git_commit_Link_codeberg($revision, $hostname, $path) {
 			break;
 
 		default:
-			$url .= 'UNKOWN_PATH';
+			$url .= UNKNOWN_PATH;
 			break;
 	}
 
@@ -158,7 +158,7 @@ function freshports_git_commit_Link_github($revision, $hostname, $path) {
 			break;
 
 		default:
-			$url .= 'UNKOWN_PATH';
+			$url .= UNKNOWN_PATH;
 			break;
 	}
 
@@ -184,7 +184,7 @@ function freshports_git_commit_Link_gitlab($revision, $hostname, $path) {
 			break;
 
 		default:
-			$url .= 'UNKOWN_PATH';
+			$url .= UNKNOWN_PATH;
 			break;
 	}
 
@@ -215,7 +215,7 @@ function freshports_git_Link_codeberg($hostname, $path, $pathname) {
 			break;
 
 		default:
-			$url .= 'UNKOWN_PATH';
+			$url .= UNKNOWN_PATH;
 			break;
 	}
 
@@ -241,11 +241,11 @@ function freshports_git_Link_github($hostname, $path, $pathname) {
 			break;
 
 		default:
-			$url .= 'UNKOWN_PATH';
+			$url .= UNKNOWN_PATH;
 			break;
 	}
 
-	$url .= '/commits/main' . $pathname;
+	$url .= '/commits/main/' . $pathname;
 	return '<a href="' . $url. '">' . freshports_GitHub_Icon('commit log for: ' . $pathname) . '</a>';
 }
 
@@ -267,7 +267,7 @@ function freshports_git_Link_gitlab($hostname, $path, $pathname) {
 			break;
 
 		default:
-			$url .= 'UNKOWN_PATH';
+			$url .= UNKNOWN_PATH;
 			break;
 	}
 

@@ -229,3 +229,6 @@ define('PREDATES_MESSAGE_ID',  'dev.null.freshports.org');
 # the head of the ports tree in the database
 define('FRESHPORTS_PORTS_TREE_HEAD_PREFIX',   '/ports/head');
 define('FRESHPORTS_PORTS_TREE_BRANCH_PREFIX', '/ports/branches');
+
+# when we don't know the path, it is:
+define('UNKNOWN_PATH', 'UNKNOWN_PATH');

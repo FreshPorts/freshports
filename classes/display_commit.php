@@ -122,8 +122,14 @@ class DisplayCommit {
 
 #			echo '<pre>'; var_dump($mycommit); echo '</pre>';
 
+			if ($mycommit->branch && $mycommit->branch != BRANCH_HEAD) {
+				$QueryArgs= '?branch=' . $mycommit->branch;
+			} else {
+				$QueryArgs = '';
+			}
 
 			// OK, while we have the log change log, let's put the port details here.
+
 
 			if ($mycommit->commit_log_id != $PreviousCommit->commit_log_id) {
 				if ($Debug) echo 'This commit_log_id is different<br>';
@@ -189,14 +195,15 @@ class DisplayCommit {
 				}
 				$this->HTML .= ' ]';
 				$this->HTML .= '</span>';
-				$this->HTML .= '&nbsp;';
+				$this->HTML .= '<br>';
 				if ($this->IsGitCommit($mycommit->message_id)) {
 					# do nothing
 				} else {
 					$this->HTML .= freshports_Email_Link($mycommit->message_id);
 				}
 
-				$this->HTML .= '&nbsp;';
+				# we use element-details so the icons on the hash align with the icons on the elements which appear below it.
+				$this->HTML .= '<span class="element-details">';
 				if ($this->UserID) {
 					if (IsSet($this->FlaggedCommits[$mycommit->commit_log_id])) {
 						$this->HTML .= freshports_Commit_Flagged_Link    ($mycommit->message_id);
@@ -212,19 +219,18 @@ class DisplayCommit {
 				if ($mycommit->stf_message != '' && $this->ShowLinkToSanityTestFailure) {
 					$this->HTML .= '&nbsp;' . freshports_SanityTestFailure_Link($mycommit->message_id);
 				}
-				
+
 #        			echo '<pre>' . print_r($mycommit, true) . '</pre>';
 
-					
 				if ($mycommit->svn_revision != '') {
 					if ($this->IsGitCommit($mycommit->message_id)) {
-						$this->HTML .= '&nbsp; ' . freshports_git_commit_Link_freebsd ($mycommit->svn_revision,                               $mycommit->repo_hostname, $mycommit->path_to_repo);
-						$this->HTML .= '&nbsp; ' . freshports_git_commit_Link_codeberg($mycommit->svn_revision,                               $mycommit->repo_hostname, $mycommit->path_to_repo);
-						$this->HTML .= '&nbsp; ' . freshports_git_commit_Link_github  ($mycommit->svn_revision,                               $mycommit->repo_hostname, $mycommit->path_to_repo);
-						$this->HTML .= '&nbsp; ' . freshports_git_commit_Link_gitlab  ($mycommit->svn_revision,                               $mycommit->repo_hostname, $mycommit->path_to_repo);
-						$this->HTML .= '&nbsp; ' . freshports_git_commit_Link_Hash    ($mycommit->svn_revision, $mycommit->commit_hash_short, $mycommit->repo_hostname, $mycommit->path_to_repo) . '&nbsp;';
+						$this->HTML .= freshports_git_commit_Link_freebsd ($mycommit->svn_revision,                               $mycommit->repo_hostname, $mycommit->path_to_repo) . '&nbsp;';
+						$this->HTML .= freshports_git_commit_Link_codeberg($mycommit->svn_revision,                               $mycommit->repo_hostname, $mycommit->path_to_repo) . '&nbsp;';
+						$this->HTML .= freshports_git_commit_Link_github  ($mycommit->svn_revision,                               $mycommit->repo_hostname, $mycommit->path_to_repo) . '&nbsp;';
+						$this->HTML .= freshports_git_commit_Link_gitlab  ($mycommit->svn_revision,                               $mycommit->repo_hostname, $mycommit->path_to_repo) . '&nbsp;';
+						$this->HTML .= freshports_git_commit_Link_Hash    ($mycommit->svn_revision, $mycommit->commit_hash_short, $mycommit->repo_hostname, $mycommit->path_to_repo);
 					} else {
-						$this->HTML .= '&nbsp; ' . freshports_svnweb_ChangeSet_Link($mycommit->svn_revision, $mycommit->repo_hostname);
+						$this->HTML .= freshports_svnweb_ChangeSet_Link($mycommit->svn_revision, $mycommit->repo_hostname) . '&nbsp;';
 					}
 				}
 
@@ -233,6 +239,7 @@ class DisplayCommit {
 				if (!empty($mycommit->branch) && $this->BranchName != $mycommit->branch || $this->BranchName != BRANCH_HEAD) {
 					$this->HTML .=  ' <span class="commit-branch">' . $mycommit->branch . '</span>';
 				}
+				$this->HTML .= '</span>';
 
 				$this->HTML .= "<ul class=\"element-list\">\n";
 
@@ -265,10 +272,8 @@ class DisplayCommit {
 					$this->HTML .= '<span class="element-details">';
 #					$this->HTML .= '<a href="/' . $mycommit->category . '/' . $mycommit->port . '/' . $URLBranchSuffix;
 					$this->HTML .= '<a href="/' . $mycommit->category . '/' . $mycommit->port . '/';
-					if ($mycommit->branch && $mycommit->branch != BRANCH_HEAD) {
-						$this->HTML .= '?branch=' . $mycommit->branch;
-					}
-					$this->HTML .= '">';
+
+					$this->HTML .= $QueryArgs . '">';
 					$this->HTML .= $mycommit->port;
 					$this->HTML .= '</a>';
 
@@ -365,12 +370,10 @@ class DisplayCommit {
 							break;
 					}
 
-					# this next line might want to go higher in the code if it's needed up there
-					if ($this->BranchName != $mycommit->branch || $this->BranchName != BRANCH_HEAD) {
-						$QueryArgs= '?branch=' . $mycommit->branch;
-					} else {
-						$QueryArgs = '';
-					}
+					$this->HTML .= freshports_git_Link_freebsd ($mycommit->repo_hostname, $mycommit->path_to_repo, $PathName) . '&nbsp;';
+					$this->HTML .= freshports_git_Link_codeberg($mycommit->repo_hostname, $mycommit->path_to_repo, $PathName) . '&nbsp;';
+					$this->HTML .= freshports_git_Link_github  ($mycommit->repo_hostname, $mycommit->path_to_repo, $PathName) . '&nbsp;';
+					$this->HTML .= freshports_git_Link_gitlab  ($mycommit->repo_hostname, $mycommit->path_to_repo, $PathName) . '&nbsp;';
 
 					if ($PathName != $mycommit->element_pathname) {
 						$this->HTML .= '<a href="/' . str_replace('%2F', '/', urlencode($PathName)) . $QueryArgs . '">' . $PathName. '</a>';
@@ -380,13 +383,6 @@ class DisplayCommit {
 						$this->HTML .= $PathName;
 						$this->HTML .= "</span>\n";
 					}
-
-					$this->HTML .= '&nbsp; ' . freshports_git_Link_freebsd ($mycommit->repo_hostname, $mycommit->path_to_repo, $PathName);
-					$this->HTML .= '&nbsp; ' . freshports_git_Link_codeberg($mycommit->repo_hostname, $mycommit->path_to_repo, $PathName);
-					$this->HTML .= '&nbsp; ' . freshports_git_Link_github  ($mycommit->repo_hostname, $mycommit->path_to_repo, $PathName);
-					$this->HTML .= '&nbsp; ' . freshports_git_Link_gitlab  ($mycommit->repo_hostname, $mycommit->path_to_repo, $PathName);
-
-
 				}
 				$this->HTML .= htmlify(_forDisplay($mycommit->short_description)) . "</li>\n";
 

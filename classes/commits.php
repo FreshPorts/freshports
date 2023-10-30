@@ -184,7 +184,7 @@ class Commits {
 with recent_commits AS
 (WITH RC AS
   (select * from commit_log order by commit_date DESC limit 1000)
-  SELECT distinct RC.*, CLPE.element_id AS clpe_element_id
+  SELECT distinct RC.*
     FROM commit_log_ports_elements CLPE, RC
    WHERE CLPE.commit_log_id = RC.id
    ORDER by RC.commit_date DESC
@@ -221,8 +221,8 @@ with recent_commits AS
             C.name                                                                                              AS category,
             C.id                                                                                                AS category_id,
             E.name                                                                                              AS port,
-            element_pathname(clpe_element_id)                                                                   AS element_pathname,
-            clpe_element_id                                                                                     AS element_id,
+            element_pathname(CLPE.element_id)                                                                   AS element_pathname,
+            CLPE.element_id                                                                                     AS element_id,
             CASE when CLP.port_version IS NULL then P.version  else CLP.port_version  END                       AS version,
             CASE when CLP.port_version is NULL then P.revision else CLP.port_revision END                       AS revision,
             CASE when CLP.port_epoch   is NULL then P.portepoch else CLP.port_epoch   END                       AS epoch,
@@ -258,9 +258,10 @@ with recent_commits AS
 
                 $sql .= "
     FROM recent_commits RC
-    LEFT OUTER JOIN commit_log_branches CLB  ON RC.id             = CLB.commit_log_id
+               JOIN commit_log_ports_elements CLPE ON CLPE.commit_log_id = RC.id
+    LEFT OUTER JOIN commit_log_branches CLB  ON CLPE.commit_log_id= CLB.commit_log_id
                JOIN system_branch SB         ON SB.id             = CLB.branch_id
-    LEFT OUTER JOIN ports P                  ON P.element_id      = clpe_element_id
+    LEFT OUTER JOIN ports P                  ON P.element_id      = CLPE.element_id
     LEFT OUTER JOIN commit_log_ports CLP     ON P.id              = CLP.port_id and CLP.commit_log_id = RC.id
     LEFT OUTER JOIN element E                ON E.id              = P.element_id
     LEFT OUTER JOIN categories C             ON C.id              = P.category_id

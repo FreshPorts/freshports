@@ -17,7 +17,7 @@
 
 	checkLoadBeforeProceeding();
 
-	$Debug = 0;
+	$Debug = 1;
 # this should only be referenced after it has been set.
 #	$sqlUserSpecifiedCondition = '';
 #	if ($Debug) phpinfo();
@@ -64,8 +64,12 @@
 		}
 	}
 
+	define('SEARCH_FIELD_AUTHOR_NAME',          'author_name');
+	define('SEARCH_FIELD_AUTHOR_EMAIL'   ,      'author_email');
 	define('SEARCH_FIELD_COMMITMESSAGE',        'commitmessage');
 	define('SEARCH_FIELD_COMMITTER',            'committer');
+	define('SEARCH_FIELD_COMMITTER_EMAIL',      'committer_email');
+	define('SEARCH_FIELD_COMMITTER_NAME',       'committer_name');
 	define('SEARCH_FIELD_DEPENDS_ALL',          'depends_all');
 	define('SEARCH_FIELD_DEPENDS_BUILD',        'depends_build');
 	define('SEARCH_FIELD_DEPENDS_LIB',          'depends_lib');
@@ -87,8 +91,12 @@
 
 
 	$SearchTypeToFieldMap = array(
+        SEARCH_FIELD_AUTHOR_NAME          => 'CL.author_name',
+        SEARCH_FIELD_AUTHOR_EMAIL         => 'CL.author_email',
 	    SEARCH_FIELD_COMMITMESSAGE        => 'CL.description',
 	    SEARCH_FIELD_COMMITTER            => 'CL.committer',
+	    SEARCH_FIELD_COMMITTER_EMAIL      => 'CL.committer_email',
+	    SEARCH_FIELD_COMMITTER_NAME       => 'CL.committer_name',
 	    SEARCH_FIELD_DEPENDS_ALL          => 'P.depends_all',
 	    SEARCH_FIELD_DEPENDS_BUILD        => 'P.depends_build',
 	    SEARCH_FIELD_DEPENDS_LIB          => 'P.depends_lib',
@@ -199,13 +207,18 @@
 	// avoid nasty problems by escaping them - I'm not even sure this is proper.
 	if (IsSet($_REQUEST['stype']))              $stype               = pg_escape_string($db, trim($_REQUEST['stype']));
 	if (IsSet($_REQUEST['num']))                $num                 = intval(pg_escape_string($db, trim($_REQUEST['num'])));
+
+    # Before adding the dropdown for searching by category, this line was here, but I don't know why. It was not used.
 	if (IsSet($_REQUEST['category']))           $category            = pg_escape_string($db, trim($_REQUEST['category']));
-	if (IsSet($_REQUEST['port']))               $port                = pg_escape_string($db, trim($_REQUEST['port']));
+
+# I am sure this is not used
+#	if (IsSet($_REQUEST['port']))               $port                = pg_escape_string($db, trim($_REQUEST['port']));
+
 	if (IsSet($_REQUEST['method']))             $method              = pg_escape_string($db, trim($_REQUEST['method']));
-	if (IsSet($_REQUEST['deleted']))            $deleted		 = pg_escape_string($db, trim($_REQUEST['deleted']));
+	if (IsSet($_REQUEST['deleted']))            $deleted		     = pg_escape_string($db, trim($_REQUEST['deleted']));
 	if (!IsSet($_REQUEST[INCLUDE_SRC_COMMITS])) $include_src_commits = '';
 	if (IsSet($_REQUEST['casesensitivity']))    $casesensitivity	 = pg_escape_string($db, trim($_REQUEST['casesensitivity']));
-	if (IsSet($_REQUEST['orderby']))            $orderby		 = pg_escape_string($db, trim($_REQUEST['orderby']));
+	if (IsSet($_REQUEST['orderby']))            $orderby		     = pg_escape_string($db, trim($_REQUEST['orderby']));
 	if (IsSet($_REQUEST['orderbyupdown']))      $orderbyupdown       = pg_escape_string($db, trim($_REQUEST['orderbyupdown']));
 	if (IsSet($_REQUEST['format']))             $output_format       = pg_escape_string($db, trim($_REQUEST['format']));
 	if (IsSet($_REQUEST['minimal']))            $minimal_output      = pg_escape_string($db, trim($_REQUEST['minimal']));
@@ -215,6 +228,9 @@
 	# 83.85.93.90 - - [02/Oct/2007:04:18:00 -0400] "GET /search.php?stype=https://amyru.h18.ru/images/cs.txt? HTTP/1.1" 301 332 "-" "Wget/1.1 (compatible; i486; Linux; RedHat7.3)"
 	# well, it's not so much a problem as an annoyance.  So we will redirect their ass eslewhere.
 	#
+
+    # for parameters to sql query via pg_query_params
+    $query_params = array();
 
 	if (substr($stype, 0, 7) === 'http://') {
 	  # redirect their ass
@@ -228,7 +244,11 @@
 	}
 
 	switch ($stype) {
+		case SEARCH_FIELD_AUTHOR_NAME:
+		case SEARCH_FIELD_AUTHOR_EMAIL:
 		case SEARCH_FIELD_COMMITTER:
+		case SEARCH_FIELD_COMMITTER_NAME:
+		case SEARCH_FIELD_COMMITTER_EMAIL:
 		case SEARCH_FIELD_COMMITMESSAGE:
 		case SEARCH_FIELD_DEPENDS_ALL:
 		case SEARCH_FIELD_DEPENDS_BUILD:
@@ -363,7 +383,11 @@
 		# Adjust method if required
 		if ($method == 'soundex') {
 			switch ($stype) {
+				case SEARCH_FIELD_AUTHOR_NAME:
+				case SEARCH_FIELD_AUTHOR_EMAIL:
 				case SEARCH_FIELD_COMMITTER:
+				case SEARCH_FIELD_COMMITTER_NAME:
+				case SEARCH_FIELD_COMMITTER_EMAIL:
 				case SEARCH_FIELD_MAINTAINER:
 				case SEARCH_FIELD_NAME:
 				case SEARCH_FIELD_PACKAGE:
@@ -433,7 +457,7 @@
 							break;
 
 						default:
-					                $sqlSetAll = true;
+                            $sqlSetAll = true;
 							$FieldName = $SearchTypeToFieldMap[$stype] ?? null;
 							if (empty($FieldName)) {
 							   die('you are probably doing this wrong');
@@ -498,6 +522,20 @@
 		# How are we ordering the output?
 		# NOTE that searching by 'sounds like' requires a special approach
 		#
+        switch ($stype) {
+            case SEARCH_FIELD_AUTHOR_NAME:
+            case SEARCH_FIELD_AUTHOR_EMAIL:
+            case SEARCH_FIELD_COMMITTER:
+            case SEARCH_FIELD_COMMITTER_NAME:
+            case SEARCH_FIELD_COMMITTER_EMAIL:
+            case SEARCH_FIELD_MAINTAINER:
+            case SEARCH_FIELD_NAME:
+            case SEARCH_FIELD_PACKAGE:
+                $sqlOrderBy = "\n ORDER BY ";
+                break;
+
+            default:
+        } # end of final adjustment of sort
 
 		switch ($method) {
 			case 'soundex':
@@ -528,7 +566,7 @@
 								break;
 
 							case ORDERBYASCENDING:
-								$sqlOrderBy = "\n ORDER BY C.name, E.name";
+								$sqlOrderBy = "\n ORDER BY commit_date_raw DESC, commit_log_id, C.name, E.name";
 								break;
 						}
 						break;
@@ -548,6 +586,8 @@
 						break;
 				}
 		}
+
+        # sorting is different for somethings and we adjust that here:
 
 		# grab the constant
 		$sqlSelectFields = SEARCH_SELECT_FIELD;
@@ -575,15 +615,15 @@
 		    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
 
 		    if ($include_src_commits) {
-		      if ($Debug) echo 'searching src';
+		      if ($Debug) echo 'searching src<br>';
 		      require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits_by_committer.php');
 		      $Commits = new CommitsByCommitter($db);
 		    } else {
-		      if ($Debug) echo 'not searching src';
+		      if ($Debug) echo 'not searching src<br>';
 		      require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port_commits_by_committer.php');
 		      $Commits = new PortCommitsByCommitter($db);
 		    }
-		    if ($Debug) echo 'searching by committer for ' . htmlentities($query);
+		    if ($Debug) echo 'searching by committer for ' . htmlentities($query) . '<br>';
 		    $Commits->CommitterSet($query);
 
 		    $Commits->Debug = $Debug;
@@ -618,7 +658,7 @@
 		    if ($Debug) {
 		        if ($result) {
 		             echo "
-<br>we have a result for SEARCH_FIELD_COMMITTER<br>\n";
+<br>we have a result for $stype<br>\n";
 			}
 		    }
 		    break;
@@ -663,8 +703,8 @@
 		    if ($Debug) {
 		        if ($result) {
 		            echo "
-<br>we have a result for SEARCH_FIELD_COMMITMESSAGE<br>\n";
-			}
+<br>we have a result for $stype<br>\n";
+		    	}
 		    }
 		    break;
 
@@ -726,7 +766,7 @@
 			if ($Debug) {
 				if ($result) {
 					echo "
-<br>we have a result for SEARCH_FIELD_PATHNAME<br>\n";
+<br>we have a result for $stype<br>\n";
 				}
 			}
 
@@ -796,7 +836,7 @@
 			if ($Debug) {
 				if ($result) {
 					echo "
-<br>we have a result for SEARCH_FIELD_USES<br>\n";
+<br>we have a result for $stype<br>\n";
 				}
 			}
 			break;
@@ -806,9 +846,9 @@
 			$sqlSelectCount = "\n  SELECT count(*)";
 			if ($User->id) {
 				$sqlExtraFields .= ",\nonwatchlist";
-		        } else {
+            } else {
 				$sqlExtraFields .= ",\nNULL AS onwatchlist";
-		        }
+		    }
 
 			$sqlFrom = "
   FROM ports P LEFT OUTER JOIN ports_vulnerable    PV  ON PV.port_id       = P.id
@@ -816,9 +856,13 @@
                LEFT OUTER JOIN repo                R   ON CL.repo_id       = R.id
                LEFT OUTER JOIN commit_log_branches CLB ON CL.id            = CLB.commit_log_id
                           JOIN system_branch       SB  ON SB.branch_name   = '" . pg_escape_string($db, $Branch) . "'
-                                                      AND SB.id            = CLB.branch_id,
-       categories C, element E
-";
+                                                      AND SB.id            = CLB.branch_id";
+
+            if (!empty($category)) {
+                $query_params[] = $category;
+                $sqlFrom .= ' join ports_categories PC on P.id = PC.port_id and PC.category_id = (select id from categories where name = $' . count($query_params) . ')';
+            }
+            $sqlFrom .= ", categories C, element E\n";
 
 			if ($output_format == OUTPUT_FORMAT_DEPENDS) {
 				$sqlFrom .= "
@@ -830,6 +874,11 @@ JOIN element_pathname EP on E.id = EP.element_id
 			$sqlWhere = '
     WHERE P.category_id  = C.id
       AND P.element_id   = E.id ' ;
+
+#            if (!empty($category)) {
+#                $query_params[] = $category;
+#                $sqlWhere .= ' AND C.name = $' . count($query_params);
+#            }
 
 
 			$AddRemoveExtra  = "?query=" . htmlentities($query). "+stype=$stype+num=$num+method=$method";
@@ -846,11 +895,12 @@ JOIN element_pathname EP on E.id = EP.element_id
 			}
 
 			if ($Debug) {
-				echo "<pre>$sql<pre>\n";
+                echo __FILE__ . '::' . __LINE__ . ' says:<br>';
+				echo "<pre>$sql</pre>\n";
 			}
 
 			# this may be interesting to figure out params.
-			$result  = pg_query_params($db, $sql, array());
+			$result  = pg_query_params($db, $sql, $query_params);
 			if (!$result) {
 			  syslog(LOG_NOTICE, pg_last_error($db) . ': ' . $sql);
 			  die('something went terribly wrong.  Sorry.');
@@ -859,6 +909,7 @@ JOIN element_pathname EP on E.id = EP.element_id
 			$NumRows  = pg_num_rows($result);
 			$myrow    = pg_fetch_array($result);
 			$NumFound = $myrow[0];
+            $NumberOfCommits = $NumFound;
 
 			if ($Debug) {
 				echo "\$NumFound = '$NumFound'<br>";
@@ -903,21 +954,27 @@ JOIN element_pathname EP on E.id = EP.element_id
 				}
 
 				if ($Debug) {
-					echo "<pre>$sql<pre>\n";
+                    echo __FILE__ . '::' . __LINE__ . ' says:<br>';
+					echo "<pre>$sql</pre>\n";
 				}
 
 				pg_exec($db, "set client_encoding = 'ISO-8859-15'");
-				$result  = pg_exec($db, $sql);
+    			$result  = pg_query_params($db, $sql, $query_params);
+
 				if (!$result) {
 					syslog(LOG_NOTICE, pg_last_error($db) . ': ' . $sql);
 					die('something went terribly wrong.  Sorry.');
 				}
 
 				$NumFetches = pg_num_rows($result);
+    		    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits.php');
+    		    $Commits = new Commits($db);
+                $Commits->LocalResult = $result;
+
 				if ($Debug) {
 					if ($result) {
 						echo "
-<br>we have a result for 'default'<br>\n";
+<br>we have a result for $stype via 'default'<br>\n";
 					}
 				}
 			} # $NumFound > 0
@@ -980,8 +1037,12 @@ JOIN element_pathname EP on E.id = EP.element_id
 
 <form ACTION="<?php echo $_SERVER["PHP_SELF"] ?>" name="search" >
 	<SELECT NAME="stype" size="1">
+		<OPTION VALUE="<?php echo SEARCH_FIELD_AUTHOR_EMAIL         . '"'; if ($stype == SEARCH_FIELD_AUTHOR_EMAIL)         echo ' SELECTED'; ?>>Author Email</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_AUTHOR_NAME          . '"'; if ($stype == SEARCH_FIELD_AUTHOR_NAME)          echo ' SELECTED'; ?>>Author Name</OPTION>
 		<OPTION VALUE="<?php echo SEARCH_FIELD_COMMITMESSAGE        . '"'; if ($stype == SEARCH_FIELD_COMMITMESSAGE)        echo ' SELECTED'; ?>>Commit Message</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_COMMITTER            . '"'; if ($stype == SEARCH_FIELD_COMMITTER)            echo ' SELECTED'; ?>>Committer</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_COMMITTER            . '"'; if ($stype == SEARCH_FIELD_COMMITTER)            echo ' SELECTED'; ?>>Committer ID (email without @FreeBSD.org)</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_COMMITTER_EMAIL      . '"'; if ($stype == SEARCH_FIELD_COMMITTER_EMAIL)      echo ' SELECTED'; ?>>Committer Email</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_COMMITTER_NAME       . '"'; if ($stype == SEARCH_FIELD_COMMITTER_NAME)       echo ' SELECTED'; ?>>Committer Name</OPTION>
 		<OPTION VALUE="<?php echo SEARCH_FIELD_DEPENDS_BUILD        . '"'; if ($stype == SEARCH_FIELD_DEPENDS_BUILD)        echo ' SELECTED'; ?>>Depends Build</OPTION>
 		<OPTION VALUE="<?php echo SEARCH_FIELD_DEPENDS_LIB          . '"'; if ($stype == SEARCH_FIELD_DEPENDS_LIB)          echo ' SELECTED'; ?>>Depends Lib</OPTION>
 		<OPTION VALUE="<?php echo SEARCH_FIELD_DEPENDS_RUN          . '"'; if ($stype == SEARCH_FIELD_DEPENDS_RUN)          echo ' SELECTED'; ?>>Depends Run</OPTION>
@@ -1018,7 +1079,28 @@ JOIN element_pathname EP on E.id = EP.element_id
 		echo $PageOptions->DDLB_Choices('num', $num, 'results');
 ?>
 
-	<br><br>
+<?php
+# the goal: have a periodic script which refreshes this file avoiding race conditions, e.g. mv
+define('CATEGORIES_CACHE_LIST', '/var/db/freshports/cache/general/categories.php');
+
+if (file_exists(CATEGORIES_CACHE_LIST)) {
+ ?>
+	<br>
+	<br>
+	Search only this category:
+
+	<SELECT NAME="category" size="1">
+<?php
+     include_once(CATEGORIES_CACHE_LIST);
+ ?>
+	</SELECT>
+<?php
+} else {
+    echo "<br><br>The list of categories is not available - the cache file does not exist - This should never happen.";
+}
+?>
+<br>
+<br>
 
 <table class="search-options bordered">
 <tr>
@@ -1092,7 +1174,7 @@ JOIN element_pathname EP on E.id = EP.element_id
 <li><small>When searching on 'Commit Message' only 'containing' is used.</small></li>
 <li><small>When searching  by 'Under a pathname', your path must start with something like /ports/, /doc/, or /src/. All
       commits under that point will be returned. The selected match type is ignored and defaults to 'Starts with'.</small></li>
-<li><small>Searching for 'sounds like' is only valid for Committer, Maintainer, Package Name, and Port Name.</small></li>
+<li><small>Searching for 'sounds like' is only valid for Author Email, Author Name, Committer Email, Committer Name, Maintainer, Package Name, and Port Name.</small></li>
 </ul>
 
 <?php
@@ -1135,7 +1217,14 @@ Special searches:
 		     $HTML .= " <strong style=\"color:var(--beastie-red)\">No results found</strong><br>\n";
 		   }
 		} else {
-		      if ($stype == 'committer' || $stype == 'commitmessage' || $stype == 'tree') {
+            switch($stype) {
+                case SEARCH_FIELD_AUTHOR_EMAIL:
+                case SEARCH_FIELD_AUTHOR_NAME:
+                case SEARCH_FIELD_COMMITTER:
+                case SEARCH_FIELD_COMMITTER_EMAIL:
+                case SEARCH_FIELD_COMMITTER_NAME:
+                case SEARCH_FIELD_COMMITMESSAGE:
+                case SEARCH_FIELD_PATHNAME:
 		          $NumFetches = min($num, $NumberOfCommits);
 		          if ($Debug) echo 'here we are<br>';
 		          if ($NumFetches != $NumberOfCommits) {
@@ -1150,91 +1239,102 @@ Special searches:
 			      }
 			  
 			      if ($Debug) echo "NumPortsFound = '$NumPortsFound'<br>";
-		      } else {
-		        if (IsSet($NumFetches) && IsSet($NumRows) && $NumFetches != $NumRows) {
-		           $MoreToShow = 1;
-		        } else {
-		           $MoreToShow = 0;
-		        }
+                  break;
 
-		        $NumPortsFound = 'Number of ports: ' . ($NumFound ?? 0);
-		        if ($NumFound > $PageSize && $output_format !== OUTPUT_FORMAT_PLAIN_TEXT) {
-		          $NumPortsFound .= " (showing only $NumOnThisPage on this page)";
-		        }
-		      }
+                default:
+                    if (IsSet($NumFetches) && IsSet($NumRows) && $NumFetches != $NumRows) {
+                       $MoreToShow = 1;
+                    } else {
+                       $MoreToShow = 0;
+    		        }
 
-			if ($Debug) echo 'here we are2<br>';
-			switch ($stype) {
-				case SEARCH_FIELD_COMMITTER:
-				case SEARCH_FIELD_COMMITMESSAGE:
-				case SEARCH_FIELD_PATHNAME:
-					if ($Debug) echo 'time to display!';
-					$DisplayCommit = new DisplayCommit($db, $Commits->LocalResult);
-					$links = $Pager->GetLinks();
+                    $NumPortsFound = 'Number of ports: ' . ($NumFound ?? 0);
+                    if ($NumFound > $PageSize && $output_format !== OUTPUT_FORMAT_PLAIN_TEXT) {
+                      $NumPortsFound .= " (showing only $NumOnThisPage on this page)";
+                    }
+                    break;
+		      } /* switch */
 
-					$HTML .= $NumPortsFound . ' ' . $links['all'];
-					$HTML .= $DisplayCommit->CreateHTML();
-					$HTML .= '<tr><td>' . $NumPortsFound . ' ' . $links['all'] . '</td></tr>';
-					break;
+             if ($Debug) echo 'here we are2<br>';
+                switch ($stype) {
+                    case SEARCH_FIELD_AUTHOR_NAME:
+                    case SEARCH_FIELD_AUTHOR_EMAIL:
+                    case SEARCH_FIELD_COMMITTER:
+                    case SEARCH_FIELD_COMMITTER_NAME:
+                    case SEARCH_FIELD_COMMITTER_EMAIL:
+                    case SEARCH_FIELD_COMMITMESSAGE:
+                    case SEARCH_FIELD_PATHNAME:
+                        if ($Debug) echo __FILE__ . '::' . __LINE__ . ' says hi';
+               		    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
 
-				default:
-					require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
+                        if ($Debug) echo 'time to display!';
+                        $DisplayCommit = new DisplayCommit($db, $Commits->LocalResult);
+                        $links = $Pager->GetLinks();
 
-					$links = $Pager->GetLinks();
+                        $HTML .= $NumPortsFound . ' ' . $links['all'];
+                        $HTML .= $DisplayCommit->CreateHTML();
+                        $HTML .= '<tr><td>' . $NumPortsFound . ' ' . $links['all'] . '</td></tr>';
+                        break;
 
-					if ($output_format == OUTPUT_FORMAT_HTML) {
-						$HTML .= $NumPortsFound . ' ' . $links['all'];
-					}
+                    default:
+                        if ($Debug) echo __FILE__ . '::' . __LINE__ . ' says hi';
+                        require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
 
-					GLOBAL $User;
+                        $links = $Pager->GetLinks();
 
-					$port_display = new port_display($db, $User);
+                        if ($output_format == OUTPUT_FORMAT_HTML) {
+                            $HTML .= $NumPortsFound . ' ' . $links['all'];
+                        }
 
-					switch ($minimal_output) {
-						case 1:
-							$port_display->SetDetailsNil();
-							$port_display->SetDetailsMinimal();
-							break;
-						default:
-							$port_display->SetDetailsSearch();
-							if ($stype == SEARCH_FIELD_PKG_MESSAGE) {
-								if ($Debug) echo 'SEARCH_FIELD_PKG_MESSAGE is in effect';
-								$port_display->SetDetailsPkgMessage();
-							}
-							break;
-					}
+                        GLOBAL $User;
 
-					if ($Debug) echo 'NumFetches = ' . $NumFetches . '<br>';
-					for ($i = 0; $i < $NumFetches; $i++) {
-						$Port->FetchNth($i);
-						$port_display->SetPort($Port);
-						switch ($output_format) {
-							case OUTPUT_FORMAT_HTML:
-								$Port_HTML = $port_display->Display();
-								$HTML .= $port_display->ReplaceWatchListToken($Port->{'onwatchlist'}, $Port_HTML, $Port->{'element_id'});
-								break;
+                        $port_display = new port_display($db, $User);
 
-							case OUTPUT_FORMAT_PLAIN_TEXT:
-								$HTML .= $port_display->DisplayPlainText() . "\n";
-								break;
+                        switch ($minimal_output) {
+                            case 1:
+                                $port_display->SetDetailsNil();
+                                $port_display->SetDetailsMinimal();
+                                break;
+                            default:
+                                $port_display->SetDetailsSearch();
+                                if ($stype == SEARCH_FIELD_PKG_MESSAGE) {
+                                    if ($Debug) echo 'SEARCH_FIELD_PKG_MESSAGE is in effect';
+                                    $port_display->SetDetailsPkgMessage();
+                                }
+                                break;
+                        } /* switch output */
 
-							case OUTPUT_FORMAT_DEPENDS:
-								$HTML .= $port_display->DisplayDependencyLine() . "\n";
-								$tmp   = $port_display->DisplayDependencyLineLibraries(true);
-								if (!empty($tmp)) {
-									$HTML .= $tmp . "\n";
-								}
-								break;
-						} // switch
-						if ($output_format == OUTPUT_FORMAT_HTML) {
-							$HTML .= '<hr width="100%">';
-						}
-					} // for
+                        if ($Debug) echo 'NumFetches = ' . $NumFetches . '<br>';
+                        for ($i = 0; $i < $NumFetches; $i++) {
+                            $Port->FetchNth($i);
+                            $port_display->SetPort($Port, $Branch);
+                            switch ($output_format) {
+                                case OUTPUT_FORMAT_HTML:
+                                    $Port_HTML = $port_display->Display();
+                                    $HTML .= $port_display->ReplaceWatchListToken($Port->{'onwatchlist'}, $Port_HTML, $Port->{'element_id'});
+                                    break;
 
-				    	if ($output_format == OUTPUT_FORMAT_HTML) {
-						$HTML .= $NumPortsFound . ' ' . $links['all'];
-					}
-			}
+                                case OUTPUT_FORMAT_PLAIN_TEXT:
+                                    $HTML .= $port_display->DisplayPlainText() . "\n";
+                                    break;
+
+                                case OUTPUT_FORMAT_DEPENDS:
+                                    $HTML .= $port_display->DisplayDependencyLine() . "\n";
+                                    $tmp   = $port_display->DisplayDependencyLineLibraries(true);
+                                    if (!empty($tmp)) {
+                                        $HTML .= $tmp . "\n";
+                                    }
+                                    break;
+                            } // switch
+                            if ($output_format == OUTPUT_FORMAT_HTML) {
+                                $HTML .= '<hr width="100%">';
+                            }
+                        } // for
+
+                        if ($output_format == OUTPUT_FORMAT_HTML) {
+                            $HTML .= $NumPortsFound . ' ' . $links['all'];
+                        }
+                } /* switch */
 		
 			if ($Debug) echo 'WHAT IS THIS?<br>';
 
@@ -1277,5 +1377,3 @@ document.search.query.focus();
 
 <?php
 	} /* OUTPUT_FORMAT_HTML */
-
-

@@ -164,7 +164,7 @@
 
 		if ($NumRows == 0) {
 			$HTML .= '<tr><td class="accent">' . "\n";
-			$HTML .= '   ' . FormatTime($Date, 0, "D, j M Y") . "\n";
+			$HTML .= '  ' . FormatTime($Date, 0, "l, j M Y") . "\n";
 			$HTML .= '</td></tr>' . "\n\n";
 			$HTML .= '<tr><td>No commits found for that date</td></tr>';
 		}
@@ -188,26 +188,26 @@
 
 define('RELATIVE_DATE_24HOURS', 24 * 60 * 60);	# seconds in a day
 
-$Today = '<a href="/commits.php">Latest commits</a>';
+$Today = '<a href="/">Latest commits</a>';
 
 # use DateTime because it gets the math correct, even with daylight savings changes
 # see https://github.com/FreshPorts/freshports/issues/18
 # this will be yesterday
 $dateBefore = new DateTime($Date);
-$dateBefore->add(new DateInterval('P1D'));
+$dateBefore->sub(new DateInterval('P1D'));
 
 # this will be tomorrow
 $dateAfter = new DateTime($Date);
-$dateAfter->sub(new DateInterval('P1D'));
+$dateAfter->add(new DateInterval('P1D'));
 
 # DATE_FORMAT_D_LONG_MONTH is an empty string, and freshports_LinkToDate will format a date for me
 $Yesterday = freshports_LinkToDate(strtotime($dateBefore->format('Y-m-d')), DATE_FORMAT_D_LONG_MONTH, $BranchName);
 $Tomorrow  = freshports_LinkToDate(strtotime($dateAfter->format('Y-m-d')),  DATE_FORMAT_D_LONG_MONTH, $BranchName);
 
-$DateLinks = '&lt; ' . $Today . ' | ' . $Tomorrow . ' | ' . $Yesterday . ' &gt;';
+$DateLinks = $Yesterday . ' | ' . $Today . ' | ' . $Tomorrow;
 echo $DateLinks;
 if ($NumCommits > 0) {
-  echo " | Number of commits: " . $NumCommits;
+  echo "<br>Number of commits: " . $NumCommits;
 }
 
 ?>

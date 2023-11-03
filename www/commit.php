@@ -249,7 +249,7 @@
 							$RetVal = $DisplayCommit->CreateHTML();
 	
 							$HTML .= $DisplayCommit->HTML;
-							$HTML .= '<tr><td><p>Number of ports [&amp; non-ports] in this commit: ' . $NumFilesTouched . '</p></td></tr>';
+							$HTML .= '<tr><td><p>Number of items [ports &amp; non-ports] in this commit: ' . $NumFilesTouched . '</p></td></tr>';
 						} else {
 							$HTML .=  '<tr><td><P>Sorry, nothing found in the database....</P>' . "\n";
 							$HTML .=  '</td></tr>';

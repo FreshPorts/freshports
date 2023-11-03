@@ -19,7 +19,8 @@ class SystemBranch {
     # empty the result
     $this->system_branches = array();
 
-    $sql = "select branch_name from system_branch where branch_name ilike '20%Q%' ORDER BY branch_name";
+	# I think we should cache this data too. It changes four times a year.
+    $sql = "select branch_name from system_branch where branch_name ilike '20%Q%' ORDER BY branch_name DESC";
 
 #   echo "sql = '$sql'<br>";
 

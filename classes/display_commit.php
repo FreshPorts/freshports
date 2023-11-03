@@ -130,7 +130,8 @@ class DisplayCommit {
 
 			// OK, while we have the log change log, let's put the port details here.
 
-
+			# not sure if this should be here or elsewhere
+			$Lines = 0;
 			if ($mycommit->commit_log_id != $PreviousCommit->commit_log_id) {
 				if ($Debug) echo 'This commit_log_id is different<br>';
 				if (($NumberOfPortsInThisCommit > $MaxNumberPortsToShow) && !$this->ShowAllPorts) {
@@ -139,16 +140,17 @@ class DisplayCommit {
 					$this->HTML .= '</ul>';
 				}
 				$TooManyPorts = false;
-				if ($i > 0) {
-					$this->HTML .= "\n<blockquote class=\"description\">";
-					$this->HTML .= freshports_CommitDescriptionPrint(
-			                    $PreviousCommit->commit_description,
-			                    $PreviousCommit->encoding_losses,
-			                    $Lines,
-			                    freshports_MoreCommitMsgToShow($PreviousCommit->message_id, $Lines));
-					# close off the previous commit first
-					$this->HTML .= "\n</blockquote>\n</td></tr>\n\n\n";
-				}
+#				if ($i > 0) {
+#					$this->HTML .= "\n<blockquote class=\"description\">";
+#					$this->HTML .= 'The commit message goes here';
+#					$this->HTML .= freshports_CommitDescriptionPrint(
+#			                    $PreviousCommit->commit_description,
+#			                    $PreviousCommit->encoding_losses,
+#			                    $Lines,
+#			                    freshports_MoreCommitMsgToShow($PreviousCommit->message_id, $Lines));
+#					# close off the previous commit first
+#					$this->HTML .= "\n</blockquote>\n</td></tr>\n\n\n";
+#				}
 				# count the number of ports in this commit.
 				# first time into the loop, this will be executed.
 				$NumberOfPortsInThisCommit = 0;
@@ -156,7 +158,7 @@ class DisplayCommit {
 
 				if ($mycommit->commit_date != $PreviousCommit->commit_date) {
 					$this->HTML .= '<tr><td class="accent">' . "\n";
-					$this->HTML .= '   ' . FormatTime($mycommit->commit_date, 0, "D, j M Y") . "\n";
+					$this->HTML .= '   ' . FormatTime($mycommit->commit_date, 0, "l, j M Y") . "\n";
 					$this->HTML .= "</td></tr>\n\n";
 				}
 
@@ -165,7 +167,7 @@ class DisplayCommit {
 				$this->HTML .= "<tr><td class=\"commit-details\">\n";
 
 				$this->HTML .= '<span class="meta">';
-				$this->HTML .= '[ ' . $mycommit->commit_time . ' ';
+				$this->HTML .= $mycommit->commit_time . ' ';
 
 				#
 				# THIS CODE IS SIMILAR TO THAT IN classes/display_commit.php & classes/port-display.php
@@ -193,14 +195,31 @@ class DisplayCommit {
 				if ($CommitterIsNotAuthor) {
 					$this->HTML .= '&nbsp;Author:&nbsp;' . freshports_AuthorEmailLink($mycommit->author_name, $mycommit->author_email);
 				}
-				$this->HTML .= ' ]';
 				$this->HTML .= '</span>';
-				$this->HTML .= '<br>';
+
+#				$this->HTML .= '<br>next is the commit message';
+
+
+
+					$this->HTML .= "\n<blockquote class=\"description\">";
+					$this->HTML .= freshports_CommitDescriptionPrint(
+			                    $mycommit->commit_description,
+			                    $mycommit->encoding_losses,
+			                    $Lines,
+			                    freshports_MoreCommitMsgToShow($mycommit->message_id, $Lines));
+					# close off the previous commit first
+					$this->HTML .= "\n</blockquote>\n";
+
+
+
+
+
 				if ($this->IsGitCommit($mycommit->message_id)) {
 					# do nothing
 				} else {
 					$this->HTML .= freshports_Email_Link($mycommit->message_id);
 				}
+				
 
 				# we use element-details so the icons on the hash align with the icons on the elements which appear below it.
 				$this->HTML .= '<span class="element-details">';
@@ -233,13 +252,16 @@ class DisplayCommit {
 						$this->HTML .= freshports_svnweb_ChangeSet_Link($mycommit->svn_revision, $mycommit->repo_hostname) . '&nbsp;';
 					}
 				}
-
 				# The first comparison was here before the second, which was added as part of
 				# https://github.com/FreshPorts/freshports/issues/221 - date.php is not quarterly aware
 				if (!empty($mycommit->branch) && $this->BranchName != $mycommit->branch || $this->BranchName != BRANCH_HEAD) {
 					$this->HTML .=  ' <span class="commit-branch">' . $mycommit->branch . '</span>';
 				}
-				$this->HTML .= '</span>';
+
+#				$this->HTML .= "</td></tr>\n\n\n";
+#				$this->HTML .= '<tr><td class="commit-details">';
+				$this->HTML .= '<p>Details:</p>';
+#				$this->HTML .= '</span>';
 
 				$this->HTML .= "<ul class=\"element-list\">\n";
 
@@ -254,7 +276,8 @@ class DisplayCommit {
 
 			if (!$TooManyPorts) {
 				$this->HTML .= '<li>';
-				if (IsSet($mycommit->category) && $mycommit->category != '') {
+				if (0 && IsSet($mycommit->category) && $mycommit->category != '') {
+					# i.e. this is a category/port item, as opposed to MOVED, or UPDATING
 					if ($Debug) echo 'category is set';
 					if ($this->UserID) {
 						#
@@ -383,8 +406,74 @@ class DisplayCommit {
 						$this->HTML .= $PathName;
 						$this->HTML .= "</span>\n";
 					}
+
+					if (IsSet($mycommit->category) && $mycommit->category != '') {
+					// indicate if this port has been removed from cvs
+					if ($mycommit->status == "D") {
+						$this->HTML .= " " . freshports_Deleted_Icon_Link() . "\n";
+					}
+
+					// indicate if this port needs refreshing from CVS
+					if ($mycommit->needs_refresh) {
+						$this->HTML .= " " . freshports_Refresh_Icon_Link() . "\n";
+					}
+					if ($mycommit->date_added > Time() - 3600 * 24 * $this->DaysMarkedAsNew) {
+						$MarkedAsNew = "Y";
+						$this->HTML .= freshports_New_Icon() . "\n";
+					}
+
+					if ($mycommit->forbidden) {
+						$this->HTML .= ' ' . freshports_Forbidden_Icon_Link() . "\n";
+					}
+
+					if ($mycommit->broken) {
+						$this->HTML .= ' '. freshports_Broken_Icon_Link() . "\n";
+					}
+
+					if ($mycommit->deprecated) {
+						$this->HTML .= ' '. freshports_Deprecated_Icon_Link() . "\n";
+					}
+
+					if ($mycommit->expiration_date) {
+						if (date('Y-m-d') >= $mycommit->expiration_date) {
+							$this->HTML .= freshports_Expired_Icon_Link($mycommit->expiration_date) . "\n";
+						} else {
+							$this->HTML .= freshports_Expiration_Icon_Link($mycommit->expiration_date) . "\n";
+						}
+					}
+
+					if ($mycommit->ignore) {
+						$this->HTML .= ' '. freshports_Ignore_Icon_Link() . "\n";
+					}
+
+					$this->HTML .= freshports_Commit_Link_Port($mycommit->message_id, $mycommit->category, $mycommit->port);
+					$this->HTML .= "&nbsp;";
+
+					if ($mycommit->vulnerable_current) {
+						$this->HTML .= '&nbsp;' . freshports_VuXML_Icon() . '&nbsp;';
+					} else {
+						if ($mycommit->vulnerable_past) {
+							$this->HTML .= '&nbsp;' . freshports_VuXML_Icon_Faded() . '&nbsp;';
+						}
+					}
+
+					if ($mycommit->restricted) {
+						$this->HTML .= freshports_Restricted_Icon_Link($mycommit->restricted) . '&nbsp;';
+					}
+
+					if ($mycommit->no_cdrom) {
+						$this->HTML .= freshports_No_CDROM_Icon_Link($mycommit->no_cdrom) . '&nbsp;';
+					}
+
+					if ($mycommit->is_interactive) {
+						$this->HTML .= freshports_Is_Interactive_Icon_Link($mycommit->is_interactive) . '&nbsp;';
+					}
+
+					$this->HTML.=  freshports_Fallout_Link($mycommit->category, $mycommit->port) . '&nbsp;';
+					}
 				}
-				$this->HTML .= htmlify(_forDisplay($mycommit->short_description)) . "</li>\n";
+#				$this->HTML .= htmlify(_forDisplay($mycommit->short_description));
+				$this->HTML .= "</li>\n";
 
 				GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;			
 				if ($this->ShowEntireCommit) {
@@ -403,14 +492,14 @@ class DisplayCommit {
 		} else {
 			$this->HTML .= '</ul>';
 		}
-		$this->HTML .= "\n<blockquote class=\"description\">";
-		$this->HTML .= freshports_CommitDescriptionPrint(
-                    $PreviousCommit->commit_description,
-                    $PreviousCommit->encoding_losses,
-                    $Lines,
-                    freshports_MoreCommitMsgToShow($PreviousCommit->message_id, $Lines));
-		# close off the last commit
-		$this->HTML .= "\n</blockquote>\n</td></tr>\n\n\n";
+#		$this->HTML .= "\n<blockquote class=\"description\">";
+#		$this->HTML .= freshports_CommitDescriptionPrint(
+#                    $PreviousCommit->commit_description,
+#                    $PreviousCommit->encoding_losses,
+#                    $Lines,
+#                    freshports_MoreCommitMsgToShow($PreviousCommit->message_id, $Lines));
+#		# close off the last commit
+#		$this->HTML .= "\n</blockquote>\n</td></tr>\n\n\n";
 
 		unset($mycommit);
 		

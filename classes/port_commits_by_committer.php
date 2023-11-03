@@ -85,7 +85,7 @@ class PortCommitsByCommitter extends CommitsByCommitter {
 			C.name                                                                         AS category,
 			C.id                                                                           AS category_id,
 			E.name                                                                         AS port,
-			element_pathname(E.id)                                                         AS pathname,
+			element_pathname(E.id)                                                         AS element_pathname,
 			CASE when CLP.port_version IS NULL then P.version   else CLP.port_version  END AS version,
 			CASE when CLP.port_version is NULL then P.revision  else CLP.port_revision END AS revision,
 			CASE when CLP.port_epoch   is NULL then P.portepoch else CLP.port_epoch    END AS epoch,
@@ -99,6 +99,9 @@ class PortCommitsByCommitter extends CommitsByCommitter {
 			date_part('epoch', P.date_added)                                               AS date_added,
 			P.element_id                                                                   AS element_id,
 			P.short_description                                                            AS short_description,
+			R.repository,
+			R.repo_hostname,
+			R.path_to_repo,
 			STF.message                                                                    AS stf_message";
 		if ($this->UserID) {
 				$sql .= ",
@@ -125,7 +128,11 @@ class PortCommitsByCommitter extends CommitsByCommitter {
 
     
         $sql .= ") CL on (CLP.commit_log_id = CL.id) 
-          LEFT OUTER JOIN sanity_test_failures STF ON STF.commit_log_id = CLP.commit_log_id, categories C, ports P, element E ";
+          LEFT OUTER JOIN sanity_test_failures STF ON STF.commit_log_id = CLP.commit_log_id
+                     JOIN commit_log_branches  CLB ON CL.id         = CLB.commit_log_id
+                     JOIN system_branch        SB  ON CLB.branch_id = SB.id
+          LEFT OUTER JOIN repo R ON CL.repo_id = R.id,
+                          categories C, ports P, element E ";
 
 		if ($this->UserID) {
 				$params[] = $this->UserID;

@@ -364,7 +364,7 @@ function freshports_link_to_port($CategoryName, $PortName, $BranchName = BRANCH_
 
 	// create link to category, perhaps on a branch
 	//
-	$HTML .= '<a href="/' . $CategoryName . '/';
+	$HTML .= '<a class="port" href="/' . $CategoryName . '/';
 	if ($BranchName != BRANCH_HEAD) {
 	  $HTML .= '?branch=' . htmlentities($BranchName);
 	}
@@ -372,7 +372,7 @@ function freshports_link_to_port($CategoryName, $PortName, $BranchName = BRANCH_
 
 	// create link to port, perhaps on a branch
 	//
-	$HTML .= '<a href="/' . $CategoryName . '/' . freshports_strip_port_suffix($PortName) . '/';
+	$HTML .= '<a class="port" href="/' . $CategoryName . '/' . freshports_strip_port_suffix($PortName) . '/';
 	if ($BranchName != BRANCH_HEAD) {
 	  $HTML .= '?branch=' . htmlentities($BranchName);
 	}
@@ -400,7 +400,7 @@ function freshports_link_to_port_single($CategoryName, $PortName, $BranchName = 
 	// link to both category and port
 
 	$HTML = '';
-	$HTML .= '<a href="/' . $CategoryName . '/' . freshports_strip_port_suffix($PortName) . '/';
+	$HTML .= '<a class="port" href="/' . $CategoryName . '/' . freshports_strip_port_suffix($PortName) . '/';
 	if ($BranchName != BRANCH_HEAD) {
 	  $HTML .= '?branch=' . htmlentities($BranchName);
 	}
@@ -421,7 +421,7 @@ function freshports_link_text_to_port_single($text, $CategoryName, $PortName, $B
 	// This differs from freshports_link_to_port_single in the link text is not necessarily the port name.
 
 	$HTML = '';
-	$HTML .= htmlentities($text) . ' : <a href="/' . $CategoryName . '/' . freshports_strip_port_suffix($PortName) . '/';
+	$HTML .= '<span class="port">' . htmlentities($text) . ' : </span><a class="port" href="/' . $CategoryName . '/' . freshports_strip_port_suffix($PortName) . '/';
 	if ($BranchName != BRANCH_HEAD) {
 	  $HTML .= '?branch=' . htmlentities($BranchName);
 	}
@@ -1880,7 +1880,7 @@ function freshports_DescriptionPrint($description, $encoding_losses, $maxnumline
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
 
 	$shortened = freshports_Head($description, $maxnumlines);
-	$HTML  = '<pre class="code">';
+	$HTML  = '<pre class="description">';
 
 	$HTML .= htmlify(_forDisplay(freshports_wrap($shortened)), $Process_PRs);
 

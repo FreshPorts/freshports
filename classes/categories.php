@@ -56,11 +56,11 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 	}
 	
 	function Populate($myrow) {
-		$this->id		= $myrow["id"];
-		$this->is_primary	= $myrow["is_primary"];
-		$this->element_id	= $myrow["element_id"];
-		$this->name		= $myrow["name"];
-		$this->description	= $myrow["description"];
+		$this->id               = $myrow["id"];
+		$this->is_primary       = $myrow["is_primary"];
+		$this->element_id       = $myrow["element_id"];
+		$this->name	            = $myrow["name"];
+		$this->description      = $myrow["description"];
 		$this->last_commit_date	= $myrow["last_commit_date"];
 	}
 

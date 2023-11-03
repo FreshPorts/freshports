@@ -119,7 +119,7 @@ class port_display {
 		foreach ($pkg_message_parts as $part) {
 			if (empty($part->type)) {
 				if ($Debug) syslog(LOG_ERR, '$part->type is empty');
-				$HTML .= '<dd class="like-pre">' . htmlspecialchars($part->message) . '</dd>';
+				$HTML .= '<dd class="pkg-message">' . htmlspecialchars($part->message) . '</dd>';
 			} else {
 				# sometimes we get arrays, for install/upgrade
 				# make sure we always have an array for the later join to create $Actions
@@ -142,7 +142,7 @@ class port_display {
 				$Actions = 'For ' . join(' or ', $types);
 
 				if (is_array($part->type)) {
-					$HTML .= "<dt>$Actions:</dt>" . '<dd class="like-pre">' . htmlspecialchars($part->message) . '</dd>';
+					$HTML .= "<dt>$Actions:</dt>" . '<dd class="pkg-message">' . htmlspecialchars($part->message) . '</dd>';
 					$HTML .= "\n";
 					$HTML .= "\n";
 				} else {
@@ -150,7 +150,7 @@ class port_display {
 					foreach ($types as $type) {
 						switch($type) {
 							case 'install':
-								$HTML .= "<dt>$Actions:</dt>" . '<dd class="like-pre">' . htmlspecialchars($part->message) . '</dd>';
+								$HTML .= "<dt>$Actions:</dt>" . '<dd class="pkg-message">' . htmlspecialchars($part->message) . '</dd>';
 								$HTML .= "\n";
 								$HTML .= "\n";
 								break;
@@ -158,30 +158,30 @@ class port_display {
 							case 'upgrade':
 								if (!empty($part->minimum_version) && !empty($part->maximum_version)) {
 									$HTML .= '<dt>If upgrading from &gt; ' . htmlspecialchars($part->minimum_version) . ' and &lt; ' . htmlspecialchars($part->maximum_version) . ':</dt>';
-									$HTML .= '<dd class="like-pre">' . $part->message . '</dd>';
+									$HTML .= '<dd class="pkg-message">' . $part->message . '</dd>';
 								} elseif (!empty($part->minimum_version)) {
 									$HTML .= '<dt>If upgrading from &gt; ' . htmlspecialchars($part->minimum_version) . ':</dt>';
-									$HTML .= '<dd class="like-pre">' . htmlspecialchars($part->message) . '</dd>';
+									$HTML .= '<dd class="pkg-message">' . htmlspecialchars($part->message) . '</dd>';
 								} elseif (!empty($part->maximum_version)) {
 									$HTML .= '<dt>If upgrading from &lt; ' . htmlspecialchars($part->maximum_version) . ':</dt>';
-									$HTML .= '<dd class="like-pre">' . htmlspecialchars($part->message) . '</dd>';
+									$HTML .= '<dd class="pkg-message">' . htmlspecialchars($part->message) . '</dd>';
 								} else {
 									$HTML .= '<dt>If upgrading</dt>';
-									$HTML .= '<dd class="like-pre">' . htmlspecialchars($part->message) . '</dd>';
+									$HTML .= '<dd class="pkg-message">' . htmlspecialchars($part->message) . '</dd>';
 								}
 								$HTML .= "\n";
 								$HTML .= "\n";
 								break;
 
 							case 'remove':
-								$HTML .= '<dt>If removing:</dt><dd class="like-pre">' . htmlspecialchars($part->message) . '</dd>';
+								$HTML .= '<dt>If removing:</dt><dd class="pkg-message">' . htmlspecialchars($part->message) . '</dd>';
 								$HTML .= "\n";
 								$HTML .= "\n";
 								break;
 
 							default:
 								syslog(LOG_ERR, '_pkgmessage_UCL found a type is it not prepared for : ' . $type . ' in ' . $port->pkgmessage);
-								$HTML .= '<dt>' . htmlspecialchars($part->type) . '</dt><dd class="like-pre">' . htmlspecialchars($part->message) . '</dd>';
+								$HTML .= '<dt>' . htmlspecialchars($part->type) . '</dt><dd class="pkg-message">' . htmlspecialchars($part->message) . '</dd>';
 								$HTML .= "\n";
 								$HTML .= "\n";
 								break;
@@ -223,7 +223,7 @@ class port_display {
 		if (defined('PKG_MESSAGE_UCL') && PKG_MESSAGE_UCL && $this->_isUCL($port->pkgmessage)) {
 			$HTML .= $this->_pkgmessage_UCL($port);
 		} else {
-			$HTML .= "<dt id=\"message\"><b>pkg-message: </b></dt>\n" . '<dd class="like-pre">';
+			$HTML .= "<dt id=\"message\"><b>pkg-message: </b></dt>\n" . '<dd class="pkg-message">';
 			$HTML .= htmlspecialchars($port->pkgmessage);
 
 			# this code is also duplicated within _pkgmessage_UCL()
@@ -246,18 +246,19 @@ class port_display {
 		$HTML .= "<ul>\n";
 		$data = preg_split('/\s+/', $conflicts);
 		foreach($data as $item) {
-			$HTML .= '<li>' . $item . "</li>\n";
+			$HTML .= '<li class="conflicts">' . $item . "</li>\n";
 		}
 		$HTML .= "</ul>\n";
 
 		return $HTML;
 	}
 
-	function SetPort($port) {
+	function SetPort($port, $Branch = BRANCH_HEAD) {
 	  //
-	  // We could derived branch from element_pathname(port->element_id) but let's try passing in branch explicity.
+	  // We could derive branch from element_pathname(port->element_id) but let's try passing in branch explicitly.
 	  //
 	  $this->port = $port;
+	  $this->Branch = NormalizeBranch($Branch);
 	}
 
 	function link_to_repo_svn() {
@@ -285,15 +286,15 @@ class port_display {
                 # We could search for the last known subversion commit
                 # but we aren't. Yet.
                 # Instead, we show them a strikethrough.
-		$link = null;
-               } else {
+                $link = null;
+			  } else {
                 # For subversion, we link to the revision one less
                 # so that the user has something to see
-	        $link .= '?pathrev=' . ($commit->svn_revision - 1);
-	      }
+               $link .= '?pathrev=' . ($commit->svn_revision - 1);
+	          }
             } else {
               # if there is no last revision, we can't link to it.
-	      $link = null;
+              $link = null;
             }
           }
 
@@ -1184,7 +1185,7 @@ class port_display {
 
 		# sometimes the description can get very wide. This causes problems on mobile.
 		if ($this->ShowDescriptionLong || $this->ShowEverything) {
-			$HTML .= '<dt class="description" id="description">Description:</dt><dd class="like-pre">' . htmlify(_forDisplay($port->long_description)) . '</dd>';
+			$HTML .= '<dt class="description" id="description">Description:</dt><dd class="port-description">' . htmlify(_forDisplay($port->long_description)) . '</dd>';
 		}
 
 		# this if covers several items, and wraps them in dt tags
@@ -1298,7 +1299,7 @@ class port_display {
 			if (!empty($port->conflicts_matches)) {
 				$HTML .= "<ul>\n";
 				foreach($port->conflicts_matches as $match) {
-					$HTML .= "<li>conflicts with " . freshports_link_to_port($match['category'], $match['port']) . '</li>';
+					$HTML .= "<li>conflicts with " . freshports_link_to_port($match['category'], $match['port'], $this->Branch) . '</li>';
 				}
 				$HTML .= "</ul>\n";
 			} else {
@@ -1346,9 +1347,9 @@ class port_display {
 				}
 			}
 
-			$HTML .= '<dt class="pkgname"><b>PKGNAME:</b> ';
+			$HTML .= '<dt class="pkgname"><b>PKGNAME:</b>';
 			if ($port->PackageIsAvailable()) {
-			  $HTML .= $port->package_name;
+			  $HTML .= '<span class="pkgname">' . $port->package_name . '</span>';
 			} else {
 			  $HTML .= 'there is no package for this port: <span class="file">' . $port->PackageNotAvailableReason() . '</span>';
 			}
@@ -1358,7 +1359,7 @@ class port_display {
 
 			if ($port->only_for_archs) {
 			  $HTML .= '<dt><b>ONLY_FOR_ARCHS:</b> ';
-			  $HTML .= htmlify($port->only_for_archs);
+			  $HTML .= '<span class="only_for_archs">' . htmlify($port->only_for_archs) . '</span>';
 			  $HTML .= '</dt>';
 			}
 
@@ -1374,19 +1375,19 @@ class port_display {
 				if ($port->distinfo) {
 					$distinfo_line_count = substr_count( $port->distinfo, "\n" );
 					if ($distinfo_line_count <= DISTINFO_LINES) {
-						$HTML .= '<dd class="like-pre">';
+						$HTML .= '<dd class="distinfo">';
 						$HTML .= $port->distinfo;
 						$HTML .= '</dd>';
 					} else {
 						# show only the first three lines, collpse the rest
 						$nth_line = $this->strpos_nth($port->distinfo, "\n", 3);
 
-						$HTML .= '<dd class="like-pre">';
+						$HTML .= '<dd class="distinfo">';
 						$HTML .= substr($port->distinfo, 0, $nth_line);
 						$HTML .= '<p><a href="#" id="distinfo-Extra-show" class="showLink" onclick="showHide(\'distinfo-Extra\');return false;">Expand this list (' . ($distinfo_line_count - DISTINFO_LINES + 1) . ' items)</a></p>';
 						$HTML .= '</dd>';
 
-						$HTML .= '<dd id="distinfo-Extra" class="more distinfo like-pre">';
+						$HTML .= '<dd id="distinfo-Extra" class="more distinfo">';
 						$HTML .= '<p><a href="#" id="distinfo-Extra-hide" class="hideLink" onclick="showHide(\'distinfo-Extra\');return false;">Collapse this list.</a></p>';
 						$HTML .= substr($port->distinfo, $nth_line + 1);
 
@@ -1481,7 +1482,7 @@ class port_display {
 			if ($port->IsSlavePort()) {
 				$HTML .= '<dt><span class="masterport" id="masterport"><b>Master port</b>: </span>';
 				list($MyCategory, $MyPort) = explode('/', $port->master_port);
-				$HTML .= freshports_link_to_port($MyCategory, $MyPort, $this->Branch);
+				$HTML .= '<span class="port">' . freshports_link_to_port($MyCategory, $MyPort, $this->Branch) . '</span>';
 				$HTML .= "</dt>\n";
 			}
 
@@ -1560,7 +1561,7 @@ class port_display {
 
 		if ($this->ShowEverything || $this->ShowConfig) {
 #			$HTML .= "\n<dl>";
-			$HTML .= '<dt id="config"><hr>' . "\n" . '<b>Configuration Options</b>:</dt>' . "\n" . '<dd class="like-pre">';
+			$HTML .= '<dt id="config"><hr>' . "\n" . '<b>Configuration Options</b>:</dt>' . "\n" . '<dd class="config">';
 			if ($port->showconfig) {
 				$HTML .= $port->showconfig;
 			} else {
@@ -1568,7 +1569,7 @@ class port_display {
 			}
 			$HTML .= "</dd>";
 
-			$HTML .= '<dt id="options"><b>Options name</b>:</dt>' . "\n" . '<dd class="like-pre">';
+			$HTML .= '<dt id="options"><b>Options name</b>:</dt>' . "\n" . '<dd class="options">';
 			if (!empty($port->options_name)) {
 				$HTML .= $port->options_name;
 			} else {
@@ -1579,7 +1580,7 @@ class port_display {
 
 		if (($this->ShowEverything || $this->ShowUses) && $port->uses) {
 #			$HTML .= '</dl><hr><dl>';
-			$HTML .= '<dt id="uses"><b>USES:</b></dt>' . "\n" . '<dd class="like-pre">';
+			$HTML .= '<dt id="uses"><b>USES:</b></dt>' . "\n" . '<dd class="uses">';
 			$HTML .= $port->uses;
 			$HTML .= "</dd>\n";
 #			$HTML .= "</dl>\n<hr>\n<dl>";
@@ -1628,7 +1629,11 @@ class port_display {
 
 	function LinkToPort() {
 		$HTML = '<a href="/' . $this->port->category . '/' . $this->port->port . '/';
-		$HTML .= '">' . $this->port->port . '</a>';
+		if ($this->Branch != BRANCH_HEAD) {
+			$HTML .= '?branch=' . htmlentities($this->Branch);
+		}
+		$HTML .= '">' . $this->port->port;
+		$HTML .= '</a>';
 
 		return $HTML;
 	}

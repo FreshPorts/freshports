@@ -222,6 +222,24 @@ const SEARCH_SELECT_FIELD = "
          PortVersionOnQuarterlyBranch(P.id, C.name || '/' || E.name) AS quarterly_revision,
          P.uses  ";
 
+#
+# used by www/search.php when searching package names
+# see https://github.com/FreshPorts/freshports/issues/481
+# NOTE that the search parameter for package name must always be the
+# first paramater query
+#
+const SQL_WITH_PACKAGES = '
+with packages as
+(with package_names as
+(select P.id as port_id, P.package_name as package_name
+  FROM ports P where P.package_name ilike $1
+UNION
+select PV.port_id as port_id, PV.name as package_name
+  FROM package_flavors PV where  name ilike $1
+ )
+ select distinct port_id, array_agg(package_name) as package_names from package_names
+ group by port_id
+ ) ' ;
 
 # passed to pgcrypto gen_salt when creating or updating user passwords in the database
 # used by

@@ -17,7 +17,7 @@
 
 	checkLoadBeforeProceeding();
 
-	$Debug = 1;
+	$Debug = 0;
 # this should only be referenced after it has been set.
 #	$sqlUserSpecifiedCondition = '';
 #	if ($Debug) phpinfo();
@@ -215,7 +215,7 @@
 #	if (IsSet($_REQUEST['port']))               $port                = pg_escape_string($db, trim($_REQUEST['port']));
 
 	if (IsSet($_REQUEST['method']))             $method              = pg_escape_string($db, trim($_REQUEST['method']));
-	if (IsSet($_REQUEST['deleted']))            $deleted		     = pg_escape_string($db, trim($_REQUEST['deleted']));
+	if (IsSet($_REQUEST['deleted']))            $deleted             = pg_escape_string($db, trim($_REQUEST['deleted']));
 	if (!IsSet($_REQUEST[INCLUDE_SRC_COMMITS])) $include_src_commits = '';
 	if (IsSet($_REQUEST['casesensitivity']))    $casesensitivity	 = pg_escape_string($db, trim($_REQUEST['casesensitivity']));
 	if (IsSet($_REQUEST['orderby']))            $orderby		     = pg_escape_string($db, trim($_REQUEST['orderby']));
@@ -313,7 +313,7 @@
 			break;
 
 		default:
-			# some strange value
+			# some strange value, default to this:
 			$output_format = OUTPUT_FORMAT_HTML;
 			break;
 	}
@@ -413,6 +413,7 @@
 		  $sqlUserSuppliedPortsList = Category_Ports_To_In_Clause($db, $query);
 		  if ($Debug) echo "sqlUserSuppliedPortsList is '$sqlUserSuppliedPortsList'\n";
 		} else {
+                  if ($stype != SEARCH_FIELD_PACKAGE) {
 		  switch ($method) {
 			case 'prefix':
 				$WildCardMatch = "$query%";
@@ -457,7 +458,7 @@
 							break;
 
 						default:
-                            $sqlSetAll = true;
+                                                        $sqlSetAll = true;
 							$FieldName = $SearchTypeToFieldMap[$stype] ?? null;
 							if (empty($FieldName)) {
 							   die('you are probably doing this wrong');
@@ -478,7 +479,7 @@
 					$sqlSoundsLikeOrderBy = "levenshtein($FieldName, '" . pg_escape_string($db, $query) . "')";
 					break;
 		  }
-
+		  }  # $stype != SEARCH_FIELD_PACKAGE
 		} # not OUTPUT_FORMAT_DEPENDS
 
 		if ($Debug && IsSet($sqlUserSpecifiedCondition)) echo "at line " . __LINE__ . " sqlUserSpecifiedCondition is: $sqlUserSpecifiedCondition<br>";
@@ -503,16 +504,17 @@
 						# do not break here...
 
 					case 'excludedeleted':
-						# not really sure of the logic here
-						if ($output_format != OUTPUT_FORMAT_DEPENDS) {
-							$sqlUserSpecifiedCondition .= " and";
-						}
 						# but I know on this query, we get an error if we don't set $sqlUserSpecifiedCondition first.
 						# search.php?stype=name&method=match&query=signal&num=10&orderby=category&orderbyupdown=asc&search=Search&format=depends&branch=head
 						if (!IsSet($sqlUserSpecifiedCondition)) {
 							$sqlUserSpecifiedCondition = '';
 						}
-						$sqlUserSpecifiedCondition .= " E.status = 'A' ";
+
+						# If there is an existing condition, concatenate via 'and'
+						if (!empty($sqlUserSpecifiedCondition)) {
+							$sqlUserSpecifiedCondition .= " and ";
+                                                }
+                                                $sqlUserSpecifiedCondition .= " E.status = 'A' ";
 				}
 				break;
 		}
@@ -522,20 +524,20 @@
 		# How are we ordering the output?
 		# NOTE that searching by 'sounds like' requires a special approach
 		#
-        switch ($stype) {
-            case SEARCH_FIELD_AUTHOR_NAME:
-            case SEARCH_FIELD_AUTHOR_EMAIL:
-            case SEARCH_FIELD_COMMITTER:
-            case SEARCH_FIELD_COMMITTER_NAME:
-            case SEARCH_FIELD_COMMITTER_EMAIL:
-            case SEARCH_FIELD_MAINTAINER:
-            case SEARCH_FIELD_NAME:
-            case SEARCH_FIELD_PACKAGE:
-                $sqlOrderBy = "\n ORDER BY ";
-                break;
+		switch ($stype) {
+		        case SEARCH_FIELD_AUTHOR_NAME:
+		        case SEARCH_FIELD_AUTHOR_EMAIL:
+		        case SEARCH_FIELD_COMMITTER:
+		        case SEARCH_FIELD_COMMITTER_NAME:
+		        case SEARCH_FIELD_COMMITTER_EMAIL:
+		        case SEARCH_FIELD_MAINTAINER:
+		        case SEARCH_FIELD_NAME:
+		        case SEARCH_FIELD_PACKAGE:
+		                $sqlOrderBy = "\n ORDER BY ";
+		                break;
 
-            default:
-        } # end of final adjustment of sort
+                        default:
+                } # end of final adjustment of sort
 
 		switch ($method) {
 			case 'soundex':
@@ -719,10 +721,10 @@
 			$Commits->UserIDSet($User->id);
 			$Commits->Debug = $Debug;
 			if ($sqlSetAll) {
-			  if ($Debug) echo 'invoking TreePathConditionSetAll() with ' . $sqlUserSpecifiedCondition;
+			  if ($Debug) echo 'invoking TreePathConditionSetAll() with ' . $sqlUserSpecifiedConditionl;
 			  $Commits->TreePathConditionSetAll($sqlUserSpecifiedCondition);
 			} else {
-			  if ($Debug) echo 'invoking TreePathConditionSet() with ' . $sqlUserSpecifiedCondition;
+			  if ($Debug) echo 'invoking TreePathConditionSet() with '    . $sqlUserSpecifiedCondition;
 			  $Commits->TreePathConditionSet($sqlUserSpecifiedCondition);
 			}
 
@@ -846,23 +848,56 @@
 			$sqlSelectCount = "\n  SELECT count(*)";
 			if ($User->id) {
 				$sqlExtraFields .= ",\nonwatchlist";
-            } else {
+                        } else {
 				$sqlExtraFields .= ",\nNULL AS onwatchlist";
-		    }
+                        }
 
-			$sqlFrom = "
-  FROM ports P LEFT OUTER JOIN ports_vulnerable    PV  ON PV.port_id       = P.id
+                        #
+                        # this is used for queries in this section
+                        # notably, searching by package name involes searching
+                        # two field: ports.package_name and package_flavors.name
+                        # The trick, how best to combine the data.
+                        #
+                        # see https://github.com/FreshPorts/freshports/issues/481
+                        # the comparison string (e.g. %emacs%) must be the first parameter when using this.
+                        #
+                        # constants used below (UPPER CASE) can be found in include/constants.php
+                        #
+                        # $sqlFromBase could also be a constant, but for the use of $Branch
+                        # This is the only use, and it is declared as if it was a constant.
+                        #
+			$sqlFromBase = "
+               LEFT OUTER JOIN ports_vulnerable    PV  ON PV.port_id       = P.id
                LEFT OUTER JOIN commit_log          CL  ON P.last_commit_id = CL.id
                LEFT OUTER JOIN repo                R   ON CL.repo_id       = R.id
                LEFT OUTER JOIN commit_log_branches CLB ON CL.id            = CLB.commit_log_id
                           JOIN system_branch       SB  ON SB.branch_name   = '" . pg_escape_string($db, $Branch) . "'
-                                                      AND SB.id            = CLB.branch_id";
+                                                      AND SB.id            = CLB.branch_id ";
 
-            if (!empty($category)) {
-                $query_params[] = $category;
-                $sqlFrom .= ' join ports_categories PC on P.id = PC.port_id and PC.category_id = (select id from categories where name = $' . count($query_params) . ')';
-            }
-            $sqlFrom .= ", categories C, element E\n";
+                        $sqlFrom = $sqlFromBase;
+
+                        if ($stype == SEARCH_FIELD_PACKAGE) {
+                                $query_params[] = '%' . $query . '%';
+                                # see https://github.com/FreshPorts/freshports/issues/481#issuecomment-1793451539
+                                $sqlSelectCount = $SQL_WITH_PACKAGES . $sqlSelectCount;
+
+                                 # join on the new WITH above
+                                 $sqlFrom = " packages P2 join ports P ON p2.port_id = P.id\n" . $sqlFrom;
+
+                                 $sqlSelectFields = $SQL_WITH_PACKAGES . $sqlSelectFields;
+
+                                 # we are searching by package, a port can have multiple package names; bring them all back.
+                                 $sqlExtraFields .= ",\n package_names";
+
+                        } else {
+                                 # need to specify the ports table here
+                                 $sqlFrom = " ports P " . $sqlFrom;
+                        }
+                        if (!empty($category)) {
+                                $query_params[] = $category;
+                                $sqlFrom .= ' join ports_categories PC on P.id = PC.port_id and PC.category_id = (select id from categories where name = $' . count($query_params) . ')';
+                        }
+                        $sqlFrom .= ", categories C, element E\n";
 
 			if ($output_format == OUTPUT_FORMAT_DEPENDS) {
 				$sqlFrom .= "
@@ -886,16 +921,18 @@ JOIN element_pathname EP on E.id = EP.element_id
 			$AddRemoveExtra = pg_escape_string($db, $AddRemoveExtra);
 			if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<br>";
 
+			#
+			# construct the query to detemine the number of rows.
+			#
 
-			### how many rows is this?
+			$sql = $sqlSelectCount . ' FROM ' . $sqlFrom .  $sqlWhere;
 
-			$sql = $sqlSelectCount . $sqlFrom .  $sqlWhere;
 			if (!empty($sqlUserSpecifiedCondition)) {
-				$sql .=  ' AND ' . $sqlUserSpecifiedCondition;
-			}
+			        $sql .=  ' AND ' . $sqlUserSpecifiedCondition;
+                        }
 
 			if ($Debug) {
-                echo __FILE__ . '::' . __LINE__ . ' says:<br>';
+                                echo __FILE__ . '::' . __LINE__ . ' says:<br>';
 				echo "<pre>$sql</pre>\n";
 			}
 
@@ -909,7 +946,7 @@ JOIN element_pathname EP on E.id = EP.element_id
 			$NumRows  = pg_num_rows($result);
 			$myrow    = pg_fetch_array($result);
 			$NumFound = $myrow[0];
-            $NumberOfCommits = $NumFound;
+			$NumberOfCommits = $NumFound;
 
 			if ($Debug) {
 				echo "\$NumFound = '$NumFound'<br>";
@@ -948,18 +985,21 @@ JOIN element_pathname EP on E.id = EP.element_id
 
 				} // HTML format
 
-				$sql = $sqlSelectFields . $sqlExtraFields . $sqlFrom . $sqlWatchListFrom . $sqlWhere;
+				#
+				# construct the query to obtain the data.
+				#
+				$sql = $sqlSelectFields . $sqlExtraFields . ' FROM ' . $sqlFrom . $sqlWatchListFrom . $sqlWhere;
 				if (!empty($sqlUserSpecifiedCondition)) {
-					$sql .= ' AND ' . $sqlUserSpecifiedCondition . $sqlOrderBy . $sqlOffsetLimit;
+					$sql .= ' and ' . $sqlUserSpecifiedCondition . $sqlOrderBy . $sqlOffsetLimit;
 				}
 
 				if ($Debug) {
-                    echo __FILE__ . '::' . __LINE__ . ' says:<br>';
+                                        echo __FILE__ . '::' . __LINE__ . ' says:<br>';
 					echo "<pre>$sql</pre>\n";
 				}
 
 				pg_exec($db, "set client_encoding = 'ISO-8859-15'");
-    			$result  = pg_query_params($db, $sql, $query_params);
+				$result  = pg_query_params($db, $sql, $query_params);
 
 				if (!$result) {
 					syslog(LOG_NOTICE, pg_last_error($db) . ': ' . $sql);
@@ -967,9 +1007,9 @@ JOIN element_pathname EP on E.id = EP.element_id
 				}
 
 				$NumFetches = pg_num_rows($result);
-    		    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits.php');
-    		    $Commits = new Commits($db);
-                $Commits->LocalResult = $result;
+				require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits.php');
+				$Commits = new Commits($db);
+				$Commits->LocalResult = $result;
 
 				if ($Debug) {
 					if ($result) {
@@ -1174,7 +1214,8 @@ if (file_exists(CATEGORIES_CACHE_LIST)) {
 <li><small>When searching on 'Commit Message' only 'containing' is used.</small></li>
 <li><small>When searching  by 'Under a pathname', your path must start with something like /ports/, /doc/, or /src/. All
       commits under that point will be returned. The selected match type is ignored and defaults to 'Starts with'.</small></li>
-<li><small>Searching for 'sounds like' is only valid for Author Email, Author Name, Committer Email, Committer Name, Maintainer, Package Name, and Port Name.</small></li>
+<li><small>Searching for 'sounds like' is only valid for Author Email, Author Name, Committer Email, Committer Name, Maintainer, Package Name, and Port Name - but I'm not sure it is indexed properly. Ask Dan about that.</small></li>
+<li><small>Searching for Package is always 'containing' and case sensitive - if you figure we need something better, please open an issue - the current implementation was a first draft of searching package flavor names.</small></li>
 </ul>
 
 <?php
@@ -1255,7 +1296,7 @@ Special searches:
                     break;
 		      } /* switch */
 
-             if ($Debug) echo 'here we are2<br>';
+                if ($Debug) echo 'here we are2<br>';
                 switch ($stype) {
                     case SEARCH_FIELD_AUTHOR_NAME:
                     case SEARCH_FIELD_AUTHOR_EMAIL:
@@ -1265,7 +1306,7 @@ Special searches:
                     case SEARCH_FIELD_COMMITMESSAGE:
                     case SEARCH_FIELD_PATHNAME:
                         if ($Debug) echo __FILE__ . '::' . __LINE__ . ' says hi';
-               		    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
+                        require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
 
                         if ($Debug) echo 'time to display!';
                         $DisplayCommit = new DisplayCommit($db, $Commits->LocalResult);

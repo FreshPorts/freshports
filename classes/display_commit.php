@@ -276,6 +276,9 @@ class DisplayCommit {
 
 			if (!$TooManyPorts) {
 				$this->HTML .= '<li>';
+				#
+				# XXX This 0 is in the if beacuse I'm testing the ELSE portion for all purposes
+				#
 				if (0 && IsSet($mycommit->category) && $mycommit->category != '') {
 					# i.e. this is a category/port item, as opposed to MOVED, or UPDATING
 					if ($Debug) echo 'category is set';
@@ -399,10 +402,11 @@ class DisplayCommit {
 					$this->HTML .= freshports_git_Link_gitlab  ($mycommit->repo_hostname, $mycommit->path_to_repo, $PathName) . '&nbsp;';
 
 					if ($PathName != $mycommit->element_pathname) {
+						# the replace changes encoded / to plain text / - not sure why may have been present
 						$this->HTML .= '<a href="/' . str_replace('%2F', '/', urlencode($PathName)) . $QueryArgs . '">' . $PathName. '</a>';
 						$this->HTML .= "</span>\n";
 					} else {
-						#$this->HTML .= 'XXXXXX <a href="' . FRESHPORTS_FREEBSD_CVS_URL . $PathName . '#rev' . $mycommit->revision . '">' . $PathName . '</a>';
+						#$this->HTML .= '<a href="' . FRESHPORTS_FREEBSD_CVS_URL . $PathName . '#rev' . $mycommit->revision . '">' . $PathName . '</a>';
 						$this->HTML .= $PathName;
 						$this->HTML .= "</span>\n";
 					}

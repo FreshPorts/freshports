@@ -405,7 +405,7 @@
 		# are we setting the whole SQL condition or just the operator and the value?
 		$sqlSetAll = false;
 
-		if ($Debug) echo "at line " . __LINE__ . " stype='$stype'<br>";
+		if ($Debug) echo "at line " . __FILE__ . '::' . __LINE__ . " stype='$stype'<br>";
 
 
 		if ($output_format == OUTPUT_FORMAT_DEPENDS && $stype == SEARCH_FIELD_NAME) {
@@ -482,7 +482,7 @@
 		  }  # $stype != SEARCH_FIELD_PACKAGE
 		} # not OUTPUT_FORMAT_DEPENDS
 
-		if ($Debug && IsSet($sqlUserSpecifiedCondition)) echo "at line " . __LINE__ . " sqlUserSpecifiedCondition is: $sqlUserSpecifiedCondition<br>";
+		if ($Debug && IsSet($sqlUserSpecifiedCondition)) echo "at line " . __FILE__ . '::' . __LINE__ . " sqlUserSpecifiedCondition is: $sqlUserSpecifiedCondition<br>";
 
 		#
 		# include/exclude deleted ports
@@ -721,7 +721,7 @@
 			$Commits->UserIDSet($User->id);
 			$Commits->Debug = $Debug;
 			if ($sqlSetAll) {
-			  if ($Debug) echo 'invoking TreePathConditionSetAll() with ' . $sqlUserSpecifiedConditionl;
+			  if ($Debug) echo 'invoking TreePathConditionSetAll() with ' . $sqlUserSpecifiedCondition;
 			  $Commits->TreePathConditionSetAll($sqlUserSpecifiedCondition);
 			} else {
 			  if ($Debug) echo 'invoking TreePathConditionSet() with '    . $sqlUserSpecifiedCondition;
@@ -831,7 +831,7 @@
 			}
 			$Ports->SetLimit($PageSize);
 
-			$NumFetches = $Ports->FetchPorts($User->id, $sqlOrderBy);
+			$NumFetches = $Ports->FetchPorts($User->id, $sqlOrderBy, $Branch);
 
 			# $result get used later on to display the search results via classes/port-display.php
 			$result = $Ports->LocalResult;
@@ -879,12 +879,12 @@
                         if ($stype == SEARCH_FIELD_PACKAGE) {
                                 $query_params[] = '%' . $query . '%';
                                 # see https://github.com/FreshPorts/freshports/issues/481#issuecomment-1793451539
-                                $sqlSelectCount = $SQL_WITH_PACKAGES . $sqlSelectCount;
+                                $sqlSelectCount = SQL_WITH_PACKAGES . $sqlSelectCount;
 
                                  # join on the new WITH above
                                  $sqlFrom = " packages P2 join ports P ON p2.port_id = P.id\n" . $sqlFrom;
 
-                                 $sqlSelectFields = $SQL_WITH_PACKAGES . $sqlSelectFields;
+                                 $sqlSelectFields = SQL_WITH_PACKAGES . $sqlSelectFields;
 
                                  # we are searching by package, a port can have multiple package names; bring them all back.
                                  $sqlExtraFields .= ",\n package_names";
@@ -1305,7 +1305,7 @@ Special searches:
                     case SEARCH_FIELD_COMMITTER_EMAIL:
                     case SEARCH_FIELD_COMMITMESSAGE:
                     case SEARCH_FIELD_PATHNAME:
-                        if ($Debug) echo __FILE__ . '::' . __LINE__ . ' says hi';
+                        if ($Debug) echo __FILE__ . '::' . __LINE__ . ' says hi<br>';
                         require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
 
                         if ($Debug) echo 'time to display!';
@@ -1318,7 +1318,7 @@ Special searches:
                         break;
 
                     default:
-                        if ($Debug) echo __FILE__ . '::' . __LINE__ . ' says hi';
+                        if ($Debug) echo __FILE__ . '::' . __LINE__ . ' says hi<br>';
                         require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
 
                         $links = $Pager->GetLinks();

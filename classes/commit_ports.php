@@ -215,7 +215,7 @@ SELECT CL.id as commit_log_id,
   FROM commit_log CL LEFT OUTER JOIN sanity_test_failures STF ON CL.id         = STF.commit_log_id
                                 JOIN commit_log_branches  CLB ON CL.id         = CLB.commit_log_id
                                 JOIN system_branch        SB  ON CLB.branch_id = SB.id
-    LEFT OUTER JOIN repo R ON CL.repo_id = R.id
+                     LEFT OUTER JOIN repo R ON CL.repo_id = R.id
  WHERE " . $Where;
 
 

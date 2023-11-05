@@ -164,7 +164,7 @@ if ($db) {
 
 <p>
 <?php
-            echo '&lt; ' . $Yesterday . ' &gt; &lt; ' . $OtherBranch . ' &gt;';
+            echo $Yesterday . ' | ' . $OtherBranch;
 ?>
 </p>
 
@@ -258,7 +258,7 @@ if ($db) {
 <br>
 
 <?php
-            echo '&lt; ' . $Yesterday . ' &gt; &lt; ' . $OtherBranch . ' &gt;';
+            echo $Yesterday . ' | ' . $OtherBranch;
 ?>
 
 <?php

@@ -268,7 +268,7 @@ with recent_commits AS
     LEFT OUTER JOIN sanity_test_failures STF ON STF.commit_log_id = RC.id
     LEFT OUTER JOIN ports_vulnerable PV      ON P.id              = PV.port_id";
 
-	        if ($UserID) {
+		if ($UserID) {
 			$params[] = $UserID;
 			$sql .= "
           LEFT OUTER JOIN

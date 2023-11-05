@@ -62,6 +62,12 @@ body {
   color: var(--body-text);
 }
 
+/*
+body.dark-theme {
+ --text-color: #eee;
+}
+*/
+
 BODY, TD, TR, P, UL, OL, LI, INPUT, SELECT, DL, DD, DT, FONT
 {
     font-size: 12px;
@@ -355,6 +361,7 @@ CODE.code, kbd.code {
   color: #461b7e;
   color: var(--code-text);
 }
+
 PRE.code {
   color: #461b7e;
   color: var(--code-text);
@@ -362,9 +369,17 @@ PRE.code {
   word-break: break-word;
 }
 
-.like-pre {
-  color: #461b7e;
-  color: var(--code-text);
+.port {
+  font-family: monospace;
+}
+
+PRE.commit,
+dd.port-description {
+/*  color: black;*/
+/*  color: var(--code-text); */
+  white-space: pre-wrap;
+  word-break: break-word;
+
   font-family: monospace;
   white-space: pre-wrap;
   word-break: break-all;
@@ -373,9 +388,34 @@ PRE.code {
   margin-left: 25px;
 }
 
+.uses,
+.options,
+.config,
+.distinfo,
+.pkg-message {
+/*  color: black; */
+/*  color: var(--code-text);*/
+  font-family: monospace;
+  white-space: pre-wrap;
+  word-break: break-all;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-left: 25px;
+}
+
+.conflicts,
+.pkgname,
+.only_for_archs {
+/*  color: black; */
+/*  color: var(--code-text);*/
+  font-family: monospace;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
 .configure > li, .pkg-plist  > li {
-    color: #461b7e;
-    color: var(--code-text);
+/*    color: #461b7e;
+    color: var(--code-text);*/
     font-family: monospace;
 }
 

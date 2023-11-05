@@ -33,9 +33,29 @@ class Categories {
 			$numrows = 0;
 		}
 
-        return $numrows;
+		return $numrows;
 	}
-	
+
+	function GetAllCategories($UserID) {
+		$sql = '
+   SELECT name
+     FROM categories
+ ORDER BY name';
+
+		 # why don't we cache this, and recreate it once per day?
+
+#		echo "<pre>sql = '$sql'</pre><br>";
+
+		$this->result = pg_query_params($this->dbh, $sql, array());
+		if ($this->result) {
+			$numrows = pg_num_rows($this->result);
+		} else {
+			$numrows = 0;
+		}
+
+		return $numrows;
+	}
+
 	function FetchNth($N) {
 		#
 		# call GetAllCategoriesOnWatchLists first.

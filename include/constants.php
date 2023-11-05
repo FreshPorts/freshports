@@ -163,8 +163,26 @@ const PYTHON_PKGNAMEPREFIX = 'PYTHON_PKGNAMEPREFIX';
 # classes/ports_by_pkg_plist.php
 
 const SEARCH_SELECT_FIELD = "
-  select CL.commit_date - SystemTimeAdjust() AS last_commit_date, 
+  select Cl.id as commit_log_id,
+         CL.commit_date - SystemTimeAdjust() AS last_commit_date,
+         CL.message_id,
+         CL.commit_date AS commit_date_raw,
+         to_char(CL.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')  as commit_date,
+         to_char(CL.commit_date - SystemTimeAdjust(), 'HH24:MI:SS')   as commit_time,
+         CL.encoding_losses,
+         CL.committer,
+         CL.committer_name,
+         CL.committer_email,
+         CL.author_name,
+         CL.author_email,
+         CL.description as commit_description,
          P.id,
+         element_pathname(E.id) as element_pathname,
+ 		 R.repository                                                                                        AS repository, 
+		 R.repo_hostname                                                                                     AS repo_hostname,
+		 R.path_to_repo                                                                                      AS path_to_repo,
+		 R.name                                                                                              AS repo_name,
+         P.id as port_id,
          E.name as port,
          C.name as category,
          C.id as category_id,
@@ -172,6 +190,8 @@ const SEARCH_SELECT_FIELD = "
          P.revision as revision,
          P.portepoch as epoch,
          P.maintainer,
+         null AS needs_refresh,
+         null AS stf_message,
          P.short_description,
          P.package_exists,
          P.extract_suffix,
@@ -202,6 +222,24 @@ const SEARCH_SELECT_FIELD = "
          PortVersionOnQuarterlyBranch(P.id, C.name || '/' || E.name) AS quarterly_revision,
          P.uses  ";
 
+#
+# used by www/search.php when searching package names
+# see https://github.com/FreshPorts/freshports/issues/481
+# NOTE that the search parameter for package name must always be the
+# first paramater query
+#
+const SQL_WITH_PACKAGES = '
+with packages as
+(with package_names as
+(select P.id as port_id, P.package_name as package_name
+  FROM ports P where P.package_name ilike $1
+UNION
+select PV.port_id as port_id, PV.name as package_name
+  FROM package_flavors PV where  name ilike $1
+ )
+ select distinct port_id, array_agg(package_name) as package_names from package_names
+ group by port_id
+ ) ' ;
 
 # passed to pgcrypto gen_salt when creating or updating user passwords in the database
 # used by

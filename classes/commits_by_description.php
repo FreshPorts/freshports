@@ -25,19 +25,19 @@ class CommitsByDescription extends commits {
 		$params = array();
 		$sql = "
 		SELECT DISTINCT
-			commit_log.commit_date - SystemTimeAdjust()                                                                  AS commit_date_raw,
-			commit_log.id                                                                                                AS commit_log_id,
-			commit_log.encoding_losses                                                                                   AS encoding_losses,
-			commit_log.message_id                                                                                        AS message_id,
-			commit_log.commit_hash_short                                                                                 AS commit_hash_short,
-			commit_log.committer	                                                                                     AS committer,
-                        commit_log.committer_name                                                                                    AS committer_name,
-                        commit_log.committer_email                                                                                   AS committer_email,
-                        commit_log.author_name                                                                                       AS author_name,
-                        commit_log.author_email                                                                                      AS author_email,
-			commit_log.description                                                                                       AS commit_description,
-			to_char(commit_log.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')                                          AS commit_date,
-			to_char(commit_log.commit_date - SystemTimeAdjust(), 'HH24:MI')                                              AS commit_time,
+			CL.commit_date - SystemTimeAdjust()                                                                          AS commit_date_raw,
+			CL.id                                                                                                        AS commit_log_id,
+			CL.encoding_losses                                                                                           AS encoding_losses,
+			CL.message_id                                                                                                AS message_id,
+			CL.commit_hash_short                                                                                         AS commit_hash_short,
+			CL.committer	                                                                                             AS committer,
+			CL.committer_name                                                                                            AS committer_name,
+			CL.committer_email                                                                                           AS committer_email,
+            CL.author_name                                                                                               AS author_name,
+            CL.author_email                                                                                              AS author_email,
+			CL.description                                                                                               AS commit_description,
+			to_char(CL.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')                                                  AS commit_date,
+			to_char(CL.commit_date - SystemTimeAdjust(), 'HH24:MI')                                                      AS commit_time,
 			commit_log_ports.port_id                                                                                     AS port_id,
 			categories.name                                                                                              AS category,
 			categories.id                                                                                                AS category_id,
@@ -54,6 +54,10 @@ class CommitsByDescription extends commits {
 			ports.expiration_date                                                                                        AS expiration_date,
 			date_part('epoch', ports.date_added)                                                                         AS date_added,
 			ports.element_id                                                                                             AS element_id,
+			element_pathname(ports.element_id)                                                                           AS element_pathname,
+			R.repository,
+			R.repo_hostname,
+			R.path_to_repo,
 			ports.short_description                                                                                      AS short_description,
 			null                                                                                                         AS stf_message";
 		if ($this->UserID) {
@@ -78,7 +82,9 @@ class CommitsByDescription extends commits {
 		}
 
 
-    $sql .= ") AS commit_log, categories, ports, element ";
+    $sql .= ") AS CL JOIN commit_log_branches  CLB ON CL.id = CLB.commit_log_id
+                     JOIN system_branch        SB  ON CLB.branch_id = SB.id
+          LEFT OUTER JOIN repo R ON CL.repo_id = R.id, categories, ports, element ";
 
 		if ($this->UserID) {
 			$params[] = $this->UserID;
@@ -94,7 +100,7 @@ class CommitsByDescription extends commits {
 		}
 
 		$sql .= "
-	  WHERE commit_log_ports.commit_log_id = commit_log.id
+	  WHERE commit_log_ports.commit_log_id = CL.id
 	    AND commit_log_ports.port_id       = ports.id
 	    AND categories.id                  = ports.category_id
 	    AND element.id                     = ports.element_id

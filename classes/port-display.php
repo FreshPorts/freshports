@@ -1347,9 +1347,17 @@ class port_display {
 				}
 			}
 
-			$HTML .= '<dt class="pkgname"><b>PKGNAME:</b>';
+			$HTML .= '<dt class="pkgname"><b>PKGNAME:</b> ';
 			if ($port->PackageIsAvailable()) {
 			  $HTML .= '<span class="pkgname">' . $port->package_name . '</span>';
+				if ($port->package_names) {
+					# something like '{clojure-cider-emacs_devel_nox,clojure-cider-emacs_devel,clojure-cider-emacs_nox,clojure-cider-emacs_canna}'
+					$package_names = explode(',', rtrim(ltrim($port->package_names, '{'), '}'));
+					$names = implode('&nbsp;&nbsp; ', $package_names);
+					if ($names != $port->package_name) {
+						$HTML .= '<br><b>Also available as</b>: <span class="pkgname">' . $names .  '</span>';
+					}
+				}
 			} else {
 			  $HTML .= 'there is no package for this port: <span class="file">' . $port->PackageNotAvailableReason() . '</span>';
 			}

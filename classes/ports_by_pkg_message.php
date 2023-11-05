@@ -71,14 +71,18 @@ class PortsByPkgMessage extends Port {
 		return $count;
 	}
 
-	function FetchPorts($UserID = null, $sqlOrderBy = null) {
+	function FetchPorts($UserID = null, $sqlOrderBy = null, $Branch = BRANCH_HEAD) {
 		# but yeah, it's not really ports we are fetching.
 	
 
 		$sqlFrom = "
        FROM short_list, ports P
        LEFT OUTER JOIN ports_vulnerable    PV  ON PV.port_id       = P.id
-       LEFT OUTER JOIN commit_log          CL  ON P.last_commit_id = CL.id,
+       LEFT OUTER JOIN commit_log          CL  ON P.last_commit_id = CL.id
+       LEFT OUTER JOIN repo                R   ON CL.repo_id       = R.id
+       LEFT OUTER JOIN commit_log_branches CLB ON CL.id            = CLB.commit_log_id
+                  JOIN system_branch       SB  ON SB.branch_name   = '" . pg_escape_string($this->dbh, $Branch) . "'
+                                               AND SB.id            = CLB.branch_id,
        element_pathname EP,
        categories C, element E ";
 

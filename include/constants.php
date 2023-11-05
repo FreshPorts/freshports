@@ -178,10 +178,10 @@ const SEARCH_SELECT_FIELD = "
          CL.description as commit_description,
          P.id,
          element_pathname(E.id) as element_pathname,
- 		 R.repository                                                                                        AS repository, 
-		 R.repo_hostname                                                                                     AS repo_hostname,
-		 R.path_to_repo                                                                                      AS path_to_repo,
-		 R.name                                                                                              AS repo_name,
+         R.name                                                                                              AS repo_name,
+         R.repository                                                                                        AS repository, 
+         R.repo_hostname                                                                                     AS repo_hostname,
+         R.path_to_repo                                                                                      AS path_to_repo,
          P.id as port_id,
          E.name as port,
          C.name as category,
@@ -227,6 +227,9 @@ const SEARCH_SELECT_FIELD = "
 # see https://github.com/FreshPorts/freshports/issues/481
 # NOTE that the search parameter for package name must always be the
 # first paramater query
+#
+
+# jsonb_agg() might also be useful instead of array_agg()
 #
 const SQL_WITH_PACKAGES = '
 with packages as

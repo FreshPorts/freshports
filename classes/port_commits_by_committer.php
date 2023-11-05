@@ -99,6 +99,7 @@ class PortCommitsByCommitter extends CommitsByCommitter {
 			date_part('epoch', P.date_added)                                               AS date_added,
 			P.element_id                                                                   AS element_id,
 			P.short_description                                                            AS short_description,
+			R.name                                                                         AS repo_name,
 			R.repository,
 			R.repo_hostname,
 			R.path_to_repo,

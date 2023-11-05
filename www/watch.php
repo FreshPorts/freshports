@@ -251,6 +251,7 @@ SELECT selected_ports.*,
 		commit_log.committer_email,
 		commit_log.author_name,
 		commit_log.author_email,
+                R.name                                                                                              AS repo_name,
                 R.repo_hostname
 	from selected_ports LEFT OUTER JOIN commit_log on selected_ports.last_commit_id = commit_log.id
                             LEFT OUTER JOIN repo R     on commit_log.repo_id = R.id

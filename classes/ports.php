@@ -306,6 +306,7 @@ class Port {
        commit_log.svn_revision,
        commit_log.commit_hash_short,
        commit_log.message_id,
+       R.name          AS repo_name,
        R.repository,
        R.repo_hostname,
        R.path_to_repo,

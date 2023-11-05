@@ -105,6 +105,7 @@ class CommitFiles {
 	       NULL::text AS expiration_date,
 	       NULL::text AS is_interactive,
 	       GMT_Format(CL.commit_date) AS last_commit_date,
+               R.name                                                                                              AS repo_name,
                R.repository,
                R.repo_hostname,
                R.path_to_repo,

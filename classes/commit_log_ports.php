@@ -93,6 +93,7 @@ class Commit_Log_Ports {
 		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "
    SELECT CL.id,
           CL.svn_revision,
+          R.name          AS repo_name,
           R.repo_hostname,
           R.path_to_repo,
           port_id,

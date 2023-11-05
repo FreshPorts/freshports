@@ -40,6 +40,7 @@ class Port {
 	var $master_port;
 	var $no_package;
 	var $package_name;
+	var $package_names;
 	var $restricted;
 	var $no_cdrom;
 	var $expiration_date;
@@ -152,6 +153,7 @@ class Port {
 		$this->master_port          = $myrow["master_port"]          ?? null;
 		$this->no_package           = $myrow["no_package"]           ?? null;
 		$this->package_name         = $myrow["package_name"];
+		$this->package_names        = $myrow["package_names"]        ?? null;
 		$this->restricted           = $myrow["restricted"]           ?? null;
 		$this->no_cdrom             = $myrow["no_cdrom"]             ?? null;
 		$this->expiration_date      = $myrow["expiration_date"]      ?? null;

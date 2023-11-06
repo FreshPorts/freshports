@@ -1350,7 +1350,6 @@ class port_display {
 			$HTML .= '<dt class="pkgname"><b>PKGNAME:</b> ';
 			if ($port->PackageIsAvailable()) {
 			  $HTML .= '<span class="pkgname">' . $port->package_name . '</span>';
-				}
 			} else {
 			  $HTML .= 'there is no package for this port: <span class="file">' . $port->PackageNotAvailableReason() . '</span>';
 			}

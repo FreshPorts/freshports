@@ -196,14 +196,6 @@ class port_display {
 		# remove the temp file
 		fclose($temp);
 
-		# this code is also duplicated within _pkgmessage()
-
-		# homepage is not always present. e.g. security/gnome-keyring
-		if ($port->homepage) {
-			foreach (preg_split('/\s+/', $port->homepage, -1, PREG_SPLIT_NO_EMPTY) as $page) {
-				$HTML .= '<dd>WWW: <a href="' . _forDisplay($page) . '" title="Homepage for this port">' . _forDisplay($port->homepage) . '</a></dd>';
-			}
-		}
 		$HTML .= '</dl></dd>';
 
 		return $HTML;
@@ -226,14 +218,6 @@ class port_display {
 			$HTML .= "<dt id=\"message\"><b>pkg-message: </b></dt>\n" . '<dd class="pkg-message">';
 			$HTML .= htmlspecialchars($port->pkgmessage);
 
-			# this code is also duplicated within _pkgmessage_UCL()
-
-			# homepage is not always present. e.g. security/gnome-keyring
-			if ($port->homepage) {
-				foreach (preg_split('/\s+/', $port->homepage, -1, PREG_SPLIT_NO_EMPTY) as $page) {
-					$HTML .= 'WWW: <a href="' . _forDisplay($page) . '" title="Homepage for this port">' . _forDisplay($port->homepage) . '</a>';
-				}
-			}
 			$HTML .= "</dd>\n</dl>\n<hr>\n<dl>";
 		}
 
@@ -1185,6 +1169,14 @@ class port_display {
 
 		# sometimes the description can get very wide. This causes problems on mobile.
 		if ($this->ShowDescriptionLong || $this->ShowEverything) {
+			# homepage is not always present. e.g. security/gnome-keyring
+			if ($port->homepage) {
+				$HTML .= '<dt class="www">WWW: </dt>';
+				foreach (preg_split('/\s+/', $port->homepage, -1, PREG_SPLIT_NO_EMPTY) as $page) {
+					$HTML .= '<dd class="www-description"><a href="' . _forDisplay($page) . '" title="Homepage for this port">' . _forDisplay($page) . '</a>';
+				}
+				$HTML .= '</dd>';
+			}
 			$HTML .= '<dt class="description" id="description">Description:</dt><dd class="port-description">' . htmlify(_forDisplay($port->long_description)) . '</dd>';
 		}
 

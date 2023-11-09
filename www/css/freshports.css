@@ -388,6 +388,15 @@ dd.port-description {
   margin-left: 25px;
 }
 
+dd.www-description {
+  white-space: pre-wrap;
+  word-break: break-word;
+
+  white-space: pre-wrap;
+  word-break: break-all;
+  margin-left: 25px;
+}
+
 .uses,
 .options,
 .config,
@@ -495,7 +504,7 @@ div#followus .header
 }
 
 
-dt.required, p.required, dt.description
+dt.required, p.required, dt.description, dt.www
 {
     font-weight: bold;
 }
@@ -506,6 +515,15 @@ dt.description
   margin-bottom: 15px;
   font-weight: bold;
 }
+
+/*
+dt.www-description
+{
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-weight: bold;
+}
+*/
 
 dd.required
 {

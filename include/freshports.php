@@ -892,7 +892,7 @@ function freshports_Commit_Link_Port($MessageID, $Category, $Port) {
 }
 
 function freshports_MorePortsToShow($message_id, $NumberOfPortsInThisCommit, $MaxNumberPortsToShow) {
-	$HTML  = "(Only the first $MaxNumberPortsToShow of $NumberOfPortsInThisCommit ports in this commit are shown above. ";
+	$HTML  = "(Only the first $MaxNumberPortsToShow of $NumberOfPortsInThisCommit items in this commit are shown above. ";
 	$HTML .= freshports_Commit_Link($message_id, '<img class="icon" src="/images/play.gif" alt="View all ports for this commit" title="View all ports for this commit" width="13" height="13">');
 	$HTML .= ")";
 

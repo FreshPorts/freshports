@@ -90,7 +90,7 @@ function freshports_NonPortDescription($dbh, $element_record) {
 		$HTML = $Cache->CacheDataGet();
 		#
 		# we need to know the element_id of this port
-		# and the whether or not it is on the person's watch list
+		# and whether it is on the person's watch list.
 		# let's create a special function for that!
 		#
 		$EndOfFirstLine = strpos($HTML, "\n");

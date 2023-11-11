@@ -1121,7 +1121,7 @@ JOIN element_pathname EP on E.id = EP.element_id
 
 <?php
 # the goal: have a periodic script which refreshes this file avoiding race conditions, e.g. mv
-define('CATEGORIES_CACHE_LIST', '/var/db/freshports/cache/general/categories.php');
+define('CATEGORIES_CACHE_LIST', '/var/db/freshports/cache/html/categories.php');
 
 if (file_exists(CATEGORIES_CACHE_LIST)) {
  ?>

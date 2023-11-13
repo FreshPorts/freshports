@@ -19,6 +19,7 @@ class CommitsByTreeLocation extends commits {
 
 	function __construct($dbh) {
 		parent::__construct($dbh);
+		$this->Debug = 1;
 	}
 	
 	function TreePathConditionSet($TreePathCondition) {
@@ -192,10 +193,10 @@ ORDER BY CL.commit_date DESC ";
 			CL.message_id                                                                                       AS message_id,
 			CL.commit_hash_short                                                                                AS commit_hash_short,
 			CL.committer                                                                                        AS committer,
-                        CL.committer_name                                                                                   AS committer_name,
-                        CL.committer_email                                                                                  AS committer_email,
-                        CL.author_name                                                                                      AS author_name,
-                        CL.author_email                                                                                     AS author_email,
+			CL.committer_name                                                                                   AS committer_name,
+			CL.committer_email                                                                                  AS committer_email,
+			CL.author_name                                                                                      AS author_name,
+			CL.author_email                                                                                     AS author_email,
 			CL.description                                                                                      AS commit_description,
 			to_char(CL.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')                                         AS commit_date,
 			to_char(CL.commit_date - SystemTimeAdjust(), 'HH24:MI')                                             AS commit_time,

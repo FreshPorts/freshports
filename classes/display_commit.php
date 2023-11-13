@@ -403,7 +403,7 @@ class DisplayCommit {
 
 					if ($PathName != $mycommit->element_pathname) {
 						# the replace changes encoded / to plain text / - not sure why may have been present
-						$this->HTML .= '<a href="/' . str_replace('%2F', '/', urlencode($PathName)) . $QueryArgs . '">' . $PathName. '</a>';
+						$this->HTML .= '<b><a href="/' . str_replace('%2F', '/', urlencode($PathName)) . $QueryArgs . '">' . $PathName. '</a></b>';
 						$this->HTML .= "</span>\n";
 					} else {
 						#$this->HTML .= '<a href="' . FRESHPORTS_FREEBSD_CVS_URL . $PathName . '#rev' . $mycommit->revision . '">' . $PathName . '</a>';

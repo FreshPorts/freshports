@@ -565,6 +565,7 @@ class port_display {
 		$this->ShowLastChange          = false;
 		$this->ShowLastCommitDate      = false;
 		$this->ShowMaintainedBy        = false;
+		$this->ShowManPageLinks        = false;
 		$this->ShowMasterSites         = false;
 		$this->ShowMasterSlave         = false;
 		$this->ShowPackageLink         = false;
@@ -603,6 +604,7 @@ class port_display {
 		$this->ShowHomepageLink        = true;
 		$this->ShowLastCommitDate      = true;
 		$this->ShowMaintainedBy        = true;
+		$this->ShowManPageLinks        = true;
 		$this->ShowPackageLink         = true;
 		$this->ShowShortDescription    = true;
 		$this->ShowWatchListStatus     = true;
@@ -636,6 +638,7 @@ class port_display {
 		$this->ShowHomepageLink        = true;
 		$this->ShowLastCommitDate      = true;
 		$this->ShowMaintainedBy        = true;
+		$this->ShowManPageLinks        = true;
 		$this->ShowPackageLink         = true;
 		$this->ShowPortCreationDate    = true;
 		$this->ShowShortDescription    = true;
@@ -800,6 +803,16 @@ class port_display {
 	}
 
 	function Display() {
+		#
+		# this function gets called three times for each port
+		# what is displayed depends upon the flags used.
+		# see SetDetailsNil(), SetDetailsFull(), SetDetailsPackages(), SetDetailsPackages(), etc
+		# If you add a new item for display, and you see it listed three times in the output,
+		# it's because that output is not controlled by one of those flags.
+		#
+		# Why three times? There are three sections to a page. The top (see SetDetailsBeforePackages()),
+		# the middle (see SetDetailsPackages()), and the end (see SetDetailsPackages()), 
+		#
 
 		$port = $this->port;
 
@@ -1220,12 +1233,16 @@ class port_display {
 			$HTML .= '</dt>';
 		}
 
-		# show man pages, derived from pkg-plist
-		$HTML .= $this->ShowManPageLinks();
+		# Grab the data used for both man pages and pkg-plist
+		$ConfigurePlist = new PortConfigurePlist( $this->db );
+		$NumRows = $ConfigurePlist->FetchInitialise( $this->port->id );
 		
+		if ($this->ShowManPageLinks || $this->ShowEverything) {
+			$HTML .= $this->ShowManPageLinks($ConfigurePlist, $NumRows);
+		}
 
 		if (defined('CONFIGUREPLISTSHOW')  && ($this->ShowConfigurePlist || $this->ShowEverything)) {
-			$HTML .= $this->ShowConfigurePlist();
+			$HTML .= $this->ShowConfigurePlist($ConfigurePlist, $NumRows);
 		}
 
 		if ($this->ShowEverything || $this->ShowBasicInfo) {
@@ -1785,11 +1802,9 @@ class port_display {
 		return $HTML;
 	}
 
-	function ShowConfigurePlist() {
+	function ShowConfigurePlist($ConfigurePlist, $NumRows) {
 		$HTML = '';
 
-		$ConfigurePlist = new PortConfigurePlist( $this->db );
-		$NumRows = $ConfigurePlist->FetchInitialise( $this->port->id );
 		if ( $NumRows > 0 ) {
 			// if this is our first output, put up our standard header
 			if ( $HTML === '' ) {
@@ -1823,21 +1838,15 @@ class port_display {
 		return $HTML;
 	}
 
-	function ShowManPageLinks() {
-		#
-		# XXX
-		# This uses the same data as ShowConfigurePlist() and should be amalgamted.
-		#
+	function ShowManPageLinks($ConfigurePlist, $NumRows) {
 		$HTML = '';
 
-		$ConfigurePlist = new PortConfigurePlist( $this->db );
-		$NumRows = $ConfigurePlist->FetchInitialise( $this->port->id );
 		if ( $NumRows > 0 ) {
 			// if this is our first output, put up our standard header
 			if ( $HTML === '' ) {
 				$div = "<br>\n" . '<dt id="man" class="man"><b>Manual pages:</b></dt>';
 				$div .= '<dd class="man">';
-				$div .= "\n" . '<ol class="man">' . "\n";
+				$div .= "\n" . '<ul class="man">' . "\n";
 
 				for ( $i = 0; $i < $NumRows; $i++ ) {
 					$ConfigurePlist->FetchNth($i);
@@ -1854,8 +1863,8 @@ class port_display {
 					
 					if (preg_match('|^(man/man)(\d)/(\w+)(\.\d\.gz)$|', $ConfigurePlist->installed_file, $matches)) {
 						# we have a man page
-						$div .= '<li class="man"><a href ="' . 
-							'https://man.freebsd.org/cgi/man.cgi?query=' . $matches[3] . '&amp;sektion=' . $matches[2] . '&amp;manpath=freebsd-ports"> ' .
+						$div .= '<li class="man"><a class="man" href="' . 
+							'https://man.freebsd.org/cgi/man.cgi?query=' . $matches[3] . '&amp;sektion=' . $matches[2] . '&amp;manpath=freebsd-ports">' .
 							$matches[3] . "</a></li>\n";
 					}
 				}

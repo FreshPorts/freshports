@@ -1802,6 +1802,70 @@ class port_display {
 		return $HTML;
 	}
 
+	function ShowManPageLinks($ConfigurePlist, $NumRows) {
+		$HTML = '';
+		$div = "<br>\n" . '<dt id="man" class="man"><b>Manual pages:</b></dt>';
+
+		if ( $NumRows > 0 ) {
+			$ManPages = array();
+			# iterate through pkg-plist, looking for man page references
+			for ( $i = 0; $i < $NumRows; $i++ ) {
+				$ConfigurePlist->FetchNth($i);
+				# my thanks to https://regex101.com/r/uhEsGb/1
+				# For man/man1/bcwipe.1.gz, $matches will contain:
+				# Array
+				# (
+				#    [0] => man/man1/bcwipe.1.gz
+				#    [1] => man/man
+				#    [2] => 1
+				#    [3] => bcwipe
+				#    [4] => .1.gz
+				# )
+
+				if (preg_match('|^(man/man)(\d)/(\w+)(\.\d\.gz)$|', $ConfigurePlist->installed_file, $matches)) {
+					# we have a man page
+					$ManPages[] = '<li class="man"><a class="man" href="' . 
+						'https://man.freebsd.org/cgi/man.cgi?query=' . $matches[3] . '&amp;sektion=' . $matches[2] . '&amp;manpath=freebsd-ports">' .
+						$matches[3] . "</a></li>\n";
+				}
+			}
+
+			$CountManPages = count($ManPages);
+			if ($CountManPages > 0) {
+				# now we know how many man pages we have
+				# we can decide if we want to hide any
+
+				$div .= '<dd class="man">';
+				$div .= "\n" . '<ul class="man">' . "\n";
+				for ( $i = 0; $i < $CountManPages; $i++) {
+					if ($i == 9 && $CountManPages > 12) {
+						$div .= '<a href="#" id="ManPages-Extra-show" class="showLink" onclick="showHide(\'ManPages-Extra\');return false;">Expand this list (' . $CountManPages . ' items)</a>';
+						$div .= '<span id="ManPages-Extra" class="more ManPages">';
+					}
+					$div .= $ManPages[$i];
+				}
+				
+				if ($CountManPages > 12) {
+					$div .= '<a href="#" class="hideLink" onclick="showHide(\'ManPages-Extra\');return false;">Collapse this list.</a>';
+				}
+
+				$div .= '</ol>';
+				$div .= '</dd>';
+
+				$HTML .= $div;
+			}
+		}
+
+#		$HTML .= 'xxxxxx';
+		if ( $CountManPages == 0 ) {
+			$HTML .= $div;
+			$HTML .= "\n";
+			$HTML .= '<dd>FreshPorts has no man page information for this port.</dd>';
+		}
+
+		return $HTML;
+	}
+
 	function ShowConfigurePlist($ConfigurePlist, $NumRows) {
 		$HTML = '';
 
@@ -1833,52 +1897,6 @@ class port_display {
 		if ( $HTML === '' ) {
 			$HTML .= "\n" . '<dt class="pkg-plist"><a id="pkg-plist"><b>pkg-plist:</b></a> as obtained via: <code class="code">make generate-plist</code></dt>';
 			$HTML .= '<dd>There is no configure plist information for this port.</dd>';
-		}
-
-		return $HTML;
-	}
-
-	function ShowManPageLinks($ConfigurePlist, $NumRows) {
-		$HTML = '';
-
-		if ( $NumRows > 0 ) {
-			// if this is our first output, put up our standard header
-			if ( $HTML === '' ) {
-				$div = "<br>\n" . '<dt id="man" class="man"><b>Manual pages:</b></dt>';
-				$div .= '<dd class="man">';
-				$div .= "\n" . '<ul class="man">' . "\n";
-
-				for ( $i = 0; $i < $NumRows; $i++ ) {
-					$ConfigurePlist->FetchNth($i);
-					# my thanks to https://regex101.com/r/uhEsGb/1
-					# For man/man1/bcwipe.1.gz, $matches will contain:
-					# Array
-					# (
-					#    [0] => man/man1/bcwipe.1.gz
-					#    [1] => man/man
-					#    [2] => 1
-					#    [3] => bcwipe
-					#    [4] => .1.gz
-					# )
-					
-					if (preg_match('|^(man/man)(\d)/(\w+)(\.\d\.gz)$|', $ConfigurePlist->installed_file, $matches)) {
-						# we have a man page
-						$div .= '<li class="man"><a class="man" href="' . 
-							'https://man.freebsd.org/cgi/man.cgi?query=' . $matches[3] . '&amp;sektion=' . $matches[2] . '&amp;manpath=freebsd-ports">' .
-							$matches[3] . "</a></li>\n";
-					}
-				}
-
-				$div .= '</ol>';
-				$div .= '</dd>';
-
-				$HTML .= $div;
-			}
-		}
-
-		if ( $HTML === '' ) {
-			$HTML .= "\n";
-			$HTML .= '<dd>FreshPorts has no man page informatino about this port.</dd>';
 		}
 
 		return $HTML;

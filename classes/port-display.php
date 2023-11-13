@@ -565,6 +565,7 @@ class port_display {
 		$this->ShowLastChange          = false;
 		$this->ShowLastCommitDate      = false;
 		$this->ShowMaintainedBy        = false;
+		$this->ShowManPageLinks        = false;
 		$this->ShowMasterSites         = false;
 		$this->ShowMasterSlave         = false;
 		$this->ShowPackageLink         = false;
@@ -603,6 +604,7 @@ class port_display {
 		$this->ShowHomepageLink        = true;
 		$this->ShowLastCommitDate      = true;
 		$this->ShowMaintainedBy        = true;
+		$this->ShowManPageLinks        = true;
 		$this->ShowPackageLink         = true;
 		$this->ShowShortDescription    = true;
 		$this->ShowWatchListStatus     = true;
@@ -636,6 +638,7 @@ class port_display {
 		$this->ShowHomepageLink        = true;
 		$this->ShowLastCommitDate      = true;
 		$this->ShowMaintainedBy        = true;
+		$this->ShowManPageLinks        = true;
 		$this->ShowPackageLink         = true;
 		$this->ShowPortCreationDate    = true;
 		$this->ShowShortDescription    = true;
@@ -800,6 +803,16 @@ class port_display {
 	}
 
 	function Display() {
+		#
+		# this function gets called three times for each port
+		# what is displayed depends upon the flags used.
+		# see SetDetailsNil(), SetDetailsFull(), SetDetailsPackages(), SetDetailsPackages(), etc
+		# If you add a new item for display, and you see it listed three times in the output,
+		# it's because that output is not controlled by one of those flags.
+		#
+		# Why three times? There are three sections to a page. The top (see SetDetailsBeforePackages()),
+		# the middle (see SetDetailsPackages()), and the end (see SetDetailsPackages()), 
+		#
 
 		$port = $this->port;
 
@@ -1220,8 +1233,16 @@ class port_display {
 			$HTML .= '</dt>';
 		}
 
+		# Grab the data used for both man pages and pkg-plist
+		$ConfigurePlist = new PortConfigurePlist( $this->db );
+		$NumRows = $ConfigurePlist->FetchInitialise( $this->port->id );
+		
+		if ($this->ShowManPageLinks || $this->ShowEverything) {
+			$HTML .= $this->ShowManPageLinks($ConfigurePlist, $NumRows);
+		}
+
 		if (defined('CONFIGUREPLISTSHOW')  && ($this->ShowConfigurePlist || $this->ShowEverything)) {
-			$HTML .= $this->ShowConfigurePlist();
+			$HTML .= $this->ShowConfigurePlist($ConfigurePlist, $NumRows);
 		}
 
 		if ($this->ShowEverything || $this->ShowBasicInfo) {
@@ -1781,11 +1802,73 @@ class port_display {
 		return $HTML;
 	}
 
-	function ShowConfigurePlist() {
+	function ShowManPageLinks($ConfigurePlist, $NumRows) {
+		$HTML = '';
+		$div = "<br>\n" . '<dt id="man" class="man"><b>Manual pages:</b></dt>';
+
+		if ( $NumRows > 0 ) {
+			$ManPages = array();
+			# iterate through pkg-plist, looking for man page references
+			for ( $i = 0; $i < $NumRows; $i++ ) {
+				$ConfigurePlist->FetchNth($i);
+				# my thanks to https://regex101.com/r/sqYMyd/1
+				# For man/man1/bcwipe.1.gz, $matches will contain:
+				# Array
+				# (
+				#    [0] => man/man1/bcwipe.1.gz
+				#    [1] => man/man
+				#    [2] => 1
+				#    [3] => bcwipe
+				#    [4] => .1.gz
+				# )
+
+				if (preg_match('|^(man/man)(\d)/(\S+)(\.\d\.gz)$|', $ConfigurePlist->installed_file, $matches)) {
+					# we have a man page
+					$ManPages[] = '<li class="man"><a class="man" href="' . 
+						'https://man.freebsd.org/cgi/man.cgi?query=' . $matches[3] . '&amp;sektion=' . $matches[2] . '&amp;manpath=freebsd-ports">' .
+						$matches[3] . "</a></li>\n";
+				}
+			}
+
+			$CountManPages = count($ManPages);
+			if ($CountManPages > 0) {
+				# now we know how many man pages we have
+				# we can decide if we want to hide any
+
+				$div .= '<dd class="man">';
+				$div .= "\n" . '<ul class="man">' . "\n";
+				for ( $i = 0; $i < $CountManPages; $i++) {
+					if ($i == 9 && $CountManPages > 12) {
+						$div .= '<a href="#" id="ManPages-Extra-show" class="showLink" onclick="showHide(\'ManPages-Extra\');return false;">Expand this list (' . $CountManPages . ' items)</a>';
+						$div .= '<span id="ManPages-Extra" class="more ManPages">';
+					}
+					$div .= $ManPages[$i];
+				}
+				
+				if ($CountManPages > 12) {
+					$div .= '<a href="#" class="hideLink" onclick="showHide(\'ManPages-Extra\');return false;">Collapse this list.</a>';
+				}
+
+				$div .= '</ol>';
+				$div .= '</dd>';
+
+				$HTML .= $div;
+			}
+		}
+
+#		$HTML .= 'xxxxxx';
+		if ( $CountManPages == 0 ) {
+			$HTML .= $div;
+			$HTML .= "\n";
+			$HTML .= '<dd>FreshPorts has no man page information for this port.</dd>';
+		}
+
+		return $HTML;
+	}
+
+	function ShowConfigurePlist($ConfigurePlist, $NumRows) {
 		$HTML = '';
 
-		$ConfigurePlist = new PortConfigurePlist( $this->db );
-		$NumRows = $ConfigurePlist->FetchInitialise( $this->port->id );
 		if ( $NumRows > 0 ) {
 			// if this is our first output, put up our standard header
 			if ( $HTML === '' ) {

@@ -397,6 +397,7 @@ dd.www-description {
   margin-left: 25px;
 }
 
+a.man,
 .uses,
 .options,
 .config,
@@ -411,6 +412,16 @@ dd.www-description {
   margin-bottom: 15px;
   margin-left: 25px;
 }
+
+a.man {
+  margin-left: 0px;
+}
+
+ul.man,
+dd.man {
+  margin-inline-start: 0px;
+}
+
 
 .conflicts,
 .pkgname,

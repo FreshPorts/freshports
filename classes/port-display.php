@@ -1811,7 +1811,7 @@ class port_display {
 			# iterate through pkg-plist, looking for man page references
 			for ( $i = 0; $i < $NumRows; $i++ ) {
 				$ConfigurePlist->FetchNth($i);
-				# my thanks to https://regex101.com/r/uhEsGb/1
+				# my thanks to https://regex101.com/r/sqYMyd/1
 				# For man/man1/bcwipe.1.gz, $matches will contain:
 				# Array
 				# (
@@ -1822,7 +1822,7 @@ class port_display {
 				#    [4] => .1.gz
 				# )
 
-				if (preg_match('|^(man/man)(\d)/(\w+)(\.\d\.gz)$|', $ConfigurePlist->installed_file, $matches)) {
+				if (preg_match('|^(man/man)(\d)/(\S+)(\.\d\.gz)$|', $ConfigurePlist->installed_file, $matches)) {
 					# we have a man page
 					$ManPages[] = '<li class="man"><a class="man" href="' . 
 						'https://man.freebsd.org/cgi/man.cgi?query=' . $matches[3] . '&amp;sektion=' . $matches[2] . '&amp;manpath=freebsd-ports">' .

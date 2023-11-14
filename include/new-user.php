@@ -34,7 +34,7 @@
               <label>New password again:<br>
               <INPUT TYPE="PASSWORD" NAME="Password2" VALUE="<?php if (IsSet($Password2)) echo htmlentities($Password2) ?>" size="20"></label>
             </td>
-            <td>
+            <td valign="top">
               <label>Email Address (required):<br>
               <INPUT type="email" SIZE="35" NAME="email" required VALUE="<?php if (IsSet($email)) echo htmlentities($email) ?>"></label>
 
@@ -67,7 +67,10 @@ Number of results to display per page (e.g commits per page):
 	  echo $PageOptions->DDLB_Choices('page_size', $page_size);
 
 ?>
-<br><br><br>
+</td>
+<tr>
+<td colspan="2">
+<br><br>
             <INPUT TYPE="submit" VALUE="<?php if (IsSet($Customize)) { echo "update";} else { echo "create";} ?> account" NAME="submit">
             <INPUT TYPE="reset"  VALUE="reset form">
             </td>
@@ -90,11 +93,13 @@ if ( $_SERVER['SCRIPT_NAME'] == '/new-user.php' )
     </table>
 </FORM>
 
+<hr>
+
 <?php
 if ( $_SERVER['SCRIPT_NAME'] != '/new-user.php' )
 {
 ?>
 <p>For your reporting needs, please visit <a href="/report-subscriptions.php">Report Subscriptions</a>.</p>
-<h2><a href="/delete-account.php">Delete my account</a></h2>
+<h3><a href="/delete-account.php">Delete my account</a></h3>
 <?php
 }

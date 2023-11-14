@@ -234,11 +234,10 @@ const SEARCH_SELECT_FIELD = "
 const SQL_WITH_PACKAGES = '
 with packages as
 (with package_names as
-(select P.id as port_id, P.package_name as package_name
-  FROM ports P where P.package_name ilike $1
-UNION
-select PV.port_id as port_id, PV.name as package_name
-  FROM package_flavors PV where  name ilike $1
+(select distinct port_id, package_name
+   from packages
+  where package_set = \'latest\'
+    and package_name ilike $1
  )
  select distinct port_id, array_agg(package_name) as package_names from package_names
  group by port_id

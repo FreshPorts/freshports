@@ -120,8 +120,6 @@ class DisplayCommit {
 			$mycommit = new Commit_Ports($this->dbh);
 			$mycommit->PopulateValues($myrow);
 
-#			echo '<pre>'; var_dump($mycommit); echo '</pre>';
-
 			if ($mycommit->branch && $mycommit->branch != BRANCH_HEAD) {
 				$QueryArgs= '?branch=' . $mycommit->branch;
 			} else {
@@ -135,22 +133,14 @@ class DisplayCommit {
 			if ($mycommit->commit_log_id != $PreviousCommit->commit_log_id) {
 				if ($Debug) echo 'This commit_log_id is different<br>';
 				if (($NumberOfPortsInThisCommit > $MaxNumberPortsToShow) && !$this->ShowAllPorts) {
-					$this->HTML .= '</ul>' . freshports_MorePortsToShow($PreviousCommit->message_id, $NumberOfPortsInThisCommit, $MaxNumberPortsToShow);
-				} else if ($i > 0) {
+					if ($DetailsWillBePresented) {
+						$this->HTML .= '</ul>';
+					}
+					$this->HTML .= freshports_MorePortsToShow($PreviousCommit->message_id, $NumberOfPortsInThisCommit, $MaxNumberPortsToShow);
+				} else if ($i > 0 && $DetailsWillBePresented) {
 					$this->HTML .= '</ul>';
 				}
 				$TooManyPorts = false;
-#				if ($i > 0) {
-#					$this->HTML .= "\n<blockquote class=\"description\">";
-#					$this->HTML .= 'The commit message goes here';
-#					$this->HTML .= freshports_CommitDescriptionPrint(
-#			                    $PreviousCommit->commit_description,
-#			                    $PreviousCommit->encoding_losses,
-#			                    $Lines,
-#			                    freshports_MoreCommitMsgToShow($PreviousCommit->message_id, $Lines));
-#					# close off the previous commit first
-#					$this->HTML .= "\n</blockquote>\n</td></tr>\n\n\n";
-#				}
 				# count the number of ports in this commit.
 				# first time into the loop, this will be executed.
 				$NumberOfPortsInThisCommit = 0;
@@ -197,9 +187,6 @@ class DisplayCommit {
 				}
 				$this->HTML .= '</span>';
 
-#				$this->HTML .= '<br>next is the commit message';
-
-
 
 					$this->HTML .= "\n<blockquote class=\"description\">";
 					$this->HTML .= freshports_CommitDescriptionPrint(
@@ -239,8 +226,6 @@ class DisplayCommit {
 					$this->HTML .= '&nbsp;' . freshports_SanityTestFailure_Link($mycommit->message_id);
 				}
 
-#        			echo '<pre>' . print_r($mycommit, true) . '</pre>';
-
 				if ($mycommit->svn_revision != '') {
 					if ($this->IsGitCommit($mycommit->message_id)) {
 						$this->HTML .= freshports_git_commit_Link_freebsd ($mycommit->svn_revision,                               $mycommit->repo_hostname, $mycommit->path_to_repo) . '&nbsp;';
@@ -257,13 +242,16 @@ class DisplayCommit {
 				if (!empty($mycommit->branch) && $this->BranchName != $mycommit->branch || $this->BranchName != BRANCH_HEAD) {
 					$this->HTML .=  ' <span class="commit-branch">' . $mycommit->branch . '</span>';
 				}
+				
+				$this->HTML .= '</span>';
 
-#				$this->HTML .= "</td></tr>\n\n\n";
-#				$this->HTML .= '<tr><td class="commit-details">';
-				$this->HTML .= '<p>Details:</p>';
-#				$this->HTML .= '</span>';
+				$DetailsWillBePresented = !empty($mycommit->element_pathname);
+				
+				if ($DetailsWillBePresented) {
+					$this->HTML .= '<p>Details:</p>';
 
-				$this->HTML .= "<ul class=\"element-list\">\n";
+					$this->HTML .= '<ul class="element-list">' . "\n";
+				}
 
 			}
 
@@ -275,7 +263,9 @@ class DisplayCommit {
 			if ($Debug) echo 'at too many<br>';
 
 			if (!$TooManyPorts) {
-				$this->HTML .= '<li>';
+				if ($DetailsWillBePresented) {
+					$this->HTML .= '<li>';
+				}
 				#
 				# XXX This 0 is in the if beacuse I'm testing the ELSE portion for all purposes
 				#
@@ -296,7 +286,6 @@ class DisplayCommit {
 					}
 
 					$this->HTML .= '<span class="element-details">';
-#					$this->HTML .= '<a href="/' . $mycommit->category . '/' . $mycommit->port . '/' . $URLBranchSuffix;
 					$this->HTML .= '<a href="/' . $mycommit->category . '/' . $mycommit->port . '/';
 
 					$this->HTML .= $QueryArgs . '">';
@@ -377,8 +366,15 @@ class DisplayCommit {
 
 					$this->HTML.=  freshports_Fallout_Link($mycommit->category, $mycommit->port) . '&nbsp;';
 				} else {
+					if (!$DetailsWillBePresented) {
+						# we do nothing
+						# this is a non-port. All the rest of the stuff is not displayed
+					} else {
+					syslog(LOG_NOTICE, 'We have non-port where element_pathname is not empty');
+
 					# This is a non-port element... 
 					$this->HTML .= '<span class="element-details">';
+
 					$PathName = preg_replace('|^/?ports/|', '', $mycommit->element_pathname);
 					if ($Debug) echo "PathName='$PathName' " . " reponame='" . $mycommit->repo_name . "'<br>";
 					switch ($mycommit->repo_name)
@@ -475,9 +471,12 @@ class DisplayCommit {
 
 					$this->HTML.=  freshports_Fallout_Link($mycommit->category, $mycommit->port) . '&nbsp;';
 					}
+					} # else !empty($mycommit->element_pathname)
 				}
-#				$this->HTML .= htmlify(_forDisplay($mycommit->short_description));
-				$this->HTML .= "</li>\n";
+				
+				if ($DetailsWillBePresented) {
+					$this->HTML .= "</li>\n";
+				}
 
 				GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;			
 				if ($this->ShowEntireCommit) {
@@ -492,18 +491,15 @@ class DisplayCommit {
 		}
 
 		if (($NumberOfPortsInThisCommit > $MaxNumberPortsToShow) && !$this->ShowAllPorts) {
-			$this->HTML .= '</ul>' . freshports_MorePortsToShow($PreviousCommit->message_id, $NumberOfPortsInThisCommit, $MaxNumberPortsToShow);
+			if ($DetailsWillBePresented) {
+				$this->HTML .= '</ul>';
+			}
+			$this->HTML .= freshports_MorePortsToShow($PreviousCommit->message_id, $NumberOfPortsInThisCommit, $MaxNumberPortsToShow);
 		} else {
-			$this->HTML .= '</ul>';
+			if ($DetailsWillBePresented) {
+				$this->HTML .= '</ul>';
+			}
 		}
-#		$this->HTML .= "\n<blockquote class=\"description\">";
-#		$this->HTML .= freshports_CommitDescriptionPrint(
-#                    $PreviousCommit->commit_description,
-#                    $PreviousCommit->encoding_losses,
-#                    $Lines,
-#                    freshports_MoreCommitMsgToShow($PreviousCommit->message_id, $Lines));
-#		# close off the last commit
-#		$this->HTML .= "\n</blockquote>\n</td></tr>\n\n\n";
 
 		unset($mycommit);
 		

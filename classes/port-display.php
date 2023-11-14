@@ -1805,6 +1805,7 @@ class port_display {
 	function ShowManPageLinks($ConfigurePlist, $NumRows) {
 		$HTML = '';
 		$div = "<br>\n" . '<dt id="man" class="man"><b>Manual pages:</b></dt>';
+		$CountManPages = 0;
 
 		if ( $NumRows > 0 ) {
 			$ManPages = array();
@@ -1826,7 +1827,7 @@ class port_display {
 					# we have a man page
 					$ManPages[] = '<li class="man"><a class="man" href="' . 
 						'https://man.freebsd.org/cgi/man.cgi?query=' . $matches[3] . '&amp;sektion=' . $matches[2] . '&amp;manpath=freebsd-ports">' .
-						$matches[3] . "</a></li>\n";
+						$matches[3] . '(' . $matches[2] . ")</a></li>\n";
 				}
 			}
 
@@ -1856,7 +1857,6 @@ class port_display {
 			}
 		}
 
-#		$HTML .= 'xxxxxx';
 		if ( $CountManPages == 0 ) {
 			$HTML .= $div;
 			$HTML .= "\n";

@@ -855,6 +855,7 @@ now that the Master has been upgraded.
 
 <ul>
 	<li>description</li>
+	<li>man</li>
 	<li>add</li>
 	<li>flavors</li>
 	<li>distinfo</li>

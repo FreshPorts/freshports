@@ -33,11 +33,8 @@
               <INPUT TYPE="PASSWORD" NAME="Password1" VALUE="<?php if (IsSet($Password1)) echo htmlentities($Password1) ?>" size="20"></label><br><br>
               <label>New password again:<br>
               <INPUT TYPE="PASSWORD" NAME="Password2" VALUE="<?php if (IsSet($Password2)) echo htmlentities($Password2) ?>" size="20"></label>
-            </td>
-            <td valign="top">
-              <label>Email Address (required):<br>
-              <INPUT type="email" SIZE="35" NAME="email" required VALUE="<?php if (IsSet($email)) echo htmlentities($email) ?>"></label>
-
+<br>
+<br>
 Number of Days to show in side-bar:
 
 <SELECT NAME="numberofdays" size="1">
@@ -53,13 +50,13 @@ Number of Days to show in side-bar:
     <OPTION <?php if ($numberofdays == "9") echo "selected " ?> VALUE="9">9</OPTION>
 </SELECT>
 
+<br>
+<br>
 <label>
 Set focus to search box: <input type="checkbox" id="set_focus_search" name="set_focus_search" value="set_focus_search"<?php if ($set_focus_search) echo ' checked'; ?>>
 </label>
 
-
-<br><br><br>
-
+<br><br>
 Number of results to display per page (e.g commits per page):
 <?php
 	  require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/page_options.php');
@@ -67,6 +64,14 @@ Number of results to display per page (e.g commits per page):
 	  echo $PageOptions->DDLB_Choices('page_size', $page_size);
 
 ?>
+            </td>
+            <td valign="top">
+              <label>Email Address (required):<br>
+              <INPUT type="email" SIZE="35" NAME="email" required VALUE="<?php if (IsSet($email)) echo htmlentities($email) ?>"></label>
+
+
+<br><br><br>
+
 </td>
 <tr>
 <td colspan="2">

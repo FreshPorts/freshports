@@ -56,23 +56,20 @@ class LatestCommits {
 		GLOBAL	$freshports_CommitMsgMaxNumOfLinesToShow;
 
 		if (IsSet($this->Filter)) {
-			$sql = "select * from LatestCommitsFiltered($this->MaxNumberOfPorts, $this->UserID, '" . pg_escape_string($this->Filter) . "')";
+			$sql = "select * from LatestCommitsFiltered($1, $2, $3)";
+			$params = array($this->MaxNumberOfPorts, $this->UserID, $this->Filter);
 		} else {
-#			$sql = "select * from LatestCommits($this->MaxNumberOfPorts, $this->UserID)";
 			$sql = "
   SELECT LC.*, STF.message AS stf_message
-    FROM LatestCommits(" . pg_escape_string($this->MaxNumberOfPorts) . ", 0, '" . pg_escape_string($this->BranchName) . "') LC LEFT OUTER JOIN sanity_test_failures STF
+    FROM LatestCommits($1, 0, $2)) LC LEFT OUTER JOIN sanity_test_failures STF
       ON LC.commit_log_id = STF.commit_log_id
 ORDER BY LC.commit_date_raw DESC, LC.category, LC.port, element_pathname";
+			$params = array($this->MaxNumberOfPorts, $this->BranchName);
 		}
 		
 		if ($this->Debug) echo "\n<p>sql=$sql</p>\n";
 
-		$result = pg_exec($this->dbh, $sql);
-		if (!$result) {
-            die("read from database failed");
-			exit;
-		}
+		$result = pg_query_params($this->dbh, $sql, $params) or die("read from database failed: " . pg_last_error($this->dbh));
 		
 		$DisplayCommit = new DisplayCommit($this->dbh, $result);
 		$DisplayCommit->Debug = $this->Debug;

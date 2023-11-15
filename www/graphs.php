@@ -21,11 +21,11 @@
 
 	<?php echo freshports_MainContentTable(); ?>
 
-<TR>
-	<? echo freshports_PageBannerText("Statistics - everyone loves a graph"); ?>
-</TR>
+<tr>
+	<?php echo freshports_PageBannerText("Statistics - everyone loves a graph"); ?>
+</tr>
 
-<TR><TD>
+<tr><td>
 <P>
 All graphs are at most 4 hours old.  The data used in these graphs are compiled by a large team of 
 trained worms.  As such, they are liable to be filled with errors and riddled with castings.  You
@@ -43,28 +43,31 @@ If you have suggestions for graphs, please raise an issue.
   if ($ShowAds) echo '<CENTER>' . Ad_728x90() . '</CENTER>';
 ?>
 
-</TD></TR>
+</td></tr>
 
-<TR><TD>
+<tr><td>
 
-<TABLE class="fullwidth borderless">
-<TR>
-<TD WIDTH="300" VALIGN="top">
-<?
-	$id = $_GET["id"];
+<table class="fullwidth borderless">
+<tr>
+<td class="graph-sidebar">
+<?php
+	$id = $_REQUEST["id"] ?? '';
+	$id = intval($id);
 	$sql = "select id, title, is_clickable from graphs order by title";
-	$result = pg_exec($db, $sql);
-    if ($result) {
-    	$numrows = pg_numrows($result);
+	$title = "graph goes here!";
+	$result = pg_query($db, $sql);
+	if ($result) {
+		$numrows = pg_num_rows($result);
 		if ($numrows) { 
 			echo '<UL>';
 			for ($i = 0; $i < $numrows; $i++) {
 				$myrow = pg_fetch_array ($result, $i);
-				echo '<LI><A HREF="' . $_SERVER["PHP_SELF"] . '?id=' . $myrow["id"] . '">' . $myrow["title"] . '</A></LI>' . "\n";
+				echo '<li><a href="' . $_SERVER["PHP_SELF"] . '?id=' . $myrow["id"] . '">' . $myrow["title"] . '</a></li>' . "\n";
 				if ($myrow["id"] == $id) {
+					$title = htmlentities($myrow["title"]);
 					$is_clickable = $myrow["is_clickable"];
 				}
-#				echo $myrow["id"] .  ' '  . $myrow["is_clickable"] . '<BR>';
+#				echo $myrow["id"] .  ' '  . $myrow["is_clickable"] . '<br>';
 			}
 			echo '</UL>';
 		} else {
@@ -73,46 +76,52 @@ If you have suggestions for graphs, please raise an issue.
 			echo "data to show you.  For you see, nobody has bothered to populate the graphs table.";
 		}
 	} else {
+		echo '<p>There was unfortunately an error while fetching the list of graphs from the database.</p>';
 	}
 ?>
-</TD>
-<TD>
-<?
-	if ($id) {
+</td>
+<td>
+<?php
+	# $is_clickable will get set if graph == $id is found
+	if ($id && IsSet($is_clickable)) {
 		if ($is_clickable == "t" ) {
 			?>
 			<FORM ACTION="/graphs/graphclick.php" METHOD="get">
-			<INPUT TYPE="hidden" NAME="id"    VALUE="<? echo $id; ?>">
-			<INPUT NAME="graph"  TYPE="image" SRC="/graphs/graph.php?id=<? echo $id; ?>" TITLE="graph goes here!" ALT="graph goes here!">
+			<INPUT TYPE="hidden" NAME="id"    VALUE="<?php echo $id; ?>">
+			<INPUT NAME="graph"  TYPE="image" SRC="/graphs/graph.php?id=<?php echo $id; ?>" title="<?php echo $title; ?>" alt="<?php echo $title; ?>">
 			</FORM>
-			<?
+			<?php
 		} else {
 			?>
-			<IMG SRC="/graphs/graph.php?id=<? echo $id; ?>" TITLE="graph goes here!" ALT="graph goes here!">
-			<?
+			<IMG SRC="/graphs/graph.php?id=<?php echo htmlentities($id); ?>" title="<?php echo $title; ?>" alt="<?php echo $title; ?>">
+			<?php
 		}
+	} else {
+		echo "Oh. This is rather embarassing.  I have no idea how this could have happened. ";
+		echo "I do hope you will understand.  Please don't tell anyone.  But I don't have any ";
+		echo "data to show you.  For you see, I know nothing about that graph id.";
 	}
 ?>
-</TD>
-</TR>
-</TABLE>
+</td>
+</tr>
+</table>
 
 
-</TD></TR>
+</td></tr>
 
-</TABLE>
+</table>
 </td>
 
   <td class="sidebar">
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
   </td>
 
-</TR>
-</TABLE>
+</tr>
+</table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

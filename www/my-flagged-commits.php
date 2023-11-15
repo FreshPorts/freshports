@@ -16,15 +16,19 @@
 	freshports_Start($FreshPortsSlogan . " - $Title",
 					$Title,
 					'FreeBSD, index, applications, ports');
-$Debug = 0;
+	$Debug = 0;
 
-if ($Debug) echo "\$User->id='$User->id'";
+	if ($Debug) echo "\$User->id='$User->id'";
 
-echo freshports_MainTable();
+	echo freshports_MainTable();
 
-$num          = $MaxNumberOfPortsLong;
-$days         = $NumberOfDays;
-$dailysummary = 7;
+	# known problem: this page does not page at all - dvl 2023-04-01
+	$num           = $MaxNumberOfPortsLong;
+	$days          = $NumberOfDays;
+	$dailysummary  = 7;
+	$PageSize      = 100;
+	$PageNumber    = 1;
+	$HTML          = '';
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits_my_flagged.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
@@ -34,8 +38,8 @@ $dailysummary = 7;
 	$CommitsMyFlagged->UserIDSet($User->id);
 	$NumberCommits = $CommitsMyFlagged->Fetch();
 
-    $NumberCommits = $CommitsMyFlagged->GetCountPortCommits();
-    if ($Debug) echo 'number of commits = ' . $NumberCommits . "<br>\n";
+	$NumberCommits = $CommitsMyFlagged->GetCountPortCommits();
+	if ($Debug) echo 'number of commits = ' . $NumberCommits . "<br>\n";
 
 	$NumFound = $NumberCommits;
 	$params = array(
@@ -55,69 +59,70 @@ $dailysummary = 7;
 	$offset = $Pager->getOffsetByPageId();
 	$NumOnThisPage = $offset[1] - $offset[0] + 1;
 
-    if ($PageNumber > 1) {
-      $Commits->SetOffset($offset[0] - 1);
-    }
-    $CommitsMyFlagged->SetLimit($PageSize);
+	if ($PageNumber > 1) {
+		$Commits->SetOffset($offset[0] - 1);
+	}
+
+	$CommitsMyFlagged->SetLimit($PageSize);
 
 	$DisplayCommit = new DisplayCommit($db, $CommitsMyFlagged->LocalResult);
 	$DisplayCommit->Debug = $Debug;
 	$DisplayCommit->SetUserID($User->id);
 	$links = $Pager->GetLinks();
 		
-	$HTML .= $NumPortsFound . ' ' . $links['all'];
+
+	$HTML .= $links['all'];
 	$HTML .= $DisplayCommit->CreateHTML();
 
 
-if ($db) {
+	if ($db) {
 ?>
-<TR><td class="content">
+<tr><td class="content">
 
 <?php echo freshports_MainContentTable(); ?>
 
-<TR>
-<? echo freshports_PageBannerText("My flagged commits"); ?>
-        <? //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPortsLong) ?>
-</TR>
-<TR><TD>
+<tr>
+<?php echo freshports_PageBannerText("My flagged commits"); ?>
+        <?php //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPortsLong) ?>
+</tr>
+<tr><TD>
 <p><?php echo EVERYTHING; ?>
 <p>
 A port is marked as new for 10 days.
 
 <?php
-	if ($ShowAds && $BannerAd) {
-		echo "</td></tr>\n<tr><td>\n<CENTER>\n";
-		echo Ad_728x90();
-		echo "</CENTER>\n\n";
-	}
+		if ($ShowAds && $BannerAd) {
+			echo "</td></tr>\n<tr><td>\n<CENTER>\n";
+			echo Ad_728x90();
+			echo "</CENTER>\n\n";
+		}
 ?>
 
 
 
-</TD></TR>
+</td></tr>
 <?php
 
 	$UseCache = FALSE;
 
 	echo $HTML;
-}
-
+	} # $dbd
 ?>
-</TABLE>
+</table>
 </td>
   <td class="sidebar">
-   <? echo freshports_SideBar(); ?>
+   <?php echo freshports_SideBar(); ?>
 
-<BR>
+<br>
 
  </td>
-</TR>
-</TABLE>
+</tr>
+</table>
 
-<BR>
+<br>
 
-<?
-echo freshports_ShowFooter();
+<?php
+	echo freshports_ShowFooter();
 ?>
 
 </body>

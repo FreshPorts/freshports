@@ -16,6 +16,17 @@
 
 	$Debug = 0;
 
+	# NOTE: login not required to access this page; a valid token is required
+
+	if (IN_MAINTENANCE_MODE) {
+		# usually we redirect to the maintenance page but this is an
+		# RSS feed.
+		header('HTTP/1.1 503 Service Temporarily Unavailable');
+		header('Status: 503 Service Temporarily Unavailable');
+		header('Retry-After: 300');//300 seconds
+	}
+
+
 function DisplayNewsFeed($db, $format, $token) {
 	$Debug = 0;
 
@@ -26,7 +37,7 @@ function DisplayNewsFeed($db, $format, $token) {
 	if ($wlid == '') {
 		syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . 
 			' watch list token requested by ' . $_SERVER['REMOTE_ADDR'] . 
-			' not found ' . $token);
+			' not found ' . "'$token'");
 		header('HTTP/1.1 404 NOT FOUND');
 		exit; 
 	}
@@ -37,7 +48,6 @@ function DisplayNewsFeed($db, $format, $token) {
 function DisplayWatchListNewsFeeds($db, $UserID) {
 	$Debug = 0;
 
-	echo '<h1>These are your newsfeeds</h1>';
 	$WatchLists = new WatchLists($db);
 	$NumRows = $WatchLists->Fetch($UserID);
 
@@ -57,8 +67,6 @@ function DisplayWatchListNewsFeeds($db, $UserID) {
 		}
 	}
 
-	$HTML .= '</select>';
-	
 	$HTML .= "<p>You can use these formats:
 	
 	<ul>
@@ -71,15 +79,21 @@ function DisplayWatchListNewsFeeds($db, $UserID) {
 }
 
 	if (IsSet($_REQUEST['id'])) {
-		$token = pg_escape_string($_REQUEST['id']);
+		$token = pg_escape_string($db, $_REQUEST['id']);
 	}
 
 	if (IsSet($_REQUEST['format'])) {
-		$format = pg_escape_string($_REQUEST['format']);
+		$format = pg_escape_string($db, $_REQUEST['format']);
 	}
 
-	# validate incoming format	
-	switch (strtolower($format)) {
+	if (empty($visitor) && empty($token)) {
+		header('HTTP/1.0 401 Unauthorized');
+		exit;  /* Make sure that code below does not get executed when we redirect. */
+	}
+
+
+# validate incoming format
+	switch (strtolower($format ?? '')) {
 		case 'rss1.0':
 		case 'rss2.0':
 			# all good.
@@ -94,10 +108,36 @@ function DisplayWatchListNewsFeeds($db, $UserID) {
 		DisplayNewsFeed($db, $format, $token);
 	} else {
 		// if we don't know who they are, we'll make sure they login first
-		if (!$visitor) {
-			header("Location: /login.php");
-			exit;  /* Make sure that code below does not get executed when we redirect. */
-		}
+
+		$Title = "Watch List Feeds";
+		freshports_Start($Title, $Title, 'FreeBSD, index, applications, ports');
+		echo freshports_MainTable();
+		echo '<tr><td class="content">';
+		echo freshports_MainContentTable();
+		echo '<tr>';
+		echo freshports_PageBannerText('These are your news feeds');
+		echo '</tr><tr><td class="textcontent">';
 
 		DisplayWatchListNewsFeeds($db, $User->id);
-	}
+		?>
+	</td></tr>
+</table>
+</td>
+
+  <td class="sidebar">
+	<?php
+	echo freshports_SideBar();
+	?>
+  </td>
+
+</tr>
+</table>
+
+<?php
+echo freshports_ShowFooter();
+?>
+
+</body>
+</html>
+<?php
+	} ?>

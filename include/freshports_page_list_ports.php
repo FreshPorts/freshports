@@ -51,7 +51,7 @@ class freshports_page_list_ports extends freshports_page {
                                                                          LEFT  OUTER JOIN commit_log CL           ON ports.last_commit_id = CL.id
                                                                          LEFT  OUTER JOIN repo R                  ON CL.repo_id = R.id
                                                                          LEFT  OUTER JOIN commit_log_branches CLB ON CL.id            = CLB.commit_log_id
-                                                                                     JOIN system_branch       SB  ON SB.branch_name   = '" . pg_escape_string($this->Branch) . "'
+                                                                                     JOIN system_branch       SB  ON SB.branch_name   = '" . pg_escape_string($this->_db, $this->Branch) . "'
                                                                                                                  AND SB.id            = CLB.branch_id";
           return $_FROM_CLAUSE;
 	}
@@ -60,7 +60,7 @@ class freshports_page_list_ports extends freshports_page {
 
 	  $_WHERE_CLAUSE = " WHERE ports.element_id  = element.id
   AND ports.category_id = categories.id 
-  AND ports.status      = '" . pg_escape_string($this->getStatus()) . "'";
+  AND ports.status      = '" . pg_escape_string($this->_db, $this->getStatus()) . "'";
 
           return $_WHERE_CLAUSE;
         }
@@ -160,13 +160,13 @@ class freshports_page_list_ports extends freshports_page {
 
 	function getRowCount() {
 		$numrows = -1;
-		$result = pg_exec($this->_db, $this->getSQLCount());
+		$result = pg_query_params($this->_db, $this->getSQLCount(), array());
 		if ($result) {
 			$myrow = pg_fetch_array ($result);
 			$numrows = $myrow[0];
-#			echo "There are $numrows to fetch<BR>\n";
+#			echo "There are $numrows to fetch<br>\n";
 		} else {
-			echo pg_errormessage();
+			echo pg_last_error($this->_db);
 		}
 		
 		return $numrows;
@@ -204,12 +204,12 @@ SELECT ports.id,
        no_cdrom,
        expiration_date,
        last_commit_id,
+       R.name                                                                                              AS repo_name,
        R.path_to_repo,
        R.repository,
        R.repo_hostname,
        null AS epoch,
-       null AS onwatchlist,
-       latest_link ";
+       null AS onwatchlist";
 
 		if ($UserID) {
 			$this->_sql .= ",
@@ -228,7 +228,7 @@ SELECT ports.id,
  (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
     FROM watch_list JOIN watch_list_element
         ON watch_list.id      = watch_list_element.watch_list_id
-       AND watch_list.user_id = ' . pg_escape_string($UserID) . '
+       AND watch_list.user_id = ' . pg_escape_string($this->_db, $UserID) . '
        AND watch_list.in_service
   GROUP BY wle_element_id) AS TEMP
        ON TEMP.wle_element_id = ports.element_id';
@@ -258,9 +258,9 @@ SELECT gmt_format(max(CL.date_added)) as last_modified " . $this->_FROM_CLAUSE()
 
 #		echo '<pre>' . $sql . '</pre>';
 
-		$result = pg_exec($this->_db, $sql);
+		$result = pg_query_params($this->_db, $sql, array());
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			#
 			# here we are doing a max. Even if we have nothing in the result set,
 			# we will still get a null value.
@@ -272,11 +272,11 @@ SELECT gmt_format(max(CL.date_added)) as last_modified " . $this->_FROM_CLAUSE()
 
 			if ($numrows != 1 || $last_modified == '') {
 				$sql = 'select gmt_format(LatestCommitDatePorts()) as last_modified';
-				$result = pg_exec($this->_db, $sql);
+				$result = pg_query_params($this->_db, $sql, array());
 				if (!$result) {
 					# if the above failed, give them the current date time
 					$sql = 'select GMT_Format(CURRENT_TIMESTAMP) as last_modified';
-					$result = pg_exec($this->_db, $sql);
+					$result = pg_query_params($this->_db, $sql, array());
 					if (!$result) {
 						die('could not get last_modified value: ' . __FILE__);
 					}
@@ -298,12 +298,12 @@ SELECT gmt_format(max(CL.date_added)) as last_modified " . $this->_FROM_CLAUSE()
 			echo '<pre>' . $this->getSQL() . '</pre>';
 		}
 
-		$this->_result = pg_exec($this->_db, $this->getSQL());
+		$this->_result = pg_query_params($this->_db, $this->getSQL(), array());
 		if (!$this->_result) {
-			echo pg_errormessage();
+			echo pg_last_error($this->_db);
 		} else {
-			$numrows = pg_numrows($this->_result);
-#			echo "There are $numrows to fetch<BR>\n";
+			$numrows = pg_num_rows($this->_result);
+#			echo "There are $numrows to fetch<br>\n";
 		}
 		
 		return $numrows;
@@ -404,11 +404,11 @@ SELECT gmt_format(max(CL.date_added)) as last_modified " . $this->_FROM_CLAUSE()
 	}
 
 	function toHTML() {
-		$this->addBodyContent('<TR><TD>' . $this->getDescription() . '</TD></TR>');
+		$this->addBodyContent('<tr><td>' . $this->getDescription() . '</td></tr>');
 
 		// make sure the value for $sort is valid
 
-		$SortStatement = "<TR><TD>\nThis page is " . $this->getSortedbyHTML() . "</TD></TR>\n";
+		$SortStatement = "<tr><td>\nThis page is " . $this->getSortedbyHTML() . "</td></tr>\n";
 
 		$this->addBodyContent($SortStatement); 
 
@@ -418,7 +418,7 @@ SELECT gmt_format(max(CL.date_added)) as last_modified " . $this->_FROM_CLAUSE()
 
 		$PageLinks = $this->pageLinks();
 		if ($PageLinks != '') {
-			$this->AddBodyContent('<tr><td align="center">');
+			$this->AddBodyContent('<tr><td class="vcentered">');
 			$this->AddBodyContent($PageLinks);
 			$this->AddBodyContent('</td></tr>');
 		}
@@ -428,7 +428,7 @@ SELECT gmt_format(max(CL.date_added)) as last_modified " . $this->_FROM_CLAUSE()
 		$this->addBodyContent($SortStatement); 
 
 		if ($PageLinks != '') {
-			$this->AddBodyContent('<tr><td align="center">');
+			$this->AddBodyContent('<tr><td class="vcentered">');
 			$this->AddBodyContent($PageLinks);
 			$this->AddBodyContent('</td></tr>');
 		}

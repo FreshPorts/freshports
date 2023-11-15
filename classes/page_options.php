@@ -32,13 +32,13 @@ class ItemsPerPage {
 	}
 
 	foreach ($this->Choices as $choice => $value) {
-		$HTML .= '<option value="' . htmlspecialchars(pg_escape_string($value)) . '"';
+		$HTML .= '<option value="' . htmlspecialchars($value) . '"';
 		if ($value == $selected) {
 			$HTML .= ' selected';
 		}
-		$HTML .= '>' . htmlspecialchars(pg_escape_string($choice));
+		$HTML .= '>' . htmlspecialchars($choice);
 		if ($ChoiceSuffix) {
-		  $HTML .=  ' ' . htmlspecialchars(pg_escape_string($ChoiceSuffix));
+		  $HTML .=  ' ' . htmlspecialchars($ChoiceSuffix);
         }
 		$HTML .= "</option>\n";
 	}

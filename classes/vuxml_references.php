@@ -19,20 +19,20 @@ class VuXML_References {
 	}
 
 	function FetchByVID($vuxml_id) {
-		$sql = "SELECT vuxml_references.*
+		$sql = 'SELECT vuxml_references.*
 	              FROM vuxml_references
-	             WHERE vuxml_references.vuxml_id = " . pg_escape_string($vuxml_id);
-#		echo "<pre>sql = '$sql'</pre><BR>";
+	             WHERE vuxml_references.vuxml_id = $1';
+#		echo "<pre>sql = '$sql'</pre><br>";
 
-		$result = pg_query($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($vuxml_id));
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			for ($i = 0; $i < $numrows; $i++) {
 				$myrow = pg_fetch_array ($result, $i);
 				$this->PopulateValues($myrow);
 			}
 		} else {
-			echo 'VuXML_References SQL failed: ' . $result . pg_last_error();
+			syslog(LOG_ERR, 'VuXML_References SQL failed: ' . $result . pg_last_error($this->dbh));
 		}
 
         return $this->id;
@@ -47,7 +47,7 @@ class VuXML_References {
 
 	function display() {
 		for ($i = 0; $i < count($this->id); $i++) {
-			echo $this->reference[$i] . "<br>\n";
+			echo htmlentities($this->reference[$i]) . "<br>\n";
 		}
 	}
 

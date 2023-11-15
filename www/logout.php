@@ -17,20 +17,10 @@
 	if (IsSet($_COOKIE[USER_COOKIE_NAME])) {
 		$visitor = $_COOKIE[USER_COOKIE_NAME];
 
-		$sql = "UPDATE users SET cookie = 'nocookie' WHERE cookie = '" . pg_escape_string($_COOKIE[USER_COOKIE_NAME]) . "'";
+		$sql = "UPDATE users SET cookie = 'nocookie' WHERE cookie = $1";
 		#echo $sql;
-		$result = pg_exec($db, $sql);
+		$result = pg_query_params($db, $sql, array($_COOKIE[USER_COOKIE_NAME]));
 	}
 
-	if (IsSet($_GET['origin'])) {
-		$origin = $_GET['origin'];
-	} else {
-		$origin = '';
-	}
-
-	if ($origin == '/index.php') {                   
-		$origin = '';                                 
-	}
-
-	header("Location: /$origin");  /* Redirect browser to PHP web site */
+	header("Location: /");  /* Redirect browser to PHP web site */
 	exit;  /* Make sure that code below does not get executed when we redirect. */

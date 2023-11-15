@@ -60,7 +60,13 @@ http://this.is.link/x.php?email=somebody@host.com&anotheremail=other@other.org&x
 http://this.is.link.with/test?PR:123/qweeq
 http://www.freebsd.org/cgi/query-pr.cgi?pr=ports/39731
 
-Does it handle great then (>) and less than (<) and ampersand (&)?
+
+Changelog:
+https://thekelleys.org.uk/gitweb/?p=dnsmasq.git;a=blob_plain;f=CHANGELOG;hb=v2.87
+https://www.mail-archive.com/dnsmasq-discuss@lists.thekelleys.org.uk/msg16445.html
+
+
+Does it handle greater than (>) and less than (<) and ampersand (&)?
 
 
 Make sure that links with trailing commas work OK:  The following is from java/linux-sun-jdk14/Makefile:
@@ -69,6 +75,22 @@ IGNORE: You must manually fetch the J2SE SDK self-extracting file for the Linux 
 
 Should have a URL: http://www.sql-ledger.org/cgi-bin/nav.pl?page=news.html&title=What's%20New
 
+
+A built-package format for Python.
+
+A wheel is a ZIP-format archive with a specially formatted filename and the
+.whl extension. It is designed to contain all the files for a PEP 376
+compatible install in a way that is very close to the on-disk format.
+Many packages will be properly installed with only the "Unpack" step (simply
+extracting the file onto sys.path), and the unpacked archive preserves enough
+information to "Spread" (copy data and scripts to their final locations)
+at any later time.
+
+The wheel project provides a bdist_wheel command for setuptools (requires
+setuptools >= 0.8.0). Wheel files can be installed with a newer pip from
+https://github.com/pypa/pip or with wheel's own command line utility.
+
+WWW: https://github.com/pypa/wheel
 
 EOD;
 
@@ -97,7 +119,7 @@ The following should not get a PR type hyperlink:
 <h2>Does it htmlify the URL and the URL name?</h2>
 <ul>
 <li>Before: http://www.sql-ledger.org/cgi-bin/nav.pl?page=news.html&title=What's%20New
-<li>After: <?php echo htmlify("http://www.sql-ledger.org/cgi-bin/nav.pl?page=news.html&title=What's%20New"); ?>
+<li>After: <?php echo htmlify(htmlentities("http://www.sql-ledger.org/cgi-bin/nav.pl?page=news.html&title=What's%20New")); ?>
 </ul>
 
 </body>

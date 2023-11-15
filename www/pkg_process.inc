@@ -10,7 +10,7 @@
 $Debug=0;
 
 function LinkToPort($category, $port) {
-	return '<A HREF="/' . $category . '/' . $port . '/">' . $category . '/' . $port . '</A>';
+	return '<a href="/' . $category . '/' . $port . '/">' . $category . '/' . $port . '</a>';
 }
 
 
@@ -23,10 +23,10 @@ function HandleFileUpload($FormFileName, $Destination) {
 
 	if (is_uploaded_file($_FILES[$FormFileName]['tmp_name'])) {
 		$filename = $_FILES[$FormFileName]['tmp_name'];
-#		print "$filename was uploaded successfully<BR>";
+#		print "$filename was uploaded successfully<br>";
 		$realname = $_FILES[$FormFileName]['name'];
-#		print "realname is $realname<BR>";
-#		print "copying file to $Destination<BR>";
+#		print "realname is $realname<br>";
+#		print "copying file to $Destination<br>";
 		copy($_FILES[$FormFileName]['tmp_name'], $Destination);
 		$result = 1;
 	} else {
@@ -41,31 +41,25 @@ function HandleFileUpload($FormFileName, $Destination) {
 
 function DisplayError($error) {
 ?>
-	<TABLE class="fullwidth bordered" ALIGN="center">
-	<TR><TD VALIGN=TOP>
-		<TABLE class="fullwidth">
-			<TR>
-			    <? echo freshports_PageBannerText("NOTICE"); ?>
-			</TR>
+	<table class="fullwidth bordered">
+	<tr><td VALIGN=TOP>
+		<table class="fullwidth">
+			<tr>
+			    <?php echo freshports_PageBannerText("NOTICE"); ?>
+			</tr>
 
-			<TR>
-				<TD>
-					<TABLE class="fullwidth borderless" CELLPADDING="0">
-						<TR VALIGN="top">
-							<TD VALIGN="middle"><IMG SRC="/images/warning.gif" ALT="warning"></TD>
-							<TD VALIGN="middle" width="100%">
-							<? echo $error ?>
-							</TD>
-						</TR>
-					</TABLE>
-				</TD>
-			</TR>
-		</TABLE>
-	</TD>
-	</TR>
-	</TABLE>
+			<tr>
+				<td>
+					<IMG SRC="/images/warning.gif" ALT="warning">
+					<?php echo $error ?>
+				</td>
+			</tr>
+		</table>
+	</td>
+	</tr>
+	</table>
 
-<?
+<?php
 }
 
 
@@ -152,7 +146,7 @@ function ProcessPackages($UserID, $PortArray, $dbh) {
 			#
 			DisplayError('<P>OUCH, That does not look like the right output to me.  Please ensure you
 								have the correct file format and try again (see step 1). </P>
-							<P>This is the first line I found: <CODE CLASS="code">' . $key . '</CODE></P>');
+							<P>This is the first line I found: <code class="code">' . $key . '</code></P>');
 			$ok = FALSE;
 			break;
 		}
@@ -160,13 +154,12 @@ function ProcessPackages($UserID, $PortArray, $dbh) {
 		$Category = $CategoryPort[0];
 		$Port     = $CategoryPort[1];
 
-		$sql = 'select WatchListStagingAddItem(' . pg_escape_string($UserID) . ', \'' . 
-					pg_escape_string($Category) . '\', \'' . pg_escape_string($Port) . '\', ' . pg_escape_string($count) . ')';
-		$result = pg_exec($dbh, $sql);
-		if ($result && pg_numrows($result)) {
+		$sql = 'select WatchListStagingAddItem($1, $2, $3, $4)';
+		$result = pg_query_params($dbh, $sql, array($UserID, $Category, $Port, $count));
+		if ($result && pg_num_rows($result)) {
 			# do nothing
 		} else {
-			echo pg_errormessage() . " sql = $sql";
+			echo pg_last_error($dbh) . " sql = $sql";
 			$ok = FALSE;
 			break;
 		}
@@ -175,12 +168,12 @@ function ProcessPackages($UserID, $PortArray, $dbh) {
 	if ($ok) {
 		# All is well.
 
-		$sql = "select WatchListStagingProcess(" . pg_escape_string($UserID) . ")";
-		$result = pg_exec($dbh, $sql);
-		if ($result && pg_numrows($result)) {
+		$sql = "select WatchListStagingProcess($1)";
+		$result = pg_query_params($dbh, $sql, array($UserID));
+		if ($result && pg_num_rows($result)) {
 			# do nothing.  All is well
 		} else {
-			echo pg_errormessage() . " sql = $sql";
+			echo pg_last_error($dbh) . " sql = $sql";
 			$ok = FALSE;
 		}
 	}
@@ -202,45 +195,45 @@ function UploadDisplayStagingResultsMatches($UserID, $WatchListID, $dbh) {
 					watch_list_element.element_id AS onwatchlist
 			   FROM	watch_list_staging LEFT OUTER JOIN watch_list_element
 						ON  watch_list_staging.element_id    = watch_list_element.element_id
-						AND $WatchListID                     = watch_list_element.watch_list_id
-			  WHERE " . pg_escape_string($UserID) . "    = watch_list_staging.user_id
+						AND $1                               = watch_list_element.watch_list_id
+			  WHERE $2 = watch_list_staging.user_id
 			    AND item_count = 1
 				AND watch_list_staging.element_id IS NOT NULL
 			  ORDER BY category, port";
 
-	$result = pg_exec($dbh, $sql);
+	$result = pg_query_params($dbh, $sql, array($WatchListID, $UserID));
 
 	if ($result) {
-		$numrows = pg_numrows($result);
+		$numrows = pg_num_rows($result);
 		if ($numrows) {
 			?>
 
-			<TABLE ALIGN="center" class="bordered" CELLPADDING="5">
-			<TR><TD COLSPAN="2"><B>Port name</B> <SMALL>(<? echo $numrows ?> port<?php if ($numrows > 1) echo 's'; ?>)</SMALL></TD><TD ALIGN="center"><SMALL>Add</SMALL></TD></TR>
+			<table class="bordered">
+			<tr><td colspan="2"><B>Port name</B> <small>(<?php echo $numrows ?> port<?php if ($numrows > 1) echo 's'; ?>)</small></td><td ALIGN="center"><small>Add</small></td></tr>
 
-			<?
+			<?php
 			for ($i = 0; $i < $numrows; $i++) {
 				$row = pg_fetch_array($result, $i);
-				echo '<TR>';
+				echo '<tr>';
 
-				echo '<TD>';
+				echo '<td>';
 				echo LinkToPort($row["category"], $row["port"]);
-				echo '</TD>';
+				echo '</td>';
 
-				echo '<TD ALIGN="center">';
+				echo '<td ALIGN="center">';
 				if ($row["onwatchlist"]) {
 					echo 'W';
 				} else {
 					echo '&nbsp;';
 				}
-				echo '</TD>';
+				echo '</td>';
 
-				echo '<TD ALIGN="center"><INPUT TYPE="checkbox" NAME="ports[]" VALUE="' . $row["element_id"] . '" CHECKED></TD>';
+				echo '<td ALIGN="center"><INPUT TYPE="checkbox" NAME="ports[]" VALUE="' . $row["element_id"] . '" CHECKED></td>';
 
-				echo '</TR>' . "\n";
+				echo '</tr>' . "\n";
 			}
 			
-			echo '</TABLE>';
+			echo '</table>';
 
 #			echo 'that took '. (time() - $begintime) . ' seconds to process ' . $numrows . ' rows';
 		} else {
@@ -258,32 +251,32 @@ function UploadDisplayStagingResultsMatchesNo($UserID, $dbh) {
 	$begintime = time();
 	$sql = " SELECT category, port, item_count, from_pkg_info, from_watch_list, watch_list_staging.element_id
 			     FROM watch_list_staging
-			    WHERE " . pg_escape_string($UserID) . "    = watch_list_staging.user_id
+			    WHERE $1    = watch_list_staging.user_id
 			      AND item_count = 1
 				   AND watch_list_staging.element_id IS NULL
 			 ORDER BY category, port";
 
 #	echo $sql;
 
-	$result = pg_exec($dbh, $sql);
+	$result = pg_query_params($dbh, $sql, array($UserID));
 
 	if ($result) {
-		$numrows = pg_numrows($result);
+		$numrows = pg_num_rows($result);
 		if ($numrows) {
 			?>
 
-			<TABLE ALIGN="center" class="bordered" CELLPADDING="5">
-			<TR><TD><B>Port name</B> <SMALL>(<? echo $numrows ?> port<?php if ($numrows > 1) echo 's'; ?>)</SMALL></TD><TD><SMALL>search</SMALL></TD></TR>
+			<table class="bordered">
+			<tr><td><B>Port name</B> <small>(<?php echo $numrows ?> port<?php if ($numrows > 1) echo 's'; ?>)</small></td><td><small>search</small></td></tr>
 
-			<?
+			<?php
 			for ($i = 0; $i < $numrows; $i++) {
 				$row = pg_fetch_array($result, $i);
-				echo '<TR>';
-				echo '<TD><FONT COLOR="red">' . $row["category"] . '/' . $row["port"] . '</FONT></TD>';
-				echo '<TD ALIGN="center"><A HREF="/search.php?query=' . $row["port"] . '&amp;stype=name&amp;num=10&amp;method=soundex&amp;staging=1">?</A></TD>';
-				echo '</TR>';
+				echo '<tr>';
+				echo '<td><FONT COLOR="red">' . $row["category"] . '/' . $row["port"] . '</FONT></td>';
+				echo '<td ALIGN="center"><a href="/search.php?query=' . $row["port"] . '&amp;stype=name&amp;num=10&amp;method=soundex&amp;staging=1">?</a></td>';
+				echo '</tr>';
 			}
-			echo '</TABLE>';
+			echo '</table>';
 
 #			echo 'that took '. (time() - $begintime) . ' seconds to process ' . $numrows . ' rows';
 		} else {
@@ -301,43 +294,43 @@ function UploadDisplayStagingResultsMatchesDuplicates($UserID, $WatchListID, $db
 	$sql = " SELECT category, port, item_count, from_pkg_info, from_watch_list, watch_list_staging.element_id
 			     FROM watch_list_staging LEFT OUTER JOIN watch_list_element
 					     	 ON  watch_list_staging.element_id = watch_list_element.element_id
-						    AND $WatchListID                   = watch_list_element.watch_list_id
-			    WHERE " . pg_escape_string($UserID) . "    = watch_list_staging.user_id
+						    AND $1                   = watch_list_element.watch_list_id
+			    WHERE $2    = watch_list_staging.user_id
 			      AND item_count > 1
 				   AND watch_list_staging.element_id IS NOT NULL
 			 ORDER BY category, port";
 
 #	echo $sql;
 
-	$result = pg_exec($dbh, $sql);
+	$result = pg_query_params($dbh, $sql, array($WatchListID, $UserID));
 
 	if ($result) {
-		$numrows = pg_numrows($result);
+		$numrows = pg_num_rows($result);
 		if ($numrows) {
 			?>
 
-			<TABLE ALIGN="center" class="bordered" CELLPADDING="5">
-			<TR><TD><B>Port name</B></TD><TD><B>Count</B></TD><TD ALIGN="center"><SMALL>Add</SMALL></TD></TR>
+			<table class="bordered">
+			<tr><td><B>Port name</B></td><td><B>Count</B></td><td ALIGN="center"><small>Add</small></td></tr>
 
-			<?
+			<?php
 			for ($i = 0; $i < $numrows; $i++) {
 				$row = pg_fetch_array($result, $i);
-				echo '<TR>';
+				echo '<tr>';
 
-				echo '<TD>';
+				echo '<td>';
 				echo LinkToPort($row["category"], $row["port"]);
-				echo '</TD>';
+				echo '</td>';
 
-				echo '<TD ALIGN="center">';
+				echo '<td ALIGN="center">';
 				echo $row["item_count"];
-				echo '</TD>';
+				echo '</td>';
 
-				echo '<TD ALIGN="center"><INPUT TYPE="checkbox" NAME="ports[]" VALUE="' . $row["element_id"] . '" CHECKED></TD>';
+				echo '<td ALIGN="center"><INPUT TYPE="checkbox" NAME="ports[]" VALUE="' . $row["element_id"] . '" CHECKED></td>';
 
-				echo '</TR>';
+				echo '</tr>';
 			
 			}
-			echo '</TABLE>';
+			echo '</table>';
 
 #			echo 'that took '. (time() - $begintime) . ' seconds to process ' . $numrows . ' rows';
 		} else {
@@ -357,7 +350,7 @@ function UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $dbh) {
 	                element.name as port, 
 	                ports.element_id
 			     FROM ports, categories, watch_list_element, element
-			    WHERE $WatchListID      = watch_list_element.watch_list_id
+			    WHERE $1      = watch_list_element.watch_list_id
 				   AND ports.element_id = watch_list_element.element_id
 				   AND ports.element_id = element.id
 				   AND categories.id    = ports.category_id
@@ -370,30 +363,30 @@ function UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $dbh) {
 
 #	syslog(LOG_NOTICE, $sql);
 
-	$result = pg_exec($dbh, $sql);
+	$result = pg_query_params($dbh, $sql, array($WatchListID));
 #	syslog(LOG_NOTICE, "UploadDisplayWatchListItemsNotInStagingArea for WatchListID: $WatchListID");
 
 	if ($result) {
-		$numrows = pg_numrows($result);
+		$numrows = pg_num_rows($result);
 		if ($numrows) {
 			?>
 
-			<TABLE ALIGN="center" class="bordered" CELLPADDING="5">
-			<TR><TD><B>Port name</B></TD><TD ALIGN="center"><SMALL>Add</SMALL></TD></TR>
+			<table class="bordered">
+			<tr><td><B>Port name</B></td><td ALIGN="center"><small>Add</small></td></tr>
 
-			<?
+			<?php
 			for ($i = 0; $i < $numrows; $i++) {
 				$row = pg_fetch_array($result, $i);
 
-				echo '<TR><TD ALIGN="left">';
+				echo '<tr><td>';
 				echo LinkToPort($row["category"], $row["port"]);
-				echo '</TD>';
+				echo '</td>';
 
-				echo '<TD ALIGN="center"><INPUT TYPE="checkbox" NAME="ports[]" VALUE="' . $row["element_id"] . '" CHECKED></TD>';
+				echo '<td ALIGN="center"><INPUT TYPE="checkbox" NAME="ports[]" VALUE="' . $row["element_id"] . '" CHECKED></td>';
 
-				echo '</TR>' . "\n";
+				echo '</tr>' . "\n";
 			}
-			echo '</TABLE>';
+			echo '</table>';
 
 #			echo 'that took '. (time() - $begintime) . ' seconds to process ' . $numrows . ' rows';
 		} else {
@@ -409,8 +402,8 @@ function UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $dbh) {
 function MoveStagingToWatchList($UserID, $WatchListID, $dbh) {
 	$ok  = TRUE;
 
-	$UserID      = pg_escape_string($UserID);
-	$WatchListID = pg_escape_string($WatchListID);
+	$UserID      = pg_escape_string($dbh, $UserID);
+	$WatchListID = pg_escape_string($dbh, $WatchListID);
 
 	$Debug = 0;
 
@@ -432,16 +425,16 @@ function MoveStagingToWatchList($UserID, $WatchListID, $dbh) {
 	$PortCount = 0;
 	if ($ok) {
 		if ($Debug) syslog(LOG_NOTICE, 'MoveStagingToWatchList: line ' . __LINE__);
-		$sql = "select MigrateStagingAreaToWatchList($WatchListID)";
-		$result = pg_exec($dbh, $sql);
+		$sql = "select MigrateStagingAreaToWatchList($1)";
+		$result = pg_query_params($dbh, $sql, array($WatchListID));
 		if (!$result) {
 			$ok = FALSE;
 		}
 	}
 
 	if ($ok) {
-		$sql = "select WatchListStagingLogWatch($UserID, $PortCount)";
-		$result = pg_exec($dbh, $sql);
+		$sql = "select WatchListStagingLogWatch($1, $2)";
+		$result = pg_query_params($dbh, $sql, array($UserID, $PortCount));
 		if (!$result) {
 			$ok = FALSE;
 		}
@@ -450,8 +443,8 @@ function MoveStagingToWatchList($UserID, $WatchListID, $dbh) {
 	# clear out the staging area
 
 	if ($ok) {
-		$sql = "select WatchListStagingClear($UserID)";
-		$result = pg_exec($dbh, $sql);
+		$sql = "select WatchListStagingClear($1)";
+		$result = pg_query_params($dbh, $sql, array($UserID));
 		if (!$result) {
 			$ok = FALSE;
 		}
@@ -461,7 +454,7 @@ function MoveStagingToWatchList($UserID, $WatchListID, $dbh) {
 		if ($Debug) syslog(LOG_NOTICE, 'commit');
 		pg_exec($dbh, "COMMIT");
 	} else {
-		echo pg_errormessage() . " sql = $sql";
+		echo pg_last_error($dbh) . " sql = $sql";
 		pg_exec($dbh, "ROLLBACK");
 	}
 
@@ -472,8 +465,8 @@ function CopyStagingToWatchList($dbh, $UserID, $WatchListID, $Overwrite = TRUE) 
 	$ok  = TRUE;
 	$begintime = time();
 
-	$UserID      = pg_escape_string($UserID);
-	$WatchListID = pg_escape_string($WatchListID);
+	$UserID      = pg_escape_string($dbh, $UserID);
+	$WatchListID = pg_escape_string($dbh, $WatchListID);
 
 	$result = pg_exec($dbh, 'BEGIN');
 	if (!$result) {
@@ -481,8 +474,8 @@ function CopyStagingToWatchList($dbh, $UserID, $WatchListID, $Overwrite = TRUE) 
 	}
 
 	if ($ok && $Overwrite && !empty($WatchListID)) {
-		$sql = "select WatchListDeleteAllElements($WatchListID)";
-		$result = pg_exec($dbh, $sql);
+		$sql = "select WatchListDeleteAllElements($1)";
+		$result = pg_query_params($dbh, $sql, array($WatchListID));
 		if (!$result) {
 			$ok = FALSE;
 		}
@@ -493,20 +486,23 @@ function CopyStagingToWatchList($dbh, $UserID, $WatchListID, $Overwrite = TRUE) 
                  SELECT $WatchListID, element_id
                    FROM watch_list_staging
                   WHERE element_id IS NOT NULL
-                    AND user_id = $UserID
+                    AND user_id = $1
 ";
 
 		if (!$Overwrite) {
 			$sql .= "EXCEPT SELECT watch_list_id, element_id
                               FROM watch_list_element
-                             WHERE watch_list_id = $WatchListID
+                             WHERE watch_list_id = $2
 ";
+                        $params = array($UserID, $WatchListID);
+		} else {
+			$params = array($UserID);
 		}
 	}
 
 #	syslog(LOG_NOTICE, $sql);
 
-	$result = pg_exec($dbh, $sql);
+	$result = pg_query_params($dbh, $sql, $params);
 #	syslog(LOG_NOTICE, "UploadDisplayWatchListItemsNotInStagingArea for WatchListID: $WatchListID");
 
 	if (!$result) {
@@ -517,7 +513,7 @@ function CopyStagingToWatchList($dbh, $UserID, $WatchListID, $Overwrite = TRUE) 
 #		syslog(LOG_NOTICE, 'commit');
 		pg_exec($dbh, "COMMIT");
 	} else {
-		echo pg_errormessage() . " sql = $sql";
+		echo pg_last_error($dbh) . " sql = $sql";
 		pg_exec($dbh, "ROLLBACK");
 	}
 
@@ -529,12 +525,12 @@ function CopyStagingToWatchList($dbh, $UserID, $WatchListID, $Overwrite = TRUE) 
 function StagingAreaClear($UserID, $dbh) {
 	$ok = TRUE;
 
-	$UserID = pg_escape_string($UserID);
+	$UserID = pg_escape_string($dbh, $UserID);
 
 	$result = pg_exec($dbh, "BEGIN");
 	if ($result) {
-		$sql = "select WatchListStagingClear($UserID)";
-		$result = pg_exec($dbh, $sql);
+		$sql = "select WatchListStagingClear($1)";
+		$result = pg_query_params($dbh, $sql, array(intval($UserID)));
 		if (!$result) {
 			$ok = FALSE;
 		}
@@ -545,7 +541,7 @@ function StagingAreaClear($UserID, $dbh) {
 	if ($result && $ok) {
 		pg_exec($dbh, "COMMIT");
 	} else {
-		echo pg_errormessage() . " sql = $sql";
+		echo pg_last_error($dbh) . " sql = $sql";
 		pg_exec($dbh, "ROLLBACK");
 	}
 

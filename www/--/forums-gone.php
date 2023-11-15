@@ -16,19 +16,17 @@
 					'freshports - new ports, applications',
 					'FreeBSD, index, applications, ports');
 
-	$origin = $_GET["origin"];
-
 	echo freshports_MainTable();
 ?>
 
 	<tr><td class="content">
 
 	<?php echo freshports_MainContentTable(); ?>
-  <TR>
+  <tr>
 	<?php echo freshports_PageBannerText("The forums are gone"); ?>
-  </TR>
-	<TR>
-	<TD>
+  </tr>
+	<tr>
+	<td>
 	<P>
 	The forums have been removed <a href="https://github.com/FreshPorts/freshports/issues/134">via issue #134</a>.
 	</P>
@@ -44,19 +42,19 @@
 
 	</P>
 
-</TD></TR>
-</TABLE>
-</TD>
+</td></tr>
+</table>
+</td>
 
   <td class="sidebar">
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
   </td>
-</TR>
-</TABLE>
+</tr>
+</table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

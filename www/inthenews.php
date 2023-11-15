@@ -22,12 +22,12 @@
 <tr><td class="content">
 <table class="fullwidth borderless">
   <tr>
-	<? echo freshports_PageBannerText("In the news"); ?>
+	<?php echo freshports_PageBannerText("In the news"); ?>
   </tr>
 
-<TR>
-<TD VALIGN="top">
-<p>This page is just a place for me to record the <? echo $FreshPortsTitle; ?> articles which appear
+<tr>
+<td>
+<p>This page is just a place for me to record the <?php echo $FreshPortsTitle; ?> articles which appear
 on other sites.  Links are recorded in reverse chronological order (i.e. newest first).
 </p>
 <p>
@@ -38,14 +38,14 @@ BSD Today - <a href="http://www.bsdtoday.com/2000/May/News146.html">Keeping trac
 slashdot - <a href="https://slashdot.org/article.pl?sid=00/05/10/1014226">BSD: FreshPorts</a>
 </p>
 
-Daily Daemon News - <a href="https://daily.daemonnews.org/view_story.php3?story_id=889"><? echo $FreshPortsTitle; ?> site announncement</a>
-</TD>
-</TR>
-</TABLE>
+Daily Daemon News - <a href="https://daily.daemonnews.org/view_story.php3?story_id=889"><?php echo $FreshPortsTitle; ?> site announncement</a>
+</td>
+</tr>
+</table>
 </td>
   <td class="sidebar">
 
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
   </td>
@@ -53,7 +53,7 @@ Daily Daemon News - <a href="https://daily.daemonnews.org/view_story.php3?story_
 </tr>
 </table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

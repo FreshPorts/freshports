@@ -1,4 +1,4 @@
-<?
+<?php
 //////////////////////////////////////////////////////////////////////
 //
 // phpPolls - A voting booth for PHP3 (administration module)
@@ -38,7 +38,7 @@ h2 {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14pt; color
 
 <body bgcolor="#ffffff" text="#000000" link="#0000FF" vlink="#000080">
 
-<?
+<?php
 
 require "phpPollConfig.php3";
 require "phpPollUI.php3";

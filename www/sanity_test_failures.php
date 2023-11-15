@@ -18,7 +18,7 @@
 
 	$message_id = '';
 	if (IsSet($_REQUEST['message_id'])) {
-		$message_id = pg_escape_string($_REQUEST['message_id']);
+		$message_id = pg_escape_string($db, $_REQUEST['message_id']);
 		# avoid path manipulation e.g. ../../
 		# this will come into play when we fetch / save the cached file
 		$message_id = filter_var($message_id, FILTER_SANITIZE_EMAIL);
@@ -42,18 +42,18 @@ function freshports_SummaryForDay($MinusN) {
    $File = $BaseDirectory . "/" . date("Y/m/d", $Now - 60*60*24*$MinusN) . ".inc";
 //   echo "$File<br>\n";
    if (file_exists($File)) {
-      echo '<br><TABLE WIDTH="152" class="bordered" CELLPADDING="5">';
-      echo '  <TR>';
-      echo '<TD class="accent" height="30">';
+      echo '<br><table WIDTH="152" class="bordered" CELLPADDING="5">';
+      echo '  <tr>';
+      echo '<td class="accent" height="30">';
       echo date("l j M", $Now - 60*60*24*$MinusN);
-      echo '</TD>';
-      echo '       </TR>';
-      echo '        <TR>';
-      echo '         <TD>';
+      echo '</td>';
+      echo '       </tr>';
+      echo '        <tr>';
+      echo '         <td>';
       include($File);
-      echo '   </TD>';
-      echo '   </TR>';
-      echo '   </TABLE>';
+      echo '   </td>';
+      echo '   </tr>';
+      echo '   </table>';
    }
 } /* summary for day */
 
@@ -63,9 +63,9 @@ $num          = $MaxNumberOfPorts;
 $days         = $NumberOfDays;
 $dailysummary = 7;
 
-if (In_Array('num',          $_GET)) $num		= pg_escape_string($_GET["num"]);
-if (In_Array('dailysummary', $_GET)) $dailysummary	= pg_escape_string($_GET["dailysummary"]);
-if (In_Array('days',         $_GET)) $days		= pg_escape_string($_GET["days"]);
+if (In_Array('num',          $_REQUEST)) $num		= pg_escape_string($db, intval($_REQUEST["num"]));
+if (In_Array('dailysummary', $_REQUEST)) $dailysummary	= pg_escape_string($db, intval($_REQUEST["dailysummary"]));
+if (In_Array('days',         $_REQUEST)) $days		= pg_escape_string($db, intval($_REQUEST["days"]));
 
 
 if (Is_Numeric($num)) {
@@ -89,29 +89,29 @@ if (Is_Numeric($dailysummary)) {
 
 if ($db) {
 ?>
-<TR><td class="content">
+<tr><td class="content">
 
 <?php echo freshports_MainContentTable(); ?>
 
-<TR>
+<tr>
 <?php
 $Title = 'Sanity Test Failure';
 
 if ($message_id == '') {
 	$Title .= 's';
 }
-echo freshports_PageBannerText($Title, 3);
+echo freshports_PageBannerTextColSpan($Title, 1);
 ?>
-</TR>
+</tr>
 <?php
 if ($message_id == '') {
 ?>
-<TR><TD>
+<tr><td>
 <p>These are the sanity test failures found by FreshPorts.  Sanity tests have
 been in place for several years, but have only been saved in the database
 since 10 October 2006.
 </p>
-</TD></TR>
+</td></tr>
 <?php
 }
 	if ($ShowAds && $BannerAd) {
@@ -130,7 +130,10 @@ since 10 October 2006.
 			var_dump($url_query);
 			echo '</pre>';
 		}
-		parse_str($url_query, $url_args);
+		$url_args = array();
+		if (!empty($url_query)) {
+			parse_str($url_query, $url_args);
+		}
 		if ($Debug) {
 			echo '<pre>url_args is';
 			var_dump($url_args);
@@ -196,13 +199,13 @@ since 10 October 2006.
 }
 
 ?>
-</TABLE>
-</TD>
+</table>
+</td>
   <td class="sidebar">
-   <? echo freshports_SideBar(); ?>
+   <?php echo freshports_SideBar(); ?>
 
-<BR>
-<?
+<br>
+<?php
 
 	if ($dailysummary) {
 		for ($i = 0; $i < $dailysummary; $i++) {
@@ -212,30 +215,30 @@ since 10 October 2006.
 		if ($NumberOfDays) {
 			$Today = time();
 			echo '
-<TABLE WIDTH="155" class="bordered" CELLPADDING="5">
-	<TR>
-		<TD class="accent" height="30"><B>Previous days</B></TD>
-	</TR>
-	<TR><TD>
+<table WIDTH="155" class="bordered" CELLPADDING="5">
+	<tr>
+		<td class="accent" height="30"><B>Previous days</B></td>
+	</tr>
+	<tr><td>
 ';
 			for ($i = 1; $i <= $NumberOfDays; $i++) {
 				echo freshports_LinkToDate($Today - $i * 86400) . "<br>\n";
 			}
 			echo '
-	</TD></TR>
-</TABLE>
+	</td></tr>
+</table>
 
 ';
 		}
 	}
 ?>
  </td>
-</TR>
-</TABLE>
+</tr>
+</table>
 
-<BR>
+<br>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

@@ -2,7 +2,7 @@
 	#
 	# $Id: cache.php,v 1.4 2008-01-26 23:41:05 dan Exp $
 	#
-	# Copyright (c) 2006 DVL Software Limited
+	# Copyright (c) 2006-2022 DVL Software Limited
 	#
 
 // base class for caching
@@ -44,16 +44,21 @@ class Cache {
 			$this->LastModified = filemtime($CacheFileName);
 			$CacheFileHandle = fopen($CacheFileName, 'r');
 			if ($CacheFileHandle) {
-				$this->CacheData = fread($CacheFileHandle, filesize ($CacheFileName));
-				fclose($CacheFileHandle);
-				$this->_Log('Cache: Retrieve ' . $CacheFileName);
-				
+				$filesize = filesize($CacheFileName);
+				if ($filesize) {
+					$this->CacheData = fread($CacheFileHandle, $filesize);
+					fclose($CacheFileHandle);
+					$this->_Log('Cache: Retrieve ' . $CacheFileName);
+				}  else {
+					$this->_Log('Cache: CRITICAL filesize is zero/false: ' . $CacheFileName, true);
+					$result = -3;
+				}
 			} else {
 				$this->_Log('Cache: FAILED Retrieve file open ' . $CacheFileName);
 				$result = -1;
 			}
 		} else {
-			$this->_Log('Cache: FAILED Retrieve NOT FOUND ' .$CacheFileName);
+			$this->_Log('Cache: FAILED Retrieve NOT FOUND ' . $CacheFileName);
 			$result = -2;
 		}
 		
@@ -67,6 +72,8 @@ class Cache {
 		$SpoolFileHandle = fopen($SpoolFileName, 'w');
 		if ($SpoolFileHandle) {
 			// write $data to file
+			// returns the number of bytes written, or false on error
+			// nothing write is still an error for us
 			if (fwrite($SpoolFileHandle, $this->CacheData)) {
 				// close $SpoolFileHandle
 				fclose($SpoolFileHandle);
@@ -111,9 +118,9 @@ class Cache {
 		// rm $Filename
 		if (unlink($Filename)) {
 			// success
-			$this->_Log('Cache: Remove ' .$CacheFileName);
+			$this->_Log('Cache: Remove ' . $CacheFileName);
 		} else {
-			$this->_Log('Cache: FAILED Remove ' .$CacheFileName);
+			$this->_Log('Cache: FAILED Remove ' . $CacheFileName);
 			$result = -1;
 		}
 		
@@ -122,8 +129,9 @@ class Cache {
 
 	function _CleanKey($key) {
 		// convert /../ to .
-		
-		$new_key = preg_replace( '/[^a-z0-9]+/', '-', strtolower( $key ) );
+		$this->_Log('Cache: cleaning  ' . ($key ?? '<NULL>') );
+
+		$new_key = preg_replace( '/[^a-z0-9]+/', '-', strtolower( $key ?? '' ) );
 
 		return $new_key;
 	}
@@ -142,10 +150,12 @@ class Cache {
 
 		return $FileName;
 	}
-	
-	function _Log($activity) {
+
+	function _Log($activity, $always_log = false) {
 		// log the above message
-		if (defined('FRESHPORTS_LOG_CACHE_ACTIVITY')) {
+		# Logging cache takes up a lot of room. It is off by default
+		# But we always log errors, for example.
+		if (defined('FRESHPORTS_LOG_CACHE_ACTIVITY') || $always_log) {
 			syslog(LOG_NOTICE, $activity);
 		}
 	}

@@ -51,19 +51,19 @@ class User {
 	
 
 	function Fetch($ID) {
-		$sql = "
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" .'
 		SELECT *
 		  FROM users
-		 WHERE id = " . pg_escape_string($ID);
+		 WHERE id = $1';
 
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, $sql, array($ID));
 		if ($this->LocalResult) {
 			$myrow = pg_fetch_array($this->LocalResult, 0);
 			$this->PopulateValues($myrow);
-			$numrows = pg_numrows($this->LocalResult);
+			$numrows = pg_num_rows($this->LocalResult);
 		} else {
 			$numrows = -1;
-			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': ' . pg_last_error());
+			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': ' . pg_last_error($this->dbh));
 			die('something terrible has happened');
 		}
 
@@ -72,25 +72,25 @@ class User {
 
 
 	function FetchByCookie($Cookie) {
-		$sql = "SELECT users.*
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . 'SELECT users.*
 		          FROM users
-				 WHERE cookie = '" . pg_escape_string($Cookie) . "'";
+				 WHERE cookie = $1';
 
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, $sql, array($Cookie));
 		if ($this->LocalResult) {
-			$numrows = pg_numrows($this->LocalResult);
+			$numrows = pg_num_rows($this->LocalResult);
 			if ($numrows == 1) {
 				$myrow = pg_fetch_array($this->LocalResult, 0);
 				$this->PopulateValues($myrow);
 			} else {
 				freshports_CookieClear();
 				syslog(LOG_ERR, "Could not find user details for '$Cookie' from '" . 
-				        $_SERVER['REMOTE_ADDR'] . "' for '". $SERVER['REQUEST_URI'] . "'.");
+				        $_SERVER['REMOTE_ADDR'] . "' for '". $_SERVER['REQUEST_URI'] . "'.");
 				die('Your user details were not found.  You have been logged out.  Please return to the <a href="/">home page</a>.');
 			}
 		} else {
 			$numrows = -1;
-			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': ' . pg_last_error());
+			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': ' . pg_last_error($this->dbh));
 			die('something terrible has happened');
 		}
 
@@ -137,17 +137,17 @@ class User {
 	
 	function SetWatchListAddRemove($WatchListAddRemove) {
 		
-		$sql = 'UPDATE users 
-		          set watch_list_add_remove = \'' . pg_escape_string($WatchListAddRemove) . '\'
-		        WHERE id                    =   ' . $this->id;
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" .'UPDATE users 
+		          set watch_list_add_remove =  $1
+		        WHERE id                    =  $2';
 
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, $sql, array($WatchListAddRemove, $this->id));
 		if ($this->LocalResult) {
 			$numrows = pg_affected_rows($this->LocalResult);
-			$this->watch_list_add_remove = pg_escape_string($WatchListAddRemove);
+			$this->watch_list_add_remove = pg_escape_string($this->dbh, $WatchListAddRemove);
 		} else {
 			$numrows = -1;
-			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': ' . pg_last_error());
+			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': ' . pg_last_error($this->dbh));
 			die('something terrible has happened');
 		}
 
@@ -157,20 +157,21 @@ class User {
 	function SetLastWatchListChosen($WatchListID) {
 
 		$Debug = 0;
+		$numrows = -1;
 
-		# we should have some checks here to verify that this WatchListID belongs to this user		
-		$sql = 'UPDATE users 
+		# Update only if that watch list id belongs to that user.
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . 'UPDATE users U
 		          set last_watch_list_chosen = $1
 		        WHERE id                     = $2
-		          AND $2 IN (SELECT id FROM watch_list WHERE user_id = users.id)';
+		          AND $1 IN (SELECT id FROM watch_list WHERE user_id = $2)';
 		
 		$this->LocalResult = pg_query_params($this->dbh, $sql, array($WatchListID, $this->id));
 		if ($this->LocalResult) {
 			$numrows = pg_affected_rows($this->LocalResult);
-			$this->last_watch_list_chosen = pg_escape_string($WatchListID);
+			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': setting ' );
+			$this->last_watch_list_chosen = pg_escape_string($this->dbh, $WatchListID);
 		} else {
-			$numrows = -1;
-			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': ' . pg_last_error());
+			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': ' . pg_last_error($this->dbh));
 			die('something terrible has happened' . $sql);
 		}
 

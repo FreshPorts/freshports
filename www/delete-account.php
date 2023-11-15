@@ -12,7 +12,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
 	
-	if (IN_MAINTENCE_MODE) {
+	if (IN_MAINTENANCE_MODE) {
                 header('Location: /' . MAINTENANCE_PAGE, TRUE, 307);
 	}
 
@@ -20,9 +20,10 @@
 
 	$errors          = 0;
 	$AccountModified = 0;
+	$deleted         = 0;
 
-if (IsSet($_REQUEST['submit'])) $submit = $_REQUEST['submit'];
-$visitor	= pg_escape_string($_COOKIE[USER_COOKIE_NAME]);
+$submit = $_REQUEST['submit'] ?? '';
+$visitor = pg_escape_string($db, $_COOKIE[USER_COOKIE_NAME]);
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {
@@ -30,32 +31,32 @@ if (!$visitor) {
 	exit;  /* Make sure that code below does not get executed when we redirect. */
 }
 
-if (IsSet($submit)) {
+if ($submit) {
     #phpinfo();
     $Debug = 0;
 
     // process form
     syslog(LOG_ERR, 'into '. __FILE__);
 
-	$confirmation = pg_escape_string($_POST['confirmation']);
+	$confirmation = $_POST['confirmation'] ?? '';
 
 	if ($confirmation ==  $User->name) {
 		$result = pg_exec($db, "BEGIN");
         
 		// Delete from the user table. The database will take care of the rest
 #		$sql = "DELETE FROM users WHERE cookie = '$visitor'";
-		$sql = "SELECT DeleteUser('$User->id')";
-		$result = pg_exec($db, $sql);
+		$sql = "SELECT DeleteUser($1)";
+		$result = pg_query_params($db, $sql, array($User->id));
 		if ($result) {
 			$numrows = pg_affected_rows($result);
 			if ($numrows == 1) {
-                pg_exec($db, "COMMIT");
-                # clear the cookie so they don't get "Your user details were not found. You have been logged out. Please return to the home page."
-                freshports_CookieClear();
+				pg_exec($db, "COMMIT");
+				# clear the cookie so they don't get "Your user details were not found. You have been logged out. Please return to the home page."
+				freshports_CookieClear();
 				$deleted = 1;
 			} else {
-                pg_exec($db, "ROLLBACK");
-                $errors = 'I really tried to delete your account. I failed. Sorry.';
+				pg_exec($db, "ROLLBACK");
+				$errors = 'I really tried to delete your account. I failed. Sorry.';
 				syslog(LOG_ERR, 'attempted to delete user failed ' . $User->name . ' failed when trying to delete ' . $numrows . ' rows.');
             }
         } else {
@@ -77,52 +78,52 @@ if (IsSet($submit)) {
 						'FreeBSD, index, applications, ports');
 ?>
 
-<TABLE class="fullwidth borderless" ALIGN="center">
-<TR><td class="content">
-<TABLE class="fullwidth borderless">
-  <TR>
-    <TD height="20"><?php
+<table class="fullwidth borderless" ALIGN="center">
+<tr><td class="content">
+<table class="fullwidth borderless">
+  <tr>
+    <td height="20"><?php
 
 
 if ($errors) {
-echo '<TABLE class="fullwidth borderless">
-<TR>
-<TD>
-<TABLE class="fullwidth borderless">
-<TR class="accent"><TD><b>Delete Failed!</b></TD>
-</TR>
-<TR>
-<TD>
-  <TABLE class="fullwidth borderless" CELLPADDING="3">
-  <TR VALIGN=top>
-   <TD><img src="/images/warning.gif"></TD>
-   <TD width="100%">
+echo '<table class="fullwidth borderless">
+<tr>
+<td>
+<table class="fullwidth borderless">
+<tr class="accent"><td><b>Delete Failed!</b></td>
+</tr>
+<tr>
+<td>
+  <table class="fullwidth borderless" CELLPADDING="3">
+  <tr VALIGN=top>
+   <td><img src="/images/warning.gif"></td>
+   <td width="100%">
   <p>The deleted failed.</p>';
 
 echo $errors;
 
 echo '<p>If you need help, please email postmaster@. </p>
- </TD>
- </TR>
- </TABLE>
-</TD>
-</TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>
+ </td>
+ </tr>
+ </table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
 <br>';
 }  // if ($errors)
 
-echo '<TABLE class="fullwidth borderless">
-<TR>
-<TD VALIGN="top">
-<TABLE class="fullwidth borderless">
-<TR>
+echo '<table class="fullwidth borderless">
+<tr>
+<td VALIGN="top">
+<table class="fullwidth borderless">
+<tr>
 <td class="accent"><BIG>Customize</BIG></td>
-</TR>
-<TR>
-<TD>';
+</tr>
+<tr>
+<td>';
 
 
 if ($deleted) {
@@ -137,9 +138,9 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 ?>
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
-<TABLE width="*" class="borderless">
-          <TR>
-            <TD VALIGN="top">
+<table width="*" class="borderless">
+          <tr>
+            <td VALIGN="top">
                <p>The account name is: <?php echo $User->name; ?><p>
                User Name: <INPUT SIZE="15" NAME="confirmation" VALUE="">
             </td>
@@ -152,33 +153,33 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
             </td>
         </tr>
   
-    </TABLE>
+    </table>
 </FORM>
 
 <?php
 } // if ($deleted)
-echo "</TD>
-</TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>";
+echo "</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>";
 
 ?>
-</TD>
-</TABLE>
+</td>
+</table>
 </td>
 
   <td class="sidebar">
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
   </td>
 
-</TR>
-</TABLE>
+</tr>
+</table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

@@ -58,26 +58,39 @@ class PageLoadDetail {
 
 		$Debug = 0;
 
-		$UserID = $User->id == '' ? "NULL" : $User->id;
-#		echo "\$UserID='$UserID'<br>";
+		$UserID = null;
+		if (IsSet($User) && IsSet($User->id) && $User->id !== '') {
+			$UserID = $User->id;
+		}
 
-		$sql = "
+#		echo "\$UserID='$UserID'<br>";
+		$params = array($_SERVER['SCRIPT_NAME']);
+		if (!empty($UserID)) {
+			$params[] = $UserID;
+			$sql = '
 INSERT INTO page_load_detail(page_name,
                              user_id,
                              ip_address,
                              full_url,
                              rendering_time)
-                     values ('" . pg_escape_string($_SERVER['SCRIPT_NAME']) . "',
-                             $UserID,
-                             '" . pg_escape_string($_SERVER['REMOTE_ADDR']) . "',
-                             '" . pg_escape_string($_SERVER["REQUEST_URI"]) . "',
-                             '" . $this->ElapsedTime() . " seconds')";
-		if ($Debug) echo "CODE <pre>$sql</pre>";
-		$result = pg_exec($this->dbh, $sql);
+                     values ($1, $2, $3, $4, $5)';
+		} else {
+			$sql = '
+INSERT INTO page_load_detail(page_name,
+                             ip_address,
+                             full_url,
+                             rendering_time)
+                     values ($1, $2, $3, $4)';
+		}
+		$params[] = $_SERVER['REMOTE_ADDR'];
+		$params[] = $_SERVER['REQUEST_URI'];
+		$params[] = $this->ElapsedTime() . ' seconds';
+		if ($Debug) echo $sql;
+		$result = pg_query_params($this->dbh, $sql, $params);
 		if ($result) {
 			$return = 1;
 		} else {
-			echo "error " . pg_errormessage();
+			echo "error " . pg_last_error($this->dbh);
 			$return = -1;
 		}
 

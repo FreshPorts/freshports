@@ -20,55 +20,26 @@
 
 ?>
 
-<TABLE class="fullwidth borderless" ALIGN="center">
+<table class="fullwidth borderless" ALIGN="center">
 
-<TR><td class="content">
-<TABLE class="fullwidth borderless">
-<TR>
-	<? echo freshports_PageBannerText($Title); ?>
-</TR>
-<TR><TD>
-<h2>System status</h2>
-</TD></TR>
+<tr><td class="content">
+<table class="fullwidth borderless">
+<tr>
+	<?php echo freshports_PageBannerText($Title); ?>
+</tr>
 <tr><td>
-<?
+<h2>System status</h2>
+</td></tr>
+<tr><td>
+<?php
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../configuration/status-config.php');
-
-echo '<table class="bordered">' . "\n";
-echo '<tr><td></td><td align="center" colspan="' . count($sites) . '">sites - yeah, we can\'t do this yet from the front end</td></tr>' . "\n";
-echo '<tr><td>queues</td>';
-foreach ($sites as $site) {
-	echo '<td><b>' . $site . '</b></td>';
-}
-echo "</tr>\n";
-
-foreach ($queues as $queue => $pattern) {
-	echo '<tr><td><b>' . $queue_names[$queue] . '</b></td>';
-	foreach ($sites as $site) {
-		$command = "find $base/$site/msgs/FreeBSD/$queue/";
-		if ($pattern) {
-			$command .= " -name \"$pattern\"";
-		}
-		$command .= ' | wc -l';
-
-		# the above command will return 1 for an empty directory.
-		# so adjust appropriately
-
-		$count = exec($command) - 1;
-		echo '<td align="right">' . $count . '</td>';
-	}
-	echo "</tr>\n";
-}
-
-echo "</table>\n";
 
 $sql = "select * from GetPackageStatus()";
-$result = pg_exec($db, $sql);
+$result = pg_query_params($db, $sql, array());
 if ($result) {
-	$numrows = pg_numrows($result);
+	$numrows = pg_num_rows($result);
 	if ($numrows) {
-		echo '<table class="bordered" cellpadding="5" cellspacing="3">' . "\n";
+		echo '<table class="bordered" class="cellpadding5" cellspacing="3">' . "\n";
 		echo "<caption>The package imports</caption><tr>
 		<td><b>ABI</b>
 		<td><b>package set</b></td>
@@ -107,9 +78,9 @@ if ($result) {
 
 <?php
 $sql = "select * from LoginCounts(10)";
-$result = pg_exec($db, $sql);
+$result = pg_query_params($db, $sql, array());
 if ($result) {
-	$numrows = pg_numrows($result);
+	$numrows = pg_num_rows($result);
 	if ($numrows) {
 		echo '<table class="bordered">' . "\n";
 		echo "<tr><td><b>Days</b><td><b>Users</b></td></tr>\n";
@@ -129,15 +100,15 @@ if ($result) {
 <sup>*</sup>The users column indicates the number of logged-in users who last accessed the system on that day.
 
   <td class="sidebar">
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
   </td>
 
-</TR>
-</TABLE>
+</tr>
+</table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

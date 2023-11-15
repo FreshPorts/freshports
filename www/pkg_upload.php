@@ -13,7 +13,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/watch-lists.php');
 
-	if (IN_MAINTENCE_MODE) {
+	if (IN_MAINTENANCE_MODE) {
                 header('Location: /' . MAINTENANCE_PAGE, TRUE, 307);
 	}
 
@@ -29,20 +29,20 @@ if ($Debug) {
 
 function StagingAlreadyInUse($UserID, $dbh) {
 
-        $UserID = pg_escape_string($UserID);
+        $UserID = pg_escape_string($dbh, $UserID);
 
 	$Result = 1;	// yes, already in progress.
 
-	$sql = "select WatchListStagingExists($UserID)";
+	$sql = "select WatchListStagingExists($1)";
 
-	$result = pg_exec($dbh, $sql);
-	if ($result && pg_numrows($result)) {
+	$result = pg_query_params($dbh, $sql, array($UserID));
+	if ($result && pg_num_rows($result)) {
 		$row = pg_fetch_array($result, 0);
 		if ($row[0] == 0) {
 			$Result = 0;
 		}
 	} else {
-		echo pg_errormessage() . " sql = $sql";
+		echo pg_last_error($dbh) . " sql = $sql";
 	}
 
 	return $Result;
@@ -55,9 +55,9 @@ function DisplayUploadForm($db, $UserID) {
 
 	<P>
 	You can update your watch lists from the packages database on your computer.  Use the output
-	from the <CODE CLASS="code">pkg info</CODE> command as the input for this page.  FreshPorts
+	from the <code class="code">pkg info</code> command as the input for this page.  FreshPorts
 	will take this information, analyze it, and use that data to update your watch list.
-	<SMALL><A HREF="/help.php">help</A></SMALL>
+	<SMALL><a href="/help.php">help</a></SMALL>
 	</P>
 
 	<p>
@@ -65,47 +65,46 @@ function DisplayUploadForm($db, $UserID) {
 	copy/paste the results into a form.
 	</p>
 
-	<table class="fullwidth bordered" cellpadding="5">
+	<table class="pkg-upload-info fullwidth bordered">
 	<tr>
-	<td valign="top">
+	<td>
 	<h2>Uploading a file</h2>
 
 	<P>Here are the steps you should perform:</P>
 
-	<OL>
+	<ol>
 
-	<LI>
+	<li>
 	<P>
 	You should first issue this command on your FreeBSD computer:
 	</P>
 
-	<BLOCKQUOTE>
-		<CODE CLASS="code">pkg info -qoa > mypkg_info.txt</CODE>
-	</BLOCKQUOTE>
+	<blockquote>
+		<code class="code">pkg info -qoa > mypkg_info.txt</code>
+	</blockquote>
 
-	</LI>
+	</li>
 
-	<LI>
+	<li>
 	<P>
 	Then click on the <B>Choose</B> button and select the file you created in the previous step.
 	<P>
-	</LI>
+	</li>
 
-	<LI>
+	<li>
 	Then click on either <b>Staging</b> or <B>Upload</B>.
-	</LI>
+	</li>
 
-	</OL>
+	</ol>
 
 	<hr>
 
 
-	<FORM ACTION="<? echo $_SERVER["PHP_SELF"]; ?>" METHOD="post" enctype="multipart/form-data">
-		<TABLE>
-			<TR><TD>The file name containing the output from step 1:</TD></TR>
-			<TR><TD><INPUT TYPE="file"   NAME="pkg_info" SIZE="40" ></TD></TR>
-			<TR><TD><INPUT TYPE="submit" NAME="staging"  SIZE="20" VALUE="Staging"> &lt;= Click here to go to staging area</TD></TR>
-			<tr><td><hr></td></tr>
+	<FORM ACTION="<?php echo $_SERVER["PHP_SELF"]; ?>" METHOD="post" enctype="multipart/form-data">
+		<table>
+			<tr><td>The file name containing the output from step 1:</td></tr>
+			<tr><td><INPUT TYPE="file"   NAME="pkg_info" SIZE="40" ></td></tr>
+			<tr><td><INPUT TYPE="submit" NAME="staging"  SIZE="20" VALUE="Staging"> &lt;= Click here to go to staging area<hr></td></tr>
 
 			<tr><td>Use this Watch List: 
 			<?php
@@ -116,19 +115,18 @@ echo freshports_WatchListDDLB($db, $UserID);
 			<tr><td><input type="radio" name="replaceappend" value="replace" checked>Replace list contents<br>
                     <input type="radio" name="replaceappend" value="append">Append to list (duplicates will be removed)</td></tr>
 			<tr><td><input type="submit" name="upload" size="40" value="Upload"> &lt;= Click here here to avoid staging area</td></tr>
-		</TABLE>
+		</table>
 	</FORM>
 
 	</td>
-	<td valign="top">
+	<td>
 	<h2>Copy/Paste</h2>
 
-	<FORM ACTION="<? echo $_SERVER["PHP_SELF"]; ?>" METHOD="post" enctype="multipart/form-data">
-		<TABLE>
-			<TR><TD>Paste the output of <code>pkg info -qoa</code> here:</TD></TR>
+	<FORM ACTION="<?php echo $_SERVER["PHP_SELF"]; ?>" METHOD="post" enctype="multipart/form-data">
+		<table>
+			<tr><td>Paste the output of <code>pkg info -qoa</code> here:</td></tr>
 			<tr><td><textarea name="copypaste" rows="20" cols="30"></textarea></td></tr>
-			<TR><TD><INPUT TYPE="submit" NAME="staging_copypaste" SIZE="20" VALUE="Staging"> &lt;= Click here to go to staging area</TD></TR>
-			<tr><td><hr></td></tr>
+			<tr><td><INPUT TYPE="submit" NAME="staging_copypaste" SIZE="20" VALUE="Staging"> &lt;= Click here to go to staging area<hr></td></tr>
 
 			<tr><td>Use this Watch List: 
 			<?php
@@ -139,7 +137,7 @@ echo freshports_WatchListDDLB($db, $UserID);
 			<tr><td><input type="radio" name="replaceappend" value="replace" checked>Replace list contents<br>
                     <input type="radio" name="replaceappend" value="append" >Append to list (duplicates will be removed)</td></tr>
 			<tr><td><input type="submit" name="upload_copypaste" size="40" value="Upload"> &lt;= Click here here to avoid staging area</td></tr>
-		</TABLE>
+		</table>
 	</FORM>
 
 
@@ -147,93 +145,79 @@ echo freshports_WatchListDDLB($db, $UserID);
 	</tr>
 	</table>
 
-<?
+<?php
 }
 
 function DisplayStagingArea($UserID, $WatchListID, $db) {
 
-	echo '<TABLE ALIGN="center" class="bordered" CELLPADDING="5">';
+	echo '<table class="pkg-upload-info fullwidth bordered">';
 ?>
 
-	<TR><TD COLSPAN="4"><BIG>The following information is in your Staging Area.  To save it to a Watch List, 
+	<tr><td colspan="4">The following information is in your Staging Area.  To save it to a Watch List,
 		please click on the
-			"Update watch list" button.</BIG> <SMALL><A HREF="/help.php">help</A></SMALL></TD></TR>
+			"Update watch list" button. <SMALL><a href="/help.php">help</a></SMALL></td></tr>
 
-	<TR><TD COLSPAN="4">
-	<FORM ACTION="<? echo $_SERVER["PHP_SELF"]; ?>" method="POST">
-	<table class="fullwidth borderless">
-	<tr><td align="center">
+	<tr><td colspan="4">
+	<form class="pkg-upload-controls" ACTION="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST">
 			<INPUT TYPE="submit" VALUE="Update watch list"  NAME="update_watch_list" SIZE="40">
-			&nbsp;&nbsp;&nbsp;
  			<INPUT TYPE="submit" VALUE="Empty staging area" NAME="clear">
-	</td><td align="right">
 			<?php echo freshports_WatchListDDLB($db, $UserID, $WatchListID); ?>
-	</td><td>
-	<?php echo freshports_WatchListSelectGoButton() ?>
-	</tr></table>
+			<?php echo freshports_WatchListSelectGoButton() ?>
 	</form>
-
-	</TD></TR>
+	</td></tr>
 	<tr>
-<?
+<?php
 
-	echo '<TD VALIGN="top"><B>Ports found from your uploaded data.</B><BR>Those marked with a W are already on your watch list.</TD>' . "\n";
-	echo '<TD VALIGN="top"><B>Ports not found.</B><BR>These ports are installed on your system but could not be located within FreshPorts.  Perhaps they have
+	echo '<td><B>Ports found from your uploaded data.</B><br>Those marked with a W are already on your watch list.</td>' . "\n";
+	echo '<td><B>Ports not found.</B><br>These ports are installed on your system but could not be located within FreshPorts.  Perhaps they have
 								been renamed or removed from the ports tree.  You could use the search link, locate the ports, and add them to your
-								watch list manually.</TD>' . "\n";
-	echo '<TD VALIGN="top"><B>Ports duplicated</B><BR>The following ports have been installed multiple times, most definitely with different versions on
-										 your system.</TD>' . "\n";
+								watch list manually.</td>' . "\n";
+	echo '<td><B>Ports duplicated</B><br>The following ports have been installed multiple times, most definitely with different versions on
+										 your system.</td>' . "\n";
 
-	echo '<TD VALIGN="top"><B>Port from your watch lists</B><BR>These ports are on your watch list but do not appear in your pkg info data.</TD>' . "\n";
+	echo '<td><B>Port from your watch lists</B><br>These ports are on your watch list but do not appear in your pkg info data.</td>' . "\n";
 
-	echo '</TR><TR>';
+	echo '</tr><tr>';
 
 
-	echo '<TD VALIGN="top">' . "\n";
+	echo '<td>' . "\n";
 	UploadDisplayStagingResultsMatches($UserID, $WatchListID, $db);
-	echo '</TD>';
+	echo '</td>';
 
-	echo '<TD VALIGN="top">' . "\n";
+	echo '<td>' . "\n";
 	UploadDisplayStagingResultsMatchesNo($UserID, $db);
-	echo '</TD>';
+	echo '</td>';
 
-	echo '<TD VALIGN="top">' . "\n";
+	echo '<td>' . "\n";
 	UploadDisplayStagingResultsMatchesDuplicates($UserID, $WatchListID, $db);
-	echo '</TD>';
+	echo '</td>';
 
-	echo '<TD VALIGN="top">' . "\n";
+	echo '<td>' . "\n";
 	UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $db);
-	echo '</TD>';
+	echo '</td>';
 
-	echo '</TR>';
-	echo '</TABLE>';
+	echo '</tr>';
+	echo '</table>';
 }
 
 function ChooseWatchLists($UserID, $db) {
 
-	echo '<TABLE class="fullwidth bordered" ALIGN="center" CELLPADDING="5"><TR>';
+	echo '<table class="pkg-upload-info fullwidth bordered"><tr>';
 ?>
 
-	<TR><TD><BIG>Your staging area contains your uploaded information.  Please choose a watch list, and click on Go.
-		 <SMALL><A HREF="/help.php">help</A></SMALL></TD></TR>
+	<tr><td>Your staging area contains your uploaded information.  Please choose a watch list, and click on Go.
+		 <SMALL><a href="/help.php">help</a></SMALL></td></tr>
 
-	<TR><TD>
-	<table class="fullwidth borderless"><tr><td>
-			<FORM ACTION="<? echo $_SERVER["PHP_SELF"]; ?>" method="POST">
-			<P ALIGN="center">
+	<tr><td>
+			<FORM class="pkg-upload-controls" ACTION="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST">
  			<INPUT TYPE="submit" VALUE="Empty staging area" NAME="clear">
- 			</td><td align="right">
 			<?php echo freshports_WatchListDDLB($db, $UserID); ?>
-			</td>
-			<td>
-	<?php echo freshports_WatchListSelectGoButton() ?>
+			<?php echo freshports_WatchListSelectGoButton() ?>
+			</FORM>
+	</td></tr>
 
-</td></tr></table>
-	</TD></TR>
-<?
-	echo '</FORM>';
-
-	echo '</TABLE>';
+	</table>
+	<?php
 }
 
 ?>
@@ -243,25 +227,25 @@ function ChooseWatchLists($UserID, $db) {
 	<tr><td class="content">
 
 	<?php echo freshports_MainContentTable(); ?>
-<TR>
-	<? echo freshports_PageBannerText("Uploading pkg info"); ?>
-<TR><TD>
-<BIG>WARNING</BIG>: The system will clear out your staging area from time to time.
-</TD></TR>
-<TR><TD>
-	<?
+<tr>
+	<?php echo freshports_PageBannerText("Uploading pkg info"); ?>
+<tr><td>
+<span class="element-details">WARNING</span>: The system will clear out your staging area from time to time.
+</td></tr>
+<tr><td>
+	<?php
 	$Debug = 0;
 	
 #	if ($Debug) phpinfo();
 
 	# you can only be here if you are logged in!
-	$visitor = $_COOKIE[USER_COOKIE_NAME];
+	$visitor = $_COOKIE[USER_COOKIE_NAME] ?? null;
 	if (!$visitor) {
 		?>
 		<P>
-		You must <A HREF="/login.php">login</A> before you can upload your package information.
+		You must <a href="/login.php">login</a> before you can upload your package information.
 		</P>
-		<?
+		<?php
  	} else {
 		global $gDBG;
 		$gDBG  = false;
@@ -292,11 +276,12 @@ if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 		if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 			if ($Debug) echo 'staging area is in use<br>';
 			$DisplayStagingArea = TRUE;
-			if ($_REQUEST["update_watch_list"]) {
-				$ports = $_REQUEST["ports"];
+			if (IsSet($_REQUEST["update_watch_list"])) {
+#phpinfo();
+#				$ports = $_REQUEST["ports"];
 				# save these things to the watch list
 				# and clear out part of the staging area.
-				$WatchListID = pg_escape_string($_REQUEST['wlid']);
+				$WatchListID = pg_escape_string($db, $_REQUEST['wlid']);
 				if (!IsSet($WatchListID) || $WatchListID === '') {
 					syslog(LOG_NOTICE, "No watch list ID was supplied.  I cannot continue.  " .
 					    __FILE__ . '::' . __LINE__ . " User id = " . $User->id);
@@ -304,7 +289,6 @@ if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 				} 
 
 				if ($Debug) echo ' you clicked on update_watch_list';
-#phpinfo();
 				if (MoveStagingToWatchList($User->id, $WatchListID, $db)) {
 					$DisplayStagingArea = FALSE;
 					$StagingInUse       = FALSE;
@@ -312,7 +296,7 @@ if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 				}
 			}
 if ($Debug) echo '<br>' . __LINE__ . '<br>';
-			if ($_REQUEST["clear"]) {
+			if (IsSet($_REQUEST["clear"])) {
 				if ($Debug) echo " you pressed clear!<br>";
 				if (StagingAreaClear($User->id, $db)) {
 					$StagingInUse		= FALSE;
@@ -321,12 +305,12 @@ if ($Debug) echo '<br>' . __LINE__ . '<br>';
 				}
 			}
 			
-			if ($_REQUEST['wlid']) {
+			if (IsSet($_REQUEST['wlid'])) {
 if ($Debug) echo '<br>' . __LINE__ . '<br>';
 				if ($Debug) echo 'you selected a list<br>';
 				# they clicked on the GO button and we have to apply the 
 				# watch staging area against the watch list.
-				$WatchListID = pg_escape_string($_REQUEST['wlid']);
+				$WatchListID = pg_escape_string($db, $_REQUEST['wlid']);
 				if ($Debug) echo "setting SetLastWatchListChosen => \$wlid='$WatchListID'";
 				$User->SetLastWatchListChosen($WatchListID);
 			} else {
@@ -371,7 +355,7 @@ if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 						if (ProcessPackages($User->id, $PortArray, $db)) {
 if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 							# we are not using the staging list
-							$WatchListID = pg_escape_string($_REQUEST['wlid']);
+							$WatchListID = pg_escape_string($db, $_REQUEST['wlid']);
 							if ($Debug) echo ' you clicked on update_watch_list';
 
 							if ($_REQUEST['replaceappend'] == 'replace') {
@@ -381,8 +365,8 @@ if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 							}
 
 							if (!IsSet($WatchListID) || $WatchListID === '') {
-								syslog(LOG_NOTICE, "No watch list ID was supplied.  I cannot continue.  pkg_upload.php::250 " .
-									"User id = " . $User->id);
+								syslog(LOG_NOTICE, "No watch list ID was supplied.  I cannot continue.  pkg_upload.php::" . __LINE__ .
+									" User id = " . $User->id);
 								die('No watch list ID was supplied.  I cannot continue.');
 							} 
 
@@ -437,7 +421,7 @@ if ($Debug) echo '<pre>' . $_REQUEST['copypaste'] . '</pre>';
                   $PortArray = ConvertStringToArray($_REQUEST['copypaste']);
                   if (ProcessPackages($User->id, $PortArray, $db)) {
 #                  if ($Debug) phpinfo();
-					$WatchListID = pg_escape_string($_REQUEST['wlid']);
+					$WatchListID = pg_escape_string($db, $_REQUEST['wlid']);
 					if ($_REQUEST['replaceappend'] == 'replace') {
 					  $Overwrite = TRUE;
 					} else {
@@ -470,7 +454,7 @@ if ($Debug) echo '<br>' . __LINE__ . '<br>';
 		#
 		if ($DisplayStagingArea) {
 			if ($WatchListUpdated) {
-				DisplayError('<BIG>Your watch list has been updated. You may wish to empty your staging area now.</BIG>');
+				DisplayError('Your watch list has been updated. You may wish to empty your staging area now.');
 			}
 			if ($WatchListID) {
 				DisplayStagingArea($User->id, $WatchListID, $db);
@@ -482,21 +466,21 @@ if ($Debug) echo '<br>' . __LINE__ . '<br>';
 		}
 	}
 	?>
-</TD>
-</TR>
-</TABLE>
-</TD>
+</td>
+</tr>
+</table>
+</td>
 
   <td class="sidebar">
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
   </td>
 
-</TR>
-</TABLE>
+</tr>
+</table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

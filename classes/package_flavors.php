@@ -23,7 +23,7 @@ class PackageFlavors {
 	function _PopulateValues($myrow) {
 		$this->id            = $myrow['id'];
 		$this->port_id       = $myrow['port_id'];
-		$this->flavor        = $myrow['flavor'];
+		$this->flavor        = $myrow['flavor'] ?? null;
 		$this->flavor_id     = $myrow['flavor_id'];
 		$this->flavor_name   = $myrow['flavor_name'];
 		$this->name          = $myrow['name'];
@@ -31,14 +31,14 @@ class PackageFlavors {
 	}
 
 	function FetchInitialise($PortID) {
-		# this returns package flavors with the default pacakge first
-		$sql = "SELECT * FROM PackageFlavors($PortID)";
+		# this returns package flavors with the default package first
+		$sql = 'SELECT * FROM PackageFlavors($1)';
 		
 #		echo "<pre>$sql</pre>";
 
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, $sql, array($PortID));
 		if ($this->LocalResult) {
-			$numrows = pg_numrows($this->LocalResult);
+			$numrows = pg_num_rows($this->LocalResult);
 			if ($numrows == 1) {
 				$myrow = pg_fetch_array($this->LocalResult, 0);
 			}

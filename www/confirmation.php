@@ -19,17 +19,17 @@
 
 	$ResultConfirm = 999;
 
-	$token = $_GET['token'];
+	$token = $_REQUEST['token'] ?? null;
 	if (IsSet($token)) {
-		$token = pg_escape_string($token);
-		if ($Debug) echo "I'm confirming with token $token\n<BR>";
-		$sql = "select ConfirmUserAccount('$token')";
-		$result = pg_exec($db, $sql);
+		$token = pg_escape_string($db, $token);
+		if ($Debug) echo "I'm confirming with token $token\n<br>";
+		$sql = "select ConfirmUserAccount($1)";
+		$result = pg_query_params($db, $sql, array($token));
 		if ($result) {
 			$row = pg_fetch_array($result,0);
 			$ResultConfirm = $row[0];
 		} else {
-			echo pg_errormessage() . $sql;
+			echo pg_last_error($db) . $sql;
 		}
 	}
 ?>
@@ -37,14 +37,14 @@
 
 <?php echo freshports_MainTable(); ?>
 <tr><td class="content">
-<TABLE class="fullwidth">
-<TR>
-	<? echo freshports_PageBannerText("Account confirmation"); ?>
-</TR>
+<table class="fullwidth">
+<tr>
+	<?php echo freshports_PageBannerText("Account confirmation"); ?>
+</tr>
 
-<TR><TD>
+<tr><td>
 <P>
-<?
+<?php
 	if ($Debug) echo $ResultConfirm;
 	switch ($ResultConfirm) {
 		case 0:
@@ -52,12 +52,12 @@
 			break;
 
 		case 1:
-			echo 'Your account has been enabled.  Please proceed to the <A HREF="login.php">login page</A>';
+			echo 'Your account has been enabled.  Please proceed to the <a href="login.php">login page</a>';
 			break;
 
 		case 2:
 			echo "Well.  This just isn't supposed to happen.  For some strange and very rare reason,
-				 there is more than one person with that token.<BR><BR>Please contact webmaster&#64;freshports.org for help.";
+				 there is more than one person with that token.<br><br>Please contact webmaster&#64;freshports.org for help.";
 			break;
 
 		case -1:
@@ -73,14 +73,14 @@
 
 ?>
 </P>
-</TD></TR>
+</td></tr>
 
 </table>
 </td>
 
   <td class="sidebar">
 
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
 
@@ -89,7 +89,7 @@
 </tr>
 </table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

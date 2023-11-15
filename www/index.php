@@ -26,11 +26,23 @@
 
 	if ($Debug) echo 'Branch is ' . $Branch . '<br>';
 
+	if ($Debug) var_dump($User);
+
+	# we use this near the top of the page and at the bottom.
+	define('RELATIVE_DATE_24HOURS', 24 * 60 * 60);	# seconds in a day
+	$Date = date('Y/m/d');
+	$Yesterday = freshports_LinkToDate(strtotime($Date) - RELATIVE_DATE_24HOURS, "Yesterday's Commits", $Branch);
+	if ($Branch == BRANCH_HEAD) {
+		$OtherBranch = '<a href="/?branch=quarterly">Quarterly Branch</a>';
+	} else {
+		$OtherBranch = '<a href="/">Main Branch</a>';
+	}
+
 	#
 	# If they supply a package name, go for it.
 	#
 	if (IsSet($_REQUEST['package'])) {
-		$package = pg_escape_string($_REQUEST['package']);
+		$package = pg_escape_string($db, $_REQUEST['package']);
 		if ($Debug) echo "package is specfied on the URL: '$package'<br>\n";
 		if ($package != '') {
 			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/packages.php');
@@ -48,7 +60,7 @@
 					# multiple ports have that package name
 					# search for them all and let the users decide which one they want
 					require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/searches.php');
-					$Searches = new Searches($dbh);
+					$Searches = new Searches($db);
 					$Redirect = $Searches->GetLink($package, FRESHPORTS_SEARCH_METHOD_Exact, 1);
 					header('Location: ' . $Redirect);
 					exit;
@@ -64,8 +76,7 @@
 	{
 	    if ($Debug) echo "package is not specified on the URL<br>\n";
     }
-?>
-<?php
+
 	$Title = 'Most recent commits';
 	freshports_Start($FreshPortsSlogan . " - $Title",
 					$Title,
@@ -79,18 +90,18 @@ function freshports_SummaryForDay($MinusN) {
    $File = $BaseDirectory . "/" . date("Y/m/d", $Now - 60*60*24*$MinusN) . ".inc";
 //   echo "$File<br>\n";
    if (file_exists($File)) {
-      echo '<br><TABLE WIDTH="152" class="bordered" CELLPADDING="5">';
-      echo '  <TR>';
-      echo '<TD class="accent" height="30">';
+      echo '<br><table width="152" class="bordered" class="cellpadding5">';
+      echo '  <tr>';
+      echo '<td class="accent" height="30">';
       echo date("l j M", $Now - 60*60*24*$MinusN);
-      echo '</TD>';
-      echo '       </TR>';
-      echo '        <TR>';
-      echo '         <TD>';
+      echo '</td>';
+      echo '       </tr>';
+      echo '        <tr>';
+      echo '         <td>';
       include($File);
-      echo '   </TD>';
-      echo '   </TR>';
-      echo '   </TABLE>';
+      echo '   </td>';
+      echo '   </tr>';
+      echo '   </table>';
    }
 }
 
@@ -100,9 +111,9 @@ $num          = $MaxNumberOfPortsLong;
 $days         = $NumberOfDays;
 $dailysummary = 7;
 
-if (In_Array('num',          $_GET)) $num          = pg_escape_string($_GET["num"]);
-if (In_Array('dailysummary', $_GET)) $dailysummary = pg_escape_string($_GET["dailysummary"]);
-if (In_Array('days',         $_GET)) $days         = pg_escape_string($_GET["days"]);
+if (In_Array('num',          $_REQUEST)) $num          = pg_escape_string($db, intval($_REQUEST["num"]));
+if (In_Array('dailysummary', $_REQUEST)) $dailysummary = pg_escape_string($db, intval($_REQUEST["dailysummary"]));
+if (In_Array('days',         $_REQUEST)) $days         = pg_escape_string($db, intval($_REQUEST["days"]));
 
 if (Is_Numeric($num)) {
 	$MaxNumberOfPortsLong = min($MaxNumberOfPortsLong, max(10, $num));
@@ -125,22 +136,22 @@ if (Is_Numeric($dailysummary)) {
 
 if ($db) {
 ?>
-<TR><td class="content">
+<tr><td class="content">
 
 <?php echo freshports_MainContentTable(); ?>
 
-<TR>
+<tr>
 <?php
  if ( $Branch == BRANCH_HEAD) {
-   echo freshports_PageBannerText("$MaxNumberOfPortsLong most recent commits");
+   echo freshports_PageBannerText("$MaxNumberOfPortsLong most recent commits (all timestamps are UTC)");
  } else {
    echo freshports_PageBannerText("Commits from the $Branch branch");
  }
  
 ?>
-        <? //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPortsLong) ?>
-</TR>
-<TR><TD>
+        <?php //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPortsLong) ?>
+</tr>
+<tr><td>
 <p><?php echo EVERYTHING; ?>
 
 <?php
@@ -151,8 +162,14 @@ if ($db) {
 	}
 ?>
 
+<p>
+<?php
+            echo $Yesterday . ' | ' . $OtherBranch;
+?>
+</p>
 
-</TD></TR>
+
+</td></tr>
 <?php
 	$UseCache = FALSE;
 	$FileName = "index.html.$Branch";
@@ -180,8 +197,13 @@ if ($db) {
 
 		$LatestCommits = new Commits($db);
 		$LatestCommits->SetBranch($Branch);
-		$LatestCommits->FetchLimit(isset($User) ? $User->id : null, 100);
-		
+
+		if (isset($User)) {
+			$LatestCommits->FetchLimit($User->id, $User->page_size);
+		} else {
+			$LatestCommits->FetchLimit(null,      100);
+		}
+
 		$DisplayCommit = new DisplayCommit($db, $LatestCommits->LocalResult);
 		$DisplayCommit->SetBranch($Branch);
 		$DisplayCommit->ShowLinkToSanityTestFailure = true;
@@ -196,13 +218,13 @@ if ($db) {
 }
 
 ?>
-</TABLE>
+</table>
 </td>
   <td class="sidebar">
-   <? echo freshports_SideBar(); ?>
+   <?php echo freshports_SideBar(); ?>
 
-<BR>
-<?
+<br>
+<?php
 
 	if ($dailysummary) {
 		for ($i = 0; $i < $dailysummary; $i++) {
@@ -212,46 +234,35 @@ if ($db) {
 		if ($NumberOfDays) {
 			$Today = time();
 			echo '
-<TABLE WIDTH="155" class="bordered" CELLPADDING="5">
-	<TR>
-		<TD class="accent" height="30"><B>Previous days</B></TD>
-	</TR>
-	<TR><TD>
+<table width="155" class="bordered" class="cellpadding5">
+	<tr>
+		<td class="accent" height="30"><B>Previous days</B></td>
+	</tr>
+	<tr><td>
 ';
 			for ($i = 1; $i <= $NumberOfDays; $i++) {
 				echo freshports_LinkToDate($Today - $i * 86400) . "<br>\n";
 			}
 			echo '
-	</TD></TR>
-</TABLE>
+	</td></tr>
+</table>
 
 ';
 		}
 	}
 ?>
  </td>
-</TR>
-</TABLE>
+</tr>
+</table>
 
-<BR>
+<br>
 
 <?php
-define('RELATIVE_DATE_24HOURS', 24 * 60 * 60);	# seconds in a day
-$Date = date('Y/m/d');
-$Yesterday = freshports_LinkToDate(strtotime($Date) - RELATIVE_DATE_24HOURS, "Yesterday's Commits");
-
-echo '&lt; ' . $Yesterday . ' &gt;';
+            echo $Yesterday . ' | ' . $OtherBranch;
 ?>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
-<? if ($User->set_focus_search) { ?>
-	<script language="JavaScript" type="text/javascript">
-	<!--
-	document.f.query.focus();
-	// -->
-	</script>
-<? } ?>
 </body>
 </html>

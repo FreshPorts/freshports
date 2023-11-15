@@ -16,14 +16,6 @@
 
 	GLOBAL $User;
 
-$origin		= isset($_REQUEST['origin']) ? $_REQUEST['origin'] : null;
-$submit 	= isset($_REQUEST['submit']) ? $_REQUEST['submit'] : null;
-$visitor	= isset($_COOKIE[USER_COOKIE_NAME]) ? $_COOKIE[USER_COOKIE_NAME] : null;
-
-if ($origin == '/index.php' || $origin == '') {
-	$origin = '/';
-}
-
 // if we don't know who they are, we'll make sure they login first
 if (!$User->id) {
 	header('Location: /login.php');  /* Redirect browser to PHP web site */
@@ -37,10 +29,10 @@ if (!$User->IsTaskAllowed(FRESHPORTS_TASKS_ANNOUNCEMENTS_MAINTAIN)) {
 if (IsSet($_REQUEST['add'])) {
 	$Announcement = new Announcement($db);
 
-	$Announcement->TextSet     ($_REQUEST['announcement']);
-	$Announcement->TextPlainSet($_REQUEST['announcement_plain']);
-	$Announcement->StartDateSet($_REQUEST['start_date']);
-	$Announcement->EndDateSet  ($_REQUEST['end_date']);
+	$Announcement->TextSet     (pg_escape_string($db, $_REQUEST['announcement']));
+	$Announcement->TextPlainSet(pg_escape_string($db, $_REQUEST['announcement_plain']));
+	$Announcement->StartDateSet(pg_escape_string($db, $_REQUEST['start_date']));
+	$Announcement->EndDateSet  (pg_escape_string($db, $_REQUEST['end_date']));
 
 	$Announcement->Insert();
 	Unset($Announcement);
@@ -49,11 +41,11 @@ if (IsSet($_REQUEST['add'])) {
 if (IsSet($_REQUEST['update'])) {
 	$Announcement = new Announcement($db);
 
-	$Announcement->TextSet     ($_REQUEST['announcement']);
-	$Announcement->TextPlainSet($_REQUEST['announcement_plain']);
-	$Announcement->StartDateSet($_REQUEST['start_date']);
-	$Announcement->EndDateSet  ($_REQUEST['end_date']);
-	$Announcement->IDSet       ($_REQUEST['id']);
+	$Announcement->TextSet     (pg_escape_string($db, $_REQUEST['announcement']));
+	$Announcement->TextPlainSet(pg_escape_string($db, $_REQUEST['announcement_plain']));
+	$Announcement->StartDateSet(pg_escape_string($db, $_REQUEST['start_date']));
+	$Announcement->EndDateSet  (pg_escape_string($db, $_REQUEST['end_date']));
+	$Announcement->IDSet       (pg_escape_string($db, intval($_REQUEST['id'])));
 
 	$Announcement->Update();
 	Unset($Announcement);
@@ -62,7 +54,7 @@ if (IsSet($_REQUEST['update'])) {
 if (IsSet($_REQUEST['delete'])) {
 	$Announcement = new Announcement($db);
 
-	$Announcement->IDSet($_REQUEST['delete']);
+	$Announcement->IDSet(intval(pg_escape_string($db, $_REQUEST['delete'])));
 
 	$Announcement->Delete();
 	Unset($Announcement);
@@ -72,7 +64,7 @@ if (IsSet($_REQUEST['delete'])) {
 $Announcement = new Announcement($db);
 
 if (IsSet($_REQUEST['edit'])) {
-	$Announcement->Fetch($_REQUEST['edit']);
+	$Announcement->Fetch(intval(pg_escape_string($db, $_REQUEST['edit'])));
 }
 
 	#echo '<br>the page size is ' . $page_size . ' : ' . $email;
@@ -82,41 +74,41 @@ if (IsSet($_REQUEST['edit'])) {
                'FreeBSD, index, applications, ports');
 ?>
 
-<TABLE class="fullwidth borderless" ALIGN="center">
-<TR><td class="content">
+<table class="fullwidth borderless" ALIGN="center">
+<tr><td class="content">
 <?php
 
 
 if (isset($errors)) {
 echo '
-  <TABLE CELLPADDING="3" class="fullwidth borderless">
-  <TR VALIGN=top>
-   <TD><img src="/images/warning.gif"></TD>
-   <TD width="100%">
+  <table CELLPADDING="3" class="fullwidth borderless">
+  <tr VALIGN=top>
+   <td><img src="/images/warning.gif"></td>
+   <td width="100%">
   <p>Some errors have occurred which must be corrected before your announcement can be saved.</p>';
 
 echo $errors;
 
 echo '
- </TD>
- </TR>
- </TABLE>
+ </td>
+ </tr>
+ </table>
 <br>';
 }
 
-echo '<TABLE CELLSPACING="3" class="fullwidth borderless">
-<TR>
+echo '<table CELLSPACING="3" class="fullwidth borderless">
+<tr>
 <td class="accent"><big>' . $Title . '</big></td>
-</TR>
-<TR>
-<TD>';
+</tr>
+<tr>
+<td>';
 
 echo 'Current annoucements<blockquote>';
 
 $HTML  = '';
 $HTML .= '<form action="' . $_SERVER["PHP_SELF"] . '" method="POST">' . "\n";
 
-$HTML .= '<table cellpadding="4" class="bordered">' . "\n";
+$HTML .= '<table class="cellpadding4" class="bordered">' . "\n";
 
 $HTML .= '<tr><td><b>Announcement Text (can be HTML)</b></td><td><b>Start Date</b></td><td><b>End Date</b></td></tr>' . "\n";
 
@@ -128,11 +120,11 @@ $HTML .= $Announcement->TextGet();
 $HTML .= '</TEXTAREA>';
 $HTML .= '</td>'  . "\n";
 
-$HTML .= '<td valign="top">'  . "\n";
+$HTML .= '<td class="vtop">'  . "\n";
 $HTML .= '<INPUT id="start_date" name="start_date" value="' . $Announcement->StartDateGet() . '" size=25>' . "\n";
 $HTML .= '</td>'  . "\n";
 
-$HTML .= '<td valign="top">'  . "\n";
+$HTML .= '<td class="vtop">'  . "\n";
 $HTML .= '<INPUT id="end_date"   name="end_date"   value="' . $Announcement->EndDateGet()   . '" size=25>' . "\n";
 $HTML .= '</td>'  . "\n";
 
@@ -142,7 +134,7 @@ $HTML .= '<tr>'  . "\n";
 
 $HTML .= '<td colspan="3"><b>Plain text Version</b>'  . "\n";
 $HTML .= '<TEXTAREA NAME="announcement_plain" ROWS="10" COLS="60">'          . "\n";
-$HTML .= htmlspecialchars($Announcement->TextPlainGet());
+$HTML .= htmlspecialchars($Announcement->TextPlainGet() ?? '');
 $HTML .= '</TEXTAREA>';
 $HTML .= '</td>'  . "\n";
 $HTML .= '</tr>'  . "\n";
@@ -152,7 +144,7 @@ $ControlName  = IsSet($_REQUEST['edit']) ? 'update' : 'add';
 $ControlValue = IsSet($_REQUEST['edit']) ? 'Update' : 'Add';
 
 $HTML .= '<tr><td colspan="3">'  . "\n";
-$HTML .= '<div align="center"><INPUT id="' . $ControlName . '" style="WIDTH: 85px; HEIGHT: 24px" type="submit" size="29" value="' . $ControlValue . '"';
+$HTML .= '<div class="vcentered"><INPUT id="' . $ControlName . '" style="WIDTH: 85px; HEIGHT: 24px" type="submit" size="29" value="' . $ControlValue . '"';
 $HTML .= ' name="' . $ControlName . '"></div>' . "\n";
 $HTML .= '</tr>'  . "\n";
 
@@ -164,13 +156,13 @@ $HTML .= '</form>';
 
 echo $HTML;
 
-echo "<p></blockquote></TD>
-</TR>
-</TABLE>";
+echo "<p></blockquote></td>
+</tr>
+</table>";
 
 function MyDisplayAnnouncements($Announcement) {
         $HTML = '';
-	$HTML .= '<table cellpadding="4" class="bordered">' . "\n";
+	$HTML .= '<table class="cellpadding4" class="bordered">' . "\n";
 	$HTML .= '<tr><td><b>Announcement Text</b></td><td><b>Start Date</b></td><td><b>End Date</b></td><td><b>Edit</b></td><td><b>Delete</b</td></tr>' . "\n";
 
 	$NumRows = $Announcement->NumRows();
@@ -222,18 +214,18 @@ if ($NumRows > 0) {
 
 <p>
 
-</TD>
+</td>
 
   <td class="sidebar">
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
   </td>
 
-</TR>
-</TABLE>
+</tr>
+</table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

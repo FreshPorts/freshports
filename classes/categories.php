@@ -56,11 +56,11 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 	}
 	
 	function Populate($myrow) {
-		$this->id		= $myrow["id"];
-		$this->is_primary	= $myrow["is_primary"];
-		$this->element_id	= $myrow["element_id"];
-		$this->name		= $myrow["name"];
-		$this->description	= $myrow["description"];
+		$this->id               = $myrow["id"];
+		$this->is_primary       = $myrow["is_primary"];
+		$this->element_id       = $myrow["element_id"];
+		$this->name	            = $myrow["name"];
+		$this->description      = $myrow["description"];
 		$this->last_commit_date	= $myrow["last_commit_date"];
 	}
 
@@ -72,15 +72,15 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 		# Get the category details, and the date of the
 		# last modified port therein
 		#
-		$sql = $this->ComposeFetchBranchSQL() . ' WHERE id = ' . pg_escape_string($this->id);
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . $this->ComposeFetchBranchSQL() . ' WHERE id = $1';
 
-		if ($this->Debug) echo "<pre>1. sql = '$sql'</pre><BR>";
+		if ($this->Debug) echo "<pre>1. sql = '$sql'</pre><br>";
 
-        $result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($this->id));
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
-				if ($this->Debug) echo "fetched by ID succeeded<BR>";
+				if ($this->Debug) echo "fetched by ID succeeded<br>";
 				$myrow = pg_fetch_array ($result, 0);
 				$this->Populate($myrow);
 			}
@@ -94,14 +94,14 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 		if (IsSet($element_id)) {
 			$this->element_id = $element_id;
 		}
-		$sql = $this->ComposeFetchBranchSQL() . '  WHERE C.element_id = ' . pg_escape_string($this->element_id);
-		if ($this->Debug) echo "<pre>sql = '$sql'</pre><BR>";
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . $this->ComposeFetchBranchSQL() . '  WHERE C.element_id = $1';
+		if ($this->Debug) echo "<pre>sql = '$sql'</pre><br>";
 
-        $result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($this->element_id));
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
-				if ($this->Debug) echo "fetched by ID succeeded<BR>";
+				if ($this->Debug) echo "fetched by ID succeeded<br>";
 				$myrow = pg_fetch_array ($result, 0);
 				$this->Populate($myrow);
 			}
@@ -115,16 +115,16 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 		$CategoryID = 0;
 
 		if (IsSet($Name)) {
-			$this->name = pg_escape_string($Name);
+			$this->name = pg_escape_string($this->dbh, $Name);
 			unset($this->id);
 		}
-		$sql = $this->ComposeFetchBranchSQL() . " WHERE C.name = '" . pg_escape_string($this->name) . "'";
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . $this->ComposeFetchBranchSQL() . " WHERE C.name = $1";
 
-		if ($this->Debug) echo "<pre>sql = '$sql'</pre><BR>";
+		if ($this->Debug) echo "<pre>sql = '$sql'</pre><br>";
 
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($this->name));
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
 				$myrow = pg_fetch_array ($result, 0);
 				$this->Populate($myrow);
@@ -136,16 +136,17 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 	}
 
 	function IsCategoryByName($Name) {
+		# I suspect this is unused - dvl 2023-04-01
 
 		Unset($CategoryID);
 
-		$sql = "SELECT id FROM categories where name = '" . pg_escape_string($Name) . "'";
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . "SELECT id FROM categories where name = $1";
 
-		if ($this->Debug) echo "sql = '$sql'<BR>";
+		if ($this->Debug) echo "sql = '$sql'<br>";
 
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($Name));
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
 				$myrow = pg_fetch_array ($result, 0);
 				$CategoryID = $myrow['id'];
@@ -158,21 +159,24 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 	function PortCount($Name, $Branch = BRANCH_HEAD) {
 		$Count = 0;
 
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n";
 		if (IsSet($Name)) {
-			$this->name = pg_escape_string($Name);
+			$this->name = pg_escape_string($this->dbh, $Name);
 		}
 		if ($Branch == BRANCH_HEAD) {
-			$sql = "select CategoryPortCount('" . pg_escape_string($this->name) . "')";
+			$params = array($this->name);
+			$sql .= "select CategoryPortCount($1)";
 		} else {
-			$sql = "select CategoryPortCount('" . pg_escape_string($this->name) . "', '" . pg_escape_string($Branch) . "')";
+			$params = array($this->name, $Branch);
+			$sql .= "select CategoryPortCount($1, $2)";
 		}
-		if ($this->Debug) echo "sql = '$sql'<BR>";
+		if ($this->Debug) echo "sql = '$sql'<br>";
 
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, $params);
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
-				if ($this->Debug) echo "PortCount succeeded<BR>";
+				if ($this->Debug) echo "PortCount succeeded<br>";
 				$myrow = pg_fetch_array ($result, 0);
 				$Count = $myrow[0];
 			}
@@ -185,13 +189,13 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 	function UpdateDescription() {
 		GLOBAL $User;
 
-		$sql = "UPDATE categories SET description = '" . pg_escape_string($this->description) . "' WHERE id = " . pg_escape_string($this->id) . ' AND is_primary = FALSE';
+		$sql = "UPDATE categories SET description = $1 WHERE id = $2 AND is_primary = FALSE";
 		syslog(LOG_NOTICE, 'User \'' . $User->name . '\' at '
-			. pg_escape_string($_SERVER[REMOTE_ADDR]) . ' is changing category \'' 
+			. pg_escape_string($this->dbh, $_SERVER[REMOTE_ADDR]) . ' is changing category \'' 
 			. $this->name . '\' to \'' . $this->description . '\'.');
-		if ($this->Debug) echo "sql = '$sql'<BR>";
+		if ($this->Debug) echo "sql = '$sql'<br>";
 
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($this->description, $this->id));
 
 		return  pg_affected_rows($result);
 	}
@@ -202,9 +206,9 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 
 	protected function ComposeFetchBranchSQL() {
 		if ($this->BranchName == BRANCH_HEAD) {
-		  $sql = self::FETCH_SQL_HEAD;
+		  $sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . self::FETCH_SQL_HEAD;
 		} else {
-		  $sql = self::FETCH_SQL_BRANCH_1 . "'" . pg_escape_string($Branch) . "'" . self::FETCH_SQL_BRANCH_2;
+		  $sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . self::FETCH_SQL_BRANCH_1 . "'" . pg_escape_string($this->dbh, $this->BranchName) . "'" . self::FETCH_SQL_BRANCH_2;
 		}
 
 		return $sql;

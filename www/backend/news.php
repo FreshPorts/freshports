@@ -14,7 +14,7 @@
 	$format = basename($_SERVER['PHP_SELF'], '.php');
 
 	if (IsSet($_REQUEST['branch'])) {
-		$BranchName = htmlspecialchars($_REQUEST['branch']);
+		$BranchName = NormalizeBranch(htmlspecialchars(pg_escape_string($db, $_REQUEST['branch'])));
 	} else {
 		$BranchName = BRANCH_HEAD;
 	}
@@ -23,11 +23,7 @@
 
 	$Flavor = '';
 	if (IsSet($_REQUEST['flavor'])) {
-		$Flavor = htmlspecialchars($_REQUEST['flavor']);
-	}
-
-	if (IsSet($_REQUEST['flavour'])) {
-		$Flavor = htmlspecialchars($_REQUEST['flavour']);
+		$Flavor = htmlspecialchars(pg_escape_string($db, pg_escape_string($db, $_REQUEST['flavor'])));
 	}
 
 	$OrderBy = '';

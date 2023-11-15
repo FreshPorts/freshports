@@ -20,36 +20,72 @@
 	#
 	# Get the date we are going to work with.
 	#
-	if (IsSet($_GET['date'])) {
-		$Date = pg_escape_string($_GET['date']);
+	$Date      = '';
+	$orig_date = $Date;
+	if (IsSet($_REQUEST['date'])) {
+		if ($Debug) echo "found a value<br>\n";
+		if (preg_match('!^\d{4}\/\d+\/\d+$!', $_REQUEST['date'])) {
+			$Date = pg_escape_string($db, $_REQUEST['date']);
+			$orig_date = $Date;
+		} else {
+			if ($Debug) echo "date parameter does not match regex\n<br>";
+		}
 	} else {
-		$Date = '';
+		if ($Debug) echo "date parameter not provided or does not match regex\n<br>";
 	}
 
-	$DateMessage = '';
-
-	if ($Date == '' || strtotime($Date) == -1) {
-		$DateMessage = 'date assumed';
+	if ($Date == '' || strtotime($Date) === false) {
 		$Date = date('Y/m/d');
 	}
+
 	list($year, $month, $day) = explode('/', $Date);
-	if (!CheckDate($month, $day, $year)) {
-		$DateMessage = 'date adjusted to something realistic';
-		$Date = date('Y/m/d');
-	} else {
+	if ($Debug) echo "year=$year<br>month=$month<br>day=$day<br>\n";
+	if (is_numeric($year) && is_numeric($month) && is_numeric($day) && CheckDate($month, $day, $year)) {
+		if ($Debug) echo "That date passed sanity checking<br>\n";
 		$Date = date('Y/m/d', strtotime($Date));
+
+		# no sense looking at tomorrow..
+		if ($Date > date('Y/m/d')) {
+			$Date = date('Y/m/d');
+		}
+	} else {
+		if ($Debug) "that day fails the sanity check<br>\n";
+		$Date = date('Y/m/d');
+	}
+
+	if ($Debug) {
+		echo "The date we were given was $orig_date\n<br>";
+		echo "The date we are using is $Date\n<br>";
 	}
 
 	if (IsSet($_REQUEST['branch'])) {
-		$BranchName = htmlspecialchars($_REQUEST['branch']);
+		$BranchName = NormalizeBranch(NormalizeBranch(htmlspecialchars($_REQUEST['branch'])));
 	} else {
 		$BranchName = BRANCH_HEAD;
 	}
 
+	if (IsSet($orig_date) && $orig_date != $Date) {
+		# we are going to redirect
+		if ($Debug) echo 'We are redirecting';
+		header('HTTP/1.1 301 Moved Permanently');
+		# this should include branch
+		$Location = 'Location: ' . $_SERVER['SCRIPT_NAME'] . '?date=' . $Date;
+		if ($BranchName != BRANCH_HEAD) {
+			$Location .= '&branch=' . $BranchName;
+		}
+		header($Location);
+		exit;
+	}
+
+	if ($Debug) {
+		if (IsSet($_REQUEST['branch'])) echo 'Branch we got is: ' . htmlspecialchars($_REQUEST['branch']) . '<br>';
+		echo 'Branch we use is: ' . htmlspecialchars($BranchName) . '<br>';
+	}
+
 	$commits = new Commits($db, $BranchName);
 	$commits->Debug = $Debug;
-	$last_modified = $commits->LastModified($Date);
-	$NumCommits    = $commits->Count($Date);
+	$last_modified  = $commits->LastModified($Date);
+	$NumCommits     = $commits->Count($Date);
 
 	freshports_ConditionalGet($last_modified);
 
@@ -60,14 +96,14 @@
 
 	function ArchiveFileName($Date, $BranchName = BRANCH_HEAD) {
 		$File = DAILY_DIRECTORY . '/' . $Date . '.daily.' . $BranchName;
-		
+
 		return $File;
 	}
 
 	function ArchiveDirectoryCreate($Date) {
 		$SubDir      = date('Y/m', strtotime($Date));
 		$DirToCreate = DAILY_DIRECTORY . '/' . $SubDir;
-		if (!file_exists($DirToCreate)) {
+		if (!is_dir($DirToCreate)) {
 			$old = umask(0);
 			mkdir($DirToCreate, 0770, true);
 			umask($old);
@@ -90,7 +126,7 @@
 
 	function ArchiveSave($Date, $HTML, $BranchName = BRANCH_HEAD) {
 		# saves the archive away...
-		
+
 		ArchiveDirectoryCreate($Date);
 		$File = ArchiveFileName($Date, $BranchName);
 
@@ -100,14 +136,14 @@
 		$old = umask(0);
 		chmod($File, 0664);
 		umask($old);
-		
+
 	}
 
 	function ArchiveGet($Date, $BranchName = BRANCH_HEAD) {
 		# saves the archive away...
-		
+
 		$File = ArchiveFileName($Date, $BranchName);
-		
+
 		$myfile = fopen($File, 'r');
 		$HTML = fread($myfile, filesize($File));
 		fclose($myfile);
@@ -115,24 +151,24 @@
 		return $HTML;
 	}
 
-	function ArchiveCreate($Date, $DateMessage, $db, $User, $BranchName) {
+	function ArchiveCreate($Date, $db, $User, $BranchName) {
 		GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;
 
 		$commits = new Commits($db);
 		$commits->SetBranch($BranchName);
 		$NumRows = $commits->FetchCommitsOnADay($Date, isset($User) ? $User->id : null);
-	
+
 		#echo '<br>NumRows = ' . $NumRows;
 
 		$HTML = '';
 
 		if ($NumRows == 0) {
 			$HTML .= '<tr><td class="accent">' . "\n";
-			$HTML .= '   ' . FormatTime($Date, 0, "D, j M Y") . "\n";
+			$HTML .= '  ' . FormatTime($Date, 0, "l, j M Y") . "\n";
 			$HTML .= '</td></tr>' . "\n\n";
 			$HTML .= '<tr><td>No commits found for that date</td></tr>';
 		}
-		
+
 		unset($ThisCommitLogID);
 
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
@@ -152,33 +188,33 @@
 
 define('RELATIVE_DATE_24HOURS', 24 * 60 * 60);	# seconds in a day
 
-$Today = '<a href="/commits.php">Latest commits</a>';
+$Today = '<a href="/">Latest commits</a>';
 
 # use DateTime because it gets the math correct, even with daylight savings changes
 # see https://github.com/FreshPorts/freshports/issues/18
 # this will be yesterday
 $dateBefore = new DateTime($Date);
-$dateBefore->add(new DateInterval('P1D'));
+$dateBefore->sub(new DateInterval('P1D'));
 
 # this will be tomorrow
 $dateAfter = new DateTime($Date);
-$dateAfter->sub(new DateInterval('P1D'));
+$dateAfter->add(new DateInterval('P1D'));
 
 # DATE_FORMAT_D_LONG_MONTH is an empty string, and freshports_LinkToDate will format a date for me
 $Yesterday = freshports_LinkToDate(strtotime($dateBefore->format('Y-m-d')), DATE_FORMAT_D_LONG_MONTH, $BranchName);
 $Tomorrow  = freshports_LinkToDate(strtotime($dateAfter->format('Y-m-d')),  DATE_FORMAT_D_LONG_MONTH, $BranchName);
 
-$DateLinks = '&lt; ' . $Today . ' | ' . $Tomorrow . ' | ' . $Yesterday . ' &gt;';
+$DateLinks = $Yesterday . ' | ' . $Today . ' | ' . $Tomorrow;
 echo $DateLinks;
 if ($NumCommits > 0) {
-  echo " | Number of commits: " . $NumCommits;
+  echo "<br>Number of commits: " . $NumCommits;
 }
 
 ?>
 
 <?php echo freshports_MainTable(); ?>
 
-<TR><td class="content">
+<tr><td class="content">
 <?php
 
 echo freshports_MainContentTable();
@@ -186,7 +222,7 @@ echo freshports_MainContentTable();
 if (ArchiveExists($Date, $BranchName)) {
   $HTML = ArchiveGet($Date, $BranchName);
 } else {
-  $HTML = ArchiveCreate($Date, $DateMessage, $db, $User, $BranchName);
+  $HTML = ArchiveCreate($Date, $db, $User, $BranchName);
   ArchiveSave($Date, $HTML, $BranchName);
 }
 
@@ -205,15 +241,15 @@ if ($NumCommits > 0) {
 
   <td class="sidebar">
 
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
 
-  </td>	
+  </td>
 </tr>
 </table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

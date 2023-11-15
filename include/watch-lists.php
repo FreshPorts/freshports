@@ -39,7 +39,7 @@
 		if ($NumRows) {
 			for ($i = 0; $i < $NumRows; $i++) {
 				$WatchList = $WatchLists->FetchNth($i);
-				$HTML .= '<option value="' . htmlspecialchars(pg_escape_string($WatchList->id)) . '"';
+				$HTML .= '<option value="' . htmlspecialchars(pg_escape_string($dbh, $WatchList->id)) . '"';
 				if ($selected == '') {
 					if ($element_id && $WatchList->watch_list_count > 0) {
 						$HTML .= ' selected';
@@ -49,7 +49,7 @@
 						$HTML .= ' selected';
 					}
 				}
-				$HTML .= '>' . htmlspecialchars(pg_escape_string($WatchList->name));
+				$HTML .= '>' . htmlspecialchars(pg_escape_string($dbh, $WatchList->name));
 				if ($show_active && $WatchList->in_service == 't') {
 					$HTML .= '*';
 				}
@@ -70,41 +70,33 @@
 	}
 
 function freshports_WatchListSelectGoButton($name = 'watch_list_select') {
-	return '	<input type="image" name="' . $name . '" value="GO" src="/images/go.gif" alt="Go" align="middle" title="Display the selected watch list">';
+	return '	<input type="image" name="' . $name . '" src="/images/go.gif" alt="Go" title="Display the selected watch list">';
 }
 
 function freshports_WatchListDDLBForm($db, $UserID, $WatchListID, $Extra = '') {
 	
 	$HTML = '
-<form action="' . $_SERVER["PHP_SELF"] . '" method="POST" NAME=f>
-<table class="borderless">
-<tr>
-<td valign="top" nowrap align="right">
-<small>
+<form class="watchlist-selector" action="' . $_SERVER["PHP_SELF"] . '" method="POST" NAME=f>
 ';
 
 	$HTML .= freshports_WatchListDDLB($db, $UserID, $WatchListID);
 
 $HTML .=  '
-</small>
-</td>
-<td valign="top" nowrap align="left">
-'  . freshports_WatchListSelectGoButton() . $Extra .
-'</td></tr></table></form>
+'  . freshports_WatchListSelectGoButton() . $Extra .  '</form>
 ';
 
 	return $HTML;
 
 }
 
-function freshports_WatchListCountDefault($db, $UserID) {
-	$sql = "select WatchListCountDefault(" . pg_escape_string($UserID) . ") as count";
+function freshports_WatchListCountDefault($dbh, $UserID) {
+	$sql = "select WatchListCountDefault($1) as count";
 
 #	echo $sql;
 
-	$result = pg_exec($db, $sql);
+	$result = pg_query_params($dbh, $sql, array($UserID));
 	if (!$result) {
-		echo "error " . pg_errormessage();
+		echo "error " . pg_last_error($dbh);
 		exit;
 	}
 
@@ -115,56 +107,16 @@ function freshports_WatchListCountDefault($db, $UserID) {
 	return $myrow["count"];
 }
 
-# XXX I have no idea why UPDATING is in watch-lists.php
-function freshports_UpdatingOutput($NumRowsUpdating, $PortsUpdating, $port) {
-	$HTML = '';
-	
-	if ($NumRowsUpdating > 0) {
-		$HTML .= '<TABLE class="fullwidth bordered" CELLPADDING="5">' . "\n";
-		$HTML .= "<TR>\n";
-		$HTML .= freshports_PageBannerText('<a id="updating">Notes from UPDATING</a>');
-		$HTML .= "<tr><td><dl>\n";
-		$HTML .= "<dt>These upgrade notes are taken from <a href=\"/UPDATING\">/usr/ports/UPDATING</a></dt>";
-		$HTML .= "<dd><ul>\n";
-
-		$Hiding = false;
-		for ($i = 0; $i < $NumRowsUpdating; $i++) {
-			$PortsUpdating->FetchNth($i);
-			if ($i == 1) {
-				$Hiding = true;
-				# end the old list, start a new list
-				$HTML .= "</ul></dd>\n";
-				$HTML .= '<dt><a href="#" id="UPDATING-Extra-show" class="showLink" onclick="showHide(\'UPDATING-Extra\');return false;">Expand this list (' . ($NumRowsUpdating - 1) . ' items)</a></dt>';
-				$HTML .= '<dd id="UPDATING-Extra" class="more UPDATING">';
-
-				# start the new list of all hidden items
-				$HTML .= "<ul>\n";
-			}
-
-			$HTML .= '<li>' . freshports_PortsUpdating($port, $PortsUpdating) . "</li>\n";
-		}
-		if ($Hiding) {
-			$HTML .= '<li class="nostyle"><a href="#" id="UPDATING-Extra-hide2" class="hideLink" onclick="showHide(\'UPDATING-Extra\');return false;">Collapse this list.</a></li>';
-		}
-
-		$HTML .= "</ul></dd>";
-		$HTML .= "</dl></td></tr>\n";
-		$HTML .= "</table>\n";
-	}
-
-	return $HTML;
-}
-
-function freshports_WatchListVerifyToken($db, $token) {
+function freshports_WatchListVerifyToken($dbh, $token) {
 	$id = '';
 
-	$sql = "SELECT id from watch_list where token = '" . pg_escape_string($token) . "'";
+	$sql = "SELECT id from watch_list where token = $1";
 
 #	echo $sql;
 
-	$result = pg_exec($db, $sql);
+	$result = pg_query_params($dbh, $sql, array($token));
 	if ($result) {
-		$numrows = pg_numrows($result);
+		$numrows = pg_num_rows($result);
 		switch ($numrows) {
 			case 0:
 				// nothing found, do nothing

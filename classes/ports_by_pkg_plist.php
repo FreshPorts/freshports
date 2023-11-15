@@ -13,11 +13,10 @@
 class PortsByPkgPlist extends Port {
 
 	var $Query;
+	var $PortStatus = PORT_STATUS_ACTIVE;
 	var $Limit  = 0;
 	var $Offset = 0;
 
-	var $Debug = 1;
-	
 	var $LocalResult = null;
 	
 	const WITH_CLAUSE = 'WITH short_list AS MATERIALIZED (
@@ -26,9 +25,9 @@ class PortsByPkgPlist extends Port {
     FROM
         generate_plist
     WHERE
-        textsearchable_index_col  @@ websearch_to_tsquery($1)
-     OR textsearchable_index_col2 @@ websearch_to_tsquery($1)
-     OR textsearchable_index_col3 @@ websearch_to_tsquery($1)
+        textsearchable_index_col  @@ websearch_to_tsquery(\'english\', $1)
+     OR textsearchable_index_col2 @@ websearch_to_tsquery(\'english\', $1)
+     OR textsearchable_index_col3 @@ websearch_to_tsquery(\'english\', $1)
 )';
 
 	function __construct($dbh) {
@@ -39,13 +38,24 @@ class PortsByPkgPlist extends Port {
 		$this->Query = $Query;
 	}
 
+	function IncludeDeletedPorts($IncludeDeletedPorts = false) {
+		if ($IncludeDeletedPorts) {
+			$this->PortStatus = PORT_STATUS_DELETED;
+			if (parent::getDebug()) echo 'deleted';
+		} else {
+			$this->PortStatus = PORT_STATUS_ACTIVE;
+			if (parent::getDebug()) echo 'active';
+		}
+	}
+
 	function GetQueryCount() {
 		$count = 0;
 		
 		$sql = $this::WITH_CLAUSE . 'select count(*) as count from short_list, ports_active P, element_pathname EP WHERE P.id = short_list.port_id
    AND P.element_id = EP.element_id and EP.pathname like \'/ports/head/%\'';
-		if ($this->Debug) echo "<pre>$sql</pre> with <pre>$this->Query</pre>";
-		$result = pg_query_params($this->dbh, $sql, array($this->Query));
+		if ($this->getDebug()) echo "<br>sql is <br>$sql<br>";
+		if ($this->getDebug()) "query is '" . htmlentities($this->Query) . "'";
+		$result = pg_query_params($this->dbh, $sql, array(pg_escape_string($this->dbh, $this->Query)));
 		if ($result) {
 			$myrow = pg_fetch_array($result);
 			$count = $myrow['count'];
@@ -57,20 +67,24 @@ class PortsByPkgPlist extends Port {
 		return $count;
 	}
 
-	function FetchPorts($UserID = null, $sqlOrderBy = null) {
+	function FetchPorts($UserID = null, $sqlOrderBy = null, $Branch = BRANCH_HEAD) {
 		# but yeah, it's not really ports we are fetching.
 	
 
 		$sqlFrom = "
        FROM short_list, ports P
        LEFT OUTER JOIN ports_vulnerable    PV  ON PV.port_id       = P.id
-       LEFT OUTER JOIN commit_log          CL  ON P.last_commit_id = CL.id,
+       LEFT OUTER JOIN commit_log          CL  ON P.last_commit_id = CL.id
+       LEFT OUTER JOIN repo                R   ON CL.repo_id       = R.id
+       LEFT OUTER JOIN commit_log_branches CLB ON CL.id            = CLB.commit_log_id
+                  JOIN system_branch       SB  ON SB.branch_name   = '" . pg_escape_string($this->dbh, $Branch) . "'
+                                               AND SB.id            = CLB.branch_id,
        element_pathname EP,
        categories C, element E ";
 
 
 		$sqlWatchListFrom = '';
-		if ($User->id) {
+		if (IsSet($User) && $User->id) {
 			$sqlWatchListFrom .= "
       LEFT OUTER JOIN
  (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
@@ -86,9 +100,12 @@ class PortsByPkgPlist extends Port {
  WHERE P.id = short_list.port_id
    AND P.element_id = EP.element_id and EP.pathname like '/ports/head/%'
    AND P.category_id  = C.id
-   AND P.element_id   = E.id  AND E.status = 'A'" ;
+   AND P.element_id   = E.id " ;
 
-
+		if ($this->PortStatus == PORT_STATUS_ACTIVE) {
+			# restrict this to active ports only
+			$sqlWhere .= " AND E.status = 'A'" ;
+		}
 
    		# the CTE (Common Table Expression) exists because the LIMIT would hit performance
 		$sql = "WITH t as (" . $this::WITH_CLAUSE . SEARCH_SELECT_FIELD . $sqlFrom . $sqlWatchListFrom . 
@@ -106,14 +123,14 @@ class PortsByPkgPlist extends Port {
 			$sql .= " OFFSET " . $this->Offset;
 		}
 
-		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
-		$this->LocalResult = pg_query_params($this->dbh, $sql, array(htmlspecialchars(pg_escape_string($this->Query))));
+		if (parent::getDebug()) echo '<pre>' . $sql . '</pre>';
+		$this->LocalResult = pg_query_params($this->dbh, $sql, array(pg_escape_string($this->dbh, $this->Query)));
 		if ($this->LocalResult) {
-			$numrows = pg_numrows($this->LocalResult);
-			if ($this->Debug) echo "That would give us $numrows rows";
+			$numrows = pg_num_rows($this->LocalResult);
+			if (parent::getDebug()) echo "That would give us $numrows rows";
 		} else {
 			$numrows = -1;
-			echo 'pg_exec failed: ' . "<pre>$sql</pre>";
+			echo 'pg_query_params failed: ' . "<pre>$sql</pre>";
 		}
 
 		return $numrows;

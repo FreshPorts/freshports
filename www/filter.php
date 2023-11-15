@@ -17,7 +17,7 @@
 	# If they supply a package name, go for it.
 	#
 	if (IsSet($_REQUEST['package'])) {
-		$package = pg_escape_string($_REQUEST['package']);
+		$package = pg_escape_string($db, $_REQUEST['package']);
 		if ($package != '') {
 			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/packages.php');
 
@@ -61,18 +61,18 @@ function freshports_SummaryForDay($MinusN) {
    $File = $BaseDirectory . "/" . date("Y/m/d", $Now - 60*60*24*$MinusN) . ".inc";
 //   echo "$File<br>\n";
    if (file_exists($File)) {
-      echo '<br><TABLE WIDTH="152" class="bordered" CELLPADDING="5">';
-      echo '  <TR>';
-      echo '<TD class="accent" height="30">';
+      echo '<br><table WIDTH="152" class="bordered" CELLPADDING="5">';
+      echo '  <tr>';
+      echo '<td class="accent" height="30">';
       echo date("l j M", $Now - 60*60*24*$MinusN);
-      echo '</TD>';
-      echo '       </TR>';
-      echo '        <TR>';
-      echo '         <TD>';
+      echo '</td>';
+      echo '       </tr>';
+      echo '        <tr>';
+      echo '         <td>';
       include($File);
-      echo '   </TD>';
-      echo '   </TR>';
-      echo '   </TABLE>';
+      echo '   </td>';
+      echo '   </tr>';
+      echo '   </table>';
    }
 }
 
@@ -82,9 +82,9 @@ $num          = $MaxNumberOfPortsLong;
 $days         = $NumberOfDays;
 $dailysummary = 7;
 
-if (IsSet($_REQUEST['num']))          $num			= pg_escape_string($_REQUEST["num"]);
-if (IsSet($_REQUEST['dailysummary'])) $dailysummary	= pg_escape_string($_REQUEST["dailysummary"]);
-if (IsSet($_REQUEST['days']))         $days			= pg_escape_string($_REQUEST["days"]);
+if (IsSet($_REQUEST['num']))          $num          = pg_escape_string($db, intval($_REQUEST["num"]));
+if (IsSet($_REQUEST['dailysummary'])) $dailysummary = pg_escape_string($db, intval($_REQUEST["dailysummary"]));
+if (IsSet($_REQUEST['days']))         $days         = pg_escape_string($db, intval($_REQUEST["days"]));
 
 if (Is_Numeric($num)) {
 	$MaxNumberOfPortsLong = min($MaxNumberOfPortsLong, max(10, $num));
@@ -107,15 +107,15 @@ if (Is_Numeric($dailysummary)) {
 
 if ($db) {
 ?>
-<TR><td class="content">
+<tr><td class="content">
 
 <?php echo freshports_MainContentTable(); ?>
 
-<TR>
-<? echo freshports_PageBannerText("$MaxNumberOfPortsLong most recent commits"); ?>
-        <? //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPortsLong) ?>
-</TR>
-<TR><TD>
+<tr>
+<?php echo freshports_PageBannerText("$MaxNumberOfPortsLong most recent commits (all timestamps are UTC)"); ?>
+        <?php //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPortsLong) ?>
+</tr>
+<tr><td>
 <p><?php echo EVERYTHING; ?>
 <p>
 A port is marked as new for 10 days.
@@ -130,7 +130,7 @@ A port is marked as new for 10 days.
 
 
 
-</TD></TR>
+</td></tr>
 <?php
 
 	$UseCache = FALSE;
@@ -169,13 +169,13 @@ A port is marked as new for 10 days.
 }
 
 ?>
-</TABLE>
+</table>
 </td>
   <td class="sidebar">
-   <? echo freshports_SideBar(); ?>
+   <?php echo freshports_SideBar(); ?>
 
-<BR>
-<?
+<br>
+<?php
 
 	if ($dailysummary) {
 		for ($i = 0; $i < $dailysummary; $i++) {
@@ -185,28 +185,28 @@ A port is marked as new for 10 days.
 		if ($NumberOfDays) {
 			$Today = time();
 			echo '
-<TABLE WIDTH="155" class="bordered" CELLPADDING="5">
-	<TR>
-		<TD class="accent" height="30"><B>Previous days</B></TD>
-	</TR>
-	<TR><TD>
+<table WIDTH="155" class="bordered" CELLPADDING="5">
+	<tr>
+		<td class="accent" height="30"><B>Previous days</B></td>
+	</tr>
+	<tr><td>
 ';
 			for ($i = 1; $i <= $NumberOfDays; $i++) {
 				echo freshports_LinkToDate($Today - $i * 86400) . "<br>\n";
 			}
 			echo '
-	</TD></TR>
-</TABLE>
+	</td></tr>
+</table>
 
 ';
 		}
 	}
 ?>
  </td>
-</TR>
-</TABLE>
+</tr>
+</table>
 
-<BR>
+<br>
 
 <?php
 define('RELATIVE_DATE_24HOURS', 24 * 60 * 60);	# seconds in a day
@@ -216,7 +216,7 @@ $Yesterday = freshports_LinkToDate(strtotime($Date) - RELATIVE_DATE_24HOURS, "Ye
 echo '&lt; ' . $Yesterday . ' &gt;';
 ?>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

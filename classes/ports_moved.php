@@ -39,7 +39,7 @@ class PortsMoved {
 
 		$Debug = 0;
 
-		$sql = "
+		$sql = '
   SELECT from_port_id,
          to_port_id,
          ports_moved.id     as ports_moved_id,
@@ -51,21 +51,21 @@ class PortsMoved {
          LEFT OUTER JOIN ports      ON ports.id         = ports_moved.to_port_id
          LEFT OUTER JOIN categories ON categories.id    = ports.category_id
          LEFT OUTER JOIN element    ON ports.element_id = element.id
-   WHERE from_port_id = " . pg_escape_string($PortID) . "
-ORDER BY date desc"
+   WHERE from_port_id = $1
+ORDER BY date desc'
 ;
 		if ($Debug) echo "<pre>$sql</pre>";
 
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, $sql, array($PortID));
 		if ($this->LocalResult) {
-			$numrows = pg_numrows($this->LocalResult);
+			$numrows = pg_num_rows($this->LocalResult);
 			if ($numrows == 1) {
 				$myrow = pg_fetch_array ($this->LocalResult);
 #				$this->_PopulateValues($myrow);
 
 			}
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
+			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
 		}
 
 		return $numrows;
@@ -76,7 +76,7 @@ ORDER BY date desc"
 
 		$Debug = 0;
 
-		$sql = "
+		$sql = '
   SELECT from_port_id,
          to_port_id,
          ports_moved.id     as ports_moved_id,
@@ -88,22 +88,22 @@ ORDER BY date desc"
          LEFT OUTER JOIN ports      ON ports.id         = ports_moved.from_port_id
          LEFT OUTER JOIN categories ON categories.id    = ports.category_id
          LEFT OUTER JOIN element    ON ports.element_id = element.id
-   WHERE to_port_id    = " . pg_escape_string($PortID) . "
-     AND from_port_id <> " . pg_escape_string($PortID) . "
-ORDER BY date desc"
+   WHERE to_port_id    = $1
+     AND from_port_id <> $1
+ORDER BY date desc'
 ;
 		if ($Debug) echo "<pre>$sql</pre>";
 
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, $sql, array($PortID));
 		if ($this->LocalResult) {
-			$numrows = pg_numrows($this->LocalResult);
+			$numrows = pg_num_rows($this->LocalResult);
 			if ($numrows == 1) {
 				$myrow = pg_fetch_array ($this->LocalResult);
 #				$this->_PopulateValues($myrow);
 
 			}
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
+			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
 		}
 
 		return $numrows;

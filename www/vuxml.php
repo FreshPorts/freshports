@@ -15,14 +15,13 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 	define('VUXMLURL',     'https://www.vuxml.org/freebsd/');
-	define('VUXMLREVISION', HTML_DIRECTORY . '/vuxml_revision');
-
 
 	if (IsSet($_REQUEST['vid'])) {
-		$vid = pg_escape_string($_REQUEST['vid']);
+		$vid = pg_escape_string($db, $_REQUEST['vid']);
 
 		$vidArray = explode('|', $vid);
 	}
+	echo HTML_DOCTYPE;
 ?>
 <html lang="en">
 <head>
@@ -38,13 +37,10 @@ This page displays <a href="<?php echo VUXMLURL; ?>">vulnerability information</
 </p>
 
 <?php
-	if (file_exists(VUXMLREVISION) && is_readable(VUXMLREVISION)) {
-		echo '<p>The last <a href="/security/vuxml/vuln.xml">vuln.xml</a> file processed by FreshPorts is:</p>';
-		echo "<blockquote><pre>\n";
-		require_once(VUXMLREVISION);
-		echo "</pre></blockquote>\n";
+	if (file_exists(VUXML_LATEST) && is_readable(VUXML_LATEST)) {
+		echo '<p>The VUXML data was last processed by FreshPorts on ' . date('Y-m-d H:i:s T', filemtime(VUXML_LATEST)) . '</p>';
 	} else {
-		echo '<p><b> * * * We have no information on the latest commit to <a href="/security/vuxml/vuln.xml">vuln.xml</a>. This should never happen. * * * </b></p>';
+		echo '<p><b> * * * We have no information on when we last processed VUXML. This should never happen. * * * </b></p>';
 	}
 
 	if (!IsSet($_REQUEST['list'])) {
@@ -67,8 +63,8 @@ This page displays <a href="<?php echo VUXMLURL; ?>">vulnerability information</
 These are the vulnerabilities relating to the commit you have selected:
 </p>
 
-<table cellpadding="5" class="bordered">
-<tr><th align="left"><b>VuXML ID</b></th><th align="left"><b>Description</b></th></tr>
+<table class="cellpadding5" class="bordered">
+<tr><th class="hleft"><b>VuXML ID</b></th><th class="vleft"><b>Description</b></th></tr>
 <?php
 	if (!IsSet($vidArray)) {
 		$vuln = $_REQUEST['vuln'];
@@ -82,7 +78,7 @@ These are the vulnerabilities relating to the commit you have selected:
 		$VuXML->FetchByVID($value);
 
 		$URL = VUXMLURL . $value . '.html';
-		echo '<tr><td valign="top" nowrap><a href="' . $URL . '">' . $value . '</a></td><td>';
+		echo '<tr><td class="vtop" nowrap><a href="' . $URL . '">' . $value . '</a></td><td>';
 		$VuXML->display();
 		
 		echo "</td></tr>\n";
@@ -98,14 +94,14 @@ These are the vulnerabilities relating to the commit you have selected:
 		function vuxml_name_link($VID, $Name, $Count) {
 			$HTML = '<tr><td>';
 
-			$HTML .= '<a href="/vuxml.php?vid=' . $VID . '">' . $Name . '</a></td><td align="center">';
+			$HTML .= '<a href="/vuxml.php?vid=' . urlencode($VID) . '">' . $Name . '</a></td><td class="hcentered">';
 			if ($Count > 1) {
 				$HTML .= ' (' . $Count . ')';
 			} else {
 				$HTML .= '&nbsp;';
 			}
 
-			$HTML .= '</td><td align="center">';
+			$HTML .= '</td><td class="hcentered">';
 			$HTML .= '<a href="/?package=' . $Name . '">port</a>';
 			$HTML .= '</td></tr>' . "\n";
 
@@ -114,7 +110,7 @@ These are the vulnerabilities relating to the commit you have selected:
 
 	
 
-
+		$params = array();
 		$sql = "
 SELECT V.vid,
        VN.name
@@ -123,14 +119,15 @@ SELECT V.vid,
    AND VA.vuxml_id          = V.id";
    
    	if (IsSet($_REQUEST['package'])) {
-   		$sql .= "\n   AND lower(VN.name) = '" . pg_escape_string($db, strtolower($_REQUEST['package'])) . "'";
+		$sql .= "\n   AND lower(VN.name) = $1";
+		$params = array(strtolower($_REQUEST['package']));
    	}
 
    	$sql .= "\nORDER BY lower(VN.name), V.vid\n";
    	
-		$result = pg_exec($db, $sql);
+		$result = pg_query_params($db, $sql, $params);
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 
 			$LastName    = '';
 			$LastVID     = '';
@@ -141,9 +138,9 @@ SELECT V.vid,
 			echo '<th colspan="3">VuXML entries as processed by FreshPorts</th>';
 			echo '<tr><td><b>';
 			echo 'package';
-			echo '</b></td><td align="center"><b>';
+			echo '</b></td><td class="hcentered"><b>';
 			echo 'vuln count<br>[blank means (1)]';
-			echo '</b></td><td align="center"><b>Port(s)</b></td></tr>' . "\n";
+			echo '</b></td><td class="hcentered"><b>Port(s)</b></td></tr>' . "\n";
 			for ($i = 0; $i < $numrows; $i++) {
 				$myrow = pg_fetch_array ($result, $i);
 
@@ -181,18 +178,18 @@ SELECT V.vid,
 
 	if (IsSet($_REQUEST['all'])) {
 		function vuxml_name_link($VID, $Date, $Description, $PortArray, $IsNew) {
-			$HTML = '<tr><td nowrap valign="top">';
+			$HTML = '<tr><td class="vtop nowrap">';
 			
 			$HTML .= $Date;
 			if ($IsNew == 'f') {
 				$HTML .= '<sup>*</sup>';
 			}
-			$HTML .= '</td><td valign="top">';
+			$HTML .= '</td><td class="vtop">';
 			
 			$Narrative = trim(strip_tags($Description));
 			$Narrative = utf8_decode($Description);
 			$HTML .= '<b>VuXML ID</b> <span class="code">' . $VID . '</span><br>' . $Narrative . ' <a href="' . VUXMLURL . $VID . '.html">more...</a>';
-			$HTML .= '</td><td align="left" valign="top">';
+			$HTML .= '</td><td class="hleft vtop">';
 
 			foreach ($PortArray as $package) {
 				$HTML .= '<a href="/?package=' . $package . '">' . $package . '</a> ';
@@ -208,7 +205,7 @@ SELECT V.vid,
 	
 
 
-		$sql = "set client_encoding = 'ISO-8859-15';
+		$sql = "
 SELECT V.vid,
        VN.name,
        V.description,
@@ -219,9 +216,10 @@ SELECT V.vid,
 ORDER BY coalesce(V.date_modified, V.date_entry, V.date_discovery)::date desc, V.vid, lower(VN.name)
 ";
 
-		$result = pg_exec($db, $sql);
+		$result = pg_query_params($db, "set client_encoding = 'ISO-8859-15'", array()) or die('query failed ' . pg_last_error($db));
+		$result = pg_query_params($db, $sql, array());
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			if ($numrows == 0) {
 				echo '<p>no vulnerabilities found.  it looks as if the data is missing.</p>';
 			} else {
@@ -230,11 +228,11 @@ ORDER BY coalesce(V.date_modified, V.date_entry, V.date_discovery)::date desc, V
 				$LastVID     = '';
 				$NumPackages = 0;
 				$VIDs        = 0;
-				echo '<table class="bordered" cellpadding="5">' . "\n";
+				echo '<table class="bordered" class="cellpadding5">' . "\n";
 				echo '<th colspan="3">VuXML entries as processed by FreshPorts</th>';
 				echo '<tr><td><b>Date</b></td><td><b>';
 				echo 'Decscription';
-				echo '</b></td><td align="center"><b>Port(s)</b></td></tr>' . "\n";
+				echo '</b></td><td class="hcentered"><b>Port(s)</b></td></tr>' . "\n";
 				for ($i = 0; $i < $numrows; $i++) {
 					$myrow = pg_fetch_array($result, $i);
 

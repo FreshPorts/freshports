@@ -25,10 +25,10 @@
 	<?php echo freshports_MainContentTable(); ?>
 
 
-<TR>
-	<? echo freshports_PageBannerText('Contact'); ?>
-</TR>
-<TR><TD>
+<tr>
+	<?php echo freshports_PageBannerText('Contact'); ?>
+</tr>
+<tr><td>
 
 <P>
 This is a pretty big website.  Roughly 600,000 pages as of Oct 2007.
@@ -46,20 +46,20 @@ errors, etc), please let us know.  The best place for that is via a
 <p>
 If your needs do not fall into the above categories, you can try
 email: dan (at) langille.org.
-</TD></TR>
-</TABLE>
-</TD>
+</td></tr>
+</table>
+</td>
 
   <td class="sidebar">
-  <?
+  <?php
   echo freshports_SideBar();
   ?>
   </td>
 
-</TR>
-</TABLE>
+</tr>
+</table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

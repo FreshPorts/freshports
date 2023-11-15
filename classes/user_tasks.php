@@ -26,12 +26,12 @@ class UserTasks {
 		if (IsSet($user_id)) {
 			$this->id = $user_id;
 		}
-		$sql = "select id, name from user_tasks, tasks where user_id = " . pg_escape_string($this->id) . " and user_tasks.task_id = tasks.id";
-#		echo "<pre>sql = '$sql'</pre><BR>";
+		$sql = 'select id, name from user_tasks, tasks where user_id = $1 and user_tasks.task_id = tasks.id';
+#		echo "<pre>sql = '$sql'</pre><br>";
 
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($this->id));
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			for ($i = 0; $i < $numrows; $i++) {
 				$myrow = pg_fetch_array ($result, $i);
 				$this->tasks[$myrow['name']] = $myrow['id'];

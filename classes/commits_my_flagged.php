@@ -24,9 +24,9 @@ class CommitsMyFlagged extends commits {
 	function GetCountCommits() {
 		$count = 0;
 		
-		$sql = "select count(*) as count from commits_flagged where user_id = '" . pg_escape_string($this->UserID) . "'";
+		$sql = "select count(*) as count from commits_flagged where user_id = $1";
 		if ($this->Debug) echo "<pre>$sql</pre>";
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($this->UserID));
 		if ($result) {
 			$myrow = pg_fetch_array($result);
 			$count = $myrow['count'];
@@ -46,10 +46,10 @@ class CommitsMyFlagged extends commits {
 		  FROM commit_log CL, commit_log_ports CLP, commits_flagged CF
 		 WHERE CL.id      = CF.commit_log_id
 		   AND CL.id      = CLP.commit_log_id
-		   AND CF.user_id = '" . pg_escape_string($this->UserID) . "'";
+		   AND CF.user_id = $1";
 
 		if ($this->Debug) echo "<pre>$sql</pre>";
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($this->UserID));
 		if ($result) {
 			$myrow = pg_fetch_array($result);
 			$count = $myrow['count'];
@@ -62,6 +62,7 @@ class CommitsMyFlagged extends commits {
 	}
 
 	function GetCountPortsTouched() {
+		# I suspect this function is used as of 2023-04-01 - dvl
 		$count = 0;
 		
 		$sql = "
@@ -69,10 +70,10 @@ class CommitsMyFlagged extends commits {
 		  FROM commit_log CL, commit_log_ports CLP, commits_flagged CF
 		 WHERE CL.id      = CF.commit_log_id
 		   AND CL.id      = CLP.commit_log_id
-		   AND CF.user_id = '" . pg_escape_string($this->UserID) . "'";
+		   AND CF.user_id = $1"
 		;
 		if ($this->Debug) echo "<pre>$sql</pre>";
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($this->UserID));
 		if ($result) {
 			$myrow = pg_fetch_array($result);
 			$count = $myrow['count'];
@@ -119,6 +120,9 @@ class CommitsMyFlagged extends commits {
 			ports.element_id                                                                                            AS element_id,
 			ports.short_description                                                                                     AS short_description,
 			STF.message                                                                                                 AS stf_message";
+
+		$params = array();
+
 		if ($this->UserID) {
 				$sql .= ",
 		        onwatchlist ";
@@ -131,23 +135,26 @@ class CommitsMyFlagged extends commits {
     FROM commit_log_ports LEFT OUTER JOIN sanity_test_failures STF ON STF.commit_log_id = commit_log_ports.commit_log_id, commit_log, categories, ports, commits_flagged CF, element ";
 
 		if ($this->UserID) {
+				$params[] = $this->UserID;
 				$sql .= "
 	      LEFT OUTER JOIN
 	 (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
 	    FROM watch_list JOIN watch_list_element 
 	        ON watch_list.id      = watch_list_element.watch_list_id
-	       AND watch_list.user_id = " . $this->UserID . "
+	       AND watch_list.user_id = $" . count($params) . "
 	       AND watch_list.in_service		
 	  GROUP BY wle_element_id) AS TEMP
 	       ON TEMP.wle_element_id = element.id";
 		}
-		
+
+		# yes, we might be duplicating the same paramter twice. The code is simple this way.
+		$params[] = $this->UserID;
 		$sql .= "
 	  WHERE commit_log_ports.commit_log_id = commit_log.id
 	    AND commit_log_ports.port_id       = ports.id
 	    AND categories.id                  = ports.category_id
 	    AND element.id                     = ports.element_id
-	    AND CF.user_id                     = " . pg_escape_string($this->UserID) . "
+	    AND CF.user_id                     = $" . count($params) . "
 	    AND CF.commit_log_id               = commit_log.id
    ORDER BY 1 desc,
 			commit_log_id,
@@ -155,24 +162,26 @@ class CommitsMyFlagged extends commits {
 			port";
 			
 		if ($this->Limit) {
-			$sql .= " LIMIT " . pg_escape_string($this->Limit);
+			$params[] = $this->Limit;
+			$sql .= ' LIMIT $' . count($params);
 		}
 		
 		if ($this->Offset) {
-			$sql .= " OFFSET " . pg_escape_string($this->Offset);
+			$params[] = $this->Offset;
+			$sql .= ' OFFSET $' . count($params);
 		}
 
 
 
 		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
 
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, $sql, $params);
 		if ($this->LocalResult) {
-			$numrows = pg_numrows($this->LocalResult);
+			$numrows = pg_num_rows($this->LocalResult);
 			if ($this->Debug) echo "That would give us $numrows rows";
 		} else {
 			$numrows = -1;
-			echo 'pg_exec failed: ' . "<pre>$sql</pre>";
+			echo 'pg_query_params failed: ' . "<pre>$sql</pre>";
 		}
 
 		return $numrows;

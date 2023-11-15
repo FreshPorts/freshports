@@ -40,7 +40,7 @@ class PortsUnrefreshed {
 	function FetchAll() {
 		# fetch all unrefreshed ports
 		
-		$Debug = 1;
+		$Debug = 0;
 
 		$sql = "
 select ports.id         as port_id,
@@ -65,11 +65,11 @@ order by category_name, port_name";
 
 #		if ($Debug) echo "<pre>$sql</pre>";
 
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, $sql, array());
 		if ($this->LocalResult) {
-			$numrows = pg_numrows($this->LocalResult);
+			$numrows = pg_num_rows($this->LocalResult);
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
+			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
 		}
 
 		return $numrows;

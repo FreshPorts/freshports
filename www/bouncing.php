@@ -11,22 +11,22 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
-	if (IN_MAINTENCE_MODE) {
+	if (IN_MAINTENANCE_MODE) {
                 header('Location: /' . MAINTENANCE_PAGE, TRUE, 307);
 	}
 
 	$Debug = 0;
 
-	$submit		= $_POST["submit"];
+	$submit		= $_POST["submit"] ?? '';
 	$visitor	= $_COOKIE[USER_COOKIE_NAME];
 
 if ($submit) {
-   $sql = "update users set emailbouncecount = 0 where cookie = '" . pg_escape_string($visitor) . "'";
+   $sql = "update users set emailbouncecount = 0 where cookie = $1";
    if ($Debug) {
       echo $sql;
    }
       
-   $result = pg_exec($db, $sql);
+   $result = pg_query_params($db, $sql, array($visitor));
    if ($result) {
       if ($Debug) {
          echo "I would have taken you to '' now, but debugging is on<br>\n";
@@ -64,8 +64,8 @@ on the customization page (see the link on the right hand side of the page).</p>
 to us.  So we have stopped sending out messages to you.  If you wish to continue to receive such
 messages, you should update your email address on the customization page.</p>
 </td></tr>
-<TR><TD HEIGHT="20">
-</TD></TR>
+<tr><td HEIGHT="20">
+</td></tr>
 <tr>
 <?php echo freshports_PageBannerText("How to fix the problem"); ?>
 </tr>
@@ -92,7 +92,7 @@ the button below.</p>
 </td>
 
   <td class="sidebar">
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
   </td>
@@ -100,7 +100,7 @@ the button below.</p>
 </tr>
 </table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

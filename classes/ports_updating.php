@@ -35,7 +35,7 @@ class PortsUpdating {
 
 		$Debug = 0;
 
-		$sql = "
+		$sql = '
   SELECT PU.id,
          PU.date,
          PU.affects,
@@ -44,25 +44,25 @@ class PortsUpdating {
          E.name       as port,
          C.name       as category
     FROM ports_updating PU, ports_updating_ports_xref PUPX, ports, categories C, element E
-   WHERE PUPX.port_id           = " . pg_escape_string($PortID) . "
+   WHERE PUPX.port_id           = $1
      AND PUPX.ports_updating_id = PU.id
      AND PUPX.port_id           = ports.id
      AND ports.category_id      = C.id
      AND ports.element_id       = E.id
-ORDER BY date desc"
+ORDER BY date desc'
 ;
 		if ($Debug) echo "<pre>$sql</pre>";
 
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, $sql, array($PortID));
 		if ($this->LocalResult) {
-			$numrows = pg_numrows($this->LocalResult);
+			$numrows = pg_num_rows($this->LocalResult);
 			if ($numrows == 1) {
 				$myrow = pg_fetch_array ($this->LocalResult);
 #				$this->_PopulateValues($myrow);
 
 			}
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
+			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
 		}
 
 		return $numrows;

@@ -2,7 +2,7 @@
 	#
 	# $Id: cache-port.php,v 1.6 2007-06-04 02:16:33 dan Exp $
 	#
-	# Copyright (c) 2006-2007 DVL Software Limited
+	# Copyright (c) 2006-2022 DVL Software Limited
 	#
 
 	require_once('cache.php');
@@ -12,9 +12,10 @@
 // Supplies methods for adding, removing, and retrieving.
 //
 
-define('CACHE_PORT_COMMITS', 'Commits');
-define('CACHE_PORT_DETAIL',  'Detail');
-
+if (!defined('CACHE_PORT_DETAIL')) {
+	define('CACHE_PORT_DETAIL',  'Detail');
+}
+ 
 class CachePort extends Cache {
 
 	const CacheCategory  = 'ports';
@@ -32,7 +33,7 @@ class CachePort extends Cache {
 		$this->PageSize = $PageSize;
 	}
 
-	function RetrievePort($Category, $Port, $CacheType = CACHE_PORT_COMMITS, $PageNum = 1, $Branch = BRANCH_HEAD, $CachePart) {
+	function RetrievePort($Category, $Port, $CacheType = CACHE_PORT_DETAIL, $PageNum = 1, $Branch = BRANCH_HEAD, $CachePart = CachePort::CachePartOne) {
 		$this->_Log("CachePort: Retrieving for $Category/$Port/$CachePart");
 		$Key = $this->_PortKey($Category, $Port, $CacheType, $PageNum, $Branch, $CachePart);
 		$result = parent::Retrieve($Key);
@@ -40,16 +41,21 @@ class CachePort extends Cache {
 		return $result;
 	}
 
-	function AddPort($Category, $Port, $CacheType = CACHE_PORT_COMMITS, $PageNum = 1, $Branch = BRANCH_HEAD, $CachePart) {
+	function AddPort($Category, $Port, $CacheType = CACHE_PORT_DETAIL, $PageNum = 1, $Branch = BRANCH_HEAD, $CachePart = CachePort::CachePartOne) {
 		$this->_Log("CachePort: Adding for $Category/$Port");
 
 		$CacheDir = $this->CacheDir . '/' . self::CacheCategory . '/' . $Category . '/' . $Port;
 		$Key = $this->_PortKey($Category, $Port, $CacheType, $PageNum, $Branch, $CachePart);
 		 
-		if (!file_exists($CacheDir)) {
+		if (!is_dir($CacheDir)) {
 			$this->_Log("CachePort: creating directory $CacheDir");
 			$old_mask = umask(0000);
-			if (!mkdir($CacheDir, 0774, true)) {
+			#
+			# we use @mkdir because we still this even if we check:
+			# [23-Jul-2022 02:59:21 UTC] PHP Warning:  mkdir(): File exists in /usr/local/www/freshports/classes/cache-port.php on line 53
+			# concurrency.
+			#
+			if (!@mkdir($CacheDir, 0774, true)) {
 				$this->_Log("CachePort: unable to create directory $CacheDir");
 			}
 			umask($old_mask);
@@ -74,7 +80,7 @@ class CachePort extends Cache {
 		return $result;
 	}
 
-	function _PortKey($Category, $Port, $CacheType, $PageNum = 1, $Branch = BRANCH_HEAD, $CachePart) {
+	function _PortKey($Category, $Port, $CacheType, $PageNum = 1, $Branch = BRANCH_HEAD, $CachePart = CachePort::CachePartOne) {
 		// might want some parameter checking here
 		switch($CachePart) {
 			case self::CachePartOne:

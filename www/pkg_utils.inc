@@ -1,4 +1,4 @@
-<?
+<?php
 	#
 	# $Id: pkg_utils.inc,v 1.6 2006-12-17 12:06:13 dan Exp $
 	#
@@ -52,14 +52,15 @@ function Cleanup() {
 *
 */
 function IsLoginValid($user, $pw, &$retval) {
+	# not sure this is used: dvl 2023-04-01
 	$retval = false;
-	$query = "select IsLoginValid('" . pg_escape_string($user) . "','" . pg_escape_string($pw) . "')";
+	$query = "select IsLoginValid($1, $2)";
 	$database =& DBConnect();
 
 	if ($database) {
-		$result = pg_exec($database, $query);
+		$result = pg_query_params($database, $query, array($user, $pw));
 
-		if ($result && pg_numrows($result)) {
+		if ($result && pg_num_rows($result)) {
 			$row = pg_fetch_array($result,0);
 			$retval = $row[0];
 		}
@@ -79,17 +80,18 @@ function IsLoginValid($user, $pw, &$retval) {
 *
 */
 function CleanPorts($watchID) {
+	# not sure this is used: dvl 2023-04-01
 	$retval = true;
-	$query = "delete from watch_list_element where watch_list_id = " . pg_escape_string($watchID);
+	$query = "delete from watch_list_element where watch_list_id = $1";
 	$database =& DBConnect();
 
-	echo "Cleaning out old ports<BR>\n";
+	echo "Cleaning out old ports<br>\n";
 	if ($database) {
-		$result = pg_exec($database, $query);
+		$result = pg_query_params($database, $query, array($watchID));
 
 		if (!$result) {
-			$error = pg_errormessage($database);
-			echo "$error<BR>\n";
+			$error = pg_last_error($database);
+			echo "$error<br>\n";
 			$retval = false;
 		}
 	}
@@ -108,6 +110,7 @@ function CleanPorts($watchID) {
 *
 */
 function AddPortsToList($ports, $userID) {
+	# not sure this is used: dvl 2023-04-01
 	$source = "AddPortsToList";
 	$successful = 0;
 	$dups = 0;
@@ -121,11 +124,11 @@ function AddPortsToList($ports, $userID) {
 		}
 		// optimize this
 		foreach ($ports as $port) {
-			$query = "select WatchListAdd(" . pg_escape_string($userID) . ", '" . pg_escape_string($port) . "')";
-			$result = @pg_exec($database, $query);
+			$query = "select WatchListAdd($1, $2)";
+			$result = @pg_query_params($database, $query, array($userID, $port));
 
 			if (!$result) {
-				$errorMsg = pg_errormessage($database);
+				$errorMsg = pg_last_error($database);
 				if (strpos($errorMsg, 'Cannot insert a duplicate key')) {
 					$dups++;
 				}
@@ -143,15 +146,15 @@ function AddPortsToList($ports, $userID) {
 	}
 
 	echo "<P>Your pkg_info data has been uploaded and your watch list has been updated as follows:</P>";
-	echo "Added $successful new ports<BR>\n";
+	echo "Added $successful new ports<br>\n";
 	if ($dups) {
-		echo "$dups ports in your update were already on your watch list.<BR>\n";
+		echo "$dups ports in your update were already on your watch list.<br>\n";
 	}
 	if (count($errorLog) > 0) {
 		epp("<pre>");
 		epp("ERROR LOG");
 		foreach ($errorLog as $error) {
-			echo $error . "<BR>\n";
+			echo $error . "<br>\n";
 		}
 #		print_r($errorLog);
    		epp("</pre>");
@@ -162,4 +165,3 @@ function AddPortsToList($ports, $userID) {
 	return true;
 }
 // }}}
-?>

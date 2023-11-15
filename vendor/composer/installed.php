@@ -1,0 +1,41 @@
+<?php return array(
+    'root' => array(
+        'name' => '__root__',
+        'pretty_version' => '1.0.0+no-version-set',
+        'version' => '1.0.0.0',
+        'reference' => NULL,
+        'type' => 'library',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'dev' => true,
+    ),
+    'versions' => array(
+        '__root__' => array(
+            'pretty_version' => '1.0.0+no-version-set',
+            'version' => '1.0.0.0',
+            'reference' => NULL,
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'symfony/polyfill-php72' => array(
+            'pretty_version' => 'v1.27.0',
+            'version' => '1.27.0.0',
+            'reference' => '869329b1e9894268a8a61dabb69153029b7a8c97',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../symfony/polyfill-php72',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'vstelmakh/url-highlight' => array(
+            'pretty_version' => 'v3.0.1',
+            'version' => '3.0.1.0',
+            'reference' => '7dffee7b2679d5d1ea98d0c3beaf316de3559e30',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../vstelmakh/url-highlight',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+    ),
+);

@@ -12,7 +12,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/cache-file.php');
 	require_once('Pager/Pager.php');
 	
-function freshports_NonPortDescription($db, $element_record) {
+function freshports_NonPortDescription($dbh, $element_record) {
 	GLOBAL $FreshPortsTitle;
 
 	$Debug = 0;
@@ -36,14 +36,11 @@ function freshports_NonPortDescription($db, $element_record) {
 	<tr><td class="content">
 
 	<?php echo freshports_MainContentTable(); ?>
-<TR>
-<? echo freshports_PageBannerText('non port: ' . $Title); ?>
-</TR>
-<tr><td>
-<a HREF="<?php echo FRESHPORTS_FREEBSD_SVN_URL . $element_record->element_pathname; ?>?view=log" rel="noopener noreferrer">SVNWeb</a>
-</td></tr>
+<tr>
+<?php echo freshports_PageBannerText('non port: ' . $Title); ?>
+</tr>
 
-<?
+<?php
 	GLOBAL $User;
 
 	# these two options must be the last on the line.  And as such are mutually exclusive
@@ -61,7 +58,11 @@ function freshports_NonPortDescription($db, $element_record) {
 			var_dump($url_query);
 			echo '</pre>';
 		}
-		parse_str($url_query, $url_args);
+
+		$url_args = array();
+		if (IsSet($url_query)) {
+			parse_str($url_query, $url_args);
+		}
 		if ($Debug) {
 			echo '<pre>url_args is';
 			var_dump($url_args);
@@ -70,6 +71,7 @@ function freshports_NonPortDescription($db, $element_record) {
 
 		if (IsSet($url_args['page']))      $PageNo   = $url_args['page'];
 		if (IsSet($url_args['page_size'])) $PageSize = $url_args['page_size'];
+
 		if (IsSet($url_args['page'])  && Is_Numeric($url_args['page'])) {
 			$PageNumber = intval($url_args['page']);
 			if ($PageNumber != $url_args['page'] || $PageNumber < 1) {
@@ -88,7 +90,7 @@ function freshports_NonPortDescription($db, $element_record) {
 		$HTML = $Cache->CacheDataGet();
 		#
 		# we need to know the element_id of this port
-		# and the whether or not it is on the person's watch list
+		# and whether it is on the person's watch list.
 		# let's create a special function for that!
 		#
 		$EndOfFirstLine = strpos($HTML, "\n");
@@ -103,7 +105,7 @@ function freshports_NonPortDescription($db, $element_record) {
 		}
 
 		if ($User->id) {
-			$OnWatchList = freshports_OnWatchList($db, $User->id, $ElementID);
+			$OnWatchList = freshports_OnWatchList($dbh, $User->id, $ElementID);
 		} else {
 			$OnWatchList = 0;
 		}
@@ -114,14 +116,14 @@ function freshports_NonPortDescription($db, $element_record) {
 		$HTML = '';
 
 
-	$Commits = new CommitsByTreeLocation($db);
+	$Commits = new CommitsByTreeLocation($dbh);
 	$Commits->SetLimit($Cache->PageSize);
 	$Commits->Debug = $Debug;
 	$Commits->UserIDSet($User->id);
-	$Commits->TreePathConditionSet("= '" . pg_escape_string($element_record->element_pathname) . "'");
+	$Commits->TreePathConditionSet("= '" . pg_escape_string($dbh, $element_record->element_pathname) . "'");
     
 	#	
-	# get the count without excuting the whole query
+	# get the count without executing the whole query
 	# we don't want to pull back all the data.
 	#
 	
@@ -137,7 +139,7 @@ function freshports_NonPortDescription($db, $element_record) {
 			'spacesBeforeSeparator' => 1,
 			'spacesAfterSeparator'  => 1,
 			'append'                => false,
-			'path'			=> '/' . preg_replace('|^/?head/|', '', preg_replace('|^/?ports/|', '', $element_record->element_pathname)),
+			'path'                  => '/' . preg_replace('|^/?head/|', '', preg_replace('|^/?ports/|', '', $element_record->element_pathname)),
 			'fileName'              => '?page=%d',
 			'altFirst'              => 'First Page',
 			'firstPageText'         => 'First Page',
@@ -150,7 +152,7 @@ function freshports_NonPortDescription($db, $element_record) {
 	
 	$links = $Pager->GetLinks();
 
-	$NumCommitsHTML = '<tr><td><p align="left">Number of commits found: ' . $NumCommits;
+	$NumCommitsHTML = '<tr><td><p>Number of commits found: ' . $NumCommits;
 
 	$Offset = 0;
 	$PageLinks = $links['all'];
@@ -170,7 +172,7 @@ function freshports_NonPortDescription($db, $element_record) {
 
 	$NumCommitsHTML .= '</p>';
 	if ($PageLinksHTML != '') {
-		$PageLinksHTML = '<p align="center">' . $PageLinksHTML . '</p>';
+		$PageLinksHTML = '<p class="pagination">' . $PageLinksHTML . '</p>';
 	}
 
 	$NumCommitsHTML .= $PageLinksHTML . '</td></tr>';
@@ -180,7 +182,7 @@ function freshports_NonPortDescription($db, $element_record) {
 	if ($Commits->Debug) echo "PageNumber='$PageNumber'<br>Offset='$Offset'<br>";
 
 	$NumFetches = $Commits->Fetch();
-	$DisplayCommit = new DisplayCommit($db, $Commits->LocalResult);
+	$DisplayCommit = new DisplayCommit($dbh, $Commits->LocalResult);
 	$HTML .= $DisplayCommit->CreateHTML();
 
 	$HTML .= $NumCommitsHTML;
@@ -201,20 +203,21 @@ function freshports_NonPortDescription($db, $element_record) {
 
 </TD>
   <td class="sidebar">
-  <?
+  <?php
   echo freshports_SideBar();
   ?>
   </td>
-</TR>
+</tr>
 
-</TABLE>
+</table>
 
-<?
+<?php
 	echo freshports_ShowFooter();
 ?>
 
 </body>
 </html>
 
-<?
+<?php
+	return false;
 } # end of freshports_NonPortDescription

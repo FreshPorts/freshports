@@ -1,13 +1,13 @@
-<?
+<?php
 	#
 	# $Id: graphclick.php,v 1.2 2006-12-17 12:06:25 dan Exp $
 	#
 
 	$cache_dir = "/tmp/";
 
-	$id      = $_GET["id"];
-	$graph_x = $_GET["graph_x"];
-	$graph_y = $_GET["graph_y"];
+	$id      = $_REQUEST["id"];
+	$graph_x = $_REQUEST["graph_x"];
+	$graph_y = $_REQUEST["graph_y"];
 
 
 	if (!isset($id)) $id=0;
@@ -18,7 +18,7 @@
 	}
 
 	foreach ($map as $m) {
-		list($y,$p) = split(":",$m);
+		list($y,$p) = explode(":",$m);
 		$map_y[] = $y;
 		$map_p[] = $p;
 	}

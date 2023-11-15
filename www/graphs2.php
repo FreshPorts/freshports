@@ -15,15 +15,9 @@
 					$Title,
 					'FreeBSD, index, applications, ports');
 ?>
-	<script src="/javascript/jquery-3.5.0.min.js"></script>
-	<script src="/javascript/jquery.canvaswrapper.js"></script>
-	<script src="/javascript/jquery.colorhelpers.js"></script>
-	<script src="/javascript/jquery.flot.js"></script>
-	<script src="/javascript/jquery.flot.saturated.js"></script>
-	<script src="/javascript/jquery.flot.browser.js"></script>
-	<script src="/javascript/jquery.flot.drawSeries.js"></script>
-	<script src="/javascript/jquery.flot.uiConstants.js"></script>
-	<script src="/javascript/graphs.js"></script>
+	<script src="/javascript/jquery-3.6.0.min.js" defer></script>
+	<script src="/javascript/jquery.flot.min.js" defer></script>
+	<script src="/javascript/graphs.js" defer></script>
 
 	<?php echo freshports_MainTable(); ?>
 
@@ -31,11 +25,11 @@
 
 	<?php echo freshports_MainContentTable(); ?>
 
-<TR>
-	<? echo freshports_PageBannerText("Statistics - everyone loves a graph"); ?>
-</TR>
+<tr>
+	<?php echo freshports_PageBannerText("Statistics - everyone loves a graph"); ?>
+</tr>
 
-<TR><TD>
+<tr><td>
 <P>
 All of these graphs require javascript.  Please select the graph you would like to view from the dropdown.
 </P>
@@ -48,7 +42,7 @@ If you have suggestions for graphs, please submit them via the <a href="<?php ec
   if ($ShowAds) echo '<CENTER>' . Ad_728x90() . '</CENTER>';
 ?>
 
-</TD></TR>
+</td></tr>
 
 <tr><td>
 <h2>HEADS UP!</h2>
@@ -74,16 +68,16 @@ Thank you for your help.
 <p>
 </td></tr>
 
-<TR><TD>
+<tr><td>
 
-<TABLE class="fullwidth borderless">
-<TR align="center">
-<TD WIDTH="300" VALIGN="top">
+<table class="graphs fullwidth borderless">
+<tr>
+<td class="graph-sidebar">
 <?php
 	$sql = "select title, label from graphs where json=true order by title";
-	$result = pg_exec($db, $sql);
+	$result = pg_query($db, $sql);
     if ($result) {
-    	$numrows = pg_numrows($result);
+    	$numrows = pg_num_rows($result);
 		if ($numrows) { 
 			echo '<select>';
 			for ($i = 0; $i < $numrows; $i++) {
@@ -98,14 +92,14 @@ Thank you for your help.
 		}
 	}
 ?>
-</TD>
-</TR>
-<TR align="center">
-<TD>
+</td>
+</tr>
+<tr>
+<td>
 <div id="title"></div>
-<div id="overview" style="width:400;height:100"></div>
+<div id="overview"></div>
 <table>
-<tr valign="top">
+<tr>
 <td>
 <div id="list"></div>
 </td>
@@ -114,26 +108,26 @@ Thank you for your help.
 </td>
 </tr>
 </table>
-</TD>
-</TR>
-</TABLE>
+</td>
+</tr>
+</table>
 
 
-</TD></TR>
+</td></tr>
 
-</TABLE>
+</table>
 </td>
 
   <td class="sidebar">
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
   </td>
 
-</TR>
-</TABLE>
+</tr>
+</table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

@@ -2,7 +2,7 @@
 	#
 	# $Id: cache-port.php,v 1.6 2007-06-04 02:16:33 dan Exp $
 	#
-	# Copyright (c) 2006-2007 DVL Software Limited
+	# Copyright (c) 2006-2022 DVL Software Limited
 	#
 
 	require_once('cache.php');
@@ -10,9 +10,6 @@
 // base class for caching
 // Supplies methods for adding, removing, and retrieving.
 //
-
-define('CACHE_PORT_COMMITS', 'Commits');
-define('CACHE_PORT_DETAIL',  'Detail');
 
 class CacheCommit extends Cache {
 
@@ -43,10 +40,15 @@ class CacheCommit extends Cache {
 		$CacheDir = $this->CacheDir . '/' . self::CacheCategory . '/' . $this->_cleanKey($MessageId);
 		$Key = $this->_CommitKey($MessageId, $category, $port, $files);
 		 
-		if (!file_exists($CacheDir)) {
+		if (!is_dir($CacheDir)) {
 			$this->_Log("CacheCommit: creating directory $CacheDir");
 			$old_mask = umask(0000);
-			if (!mkdir($CacheDir, 0774, true)) {
+			#
+			# we use @mkdir because we still this even if we check:
+			# [23-Jul-2022 02:59:21 UTC] PHP Warning:  mkdir(): File exists in /usr/local/www/freshports/classes/cache-port.php on line 53
+			# concurrency.
+			#
+			if (!@mkdir($CacheDir, 0774, true)) {
 				$this->_Log("CacheCommit: unable to create directory $CacheDir");
 			}
 			umask($old_mask);
@@ -65,13 +67,13 @@ class CacheCommit extends Cache {
 		# the wild card allows us to remove all cache entries for this port
 		# regardless of the CacheType or page number
 		#
-		$Key = $this->_CommitKey($MessageId, $category, $port, $files);
+		$Key = $this->_CommitKey($MessageId);
 		$result = parent::Remove($Key, $data);
 
 		return $result;
 	}
 
-	function _CommitKey($MessageId, $category, $port, $files) {
+	function _CommitKey($MessageId, $category = '', $port = '', $files = 'n') {
 		// might want some parameter checking here
 		$CleanMessageId = $this->_CleanKey($MessageId);
 		$Key = self::CacheCategory . "/$CleanMessageId/$CleanMessageId." . $this->_CleanKey($category) . '.' . $this->_CleanKey($port) . '.' . $this->_CleanKey($files) . '.html';

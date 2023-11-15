@@ -13,8 +13,11 @@ class WatchLists {
 	var $dbh;
 	var $LocalResult;
 
+	var $Debug;
+
 	function __construct($dbh) {
 		$this->dbh	= $dbh;
+		$this->Debug	= 0;
 	}
 
 	function DeleteAllLists($UserID) {
@@ -25,10 +28,10 @@ class WatchLists {
 
 		$query  = '
 DELETE FROM watch_list 
- WHERE user_id = ' . $UserID;
+ WHERE user_id = $1';
 
-		if ($Debug) echo $query;
-		$result = pg_query($this->dbh, $query);
+		if ($this->Debug) echo $query;
+		$result = pg_query_params($this->dbh, $query, array($UserID));
 
 		# that worked and we updated exactly one row
 		if ($result) {
@@ -39,10 +42,10 @@ DELETE FROM watch_list
 	}
 
 	function Fetch($UserID, $element_id = 0) {
-		$Debug = 0;
+		$this->Debug = 0;
 
 		if ($element_id) {
-			$sql = "
+			$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . '
 			SELECT id,
 			       user_id,
 			       name,
@@ -52,12 +55,13 @@ DELETE FROM watch_list
                    NULL as watch_list_count
 			  FROM watch_list LEFT OUTER JOIN watch_list_element
 			    ON watch_list_element.watch_list_id = watch_list.id
-			   AND watch_list_element.element_id    = " . pg_escape_string($element_id) . "
-			 WHERE user_id = " . pg_escape_string($UserID) . "
+			   AND watch_list_element.element_id  = $1
+			 WHERE user_id = $2
 		 GROUP BY id, user_id, name, in_service, element_id, token
-		 ORDER BY name";
+		 ORDER BY name';
+		 $params = array($element_id, $UserID);
 		} else {
-			$sql = "
+			$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . '
 			SELECT id,
 			       user_id,
 			       name,
@@ -65,21 +69,22 @@ DELETE FROM watch_list
 			       token,
                    NULL as watch_list_count
 			  FROM watch_list
-			 WHERE user_id = " . pg_escape_string($UserID) . "
-		 ORDER BY name";
+			 WHERE user_id = $1
+		 ORDER BY name';
+		 	$params = array($UserID);
 		}
 
-		if ($Debug) {
+		if ($this->Debug) {
 			echo 'WatchLists::Fetch sql = <pre>' . $sql . '</pre>';
 		}
 
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, $sql, $params);
 		if ($this->LocalResult) {
-			$numrows = pg_numrows($this->LocalResult);
+			$numrows = pg_num_rows($this->LocalResult);
 #			echo "That would give us $numrows rows";
 		} else {
 			$numrows = -1;
-			echo 'pg_exec failed: ' . $sql;
+			echo 'pg_query_params failed: ' . $sql;
 		}
 
 		return $numrows;
@@ -108,35 +113,42 @@ DELETE FROM watch_list
 		# returns the number of rows set to true
 		#
 
+
+		# first, set them all false
 		$max = count($WatchListIDs);
-		$sql = 'UPDATE watch_list
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ .  '
+		        UPDATE watch_list
 		           SET in_service = FALSE
-		         WHERE user_id = ' . pg_escape_string($UserID);
+		         WHERE user_id = $1';
 
-		if ($Debug) echo "<pre>$sql</pre>";
-		$result = pg_exec($this->dbh, $sql);
+		# then set the supplied watch lists to true
+		if ($this->Debug) echo "<pre>$sql</pre>";
+		$result = pg_query_params($this->dbh, $sql, array($UserID));
 		if ($result && $max) {
-			$sql = 'UPDATE watch_list
+			$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . '
+			UPDATE watch_list
 		           SET in_service = TRUE
-		         WHERE user_id = ' . pg_escape_string($UserID) . '
+		         WHERE user_id = $1
 		           AND id IN (';
-
+		        
+			$params = array($UserID);
 			for ($i = 0; $i < $max; $i++) {
-				$sql .= $WatchListIDs[$i] . ', ';
+				$sql .= '$' . ($i + 2) . ', ';
+				$params[] = $WatchListIDs[$i];
 			}
 
 			# now get rid of the trailing ,
 			$sql = substr($sql, 0, strlen($sql) - 2);
 
 			$sql .= ')';
-			if ($Debug) echo "<pre>$sql</pre>";
-			$result = pg_exec($this->dbh, $sql);
+			if ($this->Debug) echo "<pre>$sql</pre>";
+			$result = pg_query_params($this->dbh, $sql, $params);
 		}
 		if ($result) {
 			$numrows = pg_affected_rows($result);
 		} else {
 			$numrows = -1;
-			die(pg_last_error() . '<pre>' . $sql . '</pre>');
+			die(pg_last_error($this->dbh) . '<pre>' . $sql . '</pre>');
 		}
 
 		return $numrows;
@@ -151,21 +163,19 @@ DELETE FROM watch_list
 		# otherwise, return an empty string.
 		#
 
-		$Debug = 0;
-
-		$sql = "
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "
    SELECT id,
           in_service
      FROM watch_list
-    WHERE user_id = " . pg_escape_string($UserID) . "
+    WHERE user_id = $1
  ORDER BY name";
 
-		if ($Debug) echo "<pre>$sql</pre>";
+		if ($this->Debug) echo "<pre>$sql</pre>";
 
 		$WatchListID = '';
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($UserID));
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
 				$myrow = pg_fetch_array($result, 0);
 				$WatchListID = $myrow["id"];
@@ -185,7 +195,7 @@ DELETE FROM watch_list
 				}
 			}
 		} else {
-			die(pg_last_error() . '<pre>' . $sql . '</pre>');
+			die(pg_last_error($this->dbh) . '<pre>' . $sql . '</pre>');
 		}
 
 		return $WatchListID;
@@ -195,23 +205,23 @@ DELETE FROM watch_list
 		# return the number of watch lists owned by the user that
 		# contain the indicated element
 
-		$sql = "
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "
    SELECT count(WLE.watch_list_id) AS listcount
      FROM watch_list WL, watch_list_element WLE
-    WHERE WL.user_id     = " . pg_escape_string($UserID) . "
+    WHERE WL.user_id     = $1
       AND WL.id          = WLE.watch_list_id
-      AND WLE.element_id = " . pg_escape_string($ElementID);
+      AND WLE.element_id = $2";
 
-      	$ListCount = 0;
-		$result = pg_exec($this->dbh, $sql);
+		$ListCount = 0;
+		$result = pg_query_params($this->dbh, $sql, array($UserID, $ElementID));
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
 				$myrow = pg_fetch_array($result, 0);
 				$ListCount = $myrow['listcount'];
 			}
 		} else {
-			die(pg_result_error($result) . "<pre>$sql</pre>");
+			die(pg_last_error($result) . "<pre>$sql</pre>");
 		}
 				
 		return $ListCount;

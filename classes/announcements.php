@@ -75,13 +75,13 @@ class Announcement {
 	function Delete() {
 		# delete the ignore entry for this commit/port combination
 
-		$sql = '
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . '
 DELETE from announcements
- WHERE id = ' . pg_escape_string($this->id);
+ WHERE id = $1';
 
-		$this->result = pg_exec($this->dbh, $sql);
+		$this->result = pg_query_params($this->dbh, $sql, array($this->id));
 		if (!$this->result) {
-			echo pg_errormessage() . " $sql";
+			echo pg_last_error($this->dbh) . " $sql";
 		}
 		$numrows = pg_affected_rows($this->result);
 
@@ -92,7 +92,7 @@ DELETE from announcements
 	function Insert() {
 		# delete the ignore entry for this commit/port combination
 
-		$sql = 'INSERT INTO announcements (text, text_plain';
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . 'INSERT INTO announcements (text, text_plain';
 
 		if ($this->start_date != '') {
 			$sql .= ', start_date';
@@ -102,23 +102,26 @@ DELETE from announcements
 			$sql .= ', end_date';
 		}
 
-		$sql .= ") values ('" . pg_escape_string($this->text) . "', '" . pg_escape_string($this->text_plain) . "'";
+		$params = array($this->text, $this->text_plain);
+		$sql .= ") values ($1, $2";
 
 		if ($this->start_date != '') {
-			$sql .= ", '" . pg_escape_string($this->start_date) . "'";
+			$params[] = $this->start_date;
+			$sql .= ", $" . count($params);
 		}
 
 		if ($this->end_date != '') {
-			$sql .= ", '" . pg_escape_string($this->end_date) . "'";
+			$params[] = $this->end_date;
+			$sql .= ", $" . count($params);
 		}
 
 		$sql .= ")";
 
 #		echo "<pre>$sql</pre>";
 
-		$this->result = pg_exec($this->dbh, $sql);
+		$this->result = pg_query_params($this->dbh, $sql, $params);
 		if (!$this->result) {
-			echo pg_errormessage() . " $sql";
+			echo pg_last_error($this->dbh) . " $sql";
 		}
 		$numrows = pg_affected_rows($this->result);
 
@@ -129,29 +132,32 @@ DELETE from announcements
 	function Update() {
 		# delete the ignore entry for this commit/port combination
 
-		$sql = "UPDATE announcements set text = '" . pg_escape_string($this->text) . 
-		          "', text_plain = '" . pg_escape_string($this->text_plain) . "', start_date = ";
+		$params = array($this->text, $this->text_plain);
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . "UPDATE announcements set text = $1, text_plain = $2, start_date = ";
 
 		if ($this->start_date != '') {
-			$sql .= "'" . pg_escape_string($this->start_date) . "'";
+			$params[] = $this->start_date;
+			$sql .= '$' . count($params);
 		} else {
 			$sql .= 'NULL';
 		}
 
 		$sql .= ", end_date = ";		
 		if ($this->end_date != '') {
-			$sql .= "'" . pg_escape_string($this->end_date) . "'";
+			$params[] = $this->end_date;
+			$sql .= '$' . count($params);
 		} else {
 			$sql .= 'NULL';
 		}
 
-		$sql .= ' where id = ' . pg_escape_string($this->id);
+		$params[] = $this->id;
+		$sql .= ' where id = $' . count($params);
 
 #		echo "<pre>$sql</pre>";
 
-		$this->result = pg_exec($this->dbh, $sql);
+		$this->result = pg_query_params($this->dbh, $sql, $params);
 		if (!$this->result) {
-			echo pg_errormessage() . " $sql";
+			echo pg_last_error($this->dbh) . " $sql";
 		}
 		$numrows = pg_affected_rows($this->result);
 
@@ -161,18 +167,18 @@ DELETE from announcements
 	
 	function Fetch($id) {
 
-		$sql = '
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . '
 SELECT *
   FROM announcements
- WHERE id = ' . pg_escape_string($id);
+ WHERE id = $1';
 
-#		echo "sql = '<pre>$sql</pre>'<BR>";
+#		echo "sql = '<pre>$sql</pre>'<br>";
 
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($id));
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
-				if ($this->Debug) echo "fetched by ID succeeded<BR>";
+				if ($this->Debug) echo "fetched by ID succeeded<br>";
 				$myrow = pg_fetch_array ($result, 0);
 				$this->PopulateValues($myrow);
 			}
@@ -182,7 +188,7 @@ SELECT *
 	}
 
 	function FetchAllActive() {
-		$sql = "
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . "
 		SELECT id,
              text,
              text_plain,
@@ -195,22 +201,22 @@ SELECT *
 
 #		echo '<pre>' . $sql . '</pre>';
 
-		if ($this->Debug)	echo "commits::Fetch sql = '$sql'<BR>";
+		if ($this->Debug)	echo "commits::Fetch sql = '$sql'<br>";
 
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, $sql, array());
 		if ($this->LocalResult) {
-			$numrows = pg_numrows($this->LocalResult);
+			$numrows = pg_num_rows($this->LocalResult);
 #			echo "That would give us $numrows rows";
 		} else {
 			$numrows = -1;
-			echo 'pg_exec failed: ' . $sql;
+			echo 'pg_query_params failed: ' . $sql;
 		}
 
 		return $numrows;
 	}
 
 	function FetchAll() {
-		$sql = "
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . "
 		SELECT id,
              text,
              text_plain,
@@ -221,22 +227,22 @@ SELECT *
 
 #		echo '<pre>' . $sql . '</pre>';
 
-		if ($this->Debug)	echo "commits::Fetch sql = '$sql'<BR>";
+		if ($this->Debug)	echo "commits::Fetch sql = '$sql'<br>";
 
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, $sql, array());
 		if ($this->LocalResult) {
-			$numrows = pg_numrows($this->LocalResult);
+			$numrows = pg_num_rows($this->LocalResult);
 #			echo "That would give us $numrows rows";
 		} else {
 			$numrows = -1;
-			echo 'pg_exec failed: ' . $sql;
+			echo 'pg_query_params failed: ' . $sql;
 		}
 
 		return $numrows;
 	}
 
 	function NumRows() {
-		return pg_numrows($this->LocalResult);
+		return pg_num_rows($this->LocalResult);
 	}
 
 	function FetchNth($N) {
@@ -257,22 +263,22 @@ SELECT *
 	function GetAllActive() {
 		$Announcements = '';
 
-		$sql = "select * from AnnouncementsGet() as text";
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . "select * from AnnouncementsGet() as text";
 
 #		echo '<pre>' . $sql . '</pre>';
 
-		if ($this->Debug) echo "commits::Fetch sql = '$sql'<BR>";
+		if ($this->Debug) echo "commits::Fetch sql = '$sql'<br>";
 
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array());
 		if ($this->LocalResult) {
-			$numrows = pg_numrows($this->LocalResult);
+			$numrows = pg_num_rows($this->LocalResult);
 #			echo "That would give us $numrows rows";
 			for ($i = 0; $i < $numrows; $i++) {
 				$myrow = pg_fetch_array($result, $i);
 				$Announcements .= '<p>' . $myrow['text'] . '</p>';
 			}
 		} else {
-			echo 'pg_exec failed: ' . $sql;
+			echo 'pg_query_params failed: ' . $sql;
 		}
 
 		return $Announcements;

@@ -29,25 +29,25 @@ class PortConfigurePlist {
 
 		$Debug = 0;
 
-		$sql = "
+		$sql = '
   SELECT port_id,
          installed_file
     FROM generate_plist
-   WHERE port_id = " . pg_escape_string($PortID) . "
-   ORDER BY id ASC";
+   WHERE port_id = $1
+   ORDER BY id ASC';
 
 		if ($Debug) echo "<pre>$sql</pre>";
 
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, $sql, array($PortID));
 		if ($this->LocalResult) {
-			$numrows = pg_numrows($this->LocalResult);
+			$numrows = pg_num_rows($this->LocalResult);
 			if ($numrows == 1) {
 				$myrow = pg_fetch_array ($this->LocalResult);
 				$this->_PopulateValues($myrow);
 
 			}
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
+			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
 		}
 
 		return $numrows;

@@ -5,22 +5,16 @@
 	# Copyright (c) 1998-2004 DVL Software Limited
 	#
 
-	$db = pg_connect("dbname=freshports.dev host=pg02.example.org user=www_dev password=SecretPW sslmode=require");
+	$db = @pg_connect("dbname=freshports.dev host=pg02.example.org user=www_dev password=SecretPW sslmode=require");
 	if ($db) {
 #		echo 'database connected';
 	} else {
 #		echo 'database connection failed';
+        header('HTTP/1.1 503 Service Temporarily Unavailable');
+        header('Status: 503 Service Temporarily Unavailable');
+        header('Retry-After: 300');//300 seconds
+        syslog(LOG_ERR, 'Database connection failure');
+        die('Status: 503 Service Temporarily Unavailable');
 	}
 
 	$Statistics->DBSet($db);
-
-function UserToCookie($User) {
-	$EncodedUserID = base64_encode(strtolower($User));
-	$EncodedUserID = base64_encode($EncodedUserID);
-	$EncodedUserID = base64_encode($EncodedUserID);
-	$EncodedUserID = base64_encode($EncodedUserID);
-	$EncodedUserID = base64_encode($EncodedUserID);
-	$EncodedUserID = urlencode($EncodedUserID);
-
-	return $EncodedUserID;
-}

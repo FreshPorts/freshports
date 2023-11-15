@@ -12,7 +12,7 @@
 
 	freshports_ConditionalGet(freshports_LastModified());
 
-	if (IN_MAINTENCE_MODE) {
+	if (IN_MAINTENANCE_MODE) {
 		header('Refresh: ' . MAINTENANCE_MODE_RERESH_TIME_SECONDS);
 	} else {
 		header('Location: /', TRUE, 307);
@@ -39,7 +39,7 @@
 <tr>
 	<?php echo freshports_PageBannerText("Maintenance Mode"); ?>
 </tr>
-<TR><TD>
+<TR><td>
 
 <p>
 The website is now in maintenance mode. No updates are allowed during this process.
@@ -49,23 +49,23 @@ The website is now in maintenance mode. No updates are allowed during this proce
 This page will reload every <?php echo MAINTENANCE_MODE_RERESH_TIME_SECONDS; ?> seconds. When maintence mode finishes, this page will be redirect to the home page.
 </p>
 
-<p align="center">
+<p class="maintenance">
 <img src="images/work-in-progress.jpg" width="640" height="480" alt="work in progress">
 </p>
 
-</TD></TR>
+</td></TR>
 
-</TABLE>
-</TD>
+</table>
+</td>
 
   <td class="sidebar">
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
   </td>
 
 </TR>
-</TABLE>
+</table>
 
 <?php
 echo freshports_ShowFooter();

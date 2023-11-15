@@ -21,43 +21,42 @@
 
 	<?php echo freshports_MainTable(); ?>
 
-  <TR>
+  <tr>
 	<td class="content">
 	<P>
 	The copyright on the daemon you see in the website logo is as follows:
 	</P>
 
-<BLOCKQUOTE>
+<blockquote>
 	<P>
-	BSD Daemon Copyright 1988 by Marshall Kirk McKusick.<BR>
-	All Rights Reserved.<BR>
-<BR>
-	Permission to use the daemon may be obtained from:<BR>
-<BLOCKQUOTE>
-		Marshall Kirk McKusick<BR>
-		1614 Oxford St<BR>
-		Berkeley, CA 94709-1608<BR>
-		USA<BR>
-</BLOCKQUOTE>
-	or via email at mckusick&#64;mckusick.com<BR>
+	BSD Daemon Copyright 1988 by Marshall Kirk McKusick.<br>
+	All Rights Reserved.<br>
+<br>
+	Permission to use the daemon may be obtained from:<br>
+<blockquote>
+		Marshall Kirk McKusick<br>
+		1614 Oxford St<br>
+		Berkeley, CA 94709-1608<br>
+		USA<br>
+</blockquote>
+	or via email at mckusick&#64;mckusick.com<br>
 
-</BLOCKQUOTE>
+</blockquote>
 	</td>
 
   <td class="sidebar">
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
   </td>
 
-  </TR>
+  </tr>
 
-</TABLE>
+</table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 
 </BODY>
 </HTML>
-

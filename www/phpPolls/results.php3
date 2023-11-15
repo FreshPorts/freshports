@@ -1,4 +1,4 @@
-<? 
+<?php 
 //
 // this script displays a poll's result using an alternative display method
 // 
@@ -29,7 +29,7 @@ h2 {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14pt; color
   </td>
 </tr>
 
-<?
+<?php
 if(!isset($pollID))
   $pollID = 1;
   

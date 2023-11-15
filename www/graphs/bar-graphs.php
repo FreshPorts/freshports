@@ -125,9 +125,9 @@ class dg_BarGraph {
 
 	function _allocate_color($im, $colorarray) {
 		return imagecolorallocate($im, 
-			$colorarray[0], 
-			$colorarray[1], 
-			$colorarray[2]);
+			(int) $colorarray[0], 
+			(int) $colorarray[1], 
+			(int) $colorarray[2]);
 	}
 	// ------------ MAIN SHOW METHOD -----------------
 
@@ -227,8 +227,8 @@ class dg_BarGraph {
 		imagettftext($im,
 			$this->title_size,
 			0,
-			($this->width - $title_width) / 2,
-			$title_height-$this->title_margin,
+			(int) (($this->width - $title_width) / 2),
+			(int) $title_height-$this->title_margin,
 			$c_title,
 			$this->font_name,
 			$this->title);
@@ -267,13 +267,14 @@ class dg_BarGraph {
 
 		// axis label
 		imagestring($im,
-			$this->axis_size,
-			$this->margin_l + (($field_width-imagefontwidth($this->axis_size)*strlen($this->axis_label))/2),
-			$height - $footer_height - $this->axis_height - 1 + 15,
+			(int) $this->axis_size,
+			(int) ($this->margin_l + ($field_width) - imagefontwidth((int) ( ($this->axis_size) * strlen($this->axis_label) / 2 )) ),
+			(int) ($height - $footer_height - $this->axis_height - 1 + 15),
 			$this->axis_label,
 			$c_axislbl);
 			
 		// calculate how many ticks we'll need
+#		echo '<pre>'; var_dump($this->values); echo '</pre>';
 		$max = max($this->values);
 		$t = 1000000000;
 		while ($t>0.5) {
@@ -296,10 +297,10 @@ class dg_BarGraph {
 		for ($i=1; $i<=$steps; $i++) {
 			// grid
 			imageline($im,
-				$this->margin_l + $i*$d,
-				$this->margin_t + $title_height + 1,
-				$this->margin_l + $i*$d,
-				$height - $footer_height - $this->axis_height - 1 + 3,
+				(int) ($this->margin_l + $i*$d),
+				(int) ($this->margin_t + $title_height + 1),
+				(int) ($this->margin_l + $i*$d),
+				(int) ($height - $footer_height - $this->axis_height - 1 + 3),
 				$c_axisgr);
 
 			// label
@@ -307,9 +308,9 @@ class dg_BarGraph {
 			$w = imagefontwidth($this->axis_size) * strlen($v);
 
 			imagestring($im,
-				$this->axis_size,
-				$this->margin_l + $i*$d - $w/2,
-				$height - $footer_height - $this->axis_height - 1 + 5,
+				(int) $this->axis_size,
+				(int) ($this->margin_l + $i*$d - $w/2),
+				(int) ($height - $footer_height - $this->axis_height - 1 + 5),
 				$v,
 				$c_black);
 
@@ -319,8 +320,8 @@ class dg_BarGraph {
 		$x = $this->margin_t;
 		for ($i = 0; $i < count($this->values); $i++) {
 			if ($this->values[$i] >= 0) {
-			
-				$v = ($this->values[$i] * $field_width)/$rmax;
+#syslog(LOG_ERR, $this->values[$i]);
+				$v = ($this->values[$i] * $field_width) / $rmax;
 
 				if ($v) {
 					$gd = 64 / $v;
@@ -346,12 +347,12 @@ class dg_BarGraph {
 				// draw bar
 				for ($j=0; $j<$v; $j++) {
 					imageline($im, 
-						$x1+$j, $y1, 
-						$x1+$j, $y2, 
-						$c_gradient[$gd*$j]);
+						(int) ($x1+$j), (int) $y1, 
+						(int) ($x1+$j), (int) $y2, 
+						(int) $c_gradient[(int) $gd*$j]);
 				}
 
-				imagerectangle($im, $x1, $y1, $x2, $y2,	$c_black);
+				imagerectangle($im, (int) $x1, (int) $y1, (int) $x2, (int) $y2, $c_black);
 
 			}
 
@@ -368,8 +369,8 @@ class dg_BarGraph {
 			imagettftext($im,
 				$this->label_size,
 				0,
-				$this->margin_l - $w - 5,
-				$y2 - (($this->bar_width - $h) / 2),
+				(int) ($this->margin_l - $w - 5),
+				(int) ($y2 - (($this->bar_width - $h) / 2)),
 				$c_axislbl,
 				$this->font_name,
 				$this->labels[$i]);
@@ -393,5 +394,3 @@ class dg_BarGraph {
 	}
 
 }
-
-?>

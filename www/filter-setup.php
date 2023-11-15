@@ -13,7 +13,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/watch-lists.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_list_element.php');
 
-	if (IN_MAINTENCE_MODE) {
+	if (IN_MAINTENANCE_MODE) {
                 header('Location: /' . MAINTENANCE_PAGE, TRUE, 307);
 	}
 
@@ -27,13 +27,14 @@
 
 	$submit = 0;
 	if (IsSet($_POST['submit'])) {
-		$submit = pg_escape_string($_POST['submit']);
+		$submit = pg_escape_string($db, $_POST['submit']);
 	}
+		
 
 if (IsSet($_REQUEST['wlid'])) {
 		# they clicked on the GO button and we have to apply the 
 		# watch staging area against the watch list.
-		$wlid = pg_escape_string($_REQUEST["wlid"]);
+		$wlid = pg_escape_string($db, intval($_REQUEST["wlid"]));
 		if ($Debug) echo "setting SetLastWatchListChosen => \$wlid='$wlid'";
 		$User->SetLastWatchListChosen($wlid);
 		if ($Debug) echo "\$wlid='$wlid'";
@@ -61,7 +62,7 @@ if ($submit) {
     // make sure we are pointing at the start of the array.
     reset($categories);
     foreach ($categories as $key => $value) {
-      $result = $WatchListElement->Add($User->id, $wlid, $value);
+      $result = $WatchListElement->Add($User->id, $wlid, intval($value));
 
 #      ${"category_".$value} = 1;
       if ($result != 1) {
@@ -92,7 +93,7 @@ $visitor = $_COOKIE[USER_COOKIE_NAME];
 if ($_REQUEST['wlid']) {
 		# they clicked on the GO button and we have to apply the 
 		# watch staging area against the watch list.
-		$wlid = pg_escape_string($_REQUEST["wlid"]);
+		$wlid = pg_escape_string($db, int_val($_REQUEST['wlid']));
 		if ($Debug) echo "setting SetLastWatchListChosen => \$wlid='$wlid'";
 		$User->SetLastWatchListChosen($wlid);
 		if ($Debug) echo "\$wlid='$wlid'";
@@ -114,7 +115,7 @@ if ($_REQUEST['wlid']) {
 	<?php echo freshports_MainContentTable(NOBORDER); ?>
 <?php # article table start ?>
   <tr>
-	<? echo freshports_PageBannerText("Watch List - categories"); ?>
+	<?php echo freshports_PageBannerText("Watch List - categories"); ?>
   </tr>
 <tr><td class="content">
 
@@ -130,7 +131,7 @@ notification frequency within your <a href="customize.php">account settings</a>.
 Virtual categories cannot be watched and their checkboxes will be disabled.
 </td>
 
-<td valign="top">
+<td class="vtop">
 <table class="borderless">
 <?php # ddlb start ?>
 <tr><td>Select...</td></tr>
@@ -162,8 +163,8 @@ if ($wlid != '') {
 $sql = "
    select distinct(ports_categories.category_id) as category_id
      from watch_list, watch_list_element, ports, ports_categories
-    WHERE watch_list.id      = " . $wlid . "
-      and watch_list.user_id = $User->id
+    WHERE watch_list.id      = $1
+      and watch_list.user_id = $2
       and watch_list.id      = watch_list_element.watch_list_id
       and ports.element_id   = watch_list_element.element_id
       AND ports_categories.port_id = ports.id";
@@ -171,15 +172,15 @@ $sql = "
 if ($Debug) echo "<pre>$sql</pre>";
 
 
-$result  = pg_exec ($db, $sql);
-$numrows = pg_numrows($result);
+$result  = pg_query_params($db, $sql, array($wlid, $User->id));
+$numrows = pg_num_rows($result);
 
-if ($Debug) echo "num categories being watched = $numrows<BR>";
+if ($Debug) echo "num categories being watched = $numrows<br>";
 
 for ($i = 0; $i < $numrows; $i++) {
 	$myrow = pg_fetch_array($result, $i);
 	$WatchedCategories{$myrow["category_id"]} = ' *';
-	if ($Debug) echo "category " . $myrow["category_id"] . " = " . $WatchedCategories{$myrow["category_id"]} . '<BR>';
+	if ($Debug) echo "category " . $myrow["category_id"] . " = " . $WatchedCategories{$myrow["category_id"]} . '<br>';
 }
 
 # Get a list of the categories that are being watched
@@ -187,30 +188,30 @@ for ($i = 0; $i < $numrows; $i++) {
 $sql = "
    select distinct(categories.element_id) as category_element_id
      from watch_list, watch_list_element, categories
-    WHERE watch_list.id         = " . $wlid . "
-      and watch_list.user_id    = $User->id
+    WHERE watch_list.id         = $1
+      and watch_list.user_id    = $2
       and watch_list.id         = watch_list_element.watch_list_id
       and categories.element_id = watch_list_element.element_id";
 
 if ($Debug) echo "<pre>$sql</pre>";
 
 
-echo '<tr><td align="center">' . "\n";
+echo '<tr><td class="vcentered">' . "\n";
 
-$result  = pg_exec ($db, $sql);
-$numrows = pg_numrows($result);
+$result  = pg_query_params($db, $sql, array($wlid, $User->id));
+$numrows = pg_num_rows($result);
 
-if ($Debug) echo "num categories being watched = $numrows<BR>";
+if ($Debug) echo "num categories being watched = $numrows<br>";
 
 for ($i = 0; $i < $numrows; $i++) {
 	$myrow = pg_fetch_array($result, $i);
 	$FilteredCategories{$myrow["category_element_id"]} = ' $';
-	if ($Debug) echo "category " . $myrow["category_element_id"] . " = " . $FilteredCategories{$myrow["category_element_id"]} . '<BR>';
+	if ($Debug) echo "category " . $myrow["category_element_id"] . " = " . $FilteredCategories{$myrow["category_element_id"]} . '<br>';
 }
 
 # categories list start
 
-$HTML .= "\n" . '<TABLE class="bordered" CELLPADDING="5">' . "\n";
+$HTML .= "\n" . '<table class="bordered" CELLPADDING="5">' . "\n";
 $HTML .= '<tr><td>';
 // get the list of categories to display
 $sql = "
@@ -221,8 +222,8 @@ $sql = "
       from categories
   order by category";
 
-$result  = pg_exec($db, $sql);  
-$numrows = pg_numrows($result);
+$result  = pg_query_params($db, $sql, array());
+$numrows = pg_num_rows($result);
 $NumCategories = 0;
 for ($i = 0; $i < $numrows; $i++) {
 	$myrow = pg_fetch_array($result, $i);
@@ -247,7 +248,7 @@ for ($i = 0; $i < $NumCategories; $i++) {
    }
 
    if ($Row == 1) {
-      $HTML .= '<td valign="top">';
+      $HTML .= '<td class="vtop">';
    }
 
    $HTML .= '<input type="checkbox" name="categories[]"';
@@ -297,7 +298,7 @@ echo "</table>\n";
 </td>
 
   <td class="sidebar">
-  <?
+  <?php
   echo freshports_SideBar();
   ?>
   </td>
@@ -306,7 +307,7 @@ echo "</table>\n";
 </table>
 <?php # main table finish ?>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

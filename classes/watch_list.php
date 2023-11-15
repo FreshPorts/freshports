@@ -35,18 +35,18 @@ class WatchList {
 
 		$return = 0;
 
-		$Name = pg_escape_string($Name);
+		$Name = pg_escape_string($this->dbh, $Name);
 		
-		$query = "
+		$query = '
 SELECT count(watch_list.id), users.max_number_watch_lists
     FROM users LEFT OUTER JOIN watch_list
                ON users.id = watch_list.user_id
-   WHERE users.id = $UserID
-GROUP BY users.max_number_watch_lists";
+   WHERE users.id = $1
+GROUP BY users.max_number_watch_lists';
 
-		$this->LocalResult = pg_query($this->dbh, $query);
+		$this->LocalResult = pg_query_params($this->dbh, $query, array($UserID));
 		if ($this->LocalResult) {
-			$numrows = pg_numrows($this->LocalResult);
+			$numrows = pg_num_rows($this->LocalResult);
 			if ($numrows == 1) {
 				$myrow = pg_fetch_array($this->LocalResult, 0);
 				$Count = $myrow[0];
@@ -64,9 +64,9 @@ GROUP BY users.max_number_watch_lists";
 					# again.  5 Collisions should be very rare.
 					#
 					while ($Attempts > 0 and !$result) {
-						$query  = "insert into watch_list (id, user_id, name) values ($NextValue, $UserID, '$Name')";
-						$result = pg_query($this->dbh, $query);
-						if (!result) {
+						$query  = 'insert into watch_list (id, user_id, name) values ($1, $2, $3)';
+						$result = pg_query_params($this->dbh, $query, array($NextValue, $UserID, $Name));
+						if (!$result) {
 							syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ' inserting into watch_list failed on attempt ' . $Attempts . '.  collision on token column suspected.');
 						}
 						$Attempts--;
@@ -76,7 +76,7 @@ GROUP BY users.max_number_watch_lists";
 					if ($result && pg_affected_rows($result) == 1) {
 						$return = $NextValue;
 					}
-					if (!result) {
+					if (!$result) {
 						syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ' failed to insert into watch_list.  collision on token column suspected.').
 						die('Sorry, I was unable to create you a watch list.  Please try again, and if failure persist, please contast the webmaster.');
 					}
@@ -90,7 +90,7 @@ GROUP BY users.max_number_watch_lists";
 				die("I couldn't find your watch list details... sorry");
 			}
 		} else {
-			syslog(LOG_ERR, "Error finding watch list count for user $UserID - " . $_SERVER['PHP_SELF'] . ' ' . pg_last_error());
+			syslog(LOG_ERR, "Error finding watch list count for user $UserID - " . $_SERVER['PHP_SELF'] . ' ' . pg_last_error($this->dbh));
 			die('Error finding watch list count for user');
 		}
 
@@ -106,11 +106,11 @@ GROUP BY users.max_number_watch_lists";
 
 		$query  = '
 DELETE FROM watch_list 
- WHERE id = ' . pg_escape_string($WatchListID) .'
-   AND user_id = ' . $UserID;
+ WHERE id = $1
+   AND user_id = $2';
 
-		if ($Debug) echo $query;
-		$result = pg_query($this->dbh, $query);
+		if (0) echo $query;
+		$result = pg_query_params($this->dbh, $query, array($WatchListID, $UserID));
 
 		# that worked and we updated exactly one row
 		if ($result && pg_affected_rows($result) == 1) {
@@ -127,15 +127,15 @@ DELETE FROM watch_list
 		unset($return);
 		$Debug = 0;
 
-		$query = "
+		$query = '
 DELETE FROM watch_list_element
  USING watch_list
- WHERE watch_list.id                    = $WatchListID
-   AND watch_list.user_id               = $UserID
-   AND watch_list_element.watch_list_id = watch_list.id";
+ WHERE watch_list.id                    = $1
+   AND watch_list.user_id               = $2
+   AND watch_list_element.watch_list_id = watch_list.id';
 
 		if ($Debug) echo $query;
-		$result = pg_query($this->dbh, $query);
+		$result = pg_query_params($this->dbh, $query, array($WatchListID, $UserID));
 
 		# that worked and we updated exactly one row
 		if ($result) {
@@ -152,18 +152,18 @@ DELETE FROM watch_list_element
 		unset($return);
 		$Debug = 0;
 
-		$query = "
+		$query = '
 DELETE FROM watch_list_element
  USING ports_categories, ports, watch_list
- WHERE ports_categories.category_id     = $CategoryID
+ WHERE ports_categories.category_id     = $1
    AND ports_categories.port_id         = ports.id
    AND ports.element_id                 = watch_list_element.element_id
-   AND watch_list.id                    = $WatchListID
-   AND watch_list.user_id               = $UserID
-   AND watch_list_element.watch_list_id = watch_list.id";
+   AND watch_list.id                    = $2
+   AND watch_list.user_id               = $3
+   AND watch_list_element.watch_list_id = watch_list.id';
 
 		if ($Debug) echo $query;
-		$result = pg_query($this->dbh, $query);
+		$result = pg_query_params($this->dbh, $query, array($CategoryID, $WatchListID, $UserID));
 
 		# that worked and we updated exactly one row
 		if ($result) {
@@ -180,14 +180,14 @@ DELETE FROM watch_list_element
 		unset($return);
 		$Debug = 0;
 
-		$query = "
+		$query = '
 DELETE FROM watch_list_element
  USING watch_list
- WHERE watch_list.user_id               = $UserID
-   AND watch_list_element.watch_list_id = watch_list.id";
+ WHERE watch_list.user_id               = $1
+   AND watch_list_element.watch_list_id = watch_list.id';
 
 		if ($Debug) echo $query;
-		$result = pg_query($this->dbh, $query);
+		$result = pg_query_params($this->dbh, $query, array($UserID));
 
 		# that worked and we updated exactly one row
 		if ($result) {
@@ -202,15 +202,16 @@ DELETE FROM watch_list_element
 		#
 		# Delete a watch list
 		#
-		unset($return);
+		$return = null;
+		Global $Debug;
 
 		$query  = '
 UPDATE watch_list 
-   SET name = \'' . pg_escape_string($NewName) . '\' 
- WHERE id = ' . pg_escape_string($WatchListID) . '
-   AND watch_list.user_id = ' . $UserID;
+   SET name = $1
+ WHERE id = $2
+   AND watch_list.user_id = $3';
 		if ($Debug) echo $query;
-		$result = pg_query($this->dbh, $query);
+		$result = pg_query_params($this->dbh, $query, array($NewName, $WatchListID, $UserID));
 
 		# that worked and we updated exactly one row
 		if ($result && pg_affected_rows($result) == 1) {
@@ -224,7 +225,7 @@ UPDATE watch_list
 	function Fetch($UserID, $ID) {
 		$Debug = 0;
 
-		$sql = "
+		$sql = '
 		SELECT id,
 		       user_id,
 		       name,
@@ -232,19 +233,19 @@ UPDATE watch_list
 		       token,
                NULL as watch_list_count
 		  FROM watch_list
-		 WHERE id      = " . pg_escape_string($ID) . "
-		   AND user_id = " . pg_escape_string($UserID);
+		 WHERE id      = $1
+		   AND user_id = $2';
 
 #		echo '<pre>' . $sql . '</pre>';
 
-		if ($Debug)	echo "WatchLists::Fetch sql = '$sql'<BR>";
+		if ($Debug)	echo "WatchLists::Fetch sql = '$sql'<br>";
 
 		if ($ID == '') {
 			syslog(LOG_NOTICE, "classes/watch_list.php::line 213 \$UserID='$UserID', \$ID='$ID'");
 		}
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, $sql, array($ID, $UserID));
 		if ($this->LocalResult) {
-			$numrows = pg_numrows($this->LocalResult);
+			$numrows = pg_num_rows($this->LocalResult);
 			if ($numrows > 0) {
 				$myrow = pg_fetch_array($this->LocalResult, 0);
 				$this->PopulateValues($myrow);
@@ -252,7 +253,7 @@ UPDATE watch_list
 #			echo "That would give us $numrows rows";
 		} else {
 			$numrows = -1;
-			echo 'pg_exec failed: ' . $sql;
+			echo 'pg_query_params failed: ' . $sql;
 		}
 
 		return $numrows;

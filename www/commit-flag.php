@@ -12,10 +12,10 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit_flag.php');
 
 	$Debug = 0;
-	if ($_POST["Origin"]) {
-		$Origin = pg_escape_string($_POST["Origin"]);
+	if (IsSet($_POST["Origin"])) {
+		$Origin = pg_escape_string($db, $_POST["Origin"]);
 	} else {
-		$Origin = $_SERVER["HTTP_REFERER"];
+		$Origin = $_SERVER["HTTP_REFERER"] ?? '/';
 	}
 	$Redirect = 1;
 #phpinfo();
@@ -28,7 +28,7 @@
 	}
 
 	if (IsSet($_REQUEST['message_id'])) {
-		$message_id = pg_escape_string($_REQUEST['message_id']);
+		$message_id = pg_escape_string($db, $_REQUEST['message_id']);
 	} else {
 		$message_id = '';
 	}
@@ -52,7 +52,7 @@
 				pg_exec($db, 'COMMIT');
 			} else {
 				pg_exec($db, 'ROLLBACK');
-				die(pg_last_error());
+				die(pg_last_error($db));
 			}
 			break;
 			
@@ -64,10 +64,10 @@
 			pg_exec($db, 'BEGIN');
 			$CommitFlag = new CommitFlag($db);
 			if ($CommitFlag->Delete($User->id, $message_id) >= 0) {
-				pg_exec('COMMIT');
+				pg_exec($db, 'COMMIT');
 			} else {
-				pg_exec('ROLLBACK');
-				die(pg_last_error());
+				pg_exec($db, 'ROLLBACK');
+				die(pg_last_error($db));
 			}
 			break;
 				
@@ -75,19 +75,17 @@
 			die("I don't know what I was supposed to do there!");
 	}
 
-#	echo 'when done, I will return to ' . $HTTP_SERVER_VARS['HTTP_REFERER'];
+#	echo 'when done, I will return to ' . $Origin;
 	if ($Redirect) {
 		if ($Origin) {
-			if ($Debug) echo "Origin supplied is $Origin\n<BR>";
+			if ($Debug) echo "Origin supplied is $Origin\n<br>";
 			$Origin = str_replace(' ', '&', $Origin);
 		}
 
-		if ($Debug) echo "redirecting to $Origin\n<BR>";
+		if ($Debug) echo "redirecting to $Origin\n<br>";
 
 		header("Location: $Origin");  /* Redirect browser to PHP web site */
 		exit;  /* Make sure that code below does not get executed when we redirect. */
 	}
 
 #	phpinfo();
-
-?>

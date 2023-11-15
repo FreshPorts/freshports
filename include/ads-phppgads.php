@@ -10,13 +10,13 @@
 function Ad_PhpPgAdsBase($Zone, $N) {
 
 	$Code = '
-<script language=\'JavaScript\' type=\'text/javascript\' src=\'http://ads.unixathome.org/phpPgAds/adx.js\'></script>
-<script language=\'JavaScript\' type=\'text/javascript\'>
+<script src=\'http://ads.unixathome.org/phpPgAds/adx.js\'></script>
+<script>
 <!--
    if (!document.phpAds_used) document.phpAds_used = \',\';
    phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
    
-   document.write ("<" + "script language=\'JavaScript\' type=\'text/javascript\' src=\'");
+   document.write ("<" + "script src=\'");
    document.write ("http://ads.unixathome.org/phpPgAds/adjs.php?n=" + phpAds_random);
    document.write ("&amp;what=zone:' . $Zone . '");
    document.write ("&amp;exclude=" + document.phpAds_used);

@@ -33,11 +33,15 @@
 	require_once('/usr/local/share/UniversalFeedCreator/lib/UniversalFeedCreator.php'); 
 	require_once('/usr/local/share/UniversalFeedCreator/lib/constants.php'); 
 	
-function newsfeed($db, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $Flavor = '') { # $OrderBy = '', $Where = '') {
+function newsfeed($dbh, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $Flavor = '') { # $OrderBy = '', $Where = '') {
 
-	$WatchListID = pg_escape_string($WatchListID);
-	$Format      = pg_escape_string($Format);
-	$Flavor      = pg_escape_string($Flavor);
+	# avoid: [24-Jul-2022 12:36:25 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /usr/local/www/freshports/classes/newsfeed.php:353) in /usr/local/share/UniversalFeedCreator/lib/Creator/FeedCreator.php on line 215
+	# some watch lists can be large
+	$old_value = ini_set('memory_limit', '512M');
+
+	$WatchListID = pg_escape_string($dbh, $WatchListID);
+	$Format      = pg_escape_string($dbh, $Format);
+	$Flavor      = pg_escape_string($dbh, $Flavor ?? '');
 
 	$PHP_SELF = $_SERVER['PHP_SELF'];
 
@@ -52,19 +56,34 @@ function newsfeed($db, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $Fl
 		}
 	}
 
-	$MaxNumberOfPorts = pg_escape_string(MAX_PORTS);
+	$MaxNumberOfPorts = pg_escape_string($dbh, MAX_PORTS);
 
 	$rss = new UniversalFeedCreator(); 
 
 	# NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
 	#
-	# this next call may wind up using the cached and the 
-	# rest of the function may never be use executed.
+	# this next call may wind up using the cached file and
+	# the rest of the function may never be executed.
 	#
 	# NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
 
-	# Commenting out ths next line is useful for Debugging.
+	# Commenting out this next line is useful for Debugging.
+	# This will read the cached file file, and it meets the freshness
+	# standard (not too old), supply it to the user.
+	# Otherwise, we fall through and create a new feed.
 	#
+	# there is a race condition within UniversalFeedCreator/lib/Creator/FeedCreator.php:
+	# useCached() checks for file existence and calls _redirect()
+	# if the cache is cleared in that tile, _redirect() will product this error:
+	#
+	# [28-Mar-2023 23:39:05 UTC] PHP Warning:  readfile(/var/db/freshports/cache/news/news.NEWS.head.xml): Failed to open stream: No such file or directory in /usr/local/share/UniversalFeedCreator/lib/Creator/FeedCreator.php on line 217
+	#
+	# That will give the user a bad feed:
+	#
+        # [IPv6 address redacted]- - [28/Mar/2023:23:39:05 +0000] "GET /backend/news.php HTTP/2.0" 200 234 "https://www.freshports.org" "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)"
+        #
+        # Perhaps we should not be clearing out the cache that way. Perhap we should just let it get stale
+        #
 	$rss->useCached($Format, NEWSFEEDCACHE, NEWSFEED_REFRESH_SECONDS);
 
 	$rss->title          = 'FreshPorts news'; 
@@ -103,7 +122,7 @@ function newsfeed($db, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $Fl
 
 	if ($WatchListID) {
 	# this is for newfeeds based on personal watch lists
-	$sql = "
+	$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . '::WatchListID 
 	select E.name 			as port, 
 		   P.id 				as id, 
 	       C.name 		as category, 
@@ -111,9 +130,9 @@ function newsfeed($db, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $Fl
 	       P.version 		as version, 
 	       P.revision 		as revision, 
 	       E.id 			as element_id,
-           to_char(CL.commit_date - SystemTimeAdjust(), 'DD Mon')  AS commit_date,
-           to_char(CL.commit_date - SystemTimeAdjust(), 'HH24:MI') AS commit_time,
-           commit_date          AS commit_date_raw,
+           to_char(CL.commit_date - SystemTimeAdjust(), \'DD Mon\')  AS commit_date,
+           to_char(CL.commit_date - SystemTimeAdjust(), \'HH24:MI\') AS commit_time,
+           commit_date          AS news_date,
            CL.description       AS commit_description,
            CLP.port_epoch as epoch,
            CL.committer,
@@ -131,18 +150,15 @@ function newsfeed($db, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $Fl
        AND P.element_id      = WLE.element_id
 	   AND P.element_id      = E.id
 	   AND P.category_id     = C.id 
-	   AND WLE.watch_list_id = " . pg_escape_string($WatchListID) .  ' ';
-	   
-	} else {
-		if ($BranchName == BRANCH_HEAD) {
-			$BranchExpression = pg_escape_literal('/ports/' . BRANCH_HEAD .'/%');
-		} else {
-			$BranchExpression =  pg_escape_literal('/ports/branches/' . $BranchName . '/%');
-		}
+	   AND WLE.watch_list_id = $1';
 
+	   $params = array($WatchListID);
+
+	} else {
+		# no WatchListID supplied
 		switch ($Flavor) {
 			case 'new':
-				$sql = "
+				$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . '::new
   SELECT C.name    AS category,
          E.name    AS port,
          E.status  AS status,
@@ -155,20 +171,20 @@ function newsfeed($db, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $Fl
          P.version                        AS ports_version,
          P.revision                       AS ports_revision,
          P.portepoch                      AS epoch,
-         date_part('epoch', P.date_added) AS date_added,
+         P.date_added                     AS news_date,
          P.short_description              AS short_description,
          P.category_id
     FROM (SELECT P1.* 
-            FROM ports            P1
-            JOIN element_pathname EP ON P1.element_id = EP.element_id AND EP.pathname LIKE '/ports/head/%'
+            FROM ports_active            P1
            WHERE P1.date_added IS NOT NULL ORDER BY P1.date_added DESC LIMIT 20) AS P
     JOIN element    E   ON P.element_id  = E.id
     JOIN categories C   ON P.category_id = C.id
-ORDER BY P.date_added DESC, E.name, category, version";
+ORDER BY P.date_added DESC, E.name, category, version';
+				$params = array();
 				break;
 
 			case 'broken':
-				$sql = "
+				$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . '::broken
   SELECT C.name    AS category,
          E.name    AS port,
          E.status  AS status,
@@ -181,14 +197,14 @@ ORDER BY P.date_added DESC, E.name, category, version";
          P.version                        AS ports_version,
          P.revision                       AS ports_revision,
          P.portepoch                      AS epoch,
-         date_part('epoch', P.date_added) AS date_added,
+         date_part(\'epoch\', P.date_added) AS date_added,
          P.short_description              AS short_description,
          P.category_id,
          CLP.port_version  AS clp_version,
          CLP.port_revision AS clp_revision,
          CLP.needs_refresh AS needs_refresh,
          CL.id     AS commit_log_id, 
-         CL.commit_date       AS commit_date_raw,
+         CL.commit_date       AS news_date,
          CL.message_subject,
          CL.message_id,
          CL.commit_hash_short,
@@ -198,26 +214,25 @@ ORDER BY P.date_added DESC, E.name, category, version";
          CL.author_name,
          CL.author_email,
          CL.description       AS commit_description,
-         to_char(CL.commit_date - SystemTimeAdjust(), 'DD Mon')  AS commit_date,
-         to_char(CL.commit_date - SystemTimeAdjust(), 'HH24:MI') AS commit_time,
+         to_char(CL.commit_date - SystemTimeAdjust(), \'DD Mon\')  AS commit_date,
+         to_char(CL.commit_date - SystemTimeAdjust(), \'HH24:MI\') AS commit_time,
          CL.encoding_losses
     FROM (SELECT P1.* 
-            FROM ports            P1
-            JOIN element_pathname EP ON P1.element_id = EP.element_id AND EP.pathname LIKE '/ports/head/%'
-           WHERE P1.broken IS NOT NULL
-             AND P1.status = 'A') AS P
+            FROM ports_active            P1
+           WHERE P1.broken IS NOT NULL) AS P
     JOIN commit_log           CL  ON P.last_commit_id  = CL.id 
     JOIN commit_log_ports     CLP ON CLP.commit_log_id = CL.id AND P.id = CLP.port_id
     JOIN element              E   ON P.element_id      = E.id
     JOIN categories           C   ON P.category_id     = C.id
-ORDER BY CL.commit_date DESC, CL.id ASC, E.name, category, version";
+ORDER BY CL.commit_date DESC, CL.id ASC, E.name, category, version';
+				$params = array();
 				break;
-				
+
                         case 'vuln':
-                                $sql = "
+                                $sql = "-- " . __FILE__ . '::' . __FUNCTION__ . '::vuln
   SELECT C.name    AS category,
-         E.name    AS port,
-         E.status  AS status,
+         P.name    AS port,
+         P.status  AS status,
          P.forbidden,
          P.broken,
          P.deprecated,
@@ -227,17 +242,17 @@ ORDER BY CL.commit_date DESC, CL.id ASC, E.name, category, version";
          P.version                        AS ports_version,
          P.revision                       AS ports_revision,
          P.portepoch                      AS epoch,
-         date_part('epoch', P.date_added) AS date_added,
+         date_part(\'epoch\', P.date_added) AS date_added,
+         CL.commit_date                   AS news_date,
          P.short_description              AS short_description,
          P.category_id
-         FROM ports            P
+         FROM ports_active            P
          JOIN ports_vulnerable PV ON PV.current    > 0            AND PV.port_id = P.id
-         JOIN element_pathname EP ON EP.element_id = P.element_id AND EP.pathname like '/ports/head/%'
-         JOIN element          E  ON P.element_id  = E.id         AND E.status = 'A'
          JOIN categories       C  ON P.category_id = C.id
          JOIN commit_log       CL ON CL.id         = P.last_commit_id
 ORDER BY CL.commit_date;
-";
+';
+				$params = array();
                                 break;
 
 			default:
@@ -245,7 +260,7 @@ ORDER BY CL.commit_date;
 			        # We start with the last 200 commits added to the system, because we're likely to get 100 ports from that.
 			        # The lateral join is to get just one port from the commit_log_ports table
 			        # we order by port.id so we get the same results on each query
-				$sql = "
+				$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . '::default
  SELECT  C.name    AS category,
          E.name    AS port,
          E.status  AS status,
@@ -265,7 +280,7 @@ ORDER BY CL.commit_date;
          CLP.clp_revision,
          CLP.needs_refresh AS needs_refresh,
          CL.id     AS commit_log_id, 
-         CL.commit_date       AS commit_date_raw,
+         CL.commit_date       AS news_date,
          CL.message_subject,
          CL.message_id,
          CL.commit_hash_short,
@@ -275,14 +290,16 @@ ORDER BY CL.commit_date;
          CL.author_name,
          CL.author_email,
          CL.description       AS commit_description,
-         to_char(CL.commit_date - SystemTimeAdjust(), 'DD Mon')  AS commit_date,
-         to_char(CL.commit_date - SystemTimeAdjust(), 'HH24:MI') AS commit_time,
+         to_char(CL.commit_date - SystemTimeAdjust(), \'DD Mon\')  AS commit_date,
+         to_char(CL.commit_date - SystemTimeAdjust(), \'HH24:MI\') AS commit_time,
          CL.encoding_losses
     FROM (select cl.* 
             from commit_log cl
            where exists (select *
                            from commit_log_ports clp
-                          where clp.commit_log_id = cl.id)
+                           join commit_log_branches clb on clp.commit_log_id = clb.commit_log_id
+                           join system_branch sb on sb.id = clb.branch_id
+                          where clp.commit_log_id = cl.id and sb.branch_name = $1)
            order by cl.commit_date desc limit 100 ) AS CL
     JOIN LATERAL ( select CLP1.commit_log_id, P.forbidden, P.broken, P.deprecated, P.element_id,
                           CASE when CLP1.port_version  IS NULL then P.version  else CLP1.port_version  END as version,
@@ -290,7 +307,7 @@ ORDER BY CL.commit_date;
                           P.version                        AS ports_version,
                           P.revision                       AS ports_revision,
                           P.portepoch                      AS epoch,
-                          date_part('epoch', P.date_added) AS date_added,
+                          date_part(\'epoch\', P.date_added) AS date_added,
                           P.short_description              AS short_description,
                           P.category_id,
                           CLP1.port_version  AS clp_version,
@@ -301,12 +318,12 @@ ORDER BY CL.commit_date;
                       and CLP1.port_id   = P.id
                   ORDER BY P.id 
                      LIMIT 1) AS CLP on true
-    JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
-    JOIN system_branch       SB  ON SB.branch_name    = " . pg_escape_literal($BranchName) . " AND SB.id = CLB.branch_id
     JOIN element             E   ON CLP.element_id    = E.id
     JOIN categories          C   ON CLP.category_id   = C.id
     ORDER BY CL.commit_date desc
-	LIMIT 500";
+	LIMIT 500';
+
+                            $params = array($BranchName);
 
 		} # switch flavor
 	} # WatchListID	
@@ -318,9 +335,9 @@ ORDER BY CL.commit_date;
 	$ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['HTTP_HOST']);
 	
 	# get the results
-	$result = pg_query($db, $sql);
+        $result = pg_query_params($dbh, $sql, $params);
 	if (!$result) {
-		syslog(LOG_ERR, 'sql error ' . pg_result_error($result));
+		syslog(LOG_ERR, 'sql error ' . pg_last_error($dbh));
 
 		die('We broke the SQL, sorry');
 	}
@@ -334,15 +351,15 @@ ORDER BY CL.commit_date;
 			case 'new':
 			case 'vuln':
 				# this is a relative link
-				$link        = freshports_Port_URL($myrow['category'], $myrow['port'], $BranchName);;
-				$date        = $myrow['date_added'];
-				$author      = $myrow['maintainer'];
+				$link        = freshports_Port_URL($dbh, $myrow['category'], $myrow['port'], $BranchName);;
+				$date        = $myrow['news_date'];
+				$author      = $myrow['maintainer'] ?? '';
 				$description = $myrow['short_description'];
 				break;
 				
 			default:
 				$link        = freshports_Commit_Link_Port_URL($myrow['message_id'], $myrow['category'], $myrow['port']);
-				$date        = $myrow['commit_date_raw'];
+				$date        = $myrow['news_date'];
 				$author      = $myrow['committer'] . '@FreeBSD.org (' . $myrow['committer'] . ')';
 				$description = $myrow['commit_description'];
 				break;
@@ -356,7 +373,9 @@ ORDER BY CL.commit_date;
 		//item->descriptionTruncSize = 500;
 		$item->descriptionHtmlSyndicated = false;
 	
-		$item->date   = strtotime($date);
+		if (!empty($date)) {
+			$item->date   = strtotime($date);
+                }
 		$item->source = $_SERVER['HTTP_HOST']; 
 		$item->author = $author;
 		$item->guid   = $link; 

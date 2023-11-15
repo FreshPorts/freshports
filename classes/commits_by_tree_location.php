@@ -34,7 +34,7 @@ class CommitsByTreeLocation extends commits {
 	function GetCountPortCommits() {
 		$count = 0;
 
-		$sql = "
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "
 			SELECT count(DISTINCT CL.id) AS    count
 			  FROM element_pathname EP, commit_log_ports_elements CLPE, commit_log CL
 			 WHERE $this->TreePathCondition
@@ -42,7 +42,7 @@ class CommitsByTreeLocation extends commits {
 			   AND CL.id         = CLPE.commit_log_id";
    
 		if ($this->Debug) echo "<pre>$sql</pre>";
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query($this->dbh, $sql);
 		if ($result) {
 			$myrow = pg_fetch_array($result);
 			$count = $myrow['count'];
@@ -57,7 +57,7 @@ class CommitsByTreeLocation extends commits {
 	function GetCountCommits() {
 		$count = 0;
 
-		$sql = "
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ ."
 			SELECT count(DISTINCT CL.id) AS                 count
 			  FROM element_pathname EP, commit_log_elements CLE, commit_log CL
 			 WHERE $this->TreePathCondition
@@ -65,7 +65,7 @@ class CommitsByTreeLocation extends commits {
 			   AND CL.id         = CLE.commit_log_id";
    
 		if ($this->Debug) echo "<pre>$sql</pre>";
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query($this->dbh, $sql);
 		if ($result) {
 			$myrow = pg_fetch_array($result);
 			$count = $myrow['count'];
@@ -78,7 +78,8 @@ class CommitsByTreeLocation extends commits {
 	}
 
 	function FetchPortCommits() {
-		$sql = "
+		$params = array();
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ ."
 	 SELECT commit_log.commit_date - SystemTimeAdjust()                                                                         AS commit_date_raw,
 			commit_log.id                                                                                               AS commit_log_id,
 			commit_log.encoding_losses                                                                                  AS encoding_losses,
@@ -109,7 +110,8 @@ class CommitsByTreeLocation extends commits {
 			ports.expiration_date                                                                                       AS expiration_date,
 			date_part('epoch', ports.date_added)                                                                        AS date_added,
 			ports.element_id                                                                                            AS element_id,
-			ports.short_description                                                                                     AS short_description";
+			ports.short_description                                                                                     AS short_description,
+			null                                                                                                        AS stf_message";
 		if ($this->UserID) {
 				$sql .= ",
 		        onwatchlist ";
@@ -122,12 +124,13 @@ class CommitsByTreeLocation extends commits {
     FROM commit_log_ports, commit_log, categories, ports, element ";
 
 		if ($this->UserID) {
-				$sql .= "
+			$params[] = $this->UserID;
+			$sql .= "
 	      LEFT OUTER JOIN
 	 (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
 	    FROM watch_list JOIN watch_list_element 
 	        ON watch_list.id      = watch_list_element.watch_list_id
-	       AND watch_list.user_id = " . pg_escape_string($this->UserID) . "
+	       AND watch_list.user_id = $" . count($params) . "
 	       AND watch_list.in_service		
 	  GROUP BY wle_element_id) AS TEMP
 	       ON TEMP.wle_element_id = element.id";
@@ -142,11 +145,13 @@ class CommitsByTreeLocation extends commits {
 ORDER BY CL.commit_date DESC ";
 
    		if ($this->Limit) {
-			$sql .= " LIMIT " . pg_escape_string($this->Limit);
+			$sql .= " LIMIT $" . count($params) + 1;
+			$params[] = $this->Limit;
 		}
 		
 		if ($this->Offset) {
-			$sql .= " OFFSET " . pg_escape_string($this->Offset);
+			$sql .= " OFFSET $" . count($params) + 1;
+			$params[] = $this->Offset;
 		}
 
 
@@ -163,13 +168,13 @@ ORDER BY CL.commit_date DESC ";
 			
 		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
 
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, $sql, $params);
 		if ($this->LocalResult) {
-			$numrows = pg_numrows($this->LocalResult);
+			$numrows = pg_num_rows($this->LocalResult);
 			if ($this->Debug) echo "That would give us $numrows rows";
 		} else {
 			$numrows = -1;
-			echo 'pg_exec failed: ' . "<pre>$sql</pre>";
+			echo 'pg_query_params failed: ' . "<pre>$sql</pre>";
 		}
 
 		return $numrows;
@@ -178,113 +183,98 @@ ORDER BY CL.commit_date DESC ";
 	# neither of these arguments are used in this function
 	# they are present to be compatible with the parent class
 	function Fetch($date = null, $UserID = null) {
-		$sql = "
-		SELECT DISTINCT
-			CL.commit_date - SystemTimeAdjust()                                                                 AS commit_date_raw,
-			CL.id                                                                                               AS commit_log_id,
-			CL.encoding_losses                                                                                  AS encoding_losses,
-			CL.message_id                                                                                       AS message_id,
-			CL.commit_hash_short                                                                                AS commit_hash_short,
-			CL.committer                                                                                        AS committer,
-                        CL.committer_name                                                                                   AS committer_name,
-                        CL.committer_email                                                                                  AS committer_email,
-                        CL.author_name                                                                                      AS author_name,
-                        CL.author_email                                                                                     AS author_email,
-			CL.description                                                                                      AS commit_description,
-			to_char(CL.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')                                         AS commit_date,
-			to_char(CL.commit_date - SystemTimeAdjust(), 'HH24:MI')                                             AS commit_time,
-			element.name                                                                                        AS port,
-			element_pathname(element.id)                                                                        AS pathname,
-			element.status                                                                                      AS status,
-			element_pathname.pathname                                                                           AS element_pathname,
-			CL.message_subject,
-			CL.svn_revision                                                                                     AS svn_revision,
-			NULL AS port_id,
-			0    AS needs_refresh,
-			NULL AS forbidden,
-			NULL AS broken,
-			NULL AS deprecated,
-			NULL AS ignore,
-			commit_log_elements.element_id,
-			NULL AS version,
-			NULL AS epoch,
-			NULL as date_added,
-			NULL AS short_description,
-			NULL AS category_id,
-			NULL AS category,
-			NULL AS watch,
-			NULL AS vulnerable_current,
-			NULL AS vulnerable_past,
-			NULL AS restricted,
-			NULL AS no_cdrom,
-			NULL AS expiration_date,
-			NULL AS is_interactive,
-			NULL AS only_for_archs,
-			NULL AS not_for_archs,
-			NULL AS stf_message,
-			commit_log_elements.revision_name as revision,
-			R.name          AS repo_name,
-			R.repository    AS repository,
-			R.repo_hostname AS repo_hostname,
-			R.path_to_repo  AS path_to_repo ";
-		if ($this->UserID) {
-				$sql .= ",
-		        onwatchlist ";
-	        } else {
-				$sql .= ",
-		        null AS onwatchlist ";
-		}
-
-		$sql .= "
-    FROM commit_log_elements, commit_log CL LEFT OUTER JOIN repo R on  CL.repo_id = R.id, element_pathname, element ";
-
-		if ($this->UserID) {
-				$sql .= "
-	      LEFT OUTER JOIN
-	 (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
-	    FROM watch_list JOIN watch_list_element 
-	        ON watch_list.id      = watch_list_element.watch_list_id
-	       AND watch_list.user_id = " . pg_escape_string($this->UserID) . "
-	       AND watch_list.in_service		
-	  GROUP BY wle_element_id) AS TEMP
-	       ON TEMP.wle_element_id = element.id";
-		}
-
-		$sql .= "
-	  WHERE CL.id IN (SELECT tmp.ID FROM (SELECT DISTINCT CL.id, CL.commit_date
-  FROM element_pathname EP, commit_log_elements CLE, commit_log CL
- WHERE $this->TreePathCondition
-   AND EP.element_id = CLE.element_ID
-   AND CL.id         = CLE.commit_log_id
-ORDER BY CL.commit_date DESC ";
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "
+with mycommits as (
+SELECT tmp.ID as commit_log_id FROM (SELECT DISTINCT CL.id, CL.commit_date
+   FROM element_pathname EP, commit_log_elements CLE, commit_log CL
+  WHERE " . $this->TreePathCondition . "
+    AND EP.element_id = CLE.element_ID
+    AND CL.id         = CLE.commit_log_id
+ ORDER BY CL.commit_date DESC\n";
 
 		if ($this->Limit) {
-			$sql .= "\nLIMIT " . pg_escape_string($this->Limit);
+			$params[] = $this->Limit;
+			$sql .= "\nLIMIT $" . count($params);
 		}
-		
+
 		if ($this->Offset) {
-			$sql .= "\nOFFSET " . pg_escape_string($this->Offset);
+			$params[] = $this->Offset;
+			$sql .= "\nOFFSET $" . count($params) ;
 		}
 
-   		$sql .= ") AS tmp)
-	    AND commit_log_elements.commit_log_id = CL.id
-	    AND commit_log_elements.element_id    = element.id
-        AND element_pathname.element_id       = element.id
-   ORDER BY 1 desc,
-			commit_log_id, element_pathname";
-			
+		$sql .= "
+) as tmp)
+                 SELECT DISTINCT
+                         CL.commit_date - SystemTimeAdjust()                                                                 AS commit_date_raw,
+                         CL.id                                                                                               AS commit_log_id,
+                         CL.encoding_losses                                                                                  AS encoding_losses,
+                         CL.message_id                                                                                       AS message_id,
+                         CL.commit_hash_short                                                                                AS commit_hash_short,
+                         CL.committer                                                                                        AS committer,
+                         CL.committer_name                                                                                   AS committer_name,
+                         CL.committer_email                                                                                  AS committer_email,
+                         CL.author_name                                                                                      AS author_name,
+                         CL.author_email                                                                                     AS author_email,
+                         CL.description                                                                                      AS commit_description,
+                         to_char(CL.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')                                         AS commit_date,
+                         to_char(CL.commit_date - SystemTimeAdjust(), 'HH24:MI')                                             AS commit_time,
+                         null                                                                                                AS port,
+                         null                                                                                                AS pathname,
+                         null                                                                                                AS status,
+                         null                                                                                                AS element_pathname,
+                         CL.message_subject,
+                         CL.svn_revision                                                                                     AS svn_revision,
+                         NULL AS port_id,
+                         0    AS needs_refresh,
+                         NULL AS forbidden,
+                         NULL AS broken,
+                         NULL AS deprecated,
+                         NULL AS ignore,
+                         null as element_id,
+                         NULL AS version,
+                         NULL AS epoch,
+                         NULL as date_added,
+                         NULL AS short_description,
+                         NULL AS category_id,
+                         NULL AS category,
+                         NULL AS watch,
+                         NULL AS vulnerable_current,
+                         NULL AS vulnerable_past,
+                         NULL AS restricted,
+                         NULL AS no_cdrom,
+                         NULL AS expiration_date,
+                         NULL AS is_interactive,
+                         NULL AS only_for_archs,
+                         NULL AS not_for_archs,
+                         NULL AS stf_message,
+                         null as revision,
+                         R.name          AS repo_name,
+                         R.repository    AS repository,
+                         R.repo_hostname AS repo_hostname,
+                         R.path_to_repo  AS path_to_repo,
+                         null AS onwatchlist ";
+
+		# I tried to make '$this->TreePathCondition' a parameter. I was blocked by this error:
+		# Warning: pg_query_params(): Query failed: ERROR: invalid input syntax for type boolean: ""EP.pathname = '/ports/head/MOVED'"" in /usr/local/www/freshports/classes/commits_by_tree_location.php on line 291
+		# pg_query_params failed:
+
+		$sql .= "
+	       FROM mycommits MC join commit_log CL on MC.commit_log_id = CL.id
+                       LEFT OUTER JOIN repo R on  CL.repo_id = R.id ";
 
 
+   		$sql .= "
+   ORDER BY 1 desc, commit_log_id, element_pathname";
 
 		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
 
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, $sql, $params);
 		if ($this->LocalResult) {
-			$numrows = pg_numrows($this->LocalResult);
+			$numrows = pg_num_rows($this->LocalResult);
 			if ($this->Debug) echo "That would give us $numrows rows";
 		} else {
 			$numrows = -1;
-			echo 'pg_exec failed: ' . "<pre>$sql</pre>";
+			echo 'pg_query_params failed: ' . "<pre>$sql</pre>";
 		}
 
 		return $numrows;

@@ -10,31 +10,33 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
-	if (IN_MAINTENCE_MODE) {
+	if (IN_MAINTENANCE_MODE) {
                 header('Location: /' . MAINTENANCE_PAGE, TRUE, 307);
 	}
+
+	const FREEBSD_EMAIL_REGEX = '/.*@FreeBSD.org/i';
 
 	$Title = 'Committer opt-in';
 	freshports_Start($Title,
 					$Title,
 					'FreeBSD, index, applications, ports');
 
-	if (!preg_match("/.*@FreeBSD.org/i", $User->email)) {
+	if (IsSet($User->email) && !preg_match(FREEBSD_EMAIL_REGEX, $User->email)) {
 		# nothing yet
 	} else {
 		if (IsSet($_POST["subscribe"]) && $_POST["subscribe"] && !empty($visitor)) {
 			# if not an email address
 			if (strrpos($_POST["email"], '@') === false) {
-				$committer = pg_escape_string($_POST["email"]);
-		    		$sql = "insert into committer_notify (user_id, committer, status)
-			    			values ($User->id, '$committer', 'A')";
+				$committer = $_POST["email"];
+				
+		    		$sql = 'insert into committer_notify (user_id, committer, status) values ($1, $2, $3)';
 
 				if ($Debug) echo "sql=$sql<br>\n";
 
-				$result = pg_exec($db, $sql) or die("insert query failed " . pg_errormessage());
+				$result = pg_query_params($db, $sql, array($User->id, $committer, 'A'))  or die("insert query failed " . pg_last_error($db));
 
 			    	if (!$result) {
-		        		die("determine committer subscribe failed " . pg_errormessage());
+		        		die("determine committer subscribe failed " . pg_last_error($db));
 	    			}
 			} else {
 				die("please enter just your login, not your email address");
@@ -42,33 +44,30 @@
 		}
 
 		if (IsSet($_POST["unsubscribe"]) && $_POST["unsubscribe"] && !empty($visitor)) {
-			$committer = pg_escape_string($_POST["email"]);
-			$sql = "delete from committer_notify where user_id = $User->id";
+			$sql = 'delete from committer_notify where user_id = $1';
 
 			if ($Debug) echo "sql=$sql<br>\n";
 
-			$result = pg_exec($db, $sql) or die("insert query failed " . pg_errormessage());
+			$result = pg_query_params($db, $sql, array($User->id))  or die("delete query failed " . pg_last_error($db));
 
 			if (!$result) {
-				die("determine committer unsubscribe failed " . pg_errormessage());
+				die("determine committer unsubscribe failed " . pg_last_error($db));
 				}
-
-			Unset($committer);
 			}
 
 
 		if (IsSet($_POST["update"]) && $_POST["update"] && !empty($visitor)) {
-			$committer = pg_escape_string($_POST["email"]);
-			$sql = "update committer_notify 
-				set committer = '$committer'
-				where user_id   = $User->id";
+			$committer = $_POST["email"];
+			$sql = 'update committer_notify 
+				set committer = $1
+				where user_id   = $2';
 
 			if ($Debug) echo "sql=$sql<br>\n";
 
-			$result = pg_exec($db, $sql) or die("insert query failed " . pg_errormessage());
+			$result = pg_query_params($db, $sql, array($committer, $User->id))  or die("update query failed " . pg_last_error($db));
 
 			if (!$result) {
-				die("determine committer subscribe failed " . pg_errormessage());
+				die("determine committer subscribe failed " . pg_last_error($db));
 			}
 		}
 	}
@@ -79,14 +78,14 @@
 	<tr><td class="content">
 
 	<?php echo freshports_MainContentTable(NOBORDER); ?>
-<TR>
-	<? echo freshports_PageBannerText("Committer opt-in"); ?>
-</TR>
+<tr>
+	<?php echo freshports_PageBannerText("Committer opt-in"); ?>
+</tr>
 
-<TR><TD class="textcontent">
+<tr><td class="textcontent">
 <P>
 <?php
-	if (!preg_match(".*@FreeBSD.org", $User->email)) {
+	if (!IsSet($User->email) || !preg_match(FREEBSD_EMAIL_REGEX, $User->email)) {
 ?>
 <p><b><big>This page only works if you are logged in and using a @FreeBSD.org email address.</big></b></p>
 <?php
@@ -102,32 +101,37 @@ which you committed.  In the past, such problems are related to syntax errors in
 <P>
 One committer referred to this service as an automated nagging mentor...
 </P>
-</TD></TR>
+</td></tr>
 
-<TR>
-	<?
+<?php
+
+if (IsSet($User->email)) {
+?>
+
+<tr>
+	<?php
 	echo freshports_PageBannerText("Your opt-in status");
 	?>
-</TR>
+</tr>
 
-<TR><TD>
+<tr><td>
 <P>
-<?
+<?php
 if (!empty($visitor)) {
-	$sql = "select committer
+	$sql = 'select committer
 			  from committer_notify
-			 where user_id = $User->id";
+			 where user_id = $1';
 
 	if ($Debug) {
 		echo "sql=$sql<br>\n";
 	}
 
-	$result = pg_exec($db, $sql) or die("determine committer query failed " . pg_errormessage());
+	$result = pg_query_params($db, $sql, array($User->id))  or die("select query failed " . pg_last_error($db));
 
 	if ($result) {
 		echo 'You are: ';
 		if ($Debug) echo "we found a result there...\n<br>";
-		$numrows = pg_numrows($result);
+		$numrows = pg_num_rows($result);
 		if ($numrows) {
 			$myrow = pg_fetch_array ($result, 0);
 			if ($myrow) {
@@ -148,17 +152,17 @@ if (!empty($visitor)) {
 
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
                your freefall login:
-               <INPUT SIZE="35" NAME="email" VALUE="<?echo $committer ?>"><BR><BR>
-<?
-			if ($numrows) {
+               <INPUT SIZE="35" NAME="email" VALUE="<?php echo $committer ?? '' ?>"><br><br>
+<?php
+			if (IsSet($numrows) && $numrows) {
 ?>
 				<INPUT TYPE="submit" VALUE="update"      NAME="Update my address"> 
 				<INPUT TYPE="submit" VALUE="unsubscribe" NAME="unsubscribe">
-<?
+<?php
 			} else {
 ?>
 				<INPUT TYPE="submit"  VALUE="subscribe" NAME="subscribe">
-<?
+<?php
 			}
 ?>
 
@@ -168,20 +172,24 @@ if (!empty($visitor)) {
 <BIG>Please do not include @FreeBSD.org in your login name.</BIG>
 </p>
 
-</TD></TR>
+</td></tr>
 
-</TABLE>
-</TD>
+<?php
+} // $User->email
+?>
+
+</table>
+</td>
 
   <td class="sidebar">
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
   </td>
 
-</TABLE>
+</table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

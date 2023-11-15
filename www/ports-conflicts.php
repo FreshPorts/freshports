@@ -33,12 +33,12 @@ SELECT distinct P.maintainer, C.name || '/' || E.name AS port_name, f.*
 
 echo "<pre>$sql</pre>";
 
-$result = pg_exec($db, $sql);
+$result = pg_query_params($db, $sql, array());
 if (!$result) {
   echo pg_last_error($db);
   die('that did not work');
 }
-$numrows = pg_numrows($result);
+$numrows = pg_num_rows($result);
 echo '<table><tr><th>Maintainer</th><th>port</th><th>conflicts with</th></tr>';
 for ($i = 0; $i < $numrows; $i++) {
 	 $myrow = pg_fetch_array($result, $i);

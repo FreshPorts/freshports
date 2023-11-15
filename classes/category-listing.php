@@ -17,25 +17,45 @@ class Categories {
 	}
 
 	function GetAllCategoriesOnWatchLists($UserID) {
-		$sql = "
+		$sql = '
    SELECT distinct C.id AS category_id
      FROM watch_list WL, watch_list_element WLE, categories C
-    WHERE WL.user_id     = $UserID
+    WHERE WL.user_id     = $1
       AND WL.id          = WLE.watch_list_id
-      AND WLE.element_id = C.element_id";
+      AND WLE.element_id = C.element_id';
 
-#		echo "<pre>sql = '$sql'</pre><BR>";
+#		echo "<pre>sql = '$sql'</pre><br>";
 
-		$this->result = pg_query($this->dbh, $sql);
+		$this->result = pg_query_params($this->dbh, $sql, array($UserID));
 		if ($this->result) {
-			$numrows = pg_numrows($this->result);
+			$numrows = pg_num_rows($this->result);
 		} else {
 			$numrows = 0;
 		}
 
-        return $numrows;
+		return $numrows;
 	}
-	
+
+	function GetAllCategories($UserID) {
+		$sql = '
+   SELECT name
+     FROM categories
+ ORDER BY name';
+
+		 # why don't we cache this, and recreate it once per day?
+
+#		echo "<pre>sql = '$sql'</pre><br>";
+
+		$this->result = pg_query_params($this->dbh, $sql, array());
+		if ($this->result) {
+			$numrows = pg_num_rows($this->result);
+		} else {
+			$numrows = 0;
+		}
+
+		return $numrows;
+	}
+
 	function FetchNth($N) {
 		#
 		# call GetAllCategoriesOnWatchLists first.

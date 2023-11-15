@@ -1,4 +1,4 @@
-<!-- example from http://www.cssnewbie.com/example/showhide-content/ -->
+/* example from http://www.cssnewbie.com/example/showhide-content/ */
 
 function showHide(shID) {
    if (document.getElementById(shID)) {

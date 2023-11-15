@@ -17,12 +17,17 @@
 					$Title,
 					"FreeBSD, index, applications, ports");
 
+	$notfound = 0;
 	if (IsSet($_REQUEST['notfound'])) $notfound = 1;
 	if (IsSet($_REQUEST['multiple'])) $multiple = 1;
 
-	$package  = pg_escape_string($_REQUEST['package']);
+	if (IsSet($_REQUEST['package'])) {
+		$package  = pg_escape_string($db, $_REQUEST['package']);
+	} else {
+		$package = '';
+	}
 
-	$Searches = new Searches($dbh);
+	$Searches = new Searches($db);
 
 ?>
 	<?php echo freshports_MainTable(); ?>
@@ -31,11 +36,11 @@
 
 	<?php echo freshports_MainContentTable(); ?>
 
-<TR>
-	<? echo freshports_PageBannerText($Title); ?>
-</TR>
+<tr>
+	<?php echo freshports_PageBannerText($Title); ?>
+</tr>
 
-<TR><TD>
+<tr><td>
 <P>
 
 <?php
@@ -52,29 +57,29 @@ The package specified ('<?php echo $packages_html; ?>') could not be found.  We 
 }
 ?>
 </P>
-</TD></TR>
+</td></tr>
 
-</TABLE>
+</table>
 </td>
 
   <td class="sidebar">
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
   </td>
 
-</TABLE>
+</table>
 
 <?php
 	GLOBAL $ShowPoweredBy;
 	$ShowPoweredBy = 1;
 ?>
 
-<TABLE class="fullwidth borderless">
-<TR><TD>
-<? echo freshports_ShowFooter(); ?>
-</TD></TR>
-</TABLE>
+<table class="fullwidth borderless">
+<tr><td>
+<?php echo freshports_ShowFooter(); ?>
+</td></tr>
+</table>
 
 </BODY>
 </HTML>

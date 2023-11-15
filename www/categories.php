@@ -16,7 +16,8 @@
 	$Commit = new Commit($db);
 	$Commit->DateNewestPort();
 
-	freshports_ConditionalGet($Commit->last_modified);
+# Categories does not have that field, yet.
+#	freshports_ConditionalGet($Commit->last_modified);
 
 	$Title = 'Categories';
 	freshports_Start($Title,
@@ -27,7 +28,7 @@
 
 	DEFINE('VIRTUAL', '<sup>*</sup>'); 
 	$Primary['t'] = '';
-    $Primary['f'] = VIRTUAL;
+	$Primary['f'] = VIRTUAL;
 
 	$AllowedToEdit = $User->IsTaskAllowed(FRESHPORTS_TASKS_CATEGORY_VIRTUAL_DESCRIPTION_SET);
 
@@ -60,7 +61,7 @@
 <?php echo freshports_MainContentTable(BORDER); ?>
 
   <tr>
-	<? echo freshports_PageBannerText("$FreshPortsTitle - list of categories"); ?>
+	<?php echo freshports_PageBannerText("$FreshPortsTitle - list of categories"); ?>
   </tr>
 <tr><td>
 <P>
@@ -81,7 +82,7 @@ You can sort each column by clicking on the header.  e.g. click on <strong>Categ
 <table class="category-list fullwidth bordered">
 
 <?php
-$sort = IsSet($_REQUEST['sort']) ? pg_escape_string($_REQUEST['sort']) : '';
+$sort = IsSet($_REQUEST['sort']) ? pg_escape_string($db, $_REQUEST['sort']) : '';
 
 switch ($sort) {
    case 'category':
@@ -109,12 +110,12 @@ $sql = "
          CS.port_count          AS count
     FROM categories C JOIN category_stats CS ON (C.id = CS.category_id)";
 
-$sql .=  " ORDER BY " . pg_escape_string($sort);
+$sql .=  " ORDER BY $1";
 
 if ($Debug) echo '<pre>' . $sql, "</pre>\n";
 //echo $sort, "\n";
 
-$result = pg_exec($db, $sql);
+$result = pg_query_params($db, $sql, array($sort));
 
 $HTML = '<tr>';
 
@@ -151,13 +152,13 @@ if ($sort == "last_update") {
 $HTML .= '</tr>';
 
 if (!$result) {
-   echo "<tr><td colspan=\"$ColSpan\"" . pg_errormessage() . "</td></tr></table></td></td></table>\n";
+   echo "<tr><td colspan=\"$ColSpan\"" . pg_last_error($db) . "</td></tr></table></td></td></table>\n";
    exit;
 } else {
 	$NumTopics	   = 0;
 	$NumPorts      = 0;
 	$CategoryCount = 0;
-	$NumRows = pg_numrows($result);
+	$NumRows = pg_num_rows($result);
     if ($NumRows) {
       for ($i = 0; $i < $NumRows; $i++) {
         $myrow = pg_fetch_array($result, $i);
@@ -216,7 +217,7 @@ echo $HTML;
 ?>
 
   <td class="sidebar">
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
   </td>
@@ -224,7 +225,7 @@ echo $HTML;
 </tr>
 </table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

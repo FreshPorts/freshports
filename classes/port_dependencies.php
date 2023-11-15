@@ -37,7 +37,7 @@ class PortDependencies {
 
 		$Debug = 0;
 
-		$sql = "
+		$sql = '
   SELECT port_id,
          port_id_dependent_upon,
          dependency_type,
@@ -48,22 +48,22 @@ class PortDependencies {
          LEFT OUTER JOIN ports      ON ports.id         = port_dependencies.port_id
          LEFT OUTER JOIN categories ON categories.id    = ports.category_id
          LEFT OUTER JOIN element    ON ports.element_id = element.id
-   WHERE port_id_dependent_upon = " . pg_escape_string($PortID) . "
-     AND dependency_type = '" . pg_escape_string($depends_type) . "'
-ORDER BY status, category, port ";
+   WHERE port_id_dependent_upon = $1
+     AND dependency_type        = $2
+ORDER BY status, category, port ';
 
 		if ($Debug) echo "<pre>$sql</pre>";
 
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, $sql, array($PortID, $depends_type));
 		if ($this->LocalResult) {
-			$numrows = pg_numrows($this->LocalResult);
+			$numrows = pg_num_rows($this->LocalResult);
 			if ($numrows == 1) {
 				$myrow = pg_fetch_array ($this->LocalResult);
 				$this->_PopulateValues($myrow);
 
 			}
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
+			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
 		}
 
 		return $numrows;

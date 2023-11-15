@@ -32,12 +32,13 @@ class VuXML {
 
 	function FetchByVID($VID) {
 		$this->vid = $VID;
-		$sql = "select * from vuxml where vid = '" . pg_escape_string($VID) . "'";
-#		echo "<pre>sql = '$sql'</pre><BR>";
+		pg_query($this->dbh, "set client_encoding = 'ISO-8859-15'");
+		$sql = 'select * from vuxml where vid = $1';
+#		echo "<pre>sql = '$sql'</pre><br>";
 
-		$result = pg_query($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($VID));
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			# there should only be one row.
 			if ($numrows == 1) {
 				$myrow = pg_fetch_array ($result, 0);
@@ -47,9 +48,10 @@ class VuXML {
 				$this->FetchReferences();
 			} else {
 				die('I found ' . $numrows . ' entries for ' . htmlentities($VID) . '. There should be only one.');
+				syslog(LOG_ERR, 'I found ' . $numrows . ' entries for ' . htmlentities($VID) . '. There should be only one.');
 			}
 		} else {
-			echo 'VuXML SQL failed: ' . $result . pg_last_error();
+			syslog(LOG_ERR, 'VuXML SQL failed: ' . $result . pg_last_error($this->dbh));
 		}
 
         return $this->id;
@@ -85,7 +87,11 @@ class VuXML {
 		if (IsSet($this->date_entry))     echo "Entry     " . $this->date_entry     . '<br>';
 		if (IsSet($this->date_modified))  echo "Modified  " . $this->date_modified  . '<br>';
 
-		$this->packages->display();
+		if (IsSet($this->packages)) {
+			$this->packages->display();
+		} else {
+			echo 'no package data found - did an error occur?';
+		}
 		$this->references->display();
 	}
 

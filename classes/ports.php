@@ -38,10 +38,9 @@ class Port {
 	var $date_added;
 	var $categories;
 	var $master_port;
-	var $latest_link;
-	var $no_latest_link;
 	var $no_package;
 	var $package_name;
+	var $package_names;
 	var $restricted;
 	var $no_cdrom;
 	var $expiration_date;
@@ -55,6 +54,7 @@ class Port {
 	var $fetch_depends;
 	var $extract_depends;
 	var $patch_depends;
+	var $test_depends;
 	var $uses;
 	var $pkgmessage;
 	var $distinfo;
@@ -102,6 +102,12 @@ class Port {
 
 	var $committer; 
 
+	// needed for watch.php
+	var $committer_name;
+	var $committer_email;
+	var $author_name;
+	var $author_email;
+
 	var $repository;
 	var $repo_hostname;
 	var $git_hostname; # not yet populated
@@ -119,98 +125,121 @@ class Port {
 	}
 
 	function _PopulateValues($myrow) {
-		$this->id                 = $myrow["id"];
-		$this->element_id         = $myrow["element_id"];
-		$this->category_id        = $myrow["category_id"];
-		$this->short_description  = $myrow["short_description"];
-		$this->long_description   = isset($myrow["long_description"]) ? $myrow["long_description"] : null;
-		$this->version            = $myrow["version"];
-		$this->revision           = $myrow["revision"];
-		$this->epoch              = $myrow["epoch"];
-		$this->maintainer         = $myrow["maintainer"];
-		$this->homepage           = $myrow["homepage"];
-		$this->master_sites       = isset($myrow["master_sites"]) ? $myrow["master_sites"] : null;
-		$this->extract_suffix     = $myrow["extract_suffix"];
-		$this->package_exists     = $myrow["package_exists"];
+		$this->id                   = $myrow["id"];
+		$this->element_id           = $myrow["element_id"];
+		$this->category_id          = $myrow["category_id"];
+		$this->short_description    = $myrow["short_description"];
+		$this->long_description     = isset($myrow["long_description"]) ? $myrow["long_description"] : null;
+		$this->version              = $myrow["version"];
+		$this->revision             = $myrow["revision"];
+		$this->epoch                = $myrow["epoch"] ?? null;
+		$this->maintainer           = $myrow["maintainer"];
+		$this->homepage             = $myrow["homepage"];
+		$this->master_sites         = isset($myrow["master_sites"]) ? $myrow["master_sites"] : null;
+		$this->extract_suffix       = $myrow["extract_suffix"];
+		$this->package_exists       = $myrow["package_exists"];
 		
-		$this->depends_build      = isset($myrow["depends_build"]) ? $myrow["depends_build"] : null;
-		$this->depends_run        = isset($myrow["depends_run"]) ? $myrow["depends_run"] : null;
-		$this->depends_lib        = isset($myrow["depends_lib"]) ? $myrow["depends_lib"] : null;
-		$this->last_commit_id     = isset($myrow["last_commit_id"]) ? $myrow["last_commit_id"] : null;
-		$this->found_in_index     = isset($myrow["found_in_index"]) ? $myrow["found_in_index"] : null;
-		$this->forbidden          = $myrow["forbidden"];
-		$this->broken             = $myrow["broken"];
-		$this->deprecated         = $myrow["deprecated"];
-		$this->ignore             = $myrow["ignore"];
-		$this->date_added         = isset($myrow["date_added"]) ? $myrow["date_added"] : null;
-		$this->categories         = isset($myrow["categories"]) ? $myrow["categories"] : null;
-		$this->master_port        = $myrow["master_port"];
-		$this->latest_link        = isset($myrow["latest_link"])    ? $myrow["latest_link"]    : null;
-		$this->no_latest_link     = isset($myrow["no_latest_link"]) ? $myrow["no_latest_link"] : null;
-		$this->no_package         = $myrow["no_package"];
-		$this->package_name       = $myrow["package_name"];
-		$this->restricted         = $myrow["restricted"];
-		$this->no_cdrom           = $myrow["no_cdrom"];
-		$this->expiration_date    = $myrow["expiration_date"];
-		$this->is_interactive     = isset($myrow["is_interactive"]) ? $myrow["is_interactive"] : null;
-		$this->only_for_archs     = isset($myrow["only_for_archs"]) ? $myrow["only_for_archs"] : null;
-		$this->not_for_archs      = isset($myrow["not_for_archs"]) ? $myrow["not_for_archs"] : null;
-		$this->status             = $myrow["status"];
-		$this->showconfig         = isset($myrow["showconfig"]) ? $myrow["showconfig"] : null;
-		$this->options_name       = isset($myrow["options_name"]) ? $myrow["options_name"] : null;
-		$this->license            = $myrow["license"];
-		$this->fetch_depends      = isset($myrow["fetch_depends"])   ? $myrow["fetch_depends"]   : null;
-		$this->extract_depends    = isset($myrow["extract_depends"]) ? $myrow["extract_depends"] : null;
-		$this->patch_depends      = isset($myrow["patch_depends"])   ? $myrow["patch_depends"]   : null;
-		$this->uses               = isset($myrow["uses"])            ? $myrow["uses"]            : null;
-		$this->pkgmessage         = isset($myrow["pkgmessage"])      ? $myrow["pkgmessage"]      : null;
-		$this->distinfo           = isset($myrow["distinfo"])        ? $myrow["distinfo"]        : null;
-		$this->license_restricted  =  isset($myrow["license_restricted"])   ? $myrow["license_restricted"]   : null;
-		$this->manual_package_build = isset($myrow["manual_package_build"]) ? $myrow["manual_package_build"] : null;
-		$this->license_perms        = isset($myrow["license_perms"])        ? $myrow["license_perms"]        : null;
-		$this->conflicts            = isset($myrow["conflicts"])            ? $myrow["conflicts"]            : null;
-		$this->conflicts_build      = isset($myrow["conflicts_build"])      ? $myrow["conflicts_build"]      : null;
-		$this->conflicts_install    = isset($myrow["conflicts_install"])    ? $myrow["conflicts_install"]    : null;
-		$this->generate_plist       = isset($myrow["generate_plist"])       ? $myrow["generate_plist"]       : null;
+		$this->depends_build        = $myrow["depends_build"]        ?? null;
+		$this->depends_run          = $myrow["depends_run"]          ?? null;
+		$this->depends_lib          = $myrow["depends_lib"]          ?? null;
+		$this->last_commit_id       = $myrow["last_commit_id"]       ?? null;
+		$this->found_in_index       = $myrow["found_in_index"]       ?? null;
+		$this->forbidden            = $myrow["forbidden"];
+		$this->broken               = $myrow["broken"]               ?? null;
+		$this->deprecated           = $myrow["deprecated"]           ?? null;
+		$this->ignore               = $myrow["ignore"]               ?? null;
+		$this->date_added           = $myrow["date_added"]           ?? null;
+		$this->categories           = $myrow["categories"]           ?? null;
+		$this->master_port          = $myrow["master_port"]          ?? null;
+		$this->no_package           = $myrow["no_package"]           ?? null;
+		$this->package_name         = $myrow["package_name"];
+		$this->package_names        = $myrow["package_names"]        ?? null;
+		$this->restricted           = $myrow["restricted"]           ?? null;
+		$this->no_cdrom             = $myrow["no_cdrom"]             ?? null;
+		$this->expiration_date      = $myrow["expiration_date"]      ?? null;
+		$this->is_interactive       = $myrow["is_interactive"]       ?? null;
+		$this->only_for_archs       = $myrow["only_for_archs"]       ?? null;
+		$this->not_for_archs        = $myrow["not_for_archs"]        ?? null;
+		$this->status               = $myrow["status"];
+		$this->showconfig           = $myrow["showconfig"]           ?? null;
+		$this->options_name         = $myrow["options_name"]         ?? null;
+		$this->license              = $myrow["license"]              ?? null;
+		$this->fetch_depends        = $myrow["fetch_depends"]        ?? null;
+		$this->extract_depends      = $myrow["extract_depends"]      ?? null;
+		$this->patch_depends        = $myrow["patch_depends"]        ?? null;
+		$this->test_depends         = $myrow["test_depends"]         ?? null;
+		$this->uses                 = $myrow["uses"]                 ?? null;
+		$this->pkgmessage           = $myrow["pkgmessage"]           ?? null;
+		$this->distinfo             = $myrow["distinfo"]             ?? null;
+		$this->license_restricted   = $myrow["license_restricted"]   ?? null;
+		$this->manual_package_build = $myrow["manual_package_build"] ?? null;
+		$this->license_perms        = $myrow["license_perms"]        ?? null;
+		$this->conflicts            = $myrow["conflicts"]            ?? null;
+		$this->conflicts_build      = $myrow["conflicts_build"]      ?? null;
+		$this->conflicts_install    = $myrow["conflicts_install"]    ?? null;
+		$this->generate_plist       = $myrow["generate_plist"]       ?? null;
 
 		$this->port                 = $myrow["port"];
 		$this->category             = $myrow["category"];
-		$this->needs_refresh        = isset($myrow["needs_refresh"]) ? $myrow["needs_refresh"] : null;
-		$this->updated              = isset($myrow["updated"])       ? $myrow["updated"]       : null;
+		$this->needs_refresh        = $myrow["needs_refresh"]        ?? null;
+		$this->updated              = $myrow["updated"]              ?? null;
 
-		$this->onwatchlist        = $myrow["onwatchlist"];
-		$this->svn_revision       = isset($myrow["svn_revision"])  ? $myrow["svn_revision"]  : null;
+		$this->onwatchlist          = $myrow["onwatchlist"]          ?? null;
+		$this->svn_revision         = $myrow["svn_revision"]         ?? null;
 
-		$this->update_description = isset($myrow["update_description"]) ? $myrow["update_description"] : null;
-		$this->message_id         = isset($myrow["message_id"])         ? $myrow["message_id"]         : null;
-		$this->commit_hash_short  = isset($myrow["commit_hash_short"])  ? $myrow["commit_hash_short"]  : null;
-		$this->encoding_losses    = isset($myrow["encoding_losses"])    ? $myrow["encoding_losses"]    : null;
-		$this->committer          = isset($myrow["committer"])          ? $myrow["committer"]          : null;
+		$this->update_description   = $myrow["update_description"]   ?? null;
+		$this->message_id           = $myrow["message_id"]           ?? null;
+		$this->commit_hash_short    = $myrow["commit_hash_short"]    ?? null;
+		$this->encoding_losses      = $myrow["encoding_losses"]      ?? null;
+		$this->committer            = $myrow["committer"]            ?? null;
+		$this->committer_name       = $myrow["committer_name"]       ?? null;
+		$this->committer_email      = $myrow["committer_email"]      ?? null;
+		$this->author_name          = $myrow["author_name"]          ?? null;
+		$this->author_email         = $myrow["author_email"]         ?? null;
 
-		$this->vulnerable_current = $myrow["vulnerable_current"];
-		$this->vulnerable_past    = $myrow["vulnerable_past"];
+		$this->vulnerable_current   = $myrow["vulnerable_current"]   ?? null;
+		$this->vulnerable_past      = $myrow["vulnerable_past"]      ?? null;
 
-		$this->pkg_plist_library_matches = $myrow["pkg_plist_library_matches"];
+		if (IsSet($this->pkg_plist_library_matches)) {
+			$this->pkg_plist_library_matches = $myrow["pkg_plist_library_matches"];
+		}
 
 		// We might be looking at category lang.  japanese/gawk is listed in both japanese and lang.
 		// So when looking at lang, we don't want to say, Also listed in lang...  
 		//
-		$this->category_looking_at= isset($myrow["category_looking_at"]) ? $myrow["category_looking_at"] : null;
+		$this->category_looking_at  = isset($myrow["category_looking_at"]) ? $myrow["category_looking_at"] : null;
 
-		$this->repository         = $myrow['repository'];
-		$this->repo_hostname      = $myrow['repo_hostname'];
-#		$this->git_hostname       = '';
-		$this->path_to_repo       = $myrow['path_to_repo'];
-		$this->element_pathname   = $myrow['element_pathname'];
-		$this->quarterly_revision = $myrow['quarterly_revision'];
+		$this->repository           = $myrow['repository']       ?? null;
+		$this->repo_hostname        = $myrow['repo_hostname']    ?? null;
+#		$this->git_hostname         = '';
+		$this->path_to_repo         = $myrow['path_to_repo']     ?? null;
+		$this->element_pathname     = $myrow['element_pathname'] ?? null;
+		$this->quarterly_revision   = $myrow['quarterly_revision'] ?? null;
 
-		$this->last_commit_date   = isset($myrow['last_commit_date']) ? $myrow['last_commit_date'] : null;
+		$this->last_commit_date     = isset($myrow['last_commit_date']) ? $myrow['last_commit_date'] : null;
 
 		$this->ConflictMatches();
 	}
 
-	function FetchByElementID($element_id, $UserID = 0) {
+	function GetBranchPath($Branch) {
+		if ($Branch === BRANCH_HEAD) {
+			$path = FRESHPORTS_PORTS_TREE_HEAD_PREFIX;
+		} else {
+			$path = FRESHPORTS_PORTS_TREE_BRANCH_PREFIX . '/' . $Branch;
+		}
 
+		return $path;
+	}
+	function setDebug($Debug) {
+		$this->Debug = $Debug;
+	}
+
+	function getDebug() {
+		return $this->Debug;
+	}
+
+	function FetchByElementID($element_id, $UserID = 0) {
+	
 		# fetch a single port based on element_id.
 		# e.g. net/samba
 		#
@@ -218,8 +247,7 @@ class Port {
 
 		$this->element_id = $element_id;
 
-		$sql = "set client_encoding = 'ISO-8859-15';
-select ports.id,
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . "\nselect ports.id,
        ports.element_id,
        ports.category_id       as category_id, 
        ports.short_description as short_description, 
@@ -242,8 +270,6 @@ select ports.id,
        ports.deprecated, 
        ports.ignore, 
        ports.master_port,
-       ports.latest_link,
-       ports.no_latest_link,
        ports.no_package,
        ports.package_name,
        ports.restricted,
@@ -259,6 +285,7 @@ select ports.id,
        ports.fetch_depends,
        ports.extract_depends,
        ports.patch_depends,
+       ports.test_depends,
        ports.uses,
        ports.pkgmessage,
        ports.distinfo,
@@ -279,6 +306,7 @@ select ports.id,
        commit_log.svn_revision,
        commit_log.commit_hash_short,
        commit_log.message_id,
+       R.name          AS repo_name,
        R.repository,
        R.repo_hostname,
        R.path_to_repo,
@@ -286,55 +314,61 @@ select ports.id,
        PortVersionOnQuarterlyBranch(ports.id, categories.name || '/' || element.name) AS quarterly_revision  ";
 
 		if ($UserID) {
-			$sql .= ",
-	        TEMP.onwatchlist";
+			$sql .= ',
+	        TEMP.onwatchlist';
 		}
 		else
 		{
-			$sql .= ",
-			0 as onwatchlist";
+			$sql .= ',
+			0 as onwatchlist';
 		}
 
-		$sql .= "
+		$sql .= '
        from categories, element, ports_vulnerable right outer join ports 
                        on (ports_vulnerable.port_id = ports.id)
                left outer join commit_log on ports.last_commit_id = commit_log.id 
-               LEFT OUTER JOIN repo R ON commit_log.repo_id = R.id ";
+               LEFT OUTER JOIN repo R ON commit_log.repo_id = R.id ';
 
 		if ($UserID) {
-			$sql .= "
+			$sql .= '
 	      LEFT OUTER JOIN
 	 (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
 	    FROM watch_list JOIN watch_list_element 
 	        ON watch_list.id      = watch_list_element.watch_list_id
-	       AND watch_list.user_id = " . pg_escape_string($UserID) . "
+	       AND watch_list.user_id = $2
            AND watch_list.in_service
 	  GROUP BY element_id) AS TEMP
-	       ON TEMP.wle_element_id = ports.element_id";
+	       ON TEMP.wle_element_id = ports.element_id';
+	       		$params = array($this->element_id, $UserID);
+		} else {
+			$params = array($this->element_id);
 		}
 	
 
-		$sql .= " WHERE element.id        = " . pg_escape_string($this->element_id) . " 
+		$sql .= ' WHERE element.id        = $1
 			        and ports.category_id = categories.id 
-			        and ports.element_id  = element.id ";
+			        and ports.element_id  = element.id ';
 
 
 		if ($this->Debug) {
-			echo "<pre>$sql</pre>";
+			echo "<pre>$sql</pre><br>";
 		}
 
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, "set client_encoding = 'ISO-8859-15'", array()) or die('query failed ' . pg_last_error($this->dbh));
+		$result = pg_query_params($this->dbh, $sql, $params);
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
-				if ($this->Debug) echo "FetchByElementID succeeded<BR>";
+				if ($this->Debug) {
+					echo __FUNCTION__ . " succeeded<br>";
+				}
 				$myrow = pg_fetch_array ($result);
 				$this->_PopulateValues($myrow);
 			} else {
 				die(__CLASS__ . ':' . __FUNCTION__ . " got $numrows rows at line " . __LINE__);
 			}
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
+			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
 		}
 	}
 
@@ -342,7 +376,7 @@ select ports.id,
 		# fetch a single port based on id
 		# used by missing-port.php
 
-		$sql = "set client_encoding = 'ISO-8859-15'; select ports.id, 
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . "select ports.id, 
 		               ports.element_id,
 		               element_pathname(ports.element_id)        as element_pathname,
 		               ports.category_id       as category_id,
@@ -367,8 +401,6 @@ select ports.id,
 		               ports.ignore, 
 		               to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added,
 		               ports.master_port,
-		               ports.latest_link,
-		               ports.no_latest_link,
 		               ports.no_package,
 		               ports.package_name,
 		               ports.restricted,
@@ -384,6 +416,7 @@ select ports.id,
 		               ports.fetch_depends,
 		               ports.extract_depends,
 		               ports.patch_depends,
+		               ports.test_depends,
 		               ports.uses,
 		               ports.pkgmessage,
 		               ports.distinfo,
@@ -422,29 +455,31 @@ END as onwatchlist';
 		}
 
 
-		$sql .= " from categories, element, ports_vulnerable right outer join ports
+		$sql .=' from categories, element, ports_vulnerable right outer join ports
                        on (ports_vulnerable.port_id = ports.id)
                left outer join commit_log on ports.last_commit_id = commit_log.id 
-               LEFT OUTER JOIN repo R ON commit_log.repo_id = R.id ";
+               LEFT OUTER JOIN repo R ON commit_log.repo_id = R.id ';
 
 		#
 		# if the watch list id is provided (i.e. they are logged in and have a watch list id...)
 		#
 		if ($UserID) {
-			$sql .="
+			$sql .='
 LEFT OUTER JOIN (
 SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
     FROM watch_list JOIN watch_list_element
         ON watch_list.id      = watch_list_element.watch_list_id
-       AND watch_list.user_id = " . pg_escape_string($UserID) . "
+       AND watch_list.user_id = $2
        AND watch_list.in_service
   GROUP BY element_id
 ) AS TEMP
-ON TEMP.wle_element_id = ports.element_id";
-
+ON TEMP.wle_element_id = ports.element_id';
+			$params = array($id, $UserID);
+		} else {
+			$params = array($id);
 		}
 
-		$sql .= "\nWHERE ports.id        = " . pg_escape_string($id) . " 
+		$sql .= "\nWHERE ports.id        = $1
 		          and ports.category_id = categories.id 
 		          and ports.element_id  = element.id ";
 
@@ -452,27 +487,181 @@ ON TEMP.wle_element_id = ports.element_id";
 			echo "<pre>$sql</pre>";
 		}
 
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, "set client_encoding = 'ISO-8859-15'", array()) or die('query failed ' . pg_last_error($this->dbh));
+		$result = pg_query_params($this->dbh, $sql, $params);
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
-				if ($this->Debug) echo "FetchByID succeeded<BR>";
+				if ($this->Debug) {
+					echo __FUNCTION__ . " succeeded<br>";
+				}
 				$myrow = pg_fetch_array ($result);
 				$this->_PopulateValues($myrow);
-				$result = $this->{'id'};
+				$result = $this->id;
 			}
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
+			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
 		}
 
 		return $result;
 	}
 
+	function FetchByCategoryPortBranch($Category, $Port, $Branch, $UserID = 0) {
+		# fetch a single port based on Category/Name on a Branch.
+		# used by new-url-parsing.php
+		# returns true if found, false otherwise
+
+		# b for boolean
+		$bResult = false;
+
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . "select ports.id, 
+		               ports.element_id,
+		               element_pathname(ports.element_id)        as element_pathname,
+		               ports.category_id       as category_id,
+		               ports.short_description as short_description, 
+		               ports.long_description, 
+		               ports.version           as version,
+		               ports.revision          as revision, 
+		               ports.portepoch         as epoch, 
+		               ports.maintainer,
+		               ports.homepage, 
+		               ports.master_sites, 
+		               ports.extract_suffix, 
+		               ports.package_exists,
+		               ports.depends_build, 
+		               ports.depends_run, 
+		               ports.depends_lib, 
+		               ports.last_commit_id, 
+		               ports.found_in_index,
+		               ports.forbidden, 
+		               ports.broken, 
+		               ports.deprecated, 
+		               ports.ignore, 
+		               to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added,
+		               ports.master_port,
+		               ports.no_package,
+		               ports.package_name,
+		               ports.restricted,
+		               ports.no_cdrom,
+		               ports.expiration_date,
+		               ports.is_interactive,
+		               ports.only_for_archs,
+		               ports.not_for_archs,
+		               ports.status,
+		               ports.showconfig,
+		               ports.options_name,
+		               ports.license,
+		               ports.fetch_depends,
+		               ports.extract_depends,
+		               ports.patch_depends,
+		               ports.test_depends,
+		               ports.uses,
+		               ports.pkgmessage,
+		               ports.distinfo,
+		               ports.license_restricted,
+		               ports.manual_package_build,
+		               ports.license_perms,
+		               ports.conflicts,
+		               ports.conflicts_build,
+		               ports.conflicts_install,
+		               ports.categories as categories,
+		               element.name     as port, 
+		               categories.name  as category,
+		               ports_vulnerable.current as vulnerable_current,
+		               ports_vulnerable.past    as vulnerable_past,
+		               pkg_plist(ports.id) AS pkg_plist_library_matches,
+		               commit_log.commit_date - SystemTimeAdjust() AS last_commit_date,
+		               commit_log.svn_revision,
+		               commit_log.commit_hash_short,
+		               commit_log.message_id,
+		               R.repository,
+		               R.repo_hostname,
+		               R.path_to_repo,
+		               element_pathname(ports.element_id) as element_pathname,
+		               PortVersionOnQuarterlyBranch(ports.id, categories.name || '/' || element.name) AS quarterly_revision ";
+
+		if ($UserID) {
+			$sql .= ', 
+CASE WHEN TEMP.onwatchlist IS NULL
+THEN 0 ELSE 1
+END as onwatchlist';
+		}
+		else
+		{
+		   $sql .= ',
+		   0 as onwatchlist';
+		}
+
+
+		$params[] = $Port;
+		$sql .=' from ports join element    on element.name = $' . count($params) . ' and ports.element_id = element.id ' . "\n";
+		
+		$params[] = $Category;
+		$sql .= '
+		                    join categories on categories.id = ports.category_id and categories.name = $' . count($params) . "\n";
+		
+		# this identifies the branch we are on
+		# For now, just head.
+		$params[] = $this->GetBranchPath($Branch) . '/' . $Category  . '/' . $Port;
+		$sql .= '
+		                    join element_pathname on ports.element_id = element_pathname.element_id and element_pathname.pathname = $' . count($params) . "\n";
+		                    
+		$sql .= ' left outer join ports_vulnerable on (ports_vulnerable.port_id = ports.id)
+               left outer join commit_log on ports.last_commit_id = commit_log.id 
+               LEFT OUTER JOIN repo R ON commit_log.repo_id = R.id ';
+
+		#
+		# if the watch list id is provided (i.e. they are logged in and have a watch list id...)
+		#
+		if ($UserID) {
+			$params[] = $UserID;
+			$sql .='
+LEFT OUTER JOIN (
+SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
+    FROM watch_list JOIN watch_list_element
+        ON watch_list.id      = watch_list_element.watch_list_id
+       AND watch_list.user_id = $' . count($params) . '
+       AND watch_list.in_service
+  GROUP BY element_id
+) AS TEMP
+ON TEMP.wle_element_id = ports.element_id';
+		}
+
+#		$sql .= "\nWHERE ports.id        = $1
+#		          and ports.category_id = categories.id 
+#		          and ports.element_id  = element.id ";
+#
+		if ($this->Debug) {
+			echo "<pre>$sql</pre>";
+		}
+
+		$result = pg_query_params($this->dbh, "set client_encoding = 'ISO-8859-15'", array()) or die('query failed ' . pg_last_error($this->dbh));
+		$result = pg_query_params($this->dbh, $sql, $params);
+		if ($result) {
+			$numrows = pg_num_rows($result);
+			if ($numrows == 1) {
+				if ($this->Debug) {
+					echo __FUNCTION__ . " succeeded<br>";
+				}
+				$myrow = pg_fetch_array ($result);
+				$this->_PopulateValues($myrow);
+				$bResult = true;
+			}
+		} else {
+			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
+		}
+
+		return $bResult;
+	}
+
 	function FetchByCategoryInitialise($CategoryName, $UserID = 0, $PageSize = 0, $PageNo = 0, $Branch = BRANCH_HEAD) {
 		# fetch all ports based on category
 		# e.g. id for net
-		
-		$sql = "set client_encoding = 'ISO-8859-15';";
+
+#		die("into " . __FUNCTION__ . 'with branch = ' . $Branch);
+
+		$params = array();		
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n";
 		if ($UserID) {
 			$sql .= "SELECT PE.*,
 
@@ -512,8 +701,6 @@ SELECT P.*, element.name    as port
         ports.ignore,
         to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added,
         ports.master_port,
-        ports.latest_link,
-        ports.no_latest_link,
         ports.no_package,
         ports.package_name,
         ports.restricted,
@@ -523,12 +710,13 @@ SELECT P.*, element.name    as port
         ports.only_for_archs,
         ports.not_for_archs,
         ports.status,
-        ports.showconfig,
+        ports.showconfig, 
         ports.options_name,
         ports.license,
         ports.fetch_depends,
         ports.extract_depends,
         ports.patch_depends,
+        ports.test_depends,
         ports.uses,
         ports.pkgmessage,
         ports.distinfo,
@@ -568,17 +756,24 @@ SELECT P.*, element.name    as port
         categories, ports_categories, categories PRIMARY_CATEGORY, element
   WHERE ports_categories.port_id     = ports.id
     AND ports_categories.category_id = categories.id
-    AND categories.name              = '" . pg_escape_string($CategoryName) . "'
+    AND categories.name              = $1
     AND PRIMARY_CATEGORY.id          = ports.category_id
     AND ports.element_id             = element.id) AS P
    ON (P.element_id     = element.id
-   AND element.status   = 'A') JOIN element_pathname EP ON P.element_id = EP.element_id AND EP.pathname like '/ports/";
+   AND element.status   = 'A') JOIN element_pathname EP ON P.element_id = EP.element_id AND EP.pathname like $2";
+   
+	   	$params[] = $CategoryName;
 
-	if ($Branch != BRANCH_HEAD) {
-		$sql .= 'branches/';
-	}
+		# create a pathname to compare against   	
+	   	$param_pathname = '/ports/';
 
-	$sql .= pg_escape_string($Branch) . "/%'";
+		if ($Branch != BRANCH_HEAD) {
+			$param_pathname .= 'branches/';
+			# php arrays are zero-based
+		}
+
+		$param_pathname .= $Branch . '/%';
+		$params[] = $param_pathname;
 
 		if ($UserID) {
 			$sql .= ") AS PE
@@ -587,35 +782,42 @@ LEFT OUTER JOIN
          COUNT(watch_list_id) as watchlistcount
     FROM watch_list JOIN watch_list_element
       ON watch_list.id      = watch_list_element.watch_list_id
-     AND watch_list.user_id = " . pg_escape_string($UserID) . "
+     AND watch_list.user_id = $3
      AND watch_list.in_service
  GROUP BY wle_element_id) AS TEMP
   ON TEMP.wle_element_id = PE.element_id";
-    	}
 
+  			$params[] = $UserID;
+	    	}
+  		
 		$sql .= " ORDER by port ";
 		
-#echo "\$PageSize='$PageSize'\n";
+#		echo "\$PageSize='$PageSize'\n";
+
 		if ($PageSize) {
-			$sql .= " LIMIT $PageSize";
+			$params[] =  $PageSize;
+			$sql .= ' LIMIT $' . count($params);
 			if ($PageNo) {
-				$sql .= ' OFFSET ' . pg_escape_string(($PageNo - 1 ) * $PageSize);
+				$params[] = ($PageNo - 1 ) * $PageSize;
+				$sql .= ' OFFSET $' . count($params);
 			}
 		}
 
 		if ($this->Debug) echo "<pre>$sql</pre>";
 
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, "set client_encoding = 'ISO-8859-15'", array()) or die('query failed ' . pg_last_error($this->dbh));
+		$this->LocalResult = pg_query_params($this->dbh, $sql, $params);
 		if ($this->LocalResult) {
-			$numrows = pg_numrows($this->LocalResult);
+			$numrows = pg_num_rows($this->LocalResult);
 			if ($numrows == 1) {
-#				echo "fetched by ID succeeded<BR>";
+				if ($this->Debug) {
+					echo __FUNCTION__ . " succeeded<br>";
+				}
 				$myrow = pg_fetch_array ($this->LocalResult);
 				$this->_PopulateValues($myrow);
-
 			}
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
+			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
 		}
 
 		return $numrows;
@@ -637,23 +839,26 @@ LEFT OUTER JOIN
 		# return non-zero if this port is on the supplied watch list ID.
 		# zero otherwise.
 		#
-
+		# I suspect this function is unused : dvl 2023-03-31
 		$result = 0;
 
-		$sql = "	select element_id
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n". 
+		                      ' select element_id
 					  from watch_list_element
-					 where watch_list_id = " . pg_escape_string($WatchListID) . "
-					   and element_id    = " . pg_escape_string($this->element_id);
+					 where watch_list_id = $1
+					   and element_id    = $2';
 
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($WatchListID, $this->element_id));
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
-				if ($this->Debug) echo "IsOnWatchList succeeded<BR>";
+				if ($this->Debug) {
+					echo __FUNCTION__ . " succeeded<br>";
+				}
 				$result = 1;
 			}
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
+			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
 		}
 
 		return $result;
@@ -664,12 +869,14 @@ LEFT OUTER JOIN
 		# introduced for virtual categories.
 		# given a category port combination, let's get the port id
 		# and then fetch
+		# NOTE: 2023-03-31 The system doesn't allow you to fetch category/port where category is virtual
+		# I see this used in www/--/index.php though
 		#
 
-		$sql = "select GetPortID('" . pg_escape_string($Category) . "', '"  . pg_escape_string($Port) . "') as port_id";
-		$result = pg_exec($this->dbh, $sql);
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . 'select GetPortID($1, $2) as port_id';
+		$result = pg_query_params($this->dbh, $sql, params($Category, $Port));
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
 				$myrow = pg_fetch_row($result);
 				$PortID = $myrow[0];
@@ -683,7 +890,7 @@ LEFT OUTER JOIN
 				echo 'that port was not found:' . $Category . '/' . $Port;
 			}
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
+			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
 		}
 
 		return $result;
@@ -696,19 +903,19 @@ LEFT OUTER JOIN
 
 		$result = 0;
 
-		$sql = 'select watch_list_count(' . pg_escape_string($this->element_id) . ')';
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . 'select watch_list_count($1)';
 
-		if ($this->Debug) echo $sql;
+		if ($this->Debug) echo $sql . '<br>';
 
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($this->element_id));
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			if ($numrows >= 1) {
 				$myrow = pg_fetch_row($result);
 				$result = $myrow[0];
 			}
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
+			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
 		}
 
 		return $result;
@@ -746,19 +953,19 @@ LEFT OUTER JOIN
 	}
 	
 	function IsDeleted() {
-		return $this->{'status'} == "D";
+		return $this->status == "D";
 	}
 
 	function PackageIsAvailable() {
 		$available = true;
-		if (strpos($this->{'license_restricted'}, DELETE_PACKAGE) !== false) {
+		if (IsSet($this->license_restricted) && strpos($this->license_restricted, DELETE_PACKAGE) !== false) {
 			# false === not found
 			# non false = found
 			$available = false;
 		}
 
 		# if either of these are non-black, there is no package
-		if (!empty($this->{'no_package'}) || !empty($this->{'manual_package_build'})) {
+		if (!empty($this->no_package) || !empty($this->manual_package_build)) {
 			$available = false;
 		}
 
@@ -767,42 +974,44 @@ LEFT OUTER JOIN
 
 	function PackageNotAvailableReason() {
 		$available = '';
-		if (strpos($this->{'license_restricted'}, DELETE_PACKAGE) !== false) {
+		if (IsSet($this->license_restricted) && strpos($this->license_restricted, DELETE_PACKAGE) !== false) {
 			# false === not found
 			# non false = found
-			$available = '_LICENSE_RESTRICTED = ' . $this->{'license_restricted'};
+			$available = '_LICENSE_RESTRICTED = ' . $this->license_restricted;
 		}
 
 		# if either of these are non-black, there is no package
-		if (!empty($this->{'no_package'}) || !empty($this->{'manual_package_build'})) {
-			$available = 'NO_PACKAGE = ' . $this->{'no_package'};
+		if (!empty($this->no_package) || !empty($this->manual_package_build)) {
+			$available = 'NO_PACKAGE = ' . $this->no_package;
 		}
 
-		if (!empty($this->{'manual_package_build'})) {
-			$available = 'MANUAL_PACKAGE_BUILD = ' . $this->{'manual_package_build'};
+		if (!empty($this->manual_package_build)) {
+			$available = 'MANUAL_PACKAGE_BUILD = ' . $this->manual_package_build;
 		}
 
 		return $available;
 	}
 
 	function ConflictMatches() {
-		$sql = 'SELECT DISTINCT PackageName(PCM.port_id) as package_name, f.*
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . 'SELECT DISTINCT PackageName(PCM.port_id) as package_name, f.*
   FROM ports_conflicts_matches PCM
   JOIN ports_conflicts PC ON PCM.ports_conflicts_id = PC.id
   JOIN GetPortFromPackageName(PackageName(PCM.port_id)) AS f ON true
- WHERE PC.port_id = ' . $this ->{'id'};
+ WHERE PC.port_id = $1';
 
 		if ($this->Debug) {
 			echo "<pre>$sql</pre>";
 		}
 
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($this->id));
 		if ($result) {
-			$numrows = pg_numrows($result);
-			if ($this->Debug) echo "FetchByElementID succeeded<BR>";
-			$this->{'conflicts_matches'} = pg_fetch_all($result);
+			$numrows = pg_num_rows($result);
+			if ($this->Debug) {
+				echo __FUNCTION__ . " succeeded<br>";
+			}
+			$this->conflicts_matches = pg_fetch_all($result);
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
+			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
 		}
 
 	}

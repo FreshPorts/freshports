@@ -2,36 +2,40 @@
 	#
 	# $Id: new-user.php,v 1.3 2011-08-21 15:10:59 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2022 DVL Software Limited
 	#
+	
+	
+	# These are customization features (see www/customize.php) and are needed
+	# by include/new-user.php - but with a new user, they must be set here.
+	$set_focus_search = $set_focus_search ?? false;
+	$page_size        = $page_size        ?? 0;
+	$numberofdays     = $numberofdays     ?? 0;
 
-	if (IsSet($_REQUEST["origin"])) $origin = $_REQUEST["origin"];
+
 ?>
 
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
-<TABLE width="*" class="borderless">
-          <TR>
-            <TD VALIGN="top">
+<table class="borderless">
+          <tr>
+            <td>
 <?php if (IsSet($Customize)) { ?>
-               Current password:<br>
-               <INPUT TYPE="PASSWORD" NAME="Password" VALUE="<?php if (IsSet($Password)) echo htmlentities($Password) ?>" size="20"><br><br>
+              <label>Current password:<br>
+              <INPUT TYPE="PASSWORD" NAME="Password" VALUE="<?php if (IsSet($Password)) echo htmlentities($Password) ?>" size="20"></label><br><br>
 
 <?php } else { ?>
 
               <INPUT TYPE="hidden" NAME="ADD" VALUE="1">
-              User ID:<br>
-              <INPUT SIZE="15" NAME="UserLogin" VALUE="<?php if (IsSet($UserLogin)) echo htmlentities($UserLogin) ?>" autofocus=""><br><br>
+              <label>User ID:<br>
+              <INPUT SIZE="15" NAME="UserLogin" VALUE="<?php if (IsSet($UserLogin)) echo htmlentities($UserLogin) ?>" autofocus=""></label><br><br>
 <?php } ?>
-               New password:<br>
-               <INPUT TYPE="PASSWORD" NAME="Password1" VALUE="<?php if (IsSet($Password1)) echo htmlentities($Password1) ?>" size="20"><br><br>
-               New password again:<br>
-               <INPUT TYPE="PASSWORD" NAME="Password2" VALUE="<?php if (IsSet($Password2)) echo htmlentities($Password2) ?>" size="20">
-            </TD>
-            <TD VALIGN="top">
-               email address (required):<br>
-               <INPUT SIZE="35" NAME="email" VALUE="<?php if (IsSet($email)) echo htmlentities($email) ?>">
-
-Number of Days to show in side-bar: 
+              <label>New password:<br>
+              <INPUT TYPE="PASSWORD" NAME="Password1" VALUE="<?php if (IsSet($Password1)) echo htmlentities($Password1) ?>" size="20"></label><br><br>
+              <label>New password again:<br>
+              <INPUT TYPE="PASSWORD" NAME="Password2" VALUE="<?php if (IsSet($Password2)) echo htmlentities($Password2) ?>" size="20"></label>
+<br>
+<br>
+Number of Days to show in side-bar:
 
 <SELECT NAME="numberofdays" size="1">
     <OPTION <?php if ($numberofdays == "0") echo "selected " ?> VALUE="0">0</OPTION>
@@ -46,10 +50,13 @@ Number of Days to show in side-bar:
     <OPTION <?php if ($numberofdays == "9") echo "selected " ?> VALUE="9">9</OPTION>
 </SELECT>
 
+<br>
+<br>
+<label>
 Set focus to search box: <input type="checkbox" id="set_focus_search" name="set_focus_search" value="set_focus_search"<?php if ($set_focus_search) echo ' checked'; ?>>
+</label>
 
-<br><br><BR>
-
+<br><br>
 Number of results to display per page (e.g commits per page):
 <?php
 	  require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/page_options.php');
@@ -57,11 +64,22 @@ Number of results to display per page (e.g commits per page):
 	  echo $PageOptions->DDLB_Choices('page_size', $page_size);
 
 ?>
-<br><br><BR>
-            <INPUT TYPE="submit" VALUE="<? if (IsSet($Customize)) { echo "update";} else { echo "create";} ?> account" NAME="submit">
+            </td>
+            <td valign="top">
+              <label>Email Address (required):<br>
+              <INPUT type="email" SIZE="35" NAME="email" required VALUE="<?php if (IsSet($email)) echo htmlentities($email) ?>"></label>
+
+
+<br><br><br>
+
+</td>
+<tr>
+<td colspan="2">
+<br><br>
+            <INPUT TYPE="submit" VALUE="<?php if (IsSet($Customize)) { echo "update";} else { echo "create";} ?> account" NAME="submit">
             <INPUT TYPE="reset"  VALUE="reset form">
-            </TD>
-          </TR>
+            </td>
+          </tr>
 <?php
 
 # include this CAPTCHA only for new registrations
@@ -70,21 +88,23 @@ if ( $_SERVER['SCRIPT_NAME'] == '/new-user.php' )
 {
 ?>
 
-<tr><td align="center">CAPTCHA:<br>
+<tr><td class="captcha">CAPTCHA:<br>
   (antispam code, 3 black symbols)<br>
   <table><tr><td><img src="/images/captcha/captcha.php" alt="captcha image"></td><td><input type="text" name="captcha" size="3" maxlength="3"></td></tr></table>
-</td></tr>
+</td><td></td></tr>
 <?php
 }
 ?>    
-    </TABLE>
+    </table>
 </FORM>
+
+<hr>
 
 <?php
 if ( $_SERVER['SCRIPT_NAME'] != '/new-user.php' )
 {
 ?>
-<p>For your reporting needs, please visit <A HREF="/report-subscriptions.php">Report Subscriptions</A>.</p>
-<h2><a href="/delete-account.php"><big>Delete my account</big></a></h2>
+<p>For your reporting needs, please visit <a href="/report-subscriptions.php">Report Subscriptions</a>.</p>
+<h3><a href="/delete-account.php">Delete my account</a></h3>
 <?php
 }

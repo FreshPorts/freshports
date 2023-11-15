@@ -38,7 +38,11 @@ function FreshPortsChart($title, $axislabel, $values, $labels, $urls, $file = "-
 // parameters:
 // id=number of graph
 
-$id = pg_escape_string($_GET["id"]);
+$id = intval(pg_escape_string($db, $_REQUEST["id"]));
+
+if ($id == 31) die('Sorry, graph 31 is broken');
+if ($id == 32) die('Sorry, graph 32 is broken');
+if ($id == 8)  die('Sorry, graph 8 is broken');
 
 // assume that we always have graph of id=0
 if (!isset($id)) $id=0;
@@ -54,37 +58,37 @@ if (!file_exists($filename) || filemtime($filename)+$period<time())	{
 	GLOBAL $db;
 
 	// XXX CHANGE THE QUERY XXX
-	$data = @pg_exec($db, "select query, title, label, is_clickable from graphs where id = $id")
-		or die("PGERR 1: " . pg_ErrorMessage());
+	$data = pg_query_params($db, "select query, title, label, is_clickable from graphs where id = $1", array($id))
+		or die("PGERR 1: " . pg_ErrorMessage($db));
 	
-	if (pg_numrows($data) == 0)
+	if (pg_num_rows($data) == 0)
 		die("GRAPH: invalid id");
 
-	$r = pg_fetch_row($data, $i);
+	$r = pg_fetch_row($data);
 
 	$query        = $r[0];
 	$title        = $r[1];
 	$axislabel    = $r[2];
 	$is_clickable = $r[3];
 
-	pg_freeresult($data);
+	pg_free_result($data);
 
 	// get graph data
-	$data = @pg_exec($db, $query)
+	$data = pg_query_params($db, $query, array())
 		or die("PGERR 2: " . pg_ErrorMessage());
 
 	$v = array();
 	$l = array();
 	$u = array();
 
-	for ($i=0; $i<pg_numrows($data); $i++) {
+	for ($i=0; $i<pg_num_rows($data); $i++) {
 		$r = pg_fetch_row($data, $i);
 		array_push($v, $r[1]);
-		array_push($l, $r[0]."  ");
-		array_push($u, $r[2]);
+		array_push($l, $r[0] . "  ");
+		array_push($u, $r[2] ?? 0);
 	}
 	
-	pg_freeresult($data);
+	pg_free_result($data);
 	
 	// draw
 	$map = FreshPortsChart($title, $axislabel, $v, $l, $u, $filename);
@@ -96,7 +100,7 @@ if (!file_exists($filename) || filemtime($filename)+$period<time())	{
 		fclose($fp);
 	}
 	
-	pg_close();
+	pg_close($db);
 }
 
 
@@ -104,7 +108,7 @@ header("Content-type: image/png");
 readfile($filename);
 
 
-//  CREATE TABLE "graph" ("id" integer NOT NULL, "query" text NOT NULL,
+//  CREATE table "graph" ("id" integer NOT NULL, "query" text NOT NULL,
 //  "title" text NOT NULL);
 
 // insert into graph (id, query, title) values (0,'select category,
@@ -112,6 +116,3 @@ readfile($filename);
 // watch_list_element where ports_active.element_id =
 // watch_list_element.element_id group by category, name order by 3 desc
 // limit 20','Most Watched Ports');
-
-
-?>

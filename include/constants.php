@@ -2,11 +2,12 @@
 	#
 	# $Id: constants.php,v 1.6 2012-12-21 18:20:53 dan Exp $
 	#
-	# Copyright (c) 1998-2006 DVL Software Limited
+	# Copyright (c) 1998-2022 DVL Software Limited
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.local.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.app.php');
 
 #
 # colours for the banners (not really banners, but headings)
@@ -22,21 +23,20 @@ $BannerFontSize         = "+1";
 $BannerWidth            = "100%";
 $TableWidth             = "100%";
 $DateFormatDefault      = "j M Y";
-$TimeFormatDefault		= "H:i:s";
+$TimeFormatDefault      = "H:i:s";
 
-$FreshPortsTitle		= "FreshPorts";
+$FreshPortsTitle        = "FreshPorts";
 
-$WatchNoticeFrequencyDaily			= "D";
-$WatchNoticeFrequencyWeekly			= "W";
-$WatchNoticeFrequencyFortnightly	= "F";
-$WatchNoticeFrequencyMonthly		= "M";
-$WatchNoticeFrequencyNever			= "Z";
+$WatchNoticeFrequencyDaily       = "D";
+$WatchNoticeFrequencyWeekly      = "W";
+$WatchNoticeFrequencyFortnightly = "F";
+$WatchNoticeFrequencyMonthly     = "M";
+$WatchNoticeFrequencyNever       = "Z";
 
 $UserStatusActive      = "A";
 $UserStatusDisabled    = "D";
 $UserStatusUnconfirmed = "U";
 
-$ProblemSolverEmailAddress	= "webmaster@freshports.org";
 
 if (!defined('USER_COOKIE_NAME')) define('USER_COOKIE_NAME', "visitor");
 
@@ -44,8 +44,8 @@ if (!defined('USER_COOKIE_NAME')) define('USER_COOKIE_NAME', "visitor");
 # SEQUENCES
 #
 
-$Sequence_Watch_List_ID			= 'watch_list_id_seq';
-$Sequence_User_ID				= 'users_id_seq';
+$Sequence_Watch_List_ID = 'watch_list_id_seq';
+$Sequence_User_ID       = 'users_id_seq';
 
 #
 # external URLs
@@ -117,7 +117,14 @@ define('SPOOLING_DIRECTORY', CACHE_DIRECTORY . '/spooling');  # cache spooling
 define('DELETE_PACKAGE', 'delete-package');
 
 define('DEFAULT_SVN_REPO', 'svnweb.freebsd.org');
-define('DEFAULT_GIT_REPO', 'github.com');
+define('DEFAULT_GIT_REPO', 'cgit.freebsd.org');
+define('DEFAULT_GITHUB',   'github.com');
+define('DEFAULT_GITLAB',   'gitlab.com');
+define('DEFAULT_CODEBERG', 'codeberg.org');
+
+define('DEFAULT_ICON_SIZE', 22);
+define('FALLOUT_SMALLER_ICON_SIZE', 16);
+define('FALLOUT_TITLE', 'Fallout');
 
 define('PORT_STATUS_ACTIVE',  'A');
 define('PORT_STATUS_DELETED', 'D');
@@ -147,6 +154,7 @@ const PACKAGE_SETS = array('latest', 'quarterly');
 define('DEFAULT_NUMBER_OF_COMMITS', 100);
 
 const USES_PYTHON = 'python';
+const USES_PHP    = 'php';
 
 const PYTHON_PKGNAMEPREFIX = 'PYTHON_PKGNAMEPREFIX';
 
@@ -154,11 +162,27 @@ const PYTHON_PKGNAMEPREFIX = 'PYTHON_PKGNAMEPREFIX';
 # www/search.php
 # classes/ports_by_pkg_plist.php
 
-const LOGIN_QUERY = 'LOGIN';
-
-const SEARCH_SELECT_FIELD = '
-  select CL.commit_date - SystemTimeAdjust() AS last_commit_date, 
+const SEARCH_SELECT_FIELD = "
+  select Cl.id as commit_log_id,
+         CL.commit_date - SystemTimeAdjust() AS last_commit_date,
+         CL.message_id,
+         CL.commit_date AS commit_date_raw,
+         to_char(CL.commit_date - SystemTimeAdjust(), 'DD Mon YYYY')  as commit_date,
+         to_char(CL.commit_date - SystemTimeAdjust(), 'HH24:MI:SS')   as commit_time,
+         CL.encoding_losses,
+         CL.committer,
+         CL.committer_name,
+         CL.committer_email,
+         CL.author_name,
+         CL.author_email,
+         CL.description as commit_description,
          P.id,
+         element_pathname(E.id) as element_pathname,
+         R.name                                                                                              AS repo_name,
+         R.repository                                                                                        AS repository, 
+         R.repo_hostname                                                                                     AS repo_hostname,
+         R.path_to_repo                                                                                      AS path_to_repo,
+         P.id as port_id,
          E.name as port,
          C.name as category,
          C.id as category_id,
@@ -166,6 +190,8 @@ const SEARCH_SELECT_FIELD = '
          P.revision as revision,
          P.portepoch as epoch,
          P.maintainer,
+         null AS needs_refresh,
+         null AS stf_message,
          P.short_description,
          P.package_exists,
          P.extract_suffix,
@@ -179,27 +205,70 @@ const SEARCH_SELECT_FIELD = '
          PV.past    as vulnerable_past,
          P.forbidden,
          P.master_port,
-         P.latest_link,
          P.no_package,
          P.package_name,
          P.restricted,
+         P.license_restricted,
+         P.manual_package_build,
          P.no_cdrom,
          P.expiration_date,
-         P.no_package,
          P.license,
          P.last_commit_id,
          P.distinfo,
          element_pathname(P.element_id) as element_pathname,
          Cl.svn_revision,
-         P.uses  ';
+         P.pkgmessage,
+         to_char(P.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') as date_added, 
+         PortVersionOnQuarterlyBranch(P.id, C.name || '/' || E.name) AS quarterly_revision,
+         P.uses  ";
 
+#
+# used by www/search.php when searching package names
+# see https://github.com/FreshPorts/freshports/issues/481
+# NOTE that the search parameter for package name must always be the
+# first paramater query
+#
+
+# jsonb_agg() might also be useful instead of array_agg()
+#
+const SQL_WITH_PACKAGES = '
+with packages as
+(with package_names as
+(select distinct port_id, package_name
+   from packages
+  where package_set = \'latest\'
+    and package_name ilike $1
+ )
+ select distinct port_id, array_agg(package_name) as package_names from package_names
+ group by port_id
+ ) ' ;
 
 # passed to pgcrypto gen_salt when creating or updating user passwords in the database
 # used by
 # www/new-user.php
 # www/customize.php
-const HASH_UPDATE_QUERY = 'HASH_UPDATE';
-if (!defined('PW_HASH_METHOD')) define('PW_HASH_METHOD', 'bf');
-if (!defined('PW_HASH_COST')) define('PW_HASH_COST', 14);
 
-define('HTML_DOCTYPE', '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">');
+if (!defined('PW_HASH_METHOD')) define('PW_HASH_METHOD', 'bf');
+if (!defined('PW_HASH_COST'))   define('PW_HASH_COST', 14);
+
+define('HTML_DOCTYPE', '<!DOCTYPE html>');
+
+define('ICON_SEPARATOR', ' &#166; ');
+
+define('VUXML_LATEST', HTML_DIRECTORY . '/vuln-latest.html');
+
+# re https://cgit.freebsd.org/ports/commit/?id=4010f7bbc03638d71781ce091bf40a0907fa12fe
+define('LAST_SUBVERSION_COMMIT', '2021-03-31 03:12:20');
+
+# looks like a subversion commit? The ports.message_id column contains the email message-id value
+define('LOOKS_LIKE_SUBVERSON', 'freebsd.org');
+
+# When that column was added to the table, existing entries were given a value similar to fp1.9826@dev.null.freshports.org
+define('PREDATES_MESSAGE_ID',  'dev.null.freshports.org');
+
+# the head of the ports tree in the database
+define('FRESHPORTS_PORTS_TREE_HEAD_PREFIX',   '/ports/head');
+define('FRESHPORTS_PORTS_TREE_BRANCH_PREFIX', '/ports/branches');
+
+# when we don't know the path, it is:
+define('UNKNOWN_PATH', 'UNKNOWN_PATH');

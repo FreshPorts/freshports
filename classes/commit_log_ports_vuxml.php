@@ -35,16 +35,16 @@ select CLPV.id,
        CLPV.vuxml_id,
        vuxml.vid
   from commit_log_ports_vuxml CLPV, vuxml
- where CLPV.port_id  = " . pg_escape_string($port_id) . "
+ where CLPV.port_id  = $1
    and CLPV.vuxml_id = vuxml.id
  order by CLPV.commit_log_id ";
 
 #		echo "\$sql='<pre>$sql</pre><br>\n";
-		$this->result = pg_exec($this->dbh, $sql);
+		$this->result = pg_query_params($this->dbh, $sql, array($port_id));
 		if (!$this->result) {
-			echo pg_errormessage() . " $sql";
+			echo pg_last_error($this->dbh) . " $sql";
 		}
-		$numrows = pg_numrows($this->result);
+		$numrows = pg_num_rows($this->result);
 
 		return $numrows;
 	}

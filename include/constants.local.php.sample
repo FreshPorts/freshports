@@ -29,7 +29,24 @@
 # * watch-list-maintenance.php
 # * watch-list.php
 #
-define('IN_MAINTENCE_MODE', true);
+define('IN_MAINTENANCE_MODE', false);
 
 # if defined, and non-empty, parse out the UCL messages
 define('PKG_MESSAGE_UCL', 1);
+
+define('MAX_LOAD_SEARCH', 3.75);
+define('MAX_LOAD_COMMIT', 3.752);
+
+define('MAIL_SERVER', 'localhost');
+
+define('UKRAINE', '1');
+
+#
+# for include/htmlify.php
+#
+define('HTMLIFY_USE_URL_HIGHLIGHT',     false);
+define('HTMLIFY_USE_LIB_AUTOLINK',      true);
+
+define('HTMLIFY_PROCESS_PRS', true);
+
+define('INCLUDE_GOOGLE_GTAG', false);

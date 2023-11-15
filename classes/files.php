@@ -105,21 +105,27 @@ class CommitFiles {
 	       NULL::text AS expiration_date,
 	       NULL::text AS is_interactive,
 	       GMT_Format(CL.commit_date) AS last_commit_date,
+               R.name                                                                                              AS repo_name,
                R.repository,
                R.repo_hostname,
-               R.path_to_repo
-	  FROM commit_log               CL
-	       LEFT OUTER JOIN repo R on CL.repo_id = R.id,
+               R.path_to_repo,
+               SB.branch_name as branch
+	  FROM commit_log                CL
+	       LEFT OUTER JOIN repo       R on CL.repo_id    = R.id
+	       JOIN commit_log_branches CLB on CL.id         = CLB.commit_log_id
+	       JOIN system_branch        SB on CLB.branch_id = SB.id,
 	       commit_log_elements      CLE,
 	       element                  E
-	 WHERE CL.message_id              = '" . pg_escape_string($this->MessageID) . "'
+	 WHERE CL.message_id              = $1
 	   AND CL.id                      = CLE.commit_log_id
 	   AND CLE.element_id             = E.id";
+	   	$params = array($this->MessageID);
 
 	
-		if ($ForJustOnePort) { 
+		if ($ForJustOnePort) {
+	   		$params[] = '%/' . $this->Category . '/' . $this->Port . '%';
 			$sql .= "
-	   AND element_pathname(E.id) LIKE '%/" . pg_escape_string($this->Category)  . '/' . pg_escape_string($this->Port) . "%'";
+	   AND element_pathname(E.id) LIKE $" . count($params);
 		}
 		
 		$sql .= ") AS A
@@ -130,11 +136,12 @@ class CommitFiles {
 		# if the watch list id is provided (i.e. they are logged in and have a watch list id...)
 		#
 		if ($this->UserID) {
+			$params[] = $this->UserID;
 			$sql .= "
 		 (SELECT element_id AS wle_element_id, COUNT(watch_list_id) AS onwatchlist
 		    FROM watch_list JOIN watch_list_element 
 		        ON watch_list.id      = watch_list_element.watch_list_id
-		       AND watch_list.user_id = " . pg_escape_string($this->UserID) . "
+		       AND watch_list.user_id = $" . count($params) . "
 	          AND watch_list.in_service
 		  GROUP BY wle_element_id) AS B
 		       ON B.wle_element_id = A.element_id
@@ -149,14 +156,14 @@ class CommitFiles {
 	
 		if ($this->Debug) echo '<PRE>' . $sql . '</PRE>';
 
-		$this->LocalResult = pg_exec($this->dbh, $sql);
+		$this->LocalResult = pg_query_params($this->dbh, $sql, $params);
 
 		if (!$this->LocalResult) {
-			syslog(LOG_ERR, __FILE__  . '::' . __LINE__  . ' ' . pg_last_error());
+			syslog(LOG_ERR, __FILE__  . '::' . __LINE__  . ' ' . pg_last_error($this->dbh));
 			exit;
 		}
 
-		$NumRows = pg_numrows($this->LocalResult);
+		$NumRows = pg_num_rows($this->LocalResult);
 		return $NumRows;
 	}
 }

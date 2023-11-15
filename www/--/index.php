@@ -16,11 +16,14 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/functions.php');
 
 
 
-$script     = $_SERVER['REQUEST_URI'];
-$url_query  = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
-$url        = parse_url($url_query);
+$script    = $_SERVER['REQUEST_URI'];
+$url_query = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
+$url_parts = array();
+if (!empty($url_query)) {
+	$url = parse_url($url_query);
 
-parse_str($url_query, $url_parts);
+	parse_str($url_query, $url_parts);
+}
 
 $Debug = isset($url_parts['Debug']);
 $Debug = 0;
@@ -65,7 +68,7 @@ switch($script) {
         require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/badges.php');
         require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
         
-        $category_port = pg_escape_string($url_parts['port']);
+        $category_port = pg_escape_string($db, $url_parts['port']);
         
         list($category, $port) = explode('/', $category_port);
         $myPort = new Port($db);
@@ -94,25 +97,35 @@ switch($script) {
         echo "</head>\n";
 
         echo '<p>';
-
         if ($status->InMaintenanceMode()) {
-            echo 'We are in maintenance mode<br>';
+            echo 'We are in maintenance mode.';
         } else {
-            echo 'We are in not in maintenance mode';
+            echo 'We are in not in maintenance mode.';
         }
 
         echo '</p><p>';
 
         if ($status->LoginsAreAllowed()) {
-            echo 'Logins are enabled<br>';
+            echo 'Logins are enabled.';
         } else {
             echo 'Nobody is allowed to login right now.';
         }
         echo '</p>';
 
-        require_once("/var/db/freshports/cache/html/backend-status.html");
+        define('STATUS_FILE', "/var/db/freshports/cache/html/backend-status.html");
+
+        require_once(STATUS_FILE);
+
+        passthru("/usr/sbin/service fp_listen status", $fp_listen_result);
+
+        echo '<hr>';
+
+        echo "<p>This status was last updated at " . gmdate('Y-m-d H:i:sO', filemtime(STATUS_FILE)) . '</p>';
+        echo "<p>It should never be more than 4 minutes old.</p>";
+        echo '<p>This page automatically reloads every 3 minutes.</p>';
+        echo '<p>The contents are generated every 3 minutes by the backend server.</p>';
+
         echo "</body>\n";
-        exit;
         break;
 
     case SCRIPT_API:
@@ -143,7 +156,7 @@ echo 'done';
         break;
 
     default:
-        $result = freshports_Parse404URI($_SERVER['REQUEST_URI'], $db);
+        $not_found = freshports_Parse404URI($_SERVER['REQUEST_URI'], $db);
 
         # if you get here, we could not find anything in the database, so let's run 
         # the 404 code.
@@ -151,7 +164,7 @@ echo 'done';
         # XXX move missing.php out of DOCUMENT_ROOT
         #echo "\$result='$result'";
 
-        if ($result != '') {
-	    require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing.php');
+        if ($not_found) {
+            require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing.php');
         }
 }

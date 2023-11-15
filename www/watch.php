@@ -17,7 +17,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_list_deleted_ports.php');
 
 	// if we don't know who they are, we'll make sure they login first
-	if (!$visitor) {
+	if (!IsSet($visitor) || !$visitor) {
 		header("Location: /login.php");  /* Redirect browser to PHP web site */
 		exit;  /* Make sure that code below does not get executed when we redirect. */
 	}
@@ -34,9 +34,16 @@
 	if (IsSet($_POST["watch_list_select_x"]) && IsSet($_POST["watch_list_select_y"])) {
 		# they clicked on the GO button and we have to apply the 
 		# watch staging area against the watch list.
-		$wlid = pg_escape_string($_POST["wlid"]);
+		$wlid = intval(pg_escape_string($db, $_POST["wlid"]));
 		if ($Debug) echo "setting SetLastWatchListChosen => \$wlid='$wlid'";
-		$User->SetLastWatchListChosen($wlid);
+		pg_query_params($db, 'BEGIN', array());
+		$numrows = $User->SetLastWatchListChosen($wlid);
+		if ($numrows === 1) {
+			pg_query_params($db, 'COMMIT', array());
+		} else {
+			pg_query_params($db, 'ROLLBACK', array());
+			syslog(LOG_NOTICE, 'Fatal error: ' . __FILE__ . '::' . __FUNCTION__ . '::' . __LINE__ . ' setting $wlid=' . htmlentities($wlid) . ' failed - ' . pg_last_error(($db)) . htmlentities(($numrows)));
+		}
 		if ($Debug) echo "\$wlid='$wlid'";
 	} else {
 		$wlid = $User->last_watch_list_chosen;
@@ -71,24 +78,21 @@
 <?php echo freshports_MainTable(); ?>
 
 <tr><td class="content">
-<table class="fullwidth borderless">
+<?php echo freshports_MainContentTable(NOBORDER); ?>
 <tr>
-	<? echo freshports_PageBannerText($Title); ?>
+	<?php echo freshports_PageBannerText($Title); ?>
 </tr>
-<tr><td valign="top">
-<table class="fullwidth borderless">
 <tr><td>
 <?php
 if ($wlid == '') {
 	echo 'You have no watch lists.';
 } else {
 ?>
-These are the ports which are on your <a href="watch-categories.php">watch list</A>. 
-That link also occurs on the right hand side of this page, under Login.
+These are the ports which are on your <a href="/watch-categories.php">watch list</a>.
+That link also appears on the right hand side of this page, under Login.
 <?php
 }
 ?>
-</td><td valign="top" nowrap align="right">
 
 <?php
 
@@ -97,57 +101,55 @@ if ($wlid != '') {
 }
 
 ?>
-
-</td></tr>
-</table>
 </td></tr>
 <?php
 
 // make sure the value for $sort is valid
 
 echo "<tr><td>";
-if ($wlid == '') {
-} else {
-$WatchListDeletedPorts = new WatchListDeletedPorts($db);
-$rowcount = $WatchListDeletedPorts->FetchInitialise($wlid);
-if ($rowcount)
-{
-echo '<hr><p>Some of your watched ports have moved.  You are still watching the old ports.</p>';
-echo '<table class="bordered" cellpadding="5">';
-echo '<tr><td><b>Old Port</b></td><td><b>Replaced by</b></td></tr>';
-for ($i = 0; $i < $rowcount; $i++) {
-	$WatchListDeletedPorts->FetchNth($i);
+if ($wlid) {
+	$WatchListDeletedPorts = new WatchListDeletedPorts($db);
+	$rowcount = $WatchListDeletedPorts->FetchInitialise($wlid);
+	if ($rowcount) {
+		echo '<hr><p>Some of your watched ports have moved.  You are still watching the old ports.</p>';
+		echo '<table class="bordered" class="cellpadding5">';
+		echo '<tr><td><b>Old Port</b></td><td><b>Replaced by</b></td></tr>';
+		for ($i = 0; $i < $rowcount; $i++) {
+			$WatchListDeletedPorts->FetchNth($i);
 
-	$OldPort = $WatchListDeletedPorts->category_old . '/' . $WatchListDeletedPorts->name_old;
-	$NewPort = $WatchListDeletedPorts->category_new . '/' . $WatchListDeletedPorts->name_new;
-	$OldURL = '<a href="/' . $OldPort . '/">' . $OldPort . '</a>';
-	$NewURL = '<a href="/' . $NewPort . '/">' . $NewPort . '</a>';
+			$OldPort = $WatchListDeletedPorts->category_old . '/' . $WatchListDeletedPorts->name_old;
+			$NewPort = $WatchListDeletedPorts->category_new . '/' . $WatchListDeletedPorts->name_new;
+			$OldURL = '<a href="/' . $OldPort . '/">' . $OldPort . '</a>';
+			$NewURL = '<a href="/' . $NewPort . '/">' . $NewPort . '</a>';
 
-	echo "<tr><td>$OldURL</td><td>$NewURL</td></td>";
-}
-echo '</table>';
+			echo "<tr><td>$OldURL</td><td>$NewURL</td></td>";
+		}
+		echo '</table>';
 
-echo '<p>You should visit the <i>Replaced By</i> link first, add that port to your watch list, then 
+		echo '<p>You should visit the <i>Replaced By</i> link first, add that port to your watch list, then
 visit the <i>Old Port</i> link and remove it from your watch list. <hr>';
 
-}
-
+	}
 }
 
 if ($wlid != '') {
 
 echo "\nThis page is ";
 
-if (IsSet($_GET["sort"])) {
-	$sort = $_GET["sort"];
+if (IsSet($_REQUEST["sort"])) {
+	$sort = $_REQUEST["sort"];
 } else {
 	$sort = '';
 }
 
+$cache_file = '';
+
+# this sanitizes $sort / $_REQUEST["sort"]
 switch ($sort) {
    case "port":
       $sort = "port";
       echo 'sorted by port.  but you can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=updated">last update</a> or <a href="' . $_SERVER["PHP_SELF"] . '?sort=category">category</a>';
+      $ShowCategoryHeaders = 0;
       $cache_file .= ".port";
       break;
 
@@ -176,12 +178,12 @@ echo "</td></tr>\n";
 <?php
 	if ($wlid != '') {
 	if ($OnlyThoseWithUpdatingEntries) {
-		echo '<a href="?updating">View watched ports + entries from </code>/usr/ports/UPDATING</code></a>';
+		echo '<a href="?updating">View watched ports + entries from <code>/usr/ports/UPDATING</code></a>';
 	} else {
 		if ($IncludeUpdating) {
 			echo '<a href="https://' .  $_SERVER['HTTP_HOST'] .  $_SERVER['PHP_SELF'] . '">View all watched ports</a>';
 		} else {
-			echo '<a href="?updating">View all watched ports + entries from </code>/usr/ports/UPDATING</code></a>';
+			echo '<a href="?updating">View all watched ports + entries from <code>/usr/ports/UPDATING</code></a>';
 		}
 	}
 
@@ -190,7 +192,7 @@ echo "</td></tr>\n";
 	if ($OnlyThoseWithUpdatingEntries) {
 		echo '<a href="https://' .  $_SERVER['HTTP_HOST'] .  $_SERVER['PHP_SELF'] . '">View all watched ports.</a>';
 	} else {
-		echo '<a href="?updatingonly">View only watched ports with entries in </code>/usr/ports/UPDATING</code></a>';
+		echo '<a href="?updatingonly">View only watched ports with entries in <code>/usr/ports/UPDATING</code></a>';
 	}
 	}
 
@@ -201,94 +203,110 @@ echo "</td></tr>\n";
 
 
 if ($wlid != '') {
-	$sql = "
-	SELECT temp.*,
-		to_char(max(commit_log.commit_date) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') 	as updated,
-		commit_log.committer, commit_log.description 														as update_description, 
-		commit_log.message_id, max(commit_log.commit_date) 												as commit_date_sort_field,
-		commit_log.committer
-	from commit_log
-		RIGHT OUTER JOIN
-	(
-	
-	select element.name 			as port, 
-			 ports.id 				as id, 
+	$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" ."
+
+WITH selected_ports AS (
+	select element.name 		as port, 
+	       ports.id 		as id, 
 	       categories.name 		as category, 
 	       categories.id 		as category_id, 
 	       ports.version 		as version, 
 	       ports.revision 		as revision, 
-	       element.id 			as element_id, 
+	       element.id 		as element_id, 
 	       ports.maintainer, 
 	       ports.short_description, 
 	       ports.last_commit_id, 
 	       ports.package_exists, 
 	       ports.extract_suffix, 
 	       ports.homepage, 
-		   to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') 		as date_added, 
+	       to_char(ports.date_added - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') 		as date_added, 
 	       element.status, 
 	       ports.broken, 
 	       ports.deprecated, 
 	       ports.ignore, 
 	       ports.forbidden, 
-           ports.master_port,
-           ports.latest_link,
-           ports.no_package,
-           ports.package_name,
-           ports.restricted,
-           ports.no_cdrom,
-           ports.expiration_date,
-	       1 as onwatchlist 
-	       from watch_list_element, element, categories, ports
+	       ports.master_port,
+	       ports.no_package,
+	       ports.package_name,
+	       ports.restricted,
+	       ports.no_cdrom,
+	       ports.expiration_date,
+	       1 as onwatchlist
+	  FROM watch_list_element, element, categories, ports
 	 WHERE ports.category_id                = categories.id 
 	   and watch_list_element.element_id    = ports.element_id 
-		and ports.element_id                 = element.id
-	   and watch_list_element.watch_list_id = " . pg_escape_string($wlid) . "
+		and ports.element_id            = element.id
+	   and watch_list_element.watch_list_id = $1
+)
+
+SELECT selected_ports.*,
+		to_char(max(commit_log.commit_date) - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') 	as last_commit_date,
+		commit_log.committer,
+		commit_log.description        								as update_description,
+		commit_log.message_id, 
+		commit_log.svn_revision, 
+		commit_log.commit_hash_short,
+		max(commit_log.commit_date) 					                        as commit_date_sort_field,
+		commit_log.committer_name,
+		commit_log.committer_email,
+		commit_log.author_name,
+		commit_log.author_email,
+        R.name                                                                                              AS repo_name,
+        R.repo_hostname
+	from selected_ports LEFT OUTER JOIN commit_log on selected_ports.last_commit_id = commit_log.id
+                            LEFT OUTER JOIN repo R     on commit_log.repo_id = R.id
 	
-	
-	) as TEMP
-	on (TEMP.last_commit_id = commit_log.id) 
-	
-	GROUP BY temp.port,
-			 temp.id, 
-	         temp.category, 
-	         temp.category_id, 
-	         temp.version, 
-	         temp.revision, 
+	GROUP BY selected_ports.port,
+	         selected_ports.id,
+	         selected_ports.category, 
+	         selected_ports.category_id, 
+	         selected_ports.version, 
+	         selected_ports.revision, 
 	         commit_log.committer, 
+	         commit_log.committer_name,
+	         commit_log.committer_email,
+	         commit_log.author_name,
+	         commit_log.author_email,
 	         update_description, 
-	         temp.element_id, 
-	         temp.maintainer, 
-	         temp.short_description, 
-	         temp.date_added, 
-	         temp.last_commit_id, 
-	         commit_log.message_id, 
-	         temp.package_exists, 
-	         temp.extract_suffix, 
-	         temp.homepage, 
-	         temp.status, 
-	         temp.broken, 
-	         temp.deprecated, 
-	         temp.ignore, 
-	         temp.forbidden, 
-	         temp.master_port,
-	         temp.latest_link,
-	         temp.no_package,
-	         temp.package_name,
-	         temp.restricted,
-	         temp.no_cdrom,
-	         temp.expiration_date,
-	         temp.onwatchlist  
+	         selected_ports.element_id, 
+	         selected_ports.maintainer, 
+	         selected_ports.short_description, 
+	         selected_ports.date_added, 
+	         selected_ports.last_commit_id,
+	         commit_log.message_id,
+	         commit_log.svn_revision,
+	         commit_log.commit_hash_short,
+	         selected_ports.package_exists, 
+	         selected_ports.extract_suffix, 
+	         selected_ports.homepage, 
+	         selected_ports.status, 
+	         selected_ports.broken, 
+	         selected_ports.deprecated, 
+	         selected_ports.ignore, 
+	         selected_ports.forbidden, 
+	         selected_ports.master_port,
+	         selected_ports.no_package,
+	         selected_ports.package_name,
+	         selected_ports.restricted,
+	         selected_ports.no_cdrom,
+	         selected_ports.expiration_date,
+	         selected_ports.onwatchlist,
+	         R.name,
+             r.repo_hostname
 	";
 	
+	$params = array($wlid);
+
 	$sql .= " order by $sort ";
 	
 	if ($Debug) {
 	   echo "<pre>$sql</pre>";
 	}
 	
-	$result = pg_exec($db, $sql);
+	$result = pg_query_params($db, $sql, array($wlid));
+
 	if (!$result) {
-		echo pg_errormessage();
+		echo "there was an error: " . pg_last_error($db);
 	}
 
 	// get the list of topics, which we need to modify the order
@@ -300,7 +318,7 @@ if ($wlid != '') {
 
 	$LastCategory='';
 	$GlobalHideLastChange = 'N';
-	$numrows = pg_numrows($result);
+	$numrows = pg_num_rows($result);
 
 	$TextNumRowsFound = '<p><small>';
 	if ($numrows > 1) {
@@ -315,8 +333,8 @@ if ($wlid != '') {
 	$TextNumRowsFound .= ' found';
 
 
-	$TextNumRowsFound .= '</small>';
-	echo "</p>\n<tr><td>";
+	$TextNumRowsFound .= '</small></p>';
+	echo "\n<tr><td>";
 
 	if ($numrows > 0) {
 		// Display the first row count only if there is a port.
@@ -328,7 +346,7 @@ if ($wlid != '') {
 	}
 
 	if ($ShowCategoryHeaders) {
-		echo '<DL>';
+		echo '<dl>';
 	}
 
 
@@ -351,17 +369,17 @@ if ($wlid != '') {
 	
 			if ($LastCategory != $Category) {
 				if ($i > 0) {
-					echo "\n</DD>\n";
+					echo "\n</dd>\n";
 				}
 
 				$LastCategory = $Category;
 				if ($ShowCategoryHeaders) {
-					echo '<DT>';
+					echo '<dt>';
 				}
 
-				echo '<BIG><BIG><B><a href="/' . $Category . '/">' . $Category . '</a></B></BIG></BIG>';
+				echo '<span class="element-details><span><a href="/' . $Category . '/">' . $Category . '</a></span></span>';
 				if ($ShowCategoryHeaders) {
-					echo "</DT>\n<DD>";
+					echo "</dt>\n<dd>";
 				}
 			}
 		}
@@ -378,11 +396,11 @@ if ($wlid != '') {
 			echo freshports_UpdatingOutput($NumRowsUpdating, $PortsUpdating, $port);
 		}
 		
-		echo '<BR>';
+		echo '<hr>';
 	}
 
 	if ($ShowCategoryHeaders) {
-		echo "\n</DD>\n</DL>\n";
+		echo "\n</dd>\n</dl>\n";
 	}
 
 	echo "</td></tr>\n";
@@ -393,7 +411,7 @@ if ($wlid != '') {
 		echo '<small> on your watch list (but only showing ' . ($numrows - $NumSkipped) . ')</small>';
 	}
 
-	echo "</p>\n</td></tr>\n";
+	echo "\n</td></tr>\n";
 
 } // end if no wlid
 
@@ -402,7 +420,7 @@ if ($wlid != '') {
 </td>
 
   <td class="sidebar">
-	<?
+	<?php
 	echo freshports_SideBar();
 	?>
   </td>
@@ -410,7 +428,7 @@ if ($wlid != '') {
 </tr>
 </table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

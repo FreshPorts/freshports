@@ -20,12 +20,12 @@ class Packages {
 
 	function GetCategoryPortFromPackageName($package) {
 		$this->package = $package;
-		$sql = "select GetCategoryPortFromLatestLink('" . pg_escape_string($package) . "') as categoryport";
-#		echo "<pre>sql = '$sql'</pre><BR>";
+		$sql = 'select GetCategoryPortFromPackageName($1) as categoryport';
+#		echo "<pre>sql = '$sql'</pre><br>";
 
-		$result = pg_query($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($package));
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			# there should only be one row.
 			if ($numrows == 1) {
 				$myrow = pg_fetch_array ($result, 0);
@@ -34,7 +34,7 @@ class Packages {
 				$this->CategoryPort = '';
 			}
 		} else {
-			echo 'Packages SQL failed: ' . $result . pg_last_error();
+			echo 'Packages SQL failed: ' . $result . pg_last_error($this->dbh);
 		}
 
 	        return $this->CategoryPort;
@@ -48,13 +48,13 @@ class Packages {
 		$Debug     = 0;
 		$TotalRows = 0;
 
-		$sql = "SELECT * FROM PortPackages($PortID)";
+		$sql = 'SELECT * FROM PortPackages($1)';
 
 		if ($Debug) echo "<pre>$sql</pre>";
 
-		$result = pg_exec($this->dbh, $sql);
+		$result = pg_query_params($this->dbh, $sql, array($PortID));
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			if ($Debug) echo "<pre>$numrows returned from PortPackages()</pre>";
 			if ($numrows > 0) {
 				$packages = pg_fetch_all($result);
@@ -77,7 +77,7 @@ class Packages {
 				$TotalRows += $numrows;
 			}
 		} else {
-			echo 'pg_exec failed: <pre>' . $sql . '</pre> : ' . pg_errormessage();
+			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
 		}
 
 #		exit("Stopping because we are testing PackagesGetPackageNamesForPort()");

@@ -20,23 +20,16 @@ class freshports_page extends HTML_Page2 {
 	var $_debug             = 0;
 
 	function __construct($attributes = array()) {
+		$this->HTML_Page2($attributes);
 
 		GLOBAL $ShowAds;
 
 		$this->_ShowAds = $ShowAds;
 		$this->assignDefaultAttributes($attributes);
 
-		$this->HTML_Page2($attributes);
-
 		$this->setMetaData('author',           COPYRIGHTHOLDER);
 		$this->setMetaData('description',      'FreshPorts - new ports, applications');
 		$this->setMetaData('keywords',         'FreeBSD, index, applications, ports');
-
-		$this->setMetaData('Pragma',           'no-cache', TRUE);
-		$this->setMetaData('Cache-Control',    'no-cache', TRUE);
-		$this->setMetaData('Pragma-directive', 'no-cache', TRUE);
-		$this->setMetaData('cache-directive',  'no-cache', TRUE);
-		$this->setMetaData('Expires',          '0',        TRUE);
 
 		$this->setMetaData('robots', 'noarchive');
 		$this->setMetaData('robots', 'noindex');
@@ -45,6 +38,7 @@ class freshports_page extends HTML_Page2 {
 		$this->addStyleSheet('/css/freshports.css?v=' . $version);
 
 		$this->addFavicon('/favicon.ico');
+		$this->setDocType('HTML 4.01 Strict');
 	}
 
 	function setDB($db) {
@@ -70,7 +64,7 @@ class freshports_page extends HTML_Page2 {
 
 		$HTML .= freshports_MainTable() . "\n<tr><td class=\"content\">\n" .
 		         freshports_MainContentTable() . "\n<tr>\n" .
-		         freshports_PageBannerText($this->_title);
+		         freshports_PageBannerText($this->getTitle());
 
 		$this->prependBodyContent($HTML);
 
@@ -82,8 +76,7 @@ class freshports_page extends HTML_Page2 {
 	function assignDefaultAttributes(&$attributes) {
 		# if no value, give it a default value
 		if (!$attributes || !is_array($attributes)) {
-
-			$attributes['doctype'] = 'HTML 4.01 Transitional';
+			$attributes['doctype'] = 'html';
 		}
 
 		if (!IsSet($attributes['doctype'])) {

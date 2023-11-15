@@ -11,16 +11,17 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_list_element.php');
 
-	if (IN_MAINTENCE_MODE) {
+	if (IN_MAINTENANCE_MODE) {
                 header('Location: /' . MAINTENANCE_PAGE, TRUE, 307);
+                exit;
 	}
 
 	$Debug = 0;
 
-	if ($_POST["Origin"]) {
-		$Origin = pg_escape_string($_POST["Origin"]);
+	if (IsSet($_POST["Origin"])) {
+		$Origin = pg_escape_string($db, $_POST["Origin"]);
 	} else {
-		$Origin = $_SERVER["HTTP_REFERER"];
+		$Origin = $_SERVER["HTTP_REFERER"] ?? '/';
 	}
 	$Redirect = 1;
 #phpinfo();
@@ -28,7 +29,7 @@
 function RemoveElementFromWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 	$Debug = 0;
 
-	if ($Debug) echo "I'm removing $ElementID\n<BR>";
+	if ($Debug) echo "I'm removing $ElementID\n<br>";
 	$WatchListElement = new WatchListElement($db);
 	foreach ($WatchListsIDs as $key => $WatchListID) {
 		$result = $WatchListElement->Delete($UserID, $WatchListID, $ElementID);
@@ -41,7 +42,8 @@ function RemoveElementFromWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 }
 
 function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
-	if ($Debug) echo "I'm adding $ElementID\n<BR>";
+	GLOBAL $Debug;
+	if ($Debug) echo "I'm adding $ElementID\n<br>";
 	$WatchListElement = new WatchListElement($db);
 	foreach ($WatchListsIDs as $key => $WatchListID) {
 		$result = $WatchListElement->Add($UserID, $WatchListID, $ElementID);
@@ -66,7 +68,7 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 
 		$Title = 'Watch list maintenance';
 		freshports_Start($Title,
-						$TItle,
+						$Title,
 						'FreeBSD, index, applications, ports');
 		?>
 
@@ -75,14 +77,14 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 	<tr><td class="content">
 
 	<?php echo freshports_MainContentTable(); ?>
-<TR>
-	<? echo freshports_PageBannerText("Watch list maintenance"); ?>
-</TR>
-<TR><td class="content">
+<tr>
+	<?php echo freshports_PageBannerText("Watch list maintenance"); ?>
+</tr>
+<tr><td class="content">
 <?php
-		if ($ErrorMessage) {
-			echo freshports_ErrorMessage("Let\'s try that again!", $ErrorMessage);
-		}
+#		if ($ErrorMessage) {
+#			echo freshports_ErrorMessage("Let\'s try that again!", $ErrorMessage);
+#		}
 	
 		$PostURL = $_SERVER["PHP_SELF"];
 		if (IsSet($_REQUEST["remove"])) {
@@ -90,14 +92,14 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 			$Action     = "remove";
 			$Verb       = 'removed';
 			$FromTo     = 'from';
-			$Object     = pg_escape_string($_REQUEST["remove"]);
+			$Object     = pg_escape_string($db, $_REQUEST["remove"]);
 		} else {
 			if (IsSet($_REQUEST["add"])) {
 				$ButtonName = "Update";
 				$Action     = "add";
 				$Verb       = 'added';
 				$FromTo     = 'to';
-				$Object     = pg_escape_string($_REQUEST["add"]);
+				$Object     = pg_escape_string($db, $_REQUEST["add"]);
 			} else {
 				die("I don't know whether you are removing or adding, so I'll just stop here shall I?");
 			}
@@ -134,7 +136,7 @@ Please select the watch lists which should contain this port:
 		<INPUT TYPE="hidden" NAME="Origin" VALUE="<?php echo $Origin?>">
 		<INPUT TYPE="hidden" NAME="Update" VALUE="<?php echo $Object?>">
 <?php
-		if ($WatchListID) {
+		if (IsSet($WatchListID)) {
 			echo '		<INPUT TYPE="hidden" NAME="wlid" VALUE="' . $WatchListID . '">';
 		}
 ?>
@@ -157,14 +159,14 @@ NOTES
 </tr>
 </table>
   <td class="sidebar">
-  <?
+  <?php
   echo freshports_SideBar();
   ?>
   </td>
 
-</TABLE>
+</table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 
@@ -177,13 +179,13 @@ echo freshports_ShowFooter();
 		if (IsSet($_REQUEST['Update'])) {
 			pg_exec($db, 'BEGIN');
 			$Error = '';
-			$ElementID = pg_escape_string($_REQUEST['Update']);
+			$ElementID = pg_escape_string($db, intval($_REQUEST['Update']));
 			$WatchListElement = new WatchListElement($db);
 
 			if ($Debug) echo "userid = '$User->id' and ElementID = '$ElementID'<br>";
 
 			if ($WatchListElement->DeleteElementFromWatchLists($User->id, $ElementID) == -1) {
-				$Error = 'removing element failed : Please try again, and if the problem persists, please contact the webmaster: ' . pg_last_error();
+				$Error = 'removing element failed : Please try again, and if the problem persists, please contact the webmaster: ' . pg_last_error($db);
 			}
 			if ($Debug) {
 				echo "Error is '$Error'<br>";
@@ -199,8 +201,8 @@ echo freshports_ShowFooter();
 			if ($Error == '' && IsSet($_REQUEST['wlid'])) {
 
 				if ($Debug) echo "userid = $User->id and ElementID = $ElementID <br>";
-				if (AddElementToWatchLists($db, $User->id, $ElementID, $_REQUEST['wlid']) == -1) {
-					$Error = 'adding element failed : Please try again, and if the problem persists, please contact the webmaster: ' . pg_last_error();
+				if (AddElementToWatchLists($db, $User->id, $ElementID, $_REQUEST['wlid'])== -1) {
+					$Error = 'adding element failed : Please try again, and if the problem persists, please contact the webmaster: ' . pg_last_error($db);
 				}
 			}
 
@@ -214,7 +216,7 @@ echo freshports_ShowFooter();
 			if (IsSet($_REQUEST['add'])) {
 				pg_exec($db, 'BEGIN');
 				$Error = '';
-				$ElementID = pg_escape_string($_REQUEST['add']);
+				$ElementID = intval(pg_escape_string($db, $_REQUEST['add']));
 				if ($ElementID == '') {
 					die('The target for addition was not supplied');
 				}
@@ -224,22 +226,22 @@ echo freshports_ShowFooter();
 					pg_exec($db, 'COMMIT');
 				} else {
 					pg_exec($db, 'ROLLBACK');
-					die(pg_last_error());
+					die(pg_last_error($db));
 				}
 			} else {
 				if (IsSet($_REQUEST['remove'])) {
 					pg_exec($db, 'BEGIN');
-					$ElementID = pg_escape_string($_REQUEST['remove']);
+					$ElementID = intval(pg_escape_string($db, $_REQUEST['remove']));
 					if ($ElementID == '') {
 						die('The target for removal was not supplied');
 					}
 
 					$WatchListElement = new WatchListElement($db);
 					if ($WatchListElement->DeleteFromDefault($User->id, $ElementID) >= 0) {
-						pg_exec('COMMIT');
+						pg_exec($db, 'COMMIT');
 					} else {
-						pg_exec('ROLLBACK');
-						die(pg_last_error());
+						pg_exec($db, 'ROLLBACK');
+						die(pg_last_error($db));
 					}
 				} else {
 					die("I don't know what I was supposed to do there!");
@@ -248,14 +250,14 @@ echo freshports_ShowFooter();
 		}
 	} // end if Ask
 
-#	echo 'when done, I will return to ' . $HTTP_SERVER_VARS['HTTP_REFERER'];
+#	echo 'when done, I will return to ' . $Origin;
 	if ($Redirect) {
 		if ($Origin) {
-			if ($Debug) echo "Origin supplied is $Origin\n<BR>";
+			if ($Debug) echo "Origin supplied is $Origin\n<br>";
 			$Origin = str_replace(' ', '&', $Origin);
 		}
 
-		if ($Debug) echo "redirecting to $Origin\n<BR>";
+		if ($Debug) echo "redirecting to $Origin\n<br>";
 
 		header("Location: $Origin");  /* Redirect browser to PHP web site */
 		exit;  /* Make sure that code below does not get executed when we redirect. */

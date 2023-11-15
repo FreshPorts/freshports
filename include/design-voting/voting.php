@@ -11,7 +11,7 @@ function ValidHash($value, $hash) {
   return $hash == myhash($value);
 }
 
-function ProcessVote($db, $UserID, $choice1, $choice2, $choice3) {
+function ProcessVote($dbh, $UserID, $choice1, $choice2, $choice3) {
   if (empty($choice1) || empty($choice2) || empty($choice3)) {
     return 'Please make a selection for each choice.';
   }
@@ -21,27 +21,27 @@ function ProcessVote($db, $UserID, $choice1, $choice2, $choice3) {
   }
   
   $sql = "INSERT INTO design_results (user_id, choice1, choice2, choice3) values (" .
-           pg_escape_string($UserID)   . ", '"  .
-           pg_escape_string($choice1)  . "', '" .
-           pg_escape_string($choice2)  . "', '" .
-           pg_escape_string($choice3)  . "')";      
-  $result = pg_exec($db, $sql);
+           pg_escape_string($dbh, $UserID)   . ", '"  .
+           pg_escape_string($dbh, $choice1)  . "', '" .
+           pg_escape_string($dbh, $choice2)  . "', '" .
+           pg_escape_string($dbh, $choice3)  . "')";      
+  $result = pg_exec($dbh, $sql);
   if ($result) {
     return 'Your vote has been recorded.  Thank you.';
   } else {
-    syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ": $sql " . pg_last_error($db));
+    syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ": $sql " . pg_last_error($dbh));
     return 'SQL ERROR';
   }
 }
 
-function AlreadyVoted($db, $ID) {
-  $sql = "SELECT count(*) AS count FROM design_results WHERE user_id = " . pg_escape_string($ID);
-  $result = pg_exec($db, $sql);
+function AlreadyVoted($dbh, $ID) {
+  $sql = "SELECT count(*) AS count FROM design_results WHERE user_id = " . pg_escape_string($dbh, $ID);
+  $result = pg_exec($dbh, $sql);
   if ($result) {
     $myrow = pg_fetch_array($result);
     $count = $myrow['count'];
   } else {
-    syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ": $sql " . pg_last_error($db));
+    syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ": $sql " . pg_last_error($dbh));
     die('SQL ERROR');
   }
 

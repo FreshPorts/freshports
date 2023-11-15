@@ -17,47 +17,43 @@
 ?>
 
 <?php echo freshports_MainTable(); ?>
-<TR>
-<TD WIDTH="100%" VALIGN="top">
+<tr>
+<td class="content">
 <?php echo freshports_MainContentTable(); ?>
-<TR>
-    <td class="accent"><BIG>
-<?
+<tr>
+    <td class="accent"><span>
+<?php
    echo "$FreshPortsTitle -- $Title";
 ?>
-</BIG></td>
-</TR>
+</span></td>
+</tr>
 
-<TR>
+<tr>
 <td class="content">
 <P>
 Sorry, but I don't know anything about that.
 </P>
 
 <P>
-<? echo htmlentities($result) ?>
-</P>
-
-<P>
-Perhaps a <A HREF="/categories.php">list of categories</A> or <A HREF="/search.php">the search page</A> might be helpful.
+Perhaps a <a href="/categories.php">list of categories</a> or <a href="/search.php">the search page</a> might be helpful.
 </P>
 
 </td>
-</TR>
-</TABLE>
-</TD>
+</tr>
+</table>
+</td>
 
   <td class="sidebar">
-  <?
+  <?php
   echo freshports_SideBar();
   ?>
   </td>
 
-</TR>
+</tr>
 
-</TABLE>
+</table>
 
-<?
+<?php
 	echo freshports_ShowFooter();
 ?>
 

@@ -14,7 +14,8 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
 
-	if (IN_MAINTENCE_MODE) {
+
+	if (IN_MAINTENANCE_MODE) {
                 header('Location: /' . MAINTENANCE_PAGE, TRUE, 307);
 	}
 
@@ -34,8 +35,8 @@ if (IsSet($submit)) {
 	// process form
 
 	/*
-	while (list($name, $value) = each($HTTP_POST_VARS)) {
-		echo "$name = $value<BR>\n";
+	while (list($name, $value) = each($_REQUEST)) {
+		echo "$name = $value<br>\n";
 	}
 	*/
 
@@ -44,14 +45,14 @@ if (IsSet($submit)) {
 
 	$errors = "";
 
-	$UserLogin    = $_REQUEST["UserLogin"];
-	$email        = $_REQUEST["email"];
-	$Password1    = $_REQUEST["Password1"];
-	$Password2    = $_REQUEST["Password2"];
-	$numberofdays = $_REQUEST["numberofdays"];
-	
+	$UserLogin    = $_REQUEST["UserLogin"]    ?? '';
+	$email        = $_REQUEST["email"]        ?? '';
+	$Password1    = $_REQUEST["Password1"]    ?? '';
+	$Password2    = $_REQUEST["Password2"]    ?? '';
+	$numberofdays = $_REQUEST["numberofdays"] ?? '';
+
 	if ($UserLogin == '') {
-		$errors .= "Please enter a user id.<BR>";
+		$errors .= "Please enter a user id.<br>";
 		$OK = 0;
 	}
 
@@ -62,7 +63,7 @@ if (IsSet($submit)) {
 	}
 
 	if (!freshports_IsEmailValid($email)) {
-		$errors .= "That email address doesn't look right to me<BR>";
+		$errors .= "That email address doesn't look right to me<br>";
 		$OK = 0;
 	}
 
@@ -73,11 +74,11 @@ if (IsSet($submit)) {
 	}
 
 	if ($Password1 != $Password2) {
-		$errors .= "The password was not confirmed.  It must be entered twice.<BR>";
+		$errors .= "The password was not confirmed.  It must be entered twice.<br>";
 		$OK = 0;
 	} else {
 		if ($Password1 == '') {
-			$errors .= 'A password must be supplied<BR>';
+			$errors .= 'A password must be supplied<br>';
 			$OK = 0;
 		}
 	}
@@ -90,20 +91,20 @@ if (IsSet($submit)) {
 		$numberofdays = 0;
 	}
 
-	if ( isset( $_POST["captcha"] ) )
+	if (isset($_POST["captcha"] ) )
 	{
-  	if ( $_SESSION["captcha"] == $_POST["captcha"] )
-  	{
-      //CAPTHCA is valid; proceed the message: save to database, send by e-mail ...
-      // echo 'CAPTHCA is valid; proceed the message';
-    }
-	  else
-	  {
-	    $errors .= 'Your CAPTHCA code is not valid<br>';
-	    syslog(LOG_ERR, "FreshPorts captcha failure: '" . $UserLogin . "', '" . $email . "', "  . $_SERVER['REMOTE_ADDR']);
-	    $OK = 0;
-	  }
-  }
+		if (IsSet($_SESSION["captcha"]) && IsSet($_POST["captcha"]) && $_SESSION["captcha"] == $_POST["captcha"] )
+		{
+			//CAPTHCA is valid; proceed the message: save to database, send by e-mail ...
+			// echo 'CAPTHCA is valid; proceed the message';
+		}
+		else
+		{
+			$errors .= 'Your CAPTHCA code is not valid<br>';
+			syslog(LOG_ERR, "FreshPorts captcha failure: '" . $UserLogin . "', '" . $email . "', "  . $_SERVER['REMOTE_ADDR']);
+			$OK = 0;
+		}
+	}
 
 
 
@@ -116,29 +117,30 @@ if (IsSet($submit)) {
 	if ($OK) {
 		// test for existance of user id
 
-		$sql = "select * from users where name = '" . pg_escape_string(strtolower($UserLogin)) . "'";
+		$sql = 'select * from users where name = $1';
 		syslog(LOG_ERR, "FreshPorts new user: $sql");
 
-		$result = pg_exec($db, $sql) or die('query failed');
+		$result = pg_query_params($db, $sql, array($UserLogin)) or die('query failed');
 
 		// create user id if not found
-		if(!pg_numrows($result)) {
+		if (!pg_num_rows($result)) {
 			syslog(LOG_ERR, "FreshPorts new user: '$UserLogin', '$email', " . $_SERVER["REMOTE_ADDR"] . ' confirmed: user id is new');
 
 			$UserID = freshports_GetNextValue($Sequence_User_ID, $db);
-			if (IsSet($UserID)) {			
-				$sql = "insert into users (id, name, cookie, email, " . 
-						"watch_notice_id, emailsitenotices_yn, type, ip_address, number_of_days, password_hash) values (";
-				$sql .= pg_escape_string($UserID) . ", '" . pg_escape_string($UserLogin) . "', 'nocookie', '" . 
-					pg_escape_string($email) . "', '1', 'N', 'U', '" . pg_escape_string($_SERVER["REMOTE_ADDR"]) . "', " .
-					pg_escape_string($numberofdays) . ", " .
-					"crypt('" . pg_escape_string($Password1) . "' , gen_salt('" . PW_HASH_METHOD ."', " . PW_HASH_COST .")))";
+			if (IsSet($UserID)) {
+				$sql = "insert into " .
+					"users (id, name, cookie, email, watch_notice_id, emailsitenotices_yn, type, ip_address, number_of_days, password_hash) " .
+					"values ($1, $2, $3, $4, $5::integer, $6, $7, $8, $9::integer, crypt($10, gen_salt($11, $12::integer)))";
 
 				syslog(LOG_ERR, "FreshPorts new user: '$UserID', '$UserLogin', '$email', " . $_SERVER["REMOTE_ADDR"]);
 
-				$errors .= "<BR>sql=" . $sql;
+				$errors .= "<br>sql=" . $sql;
 
-				$result = pg_exec($db, $sql);
+				$result = pg_query_params($db, $sql, array(
+					$UserID, $UserLogin, 'nocookie', $email, 1, 'N', 'U', $_SERVER["REMOTE_ADDR"],
+					$numberofdays, $Password1, PW_HASH_METHOD, PW_HASH_COST
+				));
+
 				if ($result) {
 					$UserCreated = 1;
 
@@ -156,7 +158,7 @@ if (IsSet($submit)) {
 			}
 
 	    } else {
-			$errors .= 'That User ID is already in use.  Please select a different  User ID.<BR>';
+			$errors .= 'That User ID is already in use.  Please select a different  User ID.<br>';
     	}
 	}
 
@@ -178,41 +180,34 @@ if (IsSet($submit)) {
 ?>
 
 <?php echo freshports_MainTable(); ?>
-<TR><td class="content">
+<tr><td class="content">
 <?php
 if ($errors != '') {
-echo '<TABLE class="fullwidth borderless">
-<TR>
-<TD>
-<TABLE class="fullwidth borderless">
-<TR class="accent"><TD><B>Access Code Failed!</B></TD>
-</TR>
-<TR>
-<TD>
-  <TABLE class="fullwidth borderless" CELLPADDING=3>
-  <TR VALIGN=top>
-   <TD><IMG SRC="/images/warning.gif"></TD>
-   <TD WIDTH=100%>
-  <p>Some errors have occurred which must be corrected before your login can be created.</p>';
+echo '<table class="fullwidth borderless">
+<tr>
+<td>
+<table class="fullwidth borderless">
+<tr class="accent"><td>Access Code Failed!</td>
+</tr>
+<tr>
+<td>
+  <p><IMG SRC="/images/warning.gif"> Some errors have occurred which must be corrected before your login can be created.</p>';
 
 /*
-  while (list($name, $value) = each($HTTP_POST_VARS)) {
-    echo "$name = $value<BR>\n";
+  while (list($name, $value) = each($_REQUEST)) {
+    echo "$name = $value<br>\n";
   }
 */
 echo $errors;
 
 echo '<p>If you need help, please email postmaster@. </p>
- </TD>
- </TR>
- </TABLE>
-</TD>
-</TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>
-<BR>';
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<br>';
 }
 
 if (!IsSet($submit) && $errors != '') {
@@ -223,13 +218,13 @@ if (!IsSet($submit) && $errors != '') {
 echo freshports_MainContentTable();
 
 ?>
-      <TR>
-		<? echo freshports_PageBannerText("New User Details"); ?>
-      </TR>
-      <TR>
-        <TD>
+      <tr>
+		<?php echo freshports_PageBannerText("New User Details"); ?>
+      </tr>
+      <tr>
+        <td>
 
-<P><BIG><BIG>Please observe the following points:</BIG></BIG>
+<p class="element-details"><span>Please observe the following points:</span></p>
 
 <ul>
 <li>
@@ -237,7 +232,7 @@ You must supply a valid email address. Instructions to enable your account
 will be emailed to you at that address.
 
 <li>If you have a spam filter, please allow all
-mail from <CODE CLASS="code">unixathome.org</CODE> and <CODE CLASS="code">freshports.org</CODE>.
+mail from <code class="code">unixathome.org</code> and <code class="code">freshports.org</code>.
 
 <li>Please disable any auto-responders for the above domains.  I get enough email
 without being told when you'll be back from holiday or who else I can contact...
@@ -251,25 +246,23 @@ Your cooperation with the above will make my life easier.  Thank you.
 
 <hr>
 
-<? require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/new-user.php'); ?>
+<?php require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/new-user.php'); ?>
 
 	<hr>
 
-    </TD>
-  </TR>
-</TABLE>
-</TD>
+    </td>
+  </tr>
+</table>
+</td>
 <td class="sidebar">
 
-	<?
-	echo freshports_SideBar();
-	?>
+	<?php echo freshports_SideBar(); ?>
 
 </td>
-</TR>
-</TABLE>
+</tr>
+</table>
 
-<?
+<?php
 echo freshports_ShowFooter();
 ?>
 

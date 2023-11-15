@@ -37,14 +37,14 @@ class WatchNotice {
 		if (IsSet($id)) {
 			$this->id = $id;
 		}
-		$sql = "select * from watch_notice where id = " . pg_escape_string($this->id);
-#		echo "sql = '$sql'<BR>";
+		$sql = 'select * from watch_notice where id = $1';
+#		echo "sql = '$sql'<br>";
 
-        $result = pg_exec($this->dbh, $sql);
+        $result = pg_query_params($this->dbh, $sql, array($this->id));
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
-#				echo "fetched by ID succeeded<BR>";
+#				echo "fetched by ID succeeded<br>";
 				$myrow = pg_fetch_array ($result, 0);
 				$this->_PopulateValues($myrow);
 			}
@@ -58,15 +58,15 @@ class WatchNotice {
 		if (IsSet($frequency)) {
 			$this->frequency = $frequency;
 		}
-		$sql = "select * from watch_notice where frequency = '" . pg_escape_string($this->frequency) . "'";
+		$sql = 'select * from watch_notice where frequency = $1';
 
-#		echo "sql = '$sql'<BR>";
+#		echo "sql = '$sql'<br>";
 
-        $result = pg_exec($this->dbh, $sql);
+        $result = pg_query_params($this->dbh, $sql, array($this->frequency));
 		if ($result) {
-			$numrows = pg_numrows($result);
+			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {
-#				echo "fetched by Frequency succeeded<BR>";
+#				echo "fetched by Frequency succeeded<br>";
 				$myrow = pg_fetch_array ($result, 0);
 				$this->_PopulateValues($myrow);
 			}

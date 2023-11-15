@@ -6,6 +6,7 @@
 
 
 // base class for commit_log_ports_ignore
+# not sure this class is used: dvl 2023-04-01
 class Commit_Log_Ports_Ignore {
 
 	var $dbh;
@@ -19,7 +20,7 @@ class Commit_Log_Ports_Ignore {
 	var $result;
 
 	function __construct($dbh) {
-		$this->dbh	= $dbh;
+		$this->dbh = $dbh;
 	}
 	
 	function CommitLogIDSet($commit_log_id) {
@@ -37,16 +38,16 @@ class Commit_Log_Ports_Ignore {
 	function Delete() {
 		# delete the ignore entry for this commit/port combination
 
-		$sql = "
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "
 DELETE from commit_log_ports_ignore
- WHERE commit_log_id = " . pg_escape_string($this->commit_log_id) . "
-   AND port_id       = " . pg_escape_string($this->port_id);
+ WHERE commit_log_id = $1
+   AND port_id       = $2";
 
 		echo ("\$sql='<pre>$sql</pre><br>\n");
 		
-		$this->result = pg_exec($this->dbh, $sql);
+		$this->result = pg_query_params($this->dbh, $sql, array($this->commit_log_id, $this->commit_log_id));
 		if (!$this->result) {
-			echo pg_errormessage() . " $sql";
+			echo pg_last_error($this->dbh) . " $sql";
 		}
 		$numrows = pg_affected_rows($this->result);
 
@@ -57,15 +58,15 @@ DELETE from commit_log_ports_ignore
 	function Insert() {
 		# delete the ignore entry for this commit/port combination
 
-		$sql = "
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "
 INSERT INTO commit_log_ports_ignore (commit_log_id, port_id, reason)
-   values (" . pg_escape_string($this->commit_log_id) . ", " . pg_escape_string($this->port_id) . ", '" . pg_escape_string($this->reason) . "')";
+   values ($1, $2, $3)";
 
 		echo "\$sql='<pre>$sql</pre><br>\n";
 		
-		$this->result = pg_exec($this->dbh, $sql);
+		$this->result = pg_query_params($this->dbh, $sql, array($this->commit_log_id, $this->port_id, $this->reason));
 		if (!$this->result) {
-			echo pg_errormessage() . " $sql";
+			echo pg_last_error($this->dbh) . " $sql";
 		}
 		$numrows = pg_affected_rows($this->result);
 

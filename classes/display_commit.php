@@ -187,6 +187,11 @@ class DisplayCommit {
 				}
 				$this->HTML .= '</span>';
 
+				if (!empty($mycommit->branch) && $this->BranchName != $mycommit->branch || $this->BranchName != BRANCH_HEAD) {
+					$this->HTML .=  ' <span class="commit-branch">' . $mycommit->branch . '</span>';
+				}
+
+
 
 					$this->HTML .= "\n<blockquote class=\"description\">";
 					$this->HTML .= freshports_CommitDescriptionPrint(

@@ -927,7 +927,7 @@ class port_display {
 			# link to https://repology.org : re https://github.com/FreshPorts/freshports/issues/148
 			$HTML .= ' ' . freshports_Repology_Link($port->category . '/' . $port->port);
 
-			$HTML.= ' ' . freshports_Fallout_Link($port->category, $port->port);
+			$HTML .= ' ' . freshports_Fallout_Link($port->category, $port->port);
 
 			$HTML .=  ' <span class="tooltip">';
 			if (empty($port->quarterly_revision)) {

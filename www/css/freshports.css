@@ -775,11 +775,13 @@ table.packages {
 }
 
 .commit-branch {
+    font-size: 14px;
     border-radius: 6px;
     padding: 0 6px;
     background-color: darkred;
     border-style: none;
     color: white;
+    font-family: monospace;
 }
 
 

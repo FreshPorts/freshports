@@ -266,110 +266,10 @@ class DisplayCommit {
 				if ($DetailsWillBePresented) {
 					$this->HTML .= '<li>';
 				}
-				#
-				# XXX This 0 is in the if beacuse I'm testing the ELSE portion for all purposes
-				#
-				if (0 && IsSet($mycommit->category) && $mycommit->category != '') {
-					# i.e. this is a category/port item, as opposed to MOVED, or UPDATING
-					if ($Debug) echo 'category is set';
-					if ($this->UserID) {
-						#
-						# if they are watching the port, display the toggle to remove it from the watch list.
-						# if they aren't, let they add it.
-						#
-						$OnWatchList = IsSet($mycommit->onwatchlist) && $mycommit->onwatchlist;
-						if ($OnWatchList) {
-							$this->HTML .= ' '. freshports_Watch_Link_Remove($this->WatchListAsk, $OnWatchList, $mycommit->element_id) . ' ';
-						} else {
-							$this->HTML .= ' '. freshports_Watch_Link_Add   ($this->WatchListAsk, $OnWatchList, $mycommit->element_id) . ' ';
-						}
-					}
-
-					$this->HTML .= '<span class="element-details">';
-					$this->HTML .= '<a href="/' . $mycommit->category . '/' . $mycommit->port . '/';
-
-					$this->HTML .= $QueryArgs . '">';
-					$this->HTML .= $mycommit->port;
-					$this->HTML .= '</a>';
-
-					$PackageVersion = freshports_PackageVersion($mycommit->version, $mycommit->revision, $mycommit->epoch);
-					if (strlen($PackageVersion) > 0) {
-						$this->HTML .= ' ' . $PackageVersion;
-					}
-
-					$this->HTML .= "</span>\n";
-
-					$this->HTML .= '<a href="/' . $mycommit->category . '/'  . $URLBranchSuffix . '">';
-					$this->HTML .= $mycommit->category. "</a>";
-					$this->HTML .= '&nbsp;';
-
-					// indicate if this port has been removed from cvs
-					if ($mycommit->status == "D") {
-						$this->HTML .= " " . freshports_Deleted_Icon_Link() . "\n";
-					}
-
-					// indicate if this port needs refreshing from CVS
-					if ($mycommit->needs_refresh) {
-						$this->HTML .= " " . freshports_Refresh_Icon_Link() . "\n";
-					}
-					if ($mycommit->date_added > Time() - 3600 * 24 * $this->DaysMarkedAsNew) {
-						$MarkedAsNew = "Y";
-						$this->HTML .= freshports_New_Icon() . "\n";
-					}
-
-					if ($mycommit->forbidden) {
-						$this->HTML .= ' ' . freshports_Forbidden_Icon_Link() . "\n";
-					}
-
-					if ($mycommit->broken) {
-						$this->HTML .= ' '. freshports_Broken_Icon_Link() . "\n";
-					}
-
-					if ($mycommit->deprecated) {
-						$this->HTML .= ' '. freshports_Deprecated_Icon_Link() . "\n";
-					}
-
-					if ($mycommit->expiration_date) {
-						if (date('Y-m-d') >= $mycommit->expiration_date) {
-							$this->HTML .= freshports_Expired_Icon_Link($mycommit->expiration_date) . "\n";
-						} else {
-							$this->HTML .= freshports_Expiration_Icon_Link($mycommit->expiration_date) . "\n";
-						}
-					}
-
-					if ($mycommit->ignore) {
-						$this->HTML .= ' '. freshports_Ignore_Icon_Link() . "\n";
-					}
-
-					$this->HTML .= freshports_Commit_Link_Port($mycommit->message_id, $mycommit->category, $mycommit->port);
-					$this->HTML .= "&nbsp;";
-
-					if ($mycommit->vulnerable_current) {
-						$this->HTML .= '&nbsp;' . freshports_VuXML_Icon() . '&nbsp;';
-					} else {
-						if ($mycommit->vulnerable_past) {
-							$this->HTML .= '&nbsp;' . freshports_VuXML_Icon_Faded() . '&nbsp;';
-						}
-					}
-
-					if ($mycommit->restricted) {
-						$this->HTML .= freshports_Restricted_Icon_Link($mycommit->restricted) . '&nbsp;';
-					}
-
-					if ($mycommit->no_cdrom) {
-						$this->HTML .= freshports_No_CDROM_Icon_Link($mycommit->no_cdrom) . '&nbsp;';
-					}
-
-					if ($mycommit->is_interactive) {
-						$this->HTML .= freshports_Is_Interactive_Icon_Link($mycommit->is_interactive) . '&nbsp;';
-					}
-
-					$this->HTML.=  freshports_Fallout_Link($mycommit->category, $mycommit->port) . '&nbsp;';
+				if (!$DetailsWillBePresented) {
+					# we do nothing
+					# this is a non-port. All the rest of the stuff is not displayed
 				} else {
-					if (!$DetailsWillBePresented) {
-						# we do nothing
-						# this is a non-port. All the rest of the stuff is not displayed
-					} else {
 					syslog(LOG_NOTICE, 'We have non-port where element_pathname is not empty');
 
 					# This is a non-port element... 
@@ -399,7 +299,9 @@ class DisplayCommit {
 
 					if ($PathName != $mycommit->element_pathname) {
 						# the replace changes encoded / to plain text / - not sure why may have been present
-						$this->HTML .= '<a href="/' . str_replace('%2F', '/', urlencode($PathName)) . $QueryArgs . '">' . $PathName. '</a>';
+						$this->HTML .= '<a href="/' . str_replace('%2F', '/', $PathName);
+						if (!empty($mycommit->port)) $this->HTML .= '/';
+						$this->HTML .= $QueryArgs . '">' . $PathName. '</a>';
 						$this->HTML .= "</span>\n";
 					} else {
 						#$this->HTML .= '<a href="' . FRESHPORTS_FREEBSD_CVS_URL . $PathName . '#rev' . $mycommit->revision . '">' . $PathName . '</a>';
@@ -471,7 +373,6 @@ class DisplayCommit {
 
 					$this->HTML.=  freshports_Fallout_Link($mycommit->category, $mycommit->port) . '&nbsp;';
 					}
-					} # else !empty($mycommit->element_pathname)
 				}
 				
 				if ($DetailsWillBePresented) {

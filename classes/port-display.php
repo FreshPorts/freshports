@@ -962,11 +962,11 @@ class port_display {
 			}
 
 			if ($port->broken) {
-				$HTML .= freshports_Broken_Icon_Link($port->broken)         . ' BROKEN: '     . htmlify(_forDisplay($port->broken))     . "<br>"; ;
+				$HTML .= freshports_Broken_Icon_Link($port->broken)         . ' BROKEN: '     . htmlify(_forDisplay($port->broken))     . "<br>";
 			}
 
 			if ($port->deprecated) {
-				$HTML .= freshports_Deprecated_Icon_Link($port->deprecated) . ' DEPRECATED: ' . htmlify(_forDisplay($port->deprecated)) . "<br>"; ;
+				$HTML .= freshports_Deprecated_Icon_Link($port->deprecated) . ' DEPRECATED: ' . htmlify(_forDisplay($port->deprecated)) . "<br>";
 			}
 
 			if ($port->expiration_date) {
@@ -978,7 +978,7 @@ class port_display {
 			}
 
 			if ($port->ignore) {
-				$HTML .= freshports_Ignore_Icon_Link($port->ignore)         . ' IGNORE: '     . htmlify(_forDisplay($port->ignore))     . '<br>'; ;
+				$HTML .= freshports_Ignore_Icon_Link($port->ignore)         . ' IGNORE: '     . htmlify(_forDisplay($port->ignore))     . '<br>';
 			}
 
 			if ($port->restricted) {

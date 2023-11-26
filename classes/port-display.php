@@ -638,7 +638,6 @@ class port_display {
 		$this->ShowHomepageLink        = true;
 		$this->ShowLastCommitDate      = true;
 		$this->ShowMaintainedBy        = true;
-		$this->ShowManPageLinks        = true;
 		$this->ShowPackageLink         = true;
 		$this->ShowPortCreationDate    = true;
 		$this->ShowShortDescription    = true;

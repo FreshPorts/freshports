@@ -209,7 +209,8 @@ class DisplayCommit {
 				
 
 				# we use element-details so the icons on the hash align with the icons on the elements which appear below it.
-				$this->HTML .= '<span class="element-details">';
+				$this->HTML .= '<span class="hash">';
+
 				if ($this->UserID) {
 					if (IsSet($this->FlaggedCommits[$mycommit->commit_log_id])) {
 						$this->HTML .= freshports_Commit_Flagged_Link    ($mycommit->message_id);
@@ -243,13 +244,11 @@ class DisplayCommit {
 					$this->HTML .=  ' <span class="commit-branch">' . $mycommit->branch . '</span>';
 				}
 				
-				$this->HTML .= '</span>';
+				$this->HTML .= '</span>'; /* hash */
 
 				$DetailsWillBePresented = !empty($mycommit->element_pathname);
 				
 				if ($DetailsWillBePresented) {
-					$this->HTML .= '<p>Details:</p>';
-
 					$this->HTML .= '<ul class="element-list">' . "\n";
 				}
 
@@ -292,22 +291,19 @@ class DisplayCommit {
 							break;
 					}
 
-					$this->HTML .= freshports_git_Link_freebsd ($mycommit->repo_hostname, $mycommit->path_to_repo, $PathName) . '&nbsp;';
-					$this->HTML .= freshports_git_Link_codeberg($mycommit->repo_hostname, $mycommit->path_to_repo, $PathName) . '&nbsp;';
-					$this->HTML .= freshports_git_Link_github  ($mycommit->repo_hostname, $mycommit->path_to_repo, $PathName) . '&nbsp;';
-					$this->HTML .= freshports_git_Link_gitlab  ($mycommit->repo_hostname, $mycommit->path_to_repo, $PathName) . '&nbsp;';
-
 					if ($PathName != $mycommit->element_pathname) {
 						# the replace changes encoded / to plain text / - not sure why may have been present
 						$this->HTML .= '<a href="/' . str_replace('%2F', '/', $PathName);
 						if (!empty($mycommit->port)) $this->HTML .= '/';
-						$this->HTML .= $QueryArgs . '">' . $PathName. '</a>';
-						$this->HTML .= "</span>\n";
+						$this->HTML .= $QueryArgs . '"';
+						$this->HTML .= ' title="' . $PathName . ': ' . $mycommit->short_description . '"';
+						$this->HTML .= '>' . $PathName. '</a>';
 					} else {
 						#$this->HTML .= '<a href="' . FRESHPORTS_FREEBSD_CVS_URL . $PathName . '#rev' . $mycommit->revision . '">' . $PathName . '</a>';
 						$this->HTML .= $PathName;
-						$this->HTML .= "</span>\n";
 					}
+
+					$this->HTML .= "</span>\n"; /* element-details*/
 
 					if (IsSet($mycommit->category) && $mycommit->category != '') {
 					// indicate if this port has been removed from cvs
@@ -348,15 +344,8 @@ class DisplayCommit {
 						$this->HTML .= ' '. freshports_Ignore_Icon_Link() . "\n";
 					}
 
-					$this->HTML .= freshports_Commit_Link_Port($mycommit->message_id, $mycommit->category, $mycommit->port);
-					$this->HTML .= "&nbsp;";
-
 					if ($mycommit->vulnerable_current) {
 						$this->HTML .= '&nbsp;' . freshports_VuXML_Icon() . '&nbsp;';
-					} else {
-						if ($mycommit->vulnerable_past) {
-							$this->HTML .= '&nbsp;' . freshports_VuXML_Icon_Faded() . '&nbsp;';
-						}
 					}
 
 					if ($mycommit->restricted) {
@@ -371,7 +360,6 @@ class DisplayCommit {
 						$this->HTML .= freshports_Is_Interactive_Icon_Link($mycommit->is_interactive) . '&nbsp;';
 					}
 
-					$this->HTML.=  freshports_Fallout_Link($mycommit->category, $mycommit->port) . '&nbsp;';
 					}
 				}
 				

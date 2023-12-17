@@ -212,6 +212,11 @@ td.content {
   padding-left: 0;
 }
 
+.hash {
+  font-family: monospace;
+}
+
+
 .element-details {
   font-family: monospace;
 }
@@ -518,6 +523,17 @@ div#followus .header
 dt.required, p.required, dt.description, dt.www
 {
     font-weight: bold;
+}
+
+pre.description {
+    overflow-x: scroll;
+    max-width: 600px;
+/*    white-space: nowrap;*/
+}
+
+html {
+    overflow: -moz-scrollbars-vertical; 
+    overflow-y: scroll;
 }
 
 dt.description

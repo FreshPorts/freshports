@@ -79,7 +79,7 @@ class Cache {
 				fclose($SpoolFileHandle);
 
 				// chmod to group writable so that the perl scripts, running
-				// as dan, can remove them when a new commit comes in.
+				// as freshports, can remove them when a new commit comes in.
 				// the leading zero is important.
 				$old = umask(0);
 				chmod($SpoolFileName, 0774);

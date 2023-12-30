@@ -1080,6 +1080,7 @@ GLOBAL $FreshPortsLogoHeight;
 	}
 
 	$HTML .= '<span class="amazon">As an Amazon Associate I earn from qualifying purchases.<br>Want a good read? Try <a target="_blank" rel="noopener noreferrer" href="https://www.amazon.com/gp/product/B07PVTBWX7/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B07PVTBWX7&amp;linkCode=as2&amp;tag=thfrdi0c-20&amp;linkId=a5cb3ac309f59900d44401e24a169f05">FreeBSD Mastery: Jails (IT Mastery Book 15)</a></span>';
+	$HTML .= '<span class="amazon">Want a good monitor light? See my <a href="https://dan.langille.org/2023/12/30/blatant-self-interest-monitor-light/">photos</></span>';
 	$HTML .= '<span class="timezone">All times are UTC</span>';
 
 	$HTML .= '</td>';

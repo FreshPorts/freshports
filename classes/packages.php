@@ -12,6 +12,7 @@ class Packages {
 	var $id;       # the port id for this set of packages
 
 	var $package_names = array();
+	var $packages;
 	var $dbh;
 
 	function __construct($dbh) {  

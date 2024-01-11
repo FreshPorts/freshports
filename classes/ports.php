@@ -65,6 +65,7 @@ class Port {
 	var $conflicts_build;
 	var $conflicts_install;
 	var $conflicts_matches;
+	var $generate_plist;
 
 	// derived or from other tables
 	var $category;
@@ -108,6 +109,7 @@ class Port {
 	var $author_name;
 	var $author_email;
 
+	var $category_looking_at;
 	var $repository;
 	var $repo_hostname;
 	var $git_hostname; # not yet populated

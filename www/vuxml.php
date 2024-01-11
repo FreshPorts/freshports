@@ -186,8 +186,7 @@ SELECT V.vid,
 			}
 			$HTML .= '</td><td class="vtop">';
 			
-			$Narrative = trim(strip_tags($Description));
-			$Narrative = utf8_decode($Description);
+			$Narrative = $Description;
 			$HTML .= '<b>VuXML ID</b> <span class="code">' . $VID . '</span><br>' . $Narrative . ' <a href="' . VUXMLURL . $VID . '.html">more...</a>';
 			$HTML .= '</td><td class="hleft vtop">';
 

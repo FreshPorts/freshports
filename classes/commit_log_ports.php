@@ -13,6 +13,7 @@ class Commit_Log_Ports {
 
 	var $id;
 	var $svn_revision;
+	var $port_id;
 	var $message_id;
 	var $commit_hash_short;
 	var $commit_date;

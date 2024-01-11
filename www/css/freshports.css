@@ -218,7 +218,9 @@ td.content {
 
 
 .element-details {
-  font-family: monospace;
+/*  font-family: monospace;*/
+  font-size: larger;
+  font-weight: bold;
 }
 
 .element-details > span {

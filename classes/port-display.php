@@ -36,6 +36,7 @@ class port_display {
 	var $ShowCategory;
 	var $ShowChangesLink;
 	var $ShowConfig;
+	var $ShowConfigurePlist;
 	var $ShowConflicts;
 	var $ShowDateAdded;
 	var $ShowDepends;
@@ -47,6 +48,7 @@ class port_display {
 	var $ShowLastChange;        # who made the last change - useful for knowing last commit
 	var $ShowLastCommitDate;    # when was the last change - useful when searching by committer
 	var $ShowMaintainedBy;
+	var $ShowManPageLinks;
 	var $ShowMasterSites;
 	var $ShowMasterSlave;
 	var $ShowPackageLink;
@@ -57,6 +59,7 @@ class port_display {
 	var $ShowUses;
 	var $ShowWatchListCount;
 	var $ShowWatchListStatus;
+	var $UseFullPathNames;
 
 	# taken from https://www.php.net/manual/en/function.strpos.php
 	function strpos_nth(string $string, string $needle, int $occurrence, int $offset = 0) {

@@ -15,6 +15,7 @@ class PortDependencies {
 	
 	var $category;  // of the dependent port
 	var $port;      // of the dependent port
+	var $status;
 
 	var $dbh;
 	var $LocalResult;

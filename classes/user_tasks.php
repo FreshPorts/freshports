@@ -12,6 +12,7 @@ DEFINE('FRESHPORTS_TASKS_ANNOUNCEMENTS_MAINTAIN',           'AnnouncementsUpdate
 // base class for user tasks
 class UserTasks {
 
+	var $id;
 	var $user_id;
 	var $tasks;
 

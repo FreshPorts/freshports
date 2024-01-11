@@ -23,6 +23,7 @@ class Commit_Ports {
 	var $category_id;
 	var $port;
 	var $version;
+	var $revision;
 	var $svn_revision;
 	var $epoch;
 	var $status;

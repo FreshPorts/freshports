@@ -18,6 +18,7 @@ class Category {
 	var $element_id;
 	var $name;
 	var $description;
+	var $last_commit_date;
 
 	var $Debug = 0;
 

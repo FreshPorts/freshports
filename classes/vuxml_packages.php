@@ -1,4 +1,4 @@
-<?php
+k68<?php
 	#
 	# $Id: vuxml_packages.php,v 1.2 2006-12-17 11:37:21 dan Exp $
 	#
@@ -10,6 +10,8 @@ class VuXML_Packages {
 	var $id;
 	var $vuxml_id;
 	var $type;
+	var $names;
+	var $ranges;
 
 	var $dbh;
 

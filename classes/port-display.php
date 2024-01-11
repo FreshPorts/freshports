@@ -399,7 +399,7 @@ class port_display {
                 # For subversion, we link to the revision one less
                 # so that the user has something to see.
                 # But this is a git commit, so we can't do that.
-                # We show them a striketrough instead.
+                # We show them a strike-through instead.
                 # echo 'oh, we are going null #1';
 	        $link = null;
               }
@@ -784,19 +784,19 @@ class port_display {
 		$title = '';
 
 		if (empty($repo_date)) {
-			$title .= "repo not found\n";
+			$title .= "repo not found - no repo build date\n";
 		} else {
 			$title .= $repo_date . " &#8211; repo build date\n";
 		}
 
 		if (empty($processed_date)) {
-			$title .= "never imported\n";
+			$title .= "nil - processed by FreshPorts\n";
 		} else {
 			$title .= $processed_date . " &#8211; processed by FreshPorts\n";
 		}
 
 		if (empty($last_checked)) {
-			$title .= "never checked";
+			$title .= "never - last checked by FreshPorts";
 		} else {
 			$title .= $last_checked . " &#8211; last checked by FreshPorts";
 		}
@@ -933,11 +933,12 @@ class port_display {
 
 			$HTML .=  ' <span class="tooltip">';
 			if (empty($port->quarterly_revision)) {
-				$HTML .= 'Port not present on quarterly';
+
+				$HTML .= 'Package not present on quarterly.';
 				if (IsSet($port->date_added) && date("Y-m-d", strtotime($port->date_added)) > FirstDateOfCurrentQuarter()) {
 					$ToolTipText = 'This is expected as this port was created during this quarter.';
 				} else {
-					$ToolTipText = 'This missing version is most likely a FreshPorts error.';
+					$ToolTipText = 'This is expected early in the quarter (because the new packaage repo has not been built yet.). Otherwise, this missing version is most likely a FreshPorts error.';
 				}
 			} else {
 				$HTML .= $port->quarterly_revision;

@@ -10,7 +10,9 @@ class PackageFlavors {
 	var $id;
 	var $port_id;
 	var $flavor;
+	var $flavor_id;
 	var $flavor_name;
+	var $name;
 	var $flavor_number;
 
 	var $dbh;

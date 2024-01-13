@@ -39,7 +39,7 @@ class Commit_Log_Ports {
 	var $Offset;
 
 	function __construct($dbh) {
-		$this->dbh	  = $dbh;
+		$this->dbh    = $dbh;
 		$this->Limit  = '';
 		$this->Offset = '';
 	}

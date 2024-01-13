@@ -20,7 +20,7 @@ class Commit_Log_Ports_VuXML {
 	var $result;
 
 	function __construct($dbh) {
-		$this->dbh	= $dbh;
+		$this->dbh = $dbh;
 	}
 	
 	function FetchInitialise($port_id) {

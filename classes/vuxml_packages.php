@@ -16,7 +16,7 @@ class VuXML_Packages {
 	var $dbh;
 
 	function __construct($dbh) {
-		$this->dbh	= $dbh;
+		$this->dbh = $dbh;
 	}
 
 	function FetchByVID($vuxml_id) {

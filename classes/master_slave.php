@@ -17,14 +17,14 @@ class MasterSlave {
 	var $LocalResult;
 
 	function __construct($dbh) {
-		$this->dbh	= $dbh;
+		$this->dbh = $dbh;
 	}
 
 	function _PopulateValues($myrow) {
-		$this->slave_port_id			= $myrow['slave_port_id'];
-		$this->slave_port_name			= $myrow['slave_port_name'];
-		$this->slave_category_id		= $myrow['slave_category_id'];
-		$this->slave_category_name		= $myrow['slave_category_name'];
+		$this->slave_port_id       = $myrow['slave_port_id'];
+		$this->slave_port_name     = $myrow['slave_port_name'];
+		$this->slave_category_id   = $myrow['slave_category_id'];
+		$this->slave_category_name = $myrow['slave_category_name'];
 	}
 
 	function FetchByMaster($MasterName) {

@@ -22,7 +22,7 @@ class CommitFlag {
 
 
 	function __construct($dbh) {
-		$this->dbh	= $dbh;
+		$this->dbh    = $dbh;
 		$this->_Debug = false;
 	}
 	

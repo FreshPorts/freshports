@@ -9,11 +9,11 @@
 // base class for watch notice
 class WatchNotice {
 
-	var $Never			= 'Z';
-	var $Daily			= 'D';
-	var $Weekly			= 'W';
-	var $Fortnightly	= 'F';
-	var $Monthly		= 'M';
+	var $Never       = 'Z';
+	var $Daily       = 'D';
+	var $Weekly      = 'W';
+	var $Fortnightly = 'F';
+	var $Monthly     = 'M';
 
 	var $id;
 	var $frequency;
@@ -23,14 +23,14 @@ class WatchNotice {
 	var $dbh;
 
 	function __construct($dbh) {
-		$this->dbh	= $dbh;
+		$this->dbh = $dbh;
 	}
 
     function _PopulateValues($myrow) {
-		$this->id			= $myrow["id"];
-		$this->frequency	= $myrow["frequency"];
-		$this->description	= $myrow["description"];
-		$this->last_sent	= $myrow["last_sent"];
+		$this->id          = $myrow["id"];
+		$this->frequency   = $myrow["frequency"];
+		$this->description = $myrow["description"];
+		$this->last_sent   = $myrow["last_sent"];
 	}
 
 	function FetchByID($id) {

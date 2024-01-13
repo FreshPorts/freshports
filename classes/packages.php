@@ -16,7 +16,7 @@ class Packages {
 	var $dbh;
 
 	function __construct($dbh) {  
-		$this->dbh	= $dbh;
+		$this->dbh = $dbh;
 	}
 
 	function GetCategoryPortFromPackageName($package) {

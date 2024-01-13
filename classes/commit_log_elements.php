@@ -29,7 +29,7 @@ class Commit_Log_Elements {
 	var $Debug;
 
 	function __construct($dbh) {
-		$this->dbh	= $dbh;
+		$this->dbh = $dbh;
 	}
 	
 	function FetchInitialise($element_id) {

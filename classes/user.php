@@ -44,7 +44,7 @@ class User {
 	function __construct($dbh) {
 		GLOBAL $DefaultPageSize;	# from include/getvalues.php
 
-		$this->dbh	     = $dbh;
+		$this->dbh       = $dbh;
 		$this->id        = 0;
 		$this->page_size = 100;
 	}
@@ -122,10 +122,9 @@ class User {
 		$this->number_of_days           = $myrow['number_of_days'];
 		$this->watch_list_add_remove    = $myrow['watch_list_add_remove'];
 		$this->last_watch_list_chosen   = $myrow['last_watch_list_chosen'];
+		$this->page_size                = $myrow['page_size'];
 		$this->filter                   = isset($myrow['filter']) ? $myrow['filter'] : null;
 		$this->set_focus_search         = $myrow['set_focus_search'] == 't' ? true : false;
-
-		$this->page_size                 = $myrow['page_size'];
 
 		if (!IsSet($this->page_size) || $this->page_size == '') {
 			GLOBAL $DefaultPageSize; # from configuration/freshports.conf.php

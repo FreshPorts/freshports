@@ -42,7 +42,7 @@ class Commit {
 	const MESSAGE_ID_DOMAIN = 'freebsd.org';
 
 	function __construct($dbh) {
-		$this->dbh	= $dbh;
+		$this->dbh = $dbh;
 	}
 
 	function PopulateValues($myrow) {

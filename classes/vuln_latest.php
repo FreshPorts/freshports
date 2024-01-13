@@ -12,14 +12,14 @@ class vuln_latest {
 	var $id;
 	var $category;
 	var $port;
-	var $dater;
+	var $date;
 	var $vid;
 
 	var $dbh;
 	var $LocalResult;
 
 	function __construct($dbh) {
-		$this->dbh	= $dbh;
+		$this->dbh = $dbh;
 	}
 
 	function _PopulateValues($myrow) {

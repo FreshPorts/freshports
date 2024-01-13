@@ -40,6 +40,7 @@ class CommitRecord {
 	var $element_pathname;
 	var $status;
 	var $category;
+	var $watch;
 	var $vulnerable_current;
 	var $vulnerable_past;
 	var $restricted;
@@ -55,8 +56,6 @@ class CommitRecord {
 	var $repository;
 	var $repo_hostname;
 	var $path_to_repo;
-
-	var $watch;
 
 	function __construct() {
 	}

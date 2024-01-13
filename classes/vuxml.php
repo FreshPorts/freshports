@@ -27,7 +27,7 @@ class VuXML {
 	var $dbh;
 
 	function __construct($dbh) {
-		$this->dbh	= $dbh;
+		$this->dbh = $dbh;
 	}
 
 	function FetchByVID($VID) {
@@ -81,7 +81,7 @@ class VuXML {
 	}
 
 	function display() {
-		echo $this->topic        . '<br>';
+		echo $this->topic       . '<br>';
 		echo $this->description . '<br>';
 		if (IsSet($this->date_discovery)) echo "Discovery " . $this->date_discovery . '<br>';
 		if (IsSet($this->date_entry))     echo "Entry     " . $this->date_entry     . '<br>';

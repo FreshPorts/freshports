@@ -24,7 +24,7 @@ class WatchList {
 
 
 	function __construct($dbh) {
-		$this->dbh	= $dbh;
+		$this->dbh = $dbh;
 	}
 	
 	function Create($UserID, $Name) {
@@ -267,11 +267,11 @@ UPDATE watch_list
 		# returned by Fetch.
 		#
 
-		$this->id				= $myrow["id"];
-		$this->user_id			= $myrow["user_id"];
-		$this->name				= $myrow["name"];
-		$this->in_service		= $myrow["in_service"];
-		$this->token			= $myrow["token"];
+		$this->id               = $myrow["id"];
+		$this->user_id          = $myrow["user_id"];
+		$this->name             = $myrow["name"];
+		$this->in_service       = $myrow["in_service"];
+		$this->token            = $myrow["token"];
 		$this->watch_list_count = $myrow["watch_list_count"];
 	}
 }

@@ -12,7 +12,7 @@ class SystemBranch {
   var $dbh;
 
   function __construct($dbh) {
-    $this->dbh	= $dbh;
+    $this->dbh = $dbh;
   }
 
   function getBranchNames() {

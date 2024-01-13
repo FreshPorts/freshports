@@ -16,7 +16,7 @@ class VuXML_Names {
 	var $dbh;
 
 	function __construct($dbh) {
-		$this->dbh	= $dbh;
+		$this->dbh = $dbh;
 	}
 
 	function FetchByVuXMLAffectedID($vuxml_affected_id) {

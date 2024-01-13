@@ -19,7 +19,7 @@ class PortsUpdating {
 	var $LocalResult;
 
 	function __construct($dbh) {
-		$this->dbh	= $dbh;
+		$this->dbh = $dbh;
 	}
 
 	function _PopulateValues($myrow) {

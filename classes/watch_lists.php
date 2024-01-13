@@ -16,8 +16,8 @@ class WatchLists {
 	var $Debug;
 
 	function __construct($dbh) {
-		$this->dbh	= $dbh;
-		$this->Debug	= 0;
+		$this->dbh   = $dbh;
+		$this->Debug = 0;
 	}
 
 	function DeleteAllLists($UserID) {

@@ -18,7 +18,7 @@ class WatchListAlsoWatched {
 	var $LocalResult;
 
 	function __construct($dbh) {
-		$this->dbh	= $dbh;
+		$this->dbh = $dbh;
 	}
 	
 	function WatchersAlsoWatch($ElementID) {
@@ -64,7 +64,7 @@ class WatchListAlsoWatched {
 		# returned by Fetch.
 		#
 
-		$this->element_id	= $myrow['element_id'];
-		$this->URL			= $myrow['url'];
+		$this->element_id = $myrow['element_id'];
+		$this->URL        = $myrow['url'];
 	}
 }

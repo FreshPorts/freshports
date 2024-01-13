@@ -65,11 +65,11 @@ class Announcement {
 	}
 
 	function PopulateValues($myrow) {
-		$this->id			= $myrow["id"];
-		$this->text			= $myrow["text"];
-		$this->text_plain	= $myrow["text_plain"];
-		$this->start_date	= $myrow["start_date"];
-		$this->end_date	    = $myrow["end_date"];
+		$this->id         = $myrow["id"];
+		$this->text       = $myrow["text"];
+		$this->text_plain = $myrow["text_plain"];
+		$this->start_date = $myrow["start_date"];
+		$this->end_date	  = $myrow["end_date"];
 	}
 
 	function Delete() {

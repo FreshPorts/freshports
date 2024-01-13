@@ -22,7 +22,7 @@ class PageLoadDetail {
 	}
 	
 	function DBSet($dbh) {
-		$this->dbh	= $dbh;
+		$this->dbh = $dbh;
 	}
 	
 	function ElapsedTime() {

@@ -19,7 +19,7 @@ class UserTasks {
 	var $dbh;
 
 	function __construct($dbh) {
-		$this->dbh	= $dbh;
+		$this->dbh = $dbh;
 	}
 
 	function FetchByID($user_id) {

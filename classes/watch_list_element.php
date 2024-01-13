@@ -22,7 +22,7 @@ class WatchListElement {
 
 
 	function __construct($dbh) {
-		$this->dbh	= $dbh;
+		$this->dbh   = $dbh;
 		$this->Debug = 0;
 	}
 	

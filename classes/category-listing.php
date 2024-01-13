@@ -13,7 +13,7 @@ class Categories {
 	var $result;
 
 	function __construct($dbh) {
-		$this->dbh	= $dbh;
+		$this->dbh = $dbh;
 	}
 
 	function GetAllCategoriesOnWatchLists($UserID) {

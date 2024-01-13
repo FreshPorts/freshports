@@ -25,12 +25,12 @@ class ElementRecord {
 	}
 
 	function PopulateValues($myrow) {
-		$this->id         = $myrow['id'];
-		$this->name       = $myrow['name'];
-		$this->type       = $myrow['type'];
-		$this->status     = $myrow['status'];
-		$this->iscategory = $myrow['iscategory'];
-		$this->isport     = $myrow['isport'];
+		$this->id               = $myrow['id'];
+		$this->name             = $myrow['name'];
+		$this->type             = $myrow['type'];
+		$this->status           = $myrow['status'];
+		$this->iscategory       = $myrow['iscategory'];
+		$this->isport           = $myrow['isport'];
 
 		$this->element_pathname	= $myrow['element_pathname'];
 	}

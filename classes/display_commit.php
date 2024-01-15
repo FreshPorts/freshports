@@ -126,6 +126,12 @@ class DisplayCommit
 		}
 		$HTML .= '</span>';
 
+		# The first comparison was here before the second, which was added as part of
+		# https://github.com/FreshPorts/freshports/issues/221 - date.php is not quarterly aware
+		if (!empty($mycommit->branch) && $this->BranchName != $mycommit->branch || $this->BranchName != BRANCH_HEAD) {
+			$HTML .= ' <span class="commit-branch">' . $mycommit->branch . '</span>';
+		}
+
 		return $HTML;
 	}
 
@@ -297,11 +303,6 @@ class DisplayCommit
 			} else {
 				$HTML .= freshports_svnweb_ChangeSet_Link($mycommit->svn_revision, $mycommit->repo_hostname) . '&nbsp;';
 			}
-		}
-		# The first comparison was here before the second, which was added as part of
-		# https://github.com/FreshPorts/freshports/issues/221 - date.php is not quarterly aware
-		if (!empty($mycommit->branch) && $this->BranchName != $mycommit->branch || $this->BranchName != BRANCH_HEAD) {
-			$HTML .= ' <span class="commit-branch">' . $mycommit->branch . '</span>';
 		}
 
 		if ($mycommit->stf_message != '' && $this->ShowLinkToSanityTestFailure) {

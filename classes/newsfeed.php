@@ -14,7 +14,6 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
-
 	require_once('/usr/local/share/UniversalFeedCreator/lib/Element/FeedDate.php'); 
 	require_once('/usr/local/share/UniversalFeedCreator/lib/Element/FeedHtmlField.php'); 
 	require_once('/usr/local/share/UniversalFeedCreator/lib/Element/HtmlDescribable.php'); 
@@ -101,7 +100,6 @@ function newsfeed($dbh, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $F
 	//$rss->xslStyleSheet = 'http://feedster.com/rss20.xsl';
 
 	$rss->link    = 'http://' . $_SERVER['HTTP_HOST']; 
-	$rss->feedURL = 'http://' . $_SERVER['HTTP_HOST'] . '/' .  $PHP_SELF; 
 
 	$image = new FeedImage(); 
 	$image->title       = 'FreshPorts news'; 

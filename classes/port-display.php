@@ -936,7 +936,7 @@ class port_display {
 
 				$HTML .= 'Package not present on quarterly.';
 				if (IsSet($port->date_added) && date("Y-m-d", strtotime($port->date_added)) > FirstDateOfCurrentQuarter()) {
-					$ToolTipText = 'This is expected as this port was created during this quarter.';
+					$ToolTipText = 'This port was created during this quarter. It will be in the next quarterly branch but not the current one.';
 				} else {
 					$ToolTipText = 'This is expected early in the quarter (because the new packaage repo has not been built yet.). Otherwise, this missing version is most likely a FreshPorts error.';
 				}

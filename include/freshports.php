@@ -2748,7 +2748,7 @@ function checkLoadBeforeProceeding() {
 
 function FirstDateOfCurrentQuarter() {
 	$month = date("n");
-	$yearQuarter = ($month % 4) * 4;
+	$yearQuarter = intval(($month - 1) / 3) * 3 + 1;
 
 	return date("Y-m-d", strtotime(date("Y") . '-' . $yearQuarter . '-01'));
 }

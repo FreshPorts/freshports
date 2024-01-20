@@ -564,11 +564,11 @@
 						switch ($orderbyupdown) {
 							case ORDERBYDESCENDING:
 							default:
-								$sqlOrderBy = "\n ORDER BY C.name desc, E.name";
+								$sqlOrderBy = "\n ORDER BY C.name DESC, E.name DESC";
 								break;
 
 							case ORDERBYASCENDING:
-								$sqlOrderBy = "\n ORDER BY commit_date_raw DESC, commit_log_id, C.name, E.name";
+								$sqlOrderBy = "\n ORDER BY C.name ASC, E.name ASC";
 								break;
 						}
 						break;

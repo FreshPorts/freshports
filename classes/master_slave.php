@@ -11,7 +11,7 @@ class MasterSlave {
 	var $slave_port_id;
 	var $slave_port_name;
 	var $slave_category_id;
-	var $slave_category;
+	var $slave_category_name;
 
 	var $dbh;
 	var $LocalResult;

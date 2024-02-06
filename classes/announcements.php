@@ -18,6 +18,8 @@ class Announcement {
 	var $start_date;
 	var $end_date;
 
+	var $result;
+
 	var $Debug = 0;
 
 	function __construct($dbh) {

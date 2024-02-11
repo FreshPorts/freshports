@@ -7,7 +7,7 @@
 # https://www.freshports.org/.well-known/security.txt.sig
 
 Contact: https://www.freshports.org/contact.php
-Expires: Sun, 1 Jan 2023 00:0 -0400
+Expires: Sun, 1 Jan 2025 00:0 -0400
 Encryption: https://www.freshports.org/.well-known/pgp-key.txt
 Acknowledgments: https://www.freshports.org/security-policy.php
 Preferred-Languages: en

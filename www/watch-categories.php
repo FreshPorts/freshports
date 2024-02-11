@@ -100,7 +100,7 @@ echo freshports_WatchListDDLBForm($db, $User->id, $wlid);
 
 </td></tr>
 </table>
-<?php # list of categories table finish ?>
+<?php # list of watchlists table finish ?>
 
 </td></tr>
 <?php

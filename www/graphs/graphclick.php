@@ -10,11 +10,13 @@
 	$graph_y = $_REQUEST["graph_y"];
 
 
-	if (!isset($id)) $id=0;
+	if (!isset($id)) $id = 0;
+	if (!is_numeric($id)) $id = 0;
+	$id = intval($id);
 
-	$map = file($cache_dir."FreshPorts.graph" . $id . ".map");
+	$map = file($cache_dir . "FreshPorts.graph" . $id . ".map");
 	if (count($map) == 0) {
-    	die("GRAPH: invalid id");
+		die("GRAPH: invalid id");
 	}
 
 	foreach ($map as $m) {

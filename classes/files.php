@@ -15,8 +15,8 @@ class CommitFiles {
 
 	var $dbh;
 	var $message_id;
-	var $category;
-	var $port;
+	var $Category;
+	var $Port;
 	var $UserID;
 
 	var $Debug = 0;
@@ -27,8 +27,8 @@ class CommitFiles {
 		$this->dbh = $dbh;
 
 		$this->message_id = '';
-		$this->category   = '';
-		$this->port       = '';
+		$this->Category   = '';
+		$this->Port       = '';
 	}
 
 	function MessageIDSet($MessageID) {

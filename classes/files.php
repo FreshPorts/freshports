@@ -17,6 +17,7 @@ class CommitFiles {
 	var $message_id;
 	var $category;
 	var $port;
+	var $UserID;
 
 	var $Debug = 0;
 
@@ -31,7 +32,7 @@ class CommitFiles {
 	}
 
 	function MessageIDSet($MessageID) {
-		$this->MessageID = $MessageID;
+		$this->message_id = $MessageID;
 	}
 
 	function CategorySet($Category) {
@@ -47,7 +48,7 @@ class CommitFiles {
 	}
 
 	function Fetch() {
-		if ($this->MessageID == '') {
+		if ($this->message_id == '') {
 			echo 'No message_id supplied';
 			syslog(LOG_ERR, __FILE__  . '::' . __LINE__  . ' No message_id supplied: ' .$_SERVER['REQUEST_URI']);
 			exit;
@@ -119,7 +120,7 @@ class CommitFiles {
 	 WHERE CL.message_id              = $1
 	   AND CL.id                      = CLE.commit_log_id
 	   AND CLE.element_id             = E.id";
-	   	$params = array($this->MessageID);
+	   	$params = array($this->message_id);
 
 	
 		if ($ForJustOnePort) {

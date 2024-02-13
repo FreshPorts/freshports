@@ -12,6 +12,8 @@ class Packages {
 	var $id;       # the port id for this set of packages
 
 	var $package_names = array();
+	var $package;
+	var $CategoryPort;
 	var $packages;
 	var $dbh;
 

@@ -14,12 +14,12 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
 
 	$Title        = 'Category maintenance';
-	$CategoryName = pg_escape_string($db, $_REQUEST['category'] ?? '');
+	$CategoryName = $_REQUEST['category'] ?? '';
 
 	$Category = new Category($db);
-	$CategoryID = $Category->FetchByName($CategoryName);
+	$CategoryID = $Category->FetchByName(pg_escape_string($db, $CategoryName));
 	if (!$CategoryID) {
-		die("I don't know that category: $CategoryName");
+		die("I don't know that category: " . htmlspecialchars($CategoryName));
 	}
 
 	if ($Category->IsPrimary() == 't') {
@@ -35,7 +35,7 @@
 
 
 
-	freshports_Start($Title . ' - ' . $CategoryName,
+	freshports_Start($Title . ' - ' . htmlspecialchars($CategoryName),
 					$Title,
 					'FreeBSD, index, applications, ports');
 
@@ -45,7 +45,7 @@
 <table class="fullwidth borderless">
 
 <tr>
-	<?php echo freshports_PageBannerText($Title . ' - ' . $CategoryName); ?>
+	<?php echo freshports_PageBannerText($Title . ' - ' . htmlspecialchars($CategoryName)); ?>
 </tr>
 <tr><td>
 <p>
@@ -101,7 +101,7 @@ if (!$IsPrimary) {
 <tr><td colspan="5" class="vcentered">
 <p>
 <INPUT id=default     style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29 value="Update"  name="update">
-<INPUT TYPE="hidden" NAME="category" VALUE="<?php echo $CategoryName; ?>">
+<INPUT TYPE="hidden" NAME="category" VALUE="<?php echo htmlspecialchars($CategoryName); ?>">
 </p>
 </td></tr>
 

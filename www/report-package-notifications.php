@@ -8,9 +8,9 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
-    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/abi.php');
-    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/report_subscriptions_abi.php');
-    require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/watch-lists.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/abi.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/report_subscriptions_abi.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/watch-lists.php');
 
 # used for the key value pair of watch_list_id and abi_id
 define('MY_DELIMITER', ':::');

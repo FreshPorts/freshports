@@ -119,83 +119,84 @@ class port_display {
 			var_dump($pkg_message_parts);
 			echo '</pre>';
 		}
-		foreach ($pkg_message_parts as $part) {
-			if (empty($part->type)) {
-				if ($Debug) syslog(LOG_ERR, '$part->type is empty');
-				$HTML .= '<dd class="pkg-message">' . htmlspecialchars($part->message) . '</dd>';
-			} else {
-				# sometimes we get arrays, for install/upgrade
-				# make sure we always have an array for the later join to create $Actions
-				if (is_array($part->type)) {
-					# see https://news.freshports.org/2021/10/14/pkg-message-ucl-type-gives-_pkgmessage_ucl-found-a-type-is-it-not-prepared-for-array/
-					# and https://github.com/FreshPorts/freshports/issues/345
+		if (is_array($pkg_message_parts)) {
+			foreach ($pkg_message_parts as $part) {
+				if (empty($part->type)) {
+					if ($Debug) syslog(LOG_ERR, '$part->type is empty');
+					$HTML .= '<dd class="pkg-message">' . htmlspecialchars($part->message) . '</dd>';
+				} else {
+					# sometimes we get arrays, for install/upgrade
+					# make sure we always have an array for the later join to create $Actions
+					if (is_array($part->type)) {
+						# see https://news.freshports.org/2021/10/14/pkg-message-ucl-type-gives-_pkgmessage_ucl-found-a-type-is-it-not-prepared-for-array/
+						# and https://github.com/FreshPorts/freshports/issues/345
+						#
+						if ($Debug) echo 'we have an array';
+						$types = $part->type;
+					} else {
+						if ($Debug) echo 'creating an array';
+						$types = array($part->type);
+					}
+
 					#
-					if ($Debug) echo 'we have an array';
-					$types = $part->type;
-				} else {
-					if ($Debug) echo 'creating an array';
-					$types = array($part->type);
+					# Build the action phrase (install, remove, etc)
+					# I think the orginal intention of doing $Actions .= was catering
+					# for the same message for multiple actions (e.g. for install, upgrade)
+					#
+					$Actions = 'For ' . join(' or ', $types);
+
+					if (is_array($part->type)) {
+						$HTML .= "<dt>$Actions:</dt>" . '<dd class="pkg-message">' . htmlspecialchars($part->message) . '</dd>';
+						$HTML .= "\n";
+						$HTML .= "\n";
+					} else {
+
+						foreach ($types as $type) {
+							switch($type) {
+								case 'install':
+									$HTML .= "<dt>$Actions:</dt>" . '<dd class="pkg-message">' . htmlspecialchars($part->message) . '</dd>';
+									$HTML .= "\n";
+									$HTML .= "\n";
+									break;
+
+								case 'upgrade':
+									if (!empty($part->minimum_version) && !empty($part->maximum_version)) {
+										$HTML .= '<dt>If upgrading from &gt; ' . htmlspecialchars($part->minimum_version) . ' and &lt; ' . htmlspecialchars($part->maximum_version) . ':</dt>';
+										$HTML .= '<dd class="pkg-message">' . $part->message . '</dd>';
+									} elseif (!empty($part->minimum_version)) {
+										$HTML .= '<dt>If upgrading from &gt; ' . htmlspecialchars($part->minimum_version) . ':</dt>';
+										$HTML .= '<dd class="pkg-message">' . htmlspecialchars($part->message) . '</dd>';
+									} elseif (!empty($part->maximum_version)) {
+										$HTML .= '<dt>If upgrading from &lt; ' . htmlspecialchars($part->maximum_version) . ':</dt>';
+										$HTML .= '<dd class="pkg-message">' . htmlspecialchars($part->message) . '</dd>';
+									} else {
+										$HTML .= '<dt>If upgrading</dt>';
+										$HTML .= '<dd class="pkg-message">' . htmlspecialchars($part->message) . '</dd>';
+									}
+									$HTML .= "\n";
+									$HTML .= "\n";
+									break;
+
+								case 'remove':
+									$HTML .= '<dt>If removing:</dt><dd class="pkg-message">' . htmlspecialchars($part->message) . '</dd>';
+									$HTML .= "\n";
+									$HTML .= "\n";
+									break;
+
+								default:
+									syslog(LOG_ERR, '_pkgmessage_UCL found a type is it not prepared for : ' . $type . ' in ' . $port->pkgmessage);
+									$HTML .= '<dt>' . htmlspecialchars($part->type) . '</dt><dd class="pkg-message">' . htmlspecialchars($part->message) . '</dd>';
+									$HTML .= "\n";
+									$HTML .= "\n";
+									break;
+
+							} # switch
+						} # foreach
+					} # if (is_array($part->type))
+
 				}
-
-				#
-				# Build the action phrase (install, remove, etc)
-				# I think the orginal intention of doing $Actions .= was catering
-				# for the same message for multiple actions (e.g. for install, upgrade)
-				# 
-				$Actions = 'For ' . join(' or ', $types);
-
-				if (is_array($part->type)) {
-					$HTML .= "<dt>$Actions:</dt>" . '<dd class="pkg-message">' . htmlspecialchars($part->message) . '</dd>';
-					$HTML .= "\n";
-					$HTML .= "\n";
-				} else {
-
-					foreach ($types as $type) {
-						switch($type) {
-							case 'install':
-								$HTML .= "<dt>$Actions:</dt>" . '<dd class="pkg-message">' . htmlspecialchars($part->message) . '</dd>';
-								$HTML .= "\n";
-								$HTML .= "\n";
-								break;
-
-							case 'upgrade':
-								if (!empty($part->minimum_version) && !empty($part->maximum_version)) {
-									$HTML .= '<dt>If upgrading from &gt; ' . htmlspecialchars($part->minimum_version) . ' and &lt; ' . htmlspecialchars($part->maximum_version) . ':</dt>';
-									$HTML .= '<dd class="pkg-message">' . $part->message . '</dd>';
-								} elseif (!empty($part->minimum_version)) {
-									$HTML .= '<dt>If upgrading from &gt; ' . htmlspecialchars($part->minimum_version) . ':</dt>';
-									$HTML .= '<dd class="pkg-message">' . htmlspecialchars($part->message) . '</dd>';
-								} elseif (!empty($part->maximum_version)) {
-									$HTML .= '<dt>If upgrading from &lt; ' . htmlspecialchars($part->maximum_version) . ':</dt>';
-									$HTML .= '<dd class="pkg-message">' . htmlspecialchars($part->message) . '</dd>';
-								} else {
-									$HTML .= '<dt>If upgrading</dt>';
-									$HTML .= '<dd class="pkg-message">' . htmlspecialchars($part->message) . '</dd>';
-								}
-								$HTML .= "\n";
-								$HTML .= "\n";
-								break;
-
-							case 'remove':
-								$HTML .= '<dt>If removing:</dt><dd class="pkg-message">' . htmlspecialchars($part->message) . '</dd>';
-								$HTML .= "\n";
-								$HTML .= "\n";
-								break;
-
-							default:
-								syslog(LOG_ERR, '_pkgmessage_UCL found a type is it not prepared for : ' . $type . ' in ' . $port->pkgmessage);
-								$HTML .= '<dt>' . htmlspecialchars($part->type) . '</dt><dd class="pkg-message">' . htmlspecialchars($part->message) . '</dd>';
-								$HTML .= "\n";
-								$HTML .= "\n";
-								break;
-
-						} # switch
-					} # foreach
-				} # if (is_array($part->type))
-
 			}
-		}
-
+		}  # if is_array
 		# remove the temp file
 		fclose($temp);
 

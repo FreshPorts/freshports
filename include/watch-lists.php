@@ -8,7 +8,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_lists.php');
 
 	function freshports_WatchListDDLB($dbh, $UserID, $selected = '', $size = 0, $multiple = 0, $show_active = 1, $element_id = 0) {
-		# return the HTML which forms a dropdown list box.
+		# return the HTML which crates a dropdown list box.
 		# optionally, select the item identified by $selected.
 	
 		$Debug = 0;

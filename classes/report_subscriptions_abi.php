@@ -5,29 +5,34 @@
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_list.php');
-
-// base class for fetching watch lists
-class WatchLists {
+// base class for subscriptions to package notifications
+class report_subscriptions_abi {
 
 	var $dbh;
 	var $LocalResult;
 
 	var $Debug;
 
+	var $user_id;
+	var $abi_id;
+
+	var $abi_name;
+	var $watch_list_id;
+	var $watch_list_name;
+
 	function __construct($dbh) {
 		$this->dbh   = $dbh;
 		$this->Debug = 0;
 	}
 
-	function DeleteAllLists($UserID) {
+	function DeleteAllSubscriptions($UserID) {
 		#
-		# Delete a watch list
+		# Delete a the subscriptions for a user
 		#
 		unset($return);
 
 		$query  = '
-DELETE FROM watch_list 
+DELETE FROM report_subscriptions_abi 
  WHERE user_id = $1';
 
 		if ($this->Debug) echo $query;
@@ -41,44 +46,27 @@ DELETE FROM watch_list
 		return $return;
 	}
 
-	function Fetch($UserID, $element_id = 0) {
+	function Fetch($UserID) {
+
 		$this->Debug = 0;
 
-		if ($element_id) {
-			$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . '
-			SELECT id,
-			       user_id,
-			       name,
-			       in_service,
-			       count(element_id) as watch_list_count,
-			       token,
-                   NULL as watch_list_count
-			  FROM watch_list LEFT OUTER JOIN watch_list_element
-			    ON watch_list_element.watch_list_id = watch_list.id
-			   AND watch_list_element.element_id  = $1
-			 WHERE user_id = $2
-		 GROUP BY id, user_id, name, in_service, element_id, token
-		 ORDER BY name';
-		 $params = array($element_id, $UserID);
-		} else {
-			$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . '
-			SELECT id,
-			       user_id,
-			       name,
-			       in_service,
-			       token,
-                   NULL as watch_list_count
-			  FROM watch_list
-			 WHERE user_id = $1
-		 ORDER BY name';
-		 	$params = array($UserID);
-		}
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . '
+		SELECT RSA.user_id,
+			   RSA.abi_id,
+			   abi.name AS abi_name,
+			   WL.id    AS watch_list_id,
+			   WL.name  AS watch_list_name,
+			   RSA.user_id
+		  FROM report_subscriptions_abi RSA JOIN abi on RSA.abi_id = abi.id 
+		                                    JOIN watch_list WL ON RSA.watch_list_id = WL.id
+		 WHERE RSA.user_id = $1
+	  ORDER BY watch_list_name, abi_name';
 
 		if ($this->Debug) {
 			echo 'WatchLists::Fetch sql = <pre>' . $sql . '</pre>';
 		}
 
-		$this->LocalResult = pg_query_params($this->dbh, $sql, $params);
+		$this->LocalResult = pg_query_params($this->dbh, $sql, array($UserID));
 		if ($this->LocalResult) {
 			$numrows = pg_num_rows($this->LocalResult);
 #			echo "That would give us $numrows rows";
@@ -90,6 +78,63 @@ DELETE FROM watch_list
 		return $numrows;
 	}
 
+	function Save($UserID, $abi_id, $watch_list_id) {
+		#
+		# Save the list of ABI/watch list combinations.
+		# abi_ids is an array of "$abi_id:$watch_list"
+		#
+		GLOBAL $Sequence_Watch_List_ID;
+
+		$return = 0;
+
+		# insert only that user owns that watch list.
+		$query = '
+insert into report_subscriptions_abi(user_id, abi_id, watch_list_id)
+select $1, $2, $3
+from watch_list
+where id = $3 and user_id = $1
+on conflict on constraint report_subscriptions_abi_user_abi_watch_pk do nothing';
+		if ($this->Debug) echo "<pre>$sql</pre>";
+
+		$this->LocalResult = pg_query_params($this->dbh, $query, array($UserID, $abi_id, $watch_list_id));
+		if ($this->LocalResult) {
+			$return = 1;
+		} else {
+			$return = 1;
+		}
+	}
+	function Delete($UserID, $abi_id, $watch_list_id) {
+		#
+		# Save the list of ABI/watch list combinations.
+		# abi_ids is an array of "$abi_id:$watch_list"
+		#
+		GLOBAL $Sequence_Watch_List_ID;
+
+		$return = 0;
+
+		#
+		# The "subselect" ensures the user can only delete things from their
+		# own watch list
+		#
+		$query = '
+DELETE from report_subscriptions_abi RSA
+using watch_list WL
+WHERE WL.id = $3
+  AND WL.user_id = $1
+  AND RSA.abi_id = $2
+  AND RSA.watch_list_id = WL.id';
+
+
+		if ($this->Debug) echo "<pre>$sql</pre>";
+
+		$this->LocalResult = pg_query_params($this->dbh, $query, array($UserID, $abi_id, $watch_list_id));
+		if ($this->LocalResult) {
+			$return = 1;
+		} else {
+			$return = 1;
+		}
+	}
+
 	function FetchNth($N) {
 		#
 		# call Fetch first.
@@ -99,131 +144,23 @@ DELETE FROM watch_list
 
 #		echo "fetching row $N<br>";
 
-		$WatchList = new WatchList($this->dbh);
-
 		$myrow = pg_fetch_array($this->LocalResult, $N);
-		$WatchList->PopulateValues($myrow);
+		$this->PopulateValues($myrow);
 
-		return $WatchList;
+		return $myrow;
 	}
 
-	function In_Service_Set($UserID, $WatchListIDs) {
+	function PopulateValues($myrow) {
 		#
-		# for each ID in $WatchListIDs, set in_service = true
-		# returns the number of rows set to true
-		#
-
-
-		# first, set them all false
-		$max = count($WatchListIDs);
-		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ .  '
-		        UPDATE watch_list
-		           SET in_service = FALSE
-		         WHERE user_id = $1';
-
-		# then set the supplied watch lists to true
-		if ($this->Debug) echo "<pre>$sql</pre>";
-		$result = pg_query_params($this->dbh, $sql, array($UserID));
-		if ($result && $max) {
-			$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . '
-			UPDATE watch_list
-		           SET in_service = TRUE
-		         WHERE user_id = $1
-		           AND id IN (';
-		        
-			$params = array($UserID);
-			for ($i = 0; $i < $max; $i++) {
-				$sql .= '$' . ($i + 2) . ', ';
-				$params[] = $WatchListIDs[$i];
-			}
-
-			# now get rid of the trailing ,
-			$sql = substr($sql, 0, strlen($sql) - 2);
-
-			$sql .= ')';
-			if ($this->Debug) echo "<pre>$sql</pre>";
-			$result = pg_query_params($this->dbh, $sql, $params);
-		}
-		if ($result) {
-			$numrows = pg_affected_rows($result);
-		} else {
-			$numrows = -1;
-			die(pg_last_error($this->dbh) . '<pre>' . $sql . '</pre>');
-		}
-
-		return $numrows;
-	}
-
-	function GetDefaultWatchListID($UserID) {
-		#
-		# If the user has just one watch list, return that.
-		# If the user has more than one watch list, take
-		# the first one which is in_service.
-		# if none are in service, return the first one.
-		# otherwise, return an empty string.
+		# call Fetch first.
+		# then call this function N times, where N is the number
+		# returned by Fetch.
 		#
 
-		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "
-   SELECT id,
-          in_service
-     FROM watch_list
-    WHERE user_id = $1
- ORDER BY name";
-
-		if ($this->Debug) echo "<pre>$sql</pre>";
-
-		$WatchListID = '';
-		$result = pg_query_params($this->dbh, $sql, array($UserID));
-		if ($result) {
-			$numrows = pg_num_rows($result);
-			if ($numrows == 1) {
-				$myrow = pg_fetch_array($result, 0);
-				$WatchListID = $myrow["id"];
-			} else {
-				if ($numrows > 0) {
-					for ($i = 0; $i < $numrows; $i++) {
-						$myrow = pg_fetch_array($result, $i);
-						if ($myrow["in_service"] == 't') {
-							$WatchListID = $myrow["id"];
-							break;
-						}
-					}
-					if ($WatchListID == '') {
-						$myrow = pg_fetch_array($result, 0);
-						$WatchListID = $myrow["id"];
-					}
-				}
-			}
-		} else {
-			die(pg_last_error($this->dbh) . '<pre>' . $sql . '</pre>');
-		}
-
-		return $WatchListID;
-	}
-	
-	function IsOnWatchList($UserID, $ElementID) {
-		# return the number of watch lists owned by the user that
-		# contain the indicated element
-
-		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "
-   SELECT count(WLE.watch_list_id) AS listcount
-     FROM watch_list WL, watch_list_element WLE
-    WHERE WL.user_id     = $1
-      AND WL.id          = WLE.watch_list_id
-      AND WLE.element_id = $2";
-
-		$ListCount = 0;
-		$result = pg_query_params($this->dbh, $sql, array($UserID, $ElementID));
-		if ($result) {
-			$numrows = pg_num_rows($result);
-			if ($numrows == 1) {
-				$myrow = pg_fetch_array($result, 0);
-				$ListCount = $myrow['listcount'];
-			}
-		} else {
-			die(pg_last_error($result) . "<pre>$sql</pre>");
-		}
-				
-		return $ListCount;
+		$this->user_id          = $myrow['user_id'];
+		$this->abi_id           = $myrow['abi_id'];
+		$this->abi_name         = $myrow['abi_name'];
+		$this->watch_list_id    = $myrow['watch_list_id'];
+		$this->watch_list_name  = $myrow['watch_list_name'];
 	}
 }

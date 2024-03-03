@@ -1,8 +1,6 @@
 <?php
 	#
-	# $Id: watch_lists.php,v 1.2 2006-12-17 11:37:22 dan Exp $
-	#
-	# Copyright (c) 1998-2005 DVL Software Limited
+	# Copyright (c) 2024 Dan Langille
 	#
 
 // base class for subscriptions to package notifications

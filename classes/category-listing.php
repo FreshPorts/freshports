@@ -8,6 +8,7 @@
 // base class for listing the categories
 class Categories {
 
+	var $dbh;
 	var $category_id;
 	
 	var $result;

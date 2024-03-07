@@ -180,11 +180,12 @@ echo freshports_ShowFooter();
 			pg_exec($db, 'BEGIN');
 			$Error = '';
 			$ElementID = pg_escape_string($db, intval($_REQUEST['Update']));
+			$WLID      = pg_escape_string($db, intval($_REQUEST['wlid']));
 			$WatchListElement = new WatchListElement($db);
 
 			if ($Debug) echo "userid = '$User->id' and ElementID = '$ElementID'<br>";
 
-			if ($WatchListElement->DeleteElementFromWatchLists($User->id, $ElementID) == -1) {
+			if ($WatchListElement->DeleteElementFromWatchLists($User->id, $WLID, $ElementID) == -1) {
 				$Error = 'removing element failed : Please try again, and if the problem persists, please contact the webmaster: ' . pg_last_error($db);
 			}
 			if ($Debug) {
@@ -216,7 +217,7 @@ echo freshports_ShowFooter();
 			if (IsSet($_REQUEST['add'])) {
 				pg_exec($db, 'BEGIN');
 				$Error = '';
-				$ElementID = intval(pg_escape_string($db, $_REQUEST['add']));
+				$ElementID = pg_escape_string($db, intval($_REQUEST['add']));
 				if ($ElementID == '') {
 					die('The target for addition was not supplied');
 				}
@@ -231,13 +232,15 @@ echo freshports_ShowFooter();
 			} else {
 				if (IsSet($_REQUEST['remove'])) {
 					pg_exec($db, 'BEGIN');
-					$ElementID = intval(pg_escape_string($db, $_REQUEST['remove']));
+					$ElementID = pg_escape_string($db, intval($_REQUEST['remove']));
+					$WLID      = pg_escape_string($db, intval($_REQUEST['wlid']));
 					if ($ElementID == '') {
 						die('The target for removal was not supplied');
 					}
 
 					$WatchListElement = new WatchListElement($db);
-					if ($WatchListElement->DeleteFromDefault($User->id, $ElementID) >= 0) {
+#					if ($WatchListElement->DeleteFromDefault($User->id, $ElementID) >= 0) {
+					if ($WatchListElement->Delete($User->id, $WLID, $ElementID) >= 0) {
 						pg_exec($db, 'COMMIT');
 					} else {
 						pg_exec($db, 'ROLLBACK');

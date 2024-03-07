@@ -71,7 +71,7 @@
 					$Title,
 					'FreeBSD, index, applications, ports');
 
-	$PortsUpdating   = new PortsUpdating($db);
+	$PortsUpdating = new PortsUpdating($db);
 
 ?>
 
@@ -298,11 +298,11 @@ SELECT selected_ports.*,
 	$params = array($wlid);
 
 	$sql .= " order by $sort ";
-	
+
 	if ($Debug) {
 	   echo "<pre>$sql</pre>";
 	}
-	
+
 	$result = pg_query_params($db, $sql, array($wlid));
 
 	if (!$result) {

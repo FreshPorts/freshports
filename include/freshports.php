@@ -768,7 +768,7 @@ function freshports_Repology_Link($CategoryNamePortName) {
 	return $HTML;
 }
 
-function freshports_Watch_Link_Add($WatchListAsk, $WatchListCount, $ElementID) {
+function freshports_Watch_Link_Add($WatchListAsk, $WatchListCount, $ElementID, $wlid = 0) {
 	$HTML = '<small><a href="/watch-list.php?';
 	$HTML .= 'add='  . $ElementID;
 

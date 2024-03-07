@@ -387,8 +387,8 @@ SELECT selected_ports.*,
 		$port_display->SetPort($port);
 
 		$Port_HTML = $port_display->Display();
-		
-		$HTML = $port_display->ReplaceWatchListToken($port->{'onwatchlist'}, $Port_HTML, $port->{'element_id'});
+
+		$HTML = $port_display->ReplaceWatchListToken($port->{'onwatchlist'}, $Port_HTML, $port->{'element_id'}, $wlid);
 
 		echo $HTML;
 

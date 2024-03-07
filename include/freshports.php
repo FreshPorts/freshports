@@ -776,6 +776,10 @@ function freshports_Watch_Link_Add($WatchListAsk, $WatchListCount, $ElementID) {
 		$HTML .= '&amp;ask=1';
 	}
 
+	if ($wlid) {
+		$HTML .= '&amp;wlid=' . htmlentities($wlid);
+	}
+
 	$HTML .= '"';
 	$HTML .= ' title="' . CLICKTOADD . '"';
 
@@ -784,12 +788,16 @@ function freshports_Watch_Link_Add($WatchListAsk, $WatchListCount, $ElementID) {
 	return $HTML;
 }
 
-function freshports_Watch_Link_Remove($WatchListAsk, $WatchListCount, $ElementID) {
+function freshports_Watch_Link_Remove($WatchListAsk, $WatchListCount, $ElementID, $wlid = 0) {
 	$HTML = '<small><a href="/watch-list.php?';
 	$HTML .= 'remove=' . $ElementID;
 
 	if ($WatchListAsk == 'ask') {
 		$HTML .= '&amp;ask=1';
+	}
+
+	if ($wlid) {
+		$HTML .= '&amp;wlid=' . htmlentities($wlid);
 	}
 
 	$HTML .= '"';

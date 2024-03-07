@@ -1654,14 +1654,14 @@ class port_display {
 		return $HTML;
 	}
 
-	function ReplaceWatchListToken($OnWatchList, $HTML, $ElementID) {
+	function ReplaceWatchListToken($OnWatchList, $HTML, $ElementID, $wlid = 0) {
 		$Watch_HTML = '';
 
 		if ($this->User && $this->User->id && ($this->ShowEverything || $this->ShowWatchListStatus)) {
 			if ($OnWatchList) {
-				$Watch_HTML .= freshports_Watch_Link_Remove($this->User->watch_list_add_remove, $OnWatchList, $ElementID);
+				$Watch_HTML .= freshports_Watch_Link_Remove($this->User->watch_list_add_remove, $OnWatchList, $ElementID, $wlid);
 			} else {
-				$Watch_HTML .= freshports_Watch_Link_Add   ($this->User->watch_list_add_remove, $OnWatchList, $ElementID);
+				$Watch_HTML .= freshports_Watch_Link_Add   ($this->User->watch_list_add_remove, $OnWatchList, $ElementID, $wlid);
 			}
 		}
 

@@ -9,6 +9,7 @@
 // base class for getting deleted ports on a watch list
 class WatchListDeletedPorts {
 
+	var $dbh;
 	var $name_old;
 	var $category_old;
 	var $name_new;

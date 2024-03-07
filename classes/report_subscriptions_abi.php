@@ -12,15 +12,16 @@ class report_subscriptions_abi {
 	var $Debug;
 
 	var $user_id;
+	var $watch_list_id;
 	var $abi_id;
+	var $package_set;
 
 	var $abi_name;
-	var $watch_list_id;
 	var $watch_list_name;
 
 	function __construct($dbh) {
 		$this->dbh   = $dbh;
-		$this->Debug = 0;
+		$this->Debug = 1;
 	}
 
 	function DeleteAllSubscriptions($UserID) {
@@ -52,9 +53,9 @@ DELETE FROM report_subscriptions_abi
 		SELECT RSA.user_id,
 			   RSA.abi_id,
 			   abi.name AS abi_name,
+			   RSA.package_set,
 			   WL.id    AS watch_list_id,
-			   WL.name  AS watch_list_name,
-			   RSA.user_id
+			   WL.name  AS watch_list_name
 		  FROM report_subscriptions_abi RSA JOIN abi on RSA.abi_id = abi.id 
 		                                    JOIN watch_list WL ON RSA.watch_list_id = WL.id
 		 WHERE RSA.user_id = $1
@@ -76,7 +77,7 @@ DELETE FROM report_subscriptions_abi
 		return $numrows;
 	}
 
-	function Save($UserID, $abi_id, $watch_list_id) {
+	function Save($UserID, $watch_list_id, $abi_id, $package_set) {
 		#
 		# Save the list of ABI/watch list combinations.
 		# abi_ids is an array of "$abi_id:$watch_list"
@@ -87,21 +88,21 @@ DELETE FROM report_subscriptions_abi
 
 		# insert only that user owns that watch list.
 		$query = '
-insert into report_subscriptions_abi(user_id, abi_id, watch_list_id)
-select $1, $2, $3
+insert into report_subscriptions_abi(user_id, watch_list_id, abi_id, package_set)
+select $1, $2, $3, $4::package_sets
 from watch_list
-where id = $3 and user_id = $1
+where id = $2 and user_id = $1
 on conflict on constraint report_subscriptions_abi_user_abi_watch_pk do nothing';
-		if ($this->Debug) echo "<pre>$sql</pre>";
+		if ($this->Debug) echo "<pre>$query</pre>";
 
-		$this->LocalResult = pg_query_params($this->dbh, $query, array($UserID, $abi_id, $watch_list_id));
+		$this->LocalResult = pg_query_params($this->dbh, $query, array($UserID, $watch_list_id, $abi_id, $package_set));
 		if ($this->LocalResult) {
 			$return = 1;
 		} else {
 			$return = 1;
 		}
 	}
-	function Delete($UserID, $abi_id, $watch_list_id) {
+	function Delete($UserID, $watch_list_id, $abi_id, $package_set) {
 		#
 		# Save the list of ABI/watch list combinations.
 		# abi_ids is an array of "$abi_id:$watch_list"
@@ -117,15 +118,16 @@ on conflict on constraint report_subscriptions_abi_user_abi_watch_pk do nothing'
 		$query = '
 DELETE from report_subscriptions_abi RSA
 using watch_list WL
-WHERE WL.id = $3
-  AND WL.user_id = $1
-  AND RSA.abi_id = $2
-  AND RSA.watch_list_id = WL.id';
+WHERE WL.user_id = $1
+  AND WL.id = $2
+  AND RSA.watch_list_id = WL.id
+  AND RSA.abi_id = $3
+  AND RSA.package_set = $4';
 
 
-		if ($this->Debug) echo "<pre>$sql</pre>";
+		if ($this->Debug) echo "<pre>$query</pre>";
 
-		$this->LocalResult = pg_query_params($this->dbh, $query, array($UserID, $abi_id, $watch_list_id));
+		$this->LocalResult = pg_query_params($this->dbh, $query, array($UserID, $watch_list_id, $abi_id, $package_set));
 		if ($this->LocalResult) {
 			$return = 1;
 		} else {
@@ -156,9 +158,10 @@ WHERE WL.id = $3
 		#
 
 		$this->user_id          = $myrow['user_id'];
-		$this->abi_id           = $myrow['abi_id'];
-		$this->abi_name         = $myrow['abi_name'];
 		$this->watch_list_id    = $myrow['watch_list_id'];
+		$this->abi_id           = $myrow['abi_id'];
+		$this->package_set      = $myrow['package_set'];
+		$this->abi_name         = $myrow['abi_name'];
 		$this->watch_list_name  = $myrow['watch_list_name'];
 	}
 }

@@ -44,7 +44,7 @@ class Packages {
 	}
 
 	function Fetch($PortID) {
-		# fetch all rows in ports_updating with id = $PortID
+		# fetch all rows from PortPackages with id = $PortID
 
 		$this->id = $PortID;
 
@@ -86,6 +86,20 @@ class Packages {
 #		exit("Stopping because we are testing PackagesGetPackageNamesForPort()");
 
 		return $TotalRows;
+	}
+
+	function GetListOfArchs($package) {
+
+		$archs = array();
+		# we need to know the archs so we can use them as the column headings
+		foreach($package as $package_line) {
+
+			$abi = $package_line['abi'];
+			$arch = substr($abi, strrpos($abi, ':') + 1);
+			$archs[$arch] = $arch;
+		}
+
+		return $archs;
 	}
 
 }

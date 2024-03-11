@@ -1436,71 +1436,128 @@ class port_display {
 				# At some time, it seemed like knowing we had $MultiplePackageNames... but that var is never used.
 				$MultiplePackageNames = count($packages->packages) > 1;
 
-				$packages_array = array();
-				foreach($packages->packages as $package_name => $package) {
+				if (1) { # showing new format for packages table.
+					$packages_array = array();
+					foreach ($packages->packages as $package_name => $package) {
 
-					$archs = $packages->GetListOfArchs($package);
-					$Previous_ABI_Prefix = '';
-					foreach($package as $package_line) {
-						# convert FreeBSD:13:aarch64 to FreeBSD:13
-						$abi_prefix = substr($package_line['abi'], 0, strrpos($package_line['abi'], ':'));
-						$arch       = substr($package_line['abi'], strrpos($package_line['abi'], ':') +1);
+						$archs = $packages->GetListOfArchs($package);
+						$Previous_ABI_Prefix = '';
+						foreach ($package as $package_line) {
+							# convert FreeBSD:13:aarch64 to FreeBSD:13
+							$abi_prefix = substr($package_line['abi'], 0, strrpos($package_line['abi'], ':'));
+							$arch = substr($package_line['abi'], strrpos($package_line['abi'], ':') + 1);
 
-						$package_version_latest    = empty($package_line['package_version_latest'])    ? '-' : $package_line['package_version_latest'];
-						$package_version_quarterly = empty($package_line['package_version_quarterly']) ? '-' : $package_line['package_version_quarterly'];
+							$package_version_latest = empty($package_line['package_version_latest']) ? '-' : $package_line['package_version_latest'];
+							$package_version_quarterly = empty($package_line['package_version_quarterly']) ? '-' : $package_line['package_version_quarterly'];
 
-						$packages_array[$package_name][$abi_prefix . ':latest']   [$arch]['version'] = $package_version_latest;
-						$packages_array[$package_name][$abi_prefix . ':quarterly'][$arch]['version'] = $package_version_quarterly;
+							$packages_array[$package_name][$abi_prefix . ':latest']   [$arch]['version'] = $package_version_latest;
+							$packages_array[$package_name][$abi_prefix . ':quarterly'][$arch]['version'] = $package_version_quarterly;
 
-						$packages_array[$package_name][$abi_prefix . ':latest'][$arch]['title'] = $this->packageToolTipText($package_line['last_checked_latest'], $package_line['repo_date_latest'], $package_line['processed_date_latest']);
-						$packages_array[$package_name][$abi_prefix . ':latest'][$arch]['class'] = 'class="version ' . ($package_version_latest    == '-' ? 'noversion' : '');
+							$packages_array[$package_name][$abi_prefix . ':latest'][$arch]['title'] = $this->packageToolTipText($package_line['last_checked_latest'], $package_line['repo_date_latest'], $package_line['processed_date_latest']);
+							$packages_array[$package_name][$abi_prefix . ':latest'][$arch]['class'] = 'class="version ' . ($package_version_latest == '-' ? 'noversion' : '');
 
-						$packages_array[$package_name][$abi_prefix . ':quarterly'][$arch]['title'] = $this->packageToolTipText($package_line['last_checked_quarterly'], $package_line['repo_date_quarterly'], $package_line['processed_date_quarterly']);
-						$packages_array[$package_name][$abi_prefix . ':quarterly'][$arch]['class'] = 'class="version ' . ($package_version_quarterly    == '-' ? 'noversion' : '');
+							$packages_array[$package_name][$abi_prefix . ':quarterly'][$arch]['title'] = $this->packageToolTipText($package_line['last_checked_quarterly'], $package_line['repo_date_quarterly'], $package_line['processed_date_quarterly']);
+							$packages_array[$package_name][$abi_prefix . ':quarterly'][$arch]['class'] = 'class="version ' . ($package_version_quarterly == '-' ? 'noversion' : '');
+
+						}
 
 					}
 
-				}
 
+					# Now let's convert $packages_array into HTML
 
-				# Now let's convert $packages_array into HTML
+					$HTML .= '<dt id="packages" class="h3"><hr><b>Packages</b> (timestamps in pop-ups are UTC):</dt>';
+					$HTML .= '<dd>';
+					$HTML .= '<div class="scrollmenu">';
 
-				$HTML .= '<dt id="packages" class="h3"><hr><b>Packages</b> (timestamps in pop-ups are UTC):</dt>';
-				$HTML .= '<dd>';
-				$HTML .= '<div class="scrollmenu">';
+					foreach ($packages_array as $package_name => $package) {
+						$HTML .= '<table class="packages"><caption>' . $package_name . '</caption><tr><th>ABI</th>';
 
-				foreach($packages_array as $package_name => $package) {
-					$HTML .= '<table class="packages"><caption>' . $package_name . '</caption><tr><th>ABI</th>';
-
-
-					foreach ($archs as $arch) {
-						$HTML .= '<th>' . $arch . '</th>';
-					}
-					$HTML .= '</tr>';
-
-					foreach ($package as $ABI => $ABI_q_l) {
-						$HTML .= '<tr>';
-
-						$HTML .= '<td>' . $ABI . '</td>';
 
 						foreach ($archs as $arch) {
-							if (isset($ABI_q_l[$arch]['version'])) {
-								$version = $ABI_q_l[$arch]['version'];
-							} else {
-								$version = 'n/a';
-							}
-							$HTML .= '<td>' . $version . '</td>';
+							$HTML .= '<th>' . $arch . '</th>';
 						}
 						$HTML .= '</tr>';
-					}
-					$HTML .= '</table>';
 
-					if (count($packages_array) > 1) {
-						$HTML .= '&nbsp';
-						if (count($packages_array) % 2 == 0) {
-							$HTML .= '<br><br>';
+						foreach ($package as $ABI => $ABI_q_l) {
+							$HTML .= '<tr>';
+
+							$HTML .= '<td>' . $ABI . '</td>';
+
+							foreach ($archs as $arch) {
+								if (isset($ABI_q_l[$arch]['version'])) {
+									$version = $ABI_q_l[$arch]['version'];
+									$title = $ABI_q_l[$arch]['title'];
+								} else {
+									$version = 'n/a';
+									$title = 'n/a';
+								}
+								$HTML .= '<td tabindex="-1" class="version ' . ($version == '-' ? 'noversion' : '') . '" data-title="' . $title . '">';
+								$HTML .= $version;
+								$HTML .= '</td>';
+
+
+							}
+							$HTML .= '</tr>';
+						}
+						$HTML .= '</table>';
+
+						if (count($packages_array) > 1) {
+							$HTML .= '&nbsp';
+							if (count($packages_array) % 2 == 0) {
+								$HTML .= '<br><br>';
+							}
 						}
 					}
+					$HTML .= '</div>';
+					$HTML .= '</dd>';
+
+				} else {
+					# use the old version
+					$HTML .= '<dt id="packages" class="h3"><hr><b>Packages</b> (timestamps in pop-ups are UTC):</dt>';
+					$HTML .= '<dd>';
+					$HTML .= '<div class="scrollmenu">';
+
+					# if we have multiple packages, we create an enclosing table
+					$MultiplePackageNames = count($packages->packages) > 1;
+
+
+					foreach ($packages->packages as $package_name => $package) {
+
+						$HTML .= '<table class="packages"><caption>' . $package_name . '</caption><tr><th>ABI</th><th>latest</th><th>quarterly</th></tr>';
+						foreach ($package as $package_line) {
+
+							if ($Debug) {
+								echo '<pre>';
+								var_export($package_line);
+								echo '</pre>';
+							}
+
+							# All values of active ABI are returned (e.g. FreeBSD:12:amd64
+							# package_version will be empty if the port is not build for that ABI
+
+							$package_version_latest = empty($package_line['package_version_latest']) ? '-' : $package_line['package_version_latest'];
+							$package_version_quarterly = empty($package_line['package_version_quarterly']) ? '-' : $package_line['package_version_quarterly'];
+
+							$HTML .= '<tr><td>' . $package_line['abi'] . '</td>';
+
+							# If showing a - for the version, center align it
+							$title = $this->packageToolTipText($package_line['last_checked_latest'], $package_line['repo_date_latest'], $package_line['processed_date_latest']);
+							$HTML .= '<td tabindex="-1" class="version ' . ($package_version_latest == '-' ? 'noversion' : '') . '" data-title="' . $title . '">';
+							$HTML .= $package_version_latest;
+							$HTML .= '</td>';
+
+							$title = $this->packageToolTipText($package_line['last_checked_quarterly'], $package_line['repo_date_quarterly'], $package_line['processed_date_quarterly']);
+							$HTML .= '<td tabindex="-1" class="version ' . ($package_version_quarterly == '-' ? 'noversion' : '') . '" data-title="' . $title . '">';
+							$HTML .= $package_version_quarterly;
+							$HTML .= '</td>';
+							$HTML .= '</tr>';
+						}
+						$HTML .= '</table>&nbsp;';
+
+					}
+					$HTML .= '</div>';
+					$HTML .= '</dd>';
 				}
 			} else {
 				$HTML .= '<dt id="packages"><hr><b>No package information for this port in our database</b></dt>';

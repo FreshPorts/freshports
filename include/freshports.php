@@ -768,12 +768,16 @@ function freshports_Repology_Link($CategoryNamePortName) {
 	return $HTML;
 }
 
-function freshports_Watch_Link_Add($WatchListAsk, $WatchListCount, $ElementID) {
+function freshports_Watch_Link_Add($WatchListAsk, $WatchListCount, $ElementID, $wlid = 0) {
 	$HTML = '<small><a href="/watch-list.php?';
 	$HTML .= 'add='  . $ElementID;
 
 	if ($WatchListAsk == 'ask') {
 		$HTML .= '&amp;ask=1';
+	}
+
+	if ($wlid) {
+		$HTML .= '&amp;wlid=' . htmlentities($wlid);
 	}
 
 	$HTML .= '"';
@@ -784,12 +788,16 @@ function freshports_Watch_Link_Add($WatchListAsk, $WatchListCount, $ElementID) {
 	return $HTML;
 }
 
-function freshports_Watch_Link_Remove($WatchListAsk, $WatchListCount, $ElementID) {
+function freshports_Watch_Link_Remove($WatchListAsk, $WatchListCount, $ElementID, $wlid = 0) {
 	$HTML = '<small><a href="/watch-list.php?';
 	$HTML .= 'remove=' . $ElementID;
 
 	if ($WatchListAsk == 'ask') {
 		$HTML .= '&amp;ask=1';
+	}
+
+	if ($wlid) {
+		$HTML .= '&amp;wlid=' . htmlentities($wlid);
 	}
 
 	$HTML .= '"';
@@ -2298,12 +2306,13 @@ $HTML .= '<br>
 	<tr>
 	<td>';
 
-		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/pkg_upload.php',             "Upload",               "Upoad a file containing a list of ports you want to add to your watch list");
-		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/watch-categories.php',       "Categories",           "Search through categories for ports to add to your watch list"             );
-		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/watch-list-maintenance.php', "Maintain",             "Maintain your watch list[s]"                                               );
-		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/watch.php',                  "Ports",                "Your list of watched ports"                                                );
-		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/backend/watch-list.php',     "Personal Newsfeeds",   "A list of news feeds for your watched lists"                               );
-		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/report-subscriptions.php',   "Report Subscriptions", "Maintain your list of subscriptions"                                       );
+		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/pkg_upload.php',                   "Upload",                    "Upoad a file containing a list of ports you want to add to your watch list");
+		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/watch-categories.php',             "Categories",                "Search through categories for ports to add to your watch list"             );
+		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/watch-list-maintenance.php',       "Maintain",                  "Maintain your watch list[s]"                                               );
+		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/watch.php',                        "Ports",                     "Your list of watched ports"                                                );
+		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/backend/watch-list.php',           "Personal Newsfeeds",        "A list of news feeds for your watched lists"                               );
+		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/report-subscriptions.php',         "Report Subscriptions",      "Maintain your list of subscriptions"                                       );
+		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/report-package-notifications.php', "ABI Package Subscriptions", "Maintain your ABI package subscriptions"                                   );
 
 $HTML .= '		
 	</td>

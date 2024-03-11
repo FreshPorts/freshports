@@ -230,6 +230,13 @@ This page allows you to select the reports you wish to receive and the frequency
 	?>
 	</table>
 
+<h3>New Package Notification</h3>
+
+<p>
+If you are subscribing to <i>New Package Notification</i> above,
+you'll also need to <a href="/report-package-notifications.php">specify ABI and watch lists</a>.
+</p>
+
 <?php require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/spam-filter-information.php'); ?>
 
 <hr>

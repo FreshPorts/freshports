@@ -55,7 +55,7 @@ class WatchListElement {
 	}
 
 
-	function DeleteElementFromWatchLists($UserID, $ElementID) {
+	function DeleteElementFromWatchLists($UserID, $WatchListID, $ElementID) {
 		#
 		# Delete this element from all watch lists
 		#
@@ -67,11 +67,12 @@ class WatchListElement {
 
 		$sql = 'DELETE FROM watch_list_element
                  USING watch_list
-		         WHERE watch_list_element.element_id    = $1
-		           AND watch_list.user_id               = $2
+		         WHERE watch_list.user_id               = $1
+		           AND watch_list.id                    = $2
+		           AND watch_list_element.element_id    = $3
 		           AND watch_list_element.watch_list_id = watch_list.id';
 		if ($this->Debug) echo "<pre>$sql</pre>";
-		$result = pg_query_params($this->dbh, $sql, array($ElementID, $UserID));
+		$result = pg_query_params($this->dbh, $sql, array($UserID, $WatchListID, $ElementID));
 
 		# that worked and we updated exactly one row
 		if ($result) {
@@ -144,7 +145,7 @@ select $1, $2
 		} else {
 			# If this isn't a duplicate key error, then break
 			if (stristr(pg_last_error($this->dbh), "Cannot insert a duplicate key") == '') {
-				$return = -1;
+				$return = 1;
 			} else {
 				$return = 1;
 			}

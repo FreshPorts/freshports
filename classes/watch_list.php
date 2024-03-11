@@ -5,12 +5,11 @@
 	# Copyright (c) 1998-2005 DVL Software Limited
 	#
 
-$Debug = 0;
-
 // base class for a single watchlist
 class WatchList {
 
 	var $dbh;
+	var $Debug;
 
 	var $id;
 	var $user_id;
@@ -25,6 +24,7 @@ class WatchList {
 
 	function __construct($dbh) {
 		$this->dbh = $dbh;
+		$this->Debug = 0;
 	}
 	
 	function Create($UserID, $Name) {
@@ -125,7 +125,7 @@ DELETE FROM watch_list
 		# Empty a watch list (couldn't use empty, as that's reserved)
 		#
 		unset($return);
-		$Debug = 0;
+		$this->Debug = 0;
 
 		$query = '
 DELETE FROM watch_list_element
@@ -134,7 +134,7 @@ DELETE FROM watch_list_element
    AND watch_list.user_id               = $2
    AND watch_list_element.watch_list_id = watch_list.id';
 
-		if ($Debug) echo $query;
+		if ($this->Debug) echo $query;
 		$result = pg_query_params($this->dbh, $query, array($WatchListID, $UserID));
 
 		# that worked and we updated exactly one row
@@ -150,7 +150,7 @@ DELETE FROM watch_list_element
 		# Empty a watch list of all items within the supplied category
 		#
 		unset($return);
-		$Debug = 0;
+		$this->Debug = 0;
 
 		$query = '
 DELETE FROM watch_list_element
@@ -162,7 +162,7 @@ DELETE FROM watch_list_element
    AND watch_list.user_id               = $3
    AND watch_list_element.watch_list_id = watch_list.id';
 
-		if ($Debug) echo $query;
+		if ($this->Debug) echo $query;
 		$result = pg_query_params($this->dbh, $query, array($CategoryID, $WatchListID, $UserID));
 
 		# that worked and we updated exactly one row
@@ -178,7 +178,7 @@ DELETE FROM watch_list_element
 		# Empty all watch lists
 		#
 		unset($return);
-		$Debug = 0;
+		$this->Debug = 0;
 
 		$query = '
 DELETE FROM watch_list_element
@@ -186,13 +186,13 @@ DELETE FROM watch_list_element
  WHERE watch_list.user_id               = $1
    AND watch_list_element.watch_list_id = watch_list.id';
 
-		if ($Debug) echo $query;
+		if ($this->Debug) echo $query;
 		$result = pg_query_params($this->dbh, $query, array($UserID));
 
 		# that worked and we updated exactly one row
 		if ($result) {
 			$return = pg_affected_rows($result);
-			if ($Debug) echo '<br>pg_affected_rows = ' . $return;
+			if ($this->Debug) echo '<br>pg_affected_rows = ' . $return;
 		}
 
 		return $return;
@@ -203,14 +203,13 @@ DELETE FROM watch_list_element
 		# Delete a watch list
 		#
 		$return = null;
-		Global $Debug;
 
 		$query  = '
 UPDATE watch_list 
    SET name = $1
  WHERE id = $2
    AND watch_list.user_id = $3';
-		if ($Debug) echo $query;
+		if ($this->Debug) echo $query;
 		$result = pg_query_params($this->dbh, $query, array($NewName, $WatchListID, $UserID));
 
 		# that worked and we updated exactly one row
@@ -223,7 +222,7 @@ UPDATE watch_list
 
 	
 	function Fetch($UserID, $ID) {
-		$Debug = 0;
+		$this->Debug = 0;
 
 		$sql = '
 		SELECT id,
@@ -238,7 +237,7 @@ UPDATE watch_list
 
 #		echo '<pre>' . $sql . '</pre>';
 
-		if ($Debug)	echo "WatchLists::Fetch sql = '$sql'<br>";
+		if ($this->Debug)	echo "WatchLists::Fetch sql = '$sql'<br>";
 
 		if ($ID == '') {
 			syslog(LOG_NOTICE, "classes/watch_list.php::line 213 \$UserID='$UserID', \$ID='$ID'");

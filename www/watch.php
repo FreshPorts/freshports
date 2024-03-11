@@ -71,7 +71,7 @@
 					$Title,
 					'FreeBSD, index, applications, ports');
 
-	$PortsUpdating   = new PortsUpdating($db);
+	$PortsUpdating = new PortsUpdating($db);
 
 ?>
 
@@ -298,11 +298,11 @@ SELECT selected_ports.*,
 	$params = array($wlid);
 
 	$sql .= " order by $sort ";
-	
+
 	if ($Debug) {
 	   echo "<pre>$sql</pre>";
 	}
-	
+
 	$result = pg_query_params($db, $sql, array($wlid));
 
 	if (!$result) {
@@ -387,8 +387,8 @@ SELECT selected_ports.*,
 		$port_display->SetPort($port);
 
 		$Port_HTML = $port_display->Display();
-		
-		$HTML = $port_display->ReplaceWatchListToken($port->{'onwatchlist'}, $Port_HTML, $port->{'element_id'});
+
+		$HTML = $port_display->ReplaceWatchListToken($port->{'onwatchlist'}, $Port_HTML, $port->{'element_id'}, $wlid);
 
 		echo $HTML;
 

@@ -1458,7 +1458,6 @@ class port_display {
 
 							$packages_array[$package_name][$abi_prefix . ':quarterly'][$arch]['title'] = $this->packageToolTipText($package_line['last_checked_quarterly'], $package_line['repo_date_quarterly'], $package_line['processed_date_quarterly']);
 							$packages_array[$package_name][$abi_prefix . ':quarterly'][$arch]['class'] = 'class="version ' . ($package_version_quarterly == '-' ? 'noversion' : '');
-
 						}
 
 					}
@@ -1479,7 +1478,20 @@ class port_display {
 						}
 						$HTML .= '</tr>';
 
+						# Get the ABI (sort of) for the last row in this table.
+						# It will be something like FreeBSD:15:quarterly
+						# We don't display that row because historically, the quaterly branch is
+						# not build for -CURRENT.
+						#
+						$LastArrayPosition = array_key_last($package);
 						foreach ($package as $ABI => $ABI_q_l) {
+							#
+							# re https://github.com/FreshPorts/freshports/issues/554
+							# Try not to display the quarterly branch for the latest version.
+							#
+							if ($ABI === $LastArrayPosition) {
+								continue;
+							}
 							$HTML .= '<tr>';
 
 							$HTML .= '<td>' . $ABI . '</td>';
@@ -1487,7 +1499,7 @@ class port_display {
 							foreach ($archs as $arch) {
 								if (isset($ABI_q_l[$arch]['version'])) {
 									$version = $ABI_q_l[$arch]['version'];
-									$title = $ABI_q_l[$arch]['title'];
+									$title   = $ABI_q_l[$arch]['title'];
 								} else {
 									$version = 'n/a';
 									$title = 'n/a';
@@ -1495,8 +1507,6 @@ class port_display {
 								$HTML .= '<td tabindex="-1" class="version ' . ($version == '-' ? 'noversion' : '') . '" data-title="' . $title . '">';
 								$HTML .= $version;
 								$HTML .= '</td>';
-
-
 							}
 							$HTML .= '</tr>';
 						}

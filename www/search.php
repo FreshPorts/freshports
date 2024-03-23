@@ -323,6 +323,13 @@
 	  header('Content-Type: text/plain');
 	}
 
+	# based on https://github.com/FreshPorts/freshports/issues/556
+	# If you want format depends as output, you must search by port name as input.
+	if ($output_format == OUTPUT_FORMAT_DEPENDS && $stype != SEARCH_FIELD_NAME) {
+	        echo "If the 'Output format' is 'Depends', then you must search by 'Port Name'. Please adjust the parameters and try again.";
+	        exit;
+	}
+
 	// start of HTML output
 	if ($output_format == OUTPUT_FORMAT_HTML) {
 		$Title = 'Search';

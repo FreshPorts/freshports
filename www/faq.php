@@ -143,8 +143,8 @@ down you must read to find something you didn't already know.</P>
 </tr>
 
 	<tr><td class="textcontent">
-	You can't.  But you can unsubscribe from all of the reports
-	and you'll never hear from us again.
+	Visit <a href="https://www.freshports.org/customize.php">https://www.freshports.org/customize.php</a> and click
+	on the <b>Delete my account</b> link. It's just below <b>update account</b>.
 	</td></tr>
 <tr id="port-what">
 <?php echo freshports_PageBannerText("What is a port?"); ?>
@@ -905,7 +905,39 @@ now that the Master has been upgraded.
 	Enjoy. We can add more anchors upon request.
 </p>
 
-	</td></tr>
+<tr id="packages">
+<?php echo freshports_PageBannerText('Can I get alerts for new packages?'); ?>
+</tr>
+
+   <tr><td class="textcontent">
+   <p>Yes, yes, you can.</p>
+
+   <p>Not only can FreshPorts email you when one of your watched ports is updated, it can also email you when the package is ready
+   to install</p>
+   
+   <p>FreshPorts polls the available FreeBSD repo builds on an hourly basis. It uses that information to display the packages
+   available under various ABI (e.g. FreeBSD:14:amd64).
+   
+   <p>To get new package notifications, follow these steps:
+   
+   <ol>
+   <li>Click on <a href="/report-subscriptions.php">Report Subscriptions</a>, under <i>Watch Lists</i> in the right hand column</li>
+   <li>Check the <i>New Package Notification</i> box</li>
+   <li>click on Update</li>
+   <li>Again under <i>Watch Lists</i>, this time, click on <a href="/report-package-notifications.php">ABI Package Subscriptions</a> to
+   select the ABI for which you want to receive notifications</li>
+   <li>On this page, select one or more items from each of the first three boxes:
+     <ol>
+     <li>watch lists (first box)</li>
+     <li>ABI (second box)</li>
+     <li>one or both of quaterly and latest (third/ box)</li>
+     </ol>
+     and click on <i>Add</i>
+   </li>
+   </ol>
+   
+  <p> When the next updates arrive, you'll get an email.
+   </td></tr>
 </table>
 </td>
 

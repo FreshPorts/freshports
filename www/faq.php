@@ -916,7 +916,8 @@ now that the Master has been upgraded.
    to install</p>
    
    <p>FreshPorts polls the available FreeBSD repo builds on an hourly basis. It uses that information to display the packages
-   available under various ABI (e.g. FreeBSD:14:amd64).
+   available under various ABI (e.g. FreeBSD:14:amd64). NOTE: we do not display package for the quarterly branch on the latest CURRENT
+   of FreeBSD. No pacakges are build for that ABI/package set combination.
    
    <p>To get new package notifications, follow these steps:
    

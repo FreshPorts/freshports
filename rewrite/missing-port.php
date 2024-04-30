@@ -94,6 +94,7 @@ function _GetThatPort($db, $Debug, $category, $port, $branch, $UserID) {
 	if ($Debug) echo "$category/$port $port_id found by freshports_GetPortID on $branch<br>\n";
 
 	$MyPort = new Port($db);
+	# We are fetching by id - we don't need branch, because the id differs between head and a branch
 	$MyPort->FetchByID($port_id, $UserID);
 
 	return $MyPort;
@@ -114,7 +115,7 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 	# In that circumstance, we display from head.
 	$ReadFromThisBranch = $HasCommitsOnBranch ? $branch : BRANCH_HEAD;
 
-	if ($Debug) echo 'into ' . __FILE__ . ' now' . "<br>\n";
+	if ($Debug) echo 'into ' . __FILE__ . '::' . __FUNCTION__ . " now for $category, $port, $branch, $HasCommitsOnBranch<br>\n";
 #	if ($Debug) phpinfo();
 
 	$PageNumber = 1;
@@ -134,14 +135,14 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 
 	# allowing the code to bypass and/or not update the cache is only permitted
 	# with FRESHPORTS_LOG_CACHE_ACTIVITY set
-	$BypassCache = 0; # by default, we do not bypass the cache
+	$BypassCache  = 0; # by default, we do not bypass the cache
 	$RefreshCache = 1; # by default, we refresh the cache
 
 	# if allowed, look to see if we are allowed to change the default values.
 	# this prevents abuse by non-developers.
 	if (defined('FRESHPORTS_LOG_CACHE_ACTIVITY')) {
 		if ($Debug) echo 'checking for cache instructions<br>';
-		if (isset($url_args['bypasscache']) && $url_args['bypasscache'] == '1') $BypassCache = 1;
+		if (isset($url_args['bypasscache'])  && $url_args['bypasscache']  == '1') $BypassCache  = 1;
 		if (isset($url_args['refreshcache']) && $url_args['refreshcache'] == '0') $RefreshCache = 0;
 	} else {
 		if ($Debug) echo 'cache instructions are not enabled<br>';
@@ -159,6 +160,9 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 		}
 	}
 
+	if ($Debug) {
+		echo "invoking new port_display() with '$branch'<br>\n";
+	}
 	$port_display = new port_display($db, $User, $branch);
 	$port_display->SetDetailsFull();
 
@@ -309,7 +313,7 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 			}
 		}
 
-		$port_display->SetPort($MyPort);
+		$port_display->SetPort($MyPort, $ReadFromThisBranch);
 		$port_display->SetDetailsBeforePackages();
 
 		$HTMLPortPart2 .= $port_display->Display();
@@ -338,7 +342,7 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 	}
 
 	# At this point, we have the port detail HTML part 2
-
+	# XXX wlid should be supplied here
 	$HTMLPortPart2 = $port_display->ReplaceWatchListToken($OnWatchList, $HTMLPortPart2, $ElementID);
 
 	global $ShowAds, $BannerAd;
@@ -392,7 +396,7 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 			}
 		}
 
-		$port_display->SetPort($MyPort);
+		$port_display->SetPort($MyPort, $ReadFromThisBranch);
 		$port_display->SetDetailsAfterPackages();
 
 		$HTMLPortPart3 .= $port_display->Display();
@@ -470,7 +474,7 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 			}
 		}
 
-		$port_display->SetPort($MyPort);
+		$port_display->SetPort($MyPort, $ReadFromThisBranch);
 		$port_display->SetDetailsPackages();
 
 		$HTMLPortPackages .= $port_display->Display();
@@ -585,7 +589,7 @@ function freshports_PortDisplayNew($db, $MyPort, $category, $port, $url_args, $B
 	# this prevents abuse by non-developers.
 	if (defined('FRESHPORTS_LOG_CACHE_ACTIVITY')) {
 		if ($Debug) echo 'checking for cache instructions<br>';
-		if (isset($url_args['bypasscache']) && $url_args['bypasscache'] == '1') $BypassCache = 1;
+		if (isset($url_args['bypasscache'])  && $url_args['bypasscache']  == '1') $BypassCache  = 1;
 		if (isset($url_args['refreshcache']) && $url_args['refreshcache'] == '0') $RefreshCache = 0;
 	} else {
 		if ($Debug) echo 'cache instructions are not enabled<br>';
@@ -758,7 +762,7 @@ function freshports_PortDisplayNew($db, $MyPort, $category, $port, $url_args, $B
 			}
 		}
 
-		$port_display->SetPort($MyPort);
+		$port_display->SetPort($MyPort, $ReadFromThisBranch);
 		$port_display->SetDetailsBeforePackages();
 
 		$HTMLPortPart2 .= $port_display->Display();
@@ -842,7 +846,7 @@ function freshports_PortDisplayNew($db, $MyPort, $category, $port, $url_args, $B
 			}
 		}
 
-		$port_display->SetPort($MyPort);
+		$port_display->SetPort($MyPort, $ReadFromThisBranch);
 		$port_display->SetDetailsAfterPackages();
 
 		$HTMLPortPart3 .= $port_display->Display();
@@ -920,7 +924,7 @@ function freshports_PortDisplayNew($db, $MyPort, $category, $port, $url_args, $B
 			}
 		}
 
-		$port_display->SetPort($MyPort);
+		$port_display->SetPort($MyPort, $ReadFromThisBranch);
 		$port_display->SetDetailsPackages();
 
 		$HTMLPortPackages .= $port_display->Display();

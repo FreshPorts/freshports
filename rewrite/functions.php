@@ -196,10 +196,9 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 
 			if ($Debug) echo 'including missing-port<br>';
 			require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-port.php');
-
 			if ($Debug) echo 'including missing-port<br>';
 
-			if ($Debug) echo 'invoking freshports_PortDisplay<br>';
+			if ($Debug) echo "invoking freshports_PortDisplay with $category, $port, $Branch, $HasCommitsOnBranch <br>";
 			$result = freshports_PortDisplay($db, $category, $port, $Branch, $HasCommitsOnBranch);
 			if ($result) {
 				# if zero is returned, all is well, otherwise, we can't display that category/port.

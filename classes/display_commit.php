@@ -191,7 +191,7 @@ class DisplayCommit
 			if ($mycommit->needs_refresh) {
 				$HTML .= " " . freshports_Refresh_Icon_Link() . "\n";
 			}
-			if ($mycommit->date_added > Time() - 3600 * 24 * $this->DaysMarkedAsNew) {
+			if ($mycommit->branch == BRANCH_HEAD && $mycommit->date_added > Time() - 3600 * 24 * $this->DaysMarkedAsNew) {
 				$MarkedAsNew = "Y";
 				$HTML .= freshports_New_Icon() . "\n";
 			}

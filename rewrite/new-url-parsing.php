@@ -145,14 +145,14 @@ function freshports_Parse404URI($url, $db):never {
 		if ($Debug) echo "trying that as a category<br>";
 		# if this is a category, this function does not return
 		Try_Displaying_Category($db, $path_parts, $url_args, $Branch);
-        if ($Debug) echo "'$pathname' on $Branch was not a category<br>";
+	        if ($Debug) echo "'$pathname' on $Branch was not a category<br>";
 	}
 
 	if (count($path_parts) == 2) {
 		if ($Debug) echo "trying that as a port<br>";
 		# if this is a port, this function does not return
 		Try_Displaying_Port($db, $path_parts, $url_args, $Branch);
-        if ($Debug) echo "'$pathname' on $Branch was was not a port<br>";
+		if ($Debug) echo "'$pathname' on $Branch was was not a port<br>";
 	}
 
 	if ($Debug) echo "trying that as an element<br>";
@@ -254,15 +254,15 @@ function Try_Displaying_Port($db, $path_parts, $url_args, $Branch) {
 		}
 	}
 	if ($result) {
-        if ($Debug) {
-            echo 'we are displaying ' . htmlentities("$category/$port") . ' on ' . htmlentities($Branch) . '<br>';
-        }
-        require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-port.php');
+	        if ($Debug) {
+			echo 'we are displaying ' . htmlentities("$category/$port") . ' on ' . htmlentities($Branch) . '<br>';
+	        }
+	        require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-port.php');
 		# display $result
 		# if we fetched you here, we got commits on that branch
-        freshports_PortDisplayNew($db, $MyPort, $category, $port, $url_args, $Branch, $HasCommitsOnBranch);
-		exit;
-    }
+	        freshports_PortDisplayNew($db, $MyPort, $category, $port, $url_args, $Branch, $HasCommitsOnBranch);
+	        exit;
+	}
 }
 
 

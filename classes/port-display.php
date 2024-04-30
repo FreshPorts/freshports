@@ -828,7 +828,8 @@ class port_display {
 
 		# date_added is in 22 Jan 2021 17:34:22 format. Convert it to  a unix timestamp
 		# for comparison
-		if (IsSet($port->{'date_added'}) && strtotime($port->{'date_added'}) > (Time() - 3600 * 24 * $this->DaysMarkedAsNew)) {
+		# We don't set NEW on branches.
+		if ($this->Branch == BRANCH_HEAD && IsSet($port->{'date_added'}) && strtotime($port->{'date_added'}) > (Time() - 3600 * 24 * $this->DaysMarkedAsNew)) {
 			$MarkedAsNew = true;
 		}
 

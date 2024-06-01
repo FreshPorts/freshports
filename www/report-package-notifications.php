@@ -286,7 +286,7 @@ in the ABI you selected, an email will be sent as soon FreshPorts discovers the 
 	</td>
 	<td>
 
-		list of chosen ABI
+		list of chosen <b>`WatchList -> ABI -> Branch`</b> values
 		<br>
 		<?php
 		echo freshports_ABI_list_watching($User->id, $db);

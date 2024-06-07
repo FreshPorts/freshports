@@ -233,7 +233,7 @@ echo freshports_ShowFooter();
 				if (IsSet($_REQUEST['remove'])) {
 					pg_exec($db, 'BEGIN');
 					$ElementID = pg_escape_string($db, intval($_REQUEST['remove']));
-					$WLID      = pg_escape_string($db, intval($_REQUEST['wlid']));
+					$WLID      = pg_escape_string($db, IsSet($_REQUEST['wlid']) ? intval($_REQUEST['wlid']) : 0);
 					if ($ElementID == '') {
 						die('The target for removal was not supplied');
 					}

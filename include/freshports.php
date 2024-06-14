@@ -2749,8 +2749,10 @@ function checkLoadBeforeProceeding() {
   if ($MaxLoad) {
     $load = sys_getloadavg();
     if ($load[0] > $MaxLoad) {
-      header('HTTP/1.1 503 Too busy, try again later. You should never see this mesasge if you are logged in.');
-      die('Server too busy. Please try again later.  You should never see this message if you are logged in.');
+      # one message, twice invoked.
+      $msg = 'Server too busy. Please try again later.  You should never see this message if you are logged in.';
+      header('HTTP/1.1 503 ' . $msg);
+      die($msg);
     }
   }
 }

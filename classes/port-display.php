@@ -1573,7 +1573,11 @@ class port_display {
 			} else {
 				$HTML .= '<dt id="packages"><hr><b>No package information for this port in our database</b></dt>';
 				$HTML .= '<dd>Sometimes this happens. Not all ports have packages.';
-				if ($MarkedAsNew) $HTML .= ' This is doubly so for new ports, like this one.';
+				if ($MarkedAsNew) {
+					$HTML .= ' This is doubly so for new ports, like this one.';
+				} else {
+					$HTML .= ' Perhaps there is a build error. Check the fallout link: ' . freshports_Fallout_Link($port->category, $port->port);
+				}
 				$HTML .= '</dd>';
 			}
 		}

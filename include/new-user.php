@@ -73,13 +73,7 @@ Number of results to display per page (e.g commits per page):
 <br><br><br>
 
 </td>
-<tr>
-<td colspan="2">
-<br><br>
-            <INPUT TYPE="submit" VALUE="<?php if (IsSet($Customize)) { echo "update";} else { echo "create";} ?> account" NAME="submit">
-            <INPUT TYPE="reset"  VALUE="reset form">
-            </td>
-          </tr>
+
 <?php
 
 # include this CAPTCHA only for new registrations
@@ -89,12 +83,20 @@ if ( $_SERVER['SCRIPT_NAME'] == '/new-user.php' )
 ?>
 
 <tr><td class="captcha">CAPTCHA:<br>
-  (antispam code, 3 black symbols)<br>
+  (antispam code, type the three black symbols)<br>
   <table><tr><td><img src="/images/captcha/captcha.php" alt="captcha image"></td><td><input type="text" name="captcha" size="3" maxlength="3"></td></tr></table>
 </td><td></td></tr>
 <?php
 }
 ?>    
+
+<tr>
+<td colspan="2">
+<br><br>
+            <INPUT TYPE="submit" VALUE="<?php if (IsSet($Customize)) { echo "update";} else { echo "create";} ?> account" NAME="submit">
+            <INPUT TYPE="reset"  VALUE="reset form">
+            </td>
+          </tr>
     </table>
 </FORM>
 

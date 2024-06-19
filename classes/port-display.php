@@ -1312,17 +1312,21 @@ class port_display {
 
 			$HTML .= "\n";
 
-			$HTML .= "<dt><b>Conflicts Matches:</b>\n</dt>";
-			$HTML .= "<dd>\n";
-			if (!empty($port->conflicts_matches)) {
-				$HTML .= "<ul>\n";
-				foreach($port->conflicts_matches as $match) {
-					$HTML .= "<li>conflicts with " . freshports_link_to_port($match['category'], $match['port'], $this->Branch) . '</li>';
+			if (defined('SHOW_CONFLICTS_MATCHES')) {
+				# see https://github.com/FreshPorts/freshports/issues/566
+				# this field is defined, but not populated.
+				$HTML .= "<dt><b>Conflicts Matches:</b>\n</dt>";
+				$HTML .= "<dd>\n";
+				if (!empty($port->conflicts_matches)) {
+					$HTML .= "<ul>\n";
+					foreach($port->conflicts_matches as $match) {
+						$HTML .= "<li>conflicts with " . freshports_link_to_port($match['category'], $match['port'], $this->Branch) . '</li>';
+					}
+					$HTML .= "</ul>\n";
+				} else {
+					$HTML .= 'There are no Conflicts Matches for this port.  This is usually an error.';
+					syslog(LOG_ERR, 'There are no Conflicts Matches for this port. This is usually an error. ' . $port->element_pathname);
 				}
-				$HTML .= "</ul>\n";
-			} else {
-				$HTML .= 'There are no Conflicts Matches for this port.  This is usually an error.';
-				syslog(LOG_ERR, 'There are no Conflicts Matches for this port. This is usually an error. ' . $port->element_pathname);
 			}
 			$HTML .= '</dd>';
 		}

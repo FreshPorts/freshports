@@ -18,7 +18,6 @@ class User {
 	var $id;
 	var $name;
 	var $password;
-	var $cookie;
 	var $firstlogin;
 	var $lastlogin;
 	var $email;
@@ -111,7 +110,6 @@ class User {
 		$this->id                       = $myrow['id'];
 		$this->name                     = $myrow['name'];
 		$this->password                 = isset($myrow['password']) ? $myrow['password'] : null;
-		$this->cookie                   = $myrow['cookie'];
 		$this->firstlogin               = $myrow['firstlogin'];
 		$this->lastlogin                = $myrow['lastlogin'];
 		$this->email                    = $myrow['email'];

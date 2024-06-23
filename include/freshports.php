@@ -2763,3 +2763,24 @@ function FirstDateOfCurrentQuarter() {
 
 	return date("Y-m-d", strtotime(date("Y") . '-' . $yearQuarter . '-01'));
 }
+
+function freshports_UserSetCookie($Cookie, $Expires = null) {
+	# set the cookie to the supplied expiry date
+	# initially set during login
+	# then reset/extended each time the cookie is used.
+
+	if (Is_Null($Expires)) {
+		$Expires = time() + USER_COOKIE_EXPIRES;
+	}
+
+	SetCookie(USER_COOKIE_NAME, $Cookie, array(
+		'expires'  => $Expires,
+		'path'     => '/',
+		'secure'   => (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'),
+		'httponly' => TRUE,
+		// it's probably common for users to navigate from other sites like portscout
+		// we want them to still be logged in if that's the case
+		'samesite' => 'Lax',
+	));
+
+}

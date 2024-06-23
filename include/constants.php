@@ -38,7 +38,8 @@ $UserStatusDisabled    = "D";
 $UserStatusUnconfirmed = "U";
 
 
-if (!defined('USER_COOKIE_NAME')) define('USER_COOKIE_NAME', "visitor");
+if (!defined('USER_COOKIE_NAME'   )) define('USER_COOKIE_NAME', "visitor");
+if (!defined('USER_COOKIE_EXPIRES')) define('USER_COOKIE_EXPIRES', 60 * 60 * 24 * 120); # 120 days
 
 #
 # SEQUENCES

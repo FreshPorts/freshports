@@ -44,7 +44,6 @@ if ($submit) {
 		$result = pg_exec($db, "BEGIN");
         
 		// Delete from the user table. The database will take care of the rest
-#		$sql = "DELETE FROM users WHERE cookie = '$visitor'";
 		$sql = "SELECT DeleteUser($1)";
 		$result = pg_query_params($db, $sql, array($User->id));
 		if ($result) {

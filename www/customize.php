@@ -97,11 +97,7 @@ if (IsSet($submit)) {
 
 	if ($OK) {
 		// get the existing email in case we need to reset the bounce count
-		$sql = "select email from users where cookie = '$visitor'";
-		$result = pg_query($db, $sql);
-		if ($result) {
-			$myrow = pg_fetch_array ($result, 0);
-
+		if (IsSet($User)) {
 			$sql = "
 UPDATE users
    SET email            = '$email',
@@ -110,7 +106,7 @@ UPDATE users
        set_focus_search = $set_focus_search";
 
 			// if they are changing the email, reset the bouncecount.
-			if ($myrow["email"] != $email) {
+			if ($User->email != $email) {
 				$sql .= ", emailbouncecount = 0 ";
 			}
 
@@ -119,13 +115,13 @@ UPDATE users
 				$sql .= ", gen_salt('" . PW_HASH_METHOD . "', " . PW_HASH_COST ."))";
 			}
 
-			$sql .= " where cookie = '$visitor'";
+			$sql .= " where users.id = (select user_id from user_cookie where cookie = $1)";
 
 			if ($Debug) {
 				echo '<pre>' . htmlentities($sql) . '</pre>';
 			}
 
-			$result = pg_query($db, $sql);
+			$result = pg_query_params($db, $sql, array($visitor));
 			if ($result) {
 				$AccountModified = 1;
 			}

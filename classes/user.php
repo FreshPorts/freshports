@@ -72,9 +72,12 @@ class User {
 
 
 	function FetchByCookie($Cookie) {
+		# might want to make this a stored procedure
 		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . 'SELECT users.*
-		          FROM users
-				 WHERE cookie = $1';
+		          FROM users join user_cookie on users.id = user_cookie.user_id
+				 WHERE user_cookie.cookie = $1';
+
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . 'select * from user_fetch_by_cookie($1)';
 
 		$this->LocalResult = pg_query_params($this->dbh, $sql, array($Cookie));
 		if ($this->LocalResult) {

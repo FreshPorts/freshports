@@ -17,7 +17,7 @@
 	if (IsSet($_COOKIE[USER_COOKIE_NAME])) {
 		$visitor = $_COOKIE[USER_COOKIE_NAME];
 
-		$sql = "UPDATE users SET cookie = 'nocookie' WHERE cookie = $1";
+		$sql = "select * from user_logout($1)";
 		#echo $sql;
 		$result = pg_query_params($db, $sql, array($_COOKIE[USER_COOKIE_NAME]));
 	}

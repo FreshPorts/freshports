@@ -86,12 +86,15 @@ if (IsSet($_REQUEST['LOGIN']) && IsSet($_REQUEST['UserID']) && IsSet($_REQUEST['
 	         $Cookie = $user->createUserToken();
 	         # we should use $user to save this...
 
-	         $sql = "UPDATE users SET cookie = $1 WHERE id = $2";
+	         $expires = time() + 60 * 60 * 24 * 120; # 120 days
+	         $dt = new DateTime("@$expires"); // convert UNIX timestamp to PHP DateTime
+	         $expires_dt = $dt->format('Y-m-d H:i:s');  // output = 2012-08-15 00:00:00
+	         $sql = 'SELECT * FROM user_set_cookie($1, $2, $3)';
 	         # if we were doing this in a user object, we could retry when there was a cookie collision and we get a unique index error
-	         $result = pg_query_params($db, $sql, array($Cookie, $row['id'])) or die('query failed ' . pg_last_error($db));
+	         $result = pg_query_params($db, $sql, array($row['id'], $Cookie, $expires_dt)) or die('query failed ' . pg_last_error($db));
 
 	         SetCookie(USER_COOKIE_NAME, $Cookie, array(
-	           'expires'  => time() + 60*60*24*120,
+	           'expires'  => $expires,
 	           'path'     => '/',
 	           'secure'   => (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'),
 	           'httponly' => TRUE,

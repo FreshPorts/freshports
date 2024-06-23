@@ -21,7 +21,7 @@
 	$visitor	= $_COOKIE[USER_COOKIE_NAME];
 
 if ($submit) {
-   $sql = "update users set emailbouncecount = 0 where cookie = $1";
+   $sql = "select * from user_clear_bouncecount($1)";
    if ($Debug) {
       echo $sql;
    }

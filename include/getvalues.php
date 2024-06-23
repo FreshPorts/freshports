@@ -58,7 +58,7 @@ $ShowPortCreationDate	= 0;
 $User->name	= '';
 $User->id	= 0;
 
-// This is used to determine whether or not the cach can be used.
+// This is used to determine whether or not the cache can be used.
 $DefaultMaxArticles = $MaxArticles;
 
 if (IsSet($_COOKIE[USER_COOKIE_NAME])) {

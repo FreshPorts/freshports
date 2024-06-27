@@ -18,7 +18,6 @@ class User {
 	var $id;
 	var $name;
 	var $password;
-	var $cookie;
 	var $firstlogin;
 	var $lastlogin;
 	var $email;
@@ -72,9 +71,12 @@ class User {
 
 
 	function FetchByCookie($Cookie) {
+		# might want to make this a stored procedure
 		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . 'SELECT users.*
-		          FROM users
-				 WHERE cookie = $1';
+		          FROM users join user_cookie on users.id = user_cookie.user_id
+				 WHERE user_cookie.cookie = $1';
+
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . 'select * from user_fetch_by_cookie($1)';
 
 		$this->LocalResult = pg_query_params($this->dbh, $sql, array($Cookie));
 		if ($this->LocalResult) {
@@ -108,7 +110,6 @@ class User {
 		$this->id                       = $myrow['id'];
 		$this->name                     = $myrow['name'];
 		$this->password                 = isset($myrow['password']) ? $myrow['password'] : null;
-		$this->cookie                   = $myrow['cookie'];
 		$this->firstlogin               = $myrow['firstlogin'];
 		$this->lastlogin                = $myrow['lastlogin'];
 		$this->email                    = $myrow['email'];

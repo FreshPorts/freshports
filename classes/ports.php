@@ -119,7 +119,7 @@ class Port {
 	// version on current quarterly branch. see https://github.com/FreshPorts/freshports/issues/115
 	var $quarterly_revision;
 
-	private $Debug = 0;
+	var $Debug = 0;
 	
 	function __construct($dbh) {
 		$this->dbh = $dbh;

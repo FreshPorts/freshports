@@ -88,7 +88,6 @@ class User {
 				freshports_CookieClear();
 				syslog(LOG_ERR, "Could not find user details for '$Cookie' from '" . 
 				        $_SERVER['REMOTE_ADDR'] . "' for '". $_SERVER['REQUEST_URI'] . "'.");
-				die('Your user details were not found.  You have been logged out.  Please return to the <a href="/">home page</a>.');
 			}
 		} else {
 			$numrows = -1;

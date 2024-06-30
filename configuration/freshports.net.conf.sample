@@ -10,8 +10,9 @@
 server {
   listen 127.163.0.80:80;
   listen [fd00::80]:80;
-  listen 127.163.0.80:443 ssl http2;
-  listen [fd00::80]:443   ssl http2;
+  listen 127.163.0.80:443 ssl;
+  listen [fd00::80]:443   ssl;
+  http2 on;
   
   server_name   freshports.net www.freshports.net;
 

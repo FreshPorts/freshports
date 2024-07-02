@@ -18,7 +18,7 @@ class SystemBranch {
 
   function getBranchNames() {
     # empty the result
-    $this->system_branches = array();
+    $this->branch_names = array();
 
 	# I think we should cache this data too. It changes four times a year.
     $sql = "select branch_name from system_branch where branch_name ilike '20%Q%' ORDER BY branch_name DESC";

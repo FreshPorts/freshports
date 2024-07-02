@@ -8,6 +8,7 @@
 class SystemBranch {
 
   var $branch_names = array();
+  var $system_branch;
 
   var $dbh;
 

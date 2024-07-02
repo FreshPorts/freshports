@@ -38,6 +38,7 @@ class dg_BarGraph {
 	var $margin_r;
 
 	var $font_name;
+	var $font_name_bold;
 	var $label_size;
 	var $label_color;
 

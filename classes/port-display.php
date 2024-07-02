@@ -909,7 +909,7 @@ class port_display {
 		}
 
 		if ($this->ShowEverything || $this->ShowWatchListCount) {
-			$HTML .= ' ' . freshPorts_WatchListCount_Icon_Link() . '=' . $port->WatchListCount();
+			$HTML .= ' ' . freshports_WatchListCount_Icon_Link() . '=' . $port->WatchListCount();
 		}
 
 		if ($this->ShowEverything || $this->ShowBasicInfo) {

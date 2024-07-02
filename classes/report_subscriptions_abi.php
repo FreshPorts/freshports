@@ -21,7 +21,7 @@ class report_subscriptions_abi {
 
 	function __construct($dbh) {
 		$this->dbh   = $dbh;
-		$this->Debug = 1;
+		$this->Debug = 0;
 	}
 
 	function DeleteAllSubscriptions($UserID) {

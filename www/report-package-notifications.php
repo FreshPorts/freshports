@@ -158,29 +158,33 @@ if (IsSet($_REQUEST['add']) || IsSet($_REQUEST['delete'])) {
 		$num_wl_id  = min(sizeof($wl_id_array), 30);
 		$num_ps_id  = min(sizeof($package_set_array), 2);
 
-        echo '$num_abi_id=' . $num_abi_id  . "\n<br>";
-		echo '$num_wl_id='  . $num_wl_id   . "\n<br>";
-		echo '$num_ps_id='  . $num_ps_id . "\n<br>";
-        $sql = 'Here we go: ';
-        echo 'Hitting the for loops<br>';
+	if ($Debug) {
+        	echo '$num_abi_id=' . $num_abi_id  . "\n<br>";
+        	echo '$num_wl_id='  . $num_wl_id   . "\n<br>";
+        	echo '$num_ps_id='  . $num_ps_id . "\n<br>";
+        	$sql = 'Here we go: ';
+        	echo 'Hitting the for loops<br>';
+	}
 
         for ($abi_ix = 0; $abi_ix <  $num_abi_id; $abi_ix++) {
-            echo '$abi_ix=' . $abi_ix . "\n<br>";
+            if ($Debug) echo '$abi_ix=' . $abi_ix . "\n<br>";
             for ($wl_ix = 0; $wl_ix <  $num_wl_id; $wl_ix++) {
-				echo '$wl_ix=' . $wl_ix . "\n<br>";
+		if ($Debug) echo '$wl_ix=' . $wl_ix . "\n<br>";
                 for ($ps_ix = 0; $ps_ix < $num_ps_id; $ps_ix++) {
-					echo '$ps_ix=' . $ps_ix . "\n<br>";
-					echo $User->id . ', ' . $wl_id_array[$wl_ix] . ', ', $abi_id_array[$abi_ix]  . ', ' . $package_set_array[$ps_ix];
-                    # sql was created during development, but never used
-					$sql .= "$User->id, $wl_id_array[$wl_ix], $abi_id_array[$abi_ix], $package_set_array[$ps_ix]<br>\n";
+			if ($Debug) {
+				echo '$ps_ix=' . $ps_ix . "\n<br>";
+				echo $User->id . ', ' . $wl_id_array[$wl_ix] . ', ', $abi_id_array[$abi_ix]  . ', ' . $package_set_array[$ps_ix];
+			}
+			# sql was created during development, but never used
+			$sql .= "$User->id, $wl_id_array[$wl_ix], $abi_id_array[$abi_ix], $package_set_array[$ps_ix]<br>\n";
 
-                    # instead, we save
-					$rsa->Save($User->id, $wl_id_array[$wl_ix], $abi_id_array[$abi_ix], $package_set_array[$ps_ix]);
-				}
+			# instead, we save
+			$rsa->Save($User->id, $wl_id_array[$wl_ix], $abi_id_array[$abi_ix], $package_set_array[$ps_ix]);
+		}
             }
         }
 
-		echo "<br><br>\n\nThis is the SQL<pre>$sql</pre>";
+	if ($Debug) echo "<br><br>\n\nThis is the SQL<pre>$sql</pre>";
     }
 
     if ($delete) {
@@ -207,11 +211,11 @@ if (IsSet($_REQUEST['add']) || IsSet($_REQUEST['delete'])) {
             $abi_id        = intval($key_values[1]);
 			$package_set   = $key_values[2];
 
-            echo "deleting  $watch_list_id $abi_id $package_set<br>\n";
+            if ($Debug) echo "deleting  $watch_list_id $abi_id $package_set<br>\n";
             $num_rows = $rsa->Delete($User->id, $watch_list_id, $abi_id, $package_set);
             if ($num_rows >= 1) {
-				syslog(LOG_ERR, "The key-value pair deleted more than one row ($num_rows): $watch_list_id ::: $abi_id.");
-				exit("The key-value pair deleted more than one row ($num_rows): " . $watch_list_id . MY_DELIMITER . $abi_id . MY_DELIMITER . $package_set . " - Not sure what's going on there, but I'm stopping right now.");
+            	syslog(LOG_ERR, "The key-value pair deleted more than one row ($num_rows): $watch_list_id ::: $abi_id.");
+            	exit("The key-value pair deleted more than one row ($num_rows): " . $watch_list_id . MY_DELIMITER . $abi_id . MY_DELIMITER . $package_set . " - Not sure what's going on there, but I'm stopping right now.");
             }
         }
     }
@@ -265,30 +269,34 @@ in the ABI you selected, an email will be sent as soon FreshPorts discovers the 
 
 <?php
     if ($Debug) echo 'when calling freshports_WatchListDDLBForm, $wlid = \'' . $wlid . '\'';
+    echo '<label for="wlid">Choose watch lists:</label><br>';
     echo freshports_WatchListDDLB($db, $User->id, $wlid, 15, 1);
 
 ?>
 <td>
 <?php
+		echo '<label for="abi">Choose your ABI values:</label><br>';
 		echo freshports_ABI_list($db);
 ?>
 </td>
                 <td>
                     <?php
-					echo freshports_Package_Sets();
-					?>
+			echo '<label for="package_set">Choose your package set values:</label><br>';
+			echo freshports_Package_Sets();
+		    ?>
                 </td>
 <td>
-            <input type="submit" value="add" name="add">Add Selected>>></input>
+	    <label for="add">Choose an action:</label><br>
+            <input type="submit" value="Add Selected >>>" name="add"></input>
 
             <br>		<br>
-            <input type="submit" value="delete" name="delete">Delete Selected >>></input>
+            <input type="submit" value="Delete Selected <<<" name="delete"></input>
 	</td>
 	<td>
 
-		list of chosen ABI
 		<br>
 		<?php
+		echo '<label for="watch_list_abi">Your selected watch list / ABI combinations:</label><br>';
 		echo freshports_ABI_list_watching($User->id, $db);
 		?>
 		</td>

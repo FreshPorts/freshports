@@ -717,11 +717,18 @@ class port_display {
 		return $result;
 	}
 
-	function Is_A_Python_Port(&$matches) {
+	function Is_A_Python_Port_Prefix(&$matches) {
 		# find out of the python port starts with pyXX-
-		$Is_A_Python_Port = preg_match('/^py[0-9]+-(.*)/', $this->port->package_name ?? '', $matches);
+		$Is_A_Python_Port_Prefix = preg_match('/^py[0-9]+-(.*)/', $this->port->package_name ?? '', $matches);
 
-		return $Is_A_Python_Port;
+		return $Is_A_Python_Port_Prefix;
+	}
+
+	function Is_A_Python_Port_Suffix(&$matches) {
+		# find out of the python port end with -pyXX
+		$Is_A_Python_Port_Suffix = preg_match('/(.*)-py[0-9]+$/', $this->port->package_name ?? '', $matches);
+
+		return $Is_A_Python_Port_Suffix;
 	}
 
 	function DisplayDependencyLine() {
@@ -729,27 +736,43 @@ class port_display {
 
 		$HTML = '';
 
-		// if USES= contains python
+		# we assume there is no prefix/suffix in use
+		$Is_A_Python_Port_Prefix = false;
+		$Is_A_Python_Port_Suffix = false;
+
+		# assume the default package name		
+		$package_name = $port->package_name;
+
+		// check to see if USES= contains python
 		if (!empty($port->uses)) {
 			$USES_PYTHON = in_array(USES_PYTHON, preg_split('/\s+|:/', $port->uses));
 		}
 
+
+		# if there is python in there...
                 if (!empty($USES_PYTHON)) {
-			# it is a python port if it starts with py-37, for example.
-                        $Is_A_Python_Port = $this->Is_A_Python_Port($matches);
+			# it is a python port if it starts with py37-, for example.
+                        $Is_A_Python_Port_Prefix = $this->Is_A_Python_Port_Prefix($prefix_matches);
                         # if a match for py37-django-js-asset, $matches[0]=> "py37-django-js-asset", $matches[1]=> "django-js-asset"
-                } else {
-                        $Is_A_Python_Port = false;
+
+			# it is a python port if it end with -py37, for example.
+                        $Is_A_Python_Port_Suffix = $this->Is_A_Python_Port_Suffix($suffix_matches);
+                        # if a match for uwsgi-py311, $matches[0]=> "uwsgi-py311", $matches[1]=> "uwsgi"
                 }
 
-                if ($Is_A_Python_Port) {
-                        $HTML .=  '${PYTHON_PKGNAMEPREFIX}' . $matches[1];
-                } else {
-                        $HTML .= $port->package_name;
-                }
 
-                $HTML .= '>0:' . $this->DisplayPlainText();
-                if ($Is_A_Python_Port) {
+		# This code presumes that only one of PYTHON_PKGNAMEPREFIX and PYTHON_PKGNAMESUFFIX appears in a given port
+		# Right now, I don't want to code that possibility.
+                if ($Is_A_Python_Port_Prefix) {
+                        $package_name = '${PYTHON_PKGNAMEPREFIX}' . $prefix_matches[1];
+		}
+
+                if ($Is_A_Python_Port_Suffix) {
+                        $package_name = $suffix_matches[1] . '${PYTHON_PKGNAMESUFFIX}';
+		}
+
+                $HTML .= $package_name . '>0:' . $this->DisplayPlainText();
+                if ($Is_A_Python_Port_Prefix) {
                         $HTML .= '@${PY_FLAVOR}';
                 }
 
@@ -1362,7 +1385,7 @@ class port_display {
 					$HTML .= '<li><kbd class="code">pkg install ' . $port->package_name . '</kbd></li></ul>';
 					$HTML .= 'NOTE: If this package has multiple flavors (see below), then use one of them instead of the name specified above.';
 
-					if ($this->Is_A_Python_Port($matches)) {
+					if ($this->Is_A_Python_Port_Prefix($matches)) {
 						$HTML .= '<br>NOTE: This is a Python port. Instead of <kbd class="code">' . $port->package_name . '</kbd> listed in the above command, you can pick from the names under the <a href="#packages">Packages</a> section.';
 					}
 					$HTML .= '</dd>';

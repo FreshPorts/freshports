@@ -719,7 +719,7 @@ class port_display {
 
 	function Is_A_Python_Port(&$matches) {
 		# find out of the python port starts with pyXX-
-		$Is_A_Python_Port = preg_match('/^py[0-9][0-9]-(.*)/', $this->port->package_name ?? '', $matches);
+		$Is_A_Python_Port = preg_match('/^py[0-9]+-(.*)/', $this->port->package_name ?? '', $matches);
 
 		return $Is_A_Python_Port;
 	}

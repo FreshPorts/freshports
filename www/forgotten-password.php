@@ -125,7 +125,7 @@ if ($submit) {
 
             // Content
             $mail->ContentType = 'text/plain';
-            $mail->Subject     = WEBSITE_NAME . '- password';
+            $mail->Subject     = WEBSITE_NAME . ' - password';
             $mail->Body        = $message;
 
             $mail->setFrom   (PROBLEM_SOLVER_EMAIL_ADDRESS, WEBSITE_NAME);

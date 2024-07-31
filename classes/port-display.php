@@ -731,6 +731,20 @@ class port_display {
 		return $Is_A_Python_Port_Suffix;
 	}
 
+	function Is_A_PHP_Port_Prefix(&$matches) {
+		# find out of the python port starts with phpXX-
+		$Is_A_PHP_Port_Prefix = preg_match('/^php[0-9]+-(.*)/', $this->port->package_name ?? '', $matches);
+
+		return $Is_A_PHP_Port_Prefix;
+	}
+
+	function Is_A_PHP_Port_Suffix(&$matches) {
+		# find out of the python port end with -phpXX
+		$Is_A_PHP_Port_Suffix = preg_match('/(.*)-php[0-9]+$/', $this->port->package_name ?? '', $matches);
+
+		return $Is_A_PHP_Port_Suffix;
+	}
+
 	function DisplayDependencyLine() {
 		$port = $this->port;
 
@@ -740,12 +754,20 @@ class port_display {
 		$Is_A_Python_Port_Prefix = false;
 		$Is_A_Python_Port_Suffix = false;
 
+		$Is_A_PHP_Port_Prefix    = false;
+		$Is_A_PHP_Port_Suffix    = false;
+
 		# assume the default package name		
 		$package_name = $port->package_name;
 
 		// check to see if USES= contains python
 		if (!empty($port->uses)) {
 			$USES_PYTHON = in_array(USES_PYTHON, preg_split('/\s+|:/', $port->uses));
+		}
+
+		// check to see if USES= contains php
+		if (!empty($port->uses)) {
+			$USES_PHP = in_array(USES_PHP, preg_split('/\s+|:/', $port->uses));
 		}
 
 
@@ -761,14 +783,35 @@ class port_display {
                 }
 
 
+		# if there is PHP in there...
+                if (!empty($USES_PHP)) {
+			# it is a PHP port if it starts with php84-, for example.
+                        $Is_A_PHP_Port_Prefix = $this->Is_A_PHP_Port_Prefix($prefix_matches);
+                        # if a match for php84-pecl-imap, $matches[0]=> "php84-pecl-imap", $matches[1]=> "pecl-imap"
+
+			# it is a PHP port if it end with -py84, for example.
+                        $Is_A_PHP_Port_Suffix = $this->Is_A_PHP_Port_Suffix($suffix_matches);
+                        # if a match for arcanist-lib-php82, $matches[0]=> "arcanist-lib-php82", $matches[1]=> "arcanist-lib"
+                }
+
+
 		# This code presumes that only one of PYTHON_PKGNAMEPREFIX and PYTHON_PKGNAMESUFFIX appears in a given port
-		# Right now, I don't want to code that possibility.
+		# Similarly, when adding PHP_PKGNAMEPREFIX/SUFFIX, I'm assuming only one of the four is used at a time.
+		# Right now, I don't want to code that possibility that my assumption is false.
                 if ($Is_A_Python_Port_Prefix) {
                         $package_name = '${PYTHON_PKGNAMEPREFIX}' . $prefix_matches[1];
 		}
 
                 if ($Is_A_Python_Port_Suffix) {
                         $package_name = $suffix_matches[1] . '${PYTHON_PKGNAMESUFFIX}';
+		}
+
+                if ($Is_A_PHP_Port_Prefix) {
+                        $package_name = '${PHP_PKGNAMEPREFIX}' . $prefix_matches[1];
+		}
+
+                if ($Is_A_PHP_Port_Suffix) {
+                        $package_name = $suffix_matches[1] . '${PHP_PKGNAMESUFFIX}';
 		}
 
                 $HTML .= $package_name . '>0:' . $this->DisplayPlainText();

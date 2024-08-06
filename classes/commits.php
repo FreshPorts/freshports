@@ -199,6 +199,7 @@ with recent_commits AS
   select distinct CL.*, CLPE.element_id AS clpe_element_id from CL join commit_log_branches clb on clb.branch_id =
         (select id from system_branch where branch_name = $" . (count($params) - 1). ") and CL.id = CLB.commit_log_id
         JOIN commit_log_ports_elements CLPE on CLPE.commit_log_id = CL.id
+   order by CL.commit_date desc
    LIMIT $" . count($params) . ')';
 		}
 

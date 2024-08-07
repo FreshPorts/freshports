@@ -1144,6 +1144,8 @@ function freshports_HEAD_main_items() {
 
 	<link rel="alternate" type="application/rss+xml" title="FreshPorts - The Place For Ports" href="https://' . $_SERVER['HTTP_HOST'] . '/backend/rss2.0.php">
 
+	<link rel="search" type="application/opensearchdescription+xml" href="https://' . $_SERVER['HTTP_HOST'] . '/opensearch.php" title="FreshPorts">
+
 	<link rel="apple-touch-icon" sizes="57x57" href="/images/apple-icon-57x57.png">
 	<link rel="apple-touch-icon" sizes="60x60" href="/images/apple-icon-60x60.png">
 	<link rel="apple-touch-icon" sizes="72x72" href="/images/apple-icon-72x72.png">

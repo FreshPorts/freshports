@@ -419,7 +419,9 @@ class DisplayCommit
 					# this is a non-port. All the rest of the stuff is not displayed
 					if ($Debug) echo 'details will not be presented<br>';
 				} else {
-					syslog(LOG_NOTICE, 'We have non-port where element_pathname is not empty');
+					# we might be here for something like:
+					# /commit.php?category=science&port=metaf2xml&files=yes&message_id=201407160318.s6G3IQKY090479@svn.freebsd.org
+					syslog(LOG_NOTICE, 'We have non-port where element_pathname is not empty - first location');
 
 					# for future consideration
 					# we could display this as a table
@@ -595,7 +597,7 @@ class DisplayCommit
 						# this is a non-port. All the rest of the stuff is not displayed
 						if ($Debug) echo 'details will not be presented<br>';
 					} else {
-						syslog(LOG_NOTICE, 'We have non-port where element_pathname is not empty');
+						syslog(LOG_NOTICE, 'We have non-port where element_pathname is not empty - 2nd location: ' . $mycommit->element_pathname);
 
 						# This is a non-port element...
 						$this->HTML .= '<span class="element-details">';

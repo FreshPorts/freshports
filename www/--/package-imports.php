@@ -69,11 +69,13 @@ if (file_exists($cache_file)) {
 
 <pre>
 
+This page can sort by name or date.
+
 <?php
 
 #echo phpinfo();
 
-echo "sort by: $sort\n";
+echo "sorted by: $sort\n";
 
 echo "cache file: $cache_file\n";
 

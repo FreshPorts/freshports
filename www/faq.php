@@ -253,8 +253,8 @@ down you must read to find something you didn't already know.</P>
 		<a href="https://docs.freebsd.org/en/books/porters-handbook/makefiles/#makefile-www">documentation</a> does
 		not specifically allow for this, I think it arose when
 		 <a href="https://cgit.freebsd.org/ports/commit/?id=b7f05445c00f2625aa19b4154ebcbce5ed2daa52">WWW was moved</a>
-		 from <span class="file">pkg-descr</apsn>
-		to <span class="file">Makefile<span>.</P>
+		 from <span class="file">pkg-descr</span>
+		to <span class="file">Makefile</span>.</P>
 
 	<P id="fallout"><?php echo freshports_Fallout_Icon(); ?>
 		Fallout: a link to search the <a href="https://lists.freebsd.org/archives/freebsd-pkg-fallout/">freebsd-pkg-fallout archives</a>. If the resulting fallout list is empty: the port may have been skipped due to fallout of a related port.</P>
@@ -939,6 +939,50 @@ now that the Master has been upgraded.
    
   <p> When the next updates arrive, you'll get an email.
    </td></tr>
+
+<tr id="abi">
+<?php echo freshports_PageBannerText('Why isthis particular ABI not listed on the website??'); ?>
+</tr>
+
+   <tr><td class="textcontent">
+   <p>FreshPorts covers the ABI published by the project at https://pkg.freebsd.org/index.html</p>
+   
+   <p>At the time of writing (2024-08-24), the code to extract those ABI and the current ABI list was:</p>
+   <pre>
+[15:25 dvl-ingress01 dvl ~/scripts] % cat ./current-list-of-valid-abi.sh
+#!/bin/sh
+
+fetch -qo - https://pkg.freebsd.org/index.html | \
+  grep FreeBSD: | sed -e 's@.*\(FreeBSD:[^ &lt;]*\).*@\1@' | sort
+[15:25 dvl-ingress01 dvl ~/scripts] % sh ./current-list-of-valid-abi.sh 
+FreeBSD:13:aarch64
+FreeBSD:13:amd64
+FreeBSD:13:armv6
+FreeBSD:13:armv7
+FreeBSD:13:i386
+FreeBSD:13:powerpc
+FreeBSD:13:powerpc64
+FreeBSD:13:powerpc64le
+FreeBSD:14:aarch64
+FreeBSD:14:amd64
+FreeBSD:14:armv6
+FreeBSD:14:armv7
+FreeBSD:14:i386
+FreeBSD:14:powerpc
+FreeBSD:14:powerpc64
+FreeBSD:14:powerpc64le
+FreeBSD:15:aarch64
+FreeBSD:15:amd64
+FreeBSD:15:armv7
+FreeBSD:15:powerpc
+FreeBSD:15:powerpc64
+FreeBSD:15:powerpc64le
+</pre>
+   </td></tr>
+
+
+
+
 </table>
 </td>
 

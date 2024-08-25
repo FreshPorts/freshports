@@ -951,7 +951,7 @@ now that the Master has been upgraded.
 
    <p>In general, the project does not build quarterly branches for whatever branch is now CURRENT.</p>
 
-   <p>At the time of writing (2024-08-24), the code to extract those ABI and the current ABI list was:</p>
+   <p>At the time of writing (2024-08-24), the code to extract those ABIs and the current ABI list was:</p>
    <pre>
 [15:25 dvl-ingress01 dvl ~/scripts] % cat ./current-list-of-valid-abi.sh
 #!/bin/sh

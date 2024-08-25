@@ -913,11 +913,12 @@ now that the Master has been upgraded.
    <p>Yes, yes, you can.</p>
 
    <p>Not only can FreshPorts email you when one of your watched ports is updated, it can also email you when the package is ready
-   to install</p>
+   to install.</p>
    
    <p>FreshPorts polls the available FreeBSD repo builds on an hourly basis. It uses that information to display the packages
-   available under various ABI (e.g. FreeBSD:14:amd64). NOTE: we do not display package for the quarterly branch on the latest CURRENT
-   of FreeBSD. No pacakges are build for that ABI/package set combination.
+   available under various ABI (e.g. FreeBSD:14:amd64). NOTE: we do not display packages for the quarterly branch on the latest CURRENT
+   of FreeBSD. Packages are not build for that ABI/package set combination. You may see CURRENT/quarterly listed on some pages.
+   That is easier to do than to keep track of which branch is CURRENT.
    
    <p>To get new package notifications, follow these steps:
    
@@ -941,7 +942,7 @@ now that the Master has been upgraded.
    </td></tr>
 
 <tr id="abi">
-<?php echo freshports_PageBannerText('Why isthis particular ABI not listed on the website??'); ?>
+<?php echo freshports_PageBannerText('Why is this particular ABI not listed on the website??'); ?>
 </tr>
 
    <tr><td class="textcontent">
@@ -949,7 +950,7 @@ now that the Master has been upgraded.
 
    <p>In general, the project does not build quarterly branches for whatever branch is now CURRENT.</p>
 
-   <p>At the time of writing (2024-08-24), the code to extract those ABI and the current ABI list was:</p>
+   <p>At the time of writing (2024-08-24), the code to extract those ABIs and the current ABI list was:</p>
    <pre>
 [15:25 dvl-ingress01 dvl ~/scripts] % cat ./current-list-of-valid-abi.sh
 #!/bin/sh

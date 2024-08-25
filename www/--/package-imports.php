@@ -53,6 +53,7 @@ if (file_exists($cache_file)) {
 
     header("Last-Modified: " . $modified);
 } else {
+    $modified = null;
     header("HTTP/1.1 500 Internal Server Error");
 
     $HTML = 'The required file was not found: ' . $cache_file;
@@ -75,11 +76,15 @@ This page can sort by name or date.
 
 #echo phpinfo();
 
-echo "sorted by: $sort\n";
+# there is a file...
+if (IsSet($modified)) {
 
-echo "cache file: $cache_file\n";
+    echo "sorted by: $sort\n";
 
-echo "Last-Modified: " . $modified . "\n";
+    echo "cache file: $cache_file\n";
+
+    echo "Last-Modified: " . $modified . "\n";
+}
 
 echo $HTML;
 

@@ -916,10 +916,9 @@ now that the Master has been upgraded.
    to install.</p>
    
    <p>FreshPorts polls the available FreeBSD repo builds on an hourly basis. It uses that information to display the packages
-   available under various ABIs (e.g. FreeBSD:14:amd64).</p>
-   
-   <p>NOTE: we do not display packages for the quarterly branch on FreeBSD-CURRENT. No packages are built for that ABI/package set
-   combination.</p>
+   available under various ABI (e.g. FreeBSD:14:amd64). NOTE: we do not display packages for the quarterly branch on the latest CURRENT
+   of FreeBSD. Packages are not build for that ABI/package set combination. You may see CURRENT/quarterly listed on some pages.
+   That is easier to do than to keep track of which branch is CURRENT.
    
    <p>To get new package notifications, follow these steps:
    
@@ -943,7 +942,7 @@ now that the Master has been upgraded.
    </td></tr>
 
 <tr id="abi">
-<?php echo freshports_PageBannerText('Why is this particular ABI not listed on the website?'); ?>
+<?php echo freshports_PageBannerText('Why is this particular ABI not listed on the website??'); ?>
 </tr>
 
    <tr><td class="textcontent">

@@ -1018,4 +1018,10 @@ LEFT OUTER JOIN
 
 	}
 
+
+	function UsesPython() {
+		$USES_PYTHON = !empty($this->uses) && in_array(USES_PYTHON, preg_split('/\s+|:/', $this->uses));
+
+		return $USES_PYTHON;
+	}
 }

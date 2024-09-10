@@ -1020,8 +1020,15 @@ LEFT OUTER JOIN
 
 
 	function UsesPython() {
+		# often, we need to know about python to change py311 to ${xPYTHON_PKGNAMEPREFIX}
 		$USES_PYTHON = !empty($this->uses) && in_array(USES_PYTHON, preg_split('/\s+|:/', $this->uses));
 
 		return $USES_PYTHON;
+	}
+
+	function UsesPHP() {
+		$USES_PHP = !empty($this->uses) && in_array(USES_PHP, preg_split('/\s+|:/', $this->uses));
+
+		return $USES_PHP;
 	}
 }

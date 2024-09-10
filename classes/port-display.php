@@ -1539,8 +1539,25 @@ class port_display {
 					$HTML .= '<dt id="packages" class="h3"><hr><b>Packages</b> (timestamps in pop-ups are UTC):</dt>';
 					$HTML .= '<dd>';
 					$HTML .= '<div class="scrollmenu">';
+					
+					# we try to sort the packages by name, which is not always a regular sort.
+					# e.g. array('py39-Jinja2', 'py27-Jinja2', 'py37-Jinja2', 'py311-Jinja2')
+					# should be sorted as Array( py27-Jinja2, py37-Jinja2, py39-Jinja2, py311-Jinja2)
+					# But that does not apply to all ports.
+					# This only applies to packages with lettternumber- prefixes, such as Python.
+					#
 
-					foreach ($packages_array as $package_name => $package) {
+					$package_names = array_keys($packages_array);
+#					echo 'before sorting';
+#					var_dump($package_names);
+					if (count($package_names) > 1 && $this->port->UsesPython()) {
+#						echo 'this port uses python, so we are invoking pkg_prefix_sort()';
+						$package_names = pkg_prefix_sort($package_names);
+					}
+
+#					foreach ($packages_array as $package_name => $package) {
+					foreach ($package_names as $key => $package_name) {
+						$package = $packages_array[$package_name];
 						$HTML .= '<table class="packages"><caption>' . $package_name . '</caption><tr><th>ABI</th>';
 
 
@@ -1561,6 +1578,7 @@ class port_display {
 							# Try not to display the quarterly branch for the latest version.
 							#
 							if ($ABI === $LastArrayPosition) {
+							
 								continue;
 							}
 							$HTML .= '<tr>';

@@ -762,14 +762,13 @@ class port_display {
 
 		// check to see if USES= contains python
 		if (!empty($port->uses)) {
-			$USES_PYTHON = in_array(USES_PYTHON, preg_split('/\s+|:/', $port->uses));
+			$USES_PYTHON = $port->UsesPython();
 		}
 
 		// check to see if USES= contains php
 		if (!empty($port->uses)) {
-			$USES_PHP = in_array(USES_PHP, preg_split('/\s+|:/', $port->uses));
+			$USES_PHP = $port->UsesPHP();
 		}
-
 
 		# if there is python in there...
                 if (!empty($USES_PYTHON)) {
@@ -1548,15 +1547,14 @@ class port_display {
 					#
 
 					$package_names = array_keys($packages_array);
-#					echo 'before sorting';
-#					var_dump($package_names);
 					if (count($package_names) > 1 && $this->port->UsesPython()) {
-#						echo 'this port uses python, so we are invoking pkg_prefix_sort()';
 						$package_names = pkg_prefix_sort($package_names);
 					}
 
-#					foreach ($packages_array as $package_name => $package) {
+					# here, we access the data in package name sorted order
+					# it's easier to sort the names along, then used that to access the data.
 					foreach ($package_names as $key => $package_name) {
+						# get the package data for this package name
 						$package = $packages_array[$package_name];
 						$HTML .= '<table class="packages"><caption>' . $package_name . '</caption><tr><th>ABI</th>';
 

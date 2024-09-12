@@ -2799,13 +2799,6 @@ function pkg_prefix_sort($arr) {
         $halves = explode('-', $item, 2);
         $runtimeBits = preg_split('/(?<=\D)(?=\d)|(?<=\d)(?=\D)/', $halves[0], PREG_SPLIT_DELIM_CAPTURE);
 
-        # I hope to avoid this situtation by not calling this function when there is only one package available.        
-        # we get caught up by ports like lang/python, which uses python (`make -V USES` gives python:run, similarly for lang/python39
-        # but there is no PYTHON_PKGNAMEPREFIX in use... hence, I added this check:
-        if (count($runtimeBits) <= 2) {
-          return $arr;
-        }
-
         $splits[] = array('prefix' => $runtimeBits[0], 'runtime' => $runtimeBits[1], 'separator' => '-', 'lib' => $halves[1]);
     }
     

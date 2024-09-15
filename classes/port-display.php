@@ -1515,9 +1515,9 @@ class port_display {
 						foreach ($package as $package_line) {
 							# convert FreeBSD:13:aarch64 to FreeBSD:13
 							$abi_prefix = substr($package_line['abi'], 0, strrpos($package_line['abi'], ':'));
-							$arch = substr($package_line['abi'], strrpos($package_line['abi'], ':') + 1);
+							$arch       = substr($package_line['abi'],    strrpos($package_line['abi'], ':') + 1);
 
-							$package_version_latest = empty($package_line['package_version_latest']) ? '-' : $package_line['package_version_latest'];
+							$package_version_latest    = empty($package_line['package_version_latest'])    ? '-' : $package_line['package_version_latest'];
 							$package_version_quarterly = empty($package_line['package_version_quarterly']) ? '-' : $package_line['package_version_quarterly'];
 
 							$packages_array[$package_name][$abi_prefix . ':latest']   [$arch]['version'] = $package_version_latest;

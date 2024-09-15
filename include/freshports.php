@@ -2797,6 +2797,11 @@ function pkg_prefix_sort($arr) {
 
     foreach ($arr as $item) {
         $halves = explode('-', $item, 2);
+        if (count($halves) < 2) {
+          # if there is nothing to split, return the data unsorted.
+          return $arr;
+        }
+
         $runtimeBits = preg_split('/(?<=\D)(?=\d)|(?<=\d)(?=\D)/', $halves[0], PREG_SPLIT_DELIM_CAPTURE);
 
         $splits[] = array('prefix' => $runtimeBits[0], 'runtime' => $runtimeBits[1], 'separator' => '-', 'lib' => $halves[1]);

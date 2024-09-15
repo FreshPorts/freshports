@@ -2802,7 +2802,6 @@ function pkg_prefix_sort($arr) {
           return $arr;
         }
 
-        var_dump($halves);
         $runtimeBits = preg_split('/(?<=\D)(?=\d)|(?<=\d)(?=\D)/', $halves[0], PREG_SPLIT_DELIM_CAPTURE);
 
         $splits[] = array('prefix' => $runtimeBits[0], 'runtime' => $runtimeBits[1], 'separator' => '-', 'lib' => $halves[1]);

@@ -27,6 +27,10 @@
 	$message_id = pg_escape_string($db, $_REQUEST['message_id'] ?? '');
 	$revision   = pg_escape_string($db, $_REQUEST['revision']   ?? '');
 
+	if ($message_id === '' && $revision === '') {
+		# you're going to have a bad time.
+		header('HTTP/1.1 404 NOT FOUND');
+	}
 	$url_query = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
 	$url_args  = array();
 	if (IsSet($url_query)) {

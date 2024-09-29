@@ -2115,8 +2115,8 @@ alt="powered by nginx" width="121" height="32"></a>
 <td class="copyright">
 <small>
 Valid 
-<a href="https://validator.w3.org/check?uri=' . $URI . '" title="We like to keep our HTML valid" target="_blank" rel="noopener noreferrer">HTML</a>,
-<a href="https://jigsaw.w3.org/css-validator/validator?uri=' .  $URI . '" title="We like to have valid CSS" rel="noopener noreferrer">CSS</a>, and
+<a href="https://validator.w3.org/check?uri=' . $URI . '" title="We like to keep our HTML valid" target="_blank" rel="nofollow noopener noreferrer">HTML</a>,
+<a href="https://jigsaw.w3.org/css-validator/validator?uri=' .  $URI . '" title="We like to have valid CSS" rel="nofollow noopener noreferrer">CSS</a>, and
 <a href="https://validator.w3.org/feed/check.cgi?url=' . rawurlencode("{$URIBase}/backend/rss2.0.php") . '" title="Valid RSS is good too" rel="noopener noreferrer">RSS</a>.
 </small>
 ' . freshports_copyright() . '

@@ -32,7 +32,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 
 	GLOBAL $User;
 
-	$Debug  = 1;
+	$Debug  = 0;
 	$result = false;
 
 	$IsCategory = false;
@@ -41,7 +41,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	$CategoryID = 0;
 
 	if ($Debug) {
-		echo "Debug is turned on.  Only 404 will be returned now because we cannot alter the headers at this time.<br>\n";
+		echo "Debug is on.  Only 404 will be returned now because we cannot alter the headers at this time.<br>\n";
 		echo "\$REQUEST_URI='$REQUEST_URI'<br>";
 #		phpinfo();
 	}

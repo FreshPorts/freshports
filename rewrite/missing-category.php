@@ -66,8 +66,10 @@ function freshports_CategoryDisplay($dbh, $category, $url_parts, $Branch = BRANC
 #
 	GLOBAL $User;
 
-	$Debug = 1;
+	$Debug = 0;
 
+	# try pulling values from the URI
+	#
 	if (IsSet($_SERVER['REQUEST_URI'])) {
 		$url_query = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
 		if ($Debug) {
@@ -85,33 +87,35 @@ function freshports_CategoryDisplay($dbh, $category, $url_parts, $Branch = BRANC
 			echo '</pre>';
 		}
 
-		$PageNumber = $url_args['page'] ?? 1;
-		if (IsSet($url_args['page_size'])) $PageSize   = $url_args['page_size'];
+		# these are the two main things: page number, and page size
+		$PageNumber = $url_args['page']      ?? 1;
+		$PageSize   = $url_args['page_size'] ?? DEFAULT_PAGE_SIZE;
 	}
 
-	if (!IsSet($page) || $page == '') {
-		$page = 1;
+	# if not found on the URI, or odd values, give them default values here.
+	if (!IsSet($PageNumber) || $PageNumber == '') {
+		$PageNumber = 1;
 	}
 
-	if (!IsSet($page_size) || $page_size == '') {
-		$page_size = $User->page_size;
+	if (!IsSet($PageSize) || $PageSize == '') {
+		$PageSize = $User->PageSize;
 	}
 
 	if ($Debug) {
-		echo "\$page      = '$page'<br>\n";
-		echo "\$page_size = '$page_size'<br>\n";
+		echo "\PageNumber = '$PageNumber'<br>\n";
+		echo "\$PageSize  = '$PageSize'<br>\n";
 	}
 
-	$PageNumber = $url_parts['page']      ?? 1;
-	$PageSize   = $url_parts['page_size'] ?? $User->page_size;
-
+	# Not sure why I started oing this
 	SetType($PageNumber, "integer");
 	SetType($PageSize,   "integer");
 
+	# this looks like more sanity testing.
 	if (!IsSet($PageNumber) || !str_is_int("$PageNumber") || $PageNumber < 1) {
 		$PageNumber = 1;
 	}
 
+	# more sanity testing
 	if (!IsSet($PageSize) || !str_is_int("$PageSize") || $PageSize < 1 || $PageSize > MAX_PAGE_SIZE) {
 		$PageSize = DEFAULT_PAGE_SIZE;
 	}
@@ -134,7 +138,7 @@ function freshports_CategoryDisplay($dbh, $category, $url_parts, $Branch = BRANC
 	###
 
 	$Cache = new CacheCategory();
-	$Cache->PageSize = $User->page_size;
+	$Cache->PageSize = $PageSize;
 	$result = $Cache->RetrieveCategory($category->name, $User->id, $PageNumber, $Branch);
 	if (!$result && !$BypassCache && !$RefreshCache) {
 		if ($Debug) echo "found something from the cache<br>\n";

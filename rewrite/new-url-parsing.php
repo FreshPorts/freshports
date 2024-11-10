@@ -62,7 +62,7 @@ function freshports_Parse404URI($url, $db):never {
 	$CategoryID = 0;
 
 	if ($Debug) {
-		echo '<br>Debug is turned on for:<br>'. __FILE__ . '::' . __FUNCTION__ . "<br>Only 404 will be returned now because we cannot alter the headers at this time.<br>\n";
+		echo '<br>Debug is on for:<br>'. __FILE__ . '::' . __FUNCTION__ . "<br>Only 404 will be returned now because we cannot alter the headers at this time.<br>\n";
 #		phpinfo();
 	}
 

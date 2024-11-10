@@ -284,7 +284,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 			parse_str($URLParts['query'], $url_args);
 		}
 		
-		freshports_CategoryDisplayNew($db, $category, $url_args, $Branch);
+		freshports_CategoryDisplay($db, $category, $url_args, $Branch);
 	}
 
 	if ($Debug) echo 'we hit rock bottom in ' . __FUNCTION__ . ' of ' . __FILE__;

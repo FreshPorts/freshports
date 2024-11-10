@@ -201,7 +201,7 @@ function Try_Displaying_Category($db, $path_parts, $url_args, $Branch):void {
 
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-category.php');
 		# We may have to pass in page size / page number from URL
-		freshports_CategoryDisplayNew($db, $Category, $url_args, $Branch);
+		freshports_CategoryDisplay($db, $Category, $url_args, $Branch);
 		exit;
 	}
 }

@@ -43,7 +43,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	if ($Debug) {
 		echo "Debug is turned on.  Only 404 will be returned now because we cannot alter the headers at this time.<br>\n";
 		echo "\$REQUEST_URI='$REQUEST_URI'<br>";
-		phpinfo();
+#		phpinfo();
 	}
 
 	$URLParts = parse_url($_SERVER['REQUEST_URI']);

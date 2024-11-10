@@ -8,8 +8,8 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/cache-category.php');
 
-DEFINE('MAX_PAGE_SIZE',     500);
-DEFINE('DEFAULT_PAGE_SIZE', 100);
+DEFINE('MAX_PAGE_SIZE',     100);
+DEFINE('DEFAULT_PAGE_SIZE', 50);
 
 DEFINE('NEXT_PAGE', 'Next');
 
@@ -88,8 +88,8 @@ function freshports_CategoryDisplay($dbh, $category, $url_parts, $Branch = BRANC
 		}
 
 		# these are the two main things: page number, and page size
-		$PageNumber = $url_args['page']      ?? 1;
-		$PageSize   = $url_args['page_size'] ?? DEFAULT_PAGE_SIZE;
+		if (IsSet($url_args['page']))      $PageNumber = $url_args['page'];
+		if (IsSet($url_args['page_size'])) $PageSize   = $url_args['page_size'];
 	}
 
 	# if not found on the URI, or odd values, give them default values here.
@@ -98,7 +98,7 @@ function freshports_CategoryDisplay($dbh, $category, $url_parts, $Branch = BRANC
 	}
 
 	if (!IsSet($PageSize) || $PageSize == '') {
-		$PageSize = $User->PageSize;
+		$PageSize = $User->page_size;
 	}
 
 	if ($Debug) {
@@ -165,6 +165,14 @@ function freshports_CategoryDisplay($dbh, $category, $url_parts, $Branch = BRANC
 		$port->SetDebug($Debug);
 
 		$numrows = $port->FetchByCategoryInitialise($category->name, $User->id, $PageSize, $PageNumber, $Branch);
+		if ($numrows == 0) {
+			# there is nothing here
+			# Probably, someone is manually changing the page number
+			# stop here, give a 404 - the exit avoids caching empty pages
+			$FreshPortsTitle= $Title;
+			require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing.php');
+			exit;
+		}
 
 		$HTML = freshports_MainTable();
 

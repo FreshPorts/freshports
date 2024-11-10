@@ -15,8 +15,8 @@
 
 	$Debug = 0;
 
-	DEFINE('MAX_PAGE_SIZE',     1000);
-	DEFINE('DEFAULT_PAGE_SIZE', 500);
+	DEFINE('MAX_PAGE_SIZE',     100);
+	DEFINE('DEFAULT_PAGE_SIZE', 100);
 
 	DEFINE('NEXT_PAGE',         'Next');
 

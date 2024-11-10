@@ -171,7 +171,11 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 			$params = array($this->name, $Branch);
 			$sql .= "select CategoryPortCount($1, $2)";
 		}
-		if ($this->Debug) echo "sql = '$sql'<br>";
+		if ($this->Debug) {
+			echo "sql = '$sql'<br>";
+			echo "Name = '$Name'<br>";
+			echo "Branch = '$Branch'<br>";
+		}
 
 		$result = pg_query_params($this->dbh, $sql, $params);
 		if ($result) {

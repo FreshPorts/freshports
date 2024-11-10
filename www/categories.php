@@ -1,54 +1,54 @@
 <?php
-	#
-	# $Id: categories.php,v 1.2 2006-12-17 12:06:08 dan Exp $
-	#
-	# Copyright (c) 1998-2006 DVL Software Limited
-	#
+    #
+    # $Id: categories.php,v 1.2 2006-12-17 12:06:08 dan Exp $
+    #
+    # Copyright (c) 1998-2006 DVL Software Limited
+    #
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user_tasks.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user_tasks.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
+
+    $Commit = new Commit($db);
+    $Commit->DateNewestPort();
+
+    # Categories does not have that field, yet.
+    #	freshports_ConditionalGet($Commit->last_modified);
+
+    $Title = 'Categories';
+    freshports_Start($Title,
+                    $Title,
+                    'FreeBSD, index, applications, ports');
+
+    $Debug = 1;
+
+    DEFINE('VIRTUAL', '<sup>*</sup>');
+    $Primary['t'] = '';
+    $Primary['f'] = VIRTUAL;
+
+    $AllowedToEdit = $User->IsTaskAllowed(FRESHPORTS_TASKS_CATEGORY_VIRTUAL_DESCRIPTION_SET);
+
+    if ($AllowedToEdit) {
+        $ColSpan = 5;
+    } else {
+        $ColSpan = 4;
+    }
 	
-	$Commit = new Commit($db);
-	$Commit->DateNewestPort();
+    if ($User->id) {
+        # obtain a list of the categories on this users watchlists
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/category-listing.php');
 
-# Categories does not have that field, yet.
-#	freshports_ConditionalGet($Commit->last_modified);
-
-	$Title = 'Categories';
-	freshports_Start($Title,
-					$Title,
-					'FreeBSD, index, applications, ports');
-					
-	$Debug = 0;
-
-	DEFINE('VIRTUAL', '<sup>*</sup>'); 
-	$Primary['t'] = '';
-	$Primary['f'] = VIRTUAL;
-
-	$AllowedToEdit = $User->IsTaskAllowed(FRESHPORTS_TASKS_CATEGORY_VIRTUAL_DESCRIPTION_SET);
-
-	if ($AllowedToEdit) {
-		$ColSpan = 5;
-	} else {
-	   	$ColSpan = 4;
-	}
-	
-	if ($User->id) {
-	  # obtain a list of the categories on this users watchlists
-      require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/category-listing.php');
-      
-      $CategoryListing = new Categories($db);
-      $NumRows = $CategoryListing->GetAllCategoriesOnWatchLists($User->id);
-      for ($i = 0; $i < $NumRows; $i++) {
-        $CategoryListing->FetchNth($i);
-        $CategoriesWatched[$CategoryListing->category_id] = $CategoryListing->category_id;
-      }
-	}
+        $CategoryListing = new Categories($db);
+        $NumRows = $CategoryListing->GetAllCategoriesOnWatchLists($User->id);
+        for ($i = 0; $i < $NumRows; $i++) {
+            $CategoryListing->FetchNth($i);
+            $CategoriesWatched[$CategoryListing->category_id] = $CategoryListing->category_id;
+        }
+    }
 
 ?>
 
@@ -85,18 +85,21 @@ You can sort each column by clicking on the header.  e.g. click on <strong>Categ
 $sort = IsSet($_REQUEST['sort']) ? pg_escape_string($db, $_REQUEST['sort']) : '';
 
 switch ($sort) {
-   case 'category':
-   case 'count':
-   case 'description':
-      $sort = $sort;
-      break;
+    case 'category':
+    case 'description':
+        $sort_amended = $sort;
+        break;
 
-   case 'lastupdate':
-      $sort = 'last_update';
-      break;
+    case 'count':
+        $sort_amended = 'count, things,category';
+        break;
 
-   default:
-      $sort = 'category';
+    case 'lastupdate':
+        $sort_amended = 'CS.last_update, category';
+        break;
+
+    default:
+        $sort_amended = 'category';
 }
 
 $sql = "
@@ -108,14 +111,16 @@ $sql = "
          C.element_id           AS element_id,
          to_char(CS.last_update - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') AS lastupdate,
          CS.port_count          AS count
-    FROM categories C JOIN category_stats CS ON (C.id = CS.category_id)";
+    FROM categories C LEFT OUTER JOIN category_stats CS ON (C.id = CS.category_id)";
 
-$sql .=  " ORDER BY $1";
+$sql .=  ' ORDER BY $1';
 
-if ($Debug) echo '<pre>' . $sql, "</pre>\n";
-//echo $sort, "\n";
+if ($Debug) {
+	echo '<pre>' . $sql, "</pre>\n";
+	echo "sort is $sort_amended\n";
+}
 
-$result = pg_query_params($db, $sql, array($sort));
+$result = pg_query_params($db, $sql, array($sort_amended));
 
 $HTML = '<tr>';
 
@@ -151,19 +156,23 @@ if ($sort == "last_update") {
 
 $HTML .= '</tr>';
 
-if (!$result) {
+if ($result === false) {
    echo "<tr><td colspan=\"$ColSpan\"" . pg_last_error($db) . "</td></tr></table></td></td></table>\n";
    exit;
 } else {
 	$NumTopics	   = 0;
 	$NumPorts      = 0;
 	$CategoryCount = 0;
+
 	$NumRows = pg_num_rows($result);
+
     if ($NumRows) {
       for ($i = 0; $i < $NumRows; $i++) {
         $myrow = pg_fetch_array($result, $i);
+
 		$HTML .= '<tr>';
 		$HTML .= '<td>';
+
         if ($User->id) {
           if ($Primary[$myrow["is_primary"]]) {
             $HTML .= freshports_Watch_Icon_Empty();
@@ -177,7 +186,7 @@ if (!$result) {
 		}
 		$HTML .= ' ';
 
-		$HTML .= '<a href="/' . $myrow["category"] . '/">' . $myrow["category"] . '</a>' . $Primary[$myrow["is_primary"]];
+		$HTML .=  $i . ' ' . '<a href="/' . $myrow["category"] . '/">' . $myrow["category"] . '</a>' . $Primary[$myrow["is_primary"]];
 		
 		$HTML .= '</td>';
 		if ($AllowedToEdit) {
@@ -207,7 +216,7 @@ if ($AllowedToEdit) {
 	$HTML .= '<td>&nbsp;</td>';
 }
 
-$HTML .= "<td class=\"numeric-cell summary-cell\">$NumPorts</td><td colspan=\"2\">($CategoryCount categories)</td></tr>";
+$HTML .= "<td class=\"numeric-cell summary-cell\">$NumPorts</td><td colspan=\"2\">($CategoryCount real categories)</td></tr>";
 
 $HTML .= "<tr><td colspan=\"$ColSpan\">Hmmm, I'm not so sure this port count is accurate. Dan Langille 27 April 2003</td></tr>";
 

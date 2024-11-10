@@ -59,36 +59,27 @@ function str_is_int($str) {
 }
 
 
+# XXX this function, and freshports_CategoryDisplay() can both be deleted
+# They were only called from rewrite/functions.php and that call has been changed to freshports_CategoryDisplayNew()
 function freshports_CategoryByID($dbh, $category_id, $PageNumber = 1, $PageSize = DEFAULT_PAGE_SIZE, $Branch = BRANCH_HEAD) {
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
 	$category = new Category($dbh, $Branch);
 	$category->FetchByID($category_id);
 
-# The category class does not condtain 'last_modified' - we'd need to get this from the cached file.
+# The category class does not contain 'last_modified' - we'd need to get this from the cached file.
 #	freshports_ConditionalGet($category->last_modified);
 
 	freshports_CategoryDisplay($dbh, $category, $PageNumber, $PageSize, $Branch);
 }
 
 
-function freshports_CategoryByElementID($dbh, $element_id, $PageNumber = 1, $PageSize = DEFAULT_PAGE_SIZE) {
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
-	$category = new Category($dbh);
-	$category->FetchByElementID($element_id);
+function freshports_CategoryDisplay($dbh, $category, $PageNumber = 1, $PageSize = DEFAULT_PAGE_SIZE, $Branch = BRANCH_HEAD) {
 
-	freshports_ConditionalGet($category->last_modified);
-
-	freshports_CategoryDisplay($dbh, $category, $PageNumber, $PageSize);
-}
-
-
-function freshports_CategoryDisplay($dbh, $category, $PageNumber = 1, $Branch = BRANCH_HEAD) {
-
-#		var_dump($category);
+#	var_dump($category);
 #
 	GLOBAL $User;
 
-	$Debug = 0;
+	$Debug = 1;
 
 	if (IsSet($_SERVER['REQUEST_URI'])) {
 		$url_query = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
@@ -124,6 +115,9 @@ function freshports_CategoryDisplay($dbh, $category, $PageNumber = 1, $Branch = 
 		echo "\$page_size = '$page_size'<br>\n";
 	}
 
+
+
+
 	SetType($PageNumber, "integer");
 	SetType($PageSize,   "integer");
 
@@ -136,6 +130,7 @@ function freshports_CategoryDisplay($dbh, $category, $PageNumber = 1, $Branch = 
 	}
 
 	if ($Debug) {
+
 		echo "\$PageNumber = '$PageNumber'<br>\n";
 		echo "\$PageSize   = '$PageSize'<br>\n";
 	}
@@ -176,6 +171,7 @@ function freshports_CategoryDisplay($dbh, $category, $PageNumber = 1, $Branch = 
 		$PortCount = $category->PortCount($category->name, $Branch);
 
 		$port = new Port($dbh);
+
 
 		$numrows = $port->FetchByCategoryInitialise($category->name, $User->id, $PageSize, $PageNumber, $Branch);
 
@@ -223,9 +219,9 @@ function freshports_CategoryDisplay($dbh, $category, $PageNumber = 1, $Branch = 
 		$HTML .= '</td></tr>';
 
 		if ($Debug) {
-			echo "\$CategoryID = '$CategoryID'<br>\n";;
-			echo "GlobalHideLastChange = $GlobalHideLastChange<br>\n";
 			echo "\$numrows = $numrows<br>\n";
+
+
 		}
 
 		$ShowShortDescription	= "Y";
@@ -317,13 +313,48 @@ function freshports_CategoryDisplay($dbh, $category, $PageNumber = 1, $Branch = 
 	return false;
 }
 
+# at present, this is invoked from rewrite/new-url-parsing.php::Try_Displaying_Category()
 function freshports_CategoryDisplayNew($dbh, $category, $url_parts, $Branch = BRANCH_HEAD) {
 
 #	var_dump($category);
 #
 	GLOBAL $User;
 
-	$Debug = 0;
+	$Debug = 1;
+
+	if (IsSet($_SERVER['REQUEST_URI'])) {
+		$url_query = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
+		if ($Debug) {
+			echo '<pre>url_query is';
+			var_dump($url_query);
+			echo '</pre>';
+		}
+		$url_args = array();
+		if (IsSet($url_query)) {
+			parse_str($url_query, $url_args);
+		}
+		if ($Debug) {
+			echo '<pre>url_args is';
+			var_dump($url_args);
+			echo '</pre>';
+		}
+
+		$PageNumber = $url_args['page'] ?? 1;
+		if (IsSet($url_args['page_size'])) $PageSize   = $url_args['page_size'];
+	}
+
+	if (!IsSet($page) || $page == '') {
+		$page = 1;
+	}
+
+	if (!IsSet($page_size) || $page_size == '') {
+		$page_size = $User->page_size;
+	}
+
+	if ($Debug) {
+		echo "\$page      = '$page'<br>\n";
+		echo "\$page_size = '$page_size'<br>\n";
+	}
 
 	$PageNumber = $url_parts['page']      ?? 1;
 	$PageSize   = $url_parts['page_size'] ?? $User->page_size;

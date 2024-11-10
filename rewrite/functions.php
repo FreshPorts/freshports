@@ -32,7 +32,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 
 	GLOBAL $User;
 
-	$Debug  = 0;
+	$Debug  = 1;
 	$result = false;
 
 	$IsCategory = false;
@@ -274,7 +274,18 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 			syslog(LOG_NOTICE, 'invoking ' . $_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-category.php');
 		}
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-category.php');
-		return freshports_CategoryByID($db, $CategoryID, 1, $User->page_size, $Branch);
+#		return freshports_CategoryByID($db, $CategoryID, 1, $User->page_size, $Branch);
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
+		$category = new Category($db,  $Branch);
+		$category->FetchByID($CategoryID);
+		
+		$url_args = array();
+		if (IsSet($URLParts['query'])) {
+			parse_str($URLParts['query'], $url_args);
+		}
+		
+		freshports_CategoryDisplayNew($db, $category, $url_args, $Branch);
+
 	}
 
 	if ($Debug) echo 'we hit rock bottom in ' . __FUNCTION__ . ' of ' . __FILE__;

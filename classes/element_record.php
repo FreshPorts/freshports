@@ -10,14 +10,12 @@
 class ElementRecord {
 
 	var $dbh;
-
 	var $id;
 	var $name;
 	var $type;
 	var $status;
 	var $iscategory;
 	var $isport;
-
 	var $element_pathname;
 
 	function __construct($dbh) {

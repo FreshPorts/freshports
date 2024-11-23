@@ -948,7 +948,7 @@ now that the Master has been upgraded.
    <tr><td class="textcontent">
    <p>FreshPorts covers the ABIs published at <a href="https://pkg.freebsd.org/index.html">https://pkg.freebsd.org/index.html</a>.</p>
 
-   <p>In general, the Project does not build quarterly branches for whatever branch is CURRENT.</p>
+   <p>In general, the FreeBSD Project does not build quarterly branches for whatever branch is CURRENT.</p>
 
    <p>At the time of writing (2024-08-24), the code to extract those ABIs and the current ABI list was:</p>
    <pre>

@@ -942,13 +942,13 @@ now that the Master has been upgraded.
    </td></tr>
 
 <tr id="abi">
-<?php echo freshports_PageBannerText('Why is this particular ABI not listed on the website??'); ?>
+<?php echo freshports_PageBannerText('Why is a particular ABI not listed at FreshPorts?'); ?>
 </tr>
 
    <tr><td class="textcontent">
-   <p>FreshPorts covers the ABIs published by the project at <a href="https://pkg.freebsd.org/index.html">https://pkg.freebsd.org/index.html</a>.</p>
+   <p>FreshPorts covers the ABIs published at <a href="https://pkg.freebsd.org/index.html">https://pkg.freebsd.org/index.html</a>.</p>
 
-   <p>In general, the project does not build quarterly branches for whatever branch is now CURRENT.</p>
+   <p>In general, the Project does not build quarterly branches for whatever branch is CURRENT.</p>
 
    <p>At the time of writing (2024-08-24), the code to extract those ABIs and the current ABI list was:</p>
    <pre>

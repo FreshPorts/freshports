@@ -102,6 +102,27 @@ switch ($sort) {
         $sort_amended = 'category';
 }
 
+switch ($sort) {
+    case 'category':
+        $sort_amended = "2";
+        break;
+
+    case 'description':
+        $sort_amended = "4";
+        break;
+
+    case 'count':
+        $sort_amended = "8,2" ;
+        break;
+
+    case 'lastupdate':
+        $sort_amended = 'CS.last_update, category';
+        break;
+
+    default:
+        $sort_amended = '2';
+}
+
 $sql = "
   SELECT C.id                   AS category_id,
          C.name                 AS category,
@@ -111,16 +132,15 @@ $sql = "
          C.element_id           AS element_id,
          to_char(CS.last_update - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') AS lastupdate,
          CS.port_count          AS count
-    FROM categories C LEFT OUTER JOIN category_stats CS ON (C.id = CS.category_id)";
-
-$sql .=  ' ORDER BY $1';
+    FROM categories C LEFT OUTER JOIN category_stats CS ON (C.id = CS.category_id) ORDER BY $sort_amended";
 
 if ($Debug) {
 	echo '<pre>' . $sql, "</pre>\n";
 	echo "sort is $sort_amended\n";
 }
 
-$result = pg_query_params($db, $sql, array($sort_amended));
+# I tried to use pg_query_params() but there was a problem in subsituation. It just wasn't taking the paramter at all.
+$result = pg_query($db, $sql);
 
 $HTML = '<tr>';
 

@@ -1054,6 +1054,10 @@ GLOBAL $FreshPortsSlogan;
 GLOBAL $FreshPortsLogoWidth;
 GLOBAL $FreshPortsLogoHeight;
 
+# see /usr/local/etc/freshports/database.php
+GLOBAL $dbname;
+GLOBAL $dbhost;
+
 #echo "$LocalTimeAdjustment<br>";
 
 	$HTML = '<br>
@@ -1069,9 +1073,13 @@ GLOBAL $FreshPortsLogoHeight;
 	$HTML .= '"><img id="fp-logo" src="' . $FreshPortsLogo . '" alt="' . $FreshPortsName . ' -- ' . $FreshPortsSlogan . '" title="' . $FreshPortsName . ' -- ' . $FreshPortsSlogan . '" width="' . $FreshPortsLogoWidth . '" height="' . $FreshPortsLogoHeight . '"></a></span>';
     define('HEAD_FILE', $_SERVER['DOCUMENT_ROOT'] . '/../.git/HEAD');
 
+	# This file will exist only on dev hosts with a checked out version of the code
     if (file_exists(HEAD_FILE)) {
-      # taken from https://stackoverflow.com/questions/7447472/how-could-i-display-the-current-git-branch-name-at-the-top-of-the-page-of-my-de
-      $HTML .= '<span class="branch">The git branch used by this host is <span class="file">' . implode('/', array_slice(explode('/', file_get_contents(HEAD_FILE)), 2)) . '</span></span><br>';
+		# taken from https://stackoverflow.com/questions/7447472/how-could-i-display-the-current-git-branch-name-at-the-top-of-the-page-of-my-de
+		#
+		$HTML .= '<span class="branch">The git branch used by this host is <span class="file">' . implode('/', array_slice(explode('/', file_get_contents(HEAD_FILE)), 2)) . '</span></span><br>';
+		$HTML .= '<span class="branch">The database is   <span class="file">' . $dbname . '</span></span><br>';
+		$HTML .= '<span class="branch">The db server is   <span class="file">' . $dbhost . '</span></span><br>';
     }
     if (defined('SHOW_ANIMATED_BUG') && SHOW_ANIMATED_BUG)
     {

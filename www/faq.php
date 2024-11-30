@@ -89,7 +89,7 @@ down you must read to find something you didn't already know.</P>
 	<h3 id="port">What is a port?</h3>
 	<p>
 	If you install a port, the source will be downloaded, patched if 
-	necessary, compiled and installed. If the port has any default
+	necessary, compiled, and installed. If the port has any default
 	configuration option that is preset by the maintainer, you can choose
 	to vary from each preset. It is because of these compile time options
 	that some people prefer ports over precompiled packages.

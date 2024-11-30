@@ -96,8 +96,8 @@ down you must read to find something you didn't already know.</P>
 	<p>
 	If a port depends upon other ports that are not yet installed: it may
 	be necessary to also compile all of those other ports. The Foundation's
-	blog post mentions <em>poudriere</em>, which can minimize – sometimes
-	negate – the need to compile dependencies.
+	blog post mentions <em>poudriere</em>, which can minimize &#8211; sometimes
+	negate &#8211; the need to compile dependencies.
 
 	<h3 id="package">What is a package?</h3>
 	<p>
@@ -110,7 +110,7 @@ down you must read to find something you didn't already know.</P>
 	simply because it takes time to compile	packages (and more than a day
 	may be required for a single complex port). Also, because the Project
 	must support concurrent releases of each major version of the operating
-	system – and because build hardware and other resources are not
+	system &#8211; and because build hardware and other resources are not
 	infinite: a single version of the OS must build packages for for
 	multiple releases, for as long as the older version will be
 	supported. Packages for 14.2-RELEASE will be built in a 14.1
@@ -907,7 +907,7 @@ now that the Master has been upgraded.
 	Anchors make it easier to link to sections within pages. 
 </p>
 <p>
-	For example, this link – note the <code class="code">#history</code> at its tail – takes you to the commit history for security/acme.sh: 
+	For example, this link &#8211; note the <code class="code">#history</code> at its tail &#8211; takes you to the commit history for security/acme.sh: 
 </p>
 
 <blockquote><a href="/security/acme.sh/#history">security/acme.sh/#history</a></blockquote>

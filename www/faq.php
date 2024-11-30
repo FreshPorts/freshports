@@ -118,8 +118,8 @@ down you must read to find something you didn't already know.</P>
 	reaches end of life</a>, and so on.
 	<p>
 	If you need a package that is not yet available, or not yet compiled by
-	the Project on a required version of the OS, then you can install the
-	port.
+	the Project on a required version of the OS, then you can build from
+	ports.
 </td></tr>
 <tr id="watch-modify">
 <?php echo freshports_PageBannerText("How do I modify my watch list?"); ?>

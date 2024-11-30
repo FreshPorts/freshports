@@ -112,7 +112,7 @@ down you must read to find something you didn't already know.</P>
 	must support concurrent releases of each major version of the operating
 	system – and because build hardware and other resources are not
 	infinite: a single version of the OS must build packages for for
-	multiple releases, for as long as the inferior version will be
+	multiple releases, for as long as the older version will be
 	supported. Packages for 14.2-RELEASE will be built in a 14.1
 	environment until 14.1 <a href="https://www.freebsd.org/security/#sup">
 	reaches end of life</a>, and so on.

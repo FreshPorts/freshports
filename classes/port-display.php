@@ -61,6 +61,8 @@ class port_display {
 	var $ShowWatchListStatus;
 	var $UseFullPathNames;
 
+	const MSG_PROCESSED_DATE = 'last time FreshPorts imported a new release of this repo';
+	const MSG_LAST_CHECKED   = 'last checked by FreshPorts';
 	# taken from https://www.php.net/manual/en/function.strpos.php
 	function strpos_nth(string $string, string $needle, int $occurrence, int $offset = 0) {
 	        if ((0 < $occurrence) && ($length = strlen($needle))) {
@@ -856,15 +858,15 @@ class port_display {
 		}
 
 		if (empty($processed_date)) {
-			$title .= "nil - processed by FreshPorts\n";
+			$title .= 'nil - ' . static::MSG_PROCESSED_DATE . "\n";
 		} else {
-			$title .= $processed_date . " &#8211; processed by FreshPorts\n";
+			$title .= $processed_date . ' &#8211; ' . static::MSG_PROCESSED_DATE. "\n";
 		}
 
 		if (empty($last_checked)) {
-			$title .= "never - last checked by FreshPorts";
+			$title .= 'never - ' . static::MSG_LAST_CHECKED;
 		} else {
-			$title .= $last_checked . " &#8211; last checked by FreshPorts";
+			$title .= $last_checked . ' &#8211; ' . static::MSG_LAST_CHECKED;
 		}
 
 		return $title;

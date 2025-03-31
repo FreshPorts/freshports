@@ -61,6 +61,8 @@ class port_display {
 	var $ShowWatchListStatus;
 	var $UseFullPathNames;
 
+	const MSG_PROCESSED_DATE = 'last time FreshPorts imported a new release of this repo';
+	const MSG_LAST_CHECKED   = 'last checked by FreshPorts';
 	# taken from https://www.php.net/manual/en/function.strpos.php
 	function strpos_nth(string $string, string $needle, int $occurrence, int $offset = 0) {
 	        if ((0 < $occurrence) && ($length = strlen($needle))) {
@@ -856,15 +858,15 @@ class port_display {
 		}
 
 		if (empty($processed_date)) {
-			$title .= "nil - processed by FreshPorts\n";
+			$title .= 'nil - ' . static::MSG_PROCESSED_DATE . "\n";
 		} else {
-			$title .= $processed_date . " &#8211; processed by FreshPorts\n";
+			$title .= $processed_date . ' &#8211; ' . static::MSG_PROCESSED_DATE. "\n";
 		}
 
 		if (empty($last_checked)) {
-			$title .= "never - last checked by FreshPorts";
+			$title .= 'never - ' . static::MSG_LAST_CHECKED;
 		} else {
-			$title .= $last_checked . " &#8211; last checked by FreshPorts";
+			$title .= $last_checked . ' &#8211; ' . static::MSG_LAST_CHECKED;
 		}
 
 		return $title;
@@ -1502,160 +1504,115 @@ class port_display {
 			$numrows = $packages->Fetch($this->port->id);
 
 			if ($numrows > 0) {
-				# if we have multiple packages, we create an enclosing table
-				# At some time, it seemed like knowing we had $MultiplePackageNames... but that var is never used.
-				$MultiplePackageNames = count($packages->packages) > 1;
+				$packages_array = array();
+				foreach ($packages->packages as $package_name => $package) {
 
-				if (1) { # showing new format for packages table.
-					$packages_array = array();
-					foreach ($packages->packages as $package_name => $package) {
+					$archs = $packages->GetListOfArchs($package);
+					$Previous_ABI_Prefix = '';
+					foreach ($package as $package_line) {
+						# convert FreeBSD:13:aarch64 to FreeBSD:13
+						$abi_prefix = substr($package_line['abi'], 0, strrpos($package_line['abi'], ':'));
+						$arch       = substr($package_line['abi'],    strrpos($package_line['abi'], ':') + 1);
 
-						$archs = $packages->GetListOfArchs($package);
-						$Previous_ABI_Prefix = '';
-						foreach ($package as $package_line) {
-							# convert FreeBSD:13:aarch64 to FreeBSD:13
-							$abi_prefix = substr($package_line['abi'], 0, strrpos($package_line['abi'], ':'));
-							$arch       = substr($package_line['abi'],    strrpos($package_line['abi'], ':') + 1);
+						$package_version_kmod      = empty($package_line['package_version_kmod'])      ? '-' : $package_line['package_version_kmod'];
+						$package_version_latest    = empty($package_line['package_version_latest'])    ? '-' : $package_line['package_version_latest'];
+						$package_version_quarterly = empty($package_line['package_version_quarterly']) ? '-' : $package_line['package_version_quarterly'];
 
-							$package_version_latest    = empty($package_line['package_version_latest'])    ? '-' : $package_line['package_version_latest'];
-							$package_version_quarterly = empty($package_line['package_version_quarterly']) ? '-' : $package_line['package_version_quarterly'];
+						# get the version for each package_set
+						$packages_array[$package_name][$abi_prefix . ':kmod']     [$arch]['version'] = $package_version_kmod;
+						$packages_array[$package_name][$abi_prefix . ':latest']   [$arch]['version'] = $package_version_latest;
+						$packages_array[$package_name][$abi_prefix . ':quarterly'][$arch]['version'] = $package_version_quarterly;
 
-							$packages_array[$package_name][$abi_prefix . ':latest']   [$arch]['version'] = $package_version_latest;
-							$packages_array[$package_name][$abi_prefix . ':quarterly'][$arch]['version'] = $package_version_quarterly;
+						# get the title and class for each package_set
+						$packages_array[$package_name][$abi_prefix . ':kmod'][$arch]['title'] = $this->packageToolTipText($package_line['last_checked_kmod'], $package_line['repo_date_latest'], $package_line['processed_date_kmod']);
+						$packages_array[$package_name][$abi_prefix . ':kmod'][$arch]['class'] = 'class="version ' . ($package_version_kmod == '-' ? 'noversion' : '');
 
-							$packages_array[$package_name][$abi_prefix . ':latest'][$arch]['title'] = $this->packageToolTipText($package_line['last_checked_latest'], $package_line['repo_date_latest'], $package_line['processed_date_latest']);
-							$packages_array[$package_name][$abi_prefix . ':latest'][$arch]['class'] = 'class="version ' . ($package_version_latest == '-' ? 'noversion' : '');
+						$packages_array[$package_name][$abi_prefix . ':latest'][$arch]['title'] = $this->packageToolTipText($package_line['last_checked_latest'], $package_line['repo_date_latest'], $package_line['processed_date_latest']);
+						$packages_array[$package_name][$abi_prefix . ':latest'][$arch]['class'] = 'class="version ' . ($package_version_latest == '-' ? 'noversion' : '');
 
-							$packages_array[$package_name][$abi_prefix . ':quarterly'][$arch]['title'] = $this->packageToolTipText($package_line['last_checked_quarterly'], $package_line['repo_date_quarterly'], $package_line['processed_date_quarterly']);
-							$packages_array[$package_name][$abi_prefix . ':quarterly'][$arch]['class'] = 'class="version ' . ($package_version_quarterly == '-' ? 'noversion' : '');
-						}
-
+						$packages_array[$package_name][$abi_prefix . ':quarterly'][$arch]['title'] = $this->packageToolTipText($package_line['last_checked_quarterly'], $package_line['repo_date_quarterly'], $package_line['processed_date_quarterly']);
+						$packages_array[$package_name][$abi_prefix . ':quarterly'][$arch]['class'] = 'class="version ' . ($package_version_quarterly == '-' ? 'noversion' : '');
 					}
 
+				}
 
-					# Now let's convert $packages_array into HTML
 
-					$HTML .= '<dt id="packages" class="h3"><hr><b>Packages</b> (timestamps in pop-ups are UTC):</dt>';
-					$HTML .= '<dd>';
-					$HTML .= '<div class="scrollmenu">';
-					
-					# we try to sort the packages by name, which is not always a regular sort.
-					# e.g. array('py39-Jinja2', 'py27-Jinja2', 'py37-Jinja2', 'py311-Jinja2')
-					# should be sorted as Array( py27-Jinja2, py37-Jinja2, py39-Jinja2, py311-Jinja2)
-					# But that does not apply to all ports.
-					# This only applies to packages with lettternumber- prefixes, such as Python.
+				# Now let's convert $packages_array into HTML
+
+				$HTML .= '<dt id="packages" class="h3"><hr><b>Packages</b> (timestamps in pop-ups are UTC) (kernel module tracking started with FreeBSD 14):</dt>';
+				$HTML .= '<dd>';
+				$HTML .= '<div class="scrollmenu">';
+
+				# we try to sort the packages by name, which is not always a regular sort.
+				# e.g. array('py39-Jinja2', 'py27-Jinja2', 'py37-Jinja2', 'py311-Jinja2')
+				# should be sorted as Array( py27-Jinja2, py37-Jinja2, py39-Jinja2, py311-Jinja2)
+				# But that does not apply to all ports.
+				# This only applies to packages with lettternumber- prefixes, such as Python.
+				#
+
+				$package_names = array_keys($packages_array);
+				if (count($package_names) > 1 && $this->port->UsesPython()) {
+					$package_names = pkg_prefix_sort($package_names);
+				}
+
+				# here, we access the data in package name sorted order
+				# it's easier to sort the names along, then used that to access the data.
+				foreach ($package_names as $key => $package_name) {
+					# get the package data for this package name
+					$package = $packages_array[$package_name];
+					$HTML .= '<table class="packages"><caption>' . $package_name . '</caption><tr><th>ABI</th>';
+
+
+					foreach ($archs as $arch) {
+						$HTML .= '<th>' . $arch . '</th>';
+					}
+					$HTML .= '</tr>';
+
+					# Get the ABI (sort of) for the last row in this table.
+					# It will be something like FreeBSD:15:quarterly
+					# We don't display that row because historically, the quaterly branch is
+					# not build for -CURRENT.
 					#
+					$LastArrayPosition = array_key_last($package);
+					foreach ($package as $ABI => $ABI_q_l) {
+						#
+						# re https://github.com/FreshPorts/freshports/issues/554
+						# Try not to display the quarterly branch for the latest version.
+						#
+						if ($ABI === $LastArrayPosition) {
 
-					$package_names = array_keys($packages_array);
-					if (count($package_names) > 1 && $this->port->UsesPython()) {
-						$package_names = pkg_prefix_sort($package_names);
-					}
+							continue;
+						}
+						$HTML .= '<tr>';
 
-					# here, we access the data in package name sorted order
-					# it's easier to sort the names along, then used that to access the data.
-					foreach ($package_names as $key => $package_name) {
-						# get the package data for this package name
-						$package = $packages_array[$package_name];
-						$HTML .= '<table class="packages"><caption>' . $package_name . '</caption><tr><th>ABI</th>';
-
+						$HTML .= '<td>' . $ABI . '</td>';
 
 						foreach ($archs as $arch) {
-							$HTML .= '<th>' . $arch . '</th>';
+							if (isset($ABI_q_l[$arch]['version'])) {
+								$version = $ABI_q_l[$arch]['version'];
+								$title   = $ABI_q_l[$arch]['title'];
+							} else {
+								$version = 'n/a';
+								$title = 'n/a';
+							}
+							$HTML .= '<td tabindex="-1" class="version ' . ($version == '-' ? 'noversion' : '') . '" data-title="' . $title . '">';
+							$HTML .= $version;
+							$HTML .= '</td>';
 						}
 						$HTML .= '</tr>';
+					}
+					$HTML .= '</table>';
 
-						# Get the ABI (sort of) for the last row in this table.
-						# It will be something like FreeBSD:15:quarterly
-						# We don't display that row because historically, the quaterly branch is
-						# not build for -CURRENT.
-						#
-						$LastArrayPosition = array_key_last($package);
-						foreach ($package as $ABI => $ABI_q_l) {
-							#
-							# re https://github.com/FreshPorts/freshports/issues/554
-							# Try not to display the quarterly branch for the latest version.
-							#
-							if ($ABI === $LastArrayPosition) {
-							
-								continue;
-							}
-							$HTML .= '<tr>';
-
-							$HTML .= '<td>' . $ABI . '</td>';
-
-							foreach ($archs as $arch) {
-								if (isset($ABI_q_l[$arch]['version'])) {
-									$version = $ABI_q_l[$arch]['version'];
-									$title   = $ABI_q_l[$arch]['title'];
-								} else {
-									$version = 'n/a';
-									$title = 'n/a';
-								}
-								$HTML .= '<td tabindex="-1" class="version ' . ($version == '-' ? 'noversion' : '') . '" data-title="' . $title . '">';
-								$HTML .= $version;
-								$HTML .= '</td>';
-							}
-							$HTML .= '</tr>';
-						}
-						$HTML .= '</table>';
-
-						if (count($packages_array) > 1) {
-							$HTML .= '&nbsp';
-							if (count($packages_array) % 2 == 0) {
-								$HTML .= '<br><br>';
-							}
+					if (count($packages_array) > 1) {
+						$HTML .= '&nbsp';
+						if (count($packages_array) % 2 == 0) {
+							$HTML .= '<br><br>';
 						}
 					}
-					$HTML .= '</div>';
-					$HTML .= '</dd>';
-
-				} else {
-					# use the old version
-					$HTML .= '<dt id="packages" class="h3"><hr><b>Packages</b> (timestamps in pop-ups are UTC):</dt>';
-					$HTML .= '<dd>';
-					$HTML .= '<div class="scrollmenu">';
-
-					# if we have multiple packages, we create an enclosing table
-					$MultiplePackageNames = count($packages->packages) > 1;
-
-
-					foreach ($packages->packages as $package_name => $package) {
-
-						$HTML .= '<table class="packages"><caption>' . $package_name . '</caption><tr><th>ABI</th><th>latest</th><th>quarterly</th></tr>';
-						foreach ($package as $package_line) {
-
-							if ($Debug) {
-								echo '<pre>';
-								var_export($package_line);
-								echo '</pre>';
-							}
-
-							# All values of active ABI are returned (e.g. FreeBSD:12:amd64
-							# package_version will be empty if the port is not build for that ABI
-
-							$package_version_latest = empty($package_line['package_version_latest']) ? '-' : $package_line['package_version_latest'];
-							$package_version_quarterly = empty($package_line['package_version_quarterly']) ? '-' : $package_line['package_version_quarterly'];
-
-							$HTML .= '<tr><td>' . $package_line['abi'] . '</td>';
-
-							# If showing a - for the version, center align it
-							$title = $this->packageToolTipText($package_line['last_checked_latest'], $package_line['repo_date_latest'], $package_line['processed_date_latest']);
-							$HTML .= '<td tabindex="-1" class="version ' . ($package_version_latest == '-' ? 'noversion' : '') . '" data-title="' . $title . '">';
-							$HTML .= $package_version_latest;
-							$HTML .= '</td>';
-
-							$title = $this->packageToolTipText($package_line['last_checked_quarterly'], $package_line['repo_date_quarterly'], $package_line['processed_date_quarterly']);
-							$HTML .= '<td tabindex="-1" class="version ' . ($package_version_quarterly == '-' ? 'noversion' : '') . '" data-title="' . $title . '">';
-							$HTML .= $package_version_quarterly;
-							$HTML .= '</td>';
-							$HTML .= '</tr>';
-						}
-						$HTML .= '</table>&nbsp;';
-
-					}
-					$HTML .= '</div>';
-					$HTML .= '</dd>';
 				}
+				$HTML .= '</div>';
+				$HTML .= '</dd>';
+
 			} else {
 				$HTML .= '<dt id="packages"><hr><b>No package information for this port in our database</b></dt>';
 				$HTML .= '<dd>Sometimes this happens. Not all ports have packages.';

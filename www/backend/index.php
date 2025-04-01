@@ -33,9 +33,9 @@
 <tr><td class="content">
 <h1>FreshPorts News Feeds</h1>
 
-<p>
-We have a number of newsfeeds for your consumption:
+<h2>Various RSS formats</h2>
 
+        <p>See the next section for optional parameters for these URLs.</p>
 <?php
 
 #echo phpinfo();
@@ -61,6 +61,43 @@ $Hostname = $_SERVER['HTTP_HOST'];
 
 <p>
 The above feeds are created using <a href="https://github.com/flack/UniversalFeedCreator">UniversalFeedCreator</a>.
+
+
+<h2>Optional parameters for the above formats</h2>
+
+<p>Each of those formats have optional parameters:</p>
+<ul>
+    <li><b>flavor=new</b> : show only new ports (ignores <b>branch</b>).</li>
+    <li><b>flavor=broken</b> : show only new ports (ignores <b>branch</b>).</li>
+    <li><b>flavor=vuln</b> : show only vuln ports (branches should work, let me know if they do not).</li>
+    <li><b>branch=2018Q3</b> : show only commits on that branch. If not specified, defaults to <b>head</b>.
+</ul>
+<p>
+    Sample URLs include:
+</p>
+<?php
+    $Protocol = isset($_SERVER['HTTPS']) ? 'https' : 'http';
+    $ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['HTTP_HOST']);
+	$URL  = "$Protocol://$ServerName/backend/";
+    $HREF = "<a href=\"$URL\">$URL</a>";
+
+    echo '
+<ol>
+    <li>' . $URL . 'html.php?branch=2018Q4</li>
+    <li>' . $URL . 'html.php?branch=quarterly</li>
+    <li>' . $URL . 'html.php?flavor=broken</li>
+    <li>' . $URL . 'html.php?flavor=new</li>';
+?>
+</ol>
+
+<h2>Other feeds</h2>
+<ol>
+    <li><p>A Personal News feed for each of your watch lists. Look for the link under
+            the <code>Watch Lists</code> box after you have logged in.</li>
+
+    <li><p>The blog for this website, <a href="https://news.freshports.org/">FreshPorts News</a>.
+</ol>
+
 </table>
 </TD>
   <td class="sidebar">

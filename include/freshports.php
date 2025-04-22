@@ -2811,6 +2811,14 @@ function pkg_prefix_sort($arr) {
         }
 
         $runtimeBits = preg_split('/(?<=\D)(?=\d)|(?<=\d)(?=\D)/', $halves[0], PREG_SPLIT_DELIM_CAPTURE);
+        if (count($runtimeBits) < 2) {
+          # this is something odd, like rubygem-passenger
+          # just get out of here.
+          return $arr;
+        }
+        
+        
+        echo '$runtimeBits', var_dump($runtimeBits);
 
         $splits[] = array('prefix' => $runtimeBits[0], 'runtime' => $runtimeBits[1], 'separator' => '-', 'lib' => $halves[1]);
     }

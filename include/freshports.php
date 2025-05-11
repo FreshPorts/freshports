@@ -2817,9 +2817,6 @@ function pkg_prefix_sort($arr) {
           return $arr;
         }
         
-        
-        echo '$runtimeBits', var_dump($runtimeBits);
-
         $splits[] = array('prefix' => $runtimeBits[0], 'runtime' => $runtimeBits[1], 'separator' => '-', 'lib' => $halves[1]);
     }
     

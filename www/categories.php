@@ -24,7 +24,7 @@
                     $Title,
                     'FreeBSD, index, applications, ports');
 
-    $Debug = 1;
+    $Debug = 0;
 
     DEFINE('VIRTUAL', '<sup>*</sup>');
     $Primary['t'] = '';

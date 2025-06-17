@@ -2003,17 +2003,17 @@ class port_display {
 			for ( $i = 0; $i < $NumRows; $i++ ) {
 				$ConfigurePlist->FetchNth($i);
 				# my thanks to https://regex101.com/r/sqYMyd/1
-				# For man/man1/bcwipe.1.gz, $matches will contain:
+				# For share/man/man1/bcwipe.1.gz, $matches will contain:
 				# Array
 				# (
-				#    [0] => man/man1/bcwipe.1.gz
-				#    [1] => man/man
+				#    [0] => shareman/man1/bcwipe.1.gz
+				#    [1] => share/man/man
 				#    [2] => 1
 				#    [3] => bcwipe
 				#    [4] => .1.gz
 				# )
 
-				if (preg_match('|^(man/man)(\d)/(\S+)(\.\d\.gz)$|', $ConfigurePlist->installed_file, $matches)) {
+				if (preg_match('|^(share/man/man)(\d)/(\S+)(\.\d\.gz)$|', $ConfigurePlist->installed_file, $matches)) {
 					# we have a man page
 					$ManPages[] = '<li class="man"><a class="man" href="' . 
 						'https://man.freebsd.org/cgi/man.cgi?query=' . $matches[3] . '&amp;sektion=' . $matches[2] . '&amp;manpath=freebsd-ports">' .

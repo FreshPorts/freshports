@@ -528,7 +528,7 @@ dt.required, p.required, dt.description, dt.www
 }
 
 pre.description {
-    overflow-x: scroll;
+/*    overflow-x: scroll; */
     max-width: 600px;
 /*    white-space: nowrap;*/
 }

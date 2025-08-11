@@ -1,4 +1,4 @@
-k68<?php
+<?php
 	#
 	# $Id: vuxml_packages.php,v 1.2 2006-12-17 11:37:21 dan Exp $
 	#

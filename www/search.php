@@ -1118,7 +1118,7 @@ JOIN element_pathname EP on E.id = EP.element_id
 		<OPTION VALUE="soundex" <?php if ($method == "soundex") echo 'SELECTED' ?>>sounds like
 	</SELECT>
 
-	<INPUT NAME="query" size="40"  VALUE="<?php echo htmlentities($query)?>">
+	<INPUT NAME="query" size="40" AUTOCORRECT="off" AUTOCAPITALIZE="none" SPELLCHECK="false" VALUE="<?php echo htmlentities($query)?>">
 
 <?php
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/page_options.php');

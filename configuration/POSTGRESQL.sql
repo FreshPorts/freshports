@@ -209,8 +209,6 @@ grant update                         on watch_notice_log_id_seq        to group 
 grant ALL on ports_check           to group commits;
 grant update on ports_check_id_seq to group commits;
 
-grant select, insert, delete         on daily_refreshes                to group commits;
-
 grant select                         on daily_stats                    to group commits;
 grant insert                         on daily_stats_data               to group commits;
 grant update                         on daily_stats_data_seq           to group commits;

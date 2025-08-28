@@ -119,6 +119,8 @@ class Port {
 	// version on current quarterly branch. see https://github.com/FreshPorts/freshports/issues/115
 	var $quarterly_revision;
 
+    var $use_rc_subr;
+
 	var $Debug = 0;
 	
 	function __construct($dbh) {
@@ -211,14 +213,15 @@ class Port {
 		//
 		$this->category_looking_at  = isset($myrow["category_looking_at"]) ? $myrow["category_looking_at"] : null;
 
-		$this->repository           = $myrow['repository']       ?? null;
-		$this->repo_hostname        = $myrow['repo_hostname']    ?? null;
+		$this->repository           = $myrow['repository']         ?? null;
+		$this->repo_hostname        = $myrow['repo_hostname']      ?? null;
 #		$this->git_hostname         = '';
-		$this->path_to_repo         = $myrow['path_to_repo']     ?? null;
-		$this->element_pathname     = $myrow['element_pathname'] ?? null;
-		$this->quarterly_revision   = $myrow['quarterly_revision'] ?? null;
+		$this->path_to_repo         = $myrow['path_to_repo']       ?? null;
+		$this->element_pathname     = $myrow['element_pathname']   ?? null;
+        $this->quarterly_revision   = $myrow['quarterly_revision'] ?? null;
+        $this->use_rc_subr          = $myrow['use_rc_subr']        ?? null;
 
-		$this->last_commit_date     = isset($myrow['last_commit_date']) ? $myrow['last_commit_date'] : null;
+        $this->last_commit_date     = isset($myrow['last_commit_date']) ? $myrow['last_commit_date'] : null;
 
 		$this->ConflictMatches();
 	}
@@ -313,7 +316,8 @@ class Port {
        R.repo_hostname,
        R.path_to_repo,
        element_pathname(ports.element_id) as element_pathname,
-       PortVersionOnQuarterlyBranch(ports.id, categories.name || '/' || element.name) AS quarterly_revision  ";
+       PortVersionOnQuarterlyBranch(ports.id, categories.name || '/' || element.name) AS quarterly_revision, 
+       use_rc_subr ";
 
 		if ($UserID) {
 			$sql .= ',
@@ -442,7 +446,8 @@ class Port {
 		               R.repo_hostname,
 		               R.path_to_repo,
 		               element_pathname(ports.element_id) as element_pathname,
-		               PortVersionOnQuarterlyBranch(ports.id, categories.name || '/' || element.name) AS quarterly_revision ";
+		               PortVersionOnQuarterlyBranch(ports.id, categories.name || '/' || element.name) AS quarterly_revision, 
+                       use_rc_subr ";
 
 		if ($UserID) {
 			$sql .= ', 
@@ -580,7 +585,8 @@ ON TEMP.wle_element_id = ports.element_id';
 		               R.repo_hostname,
 		               R.path_to_repo,
 		               element_pathname(ports.element_id) as element_pathname,
-		               PortVersionOnQuarterlyBranch(ports.id, categories.name || '/' || element.name) AS quarterly_revision ";
+		               PortVersionOnQuarterlyBranch(ports.id, categories.name || '/' || element.name) AS quarterly_revision, 
+                       use_rc_subr ";
 
 		if ($UserID) {
 			$sql .= ', 
@@ -752,7 +758,8 @@ SELECT P.*, element.name    as port
         NULL AS repository,
         NULL AS repo_hostname,
         NULL AS onwatchlist,
-        PortVersionOnQuarterlyBranch(ports.id, categories.name || '/' || element.name) AS quarterly_revision
+        PortVersionOnQuarterlyBranch(ports.id, categories.name || '/' || element.name) AS quarterly_revision, 
+        use_rc_subr
 
    FROM ports_vulnerable right outer join ports on (ports_vulnerable.port_id = ports.id),
         categories, ports_categories, categories PRIMARY_CATEGORY, element

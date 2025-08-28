@@ -243,6 +243,19 @@ class port_display {
 		return $HTML;
 	}
 
+    function html_use_rc_subr($use_rc_subr) {
+        $HTML = '';
+
+        $HTML .= "<ul>\n";
+        $data = explode(':', $use_rc_subr);
+        foreach($data as $item) {
+            $HTML .= '<li class="use_rc_subr">' . $item . "</li>\n";
+        }
+        $HTML .= "</ul>\n";
+
+        return $HTML;
+    }
+
 	function SetPort($port, $Branch = BRANCH_HEAD) {
 	  //
 	  // We could derive branch from element_pathname(port->element_id) but let's try passing in branch explicitly.
@@ -1305,9 +1318,9 @@ class port_display {
 			$HTML .= '</dt>';
 		}
 
-		# Grab the data used for both man pages and pkg-plist
-		$ConfigurePlist = new PortConfigurePlist( $this->db );
-		$NumRows = $ConfigurePlist->FetchInitialise( $this->port->id );
+        # Grab the data used for both man pages and pkg-plist
+        $ConfigurePlist = new PortConfigurePlist( $this->db );
+        $NumRows = $ConfigurePlist->FetchInitialise( $this->port->id );
 		
 		if ($this->ShowManPageLinks || $this->ShowEverything) {
 			$HTML .= $this->ShowManPageLinks($ConfigurePlist, $NumRows);
@@ -1317,7 +1330,15 @@ class port_display {
 			$HTML .= $this->ShowConfigurePlist($ConfigurePlist, $NumRows);
 		}
 
-		if ($this->ShowEverything || $this->ShowBasicInfo) {
+        # output use_rc_subr, if provided.
+        #
+        if ($this->ShowEverything|| $this->ShowBasicInfo) {
+            $HTML .= '<dt><b>USE_RC_SUBR (Service Scripts)</b></dt><dd>';
+            $HTML .= $this->html_use_rc_subr($this->port->use_rc_subr ? $this->port->use_rc_subr : 'no SUBR information found for this port');
+            $HTML .= '</dd>';
+        }
+
+        if ($this->ShowEverything || $this->ShowBasicInfo) {
 			// pkg_plist_library_matches is a JSON array
 			if (!empty($port->pkg_plist_library_matches)) {
 				$lib_depends = json_decode($port->pkg_plist_library_matches, true);

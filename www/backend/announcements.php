@@ -29,10 +29,10 @@ if (!$User->IsTaskAllowed(FRESHPORTS_TASKS_ANNOUNCEMENTS_MAINTAIN)) {
 if (IsSet($_REQUEST['add'])) {
 	$Announcement = new Announcement($db);
 
-	$Announcement->TextSet     (pg_escape_string($db, $_REQUEST['announcement']));
-	$Announcement->TextPlainSet(pg_escape_string($db, $_REQUEST['announcement_plain']));
-	$Announcement->StartDateSet(pg_escape_string($db, $_REQUEST['start_date']));
-	$Announcement->EndDateSet  (pg_escape_string($db, $_REQUEST['end_date']));
+	$Announcement->TextSet     ($_REQUEST['announcement']);
+	$Announcement->TextPlainSet($_REQUEST['announcement_plain']);
+	$Announcement->StartDateSet($_REQUEST['start_date']);
+	$Announcement->EndDateSet  ($_REQUEST['end_date']);
 
 	$Announcement->Insert();
 	Unset($Announcement);
@@ -41,11 +41,11 @@ if (IsSet($_REQUEST['add'])) {
 if (IsSet($_REQUEST['update'])) {
 	$Announcement = new Announcement($db);
 
-	$Announcement->TextSet     (pg_escape_string($db, $_REQUEST['announcement']));
-	$Announcement->TextPlainSet(pg_escape_string($db, $_REQUEST['announcement_plain']));
-	$Announcement->StartDateSet(pg_escape_string($db, $_REQUEST['start_date']));
-	$Announcement->EndDateSet  (pg_escape_string($db, $_REQUEST['end_date']));
-	$Announcement->IDSet       (pg_escape_string($db, intval($_REQUEST['id'])));
+	$Announcement->TextSet     ($_REQUEST['announcement']);
+	$Announcement->TextPlainSet($_REQUEST['announcement_plain']);
+	$Announcement->StartDateSet($_REQUEST['start_date']);
+	$Announcement->EndDateSet  ($_REQUEST['end_date']);
+	$Announcement->IDSet       (intval($_REQUEST['id']));
 
 	$Announcement->Update();
 	Unset($Announcement);

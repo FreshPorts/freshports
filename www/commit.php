@@ -11,10 +11,10 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/cache-commit.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
-	if (!$User->id) {
-	  header("HTTP/1.1 422 Unprocessable Content");
-	  die('something is wrong');
-	}
+        if (!$User->id) {
+          header("HTTP/1.1 422 Unprocessable Content");
+          die('something is wrong - you probably need to be <a href="/login.php">logged in</a>');
+        }
 
 	checkLoadBeforeProceeding();
 

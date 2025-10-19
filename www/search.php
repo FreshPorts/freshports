@@ -1284,9 +1284,9 @@ Special searches:
 		          $NumPortsFound = 'Number of commits: ' . $NumberOfCommits;
 		          if ($NumFound > $PageSize) {
 		            $NumPortsFound .= " (showing only $NumOnThisPage on this page)";
-			      }
+			  }
 			  
-			      if ($Debug) echo "NumPortsFound = '$NumPortsFound'<br>";
+			  if ($Debug) echo "NumPortsFound = '$NumPortsFound'<br>";
                   break;
 
                 default:
@@ -1294,14 +1294,16 @@ Special searches:
                        $MoreToShow = 1;
                     } else {
                        $MoreToShow = 0;
-    		        }
+    		    }
 
+		    $offset = $Pager->getOffsetByPageId();
+		    $NumOnThisPage = $offset[1] - $offset[0] + 1;
                     $NumPortsFound = 'Number of ports: ' . ($NumFound ?? 0);
                     if ($NumFound > $PageSize && $output_format !== OUTPUT_FORMAT_PLAIN_TEXT) {
                       $NumPortsFound .= " (showing only $NumOnThisPage on this page)";
                     }
                     break;
-		      } /* switch */
+		} /* switch */
 
                 if ($Debug) echo 'here we are2<br>';
                 switch ($stype) {

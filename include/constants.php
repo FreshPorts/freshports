@@ -232,13 +232,17 @@ const SEARCH_SELECT_FIELD = "
 
 # jsonb_agg() might also be useful instead of array_agg()
 #
-const SQL_WITH_PACKAGES = '
+# needs a trailing space
+const SQL_WITH_PACKAGES_BEFORE_PKG_NAME = '
 with packages as
 (with package_names as
 (select distinct port_id, package_name
    from packages
   where package_set = \'latest\'
-    and package_name ilike $1
+    and package_name ';
+
+# needs a trailing space
+const SQL_WITH_PACKAGES_AFTER_PKG_NAME = '
  )
  select distinct port_id, array_agg(package_name) as package_names from package_names
  group by port_id

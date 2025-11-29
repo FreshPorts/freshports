@@ -420,72 +420,72 @@
 		  $sqlUserSuppliedPortsList = Category_Ports_To_In_Clause($db, $query);
 		  if ($Debug) echo "sqlUserSuppliedPortsList is '$sqlUserSuppliedPortsList'\n";
 		} else {
-                  if ($stype != SEARCH_FIELD_PACKAGE) {
-		  switch ($method) {
-			case 'prefix':
-				$WildCardMatch = "$query%";
-				if ($casesensitivity == 'casesensitive') {
-					$Like = 'LIKE';
-				} else {
-					$Like = 'ILIKE';
-				}
-				$sqlUserSpecifiedCondition = WildCardQuery($db, $stype, $Like, $WildCardMatch);
-				break;
+          if ($stype != SEARCH_FIELD_PACKAGE) {
+              switch ($method) {
+                case 'prefix':
+                    $WildCardMatch = "$query%";
+                    if ($casesensitivity == 'casesensitive') {
+                        $Like = 'LIKE';
+                    } else {
+                        $Like = 'ILIKE';
+                    }
+                    $sqlUserSpecifiedCondition = WildCardQuery($db, $stype, $Like, $WildCardMatch);
+                    break;
 
-			case 'match':
-				$WildCardMatch = "%$query%";
-				if ($casesensitivity == 'casesensitive') {
-					$Like = 'LIKE';
-				} else {
-					$Like = 'ILIKE';
-				}
-				if ($Debug) echo 'invoking WildCardQuery for match<br>';
-				$sqlUserSpecifiedCondition = WildCardQuery($db, $stype, $Like, $WildCardMatch);
-				break;
+                case 'match':
+                    $WildCardMatch = "%$query%";
+                    if ($casesensitivity == 'casesensitive') {
+                        $Like = 'LIKE';
+                    } else {
+                        $Like = 'ILIKE';
+                    }
+                    if ($Debug) echo 'invoking WildCardQuery for match<br>';
+                    $sqlUserSpecifiedCondition = WildCardQuery($db, $stype, $Like, $WildCardMatch);
+                    break;
 
-			case 'suffix':
-				$WildCardMatch = "%$query";
-				if ($casesensitivity == 'casesensitive') {
-					$Like = 'LIKE';
-				} else {
-					$Like = 'ILIKE';
-				}
-				$sqlUserSpecifiedCondition = WildCardQuery($db, $stype, $Like, $WildCardMatch);
-				break;
+                case 'suffix':
+                    $WildCardMatch = "%$query";
+                    if ($casesensitivity == 'casesensitive') {
+                        $Like = 'LIKE';
+                    } else {
+                        $Like = 'ILIKE';
+                    }
+                    $sqlUserSpecifiedCondition = WildCardQuery($db, $stype, $Like, $WildCardMatch);
+                    break;
 
-			default:
-				case 'exact':
-					switch ($stype) {
-						case SEARCH_FIELD_DEPENDS_ALL:
-							if ($casesensitivity == 'casesensitive') {
-								$sqlUserSpecifiedCondition = "\n     (P.depends_build = '" . pg_escape_string($db, $query) . "' OR P.depends_lib = '" . pg_escape_string($db, $query) . "' OR P.depends_run = '" . pg_escape_string($db, $query) . "')";
-							} else {
-								$sqlUserSpecifiedCondition = "\n     (lower(P.depends_build) = lower('" . pg_escape_string($db, $query) . "') OR lower(P.depends_lib) = lower('" . pg_escape_string($db, $query) . "') OR lower(P.depends_run) = lower('" . pg_escape_string($db, $query) . "'))";
-							}
-							break;
+                default:
+                    case 'exact':
+                        switch ($stype) {
+                            case SEARCH_FIELD_DEPENDS_ALL:
+                                if ($casesensitivity == 'casesensitive') {
+                                    $sqlUserSpecifiedCondition = "\n     (P.depends_build = '" . pg_escape_string($db, $query) . "' OR P.depends_lib = '" . pg_escape_string($db, $query) . "' OR P.depends_run = '" . pg_escape_string($db, $query) . "')";
+                                } else {
+                                    $sqlUserSpecifiedCondition = "\n     (lower(P.depends_build) = lower('" . pg_escape_string($db, $query) . "') OR lower(P.depends_lib) = lower('" . pg_escape_string($db, $query) . "') OR lower(P.depends_run) = lower('" . pg_escape_string($db, $query) . "'))";
+                                }
+                                break;
 
-						default:
-                                                        $sqlSetAll = true;
-							$FieldName = $SearchTypeToFieldMap[$stype] ?? null;
-							if (empty($FieldName)) {
-							   die('you are probably doing this wrong');
-							}
-							if ($casesensitivity == 'casesensitive') {
-								$sqlUserSpecifiedCondition = "     $FieldName = '" . pg_escape_string($db, $query) . "'";
-							} else {
-								$sqlUserSpecifiedCondition = "     lower($FieldName) = lower('" . pg_escape_string($db, $query) . "')";
-							}
-							break;
-					}
-					break;
+                            default:
+                                                            $sqlSetAll = true;
+                                $FieldName = $SearchTypeToFieldMap[$stype] ?? null;
+                                if (empty($FieldName)) {
+                                   die('you are probably doing this wrong');
+                                }
+                                if ($casesensitivity == 'casesensitive') {
+                                    $sqlUserSpecifiedCondition = "     $FieldName = '" . pg_escape_string($db, $query) . "'";
+                                } else {
+                                    $sqlUserSpecifiedCondition = "     lower($FieldName) = lower('" . pg_escape_string($db, $query) . "')";
+                                }
+                                break;
+                        }
+                        break;
 
-				case 'soundex':
-				    $sqlSetAll = true;
-					$FieldName = $SearchTypeToFieldMap[$stype];
-					$sqlUserSpecifiedCondition = "\n     levenshtein($FieldName, '" . pg_escape_string($db, $query) . "') < " . VEVENSHTEIN_MATCH;
-					$sqlSoundsLikeOrderBy = "levenshtein($FieldName, '" . pg_escape_string($db, $query) . "')";
-					break;
-		  }
+                    case 'soundex':
+                        $sqlSetAll = true;
+                        $FieldName = $SearchTypeToFieldMap[$stype];
+                        $sqlUserSpecifiedCondition = "\n     levenshtein($FieldName, '" . pg_escape_string($db, $query) . "') < " . VEVENSHTEIN_MATCH;
+                        $sqlSoundsLikeOrderBy = "levenshtein($FieldName, '" . pg_escape_string($db, $query) . "')";
+                        break;
+              }
 		  }  # $stype != SEARCH_FIELD_PACKAGE
 		} # not OUTPUT_FORMAT_DEPENDS
 
@@ -884,17 +884,45 @@
                         $sqlFrom = $sqlFromBase;
 
                         if ($stype == SEARCH_FIELD_PACKAGE) {
-                                $query_params[] = '%' . $query . '%';
-                                # see https://github.com/FreshPorts/freshports/issues/481#issuecomment-1793451539
-                                $sqlSelectCount = SQL_WITH_PACKAGES . $sqlSelectCount;
+                            # packages is different because it uses a subquery.
+                            if ($casesensitivity == 'casesensitive') {
+                                # needs a trailing space
+                                $pkg_name_condition = 'LIKE ';
+                            } else {
+                                # needs a trailing space
+                                $pkg_name_condition = 'ILIKE ';
+                            }
+                            switch ($method) {
+                                case 'prefix':
+                                    $query_param_pkg_name = "$query%";
+                                    break;
 
-                                 # join on the new WITH above
-                                 $sqlFrom = " packages P2 join ports P ON p2.port_id = P.id\n" . $sqlFrom;
+                                case 'match':
+                                    $query_param_pkg_name = "%$query%";
+                                    break;
 
-                                 $sqlSelectFields = SQL_WITH_PACKAGES . $sqlSelectFields;
+                                case 'suffix':
+                                    $query_param_pkg_name = "%$query";
+                                    break;
 
-                                 # we are searching by package, a port can have multiple package names; bring them all back.
-                                 $sqlExtraFields .= ",\n package_names";
+                                case 'exact':
+                                default:
+                                    $query_param_pkg_name = "$query";
+                                    # needs a trailing space
+                                    $pkg_name_condition   = "= ";
+                            }
+
+                            $query_params[] = $query_param_pkg_name;
+                            # see https://github.com/FreshPorts/freshports/issues/481#issuecomment-1793451539
+                            $sqlSelectCount = SQL_WITH_PACKAGES_BEFORE_PKG_NAME . $pkg_name_condition . '$1' . SQL_WITH_PACKAGES_AFTER_PKG_NAME . $sqlSelectCount;
+
+                            # join on the new WITH above
+                            $sqlFrom = " packages P2 join ports P ON p2.port_id = P.id\n" . $sqlFrom;
+
+                            $sqlSelectFields = SQL_WITH_PACKAGES_BEFORE_PKG_NAME . $pkg_name_condition . '$1' . SQL_WITH_PACKAGES_AFTER_PKG_NAME . $sqlSelectFields;
+
+                            # we are searching by package, a port can have multiple package names; bring them all back.
+                            $sqlExtraFields .= ",\n package_names";
 
                         } else {
                                  # need to specify the ports table here
@@ -929,7 +957,7 @@ JOIN element_pathname EP on E.id = EP.element_id
 			if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<br>";
 
 			#
-			# construct the query to detemine the number of rows.
+			# construct the query to determine the number of rows.
 			#
 
 			$sql = $sqlSelectCount . ' FROM ' . $sqlFrom .  $sqlWhere;
@@ -939,12 +967,12 @@ JOIN element_pathname EP on E.id = EP.element_id
                         }
 
 			if ($Debug) {
-                                echo __FILE__ . '::' . __LINE__ . ' says:<br>';
+				echo __FILE__ . '::' . __LINE__ . ' says:<br>';
 				echo "<pre>$sql</pre>\n";
 			}
 
 			# this may be interesting to figure out params.
-			$result  = pg_query_params($db, $sql, $query_params);
+			$result  = pg_query_params($db,"-- search.php line " . __LINE__ . "\n" . $sql, $query_params);
 			if (!$result) {
 			  syslog(LOG_NOTICE, pg_last_error($db) . ': ' . $sql);
 			  die('something went terribly wrong.  Sorry.');
@@ -956,7 +984,7 @@ JOIN element_pathname EP on E.id = EP.element_id
 			$NumberOfCommits = $NumFound;
 
 			if ($Debug) {
-				echo "\$NumFound = '$NumFound'<br>";
+				echo "\$NumFound = '$NumFound' on line " . __LINE__ . "<br>";
 			}
 
 			$NumFetches = 0;
@@ -1222,7 +1250,6 @@ if (file_exists(CATEGORIES_CACHE_LIST)) {
 <li><small>When searching  by 'Under a pathname', your path must start with something like /ports/, /doc/, or /src/. All
       commits under that point will be returned. The selected match type is ignored and defaults to 'Starts with'.</small></li>
 <li><small>Searching for 'sounds like' is only valid for Author Email, Author Name, Committer Email, Committer Name, Maintainer, Package Name, and Port Name - but I'm not sure it is indexed properly. Ask Dan about that.</small></li>
-<li><small>Searching for Package is always 'containing' and case sensitive - if you figure we need something better, please open an issue - the current implementation was a first draft of searching package flavor names.</small></li>
 </ul>
 
 <?php

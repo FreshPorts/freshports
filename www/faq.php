@@ -75,38 +75,52 @@ down you must read to find something you didn't already know.</P>
 
 	<tr><td class="textcontent">
 	<p>
-	You should be familiar with the <a href="https://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/ports.html">Ports</a>
-	section of <a href="https://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/index.html">The FreeBSD Handbook</a>.
-	Pay careful attention to the difference between a port and a package.
+	Pay careful attention to the differences between a port and a package.
+	<p>
+	Blogged by the FreeBSD Foundation in August 2024:
+	<a href="https://freebsdfoundation.org/blog/freebsd-ports-and-packages-what-you-need-to-know/">
+	FreeBSD Ports and Packages: What you need to know</a>. More generally,
+	please be familiar with the <a href="https://docs.freebsd.org/en/books/handbook/ports/">
+	Ports</a> section of the <a href="https://docs.freebsd.org/en/books/handbook/">
+	FreeBSD Handbook</a>.
 
 	<h2>Definitions for the hopelessly lazy</h2>
 
 	<h3 id="port">What is a port?</h3>
 	<p>
-	If you install the port, the source will be downloaded, patched if necessary,
-	compiled and installed.  You will have a chance to set any optional configuration
-	items particular to that port. If the port is dependent upon another port,
-	that port will also be installed.  After installing, ports are identical to
-	packages.
-
+	If you install a port, the source will be downloaded, patched if 
+	necessary, compiled, and installed. If the port has any default
+	configuration option that is preset by the maintainer, you can choose
+	to vary from each preset. It is because of these compile time options
+	that some people prefer ports over precompiled packages.
 	<p>
-	It is because of these compile time options that I prefer ports over packages.
+	If a port depends upon other ports that are not yet installed: it may
+	be necessary to also compile all of those other ports. The Foundation's
+	blog post mentions <em>poudriere</em>, which can minimize &#8211; sometimes
+	negate &#8211; the need to compile dependencies.
 
 	<h3 id="package">What is a package?</h3>
 	<p>
-	A package is a compiled port.  It is a binary.  When you install the package, 
-	you will download a binary and it will be installed.
-
+	A package is a precompiled port, typically including a binary file.
 	<p>
-	Packages often lag behind ports.  That is usually because it takes time to compile
-	the packages, etc.  If you want the latest version, and the package is not
-	available, then you should install the port.
-
+	Not all ports can be distributed as packages. License restrictions may
+	prevent binary distribution, and so on.
 	<p>
-	Not all ports can have packages, often because of license restrictions that
-	prevent binary distribution.
-
-	</td></tr>
+	FreeBSD Project-provided packages often lag behind ports. Sometimes,
+	simply because it takes time to compile	packages (and more than a day
+	may be required for a single complex port). Also, because the Project
+	must support concurrent releases of each major version of the operating
+	system &#8211; and because build hardware and other resources are not
+	infinite: a single version of the OS must build packages for for
+	multiple releases, for as long as the older version will be
+	supported. Packages for 14.2-RELEASE will be built in a 14.1
+	environment until 14.1 <a href="https://www.freebsd.org/security/#sup">
+	reaches end of life</a>, and so on.
+	<p>
+	If you need a package that is not yet available, or not yet compiled by
+	the Project on a required version of the OS, then you can build from
+	ports.
+</td></tr>
 <tr id="watch-modify">
 <?php echo freshports_PageBannerText("How do I modify my watch list?"); ?>
 </tr>
@@ -893,7 +907,7 @@ now that the Master has been upgraded.
 	Anchors make it easier to link to sections within pages. 
 </p>
 <p>
-	For example, this link – note the <code class="code">#history</code> at its tail – takes you to the commit history for security/acme.sh: 
+	For example, this link &#8211; note the <code class="code">#history</code> at its tail &#8211; takes you to the commit history for security/acme.sh: 
 </p>
 
 <blockquote><a href="/security/acme.sh/#history">security/acme.sh/#history</a></blockquote>

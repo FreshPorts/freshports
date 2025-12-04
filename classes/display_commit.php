@@ -42,8 +42,8 @@ class DisplayCommit
 
 	function __construct($dbh, $result, $BranchName = BRANCH_HEAD)
 	{
-		$this->dbh = $dbh;
-		$this->result = $result;
+		$this->dbh        = $dbh;
+		$this->result     = $result;
 		$this->BranchName = $BranchName;
 	}
 
@@ -167,7 +167,11 @@ class DisplayCommit
 			$HTML .= '<a href="/' . str_replace('%2F', '/', $PathName);
 			if (!empty($mycommit->port)) $HTML .= '/';
 			$HTML .= $QueryArgs . '"';
-			$HTML .= ' title="' . $PathName . ': ' . htmlentities($mycommit->short_description) . '"';
+			$HTML .= ' title="' . $PathName;
+			if (IsSet($mycommit->short_description)) {
+				$HTML .= ': ' . htmlentities($mycommit->short_description);
+			}
+			$HTML .= '"';
 			$HTML .= '>' . $PathName . '</a>';
 		} else {
 			#$HTML .= '<a href="' . FRESHPORTS_FREEBSD_CVS_URL . $PathName . '#rev' . $mycommit->revision . '">' . $PathName . '</a>';

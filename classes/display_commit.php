@@ -395,6 +395,10 @@ class DisplayCommit
 				}
 
 				$this->HTML .= $this->_DisplayStartofCommit($mycommit);
+
+				if ($DetailsWillBePresented) {
+					$this->HTML .= '<ul class="element-list">' . "\n";
+				}
 			}
 
 			$NumberOfPortsInThisCommit++;
@@ -403,12 +407,6 @@ class DisplayCommit
 			}
 
 			if ($Debug) echo 'at too many<br>';
-
-			if ($DetailsWillBePresented) {
-				$this->HTML .= '<ul class="element-list">' . "\n";
-			}
-
-
 
 			if (!$TooManyPorts) {
 				if ($DetailsWillBePresented) {

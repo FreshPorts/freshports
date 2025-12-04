@@ -42,8 +42,8 @@ class DisplayCommit
 
 	function __construct($dbh, $result, $BranchName = BRANCH_HEAD)
 	{
-		$this->dbh = $dbh;
-		$this->result = $result;
+		$this->dbh        = $dbh;
+		$this->result     = $result;
 		$this->BranchName = $BranchName;
 	}
 
@@ -118,7 +118,7 @@ class DisplayCommit
 			$HTML .= '&nbsp;(' . $mycommit->committer . ')';
 		}
 
-		# after the committer, display a search-by-commiter link
+		# after the committer, display a search-by-committer link
 		$HTML .= '&nbsp;' . freshports_Search_Committer($mycommit->committer);
 
 		if ($CommitterIsNotAuthor) {
@@ -167,7 +167,11 @@ class DisplayCommit
 			$HTML .= '<a href="/' . str_replace('%2F', '/', $PathName);
 			if (!empty($mycommit->port)) $HTML .= '/';
 			$HTML .= $QueryArgs . '"';
-			$HTML .= ' title="' . $PathName . ': ' . $mycommit->short_description . '"';
+			$HTML .= ' title="' . $PathName;
+			if (IsSet($mycommit->short_description)) {
+				$HTML .= ': ' . htmlentities($mycommit->short_description);
+			}
+			$HTML .= '"';
 			$HTML .= '>' . $PathName . '</a>';
 		} else {
 			#$HTML .= '<a href="' . FRESHPORTS_FREEBSD_CVS_URL . $PathName . '#rev' . $mycommit->revision . '">' . $PathName . '</a>';
@@ -395,6 +399,10 @@ class DisplayCommit
 				}
 
 				$this->HTML .= $this->_DisplayStartofCommit($mycommit);
+
+				if ($DetailsWillBePresented) {
+					$this->HTML .= '<ul class="element-list">' . "\n";
+				}
 			}
 
 			$NumberOfPortsInThisCommit++;
@@ -403,12 +411,6 @@ class DisplayCommit
 			}
 
 			if ($Debug) echo 'at too many<br>';
-
-			if ($DetailsWillBePresented) {
-				$this->HTML .= '<ul class="element-list">' . "\n";
-			}
-
-
 
 			if (!$TooManyPorts) {
 				if ($DetailsWillBePresented) {

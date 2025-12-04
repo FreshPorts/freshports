@@ -118,7 +118,7 @@ class DisplayCommit
 			$HTML .= '&nbsp;(' . $mycommit->committer . ')';
 		}
 
-		# after the committer, display a search-by-commiter link
+		# after the committer, display a search-by-committer link
 		$HTML .= '&nbsp;' . freshports_Search_Committer($mycommit->committer);
 
 		if ($CommitterIsNotAuthor) {
@@ -167,7 +167,7 @@ class DisplayCommit
 			$HTML .= '<a href="/' . str_replace('%2F', '/', $PathName);
 			if (!empty($mycommit->port)) $HTML .= '/';
 			$HTML .= $QueryArgs . '"';
-			$HTML .= ' title="' . $PathName . ': ' . $mycommit->short_description . '"';
+			$HTML .= ' title="' . $PathName . ': ' . htmlentities($mycommit->short_description) . '"';
 			$HTML .= '>' . $PathName . '</a>';
 		} else {
 			#$HTML .= '<a href="' . FRESHPORTS_FREEBSD_CVS_URL . $PathName . '#rev' . $mycommit->revision . '">' . $PathName . '</a>';

@@ -5,6 +5,7 @@
   --accent-text: white;
   --code-text: #461b7e;
   --link-color: #36f;
+  --gsc-button: #cecece;
   color-scheme: light dark;
 }
 
@@ -14,6 +15,7 @@
     --body-text: #c9d9d9;
     --code-text: #dfc7ff;
     --link-color: #33cdff;
+    --gsc-button: var(--background-color);
   }
 
   a:link {
@@ -162,6 +164,20 @@ td.content {
 .textcontent table td, .textcontent table th {
   padding: 5px;
 }
+
+/* following nested under body for specificity */
+body .gsc-control-cse, body .gsc-input-box {
+  background-color: inherit;
+}
+
+body .gsc-control-cse input {
+  background-color: inherit !important;
+}
+
+body .gsc-search-button-v2 {
+  background-color: var(--gsc-button);
+}
+
 
 .watch-maintenance td {
   vertical-align: top;

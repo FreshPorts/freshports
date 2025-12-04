@@ -5,6 +5,7 @@
   --accent-text: white;
   --code-text: #461b7e;
   --link-color: #36f;
+  color-scheme: light dark;
 }
 
 @media (prefers-color-scheme: dark) {

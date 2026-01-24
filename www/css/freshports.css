@@ -75,6 +75,12 @@ BODY, TD, TR, P, UL, OL, LI, INPUT, SELECT, DL, DD, DT, FONT
 {
     font-size: 12px;
 }
+@media only screen and (min-resolution: 140dpi) {
+  BODY, TD, TR, P, UL, OL, LI, INPUT, SELECT, DL, DD, DT, FONT
+  {
+      font-size: 18px;
+  }
+}
 
 table.maincontent > tbody > tr > td {
   padding: 8px;

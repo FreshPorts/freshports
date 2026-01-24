@@ -78,7 +78,7 @@ BODY, TD, TR, P, UL, OL, LI, INPUT, SELECT, DL, DD, DT, FONT
 @media only screen and (min-resolution: 140dpi) {
   BODY, TD, TR, P, UL, OL, LI, INPUT, SELECT, DL, DD, DT, FONT
   {
-      font-size: 18px;
+      font-size: 16px;
   }
 }
 
@@ -105,9 +105,20 @@ td.content {
   text-align: left;
 }
 
+@media only screen and (min-resolution: 140dpi) {
+  .sidebar > table {
+    width: 230px;
+  }
+}
+
 .sidebar > table:first-child td {
   white-space: nowrap;
 }
+
+.sidebar table tr > td:first-child {
+    width: 100%;
+}
+
 
 .sidebar > table table td:nth-child(2) {
   text-align: right;
@@ -609,7 +620,7 @@ dt.h3
 {
   margin-top: 10px;
   margin-bottom: 10px;
-  font-size: 18px;
+  font-size: 18npx;
 }
 
 ol.required, ol.depends, ol.mastersites

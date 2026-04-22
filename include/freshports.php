@@ -1077,7 +1077,9 @@ GLOBAL $dbhost;
     if (file_exists(HEAD_FILE)) {
 		# taken from https://stackoverflow.com/questions/7447472/how-could-i-display-the-current-git-branch-name-at-the-top-of-the-page-of-my-de
 		#
-		$HTML .= '<span class="branch">The git branch used by this host is <span class="file">' . implode('/', array_slice(explode('/', file_get_contents(HEAD_FILE)), 2)) . '</span><br>';
+		$InUse = (defined('HTMLIFY_USE_URL_HIGHLIGHT') && HTMLIFY_USE_URL_HIGHLIGHT) ? 'true' : 'false';
+		$HTML .= '<span class="branch">HTMLIFY_USE_URL_HIGHLIGHT is ' . $InUse . '<br>';
+		$HTML .= 'The git branch used by this host is <span class="file">' . implode('/', array_slice(explode('/', file_get_contents(HEAD_FILE)), 2)) . '</span><br>';
 		$HTML .= 'The database is   <span class="file">' . $dbname . '</span><br>';
 		$HTML .= 'The db server is   <span class="file">' . $dbhost . '</span></span><br>';
     }

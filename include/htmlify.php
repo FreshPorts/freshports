@@ -86,8 +86,9 @@ function url_shorten($Arr) {
 
 # I couldn't find a conditional which would allow optional use
 require_once($_SERVER['DOCUMENT_ROOT'] .  '/../vendor/autoload.php');
-use VStelmakh\UrlHighlight\Encoder\HtmlSpecialcharsEncoder;
+#use VStelmakh\UrlHighlight\Encoder\HtmlSpecialcharsEncoder;
 use VStelmakh\UrlHighlight\UrlHighlight;
+use VStelmakh\UrlHighlight\Encoder\HtmlSpecialcharsEncoder;
 
 require_once($_SERVER['DOCUMENT_ROOT'] .  '/../include/lib_autolink/lib_autolink.php');
 

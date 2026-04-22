@@ -51,6 +51,7 @@ define('HTMLIFY_PROCESS_PRS', true);
 
 define('INCLUDE_GOOGLE_GTAG', false);
 
+# re https://github.com/FreshPorts/freshports/issues/655
 define('LOGIN_TO_VIEW_COMMIT', true);
 define('LOGIN_TO_SEARCH',      true);
 define('LOGIN_TO_VIEW_VUXML',  true);

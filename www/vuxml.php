@@ -16,6 +16,16 @@
 
 	define('VUXMLURL',     'https://www.vuxml.org/freebsd/');
 
+	# if users must be logged in, and they aren't...
+	if (LOGIN_TO_VIEW_VUXML && !$User->id) {
+	        # one message, twice invoked.
+	        $msg = 'You must be logged in to use this feature.';
+	        header('HTTP/1.1 503 ' . $msg);
+	        die($msg);
+	} else {
+		checkLoadBeforeProceeding();
+        }
+
 	if (IsSet($_REQUEST['vid'])) {
 		$vid = pg_escape_string($db, $_REQUEST['vid']);
 

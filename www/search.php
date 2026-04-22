@@ -15,7 +15,15 @@
 
 	require_once('Pager/Pager.php');
 
-	checkLoadBeforeProceeding();
+	# if users must be logged in, and they aren't...
+	if (LOGIN_TO_SEARCH && !$User->id) {
+	        # one message, twice invoked.
+	        $msg = 'You must be logged in to use this feature.';
+	        header('HTTP/1.1 503 ' . $msg);
+	        die($msg);
+	} else {
+	        checkLoadBeforeProceeding();
+        }
 
 	$Debug = 0;
 # this should only be referenced after it has been set.

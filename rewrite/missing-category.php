@@ -199,7 +199,7 @@ function freshports_CategoryDisplay($dbh, $category, $url_parts, $Branch = BRANC
 		$HTML .= '
 <span class="element-details"><span>' .
 			$category->description . '
-</span></span> - Number of ports in this category' . ($Branch == BRANCH_HEAD ? '' : ' (with commits on branch <b>' . htmlentities($Branch)) . '</b>): ' . $PortCount . '
+</span></span> - Number of ports in this category' . ($Branch == BRANCH_HEAD ? '' : ' (with commits on branch <b>' . htmlentities($Branch)) . '</b>: ' . $PortCount . '
 
 <p>
 	Ports marked with a <sup>*</sup> actually reside within another category but

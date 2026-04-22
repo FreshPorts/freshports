@@ -50,3 +50,7 @@ define('HTMLIFY_USE_LIB_AUTOLINK',      true);
 define('HTMLIFY_PROCESS_PRS', true);
 
 define('INCLUDE_GOOGLE_GTAG', false);
+
+define('LOGIN_TO_VIEW_COMMIT', true);
+define('LOGIN_TO_SEARCH',      true);
+define('LOGIN_TO_VIEW_VUXML',  true);

@@ -2755,7 +2755,9 @@ function checkLoadBeforeProceeding() {
   if ($User->id) {
     return;
   }
+
   $MaxLoad = checkAcceptedMaxLoad($_SERVER['PHP_SELF']);
+
   if ($MaxLoad) {
     $load = sys_getloadavg();
     if ($load[0] > $MaxLoad) {

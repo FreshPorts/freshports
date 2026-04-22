@@ -11,12 +11,15 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/cache-commit.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
-        if (!$User->id) {
-          header("HTTP/1.1 422 Unprocessable Content");
-          die('something is wrong - you probably need to be <a href="/login.php">logged in</a>');
+	# if users must be logged in, and they aren't...
+	if (LOGIN_TO_VIEW_COMMIT && !$User->id) {
+	        # one message, twice invoked.
+	        $msg = 'You must be logged in to use this feature.';
+	        header('HTTP/1.1 503 ' . $msg);
+	        die($msg);
+	} else {
+		checkLoadBeforeProceeding();
         }
-
-	checkLoadBeforeProceeding();
 
 	$Debug = 0;
 

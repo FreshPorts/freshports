@@ -55,7 +55,7 @@ function freshports_Search_Depends_All($CategoryPort) {
 }
 
 function freshports_Search_For_Bugs($CategoryPort) {
-  $SearchURL = "https://bugs.freebsd.org/bugzilla/buglist.cgi?component=Individual%20Port%28s%29&amp;list_id=28394&amp;product=Ports%20%26%20Packages&amp;query_format=advanced&amp;resolution=---" . 
+  $SearchURL = "https://bugs.freebsd.org/bugzilla/buglist.cgi?component=Individual%20Port%28s%29&amp;product=Ports%20%26%20Packages&amp;query_format=advanced&amp;resolution=---" . 
     "&amp;short_desc=" . urlencode($CategoryPort) . "&amp;short_desc_type=allwordssubstr";
 
   return '<a href="' . $SearchURL . '"  rel="nofollow noopener noreferrer">' . freshports_Bugs_Find_Icon() . '</a>';

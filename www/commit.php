@@ -15,7 +15,7 @@
 	if (LOGIN_TO_VIEW_COMMIT && !$User->id) {
 	        # one message, twice invoked.
 	        $msg = 'You must be logged in to use this feature.';
-	        header('HTTP/1.1 503 ' . $msg);
+	        header('HTTP/1.1 401 ' . $msg);
 	        die($msg);
 	} else {
 		checkLoadBeforeProceeding();
@@ -31,7 +31,7 @@
 	$message_id = '';
 	$page       = '';
 	$page_size  = '';
-	
+
 	$message_id = pg_escape_string($db, $_REQUEST['message_id'] ?? '');
 	$revision   = pg_escape_string($db, $_REQUEST['revision']   ?? '');
 
@@ -140,13 +140,13 @@
 	}
 
 	SetType($PageNo,   "integer");
-	SetType($PageSize, "integer"); 
+	SetType($PageSize, "integer");
 
 	if (!IsSet($PageNo)   || !str_is_int("$PageNo")   || $PageNo   < 1) {
 		$PageNo = 1;
 	}
 
-	if (!IsSet($PageSize) || !str_is_int("$PageSize") || $PageSize < 1 || $PageSize > MAX_PAGE_SIZE) {	
+	if (!IsSet($PageSize) || !str_is_int("$PageSize") || $PageSize < 1 || $PageSize > MAX_PAGE_SIZE) {
 		$PageSize = DEFAULT_PAGE_SIZE;
 	}
 
@@ -189,7 +189,7 @@
 		$DoTheSave = true;
 		$database = $db;
 		if ($database) {
-	
+
 			if (!empty($revision) && count($message_id_array)) {
 				// we have multiple messages for that commit
 				echo '<tr><td class="content">';
@@ -197,7 +197,7 @@
 				$Commit->FetchNth(0);
 				$clean_revision = htmlentities($Commit->svn_revision);
 				// e.g. http://svnweb.freebsd.org/base?view=revision&revision=177821
-				echo '<a href="http://' . htmlentities($Commit->svn_hostname) . htmlentities($Commit->path_to_repo) . '?view=revision&amp;revision=' . $clean_revision . 
+				echo '<a href="http://' . htmlentities($Commit->svn_hostname) . htmlentities($Commit->path_to_repo) . '?view=revision&amp;revision=' . $clean_revision .
 					'">' . $clean_revision . '</a>';
 
 				echo "<ol>\n";
@@ -221,7 +221,7 @@
 					$result = pg_query_params($database, $sql, array($message_id));
 					if ($result) {
 						$numrows = pg_num_rows($result);
-						if ($numrows == 1) { 
+						if ($numrows == 1) {
 							$myrow = pg_fetch_array($result, 0);
 						} else {
 							die('could not determine the number of commit elements');
@@ -259,7 +259,7 @@
 							$DisplayCommit->SetShowEntireCommit(true);
 							$DisplayCommit->ShowLinkToSanityTestFailure = true;
 							$RetVal = $DisplayCommit->CreateHTML();
-	
+
 							$HTML .= $DisplayCommit->HTML;
 							$HTML .= '<tr><td><p>Number of items [ports &amp; non-ports] in this commit: ' . $NumFilesTouched . '</p></td></tr>';
 						} else {

@@ -20,7 +20,7 @@
 	if (LOGIN_TO_VIEW_VUXML && !$User->id) {
 	        # one message, twice invoked.
 	        $msg = 'You must be logged in to use this feature.';
-	        header('HTTP/1.1 503 ' . $msg);
+	        header('HTTP/1.1 401 ' . $msg);
 	        die($msg);
 	} else {
 		checkLoadBeforeProceeding();
@@ -90,7 +90,7 @@ These are the vulnerabilities relating to the commit you have selected:
 		$URL = VUXMLURL . $value . '.html';
 		echo '<tr><td class="vtop" nowrap><a href="' . $URL . '">' . $value . '</a></td><td>';
 		$VuXML->display();
-		
+
 		echo "</td></tr>\n";
 	}
 
@@ -118,7 +118,7 @@ These are the vulnerabilities relating to the commit you have selected:
 			return $HTML;
 		}
 
-	
+
 
 		$params = array();
 		$sql = "
@@ -127,14 +127,14 @@ SELECT V.vid,
   FROM vuxml_affected VA, vuxml_names VN, vuxml V
  WHERE VN.vuxml_affected_id = VA.id
    AND VA.vuxml_id          = V.id";
-   
+
    	if (IsSet($_REQUEST['package'])) {
 		$sql .= "\n   AND lower(VN.name) = $1";
 		$params = array(strtolower($_REQUEST['package']));
    	}
 
    	$sql .= "\nORDER BY lower(VN.name), V.vid\n";
-   	
+
 		$result = pg_query_params($db, $sql, $params);
 		if ($result) {
 			$numrows = pg_num_rows($result);
@@ -189,13 +189,13 @@ SELECT V.vid,
 	if (IsSet($_REQUEST['all'])) {
 		function vuxml_name_link($VID, $Date, $Description, $PortArray, $IsNew) {
 			$HTML = '<tr><td class="vtop nowrap">';
-			
+
 			$HTML .= $Date;
 			if ($IsNew == 'f') {
 				$HTML .= '<sup>*</sup>';
 			}
 			$HTML .= '</td><td class="vtop">';
-			
+
 			$Narrative = $Description;
 			$HTML .= '<b>VuXML ID</b> <span class="code">' . $VID . '</span><br>' . $Narrative . ' <a href="' . VUXMLURL . $VID . '.html">more...</a>';
 			$HTML .= '</td><td class="hleft vtop">';
@@ -204,14 +204,14 @@ SELECT V.vid,
 				$HTML .= '<a href="/?package=' . $package . '">' . $package . '</a> ';
 				$HTML .= '<br>';
 			}
-			
+
 
 			$HTML .= '<br><a href="vuxml.php?vid=' . $VID . '">more detail</a></td></tr>' . "\n";
 
 			return $HTML;
 		}
 
-	
+
 
 
 		$sql = "
@@ -249,7 +249,7 @@ ORDER BY coalesce(V.date_modified, V.date_entry, V.date_discovery)::date desc, V
 					if ($LastVID == '') {
 						$LastVID = $myrow['vid'];
 					}
-					
+
 					if ($LastVID != $myrow['vid']) {
 						$VIDs++;
 						echo vuxml_name_link($LastVID, $Date, $Description, $PortArray, $IsNew);

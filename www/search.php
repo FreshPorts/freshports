@@ -19,7 +19,7 @@
 	if (LOGIN_TO_SEARCH && !$User->id) {
 	        # one message, twice invoked.
 	        $msg = 'You must be logged in to use this feature.';
-	        header('HTTP/1.1 503 ' . $msg);
+	        header('HTTP/1.1 401 ' . $msg);
 	        die($msg);
 	} else {
 	        checkLoadBeforeProceeding();
@@ -1320,7 +1320,7 @@ Special searches:
 		          if ($NumFound > $PageSize) {
 		            $NumPortsFound .= " (showing only $NumOnThisPage on this page)";
 			  }
-			  
+
 			  if ($Debug) echo "NumPortsFound = '$NumPortsFound'<br>";
                   break;
 
@@ -1420,7 +1420,7 @@ Special searches:
                             $HTML .= $NumPortsFound . ' ' . $links['all'];
                         }
                 } /* switch */
-		
+
 			if ($Debug) echo 'WHAT IS THIS?<br>';
 
 		} /* NumFetches  != 0 */

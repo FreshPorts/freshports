@@ -25,6 +25,7 @@ class DisplayCommit
 	var $DaysMarkedAsNew = 10;
 	var $LocalResult;
 	var $HTML;
+	var $PlainText;
 
 	var $FlaggedCommits;
 
@@ -455,9 +456,7 @@ class DisplayCommit
 		return $this->HTML;
 	}
 
-	function CreateHTML1() {
-		GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;
-		
+	function CreatePlainText() {
 		$Debug = $this->Debug;
 
 		$URLBranchSuffix = BranchSuffix($this->BranchName);
@@ -470,255 +469,28 @@ class DisplayCommit
 
 		$NumRows = pg_num_rows($this->result);
 		if ($this->Debug) echo __FILE__ . ':' . __LINE__ . " Number of rows = $NumRows<br>\n";
-		if (!$NumRows) { 
-			$this->HTML = "<tr><td>\n<P>Sorry, nothing found in the database....</P>\n</td></tr>\n";
-			return $this->HTML;
+		if (!$NumRows) {
+			$this->PlainText = 'Sorry, nothing found in the database....';
+			return $this->PlainText;
 		}
-		
-		# if we have a UserID, but no flagged commits, grab them
-		#
-		if ($this->UserID && !IsSet($this->FlaggedCommits)) {
-			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit_flag.php');
 
-			$FlaggedCommits = new CommitFlag($this->dbh);
-			$NumFlaggedCommits = $FlaggedCommits->Fetch($this->UserID);
-			for ($i = 0; $i < $NumFlaggedCommits; $i++) {
-				$FlaggedCommits->FetchNth($i);
-				$this->FlaggedCommits[$FlaggedCommits->commit_log_id] = $FlaggedCommits->commit_log_id;
-				if ($this->Debug) echo "fetching record # $i -> $FlaggedCommits->commit_log_id<br>";
-			}
-		}
-	
-		$GlobalHideLastChange = "N";
-
-		$this->HTML = "";
+		$this->PlainText = "";
 
 		# leave it all empty as a comparison point
-		$PreviousCommit = new Commit_Ports($this->dbh);
 
-		$NumberOfPortsInThisCommit = 0;
-		$MaxNumberPortsToShow      = 10;
-		$TooManyPorts = false;	# we might not show all of a commit, just for the big ones.
 		for ($i = 0; $i < $NumRows; $i++) {
 			$myrow = pg_fetch_array($this->result, $i);
-			if ($Debug) echo '<pre>processing row ' . $i . ' ' . $myrow['commit_log_id'] . ' ' . $myrow['message_id'] .  ' ' . $myrow['element_pathname'] . "</pre><br>\n";
-			unset($mycommit);
-			$mycommit = new Commit_Ports($this->dbh);
-			$mycommit->PopulateValues($myrow);
-
-			if ($mycommit->branch && $mycommit->branch != BRANCH_HEAD) {
-				$QueryArgs= '?branch=' . $mycommit->branch;
-			} else {
-				$QueryArgs = '';
-			}
-
-			$DetailsWillBePresented = !empty($mycommit->element_pathname);
-
-			// OK, while we have the log change log, let's put the port details here.
-
-			# not sure if this should be here or elsewhere
-			$Lines = 0;
-			if ($mycommit->commit_log_id != $PreviousCommit->commit_log_id) {
-				if ($Debug) echo 'This commit_log_id is different<br>';
-				if (($NumberOfPortsInThisCommit > $MaxNumberPortsToShow) && !$this->ShowAllPorts) {
-					if ($DetailsWillBePresented) {
-						$this->HTML .= '</ul>';
-					}
-					$this->HTML .= freshports_MorePortsToShow($PreviousCommit->message_id, $NumberOfPortsInThisCommit, $MaxNumberPortsToShow);
-				} else if ($i > 0 && $DetailsWillBePresented) {
-					$this->HTML .= '</ul>';
-				}
-				$TooManyPorts = false;
-				# count the number of ports in this commit.
-				# first time into the loop, this will be executed.
-				$NumberOfPortsInThisCommit = 0;
-				$MaxNumberPortsToShow = 10;
-
-				if ($mycommit->commit_date != $PreviousCommit->commit_date) {
-					$this->HTML .= '<tr><td class="accent">' . "\n";
-					$this->HTML .= '   ' . FormatTime($mycommit->commit_date, 0, "l, j M Y") . "\n";
-					$this->HTML .= "</td></tr>\n\n";
-				}
-
-				global $freshports_mail_archive;
-
-				$this->HTML .= "<tr><td class=\"commit-details\">\n";
-
-				$this->HTML .= '<span class="meta">';
-				$this->HTML .= $mycommit->commit_time . ' ';
-
-				#
-				# THIS CODE IS SIMILAR TO THAT IN classes/display_commit.php & classes/port-display.php
-				#
-				#
-				# the committer may not be the author
-				# committer name and author name came into the database with git.
-				# For other commits, such as git or cvs, those fields will not be present.
-				# committer will always be present.
-				#
-				$CommitterIsNotAuthor = !empty($mycommit->author_name) && !empty($mycommit->committer_name) && $mycommit->author_name != $mycommit->committer_name;
-
-				# if no author name, it's an older commit, and we have only committer
-				if (empty($mycommit->committer_name)) {
-					$this->HTML .= freshports_CommitterEmailLink_Old($mycommit->committer);
-				} else {
-					$this->HTML .= freshports_AuthorEmailLink($mycommit->committer_name, $mycommit->committer_email);
-					# display the committer id, just because
-					$this->HTML .= '&nbsp;(' . $mycommit->committer . ')';
-				}
-
-				# after the committer, display a search-by-committer link
-				$this->HTML .= '&nbsp;' . freshports_Search_Committer($mycommit->committer);
-
-				if ($CommitterIsNotAuthor) {
-					$this->HTML .= '&nbsp;Author:&nbsp;' . freshports_AuthorEmailLink($mycommit->author_name, $mycommit->author_email);
-				}
-				$this->HTML .= '</span>';
-			}
-
-				$NumberOfPortsInThisCommit++;
-				if (($NumberOfPortsInThisCommit > $MaxNumberPortsToShow) && !$this->ShowAllPorts) {
-					$TooManyPorts = true;
-				}
-
-				if ($Debug) echo 'at too many<br>';
-
-				if ($DetailsWillBePresented) {
-					$this->HTML .= '<ul class="element-list">' . "\n";
-				}
-
-
-
-
-				if (!$TooManyPorts) {
-					if ($DetailsWillBePresented) {
-						$this->HTML .= '<li>';
-					}
-					if (!$DetailsWillBePresented) {
-						# we do nothing
-						# this is a non-port. All the rest of the stuff is not displayed
-						if ($Debug) echo 'details will not be presented<br>';
-					} else {
-						syslog(LOG_NOTICE, 'We have non-port where element_pathname is not empty - 2nd location: ' . $mycommit->element_pathname);
-
-						# This is a non-port element...
-						$this->HTML .= '<span class="element-details">';
-
-						$PathName = preg_replace('|^/?ports/|', '', $mycommit->element_pathname);
-						if ($Debug) echo "PathName='$PathName' " . " reponame='" . $mycommit->repo_name . "'<br>";
-						switch ($mycommit->repo_name)
-						{
-							case 'ports':
-								// strip off the leading directories
-								if ($Debug && !empty($mycommit->branch)) echo 'Branch is ' . $mycommit->branch . '<br>';
-								if (empty($mycommit->branch) || $mycommit->branch == BRANCH_HEAD) {
-									if ($Debug) echo 'replacing head<br>';
-									$PathName = preg_replace('|^head/|', '', $PathName);
-								} else {
-									if ($Debug) echo 'replacing branches<br>';
-									$PathName = preg_replace('|^branches/' . $mycommit->branch . '/|', '', $PathName);
-								}
-								break;
-						}
-
-						if ($PathName != $mycommit->element_pathname) {
-							# the replace changes encoded / to plain text / - not sure why may have been present
-							$this->HTML .= '<a href="/' . str_replace('%2F', '/', $PathName);
-							if (!empty($mycommit->port)) $this->HTML .= '/';
-							$this->HTML .= $QueryArgs . '"';
-							$this->HTML .= ' title="' . $PathName . ': ' . $mycommit->short_description . '"';
-							$this->HTML .= '>' . $PathName. '</a>';
-						} else {
-							#$this->HTML .= '<a href="' . FRESHPORTS_FREEBSD_CVS_URL . $PathName . '#rev' . $mycommit->revision . '">' . $PathName . '</a>';
-							$this->HTML .= $PathName;
-						}
-
-						$this->HTML .= "</span>\n"; /* element-details*/
-
-						if (IsSet($mycommit->category) && $mycommit->category != '') {
-							// indicate if this port has been removed from cvs
-							if ($mycommit->status == "D") {
-								$this->HTML .= " " . freshports_Deleted_Icon_Link() . "\n";
-							}
-
-							// indicate if this port needs refreshing from CVS
-							if ($mycommit->needs_refresh) {
-								$this->HTML .= " " . freshports_Refresh_Icon_Link() . "\n";
-							}
-							if ($mycommit->date_added > Time() - 3600 * 24 * $this->DaysMarkedAsNew) {
-								$MarkedAsNew = "Y";
-								$this->HTML .= freshports_New_Icon() . "\n";
-							}
-
-							if ($mycommit->forbidden) {
-								$this->HTML .= ' ' . freshports_Forbidden_Icon_Link() . "\n";
-							}
-
-							if ($mycommit->broken) {
-								$this->HTML .= ' '. freshports_Broken_Icon_Link() . "\n";
-							}
-
-							if ($mycommit->deprecated) {
-								$this->HTML .= ' '. freshports_Deprecated_Icon_Link() . "\n";
-							}
-
-							if ($mycommit->expiration_date) {
-								if (date('Y-m-d') >= $mycommit->expiration_date) {
-									$this->HTML .= freshports_Expired_Icon_Link($mycommit->expiration_date) . "\n";
-								} else {
-									$this->HTML .= freshports_Expiration_Icon_Link($mycommit->expiration_date) . "\n";
-								}
-							}
-
-							if ($mycommit->ignore) {
-								$this->HTML .= ' '. freshports_Ignore_Icon_Link() . "\n";
-							}
-
-							if ($mycommit->vulnerable_current) {
-								$this->HTML .= '&nbsp;' . freshports_VuXML_Icon() . '&nbsp;';
-							}
-
-							if ($mycommit->restricted) {
-								$this->HTML .= freshports_Restricted_Icon_Link($mycommit->restricted) . '&nbsp;';
-							}
-
-							if ($mycommit->no_cdrom) {
-								$this->HTML .= freshports_No_CDROM_Icon_Link($mycommit->no_cdrom) . '&nbsp;';
-							}
-
-							if ($mycommit->is_interactive) {
-								$this->HTML .= freshports_Is_Interactive_Icon_Link($mycommit->is_interactive) . '&nbsp;';
-							}
-
-						}
-
-					if ($DetailsWillBePresented) {
-						$this->HTML .= "</li>\n";
-					}
-
-					GLOBAL $freshports_CommitMsgMaxNumOfLinesToShow;
-					if ($this->ShowEntireCommit) {
-						$Lines = 0;
-					} else {
-						$Lines = $freshports_CommitMsgMaxNumOfLinesToShow;
-					}
-				} # !$TooManyPorts
-
-			}
-
-			$PreviousCommit = $mycommit;
+			$this->PlainText .= $myrow['message_id'] . "\n";
 		}
 
-		$this->HTML .= _DisplayEndOfCommit($PreviousCommit, $Lines);
-
 		unset($mycommit);
-		
-		return $this->HTML;
+
+		return $this->PlainText;
 	}
 
 	function SetBranch($BranchName) {
 		# usually, this is set during __construct
 		$this->BranchName = $BranchName;
 	}
-	
+
 }

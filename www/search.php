@@ -99,8 +99,8 @@
 
 
 	$SearchTypeToFieldMap = array(
-        SEARCH_FIELD_AUTHOR_NAME          => 'CL.author_name',
-        SEARCH_FIELD_AUTHOR_EMAIL         => 'CL.author_email',
+	    SEARCH_FIELD_AUTHOR_NAME          => 'CL.author_name',
+	    SEARCH_FIELD_AUTHOR_EMAIL         => 'CL.author_email',
 	    SEARCH_FIELD_COMMITMESSAGE        => 'CL.description',
 	    SEARCH_FIELD_COMMITTER            => 'CL.committer',
 	    SEARCH_FIELD_COMMITTER_EMAIL      => 'CL.committer_email',
@@ -420,7 +420,8 @@
 		# are we setting the whole SQL condition or just the operator and the value?
 		$sqlSetAll = false;
 
-		if ($Debug) echo "at line " . __FILE__ . '::' . __LINE__ . " stype='$stype'<br>";
+		# the \n is for better formatting when reading plain text debug output
+		if ($Debug) echo "at line " . __FILE__ . '::' . __LINE__ . " stype='$stype'<br>\n";
 
 
 		if ($output_format == OUTPUT_FORMAT_DEPENDS && $stype == SEARCH_FIELD_NAME) {
@@ -447,7 +448,7 @@
                     } else {
                         $Like = 'ILIKE';
                     }
-                    if ($Debug) echo 'invoking WildCardQuery for match<br>';
+                    if ($Debug) echo 'invoking WildCardQuery for match<br>\n';
                     $sqlUserSpecifiedCondition = WildCardQuery($db, $stype, $Like, $WildCardMatch);
                     break;
 
@@ -497,7 +498,7 @@
 		  }  # $stype != SEARCH_FIELD_PACKAGE
 		} # not OUTPUT_FORMAT_DEPENDS
 
-		if ($Debug && IsSet($sqlUserSpecifiedCondition)) echo "at line " . __FILE__ . '::' . __LINE__ . " sqlUserSpecifiedCondition is: $sqlUserSpecifiedCondition<br>";
+		if ($Debug && IsSet($sqlUserSpecifiedCondition)) echo "at line " . __FILE__ . '::' . __LINE__ . " sqlUserSpecifiedCondition is: $sqlUserSpecifiedCondition<br>\n";
 
 		#
 		# include/exclude deleted ports
@@ -632,15 +633,15 @@
 		    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
 
 		    if ($include_src_commits) {
-		      if ($Debug) echo 'searching src<br>';
+		      if ($Debug) echo 'searching src<br>\n';
 		      require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commits_by_committer.php');
 		      $Commits = new CommitsByCommitter($db);
 		    } else {
-		      if ($Debug) echo 'not searching src<br>';
+		      if ($Debug) echo 'not searching src<br>\n';
 		      require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port_commits_by_committer.php');
 		      $Commits = new PortCommitsByCommitter($db);
 		    }
-		    if ($Debug) echo 'searching by committer for ' . htmlentities($query) . '<br>';
+		    if ($Debug) echo 'searching by committer for ' . htmlentities($query) . '<br>\n';
 		    $Commits->CommitterSet($query);
 
 		    $Commits->Debug = $Debug;
@@ -674,8 +675,7 @@
 		    $result     = $Commits->LocalResult;
 		    if ($Debug) {
 		        if ($result) {
-		             echo "
-<br>we have a result for $stype<br>\n";
+		            echo "\n<br>" . __FILE__ . '::' . __LINE__ . " we have a result for $stype<br>\n";
 			}
 		    }
 		    break;
@@ -719,8 +719,7 @@
 		    $result     = $Commits->LocalResult;
 		    if ($Debug) {
 		        if ($result) {
-		            echo "
-<br>we have a result for $stype<br>\n";
+		            echo "\n<br>" . __FILE__ . '::' . __LINE__ . " we have a result for $stype<br>\n";
 		    	}
 		    }
 		    break;
@@ -782,8 +781,7 @@
 			$result = $Commits->LocalResult;
 			if ($Debug) {
 				if ($result) {
-					echo "
-<br>we have a result for $stype<br>\n";
+				        echo "\n<br>" . __FILE__ . '::' . __LINE__ . " we have a result for $stype<br>\n";
 				}
 			}
 
@@ -852,8 +850,7 @@
 			$result = $Ports->LocalResult;
 			if ($Debug) {
 				if ($result) {
-					echo "
-<br>we have a result for $stype<br>\n";
+				        echo "\n<br>" . __FILE__ . '::' . __LINE__ . " we have a result for $stype<br>\n";
 				}
 			}
 			break;
@@ -960,9 +957,9 @@ JOIN element_pathname EP on E.id = EP.element_id
 
 
 			$AddRemoveExtra  = "?query=" . htmlentities($query). "+stype=$stype+num=$num+method=$method";
-			if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<br>";
+			if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<br>\n";
 			$AddRemoveExtra = pg_escape_string($db, $AddRemoveExtra);
-			if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<br>";
+			if ($Debug) echo "\$AddRemoveExtra = '$AddRemoveExtra'\n<br>\n";
 
 			#
 			# construct the query to determine the number of rows.
@@ -975,8 +972,8 @@ JOIN element_pathname EP on E.id = EP.element_id
                         }
 
 			if ($Debug) {
-				echo __FILE__ . '::' . __LINE__ . ' says:<br>';
-				echo "<pre>$sql</pre>\n";
+				echo __FILE__ . '::' . __LINE__ . ' says:<br>\n';
+				echo "\n<pre>\n$sql\n</pre>\n";
 			}
 
 			# this may be interesting to figure out params.
@@ -992,7 +989,7 @@ JOIN element_pathname EP on E.id = EP.element_id
 			$NumberOfCommits = $NumFound;
 
 			if ($Debug) {
-				echo "\$NumFound = '$NumFound' on line " . __LINE__ . "<br>";
+				echo "\$NumFound = '$NumFound' on line " . __LINE__ . "<br>\n";
 			}
 
 			$NumFetches = 0;
@@ -1037,7 +1034,7 @@ JOIN element_pathname EP on E.id = EP.element_id
 				}
 
 				if ($Debug) {
-                                        echo __FILE__ . '::' . __LINE__ . ' says:<br>';
+                                        echo __FILE__ . '::' . __LINE__ . ' says:<br>\n';
 					echo "<pre>$sql</pre>\n";
 				}
 
@@ -1056,14 +1053,15 @@ JOIN element_pathname EP on E.id = EP.element_id
 
 				if ($Debug) {
 					if ($result) {
-						echo "
-<br>we have a result for $stype via 'default'<br>\n";
+						echo "\n<br>" . __FILE__ . '::' . __LINE__ . " we have a result for $stype via 'default'<br>\n";
 					}
 				}
 			} # $NumFound > 0
 
 		} // end of non-committer search  ## I think this is the end of the default option
 
+		# this code has been around for decades
+		# my initial goal: see the terms used for searching
 		$fp = fopen($logfile, "a");
 		if ($fp) {
 			switch ($method) {
@@ -1083,7 +1081,6 @@ JOIN element_pathname EP on E.id = EP.element_id
 			define_syslog_variables();
 			syslog(LOG_ERR, "FreshPorts could not open the search log file: $logfile");
 		}
-
 
 		$Port = new Port($db);
 		$Port->LocalResult = $result;
@@ -1287,11 +1284,11 @@ Special searches:
 			echo "<tr><td>\n";
 		}
 
-	}  // end of putting out HTML output
+	}  // end of putting out HTML output - OUTPUT_FORMAT_HTML
 
-	if ($Debug) echo 'in debug mode<br>';
+	if ($Debug) echo __FILE__ . '::' . __LINE__ . "in debug mode<br>\n";
 
-	if ($Debug && $WeHaveToSearch) echo 'we have to search<br>';
+	if ($Debug && $WeHaveToSearch) echo "we have to search<br>\n";
 
 	if ($WeHaveToSearch) {
 		if (IsSet($NumFetches) && $NumFetches == 0) {
@@ -1309,7 +1306,7 @@ Special searches:
                 case SEARCH_FIELD_COMMITMESSAGE:
                 case SEARCH_FIELD_PATHNAME:
 		          $NumFetches = min($num, $NumberOfCommits);
-		          if ($Debug) echo 'here we are<br>';
+		          if ($Debug) echo __FILE__ . '::' . __LINE__ . "here we are<br>\n";
 		          if ($NumFetches != $NumberOfCommits) {
 		            $MoreToShow = 1;
 		          } else {
@@ -1317,11 +1314,11 @@ Special searches:
 		          }
 
 		          $NumPortsFound = 'Number of commits: ' . $NumberOfCommits;
-		          if ($NumFound > $PageSize) {
+		          if ($output_format == OUTPUT_FORMAT_HTML && ($NumFound > $PageSize)) {
 		            $NumPortsFound .= " (showing only $NumOnThisPage on this page)";
 			  }
 
-			  if ($Debug) echo "NumPortsFound = '$NumPortsFound'<br>";
+			  if ($Debug) echo "NumPortsFound = '$NumPortsFound'<br>\n";
                   break;
 
                 default:
@@ -1340,7 +1337,7 @@ Special searches:
                     break;
 		} /* switch */
 
-                if ($Debug) echo 'here we are2<br>';
+                if ($Debug) echo __FILE__ . '::' . __LINE__ . "here we are2<br>\n";
                 switch ($stype) {
                     case SEARCH_FIELD_AUTHOR_NAME:
                     case SEARCH_FIELD_AUTHOR_EMAIL:
@@ -1349,20 +1346,25 @@ Special searches:
                     case SEARCH_FIELD_COMMITTER_EMAIL:
                     case SEARCH_FIELD_COMMITMESSAGE:
                     case SEARCH_FIELD_PATHNAME:
-                        if ($Debug) echo __FILE__ . '::' . __LINE__ . ' says hi<br>';
+                        if ($Debug) echo __FILE__ . '::' . __LINE__ . " says hi<br>\n";
                         require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
 
-                        if ($Debug) echo 'time to display!';
+                        if ($Debug) echo "time to display!<br>\n";
                         $DisplayCommit = new DisplayCommit($db, $Commits->LocalResult);
-                        $links = $Pager->GetLinks();
+                        if ($output_format !== OUTPUT_FORMAT_PLAIN_TEXT) {
+                                $links = $Pager->GetLinks();
 
-                        $HTML .= $NumPortsFound . ' ' . $links['all'];
-                        $HTML .= $DisplayCommit->CreateHTML();
-                        $HTML .= '<tr><td>' . $NumPortsFound . ' ' . $links['all'] . '</td></tr>';
+                                $HTML .= $NumPortsFound . ' ' . $links['all'];
+
+                                $HTML .= $DisplayCommit->CreateHTML();
+                                $HTML .= '<tr><td>' . $NumPortsFound . ' ' . $links['all'] . '</td></tr>';
+                        } else {
+                                $HTML .= $DisplayCommit->CreatePlainText();
+                        }
                         break;
 
                     default:
-                        if ($Debug) echo __FILE__ . '::' . __LINE__ . ' says hi<br>';
+                        if ($Debug) echo __FILE__ . '::' . __LINE__ . " says hi<br>\n";
                         require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
 
                         $links = $Pager->GetLinks();
@@ -1389,7 +1391,7 @@ Special searches:
                                 break;
                         } /* switch output */
 
-                        if ($Debug) echo 'NumFetches = ' . $NumFetches . '<br>';
+                        if ($Debug) echo 'NumFetches = ' . $NumFetches . "<br>\n";
                         for ($i = 0; $i < $NumFetches; $i++) {
                             $Port->FetchNth($i);
                             $port_display->SetPort($Port, $Branch);
@@ -1421,7 +1423,7 @@ Special searches:
                         }
                 } /* switch */
 
-			if ($Debug) echo 'WHAT IS THIS?<br>';
+		if ($Debug) echo "WHAT IS THIS?<br>\n";
 
 		} /* NumFetches  != 0 */
 	} // $WeHaveToSearch

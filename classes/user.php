@@ -47,7 +47,7 @@ class User {
 		$this->id        = 0;
 		$this->page_size = 100;
 	}
-	
+
 
 	function Fetch($ID) {
 		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" .'
@@ -86,7 +86,7 @@ class User {
 				$this->PopulateValues($myrow);
 			} else {
 				freshports_CookieClear();
-				syslog(LOG_ERR, "Could not find user details for '$Cookie' from '" . 
+				syslog(LOG_ERR, "Could not find user details for '$Cookie' from '" .
 				        $_SERVER['REMOTE_ADDR'] . "' for '". $_SERVER['REQUEST_URI'] . "'.");
 			}
 		} else {
@@ -133,10 +133,10 @@ class User {
 			$this->page_size = $DefaultPageSize;
 		}
 	}
-	
+
 	function SetWatchListAddRemove($WatchListAddRemove) {
-		
-		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" .'UPDATE users 
+
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" .'UPDATE users
 		          set watch_list_add_remove =  $1
 		        WHERE id                    =  $2';
 
@@ -158,20 +158,27 @@ class User {
 		$Debug = 0;
 		$numrows = -1;
 
+		$WatchListID = intval($WatchListID);
+
 		# Update only if that watch list id belongs to that user.
 		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . 'UPDATE users U
 		          set last_watch_list_chosen = $1
 		        WHERE id                     = $2
 		          AND $1 IN (SELECT id FROM watch_list WHERE user_id = $2)';
-		
+
 		$this->LocalResult = pg_query_params($this->dbh, $sql, array($WatchListID, $this->id));
 		if ($this->LocalResult) {
 			$numrows = pg_affected_rows($this->LocalResult);
+			if ($numrows == 0) {
+				syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . 'could not update the user table. This should indicate the user tampered with the HTML before submitting the page.' );
+				echo('yes, I could not update the user table. Oh no, Mr Bill!');
+				die("\ndead\n");
+			}
 			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': setting ' );
-			$this->last_watch_list_chosen = pg_escape_string($this->dbh, $WatchListID);
+			$this->last_watch_list_chosen = $WatchListID;
 		} else {
 			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': ' . pg_last_error($this->dbh));
-			die('something terrible has happened' . $sql);
+			die('something terrible has happened. check the logs around ' . gmdate("Y-m-d\TH:i:s\Z") . ' look for last_watch_list_chosen');
 		}
 
 		return $numrows;

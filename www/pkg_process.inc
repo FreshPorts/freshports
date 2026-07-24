@@ -159,7 +159,7 @@ function ProcessPackages($UserID, $PortArray, $dbh) {
 		if ($result && pg_num_rows($result)) {
 			# do nothing
 		} else {
-			echo pg_last_error($dbh) . " sql = $sql";
+			syslog(LOG_ERR, pg_last_error($dbh) . " sql = $sql");
 			$ok = FALSE;
 			break;
 		}
@@ -173,7 +173,7 @@ function ProcessPackages($UserID, $PortArray, $dbh) {
 		if ($result && pg_num_rows($result)) {
 			# do nothing.  All is well
 		} else {
-			echo pg_last_error($dbh) . " sql = $sql";
+			syslog(LOG_ERR,  pg_last_error($dbh) . " sql = $sql");
 			$ok = FALSE;
 		}
 	}
@@ -454,7 +454,7 @@ function MoveStagingToWatchList($UserID, $WatchListID, $dbh) {
 		if ($Debug) syslog(LOG_NOTICE, 'commit');
 		pg_exec($dbh, "COMMIT");
 	} else {
-		echo pg_last_error($dbh) . " sql = $sql";
+		syslog(LOG_ERR, pg_last_error($dbh) . " sql = $sql");
 		pg_exec($dbh, "ROLLBACK");
 	}
 
@@ -465,8 +465,8 @@ function CopyStagingToWatchList($dbh, $UserID, $WatchListID, $Overwrite = TRUE) 
 	$ok  = TRUE;
 	$begintime = time();
 
-	$UserID      = pg_escape_string($dbh, $UserID);
-	$WatchListID = pg_escape_string($dbh, $WatchListID);
+	$UserID      = intval($UserID);
+	$WatchListID = intval($WatchListID);
 
 	$result = pg_exec($dbh, 'BEGIN');
 	if (!$result) {
@@ -482,27 +482,27 @@ function CopyStagingToWatchList($dbh, $UserID, $WatchListID, $Overwrite = TRUE) 
 	}
 
 	if ($ok) {
+		# the JOIN to watch_list ensures the supplied $WatchListID
+		# belongs to the logged-in user.
 		$sql = " INSERT INTO watch_list_element
-                 SELECT $WatchListID, element_id
-                   FROM watch_list_staging
-                  WHERE element_id IS NOT NULL
-                    AND user_id = $1
-";
+                 SELECT $1, element_id
+                   FROM watch_list_staging WLS JOIN watch_list WL ON WLS.user_id = WL.user_id AND WL.id = $1
+                  WHERE WLS.element_id IS NOT NULL
+                    AND WLS.user_id = $2\n";
 
+		$params = array($WatchListID, $UserID);
 		if (!$Overwrite) {
 			$sql .= "EXCEPT SELECT watch_list_id, element_id
                               FROM watch_list_element
-                             WHERE watch_list_id = $2
-";
-                        $params = array($UserID, $WatchListID);
-		} else {
-			$params = array($UserID);
+                             WHERE watch_list_id = $3\n";
+                        $params[] = $WatchListID;
 		}
 	}
 
 #	syslog(LOG_NOTICE, $sql);
 
-	$result = pg_query_params($dbh, $sql, $params);
+	# don't run the query unless OK from above
+	$result = $ok && pg_query_params($dbh, $sql, $params);
 #	syslog(LOG_NOTICE, "UploadDisplayWatchListItemsNotInStagingArea for WatchListID: $WatchListID");
 
 	if (!$result) {
@@ -513,7 +513,7 @@ function CopyStagingToWatchList($dbh, $UserID, $WatchListID, $Overwrite = TRUE) 
 #		syslog(LOG_NOTICE, 'commit');
 		pg_exec($dbh, "COMMIT");
 	} else {
-		echo pg_last_error($dbh) . " sql = $sql";
+		syslog(LOG_ERR, pg_last_error($dbh) . " sql = $sql");
 		pg_exec($dbh, "ROLLBACK");
 	}
 

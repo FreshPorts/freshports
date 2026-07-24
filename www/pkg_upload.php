@@ -106,9 +106,9 @@ function DisplayUploadForm($db, $UserID) {
 			<tr><td><INPUT TYPE="file"   NAME="pkg_info" SIZE="40" ></td></tr>
 			<tr><td><INPUT TYPE="submit" NAME="staging"  SIZE="20" VALUE="Staging"> &lt;= Click here to go to staging area<hr></td></tr>
 
-			<tr><td>Use this Watch List: 
+			<tr><td>Use this Watch List:
 			<?php
-echo freshports_WatchListDDLB($db, $UserID); 
+echo freshports_WatchListDDLB($db, $UserID);
 
 ?>
 </td></tr>
@@ -128,9 +128,9 @@ echo freshports_WatchListDDLB($db, $UserID);
 			<tr><td><textarea name="copypaste" rows="20" cols="30"></textarea></td></tr>
 			<tr><td><INPUT TYPE="submit" NAME="staging_copypaste" SIZE="20" VALUE="Staging"> &lt;= Click here to go to staging area<hr></td></tr>
 
-			<tr><td>Use this Watch List: 
+			<tr><td>Use this Watch List:
 			<?php
-echo freshports_WatchListDDLB($db, $UserID); 
+echo freshports_WatchListDDLB($db, $UserID);
 
 ?>
 </td></tr>
@@ -235,7 +235,7 @@ function ChooseWatchLists($UserID, $db) {
 <tr><td>
 	<?php
 	$Debug = 0;
-	
+
 #	if ($Debug) phpinfo();
 
 	# you can only be here if you are logged in!
@@ -281,12 +281,12 @@ if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 #				$ports = $_REQUEST["ports"];
 				# save these things to the watch list
 				# and clear out part of the staging area.
-				$WatchListID = pg_escape_string($db, $_REQUEST['wlid']);
+				$WatchListID = intval($_REQUEST['wlid']);
 				if (!IsSet($WatchListID) || $WatchListID === '') {
 					syslog(LOG_NOTICE, "No watch list ID was supplied.  I cannot continue.  " .
 					    __FILE__ . '::' . __LINE__ . " User id = " . $User->id);
 					die('No watch list ID was supplied.  I cannot continue.');
-				} 
+				}
 
 				if ($Debug) echo ' you clicked on update_watch_list';
 				if (MoveStagingToWatchList($User->id, $WatchListID, $db)) {
@@ -304,11 +304,11 @@ if ($Debug) echo '<br>' . __LINE__ . '<br>';
 					DisplayError("Your staging area has been cleared.");
 				}
 			}
-			
+
 			if (IsSet($_REQUEST['wlid'])) {
 if ($Debug) echo '<br>' . __LINE__ . '<br>';
 				if ($Debug) echo 'you selected a list<br>';
-				# they clicked on the GO button and we have to apply the 
+				# they clicked on the GO button and we have to apply the
 				# watch staging area against the watch list.
 				$WatchListID = pg_escape_string($db, $_REQUEST['wlid']);
 				if ($Debug) echo "setting SetLastWatchListChosen => \$wlid='$WatchListID'";
@@ -339,7 +339,7 @@ Array
     [error] => 0
     [size] => 8387
 )
-*/			
+*/
 
 			if (IsSet($_FILES["pkg_info"]) && count($_FILES["pkg_info"]) != 0) {
 if ($Debug) echo 'at line ' . __LINE__ . '<br>';
@@ -368,7 +368,7 @@ if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 								syslog(LOG_NOTICE, "No watch list ID was supplied.  I cannot continue.  pkg_upload.php::" . __LINE__ .
 									" User id = " . $User->id);
 								die('No watch list ID was supplied.  I cannot continue.');
-							} 
+							}
 
 							if (CopyStagingToWatchList($db, $User->id, $WatchListID, $Overwrite)) {
 								$DisplayStagingArea = FALSE;
@@ -444,7 +444,7 @@ if ($Debug) echo '<pre>' . $_REQUEST['copypaste'] . '</pre>';
 			    }
 			  }
             }
-			
+
 		}
 
 if ($Debug) echo '<br>' . __LINE__ . '<br>';

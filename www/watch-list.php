@@ -233,14 +233,18 @@ echo freshports_ShowFooter();
 				if (IsSet($_REQUEST['remove'])) {
 					pg_exec($db, 'BEGIN');
 					$ElementID = pg_escape_string($db, intval($_REQUEST['remove']));
-					$WLID      = pg_escape_string($db, intval($_REQUEST['wlid']));
 					if ($ElementID == '') {
 						die('The target for removal was not supplied');
 					}
 
 					$WatchListElement = new WatchListElement($db);
-#					if ($WatchListElement->DeleteFromDefault($User->id, $ElementID) >= 0) {
-					if ($WatchListElement->Delete($User->id, $WLID, $ElementID) >= 0) {
+					if (IsSet($_REQUEST['wlid'])) {
+						$WLID   = pg_escape_string($db, intval($_REQUEST['wlid']));
+						$Result = $WatchListElement->Delete($User->id, $WLID, $ElementID);
+					} else {
+						$Result = $WatchListElement->DeleteFromDefault($User->id, $ElementID);
+					}
+					if ($Result >= 0) {
 						pg_exec($db, 'COMMIT');
 					} else {
 						pg_exec($db, 'ROLLBACK');

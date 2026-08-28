@@ -85,7 +85,7 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 #		if ($ErrorMessage) {
 #			echo freshports_ErrorMessage("Let\'s try that again!", $ErrorMessage);
 #		}
-	
+
 		$PostURL = $_SERVER["PHP_SELF"];
 		if (IsSet($_REQUEST["remove"])) {
 			$ButtonName = "Update";
@@ -119,7 +119,7 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 		$port_display->SetPort($port);
 
 		$Port_HTML = $port_display->Display();
-		
+
 		$HTML = $port_display->ReplaceWatchListToken($port->{'onwatchlist'}, $Port_HTML, $port->{'element_id'});
 
 		echo $HTML;
@@ -131,7 +131,7 @@ Please select the watch lists which should contain this port:
 		echo freshports_WatchListDDLB($db, $User->id, '', 10, TRUE, TRUE, $Object);
 		?>
 		<br><br>
-		<INPUT id=submit style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29 
+		<INPUT id=submit style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29
 		   value="<?php echo $ButtonName; ?>" name="submit"><br>
 		<INPUT TYPE="hidden" NAME="Origin" VALUE="<?php echo $Origin?>">
 		<INPUT TYPE="hidden" NAME="Update" VALUE="<?php echo $Object?>">
@@ -221,7 +221,7 @@ echo freshports_ShowFooter();
 				if ($ElementID == '') {
 					die('The target for addition was not supplied');
 				}
-	
+
 				$WatchListElement = new WatchListElement($db);
 				if ($WatchListElement->AddToDefault($User->id, $ElementID) == 1) {
 					pg_exec($db, 'COMMIT');
@@ -233,14 +233,12 @@ echo freshports_ShowFooter();
 				if (IsSet($_REQUEST['remove'])) {
 					pg_exec($db, 'BEGIN');
 					$ElementID = pg_escape_string($db, intval($_REQUEST['remove']));
-					$WLID      = pg_escape_string($db, intval($_REQUEST['wlid']));
 					if ($ElementID == '') {
 						die('The target for removal was not supplied');
 					}
 
 					$WatchListElement = new WatchListElement($db);
-#					if ($WatchListElement->DeleteFromDefault($User->id, $ElementID) >= 0) {
-					if ($WatchListElement->Delete($User->id, $WLID, $ElementID) >= 0) {
+					if ($WatchListElement->DeleteFromDefault($User->id, $ElementID) >= 0) {
 						pg_exec($db, 'COMMIT');
 					} else {
 						pg_exec($db, 'ROLLBACK');

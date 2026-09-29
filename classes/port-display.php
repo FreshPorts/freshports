@@ -1782,7 +1782,7 @@ class port_display {
 				$HTML .= "\n</ol></dd>\n";
 			}
 
-			if (!($port->depends_build || $port->depends_run || $port->depends_lib || $port->fetch_depends || $port->patch_depends || $port->extract_depends || $port->build_run_depends)) {
+			if (!($port->depends_build || $port->depends_run || $port->depends_lib || $port->fetch_depends || $port->patch_depends || $port->extract_depends || $port->test_depends || $port->build_run_depends)) {
 				$HTML .= '<dt class="h3" id="dependencies">This port has no dependencies.</dt>';
 			}
 

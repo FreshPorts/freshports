@@ -56,6 +56,7 @@ class Port {
 	var $patch_depends;
 	var $test_depends;
 	var $build_run_depends;
+	var $pkgversion;
 	var $uses;
 	var $pkgmessage;
 	var $distinfo;
@@ -174,6 +175,7 @@ class Port {
 		$this->patch_depends        = $myrow["patch_depends"]        ?? null;
 		$this->test_depends         = $myrow["test_depends"]         ?? null;
 		$this->build_run_depends    = $myrow["build_run_depends"]    ?? null;
+		$this->pkgversion           = $myrow["pkgversion"]           ?? null;
 		$this->uses                 = $myrow["uses"]                 ?? null;
 		$this->pkgmessage           = $myrow["pkgmessage"]           ?? null;
 		$this->distinfo             = $myrow["distinfo"]             ?? null;
@@ -294,6 +296,7 @@ class Port {
        ports.patch_depends,
        ports.test_depends,
        ports.build_run_depends,
+       ports.pkgversion,
        ports.uses,
        ports.pkgmessage,
        ports.distinfo,
@@ -427,6 +430,7 @@ class Port {
 		               ports.patch_depends,
 		               ports.test_depends,
 		               ports.build_run_depends,
+		               ports.pkgversion,
 		               ports.uses,
 		               ports.pkgmessage,
 		               ports.distinfo,
@@ -567,6 +571,7 @@ ON TEMP.wle_element_id = ports.element_id';
 		               ports.patch_depends,
 		               ports.test_depends,
 		               ports.build_run_depends,
+		               ports.pkgversion,
 		               ports.uses,
 		               ports.pkgmessage,
 		               ports.distinfo,
@@ -731,6 +736,7 @@ SELECT P.*, element.name    as port
         ports.patch_depends,
         ports.test_depends,
         ports.build_run_depends,
+        ports.pkgversion,
         ports.uses,
         ports.pkgmessage,
         ports.distinfo,

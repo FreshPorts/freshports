@@ -955,6 +955,21 @@ class port_display {
 				$HTML .= '#history">' . $PackageVersion . '</a>';
 			}
 
+			#
+			# The package is not always named after PORTVERSION, PORTREVISION
+			# and PORTEPOCH alone.  The kmod ports and a few others have
+			# ${OSVERSION} spliced in by the framework, so the package built
+			# for one release of FreeBSD is not named the same as the package
+			# built for another, and the version above is not the whole story.
+			#
+			# ports.pkgversion is make -V PKGVERSION, so where it differs from
+			# what we just composed, something else is in there.  Show it.
+			#
+			if (!empty($port->pkgversion) && $port->pkgversion != $PackageVersion) {
+				$HTML .= ' <span title="The package version for this port includes the version of FreeBSD it is built for, so packages for other releases are named differently.">(package ' .
+				         htmlspecialchars($port->pkgversion) . ')</span>';
+			}
+
 			if (IsSet($port->category_looking_at)) {
 				if ($port->category_looking_at != $port->category) {
 					$HTML .= '<sup>*</sup>';

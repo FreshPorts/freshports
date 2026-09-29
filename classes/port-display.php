@@ -1726,12 +1726,15 @@ class port_display {
 
 		if ($this->ShowDepends || $this->ShowEverything) {
 #			$HTML .= "</dl>\n<hr><dl>\n";
-			if ($port->depends_build || $port->depends_run || $port->depends_lib || $port->fetch_depends || $port->patch_depends || $port->extract_depends || $port->test_depends) {
+			if ($port->depends_build || $port->depends_run || $port->depends_lib || $port->fetch_depends || $port->patch_depends || $port->extract_depends || $port->test_depends || $port->build_run_depends) {
 				$HTML .= '<dt class="h2" id="dependencies">Dependencies</dt>';
 				$HTML .= '<dt class="notice">NOTE: FreshPorts displays only information on required and default dependencies.  Optional dependencies are not covered.</dt>';
 			}
 
-			if ($port->depends_build) {
+			# BUILD_RUN_DEPENDS covers both building and running, so when it is
+			# set it stands in for the separate build and run sections rather
+			# than repeating what they would say.
+			if ($port->depends_build && !$port->build_run_depends) {
 				$HTML .= '<dt class="required" id="requiredbuild">Build dependencies:</dt><dd>' . "\n" . '<ol class="required" id="requiredtobuild">';
 				$HTML .= freshports_depends_links($this->db, $port->depends_build, $this->Branch);
 				$HTML .= "\n</ol></dd>\n";
@@ -1743,7 +1746,7 @@ class port_display {
 				$HTML .= "\n</ol></dd>\n";
 			}
 
-			if ($port->depends_run) {
+			if ($port->depends_run && !$port->build_run_depends) {
 				$HTML .= '<dt class="required" id="requiredrun">Runtime dependencies:</dt><dd>' . "\n" . '<ol class="required" id="requiredtorun">';
 				$HTML .= freshports_depends_links($this->db, $port->depends_run, $this->Branch);
 				$HTML .= "\n</ol></dd>\n";
@@ -1773,7 +1776,13 @@ class port_display {
 				$HTML .= "\n</ol></dd>\n";
 			}
 
-			if (!($port->depends_build || $port->depends_run || $port->depends_lib || $port->fetch_depends || $port->patch_depends || $port->extract_depends)) {
+			if ($port->build_run_depends) {
+				$HTML .= '<dt class="required" id="requiredbuildrun">Build and run dependencies:</dt><dd>' . "\n" . '<ol class="required" id="requiredtobuildandrun">';
+				$HTML .= freshports_depends_links($this->db, $port->build_run_depends, $this->Branch);
+				$HTML .= "\n</ol></dd>\n";
+			}
+
+			if (!($port->depends_build || $port->depends_run || $port->depends_lib || $port->fetch_depends || $port->patch_depends || $port->extract_depends || $port->build_run_depends)) {
 				$HTML .= '<dt class="h3" id="dependencies">This port has no dependencies.</dt>';
 			}
 
@@ -1894,14 +1903,21 @@ class port_display {
 		$HTML = '';
 
 		$PortDependencies = new PortDependencies( $this->db );
-		$Types = array( 'B' => 'Build', 'E' => 'Extract', 'F' => 'Fetch', 'L' => 'Libraries', 'P' => 'Patch', 'R' => 'Run' );
+		$Types = array( 'A' => 'BuildAndRun', 'B' => 'Build', 'E' => 'Extract', 'F' => 'Fetch', 'L' => 'Libraries', 'P' => 'Patch', 'R' => 'Run', 'T' => 'Test' );
+
+		# $title is used both as display text and as an HTML id fragment, so it
+		# cannot contain spaces.  Types whose name does not survive that get a
+		# separate label here, used for display only.
+		$Labels = array( 'BuildAndRun' => 'Build and run' );
+
 		foreach ( $Types as $type => $title ) {
+			$label = isset( $Labels[$title] ) ? $Labels[$title] : $title;
 			$div  = ''; # we use this empty bit when the first port in the list is a deleted port.  It tells us to open the list via <dl>
 			$NumRows = $PortDependencies->FetchInitialise( $port->id, $type );
 			if ( $NumRows > 0 ) {
 				# everything "required for" XXX goes under this section.
 				# Each one of Build, Extract, etc, gets this.
-				$HTML .= '<dd class="required"><dl><dt>for ' . $title . "</dt>\n";
+				$HTML .= '<dd class="required"><dl><dt>for ' . $label . "</dt>\n";
 
 				# Let's fetch the first port, and see if it's deleted.  If it is, we don't need this first loop
 				$PortDependencies->FetchNth(0);

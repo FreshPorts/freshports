@@ -55,6 +55,7 @@ class Port {
 	var $extract_depends;
 	var $patch_depends;
 	var $test_depends;
+	var $build_run_depends;
 	var $uses;
 	var $pkgmessage;
 	var $distinfo;
@@ -172,6 +173,7 @@ class Port {
 		$this->extract_depends      = $myrow["extract_depends"]      ?? null;
 		$this->patch_depends        = $myrow["patch_depends"]        ?? null;
 		$this->test_depends         = $myrow["test_depends"]         ?? null;
+		$this->build_run_depends    = $myrow["build_run_depends"]    ?? null;
 		$this->uses                 = $myrow["uses"]                 ?? null;
 		$this->pkgmessage           = $myrow["pkgmessage"]           ?? null;
 		$this->distinfo             = $myrow["distinfo"]             ?? null;
@@ -291,6 +293,7 @@ class Port {
        ports.extract_depends,
        ports.patch_depends,
        ports.test_depends,
+       ports.build_run_depends,
        ports.uses,
        ports.pkgmessage,
        ports.distinfo,
@@ -423,6 +426,7 @@ class Port {
 		               ports.extract_depends,
 		               ports.patch_depends,
 		               ports.test_depends,
+		               ports.build_run_depends,
 		               ports.uses,
 		               ports.pkgmessage,
 		               ports.distinfo,
@@ -562,6 +566,7 @@ ON TEMP.wle_element_id = ports.element_id';
 		               ports.extract_depends,
 		               ports.patch_depends,
 		               ports.test_depends,
+		               ports.build_run_depends,
 		               ports.uses,
 		               ports.pkgmessage,
 		               ports.distinfo,
@@ -725,6 +730,7 @@ SELECT P.*, element.name    as port
         ports.extract_depends,
         ports.patch_depends,
         ports.test_depends,
+        ports.build_run_depends,
         ports.uses,
         ports.pkgmessage,
         ports.distinfo,

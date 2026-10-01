@@ -571,6 +571,9 @@ pre.description {
 /*    overflow-x: scroll; */
     max-width: 600px;
 /*    white-space: nowrap;*/
+    /* wrap long lines, e.g. URLs, instead of overflowing - see issue #674 */
+    white-space: pre-wrap;
+    word-break: break-word;
 }
 
 html {

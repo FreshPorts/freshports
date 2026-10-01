@@ -410,6 +410,12 @@ PRE.code {
   word-break: break-word;
 }
 
+/* UPDATING entries can contain very long lines, e.g. stack traces - see issue #674 */
+.ports-updating pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
 .port {
   font-family: monospace;
 }

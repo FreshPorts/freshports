@@ -45,7 +45,8 @@ date_default_timezone_set(FRESHPORTS_TIMEZONE);
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watchnotice.php');
 
 function freshports_MainTable() {
-	return '<table class="fullwidth borderless">
+	# the layout class lets the stylesheet stack content above the sidebar on narrow screens - see issue #636
+	return '<table class="layout fullwidth borderless">
 ';
 }
 
@@ -1060,10 +1061,10 @@ GLOBAL $dbhost;
 
 #echo "$LocalTimeAdjustment<br>";
 
-	$HTML = '<br>
-<table class="fullwidth borderless">
-<tr>
-	<td><span class="logo"><a href="';
+	# a header rather than a table, so it can wrap on narrow screens - see issue #636
+	$HTML = '
+<header class="site-header">
+	<div class="site-header-main"><span class="logo"><a href="';
 
 	if ($_SERVER["PHP_SELF"] == "/index.php") {
 		$HTML .= 'other-copyrights.php';
@@ -1099,23 +1100,26 @@ GLOBAL $dbhost;
 	$HTML .= 'Want a good monitor light? See my <a href="https://dan.langille.org/2023/12/30/blatant-self-interest-monitor-light/">photos</a></span>';
 	$HTML .= '<span class="timezone">All times are UTC</span>';
 
-	$HTML .= '</td>';
+	$HTML .= '</div>';
 
 if (date("M") == 'Nov' && date("j") <= 12) {
-	$HTML .= '	<td class="sans nowrap vbottom hcentered"><a href="https://www.google.ca/search?q=remembrance+day" rel="noopener noreferrer"><img src="/images/poppy.gif" width="50" height="48" alt="Remember" title="Remember"><br>I remember</a></td>';
+	$HTML .= '	<div class="site-header-aside sans nowrap hcentered"><a href="https://www.google.ca/search?q=remembrance+day" rel="noopener noreferrer"><img src="/images/poppy.gif" width="50" height="48" alt="Remember" title="Remember"><br>I remember</a></div>';
 } elseif (defined('UKRAINE') && UKRAINE) {
-	$HTML .= '	<td class="sans nowrap vbottom hcentered"><img src="/images/ukraine.png" width="133" height="100" alt="Ukraine" title="Ukraine"></td>';
+	$HTML .= '	<div class="site-header-aside sans nowrap hcentered"><img src="/images/ukraine.png" width="133" height="100" alt="Ukraine" title="Ukraine"></div>';
 } else {
-	$HTML .= '	<td>';
+	$HTML .= '	<div class="site-header-aside">';
 	$HTML .= '<div id="followus"><div class="header">Follow us</div><a href="https://news.freshports.org/" rel="noopener noreferrer">Blog</a><br><a href="https://twitter.com/freshports/" rel="noopener noreferrer">Twitter</a><br><a href="https://freshports.wordpress.com/" rel="noopener noreferrer">Status page</a><br></div><a rel="me" href="https://bsd.network/@dvl">Mastodon</a>';
 
-	$HTML .= '</td>';
+	$HTML .= '</div>';
 	
 }
 
+# only shown on narrow screens, where the sidebar is pushed below the page content.
+# menu-button stays pinned to a corner of the screen, so it can be used from anywhere on the page.
 $HTML .= '
-</tr>
-</table>
+	<a class="menu-link" href="#sidebar">Menu &amp; search</a>
+	<a class="menu-button" href="#sidebar" title="Jump to the menu and search">&#9776; Menu</a>
+</header>
 ';
 
 	return $HTML;
@@ -1143,6 +1147,7 @@ echo HTML_DOCTYPE . '
 function freshports_HEAD_charset() {
 	return '
 	<meta http-equiv="Content-Type" content="text/html; charset=' . FRESHPORTS_ENCODING . '">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 ';
 }
 
@@ -2182,8 +2187,9 @@ function freshports_SideBar() {
 
 	GLOBAL $User;
 
+	# id="sidebar" is the target of the narrow-screen menu link in freshports_Logo()
 	$HTML = '
-  <table class="bordered">
+  <table class="bordered" id="sidebar">
         <tr>
          <th class="accent">Login</th>
         </tr>

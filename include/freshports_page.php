@@ -33,6 +33,7 @@ class freshports_page extends HTML_Page2 {
 
 		$this->setMetaData('robots', 'noarchive');
 		$this->setMetaData('robots', 'noindex');
+		$this->setMetaData('viewport', 'width=device-width, initial-scale=1');
 
 		$version = substr(hash_file('sha1', $_SERVER['DOCUMENT_ROOT'] . '/css/freshports.css'), 0, 8);
 		$this->addStyleSheet('/css/freshports.css?v=' . $version);

@@ -37,6 +37,7 @@
 <head>
 <title>FreshPorts - VuXML</title>
 <meta name="robots" content="nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 

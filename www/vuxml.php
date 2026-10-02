@@ -27,7 +27,9 @@
         }
 
 	if (IsSet($_REQUEST['vid'])) {
-		$vid = pg_escape_string($db, $_REQUEST['vid']);
+		# no SQL escaping needed: VuXML::FetchByVID() uses pg_query_params.
+		# Values are HTML escaped on output.
+		$vid = $_REQUEST['vid'];
 
 		$vidArray = explode('|', $vid);
 	}
@@ -59,11 +61,11 @@ This page displays <a href="<?php echo VUXMLURL; ?>">vulnerability information</
 	}
 
 	if (!IsSet($_REQUEST['list'])) {
-		echo '<p><a href="' . $_SERVER["PHP_SELF"] . '?list">List all Vulnerabilities, by package</a></p>';
+		echo '<p><a href="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '?list">List all Vulnerabilities, by package</a></p>';
 	}
 
 	if (!IsSet($_REQUEST['all'])) {
-		echo '<p><a href="' . $_SERVER["PHP_SELF"] . '?all">List all Vulnerabilities, by date</a></p>';
+		echo '<p><a href="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '?all">List all Vulnerabilities, by date</a></p>';
 	}
 
 
@@ -92,8 +94,9 @@ These are the vulnerabilities relating to the commit you have selected:
 	foreach($vidArray as $key => $value) {
 		$VuXML->FetchByVID($value);
 
-		$URL = VUXMLURL . $value . '.html';
-		echo '<tr><td class="vtop" nowrap><a href="' . $URL . '">' . $value . '</a></td><td>';
+		# $value comes straight from the request; escape it - see reflected XSS
+		$URL = VUXMLURL . rawurlencode($value) . '.html';
+		echo '<tr><td class="vtop" nowrap><a href="' . htmlspecialchars($URL) . '">' . htmlspecialchars($value) . '</a></td><td>';
 		$VuXML->display();
 
 		echo "</td></tr>\n";
@@ -109,7 +112,7 @@ These are the vulnerabilities relating to the commit you have selected:
 		function vuxml_name_link($VID, $Name, $Count) {
 			$HTML = '<tr><td>';
 
-			$HTML .= '<a href="/vuxml.php?vid=' . urlencode($VID) . '">' . $Name . '</a></td><td class="hcentered">';
+			$HTML .= '<a href="/vuxml.php?vid=' . htmlspecialchars(urlencode($VID)) . '">' . htmlspecialchars($Name) . '</a></td><td class="hcentered">';
 			if ($Count > 1) {
 				$HTML .= ' (' . $Count . ')';
 			} else {
@@ -117,7 +120,7 @@ These are the vulnerabilities relating to the commit you have selected:
 			}
 
 			$HTML .= '</td><td class="hcentered">';
-			$HTML .= '<a href="/?package=' . $Name . '">port</a>';
+			$HTML .= '<a href="/?package=' . htmlspecialchars(urlencode($Name)) . '">port</a>';
 			$HTML .= '</td></tr>' . "\n";
 
 			return $HTML;
@@ -195,23 +198,24 @@ SELECT V.vid,
 		function vuxml_name_link($VID, $Date, $Description, $PortArray, $IsNew) {
 			$HTML = '<tr><td class="vtop nowrap">';
 
-			$HTML .= $Date;
+			$HTML .= htmlspecialchars($Date);
 			if ($IsNew == 'f') {
 				$HTML .= '<sup>*</sup>';
 			}
 			$HTML .= '</td><td class="vtop">';
 
+			# the description is XHTML from vuxml.xml and is intentionally output as-is
 			$Narrative = $Description;
-			$HTML .= '<b>VuXML ID</b> <span class="code">' . $VID . '</span><br>' . $Narrative . ' <a href="' . VUXMLURL . $VID . '.html">more...</a>';
+			$HTML .= '<b>VuXML ID</b> <span class="code">' . htmlspecialchars($VID) . '</span><br>' . $Narrative . ' <a href="' . htmlspecialchars(VUXMLURL . rawurlencode($VID) . '.html') . '">more...</a>';
 			$HTML .= '</td><td class="hleft vtop">';
 
 			foreach ($PortArray as $package) {
-				$HTML .= '<a href="/?package=' . $package . '">' . $package . '</a> ';
+				$HTML .= '<a href="/?package=' . htmlspecialchars(urlencode($package)) . '">' . htmlspecialchars($package) . '</a> ';
 				$HTML .= '<br>';
 			}
 
 
-			$HTML .= '<br><a href="vuxml.php?vid=' . $VID . '">more detail</a></td></tr>' . "\n";
+			$HTML .= '<br><a href="vuxml.php?vid=' . htmlspecialchars(urlencode($VID)) . '">more detail</a></td></tr>' . "\n";
 
 			return $HTML;
 		}

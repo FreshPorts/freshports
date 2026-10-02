@@ -695,6 +695,24 @@ a.showLink:hover, a.hideLink:hover {
     border-bottom: 1px dotted var(--link-color);
 }
 
+/* visible links to the anchors on a page, e.g. #packages on a port page - see issue #675 */
+a.anchor-link {
+  font-family: monospace;
+  font-weight: normal;
+  text-decoration: none;
+  opacity: 0.6;
+}
+
+a.anchor-link:hover, a.anchor-link:focus {
+  text-decoration: underline;
+  opacity: 1;
+}
+
+.accent a.anchor-link {
+  color: white;
+  color: var(--accent-text);
+}
+
 li.nostyle {
     list-style-type: none;
 }

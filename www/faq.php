@@ -872,13 +872,14 @@ now that the Master has been upgraded.
 	<li>requiredpatch</li>
 	<li>requiredextract</li>
 	<li>requiredby</li>
-	<li>RequiredByBuild</li>
-	<li>RequiredByExtract</li>
-	<li>RequiredByFetch</li>
-	<li>RequiredByLibraries</li>
-	<li>RequiredByPatch</li>
-	<li>RequiredByRun</li>
-	<li>requiredfor</li>
+	<li>requiredforBuildAndRun</li>
+	<li>requiredforBuild</li>
+	<li>requiredforExtract</li>
+	<li>requiredforFetch</li>
+	<li>requiredforLibraries</li>
+	<li>requiredforPatch</li>
+	<li>requiredforRun</li>
+	<li>requiredforTest</li>
 	<li>conflicts</li>
 	<li>config</li>
 	<li>options</li>
@@ -899,7 +900,8 @@ now that the Master has been upgraded.
 <blockquote><a href="/security/acme.sh/#history">security/acme.sh/#history</a></blockquote>
 
 <p>
-	Browser extensions such as <a href="https://github.com/Rob--W/display-anchors#readme">Display #Anchors</a> and <a href="https://addons.mozilla.org/addon/anchors-reveal/">Anchors Reveal</a> can help to visualise anchors that would otherwise be invisible. 
+	Each of these sections has a <code class="code">#</code> link beside its heading.
+	Click it, or copy it, to get a link to that section.
 </p>
 <p>
 	Enjoy. We can add more anchors upon request.

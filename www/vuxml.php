@@ -37,7 +37,11 @@
 <head>
 <title>FreshPorts - VuXML</title>
 <meta name="robots" content="nofollow">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<?php
+	# the stylesheet sets text and background colours for both light and dark mode - see issue #598
+	echo freshports_HEAD_charset();
+	freshports_style();
+?>
 </head>
 <body>
 

@@ -53,7 +53,8 @@
   height: 100%;
 }
 
-.holiday.pride body > table {
+.holiday.pride body > table,
+.holiday.pride body > header {
   background-color: white;
   background-color: var(--background-color);
 }
@@ -397,6 +398,32 @@ input[type="image"], .watchlist-selector select {
 }
 
 IMG#fp-logo { max-width: 100%; height: auto }
+
+/* page header: logo, notices, and follow-us links - see issue #636 */
+.site-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1em;
+  margin-top: 1em;
+}
+
+.site-header-main {
+  flex: 1 1 auto;
+  display: flow-root;
+}
+
+.site-header-aside {
+  flex: 0 0 auto;
+}
+
+.site-header-aside.hcentered {
+  align-self: flex-end;
+}
+
+/* only shown on narrow screens */
+.menu-link {
+  display: none;
+}
 
 CODE.code, kbd.code {
   color: #461b7e;
@@ -868,3 +895,163 @@ table.packages {
 .nowrap { white-space: nowrap; }
 
 .cmd { color: #007a00; font-family: monospace; }
+
+
+/*
+  Narrow screens (phones, small tablets) - see issue #636
+
+  Pages are laid out with tables: the content and the sidebar are two cells
+  of table.layout. Here those cells are stacked, the sidebar boxes are put
+  into a grid below the content, and wide tables scroll within their cell
+  instead of widening the whole page.
+*/
+@media only screen and (max-width: 800px) {
+  .site-header {
+    flex-wrap: wrap;
+    gap: 0.5em;
+    margin-top: 0.5em;
+  }
+
+  .site-header-main {
+    flex-basis: 100%;
+  }
+
+  span.logo, span.branch, span.amazon, div#followus {
+    float: none;
+  }
+
+  span.logo, span.branch, span.amazon, span.timezone {
+    display: block;
+  }
+
+  span.amazon {
+    font-size: inherit;
+    margin: 0.5em 0;
+  }
+
+  div#followus .header {
+    font-size: 20px;
+  }
+
+  .menu-link {
+    display: block;
+    flex-basis: 100%;
+    padding: 0.5em;
+    text-align: center;
+    font-weight: bold;
+    text-decoration: none;
+    background-color: #8c0707;
+    background-color: var(--beastie-red);
+  }
+
+  .menu-link:link, .menu-link:visited {
+    color: white;
+    color: var(--accent-text);
+  }
+
+  table.layout,
+  table.layout > tbody,
+  table.layout > tbody > tr,
+  table.layout > tbody > tr > td,
+  table.maincontent,
+  table.maincontent > tbody,
+  table.maincontent > tbody > tr,
+  table.maincontent > tbody > tr > td {
+    display: block;
+    width: 100%;
+  }
+
+  td.content {
+    overflow-wrap: break-word;
+  }
+
+  table.maincontent > tbody > tr > td {
+    padding: 4px;
+    overflow-x: auto;
+  }
+
+  /* long banner text wraps on narrow screens, so it cannot have a fixed height */
+  .accent {
+    height: auto;
+    min-height: 30px;
+  }
+
+  table.layout > tbody > tr > td.sidebar {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 1em;
+    align-items: start;
+    margin-top: 1em;
+    text-align: left;
+  }
+
+  .sidebar > table,
+  .sidebar > table:first-child td {
+    width: 100%;
+    white-space: normal;
+  }
+
+  .sidebar > br {
+    display: none;
+  }
+
+  .sidebar input[type="text"] {
+    width: 70%;
+  }
+
+  /* one commit per block, instead of three side-by-side columns */
+  .commit-list,
+  .commit-list > tbody,
+  .commit-list > tbody > tr,
+  .commit-list > tbody > tr > td {
+    display: block;
+    width: auto;
+  }
+
+  .commit-list td:first-child {
+    width: auto;
+  }
+
+  .commit-list > tbody > tr:has(> th) {
+    display: none;
+  }
+
+  .commit-list > tbody > tr {
+    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--body-text);
+  }
+
+  table.bordered.commit-list > tbody > tr > td {
+    border: 0 none;
+  }
+
+  .commit-details {
+    white-space: normal;
+  }
+
+  pre.description {
+    max-width: none;
+  }
+
+  div.scrollmenu {
+    overflow-x: auto;
+  }
+
+  .graph-sidebar, .graph-sidebar select, .graphs #holder, .graphs #overview {
+    width: auto;
+    max-width: 100%;
+  }
+
+  .footer table,
+  .footer tbody,
+  .footer tr,
+  .footer td {
+    display: block;
+    width: 100%;
+  }
+
+  .footer .sponsors, .footer .copyright {
+    text-align: center;
+    padding: 0.25em 0;
+  }
+}

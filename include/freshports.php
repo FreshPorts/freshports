@@ -1114,9 +1114,11 @@ if (date("M") == 'Nov' && date("j") <= 12) {
 	
 }
 
-# only shown on narrow screens, where the sidebar is pushed below the page content
+# only shown on narrow screens, where the sidebar is pushed below the page content.
+# menu-button stays pinned to a corner of the screen, so it can be used from anywhere on the page.
 $HTML .= '
 	<a class="menu-link" href="#sidebar">Menu &amp; search</a>
+	<a class="menu-button" href="#sidebar" title="Jump to the menu and search">&#9776; Menu</a>
 </header>
 ';
 

@@ -421,7 +421,7 @@ IMG#fp-logo { max-width: 100%; height: auto }
 }
 
 /* only shown on narrow screens */
-.menu-link {
+.menu-link, .menu-button {
   display: none;
 }
 
@@ -944,7 +944,23 @@ table.packages {
     background-color: var(--beastie-red);
   }
 
-  .menu-link:link, .menu-link:visited {
+  .menu-button {
+    display: block;
+    position: fixed;
+    right: 12px;
+    bottom: 12px;
+    z-index: 10;
+    padding: 0.6em 0.9em;
+    border-radius: 6px;
+    font-weight: bold;
+    text-decoration: none;
+    background-color: #8c0707;
+    background-color: var(--beastie-red);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  }
+
+  .menu-link:link, .menu-link:visited,
+  .menu-button:link, .menu-button:visited {
     color: white;
     color: var(--accent-text);
   }

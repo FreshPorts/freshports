@@ -550,11 +550,12 @@ function freshports_Bugs_Report_Icon($Title = 'Report an issue related to this p
 }
 
 function freshports_WatchListCount_Icon() {
-	return '<img class="icon" src="/images/sum.gif" alt="on this many watch lists" title="on this many watch lists" width="8" height="11">';
+	# a text character, not the old sum.gif, so it follows the text colour in light and dark mode - see issue #598
+	return '<span class="watchlist-count" title="on this many watch lists" aria-label="on this many watch lists">&Sigma;</span>';
 }
 
 function freshports_WatchListCount_Icon_Link() {
-	return '<a href="/' . FAQLINK . '#watchlistcount">' . freshports_WatchListCount_Icon() . '</a>';
+	return '<a class="watchlist-count" href="/' . FAQLINK . '#watchlistcount">' . freshports_WatchListCount_Icon() . '</a>';
 }
 
 function freshports_Files_Icon() {

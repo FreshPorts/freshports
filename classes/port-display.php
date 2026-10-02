@@ -1746,12 +1746,16 @@ class port_display {
 				$HTML .= '<dt class="notice">NOTE: FreshPorts displays only information on required and default dependencies.  Optional dependencies are not covered.</dt>';
 			}
 
-			# BUILD_RUN_DEPENDS covers both building and running, so when it is
-			# set it stands in for the separate build and run sections rather
-			# than repeating what they would say.
-			if ($port->depends_build && !$port->build_run_depends) {
+			# The ports framework appends BUILD_RUN_DEPENDS to both BUILD_DEPENDS
+			# and RUN_DEPENDS.  Take it back out, so the build and run sections
+			# show only what is build-only or run-only, and the shared entries
+			# appear once, under build and run dependencies.
+			$depends_build = freshports_depends_subtract($port->depends_build, $port->build_run_depends);
+			$depends_run   = freshports_depends_subtract($port->depends_run,   $port->build_run_depends);
+
+			if ($depends_build) {
 				$HTML .= '<dt class="required" id="requiredbuild">Build dependencies:</dt><dd>' . "\n" . '<ol class="required" id="requiredtobuild">';
-				$HTML .= freshports_depends_links($this->db, $port->depends_build, $this->Branch);
+				$HTML .= freshports_depends_links($this->db, $depends_build, $this->Branch);
 				$HTML .= "\n</ol></dd>\n";
 			}
 
@@ -1761,9 +1765,9 @@ class port_display {
 				$HTML .= "\n</ol></dd>\n";
 			}
 
-			if ($port->depends_run && !$port->build_run_depends) {
+			if ($depends_run) {
 				$HTML .= '<dt class="required" id="requiredrun">Runtime dependencies:</dt><dd>' . "\n" . '<ol class="required" id="requiredtorun">';
-				$HTML .= freshports_depends_links($this->db, $port->depends_run, $this->Branch);
+				$HTML .= freshports_depends_links($this->db, $depends_run, $this->Branch);
 				$HTML .= "\n</ol></dd>\n";
 			}
 

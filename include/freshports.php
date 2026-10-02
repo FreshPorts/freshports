@@ -1377,6 +1377,20 @@ function freshports_ONToYN($Value) {
 }
 
 
+#
+# Return the entries of $DependsList which do not appear in $Remove,
+# keeping their order.  Both are whitespace-separated depends lists.
+# Used to take BUILD_RUN_DEPENDS out of BUILD_DEPENDS and RUN_DEPENDS,
+# which the ports framework appends it to.
+#
+function freshports_depends_subtract($DependsList, $Remove) {
+	$depends = preg_split('!\s+!', trim($DependsList ?? ''), -1, PREG_SPLIT_NO_EMPTY);
+	$remove  = preg_split('!\s+!', trim($Remove      ?? ''), -1, PREG_SPLIT_NO_EMPTY);
+
+	return implode(' ', array_diff($depends, $remove));
+}
+
+
 function freshports_depends_links($dbh, $DependsList, $BranchName = BRANCH_HEAD) {
 	$Debug = 0;
 

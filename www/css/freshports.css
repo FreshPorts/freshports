@@ -695,6 +695,35 @@ a.showLink:hover, a.hideLink:hover {
     border-bottom: 1px dotted var(--link-color);
 }
 
+/*
+  visible links to the anchors on a page, e.g. #packages on a port page - see issue #675
+  faint text colour until the pointer is over the heading, or the link has keyboard focus
+*/
+a.anchor-link {
+  font-family: monospace;
+  font-weight: normal;
+  text-decoration: none;
+  opacity: 0.35;
+}
+
+a.anchor-link:link, a.anchor-link:visited {
+  color: black;
+  color: var(--body-text);
+}
+
+:hover > a.anchor-link, a.anchor-link:focus {
+  opacity: 1;
+}
+
+a.anchor-link:hover, a.anchor-link:focus {
+  text-decoration: underline;
+}
+
+.accent a.anchor-link:link, .accent a.anchor-link:visited {
+  color: white;
+  color: var(--accent-text);
+}
+
 li.nostyle {
     list-style-type: none;
 }

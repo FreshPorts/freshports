@@ -1683,7 +1683,7 @@ function freshports_PortCommits($port, $PageNumber = 1, $NumCommitsPerPage = 100
 
 	$links = $Pager->GetLinks();
 
-	# the opening <p> is prepended later
+	# the <p> tags are added where this is used
 	$NumCommitsHTML = 'Number of commits found: ' . $NumCommits;
 
 	$Offset = 0;
@@ -1697,8 +1697,6 @@ function freshports_PortCommits($port, $PageNumber = 1, $NumCommitsPerPage = 100
 		unset($offset);
 	}
 
-	$NumCommitsHTML .= '</p>';
-
 	if ($PageLinks != '') {
 		$PageLinksHTML = '<p class="pagination">' . $PageLinks . '</p>';
 	} else {
@@ -1706,7 +1704,7 @@ function freshports_PortCommits($port, $PageNumber = 1, $NumCommitsPerPage = 100
 	}
 
 	# this is the 1st of 2 places where NumCommitsHTML is used.
-	$HTML .= '<p id="history">' . $NumCommitsHTML . $PageLinksHTML;
+	$HTML .= '<p id="history">' . $NumCommitsHTML . freshports_AnchorLink('history') . '</p>' . $PageLinksHTML;
 
 	if ($Commits->Debug) echo "PageNumber='$PageNumber'<br>Offset='$Offset'<br>";
 	
@@ -1734,7 +1732,7 @@ function freshports_PortCommits($port, $PageNumber = 1, $NumCommitsPerPage = 100
 	
 	# this is the 2nd of 2 places where NumCommitsHTML is used.
 	# no id=history here
-	$HTML .= '<p>' . $NumCommitsHTML . $PageLinksHTML;
+	$HTML .= '<p>' . $NumCommitsHTML . '</p>' . $PageLinksHTML;
 
 	return $HTML;
 }
@@ -1966,6 +1964,11 @@ function freshports_wrap($text, $length = WRAPCOMMITSATCOLUMN) {
 	return implode("\n", $lines);
 }
 
+function freshports_AnchorLink($ID) {
+	# a visible link to an anchor on this page, so people can easily link to that section - see issue #675
+	return ' <a class="anchor-link" href="#' . htmlentities($ID) . '" title="Link to this section" aria-label="Link to this section">#</a>';
+}
+
 function freshports_PageBannerText($Text) {
 	return freshports_PageBannerTextColSpan($Text, 1);
 }
@@ -1990,7 +1993,7 @@ function freshports_PageBannerTextColSpanWithID($Text, $ColSpan, $ID) {
 		$HTML .= htmlentities($Text);
 	}
 	if (!empty($ID)) {
-	  $HTML .= '</a>';
+	  $HTML .= '</a>' . freshports_AnchorLink($ID);
         }
         $HTML .= '</span></td>' . "\n";
 

@@ -165,6 +165,12 @@ td.content {
   margin: 2px;
 }
 
+/* the Sigma before a port's watch list count, replacing sum.gif - see issue #598 */
+.watchlist-count {
+  font-weight: bold;
+  text-decoration: none;
+}
+
 .commit-list th, .files-list th {
   text-align: left;
 }

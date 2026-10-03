@@ -1,6 +1,6 @@
 <?php
 	#
-	# Copyright (c) 2024 Dan Langille
+	# Copyright (c) 2024-2026 Dan Langille
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');

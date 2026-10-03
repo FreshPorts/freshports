@@ -2,7 +2,7 @@
 	#
 	# $Id: vuxml.php,v 1.10 2012-07-18 18:33:27 dan Exp $
 	#
-	# Copyright (c) 2004 DVL Software Limited
+	# Copyright (c) 2004-2026 Dan Langille
 	#
 
 	if (IsSet($_REQUEST['all']) && strlen($_REQUEST['all'])) {

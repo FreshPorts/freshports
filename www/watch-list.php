@@ -2,7 +2,7 @@
 	#
 	# $Id: watch-list.php,v 1.4 2013-01-29 16:02:57 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2026 Dan Langille
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');

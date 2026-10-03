@@ -2,7 +2,7 @@
 	#
 	# $Id: graphs.php,v 1.7 2012-07-21 23:23:57 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2026 Dan Langille
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');

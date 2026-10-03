@@ -2,7 +2,7 @@
 	#
 	# $Id: port_commits_by_committer.php,v 1.3 2013-02-16 01:58:47 dan Exp $
 	#
-	# Copyright (c) 1998-2006 DVL Software Limited
+	# Copyright (c) 1998-2026 Dan Langille
 	#
 
 

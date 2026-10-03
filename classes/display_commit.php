@@ -2,7 +2,7 @@
 	#
 	# $Id: display_commit.php,v 1.14 2012-12-21 18:20:53 dan Exp $
 	#
-	# Copyright (c) 2003-2007 DVL Software Limited
+	# Copyright (c) 2003-2026 Dan Langille
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');

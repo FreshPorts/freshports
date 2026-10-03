@@ -2,7 +2,7 @@
 	#
 	# $Id: commit.php,v 1.11 2013-04-10 18:47:47 dan Exp $
 	#
-	# Copyright (c) 1998-2022 DVL Software Limited
+	# Copyright (c) 1998-2026 Dan Langille
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');

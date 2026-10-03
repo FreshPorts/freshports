@@ -2,7 +2,7 @@
 	#
 	# $Id: commits_by_committer.php,v 1.4 2010-07-11 18:23:26 dan Exp $
 	#
-	# Copyright (c) 1998-2006 DVL Software Limited
+	# Copyright (c) 1998-2026 Dan Langille
 	#
 
 

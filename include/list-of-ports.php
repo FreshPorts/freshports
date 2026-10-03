@@ -2,7 +2,7 @@
 	#
 	# $Id: list-of-ports.php,v 1.2 2006-12-17 11:55:53 dan Exp $
 	#
-	# Copyright (c) 1998-2006 DVL Software Limited
+	# Copyright (c) 1998-2026 Dan Langille
 	#
 
 function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeaders, $User, $PortCount = -1) {

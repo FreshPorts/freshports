@@ -1,7 +1,7 @@
 #
 # $Id: README.txt,v 1.3 2007-10-16 18:29:39 dan Exp $
 #
-# Copyright (c) 1998-2006 DVL Software Limited
+# Copyright (c) 1998-2026 Dan Langille
 #
 
 Much of what this documents is now handled by the freshports-www port.

@@ -2,7 +2,7 @@
 	#
 	# $Id: htmlify-test.php,v 1.5 2007-10-23 18:55:08 dan Exp $
 	#
-	# Copyright (c) 2003 DVL Software Limited
+	# Copyright (c) 2003-2026 Dan Langille
 	#
 
 	require_once("htmlify.php");

@@ -2,7 +2,7 @@
 	#
 	# $Id: watch_list_deleted_ports.php,v 1.2 2006-12-17 11:37:22 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2026 Dan Langille
 	#
 
 

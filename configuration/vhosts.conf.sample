@@ -1,7 +1,7 @@
 #
 # $Id: vhosts.conf.sample,v 1.10 2012-08-11 14:27:35 dan Exp $
 #
-# Copyright (c) 1998-2003 DVL Software Limited
+# Copyright (c) 1998-2026 Dan Langille
 #
 
 <VirtualHost *>

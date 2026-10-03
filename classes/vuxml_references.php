@@ -2,7 +2,7 @@
 	#
 	# $Id: vuxml_references.php,v 1.2 2006-12-17 11:37:22 dan Exp $
 	#
-	# Copyright (c) 2004 DVL Software Limited
+	# Copyright (c) 2004-2026 Dan Langille
 	#
 
 // base class for VuXML_References

@@ -1,6 +1,6 @@
 <?php
 	#
-	# Copyright (c) 2016 Dan Langille
+	# Copyright (c) 2016-2026 Dan Langille
 	#
 
 

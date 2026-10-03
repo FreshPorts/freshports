@@ -2,7 +2,7 @@
 	#
 	# $Id: password-reset-via-token.php,v 1.1 2010-09-17 14:44:55 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2026 Dan Langille
 	#
 
 	GLOBAL $numberofdays;

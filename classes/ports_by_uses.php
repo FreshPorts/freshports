@@ -1,6 +1,6 @@
 <?php
 	#
-	# Copyright (c) 1998-2022 Dan Langille
+	# Copyright (c) 1998-2026 Dan Langille
 	#
 
 

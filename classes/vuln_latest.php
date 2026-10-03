@@ -2,7 +2,7 @@
 	#
 	# $Id: vuln_latest.php,v 1.2 2006-12-17 11:37:21 dan Exp $
 	#
-	# Copyright (c) 1998-2006 DVL Software Limited
+	# Copyright (c) 1998-2026 Dan Langille
 	#
 
 

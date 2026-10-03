@@ -2,7 +2,7 @@
 	#
 	# $Id: package.php,v 1.2 2006-12-17 12:06:13 dan Exp $
 	#
-	# Copyright (c) 2004 DVL Software Limited
+	# Copyright (c) 2004-2026 Dan Langille
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');

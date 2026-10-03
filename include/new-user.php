@@ -2,7 +2,7 @@
 	#
 	# $Id: new-user.php,v 1.3 2011-08-21 15:10:59 dan Exp $
 	#
-	# Copyright (c) 1998-2022 DVL Software Limited
+	# Copyright (c) 1998-2026 Dan Langille
 	#
 	
 	

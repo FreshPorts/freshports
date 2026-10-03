@@ -2,7 +2,7 @@
 	#
 	# $Id: categories.php,v 1.3 2013-04-07 01:19:59 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2026 Dan Langille
 	#
 
 

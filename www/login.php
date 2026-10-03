@@ -2,7 +2,7 @@
    #
    # $Id: login.php,v 1.4 2010-09-17 14:37:16 dan Exp $
    #
-   # Copyright (c) 1998-2003 DVL Software Limited
+   # Copyright (c) 1998-2026 Dan Langille
    #
 
    require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');

@@ -2,7 +2,7 @@
 	#
 	# $Id: news.php,v 1.2 2006-12-17 12:06:13 dan Exp $
 	#
-	# Copyright (c) 1998-2005 DVL Software Limited
+	# Copyright (c) 1998-2026 Dan Langille
 	#
 
 	DEFINE('MAX_PORTS', 20);

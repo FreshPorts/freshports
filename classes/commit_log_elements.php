@@ -2,7 +2,7 @@
 	#
 	# $Id: commit_log_elements.php,v 1.2 2006-12-17 11:37:18 dan Exp $
 	#
-	# Copyright (c) 2003-2006 DVL Software Limited
+	# Copyright (c) 2003-2026 Dan Langille
 	#
 
 

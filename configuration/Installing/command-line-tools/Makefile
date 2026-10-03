@@ -3,7 +3,7 @@
 #
 # New ports collection makefile for: newbox-checklist
 #
-# Copyright (c) 2002-2005 DVL Software Limited
+# Copyright (c) 2002-2026 Dan Langille
 #
 
 PORTNAME=	newbox-checklist

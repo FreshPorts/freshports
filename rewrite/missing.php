@@ -2,7 +2,7 @@
 	#
 	# $Id: missing.php,v 1.11 2012-10-23 17:08:20 dan Exp $
 	#
-	# Copyright (c) 2001-2006 DVL Software Limited
+	# Copyright (c) 2001-2026 Dan Langille
 	#
 
 	#

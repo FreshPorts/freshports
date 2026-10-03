@@ -2,7 +2,7 @@
 	#
 	# $Id: adsense.php,v 1.2 2006-12-17 11:55:52 dan Exp $
 	#
-	# Copyright (c) 1998-2006 DVL Software Limited
+	# Copyright (c) 1998-2026 Dan Langille
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');

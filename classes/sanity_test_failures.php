@@ -2,7 +2,7 @@
 	#
 	# $Id: sanity_test_failures.php,v 1.3 2013-04-07 01:19:59 dan Exp $
 	#
-	# Copyright (c) 2003-2004 DVL Software Limited
+	# Copyright (c) 2003-2026 Dan Langille
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');

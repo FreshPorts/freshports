@@ -2,7 +2,7 @@
 	#
 	# $Id: watch_list.php,v 1.2 2006-12-17 11:37:22 dan Exp $
 	#
-	# Copyright (c) 1998-2005 DVL Software Limited
+	# Copyright (c) 1998-2026 Dan Langille
 	#
 
 // base class for a single watchlist

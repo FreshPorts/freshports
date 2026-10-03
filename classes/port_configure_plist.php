@@ -2,7 +2,7 @@
 	#
 	# $Id: port_dependencies.php,v 1.4 2011-02-07 00:38:59 dan Exp $
 	#
-	# Copyright (c) 1998-2011 DVL Software Limited
+	# Copyright (c) 1998-2026 Dan Langille
 	#
 
 

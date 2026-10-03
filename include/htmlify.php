@@ -2,7 +2,7 @@
 	#
 	# $Id: htmlify.php,v 1.6 2007-10-23 19:01:37 dan Exp $
 	#
-	# Copyright (c) 1998-2007 DVL Software Limited
+	# Copyright (c) 1998-2026 Dan Langille
 	#
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.local.php');

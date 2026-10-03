@@ -1,6 +1,6 @@
 <?php
 	#
-	# Copyright (c) 2024 Dan Langille
+	# Copyright (c) 2024-2026 Dan Langille
 	#
 
 // base class for subscriptions to package notifications

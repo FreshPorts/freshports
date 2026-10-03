@@ -2,7 +2,7 @@
 	#
 	# $Id: forgotten-password.php,v 1.3 2010-09-17 14:38:29 dan Exp $
 	#
-	# Copyright (c) 1998-2022 DVL Software Limited
+	# Copyright (c) 1998-2026 Dan Langille
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');

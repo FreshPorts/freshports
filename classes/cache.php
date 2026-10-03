@@ -2,7 +2,7 @@
 	#
 	# $Id: cache.php,v 1.4 2008-01-26 23:41:05 dan Exp $
 	#
-	# Copyright (c) 2006-2022 DVL Software Limited
+	# Copyright (c) 2006-2026 Dan Langille
 	#
 
 // base class for caching

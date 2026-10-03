@@ -2,7 +2,7 @@
 	#
 	# $Id: category-maintenance.php,v 1.2 2006-12-17 12:06:08 dan Exp $
 	#
-	# Copyright (c) 2003 DVL Software Limited
+	# Copyright (c) 2003-2026 Dan Langille
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');

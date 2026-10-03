@@ -2,7 +2,7 @@
 	#
 	# $Id: newsfeed.php,v 1.7 2013-02-15 02:09:22 dan Exp $
 	#
-	# Copyright (c) 1998-2007 DVL Software Limited
+	# Copyright (c) 1998-2026 Dan Langille
 	#
 
 	DEFINE('MAX_PORTS', 20);

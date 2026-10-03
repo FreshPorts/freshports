@@ -2,7 +2,7 @@
 	#
 	# $Id: customize.php,v 1.3 2008-08-06 13:36:16 dan Exp $
 	#
-	# Copyright (c) 1998-2022 DVL Software Limited
+	# Copyright (c) 1998-2026 Dan Langille
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');

@@ -2,7 +2,7 @@
 	#
 	# $Id: latest_commits.php,v 1.4 2012-09-25 18:10:12 dan Exp $
 	#
-	# Copyright (c) 2003-2004 DVL Software Limited
+	# Copyright (c) 2003-2026 Dan Langille
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');

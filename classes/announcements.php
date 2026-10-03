@@ -2,7 +2,7 @@
 	#
 	# $Id: announcements.php,v 1.4 2007-04-20 02:07:23 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2026 Dan Langille
 	#
 
 

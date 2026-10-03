@@ -2,7 +2,7 @@
 	#
 	# $Id: ports.php,v 1.5 2012-12-21 18:20:53 dan Exp $
 	#
-	# Copyright (c) 1998-2004 DVL Software Limited
+	# Copyright (c) 1998-2026 Dan Langille
 	#
 
 

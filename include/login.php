@@ -2,7 +2,7 @@
 	#
 	# $Id: login.php,v 1.3 2010-09-17 14:44:38 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2026 Dan Langille
 	#
 
 ?>

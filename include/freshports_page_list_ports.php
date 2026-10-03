@@ -2,7 +2,7 @@
 	#
 	# $Id: freshports_page_list_ports.php,v 1.2 2006-12-17 11:55:53 dan Exp $
 	#
-	# Copyright (c) 2005-2006 DVL Software Limited
+	# Copyright (c) 2005-2026 Dan Langille
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports_page.php');

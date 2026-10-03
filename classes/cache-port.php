@@ -2,7 +2,7 @@
 	#
 	# $Id: cache-port.php,v 1.6 2007-06-04 02:16:33 dan Exp $
 	#
-	# Copyright (c) 2006-2022 DVL Software Limited
+	# Copyright (c) 2006-2026 Dan Langille
 	#
 
 	require_once('cache.php');

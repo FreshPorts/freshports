@@ -2,7 +2,7 @@
 	#
 	# $Id: port-display.php,v 1.20 2013-03-25 16:09:08 dan Exp $
 	#
-	# Copyright (c) 2005-2006 DVL Software Limited
+	# Copyright (c) 2005-2026 Dan Langille
 	#
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/master_slave.php');

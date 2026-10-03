@@ -2,7 +2,7 @@
 	#
 	# $Id: new-user.php,v 1.6 2011-08-21 15:20:25 dan Exp $
 	#
-	# Copyright (c) 1998-2004 DVL Software Limited
+	# Copyright (c) 1998-2026 Dan Langille
 	#
 
 	# for captcha

@@ -2,7 +2,7 @@
 	#
 	# $Id: missing-port.php,v 1.6 2012-08-07 13:13:24 dan Exp $
 	#
-	# Copyright (c) 2001-2006 DVL Software Limited
+	# Copyright (c) 2001-2026 Dan Langille
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');

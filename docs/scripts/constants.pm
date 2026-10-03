@@ -1,6 +1,6 @@
 # $Id: constants.pm,v 1.2 2006-12-17 12:06:23 dan Exp $
 #
-# Copyright (c) 2001-2003 DVL Software
+# Copyright (c) 2001-2026 Dan Langille
 #
 package FreshPorts::Constants;
 

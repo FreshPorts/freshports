@@ -2,7 +2,7 @@
 	#
 	# $Id: password-reset-via-token.php,v 1.3 2010-09-21 11:08:10 dan Exp $
 	#
-	# Copyright (c) 1998-2004 DVL Software Limited
+	# Copyright (c) 1998-2026 Dan Langille
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');

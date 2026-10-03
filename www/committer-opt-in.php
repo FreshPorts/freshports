@@ -2,7 +2,7 @@
 	#
 	# $Id: committer-opt-in.php,v 1.5 2009-01-08 19:47:08 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2026 Dan Langille
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');

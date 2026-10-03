@@ -1,7 +1,7 @@
 --
 -- $Id: POSTGRESQL.sql,v 1.7 2011-02-06 14:53:45 dan Exp $
 --
--- Copyright (c) 1998-2006 DVL Software Limited
+-- Copyright (c) 1998-2026 Dan Langille
 --
 
 --

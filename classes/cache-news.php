@@ -2,7 +2,7 @@
 	#
 	# $Id: cache-file.php,v 1.1 2007-06-03 16:00:17 dan Exp $
 	#
-	# Copyright (c) 2006-2007 DVL Software Limited
+	# Copyright (c) 2006-2026 Dan Langille
 	#
 
 	require_once('cache.php');

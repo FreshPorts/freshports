@@ -1,6 +1,6 @@
 <?php
 	#
-	# Copyright (c) 1998-2018 DVL Software Limited
+	# Copyright (c) 1998-2026 Dan Langille
 	#
 
 

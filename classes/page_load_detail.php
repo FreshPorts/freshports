@@ -2,7 +2,7 @@
 	#
 	# $Id: page_load_detail.php,v 1.3 2013-04-08 12:15:34 dan Exp $
 	#
-	# Copyright (c) 2003 DVL Software Limited
+	# Copyright (c) 2003-2026 Dan Langille
 	#
 
 	$Debug = 0;

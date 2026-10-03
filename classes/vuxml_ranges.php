@@ -2,7 +2,7 @@
 	#
 	# $Id: vuxml_ranges.php,v 1.2 2006-12-17 11:37:21 dan Exp $
 	#
-	# Copyright (c) 2004 DVL Software Limited
+	# Copyright (c) 2004-2026 Dan Langille
 	#
 
 // base class for VuXML_Ranges

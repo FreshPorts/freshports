@@ -2,7 +2,7 @@
 	#
 	# $Id: watch_list_element.php,v 1.3 2013-01-29 16:02:57 dan Exp $
 	#
-	# Copyright (c) 1998-2005 DVL Software Limited
+	# Copyright (c) 1998-2026 Dan Langille
 	#
 
 // base class for a single item on a watch list

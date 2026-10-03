@@ -2,7 +2,7 @@
 	#
 	# $Id: missing-category.php,v 1.3 2010-11-10 20:04:44 dan Exp $
 	#
-	# Copyright (c) 1998-2006 DVL Software Limited
+	# Copyright (c) 1998-2026 Dan Langille
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');

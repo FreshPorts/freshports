@@ -2,7 +2,7 @@
 	#
 	# $Id: pkg_process.inc,v 1.6 2006-12-17 12:06:13 dan Exp $
 	#
-	# Copyright (c) 1998-2006 DVL Software Limited
+	# Copyright (c) 1998-2026 Dan Langille
 	#
 
 	require($_SERVER["DOCUMENT_ROOT"] . "/../classes/ports.php");	

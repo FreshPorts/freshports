@@ -2,7 +2,7 @@
 	#
 	# $Id: files.php,v 1.4 2013-04-08 12:15:34 dan Exp $
 	#
-	# Copyright (c) 1998-2006 DVL Software Limited
+	# Copyright (c) 1998-2026 Dan Langille
 	#
 	
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');

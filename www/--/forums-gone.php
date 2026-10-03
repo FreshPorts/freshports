@@ -2,7 +2,7 @@
 	#
 	# $Id: welcome.php,v 1.2 2006-12-17 12:06:19 dan Exp $
 	#
-	# Copyright (c) 1998-2003 DVL Software Limited
+	# Copyright (c) 1998-2026 Dan Langille
 	#
 
 	header( "HTTP/1.1 410 Gone" );

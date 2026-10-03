@@ -2,7 +2,7 @@
 	#
 	# $Id: freshports_page.php,v 1.2 2006-12-17 11:55:53 dan Exp $
 	#
-	# Copyright (c) 2005-2006 DVL Software Limited
+	# Copyright (c) 2005-2026 Dan Langille
 	#
 
 	set_include_path('/usr/local/share/pear');

@@ -2,7 +2,7 @@
 	#
 	# $Id: freshports.php,v 1.51 2013-05-12 14:47:12 dan Exp $
 	#
-	# Copyright (c) 1998-2022 DVL Software Limited
+	# Copyright (c) 1998-2026 Dan Langille
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');

@@ -2,7 +2,7 @@
 	#
 	# $Id: vuxml.php,v 1.3 2013-05-12 20:21:26 dan Exp $
 	#
-	# Copyright (c) 2004 DVL Software Limited
+	# Copyright (c) 2004-2026 Dan Langille
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/vuxml_names.php');

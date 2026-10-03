@@ -2,7 +2,7 @@
 	#
 	# $Id: contact.php,v 1.1 2007-10-21 16:59:05 dan Exp $
 	#
-	# Copyright (c) 2007 DVL Software Limited
+	# Copyright (c) 2007-2026 Dan Langille
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');

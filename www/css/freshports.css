@@ -1110,3 +1110,94 @@ table.packages {
     padding: 0.25em 0;
   }
 }
+
+/*
+  Narrow screens, with JavaScript: the sidebar flies in from the right as an
+  overlay, instead of sitting below the page content - see issue #636
+
+  freshports.js adds has-drawer to <html> when it can run the drawer, and
+  toggles drawer-open.  Without JavaScript, the stacked layout above is used.
+*/
+@media only screen and (max-width: 1120px) {
+  html.has-drawer table.layout > tbody > tr > td.sidebar {
+    display: block;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 30;
+    width: 260px;
+    max-width: 85vw;
+    margin: 0;
+    padding: 0 8px 8px 8px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background-color: white;
+    background-color: var(--background-color);
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.4);
+    transform: translateX(100%);
+    visibility: hidden;
+    transition: transform 0.25s ease, visibility 0.25s;
+  }
+
+  html.drawer-open table.layout > tbody > tr > td.sidebar {
+    transform: none;
+    visibility: visible;
+  }
+
+  html.has-drawer .sidebar > table {
+    margin-bottom: 1em;
+  }
+
+  .drawer-close {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    margin: 0 0 8px 0;
+    padding: 0.6em;
+    border: 0;
+    font: inherit;
+    font-weight: bold;
+    text-align: right;
+    cursor: pointer;
+    color: white;
+    color: var(--accent-text);
+    background-color: #8c0707;
+    background-color: var(--beastie-red);
+  }
+
+  .drawer-backdrop {
+    display: none;
+  }
+
+  html.drawer-open .drawer-backdrop {
+    display: block;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 20;
+    background-color: rgba(0, 0, 0, 0.25);
+  }
+
+  html.drawer-open .menu-button {
+    display: none;
+  }
+}
+
+/* the close button and backdrop are only used on narrow screens */
+@media only screen and (min-width: 1121px) {
+  .drawer-close, .drawer-backdrop {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.has-drawer table.layout > tbody > tr > td.sidebar {
+    transition: none;
+  }
+}

@@ -42,8 +42,9 @@
 	# If they supply a package name, go for it.
 	#
 	if (IsSet($_REQUEST['package'])) {
-		$package = pg_escape_string($db, $_REQUEST['package']);
-		if ($Debug) echo "package is specfied on the URL: '$package'<br>\n";
+		# no SQL escaping needed: GetCategoryPortFromPackageName() uses pg_query_params
+		$package = $_REQUEST['package'];
+		if ($Debug) echo "package is specfied on the URL: '" . htmlspecialchars($package) . "'<br>\n";
 		if ($package != '') {
 			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/packages.php');
 
@@ -53,7 +54,8 @@
 			switch ($CategoryPort) {
 				case "0":
 					# no such port found
-					header('Location: /package.php?package=' . $package . '&notfound');
+					# urlencode, else a + in the package name arrives as a space - see #680
+					header('Location: /package.php?package=' . urlencode($package) . '&notfound');
 					exit;
 
 				case "-1":

@@ -22,7 +22,8 @@
 	if (IsSet($_REQUEST['multiple'])) $multiple = 1;
 
 	if (IsSet($_REQUEST['package'])) {
-		$package  = pg_escape_string($db, $_REQUEST['package']);
+		# not used in SQL here; escaped on output
+		$package  = $_REQUEST['package'];
 	} else {
 		$package = '';
 	}
@@ -49,7 +50,7 @@ $packages_html = htmlspecialchars($package);
 ?>
 The package specified ('<?php echo $packages_html; ?>') could not be found.  We have a few suggestions.
 <ul>
-<li><a href="<?php echo $Searches->GetDefaultSearchStringPackage($packages_html); ?>">Search</a> for ports containing '<?php echo $packages_html; ?>' in their name.
+<li><a href="<?php echo htmlspecialchars($Searches->GetDefaultSearchStringPackage($package)); ?>">Search</a> for ports containing '<?php echo $packages_html; ?>' in their name.
 </ul>
 <?php
 } else {

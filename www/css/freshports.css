@@ -933,14 +933,18 @@ table.packages {
 
 
 /*
-  Narrow screens (phones, small tablets) - see issue #636
+  Narrow screens (phones, tablets) - see issue #636
 
   Pages are laid out with tables: the content and the sidebar are two cells
   of table.layout. Here those cells are stacked, the sidebar boxes are put
   into a grid below the content, and wide tables scroll within their cell
   instead of widening the whole page.
+
+  The side-by-side layout needs about 1110px (content ~870px, sidebar
+  ~230px), so anything narrower than that gets the stacked layout.  That
+  includes iPads in portrait (810-834px) and the iPad mini in landscape.
 */
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 1120px) {
   .site-header {
     flex-wrap: wrap;
     gap: 0.5em;

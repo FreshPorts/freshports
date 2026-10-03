@@ -57,8 +57,9 @@ return '
               '&casesensitivity=' . FRESHPORTS_SEARCH_DEFAULT_Casesensitivity;
 	}
 
+	# $text is the raw package name; it is urlencoded here - see #680
 	function GetDefaultSearchStringPackage($text) {
-        return $this->SearchPage . '?' . 'query='           . $text                              .
+        return $this->SearchPage . '?' . 'query='           . urlencode($text)                   .
               '&num='             . FRESHPORTS_SEARCH_DEFAULT_Num      . 
               '&stype='           . FRESHPORTS_SEARCH_STYPE_Package    .
               '&method='          . FRESHPORTS_SEARCH_DEFAULT_Method   . 
@@ -77,8 +78,9 @@ return '
               '&casesensitivity=' . FRESHPORTS_SEARCH_DEFAULT_Casesensitivity;
 	}
 
+	# $text is the raw package name; it is urlencoded here - see #680
 	function GetDefaultMethodStringPackage($text, $method) {
-        return $this->SearchPage . '?' . 'query='           . $text    .
+        return $this->SearchPage . '?' . 'query='           . urlencode($text) .
               '&num='             . FRESHPORTS_SEARCH_DEFAULT_Num      .
               '&stype='           . FRESHPORTS_SEARCH_STYPE_Package    .
               '&method='          . $method                            . 

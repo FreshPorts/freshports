@@ -751,7 +751,7 @@ function freshports_Diff_Icon() {
 
 
 function freshports_VuXML_Link($PackageName, $HasCurrentVulns) {
-	$HTML = '<a href="/vuxml.php?package=' . $PackageName . '">';
+	$HTML = '<a href="/vuxml.php?package=' . htmlspecialchars(urlencode($PackageName)) . '">';
 	if ($HasCurrentVulns) {
 		$HTML .= freshports_VuXML_Icon();
 	} else {

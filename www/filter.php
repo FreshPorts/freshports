@@ -17,7 +17,8 @@
 	# If they supply a package name, go for it.
 	#
 	if (IsSet($_REQUEST['package'])) {
-		$package = pg_escape_string($db, $_REQUEST['package']);
+		# no SQL escaping needed: GetCategoryPortFromPackageName() uses pg_query_params
+		$package = $_REQUEST['package'];
 		if ($package != '') {
 			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/packages.php');
 
@@ -27,14 +28,15 @@
 			switch ($CategoryPort) {
 				case "0":
 					# no such port found
-					header('Location: /package.php?package=' . $package . '&notfound');
+					# urlencode, else a + in the package name arrives as a space - see #680
+					header('Location: /package.php?package=' . urlencode($package) . '&notfound');
 					exit;
 
 				case "-1":
 					# multiple ports have that package name
 					# search for them all and let the users decide which one they want
 					require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/searches.php');
-					$Searches = new Searches($dbh);
+					$Searches = new Searches($db);
 					$Redirect = $Searches->GetLink($package, FRESHPORTS_SEARCH_METHOD_Exact, 1);
 					header('Location: ' . $Redirect);
 					exit;

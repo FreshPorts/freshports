@@ -8,6 +8,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
 	if ($ShowAds) require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/ads.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../configuration/freshports.conf.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/i18n.php');
 
 	if (IsSet($ShowAnnouncements)) {
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/announcements.php');
@@ -1079,9 +1080,9 @@ GLOBAL $dbhost;
     if (file_exists(HEAD_FILE)) {
 		# taken from https://stackoverflow.com/questions/7447472/how-could-i-display-the-current-git-branch-name-at-the-top-of-the-page-of-my-de
 		#
-		$HTML .= '<span class="branch">The git branch used by this host is <span class="file">' . implode('/', array_slice(explode('/', file_get_contents(HEAD_FILE)), 2)) . '</span><br>';
-		$HTML .= 'The database is   <span class="file">' . $dbname . '</span><br>';
-		$HTML .= 'The db server is   <span class="file">' . $dbhost . '</span></span><br>';
+		$HTML .= '<span class="branch">' . sprintf(_('The git branch used by this host is %s'), '<span class="file">' . implode('/', array_slice(explode('/', file_get_contents(HEAD_FILE)), 2)) . '</span>') . '<br>';
+		$HTML .= sprintf(_('The database is %s'), '<span class="file">' . $dbname . '</span>') . '<br>';
+		$HTML .= sprintf(_('The db server is %s'), '<span class="file">' . $dbhost . '</span>') . '</span><br>';
     }
     if (defined('SHOW_ANIMATED_BUG') && SHOW_ANIMATED_BUG)
     {
@@ -1097,19 +1098,19 @@ GLOBAL $dbhost;
 ";
 	}
 
-	$HTML .= '<span class="amazon">As an Amazon Associate I earn from qualifying purchases.<br>Want a good read? Try <a target="_blank" rel="noopener noreferrer" href="https://www.amazon.com/gp/product/B07PVTBWX7/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B07PVTBWX7&amp;linkCode=as2&amp;tag=thfrdi0c-20&amp;linkId=a5cb3ac309f59900d44401e24a169f05">FreeBSD Mastery: Jails (IT Mastery Book 15)</a><br>';
-	$HTML .= 'Want a good monitor light? See my <a href="https://dan.langille.org/2023/12/30/blatant-self-interest-monitor-light/">photos</a></span>';
-	$HTML .= '<span class="timezone">All times are UTC</span>';
+	$HTML .= '<span class="amazon">' . _('As an Amazon Associate I earn from qualifying purchases.') . '<br>' . sprintf(_('Want a good read? Try %s'), '<a target="_blank" rel="noopener noreferrer" href="https://www.amazon.com/gp/product/B07PVTBWX7/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B07PVTBWX7&amp;linkCode=as2&amp;tag=thfrdi0c-20&amp;linkId=a5cb3ac309f59900d44401e24a169f05">FreeBSD Mastery: Jails (IT Mastery Book 15)</a>') . '<br>';
+	$HTML .= sprintf(_('Want a good monitor light? See my <a href="%s">photos</a>'), 'https://dan.langille.org/2023/12/30/blatant-self-interest-monitor-light/') . '</span>';
+	$HTML .= '<span class="timezone">' . _('All times are UTC') . '</span>';
 
 	$HTML .= '</div>';
 
 if (date("M") == 'Nov' && date("j") <= 12) {
-	$HTML .= '	<div class="site-header-aside sans nowrap hcentered"><a href="https://www.google.ca/search?q=remembrance+day" rel="noopener noreferrer"><img src="/images/poppy.gif" width="50" height="48" alt="Remember" title="Remember"><br>I remember</a></div>';
+	$HTML .= '	<div class="site-header-aside sans nowrap hcentered"><a href="https://www.google.ca/search?q=remembrance+day" rel="noopener noreferrer"><img src="/images/poppy.gif" width="50" height="48" alt="Remember" title="Remember"><br>' . _('I remember') . '</a></div>';
 } elseif (defined('UKRAINE') && UKRAINE) {
 	$HTML .= '	<div class="site-header-aside sans nowrap hcentered"><img src="/images/ukraine.png" width="133" height="100" alt="Ukraine" title="Ukraine"></div>';
 } else {
 	$HTML .= '	<div class="site-header-aside">';
-	$HTML .= '<div id="followus"><div class="header">Follow us</div><a href="https://news.freshports.org/" rel="noopener noreferrer">Blog</a><br><a href="https://twitter.com/freshports/" rel="noopener noreferrer">Twitter</a><br><a href="https://freshports.wordpress.com/" rel="noopener noreferrer">Status page</a><br></div><a rel="me" href="https://bsd.network/@dvl">Mastodon</a>';
+	$HTML .= '<div id="followus"><div class="header">' . _('Follow us') . '</div><a href="https://news.freshports.org/" rel="noopener noreferrer">' . _('Blog') . '</a><br><a href="https://twitter.com/freshports/" rel="noopener noreferrer">Twitter</a><br><a href="https://freshports.wordpress.com/" rel="noopener noreferrer">' . _('Status page') . '</a><br></div><a rel="me" href="https://bsd.network/@dvl">Mastodon</a>';
 
 	$HTML .= '</div>';
 	
@@ -1118,8 +1119,8 @@ if (date("M") == 'Nov' && date("j") <= 12) {
 # only shown on narrow screens, where the sidebar is pushed below the page content.
 # menu-button stays pinned to a corner of the screen, so it can be used from anywhere on the page.
 $HTML .= '
-	<a class="menu-link" href="#sidebar">Menu &amp; search</a>
-	<a class="menu-button" href="#sidebar" title="Jump to the menu and search">&#9776; Menu</a>
+	<a class="menu-link" href="#sidebar">' . _('Menu &amp; search') . '</a>
+	<a class="menu-button" href="#sidebar" title="' . _('Jump to the menu and search') . '">&#9776; ' . _('Menu') . '</a>
 </header>
 ';
 
@@ -1141,7 +1142,7 @@ GLOBAL $Debug;
 $holiday = freshports_detect_holidays(time());
 
 echo HTML_DOCTYPE . '
-<html lang="en"' . ($holiday ? ' class="holiday ' . $holiday . '"' : '') . '>
+<html lang="' . freshports_i18n_html_lang() . '"' . ($holiday ? ' class="holiday ' . $holiday . '"' : '') . '>
 ';
 }
 
@@ -1507,7 +1508,7 @@ function freshports_navigation_bar_top() {
 }
 
 function freshports_copyright() {
-	return '<small><a href="/legal.php" target="_top" title="This material is copyrighted">Copyright</a> &copy; ' . COPYRIGHTYEARS . ' <a href="' . COPYRIGHTHOLDERURL . '" rel="noopener noreferrer">' . COPYRIGHTHOLDER . '</a>. All rights reserved.</small>';
+	return '<small><a href="/legal.php" target="_top" title="' . _('This material is copyrighted') . '">' . _('Copyright') . '</a> &copy; ' . COPYRIGHTYEARS . ' <a href="' . COPYRIGHTHOLDERURL . '" rel="noopener noreferrer">' . COPYRIGHTHOLDER . '</a>. ' . _('All rights reserved.') . '</small>';
 }
 
 function FormatTime($Time, $Adjustment, $Format) {
@@ -2145,12 +2146,13 @@ alt="powered by nginx" width="121" height="32"></a>
 </td>
 <td class="copyright">
 <small>
-Valid 
-<a href="https://validator.w3.org/check?uri=' . $URI . '" title="We like to keep our HTML valid" target="_blank" rel="nofollow noopener noreferrer">HTML</a>,
-<a href="https://jigsaw.w3.org/css-validator/validator?uri=' .  $URI . '" title="We like to have valid CSS" rel="nofollow noopener noreferrer">CSS</a>, and
-<a href="https://validator.w3.org/feed/check.cgi?url=' . rawurlencode("{$URIBase}/backend/rss2.0.php") . '" title="Valid RSS is good too" rel="noopener noreferrer">RSS</a>.
+' . sprintf(_('Valid %1$s, %2$s, and %3$s.'),
+'<a href="https://validator.w3.org/check?uri=' . $URI . '" title="' . _('We like to keep our HTML valid') . '" target="_blank" rel="nofollow noopener noreferrer">HTML</a>',
+'<a href="https://jigsaw.w3.org/css-validator/validator?uri=' .  $URI . '" title="' . _('We like to have valid CSS') . '" rel="nofollow noopener noreferrer">CSS</a>',
+'<a href="https://validator.w3.org/feed/check.cgi?url=' . rawurlencode("{$URIBase}/backend/rss2.0.php") . '" title="' . _('Valid RSS is good too') . '" rel="noopener noreferrer">RSS</a>') . '
 </small>
 ' . freshports_copyright() . '
+' . freshports_i18n_language_picker() . '
 </td></tr>
 </table>
 </td></tr>
@@ -2192,7 +2194,7 @@ function freshports_SideBar() {
 	$HTML = '
   <table class="bordered" id="sidebar">
         <tr>
-         <th class="accent">Login</th>
+         <th class="accent">' . _('Login') . '</th>
         </tr>
         <tr>
 
@@ -2205,25 +2207,25 @@ function freshports_SideBar() {
 	if (IsSet($visitor)) {
 		GLOBAL $User;
 
-		$HTML .= 'Logged in as ' . htmlentities($User->name ?? '**unknown**') . "<br>";
+		$HTML .= sprintf(_('Logged in as %s'), htmlentities($User->name ?? '**unknown**')) . "<br>";
 
 		if ($User->emailbouncecount ?? 0 > 0) {
 			$HTML .= '<img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><br>';
-			$HTML .= 'your email is <a href="/bouncing.php">bouncing</a><br>';
+			$HTML .= _('your email is <a href="/bouncing.php">bouncing</a>') . '<br>';
 			$HTML .= '<img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><br>';
 		}
-		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/customize.php', "Your Account", "Your account");
+		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/customize.php', _("Your Account"), _("Your account"));
 
 		if (preg_match("/.*@FreeBSD.org/i", $User->email ?? '')) {
-			$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/committer-opt-in.php', "Committer Opt-in", "Committers can receive reports of Sanity Test Failures");
+			$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/committer-opt-in.php', _("Committer Opt-in"), _("Committers can receive reports of Sanity Test Failures"));
 		}
 
 
-		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/logout.php',             "Logout",                  "Logout of the website"            );
-		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/my-flagged-commits.php', "My Flagged Commits",      "List of commits you have flagged" );
+		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/logout.php',             _("Logout"),                  _("Logout of the website")            );
+		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/my-flagged-commits.php', _("My Flagged Commits"),      _("List of commits you have flagged") );
 	} else {
-		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/login.php',              "User Login",              "Login to the website"             );
-		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/new-user.php',           "Create account",          "Create an account"                );
+		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/login.php',              _("User Login"),              _("Login to the website")             );
+		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/new-user.php',           _("Create account"),          _("Create an account")                );
 	}
 
 	$HTML .= '
@@ -2241,26 +2243,26 @@ function freshports_SideBar() {
 	$HTML .= '	
 <table class="bordered">
 	<tr>
-		<th class="accent">This site</th>
+		<th class="accent">' . _('This site') . '</th>
 	</tr>
 	<tr>
 	<td>
-	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/about.php",           "What is FreshPorts?", "A bit of background on FreshPorts"               ) . '
-	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/authors.php",         "About the authors",   "Who wrote this stuff?"                           ) . '
-	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], ISSUES,                 "Issues",              "Report a website problem"                        ) . '
-	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/faq.php",             "FAQ",                 "Frequently Asked Questions"                      ) . '
-	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/how-big-is-it.php",   "How big is it?",      "How many pages are in this website?"             ) . '
-	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/security-policy.php", "Security Policy",     "Are you a security researcher? Please read this.") . '
-	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/privacy.php",         "Privacy",             "Our privacy statement"                           ) . '
-	<a href="https://news.freshports.org/" title="All the latest FreshPorts news" rel="noopener noreferrer">Blog</a><br>
-	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/contact.php",         "Contact",             "Contact details"                                 ) . '
+	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/about.php",           _("What is FreshPorts?"), _("A bit of background on FreshPorts")               ) . '
+	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/authors.php",         _("About the authors"),   _("Who wrote this stuff?")                           ) . '
+	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], ISSUES,                 _("Issues"),              _("Report a website problem")                        ) . '
+	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/faq.php",             _("FAQ"),                 _("Frequently Asked Questions")                      ) . '
+	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/how-big-is-it.php",   _("How big is it?"),      _("How many pages are in this website?")             ) . '
+	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/security-policy.php", _("Security Policy"),     _("Are you a security researcher? Please read this.")) . '
+	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/privacy.php",         _("Privacy"),             _("Our privacy statement")                           ) . '
+	<a href="https://news.freshports.org/" title="' . _('All the latest FreshPorts news') . '" rel="noopener noreferrer">' . _('Blog') . '</a><br>
+	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/contact.php",         _("Contact"),             _("Contact details")                                 ) . '
 	</td>
 	</tr>
 </table>
 <br>
 <table class="bordered">
 	<tr>
-		<th class="accent">Search</th>
+		<th class="accent">' . _('Search') . '</th>
 	</tr>
 	<tr>
 
@@ -2282,7 +2284,7 @@ function freshports_SideBar() {
 	$HTML .= $Searches->GetFormSimple('&nbsp;', IsSet($visitor) && !empty($User->set_focus_search));
 
 	if ($_SERVER["PHP_SELF"] != '/search.php') {
-		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/search.php', "more...", "Advanced Searching options");
+		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/search.php', _("more..."), _("Advanced Searching options"));
 	}
 	$HTML .= '
 	</td>
@@ -2294,14 +2296,14 @@ function freshports_SideBar() {
 $HTML .= '<br>
 <table class="bordered">
 	<tr>
-		<th class="accent">Latest Vulnerabilities</th>
+		<th class="accent">' . _('Latest Vulnerabilities') . '</th>
 	</tr>
 	<tr><td>
 	' . file_get_contents(VUXML_LATEST) . "\n" . '
 	</td></tr>
 	<tr><td>
-		<p><sup>*</sup> - modified, not new</p><p><a href="/vuxml.php?all">All vulnerabilities</a></p>
-		<p>Last processed:<br>' . date('Y-m-d H:i:s T', filemtime(VUXML_LATEST)) . '</p>
+		<p><sup>*</sup> - ' . _('modified, not new') . '</p><p><a href="/vuxml.php?all">' . _('All vulnerabilities') . '</a></p>
+		<p>' . _('Last processed:') . '<br>' . date('Y-m-d H:i:s T', filemtime(VUXML_LATEST)) . '</p>
 	</td></tr>
 </table>
 <br>';
@@ -2313,16 +2315,16 @@ $HTML .= '<br>
 
 <table class="bordered">
 	<tr>
-		<th class="accent">Ports</th>
+		<th class="accent">' . _('Ports') . '</th>
 	</tr>
 	<tr>
 	<td>
 
-	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/",                         "Home",                 "FreshPorts Home page"                ) . '
-	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/categories.php",           "Categories",           "List of all Port categories"         ) . '
-	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/ports-deleted.php",        "Deleted ports",        "All deleted ports"                   ) . '
-	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/sanity_test_failures.php", "Sanity Test Failures", "Things that didn't go quite right...") . '
-	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/backend/newsfeeds.php",    "Newsfeeds",            "Newsfeeds for just about everything" ) . '
+	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/",                         _("Home"),                 _("FreshPorts Home page")                ) . '
+	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/categories.php",           _("Categories"),           _("List of all Port categories")         ) . '
+	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/ports-deleted.php",        _("Deleted ports"),        _("All deleted ports")                   ) . '
+	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/sanity_test_failures.php", _("Sanity Test Failures"), _("Things that didn't go quite right...")) . '
+	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/backend/newsfeeds.php",    _("Newsfeeds"),            _("Newsfeeds for just about everything") ) . '
 	
 	</td>
 	</tr>
@@ -2335,18 +2337,18 @@ if (IsSet($visitor)) {
 $HTML .= '<br>
 <table class="bordered">
 	<tr>
-		<th class="accent">Watch Lists</th>
+		<th class="accent">' . _('Watch Lists') . '</th>
 	</tr>
 	<tr>
 	<td>';
 
-		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/pkg_upload.php',                   "Upload",                    "Upoad a file containing a list of ports you want to add to your watch list");
-		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/watch-categories.php',             "Categories",                "Search through categories for ports to add to your watch list"             );
-		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/watch-list-maintenance.php',       "Maintain",                  "Maintain your watch list[s]"                                               );
-		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/watch.php',                        "Ports",                     "Your list of watched ports"                                                );
-		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/backend/watch-list.php',           "Personal Newsfeeds",        "A list of news feeds for your watched lists"                               );
-		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/report-subscriptions.php',         "Report Subscriptions",      "Maintain your list of subscriptions"                                       );
-		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/report-package-notifications.php', "ABI Package Subscriptions", "Maintain your ABI package subscriptions"                                   );
+		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/pkg_upload.php',                   _("Upload"),                    _("Upload a file containing a list of ports you want to add to your watch list"));
+		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/watch-categories.php',             _("Categories"),                _("Search through categories for ports to add to your watch list")             );
+		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/watch-list-maintenance.php',       _("Maintain"),                  _("Maintain your watch list[s]")                                               );
+		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/watch.php',                        _("Ports"),                     _("Your list of watched ports")                                                );
+		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/backend/watch-list.php',           _("Personal Newsfeeds"),        _("A list of news feeds for your watched lists")                               );
+		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/report-subscriptions.php',         _("Report Subscriptions"),      _("Maintain your list of subscriptions")                                       );
+		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/report-package-notifications.php', _("ABI Package Subscriptions"), _("Maintain your ABI package subscriptions")                                   );
 
 $HTML .= '		
 	</td>
@@ -2371,13 +2373,13 @@ $HTML .= '
 
 <table class="bordered">
 	<tr>
-		<th class="accent">Statistics</th>
+		<th class="accent">' . _('Statistics') . '</th>
 	</tr>
 	<tr>
 	<td>
 
-' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/graphs.php",  "Graphs",                  "Everyone loves statistics!") . '
-' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/graphs2.php", "NEW Graphs (Javascript)", "Everyone loves statistics!");
+' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/graphs.php",  _("Graphs"),                  _("Everyone loves statistics!")) . '
+' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/graphs2.php", _("NEW Graphs (Javascript)"), _("Everyone loves statistics!"));
 
 	if (file_exists(HTML_DIRECTORY . '/stats.html')) {
 		$HTML .= file_get_contents(HTML_DIRECTORY . '/stats.html') . "\n";

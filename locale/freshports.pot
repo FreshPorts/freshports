@@ -1,0 +1,390 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the FreshPorts package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: FreshPorts\n"
+"Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
+"POT-Creation-Date: 2026-10-03 19:44-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: include/freshports.php:1083
+#, php-format
+msgid "The git branch used by this host is %s"
+msgstr ""
+
+#: include/freshports.php:1084
+#, php-format
+msgid "The database is %s"
+msgstr ""
+
+#: include/freshports.php:1085
+#, php-format
+msgid "The db server is %s"
+msgstr ""
+
+#: include/freshports.php:1101
+msgid "As an Amazon Associate I earn from qualifying purchases."
+msgstr ""
+
+#: include/freshports.php:1101
+#, php-format
+msgid "Want a good read? Try %s"
+msgstr ""
+
+#: include/freshports.php:1102
+#, php-format
+msgid "Want a good monitor light? See my <a href=\"%s\">photos</a>"
+msgstr ""
+
+#: include/freshports.php:1103
+msgid "All times are UTC"
+msgstr ""
+
+#: include/freshports.php:1108
+msgid "I remember"
+msgstr ""
+
+#: include/freshports.php:1113 include/freshports.php:2257
+msgid "Blog"
+msgstr ""
+
+#: include/freshports.php:1113
+msgid "Follow us"
+msgstr ""
+
+#: include/freshports.php:1113
+msgid "Status page"
+msgstr ""
+
+#: include/freshports.php:1122
+msgid "Menu &amp; search"
+msgstr ""
+
+#: include/freshports.php:1123
+msgid "Jump to the menu and search"
+msgstr ""
+
+#: include/freshports.php:1123
+msgid "Menu"
+msgstr ""
+
+#: include/freshports.php:1511
+msgid "All rights reserved."
+msgstr ""
+
+#: include/freshports.php:1511
+msgid "Copyright"
+msgstr ""
+
+#: include/freshports.php:1511
+msgid "This material is copyrighted"
+msgstr ""
+
+#: include/freshports.php:2149
+#, php-format
+msgid "Valid %1$s, %2$s, and %3$s."
+msgstr ""
+
+#: include/freshports.php:2150
+msgid "We like to keep our HTML valid"
+msgstr ""
+
+#: include/freshports.php:2151
+msgid "We like to have valid CSS"
+msgstr ""
+
+#: include/freshports.php:2152
+msgid "Valid RSS is good too"
+msgstr ""
+
+#: include/freshports.php:2197
+msgid "Login"
+msgstr ""
+
+#: include/freshports.php:2210
+#, php-format
+msgid "Logged in as %s"
+msgstr ""
+
+#: include/freshports.php:2214
+msgid "your email is <a href=\"/bouncing.php\">bouncing</a>"
+msgstr ""
+
+#: include/freshports.php:2217
+msgid "Your Account"
+msgstr ""
+
+#: include/freshports.php:2217
+msgid "Your account"
+msgstr ""
+
+#: include/freshports.php:2220
+msgid "Committer Opt-in"
+msgstr ""
+
+#: include/freshports.php:2220
+msgid "Committers can receive reports of Sanity Test Failures"
+msgstr ""
+
+#: include/freshports.php:2224
+msgid "Logout"
+msgstr ""
+
+#: include/freshports.php:2224
+msgid "Logout of the website"
+msgstr ""
+
+#: include/freshports.php:2225
+msgid "List of commits you have flagged"
+msgstr ""
+
+#: include/freshports.php:2225
+msgid "My Flagged Commits"
+msgstr ""
+
+#: include/freshports.php:2227
+msgid "Login to the website"
+msgstr ""
+
+#: include/freshports.php:2227
+msgid "User Login"
+msgstr ""
+
+#: include/freshports.php:2228
+msgid "Create account"
+msgstr ""
+
+#: include/freshports.php:2228
+msgid "Create an account"
+msgstr ""
+
+#: include/freshports.php:2246
+msgid "This site"
+msgstr ""
+
+#: include/freshports.php:2250
+msgid "A bit of background on FreshPorts"
+msgstr ""
+
+#: include/freshports.php:2250
+msgid "What is FreshPorts?"
+msgstr ""
+
+#: include/freshports.php:2251
+msgid "About the authors"
+msgstr ""
+
+#: include/freshports.php:2251
+msgid "Who wrote this stuff?"
+msgstr ""
+
+#: include/freshports.php:2252
+msgid "Issues"
+msgstr ""
+
+#: include/freshports.php:2252
+msgid "Report a website problem"
+msgstr ""
+
+#: include/freshports.php:2253
+msgid "FAQ"
+msgstr ""
+
+#: include/freshports.php:2253
+msgid "Frequently Asked Questions"
+msgstr ""
+
+#: include/freshports.php:2254
+msgid "How big is it?"
+msgstr ""
+
+#: include/freshports.php:2254
+msgid "How many pages are in this website?"
+msgstr ""
+
+#: include/freshports.php:2255
+msgid "Are you a security researcher? Please read this."
+msgstr ""
+
+#: include/freshports.php:2255
+msgid "Security Policy"
+msgstr ""
+
+#: include/freshports.php:2256
+msgid "Our privacy statement"
+msgstr ""
+
+#: include/freshports.php:2256
+msgid "Privacy"
+msgstr ""
+
+#: include/freshports.php:2257
+msgid "All the latest FreshPorts news"
+msgstr ""
+
+#: include/freshports.php:2258
+msgid "Contact"
+msgstr ""
+
+#: include/freshports.php:2258
+msgid "Contact details"
+msgstr ""
+
+#: include/freshports.php:2265
+msgid "Search"
+msgstr ""
+
+#: include/freshports.php:2287
+msgid "Advanced Searching options"
+msgstr ""
+
+#: include/freshports.php:2287
+msgid "more..."
+msgstr ""
+
+#: include/freshports.php:2299
+msgid "Latest Vulnerabilities"
+msgstr ""
+
+#: include/freshports.php:2305
+msgid "All vulnerabilities"
+msgstr ""
+
+#: include/freshports.php:2305
+msgid "modified, not new"
+msgstr ""
+
+#: include/freshports.php:2306
+msgid "Last processed:"
+msgstr ""
+
+#: include/freshports.php:2318 include/freshports.php:2348
+msgid "Ports"
+msgstr ""
+
+#: include/freshports.php:2323
+msgid "FreshPorts Home page"
+msgstr ""
+
+#: include/freshports.php:2323
+msgid "Home"
+msgstr ""
+
+#: include/freshports.php:2324 include/freshports.php:2346
+msgid "Categories"
+msgstr ""
+
+#: include/freshports.php:2324
+msgid "List of all Port categories"
+msgstr ""
+
+#: include/freshports.php:2325
+msgid "All deleted ports"
+msgstr ""
+
+#: include/freshports.php:2325
+msgid "Deleted ports"
+msgstr ""
+
+#: include/freshports.php:2326
+msgid "Sanity Test Failures"
+msgstr ""
+
+#: include/freshports.php:2326
+msgid "Things that didn't go quite right..."
+msgstr ""
+
+#: include/freshports.php:2327
+msgid "Newsfeeds"
+msgstr ""
+
+#: include/freshports.php:2327
+msgid "Newsfeeds for just about everything"
+msgstr ""
+
+#: include/freshports.php:2340
+msgid "Watch Lists"
+msgstr ""
+
+#: include/freshports.php:2345
+msgid "Upload"
+msgstr ""
+
+#: include/freshports.php:2345
+msgid ""
+"Upload a file containing a list of ports you want to add to your watch list"
+msgstr ""
+
+#: include/freshports.php:2346
+msgid "Search through categories for ports to add to your watch list"
+msgstr ""
+
+#: include/freshports.php:2347
+msgid "Maintain"
+msgstr ""
+
+#: include/freshports.php:2347
+msgid "Maintain your watch list[s]"
+msgstr ""
+
+#: include/freshports.php:2348
+msgid "Your list of watched ports"
+msgstr ""
+
+#: include/freshports.php:2349
+msgid "A list of news feeds for your watched lists"
+msgstr ""
+
+#: include/freshports.php:2349
+msgid "Personal Newsfeeds"
+msgstr ""
+
+#: include/freshports.php:2350
+msgid "Maintain your list of subscriptions"
+msgstr ""
+
+#: include/freshports.php:2350
+msgid "Report Subscriptions"
+msgstr ""
+
+#: include/freshports.php:2351
+msgid "ABI Package Subscriptions"
+msgstr ""
+
+#: include/freshports.php:2351
+msgid "Maintain your ABI package subscriptions"
+msgstr ""
+
+#: include/freshports.php:2376
+msgid "Statistics"
+msgstr ""
+
+#: include/freshports.php:2381 include/freshports.php:2382
+msgid "Everyone loves statistics!"
+msgstr ""
+
+#: include/freshports.php:2381
+msgid "Graphs"
+msgstr ""
+
+#: include/freshports.php:2382
+msgid "NEW Graphs (Javascript)"
+msgstr ""
+
+#: include/i18n.php:209
+msgid "Language"
+msgstr ""
+
+#: include/i18n.php:216
+msgid "Change"
+msgstr ""

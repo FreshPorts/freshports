@@ -33,7 +33,7 @@ DEFINE('UNMAINTAINTED_ADDRESS', 'ports@freebsd.org');
 
 DEFINE('CLICKTOADD', 'Click to add this to your default watch list[s]');
 
-DEFINE('SPONSORS', 'Servers and bandwidth provided by <br><a href="https://www.nyi.net/" rel="noopener noreferrer" TARGET="_blank">New York Internet</a>, <a href="https://www.ixsystems.com/"  rel="noopener noreferrer" TARGET="_blank">iXsystems</a>, and <a href="https://www.rootbsd.net/" rel="noopener noreferrer" TARGET="_blank">RootBSD</a>');
+DEFINE('SPONSORS', 'Servers and bandwidth provided by <br><a href="https://www.nyi.net/" rel="noopener noreferrer" TARGET="_blank">New York Internet</a>, <a href="https://www.truenas.com/"  rel="noopener noreferrer" TARGET="_blank">iXsystems</a>, and <a href="https://netactuate.com/rootbsd" rel="noopener noreferrer" TARGET="_blank">RootBSD</a>');
 
 DEFINE('FRESHPORTS_ENCODING', 'UTF-8');
 DEFINE('FRESHPORTS_TIMEZONE', 'UTC');

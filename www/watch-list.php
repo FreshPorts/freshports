@@ -66,7 +66,7 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/watch-lists.php');
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
 
-		$Title = 'Watch list maintenance';
+		$Title = _('Watch list maintenance');
 		freshports_Start($Title,
 						$Title,
 						'FreeBSD, index, applications, ports');
@@ -78,7 +78,7 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 
 	<?php echo freshports_MainContentTable(); ?>
 <tr>
-	<?php echo freshports_PageBannerText("Watch list maintenance"); ?>
+	<?php echo freshports_PageBannerText(_("Watch list maintenance")); ?>
 </tr>
 <tr><td class="content">
 <?php
@@ -88,14 +88,14 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 
 		$PostURL = $_SERVER["PHP_SELF"];
 		if (IsSet($_REQUEST["remove"])) {
-			$ButtonName = "Update";
+			$ButtonName = _('Update');
 			$Action     = "remove";
 			$Verb       = 'removed';
 			$FromTo     = 'from';
 			$Object     = pg_escape_string($db, $_REQUEST["remove"]);
 		} else {
 			if (IsSet($_REQUEST["add"])) {
-				$ButtonName = "Update";
+				$ButtonName = _('Update');
 				$Action     = "add";
 				$Verb       = 'added';
 				$FromTo     = 'to';
@@ -124,7 +124,7 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 
 		echo $HTML;
 ?>
-Please select the watch lists which should contain this port:
+<?php echo _('Please select the watch lists which should contain this port:'); ?>
 <blockquote>
 		<form action="<?php echo $PostURL; ?>" method="POST" NAME=f>
 		<?php
@@ -132,7 +132,7 @@ Please select the watch lists which should contain this port:
 		?>
 		<br><br>
 		<INPUT id=submit style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29
-		   value="<?php echo $ButtonName; ?>" name="submit"><br>
+		   value="<?php echo htmlspecialchars($ButtonName); ?>" name="submit"><br>
 		<INPUT TYPE="hidden" NAME="Origin" VALUE="<?php echo $Origin?>">
 		<INPUT TYPE="hidden" NAME="Update" VALUE="<?php echo $Object?>">
 <?php
@@ -146,11 +146,11 @@ Please select the watch lists which should contain this port:
 <?php
 		if ($Action == 'remove') {
 ?>
-NOTES
+<?php echo _('NOTES'); ?>
 <ul>
-<li>'+' indicates that the port is on this watch list.
-<li>'*' indicates a default watch list.
-<li>the watch lists which are selected are those upon which the port appears
+<li><?php echo _("'+' indicates that the port is on this watch list."); ?>
+<li><?php echo _("'*' indicates a default watch list."); ?>
+<li><?php echo _('the watch lists which are selected are those upon which the port appears'); ?>
 </ul>
 <?php
 		}

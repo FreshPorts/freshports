@@ -79,7 +79,7 @@ if ($submit) {
       
 }
 
-	$Title = 'Watch categories';
+	$Title = _('Watch categories');
 	freshports_Start($Title,
 					$Title,
 					'FreeBSD, index, applications, ports');
@@ -115,7 +115,7 @@ if ($_REQUEST['wlid']) {
 	<?php echo freshports_MainContentTable(NOBORDER); ?>
 <?php # article table start ?>
   <tr>
-	<?php echo freshports_PageBannerText("Watch List - categories"); ?>
+	<?php echo freshports_PageBannerText(_("Watch List - categories")); ?>
   </tr>
 <tr><td class="content">
 
@@ -123,18 +123,16 @@ if ($_REQUEST['wlid']) {
 <table class="fullwidth borderless">
 <?php # list of categories table start ?>
 <tr><td>
-This screen contains a list of the port categories. A * indicates a category that contains ports which are
-on your watch list. When a port changes in one of your watch categories, you will be notified by email if you have selected a 
-notification frequency within your <a href="customize.php">account settings</a>.
+<?php echo _('This screen contains a list of the port categories. A * indicates a category that contains ports which are on your watch list. When a port changes in one of your watch categories, you will be notified by email if you have selected a notification frequency within your <a href="customize.php">account settings</a>.'); ?>
 
 <p>
-Virtual categories cannot be watched and their checkboxes will be disabled.
+<?php echo _('Virtual categories cannot be watched and their checkboxes will be disabled.'); ?>
 </td>
 
 <td class="vtop">
 <table class="borderless">
 <?php # ddlb start ?>
-<tr><td>Select...</td></tr>
+<tr><td><?php echo _('Select...'); ?></td></tr>
 <tr><td align="left">
 
 <?php
@@ -279,8 +277,8 @@ echo $HTML;
 echo "</table>\n";
 ?>
 <br>
-<input TYPE="submit" VALUE="Save changes" name="submit">
-<input TYPE="reset"  VALUE="reset form">
+<input TYPE="submit" VALUE="<?php echo htmlspecialchars(_('Save changes')); ?>" name="submit">
+<input TYPE="reset"  VALUE="<?php echo htmlspecialchars(_('reset form')); ?>">
 <input type="hidden" name="watch_list_id" value="<?php echo $wlid; ?>">
 
 </form>

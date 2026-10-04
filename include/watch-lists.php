@@ -18,7 +18,7 @@
 			$HTML .= '[]';
 		}
 		
-		$HTML .= '" title="Select a watch list"';
+		$HTML .= '" title="' . htmlspecialchars(_('Select a watch list')) . '"';
 	
 		if ($size) {
 			$HTML .= ' size="' . $size . '"';
@@ -63,14 +63,14 @@
 		$HTML .= '</select>';
 
 		if (!$NumRows) {
-			$HTML .= '<br><h2> You have no watch lists.  You must <a href="watch-list-maintenance.php">create one</a>.</h2>';
+			$HTML .= '<br><h2> ' . _('You have no watch lists.  You must <a href="watch-list-maintenance.php">create one</a>.') . '</h2>';
 		}
 	
 		return $HTML;
 	}
 
 function freshports_WatchListSelectGoButton($name = 'watch_list_select') {
-	return '	<input type="image" name="' . $name . '" src="/images/go.gif" alt="Go" title="Display the selected watch list">';
+	return '	<input type="image" name="' . $name . '" src="/images/go.gif" alt="' . htmlspecialchars(_('Go')) . '" title="' . htmlspecialchars(_('Display the selected watch list')) . '">';
 }
 
 function freshports_WatchListDDLBForm($db, $UserID, $WatchListID, $Extra = '') {

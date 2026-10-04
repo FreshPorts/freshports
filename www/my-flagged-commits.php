@@ -12,7 +12,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 	require_once('Pager/Pager.php');
 
-	$Title = 'My flagged commits';
+	$Title = _('My flagged commits');
 	freshports_Start($FreshPortsSlogan . " - $Title",
 					$Title,
 					'FreeBSD, index, applications, ports');
@@ -82,13 +82,13 @@
 <?php echo freshports_MainContentTable(); ?>
 
 <tr>
-<?php echo freshports_PageBannerText("My flagged commits"); ?>
+<?php echo freshports_PageBannerText(_("My flagged commits")); ?>
         <?php //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPortsLong) ?>
 </tr>
 <tr><TD>
 <p><?php echo EVERYTHING; ?>
 <p>
-A port is marked as new for 10 days.
+<?php echo _('A port is marked as new for 10 days.'); ?>
 
 <?php
 		if ($ShowAds && $BannerAd) {

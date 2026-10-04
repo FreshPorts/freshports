@@ -36,7 +36,7 @@ function freshports_ABI_list($dbh) {
 		$HTML .= '[]';
 	}
 
-	$HTML .= '" title="Select a watch list"';
+	$HTML .= '" title="' . htmlspecialchars(_('Select a watch list')) . '"';
 
 	if ($multiple) {
 		$HTML .= ' multiple';
@@ -64,7 +64,7 @@ function freshports_ABI_list($dbh) {
 	$HTML .= '</select>';
 
 	if (!$NumRows) {
-		$HTML .= '<br><h2> You have no watch lists.  You must <a href="watch-list-maintenance.php">create one</a>.</h2>';
+		$HTML .= '<br><h2> ' . _('You have no watch lists.  You must <a href="watch-list-maintenance.php">create one</a>.') . '</h2>';
 	}
 
 	return $HTML;
@@ -78,7 +78,7 @@ function freshports_ABI_list_watching($UserID, $dbh) {
 
 	$Debug = 0;
 
-	$HTML = '<select name="watch_list_abi[]" size="23" max-width="95%" title="Select the ABI" multiple>' . "\n";
+	$HTML = '<select name="watch_list_abi[]" size="23" max-width="95%" title="' . htmlspecialchars(_('Select the ABI')) . '" multiple>' . "\n";
 
 	$rpn = new report_subscriptions_abi($dbh);
 	$numrows = $rpn->Fetch($UserID);
@@ -98,7 +98,7 @@ function freshports_Package_Sets() {
 	# It will contain the package sets the user can select from
 
 
-	$HTML = '<select name="package_set[]" size="2" max-width="95%" title="Select the package set" multiple>' . "\n";
+	$HTML = '<select name="package_set[]" size="2" max-width="95%" title="' . htmlspecialchars(_('Select the package set')) . '" multiple>' . "\n";
 
 	$HTML .= '<option value="latest">latest</option>';
 	$HTML .= '<option value="quarterly">quarterly</option>';
@@ -128,7 +128,7 @@ if (IsSet($_REQUEST['add']) || IsSet($_REQUEST['delete'])) {
 	if ($add) {
         if (!IsSet($_REQUEST['wlid']) || !IsSet($_REQUEST['abi']) || !IsSet($_REQUEST['package_set'])) {
 			syslog(LOG_ERR, "At least one each watch list, ABI, and package set must be selected.");
-			exit("You have to click at least one watch list, one ABI, and one package set. I'm stopping right now. You can click back and try again.");
+			exit(_("You have to click at least one watch list, one ABI, and one package set. I'm stopping right now. You can click back and try again."));
         }
 		# convert single value to an array
 		if (is_array($_REQUEST['abi'])) {
@@ -227,7 +227,7 @@ if (IsSet($_REQUEST['add']) || IsSet($_REQUEST['delete'])) {
 
 
 
-	$ArticleTitle = 'Package Notifications';
+	$ArticleTitle = _('Package Notifications');
 
 	freshports_Start(	$ArticleTitle,
 					'',
@@ -252,11 +252,10 @@ if (IsSet($_REQUEST['add']) || IsSet($_REQUEST['delete'])) {
 <td colspan="1">
 
 <p>
-This page allows you to choose which watch lists will be used for Package Notifications.
+<?php echo _('This page allows you to choose which watch lists will be used for Package Notifications.'); ?>
 </p>
 <p>
-For each watch list, select one or more ABI.  When a new package is available for something on your watch list,
-in the ABI you selected, an email will be sent as soon FreshPorts discovers the fresh package.
+<?php echo _('For each watch list, select one or more ABI.  When a new package is available for something on your watch list, in the ABI you selected, an email will be sent as soon as FreshPorts discovers the fresh package.'); ?>
 </p>
     </tr>
 <tr>
@@ -269,34 +268,34 @@ in the ABI you selected, an email will be sent as soon FreshPorts discovers the 
 
 <?php
     if ($Debug) echo 'when calling freshports_WatchListDDLBForm, $wlid = \'' . $wlid . '\'';
-    echo '<label for="wlid">Choose watch lists:</label><br>';
+    echo '<label for="wlid">' . _('Choose watch lists:') . '</label><br>';
     echo freshports_WatchListDDLB($db, $User->id, $wlid, 15, 1);
 
 ?>
 <td>
 <?php
-		echo '<label for="abi">Choose your ABI values:</label><br>';
+		echo '<label for="abi">' . _('Choose your ABI values:') . '</label><br>';
 		echo freshports_ABI_list($db);
 ?>
 </td>
                 <td>
                     <?php
-			echo '<label for="package_set">Choose your package set values:</label><br>';
+			echo '<label for="package_set">' . _('Choose your package set values:') . '</label><br>';
 			echo freshports_Package_Sets();
 		    ?>
                 </td>
 <td>
-	    <label for="add">Choose an action:</label><br>
-            <input type="submit" value="Add Selected >>>" name="add"></input>
+	    <label for="add"><?php echo _('Choose an action:'); ?></label><br>
+            <input type="submit" value="<?php echo htmlspecialchars(_('Add Selected') . ' >>>'); ?>" name="add"></input>
 
             <br>		<br>
-            <input type="submit" value="Delete Selected <<<" name="delete"></input>
+            <input type="submit" value="<?php echo htmlspecialchars(_('Delete Selected') . ' <<<'); ?>" name="delete"></input>
 	</td>
 	<td>
 
 		<br>
 		<?php
-		echo '<label for="watch_list_abi">Your selected watch list / ABI combinations:</label><br>';
+		echo '<label for="watch_list_abi">' . _('Your selected watch list / ABI combinations:') . '</label><br>';
 		echo freshports_ABI_list_watching($User->id, $db);
 		?>
 		</td>

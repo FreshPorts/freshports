@@ -21,7 +21,7 @@
                 header('Location: /' . MAINTENANCE_PAGE, TRUE, 307);
 	}
 
-	$ArticleTitle = 'Report subscriptions';
+	$ArticleTitle = _('Report subscriptions');
 
 	freshports_Start(	$ArticleTitle,
 					'',
@@ -68,7 +68,8 @@
 		return $Reports;
 	}
 
-	if (IsSet($_POST['submit']) && $_POST['submit'] == 'update') {
+	# the button label is translated, so test only that the button was pressed
+	if (IsSet($_POST['submit'])) {
 		pg_query($db, 'begin');
 		$sql = "DELETE from report_subscriptions WHERE user_id = $User->id";
 
@@ -100,7 +101,7 @@
 				$result = pg_query_params($db, $sql, $params);
 	
 				if (!$result) {
-					echo 'OUCH, that\'s not very nice.  something went wrong: ' . pg_last_error($db) . "  $sql";
+					echo _("OUCH, that's not very nice.  something went wrong:") . ' ' . pg_last_error($db) . "  $sql";
 					pg_exec($db, 'rollback');
 					exit;
 				}
@@ -161,12 +162,12 @@
 <td>
 
 <p>
-This page allows you to select the reports you wish to receive and the frequency of the report.
+<?php echo _('This page allows you to select the reports you wish to receive and the frequency of the report.'); ?>
 </p>
 
 <FORM ACTION="<?php echo $_SERVER["PHP_SELF"] ;?>" METHOD="POST" NAME=f>
 	<table class="report-list bordered">
-	<tr><td class="element-details">Report Name</td><td class="element-details">Frequency</td><td class="element-details">Description</td></tr>
+	<tr><td class="element-details"><?php echo _('Report Name'); ?></td><td class="element-details"><?php echo _('Frequency'); ?></td><td class="element-details"><?php echo _('Description'); ?></td></tr>
 	<?php
 
 
@@ -220,7 +221,7 @@ This page allows you to select the reports you wish to receive and the frequency
 
 				echo $DDLB;
 			} else {
-			  echo 'nil';
+			  echo _('nil');
 			}
 			echo '</td>';
 			echo "<td>" . $description . " </td>";
@@ -230,29 +231,24 @@ This page allows you to select the reports you wish to receive and the frequency
 	?>
 	</table>
 
-<h3>New Package Notification</h3>
+<h3><?php echo _('New Package Notification'); ?></h3>
 
 <p>
-If you are subscribing to <i>New Package Notification</i> above,
-you'll also need to <a href="/report-package-notifications.php">specify ABI and watch lists</a>.
+<?php echo _('If you are subscribing to <i>New Package Notification</i> above, you\'ll also need to <a href="/report-package-notifications.php">specify ABI and watch lists</a>.'); ?>
 </p>
 
 <?php require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/spam-filter-information.php'); ?>
 
 <hr>
 <p>
-<h2>Beta mailing list</h2>
+<h2><?php echo _('Beta mailing list'); ?></h2>
 <p>
-You may wish to help me test new FreshPorts features or even just get a sneak
-peek at them.  If so, I urge you to join the new Beta mailing list.  This
-will be a low volume list which broadcasts details of new features which
-you can try out before they hit the main website.  To subscribe, follow
-the directions found on the <a href="https://lists.freshports.org/mailman/listinfo/">FreshPorts mailing list website</a>
+<?php echo _('You may wish to help me test new FreshPorts features or even just get a sneak peek at them.  If so, I urge you to join the new Beta mailing list.  This will be a low volume list which broadcasts details of new features which you can try out before they hit the main website.  To subscribe, follow the directions found on the <a href="https://lists.freshports.org/mailman/listinfo/">FreshPorts mailing list website</a>'); ?>
 
 <hr>
 
 <br><br>
-	&nbsp;&nbsp;<INPUT TYPE="submit" VALUE="update" NAME="submit">
+	&nbsp;&nbsp;<INPUT TYPE="submit" VALUE="<?php echo htmlspecialchars(_('update')); ?>" NAME="submit">
 </FORM>
 
 </td>

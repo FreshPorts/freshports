@@ -49,7 +49,7 @@
 		}
 	}
 
-	$Title = 'watch list categories';
+	$Title = _('watch list categories');
 	freshports_Start($FreshPortsSlogan . " - $Title",
 					$Title,
 					'FreeBSD, index, applications, ports');
@@ -114,13 +114,13 @@ if ($db) {
 <?php echo freshports_MainContentTable(); ?>
 
 <tr>
-<?php echo freshports_PageBannerText("$MaxNumberOfPortsLong most recent commits (all timestamps are UTC)"); ?>
+<?php echo freshports_PageBannerText(sprintf(ngettext('%d most recent commit (all timestamps are UTC)', '%d most recent commits (all timestamps are UTC)', $MaxNumberOfPortsLong), $MaxNumberOfPortsLong)); ?>
         <?php //echo ($StartAt + 1) . " - " . ($StartAt + $MaxNumberOfPortsLong) ?>
 </tr>
 <tr><td>
 <p><?php echo EVERYTHING; ?>
 <p>
-A port is marked as new for 10 days.
+<?php echo _('A port is marked as new for 10 days.'); ?>
 
 <?php
 	if ($ShowAds && $BannerAd) {
@@ -189,7 +189,7 @@ A port is marked as new for 10 days.
 			echo '
 <table WIDTH="155" class="bordered" CELLPADDING="5">
 	<tr>
-		<td class="accent" height="30"><B>Previous days</B></td>
+		<td class="accent" height="30"><B>' . _('Previous days') . '</B></td>
 	</tr>
 	<tr><td>
 ';
@@ -213,7 +213,7 @@ A port is marked as new for 10 days.
 <?php
 define('RELATIVE_DATE_24HOURS', 24 * 60 * 60);	# seconds in a day
 $Date = date('Y/m/d');
-$Yesterday = freshports_LinkToDate(strtotime($Date) - RELATIVE_DATE_24HOURS, "Yesterday's Commits");
+$Yesterday = freshports_LinkToDate(strtotime($Date) - RELATIVE_DATE_24HOURS, _("Yesterday's Commits"));
 
 echo '&lt; ' . $Yesterday . ' &gt;';
 ?>

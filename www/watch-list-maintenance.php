@@ -52,14 +52,14 @@ if (!$visitor) {
 unset($add_name);
 unset($rename_name);
 
-$ValidCharacters = 'a-z, A-Z, and 0-9';
+$ValidCharacters = _('a-z, A-Z, and 0-9');
 
-$WatchListNameMessage = 'Watch list names must contain only A..Z, a..z, or 0..9.';
+$WatchListNameMessage = _('Watch list names must contain only A..Z, a..z, or 0..9.');
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_lists.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user.php');
 
-	$Title = 'Watch list maintenance';
+	$Title = _('Watch list maintenance');
 	freshports_Start($Title,
 					$Title,
 					'FreeBSD, index, applications, ports');
@@ -75,6 +75,20 @@ $ConfirmationNeeded['add']         = 0;
 $ConfirmationNeeded['rename']      = 0;
 $ConfirmationNeeded['set_default'] = 0;
 $ConfirmationNeeded['set_options'] = 0;
+
+#
+# The button labels.  The confirmation text the user types must match the label
+# on the button they clicked, so the labels are translated here once and used
+# both for the buttons and for the client-side pattern on the confirm field.
+#
+$ButtonLabel['add']         = _('Add');
+$ButtonLabel['rename']      = _('Rename');
+$ButtonLabel['delete']      = _('Delete');
+$ButtonLabel['delete_all']  = _('Delete All');
+$ButtonLabel['empty']       = _('Empty');
+$ButtonLabel['empty_all']   = _('Empty All');
+$ButtonLabel['set_default'] = _('Set Default');
+$ButtonLabel['set_options'] = _('Set options');
 
 $UserClickedOn = '';
 $ErrorMessage  = '';
@@ -117,7 +131,7 @@ if (IsSet($_POST['set_options'])) {
 if ($UserClickedOn) {
 	if ($ConfirmationNeeded[$UserClickedOn]) {
 		if ($_POST['confirm'] != $_POST[$UserClickedOn]) {
-			$ErrorMessage = 'You did not supply the confirmation text';
+			$ErrorMessage = _('You did not supply the confirmation text');
 		}
 	}
 
@@ -126,7 +140,7 @@ if ($UserClickedOn) {
 			case 'add':
 				$add_name = pg_escape_string($db, $_POST['add_name']);
 				if ($add_name == '') {
-					$ErrorMessage = 'When creating a new list, you must supply a name.';
+					$ErrorMessage = _('When creating a new list, you must supply a name.');
 				}
 				if (preg_match("/[^a-zA-Z0-9]/", $add_name)) {
 					$ErrorMessage = $WatchListNameMessage;
@@ -136,7 +150,7 @@ if ($UserClickedOn) {
 			case 'rename':
 				$rename_name  = pg_escape_string($db, $_POST['rename_name']);
 				if ($rename_name == '') {
-					$ErrorMessage = 'When renaming an existing list, you must supply a name.';
+					$ErrorMessage = _('When renaming an existing list, you must supply a name.');
 				}
 				if (preg_match("/[^a-zA-Z0-9]/", $rename_name)) {
 					$ErrorMessage = $WatchListNameMessage;
@@ -175,7 +189,7 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 					break;
 				}
 			} else {
-				$ErrorMessage = 'Select exactly one watch list to be renamed.  I can\'t handle zero or more than one.';
+				$ErrorMessage = _("Select exactly one watch list to be renamed.  I can't handle zero or more than one.");
 			}
 			break;
 
@@ -259,7 +273,7 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 			break;
 
 		default:
-			echo 'Hmmm, I have no idea what you asked me to do';
+			echo _('Hmmm, I have no idea what you asked me to do');
 	}
 }
 
@@ -270,10 +284,7 @@ function CheckForNoDefaultAndAddToDefault($db, $User) {
 
 	if (freshports_WatchListCountDefault($db, $User->id) == 0) {
 		if ($User->watch_list_add_remove == 'default') {
-			$Message = 'You have no default watch lists.  You have chosen to act ' .
-				'upon the default watch list[s].  With this combination, you will be unable to add ' .
-				'ports using the one-click method.  It is suggested that you set at least one watch list ' .
-				'to be the default watch list.';
+			$Message = _('You have no default watch lists.  You have chosen to act upon the default watch list[s].  With this combination, you will be unable to add ports using the one-click method.  It is suggested that you set at least one watch list to be the default watch list.');
 		}
 	}
 
@@ -290,7 +301,7 @@ $ErrorMessage .= CheckForNoDefaultAndAddToDefault($db, $User);
 
 	<?php echo freshports_MainContentTable(); ?>
 <tr>
-	<?php echo freshports_PageBannerText("Watch list maintenance"); ?>
+	<?php echo freshports_PageBannerText(_("Watch list maintenance")); ?>
 </tr>
 
 <tr><td>
@@ -298,13 +309,13 @@ $ErrorMessage .= CheckForNoDefaultAndAddToDefault($db, $User);
 <tr><td>
 <?php
 	if ($ErrorMessage != '') {
-		echo freshports_ErrorMessage("Let's try that again!", $ErrorMessage);
+		echo freshports_ErrorMessage(_("Let's try that again!"), $ErrorMessage);
 	}
 ?>
 
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
 <table class="fullwidth bordered">
-<tr><td class="element-details">Watch Lists</td><td><span class="element-details">Actions</span> (scroll down for instructions)</td></tr>
+<tr><td class="element-details"><?php echo _('Watch Lists'); ?></td><td><span class="element-details"><?php echo _('Actions'); ?></span> <?php echo _('(scroll down for instructions)'); ?></td></tr>
   <tr>
     <td>
 <?php
@@ -312,25 +323,34 @@ $ErrorMessage .= CheckForNoDefaultAndAddToDefault($db, $User);
 ?>
     </td>
     <td>
-    <INPUT id=add         type=submit size=48 value="Add"          name=add>&nbsp;&nbsp;&nbsp;
+    <INPUT id=add         type=submit size=48 value="<?php echo htmlspecialchars($ButtonLabel['add']); ?>"          name=add>&nbsp;&nbsp;&nbsp;
     <INPUT id=add_name    name=add_name    <?php if (IsSet($add_name))    echo 'value="' . htmlspecialchars($add_name)    . '" '; ?>pattern="[a-zA-Z0-9]+" size=10><small><sup>(1)</sup></small><br>
-    <INPUT id=rename      type=submit size=23 value="Rename"       name=rename>&nbsp;&nbsp;&nbsp;
+    <INPUT id=rename      type=submit size=23 value="<?php echo htmlspecialchars($ButtonLabel['rename']); ?>"       name=rename>&nbsp;&nbsp;&nbsp;
     <INPUT id=rename_name name=rename_name <?php if (IsSet($rename_name)) echo 'value="' . htmlspecialchars($rename_name) . '" '; ?>pattern="[a-zA-Z0-9]+" size=10><small><sup>(1)</sup></small><br>
-    <?php echo "&nbsp;<small>(1) - only $ValidCharacters</small>" ?>
+    <?php echo '&nbsp;<small>' . sprintf(_('(1) - only %s'), $ValidCharacters) . '</small>' ?>
 		<br>
 
     <br>
-    <INPUT id=delete      type=submit size=29 value="Delete"       name=delete><br>
-    <INPUT id=delete_all  type=submit size=29 value="Delete All"   name=delete_all><br>
+    <INPUT id=delete      type=submit size=29 value="<?php echo htmlspecialchars($ButtonLabel['delete']); ?>"       name=delete><br>
+    <INPUT id=delete_all  type=submit size=29 value="<?php echo htmlspecialchars($ButtonLabel['delete_all']); ?>"   name=delete_all><br>
     <br>
-    <INPUT id=empty       type=submit size=29 value="Empty"        name=empty><br>
-    <INPUT id=empty_all   type=submit size=29 value="Empty All"    name=empty_all><br>
+    <INPUT id=empty       type=submit size=29 value="<?php echo htmlspecialchars($ButtonLabel['empty']); ?>"        name=empty><br>
+    <INPUT id=empty_all   type=submit size=29 value="<?php echo htmlspecialchars($ButtonLabel['empty_all']); ?>"    name=empty_all><br>
     <br>
-    <INPUT id=default     type=submit size=29 value="Set Default"  name=set_default><br>
+    <INPUT id=default     type=submit size=29 value="<?php echo htmlspecialchars($ButtonLabel['set_default']); ?>"  name=set_default><br>
     <br>
 
-    <label>Confirm: <INPUT id=confirm name=confirm pattern="(Delete|Empty)( All)?" size=10></label>
-	 <br>(case sensitive)
+<?php
+	# the confirmation text must be one of the (translated) labels of the buttons which need confirmation
+	$ConfirmPattern = array();
+	foreach ($ConfirmationNeeded as $Button => $Needed) {
+		if ($Needed) {
+			$ConfirmPattern[] = preg_replace('/[\\\\^$.*+?()[\\]{}|\\/]/', '\\\\$0', $ButtonLabel[$Button]);
+		}
+	}
+?>
+    <label><?php echo _('Confirm:'); ?> <INPUT id=confirm name=confirm pattern="<?php echo htmlspecialchars(implode('|', $ConfirmPattern)); ?>" size=10></label>
+	 <br><?php echo _('(case sensitive)'); ?>
 
     </td>
 </tr>
@@ -340,14 +360,14 @@ $ErrorMessage .= CheckForNoDefaultAndAddToDefault($db, $User);
 </td><td>
 
 <table class="fullwidth bordered">
-<tr><td class="element-details">Options</td></tr>
+<tr><td class="element-details"><?php echo _('Options'); ?></td></tr>
   <tr>
 <td>
-When clicking on Add/Remove for a port,<br> the action should affect
+<?php echo _('When clicking on Add/Remove for a port,<br> the action should affect'); ?>
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
-<INPUT type=radio name=addremove value=default<?php if ($User->watch_list_add_remove == 'default') echo ' checked'; ?>>&nbsp;the default watch list[s]<br>
-<INPUT type=radio name=addremove value=ask<?php     if ($User->watch_list_add_remove == 'ask')     echo ' checked'; ?>>&nbsp;Ask for watch list name[s] each time<br>
-<INPUT type=submit size=29 value="Set options"  name=set_options>
+<INPUT type=radio name=addremove value=default<?php if ($User->watch_list_add_remove == 'default') echo ' checked'; ?>>&nbsp;<?php echo _('the default watch list[s]'); ?><br>
+<INPUT type=radio name=addremove value=ask<?php     if ($User->watch_list_add_remove == 'ask')     echo ' checked'; ?>>&nbsp;<?php echo _('Ask for watch list name[s] each time'); ?><br>
+<INPUT type=submit size=29 value="<?php echo htmlspecialchars($ButtonLabel['set_options']); ?>"  name=set_options>
  </form>
 </td>
     </tr>
@@ -357,58 +377,52 @@ When clicking on Add/Remove for a port,<br> the action should affect
 
 </table>
 
-<H2>Information</H2>
+<H2><?php echo _('Information'); ?></H2>
 <ul>
-<li>Names do not have to be unique but it is advisable.
-<li>Valid characters are: <?php echo $ValidCharacters; ?>
-<li>Please contact the webmaster if you want more than 5 lists.
+<li><?php echo _('Names do not have to be unique but it is advisable.'); ?>
+<li><?php echo sprintf(_('Valid characters are: %s'), $ValidCharacters); ?>
+<li><?php echo _('Please contact the webmaster if you want more than 5 lists.'); ?>
 </ul>
 
-<H2>Help</H2>
+<H2><?php echo _('Help'); ?></H2>
 
 <ul>
-<li><b>Watch Lists</b> - this is what it's all about
+<li><b><?php echo _('Watch Lists'); ?></b> - <?php echo _("this is what it's all about"); ?>
 	<ul>
-	<li>These are your existing watch lists.
+	<li><?php echo _('These are your existing watch lists.'); ?>
 	</ul>
 	<br>
-<li><b>Actions</b> - what you can do to your watch lists
+<li><b><?php echo _('Actions'); ?></b> - <?php echo _('what you can do to your watch lists'); ?>
 	<ul>
-	<li><b>Add</b> - add a new watch list.  Supply the name in the space provided.  This name will be supplied
-			in any mail notification messages for this watch lists.  
+	<li><b><?php echo $ButtonLabel['add']; ?></b> - <?php echo _('add a new watch list.  Supply the name in the space provided.  This name will be supplied in any mail notification messages for this watch lists.'); ?>
 	
-	<li><b>Rename</b> - rename a new watch list.  Select the watch list and supply the new name.
+	<li><b><?php echo $ButtonLabel['rename']; ?></b> - <?php echo _('rename a new watch list.  Select the watch list and supply the new name.'); ?>
 	
 		
-	<li><b>Delete<sup>*</sup></b> - Deletes the selected watch lists.
+	<li><b><?php echo $ButtonLabel['delete']; ?><sup>*</sup></b> - <?php echo _('Deletes the selected watch lists.'); ?>
 	
-	<li><b>Delete All<sup>*</sup></b> - Deletes all of your watch lists.
+	<li><b><?php echo $ButtonLabel['delete_all']; ?><sup>*</sup></b> - <?php echo _('Deletes all of your watch lists.'); ?>
 	
-	<li><b>Empty<sup>*</sup></b> - Empties the selected watch lists.
+	<li><b><?php echo $ButtonLabel['empty']; ?><sup>*</sup></b> - <?php echo _('Empties the selected watch lists.'); ?>
 	
-	<li><b>Empty All<sup>*</sup></b> - Empties all of your watch lists.
+	<li><b><?php echo $ButtonLabel['empty_all']; ?><sup>*</sup></b> - <?php echo _('Empties all of your watch lists.'); ?>
 
-	<li><b>Set Default</b> - Sets the default watch list[s].  The default watch list[s] is/are used when:
+	<li><b><?php echo $ButtonLabel['set_default']; ?></b> - <?php echo _('Sets the default watch list[s].  The default watch list[s] is/are used when:'); ?>
 			<ul>
-			<li>you click on the add/remove links
-			<li>when displaying a port, the add/remove link reflects whether or not that port is on this list
+			<li><?php echo _('you click on the add/remove links'); ?>
+			<li><?php echo _('when displaying a port, the add/remove link reflects whether or not that port is on this list'); ?>
 			</ul>
 	</ul>
 	
 	<br>
-<li><b>Options</b> - this affects the display/actions on other pages
+<li><b><?php echo _('Options'); ?></b> - <?php echo _('this affects the display/actions on other pages'); ?>
 	<ul>
-	<li><b>Set Options</b> - Set the options to be used when clicking on Add/Remove for a port.
+	<li><b><?php echo $ButtonLabel['set_options']; ?></b> - <?php echo _('Set the options to be used when clicking on Add/Remove for a port.'); ?>
 	</ul>
 </ul>
 
 <p>
-		<sup>*</sup>These items require confirmation by typing the button name in the 
-			confirmation text box (case sensitive).  Be careful: these actions cannot be undone.
-    For example, when deleting or emptying a list, you must confirm your action by typing
-    the button name into this field (e.g. if you click on <b>Empty All</b>",
-    you must type <b>Empty All</b> into the box below in order for the action
-    to be completed). This is case sensitive.<br>
+		<sup>*</sup><?php echo sprintf(_('These items require confirmation by typing the button name in the confirmation text box (case sensitive).  Be careful: these actions cannot be undone. For example, when deleting or emptying a list, you must confirm your action by typing the button name into this field (e.g. if you click on <b>%1$s</b>, you must type <b>%1$s</b> into the box above in order for the action to be completed). This is case sensitive.'), $ButtonLabel['empty_all']); ?><br>
 
 </p>
 </td></tr></table>

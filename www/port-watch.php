@@ -128,7 +128,7 @@ if ($submit) {
 		}
    }
 
-   $Title = 'Watch List ' . htmlentities($category);
+   $Title = sprintf(_('Watch List %s'), htmlentities($category));
    freshports_Start($Title,
                $Title,
                "FreeBSD, index, applications, ports");
@@ -141,7 +141,7 @@ if ($submit) {
 
 	<?php echo freshports_MainContentTable(); ?>
   <tr>
-	<?php echo freshports_PageBannerText("Watch List - " . $category) ?>
+	<?php echo freshports_PageBannerText(sprintf(_('Watch List - %s'), $category)) ?>
   </tr>
 
 <?php
@@ -183,10 +183,13 @@ if ($numrows) {
 }
 
 
-$HTML .= '<tr><td><b>' . $numrows . ' ports found (';
-if ($NumVirtual != 0) {
-	$HTML .=  ($numrows - $NumVirtual) . ' primary, ' . htmlentities($NumVirtual) . ' secondary)</b></td></tr>';
+$HTML .= '<tr><td><b>';
+if (!empty($NumVirtual)) {
+	$HTML .= sprintf(ngettext('%1$d port found (%2$d primary, %3$d secondary)', '%1$d ports found (%2$d primary, %3$d secondary)', $numrows), $numrows, $numrows - $NumVirtual, $NumVirtual);
+} else {
+	$HTML .= sprintf(ngettext('%d port found', '%d ports found', $numrows), $numrows);
 }
+$HTML .= '</b></td></tr>';
 $HTML .= '<tr><td class="vtop hcentered">' . "\n";
 
 
@@ -246,8 +249,8 @@ if ($numrows) {
 
 <div class="hcentered">
 <br>
-<input TYPE="submit" VALUE="update watch list" name="submit">
-<input TYPE="reset"  VALUE="reset form">
+<input TYPE="submit" VALUE="<?php echo htmlspecialchars(_('update watch list')); ?>" name="submit">
+<input TYPE="reset"  VALUE="<?php echo htmlspecialchars(_('reset form')); ?>">
 <input type="hidden" name="watch_list_id" value="<?php echo htmlentities($wlid); ?>">
 
 </div>
@@ -255,7 +258,7 @@ if ($numrows) {
 </table>
 
 <td class="vtop">
-<table class="borderless"><tr><td>Select...</td></tr><tr><td>
+<table class="borderless"><tr><td><?php echo _('Select...'); ?></td></tr><tr><td>
    
 <?php
 	$Extra = '<input type="hidden" name="category" value="' . htmlentities($category) . '">';
@@ -267,7 +270,7 @@ if ($numrows) {
 <?php
 } else {
 	echo '<tr><td ALIGN="center">' . "\n";
-	echo "No ports found.  Perhaps this is an invalid category id.";
+	echo _('No ports found.  Perhaps this is an invalid category id.');
 	echo "</td></tr>\n";
 }
 
@@ -276,15 +279,13 @@ if ($numrows) {
 <tr><td class="hleft vtop">
 <UL>
 <li>
-This page operates on a single watch list at a time.
-<li>This page shows you the ports in a category (<em><?php echo htmlentities($category) ?></em>)
-that are on your selected watch list.</li>
-<li>The entries with a tick beside them are your on the selected watch list.</li>
-<li>When one of the ports in your watch list changes, you will be notified by email if
-you have selected a notification frequency within your <a href="customize.php">account settings</a>.
+<?php echo _('This page operates on a single watch list at a time.'); ?>
+<li><?php echo sprintf(_('This page shows you the ports in a category (%s) that are on your selected watch list.'), '<em>' . htmlentities($category) . '</em>'); ?></li>
+<li><?php echo _('The entries with a tick beside them are on your selected watch list.'); ?></li>
+<li><?php echo _('When one of the ports in your watch list changes, you will be notified by email if you have selected a notification frequency within your <a href="customize.php">account settings</a>.'); ?>
 </li>
-<li>[D] indicates a port which has been removed from the tree.</li>
-<li><sup>*</sup> indicates a port which resides in another cateogory but lists this category as a secondary.</li>
+<li><?php echo _('[D] indicates a port which has been removed from the tree.'); ?></li>
+<li><sup>*</sup> <?php echo _('indicates a port which resides in another category but lists this category as a secondary.'); ?></li>
 </UL>
 </table>
 

@@ -67,10 +67,10 @@ function DisplayWatchListNewsFeeds($db, $UserID) {
 		}
 	}
 
-	$HTML .= "<p>You can use these formats:
+	$HTML .= "<p>" . _('You can use these formats:') . "
 	
 	<ul>
-	<li>rss0.91 (default)</li>
+	<li>" . sprintf(_('%s (default)'), 'rss0.91') . "</li>
 	<li>rss1.0</li>
 	<li>rss2.0</li>
 	</ul>";
@@ -109,13 +109,13 @@ function DisplayWatchListNewsFeeds($db, $UserID) {
 	} else {
 		// if we don't know who they are, we'll make sure they login first
 
-		$Title = "Watch List Feeds";
+		$Title = _('Watch List Feeds');
 		freshports_Start($Title, $Title, 'FreeBSD, index, applications, ports');
 		echo freshports_MainTable();
 		echo '<tr><td class="content">';
 		echo freshports_MainContentTable();
 		echo '<tr>';
-		echo freshports_PageBannerText('These are your news feeds');
+		echo freshports_PageBannerText(_('These are your news feeds'));
 		echo '</tr><tr><td class="textcontent">';
 
 		DisplayWatchListNewsFeeds($db, $User->id);

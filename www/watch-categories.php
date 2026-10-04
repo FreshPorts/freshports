@@ -24,7 +24,7 @@
 
 	define('NUMCOLUMNS', 7);
 
-	$Title = 'Watch Categories';
+	$Title = _('Watch Categories');
 	freshports_Start($Title,
 					$Title,
 					'FreeBSD, index, applications, ports');
@@ -68,7 +68,7 @@ if (IsSet($_REQUEST['wlid']) && $_REQUEST['wlid']) {
 	<?php echo freshports_MainContentTable(NOBORDER); ?>
 <?php # article table start ?>
   <tr>
-	<?php echo freshports_PageBannerText("Watch List - categories"); ?>
+	<?php echo freshports_PageBannerText(_("Watch List - categories")); ?>
   </tr>
 <tr><td class="content">
 
@@ -77,16 +77,14 @@ if (IsSet($_REQUEST['wlid']) && $_REQUEST['wlid']) {
 <?php # list of categories table start ?>
 <tr><td>
 <p>
-This screen contains a list of the port categories. The categories with a * beside them contain ports which are
-on your watch list. When a port changes in one of your watch categories, you will be notified by email if you have selected a 
-notification frequency within <a href="customize.php">your account</a>.
+<?php echo _('This screen contains a list of the port categories. The categories with a * beside them contain ports which are on your watch list. When a port changes in one of your watch categories, you will be notified by email if you have selected a notification frequency within <a href="customize.php">your account</a>.'); ?>
 </p>
 </td>
 
 <td>
 <table class="borderless">
 <?php # ddlb start ?>
-<tr><td>Select...</td></tr>
+<tr><td><?php echo _('Select...'); ?></td></tr>
 <tr><td>
 
 <?php

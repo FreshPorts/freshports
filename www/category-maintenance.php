@@ -13,13 +13,13 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
 
-	$Title        = 'Category maintenance';
+	$Title        = _('Category maintenance');
 	$CategoryName = $_REQUEST['category'] ?? '';
 
 	$Category = new Category($db);
 	$CategoryID = $Category->FetchByName(pg_escape_string($db, $CategoryName));
 	if (!$CategoryID) {
-		die("I don't know that category: " . htmlspecialchars($CategoryName));
+		die(sprintf(_("I don't know that category: %s"), htmlspecialchars($CategoryName)));
 	}
 
 	if ($Category->IsPrimary() == 't') {
@@ -52,7 +52,7 @@
 <?php
 if ($User->IsTaskAllowed(FRESHPORTS_TASKS_CATEGORY_VIRTUAL_DESCRIPTION_SET)) {
 ?>
-This page allows you to maintain a category, if you have permission to do so.
+<?php echo _('This page allows you to maintain a category, if you have permission to do so.'); ?>
 
 
 <p>
@@ -100,7 +100,7 @@ if (!$IsPrimary) {
 ?>
 <tr><td colspan="5" class="vcentered">
 <p>
-<INPUT id=default     style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29 value="Update"  name="update">
+<INPUT id=default     style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29 value="<?php echo htmlspecialchars(_('Update')); ?>"  name="update">
 <INPUT TYPE="hidden" NAME="category" VALUE="<?php echo htmlspecialchars($CategoryName); ?>">
 </p>
 </td></tr>
@@ -118,23 +118,22 @@ if (!$IsPrimary) {
 ?>
 
 <p>
-NOTES:
+<?php echo _('NOTES:'); ?>
 
 <ul>
-<li>The official list of categories is in the 
-<a href="https://www.freebsd.org/doc/en_US.ISO8859-1/books/porters-handbook/makefile-categories.html#PORTING-CATEGORIES">Porters Handbook</a>.
-<li>Primary categories are those which physically reside on disk.
-<li>Only virtual categories need to have their description values set.
-<li>FreshPorts will automatically obtain the description for physical categoriers from <code class="code">ports/pkg/COMMENT</code>.
-<li>See the above link for the description to use.
-<li>All changes are logged.
+<li><?php echo sprintf(_('The official list of categories is in the %s.'), '<a href="https://www.freebsd.org/doc/en_US.ISO8859-1/books/porters-handbook/makefile-categories.html#PORTING-CATEGORIES">' . _('Porters Handbook') . '</a>'); ?>
+<li><?php echo _('Primary categories are those which physically reside on disk.'); ?>
+<li><?php echo _('Only virtual categories need to have their description values set.'); ?>
+<li><?php echo _('FreshPorts will automatically obtain the description for physical categories from <code class="code">ports/pkg/COMMENT</code>.'); ?>
+<li><?php echo _('See the above link for the description to use.'); ?>
+<li><?php echo _('All changes are logged.'); ?>
 </ul>
 
 
 <?php
 } else {
 ?>
-Well, I'm sorry to advise you that this page is intentionally left blank.
+<?php echo _("Well, I'm sorry to advise you that this page is intentionally left blank."); ?>
 <?php
 }
 ?>

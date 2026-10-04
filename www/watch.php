@@ -58,13 +58,13 @@
 		}
 	}
 
-	$Title = "Watch List";
+	$Title = _('Watch List');
 	if ($wlid != '') {
 		if ($Debug) echo "Fetching for \$wlid='$wlid'";
 		$WatchList = new WatchList($db);
 		$WatchList->Fetch($User->id, $wlid);
 
-		$Title .= " - " . $WatchList->name;
+		$Title = sprintf(_('Watch List - %s'), $WatchList->name);
 	}
 
 	freshports_Start($Title,
@@ -85,12 +85,9 @@
 <tr><td>
 <?php
 if ($wlid == '') {
-	echo 'You have no watch lists.';
+	echo _('You have no watch lists.');
 } else {
-?>
-These are the ports which are on your <a href="/watch-categories.php">watch list</a>.
-That link also appears on the right hand side of this page, under Login.
-<?php
+	echo _('These are the ports which are on your <a href="/watch-categories.php">watch list</a>. That link also appears on the right hand side of this page, under Login.');
 }
 ?>
 
@@ -111,9 +108,9 @@ if ($wlid) {
 	$WatchListDeletedPorts = new WatchListDeletedPorts($db);
 	$rowcount = $WatchListDeletedPorts->FetchInitialise($wlid);
 	if ($rowcount) {
-		echo '<hr><p>Some of your watched ports have moved.  You are still watching the old ports.</p>';
+		echo '<hr><p>' . _('Some of your watched ports have moved.  You are still watching the old ports.') . '</p>';
 		echo '<table class="bordered" class="cellpadding5">';
-		echo '<tr><td><b>Old Port</b></td><td><b>Replaced by</b></td></tr>';
+		echo '<tr><td><b>' . _('Old Port') . '</b></td><td><b>' . _('Replaced by') . '</b></td></tr>';
 		for ($i = 0; $i < $rowcount; $i++) {
 			$WatchListDeletedPorts->FetchNth($i);
 
@@ -126,15 +123,14 @@ if ($wlid) {
 		}
 		echo '</table>';
 
-		echo '<p>You should visit the <i>Replaced By</i> link first, add that port to your watch list, then
-visit the <i>Old Port</i> link and remove it from your watch list. <hr>';
+		echo '<p>' . _('You should visit the <i>Replaced By</i> link first, add that port to your watch list, then visit the <i>Old Port</i> link and remove it from your watch list.') . ' <hr>';
 
 	}
 }
 
 if ($wlid != '') {
 
-echo "\nThis page is ";
+echo "\n";
 
 if (IsSet($_REQUEST["sort"])) {
 	$sort = $_REQUEST["sort"];
@@ -148,21 +144,21 @@ $cache_file = '';
 switch ($sort) {
    case "port":
       $sort = "port";
-      echo 'sorted by port.  but you can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=updated">last update</a> or <a href="' . $_SERVER["PHP_SELF"] . '?sort=category">category</a>';
+      echo sprintf(_('This page is sorted by port.  but you can sort by %1$s or %2$s'), '<a href="' . $_SERVER["PHP_SELF"] . '?sort=updated">' . _('last update') . '</a>', '<a href="' . $_SERVER["PHP_SELF"] . '?sort=category">' . _('category') . '</a>');
       $ShowCategoryHeaders = 0;
       $cache_file .= ".port";
       break;
 
    case "category":
       $sort ="category, port";
-      echo 'sorted by category.  but you can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=updated">last update</a> or <a href="' . $_SERVER["PHP_SELF"] . '?sort=port">port</a>';
+      echo sprintf(_('This page is sorted by category.  but you can sort by %1$s or %2$s'), '<a href="' . $_SERVER["PHP_SELF"] . '?sort=updated">' . _('last update') . '</a>', '<a href="' . $_SERVER["PHP_SELF"] . '?sort=port">' . _('port') . '</a>');
       $ShowCategoryHeaders = 1;
       $cache_file .= ".category";
       break;
 
    default:
       $sort = "max(commit_log.commit_date) is null desc, max(commit_log.commit_date) desc, port";
-      echo 'sorted by last update date.  but you can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=category">category</a> or <a href="' . $_SERVER["PHP_SELF"] . '?sort=port">port</a>';
+      echo sprintf(_('This page is sorted by last update date.  but you can sort by %1$s or %2$s'), '<a href="' . $_SERVER["PHP_SELF"] . '?sort=category">' . _('category') . '</a>', '<a href="' . $_SERVER["PHP_SELF"] . '?sort=port">' . _('port') . '</a>');
       $ShowCategoryHeaders = 0;
       $cache_file .= ".updated";
       break;
@@ -178,21 +174,21 @@ echo "</td></tr>\n";
 <?php
 	if ($wlid != '') {
 	if ($OnlyThoseWithUpdatingEntries) {
-		echo '<a href="?updating">View watched ports + entries from <code>/usr/ports/UPDATING</code></a>';
+		echo '<a href="?updating">' . _('View watched ports + entries from <code>/usr/ports/UPDATING</code>') . '</a>';
 	} else {
 		if ($IncludeUpdating) {
-			echo '<a href="https://' .  $_SERVER['HTTP_HOST'] .  $_SERVER['PHP_SELF'] . '">View all watched ports</a>';
+			echo '<a href="https://' .  $_SERVER['HTTP_HOST'] .  $_SERVER['PHP_SELF'] . '">' . _('View all watched ports') . '</a>';
 		} else {
-			echo '<a href="?updating">View all watched ports + entries from <code>/usr/ports/UPDATING</code></a>';
+			echo '<a href="?updating">' . _('View all watched ports + entries from <code>/usr/ports/UPDATING</code>') . '</a>';
 		}
 	}
 
 	echo "\n<br>\n";
 
 	if ($OnlyThoseWithUpdatingEntries) {
-		echo '<a href="https://' .  $_SERVER['HTTP_HOST'] .  $_SERVER['PHP_SELF'] . '">View all watched ports.</a>';
+		echo '<a href="https://' .  $_SERVER['HTTP_HOST'] .  $_SERVER['PHP_SELF'] . '">' . _('View all watched ports.') . '</a>';
 	} else {
-		echo '<a href="?updatingonly">View only watched ports with entries in <code>/usr/ports/UPDATING</code></a>';
+		echo '<a href="?updatingonly">' . _('View only watched ports with entries in <code>/usr/ports/UPDATING</code>') . '</a>';
 	}
 	}
 
@@ -306,7 +302,7 @@ SELECT selected_ports.*,
 	$result = pg_query_params($db, $sql, array($wlid));
 
 	if (!$result) {
-		echo "there was an error: " . pg_last_error($db);
+		echo _('there was an error:') . ' ' . pg_last_error($db);
 	}
 
 	// get the list of topics, which we need to modify the order
@@ -321,17 +317,11 @@ SELECT selected_ports.*,
 	$numrows = pg_num_rows($result);
 
 	$TextNumRowsFound = '<p><small>';
-	if ($numrows > 1) {
-		$TextNumRowsFound .= "$numrows ports";
+	if ($numrows > 0) {
+		$TextNumRowsFound .= sprintf(ngettext('%d port found', '%d ports found', $numrows), $numrows);
 	} else {
-		if ($numrows == 1) {
-			$TextNumRowsFound .= 'one port';
-		} else {
-			$TextNumRowsFound .= 'no ports';
-		}
+		$TextNumRowsFound .= _('no ports found');
 	}
-	$TextNumRowsFound .= ' found';
-
 
 	$TextNumRowsFound .= '</small></p>';
 	echo "\n<tr><td>";
@@ -341,7 +331,7 @@ SELECT selected_ports.*,
 		echo $TextNumRowsFound;
 
 		if ($OnlyThoseWithUpdatingEntries) {
-			echo '<small> on your watch list (but only showing those with entries in <code>/usr/ports/UPDATING</code>)</small>';
+			echo '<small>' . _('(on your watch list, but only showing those with entries in <code>/usr/ports/UPDATING</code>)') . '</small>';
 		}
 	}
 
@@ -408,7 +398,7 @@ SELECT selected_ports.*,
 	echo "<tr><td>$TextNumRowsFound";
 
 	if ($OnlyThoseWithUpdatingEntries) {
-		echo '<small> on your watch list (but only showing ' . ($numrows - $NumSkipped) . ')</small>';
+		echo '<small>' . sprintf(ngettext('(on your watch list, but only showing %d)', '(on your watch list, but only showing %d)', $numrows - $NumSkipped), $numrows - $NumSkipped) . '</small>';
 	}
 
 	echo "\n</td></tr>\n";

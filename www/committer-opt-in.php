@@ -16,7 +16,7 @@
 
 	const FREEBSD_EMAIL_REGEX = '/.*@FreeBSD.org/i';
 
-	$Title = 'Committer opt-in';
+	$Title = _('Committer opt-in');
 	freshports_Start($Title,
 					$Title,
 					'FreeBSD, index, applications, ports');
@@ -39,7 +39,7 @@
 		        		die("determine committer subscribe failed " . pg_last_error($db));
 	    			}
 			} else {
-				die("please enter just your login, not your email address");
+				die(_('please enter just your login, not your email address'));
 				}
 		}
 
@@ -79,7 +79,7 @@
 
 	<?php echo freshports_MainContentTable(NOBORDER); ?>
 <tr>
-	<?php echo freshports_PageBannerText("Committer opt-in"); ?>
+	<?php echo freshports_PageBannerText(_("Committer opt-in")); ?>
 </tr>
 
 <tr><td class="textcontent">
@@ -87,19 +87,16 @@
 <?php
 	if (!IsSet($User->email) || !preg_match(FREEBSD_EMAIL_REGEX, $User->email)) {
 ?>
-<p><b><big>This page only works if you are logged in and using a @FreeBSD.org email address.</big></b></p>
+<p><b><big><?php echo _('This page only works if you are logged in and using a @FreeBSD.org email address.'); ?></big></b></p>
 <?php
 	}
 ?>
 
-Mistakes happen.  And when they do, they are best corrected quickly.  To that end, FreshPorts
-provides an opt-in service for all FreeBSD committers.  If you subscribe to this service,
-FreshPorts will notify you of any problems it encounters when processing a port change
-which you committed.  In the past, such problems are related to syntax errors in the Makefile.
+<?php echo _('Mistakes happen.  And when they do, they are best corrected quickly.  To that end, FreshPorts provides an opt-in service for all FreeBSD committers.  If you subscribe to this service, FreshPorts will notify you of any problems it encounters when processing a port change which you committed.  In the past, such problems are related to syntax errors in the Makefile.'); ?>
 </P>
 
 <P>
-One committer referred to this service as an automated nagging mentor...
+<?php echo _('One committer referred to this service as an automated nagging mentor...'); ?>
 </P>
 </td></tr>
 
@@ -110,7 +107,7 @@ if (IsSet($User->email)) {
 
 <tr>
 	<?php
-	echo freshports_PageBannerText("Your opt-in status");
+	echo freshports_PageBannerText(_("Your opt-in status"));
 	?>
 </tr>
 
@@ -129,17 +126,16 @@ if (!empty($visitor)) {
 	$result = pg_query_params($db, $sql, array($User->id))  or die("select query failed " . pg_last_error($db));
 
 	if ($result) {
-		echo 'You are: ';
 		if ($Debug) echo "we found a result there...\n<br>";
 		$numrows = pg_num_rows($result);
 		if ($numrows) {
 			$myrow = pg_fetch_array ($result, 0);
 			if ($myrow) {
-				echo 'subscribed';
+				echo _('You are: subscribed');
 				$committer = $myrow["committer"];
 			}
 		} else {
-			echo 'not subscribed';
+			echo _('You are: not subscribed');
 			$committer = preg_replace('|^(.*)@FreeBSD\.org|i', '\\1', $User->email);
 		}
 	}
@@ -151,17 +147,17 @@ if (!empty($visitor)) {
 ?>
 
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
-               your freefall login:
+               <?php echo _('your freefall login:'); ?>
                <INPUT SIZE="35" NAME="email" VALUE="<?php echo $committer ?? '' ?>"><br><br>
 <?php
 			if (IsSet($numrows) && $numrows) {
 ?>
-				<INPUT TYPE="submit" VALUE="update"      NAME="update"> 
-				<INPUT TYPE="submit" VALUE="unsubscribe" NAME="unsubscribe">
+				<INPUT TYPE="submit" VALUE="<?php echo htmlspecialchars(_('update')); ?>"      NAME="update">
+				<INPUT TYPE="submit" VALUE="<?php echo htmlspecialchars(_('unsubscribe')); ?>" NAME="unsubscribe">
 <?php
 			} else {
 ?>
-				<INPUT TYPE="submit"  VALUE="subscribe" NAME="subscribe">
+				<INPUT TYPE="submit"  VALUE="<?php echo htmlspecialchars(_('subscribe')); ?>" NAME="subscribe">
 <?php
 			}
 ?>
@@ -169,7 +165,7 @@ if (!empty($visitor)) {
 </FORM>
 
 <p>
-<BIG>Please do not include @FreeBSD.org in your login name.</BIG>
+<BIG><?php echo _('Please do not include @FreeBSD.org in your login name.'); ?></BIG>
 </p>
 
 </td></tr>

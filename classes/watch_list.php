@@ -78,16 +78,16 @@ GROUP BY users.max_number_watch_lists';
 					}
 					if (!$result) {
 						syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ' failed to insert into watch_list.  collision on token column suspected.').
-						die('Sorry, I was unable to create you a watch list.  Please try again, and if failure persist, please contast the webmaster.');
+						die(_('Sorry, I was unable to create you a watch list.  Please try again, and if failure persists, please contact the webmaster.'));
 					}
 
 				} else {
 					syslog(LOG_NOTICE, "You already have $Count watch lists.  If you want more than $Max watch lists, please contact the postmaster. UserID='$UserID'");
-					die("You already have $Count watch lists.  If you want more than $Max watch lists, please contact the postmaster.");
+					die(sprintf(_('You already have %1$d watch lists.  If you want more than %2$d watch lists, please contact the postmaster.'), $Count, $Max));
 				}
 			} else {
 				syslog(LOG_ERR, "Could not find watch list count for user $UserID - " . $_SERVER['PHP_SELF']);
-				die("I couldn't find your watch list details... sorry");
+				die(_("I couldn't find your watch list details... sorry"));
 			}
 		} else {
 			syslog(LOG_ERR, "Error finding watch list count for user $UserID - " . $_SERVER['PHP_SELF'] . ' ' . pg_last_error($this->dbh));

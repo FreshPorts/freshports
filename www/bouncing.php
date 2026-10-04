@@ -18,7 +18,7 @@
 	$Debug = 0;
 
 	$submit		= $_POST["submit"] ?? '';
-	$visitor	= $_COOKIE[USER_COOKIE_NAME];
+	$visitor	= $_COOKIE[USER_COOKIE_NAME] ?? '';
 
 if ($submit) {
    $sql = "select * from user_clear_bouncecount($1)";

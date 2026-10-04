@@ -23,7 +23,7 @@
 	$deleted         = 0;
 
 $submit = $_REQUEST['submit'] ?? '';
-$visitor = pg_escape_string($db, $_COOKIE[USER_COOKIE_NAME]);
+$visitor = pg_escape_string($db, $_COOKIE[USER_COOKIE_NAME] ?? '');
 
 // if we don't know who they are, we'll make sure they login first
 if (!$visitor) {

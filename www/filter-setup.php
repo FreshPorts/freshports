@@ -179,8 +179,8 @@ if ($Debug) echo "num categories being watched = $numrows<br>";
 
 for ($i = 0; $i < $numrows; $i++) {
 	$myrow = pg_fetch_array($result, $i);
-	$WatchedCategories{$myrow["category_id"]} = ' *';
-	if ($Debug) echo "category " . $myrow["category_id"] . " = " . $WatchedCategories{$myrow["category_id"]} . '<br>';
+	$WatchedCategories[$myrow["category_id"]] = ' *';
+	if ($Debug) echo "category " . $myrow["category_id"] . " = " . $WatchedCategories[$myrow["category_id"]] . '<br>';
 }
 
 # Get a list of the categories that are being watched
@@ -205,8 +205,8 @@ if ($Debug) echo "num categories being watched = $numrows<br>";
 
 for ($i = 0; $i < $numrows; $i++) {
 	$myrow = pg_fetch_array($result, $i);
-	$FilteredCategories{$myrow["category_element_id"]} = ' $';
-	if ($Debug) echo "category " . $myrow["category_element_id"] . " = " . $FilteredCategories{$myrow["category_element_id"]} . '<br>';
+	$FilteredCategories[$myrow["category_element_id"]] = ' $';
+	if ($Debug) echo "category " . $myrow["category_element_id"] . " = " . $FilteredCategories[$myrow["category_element_id"]] . '<br>';
 }
 
 # categories list start
@@ -236,7 +236,7 @@ $HTML .= '<form action="' . $_SERVER["PHP_SELF"] . '" method="POST">' . "\n";
 
 
 # if we go 
-$RowCount = ceil($NumCategories / (double) NUMCOLUMS);
+$RowCount = ceil($NumCategories / (float) NUMCOLUMS);
 $Row = 0;
 for ($i = 0; $i < $NumCategories; $i++) {
 	pg_fetch_array ($result, $i);
@@ -257,15 +257,15 @@ for ($i = 0; $i < $NumCategories; $i++) {
    } else {
      $HTML .= " disabled";
    }
-   if (IsSet($FilteredCategories{$rows[$i]['element_id']})) {
+   if (IsSet($FilteredCategories[$rows[$i]['element_id']])) {
      $HTML .= " checked ";
    }
    $HTML .= '> ';
 
    $HTML .= ' <a href="/port-watch.php?category=' . $rows[$i]['category'] . '&amp;wlid=' . $wlid . '">' . $rows[$i]['category'] . '</a>';
 
-   $HTML .= $WatchedCategories {$rows[$i]['category_id']};
-   $HTML .= $FilteredCategories{$rows[$i]['element_id']};
+   $HTML .= $WatchedCategories[$rows[$i]['category_id']];
+   $HTML .= $FilteredCategories[$rows[$i]['element_id']];
 
    $HTML .= "<br>\n";
 }

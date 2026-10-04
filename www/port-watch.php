@@ -202,7 +202,7 @@ if ($numrows) {
    $HTML .= '<input type="hidden" name="wlid"     value="' . htmlentities($wlid)     . '">' . "\n";
 
    $HTML .= "\n" . '<table class="bordered" CELLPADDING="5">' . "\n<tr>\n";
-   $RowCount = ceil($NumPorts / (double) 4);
+   $RowCount = ceil($NumPorts / (float) 4);
    $Row = 0;
    for ($i = 0; $i < $NumPorts; $i++) {
       $Row++;

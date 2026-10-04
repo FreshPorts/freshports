@@ -128,7 +128,7 @@ First, let's count the number of pages on disk:
 <blockquote><code class="code">
 $ ls *.php | wc -l<br>
 <?php
-$Files = `ls *.php | wc -l`;
+$Files = shell_exec('ls *.php | wc -l');
 
 echo $Files;
 $Total += $Files;

@@ -153,7 +153,7 @@ for ($i = 0; $i < $numrows; $i++) {
 }
 
 # how many rows will we have if we go for NUMCOLUMNS colums?
-$RowCount = ceil($NumCategories / (double) NUMCOLUMNS);
+$RowCount = ceil($NumCategories / (float) NUMCOLUMNS);
 $Row = 0;
 for ($i = 0; $i < $NumCategories; $i++) {
    $Row++;

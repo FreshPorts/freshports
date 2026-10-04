@@ -110,7 +110,7 @@ if ($submit) {
                      " \n" .
                      sprintf(_("Your login id is: %s"), $myrow["name"]) . "\n\n" .
                      _("Your password recovery URL is:") . "\n" .
-                     "http://" . $_SERVER["HTTP_HOST"] . "/password-reset-via-token.php?token=" . $token . "\n" .
+                     "https://" . $_SERVER["HTTP_HOST"] . "/password-reset-via-token.php?token=" . $token . "\n" .
                      "\n" .
                      sprintf(_("the request came from %s"), $_SERVER["REMOTE_ADDR"]);  # no port: real_ip takes the address from a header, so REMOTE_PORT is empty
 

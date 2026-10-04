@@ -1,0 +1,1323 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: freshports\n"
+"Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
+"POT-Creation-Date: 2026-10-03 20:50-0400\n"
+"PO-Revision-Date: 2026-10-04 12:07+0800\n"
+"Last-Translator: ykla <yklaxds@gmail.com>\n"
+"Language-Team: ykla <yklaxds@gmail.com>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.9\n"
+"X-Poedit-Basepath: .\n"
+
+#: classes/display_commit.php:126
+msgid "Author:"
+msgstr "作者："
+
+#: classes/display_commit.php:338 classes/files-display.php:40
+#: www/commit.php:266
+msgid "Sorry, nothing found in the database...."
+msgstr "抱歉，数据库中未找到任何内容……"
+
+#: classes/files-display.php:48
+#, php-format
+msgid "%d file found"
+msgid_plural "%d files found"
+msgstr[0] "找到 %d 个文件"
+
+#: classes/files-display.php:56
+msgid "Action"
+msgstr "操作"
+
+#: classes/files-display.php:56
+msgid "Annotate/etc"
+msgstr "注解等"
+
+#: classes/files-display.php:56
+msgid "File"
+msgstr "文件"
+
+#: classes/files-display.php:56
+msgid "Revision"
+msgstr "修订版"
+
+#: classes/files-display.php:88
+msgid "import"
+msgstr "导入"
+
+#: classes/files-display.php:88
+msgid "modify"
+msgstr "修改"
+
+#: classes/files-display.php:88
+msgid "remove"
+msgstr "删除"
+
+#: classes/files-display.php:177
+msgid "Commit history"
+msgstr "提交历史"
+
+#: include/freshports.php:116 include/freshports.php:142
+#: include/freshports.php:168
+#, php-format
+msgid "commit hash: %s"
+msgstr "提交哈希：%s"
+
+#: include/freshports.php:298
+#, php-format
+msgid "Revision:%s"
+msgstr "修订版：%s"
+
+#: include/freshports.php:312
+msgid "search for other commits by this committer"
+msgstr "搜索此提交者的其他提交"
+
+#: include/freshports.php:530
+msgid "Sanity Test Failure"
+msgstr "健全性测试失败"
+
+#: include/freshports.php:564
+msgid "files touched by this commit"
+msgstr "本次提交涉及的文件"
+
+#: include/freshports.php:568
+msgid "Refresh"
+msgstr "刷新"
+
+#: include/freshports.php:568
+msgid ""
+"Refresh - this port is being refreshed, or make failed to run error-free."
+msgstr "刷新——正在刷新此 Port，或 make 运行出错。"
+
+#: include/freshports.php:576
+msgid "Deleted"
+msgstr "已删除"
+
+#: include/freshports.php:596
+msgid "Forbidden"
+msgstr "已禁止"
+
+#: include/freshports.php:607
+msgid "Broken"
+msgstr "已损坏"
+
+#: include/freshports.php:618
+msgid "Deprecated"
+msgstr "已弃用"
+
+#: include/freshports.php:629
+msgid "Expired"
+msgstr "已过期"
+
+#: include/freshports.php:640
+msgid "Expiration Date"
+msgstr "到期日期"
+
+#: include/freshports.php:651
+msgid "Restricted"
+msgstr "受限"
+
+#: include/freshports.php:662
+msgid "Is Interactive"
+msgstr "需要交互"
+
+#: include/freshports.php:673
+msgid "NO CDROM"
+msgstr "禁止光盘"
+
+#: include/freshports.php:684
+msgid "Ignore"
+msgstr "忽略"
+
+#: include/freshports.php:695
+msgid "new!"
+msgstr "新的！"
+
+#: include/freshports.php:699
+msgid "Original commit"
+msgstr "原始提交"
+
+#: include/freshports.php:699
+msgid "Original commit message"
+msgstr "原始提交消息"
+
+#: include/freshports.php:703
+msgid "Commit details"
+msgstr "提交详情"
+
+#: include/freshports.php:703
+msgid "FreshPorts commit message"
+msgstr "FreshPorts 提交消息"
+
+#: include/freshports.php:723
+msgid "Encoding Errors (not all of the commit message was ASCII)"
+msgstr "编码错误（提交消息并非全部为 ASCII）"
+
+#: include/freshports.php:735
+msgid "This port version is marked as vulnerable."
+msgstr "此 Port 版本被标记为存在漏洞。"
+
+#: include/freshports.php:743
+msgid "View revision"
+msgstr "查看修订版"
+
+#: include/freshports.php:743
+msgid "view revision"
+msgstr "查看修订版"
+
+#: include/freshports.php:747
+msgid "Annotate / Blame"
+msgstr "注解 / 追溯"
+
+#: include/freshports.php:751
+msgid "View diff"
+msgstr "查看差异"
+
+#: include/freshports.php:751
+msgid "view diff"
+msgstr "查看差异"
+
+#: include/freshports.php:835
+msgid "Commit Flagged"
+msgstr "提交已标记"
+
+#: include/freshports.php:840
+msgid "Commit Not Flagged"
+msgstr "提交未标记"
+
+#: include/freshports.php:909
+msgid "View all ports for this commit"
+msgstr "查看本次提交的全部 Port"
+
+#: include/freshports.php:910
+#, php-format
+msgid ""
+"(Only the first %1$d of %2$d items in this commit are shown above. %3$s)"
+msgstr "（上面仅显示本次提交全部 %2$d 个条目中的前 %1$d 个。%3$s）"
+
+#: include/freshports.php:916
+msgid "View all of this commit message"
+msgstr "查看完整提交消息"
+
+#: include/freshports.php:917
+#, php-format
+msgid "(Only the first %1$d lines of the commit message are shown above %2$s)"
+msgstr "（上面仅显示提交消息的前 %1$d 行，%2$s）"
+
+#: include/freshports.php:1084
+#, php-format
+msgid "The git branch used by this host is %s"
+msgstr "本主机使用的 git 分支为 %s"
+
+#: include/freshports.php:1085
+#, php-format
+msgid "The database is %s"
+msgstr "数据库为 %s"
+
+#: include/freshports.php:1086
+#, php-format
+msgid "The db server is %s"
+msgstr "数据库服务器为 %s"
+
+#: include/freshports.php:1102
+msgid "As an Amazon Associate I earn from qualifying purchases."
+msgstr "作为亚马逊联盟成员，我会从符合条件的购买中获得佣金。"
+
+#: include/freshports.php:1102
+#, php-format
+msgid "Want a good read? Try %s"
+msgstr "想读本好书？试试 %s"
+
+#: include/freshports.php:1103
+#, php-format
+msgid "Want a good monitor light? See my <a href=\"%s\">photos</a>"
+msgstr "想要一款好的显示器挂灯？看看我的<a href=\"%s\">照片</a>"
+
+#: include/freshports.php:1104
+msgid "All times are UTC"
+msgstr "所有时间均为 UTC"
+
+#: include/freshports.php:1109
+msgid "I remember"
+msgstr "缅怀"
+
+#: include/freshports.php:1114 include/freshports.php:2261
+msgid "Blog"
+msgstr "博客"
+
+#: include/freshports.php:1114
+msgid "Follow us"
+msgstr "关注我们"
+
+#: include/freshports.php:1114
+msgid "Status page"
+msgstr "状态页面"
+
+#: include/freshports.php:1123
+msgid "Menu &amp; search"
+msgstr "菜单与搜索"
+
+#: include/freshports.php:1124
+msgid "Jump to the menu and search"
+msgstr "跳转到菜单与搜索"
+
+#: include/freshports.php:1124
+msgid "Menu"
+msgstr "菜单"
+
+#: include/freshports.php:1512
+msgid "All rights reserved."
+msgstr "保留所有权利。"
+
+#: include/freshports.php:1512
+msgid "Copyright"
+msgstr "版权"
+
+#: include/freshports.php:1512
+msgid "This material is copyrighted"
+msgstr "本材料受版权保护"
+
+#. TRANSLATORS: 请保持较短的行宽，这是纯文本邮件
+#: include/freshports.php:2042
+#, php-format
+msgid ""
+"Someone, perhaps you, supplied your email address as their\n"
+"FreshPorts login. If that wasn't you, and this message becomes\n"
+"a nuisance, please forward this message to %s\n"
+"and we will take care of it for you."
+msgstr ""
+"有人（也许是您）把您的邮箱地址用作\n"
+"FreshPorts 登录名。若非您本人所为，而此消息\n"
+"给您造成困扰，请将其转发至 %s\n"
+"我们会为您处理。"
+
+#: include/freshports.php:2047
+#, php-format
+msgid "Your token is: %s"
+msgstr "您的令牌是：%s"
+
+#: include/freshports.php:2049
+msgid "Please point your browser at"
+msgstr "请将浏览器指向"
+
+#: include/freshports.php:2051
+#, php-format
+msgid "The request came from %s"
+msgstr "请求来自 %s"
+
+#: include/freshports.php:2068
+msgid "FreshPorts - user registration"
+msgstr "FreshPorts——用户注册"
+
+#: include/freshports.php:2153
+#, php-format
+msgid "Valid %1$s, %2$s, and %3$s."
+msgstr "%1$s、%2$s 和 %3$s 均有效。"
+
+#: include/freshports.php:2154
+msgid "We like to keep our HTML valid"
+msgstr "我们希望保持 HTML 有效"
+
+#: include/freshports.php:2155
+msgid "We like to have valid CSS"
+msgstr "我们希望 CSS 有效"
+
+#: include/freshports.php:2156
+msgid "Valid RSS is good too"
+msgstr "有效的 RSS 也很好"
+
+#: include/freshports.php:2201 include/login.php:15 www/login.php:148
+#: www/login.php:231
+msgid "Login"
+msgstr "登录"
+
+#: include/freshports.php:2214
+#, php-format
+msgid "Logged in as %s"
+msgstr "已登录为 %s"
+
+#: include/freshports.php:2218
+msgid "your email is <a href=\"/bouncing.php\">bouncing</a>"
+msgstr "您的邮箱正在<a href=\"/bouncing.php\">退信</a>"
+
+#: include/freshports.php:2221
+msgid "Your Account"
+msgstr "您的账户"
+
+#: include/freshports.php:2221
+msgid "Your account"
+msgstr "您的账户"
+
+#: include/freshports.php:2224
+msgid "Committer Opt-in"
+msgstr "提交者选择加入"
+
+#: include/freshports.php:2224
+msgid "Committers can receive reports of Sanity Test Failures"
+msgstr "提交者可以接收健全性测试的失败报告"
+
+#: include/freshports.php:2228
+msgid "Logout"
+msgstr "退出登录"
+
+#: include/freshports.php:2228
+msgid "Logout of the website"
+msgstr "退出网站登录"
+
+#: include/freshports.php:2229
+msgid "List of commits you have flagged"
+msgstr "您标记过的提交列表"
+
+#: include/freshports.php:2229
+msgid "My Flagged Commits"
+msgstr "我标记的提交"
+
+#: include/freshports.php:2231
+msgid "Login to the website"
+msgstr "登录网站"
+
+#: include/freshports.php:2231
+msgid "User Login"
+msgstr "用户登录"
+
+#: include/freshports.php:2232
+msgid "Create account"
+msgstr "创建账户"
+
+#: include/freshports.php:2232
+msgid "Create an account"
+msgstr "创建账户"
+
+#: include/freshports.php:2250
+msgid "This site"
+msgstr "本站"
+
+#: include/freshports.php:2254
+msgid "A bit of background on FreshPorts"
+msgstr "FreshPorts 背景简介"
+
+#: include/freshports.php:2254
+msgid "What is FreshPorts?"
+msgstr "FreshPorts 是什么？"
+
+#: include/freshports.php:2255
+msgid "About the authors"
+msgstr "关于作者"
+
+#: include/freshports.php:2255
+msgid "Who wrote this stuff?"
+msgstr "这些内容是谁写的？"
+
+#: include/freshports.php:2256
+msgid "Issues"
+msgstr "问题反馈"
+
+#: include/freshports.php:2256
+msgid "Report a website problem"
+msgstr "报告网站问题"
+
+#: include/freshports.php:2257
+msgid "FAQ"
+msgstr "常见问题"
+
+#: include/freshports.php:2257
+msgid "Frequently Asked Questions"
+msgstr "常见问题解答"
+
+#: include/freshports.php:2258
+msgid "How big is it?"
+msgstr "网站有多大？"
+
+#: include/freshports.php:2258
+msgid "How many pages are in this website?"
+msgstr "本站有多少个页面？"
+
+#: include/freshports.php:2259
+msgid "Are you a security researcher? Please read this."
+msgstr "您是安全研究人员吗？请阅读此文。"
+
+#: include/freshports.php:2259
+msgid "Security Policy"
+msgstr "安全政策"
+
+#: include/freshports.php:2260
+msgid "Our privacy statement"
+msgstr "我们的隐私声明"
+
+#: include/freshports.php:2260
+msgid "Privacy"
+msgstr "隐私"
+
+#: include/freshports.php:2261
+msgid "All the latest FreshPorts news"
+msgstr "FreshPorts 最新消息"
+
+#: include/freshports.php:2262
+msgid "Contact"
+msgstr "联系方式"
+
+#: include/freshports.php:2262
+msgid "Contact details"
+msgstr "详细联系方式"
+
+#: include/freshports.php:2269
+msgid "Search"
+msgstr "搜索"
+
+#: include/freshports.php:2291
+msgid "Advanced Searching options"
+msgstr "高级搜索选项"
+
+#: include/freshports.php:2291
+msgid "more..."
+msgstr "更多……"
+
+#: include/freshports.php:2303
+msgid "Latest Vulnerabilities"
+msgstr "最新漏洞"
+
+#: include/freshports.php:2309
+msgid "All vulnerabilities"
+msgstr "全部漏洞"
+
+#: include/freshports.php:2309
+msgid "modified, not new"
+msgstr "有修改，并非新增"
+
+#: include/freshports.php:2310
+msgid "Last processed:"
+msgstr "上次处理："
+
+#: include/freshports.php:2322 include/freshports.php:2352
+msgid "Ports"
+msgstr "Port"
+
+#: include/freshports.php:2327
+msgid "FreshPorts Home page"
+msgstr "FreshPorts 主页"
+
+#: include/freshports.php:2327
+msgid "Home"
+msgstr "主页"
+
+#: include/freshports.php:2328 include/freshports.php:2350
+msgid "Categories"
+msgstr "分类"
+
+#: include/freshports.php:2328
+msgid "List of all Port categories"
+msgstr "所有 Port 分类列表"
+
+#: include/freshports.php:2329
+msgid "All deleted ports"
+msgstr "全部已删除 Port"
+
+#: include/freshports.php:2329
+msgid "Deleted ports"
+msgstr "已删除 Port"
+
+#: include/freshports.php:2330
+msgid "Sanity Test Failures"
+msgstr "健全性测试失败"
+
+#: include/freshports.php:2330
+msgid "Things that didn't go quite right..."
+msgstr "那些不太顺利的事……"
+
+#: include/freshports.php:2331
+msgid "Newsfeeds"
+msgstr "新闻源"
+
+#: include/freshports.php:2331
+msgid "Newsfeeds for just about everything"
+msgstr "涵盖几乎所有内容的新闻源"
+
+#: include/freshports.php:2344
+msgid "Watch Lists"
+msgstr "关注列表"
+
+#: include/freshports.php:2349
+msgid "Upload"
+msgstr "上传"
+
+#: include/freshports.php:2349
+msgid ""
+"Upload a file containing a list of ports you want to add to your watch list"
+msgstr "上传文件，内含您想加入关注列表的 Port 列表"
+
+#: include/freshports.php:2350
+msgid "Search through categories for ports to add to your watch list"
+msgstr "按分类搜索要加入关注列表的 Port"
+
+#: include/freshports.php:2351
+msgid "Maintain"
+msgstr "维护"
+
+#: include/freshports.php:2351
+msgid "Maintain your watch list[s]"
+msgstr "维护关注列表"
+
+#: include/freshports.php:2352
+msgid "Your list of watched ports"
+msgstr "您关注的 Port 列表"
+
+#: include/freshports.php:2353
+msgid "A list of news feeds for your watched lists"
+msgstr "关注列表的新闻源列表"
+
+#: include/freshports.php:2353
+msgid "Personal Newsfeeds"
+msgstr "个人新闻源"
+
+#: include/freshports.php:2354
+msgid "Maintain your list of subscriptions"
+msgstr "维护订阅列表"
+
+#: include/freshports.php:2354
+msgid "Report Subscriptions"
+msgstr "报告订阅"
+
+#: include/freshports.php:2355
+msgid "ABI Package Subscriptions"
+msgstr "ABI 软件包订阅"
+
+#: include/freshports.php:2355
+msgid "Maintain your ABI package subscriptions"
+msgstr "维护 ABI 软件包订阅"
+
+#: include/freshports.php:2380
+msgid "Statistics"
+msgstr "统计"
+
+#: include/freshports.php:2385 include/freshports.php:2386
+msgid "Everyone loves statistics!"
+msgstr "人人都爱统计！"
+
+#: include/freshports.php:2385
+msgid "Graphs"
+msgstr "图表"
+
+#: include/freshports.php:2386
+msgid "NEW Graphs (Javascript)"
+msgstr "新图表（JavaScript）"
+
+#: include/i18n.php:224
+msgid "Language"
+msgstr "语言"
+
+#: include/i18n.php:231
+msgid "Change"
+msgstr "更改"
+
+#: include/login.php:11 include/new-user.php:29 www/forgotten-password.php:260
+msgid "User ID:"
+msgstr "用户 ID："
+
+#: include/login.php:13 include/password-reset-via-token.php:17
+msgid "Password:"
+msgstr "密码："
+
+#: include/login.php:18 www/forgotten-password.php:236 www/login.php:245
+msgid "Forgotten your password?"
+msgstr "忘记密码了？"
+
+#: include/new-user.php:23
+msgid "Current password:"
+msgstr "当前密码："
+
+#: include/new-user.php:32
+msgid "New password:"
+msgstr "新密码："
+
+#: include/new-user.php:34
+msgid "New password again:"
+msgstr "再次输入新密码："
+
+#: include/new-user.php:38
+msgid "Number of Days to show in side-bar:"
+msgstr "侧边栏显示的天数："
+
+#: include/new-user.php:56
+msgid "Set focus to search box:"
+msgstr "将焦点置于搜索框："
+
+#: include/new-user.php:60
+msgid "Number of results to display per page (e.g commits per page):"
+msgstr "每页显示的结果数（例如每页提交数）："
+
+#: include/new-user.php:69
+msgid "Email Address (required):"
+msgstr "邮箱地址（必填）："
+
+#: include/new-user.php:85
+msgid "CAPTCHA:"
+msgstr "验证码："
+
+#: include/new-user.php:86
+msgid "(antispam code, type the three black symbols)"
+msgstr "（防垃圾邮件验证码，请输入这三个黑色符号）"
+
+#: include/new-user.php:96
+msgid "create account"
+msgstr "创建账户"
+
+#: include/new-user.php:96
+msgid "update account"
+msgstr "更新账户"
+
+#: include/new-user.php:97
+msgid "reset form"
+msgstr "重置表单"
+
+#: include/new-user.php:109
+msgid ""
+"For your reporting needs, please visit <a href=\"/report-"
+"subscriptions.php\">Report Subscriptions</a>."
+msgstr ""
+"如需查看报告，请访问<a href=\"/report-subscriptions.php\">报告订阅</a>。"
+
+#: include/new-user.php:110
+msgid "Delete my account"
+msgstr "删除我的账户"
+
+#: include/password-reset-via-token.php:19
+msgid "Confirm Password:"
+msgstr "确认密码："
+
+#: include/password-reset-via-token.php:22
+msgid "Set password"
+msgstr "设置密码"
+
+#: include/spam-filter-information.php:9
+msgid "SPAM FILTERS:"
+msgstr "垃圾邮件过滤器："
+
+#: include/spam-filter-information.php:11
+msgid ""
+"If you are using spam filters which require confirmation of incoming email, "
+"these reports will be coming from the following domains:"
+msgstr ""
+"如果您使用的垃圾邮件过滤器要求确认收到的邮件，那么这些报告应来自以下域名："
+
+#: include/spam-filter-information.php:15
+msgid "Domain"
+msgstr "域名"
+
+#: include/spam-filter-information.php:15
+msgid "Reason"
+msgstr "原因"
+
+#: include/spam-filter-information.php:16
+msgid "All reports originate from that domain."
+msgstr "所有报告均来自该域名。"
+
+#: include/spam-filter-information.php:17
+msgid "The websites are hosted on a box in that domain."
+msgstr "这些网站托管在该域名下的一台服务器上。"
+
+#: include/spam-filter-information.php:18
+msgid "If I need to write to you, it will come from that domain."
+msgstr "如果我需要给您写信，邮件将来自该域名。"
+
+#: include/spam-filter-information.php:22
+msgid ""
+"Ensure that you update your spam filters to allow such incoming messages.  "
+"If your spam tools require that a confirmation be sent, you'll have to "
+"modify things as no confirmations will be sent for FreshPorts messages."
+msgstr ""
+"请务必更新垃圾邮件过滤器，以放行这类邮件。如果您的垃圾邮件工具要求先发送"
+"确认，那您就需要调整设置，因为 FreshPorts 发送的邮件不会附带任何确认。"
+
+#: www/bouncing.php:39 www/customize.php:138
+#: www/password-reset-via-token.php:79
+msgid "Something went terribly wrong there."
+msgstr "那里出了很严重的问题。"
+
+#: www/bouncing.php:42
+msgid "your email is bouncing"
+msgstr "您的邮箱正在退信"
+
+#: www/bouncing.php:55
+msgid "Bouncing?  What do you mean?"
+msgstr "退信？这是什么意思？"
+
+#: www/bouncing.php:59
+msgid ""
+"You are a registered user. You have indicated that we can send you email.  "
+"This will either be part of your watch list notifications or as an "
+"announcement.  You can view these settings on the customization page (see "
+"the link on the right hand side of the page)."
+msgstr ""
+"您是注册用户，并表示过我们可以给您发送邮件。这些邮件可能是关注列表通知，也可"
+"能是公告。您可以在自定义页面查看这些设置（见页面右侧的链接）。"
+
+#: www/bouncing.php:61
+msgid ""
+"The problem is that the email we are sending you is not getting to you.  It "
+"is bouncing back to us.  So we have stopped sending out messages to you.  If "
+"you wish to continue to receive such messages, you should update your email "
+"address on the customization page."
+msgstr ""
+"问题在于，我们发给您的邮件无法送达，而是被退信了。因此我们不再向您发送邮件。"
+"如果您希望继续收到这类邮件，请到自定义页面更新您的邮箱地址。"
+
+#: www/bouncing.php:66
+msgid "How to fix the problem"
+msgstr "如何解决该问题"
+
+#: www/bouncing.php:69
+msgid "There are two things which might have caused your email to bounce:"
+msgstr "有两种原因可能导致您的邮件退信："
+
+#: www/bouncing.php:71
+msgid "Your email address has changed."
+msgstr "您的邮箱地址变了。"
+
+#: www/bouncing.php:72
+msgid "There was a problem with your email but it's been fixed."
+msgstr "您的邮箱之前出过问题，不过现在修好了。"
+
+#: www/bouncing.php:75
+msgid ""
+"If your email address has changed, please update it in your <a "
+"href=\"customize.php\">account settings</a>."
+msgstr ""
+"如果您的邮箱地址变了，请在<a href=\"customize.php\">账户设置</a>中更新。"
+
+#: www/bouncing.php:77
+msgid ""
+"If there was a problem with your email, such as your server was down, you "
+"can tell FreshPorts that you want it to start using your email address again "
+"by pressing the button below."
+msgstr ""
+"如果您的邮箱出过问题（例如您的服务器曾经宕机），您可以点击下面的按钮，告诉 "
+"FreshPorts 重新开始使用您的邮箱地址。"
+
+#: www/bouncing.php:82
+msgid "There was a problem, but it's fixed now"
+msgstr "之前出了问题，现在修好了"
+
+#: www/commit.php:161
+#, php-format
+msgid "Commit found by commit id on branch %s"
+msgstr "在分支 %s 上按提交 ID 找到的提交"
+
+#: www/commit.php:163
+msgid "Commit found by commit id"
+msgstr "按提交 ID 找到的提交"
+
+#: www/commit.php:196
+msgid "We have multiple emails for that revision:"
+msgstr "该修订版对应多封邮件："
+
+#: www/commit.php:264
+#, php-format
+msgid "Number of items [ports &amp; non-ports] in this commit: %d"
+msgstr "本次提交中的条目数 [Port 与非 Port]：%d"
+
+#: www/commit.php:277
+msgid "show all files"
+msgstr "显示全部文件"
+
+#: www/commit.php:279
+msgid "hide all files"
+msgstr "隐藏全部文件"
+
+#: www/commit.php:288
+#, php-format
+msgid "I don't know that category: %s"
+msgstr "我不知道那个分类：%s"
+
+#: www/commit.php:299
+msgid "I don't know that port."
+msgstr "我不知道那个 Port。"
+
+#: www/commit.php:303
+msgid "That is not a port."
+msgstr "那不是 Port。"
+
+#: www/commit.php:308
+#, php-format
+msgid "Showing files for just one port: %s"
+msgstr "仅显示一个 Port 的文件：%s"
+
+#: www/commit.php:360
+msgid "Database connection could not be established!"
+msgstr "无法建立数据库连接！"
+
+#: www/commit.php:363
+msgid "nothing supplied, nothing found!"
+msgstr "没提供任何内容，也就什么都找不到！"
+
+#: www/confirmation.php:14 www/confirmation.php:42
+msgid "Account confirmation"
+msgstr "账户确认"
+
+#: www/confirmation.php:51
+msgid "I don't know anything about that token."
+msgstr "我不知道这个令牌。"
+
+#: www/confirmation.php:55
+msgid ""
+"Your account has been enabled.  Please proceed to the <a "
+"href=\"login.php\">login page</a>"
+msgstr "您的账户已启用。请前往<a href=\"login.php\">登录页面</a>"
+
+#: www/confirmation.php:59
+msgid ""
+"Well.  This just isn't supposed to happen.  For some strange and very rare "
+"reason, there is more than one person with that token."
+msgstr ""
+"好吧，这本不该发生。出于某种奇怪且极其罕见的原因，持有该令牌的人不止一个。"
+
+#: www/confirmation.php:60
+#, php-format
+msgid "Please contact %s for help."
+msgstr "请联系 %s 寻求帮助。"
+
+#: www/confirmation.php:64
+msgid "An error has occurred.  Sorry."
+msgstr "出错了，抱歉。"
+
+#: www/confirmation.php:68
+msgid "Hi there.  What are you doing here?"
+msgstr "你好呀，你怎么会跑到这里来？"
+
+#: www/customize.php:73 www/new-user.php:66
+msgid "That email address doesn't look right to me"
+msgstr "我觉得这个邮箱地址不太对"
+
+#: www/customize.php:79
+msgid ""
+"If changing your password, remember to supply your existing password first."
+msgstr "如果要修改密码，记得先输入您的当前密码。"
+
+#: www/customize.php:84
+msgid "The new password was not confirmed.  It must be entered twice."
+msgstr "新密码未通过确认，必须输入两次。"
+
+#: www/customize.php:93
+msgid "That is NOT your current password."
+msgstr "这不是您的当前密码。"
+
+#: www/customize.php:153
+msgid "Customize User Account"
+msgstr "自定义用户账户"
+
+#: www/customize.php:164 www/new-user.php:190
+#: www/password-reset-via-token.php:105
+msgid "Access Code Failed!"
+msgstr "验证码校验失败！"
+
+#: www/customize.php:167 www/new-user.php:194
+#: www/password-reset-via-token.php:113
+msgid ""
+"Some errors have occurred which must be corrected before your login can be "
+"created."
+msgstr "出现了一些错误，必须先纠正，才能创建您的登录账户。"
+
+#: www/customize.php:171 www/delete-account.php:104 www/login.php:181
+#: www/new-user.php:203 www/password-reset-via-token.php:117
+msgid "If you need help, please email postmaster@."
+msgstr "如需帮助，请发送邮件至 postmaster@。"
+
+#: www/customize.php:176
+msgid "Account updated!"
+msgstr "账户更新完成！"
+
+#: www/customize.php:177
+msgid "Your account details were successfully updated."
+msgstr "您的账户信息更新成功。"
+
+#: www/customize.php:182
+msgid "Customize"
+msgstr "自定义"
+
+#: www/customize.php:187
+msgid ""
+"If you wish to change your password, first type your existing password, then "
+"your new password twice.  Otherwise, leave them all blank."
+msgstr ""
+"如果您想修改密码，请先输入当前密码，再输入两次新密码。否则，请将这些字段全部"
+"留空。"
+
+#: www/date.php:92
+#, php-format
+msgid "Commits for %s"
+msgstr "%s 的提交"
+
+#: www/date.php:170
+msgid "No commits found for that date"
+msgstr "该日期没有找到提交"
+
+#: www/date.php:192
+msgid "Latest commits"
+msgstr "最新提交"
+
+#: www/date.php:211 www/date.php:236
+#, php-format
+msgid "Number of commits: %d"
+msgstr "提交数：%d"
+
+#: www/delete-account.php:58
+msgid "I really tried to delete your account. I failed. Sorry."
+msgstr "我真的试着删除您的账户了，但没成功。抱歉。"
+
+#: www/delete-account.php:65
+msgid "I could not delete that account. Sorry."
+msgstr "我没能删除那个账户。抱歉。"
+
+#: www/delete-account.php:69
+msgid "The confirmation was not correct."
+msgstr "确认信息不正确。"
+
+#: www/delete-account.php:75
+msgid "Delete User Account"
+msgstr "删除用户账户"
+
+#: www/delete-account.php:92
+msgid "Delete Failed!"
+msgstr "删除失败！"
+
+#: www/delete-account.php:100
+msgid "The delete failed."
+msgstr "删除失败。"
+
+#: www/delete-account.php:122
+msgid "Delete account"
+msgstr "删除账户"
+
+#: www/delete-account.php:130
+msgid "Your account has been deleted."
+msgstr "您的账户已经删除。"
+
+#: www/delete-account.php:131
+msgid "Please click <a href=\"/\">here</a> to return to the home page."
+msgstr "请点击<a href=\"/\">此处</a>返回主页。"
+
+#: www/delete-account.php:134 www/delete-account.php:151
+msgid "Delete Account"
+msgstr "删除账户"
+
+#: www/delete-account.php:134
+#, php-format
+msgid "To delete your account, please enter your account name and click on %s."
+msgstr "要删除您的账户，请输入账户名并点击 %s。"
+
+#: www/delete-account.php:143
+#, php-format
+msgid "The account name is: %s"
+msgstr "账户名为：%s"
+
+#: www/delete-account.php:144
+msgid "User Name:"
+msgstr "用户名："
+
+#: www/delete-account.php:150
+msgid "There is no undo for this"
+msgstr "此操作无法撤销"
+
+#: www/forgotten-password.php:84
+#, php-format
+msgid ""
+"Sorry, but previous email to you has bounced, so we're not sure it's going "
+"to get to you.  But we sent it out anyway.  Please contact the <a "
+"href=\"%s\">webmaster</a> for help if it doesn't arrive."
+msgstr ""
+"抱歉，之前发给您的邮件被退信了，所以我们不确定您能否收到。不过我们还是把它发"
+"出去了。如果没收到，请联系<a href=\"%s\">网站管理员</a>寻求帮助。"
+
+#: www/forgotten-password.php:91
+#, php-format
+msgid ""
+"Guess what?  You never gave us an email address.  So I guess you must "
+"contact the <a href=\"%s\">webmaster</a> for help."
+msgstr ""
+"您猜怎么着？您从未给我们留过邮箱地址。所以我看您得联系<a href=\"%s\">网站管"
+"理员</a>求助了。"
+
+#. TRANSLATORS: 请保持较短的行宽，这是纯文本邮件
+#: www/forgotten-password.php:106
+#, php-format
+msgid ""
+"Someone, perhaps you, requested to reset your password.\n"
+"If that wasn't you, and this message becomes a nuisance, please\n"
+"forward this message to %s and we will take\n"
+"care of it for you."
+msgstr ""
+"有人（也许就是您）请求重置您的密码。\n"
+"如果那不是您，而这条消息又让您觉得烦，请\n"
+"把这封邮件转发给 %s，我们会为您\n"
+"处理。"
+
+#: www/forgotten-password.php:111
+#, php-format
+msgid "Your login id is: %s"
+msgstr "您的登录 ID 是：%s"
+
+#: www/forgotten-password.php:112
+msgid "Your password recovery URL is:"
+msgstr "您的密码重置 URL 是："
+
+#: www/forgotten-password.php:115
+#, php-format
+msgid "the request came from %s"
+msgstr "请求来自 %s"
+
+#: www/forgotten-password.php:129
+msgid "password"
+msgstr "密码"
+
+#: www/forgotten-password.php:151
+msgid "Forgotten password"
+msgstr "忘记密码"
+
+#: www/forgotten-password.php:169
+msgid "We have a problem!"
+msgstr "出了问题！"
+
+#: www/forgotten-password.php:196
+msgid "User ID not found!"
+msgstr "未找到用户 ID！"
+
+#: www/forgotten-password.php:207
+msgid ""
+"The User ID you supplied could not be found.  Perhaps try your email instead?"
+msgstr "找不到您提供的用户 ID。要不要改用邮箱试试？"
+
+#: www/forgotten-password.php:209
+msgid ""
+"The email you supplied could not be found.  Perhaps try your User ID instead?"
+msgstr "找不到您提供的邮箱。要不要改用用户 ID 试试？"
+
+#: www/forgotten-password.php:234
+msgid "Mail sent to your address"
+msgstr "邮件已发送至您的地址"
+
+#: www/forgotten-password.php:246
+#, php-format
+msgid ""
+"A password recovery URL has been sent to the address we have on file.  If "
+"you still can't get logged in please contact <a href=\"%s\">the webmaster</"
+"a> and we'll see what we can do."
+msgstr ""
+"密码重置 URL 已发送到我们存档的地址。如果您仍然无法登录，请联系<a "
+"href=\"%s\">网站管理员</a>，我们看看能做些什么。"
+
+#: www/forgotten-password.php:252
+msgid ""
+"If you've forgotten your password, don't worry.  We've got that covered."
+msgstr "如果您忘了密码，别担心，我们有办法。"
+
+#: www/forgotten-password.php:254
+#, php-format
+msgid ""
+"Please enter either your login or your email address (whichever you "
+"remember), then click on '%s'."
+msgstr "请输入您的登录名或邮箱地址（哪个还记得就填哪个），然后点击“%s”。"
+
+#: www/forgotten-password.php:254 www/forgotten-password.php:264
+msgid "eMail Me!"
+msgstr "发邮件给我！"
+
+#: www/forgotten-password.php:256
+msgid ""
+"We will send you an email with a link in it. Click on that link and you'll "
+"be able to set a new password. This link will expire within a few hours. "
+"This isn't exactly totally secure, but then we're only dealing with your "
+"FreshPorts login, not a financial transaction...."
+msgstr ""
+"我们会给您发封邮件，里面有个链接。点击那个链接，您就能设置新密码。这个链接会"
+"在几小时内失效。这算不上多么安全，不过我们处理的只是您的 FreshPorts 登录信"
+"息，又不是什么金融交易……"
+
+#: www/forgotten-password.php:262
+msgid "email address:"
+msgstr "邮箱地址："
+
+#: www/login.php:104
+#, php-format
+msgid "Your account has been disabled.  Please contact %s"
+msgstr "您的账户已停用。请联系 %s"
+
+#: www/login.php:107
+msgid ""
+"Your account needs to be enabled by following the directions in the email we "
+"have sent to you."
+msgstr "您的账户需要启用，请按我们发给您的邮件中的说明操作。"
+
+#: www/login.php:108
+msgid ""
+"To have your activation details resent to the email address you supplied, "
+"click on the resend button"
+msgstr "如需将激活信息重新发送到您提供的邮箱地址，请点击重新发送按钮。"
+
+#: www/login.php:111
+msgid "Resend"
+msgstr "重新发送"
+
+#: www/login.php:114
+msgid "I have no idea what your account status is."
+msgstr "我不知道您的账户处于什么状态。"
+
+#: www/login.php:139 www/welcome.php:34
+msgid ""
+"You should soon receive an email at the mail address you supplied. It will "
+"contain instructions to enable your account."
+msgstr ""
+"您应该很快会收到一封邮件，发往您提供的邮箱地址，其中含有启用账户的说明。"
+
+#: www/login.php:141
+#, php-format
+msgid "I'm sorry but I couldn't send your token.  Please contact %s."
+msgstr "抱歉，我无法发送您的令牌。请联系 %s。"
+
+#: www/login.php:144
+#, php-format
+msgid ""
+"Hmmm, I know nothing about you.  That can't be right.  Please contact %s"
+msgstr "嗯，我对您一无所知。这不太对劲。请联系 %s"
+
+#: www/login.php:167
+msgid "Login Failed!"
+msgstr "登录失败！"
+
+#: www/login.php:175
+msgid ""
+"The User ID and password you supplied could not be used to login.  This "
+"could be for one of the following reasons:"
+msgstr "您提供的用户 ID 和密码无法用于登录。可能是以下原因之一："
+
+#: www/login.php:177
+msgid "The login id is incorrect"
+msgstr "登录 ID 不正确"
+
+#: www/login.php:178
+msgid "The password is incorrect"
+msgstr "密码不正确"
+
+#: www/login.php:179
+msgid "Both of the above"
+msgstr "以上两项均不正确"
+
+#: www/login.php:201
+msgid "NOTICE"
+msgstr "注意"
+
+#: www/login.php:237
+msgid "Your browser must allow cookies for this login to work."
+msgstr "您的浏览器必须允许使用 Cookie，才能正常登录。"
+
+#: www/new-user.php:55
+msgid "Please enter a user id."
+msgstr "请输入用户 ID。"
+
+#: www/new-user.php:61
+msgid ""
+"Please, just use plain text for your user id.  This event has been logged."
+msgstr "用户 ID 请仅使用纯文本。此事件已记录。"
+
+#: www/new-user.php:72
+msgid ""
+"Please, just use plain text for your email.  This event has been logged."
+msgstr "邮箱请仅使用纯文本。此事件已记录。"
+
+#: www/new-user.php:77 www/password-reset-via-token.php:51
+msgid "The password was not confirmed.  It must be entered twice."
+msgstr "密码未通过确认，必须输入两次。"
+
+#: www/new-user.php:81
+msgid "A password must be supplied"
+msgstr "必须提供密码"
+
+#: www/new-user.php:103
+msgid "Your CAPTCHA code is not valid"
+msgstr "验证码无效"
+
+#: www/new-user.php:152
+msgid "OUCH! I couldn't add you to the database"
+msgstr "哎呀！我无法把您添加到数据库中"
+
+#: www/new-user.php:156
+msgid "OUCH! I couldn't assign you a new UserID"
+msgstr "哎呀！我没法给您分配新的用户 ID"
+
+#: www/new-user.php:161
+msgid "That User ID is already in use.  Please select a different User ID."
+msgstr "该用户 ID 已被使用，请换一个用户 ID。"
+
+#: www/new-user.php:176 www/welcome.php:13
+msgid "New User"
+msgstr "新用户"
+
+#: www/new-user.php:222
+msgid "New User Details"
+msgstr "新用户信息"
+
+#: www/new-user.php:227
+msgid "Please observe the following points:"
+msgstr "请注意以下几点："
+
+#: www/new-user.php:230
+msgid ""
+"You must supply a valid email address. Instructions to enable your account "
+"will be emailed to you at that address."
+msgstr "您必须提供有效的邮箱地址。启用账户的说明会通过邮件发送到该地址。"
+
+#: www/new-user.php:232
+#, php-format
+msgid "If you have a spam filter, please allow all mail from %1$s and %2$s."
+msgstr "如果您使用了垃圾邮件过滤器，请放行来自 %1$s 和 %2$s 的所有邮件。"
+
+#: www/new-user.php:234
+msgid ""
+"Please disable any auto-responders for the above domains.  I get enough "
+"email without being told when you'll be back from holiday or who else I can "
+"contact..."
+msgstr ""
+"请关闭上述域名的所有自动回复功能。我收到的邮件已经够多了，不想再要求告知您什么"
+"时候休假回来，或者我还能联系谁……"
+
+#: www/new-user.php:236
+msgid "Your browser must allow cookies for the login to work."
+msgstr "您的浏览器必须允许使用 Cookie，才能正常登录。"
+
+#: www/new-user.php:241
+msgid "Your cooperation with the above will make my life easier.  Thank you."
+msgstr "如果您配合以上几点，能让我的日子轻松不少。谢谢。"
+
+#: www/password-reset-via-token.php:70
+msgid "It seems that token is no longer valid."
+msgstr "这个令牌似乎已经失效。"
+
+#: www/password-reset-via-token.php:87 www/password-reset-via-token.php:140
+msgid "Reset password via token"
+msgstr "通过令牌重置密码"
+
+#: www/password-reset-via-token.php:131
+msgid ""
+"SUCCESS! Your password has been updated.  Please <a href=\"/"
+"login.php\">login</a>"
+msgstr "成功！您的密码已更新。请<a href=\"/login.php\">登录</a>"
+
+#: www/password-reset-via-token.php:145
+msgid "Please enter your new password twice."
+msgstr "请输入两次新密码。"
+
+#: www/welcome.php:25
+msgid "Account created"
+msgstr "账户创建成功"
+
+#: www/welcome.php:30
+msgid "Your account has been created."
+msgstr "您的账户已经创建。"
+
+#: www/welcome.php:37
+msgid ""
+"If you do not receive that email, please attempt to login and you will have "
+"an opportunity to resend the notification."
+msgstr "如果您没有收到那封邮件，请尝试登录，届时您可以重新发送通知。"

@@ -112,7 +112,7 @@ if ($submit) {
                      _("Your password recovery URL is:") . "\n" .
                      "http://" . $_SERVER["HTTP_HOST"] . "/password-reset-via-token.php?token=" . $token . "\n" .
                      "\n" .
-                     sprintf(_("the request came from %s"), $_SERVER["REMOTE_ADDR"] . ':' . $_SERVER["REMOTE_PORT"]);
+                     sprintf(_("the request came from %s"), $_SERVER["REMOTE_ADDR"]);  # no port: real_ip takes the address from a header, so REMOTE_PORT is empty
 
           try {
             $mail = new PHPMailer\PHPMailer\PHPMailer;

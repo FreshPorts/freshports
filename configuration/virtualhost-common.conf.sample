@@ -3,6 +3,11 @@
   root          /usr/local/www/freshports/www/;
   index         index.php index.html index.htm;
 
+  # the client address comes from the front proxy; set this to that proxy's address
+  set_real_ip_from  10.55.0.24/32;
+  real_ip_header    X-Real-IP;
+  real_ip_recursive on;
+
   gzip on;
   gzip_vary on;
   gzip_http_version 1.1;
@@ -12,7 +17,7 @@
   error_log	/var/log/nginx/freshports.org-error.log;
   access_log	/var/log/nginx/freshports.org-access.log combined;
 
-  location ~ /(login|forgotten-password|password-reset-via-token.php).php  {
+  location ~ ^/(login|forgotten-password|password-reset-via-token)\.php$  {
     limit_req zone=auth_limit burst=5;
     include /usr/local/www/freshports/configuration/php-processing.conf;
   }

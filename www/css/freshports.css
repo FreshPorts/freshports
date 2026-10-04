@@ -438,6 +438,7 @@ IMG#fp-logo { max-width: 100%; height: auto }
   flex-basis: 100%;
   align-items: center;
   gap: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 .header-search input[type="search"] {

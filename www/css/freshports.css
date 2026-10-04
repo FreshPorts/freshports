@@ -427,7 +427,7 @@ IMG#fp-logo { max-width: 100%; height: auto }
 }
 
 /* only shown on narrow screens */
-.menu-link, .menu-button {
+.menu-link, .menu-button, .header-search {
   display: none;
 }
 
@@ -955,6 +955,11 @@ table.packages {
     flex-basis: 100%;
   }
 
+  /* leave room beside the logo for the Menu button pinned to the top-right corner */
+  IMG#fp-logo {
+    max-width: calc(100% - 110px);
+  }
+
   span.logo, span.branch, span.amazon, div#followus {
     float: none;
   }
@@ -983,12 +988,13 @@ table.packages {
     background-color: var(--beastie-red);
   }
 
+  /* pinned top-right; with the drawer, it sits above it and becomes the Close button */
   .menu-button {
     display: block;
     position: fixed;
+    top: 12px;
     right: 12px;
-    bottom: 12px;
-    z-index: 10;
+    z-index: 40;
     padding: 0.6em 0.9em;
     border-radius: 6px;
     font-weight: bold;
@@ -1002,6 +1008,30 @@ table.packages {
   .menu-button:link, .menu-button:visited {
     color: white;
     color: var(--accent-text);
+  }
+
+  /* the sidebar is tucked away, so search moves into the header */
+  .header-search {
+    display: flex;
+    flex-basis: 100%;
+    align-items: center;
+    gap: 0.5em;
+  }
+
+  .header-search input[type="search"] {
+    flex: 1;
+    min-width: 0;
+    padding: 0.4em;
+    font-size: 16px; /* 16px or more stops iOS zooming in on focus */
+  }
+
+  .header-search input[type="submit"] {
+    padding: 0.4em 0.8em;
+    font-size: 16px;
+  }
+
+  table.sidebar-search {
+    display: none;
   }
 
   table.layout,
@@ -1129,7 +1159,7 @@ table.packages {
     width: 260px;
     max-width: 85vw;
     margin: 0;
-    padding: 0 8px 8px 8px;
+    padding: 60px 8px 8px 8px; /* clear of the Menu / Close button */
     box-sizing: border-box;
     overflow-y: auto;
     overscroll-behavior: contain;
@@ -1150,25 +1180,6 @@ table.packages {
     margin-bottom: 1em;
   }
 
-  .drawer-close {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    display: block;
-    width: 100%;
-    margin: 0 0 8px 0;
-    padding: 0.6em;
-    border: 0;
-    font: inherit;
-    font-weight: bold;
-    text-align: right;
-    cursor: pointer;
-    color: white;
-    color: var(--accent-text);
-    background-color: #8c0707;
-    background-color: var(--beastie-red);
-  }
-
   .drawer-backdrop {
     display: none;
   }
@@ -1184,14 +1195,15 @@ table.packages {
     background-color: rgba(0, 0, 0, 0.25);
   }
 
-  html.drawer-open .menu-button {
+  /* the pinned button does the job; the header link is only for no JavaScript */
+  html.has-drawer .menu-link {
     display: none;
   }
 }
 
-/* the close button and backdrop are only used on narrow screens */
+/* the backdrop is only used on narrow screens */
 @media only screen and (min-width: 1121px) {
-  .drawer-close, .drawer-backdrop {
+  .drawer-backdrop {
     display: none;
   }
 }

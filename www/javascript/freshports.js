@@ -16,70 +16,85 @@ function showHide(shID) {
 /*
  * On narrow screens, the sidebar flies in from the right instead of sitting
  * below the page content - see issue #636 and the matching rules in
- * freshports.css.  The Menu links keep href="#sidebar", so without this
- * script they still jump to the sidebar in the stacked layout.
+ * freshports.css.  The Menu button, pinned to the top-right corner, opens
+ * the drawer and becomes its Close button, so the menu can be toggled
+ * without moving your hand.  The Menu links keep href="#sidebar", so
+ * without this script they still jump to the sidebar in the stacked layout.
  */
 (function () {
    var root    = document.documentElement;
    var sidebar = document.querySelector('td.sidebar');
-   var openers = document.querySelectorAll('.menu-link, .menu-button');
+   var button  = document.querySelector('.menu-button');
+   var link    = document.querySelector('.menu-link');
 
-   if (!sidebar || !openers.length || !window.matchMedia) {
+   if (!sidebar || !button || !window.matchMedia) {
       return;
    }
 
    // must match the max-width of the narrow-screen rules in freshports.css
-   var narrow   = window.matchMedia('(max-width: 1120px)');
-   var returnTo = null;
+   var narrow = window.matchMedia('(max-width: 1120px)');
+
+   var menuLabel  = button.innerHTML;
+   var menuTitle  = button.getAttribute('title');
+   var closeLabel = '&#10005; Close';
+   var closeTitle = 'Close the menu';
 
    sidebar.id = 'sidebar-drawer';
-
-   var closeButton = document.createElement('button');
-   closeButton.type        = 'button';
-   closeButton.className   = 'drawer-close';
-   closeButton.textContent = 'Close ✕';
-   sidebar.insertBefore(closeButton, sidebar.firstChild);
+   button.setAttribute('role', 'button');
+   button.setAttribute('aria-controls', sidebar.id);
 
    var backdrop = document.createElement('div');
    backdrop.className = 'drawer-backdrop';
    document.body.appendChild(backdrop);
 
-   function setExpanded(expanded) {
-      for (var i = 0; i < openers.length; i++) {
-         openers[i].setAttribute('aria-expanded', expanded ? 'true' : 'false');
-      }
+   function isOpen() {
+      return root.classList.contains('drawer-open');
    }
 
-   function openDrawer(opener) {
-      returnTo = opener;
+   function openDrawer() {
       root.classList.add('drawer-open');
-      setExpanded(true);
-      closeButton.focus();
+      button.setAttribute('aria-expanded', 'true');
+      button.innerHTML = closeLabel;
+      button.setAttribute('title', closeTitle);
+      button.focus();
    }
 
    function closeDrawer() {
-      if (!root.classList.contains('drawer-open')) {
+      if (!isOpen()) {
          return;
       }
+      var focusWasInside = sidebar.contains(document.activeElement);
       root.classList.remove('drawer-open');
-      setExpanded(false);
-      if (returnTo) {
-         returnTo.focus();
+      button.setAttribute('aria-expanded', 'false');
+      button.innerHTML = menuLabel;
+      button.setAttribute('title', menuTitle);
+      if (focusWasInside) {
+         button.focus();
       }
    }
 
-   for (var i = 0; i < openers.length; i++) {
-      openers[i].setAttribute('aria-controls', sidebar.id);
-      openers[i].addEventListener('click', function (event) {
+   button.addEventListener('click', function (event) {
+      if (!narrow.matches) {
+         return;
+      }
+      event.preventDefault();
+      if (isOpen()) {
+         closeDrawer();
+      } else {
+         openDrawer();
+      }
+   });
+
+   if (link) {
+      link.addEventListener('click', function (event) {
          if (!narrow.matches) {
             return;
          }
          event.preventDefault();
-         openDrawer(this);
+         openDrawer();
       });
    }
 
-   closeButton.addEventListener('click', closeDrawer);
    backdrop.addEventListener('click', closeDrawer);
 
    document.addEventListener('keydown', function (event) {
@@ -102,6 +117,6 @@ function showHide(shID) {
    // not every browser fires the change event above on rotation
    window.addEventListener('resize', onChange);
 
-   setExpanded(false);
+   button.setAttribute('aria-expanded', 'false');
    root.classList.add('has-drawer');
 })();

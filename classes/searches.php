@@ -36,15 +36,33 @@ return '
 	<FORM ACTION="' . $this->SearchPage . '" NAME="f">
 	Enter Keywords:<br>
 	<INPUT NAME="query"  TYPE="text" SIZE="8" TABINDEX=1 AUTOCORRECT="off" AUTOCAPITALIZE="none" SPELLCHECK="false"' . ($autofocus ? ' autofocus' : '') . '>' .
-	$text . '<INPUT TYPE="submit" VALUE="go" NAME="search" TABINDEX=2>
+	$text . '<INPUT TYPE="submit" VALUE="go" NAME="search" TABINDEX=2>' .
+	$this->_DefaultHiddenFields() . '
+	</FORM>
+';
+	}
+
+	# a compact search box for the page header, shown only on narrow screens,
+	# where the sidebar and its search box are tucked away - see issue #636
+	function GetFormHeader() {
+return '
+	<form action="' . $this->SearchPage . '" class="header-search" role="search">
+	<input name="query" type="search" placeholder="Search ports" aria-label="Search ports" autocorrect="off" autocapitalize="none" spellcheck="false">
+	<input type="submit" value="go">' .
+	$this->_DefaultHiddenFields() . '
+	<a href="' . $this->SearchPage . '" title="Advanced Searching options">more...</a>
+	</form>
+';
+	}
+
+	function _DefaultHiddenFields() {
+return '
 	<INPUT NAME="num"             TYPE="hidden" value="' . FRESHPORTS_SEARCH_DEFAULT_Num             . '">
 	<INPUT NAME="stype"           TYPE="hidden" value="' . FRESHPORTS_SEARCH_DEFAULT_Stype           . '">
 	<INPUT NAME="method"          TYPE="hidden" value="' . FRESHPORTS_SEARCH_DEFAULT_Method          . '">
 	<INPUT NAME="deleted"         TYPE="hidden" value="' . FRESHPORTS_SEARCH_DEFAULT_Deleted         . '">
 	<INPUT NAME="start"           TYPE="hidden" value="' . FRESHPORTS_SEARCH_DEFAULT_Start           . '">
-  	<INPUT NAME="casesensitivity" TYPE="hidden" value="' . FRESHPORTS_SEARCH_DEFAULT_Casesensitivity . '" >
-	</FORM>
-';
+  	<INPUT NAME="casesensitivity" TYPE="hidden" value="' . FRESHPORTS_SEARCH_DEFAULT_Casesensitivity . '" >';
 	}
 
 	function GetDefaultSearchString($text) {

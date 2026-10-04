@@ -1115,11 +1115,17 @@ if (date("M") == 'Nov' && date("j") <= 12) {
 	
 }
 
-# only shown on narrow screens, where the sidebar is pushed below the page content.
-# menu-button stays pinned to a corner of the screen, so it can be used from anywhere on the page.
+# only shown on narrow screens, where the sidebar is tucked away: the header
+# gets its own search box, and menu-button stays pinned to the top-right corner
+# so it can be used from anywhere on the page.  With JavaScript, menu-button
+# opens and closes the sidebar as a drawer; without it, both links jump to it.
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/searches.php');
+$Searches = new Searches(null);
+$HTML .= $Searches->GetFormHeader();
+
 $HTML .= '
-	<a class="menu-link" href="#sidebar">Menu &amp; search</a>
-	<a class="menu-button" href="#sidebar" title="Jump to the menu and search">&#9776; Menu</a>
+	<a class="menu-link" href="#sidebar">Menu</a>
+	<a class="menu-button" href="#sidebar" title="Open the menu">&#9776; Menu</a>
 </header>
 ';
 
@@ -2258,7 +2264,7 @@ function freshports_SideBar() {
 	</tr>
 </table>
 <br>
-<table class="bordered">
+<table class="bordered sidebar-search">
 	<tr>
 		<th class="accent">Search</th>
 	</tr>

@@ -11,7 +11,7 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
-	$Title = 'Account confirmation';
+	$Title = _('Account confirmation');
 	freshports_Start($Title,
 					$Title,
 					'FreeBSD, index, applications, ports');
@@ -39,7 +39,7 @@
 <tr><td class="content">
 <table class="fullwidth">
 <tr>
-	<?php echo freshports_PageBannerText("Account confirmation"); ?>
+	<?php echo freshports_PageBannerText(_("Account confirmation")); ?>
 </tr>
 
 <tr><td>
@@ -48,24 +48,24 @@
 	if ($Debug) echo $ResultConfirm;
 	switch ($ResultConfirm) {
 		case 0:
-			echo "I don't know anything about that token.";
+			echo _("I don't know anything about that token.");
 			break;
 
 		case 1:
-			echo 'Your account has been enabled.  Please proceed to the <a href="login.php">login page</a>';
+			echo _('Your account has been enabled.  Please proceed to the <a href="login.php">login page</a>');
 			break;
 
 		case 2:
-			echo "Well.  This just isn't supposed to happen.  For some strange and very rare reason,
-				 there is more than one person with that token.<br><br>Please contact webmaster&#64;freshports.org for help.";
+			echo _("Well.  This just isn't supposed to happen.  For some strange and very rare reason, there is more than one person with that token.") . '<br><br>' .
+			     sprintf(_('Please contact %s for help.'), 'webmaster&#64;freshports.org');
 			break;
 
 		case -1:
-			echo "An error has occurred.  Sorry.";
+			echo _("An error has occurred.  Sorry.");
 			break;
 
 		case 999:
-			echo "Hi there.  What you are doing here?";
+			echo _("Hi there.  What are you doing here?");
 			break;
 
 		default:

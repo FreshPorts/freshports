@@ -55,24 +55,24 @@ if ($submit) {
 				$deleted = 1;
 			} else {
 				pg_exec($db, "ROLLBACK");
-				$errors = 'I really tried to delete your account. I failed. Sorry.';
+				$errors = _('I really tried to delete your account. I failed. Sorry.');
 				syslog(LOG_ERR, 'attempted to delete user failed ' . $User->name . ' failed when trying to delete ' . $numrows . ' rows.');
             }
         } else {
             pg_exec($db, "ROLLBACK");
 
             syslog(LOG_ERR, 'attempt to delete user failed ' . $User->name . ' failed with error ' . pg_last_error($db));
-            $errors = 'I could not delete that account. Sorry.';
+            $errors = _('I could not delete that account. Sorry.');
         }
 	} else {
         syslog(LOG_ERR, 'confirmation did not match: "' . $confirmation . '" != "' . $User->name . '"');
-        $errors = 'The confirmation was not correct.';
+        $errors = _('The confirmation was not correct.');
     }
 }
 
 #	echo '<br>the page size is ' . $page_size . ' : ' . $email;
 
-	freshports_Start('Delete User Account',
+	freshports_Start(_('Delete User Account'),
 						'freshports - new ports, applications',
 						'FreeBSD, index, applications, ports');
 ?>
@@ -89,7 +89,7 @@ echo '<table class="fullwidth borderless">
 <tr>
 <td>
 <table class="fullwidth borderless">
-<tr class="accent"><td><b>Delete Failed!</b></td>
+<tr class="accent"><td><b>' . _('Delete Failed!') . '</b></td>
 </tr>
 <tr>
 <td>
@@ -97,11 +97,11 @@ echo '<table class="fullwidth borderless">
   <tr VALIGN=top>
    <td><img src="/images/warning.gif"></td>
    <td width="100%">
-  <p>The deleted failed.</p>';
+  <p>' . _('The delete failed.') . '</p>';
 
 echo $errors;
 
-echo '<p>If you need help, please email postmaster@. </p>
+echo '<p>' . _('If you need help, please email postmaster@.') . '</p>
  </td>
  </tr>
  </table>
@@ -119,7 +119,7 @@ echo '<table class="fullwidth borderless">
 <td VALIGN="top">
 <table class="fullwidth borderless">
 <tr>
-<td class="accent"><BIG>Customize</BIG></td>
+<td class="accent"><BIG>' . _('Delete account') . '</BIG></td>
 </tr>
 <tr>
 <td>';
@@ -127,11 +127,11 @@ echo '<table class="fullwidth borderless">
 
 if ($deleted) {
     ?>
-    <br><h2>Your account has been deleted.</h2>
-    <p>Please click <a href="/">here</a> to return to the home page.</p>
+    <br><h2><?php echo _('Your account has been deleted.'); ?></h2>
+    <p><?php echo _('Please click <a href="/">here</a> to return to the home page.'); ?></p>
     <?php
 } else {
-echo '<p>To delete your account, please enter you account name and click on <i>delete account</i>.</p><br>';
+echo '<p>' . sprintf(_('To delete your account, please enter your account name and click on %s.'), '<i>' . _('Delete Account') . '</i>') . '</p><br>';
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
@@ -140,15 +140,15 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 <table width="*" class="borderless">
           <tr>
             <td VALIGN="top">
-               <p>The account name is: <?php echo $User->name; ?><p>
-               User Name: <INPUT SIZE="15" NAME="confirmation" VALUE="">
+               <p><?php printf(_('The account name is: %s'), htmlentities($User->name)); ?><p>
+               <?php echo _('User Name:'); ?> <INPUT SIZE="15" NAME="confirmation" VALUE="">
             </td>
         </tr>
         <tr>
             <td>
                 <br>
-                <h2>There is no undo for this</h2>
-                <INPUT TYPE="submit" VALUE="Delete Account" NAME="submit">
+                <h2><?php echo _('There is no undo for this'); ?></h2>
+                <INPUT TYPE="submit" VALUE="<?php echo _('Delete Account'); ?>" NAME="submit">
             </td>
         </tr>
   

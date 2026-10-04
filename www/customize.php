@@ -70,18 +70,18 @@ if (IsSet($submit)) {
 	$errors = '';
 
 	if (!freshports_IsEmailValid($email)) {
-		$errors .= 'That email address doesn\'t look right to me<br>';
+		$errors .= _("That email address doesn't look right to me") . '<br>';
 		$OK = 0;
 	}
 	
 	# new passwords supplied, but not existing password
 	if ($Password1 && $Password2 && !$Password) {
-		$errors .= 'If changing your password, remember to supply your existing password first.<br>';
+		$errors .= _('If changing your password, remember to supply your existing password first.') . '<br>';
 		$OK = 0;
 	}
 
 	if ($Password1 != $Password2) {
-		$errors .= 'The new password was not confirmed.  It must be entered twice.<br>';
+		$errors .= _('The new password was not confirmed.  It must be entered twice.') . '<br>';
 		$OK = 0;
 	}
 
@@ -90,7 +90,7 @@ if (IsSet($submit)) {
 		$result = getLoginDetails($db, $User->name, $Password);
 		# there must be only 1 row in there.
 		if (pg_num_rows($result) != 1) {
-			$errors .= 'That is NOT your current password.<br>';
+			$errors .= _('That is NOT your current password.') . '<br>';
 			$OK = 0;
 		}
 	}
@@ -135,7 +135,7 @@ UPDATE users
 				exit;  /* Make sure that code below does not get executed when we redirect. */
 			}
 		} else {
-			$errors .= 'Something went terribly wrong there.<br>';
+			$errors .= _('Something went terribly wrong there.') . '<br>';
 			$errors .= $sql . "<br>\n";
 			$errors .= pg_last_error($db);
 		}
@@ -150,7 +150,7 @@ UPDATE users
 
 #	echo '<br>the page size is ' . $page_size . ' : ' . $email;
 
-	$Title = 'Customize User Account';
+	$Title = _('Customize User Account');
 	freshports_Start($Title,
 						$Title,
 						'FreeBSD, index, applications, ports');
@@ -161,30 +161,30 @@ UPDATE users
 <?php echo freshports_MainContentTable(NOBORDER);
 
 if ($errors) {
-echo '<TR><td class="accent">Access Code Failed!</td></TR>
+echo '<TR><td class="accent">' . _('Access Code Failed!') . '</td></TR>
 <TR>
 <td>
-   <td class="textcontent"><p><img src="/images/warning.gif"> Some errors have occurred which must be corrected before your login can be created.</p>';
+   <td class="textcontent"><p><img src="/images/warning.gif"> ' . _('Some errors have occurred which must be corrected before your login can be created.') . '</p>';
 
 echo $errors;
 
-echo '<p>If you need help, please email postmaster@. </p>
+echo '<p>' . _('If you need help, please email postmaster@.') . '</p>
 </td>
 </TR>';
 }
 if ($AccountModified) {
-echo '<TR><td class="accent">Account updated!</td></TR>
-   <tr><td class="textcontent">Your account details were successfully updated.</td></tr>';
+echo '<TR><td class="accent">' . _('Account updated!') . '</td></TR>
+   <tr><td class="textcontent">' . _('Your account details were successfully updated.') . '</td></tr>';
 } else {
 
 echo '
 <TR>
-<td class="accent"><span>Customize</span></td>
+<td class="accent"><span>' . _('Customize') . '</span></td>
 </TR>
 <TR>
 <td>';
 
-echo '<p>If you wish to change your password, first type your existing password, then your new password twice.  Otherwise, leave them all blank.</p><br>';
+echo '<p>' . _('If you wish to change your password, first type your existing password, then your new password twice.  Otherwise, leave them all blank.') . '</p><br>';
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 $Customize=1;

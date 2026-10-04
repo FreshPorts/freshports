@@ -10,7 +10,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
-	$Title = 'New User';
+	$Title = _('New User');
 	freshports_Start($Title,
 					$Title,
 					'FreeBSD, index, applications, ports');
@@ -22,21 +22,19 @@
 
 	<?php echo freshports_MainContentTable(); ?>
   <tr>
-	<?php echo freshports_PageBannerText("Account created"); ?>
+	<?php echo freshports_PageBannerText(_("Account created")); ?>
   </tr>
 	<TR>
 	<td>
 	<P>
-	Your account has been created.
+	<?php echo _('Your account has been created.'); ?>
 	</P>
 
 	<P>
-	You should soon receive an email at the mail address you supplied.
-	It will contain instructions to enable your account.
+	<?php echo _('You should soon receive an email at the mail address you supplied. It will contain instructions to enable your account.'); ?>
 
 	<P>
-	If you do not receive that email, please attempt to login and you
-	will have an opportunity to resend the notification.
+	<?php echo _('If you do not receive that email, please attempt to login and you will have an opportunity to resend the notification.'); ?>
 	</P>
 </td></TR>
 </table>

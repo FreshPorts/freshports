@@ -52,33 +52,33 @@ if (IsSet($submit)) {
 	$numberofdays = $_REQUEST["numberofdays"] ?? '';
 
 	if ($UserLogin == '') {
-		$errors .= "Please enter a user id.<br>";
+		$errors .= _("Please enter a user id.") . "<br>";
 		$OK = 0;
 	}
 
 	if ($UserLogin != trim($UserLogin, "\t\n\r\x0B")) {
 		syslog(LOG_ERR, 'FreshPorts (odd UserLogin): '. $UserLogin);
-		$errors .= "Please, just use plain text for your user id.  This event has been logged.<br>";
+		$errors .= _("Please, just use plain text for your user id.  This event has been logged.") . "<br>";
 		$OK = 0;
 	}
 
 	if (!freshports_IsEmailValid($email)) {
-		$errors .= "That email address doesn't look right to me<br>";
+		$errors .= _("That email address doesn't look right to me") . "<br>";
 		$OK = 0;
 	}
 
 	if ($email != trim($email, "\t\n\r\x0B")) {
 		syslog(LOG_ERR, 'FreshPorts (odd email): '. $email);
-		$errors .= "Please, just use plain text for your email.  This event has been logged.<br>";
+		$errors .= _("Please, just use plain text for your email.  This event has been logged.") . "<br>";
 		$OK = 0;
 	}
 
 	if ($Password1 != $Password2) {
-		$errors .= "The password was not confirmed.  It must be entered twice.<br>";
+		$errors .= _("The password was not confirmed.  It must be entered twice.") . "<br>";
 		$OK = 0;
 	} else {
 		if ($Password1 == '') {
-			$errors .= 'A password must be supplied<br>';
+			$errors .= _('A password must be supplied') . '<br>';
 			$OK = 0;
 		}
 	}
@@ -100,7 +100,7 @@ if (IsSet($submit)) {
 		}
 		else
 		{
-			$errors .= 'Your CAPTHCA code is not valid<br>';
+			$errors .= _('Your CAPTCHA code is not valid') . '<br>';
 			syslog(LOG_ERR, "FreshPorts captcha failure: '" . $UserLogin . "', '" . $email . "', "  . $_SERVER['REMOTE_ADDR']);
 			$OK = 0;
 		}
@@ -149,16 +149,16 @@ if (IsSet($submit)) {
 					#
 					freshports_UserSendToken($UserID, $db);
 				} else {
-					$errors .= "OUCH! I couldn't add you to the database\n";
+					$errors .= _("OUCH! I couldn't add you to the database") . "\n";
 					$OK = 0;
 				}
 			} else {
-				$errors .= "OUCH! I couldn't assign you a new UserID\n";
+				$errors .= _("OUCH! I couldn't assign you a new UserID") . "\n";
 				$OK = 0;
 			}
 
 	    } else {
-			$errors .= 'That User ID is already in use.  Please select a different  User ID.<br>';
+			$errors .= _('That User ID is already in use.  Please select a different User ID.') . '<br>';
     	}
 	}
 
@@ -173,7 +173,7 @@ if (IsSet($submit)) {
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 }
 
-	$Title = 'New User';
+	$Title = _('New User');
 	freshports_Start($Title,
                $Title,
                'FreeBSD, index, applications, ports');
@@ -187,11 +187,11 @@ echo '<table class="fullwidth borderless">
 <tr>
 <td>
 <table class="fullwidth borderless">
-<tr class="accent"><td>Access Code Failed!</td>
+<tr class="accent"><td>' . _('Access Code Failed!') . '</td>
 </tr>
 <tr>
 <td>
-  <p><IMG SRC="/images/warning.gif"> Some errors have occurred which must be corrected before your login can be created.</p>';
+  <p><IMG SRC="/images/warning.gif"> ' . _('Some errors have occurred which must be corrected before your login can be created.') . '</p>';
 
 /*
   while (list($name, $value) = each($_REQUEST)) {
@@ -200,7 +200,7 @@ echo '<table class="fullwidth borderless">
 */
 echo $errors;
 
-echo '<p>If you need help, please email postmaster@. </p>
+echo '<p>' . _('If you need help, please email postmaster@.') . '</p>
 </td>
 </tr>
 </table>
@@ -219,30 +219,26 @@ echo freshports_MainContentTable();
 
 ?>
       <tr>
-		<?php echo freshports_PageBannerText("New User Details"); ?>
+		<?php echo freshports_PageBannerText(_("New User Details")); ?>
       </tr>
       <tr>
         <td>
 
-<p class="element-details"><span>Please observe the following points:</span></p>
+<p class="element-details"><span><?php echo _('Please observe the following points:'); ?></span></p>
 
 <ul>
-<li>
-You must supply a valid email address. Instructions to enable your account 
-will be emailed to you at that address.
+<li><?php echo _('You must supply a valid email address. Instructions to enable your account will be emailed to you at that address.'); ?>
 
-<li>If you have a spam filter, please allow all
-mail from <code class="code">unixathome.org</code> and <code class="code">freshports.org</code>.
+<li><?php printf(_('If you have a spam filter, please allow all mail from %1$s and %2$s.'), '<code class="code">unixathome.org</code>', '<code class="code">freshports.org</code>'); ?>
 
-<li>Please disable any auto-responders for the above domains.  I get enough email
-without being told when you'll be back from holiday or who else I can contact...
+<li><?php echo _("Please disable any auto-responders for the above domains.  I get enough email without being told when you'll be back from holiday or who else I can contact..."); ?>
 
-<li>Your browser must allow cookies for the login to work.
+<li><?php echo _('Your browser must allow cookies for the login to work.'); ?>
 
 </ul>
 
 <P>
-Your cooperation with the above will make my life easier.  Thank you.
+<?php echo _('Your cooperation with the above will make my life easier.  Thank you.'); ?>
 
 <hr>
 

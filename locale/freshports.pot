@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreshPorts\n"
 "Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
-"POT-Creation-Date: 2026-10-03 19:44-0400\n"
+"POT-Creation-Date: 2026-10-03 20:13-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -107,7 +107,8 @@ msgstr ""
 msgid "Valid RSS is good too"
 msgstr ""
 
-#: include/freshports.php:2197
+#: include/freshports.php:2197 include/login.php:15 www/login.php:148
+#: www/login.php:231
 msgid "Login"
 msgstr ""
 
@@ -387,4 +388,585 @@ msgstr ""
 
 #: include/i18n.php:216
 msgid "Change"
+msgstr ""
+
+#: include/login.php:11 include/new-user.php:29 www/forgotten-password.php:257
+msgid "User ID:"
+msgstr ""
+
+#: include/login.php:13 include/password-reset-via-token.php:17
+msgid "Password:"
+msgstr ""
+
+#: include/login.php:18 www/forgotten-password.php:233 www/login.php:245
+msgid "Forgotten your password?"
+msgstr ""
+
+#: include/new-user.php:23
+msgid "Current password:"
+msgstr ""
+
+#: include/new-user.php:32
+msgid "New password:"
+msgstr ""
+
+#: include/new-user.php:34
+msgid "New password again:"
+msgstr ""
+
+#: include/new-user.php:38
+msgid "Number of Days to show in side-bar:"
+msgstr ""
+
+#: include/new-user.php:56
+msgid "Set focus to search box:"
+msgstr ""
+
+#: include/new-user.php:60
+msgid "Number of results to display per page (e.g commits per page):"
+msgstr ""
+
+#: include/new-user.php:69
+msgid "Email Address (required):"
+msgstr ""
+
+#: include/new-user.php:85
+msgid "CAPTCHA:"
+msgstr ""
+
+#: include/new-user.php:86
+msgid "(antispam code, type the three black symbols)"
+msgstr ""
+
+#: include/new-user.php:96
+msgid "create account"
+msgstr ""
+
+#: include/new-user.php:96
+msgid "update account"
+msgstr ""
+
+#: include/new-user.php:97
+msgid "reset form"
+msgstr ""
+
+#: include/new-user.php:109
+msgid ""
+"For your reporting needs, please visit <a href=\"/report-"
+"subscriptions.php\">Report Subscriptions</a>."
+msgstr ""
+
+#: include/new-user.php:110
+msgid "Delete my account"
+msgstr ""
+
+#: include/password-reset-via-token.php:19
+msgid "Confirm Password:"
+msgstr ""
+
+#: include/password-reset-via-token.php:22
+msgid "Set password"
+msgstr ""
+
+#: include/spam-filter-information.php:9
+msgid "SPAM FILTERS:"
+msgstr ""
+
+#: include/spam-filter-information.php:11
+msgid ""
+"If you are using spam filters which require confirmation of incoming email, "
+"these reports will be coming from the following domains:"
+msgstr ""
+
+#: include/spam-filter-information.php:15
+msgid "Domain"
+msgstr ""
+
+#: include/spam-filter-information.php:15
+msgid "Reason"
+msgstr ""
+
+#: include/spam-filter-information.php:16
+msgid "All reports originate from that domain."
+msgstr ""
+
+#: include/spam-filter-information.php:17
+msgid "The websites are hosted on a box in that domain."
+msgstr ""
+
+#: include/spam-filter-information.php:18
+msgid "If I need to write to you, it will come from that domain."
+msgstr ""
+
+#: include/spam-filter-information.php:22
+msgid ""
+"Ensure that you update your spam filters to allow such incoming messages.  "
+"If your spam tools require that a confirmation be sent, you'll have to "
+"modify things as no confirmations will be sent for FreshPorts messages."
+msgstr ""
+
+#: www/bouncing.php:39 www/customize.php:138
+#: www/password-reset-via-token.php:79
+msgid "Something went terribly wrong there."
+msgstr ""
+
+#: www/bouncing.php:42
+msgid "your email is bouncing"
+msgstr ""
+
+#: www/bouncing.php:55
+msgid "Bouncing?  What do you mean?"
+msgstr ""
+
+#: www/bouncing.php:59
+msgid ""
+"You are a registered user. You have indicated that we can send you email.  "
+"This will either be part of your watch list notifications or as an "
+"announcement.  You can view these settings on the customization page (see "
+"the link on the right hand side of the page)."
+msgstr ""
+
+#: www/bouncing.php:61
+msgid ""
+"The problem is that the email we are sending you is not getting to you.  It "
+"is bouncing back to us.  So we have stopped sending out messages to you.  If "
+"you wish to continue to receive such messages, you should update your email "
+"address on the customization page."
+msgstr ""
+
+#: www/bouncing.php:66
+msgid "How to fix the problem"
+msgstr ""
+
+#: www/bouncing.php:69
+msgid "There are two things which might have caused your email to bounce:"
+msgstr ""
+
+#: www/bouncing.php:71
+msgid "Your email address has changed."
+msgstr ""
+
+#: www/bouncing.php:72
+msgid "There was a problem with your email but it's been fixed."
+msgstr ""
+
+#: www/bouncing.php:75
+msgid ""
+"If your email address has changed, please update it in your <a "
+"href=\"customize.php\">account settings</a>."
+msgstr ""
+
+#: www/bouncing.php:77
+msgid ""
+"If there was a problem with your email, such as your server was down, you "
+"can tell FreshPorts that you want it to start using your email address again "
+"by pressing the button below."
+msgstr ""
+
+#: www/bouncing.php:82
+msgid "There was a problem, but it's fixed now"
+msgstr ""
+
+#: www/confirmation.php:14 www/confirmation.php:42
+msgid "Account confirmation"
+msgstr ""
+
+#: www/confirmation.php:51
+msgid "I don't know anything about that token."
+msgstr ""
+
+#: www/confirmation.php:55
+msgid ""
+"Your account has been enabled.  Please proceed to the <a "
+"href=\"login.php\">login page</a>"
+msgstr ""
+
+#: www/confirmation.php:59
+msgid ""
+"Well.  This just isn't supposed to happen.  For some strange and very rare "
+"reason, there is more than one person with that token."
+msgstr ""
+
+#: www/confirmation.php:60
+#, php-format
+msgid "Please contact %s for help."
+msgstr ""
+
+#: www/confirmation.php:64
+msgid "An error has occurred.  Sorry."
+msgstr ""
+
+#: www/confirmation.php:68
+msgid "Hi there.  What are you doing here?"
+msgstr ""
+
+#: www/customize.php:73 www/new-user.php:66
+msgid "That email address doesn't look right to me"
+msgstr ""
+
+#: www/customize.php:79
+msgid ""
+"If changing your password, remember to supply your existing password first."
+msgstr ""
+
+#: www/customize.php:84
+msgid "The new password was not confirmed.  It must be entered twice."
+msgstr ""
+
+#: www/customize.php:93
+msgid "That is NOT your current password."
+msgstr ""
+
+#: www/customize.php:153
+msgid "Customize User Account"
+msgstr ""
+
+#: www/customize.php:164 www/new-user.php:190
+#: www/password-reset-via-token.php:105
+msgid "Access Code Failed!"
+msgstr ""
+
+#: www/customize.php:167 www/new-user.php:194
+#: www/password-reset-via-token.php:113
+msgid ""
+"Some errors have occurred which must be corrected before your login can be "
+"created."
+msgstr ""
+
+#: www/customize.php:171 www/delete-account.php:104 www/login.php:181
+#: www/new-user.php:203 www/password-reset-via-token.php:117
+msgid "If you need help, please email postmaster@."
+msgstr ""
+
+#: www/customize.php:176
+msgid "Account updated!"
+msgstr ""
+
+#: www/customize.php:177
+msgid "Your account details were successfully updated."
+msgstr ""
+
+#: www/customize.php:182
+msgid "Customize"
+msgstr ""
+
+#: www/customize.php:187
+msgid ""
+"If you wish to change your password, first type your existing password, then "
+"your new password twice.  Otherwise, leave them all blank."
+msgstr ""
+
+#: www/delete-account.php:58
+msgid "I really tried to delete your account. I failed. Sorry."
+msgstr ""
+
+#: www/delete-account.php:65
+msgid "I could not delete that account. Sorry."
+msgstr ""
+
+#: www/delete-account.php:69
+msgid "The confirmation was not correct."
+msgstr ""
+
+#: www/delete-account.php:75
+msgid "Delete User Account"
+msgstr ""
+
+#: www/delete-account.php:92
+msgid "Delete Failed!"
+msgstr ""
+
+#: www/delete-account.php:100
+msgid "The delete failed."
+msgstr ""
+
+#: www/delete-account.php:122
+msgid "Delete account"
+msgstr ""
+
+#: www/delete-account.php:130
+msgid "Your account has been deleted."
+msgstr ""
+
+#: www/delete-account.php:131
+msgid "Please click <a href=\"/\">here</a> to return to the home page."
+msgstr ""
+
+#: www/delete-account.php:134 www/delete-account.php:151
+msgid "Delete Account"
+msgstr ""
+
+#: www/delete-account.php:134
+#, php-format
+msgid "To delete your account, please enter your account name and click on %s."
+msgstr ""
+
+#: www/delete-account.php:143
+#, php-format
+msgid "The account name is: %s"
+msgstr ""
+
+#: www/delete-account.php:144
+msgid "User Name:"
+msgstr ""
+
+#: www/delete-account.php:150
+msgid "There is no undo for this"
+msgstr ""
+
+#: www/forgotten-password.php:84
+#, php-format
+msgid ""
+"Sorry, but previous email to you has bounced, so we're not sure it's going "
+"to get to you.  But we sent it out anyway.  Please contact the <a "
+"href=\"%s\">webmaster</a> for help if it doesn't arrive."
+msgstr ""
+
+#: www/forgotten-password.php:91
+#, php-format
+msgid ""
+"Guess what?  You never gave us an email address.  So I guess you must "
+"contact the <a href=\"%s\">webmaster</a> for help."
+msgstr ""
+
+#: www/forgotten-password.php:148
+msgid "Forgotten password"
+msgstr ""
+
+#: www/forgotten-password.php:166
+msgid "We have a problem!"
+msgstr ""
+
+#: www/forgotten-password.php:193
+msgid "User ID not found!"
+msgstr ""
+
+#: www/forgotten-password.php:204
+msgid ""
+"The User ID you supplied could not be found.  Perhaps try your email instead?"
+msgstr ""
+
+#: www/forgotten-password.php:206
+msgid ""
+"The email you supplied could not be found.  Perhaps try your User ID instead?"
+msgstr ""
+
+#: www/forgotten-password.php:231
+msgid "Mail sent to your address"
+msgstr ""
+
+#: www/forgotten-password.php:243
+#, php-format
+msgid ""
+"A password recovery URL has been sent to the address we have on file.  If "
+"you still can't get logged in please contact <a href=\"%s\">the webmaster</"
+"a> and we'll see what we can do."
+msgstr ""
+
+#: www/forgotten-password.php:249
+msgid ""
+"If you've forgotten your password, don't worry.  We've got that covered."
+msgstr ""
+
+#: www/forgotten-password.php:251
+#, php-format
+msgid ""
+"Please enter either your login or your email address (whichever you "
+"remember), then click on '%s'."
+msgstr ""
+
+#: www/forgotten-password.php:251 www/forgotten-password.php:261
+msgid "eMail Me!"
+msgstr ""
+
+#: www/forgotten-password.php:253
+msgid ""
+"We will send you an email with a link in it. Click on that link and you'll "
+"be able to set a new password. This link will expire within a few hours. "
+"This isn't exactly totally secure, but then we're only dealing with your "
+"FreshPorts login, not a financial transaction...."
+msgstr ""
+
+#: www/forgotten-password.php:259
+msgid "email address:"
+msgstr ""
+
+#: www/login.php:104
+#, php-format
+msgid "Your account has been disabled.  Please contact %s"
+msgstr ""
+
+#: www/login.php:107
+msgid ""
+"Your account needs to be enabled by following the directions in the email we "
+"have sent to you."
+msgstr ""
+
+#: www/login.php:108
+msgid ""
+"To have your activation details resent to the email address you supplied, "
+"click on the resend button"
+msgstr ""
+
+#: www/login.php:111
+msgid "Resend"
+msgstr ""
+
+#: www/login.php:114
+msgid "I have no idea what your account status is."
+msgstr ""
+
+#: www/login.php:139 www/welcome.php:34
+msgid ""
+"You should soon receive an email at the mail address you supplied. It will "
+"contain instructions to enable your account."
+msgstr ""
+
+#: www/login.php:141
+#, php-format
+msgid "I'm sorry but I couldn't send your token.  Please contact %s."
+msgstr ""
+
+#: www/login.php:144
+#, php-format
+msgid ""
+"Hmmm, I know nothing about you.  That can't be right.  Please contact %s"
+msgstr ""
+
+#: www/login.php:167
+msgid "Login Failed!"
+msgstr ""
+
+#: www/login.php:175
+msgid ""
+"The User ID and password you supplied could not be used to login.  This "
+"could be for one of the following reasons:"
+msgstr ""
+
+#: www/login.php:177
+msgid "The login id is incorrect"
+msgstr ""
+
+#: www/login.php:178
+msgid "The password is incorrect"
+msgstr ""
+
+#: www/login.php:179
+msgid "Both of the above"
+msgstr ""
+
+#: www/login.php:201
+msgid "NOTICE"
+msgstr ""
+
+#: www/login.php:237
+msgid "Your browser must allow cookies for this login to work."
+msgstr ""
+
+#: www/new-user.php:55
+msgid "Please enter a user id."
+msgstr ""
+
+#: www/new-user.php:61
+msgid ""
+"Please, just use plain text for your user id.  This event has been logged."
+msgstr ""
+
+#: www/new-user.php:72
+msgid ""
+"Please, just use plain text for your email.  This event has been logged."
+msgstr ""
+
+#: www/new-user.php:77 www/password-reset-via-token.php:51
+msgid "The password was not confirmed.  It must be entered twice."
+msgstr ""
+
+#: www/new-user.php:81
+msgid "A password must be supplied"
+msgstr ""
+
+#: www/new-user.php:103
+msgid "Your CAPTCHA code is not valid"
+msgstr ""
+
+#: www/new-user.php:152
+msgid "OUCH! I couldn't add you to the database"
+msgstr ""
+
+#: www/new-user.php:156
+msgid "OUCH! I couldn't assign you a new UserID"
+msgstr ""
+
+#: www/new-user.php:161
+msgid "That User ID is already in use.  Please select a different User ID."
+msgstr ""
+
+#: www/new-user.php:176 www/welcome.php:13
+msgid "New User"
+msgstr ""
+
+#: www/new-user.php:222
+msgid "New User Details"
+msgstr ""
+
+#: www/new-user.php:227
+msgid "Please observe the following points:"
+msgstr ""
+
+#: www/new-user.php:230
+msgid ""
+"You must supply a valid email address. Instructions to enable your account "
+"will be emailed to you at that address."
+msgstr ""
+
+#: www/new-user.php:232
+#, php-format
+msgid "If you have a spam filter, please allow all mail from %1$s and %2$s."
+msgstr ""
+
+#: www/new-user.php:234
+msgid ""
+"Please disable any auto-responders for the above domains.  I get enough "
+"email without being told when you'll be back from holiday or who else I can "
+"contact..."
+msgstr ""
+
+#: www/new-user.php:236
+msgid "Your browser must allow cookies for the login to work."
+msgstr ""
+
+#: www/new-user.php:241
+msgid "Your cooperation with the above will make my life easier.  Thank you."
+msgstr ""
+
+#: www/password-reset-via-token.php:70
+msgid "It seems that token is no longer valid."
+msgstr ""
+
+#: www/password-reset-via-token.php:87 www/password-reset-via-token.php:140
+msgid "Reset password via token"
+msgstr ""
+
+#: www/password-reset-via-token.php:131
+msgid ""
+"SUCCESS! Your password has been updated.  Please <a href=\"/"
+"login.php\">login</a>"
+msgstr ""
+
+#: www/password-reset-via-token.php:145
+msgid "Please enter your new password twice."
+msgstr ""
+
+#: www/welcome.php:25
+msgid "Account created"
+msgstr ""
+
+#: www/welcome.php:30
+msgid "Your account has been created."
+msgstr ""
+
+#: www/welcome.php:37
+msgid ""
+"If you do not receive that email, please attempt to login and you will have "
+"an opportunity to resend the notification."
 msgstr ""

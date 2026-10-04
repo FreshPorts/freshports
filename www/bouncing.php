@@ -36,10 +36,10 @@ if ($submit) {
          exit;  /* Make sure that code below does not get executed when we redirect. */
       }
    } else {
-      echo 'Something went terribly wrong there.<br>';
+      echo _('Something went terribly wrong there.') . '<br>';
    }
 }
-   $Title = 'your email is bouncing';
+   $Title = _('your email is bouncing');
    freshports_Start($Title,
                $Title,
                "FreeBSD, index, applications, ports");
@@ -52,40 +52,34 @@ if ($submit) {
 	<?php echo freshports_MainContentTable(NOBORDER); ?>
 
 <tr>
-<?php echo freshports_PageBannerText("Bouncing?  What do you mean?"); ?>
+<?php echo freshports_PageBannerText(_("Bouncing?  What do you mean?")); ?>
 </tr>
 <tr><td>
 
-<p>You are a registered user. You have indicated that we can send you email.  This will either
-be part of your watch list notifications or as an announcement.  You can view these settings
-on the customization page (see the link on the right hand side of the page).</p>
+<p><?php echo _('You are a registered user. You have indicated that we can send you email.  This will either be part of your watch list notifications or as an announcement.  You can view these settings on the customization page (see the link on the right hand side of the page).'); ?></p>
 
-<p>The problem is that the email we are sending you is not getting to you.  It is bouncing back
-to us.  So we have stopped sending out messages to you.  If you wish to continue to receive such
-messages, you should update your email address on the customization page.</p>
+<p><?php echo _('The problem is that the email we are sending you is not getting to you.  It is bouncing back to us.  So we have stopped sending out messages to you.  If you wish to continue to receive such messages, you should update your email address on the customization page.'); ?></p>
 </td></tr>
 <tr><td HEIGHT="20">
 </td></tr>
 <tr>
-<?php echo freshports_PageBannerText("How to fix the problem"); ?>
+<?php echo freshports_PageBannerText(_("How to fix the problem")); ?>
 </tr>
 <tr><td>
-<p>There are two things which might have caused your email to bounce:</p>
+<p><?php echo _('There are two things which might have caused your email to bounce:'); ?></p>
 <ol>
-  <li>Your email address has changed.</li>
-  <li>There was a problem with your email but it's been fixed.</li>
+  <li><?php echo _('Your email address has changed.'); ?></li>
+  <li><?php echo _("There was a problem with your email but it's been fixed."); ?></li>
 </ol>
 
-<p>If your email address has changed, please update it in your <a href="customize.php">account settings</a>.</p>
+<p><?php echo _('If your email address has changed, please update it in your <a href="customize.php">account settings</a>.'); ?></p>
 
-<p>If there was a problem with your email, such as your server was down, you can 
-tell FreshPorts that you want it to start using your email address again by pressing 
-the button below.</p>
+<p><?php echo _('If there was a problem with your email, such as your server was down, you can tell FreshPorts that you want it to start using your email address again by pressing the button below.'); ?></p>
 
 </td></tr>
 <tr><td>
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST">
-<input TYPE="submit" VALUE="There was a problem, but it's fixed now" name="submit">
+<input TYPE="submit" VALUE="<?php echo htmlspecialchars(_("There was a problem, but it's fixed now")); ?>" name="submit">
 </form>
 </td></tr>
 </table>

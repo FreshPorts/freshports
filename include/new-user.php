@@ -20,22 +20,22 @@
           <tr>
             <td>
 <?php if (IsSet($Customize)) { ?>
-              <label>Current password:<br>
+              <label><?php echo _('Current password:'); ?><br>
               <INPUT TYPE="PASSWORD" NAME="Password" VALUE="<?php if (IsSet($Password)) echo htmlentities($Password) ?>" size="20"></label><br><br>
 
 <?php } else { ?>
 
               <INPUT TYPE="hidden" NAME="ADD" VALUE="1">
-              <label>User ID:<br>
+              <label><?php echo _('User ID:'); ?><br>
               <INPUT SIZE="15" NAME="UserLogin" VALUE="<?php if (IsSet($UserLogin)) echo htmlentities($UserLogin) ?>" autofocus=""></label><br><br>
 <?php } ?>
-              <label>New password:<br>
+              <label><?php echo _('New password:'); ?><br>
               <INPUT TYPE="PASSWORD" NAME="Password1" VALUE="<?php if (IsSet($Password1)) echo htmlentities($Password1) ?>" size="20"></label><br><br>
-              <label>New password again:<br>
+              <label><?php echo _('New password again:'); ?><br>
               <INPUT TYPE="PASSWORD" NAME="Password2" VALUE="<?php if (IsSet($Password2)) echo htmlentities($Password2) ?>" size="20"></label>
 <br>
 <br>
-Number of Days to show in side-bar:
+<?php echo _('Number of Days to show in side-bar:'); ?>
 
 <SELECT NAME="numberofdays" size="1">
     <OPTION <?php if ($numberofdays == "0") echo "selected " ?> VALUE="0">0</OPTION>
@@ -53,11 +53,11 @@ Number of Days to show in side-bar:
 <br>
 <br>
 <label>
-Set focus to search box: <input type="checkbox" id="set_focus_search" name="set_focus_search" value="set_focus_search"<?php if ($set_focus_search) echo ' checked'; ?>>
+<?php echo _('Set focus to search box:'); ?> <input type="checkbox" id="set_focus_search" name="set_focus_search" value="set_focus_search"<?php if ($set_focus_search) echo ' checked'; ?>>
 </label>
 
 <br><br>
-Number of results to display per page (e.g commits per page):
+<?php echo _('Number of results to display per page (e.g commits per page):'); ?>
 <?php
 	  require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/page_options.php');
 	  $PageOptions = new ItemsPerPage();
@@ -66,7 +66,7 @@ Number of results to display per page (e.g commits per page):
 ?>
             </td>
             <td valign="top">
-              <label>Email Address (required):<br>
+              <label><?php echo _('Email Address (required):'); ?><br>
               <INPUT type="email" SIZE="35" NAME="email" required VALUE="<?php if (IsSet($email)) echo htmlentities($email) ?>"></label>
 
 
@@ -82,8 +82,8 @@ if ( $_SERVER['SCRIPT_NAME'] == '/new-user.php' )
 {
 ?>
 
-<tr><td class="captcha">CAPTCHA:<br>
-  (antispam code, type the three black symbols)<br>
+<tr><td class="captcha"><?php echo _('CAPTCHA:'); ?><br>
+  <?php echo _('(antispam code, type the three black symbols)'); ?><br>
   <table><tr><td><img src="/images/captcha/captcha.php" alt="captcha image"></td><td><input type="text" name="captcha" size="3" maxlength="3"></td></tr></table>
 </td><td></td></tr>
 <?php
@@ -93,8 +93,8 @@ if ( $_SERVER['SCRIPT_NAME'] == '/new-user.php' )
 <tr>
 <td colspan="2">
 <br><br>
-            <INPUT TYPE="submit" VALUE="<?php if (IsSet($Customize)) { echo "update";} else { echo "create";} ?> account" NAME="submit">
-            <INPUT TYPE="reset"  VALUE="reset form">
+            <INPUT TYPE="submit" VALUE="<?php echo IsSet($Customize) ? _('update account') : _('create account'); ?>" NAME="submit">
+            <INPUT TYPE="reset"  VALUE="<?php echo _('reset form'); ?>">
             </td>
           </tr>
     </table>
@@ -106,7 +106,7 @@ if ( $_SERVER['SCRIPT_NAME'] == '/new-user.php' )
 if ( $_SERVER['SCRIPT_NAME'] != '/new-user.php' )
 {
 ?>
-<p>For your reporting needs, please visit <a href="/report-subscriptions.php">Report Subscriptions</a>.</p>
-<h3><a href="/delete-account.php">Delete my account</a></h3>
+<p><?php echo _('For your reporting needs, please visit <a href="/report-subscriptions.php">Report Subscriptions</a>.'); ?></p>
+<h3><a href="/delete-account.php"><?php echo _('Delete my account'); ?></a></h3>
 <?php
 }

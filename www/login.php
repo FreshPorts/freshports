@@ -101,17 +101,17 @@ if (IsSet($_REQUEST['LOGIN']) && IsSet($_REQUEST['UserID']) && IsSet($_REQUEST['
 	      }
 	   } else {
 	      if (!$LoginFailed && $status == $UserStatusDisabled) {
-	         $error .= 'Your account has been disabled.  Please contact ' . PROBLEM_SOLVER_EMAIL_ADDRESS;
+	         $error .= sprintf(_('Your account has been disabled.  Please contact %s'), PROBLEM_SOLVER_EMAIL_ADDRESS);
 	      } else {
 	         if ($status == $UserStatusUnconfirmed) {
-	            $error .= 'Your account needs to be enabled by following the directions in the email we have sent to you.' . "<br>\n";
-	            $error .= 'To have your activation details resent to the email address you supplied, click on the resend button' . "<br>\n";
+	            $error .= _('Your account needs to be enabled by following the directions in the email we have sent to you.') . "<br>\n";
+	            $error .= _('To have your activation details resent to the email address you supplied, click on the resend button') . "<br>\n";
 	            $error .= '<form action="' . $_SERVER["PHP_SELF"] . '" method="POST">' . "\n";
 	            $error .= '<input type="hidden" name="user" value="' . htmlentities($UserID) . '">' . "\n";
-	            $error .= '<input TYPE="submit" VALUE="Resend" name=resend>' . "\n";
+	            $error .= '<input TYPE="submit" VALUE="' . _('Resend') . '" name=resend>' . "\n";
 	            $error .= '</form>' . "\n";
 	         } else {
-	            $error .= "I have no idea what your account status is.";
+	            $error .= _("I have no idea what your account status is.");
 	         }
 	      }
 	   }
@@ -136,16 +136,16 @@ if (IsSet($_REQUEST["resend"]) && IsSet($_REQUEST["user"])) {
       $row = pg_fetch_array($result,0);
       $ID  = $row["id"];
       if (freshports_UserSendToken($ID, $db)) {
-         $error .= 'You should soon receive an email at the mail address you supplied. It will contain instructions to enable your account.';
+         $error .= _('You should soon receive an email at the mail address you supplied. It will contain instructions to enable your account.');
       } else {
-         $error .= 'I\'m sorry but I couldn\'t send your token.  Please contact ' . PROBLEM_SOLVER_EMAIL_ADDRESS . '.';
+         $error .= sprintf(_("I'm sorry but I couldn't send your token.  Please contact %s."), PROBLEM_SOLVER_EMAIL_ADDRESS);
       }
    } else {
-      $error .= 'Hmmm, I know nothing about you.  That can\'t be right.  Please contact ' . PROBLEM_SOLVER_EMAIL_ADDRESS;
+      $error .= sprintf(_("Hmmm, I know nothing about you.  That can't be right.  Please contact %s"), PROBLEM_SOLVER_EMAIL_ADDRESS);
    }
 }
 
-$Title = 'Login';
+$Title = _('Login');
 freshports_Start($Title,
                  $Title,
                  'FreeBSD, index, applications, ports');
@@ -164,7 +164,7 @@ if ($LoginFailed) {
 <tr><td VALIGN=TOP>
 <table class="fullwidth">
 <tr>
-   <?php echo freshports_PageBannerText("Login Failed!") ?>
+   <?php echo freshports_PageBannerText(_("Login Failed!")) ?>
 </tr>
 <tr>
 <td>
@@ -172,13 +172,13 @@ if ($LoginFailed) {
   <tr class="vtop">
    <td><img src="/images/warning.gif"></td>
    <td WIDTH="100%">
-  <p>The User ID and password you supplied could not be used to login.	This could be for one of the following reasons:</p>
+  <p><?php echo _('The User ID and password you supplied could not be used to login.  This could be for one of the following reasons:'); ?></p>
  <ul>
- <li>The login id is incorrect
- <li>The password is incorrect
- <li>Both of the above
+ <li><?php echo _('The login id is incorrect'); ?>
+ <li><?php echo _('The password is incorrect'); ?>
+ <li><?php echo _('Both of the above'); ?>
  </ul>
- <p>If you need help, please email postmaster@. </p>
+ <p><?php echo _('If you need help, please email postmaster@.'); ?></p>
  </td>
  </tr>
  </table>
@@ -198,7 +198,7 @@ if ($error) {
 <tr><td VALIGN=TOP>
 <table class="fullwidth">
 <tr>
-    <?php echo freshports_PageBannerText("NOTICE"); ?>
+    <?php echo freshports_PageBannerText(_("NOTICE")); ?>
 </tr>
 
 <tr>
@@ -228,13 +228,13 @@ echo '<table class="fullwidth bordered">';
 
 echo '<tr>';
 
-echo freshports_PageBannerText("Login");
+echo freshports_PageBannerText(_("Login"));
 echo '</tr>';
 
 echo '<tr><td>';
 include ($_SERVER['DOCUMENT_ROOT'] . "/../include/login.php");
 
-echo "Your browser must allow cookies for this login to work.";
+echo _("Your browser must allow cookies for this login to work.");
 
 echo "</td>";
 echo"
@@ -242,7 +242,7 @@ echo"
 </table>
 ";
 
-echo '<br><a href="forgotten-password.php">Forgotten your password?</a>';
+echo '<br><a href="forgotten-password.php">' . _('Forgotten your password?') . '</a>';
 
 ?>
 </td>

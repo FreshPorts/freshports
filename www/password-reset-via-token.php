@@ -48,7 +48,7 @@ if (IsSet($submit)) {
   $errors = '';
 
   if ( !$Password1 || ( $Password1 != $Password2 ) ) {
-    $errors .= 'The password was not confirmed.  It must be entered twice.<br>';
+    $errors .= _('The password was not confirmed.  It must be entered twice.') . '<br>';
     syslog(LOG_NOTICE, "Password reset page: password not confirmed for " . $token);
     $OK = 0;
   }
@@ -67,7 +67,7 @@ if (IsSet($submit)) {
           $PasswordReset = 1;
       } else {
           syslog(LOG_NOTICE, "Password reset page: Token not deleted after reset: " . $token);
-          $errors = "It seems that token is no longer valid.<br>";
+          $errors = _("It seems that token is no longer valid.") . "<br>";
       }
     }
 
@@ -76,7 +76,7 @@ if (IsSet($submit)) {
         echo "I would have taken you to / now, but debugging is on<br>\n";
       }
     } else {
-      $errors .= 'Something went terribly wrong there.<br>';
+      $errors .= _('Something went terribly wrong there.') . '<br>';
       syslog(LOG_NOTICE, "Password reset page: Password reset went wrong " . $sql . ' ' . pg_last_error($db));
     }
   }
@@ -84,7 +84,7 @@ if (IsSet($submit)) {
 
 #	echo '<br>the page size is ' . $page_size . ' : ' . $email;
 
-        $Title = 'Reset password via token';
+        $Title = _('Reset password via token');
 	freshports_Start($Title,
 						$Title,
 						'FreeBSD, index, applications, ports');
@@ -102,7 +102,7 @@ echo '<table class="fullwidth borderless">
 <tr>
 <td>
 <table class="fullwidth borderless">
-<tr class="accent"><td><b>Access Code Failed!</b></td>
+<tr class="accent"><td><b>' . _('Access Code Failed!') . '</b></td>
 </tr>
 <tr>
 <td>
@@ -110,11 +110,11 @@ echo '<table class="fullwidth borderless">
   <tr VALIGN=top>
    <td><img src="/images/warning.gif"></td>
    <td width="100%">
-  <p>Some errors have occurred which must be corrected before your login can be created.</p>';
+  <p>' . _('Some errors have occurred which must be corrected before your login can be created.') . '</p>';
 
 echo $errors;
 
-echo '<p>If you need help, please email postmaster@. </p>
+echo '<p>' . _('If you need help, please email postmaster@.') . '</p>
  </td>
  </tr>
  </table>
@@ -128,7 +128,7 @@ echo '<p>If you need help, please email postmaster@. </p>
 }
 
 if ($PasswordReset) {
-   echo 'SUCCESS! Your password has been updated.  Please <a href="/login.php">login</a>';
+   echo _('SUCCESS! Your password has been updated.  Please <a href="/login.php">login</a>');
 
 } else {
 
@@ -137,12 +137,12 @@ echo '<table class="fullwidth borderless">
 <td VALIGN="top">
 <table class="fullwidth borderless">
 <tr>
-<td class="accent"><BIG>Reset password via token</BIG></td>
+<td class="accent"><BIG>' . _('Reset password via token') . '</BIG></td>
 </tr>
 <tr>
 <td>';
 
-echo '<p>Please enter your new password twice.</p><br>';
+echo '<p>' . _('Please enter your new password twice.') . '</p><br>';
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 $Customize=1;

@@ -81,17 +81,15 @@ if ($submit) {
 
         $OKToMail = 1;
         if ($myrow["emailbouncecount"] > 0) {
-           $error = "Sorry, but previous email to you has bounced, so we're not sure it's going to get to you.  But we sent it out
-						anyway.  Please contact " .
-                    'the <a href="' . MAILTO . ':' . htmlentities(PROBLEM_SOLVER_EMAIL_ADDRESS . '?subject=I forgot my password') . '" rel="noopener noreferrer">webmaster</a> for help
-                    if it doesn\'t arrive.';
+           $error = sprintf(_("Sorry, but previous email to you has bounced, so we're not sure it's going to get to you.  But we sent it out anyway.  Please contact the <a href=\"%s\">webmaster</a> for help if it doesn't arrive."),
+                    MAILTO . ':' . htmlentities(PROBLEM_SOLVER_EMAIL_ADDRESS . '?subject=I forgot my password'));
            $OKToMail = 1;
            syslog(LOG_NOTICE, "Forgotten password: previous email to '" . $myrow['email'] . "' bounced");
         }
 
         if ($myrow["email"] == "") {
-          $error = 'Guess what?  You never gave us an email address.  So I guess you must ' . 
-              'contact the <a href="' . MAILTO . ':' . htmlentities(PROBLEM_SOLVER_EMAIL_ADDRESS . '?subject=I forgot my password') . '" rel="noopener noreferrer">webmaster</a> for help.';
+          $error = sprintf(_('Guess what?  You never gave us an email address.  So I guess you must contact the <a href="%s">webmaster</a> for help.'),
+              MAILTO . ':' . htmlentities(PROBLEM_SOLVER_EMAIL_ADDRESS . '?subject=I forgot my password'));
               $OKToMail = 0;
           syslog(LOG_NOTICE, "Forgotten password: '" . $myrow['name'] . "' never supplied an email.");
         }
@@ -147,7 +145,7 @@ if ($submit) {
    }
 }
 
-   $Title = 'Forgotten password';
+   $Title = _('Forgotten password');
    freshports_Start($Title,
                $Title,
                'FreeBSD, index, applications, ports');
@@ -165,7 +163,7 @@ if (IsSet($error) and $error != '') {
             <tr>
             <td>
                <table class="fullwidth borderless">
-                 <tr class="accent"><td><b>We have a problem!</b></td>
+                 <tr class="accent"><td><b>' . _('We have a problem!') . '</b></td>
                  </tr> 
                  <tr>
             <td>
@@ -192,7 +190,7 @@ if (IsSet($error) and $error != '') {
             <tr>
             <td>
                <table class="fullwidth borderless">
-                 <tr class="accent"><td><b>User ID not found!</b></td>
+                 <tr class="accent"><td><b>' . _('User ID not found!') . '</b></td>
                  </tr>
                  <tr>
             <td>
@@ -200,21 +198,14 @@ if (IsSet($error) and $error != '') {
               <tr VALIGN=top>
                <td><img src="/images/warning.gif" ALT="warning!"></td>
                <td WIDTH="100%">
-              <p>The ';
+              <p>';
 
       if ($LoginFailed) {
-         echo "User ID";
+         echo _('The User ID you supplied could not be found.  Perhaps try your email instead?');
       } else {
-         echo "email";
+         echo _('The email you supplied could not be found.  Perhaps try your User ID instead?');
       }
-
-      echo ' you supplied could not be found.  Perhaps try your ';
-      if ($LoginFailed) {
-         echo "email";
-      } else {
-         echo "User ID";
-      }
-      echo ' instead?</p>
+      echo '</p>
        </td>
        </tr>
        </table>
@@ -237,9 +228,9 @@ if (IsSet($error) and $error != '') {
 <tr class="accent" ><td class="accent">
 <?php
 if ($MailSent) {
-   echo "Mail sent to your address";
+   echo _("Mail sent to your address");
 } else {
-   echo "Forgotten your password?";
+   echo _("Forgotten your password?");
 }
 ?>
 </td></tr>
@@ -249,28 +240,25 @@ if ($MailSent) {
 if ($MailSent) {
 ?>
 <p>
-A password recovery URL has been sent to the address we have on file.  If you still can't get logged in
-please contact <a href="<?php echo MAILTO; ?>:webmaster&#64;freshports.org?subject=I forgot my password" rel="noopener noreferrer">the webmaster</a>
-and we'll see what we can do.
+<?php printf(_("A password recovery URL has been sent to the address we have on file.  If you still can't get logged in please contact <a href=\"%s\">the webmaster</a> and we'll see what we can do."),
+             MAILTO . ':webmaster&#64;freshports.org?subject=I forgot my password'); ?>
 </p>
 <?php } else {  ?>
 
 
-<p>If you've forgotten your password, don't worry.  We've got that covered.</p>
+<p><?php echo _("If you've forgotten your password, don't worry.  We've got that covered."); ?></p>
 
-<p>Please enter either your login or your email address (whichever you remember), then click on 'eMail Me!'.</p>
+<p><?php printf(_("Please enter either your login or your email address (whichever you remember), then click on '%s'."), _('eMail Me!')); ?></p>
 
-<p>We will send you an email with a link in it. Click on that link and you'll be able to set a new password.
-This link will expire within a few hours. This isn't exactly totally secure, but then
-we're only dealing with your FreshPorts login, not a financial transaction....</p>
+<p><?php echo _("We will send you an email with a link in it. Click on that link and you'll be able to set a new password. This link will expire within a few hours. This isn't exactly totally secure, but then we're only dealing with your FreshPorts login, not a financial transaction...."); ?></p>
 
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST">
       <input type="hidden" name="custom_settings" value="1"><input type="hidden" name="LOGIN" value="1">
-      <p>User ID:<br>
+      <p><?php echo _('User ID:'); ?><br>
       <input SIZE="15" NAME="UserID" value="<?php if (IsSet($UserID)) echo htmlentities($UserID) ?>"></p>
-      <p>email address:<br>
+      <p><?php echo _('email address:'); ?><br>
       <input NAME="eMail" VALUE = "<?php if (IsSet($eMail)) echo htmlentities($eMail) ?>" SIZE="20"></p>
-      <p><input TYPE="submit" VALUE="eMail Me!" name=submit>
+      <p><input TYPE="submit" VALUE="<?php echo _('eMail Me!'); ?>" name=submit>
 </form>
 <?php } ?>
 </td>

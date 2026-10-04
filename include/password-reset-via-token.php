@@ -14,12 +14,12 @@
           <tr>
             <td VALIGN="top">
               <INPUT TYPE="hidden" NAME="token" VALUE="<?php echo $token ?>">
-               Password:<br>
+               <?php echo _('Password:'); ?><br>
                <INPUT TYPE="PASSWORD" NAME="Password1" VALUE="<?php if (IsSet($Password1)) echo htmlentities($Password1) ?>" size="20"><br><br>
-               Confirm Password:<br>
+               <?php echo _('Confirm Password:'); ?><br>
                <INPUT TYPE="PASSWORD" NAME="Password2" VALUE="<?php if (IsSet($Password2)) echo htmlentities($Password2) ?>" size="20">
                <br><br>
-            <INPUT TYPE="submit" VALUE="Set password" NAME="submit">
+            <INPUT TYPE="submit" VALUE="<?php echo _('Set password'); ?>" NAME="submit">
             </TD>
           </tr>
 </table>

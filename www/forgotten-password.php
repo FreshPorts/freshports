@@ -101,16 +101,18 @@ if ($submit) {
           $token = $token_row["token"];
           
           # send out email
-          $message = "Someone, perhaps you, requested to reset your password.\n".
-                     "If that wasn't you, and this message becomes a nuisance, please\n".
-                     "forward this message to webmaster@freshports.org and we will take\n". 
-                     "care of it for you.\n" .
+          # sent in the language the visitor is using now - re #678
+          // TRANSLATORS: keep the line breaks short, this is a plain text email
+          $message = sprintf(_("Someone, perhaps you, requested to reset your password.\n" .
+                               "If that wasn't you, and this message becomes a nuisance, please\n" .
+                               "forward this message to %s and we will take\n" .
+                               "care of it for you."), 'webmaster@freshports.org') . "\n" .
                      " \n" .
-                     "Your login id is: " . $myrow["name"] . "\n\n" . 
-                     "Your password recovery URL is:\n" .
+                     sprintf(_("Your login id is: %s"), $myrow["name"]) . "\n\n" .
+                     _("Your password recovery URL is:") . "\n" .
                      "http://" . $_SERVER["HTTP_HOST"] . "/password-reset-via-token.php?token=" . $token . "\n" .
                      "\n" .
-                     "the request came from " . $_SERVER["REMOTE_ADDR"] . ':' . $_SERVER["REMOTE_PORT"];
+                     sprintf(_("the request came from %s"), $_SERVER["REMOTE_ADDR"] . ':' . $_SERVER["REMOTE_PORT"]);
 
           try {
             $mail = new PHPMailer\PHPMailer\PHPMailer;
@@ -123,7 +125,8 @@ if ($submit) {
 
             // Content
             $mail->ContentType = 'text/plain';
-            $mail->Subject     = WEBSITE_NAME . ' - password';
+            $mail->CharSet     = 'UTF-8';  # translations need more than Latin-1
+            $mail->Subject     = WEBSITE_NAME . ' - ' . _('password');
             $mail->Body        = $message;
 
             $mail->setFrom   (PROBLEM_SOLVER_EMAIL_ADDRESS, WEBSITE_NAME);

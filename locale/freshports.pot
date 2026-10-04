@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreshPorts\n"
 "Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
-"POT-Creation-Date: 2026-10-04 09:29-0400\n"
+"POT-Creation-Date: 2026-10-04 12:00-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 #: classes/display_commit.php:126 classes/port-display.php:1152
-#: include/freshports.php:1841
+#: include/freshports.php:1847
 msgid "Author:"
 msgstr ""
 
@@ -366,7 +366,7 @@ msgstr ""
 
 #: classes/port-display.php:1512 classes/port-display.php:1857
 #: classes/port-display.php:2089 classes/port-display.php:2123
-#: include/freshports.php:1545
+#: include/freshports.php:1551
 #, php-format
 msgid "Expand this list (%d items)"
 msgstr ""
@@ -375,7 +375,7 @@ msgstr ""
 #: classes/port-display.php:1859 classes/port-display.php:1867
 #: classes/port-display.php:1975 classes/port-display.php:1990
 #: classes/port-display.php:2096 classes/port-display.php:2126
-#: classes/port-display.php:2136 include/freshports.php:1555
+#: classes/port-display.php:2136 include/freshports.php:1561
 msgid "Collapse this list."
 msgstr ""
 
@@ -605,6 +605,26 @@ msgstr ""
 msgid "there is no flavor information for this port."
 msgstr ""
 
+#: classes/searches.php:37
+msgid "Enter Keywords:"
+msgstr ""
+
+#: classes/searches.php:39 classes/searches.php:51
+msgid "go"
+msgstr ""
+
+#: classes/searches.php:50
+msgid "Search ports"
+msgstr ""
+
+#: classes/searches.php:53 include/freshports.php:2304
+msgid "Advanced Searching options"
+msgstr ""
+
+#: classes/searches.php:53 include/freshports.php:2304
+msgid "more..."
+msgstr ""
+
 #: include/freshports.php:37
 msgid "Click to add this to your default watch list[s]"
 msgstr ""
@@ -648,7 +668,7 @@ msgstr ""
 msgid "Descending Order"
 msgstr ""
 
-#: include/freshports.php:548 include/freshports.php:2273
+#: include/freshports.php:548 include/freshports.php:2282
 msgid "Search"
 msgstr ""
 
@@ -840,7 +860,7 @@ msgstr ""
 msgid "I remember"
 msgstr ""
 
-#: include/freshports.php:1119 include/freshports.php:2265
+#: include/freshports.php:1119 include/freshports.php:2274
 msgid "Blog"
 msgstr ""
 
@@ -852,119 +872,123 @@ msgstr ""
 msgid "Status page"
 msgstr ""
 
-#: include/freshports.php:1128
-msgid "Menu &amp; search"
-msgstr ""
-
-#: include/freshports.php:1129
-msgid "Jump to the menu and search"
-msgstr ""
-
-#: include/freshports.php:1129
+#: include/freshports.php:1134 include/freshports.php:1135
 msgid "Menu"
 msgstr ""
 
-#: include/freshports.php:1482
+#: include/freshports.php:1135
+msgid "Close"
+msgstr ""
+
+#: include/freshports.php:1135
+msgid "Close the menu"
+msgstr ""
+
+#: include/freshports.php:1135
+msgid "Open the menu"
+msgstr ""
+
+#: include/freshports.php:1488
 #, php-format
 msgid "port deleted on %s"
 msgstr ""
 
-#: include/freshports.php:1485
+#: include/freshports.php:1491
 #, php-format
 msgid "resurrected on %s"
 msgstr ""
 
-#: include/freshports.php:1491
+#: include/freshports.php:1497
 #, php-format
 msgid "port moved to %1$s on %2$s"
 msgstr ""
 
-#: include/freshports.php:1493
+#: include/freshports.php:1499
 #, php-format
 msgid "port moved here from %1$s on %2$s"
 msgstr ""
 
-#: include/freshports.php:1499
+#: include/freshports.php:1505
 msgid "REASON:"
 msgstr ""
 
-#: include/freshports.php:1518
+#: include/freshports.php:1524
 msgid "All rights reserved."
 msgstr ""
 
-#: include/freshports.php:1518
+#: include/freshports.php:1524
 msgid "Copyright"
 msgstr ""
 
-#: include/freshports.php:1518
+#: include/freshports.php:1524
 msgid "This material is copyrighted"
 msgstr ""
 
-#: include/freshports.php:1533
+#: include/freshports.php:1539
 msgid "Notes from UPDATING"
 msgstr ""
 
-#: include/freshports.php:1535
+#: include/freshports.php:1541
 #, php-format
 msgid "These upgrade notes are taken from %s"
 msgstr ""
 
-#: include/freshports.php:1578
+#: include/freshports.php:1584
 msgid ""
 "Commit History - (may be incomplete: for full details, see links to "
 "repositories near top of page)"
 msgstr ""
 
-#: include/freshports.php:1583
+#: include/freshports.php:1589
 #, php-format
 msgid ""
 "This is a slave port.  You may also want to view the commits to the master "
 "port: %s"
 msgstr ""
 
-#: include/freshports.php:1587
+#: include/freshports.php:1593
 msgid "Commit"
 msgstr ""
 
-#: include/freshports.php:1587
+#: include/freshports.php:1593
 msgid "Credits"
 msgstr ""
 
-#: include/freshports.php:1587
+#: include/freshports.php:1593
 msgid "Log message"
 msgstr ""
 
-#: include/freshports.php:1632
+#: include/freshports.php:1638
 #, php-format
 msgid ""
 "<b>NOTE</b>: This slave port may no longer be vulnerable to issues shown "
 "below because the <a href=\"%s\">master port</a> has been updated."
 msgstr ""
 
-#: include/freshports.php:1672 include/freshports.php:1673
+#: include/freshports.php:1678 include/freshports.php:1679
 msgid "First Page"
 msgstr ""
 
-#: include/freshports.php:1674 include/freshports.php:1675
+#: include/freshports.php:1680 include/freshports.php:1681
 msgid "Last Page"
 msgstr ""
 
-#: include/freshports.php:1699
+#: include/freshports.php:1705
 #, php-format
 msgid "Number of commits found: %d"
 msgstr ""
 
-#: include/freshports.php:1708
+#: include/freshports.php:1714
 #, php-format
 msgid "(showing only %d on this page)"
 msgstr ""
 
-#: include/freshports.php:1981
+#: include/freshports.php:1987
 msgid "Link to this section"
 msgstr ""
 
 #. TRANSLATORS: keep the line breaks short, this is a plain text email
-#: include/freshports.php:2046
+#: include/freshports.php:2052
 #, php-format
 msgid ""
 "Someone, perhaps you, supplied your email address as their\n"
@@ -973,321 +997,313 @@ msgid ""
 "and we will take care of it for you."
 msgstr ""
 
-#: include/freshports.php:2051
+#: include/freshports.php:2057
 #, php-format
 msgid "Your token is: %s"
 msgstr ""
 
-#: include/freshports.php:2053
+#: include/freshports.php:2059
 msgid "Please point your browser at"
 msgstr ""
 
-#: include/freshports.php:2055
+#: include/freshports.php:2061
 #, php-format
 msgid "The request came from %s"
 msgstr ""
 
-#: include/freshports.php:2072
+#: include/freshports.php:2078
 msgid "FreshPorts - user registration"
 msgstr ""
 
-#: include/freshports.php:2157
+#: include/freshports.php:2163
 #, php-format
 msgid "Valid %1$s, %2$s, and %3$s."
 msgstr ""
 
-#: include/freshports.php:2158
+#: include/freshports.php:2164
 msgid "We like to keep our HTML valid"
 msgstr ""
 
-#: include/freshports.php:2159
+#: include/freshports.php:2165
 msgid "We like to have valid CSS"
 msgstr ""
 
-#: include/freshports.php:2160
+#: include/freshports.php:2166
 msgid "Valid RSS is good too"
 msgstr ""
 
-#: include/freshports.php:2205 include/login.php:15 www/login.php:148
+#: include/freshports.php:2214 include/login.php:15 www/login.php:148
 #: www/login.php:231
 msgid "Login"
 msgstr ""
 
-#: include/freshports.php:2218
+#: include/freshports.php:2227
 #, php-format
 msgid "Logged in as %s"
 msgstr ""
 
-#: include/freshports.php:2222
+#: include/freshports.php:2231
 msgid "your email is <a href=\"/bouncing.php\">bouncing</a>"
 msgstr ""
 
-#: include/freshports.php:2225
+#: include/freshports.php:2234
 msgid "Your Account"
 msgstr ""
 
-#: include/freshports.php:2225
+#: include/freshports.php:2234
 msgid "Your account"
 msgstr ""
 
-#: include/freshports.php:2228
+#: include/freshports.php:2237
 msgid "Committer Opt-in"
 msgstr ""
 
-#: include/freshports.php:2228
+#: include/freshports.php:2237
 msgid "Committers can receive reports of Sanity Test Failures"
 msgstr ""
 
-#: include/freshports.php:2232
+#: include/freshports.php:2241
 msgid "Logout"
 msgstr ""
 
-#: include/freshports.php:2232
+#: include/freshports.php:2241
 msgid "Logout of the website"
 msgstr ""
 
-#: include/freshports.php:2233
+#: include/freshports.php:2242
 msgid "List of commits you have flagged"
 msgstr ""
 
-#: include/freshports.php:2233
+#: include/freshports.php:2242
 msgid "My Flagged Commits"
 msgstr ""
 
-#: include/freshports.php:2235
+#: include/freshports.php:2244
 msgid "Login to the website"
 msgstr ""
 
-#: include/freshports.php:2235
+#: include/freshports.php:2244
 msgid "User Login"
 msgstr ""
 
-#: include/freshports.php:2236
+#: include/freshports.php:2245
 msgid "Create account"
 msgstr ""
 
-#: include/freshports.php:2236
+#: include/freshports.php:2245
 msgid "Create an account"
 msgstr ""
 
-#: include/freshports.php:2254
+#: include/freshports.php:2263
 msgid "This site"
 msgstr ""
 
-#: include/freshports.php:2258
+#: include/freshports.php:2267
 msgid "A bit of background on FreshPorts"
 msgstr ""
 
-#: include/freshports.php:2258
+#: include/freshports.php:2267
 msgid "What is FreshPorts?"
 msgstr ""
 
-#: include/freshports.php:2259
+#: include/freshports.php:2268
 msgid "About the authors"
 msgstr ""
 
-#: include/freshports.php:2259
+#: include/freshports.php:2268
 msgid "Who wrote this stuff?"
 msgstr ""
 
-#: include/freshports.php:2260
+#: include/freshports.php:2269
 msgid "Issues"
 msgstr ""
 
-#: include/freshports.php:2260
+#: include/freshports.php:2269
 msgid "Report a website problem"
 msgstr ""
 
-#: include/freshports.php:2261
+#: include/freshports.php:2270
 msgid "FAQ"
 msgstr ""
 
-#: include/freshports.php:2261
+#: include/freshports.php:2270
 msgid "Frequently Asked Questions"
 msgstr ""
 
-#: include/freshports.php:2262
+#: include/freshports.php:2271
 msgid "How big is it?"
 msgstr ""
 
-#: include/freshports.php:2262
+#: include/freshports.php:2271
 msgid "How many pages are in this website?"
 msgstr ""
 
-#: include/freshports.php:2263
+#: include/freshports.php:2272
 msgid "Are you a security researcher? Please read this."
 msgstr ""
 
-#: include/freshports.php:2263
+#: include/freshports.php:2272
 msgid "Security Policy"
 msgstr ""
 
-#: include/freshports.php:2264
+#: include/freshports.php:2273
 msgid "Our privacy statement"
 msgstr ""
 
-#: include/freshports.php:2264
+#: include/freshports.php:2273
 msgid "Privacy"
 msgstr ""
 
-#: include/freshports.php:2265
+#: include/freshports.php:2274
 msgid "All the latest FreshPorts news"
 msgstr ""
 
-#: include/freshports.php:2266
+#: include/freshports.php:2275
 msgid "Contact"
 msgstr ""
 
-#: include/freshports.php:2266
+#: include/freshports.php:2275
 msgid "Contact details"
 msgstr ""
 
-#: include/freshports.php:2295
-msgid "Advanced Searching options"
-msgstr ""
-
-#: include/freshports.php:2295
-msgid "more..."
-msgstr ""
-
-#: include/freshports.php:2307
+#: include/freshports.php:2316
 msgid "Latest Vulnerabilities"
 msgstr ""
 
-#: include/freshports.php:2313
+#: include/freshports.php:2322
 msgid "All vulnerabilities"
 msgstr ""
 
-#: include/freshports.php:2313
+#: include/freshports.php:2322
 msgid "modified, not new"
 msgstr ""
 
-#: include/freshports.php:2314
+#: include/freshports.php:2323
 msgid "Last processed:"
 msgstr ""
 
-#: include/freshports.php:2326 include/freshports.php:2356
+#: include/freshports.php:2335 include/freshports.php:2365
 msgid "Ports"
 msgstr ""
 
-#: include/freshports.php:2331
+#: include/freshports.php:2340
 msgid "FreshPorts Home page"
 msgstr ""
 
-#: include/freshports.php:2331
+#: include/freshports.php:2340
 msgid "Home"
 msgstr ""
 
-#: include/freshports.php:2332 include/freshports.php:2354
+#: include/freshports.php:2341 include/freshports.php:2363
 msgid "Categories"
 msgstr ""
 
-#: include/freshports.php:2332
+#: include/freshports.php:2341
 msgid "List of all Port categories"
 msgstr ""
 
-#: include/freshports.php:2333
+#: include/freshports.php:2342
 msgid "All deleted ports"
 msgstr ""
 
-#: include/freshports.php:2333
+#: include/freshports.php:2342
 msgid "Deleted ports"
 msgstr ""
 
-#: include/freshports.php:2334
+#: include/freshports.php:2343
 msgid "Sanity Test Failures"
 msgstr ""
 
-#: include/freshports.php:2334
+#: include/freshports.php:2343
 msgid "Things that didn't go quite right..."
 msgstr ""
 
-#: include/freshports.php:2335
+#: include/freshports.php:2344
 msgid "Newsfeeds"
 msgstr ""
 
-#: include/freshports.php:2335
+#: include/freshports.php:2344
 msgid "Newsfeeds for just about everything"
 msgstr ""
 
-#: include/freshports.php:2348
+#: include/freshports.php:2357
 msgid "Watch Lists"
 msgstr ""
 
-#: include/freshports.php:2353
+#: include/freshports.php:2362
 msgid "Upload"
 msgstr ""
 
-#: include/freshports.php:2353
+#: include/freshports.php:2362
 msgid ""
 "Upload a file containing a list of ports you want to add to your watch list"
 msgstr ""
 
-#: include/freshports.php:2354
+#: include/freshports.php:2363
 msgid "Search through categories for ports to add to your watch list"
 msgstr ""
 
-#: include/freshports.php:2355
+#: include/freshports.php:2364
 msgid "Maintain"
 msgstr ""
 
-#: include/freshports.php:2355
+#: include/freshports.php:2364
 msgid "Maintain your watch list[s]"
 msgstr ""
 
-#: include/freshports.php:2356
+#: include/freshports.php:2365
 msgid "Your list of watched ports"
 msgstr ""
 
-#: include/freshports.php:2357
+#: include/freshports.php:2366
 msgid "A list of news feeds for your watched lists"
 msgstr ""
 
-#: include/freshports.php:2357
+#: include/freshports.php:2366
 msgid "Personal Newsfeeds"
 msgstr ""
 
-#: include/freshports.php:2358
+#: include/freshports.php:2367
 msgid "Maintain your list of subscriptions"
 msgstr ""
 
-#: include/freshports.php:2358
+#: include/freshports.php:2367
 msgid "Report Subscriptions"
 msgstr ""
 
-#: include/freshports.php:2359
+#: include/freshports.php:2368
 msgid "ABI Package Subscriptions"
 msgstr ""
 
-#: include/freshports.php:2359
+#: include/freshports.php:2368
 msgid "Maintain your ABI package subscriptions"
 msgstr ""
 
-#: include/freshports.php:2384
+#: include/freshports.php:2393
 msgid "Statistics"
 msgstr ""
 
-#: include/freshports.php:2389 include/freshports.php:2390
+#: include/freshports.php:2398 include/freshports.php:2399
 msgid "Everyone loves statistics!"
 msgstr ""
 
-#: include/freshports.php:2389
+#: include/freshports.php:2398
 msgid "Graphs"
 msgstr ""
 
-#: include/freshports.php:2390
+#: include/freshports.php:2399
 msgid "NEW Graphs (Javascript)"
 msgstr ""
 
-#: include/freshports.php:2482
+#: include/freshports.php:2491
 msgid "People watching this port, also watch:"
 msgstr ""
 
-#: include/i18n.php:224
+#: include/i18n.php:225
 msgid "Language"
 msgstr ""
 
-#: include/i18n.php:231
+#: include/i18n.php:232
 msgid "Change"
 msgstr ""
 

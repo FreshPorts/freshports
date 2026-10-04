@@ -1132,7 +1132,7 @@ $HTML .= $Searches->GetFormHeader();
 
 $HTML .= '
 	<a class="menu-link" href="#sidebar">' . _('Menu') . '</a>
-	<a class="menu-button" href="#sidebar" title="' . _('Open the menu') . '">&#9776; ' . _('Menu') . '</a>
+	<a class="menu-button" href="#sidebar" title="' . _('Open the menu') . '" data-close-label="' . htmlspecialchars(_('Close')) . '" data-close-title="' . htmlspecialchars(_('Close the menu')) . '">&#9776; ' . _('Menu') . '</a>
 </header>
 ';
 

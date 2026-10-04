@@ -36,8 +36,9 @@ function showHide(shID) {
 
    var menuLabel  = button.innerHTML;
    var menuTitle  = button.getAttribute('title');
-   var closeLabel = '&#10005; Close';
-   var closeTitle = 'Close the menu';
+   // the page supplies these in the visitor's language - see freshports_Logo()
+   var closeLabel = '\u2715 ' + (button.getAttribute('data-close-label') || 'Close');
+   var closeTitle = button.getAttribute('data-close-title') || 'Close the menu';
 
    sidebar.id = 'sidebar-drawer';
    button.setAttribute('role', 'button');
@@ -54,7 +55,7 @@ function showHide(shID) {
    function openDrawer() {
       root.classList.add('drawer-open');
       button.setAttribute('aria-expanded', 'true');
-      button.innerHTML = closeLabel;
+      button.textContent = closeLabel;
       button.setAttribute('title', closeTitle);
       button.focus();
    }

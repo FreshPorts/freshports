@@ -2,7 +2,7 @@
 
 # Compile each locale/<locale>/LC_MESSAGES/freshports.po into freshports.mo
 # The website offers a language only once its .mo file exists.
-# Run this when deploying; php-fpm caches .mo files, so reload it afterwards.
+# Run this when deploying; php-fpm caches .mo files, so reload it afterwards (service php_fpm reload).
 # See https://github.com/FreshPorts/freshports/issues/678
 #
 # Requires devel/gettext-tools

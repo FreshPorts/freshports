@@ -8,7 +8,8 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/i18n.php');
 
-	$locale = $_REQUEST['lang'] ?? '';
+	# not $_REQUEST: depending on request_order, the existing lang cookie would override the choice
+	$locale = $_POST['lang'] ?? $_GET['lang'] ?? '';
 
 	if (is_string($locale) && array_key_exists($locale, freshports_i18n_available_locales())) {
 		setcookie(LANGUAGE_COOKIE_NAME, $locale, array(

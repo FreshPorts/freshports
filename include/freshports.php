@@ -36,7 +36,7 @@ DEFINE('CLICKTOADD', 'Click to add this to your default watch list[s]');  # tran
 # so xgettext finds the string above
 if (false) _('Click to add this to your default watch list[s]');
 
-DEFINE('SPONSORS', 'Servers and bandwidth provided by <br><a href="https://www.nyi.net/" rel="noopener noreferrer" TARGET="_blank">New York Internet</a>, <a href="https://www.ixsystems.com/"  rel="noopener noreferrer" TARGET="_blank">iXsystems</a>, and <a href="https://www.rootbsd.net/" rel="noopener noreferrer" TARGET="_blank">RootBSD</a>');
+DEFINE('SPONSORS', 'Servers and bandwidth provided by <br><a href="https://www.nyi.net/" rel="noopener noreferrer" TARGET="_blank">New York Internet</a>, <a href="https://www.truenas.com/"  rel="noopener noreferrer" TARGET="_blank">iXsystems</a>, and <a href="https://netactuate.com/rootbsd" rel="noopener noreferrer" TARGET="_blank">RootBSD</a>');
 
 DEFINE('FRESHPORTS_ENCODING', 'UTF-8');
 DEFINE('FRESHPORTS_TIMEZONE', 'UTC');
@@ -1122,11 +1122,17 @@ if (date("M") == 'Nov' && date("j") <= 12) {
 	
 }
 
-# only shown on narrow screens, where the sidebar is pushed below the page content.
-# menu-button stays pinned to a corner of the screen, so it can be used from anywhere on the page.
+# only shown on narrow screens, where the sidebar is tucked away: the header
+# gets its own search box, and menu-button stays pinned to the top-right corner
+# so it can be used from anywhere on the page.  With JavaScript, menu-button
+# opens and closes the sidebar as a drawer; without it, both links jump to it.
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/searches.php');
+$Searches = new Searches(null);
+$HTML .= $Searches->GetFormHeader();
+
 $HTML .= '
-	<a class="menu-link" href="#sidebar">' . _('Menu &amp; search') . '</a>
-	<a class="menu-button" href="#sidebar" title="' . _('Jump to the menu and search') . '">&#9776; ' . _('Menu') . '</a>
+	<a class="menu-link" href="#sidebar">' . _('Menu') . '</a>
+	<a class="menu-button" href="#sidebar" title="' . _('Open the menu') . '">&#9776; ' . _('Menu') . '</a>
 </header>
 ';
 
@@ -2175,7 +2181,10 @@ alt="powered by nginx" width="121" height="32"></a>
 		$HTML .= freshports_GoogleAnalytics();
 	}
 	
-	$HTML .= '<script src="/javascript/freshports.js" defer></script>';
+	# the version changes whenever the file does, so browsers do not keep running
+	# a cached copy that no longer matches freshports.css - see issue #636
+	$version = substr(hash_file('sha1', $_SERVER['DOCUMENT_ROOT'] . '/javascript/freshports.js'), 0, 8);
+	$HTML .= '<script src="/javascript/freshports.js?v=' . $version . '" defer></script>';
 
 	if ($Statistics) $Statistics->Save();
 
@@ -2268,7 +2277,7 @@ function freshports_SideBar() {
 	</tr>
 </table>
 <br>
-<table class="bordered">
+<table class="bordered sidebar-search">
 	<tr>
 		<th class="accent">' . _('Search') . '</th>
 	</tr>

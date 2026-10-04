@@ -156,7 +156,7 @@ if (!empty($visitor)) {
 <?php
 			if (IsSet($numrows) && $numrows) {
 ?>
-				<INPUT TYPE="submit" VALUE="update"      NAME="Update my address"> 
+				<INPUT TYPE="submit" VALUE="update"      NAME="update"> 
 				<INPUT TYPE="submit" VALUE="unsubscribe" NAME="unsubscribe">
 <?php
 			} else {

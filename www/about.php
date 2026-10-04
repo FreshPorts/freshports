@@ -12,7 +12,7 @@
 
 	freshports_ConditionalGet(freshports_LastModified());
 
-	$Title = 'About this site';
+	$Title = _('About this site');
 	freshports_Start($Title,
 					$Title,
 					"FreeBSD, index, applications, ports");
@@ -25,12 +25,12 @@
 	<?php echo freshports_MainContentTable(NOBORDER); ?>
 
 <tr>
-	<?php echo freshports_PageBannerText("About this site"); ?>
+	<?php echo freshports_PageBannerText(_('About this site')); ?>
 </tr>
 
 <tr><td class="textcontent">
 <P>
-We have a few notes about this website.
+<?php echo _('We have a few notes about this website.'); ?>
 </P>
 
 <?php
@@ -40,57 +40,44 @@ We have a few notes about this website.
 </td></tr>
 <tr>
 	<?php
-	echo freshports_PageBannerText("What is a port?"); 
+	echo freshports_PageBannerText(_('What is a port?'));
 	?>
 </tr>
 
 <tr><td class="textcontent">
 
-<P>A port is the term used to describe a collection of files which makes it extremely
-easy to install an application.  As it says in the <a href="https://www.freebsd.org/ports/">
-FreeBSD Ports description</a>: <em>Installing an application is as simple as downloading
-the port, unpacking it and typing <b>make</b> in the port directory</em>. If you want an application, 
-the port is the Way To Go(TM)</P>
+<P><?php
+// TRANSLATORS: %1$s is a link whose text is 'FreeBSD Ports description'; %2$s is the command name 'make'. The <em> part quotes the FreeBSD website.
+echo sprintf(_('A port is the term used to describe a collection of files which makes it extremely easy to install an application.  As it says in the %1$s: <em>Installing an application is as simple as downloading the port, unpacking it and typing %2$s in the port directory</em>. If you want an application, the port is the Way To Go(TM)'), '<a href="https://www.freebsd.org/ports/">' . _('FreeBSD Ports description') . '</a>', '<b>make</b>'); ?></P>
 
-<P>So off you go to the ports tree to install your favourite port.  It's quite easy. It's simple.
-And you love that new application.  And you want to know when the port is updated.  That's where
-we come in.</P>
+<P><?php echo _("So off you go to the ports tree to install your favourite port.  It's quite easy. It's simple. And you love that new application.  And you want to know when the port is updated.  That's where we come in."); ?></P>
 
-<P>For more information about the Ports tree, see <a href="https://www.freebsd.org/ports/">https://www.freebsd.org/ports/</a>.</P>
+<P><?php echo sprintf(_('For more information about the Ports tree, see %s.'), '<a href="https://www.freebsd.org/ports/">https://www.freebsd.org/ports/</a>'); ?></P>
 
 </td></tr>
 <tr>
 	<?php
-	echo freshports_PageBannerText("What is $FreshPortsTitle");
+	echo freshports_PageBannerText(sprintf(_('What is %s'), $FreshPortsTitle));
 	?>
 </tr>
 
 <tr><td class="textcontent">
 
-<P><?php echo $FreshPortsTitle; ?> lists the changes made to the ports tree. If you wish, <?php echo $FreshPortsTitle; ?> can email you 
-when your favourite port has been updated.
-</P>
+<P><?php echo sprintf(_('%1$s lists the changes made to the ports tree. If you wish, %1$s can email you when your favourite port has been updated.'), $FreshPortsTitle); ?></P>
 
 <P>
-<?php echo $FreshPortsTitle; ?> is not the place to report errors or request changes.  You should do that on the 
-<a href="<?php echo MAILTO; ?>:freebsd-ports&#64;freebsd.org">FreeBSD Ports mailing list</a>.  We do not maintain ports.  We do not
-create ports.  We do not fix ports.  We just tell you what others have been doing to the Ports tree.
+<?php echo sprintf(_('%1$s is not the place to report errors or request changes.  You should do that on the %2$s.  We do not maintain ports.  We do not create ports.  We do not fix ports.  We just tell you what others have been doing to the Ports tree.'), $FreshPortsTitle, '<a href="' . MAILTO . ':freebsd-ports&#64;freebsd.org">' . _('FreeBSD Ports mailing list') . '</a>'); ?>
 </P>
 
 </td></tr>
 <tr>
 	<?php
-	echo freshports_PageBannerText("OK, whose bright idea was this?");
+	echo freshports_PageBannerText(_('OK, whose bright idea was this?'));
 	?>
 </tr>
 
 <tr><td class="textcontent">
-<P>This site was created by Dan Langille.  His other web feats include 
-<a href="https://www.freebsddiary.org/">The FreeBSD Diary</a>, <a href="https://www.racingsystem.com">The Racing System</a>, 
-<a href="https://www.bsdcan.org/">BSDCan</a>, and an ability
-to avoid reading the inane comments on <a href="https://slashdot.org">slashdot</a>.
-But Dan didn't create the site all by himself.  Have a look at <a href="authors.php">
-About the Authors</a> for details of who else helped.</P>
+<P><?php echo _('This site was created by Dan Langille.  His other web feats include <a href="https://www.freebsddiary.org/">The FreeBSD Diary</a>, <a href="https://www.racingsystem.com">The Racing System</a>, <a href="https://www.bsdcan.org/">BSDCan</a>, and an ability to avoid reading the inane comments on <a href="https://slashdot.org">slashdot</a>. But Dan didn\'t create the site all by himself.  Have a look at <a href="authors.php">About the Authors</a> for details of who else helped.'); ?></P>
 </td></tr>
 
 </table>

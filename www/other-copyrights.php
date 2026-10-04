@@ -13,7 +13,7 @@
 
 	freshports_ConditionalGet(freshports_LastModified());
 
-	freshports_Start(	'Other copyrights',
+	freshports_Start(	_('Other copyrights'),
 					'',
 					'FreeBSD, daemon copyright');
 
@@ -24,7 +24,7 @@
   <tr>
 	<td class="content">
 	<P>
-	The copyright on the daemon you see in the website logo is as follows:
+	<?php echo _('The copyright on the daemon you see in the website logo is as follows:'); ?>
 	</P>
 
 <blockquote>

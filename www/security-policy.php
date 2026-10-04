@@ -12,7 +12,7 @@
 
 	freshports_ConditionalGet(freshports_LastModified());
 
-	$Title = 'Security Policy';
+	$Title = _('Security Policy');
 	freshports_Start($Title, $Title, 'FreeBSD, security, policy');
 
 ?>
@@ -29,14 +29,10 @@
 <tr><td>
 
 <P>
-I appreciate the contributions of the security researchers who have helped out on this
-website. Please be aware that this is not a for-profit website. It is a hobby. It is something I
-do in my spare time. It is run as a service to the open source community.
+<?php echo _('I appreciate the contributions of the security researchers who have helped out on this website. Please be aware that this is not a for-profit website. It is a hobby. It is something I do in my spare time. It is run as a service to the open source community.'); ?>
 
 <p>
-With that in mind, do not expect to make a living getting bounties on this website. With your consent,
-I will list your contributions here. Your contribution can be anonymous if you wish. I am happy to
-acknowledge the work you do and the findings you present.
+<?php echo _('With that in mind, do not expect to make a living getting bounties on this website. With your consent, I will list your contributions here. Your contribution can be anonymous if you wish. I am happy to acknowledge the work you do and the findings you present.'); ?>
 
 </td></tr>
 </table>

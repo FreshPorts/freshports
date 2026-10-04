@@ -12,7 +12,7 @@
 
 	freshports_ConditionalGet(freshports_LastModified());
 
-	$Title = 'Contact';
+	$Title = _('Contact');
 	freshports_Start($Title,
 					$Title,
 					'FreeBSD, index, applications, ports');
@@ -26,26 +26,21 @@
 
 
 <tr>
-	<?php echo freshports_PageBannerText('Contact'); ?>
+	<?php echo freshports_PageBannerText(_('Contact')); ?>
 </tr>
 <tr><td>
 
 <P>
-This is a pretty big website.  Roughly 600,000 pages as of Oct 2007.
-And 1.8 million as of June 2020.
+<?php echo _('This is a pretty big website.  Roughly 600,000 pages as of Oct 2007. And 1.8 million as of June 2020.'); ?>
 
 <p>
-If you need help with a particular port, please go through the
-FreeBSD mailing lists.
+<?php echo _('If you need help with a particular port, please go through the FreeBSD mailing lists.'); ?>
 
 <p>
-If you see a problem with the website (incorrect information, 
-errors, etc), please let us know.  The best place for that is via a 
-<a href="https://github.com/FreshPorts/freshports/issues" rel="noopener noreferrer">GitHub Issue</a>.
+<?php echo _('If you see a problem with the website (incorrect information, errors, etc), please let us know.  The best place for that is via a <a href="https://github.com/FreshPorts/freshports/issues" rel="noopener noreferrer">GitHub Issue</a>.'); ?>
 
 <p>
-If your needs do not fall into the above categories, you can try
-email: dan (at) langille.org.
+<?php echo sprintf(_('If your needs do not fall into the above categories, you can try email: %s.'), 'dan (at) langille.org'); ?>
 </td></tr>
 </table>
 </td>

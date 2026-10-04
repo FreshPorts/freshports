@@ -12,7 +12,7 @@
 
 	freshports_ConditionalGet(freshports_LastModified());
 
-	$Title = 'In The News';
+	$Title = _('In The News');
 	freshports_Start($Title,
 					$Title,
 					'FreeBSD, index, applications, ports');
@@ -22,13 +22,12 @@
 <tr><td class="content">
 <table class="fullwidth borderless">
   <tr>
-	<?php echo freshports_PageBannerText("In the news"); ?>
+	<?php echo freshports_PageBannerText(_('In the news')); ?>
   </tr>
 
 <tr>
 <td>
-<p>This page is just a place for me to record the <?php echo $FreshPortsTitle; ?> articles which appear
-on other sites.  Links are recorded in reverse chronological order (i.e. newest first).
+<p><?php echo sprintf(_('This page is just a place for me to record the %s articles which appear on other sites.  Links are recorded in reverse chronological order (i.e. newest first).'), $FreshPortsTitle); ?>
 </p>
 <p>
 BSD Today - <a href="http://www.bsdtoday.com/2000/May/News146.html">Keeping track of your favorite ports</a>
@@ -38,7 +37,7 @@ BSD Today - <a href="http://www.bsdtoday.com/2000/May/News146.html">Keeping trac
 slashdot - <a href="https://slashdot.org/article.pl?sid=00/05/10/1014226">BSD: FreshPorts</a>
 </p>
 
-Daily Daemon News - <a href="https://daily.daemonnews.org/view_story.php3?story_id=889"><?php echo $FreshPortsTitle; ?> site announncement</a>
+Daily Daemon News - <a href="https://daily.daemonnews.org/view_story.php3?story_id=889"><?php echo sprintf(_('%s site announcement'), $FreshPortsTitle); ?></a>
 </td>
 </tr>
 </table>

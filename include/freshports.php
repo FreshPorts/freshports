@@ -32,7 +32,9 @@ DEFINE('BORDER',                'bordered');
 
 DEFINE('UNMAINTAINTED_ADDRESS', 'ports@freebsd.org');
 
-DEFINE('CLICKTOADD', 'Click to add this to your default watch list[s]');
+DEFINE('CLICKTOADD', 'Click to add this to your default watch list[s]');  # translated where used, with _(CLICKTOADD)
+# so xgettext finds the string above
+if (false) _('Click to add this to your default watch list[s]');
 
 DEFINE('SPONSORS', 'Servers and bandwidth provided by <br><a href="https://www.nyi.net/" rel="noopener noreferrer" TARGET="_blank">New York Internet</a>, <a href="https://www.ixsystems.com/"  rel="noopener noreferrer" TARGET="_blank">iXsystems</a>, and <a href="https://www.rootbsd.net/" rel="noopener noreferrer" TARGET="_blank">RootBSD</a>');
 
@@ -53,7 +55,7 @@ function freshports_MainTable() {
 
 function freshports_Search_Depends_All($CategoryPort) {
 	return '<a href="/search.php?stype=depends_all&amp;method=match&amp;query=' . htmlentities($CategoryPort) . '">' .
-	      freshports_Search_Icon('search for ports that depend on this port') . '</a>';
+	      freshports_Search_Icon(_('search for ports that depend on this port')) . '</a>';
 }
 
 function freshports_Search_For_Bugs($CategoryPort) {
@@ -304,7 +306,7 @@ function freshports_svnweb_ChangeSet_Link_Text($revision, $hostname) {
 
 function freshports_Search_Maintainer($Maintainer) {
 	return '<a href="/search.php?stype=maintainer&amp;method=exact&amp;query=' . urlencode($Maintainer) . '">' .
-	      freshports_Search_Icon('search for ports maintained by this maintainer') . '</a>';
+	      freshports_Search_Icon(_('search for ports maintained by this maintainer')) . '</a>';
 }
 
 function freshports_Search_Committer($Committer) {
@@ -522,7 +524,8 @@ function freshports_GitLab_Icon($Title = 'git', $size = DEFAULT_ICON_SIZE) {
 	return '<img class="icon" src="/images/gitlab.svg" alt="' . $Title . '" title="' . $Title . '" width="' . $size . '" height="' . $size . '">';
 }
 
-function freshports_Homepage_Icon($Title = 'Homepage', $size = DEFAULT_ICON_SIZE + 2) {
+function freshports_Homepage_Icon($Title = null, $size = DEFAULT_ICON_SIZE + 2) {
+	$Title = $Title ?? _('Homepage');
 	return '<img class="icon" src="/images/home.svg" alt="' . $Title . '" title="' . $Title . '" width="24" height="24">';
 }
 
@@ -531,29 +534,34 @@ function freshports_SanityTestFailure_Icon($Title = null) {
 	return '<img class="icon" src="/images/stf.gif" alt="' . $Title . '" title="' . $Title . '" width="13" height="13">';
 }
 
-function freshports_Ascending_Icon($Title = 'Ascending Order') {
+function freshports_Ascending_Icon($Title = null) {
+	$Title = $Title ?? _('Ascending Order');
 	return '<img class="icon" src="/images/ascending.gif" alt="' . $Title . '" title="' . $Title . '" width="9" height="9">';
 }
 
-function freshports_Descending_Icon($Title = 'Descending Order') {
+function freshports_Descending_Icon($Title = null) {
+	$Title = $Title ?? _('Descending Order');
 	return '<img class="icon" src="/images/descending.gif" alt="' . $Title . '" title="' . $Title . '" width="9" height="9">';
 }
 
-function freshports_Search_Icon($Title = 'Search') {
+function freshports_Search_Icon($Title = null) {
+	$Title = $Title ?? _('Search');
 	return '<img class="icon" src="/images/search.jpg" alt="' . $Title . '" title="' . $Title . '" width="17" height="17">';
 }
 
-function freshports_Bugs_Find_Icon($Title = 'Find issues related to this port') {
+function freshports_Bugs_Find_Icon($Title = null) {
+	$Title = $Title ?? _('Find issues related to this port');
 	return '<img class="icon" src="/images/bug.gif" alt="' . $Title . '" title="' . $Title . '" width="16" height="16">';
 }
 
-function freshports_Bugs_Report_Icon($Title = 'Report an issue related to this port') {
+function freshports_Bugs_Report_Icon($Title = null) {
+	$Title = $Title ?? _('Report an issue related to this port');
 	return '<img class="icon" src="/images/bug_report.gif" alt="' . $Title . '" title="' . $Title . '" width="16" height="16">';
 }
 
 function freshports_WatchListCount_Icon() {
 	# a text character, not the old sum.gif, so it follows the text colour in light and dark mode - see issue #598
-	return '<span class="watchlist-count" title="on this many watch lists" aria-label="on this many watch lists">&Sigma;</span>';
+	return '<span class="watchlist-count" title="' . _('on this many watch lists') . '" aria-label="' . _('on this many watch lists') . '">&Sigma;</span>';
 }
 
 function freshports_WatchListCount_Icon_Link() {
@@ -708,11 +716,11 @@ function freshports_CVS_Icon() {
 }
 
 function freshports_Watch_Icon() {
-	return '<img class="icon" src="/images/watch-remove.gif" alt="Click to remove this from your default watch list[s]" title="Click to remove this from your default watch list[s]" width="16" height="16">';
+	return '<img class="icon" src="/images/watch-remove.gif" alt="' . _('Click to remove this from your default watch list[s]') . '" title="' . _('Click to remove this from your default watch list[s]') . '" width="16" height="16">';
 }
 
 function freshports_Watch_Icon_Add() {
-	return '<img class="icon" src="/images/watch-add.gif" alt="' . CLICKTOADD . '" title="' . CLICKTOADD . '" width="16" height="16">';
+	return '<img class="icon" src="/images/watch-add.gif" alt="' . _(CLICKTOADD) . '" title="' . _(CLICKTOADD) . '" width="16" height="16">';
 }
 
 function freshports_Watch_Icon_Empty() {
@@ -728,7 +736,7 @@ function freshports_Encoding_Errors_Link() {
 }
 
 function freshports_Repology_Icon() {
-	return '<img class="icon" src="/images/repology.png" alt="View this port on Repology." title="View this port on Repology." width="16" height="16">';
+	return '<img class="icon" src="/images/repology.png" alt="' . _('View this port on Repology.') . '" title="' . _('View this port on Repology.') . '" width="16" height="16">';
 }
 
 function freshports_VuXML_Icon() {
@@ -736,7 +744,7 @@ function freshports_VuXML_Icon() {
 }
 
 function freshports_VuXML_Icon_Faded() {
-	return '<img class="icon" src="/images/vuxml-faded.gif" alt="An older version of this port was marked as vulnerable." title="An older version of this port was marked as vulnerable." width="13" height="16">';
+	return '<img class="icon" src="/images/vuxml-faded.gif" alt="' . _('An older version of this port was marked as vulnerable.') . '" title="' . _('An older version of this port was marked as vulnerable.') . '" width="13" height="16">';
 }
 
 function freshports_Revision_Icon() {
@@ -785,7 +793,7 @@ function freshports_Watch_Link_Add($WatchListAsk, $WatchListCount, $ElementID, $
 	}
 
 	$HTML .= '"';
-	$HTML .= ' title="' . CLICKTOADD . '"';
+	$HTML .= ' title="' . _(CLICKTOADD) . '"';
 
 	$HTML .= '>' . freshports_Watch_Icon_Add() . '</a></small>';
 
@@ -805,10 +813,7 @@ function freshports_Watch_Link_Remove($WatchListAsk, $WatchListCount, $ElementID
 	}
 
 	$HTML .= '"';
-	$HTML .= ' title="on ' . $WatchListCount . ' watch list';
-	if ($WatchListCount > 1) {
-		$HTML .= 's';
-	}
+	$HTML .= ' title="' . sprintf(ngettext('on %d watch list', 'on %d watch lists', $WatchListCount), $WatchListCount);
 	$HTML .= '">' . freshports_Watch_Icon() . '</a></small>';
 	
 	return $HTML;
@@ -952,7 +957,7 @@ function freshports_CommitterEmailLink_Old($committer) {
 
 	$new_addr = freshportsObscureHTML($addr);
 
-	$HTML = '<a href="' . MAILTO . ':' . $new_addr . '" title="committed by this person">' . $committer . '</a>';
+	$HTML = '<a href="' . MAILTO . ':' . $new_addr . '" title="' . _('committed by this person') . '">' . $committer . '</a>';
 
 	return $HTML;
 }
@@ -991,7 +996,7 @@ function freshports_AuthorEmailLink($author_name, $author_email) {
 
 	$new_addr = freshportsObscureHTML($addr);
 
-	$HTML = '<a href="' . MAILTO . ':' . $new_addr . '" title="authored by this person">' . $author_name . '</a>';
+	$HTML = '<a href="' . MAILTO . ':' . $new_addr . '" title="' . _('authored by this person') . '">' . $author_name . '</a>';
 
 	return $HTML;
 }
@@ -1008,7 +1013,7 @@ function freshports_CommitterEmailLink($committer_name, $committer_email) {
 
 	$new_addr = freshportsObscureHTML($addr);
 
-	$HTML = '<a href="' . MAILTO . ':' . $new_addr . '" title="committed by this person">' . $committer_name . '</a>';
+	$HTML = '<a href="' . MAILTO . ':' . $new_addr . '" title="' . _('committed by this person') . '">' . $committer_name . '</a>';
 
 	return $HTML;
 }
@@ -1474,30 +1479,31 @@ function freshports_PortsMoved($port, $PortsMoved) {
 	$HTML = '';
 
 	if ($PortsMoved->port == '') {
-		$HTML .= "port deleted ";
+		$HTML .= sprintf(_('port deleted on %s'), $PortsMoved->date);
 	} else {
 		if ($PortsMoved->from_port_id == $PortsMoved->to_port_id) {
-			$HTML .= ' resurrected ';
+			$HTML .= sprintf(_('resurrected on %s'), $PortsMoved->date);
 		} else {
+			$OtherPort  = '<a href="/' . $PortsMoved->category .                                 '/">' . $PortsMoved->category . '</a>';
+			$OtherPort .= '/';
+			$OtherPort .= '<a href="/' . $PortsMoved->category . '/'   . $PortsMoved->port     . '/">' . $PortsMoved->port     . '</a>';
 			if ($PortsMoved->from_port_id == $port->id) {
-				$HTML .= "port moved to ";
+				$HTML .= sprintf(_('port moved to %1$s on %2$s'), $OtherPort, $PortsMoved->date);
 			} else {
-				$HTML .= "port moved here from ";
+				$HTML .= sprintf(_('port moved here from %1$s on %2$s'), $OtherPort, $PortsMoved->date);
 			}
-			$HTML .= '<a href="/' . $PortsMoved->category .                                 '/">' . $PortsMoved->category . '</a>';
-			$HTML .= '/';
-			$HTML .= '<a href="/' . $PortsMoved->category . '/'   . $PortsMoved->port     . '/">' . $PortsMoved->port     . '</a> ';
 		}
 	}
 
-	$HTML .= 'on ' . $PortsMoved->date . '<br>';
-	$HTML .= 'REASON: ' . $PortsMoved->reason . '<br>';
+	$HTML .= '<br>';
+	$HTML .= _('REASON:') . ' ' . $PortsMoved->reason . '<br>';
 
 	return $HTML;
 }
 
 function freshports_PortsUpdating($port, $PortsUpdating) {
 	$HTML  =                    _forDisplay($PortsUpdating->date);
+	# these match the field names in /usr/ports/UPDATING, so they are not translated
 	$HTML .= '<pre>Affects: ' . _forDisplay($PortsUpdating->affects) . '</pre>';
 	$HTML .= '<pre>Author: '  . _forDisplay($PortsUpdating->author)  . '</pre>';
 	$HTML .= '<pre>Reason: '  . _forDisplay($PortsUpdating->reason)  . '</pre>';
@@ -1524,9 +1530,9 @@ function freshports_UpdatingOutput($NumRowsUpdating, $PortsUpdating, $port) {
 	if ($NumRowsUpdating > 0) {
 		$HTML .= '<table class="ports-updating fullwidth bordered">' . "\n";
 		$HTML .= "<tr>\n";
-		$HTML .= freshports_PageBannerTextWithID('Notes from UPDATING', 'updating');
+		$HTML .= freshports_PageBannerTextWithID(_('Notes from UPDATING'), 'updating');
 		$HTML .= "<tr><td><dl>\n";
-		$HTML .= "<dt>These upgrade notes are taken from <a href=\"/UPDATING\">/usr/ports/UPDATING</a></dt>";
+		$HTML .= '<dt>' . sprintf(_('These upgrade notes are taken from %s'), '<a href="/UPDATING">/usr/ports/UPDATING</a>') . '</dt>';
 		$HTML .= "<dd><ul>\n";
 
 		$Hiding = false;
@@ -1536,7 +1542,7 @@ function freshports_UpdatingOutput($NumRowsUpdating, $PortsUpdating, $port) {
 				$Hiding = true;
 				# end the old list, start a new list
 				$HTML .= "</ul></dd>\n";
-				$HTML .= '<dt><a href="#" id="UPDATING-Extra-show" class="showLink" onclick="showHide(\'UPDATING-Extra\');return false;">Expand this list (' . ($NumRowsUpdating - 1) . ' items)</a></dt>';
+				$HTML .= '<dt><a href="#" id="UPDATING-Extra-show" class="showLink" onclick="showHide(\'UPDATING-Extra\');return false;">' . sprintf(_('Expand this list (%d items)'), $NumRowsUpdating - 1) . '</a></dt>';
 				$HTML .= '<dd id="UPDATING-Extra" class="more UPDATING">';
 
 				# start the new list of all hidden items
@@ -1546,7 +1552,7 @@ function freshports_UpdatingOutput($NumRowsUpdating, $PortsUpdating, $port) {
 			$HTML .= '<li>' . freshports_PortsUpdating($port, $PortsUpdating) . "</li>\n";
 		}
 		if ($Hiding) {
-			$HTML .= '<li class="nostyle"><a href="#" id="UPDATING-Extra-hide2" class="hideLink" onclick="showHide(\'UPDATING-Extra\');return false;">Collapse this list.</a></li>';
+			$HTML .= '<li class="nostyle"><a href="#" id="UPDATING-Extra-hide2" class="hideLink" onclick="showHide(\'UPDATING-Extra\');return false;">' . _('Collapse this list.') . '</a></li>';
 		}
 
 		$HTML .= "</ul></dd>";
@@ -1569,17 +1575,16 @@ function freshports_PortCommitsHeader($port) {
 
 	$Columns = 3;
 
-	$HTML .= freshports_PageBannerTextColSpan("Commit History - (may be incomplete: for full details, see links to repositories near top of page)", $Columns);
+	$HTML .= freshports_PageBannerTextColSpan(_("Commit History - (may be incomplete: for full details, see links to repositories near top of page)"), $Columns);
 
 	if ($port->IsSlavePort()) {
 		$HTML .= '<tr><td colspan="' . $Columns . '">'; 
-		$HTML .= 'This is a slave port.  You may also want to view the commits to the master port: ';
 		list($MyCategory, $MyPort) = explode('/', $port->master_port);
-		$HTML .= freshports_link_to_port_single($MyCategory, $MyPort);
+		$HTML .= sprintf(_('This is a slave port.  You may also want to view the commits to the master port: %s'), freshports_link_to_port_single($MyCategory, $MyPort));
 		$HTML .= '</td></tr>';
 	}
 
-	$HTML .= '<tr><th>Commit</th><th>Credits</th><th>Log message</th>';
+	$HTML .= '<tr><th>' . _('Commit') . '</th><th>' . _('Credits') . '</th><th>' . _('Log message') . '</th>';
 
 	$HTML .= "</tr>\n";
 
@@ -1624,8 +1629,7 @@ function freshports_CheckForOutdatedVulnClaim($commit, $port, $VuXMLList) {
 			$PortVersion   = freshports_PackageVersion($port->{'version'},         $port->{'revision'},         $port->{'epoch'});
 
 			if ($CommitVersion != $PortVersion) {
-				$HTML .= "<p><b>NOTE</b>: This slave port may no longer be vulnerable to issues shown below because the ";
-				$HTML .= '<a href="/' . $port->master_port . '/">master port</a>' . " has been updated.</p>\n";
+				$HTML .= '<p>' . sprintf(_('<b>NOTE</b>: This slave port may no longer be vulnerable to issues shown below because the <a href="%s">master port</a> has been updated.'), '/' . $port->master_port . '/') . "</p>\n";
 			}
 		}
 	}
@@ -1665,10 +1669,10 @@ function freshports_PortCommits($port, $PageNumber = 1, $NumCommitsPerPage = 100
 			'append'                => false,
 			'path'			=> '/' . $port->category . '/' . $port->port,
 			'fileName'              => '?page=%d#history', 	# there are two places #history is set.  This is #1
-			'altFirst'              => 'First Page',
-			'firstPageText'         => 'First Page',
-			'altLast'               => 'Last Page',
-			'lastPageText'          => 'Last Page',
+			'altFirst'              => _('First Page'),
+			'firstPageText'         => _('First Page'),
+			'altLast'               => _('Last Page'),
+			'lastPageText'          => _('Last Page'),
 		);
 
 	# use @ to suppress: Non-static method Pager::factory() should not be called statically
@@ -1692,7 +1696,7 @@ function freshports_PortCommits($port, $PageNumber = 1, $NumCommitsPerPage = 100
 	$links = $Pager->GetLinks();
 
 	# the <p> tags are added where this is used
-	$NumCommitsHTML = 'Number of commits found: ' . $NumCommits;
+	$NumCommitsHTML = sprintf(_('Number of commits found: %d'), $NumCommits);
 
 	$Offset = 0;
 	$PageLinks = $links['all'];
@@ -1701,7 +1705,7 @@ function freshports_PortCommits($port, $PageNumber = 1, $NumCommitsPerPage = 100
 		$offset = $Pager->getOffsetByPageId();
 		$NumOnThisPage = $offset[1] - $offset[0] + 1;
 		$Offset = $offset[0] - 1;
-		$NumCommitsHTML .= " (showing only $NumOnThisPage on this page)";
+		$NumCommitsHTML .= ' ' . sprintf(_('(showing only %d on this page)'), $NumOnThisPage);
 		unset($offset);
 	}
 
@@ -1834,7 +1838,7 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 	$HTML .= '&nbsp;' . freshports_Search_Committer($commit->committer);
 
 	if ($CommitterIsNotAuthor) {
-		$HTML .= '<br>Author:&nbsp;' . freshports_AuthorEmailLink($commit->author_name, $commit->author_email);
+		$HTML .= '<br>' . _('Author:') . '&nbsp;' . freshports_AuthorEmailLink($commit->author_name, $commit->author_email);
 	}
 
 	$HTML .= "</td>\n";
@@ -1974,7 +1978,7 @@ function freshports_wrap($text, $length = WRAPCOMMITSATCOLUMN) {
 
 function freshports_AnchorLink($ID) {
 	# a visible link to an anchor on this page, so people can easily link to that section - see issue #675
-	return ' <a class="anchor-link" href="#' . htmlentities($ID) . '" title="Link to this section" aria-label="Link to this section">#</a>';
+	return ' <a class="anchor-link" href="#' . htmlentities($ID) . '" title="' . _('Link to this section') . '" aria-label="' . _('Link to this section') . '">#</a>';
 }
 
 function freshports_PageBannerText($Text) {
@@ -2475,7 +2479,7 @@ function PeopleWatchingThisPortAlsoWatch($dbh, $element_id) {
 	$AlsoWatched = new WatchListAlsoWatched($dbh);
 	$numrows = $AlsoWatched->WatchersAlsoWatch($element_id);
 	if ($numrows) {
-		$HTML .= '<dt><b>People watching this port, also watch:</b>: ';
+		$HTML .= '<dt><b>' . _('People watching this port, also watch:') . '</b> ';
 		for ($i = 0; $i < $numrows; $i++) {
 			$AlsoWatched->FetchNth($i);
 			$HTML .= $AlsoWatched->URL;

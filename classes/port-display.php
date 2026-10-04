@@ -61,8 +61,6 @@ class port_display {
 	var $ShowWatchListStatus;
 	var $UseFullPathNames;
 
-	const MSG_PROCESSED_DATE = 'last time FreshPorts imported a new release of this repo';
-	const MSG_LAST_CHECKED   = 'last checked by FreshPorts';
 	# taken from https://www.php.net/manual/en/function.strpos.php
 	function strpos_nth(string $string, string $needle, int $occurrence, int $offset = 0) {
 	        if ((0 < $occurrence) && ($length = strlen($needle))) {
@@ -145,7 +143,7 @@ class port_display {
 					# I think the orginal intention of doing $Actions .= was catering
 					# for the same message for multiple actions (e.g. for install, upgrade)
 					#
-					$Actions = 'For ' . join(' or ', $types);
+					$Actions = sprintf(_('For %s'), join(' ' . _('or') . ' ', $types));
 
 					if (is_array($part->type)) {
 						$HTML .= "<dt>$Actions:</dt>" . '<dd class="pkg-message">' . htmlspecialchars($part->message) . '</dd>';
@@ -163,16 +161,16 @@ class port_display {
 
 								case 'upgrade':
 									if (!empty($part->minimum_version) && !empty($part->maximum_version)) {
-										$HTML .= '<dt>If upgrading from &gt; ' . htmlspecialchars($part->minimum_version) . ' and &lt; ' . htmlspecialchars($part->maximum_version) . ':</dt>';
+										$HTML .= '<dt>' . sprintf(_('If upgrading from &gt; %1$s and &lt; %2$s:'), htmlspecialchars($part->minimum_version), htmlspecialchars($part->maximum_version)) . '</dt>';
 										$HTML .= '<dd class="pkg-message">' . $part->message . '</dd>';
 									} elseif (!empty($part->minimum_version)) {
-										$HTML .= '<dt>If upgrading from &gt; ' . htmlspecialchars($part->minimum_version) . ':</dt>';
+										$HTML .= '<dt>' . sprintf(_('If upgrading from &gt; %s:'), htmlspecialchars($part->minimum_version)) . '</dt>';
 										$HTML .= '<dd class="pkg-message">' . htmlspecialchars($part->message) . '</dd>';
 									} elseif (!empty($part->maximum_version)) {
-										$HTML .= '<dt>If upgrading from &lt; ' . htmlspecialchars($part->maximum_version) . ':</dt>';
+										$HTML .= '<dt>' . sprintf(_('If upgrading from &lt; %s:'), htmlspecialchars($part->maximum_version)) . '</dt>';
 										$HTML .= '<dd class="pkg-message">' . htmlspecialchars($part->message) . '</dd>';
 									} else {
-										$HTML .= '<dt>If upgrading</dt>';
+										$HTML .= '<dt>' . _('If upgrading') . '</dt>';
 										$HTML .= '<dd class="pkg-message">' . htmlspecialchars($part->message) . '</dd>';
 									}
 									$HTML .= "\n";
@@ -180,7 +178,7 @@ class port_display {
 									break;
 
 								case 'remove':
-									$HTML .= '<dt>If removing:</dt><dd class="pkg-message">' . htmlspecialchars($part->message) . '</dd>';
+									$HTML .= '<dt>' . _('If removing:') . '</dt><dd class="pkg-message">' . htmlspecialchars($part->message) . '</dd>';
 									$HTML .= "\n";
 									$HTML .= "\n";
 									break;
@@ -311,7 +309,7 @@ class port_display {
 	}
 
 	function link_to_repo_svn_greyed() {
-          $link_title = 'SVNWeb - no subversion history for this port';
+          $link_title = _('SVNWeb - no subversion history for this port');
           $link = freshports_Subversion_Icon_Greyed($link_title);
 
           return $link;
@@ -864,22 +862,25 @@ class port_display {
 
 		$title = '';
 
+		$MsgProcessedDate = _('last time FreshPorts imported a new release of this repo');
+		$MsgLastChecked   = _('last checked by FreshPorts');
+
 		if (empty($repo_date)) {
-			$title .= "repo not found - no repo build date\n";
+			$title .= _('repo not found - no repo build date') . "\n";
 		} else {
-			$title .= $repo_date . " &#8211; repo build date\n";
+			$title .= $repo_date . ' &#8211; ' . _('repo build date') . "\n";
 		}
 
 		if (empty($processed_date)) {
-			$title .= 'nil - ' . static::MSG_PROCESSED_DATE . "\n";
+			$title .= _('nil') . ' - ' . $MsgProcessedDate . "\n";
 		} else {
-			$title .= $processed_date . ' &#8211; ' . static::MSG_PROCESSED_DATE. "\n";
+			$title .= $processed_date . ' &#8211; ' . $MsgProcessedDate . "\n";
 		}
 
 		if (empty($last_checked)) {
-			$title .= 'never - ' . static::MSG_LAST_CHECKED;
+			$title .= _('never') . ' - ' . $MsgLastChecked;
 		} else {
-			$title .= $last_checked . ' &#8211; ' . static::MSG_LAST_CHECKED;
+			$title .= $last_checked . ' &#8211; ' . $MsgLastChecked;
 		}
 
 		return $title;
@@ -966,8 +967,8 @@ class port_display {
 			# what we just composed, something else is in there.  Show it.
 			#
 			if (!empty($port->pkgversion) && $port->pkgversion != $PackageVersion) {
-				$HTML .= ' <span title="The package version for this port includes the version of FreeBSD it is built for, so packages for other releases are named differently.">(package ' .
-				         htmlspecialchars($port->pkgversion) . ')</span>';
+				$HTML .= ' <span title="' . _('The package version for this port includes the version of FreeBSD it is built for, so packages for other releases are named differently.') . '">' .
+				         sprintf(_('(package %s)'), htmlspecialchars($port->pkgversion)) . '</span>';
 			}
 
 			if (IsSet($port->category_looking_at)) {
@@ -984,7 +985,7 @@ class port_display {
 			if ($this->Branch != BRANCH_HEAD) {
 				$HTML .= '?branch=' . htmlspecialchars($this->Branch);
 			}
-			$HTML .= '" title="The category for this port">' . $port->category . '</a>';
+			$HTML .= '" title="' . _('The category for this port') . '">' . $port->category . '</a>';
 		}
 
 		if ($this->ShowEverything || $this->ShowBasicInfo) {
@@ -1031,16 +1032,16 @@ class port_display {
 			$HTML .=  ' <span class="tooltip">';
 			if (empty($port->quarterly_revision)) {
 
-				$HTML .= 'Package not present on quarterly.';
+				$HTML .= _('Package not present on quarterly.');
 				if (IsSet($port->date_added) && date("Y-m-d", strtotime($port->date_added)) > FirstDateOfCurrentQuarter()) {
-					$ToolTipText = 'This port was created during this quarter. It will be in the next quarterly branch but not the current one.';
+					$ToolTipText = _('This port was created during this quarter. It will be in the next quarterly branch but not the current one.');
 				} else {
-					$ToolTipText = 'This is expected early in the quarter (because the new packaage repo has not been built yet.). Otherwise, this missing version is most likely a FreshPorts error.';
+					$ToolTipText = _('This is expected early in the quarter (because the new package repo has not been built yet.). Otherwise, this missing version is most likely a FreshPorts error.');
 				}
 			} else {
 				$HTML .= $port->quarterly_revision;
-				$ToolTipText = 'Version of this port present on the latest quarterly branch.';
-				if ($port->IsSlavePort()) $ToolTip = ' NOTE: Slave port - quarterly revision is most likely wrong.';
+				$ToolTipText = _('Version of this port present on the latest quarterly branch.');
+				if ($port->IsSlavePort()) $ToolTip = ' ' . _('NOTE: Slave port - quarterly revision is most likely wrong.');
 			}
 			$HTML .= '<span class="tooltiptext tooltip-top">' . $ToolTipText;
 			$HTML .= '</span></span>';
@@ -1072,7 +1073,7 @@ class port_display {
 
 			if ($port->expiration_date) {
 				if (date('Y-m-d') >= $port->expiration_date) {
-					$HTML .= freshports_Expired_Icon_Link($port->expiration_date) . ' This port expired on: ' . $port->expiration_date . '<br>';
+					$HTML .= freshports_Expired_Icon_Link($port->expiration_date) . ' ' . sprintf(_('This port expired on: %s'), $port->expiration_date) . '<br>';
 					} else {
 					$HTML .= freshports_Expiration_Icon_Link($port->expiration_date) . ' EXPIRATION DATE: ' . $port->expiration_date . '<br>';
 				}
@@ -1100,17 +1101,16 @@ class port_display {
 		// maintainer
 		if ($port->maintainer && ($this->ShowMaintainedBy || $this->ShowEverything)) {
 			if (strtolower($port->maintainer) == UNMAINTAINTED_ADDRESS) {
-				$HTML .= '<dt class="nomaintainer">There is no maintainer for this port.</dt>';
-				$HTML .= '<dd>Any concerns regarding this port should be directed to the FreeBSD ' .
-				         'Ports mailing list via ';
-				$HTML .= '<a href="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);
-				$HTML .= '?subject=FreeBSD%20Port:%20' . $port->category . '/' . $port->port . '" title="email the FreeBSD Ports mailing list">';
-				$HTML .= freshportsObscureHTML($port->maintainer) . '</a> ' . freshports_Search_Maintainer($port->maintainer) . '</dd>';
+				$HTML .= '<dt class="nomaintainer">' . _('There is no maintainer for this port.') . '</dt>';
+				$MailingList  = '<a href="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);
+				$MailingList .= '?subject=FreeBSD%20Port:%20' . $port->category . '/' . $port->port . '" title="' . _('email the FreeBSD Ports mailing list') . '">';
+				$MailingList .= freshportsObscureHTML($port->maintainer) . '</a>';
+				$HTML .= '<dd>' . sprintf(_('Any concerns regarding this port should be directed to the FreeBSD Ports mailing list via %s'), $MailingList) . ' ' . freshports_Search_Maintainer($port->maintainer) . '</dd>';
 			} else {
 				$HTML .= '<dt><b>';
 
-				$HTML .= 'Maintainer:</b> <a href="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);
-				$HTML .= '?subject=FreeBSD%20Port:%20' . $port->category . '/' . $port->port . '" title="email the maintainer">';
+				$HTML .= _('Maintainer:') . '</b> <a href="' . MAILTO . ':' . freshportsObscureHTML($port->maintainer);
+				$HTML .= '?subject=FreeBSD%20Port:%20' . $port->category . '/' . $port->port . '" title="' . _('email the maintainer') . '">';
 				$HTML .= freshportsObscureHTML($port->maintainer) . '</a> ';
 				$HTML .= freshports_Search_Maintainer($port->maintainer) . '</dt>';
 			}
@@ -1123,7 +1123,7 @@ class port_display {
 		if ($this->ShowLastChange) {
 			$HTML .= "<dt>\n";
 			if ($port->updated != 0) {
-				$HTML .= 'last change committed by&nbsp;';
+				$HTML .= _('last change committed by') . '&nbsp;';
 
 				#
 				# THIS CODE IS SIMILAR TO THAT IN classes/display_commit.php & include/freshports.php
@@ -1149,12 +1149,12 @@ class port_display {
 				$HTML .= '&nbsp;' . freshports_Search_Committer($port->committer);
 
 				if ($CommitterIsNotAuthor) {
-					$HTML .= '&nbsp;Author:&nbsp;' . freshports_AuthorEmailLink($port->author_name, $port->author_email);
+					$HTML .= '&nbsp;' . _('Author:') . '&nbsp;' . freshports_AuthorEmailLink($port->author_name, $port->author_email);
 				}
 
 
 
-				$HTML .= ' on ' . $port->updated . "\n";
+				$HTML .= ' ' . sprintf(_('on %s'), $port->updated) . "\n";
 
 				$HTML .= freshports_Email_Link($port->message_id);
 
@@ -1172,7 +1172,7 @@ class port_display {
 			 				freshports_MoreCommitMsgToShow($port->message_id,
 							$freshports_CommitMsgMaxNumOfLinesToShow));
 			} else {
-				$HTML .= "no changes recorded in FreshPorts<br>\n";
+				$HTML .= _('no changes recorded in FreshPorts') . "<br>\n";
 			}
 			$HTML .= "</dt>\n";
 		}
@@ -1180,11 +1180,11 @@ class port_display {
 		# show the date added, if asked
 
 		if ($this->ShowDateAdded || $this->ShowEverything) {
-			$HTML .= '<dt><b>Port Added:</b> ';
+			$HTML .= '<dt><b>' . _('Port Added:') . '</b> ';
 			if ($port->date_added) {
 				$HTML .= FormatTime($port->date_added, 0, "Y-m-d H:i:s");
 			} else {
-				$HTML .= "unknown";
+				$HTML .= _('unknown');
 			}
 			$HTML .= "</dt>\n";
 		}
@@ -1192,11 +1192,11 @@ class port_display {
 		# show the date modified, if asked
 
 		if ($this->ShowLastCommitDate || $this->ShowEverything) {
-			$HTML .= '<dt><b>Last Update:</b> ';
+			$HTML .= '<dt><b>' . _('Last Update:') . '</b> ';
 			if ($port->last_commit_date) {
 				$HTML .= FormatTime($port->last_commit_date, 0, "Y-m-d H:i:s");
 			} else {
-				$HTML .= "unknown";
+				$HTML .= _('unknown');
 			}
 			$HTML .= "</dt>\n";
 
@@ -1213,14 +1213,14 @@ class port_display {
 				#
 				if (strpos($port->message_id, LOOKS_LIKE_SUBVERSON) === false && strpos($port->message_id, PREDATES_MESSAGE_ID) === false) {
 				# !empty($port->commit_hash_short)) {
-					$HTML .= '<dt><b>Commit Hash:</b> ';
+					$HTML .= '<dt><b>' . _('Commit Hash:') . '</b> ';
 					$HTML .= freshports_git_commit_Link_Hash($port->svn_revision, $port->commit_hash_short, $port->repo_hostname, $port->path_to_repo);
 				} else {
-					$HTML .= '<dt><b>SVN Revision:</b> ';
+					$HTML .= '<dt><b>' . _('SVN Revision:') . '</b> ';
 					if (isset($port->svn_revision)) {
 						$HTML .= freshports_svnweb_ChangeSet_Link_Text($port->svn_revision, $port->repo_hostname);
 					} else {
-						$HTML .= 'UNKNOWN';
+						$HTML .= _('UNKNOWN');
 					}
 				}
 				$HTML .= "</dt>\n";
@@ -1246,7 +1246,7 @@ class port_display {
 				$CategoriesArray = array_diff(explode(" ", $port->categories), array($CategoryToRemove));
 				$Count = count($CategoriesArray);
 				if ($Count > 0) {
-					$OtherCategories = "<dt><b>Also Listed In:</b> ";
+					$OtherCategories = '<dt><b>' . _('Also Listed In:') . '</b> ';
 
 					# sort the list by name
 					asort($CategoriesArray);
@@ -1264,11 +1264,11 @@ class port_display {
 				}
 			}
 
-			$HTML .= '<dt><b>License:</b> ';
+			$HTML .= '<dt><b>' . _('License:') . '</b> ';
 			if ($port->license) {
 			        $HTML .= htmlentities($port->license);
 			} else {
-			        $HTML .= 'not specified in port';
+			        $HTML .= _('not specified in port');
 			}
 
 			$HTML .= "</dt>\n";
@@ -1286,11 +1286,11 @@ class port_display {
 			if ($port->homepage) {
 				$HTML .= '<dt class="www">WWW: </dt>';
 				foreach (preg_split('/\s+/', $port->homepage, -1, PREG_SPLIT_NO_EMPTY) as $page) {
-					$HTML .= '<dd class="www-description"><a href="' . _forDisplay($page) . '" title="Homepage for this port">' . _forDisplay($page) . '</a>';
+					$HTML .= '<dd class="www-description"><a href="' . _forDisplay($page) . '" title="' . _('Homepage for this port') . '">' . _forDisplay($page) . '</a>';
 				}
 				$HTML .= '</dd>';
 			}
-			$HTML .= '<dt class="description" id="description">Description:' . freshports_AnchorLink('description') . '</dt><dd class="port-description">' . htmlify(_forDisplay($port->long_description)) . '</dd>';
+			$HTML .= '<dt class="description" id="description">' . _('Description:') . freshports_AnchorLink('description') . '</dt><dd class="port-description">' . htmlify(_forDisplay($port->long_description)) . '</dd>';
 		}
 
 		# this if covers several items, and wraps them in dt tags
@@ -1300,7 +1300,7 @@ class port_display {
 
 			if ($port->homepage && ($this->ShowHomepageLink || $this->ShowEverything)) {
 				foreach (preg_split('/\s+/', $port->homepage, -1, PREG_SPLIT_NO_EMPTY) as $page) {
-					$HTML .= '<a href="' . _forDisplay($page) . '" title="Homepage for this port">' . freshports_Homepage_Icon() . '</a>';
+					$HTML .= '<a href="' . _forDisplay($page) . '" title="' . _('Homepage for this port') . '">' . freshports_Homepage_Icon() . '</a>';
 				}
 				$HTML .= '&nbsp;&nbsp;&nbsp;&nbsp;';
 			}
@@ -1327,7 +1327,7 @@ class port_display {
 				// package
 				$HTML .= ' <b>:</b> ';
 				$HTML .= '<a href="' . FRESHPORTS_FREEBSD_FTP_URL . '/' . freshports_PackageVersion($port->version, $port->revision, $port->epoch);
-				$HTML .= '.tgz">Package</a>';
+				$HTML .= '.tgz">' . _('Package') . '</a>';
 			}
 
 			$HTML .= '</dt>';
@@ -1348,8 +1348,8 @@ class port_display {
         # output use_rc_subr, if provided.
         #
         if ($this->ShowEverything|| $this->ShowBasicInfo) {
-            $HTML .= '<dt><b>USE_RC_SUBR (Service Scripts)</b></dt><dd>';
-            $HTML .= $this->html_use_rc_subr($this->port->use_rc_subr ? $this->port->use_rc_subr : 'no SUBR information found for this port');
+            $HTML .= '<dt><b>USE_RC_SUBR (' . _('Service Scripts') . ')</b></dt><dd>';
+            $HTML .= $this->html_use_rc_subr($this->port->use_rc_subr ? $this->port->use_rc_subr : _('no SUBR information found for this port'));
             $HTML .= '</dd>';
         }
 
@@ -1359,11 +1359,11 @@ class port_display {
 				$lib_depends = json_decode($port->pkg_plist_library_matches, true);
 				$HasLibraries = is_array($lib_depends) && count($lib_depends) > 0;
 			}
-			$HTML .= '<dt class="pkg-plist"><b>Dependency lines</b>:</dt>';
+			$HTML .= '<dt class="pkg-plist"><b>' . _('Dependency lines') . '</b>:</dt>';
 			$HTML .= '<dd class="pkg-plist">' . "\n";
 
 			if (!empty($HasLibraries)) {
-				$HTML .= '<ul class="pkg-plist"><li>For RUN/BUILD depends:';
+				$HTML .= '<ul class="pkg-plist"><li>' . sprintf(_('For %s depends:'), 'RUN/BUILD');
 			}
 
 			$HTML .= '<ul class="pkg-plist">';
@@ -1374,7 +1374,7 @@ class port_display {
 				# close tags for RUN/BUILD depends
 				$HTML .= "</li></ul>\n";
 				# open tags for LIB DEPEND
-				$HTML .= '<ul class="pkg-plist"><li>For LIB depends:';
+				$HTML .= '<ul class="pkg-plist"><li>' . sprintf(_('For %s depends:'), 'LIB');
 				$HTML .= '<ul class="pkg-plist">';
 			}
 
@@ -1393,7 +1393,7 @@ class port_display {
 
 		# if there are conflicts
 		if (($this->ShowEverything || $this->ShowConflicts) && ($port->conflicts || $port->conflicts_build || $port->conflicts_install)) {
-			$HTML .= '<dt id="conflicts"><b>Conflicts:</b>' . freshports_AnchorLink('conflicts') . '</dt>';
+			$HTML .= '<dt id="conflicts"><b>' . _('Conflicts:') . '</b>' . freshports_AnchorLink('conflicts') . '</dt>';
 
 			if ($port->conflicts) {
 				$HTML .= "<dd>CONFLICTS:";
@@ -1418,16 +1418,16 @@ class port_display {
 			if (defined('SHOW_CONFLICTS_MATCHES')) {
 				# see https://github.com/FreshPorts/freshports/issues/566
 				# this field is defined, but not populated.
-				$HTML .= "<dt><b>Conflicts Matches:</b>\n</dt>";
+				$HTML .= '<dt><b>' . _('Conflicts Matches:') . "</b>\n</dt>";
 				$HTML .= "<dd>\n";
 				if (!empty($port->conflicts_matches)) {
 					$HTML .= "<ul>\n";
 					foreach($port->conflicts_matches as $match) {
-						$HTML .= "<li>conflicts with " . freshports_link_to_port($match['category'], $match['port'], $this->Branch) . '</li>';
+						$HTML .= '<li>' . sprintf(_('conflicts with %s'), freshports_link_to_port($match['category'], $match['port'], $this->Branch)) . '</li>';
 					}
 					$HTML .= "</ul>\n";
 				} else {
-					$HTML .= 'There are no Conflicts Matches for this port.  This is usually an error.';
+					$HTML .= _('There are no Conflicts Matches for this port.  This is usually an error.');
 					syslog(LOG_ERR, 'There are no Conflicts Matches for this port. This is usually an error. ' . $port->element_pathname);
 				}
 			}
@@ -1441,32 +1441,32 @@ class port_display {
 		if ($this->ShowPackageLink || $this->ShowEverything) {
 #			$HTML .= "\n</dl><dl>\n";
 			if ($port->IsDeleted()) {
-				$HTML .= '<dt>No installation instructions:</dt><dd>This port has been deleted.</dd>';
+				$HTML .= '<dt>' . _('No installation instructions:') . '</dt><dd>' . _('This port has been deleted.') . '</dd>';
 			} else {
-				$HTML .= '<dt id="add"><b>To install <a href="/faq.php#port" title="what is a port?">the port</a>:</b>' . freshports_AnchorLink('add') . '</dt><dd> <kbd class="code">cd /usr/ports/'  . $port->category . '/' . $port->port . '/ && make install clean</kbd></dd>';
+				$HTML .= '<dt id="add"><b>' . _('To install <a href="/faq.php#port" title="what is a port?">the port</a>:') . '</b>' . freshports_AnchorLink('add') . '</dt><dd> <kbd class="code">cd /usr/ports/'  . $port->category . '/' . $port->port . '/ && make install clean</kbd></dd>';
 				if (IsSet($port->no_package) && $port->no_package != '') {
-					$HTML .= '<dt><b>No <a href="/faq.php#package" title="what is a package?">package</a> is available:</b> ' . $port->no_package . '</dt>';
+					$HTML .= '<dt><b>' . _('No <a href="/faq.php#package" title="what is a package?">package</a> is available:') . '</b> ' . $port->no_package . '</dt>';
 				} else {
 					if ($port->forbidden || $port->broken || $port->ignore || $port->restricted || !$port->PackageIsAvailable()) {
-						$HTML .= '<dt>We doubt a <b><a href="/faq.php#package" title="what is a package?">package</a></b> is available for this port because we see it marked as as:</dt><dd>';
+						$HTML .= '<dt>' . _('We doubt a <b><a href="/faq.php#package" title="what is a package?">package</a></b> is available for this port because we see it marked as:') . '</dt><dd>';
 
 						$HTML .= "<ul>\n";
-						if ($port->forbidden)  $HTML .= '<li><b>Forbidden</b></li>';
-						if ($port->broken)     $HTML .= '<li><b>Broken</b></li>';
-						if ($port->ignore)     $HTML .= '<li><b>Ignore</b></li>';
-						if ($port->restricted) $HTML .= '<li><b>Restricted</b></li>';
-						if (!$port->PackageIsAvailable()) $HTML .= '<li><b>Package not available</b></li>';
+						if ($port->forbidden)  $HTML .= '<li><b>' . _('Forbidden') . '</b></li>';
+						if ($port->broken)     $HTML .= '<li><b>' . _('Broken') . '</b></li>';
+						if ($port->ignore)     $HTML .= '<li><b>' . _('Ignore') . '</b></li>';
+						if ($port->restricted) $HTML .= '<li><b>' . _('Restricted') . '</b></li>';
+						if (!$port->PackageIsAvailable()) $HTML .= '<li><b>' . _('Package not available') . '</b></li>';
 
 						$HTML .= "</ul>\n";
-						$HTML .= 'Packages are normally not provided for ports that are marked as above.</dd>';
+						$HTML .= _('Packages are normally not provided for ports that are marked as above.') . '</dd>';
 					}
-					$HTML .= '<dt><b>To add the <a href="/faq.php#package" title="what is a package?">package</a>, run one of these commands:</b></dt>';
+					$HTML .= '<dt><b>' . _('To add the <a href="/faq.php#package" title="what is a package?">package</a>, run one of these commands:') . '</b></dt>';
 					$HTML .= '<dd><ul><li><kbd class="code">pkg install ' . $port->category . '/' . $port->port . '</kbd></li>';
 					$HTML .= '<li><kbd class="code">pkg install ' . $port->package_name . '</kbd></li></ul>';
-					$HTML .= 'NOTE: If this package has multiple flavors (see below), then use one of them instead of the name specified above.';
+					$HTML .= _('NOTE: If this package has multiple flavors (see below), then use one of them instead of the name specified above.');
 
 					if ($this->Is_A_Python_Port_Prefix($matches)) {
-						$HTML .= '<br>NOTE: This is a Python port. Instead of <kbd class="code">' . $port->package_name . '</kbd> listed in the above command, you can pick from the names under the <a href="#packages">Packages</a> section.';
+						$HTML .= '<br>' . sprintf(_('NOTE: This is a Python port. Instead of %s listed in the above command, you can pick from the names under the <a href="#packages">Packages</a> section.'), '<kbd class="code">' . $port->package_name . '</kbd>');
 					}
 					$HTML .= '</dd>';
 				}
@@ -1476,7 +1476,7 @@ class port_display {
 			if ($port->PackageIsAvailable()) {
 			  $HTML .= '<span class="pkgname">' . $port->package_name . '</span>';
 			} else {
-			  $HTML .= 'there is no package for this port: <span class="file">' . $port->PackageNotAvailableReason() . '</span>';
+			  $HTML .= sprintf(_('there is no package for this port: %s'), '<span class="file">' . $port->PackageNotAvailableReason() . '</span>');
 			}
 			$HTML .= '</dt>';
 
@@ -1509,18 +1509,18 @@ class port_display {
 
 						$HTML .= '<dd class="distinfo">';
 						$HTML .= substr($port->distinfo, 0, $nth_line);
-						$HTML .= '<p><a href="#" id="distinfo-Extra-show" class="showLink" onclick="showHide(\'distinfo-Extra\');return false;">Expand this list (' . ($distinfo_line_count - DISTINFO_LINES + 1) . ' items)</a></p>';
+						$HTML .= '<p><a href="#" id="distinfo-Extra-show" class="showLink" onclick="showHide(\'distinfo-Extra\');return false;">' . sprintf(_('Expand this list (%d items)'), $distinfo_line_count - DISTINFO_LINES + 1) . '</a></p>';
 						$HTML .= '</dd>';
 
 						$HTML .= '<dd id="distinfo-Extra" class="more distinfo">';
-						$HTML .= '<p><a href="#" id="distinfo-Extra-hide" class="hideLink" onclick="showHide(\'distinfo-Extra\');return false;">Collapse this list.</a></p>';
+						$HTML .= '<p><a href="#" id="distinfo-Extra-hide" class="hideLink" onclick="showHide(\'distinfo-Extra\');return false;">' . _('Collapse this list.') . '</a></p>';
 						$HTML .= substr($port->distinfo, $nth_line + 1);
 
-						$HTML .= '<p><a href="#" class="hideLink" onclick="showHide(\'distinfo-Extra\');return false;">Collapse this list.</a></p>';
+						$HTML .= '<p><a href="#" class="hideLink" onclick="showHide(\'distinfo-Extra\');return false;">' . _('Collapse this list.') . '</a></p>';
 						$HTML .= '</dd>';
 					}
 				} else {
-					$HTML .= "<dd>There is no distinfo for this port.</dd>\n";
+					$HTML .= '<dd>' . _('There is no distinfo for this port.') . "</dd>\n";
 				}
 			}
 
@@ -1573,7 +1573,7 @@ class port_display {
 
 					# Now let's convert $packages_array into HTML
 
-					$HTML .= '<dt id="packages" class="h3"><hr><b>Packages</b> (timestamps in pop-ups are UTC):' . freshports_AnchorLink('packages') . '</dt>';
+					$HTML .= '<dt id="packages" class="h3"><hr><b>' . _('Packages') . '</b> ' . _('(timestamps in pop-ups are UTC):') . freshports_AnchorLink('packages') . '</dt>';
 					$HTML .= '<dd>';
 					$HTML .= '<div class="scrollmenu">';
 					
@@ -1649,7 +1649,7 @@ class port_display {
 
 				} else {
 					# use the old version
-					$HTML .= '<dt id="packages" class="h3"><hr><b>Packages</b> (timestamps in pop-ups are UTC):' . freshports_AnchorLink('packages') . '</dt>';
+					$HTML .= '<dt id="packages" class="h3"><hr><b>' . _('Packages') . '</b> ' . _('(timestamps in pop-ups are UTC):') . freshports_AnchorLink('packages') . '</dt>';
 					$HTML .= '<dd>';
 					$HTML .= '<div class="scrollmenu">';
 
@@ -1695,12 +1695,12 @@ class port_display {
 					$HTML .= '</dd>';
 				}
 			} else {
-				$HTML .= '<dt id="packages"><hr><b>No package information for this port in our database</b>' . freshports_AnchorLink('packages') . '</dt>';
-				$HTML .= '<dd>Sometimes this happens. Not all ports have packages.';
+				$HTML .= '<dt id="packages"><hr><b>' . _('No package information for this port in our database') . '</b>' . freshports_AnchorLink('packages') . '</dt>';
+				$HTML .= '<dd>' . _('Sometimes this happens. Not all ports have packages.');
 				if ($MarkedAsNew) {
-					$HTML .= ' This is doubly so for new ports, like this one.';
+					$HTML .= ' ' . _('This is doubly so for new ports, like this one.');
 				} else {
-					$HTML .= ' Perhaps there is a build error. Check the fallout link: ' . freshports_Fallout_Link($port->category, $port->port);
+					$HTML .= ' ' . sprintf(_('Perhaps there is a build error. Check the fallout link: %s'), freshports_Fallout_Link($port->category, $port->port));
 				}
 				$HTML .= '</dd>';
 			}
@@ -1719,7 +1719,7 @@ class port_display {
 			}
 
 			if ($port->IsSlavePort()) {
-				$HTML .= '<dt><span class="masterport" id="masterport"><b>Master port</b>: </span>';
+				$HTML .= '<dt><span class="masterport" id="masterport"><b>' . _('Master port') . '</b>: </span>';
 				list($MyCategory, $MyPort) = explode('/', $port->master_port);
 				$HTML .= '<span class="port">' . freshports_link_to_port($MyCategory, $MyPort, $this->Branch) . '</span>';
 				$HTML .= freshports_AnchorLink('masterport') . "</dt>\n";
@@ -1730,7 +1730,7 @@ class port_display {
 			#
 
 			if ($NumRows > 0) {
-				$HTML .= '<dt><span class="slaveports" id="slaveports">Slave ports:</span>' . freshports_AnchorLink('slaveports') . '</dt><dd>' . "\n" . '<ol class="slaveports">';
+				$HTML .= '<dt><span class="slaveports" id="slaveports">' . _('Slave ports:') . '</span>' . freshports_AnchorLink('slaveports') . '</dt><dd>' . "\n" . '<ol class="slaveports">';
 				for ($i = 0; $i < $NumRows; $i++) {
 					$MasterSlave->FetchNth($i);
 					$HTML .= '<li>' . freshports_link_to_port($MasterSlave->slave_category_name, $MasterSlave->slave_port_name, $this->Branch) . '</li>';
@@ -1742,8 +1742,8 @@ class port_display {
 		if ($this->ShowDepends || $this->ShowEverything) {
 #			$HTML .= "</dl>\n<hr><dl>\n";
 			if ($port->depends_build || $port->depends_run || $port->depends_lib || $port->fetch_depends || $port->patch_depends || $port->extract_depends || $port->test_depends || $port->build_run_depends) {
-				$HTML .= '<dt class="h2" id="dependencies">Dependencies' . freshports_AnchorLink('dependencies') . '</dt>';
-				$HTML .= '<dt class="notice">NOTE: FreshPorts displays only information on required and default dependencies.  Optional dependencies are not covered.</dt>';
+				$HTML .= '<dt class="h2" id="dependencies">' . _('Dependencies') . freshports_AnchorLink('dependencies') . '</dt>';
+				$HTML .= '<dt class="notice">' . _('NOTE: FreshPorts displays only information on required and default dependencies.  Optional dependencies are not covered.') . '</dt>';
 			}
 
 			# The ports framework appends BUILD_RUN_DEPENDS to both BUILD_DEPENDS
@@ -1754,55 +1754,55 @@ class port_display {
 			$depends_run   = freshports_depends_subtract($port->depends_run,   $port->build_run_depends);
 
 			if ($depends_build) {
-				$HTML .= '<dt class="required" id="requiredbuild">Build dependencies:' . freshports_AnchorLink('requiredbuild') . '</dt><dd>' . "\n" . '<ol class="required" id="requiredtobuild">';
+				$HTML .= '<dt class="required" id="requiredbuild">' . _('Build dependencies:') . freshports_AnchorLink('requiredbuild') . '</dt><dd>' . "\n" . '<ol class="required" id="requiredtobuild">';
 				$HTML .= freshports_depends_links($this->db, $depends_build, $this->Branch);
 				$HTML .= "\n</ol></dd>\n";
 			}
 
 			if ($port->test_depends) {
-				$HTML .= '<dt class="required" id="requiredtest">Test dependencies:' . freshports_AnchorLink('requiredtest') . '</dt><dd>' . "\n" . '<ol class="required" id="requiredtotest">';
+				$HTML .= '<dt class="required" id="requiredtest">' . _('Test dependencies:') . freshports_AnchorLink('requiredtest') . '</dt><dd>' . "\n" . '<ol class="required" id="requiredtotest">';
 				$HTML .= freshports_depends_links($this->db, $port->test_depends, $this->Branch);
 				$HTML .= "\n</ol></dd>\n";
 			}
 
 			if ($depends_run) {
-				$HTML .= '<dt class="required" id="requiredrun">Runtime dependencies:' . freshports_AnchorLink('requiredrun') . '</dt><dd>' . "\n" . '<ol class="required" id="requiredtorun">';
+				$HTML .= '<dt class="required" id="requiredrun">' . _('Runtime dependencies:') . freshports_AnchorLink('requiredrun') . '</dt><dd>' . "\n" . '<ol class="required" id="requiredtorun">';
 				$HTML .= freshports_depends_links($this->db, $depends_run, $this->Branch);
 				$HTML .= "\n</ol></dd>\n";
 			}
 
 			if ($port->depends_lib) {
-				$HTML .= '<dt class="required" id="requiredlib">Library dependencies:' . freshports_AnchorLink('requiredlib') . '</dt><dd>' . "\n" . '<ol class="required" id="requiredlibraries">';
+				$HTML .= '<dt class="required" id="requiredlib">' . _('Library dependencies:') . freshports_AnchorLink('requiredlib') . '</dt><dd>' . "\n" . '<ol class="required" id="requiredlibraries">';
 				$HTML .= freshports_depends_links($this->db, $port->depends_lib, $this->Branch);
 				$HTML .= "\n</ol></dd>\n";
 			}
 
 			if ($port->fetch_depends) {
-				$HTML .= '<dt class="required" id="requiredfetch">Fetch dependencies:' . freshports_AnchorLink('requiredfetch') . '</dt><dd>' . "\n" . '<ol class="required" id="requiredfetches">';
+				$HTML .= '<dt class="required" id="requiredfetch">' . _('Fetch dependencies:') . freshports_AnchorLink('requiredfetch') . '</dt><dd>' . "\n" . '<ol class="required" id="requiredfetches">';
 				$HTML .= freshports_depends_links($this->db, $port->fetch_depends, $this->Branch);
 				$HTML .= "\n</ol></dd>\n";
 			}
 
 			if ($port->patch_depends) {
-				$HTML .= '<dt class="required" id="requiredpatch">Patch dependencies:' . freshports_AnchorLink('requiredpatch') . '</dt><dd>' . "\n" . '<ol class="required" id="requiredpatches">';
+				$HTML .= '<dt class="required" id="requiredpatch">' . _('Patch dependencies:') . freshports_AnchorLink('requiredpatch') . '</dt><dd>' . "\n" . '<ol class="required" id="requiredpatches">';
 				$HTML .= freshports_depends_links($this->db, $port->patch_depends, $this->Branch);
 				$HTML .= "\n</ol></dd>\n";
 			}
 
 			if ($port->extract_depends) {
-				$HTML .= '<dt class="required" id="requiredextract">Extract dependencies:' . freshports_AnchorLink('requiredextract') . '</dt><dd>' . "\n" . '<ol class="required" id="requiredextracts">';
+				$HTML .= '<dt class="required" id="requiredextract">' . _('Extract dependencies:') . freshports_AnchorLink('requiredextract') . '</dt><dd>' . "\n" . '<ol class="required" id="requiredextracts">';
 				$HTML .= freshports_depends_links($this->db, $port->extract_depends, $this->Branch);
 				$HTML .= "\n</ol></dd>\n";
 			}
 
 			if ($port->build_run_depends) {
-				$HTML .= '<dt class="required" id="requiredbuildrun">Build and run dependencies:</dt><dd>' . "\n" . '<ol class="required" id="requiredtobuildandrun">';
+				$HTML .= '<dt class="required" id="requiredbuildrun">' . _('Build and run dependencies:') . '</dt><dd>' . "\n" . '<ol class="required" id="requiredtobuildandrun">';
 				$HTML .= freshports_depends_links($this->db, $port->build_run_depends, $this->Branch);
 				$HTML .= "\n</ol></dd>\n";
 			}
 
 			if (!($port->depends_build || $port->depends_run || $port->depends_lib || $port->fetch_depends || $port->patch_depends || $port->extract_depends || $port->test_depends || $port->build_run_depends)) {
-				$HTML .= '<dt class="h3" id="dependencies">This port has no dependencies.' . freshports_AnchorLink('dependencies') . '</dt>';
+				$HTML .= '<dt class="h3" id="dependencies">' . _('This port has no dependencies.') . freshports_AnchorLink('dependencies') . '</dt>';
 			}
 
 			# XXX when adding new depends above, be sure to update the array in ShowDependencies()
@@ -1813,19 +1813,19 @@ class port_display {
 
 		if ($this->ShowEverything || $this->ShowConfig) {
 #			$HTML .= "\n<dl>";
-			$HTML .= '<dt id="config"><hr>' . "\n" . '<b>Configuration Options</b>:' . freshports_AnchorLink('config') . '</dt>' . "\n" . '<dd class="config">';
+			$HTML .= '<dt id="config"><hr>' . "\n" . '<b>' . _('Configuration Options') . '</b>:' . freshports_AnchorLink('config') . '</dt>' . "\n" . '<dd class="config">';
 			if ($port->showconfig) {
 				$HTML .= $port->showconfig;
 			} else {
-				$HTML .= '     No options to configure';
+				$HTML .= '     ' . _('No options to configure');
 			}
 			$HTML .= "</dd>";
 
-			$HTML .= '<dt id="options"><b>Options name</b>:' . freshports_AnchorLink('options') . '</dt>' . "\n" . '<dd class="options">';
+			$HTML .= '<dt id="options"><b>' . _('Options name') . '</b>:' . freshports_AnchorLink('options') . '</dt>' . "\n" . '<dd class="options">';
 			if (!empty($port->options_name)) {
 				$HTML .= $port->options_name;
 			} else {
-				$HTML .= 'N/A';
+				$HTML .= _('N/A');
 			}
 			$HTML .= "</dd>";
 		}
@@ -1842,21 +1842,21 @@ class port_display {
 			if ($port->pkgmessage) {
 				$HTML .= $this->_pkgmessage($port);
 			} else {
-				$HTML .= '<dt id="message"><b>FreshPorts was unable to extract/find any pkg message</b>' . freshports_AnchorLink('message') . '<br></dt>';
+				$HTML .= '<dt id="message"><b>' . _('FreshPorts was unable to extract/find any pkg message') . '</b>' . freshports_AnchorLink('message') . '<br></dt>';
 			}
 		}
 
 		if ($this->ShowEverything || $this->ShowMasterSites) {
-			$HTML .= '<dt id="sites"><b>Master Sites:</b>' . freshports_AnchorLink('sites') . '</dt>' . "\n";
+			$HTML .= '<dt id="sites"><b>' . _('Master Sites:') . '</b>' . freshports_AnchorLink('sites') . '</dt>' . "\n";
 
 			if (!empty($port->master_sites)) {
 
 				$MasterSites = explode(' ', $port->master_sites);
 				asort($MasterSites);
 
-				$HTML .= '<dd><a href="#" id="mastersites-Extra-show" class="showLink" onclick="showHide(\'mastersites-Extra\');return false;">Expand this list (' . count($MasterSites) . ' items)</a>';
+				$HTML .= '<dd><a href="#" id="mastersites-Extra-show" class="showLink" onclick="showHide(\'mastersites-Extra\');return false;">' . sprintf(_('Expand this list (%d items)'), count($MasterSites)) . '</a>';
 				$HTML .= '<dd id="mastersites-Extra" class="more mastersites">';
-				$HTML .= '<a href="#" id="mastersites-Extra-hide" class="hideLink" onclick="showHide(\'mastersites-Extra\');return false;">Collapse this list.</a>';
+				$HTML .= '<a href="#" id="mastersites-Extra-hide" class="hideLink" onclick="showHide(\'mastersites-Extra\');return false;">' . _('Collapse this list.') . '</a>';
 				$HTML .= '<ol class="mastersites" id="mastersites">' . "\n";
 
 				foreach ($MasterSites as $Site) {
@@ -1864,10 +1864,10 @@ class port_display {
 			  	}
 
 				$HTML .= '</ol>';
-				$HTML .= '<a href="#" class="hideLink" onclick="showHide(\'mastersites-Extra\');return false;">Collapse this list.</a>';
+				$HTML .= '<a href="#" class="hideLink" onclick="showHide(\'mastersites-Extra\');return false;">' . _('Collapse this list.') . '</a>';
 				$HTML .= '</dd>';
 			} else {
-			  $HTML .= '<dd><ol class="mastersites" id="mastersites"><li>There is no master site for this port.</li></ol></dd>';
+			  $HTML .= '<dd><ol class="mastersites" id="mastersites"><li>' . _('There is no master site for this port.') . '</li></ol></dd>';
 			}
 
 		} # ShowMasterSites
@@ -1927,7 +1927,8 @@ class port_display {
 		# $title is used both as display text and as an HTML id fragment, so it
 		# cannot contain spaces.  Types whose name does not survive that get a
 		# separate label here, used for display only.
-		$Labels = array( 'BuildAndRun' => 'Build and run' );
+		$Labels = array( 'BuildAndRun' => _('Build and run'), 'Build' => _('Build'), 'Extract' => _('Extract'), 'Fetch' => _('Fetch'),
+		                 'Libraries' => _('Libraries'), 'Patch' => _('Patch'), 'Run' => _('Run'), 'Test' => _('Test') );
 
 		foreach ( $Types as $type => $title ) {
 			$label = isset( $Labels[$title] ) ? $Labels[$title] : $title;
@@ -1937,7 +1938,7 @@ class port_display {
 				# everything "required for" XXX goes under this section.
 				# Each one of Build, Extract, etc, gets this.
 				# the id is on this <dt>, not on the list below, because that list is not output when its first port is deleted
-				$HTML .= '<dd class="required"><dl><dt id="requiredfor' . $title . '">for ' . $label . freshports_AnchorLink('requiredfor' . $title) . "</dt>\n";
+				$HTML .= '<dd class="required"><dl><dt id="requiredfor' . $title . '">' . sprintf(_('for %s'), $label) . freshports_AnchorLink('requiredfor' . $title) . "</dt>\n";
 
 				# Let's fetch the first port, and see if it's deleted.  If it is, we don't need this first loop
 				$PortDependencies->FetchNth(0);
@@ -1969,9 +1970,9 @@ class port_display {
 						if ( !$hidingStarted && ( ( ( $NumRows > DEPENDS_SUMMARY )  && ( $i == DEPENDS_SUMMARY ) ) ) ) {
 							$div .= '</ol>';
 							$div .= '<a href="#" id="RequiredBy' . $title . 'Extra-show" class="showLink" onclick="showHide(\'RequiredBy' .
-							        $title . 'Extra\');return false;">Expand this list (' . $NumRows . ' items / ' . ($NumRows - DEPENDS_SUMMARY) . ' hidden - sorry, this count includes any deleted ports)</a>';
+							        $title . 'Extra\');return false;">' . sprintf(_('Expand this list (%1$d items / %2$d hidden - sorry, this count includes any deleted ports)'), $NumRows, $NumRows - DEPENDS_SUMMARY) . '</a>';
 							$div .= '<ol id="RequiredBy' . $title . 'Extra" class="depends more" start="' . ($i + 1) . '" style="margin-top: 0px">';
-							$div .= '<li class="nostyle"><a href="#" id="RequiredBy' . $title . 'Extra-hide" class="hideLink" onclick="showHide(\'RequiredBy' . $title . 'Extra\');return false;" >Collapse this list). </a></li>';
+							$div .= '<li class="nostyle"><a href="#" id="RequiredBy' . $title . 'Extra-hide" class="hideLink" onclick="showHide(\'RequiredBy' . $title . 'Extra\');return false;" >' . _('Collapse this list.') . ' </a></li>';
 							# yes, we have started hiding things.
 							$hidingStarted = true;
 							# we use this to skip a number, the one take up by the Collapse link above.
@@ -1986,7 +1987,7 @@ class port_display {
 					} # for
 
 					if ( $hidingStarted ) {
-						$div .= '<li class="nostyle"><a href="#" class="hideLink" onclick="showHide(\'RequiredBy' . $title . 'Extra\');return false;" >Collapse this list.</a></li>';
+						$div .= '<li class="nostyle"><a href="#" class="hideLink" onclick="showHide(\'RequiredBy' . $title . 'Extra\');return false;" >' . _('Collapse this list.') . '</a></li>';
 					}
 
 					$div .= '</ol></dd>'; # we always close off this list here.
@@ -2002,14 +2003,12 @@ class port_display {
 
 				if ($deletedPortFound) {
 
-					# is it port or ports?
-					$PluralSingularSuffix = ($NumRows - $firstDeletedPort) > 1 ? 's' : '';
 
 					$div .= '<dd id="RequiredBy' . $title . 'Deleted" class="depends">' . "\n";
 
-					$div .= '<p>Deleted ports which required this port:</p>';
+					$div .= '<p>' . _('Deleted ports which required this port:') . '</p>';
 					$div .= '<a href="#" id="RequiredBy' . $title . 'DeletedExtra-show" class="showLink" onclick="showHide(\'RequiredBy' . $title .
-				                'DeletedExtra\');return false;">Expand this list of ' . ($NumRows - $firstDeletedPort) . ' deleted port' . $PluralSingularSuffix . '</a>';
+				                'DeletedExtra\');return false;">' . sprintf(ngettext('Expand this list of %d deleted port', 'Expand this list of %d deleted ports', $NumRows - $firstDeletedPort), $NumRows - $firstDeletedPort) . '</a>';
 
 					$div .= '<ol class="depends more" id="RequiredBy' . $title . 'DeletedExtra" style="padding-left: 20px;">' . "\n";
  					for ( $i = $firstDeletedPort; $i < $NumRows; $i++ ) {
@@ -2020,7 +2019,7 @@ class port_display {
 						$div .= "</li>\n";
 					}
 
-					$div .= '<li class="nostyle"><a href="#" id="RequiredBy' . $title . 'DeletedExtra-hide2" class="hideLink" onclick="showHide(\'RequiredBy' . $title . 'DeletedExtra\');return false;">Collapse this list of deleted ports.</a></li>';
+					$div .= '<li class="nostyle"><a href="#" id="RequiredBy' . $title . 'DeletedExtra-hide2" class="hideLink" onclick="showHide(\'RequiredBy' . $title . 'DeletedExtra\');return false;">' . _('Collapse this list of deleted ports.') . '</a></li>';
 					$div .= '</ol></dd>';
 
 				}
@@ -2032,17 +2031,17 @@ class port_display {
 		}
 
 		if ( $HTML === '' ) {
-			$HTML .= '<dt class="h3" id="requiredby">There are no ports dependent upon this port' . freshports_AnchorLink('requiredby') . '</dt>';
+			$HTML .= '<dt class="h3" id="requiredby">' . _('There are no ports dependent upon this port') . freshports_AnchorLink('requiredby') . '</dt>';
 		} else {
-			$HTML = '<dt class="h3" id="requiredby">This port is required by:' . freshports_AnchorLink('requiredby') . '</dt>' . $HTML;
+			$HTML = '<dt class="h3" id="requiredby">' . _('This port is required by:') . freshports_AnchorLink('requiredby') . '</dt>' . $HTML;
 			if ($deletedPortFound) {
 				# add some stuff to the front of what we have
 				if ( $port->IsDeleted() ) {
-					$HTML = '<dd>NOTE: dependencies for deleted ports are notoriously suspect</dd>' . $HTML;
+					$HTML = '<dd>' . _('NOTE: dependencies for deleted ports are notoriously suspect') . '</dd>' . $HTML;
 				}
 
 				# and to the end...
-				$HTML .= '<dd>* - deleted ports are only shown under the <em>This port is required by</em> section.  It was harder to do for the <em>Required</em> section.  Perhaps later...</dd>';
+				$HTML .= '<dd>* - ' . _('deleted ports are only shown under the <em>This port is required by</em> section.  It was harder to do for the <em>Required</em> section.  Perhaps later...') . '</dd>';
 			}
 		}
 
@@ -2051,7 +2050,7 @@ class port_display {
 
 	function ShowManPageLinks($ConfigurePlist, $NumRows) {
 		$HTML = '';
-		$div = "<br>\n" . '<dt id="man" class="man"><b>Manual pages:</b>' . freshports_AnchorLink('man') . '</dt>';
+		$div = "<br>\n" . '<dt id="man" class="man"><b>' . _('Manual pages:') . '</b>' . freshports_AnchorLink('man') . '</dt>';
 		$CountManPages = 0;
 
 		if ( $NumRows > 0 ) {
@@ -2087,14 +2086,14 @@ class port_display {
 				$div .= "\n" . '<ul class="man">' . "\n";
 				for ( $i = 0; $i < $CountManPages; $i++) {
 					if ($i == 9 && $CountManPages > 12) {
-						$div .= '<a href="#" id="ManPages-Extra-show" class="showLink" onclick="showHide(\'ManPages-Extra\');return false;">Expand this list (' . $CountManPages . ' items)</a>';
+						$div .= '<a href="#" id="ManPages-Extra-show" class="showLink" onclick="showHide(\'ManPages-Extra\');return false;">' . sprintf(_('Expand this list (%d items)'), $CountManPages) . '</a>';
 						$div .= '<span id="ManPages-Extra" class="more ManPages">';
 					}
 					$div .= $ManPages[$i];
 				}
 				
 				if ($CountManPages > 12) {
-					$div .= '<a href="#" class="hideLink" onclick="showHide(\'ManPages-Extra\');return false;">Collapse this list.</a>';
+					$div .= '<a href="#" class="hideLink" onclick="showHide(\'ManPages-Extra\');return false;">' . _('Collapse this list.') . '</a>';
 				}
 
 				$div .= '</ol>';
@@ -2107,7 +2106,7 @@ class port_display {
 		if ( $CountManPages == 0 ) {
 			$HTML .= $div;
 			$HTML .= "\n";
-			$HTML .= '<dd>FreshPorts has no man page information for this port.</dd>';
+			$HTML .= '<dd>' . _('FreshPorts has no man page information for this port.') . '</dd>';
 		}
 
 		return $HTML;
@@ -2119,12 +2118,12 @@ class port_display {
 		if ( $NumRows > 0 ) {
 			// if this is our first output, put up our standard header
 			if ( $HTML === '' ) {
-				$div = "\n" . '<dt id="pkg-plist" class="pkg-plist"><b>pkg-plist:</b> as obtained via: <code class="code">make generate-plist</code>' . freshports_AnchorLink('pkg-plist') . '</dt>';
+				$div = "\n" . '<dt id="pkg-plist" class="pkg-plist"><b>pkg-plist:</b> ' . sprintf(_('as obtained via: %s'), '<code class="code">make generate-plist</code>') . freshports_AnchorLink('pkg-plist') . '</dt>';
 				$div .= '<dd class="pkg-plist">';
-				$div .= '<a href="#" id="configureplist-Extra-show" class="showLink" onclick="showHide(\'configureplist-Extra\');return false;">Expand this list (' . $NumRows . ' items)</a>';
+				$div .= '<a href="#" id="configureplist-Extra-show" class="showLink" onclick="showHide(\'configureplist-Extra\');return false;">' . sprintf(_('Expand this list (%d items)'), $NumRows) . '</a>';
 				$div .= '</dd>';
 				$div .= '<dd id="configureplist-Extra" class="more pkg-plist">';
-				$div .= '<a href="#" id="configureplist-Extra-hide" class="hideLink" onclick="showHide(\'configureplist-Extra\');return false;">Collapse this list.</a>';
+				$div .= '<a href="#" id="configureplist-Extra-hide" class="hideLink" onclick="showHide(\'configureplist-Extra\');return false;">' . _('Collapse this list.') . '</a>';
 				$div .= "\n" . '<ol class="configure" id="configureplist">' . "\n";
 
 				for ( $i = 0; $i < $NumRows; $i++ ) {
@@ -2134,7 +2133,7 @@ class port_display {
 				}
 
 				$div .= '</ol>';
-				$div .= '<a href="#" class="hideLink" onclick="showHide(\'configureplist-Extra\');return false;">Collapse this list.</a>';
+				$div .= '<a href="#" class="hideLink" onclick="showHide(\'configureplist-Extra\');return false;">' . _('Collapse this list.') . '</a>';
 				$div .= '</dd>';
 
 				$HTML .= $div;
@@ -2142,8 +2141,8 @@ class port_display {
 		}
 
 		if ( $HTML === '' ) {
-			$HTML .= "\n" . '<dt class="pkg-plist"><a id="pkg-plist"><b>pkg-plist:</b></a> as obtained via: <code class="code">make generate-plist</code>' . freshports_AnchorLink('pkg-plist') . '</dt>';
-			$HTML .= '<dd>There is no configure plist information for this port.</dd>';
+			$HTML .= "\n" . '<dt class="pkg-plist"><a id="pkg-plist"><b>pkg-plist:</b></a> ' . sprintf(_('as obtained via: %s'), '<code class="code">make generate-plist</code>') . freshports_AnchorLink('pkg-plist') . '</dt>';
+			$HTML .= '<dd>' . _('There is no configure plist information for this port.') . '</dd>';
 		}
 
 		return $HTML;
@@ -2155,7 +2154,7 @@ class port_display {
 		$PackageFlavors = new PackageFlavors( $this->db );
 		$NumRows = $PackageFlavors->FetchInitialise( $this->port->id );
 		if ( $NumRows > 0 ) {
-			$HTML = '<dt class="flavors" id="flavors"><b>Package flavors</b> (<span class="file">&lt;flavor&gt;: &lt;package&gt;</span>)' . freshports_AnchorLink('flavors') . '</dt>';
+			$HTML = '<dt class="flavors" id="flavors"><b>' . _('Package flavors') . '</b> (<span class="file">&lt;' . _('flavor') . '&gt;: &lt;' . _('package') . '&gt;</span>)' . freshports_AnchorLink('flavors') . '</dt>';
 			// if this is our first output, put up our standard header
 			$HTML .= '<dd><ul>';
 			for ( $i = 0; $i < $NumRows; $i++ ) {
@@ -2167,7 +2166,7 @@ class port_display {
 		}
 
 		if ( $NumRows == 0 ) {
-			$HTML .= '<dt class="flavors" id="flavors"><b>Flavors:</b> there is no flavor information for this port.' . freshports_AnchorLink('flavors') . '</dt>';
+			$HTML .= '<dt class="flavors" id="flavors"><b>' . _('Flavors:') . '</b> ' . _('there is no flavor information for this port.') . freshports_AnchorLink('flavors') . '</dt>';
 		}
 
 		return $HTML;

@@ -40,7 +40,7 @@ function DisplayPortCommits($port, $PageNumber):string {
 	if ($NumRowsFrom + $NumRowsTo > 0) {
 		$HTML .= '<table class="ports-moved fullwidth bordered">' . "\n";
 		$HTML .= "<tr>\n";
-		$HTML .= freshports_PageBannerText("Port Moves");
+		$HTML .= freshports_PageBannerText(_("Port Moves"));
 		$HTML .= "<tr><td>\n";
 		$HTML .= "<ul>\n";
 	}
@@ -210,7 +210,7 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 
 		$HTMLPortPart1 .= $MyPort->long_description;
 		if (empty($HTMLPortPart1)) {
-			$HTMLPortPart1 = 'a long description could not be found for this port';
+			$HTMLPortPart1 = _('a long description could not be found for this port');
 		}
 
 		# only save if we are supposed to save... usually for debugging
@@ -328,7 +328,7 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 			#
 			$myShortDescription = $MyPort->{'short_description'};
 			if (empty($myShortDescription)) {
-				$myShortDescription = 'A short description could not be found for this port';
+				$myShortDescription = _('A short description could not be found for this port');
 			}
 			$Cache->CacheDataSet($MyPort->{'element_id'} . "\n" . $myShortDescription . "\n" . $HTMLPortPart2);
 			$Cache->AddPort($MyPort->category, $MyPort->port, CACHE_PORT_DETAIL, $PageNumber, $branch, $Cache::CachePartTwo);
@@ -407,7 +407,7 @@ function freshports_PortDisplay($db, $category, $port, $branch, $HasCommitsOnBra
 			# we are displaying the 
 			$HTMLPortPart3 .= DisplayPortCommits($MyPort, $PageNumber);
 		} else {
-			$HTMLPortPart3 .= "<h2>There are no commits on branch $branch for this port</h2>";
+			$HTMLPortPart3 .= '<h2>' . sprintf(_('There are no commits on branch %s for this port'), $branch) . '</h2>';
 		}
 
 		# only save if we are supposed to save... usually for debugging
@@ -520,7 +520,7 @@ document.body.appendChild(sheet);
 			<?php echo freshports_MainContentTable(); ?>
 
 	<tr>
-		<?php echo freshports_PageBannerText("Port details" . ($branch != BRANCH_HEAD ? ' on branch ' . htmlspecialchars($branch) : '')); ?>
+		<?php echo freshports_PageBannerText($branch != BRANCH_HEAD ? sprintf(_('Port details on branch %s'), htmlspecialchars($branch)) : _('Port details')); ?>
 	</tr>
 
 	<tr><td class="content">
@@ -654,7 +654,7 @@ function freshports_PortDisplayNew($db, $MyPort, $category, $port, $url_args, $B
 
 		$HTMLPortPart1 .= $MyPort->long_description;
 		if (empty($HTMLPortPart1)) {
-			$HTMLPortPart1 = 'a long description could not be found for this port';
+			$HTMLPortPart1 = _('a long description could not be found for this port');
 		}
 
 		# only save if we are supposed to save... usually for debugging
@@ -777,7 +777,7 @@ function freshports_PortDisplayNew($db, $MyPort, $category, $port, $url_args, $B
 			#
 			$myShortDescription = $MyPort->{'short_description'};
 			if (empty($myShortDescription)) {
-				$myShortDescription = 'A short description could not be found for this port';
+				$myShortDescription = _('A short description could not be found for this port');
 			}
 			$Cache->CacheDataSet($MyPort->{'element_id'} . "\n" . $myShortDescription . "\n" . $HTMLPortPart2);
 			$Cache->AddPort($MyPort->category, $MyPort->port, CACHE_PORT_DETAIL, $PageNumber, $Branch, $Cache::CachePartTwo);
@@ -857,7 +857,7 @@ function freshports_PortDisplayNew($db, $MyPort, $category, $port, $url_args, $B
 			# we are displaying the commits from the branch
 			$HTMLPortPart3 .= DisplayPortCommits($MyPort, $PageNumber);
 		} else {
-			$HTMLPortPart3 .= "<h2>There are no commits on branch $Branch for this port</h2>";
+			$HTMLPortPart3 .= '<h2>' . sprintf(_('There are no commits on branch %s for this port'), $Branch) . '</h2>';
 		}
 
 		# only save if we are supposed to save... usually for debugging
@@ -972,7 +972,7 @@ document.body.appendChild(sheet);
 			<?php echo freshports_MainContentTable(); ?>
 
 	<tr>
-		<?php echo freshports_PageBannerText("Port details" . ($Branch != BRANCH_HEAD ? ' on branch ' . htmlspecialchars($Branch) : '')); ?>
+		<?php echo freshports_PageBannerText($Branch != BRANCH_HEAD ? sprintf(_('Port details on branch %s'), htmlspecialchars($Branch)) : _('Port details')); ?>
 	</tr>
 
 	<tr><td class="content">

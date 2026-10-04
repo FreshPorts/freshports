@@ -31,23 +31,11 @@ class Searches {
 		$this->SearchPage = $SearchPage;
 	}
 
-	function GetFormSimple($text, $autofocus=false) {
-return '
-	<FORM ACTION="' . $this->SearchPage . '" NAME="f">
-	' . _('Enter Keywords:') . '<br>
-	<INPUT NAME="query"  TYPE="text" SIZE="8" TABINDEX=1 AUTOCORRECT="off" AUTOCAPITALIZE="none" SPELLCHECK="false"' . ($autofocus ? ' autofocus' : '') . '>' .
-	$text . '<INPUT TYPE="submit" VALUE="' . _('go') . '" NAME="search" TABINDEX=2>' .
-	$this->_DefaultHiddenFields() . '
-	</FORM>
-';
-	}
-
-	# a compact search box for the page header, shown only on narrow screens,
-	# where the sidebar and its search box are tucked away - see issue #636
-	function GetFormHeader() {
+	# the search box in the page header, shown on every page and every device
+	function GetFormHeader($autofocus = false) {
 return '
 	<form action="' . $this->SearchPage . '" class="header-search" role="search">
-	<input name="query" type="search" placeholder="' . _('Search ports') . '" aria-label="' . _('Search ports') . '" autocorrect="off" autocapitalize="none" spellcheck="false">
+	<input name="query" type="search" placeholder="' . _('Search ports') . '" aria-label="' . _('Search ports') . '" autocorrect="off" autocapitalize="none" spellcheck="false"' . ($autofocus ? ' autofocus' : '') . '>
 	<input type="submit" value="' . _('go') . '">' .
 	$this->_DefaultHiddenFields() . '
 	<a href="' . $this->SearchPage . '" title="' . _('Advanced Searching options') . '">' . _('more...') . '</a>

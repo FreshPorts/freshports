@@ -408,6 +408,7 @@ IMG#fp-logo { max-width: 100%; height: auto }
 /* page header: logo, notices, and follow-us links - see issue #636 */
 .site-header {
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-start;
   gap: 1em;
   margin-top: 1em;
@@ -427,8 +428,26 @@ IMG#fp-logo { max-width: 100%; height: auto }
 }
 
 /* only shown on narrow screens */
-.menu-link, .menu-button, .header-search {
+.menu-link, .menu-button {
   display: none;
+}
+
+/* the search box, in the header on every device */
+.header-search {
+  display: flex;
+  flex-basis: 100%;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.header-search input[type="search"] {
+  flex: 0 1 25em;
+  min-width: 0;
+  padding: 0.3em;
+}
+
+.header-search input[type="submit"] {
+  padding: 0.3em 0.8em;
 }
 
 CODE.code, kbd.code {
@@ -952,7 +971,6 @@ table.packages {
 */
 @media only screen and (max-width: 1120px) {
   .site-header {
-    flex-wrap: wrap;
     gap: 0.5em;
     margin-top: 0.5em;
   }
@@ -1016,28 +1034,16 @@ table.packages {
     color: var(--accent-text);
   }
 
-  /* the sidebar is tucked away, so search moves into the header */
-  .header-search {
-    display: flex;
-    flex-basis: 100%;
-    align-items: center;
-    gap: 0.5em;
-  }
-
+  /* fill the width, and 16px or more stops iOS zooming in on focus */
   .header-search input[type="search"] {
     flex: 1;
-    min-width: 0;
     padding: 0.4em;
-    font-size: 16px; /* 16px or more stops iOS zooming in on focus */
+    font-size: 16px;
   }
 
   .header-search input[type="submit"] {
     padding: 0.4em 0.8em;
     font-size: 16px;
-  }
-
-  table.sidebar-search {
-    display: none;
   }
 
   table.layout,

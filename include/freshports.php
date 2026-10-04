@@ -1067,6 +1067,8 @@ GLOBAL $FreshPortsLogoHeight;
 GLOBAL $dbname;
 GLOBAL $dbhost;
 
+GLOBAL $User;
+
 #echo "$LocalTimeAdjustment<br>";
 
 	# a header rather than a table, so it can wrap on narrow screens - see issue #636
@@ -1122,13 +1124,16 @@ if (date("M") == 'Nov' && date("j") <= 12) {
 	
 }
 
-# only shown on narrow screens, where the sidebar is tucked away: the header
-# gets its own search box, and menu-button stays pinned to the top-right corner
-# so it can be used from anywhere on the page.  With JavaScript, menu-button
-# opens and closes the sidebar as a drawer; without it, both links jump to it.
+# the search box lives in the header on every device, so it is always easy to find.
+# menu-link and menu-button are only shown on narrow screens, where the sidebar is
+# tucked away; menu-button stays pinned to the top-right corner so it can be used
+# from anywhere on the page.  With JavaScript, menu-button opens and closes the
+# sidebar as a drawer; without it, both links jump to it.
+#
+# set_focus_search is only set for logged in visitors; is_object() guards pages without getvalues.php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/searches.php');
 $Searches = new Searches(null);
-$HTML .= $Searches->GetFormHeader();
+$HTML .= $Searches->GetFormHeader(is_object($User) && !empty($User->set_focus_search));
 
 $HTML .= '
 	<a class="menu-link" href="#sidebar">' . _('Menu') . '</a>
@@ -2281,37 +2286,6 @@ function freshports_SideBar() {
 	' . freshports_SideBarHTML($_SERVER["PHP_SELF"], "/contact.php",         _("Contact"),             _("Contact details")                                 ) . '
 	</td>
 	</tr>
-</table>
-<br>
-<table class="bordered sidebar-search">
-	<tr>
-		<th class="accent">' . _('Search') . '</th>
-	</tr>
-	<tr>
-
-	<td>';
-
-	GLOBAL $dbh;
-
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/searches.php');
-
-
-	$Searches = new Searches($dbh);
-	#
-	# if $visitor is set, they are logged in, so we can check for set_focus_search
-	# false, or empty string, evaluates to empty
-	# https://www.php.net/manual/en/language.types.boolean.php#language.types.boolean.casting
-	#
-	# fixes [29-Apr-2023 23:58:55 UTC] PHP Warning:  Attempt to read property "set_focus_search" on string in /usr/local/www/freshports/include/freshports.php on line 2066
-	#
-	$HTML .= $Searches->GetFormSimple('&nbsp;', IsSet($visitor) && !empty($User->set_focus_search));
-
-	if ($_SERVER["PHP_SELF"] != '/search.php') {
-		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/search.php', _("more..."), _("Advanced Searching options"));
-	}
-	$HTML .= '
-	</td>
-</tr>
 </table>
 
 ';

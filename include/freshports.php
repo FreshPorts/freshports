@@ -1527,7 +1527,8 @@ function freshports_copyright() {
 function FormatTime($Time, $Adjustment, $Format) {
 #echo "$Time<br>";
 #echo time() . "<br>";
-	return date($Format, strtotime($Time) + $Adjustment);
+	# day and month names follow the visitor's language - see freshports_i18n_date()
+	return freshports_i18n_date(strtotime($Time) + $Adjustment, $Format);
 }
 
 function freshports_UpdatingOutput($NumRowsUpdating, $PortsUpdating, $port) {
@@ -1777,7 +1778,12 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 		$HTML .= '<span class="element-details">' . $PackageVersion . '</span><br>';
 	}
 
-	$HTML .= $commit->commit_date . '<br>';
+	# commit_date comes from the database as e.g. '04 Apr 2024 13:19:47'; English shows it as is
+	if (FRESHPORTS_LOCALE == I18N_DEFAULT_LOCALE) {
+		$HTML .= $commit->commit_date . '<br>';
+	} else {
+		$HTML .= freshports_i18n_date(strtotime($commit->commit_date), 'd M Y H:i:s') . '<br>';
+	}
 	if ($GitCommit) {
 		$HTML .= freshports_git_commit_Link_freebsd ($commit->message_id, $commit->repo_hostname, $commit->path_to_repo);
 		$HTML .= freshports_git_commit_Link_codeberg($commit->message_id, $commit->repo_hostname, $commit->path_to_repo);
@@ -2423,7 +2429,7 @@ function freshports_LinkToDate($Date, $Text = '', $BranchName = BRANCH_HEAD) {
 	if ($Text != '') {
 		$URL .= $Text;
 	} else {
-		$URL .= date("j F", $Date);
+		$URL .= freshports_i18n_date($Date, "j F");
 	}
 
 	$URL .= '</a>';

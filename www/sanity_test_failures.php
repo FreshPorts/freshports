@@ -45,7 +45,7 @@ function freshports_SummaryForDay($MinusN) {
       echo '<br><table WIDTH="152" class="bordered" CELLPADDING="5">';
       echo '  <tr>';
       echo '<td class="accent" height="30">';
-      echo date("l j M", $Now - 60*60*24*$MinusN);
+      echo freshports_i18n_date($Now - 60*60*24*$MinusN, "l j M");
       echo '</td>';
       echo '       </tr>';
       echo '        <tr>';

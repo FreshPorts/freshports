@@ -193,6 +193,50 @@ function freshports_i18n_start() {
 }
 
 #
+# Format a date with day and month names in the visitor's language, e.g.
+# 'Saturday, 3 Oct 2026' becomes '2026年10月3日星期六' in Chinese.
+#
+# $Format is the PHP date() format used for English.  English, and any format
+# not listed below, gives exactly what date() gives.  Other languages need the
+# intl extension; without it, the date stays English.
+#
+function freshports_i18n_date($Timestamp, $Format) {
+	if (!defined('FRESHPORTS_LOCALE') || FRESHPORTS_LOCALE == I18N_DEFAULT_LOCALE || !class_exists('IntlDateFormatter')) {
+		return date($Format, $Timestamp);
+	}
+
+	# for each English format: the ICU skeleton (the fields wanted, in any order),
+	# and the date and time styles to fall back on before PHP 8.1
+	$Formats = array(
+		'l, j M Y'    => array('EEEEdMMMy', IntlDateFormatter::FULL,   IntlDateFormatter::NONE),
+		'l j M'       => array('EEEEdMMM',  IntlDateFormatter::FULL,   IntlDateFormatter::NONE),
+		'j F'         => array('dMMMM',     IntlDateFormatter::LONG,   IntlDateFormatter::NONE),
+		'd M Y H:i:s' => array('yMMMdHms',  IntlDateFormatter::MEDIUM, IntlDateFormatter::MEDIUM),
+	);
+	if (!isset($Formats[$Format])) {
+		return date($Format, $Timestamp);
+	}
+
+	static $Formatters = array();
+	if (!isset($Formatters[$Format])) {
+		list($Skeleton, $DateType, $TimeType) = $Formats[$Format];
+
+		$Pattern = null;
+		if (class_exists('IntlDatePatternGenerator')) {
+			$Pattern = (new IntlDatePatternGenerator(FRESHPORTS_LOCALE))->getBestPattern($Skeleton) ?: null;
+		}
+
+		$Formatters[$Format] = new IntlDateFormatter(FRESHPORTS_LOCALE, $DateType, $TimeType,
+		                           defined('FRESHPORTS_TIMEZONE') ? FRESHPORTS_TIMEZONE : 'UTC',
+		                           IntlDateFormatter::GREGORIAN, $Pattern);
+	}
+
+	$Result = $Formatters[$Format]->format($Timestamp);
+
+	return $Result === false ? date($Format, $Timestamp) : $Result;
+}
+
+#
 # Cached pages are per language. English keeps the original file names, so its
 # cache is unaffected; other languages add e.g. '.zh_CN' to the name.
 #

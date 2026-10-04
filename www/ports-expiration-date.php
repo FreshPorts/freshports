@@ -27,8 +27,8 @@
 
 	$page->setDB($db);
 
-	$page->setTitle('Ports with an expiration date');
-	$page->setDescription('These ports have an expiration date, after which they may be removed from the tree');
+	$page->setTitle(_('Ports with an expiration date'));
+	$page->setDescription(_('These ports have an expiration date, after which they may be removed from the tree'));
 
 
 	$page->setSQL("ports.expiration_date is not null", $User->id);

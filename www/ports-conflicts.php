@@ -11,13 +11,13 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 ?>
 
-<h1>FreshPorts Conflict Matches</h1>
+<h1><?php echo _('FreshPorts Conflict Matches'); ?></h1>
 
-<p>This page is manually generated and was last updated at:</P>
+<p><?php echo _('This page is manually generated and was last updated at:'); ?></P>
 
-<p>Please look for the ports you maintain, and verify the conflicts are what you expect.  The middle column is the port you maintain. The right hand column are the conflicts.<p>
+<p><?php echo _('Please look for the ports you maintain, and verify the conflicts are what you expect.  The middle column is the port you maintain. The right hand column are the conflicts.'); ?><p>
 
-<p>Please report any issues to dvl@FreeBSD.org</p>
+<p><?php printf(_('Please report any issues to %s'), 'dvl@FreeBSD.org'); ?></p>
 
 <?php
 
@@ -36,14 +36,14 @@ echo "<pre>$sql</pre>";
 $result = pg_query_params($db, $sql, array());
 if (!$result) {
   echo pg_last_error($db);
-  die('that did not work');
+  die(_('that did not work'));
 }
 $numrows = pg_num_rows($result);
-echo '<table><tr><th>Maintainer</th><th>port</th><th>conflicts with</th></tr>';
+echo '<table><tr><th>' . _('Maintainer') . '</th><th>' . _('port') . '</th><th>' . _('conflicts with') . '</th></tr>';
 for ($i = 0; $i < $numrows; $i++) {
 	 $myrow = pg_fetch_array($result, $i);
 	 echo '<tr><td>' . $myrow['maintainer'] . '</td><td><a href="/' . $myrow['port_name'] . '">' .  $myrow['port_name'] . 
-              '</a></td><td>conflicts with: <a href="/' . $myrow['category'] . '/' . $myrow['port'] . '">' . $myrow['category'] . '/' . $myrow['port'] . '</a></td></tr>';
+              '</a></td><td>' . _('conflicts with:') . ' <a href="/' . $myrow['category'] . '/' . $myrow['port'] . '">' . $myrow['category'] . '/' . $myrow['port'] . '</a></td></tr>';
 }
 
 echo '</table>';

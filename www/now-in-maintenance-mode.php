@@ -17,7 +17,7 @@
 	} else {
 		header('Location: /', TRUE, 307);
 	}
-	$Title = 'Maintenance Mode';
+	$Title = _('Maintenance Mode');
 	freshports_Start($Title,
 					$Title,
 					'FreeBSD, index, applications, ports');
@@ -37,20 +37,20 @@
 
 
 <tr>
-	<?php echo freshports_PageBannerText("Maintenance Mode"); ?>
+	<?php echo freshports_PageBannerText(_('Maintenance Mode')); ?>
 </tr>
 <TR><td>
 
 <p>
-The website is now in maintenance mode. No updates are allowed during this process.
+<?php echo _('The website is now in maintenance mode. No updates are allowed during this process.'); ?>
 </p>
 
 <p>
-This page will reload every <?php echo MAINTENANCE_MODE_RERESH_TIME_SECONDS; ?> seconds. When maintence mode finishes, this page will be redirect to the home page.
+<?php printf(ngettext('This page will reload every %d second. When maintenance mode finishes, this page will be redirected to the home page.', 'This page will reload every %d seconds. When maintenance mode finishes, this page will be redirected to the home page.', MAINTENANCE_MODE_RERESH_TIME_SECONDS), MAINTENANCE_MODE_RERESH_TIME_SECONDS); ?>
 </p>
 
 <p class="maintenance">
-<img src="images/work-in-progress.jpg" width="640" height="480" alt="work in progress">
+<img src="images/work-in-progress.jpg" width="640" height="480" alt="<?php echo htmlspecialchars(_('work in progress')); ?>">
 </p>
 
 </td></TR>

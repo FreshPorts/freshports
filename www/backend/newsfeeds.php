@@ -18,11 +18,11 @@
 
 	$page->setDB($db);
 
-	$page->setTitle('Newsfeeds');
+	$page->setTitle(_('Newsfeeds'));
 
 	$page->addBodyContent('
 	</tr><tr><td>
-	We have five newsfeeds:
+	' . _('We have five newsfeeds:') . '
 	');
 
 	$Protocol = isset($_SERVER['HTTPS']) ? 'https' : 'http';
@@ -33,22 +33,22 @@
 
 	$page->addBodyContent('
 	<ol>
-	<li>An RSS feed : ' . $HREF . '
-	<p>Take your pick of different formats:');
+	<li>' . sprintf(_('An RSS feed : %s'), $HREF) . '
+	<p>' . _('Take your pick of different formats:'));
 	
 	$URL  = "$Protocol://$ServerName/backend/";
 	$HREF = "<a href=\"$URL\">$URL</a>";
 	$page->addBodyContent($HREF . '
 	
-	<p>This RSS feed takes the following optional parameters:</p>
+	<p>' . _('This RSS feed takes the following optional parameters:') . '</p>
 	<ul>
-	<li><b>flavor=new</b> : show only new ports (ignores <b>branch</b>).</li>
-	<li><b>flavor=broken</b> : show only new ports (ignores <b>branch</b>).</li>
-	<li><b>flavor=vuln</b> : show only vuln ports (branches should work, let me know if they do not).</li>
-	<li><b>branch=2018Q3</b> : show only commits on that branch. If not specified, defaults to <b>head</b>.
+	<li><b>flavor=new</b> : ' . _('show only new ports (ignores <b>branch</b>).') . '</li>
+	<li><b>flavor=broken</b> : ' . _('show only new ports (ignores <b>branch</b>).') . '</li>
+	<li><b>flavor=vuln</b> : ' . _('show only vuln ports (branches should work, let me know if they do not).') . '</li>
+	<li><b>branch=2018Q3</b> : ' . _('show only commits on that branch. If not specified, defaults to <b>head</b>.') . '
 	</ul>
 	<p>
-	Sample URLs include:
+	' . _('Sample URLs include:') . '
 	</p>
 	<ol>
 	<li>' . $URL . 'html.php?branch=2018Q4</li>
@@ -63,12 +63,11 @@
 	$HREF = "<a href=\"$URL\">$URL</a>";
 
 	$page->addBodyContent('
-	<li><p>An RSS feed that lists only new ports:  ' . $HREF . ' </p></li>
+	<li><p>' . sprintf(_('An RSS feed that lists only new ports:  %s'), $HREF) . ' </p></li>
 
-	<li><p>A Personal News feed for each of your watch lists. Look for the link under
-		the <code>Watch Lists</code> box after you have logged in.</li>
+	<li><p>' . _('A Personal News feed for each of your watch lists. Look for the link under the <code>Watch Lists</code> box after you have logged in.') . '</li>
 
-	<li><p>The blog for this website, <a href="https://news.freshports.org/">FreshPorts News</a>.
+	<li><p>' . _('The blog for this website, <a href="https://news.freshports.org/">FreshPorts News</a>.') . '
 
 	</ol>');
 

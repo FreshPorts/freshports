@@ -369,18 +369,21 @@ SELECT gmt_format(max(CL.date_added)) as last_modified " . $this->_FROM_CLAUSE()
 
 		switch ($sort) {
 			case 'dateadded':
-				$HTML .= 'sorted by date added.  You can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=category">category</a>' .
-							', or by <a href="' . $_SERVER["PHP_SELF"] . '?sort=port">port</a>.';
+				$HTML .= sprintf(_('This page is sorted by date added.  You can sort by %1$s, or by %2$s.'),
+							'<a href="' . $_SERVER["PHP_SELF"] . '?sort=category">' . _('category') . '</a>',
+							'<a href="' . $_SERVER["PHP_SELF"] . '?sort=port">' . _('port') . '</a>');
 				break;
 
 			case 'port':
-				$HTML .= 'sorted by port.  You can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=category">category</a>' .
-							', or by <a href="' . $_SERVER["PHP_SELF"] . '?sort=dateadded">date added</a>.';
+				$HTML .= sprintf(_('This page is sorted by port.  You can sort by %1$s, or by %2$s.'),
+							'<a href="' . $_SERVER["PHP_SELF"] . '?sort=category">' . _('category') . '</a>',
+							'<a href="' . $_SERVER["PHP_SELF"] . '?sort=dateadded">' . _('date added') . '</a>');
 				break;
 
 			default:
-				$HTML .= 'sorted by category.  You can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=dateadded">date added</a>' . 
-							', or by <a href="' . $_SERVER["PHP_SELF"] . '?sort=port">port</a>.';
+				$HTML .= sprintf(_('This page is sorted by category.  You can sort by %1$s, or by %2$s.'),
+							'<a href="' . $_SERVER["PHP_SELF"] . '?sort=dateadded">' . _('date added') . '</a>',
+							'<a href="' . $_SERVER["PHP_SELF"] . '?sort=port">' . _('port') . '</a>');
 		}
 
 		return $HTML;
@@ -408,7 +411,7 @@ SELECT gmt_format(max(CL.date_added)) as last_modified " . $this->_FROM_CLAUSE()
 
 		// make sure the value for $sort is valid
 
-		$SortStatement = "<tr><td>\nThis page is " . $this->getSortedbyHTML() . "</td></tr>\n";
+		$SortStatement = "<tr><td>\n" . $this->getSortedbyHTML() . "</td></tr>\n";
 
 		$this->addBodyContent($SortStatement); 
 

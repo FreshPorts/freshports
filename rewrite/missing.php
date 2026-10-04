@@ -9,9 +9,9 @@
 	# this is a true 404
 	header("HTTP/1.1 404 NOT FOUND");
 
-	$Title = 'Document not found';
-	freshports_Start($Title . ' 404 page',
-					$FreshPortsTitle . ' - 404 page',
+	$Title = _('Document not found');
+	freshports_Start(sprintf(_('%s 404 page'), $Title),
+					sprintf(_('%s - 404 page'), $FreshPortsTitle),
 					'FreeBSD, index, applications, ports');
 					
 ?>
@@ -31,11 +31,11 @@
 <tr>
 <td class="content">
 <P>
-Sorry, but I don't know anything about that.
+<?php echo _("Sorry, but I don't know anything about that."); ?>
 </P>
 
 <P>
-Perhaps a <a href="/categories.php">list of categories</a> or <a href="/search.php">the search page</a> might be helpful.
+<?php echo _('Perhaps a <a href="/categories.php">list of categories</a> or <a href="/search.php">the search page</a> might be helpful.'); ?>
 </P>
 
 </td>

@@ -12,7 +12,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
-	freshports_Start('The forums are gone',
+	freshports_Start(_('The forums are gone'),
 					'freshports - new ports, applications',
 					'FreeBSD, index, applications, ports');
 
@@ -23,21 +23,21 @@
 
 	<?php echo freshports_MainContentTable(); ?>
   <tr>
-	<?php echo freshports_PageBannerText("The forums are gone"); ?>
+	<?php echo freshports_PageBannerText(_('The forums are gone')); ?>
   </tr>
 	<tr>
 	<td>
 	<P>
-	The forums have been removed <a href="https://github.com/FreshPorts/freshports/issues/134">via issue #134</a>.
+	<?php echo _('The forums have been removed <a href="https://github.com/FreshPorts/freshports/issues/134">via issue #134</a>.'); ?>
 	</P>
 
 	<P>
-	The software they used was outdated. The usage was low. Better tools exist, such as:
+	<?php echo _('The software they used was outdated. The usage was low. Better tools exist, such as:'); ?>
 
 <ul>
-<li><a href="https://github.com/FreshPorts/freshports/issues">Github issues</a></li>
-<li><a href="https://www.freebsd.org/community/mailinglists.html">mailing lists</a></li>
-<li><a href="https://forums.freebsd.org/">FreeBSD forums</a></li>
+<li><a href="https://github.com/FreshPorts/freshports/issues"><?php echo _('GitHub issues'); ?></a></li>
+<li><a href="https://www.freebsd.org/community/mailinglists.html"><?php echo _('mailing lists'); ?></a></li>
+<li><a href="https://forums.freebsd.org/"><?php echo _('FreeBSD forums'); ?></a></li>
 </ul>
 
 	</P>

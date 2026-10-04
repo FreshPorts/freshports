@@ -27,8 +27,8 @@
 
 	$page->setDB($db);
 
-	$page->setTitle('NO CDROM ports');
-	$page->setDescription('These are the NO CDROM ports');
+	$page->setTitle(_('NO CDROM ports'));
+	$page->setDescription(_('These are the NO CDROM ports'));
 
 
 	$page->setSQL("ports.no_cdrom <> ''", $User->id);

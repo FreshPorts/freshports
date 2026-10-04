@@ -25,34 +25,34 @@ if (isset($_REQUEST["interval"])) {
 switch ($interval) {
     case 'today':
         $IntervalAdjust = '1 day';
-        $Interval = 'past 24 hours';
+        $Interval = _('past 24 hours');
         break;
 
     case 'yesterday':
         $IntervalAdjust = '2 days';
-        $Interval = 'past 48 hours';
+        $Interval = _('past 48 hours');
         break;
 
     default:
     case 'week':
         $interval = 'week';
         $IntervalAdjust = '1 week';
-        $Interval = 'past 7 days';
+        $Interval = _('past 7 days');
         break;
 
     case 'fortnight':
         $IntervalAdjust = '2 weeks';
-        $Interval = 'past 2 weeks';
+        $Interval = _('past 2 weeks');
         break;
 
     case 'month':
         $IntervalAdjust = '1 month';
-        $Interval = 'past month';
+        $Interval = _('past month');
         break;
 
     case '3months':
         $IntervalAdjust = '3 months';
-        $Interval = 'past 3 months';
+        $Interval = _('past 3 months');
 }
 
 
@@ -62,7 +62,7 @@ if (isset($_REQUEST['branch'])) {
     $BranchName = BRANCH_HEAD;
 }
 
-$Title = "New ports - " . $Interval;
+$Title = sprintf(_('New ports - %s'), $Interval);
 
 freshports_Start($Title,
     $Title,
@@ -82,7 +82,7 @@ freshports_Start($Title,
 </tr>
 <tr>
     <td>
-        These are the recently added ports.
+        <?php echo _('These are the recently added ports.'); ?>
     </td>
 </tr>
 <?php
@@ -96,18 +96,18 @@ if (isset($_REQUEST["sort"])) {
 
 // make sure the value for $sort is valid
 
-echo "<tr><td>\nThis page is ";
+echo "<tr><td>\n";
 
 switch ($sort) {
     case "dateadded":
         $sort = "date_added_raw desc, category, port";
-        echo 'sorted by date added.  <a href="' . $_SERVER["PHP_SELF"] . '?interval=' . $interval . '&amp;sort=category">Sort by category</a>';
+        printf(_('This page is sorted by date added.  %s'), '<a href="' . $_SERVER["PHP_SELF"] . '?interval=' . $interval . '&amp;sort=category">' . _('Sort by category') . '</a>');
         $ShowCategoryHeaders = 0;
         break;
 
     default:
         $sort = "category, port";
-        echo 'sorted by category.  <a href="' . $_SERVER["PHP_SELF"] . '?interval=' . $interval . '&amp;sort=dateadded">Sort by date added</a>';
+        printf(_('This page is sorted by category.  %s'), '<a href="' . $_SERVER["PHP_SELF"] . '?interval=' . $interval . '&amp;sort=dateadded">' . _('Sort by date added') . '</a>');
         $ShowCategoryHeaders = 1;
 }
 

@@ -27,8 +27,8 @@
 
 	$page->setDB($db);
 
-	$page->setTitle('Broken ports');
-	$page->setDescription('These are the broken ports');
+	$page->setTitle(_('Broken ports'));
+	$page->setDescription(_('These are the broken ports'));
 
 
 	$page->setSQL("ports.broken <> ''", $User->id);

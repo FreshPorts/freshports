@@ -27,8 +27,8 @@
 
 	$page->setDB($db);
 
-	$page->setTitle('Deprecated ports');
-	$page->setDescription('These are the deprecated ports');
+	$page->setTitle(_('Deprecated ports'));
+	$page->setDescription(_('These are the deprecated ports'));
 
 
 	$page->setSQL("ports.deprecated <> ''", $User->id);

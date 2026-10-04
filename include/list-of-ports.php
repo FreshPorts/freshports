@@ -22,9 +22,9 @@ function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeade
 		$PortCount = $numrows;
 	}
 
-	$PortCountText = "<tr><td>$PortCount ports found.";
+	$PortCountText = '<tr><td>' . sprintf(ngettext('%d port found.', '%d ports found.', $PortCount), $PortCount);
 	if ($numrows != $PortCount) {
-		$PortCountText .= " (showing only $numrows ports on this page)";
+		$PortCountText .= ' ' . sprintf(ngettext('(showing only %d port on this page)', '(showing only %d ports on this page)', $numrows), $numrows);
 	}
 	$PortCountText .= "</td></tr>\n";
 

@@ -27,8 +27,8 @@
 
 	$page->setDB($db);
 
-	$page->setTitle('Vulnerable ports');
-	$page->setDescription('These are the vulnerable ports');
+	$page->setTitle(_('Vulnerable ports'));
+	$page->setDescription(_('These are the vulnerable ports'));
 
 
 	$page->setSQL("PV.current != 0", $User->id);

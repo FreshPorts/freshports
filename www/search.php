@@ -20,7 +20,7 @@
 	        # one message, twice invoked.
 	        $msg = 'You must be logged in to use this feature.';
 	        header('HTTP/1.1 401 ' . $msg);
-	        die($msg);
+	        die(_('You must be logged in to use this feature.'));
 	} else {
 	        checkLoadBeforeProceeding();
         }
@@ -182,7 +182,7 @@
 	if ($RejectExternalSearches  && $_SERVER["HTTP_REFERER"] != '') {
 		$pos = strpos($_SERVER["HTTP_REFERER"], $protocol . '://' . $_SERVER["HTTP_HOST"]);
 		if ($pos === FALSE || $pos != 0) {
-			echo "Ouch, something really nasty is going on.  Error code: UAFC.  Please contact the webmaster with this message.";
+			echo _('Ouch, something really nasty is going on.  Error code: UAFC.  Please contact the webmaster with this message.');
 			syslog(LOG_NOTICE, "External search form discovered: $_SERVER[HTTP_REFERER] $_SERVER[REMOTE_ADDR]:$_SERVER[REMOTE_PORT]");
 			exit;
 		}
@@ -334,13 +334,13 @@
 	# based on https://github.com/FreshPorts/freshports/issues/556
 	# If you want format depends as output, you must search by port name as input.
 	if ($output_format == OUTPUT_FORMAT_DEPENDS && $stype != SEARCH_FIELD_NAME) {
-	        echo "If the 'Output format' is 'Depends', then you must search by 'Port Name'. Please adjust the parameters and try again.";
+	        echo _("If the 'Output format' is 'Depends', then you must search by 'Port Name'. Please adjust the parameters and try again.");
 	        exit;
 	}
 
 	// start of HTML output
 	if ($output_format == OUTPUT_FORMAT_HTML) {
-		$Title = 'Search';
+		$Title = _('Search');
 		freshports_Start($Title,
 					$Title,
 					'FreeBSD, index, applications, ports');
@@ -350,7 +350,7 @@
 <tr><td class="content">
 <?php echo freshports_MainContentTable(); ?>
   <tr>
-	<?php echo freshports_PageBannerText("Search FreshPorts using Google"); ?>
+	<?php echo freshports_PageBannerText(_("Search FreshPorts using Google")); ?>
   </tr>
 <tr><td><div class="gcse-search"></div>
 <?php
@@ -411,7 +411,7 @@
 				default:
 					$method = 'match';
 					if ($output_format == OUTPUT_FORMAT_HTML ) {
-						$HTML .= "<p><b>NOTE</b>: Instead of using 'sounds like' as instructed, the system used 'containing'.  See the notes above for why this is done.</p>";
+						$HTML .= '<p>' . _("<b>NOTE</b>: Instead of using 'sounds like' as instructed, the system used 'containing'.  See the notes above for why this is done.") . '</p>';
 					}
 					break;
 			}
@@ -729,7 +729,7 @@
 			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
 
 			if (empty($sqlUserSpecifiedCondition)) {
-				exit("Sorry, but you messed something up in your manually created query");
+				exit(_('Sorry, but you messed something up in your manually created query'));
 			}
 			$Commits = new CommitsByTreeLocation($db);
 			$Commits->UserIDSet($User->id);
@@ -980,7 +980,7 @@ JOIN element_pathname EP on E.id = EP.element_id
 			$result  = pg_query_params($db,"-- search.php line " . __LINE__ . "\n" . $sql, $query_params);
 			if (!$result) {
 			  syslog(LOG_NOTICE, pg_last_error($db) . ': ' . $sql);
-			  die('something went terribly wrong.  Sorry.');
+			  die(_('something went terribly wrong.  Sorry.'));
 			}
 
 			$NumRows  = pg_num_rows($result);
@@ -1043,7 +1043,7 @@ JOIN element_pathname EP on E.id = EP.element_id
 
 				if (!$result) {
 					syslog(LOG_NOTICE, pg_last_error($db) . ': ' . $sql);
-					die('something went terribly wrong.  Sorry.');
+					die(_('something went terribly wrong.  Sorry.'));
 				}
 
 				$NumFetches = pg_num_rows($result);
@@ -1077,7 +1077,7 @@ JOIN element_pathname EP on E.id = EP.element_id
 			}
 			fclose($fp);
 		} else {
-			print "Please let postmaster@freshports.org know that the search log could not be opened.  This does not affect the search results.\n";
+			print _('Please let postmaster@freshports.org know that the search log could not be opened.  This does not affect the search results.') . "\n";
 			define_syslog_variables();
 			syslog(LOG_ERR, "FreshPorts could not open the search log file: $logfile");
 		}
@@ -1110,45 +1110,45 @@ JOIN element_pathname EP on E.id = EP.element_id
 
 <?php echo freshports_MainContentTable(); ?>
   <tr>
-	<?php echo freshports_PageBannerText("The FreshPorts Search"); ?>
+	<?php echo freshports_PageBannerText(_("The FreshPorts Search")); ?>
   </tr>
 <tr><td>
 
 
 <form ACTION="<?php echo $_SERVER["PHP_SELF"] ?>" name="search" >
 	<SELECT NAME="stype" size="1">
-		<OPTION VALUE="<?php echo SEARCH_FIELD_AUTHOR_EMAIL         . '"'; if ($stype == SEARCH_FIELD_AUTHOR_EMAIL)         echo ' SELECTED'; ?>>Author Email</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_AUTHOR_NAME          . '"'; if ($stype == SEARCH_FIELD_AUTHOR_NAME)          echo ' SELECTED'; ?>>Author Name</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_COMMITMESSAGE        . '"'; if ($stype == SEARCH_FIELD_COMMITMESSAGE)        echo ' SELECTED'; ?>>Commit Message</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_COMMITTER            . '"'; if ($stype == SEARCH_FIELD_COMMITTER)            echo ' SELECTED'; ?>>Committer ID (email without @FreeBSD.org)</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_COMMITTER_EMAIL      . '"'; if ($stype == SEARCH_FIELD_COMMITTER_EMAIL)      echo ' SELECTED'; ?>>Committer Email</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_COMMITTER_NAME       . '"'; if ($stype == SEARCH_FIELD_COMMITTER_NAME)       echo ' SELECTED'; ?>>Committer Name</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_DEPENDS_BUILD        . '"'; if ($stype == SEARCH_FIELD_DEPENDS_BUILD)        echo ' SELECTED'; ?>>Depends Build</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_DEPENDS_LIB          . '"'; if ($stype == SEARCH_FIELD_DEPENDS_LIB)          echo ' SELECTED'; ?>>Depends Lib</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_DEPENDS_RUN          . '"'; if ($stype == SEARCH_FIELD_DEPENDS_RUN)          echo ' SELECTED'; ?>>Depends Run</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_DEPENDS_ALL          . '"'; if ($stype == SEARCH_FIELD_DEPENDS_ALL)          echo ' SELECTED'; ?>>Depends Build/Lib/Run</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_AUTHOR_EMAIL         . '"'; if ($stype == SEARCH_FIELD_AUTHOR_EMAIL)         echo ' SELECTED'; ?>><?php echo _('Author Email'); ?></OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_AUTHOR_NAME          . '"'; if ($stype == SEARCH_FIELD_AUTHOR_NAME)          echo ' SELECTED'; ?>><?php echo _('Author Name'); ?></OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_COMMITMESSAGE        . '"'; if ($stype == SEARCH_FIELD_COMMITMESSAGE)        echo ' SELECTED'; ?>><?php echo _('Commit Message'); ?></OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_COMMITTER            . '"'; if ($stype == SEARCH_FIELD_COMMITTER)            echo ' SELECTED'; ?>><?php echo _('Committer ID (email without @FreeBSD.org)'); ?></OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_COMMITTER_EMAIL      . '"'; if ($stype == SEARCH_FIELD_COMMITTER_EMAIL)      echo ' SELECTED'; ?>><?php echo _('Committer Email'); ?></OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_COMMITTER_NAME       . '"'; if ($stype == SEARCH_FIELD_COMMITTER_NAME)       echo ' SELECTED'; ?>><?php echo _('Committer Name'); ?></OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_DEPENDS_BUILD        . '"'; if ($stype == SEARCH_FIELD_DEPENDS_BUILD)        echo ' SELECTED'; ?>><?php echo _('Depends Build'); ?></OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_DEPENDS_LIB          . '"'; if ($stype == SEARCH_FIELD_DEPENDS_LIB)          echo ' SELECTED'; ?>><?php echo _('Depends Lib'); ?></OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_DEPENDS_RUN          . '"'; if ($stype == SEARCH_FIELD_DEPENDS_RUN)          echo ' SELECTED'; ?>><?php echo _('Depends Run'); ?></OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_DEPENDS_ALL          . '"'; if ($stype == SEARCH_FIELD_DEPENDS_ALL)          echo ' SELECTED'; ?>><?php echo _('Depends Build/Lib/Run'); ?></OPTION>
 		<OPTION VALUE="<?php echo SEARCH_FIELD_LICENSE_PERMS        . '"'; if ($stype == SEARCH_FIELD_LICENSE_PERMS)        echo ' SELECTED'; ?>>LICENSE_PERMS</OPTION>
 		<OPTION VALUE="<?php echo SEARCH_FIELD_LICENSE_RESTRICTED   . '"'; if ($stype == SEARCH_FIELD_LICENSE_RESTRICTED)   echo ' SELECTED'; ?>>_LICENSE_RESTRICTED</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_LONGDESCRIPTION      . '"'; if ($stype == SEARCH_FIELD_LONGDESCRIPTION)      echo ' SELECTED'; ?>>Long Description</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_MAINTAINER           . '"'; if ($stype == SEARCH_FIELD_MAINTAINER)           echo ' SELECTED'; ?>>Maintainer</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_MAKEFILE             . '"'; if ($stype == SEARCH_FIELD_MAKEFILE)             echo ' SELECTED'; ?>>Makefile (ports only)</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_LONGDESCRIPTION      . '"'; if ($stype == SEARCH_FIELD_LONGDESCRIPTION)      echo ' SELECTED'; ?>><?php echo _('Long Description'); ?></OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_MAINTAINER           . '"'; if ($stype == SEARCH_FIELD_MAINTAINER)           echo ' SELECTED'; ?>><?php echo _('Maintainer'); ?></OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_MAKEFILE             . '"'; if ($stype == SEARCH_FIELD_MAKEFILE)             echo ' SELECTED'; ?>><?php echo _('Makefile (ports only)'); ?></OPTION>
 		<OPTION VALUE="<?php echo SEARCH_FIELD_MANUAL_PACKAGE_BUILD . '"'; if ($stype == SEARCH_FIELD_MANUAL_PACKAGE_BUILD) echo ' SELECTED'; ?>>MANUAL_PACKAGE_BUILD</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_MESSAGEID            . '"'; if ($stype == SEARCH_FIELD_MESSAGEID)            echo ' SELECTED'; ?>>Message ID</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_PACKAGE              . '"'; if ($stype == SEARCH_FIELD_PACKAGE)              echo ' SELECTED'; ?>>Package Name</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_MESSAGEID            . '"'; if ($stype == SEARCH_FIELD_MESSAGEID)            echo ' SELECTED'; ?>><?php echo _('Message ID'); ?></OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_PACKAGE              . '"'; if ($stype == SEARCH_FIELD_PACKAGE)              echo ' SELECTED'; ?>><?php echo _('Package Name'); ?></OPTION>
 		<OPTION VALUE="<?php echo SEARCH_FIELD_PKG_MESSAGE          . '"'; if ($stype == SEARCH_FIELD_PKG_MESSAGE)          echo ' SELECTED'; ?>>pkg-message</OPTION>
 		<OPTION VALUE="<?php echo SEARCH_FIELD_PKG_PLIST            . '"'; if ($stype == SEARCH_FIELD_PKG_PLIST)            echo ' SELECTED'; ?>>pkg-plist</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_NAME                 . '"'; if ($stype == SEARCH_FIELD_NAME)                 echo ' SELECTED'; ?>>Port Name</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_SHORTDESCRIPTION     . '"'; if ($stype == SEARCH_FIELD_SHORTDESCRIPTION)     echo ' SELECTED'; ?>>Short Description</OPTION>
-		<OPTION VALUE="<?php echo SEARCH_FIELD_PATHNAME             . '"'; if ($stype == SEARCH_FIELD_PATHNAME)             echo ' SELECTED'; ?>>Under a pathname</OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_NAME                 . '"'; if ($stype == SEARCH_FIELD_NAME)                 echo ' SELECTED'; ?>><?php echo _('Port Name'); ?></OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_SHORTDESCRIPTION     . '"'; if ($stype == SEARCH_FIELD_SHORTDESCRIPTION)     echo ' SELECTED'; ?>><?php echo _('Short Description'); ?></OPTION>
+		<OPTION VALUE="<?php echo SEARCH_FIELD_PATHNAME             . '"'; if ($stype == SEARCH_FIELD_PATHNAME)             echo ' SELECTED'; ?>><?php echo _('Under a pathname'); ?></OPTION>
 		<OPTION VALUE="<?php echo SEARCH_FIELD_USES                 . '"'; if ($stype == SEARCH_FIELD_USES)                 echo ' SELECTED'; ?>>USES</OPTION>
 	</SELECT>
 
 	<SELECT name=method>
-		<OPTION VALUE="exact"   <?php if ($method == "exact"  ) echo 'SELECTED' ?>>equal to
-		<OPTION VALUE="prefix"  <?php if ($method == "prefix" ) echo 'SELECTED' ?>>starting with
-		<OPTION VALUE="match"   <?php if ($method == "match"  ) echo 'SELECTED' ?>>containing
-		<OPTION VALUE="suffix"  <?php if ($method == "suffix" ) echo 'SELECTED' ?>>ending with
-		<OPTION VALUE="soundex" <?php if ($method == "soundex") echo 'SELECTED' ?>>sounds like
+		<OPTION VALUE="exact"   <?php if ($method == "exact"  ) echo 'SELECTED' ?>><?php echo _('equal to'); ?>
+		<OPTION VALUE="prefix"  <?php if ($method == "prefix" ) echo 'SELECTED' ?>><?php echo _('starting with'); ?>
+		<OPTION VALUE="match"   <?php if ($method == "match"  ) echo 'SELECTED' ?>><?php echo _('containing'); ?>
+		<OPTION VALUE="suffix"  <?php if ($method == "suffix" ) echo 'SELECTED' ?>><?php echo _('ending with'); ?>
+		<OPTION VALUE="soundex" <?php if ($method == "soundex") echo 'SELECTED' ?>><?php echo _('sounds like'); ?>
 	</SELECT>
 
 	<INPUT NAME="query" size="40" AUTOCORRECT="off" AUTOCAPITALIZE="none" SPELLCHECK="false" VALUE="<?php echo htmlentities($query)?>">
@@ -1156,7 +1156,7 @@ JOIN element_pathname EP on E.id = EP.element_id
 <?php
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/page_options.php');
 		$PageOptions = new ItemsPerPage();
-		echo $PageOptions->DDLB_Choices('num', $num, 'results');
+		echo $PageOptions->DDLB_Choices('num', $num, _('results'));
 ?>
 
 <?php
@@ -1167,7 +1167,7 @@ if (file_exists(CATEGORIES_CACHE_LIST)) {
  ?>
 	<br>
 	<br>
-	Search only this category:
+	<?php echo _('Search only this category:'); ?>
 
 	<SELECT NAME="category" size="1">
 <?php
@@ -1176,7 +1176,7 @@ if (file_exists(CATEGORIES_CACHE_LIST)) {
 	</SELECT>
 <?php
 } else {
-    echo "<br><br>The list of categories is not available - the cache file does not exist - This should never happen.";
+    echo '<br><br>' . _('The list of categories is not available - the cache file does not exist - This should never happen.');
 }
 ?>
 <br>
@@ -1185,47 +1185,47 @@ if (file_exists(CATEGORIES_CACHE_LIST)) {
 <table class="search-options bordered">
 <tr>
 <td>
-	<INPUT TYPE=checkbox <?php if ($deleted == INCLUDE_DELETED_PORTS) echo 'CHECKED'; ?> VALUE=<?php echo INCLUDE_DELETED_PORTS; ?> NAME=deleted> Include deleted ports
+	<INPUT TYPE=checkbox <?php if ($deleted == INCLUDE_DELETED_PORTS) echo 'CHECKED'; ?> VALUE=<?php echo INCLUDE_DELETED_PORTS; ?> NAME=deleted> <?php echo _('Include deleted ports'); ?>
 </td>
 <td>
-	<INPUT TYPE=checkbox <?php if ($casesensitivity == "casesensitive")   echo 'CHECKED'; ?> VALUE=casesensitive   NAME=casesensitivity> Case sensitive search
+	<INPUT TYPE=checkbox <?php if ($casesensitivity == "casesensitive")   echo 'CHECKED'; ?> VALUE=casesensitive   NAME=casesensitivity> <?php echo _('Case sensitive search'); ?>
 </td>
 <td>
-	Sort by: <SELECT name="orderby">
-		<OPTION VALUE="<?php echo ORDERBYPORT;       ?>" <?php if ($orderby == ORDERBYPORT       ) echo 'SELECTED' ?>>Port
-		<OPTION VALUE="<?php echo ORDERBYCATEGORY;   ?>" <?php if ($orderby == ORDERBYCATEGORY   ) echo 'SELECTED' ?>>Category
-		<OPTION VALUE="<?php echo ORDERBYLASTUPDATE; ?>" <?php if ($orderby == ORDERBYLASTUPDATE ) echo 'SELECTED' ?>>Last Update
+	<?php echo _('Sort by:'); ?> <SELECT name="orderby">
+		<OPTION VALUE="<?php echo ORDERBYPORT;       ?>" <?php if ($orderby == ORDERBYPORT       ) echo 'SELECTED' ?>><?php echo _('Port'); ?>
+		<OPTION VALUE="<?php echo ORDERBYCATEGORY;   ?>" <?php if ($orderby == ORDERBYCATEGORY   ) echo 'SELECTED' ?>><?php echo _('Category'); ?>
+		<OPTION VALUE="<?php echo ORDERBYLASTUPDATE; ?>" <?php if ($orderby == ORDERBYLASTUPDATE ) echo 'SELECTED' ?>><?php echo _('Last Update'); ?>
 	</SELECT>
 
 	<SELECT name="orderbyupdown">
-		<OPTION VALUE="<?php echo ORDERBYASCENDING;  ?>" <?php if ($orderbyupdown == ORDERBYASCENDING  ) echo 'SELECTED' ?>>ascending
-		<OPTION VALUE="<?php echo ORDERBYDESCENDING; ?>" <?php if ($orderbyupdown == ORDERBYDESCENDING ) echo 'SELECTED' ?>>descending
+		<OPTION VALUE="<?php echo ORDERBYASCENDING;  ?>" <?php if ($orderbyupdown == ORDERBYASCENDING  ) echo 'SELECTED' ?>><?php echo _('ascending'); ?>
+		<OPTION VALUE="<?php echo ORDERBYDESCENDING; ?>" <?php if ($orderbyupdown == ORDERBYDESCENDING ) echo 'SELECTED' ?>><?php echo _('descending'); ?>
 	</SELECT>
 </td>
 <td>
-	<INPUT TYPE="submit" VALUE="Search" NAME="search">
+	<INPUT TYPE="submit" VALUE="<?php echo htmlspecialchars(_('Search')); ?>" NAME="search">
 </td>
 </tr><tr>
 <td colspan="4">
-	<INPUT TYPE=checkbox <?php if ($include_src_commits == INCLUDE_SRC_COMMITS) echo 'CHECKED'; ?> VALUE=<?php echo INCLUDE_SRC_COMMITS; ?> NAME=<?php echo INCLUDE_SRC_COMMITS; ?>> Include /src tree
+	<INPUT TYPE=checkbox <?php if ($include_src_commits == INCLUDE_SRC_COMMITS) echo 'CHECKED'; ?> VALUE=<?php echo INCLUDE_SRC_COMMITS; ?> NAME=<?php echo INCLUDE_SRC_COMMITS; ?>> <?php echo _('Include /src tree'); ?>
 </td>
 </tr>
 <tr><td colspan="2">
-  <b>Output format</b>:<br>
+  <?php echo _('<b>Output format</b>:'); ?><br>
   <input type="radio" name="format" value="<?php echo OUTPUT_FORMAT_HTML       . '"'; if ($output_format == OUTPUT_FORMAT_HTML)       echo ' checked'; ?>> HTML<br>
-  <input type="radio" name="format" value="<?php echo OUTPUT_FORMAT_PLAIN_TEXT . '"'; if ($output_format == OUTPUT_FORMAT_PLAIN_TEXT) echo ' checked'; ?>> Plain Text<br>
-  <input type="radio" name="format" value="<?php echo OUTPUT_FORMAT_DEPENDS    . '"'; if ($output_format == OUTPUT_FORMAT_DEPENDS)    echo ' checked'; ?>> Depends (only works with <b>Port Name</b>)<br>
+  <input type="radio" name="format" value="<?php echo OUTPUT_FORMAT_PLAIN_TEXT . '"'; if ($output_format == OUTPUT_FORMAT_PLAIN_TEXT) echo ' checked'; ?>> <?php echo _('Plain Text'); ?><br>
+  <input type="radio" name="format" value="<?php echo OUTPUT_FORMAT_DEPENDS    . '"'; if ($output_format == OUTPUT_FORMAT_DEPENDS)    echo ' checked'; ?>> <?php echo _('Depends (only works with <b>Port Name</b>)'); ?><br>
 </td>
 <td>
-<INPUT TYPE=checkbox VALUE=1   NAME=effort> Maximum Effort
+<INPUT TYPE=checkbox VALUE=1   NAME=effort> <?php echo _('Maximum Effort'); ?>
 </td>
 <td>
-<INPUT TYPE=checkbox <?php if ($minimal_output == "1")   echo 'CHECKED'; ?> VALUE=1   NAME=minimal> Minimal output
+<INPUT TYPE=checkbox <?php if ($minimal_output == "1")   echo 'CHECKED'; ?> VALUE=1   NAME=minimal> <?php echo _('Minimal output'); ?>
 </td>
 </tr>
 <tr>
   <td colspan="4">
-    <b>Branch</b>:<br>
+    <?php echo _('<b>Branch</b>:'); ?><br>
       <SELECT NAME="branch" size="1">
         <OPTION VALUE="<?php
         	echo BRANCH_HEAD . '"';
@@ -1247,14 +1247,13 @@ if (file_exists(CATEGORIES_CACHE_LIST)) {
 </table>
 </form>
 
-<h3>Notes</h3>
+<h3><?php echo _('Notes'); ?></h3>
 <ul>
-<li><small>Case sensitivity is ignored for "sounds like" and output is ordered by the soundex.</small></li>
-<li><small>When searching on 'Message ID', the type of match is ignored.</small></li>
-<li><small>When searching on 'Commit Message' only 'containing' is used.</small></li>
-<li><small>When searching  by 'Under a pathname', your path must start with something like /ports/, /doc/, or /src/. All
-      commits under that point will be returned. The selected match type is ignored and defaults to 'Starts with'.</small></li>
-<li><small>Searching for 'sounds like' is only valid for Author Email, Author Name, Committer Email, Committer Name, Maintainer, Package Name, and Port Name - but I'm not sure it is indexed properly. Ask Dan about that.</small></li>
+<li><small><?php echo _('Case sensitivity is ignored for "sounds like" and output is ordered by the soundex.'); ?></small></li>
+<li><small><?php echo _("When searching on 'Message ID', the type of match is ignored."); ?></small></li>
+<li><small><?php echo _("When searching on 'Commit Message' only 'containing' is used."); ?></small></li>
+<li><small><?php echo _("When searching by 'Under a pathname', your path must start with something like /ports/, /doc/, or /src/. All commits under that point will be returned. The selected match type is ignored and defaults to 'Starts with'."); ?></small></li>
+<li><small><?php echo _("Searching for 'sounds like' is only valid for Author Email, Author Name, Committer Email, Committer Name, Maintainer, Package Name, and Port Name - but I'm not sure it is indexed properly. Ask Dan about that."); ?></small></li>
 </ul>
 
 <?php
@@ -1262,7 +1261,7 @@ if (file_exists(CATEGORIES_CACHE_LIST)) {
 		if ($User->id != '') {
 ?>
 <p>
-Special searches:
+<?php echo _('Special searches:'); ?>
 </p>
 <ul>
 <li>	<FORM ACTION="/search.php" NAME="f">
@@ -1273,7 +1272,7 @@ Special searches:
 	<INPUT NAME="deleted"         TYPE="hidden" value="excludedeleted">
 	<INPUT NAME="start"           TYPE="hidden" value="1">
   	<INPUT NAME="casesensitivity" TYPE="hidden" value="caseinsensitive">
-    <INPUT NAME="search"          TYPE="submit" value="Ports I Maintain">
+    <INPUT NAME="search"          TYPE="submit" value="<?php echo htmlspecialchars(_('Ports I Maintain')); ?>">
 	</FORM>
 
 </ul>
@@ -1294,7 +1293,7 @@ Special searches:
 		if (IsSet($NumFetches) && $NumFetches == 0) {
 		if ($Debug) echo 'nothing found';
 		   if ($output_format == OUTPUT_FORMAT_HTML) {
-		     $HTML .= " <strong style=\"color:var(--beastie-red)\">No results found</strong><br>\n";
+		     $HTML .= ' <strong style="color:var(--beastie-red)">' . _('No results found') . "</strong><br>\n";
 		   }
 		} else {
             switch($stype) {
@@ -1313,9 +1312,9 @@ Special searches:
 		             $MoreToShow = 0;
 		          }
 
-		          $NumPortsFound = 'Number of commits: ' . $NumberOfCommits;
+		          $NumPortsFound = sprintf(_('Number of commits: %d'), $NumberOfCommits);
 		          if ($output_format == OUTPUT_FORMAT_HTML && ($NumFound > $PageSize)) {
-		            $NumPortsFound .= " (showing only $NumOnThisPage on this page)";
+		            $NumPortsFound .= ' ' . sprintf(_('(showing only %d on this page)'), $NumOnThisPage);
 			  }
 
 			  if ($Debug) echo "NumPortsFound = '$NumPortsFound'<br>\n";
@@ -1330,9 +1329,9 @@ Special searches:
 
 		    $offset = $Pager->getOffsetByPageId();
 		    $NumOnThisPage = $offset[1] - $offset[0] + 1;
-                    $NumPortsFound = 'Number of ports: ' . ($NumFound ?? 0);
+                    $NumPortsFound = sprintf(_('Number of ports: %d'), ($NumFound ?? 0));
                     if ($NumFound > $PageSize && $output_format !== OUTPUT_FORMAT_PLAIN_TEXT) {
-                      $NumPortsFound .= " (showing only $NumOnThisPage on this page)";
+                      $NumPortsFound .= ' ' . sprintf(_('(showing only %d on this page)'), $NumOnThisPage);
                     }
                     break;
 		} /* switch */

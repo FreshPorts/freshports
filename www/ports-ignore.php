@@ -27,8 +27,8 @@
 
 	$page->setDB($db);
 
-	$page->setTitle('Ignored ports');
-	$page->setDescription('These are the ignored ports');
+	$page->setTitle(_('Ignored ports'));
+	$page->setDescription(_('These are the ignored ports'));
 
 
 	$page->setSQL("ports.ignore <> ''", $User->id);

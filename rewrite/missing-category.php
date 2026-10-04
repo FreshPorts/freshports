@@ -19,7 +19,7 @@ $g_NOINDEX = 1;  // we should not index category pages. too much clutter.
 
 function freshports_CategoryNextPreviousPage($CategoryName, $PortCount, $PageNumber, $PageSize, $Branch = BRANCH_HEAD) {
 
-	$HTML = "Result Page:";
+	$HTML = _('Result Page:');
 
 	$queryParms = array();
 	if ($Branch != BRANCH_HEAD) {
@@ -43,10 +43,10 @@ function freshports_CategoryNextPreviousPage($CategoryName, $PortCount, $PageNum
 	}
 
 	if ($PageNumber == $NumPages) {
-		$HTML .= '&nbsp; ' . NEXT_PAGE;
+		$HTML .= '&nbsp; ' . _('Next');
 	} else {
 		$queryParms['page'] = $PageNumber + 1;
-		$HTML .= '&nbsp;<a href="/' . $CategoryName . '/?' . http_build_query($queryParms, '', '&amp;') .  '">' . NEXT_PAGE . '</a>';
+		$HTML .= '&nbsp;<a href="/' . $CategoryName . '/?' . http_build_query($queryParms, '', '&amp;') .  '">' . _('Next') . '</a>';
 		$HTML .= "\n";
 	}
 	
@@ -181,7 +181,7 @@ function freshports_CategoryDisplay($dbh, $category, $url_parts, $Branch = BRANC
 		$HTML .= freshports_MainContentTable() . '
 
 		<tr>
-		  ' . freshports_PageBannerText('Category listing - ' . $category->name . ($Branch == BRANCH_HEAD ? '' : ': ports with commits on branch '. pg_escape_string($dbh, $Branch))) . '
+		  ' . freshports_PageBannerText($Branch == BRANCH_HEAD ? sprintf(_('Category listing - %s'), $category->name) : sprintf(_('Category listing - %1$s: ports with commits on branch %2$s'), $category->name, pg_escape_string($dbh, $Branch))) . '
 		</tr>
 
 	<tr><td>';
@@ -199,11 +199,10 @@ function freshports_CategoryDisplay($dbh, $category, $url_parts, $Branch = BRANC
 		$HTML .= '
 <span class="element-details"><span>' .
 			$category->description . '
-</span></span> - Number of ports in this category' . ($Branch == BRANCH_HEAD ? '' : ' (with commits on branch <b>' . htmlentities($Branch)) . '</b>: ' . $PortCount . '
+</span></span> - ' . ($Branch == BRANCH_HEAD ? sprintf(_('Number of ports in this category: %d'), $PortCount) : sprintf(_('Number of ports in this category (with commits on branch %1$s): %2$d'), '<b>' . htmlentities($Branch) . '</b>', $PortCount)) . '
 
 <p>
-	Ports marked with a <sup>*</sup> actually reside within another category but
-	have <strong>' . $category->name . '</strong> listed as a secondary category.';
+	' . sprintf(_('Ports marked with a <sup>*</sup> actually reside within another category but have %s listed as a secondary category.'), '<strong>' . $category->name . '</strong>');
 
 		GLOBAL $ShowAds, $BannerAd;
 

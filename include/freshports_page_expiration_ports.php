@@ -59,18 +59,21 @@ class freshports_page_expiration_ports extends freshports_page_list_ports {
 
 		switch ($sort) {
 			case 'expiration_date':
-				$HTML .= 'sorted by expiration date.  You can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=category">category</a>' .
-							', or by <a href="' . $_SERVER["PHP_SELF"] . '?sort=port">port</a>.';
+				$HTML .= sprintf(_('This page is sorted by expiration date.  You can sort by %1$s, or by %2$s.'),
+							'<a href="' . $_SERVER["PHP_SELF"] . '?sort=category">' . _('category') . '</a>',
+							'<a href="' . $_SERVER["PHP_SELF"] . '?sort=port">' . _('port') . '</a>');
 				break;
 
 			case 'port':
-				$HTML .= 'sorted by port.  You can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=category">category</a>' .
-							', or by <a href="' . $_SERVER["PHP_SELF"] . '?sort=expiration_date">expiration date</a>.';
+				$HTML .= sprintf(_('This page is sorted by port.  You can sort by %1$s, or by %2$s.'),
+							'<a href="' . $_SERVER["PHP_SELF"] . '?sort=category">' . _('category') . '</a>',
+							'<a href="' . $_SERVER["PHP_SELF"] . '?sort=expiration_date">' . _('expiration date') . '</a>');
 				break;
 
 			default:
-				$HTML .= 'sorted by category.  You can sort by <a href="' . $_SERVER["PHP_SELF"] . '?sort=expiration_date">expiration date</a>' . 
-							', or by <a href="' . $_SERVER["PHP_SELF"] . '?sort=port">port</a>.';
+				$HTML .= sprintf(_('This page is sorted by category.  You can sort by %1$s, or by %2$s.'),
+							'<a href="' . $_SERVER["PHP_SELF"] . '?sort=expiration_date">' . _('expiration date') . '</a>',
+							'<a href="' . $_SERVER["PHP_SELF"] . '?sort=port">' . _('port') . '</a>');
 		}
 
 		return $HTML;

@@ -112,17 +112,17 @@ switch($script) {
 
         echo '<p>';
         if ($status->InMaintenanceMode()) {
-            echo 'We are in maintenance mode.';
+            echo _('We are in maintenance mode.');
         } else {
-            echo 'We are in not in maintenance mode.';
+            echo _('We are not in maintenance mode.');
         }
 
         echo '</p><p>';
 
         if ($status->LoginsAreAllowed()) {
-            echo 'Logins are enabled.';
+            echo _('Logins are enabled.');
         } else {
-            echo 'Nobody is allowed to login right now.';
+            echo _('Nobody is allowed to login right now.');
         }
         echo '</p>';
 
@@ -134,10 +134,10 @@ switch($script) {
 
         echo '<hr>';
 
-        echo "<p>This status was last updated at " . gmdate('Y-m-d H:i:sO', filemtime(STATUS_FILE)) . '</p>';
-        echo "<p>It should never be more than 4 minutes old.</p>";
-        echo '<p>This page automatically reloads every 3 minutes.</p>';
-        echo '<p>The contents are generated every 3 minutes by the backend server.</p>';
+        echo '<p>' . sprintf(_('This status was last updated at %s'), gmdate('Y-m-d H:i:sO', filemtime(STATUS_FILE))) . '</p>';
+        echo '<p>' . _('It should never be more than 4 minutes old.') . '</p>';
+        echo '<p>' . _('This page automatically reloads every 3 minutes.') . '</p>';
+        echo '<p>' . _('The contents are generated every 3 minutes by the backend server.') . '</p>';
 
         echo "</body>\n";
         break;

@@ -27,8 +27,8 @@
 
 	$page->setDB($db);
 
-	$page->setTitle('Interactive ports');
-	$page->setDescription('These are the interactive ports');
+	$page->setTitle(_('Interactive ports'));
+	$page->setDescription(_('These are the interactive ports'));
 
 
 	$page->setSQL("ports.is_interactive <> ''", $User->id);

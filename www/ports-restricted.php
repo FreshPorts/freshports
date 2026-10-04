@@ -27,8 +27,8 @@
 
 	$page->setDB($db);
 
-	$page->setTitle('Restricted ports');
-	$page->setDescription('These are the restricted ports');
+	$page->setTitle(_('Restricted ports'));
+	$page->setDescription(_('These are the restricted ports'));
 
 
 	$page->setSQL("ports.restricted <> ''", $User->id);

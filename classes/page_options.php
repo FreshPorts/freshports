@@ -21,7 +21,7 @@ class ItemsPerPage {
 
 	$HTML = '<select name="' . htmlentities($Name);
 
-	$HTML .= '" title="select a page size"';
+	$HTML .= '" title="' . htmlspecialchars(_('select a page size')) . '"';
 
 	$HTML .= ">\n";
 

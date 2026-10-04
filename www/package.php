@@ -11,7 +11,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/searches.php');
 
-	$Title = 'Search by package';
+	$Title = _('Search by package');
 
 	freshports_Start("$Title",
 					$Title,
@@ -48,13 +48,13 @@
 if ($notfound) {
 $packages_html = htmlspecialchars($package);
 ?>
-The package specified ('<?php echo $packages_html; ?>') could not be found.  We have a few suggestions.
+<?php printf(_("The package specified ('%s') could not be found.  We have a few suggestions."), $packages_html); ?>
 <ul>
-<li><a href="<?php echo htmlspecialchars($Searches->GetDefaultSearchStringPackage($package)); ?>">Search</a> for ports containing '<?php echo $packages_html; ?>' in their name.
+<li><?php printf(_('%1$s for ports containing \'%2$s\' in their name.'), '<a href="' . htmlspecialchars($Searches->GetDefaultSearchStringPackage($package)) . '">' . _('Search') . '</a>', $packages_html); ?>
 </ul>
 <?php
 } else {
-	die('I have no idea what I should be doing');
+	die(_('I have no idea what I should be doing'));
 }
 ?>
 </P>

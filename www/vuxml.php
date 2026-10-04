@@ -21,7 +21,7 @@
 	        # one message, twice invoked.
 	        $msg = 'You must be logged in to use this feature.';
 	        header('HTTP/1.1 401 ' . $msg);
-	        die($msg);
+	        die(_('You must be logged in to use this feature.'));
 	} else {
 		checkLoadBeforeProceeding();
         }
@@ -50,22 +50,22 @@
 <h1>FreshPorts - VuXML</h1>
 
 <p>
-This page displays <a href="<?php echo VUXMLURL; ?>">vulnerability information</a> about FreeBSD Ports.
+<?php printf(_('This page displays %s about FreeBSD Ports.'), '<a href="' . VUXMLURL . '">' . _('vulnerability information') . '</a>'); ?>
 </p>
 
 <?php
 	if (file_exists(VUXML_LATEST) && is_readable(VUXML_LATEST)) {
-		echo '<p>The VUXML data was last processed by FreshPorts on ' . date('Y-m-d H:i:s T', filemtime(VUXML_LATEST)) . '</p>';
+		echo '<p>' . sprintf(_('The VUXML data was last processed by FreshPorts on %s'), date('Y-m-d H:i:s T', filemtime(VUXML_LATEST))) . '</p>';
 	} else {
-		echo '<p><b> * * * We have no information on when we last processed VUXML. This should never happen. * * * </b></p>';
+		echo '<p><b> * * * ' . _('We have no information on when we last processed VUXML. This should never happen.') . ' * * * </b></p>';
 	}
 
 	if (!IsSet($_REQUEST['list'])) {
-		echo '<p><a href="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '?list">List all Vulnerabilities, by package</a></p>';
+		echo '<p><a href="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '?list">' . _('List all Vulnerabilities, by package') . '</a></p>';
 	}
 
 	if (!IsSet($_REQUEST['all'])) {
-		echo '<p><a href="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '?all">List all Vulnerabilities, by date</a></p>';
+		echo '<p><a href="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '?all">' . _('List all Vulnerabilities, by date') . '</a></p>';
 	}
 
 
@@ -77,11 +77,11 @@ This page displays <a href="<?php echo VUXMLURL; ?>">vulnerability information</
 ?>
 
 <p>
-These are the vulnerabilities relating to the commit you have selected:
+<?php echo _('These are the vulnerabilities relating to the commit you have selected:'); ?>
 </p>
 
 <table class="cellpadding5 bordered">
-<tr><th class="hleft"><b>VuXML ID</b></th><th class="hleft"><b>Description</b></th></tr>
+<tr><th class="hleft"><b><?php echo _('VuXML ID'); ?></b></th><th class="hleft"><b><?php echo _('Description'); ?></b></th></tr>
 <?php
 	if (!IsSet($vidArray)) {
 		$vuln = $_REQUEST['vuln'];
@@ -120,7 +120,7 @@ These are the vulnerabilities relating to the commit you have selected:
 			}
 
 			$HTML .= '</td><td class="hcentered">';
-			$HTML .= '<a href="/?package=' . htmlspecialchars(urlencode($Name)) . '">port</a>';
+			$HTML .= '<a href="/?package=' . htmlspecialchars(urlencode($Name)) . '">' . _('port') . '</a>';
 			$HTML .= '</td></tr>' . "\n";
 
 			return $HTML;
@@ -153,12 +153,12 @@ SELECT V.vid,
 			$NumPackages = 0;
 			$VIDs        = array();
 			echo '<table class="bordered">' . "\n";
-			echo '<th colspan="3">VuXML entries as processed by FreshPorts</th>';
+			echo '<th colspan="3">' . _('VuXML entries as processed by FreshPorts') . '</th>';
 			echo '<tr><td><b>';
-			echo 'package';
+			echo _('package');
 			echo '</b></td><td class="hcentered"><b>';
-			echo 'vuln count<br>[blank means (1)]';
-			echo '</b></td><td class="hcentered"><b>Port(s)</b></td></tr>' . "\n";
+			echo _('vuln count<br>[blank means (1)]');
+			echo '</b></td><td class="hcentered"><b>' . _('Port(s)') . '</b></td></tr>' . "\n";
 			for ($i = 0; $i < $numrows; $i++) {
 				$myrow = pg_fetch_array ($result, $i);
 
@@ -187,8 +187,8 @@ SELECT V.vid,
 			echo vuxml_name_link($LastVID, $LastName, $Count);
 			echo "</table>\n";
 
-			echo "<p>Number of packages: $NumPackages<br>\n";
-			echo "<p>Number of vulns   : " . count($VIDs) . "<br>\n";
+			echo '<p>' . sprintf(_('Number of packages: %d'), $NumPackages) . "<br>\n";
+			echo '<p>' . sprintf(_('Number of vulns: %d'), count($VIDs)) . "<br>\n";
 		}
 
 	}
@@ -206,7 +206,7 @@ SELECT V.vid,
 
 			# the description is XHTML from vuxml.xml and is intentionally output as-is
 			$Narrative = $Description;
-			$HTML .= '<b>VuXML ID</b> <span class="code">' . htmlspecialchars($VID) . '</span><br>' . $Narrative . ' <a href="' . htmlspecialchars(VUXMLURL . rawurlencode($VID) . '.html') . '">more...</a>';
+			$HTML .= '<b>' . _('VuXML ID') . '</b> <span class="code">' . htmlspecialchars($VID) . '</span><br>' . $Narrative . ' <a href="' . htmlspecialchars(VUXMLURL . rawurlencode($VID) . '.html') . '">' . _('more...') . '</a>';
 			$HTML .= '</td><td class="hleft vtop">';
 
 			foreach ($PortArray as $package) {
@@ -215,7 +215,7 @@ SELECT V.vid,
 			}
 
 
-			$HTML .= '<br><a href="vuxml.php?vid=' . htmlspecialchars(urlencode($VID)) . '">more detail</a></td></tr>' . "\n";
+			$HTML .= '<br><a href="vuxml.php?vid=' . htmlspecialchars(urlencode($VID)) . '">' . _('more detail') . '</a></td></tr>' . "\n";
 
 			return $HTML;
 		}
@@ -239,7 +239,7 @@ ORDER BY coalesce(V.date_modified, V.date_entry, V.date_discovery)::date desc, V
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($numrows == 0) {
-				echo '<p>no vulnerabilities found.  it looks as if the data is missing.</p>';
+				echo '<p>' . _('no vulnerabilities found.  it looks as if the data is missing.') . '</p>';
 			} else {
 
 				$PortArray   = array();
@@ -247,10 +247,10 @@ ORDER BY coalesce(V.date_modified, V.date_entry, V.date_discovery)::date desc, V
 				$NumPackages = 0;
 				$VIDs        = 0;
 				echo '<table class="bordered cellpadding5">' . "\n";
-				echo '<th colspan="3">VuXML entries as processed by FreshPorts</th>';
-				echo '<tr><td><b>Date</b></td><td><b>';
-				echo 'Decscription';
-				echo '</b></td><td class="hcentered"><b>Port(s)</b></td></tr>' . "\n";
+				echo '<th colspan="3">' . _('VuXML entries as processed by FreshPorts') . '</th>';
+				echo '<tr><td><b>' . _('Date') . '</b></td><td><b>';
+				echo _('Description');
+				echo '</b></td><td class="hcentered"><b>' . _('Port(s)') . '</b></td></tr>' . "\n";
 				for ($i = 0; $i < $numrows; $i++) {
 					$myrow = pg_fetch_array($result, $i);
 
@@ -275,9 +275,9 @@ ORDER BY coalesce(V.date_modified, V.date_entry, V.date_discovery)::date desc, V
 				echo vuxml_name_link($LastVID, $Date, $Description, $PortArray, $IsNew);
 				echo "</table>\n";
 
-				echo "<p>Number of vulns/ports : " . $numrows . "<br>\n";
-				echo "<p>Number of vulns   : " . $VIDs . "<br>\n";
-				echo "<p>A date marked with <sup>*</sup> indicates an updated vuxml entry.<br>\n";
+				echo '<p>' . sprintf(_('Number of vulns/ports: %d'), $numrows) . "<br>\n";
+				echo '<p>' . sprintf(_('Number of vulns: %d'), $VIDs) . "<br>\n";
+				echo '<p>' . _('A date marked with <sup>*</sup> indicates an updated vuxml entry.') . "<br>\n";
 			}
 		}
 

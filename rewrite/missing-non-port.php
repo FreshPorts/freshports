@@ -37,7 +37,7 @@ function freshports_NonPortDescription($dbh, $element_record) {
 
 	<?php echo freshports_MainContentTable(); ?>
 <tr>
-<?php echo freshports_PageBannerText('non port: ' . $Title); ?>
+<?php echo freshports_PageBannerText(sprintf(_('non port: %s'), $Title)); ?>
 </tr>
 
 <?php
@@ -152,7 +152,7 @@ function freshports_NonPortDescription($dbh, $element_record) {
 	
 	$links = $Pager->GetLinks();
 
-	$NumCommitsHTML = '<tr><td><p>Number of commits found: ' . $NumCommits;
+	$NumCommitsHTML = '<tr><td><p>' . sprintf(_('Number of commits found: %d'), $NumCommits);
 
 	$Offset = 0;
 	$PageLinks = $links['all'];
@@ -162,7 +162,7 @@ function freshports_NonPortDescription($dbh, $element_record) {
 		$offset = $Pager->getOffsetByPageId();
 		$NumOnThisPage = $offset[1] - $offset[0] + 1;
 		$Offset = $offset[0] - 1;
-		$NumCommitsHTML .= " (showing only $NumOnThisPage on this page)";
+		$NumCommitsHTML .= ' ' . sprintf(_('(showing only %d on this page)'), $NumOnThisPage);
 		unset($offset);
 	}
 	

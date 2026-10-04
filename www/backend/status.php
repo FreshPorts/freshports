@@ -12,7 +12,7 @@
 
 	$Debug = 0;
 
-	$Title    = "Status";
+	$Title    = _('Status');
 
 	freshports_Start($Title,
 					"freshports - new ports, applications",
@@ -28,7 +28,7 @@
 	<?php echo freshports_PageBannerText($Title); ?>
 </tr>
 <tr><td>
-<h2>System status</h2>
+<h2><?php echo _('System status'); ?></h2>
 </td></tr>
 <tr><td>
 <?php
@@ -40,11 +40,11 @@ if ($result) {
 	$numrows = pg_num_rows($result);
 	if ($numrows) {
 		echo '<table class="bordered" class="cellpadding5" cellspacing="3">' . "\n";
-		echo "<caption>The package imports</caption><tr>
+		echo '<caption>' . _('The package imports') . '</caption><tr>
 		<td><b>ABI</b>
-		<td><b>package set</b></td>
-		<td><b>repo build date</b></td>
-		<td><b>processed date</b></td>
+		<td><b>' . _('package set') . '</b></td>
+		<td><b>' . _('repo build date') . '</b></td>
+		<td><b>' . _('processed date') . "</b></td>
 		</tr>\n";
 	
 		$i=0;
@@ -67,14 +67,14 @@ if ($result) {
 
 ?>
 <ul>
-<li><b>repo build date</b> - date repo was last build</li>
-<li><b>processed date</b> - when this information was imported into FreshPorts</li>
+<li><b><?php echo _('repo build date'); ?></b> - <?php echo _('date repo was last built'); ?></li>
+<li><b><?php echo _('processed date'); ?></b> - <?php echo _('when this information was imported into FreshPorts'); ?></li>
 </ul>
 </table>
 
-<p><sup>*</sup>The processed queue is cleared out daily.
+<p><sup>*</sup><?php echo _('The processed queue is cleared out daily.'); ?>
 
-<h2>Last login count</h2>
+<h2><?php echo _('Last login count'); ?></h2>
 
 <?php
 $sql = "select * from LoginCounts(10)";
@@ -83,7 +83,7 @@ if ($result) {
 	$numrows = pg_num_rows($result);
 	if ($numrows) {
 		echo '<table class="bordered">' . "\n";
-		echo "<tr><td><b>Days</b><td><b>Users</b></td></tr>\n";
+		echo '<tr><td><b>' . _('Days') . '</b><td><b>' . _('Users') . "</b></td></tr>\n";
 	
 		$i=0;
 		$GlobalHideLastChange = "N";
@@ -97,7 +97,7 @@ if ($result) {
 }
 ?>
 
-<sup>*</sup>The users column indicates the number of logged-in users who last accessed the system on that day.
+<sup>*</sup><?php echo _('The users column indicates the number of logged-in users who last accessed the system on that day.'); ?>
 
   <td class="sidebar">
 	<?php

@@ -31,11 +31,11 @@
 	# we use this near the top of the page and at the bottom.
 	define('RELATIVE_DATE_24HOURS', 24 * 60 * 60);	# seconds in a day
 	$Date = date('Y/m/d');
-	$Yesterday = freshports_LinkToDate(strtotime($Date) - RELATIVE_DATE_24HOURS, "Yesterday's Commits", $Branch);
+	$Yesterday = freshports_LinkToDate(strtotime($Date) - RELATIVE_DATE_24HOURS, _("Yesterday's Commits"), $Branch);
 	if ($Branch == BRANCH_HEAD) {
-		$OtherBranch = '<a href="/?branch=quarterly">Quarterly Branch</a>';
+		$OtherBranch = '<a href="/?branch=quarterly">' . _('Quarterly Branch') . '</a>';
 	} else {
-		$OtherBranch = '<a href="/">Main Branch</a>';
+		$OtherBranch = '<a href="/">' . _('Main Branch') . '</a>';
 	}
 
 	#
@@ -79,7 +79,7 @@
 	    if ($Debug) echo "package is not specified on the URL<br>\n";
     }
 
-	$Title = 'Most recent commits';
+	$Title = _('Most recent commits');
 	freshports_Start($FreshPortsSlogan . " - $Title",
 					$Title,
 					'FreeBSD, index, applications, ports');
@@ -145,9 +145,9 @@ if ($db) {
 <tr>
 <?php
  if ( $Branch == BRANCH_HEAD) {
-   echo freshports_PageBannerText("$MaxNumberOfPortsLong most recent commits (all timestamps are UTC)");
+   echo freshports_PageBannerText(sprintf(ngettext('%d most recent commit (all timestamps are UTC)', '%d most recent commits (all timestamps are UTC)', $MaxNumberOfPortsLong), $MaxNumberOfPortsLong));
  } else {
-   echo freshports_PageBannerText("Commits from the $Branch branch");
+   echo freshports_PageBannerText(sprintf(_('Commits from the %s branch'), $Branch));
  }
  
 ?>
@@ -238,7 +238,7 @@ if ($db) {
 			echo '
 <table width="155" class="bordered" class="cellpadding5">
 	<tr>
-		<td class="accent" height="30"><B>Previous days</B></td>
+		<td class="accent" height="30"><B>' . _('Previous days') . '</B></td>
 	</tr>
 	<tr><td>
 ';

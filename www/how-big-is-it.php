@@ -12,7 +12,7 @@
 
 	freshports_ConditionalGet(freshports_LastModified());
 
-	$Title = 'How big is it?';
+	$Title = _('How big is it?');
 	freshports_Start($Title,
 					$Title,
 					'FreeBSD, index, applications, ports');
@@ -97,7 +97,7 @@ function DBSize($db) {
 	<?php echo freshports_MainContentTable(NOBORDER); ?>
 
 <tr>
-	<?php echo freshports_PageBannerText("How big is it"); ?>
+	<?php echo freshports_PageBannerText(_("How big is it")); ?>
 </tr>
 
 <tr><td class="textcontent">
@@ -107,24 +107,20 @@ function DBSize($db) {
 ?>
 
 <P>
-It was a few days ago that I was thinking about search engines crawling through this website.
-I began to wonder just how many web pages there are here.  To calculate this total, it's not 
-just a simple matter of counting files on disk.  Most of the web pages are created from entries
-in the database.  One recent evening, I started to design a formula to find out how many web pages
-there are.  Roughly.  This will not be 100% accurate, but it will be close.
+<?php echo _("It was a few days ago that I was thinking about search engines crawling through this website. I began to wonder just how many web pages there are here.  To calculate this total, it's not just a simple matter of counting files on disk.  Most of the web pages are created from entries in the database.  One recent evening, I started to design a formula to find out how many web pages there are.  Roughly.  This will not be 100% accurate, but it will be close."); ?>
 </P>
 </td></tr>
 
 <tr>
 	<?php
-	echo freshports_PageBannerText("Pages on disk"); 
+	echo freshports_PageBannerText(_("Pages on disk")); 
 	?>
 </tr>
 
 <tr><td class="textcontent">
 
 <P>
-First, let's count the number of pages on disk:
+<?php echo _("First, let's count the number of pages on disk:"); ?>
 <blockquote><code class="code">
 $ ls *.php | wc -l<br>
 <?php
@@ -139,14 +135,14 @@ $Total += $Files;
 
 <tr>
 	<?php
-	echo freshports_PageBannerText("Number of categories"); 
+	echo freshports_PageBannerText(_("Number of categories")); 
 	?>
 </tr>
 
 <tr><td class="textcontent">
 
 <P>
-There is a page for each category:
+<?php echo _('There is a page for each category:'); ?>
 <blockquote><code class="code">
 # select count(*) from categories;<br>
 &nbsp;count<br>
@@ -163,14 +159,14 @@ echo format_number($Value) . '<br>'
 </td></tr>
 <tr>
 	<?php
-	echo freshports_PageBannerText("Number of ports"); 
+	echo freshports_PageBannerText(_("Number of ports")); 
 	?>
 </tr>
 
 <tr><td class="textcontent">
 
 <P>
-There are ports, and there are deleted ports. I'll show both:
+<?php echo _("There are ports, and there are deleted ports. I'll show both:"); ?>
 <blockquote><code class="code">
 # select count(*) from ports_all where status = 'A';<br>
 &nbsp;count<br>
@@ -200,14 +196,14 @@ echo format_number($Value) . '<br>';
 
 <tr>
 	<?php
-	echo freshports_PageBannerText("Number of files in the ports tree"); 
+	echo freshports_PageBannerText(_("Number of files in the ports tree")); 
 	?>
 </tr>
 
 <tr><td class="textcontent">
 
 <P>
-There is a page for each file in the ports tree:
+<?php echo _('There is a page for each file in the ports tree:'); ?>
 <blockquote><code class="code">
 [dan@ngaio:/usr/ports] $ find . | wc -l<br>
 <?php
@@ -233,19 +229,19 @@ $Total += $Value;
 ?>
 </code></blockquote>
 
-Count last performed at <?php echo $DateLastChecked; ?>
+<?php printf(_('Count last performed at %s'), $DateLastChecked); ?>
 </td></tr>
 
 <tr>
 	<?php
-	echo freshports_PageBannerText("Number of commits"); 
+	echo freshports_PageBannerText(_("Number of commits")); 
 	?>
 </tr>
 
 <tr><td class="textcontent">
 
 <P>
-There is a page for each commit:
+<?php echo _('There is a page for each commit:'); ?>
 <blockquote><code class="code">
 # select count(*) from commit_log;<br>
 &nbsp;count<br>
@@ -263,14 +259,14 @@ echo format_number($Value) . '<br>';
 
 <tr>
 	<?php
-	echo freshports_PageBannerText("Number of ports for each commit"); 
+	echo freshports_PageBannerText(_("Number of ports for each commit")); 
 	?>
 </tr>
 
 <tr><td class="textcontent">
 
 <P>
-For each commit, you can view the files modified by that commit for a particular port:
+<?php echo _('For each commit, you can view the files modified by that commit for a particular port:'); ?>
 <blockquote><code class="code">
 # select count(*) from commit_log_ports;<br>
 &nbsp;count<br>
@@ -288,14 +284,14 @@ echo format_number($Value) . '<br>';
 
 <tr>
 	<?php
-	echo freshports_PageBannerText("How many days?"); 
+	echo freshports_PageBannerText(_("How many days?")); 
 	?>
 </tr>
 
 <tr><td class="textcontent">
 
 <P>
-For each day, there is a page showing the commits for that day.  How many days do we have?
+<?php echo _('For each day, there is a page showing the commits for that day.  How many days do we have?'); ?>
 <blockquote><code class="code">
 # select count(distinct commit_date) from commit_log;<br>
 &nbsp;count<br>
@@ -313,14 +309,14 @@ echo format_number($Value) . '<br>';
 
 <tr>
 	<?php
-	echo freshports_PageBannerText("How many users?"); 
+	echo freshports_PageBannerText(_("How many users?")); 
 	?>
 </tr>
 
 <tr><td class="textcontent">
 
 <P>
-Each user has a page:
+<?php echo _('Each user has a page:'); ?>
 <blockquote><code class="code">
 # select count(*) from users;<br>
 &nbsp;count<br>
@@ -338,14 +334,14 @@ echo format_number($Value) . '<br>';
 
 <tr>
 	<?php
-	echo freshports_PageBannerText("How many watch lists?"); 
+	echo freshports_PageBannerText(_("How many watch lists?")); 
 	?>
 </tr>
 
 <tr><td class="textcontent">
 
 <P>
-For each watch list, there is a page:
+<?php echo _('For each watch list, there is a page:'); ?>
 <blockquote><code class="code">
 # select count(*) from watch_list;<br>
 &nbsp;count<br>
@@ -363,7 +359,7 @@ echo format_number($Value) . '<br>';
 
 <tr>
 	<?php
-	echo freshports_PageBannerText("Estimated total"); 
+	echo freshports_PageBannerText(_("Estimated total")); 
 	?>
 </tr>
 
@@ -371,30 +367,28 @@ echo format_number($Value) . '<br>';
 
 <P>
 <?php $GooglePages = 8058044651; ?>
-That gives a grand total of <?php echo number_format($Total) ?> pages.  On my last count, that's 
-about <?php echo number_format($Total / $GooglePages * 100, 6) ?>% of the
-web pages on <a href="https://www.Google.com/">Google</a><small><sup><a href="#1">1</a></sup></small>
+<?php printf(_('That gives a grand total of %1$s pages.  On my last count, that\'s about %2$s%% of the web pages on %3$s'), number_format($Total), number_format($Total / $GooglePages * 100, 6), '<a href="https://www.Google.com/">Google</a>'); ?><small><sup><a href="#1">1</a></sup></small>
 </P>
 
 <p>
-<h2>Notes</h2>
+<h2><?php echo _('Notes'); ?></h2>
 <ul>
-<li>These statistics are updated daily.
-<li id="1"><sup>1</sup>The number of Google pages used in this calculation is <?php echo number_format($GooglePages) ?>.
+<li><?php echo _('These statistics are updated daily.'); ?>
+<li id="1"><sup>1</sup><?php printf(_('The number of Google pages used in this calculation is %s.'), number_format($GooglePages)); ?>
 </ul>
 
 </td></tr>
 
 <tr>
 	<?php
-	echo freshports_PageBannerText("How much diskspace?"); 
+	echo freshports_PageBannerText(_("How much diskspace?")); 
 	?>
 </tr>
 
 <tr><td class="textcontent">
 
 <P>
-The total space used by the FreshPorts database is:
+<?php echo _('The total space used by the FreshPorts database is:'); ?>
 <blockquote><code class="code">
 # select pg_database_size('freshports.org');<br>
 &nbsp;pg_database_size<br>
@@ -408,8 +402,8 @@ echo number_format($Value) . '<br>';
 (1 row)<br>
 </code></blockquote>
 
-<p>That's bytes...
-<p>This value might be easier to parse: <?php echo human_readable($Value); ?>
+<p><?php echo _("That's bytes..."); ?>
+<p><?php printf(_('This value might be easier to parse: %s'), human_readable($Value)); ?>
 </td></tr>
 
 

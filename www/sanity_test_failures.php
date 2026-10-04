@@ -27,7 +27,7 @@
 		define('CACHE_NAME', 'sanity_test_failures');
 	}
 
-	$Title = 'Sanity Test Failures';
+	$Title = _('Sanity Test Failures');
 	freshports_Start($FreshPortsSlogan . " - $Title",
 					$Title,
 					'FreeBSD, index, applications, ports');
@@ -95,10 +95,10 @@ if ($db) {
 
 <tr>
 <?php
-$Title = 'Sanity Test Failure';
-
 if ($message_id == '') {
-	$Title .= 's';
+	$Title = _('Sanity Test Failures');
+} else {
+	$Title = _('Sanity Test Failure');
 }
 echo freshports_PageBannerTextColSpan($Title, 1);
 ?>
@@ -107,9 +107,7 @@ echo freshports_PageBannerTextColSpan($Title, 1);
 if ($message_id == '') {
 ?>
 <tr><td>
-<p>These are the sanity test failures found by FreshPorts.  Sanity tests have
-been in place for several years, but have only been saved in the database
-since 10 October 2006.
+<p><?php echo _('These are the sanity test failures found by FreshPorts.  Sanity tests have been in place for several years, but have only been saved in the database since 10 October 2006.'); ?>
 </p>
 </td></tr>
 <?php
@@ -184,7 +182,7 @@ since 10 October 2006.
 			$HTML .= '<tr><td>';
 			$SanityTestFailure = new SanityTestFailure($db);
 			if ($SanityTestFailure->FetchByMessageID($message_id) != -1) {
-				$HTML .= "\n<h2>Sanity Test Results</h2>\n";
+				$HTML .= "\n<h2>" . _('Sanity Test Results') . "</h2>\n";
 				$HTML .= "\n<blockquote>\n<pre>";
 				$HTML .=  $SanityTestFailure->message;
 				$HTML .= "</pre>\n</blockquote>\n";
@@ -217,7 +215,7 @@ since 10 October 2006.
 			echo '
 <table WIDTH="155" class="bordered" CELLPADDING="5">
 	<tr>
-		<td class="accent" height="30"><B>Previous days</B></td>
+		<td class="accent" height="30"><B>' . _('Previous days') . '</B></td>
 	</tr>
 	<tr><td>
 ';

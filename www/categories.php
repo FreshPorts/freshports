@@ -19,7 +19,7 @@
     # Categories does not have that field, yet.
     #	freshports_ConditionalGet($Commit->last_modified);
 
-    $Title = 'Categories';
+    $Title = _('Categories');
     freshports_Start($Title,
                     $Title,
                     'FreeBSD, index, applications, ports');
@@ -61,16 +61,15 @@
 <?php echo freshports_MainContentTable(BORDER); ?>
 
   <tr>
-	<?php echo freshports_PageBannerText("$FreshPortsTitle - list of categories"); ?>
+	<?php echo freshports_PageBannerText(sprintf(_('%s - list of categories'), $FreshPortsTitle)); ?>
   </tr>
 <tr><td>
 <P>
-This page lists the categories and can be sorted by various criteria.  Virtual
-categories are indicated by <?php echo VIRTUAL; ?>.
+<?php printf(_('This page lists the categories and can be sorted by various criteria.  Virtual categories are indicated by %s.'), VIRTUAL); ?>
 </P>
 
 <P>
-You can sort each column by clicking on the header.  e.g. click on <strong>Category</strong> to sort by category.
+<?php echo _('You can sort each column by clicking on the header.  e.g. click on <strong>Category</strong> to sort by category.'); ?>
 </P>
 
 <?php
@@ -145,33 +144,33 @@ $result = pg_query($db, $sql);
 $HTML = '<tr>';
 
 if ($sort == "category") {
-   $HTML .= '<th>Category ' . freshports_Ascending_Icon() . '</th>';
+   $HTML .= '<th>' . _('Category') . ' ' . freshports_Ascending_Icon() . '</th>';
 } else {
-   $HTML .= '<th><a href="categories.php?sort=category">Category</a></th>';
+   $HTML .= '<th><a href="categories.php?sort=category">' . _('Category') . '</a></th>';
 }
 
 
 if ($AllowedToEdit) {
-	$HTML .= '<th>Action</th>';
+	$HTML .= '<th>' . _('Action') . '</th>';
 }
 	
 
 if ($sort == "count") {
-   $HTML .= '<th>Count ' . freshports_Ascending_Icon() . '</th>';
+   $HTML .= '<th>' . _('Count') . ' ' . freshports_Ascending_Icon() . '</th>';
 } else {
-   $HTML .= '<th><a href="categories.php?sort=count">Count</a></th>';
+   $HTML .= '<th><a href="categories.php?sort=count">' . _('Count') . '</a></th>';
 }
 
 if ($sort == "description") {
-   $HTML .= '<th>Description ' . freshports_Ascending_Icon() . '</th>';
+   $HTML .= '<th>' . _('Description') . ' ' . freshports_Ascending_Icon() . '</th>';
 } else {
-   $HTML .= '<th><a href="categories.php?sort=description">Description</a></th>';
+   $HTML .= '<th><a href="categories.php?sort=description">' . _('Description') . '</a></th>';
 }
 
 if ($sort == "last_update") {
-   $HTML .= '<th>Last Update ' . freshports_Ascending_Icon() . '</th>';
+   $HTML .= '<th>' . _('Last Update') . ' ' . freshports_Ascending_Icon() . '</th>';
 } else {
-   $HTML .= '<th><a href="categories.php?sort=lastupdate">Last Update</a></th>';
+   $HTML .= '<th><a href="categories.php?sort=lastupdate">' . _('Last Update') . '</a></th>';
 }
 
 $HTML .= '</tr>';
@@ -210,7 +209,7 @@ if ($result === false) {
 		
 		$HTML .= '</td>';
 		if ($AllowedToEdit) {
-			$HTML .= '<td><a href="/category-maintenance.php?category=' . $myrow["category"] . '">update</a></td>';
+			$HTML .= '<td><a href="/category-maintenance.php?category=' . $myrow["category"] . '">' . _('update') . '</a></td>';
 		}
 
 		$HTML .= '<td class="numeric-cell">' . $myrow["count"] . '</td>';
@@ -227,18 +226,18 @@ if ($result === false) {
 		}
       }
     } else {
-        $HTML .= "<tr><td colspan=\"$ColSpan\">No categories statistics found.  I bet the refresh script is not running.</td></tr>";
+        $HTML .= "<tr><td colspan=\"$ColSpan\">" . _('No categories statistics found.  I bet the refresh script is not running.') . '</td></tr>';
     }
 }
 
-$HTML .= '<tr><td class="summary-cell">port count:</td>';
+$HTML .= '<tr><td class="summary-cell">' . _('port count:') . '</td>';
 if ($AllowedToEdit) {
 	$HTML .= '<td>&nbsp;</td>';
 }
 
-$HTML .= "<td class=\"numeric-cell summary-cell\">$NumPorts</td><td colspan=\"2\">($CategoryCount real categories)</td></tr>";
+$HTML .= "<td class=\"numeric-cell summary-cell\">$NumPorts</td><td colspan=\"2\">" . sprintf(ngettext('(%d real category)', '(%d real categories)', $CategoryCount), $CategoryCount) . '</td></tr>';
 
-$HTML .= "<tr><td colspan=\"$ColSpan\">Hmmm, I'm not so sure this port count is accurate. Dan Langille 27 April 2003</td></tr>";
+$HTML .= "<tr><td colspan=\"$ColSpan\">" . _("Hmmm, I'm not so sure this port count is accurate. Dan Langille 27 April 2003") . '</td></tr>';
 
 $HTML .= '</table></td></tr></table>';
 

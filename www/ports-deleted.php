@@ -27,8 +27,8 @@
 
 	$page->setDB($db);
 
-	$page->setTitle('Deleted ports');
-	$page->setDescription('These are the deleted ports');
+	$page->setTitle(_('Deleted ports'));
+	$page->setDescription(_('These are the deleted ports'));
 	$page->setStatus('D');
 
 	$page->setSQL('', $User->id);

@@ -83,14 +83,14 @@ class VuXML {
 	function display() {
 		echo $this->topic       . '<br>';
 		echo $this->description . '<br>';
-		if (IsSet($this->date_discovery)) echo "Discovery " . $this->date_discovery . '<br>';
-		if (IsSet($this->date_entry))     echo "Entry     " . $this->date_entry     . '<br>';
-		if (IsSet($this->date_modified))  echo "Modified  " . $this->date_modified  . '<br>';
+		if (IsSet($this->date_discovery)) echo _('Discovery') . ' ' . $this->date_discovery . '<br>';
+		if (IsSet($this->date_entry))     echo _('Entry') . ' ' . $this->date_entry     . '<br>';
+		if (IsSet($this->date_modified))  echo _('Modified') . ' ' . $this->date_modified  . '<br>';
 
 		if (IsSet($this->packages)) {
 			$this->packages->display();
 		} else {
-			echo 'no package data found - did an error occur?';
+			echo _('no package data found - did an error occur?');
 		}
 		$this->references->display();
 	}

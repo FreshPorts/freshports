@@ -191,6 +191,21 @@ function freshports_i18n_start() {
 	}
 }
 
+#
+# Cached pages are per language. English keeps the original file names, so its
+# cache is unaffected; other languages add e.g. '.zh_CN' to the name.
+#
+# The suffix goes near the end of the name, because the cache clearing code
+# (fp-listen, caching.pm) removes entries using globs on the start of the name.
+#
+function freshports_i18n_cache_suffix() {
+	if (!defined('FRESHPORTS_LOCALE') || FRESHPORTS_LOCALE == I18N_DEFAULT_LOCALE) {
+		return '';
+	}
+
+	return '.' . FRESHPORTS_LOCALE;
+}
+
 # the locale in the form used by <html lang="">, e.g. zh-CN
 function freshports_i18n_html_lang() {
 	return str_replace('_', '-', FRESHPORTS_LOCALE);

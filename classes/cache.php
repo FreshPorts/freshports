@@ -36,6 +36,7 @@ class Cache {
 	function Retrieve($key) {
 		$result = 0;
 
+		$key = $this->_LocalizedKey($key);
 		$this->_Log('Cache: retrieving for ' . $key);
 		$CacheFileName = $this->_CacheFileName($key);
 		$this->_Log('Cache: CacheFileName is ' . $CacheFileName);
@@ -67,6 +68,7 @@ class Cache {
 
 	function Add($key) {
 		$result = 0;
+		$key = $this->_LocalizedKey($key);
 		// need to use key name with care.  Remove all non a-z, A-Z, and 0-9.
 		$SpoolFileName = $this->_SpoolFileName($key);
 		$SpoolFileHandle = fopen($SpoolFileName, 'w');
@@ -125,6 +127,20 @@ class Cache {
 		}
 		
 		return $result;
+	}
+
+	// each language has its own cache entry - see freshports_i18n_cache_suffix()
+	function _LocalizedKey($key) {
+		$suffix = function_exists('freshports_i18n_cache_suffix') ? freshports_i18n_cache_suffix() : '';
+		if ($suffix == '') {
+			return $key;
+		}
+
+		if (substr($key, -5) == '.html') {
+			return substr($key, 0, -5) . $suffix . '.html';
+		}
+
+		return $key . $suffix;
 	}
 
 	function _CleanKey($key) {

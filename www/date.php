@@ -95,7 +95,8 @@
 					'FreeBSD, index, applications, ports');
 
 	function ArchiveFileName($Date, $BranchName = BRANCH_HEAD) {
-		$File = DAILY_DIRECTORY . '/' . $Date . '.daily.' . $BranchName;
+		# fp-listen clears these with the glob <day>.*, so the language goes at the end
+		$File = DAILY_DIRECTORY . '/' . $Date . '.daily.' . $BranchName . freshports_i18n_cache_suffix();
 
 		return $File;
 	}

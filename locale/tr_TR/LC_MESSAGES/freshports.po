@@ -1,0 +1,1386 @@
+# Turkish translations for FreshPorts package
+# FreshPorts paketi için Türkçe çeviriler.
+# Copyright (C) 2026 THE FreshPorts'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the FreshPorts package.
+# Yusuf Yaman <nxjoseph@freebsd.org>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: FreshPorts\n"
+"Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
+"POT-Creation-Date: 2026-10-03 20:50-0400\n"
+"PO-Revision-Date: 2026-10-04 17:57+0300\n"
+"Last-Translator: Yusuf Yaman <nxjoseph@freebsd.org>\n"
+"Language-Team: Turkish <gnome-turk@gnome.org>\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.9\n"
+
+#: classes/display_commit.php:126
+msgid "Author:"
+msgstr "Yazar:"
+
+#: classes/display_commit.php:338 classes/files-display.php:40
+#: www/commit.php:266
+msgid "Sorry, nothing found in the database...."
+msgstr "Üzgünüz, veritabanında bir şey bulunamadı..."
+
+#: classes/files-display.php:48
+#, php-format
+msgid "%d file found"
+msgid_plural "%d files found"
+msgstr[0] "%d dosyası bulunamadı"
+msgstr[1] "%d dosyaları bulunamadı"
+
+#: classes/files-display.php:56
+msgid "Action"
+msgstr ""
+
+#: classes/files-display.php:56
+msgid "Annotate/etc"
+msgstr ""
+
+#: classes/files-display.php:56
+msgid "File"
+msgstr "Dosya"
+
+#: classes/files-display.php:56
+msgid "Revision"
+msgstr "Revizyon"
+
+#: classes/files-display.php:88
+msgid "import"
+msgstr "içe Aktar"
+
+#: classes/files-display.php:88
+msgid "modify"
+msgstr "düzenle"
+
+#: classes/files-display.php:88
+msgid "remove"
+msgstr "kaldır"
+
+#: classes/files-display.php:177
+msgid "Commit history"
+msgstr "Commit geçmişi"
+
+#: include/freshports.php:116 include/freshports.php:142
+#: include/freshports.php:168
+#, php-format
+msgid "commit hash: %s"
+msgstr "commit hash: %s"
+
+#: include/freshports.php:298
+#, php-format
+msgid "Revision:%s"
+msgstr "Revizyon:%s"
+
+#: include/freshports.php:312
+msgid "search for other commits by this committer"
+msgstr "bu committer'ın diğer commitlerini ara"
+
+#: include/freshports.php:530
+msgid "Sanity Test Failure"
+msgstr "Sanity Test hatası"
+
+#: include/freshports.php:564
+msgid "files touched by this commit"
+msgstr "bu committen etkilenen dosyalar"
+
+#: include/freshports.php:568
+msgid "Refresh"
+msgstr "Yenile"
+
+#: include/freshports.php:568
+msgid ""
+"Refresh - this port is being refreshed, or make failed to run error-free."
+msgstr ""
+"Yenile - bu port yenilenmeye çalışılıyor, ya da make komutu başarıyla "
+"tamamlanamadı."
+
+#: include/freshports.php:576
+msgid "Deleted"
+msgstr "Silindi"
+
+#: include/freshports.php:596
+msgid "Forbidden"
+msgstr "Yasaklı"
+
+#: include/freshports.php:607
+msgid "Broken"
+msgstr "Kırık"
+
+#: include/freshports.php:618
+msgid "Deprecated"
+msgstr "Kullanımdan kaldırıldı"
+
+#: include/freshports.php:629
+msgid "Expired"
+msgstr "Artık geçerli değil"
+
+#: include/freshports.php:640
+msgid "Expiration Date"
+msgstr "Geçerlilik Tarihi"
+
+#: include/freshports.php:651
+msgid "Restricted"
+msgstr "Kısıtlı"
+
+#: include/freshports.php:662
+msgid "Is Interactive"
+msgstr "İnteraktif mi"
+
+#: include/freshports.php:673
+msgid "NO CDROM"
+msgstr "NO CDROM"
+
+#: include/freshports.php:684
+msgid "Ignore"
+msgstr "Görmezden gel"
+
+#: include/freshports.php:695
+msgid "new!"
+msgstr "yeni!"
+
+#: include/freshports.php:699
+msgid "Original commit"
+msgstr "Orijinal commit"
+
+#: include/freshports.php:699
+msgid "Original commit message"
+msgstr "Orijinal commit mesajı"
+
+#: include/freshports.php:703
+msgid "Commit details"
+msgstr "Commit detayları"
+
+#: include/freshports.php:703
+msgid "FreshPorts commit message"
+msgstr "FreshPorts commit mesajı"
+
+#: include/freshports.php:723
+msgid "Encoding Errors (not all of the commit message was ASCII)"
+msgstr "Encoding Hataları (commit mesajının hepsi ASCII değildi)"
+
+#: include/freshports.php:735
+msgid "This port version is marked as vulnerable."
+msgstr "Bu port versiyonu savunmasız olarak işaretlendi."
+
+#: include/freshports.php:743
+msgid "View revision"
+msgstr "Revizyonu görüntüle"
+
+#: include/freshports.php:743
+msgid "view revision"
+msgstr "revizyonu görüntüle"
+
+#: include/freshports.php:747
+msgid "Annotate / Blame"
+msgstr ""
+
+#: include/freshports.php:751
+msgid "View diff"
+msgstr "Karşılaştırmayı görüntüle"
+
+#: include/freshports.php:751
+msgid "view diff"
+msgstr "karşılaştırmayı görüntüle"
+
+#: include/freshports.php:835
+msgid "Commit Flagged"
+msgstr "Commit İşaretlendi"
+
+#: include/freshports.php:840
+msgid "Commit Not Flagged"
+msgstr "Commit İşaretlenmedi"
+
+#: include/freshports.php:909
+msgid "View all ports for this commit"
+msgstr "Bu commit'ten bütün portlara göz at"
+
+#: include/freshports.php:910
+#, php-format
+msgid ""
+"(Only the first %1$d of %2$d items in this commit are shown above. %3$s)"
+msgstr ""
+
+#: include/freshports.php:916
+msgid "View all of this commit message"
+msgstr "Bu commit mesajının hepsini görüntüle"
+
+#: include/freshports.php:917
+#, php-format
+msgid "(Only the first %1$d lines of the commit message are shown above %2$s)"
+msgstr ""
+
+#: include/freshports.php:1084
+#, php-format
+msgid "The git branch used by this host is %s"
+msgstr "Bu host tarafından kullanılan git branch'ı %s"
+
+#: include/freshports.php:1085
+#, php-format
+msgid "The database is %s"
+msgstr "Veritabanı %s"
+
+#: include/freshports.php:1086
+#, php-format
+msgid "The db server is %s"
+msgstr "Veritabanı sunucusu %s"
+
+#: include/freshports.php:1102
+msgid "As an Amazon Associate I earn from qualifying purchases."
+msgstr "Amazon ile işbirliğimde satın alımlardan kazanıyorum."
+
+#: include/freshports.php:1102
+#, php-format
+msgid "Want a good read? Try %s"
+msgstr "Kitap önerisi ister misin? Deneyin %s"
+
+#: include/freshports.php:1103
+#, php-format
+msgid "Want a good monitor light? See my <a href=\"%s\">photos</a>"
+msgstr ""
+"İyi bir monitör ışığı ister misin? <a href=\"%s\">Fotoğraflar</a>a bakın"
+
+#: include/freshports.php:1104
+msgid "All times are UTC"
+msgstr "Bütün zaman dilimleri UTC üzerindendir"
+
+#: include/freshports.php:1109
+msgid "I remember"
+msgstr "Hatırlıyorum"
+
+#: include/freshports.php:1114 include/freshports.php:2261
+msgid "Blog"
+msgstr "Blog"
+
+#: include/freshports.php:1114
+msgid "Follow us"
+msgstr "Bizi takip et"
+
+#: include/freshports.php:1114
+msgid "Status page"
+msgstr "Durum sayfası"
+
+#: include/freshports.php:1123
+msgid "Menu &amp; search"
+msgstr "Menü &amp; ara"
+
+#: include/freshports.php:1124
+msgid "Jump to the menu and search"
+msgstr "Menüye atla ve ara"
+
+#: include/freshports.php:1124
+msgid "Menu"
+msgstr "Menü"
+
+#: include/freshports.php:1512
+msgid "All rights reserved."
+msgstr "Bütün hakları saklıdır."
+
+#: include/freshports.php:1512
+msgid "Copyright"
+msgstr "Telif Hakkı"
+
+#: include/freshports.php:1512
+msgid "This material is copyrighted"
+msgstr "Bu materyalin telif hakları saklıdır"
+
+#. TRANSLATORS: keep the line breaks short, this is a plain text email
+#: include/freshports.php:2042
+#, php-format
+msgid ""
+"Someone, perhaps you, supplied your email address as their\n"
+"FreshPorts login. If that wasn't you, and this message becomes\n"
+"a nuisance, please forward this message to %s\n"
+"and we will take care of it for you."
+msgstr ""
+"Birileri, belki de sen, senin eposta adresini kendilerinin\n"
+"FreshPorts girişinde kullandı. Eğer bu sen değilsen, ve bu mesaj\n"
+"rahatsızlık veriyorsa, lütfen bu mesajı %s'a yönlendirin\n"
+"ve biz sizin için onunla ilgileneceğiz."
+
+#: include/freshports.php:2047
+#, php-format
+msgid "Your token is: %s"
+msgstr "Senin tokenin: %s"
+
+#: include/freshports.php:2049
+msgid "Please point your browser at"
+msgstr "Lütfen tarayıcınızı şu adrese yönlendirin"
+
+#: include/freshports.php:2051
+#, php-format
+msgid "The request came from %s"
+msgstr "İstek şu adresten geldi %s"
+
+#: include/freshports.php:2068
+msgid "FreshPorts - user registration"
+msgstr "FreshPorts - kullanıcı kaydı"
+
+#: include/freshports.php:2153
+#, php-format
+msgid "Valid %1$s, %2$s, and %3$s."
+msgstr "Geçerli %1$s, %2$s, ve %3$s."
+
+#: include/freshports.php:2154
+msgid "We like to keep our HTML valid"
+msgstr "HTML'imizin geçerli kalmasını seviyoruz"
+
+#: include/freshports.php:2155
+msgid "We like to have valid CSS"
+msgstr "Geçerli CSS kullanmayı seviyoruz"
+
+#: include/freshports.php:2156
+msgid "Valid RSS is good too"
+msgstr "Geçerli RSS de iyidir"
+
+#: include/freshports.php:2201 include/login.php:15 www/login.php:148
+#: www/login.php:231
+msgid "Login"
+msgstr "Giriş"
+
+#: include/freshports.php:2214
+#, php-format
+msgid "Logged in as %s"
+msgstr "Şu olarak giriş yapıldı %s"
+
+#: include/freshports.php:2218
+msgid "your email is <a href=\"/bouncing.php\">bouncing</a>"
+msgstr "sizin epostanız <a href=\"/bouncing.php\">sıçrıyor</a>"
+
+#: include/freshports.php:2221
+msgid "Your Account"
+msgstr "Senin Hesabın"
+
+#: include/freshports.php:2221
+msgid "Your account"
+msgstr "Senin hesabın"
+
+#: include/freshports.php:2224
+msgid "Committer Opt-in"
+msgstr "Committer Onayı"
+
+#: include/freshports.php:2224
+msgid "Committers can receive reports of Sanity Test Failures"
+msgstr "Committerler Sanity Test hatalarının raporunu alabilir"
+
+#: include/freshports.php:2228
+msgid "Logout"
+msgstr "Çıkış yap"
+
+#: include/freshports.php:2228
+msgid "Logout of the website"
+msgstr "Siteden çıkış yap"
+
+#: include/freshports.php:2229
+msgid "List of commits you have flagged"
+msgstr "İşaretlediğiniz commitlerin listesi"
+
+#: include/freshports.php:2229
+msgid "My Flagged Commits"
+msgstr "İşaretlediğim commitler"
+
+#: include/freshports.php:2231
+msgid "Login to the website"
+msgstr "Siteye giriş yap"
+
+#: include/freshports.php:2231
+msgid "User Login"
+msgstr "Kullanıcı Girişi"
+
+#: include/freshports.php:2232
+msgid "Create account"
+msgstr "Hesap oluştur"
+
+#: include/freshports.php:2232
+msgid "Create an account"
+msgstr "Bir hesap oluşturun"
+
+#: include/freshports.php:2250
+msgid "This site"
+msgstr "Bu site"
+
+#: include/freshports.php:2254
+msgid "A bit of background on FreshPorts"
+msgstr "FreshPorts'un geçmişi"
+
+#: include/freshports.php:2254
+msgid "What is FreshPorts?"
+msgstr "FreshPorts nedir?"
+
+#: include/freshports.php:2255
+msgid "About the authors"
+msgstr "Yazarlar hakkında"
+
+#: include/freshports.php:2255
+msgid "Who wrote this stuff?"
+msgstr "Bu şeyleri kim yazdı?"
+
+#: include/freshports.php:2256
+msgid "Issues"
+msgstr "Sorunlar"
+
+#: include/freshports.php:2256
+msgid "Report a website problem"
+msgstr "Bir site hatası bildirin"
+
+#: include/freshports.php:2257
+msgid "FAQ"
+msgstr "SSS"
+
+#: include/freshports.php:2257
+msgid "Frequently Asked Questions"
+msgstr "Sıklıkla Sorulan Sorular"
+
+#: include/freshports.php:2258
+msgid "How big is it?"
+msgstr "Ne kadar büyük?"
+
+#: include/freshports.php:2258
+msgid "How many pages are in this website?"
+msgstr "Sitede ne kadar sayfa var?"
+
+#: include/freshports.php:2259
+msgid "Are you a security researcher? Please read this."
+msgstr "Bir güvenlik araştırmacısı mısınız? Lütfen bunu okuyun."
+
+#: include/freshports.php:2259
+msgid "Security Policy"
+msgstr "Güvenlik Politikaları"
+
+#: include/freshports.php:2260
+msgid "Our privacy statement"
+msgstr "Gizlilik açıklamamız"
+
+#: include/freshports.php:2260
+msgid "Privacy"
+msgstr "Gizlilik"
+
+#: include/freshports.php:2261
+msgid "All the latest FreshPorts news"
+msgstr "Bütün en yeni FreshPorts haberleri"
+
+#: include/freshports.php:2262
+msgid "Contact"
+msgstr "İletişim"
+
+#: include/freshports.php:2262
+msgid "Contact details"
+msgstr "İletişim detayları"
+
+#: include/freshports.php:2269
+msgid "Search"
+msgstr "Ara"
+
+#: include/freshports.php:2291
+msgid "Advanced Searching options"
+msgstr "Gelişmiş Arama seçenekleri"
+
+#: include/freshports.php:2291
+msgid "more..."
+msgstr "daha fazla..."
+
+#: include/freshports.php:2303
+msgid "Latest Vulnerabilities"
+msgstr "En yeni güvenlik açıklıkları"
+
+#: include/freshports.php:2309
+msgid "All vulnerabilities"
+msgstr "Bütün güvenlik açıklıkları"
+
+#: include/freshports.php:2309
+msgid "modified, not new"
+msgstr "düzenlendi, yeni değil"
+
+#: include/freshports.php:2310
+msgid "Last processed:"
+msgstr "Son işlenilen:"
+
+#: include/freshports.php:2322 include/freshports.php:2352
+msgid "Ports"
+msgstr "Ports"
+
+#: include/freshports.php:2327
+msgid "FreshPorts Home page"
+msgstr "FreshPorts  Ana sayfası"
+
+#: include/freshports.php:2327
+msgid "Home"
+msgstr "Ana sayfa"
+
+#: include/freshports.php:2328 include/freshports.php:2350
+msgid "Categories"
+msgstr "Kategoriler"
+
+#: include/freshports.php:2328
+msgid "List of all Port categories"
+msgstr "Bütün Port kategorilerinin listesi"
+
+#: include/freshports.php:2329
+msgid "All deleted ports"
+msgstr "Bütün silinen portlar"
+
+#: include/freshports.php:2329
+msgid "Deleted ports"
+msgstr "Silinen portlar"
+
+#: include/freshports.php:2330
+msgid "Sanity Test Failures"
+msgstr "Sanity Test Hataları"
+
+#: include/freshports.php:2330
+msgid "Things that didn't go quite right..."
+msgstr "Çok da yolunda gitmeyen şeyler..."
+
+#: include/freshports.php:2331
+msgid "Newsfeeds"
+msgstr "Haber akışı"
+
+#: include/freshports.php:2331
+msgid "Newsfeeds for just about everything"
+msgstr "Her şey hakkında haber akışları"
+
+#: include/freshports.php:2344
+msgid "Watch Lists"
+msgstr "Takip Listeleri"
+
+#: include/freshports.php:2349
+msgid "Upload"
+msgstr "Yükle"
+
+#: include/freshports.php:2349
+msgid ""
+"Upload a file containing a list of ports you want to add to your watch list"
+msgstr ""
+"Takip listene eklemek istediğin portların listesini içeren bir dosya yükle"
+
+#: include/freshports.php:2350
+msgid "Search through categories for ports to add to your watch list"
+msgstr "Takip listene eklemek istediğin portlar için kategorileri listele"
+
+#: include/freshports.php:2351
+msgid "Maintain"
+msgstr "Düzenle"
+
+#: include/freshports.php:2351
+msgid "Maintain your watch list[s]"
+msgstr "Takip listeni düzenle"
+
+#: include/freshports.php:2352
+msgid "Your list of watched ports"
+msgstr "Takip ettiğin portlar listesi"
+
+#: include/freshports.php:2353
+msgid "A list of news feeds for your watched lists"
+msgstr "Takip ettiklerin için bir haber akışı"
+
+#: include/freshports.php:2353
+msgid "Personal Newsfeeds"
+msgstr "Kişisel Haber akışı"
+
+#: include/freshports.php:2354
+msgid "Maintain your list of subscriptions"
+msgstr "Abonelik listeni düzenle"
+
+#: include/freshports.php:2354
+msgid "Report Subscriptions"
+msgstr "Abonelikleri Bildir"
+
+#: include/freshports.php:2355
+msgid "ABI Package Subscriptions"
+msgstr "ABI Paket Abonelikleri"
+
+#: include/freshports.php:2355
+msgid "Maintain your ABI package subscriptions"
+msgstr "ABI Paket Aboneliklerini düzenle"
+
+#: include/freshports.php:2380
+msgid "Statistics"
+msgstr "İstatistikler"
+
+#: include/freshports.php:2385 include/freshports.php:2386
+msgid "Everyone loves statistics!"
+msgstr "Herkes istatikleri sever!"
+
+#: include/freshports.php:2385
+msgid "Graphs"
+msgstr "Grafikler"
+
+#: include/freshports.php:2386
+msgid "NEW Graphs (Javascript)"
+msgstr "YENİ Grafikler (Javascript)"
+
+#: include/i18n.php:224
+msgid "Language"
+msgstr "Dil"
+
+#: include/i18n.php:231
+msgid "Change"
+msgstr "Değiştir"
+
+#: include/login.php:11 include/new-user.php:29 www/forgotten-password.php:260
+msgid "User ID:"
+msgstr "Kullanıcı Kimliği:"
+
+#: include/login.php:13 include/password-reset-via-token.php:17
+msgid "Password:"
+msgstr "Şifre:"
+
+#: include/login.php:18 www/forgotten-password.php:236 www/login.php:245
+msgid "Forgotten your password?"
+msgstr "Şifrenizi mi unuttunuz?"
+
+#: include/new-user.php:23
+msgid "Current password:"
+msgstr "Mevcut şifren:"
+
+#: include/new-user.php:32
+msgid "New password:"
+msgstr "Yeni şifre:"
+
+#: include/new-user.php:34
+msgid "New password again:"
+msgstr "Tekrar yeni şifre:"
+
+#: include/new-user.php:38
+msgid "Number of Days to show in side-bar:"
+msgstr "Köşe sekmede gösterilecek günlerin sayısı:"
+
+#: include/new-user.php:56
+msgid "Set focus to search box:"
+msgstr "Arama çubuğunu odaklayın:"
+
+#: include/new-user.php:60
+msgid "Number of results to display per page (e.g commits per page):"
+msgstr ""
+"Bir sayfada gösterilecek sonuçların sayısı (örneğin sayfa başı commitler):"
+
+#: include/new-user.php:69
+msgid "Email Address (required):"
+msgstr "Eposta Adresi (gerekli):"
+
+#: include/new-user.php:85
+msgid "CAPTCHA:"
+msgstr "DOĞRULAMA:"
+
+#: include/new-user.php:86
+msgid "(antispam code, type the three black symbols)"
+msgstr "(spam koruması, üç tane siyah sembol yazın)"
+
+#: include/new-user.php:96
+msgid "create account"
+msgstr "hesap oluştur"
+
+#: include/new-user.php:96
+msgid "update account"
+msgstr "hesabı güncelle"
+
+#: include/new-user.php:97
+msgid "reset form"
+msgstr "formu sıfırla"
+
+#: include/new-user.php:109
+msgid ""
+"For your reporting needs, please visit <a href=\"/report-"
+"subscriptions.php\">Report Subscriptions</a>."
+msgstr ""
+"Bildirmek için, lütfen şu sayfayı ziyaret edin <a href=\"/report-"
+"subscriptions.php\">Abonelikleri bildir</a>."
+
+#: include/new-user.php:110
+msgid "Delete my account"
+msgstr "Hesabımı sil"
+
+#: include/password-reset-via-token.php:19
+msgid "Confirm Password:"
+msgstr "Şifreyi doğrula:"
+
+#: include/password-reset-via-token.php:22
+msgid "Set password"
+msgstr "Şifre ayarla"
+
+#: include/spam-filter-information.php:9
+msgid "SPAM FILTERS:"
+msgstr "SPAM FİLTRELERİ:"
+
+#: include/spam-filter-information.php:11
+msgid ""
+"If you are using spam filters which require confirmation of incoming email, "
+"these reports will be coming from the following domains:"
+msgstr ""
+"Gelen epostaları onaylamanız gerektiren spam filtreleri kullanıyorsanız, bu "
+"raporlar şu alan adlarından gelecektir:"
+
+#: include/spam-filter-information.php:15
+msgid "Domain"
+msgstr "Alan adı"
+
+#: include/spam-filter-information.php:15
+msgid "Reason"
+msgstr "Sebep"
+
+#: include/spam-filter-information.php:16
+msgid "All reports originate from that domain."
+msgstr "Bütün raporlar bu alan adından gelmektedir."
+
+#: include/spam-filter-information.php:17
+msgid "The websites are hosted on a box in that domain."
+msgstr "Siteler bu alan adındaki bilgisayarda çalışmaktadır."
+
+#: include/spam-filter-information.php:18
+msgid "If I need to write to you, it will come from that domain."
+msgstr "Eğer size yazmam gerekirse, bu alan adından gelecektir."
+
+#: include/spam-filter-information.php:22
+msgid ""
+"Ensure that you update your spam filters to allow such incoming messages.  "
+"If your spam tools require that a confirmation be sent, you'll have to "
+"modify things as no confirmations will be sent for FreshPorts messages."
+msgstr ""
+"Spam filtrelerinizin böyle gelecek epostalara izin verdiğinden emin olun. "
+"Eğer spam araçlarınız bir doğrulama yapılmasını gerektiriyorsa, bir şeyleri "
+"düzenlemeniz gerekmektedir çünkü FreshPorts mesajları için hiçbir doğrulama "
+"gönderilmeyecektir."
+
+#: www/bouncing.php:39 www/customize.php:138
+#: www/password-reset-via-token.php:79
+msgid "Something went terribly wrong there."
+msgstr "Orada bir şeyler çok yanlış gitti."
+
+#: www/bouncing.php:42
+msgid "your email is bouncing"
+msgstr "epostanız sıçrıyor"
+
+#: www/bouncing.php:55
+msgid "Bouncing?  What do you mean?"
+msgstr "Sıçrama mı? O da ne demek?"
+
+#: www/bouncing.php:59
+msgid ""
+"You are a registered user. You have indicated that we can send you email.  "
+"This will either be part of your watch list notifications or as an "
+"announcement.  You can view these settings on the customization page (see "
+"the link on the right hand side of the page)."
+msgstr ""
+"Siz bir kayıtlı kullanıcısınız. Bizden eposta almayı kabul ettiniz. Bu iki "
+"şey için olabilir, ya takip listeniz için bildirimlerdir ya da duyurulardır. "
+"Bu tercihlerinizi kişiselleştirme sayfasından kontrol edebilirsiniz (sitenin "
+"sağ tarafındaki bağlantıya bakın)."
+
+#: www/bouncing.php:61
+msgid ""
+"The problem is that the email we are sending you is not getting to you.  It "
+"is bouncing back to us.  So we have stopped sending out messages to you.  If "
+"you wish to continue to receive such messages, you should update your email "
+"address on the customization page."
+msgstr ""
+"Problem şudur ki, size gönderdiğimiz eposta size ulaşamıyor. Bize geri "
+"sıçrıyor. Bu yüzden size eposta göndermeyi bıraktık. Eğer bu tür mesajları "
+"almaya devam etmek istiyorsanız, kişiselleştirme sayfasından epostanızı "
+"güncellemeniz gerekiyor."
+
+#: www/bouncing.php:66
+msgid "How to fix the problem"
+msgstr "Problem nasıl çözülebilir"
+
+#: www/bouncing.php:69
+msgid "There are two things which might have caused your email to bounce:"
+msgstr "Epostanızın sıçrama yapmasına neden olacak iki şey olabilir:"
+
+#: www/bouncing.php:71
+msgid "Your email address has changed."
+msgstr "Eposta adresiniz değişti."
+
+#: www/bouncing.php:72
+msgid "There was a problem with your email but it's been fixed."
+msgstr "Epostanızla ilgili bir problem vardı ama çözüldü."
+
+#: www/bouncing.php:75
+msgid ""
+"If your email address has changed, please update it in your <a "
+"href=\"customize.php\">account settings</a>."
+msgstr ""
+"Eğer eposta adresiniz değiştiyse, lütfen onu <a href=\"customize.php\">hesap "
+"ayarları</a>nızdan güncelleyin."
+
+#: www/bouncing.php:77
+msgid ""
+"If there was a problem with your email, such as your server was down, you "
+"can tell FreshPorts that you want it to start using your email address again "
+"by pressing the button below."
+msgstr ""
+"Eğer epostanızla ilgili bir sorun olmuşsa, sunucunuzun kapalı olması gibi, "
+"FreshPorts'a tekrar bu adresi kullanmak istediğinizi aşağıdaki butona "
+"basarak söyleyebilirsiniz."
+
+#: www/bouncing.php:82
+msgid "There was a problem, but it's fixed now"
+msgstr "Bir problem vardı, ama artık çözüldü"
+
+#: www/commit.php:161
+#, php-format
+msgid "Commit found by commit id on branch %s"
+msgstr "Commit numarası ile %s branch'ı üzerinde bulunan commit"
+
+#: www/commit.php:163
+msgid "Commit found by commit id"
+msgstr "Commit numarası ile bulunan commit"
+
+#: www/commit.php:196
+msgid "We have multiple emails for that revision:"
+msgstr "Bu revizyon için bir çok eposta var:"
+
+#: www/commit.php:264
+#, php-format
+msgid "Number of items [ports &amp; non-ports] in this commit: %d"
+msgstr ""
+
+#: www/commit.php:277
+msgid "show all files"
+msgstr "bütün dosyaları göster"
+
+#: www/commit.php:279
+msgid "hide all files"
+msgstr "bütün dosyaları gizle"
+
+#: www/commit.php:288
+#, php-format
+msgid "I don't know that category: %s"
+msgstr "Bu kategoriyi bilmiyorum: %s"
+
+#: www/commit.php:299
+msgid "I don't know that port."
+msgstr "Bu portu bilmiyorum."
+
+#: www/commit.php:303
+msgid "That is not a port."
+msgstr "Bu bir port değil."
+
+#: www/commit.php:308
+#, php-format
+msgid "Showing files for just one port: %s"
+msgstr "Sadece bir port için dosyalar gözüküyor: %s"
+
+#: www/commit.php:360
+msgid "Database connection could not be established!"
+msgstr "Veritabanı bağlantısı kurulamadı!"
+
+#: www/commit.php:363
+msgid "nothing supplied, nothing found!"
+msgstr "hiçbir şey sağlanmadı, hiçbir şey bulunamadı!"
+
+#: www/confirmation.php:14 www/confirmation.php:42
+msgid "Account confirmation"
+msgstr "Hesap doğrulaması"
+
+#: www/confirmation.php:51
+msgid "I don't know anything about that token."
+msgstr "Bu token hakkında hiçbir şey bilmiyorum."
+
+#: www/confirmation.php:55
+msgid ""
+"Your account has been enabled.  Please proceed to the <a "
+"href=\"login.php\">login page</a>"
+msgstr ""
+"Hesabınız aktifleştirildi. Lütfen <a href=\"login.php\">giriş sayfası</a>na "
+"devam edin"
+
+#: www/confirmation.php:59
+msgid ""
+"Well.  This just isn't supposed to happen.  For some strange and very rare "
+"reason, there is more than one person with that token."
+msgstr ""
+"Eh. Bu olmamalıydı. Bazı garip ve çok nadir sebeplerden ötürü, bu tokene "
+"sahip birden fazla kişi var."
+
+#: www/confirmation.php:60
+#, php-format
+msgid "Please contact %s for help."
+msgstr "Yardım için lütfen %s ile iletişim kurun."
+
+#: www/confirmation.php:64
+msgid "An error has occurred.  Sorry."
+msgstr "Bir hata oluştu. Üzgünüz."
+
+#: www/confirmation.php:68
+msgid "Hi there.  What are you doing here?"
+msgstr "Merhaba. Burada ne yapıyorsunuz?"
+
+#: www/customize.php:73 www/new-user.php:66
+msgid "That email address doesn't look right to me"
+msgstr "Bu eposta adresi bana doğru gözükmüyor"
+
+#: www/customize.php:79
+msgid ""
+"If changing your password, remember to supply your existing password first."
+msgstr ""
+"Eğer şifrenizi değiştiriyorsanız, önce mevcut şifrenizi girmeyi unutmayın."
+
+#: www/customize.php:84
+msgid "The new password was not confirmed.  It must be entered twice."
+msgstr "Yeni şifre doğrulanamadı. İki kez girmeniz gerekiyor."
+
+#: www/customize.php:93
+msgid "That is NOT your current password."
+msgstr "Bu sizin mevcut şifreniz DEĞİL."
+
+#: www/customize.php:153
+msgid "Customize User Account"
+msgstr "Kullanıcı Hesabını Düzenle"
+
+#: www/customize.php:164 www/new-user.php:190
+#: www/password-reset-via-token.php:105
+msgid "Access Code Failed!"
+msgstr "Erişim Kodu Hatası!"
+
+#: www/customize.php:167 www/new-user.php:194
+#: www/password-reset-via-token.php:113
+msgid ""
+"Some errors have occurred which must be corrected before your login can be "
+"created."
+msgstr "Hesabınızın oluşturulması için oluşan hataları düzeltmeniz gerekiyor."
+
+#: www/customize.php:171 www/delete-account.php:104 www/login.php:181
+#: www/new-user.php:203 www/password-reset-via-token.php:117
+msgid "If you need help, please email postmaster@."
+msgstr ""
+"Eğer yardıma ihtiyacınız varsa, lütfen postmaster@ adresine eposta gönderin."
+
+#: www/customize.php:176
+msgid "Account updated!"
+msgstr "Hesap güncellendi!"
+
+#: www/customize.php:177
+msgid "Your account details were successfully updated."
+msgstr "Kullanıcı hesabı detaylarınız başarıyla güncellendi."
+
+#: www/customize.php:182
+msgid "Customize"
+msgstr "Kişiselleştir"
+
+#: www/customize.php:187
+msgid ""
+"If you wish to change your password, first type your existing password, then "
+"your new password twice.  Otherwise, leave them all blank."
+msgstr ""
+"Eğer şifrenizi değiştirmek istiyorsanız, öncelikle mevcut şifrenizi girin, "
+"sonra yeni şifrenizi iki kez girin. Diğer türlü, hepsini boş bırakın."
+
+#: www/date.php:92
+#, php-format
+msgid "Commits for %s"
+msgstr "%s için Commitler"
+
+#: www/date.php:170
+msgid "No commits found for that date"
+msgstr "Bu tarihe ait hiçbir Commit bulunamadı"
+
+#: www/date.php:192
+msgid "Latest commits"
+msgstr "En yeni commitler"
+
+#: www/date.php:211 www/date.php:236
+#, php-format
+msgid "Number of commits: %d"
+msgstr "Commit sayısı: %d"
+
+#: www/delete-account.php:58
+msgid "I really tried to delete your account. I failed. Sorry."
+msgstr ""
+"Ben hesabınızı silmeyi gerçekten denedim fakat başarılı olamadım, üzgünüm."
+
+#: www/delete-account.php:65
+msgid "I could not delete that account. Sorry."
+msgstr "Ben bu hesabı silemedim. Üzgünüm."
+
+#: www/delete-account.php:69
+msgid "The confirmation was not correct."
+msgstr "Girdiğiniz bilgiler doğru değil."
+
+#: www/delete-account.php:75
+msgid "Delete User Account"
+msgstr "Hesabı Sil"
+
+#: www/delete-account.php:92
+msgid "Delete Failed!"
+msgstr "Silme işlemi başarısız oldu!"
+
+#: www/delete-account.php:100
+msgid "The delete failed."
+msgstr "Silme işlemi başarısız."
+
+#: www/delete-account.php:122
+msgid "Delete account"
+msgstr "Hesabı sil"
+
+#: www/delete-account.php:130
+msgid "Your account has been deleted."
+msgstr "Hesabınız silindi."
+
+#: www/delete-account.php:131
+msgid "Please click <a href=\"/\">here</a> to return to the home page."
+msgstr "Anasayfaya dönmek için lütfen <a href=\"/\">buraya</a> tıklayın."
+
+#: www/delete-account.php:134 www/delete-account.php:151
+msgid "Delete Account"
+msgstr "Hesabı Sil"
+
+#: www/delete-account.php:134
+#, php-format
+msgid "To delete your account, please enter your account name and click on %s."
+msgstr "Hesabınızı silmek için, lütfen hesap adınızı girin ve %s'a tıklayın."
+
+#: www/delete-account.php:143
+#, php-format
+msgid "The account name is: %s"
+msgstr "Hesap adı: %s"
+
+#: www/delete-account.php:144
+msgid "User Name:"
+msgstr "Kullanıcı Adı:"
+
+#: www/delete-account.php:150
+msgid "There is no undo for this"
+msgstr "Bunu geri almak mümkün değil"
+
+#: www/forgotten-password.php:84
+#, php-format
+msgid ""
+"Sorry, but previous email to you has bounced, so we're not sure it's going "
+"to get to you.  But we sent it out anyway.  Please contact the <a "
+"href=\"%s\">webmaster</a> for help if it doesn't arrive."
+msgstr ""
+"Üzgünüm ama size gönderilen önceki eposta sıçrama yaptı, bu yüzden size "
+"ulaşabileceğinden emin değiliz. Ama yine de gönderdik. Eğer size ulaşmazsa, "
+"lütfen <a href=\"%s\">webmaster</a> ile iletişime geçin."
+
+#: www/forgotten-password.php:91
+#, php-format
+msgid ""
+"Guess what?  You never gave us an email address.  So I guess you must "
+"contact the <a href=\"%s\">webmaster</a> for help."
+msgstr ""
+"Bilin bakalım? Siz hiçbir zaman bize bir eposta adresi vermediniz. Bu yüzden "
+"sanırım ki yardım için <a href=\"%s\">webmaster</a> ile iletişime "
+"geçmelisiniz."
+
+#. TRANSLATORS: keep the line breaks short, this is a plain text email
+#: www/forgotten-password.php:106
+#, php-format
+msgid ""
+"Someone, perhaps you, requested to reset your password.\n"
+"If that wasn't you, and this message becomes a nuisance, please\n"
+"forward this message to %s and we will take\n"
+"care of it for you."
+msgstr ""
+"Birileri, belki de sen, senin şifreni sıfırlamayı istedi.\n"
+"Eğer bu sen değilsen, ve bu mesaj rahatsızlık veriyorsa, lütfen\n"
+"bu mesajı %s'a yönlendirin ve biz sizin için onunla ilgileneceğiz."
+
+#: www/forgotten-password.php:111
+#, php-format
+msgid "Your login id is: %s"
+msgstr "Giriş kimliğiniz: %s"
+
+#: www/forgotten-password.php:112
+msgid "Your password recovery URL is:"
+msgstr "Sizin şifre kurtarma URL'iniz:"
+
+#: www/forgotten-password.php:115
+#, php-format
+msgid "the request came from %s"
+msgstr "istek %s'dan geldi"
+
+#: www/forgotten-password.php:129
+msgid "password"
+msgstr "şifre"
+
+#: www/forgotten-password.php:151
+msgid "Forgotten password"
+msgstr "Şifremi unuttum"
+
+#: www/forgotten-password.php:169
+msgid "We have a problem!"
+msgstr "Bir problemimiz var!"
+
+#: www/forgotten-password.php:196
+msgid "User ID not found!"
+msgstr "Kullanıcı kimliği bulunamadı!"
+
+#: www/forgotten-password.php:207
+msgid ""
+"The User ID you supplied could not be found.  Perhaps try your email instead?"
+msgstr ""
+"Sağladığınız kullanıcı kimliği bulunamadı. Belki eposta adrenizi girmeyi "
+"deneyin?"
+
+#: www/forgotten-password.php:209
+msgid ""
+"The email you supplied could not be found.  Perhaps try your User ID instead?"
+msgstr ""
+"Sağladığınız eposta adresi bulunamadı. Belki kullanıcı kimliğinizi girmeyi "
+"deneyin?"
+
+#: www/forgotten-password.php:234
+msgid "Mail sent to your address"
+msgstr "Eposta adresinize gönderildi"
+
+#: www/forgotten-password.php:246
+#, php-format
+msgid ""
+"A password recovery URL has been sent to the address we have on file.  If "
+"you still can't get logged in please contact <a href=\"%s\">the webmaster</"
+"a> and we'll see what we can do."
+msgstr ""
+"Sistemimizde kayıtlı olan eposta adresine bir şifre kurtarma URL'i "
+"gönderildi. Eğer hala giriş yapamıyorsanız <a href=\"%s\">the webmaster</a> "
+"ile iletişime geçin ve ne yapabileceğimize bir bakalım."
+
+#: www/forgotten-password.php:252
+msgid ""
+"If you've forgotten your password, don't worry.  We've got that covered."
+msgstr "Eğer şifrenizi unuttuysanız, merak etmeyin. Biz bunu halledeceğiz."
+
+#: www/forgotten-password.php:254
+#, php-format
+msgid ""
+"Please enter either your login or your email address (whichever you "
+"remember), then click on '%s'."
+msgstr ""
+"Lütfen kullanıcı adınızı ya da eposta adrenizden birini girin (hangisini "
+"hatırlıyorsanız), sonra '%s' bağlantısına tıklayın."
+
+#: www/forgotten-password.php:254 www/forgotten-password.php:264
+msgid "eMail Me!"
+msgstr "Bana ePosta gönder!"
+
+#: www/forgotten-password.php:256
+msgid ""
+"We will send you an email with a link in it. Click on that link and you'll "
+"be able to set a new password. This link will expire within a few hours. "
+"This isn't exactly totally secure, but then we're only dealing with your "
+"FreshPorts login, not a financial transaction...."
+msgstr ""
+"Biz size içinde bir bağlantı olan bir eposta göndereceğiz. Bu bağlantıya "
+"tıkladığınızda bir şifre belirleyebileceksiniz. Bu bağlantı birkaç saate "
+"geçerliliğini yitirecektir. Bu tamamen güvenli değildir, ama yine de biz "
+"sadece sizin FreshPorts girişinizle uğraşıyoruz, finansal bir işlem değil..."
+
+#: www/forgotten-password.php:262
+msgid "email address:"
+msgstr "eposta adresi:"
+
+#: www/login.php:104
+#, php-format
+msgid "Your account has been disabled.  Please contact %s"
+msgstr "Hesabınız devredışı bırakıldı. Lütfen %s ile iletişime geçin"
+
+#: www/login.php:107
+msgid ""
+"Your account needs to be enabled by following the directions in the email we "
+"have sent to you."
+msgstr ""
+"Sizin hesabınızın aktif edilmesi için size gönderdiğimiz epostadaki "
+"yönergeleri takip etmeniz gerekmektedir."
+
+#: www/login.php:108
+msgid ""
+"To have your activation details resent to the email address you supplied, "
+"click on the resend button"
+msgstr ""
+"Aktivasyon detaylarınızın sağladığınız eposta adresine tekrar gönderilmesi "
+"için, yeniden gönder butonuna tıklayın"
+
+#: www/login.php:111
+msgid "Resend"
+msgstr "Yeniden gönder"
+
+#: www/login.php:114
+msgid "I have no idea what your account status is."
+msgstr "Hesabınızın durumu hakkında bir fikrim yok."
+
+#: www/login.php:139 www/welcome.php:34
+msgid ""
+"You should soon receive an email at the mail address you supplied. It will "
+"contain instructions to enable your account."
+msgstr ""
+"Sağladığınız eposta adresine yakında bir mesaj almalısınız. O mesaj "
+"hesabınızın aktif edilmesi için gereken adımları içerecektir."
+
+#: www/login.php:141
+#, php-format
+msgid "I'm sorry but I couldn't send your token.  Please contact %s."
+msgstr ""
+"Üzgünüm ama sizin tokeninizi gönderemedim. Lütfen %s ile iletişime geçin."
+
+#: www/login.php:144
+#, php-format
+msgid ""
+"Hmmm, I know nothing about you.  That can't be right.  Please contact %s"
+msgstr ""
+"Hmmm, sizin hakkınızda bir şey bilmiyorum. Bu doğru olamaz. Lütfen %s ile "
+"iletişime geçin"
+
+#: www/login.php:167
+msgid "Login Failed!"
+msgstr "Giriş Başarısız!"
+
+#: www/login.php:175
+msgid ""
+"The User ID and password you supplied could not be used to login.  This "
+"could be for one of the following reasons:"
+msgstr ""
+"Sağladığınız Kullanıcı Adı ve şifre giriş yapmak için kullanılamadı. Bu, şu "
+"birkaç sebepten olmuş olabilir:"
+
+#: www/login.php:177
+msgid "The login id is incorrect"
+msgstr "Kullanıcı adı yanlış"
+
+#: www/login.php:178
+msgid "The password is incorrect"
+msgstr "Şifre yanlış"
+
+#: www/login.php:179
+msgid "Both of the above"
+msgstr "Yukarıdakilerin her ikisi de"
+
+#: www/login.php:201
+msgid "NOTICE"
+msgstr "UYARI"
+
+#: www/login.php:237
+msgid "Your browser must allow cookies for this login to work."
+msgstr ""
+"Giriş yapabilmeniz için tarayıcınızın kurabiyelere (cookies) izin vermesi "
+"gerekiyor."
+
+#: www/new-user.php:55
+msgid "Please enter a user id."
+msgstr "Lütfen bir kullanıcı adı girin."
+
+#: www/new-user.php:61
+msgid ""
+"Please, just use plain text for your user id.  This event has been logged."
+msgstr ""
+"Kullanıcı adınız için lütfen sade bir metin girin. Bu olay kayıt alınacaktır."
+
+#: www/new-user.php:72
+msgid ""
+"Please, just use plain text for your email.  This event has been logged."
+msgstr ""
+"Eposta adresiniz için lütfen sade bir metin girin. Bu olay kayıt alınacaktır."
+
+#: www/new-user.php:77 www/password-reset-via-token.php:51
+msgid "The password was not confirmed.  It must be entered twice."
+msgstr "Şifre doğrulanamadı. İki kez girilmesi gerekiyor."
+
+#: www/new-user.php:81
+msgid "A password must be supplied"
+msgstr "Bir şifre girmek zorundasınız"
+
+#: www/new-user.php:103
+msgid "Your CAPTCHA code is not valid"
+msgstr "Sizin DOĞRULAMA (CAPTCHA) kodunuz geçerli değil"
+
+#: www/new-user.php:152
+msgid "OUCH! I couldn't add you to the database"
+msgstr "Ah! Sizi veritabanına ekleyemedim"
+
+#: www/new-user.php:156
+msgid "OUCH! I couldn't assign you a new UserID"
+msgstr "Ah! Size yeni bir kullanıcı adı tanımlayamadım"
+
+#: www/new-user.php:161
+msgid "That User ID is already in use.  Please select a different User ID."
+msgstr ""
+"Bu kullanıcı adı zaten kullanılıyor. Lütfen farklı bir kullanıcı adı seçin."
+
+#: www/new-user.php:176 www/welcome.php:13
+msgid "New User"
+msgstr "Yeni Kullanıcı"
+
+#: www/new-user.php:222
+msgid "New User Details"
+msgstr "Yeni Kullanıcı Detayları"
+
+#: www/new-user.php:227
+msgid "Please observe the following points:"
+msgstr "Lütfen aşağıdaki kurallara uyun:"
+
+#: www/new-user.php:230
+msgid ""
+"You must supply a valid email address. Instructions to enable your account "
+"will be emailed to you at that address."
+msgstr ""
+"Geçerli bir eposta adresi girmeniz gerekiyor. Hesabınızı aktifleştirmek için "
+"gereken adımlar bu adrese gönderilecektir."
+
+#: www/new-user.php:232
+#, php-format
+msgid "If you have a spam filter, please allow all mail from %1$s and %2$s."
+msgstr ""
+"Eğer bir spam filtreniz varsa, bu %1$s ve %2$s adreslerinden gelecek bütün "
+"epostalara izin verin."
+
+#: www/new-user.php:234
+msgid ""
+"Please disable any auto-responders for the above domains.  I get enough "
+"email without being told when you'll be back from holiday or who else I can "
+"contact..."
+msgstr ""
+"Lütfen üstteki alan adları için herhangi bir otomatik-yanıt servisini "
+"devredışı bırakın. Tatilden ne zaman döneceğiniz ya da başka kiminle "
+"iletişime geçebileceğim konusunda bilgilendirilmeden de yeterince e-posta "
+"alıyorum..."
+
+#: www/new-user.php:236
+msgid "Your browser must allow cookies for the login to work."
+msgstr ""
+"Girişin çalışması için tarayıcınızın kurabiyelere (cookies) izin vermesi "
+"lazım."
+
+#: www/new-user.php:241
+msgid "Your cooperation with the above will make my life easier.  Thank you."
+msgstr "Yukarıdakilerle işbirliğiniz hayatımı kolaylaştıracaktır. Teşekkürler."
+
+#: www/password-reset-via-token.php:70
+msgid "It seems that token is no longer valid."
+msgstr "Görünüyor ki token artık geçerli değil."
+
+#: www/password-reset-via-token.php:87 www/password-reset-via-token.php:140
+msgid "Reset password via token"
+msgstr "Token ile şifreyi sıfırlayın"
+
+#: www/password-reset-via-token.php:131
+msgid ""
+"SUCCESS! Your password has been updated.  Please <a href=\"/"
+"login.php\">login</a>"
+msgstr ""
+"BAŞARILI! Şifreniz güncellendi. Lütfen tekrar <a href=\"/login.php\">giriş</"
+"a> yapın"
+
+#: www/password-reset-via-token.php:145
+msgid "Please enter your new password twice."
+msgstr "Lütfen yeni şifrenizi iki kez girin."
+
+#: www/welcome.php:25
+msgid "Account created"
+msgstr "Hesap oluşturuldu"
+
+#: www/welcome.php:30
+msgid "Your account has been created."
+msgstr "Hesabın oluşturuldu."
+
+#: www/welcome.php:37
+msgid ""
+"If you do not receive that email, please attempt to login and you will have "
+"an opportunity to resend the notification."
+msgstr ""
+"Eğer bu epostayı almıyorsanız, tekrar giriş yapmayı deneyin ve o zaman "
+"bildirimi yeniden göndermek için bir şansınız olacaktır."

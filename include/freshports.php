@@ -2171,7 +2171,10 @@ Valid
 		$HTML .= freshports_GoogleAnalytics();
 	}
 	
-	$HTML .= '<script src="/javascript/freshports.js" defer></script>';
+	# the version changes whenever the file does, so browsers do not keep running
+	# a cached copy that no longer matches freshports.css - see issue #636
+	$version = substr(hash_file('sha1', $_SERVER['DOCUMENT_ROOT'] . '/javascript/freshports.js'), 0, 8);
+	$HTML .= '<script src="/javascript/freshports.js?v=' . $version . '" defer></script>';
 
 	if ($Statistics) $Statistics->Save();
 

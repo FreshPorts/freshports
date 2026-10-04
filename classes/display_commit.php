@@ -123,7 +123,7 @@ class DisplayCommit
 		$HTML .= '&nbsp;' . freshports_Search_Committer($mycommit->committer);
 
 		if ($CommitterIsNotAuthor) {
-			$HTML .= '&nbsp;Author:&nbsp;' . freshports_AuthorEmailLink($mycommit->author_name, $mycommit->author_email);
+			$HTML .= '&nbsp;' . _('Author:') . '&nbsp;' . freshports_AuthorEmailLink($mycommit->author_name, $mycommit->author_email);
 		}
 		$HTML .= '</span>';
 
@@ -335,7 +335,7 @@ class DisplayCommit
 		$NumRows = pg_num_rows($this->result);
 		if ($this->Debug) echo __FILE__ . ':' . __LINE__ . " Number of rows = $NumRows<br>\n";
 		if (!$NumRows) {
-			$this->HTML = "<tr><td>\n<P>Sorry, nothing found in the database....</P>\n</td></tr>\n";
+			$this->HTML = "<tr><td>\n<P>" . _('Sorry, nothing found in the database....') . "</P>\n</td></tr>\n";
 			return $this->HTML;
 		}
 

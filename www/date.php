@@ -89,7 +89,7 @@
 
 	freshports_ConditionalGet($last_modified);
 
-	$Title = "Commits for $Date" ;
+	$Title = sprintf(_('Commits for %s'), $Date);
 	freshports_Start($FreshPortsSlogan . ' - ' . $Title,
 					$Title,
 					'FreeBSD, index, applications, ports');
@@ -167,7 +167,7 @@
 			$HTML .= '<tr><td class="accent">' . "\n";
 			$HTML .= '  ' . FormatTime($Date, 0, "l, j M Y") . "\n";
 			$HTML .= '</td></tr>' . "\n\n";
-			$HTML .= '<tr><td>No commits found for that date</td></tr>';
+			$HTML .= '<tr><td>' . _('No commits found for that date') . '</td></tr>';
 		}
 
 		unset($ThisCommitLogID);
@@ -189,7 +189,7 @@
 
 define('RELATIVE_DATE_24HOURS', 24 * 60 * 60);	# seconds in a day
 
-$Today = '<a href="/">Latest commits</a>';
+$Today = '<a href="/">' . _('Latest commits') . '</a>';
 
 # use DateTime because it gets the math correct, even with daylight savings changes
 # see https://github.com/FreshPorts/freshports/issues/18
@@ -208,7 +208,7 @@ $Tomorrow  = freshports_LinkToDate(strtotime($dateAfter->format('Y-m-d')),  DATE
 $DateLinks = $Yesterday . ' | ' . $Today . ' | ' . $Tomorrow;
 echo $DateLinks;
 if ($NumCommits > 0) {
-  echo "<br>Number of commits: " . $NumCommits;
+  echo '<br>' . sprintf(_('Number of commits: %d'), $NumCommits);
 }
 
 ?>
@@ -233,7 +233,7 @@ echo '</table>';
 
 echo $DateLinks;
 if ($NumCommits > 0) {
-  echo " | Number of commits: " . $NumCommits;
+  echo ' | ' . sprintf(_('Number of commits: %d'), $NumCommits);
 }
 
 ?>

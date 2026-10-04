@@ -37,7 +37,7 @@ class FilesDisplay {
 		$NumRows = pg_num_rows($this->ResultSet);
 		if ($this->Debug) echo __FILE__ . ':' . __LINE__ . " Number of rows = $NumRows<br>\n";
 		if (!$NumRows) { 
-			$this->HTML = "<tr><td>\n<P>Sorry, nothing found in the database....</P>\n</td></tr>\n";
+			$this->HTML = "<tr><td>\n<P>" . _('Sorry, nothing found in the database....') . "</P>\n</td></tr>\n";
 			return $this->HTML;
 		}
 
@@ -45,18 +45,7 @@ class FilesDisplay {
 <table class="files-list fullwidth bordered">
 <tr>
 ';
-		switch ($NumRows) {
-			case 0:
-				$title = 'no files found';
-				break;
-
-			case 1:
-				$title = '1 file found';
-				break;
-
-			default:
-				$title =  $NumRows . ' files found';
-		}
+		$title = sprintf(ngettext('%d file found', '%d files found', $NumRows), $NumRows);
 
 		$this->HTML .= freshports_PageBannerTextColSpan($title, 4);
 		
@@ -64,7 +53,7 @@ class FilesDisplay {
 
 		$this->HTML .= "
 		<tr>
-			<th>Action</th><th>Revision</th><th>Annotate/etc</th><th>File</th>
+			<th>" . _('Action') . "</th><th>" . _('Revision') . "</th><th>" . _('Annotate/etc') . "</th><th>" . _('File') . "</th>
 		</tr>\n";
 
 		for ($i = 0; $i < $NumRows; $i++) {
@@ -95,7 +84,9 @@ class FilesDisplay {
 					$Change_Type = $myrow["change_type"] ; 
 			}
 
-			$this->HTML .= "  <td>" . $Change_Type . "</td>";
+			# $Change_Type is compared below, so translate only what is displayed
+			$Change_Types_Displayed = array('modify' => _('modify'), 'import' => _('import'), 'remove' => _('remove'));
+			$this->HTML .= "  <td>" . ($Change_Types_Displayed[$Change_Type] ?? $Change_Type) . "</td>";
 			$this->HTML .= '  <td>' . $myrow["revision_name"];
             $this->HTML .= "</td>";
             
@@ -183,7 +174,7 @@ class FilesDisplay {
                     # was: https://github.com/freebsd/freebsd-ports/commits/0957c7db9bf1fc4313cdefdcdc2608a0c965dda7sysutils/goaccess/Makefile
                     # now: https://cgit.freebsd.org/ports/log/multimedia/plexmediaserver-plexpass/Makefile
                     $url_text = freshports_Convert_Subversion_Path_To_Git($myrow["pathname"], $myrow['branch']);
-                    $this->HTML .= ' <a href="http://' . $myrow['repo_hostname'] . $myrow["path_to_repo"] . '/log/' . $url_text . '" title="Commit history">';
+                    $this->HTML .= ' <a href="http://' . $myrow['repo_hostname'] . $myrow["path_to_repo"] . '/log/' . $url_text . '" title="' . _('Commit history') . '">';
                     break;
             }
 

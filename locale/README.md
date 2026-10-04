@@ -14,6 +14,12 @@ translation lives at `<locale>/LC_MESSAGES/freshports.po`, for example
 
 Then edit the `.po` file (Poedit works well) and open a pull request.
 
+Check the `Plural-Forms` line in the header. Some versions of `msginit` leave
+it as `nplurals=INTEGER; plural=EXPRESSION;`, which will not compile. For
+Simplified Chinese it should be:
+
+    "Plural-Forms: nplurals=1; plural=0;\n"
+
 Please also add the language's own name to `freshports_i18n_native_name()` in
 `include/i18n.php`, so the language picker shows it.
 

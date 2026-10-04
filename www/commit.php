@@ -157,10 +157,10 @@
 
 
 
-	$Title = 'Commit found by commit id';
 	if (!empty($Commit->branch) && $Commit->branch != BRANCH_HEAD) {
-
-		$Title .= ' on branch ' . $CommitBranch;
+		$Title = sprintf(_('Commit found by commit id on branch %s'), $CommitBranch);
+	} else {
+		$Title = _('Commit found by commit id');
 	}
 	freshports_Start($Title,
 					$Title,
@@ -193,7 +193,7 @@
 			if (!empty($revision) && count($message_id_array)) {
 				// we have multiple messages for that commit
 				echo '<tr><td class="content">';
-				echo "We have multiple emails for that revision: ";
+				echo _("We have multiple emails for that revision:") . ' ';
 				$Commit->FetchNth(0);
 				$clean_revision = htmlentities($Commit->svn_revision);
 				// e.g. http://svnweb.freebsd.org/base?view=revision&revision=177821
@@ -261,9 +261,9 @@
 							$RetVal = $DisplayCommit->CreateHTML();
 
 							$HTML .= $DisplayCommit->HTML;
-							$HTML .= '<tr><td><p>Number of items [ports &amp; non-ports] in this commit: ' . $NumFilesTouched . '</p></td></tr>';
+							$HTML .= '<tr><td><p>' . sprintf(_('Number of items [ports &amp; non-ports] in this commit: %d'), $NumFilesTouched) . '</p></td></tr>';
 						} else {
-							$HTML .=  '<tr><td><P>Sorry, nothing found in the database....</P>' . "\n";
+							$HTML .=  '<tr><td><P>' . _('Sorry, nothing found in the database....') . '</P>' . "\n";
 							$HTML .=  '</td></tr>';
 							$DoTheSave = false;
 						}
@@ -274,9 +274,9 @@
 
 					$HTML .=  "<tr><td>\n";
 
-					$ShowAllFilesURL = '<a href="' . htmlspecialchars(($_SERVER['SCRIPT_URL'] ?? '') . '?message_id=' .  $message_id . '&files=yes') . '">show all files</a>';
+					$ShowAllFilesURL = '<a href="' . htmlspecialchars(($_SERVER['SCRIPT_URL'] ?? '') . '?message_id=' .  $message_id . '&files=yes') . '">' . _('show all files') . '</a>';
 
-					$HideAllFilesURL = '<a href="' . htmlspecialchars(($_SERVER['SCRIPT_URL'] ?? '') . '?message_id=' .  $message_id) . '">hide all files</a>';
+					$HideAllFilesURL = '<a href="' . htmlspecialchars(($_SERVER['SCRIPT_URL'] ?? '') . '?message_id=' .  $message_id) . '">' . _('hide all files') . '</a>';
 
 					if ($FilesForJustOnePort) {
 						// TODO need to validate category/port here!
@@ -285,7 +285,7 @@
 						$Category = new Category($database);
 						$CategoryID = $Category->FetchByName($clean['category']);
 						if (!$CategoryID) {
-							die( 'I don\'t know that category: . ' . htmlentities($clean['category']));
+							die(sprintf(_("I don't know that category: %s"), htmlentities($clean['category'])));
 						}
 
 						require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/element_record.php');
@@ -296,16 +296,16 @@
 						$ElementID = $Element->FetchByName($elementName);
 
 						if (!$ElementID) {
-							die( 'I don\'t know that port.');
+							die(_("I don't know that port."));
 						}
 
 						if (!$Element->IsPort()) {
-							die( 'That is not a port.');
+							die(_('That is not a port.'));
 						}
 
 
 						$PortURL = '<a href="/' . $clean['category'] . '/' . $clean['port'] . '/">' . $clean['category'] . '/' . $clean['port'] . '</a>';
-						$HTML .=  '<p>Showing files for just one port: <span class="element-details">' . $PortURL . '</span></p>';
+						$HTML .=  '<p>' . sprintf(_('Showing files for just one port: %s'), '<span class="element-details">' . $PortURL . '</span>') . '</p>';
 						$HTML .=  "<p>$ShowAllFilesURL</p>";
 					} # FilesForJustOnePort
 
@@ -357,10 +357,10 @@
 			echo $HTML;
 
 		} else {
-			echo '<tr><td class="content">Database connection could not be established!</td></tr></table></td>';
+			echo '<tr><td class="content">' . _('Database connection could not be established!') . '</td></tr></table></td>';
 		} # if ($database )
 	} else { # if ($message_id != '' || $revision != '')
-		echo '<tr><td class="content">nothing supplied, nothing found!</td></tr></table></td>';
+		echo '<tr><td class="content">' . _('nothing supplied, nothing found!') . '</td></tr></table></td>';
 	} # if ($cached)
 
 

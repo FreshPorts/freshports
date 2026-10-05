@@ -121,3 +121,25 @@ function showHide(shID) {
    button.setAttribute('aria-expanded', 'false');
    root.classList.add('has-drawer');
 })();
+
+/*
+ * Switch language as soon as one is picked.  Without this script, the
+ * picker's Change button does the same job - see issue #678.
+ */
+(function () {
+   var form = document.querySelector('form.language-picker');
+   if (!form) {
+      return;
+   }
+
+   var select = form.querySelector('select');
+   var button = form.querySelector('input[type="submit"]');
+   if (!select || !button) {
+      return;
+   }
+
+   button.hidden = true;
+   select.addEventListener('change', function () {
+      form.submit();
+   });
+})();

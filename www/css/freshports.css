@@ -432,13 +432,30 @@ IMG#fp-logo { max-width: 100%; height: auto }
   display: none;
 }
 
-/* the search box, in the header on every device */
-.header-search {
+/* the search box and the language picker share a row in the header, on every device - re #678 */
+.header-tools {
   display: flex;
+  flex-wrap: wrap;
   flex-basis: 100%;
   align-items: center;
-  gap: 0.5em;
+  gap: 0.5em 1.5em;
   margin-bottom: 0.5em;
+}
+
+.header-search {
+  display: flex;
+  flex: 1 1 20em;
+  align-items: center;
+  gap: 0.5em;
+}
+
+/* shown only when a translation is installed; on narrow screens it wraps below the search box */
+.language-picker {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  margin-left: auto;
+  white-space: nowrap;
 }
 
 .header-search input[type="search"] {
@@ -822,12 +839,6 @@ li.extraspace {
   text-align: right;
 }
 
-/* shown only when a translation is installed - re #678 */
-.footer .language-picker {
-  margin-top: 0.5em;
-  font-size: smaller;
-}
-
 /* for horizontal scrolling of package tables - re https://www.w3schools.com/howto/howto_css_menu_horizontal_scroll.asp#contact */
 
 div.scrollmenu table {
@@ -1044,6 +1055,10 @@ table.packages {
 
   .header-search input[type="submit"] {
     padding: 0.4em 0.8em;
+    font-size: 16px;
+  }
+
+  .language-picker select {
     font-size: 16px;
   }
 

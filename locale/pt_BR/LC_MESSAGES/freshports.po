@@ -3582,7 +3582,7 @@ msgstr ""
 "list-maintenance.php\">configurações de lista de observação</a>. Você "
 "provavelmente selecionou \"lista(s) de observação padrão\" quando não tem "
 "nenhuma lista de observação padrão definida. Para marcar uma lista de "
-"observação como padrão, selecione-a na lista e clique no botão Set Default."
+"observação como padrão, selecione-a na lista e clique no botão Definir como Padrão."
 
 #. TRANSLATORS: %1$s is the 'on your watch list' icon, %2$s is the 'add to watch list' icon.
 #: www/faq.php:422
@@ -3964,7 +3964,7 @@ msgid ""
 "<b>Commit History</b>:"
 msgstr ""
 "Para alguns ports escravos, você pode ver uma mensagem como esta, logo acima "
-"do <b>Commit History</b>:"
+"do <b>Histórico de commits</b>:"
 
 #: www/faq.php:605
 msgid ""
@@ -4184,11 +4184,11 @@ msgstr ""
 
 #: www/faq.php:738
 msgid "Check the <i>New Package Notification</i> box"
-msgstr "Marque a caixa <i>New Package Notification</i>"
+msgstr "Marque a caixa <i>Notificação de novo pacote</i>"
 
 #: www/faq.php:739
 msgid "click on Update"
-msgstr "clique em Update"
+msgstr "clique em Atualizar"
 
 #: www/faq.php:740
 msgid ""
@@ -4221,7 +4221,7 @@ msgstr "quarterly e/ou latest (terceira caixa)"
 
 #: www/faq.php:747
 msgid "and click on <i>Add</i>"
-msgstr "e clique em <i>Add</i>"
+msgstr "e clique em <i>Adicionar</i>"
 
 #: www/faq.php:751
 msgid "When the next updates arrive, you'll get an email."
@@ -6227,7 +6227,7 @@ msgstr "Esvaziar tudo"
 
 #: www/watch-list-maintenance.php:90
 msgid "Set Default"
-msgstr "Definir como padrão"
+msgstr "Definir como Padrão"
 
 #: www/watch-list-maintenance.php:91
 msgid "Set options"
@@ -6482,8 +6482,8 @@ msgid ""
 "watch list, then visit the <i>Old Port</i> link and remove it from your "
 "watch list."
 msgstr ""
-"Você deve visitar primeiro o link <i>Replaced By</i>, adicionar esse port à "
-"sua lista de observação, depois visitar o link <i>Old Port</i> e removê-lo "
+"Você deve visitar primeiro o link <i>Substituído por</i>, adicionar esse port à "
+"sua lista de observação, depois visitar o link <i>Port antigo</i> e removê-lo "
 "da sua lista de observação."
 
 #: www/watch.php:147

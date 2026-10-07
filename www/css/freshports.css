@@ -1076,6 +1076,17 @@ table.packages {
     font-size: max(16px, 1rem);
   }
 
+  /* let the header shrink to the screen, so large text does not push it off
+     the side; the search box gets narrower instead */
+  .header-tools, .header-search {
+    min-width: 0;
+  }
+
+  /* the pickers wrap onto lines of their own, so line them up on the left */
+  .language-picker, .fontsize-picker {
+    margin-left: 0;
+  }
+
   table.layout,
   table.layout > tbody,
   table.layout > tbody > tr,

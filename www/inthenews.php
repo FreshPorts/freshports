@@ -37,7 +37,8 @@ BSD Today - <a href="http://www.bsdtoday.com/2000/May/News146.html">Keeping trac
 slashdot - <a href="https://slashdot.org/article.pl?sid=00/05/10/1014226">BSD: FreshPorts</a>
 </p>
 
-Daily Daemon News - <a href="https://daily.daemonnews.org/view_story.php3?story_id=889"><?php echo sprintf(_('%s site announcement'), $FreshPortsTitle); ?></a>
+Daily Daemon News - <a href="https://daily.daemonnews.org/view_story.php3?story_id=889"><?php echo sprintf(_('%s site announcement'), $FreshPortsTitle); ?></a> -
+(<?php echo _('That link no longer works, try this copy on the Internet Archive instead:'); ?> <a href="https://web.archive.org/web/20020424042757/https://daily.daemonnews.org/view_story.php3?story_id=889"><?php echo sprintf(_('%s site announcement'), $FreshPortsTitle); ?></a>)
 </td>
 </tr>
 </table>

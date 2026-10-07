@@ -1124,7 +1124,9 @@ if (date("M") == 'Nov' && date("j") <= 12) {
 	
 }
 
-# the search box lives in the header on every device, so it is always easy to find.
+# the search box and the language picker live in the header on every device, so they
+# are always easy to find; a visitor who cannot read English should not have to hunt
+# for the picker.
 # menu-link and menu-button are only shown on narrow screens, where the sidebar is
 # tucked away; menu-button stays pinned to the top-right corner so it can be used
 # from anywhere on the page.  With JavaScript, menu-button opens and closes the
@@ -1133,7 +1135,8 @@ if (date("M") == 'Nov' && date("j") <= 12) {
 # set_focus_search is only set for logged in visitors; is_object() guards pages without getvalues.php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/searches.php');
 $Searches = new Searches(null);
-$HTML .= $Searches->GetFormHeader(is_object($User) && !empty($User->set_focus_search));
+$HTML .= '<div class="header-tools">' . $Searches->GetFormHeader(is_object($User) && !empty($User->set_focus_search)) .
+         freshports_i18n_language_picker() . '</div>';
 
 $HTML .= '
 	<a class="menu-link" href="#sidebar">' . _('Menu') . '</a>
@@ -2177,7 +2180,6 @@ alt="powered by nginx" width="121" height="32"></a>
 '<a href="https://validator.w3.org/feed/check.cgi?url=' . rawurlencode("{$URIBase}/backend/rss2.0.php") . '" title="' . _('Valid RSS is good too') . '" rel="noopener noreferrer">RSS</a>') . '
 </small>
 ' . freshports_copyright() . '
-' . freshports_i18n_language_picker() . '
 </td></tr>
 </table>
 </td></tr>

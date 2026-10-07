@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreshPorts\n"
 "Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
-"POT-Creation-Date: 2026-10-04 13:05-0400\n"
+"POT-Creation-Date: 2026-10-07 07:32-0400\n"
 "PO-Revision-Date: 2026-10-04 17:57+0300\n"
 "Last-Translator: Yusuf Yaman <nxjoseph@freebsd.org>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Poedit 3.9\n"
 
 #: classes/display_commit.php:126 classes/port-display.php:1152
-#: include/freshports.php:1847
+#: include/freshports.php:1861
 msgid "Author:"
 msgstr "Yazar:"
 
@@ -381,7 +381,7 @@ msgstr "Bunu geri almak mümkün değil"
 
 #: classes/port-display.php:1512 classes/port-display.php:1857
 #: classes/port-display.php:2089 classes/port-display.php:2123
-#: include/freshports.php:1551
+#: include/freshports.php:1560
 #, php-format
 msgid "Expand this list (%d items)"
 msgstr ""
@@ -390,7 +390,7 @@ msgstr ""
 #: classes/port-display.php:1859 classes/port-display.php:1867
 #: classes/port-display.php:1975 classes/port-display.php:1990
 #: classes/port-display.php:2096 classes/port-display.php:2126
-#: classes/port-display.php:2136 include/freshports.php:1561
+#: classes/port-display.php:2136 include/freshports.php:1570
 msgid "Collapse this list."
 msgstr ""
 
@@ -626,24 +626,20 @@ msgstr ""
 msgid "there is no flavor information for this port."
 msgstr "Bunu geri almak mümkün değil"
 
-#: classes/searches.php:37
-msgid "Enter Keywords:"
-msgstr ""
-
-#: classes/searches.php:39 classes/searches.php:51
-msgid "go"
-msgstr ""
-
-#: classes/searches.php:50
+#: classes/searches.php:38
 #, fuzzy
 msgid "Search ports"
 msgstr "Ara"
 
-#: classes/searches.php:53 include/freshports.php:2304
+#: classes/searches.php:39
+msgid "go"
+msgstr ""
+
+#: classes/searches.php:41
 msgid "Advanced Searching options"
 msgstr "Gelişmiş Arama seçenekleri"
 
-#: classes/searches.php:53 include/freshports.php:2304 www/vuxml.php:209
+#: classes/searches.php:41 www/vuxml.php:209
 msgid "more..."
 msgstr "daha fazla..."
 
@@ -727,8 +723,8 @@ msgstr ""
 msgid "Descending Order"
 msgstr ""
 
-#: include/freshports.php:548 include/freshports.php:2282 www/package.php:53
-#: www/search.php:343 www/search.php:1206
+#: include/freshports.php:548 www/package.php:53 www/search.php:343
+#: www/search.php:1206
 msgid "Search"
 msgstr "Ara"
 
@@ -887,175 +883,175 @@ msgstr ""
 msgid "authored by this person"
 msgstr ""
 
-#: include/freshports.php:1089
+#: include/freshports.php:1091
 #, php-format
 msgid "The git branch used by this host is %s"
 msgstr "Bu host tarafından kullanılan git branch'ı %s"
 
-#: include/freshports.php:1090
+#: include/freshports.php:1092
 #, php-format
 msgid "The database is %s"
 msgstr "Veritabanı %s"
 
-#: include/freshports.php:1091
+#: include/freshports.php:1093
 #, php-format
 msgid "The db server is %s"
 msgstr "Veritabanı sunucusu %s"
 
-#: include/freshports.php:1107
+#: include/freshports.php:1109
 msgid "As an Amazon Associate I earn from qualifying purchases."
 msgstr "Amazon ile işbirliğimde satın alımlardan kazanıyorum."
 
-#: include/freshports.php:1107
+#: include/freshports.php:1109
 #, php-format
 msgid "Want a good read? Try %s"
 msgstr "Kitap önerisi ister misin? Deneyin %s"
 
-#: include/freshports.php:1108
+#: include/freshports.php:1110
 #, php-format
 msgid "Want a good monitor light? See my <a href=\"%s\">photos</a>"
 msgstr ""
 "İyi bir monitör ışığı ister misin? <a href=\"%s\">Fotoğraflar</a>a bakın"
 
-#: include/freshports.php:1109
+#: include/freshports.php:1111
 msgid "All times are UTC"
 msgstr "Bütün zaman dilimleri UTC üzerindendir"
 
-#: include/freshports.php:1114
+#: include/freshports.php:1116
 msgid "I remember"
 msgstr "Hatırlıyorum"
 
-#: include/freshports.php:1119 include/freshports.php:2274
+#: include/freshports.php:1121 include/freshports.php:2287
 msgid "Blog"
 msgstr "Blog"
 
-#: include/freshports.php:1119
+#: include/freshports.php:1121
 msgid "Follow us"
 msgstr "Bizi takip et"
 
-#: include/freshports.php:1119
+#: include/freshports.php:1121
 msgid "Status page"
 msgstr "Durum sayfası"
 
-#: include/freshports.php:1134 include/freshports.php:1135
+#: include/freshports.php:1142 include/freshports.php:1143
 msgid "Menu"
 msgstr "Menü"
 
-#: include/freshports.php:1135
+#: include/freshports.php:1143
 msgid "Close"
 msgstr ""
 
-#: include/freshports.php:1135
+#: include/freshports.php:1143
 msgid "Close the menu"
 msgstr ""
 
-#: include/freshports.php:1135
+#: include/freshports.php:1143
 msgid "Open the menu"
 msgstr ""
 
-#: include/freshports.php:1488
+#: include/freshports.php:1496
 #, fuzzy, php-format
 msgid "port deleted on %s"
 msgstr "Bütün silinen portlar"
 
-#: include/freshports.php:1491
+#: include/freshports.php:1499
 #, php-format
 msgid "resurrected on %s"
 msgstr ""
 
-#: include/freshports.php:1497
+#: include/freshports.php:1505
 #, php-format
 msgid "port moved to %1$s on %2$s"
 msgstr ""
 
-#: include/freshports.php:1499
+#: include/freshports.php:1507
 #, php-format
 msgid "port moved here from %1$s on %2$s"
 msgstr ""
 
-#: include/freshports.php:1505
+#: include/freshports.php:1513
 msgid "REASON:"
 msgstr ""
 
-#: include/freshports.php:1524
+#: include/freshports.php:1532
 msgid "All rights reserved."
 msgstr "Bütün hakları saklıdır."
 
-#: include/freshports.php:1524
+#: include/freshports.php:1532
 msgid "Copyright"
 msgstr "Telif Hakkı"
 
-#: include/freshports.php:1524
+#: include/freshports.php:1532
 msgid "This material is copyrighted"
 msgstr "Bu materyalin telif hakları saklıdır"
 
-#: include/freshports.php:1539
+#: include/freshports.php:1548
 msgid "Notes from UPDATING"
 msgstr ""
 
-#: include/freshports.php:1541
+#: include/freshports.php:1550
 #, fuzzy, php-format
 msgid "These upgrade notes are taken from %s"
 msgstr "İstek şu adresten geldi %s"
 
-#: include/freshports.php:1584
+#: include/freshports.php:1593
 msgid ""
 "Commit History - (may be incomplete: for full details, see links to "
 "repositories near top of page)"
 msgstr ""
 
-#: include/freshports.php:1589
+#: include/freshports.php:1598
 #, php-format
 msgid ""
 "This is a slave port.  You may also want to view the commits to the master "
 "port: %s"
 msgstr ""
 
-#: include/freshports.php:1593
+#: include/freshports.php:1602
 #, fuzzy
 msgid "Commit"
 msgstr "Commit geçmişi"
 
-#: include/freshports.php:1593
+#: include/freshports.php:1602
 msgid "Credits"
 msgstr ""
 
-#: include/freshports.php:1593
+#: include/freshports.php:1602
 msgid "Log message"
 msgstr ""
 
-#: include/freshports.php:1638
+#: include/freshports.php:1647
 #, php-format
 msgid ""
 "<b>NOTE</b>: This slave port may no longer be vulnerable to issues shown "
 "below because the <a href=\"%s\">master port</a> has been updated."
 msgstr ""
 
-#: include/freshports.php:1678 include/freshports.php:1679
+#: include/freshports.php:1687 include/freshports.php:1688
 msgid "First Page"
 msgstr ""
 
-#: include/freshports.php:1680 include/freshports.php:1681
+#: include/freshports.php:1689 include/freshports.php:1690
 msgid "Last Page"
 msgstr ""
 
-#: include/freshports.php:1705
+#: include/freshports.php:1714
 #, fuzzy, php-format
 msgid "Number of commits found: %d"
 msgstr "Commit sayısı: %d"
 
-#: include/freshports.php:1714 www/search.php:1317 www/search.php:1334
+#: include/freshports.php:1723 www/search.php:1317 www/search.php:1334
 #, php-format
 msgid "(showing only %d on this page)"
 msgstr ""
 
-#: include/freshports.php:1987
+#: include/freshports.php:2001
 #, fuzzy
 msgid "Link to this section"
 msgstr "Siteye giriş yap"
 
 #. TRANSLATORS: keep the line breaks short, this is a plain text email
-#: include/freshports.php:2052
+#: include/freshports.php:2066
 #, php-format
 msgid ""
 "Someone, perhaps you, supplied your email address as their\n"
@@ -1068,310 +1064,310 @@ msgstr ""
 "rahatsızlık veriyorsa, lütfen bu mesajı %s'a yönlendirin\n"
 "ve biz sizin için onunla ilgileneceğiz."
 
-#: include/freshports.php:2057
+#: include/freshports.php:2071
 #, php-format
 msgid "Your token is: %s"
 msgstr "Senin tokenin: %s"
 
-#: include/freshports.php:2059
+#: include/freshports.php:2073
 msgid "Please point your browser at"
 msgstr "Lütfen tarayıcınızı şu adrese yönlendirin"
 
-#: include/freshports.php:2061
+#: include/freshports.php:2075
 #, php-format
 msgid "The request came from %s"
 msgstr "İstek şu adresten geldi %s"
 
-#: include/freshports.php:2078
+#: include/freshports.php:2092
 msgid "FreshPorts - user registration"
 msgstr "FreshPorts - kullanıcı kaydı"
 
-#: include/freshports.php:2163
+#: include/freshports.php:2177
 #, php-format
 msgid "Valid %1$s, %2$s, and %3$s."
 msgstr "Geçerli %1$s, %2$s, ve %3$s."
 
-#: include/freshports.php:2164
+#: include/freshports.php:2178
 msgid "We like to keep our HTML valid"
 msgstr "HTML'imizin geçerli kalmasını seviyoruz"
 
-#: include/freshports.php:2165
+#: include/freshports.php:2179
 msgid "We like to have valid CSS"
 msgstr "Geçerli CSS kullanmayı seviyoruz"
 
-#: include/freshports.php:2166
+#: include/freshports.php:2180
 msgid "Valid RSS is good too"
 msgstr "Geçerli RSS de iyidir"
 
-#: include/freshports.php:2214 include/login.php:15 www/login.php:148
+#: include/freshports.php:2227 include/login.php:15 www/login.php:148
 #: www/login.php:231
 msgid "Login"
 msgstr "Giriş"
 
-#: include/freshports.php:2227
+#: include/freshports.php:2240
 #, php-format
 msgid "Logged in as %s"
 msgstr "Şu olarak giriş yapıldı %s"
 
-#: include/freshports.php:2231
+#: include/freshports.php:2244
 msgid "your email is <a href=\"/bouncing.php\">bouncing</a>"
 msgstr "sizin epostanız <a href=\"/bouncing.php\">sıçrıyor</a>"
 
-#: include/freshports.php:2234
+#: include/freshports.php:2247
 msgid "Your Account"
 msgstr "Senin Hesabın"
 
-#: include/freshports.php:2234
+#: include/freshports.php:2247
 msgid "Your account"
 msgstr "Senin hesabın"
 
-#: include/freshports.php:2237
+#: include/freshports.php:2250
 msgid "Committer Opt-in"
 msgstr "Committer Onayı"
 
-#: include/freshports.php:2237
+#: include/freshports.php:2250
 msgid "Committers can receive reports of Sanity Test Failures"
 msgstr "Committerler Sanity Test hatalarının raporunu alabilir"
 
-#: include/freshports.php:2241
+#: include/freshports.php:2254
 msgid "Logout"
 msgstr "Çıkış yap"
 
-#: include/freshports.php:2241
+#: include/freshports.php:2254
 msgid "Logout of the website"
 msgstr "Siteden çıkış yap"
 
-#: include/freshports.php:2242
+#: include/freshports.php:2255
 msgid "List of commits you have flagged"
 msgstr "İşaretlediğiniz commitlerin listesi"
 
-#: include/freshports.php:2242
+#: include/freshports.php:2255
 msgid "My Flagged Commits"
 msgstr "İşaretlediğim commitler"
 
-#: include/freshports.php:2244
+#: include/freshports.php:2257
 msgid "Login to the website"
 msgstr "Siteye giriş yap"
 
-#: include/freshports.php:2244
+#: include/freshports.php:2257
 msgid "User Login"
 msgstr "Kullanıcı Girişi"
 
-#: include/freshports.php:2245
+#: include/freshports.php:2258
 msgid "Create account"
 msgstr "Hesap oluştur"
 
-#: include/freshports.php:2245
+#: include/freshports.php:2258
 msgid "Create an account"
 msgstr "Bir hesap oluşturun"
 
-#: include/freshports.php:2263
+#: include/freshports.php:2276
 msgid "This site"
 msgstr "Bu site"
 
-#: include/freshports.php:2267
+#: include/freshports.php:2280
 msgid "A bit of background on FreshPorts"
 msgstr "FreshPorts'un geçmişi"
 
-#: include/freshports.php:2267
+#: include/freshports.php:2280
 msgid "What is FreshPorts?"
 msgstr "FreshPorts nedir?"
 
-#: include/freshports.php:2268 www/authors.php:28
+#: include/freshports.php:2281 www/authors.php:28
 msgid "About the authors"
 msgstr "Yazarlar hakkında"
 
-#: include/freshports.php:2268
+#: include/freshports.php:2281
 msgid "Who wrote this stuff?"
 msgstr "Bu şeyleri kim yazdı?"
 
-#: include/freshports.php:2269
+#: include/freshports.php:2282
 msgid "Issues"
 msgstr "Sorunlar"
 
-#: include/freshports.php:2269
+#: include/freshports.php:2282
 msgid "Report a website problem"
 msgstr "Bir site hatası bildirin"
 
-#: include/freshports.php:2270 www/faq.php:34
+#: include/freshports.php:2283 www/faq.php:34
 msgid "FAQ"
 msgstr "SSS"
 
-#: include/freshports.php:2270 www/faq.php:15
+#: include/freshports.php:2283 www/faq.php:15
 msgid "Frequently Asked Questions"
 msgstr "Sıklıkla Sorulan Sorular"
 
-#: include/freshports.php:2271 www/how-big-is-it.php:15
+#: include/freshports.php:2284 www/how-big-is-it.php:15
 msgid "How big is it?"
 msgstr "Ne kadar büyük?"
 
-#: include/freshports.php:2271
+#: include/freshports.php:2284
 msgid "How many pages are in this website?"
 msgstr "Sitede ne kadar sayfa var?"
 
-#: include/freshports.php:2272
+#: include/freshports.php:2285
 msgid "Are you a security researcher? Please read this."
 msgstr "Bir güvenlik araştırmacısı mısınız? Lütfen bunu okuyun."
 
-#: include/freshports.php:2272 www/security-policy.php:15
+#: include/freshports.php:2285 www/security-policy.php:15
 msgid "Security Policy"
 msgstr "Güvenlik Politikaları"
 
-#: include/freshports.php:2273
+#: include/freshports.php:2286
 msgid "Our privacy statement"
 msgstr "Gizlilik açıklamamız"
 
-#: include/freshports.php:2273
+#: include/freshports.php:2286
 msgid "Privacy"
 msgstr "Gizlilik"
 
-#: include/freshports.php:2274
+#: include/freshports.php:2287
 msgid "All the latest FreshPorts news"
 msgstr "Bütün en yeni FreshPorts haberleri"
 
-#: include/freshports.php:2275 www/contact.php:15 www/contact.php:29
+#: include/freshports.php:2288 www/contact.php:15 www/contact.php:29
 msgid "Contact"
 msgstr "İletişim"
 
-#: include/freshports.php:2275
+#: include/freshports.php:2288
 msgid "Contact details"
 msgstr "İletişim detayları"
 
-#: include/freshports.php:2316
+#: include/freshports.php:2298
 msgid "Latest Vulnerabilities"
 msgstr "En yeni güvenlik açıklıkları"
 
-#: include/freshports.php:2322
+#: include/freshports.php:2304
 msgid "All vulnerabilities"
 msgstr "Bütün güvenlik açıklıkları"
 
-#: include/freshports.php:2322
+#: include/freshports.php:2304
 msgid "modified, not new"
 msgstr "düzenlendi, yeni değil"
 
-#: include/freshports.php:2323
+#: include/freshports.php:2305
 msgid "Last processed:"
 msgstr "Son işlenilen:"
 
-#: include/freshports.php:2335 include/freshports.php:2365
+#: include/freshports.php:2317 include/freshports.php:2347
 msgid "Ports"
 msgstr "Ports"
 
-#: include/freshports.php:2340
+#: include/freshports.php:2322
 msgid "FreshPorts Home page"
 msgstr "FreshPorts  Ana sayfası"
 
-#: include/freshports.php:2340
+#: include/freshports.php:2322
 msgid "Home"
 msgstr "Ana sayfa"
 
-#: include/freshports.php:2341 include/freshports.php:2363
+#: include/freshports.php:2323 include/freshports.php:2345
 #: www/categories.php:22
 msgid "Categories"
 msgstr "Kategoriler"
 
-#: include/freshports.php:2341
+#: include/freshports.php:2323
 msgid "List of all Port categories"
 msgstr "Bütün Port kategorilerinin listesi"
 
-#: include/freshports.php:2342
+#: include/freshports.php:2324
 msgid "All deleted ports"
 msgstr "Bütün silinen portlar"
 
-#: include/freshports.php:2342 www/ports-deleted.php:30
+#: include/freshports.php:2324 www/ports-deleted.php:30
 msgid "Deleted ports"
 msgstr "Silinen portlar"
 
-#: include/freshports.php:2343 www/sanity_test_failures.php:30
+#: include/freshports.php:2325 www/sanity_test_failures.php:30
 #: www/sanity_test_failures.php:99
 msgid "Sanity Test Failures"
 msgstr "Sanity Test Hataları"
 
-#: include/freshports.php:2343
+#: include/freshports.php:2325
 msgid "Things that didn't go quite right..."
 msgstr "Çok da yolunda gitmeyen şeyler..."
 
-#: include/freshports.php:2344 www/backend/newsfeeds.php:21
+#: include/freshports.php:2326 www/backend/newsfeeds.php:21
 msgid "Newsfeeds"
 msgstr "Haber akışı"
 
-#: include/freshports.php:2344
+#: include/freshports.php:2326
 msgid "Newsfeeds for just about everything"
 msgstr "Her şey hakkında haber akışları"
 
-#: include/freshports.php:2357 www/watch-list-maintenance.php:318
+#: include/freshports.php:2339 www/watch-list-maintenance.php:318
 #: www/watch-list-maintenance.php:390
 msgid "Watch Lists"
 msgstr "Takip Listeleri"
 
-#: include/freshports.php:2362 www/pkg_upload.php:92 www/pkg_upload.php:114
+#: include/freshports.php:2344 www/pkg_upload.php:92 www/pkg_upload.php:114
 #: www/pkg_upload.php:136
 msgid "Upload"
 msgstr "Yükle"
 
-#: include/freshports.php:2362
+#: include/freshports.php:2344
 msgid ""
 "Upload a file containing a list of ports you want to add to your watch list"
 msgstr ""
 "Takip listene eklemek istediğin portların listesini içeren bir dosya yükle"
 
-#: include/freshports.php:2363
+#: include/freshports.php:2345
 msgid "Search through categories for ports to add to your watch list"
 msgstr "Takip listene eklemek istediğin portlar için kategorileri listele"
 
-#: include/freshports.php:2364
+#: include/freshports.php:2346
 msgid "Maintain"
 msgstr "Düzenle"
 
-#: include/freshports.php:2364
+#: include/freshports.php:2346
 msgid "Maintain your watch list[s]"
 msgstr "Takip listeni düzenle"
 
-#: include/freshports.php:2365
+#: include/freshports.php:2347
 msgid "Your list of watched ports"
 msgstr "Takip ettiğin portlar listesi"
 
-#: include/freshports.php:2366
+#: include/freshports.php:2348
 msgid "A list of news feeds for your watched lists"
 msgstr "Takip ettiklerin için bir haber akışı"
 
-#: include/freshports.php:2366
+#: include/freshports.php:2348
 msgid "Personal Newsfeeds"
 msgstr "Kişisel Haber akışı"
 
-#: include/freshports.php:2367
+#: include/freshports.php:2349
 msgid "Maintain your list of subscriptions"
 msgstr "Abonelik listeni düzenle"
 
-#: include/freshports.php:2367
+#: include/freshports.php:2349
 msgid "Report Subscriptions"
 msgstr "Abonelikleri Bildir"
 
-#: include/freshports.php:2368
+#: include/freshports.php:2350
 msgid "ABI Package Subscriptions"
 msgstr "ABI Paket Abonelikleri"
 
-#: include/freshports.php:2368
+#: include/freshports.php:2350
 msgid "Maintain your ABI package subscriptions"
 msgstr "ABI Paket Aboneliklerini düzenle"
 
-#: include/freshports.php:2393
+#: include/freshports.php:2375
 msgid "Statistics"
 msgstr "İstatistikler"
 
-#: include/freshports.php:2398 include/freshports.php:2399
+#: include/freshports.php:2380 include/freshports.php:2381
 msgid "Everyone loves statistics!"
 msgstr "Herkes istatikleri sever!"
 
-#: include/freshports.php:2398
+#: include/freshports.php:2380
 msgid "Graphs"
 msgstr "Grafikler"
 
-#: include/freshports.php:2399
+#: include/freshports.php:2381
 msgid "NEW Graphs (Javascript)"
 msgstr "YENİ Grafikler (Javascript)"
 
-#: include/freshports.php:2491
+#: include/freshports.php:2473
 msgid "People watching this port, also watch:"
 msgstr ""
 
@@ -1427,11 +1423,11 @@ msgstr ""
 msgid "date added"
 msgstr ""
 
-#: include/i18n.php:225
+#: include/i18n.php:270
 msgid "Language"
 msgstr "Dil"
 
-#: include/i18n.php:232
+#: include/i18n.php:277
 msgid "Change"
 msgstr "Değiştir"
 
@@ -1506,7 +1502,7 @@ msgstr "hesap oluştur"
 msgid "update account"
 msgstr "hesabı güncelle"
 
-#: include/new-user.php:97 www/filter-setup.php:281 www/port-watch.php:253
+#: include/new-user.php:97 www/filter-setup.php:282 www/port-watch.php:253
 msgid "reset form"
 msgstr "formu sıfırla"
 
@@ -3780,17 +3776,17 @@ msgid ""
 "ABI list was:"
 msgstr ""
 
-#: www/filter-setup.php:82
+#: www/filter-setup.php:83
 #, fuzzy
 msgid "Watch categories"
 msgstr "Kategoriler"
 
-#: www/filter-setup.php:118 www/watch-categories.php:71
+#: www/filter-setup.php:119 www/watch-categories.php:71
 #, fuzzy
 msgid "Watch List - categories"
 msgstr "Takip Listeleri"
 
-#: www/filter-setup.php:126
+#: www/filter-setup.php:127
 msgid ""
 "This screen contains a list of the port categories. A * indicates a category "
 "that contains ports which are on your watch list. When a port changes in one "
@@ -3799,16 +3795,16 @@ msgid ""
 "settings</a>."
 msgstr ""
 
-#: www/filter-setup.php:129
+#: www/filter-setup.php:130
 msgid ""
 "Virtual categories cannot be watched and their checkboxes will be disabled."
 msgstr ""
 
-#: www/filter-setup.php:135 www/port-watch.php:261 www/watch-categories.php:87
+#: www/filter-setup.php:136 www/port-watch.php:261 www/watch-categories.php:87
 msgid "Select..."
 msgstr ""
 
-#: www/filter-setup.php:280
+#: www/filter-setup.php:281
 msgid "Save changes"
 msgstr ""
 
@@ -4418,9 +4414,14 @@ msgid ""
 "first)."
 msgstr ""
 
-#: www/inthenews.php:40
+#: www/inthenews.php:40 www/inthenews.php:41
 #, php-format
 msgid "%s site announcement"
+msgstr ""
+
+#: www/inthenews.php:41
+msgid ""
+"That link no longer works, try this copy on the Internet Archive instead:"
 msgstr ""
 
 #: www/login.php:104

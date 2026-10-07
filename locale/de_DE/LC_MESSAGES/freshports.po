@@ -3458,7 +3458,7 @@ msgstr ""
 #: www/forgotten-password.php:111
 #, php-format
 msgid "Your login id is: %s"
-msgstr "Ihre LOgin-ID ist: %s"
+msgstr "Ihre Login-ID ist: %s"
 
 #: www/forgotten-password.php:112
 msgid "Your password recovery URL is:"
@@ -3597,11 +3597,11 @@ msgstr "Einige Start-Punkte:"
 
 #: www/graphs2.php:57
 msgid "<a href=\"https://github.com/FreshPorts/freshports/blob/master/www/graphs2.php\">This is the source code</a> for this page."
-msgstr "<a href=\"https://github.com/FreshPorts/freshports/blob/master/www/graphs2.php\">Dies ist der Source-Code für diese Seite."
+msgstr "<a href=\"https://github.com/FreshPorts/freshports/blob/master/www/graphs2.php\">Dies ist der Source-Code</a> für diese Seite."
 
 #: www/graphs2.php:58
 msgid "<a href=\"https://github.com/FreshPorts/freshports/blob/1.40/www/graphs2.php\">This is the last working version</a> of this page."
-msgstr "<a href=\"https://github.com/FreshPorts/freshports/blob/1.40/www/graphs2.php\">Dies ist die letzte funktionierende Version dieser Seite."
+msgstr "<a href=\"https://github.com/FreshPorts/freshports/blob/1.40/www/graphs2.php\">Dies ist die letzte funktionierende Version</a> dieser Seite."
 
 #: www/graphs2.php:, fuzzy
 msgid "%s used by the above."
@@ -4162,7 +4162,7 @@ msgstr "Sie sollte als erstes dieses Kommando auf Ihrem FreeBSD-Computer ausfüh
 
 #: www/pkg_upload.php:87
 msgid "Then click on the <B>Choose</B> button and select the file you created in the previous step."
-msgstr "Dann klicken Sie auf <b>Choose</b> und wählen Sie die Datei aus, die sie im vorherigen Schritt erzeugt haben."
+msgstr "Dann klicken Sie auf <b>Choose</b> und wählen Sie die Datei aus, die Sie im vorherigen Schritt erzeugt haben."
 
 #: www/pkg_upload.php:92 www/pkg_upload.php:104 www/pkg_upload.php:126
 msgid "Staging"
@@ -4597,7 +4597,7 @@ msgstr "Neue Paket-Meldungen"
 
 #: www/report-subscriptions.php:237
 msgid "If you are subscribing to <i>New Package Notification</i> above, you'll also need to <a href=\"/report-package-notifications.php\">specify ABI and watch lists</a>."
-msgstr "Wenn Sie sich zu <i>Neue Paket-Meldungen</i> angemeldet haben, müssen Sie auch das <a href=\"/report-package-notifications.php\">ABI und die Beobachtungsliste auswählen."
+msgstr "Wenn Sie sich zu <i>Neue Paket-Meldungen</i> angemeldet haben, müssen Sie auch das <a href=\"/report-package-notifications.php\">ABI und die Beobachtungsliste auswählen</a>."
 
 #: www/report-subscriptions.php:244
 msgid "Beta mailing list"
@@ -5044,7 +5044,7 @@ msgstr "Optionen"
 #: www/watch-list-maintenance.php:366
 #, fuzzy
 msgid "When clicking on Add/Remove for a port,<br> the action should affect"
-msgstr "Wenn Sie für einen Port auf And/Remove klicken, <br>dann sollte die Aktion wirken auf"
+msgstr "Wenn Sie für einen Port auf Add/Remove klicken, <br>dann sollte die Aktion wirken auf"
 
 #: www/watch-list-maintenance.php:368
 msgid "the default watch list[s]"
@@ -5121,7 +5121,8 @@ msgstr "Wählen Sie die Standard-Beobachtungsliste(n). Diese Listen werden verwe
 #: www/watch-list-maintenance.php:412
 #, fuzzy
 msgid "you click on the add/remove links"
-msgstr "Klicken Sie auf die And/Remove-Links"
+msgstr "Klicken Sie auf die Add/Remove-Links"
+>>>>>>> 0096e2db (Fix typos reported by Dan Langille)
 
 #: www/watch-list-maintenance.php:413
 #, fuzzy

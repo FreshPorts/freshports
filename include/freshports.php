@@ -9,6 +9,7 @@
 	if ($ShowAds) require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/ads.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../configuration/freshports.conf.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/i18n.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/fontsize.php');
 
 	if (IsSet($ShowAnnouncements)) {
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/announcements.php');
@@ -1124,9 +1125,9 @@ if (date("M") == 'Nov' && date("j") <= 12) {
 	
 }
 
-# the search box and the language picker live in the header on every device, so they
-# are always easy to find; a visitor who cannot read English should not have to hunt
-# for the picker.
+# the search box and the language and text size pickers live in the header on every
+# device, so they are always easy to find; a visitor who cannot read English, or who
+# cannot read small text, should not have to hunt for them.
 # menu-link and menu-button are only shown on narrow screens, where the sidebar is
 # tucked away; menu-button stays pinned to the top-right corner so it can be used
 # from anywhere on the page.  With JavaScript, menu-button opens and closes the
@@ -1136,7 +1137,7 @@ if (date("M") == 'Nov' && date("j") <= 12) {
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/searches.php');
 $Searches = new Searches(null);
 $HTML .= '<div class="header-tools">' . $Searches->GetFormHeader(is_object($User) && !empty($User->set_focus_search)) .
-         freshports_i18n_language_picker() . '</div>';
+         freshports_i18n_language_picker() . freshports_fontsize_picker() . '</div>';
 
 $HTML .= '
 	<a class="menu-link" href="#sidebar">' . _('Menu') . '</a>
@@ -1270,6 +1271,12 @@ function freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum=0) {
 function freshports_style($Phorum=0) {
 	$version = substr(hash_file('sha1', $_SERVER['DOCUMENT_ROOT'] . '/css/freshports.css'), 0, 8);
 	echo '	<link rel="stylesheet" href="/css/freshports.css?v=' . $version . '" type="text/css">' . "\n";
+
+	# the visitor's choice of text size - see issue #690
+	$fontsize = freshports_fontsize_css();
+	if ($fontsize) {
+		echo '	<style>' . $fontsize . '</style>' . "\n";
+	}
 }
 
 function freshports_body($ExtraScript = null) {

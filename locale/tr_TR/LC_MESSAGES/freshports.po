@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreshPorts\n"
 "Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
-"POT-Creation-Date: 2026-10-07 16:56-0400\n"
+"POT-Creation-Date: 2026-10-07 17:15-0400\n"
 "PO-Revision-Date: 2026-10-04 17:57+0300\n"
 "Last-Translator: Yusuf Yaman <nxjoseph@freebsd.org>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
@@ -676,31 +676,35 @@ msgstr ""
 msgid "I couldn't find your watch list details... sorry"
 msgstr ""
 
-#: include/fontsize.php:60
+#: include/fontsize.php:61
+msgid "Smallest"
+msgstr "En küçük"
+
+#: include/fontsize.php:62
 msgid "Small"
 msgstr "Küçük"
 
-#: include/fontsize.php:61
+#: include/fontsize.php:63
 msgid "Normal"
 msgstr "Normal"
 
-#: include/fontsize.php:62
+#: include/fontsize.php:64
 msgid "Large"
 msgstr "Büyük"
 
-#: include/fontsize.php:63
+#: include/fontsize.php:65
 msgid "Larger"
 msgstr "Daha büyük"
 
-#: include/fontsize.php:64
+#: include/fontsize.php:66
 msgid "Largest"
 msgstr "En büyük"
 
-#: include/fontsize.php:70
+#: include/fontsize.php:72
 msgid "Text size"
 msgstr "Metin boyutu"
 
-#: include/fontsize.php:77 include/i18n.php:277
+#: include/fontsize.php:79 include/i18n.php:277
 msgid "Change"
 msgstr "Değiştir"
 

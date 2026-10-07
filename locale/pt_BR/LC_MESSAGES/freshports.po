@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreshPorts\n"
 "Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
-"POT-Creation-Date: 2026-10-07 16:56-0400\n"
+"POT-Creation-Date: 2026-10-07 17:15-0400\n"
 "PO-Revision-Date: 2026-10-04 21:34-0700\n"
 "Last-Translator: Gustavo Nobrega <gustavofn@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -697,31 +697,35 @@ msgid "I couldn't find your watch list details... sorry"
 msgstr ""
 "Não consegui encontrar os detalhes da sua lista de observação... desculpe"
 
-#: include/fontsize.php:60
+#: include/fontsize.php:61
+msgid "Smallest"
+msgstr "Muito pequeno"
+
+#: include/fontsize.php:62
 msgid "Small"
 msgstr "Pequeno"
 
-#: include/fontsize.php:61
+#: include/fontsize.php:63
 msgid "Normal"
 msgstr "Normal"
 
-#: include/fontsize.php:62
+#: include/fontsize.php:64
 msgid "Large"
 msgstr "Grande"
 
-#: include/fontsize.php:63
+#: include/fontsize.php:65
 msgid "Larger"
 msgstr "Maior"
 
-#: include/fontsize.php:64
+#: include/fontsize.php:66
 msgid "Largest"
 msgstr "Muito grande"
 
-#: include/fontsize.php:70
+#: include/fontsize.php:72
 msgid "Text size"
 msgstr "Tamanho do texto"
 
-#: include/fontsize.php:77 include/i18n.php:277
+#: include/fontsize.php:79 include/i18n.php:277
 msgid "Change"
 msgstr "Alterar"
 

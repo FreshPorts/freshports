@@ -20,6 +20,7 @@ define('FONTSIZE_DEFAULT',        'normal');
 #
 function freshports_fontsize_available() {
 	return array(
+		'smallest' =>  75,
 		'small'   =>  87.5,
 		'normal'  => 100,
 		'large'   => 112.5,
@@ -57,6 +58,7 @@ function freshports_fontsize_css() {
 #
 function freshports_fontsize_picker() {
 	$labels = array(
+		'smallest' => _('Smallest'),
 		'small'   => _('Small'),
 		'normal'  => _('Normal'),
 		'large'   => _('Large'),

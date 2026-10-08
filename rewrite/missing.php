@@ -38,16 +38,14 @@
 	# set by freshports_Parse404URI() - see https://github.com/FreshPorts/freshports/issues/614
 	if (!empty($Suggestions)) {
 		echo '<P>' . _('Perhaps you meant one of these:') . "</P>\n";
-		echo "<ul>\n";
+		# a table, so the descriptions line up
+		echo '<table class="borderless cellpadding4">' . "\n";
 		foreach ($Suggestions as $Suggestion) {
 			$CategoryPort = $Suggestion['category'] . '/' . $Suggestion['name'];
-			echo '<li><a href="' . htmlspecialchars($Suggestion['link']) . '">' . htmlspecialchars($CategoryPort) . '</a>';
-			if (!empty($Suggestion['short_description'])) {
-				echo ' - ' . htmlspecialchars($Suggestion['short_description']);
-			}
-			echo "</li>\n";
+			echo '<tr><td><a href="' . htmlspecialchars($Suggestion['link']) . '">' . htmlspecialchars($CategoryPort) . '</a></td>';
+			echo '<td>' . htmlspecialchars($Suggestion['short_description'] ?? '') . "</td></tr>\n";
 		}
-		echo "</ul>\n";
+		echo "</table>\n";
 	}
 ?>
 

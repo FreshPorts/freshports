@@ -942,6 +942,72 @@ LEFT OUTER JOIN
 		return $result;
 	}
 
+	function SuggestionsFor($Port) {
+		#
+		# Given a port name which was not found at the requested category/port,
+		# return ports the user might have meant, as an array of rows with
+		# category, name, and short_description.
+		# Exact matches on port name or package name are tried first, in any category.
+		# Only if there are none do we try fuzzy matching.
+		#
+		# This is called before the 404 header is sent, so errors go to syslog,
+		# not to the page.
+		#
+		# see https://github.com/FreshPorts/freshports/issues/614
+		#
+		$Suggestions = array();
+
+		# only bother with things which look like port names
+		if (!preg_match('/^[A-Za-z0-9._+-]{2,100}$/', $Port)) {
+			return $Suggestions;
+		}
+
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . '
+   SELECT category, name, short_description
+     FROM ports_active
+    WHERE lower(name) = lower($1::text)
+       OR package_name = $1::text
+ ORDER BY category, name
+    LIMIT 20';
+
+		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
+
+		$result = pg_query_params($this->dbh, $sql, array($Port));
+		if (!$result) {
+			syslog(LOG_ERR, __FILE__ . '::' . __FUNCTION__ . ' pg_query_params failed: ' . pg_last_error($this->dbh));
+			return $Suggestions;
+		}
+
+		if (pg_num_rows($result) == 0) {
+			# Nothing exact. Try names which are close (e.g. anvl for anvil), or
+			# which contain, or are contained by, what was requested (e.g.
+			# fusefs-squashfuse for squashfuse). Short names get a tighter distance,
+			# else 'vim' would match half the tree.
+			$MaxDistance = max(1, min(3, intdiv(strlen($Port), 3)));
+
+			$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . '
+   SELECT category, name, short_description
+     FROM ports_active
+    WHERE levenshtein_less_equal(lower(name), lower($1::text), $2::int) <= $2::int
+       OR (length(name)     >= 4 AND strpos(lower($1::text), lower(name)) > 0)
+       OR (length($1::text) >= 4 AND strpos(lower(name), lower($1::text)) > 0)
+ ORDER BY levenshtein(lower(name), lower($1::text)), category, name
+    LIMIT 10';
+
+			if ($this->Debug) echo '<pre>' . $sql . '</pre>';
+
+			$result = pg_query_params($this->dbh, $sql, array($Port, $MaxDistance));
+			if (!$result) {
+				syslog(LOG_ERR, __FILE__ . '::' . __FUNCTION__ . ' pg_query_params failed: ' . pg_last_error($this->dbh));
+				return $Suggestions;
+			}
+		}
+
+		$Suggestions = pg_fetch_all($result) ?: array();
+
+		return $Suggestions;
+	}
+
 	function PackageExists() {
 		return $this->package_exists == 't';
 	}

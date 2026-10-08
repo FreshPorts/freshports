@@ -34,6 +34,28 @@
 <?php echo _("Sorry, but I don't know anything about that."); ?>
 </P>
 
+<?php
+	# set by freshports_Parse404URI() - see https://github.com/FreshPorts/freshports/issues/614
+	if (!empty($Suggestions)) {
+		$SuggestionArgs = '';
+		if (IsSet($Branch) && $Branch != BRANCH_HEAD) {
+			$SuggestionArgs = '?branch=' . urlencode($Branch);
+		}
+
+		echo '<P>' . _('Perhaps you meant one of these:') . "</P>\n";
+		echo "<ul>\n";
+		foreach ($Suggestions as $Suggestion) {
+			$CategoryPort = $Suggestion['category'] . '/' . $Suggestion['name'];
+			echo '<li><a href="/' . htmlspecialchars($CategoryPort) . '/' . $SuggestionArgs . '">' . htmlspecialchars($CategoryPort) . '</a>';
+			if (!empty($Suggestion['short_description'])) {
+				echo ' - ' . htmlspecialchars($Suggestion['short_description']);
+			}
+			echo "</li>\n";
+		}
+		echo "</ul>\n";
+	}
+?>
+
 <P>
 <?php echo _('Perhaps a <a href="/categories.php">list of categories</a> or <a href="/search.php">the search page</a> might be helpful.'); ?>
 </P>

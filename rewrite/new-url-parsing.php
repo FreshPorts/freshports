@@ -167,6 +167,17 @@ function freshports_Parse404URI($url, $db):never {
 	if ($Debug) echo "'$pathname' on $Branch was not an element case insenstive<br>";
 
 	if ($Debug) echo 'we hit rock bottom at ' . __FILE__ . '::' . __FUNCTION__;
+
+	# Perhaps they have the wrong category, or misspelled the port.
+	# missing.php will list these, if any.
+	# see https://github.com/FreshPorts/freshports/issues/614
+	$Suggestions = array();
+	if (count($path_parts) == 2) {
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
+		$MyPort = new Port($db);
+		$Suggestions = $MyPort->SuggestionsFor($path_parts[1]);
+	}
+
 	# We have no options left: 404
 	$FreshPortsTitle = 'FreshPorts';
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing.php');

@@ -254,7 +254,18 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 			if ($Debug) echo 'This is a category <br>';
 
 			if (IsSet($port)) {
-				if ($Debug)  'Invalid port supplied for a valid category<br>';
+				if ($Debug) echo 'Invalid port supplied for a valid category<br>';
+
+				# perhaps $category is one of the port's secondary categories
+				# e.g. /wayland/wl-clipboard/ redirects to /x11/wl-clipboard/
+				# see https://github.com/FreshPorts/freshports/issues/618
+				require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
+				$MyPort = new Port($db);
+				$PrimaryCategory = $MyPort->PrimaryCategoryViaSecondary($category, $port);
+				if (IsSet($PrimaryCategory)) {
+					if ($Debug) echo "redirecting to /$PrimaryCategory/$port/<br>";
+					return RedirectIncorrectPathCase("/$PrimaryCategory/$port/", $url_args);
+				}
 			} else {
 				require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
 				$Category = new Category($db);

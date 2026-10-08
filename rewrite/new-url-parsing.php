@@ -175,7 +175,7 @@ function freshports_Parse404URI($url, $db):never {
 	if (count($path_parts) == 2) {
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
 		$MyPort = new Port($db);
-		$Suggestions = $MyPort->SuggestionsFor($path_parts[1]);
+		$Suggestions = $MyPort->SuggestionsFor($path_parts[1], $Branch);
 	}
 
 	# We have no options left: 404

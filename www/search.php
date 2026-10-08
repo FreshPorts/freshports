@@ -1294,6 +1294,14 @@ if (file_exists(CATEGORIES_CACHE_LIST)) {
 		if ($Debug) echo 'nothing found';
 		   if ($output_format == OUTPUT_FORMAT_HTML) {
 		     $HTML .= ' <strong style="color:var(--beastie-red)">' . _('No results found') . "</strong><br>\n";
+
+		     # offer the same suggestions as the 404 page does for /category/port/
+		     # see https://github.com/FreshPorts/freshports/issues/614
+		     if ($stype == SEARCH_FIELD_NAME || $stype == SEARCH_FIELD_PACKAGE) {
+		       require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
+		       $MyPort = new Port($db);
+		       $HTML .= freshports_PortSuggestions($MyPort->SuggestionsFor($query, $Branch));
+		     }
 		   }
 		} else {
             switch($stype) {

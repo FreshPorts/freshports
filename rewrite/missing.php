@@ -36,17 +36,7 @@
 
 <?php
 	# set by freshports_Parse404URI() - see https://github.com/FreshPorts/freshports/issues/614
-	if (!empty($Suggestions)) {
-		echo '<P>' . _('Perhaps you meant one of these:') . "</P>\n";
-		# class aligned lines up the descriptions - see freshports.css
-		echo '<ul class="aligned">' . "\n";
-		foreach ($Suggestions as $Suggestion) {
-			$CategoryPort = $Suggestion['category'] . '/' . $Suggestion['name'];
-			echo '<li><span><a href="' . htmlspecialchars($Suggestion['link']) . '">' . htmlspecialchars($CategoryPort) . '</a></span>';
-			echo '<span>' . htmlspecialchars($Suggestion['short_description'] ?? '') . "</span></li>\n";
-		}
-		echo "</ul>\n";
-	}
+	echo freshports_PortSuggestions($Suggestions ?? array());
 ?>
 
 <P>

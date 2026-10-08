@@ -917,6 +917,42 @@ LEFT OUTER JOIN
 		return $result;
 	}
 
+	function PrimaryCategoryViaSecondary($Category, $Port) {
+		#
+		# Given a category/port combination where $Category is one of the
+		# port's secondary categories (e.g. wayland/wl-clipboard), return the
+		# port's primary category (e.g. x11). Return null if there is no such
+		# port, or more than one.
+		#
+		# see https://github.com/FreshPorts/freshports/issues/618
+		#
+		$PrimaryCategory = null;
+
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . "
+   SELECT PA.category
+     FROM ports_active PA
+     JOIN ports_categories PC ON PC.port_id     = PA.id
+     JOIN categories       SC ON SC.id          = PC.category_id
+     JOIN element_pathname EP ON EP.element_id  = PA.element_id
+    WHERE PA.name     = $1
+      AND SC.name     = $2
+      AND EP.pathname LIKE '" . FRESHPORTS_PORTS_TREE_HEAD_PREFIX . "/%'";
+
+		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
+
+		$result = pg_query_params($this->dbh, $sql, array($Port, $Category));
+		if ($result) {
+			if (pg_num_rows($result) == 1) {
+				$myrow = pg_fetch_row($result);
+				$PrimaryCategory = $myrow[0];
+			}
+		} else {
+			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
+		}
+
+		return $PrimaryCategory;
+	}
+
 	function WatchListCount() {
 		#
 		# return the number of watch lists upon which this port appears

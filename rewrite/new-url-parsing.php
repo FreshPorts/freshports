@@ -263,6 +263,15 @@ function Try_Displaying_Port($db, $path_parts, $url_args, $Branch) {
 	        freshports_PortDisplayNew($db, $MyPort, $category, $port, $url_args, $Branch, $HasCommitsOnBranch);
 	        exit;
 	}
+
+	# perhaps $category is one of the port's secondary categories
+	# e.g. /wayland/wl-clipboard/ redirects to /x11/wl-clipboard/
+	# see https://github.com/FreshPorts/freshports/issues/618
+	$PrimaryCategory = $MyPort->PrimaryCategoryViaSecondary($category, $port);
+	if (IsSet($PrimaryCategory)) {
+		if ($Debug) echo htmlentities("$category/$port") . ' redirects to ' . htmlentities("$PrimaryCategory/$port") . '<br>';
+		RedirectIncorrectPathCase("/$PrimaryCategory/$port/", $url_args);
+	}
 }
 
 

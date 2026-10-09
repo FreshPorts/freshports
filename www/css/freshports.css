@@ -866,6 +866,27 @@ table.fullwidth {
   width: 100%;
 }
 
+/* a bulleted list whose second column lines up - e.g. the 404 port suggestions */
+ul.aligned {
+  display: table;
+  padding-left: 1em;
+}
+
+ul.aligned > li {
+  display: table-row;
+}
+
+ul.aligned > li::before {
+  content: "\2022";
+  display: table-cell;
+  padding-right: 0.5em;
+}
+
+ul.aligned > li > span {
+  display: table-cell;
+  padding: 2px 1em 2px 0;
+}
+
 table.borderless {
   border: 0 none black;
   border: 0 none var(--body-text);

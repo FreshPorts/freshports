@@ -1535,6 +1535,30 @@ function freshports_PortsUpdating($port, $PortsUpdating) {
 function freshports_navigation_bar_top() {
 }
 
+function freshports_PortSuggestions($Suggestions) {
+	#
+	# $Suggestions is the output of Port::SuggestionsFor()
+	# Used by the 404 page and by search when nothing is found.
+	# see https://github.com/FreshPorts/freshports/issues/614
+	#
+	$HTML = '';
+	if (empty($Suggestions)) {
+		return $HTML;
+	}
+
+	$HTML .= '<P>' . _('Perhaps you meant one of these:') . "</P>\n";
+	# class aligned lines up the descriptions - see freshports.css
+	$HTML .= '<ul class="aligned">' . "\n";
+	foreach ($Suggestions as $Suggestion) {
+		$CategoryPort = $Suggestion['category'] . '/' . $Suggestion['name'];
+		$HTML .= '<li><span><a href="' . htmlspecialchars($Suggestion['link']) . '">' . htmlspecialchars($CategoryPort) . '</a></span>';
+		$HTML .= '<span>' . htmlspecialchars($Suggestion['short_description'] ?? '') . "</span></li>\n";
+	}
+	$HTML .= "</ul>\n";
+
+	return $HTML;
+}
+
 function freshports_copyright() {
 	return '<small><a href="/legal.php" target="_top" title="' . _('This material is copyrighted') . '">' . _('Copyright') . '</a> &copy; ' . COPYRIGHTYEARS . ' <a href="' . COPYRIGHTHOLDERURL . '" rel="noopener noreferrer">' . COPYRIGHTHOLDER . '</a>. ' . _('All rights reserved.') . '</small>';
 }

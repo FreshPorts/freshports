@@ -942,6 +942,101 @@ LEFT OUTER JOIN
 		return $result;
 	}
 
+	function SuggestionsFor($Port, $Branch = BRANCH_HEAD) {
+		#
+		# Given a port name which was not found at the requested category/port,
+		# return ports the user might have meant, as an array of rows with
+		# category, name, short_description, and link (the URL of that port on $Branch).
+		# Exact matches on port name or package name are tried first, in any category.
+		# Only if there are none do we try fuzzy matching.
+		#
+		# This is called before the 404 header is sent, so errors go to syslog,
+		# not to the page.
+		#
+		# see https://github.com/FreshPorts/freshports/issues/614
+		#
+		$Suggestions = array();
+
+		# only bother with things which look like port names
+		if (!preg_match('/^[A-Za-z0-9._+-]{2,100}$/', $Port)) {
+			return $Suggestions;
+		}
+
+		# This avoids ports_active, which scans every port on every branch
+		# before filtering; here the element_name and ports_package_name
+		# indexes find the candidates first.
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . "
+   SELECT C.name AS category, E.name, P.short_description
+     FROM ports P
+     JOIN element          E  ON E.id          = P.element_id
+     JOIN element_pathname EP ON EP.element_id = E.id
+     JOIN categories       C  ON C.id          = P.category_id
+    WHERE E.status = 'A'
+      AND EP.pathname LIKE '" . FRESHPORTS_PORTS_TREE_HEAD_PREFIX . "/%'
+      AND E.id IN (SELECT id FROM element WHERE name = \$1::text
+                   UNION
+                   SELECT element_id FROM ports WHERE package_name = \$1::text)
+ ORDER BY C.name, E.name
+    LIMIT 20";
+
+		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
+
+		$result = pg_query_params($this->dbh, $sql, array($Port));
+		if (!$result) {
+			syslog(LOG_ERR, __FILE__ . '::' . __FUNCTION__ . ' pg_query_params failed: ' . pg_last_error($this->dbh));
+			return $Suggestions;
+		}
+
+		if (pg_num_rows($result) == 0) {
+			# Nothing exact. Try names which are close (e.g. anvl for anvil), or
+			# which contain, or are contained by, what was requested (e.g.
+			# fusefs-squashfuse for squashfuse). Short names get a tighter distance,
+			# else 'vim' would match half the tree.
+			$MaxDistance = max(1, min(3, intdiv(strlen($Port), 3)));
+
+			# The candidates are every active port on head. Rather than scan ports
+			# and element_pathname, walk down the tree: head, its categories, their ports.
+			$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . "
+     WITH head_ports AS (
+   SELECT E.id, E.name
+     FROM element_pathname R
+     JOIN element CE ON CE.parent_id = R.element_id
+     JOIN element E  ON E.parent_id  = CE.id
+    WHERE R.pathname = '" . FRESHPORTS_PORTS_TREE_HEAD_PREFIX . "'
+      AND E.status   = 'A')
+   SELECT C.name AS category, H.name, P.short_description
+     FROM head_ports H
+     JOIN ports      P ON P.element_id = H.id
+     JOIN categories C ON C.id         = P.category_id
+    WHERE levenshtein_less_equal(lower(H.name), lower(\$1::text), \$2::int) <= \$2::int
+       OR (length(H.name)    >= 4 AND strpos(lower(\$1::text), lower(H.name)) > 0)
+       OR (length(\$1::text) >= 4 AND strpos(lower(H.name), lower(\$1::text)) > 0)
+ ORDER BY levenshtein(lower(H.name), lower(\$1::text)), C.name, H.name
+    LIMIT 10";
+
+			if ($this->Debug) echo '<pre>' . $sql . '</pre>';
+
+			$result = pg_query_params($this->dbh, $sql, array($Port, $MaxDistance));
+			if (!$result) {
+				syslog(LOG_ERR, __FILE__ . '::' . __FUNCTION__ . ' pg_query_params failed: ' . pg_last_error($this->dbh));
+				return $Suggestions;
+			}
+		}
+
+		$BranchArgs = '';
+		if ($Branch != BRANCH_HEAD) {
+			$BranchArgs = '?branch=' . urlencode($Branch);
+		}
+
+		$Suggestions = pg_fetch_all($result) ?: array();
+		foreach ($Suggestions as &$Suggestion) {
+			$Suggestion['link'] = '/' . $Suggestion['category'] . '/' . $Suggestion['name'] . '/' . $BranchArgs;
+		}
+		unset($Suggestion);
+
+		return $Suggestions;
+	}
+
 	function PackageExists() {
 		return $this->package_exists == 't';
 	}

@@ -31,6 +31,7 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 	# otherwise, return a non-false value.
 
 	GLOBAL $User;
+	GLOBAL $Suggestions;	# for missing.php, which www/--/index.php includes on a 404
 
 	$Debug  = 0;
 	$result = false;
@@ -255,6 +256,15 @@ function freshports_Parse404URI($REQUEST_URI, $db) {
 
 			if (IsSet($port)) {
 				if ($Debug)  'Invalid port supplied for a valid category<br>';
+
+				# Perhaps they have the wrong category, or misspelled the port.
+				# missing.php will list these, if any.
+				# see https://github.com/FreshPorts/freshports/issues/614
+				if (count($PathParts) == 2) {
+					require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
+					$MyPort = new Port($db);
+					$Suggestions = $MyPort->SuggestionsFor($port, $Branch);
+				}
 			} else {
 				require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/categories.php');
 				$Category = new Category($db);

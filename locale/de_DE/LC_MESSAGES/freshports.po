@@ -2128,7 +2128,7 @@ msgstr "Bitte kontaktieren Sie %s für Hilfe."
 
 #: www/confirmation.php:64
 msgid "An error has occurred.  Sorry."
-msgstr "Ein Fehler ist aufgetreten.  Entschuldigung."
+msgstr "Ein Fehler ist aufgetreten. Entschuldigung."
 
 #: www/confirmation.php:68
 msgid "Hi there.  What are you doing here?"
@@ -3666,7 +3666,7 @@ msgid ""
 "pages are created from entries in the database.  One recent evening, I started to design a formula to find out how many web pages there are.  Roughly.  This will not be 100% accurate, but it will be close."
 msgstr ""
 "Vor ein paar Tagen habe ich mir über Suchmaschinen, die diese Website durchsuchen, Gedanken gemacht. Ich habe mich gefragt, wieviele Seiten es hier gibt. Um diese Anzahl zu berechnen genügt es nicht, die Dateien auf der Festplatte zu zählen. Die "
-"meisten Seiten werden aus Datenbank-Einträgen generiert. An einem Abend vor kurzem habe ich angefangen, eine Formel zu entwickeln, die die Anzahl der Seiten berechnet. Zumindest ungefähr.  Diese Anzahl wird nicht 100% genau sein, aber sie wird dem "
+"meisten Seiten werden aus Datenbank-Einträgen generiert. An einem Abend vor kurzem habe ich angefangen, eine Formel zu entwickeln, die die Anzahl der Seiten berechnet. Zumindest ungefähr. Diese Anzahl wird nicht 100% genau sein, aber sie wird dem "
 "richtigen Wert sehr nahe kommen."
 
 #: www/how-big-is-it.php:116
@@ -4153,7 +4153,7 @@ msgstr "Ihr Bereitstellungsbereich enthält die hochgeladenen Informationen. Bit
 
 #: www/pkg_upload.php:223
 msgid "Uploading pkg info"
-msgstr "Lade  Paket-Informationen hoch"
+msgstr "Lade Paket-Informationen hoch"
 
 #: www/pkg_upload.php:225
 msgid "<span class=\"element-details\">WARNING</span>: The system will clear out your staging area from time to time."
@@ -5061,7 +5061,7 @@ msgstr "Sie sollten den <i>Replaced By</i>-Link besuchen und den Port zu Ihrer B
 #: www/watch.php:147
 #, php-format
 msgid "This page is sorted by port.  but you can sort by %1$s or %2$s"
-msgstr "Diese Seite ist nach Ports sortiert. Aber Sie können sie auch nach  %1$s or %2$s sortieren"
+msgstr "Diese Seite ist nach Ports sortiert. Aber Sie können sie auch nach %1$s or %2$s sortieren"
 
 #: www/watch.php:147 www/watch.php:154
 msgid "last update"
@@ -5070,12 +5070,12 @@ msgstr "letzte Aktualisierung"
 #: www/watch.php:154
 #, php-format
 msgid "This page is sorted by category.  but you can sort by %1$s or %2$s"
-msgstr "Diese Seite ist nach Kategorien sortiert. Aber Sie können sie auch nach  %1$s or %2$s sortieren"
+msgstr "Diese Seite ist nach Kategorien sortiert. Aber Sie können sie auch nach %1$s or %2$s sortieren"
 
 #: www/watch.php:161
 #, php-format
 msgid "This page is sorted by last update date.  but you can sort by %1$s or %2$s"
-msgstr "Diese Seite ist nach dem Datum der letzten Änderung sortiert. Aber Sie können sie auch nach  %1$s or %2$s sortieren"
+msgstr "Diese Seite ist nach dem Datum der letzten Änderung sortiert. Aber Sie können sie auch nach %1$s or %2$s sortieren"
 
 #: www/watch.php:177
 msgid "View watched ports + entries from <code>/usr/ports/UPDATING</code>"

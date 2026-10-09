@@ -12,6 +12,7 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/system_branch.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/search-gate.php');
 
 	require_once('Pager/Pager.php');
 
@@ -24,6 +25,11 @@
 	} else {
 	        checkLoadBeforeProceeding();
         }
+
+	# only a search costs anything; the empty search form is fine for anyone
+	if (IsSet($_REQUEST['query'])) {
+		freshports_search_gate();
+	}
 
 	$Debug = 0;
 # this should only be referenced after it has been set.

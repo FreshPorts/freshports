@@ -344,25 +344,6 @@
 	        exit;
 	}
 
-	// start of HTML output
-	if ($output_format == OUTPUT_FORMAT_HTML) {
-		$Title = _('Search');
-		freshports_Start($Title,
-					$Title,
-					'FreeBSD, index, applications, ports');
-
-		echo freshports_MainTable();
-?>
-<tr><td class="content">
-<?php echo freshports_MainContentTable(); ?>
-  <tr>
-	<?php echo freshports_PageBannerText(_("Search FreshPorts using Google")); ?>
-  </tr>
-<tr><td><div class="gcse-search"></div>
-<?php
-	} // end of HTML only output
-
-
 	#
 	# ensure that our parameters have default values
 	#
@@ -1091,7 +1072,47 @@ JOIN element_pathname EP on E.id = EP.element_id
 		$Port = new Port($db);
 		$Port->LocalResult = $result;
 
+		# https://github.com/FreshPorts/freshports/issues/653
+		# A port search which finds exactly one port goes straight to that port's page.
+		# This is why the HTML output starts after the search, not before: no headers have been sent yet.
+		switch ($stype) {
+			case SEARCH_FIELD_AUTHOR_NAME:
+			case SEARCH_FIELD_AUTHOR_EMAIL:
+			case SEARCH_FIELD_COMMITTER:
+			case SEARCH_FIELD_COMMITTER_NAME:
+			case SEARCH_FIELD_COMMITTER_EMAIL:
+			case SEARCH_FIELD_COMMITMESSAGE:
+			case SEARCH_FIELD_PATHNAME:
+				# these searches find commits, not ports
+				break;
+
+			default:
+				if ($output_format == OUTPUT_FORMAT_HTML && !$Debug && ($NumFound ?? 0) == 1 && $NumFetches == 1) {
+					$Port->FetchNth(0);
+					header('Location: ' . freshports_Port_URL($db, $Port->category, $Port->port, $Branch));
+					exit;
+				}
+				break;
+		}
 	}
+
+	// start of HTML output
+	if ($output_format == OUTPUT_FORMAT_HTML) {
+		$Title = _('Search');
+		freshports_Start($Title,
+					$Title,
+					'FreeBSD, index, applications, ports');
+
+		echo freshports_MainTable();
+?>
+<tr><td class="content">
+<?php echo freshports_MainContentTable(); ?>
+  <tr>
+	<?php echo freshports_PageBannerText(_("Search FreshPorts using Google")); ?>
+  </tr>
+<tr><td><div class="gcse-search"></div>
+<?php
+	} // end of HTML only output
 
 	if ($output_format == OUTPUT_FORMAT_HTML) {
 ?>

@@ -353,7 +353,7 @@ msgstr "Erweitere diese Liste (%d Elemente)"
 #: classes/port-display.php:1516 classes/port-display.php:1519 classes/port-display.php:1859 classes/port-display.php:1867 classes/port-display.php:1975 classes/port-display.php:1990 classes/port-display.php:2096 classes/port-display.php:2126
 #: classes/port-display.php:2136 include/freshports.php:1561
 msgid "Collapse this list."
-msgstr "Vergleiche diese Liste."
+msgstr "Klappee diese Liste ein."
 
 #: classes/port-display.php:1523
 msgid "There is no distinfo for this port."
@@ -454,7 +454,7 @@ msgstr "N/A"
 
 #: classes/port-display.php:1845
 msgid "FreshPorts was unable to extract/find any pkg message"
-msgstr "FreshPorts konnte keine Paket-Nachricht finde oder extrahieren"
+msgstr "FreshPorts konnte keine Paket-Nachricht finden oder extrahieren"
 
 #: classes/port-display.php:1850
 msgid "Master Sites:"
@@ -535,7 +535,7 @@ msgstr "HINWEIS: Abhängigkeiten für gelöschte Ports sind notorisch verdächti
 
 #: classes/port-display.php:2044
 msgid "deleted ports are only shown under the <em>This port is required by</em> section.  It was harder to do for the <em>Required</em> section.  Perhaps later..."
-msgstr "gelöschte Ports werden im Abschnitt <em>Dieser Port wird benötigt für</em> angezeigt. Es war schwieriger, dies für den Abschnitt <em>Erforderlich</em> zu tun. Vielleicht später mal ..."
+msgstr "gelöschte Ports werden nur im Abschnitt <em>Dieser Port wird benötigt für</em> angezeigt. Es war schwieriger, dies für den Abschnitt <em>Erforderlich</em> zu tun. Vielleicht später mal ..."
 
 #: classes/port-display.php:2053
 msgid "Manual pages:"
@@ -896,7 +896,7 @@ msgstr "Port wiederhergestellt am %s"
 #: include/freshports.php:1497
 #, php-format
 msgid "port moved to %1$s on %2$s"
-msgstr "Port von %1$s zu %2$s verschoben"
+msgstr "Port am %2$s nach %1$s verschoben"
 
 #: include/freshports.php:1499
 #, php-format
@@ -1572,7 +1572,7 @@ msgstr "%1$s listet die Änderungen am Ports-Baum auf. Wenn Sie möchten, kann I
 #: www/about.php:69
 #, php-format
 msgid "%1$s is not the place to report errors or request changes.  You should do that on the %2$s.  We do not maintain ports.  We do not create ports.  We do not fix ports.  We just tell you what others have been doing to the Ports tree."
-msgstr "%1$s ist nicht der Ort, um Fehler zu melden oder Änderungen anzufordern. Sie sollten das unter %2$s tun. Wir pflegen keine Ports. Wir erstellen keine Ports."
+msgstr "%1$s ist nicht der Ort, um Fehler zu melden oder Änderungen anzufordern. Sie sollten das unter %2$s tun. Wir pflegen keine Ports. Wir erstellen keine Ports. Wir beheben Fehler in Ports nicht. Wir zeigen Ihnen nur, was Andere mit dem Ports-Baum gemacht haben."
 
 #: www/about.php:69
 msgid "FreeBSD Ports mailing list"
@@ -1597,9 +1597,7 @@ msgstr "Die Autoren"
 
 #: www/authors.php:35
 msgid "<a href=\"https://www.langille.org/\" rel=\"noopener noreferrer\">Dan Langille</a> thought up the idea, found the data sources, bugged people to write scripts, and did the html and database work. But he certainly didn't do it alone."
-msgstr ""
-"<a href=\"https://www.langille.org/\" rel=\"noopener noreferrer\">Dan Langille</a> hat den Ideen, die Datenquellen gefunden, Leute genervt, um Skripte zu schreiben, und die HTML- und Datenbankarbeit erledigt. Aber er hat es sicherlich nicht alleine "
-"gemacht."
+msgstr "<a href=\"https://www.langille.org/\" rel=\"noopener noreferrer\">Dan Langille</a> hatte die Idee, hat die Datenquellen gefunden, Leute genervt damit sie Skripte schreiben und die HTML- und Datenbankarbeit erledigt. Aber er hat es sicherlich nicht alleine gemacht."
 
 #: www/authors.php:38
 msgid "The details of day-to-day changes, bug fixes, challenges, and new features are documented on the <a href=\"https://news.freshports.org/\" rel=\"noopener noreferrer\">news blog</a>."
@@ -1724,7 +1722,7 @@ msgstr "Die obigen Feeds werden mit <a href=\"https://github.com/flack/Universal
 
 #: www/backend/index.php:66
 msgid "Optional parameters for the above formats"
-msgstr "Optionale"
+msgstr "Optionale Parameter für obige Formate"
 
 #: www/backend/index.php:68
 msgid "Each of those formats have optional parameters:"
@@ -2570,7 +2568,7 @@ msgstr "Dateien: Wenn Sie auf diese Grafik klicken, gelangen Sie zur Liste der D
 
 #: www/faq.php:239
 msgid "Refresh: The system is in the process of refreshing that port by inspecting the ports tree. You should rarely see this."
-msgstr "Aktualisiewren: Das System ist dabei, diesen Port zu aktualisieren, indem es den Ports-Baum überprüft. Sie sollten dies selten sehen."
+msgstr "Aktualisieren: Das System ist dabei, diesen Port zu aktualisieren, indem es den Ports-Baum überprüft. Sie sollten dies selten sehen."
 
 #: www/faq.php:240
 msgid "If you do see one, chances are that the port contains an error that prevents make(1) from running. For example:"
@@ -2988,7 +2986,7 @@ msgstr "Feld"
 
 #: www/faq.php:550
 msgid "Origin"
-msgstr "Urspr"
+msgstr "Ursprung"
 
 #: www/faq.php:551 www/search.php:1140
 msgid "Port Name"
@@ -3155,7 +3153,7 @@ msgstr "Kurz gesagt, es macht keinen Sinn, das zu verschleiern, was anderswo fre
 
 #: www/faq.php:648
 msgid "Similarly, we do not entertain requests to remove information from our website. We only report upon what exists elsewhere."
-msgstr "Ähnlich verhält es sich mit Anfragen, Informationen von unserer Website zu entfernen. Wir berichten nur über das, was anderswo schon existiert."
+msgstr "Ebenso gehen wir nicht auf Anfragen ein, Informationen von unserer Website zu entfernen. Wir berichten nur über das, was anderswo schon existiert."
 
 #: www/faq.php:653
 msgid "Why does the PORTVERSION at the top of page differ from that of the first commit?"
@@ -3217,9 +3215,8 @@ msgid ""
 "FreshPorts polls the available FreeBSD repo builds on an hourly basis. It uses that information to display the packages available under various ABI (e.g. FreeBSD:14:amd64). NOTE: we do not display packages for the quarterly branch on the latest CURRENT "
 "of FreeBSD. Packages are not built for that ABI/package set combination. You may see CURRENT/quarterly listed on some pages. That is easier to do than to keep track of which branch is CURRENT."
 msgstr ""
-"FreshPorts prüft stündlich alle verfügbaren FreeBSD-Pakete und benutzt diese Information, um die unter den verschiedenen ABIs (z. B. FreeBSD:14:amd64) verfügbaren Pakete anzuzeigen.HINWEIS: wir zeigen keine Pakete aus den Quartals-Zweigen oder dem "
-"aktuellen CURRENT von FreeBSD. Pakete werden für die diese Kombination von ABI und Paket-Set nicht gebaut.Sie können CURRENT oder Quarterly auf manchen Seiten angezeigt sehen, aber es ist einfach das zu machen als nachzuverfolgem welcher Zweig gerade "
-"CURRENT ist."
+"FreshPorts prüft stündlich alle verfügbaren FreeBSD-Pakete und benutzt diese Information, um die unter den verschiedenen ABIs (z. B. FreeBSD:14:amd64) verfügbaren Pakete anzuzeigen. HINWEIS: wir zeigen keine Pakete aus den Quartals-Zweig für die aktuellste CURRENT von FreeBSD. "
+"Pakete werden für die diese Kombination von ABI und Paket-Set nicht gebaut. Sie können CURRENT/Quarterly auf manchen Seiten angezeigt sehen, aber es ist einfacher das so zu machen, als nachzuverfolgen, welcher Zweig gerade CURRENT ist."
 
 #: www/faq.php:734
 msgid "To get new package notifications, follow these steps:"
@@ -3232,7 +3229,7 @@ msgstr "Klicken Sie auf <a href=\"/report-subscriptions.php\">Subskriptions-List
 
 #: www/faq.php:738
 msgid "Check the <i>New Package Notification</i> box"
-msgstr "Aktiviere <i>New Package Notificatin<</i>"
+msgstr "Aktiviere <i>New Package Notificatin</i>"
 
 # Update übersetzen?
 #: www/faq.php:739
@@ -3296,6 +3293,7 @@ msgid "Watch List - categories"
 msgstr "Beobachtungsliste - Kategorien"
 
 #: www/filter-setup.php:126
+msgid ""
 "This screen contains a list of the port categories. A * indicates a category that contains ports which are on your watch list. When a port changes in one of your watch categories, you will be notified by email if you have selected a notification "
 "frequency within your <a href=\"customize.php\">account settings</a>."
 msgstr ""
@@ -3652,7 +3650,7 @@ msgstr ""
 
 #: www/help.php:120
 msgid "Why would I want to clear my staging area?"
-msgstr "Warum sollte ich meinen Bereitstellungsbereich sichern wollen?"
+msgstr "Warum sollte ich meinen Bereitstellungsbereich leeren wollen?"
 
 #: www/help.php:123
 msgid "You cannot upload anything to your staging area unless it is empty. If you don't wish to save the data to your watch list, you must first clear your staging area before uploading again."
@@ -3667,8 +3665,8 @@ msgid ""
 "It was a few days ago that I was thinking about search engines crawling through this website. I began to wonder just how many web pages there are here.  To calculate this total, it's not just a simple matter of counting files on disk.  Most of the web "
 "pages are created from entries in the database.  One recent evening, I started to design a formula to find out how many web pages there are.  Roughly.  This will not be 100% accurate, but it will be close."
 msgstr ""
-"Vor ein paar Tagen habe ich mir über Suchmaschinen, die diese Website durchsuchen, Gedanken gemacht. Ich habe mich gefragt, wieviele Seiten es hier gibr. Um diese Anzahl zu berechnen genügt es nicht, die Dateien auf der Festplatte zu zählen.Die "
-"meisten Seiten werden aus Datenbank-Einträgen generiert. An einem Abend vor kurzem habe ich angefangen, eine Formel zu entwickeln, die die Anzahl der Seireb berechnet.Zumindest ungefähr.  Diese Anzahl wird nicht 100% genau sein, aber sie wird dem "
+"Vor ein paar Tagen habe ich mir über Suchmaschinen, die diese Website durchsuchen, Gedanken gemacht. Ich habe mich gefragt, wieviele Seiten es hier gibt. Um diese Anzahl zu berechnen genügt es nicht, die Dateien auf der Festplatte zu zählen. Die "
+"meisten Seiten werden aus Datenbank-Einträgen generiert. An einem Abend vor kurzem habe ich angefangen, eine Formel zu entwickeln, die die Anzahl der Seiten berechnet. Zumindest ungefähr.  Diese Anzahl wird nicht 100% genau sein, aber sie wird dem "
 "richtigen Wert sehr nahe kommen."
 
 #: www/how-big-is-it.php:116
@@ -3823,7 +3821,7 @@ msgstr "Diese Seite ist nur Platz auf dem ich die %s-Artikel speichere, die auf 
 #: www/inthenews.php:40
 #, php-format
 msgid "%s site announcement"
-msgstr "%s Website-Ankündugungen"
+msgstr "%s Website-Ankündigungen"
 
 #: www/login.php:104
 #, php-format
@@ -4155,7 +4153,7 @@ msgstr "Ihr Bereitstellungsbereich enthält die hochgeladenen Informationen. Bit
 
 #: www/pkg_upload.php:223
 msgid "Uploading pkg info"
-msgstr "Lade  Pakte-Informationen hoch"
+msgstr "Lade  Paket-Informationen hoch"
 
 #: www/pkg_upload.php:225
 msgid "<span class=\"element-details\">WARNING</span>: The system will clear out your staging area from time to time."
@@ -4497,11 +4495,11 @@ msgid ""
 "hit the main website.  To subscribe, follow the directions found on the <a href=\"https://lists.freshports.org/mailman/listinfo/\">FreshPorts mailing list website</a>"
 msgstr ""
 "Sie möchten vielleicht helfen, neue FreshPorts-Funktionen zu testen oder nur vorab zu sehen.Wenn das zutrifft, dann empfehle ich Ihnen, sich für Beta-Mail-Liste zu registrieren.Dies ist eine Mail-Liste mit wenigen Meldungen, die Sie über Details neuer "
-"Funktionen informiert, die Sie ausprobieren können, bevor sie allgemein freigegeben werden.Um sich anzumelden folgen Sie den Hinweisen unter <a href=\"https://\"lists.freshports.org/mailman/listinfo/\">FreshPorts mailing list website</a>"
+"Funktionen informiert, die Sie ausprobieren können, bevor sie allgemein freigegeben werden.Um sich anzumelden folgen Sie den Hinweisen unter <a href=\"https://lists.freshports.org/mailman/listinfo/\">FreshPorts mailing list website</a>"
 
 #: www/sanity_test_failures.php:110
 msgid "These are the sanity test failures found by FreshPorts.  Sanity tests have been in place for several years, but have only been saved in the database since 10 October 2006."
-msgstr "Dies sind die Fehlermeldungen der Sanity-Tests, die FreshPorts gefunden hat. Plausibilitätsprüfungen werden seit vielen Jahren durchggeführt, aber die Ergebnisse werden erst seit dem 10. Oktober 2006 in der Datenbank gespeichert."
+msgstr "Dies sind die Fehlermeldungen der Sanity-Tests, die FreshPorts gefunden hat. Plausibilitätsprüfungen werden seit vielen Jahren durchgeführt, aber die Ergebnisse werden erst seit dem 10. Oktober 2006 in der Datenbank gespeichert."
 
 # Besseres Wort als „Plausibilitätsprüfung“?
 #: www/sanity_test_failures.php:185
@@ -4668,7 +4666,7 @@ msgstr "<b>Zweig</b>:"
 
 #: www/search.php:1252
 msgid "Case sensitivity is ignored for \"sounds like\" and output is ordered by the soundex."
-msgstr "Die Groß-/Kleinschreibung wird bei 'klingt wie' ignoriert und die Ausgabe ist in 'soundex'-Reiehnfolge sortiert."
+msgstr "Die Groß-/Kleinschreibung wird bei 'klingt wie' ignoriert und die Ausgabe ist in 'soundex'-Reihenfolge sortiert."
 
 #: www/search.php:1253
 msgid "When searching on 'Message ID', the type of match is ignored."
@@ -5046,7 +5044,7 @@ msgstr "Dies sind die Ports auf Ihrer <a href=\"/watch-categories.php\">Beobacht
 
 #: www/watch.php:111
 msgid "Some of your watched ports have moved.  You are still watching the old ports."
-msgstr "Einige Ihrer beobachteten Ports wurden verschoben. Sie beobachten nur die alten Ports."
+msgstr "Einige Ihrer beobachteten Ports wurden verschoben. Sie beobachten noch die alten Ports."
 
 #: www/watch.php:113
 msgid "Old Port"
@@ -5128,4 +5126,4 @@ msgstr "Ihr Benutzerkonto wurde erzeugt."
 
 #: www/welcome.php:37
 msgid "If you do not receive that email, please attempt to login and you will have an opportunity to resend the notification."
-msgstr "Wenn Sie die E-Mail nicht empfangen, dann versuchen Sie bitte sich anzumelden. Sie erhalten dann die Möglichkeit uns zu benachrichtigen."
+msgstr "Wenn Sie die E-Mail nicht empfangen, dann versuchen Sie bitte sich anzumelden. Sie erhalten dann die Möglichkeit, sich die Bestätigungs-Mail erneut zusenden zu lassen."

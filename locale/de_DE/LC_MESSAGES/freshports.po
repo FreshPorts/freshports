@@ -3099,8 +3099,8 @@ msgid ""
 "Slave ports can be updated with a commit against the master port. A commit against the master port will affect any slave ports. If a <a href=\"https://www.vuxml.org/freebsd/\">VuXML</a> vulnerability has been recorded against a slave port, any fix "
 "would be applied to the master port. However, the commit to the master port would not appear under the slave port, thereby giving a false impression that the slave port was still vulnerable."
 msgstr ""
-"Slave-Ports können mit einem Commit gegen den Master-Port aktualisiert werden. Ein Commit gegen den Master-Port wirkt sich auf alle Slave-Ports aus. Wenn eine <a href=\"https://www.vuxml.org/freebsd/\">VuXML</a>-Sicherheitslücke gegen einen Slave-Port "
-"aufgezeichnet wurde, würde jede Korrektur auf den Master-Port angewendet. Der Commit zum Master-Port würde jedoch nicht unter dem Slave-Port erscheinen, wodurch der falsche Eindruck entsteht, dass der Slave-Port immer noch anfällig ist."
+"Slave-Ports können mit einem Commit des Master-Ports aktualisiert werden. Ein Commit des Master-Ports wirkt sich auf alle Slave-Ports aus. Wenn eine <a href=\"https://www.vuxml.org/freebsd/\">VuXML</a>-Sicherheitslücke gegen einen Slave-Port "
+"aufgezeichnet wurde, würde jede Korrektur auf den Master-Port angewendet. Der Commit des Master-Ports würde jedoch nicht unter dem Slave-Port erscheinen, wodurch der falsche Eindruck entsteht, dass der Slave-Port immer noch anfällig ist."
 
 #: www/faq.php:612
 msgid "The above notice serves as a reminder that the slave port may no longer be vulnerable."
@@ -3214,8 +3214,8 @@ msgid ""
 "FreshPorts polls the available FreeBSD repo builds on an hourly basis. It uses that information to display the packages available under various ABI (e.g. FreeBSD:14:amd64). NOTE: we do not display packages for the quarterly branch on the latest CURRENT "
 "of FreeBSD. Packages are not built for that ABI/package set combination. You may see CURRENT/quarterly listed on some pages. That is easier to do than to keep track of which branch is CURRENT."
 msgstr ""
-"FreshPorts prüft stündlich alle verfügbaren FreeBSD-Pakete und benutzt diese Information, um die unter den verschiedenen ABIs (z. B. FreeBSD:14:amd64) verfügbaren Pakete anzuzeigen. HINWEIS: wir zeigen keine Pakete aus den Quartals-Zweig für die aktuellste CURRENT von FreeBSD. "
-"Pakete werden für die diese Kombination von ABI und Paket-Set nicht gebaut. Sie können CURRENT/Quarterly auf manchen Seiten angezeigt sehen, aber es ist einfacher das so zu machen, als nachzuverfolgen, welcher Zweig gerade CURRENT ist."
+"FreshPorts prüft stündlich alle verfügbaren FreeBSD-Pakete und benutzt diese Information, um die unter den verschiedenen ABIs (z. B. FreeBSD:14:amd64) verfügbaren Pakete anzuzeigen. HINWEIS: wir zeigen keine Pakete aus dem Quartals-Zweig für die aktuellste CURRENT von FreeBSD. "
+"Pakete werden für diese Kombination von ABI und Paket-Set nicht gebaut. Sie können CURRENT/Quarterly auf manchen Seiten angezeigt sehen, aber es ist einfacher das so zu machen, als nachzuverfolgen, welcher Zweig gerade CURRENT ist."
 
 #: www/faq.php:734
 msgid "To get new package notifications, follow these steps:"
@@ -3224,20 +3224,20 @@ msgstr "Um Benachrichtugungen für neue Paket zu erhalten, folgen Sie diesen Sch
 # Worte in <a></a> übersetzen?
 #: www/faq.php:737
 msgid "Click on <a href=\"/report-subscriptions.php\">Report Subscriptions</a>, under <i>Watch Lists</i> in the right hand column"
-msgstr "Klicken Sie auf <a href=\"/report-subscriptions.php\">Subskriptions-Liste</a> unter <i>Watch Lists</i> in der rechten Spalte"
+msgstr "Klicken Sie auf <a href=\"/report-subscriptions.php\">Subskriptions-Liste</a> unter <i>Beobachtungs-Listen</i> in der rechten Spalte"
 
 #: www/faq.php:738
 msgid "Check the <i>New Package Notification</i> box"
-msgstr "Aktiviere <i>New Package Notificatin</i>"
+msgstr "Aktiviere <i>New Package Notification</i>"
 
 # Update übersetzen?
 #: www/faq.php:739
 msgid "click on Update"
-msgstr "Klicke auf 'Update'"
+msgstr "Klicke auf 'Aktualisieren'"
 
 #: www/faq.php:740
 msgid "Again under <i>Watch Lists</i>, this time, click on <a href=\"/report-package-notifications.php\">ABI Package Subscriptions</a> to select the ABI for which you want to receive notifications"
-msgstr "Wieder unter <i>Watch Lists</i> klicken Sie auf <a href=\"/report-package-notifications.php\">ABI Package Subscriptions</a> um das ABI auszuwählen, für das Sie Benachrichtigungen erhalten möchten"
+msgstr "Wieder unter <i>Beobachtungs-Listen</i> klicken Sie auf <a href=\"/report-package-notifications.php\">ABI-Paket-Abonnements</a> um das ABI auszuwählen, für das Sie Benachrichtigungen erhalten möchten"
 
 # Boxen übersetzen?
 #: www/faq.php:741
@@ -3254,7 +3254,7 @@ msgstr "ABI (zweites Feld)"
 
 #: www/faq.php:745
 msgid "one or both of quarterly and latest (third box)"
-msgstr "Eins oder beide von 'Quarterly' oder 'Latest' (drittes Feld)"
+msgstr "Eins oder beide von 'latest' oder 'quarterly' (drittes Feld)"
 
 # Add übersetzen?
 #: www/faq.php:747

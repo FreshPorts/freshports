@@ -353,7 +353,7 @@ msgstr "Erweitere diese Liste (%d Elemente)"
 #: classes/port-display.php:1516 classes/port-display.php:1519 classes/port-display.php:1859 classes/port-display.php:1867 classes/port-display.php:1975 classes/port-display.php:1990 classes/port-display.php:2096 classes/port-display.php:2126
 #: classes/port-display.php:2136 include/freshports.php:1561
 msgid "Collapse this list."
-msgstr "Klappee diese Liste ein."
+msgstr "Klappe diese Liste ein."
 
 #: classes/port-display.php:1523
 msgid "There is no distinfo for this port."

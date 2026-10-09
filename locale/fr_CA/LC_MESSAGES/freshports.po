@@ -1,0 +1,5716 @@
+# French translations for FreshPorts package.
+# Copyright (C) 2026 THE FreshPorts'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the FreshPorts package.
+# Marc Pearson <marc.pearson@gmail.com>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: FreshPorts\n"
+"Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
+"POT-Creation-Date: 2026-10-07 17:15-0400\n"
+"PO-Revision-Date: 2026-10-09 14:42-0400\n"
+"Last-Translator: Marc Pearson <marc.pearson@gmail.com>\n"
+"Language-Team: French <traduc@traduc.org>\n"
+"Language: fr_CA\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: classes/display_commit.php:126 classes/port-display.php:1152
+#: include/freshports.php:1868
+msgid "Author:"
+msgstr ""
+
+#: classes/display_commit.php:338 classes/files-display.php:40
+#: www/commit.php:266
+msgid "Sorry, nothing found in the database...."
+msgstr ""
+
+#: classes/files-display.php:48
+#, php-format
+msgid "%d file found"
+msgid_plural "%d files found"
+msgstr[0] ""
+msgstr[1] ""
+
+#: classes/files-display.php:56 www/categories.php:154
+msgid "Action"
+msgstr ""
+
+#: classes/files-display.php:56
+msgid "Annotate/etc"
+msgstr ""
+
+#: classes/files-display.php:56
+msgid "File"
+msgstr ""
+
+#: classes/files-display.php:56
+msgid "Revision"
+msgstr ""
+
+#: classes/files-display.php:88
+msgid "import"
+msgstr ""
+
+#: classes/files-display.php:88
+msgid "modify"
+msgstr ""
+
+#: classes/files-display.php:88
+msgid "remove"
+msgstr ""
+
+#: classes/files-display.php:177
+msgid "Commit history"
+msgstr ""
+
+#: classes/page_options.php:24
+msgid "select a page size"
+msgstr ""
+
+#: classes/port-display.php:146
+#, php-format
+msgid "For %s"
+msgstr ""
+
+#: classes/port-display.php:146
+msgid "or"
+msgstr ""
+
+#: classes/port-display.php:164
+#, php-format
+msgid "If upgrading from &gt; %1$s and &lt; %2$s:"
+msgstr ""
+
+#: classes/port-display.php:167
+#, php-format
+msgid "If upgrading from &gt; %s:"
+msgstr ""
+
+#: classes/port-display.php:170
+#, php-format
+msgid "If upgrading from &lt; %s:"
+msgstr ""
+
+#: classes/port-display.php:173
+msgid "If upgrading"
+msgstr ""
+
+#: classes/port-display.php:181
+msgid "If removing:"
+msgstr ""
+
+#: classes/port-display.php:312
+msgid "SVNWeb - no subversion history for this port"
+msgstr ""
+
+#: classes/port-display.php:865
+msgid "last time FreshPorts imported a new release of this repo"
+msgstr ""
+
+#: classes/port-display.php:866
+msgid "last checked by FreshPorts"
+msgstr ""
+
+#: classes/port-display.php:869
+msgid "repo not found - no repo build date"
+msgstr ""
+
+#: classes/port-display.php:871 www/backend/status.php:46
+#: www/backend/status.php:70
+msgid "repo build date"
+msgstr ""
+
+#: classes/port-display.php:875 www/report-subscriptions.php:224
+msgid "nil"
+msgstr ""
+
+#: classes/port-display.php:881
+msgid "never"
+msgstr ""
+
+#: classes/port-display.php:970
+msgid ""
+"The package version for this port includes the version of FreeBSD it is "
+"built for, so packages for other releases are named differently."
+msgstr ""
+
+#: classes/port-display.php:971
+#, php-format
+msgid "(package %s)"
+msgstr ""
+
+#: classes/port-display.php:988
+msgid "The category for this port"
+msgstr ""
+
+#: classes/port-display.php:1035
+msgid "Package not present on quarterly."
+msgstr ""
+
+#: classes/port-display.php:1037
+msgid ""
+"This port was created during this quarter. It will be in the next quarterly "
+"branch but not the current one."
+msgstr ""
+
+#: classes/port-display.php:1039
+msgid ""
+"This is expected early in the quarter (because the new package repo has not "
+"been built yet.). Otherwise, this missing version is most likely a "
+"FreshPorts error."
+msgstr ""
+
+#: classes/port-display.php:1043
+msgid "Version of this port present on the latest quarterly branch."
+msgstr ""
+
+#: classes/port-display.php:1044
+msgid "NOTE: Slave port - quarterly revision is most likely wrong."
+msgstr ""
+
+#: classes/port-display.php:1076
+#, php-format
+msgid "This port expired on: %s"
+msgstr ""
+
+#: classes/port-display.php:1104
+msgid "There is no maintainer for this port."
+msgstr ""
+
+#: classes/port-display.php:1106
+msgid "email the FreeBSD Ports mailing list"
+msgstr ""
+
+#: classes/port-display.php:1108
+#, php-format
+msgid ""
+"Any concerns regarding this port should be directed to the FreeBSD Ports "
+"mailing list via %s"
+msgstr ""
+
+#: classes/port-display.php:1112
+msgid "Maintainer:"
+msgstr ""
+
+#: classes/port-display.php:1113
+msgid "email the maintainer"
+msgstr ""
+
+#: classes/port-display.php:1126
+msgid "last change committed by"
+msgstr ""
+
+#: classes/port-display.php:1157
+#, php-format
+msgid "on %s"
+msgstr ""
+
+#: classes/port-display.php:1175
+msgid "no changes recorded in FreshPorts"
+msgstr ""
+
+#: classes/port-display.php:1183
+msgid "Port Added:"
+msgstr ""
+
+#: classes/port-display.php:1187 classes/port-display.php:1199
+msgid "unknown"
+msgstr ""
+
+#: classes/port-display.php:1195
+msgid "Last Update:"
+msgstr ""
+
+#: classes/port-display.php:1216
+msgid "Commit Hash:"
+msgstr ""
+
+#: classes/port-display.php:1219
+msgid "SVN Revision:"
+msgstr ""
+
+#: classes/port-display.php:1223
+msgid "UNKNOWN"
+msgstr ""
+
+#: classes/port-display.php:1249
+msgid "Also Listed In:"
+msgstr ""
+
+#: classes/port-display.php:1267
+msgid "License:"
+msgstr ""
+
+#: classes/port-display.php:1271
+msgid "not specified in port"
+msgstr ""
+
+#: classes/port-display.php:1289 classes/port-display.php:1303
+msgid "Homepage for this port"
+msgstr ""
+
+#: classes/port-display.php:1293
+msgid "Description:"
+msgstr ""
+
+#: classes/port-display.php:1330
+msgid "Package"
+msgstr ""
+
+#: classes/port-display.php:1351
+msgid "Service Scripts"
+msgstr ""
+
+#: classes/port-display.php:1352
+msgid "no SUBR information found for this port"
+msgstr ""
+
+#: classes/port-display.php:1362
+msgid "Dependency lines"
+msgstr ""
+
+#: classes/port-display.php:1366 classes/port-display.php:1377
+#, php-format
+msgid "For %s depends:"
+msgstr ""
+
+#: classes/port-display.php:1396
+msgid "Conflicts:"
+msgstr ""
+
+#: classes/port-display.php:1421
+msgid "Conflicts Matches:"
+msgstr ""
+
+#: classes/port-display.php:1426
+#, php-format
+msgid "conflicts with %s"
+msgstr ""
+
+#: classes/port-display.php:1430
+msgid ""
+"There are no Conflicts Matches for this port.  This is usually an error."
+msgstr ""
+
+#: classes/port-display.php:1444
+msgid "No installation instructions:"
+msgstr ""
+
+#: classes/port-display.php:1444
+msgid "This port has been deleted."
+msgstr ""
+
+#: classes/port-display.php:1446
+msgid ""
+"To install <a href=\"/faq.php#port\" title=\"what is a port?\">the port</a>:"
+msgstr ""
+
+#: classes/port-display.php:1448
+msgid ""
+"No <a href=\"/faq.php#package\" title=\"what is a package?\">package</a> is "
+"available:"
+msgstr ""
+
+#: classes/port-display.php:1451
+msgid ""
+"We doubt a <b><a href=\"/faq.php#package\" title=\"what is a package?"
+"\">package</a></b> is available for this port because we see it marked as:"
+msgstr ""
+
+#: classes/port-display.php:1454 include/freshports.php:605
+msgid "Forbidden"
+msgstr ""
+
+#: classes/port-display.php:1455 include/freshports.php:616
+msgid "Broken"
+msgstr ""
+
+#: classes/port-display.php:1456 include/freshports.php:693
+msgid "Ignore"
+msgstr ""
+
+#: classes/port-display.php:1457 include/freshports.php:660
+msgid "Restricted"
+msgstr ""
+
+#: classes/port-display.php:1458
+msgid "Package not available"
+msgstr ""
+
+#: classes/port-display.php:1461
+msgid "Packages are normally not provided for ports that are marked as above."
+msgstr ""
+
+#: classes/port-display.php:1463
+msgid ""
+"To add the <a href=\"/faq.php#package\" title=\"what is a package?"
+"\">package</a>, run one of these commands:"
+msgstr ""
+
+#: classes/port-display.php:1466
+msgid ""
+"NOTE: If this package has multiple flavors (see below), then use one of them "
+"instead of the name specified above."
+msgstr ""
+
+#: classes/port-display.php:1469
+#, php-format
+msgid ""
+"NOTE: This is a Python port. Instead of %s listed in the above command, you "
+"can pick from the names under the <a href=\"#packages\">Packages</a> section."
+msgstr ""
+
+#: classes/port-display.php:1479
+#, php-format
+msgid "there is no package for this port: %s"
+msgstr ""
+
+#: classes/port-display.php:1512 classes/port-display.php:1857
+#: classes/port-display.php:2089 classes/port-display.php:2123
+#: include/freshports.php:1567
+#, php-format
+msgid "Expand this list (%d items)"
+msgstr ""
+
+#: classes/port-display.php:1516 classes/port-display.php:1519
+#: classes/port-display.php:1859 classes/port-display.php:1867
+#: classes/port-display.php:1975 classes/port-display.php:1990
+#: classes/port-display.php:2096 classes/port-display.php:2126
+#: classes/port-display.php:2136 include/freshports.php:1577
+msgid "Collapse this list."
+msgstr ""
+
+#: classes/port-display.php:1523
+msgid "There is no distinfo for this port."
+msgstr ""
+
+#: classes/port-display.php:1576 classes/port-display.php:1652
+msgid "(timestamps in pop-ups are UTC):"
+msgstr ""
+
+#: classes/port-display.php:1576 classes/port-display.php:1652
+msgid "Packages"
+msgstr ""
+
+#: classes/port-display.php:1698
+msgid "No package information for this port in our database"
+msgstr ""
+
+#: classes/port-display.php:1699
+msgid "Sometimes this happens. Not all ports have packages."
+msgstr ""
+
+#: classes/port-display.php:1701
+msgid "This is doubly so for new ports, like this one."
+msgstr ""
+
+#: classes/port-display.php:1703
+#, php-format
+msgid "Perhaps there is a build error. Check the fallout link: %s"
+msgstr ""
+
+#: classes/port-display.php:1722
+msgid "Master port"
+msgstr ""
+
+#: classes/port-display.php:1733
+msgid "Slave ports:"
+msgstr ""
+
+#: classes/port-display.php:1745
+msgid "Dependencies"
+msgstr ""
+
+#: classes/port-display.php:1746
+msgid ""
+"NOTE: FreshPorts displays only information on required and default "
+"dependencies.  Optional dependencies are not covered."
+msgstr ""
+
+#: classes/port-display.php:1757
+msgid "Build dependencies:"
+msgstr ""
+
+#: classes/port-display.php:1763
+msgid "Test dependencies:"
+msgstr ""
+
+#: classes/port-display.php:1769
+msgid "Runtime dependencies:"
+msgstr ""
+
+#: classes/port-display.php:1775
+msgid "Library dependencies:"
+msgstr ""
+
+#: classes/port-display.php:1781
+msgid "Fetch dependencies:"
+msgstr ""
+
+#: classes/port-display.php:1787
+msgid "Patch dependencies:"
+msgstr ""
+
+#: classes/port-display.php:1793
+msgid "Extract dependencies:"
+msgstr ""
+
+#: classes/port-display.php:1799
+msgid "Build and run dependencies:"
+msgstr ""
+
+#: classes/port-display.php:1805
+msgid "This port has no dependencies."
+msgstr ""
+
+#: classes/port-display.php:1816
+msgid "Configuration Options"
+msgstr ""
+
+#: classes/port-display.php:1820
+msgid "No options to configure"
+msgstr ""
+
+#: classes/port-display.php:1824
+msgid "Options name"
+msgstr ""
+
+#: classes/port-display.php:1828
+msgid "N/A"
+msgstr ""
+
+#: classes/port-display.php:1845
+msgid "FreshPorts was unable to extract/find any pkg message"
+msgstr ""
+
+#: classes/port-display.php:1850
+msgid "Master Sites:"
+msgstr ""
+
+#: classes/port-display.php:1870
+msgid "There is no master site for this port."
+msgstr ""
+
+#: classes/port-display.php:1930
+msgid "Build"
+msgstr ""
+
+#: classes/port-display.php:1930
+msgid "Build and run"
+msgstr ""
+
+#: classes/port-display.php:1930
+msgid "Extract"
+msgstr ""
+
+#: classes/port-display.php:1930
+msgid "Fetch"
+msgstr ""
+
+#: classes/port-display.php:1931
+msgid "Libraries"
+msgstr ""
+
+#: classes/port-display.php:1931
+msgid "Patch"
+msgstr ""
+
+#: classes/port-display.php:1931
+msgid "Run"
+msgstr ""
+
+#: classes/port-display.php:1931
+msgid "Test"
+msgstr ""
+
+#: classes/port-display.php:1941
+#, php-format
+msgid "for %s"
+msgstr ""
+
+#: classes/port-display.php:1973
+#, php-format
+msgid ""
+"Expand this list (%1$d items / %2$d hidden - sorry, this count includes any "
+"deleted ports)"
+msgstr ""
+
+#: classes/port-display.php:2009
+msgid "Deleted ports which required this port:"
+msgstr ""
+
+#: classes/port-display.php:2011
+#, php-format
+msgid "Expand this list of %d deleted port"
+msgid_plural "Expand this list of %d deleted ports"
+msgstr[0] ""
+msgstr[1] ""
+
+#: classes/port-display.php:2022
+msgid "Collapse this list of deleted ports."
+msgstr ""
+
+#: classes/port-display.php:2034
+msgid "There are no ports dependent upon this port"
+msgstr ""
+
+#: classes/port-display.php:2036
+msgid "This port is required by:"
+msgstr ""
+
+#: classes/port-display.php:2040
+msgid "NOTE: dependencies for deleted ports are notoriously suspect"
+msgstr ""
+
+#: classes/port-display.php:2044
+msgid ""
+"deleted ports are only shown under the <em>This port is required by</em> "
+"section.  It was harder to do for the <em>Required</em> section.  Perhaps "
+"later..."
+msgstr ""
+
+#: classes/port-display.php:2053
+msgid "Manual pages:"
+msgstr ""
+
+#: classes/port-display.php:2109
+msgid "FreshPorts has no man page information for this port."
+msgstr ""
+
+#: classes/port-display.php:2121 classes/port-display.php:2144
+#, php-format
+msgid "as obtained via: %s"
+msgstr ""
+
+#: classes/port-display.php:2145
+msgid "There is no configure plist information for this port."
+msgstr ""
+
+#: classes/port-display.php:2157
+msgid "Package flavors"
+msgstr ""
+
+#: classes/port-display.php:2157
+msgid "flavor"
+msgstr ""
+
+#: classes/port-display.php:2157 www/vuxml.php:158
+msgid "package"
+msgstr ""
+
+#: classes/port-display.php:2169
+msgid "Flavors:"
+msgstr ""
+
+#: classes/port-display.php:2169
+msgid "there is no flavor information for this port."
+msgstr ""
+
+#: classes/searches.php:38
+msgid "Search ports"
+msgstr ""
+
+#: classes/searches.php:39
+msgid "go"
+msgstr ""
+
+#: classes/searches.php:41
+msgid "Advanced Searching options"
+msgstr ""
+
+#: classes/searches.php:41 www/vuxml.php:209
+msgid "more..."
+msgstr ""
+
+#: classes/vuxml.php:86
+msgid "Discovery"
+msgstr ""
+
+#: classes/vuxml.php:87
+msgid "Entry"
+msgstr ""
+
+#: classes/vuxml.php:88
+msgid "Modified"
+msgstr ""
+
+#: classes/vuxml.php:93
+msgid "no package data found - did an error occur?"
+msgstr ""
+
+#: classes/watch_list.php:81
+msgid ""
+"Sorry, I was unable to create you a watch list.  Please try again, and if "
+"failure persists, please contact the webmaster."
+msgstr ""
+
+#: classes/watch_list.php:86
+#, php-format
+msgid ""
+"You already have %1$d watch lists.  If you want more than %2$d watch lists, "
+"please contact the postmaster."
+msgstr ""
+
+#: classes/watch_list.php:90
+msgid "I couldn't find your watch list details... sorry"
+msgstr ""
+
+#: include/fontsize.php:61
+msgid "Smallest"
+msgstr ""
+
+#: include/fontsize.php:62
+msgid "Small"
+msgstr ""
+
+#: include/fontsize.php:63
+msgid "Normal"
+msgstr ""
+
+#: include/fontsize.php:64
+msgid "Large"
+msgstr ""
+
+#: include/fontsize.php:65
+msgid "Larger"
+msgstr ""
+
+#: include/fontsize.php:66
+msgid "Largest"
+msgstr ""
+
+#: include/fontsize.php:72
+msgid "Text size"
+msgstr ""
+
+#: include/fontsize.php:79 include/i18n.php:277
+msgid "Change"
+msgstr ""
+
+#: include/freshports.php:38
+msgid "Click to add this to your default watch list[s]"
+msgstr ""
+
+#: include/freshports.php:59
+msgid "search for ports that depend on this port"
+msgstr ""
+
+#: include/freshports.php:119 include/freshports.php:145
+#: include/freshports.php:171
+#, php-format
+msgid "commit hash: %s"
+msgstr ""
+
+#: include/freshports.php:301
+#, php-format
+msgid "Revision:%s"
+msgstr ""
+
+#: include/freshports.php:310
+msgid "search for ports maintained by this maintainer"
+msgstr ""
+
+#: include/freshports.php:315
+msgid "search for other commits by this committer"
+msgstr ""
+
+#: include/freshports.php:529
+msgid "Homepage"
+msgstr ""
+
+#: include/freshports.php:534 www/sanity_test_failures.php:101
+msgid "Sanity Test Failure"
+msgstr ""
+
+#: include/freshports.php:539
+msgid "Ascending Order"
+msgstr ""
+
+#: include/freshports.php:544
+msgid "Descending Order"
+msgstr ""
+
+#: include/freshports.php:549 www/package.php:53 www/search.php:343
+#: www/search.php:1206
+msgid "Search"
+msgstr ""
+
+#: include/freshports.php:554
+msgid "Find issues related to this port"
+msgstr ""
+
+#: include/freshports.php:559
+msgid "Report an issue related to this port"
+msgstr ""
+
+#: include/freshports.php:565
+msgid "on this many watch lists"
+msgstr ""
+
+#: include/freshports.php:573
+msgid "files touched by this commit"
+msgstr ""
+
+#: include/freshports.php:577
+msgid "Refresh"
+msgstr ""
+
+#: include/freshports.php:577
+msgid ""
+"Refresh - this port is being refreshed, or make failed to run error-free."
+msgstr ""
+
+#: include/freshports.php:585
+msgid "Deleted"
+msgstr ""
+
+#: include/freshports.php:627
+msgid "Deprecated"
+msgstr ""
+
+#: include/freshports.php:638
+msgid "Expired"
+msgstr ""
+
+#: include/freshports.php:649
+msgid "Expiration Date"
+msgstr ""
+
+#: include/freshports.php:671
+msgid "Is Interactive"
+msgstr ""
+
+#: include/freshports.php:682
+msgid "NO CDROM"
+msgstr ""
+
+#: include/freshports.php:704
+msgid "new!"
+msgstr ""
+
+#: include/freshports.php:708
+msgid "Original commit"
+msgstr ""
+
+#: include/freshports.php:708
+msgid "Original commit message"
+msgstr ""
+
+#: include/freshports.php:712
+msgid "Commit details"
+msgstr ""
+
+#: include/freshports.php:712
+msgid "FreshPorts commit message"
+msgstr ""
+
+#: include/freshports.php:720
+msgid "Click to remove this from your default watch list[s]"
+msgstr ""
+
+#: include/freshports.php:732
+msgid "Encoding Errors (not all of the commit message was ASCII)"
+msgstr ""
+
+#: include/freshports.php:740
+msgid "View this port on Repology."
+msgstr ""
+
+#: include/freshports.php:744
+msgid "This port version is marked as vulnerable."
+msgstr ""
+
+#: include/freshports.php:748
+msgid "An older version of this port was marked as vulnerable."
+msgstr ""
+
+#: include/freshports.php:752
+msgid "View revision"
+msgstr ""
+
+#: include/freshports.php:752
+msgid "view revision"
+msgstr ""
+
+#: include/freshports.php:756
+msgid "Annotate / Blame"
+msgstr ""
+
+#: include/freshports.php:760
+msgid "View diff"
+msgstr ""
+
+#: include/freshports.php:760
+msgid "view diff"
+msgstr ""
+
+#: include/freshports.php:817
+#, php-format
+msgid "on %d watch list"
+msgid_plural "on %d watch lists"
+msgstr[0] ""
+msgstr[1] ""
+
+#: include/freshports.php:841
+msgid "Commit Flagged"
+msgstr ""
+
+#: include/freshports.php:846
+msgid "Commit Not Flagged"
+msgstr ""
+
+#: include/freshports.php:915
+msgid "View all ports for this commit"
+msgstr ""
+
+#: include/freshports.php:916
+#, php-format
+msgid ""
+"(Only the first %1$d of %2$d items in this commit are shown above. %3$s)"
+msgstr ""
+
+#: include/freshports.php:922
+msgid "View all of this commit message"
+msgstr ""
+
+#: include/freshports.php:923
+#, php-format
+msgid "(Only the first %1$d lines of the commit message are shown above %2$s)"
+msgstr ""
+
+#: include/freshports.php:961 include/freshports.php:1017
+msgid "committed by this person"
+msgstr ""
+
+#: include/freshports.php:1000
+msgid "authored by this person"
+msgstr ""
+
+#: include/freshports.php:1092
+#, php-format
+msgid "The git branch used by this host is %s"
+msgstr ""
+
+#: include/freshports.php:1093
+#, php-format
+msgid "The database is %s"
+msgstr ""
+
+#: include/freshports.php:1094
+#, php-format
+msgid "The db server is %s"
+msgstr ""
+
+#: include/freshports.php:1110
+msgid "As an Amazon Associate I earn from qualifying purchases."
+msgstr ""
+
+#: include/freshports.php:1110
+#, php-format
+msgid "Want a good read? Try %s"
+msgstr ""
+
+#: include/freshports.php:1111
+#, php-format
+msgid "Want a good monitor light? See my <a href=\"%s\">photos</a>"
+msgstr ""
+
+#: include/freshports.php:1112
+msgid "All times are UTC"
+msgstr ""
+
+#: include/freshports.php:1117
+msgid "I remember"
+msgstr ""
+
+#: include/freshports.php:1122 include/freshports.php:2294
+msgid "Blog"
+msgstr ""
+
+#: include/freshports.php:1122
+msgid "Follow us"
+msgstr ""
+
+#: include/freshports.php:1122
+msgid "Status page"
+msgstr ""
+
+#: include/freshports.php:1143 include/freshports.php:1144
+msgid "Menu"
+msgstr ""
+
+#: include/freshports.php:1144
+msgid "Close"
+msgstr ""
+
+#: include/freshports.php:1144
+msgid "Close the menu"
+msgstr ""
+
+#: include/freshports.php:1144
+msgid "Open the menu"
+msgstr ""
+
+#: include/freshports.php:1503
+#, php-format
+msgid "port deleted on %s"
+msgstr ""
+
+#: include/freshports.php:1506
+#, php-format
+msgid "resurrected on %s"
+msgstr ""
+
+#: include/freshports.php:1512
+#, php-format
+msgid "port moved to %1$s on %2$s"
+msgstr ""
+
+#: include/freshports.php:1514
+#, php-format
+msgid "port moved here from %1$s on %2$s"
+msgstr ""
+
+#: include/freshports.php:1520
+msgid "REASON:"
+msgstr ""
+
+#: include/freshports.php:1539
+msgid "All rights reserved."
+msgstr ""
+
+#: include/freshports.php:1539
+msgid "Copyright"
+msgstr ""
+
+#: include/freshports.php:1539
+msgid "This material is copyrighted"
+msgstr ""
+
+#: include/freshports.php:1555
+msgid "Notes from UPDATING"
+msgstr ""
+
+#: include/freshports.php:1557
+#, php-format
+msgid "These upgrade notes are taken from %s"
+msgstr ""
+
+#: include/freshports.php:1600
+msgid ""
+"Commit History - (may be incomplete: for full details, see links to "
+"repositories near top of page)"
+msgstr ""
+
+#: include/freshports.php:1605
+#, php-format
+msgid ""
+"This is a slave port.  You may also want to view the commits to the master "
+"port: %s"
+msgstr ""
+
+#: include/freshports.php:1609
+msgid "Commit"
+msgstr ""
+
+#: include/freshports.php:1609
+msgid "Credits"
+msgstr ""
+
+#: include/freshports.php:1609
+msgid "Log message"
+msgstr ""
+
+#: include/freshports.php:1654
+#, php-format
+msgid ""
+"<b>NOTE</b>: This slave port may no longer be vulnerable to issues shown "
+"below because the <a href=\"%s\">master port</a> has been updated."
+msgstr ""
+
+#: include/freshports.php:1694 include/freshports.php:1695
+msgid "First Page"
+msgstr ""
+
+#: include/freshports.php:1696 include/freshports.php:1697
+msgid "Last Page"
+msgstr ""
+
+#: include/freshports.php:1721
+#, php-format
+msgid "Number of commits found: %d"
+msgstr ""
+
+#: include/freshports.php:1730 www/search.php:1317 www/search.php:1334
+#, php-format
+msgid "(showing only %d on this page)"
+msgstr ""
+
+#: include/freshports.php:2008
+msgid "Link to this section"
+msgstr ""
+
+#. TRANSLATORS: keep the line breaks short, this is a plain text email
+#: include/freshports.php:2073
+#, php-format
+msgid ""
+"Someone, perhaps you, supplied your email address as their\n"
+"FreshPorts login. If that wasn't you, and this message becomes\n"
+"a nuisance, please forward this message to %s\n"
+"and we will take care of it for you."
+msgstr ""
+
+#: include/freshports.php:2078
+#, php-format
+msgid "Your token is: %s"
+msgstr ""
+
+#: include/freshports.php:2080
+msgid "Please point your browser at"
+msgstr ""
+
+#: include/freshports.php:2082
+#, php-format
+msgid "The request came from %s"
+msgstr ""
+
+#: include/freshports.php:2099
+msgid "FreshPorts - user registration"
+msgstr ""
+
+#: include/freshports.php:2184
+#, php-format
+msgid "Valid %1$s, %2$s, and %3$s."
+msgstr ""
+
+#: include/freshports.php:2185
+msgid "We like to keep our HTML valid"
+msgstr ""
+
+#: include/freshports.php:2186
+msgid "We like to have valid CSS"
+msgstr ""
+
+#: include/freshports.php:2187
+msgid "Valid RSS is good too"
+msgstr ""
+
+#: include/freshports.php:2234 include/login.php:15 www/login.php:148
+#: www/login.php:231
+msgid "Login"
+msgstr ""
+
+#: include/freshports.php:2247
+#, php-format
+msgid "Logged in as %s"
+msgstr ""
+
+#: include/freshports.php:2251
+msgid "your email is <a href=\"/bouncing.php\">bouncing</a>"
+msgstr ""
+
+#: include/freshports.php:2254
+msgid "Your Account"
+msgstr ""
+
+#: include/freshports.php:2254
+msgid "Your account"
+msgstr ""
+
+#: include/freshports.php:2257
+msgid "Committer Opt-in"
+msgstr ""
+
+#: include/freshports.php:2257
+msgid "Committers can receive reports of Sanity Test Failures"
+msgstr ""
+
+#: include/freshports.php:2261
+msgid "Logout"
+msgstr ""
+
+#: include/freshports.php:2261
+msgid "Logout of the website"
+msgstr ""
+
+#: include/freshports.php:2262
+msgid "List of commits you have flagged"
+msgstr ""
+
+#: include/freshports.php:2262
+msgid "My Flagged Commits"
+msgstr ""
+
+#: include/freshports.php:2264
+msgid "Login to the website"
+msgstr ""
+
+#: include/freshports.php:2264
+msgid "User Login"
+msgstr ""
+
+#: include/freshports.php:2265
+msgid "Create account"
+msgstr ""
+
+#: include/freshports.php:2265
+msgid "Create an account"
+msgstr ""
+
+#: include/freshports.php:2283
+msgid "This site"
+msgstr ""
+
+#: include/freshports.php:2287
+msgid "A bit of background on FreshPorts"
+msgstr ""
+
+#: include/freshports.php:2287
+msgid "What is FreshPorts?"
+msgstr ""
+
+#: include/freshports.php:2288 www/authors.php:28
+msgid "About the authors"
+msgstr ""
+
+#: include/freshports.php:2288
+msgid "Who wrote this stuff?"
+msgstr ""
+
+#: include/freshports.php:2289
+msgid "Issues"
+msgstr ""
+
+#: include/freshports.php:2289
+msgid "Report a website problem"
+msgstr ""
+
+#: include/freshports.php:2290 www/faq.php:34
+msgid "FAQ"
+msgstr ""
+
+#: include/freshports.php:2290 www/faq.php:15
+msgid "Frequently Asked Questions"
+msgstr ""
+
+#: include/freshports.php:2291 www/how-big-is-it.php:15
+msgid "How big is it?"
+msgstr ""
+
+#: include/freshports.php:2291
+msgid "How many pages are in this website?"
+msgstr ""
+
+#: include/freshports.php:2292
+msgid "Are you a security researcher? Please read this."
+msgstr ""
+
+#: include/freshports.php:2292 www/security-policy.php:15
+msgid "Security Policy"
+msgstr ""
+
+#: include/freshports.php:2293
+msgid "Our privacy statement"
+msgstr ""
+
+#: include/freshports.php:2293
+msgid "Privacy"
+msgstr ""
+
+#: include/freshports.php:2294
+msgid "All the latest FreshPorts news"
+msgstr ""
+
+#: include/freshports.php:2295 www/contact.php:15 www/contact.php:29
+msgid "Contact"
+msgstr ""
+
+#: include/freshports.php:2295
+msgid "Contact details"
+msgstr ""
+
+#: include/freshports.php:2305
+msgid "Latest Vulnerabilities"
+msgstr ""
+
+#: include/freshports.php:2311
+msgid "All vulnerabilities"
+msgstr ""
+
+#: include/freshports.php:2311
+msgid "modified, not new"
+msgstr ""
+
+#: include/freshports.php:2312
+msgid "Last processed:"
+msgstr ""
+
+#: include/freshports.php:2324 include/freshports.php:2354
+msgid "Ports"
+msgstr ""
+
+#: include/freshports.php:2329
+msgid "FreshPorts Home page"
+msgstr ""
+
+#: include/freshports.php:2329
+msgid "Home"
+msgstr ""
+
+#: include/freshports.php:2330 include/freshports.php:2352
+#: www/categories.php:22
+msgid "Categories"
+msgstr ""
+
+#: include/freshports.php:2330
+msgid "List of all Port categories"
+msgstr ""
+
+#: include/freshports.php:2331
+msgid "All deleted ports"
+msgstr ""
+
+#: include/freshports.php:2331 www/ports-deleted.php:30
+msgid "Deleted ports"
+msgstr ""
+
+#: include/freshports.php:2332 www/sanity_test_failures.php:30
+#: www/sanity_test_failures.php:99
+msgid "Sanity Test Failures"
+msgstr ""
+
+#: include/freshports.php:2332
+msgid "Things that didn't go quite right..."
+msgstr ""
+
+#: include/freshports.php:2333 www/backend/newsfeeds.php:21
+msgid "Newsfeeds"
+msgstr ""
+
+#: include/freshports.php:2333
+msgid "Newsfeeds for just about everything"
+msgstr ""
+
+#: include/freshports.php:2346 www/watch-list-maintenance.php:318
+#: www/watch-list-maintenance.php:390
+msgid "Watch Lists"
+msgstr ""
+
+#: include/freshports.php:2351 www/pkg_upload.php:92 www/pkg_upload.php:114
+#: www/pkg_upload.php:136
+msgid "Upload"
+msgstr ""
+
+#: include/freshports.php:2351
+msgid ""
+"Upload a file containing a list of ports you want to add to your watch list"
+msgstr ""
+
+#: include/freshports.php:2352
+msgid "Search through categories for ports to add to your watch list"
+msgstr ""
+
+#: include/freshports.php:2353
+msgid "Maintain"
+msgstr ""
+
+#: include/freshports.php:2353
+msgid "Maintain your watch list[s]"
+msgstr ""
+
+#: include/freshports.php:2354
+msgid "Your list of watched ports"
+msgstr ""
+
+#: include/freshports.php:2355
+msgid "A list of news feeds for your watched lists"
+msgstr ""
+
+#: include/freshports.php:2355
+msgid "Personal Newsfeeds"
+msgstr ""
+
+#: include/freshports.php:2356
+msgid "Maintain your list of subscriptions"
+msgstr ""
+
+#: include/freshports.php:2356
+msgid "Report Subscriptions"
+msgstr ""
+
+#: include/freshports.php:2357
+msgid "ABI Package Subscriptions"
+msgstr ""
+
+#: include/freshports.php:2357
+msgid "Maintain your ABI package subscriptions"
+msgstr ""
+
+#: include/freshports.php:2382
+msgid "Statistics"
+msgstr ""
+
+#: include/freshports.php:2387 include/freshports.php:2388
+msgid "Everyone loves statistics!"
+msgstr ""
+
+#: include/freshports.php:2387
+msgid "Graphs"
+msgstr ""
+
+#: include/freshports.php:2388
+msgid "NEW Graphs (Javascript)"
+msgstr ""
+
+#: include/freshports.php:2480
+msgid "People watching this port, also watch:"
+msgstr ""
+
+#: include/freshports_page_expiration_ports.php:62
+#, php-format
+msgid ""
+"This page is sorted by expiration date.  You can sort by %1$s, or by %2$s."
+msgstr ""
+
+#: include/freshports_page_expiration_ports.php:63
+#: include/freshports_page_expiration_ports.php:69
+#: include/freshports_page_list_ports.php:373
+#: include/freshports_page_list_ports.php:379 www/watch.php:147
+#: www/watch.php:161
+msgid "category"
+msgstr ""
+
+#: include/freshports_page_expiration_ports.php:64
+#: include/freshports_page_expiration_ports.php:76
+#: include/freshports_page_list_ports.php:374
+#: include/freshports_page_list_ports.php:386 www/ports-conflicts.php:42
+#: www/vuxml.php:123 www/watch.php:154 www/watch.php:161
+msgid "port"
+msgstr ""
+
+#: include/freshports_page_expiration_ports.php:68
+#: include/freshports_page_list_ports.php:378
+#, php-format
+msgid "This page is sorted by port.  You can sort by %1$s, or by %2$s."
+msgstr ""
+
+#: include/freshports_page_expiration_ports.php:70
+#: include/freshports_page_expiration_ports.php:75
+msgid "expiration date"
+msgstr ""
+
+#: include/freshports_page_expiration_ports.php:74
+#: include/freshports_page_list_ports.php:384
+#, php-format
+msgid "This page is sorted by category.  You can sort by %1$s, or by %2$s."
+msgstr ""
+
+#: include/freshports_page_list_ports.php:372
+#, php-format
+msgid "This page is sorted by date added.  You can sort by %1$s, or by %2$s."
+msgstr ""
+
+#: include/freshports_page_list_ports.php:380
+#: include/freshports_page_list_ports.php:385
+msgid "date added"
+msgstr ""
+
+#: include/i18n.php:270
+msgid "Language"
+msgstr ""
+
+#: include/list-of-ports.php:25
+#, php-format
+msgid "%d port found."
+msgid_plural "%d ports found."
+msgstr[0] ""
+msgstr[1] ""
+
+#: include/list-of-ports.php:27
+#, php-format
+msgid "(showing only %d port on this page)"
+msgid_plural "(showing only %d ports on this page)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: include/login.php:11 include/new-user.php:29 www/forgotten-password.php:260
+msgid "User ID:"
+msgstr ""
+
+#: include/login.php:13 include/password-reset-via-token.php:17
+msgid "Password:"
+msgstr ""
+
+#: include/login.php:18 www/forgotten-password.php:236 www/login.php:245
+msgid "Forgotten your password?"
+msgstr ""
+
+#: include/new-user.php:23
+msgid "Current password:"
+msgstr ""
+
+#: include/new-user.php:32
+msgid "New password:"
+msgstr ""
+
+#: include/new-user.php:34
+msgid "New password again:"
+msgstr ""
+
+#: include/new-user.php:38
+msgid "Number of Days to show in side-bar:"
+msgstr ""
+
+#: include/new-user.php:56
+msgid "Set focus to search box:"
+msgstr ""
+
+#: include/new-user.php:60
+msgid "Number of results to display per page (e.g commits per page):"
+msgstr ""
+
+#: include/new-user.php:69
+msgid "Email Address (required):"
+msgstr ""
+
+#: include/new-user.php:85
+msgid "CAPTCHA:"
+msgstr ""
+
+#: include/new-user.php:86
+msgid "(antispam code, type the three black symbols)"
+msgstr ""
+
+#: include/new-user.php:96
+msgid "create account"
+msgstr ""
+
+#: include/new-user.php:96
+msgid "update account"
+msgstr ""
+
+#: include/new-user.php:97 www/filter-setup.php:282 www/port-watch.php:253
+msgid "reset form"
+msgstr ""
+
+#: include/new-user.php:109
+msgid ""
+"For your reporting needs, please visit <a href=\"/report-"
+"subscriptions.php\">Report Subscriptions</a>."
+msgstr ""
+
+#: include/new-user.php:110
+msgid "Delete my account"
+msgstr ""
+
+#: include/password-reset-via-token.php:19
+msgid "Confirm Password:"
+msgstr ""
+
+#: include/password-reset-via-token.php:22
+msgid "Set password"
+msgstr ""
+
+#: include/spam-filter-information.php:9
+msgid "SPAM FILTERS:"
+msgstr ""
+
+#: include/spam-filter-information.php:11
+msgid ""
+"If you are using spam filters which require confirmation of incoming email, "
+"these reports will be coming from the following domains:"
+msgstr ""
+
+#: include/spam-filter-information.php:15
+msgid "Domain"
+msgstr ""
+
+#: include/spam-filter-information.php:15
+msgid "Reason"
+msgstr ""
+
+#: include/spam-filter-information.php:16
+msgid "All reports originate from that domain."
+msgstr ""
+
+#: include/spam-filter-information.php:17
+msgid "The websites are hosted on a box in that domain."
+msgstr ""
+
+#: include/spam-filter-information.php:18
+msgid "If I need to write to you, it will come from that domain."
+msgstr ""
+
+#: include/spam-filter-information.php:22
+msgid ""
+"Ensure that you update your spam filters to allow such incoming messages.  "
+"If your spam tools require that a confirmation be sent, you'll have to "
+"modify things as no confirmations will be sent for FreshPorts messages."
+msgstr ""
+
+#: include/watch-lists.php:21 www/report-package-notifications.php:39
+msgid "Select a watch list"
+msgstr ""
+
+#: include/watch-lists.php:66 www/report-package-notifications.php:67
+msgid ""
+"You have no watch lists.  You must <a href=\"watch-list-"
+"maintenance.php\">create one</a>."
+msgstr ""
+
+#: include/watch-lists.php:73
+msgid "Display the selected watch list"
+msgstr ""
+
+#: include/watch-lists.php:73
+msgid "Go"
+msgstr ""
+
+#: www/--/forums-gone.php:15 www/--/forums-gone.php:26
+msgid "The forums are gone"
+msgstr ""
+
+#: www/--/forums-gone.php:31
+msgid ""
+"The forums have been removed <a href=\"https://github.com/FreshPorts/"
+"freshports/issues/134\">via issue #134</a>."
+msgstr ""
+
+#: www/--/forums-gone.php:35
+msgid ""
+"The software they used was outdated. The usage was low. Better tools exist, "
+"such as:"
+msgstr ""
+
+#: www/--/forums-gone.php:38
+msgid "GitHub issues"
+msgstr ""
+
+#: www/--/forums-gone.php:39
+msgid "mailing lists"
+msgstr ""
+
+#: www/--/forums-gone.php:40
+msgid "FreeBSD forums"
+msgstr ""
+
+#: www/--/index.php:101 www/--/new-url-parsing.php:115
+msgid "We are in maintenance mode."
+msgstr ""
+
+#: www/--/index.php:103 www/--/new-url-parsing.php:117
+msgid "We are not in maintenance mode."
+msgstr ""
+
+#: www/--/index.php:109 www/--/new-url-parsing.php:123
+msgid "Logins are enabled."
+msgstr ""
+
+#: www/--/index.php:111 www/--/new-url-parsing.php:125
+msgid "Nobody is allowed to login right now."
+msgstr ""
+
+#: www/--/index.php:123 www/--/new-url-parsing.php:137
+#, php-format
+msgid "This status was last updated at %s"
+msgstr ""
+
+#: www/--/index.php:124 www/--/new-url-parsing.php:138
+msgid "It should never be more than 4 minutes old."
+msgstr ""
+
+#: www/--/index.php:125 www/--/new-url-parsing.php:139
+msgid "This page automatically reloads every 3 minutes."
+msgstr ""
+
+#: www/--/index.php:126 www/--/new-url-parsing.php:140
+msgid "The contents are generated every 3 minutes by the backend server."
+msgstr ""
+
+#: www/about.php:15 www/about.php:28
+msgid "About this site"
+msgstr ""
+
+#: www/about.php:33
+msgid "We have a few notes about this website."
+msgstr ""
+
+#: www/about.php:43 www/faq.php:71 www/faq.php:121
+msgid "What is a port?"
+msgstr ""
+
+#. TRANSLATORS: %1$s is a link whose text is 'FreeBSD Ports description'; %2$s is the command name 'make'. The <em> part quotes the FreeBSD website.
+#: www/about.php:51
+#, php-format
+msgid ""
+"A port is the term used to describe a collection of files which makes it "
+"extremely easy to install an application.  As it says in the %1$s: "
+"<em>Installing an application is as simple as downloading the port, "
+"unpacking it and typing %2$s in the port directory</em>. If you want an "
+"application, the port is the Way To Go(TM)"
+msgstr ""
+
+#: www/about.php:51
+msgid "FreeBSD Ports description"
+msgstr ""
+
+#: www/about.php:53
+msgid ""
+"So off you go to the ports tree to install your favourite port.  It's quite "
+"easy. It's simple. And you love that new application.  And you want to know "
+"when the port is updated.  That's where we come in."
+msgstr ""
+
+#: www/about.php:55
+#, php-format
+msgid "For more information about the Ports tree, see %s."
+msgstr ""
+
+#: www/about.php:60
+#, php-format
+msgid "What is %s"
+msgstr ""
+
+#: www/about.php:66
+#, php-format
+msgid ""
+"%1$s lists the changes made to the ports tree. If you wish, %1$s can email "
+"you when your favourite port has been updated."
+msgstr ""
+
+#: www/about.php:69
+#, php-format
+msgid ""
+"%1$s is not the place to report errors or request changes.  You should do "
+"that on the %2$s.  We do not maintain ports.  We do not create ports.  We do "
+"not fix ports.  We just tell you what others have been doing to the Ports "
+"tree."
+msgstr ""
+
+#: www/about.php:69
+msgid "FreeBSD Ports mailing list"
+msgstr ""
+
+#: www/about.php:75
+msgid "OK, whose bright idea was this?"
+msgstr ""
+
+#: www/about.php:80
+msgid ""
+"This site was created by Dan Langille.  His other web feats include <a "
+"href=\"https://www.freebsddiary.org/\">The FreeBSD Diary</a>, <a "
+"href=\"https://www.racingsystem.com\">The Racing System</a>, <a "
+"href=\"https://www.bsdcan.org/\">BSDCan</a>, and an ability to avoid reading "
+"the inane comments on <a href=\"https://slashdot.org\">slashdot</a>. But Dan "
+"didn't create the site all by himself.  Have a look at <a "
+"href=\"authors.php\">About the Authors</a> for details of who else helped."
+msgstr ""
+
+#: www/authors.php:15
+msgid "The Authors"
+msgstr ""
+
+#: www/authors.php:35
+msgid ""
+"<a href=\"https://www.langille.org/\" rel=\"noopener noreferrer\">Dan "
+"Langille</a> thought up the idea, found the data sources, bugged people to "
+"write scripts, and did the html and database work. But he certainly didn't "
+"do it alone."
+msgstr ""
+
+#: www/authors.php:38
+msgid ""
+"The details of day-to-day changes, bug fixes, challenges, and new features "
+"are documented on the <a href=\"https://news.freshports.org/\" "
+"rel=\"noopener noreferrer\">news blog</a>."
+msgstr ""
+
+#: www/authors.php:42
+msgid ""
+"I apologize as I have not been keeping this list up to date and therefore I "
+"fear I have missed people but I don't know who. Please let me know if you "
+"should be here."
+msgstr ""
+
+#: www/authors.php:45
+msgid ""
+"Adam Herzog wrote the XML DTD and the perl script which converts the raw "
+"email to XML."
+msgstr ""
+
+#: www/authors.php:47
+msgid ""
+"Marcin Gryszkalis did the underlying work for the <a href=\"/"
+"graphs.php\">graphs</a>. He also helped out with the htmlifying of the log "
+"message (so you can click on PR and email and URLs)."
+msgstr ""
+
+#: www/authors.php:49
+msgid ""
+"Jonathan Sage helped to reclaim some missing ports by writing some perl code "
+"to pull things out of CVS."
+msgstr ""
+
+#: www/authors.php:51
+msgid ""
+"Dan Peterson showed me the wonders of <a href=\"https://cr.yp.to/"
+"daemontools.html\" rel=\"noopener noreferrer\">Daemon Tools</a> which "
+"handles the processing of incoming messages and refreshes the main web page."
+msgstr ""
+
+#: www/authors.php:53
+msgid ""
+"Josef Karthauser for helping me through the cvs-all log format and for "
+"greatly simplifying the job of FP2."
+msgstr ""
+
+#: www/authors.php:55
+msgid ""
+"Titus Manea again always has great ideas. His knowledge base of *nix far "
+"exceeds my own."
+msgstr ""
+
+#: www/authors.php:57
+msgid ""
+"Ade Lovett for grilling me about my need for daemons and leading me to "
+"discover Daemon Tools via Dan P. And for his mega-commits which prompted me "
+"to show abbreviated commits."
+msgstr ""
+
+#: www/authors.php:62
+msgid "FreshPorts (original)"
+msgstr ""
+
+#: www/authors.php:66
+msgid "Olaf wrote the perl script for the log catcher."
+msgstr ""
+
+#: www/authors.php:68
+msgid "Titus Manea wrote the awk code for the log catcher and the log munger."
+msgstr ""
+
+#: www/authors.php:70
+msgid "Adriel helped me with perl syntax."
+msgstr ""
+
+#: www/authors.php:72
+msgid "Will Andrews talked over data sources with me."
+msgstr ""
+
+#: www/authors.php:74
+msgid ""
+"John Polstra and Satoshi Asami provided insight into cvs and ports as well "
+"as encouragement."
+msgstr ""
+
+#: www/authors.php:76
+msgid ""
+"Jeremy Shaffner hung around, criticized, and suggested security improvements."
+msgstr ""
+
+#: www/authors.php:78
+msgid "Brian Mitchell did some prototype coding for me."
+msgstr ""
+
+#: www/authors.php:80
+msgid "David Bushong did a FreshBSD site which is a freshmeat-look site."
+msgstr ""
+
+#: www/authors.php:82
+msgid ""
+"lzh on undernet #perl helped me with my perl knowledge. Some of his examples "
+"form the basis for some of the most important parts of the system. Aquitaine "
+"also showed me the PERL dbi->quote() function."
+msgstr ""
+
+#: www/authors.php:84
+msgid "John Beige did the logo you see at the top of the page."
+msgstr ""
+
+#: www/authors.php:86
+msgid ""
+"Wolfram Schneider's <a href=\"https://www.freebsd.org/cgi/ports.cgi\" "
+"rel=\"noopener noreferrer\">FreeBSD Ports Changes</a> page provided much of "
+"the basis for this site."
+msgstr ""
+
+#: www/authors.php:88
+msgid "Jay gave me the box on which FreshPorts runs. Thanks."
+msgstr ""
+
+#: www/authors.php:90
+#, php-format
+msgid ""
+"Will Andrews told me about %s. This eventually led to the sanity checks that "
+"annoy Ports committers and ensure users encounter fewer problems."
+msgstr ""
+
+#: www/authors.php:92
+msgid ""
+"And various people on undernet's #nz.general and #freebsd helped me with "
+"scripts and ideas. That's not to mention that channel on efnet which I won't "
+"name just so it stays a secret."
+msgstr ""
+
+#: www/backend/index.php:15 www/backend/index.php:31 www/backend/index.php:34
+msgid "FreshPorts News Feeds"
+msgstr ""
+
+#: www/backend/index.php:36
+msgid "Various RSS formats"
+msgstr ""
+
+#: www/backend/index.php:38
+msgid "See the next section for optional parameters for these URLs."
+msgstr ""
+
+#: www/backend/index.php:53
+msgid "Javascript"
+msgstr ""
+
+#: www/backend/index.php:57 www/backend/index.php:58 www/backend/index.php:59
+msgid "RSS Feed validator"
+msgstr ""
+
+#: www/backend/index.php:63
+msgid ""
+"The above feeds are created using <a href=\"https://github.com/flack/"
+"UniversalFeedCreator\">UniversalFeedCreator</a>."
+msgstr ""
+
+#: www/backend/index.php:66
+msgid "Optional parameters for the above formats"
+msgstr ""
+
+#: www/backend/index.php:68
+msgid "Each of those formats have optional parameters:"
+msgstr ""
+
+#: www/backend/index.php:70 www/backend/index.php:71
+#: www/backend/newsfeeds.php:45 www/backend/newsfeeds.php:46
+msgid "show only new ports (ignores <b>branch</b>)."
+msgstr ""
+
+#: www/backend/index.php:72 www/backend/newsfeeds.php:47
+msgid ""
+"show only vuln ports (branches should work, let me know if they do not)."
+msgstr ""
+
+#: www/backend/index.php:73 www/backend/newsfeeds.php:48
+msgid ""
+"show only commits on that branch. If not specified, defaults to <b>head</b>."
+msgstr ""
+
+#: www/backend/index.php:76 www/backend/newsfeeds.php:51
+msgid "Sample URLs include:"
+msgstr ""
+
+#: www/backend/index.php:93
+msgid "Other feeds"
+msgstr ""
+
+#: www/backend/index.php:95 www/backend/newsfeeds.php:68
+msgid ""
+"A Personal News feed for each of your watch lists. Look for the link under "
+"the <code>Watch Lists</code> box after you have logged in."
+msgstr ""
+
+#: www/backend/index.php:97 www/backend/newsfeeds.php:70
+msgid ""
+"The blog for this website, <a href=\"https://news.freshports.org/"
+"\">FreshPorts News</a>."
+msgstr ""
+
+#: www/backend/newsfeeds.php:25
+msgid "We have five newsfeeds:"
+msgstr ""
+
+#: www/backend/newsfeeds.php:36
+#, php-format
+msgid "An RSS feed : %s"
+msgstr ""
+
+#: www/backend/newsfeeds.php:37
+msgid "Take your pick of different formats:"
+msgstr ""
+
+#: www/backend/newsfeeds.php:43
+msgid "This RSS feed takes the following optional parameters:"
+msgstr ""
+
+#: www/backend/newsfeeds.php:66
+#, php-format
+msgid "An RSS feed that lists only new ports:  %s"
+msgstr ""
+
+#: www/backend/status.php:15
+msgid "Status"
+msgstr ""
+
+#: www/backend/status.php:31
+msgid "System status"
+msgstr ""
+
+#: www/backend/status.php:43
+msgid "The package imports"
+msgstr ""
+
+#: www/backend/status.php:45
+msgid "package set"
+msgstr ""
+
+#: www/backend/status.php:47 www/backend/status.php:71
+msgid "processed date"
+msgstr ""
+
+#: www/backend/status.php:70
+msgid "date repo was last built"
+msgstr ""
+
+#: www/backend/status.php:71
+msgid "when this information was imported into FreshPorts"
+msgstr ""
+
+#: www/backend/status.php:75
+msgid "The processed queue is cleared out daily."
+msgstr ""
+
+#: www/backend/status.php:77
+msgid "Last login count"
+msgstr ""
+
+#: www/backend/status.php:86
+msgid "Days"
+msgstr ""
+
+#: www/backend/status.php:86
+msgid "Users"
+msgstr ""
+
+#: www/backend/status.php:100
+msgid ""
+"The users column indicates the number of logged-in users who last accessed "
+"the system on that day."
+msgstr ""
+
+#: www/backend/watch-list.php:70
+msgid "You can use these formats:"
+msgstr ""
+
+#: www/backend/watch-list.php:73
+#, php-format
+msgid "%s (default)"
+msgstr ""
+
+#: www/backend/watch-list.php:112
+msgid "Watch List Feeds"
+msgstr ""
+
+#: www/backend/watch-list.php:118
+msgid "These are your news feeds"
+msgstr ""
+
+#: www/bouncing.php:39 www/customize.php:138
+#: www/password-reset-via-token.php:79
+msgid "Something went terribly wrong there."
+msgstr ""
+
+#: www/bouncing.php:42
+msgid "your email is bouncing"
+msgstr ""
+
+#: www/bouncing.php:55
+msgid "Bouncing?  What do you mean?"
+msgstr ""
+
+#: www/bouncing.php:59
+msgid ""
+"You are a registered user. You have indicated that we can send you email.  "
+"This will either be part of your watch list notifications or as an "
+"announcement.  You can view these settings on the customization page (see "
+"the link on the right hand side of the page)."
+msgstr ""
+
+#: www/bouncing.php:61
+msgid ""
+"The problem is that the email we are sending you is not getting to you.  It "
+"is bouncing back to us.  So we have stopped sending out messages to you.  If "
+"you wish to continue to receive such messages, you should update your email "
+"address on the customization page."
+msgstr ""
+
+#: www/bouncing.php:66
+msgid "How to fix the problem"
+msgstr ""
+
+#: www/bouncing.php:69
+msgid "There are two things which might have caused your email to bounce:"
+msgstr ""
+
+#: www/bouncing.php:71
+msgid "Your email address has changed."
+msgstr ""
+
+#: www/bouncing.php:72
+msgid "There was a problem with your email but it's been fixed."
+msgstr ""
+
+#: www/bouncing.php:75
+msgid ""
+"If your email address has changed, please update it in your <a "
+"href=\"customize.php\">account settings</a>."
+msgstr ""
+
+#: www/bouncing.php:77
+msgid ""
+"If there was a problem with your email, such as your server was down, you "
+"can tell FreshPorts that you want it to start using your email address again "
+"by pressing the button below."
+msgstr ""
+
+#: www/bouncing.php:82
+msgid "There was a problem, but it's fixed now"
+msgstr ""
+
+#: www/categories.php:64
+#, php-format
+msgid "%s - list of categories"
+msgstr ""
+
+#: www/categories.php:68
+#, php-format
+msgid ""
+"This page lists the categories and can be sorted by various criteria.  "
+"Virtual categories are indicated by %s."
+msgstr ""
+
+#: www/categories.php:72
+msgid ""
+"You can sort each column by clicking on the header.  e.g. click on "
+"<strong>Category</strong> to sort by category."
+msgstr ""
+
+#: www/categories.php:147 www/categories.php:149 www/search.php:1196
+msgid "Category"
+msgstr ""
+
+#: www/categories.php:159 www/categories.php:161
+msgid "Count"
+msgstr ""
+
+#: www/categories.php:165 www/categories.php:167 www/faq.php:374
+#: www/report-subscriptions.php:170 www/vuxml.php:84 www/vuxml.php:252
+msgid "Description"
+msgstr ""
+
+#: www/categories.php:171 www/categories.php:173 www/search.php:1197
+msgid "Last Update"
+msgstr ""
+
+#: www/categories.php:212 www/committer-opt-in.php:155
+#: www/report-subscriptions.php:251
+msgid "update"
+msgstr ""
+
+#: www/categories.php:229
+msgid ""
+"No categories statistics found.  I bet the refresh script is not running."
+msgstr ""
+
+#: www/categories.php:233
+msgid "port count:"
+msgstr ""
+
+#: www/categories.php:238
+#, php-format
+msgid "(%d real category)"
+msgid_plural "(%d real categories)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: www/categories.php:240
+msgid ""
+"Hmmm, I'm not so sure this port count is accurate. Dan Langille 27 April 2003"
+msgstr ""
+
+#: www/category-maintenance.php:16
+msgid "Category maintenance"
+msgstr ""
+
+#: www/category-maintenance.php:22 www/commit.php:288
+#, php-format
+msgid "I don't know that category: %s"
+msgstr ""
+
+#: www/category-maintenance.php:55
+msgid ""
+"This page allows you to maintain a category, if you have permission to do so."
+msgstr ""
+
+#: www/category-maintenance.php:103 www/watch-list.php:91 www/watch-list.php:98
+msgid "Update"
+msgstr ""
+
+#: www/category-maintenance.php:121
+msgid "NOTES:"
+msgstr ""
+
+#: www/category-maintenance.php:124
+msgid "Porters Handbook"
+msgstr ""
+
+#: www/category-maintenance.php:124
+#, php-format
+msgid "The official list of categories is in the %s."
+msgstr ""
+
+#: www/category-maintenance.php:125
+msgid "Primary categories are those which physically reside on disk."
+msgstr ""
+
+#: www/category-maintenance.php:126
+msgid "Only virtual categories need to have their description values set."
+msgstr ""
+
+#: www/category-maintenance.php:127
+msgid ""
+"FreshPorts will automatically obtain the description for physical categories "
+"from <code class=\"code\">ports/pkg/COMMENT</code>."
+msgstr ""
+
+#: www/category-maintenance.php:128
+msgid "See the above link for the description to use."
+msgstr ""
+
+#: www/category-maintenance.php:129
+msgid "All changes are logged."
+msgstr ""
+
+#: www/category-maintenance.php:136
+msgid ""
+"Well, I'm sorry to advise you that this page is intentionally left blank."
+msgstr ""
+
+#: www/commit.php:161
+#, php-format
+msgid "Commit found by commit id on branch %s"
+msgstr ""
+
+#: www/commit.php:163
+msgid "Commit found by commit id"
+msgstr ""
+
+#: www/commit.php:196
+msgid "We have multiple emails for that revision:"
+msgstr ""
+
+#: www/commit.php:264
+#, php-format
+msgid "Number of items [ports &amp; non-ports] in this commit: %d"
+msgstr ""
+
+#: www/commit.php:277
+msgid "show all files"
+msgstr ""
+
+#: www/commit.php:279
+msgid "hide all files"
+msgstr ""
+
+#: www/commit.php:299
+msgid "I don't know that port."
+msgstr ""
+
+#: www/commit.php:303
+msgid "That is not a port."
+msgstr ""
+
+#: www/commit.php:308
+#, php-format
+msgid "Showing files for just one port: %s"
+msgstr ""
+
+#: www/commit.php:360
+msgid "Database connection could not be established!"
+msgstr ""
+
+#: www/commit.php:363
+msgid "nothing supplied, nothing found!"
+msgstr ""
+
+#: www/committer-opt-in.php:19 www/committer-opt-in.php:82
+msgid "Committer opt-in"
+msgstr ""
+
+#: www/committer-opt-in.php:42
+msgid "please enter just your login, not your email address"
+msgstr ""
+
+#: www/committer-opt-in.php:90
+msgid ""
+"This page only works if you are logged in and using a @FreeBSD.org email "
+"address."
+msgstr ""
+
+#: www/committer-opt-in.php:95
+msgid ""
+"Mistakes happen.  And when they do, they are best corrected quickly.  To "
+"that end, FreshPorts provides an opt-in service for all FreeBSD committers.  "
+"If you subscribe to this service, FreshPorts will notify you of any problems "
+"it encounters when processing a port change which you committed.  In the "
+"past, such problems are related to syntax errors in the Makefile."
+msgstr ""
+
+#: www/committer-opt-in.php:99
+msgid ""
+"One committer referred to this service as an automated nagging mentor..."
+msgstr ""
+
+#: www/committer-opt-in.php:110
+msgid "Your opt-in status"
+msgstr ""
+
+#: www/committer-opt-in.php:134
+msgid "You are: subscribed"
+msgstr ""
+
+#: www/committer-opt-in.php:138
+msgid "You are: not subscribed"
+msgstr ""
+
+#: www/committer-opt-in.php:150
+msgid "your freefall login:"
+msgstr ""
+
+#: www/committer-opt-in.php:156
+msgid "unsubscribe"
+msgstr ""
+
+#: www/committer-opt-in.php:160
+msgid "subscribe"
+msgstr ""
+
+#: www/committer-opt-in.php:168
+msgid "Please do not include @FreeBSD.org in your login name."
+msgstr ""
+
+#: www/confirmation.php:14 www/confirmation.php:42
+msgid "Account confirmation"
+msgstr ""
+
+#: www/confirmation.php:51
+msgid "I don't know anything about that token."
+msgstr ""
+
+#: www/confirmation.php:55
+msgid ""
+"Your account has been enabled.  Please proceed to the <a "
+"href=\"login.php\">login page</a>"
+msgstr ""
+
+#: www/confirmation.php:59
+msgid ""
+"Well.  This just isn't supposed to happen.  For some strange and very rare "
+"reason, there is more than one person with that token."
+msgstr ""
+
+#: www/confirmation.php:60
+#, php-format
+msgid "Please contact %s for help."
+msgstr ""
+
+#: www/confirmation.php:64
+msgid "An error has occurred.  Sorry."
+msgstr ""
+
+#: www/confirmation.php:68
+msgid "Hi there.  What are you doing here?"
+msgstr ""
+
+#: www/contact.php:34
+msgid ""
+"This is a pretty big website.  Roughly 600,000 pages as of Oct 2007. And 1.8 "
+"million as of June 2020."
+msgstr ""
+
+#: www/contact.php:37
+msgid ""
+"If you need help with a particular port, please go through the FreeBSD "
+"mailing lists."
+msgstr ""
+
+#: www/contact.php:40
+msgid ""
+"If you see a problem with the website (incorrect information, errors, etc), "
+"please let us know.  The best place for that is via a <a href=\"https://"
+"github.com/FreshPorts/freshports/issues\" rel=\"noopener noreferrer\">GitHub "
+"Issue</a>."
+msgstr ""
+
+#: www/contact.php:43
+#, php-format
+msgid ""
+"If your needs do not fall into the above categories, you can try email: %s."
+msgstr ""
+
+#: www/customize.php:73 www/new-user.php:66
+msgid "That email address doesn't look right to me"
+msgstr ""
+
+#: www/customize.php:79
+msgid ""
+"If changing your password, remember to supply your existing password first."
+msgstr ""
+
+#: www/customize.php:84
+msgid "The new password was not confirmed.  It must be entered twice."
+msgstr ""
+
+#: www/customize.php:93
+msgid "That is NOT your current password."
+msgstr ""
+
+#: www/customize.php:153
+msgid "Customize User Account"
+msgstr ""
+
+#: www/customize.php:164 www/new-user.php:190
+#: www/password-reset-via-token.php:105
+msgid "Access Code Failed!"
+msgstr ""
+
+#: www/customize.php:167 www/new-user.php:194
+#: www/password-reset-via-token.php:113
+msgid ""
+"Some errors have occurred which must be corrected before your login can be "
+"created."
+msgstr ""
+
+#: www/customize.php:171 www/delete-account.php:104 www/login.php:181
+#: www/new-user.php:203 www/password-reset-via-token.php:117
+msgid "If you need help, please email postmaster@."
+msgstr ""
+
+#: www/customize.php:176
+msgid "Account updated!"
+msgstr ""
+
+#: www/customize.php:177
+msgid "Your account details were successfully updated."
+msgstr ""
+
+#: www/customize.php:182
+msgid "Customize"
+msgstr ""
+
+#: www/customize.php:187
+msgid ""
+"If you wish to change your password, first type your existing password, then "
+"your new password twice.  Otherwise, leave them all blank."
+msgstr ""
+
+#: www/date.php:92
+#, php-format
+msgid "Commits for %s"
+msgstr ""
+
+#: www/date.php:170
+msgid "No commits found for that date"
+msgstr ""
+
+#: www/date.php:192
+msgid "Latest commits"
+msgstr ""
+
+#: www/date.php:211 www/date.php:236 www/search.php:1315
+#, php-format
+msgid "Number of commits: %d"
+msgstr ""
+
+#: www/delete-account.php:58
+msgid "I really tried to delete your account. I failed. Sorry."
+msgstr ""
+
+#: www/delete-account.php:65
+msgid "I could not delete that account. Sorry."
+msgstr ""
+
+#: www/delete-account.php:69
+msgid "The confirmation was not correct."
+msgstr ""
+
+#: www/delete-account.php:75
+msgid "Delete User Account"
+msgstr ""
+
+#: www/delete-account.php:92
+msgid "Delete Failed!"
+msgstr ""
+
+#: www/delete-account.php:100
+msgid "The delete failed."
+msgstr ""
+
+#: www/delete-account.php:122
+msgid "Delete account"
+msgstr ""
+
+#: www/delete-account.php:130
+msgid "Your account has been deleted."
+msgstr ""
+
+#: www/delete-account.php:131
+msgid "Please click <a href=\"/\">here</a> to return to the home page."
+msgstr ""
+
+#: www/delete-account.php:134 www/delete-account.php:151
+msgid "Delete Account"
+msgstr ""
+
+#: www/delete-account.php:134
+#, php-format
+msgid "To delete your account, please enter your account name and click on %s."
+msgstr ""
+
+#: www/delete-account.php:143
+#, php-format
+msgid "The account name is: %s"
+msgstr ""
+
+#: www/delete-account.php:144
+msgid "User Name:"
+msgstr ""
+
+#: www/delete-account.php:150
+msgid "There is no undo for this"
+msgstr ""
+
+#: www/faq.php:16
+#, php-format
+msgid "FAQ (%s)"
+msgstr ""
+
+#: www/faq.php:42
+msgid ""
+"This page contains the FAQ for FreshPorts. Hopefully the questions are "
+"arranged from general to specific. The more you know, the further down you "
+"must read to find something you didn't already know."
+msgstr ""
+
+#: www/faq.php:45
+msgid "What is this website about?"
+msgstr ""
+
+#: www/faq.php:48
+msgid ""
+"This website will help you keep up with the latest releases of your favorite "
+"software. When a new version of the software is available, FreshPorts will "
+"send you an email telling you about the change."
+msgstr ""
+
+#: www/faq.php:51
+msgid "How do I use this?"
+msgstr ""
+
+#: www/faq.php:56
+msgid ""
+"Your primary FreshPorts tool is your <b>watch list</b>. This is the "
+"collection of ports which you have selected for FreshPorts to keep track of. "
+"You will be emailed when a change is found for one of your watched ports."
+msgstr ""
+
+#: www/faq.php:59
+msgid ""
+"You can have more than one watch list. Most people would have one watch list "
+"for each machine they administer. I suggest giving the watch list the same "
+"name as the machine. Email notifications will contain headers with the list "
+"name. You can use that for any filtering you may want to do (e.g. procmail)."
+msgstr ""
+
+#: www/faq.php:62
+msgid "Some definitions"
+msgstr ""
+
+#: www/faq.php:67
+msgid ""
+"You should be familiar with the <a href=\"https://www.freebsd.org/doc/"
+"en_US.ISO8859-1/books/handbook/ports.html\">Ports</a> section of <a "
+"href=\"https://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/"
+"index.html\">The FreeBSD Handbook</a>. Pay careful attention to the "
+"difference between a port and a package."
+msgstr ""
+
+#: www/faq.php:69
+msgid "Definitions for the hopelessly lazy"
+msgstr ""
+
+#: www/faq.php:73
+msgid ""
+"If you install the port, the source will be downloaded, patched if "
+"necessary, compiled and installed. You will have a chance to set any "
+"optional configuration items particular to that port. If the port is "
+"dependent upon another port, that port will also be installed. After "
+"installing, ports are identical to packages."
+msgstr ""
+
+#: www/faq.php:76
+msgid ""
+"It is because of these compile time options that I prefer ports over "
+"packages."
+msgstr ""
+
+#: www/faq.php:78
+msgid "What is a package?"
+msgstr ""
+
+#: www/faq.php:80
+msgid ""
+"A package is a compiled port. It is a binary. When you install the package, "
+"you will download a binary and it will be installed."
+msgstr ""
+
+#: www/faq.php:83
+msgid ""
+"Packages often lag behind ports. That is usually because it takes time to "
+"compile the packages, etc. If you want the latest version, and the package "
+"is not available, then you should install the port."
+msgstr ""
+
+#: www/faq.php:86
+msgid ""
+"Not all ports can have packages, often because of license restrictions that "
+"prevent binary distribution."
+msgstr ""
+
+#: www/faq.php:90
+msgid "How do I modify my watch list?"
+msgstr ""
+
+#: www/faq.php:94
+msgid "There are three easy ways to modify your watch list:"
+msgstr ""
+
+#. TRANSLATORS: %1$s is the 'add to watch list' icon, %2$s is the 'remove from watch list' icon.
+#: www/faq.php:98
+#, php-format
+msgid ""
+"Wherever you see a port, you can click on the Add (%1$s) / Remove (%2$s) "
+"link as necessary (i.e. one-click watch list maintenance)."
+msgstr ""
+
+#: www/faq.php:99
+msgid ""
+"The 'watch list categories' link provides you with a list of categories. "
+"Select the category, and then the ports within that category."
+msgstr ""
+
+#: www/faq.php:100
+msgid ""
+"Use the 'upload' link to upload your pkg_info data into your watch list "
+"staging area and then into your watch list."
+msgstr ""
+
+#: www/faq.php:104
+msgid ""
+"One-click watch list maintenance operates only upon your default watch "
+"lists. You can set one or more watch lists as being default."
+msgstr ""
+
+#: www/faq.php:107
+msgid "How do I empty my watch list?"
+msgstr ""
+
+#: www/faq.php:111
+msgid ""
+"Via <a href=\"/watch-list-maintenance.php\">Watch List Maintenance</a>. "
+"Select the watch lists you wish to empty, and follow the instructions "
+"provided."
+msgstr ""
+
+#: www/faq.php:114
+msgid "How do I delete my account?"
+msgstr ""
+
+#: www/faq.php:118
+#, php-format
+msgid ""
+"Visit %s and click on the <b>Delete my account</b> link. It's just below "
+"<b>update account</b>."
+msgstr ""
+
+#: www/faq.php:125
+msgid ""
+"A port is a simple easy way to install an application. A port is a "
+"collection of files. These files contain the location of the source file, "
+"any patches which must be applied, instructions for building the "
+"application, and the installation procedure. Removing an installed port is "
+"also easy. For full details on how to use ports, please refer to the "
+"official port documents in the <a href=\"https://www.FreeBSD.org/handbook/"
+"\">FreeBSD Handbook</a>."
+msgstr ""
+
+#: www/faq.php:128
+msgid "Where do ports come from?"
+msgstr ""
+
+#: www/faq.php:131
+msgid ""
+"Ports are created by other FreeBSD volunteers, just like you and just like "
+"the creators of FreshPorts. The FreshPorts team does not create ports; we "
+"just tell you about the latest changes. The FreeBSD Ports team creates, "
+"maintains, and upgrades the ports."
+msgstr ""
+
+#: www/faq.php:134
+msgid "Who do I talk to about a port?"
+msgstr ""
+
+#: www/faq.php:137
+#, php-format
+msgid ""
+"The official mailing list is %s. More information about all FreeBSD mailing "
+"lists can be obtained from <a href=\"https://www.FreeBSD.org/handbook/"
+"eresources.html#eresources-mail\">FreeBSD Mailing Lists</a>."
+msgstr ""
+
+#: www/faq.php:140
+msgid "How do I get these ports?"
+msgstr ""
+
+#: www/faq.php:143
+msgid ""
+"For full information on how to obtain the ports which appear on this "
+"website, please see <a href=\"https://www.FreeBSD.org/ports/\">FreeBSD "
+"Ports</a>. The easiest way to get a port is via <span class=\"cmd\">git</"
+"span>. An abbreviated example is:"
+msgstr ""
+
+#: www/faq.php:150
+msgid "How is the website updated?"
+msgstr ""
+
+#: www/faq.php:156
+msgid "FreeBSD repository"
+msgstr ""
+
+#. TRANSLATORS: %s is a link whose text is 'FreeBSD repository'.
+#: www/faq.php:156
+#, php-format
+msgid ""
+"The source code for the entire FreeBSD operating system and the Ports tree "
+"are stored in the official %s. The FreshPorts nodes then use <span "
+"class=\"cmd\">git</span> to detect changes and load the new commits into its "
+"database."
+msgstr ""
+
+#: www/faq.php:159
+msgid ""
+"In the past, FreshPorts would parse the emails sent out for each commit and "
+"then load the information into a database. In theory, it's fairly straight "
+"forward. In practice, there's much more to it than first meets the eye. The "
+"website was updated as soon as the message arrived."
+msgstr ""
+
+#: www/faq.php:162
+msgid "What does unknown mean for a revision number?"
+msgstr ""
+
+#: www/faq.php:165
+msgid ""
+"It means the data has been converted from an earlier version of the "
+"FreshPorts database that did not record this information."
+msgstr ""
+
+#: www/faq.php:168
+msgid "Can I link to your site?"
+msgstr ""
+
+#: www/faq.php:171
+msgid ""
+"Yes, thank you, you can. No need to ask us. Just go ahead and do it. We "
+"prefer the name FreshPorts (one word, mixed case). The following HTML is a "
+"good place to start:"
+msgstr ""
+
+#: www/faq.php:177
+msgid "Here is a banner which you are free to use to link to this site:"
+msgstr ""
+
+#: www/faq.php:183
+msgid "Here is the HTML for that graphic."
+msgstr ""
+
+#: www/faq.php:190
+msgid "Please save this graphic on your website."
+msgstr ""
+
+#: www/faq.php:193
+msgid "What do these symbols mean?"
+msgstr ""
+
+#: www/faq.php:197
+msgid "There are a few symbols you will see in this website."
+msgstr ""
+
+#: www/faq.php:200
+#, php-format
+msgid ""
+"Homepage: a link to the Project Page / home page for this port. A port can "
+"have more <a href=\"https://github.com/FreshPorts/freshports/issues/"
+"434\">than one homepage</a>. While I personally think the <a href=\"https://"
+"docs.freebsd.org/en/books/porters-handbook/makefiles/#makefile-"
+"www\">documentation</a> does not specifically allow for this, I think it "
+"arose when <a href=\"https://cgit.freebsd.org/ports/commit/?"
+"id=b7f05445c00f2625aa19b4154ebcbce5ed2daa52\">WWW was moved</a> from %1$s to "
+"%2$s."
+msgstr ""
+
+#: www/faq.php:203
+msgid ""
+"Fallout: a link to search the <a href=\"https://lists.freebsd.org/archives/"
+"freebsd-pkg-fallout/\">freebsd-pkg-fallout archives</a>. If the resulting "
+"fallout list is empty: the port may have been skipped due to fallout of a "
+"related port."
+msgstr ""
+
+#: www/faq.php:206
+msgid "Repology: a link to search the Repology packaging hub for this port."
+msgstr ""
+
+#: www/faq.php:209
+msgid ""
+"Find Bugs: a link to search for open Problem Reports (issues/bugs) for this "
+"port."
+msgstr ""
+
+#: www/faq.php:212
+msgid "New Bug: a link to open a new Problem Report (issue/bug) for this port."
+msgstr ""
+
+#: www/faq.php:215
+msgid ""
+"New: This port has been recently added. A port is marked as new for 10 days."
+msgstr ""
+
+#: www/faq.php:218
+#, php-format
+msgid ""
+"Forbidden: The port is marked as forbidden. If you view the port details, "
+"you will see why. Most often, it is because of a security exploit. Packages "
+"for a forbidden port are not built by the package cluster. Therefore, %s "
+"will not work."
+msgstr ""
+
+#: www/faq.php:221
+#, php-format
+msgid ""
+"Broken: The port is marked as broken. Perhaps it won't compile. Maybe it "
+"doesn't work under FreeBSD right now. If you view the port details, you will "
+"see the reason why. Packages for a broken port are not built by the package "
+"cluster. Therefore, %s will not work."
+msgstr ""
+
+#: www/faq.php:224
+msgid ""
+"Deprecated: The port is marked as deprecated. Perhaps it has exceeded its "
+"lifetime or is obsolete."
+msgstr ""
+
+#: www/faq.php:227
+msgid ""
+"Expiration Date: The port has an expiration date. A port may be removed from "
+"the tree after this date. Often added in conjunction with Deprecated."
+msgstr ""
+
+#: www/faq.php:230
+msgid ""
+"Expired: The port has passed the expiration date. A port may be removed from "
+"the tree after this date. Often added in conjunction with Deprecated."
+msgstr ""
+
+#: www/faq.php:233
+#, php-format
+msgid ""
+"Ignore: The port is marked as ignore. It probably does not build. Packages "
+"for an ignored port are not built by the package cluster. Therefore, %s will "
+"not work."
+msgstr ""
+
+#: www/faq.php:236
+msgid ""
+"Files: If you click on this graphic, you will be taken to the list of files "
+"touched by the commit in question."
+msgstr ""
+
+#: www/faq.php:239
+msgid ""
+"Refresh: The system is in the process of refreshing that port by inspecting "
+"the ports tree. You should rarely see this."
+msgstr ""
+
+#: www/faq.php:240
+msgid ""
+"If you do see one, chances are that the port contains an error that prevents "
+"make(1) from running. For example:"
+msgstr ""
+
+#: www/faq.php:249
+msgid ""
+"In such circumstances, the port committer is notified (if they have opted in "
+"to the FreshPorts Sanity Check Report) and they should fix the problem as "
+"soon as possible. Once you see a more recent commit without a refresh icon, "
+"then the problem has been fixed. The refresh icons will go away after "
+"FreshPorts has dealt with the old commits. This may take a few hours."
+msgstr ""
+
+#: www/faq.php:252
+msgid "Deleted: This port has been removed from the ports tree."
+msgstr ""
+
+#: www/faq.php:255
+msgid ""
+"These icons are for older commits. At one time, FreshPorts parsed emails. "
+"This icon will appear alongside commits before the repo moved from <span "
+"class=\"cmd\">subversion</span> to <span class=\"cmd\">git</span>. They "
+"appear along side the commit message in the commit history. This link will "
+"take you to the original message in the FreeBSD mailing list archives. Note "
+"that it can take a few minutes for the message to appear in the archives. "
+"This link will not appear for commit messages before 3 March 2002 (which is "
+"the date FreshPorts started to store the message-id)."
+msgstr ""
+
+#: www/faq.php:258
+msgid ""
+"FreshPorts commit message: This will take you to the FreshPorts commit "
+"message and allow you to see all other ports which were affected by this "
+"commit. This link will not appear for commit messages before 3 March 2002 "
+"(which is the date FreshPorts started to store the message-id)."
+msgstr ""
+
+#: www/faq.php:261
+msgid ""
+"NOTE: This link has been made redundant by recent advances in the Files "
+"link. See next icon."
+msgstr ""
+
+#: www/faq.php:265
+msgid ""
+"Item is on one of your default watch lists: This port is on one of your "
+"default watch lists. Click this icon to remove the port from your default "
+"watch lists. This icon appears only if you are logged in."
+msgstr ""
+
+#: www/faq.php:268
+msgid ""
+"Add item to your default watch lists: This port is not on any of your "
+"default watch lists. Click this icon to add the port to your default watch "
+"lists. This icon appears only if you are logged in."
+msgstr ""
+
+#: www/faq.php:271
+msgid ""
+"Encoding Errors (not all of the commit message was ASCII): Some of the "
+"commit message may be altered because of character conversion problems. We "
+"display only UTF-8 and remove the offending characters. These errors may "
+"occur in the log message or elsewhere in the commit email."
+msgstr ""
+
+#: www/faq.php:274
+msgid ""
+"Watch List Count (WLC): This is the number of watch lists which are watching "
+"this port. This might give you an idea of the popularity of the port."
+msgstr ""
+
+#: www/faq.php:277
+msgid ""
+"Git Repository: This link will take you to the Git Repository entry for this "
+"version of the file."
+msgstr ""
+
+#: www/faq.php:280
+msgid ""
+"SVN Repository: This link will take you to the Subversion Repository entry "
+"for this version of the file."
+msgstr ""
+
+#: www/faq.php:283
+msgid ""
+"CVS Repository: Deprecated, and historical. Probably does not appear much "
+"any more. This link will take you to the CVS Repository entry for this "
+"version of the file. This is for much older commits."
+msgstr ""
+
+#: www/faq.php:286
+msgid ""
+"<a href=\"https://www.vuxml.org/freebsd/\">VuXML</a> vulnerability. Click "
+"icon for details."
+msgstr ""
+
+#: www/faq.php:289
+msgid ""
+"A past <a href=\"https://www.vuxml.org/freebsd/\">VuXML</a> vulnerability. "
+"Click icon for details. NOTE: A feature of security/vuxml is it names the "
+"packages which a given vuln affects. If the port changes its package name, "
+"past vulnerabilities won't show up in FreshPorts. That's because FreshPorts "
+"does not store historical package names."
+msgstr ""
+
+#: www/faq.php:292
+msgid "This port has some restrictions on it."
+msgstr ""
+
+#: www/faq.php:295
+msgid ""
+"This port has some restrictions with respect to being included on a CD-ROM."
+msgstr ""
+
+#: www/faq.php:298
+msgid "This port will require interaction during installation."
+msgstr ""
+
+#: www/faq.php:301
+msgid ""
+"Dependency Search: Action depends on context. Click on this icon to search "
+"for ports depending on the current port, ports maintained by the current "
+"maintainer, or other commits by the current committer."
+msgstr ""
+
+#: www/faq.php:304
+msgid ""
+"Revision details. Click on the Files icon in the commit history and you'll "
+"see what files in this port were touched by this commit. Click on the "
+"Revision details to view the revision of the file associated with this "
+"commit."
+msgstr ""
+
+#: www/faq.php:307
+msgid ""
+"Annotate: If you click on this graphic, you will be taken to a view of the "
+"file in question, with a listing of the commits that last changed each line."
+msgstr ""
+
+#: www/faq.php:310
+msgid ""
+"Diff. Click on the Files icon in the commit history and you'll see what "
+"files in this port were touched by this commit. Click on the Diff icon to "
+"view the diff between this revision of the file and the previous revision."
+msgstr ""
+
+#: www/faq.php:313
+msgid ""
+"Sanity Test Failures. The maintainers and committers are good. But sometimes "
+"a mistake slips through. This records the mistake to make it easier for "
+"others to correct it if it goes unnoticed. If you see this icon next to a "
+"commit, it failed a Sanity Test."
+msgstr ""
+
+#: www/faq.php:316
+msgid ""
+"Flagged Commit. This commit is on your list of flagged commits. Why would "
+"you flag a commit? Perhaps you want to review that commit. Perhaps you want "
+"to MFC it later. Click on this icon to remove the commit from your flag list."
+msgstr ""
+
+#: www/faq.php:319
+msgid "Click on this icon to add the commit to your flagged list."
+msgstr ""
+
+#: www/faq.php:322
+msgid ""
+"Ascending / Descending: These icons appear on particular tables and allow "
+"changing the order rows are sorted by."
+msgstr ""
+
+#: www/faq.php:326
+msgid "Why don't my old bookmarks work?"
+msgstr ""
+
+#: www/faq.php:331
+#, php-format
+msgid ""
+"Many things changed between FP1 and FP2. The most major change was in the "
+"underlying database schema. Not only did we move from <a href=\"https://"
+"www.mysql.org/\">mySQL</a> to <a href=\"https://www.postgresql.org/"
+"\">PostgreSQL</a>, we made major changes to the tables and the way in which "
+"the ports are stored in the database. As a result of these changes, many "
+"internal IDs and values are no longer valid. Therefore, URLs such as %s no "
+"longer work."
+msgstr ""
+
+#: www/faq.php:334
+msgid ""
+"If it is any consolation, the new URLs are transparent and permanent. They "
+"are of the form &lt;category&gt;/&lt;port&gt;."
+msgstr ""
+
+#: www/faq.php:338
+msgid "Do you have any news feeds?"
+msgstr ""
+
+#: www/faq.php:343
+msgid "Yes. Read <a href=\"/backend/newsfeeds.php\">all about it</a>!"
+msgstr ""
+
+#: www/faq.php:347
+msgid "Can the main page load any faster?"
+msgstr ""
+
+#. TRANSLATORS: %s is a link to the FreshPorts home page URL.
+#: www/faq.php:354
+#, php-format
+msgid ""
+"%s is the main page of this website. It contains a lot of information. You "
+"can trim this information by using parameters."
+msgstr ""
+
+#: www/faq.php:357
+#, php-format
+msgid "Try this URL: %s"
+msgstr ""
+
+#: www/faq.php:361
+msgid ""
+"<b>num</b> - number of ports to show (regardless of commits so the last "
+"commit may not list fully). The valid values are 10..100."
+msgstr ""
+
+#: www/faq.php:364
+msgid ""
+"<b>days</b> - number of summary days (in the right hand column) to display. "
+"The valid values are 0..9."
+msgstr ""
+
+#: www/faq.php:367
+msgid ""
+"<b>dailysummary</b> - similar to days, but displays a summary of the days "
+"instead of a link to a page of commits for that day."
+msgstr ""
+
+#: www/faq.php:370
+msgid "Here are a few examples:"
+msgstr ""
+
+#: www/faq.php:375
+msgid "URL"
+msgstr ""
+
+#: www/faq.php:378
+msgid "The last ten ports"
+msgstr ""
+
+#: www/faq.php:382
+msgid "Same as above, but show only two days of previous commits"
+msgstr ""
+
+#: www/faq.php:386
+msgid "Same as above, but show summaries instead of a link to another page"
+msgstr ""
+
+#: www/faq.php:392
+msgid ""
+"<b>NOTE:</b> Effective 13 November 2003, these parameters are no longer "
+"available."
+msgstr ""
+
+#: www/faq.php:396
+msgid "How can I view the commits for a particular day?"
+msgstr ""
+
+#: www/faq.php:401
+#, php-format
+msgid ""
+"Yes, you can. %s displays all the commits for today (relative to the current "
+"server time)."
+msgstr ""
+
+#: www/faq.php:404
+#, php-format
+msgid ""
+"You can also pass a parameter and view the commits for a given day. For "
+"example, %s will show all the commits for 19 November 2002"
+msgstr ""
+
+#: www/faq.php:407
+msgid ""
+"The date should be of the format YYYY/MM/DD but I'm sure different formats "
+"will work. If the code has trouble figuring out what date you mean, it will "
+"guess and let you know it adjusted the date."
+msgstr ""
+
+#: www/faq.php:410
+msgid "Why can't I add a port to my watch list?"
+msgstr ""
+
+#. TRANSLATORS: %1$s is the 'add to watch list' icon, %2$s is the 'on your watch list' icon.
+#: www/faq.php:417
+#, php-format
+msgid ""
+"You have clicked on the %1$s icon and it doesn't change to a %2$s. Yes, I've "
+"had that happen too. What you need to do is check your <a href=\"/watch-list-"
+"maintenance.php\">watch list settings</a>. You have probably selected "
+"\"default watch list[s]\" when you don't have any default watch list[s] set. "
+"To mark a watch list as a default, select it in the list, then click on the "
+"Set Default button."
+msgstr ""
+
+#. TRANSLATORS: %1$s is the 'on your watch list' icon, %2$s is the 'add to watch list' icon.
+#: www/faq.php:422
+#, php-format
+msgid ""
+"NOTE: The %1$s will only appear beside a port that is on one of your default "
+"watch lists. If the port is on one of your non-default watch list, the %2$s "
+"icon will appear instead. If you do not see what you expect, try setting the "
+"default watch lists in your <a href=\"/watch-list-maintenance.php\">watch "
+"list settings</a>."
+msgstr ""
+
+#: www/faq.php:425
+msgid "Why doesn't this port appear on my watch list?"
+msgstr ""
+
+#: www/faq.php:430
+msgid "Please refer to the above question."
+msgstr ""
+
+#: www/faq.php:433
+msgid "What are Port Moves?"
+msgstr ""
+
+#: www/faq.php:438
+#, php-format
+msgid ""
+"Some ports (for example <a href=\"/net/\">net</a>/<a href=\"/net/gift/"
+"\">gift</a>) will have a section titled \"Port Moves\". FreshPorts obtains "
+"information about ports from the commits to the %s."
+msgstr ""
+
+#: www/faq.php:438
+msgid "repository"
+msgstr ""
+
+#: www/faq.php:440
+msgid ""
+"With <span class=\"cmd\">subversion</span>, there could be a manual change "
+"to the repository, not creating a commit email. Such moves were often "
+"referred to as a <i>repo-copy</i>, and might have moved a port from one "
+"category to another. Such a change was done to ensure the port history is "
+"retained."
+msgstr ""
+
+#: www/faq.php:442
+msgid ""
+"With <span class=\"cmd\">git</span>, <i>repo-copies</i> do not occur; the "
+"changes are accomplished via commits."
+msgstr ""
+
+#: www/faq.php:445
+msgid ""
+"Such moves/commits are documented in <a href=\"/MOVED\">/usr/ports/MOVED</"
+"a>. FreshPorts parses this file and records these changes in its database."
+msgstr ""
+
+#: www/faq.php:448
+msgid "This new feature was added on 31 December 2003."
+msgstr ""
+
+#: www/faq.php:452
+msgid "What is /usr/ports/UPDATING?"
+msgstr ""
+
+#: www/faq.php:457
+#, php-format
+msgid "%1$s is similar to %2$s, but for ports, not for the source tree."
+msgstr ""
+
+#: www/faq.php:460
+msgid ""
+"FreshPorts parses this file and attempts to relate the entries to any ports "
+"it can find. Such relations are not always possible. We do the best we can. "
+"The <a href=\"/net/openldap22-client/\">net/openldap22-client</a> port is a "
+"good example of what to expect."
+msgstr ""
+
+#: www/faq.php:464
+msgid "What are Master/Slave ports?"
+msgstr ""
+
+#: www/faq.php:469
+#, php-format
+msgid ""
+"Some ports are so similar to another port that it makes sense to maintain "
+"just one port and specify the differences in the other port. This is "
+"slightly similar to the way %1$s is related to %2$s."
+msgstr ""
+
+#: www/faq.php:472
+msgid ""
+"A good example is <a href=\"/www/\">www</a>/<a href=\"/www/"
+"mod_php4\">mod_php4</a>. You can see that the <b>master port</b> for that is "
+"<a href=\"/lang/\">lang</a>/<a href=\"/lang/php4/\">php4</a>. Conversely, <a "
+"href=\"/lang/\">lang</a>/<a href=\"/lang/php4/\">php4</a> lists several "
+"<b>slave ports</b>."
+msgstr ""
+
+#: www/faq.php:475
+msgid "The ability to add this feature is because of this patch:"
+msgstr ""
+
+#: www/faq.php:500
+msgid ""
+"The FreeBSD tree has no defined method for handling master/slave ports. It "
+"is because of this that FreshPorts never attempted to refresh slave ports "
+"when a master port was updated. Now that we have a mostly-reliable method, "
+"all slave ports are refreshed when the master port is updated."
+msgstr ""
+
+#: www/faq.php:503
+msgid ""
+"This method works for all but 40 ports which are involved in a master/slave "
+"relationship. It is hoped that those 40 are fixed soon. It is also hoped "
+"that the above patch is committed to the tree."
+msgstr ""
+
+#: www/faq.php:507
+msgid "What is this \"to add the package\" stuff?"
+msgstr ""
+
+#: www/faq.php:512
+msgid ""
+"Included within the port description is the instruction for adding the "
+"package. This information can be important when the package name does not "
+"match the port name. A good example is <a href=\"/x11/\">x11</a>/<a href=\"/"
+"x11/XFree86-4-clients/\">XFree86-4-clients</a>. The command to add this "
+"package is:"
+msgstr ""
+
+#: www/faq.php:519
+msgid ""
+"This normally isn't a problem, but for the 1900 or so ports which are "
+"different, this information is very useful."
+msgstr ""
+
+#: www/faq.php:522
+#, php-format
+msgid ""
+"If the %1$s information does not appear, you'll be told why there is no "
+"package. This is controlled by the %2$s variable in the port's Makefile."
+msgstr ""
+
+#: www/faq.php:525
+#, php-format
+msgid ""
+"Broken, ignored, and forbidden ports are not built by the package cluster. "
+"Therefore, there is no package for %s to use."
+msgstr ""
+
+#: www/faq.php:528
+msgid "Why does the search page use GET and not POST?"
+msgstr ""
+
+#: www/faq.php:533
+#, php-format
+msgid ""
+"If you visit the <a href=\"/search.php\">search</a> page, and you run a "
+"search, you'll find that the URL becomes very long. For example, %s."
+msgstr ""
+
+#: www/faq.php:533
+msgid "this really long link"
+msgstr ""
+
+#: www/faq.php:535
+msgid ""
+"Long URLs occur like that because the search form uses a GET. A long URL "
+"would not occur if it was using a POST. The long URLs are useful because "
+"they allow you to bookmark your favorite search. That is why a GET is used "
+"instead of a POST."
+msgstr ""
+
+#: www/faq.php:538
+msgid ""
+"It also makes it easier to <a href=\"https://validator.w3.org/\">validate "
+"the HTML</a> if you can provide a URL that exercises all the options that "
+"require testing."
+msgstr ""
+
+#: www/faq.php:541
+msgid "What are all those fields I can search on?"
+msgstr ""
+
+#: www/faq.php:546
+msgid ""
+"For those familiar with the FreeBSD ports structure, the following fields "
+"indicate their origin:"
+msgstr ""
+
+#: www/faq.php:550
+msgid "Field"
+msgstr ""
+
+#: www/faq.php:550
+msgid "Origin"
+msgstr ""
+
+#: www/faq.php:551 www/search.php:1140
+msgid "Port Name"
+msgstr ""
+
+#: www/faq.php:552 www/search.php:1137
+msgid "Package Name"
+msgstr ""
+
+#: www/faq.php:553
+msgid "Latest Link"
+msgstr ""
+
+#: www/faq.php:554 www/ports-conflicts.php:42 www/search.php:1133
+msgid "Maintainer"
+msgstr ""
+
+#: www/faq.php:555 www/search.php:1141
+msgid "Short Description"
+msgstr ""
+
+#: www/faq.php:556 www/search.php:1132
+msgid "Long Description"
+msgstr ""
+
+#: www/faq.php:557 www/search.php:1126
+msgid "Depends Build"
+msgstr ""
+
+#: www/faq.php:558 www/search.php:1127
+msgid "Depends Lib"
+msgstr ""
+
+#: www/faq.php:559 www/search.php:1128
+msgid "Depends Run"
+msgstr ""
+
+#: www/faq.php:560 www/search.php:1136
+msgid "Message ID"
+msgstr ""
+
+#: www/faq.php:560
+msgid "The message id in the original commit email"
+msgstr ""
+
+#: www/faq.php:561 www/faq.php:562
+#, php-format
+msgid "output from %s"
+msgstr ""
+
+#: www/faq.php:565
+#, php-format
+msgid ""
+"For all of the above origins, you can obtain the value using %s. For example:"
+msgstr ""
+
+#: www/faq.php:574
+#, php-format
+msgid ""
+"This value is obtained from a file in the port directory. For example %s."
+msgstr ""
+
+#: www/faq.php:577
+msgid ""
+"Where did this \"People watching this port, also watch\" feature come from?"
+msgstr ""
+
+#: www/faq.php:582
+msgid ""
+"Like many FreshPorts features, this idea came from someone else. Florent "
+"Thoumie mentioned something about extending the ports system to include "
+"recommendations from maintainers/committers. Such a feature would allow a "
+"committer/maintainer to suggest, for example, that if you install Firefox, "
+"that you also install linuxflashplugin."
+msgstr ""
+
+#: www/faq.php:585
+msgid ""
+"It was from this concept that I came up with \"People watching this port..."
+"\". This information is obtained by:"
+msgstr ""
+
+#: www/faq.php:587
+msgid "FreshPorts takes the port you are looking at"
+msgstr ""
+
+#: www/faq.php:588
+msgid "It finds all the watch lists that this port appears on"
+msgstr ""
+
+#: www/faq.php:589
+msgid "It finds the top 5 most popular ports on those lists"
+msgstr ""
+
+#: www/faq.php:590
+msgid "FreshPorts shows you the results"
+msgstr ""
+
+#: www/faq.php:594
+msgid "All of this takes about 55ms."
+msgstr ""
+
+#: www/faq.php:597
+msgid "What do you mean, the master port has been updated?"
+msgstr ""
+
+#: www/faq.php:602
+msgid ""
+"For some slave ports, you may see a message like this, just above the "
+"<b>Commit History</b>:"
+msgstr ""
+
+#: www/faq.php:605
+msgid ""
+"NOTE: This slave port may no longer be vulnerable to issues shown below "
+"because the master port has been updated."
+msgstr ""
+
+#: www/faq.php:609
+msgid ""
+"Slave ports can be updated with a commit against the master port. A commit "
+"against the master port will affect any slave ports. If a <a href=\"https://"
+"www.vuxml.org/freebsd/\">VuXML</a> vulnerability has been recorded against a "
+"slave port, any fix would be applied to the master port. However, the commit "
+"to the master port would not appear under the slave port, thereby giving a "
+"false impression that the slave port was still vulnerable."
+msgstr ""
+
+#: www/faq.php:612
+msgid ""
+"The above notice serves as a reminder that the slave port may no longer be "
+"vulnerable."
+msgstr ""
+
+#: www/faq.php:615
+msgid "How does FreshPorts determine the master sites?"
+msgstr ""
+
+#: www/faq.php:620
+msgid ""
+"Each port displays the master sites from which its distfiles can be "
+"downloaded. This information is obtained from \"make master-sites-all\". "
+"However, this is not the only list of master sites that a port knows about. "
+"Edwin Groothuis explains it in this <a href=\"https://docs.freebsd.org/cgi/"
+"mid.cgi?20041219204057.GE63708\">email</a>."
+msgstr ""
+
+#: www/faq.php:623
+msgid ""
+"In short, FreshPorts displays the list of master sites that should contain "
+"all the distfiles. That is why we use that value, and not one of the other "
+"options."
+msgstr ""
+
+#: www/faq.php:626
+msgid "Why don't you obscure email addresses?"
+msgstr ""
+
+#: www/faq.php:631
+msgid ""
+"FreshPorts used to obscure email addresses, but we don't any more. We "
+"realised that every email address on FreshPorts is already somewhere else "
+"first. For example:"
+msgstr ""
+
+#: www/faq.php:634
+msgid "www/ports pages"
+msgstr ""
+
+#: www/faq.php:636
+msgid "fenner's output"
+msgstr ""
+
+#: www/faq.php:638
+msgid "cvsweb (now deprecated)"
+msgstr ""
+
+#: www/faq.php:639
+msgid ""
+"<span class=\"cmd\">subversion</span> (still online, but replaced by <span "
+"class=\"cmd\">git</span>)"
+msgstr ""
+
+#: www/faq.php:644
+msgid ""
+"In short, it doesn't make sense to obscure that which is freely available "
+"elsewhere."
+msgstr ""
+
+#: www/faq.php:648
+msgid ""
+"Similarly, we do not entertain requests to remove information from our "
+"website. We only report upon what exists elsewhere."
+msgstr ""
+
+#: www/faq.php:653
+msgid ""
+"Why does the PORTVERSION at the top of page differ from that of the first "
+"commit?"
+msgstr ""
+
+#: www/faq.php:658
+msgid "This question refers to a port page."
+msgstr ""
+
+#: www/faq.php:661
+msgid ""
+"This situation usually occurs with MASTER/SLAVE ports. The Master port is "
+"updated with a new REVISION. No commit is done against the Slave port. "
+"FreshPorts knows to refresh the Slave port when its Master port is updated. "
+"This refresh updates the PORTVERSION at the top of the page. This update "
+"reflects the REVISION you would get if you were to install the Slave port "
+"now that the Master has been upgraded."
+msgstr ""
+
+#: www/faq.php:664
+msgid "What HTML anchors exist?"
+msgstr ""
+
+#: www/faq.php:668
+msgid "Anchors in port pages include:"
+msgstr ""
+
+#: www/faq.php:708
+msgid "Anchors make it easier to link to sections within pages."
+msgstr ""
+
+#: www/faq.php:711
+#, php-format
+msgid ""
+"For example, this link – note the %s at its tail – takes you to the commit "
+"history for security/acme.sh:"
+msgstr ""
+
+#: www/faq.php:717
+#, php-format
+msgid ""
+"Each of these sections has a %s link beside its heading. Click it, or copy "
+"it, to get a link to that section."
+msgstr ""
+
+#: www/faq.php:720
+msgid "Enjoy. We can add more anchors upon request."
+msgstr ""
+
+#: www/faq.php:724
+msgid "Can I get alerts for new packages?"
+msgstr ""
+
+#: www/faq.php:728
+msgid "Yes, yes, you can."
+msgstr ""
+
+#: www/faq.php:730
+msgid ""
+"Not only can FreshPorts email you when one of your watched ports is updated, "
+"it can also email you when the package is ready to install."
+msgstr ""
+
+#: www/faq.php:732
+msgid ""
+"FreshPorts polls the available FreeBSD repo builds on an hourly basis. It "
+"uses that information to display the packages available under various ABI "
+"(e.g. FreeBSD:14:amd64). NOTE: we do not display packages for the quarterly "
+"branch on the latest CURRENT of FreeBSD. Packages are not built for that ABI/"
+"package set combination. You may see CURRENT/quarterly listed on some pages. "
+"That is easier to do than to keep track of which branch is CURRENT."
+msgstr ""
+
+#: www/faq.php:734
+msgid "To get new package notifications, follow these steps:"
+msgstr ""
+
+#: www/faq.php:737
+msgid ""
+"Click on <a href=\"/report-subscriptions.php\">Report Subscriptions</a>, "
+"under <i>Watch Lists</i> in the right hand column"
+msgstr ""
+
+#: www/faq.php:738
+msgid "Check the <i>New Package Notification</i> box"
+msgstr ""
+
+#: www/faq.php:739
+msgid "click on Update"
+msgstr ""
+
+#: www/faq.php:740
+msgid ""
+"Again under <i>Watch Lists</i>, this time, click on <a href=\"/report-"
+"package-notifications.php\">ABI Package Subscriptions</a> to select the ABI "
+"for which you want to receive notifications"
+msgstr ""
+
+#: www/faq.php:741
+msgid ""
+"On this page, select one or more items from each of the first three boxes:"
+msgstr ""
+
+#: www/faq.php:743
+msgid "watch lists (first box)"
+msgstr ""
+
+#: www/faq.php:744
+msgid "ABI (second box)"
+msgstr ""
+
+#: www/faq.php:745
+msgid "one or both of quarterly and latest (third box)"
+msgstr ""
+
+#: www/faq.php:747
+msgid "and click on <i>Add</i>"
+msgstr ""
+
+#: www/faq.php:751
+msgid "When the next updates arrive, you'll get an email."
+msgstr ""
+
+#: www/faq.php:755
+msgid "Why is a particular ABI not listed at FreshPorts?"
+msgstr ""
+
+#: www/faq.php:759
+#, php-format
+msgid "FreshPorts covers the ABIs published at %s."
+msgstr ""
+
+#: www/faq.php:761
+msgid ""
+"In general, the FreeBSD Project does not build quarterly branches for "
+"whatever branch is CURRENT."
+msgstr ""
+
+#: www/faq.php:763
+#, php-format
+msgid ""
+"At the time of writing (%s), the code to extract those ABIs and the current "
+"ABI list was:"
+msgstr ""
+
+#: www/filter-setup.php:83
+msgid "Watch categories"
+msgstr ""
+
+#: www/filter-setup.php:119 www/watch-categories.php:71
+msgid "Watch List - categories"
+msgstr ""
+
+#: www/filter-setup.php:127
+msgid ""
+"This screen contains a list of the port categories. A * indicates a category "
+"that contains ports which are on your watch list. When a port changes in one "
+"of your watch categories, you will be notified by email if you have selected "
+"a notification frequency within your <a href=\"customize.php\">account "
+"settings</a>."
+msgstr ""
+
+#: www/filter-setup.php:130
+msgid ""
+"Virtual categories cannot be watched and their checkboxes will be disabled."
+msgstr ""
+
+#: www/filter-setup.php:136 www/port-watch.php:261 www/watch-categories.php:87
+msgid "Select..."
+msgstr ""
+
+#: www/filter-setup.php:281
+msgid "Save changes"
+msgstr ""
+
+#: www/filter.php:52
+msgid "watch list categories"
+msgstr ""
+
+#: www/filter.php:117 www/index.php:148
+#, php-format
+msgid "%d most recent commit (all timestamps are UTC)"
+msgid_plural "%d most recent commits (all timestamps are UTC)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: www/filter.php:123 www/my-flagged-commits.php:91
+msgid "A port is marked as new for 10 days."
+msgstr ""
+
+#: www/filter.php:192 www/index.php:241 www/sanity_test_failures.php:218
+msgid "Previous days"
+msgstr ""
+
+#: www/filter.php:216 www/index.php:34
+msgid "Yesterday's Commits"
+msgstr ""
+
+#: www/forgotten-password.php:84
+#, php-format
+msgid ""
+"Sorry, but previous email to you has bounced, so we're not sure it's going "
+"to get to you.  But we sent it out anyway.  Please contact the <a "
+"href=\"%s\">webmaster</a> for help if it doesn't arrive."
+msgstr ""
+
+#: www/forgotten-password.php:91
+#, php-format
+msgid ""
+"Guess what?  You never gave us an email address.  So I guess you must "
+"contact the <a href=\"%s\">webmaster</a> for help."
+msgstr ""
+
+#. TRANSLATORS: keep the line breaks short, this is a plain text email
+#: www/forgotten-password.php:106
+#, php-format
+msgid ""
+"Someone, perhaps you, requested to reset your password.\n"
+"If that wasn't you, and this message becomes a nuisance, please\n"
+"forward this message to %s and we will take\n"
+"care of it for you."
+msgstr ""
+
+#: www/forgotten-password.php:111
+#, php-format
+msgid "Your login id is: %s"
+msgstr ""
+
+#: www/forgotten-password.php:112
+msgid "Your password recovery URL is:"
+msgstr ""
+
+#: www/forgotten-password.php:115
+#, php-format
+msgid "the request came from %s"
+msgstr ""
+
+#: www/forgotten-password.php:129
+msgid "password"
+msgstr ""
+
+#: www/forgotten-password.php:151
+msgid "Forgotten password"
+msgstr ""
+
+#: www/forgotten-password.php:169
+msgid "We have a problem!"
+msgstr ""
+
+#: www/forgotten-password.php:196
+msgid "User ID not found!"
+msgstr ""
+
+#: www/forgotten-password.php:207
+msgid ""
+"The User ID you supplied could not be found.  Perhaps try your email instead?"
+msgstr ""
+
+#: www/forgotten-password.php:209
+msgid ""
+"The email you supplied could not be found.  Perhaps try your User ID instead?"
+msgstr ""
+
+#: www/forgotten-password.php:234
+msgid "Mail sent to your address"
+msgstr ""
+
+#: www/forgotten-password.php:246
+#, php-format
+msgid ""
+"A password recovery URL has been sent to the address we have on file.  If "
+"you still can't get logged in please contact <a href=\"%s\">the webmaster</"
+"a> and we'll see what we can do."
+msgstr ""
+
+#: www/forgotten-password.php:252
+msgid ""
+"If you've forgotten your password, don't worry.  We've got that covered."
+msgstr ""
+
+#: www/forgotten-password.php:254
+#, php-format
+msgid ""
+"Please enter either your login or your email address (whichever you "
+"remember), then click on '%s'."
+msgstr ""
+
+#: www/forgotten-password.php:254 www/forgotten-password.php:264
+msgid "eMail Me!"
+msgstr ""
+
+#: www/forgotten-password.php:256
+msgid ""
+"We will send you an email with a link in it. Click on that link and you'll "
+"be able to set a new password. This link will expire within a few hours. "
+"This isn't exactly totally secure, but then we're only dealing with your "
+"FreshPorts login, not a financial transaction...."
+msgstr ""
+
+#: www/forgotten-password.php:262
+msgid "email address:"
+msgstr ""
+
+#: www/graphs.php:13 www/graphs.php:25 www/graphs2.php:29
+msgid "Statistics - everyone loves a graph"
+msgstr ""
+
+#: www/graphs.php:30
+msgid ""
+"All graphs are at most 4 hours old.  The data used in these graphs are "
+"compiled by a large team of trained worms.  As such, they are liable to be "
+"filled with errors and riddled with castings.  You are advised not to make "
+"life decisions based on this information."
+msgstr ""
+
+#: www/graphs.php:33
+msgid "If you have suggestions for graphs, please raise an issue."
+msgstr ""
+
+#: www/graphs.php:36
+msgid ""
+"NOTE that many graphs are clickable and will take you to the category, port, "
+"etc."
+msgstr ""
+
+#: www/graphs.php:55
+msgid "graph goes here!"
+msgstr ""
+
+#: www/graphs.php:72 www/graphs2.php:89
+msgid ""
+"Oh. This is rather embarrassing.  I have no idea how this could have "
+"happened. I do hope you will understand.  Please don't tell anyone.  But I "
+"don't have any data to show you.  For you see, nobody has bothered to "
+"populate the graphs table."
+msgstr ""
+
+#: www/graphs.php:75
+msgid ""
+"There was unfortunately an error while fetching the list of graphs from the "
+"database."
+msgstr ""
+
+#: www/graphs.php:96
+msgid ""
+"Oh. This is rather embarrassing.  I have no idea how this could have "
+"happened. I do hope you will understand.  Please don't tell anyone.  But I "
+"don't have any data to show you.  For you see, I know nothing about that "
+"graph id."
+msgstr ""
+
+#: www/graphs2.php:13
+msgid "Statistics 2 - everyone loves a graph"
+msgstr ""
+
+#: www/graphs2.php:34
+msgid ""
+"All of these graphs require javascript.  Please select the graph you would "
+"like to view from the dropdown."
+msgstr ""
+
+#: www/graphs2.php:37
+#, php-format
+msgid "If you have suggestions for graphs, please submit them via the %s."
+msgstr ""
+
+#: www/graphs2.php:37
+msgid "issues link"
+msgstr ""
+
+#: www/graphs2.php:48
+msgid "HEADS UP!"
+msgstr ""
+
+#: www/graphs2.php:51
+msgid "These graphs are broken. Help is needed to get them working again."
+msgstr ""
+
+#: www/graphs2.php:54
+msgid "Some starting points:"
+msgstr ""
+
+#: www/graphs2.php:57
+msgid ""
+"<a href=\"https://github.com/FreshPorts/freshports/blob/master/www/"
+"graphs2.php\">This is the source code</a> for this page."
+msgstr ""
+
+#: www/graphs2.php:58
+msgid ""
+"<a href=\"https://github.com/FreshPorts/freshports/blob/1.40/www/"
+"graphs2.php\">This is the last working version</a> of this page."
+msgstr ""
+
+#: www/graphs2.php:59 www/graphs2.php:60
+#, php-format
+msgid "%s used by the above."
+msgstr ""
+
+#: www/graphs2.php:61
+#, php-format
+msgid "%s as relocated to /javascript/"
+msgstr ""
+
+#: www/graphs2.php:62
+msgid ""
+"<a href=\"https://github.com/FreshPorts/freshports/tree/master/www/"
+"javascript\">the javascript</a> I thought would appropriately replace "
+"jquery.flot.pack.js & jquery-1.2.6.min.js"
+msgstr ""
+
+#: www/graphs2.php:65
+msgid "Thank you for your help."
+msgstr ""
+
+#: www/help.php:13
+msgid "pkg_info >> watch list"
+msgstr ""
+
+#: www/help.php:25
+msgid "pkg_info and your watch list"
+msgstr ""
+
+#: www/help.php:30
+msgid ""
+"One of the most powerful FreshPorts features is the ability to tap the "
+"existing information on your FreeBSD system and use it to modify your watch "
+"list. This is achieved using the <a href=\"/pkg_upload.php\">pkg_info upload "
+"facility</a>. This is a two stage process:"
+msgstr ""
+
+#: www/help.php:32
+msgid ""
+"upload the pkg_info output from your system into your watch list staging area"
+msgstr ""
+
+#: www/help.php:33
+msgid ""
+"choose the elements from your staging area and save them to your watch list"
+msgstr ""
+
+#: www/help.php:36
+msgid "The rest of this page should answer everything."
+msgstr ""
+
+#: www/help.php:41
+msgid "How does pkg_upload work?"
+msgstr ""
+
+#: www/help.php:45
+msgid ""
+"Mostly with smoke and mirrors, a small group of lowly trained but highly "
+"motivated cats, and a pair of keas. Actually, those team members are behind "
+"the scenes and we do not like to let them share the limelight. In brief, "
+"FreshPorts uses the basic information available on your system. It's pretty "
+"basic. And easy."
+msgstr ""
+
+#: www/help.php:51
+msgid "How does pkg_upload really work?"
+msgstr ""
+
+#: www/help.php:56
+#, php-format
+msgid ""
+"For each installed port on your FreeBSD system, there is an entry in the "
+"ports database. This database is at %1$s. The %2$s command interrogates this "
+"database and can produce a list of the installed ports. The basic command "
+"outputs the name of the installed package and a brief description. Using the "
+"%3$s options, FreshPorts obtains the &lt;category&gt;/&lt;port&gt; format of "
+"the installed packages. This format is useful for three reasons:"
+msgstr ""
+
+#: www/help.php:59
+msgid "It mirrors the directory structures of the ports tree"
+msgstr ""
+
+#: www/help.php:60
+msgid "It is easily parsed and understood by FreshPorts"
+msgstr ""
+
+#: www/help.php:61
+msgid "It is the minimal information necessary to obtain the objective"
+msgstr ""
+
+#: www/help.php:64
+msgid "Here is a short example of the output from that command:"
+msgstr ""
+
+#: www/help.php:82
+msgid ""
+"The output from this command is uploaded and saved into the FreshPorts "
+"database in your personal staging area."
+msgstr ""
+
+#: www/help.php:87
+msgid "What is a staging area?"
+msgstr ""
+
+#: www/help.php:90
+msgid ""
+"The watch list staging area is a temporary storage area for your upload "
+"pkg_info output. It serves as an area in which you can compare the new and "
+"old watch lists before saving any changes."
+msgstr ""
+
+#: www/help.php:94
+msgid "What are the different sections in my staging area?"
+msgstr ""
+
+#: www/help.php:97
+msgid ""
+"There are four sections to your staging area. These will be listed from left "
+"to right."
+msgstr ""
+
+#: www/help.php:100
+msgid ""
+"pkg_info - The first section lists the ports found in your pkg_info upload. "
+"Those which also appear in your watch list will be marked by a 'W'."
+msgstr ""
+
+#: www/help.php:102
+msgid ""
+"Not found - It is possible for ports from your pkg_info output to not be "
+"found in FreshPorts. Over time, ports are deleted, renamed, or moved. This "
+"section contains the ports from your pkg_info output that could not be found "
+"within FreshPorts."
+msgstr ""
+
+#: www/help.php:104
+msgid ""
+"Duplicates - Sometimes you install the same port twice, and not always by "
+"design. If that happens, these ports will be listed in this section. Unless "
+"you need both versions of these ports for a particular reason, you should "
+"consolidate this situation."
+msgstr ""
+
+#: www/help.php:105
+msgid ""
+"Watch List - This section contains the ports which are on your watch list "
+"which did not appear in your pkg_info upload."
+msgstr ""
+
+#: www/help.php:108
+msgid ""
+"You should inspect that information carefully before saving it to your watch "
+"list."
+msgstr ""
+
+#: www/help.php:113
+msgid "What are these check boxes in my staging area?"
+msgstr ""
+
+#: www/help.php:116
+msgid ""
+"Your staging area is just a temporary situation. You must save this "
+"information to your watch list. You can choose the ports you wish to watch "
+"using the check boxes. Only selected ports will be saved to your watch list."
+msgstr ""
+
+#: www/help.php:120
+msgid "Why would I want to clear my staging area?"
+msgstr ""
+
+#: www/help.php:123
+msgid ""
+"You cannot upload anything to your staging area unless it is empty. If you "
+"don't wish to save the data to your watch list, you must first clear your "
+"staging area before uploading again."
+msgstr ""
+
+#: www/how-big-is-it.php:100
+msgid "How big is it"
+msgstr ""
+
+#: www/how-big-is-it.php:110
+msgid ""
+"It was a few days ago that I was thinking about search engines crawling "
+"through this website. I began to wonder just how many web pages there are "
+"here.  To calculate this total, it's not just a simple matter of counting "
+"files on disk.  Most of the web pages are created from entries in the "
+"database.  One recent evening, I started to design a formula to find out how "
+"many web pages there are.  Roughly.  This will not be 100% accurate, but it "
+"will be close."
+msgstr ""
+
+#: www/how-big-is-it.php:116
+msgid "Pages on disk"
+msgstr ""
+
+#: www/how-big-is-it.php:123
+msgid "First, let's count the number of pages on disk:"
+msgstr ""
+
+#: www/how-big-is-it.php:138
+msgid "Number of categories"
+msgstr ""
+
+#: www/how-big-is-it.php:145
+msgid "There is a page for each category:"
+msgstr ""
+
+#: www/how-big-is-it.php:162
+msgid "Number of ports"
+msgstr ""
+
+#: www/how-big-is-it.php:169
+msgid "There are ports, and there are deleted ports. I'll show both:"
+msgstr ""
+
+#: www/how-big-is-it.php:199
+msgid "Number of files in the ports tree"
+msgstr ""
+
+#: www/how-big-is-it.php:206
+msgid "There is a page for each file in the ports tree:"
+msgstr ""
+
+#: www/how-big-is-it.php:232
+#, php-format
+msgid "Count last performed at %s"
+msgstr ""
+
+#: www/how-big-is-it.php:237
+msgid "Number of commits"
+msgstr ""
+
+#: www/how-big-is-it.php:244
+msgid "There is a page for each commit:"
+msgstr ""
+
+#: www/how-big-is-it.php:262
+msgid "Number of ports for each commit"
+msgstr ""
+
+#: www/how-big-is-it.php:269
+msgid ""
+"For each commit, you can view the files modified by that commit for a "
+"particular port:"
+msgstr ""
+
+#: www/how-big-is-it.php:287
+msgid "How many days?"
+msgstr ""
+
+#: www/how-big-is-it.php:294
+msgid ""
+"For each day, there is a page showing the commits for that day.  How many "
+"days do we have?"
+msgstr ""
+
+#: www/how-big-is-it.php:312
+msgid "How many users?"
+msgstr ""
+
+#: www/how-big-is-it.php:319
+msgid "Each user has a page:"
+msgstr ""
+
+#: www/how-big-is-it.php:337
+msgid "How many watch lists?"
+msgstr ""
+
+#: www/how-big-is-it.php:344
+msgid "For each watch list, there is a page:"
+msgstr ""
+
+#: www/how-big-is-it.php:362
+msgid "Estimated total"
+msgstr ""
+
+#: www/how-big-is-it.php:370
+#, php-format
+msgid ""
+"That gives a grand total of %1$s pages.  On my last count, that's about "
+"%2$s%% of the web pages on %3$s"
+msgstr ""
+
+#: www/how-big-is-it.php:374 www/search.php:1250
+msgid "Notes"
+msgstr ""
+
+#: www/how-big-is-it.php:376
+msgid "These statistics are updated daily."
+msgstr ""
+
+#: www/how-big-is-it.php:377
+#, php-format
+msgid "The number of Google pages used in this calculation is %s."
+msgstr ""
+
+#: www/how-big-is-it.php:384
+msgid "How much diskspace?"
+msgstr ""
+
+#: www/how-big-is-it.php:391
+msgid "The total space used by the FreshPorts database is:"
+msgstr ""
+
+#: www/how-big-is-it.php:405
+msgid "That's bytes..."
+msgstr ""
+
+#: www/how-big-is-it.php:406
+#, php-format
+msgid "This value might be easier to parse: %s"
+msgstr ""
+
+#: www/index.php:36
+msgid "Quarterly Branch"
+msgstr ""
+
+#: www/index.php:38
+msgid "Main Branch"
+msgstr ""
+
+#: www/index.php:82
+msgid "Most recent commits"
+msgstr ""
+
+#: www/index.php:150
+#, php-format
+msgid "Commits from the %s branch"
+msgstr ""
+
+#: www/inthenews.php:15
+msgid "In The News"
+msgstr ""
+
+#: www/inthenews.php:25
+msgid "In the news"
+msgstr ""
+
+#: www/inthenews.php:30
+#, php-format
+msgid ""
+"This page is just a place for me to record the %s articles which appear on "
+"other sites.  Links are recorded in reverse chronological order (i.e. newest "
+"first)."
+msgstr ""
+
+#: www/inthenews.php:40 www/inthenews.php:41
+#, php-format
+msgid "%s site announcement"
+msgstr ""
+
+#: www/inthenews.php:41
+msgid ""
+"That link no longer works, try this copy on the Internet Archive instead:"
+msgstr ""
+
+#: www/login.php:104
+#, php-format
+msgid "Your account has been disabled.  Please contact %s"
+msgstr ""
+
+#: www/login.php:107
+msgid ""
+"Your account needs to be enabled by following the directions in the email we "
+"have sent to you."
+msgstr ""
+
+#: www/login.php:108
+msgid ""
+"To have your activation details resent to the email address you supplied, "
+"click on the resend button"
+msgstr ""
+
+#: www/login.php:111
+msgid "Resend"
+msgstr ""
+
+#: www/login.php:114
+msgid "I have no idea what your account status is."
+msgstr ""
+
+#: www/login.php:139 www/welcome.php:34
+msgid ""
+"You should soon receive an email at the mail address you supplied. It will "
+"contain instructions to enable your account."
+msgstr ""
+
+#: www/login.php:141
+#, php-format
+msgid "I'm sorry but I couldn't send your token.  Please contact %s."
+msgstr ""
+
+#: www/login.php:144
+#, php-format
+msgid ""
+"Hmmm, I know nothing about you.  That can't be right.  Please contact %s"
+msgstr ""
+
+#: www/login.php:167
+msgid "Login Failed!"
+msgstr ""
+
+#: www/login.php:175
+msgid ""
+"The User ID and password you supplied could not be used to login.  This "
+"could be for one of the following reasons:"
+msgstr ""
+
+#: www/login.php:177
+msgid "The login id is incorrect"
+msgstr ""
+
+#: www/login.php:178
+msgid "The password is incorrect"
+msgstr ""
+
+#: www/login.php:179
+msgid "Both of the above"
+msgstr ""
+
+#: www/login.php:201
+msgid "NOTICE"
+msgstr ""
+
+#: www/login.php:237
+msgid "Your browser must allow cookies for this login to work."
+msgstr ""
+
+#: www/my-flagged-commits.php:15 www/my-flagged-commits.php:85
+msgid "My flagged commits"
+msgstr ""
+
+#: www/new-user.php:55
+msgid "Please enter a user id."
+msgstr ""
+
+#: www/new-user.php:61
+msgid ""
+"Please, just use plain text for your user id.  This event has been logged."
+msgstr ""
+
+#: www/new-user.php:72
+msgid ""
+"Please, just use plain text for your email.  This event has been logged."
+msgstr ""
+
+#: www/new-user.php:77 www/password-reset-via-token.php:51
+msgid "The password was not confirmed.  It must be entered twice."
+msgstr ""
+
+#: www/new-user.php:81
+msgid "A password must be supplied"
+msgstr ""
+
+#: www/new-user.php:103
+msgid "Your CAPTCHA code is not valid"
+msgstr ""
+
+#: www/new-user.php:152
+msgid "OUCH! I couldn't add you to the database"
+msgstr ""
+
+#: www/new-user.php:156
+msgid "OUCH! I couldn't assign you a new UserID"
+msgstr ""
+
+#: www/new-user.php:161
+msgid "That User ID is already in use.  Please select a different User ID."
+msgstr ""
+
+#: www/new-user.php:176 www/welcome.php:13
+msgid "New User"
+msgstr ""
+
+#: www/new-user.php:222
+msgid "New User Details"
+msgstr ""
+
+#: www/new-user.php:227
+msgid "Please observe the following points:"
+msgstr ""
+
+#: www/new-user.php:230
+msgid ""
+"You must supply a valid email address. Instructions to enable your account "
+"will be emailed to you at that address."
+msgstr ""
+
+#: www/new-user.php:232
+#, php-format
+msgid "If you have a spam filter, please allow all mail from %1$s and %2$s."
+msgstr ""
+
+#: www/new-user.php:234
+msgid ""
+"Please disable any auto-responders for the above domains.  I get enough "
+"email without being told when you'll be back from holiday or who else I can "
+"contact..."
+msgstr ""
+
+#: www/new-user.php:236
+msgid "Your browser must allow cookies for the login to work."
+msgstr ""
+
+#: www/new-user.php:241
+msgid "Your cooperation with the above will make my life easier.  Thank you."
+msgstr ""
+
+#: www/now-in-maintenance-mode.php:20 www/now-in-maintenance-mode.php:40
+msgid "Maintenance Mode"
+msgstr ""
+
+#: www/now-in-maintenance-mode.php:45
+msgid ""
+"The website is now in maintenance mode. No updates are allowed during this "
+"process."
+msgstr ""
+
+#: www/now-in-maintenance-mode.php:49
+#, php-format
+msgid ""
+"This page will reload every %d second. When maintenance mode finishes, this "
+"page will be redirected to the home page."
+msgid_plural ""
+"This page will reload every %d seconds. When maintenance mode finishes, this "
+"page will be redirected to the home page."
+msgstr[0] ""
+msgstr[1] ""
+
+#: www/now-in-maintenance-mode.php:53
+msgid "work in progress"
+msgstr ""
+
+#: www/other-copyrights.php:16
+msgid "Other copyrights"
+msgstr ""
+
+#: www/other-copyrights.php:27
+msgid "The copyright on the daemon you see in the website logo is as follows:"
+msgstr ""
+
+#: www/package.php:14
+msgid "Search by package"
+msgstr ""
+
+#: www/package.php:51
+#, php-format
+msgid ""
+"The package specified ('%s') could not be found.  We have a few suggestions."
+msgstr ""
+
+#: www/package.php:53
+#, php-format
+msgid "%1$s for ports containing '%2$s' in their name."
+msgstr ""
+
+#: www/package.php:57
+msgid "I have no idea what I should be doing"
+msgstr ""
+
+#: www/password-reset-via-token.php:70
+msgid "It seems that token is no longer valid."
+msgstr ""
+
+#: www/password-reset-via-token.php:87 www/password-reset-via-token.php:140
+msgid "Reset password via token"
+msgstr ""
+
+#: www/password-reset-via-token.php:131
+msgid ""
+"SUCCESS! Your password has been updated.  Please <a href=\"/"
+"login.php\">login</a>"
+msgstr ""
+
+#: www/password-reset-via-token.php:145
+msgid "Please enter your new password twice."
+msgstr ""
+
+#: www/pkg_upload.php:20
+msgid "Uploading pkg_info"
+msgstr ""
+
+#: www/pkg_upload.php:57
+msgid ""
+"You can update your watch lists from the packages database on your "
+"computer.  Use the output from the <code class=\"code\">pkg info</code> "
+"command as the input for this page.  FreshPorts will take this information, "
+"analyze it, and use that data to update your watch list."
+msgstr ""
+
+#: www/pkg_upload.php:58 www/pkg_upload.php:153 www/pkg_upload.php:201
+msgid "help"
+msgstr ""
+
+#: www/pkg_upload.php:62
+msgid ""
+"You can either save the output to a file and update the file, or you can "
+"copy/paste the results into a form."
+msgstr ""
+
+#: www/pkg_upload.php:68
+msgid "Uploading a file"
+msgstr ""
+
+#: www/pkg_upload.php:70
+msgid "Here are the steps you should perform:"
+msgstr ""
+
+#: www/pkg_upload.php:76
+msgid "You should first issue this command on your FreeBSD computer:"
+msgstr ""
+
+#: www/pkg_upload.php:87
+msgid ""
+"Then click on the <B>Choose</B> button and select the file you created in "
+"the previous step."
+msgstr ""
+
+#: www/pkg_upload.php:92 www/pkg_upload.php:104 www/pkg_upload.php:126
+msgid "Staging"
+msgstr ""
+
+#: www/pkg_upload.php:92
+#, php-format
+msgid "Then click on either %1$s or %2$s."
+msgstr ""
+
+#: www/pkg_upload.php:102
+msgid "The file name containing the output from step 1:"
+msgstr ""
+
+#: www/pkg_upload.php:104 www/pkg_upload.php:126
+msgid "Click here to go to staging area"
+msgstr ""
+
+#: www/pkg_upload.php:106 www/pkg_upload.php:128
+msgid "Use this Watch List:"
+msgstr ""
+
+#: www/pkg_upload.php:112 www/pkg_upload.php:134
+msgid "Replace list contents"
+msgstr ""
+
+#: www/pkg_upload.php:113 www/pkg_upload.php:135
+msgid "Append to list (duplicates will be removed)"
+msgstr ""
+
+#: www/pkg_upload.php:114 www/pkg_upload.php:136
+msgid "Click here to avoid staging area"
+msgstr ""
+
+#: www/pkg_upload.php:120
+msgid "Copy/Paste"
+msgstr ""
+
+#: www/pkg_upload.php:124
+msgid "Paste the output of <code>pkg info -qoa</code> here:"
+msgstr ""
+
+#: www/pkg_upload.php:153
+#, php-format
+msgid ""
+"The following information is in your Staging Area.  To save it to a Watch "
+"List, please click on the \"%s\" button."
+msgstr ""
+
+#: www/pkg_upload.php:153 www/pkg_upload.php:157
+msgid "Update watch list"
+msgstr ""
+
+#: www/pkg_upload.php:158 www/pkg_upload.php:205
+msgid "Empty staging area"
+msgstr ""
+
+#: www/pkg_upload.php:166
+msgid "Ports found from your uploaded data."
+msgstr ""
+
+#: www/pkg_upload.php:166
+msgid "Those marked with a W are already on your watch list."
+msgstr ""
+
+#: www/pkg_upload.php:167
+msgid "Ports not found."
+msgstr ""
+
+#: www/pkg_upload.php:167
+msgid ""
+"These ports are installed on your system but could not be located within "
+"FreshPorts.  Perhaps they have been renamed or removed from the ports tree.  "
+"You could use the search link, locate the ports, and add them to your watch "
+"list manually."
+msgstr ""
+
+#: www/pkg_upload.php:168
+msgid "Ports duplicated"
+msgstr ""
+
+#: www/pkg_upload.php:168
+msgid ""
+"The following ports have been installed multiple times, most definitely with "
+"different versions on your system."
+msgstr ""
+
+#: www/pkg_upload.php:170
+msgid "Port from your watch lists"
+msgstr ""
+
+#: www/pkg_upload.php:170
+msgid ""
+"These ports are on your watch list but do not appear in your pkg info data."
+msgstr ""
+
+#: www/pkg_upload.php:200
+msgid ""
+"Your staging area contains your uploaded information.  Please choose a watch "
+"list, and click on Go."
+msgstr ""
+
+#: www/pkg_upload.php:223
+msgid "Uploading pkg info"
+msgstr ""
+
+#: www/pkg_upload.php:225
+msgid ""
+"<span class=\"element-details\">WARNING</span>: The system will clear out "
+"your staging area from time to time."
+msgstr ""
+
+#: www/pkg_upload.php:238
+msgid ""
+"You must <a href=\"/login.php\">login</a> before you can upload your package "
+"information."
+msgstr ""
+
+#: www/pkg_upload.php:259
+msgid "I was unable to empty your staging area before proceeding."
+msgstr ""
+
+#: www/pkg_upload.php:296
+msgid "Your staging area has been cleared."
+msgstr ""
+
+#: www/pkg_upload.php:370 www/pkg_upload.php:428
+msgid "Your watch list has been updated."
+msgstr ""
+
+#: www/pkg_upload.php:372 www/pkg_upload.php:430
+msgid "Your staging area was not cleared."
+msgstr ""
+
+#: www/pkg_upload.php:449
+msgid ""
+"Your watch list has been updated. You may wish to empty your staging area "
+"now."
+msgstr ""
+
+#: www/port-watch.php:131
+#, php-format
+msgid "Watch List %s"
+msgstr ""
+
+#: www/port-watch.php:144 www/watch.php:67
+#, php-format
+msgid "Watch List - %s"
+msgstr ""
+
+#: www/port-watch.php:188
+#, php-format
+msgid "%1$d port found (%2$d primary, %3$d secondary)"
+msgid_plural "%1$d ports found (%2$d primary, %3$d secondary)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: www/port-watch.php:190 www/watch.php:321
+#, php-format
+msgid "%d port found"
+msgid_plural "%d ports found"
+msgstr[0] ""
+msgstr[1] ""
+
+#: www/port-watch.php:252
+msgid "update watch list"
+msgstr ""
+
+#: www/port-watch.php:273
+msgid "No ports found.  Perhaps this is an invalid category id."
+msgstr ""
+
+#: www/port-watch.php:282
+msgid "This page operates on a single watch list at a time."
+msgstr ""
+
+#: www/port-watch.php:283
+#, php-format
+msgid ""
+"This page shows you the ports in a category (%s) that are on your selected "
+"watch list."
+msgstr ""
+
+#: www/port-watch.php:284
+msgid "The entries with a tick beside them are on your selected watch list."
+msgstr ""
+
+#: www/port-watch.php:285
+msgid ""
+"When one of the ports in your watch list changes, you will be notified by "
+"email if you have selected a notification frequency within your <a "
+"href=\"customize.php\">account settings</a>."
+msgstr ""
+
+#: www/port-watch.php:287
+msgid "[D] indicates a port which has been removed from the tree."
+msgstr ""
+
+#: www/port-watch.php:288
+msgid ""
+"indicates a port which resides in another category but lists this category "
+"as a secondary."
+msgstr ""
+
+#: www/ports-broken.php:30
+msgid "Broken ports"
+msgstr ""
+
+#: www/ports-broken.php:31
+msgid "These are the broken ports"
+msgstr ""
+
+#: www/ports-conflicts.php:14
+msgid "FreshPorts Conflict Matches"
+msgstr ""
+
+#: www/ports-conflicts.php:16
+msgid "This page is manually generated and was last updated at:"
+msgstr ""
+
+#: www/ports-conflicts.php:18
+msgid ""
+"Please look for the ports you maintain, and verify the conflicts are what "
+"you expect.  The middle column is the port you maintain. The right hand "
+"column are the conflicts."
+msgstr ""
+
+#: www/ports-conflicts.php:20
+#, php-format
+msgid "Please report any issues to %s"
+msgstr ""
+
+#: www/ports-conflicts.php:39
+msgid "that did not work"
+msgstr ""
+
+#: www/ports-conflicts.php:42
+msgid "conflicts with"
+msgstr ""
+
+#: www/ports-conflicts.php:46
+msgid "conflicts with:"
+msgstr ""
+
+#: www/ports-deleted.php:31
+msgid "These are the deleted ports"
+msgstr ""
+
+#: www/ports-deprecated.php:30
+msgid "Deprecated ports"
+msgstr ""
+
+#: www/ports-deprecated.php:31
+msgid "These are the deprecated ports"
+msgstr ""
+
+#: www/ports-expiration-date.php:30
+msgid "Ports with an expiration date"
+msgstr ""
+
+#: www/ports-expiration-date.php:31
+msgid ""
+"These ports have an expiration date, after which they may be removed from "
+"the tree"
+msgstr ""
+
+#: www/ports-expired.php:30
+msgid "Ports that have expired"
+msgstr ""
+
+#: www/ports-expired.php:31
+msgid ""
+"These ports are past their expiration date.  This list never includes "
+"deleted ports."
+msgstr ""
+
+#: www/ports-forbidden.php:30
+msgid "Forbidden ports"
+msgstr ""
+
+#: www/ports-forbidden.php:31
+msgid "These are the forbidden ports"
+msgstr ""
+
+#: www/ports-ignore.php:30
+msgid "Ignored ports"
+msgstr ""
+
+#: www/ports-ignore.php:31
+msgid "These are the ignored ports"
+msgstr ""
+
+#: www/ports-interactive.php:30
+msgid "Interactive ports"
+msgstr ""
+
+#: www/ports-interactive.php:31
+msgid "These are the interactive ports"
+msgstr ""
+
+#: www/ports-new.php:28
+msgid "past 24 hours"
+msgstr ""
+
+#: www/ports-new.php:33
+msgid "past 48 hours"
+msgstr ""
+
+#: www/ports-new.php:40
+msgid "past 7 days"
+msgstr ""
+
+#: www/ports-new.php:45
+msgid "past 2 weeks"
+msgstr ""
+
+#: www/ports-new.php:50
+msgid "past month"
+msgstr ""
+
+#: www/ports-new.php:55
+msgid "past 3 months"
+msgstr ""
+
+#: www/ports-new.php:65
+#, php-format
+msgid "New ports - %s"
+msgstr ""
+
+#: www/ports-new.php:85
+msgid "These are the recently added ports."
+msgstr ""
+
+#: www/ports-new.php:104
+msgid "Sort by category"
+msgstr ""
+
+#: www/ports-new.php:104
+#, php-format
+msgid "This page is sorted by date added.  %s"
+msgstr ""
+
+#: www/ports-new.php:110
+msgid "Sort by date added"
+msgstr ""
+
+#: www/ports-new.php:110
+#, php-format
+msgid "This page is sorted by category.  %s"
+msgstr ""
+
+#: www/ports-no-cdrom.php:30
+msgid "NO CDROM ports"
+msgstr ""
+
+#: www/ports-no-cdrom.php:31
+msgid "These are the NO CDROM ports"
+msgstr ""
+
+#: www/ports-restricted.php:30
+msgid "Restricted ports"
+msgstr ""
+
+#: www/ports-restricted.php:31
+msgid "These are the restricted ports"
+msgstr ""
+
+#: www/ports-vulnerable.php:30
+msgid "Vulnerable ports"
+msgstr ""
+
+#: www/ports-vulnerable.php:31
+msgid "These are the vulnerable ports"
+msgstr ""
+
+#: www/report-package-notifications.php:81
+msgid "Select the ABI"
+msgstr ""
+
+#: www/report-package-notifications.php:101
+msgid "Select the package set"
+msgstr ""
+
+#: www/report-package-notifications.php:131
+msgid ""
+"You have to click at least one watch list, one ABI, and one package set. I'm "
+"stopping right now. You can click back and try again."
+msgstr ""
+
+#: www/report-package-notifications.php:230
+msgid "Package Notifications"
+msgstr ""
+
+#: www/report-package-notifications.php:255
+msgid ""
+"This page allows you to choose which watch lists will be used for Package "
+"Notifications."
+msgstr ""
+
+#: www/report-package-notifications.php:258
+msgid ""
+"For each watch list, select one or more ABI.  When a new package is "
+"available for something on your watch list, in the ABI you selected, an "
+"email will be sent as soon as FreshPorts discovers the fresh package."
+msgstr ""
+
+#: www/report-package-notifications.php:271
+msgid "Choose watch lists:"
+msgstr ""
+
+#: www/report-package-notifications.php:277
+msgid "Choose your ABI values:"
+msgstr ""
+
+#: www/report-package-notifications.php:283
+msgid "Choose your package set values:"
+msgstr ""
+
+#: www/report-package-notifications.php:288
+msgid "Choose an action:"
+msgstr ""
+
+#: www/report-package-notifications.php:289
+msgid "Add Selected"
+msgstr ""
+
+#: www/report-package-notifications.php:292
+msgid "Delete Selected"
+msgstr ""
+
+#: www/report-package-notifications.php:298
+msgid "Your selected watch list / ABI combinations:"
+msgstr ""
+
+#: www/report-subscriptions.php:24
+msgid "Report subscriptions"
+msgstr ""
+
+#: www/report-subscriptions.php:104
+msgid "OUCH, that's not very nice.  something went wrong:"
+msgstr ""
+
+#: www/report-subscriptions.php:165
+msgid ""
+"This page allows you to select the reports you wish to receive and the "
+"frequency of the report."
+msgstr ""
+
+#: www/report-subscriptions.php:170
+msgid "Frequency"
+msgstr ""
+
+#: www/report-subscriptions.php:170
+msgid "Report Name"
+msgstr ""
+
+#: www/report-subscriptions.php:234
+msgid "New Package Notification"
+msgstr ""
+
+#: www/report-subscriptions.php:237
+msgid ""
+"If you are subscribing to <i>New Package Notification</i> above, you'll also "
+"need to <a href=\"/report-package-notifications.php\">specify ABI and watch "
+"lists</a>."
+msgstr ""
+
+#: www/report-subscriptions.php:244
+msgid "Beta mailing list"
+msgstr ""
+
+#: www/report-subscriptions.php:246
+msgid ""
+"You may wish to help me test new FreshPorts features or even just get a "
+"sneak peek at them.  If so, I urge you to join the new Beta mailing list.  "
+"This will be a low volume list which broadcasts details of new features "
+"which you can try out before they hit the main website.  To subscribe, "
+"follow the directions found on the <a href=\"https://lists.freshports.org/"
+"mailman/listinfo/\">FreshPorts mailing list website</a>"
+msgstr ""
+
+#: www/sanity_test_failures.php:110
+msgid ""
+"These are the sanity test failures found by FreshPorts.  Sanity tests have "
+"been in place for several years, but have only been saved in the database "
+"since 10 October 2006."
+msgstr ""
+
+#: www/sanity_test_failures.php:185
+msgid "Sanity Test Results"
+msgstr ""
+
+#: www/search.php:23 www/vuxml.php:24
+msgid "You must be logged in to use this feature."
+msgstr ""
+
+#: www/search.php:185
+msgid ""
+"Ouch, something really nasty is going on.  Error code: UAFC.  Please contact "
+"the webmaster with this message."
+msgstr ""
+
+#: www/search.php:337
+msgid ""
+"If the 'Output format' is 'Depends', then you must search by 'Port Name'. "
+"Please adjust the parameters and try again."
+msgstr ""
+
+#: www/search.php:353
+msgid "Search FreshPorts using Google"
+msgstr ""
+
+#: www/search.php:414
+msgid ""
+"<b>NOTE</b>: Instead of using 'sounds like' as instructed, the system used "
+"'containing'.  See the notes above for why this is done."
+msgstr ""
+
+#: www/search.php:732
+msgid "Sorry, but you messed something up in your manually created query"
+msgstr ""
+
+#: www/search.php:983 www/search.php:1046
+msgid "something went terribly wrong.  Sorry."
+msgstr ""
+
+#: www/search.php:1080
+msgid ""
+"Please let postmaster@freshports.org know that the search log could not be "
+"opened.  This does not affect the search results."
+msgstr ""
+
+#: www/search.php:1113
+msgid "The FreshPorts Search"
+msgstr ""
+
+#: www/search.php:1120
+msgid "Author Email"
+msgstr ""
+
+#: www/search.php:1121
+msgid "Author Name"
+msgstr ""
+
+#: www/search.php:1122
+msgid "Commit Message"
+msgstr ""
+
+#: www/search.php:1123
+msgid "Committer ID (email without @FreeBSD.org)"
+msgstr ""
+
+#: www/search.php:1124
+msgid "Committer Email"
+msgstr ""
+
+#: www/search.php:1125
+msgid "Committer Name"
+msgstr ""
+
+#: www/search.php:1129
+msgid "Depends Build/Lib/Run"
+msgstr ""
+
+#: www/search.php:1134
+msgid "Makefile (ports only)"
+msgstr ""
+
+#: www/search.php:1142
+msgid "Under a pathname"
+msgstr ""
+
+#: www/search.php:1147
+msgid "equal to"
+msgstr ""
+
+#: www/search.php:1148
+msgid "starting with"
+msgstr ""
+
+#: www/search.php:1149
+msgid "containing"
+msgstr ""
+
+#: www/search.php:1150
+msgid "ending with"
+msgstr ""
+
+#: www/search.php:1151
+msgid "sounds like"
+msgstr ""
+
+#: www/search.php:1159
+msgid "results"
+msgstr ""
+
+#: www/search.php:1170
+msgid "Search only this category:"
+msgstr ""
+
+#: www/search.php:1179
+msgid ""
+"The list of categories is not available - the cache file does not exist - "
+"This should never happen."
+msgstr ""
+
+#: www/search.php:1188
+msgid "Include deleted ports"
+msgstr ""
+
+#: www/search.php:1191
+msgid "Case sensitive search"
+msgstr ""
+
+#: www/search.php:1194
+msgid "Sort by:"
+msgstr ""
+
+#: www/search.php:1195
+msgid "Port"
+msgstr ""
+
+#: www/search.php:1201
+msgid "ascending"
+msgstr ""
+
+#: www/search.php:1202
+msgid "descending"
+msgstr ""
+
+#: www/search.php:1210
+msgid "Include /src tree"
+msgstr ""
+
+#: www/search.php:1214
+msgid "<b>Output format</b>:"
+msgstr ""
+
+#: www/search.php:1216
+msgid "Plain Text"
+msgstr ""
+
+#: www/search.php:1217
+msgid "Depends (only works with <b>Port Name</b>)"
+msgstr ""
+
+#: www/search.php:1220
+msgid "Maximum Effort"
+msgstr ""
+
+#: www/search.php:1223
+msgid "Minimal output"
+msgstr ""
+
+#: www/search.php:1228
+msgid "<b>Branch</b>:"
+msgstr ""
+
+#: www/search.php:1252
+msgid ""
+"Case sensitivity is ignored for \"sounds like\" and output is ordered by the "
+"soundex."
+msgstr ""
+
+#: www/search.php:1253
+msgid "When searching on 'Message ID', the type of match is ignored."
+msgstr ""
+
+#: www/search.php:1254
+msgid "When searching on 'Commit Message' only 'containing' is used."
+msgstr ""
+
+#: www/search.php:1255
+msgid ""
+"When searching by 'Under a pathname', your path must start with something "
+"like /ports/, /doc/, or /src/. All commits under that point will be "
+"returned. The selected match type is ignored and defaults to 'Starts with'."
+msgstr ""
+
+#: www/search.php:1256
+msgid ""
+"Searching for 'sounds like' is only valid for Author Email, Author Name, "
+"Committer Email, Committer Name, Maintainer, Package Name, and Port Name - "
+"but I'm not sure it is indexed properly. Ask Dan about that."
+msgstr ""
+
+#: www/search.php:1264
+msgid "Special searches:"
+msgstr ""
+
+#: www/search.php:1275
+msgid "Ports I Maintain"
+msgstr ""
+
+#: www/search.php:1296
+msgid "No results found"
+msgstr ""
+
+#: www/search.php:1332
+#, php-format
+msgid "Number of ports: %d"
+msgstr ""
+
+#: www/security-policy.php:32
+msgid ""
+"I appreciate the contributions of the security researchers who have helped "
+"out on this website. Please be aware that this is not a for-profit website. "
+"It is a hobby. It is something I do in my spare time. It is run as a service "
+"to the open source community."
+msgstr ""
+
+#: www/security-policy.php:35
+msgid ""
+"With that in mind, do not expect to make a living getting bounties on this "
+"website. With your consent, I will list your contributions here. Your "
+"contribution can be anonymous if you wish. I am happy to acknowledge the "
+"work you do and the findings you present."
+msgstr ""
+
+#: www/vuxml.php:53
+#, php-format
+msgid "This page displays %s about FreeBSD Ports."
+msgstr ""
+
+#: www/vuxml.php:53
+msgid "vulnerability information"
+msgstr ""
+
+#: www/vuxml.php:58
+#, php-format
+msgid "The VUXML data was last processed by FreshPorts on %s"
+msgstr ""
+
+#: www/vuxml.php:60
+msgid ""
+"We have no information on when we last processed VUXML. This should never "
+"happen."
+msgstr ""
+
+#: www/vuxml.php:64
+msgid "List all Vulnerabilities, by package"
+msgstr ""
+
+#: www/vuxml.php:68
+msgid "List all Vulnerabilities, by date"
+msgstr ""
+
+#: www/vuxml.php:80
+msgid "These are the vulnerabilities relating to the commit you have selected:"
+msgstr ""
+
+#: www/vuxml.php:84 www/vuxml.php:209
+msgid "VuXML ID"
+msgstr ""
+
+#: www/vuxml.php:156 www/vuxml.php:250
+msgid "VuXML entries as processed by FreshPorts"
+msgstr ""
+
+#: www/vuxml.php:160
+msgid "vuln count<br>[blank means (1)]"
+msgstr ""
+
+#: www/vuxml.php:161 www/vuxml.php:253
+msgid "Port(s)"
+msgstr ""
+
+#: www/vuxml.php:190
+#, php-format
+msgid "Number of packages: %d"
+msgstr ""
+
+#: www/vuxml.php:191 www/vuxml.php:279
+#, php-format
+msgid "Number of vulns: %d"
+msgstr ""
+
+#: www/vuxml.php:218
+msgid "more detail"
+msgstr ""
+
+#: www/vuxml.php:242
+msgid "no vulnerabilities found.  it looks as if the data is missing."
+msgstr ""
+
+#: www/vuxml.php:251
+msgid "Date"
+msgstr ""
+
+#: www/vuxml.php:278
+#, php-format
+msgid "Number of vulns/ports: %d"
+msgstr ""
+
+#: www/vuxml.php:280
+msgid "A date marked with <sup>*</sup> indicates an updated vuxml entry."
+msgstr ""
+
+#: www/watch-categories.php:27
+msgid "Watch Categories"
+msgstr ""
+
+#: www/watch-categories.php:80
+msgid ""
+"This screen contains a list of the port categories. The categories with a * "
+"beside them contain ports which are on your watch list. When a port changes "
+"in one of your watch categories, you will be notified by email if you have "
+"selected a notification frequency within <a href=\"customize.php\">your "
+"account</a>."
+msgstr ""
+
+#: www/watch-list-maintenance.php:55
+msgid "a-z, A-Z, and 0-9"
+msgstr ""
+
+#: www/watch-list-maintenance.php:57
+msgid "Watch list names must contain only A..Z, a..z, or 0..9."
+msgstr ""
+
+#: www/watch-list-maintenance.php:62 www/watch-list-maintenance.php:304
+#: www/watch-list.php:69 www/watch-list.php:81
+msgid "Watch list maintenance"
+msgstr ""
+
+#: www/watch-list-maintenance.php:84
+msgid "Add"
+msgstr ""
+
+#: www/watch-list-maintenance.php:85
+msgid "Rename"
+msgstr ""
+
+#: www/watch-list-maintenance.php:86
+msgid "Delete"
+msgstr ""
+
+#: www/watch-list-maintenance.php:87
+msgid "Delete All"
+msgstr ""
+
+#: www/watch-list-maintenance.php:88
+msgid "Empty"
+msgstr ""
+
+#: www/watch-list-maintenance.php:89
+msgid "Empty All"
+msgstr ""
+
+#: www/watch-list-maintenance.php:90
+msgid "Set Default"
+msgstr ""
+
+#: www/watch-list-maintenance.php:91
+msgid "Set options"
+msgstr ""
+
+#: www/watch-list-maintenance.php:134
+msgid "You did not supply the confirmation text"
+msgstr ""
+
+#: www/watch-list-maintenance.php:143
+msgid "When creating a new list, you must supply a name."
+msgstr ""
+
+#: www/watch-list-maintenance.php:153
+msgid "When renaming an existing list, you must supply a name."
+msgstr ""
+
+#: www/watch-list-maintenance.php:192
+msgid ""
+"Select exactly one watch list to be renamed.  I can't handle zero or more "
+"than one."
+msgstr ""
+
+#: www/watch-list-maintenance.php:276
+msgid "Hmmm, I have no idea what you asked me to do"
+msgstr ""
+
+#: www/watch-list-maintenance.php:287
+msgid ""
+"You have no default watch lists.  You have chosen to act upon the default "
+"watch list[s].  With this combination, you will be unable to add ports using "
+"the one-click method.  It is suggested that you set at least one watch list "
+"to be the default watch list."
+msgstr ""
+
+#: www/watch-list-maintenance.php:312
+msgid "Let's try that again!"
+msgstr ""
+
+#: www/watch-list-maintenance.php:318
+msgid "(scroll down for instructions)"
+msgstr ""
+
+#: www/watch-list-maintenance.php:318 www/watch-list-maintenance.php:395
+msgid "Actions"
+msgstr ""
+
+#: www/watch-list-maintenance.php:330
+#, php-format
+msgid "(1) - only %s"
+msgstr ""
+
+#: www/watch-list-maintenance.php:352
+msgid "Confirm:"
+msgstr ""
+
+#: www/watch-list-maintenance.php:353
+msgid "(case sensitive)"
+msgstr ""
+
+#: www/watch-list-maintenance.php:363 www/watch-list-maintenance.php:418
+msgid "Options"
+msgstr ""
+
+#: www/watch-list-maintenance.php:366
+msgid "When clicking on Add/Remove for a port,<br> the action should affect"
+msgstr ""
+
+#: www/watch-list-maintenance.php:368
+msgid "the default watch list[s]"
+msgstr ""
+
+#: www/watch-list-maintenance.php:369
+msgid "Ask for watch list name[s] each time"
+msgstr ""
+
+#: www/watch-list-maintenance.php:380
+msgid "Information"
+msgstr ""
+
+#: www/watch-list-maintenance.php:382
+msgid "Names do not have to be unique but it is advisable."
+msgstr ""
+
+#: www/watch-list-maintenance.php:383
+#, php-format
+msgid "Valid characters are: %s"
+msgstr ""
+
+#: www/watch-list-maintenance.php:384
+msgid "Please contact the webmaster if you want more than 5 lists."
+msgstr ""
+
+#: www/watch-list-maintenance.php:387
+msgid "Help"
+msgstr ""
+
+#: www/watch-list-maintenance.php:390
+msgid "this is what it's all about"
+msgstr ""
+
+#: www/watch-list-maintenance.php:392
+msgid "These are your existing watch lists."
+msgstr ""
+
+#: www/watch-list-maintenance.php:395
+msgid "what you can do to your watch lists"
+msgstr ""
+
+#: www/watch-list-maintenance.php:397
+msgid ""
+"add a new watch list.  Supply the name in the space provided.  This name "
+"will be supplied in any mail notification messages for this watch lists."
+msgstr ""
+
+#: www/watch-list-maintenance.php:399
+msgid ""
+"rename a new watch list.  Select the watch list and supply the new name."
+msgstr ""
+
+#: www/watch-list-maintenance.php:402
+msgid "Deletes the selected watch lists."
+msgstr ""
+
+#: www/watch-list-maintenance.php:404
+msgid "Deletes all of your watch lists."
+msgstr ""
+
+#: www/watch-list-maintenance.php:406
+msgid "Empties the selected watch lists."
+msgstr ""
+
+#: www/watch-list-maintenance.php:408
+msgid "Empties all of your watch lists."
+msgstr ""
+
+#: www/watch-list-maintenance.php:410
+msgid ""
+"Sets the default watch list[s].  The default watch list[s] is/are used when:"
+msgstr ""
+
+#: www/watch-list-maintenance.php:412
+msgid "you click on the add/remove links"
+msgstr ""
+
+#: www/watch-list-maintenance.php:413
+msgid ""
+"when displaying a port, the add/remove link reflects whether or not that "
+"port is on this list"
+msgstr ""
+
+#: www/watch-list-maintenance.php:418
+msgid "this affects the display/actions on other pages"
+msgstr ""
+
+#: www/watch-list-maintenance.php:420
+msgid "Set the options to be used when clicking on Add/Remove for a port."
+msgstr ""
+
+#: www/watch-list-maintenance.php:425
+#, php-format
+msgid ""
+"These items require confirmation by typing the button name in the "
+"confirmation text box (case sensitive).  Be careful: these actions cannot be "
+"undone. For example, when deleting or emptying a list, you must confirm your "
+"action by typing the button name into this field (e.g. if you click on "
+"<b>%1$s</b>, you must type <b>%1$s</b> into the box above in order for the "
+"action to be completed). This is case sensitive."
+msgstr ""
+
+#: www/watch-list.php:127
+msgid "Please select the watch lists which should contain this port:"
+msgstr ""
+
+#: www/watch-list.php:149
+msgid "NOTES"
+msgstr ""
+
+#: www/watch-list.php:151
+msgid "'+' indicates that the port is on this watch list."
+msgstr ""
+
+#: www/watch-list.php:152
+msgid "'*' indicates a default watch list."
+msgstr ""
+
+#: www/watch-list.php:153
+msgid ""
+"the watch lists which are selected are those upon which the port appears"
+msgstr ""
+
+#: www/watch.php:61
+msgid "Watch List"
+msgstr ""
+
+#: www/watch.php:88
+msgid "You have no watch lists."
+msgstr ""
+
+#: www/watch.php:90
+msgid ""
+"These are the ports which are on your <a href=\"/watch-"
+"categories.php\">watch list</a>. That link also appears on the right hand "
+"side of this page, under Login."
+msgstr ""
+
+#: www/watch.php:111
+msgid ""
+"Some of your watched ports have moved.  You are still watching the old ports."
+msgstr ""
+
+#: www/watch.php:113
+msgid "Old Port"
+msgstr ""
+
+#: www/watch.php:113
+msgid "Replaced by"
+msgstr ""
+
+#: www/watch.php:126
+msgid ""
+"You should visit the <i>Replaced By</i> link first, add that port to your "
+"watch list, then visit the <i>Old Port</i> link and remove it from your "
+"watch list."
+msgstr ""
+
+#: www/watch.php:147
+#, php-format
+msgid "This page is sorted by port.  but you can sort by %1$s or %2$s"
+msgstr ""
+
+#: www/watch.php:147 www/watch.php:154
+msgid "last update"
+msgstr ""
+
+#: www/watch.php:154
+#, php-format
+msgid "This page is sorted by category.  but you can sort by %1$s or %2$s"
+msgstr ""
+
+#: www/watch.php:161
+#, php-format
+msgid ""
+"This page is sorted by last update date.  but you can sort by %1$s or %2$s"
+msgstr ""
+
+#: www/watch.php:177
+msgid "View watched ports + entries from <code>/usr/ports/UPDATING</code>"
+msgstr ""
+
+#: www/watch.php:180
+msgid "View all watched ports"
+msgstr ""
+
+#: www/watch.php:182
+msgid "View all watched ports + entries from <code>/usr/ports/UPDATING</code>"
+msgstr ""
+
+#: www/watch.php:189
+msgid "View all watched ports."
+msgstr ""
+
+#: www/watch.php:191
+msgid ""
+"View only watched ports with entries in <code>/usr/ports/UPDATING</code>"
+msgstr ""
+
+#: www/watch.php:305
+msgid "there was an error:"
+msgstr ""
+
+#: www/watch.php:323
+msgid "no ports found"
+msgstr ""
+
+#: www/watch.php:334
+msgid ""
+"(on your watch list, but only showing those with entries in <code>/usr/ports/"
+"UPDATING</code>)"
+msgstr ""
+
+#: www/watch.php:401
+#, php-format
+msgid "(on your watch list, but only showing %d)"
+msgid_plural "(on your watch list, but only showing %d)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: www/welcome.php:25
+msgid "Account created"
+msgstr ""
+
+#: www/welcome.php:30
+msgid "Your account has been created."
+msgstr ""
+
+#: www/welcome.php:37
+msgid ""
+"If you do not receive that email, please attempt to login and you will have "
+"an opportunity to resend the notification."
+msgstr ""

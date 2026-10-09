@@ -53,7 +53,7 @@ define('INCLUDE_GOOGLE_GTAG', false);
 
 # re https://github.com/FreshPorts/freshports/issues/655
 define('LOGIN_TO_VIEW_COMMIT', true);
-define('LOGIN_TO_SEARCH',      true);
+define('LOGIN_TO_SEARCH',      true);  # ignored when SEARCH_GATE_SECRET is set - re #692
 define('LOGIN_TO_VIEW_VUXML',  true);
 
 # Deter bots from search.php - see include/search-gate.php and

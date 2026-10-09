@@ -16,8 +16,8 @@
 
 	require_once('Pager/Pager.php');
 
-	# if users must be logged in, and they aren't...
-	if (LOGIN_TO_SEARCH && !$User->id) {
+	# if users must be logged in, and they aren't...  The search gate, when configured, replaces this - re #692
+	if (LOGIN_TO_SEARCH && !freshports_search_gate_enabled() && !$User->id) {
 	        # one message, twice invoked.
 	        $msg = 'You must be logged in to use this feature.';
 	        header('HTTP/1.1 401 ' . $msg);

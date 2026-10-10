@@ -213,7 +213,9 @@ body .gsc-search-button-v2 {
 }
 
 .watch-maintenance input[type="submit"] {
-  width: 85px;
+  /* --button-width is set by watch-list-maintenance.php from the longest label */
+  width: calc(var(--button-width, 8ch) + 2em);
+  min-width: 85px;
   height: 24px;
 }
 

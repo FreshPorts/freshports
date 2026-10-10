@@ -1096,7 +1096,7 @@ GLOBAL $User;
 
     if (defined('SHOW_ANIMATED_BUG') && SHOW_ANIMATED_BUG)
     {
-	  $HTML .= '<span class="notbug"><img src="/images/notbug.gif" width="56" height="50" alt="notbug" title="notbug"></span>';
+	  $HTML .= '<span class="header-badges"><img src="/images/notbug.gif" width="56" height="50" alt="notbug" title="notbug"></span>';
     }
 
     define('HEAD_FILE', $_SERVER['DOCUMENT_ROOT'] . '/../.git/HEAD');
@@ -1109,15 +1109,6 @@ GLOBAL $User;
 		$HTML .= sprintf(_('The database is %s'), '<span class="file">' . $dbname . '</span>') . '<br>';
 		$HTML .= sprintf(_('The db server is %s'), '<span class="file">' . $dbhost . '</span>') . '</span>';
     }
-
-    if (defined('SHOW_IPV6_LOGO') && SHOW_IPV6_LOGO && filter_var($_SERVER["REMOTE_ADDR"], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-    	$HTML .= "
-
-<!-- IPv6-test.com button BEGIN -->
-<a href='https://ipv6-test.com/validate.php?url=referer' rel='noopener noreferrer'><img src='/images/button-ipv6-big.png' alt='ipv6 ready' title='ipv6 ready'></a>
-<!-- IPv6-test.com button END -->
-";
-	}
 
 
 	$HTML .= '</div>';
@@ -2205,6 +2196,12 @@ alt="powered by nginx" width="121" height="32"></a>
 	$URIBase = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'];
 	$URI = trim(urlencode($URIBase . $_SERVER['REQUEST_URI']));
 
+	# in the middle of the footer, for visitors connected over IPv6 - see issue #702
+	$IPv6 = '';
+	if (defined('SHOW_IPV6_LOGO') && SHOW_IPV6_LOGO && filter_var($_SERVER["REMOTE_ADDR"], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+		$IPv6 = '<a href="https://ipv6-test.com/validate.php?url=referer" rel="noopener noreferrer"><img src="/images/ipv6.svg" width="64" height="28" alt="IPv6" title="' . htmlspecialchars(_('You are connected over IPv6')) . '"></a>';
+	}
+
 	$HTML .= '
 <tr><td>
 <table class="fullwidth">
@@ -2212,6 +2209,7 @@ alt="powered by nginx" width="121" height="32"></a>
 <td class="sponsors">
 <small>' . SPONSORS . '</small>
 </td>
+<td class="ipv6-badge">' . $IPv6 . '</td>
 <td class="copyright">
 <small>
 ' . sprintf(_('Valid %1$s, %2$s, and %3$s.'),

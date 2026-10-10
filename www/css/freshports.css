@@ -88,6 +88,30 @@ BODY, TD, TR, P, UL, OL, LI, INPUT, SELECT, DL, DD, DT, FONT
   }
 }
 
+/*
+ * the visitor's choice of text size does not apply to the site header lines
+ * (git branch, Amazon, All times are UTC), announcements, the footer, or the
+ * sponsors in the sidebar.  Dividing by
+ * --fontsize-scale, set by include/fontsize.php, undoes it; the browser's own
+ * text size still applies - see issue #702
+ */
+.site-header-main,
+.announcements :is(TD, P, UL, OL, LI, DL, DD, DT, FONT),
+.footer TD,
+.sidebar-sponsors P
+{
+    font-size: calc(0.75rem / var(--fontsize-scale, 1));
+}
+@media only screen and (min-resolution: 140dpi) {
+  .site-header-main,
+  .announcements :is(TD, P, UL, OL, LI, DL, DD, DT, FONT),
+  .footer TD,
+  .sidebar-sponsors P
+  {
+      font-size: calc(1rem / var(--fontsize-scale, 1));
+  }
+}
+
 table.maincontent > tbody > tr > td {
   padding: 8px;
 }
@@ -419,8 +443,10 @@ IMG#fp-logo { max-width: 100%; height: auto }
   margin-top: 1em;
 }
 
+/* a basis of 0 keeps the aside on the same row, at the top right - see issue #702 */
 .site-header-main {
-  flex: 1 1 auto;
+  flex: 1 1 0;
+  min-width: 0;
   display: flow-root;
 }
 
@@ -429,7 +455,7 @@ IMG#fp-logo { max-width: 100%; height: auto }
 }
 
 .site-header-aside.hcentered {
-  align-self: flex-end;
+  align-self: flex-start;
 }
 
 /* only shown on narrow screens */
@@ -726,15 +752,22 @@ div.showLink
     margin-bottom: 20px;
 }
 
-span.amazon
+div.header-notes
 {
   float:     right;
-  font-size: 1.25rem;
+  margin-left: 1em;
 }
 
-span.timezone
+/* em, not rem: sized from .site-header-main, so the chosen text size does not apply - see issue #702 */
+span.amazon, span.timezone
 {
-  float:     middle;
+  display:   block;
+  font-size: 1em;
+}
+
+span.notbug
+{
+  display:   block;
 }
 
 span.logo
@@ -742,9 +775,13 @@ span.logo
   float:     left;
 }
 
+/* not floated: it takes the width left between the logo and div.header-notes,
+   wrapping a long branch name if need be - see issue #702 */
 span.branch
 {
-  float:     left;
+  display:   flow-root;
+  font-size: 0.85em;
+  overflow-wrap: anywhere;
 }
 
 span.fp_description_short
@@ -755,6 +792,11 @@ span.fp_description_short
 span.file {
     color: #007a00;
     font-family: monospace;
+}
+
+/* monospace looks larger than the text around it - see issue #702 */
+span.branch span.file {
+    font-size: 0.85em;
 }
 
 a.hash {
@@ -1030,8 +1072,12 @@ table.packages {
     max-width: calc(100% - 110px);
   }
 
-  span.logo, span.branch, span.amazon, div#followus {
+  span.logo, div.header-notes, div#followus {
     float: none;
+  }
+
+  div.header-notes {
+    margin-left: 0;
   }
 
   span.logo, span.branch, span.amazon, span.timezone {

@@ -1083,6 +1083,22 @@ GLOBAL $User;
 		$HTML .= '/';
 	}
 	$HTML .= '"><img id="fp-logo" src="' . $FreshPortsLogo . '" alt="' . $FreshPortsName . ' -- ' . $FreshPortsSlogan . '" title="' . $FreshPortsName . ' -- ' . $FreshPortsSlogan . '" width="' . $FreshPortsLogoWidth . '" height="' . $FreshPortsLogoHeight . '"></a></span>';
+
+	# the Amazon notes, on the right.  They come before the time zone and the branch
+	# details, so those fill the space between the notes and the logo - see issue #702
+	$HTML .= '<div class="header-notes">';
+	$HTML .= '<span class="amazon">' . _('As an Amazon Associate I earn from qualifying purchases.') . '<br>' . sprintf(_('Want a good read? Try %s'), '<a target="_blank" rel="noopener noreferrer" href="https://www.amazon.com/gp/product/B07PVTBWX7/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B07PVTBWX7&amp;linkCode=as2&amp;tag=thfrdi0c-20&amp;linkId=a5cb3ac309f59900d44401e24a169f05">FreeBSD Mastery: Jails (IT Mastery Book 15)</a>') . '<br>';
+	$HTML .= sprintf(_('Want a good monitor light? See my <a href="%s">photos</a>'), 'https://dan.langille.org/2023/12/30/blatant-self-interest-monitor-light/') . '</span>';
+	$HTML .= '</div>';
+
+	# beside the logo: the time zone, the bug under it, then the branch details - see issue #702
+	$HTML .= '<span class="timezone">' . _('All times are UTC') . '</span>';
+
+    if (defined('SHOW_ANIMATED_BUG') && SHOW_ANIMATED_BUG)
+    {
+	  $HTML .= '<span class="notbug"><img src="/images/notbug.gif" width="56" height="50" alt="notbug" title="notbug"></span>';
+    }
+
     define('HEAD_FILE', $_SERVER['DOCUMENT_ROOT'] . '/../.git/HEAD');
 
 	# This file will exist only on dev hosts with a checked out version of the code
@@ -1091,11 +1107,7 @@ GLOBAL $User;
 		#
 		$HTML .= '<span class="branch">' . sprintf(_('The git branch used by this host is %s'), '<span class="file">' . implode('/', array_slice(explode('/', file_get_contents(HEAD_FILE)), 2)) . '</span>') . '<br>';
 		$HTML .= sprintf(_('The database is %s'), '<span class="file">' . $dbname . '</span>') . '<br>';
-		$HTML .= sprintf(_('The db server is %s'), '<span class="file">' . $dbhost . '</span>') . '</span><br>';
-    }
-    if (defined('SHOW_ANIMATED_BUG') && SHOW_ANIMATED_BUG)
-    {
-	  $HTML .= '<img src="/images/notbug.gif" width="56" height="50" alt="notbug" title="notbug">';
+		$HTML .= sprintf(_('The db server is %s'), '<span class="file">' . $dbhost . '</span>') . '</span>';
     }
 
     if (defined('SHOW_IPV6_LOGO') && SHOW_IPV6_LOGO && filter_var($_SERVER["REMOTE_ADDR"], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
@@ -1107,9 +1119,6 @@ GLOBAL $User;
 ";
 	}
 
-	$HTML .= '<span class="amazon">' . _('As an Amazon Associate I earn from qualifying purchases.') . '<br>' . sprintf(_('Want a good read? Try %s'), '<a target="_blank" rel="noopener noreferrer" href="https://www.amazon.com/gp/product/B07PVTBWX7/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B07PVTBWX7&amp;linkCode=as2&amp;tag=thfrdi0c-20&amp;linkId=a5cb3ac309f59900d44401e24a169f05">FreeBSD Mastery: Jails (IT Mastery Book 15)</a>') . '<br>';
-	$HTML .= sprintf(_('Want a good monitor light? See my <a href="%s">photos</a>'), 'https://dan.langille.org/2023/12/30/blatant-self-interest-monitor-light/') . '</span>';
-	$HTML .= '<span class="timezone">' . _('All times are UTC') . '</span>';
 
 	$HTML .= '</div>';
 
@@ -2294,7 +2303,7 @@ function freshports_SideBar() {
    </tr>
    </table>
 
-' . '<div>';
+' . '<div class="sidebar-sponsors">';
 
 	$HTML .='
 
@@ -2478,7 +2487,7 @@ function DisplayAnnouncements($Announcement) {
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
 
 	$HTML = '';
-	$HTML .= '<table class="fullwidth borderless" class="cellpadding4">' . "\n";
+	$HTML .= '<table class="announcements fullwidth borderless" class="cellpadding4">' . "\n";
 
 	$NumRows = $Announcement->NumRows();
 

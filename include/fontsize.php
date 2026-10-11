@@ -42,6 +42,9 @@ function freshports_fontsize_choose() {
 # The CSS for the chosen size, or '' for the default, which leaves the
 # browser's text size alone.
 #
+# --fontsize-scale lets freshports.css undo the choice for the parts of the
+# page which should not scale - see issue #702
+#
 function freshports_fontsize_css() {
 	$size = freshports_fontsize_choose();
 	if ($size == FONTSIZE_DEFAULT) {
@@ -50,7 +53,7 @@ function freshports_fontsize_css() {
 
 	$sizes = freshports_fontsize_available();
 
-	return 'html { font-size: ' . $sizes[$size] . '%; }';
+	return 'html { font-size: ' . $sizes[$size] . '%; --fontsize-scale: ' . ($sizes[$size] / 100) . '; }';
 }
 
 #

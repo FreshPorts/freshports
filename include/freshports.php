@@ -1563,6 +1563,56 @@ function freshports_copyright() {
 	return '<small><a href="/legal.php" target="_top" title="' . _('This material is copyrighted') . '">' . _('Copyright') . '</a> &copy; ' . COPYRIGHTYEARS . ' <a href="' . COPYRIGHTHOLDERURL . '" rel="noopener noreferrer">' . COPYRIGHTHOLDER . '</a>. ' . _('All rights reserved.') . '</small>';
 }
 
+# Show which release a server runs, in the page source only.
+# A package install has VERSION, written by the freshports-www port at install time.
+# A git checkout (dev, dvl) has no VERSION; use git describe instead, e.g. 2.16.1-2-gbbee08fe.
+# The tags match the package versions, so both forms read the same way.
+function freshports_PackageVersionComment() {
+	$Root = dirname(__DIR__);
+
+	$Version = '';
+	if (is_readable($Root . '/VERSION')) {
+		$Version = trim(file_get_contents($Root . '/VERSION'));
+	} elseif (is_dir($Root . '/.git')) {
+		# php-fpm runs as www, but the checkout belongs to someone else,
+		# so git needs safe.directory or it refuses with "dubious ownership"
+		$Root = escapeshellarg($Root);
+		$Version = trim((string) shell_exec("git -C $Root -c safe.directory=$Root describe --tags --always 2>/dev/null"));
+	}
+
+	if ($Version === '') {
+		return '';
+	}
+
+	# '--' is not allowed inside an HTML comment
+	return "\n<!-- freshports-www " . str_replace('--', '- -', htmlspecialchars($Version)) . " -->\n";
+}
+
+# Returns a Last-Modified time (unix) for a page that shows the version,
+# for use with freshports_ConditionalGetUnix().
+#
+# This is the most recent modification time of these files:
+#   - the page itself
+#   - VERSION, written when the package is installed
+#   - .git/index, .git/HEAD, .git/packed-refs and .git/refs/tags, which change
+#     on a git pull, checkout, or new tag
+#
+# Files which do not exist are skipped.
+function freshports_VersionLastModified() {
+	$Root  = dirname(__DIR__);
+	$Files = array($_SERVER['SCRIPT_FILENAME'], $Root . '/VERSION', $Root . '/.git/index',
+	               $Root . '/.git/HEAD', $Root . '/.git/packed-refs', $Root . '/.git/refs/tags');
+
+	$Latest = 0;
+	foreach ($Files as $File) {
+		if (file_exists($File)) {
+			$Latest = max($Latest, filemtime($File));
+		}
+	}
+
+	return $Latest;
+}
+
 function FormatTime($Time, $Adjustment, $Format) {
 #echo "$Time<br>";
 #echo time() . "<br>";

@@ -957,6 +957,10 @@ LEFT OUTER JOIN
 		#
 		$Suggestions = array();
 
+		if (!PORT_SUGGESTIONS_ON_404) {
+			return $Suggestions;
+		}
+
 		# only bother with things which look like port names
 		if (!preg_match('/^[A-Za-z0-9._+-]{2,100}$/', $Port)) {
 			return $Suggestions;

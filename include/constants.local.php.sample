@@ -62,3 +62,7 @@ define('LOGIN_TO_VIEW_VUXML',  true);
 # Generate a value with: openssl rand -hex 32
 # Changing it makes everyone's search_ok cookie invalid.
 #define('SEARCH_GATE_SECRET', '');
+
+# On a 404 for category/port, suggest ports the user might have meant.
+# Defaults to true. See https://github.com/FreshPorts/freshports/issues/614
+#define('PORT_SUGGESTIONS_ON_404', false);

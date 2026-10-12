@@ -873,7 +873,18 @@
                           JOIN system_branch       SB  ON SB.branch_name   = '" . pg_escape_string($db, $Branch) . "'
                                                       AND SB.id            = CLB.branch_id ";
 
-                        $sqlFrom = $sqlFromBase;
+                        # The count query needs none of the $sqlFromBase joins: PV, CL, and R
+                        # are outer joins which do not change the number of rows. The branch
+                        # restriction is applied by $sqlBranchCondition instead. Without those
+                        # joins, the planner can start from the E.name condition rather than
+                        # walking every commit on the branch.
+                        $sqlBranchCondition = "
+      AND EXISTS (SELECT 1
+                    FROM commit_log_branches CLB JOIN system_branch SB ON SB.id = CLB.branch_id
+                   WHERE CLB.commit_log_id = P.last_commit_id
+                     AND SB.branch_name    = '" . pg_escape_string($db, $Branch) . "')";
+
+                        $sqlFrom = '';
 
                         if ($stype == SEARCH_FIELD_PACKAGE) {
                             # packages is different because it uses a subquery.
@@ -924,13 +935,19 @@
                                 $query_params[] = $category;
                                 $sqlFrom .= ' join ports_categories PC on P.id = PC.port_id and PC.category_id = (select id from categories where name = $' . count($query_params) . ')';
                         }
-                        $sqlFrom .= ", categories C, element E\n";
+                        $sqlFromCount = $sqlFrom;
+                        $sqlFrom     .= $sqlFromBase;
+
+                        $sqlFromCount .= ", categories C, element E\n";
+                        $sqlFrom      .= ", categories C, element E\n";
 
 			if ($output_format == OUTPUT_FORMAT_DEPENDS) {
-				$sqlFrom .= "
+				$sqlFromDepends = "
 JOIN element_pathname EP on E.id = EP.element_id
   AND EP.pathname $sqlUserSuppliedPortsList
 ";
+				$sqlFromCount .= $sqlFromDepends;
+				$sqlFrom      .= $sqlFromDepends;
 			}
 
 			$sqlWhere = '
@@ -952,7 +969,7 @@ JOIN element_pathname EP on E.id = EP.element_id
 			# construct the query to determine the number of rows.
 			#
 
-			$sql = $sqlSelectCount . ' FROM ' . $sqlFrom .  $sqlWhere;
+			$sql = $sqlSelectCount . ' FROM ' . $sqlFromCount .  $sqlWhere . $sqlBranchCondition;
 
 			if (!empty($sqlUserSpecifiedCondition)) {
 			        $sql .=  ' AND ' . $sqlUserSpecifiedCondition;

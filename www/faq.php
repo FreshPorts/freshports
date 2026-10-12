@@ -760,36 +760,32 @@ $
 
    <p><?php echo _('In general, the FreeBSD Project does not build quarterly branches for whatever branch is CURRENT.'); ?></p>
 
-   <p><?php echo sprintf(_('At the time of writing (%s), the code to extract those ABIs and the current ABI list was:'), '2024-08-24'); ?></p>
+   <p><?php echo _('Some ABIs on that page are marked <i>(only pkgbase is updated)</i>. Only the base system is built for them, not the ports tree, so there are no packages for FreshPorts to show. Those ABIs are skipped.'); ?></p>
+
+   <p><?php echo sprintf(_('At the time of writing (%s), the code to extract those ABIs and the current ABI list was:'), '2026-10-11'); ?></p>
    <pre>
-[15:25 dvl-ingress01 dvl ~/scripts] % cat ./current-list-of-valid-abi.sh
 #!/bin/sh
 
+# ABI marked "(only pkgbase is updated)" have no ports packages (no latest/quarterly),
+# so exclude them - e.g. FreeBSD:15:riscv64
+
 fetch -qo - https://pkg.freebsd.org/index.html | \
-  grep FreeBSD: | sed -e 's@.*\(FreeBSD:[^ &lt;]*\).*@\1@' | sort
-[15:25 dvl-ingress01 dvl ~/scripts] % sh ./current-list-of-valid-abi.sh 
+  grep FreeBSD: | grep -v 'only pkgbase is updated' | sed -e 's@.*\(FreeBSD:[^ &lt;]*\).*@\1@' | sort
+</pre>
+   <pre>
 FreeBSD:13:aarch64
 FreeBSD:13:amd64
-FreeBSD:13:armv6
-FreeBSD:13:armv7
-FreeBSD:13:i386
-FreeBSD:13:powerpc
-FreeBSD:13:powerpc64
-FreeBSD:13:powerpc64le
 FreeBSD:14:aarch64
 FreeBSD:14:amd64
 FreeBSD:14:armv6
 FreeBSD:14:armv7
 FreeBSD:14:i386
-FreeBSD:14:powerpc
-FreeBSD:14:powerpc64
-FreeBSD:14:powerpc64le
 FreeBSD:15:aarch64
 FreeBSD:15:amd64
 FreeBSD:15:armv7
-FreeBSD:15:powerpc
-FreeBSD:15:powerpc64
-FreeBSD:15:powerpc64le
+FreeBSD:16:aarch64
+FreeBSD:16:amd64
+FreeBSD:16:armv7
 </pre>
    </td></tr>
 

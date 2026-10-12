@@ -256,6 +256,11 @@ const SQL_WITH_PACKAGES_AFTER_PKG_NAME = '
 if (!defined('PW_HASH_METHOD')) define('PW_HASH_METHOD', 'bf');
 if (!defined('PW_HASH_COST'))   define('PW_HASH_COST', 14);
 
+# on a 404 for category/port, suggest ports the user might have meant
+# set to false in constants.local.php to turn that off
+# see https://github.com/FreshPorts/freshports/issues/614
+if (!defined('PORT_SUGGESTIONS_ON_404')) define('PORT_SUGGESTIONS_ON_404', true);
+
 define('HTML_DOCTYPE', '<!DOCTYPE html>');
 
 define('ICON_SEPARATOR', ' &#166; ');

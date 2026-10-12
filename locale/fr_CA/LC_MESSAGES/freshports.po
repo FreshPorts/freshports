@@ -4479,8 +4479,8 @@ msgid ""
 msgid_plural ""
 "This page will reload every %d seconds. When maintenance mode finishes, this "
 "page will be redirected to the home page."
-msgstr[0] "Cette page sera rechargée à toutes les %d seconde. Quand le mode de maintenance se terminera, cette page sera redirigée vers la page d'accueil."
-msgstr[1] "Cette page sera rechargée à toutes les %d secondes. Quand le mode de maintenance se terminera, cette page sera redirigée vers la page d'accueil."
+msgstr[0] "Cette page sera rechargée toutes les %d seconde. Quand le mode de maintenance se terminera, cette page sera redirigée vers la page d'accueil."
+msgstr[1] "Cette page sera rechargée toutes les %d secondes. Quand le mode de maintenance se terminera, cette page sera redirigée vers la page d'accueil."
 
 #: www/now-in-maintenance-mode.php:53
 msgid "work in progress"

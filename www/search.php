@@ -31,7 +31,7 @@
 		freshports_search_gate();
 	}
 
-	$Debug = 1;
+	$Debug = 0;
 # this should only be referenced after it has been set.
 #	$sqlUserSpecifiedCondition = '';
 #	if ($Debug) phpinfo();

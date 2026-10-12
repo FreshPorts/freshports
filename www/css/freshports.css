@@ -499,6 +499,13 @@ IMG#fp-logo { max-width: 100%; height: auto }
   margin-left: 0;
 }
 
+/* with JavaScript, picking an option submits the form, so the Change button is
+   not needed; the js class is set in <head>, so the button never flashes up */
+.js .language-picker input[type="submit"],
+.js .fontsize-picker input[type="submit"] {
+  display: none;
+}
+
 .header-search input[type="search"] {
   flex: 0 1 25em;
   min-width: 0;

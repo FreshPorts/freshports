@@ -1248,6 +1248,12 @@ function freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum=0) {
 	
 	echo freshports_HEAD_charset();
 
+	# freshports.js is deferred, so it hides the pickers' Change buttons only after
+	# the page loads.  This class lets the stylesheet hide them from the start.
+	echo "
+	<script>document.documentElement.classList.add('js');</script>
+";
+
 	echo "
 	<meta name=\"description\" content=\"";
 

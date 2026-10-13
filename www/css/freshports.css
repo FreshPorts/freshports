@@ -6,9 +6,19 @@
   --code-text: #461b7e;
   --link-color: #36f;
   --gsc-button: #cecece;
+  --file-text: #007a00;
+  --link-hover: #666666;
+  --nomaintainer-text: blueviolet;
+  --quote-border: #ddd;
+  --version-hover-bg: #777;
+  --version-hover-text: white;
   color-scheme: light dark;
 }
 
+/*
+ * dark mode: every text colour here keeps a contrast ratio of at least 4.5:1
+ * against --background-color (WCAG AA)
+ */
 @media (prefers-color-scheme: dark) {
   :root {
     --background-color: #151515;
@@ -16,6 +26,12 @@
     --code-text: #dfc7ff;
     --link-color: #33cdff;
     --gsc-button: var(--background-color);
+    --file-text: #5fd35f;
+    --link-hover: #a0b4b4;
+    --nomaintainer-text: #b48cff;
+    --quote-border: #444;
+    --version-hover-bg: #3a3a3a;
+    --version-hover-text: var(--body-text);
   }
 
   a:link {
@@ -638,7 +654,10 @@ P.whitehead {
   font-weight: 900;
 }
 P.yellow { color: #FFCC33; }
-A:hover { color: #666666; }
+A:hover {
+  color: #666666;
+  color: var(--link-hover);
+}
 A.white { color: white; text-decoration: none; font-size: smaller; }
 A.black { color: black; text-decoration: none; font-size: smaller; }
 A.red   { color: red; text-decoration: none; }
@@ -661,6 +680,7 @@ blockquote {
 	margin: 15px 30px 15px 10px;
 	padding-left: 20px;
 	border-left: 5px solid #ddd;
+	border-left: 5px solid var(--quote-border);
 }
 
 div#time
@@ -801,6 +821,7 @@ span.fp_description_short
 
 span.file {
     color: #007a00;
+    color: var(--file-text);
     font-family: monospace;
 }
 
@@ -967,8 +988,9 @@ table.bordered > tbody > tr > td, table.bordered > tbody > tr > th {
 
 td.version:hover, td.version:focus {
   background-color: #777;
+  background-color: var(--version-hover-bg);
   color: white;
-  color: var(--background-color);
+  color: var(--version-hover-text);
   position: relative;
 }
 
@@ -1048,7 +1070,11 @@ table.packages {
 }
 
 
-.nomaintainer { color: blueviolet; font-size: 1.25rem; }
+.nomaintainer {
+  color: blueviolet;
+  color: var(--nomaintainer-text);
+  font-size: 1.25rem;
+}
 
 .hcentered { text-align: center; }
 
@@ -1062,7 +1088,11 @@ table.packages {
 
 .nowrap { white-space: nowrap; }
 
-.cmd { color: #007a00; font-family: monospace; }
+.cmd {
+  color: #007a00;
+  color: var(--file-text);
+  font-family: monospace;
+}
 
 
 /*

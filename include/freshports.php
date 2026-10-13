@@ -552,12 +552,12 @@ function freshports_Search_Icon($Title = null) {
 
 function freshports_Bugs_Find_Icon($Title = null) {
 	$Title = $Title ?? _('Find issues related to this port');
-	return '<img class="icon" src="/images/bug.gif" alt="' . $Title . '" title="' . $Title . '" width="16" height="16">';
+	return '<img class="icon" src="/images/bugs-find.svg" alt="' . $Title . '" title="' . $Title . '" width="16" height="16">';
 }
 
 function freshports_Bugs_Report_Icon($Title = null) {
 	$Title = $Title ?? _('Report an issue related to this port');
-	return '<img class="icon" src="/images/bug_report.gif" alt="' . $Title . '" title="' . $Title . '" width="16" height="16">';
+	return '<img class="icon" src="/images/bugs-report.svg" alt="' . $Title . '" title="' . $Title . '" width="16" height="16">';
 }
 
 function freshports_WatchListCount_Icon() {

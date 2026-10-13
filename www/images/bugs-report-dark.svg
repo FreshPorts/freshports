@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-label="Report an issue">
+<g fill="none" stroke="#c9d9d9" stroke-width="1.6" stroke-linecap="round">
+  <path d="M10 3 8 0.8M12 3 14 0.8"/>
+  <path d="M5.5 10 2 8M5.5 14H1.5M5.5 18 2 21M16.5 10 20 8M16.5 14H19"/>
+</g>
+<circle cx="11" cy="5" r="2.2" fill="#d32f2f" stroke="#c9d9d9" stroke-width="1.4"/>
+<ellipse cx="11" cy="13.5" rx="5.5" ry="7" fill="#d32f2f" stroke="#c9d9d9" stroke-width="1.4"/>
+<path d="M11 7v13.5" stroke="#c9d9d9" stroke-width="1.2"/>
+<circle cx="23" cy="23" r="8.5" fill="#1a8f3a" stroke="#151515" stroke-width="1.5"/>
+<path d="M23 18.2v9.6M18.2 23h9.6" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/>
+</svg>

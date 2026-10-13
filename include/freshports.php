@@ -497,11 +497,21 @@ function freshports_IndexFollow($URI) {
 	return $HTML;
 }
 
+/*
+ * an icon with a light and a dark mode version: /images/$name.svg and /images/$name-dark.svg
+ *
+ * The page picks the image with <picture>, rather than the SVG switching colour itself:
+ * browsers do not all apply prefers-color-scheme inside an SVG shown with <img> the way
+ * the page applies it, so the icon could stay in light mode on a dark page.
+ */
+function freshports_Themed_Icon($name, $Title, $width, $height = null, $class = 'icon') {
+	$height = $height ?? $width;
+	return '<picture><source srcset="/images/' . $name . '-dark.svg" media="(prefers-color-scheme: dark)">'
+	     . '<img class="' . $class . '" src="/images/' . $name . '.svg" alt="' . $Title . '" title="' . $Title . '" width="' . $width . '" height="' . $height . '"></picture>';
+}
+
 function freshports_Fallout_Icon($Title = FALLOUT_TITLE, $size = DEFAULT_ICON_SIZE) {
-	# the page picks the dark mode image: browsers do not all apply prefers-color-scheme
-	# inside an SVG shown with <img> the way the page applies it
-	return '<picture><source srcset="/images/fallout-dark.svg" media="(prefers-color-scheme: dark)">'
-	     . '<img class="icon fallout" src="/images/fallout.svg" alt="pkg-fallout" title="pkg-fallout" width="' . $size . '" height="' . $size . '"></picture>';
+	return freshports_Themed_Icon('fallout', 'pkg-fallout', $size, $size, 'icon fallout');
 }
 
 function freshports_Codeberg_Icon($Title = 'Codeberg', $size = DEFAULT_ICON_SIZE) {
@@ -550,17 +560,17 @@ function freshports_Descending_Icon($Title = null) {
 
 function freshports_Search_Icon($Title = null) {
 	$Title = $Title ?? _('Search');
-	return '<img class="icon" src="/images/search.jpg" alt="' . $Title . '" title="' . $Title . '" width="17" height="17">';
+	return freshports_Themed_Icon('search', $Title, 17);
 }
 
 function freshports_Bugs_Find_Icon($Title = null) {
 	$Title = $Title ?? _('Find issues related to this port');
-	return '<img class="icon" src="/images/bugs-find.svg" alt="' . $Title . '" title="' . $Title . '" width="16" height="16">';
+	return freshports_Themed_Icon('bugs-find', $Title, 16);
 }
 
 function freshports_Bugs_Report_Icon($Title = null) {
 	$Title = $Title ?? _('Report an issue related to this port');
-	return '<img class="icon" src="/images/bugs-report.svg" alt="' . $Title . '" title="' . $Title . '" width="16" height="16">';
+	return freshports_Themed_Icon('bugs-report', $Title, 16);
 }
 
 function freshports_WatchListCount_Icon() {
@@ -720,11 +730,11 @@ function freshports_CVS_Icon() {
 }
 
 function freshports_Watch_Icon() {
-	return '<img class="icon" src="/images/watch-remove.gif" alt="' . _('Click to remove this from your default watch list[s]') . '" title="' . _('Click to remove this from your default watch list[s]') . '" width="16" height="16">';
+	return freshports_Themed_Icon('watch-remove', _('Click to remove this from your default watch list[s]'), 16);
 }
 
 function freshports_Watch_Icon_Add() {
-	return '<img class="icon" src="/images/watch-add.gif" alt="' . _(CLICKTOADD) . '" title="' . _(CLICKTOADD) . '" width="16" height="16">';
+	return freshports_Themed_Icon('watch-add', _(CLICKTOADD), 16);
 }
 
 function freshports_Watch_Icon_Empty() {

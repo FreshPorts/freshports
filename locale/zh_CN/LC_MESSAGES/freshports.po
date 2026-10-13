@@ -2869,7 +2869,7 @@ msgstr ""
 
 #: www/faq.php:168
 msgid "Can I link to your site?"
-msgstr "我可以链接到您们的网站吗？"
+msgstr "我可以链接到你们的网站吗？"
 
 #: www/faq.php:171
 msgid ""
@@ -3264,7 +3264,7 @@ msgstr ""
 
 #: www/faq.php:338
 msgid "Do you have any news feeds?"
-msgstr "您们有新闻源吗？"
+msgstr "你们有新闻源吗？"
 
 #: www/faq.php:343
 msgid "Yes. Read <a href=\"/backend/newsfeeds.php\">all about it</a>!"
@@ -3794,7 +3794,7 @@ msgstr ""
 
 #: www/faq.php:626
 msgid "Why don't you obscure email addresses?"
-msgstr "您们为什么不把电子邮件地址做模糊处理？"
+msgstr "你们为什么不把电子邮件地址做模糊处理？"
 
 #: www/faq.php:631
 msgid ""

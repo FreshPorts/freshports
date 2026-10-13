@@ -335,7 +335,7 @@ msgstr "已损坏"
 
 #: classes/port-display.php:1456 include/freshports.php:693
 msgid "Ignore"
-msgstr "忽略"
+msgstr "已忽略"
 
 #: classes/port-display.php:1457 include/freshports.php:660
 msgid "Restricted"
@@ -540,7 +540,7 @@ msgstr "测试"
 #: classes/port-display.php:1941
 #, php-format
 msgid "for %s"
-msgstr "用于%s"
+msgstr "用于 %s"
 
 #: classes/port-display.php:1973
 #, php-format
@@ -1140,7 +1140,7 @@ msgstr "您的账户"
 
 #: include/freshports.php:2257
 msgid "Committer Opt-in"
-msgstr "提交者选择加入"
+msgstr "提交者自愿加入"
 
 #: include/freshports.php:2257
 msgid "Committers can receive reports of Sanity Test Failures"
@@ -1690,8 +1690,8 @@ msgid ""
 "easy. It's simple. And you love that new application.  And you want to know "
 "when the port is updated.  That's where we come in."
 msgstr ""
-"那么，就去 Ports 树安装你心爱的 Port 吧。这很容易，也很简单。你会爱上那个新应"
-"用程序。你还想知道 Port 何时更新。而这正是我们的用武之地。"
+"那么，就去 Ports 树安装您心爱的 Port 吧。这很容易，也很简单。您会爱上那个新应"
+"用程序。您还想知道 Port 何时更新。而这正是我们的用武之地。"
 
 #: www/about.php:55
 #, php-format
@@ -2414,7 +2414,7 @@ msgstr "出错了，抱歉。"
 
 #: www/confirmation.php:68
 msgid "Hi there.  What are you doing here?"
-msgstr "你好呀，你怎么会跑到这里来？"
+msgstr "您好呀，您怎么会跑到这里来？"
 
 #: www/contact.php:34
 msgid ""
@@ -3003,7 +3003,7 @@ msgid ""
 "for an ignored port are not built by the package cluster. Therefore, %s will "
 "not work."
 msgstr ""
-"忽略：该 Port 被标记为忽略。它很可能无法构建。软件包集群不会为被忽略的 Port "
+"已忽略：该 Port 被标记为已忽略。它很可能无法构建。软件包集群不会为被忽略的 Port "
 "构建软件包，因此 %s 将无法工作。"
 
 #: www/faq.php:236

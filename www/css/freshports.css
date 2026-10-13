@@ -12,6 +12,8 @@
   --quote-border: #ddd;
   --version-hover-bg: #777;
   --version-hover-text: white;
+  --input-background: white;
+  --input-border: #767676;
   color-scheme: light dark;
 }
 
@@ -32,6 +34,8 @@
     --quote-border: #444;
     --version-hover-bg: #3a3a3a;
     --version-hover-text: var(--body-text);
+    --input-background: #3b3b3b;
+    --input-border: #858585;
   }
 
   a:link {
@@ -526,6 +530,17 @@ IMG#fp-logo { max-width: 100%; height: auto }
   flex: 0 1 25em;
   min-width: 0;
   padding: 0.3em;
+  /* without this, Safari draws its own borderless rounded search field, which
+     in dark mode looks nothing like the box other browsers show */
+  -webkit-appearance: none;
+  appearance: none;
+  border: 1px solid #767676;
+  border: 1px solid var(--input-border);
+  border-radius: 2px;
+  background-color: white;
+  background-color: var(--input-background);
+  color: black;
+  color: var(--body-text);
 }
 
 .header-search input[type="submit"] {

@@ -498,7 +498,10 @@ function freshports_IndexFollow($URI) {
 }
 
 function freshports_Fallout_Icon($Title = FALLOUT_TITLE, $size = DEFAULT_ICON_SIZE) {
-	return '<img class="icon fallout" src="/images/fallout.svg" alt="pkg-fallout" title="pkg-fallout" width="' . $size . '" height="' . $size . '">';
+	# the page picks the dark mode image: browsers do not all apply prefers-color-scheme
+	# inside an SVG shown with <img> the way the page applies it
+	return '<picture><source srcset="/images/fallout-dark.svg" media="(prefers-color-scheme: dark)">'
+	     . '<img class="icon fallout" src="/images/fallout.svg" alt="pkg-fallout" title="pkg-fallout" width="' . $size . '" height="' . $size . '"></picture>';
 }
 
 function freshports_Codeberg_Icon($Title = 'Codeberg', $size = DEFAULT_ICON_SIZE) {

@@ -1,5 +1,10 @@
 
 
+
+
+
+
+
   root          /usr/local/www/freshports/www/;
   index         index.php index.html index.htm;
 
@@ -16,6 +21,9 @@
 
   error_log	/var/log/nginx/freshports.org-error.log;
   access_log	/var/log/nginx/freshports.org-access.log combined;
+
+  # Send JSON format to a log agent or Syslog endpoint handled by VictoriaLogs
+  access_log    /var/log/nginx/access_json.log victorialogs_json;
 
   location ~ ^/(login|forgotten-password|password-reset-via-token)\.php$  {
     limit_req zone=auth_limit burst=5;
@@ -43,5 +51,7 @@
   }
 
   location / {
+    limit_req zone=root_limit burst=60 nodelay;
+    limit_req_status 429;
     try_files $uri $uri/ /--/new-url-parsing.php;
   }

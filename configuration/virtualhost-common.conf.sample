@@ -30,9 +30,14 @@
     include /usr/local/www/freshports/configuration/php-processing.conf;
   }
 
+  # phorum didn't have releases for a long time.
+  # so I dropped it as would no longer run.
   location ~ ^/phorum/(.*)$ {
     try_files $uri /--/forums-gone.php;
   }
+
+  # the commits.php page has been retired
+  rewrite ^/commits.php / permanent;
 
   location ~ \.php$ {
     include /usr/local/www/freshports/configuration/php-processing.conf;

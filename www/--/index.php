@@ -68,9 +68,9 @@ switch($script) {
         require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/badges.php');
         require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
         
-        $category_port = pg_escape_string($db, $url_parts['port']);
+        $category_port = pg_escape_string($db, $url_parts['port'] ?? '');
         
-        list($category, $port) = explode('/', $category_port);
+        list($category, $port) = array_pad(explode('/', $category_port, 2), 2, '');
         $myPort = new Port($db);
         $result = $myPort->Fetch($category, $port);
         $port_badge = new port_badge($db, $myPort);
@@ -87,49 +87,9 @@ switch($script) {
         break;
  
     case SCRIPT_STATUS:
-        require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/system_status.php');
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/system-status-page.php');
 
-        $status = new SystemStatus($db);
-
-        echo "<!DOCTYPE html>\n<html>\n<head>\n";
-        echo '<meta http-equiv="refresh" content="180"> <!-- Refresh every 3 minutes -->' . "\n";
-        echo '<style>
-.maintenance { background: #c00; color: #fff; font-size: 1.5em; font-weight: bold; padding: 0.75em 1em; border: 4px solid #600; }
-.no-logins   { background: #e60; color: #fff; font-size: 1.25em; font-weight: bold; padding: 0.5em 1em; border: 4px solid #940; }
-.not-running { background: #fdd; color: #900; font-weight: bold; padding: 0.25em 0.5em; border-left: 6px solid #c00; }
-.stale       { background: #ffd; color: #840; font-weight: bold; padding: 0.25em 0.5em; border-left: 6px solid #e90; }
-</style>' . "\n";
-        echo "</head>\n<body>\n";
-
-        if ($status->InMaintenanceMode()) {
-            echo '<p class="maintenance">' . _('We are in maintenance mode.') . '</p>';
-        } else {
-            echo '<p>' . _('We are not in maintenance mode.') . '</p>';
-        }
-
-        if ($status->LoginsAreAllowed()) {
-            echo '<p>' . _('Logins are enabled.') . '</p>';
-        } else {
-            echo '<p class="no-logins">' . _('Nobody is allowed to login right now.') . '</p>';
-        }
-
-        define('STATUS_FILE', "/var/db/freshports/cache/html/backend-status.html");
-
-        # highlight any service the backend reports as not running
-        echo preg_replace('/<p>(?=[^<]*is not running)/', '<p class="not-running">', file_get_contents(STATUS_FILE));
-
-        exec("/usr/sbin/service fp_listen status", $fp_listen_output, $fp_listen_result);
-        echo '<p' . ($fp_listen_result == 0 ? '' : ' class="not-running"') . '>' . htmlspecialchars(implode(' ', $fp_listen_output)) . '</p>' . "\n";
-
-        echo '<hr>';
-
-        $status_age = time() - filemtime(STATUS_FILE);
-        echo '<p' . ($status_age > 4 * 60 ? ' class="stale"' : '') . '>' . sprintf(_('This status was last updated at %s'), gmdate('Y-m-d H:i:sO', filemtime(STATUS_FILE))) . '</p>';
-        echo '<p>' . _('It should never be more than 4 minutes old.') . '</p>';
-        echo '<p>' . _('This page automatically reloads every 3 minutes.') . '</p>';
-        echo '<p>' . _('The contents are generated every 3 minutes by the backend server.') . '</p>';
-
-        echo "</body>\n</html>\n";
+        freshports_SystemStatusPage($db);
         break;
 
     case SCRIPT_API:

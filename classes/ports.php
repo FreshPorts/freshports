@@ -895,7 +895,7 @@ LEFT OUTER JOIN
 		#
 
 		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . 'select GetPortID($1, $2) as port_id';
-		$result = pg_query_params($this->dbh, $sql, params($Category, $Port));
+		$result = pg_query_params($this->dbh, $sql, array($Category, $Port));
 		if ($result) {
 			$numrows = pg_num_rows($result);
 			if ($numrows == 1) {

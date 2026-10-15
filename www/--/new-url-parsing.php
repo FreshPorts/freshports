@@ -44,6 +44,10 @@ if ($Debug) echo 'The URL is ' .  $url;
 $url_query = $url_parts['query'] ?? ''; # branch=quarterly
 $url_path  = $url_parts['path']  ?? ''; # /sysutils/anvil/
 
+# the query string as key => value pairs, e.g. port=sysutils/anvil for a badge
+$query_parts = array();
+parse_str($url_query, $query_parts);
+
 if ($Debug) {
 #    phpinfo();
     echo '<pre>';
@@ -82,9 +86,9 @@ switch($script) {
         require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/badges.php');
         require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
         
-        $category_port = pg_escape_string($db, $url_parts['port'] ?? '');
+        $category_port = pg_escape_string($db, $query_parts['port'] ?? '');
         
-        list($category, $port) = explode('/', $category_port);
+        list($category, $port) = array_pad(explode('/', $category_port, 2), 2, '');
         $myPort = new Port($db);
         $result = $myPort->Fetch($category, $port);
         $port_badge = new port_badge($db, $myPort);
@@ -101,45 +105,9 @@ switch($script) {
         break;
  
     case SCRIPT_STATUS:
-        require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/system_status.php');
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/system-status-page.php');
 
-        $status = new SystemStatus($db);
-
-        echo "<body>\n";
-        echo "<head>\n";
-        echo '<meta http-equiv="refresh" content="180"> <!-- Refresh every 3 minutes -->' . "\n";
-        echo "</head>\n";
-
-        echo '<p>';
-        if ($status->InMaintenanceMode()) {
-            echo _('We are in maintenance mode.');
-        } else {
-            echo _('We are not in maintenance mode.');
-        }
-
-        echo '</p><p>';
-
-        if ($status->LoginsAreAllowed()) {
-            echo _('Logins are enabled.');
-        } else {
-            echo _('Nobody is allowed to login right now.');
-        }
-        echo '</p>';
-
-        define('STATUS_FILE', "/var/db/freshports/cache/html/backend-status.html");
-
-        require_once(STATUS_FILE);
-
-        passthru("/usr/sbin/service fp_listen status", $fp_listen_result);
-
-        echo '<hr>';
-
-        echo '<p>' . sprintf(_('This status was last updated at %s'), gmdate('Y-m-d H:i:sO', filemtime(STATUS_FILE))) . '</p>';
-        echo '<p>' . _('It should never be more than 4 minutes old.') . '</p>';
-        echo '<p>' . _('This page automatically reloads every 3 minutes.') . '</p>';
-        echo '<p>' . _('The contents are generated every 3 minutes by the backend server.') . '</p>';
-
-        echo "</body>\n";
+        freshports_SystemStatusPage($db);
         break;
 
     case SCRIPT_API:

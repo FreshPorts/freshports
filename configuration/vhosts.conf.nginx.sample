@@ -1,6 +1,30 @@
-# this sets rate limiting
+# the format of /var/log/nginx/access_json.log, which is read into VictoriaLogs.
+# used by virtualhost-common.conf
 
+log_format victorialogs_json escape=json '{'
+    '"_time":"$time_iso8601",'
+    '"_msg":"$request",'
+    '"status":"$status",'
+    '"remote_addr":"$remote_addr",'
+    '"body_bytes_sent":"$body_bytes_sent",'
+    '"request_time":"$request_time",'
+    '"http_user_agent":"$http_user_agent",'
+    '"app":"nginx",'
+    '"http_referer":"$http_referer",'
+    '"request_method":"$request_method",'
+    '"host":"$host",'
+    '"hostname":"$hostname",'
+    '"server_name":"$server_name"'
+'}';
+
+# this sets rate limiting
+# both zones are used by virtualhost-common.conf
+
+# protecting repeated login attempts
 limit_req_zone $binary_remote_addr zone=auth_limit:20m rate=5r/m;
+
+# cut down the abusers who raise the database CPU utilization
+limit_req_zone $binary_remote_addr zone=root_limit:15m rate=40r/m;
 
 server {
   listen 127.163.0.80:80;

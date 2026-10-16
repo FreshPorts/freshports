@@ -865,24 +865,32 @@
                         # $sqlFromBase could also be a constant, but for the use of $Branch
                         # This is the only use, and it is declared as if it was a constant.
                         #
+                        # The branch id goes in as a literal, not via a join on system_branch:
+                        # with a literal, the planner knows head has most of the rows in
+                        # commit_log_branches.  Joined by name, it guesses about 10,000 rows
+                        # instead of 568,000, and walks them all (10 seconds).  An unknown
+                        # branch gives id 0, which matches nothing, as the join did.
+                        #
+                        $system_branch = new SystemBranch($db);
+                        $BranchID = intval($system_branch->getBranchID($Branch));
+
 			$sqlFromBase = "
                LEFT OUTER JOIN ports_vulnerable    PV  ON PV.port_id       = P.id
                LEFT OUTER JOIN commit_log          CL  ON P.last_commit_id = CL.id
                LEFT OUTER JOIN repo                R   ON CL.repo_id       = R.id
-               LEFT OUTER JOIN commit_log_branches CLB ON CL.id            = CLB.commit_log_id
-                          JOIN system_branch       SB  ON SB.branch_name   = '" . pg_escape_string($db, $Branch) . "'
-                                                      AND SB.id            = CLB.branch_id ";
+                          JOIN commit_log_branches CLB ON CLB.commit_log_id = P.last_commit_id
+                                                      AND CLB.branch_id     = $BranchID ";
 
                         # The count query needs none of the $sqlFromBase joins: PV, CL, and R
                         # are outer joins which do not change the number of rows. The branch
                         # restriction is applied by $sqlBranchCondition instead. Without those
-                        # joins, the planner can start from the E.name condition rather than
+                        # joins, the planner can start from the search condition rather than
                         # walking every commit on the branch.
                         $sqlBranchCondition = "
       AND EXISTS (SELECT 1
-                    FROM commit_log_branches CLB JOIN system_branch SB ON SB.id = CLB.branch_id
+                    FROM commit_log_branches CLB
                    WHERE CLB.commit_log_id = P.last_commit_id
-                     AND SB.branch_name    = '" . pg_escape_string($db, $Branch) . "')";
+                     AND CLB.branch_id     = $BranchID)";
 
                         $sqlFrom = '';
 

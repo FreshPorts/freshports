@@ -5,10 +5,14 @@
 	# Deter bots from running searches - see
 	# https://github.com/FreshPorts/freshports/issues/692
 	#
-	# A search is allowed when the visitor is logged in, has a valid search_ok
-	# cookie, or came from a page on this site (the Referer).  Anyone else gets a
-	# small page with a button; pressing it posts to www/search-gate.php, which
-	# sets the cookie and sends them back to their search.
+	# A search is allowed when the visitor is logged in or has a valid search_ok
+	# cookie.  Anyone else gets a small page with a button; pressing it posts to
+	# www/search-gate.php, which sets the cookie and sends them back to their
+	# search.  The Referer is not trusted: bots set it to a page on this site.
+	#
+	# The challenge page needs no database, so www/search-gate.php also shows it
+	# on a GET.  That lets nginx send cookie-less searches there without running
+	# search.php at all.
 	#
 	# The cookie and the button's token are signed with SEARCH_GATE_SECRET, from
 	# include/constants.local.php.  Without that secret, the gate is off.
@@ -62,17 +66,6 @@ function freshports_search_gate_has_cookie() {
 	return $expires !== false && $expires > time();
 }
 
-function freshports_search_gate_referer_is_us() {
-	if (empty($_SERVER['HTTP_REFERER'])) {
-		return false;
-	}
-
-	$referer = parse_url($_SERVER['HTTP_REFERER']);
-	$host = ($referer['host'] ?? '') . (IsSet($referer['port']) ? ':' . $referer['port'] : '');
-
-	return $host == $_SERVER['HTTP_HOST'];
-}
-
 function freshports_search_gate_token_is_valid($token) {
 	$issued = freshports_search_gate_verify('token', $token);
 
@@ -90,11 +83,14 @@ function freshports_search_gate() {
 		return;
 	}
 
-	if (freshports_search_gate_referer_is_us()) {
-		freshports_search_gate_set_cookie();
-		return;
-	}
+	freshports_search_gate_challenge($_SERVER['QUERY_STRING'] ?? '');
+}
 
+#
+# Show the challenge page and exit.  $return is the search's query string;
+# the button brings the visitor back to it.
+#
+function freshports_search_gate_challenge($return) {
 	syslog(LOG_NOTICE, 'search gate challenge: ' . $_SERVER['REMOTE_ADDR'] . ' ' . ($_SERVER['HTTP_USER_AGENT'] ?? '-'));
 
 	header('HTTP/1.1 403 Forbidden');
@@ -103,7 +99,6 @@ function freshports_search_gate() {
 	header('Content-Type: text/html; charset=UTF-8');
 
 	$token  = freshports_search_gate_sign('token', time());
-	$return = $_SERVER['QUERY_STRING'] ?? '';
 ?>
 <!DOCTYPE html>
 <html lang="en">

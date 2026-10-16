@@ -1090,7 +1090,6 @@ JOIN element_pathname EP on E.id = EP.element_id
 			fclose($fp);
 		} else {
 			print _('Please let postmaster@freshports.org know that the search log could not be opened.  This does not affect the search results.') . "\n";
-			define_syslog_variables();
 			syslog(LOG_ERR, "FreshPorts could not open the search log file: $logfile");
 		}
 

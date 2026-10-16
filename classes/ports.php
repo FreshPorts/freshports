@@ -208,7 +208,7 @@ class Port {
 		$this->vulnerable_current   = $myrow["vulnerable_current"]   ?? null;
 		$this->vulnerable_past      = $myrow["vulnerable_past"]      ?? null;
 
-		if (IsSet($this->pkg_plist_library_matches)) {
+		if (IsSet($myrow["pkg_plist_library_matches"])) {
 			$this->pkg_plist_library_matches = $myrow["pkg_plist_library_matches"];
 		}
 
@@ -751,7 +751,7 @@ SELECT P.*, element.name    as port
         PRIMARY_CATEGORY.name as category,
         ports_vulnerable.current as vulnerable_current,
         ports_vulnerable.past    as vulnerable_past,
-        pkg_plist(ports.id) AS pkg_plist_library_matches,
+        NULL AS pkg_plist_library_matches, -- pkg_plist() is costly, and a category listing does not show it
         NULL AS needs_refresh,
         NULL AS updated,
         NULL AS last_commit_date,

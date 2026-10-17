@@ -678,10 +678,57 @@ ON TEMP.wle_element_id = ports.element_id';
 
 #		die("into " . __FUNCTION__ . 'with branch = ' . $Branch);
 
-		$params = array();		
-		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n";
+		$params = array();
+
+		# create a pathname to compare against
+		$param_pathname = '/ports/';
+
+		if ($Branch != BRANCH_HEAD) {
+			$param_pathname .= 'branches/';
+		}
+
+		$param_pathname .= $Branch . '/%';
+
+		$params[] = $CategoryName;
+		$params[] = $param_pathname;
+
+		#
+		# Sort and page on a narrow key first (port name, port id), then fetch
+		# the wide columns, and call the functions, only for the rows on this page.
+		# Sorting the full rows (long_description etc.) spills to disk on deeper
+		# pages, and the functions would otherwise be evaluated for every OFFSET row.
+		# ports.id breaks ties between ports with the same name, so paging is stable.
+		#
+		$sql_page_ports = "
+WITH page_ports AS (
+  SELECT ports.id, element.name AS port
+    FROM ports_categories
+         JOIN categories       ON categories.id          = ports_categories.category_id
+                              AND categories.name        = $1
+         JOIN ports            ON ports.id               = ports_categories.port_id
+         JOIN element          ON element.id             = ports.element_id
+                              AND element.status         = 'A'
+         JOIN element_pathname EP ON EP.element_id       = ports.element_id
+                              AND EP.pathname         like $2
+   ORDER BY element.name, ports.id";
+
+		if ($PageSize) {
+			$params[] = $PageSize;
+			$sql_page_ports .= '
+   LIMIT $' . count($params);
+			if ($PageNo) {
+				$params[] = ($PageNo - 1 ) * $PageSize;
+				$sql_page_ports .= ' OFFSET $' . count($params);
+			}
+		}
+
+		$sql_page_ports .= "
+)";
+
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . $sql_page_ports;
 		if ($UserID) {
-			$sql .= "SELECT PE.*,
+			$sql .= "
+SELECT PE.*,
 
 CASE WHEN watchlistcount IS NULL
 THEN 0 ELSE 1
@@ -689,12 +736,10 @@ END as onwatchlist
 
 FROM
  (";
-     	}
+		}
 
 		$sql .= "
-SELECT P.*, element.name    as port
-   FROM element JOIN
- (SELECT ports.id,
+SELECT ports.id,
         ports.element_id        as element_id,
         element_pathname(ports.element_id)        as element_pathname,
         ports.category_id       as category_id,
@@ -770,59 +815,32 @@ SELECT P.*, element.name    as port
         NULL AS repository,
         NULL AS repo_hostname,
         NULL AS onwatchlist,
-        PortVersionOnQuarterlyBranch(ports.id, categories.name || '/' || element.name) AS quarterly_revision, 
-        use_rc_subr
+        PortVersionOnQuarterlyBranch(ports.id, categories.name || '/' || page_ports.port) AS quarterly_revision, 
+        use_rc_subr,
+        page_ports.port
 
-   FROM ports_vulnerable right outer join ports on (ports_vulnerable.port_id = ports.id),
-        categories, ports_categories, categories PRIMARY_CATEGORY, element
-  WHERE ports_categories.port_id     = ports.id
-    AND ports_categories.category_id = categories.id
-    AND categories.name              = $1
-    AND PRIMARY_CATEGORY.id          = ports.category_id
-    AND ports.element_id             = element.id) AS P
-   ON (P.element_id     = element.id
-   AND element.status   = 'A') JOIN element_pathname EP ON P.element_id = EP.element_id AND EP.pathname like $2";
-   
-	   	$params[] = $CategoryName;
-
-		# create a pathname to compare against   	
-	   	$param_pathname = '/ports/';
-
-		if ($Branch != BRANCH_HEAD) {
-			$param_pathname .= 'branches/';
-			# php arrays are zero-based
-		}
-
-		$param_pathname .= $Branch . '/%';
-		$params[] = $param_pathname;
+   FROM page_ports
+        JOIN ports                          ON ports.id                 = page_ports.id
+        JOIN categories                     ON categories.name          = $1
+        JOIN categories PRIMARY_CATEGORY    ON PRIMARY_CATEGORY.id      = ports.category_id
+        LEFT OUTER JOIN ports_vulnerable    ON ports_vulnerable.port_id = ports.id";
 
 		if ($UserID) {
+			$params[] = $UserID;
 			$sql .= ") AS PE
 LEFT OUTER JOIN
  (SELECT element_id           as wle_element_id,
          COUNT(watch_list_id) as watchlistcount
     FROM watch_list JOIN watch_list_element
       ON watch_list.id      = watch_list_element.watch_list_id
-     AND watch_list.user_id = $3
+     AND watch_list.user_id = $" . count($params) . "
      AND watch_list.in_service
  GROUP BY wle_element_id) AS TEMP
   ON TEMP.wle_element_id = PE.element_id";
-
-  			$params[] = $UserID;
-	    	}
-  		
-		$sql .= " ORDER by port ";
-		
-#		echo "\$PageSize='$PageSize'\n";
-
-		if ($PageSize) {
-			$params[] =  $PageSize;
-			$sql .= ' LIMIT $' . count($params);
-			if ($PageNo) {
-				$params[] = ($PageNo - 1 ) * $PageSize;
-				$sql .= ' OFFSET $' . count($params);
-			}
 		}
+
+		$sql .= "
+ ORDER BY port, id";
 
 		if ($this->Debug) echo "<pre>$sql</pre>";
 

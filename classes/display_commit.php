@@ -422,18 +422,6 @@ class DisplayCommit
 					# this is a non-port. All the rest of the stuff is not displayed
 					if ($Debug) echo 'details will not be presented<br>';
 				} else {
-					# we might be here for something like:
-					# /commit.php?category=science&port=metaf2xml&files=yes&message_id=201407160318.s6G3IQKY090479@svn.freebsd.org
-					syslog(LOG_NOTICE, __FILE__ . '::' . __LINE__ . ': We have non-port where element_pathname is not empty - first location:' .
-						' commit_log_id='    . $mycommit->commit_log_id .
-						' message_id='       . $mycommit->message_id .
-						' element_id='       . $mycommit->element_id .
-						' element_pathname=' . $mycommit->element_pathname .
-						' port_id='          . $mycommit->port_id .
-						' port='             . $mycommit->category . '/' . $mycommit->port .
-						' branch='           . $mycommit->branch .
-						' uri='              . ($_SERVER['REQUEST_URI'] ?? ''));
-
 					# for future consideration
 					# we could display this as a table
 					# get _DisplayPortDetails() to return an array of arrays, one for each port to be displayed

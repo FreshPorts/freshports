@@ -7,8 +7,8 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/cache-category.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/page_options.php');
 
-DEFINE('MAX_PAGE_SIZE',     100);
 DEFINE('DEFAULT_PAGE_SIZE', 50);
 
 DEFINE('NEXT_PAGE', 'Next');
@@ -51,6 +51,20 @@ function freshports_CategoryNextPreviousPage($CategoryName, $PortCount, $PageNum
 	}
 	
 	return $HTML;
+}
+
+function freshports_CategoryPageSize($PageSize) {
+	# return the allowed page size nearest to $PageSize; on a tie, the larger one.
+	$PageOptions = new ItemsPerPage();
+
+	$Nearest = DEFAULT_PAGE_SIZE;
+	foreach ($PageOptions->Choices as $Choice) {
+		if (abs($Choice - $PageSize) <= abs($Nearest - $PageSize)) {
+			$Nearest = $Choice;
+		}
+	}
+
+	return $Nearest;
 }
 
 function str_is_int($str) {
@@ -116,9 +130,14 @@ function freshports_CategoryDisplay($dbh, $category, $url_parts, $Branch = BRANC
 	}
 
 	# more sanity testing
-	if (!IsSet($PageSize) || !str_is_int("$PageSize") || $PageSize < 1 || $PageSize > MAX_PAGE_SIZE) {
+	if (!IsSet($PageSize) || !str_is_int("$PageSize") || $PageSize < 1) {
 		$PageSize = DEFAULT_PAGE_SIZE;
 	}
+
+	# The page size is part of the cache key. Accept only the sizes offered on
+	# the customize page, so arbitrary values do not each create (and bypass)
+	# their own cache entries.
+	$PageSize = freshports_CategoryPageSize($PageSize);
 
 	if ($Debug) {
 		echo "\$Branch     = '$Branch'<br>\n";

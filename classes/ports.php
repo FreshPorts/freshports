@@ -909,7 +909,7 @@ LEFT OUTER JOIN
 		# given a category port combination, let's get the port id
 		# and then fetch
 		# NOTE: 2023-03-31 The system doesn't allow you to fetch category/port where category is virtual
-		# I see this used in www/--/index.php though
+		# used for badges, in www/--/new-url-parsing.php
 		#
 
 		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . 'select GetPortID($1, $2) as port_id';

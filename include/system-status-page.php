@@ -7,7 +7,7 @@
 
 	function freshports_SystemStatusPage($dbh) {
 		# output the /--/status/ page.
-		# shared by www/--/index.php and www/--/new-url-parsing.php so the two cannot drift apart.
+		# used by www/--/new-url-parsing.php
 
 		$status_file = '/var/db/freshports/cache/html/backend-status.html';
 

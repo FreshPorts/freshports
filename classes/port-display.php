@@ -106,7 +106,10 @@ class port_display {
 		$json = shell_exec('/usr/local/bin/ucl_tool --in ' . $filename . '  --format json');
 		if ($Debug) echo '<pre>' . var_dump($json) . '</pre>';
 		if (is_null($json)) {
+			# log under a separate tag so logcheck can ignore these
+			openlog('FreshPorts-pkgmessage', LOG_PID, LOG_LOCAL3);
 			syslog(LOG_ERR, 'shell_exec returned null');
+			openlog('FreshPorts', LOG_PID, LOG_LOCAL3);
 			$json = '[ { "message": "WARNING: The FreshPorts parser failed.  ucl_tool failed.  Please report this.", "type": "ERROR" } ]';
 		} else {
 			if ($Debug) syslog(LOG_ERR, 'shell_exec returned ' . $json);
@@ -184,7 +187,10 @@ class port_display {
 									break;
 
 								default:
+									# log under a separate tag so logcheck can ignore the whole multi-line pkg-message
+									openlog('FreshPorts-pkgmessage', LOG_PID, LOG_LOCAL3);
 									syslog(LOG_ERR, '_pkgmessage_UCL found a type is it not prepared for : ' . $type . ' in ' . $port->pkgmessage);
+									openlog('FreshPorts', LOG_PID, LOG_LOCAL3);
 									$HTML .= '<dt>' . htmlspecialchars($part->type) . '</dt><dd class="pkg-message">' . htmlspecialchars($part->message) . '</dd>';
 									$HTML .= "\n";
 									$HTML .= "\n";

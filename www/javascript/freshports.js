@@ -123,23 +123,30 @@ function showHide(shID) {
 })();
 
 /*
- * Switch language as soon as one is picked.  Without this script, the
- * picker's Change button does the same job - see issue #678.
+ * Switch language or text size as soon as one is picked.  Without this
+ * script, each picker's Change button does the same job - see issues #678
+ * and #690.
+ *
+ * The browser never sends the #anchor to the server, so the redirect back
+ * cannot include it.  Posting to e.g. /fontsize.php#dependencies instead
+ * works: a redirect without an anchor keeps the one from the URL it came
+ * from, so the visitor returns to the same place on the page.
  */
 (function () {
-   var form = document.querySelector('form.language-picker');
-   if (!form) {
-      return;
-   }
+   var forms = document.querySelectorAll('form.language-picker, form.fontsize-picker');
+   Array.prototype.forEach.call(forms, function (form) {
+      var select = form.querySelector('select');
+      var button = form.querySelector('input[type="submit"]');
+      if (!select || !button) {
+         return;
+      }
 
-   var select = form.querySelector('select');
-   var button = form.querySelector('input[type="submit"]');
-   if (!select || !button) {
-      return;
-   }
+      var action = form.getAttribute('action');
 
-   button.hidden = true;
-   select.addEventListener('change', function () {
-      form.submit();
+      button.hidden = true;
+      select.addEventListener('change', function () {
+         form.action = action + window.location.hash;
+         form.submit();
+      });
    });
 })();

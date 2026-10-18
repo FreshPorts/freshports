@@ -38,6 +38,12 @@ class freshports_page extends HTML_Page2 {
 		$version = substr(hash_file('sha1', $_SERVER['DOCUMENT_ROOT'] . '/css/freshports.css'), 0, 8);
 		$this->addStyleSheet('/css/freshports.css?v=' . $version);
 
+		# the visitor's choice of text size - see issue #690
+		$fontsize = freshports_fontsize_css();
+		if ($fontsize) {
+			$this->addStyleDeclaration($fontsize);
+		}
+
 		$this->addFavicon('/favicon.ico');
 		$this->setDocType('HTML 4.01 Strict');
 	}

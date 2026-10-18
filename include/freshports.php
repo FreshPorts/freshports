@@ -9,6 +9,7 @@
 	if ($ShowAds) require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/ads.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../configuration/freshports.conf.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/i18n.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/fontsize.php');
 
 	if (IsSet($ShowAnnouncements)) {
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/announcements.php');
@@ -496,8 +497,21 @@ function freshports_IndexFollow($URI) {
 	return $HTML;
 }
 
+/*
+ * an icon with a light and a dark mode version: /images/$name.svg and /images/$name-dark.svg
+ *
+ * The page picks the image with <picture>, rather than the SVG switching colour itself:
+ * browsers do not all apply prefers-color-scheme inside an SVG shown with <img> the way
+ * the page applies it, so the icon could stay in light mode on a dark page.
+ */
+function freshports_Themed_Icon($name, $Title, $width, $height = null, $class = 'icon') {
+	$height = $height ?? $width;
+	return '<picture><source srcset="/images/' . $name . '-dark.svg" media="(prefers-color-scheme: dark)">'
+	     . '<img class="' . $class . '" src="/images/' . $name . '.svg" alt="' . $Title . '" title="' . $Title . '" width="' . $width . '" height="' . $height . '"></picture>';
+}
+
 function freshports_Fallout_Icon($Title = FALLOUT_TITLE, $size = DEFAULT_ICON_SIZE) {
-	return '<img class="icon fallout" src="/images/fallout.svg" alt="pkg-fallout" title="pkg-fallout" width="' . $size . '" height="' . $size . '">';
+	return freshports_Themed_Icon('fallout', 'pkg-fallout', $size, $size, 'icon fallout');
 }
 
 function freshports_Codeberg_Icon($Title = 'Codeberg', $size = DEFAULT_ICON_SIZE) {
@@ -546,17 +560,17 @@ function freshports_Descending_Icon($Title = null) {
 
 function freshports_Search_Icon($Title = null) {
 	$Title = $Title ?? _('Search');
-	return '<img class="icon" src="/images/search.jpg" alt="' . $Title . '" title="' . $Title . '" width="17" height="17">';
+	return freshports_Themed_Icon('search', $Title, 17);
 }
 
 function freshports_Bugs_Find_Icon($Title = null) {
 	$Title = $Title ?? _('Find issues related to this port');
-	return '<img class="icon" src="/images/bug.gif" alt="' . $Title . '" title="' . $Title . '" width="16" height="16">';
+	return freshports_Themed_Icon('bugs-find', $Title, 16);
 }
 
 function freshports_Bugs_Report_Icon($Title = null) {
 	$Title = $Title ?? _('Report an issue related to this port');
-	return '<img class="icon" src="/images/bug_report.gif" alt="' . $Title . '" title="' . $Title . '" width="16" height="16">';
+	return freshports_Themed_Icon('bugs-report', $Title, 16);
 }
 
 function freshports_WatchListCount_Icon() {
@@ -716,11 +730,11 @@ function freshports_CVS_Icon() {
 }
 
 function freshports_Watch_Icon() {
-	return '<img class="icon" src="/images/watch-remove.gif" alt="' . _('Click to remove this from your default watch list[s]') . '" title="' . _('Click to remove this from your default watch list[s]') . '" width="16" height="16">';
+	return freshports_Themed_Icon('watch-remove', _('Click to remove this from your default watch list[s]'), 16);
 }
 
 function freshports_Watch_Icon_Add() {
-	return '<img class="icon" src="/images/watch-add.gif" alt="' . _(CLICKTOADD) . '" title="' . _(CLICKTOADD) . '" width="16" height="16">';
+	return freshports_Themed_Icon('watch-add', _(CLICKTOADD), 16);
 }
 
 function freshports_Watch_Icon_Empty() {
@@ -1082,6 +1096,22 @@ GLOBAL $User;
 		$HTML .= '/';
 	}
 	$HTML .= '"><img id="fp-logo" src="' . $FreshPortsLogo . '" alt="' . $FreshPortsName . ' -- ' . $FreshPortsSlogan . '" title="' . $FreshPortsName . ' -- ' . $FreshPortsSlogan . '" width="' . $FreshPortsLogoWidth . '" height="' . $FreshPortsLogoHeight . '"></a></span>';
+
+	# the Amazon notes, on the right.  They come before the time zone and the branch
+	# details, so those fill the space between the notes and the logo - see issue #702
+	$HTML .= '<div class="header-notes">';
+	$HTML .= '<span class="amazon">' . _('As an Amazon Associate I earn from qualifying purchases.') . '<br>' . sprintf(_('Want a good read? Try %s'), '<a target="_blank" rel="noopener noreferrer" href="https://www.amazon.com/gp/product/B07PVTBWX7/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B07PVTBWX7&amp;linkCode=as2&amp;tag=thfrdi0c-20&amp;linkId=a5cb3ac309f59900d44401e24a169f05">FreeBSD Mastery: Jails (IT Mastery Book 15)</a>') . '<br>';
+	$HTML .= sprintf(_('Want a good monitor light? See my <a href="%s">photos</a>'), 'https://dan.langille.org/2023/12/30/blatant-self-interest-monitor-light/') . '</span>';
+	$HTML .= '</div>';
+
+	# beside the logo: the time zone, the bug under it, then the branch details - see issue #702
+	$HTML .= '<span class="timezone">' . _('All times are UTC') . '</span>';
+
+    if (defined('SHOW_ANIMATED_BUG') && SHOW_ANIMATED_BUG)
+    {
+	  $HTML .= '<span class="header-badges"><img src="/images/notbug.gif" width="56" height="50" alt="notbug" title="notbug"></span>';
+    }
+
     define('HEAD_FILE', $_SERVER['DOCUMENT_ROOT'] . '/../.git/HEAD');
 
 	# This file will exist only on dev hosts with a checked out version of the code
@@ -1090,25 +1120,9 @@ GLOBAL $User;
 		#
 		$HTML .= '<span class="branch">' . sprintf(_('The git branch used by this host is %s'), '<span class="file">' . implode('/', array_slice(explode('/', file_get_contents(HEAD_FILE)), 2)) . '</span>') . '<br>';
 		$HTML .= sprintf(_('The database is %s'), '<span class="file">' . $dbname . '</span>') . '<br>';
-		$HTML .= sprintf(_('The db server is %s'), '<span class="file">' . $dbhost . '</span>') . '</span><br>';
-    }
-    if (defined('SHOW_ANIMATED_BUG') && SHOW_ANIMATED_BUG)
-    {
-	  $HTML .= '<img src="/images/notbug.gif" width="56" height="50" alt="notbug" title="notbug">';
+		$HTML .= sprintf(_('The db server is %s'), '<span class="file">' . $dbhost . '</span>') . '</span>';
     }
 
-    if (defined('SHOW_IPV6_LOGO') && SHOW_IPV6_LOGO && filter_var($_SERVER["REMOTE_ADDR"], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-    	$HTML .= "
-
-<!-- IPv6-test.com button BEGIN -->
-<a href='https://ipv6-test.com/validate.php?url=referer' rel='noopener noreferrer'><img src='/images/button-ipv6-big.png' alt='ipv6 ready' title='ipv6 ready'></a>
-<!-- IPv6-test.com button END -->
-";
-	}
-
-	$HTML .= '<span class="amazon">' . _('As an Amazon Associate I earn from qualifying purchases.') . '<br>' . sprintf(_('Want a good read? Try %s'), '<a target="_blank" rel="noopener noreferrer" href="https://www.amazon.com/gp/product/B07PVTBWX7/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B07PVTBWX7&amp;linkCode=as2&amp;tag=thfrdi0c-20&amp;linkId=a5cb3ac309f59900d44401e24a169f05">FreeBSD Mastery: Jails (IT Mastery Book 15)</a>') . '<br>';
-	$HTML .= sprintf(_('Want a good monitor light? See my <a href="%s">photos</a>'), 'https://dan.langille.org/2023/12/30/blatant-self-interest-monitor-light/') . '</span>';
-	$HTML .= '<span class="timezone">' . _('All times are UTC') . '</span>';
 
 	$HTML .= '</div>';
 
@@ -1124,9 +1138,9 @@ if (date("M") == 'Nov' && date("j") <= 12) {
 	
 }
 
-# the search box and the language picker live in the header on every device, so they
-# are always easy to find; a visitor who cannot read English should not have to hunt
-# for the picker.
+# the search box and the language and text size pickers live in the header on every
+# device, so they are always easy to find; a visitor who cannot read English, or who
+# cannot read small text, should not have to hunt for them.
 # menu-link and menu-button are only shown on narrow screens, where the sidebar is
 # tucked away; menu-button stays pinned to the top-right corner so it can be used
 # from anywhere on the page.  With JavaScript, menu-button opens and closes the
@@ -1136,7 +1150,7 @@ if (date("M") == 'Nov' && date("j") <= 12) {
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/searches.php');
 $Searches = new Searches(null);
 $HTML .= '<div class="header-tools">' . $Searches->GetFormHeader(is_object($User) && !empty($User->set_focus_search)) .
-         freshports_i18n_language_picker() . '</div>';
+         freshports_i18n_language_picker() . freshports_fontsize_picker() . '</div>';
 
 $HTML .= '
 	<a class="menu-link" href="#sidebar">' . _('Menu') . '</a>
@@ -1247,6 +1261,12 @@ function freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum=0) {
 	
 	echo freshports_HEAD_charset();
 
+	# freshports.js is deferred, so it hides the pickers' Change buttons only after
+	# the page loads.  This class lets the stylesheet hide them from the start.
+	echo "
+	<script>document.documentElement.classList.add('js');</script>
+";
+
 	echo "
 	<meta name=\"description\" content=\"";
 
@@ -1270,6 +1290,12 @@ function freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum=0) {
 function freshports_style($Phorum=0) {
 	$version = substr(hash_file('sha1', $_SERVER['DOCUMENT_ROOT'] . '/css/freshports.css'), 0, 8);
 	echo '	<link rel="stylesheet" href="/css/freshports.css?v=' . $version . '" type="text/css">' . "\n";
+
+	# the visitor's choice of text size - see issue #690
+	$fontsize = freshports_fontsize_css();
+	if ($fontsize) {
+		echo '	<style>' . $fontsize . '</style>' . "\n";
+	}
 }
 
 function freshports_body($ExtraScript = null) {
@@ -1528,8 +1554,82 @@ function freshports_PortsUpdating($port, $PortsUpdating) {
 function freshports_navigation_bar_top() {
 }
 
+function freshports_PortSuggestions($Suggestions) {
+	#
+	# $Suggestions is the output of Port::SuggestionsFor()
+	# Used by the 404 page and by search when nothing is found.
+	# see https://github.com/FreshPorts/freshports/issues/614
+	#
+	$HTML = '';
+	if (empty($Suggestions)) {
+		return $HTML;
+	}
+
+	$HTML .= '<P>' . _('Perhaps you meant one of these:') . "</P>\n";
+	# class aligned lines up the descriptions - see freshports.css
+	$HTML .= '<ul class="aligned">' . "\n";
+	foreach ($Suggestions as $Suggestion) {
+		$CategoryPort = $Suggestion['category'] . '/' . $Suggestion['name'];
+		$HTML .= '<li><span><a href="' . htmlspecialchars($Suggestion['link']) . '">' . htmlspecialchars($CategoryPort) . '</a></span>';
+		$HTML .= '<span>' . htmlspecialchars($Suggestion['short_description'] ?? '') . "</span></li>\n";
+	}
+	$HTML .= "</ul>\n";
+
+	return $HTML;
+}
+
 function freshports_copyright() {
 	return '<small><a href="/legal.php" target="_top" title="' . _('This material is copyrighted') . '">' . _('Copyright') . '</a> &copy; ' . COPYRIGHTYEARS . ' <a href="' . COPYRIGHTHOLDERURL . '" rel="noopener noreferrer">' . COPYRIGHTHOLDER . '</a>. ' . _('All rights reserved.') . '</small>';
+}
+
+# Show which release a server runs, in the page source only.
+# A package install has VERSION, written by the freshports-www port at install time.
+# A git checkout (dev, dvl) has no VERSION; use git describe instead, e.g. 2.16.1-2-gbbee08fe.
+# The tags match the package versions, so both forms read the same way.
+function freshports_PackageVersionComment() {
+	$Root = dirname(__DIR__);
+
+	$Version = '';
+	if (is_readable($Root . '/VERSION')) {
+		$Version = trim(file_get_contents($Root . '/VERSION'));
+	} elseif (is_dir($Root . '/.git')) {
+		# php-fpm runs as www, but the checkout belongs to someone else,
+		# so git needs safe.directory or it refuses with "dubious ownership"
+		$Root = escapeshellarg($Root);
+		$Version = trim((string) shell_exec("git -C $Root -c safe.directory=$Root describe --tags --always 2>/dev/null"));
+	}
+
+	if ($Version === '') {
+		return '';
+	}
+
+	# '--' is not allowed inside an HTML comment
+	return "\n<!-- freshports-www " . str_replace('--', '- -', htmlspecialchars($Version)) . " -->\n";
+}
+
+# Returns a Last-Modified time (unix) for a page that shows the version,
+# for use with freshports_ConditionalGetUnix().
+#
+# This is the most recent modification time of these files:
+#   - the page itself
+#   - VERSION, written when the package is installed
+#   - .git/index, .git/HEAD, .git/packed-refs and .git/refs/tags, which change
+#     on a git pull, checkout, or new tag
+#
+# Files which do not exist are skipped.
+function freshports_VersionLastModified() {
+	$Root  = dirname(__DIR__);
+	$Files = array($_SERVER['SCRIPT_FILENAME'], $Root . '/VERSION', $Root . '/.git/index',
+	               $Root . '/.git/HEAD', $Root . '/.git/packed-refs', $Root . '/.git/refs/tags');
+
+	$Latest = 0;
+	foreach ($Files as $File) {
+		if (file_exists($File)) {
+			$Latest = max($Latest, filemtime($File));
+		}
+	}
+
+	return $Latest;
 }
 
 function FormatTime($Time, $Adjustment, $Format) {
@@ -2165,6 +2265,12 @@ alt="powered by nginx" width="121" height="32"></a>
 	$URIBase = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'];
 	$URI = trim(urlencode($URIBase . $_SERVER['REQUEST_URI']));
 
+	# in the middle of the footer, for visitors connected over IPv6 - see issue #702
+	$IPv6 = '';
+	if (defined('SHOW_IPV6_LOGO') && SHOW_IPV6_LOGO && filter_var($_SERVER["REMOTE_ADDR"], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+		$IPv6 = '<a href="https://ipv6-test.com/validate.php?url=referer" rel="noopener noreferrer"><img src="/images/ipv6.svg" width="64" height="28" alt="IPv6" title="' . htmlspecialchars(_('You are connected over IPv6')) . '"></a>';
+	}
+
 	$HTML .= '
 <tr><td>
 <table class="fullwidth">
@@ -2172,6 +2278,7 @@ alt="powered by nginx" width="121" height="32"></a>
 <td class="sponsors">
 <small>' . SPONSORS . '</small>
 </td>
+<td class="ipv6-badge">' . $IPv6 . '</td>
 <td class="copyright">
 <small>
 ' . sprintf(_('Valid %1$s, %2$s, and %3$s.'),
@@ -2263,7 +2370,7 @@ function freshports_SideBar() {
    </tr>
    </table>
 
-' . '<div>';
+' . '<div class="sidebar-sponsors">';
 
 	$HTML .='
 
@@ -2447,7 +2554,7 @@ function DisplayAnnouncements($Announcement) {
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
 
 	$HTML = '';
-	$HTML .= '<table class="fullwidth borderless" class="cellpadding4">' . "\n";
+	$HTML .= '<table class="announcements fullwidth borderless" class="cellpadding4">' . "\n";
 
 	$NumRows = $Announcement->NumRows();
 

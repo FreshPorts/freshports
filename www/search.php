@@ -12,11 +12,12 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/system_branch.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/search-gate.php');
 
 	require_once('Pager/Pager.php');
 
-	# if users must be logged in, and they aren't...
-	if (LOGIN_TO_SEARCH && !$User->id) {
+	# if users must be logged in, and they aren't...  The search gate, when configured, replaces this - re #692
+	if (LOGIN_TO_SEARCH && !freshports_search_gate_enabled() && !$User->id) {
 	        # one message, twice invoked.
 	        $msg = 'You must be logged in to use this feature.';
 	        header('HTTP/1.1 401 ' . $msg);
@@ -24,6 +25,11 @@
 	} else {
 	        checkLoadBeforeProceeding();
         }
+
+	# only a search costs anything; the empty search form is fine for anyone
+	if (IsSet($_REQUEST['query'])) {
+		freshports_search_gate();
+	}
 
 	$Debug = 0;
 # this should only be referenced after it has been set.
@@ -337,25 +343,6 @@
 	        echo _("If the 'Output format' is 'Depends', then you must search by 'Port Name'. Please adjust the parameters and try again.");
 	        exit;
 	}
-
-	// start of HTML output
-	if ($output_format == OUTPUT_FORMAT_HTML) {
-		$Title = _('Search');
-		freshports_Start($Title,
-					$Title,
-					'FreeBSD, index, applications, ports');
-
-		echo freshports_MainTable();
-?>
-<tr><td class="content">
-<?php echo freshports_MainContentTable(); ?>
-  <tr>
-	<?php echo freshports_PageBannerText(_("Search FreshPorts using Google")); ?>
-  </tr>
-<tr><td><div class="gcse-search"></div>
-<?php
-	} // end of HTML only output
-
 
 	#
 	# ensure that our parameters have default values
@@ -878,15 +865,34 @@
                         # $sqlFromBase could also be a constant, but for the use of $Branch
                         # This is the only use, and it is declared as if it was a constant.
                         #
+                        # The branch id goes in as a literal, not via a join on system_branch:
+                        # with a literal, the planner knows head has most of the rows in
+                        # commit_log_branches.  Joined by name, it guesses about 10,000 rows
+                        # instead of 568,000, and walks them all (10 seconds).  An unknown
+                        # branch gives id 0, which matches nothing, as the join did.
+                        #
+                        $system_branch = new SystemBranch($db);
+                        $BranchID = intval($system_branch->getBranchID($Branch));
+
 			$sqlFromBase = "
                LEFT OUTER JOIN ports_vulnerable    PV  ON PV.port_id       = P.id
                LEFT OUTER JOIN commit_log          CL  ON P.last_commit_id = CL.id
                LEFT OUTER JOIN repo                R   ON CL.repo_id       = R.id
-               LEFT OUTER JOIN commit_log_branches CLB ON CL.id            = CLB.commit_log_id
-                          JOIN system_branch       SB  ON SB.branch_name   = '" . pg_escape_string($db, $Branch) . "'
-                                                      AND SB.id            = CLB.branch_id ";
+                          JOIN commit_log_branches CLB ON CLB.commit_log_id = P.last_commit_id
+                                                      AND CLB.branch_id     = $BranchID ";
 
-                        $sqlFrom = $sqlFromBase;
+                        # The count query needs none of the $sqlFromBase joins: PV, CL, and R
+                        # are outer joins which do not change the number of rows. The branch
+                        # restriction is applied by $sqlBranchCondition instead. Without those
+                        # joins, the planner can start from the search condition rather than
+                        # walking every commit on the branch.
+                        $sqlBranchCondition = "
+      AND EXISTS (SELECT 1
+                    FROM commit_log_branches CLB
+                   WHERE CLB.commit_log_id = P.last_commit_id
+                     AND CLB.branch_id     = $BranchID)";
+
+                        $sqlFrom = '';
 
                         if ($stype == SEARCH_FIELD_PACKAGE) {
                             # packages is different because it uses a subquery.
@@ -937,13 +943,19 @@
                                 $query_params[] = $category;
                                 $sqlFrom .= ' join ports_categories PC on P.id = PC.port_id and PC.category_id = (select id from categories where name = $' . count($query_params) . ')';
                         }
-                        $sqlFrom .= ", categories C, element E\n";
+                        $sqlFromCount = $sqlFrom;
+                        $sqlFrom     .= $sqlFromBase;
+
+                        $sqlFromCount .= ", categories C, element E\n";
+                        $sqlFrom      .= ", categories C, element E\n";
 
 			if ($output_format == OUTPUT_FORMAT_DEPENDS) {
-				$sqlFrom .= "
+				$sqlFromDepends = "
 JOIN element_pathname EP on E.id = EP.element_id
   AND EP.pathname $sqlUserSuppliedPortsList
 ";
+				$sqlFromCount .= $sqlFromDepends;
+				$sqlFrom      .= $sqlFromDepends;
 			}
 
 			$sqlWhere = '
@@ -965,7 +977,7 @@ JOIN element_pathname EP on E.id = EP.element_id
 			# construct the query to determine the number of rows.
 			#
 
-			$sql = $sqlSelectCount . ' FROM ' . $sqlFrom .  $sqlWhere;
+			$sql = $sqlSelectCount . ' FROM ' . $sqlFromCount .  $sqlWhere . $sqlBranchCondition;
 
 			if (!empty($sqlUserSpecifiedCondition)) {
 			        $sql .=  ' AND ' . $sqlUserSpecifiedCondition;
@@ -1078,14 +1090,53 @@ JOIN element_pathname EP on E.id = EP.element_id
 			fclose($fp);
 		} else {
 			print _('Please let postmaster@freshports.org know that the search log could not be opened.  This does not affect the search results.') . "\n";
-			define_syslog_variables();
 			syslog(LOG_ERR, "FreshPorts could not open the search log file: $logfile");
 		}
 
 		$Port = new Port($db);
 		$Port->LocalResult = $result;
 
+		# https://github.com/FreshPorts/freshports/issues/653
+		# A port search which finds exactly one port goes straight to that port's page.
+		# This is why the HTML output starts after the search, not before: no headers have been sent yet.
+		switch ($stype) {
+			case SEARCH_FIELD_AUTHOR_NAME:
+			case SEARCH_FIELD_AUTHOR_EMAIL:
+			case SEARCH_FIELD_COMMITTER:
+			case SEARCH_FIELD_COMMITTER_NAME:
+			case SEARCH_FIELD_COMMITTER_EMAIL:
+			case SEARCH_FIELD_COMMITMESSAGE:
+			case SEARCH_FIELD_PATHNAME:
+				# these searches find commits, not ports
+				break;
+
+			default:
+				if ($output_format == OUTPUT_FORMAT_HTML && !$Debug && ($NumFound ?? 0) == 1 && $NumFetches == 1) {
+					$Port->FetchNth(0);
+					header('Location: ' . freshports_Port_URL($db, $Port->category, $Port->port, $Branch));
+					exit;
+				}
+				break;
+		}
 	}
+
+	// start of HTML output
+	if ($output_format == OUTPUT_FORMAT_HTML) {
+		$Title = _('Search');
+		freshports_Start($Title,
+					$Title,
+					'FreeBSD, index, applications, ports');
+
+		echo freshports_MainTable();
+?>
+<tr><td class="content">
+<?php echo freshports_MainContentTable(); ?>
+  <tr>
+	<?php echo freshports_PageBannerText(_("Search FreshPorts using Google")); ?>
+  </tr>
+<tr><td><div class="gcse-search"></div>
+<?php
+	} // end of HTML only output
 
 	if ($output_format == OUTPUT_FORMAT_HTML) {
 ?>
@@ -1294,6 +1345,14 @@ if (file_exists(CATEGORIES_CACHE_LIST)) {
 		if ($Debug) echo 'nothing found';
 		   if ($output_format == OUTPUT_FORMAT_HTML) {
 		     $HTML .= ' <strong style="color:var(--beastie-red)">' . _('No results found') . "</strong><br>\n";
+
+		     # offer the same suggestions as the 404 page does for /category/port/
+		     # see https://github.com/FreshPorts/freshports/issues/614
+		     if ($stype == SEARCH_FIELD_NAME || $stype == SEARCH_FIELD_PACKAGE) {
+		       require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
+		       $MyPort = new Port($db);
+		       $HTML .= freshports_PortSuggestions($MyPort->SuggestionsFor($query, $Branch));
+		     }
 		   }
 		} else {
             switch($stype) {

@@ -38,4 +38,17 @@ class SystemBranch {
 
     return $this->branch_names;
   }
+
+  function getBranchID($branch_name) {
+    # returns the id for this branch name, or null if there is no such branch
+    $sql = "select id from system_branch where branch_name = $1";
+
+    $result = pg_query_params($this->dbh, $sql, array($branch_name));
+    if ($result && pg_num_rows($result) == 1) {
+      $myrow = pg_fetch_array($result, 0);
+      return intval($myrow['id']);
+    }
+
+    return null;
+  }
 }

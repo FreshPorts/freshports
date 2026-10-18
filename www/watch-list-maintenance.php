@@ -90,6 +90,9 @@ $ButtonLabel['empty_all']   = _('Empty All');
 $ButtonLabel['set_default'] = _('Set Default');
 $ButtonLabel['set_options'] = _('Set options');
 
+# All the buttons share one width, wide enough for the longest (translated) label.
+$ButtonWidth = max(array_map('mb_strlen', $ButtonLabel));
+
 $UserClickedOn = '';
 $ErrorMessage  = '';
 
@@ -305,7 +308,7 @@ $ErrorMessage .= CheckForNoDefaultAndAddToDefault($db, $User);
 </tr>
 
 <tr><td>
-<table class="watch-maintenance fullwidth borderless">
+<table class="watch-maintenance fullwidth borderless" style="--button-width: <?php echo $ButtonWidth; ?>ch">
 <tr><td>
 <?php
 	if ($ErrorMessage != '') {

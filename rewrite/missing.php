@@ -34,6 +34,11 @@
 <?php echo _("Sorry, but I don't know anything about that."); ?>
 </P>
 
+<?php
+	# set by freshports_Parse404URI() - see https://github.com/FreshPorts/freshports/issues/614
+	echo freshports_PortSuggestions($Suggestions ?? array());
+?>
+
 <P>
 <?php echo _('Perhaps a <a href="/categories.php">list of categories</a> or <a href="/search.php">the search page</a> might be helpful.'); ?>
 </P>

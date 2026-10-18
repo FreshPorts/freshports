@@ -6,9 +6,21 @@
   --code-text: #461b7e;
   --link-color: #36f;
   --gsc-button: #cecece;
+  --file-text: #007a00;
+  --link-hover: #666666;
+  --nomaintainer-text: blueviolet;
+  --quote-border: #ddd;
+  --version-hover-bg: #777;
+  --version-hover-text: white;
+  --input-background: white;
+  --input-border: #767676;
   color-scheme: light dark;
 }
 
+/*
+ * dark mode: every text colour here keeps a contrast ratio of at least 4.5:1
+ * against --background-color (WCAG AA)
+ */
 @media (prefers-color-scheme: dark) {
   :root {
     --background-color: #151515;
@@ -16,6 +28,14 @@
     --code-text: #dfc7ff;
     --link-color: #33cdff;
     --gsc-button: var(--background-color);
+    --file-text: #5fd35f;
+    --link-hover: #a0b4b4;
+    --nomaintainer-text: #b48cff;
+    --quote-border: #444;
+    --version-hover-bg: #3a3a3a;
+    --version-hover-text: var(--body-text);
+    --input-background: #3b3b3b;
+    --input-border: #858585;
   }
 
   a:link {
@@ -72,14 +92,43 @@ body.dark-theme {
 }
 */
 
+/*
+ * font sizes are in rem (1rem = 16px at the browser default) so they all
+ * follow the root font size: the browser's own setting, and later the
+ * visitor's choice - see issue #690
+ */
 BODY, TD, TR, P, UL, OL, LI, INPUT, SELECT, DL, DD, DT, FONT
 {
-    font-size: 12px;
+    font-size: 0.75rem;
 }
 @media only screen and (min-resolution: 140dpi) {
   BODY, TD, TR, P, UL, OL, LI, INPUT, SELECT, DL, DD, DT, FONT
   {
-      font-size: 16px;
+      font-size: 1rem;
+  }
+}
+
+/*
+ * the visitor's choice of text size does not apply to the site header lines
+ * (git branch, Amazon, All times are UTC), announcements, the footer, or the
+ * sponsors in the sidebar.  Dividing by
+ * --fontsize-scale, set by include/fontsize.php, undoes it; the browser's own
+ * text size still applies - see issue #702
+ */
+.site-header-main,
+.announcements :is(TD, P, UL, OL, LI, DL, DD, DT, FONT),
+.footer TD,
+.sidebar-sponsors P
+{
+    font-size: calc(0.75rem / var(--fontsize-scale, 1));
+}
+@media only screen and (min-resolution: 140dpi) {
+  .site-header-main,
+  .announcements :is(TD, P, UL, OL, LI, DL, DD, DT, FONT),
+  .footer TD,
+  .sidebar-sponsors P
+  {
+      font-size: calc(1rem / var(--fontsize-scale, 1));
   }
 }
 
@@ -208,7 +257,9 @@ body .gsc-search-button-v2 {
 }
 
 .watch-maintenance input[type="submit"] {
-  width: 85px;
+  /* --button-width is set by watch-list-maintenance.php from the longest label */
+  width: calc(var(--button-width, 8ch) + 2em);
+  min-width: 85px;
   height: 24px;
 }
 
@@ -414,8 +465,10 @@ IMG#fp-logo { max-width: 100%; height: auto }
   margin-top: 1em;
 }
 
+/* a basis of 0 keeps the aside on the same row, at the top right - see issue #702 */
 .site-header-main {
-  flex: 1 1 auto;
+  flex: 1 1 0;
+  min-width: 0;
   display: flow-root;
 }
 
@@ -424,7 +477,7 @@ IMG#fp-logo { max-width: 100%; height: auto }
 }
 
 .site-header-aside.hcentered {
-  align-self: flex-end;
+  align-self: flex-start;
 }
 
 /* only shown on narrow screens */
@@ -449,8 +502,12 @@ IMG#fp-logo { max-width: 100%; height: auto }
   gap: 0.5em;
 }
 
-/* shown only when a translation is installed; on narrow screens it wraps below the search box */
-.language-picker {
+/*
+ * the language picker is shown only when a translation is installed; on narrow
+ * screens the pickers wrap below the search box.  Whichever picker comes first
+ * is pushed to the right.
+ */
+.language-picker, .fontsize-picker {
   display: flex;
   align-items: center;
   gap: 0.4em;
@@ -458,10 +515,32 @@ IMG#fp-logo { max-width: 100%; height: auto }
   white-space: nowrap;
 }
 
+.language-picker + .fontsize-picker {
+  margin-left: 0;
+}
+
+/* with JavaScript, picking an option submits the form, so the Change button is
+   not needed; the js class is set in <head>, so the button never flashes up */
+.js .language-picker input[type="submit"],
+.js .fontsize-picker input[type="submit"] {
+  display: none;
+}
+
 .header-search input[type="search"] {
   flex: 0 1 25em;
   min-width: 0;
   padding: 0.3em;
+  /* without this, Safari draws its own borderless rounded search field, which
+     in dark mode looks nothing like the box other browsers show */
+  -webkit-appearance: none;
+  appearance: none;
+  border: 1px solid #767676;
+  border: 1px solid var(--input-border);
+  border-radius: 2px;
+  background-color: white;
+  background-color: var(--input-background);
+  color: black;
+  color: var(--body-text);
 }
 
 .header-search input[type="submit"] {
@@ -590,7 +669,10 @@ P.whitehead {
   font-weight: 900;
 }
 P.yellow { color: #FFCC33; }
-A:hover { color: #666666; }
+A:hover {
+  color: #666666;
+  color: var(--link-hover);
+}
 A.white { color: white; text-decoration: none; font-size: smaller; }
 A.black { color: black; text-decoration: none; font-size: smaller; }
 A.red   { color: red; text-decoration: none; }
@@ -613,6 +695,7 @@ blockquote {
 	margin: 15px 30px 15px 10px;
 	padding-left: 20px;
 	border-left: 5px solid #ddd;
+	border-left: 5px solid var(--quote-border);
 }
 
 div#time
@@ -623,12 +706,12 @@ div#time
 div#followus
 {
     float: right;
-    font-size: 15px;
+    font-size: 0.9375rem;
 }
 
 div#followus .header
 {
-    font-size: 37px;
+    font-size: 2.3125rem;
 }
 
 
@@ -685,21 +768,21 @@ dt.notice
   margin-top: 10px;
   margin-bottom: 10px;
   margin-inline-start: 0px;
-  font-size: 15px;
+  font-size: 0.9375rem;
 }
 
 dt.h2
 {
   margin-top: 10px;
   margin-bottom: 10px;
-  font-size: 25px;
+  font-size: 1.5625rem;
 }
 
 dt.h3
 {
   margin-top: 10px;
   margin-bottom: 10px;
-  font-size: 18npx;
+  font-size: 1.125rem;
 }
 
 ol.required, ol.depends, ol.mastersites
@@ -713,15 +796,23 @@ div.showLink
     margin-bottom: 20px;
 }
 
-span.amazon
+div.header-notes
 {
   float:     right;
-  font-size: 20px;
+  margin-left: 1em;
 }
 
-span.timezone
+/* em, not rem: sized from .site-header-main, so the chosen text size does not apply - see issue #702 */
+span.amazon, span.timezone
 {
-  float:     middle;
+  display:   block;
+  font-size: 1em;
+}
+
+/* the bug, under All times are UTC - see issue #702 */
+span.header-badges
+{
+  display:   block;
 }
 
 span.logo
@@ -729,19 +820,29 @@ span.logo
   float:     left;
 }
 
+/* not floated: it takes the width left between the logo and div.header-notes,
+   wrapping a long branch name if need be - see issue #702 */
 span.branch
 {
-  float:     left;
+  display:   flow-root;
+  font-size: 0.85em;
+  overflow-wrap: anywhere;
 }
 
 span.fp_description_short
 {
-  font-size:   16px;
+  font-size:   1rem;
 }
 
 span.file {
     color: #007a00;
+    color: var(--file-text);
     font-family: monospace;
+}
+
+/* monospace looks larger than the text around it - see issue #702 */
+span.branch span.file {
+    font-size: 0.85em;
 }
 
 a.hash {
@@ -809,7 +910,7 @@ li.extraspace {
   display: inline-block;
 }
 
-.packages caption { font-size: initial; }
+.packages caption { font-size: 1rem; }
 .packages th {
   background-color:#000;
   background-color: var(--body-text);
@@ -839,6 +940,16 @@ li.extraspace {
   text-align: right;
 }
 
+/* equal widths either side keep the IPv6 badge in the middle - see issue #702 */
+.footer .sponsors, .footer .copyright {
+  width: 50%;
+}
+
+.footer .ipv6-badge {
+  text-align: center;
+  vertical-align: middle;
+}
+
 /* for horizontal scrolling of package tables - re https://www.w3schools.com/howto/howto_css_menu_horizontal_scroll.asp#contact */
 
 div.scrollmenu table {
@@ -851,6 +962,27 @@ a > img {
 
 table.fullwidth {
   width: 100%;
+}
+
+/* a bulleted list whose second column lines up - e.g. the 404 port suggestions */
+ul.aligned {
+  display: table;
+  padding-left: 1em;
+}
+
+ul.aligned > li {
+  display: table-row;
+}
+
+ul.aligned > li::before {
+  content: "\2022";
+  display: table-cell;
+  padding-right: 0.5em;
+}
+
+ul.aligned > li > span {
+  display: table-cell;
+  padding: 2px 1em 2px 0;
 }
 
 table.borderless {
@@ -871,8 +1003,9 @@ table.bordered > tbody > tr > td, table.bordered > tbody > tr > th {
 
 td.version:hover, td.version:focus {
   background-color: #777;
+  background-color: var(--version-hover-bg);
   color: white;
-  color: var(--background-color);
+  color: var(--version-hover-text);
   position: relative;
 }
 
@@ -943,16 +1076,11 @@ table.packages {
 }
 
 
-.fallout {
-    width: 32px;
-    height: 32px;
-    background-image: url(/images/fallout.svg);
-    background-size: 100%;
-    background-repeat: no-repeat;
+.nomaintainer {
+  color: blueviolet;
+  color: var(--nomaintainer-text);
+  font-size: 1.25rem;
 }
-
-
-.nomaintainer { color: blueviolet; font-size: 20px; }
 
 .hcentered { text-align: center; }
 
@@ -966,7 +1094,11 @@ table.packages {
 
 .nowrap { white-space: nowrap; }
 
-.cmd { color: #007a00; font-family: monospace; }
+.cmd {
+  color: #007a00;
+  color: var(--file-text);
+  font-family: monospace;
+}
 
 
 /*
@@ -996,8 +1128,12 @@ table.packages {
     max-width: calc(100% - 110px);
   }
 
-  span.logo, span.branch, span.amazon, div#followus {
+  span.logo, div.header-notes, div#followus {
     float: none;
+  }
+
+  div.header-notes {
+    margin-left: 0;
   }
 
   span.logo, span.branch, span.amazon, span.timezone {
@@ -1010,7 +1146,7 @@ table.packages {
   }
 
   div#followus .header {
-    font-size: 20px;
+    font-size: 1.25rem;
   }
 
   .menu-link {
@@ -1046,20 +1182,32 @@ table.packages {
     color: var(--accent-text);
   }
 
-  /* fill the width, and 16px or more stops iOS zooming in on focus */
+  /* fill the width, and 16px or more stops iOS zooming in on focus,
+     so these never go below 16px even when the root font size is smaller */
   .header-search input[type="search"] {
     flex: 1;
     padding: 0.4em;
-    font-size: 16px;
+    font-size: max(16px, 1rem);
   }
 
   .header-search input[type="submit"] {
     padding: 0.4em 0.8em;
-    font-size: 16px;
+    font-size: max(16px, 1rem);
   }
 
-  .language-picker select {
-    font-size: 16px;
+  .language-picker select, .fontsize-picker select {
+    font-size: max(16px, 1rem);
+  }
+
+  /* let the header shrink to the screen, so large text does not push it off
+     the side; the search box gets narrower instead */
+  .header-tools, .header-search {
+    min-width: 0;
+  }
+
+  /* the pickers wrap onto lines of their own, so line them up on the left */
+  .language-picker, .fontsize-picker {
+    margin-left: 0;
   }
 
   table.layout,

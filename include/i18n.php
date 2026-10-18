@@ -63,9 +63,10 @@ function freshports_i18n_available_locales() {
 #
 function freshports_i18n_native_name($locale) {
 	$names = array(
-		'de'    => 'Deutsch',
+		'de_DE' => 'Deutsch',
 		'es'    => 'Español',
 		'fr'    => 'Français',
+		'fr_CA' => 'Français (Canada)',
 		'ja'    => '日本語',
 		'pt_BR' => 'Português (Brasil)',
 		'ru'    => 'Русский',

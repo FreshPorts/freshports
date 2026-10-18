@@ -18,36 +18,11 @@ class Category {
 	var $element_id;
 	var $name;
 	var $description;
-	var $last_commit_date;
 
 	var $Debug = 0;
 
-	protected const FETCH_SQL_HEAD = '
-SELECT C.*, (SELECT MAX(CL.commit_date)
-               FROM ports            P,
-                    commit_log       CL,
-                    ports_categories PC
-              WHERE PC.port_id       = P.id
-                AND P.last_commit_id = CL.id
-                AND PC.category_id   = C.id) AS last_commit_date
-  FROM categories C
-';
-
-	protected const FETCH_SQL_BRANCH_1 = '
-SELECT C.*, (SELECT MAX(CL.commit_date)
-               FROM ports               P,
-                    commit_log          CL,
-                    ports_categories    PC,
-                    commit_log_branches CLB,
-                    system_branch       SB
-              WHERE PC.port_id        = P.id
-                AND P.last_commit_id  = CL.id
-                AND PC.category_id    = C.id
-                AND CLB.commit_log_id = CL.id
-                AND CLB.branch_id     = SB.id
-                AND SB.branch_name    = ';
-
-	protected const FETCH_SQL_BRANCH_2 = ') AS last_commit_date
+	protected const FETCH_SQL = '
+SELECT C.*
   FROM categories C
 ';
 
@@ -62,7 +37,6 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 		$this->element_id       = $myrow["element_id"];
 		$this->name             = $myrow["name"];
 		$this->description      = $myrow["description"];
-		$this->last_commit_date	= $myrow["last_commit_date"];
 	}
 
 	function FetchByID($id) {
@@ -70,10 +44,9 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 			$this->id = $id;
 		}
 
-		# Get the category details, and the date of the
-		# last modified port therein
+		# Get the category details
 		#
-		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . $this->ComposeFetchBranchSQL() . ' WHERE id = $1';
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . self::FETCH_SQL . ' WHERE id = $1';
 
 		if ($this->Debug) echo "<pre>1. sql = '$sql'</pre><br>";
 
@@ -95,7 +68,7 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 		if (IsSet($element_id)) {
 			$this->element_id = $element_id;
 		}
-		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . $this->ComposeFetchBranchSQL() . '  WHERE C.element_id = $1';
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . self::FETCH_SQL . '  WHERE C.element_id = $1';
 		if ($this->Debug) echo "<pre>sql = '$sql'</pre><br>";
 
 		$result = pg_query_params($this->dbh, $sql, array($this->element_id));
@@ -119,7 +92,7 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 			$this->name = pg_escape_string($this->dbh, $Name);
 			unset($this->id);
 		}
-		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . $this->ComposeFetchBranchSQL() . " WHERE C.name = $1";
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . self::FETCH_SQL . " WHERE C.name = $1";
 
 		if ($this->Debug) echo "<pre>sql = '$sql'</pre><br>";
 
@@ -207,15 +180,5 @@ SELECT C.*, (SELECT MAX(CL.commit_date)
 
 	function IsPrimary() {
 		return $this->is_primary == 't';
-	}
-
-	protected function ComposeFetchBranchSQL() {
-		if ($this->BranchName == BRANCH_HEAD) {
-		  $sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . self::FETCH_SQL_HEAD;
-		} else {
-		  $sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . self::FETCH_SQL_BRANCH_1 . "'" . pg_escape_string($this->dbh, $this->BranchName) . "'" . self::FETCH_SQL_BRANCH_2;
-		}
-
-		return $sql;
 	}
 }

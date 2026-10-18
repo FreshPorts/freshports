@@ -180,12 +180,13 @@ echo freshports_ShowFooter();
 			pg_exec($db, 'BEGIN');
 			$Error = '';
 			$ElementID = pg_escape_string($db, intval($_REQUEST['Update']));
-			$WLID      = pg_escape_string($db, intval($_REQUEST['wlid']));
+			# the watch lists which should contain this element; none selected means none
+			$WLIDs     = isset($_REQUEST['wlid']) && is_array($_REQUEST['wlid']) ? array_map('intval', $_REQUEST['wlid']) : array();
 			$WatchListElement = new WatchListElement($db);
 
 			if ($Debug) echo "userid = '$User->id' and ElementID = '$ElementID'<br>";
 
-			if ($WatchListElement->DeleteElementFromWatchLists($User->id, $WLID, $ElementID) == -1) {
+			if ($WatchListElement->DeleteElementFromWatchLists($User->id, $ElementID) == -1) {
 				$Error = 'removing element failed : Please try again, and if the problem persists, please contact the webmaster: ' . pg_last_error($db);
 			}
 			if ($Debug) {
@@ -199,10 +200,10 @@ echo freshports_ShowFooter();
 				}
 			}
 
-			if ($Error == '' && IsSet($_REQUEST['wlid'])) {
+			if ($Error == '' && count($WLIDs)) {
 
 				if ($Debug) echo "userid = $User->id and ElementID = $ElementID <br>";
-				if (AddElementToWatchLists($db, $User->id, $ElementID, $_REQUEST['wlid'])== -1) {
+				if (AddElementToWatchLists($db, $User->id, $ElementID, $WLIDs)== -1) {
 					$Error = 'adding element failed : Please try again, and if the problem persists, please contact the webmaster: ' . pg_last_error($db);
 				}
 			}

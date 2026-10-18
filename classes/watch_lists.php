@@ -51,8 +51,7 @@ DELETE FROM watch_list
 			       name,
 			       in_service,
 			       count(element_id) as watch_list_count,
-			       token,
-                   NULL as watch_list_count
+			       token
 			  FROM watch_list LEFT OUTER JOIN watch_list_element
 			    ON watch_list_element.watch_list_id = watch_list.id
 			   AND watch_list_element.element_id  = $1

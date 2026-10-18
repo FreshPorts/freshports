@@ -55,7 +55,7 @@ class WatchListElement {
 	}
 
 
-	function DeleteElementFromWatchLists($UserID, $WatchListID, $ElementID) {
+	function DeleteElementFromWatchLists($UserID, $ElementID) {
 		#
 		# Delete this element from all watch lists
 		#
@@ -68,11 +68,10 @@ class WatchListElement {
 		$sql = 'DELETE FROM watch_list_element
                  USING watch_list
 		         WHERE watch_list.user_id               = $1
-		           AND watch_list.id                    = $2
-		           AND watch_list_element.element_id    = $3
+		           AND watch_list_element.element_id    = $2
 		           AND watch_list_element.watch_list_id = watch_list.id';
 		if ($this->Debug) echo "<pre>$sql</pre>";
-		$result = pg_query_params($this->dbh, $sql, array($UserID, $WatchListID, $ElementID));
+		$result = pg_query_params($this->dbh, $sql, array($UserID, $ElementID));
 
 		# that worked and we updated exactly one row
 		if ($result) {

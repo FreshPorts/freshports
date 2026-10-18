@@ -10,6 +10,8 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/system_branch.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/cache-news.php');
 
 $Debug = 0;
 
@@ -64,6 +66,59 @@ if (isset($_REQUEST['branch'])) {
 
 $Title = sprintf(_('New ports - %s'), $Interval);
 
+$visitor = pg_escape_string($db, $_COOKIE[USER_COOKIE_NAME] ?? '');
+if (isset($_REQUEST["sort"])) {
+    $sort = pg_escape_string($db, $_REQUEST["sort"]);
+} else {
+    $sort = '';
+}
+
+// make sure the value for $sort is valid
+
+switch ($sort) {
+    case "dateadded":
+        $SortKey = 'dateadded';
+        $sort = "date_added_raw desc, category, port";
+        $SortText = sprintf(_('This page is sorted by date added.  %s'), '<a href="' . $_SERVER["PHP_SELF"] . '?interval=' . $interval . '&amp;sort=category">' . _('Sort by category') . '</a>');
+        $ShowCategoryHeaders = 0;
+        break;
+
+    default:
+        $SortKey = 'category';
+        $sort = "category, port";
+        $SortText = sprintf(_('This page is sorted by category.  %s'), '<a href="' . $_SERVER["PHP_SELF"] . '?interval=' . $interval . '&amp;sort=dateadded">' . _('Sort by date added') . '</a>');
+        $ShowCategoryHeaders = 1;
+}
+
+###
+### Check the cache
+###
+# The list of ports is cached in the news cache, which fp-listen empties on every
+# commit and port update.  Each user has their own entry, because the watch list
+# icons differ; anonymous users share user 0.  The window (e.g. past 24 hours) moves
+# even when nothing is committed, so an entry older than an hour is not used.
+#
+define('PORTS_NEW_CACHE_MAX_AGE', 3600);
+
+$CacheFileName = 'ports-new.' . $interval . '.' . $SortKey . '.' . $BranchName . '.' . intval($User->id ?? 0);
+$Cache = new CacheNews(NEWS_DIRECTORY);
+$CacheResult = $Cache->Retrieve($CacheFileName);
+if (!$CacheResult && time() - $Cache->LastModifiedGet() < PORTS_NEW_CACHE_MAX_AGE) {
+    $ListOfPorts = $Cache->CacheDataGet();
+} else {
+    $Cache->LastModified = null;  # an expired entry's time must not be sent if Add() fails
+    $ListOfPorts = ports_new_ListOfPorts($db, $User, $IntervalAdjust, $BranchName, $sort, $ShowCategoryHeaders, $Debug);
+    if ($ListOfPorts !== false) {
+        $Cache->CacheDataSet($ListOfPorts);
+        $Cache->Add($CacheFileName);
+    }
+}
+
+### page building starts here
+
+# when the cache Add fails, LastModifiedGet() is empty, and this gives the current time
+freshports_ConditionalGetUnix($Cache->LastModifiedGet());
+
 freshports_Start($Title,
     $Title,
     "FreeBSD, index, applications, ports");
@@ -87,34 +142,49 @@ freshports_Start($Title,
 </tr>
 <?php
 
-$visitor = pg_escape_string($db, $_COOKIE[USER_COOKIE_NAME] ?? '');
-if (isset($_REQUEST["sort"])) {
-    $sort = pg_escape_string($db, $_REQUEST["sort"]);
-} else {
-    $sort = '';
-}
-
-// make sure the value for $sort is valid
-
 echo "<tr><td>\n";
-
-switch ($sort) {
-    case "dateadded":
-        $sort = "date_added_raw desc, category, port";
-        printf(_('This page is sorted by date added.  %s'), '<a href="' . $_SERVER["PHP_SELF"] . '?interval=' . $interval . '&amp;sort=category">' . _('Sort by category') . '</a>');
-        $ShowCategoryHeaders = 0;
-        break;
-
-    default:
-        $sort = "category, port";
-        printf(_('This page is sorted by category.  %s'), '<a href="' . $_SERVER["PHP_SELF"] . '?interval=' . $interval . '&amp;sort=dateadded">' . _('Sort by date added') . '</a>');
-        $ShowCategoryHeaders = 1;
-}
-
+echo $SortText;
 echo "</td></tr>\n";
 
+if ($ListOfPorts === false) {
+    echo pg_last_error($db);
+} else {
+    echo $ListOfPorts;
+}
+?>
+
+</table>
+
+<td class="sidebar">
+    <?php
+    echo freshports_SideBar();
+    ?>
+</td>
+
+</tr>
+</table>
+
+<?php
+echo freshports_ShowFooter();
+?>
+
+</body>
+</html>
+<?php
+
+# returns the HTML for the list of ports, or false if the query failed
+function ports_new_ListOfPorts($db, $User, $IntervalAdjust, $BranchName, $sort, $ShowCategoryHeaders, $Debug) {
+
+# The branch id goes in as a literal, not via a join on system_branch:
+# with a literal, the planner knows head has most of the rows in
+# commit_log_branches.  Joined by name, it guesses about 10,000 rows
+# instead of 568,000, and walks them all (about 1 second).  An unknown
+# branch gives id 0, which matches nothing, as the join did.
+$system_branch = new SystemBranch($db);
+$BranchID = intval($system_branch->getBranchID($BranchName));
+
 # we might add in other parameters below.
-$params = array($IntervalAdjust, $BranchName);
+$params = array($IntervalAdjust);
 $sql = "
 select NP.id,
        E.name as port,
@@ -178,7 +248,8 @@ $sql .= "
 ";
 
 # we need the single quotes for the interval operation, not for quoting.
-$sql .= "   FROM ports P  WHERE P.date_added  > (SELECT now() - $1::interval)) AS NP";
+# No sub-select around now(): the planner can then estimate the rows and use ports_date_added_idx.
+$sql .= "   FROM ports P  WHERE P.date_added  > now() - $1::interval) AS NP";
 
 if ($User->id) {
     $sql .= "
@@ -186,7 +257,7 @@ if ($User->id) {
  (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
     FROM watch_list JOIN watch_list_element
         ON watch_list.id      = watch_list_element.watch_list_id
-       AND watch_list.user_id = $3
+       AND watch_list.user_id = $2
        AND watch_list.in_service
   GROUP BY wle_element_id) AS TEMP2
        ON TEMP2.wle_element_id = NP.element_id";
@@ -198,7 +269,7 @@ $sql .= "
                LEFT OUTER JOIN commit_log          CL  ON NP.last_commit_id = CL.id
                           JOIN commit_log_ports    CLP ON CLP.commit_log_id = CL.id 
                           JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id AND CLP.port_id = NP.id
-                          JOIN system_branch       SB  ON SB.branch_name    = $2  AND SB.id = CLB.branch_id
+                                                      AND CLB.branch_id     = $BranchID
                LEFT OUTER JOIN repo                R   ON CL.repo_id        = R.id
                           JOIN element             E   ON NP.element_id     = E.id
                                                       AND E.status          = 'A'
@@ -210,36 +281,16 @@ $sql .= "
 $sql .= "\n  order by $sort ";
 
 if ($Debug) {
-    echo "<pre>$sql</pre>";
+    syslog(LOG_NOTICE, 'ports-new.php: ' . $sql);
 }
 
-$numrows = 0;
 $result = pg_query_params($db, $sql, $params);
 if (!$result) {
-    echo pg_last_error($db);
-} else {
-    $numrows = pg_num_rows($result);
+    return false;
 }
+$numrows = pg_num_rows($result);
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/list-of-ports.php');
 
-echo freshports_ListOfPorts($result, $db, 'Y', $ShowCategoryHeaders, $User, $numrows);
-?>
-
-</table>
-
-<td class="sidebar">
-    <?php
-    echo freshports_SideBar();
-    ?>
-</td>
-
-</tr>
-</table>
-
-<?php
-echo freshports_ShowFooter();
-?>
-
-</body>
-</html>
+return freshports_ListOfPorts($result, $db, 'Y', $ShowCategoryHeaders, $User, $numrows);
+}

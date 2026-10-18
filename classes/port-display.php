@@ -61,6 +61,9 @@ class port_display {
 	var $ShowWatchListStatus;
 	var $UseFullPathNames;
 
+	var $_last_commit;		# see _lastCommit()
+	var $_last_commit_id;
+
 	# taken from https://www.php.net/manual/en/function.strpos.php
 	function strpos_nth(string $string, string $needle, int $occurrence, int $offset = 0) {
 	        if ((0 < $occurrence) && ($length = strlen($needle))) {
@@ -260,6 +263,22 @@ class port_display {
         return $HTML;
     }
 
+	function _lastCommit() {
+	  #
+	  # The last commit of a deleted port, for the links to the repo.  Each repo link wants it;
+	  # fetch it once per port, not once per link.
+	  #
+	  if (!IsSet($this->_last_commit) || $this->_last_commit_id != $this->port->last_commit_id) {
+	    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
+
+	    $this->_last_commit    = new Commit($this->db);
+	    $this->_last_commit->FetchById($this->port->last_commit_id);
+	    $this->_last_commit_id = $this->port->last_commit_id;
+	  }
+
+	  return $this->_last_commit;
+	}
+
 	function SetPort($port, $Branch = BRANCH_HEAD) {
 	  //
 	  // We could derive branch from element_pathname(port->element_id) but let's try passing in branch explicitly.
@@ -283,8 +302,7 @@ class port_display {
             #
             require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
 
-            $commit = new Commit($this->db);
-            $commit->FetchById($this->port->last_commit_id);
+            $commit = $this->_lastCommit();
 
             if (!empty($commit->svn_revision)) {
               if ($this->_isGitCommit($commit->svn_revision)) {
@@ -344,8 +362,7 @@ class port_display {
             #
             require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
 
-            $commit = new Commit($this->db);
-            $commit->FetchById($this->port->last_commit_id);
+            $commit = $this->_lastCommit();
 
             if (!empty($commit->svn_revision)) {
               if ($this->_isGitCommit($commit->svn_revision)) {
@@ -404,8 +421,7 @@ class port_display {
             #
             require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
 
-            $commit = new Commit($this->db);
-            $commit->FetchById($this->port->last_commit_id);
+            $commit = $this->_lastCommit();
 
             if (!empty($commit->svn_revision)) {
               if ($this->_isGitCommit($commit->svn_revision)) {
@@ -464,8 +480,7 @@ class port_display {
             #
             require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
 
-            $commit = new Commit($this->db);
-            $commit->FetchById($this->port->last_commit_id);
+            $commit = $this->_lastCommit();
 
             if (!empty($commit->svn_revision)) {
               if ($this->_isGitCommit($commit->svn_revision)) {
@@ -524,8 +539,7 @@ class port_display {
             #
             require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
 
-            $commit = new Commit($this->db);
-            $commit->FetchById($this->port->last_commit_id);
+            $commit = $this->_lastCommit();
 
             if (!empty($commit->svn_revision)) {
               if ($this->_isGitCommit($commit->svn_revision)) {

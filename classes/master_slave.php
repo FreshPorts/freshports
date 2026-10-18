@@ -5,6 +5,8 @@
 	#
 
 
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/system_branch.php');
+
 // base class for Master-Slave relationships
 class MasterSlave {
 
@@ -28,16 +30,23 @@ class MasterSlave {
 	}
 
 	function FetchByMaster($MasterName) {
+          #
+          # The branch id goes in as a literal, not via a join on system_branch:
+          # joined by name, the planner guesses about 10,000 head rows in
+          # commit_log_branches instead of 568,000, and walks them all
+          # (900 ms for a master with many slaves; 3 ms with the literal).
+          # An unknown branch gives id 0, which matches nothing, as the join did.
+          #
+          $system_branch = new SystemBranch($this->dbh);
+          $BranchID = intval($system_branch->getBranchID(BRANCH_HEAD));
+
           $sql = "
 SELECT P.id          AS slave_port_id,
        P.name        AS slave_port_name,
        P.category_id AS slave_category_id,
        P.category    AS slave_category_name
-  FROM ports_active P LEFT OUTER JOIN commit_log CL           ON P.last_commit_id = CL.id
-                      LEFT OUTER JOIN repo R                  ON CL.repo_id = R.id
-                      LEFT OUTER JOIN commit_log_branches CLB ON CL.id            = CLB.commit_log_id
-                                 JOIN system_branch       SB  ON SB.branch_name   = 'head'
-                                                             AND SB.id            = CLB.branch_id
+  FROM ports_active P JOIN commit_log_branches CLB ON CLB.commit_log_id = P.last_commit_id
+                                                  AND CLB.branch_id     = $BranchID
  WHERE P.master_port = $1
 ORDER BY slave_category_name, slave_port_name";
 

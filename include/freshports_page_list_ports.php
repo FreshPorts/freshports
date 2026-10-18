@@ -7,13 +7,22 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports_page.php');
 	require_once('Pager/Pager.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/system_branch.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/cache-news.php');
+
+	# The window for some pages moves without any commit (e.g. ports-expired.php
+	# changes at midnight), so a cache entry older than this is rebuilt.
+	define('LIST_PORTS_CACHE_MAX_AGE', 3600);
 
 class freshports_page_list_ports extends freshports_page {
 
 	var $User;
 	var $Branch;
+	var $_branch_id;			# id of $Branch, looked up once by _getBranchID()
+	var $_row_count;			# set by getLastModified() or getRowCount(), reused by getRowCount()
+	var $_body;				# the page content from the cache or from _buildBody(); see Display()
 
-	var $_sql;
+	var $_sql;			# the query for this page, with %PAGE% where OFFSET/LIMIT go; see setSQL()
 	var $_description;
 	var $_port_status = PORT_STATUS_ACTIVE;  # show only active ports
 
@@ -46,21 +55,40 @@ class freshports_page_list_ports extends freshports_page {
 		$this->setPageNumber($page_number);
 	}
 
+	protected function _getBranchID() {
+		# An unknown branch gives id 0, which matches nothing, as the old join on system_branch did.
+		if (!IsSet($this->_branch_id)) {
+			$system_branch = new SystemBranch($this->_db);
+			$this->_branch_id = intval($system_branch->getBranchID($this->Branch));
+		}
+
+		return $this->_branch_id;
+	}
+
         protected function _FROM_CLAUSE() {
-          $_FROM_CLAUSE = "FROM element, categories, ports_vulnerable PV RIGHT OUTER JOIN ports                   ON PV.port_id = ports.id
-                                                                         LEFT  OUTER JOIN commit_log CL           ON ports.last_commit_id = CL.id
-                                                                         LEFT  OUTER JOIN repo R                  ON CL.repo_id = R.id
-                                                                         LEFT  OUTER JOIN commit_log_branches CLB ON CL.id            = CLB.commit_log_id
-                                                                                     JOIN system_branch       SB  ON SB.branch_name   = '" . pg_escape_string($this->_db, $this->Branch) . "'
-                                                                                                                 AND SB.id            = CLB.branch_id";
+          #
+          # Only what the count, the conditions (ports.* and PV.current), and the sort need.
+          # element is not here: it is the largest table, and joining it for every matching
+          # port costs more than the rest of the query.  The page query looks up element.name
+          # only for the sort, and joins element for the rows shown.
+          #
+          # The branch id goes in as a literal, not via a join on system_branch:
+          # with a literal, the planner knows head has most of the rows in
+          # commit_log_branches.  Joined by name, it guesses about 10,000 rows
+          # instead of 568,000, and walks them all (about 1 second per query).
+          #
+          $_FROM_CLAUSE = "
+  FROM ports_vulnerable PV RIGHT OUTER JOIN ports                   ON PV.port_id         = ports.id
+                                 JOIN categories          ON categories.id      = ports.category_id
+                                 JOIN commit_log_branches CLB ON CLB.commit_log_id = ports.last_commit_id
+                                                             AND CLB.branch_id     = " . $this->_getBranchID();
           return $_FROM_CLAUSE;
 	}
 
 	protected function _WHERE_CLAUSE() {
 
-	  $_WHERE_CLAUSE = " WHERE ports.element_id  = element.id
-  AND ports.category_id = categories.id 
-  AND ports.status      = '" . pg_escape_string($this->_db, $this->getStatus()) . "'";
+	  $_WHERE_CLAUSE = "
+ WHERE ports.status = '" . pg_escape_string($this->_db, $this->getStatus()) . "'";
 
           return $_WHERE_CLAUSE;
         }
@@ -71,10 +99,39 @@ class freshports_page_list_ports extends freshports_page {
 
 	function SetBranch($Branch) {
 		$this->Branch = $Branch;
+		unset($this->_branch_id);
+		unset($this->_row_count);
 	}
 
 	function Display() {
-		freshports_ConditionalGet($this->getLastModified());
+		#
+		# The content is cached in the news cache, which fp-listen empties on every
+		# commit and port update.  Each user has their own entry, because the watch list
+		# icons differ; anonymous users share user 0.  The script name identifies the
+		# page (and so its condition); the sort, port status, branch, page size and
+		# page number complete the key.  Last-Modified is the time of the cache entry.
+		#
+		$Cache = new CacheNews(NEWS_DIRECTORY);
+		$Cache->PageSizeSet($this->_pageSize);
+		$CacheFileName = 'list-ports.' . basename($_SERVER['SCRIPT_NAME']) . '.' . $this->getSort() . '.' . $this->getStatus() . '.' .
+		                 $this->Branch . '.' . intval($this->User->id ?? 0);
+
+		$CacheResult = $Cache->Retrieve($CacheFileName, $this->_pageNumber);
+		if (!$CacheResult && time() - $Cache->LastModifiedGet() < LIST_PORTS_CACHE_MAX_AGE) {
+			$this->_body = $Cache->CacheDataGet();
+		} else {
+			$Cache->LastModified = null;  # an expired entry's time must not be sent if Add() fails
+			$this->_body = $this->_buildBody();
+			if ($this->_body !== false) {
+				$Cache->CacheDataSet($this->_body);
+				$Cache->Add($CacheFileName, $this->_pageNumber);
+			} else {
+				$this->_body = '';
+			}
+		}
+
+		# when there is no cache entry, this gives the current time
+		freshports_ConditionalGetUnix($Cache->LastModifiedGet());
 
 		# disable the HTML_Page2 headers.  we do our own.
 		#
@@ -131,16 +188,20 @@ class freshports_page_list_ports extends freshports_page {
 		$this->_pager = @Pager::factory($params);
 		unset($params);
 
+		# OFFSET and LIMIT go inside the page CTE, so the details are fetched only for the rows shown
+		$page = '';
 		if ($this->_pageNumber > 1) {
 			$offset = $this->_pager->getOffsetByPageId();
-			$sql .= "\nOFFSET " . ($offset[0] - 1);
+			$page .= "\nOFFSET " . ($offset[0] - 1);
 			unset($offset);
 		}
 
 		if ($this->_pageSize) {
-			$sql .= "\nLIMIT " . $this->_pageSize;
+			$page .= "\nLIMIT " . $this->_pageSize;
 		}
-		
+
+		$sql = str_replace('%PAGE%', $page, $sql);
+
 #		echo '<pre>From line ' . __LINE__ . ' of ' . __FILE__ . ': ' . $sql . '</pre>';exit;
 #echo 'in GetSQL now';
 		return $sql;
@@ -159,11 +220,17 @@ class freshports_page_list_ports extends freshports_page {
 	}
 
 	function getRowCount() {
+		# getLastModified() usually has the count already; it runs first, from Display()
+		if (IsSet($this->_row_count)) {
+			return $this->_row_count;
+		}
+
 		$numrows = -1;
 		$result = pg_query_params($this->_db, $this->getSQLCount(), array());
 		if ($result) {
 			$myrow = pg_fetch_array ($result);
 			$numrows = $myrow[0];
+			$this->_row_count = $numrows;
 #			echo "There are $numrows to fetch<br>\n";
 		} else {
 			echo pg_last_error($this->_db);
@@ -173,7 +240,28 @@ class freshports_page_list_ports extends freshports_page {
 	}
 
 	function setSQL($Condition, $UserID=0) {
+		if ($Condition) {
+			$this->_condition = $Condition;
+		}
+
+		#
+		# Sort and page on narrow keys first, then fetch the details for the rows shown.
+		# With 25,000 deleted ports, sorting full rows, and joining element for all of them,
+		# took about a second.  The name comes from a primary-key lookup per row: cheaper
+		# than joining all of element.  getSQL() replaces %PAGE% with OFFSET and LIMIT.
+		#
 		$this->_sql = "
+WITH page AS (
+SELECT ports.id,
+       categories.name AS category,
+       (SELECT E.name FROM element E WHERE E.id = ports.element_id) AS port " . $this->_FROM_CLAUSE() . $this->_WHERE_CLAUSE();
+
+		if ($Condition) {
+			$this->_sql .= '
+   AND ' . $Condition;
+		}
+
+		$this->_sql .= "\n order by " . $this->getSort() . "%PAGE%)
 SELECT ports.id, 
        element.name    as port,  
        categories.name as category, 
@@ -219,8 +307,13 @@ SELECT ports.id,
        NULL AS onwatchlist ";
 		}
 
-		$this->_sql .= $this->_FROM_CLAUSE();
-
+		$this->_sql .= "
+  FROM page JOIN ports                                ON ports.id      = page.id
+            JOIN element                              ON element.id    = ports.element_id
+            JOIN categories                           ON categories.id = ports.category_id
+            LEFT OUTER JOIN ports_vulnerable PV       ON PV.port_id    = ports.id
+            LEFT OUTER JOIN commit_log CL             ON CL.id         = ports.last_commit_id
+            LEFT OUTER JOIN repo R                    ON R.id          = CL.repo_id";
 
 		if ($UserID) {
 			$this->_sql .= '
@@ -234,21 +327,15 @@ SELECT ports.id,
        ON TEMP.wle_element_id = ports.element_id';
 		}
 
-                $this->_sql .= $this->_WHERE_CLAUSE();
-
-		if ($Condition) {
-			$this->_sql .= '
-   AND ' . $Condition;
-			$this->_condition = $Condition;
-		}
-
 		$this->_sql .= "\n order by " . $this->getSort();
 	}
 
 	function getLastModified() {
 		# in this code, we are returning date_added because that is more relevant than commit_date with respect to getLastModified()
+		# The count comes from the same pass, saving getRowCount() a query of its own.
 		$sql = "
-SELECT gmt_format(max(CL.date_added)) as last_modified " . $this->_FROM_CLAUSE() . $this->_WHERE_CLAUSE();
+SELECT count(*) as numrows, gmt_format(max(CL.date_added)) as last_modified " . $this->_FROM_CLAUSE() . "
+                                 LEFT OUTER JOIN commit_log CL ON CL.id = ports.last_commit_id" . $this->_WHERE_CLAUSE();
 
 
 		if ($this->_condition) {
@@ -267,7 +354,8 @@ SELECT gmt_format(max(CL.date_added)) as last_modified " . $this->_FROM_CLAUSE()
 			#
 			if ($numrows == 1) {
 				$myrow = pg_fetch_array ($result);
-				$last_modified = $myrow['last_modified'];
+				$last_modified    = $myrow['last_modified'];
+				$this->_row_count = $myrow['numrows'];
 			}
 
 			if ($numrows != 1 || $last_modified == '') {
@@ -406,36 +494,41 @@ SELECT gmt_format(max(CL.date_added)) as last_modified " . $this->_FROM_CLAUSE()
 		return $HTML;
 	}
 
-	function toHTML() {
-		$this->addBodyContent('<tr><td>' . $this->getDescription() . '</td></tr>');
+	# returns the page content, or false if a query failed
+	function _buildBody() {
+		$HTML = '<tr><td>' . $this->getDescription() . '</td></tr>';
 
 		// make sure the value for $sort is valid
 
 		$SortStatement = "<tr><td>\n" . $this->getSortedbyHTML() . "</td></tr>\n";
 
-		$this->addBodyContent($SortStatement); 
+		$HTML .= $SortStatement;
 
 		$NumPorts = $this->getRowCount();
 		$numrows  = $this->ExecuteQuery();
-
+		if ($NumPorts < 0 || $numrows < 0) {
+			return false;
+		}
 
 		$PageLinks = $this->pageLinks();
 		if ($PageLinks != '') {
-			$this->AddBodyContent('<tr><td class="vcentered">');
-			$this->AddBodyContent($PageLinks);
-			$this->AddBodyContent('</td></tr>');
+			$HTML .= '<tr><td class="vcentered">' . $PageLinks . '</td></tr>';
 		}
 
-		$this->addBodyContent($this->getPorts($NumPorts));
+		$HTML .= $this->getPorts($NumPorts);
 
-		$this->addBodyContent($SortStatement); 
+		$HTML .= $SortStatement;
 
 		if ($PageLinks != '') {
-			$this->AddBodyContent('<tr><td class="vcentered">');
-			$this->AddBodyContent($PageLinks);
-			$this->AddBodyContent('</td></tr>');
+			$HTML .= '<tr><td class="vcentered">' . $PageLinks . '</td></tr>';
 		}
-		
+
+		return $HTML;
+	}
+
+	function toHTML() {
+		$this->addBodyContent($this->_body);
+
 		return parent::toHTML();
 	}
 }

@@ -1120,6 +1120,17 @@ JOIN element_pathname EP on E.id = EP.element_id
 		}
 	}
 
+	# offer the same suggestions as the 404 page does for /category/port/
+	# see https://github.com/FreshPorts/freshports/issues/614
+	# They go at the top of the page, not with the results, else they are not seen.
+	# see https://github.com/FreshPorts/freshports/issues/707
+	$SuggestionsHTML = '';
+	if ($output_format == OUTPUT_FORMAT_HTML && $WeHaveToSearch && IsSet($NumFetches) && $NumFetches == 0
+	    && ($stype == SEARCH_FIELD_NAME || $stype == SEARCH_FIELD_PACKAGE)) {
+		$MyPort = new Port($db);
+		$SuggestionsHTML = freshports_PortSuggestions($MyPort->SuggestionsFor($query, $Branch));
+	}
+
 	// start of HTML output
 	if ($output_format == OUTPUT_FORMAT_HTML) {
 		$Title = _('Search');
@@ -1130,7 +1141,23 @@ JOIN element_pathname EP on E.id = EP.element_id
 		echo freshports_MainTable();
 ?>
 <tr><td class="content">
-<?php echo freshports_MainContentTable(); ?>
+<?php
+		if ($SuggestionsHTML != '') {
+			echo freshports_MainContentTable();
+?>
+  <tr>
+	<?php echo freshports_PageBannerText(_('No results found')); ?>
+  </tr>
+<tr><td><?php echo $SuggestionsHTML; ?></td></tr>
+</table>
+
+<br>
+
+<?php
+		}
+
+		echo freshports_MainContentTable();
+?>
   <tr>
 	<?php echo freshports_PageBannerText(_("Search FreshPorts using Google")); ?>
   </tr>
@@ -1346,12 +1373,9 @@ if (file_exists(CATEGORIES_CACHE_LIST)) {
 		   if ($output_format == OUTPUT_FORMAT_HTML) {
 		     $HTML .= ' <strong style="color:var(--beastie-red)">' . _('No results found') . "</strong><br>\n";
 
-		     # offer the same suggestions as the 404 page does for /category/port/
-		     # see https://github.com/FreshPorts/freshports/issues/614
-		     if ($stype == SEARCH_FIELD_NAME || $stype == SEARCH_FIELD_PACKAGE) {
-		       require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
-		       $MyPort = new Port($db);
-		       $HTML .= freshports_PortSuggestions($MyPort->SuggestionsFor($query, $Branch));
+		     # the suggestions are shown at the top of the page, see $SuggestionsHTML
+		     if ($SuggestionsHTML != '') {
+		       $HTML .= '<P>' . _('See the suggestions at the top of this page.') . "</P>\n";
 		     }
 		   }
 		} else {

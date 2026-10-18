@@ -2,10 +2,15 @@
 
 # all others, please don't...
 User-agent: *
+Crawl-delay: 60
 Disallow: /login.php
 Disallow: /new-user.php
-Disallow: /login.php*
-Disallow: /new-user.php*
+
+Disallow: /search.php
+Disallow: /search-gate.php
+
+Disallow: /login.php
+Disallow: /new-user.php
 Disallow: /ports-broken.php
 Disallow: /ports-deleted.php
 Disallow: /ports-forbidden.php
@@ -13,8 +18,16 @@ Disallow: /ports-deprecated.php
 Disallow: /ports-ignore.php
 Disallow: /ports-new.php
 Disallow: /date.php
-Disallow: /stats
 Disallow: /stats/
-Disallow: /stats/*
 Disallow: /commit.php
 Disallow: /commits.php
+Disallow: /watch-list.php
+
+User-agent: SeekportBot
+Crawl-delay: 60
+
+# also blocked 52.230.152.0/24 & 52.233.106.0/24
+# was using 5 times more traffic than the next busiest client
+# 
+User-agent: GPTBot
+Disallow: /

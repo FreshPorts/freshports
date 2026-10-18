@@ -7,3 +7,4 @@ feedcreator
 locale/*/LC_MESSAGES/*.mo
 # written by the freshports-www port at install time
 VERSION
+www/--/freshports-versions.html

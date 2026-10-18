@@ -523,7 +523,7 @@ ON TEMP.wle_element_id = ports.element_id';
 
 	function FetchByCategoryPortBranch($Category, $Port, $Branch, $UserID = 0) {
 		# fetch a single port based on Category/Name on a Branch.
-		# used by new-url-parsing.php
+		# used by rewrite/url-parser.php::Try_Displaying_Port()
 		# returns true if found, false otherwise
 
 		# b for boolean
@@ -909,7 +909,7 @@ LEFT OUTER JOIN
 		# given a category port combination, let's get the port id
 		# and then fetch
 		# NOTE: 2023-03-31 The system doesn't allow you to fetch category/port where category is virtual
-		# used for badges, in www/--/new-url-parsing.php
+		# used for badges, in www/--/url-parser.php
 		#
 
 		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . 'select GetPortID($1, $2) as port_id';

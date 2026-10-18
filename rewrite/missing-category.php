@@ -73,7 +73,7 @@ function str_is_int($str) {
 }
 
 
-# at present, this is invoked from rewrite/new-url-parsing.php::Try_Displaying_Category()
+# at present, this is invoked from rewrite/url-parser.php::Try_Displaying_Category()
 function freshports_CategoryDisplay($dbh, $category, $url_parts, $Branch = BRANCH_HEAD) {
 
 #	var_dump($category);

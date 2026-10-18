@@ -77,5 +77,5 @@
   location / {
     limit_req zone=root_limit burst=60 nodelay;
     limit_req_status 429;
-    try_files $uri $uri/ /--/new-url-parsing.php;
+    try_files $uri $uri/ /--/url-parser.php;
   }

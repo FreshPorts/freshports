@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreshPorts\n"
 "Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
-"POT-Creation-Date: 2026-10-04 13:05-0400\n"
+"POT-Creation-Date: 2026-10-07 17:15-0400\n"
 "PO-Revision-Date: 2026-10-11 01:19+0300\n"
 "Last-Translator: Yusuf Yaman <nxjoseph@FreeBSD.org>\n"
 "Language-Team: Turkish\n"
@@ -571,6 +571,10 @@ msgstr ""
 "Bu listeyi genişlet (%1$d öge / %2$d gizli - üzgünüz, bu sayı silinen "
 "portları da içermektedir)"
 
+#: classes/port-display.php:2009
+msgid "Deleted ports which required this port:"
+msgstr ""
+
 #: classes/port-display.php:2011
 #, php-format
 msgid "Expand this list of %d deleted port"
@@ -645,16 +649,12 @@ msgid "there is no flavor information for this port."
 msgstr "bu port için herhangi bir çeşit bilgisi bulunmamaktadır."
 
 #: classes/searches.php:38
-msgid "Enter Keywords:"
-msgstr "Anahtar kelimeleri girin:"
-
-#: classes/searches.php:39 classes/searches.php:51
-msgid "go"
-msgstr "git"
-
-#: classes/searches.php:50
 msgid "Search ports"
 msgstr "Port Ara"
+
+#: classes/searches.php:39
+msgid "go"
+msgstr "git"
 
 #: classes/searches.php:41
 msgid "Advanced Searching options"
@@ -776,17 +776,16 @@ msgstr "Artan Sıralama"
 msgid "Descending Order"
 msgstr "Azalan Sıralama"
 
-#: include/freshports.php:548 include/freshports.php:2273
-#: include/freshports.php:2282 www/package.php:53 www/search.php:343
-#: www/search.php:1206 include/freshports.php:549
+#: include/freshports.php:549 www/package.php:53 www/search.php:343
+#: www/search.php:1206
 msgid "Search"
 msgstr "Ara"
 
-#: include/freshports.php:553 include/freshports.php:554
+#: include/freshports.php:554
 msgid "Find issues related to this port"
 msgstr "Bu portla alakalı sorunları bul"
 
-#: include/freshports.php:558 include/freshports.php:559
+#: include/freshports.php:559
 msgid "Report an issue related to this port"
 msgstr "Bu portla alakalı bir sorun bildir"
 
@@ -1040,16 +1039,16 @@ msgstr "Telif Hakkı"
 msgid "This material is copyrighted"
 msgstr "Bu materyal telif hakkı ile korunmaktadır"
 
-#: include/freshports.php:1533 include/freshports.php:1555
+#: include/freshports.php:1555
 msgid "Notes from UPDATING"
 msgstr "UPDATING notları"
 
-#: include/freshports.php:1535
+#: include/freshports.php:1557
 #, php-format
 msgid "These upgrade notes are taken from %s"
 msgstr "Bu yükseltme notları %s dosyasından alınmıştır"
 
-#: include/freshports.php:1578
+#: include/freshports.php:1600
 msgid ""
 "Commit History - (may be incomplete: for full details, see links to "
 "repositories near top of page)"
@@ -1057,7 +1056,7 @@ msgstr ""
 "Commit Geçmişi - (eksik olabilir: tüm ayrıntılar için sayfanın üst tarafına "
 "yakın bulunan depo bağlantılarına bakın)\""
 
-#: include/freshports.php:1583
+#: include/freshports.php:1605
 #, php-format
 msgid ""
 "This is a slave port.  You may also want to view the commits to the master "
@@ -1066,19 +1065,19 @@ msgstr ""
 "Bu bir türeme (slave) porttur. Ana (master) porta yapılan işlemeleri de "
 "incelemek isteyebilirsiniz: %s"
 
-#: include/freshports.php:1587
+#: include/freshports.php:1609
 msgid "Commit"
 msgstr "Commit"
 
-#: include/freshports.php:1587
+#: include/freshports.php:1609
 msgid "Credits"
 msgstr "Emeği Geçenler"
 
-#: include/freshports.php:1587
+#: include/freshports.php:1609
 msgid "Log message"
 msgstr "Günlük (log) mesajı"
 
-#: include/freshports.php:1632
+#: include/freshports.php:1654
 #, php-format
 msgid ""
 "<b>NOTE</b>: This slave port may no longer be vulnerable to issues shown "
@@ -1088,25 +1087,25 @@ msgstr ""
 "türeme (slave) port aşağıda gösterilen güvenlik açıklarını artık "
 "barındırmıyor olabilir."
 
-#: include/freshports.php:1672 include/freshports.php:1673
+#: include/freshports.php:1694 include/freshports.php:1695
 msgid "First Page"
 msgstr "İlk Sayfa"
 
-#: include/freshports.php:1674 include/freshports.php:1675
+#: include/freshports.php:1696 include/freshports.php:1697
 msgid "Last Page"
 msgstr "Son Sayfa"
 
-#: include/freshports.php:1699
+#: include/freshports.php:1721
 #, php-format
 msgid "Number of commits found: %d"
 msgstr "Bulunan commit sayısı: %d"
 
-#: include/freshports.php:1708
+#: include/freshports.php:1730 www/search.php:1317 www/search.php:1334
 #, php-format
 msgid "(showing only %d on this page)"
 msgstr "(bu sayfada %d kadarı gösteriliyor)"
 
-#: include/freshports.php:1981
+#: include/freshports.php:2008
 msgid "Link to this section"
 msgstr "Bu kısma giden bağlantı"
 
@@ -1183,7 +1182,7 @@ msgstr "Sizin hesabınız"
 
 #: include/freshports.php:2257
 msgid "Committer Opt-in"
-msgstr ""
+msgstr "Committer Onayı"
 
 #: include/freshports.php:2257
 msgid "Committers can receive reports of Sanity Test Failures"
@@ -5919,6 +5918,9 @@ msgid ""
 msgstr ""
 "Eğer bu epostayı almıyorsanız, tekrar giriş yapmayı deneyin ve o zaman "
 "bildirimi yeniden göndermek için bir şansınız olacaktır."
+
+#~ msgid "Enter Keywords:"
+#~ msgstr "Anahtar kelimeleri girin:"
 
 #~ msgid "Menu &amp; search"
 #~ msgstr "Menü &amp; ara"

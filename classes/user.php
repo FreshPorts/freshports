@@ -174,7 +174,7 @@ class User {
 				echo('yes, I could not update the user table. Oh no, Mr Bill!');
 				die("\ndead\n");
 			}
-			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': setting ' );
+			syslog(LOG_NOTICE, __FILE__  . '::' . __LINE__ . ': setting last_watch_list_chosen to ' . $WatchListID . ' for user ' . $this->id);
 			$this->last_watch_list_chosen = $WatchListID;
 		} else {
 			syslog(LOG_ERR, __FILE__  . '::' . __LINE__ . ': ' . pg_last_error($this->dbh));

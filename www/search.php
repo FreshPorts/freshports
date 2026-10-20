@@ -946,6 +946,13 @@
                         $sqlFromCount = $sqlFrom;
                         $sqlFrom     .= $sqlFromBase;
 
+                        # Searching by author or committer name or email tests CL, so the
+                        # count needs that join. A port has one last commit, so the join does
+                        # not change the number of rows.
+                        if (str_starts_with($SearchTypeToFieldMap[$stype] ?? '', 'CL.')) {
+                                $sqlFromCount .= "\n               JOIN commit_log          CL  ON P.last_commit_id = CL.id";
+                        }
+
                         $sqlFromCount .= ", categories C, element E\n";
                         $sqlFrom      .= ", categories C, element E\n";
 

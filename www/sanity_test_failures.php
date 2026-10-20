@@ -148,8 +148,17 @@ if ($message_id == '') {
 	
 	$UseCache = FALSE;
 
+	$SanityTestFailures = new SanityTestFailures($db);
+
+	$PageSize = $User->page_size;
+	if ($message_id == '') {
+		# the list is paged; a page past the end shows the last page, so it does not get a cache entry of its own
+		$NumCommits = $SanityTestFailures->Count();
+		$PageNumber = min($PageNumber, max(1, intval(ceil($NumCommits / $PageSize))));
+	}
+
 	$Cache = new CacheGeneral();
-	$Cache->PageSize = $User->page_size;
+	$Cache->PageSize = $PageSize;
 	$result = $Cache->Retrieve(CACHE_NAME, $PageNumber);
 
 	if (!$result)  {
@@ -161,17 +170,53 @@ if ($message_id == '') {
 		if ($Debug) echo "found NOTHING in cache<br>\n";
 		$HTML = '';
 
-		$SanityTestFailures = new SanityTestFailures($db);
 		$SanityTestFailures->SetMaxNumberOfPorts($MaxNumberOfPorts);
 		$SanityTestFailures->SetDaysMarkedAsNew ($DaysMarkedAsNew);
 		$SanityTestFailures->SetUserID($User->id);
 		$SanityTestFailures->SetWatchListAsk($User->watch_list_add_remove);
 
+		$PageLinksHTML = '';
 		if ($message_id != '') {
 			$SanityTestFailures->SetMessageID($message_id);
+		} else {
+			$params = array(
+					'mode'        => 'Sliding',
+					'perPage'     => $PageSize,
+					'delta'       => 5,
+					'totalItems'  => $NumCommits,
+					'urlVar'      => 'page',
+					'currentPage' => $PageNumber,
+					'spacesBeforeSeparator' => 1,
+					'spacesAfterSeparator'  => 1,
+					'append'                => false,
+					'path'                  => '',
+					'fileName'              => '/sanity_test_failures.php?page=%d',
+					'altFirst'              => _('First Page'),
+					'firstPageText'         => _('First Page'),
+					'altLast'               => _('Last Page'),
+					'lastPageText'          => _('Last Page'),
+				);
+
+			# use @ to suppress: Non-static method Pager::factory() should not be called statically
+			$Pager = @Pager::factory($params);
+			$links = $Pager->GetLinks();
+
+			$NumCommitsHTML = sprintf(_('Number of commits found: %d'), $NumCommits);
+			$PageLinks = str_replace('?page=1"', '"', $links['all']);
+			if ($PageLinks != '') {
+				$offset = $Pager->getOffsetByPageId();
+				$NumCommitsHTML .= ' ' . sprintf(_('(showing only %d on this page)'), $offset[1] - $offset[0] + 1);
+				$PageLinksHTML = '<tr><td><p class="pagination">' . $PageLinks . '</p></td></tr>';
+			}
+
+			$SanityTestFailures->SetLimit($PageSize);
+			$SanityTestFailures->SetOffset(($PageNumber - 1) * $PageSize);
+
+			$HTML .= '<tr><td><p>' . $NumCommitsHTML . '</p></td></tr>' . $PageLinksHTML;
 		}
 		$SanityTestFailures->CreateHTML();
 		$HTML .= $SanityTestFailures->HTML;
+		$HTML .= $PageLinksHTML;
 
 		if ($message_id != '') {
 			# when displaying for one commit, we need to pull the sanity test message out and display it.

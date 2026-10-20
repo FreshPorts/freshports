@@ -21,6 +21,8 @@ class SanityTestFailures {
 	var $UserID          = 0;
 	var $DaysMarkedAsNew = 10;
 	var $MessageID       = '';
+	var $Limit           = 0;	// number of commits per page; 0 means all
+	var $Offset          = 0;
 	var $LocalResult;
 	var $HTML;
 
@@ -52,6 +54,30 @@ class SanityTestFailures {
 		$this->MessageID = $MessageID;
 	}
 
+	function SetLimit($Limit) {
+		$this->Limit = $Limit;
+	}
+
+	function SetOffset($Offset) {
+		$this->Offset = $Offset;
+	}
+
+	function Count() {
+		# the number of commits CreateHTML() can show, i.e. those which touched at least one port
+		$sql = '
+SELECT count(DISTINCT STF.commit_log_id) AS count
+  FROM sanity_test_failures STF
+ WHERE EXISTS (SELECT 1 FROM commit_log_ports CLP WHERE CLP.commit_log_id = STF.commit_log_id)';
+
+		$result = pg_query_params($this->dbh, $sql, array());
+		if (!$result) {
+			die("read from database failed");
+		}
+		$myrow = pg_fetch_array($result);
+
+		return intval($myrow['count']);
+	}
+
 	function CreateHTML() {
 		GLOBAL	$freshports_CommitMsgMaxNumOfLinesToShow;
 
@@ -62,19 +88,32 @@ class SanityTestFailures {
 			# we don't need/use the value for stf_message here but a non-empty value is required
 			# to get port-display to provide a link to the sanity test failure message.
 			# to reduce the data set set, let's just pull back 1.
+			# SanityTestFailures() already joins sanity_test_failures, so we don't join it again.
 			$sql = "
 SELECT S.*, 1 as stf_message
-  FROM SanityTestFailures($1) S LEFT OUTER JOIN sanity_test_failures STF
-    ON S.commit_log_id = STF.commit_log_id";
+  FROM SanityTestFailures($1) S";
     			$params = array($this->UserID);
 		}
 		
 		if ($this->MessageID != '') {
 			$sql .= ' WHERE message_id = $' . count($params) + 1;
 			$params[] = $this->MessageID;
+		} elseif ($this->Limit) {
+			# page by commit, not by row, so a commit is never split across two pages
+			$params[] = $this->Limit;
+			$params[] = $this->Offset;
+			$sql .= '
+ WHERE S.commit_log_id IN (
+	SELECT STF.commit_log_id
+	  FROM sanity_test_failures STF JOIN commit_log CL ON CL.id = STF.commit_log_id
+	 WHERE EXISTS (SELECT 1 FROM commit_log_ports CLP WHERE CLP.commit_log_id = STF.commit_log_id)
+	GROUP BY STF.commit_log_id, CL.commit_date
+	ORDER BY CL.commit_date DESC, STF.commit_log_id DESC
+	 LIMIT $' . (count($params) - 1) . ' OFFSET $' . count($params) . ')';
 		}
 
-		$sql .= " ORDER BY S.commit_date_raw DESC, S.category, S.port";
+		# commit_log_id keeps each commit together when two commits share a commit_date
+		$sql .= " ORDER BY S.commit_date_raw DESC, S.commit_log_id DESC, S.category, S.port";
 		
 		if ($this->Debug) echo "\n<p>sql=$sql</p>\n";
 

@@ -1353,16 +1353,22 @@ class port_display {
 			$HTML .= '</dt>';
 		}
 
-        # Grab the data used for both man pages and pkg-plist
-        $ConfigurePlist = new PortConfigurePlist( $this->db );
-        $NumRows = $ConfigurePlist->FetchInitialise( $this->port->id );
-		
-		if ($this->ShowManPageLinks || $this->ShowEverything) {
-			$HTML .= $this->ShowManPageLinks($ConfigurePlist, $NumRows);
-		}
+		# Grab the data used for both man pages and pkg-plist, but only when
+		# one of them will be shown: Display() runs for every port on list,
+		# search, and watch list pages, which show neither.
+		$ShowManPages = $this->ShowManPageLinks || $this->ShowEverything;
+		$ShowPlist    = defined('CONFIGUREPLISTSHOW') && ($this->ShowConfigurePlist || $this->ShowEverything);
+		if ($ShowManPages || $ShowPlist) {
+			$ConfigurePlist = new PortConfigurePlist( $this->db );
+			$NumRows = $ConfigurePlist->FetchInitialise( $this->port->id );
 
-		if (defined('CONFIGUREPLISTSHOW')  && ($this->ShowConfigurePlist || $this->ShowEverything)) {
-			$HTML .= $this->ShowConfigurePlist($ConfigurePlist, $NumRows);
+			if ($ShowManPages) {
+				$HTML .= $this->ShowManPageLinks($ConfigurePlist, $NumRows);
+			}
+
+			if ($ShowPlist) {
+				$HTML .= $this->ShowConfigurePlist($ConfigurePlist, $NumRows);
+			}
 		}
 
         # output use_rc_subr, if provided.

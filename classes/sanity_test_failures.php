@@ -99,17 +99,24 @@ SELECT S.*, 1 as stf_message
 			$sql .= ' WHERE message_id = $' . count($params) + 1;
 			$params[] = $this->MessageID;
 		} elseif ($this->Limit) {
-			# page by commit, not by row, so a commit is never split across two pages
-			$params[] = $this->Limit;
-			$params[] = $this->Offset;
-			$sql .= '
- WHERE S.commit_log_id IN (
-	SELECT STF.commit_log_id
-	  FROM sanity_test_failures STF JOIN commit_log CL ON CL.id = STF.commit_log_id
-	 WHERE EXISTS (SELECT 1 FROM commit_log_ports CLP WHERE CLP.commit_log_id = STF.commit_log_id)
-	GROUP BY STF.commit_log_id, CL.commit_date
-	ORDER BY CL.commit_date DESC, STF.commit_log_id DESC
-	 LIMIT $' . (count($params) - 1) . ' OFFSET $' . count($params) . ')';
+			# page by commit, not by row, so a commit is never split across two pages.
+			# PAGE picks this page's commits, then the LATERAL fetches the rows for each one.
+			# OFFSET 0 stops the planner flattening the LATERAL, so it does one index lookup per commit.
+			#
+			# This needs SanityTestFailures() to be LANGUAGE sql, so the planner inlines it.
+			# The PL/pgSQL version builds every failure on each call, i.e. once per commit here.
+			$params = array($this->UserID, $this->Limit, $this->Offset);
+			$sql = '
+SELECT S.*, 1 as stf_message
+  FROM (SELECT STF.commit_log_id
+          FROM sanity_test_failures STF JOIN commit_log CL ON CL.id = STF.commit_log_id
+         WHERE EXISTS (SELECT 1 FROM commit_log_ports CLP WHERE CLP.commit_log_id = STF.commit_log_id)
+         ORDER BY CL.commit_date DESC, STF.commit_log_id DESC
+         LIMIT $2 OFFSET $3) PAGE
+ CROSS JOIN LATERAL (SELECT *
+                       FROM SanityTestFailures($1) S1
+                      WHERE S1.commit_log_id = PAGE.commit_log_id
+                     OFFSET 0) S';
 		}
 
 		# commit_log_id keeps each commit together when two commits share a commit_date

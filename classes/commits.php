@@ -7,6 +7,7 @@
 
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/commit_ports.php");
+	require_once($_SERVER['DOCUMENT_ROOT'] . "/../classes/system_branch.php");
 
 // base class for fetching commits
 class Commits {
@@ -190,15 +191,28 @@ with recent_commits AS
    ORDER by RC.commit_date DESC
    LIMIT $" . count($params) . ')';
 		} else {
-			$params[] = $this->BranchName;
+			#
+			# One row per commit, as for head: the LIMIT counts commits.  It used to
+			# count (commit, element) pairs, so a commit touching many ports filled
+			# the page (16 commits instead of 100), and the join below fanned each
+			# pair out to all of that commit's elements (70,000 rows, 7 seconds).
+			#
+			# The branch id goes in as a literal, not via a sub-select on
+			# system_branch, as in MasterSlave::FetchByMaster().
+			# An unknown branch gives id 0, which matches nothing, as the
+			# sub-select did.
+			#
+			$system_branch = new SystemBranch($this->dbh);
+			$BranchID = intval($system_branch->getBranchID($this->BranchName));
+
 			$params[] = $Limit;
 			$sql .= "
 with recent_commits AS
 (WITH CL AS
   (select * from commit_log order by commit_date DESC limit 5000)
-  select distinct CL.*, CLPE.element_id AS clpe_element_id from CL join commit_log_branches clb on clb.branch_id =
-        (select id from system_branch where branch_name = $" . (count($params) - 1). ") and CL.id = CLB.commit_log_id
-        JOIN commit_log_ports_elements CLPE on CLPE.commit_log_id = CL.id
+  select CL.* from CL join commit_log_branches clb on clb.branch_id = $BranchID
+        and CL.id = CLB.commit_log_id
+   where exists (select 1 from commit_log_ports_elements CLPE where CLPE.commit_log_id = CL.id)
    order by CL.commit_date desc
    LIMIT $" . count($params) . ')';
 		}

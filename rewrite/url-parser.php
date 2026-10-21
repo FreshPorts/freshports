@@ -314,9 +314,10 @@ function Try_Displaying_Element($db, $path_parts, $url_args, $Branch) {
 	if ($Debug) echo "found element with element_id = '$element_id' while doing a case sensitive search<br>";
 
 	if ($element_id === -1) {
-		$msg = 'Multiple matches found on case insensitive search. This error should never happen: ' . __FILE__ . '::' . __FUNCTION__;
-		syslog(LOG_ERR, $msg);
-		die($msg);
+		# element_pathname.pathname is unique, so this should not happen
+		syslog(LOG_ERR, 'Multiple matches found on case sensitive search for ' . implode('/', $path_parts) . ': ' . __FILE__ . '::' . __FUNCTION__);
+		# let the caller 404
+		return;
 	}
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-non-port.php');
@@ -351,9 +352,11 @@ function Try_Searching_Element_Case_Insensitive($db, $path_parts, $url_args, $Br
 	if ($Debug) echo "found element with element_id = '$element_id' while doing a case insensitive search<br>";
 
 	if ($element_id === -1) {
-		$msg = 'Multiple matches found on case insensitive search. This error should never happen: ' . __FILE__ . '::' . __FUNCTION__;
-		syslog(LOG_ERR, $msg);
-		die($msg);
+		# e.g. graphics/OPENEXR matches both graphics/OpenEXR (deleted) and graphics/openexr,
+		# and FetchByName() could not pick a single active one.
+		syslog(LOG_NOTICE, 'Multiple matches found on case insensitive search for ' . implode('/', $path_parts) . ': ' . __FILE__ . '::' . __FUNCTION__);
+		# this should be a 404
+		return;
 	}
 
 	# We found something while searching - determine the correct search terms

@@ -64,8 +64,20 @@ class ElementRecord {
 				$myrow = pg_fetch_array ($result, 0);
 				$this->PopulateValues($myrow);
 			} else {
-				# multiple values
-				return -1;
+				# multiple values. This happens on a case insensitive search when
+				# a port was renamed by case only, e.g. graphics/OpenEXR -> graphics/openexr.
+				# The deleted element remains. Use the active one, if there is only one.
+				$active = array();
+				while ($myrow = pg_fetch_array($result)) {
+					if ($myrow['status'] == 'A') {
+						$active[] = $myrow;
+					}
+				}
+				if ($Debug) echo "we have '" . count($active) . "' active rows<br>";
+				if (count($active) != 1) {
+					return -1;
+				}
+				$this->PopulateValues($active[0]);
 			}
 		}
 

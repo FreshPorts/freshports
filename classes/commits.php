@@ -309,8 +309,6 @@ with recent_commits AS
 		if ($this->LocalResult) {
 			$numrows = pg_num_rows($this->LocalResult);
 			if ($this->Debug) echo "That would give us $numrows rows, which might be more than the number of commits, if that commit touched more items than just one port.";
-			if ($numrows < $Limit) syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ': we should have ' . $Limit . 
-			    ' commits. We got ' . $numrows);
 
 		} else {
 			$numrows = -1;

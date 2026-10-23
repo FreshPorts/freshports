@@ -69,7 +69,7 @@ function freshports_i18n_native_name($locale) {
 		'fr_CA' => 'Français (Canada)',
 		'ja'    => '日本語',
 		'pt_BR' => 'Português (Brasil)',
-		'ru'    => 'Русский',
+		'ru_RU' => 'Русский',
 		'tr_TR' => 'Türkçe',
 		'zh_CN' => '简体中文',
 		'zh_TW' => '繁體中文',

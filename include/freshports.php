@@ -2852,8 +2852,11 @@ function BranchSuffix($Branch = BRANCH_HEAD) {
 
 function getLoginDetails($dbh, $UserID, $Password) {
 
+  # password_hash is '!' for an invalidated hash: the user must reset their password.
+  # The CASE keeps crypt() away from anything which is not a crypt hash.
   $sql = 'select *, password_hash not like \'$2_$' . PW_HASH_COST . '$%\' as insecure_hash ' .
-    'from users where lower(name) = lower($1) and password_hash = crypt($2, password_hash)';
+    'from users where lower(name) = lower($1) ' .
+    'and case when password_hash like \'$%\' then password_hash = crypt($2, password_hash) else false end';
   if (IsSet($Debug) && $Debug || 0) {
     echo '<pre>' . htmlentities($sql) . '<pre>';
   }

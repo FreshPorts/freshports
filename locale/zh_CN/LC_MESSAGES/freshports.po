@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: freshports\n"
 "Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
-"POT-Creation-Date: 2026-10-21 12:23+0000\n"
+"POT-Creation-Date: 2026-10-23 19:11+0000\n"
 "PO-Revision-Date: 2026-10-13 15:55+0800\n"
 "Last-Translator: ykla <yklaxds@gmail.com>\n"
 "Language-Team: ykla <yklaxds@gmail.com>\n"
@@ -1080,12 +1080,12 @@ msgstr "链接到本节"
 #, php-format
 msgid ""
 "Someone, perhaps you, supplied your email address as their\n"
-"FreshPorts login. If that wasn't you, and this message becomes\n"
+"%s login. If that wasn't you, and this message becomes\n"
 "a nuisance, please forward this message to %s\n"
 "and we will take care of it for you."
 msgstr ""
 "有人（也许是您）把您的邮箱地址用作\n"
-"FreshPorts 登录名。若非您本人所为，而此消息\n"
+"%s 登录名。若非您本人所为，而此消息\n"
 "给您造成困扰，请将其转发至 %s\n"
 "我们会为您处理。"
 
@@ -1104,8 +1104,9 @@ msgid "The request came from %s"
 msgstr "请求来自 %s"
 
 #: include/freshports.php:2192
-msgid "FreshPorts - user registration"
-msgstr "FreshPorts——用户注册"
+#, php-format
+msgid "%s - user registration"
+msgstr "%s——用户注册"
 
 #: include/freshports.php:2271
 msgid "You are connected over IPv6"

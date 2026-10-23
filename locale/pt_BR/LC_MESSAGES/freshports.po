@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreshPorts\n"
 "Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
-"POT-Creation-Date: 2026-10-21 12:23+0000\n"
+"POT-Creation-Date: 2026-10-23 19:11+0000\n"
 "PO-Revision-Date: 2026-10-04 21:34-0700\n"
 "Last-Translator: Gustavo Nobrega <gustavofn@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -1118,12 +1118,12 @@ msgstr "Link para esta seção"
 #, php-format
 msgid ""
 "Someone, perhaps you, supplied your email address as their\n"
-"FreshPorts login. If that wasn't you, and this message becomes\n"
+"%s login. If that wasn't you, and this message becomes\n"
 "a nuisance, please forward this message to %s\n"
 "and we will take care of it for you."
 msgstr ""
 "Alguém, talvez você, informou seu endereço de e-mail como seu\n"
-"login do FreshPorts. Se não foi você, e esta mensagem se tornar\n"
+"login do %s. Se não foi você, e esta mensagem se tornar\n"
 "um incômodo, por favor encaminhe esta mensagem para %s\n"
 "e nós cuidaremos disso para você."
 
@@ -1142,8 +1142,9 @@ msgid "The request came from %s"
 msgstr "A solicitação veio de %s"
 
 #: include/freshports.php:2192
-msgid "FreshPorts - user registration"
-msgstr "FreshPorts - cadastro de usuário"
+#, php-format
+msgid "%s - user registration"
+msgstr "%s - cadastro de usuário"
 
 #: include/freshports.php:2271
 msgid "You are connected over IPv6"

@@ -2164,9 +2164,9 @@ function freshports_UserSendToken($UserID, $dbh) {
 		# sent in the language the visitor is using now - re #678
 		// TRANSLATORS: keep the line breaks short, this is a plain text email
 		$message =  sprintf(_("Someone, perhaps you, supplied your email address as their\n" .
-		                      "FreshPorts login. If that wasn't you, and this message becomes\n" .
+		                      "%s login. If that wasn't you, and this message becomes\n" .
 		                      "a nuisance, please forward this message to %s\n" .
-		                      "and we will take care of it for you."), PROBLEM_SOLVER_EMAIL_ADDRESS) . "\n".
+		                      "and we will take care of it for you."), WEBSITE_NAME, PROBLEM_SOLVER_EMAIL_ADDRESS) . "\n".
                             " \n".
 	                    sprintf(_("Your token is: %s"), $token) . "\n".
                             "\n".
@@ -2175,7 +2175,7 @@ function freshports_UserSendToken($UserID, $dbh) {
                             sprintf(_("The request came from %s"), $_SERVER["REMOTE_ADDR"]) . "\n".
 		            "\n".
 		            "-- \n".
-		           "FreshPorts - https://" . $_SERVER["HTTP_HOST"] . "/ -- $FreshPortsSlogan";
+		           WEBSITE_NAME . " - https://" . $_SERVER["HTTP_HOST"] . "/ -- $FreshPortsSlogan";
 
                 try {
                   $mail = new PHPMailer\PHPMailer\PHPMailer;
@@ -2189,11 +2189,11 @@ function freshports_UserSendToken($UserID, $dbh) {
                   // Content
                   $mail->ContentType = 'text/plain';
                   $mail->CharSet     = 'UTF-8';  # translations need more than Latin-1
-                  $mail->Subject     = _('FreshPorts - user registration');
+                  $mail->Subject     = sprintf(_('%s - user registration'), WEBSITE_NAME);
                   $mail->Body        = $message;
 
-                  $mail->setFrom   (PROBLEM_SOLVER_EMAIL_ADDRESS, 'FreshPorts');
-                  $mail->addReplyTo(PROBLEM_SOLVER_EMAIL_ADDRESS, 'FreshPorts');
+                  $mail->setFrom   (PROBLEM_SOLVER_EMAIL_ADDRESS, WEBSITE_NAME);
+                  $mail->addReplyTo(PROBLEM_SOLVER_EMAIL_ADDRESS, WEBSITE_NAME);
 
                   $mail->addAddress($email);
 

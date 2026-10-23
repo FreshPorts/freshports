@@ -2337,16 +2337,11 @@ function freshports_SideBar() {
 
          <td>';
 
-	if (IsSet($_COOKIE[USER_COOKIE_NAME])) {
-		$visitor = $_COOKIE[USER_COOKIE_NAME];
-	}
+	# a cookie which matches no login leaves $User empty, so don't trust the cookie alone
+	if (!empty($User->id)) {
+		$HTML .= sprintf(_('Logged in as %s'), htmlentities($User->name)) . "<br>";
 
-	if (IsSet($visitor)) {
-		GLOBAL $User;
-
-		$HTML .= sprintf(_('Logged in as %s'), htmlentities($User->name ?? '**unknown**')) . "<br>";
-
-		if ($User->emailbouncecount ?? 0 > 0) {
+		if ($User->emailbouncecount > 0) {
 			$HTML .= '<img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><br>';
 			$HTML .= _('your email is <a href="/bouncing.php">bouncing</a>') . '<br>';
 			$HTML .= '<img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><br>';

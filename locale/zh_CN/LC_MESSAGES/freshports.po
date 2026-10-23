@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: freshports\n"
 "Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
-"POT-Creation-Date: 2026-10-23 19:11+0000\n"
+"POT-Creation-Date: 2026-10-23 19:50+0000\n"
 "PO-Revision-Date: 2026-10-13 15:55+0800\n"
 "Last-Translator: ykla <yklaxds@gmail.com>\n"
 "Language-Team: ykla <yklaxds@gmail.com>\n"
@@ -939,7 +939,7 @@ msgstr "数据库服务器为 %s"
 msgid "I remember"
 msgstr "缅怀"
 
-#: include/freshports.php:1135 include/freshports.php:2394
+#: include/freshports.php:1135 include/freshports.php:2389
 msgid "Blog"
 msgstr "博客"
 
@@ -1134,269 +1134,269 @@ msgstr "有效的 RSS 也很好"
 msgid "Login"
 msgstr "登录"
 
-#: include/freshports.php:2347
+#: include/freshports.php:2342
 #, php-format
 msgid "Logged in as %s"
 msgstr "已登录为 %s"
 
-#: include/freshports.php:2351
+#: include/freshports.php:2346
 msgid "your email is <a href=\"/bouncing.php\">bouncing</a>"
 msgstr "您的邮箱正在<a href=\"/bouncing.php\">退信</a>"
 
-#: include/freshports.php:2354
+#: include/freshports.php:2349
 msgid "Your Account"
 msgstr "您的账户"
 
-#: include/freshports.php:2354
+#: include/freshports.php:2349
 msgid "Your account"
 msgstr "您的账户"
 
-#: include/freshports.php:2357
+#: include/freshports.php:2352
 msgid "Committer Opt-in"
 msgstr "提交者自愿加入"
 
-#: include/freshports.php:2357
+#: include/freshports.php:2352
 msgid "Committers can receive reports of Sanity Test Failures"
 msgstr "提交者可以接收健全性测试的失败报告"
 
-#: include/freshports.php:2361
+#: include/freshports.php:2356
 msgid "Logout"
 msgstr "退出登录"
 
-#: include/freshports.php:2361
+#: include/freshports.php:2356
 msgid "Logout of the website"
 msgstr "退出网站登录"
 
-#: include/freshports.php:2362
+#: include/freshports.php:2357
 msgid "List of commits you have flagged"
 msgstr "您标记过的提交列表"
 
-#: include/freshports.php:2362
+#: include/freshports.php:2357
 msgid "My Flagged Commits"
 msgstr "我标记的提交"
 
-#: include/freshports.php:2364
+#: include/freshports.php:2359
 msgid "Login to the website"
 msgstr "登录网站"
 
-#: include/freshports.php:2364
+#: include/freshports.php:2359
 msgid "User Login"
 msgstr "用户登录"
 
-#: include/freshports.php:2365
+#: include/freshports.php:2360
 msgid "Create account"
 msgstr "创建账户"
 
-#: include/freshports.php:2365
+#: include/freshports.php:2360
 msgid "Create an account"
 msgstr "创建账户"
 
-#: include/freshports.php:2383
+#: include/freshports.php:2378
 msgid "This site"
 msgstr "本站"
 
-#: include/freshports.php:2387
+#: include/freshports.php:2382
 msgid "A bit of background on FreshPorts"
 msgstr "FreshPorts 背景简介"
 
-#: include/freshports.php:2387
+#: include/freshports.php:2382
 msgid "What is FreshPorts?"
 msgstr "FreshPorts 是什么？"
 
-#: include/freshports.php:2388 www/authors.php:28
+#: include/freshports.php:2383 www/authors.php:28
 msgid "About the authors"
 msgstr "关于作者"
 
-#: include/freshports.php:2388
+#: include/freshports.php:2383
 msgid "Who wrote this stuff?"
 msgstr "这些内容是谁写的？"
 
-#: include/freshports.php:2389
+#: include/freshports.php:2384
 msgid "Issues"
 msgstr "问题反馈"
 
-#: include/freshports.php:2389
+#: include/freshports.php:2384
 msgid "Report a website problem"
 msgstr "报告网站问题"
 
-#: include/freshports.php:2390 www/faq.php:34
+#: include/freshports.php:2385 www/faq.php:34
 msgid "FAQ"
 msgstr "常见问题"
 
-#: include/freshports.php:2390 www/faq.php:15
+#: include/freshports.php:2385 www/faq.php:15
 msgid "Frequently Asked Questions"
 msgstr "常见问题解答"
 
-#: include/freshports.php:2391 www/how-big-is-it.php:15
+#: include/freshports.php:2386 www/how-big-is-it.php:15
 msgid "How big is it?"
 msgstr "网站有多大？"
 
-#: include/freshports.php:2391
+#: include/freshports.php:2386
 msgid "How many pages are in this website?"
 msgstr "本站有多少个页面？"
 
-#: include/freshports.php:2392
+#: include/freshports.php:2387
 msgid "Are you a security researcher? Please read this."
 msgstr "您是安全研究人员吗？请阅读此文。"
 
-#: include/freshports.php:2392 www/security-policy.php:15
+#: include/freshports.php:2387 www/security-policy.php:15
 msgid "Security Policy"
 msgstr "安全政策"
 
-#: include/freshports.php:2393
+#: include/freshports.php:2388
 msgid "Our privacy statement"
 msgstr "我们的隐私声明"
 
-#: include/freshports.php:2393
+#: include/freshports.php:2388
 msgid "Privacy"
 msgstr "隐私"
 
-#: include/freshports.php:2394
+#: include/freshports.php:2389
 msgid "All the latest FreshPorts news"
 msgstr "FreshPorts 最新消息"
 
-#: include/freshports.php:2395 www/contact.php:15 www/contact.php:29
+#: include/freshports.php:2390 www/contact.php:15 www/contact.php:29
 msgid "Contact"
 msgstr "联系方式"
 
-#: include/freshports.php:2395
+#: include/freshports.php:2390
 msgid "Contact details"
 msgstr "详细联系方式"
 
-#: include/freshports.php:2405
+#: include/freshports.php:2400
 msgid "Latest Vulnerabilities"
 msgstr "最新漏洞"
 
-#: include/freshports.php:2411
+#: include/freshports.php:2406
 msgid "All vulnerabilities"
 msgstr "全部漏洞"
 
-#: include/freshports.php:2411
+#: include/freshports.php:2406
 msgid "modified, not new"
 msgstr "有修改，并非新增"
 
-#: include/freshports.php:2412
+#: include/freshports.php:2407
 msgid "Last processed:"
 msgstr "上次处理："
 
-#: include/freshports.php:2424 include/freshports.php:2454
+#: include/freshports.php:2419 include/freshports.php:2449
 msgid "Ports"
 msgstr "Port"
 
-#: include/freshports.php:2429
+#: include/freshports.php:2424
 msgid "FreshPorts Home page"
 msgstr "FreshPorts 主页"
 
-#: include/freshports.php:2429
+#: include/freshports.php:2424
 msgid "Home"
 msgstr "主页"
 
-#: include/freshports.php:2430 include/freshports.php:2452
+#: include/freshports.php:2425 include/freshports.php:2447
 #: www/categories.php:22
 msgid "Categories"
 msgstr "分类"
 
-#: include/freshports.php:2430
+#: include/freshports.php:2425
 msgid "List of all Port categories"
 msgstr "所有 Port 分类列表"
 
-#: include/freshports.php:2431
+#: include/freshports.php:2426
 msgid "All deleted ports"
 msgstr "全部已删除 Port"
 
-#: include/freshports.php:2431 www/ports-deleted.php:30
+#: include/freshports.php:2426 www/ports-deleted.php:30
 msgid "Deleted ports"
 msgstr "已删除 Port"
 
-#: include/freshports.php:2432 www/sanity_test_failures.php:30
+#: include/freshports.php:2427 www/sanity_test_failures.php:30
 #: www/sanity_test_failures.php:99
 msgid "Sanity Test Failures"
 msgstr "健全性测试失败"
 
-#: include/freshports.php:2432
+#: include/freshports.php:2427
 msgid "Things that didn't go quite right..."
 msgstr "那些不太顺利的事……"
 
-#: include/freshports.php:2433 www/backend/newsfeeds.php:21
+#: include/freshports.php:2428 www/backend/newsfeeds.php:21
 msgid "Newsfeeds"
 msgstr "新闻源"
 
-#: include/freshports.php:2433
+#: include/freshports.php:2428
 msgid "Newsfeeds for just about everything"
 msgstr "涵盖几乎所有内容的新闻源"
 
-#: include/freshports.php:2446 www/watch-list-maintenance.php:321
+#: include/freshports.php:2441 www/watch-list-maintenance.php:321
 #: www/watch-list-maintenance.php:393
 msgid "Watch Lists"
 msgstr "关注列表"
 
-#: include/freshports.php:2451 www/pkg_upload.php:92 www/pkg_upload.php:114
+#: include/freshports.php:2446 www/pkg_upload.php:92 www/pkg_upload.php:114
 #: www/pkg_upload.php:136
 msgid "Upload"
 msgstr "上传"
 
-#: include/freshports.php:2451
+#: include/freshports.php:2446
 msgid ""
 "Upload a file containing a list of ports you want to add to your watch list"
 msgstr "上传文件，内含您想加入关注列表的 Port 列表"
 
-#: include/freshports.php:2452
+#: include/freshports.php:2447
 msgid "Search through categories for ports to add to your watch list"
 msgstr "按分类搜索要加入关注列表的 Port"
 
-#: include/freshports.php:2453
+#: include/freshports.php:2448
 msgid "Maintain"
 msgstr "维护"
 
-#: include/freshports.php:2453
+#: include/freshports.php:2448
 msgid "Maintain your watch list[s]"
 msgstr "维护关注列表"
 
-#: include/freshports.php:2454
+#: include/freshports.php:2449
 msgid "Your list of watched ports"
 msgstr "您关注的 Port 列表"
 
-#: include/freshports.php:2455
+#: include/freshports.php:2450
 msgid "A list of news feeds for your watched lists"
 msgstr "关注列表的新闻源列表"
 
-#: include/freshports.php:2455
+#: include/freshports.php:2450
 msgid "Personal Newsfeeds"
 msgstr "个人新闻源"
 
-#: include/freshports.php:2456
+#: include/freshports.php:2451
 msgid "Maintain your list of subscriptions"
 msgstr "维护订阅列表"
 
-#: include/freshports.php:2456
+#: include/freshports.php:2451
 msgid "Report Subscriptions"
 msgstr "报告订阅"
 
-#: include/freshports.php:2457
+#: include/freshports.php:2452
 msgid "ABI Package Subscriptions"
 msgstr "ABI 软件包订阅"
 
-#: include/freshports.php:2457
+#: include/freshports.php:2452
 msgid "Maintain your ABI package subscriptions"
 msgstr "维护 ABI 软件包订阅"
 
-#: include/freshports.php:2482
+#: include/freshports.php:2477
 msgid "Statistics"
 msgstr "统计"
 
-#: include/freshports.php:2487 include/freshports.php:2488
+#: include/freshports.php:2482 include/freshports.php:2483
 msgid "Everyone loves statistics!"
 msgstr "人人都爱统计！"
 
-#: include/freshports.php:2487
+#: include/freshports.php:2482
 msgid "Graphs"
 msgstr "图表"
 
-#: include/freshports.php:2488
+#: include/freshports.php:2483
 msgid "NEW Graphs (Javascript)"
 msgstr "新图表（JavaScript）"
 
-#: include/freshports.php:2580
+#: include/freshports.php:2575
 msgid "People watching this port, also watch:"
 msgstr "关注此 Port 的人还关注："
 
@@ -1465,7 +1465,7 @@ msgid "(showing only %d port on this page)"
 msgid_plural "(showing only %d ports on this page)"
 msgstr[0] "（本页仅显示 %d 个 Port）"
 
-#: include/login.php:11 include/new-user.php:29 www/forgotten-password.php:260
+#: include/login.php:11 include/new-user.php:29 www/forgotten-password.php:261
 msgid "User ID:"
 msgstr "用户 ID："
 
@@ -1473,7 +1473,7 @@ msgstr "用户 ID："
 msgid "Password:"
 msgstr "密码："
 
-#: include/login.php:18 www/forgotten-password.php:236 www/login.php:245
+#: include/login.php:18 www/forgotten-password.php:237 www/login.php:245
 msgid "Forgotten your password?"
 msgstr "忘记密码了？"
 
@@ -2113,7 +2113,7 @@ msgstr "关注列表新闻源"
 msgid "These are your news feeds"
 msgstr "以下是您的新闻源"
 
-#: www/bouncing.php:39 www/customize.php:138
+#: www/bouncing.php:39 www/customize.php:139
 #: www/password-reset-via-token.php:79
 msgid "Something went terribly wrong there."
 msgstr "那里出了很严重的问题。"
@@ -2410,37 +2410,37 @@ msgstr "订阅"
 msgid "Please do not include @FreeBSD.org in your login name."
 msgstr "请不要在登录名中包含 @FreeBSD.org。"
 
-#: www/confirmation.php:14 www/confirmation.php:42
+#: www/confirmation.php:14 www/confirmation.php:41
 msgid "Account confirmation"
 msgstr "账户确认"
 
-#: www/confirmation.php:51
+#: www/confirmation.php:50
 msgid "I don't know anything about that token."
 msgstr "我对这个令牌一无所知。"
 
-#: www/confirmation.php:55
+#: www/confirmation.php:54
 msgid ""
 "Your account has been enabled.  Please proceed to the <a "
 "href=\"login.php\">login page</a>"
 msgstr "您的账户已启用。请前往<a href=\"login.php\">登录页面</a>"
 
-#: www/confirmation.php:59
+#: www/confirmation.php:58
 msgid ""
 "Well.  This just isn't supposed to happen.  For some strange and very rare "
 "reason, there is more than one person with that token."
 msgstr ""
 "好吧，这本不该发生。出于某种奇怪且极其罕见的原因，持有该令牌的人不止一个。"
 
-#: www/confirmation.php:60
+#: www/confirmation.php:59
 #, php-format
 msgid "Please contact %s for help."
 msgstr "请联系 %s 寻求帮助。"
 
-#: www/confirmation.php:64
+#: www/confirmation.php:63
 msgid "An error has occurred.  Sorry."
 msgstr "出错了，抱歉。"
 
-#: www/confirmation.php:68
+#: www/confirmation.php:67
 msgid "Hi there.  What are you doing here?"
 msgstr "您好呀，您怎么会跑到这里来？"
 
@@ -2475,57 +2475,57 @@ msgid ""
 "If your needs do not fall into the above categories, you can try email: %s."
 msgstr "如果您的需求不在上述范围内，可以试试发邮件：%s。"
 
-#: www/customize.php:73 www/new-user.php:66
+#: www/customize.php:74 www/new-user.php:66
 msgid "That email address doesn't look right to me"
 msgstr "我觉得这个邮箱地址不太对"
 
-#: www/customize.php:79
+#: www/customize.php:80
 msgid ""
 "If changing your password, remember to supply your existing password first."
 msgstr "如果要修改密码，记得先输入您的当前密码。"
 
-#: www/customize.php:84
+#: www/customize.php:85
 msgid "The new password was not confirmed.  It must be entered twice."
 msgstr "新密码未通过确认，必须输入两次。"
 
-#: www/customize.php:93
+#: www/customize.php:94
 msgid "That is NOT your current password."
 msgstr "这并不是您当前的密码。"
 
-#: www/customize.php:153
+#: www/customize.php:154
 msgid "Customize User Account"
 msgstr "自定义用户账户"
 
-#: www/customize.php:164 www/new-user.php:190
+#: www/customize.php:165 www/new-user.php:190
 #: www/password-reset-via-token.php:105
 msgid "Access Code Failed!"
 msgstr "验证码校验失败！"
 
-#: www/customize.php:167 www/new-user.php:194
+#: www/customize.php:168 www/new-user.php:194
 #: www/password-reset-via-token.php:113
 msgid ""
 "Some errors have occurred which must be corrected before your login can be "
 "created."
 msgstr "出现了一些错误，必须先纠正，才能创建您的登录账户。"
 
-#: www/customize.php:171 www/delete-account.php:104 www/login.php:181
+#: www/customize.php:172 www/delete-account.php:104 www/login.php:181
 #: www/new-user.php:203 www/password-reset-via-token.php:117
 msgid "If you need help, please email postmaster@."
 msgstr "如需帮助，请发送邮件至 postmaster@。"
 
-#: www/customize.php:176
+#: www/customize.php:177
 msgid "Account updated!"
 msgstr "账户更新完成！"
 
-#: www/customize.php:177
+#: www/customize.php:178
 msgid "Your account details were successfully updated."
 msgstr "您的账户信息更新成功。"
 
-#: www/customize.php:182
+#: www/customize.php:183
 msgid "Customize"
 msgstr "自定义"
 
-#: www/customize.php:187
+#: www/customize.php:188
 msgid ""
 "If you wish to change your password, first type your existing password, then "
 "your new password twice.  Otherwise, leave them all blank."
@@ -4091,7 +4091,7 @@ msgstr "前几天"
 msgid "Yesterday's Commits"
 msgstr "昨日提交"
 
-#: www/forgotten-password.php:84
+#: www/forgotten-password.php:85
 #, php-format
 msgid ""
 "Sorry, but previous email to you has bounced, so we're not sure it's going "
@@ -4101,7 +4101,7 @@ msgstr ""
 "抱歉，之前发给您的邮件被退信了，所以我们不确定您能否收到。不过我们还是把它发"
 "出去了。如果没收到，请联系<a href=\"%s\">网站管理员</a>寻求帮助。"
 
-#: www/forgotten-password.php:91
+#: www/forgotten-password.php:92
 #, php-format
 msgid ""
 "Guess what?  You never gave us an email address.  So I guess you must "
@@ -4111,7 +4111,7 @@ msgstr ""
 "员</a>求助了。"
 
 #. TRANSLATORS: keep the line breaks short, this is a plain text email
-#: www/forgotten-password.php:106
+#: www/forgotten-password.php:107
 #, php-format
 msgid ""
 "Someone, perhaps you, requested to reset your password.\n"
@@ -4124,51 +4124,51 @@ msgstr ""
 "把这封邮件转发给 %s，我们会为您\n"
 "处理。"
 
-#: www/forgotten-password.php:111
+#: www/forgotten-password.php:112
 #, php-format
 msgid "Your login id is: %s"
 msgstr "您的登录 ID 是：%s"
 
-#: www/forgotten-password.php:112
+#: www/forgotten-password.php:113
 msgid "Your password recovery URL is:"
 msgstr "您的密码重置 URL 是："
 
-#: www/forgotten-password.php:115
+#: www/forgotten-password.php:116
 #, php-format
 msgid "the request came from %s"
 msgstr "请求来自 %s"
 
-#: www/forgotten-password.php:129
+#: www/forgotten-password.php:130
 msgid "password"
 msgstr "密码"
 
-#: www/forgotten-password.php:151
+#: www/forgotten-password.php:152
 msgid "Forgotten password"
 msgstr "忘记密码"
 
-#: www/forgotten-password.php:169
+#: www/forgotten-password.php:170
 msgid "We have a problem!"
 msgstr "出了问题！"
 
-#: www/forgotten-password.php:196
+#: www/forgotten-password.php:197
 msgid "User ID not found!"
 msgstr "未找到用户 ID！"
 
-#: www/forgotten-password.php:207
+#: www/forgotten-password.php:208
 msgid ""
 "The User ID you supplied could not be found.  Perhaps try your email instead?"
 msgstr "找不到您提供的用户 ID。要不要改用邮箱试试？"
 
-#: www/forgotten-password.php:209
+#: www/forgotten-password.php:210
 msgid ""
 "The email you supplied could not be found.  Perhaps try your User ID instead?"
 msgstr "找不到您提供的邮箱。要不要改用用户 ID 试试？"
 
-#: www/forgotten-password.php:234
+#: www/forgotten-password.php:235
 msgid "Mail sent to your address"
 msgstr "邮件已发送至您的地址"
 
-#: www/forgotten-password.php:246
+#: www/forgotten-password.php:247
 #, php-format
 msgid ""
 "A password recovery URL has been sent to the address we have on file.  If "
@@ -4178,23 +4178,23 @@ msgstr ""
 "密码重置 URL 已发送到我们存档的地址。如果您仍然无法登录，请联系<a "
 "href=\"%s\">网站管理员</a>，我们看看能做些什么。"
 
-#: www/forgotten-password.php:252
+#: www/forgotten-password.php:253
 msgid ""
 "If you've forgotten your password, don't worry.  We've got that covered."
 msgstr "如果您忘了密码，别担心，我们有办法。"
 
-#: www/forgotten-password.php:254
+#: www/forgotten-password.php:255
 #, php-format
 msgid ""
 "Please enter either your login or your email address (whichever you "
 "remember), then click on '%s'."
 msgstr "请输入您的登录名或邮箱地址（哪个还记得就填哪个），然后点击“%s”。"
 
-#: www/forgotten-password.php:254 www/forgotten-password.php:264
+#: www/forgotten-password.php:255 www/forgotten-password.php:265
 msgid "eMail Me!"
 msgstr "发邮件给我！"
 
-#: www/forgotten-password.php:256
+#: www/forgotten-password.php:257
 msgid ""
 "We will send you an email with a link in it. Click on that link and you'll "
 "be able to set a new password. This link will expire within a few hours. "
@@ -4205,7 +4205,7 @@ msgstr ""
 "在几小时内失效。这算不上多么安全，不过我们处理的只是您的 FreshPorts 登录信"
 "息，又不是什么金融交易……"
 
-#: www/forgotten-password.php:262
+#: www/forgotten-password.php:263
 msgid "email address:"
 msgstr "邮箱地址："
 

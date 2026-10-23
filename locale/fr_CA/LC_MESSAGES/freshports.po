@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreshPorts\n"
 "Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
-"POT-Creation-Date: 2026-10-23 19:11+0000\n"
+"POT-Creation-Date: 2026-10-23 19:50+0000\n"
 "PO-Revision-Date: 2026-10-09 14:42-0400\n"
 "Last-Translator: Marc Pearson <marc.pearson@gmail.com>\n"
 "Language-Team: French (Canada)\n"
@@ -977,7 +977,7 @@ msgstr "Le serveur de base de données est %s"
 msgid "I remember"
 msgstr "Je me souviens"
 
-#: include/freshports.php:1135 include/freshports.php:2394
+#: include/freshports.php:1135 include/freshports.php:2389
 msgid "Blog"
 msgstr "Blog"
 
@@ -1177,274 +1177,274 @@ msgstr "Un RSS valide, c'est bien aussi"
 msgid "Login"
 msgstr "Connexion"
 
-#: include/freshports.php:2347
+#: include/freshports.php:2342
 #, php-format
 msgid "Logged in as %s"
 msgstr "Connecté en tant que %s"
 
-#: include/freshports.php:2351
+#: include/freshports.php:2346
 msgid "your email is <a href=\"/bouncing.php\">bouncing</a>"
 msgstr "votre courriel est en <a href=\"/bouncing.php\">échec de livraison</a>"
 
-#: include/freshports.php:2354
+#: include/freshports.php:2349
 msgid "Your Account"
 msgstr "Votre compte"
 
-#: include/freshports.php:2354
+#: include/freshports.php:2349
 msgid "Your account"
 msgstr "Votre compte"
 
-#: include/freshports.php:2357
+#: include/freshports.php:2352
 msgid "Committer Opt-in"
 msgstr "Inscription des committers"
 
-#: include/freshports.php:2357
+#: include/freshports.php:2352
 msgid "Committers can receive reports of Sanity Test Failures"
 msgstr ""
 "Les committers peuvent recevoir les rapports d'échecs des tests de cohérence"
 
-#: include/freshports.php:2361
+#: include/freshports.php:2356
 msgid "Logout"
 msgstr "Déconnexion"
 
-#: include/freshports.php:2361
+#: include/freshports.php:2356
 msgid "Logout of the website"
 msgstr "Se déconnecter du site"
 
-#: include/freshports.php:2362
+#: include/freshports.php:2357
 msgid "List of commits you have flagged"
 msgstr "Liste des commits que vous avez marqués"
 
-#: include/freshports.php:2362
+#: include/freshports.php:2357
 msgid "My Flagged Commits"
 msgstr "Mes commits marqués"
 
-#: include/freshports.php:2364
+#: include/freshports.php:2359
 msgid "Login to the website"
 msgstr "Se connecter au site"
 
-#: include/freshports.php:2364
+#: include/freshports.php:2359
 msgid "User Login"
 msgstr "Connexion utilisateur"
 
-#: include/freshports.php:2365
+#: include/freshports.php:2360
 msgid "Create account"
 msgstr "Créer un compte"
 
-#: include/freshports.php:2365
+#: include/freshports.php:2360
 msgid "Create an account"
 msgstr "Créer un compte"
 
-#: include/freshports.php:2383
+#: include/freshports.php:2378
 msgid "This site"
 msgstr "Ce site"
 
-#: include/freshports.php:2387
+#: include/freshports.php:2382
 msgid "A bit of background on FreshPorts"
 msgstr "Quelques informations sur FreshPorts"
 
-#: include/freshports.php:2387
+#: include/freshports.php:2382
 msgid "What is FreshPorts?"
 msgstr "Qu'est-ce que FreshPorts ?"
 
-#: include/freshports.php:2388 www/authors.php:28
+#: include/freshports.php:2383 www/authors.php:28
 msgid "About the authors"
 msgstr "À propos des auteurs"
 
-#: include/freshports.php:2388
+#: include/freshports.php:2383
 msgid "Who wrote this stuff?"
 msgstr "Qui a écrit tout ça ?"
 
-#: include/freshports.php:2389
+#: include/freshports.php:2384
 msgid "Issues"
 msgstr "Problèmes"
 
-#: include/freshports.php:2389
+#: include/freshports.php:2384
 msgid "Report a website problem"
 msgstr "Signaler un problème du site"
 
-#: include/freshports.php:2390 www/faq.php:34
+#: include/freshports.php:2385 www/faq.php:34
 msgid "FAQ"
 msgstr "FAQ"
 
-#: include/freshports.php:2390 www/faq.php:15
+#: include/freshports.php:2385 www/faq.php:15
 msgid "Frequently Asked Questions"
 msgstr "Foire aux questions"
 
-#: include/freshports.php:2391 www/how-big-is-it.php:15
+#: include/freshports.php:2386 www/how-big-is-it.php:15
 msgid "How big is it?"
 msgstr "Quelle est sa taille ?"
 
-#: include/freshports.php:2391
+#: include/freshports.php:2386
 msgid "How many pages are in this website?"
 msgstr "Combien de pages comporte ce site ?"
 
-#: include/freshports.php:2392
+#: include/freshports.php:2387
 msgid "Are you a security researcher? Please read this."
 msgstr "Êtes-vous chercheur en sécurité ? Veuillez lire ceci."
 
-#: include/freshports.php:2392 www/security-policy.php:15
+#: include/freshports.php:2387 www/security-policy.php:15
 msgid "Security Policy"
 msgstr "Politique de sécurité"
 
-#: include/freshports.php:2393
+#: include/freshports.php:2388
 msgid "Our privacy statement"
 msgstr "Notre énoncé de confidentialité"
 
-#: include/freshports.php:2393
+#: include/freshports.php:2388
 msgid "Privacy"
 msgstr "Confidentialité"
 
-#: include/freshports.php:2394
+#: include/freshports.php:2389
 msgid "All the latest FreshPorts news"
 msgstr "Toutes les dernières nouvelles de FreshPorts"
 
-#: include/freshports.php:2395 www/contact.php:15 www/contact.php:29
+#: include/freshports.php:2390 www/contact.php:15 www/contact.php:29
 msgid "Contact"
 msgstr "Contact"
 
-#: include/freshports.php:2395
+#: include/freshports.php:2390
 msgid "Contact details"
 msgstr "Coordonnées"
 
-#: include/freshports.php:2405
+#: include/freshports.php:2400
 msgid "Latest Vulnerabilities"
 msgstr "Dernières vulnérabilités"
 
-#: include/freshports.php:2411
+#: include/freshports.php:2406
 msgid "All vulnerabilities"
 msgstr "Toutes les vulnérabilités"
 
-#: include/freshports.php:2411
+#: include/freshports.php:2406
 msgid "modified, not new"
 msgstr "modifiées, pas nouvelles"
 
-#: include/freshports.php:2412
+#: include/freshports.php:2407
 msgid "Last processed:"
 msgstr "Dernier traitement :"
 
-#: include/freshports.php:2424 include/freshports.php:2454
+#: include/freshports.php:2419 include/freshports.php:2449
 msgid "Ports"
 msgstr "Ports"
 
-#: include/freshports.php:2429
+#: include/freshports.php:2424
 msgid "FreshPorts Home page"
 msgstr "Page d'accueil de FreshPorts"
 
-#: include/freshports.php:2429
+#: include/freshports.php:2424
 msgid "Home"
 msgstr "Accueil"
 
-#: include/freshports.php:2430 include/freshports.php:2452
+#: include/freshports.php:2425 include/freshports.php:2447
 #: www/categories.php:22
 msgid "Categories"
 msgstr "Catégories"
 
-#: include/freshports.php:2430
+#: include/freshports.php:2425
 msgid "List of all Port categories"
 msgstr "Liste de toutes les catégories de ports"
 
-#: include/freshports.php:2431
+#: include/freshports.php:2426
 msgid "All deleted ports"
 msgstr "Tous les ports supprimés"
 
-#: include/freshports.php:2431 www/ports-deleted.php:30
+#: include/freshports.php:2426 www/ports-deleted.php:30
 msgid "Deleted ports"
 msgstr "Ports supprimés"
 
-#: include/freshports.php:2432 www/sanity_test_failures.php:30
+#: include/freshports.php:2427 www/sanity_test_failures.php:30
 #: www/sanity_test_failures.php:99
 msgid "Sanity Test Failures"
 msgstr "Échecs des tests de cohérence"
 
-#: include/freshports.php:2432
+#: include/freshports.php:2427
 msgid "Things that didn't go quite right..."
 msgstr "Les choses qui ont un peu dérapé..."
 
-#: include/freshports.php:2433 www/backend/newsfeeds.php:21
+#: include/freshports.php:2428 www/backend/newsfeeds.php:21
 msgid "Newsfeeds"
 msgstr "Flux de nouvelles"
 
-#: include/freshports.php:2433
+#: include/freshports.php:2428
 msgid "Newsfeeds for just about everything"
 msgstr "Des flux de nouvelles pour presque tout"
 
-#: include/freshports.php:2446 www/watch-list-maintenance.php:321
+#: include/freshports.php:2441 www/watch-list-maintenance.php:321
 #: www/watch-list-maintenance.php:393
 msgid "Watch Lists"
 msgstr "Listes de suivi"
 
-#: include/freshports.php:2451 www/pkg_upload.php:92 www/pkg_upload.php:114
+#: include/freshports.php:2446 www/pkg_upload.php:92 www/pkg_upload.php:114
 #: www/pkg_upload.php:136
 msgid "Upload"
 msgstr "Téléversement"
 
-#: include/freshports.php:2451
+#: include/freshports.php:2446
 msgid ""
 "Upload a file containing a list of ports you want to add to your watch list"
 msgstr ""
 "Téléversez un fichier contenant la liste des ports que vous voulez ajouter à "
 "votre liste de suivi"
 
-#: include/freshports.php:2452
+#: include/freshports.php:2447
 msgid "Search through categories for ports to add to your watch list"
 msgstr ""
 "Parcourez les catégories pour trouver des ports à ajouter à votre liste de "
 "suivi"
 
-#: include/freshports.php:2453
+#: include/freshports.php:2448
 msgid "Maintain"
 msgstr "Gérer"
 
-#: include/freshports.php:2453
+#: include/freshports.php:2448
 msgid "Maintain your watch list[s]"
 msgstr "Gérer vos listes de suivi"
 
-#: include/freshports.php:2454
+#: include/freshports.php:2449
 msgid "Your list of watched ports"
 msgstr "Votre liste des ports suivis"
 
-#: include/freshports.php:2455
+#: include/freshports.php:2450
 msgid "A list of news feeds for your watched lists"
 msgstr "Une liste de flux pour vos listes suivies"
 
-#: include/freshports.php:2455
+#: include/freshports.php:2450
 msgid "Personal Newsfeeds"
 msgstr "Flux personnels"
 
-#: include/freshports.php:2456
+#: include/freshports.php:2451
 msgid "Maintain your list of subscriptions"
 msgstr "Gérer votre liste d'abonnements"
 
-#: include/freshports.php:2456
+#: include/freshports.php:2451
 msgid "Report Subscriptions"
 msgstr "Abonnements aux rapports"
 
-#: include/freshports.php:2457
+#: include/freshports.php:2452
 msgid "ABI Package Subscriptions"
 msgstr "Abonnements aux paquets ABI"
 
-#: include/freshports.php:2457
+#: include/freshports.php:2452
 msgid "Maintain your ABI package subscriptions"
 msgstr "Gérer vos abonnements aux paquets ABI"
 
-#: include/freshports.php:2482
+#: include/freshports.php:2477
 msgid "Statistics"
 msgstr "Statistiques"
 
-#: include/freshports.php:2487 include/freshports.php:2488
+#: include/freshports.php:2482 include/freshports.php:2483
 msgid "Everyone loves statistics!"
 msgstr "Tout le monde aime les statistiques !"
 
-#: include/freshports.php:2487
+#: include/freshports.php:2482
 msgid "Graphs"
 msgstr "Graphiques"
 
-#: include/freshports.php:2488
+#: include/freshports.php:2483
 msgid "NEW Graphs (Javascript)"
 msgstr "NOUVEAUX graphiques (Javascript)"
 
-#: include/freshports.php:2580
+#: include/freshports.php:2575
 msgid "People watching this port, also watch:"
 msgstr "Les personnes qui suivent ce port suivent aussi :"
 
@@ -1520,7 +1520,7 @@ msgid_plural "(showing only %d ports on this page)"
 msgstr[0] "(%d port seulement affiché sur cette page)"
 msgstr[1] "(%d ports seulement affichés sur cette page)"
 
-#: include/login.php:11 include/new-user.php:29 www/forgotten-password.php:260
+#: include/login.php:11 include/new-user.php:29 www/forgotten-password.php:261
 msgid "User ID:"
 msgstr "Identifiant :"
 
@@ -1528,7 +1528,7 @@ msgstr "Identifiant :"
 msgid "Password:"
 msgstr "Mot de passe :"
 
-#: include/login.php:18 www/forgotten-password.php:236 www/login.php:245
+#: include/login.php:18 www/forgotten-password.php:237 www/login.php:245
 msgid "Forgotten your password?"
 msgstr "Mot de passe oublié ?"
 
@@ -2213,7 +2213,7 @@ msgstr "Flux des listes de suivi"
 msgid "These are your news feeds"
 msgstr "Voici vos flux de nouvelles"
 
-#: www/bouncing.php:39 www/customize.php:138
+#: www/bouncing.php:39 www/customize.php:139
 #: www/password-reset-via-token.php:79
 msgid "Something went terribly wrong there."
 msgstr "Quelque chose s'est vraiment mal passé là."
@@ -2537,15 +2537,15 @@ msgstr "s'abonner"
 msgid "Please do not include @FreeBSD.org in your login name."
 msgstr "Veuillez ne pas inclure @FreeBSD.org dans votre nom de connexion."
 
-#: www/confirmation.php:14 www/confirmation.php:42
+#: www/confirmation.php:14 www/confirmation.php:41
 msgid "Account confirmation"
 msgstr "Confirmation du compte"
 
-#: www/confirmation.php:51
+#: www/confirmation.php:50
 msgid "I don't know anything about that token."
 msgstr "Je ne sais rien de ce jeton."
 
-#: www/confirmation.php:55
+#: www/confirmation.php:54
 msgid ""
 "Your account has been enabled.  Please proceed to the <a "
 "href=\"login.php\">login page</a>"
@@ -2553,7 +2553,7 @@ msgstr ""
 "Votre compte a été activé. Veuillez vous rendre sur la <a "
 "href=\"login.php\">page de connexion</a>"
 
-#: www/confirmation.php:59
+#: www/confirmation.php:58
 msgid ""
 "Well.  This just isn't supposed to happen.  For some strange and very rare "
 "reason, there is more than one person with that token."
@@ -2561,16 +2561,16 @@ msgstr ""
 "Bien. Cela ne devait tout simplement pas arriver. Pour une raison étrange et "
 "très rare, plus d'une personne possède ce jeton."
 
-#: www/confirmation.php:60
+#: www/confirmation.php:59
 #, php-format
 msgid "Please contact %s for help."
 msgstr "Veuillez contacter %s pour obtenir de l'aide."
 
-#: www/confirmation.php:64
+#: www/confirmation.php:63
 msgid "An error has occurred.  Sorry."
 msgstr "Une erreur s'est produite. Désolé."
 
-#: www/confirmation.php:68
+#: www/confirmation.php:67
 msgid "Hi there.  What are you doing here?"
 msgstr "Bonjour. Que faites-vous ici ?"
 
@@ -2610,36 +2610,36 @@ msgstr ""
 "Si vos besoins ne relèvent pas des catégories ci-dessus, vous pouvez essayer "
 "le courriel : %s."
 
-#: www/customize.php:73 www/new-user.php:66
+#: www/customize.php:74 www/new-user.php:66
 msgid "That email address doesn't look right to me"
 msgstr "Cette adresse courriel ne me semble pas correcte"
 
-#: www/customize.php:79
+#: www/customize.php:80
 msgid ""
 "If changing your password, remember to supply your existing password first."
 msgstr ""
 "Si vous changez votre mot de passe, n'oubliez pas de fournir d'abord votre "
 "mot de passe existant."
 
-#: www/customize.php:84
+#: www/customize.php:85
 msgid "The new password was not confirmed.  It must be entered twice."
 msgstr ""
 "Le nouveau mot de passe n'a pas été confirmé. Il doit être saisi deux fois."
 
-#: www/customize.php:93
+#: www/customize.php:94
 msgid "That is NOT your current password."
 msgstr "Ce n'est PAS votre mot de passe actuel."
 
-#: www/customize.php:153
+#: www/customize.php:154
 msgid "Customize User Account"
 msgstr "Personnaliser le compte d'utilisateur"
 
-#: www/customize.php:164 www/new-user.php:190
+#: www/customize.php:165 www/new-user.php:190
 #: www/password-reset-via-token.php:105
 msgid "Access Code Failed!"
 msgstr "Échec du code d'accès !"
 
-#: www/customize.php:167 www/new-user.php:194
+#: www/customize.php:168 www/new-user.php:194
 #: www/password-reset-via-token.php:113
 msgid ""
 "Some errors have occurred which must be corrected before your login can be "
@@ -2648,24 +2648,24 @@ msgstr ""
 "Des erreurs se sont produites et doivent être corrigées avant que votre "
 "connexion ne puisse être créée."
 
-#: www/customize.php:171 www/delete-account.php:104 www/login.php:181
+#: www/customize.php:172 www/delete-account.php:104 www/login.php:181
 #: www/new-user.php:203 www/password-reset-via-token.php:117
 msgid "If you need help, please email postmaster@."
 msgstr "Si vous avez besoin d'aide, veuillez écrire à postmaster@."
 
-#: www/customize.php:176
+#: www/customize.php:177
 msgid "Account updated!"
 msgstr "Compte mis à jour !"
 
-#: www/customize.php:177
+#: www/customize.php:178
 msgid "Your account details were successfully updated."
 msgstr "Les détails de votre compte ont été mis à jour avec succès."
 
-#: www/customize.php:182
+#: www/customize.php:183
 msgid "Customize"
 msgstr "Personnaliser"
 
-#: www/customize.php:187
+#: www/customize.php:188
 msgid ""
 "If you wish to change your password, first type your existing password, then "
 "your new password twice.  Otherwise, leave them all blank."
@@ -4416,7 +4416,7 @@ msgstr "Jours précédents"
 msgid "Yesterday's Commits"
 msgstr "Commits d'hier"
 
-#: www/forgotten-password.php:84
+#: www/forgotten-password.php:85
 #, php-format
 msgid ""
 "Sorry, but previous email to you has bounced, so we're not sure it's going "
@@ -4428,7 +4428,7 @@ msgstr ""
 "Veuillez contacter le <a href=\"%s\">webmaster</a> pour obtenir de l'aide "
 "s'il n'arrive pas."
 
-#: www/forgotten-password.php:91
+#: www/forgotten-password.php:92
 #, php-format
 msgid ""
 "Guess what?  You never gave us an email address.  So I guess you must "
@@ -4439,7 +4439,7 @@ msgstr ""
 "de l'aide."
 
 #. TRANSLATORS: keep the line breaks short, this is a plain text email
-#: www/forgotten-password.php:106
+#: www/forgotten-password.php:107
 #, php-format
 msgid ""
 "Someone, perhaps you, requested to reset your password.\n"
@@ -4452,55 +4452,55 @@ msgstr ""
 "transférer ce message à %s et nous nous en\n"
 "occuperons pour vous."
 
-#: www/forgotten-password.php:111
+#: www/forgotten-password.php:112
 #, php-format
 msgid "Your login id is: %s"
 msgstr "Votre identifiant de connexion est : %s"
 
-#: www/forgotten-password.php:112
+#: www/forgotten-password.php:113
 msgid "Your password recovery URL is:"
 msgstr "Votre URL de récupération de mot de passe est :"
 
-#: www/forgotten-password.php:115
+#: www/forgotten-password.php:116
 #, php-format
 msgid "the request came from %s"
 msgstr "la requête provient de %s"
 
-#: www/forgotten-password.php:129
+#: www/forgotten-password.php:130
 msgid "password"
 msgstr "mot de passe"
 
-#: www/forgotten-password.php:151
+#: www/forgotten-password.php:152
 msgid "Forgotten password"
 msgstr "Mot de passe oublié"
 
-#: www/forgotten-password.php:169
+#: www/forgotten-password.php:170
 msgid "We have a problem!"
 msgstr "Nous avons un problème !"
 
-#: www/forgotten-password.php:196
+#: www/forgotten-password.php:197
 msgid "User ID not found!"
 msgstr "Identifiant d'utilisateur introuvable !"
 
-#: www/forgotten-password.php:207
+#: www/forgotten-password.php:208
 msgid ""
 "The User ID you supplied could not be found.  Perhaps try your email instead?"
 msgstr ""
 "L'identifiant d'utilisateur que vous avez fourni est introuvable. Essayez "
 "peut-être plutôt votre courriel ?"
 
-#: www/forgotten-password.php:209
+#: www/forgotten-password.php:210
 msgid ""
 "The email you supplied could not be found.  Perhaps try your User ID instead?"
 msgstr ""
 "Le courriel que vous avez fourni est introuvable. Essayez peut-être plutôt "
 "votre identifiant d'utilisateur ?"
 
-#: www/forgotten-password.php:234
+#: www/forgotten-password.php:235
 msgid "Mail sent to your address"
 msgstr "Courriel envoyé à votre adresse"
 
-#: www/forgotten-password.php:246
+#: www/forgotten-password.php:247
 #, php-format
 msgid ""
 "A password recovery URL has been sent to the address we have on file.  If "
@@ -4512,14 +4512,14 @@ msgstr ""
 "contacter <a href=\"%s\">le webmaster</a> et nous verrons ce que nous "
 "pouvons faire."
 
-#: www/forgotten-password.php:252
+#: www/forgotten-password.php:253
 msgid ""
 "If you've forgotten your password, don't worry.  We've got that covered."
 msgstr ""
 "Si vous avez oublié votre mot de passe, ne vous inquiétez pas. Nous gérons "
 "cela."
 
-#: www/forgotten-password.php:254
+#: www/forgotten-password.php:255
 #, php-format
 msgid ""
 "Please enter either your login or your email address (whichever you "
@@ -4528,11 +4528,11 @@ msgstr ""
 "Veuillez entrer soit votre identifiant de connexion, soit votre adresse "
 "courriel (celle dont vous vous souvenez), puis cliquez sur « %s »."
 
-#: www/forgotten-password.php:254 www/forgotten-password.php:264
+#: www/forgotten-password.php:255 www/forgotten-password.php:265
 msgid "eMail Me!"
 msgstr "M'envoyer un courriel !"
 
-#: www/forgotten-password.php:256
+#: www/forgotten-password.php:257
 msgid ""
 "We will send you an email with a link in it. Click on that link and you'll "
 "be able to set a new password. This link will expire within a few hours. "
@@ -4544,7 +4544,7 @@ msgstr ""
 "heures. Ce n'est pas exactement totalement sécurisé, mais nous ne traitons "
 "qu'avec votre connexion FreshPorts, pas avec une transaction financière...."
 
-#: www/forgotten-password.php:262
+#: www/forgotten-password.php:263
 msgid "email address:"
 msgstr "adresse courriel :"
 

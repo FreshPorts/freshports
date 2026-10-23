@@ -21,8 +21,7 @@
 
 	$token = $_REQUEST['token'] ?? null;
 	if (IsSet($token)) {
-		$token = pg_escape_string($db, $token);
-		if ($Debug) echo "I'm confirming with token $token\n<br>";
+		if ($Debug) echo "I'm confirming with token " . htmlentities($token) . "\n<br>";
 		$sql = "select ConfirmUserAccount($1)";
 		$result = pg_query_params($db, $sql, array($token));
 		if ($result) {

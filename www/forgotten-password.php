@@ -8,6 +8,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 	require_once('/usr/local/share/phpmailer/PHPMailer.php');
 	require_once('/usr/local/share/phpmailer/SMTP.php');
 
@@ -36,8 +37,8 @@ if ($submit) {
 
    $OK = 1;
 
-   $UserID = pg_escape_string($db, $_REQUEST["UserID"] );
-   $eMail  = pg_escape_string($db, strtolower( $_REQUEST["eMail"] ) );
+   $UserID = $_REQUEST["UserID"] ?? '';
+   $eMail  = strtolower( $_REQUEST["eMail"] ?? '' );
 
    if ($UserID) {
       $error = '';
@@ -106,7 +107,7 @@ if ($submit) {
           $message = sprintf(_("Someone, perhaps you, requested to reset your password.\n" .
                                "If that wasn't you, and this message becomes a nuisance, please\n" .
                                "forward this message to %s and we will take\n" .
-                               "care of it for you."), 'webmaster@freshports.org') . "\n" .
+                               "care of it for you."), PROBLEM_SOLVER_EMAIL_ADDRESS) . "\n" .
                      " \n" .
                      sprintf(_("Your login id is: %s"), $myrow["name"]) . "\n\n" .
                      _("Your password recovery URL is:") . "\n" .

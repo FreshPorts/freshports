@@ -59,7 +59,7 @@ class PortsByPkgMessage extends Port {
 			$sql .= " AND E.status = 'A'" ;
 		}
 		if ($this->Debug) echo "<pre>$sql</pre> with <pre>" . htmlentities($this->Query) . "</pre>";
-		$result = pg_query_params($this->dbh, $sql, array(pg_escape_string($this->dbh, $this->Query)));
+		$result = pg_query_params($this->dbh, $sql, array($this->Query));
 		if ($result) {
 			$myrow = pg_fetch_array($result);
 			$count = $myrow['count'];
@@ -128,7 +128,7 @@ class PortsByPkgMessage extends Port {
 		}
 
 		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
-		$this->LocalResult = pg_query_params($this->dbh, $sql, array(pg_escape_string($this->dbh, $this->Query)));
+		$this->LocalResult = pg_query_params($this->dbh, $sql, array($this->Query));
 		if ($this->LocalResult) {
 			$numrows = pg_num_rows($this->LocalResult);
 			if ($this->Debug) echo "That would give us $numrows rows";

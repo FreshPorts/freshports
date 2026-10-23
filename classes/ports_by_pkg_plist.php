@@ -55,7 +55,7 @@ class PortsByPkgPlist extends Port {
    AND P.element_id = EP.element_id and EP.pathname like \'/ports/head/%\'';
 		if ($this->getDebug()) echo "<br>sql is <br>$sql<br>";
 		if ($this->getDebug()) "query is '" . htmlentities($this->Query) . "'";
-		$result = pg_query_params($this->dbh, $sql, array(pg_escape_string($this->dbh, $this->Query)));
+		$result = pg_query_params($this->dbh, $sql, array($this->Query));
 		if ($result) {
 			$myrow = pg_fetch_array($result);
 			$count = $myrow['count'];
@@ -124,7 +124,7 @@ class PortsByPkgPlist extends Port {
 		}
 
 		if (parent::getDebug()) echo '<pre>' . $sql . '</pre>';
-		$this->LocalResult = pg_query_params($this->dbh, $sql, array(pg_escape_string($this->dbh, $this->Query)));
+		$this->LocalResult = pg_query_params($this->dbh, $sql, array($this->Query));
 		if ($this->LocalResult) {
 			$numrows = pg_num_rows($this->LocalResult);
 			if (parent::getDebug()) echo "That would give us $numrows rows";

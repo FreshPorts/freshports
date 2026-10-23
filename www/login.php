@@ -121,7 +121,7 @@ if (IsSet($_REQUEST['LOGIN']) && IsSet($_REQUEST['UserID']) && IsSet($_REQUEST['
 
 if (IsSet($_REQUEST["resend"]) && IsSet($_REQUEST["user"])) {
 
-   $User = pg_escape_string($db, $_REQUEST["user"]);
+   $UserLogin = $_REQUEST["user"];
 
    // get user id for that name
    $sql = 'select id from users where lower(name) = lower($1)';
@@ -130,7 +130,7 @@ if (IsSet($_REQUEST["resend"]) && IsSet($_REQUEST["user"])) {
       echo "$sql<br>\n";
    }
 
-   $result = pg_query_params($db, $sql, array($User)) or die('query failed ' . pg_last_error($db));
+   $result = pg_query_params($db, $sql, array($UserLogin)) or die('query failed ' . pg_last_error($db));
 
    if (pg_num_rows($result)) {
       $row = pg_fetch_array($result,0);

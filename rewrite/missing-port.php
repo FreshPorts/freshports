@@ -220,6 +220,9 @@ function freshports_PortDisplayNew($db, $MyPort, $category, $port, $url_args, $B
 
 	# At this point, we have the port detail HTML part 1
 
+	# the time of each cached part, for Last-Modified; see the end of this function
+	$PartTimes = array($Cache->LastModifiedGet());
+
 	################################################################################################
 	### Port part 2 ################################################################################
 	################################################################################################
@@ -353,14 +356,15 @@ function freshports_PortDisplayNew($db, $MyPort, $category, $port, $url_args, $B
 		$HTML_For_Ad = '';
 	}
 
-	# we take this off the first cache item, for no particular reason.
-	freshports_ConditionalGetUnix($Cache->LastModifiedGet());
-
+	$PartTimes[] = $Cache->LastModifiedGet();
 
 	################################################################################################
-	### Port part 2 ################################################################################
+	### Port part 3 ################################################################################
 	################################################################################################
 
+	# $Cache is reused from part 2: without this, a part 3 which is not cached, and fails to
+	# save, would report part 2's time
+	$Cache->LastModified = null;
 	if (!$BypassCache) {
 		# returns zero if found
 		$result = $Cache->RetrievePort($category, $port, CACHE_PORT_DETAIL, $PageNumber, $Branch, CachePort::CachePartThree);
@@ -429,7 +433,7 @@ function freshports_PortDisplayNew($db, $MyPort, $category, $port, $url_args, $B
 	# the ad is always in the second part
 	$HTMLPortPart3 = $port_display->ReplaceAdvertismentToken($HTMLPortPart3, $HTML_For_Ad);
 
-	freshports_ConditionalGetUnix($Cache->LastModifiedGet());
+	$PartTimes[] = $Cache->LastModifiedGet();
 
 	$Title = $category . "/" . $port . ': ' . $ShortDescription;
 
@@ -495,7 +499,18 @@ function freshports_PortDisplayNew($db, $MyPort, $category, $port, $url_args, $B
 		}
 	}
 
+	$PartTimes[] = $CachePackages->LastModifiedGet();
 
+	#
+	# Conditional GET - re #716
+	# The page is as new as its newest part.  A part which is not cached has no time,
+	# and counts as now.  The cache is shared by all users, but whether the port is on
+	# the user's watch list is looked up on each request, so it goes into the ETag:
+	# otherwise, after adding the port to a watch list, the redirect back here gets a
+	# 304 and the browser shows the old icon.
+	#
+	$PartTimes = array_map(function($Time) { return empty($Time) ? time() : $Time; }, $PartTimes);
+	freshports_ConditionalGetUnix(max($PartTimes), $User->id ? 'watchlist:' . $OnWatchList : '');
 
 	header("HTTP/1.1 200 OK");
 

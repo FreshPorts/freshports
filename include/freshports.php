@@ -2620,10 +2620,13 @@ define('LAST_MODIFIED_FORMAT', 'D, d M Y H:i:s T'); // eg Sun, 10 Jul 2005 22:49
 # sidebar and the shared header and footer, so the ETag adds:
 #   - freshports_VersionLastModified(), which changes on a deploy
 #   - the language and the user, so a login, logout or language change gets a new page
+#   - $Extra, for anything else decided on each request rather than read from the
+#     cache, e.g. whether the port is on the user's watch list - re #716
 #
 # If-None-Match is checked first; If-Modified-Since only when it is absent (RFC 9110).
+# A date cannot carry $Extra, so If-Modified-Since alone never gets a 304 when $Extra is set.
 #
-function freshports_ConditionalGetUnix($UnixTime) {
+function freshports_ConditionalGetUnix($UnixTime, $Extra = '') {
 	GLOBAL $User;
 
 	if (headers_sent()) {
@@ -2633,7 +2636,11 @@ function freshports_ConditionalGetUnix($UnixTime) {
 	$UnixTime     = empty($UnixTime) ? time() : intval($UnixTime);
 	$LastModified = gmdate(LAST_MODIFIED_FORMAT, $UnixTime);
 	$Locale       = defined('FRESHPORTS_LOCALE') ? FRESHPORTS_LOCALE : '';
-	$Visitor      = substr(md5($Locale . '|' . intval($User->id ?? 0)), 0, 8);
+	$VisitorKey   = $Locale . '|' . intval($User->id ?? 0);
+	if ($Extra !== '') {
+		$VisitorKey .= '|' . $Extra;
+	}
+	$Visitor      = substr(md5($VisitorKey), 0, 8);
 	$ETag         = '"' . freshports_VersionLastModified() . '-' . $UnixTime . '-' . $Visitor . '"';
 
 	header('Last-Modified: ' . $LastModified);
@@ -2658,7 +2665,7 @@ function freshports_ConditionalGetUnix($UnixTime) {
 				break;
 			}
 		}
-	} elseif (IsSet($_SERVER['HTTP_IF_MODIFIED_SINCE'])) {
+	} elseif (IsSet($_SERVER['HTTP_IF_MODIFIED_SINCE']) && $Extra === '') {
 		$Since       = strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']);
 		$NotModified = $Since !== false && $Since >= $UnixTime;
 	}

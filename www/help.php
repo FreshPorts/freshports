@@ -8,8 +8,6 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
-	freshports_ConditionalGet(freshports_LastModified());
-
 	$Title = _('pkg_info >> watch list');
 	freshports_Start($Title,
 					$Title,

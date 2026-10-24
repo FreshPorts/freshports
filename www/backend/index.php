@@ -10,8 +10,6 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
-	freshports_ConditionalGet(freshports_LastModified());
-
 	freshports_Start(_('FreshPorts News Feeds'),
 					'freshports - new ports, applications',
 					'FreeBSD, index, applications, ports');

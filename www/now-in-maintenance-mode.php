@@ -10,8 +10,6 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
-	freshports_ConditionalGet(freshports_LastModified());
-
 	if (IN_MAINTENANCE_MODE) {
 		header('Refresh: ' . MAINTENANCE_MODE_RERESH_TIME_SECONDS);
 	} else {

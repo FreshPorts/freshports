@@ -365,30 +365,4 @@ with recent_commits AS
 
 		return $commit;
 	}
-
-	function LastModified($Date) {
-
-		# default to the current GMT time
-		$last_modified = gmdate(LAST_MODIFIED_FORMAT);
-
-		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "
-SELECT gmt_format(max(CL.date_added)) AS last_modified
-  FROM commit_log CL, commit_log_ports CLP JOIN commit_log_branches CLB ON CLP.commit_log_id = CLB.commit_log_id
-                                           JOIN system_branch        SB ON SB.id             = CLB.branch_id
- WHERE CL.id = CLP.commit_log_id
-   AND CL.commit_date BETWEEN $1::timestamptz  + SystemTimeAdjust()
-                          AND $1::timestamptz  + SystemTimeAdjust() + '1 Day'";
-		
-		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
-		$result = pg_query_params($this->dbh, $sql, array($Date));
-		if ($result) {
-			$myrow = pg_fetch_array($result);
-			$last_modified = $myrow['last_modified'];
-		} else {
-			syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ': ' . pg_last_error($this->dbh));
-			die('SQL ERROR');
-		}
-
-		return $last_modified;
-	}
 }

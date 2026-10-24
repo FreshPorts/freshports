@@ -71,7 +71,6 @@
 			header('Location: /commit.php?message_id=' . $message_id_array[0]);
 			exit;
 		}
-		freshports_ConditionalGet($Commit->last_modified);
 
 		if ($Debug) echo 'oh... got something back there: <pre>'. print_r($message_id_array, true) . '</pre>';
 	}
@@ -112,8 +111,6 @@
 
 			$Commit = new Commit($db);
 			$Commit->FetchByMessageId($message_id);
-# commit does not have a last_modified - yet.
-#			freshports_ConditionalGet($Commit->last_modified);
 			$CommitBranch = $Commit->branch;
 		}
 	}

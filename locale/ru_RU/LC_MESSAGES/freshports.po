@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 2 : 1;\n"
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Poedit 3.7\n"
 
 #: classes/display_commit.php:126 classes/port-display.php:1172
@@ -35,8 +35,8 @@ msgstr "Извините, в базе данных ничего не найде�
 msgid "%d file found"
 msgid_plural "%d files found"
 msgstr[0] "найден %d файл"
-msgstr[1] "найдено %d файлов"
-msgstr[2] "найдено %d файла"
+msgstr[1] "найдено %d файла"
+msgstr[2] "найдено %d файлов"
 
 #: classes/files-display.php:56 www/categories.php:154
 msgid "Action"
@@ -1116,7 +1116,7 @@ msgstr "Ссылка на этот раздел"
 
 #. TRANSLATORS: keep the line breaks short, this is a plain text email
 #: include/freshports.php:2166
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "Someone, perhaps you, supplied your email address as their\n"
 "%s login. If that wasn't you, and this message becomes\n"
@@ -1124,7 +1124,7 @@ msgid ""
 "and we will take care of it for you."
 msgstr ""
 "Кто-то, возможно вы, указал ваш адрес электронной почты в качестве\n"
-"логина FreshPorts. Если это были не вы и это сообщение стало\n"
+"логина %s. Если это были не вы и это сообщение стало\n"
 "помехой, пожалуйста, перешлите это сообщение на %s,\n"
 "и мы всё уладим за вас."
 
@@ -1143,9 +1143,9 @@ msgid "The request came from %s"
 msgstr "Запрос поступил с %s"
 
 #: include/freshports.php:2192
-#, fuzzy, php-format
+#, php-format
 msgid "%s - user registration"
-msgstr "FreshPorts — регистрация пользователя"
+msgstr "%s — регистрация пользователя"
 
 #: include/freshports.php:2271
 msgid "You are connected over IPv6"
@@ -1516,8 +1516,8 @@ msgstr[2] "найдено %d порта."
 msgid "(showing only %d port on this page)"
 msgid_plural "(showing only %d ports on this page)"
 msgstr[0] "(на этой странице показан только %d порт)"
-msgstr[1] "(на этой странице показано только %d портов)"
-msgstr[2] "(на этой странице показано только %d порта)"
+msgstr[1] "(на этой странице показано только %d порта)"
+msgstr[2] "(на этой странице показано только %d портов)"
 
 #: include/login.php:11 include/new-user.php:29 www/forgotten-password.php:261
 msgid "User ID:"
@@ -2348,8 +2348,8 @@ msgstr "количество портов:"
 msgid "(%d real category)"
 msgid_plural "(%d real categories)"
 msgstr[0] "(%d реальная категория)"
-msgstr[1] "(%d реальных категорий)"
-msgstr[2] "(%d реальных категории)"
+msgstr[1] "(%d реальных категории)"
+msgstr[2] "(%d реальных категорий)"
 
 #: www/categories.php:240
 msgid ""
@@ -4371,8 +4371,8 @@ msgstr "категории списка отслеживания"
 msgid "%d most recent commit (all timestamps are UTC)"
 msgid_plural "%d most recent commits (all timestamps are UTC)"
 msgstr[0] "%d последний коммит (все метки времени в UTC)"
-msgstr[1] "%d последних коммитов (все метки времени в UTC)"
-msgstr[2] "%d последних коммита (все метки времени в UTC)"
+msgstr[1] "%d последних коммита (все метки времени в UTC)"
+msgstr[2] "%d последних коммитов (все метки времени в UTC)"
 
 #: www/filter.php:123 www/my-flagged-commits.php:91
 msgid "A port is marked as new for 10 days."
@@ -5251,11 +5251,11 @@ msgstr[0] ""
 "обслуживания завершится, эта страница будет перенаправлена на главную "
 "страницу."
 msgstr[1] ""
-"Эта страница будет перезагружаться каждые %d секунд. Когда режим "
+"Эта страница будет перезагружаться каждые %d секунды. Когда режим "
 "обслуживания завершится, эта страница будет перенаправлена на главную "
 "страницу."
 msgstr[2] ""
-"Эта страница будет перезагружаться каждые %d секунды. Когда режим "
+"Эта страница будет перезагружаться каждые %d секунд. Когда режим "
 "обслуживания завершится, эта страница будет перенаправлена на главную "
 "страницу."
 
@@ -5533,16 +5533,16 @@ msgstr "Список отслеживания — %s"
 msgid "%1$d port found (%2$d primary, %3$d secondary)"
 msgid_plural "%1$d ports found (%2$d primary, %3$d secondary)"
 msgstr[0] "найден %1$d порт (%2$d основной, %3$d дополнительный)"
-msgstr[1] "найдено %1$d портов (%2$d основных, %3$d дополнительных)"
-msgstr[2] "найдено %1$d порта (%2$d основных, %3$d дополнительных)"
+msgstr[1] "найдено %1$d порта (%2$d основных, %3$d дополнительных)"
+msgstr[2] "найдено %1$d портов (%2$d основных, %3$d дополнительных)"
 
 #: www/port-watch.php:190 www/watch.php:321
 #, php-format
 msgid "%d port found"
 msgid_plural "%d ports found"
 msgstr[0] "найден %d порт"
-msgstr[1] "найдено %d портов"
-msgstr[2] "найдено %d порта"
+msgstr[1] "найдено %d порта"
+msgstr[2] "найдено %d портов"
 
 #: www/port-watch.php:252
 msgid "update watch list"

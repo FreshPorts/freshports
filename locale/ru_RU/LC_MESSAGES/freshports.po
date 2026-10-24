@@ -1508,8 +1508,8 @@ msgstr "Язык"
 msgid "%d port found."
 msgid_plural "%d ports found."
 msgstr[0] "найден %d порт."
-msgstr[1] "найдено %d портов."
-msgstr[2] "найдено %d порта."
+msgstr[1] "найдено %d порта."
+msgstr[2] "найдено %d портов."
 
 #: include/list-of-ports.php:27
 #, php-format

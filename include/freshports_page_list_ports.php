@@ -19,7 +19,7 @@ class freshports_page_list_ports extends freshports_page {
 	var $User;
 	var $Branch;
 	var $_branch_id;			# id of $Branch, looked up once by _getBranchID()
-	var $_row_count;			# set by getLastModified() or getRowCount(), reused by getRowCount()
+	var $_row_count;			# set and reused by getRowCount()
 	var $_body;				# the page content from the cache or from _buildBody(); see Display()
 
 	var $_sql;			# the query for this page, with %PAGE% where OFFSET/LIMIT go; see setSQL()
@@ -220,7 +220,6 @@ class freshports_page_list_ports extends freshports_page {
 	}
 
 	function getRowCount() {
-		# getLastModified() usually has the count already; it runs first, from Display()
 		if (IsSet($this->_row_count)) {
 			return $this->_row_count;
 		}
@@ -328,56 +327,6 @@ SELECT ports.id,
 		}
 
 		$this->_sql .= "\n order by " . $this->getSort();
-	}
-
-	function getLastModified() {
-		# in this code, we are returning date_added because that is more relevant than commit_date with respect to getLastModified()
-		# The count comes from the same pass, saving getRowCount() a query of its own.
-		$sql = "
-SELECT count(*) as numrows, gmt_format(max(CL.date_added)) as last_modified " . $this->_FROM_CLAUSE() . "
-                                 LEFT OUTER JOIN commit_log CL ON CL.id = ports.last_commit_id" . $this->_WHERE_CLAUSE();
-
-
-		if ($this->_condition) {
-			$sql .= '
-   AND ' . $this->_condition;
-		}
-
-#		echo '<pre>' . $sql . '</pre>';
-
-		$result = pg_query_params($this->_db, $sql, array());
-		if ($result) {
-			$numrows = pg_num_rows($result);
-			#
-			# here we are doing a max. Even if we have nothing in the result set,
-			# we will still get a null value.
-			#
-			if ($numrows == 1) {
-				$myrow = pg_fetch_array ($result);
-				$last_modified    = $myrow['last_modified'];
-				$this->_row_count = $myrow['numrows'];
-			}
-
-			if ($numrows != 1 || $last_modified == '') {
-				$sql = 'select gmt_format(LatestCommitDatePorts()) as last_modified';
-				$result = pg_query_params($this->_db, $sql, array());
-				if (!$result) {
-					# if the above failed, give them the current date time
-					$sql = 'select GMT_Format(CURRENT_TIMESTAMP) as last_modified';
-					$result = pg_query_params($this->_db, $sql, array());
-					if (!$result) {
-						die('could not get last_modified value: ' . __FILE__);
-					}
-				}
-
-				$myrow = pg_fetch_array ($result);
-				$last_modified = $myrow['last_modified'];
-			}
-			
-		}
-
-#echo 'Last Modified is ' . $last_modified . '<br>';
-		return $last_modified;
 	}
 
 	function executeQuery() {

@@ -12,8 +12,6 @@
 
 	$Title = "New Release - October 2004";
 
-	freshports_ConditionalGet(freshports_LastModified());
-
 	freshports_Start($Title,
 					$Title,
 					"FreeBSD, index, applications, ports");

@@ -11,13 +11,6 @@
     require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
     require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/user_tasks.php');
-    require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
-
-    $Commit = new Commit($db);
-    $Commit->DateNewestPort();
-
-    # Categories does not have that field, yet.
-    #	freshports_ConditionalGet($Commit->last_modified);
 
     $Title = _('Categories');
     freshports_Start($Title,

@@ -1044,6 +1044,12 @@ GLOBAL $ShowAnnouncements;
 
 	header('X-Accel-Buffering: no');
 
+	# every page with the sidebar shows who is logged in: keep it out of shared caches - re #714
+	# a page which already chose its own policy, e.g. no-store from the search gate, keeps it
+	if (!headers_sent() && !preg_grep('/^Cache-Control:/i', headers_list())) {
+		header('Cache-Control: private, no-cache');
+	}
+
 	freshports_HTML_Start();
 	freshports_Header($ArticleTitle, $Description, $Keywords, $Phorum);
 
@@ -2602,73 +2608,64 @@ function freshports_RedirectPermanent($URL) {
 define('LAST_MODIFIED_FORMAT', 'D, d M Y H:i:s T'); // eg Sun, 10 Jul 2005 22:49:33 GMT
 
 
-function freshports_LastModified() {
-	# get the last modified date of this file.
-	#
-	$UnixTime     = filemtime($_SERVER['SCRIPT_FILENAME']);
-	$LastModified = gmdate(LAST_MODIFIED_FORMAT, $UnixTime);
-
-	return $LastModified;
-}
-
-function freshports_LastModified_Dynamic() {
-	# Use the current date/time as the modified date.
-	#
-	$LastModified = gmdate(LAST_MODIFIED_FORMAT);
-
-	return $LastModified;
-}
-
+#
+# Conditional GET - re #714
+#
+# Sends Last-Modified, ETag and Cache-Control for content last changed at
+# $UnixTime, and answers 304 Not Modified, then exits, when the client's copy
+# is current.  An empty $UnixTime means the current time.
+#
+# Use this only where $UnixTime covers the page's content, e.g. the time of a
+# cache entry which is emptied when the data changes.  Every page also has the
+# sidebar and the shared header and footer, so the ETag adds:
+#   - freshports_VersionLastModified(), which changes on a deploy
+#   - the language and the user, so a login, logout or language change gets a new page
+#
+# If-None-Match is checked first; If-Modified-Since only when it is absent (RFC 9110).
+#
 function freshports_ConditionalGetUnix($UnixTime) {
-	// A PHP implementation of conditional get, see 
-	//   https://fishbowl.pastiche.org/archives/001132.html
-	// Based upon code from https://simon.incutio.com/archive/2003/04/23/conditionalGet
+	GLOBAL $User;
 
-	$ETag         = gmdate('Y-m-d H:i:s', $UnixTime);
-	$LastModified = gmdate(LAST_MODIFIED_FORMAT, $UnixTime);
-
-	// Send the headers
-	header('Last-Modified: ' . $LastModified);
-	header('ETag: "'         . $ETag . '"');
-
-	$if_modified_since = false;
-	$if_none_match     = false;
-
-	// See if the client has provided the required headers
-	if (IsSet($_SERVER['HTTP_IF_MODIFIED_SINCE'])) {
-		$if_modified_since = stripslashes($_SERVER['HTTP_IF_MODIFIED_SINCE']);
-	}
-
-	if (IsSet($_SERVER['HTTP_IF_NONE_MATCH'])) {
-		$if_none_match = stripslashes($_SERVER['HTTP_IF_NONE_MATCH']);
-	}
-
-	if (!$if_modified_since && !$if_none_match) {
+	if (headers_sent()) {
 		return;
 	}
 
-	// At least one of the headers is there - check them
-	if ($if_none_match && $if_none_match != $ETag) {
-		return; // etag is there but doesn't match
+	$UnixTime     = empty($UnixTime) ? time() : intval($UnixTime);
+	$LastModified = gmdate(LAST_MODIFIED_FORMAT, $UnixTime);
+	$Locale       = defined('FRESHPORTS_LOCALE') ? FRESHPORTS_LOCALE : '';
+	$Visitor      = substr(md5($Locale . '|' . intval($User->id ?? 0)), 0, 8);
+	$ETag         = '"' . freshports_VersionLastModified() . '-' . $UnixTime . '-' . $Visitor . '"';
+
+	header('Last-Modified: ' . $LastModified);
+	header('ETag: '          . $ETag);
+	# the sidebar shows who is logged in: no shared caches, and check with us before reuse
+	header('Cache-Control: private, no-cache');
+
+	if (!in_array($_SERVER['REQUEST_METHOD'] ?? 'GET', array('GET', 'HEAD'))) {
+		return;
 	}
 
-	if ($if_modified_since && $if_modified_since != $LastModified) {
-		return; // if-modified-since is there but doesn't match
+	$NotModified = false;
+	if (IsSet($_SERVER['HTTP_IF_NONE_MATCH'])) {
+		# a list of tags, or *; nginx sends our tag as W/"..." when it gzips the page
+		foreach (explode(',', $_SERVER['HTTP_IF_NONE_MATCH']) as $Tag) {
+			$Tag = trim($Tag);
+			if (substr($Tag, 0, 2) == 'W/') {
+				$Tag = substr($Tag, 2);
+			}
+			if ($Tag == '*' || $Tag === $ETag) {
+				$NotModified = true;
+				break;
+			}
+		}
+	} elseif (IsSet($_SERVER['HTTP_IF_MODIFIED_SINCE'])) {
+		$Since       = strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']);
+		$NotModified = $Since !== false && $Since >= $UnixTime;
 	}
 
-	// Nothing has changed since their last request - serve a 304 and exit
-	header('HTTP/1.0 304 Not Modified');
-	exit;
-}
-
-function freshports_ConditionalGet($LastModified) {
-	// A PHP implementation of conditional get, see 
-	//   https://fishbowl.pastiche.org/archives/001132.html
-	// Based upon code from https://simon.incutio.com/archive/2003/04/23/conditionalGet
-
-	if (!empty($LastModified)) {
-		$UnixTime = strtotime($LastModified);
-		freshports_ConditionalGetUnix($UnixTime);
+	if ($NotModified) {
+		http_response_code(304);
+		exit;
 	}
 }
 

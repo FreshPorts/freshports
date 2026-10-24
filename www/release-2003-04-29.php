@@ -10,8 +10,6 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
-	freshports_ConditionalGet(freshports_LastModified());
-
 	$Title = "New Release - 29 April 2003";
 
 	freshports_Start($Title,

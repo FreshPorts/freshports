@@ -84,10 +84,7 @@
 
 	$commits = new Commits($db, $BranchName);
 	$commits->Debug = $Debug;
-	$last_modified  = $commits->LastModified($Date);
 	$NumCommits     = $commits->Count($Date);
-
-	freshports_ConditionalGet($last_modified);
 
 	$Title = sprintf(_('Commits for %s'), $Date);
 	freshports_Start($FreshPortsSlogan . ' - ' . $Title,

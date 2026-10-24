@@ -49,8 +49,6 @@
 		$Branch = BRANCH_HEAD;
 	}
 
-	freshports_ConditionalGet(freshports_LastModified_Dynamic());
-
 	# results can be sorted by:
 	define('ORDERBYPORT',       'port');
 	define('ORDERBYCATEGORY',   'category');

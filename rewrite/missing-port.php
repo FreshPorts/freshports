@@ -507,10 +507,11 @@ function freshports_PortDisplayNew($db, $MyPort, $category, $port, $url_args, $B
 	# and counts as now.  The cache is shared by all users, but whether the port is on
 	# the user's watch list is looked up on each request, so it goes into the ETag:
 	# otherwise, after adding the port to a watch list, the redirect back here gets a
-	# 304 and the browser shows the old icon.
+	# 304 and the browser shows the old icon.  intval(): on a cache hit, OnWatchList() gives
+	# NULL for a port not watched, and on a rebuild FetchByID() gives 0 - re #718
 	#
 	$PartTimes = array_map(function($Time) { return empty($Time) ? time() : $Time; }, $PartTimes);
-	freshports_ConditionalGetUnix(max($PartTimes), $User->id ? 'watchlist:' . $OnWatchList : '');
+	freshports_ConditionalGetUnix(max($PartTimes), $User->id ? 'watchlist:' . intval($OnWatchList) : '');
 
 	header("HTTP/1.1 200 OK");
 

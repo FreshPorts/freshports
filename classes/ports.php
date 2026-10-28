@@ -521,6 +521,39 @@ ON TEMP.wle_element_id = ports.element_id';
 		return $result;
 	}
 
+	function ExistsOnBranch($Category, $Port, $Branch) {
+		# true if Category/Port is on Branch.
+		# used by rewrite/url-parser.php::Try_Displaying_Port(): a port page served from the
+		# cache needs nothing more.  FetchByCategoryPortBranch() calls pkg_plist(),
+		# PortVersionOnQuarterlyBranch() and element_pathname(), whose results are only used
+		# to build the cached parts, so freshports_PortDisplayNew() calls it on a cache miss.
+		# The joins are the same as there, so both find the same ports.
+
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . '
+		SELECT ports.id
+		  FROM ports
+		  JOIN element          ON element.id                   = ports.element_id
+		                       AND element.name                 = $1
+		  JOIN categories       ON categories.id                = ports.category_id
+		                       AND categories.name              = $2
+		  JOIN element_pathname ON element_pathname.element_id  = ports.element_id
+		                       AND element_pathname.pathname    = $3';
+
+		$params = array($Port, $Category, $this->GetBranchPath($Branch) . '/' . $Category . '/' . $Port);
+
+		if ($this->Debug) {
+			echo "<pre>$sql</pre>";
+		}
+
+		$result = pg_query_params($this->dbh, $sql, $params);
+		if (!$result) {
+			syslog(LOG_ERR, __FILE__ . '::' . __FUNCTION__ . ' failed: ' . pg_last_error($this->dbh));
+			return false;
+		}
+
+		return pg_num_rows($result) == 1;
+	}
+
 	function FetchByCategoryPortBranch($Category, $Port, $Branch, $UserID = 0) {
 		# fetch a single port based on Category/Name on a Branch.
 		# used by rewrite/url-parser.php::Try_Displaying_Port()

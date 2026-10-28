@@ -245,7 +245,8 @@ function Try_Displaying_Port($db, $path_parts, $url_args, $Branch) {
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
 	$MyPort = new Port($db);
 	$MyPort->setDebug($Debug);
-	$result = $MyPort->FetchByCategoryPortBranch($category, $port, $Branch, $User->id);
+	# only whether it exists: on a cache miss, freshports_PortDisplayNew() fetches the rest
+	$result = $MyPort->ExistsOnBranch($category, $port, $Branch);
 	if ($result) {
 		# found on branch. A port is only ever found on a FreshPorts branch if there is a commit.
 		$HasCommitsOnBranch = true;
@@ -255,7 +256,7 @@ function Try_Displaying_Port($db, $path_parts, $url_args, $Branch) {
 		$HasCommitsOnBranch = false;
 		if ($Debug) echo htmlentities("$category/$port") . ' was not found on branch ' . htmlentities($Branch);
 		# try on head, if found, it's just that this port has no commits on branch
-		$result = $MyPort->FetchByCategoryPortBranch($category, $port, BRANCH_HEAD, $User->id);
+		$result = $MyPort->ExistsOnBranch($category, $port, BRANCH_HEAD);
 		if ($Debug) {
 			if ($result) {
 				echo 'That port does not exist on the branch, but we found it on ' . BRANCH_HEAD . '<br>';
@@ -271,7 +272,7 @@ function Try_Displaying_Port($db, $path_parts, $url_args, $Branch) {
 	        require_once($_SERVER['DOCUMENT_ROOT'] . '/../rewrite/missing-port.php');
 		# display $result
 		# if we fetched you here, we got commits on that branch
-	        freshports_PortDisplayNew($db, $MyPort, $category, $port, $url_args, $Branch, $HasCommitsOnBranch);
+	        freshports_PortDisplayNew($db, null, $category, $port, $url_args, $Branch, $HasCommitsOnBranch);
 	        exit;
 	}
 

@@ -80,22 +80,16 @@ function DisplayPortCommits($port, $PageNumber):string {
 
 #
 # If during freshports_PortDisplayNew(), we do not have the port fetched from the database and we need it
-# this function gets invoked. Sometimes you have some cached items but not others
+# this function gets invoked. Sometimes you have some cached items but not others.
+# url-parser.php only checks that the port exists, so this is where a cache miss fetches it.
 #
 function _GetThatPort($db, $Debug, $category, $port, $branch, $UserID) {
-	$MyPort = null;
-
-	$port_id = freshports_GetPortID($db, $category, $port, $branch);
-	if (!IsSet($port_id)) {
-		if ($Debug) echo "$category/$port is not a port according to freshports_GetPortID<br>\n";
-		return $MyPort;
-	}
-
-	if ($Debug) echo "$category/$port $port_id found by freshports_GetPortID on $branch<br>\n";
-
 	$MyPort = new Port($db);
-	# We are fetching by id - we don't need branch, because the id differs between head and a branch
-	$MyPort->FetchByID($port_id, $UserID);
+	$MyPort->setDebug($Debug);
+	if (!$MyPort->FetchByCategoryPortBranch($category, $port, $branch, $UserID)) {
+		if ($Debug) echo "$category/$port was not found by FetchByCategoryPortBranch on $branch<br>\n";
+		return null;
+	}
 
 	return $MyPort;
 }

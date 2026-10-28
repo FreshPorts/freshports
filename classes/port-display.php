@@ -1456,8 +1456,8 @@ class port_display {
 					$HTML .= _('There are no Conflicts Matches for this port.  This is usually an error.');
 					syslog(LOG_ERR, 'There are no Conflicts Matches for this port. This is usually an error. ' . $port->element_pathname);
 				}
+				$HTML .= '</dd>';
 			}
-			$HTML .= '</dd>';
 		}
 
 

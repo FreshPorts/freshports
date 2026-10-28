@@ -93,7 +93,7 @@ echo '<table class="fullwidth borderless">
 </tr>
 <tr>
 <td>
-  <table class="fullwidth borderless" CELLPADDING="3">
+  <table class="fullwidth borderless cellpadding3">
   <tr class="vtop">
    <td><img src="/images/warning.gif"></td>
    <td width="100%">

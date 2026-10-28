@@ -168,7 +168,7 @@ if ($LoginFailed) {
 </tr>
 <tr>
 <td>
-  <table class="fullwidth borderless" CELLPADDING="0">
+  <table class="fullwidth borderless cellpadding0">
   <tr class="vtop">
    <td><img src="/images/warning.gif"></td>
    <td WIDTH="100%">
@@ -203,7 +203,7 @@ if ($error) {
 
 <tr>
 <td>
-  <table class="fullwidth borderless" CELLPADDING=0>
+  <table class="fullwidth borderless cellpadding0">
   <tr class="vtop">
    <td><img src="/images/warning.gif"></td>
    <td WIDTH="100%">

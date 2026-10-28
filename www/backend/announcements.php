@@ -109,7 +109,7 @@ if (IsSet($_REQUEST['edit'])) {
 
 if (isset($errors)) {
 echo '
-  <table CELLPADDING="3" class="fullwidth borderless">
+  <table class="fullwidth borderless cellpadding3">
   <tr class="vtop">
    <td><img src="/images/warning.gif"></td>
    <td width="100%">

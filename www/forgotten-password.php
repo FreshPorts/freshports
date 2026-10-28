@@ -171,7 +171,7 @@ if (IsSet($error) and $error != '') {
                  </tr> 
                  <tr>
             <td>
-              <table class="fullwidth borderless" CELLPADDING="3">
+              <table class="fullwidth borderless cellpadding3">
               <tr class="vcentered">
                <td><img src="/images/warning.gif" ALT="warning!"></td>
                <td WIDTH="100%">
@@ -198,7 +198,7 @@ if (IsSet($error) and $error != '') {
                  </tr>
                  <tr>
             <td>
-              <table class="fullwidth borderless" CELLPADDING="3">
+              <table class="fullwidth borderless cellpadding3">
               <tr class="vtop">
                <td><img src="/images/warning.gif" ALT="warning!"></td>
                <td WIDTH="100%">
@@ -227,7 +227,7 @@ if (IsSet($error) and $error != '') {
 <table class="fullwidth borderless"> <tr> <td>
 
 
-<table class="fullwidth borderless" CELLPADDING="5">
+<table class="fullwidth borderless cellpadding5">
 
 <tr class="accent" ><td class="accent">
 <?php

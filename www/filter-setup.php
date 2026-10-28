@@ -210,7 +210,7 @@ for ($i = 0; $i < $numrows; $i++) {
 
 # categories list start
 
-$HTML .= "\n" . '<table class="bordered" CELLPADDING="5">' . "\n";
+$HTML .= "\n" . '<table class="bordered cellpadding5">' . "\n";
 $HTML .= '<tr><td>';
 // get the list of categories to display
 $sql = "

@@ -23,7 +23,35 @@ if (!$User->id) {
 }
 
 if (!$User->IsTaskAllowed(FRESHPORTS_TASKS_ANNOUNCEMENTS_MAINTAIN)) {
-	die("I'm sorry, but you're not allowed to be here.  The police have been notified.  Please leave now.");
+	http_response_code(403);
+
+	freshports_Start('Announcements',
+	                 'freshports - new ports, applications',
+	                 'FreeBSD, index, applications, ports');
+
+	echo freshports_MainTable();
+?>
+<tr>
+	<td class="content">
+	<p>I'm sorry, but you're not allowed to be here.  The police have been notified.  Please leave now.</p>
+	</td>
+
+	<td class="sidebar">
+	<?php
+	echo freshports_SideBar();
+	?>
+	</td>
+</tr>
+</table>
+
+<?php
+	echo freshports_ShowFooter();
+?>
+
+</body>
+</html>
+<?php
+	exit;
 }
 
 if (IsSet($_REQUEST['add'])) {

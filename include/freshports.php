@@ -1053,12 +1053,8 @@ GLOBAL $ShowAnnouncements;
 	freshports_navigation_bar_top();
 
 	if (IsSet($ShowAnnouncements)) {
-
-		GLOBAL $db;
-		$Announcement = new Announcement($db);
-
-		$NumRows = $Announcement->FetchAllActive();
-		if ($NumRows > 0) {
+		$Announcement = freshports_AnnouncementsActive();
+		if ($Announcement !== null) {
 			echo DisplayAnnouncements($Announcement);
 		}
 	}
@@ -2564,6 +2560,50 @@ function DisplayAnnouncements($Announcement) {
 	return $HTML;
 }
 
+#
+# The active announcements, fetched once per request: the page shows them, and
+# freshports_ConditionalGetUnix() puts them in the ETag.
+# Returns null when there are none.
+#
+function freshports_AnnouncementsActive() {
+	GLOBAL $db;
+
+	static $Fetched      = false;
+	static $Announcement = null;
+
+	if (!$Fetched) {
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/announcements.php');
+
+		$Fetched = true;
+		$Active  = new Announcement($db);
+		if ($Active->FetchAllActive() > 0) {
+			$Announcement = $Active;
+		}
+	}
+
+	return $Announcement;
+}
+
+#
+# A short hash of the active announcements, for the ETag; '' when there are none.
+# An announcement which starts, ends, is edited or is deleted gives a new hash.
+#
+function freshports_AnnouncementsHash() {
+	$Announcement = freshports_AnnouncementsActive();
+	if ($Announcement === null) {
+		return '';
+	}
+
+	$Key     = '';
+	$NumRows = $Announcement->NumRows();
+	for ($i = 0; $i < $NumRows; $i++) {
+		$Announcement->FetchNth($i);
+		$Key .= $Announcement->IDGet() . ':' . $Announcement->TextGet() . "\n";
+	}
+
+	return substr(md5($Key), 0, 8);
+}
+
 function PeopleWatchingThisPortAlsoWatch($dbh, $element_id) {
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_list_also_watched.php');
 
@@ -2616,23 +2656,41 @@ define('LAST_MODIFIED_FORMAT', 'D, d M Y H:i:s T'); // eg Sun, 10 Jul 2005 22:49
 #   - the language and the user, so a login, logout or language change gets a new page
 #   - $Extra, for anything else decided on each request rather than read from the
 #     cache, e.g. whether the port is on the user's watch list - re #716
+#   - the announcements shown at the top of the page, when $Announcements is true:
+#     their hash goes in the ETag, and the time an announcement last started or
+#     ended moves Last-Modified forward.  Pages which show no announcements, such
+#     as the news feeds, pass false.
 #
 # If-None-Match is checked first; If-Modified-Since only when it is absent (RFC 9110).
 # A date cannot carry $Extra, so If-Modified-Since alone never gets a 304 when $Extra is set.
+# Nor can it carry an edit to an announcement, or its deletion; only the ETag sees those.
 #
-function freshports_ConditionalGetUnix($UnixTime, $Extra = '') {
+function freshports_ConditionalGetUnix($UnixTime, $Extra = '', $Announcements = true) {
 	GLOBAL $User;
+	GLOBAL $ShowAnnouncements;
+	GLOBAL $db;
 
 	if (headers_sent()) {
 		return;
 	}
 
 	$UnixTime     = empty($UnixTime) ? time() : intval($UnixTime);
+	$AnnouncementsHash = '';
+	if ($Announcements && IsSet($ShowAnnouncements)) {
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/announcements.php');
+
+		$LastChange        = new Announcement($db);
+		$UnixTime          = max($UnixTime, $LastChange->LastChange());
+		$AnnouncementsHash = freshports_AnnouncementsHash();
+	}
 	$LastModified = gmdate(LAST_MODIFIED_FORMAT, $UnixTime);
 	$Locale       = defined('FRESHPORTS_LOCALE') ? FRESHPORTS_LOCALE : '';
 	$VisitorKey   = $Locale . '|' . intval($User->id ?? 0);
 	if ($Extra !== '') {
 		$VisitorKey .= '|' . $Extra;
+	}
+	if ($AnnouncementsHash !== '') {
+		$VisitorKey .= '|announcements:' . $AnnouncementsHash;
 	}
 	$Visitor      = substr(md5($VisitorKey), 0, 8);
 	$ETag         = '"' . freshports_VersionLastModified() . '-' . $UnixTime . '-' . $Visitor . '"';

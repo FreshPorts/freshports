@@ -89,7 +89,7 @@ function newsfeed($dbh, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $F
 	# useCached() will serve the same file, so send our headers first; a current client gets a 304.
 	$CacheTime = @filemtime(NEWSFEEDCACHE);
 	if ($CacheTime !== false && time() - $CacheTime < NEWSFEED_REFRESH_SECONDS) {
-		freshports_ConditionalGetUnix($CacheTime);
+		freshports_ConditionalGetUnix($CacheTime, '', false); # a feed has no announcements
 	}
 	$rss->useCached($Format, NEWSFEEDCACHE, NEWSFEED_REFRESH_SECONDS);
 
@@ -411,7 +411,7 @@ ORDER BY CL.commit_date;
 	clearstatcache(true, NEWSFEEDCACHE);
 	$CacheTime = @filemtime(NEWSFEEDCACHE);
 	if ($CacheTime !== false) {
-		freshports_ConditionalGetUnix($CacheTime);
+		freshports_ConditionalGetUnix($CacheTime, '', false); # a feed has no announcements
 	}
 
 	# sends the file just written, and exits

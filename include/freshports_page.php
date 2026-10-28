@@ -60,11 +60,8 @@ class freshports_page extends HTML_Page2 {
 		}
 
 		if ($this->_ShowAnnouncements) {
-
-			$Announcement = new Announcement($this->$_db);
-
-			$NumRows = $Announcement->FetchAllActive();
-			if ($NumRows > 0) {
+			$Announcement = freshports_AnnouncementsActive();
+			if ($Announcement !== null) {
 				$HTML .= DisplayAnnouncements($Announcement);
 			}
 		}

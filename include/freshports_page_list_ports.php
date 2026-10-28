@@ -131,7 +131,7 @@ class freshports_page_list_ports extends freshports_page {
 		}
 
 		# when there is no cache entry, this gives the current time
-		freshports_ConditionalGetUnix($Cache->LastModifiedGet());
+		freshports_ConditionalGetUnix($Cache->LastModifiedGet(), '', $this->_ShowAnnouncements);
 
 		# disable the HTML_Page2 headers.  we do our own.
 		#

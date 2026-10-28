@@ -243,6 +243,27 @@ SELECT *
 		return $numrows;
 	}
 
+	function LastChange() {
+		#
+		# the last time an announcement started or ended, as a unix time; 0 if never.
+		# Used for Last-Modified, so this runs before any output: log, do not echo.
+		#
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . "
+		SELECT extract(epoch FROM max(boundary))::bigint AS last_change
+		  FROM (SELECT start_date AS boundary FROM announcements
+		        UNION ALL
+		        SELECT end_date FROM announcements) AS boundaries
+		 WHERE boundary <= CURRENT_TIMESTAMP";
+
+		$result = pg_query_params($this->dbh, $sql, array());
+		if (!$result) {
+			syslog(LOG_ERR, __FILE__ . '::' . __FUNCTION__ . ' failed: ' . pg_last_error($this->dbh));
+			return 0;
+		}
+
+		return intval(pg_fetch_result($result, 0, 'last_change'));
+	}
+
 	function NumRows() {
 		return pg_num_rows($this->LocalResult);
 	}

@@ -6,6 +6,7 @@
 	#
 
 	DEFINE('MAX_PORTS', 20);
+	DEFINE('MAX_WATCH_LIST_ITEMS', 100);	# commits in a watch list feed
 	define('TIME_ZONE', 'UTC');
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
@@ -83,6 +84,13 @@ function newsfeed($dbh, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $F
         #
         # Perhaps we should not be clearing out the cache that way. Perhap we should just let it get stale
         #
+	# Conditional GET - re #714
+	# The cache file is emptied when a commit arrives, so its time is when the feed last changed.
+	# useCached() will serve the same file, so send our headers first; a current client gets a 304.
+	$CacheTime = @filemtime(NEWSFEEDCACHE);
+	if ($CacheTime !== false && time() - $CacheTime < NEWSFEED_REFRESH_SECONDS) {
+		freshports_ConditionalGetUnix($CacheTime);
+	}
 	$rss->useCached($Format, NEWSFEEDCACHE, NEWSFEED_REFRESH_SECONDS);
 
 	$rss->title          = 'FreshPorts news'; 
@@ -120,8 +128,23 @@ function newsfeed($dbh, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $F
 
 	if ($WatchListID) {
 	# this is for newfeeds based on personal watch lists
-	$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . '::WatchListID 
-	select E.name 			as port, 
+	#
+	# Only the latest MAX_WATCH_LIST_ITEMS commits: without a limit, a large watch list
+	# gives every commit against every port on it (89,000 rows for a 2,200 port list).
+	# K finds the keys and T keeps the latest; only then are the wide columns
+	# (e.g. the commit message) fetched, so the sort stays small.
+	# MATERIALIZED stops the planner from walking all of commit_log by date instead.
+	$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . '::WatchListID
+	WITH K AS MATERIALIZED (
+	SELECT CLP1.commit_log_id, CLP1.port_id, CL1.commit_date
+	  FROM watch_list_element WLE1
+	  JOIN ports            P1   ON P1.element_id     = WLE1.element_id
+	  JOIN commit_log_ports CLP1 ON CLP1.port_id      = P1.id
+	  JOIN commit_log       CL1  ON CL1.id            = CLP1.commit_log_id
+	 WHERE WLE1.watch_list_id = $1),
+	T AS (
+	SELECT * FROM K ORDER BY commit_date DESC, commit_log_id, port_id LIMIT $2)
+	select E.name 			as port,
 		   P.id 				as id, 
 	       C.name 		as category, 
 	       C.id 		as category_id, 
@@ -130,7 +153,7 @@ function newsfeed($dbh, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $F
 	       E.id 			as element_id,
            to_char(CL.commit_date - SystemTimeAdjust(), \'DD Mon\')  AS commit_date,
            to_char(CL.commit_date - SystemTimeAdjust(), \'HH24:MI\') AS commit_time,
-           commit_date          AS news_date,
+           CL.commit_date       AS news_date,
            CL.description       AS commit_description,
            CLP.port_epoch as epoch,
            CL.committer,
@@ -141,16 +164,15 @@ function newsfeed($dbh, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $F
            CL.commit_date as commit_date_sort,
            CL.message_id,
            CL.commit_hash_short
-	  FROM watch_list_element WLE, element E, categories C, ports P,
-           commit_log CL, commit_log_ports CLP
-	 WHERE CLP.commit_log_id = CL.id
-       AND CLP.port_id       = P.id
-       AND P.element_id      = WLE.element_id
-	   AND P.element_id      = E.id
-	   AND P.category_id     = C.id 
-	   AND WLE.watch_list_id = $1';
+	  FROM T
+	  JOIN commit_log_ports CLP ON CLP.commit_log_id = T.commit_log_id AND CLP.port_id = T.port_id
+	  JOIN commit_log       CL  ON CL.id             = T.commit_log_id
+	  JOIN ports            P   ON P.id              = T.port_id
+	  JOIN element          E   ON E.id              = P.element_id
+	  JOIN categories       C   ON C.id              = P.category_id
+	ORDER BY CL.commit_date DESC, CL.id, E.name';
 
-	   $params = array($WatchListID);
+	   $params = array($WatchListID, MAX_WATCH_LIST_ITEMS);
 
 	} else {
 		# no WatchListID supplied
@@ -383,5 +405,22 @@ ORDER BY CL.commit_date;
 
 	// valid format strings are: RSS0.91, RSS1.0, RSS2.0, PIE0.1, MBOX, OPML, ATOM0.3, HTML, JS
 
-	return $rss->saveFeed($Format, NEWSFEEDCACHE);
+	# write the cache file without sending it, so the headers can use its time
+	$rss->saveFeed($Format, NEWSFEEDCACHE, false);
+
+	clearstatcache(true, NEWSFEEDCACHE);
+	$CacheTime = @filemtime(NEWSFEEDCACHE);
+	if ($CacheTime !== false) {
+		freshports_ConditionalGetUnix($CacheTime);
+	}
+
+	# sends the file just written, and exits
+	$rss->useCached($Format, NEWSFEEDCACHE, NEWSFEED_REFRESH_SECONDS);
+
+	# still here: the file was cleared, or could not be written; better than an empty 200
+	header_remove('Last-Modified');
+	header_remove('ETag');
+	header('HTTP/1.1 503 Service Temporarily Unavailable');
+	header('Retry-After: 60');
+	exit;
 }

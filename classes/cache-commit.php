@@ -68,7 +68,7 @@ class CacheCommit extends Cache {
 		# regardless of the CacheType or page number
 		#
 		$Key = $this->_CommitKey($MessageId);
-		$result = parent::Remove($Key, $data);
+		$result = parent::Remove($Key);
 
 		return $result;
 	}

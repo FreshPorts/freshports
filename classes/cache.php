@@ -119,16 +119,24 @@ class Cache {
 	function Remove($key) {
 		$result = 0;
 
-		$FileName = $this->_CacheFilename($key);
-		// rm $Filename
-		if (unlink($Filename)) {
-			// success
-			$this->_Log('Cache: Remove ' . $CacheFileName);
-		} else {
-			$this->_Log('Cache: FAILED Remove ' . $CacheFileName);
-			$result = -1;
+		// the key may contain wild cards, see the RemovePort() etc in the descendant classes
+		$CacheFileNames = glob($this->_CacheFileName($key));
+		if ($CacheFileNames === false) {
+			$this->_Log('Cache: FAILED Remove glob ' . $key);
+			return -1;
 		}
-		
+
+		foreach ($CacheFileNames as $CacheFileName) {
+			// rm $CacheFileName
+			if (unlink($CacheFileName)) {
+				// success
+				$this->_Log('Cache: Remove ' . $CacheFileName);
+			} else {
+				$this->_Log('Cache: FAILED Remove ' . $CacheFileName);
+				$result = -1;
+			}
+		}
+
 		return $result;
 	}
 

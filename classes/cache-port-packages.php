@@ -62,7 +62,7 @@ class CachePortPackages extends Cache {
 		# regardless of the CacheType or page number
 		#
 		$Key = $this->_PortPackagesKey($Category, $Port);
-		$result = parent::Remove($Key, $data);
+		$result = parent::Remove($Key);
 
 		return $result;
 	}

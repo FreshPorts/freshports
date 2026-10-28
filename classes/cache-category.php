@@ -68,7 +68,7 @@ class CacheCategory extends Cache {
 		# regardless of the CacheType or page number
 		#
 		$Key = $this->_CategoryKey($Category,  '*', '*', '*');
-		$result = parent::Remove($Key, $data);
+		$result = parent::Remove($Key);
 
 		return $result;
 	}

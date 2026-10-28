@@ -65,7 +65,7 @@ class CacheFile extends Cache {
 		# regardless of the CacheType or page number
 		#
 		$Key = $this->_FileKey($FileName, '*');
-		$result = parent::Remove($Key, $data);
+		$result = parent::Remove($Key);
 
 		return $result;
 	}

@@ -16,7 +16,7 @@
 
 ?>
 <table class="fullwidth borderless" ALIGN="center">
-<tr><td VALIGN=TOP>
+<tr><td class="vtop">
 <table class="fullwidth borderless" ALIGN="left">
 <tr>
 	<?php echo freshports_PageBannerText("Fraud"); ?>

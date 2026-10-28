@@ -172,7 +172,7 @@ if (IsSet($error) and $error != '') {
                  <tr>
             <td>
               <table class="fullwidth borderless" CELLPADDING="3">
-              <tr VALIGN="middle">
+              <tr class="vcentered">
                <td><img src="/images/warning.gif" ALT="warning!"></td>
                <td WIDTH="100%">
             <p>';
@@ -199,7 +199,7 @@ if (IsSet($error) and $error != '') {
                  <tr>
             <td>
               <table class="fullwidth borderless" CELLPADDING="3">
-              <tr VALIGN=top>
+              <tr class="vtop">
                <td><img src="/images/warning.gif" ALT="warning!"></td>
                <td WIDTH="100%">
               <p>';

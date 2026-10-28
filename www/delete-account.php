@@ -94,7 +94,7 @@ echo '<table class="fullwidth borderless">
 <tr>
 <td>
   <table class="fullwidth borderless" CELLPADDING="3">
-  <tr VALIGN=top>
+  <tr class="vtop">
    <td><img src="/images/warning.gif"></td>
    <td width="100%">
   <p>' . _('The delete failed.') . '</p>';
@@ -116,7 +116,7 @@ echo '<p>' . _('If you need help, please email postmaster@.') . '</p>
 
 echo '<table class="fullwidth borderless">
 <tr>
-<td VALIGN="top">
+<td class="vtop">
 <table class="fullwidth borderless">
 <tr>
 <td class="accent"><BIG>' . _('Delete account') . '</BIG></td>
@@ -139,7 +139,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
 <table width="*" class="borderless">
           <tr>
-            <td VALIGN="top">
+            <td class="vtop">
                <p><?php printf(_('The account name is: %s'), htmlentities($User->name)); ?><p>
                <?php echo _('User Name:'); ?> <INPUT SIZE="15" NAME="confirmation" VALUE="">
             </td>

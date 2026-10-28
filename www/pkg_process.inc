@@ -42,7 +42,7 @@ function HandleFileUpload($FormFileName, $Destination) {
 function DisplayError($error) {
 ?>
 	<table class="fullwidth bordered">
-	<tr><td VALIGN=TOP>
+	<tr><td class="vtop">
 		<table class="fullwidth">
 			<tr>
 			    <?php echo freshports_PageBannerText("NOTICE"); ?>

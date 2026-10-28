@@ -107,7 +107,7 @@ echo '<table class="fullwidth borderless">
 <tr>
 <td>
   <table class="fullwidth borderless" CELLPADDING="3">
-  <tr VALIGN=top>
+  <tr class="vtop">
    <td><img src="/images/warning.gif"></td>
    <td width="100%">
   <p>' . _('Some errors have occurred which must be corrected before your login can be created.') . '</p>';
@@ -134,7 +134,7 @@ if ($PasswordReset) {
 
 echo '<table class="fullwidth borderless">
 <tr>
-<td VALIGN="top">
+<td class="vtop">
 <table class="fullwidth borderless">
 <tr>
 <td class="accent"><BIG>' . _('Reset password via token') . '</BIG></td>

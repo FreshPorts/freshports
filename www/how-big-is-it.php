@@ -368,7 +368,6 @@ echo format_number($Value) . '<br>';
 <?php printf(_('That gives a grand total of %1$s pages.  On my last count, that\'s about %2$s%% of the web pages on %3$s'), number_format($Total), number_format($Total / $GooglePages * 100, 6), '<a href="https://www.Google.com/">Google</a>'); ?><small><sup><a href="#1">1</a></sup></small>
 </P>
 
-<p>
 <h2><?php echo _('Notes'); ?></h2>
 <ul>
 <li><?php echo _('These statistics are updated daily.'); ?>

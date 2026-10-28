@@ -161,7 +161,7 @@ if ($LoginFailed) {
 
 <?php echo freshports_ErrorContentTable(); ?>
 
-<tr><td VALIGN=TOP>
+<tr><td class="vtop">
 <table class="fullwidth">
 <tr>
    <?php echo freshports_PageBannerText(_("Login Failed!")) ?>
@@ -195,7 +195,7 @@ if ($LoginFailed) {
 if ($error) {
 ?>
 <?php echo freshports_ErrorContentTable(); ?>
-<tr><td VALIGN=TOP>
+<tr><td class="vtop">
 <table class="fullwidth">
 <tr>
     <?php echo freshports_PageBannerText(_("NOTICE")); ?>

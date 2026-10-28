@@ -12,7 +12,7 @@
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
 <table width="*" class="borderless">
           <tr>
-            <td VALIGN="top">
+            <td class="vtop">
               <INPUT TYPE="hidden" NAME="token" VALUE="<?php echo htmlentities($token ?? '') ?>">
                <?php echo _('Password:'); ?><br>
                <INPUT TYPE="PASSWORD" NAME="Password1" VALUE="<?php if (IsSet($Password1)) echo htmlentities($Password1) ?>" size="20"><br><br>

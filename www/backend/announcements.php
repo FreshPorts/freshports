@@ -110,7 +110,7 @@ if (IsSet($_REQUEST['edit'])) {
 if (isset($errors)) {
 echo '
   <table CELLPADDING="3" class="fullwidth borderless">
-  <tr VALIGN=top>
+  <tr class="vtop">
    <td><img src="/images/warning.gif"></td>
    <td width="100%">
   <p>Some errors have occurred which must be corrected before your announcement can be saved.</p>';

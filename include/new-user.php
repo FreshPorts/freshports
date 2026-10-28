@@ -65,7 +65,7 @@
 
 ?>
             </td>
-            <td valign="top">
+            <td class="vtop">
               <label><?php echo _('Email Address (required):'); ?><br>
               <INPUT type="email" SIZE="35" NAME="email" required VALUE="<?php if (IsSet($email)) echo htmlentities($email) ?>"></label>
 

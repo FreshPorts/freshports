@@ -51,6 +51,7 @@ class Cache {
 					fclose($CacheFileHandle);
 					$this->_Log('Cache: Retrieve ' . $CacheFileName);
 				}  else {
+					fclose($CacheFileHandle);
 					$this->_Log('Cache: CRITICAL filesize is zero/false: ' . $CacheFileName, true);
 					$result = -3;
 				}
@@ -103,6 +104,8 @@ class Cache {
 				}
 			} else {
 				fclose($SpoolFileHandle);
+				// rm $SpoolFileName
+				unlink($SpoolFileName);
 				$this->_Log('Cache: FAILED Add on write: ' . $SpoolFileName);
 			}
 		} else {

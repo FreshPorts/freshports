@@ -92,7 +92,7 @@ function freshports_SummaryForDay($MinusN) {
    $File = $BaseDirectory . "/" . date("Y/m/d", $Now - 60*60*24*$MinusN) . ".inc";
 //   echo "$File<br>\n";
    if (file_exists($File)) {
-      echo '<br><table width="152" class="bordered" class="cellpadding5">';
+      echo '<br><table width="152" class="bordered cellpadding5">';
       echo '  <tr>';
       echo '<td class="accent" height="30">';
       echo freshports_i18n_date($Now - 60*60*24*$MinusN, "l j M");
@@ -236,7 +236,7 @@ if ($db) {
 		if ($NumberOfDays) {
 			$Today = time();
 			echo '
-<table width="155" class="bordered" class="cellpadding5">
+<table width="155" class="bordered cellpadding5">
 	<tr>
 		<td class="accent" height="30"><B>' . _('Previous days') . '</B></td>
 	</tr>

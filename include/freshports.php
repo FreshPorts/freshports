@@ -405,18 +405,12 @@ function freshports_link_to_port_single($CategoryName, $PortName, $BranchName = 
 	// link to both category and port
 
 	$HTML = '';
-	$HTML .= '<a class="port" href="/' . $CategoryName . '/' . freshports_strip_port_suffix($PortName) . '/';
+	$HTML .= '<a class="port' . ($class ? ' ' . $class : '') . '" href="/' . $CategoryName . '/' . freshports_strip_port_suffix($PortName) . '/';
 	if ($BranchName != BRANCH_HEAD) {
 	  $HTML .= '?branch=' . htmlentities($BranchName);
 	}
 
-	$HTML .= '"';
-
-	if ($class) {
-		$HTML .= ' class="' . $class . '"';
-	}
-
-	$HTML .= '>' . $CategoryName . '/' . $PortName . '</a>';
+	$HTML .= '">' . $CategoryName . '/' . $PortName . '</a>';
 
 	return $HTML;
 }
@@ -575,7 +569,7 @@ function freshports_Bugs_Report_Icon($Title = null) {
 
 function freshports_WatchListCount_Icon() {
 	# a text character, not the old sum.gif, so it follows the text colour in light and dark mode - see issue #598
-	return '<span class="watchlist-count" title="' . _('on this many watch lists') . '" aria-label="' . _('on this many watch lists') . '">&Sigma;</span>';
+	return '<span class="watchlist-count" role="img" title="' . _('on this many watch lists') . '" aria-label="' . _('on this many watch lists') . '">&Sigma;</span>';
 }
 
 function freshports_WatchListCount_Icon_Link() {
@@ -2531,7 +2525,7 @@ function freshports_ErrorMessage($Title, $ErrorMessage) {
 </tr>
 <tr>
 <td>
-  <table class="fullwidth borderless" class="cellpadding0">
+  <table class="fullwidth borderless cellpadding0">
   <tr class="vtop">
    <td><img src="/images/warning.gif"></td>
    <td width="100%">
@@ -2555,7 +2549,7 @@ function DisplayAnnouncements($Announcement) {
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/htmlify.php');
 
 	$HTML = '';
-	$HTML .= '<table class="announcements fullwidth borderless" class="cellpadding4">' . "\n";
+	$HTML .= '<table class="announcements fullwidth borderless cellpadding4">' . "\n";
 
 	$NumRows = $Announcement->NumRows();
 

@@ -2076,7 +2076,7 @@ class port_display {
 
 	function ShowManPageLinks($ConfigurePlist, $NumRows) {
 		$HTML = '';
-		$div = "<br>\n" . '<dt id="man" class="man"><b>' . _('Manual pages:') . '</b>' . freshports_AnchorLink('man') . '</dt>';
+		$div = "\n" . '<dt id="man" class="man"><b>' . _('Manual pages:') . '</b>' . freshports_AnchorLink('man') . '</dt>';
 		$CountManPages = 0;
 
 		if ( $NumRows > 0 ) {
@@ -2112,17 +2112,19 @@ class port_display {
 				$div .= "\n" . '<ul class="man">' . "\n";
 				for ( $i = 0; $i < $CountManPages; $i++) {
 					if ($i == 9 && $CountManPages > 12) {
+						# close the visible list, the rest go into a hidden list
+						$div .= '</ul>';
 						$div .= '<a href="#" id="ManPages-Extra-show" class="showLink" onclick="showHide(\'ManPages-Extra\');return false;">' . sprintf(_('Expand this list (%d items)'), $CountManPages) . '</a>';
-						$div .= '<span id="ManPages-Extra" class="more ManPages">';
+						$div .= "\n" . '<ul id="ManPages-Extra" class="man more ManPages">' . "\n";
 					}
 					$div .= $ManPages[$i];
 				}
-				
+
 				if ($CountManPages > 12) {
-					$div .= '<a href="#" class="hideLink" onclick="showHide(\'ManPages-Extra\');return false;">' . _('Collapse this list.') . '</a>';
+					$div .= '<li class="nostyle"><a href="#" class="hideLink" onclick="showHide(\'ManPages-Extra\');return false;">' . _('Collapse this list.') . '</a></li>';
 				}
 
-				$div .= '</ol>';
+				$div .= '</ul>';
 				$div .= '</dd>';
 
 				$HTML .= $div;
@@ -2155,7 +2157,7 @@ class port_display {
 				for ( $i = 0; $i < $NumRows; $i++ ) {
 					$ConfigurePlist->FetchNth($i);
 
-					$div .= '<li>' . $ConfigurePlist->installed_file . "</li>\n";
+					$div .= '<li>' . htmlspecialchars($ConfigurePlist->installed_file) . "</li>\n";
 				}
 
 				$div .= '</ol>';

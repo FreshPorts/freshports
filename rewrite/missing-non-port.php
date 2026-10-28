@@ -17,8 +17,6 @@ function freshports_NonPortDescription($dbh, $element_record) {
 
 	$Debug = 0;
 
-	freshports_ConditionalGet(freshports_LastModified());
-
 	header("HTTP/1.1 200 OK");
 	$Title    = preg_replace('|^/?ports/head/|', '', $element_record->element_pathname);
 	$FileName = preg_replace('|^/?ports/head/|', '', $element_record->element_pathname);

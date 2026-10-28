@@ -20,7 +20,7 @@
 
 ?>
 
-<table class="fullwidth borderless" ALIGN="center">
+<table class="fullwidth borderless">
 
 <tr><td class="content">
 <table class="fullwidth borderless">
@@ -39,7 +39,7 @@ $result = pg_query_params($db, $sql, array());
 if ($result) {
 	$numrows = pg_num_rows($result);
 	if ($numrows) {
-		echo '<table class="bordered cellpadding5" cellspacing="3">' . "\n";
+		echo '<table class="bordered cellpadding5" style="border-spacing: 3px">' . "\n";
 		echo '<caption>' . _('The package imports') . '</caption><tr>
 		<td><b>ABI</b>
 		<td><b>' . _('package set') . '</b></td>
@@ -52,10 +52,10 @@ if ($result) {
 		for ($i = 0; $i < $numrows; $i++) {
 			$myrow = pg_fetch_array ($result, $i);
 			echo '<tr>
-			<td align="right">' . $myrow['abi_name'] . '</td>
-			<td align="right">' . $myrow['package_set'] . '</td>
-			<td align="right">' . $myrow['repo_date'] . '</td>
-			<td align="right">' . $myrow['processed_date'] . '</td>
+			<td class="hright">' . $myrow['abi_name'] . '</td>
+			<td class="hright">' . $myrow['package_set'] . '</td>
+			<td class="hright">' . $myrow['repo_date'] . '</td>
+			<td class="hright">' . $myrow['processed_date'] . '</td>
 			</tr>' . "\n";
 		}
 
@@ -89,7 +89,7 @@ if ($result) {
 		$GlobalHideLastChange = "N";
 		for ($i = 0; $i < $numrows; $i++) {
 			$myrow = pg_fetch_array ($result, $i);
-			echo '<tr><td align="right">' . $myrow[0] . '</td><td align="right">' . $myrow[1] . '</td></tr>' . "\n";
+			echo '<tr><td class="hright">' . $myrow[0] . '</td><td class="hright">' . $myrow[1] . '</td></tr>' . "\n";
 		}
 
 		echo "</table>\n";

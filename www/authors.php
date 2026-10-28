@@ -23,11 +23,11 @@
 	<?php echo freshports_MainContentTable(); ?>
 
   <tr>
-	<?php echo freshports_PageBannerText(_('About the authors')); ?>
+	<?php echo freshports_PageBannerTitle(_('About the authors')); ?>
   </tr>
 <tr><td>
 <?php
-	if ($ShowAds) echo '<CENTER>' . Ad_728x90() . '</CENTER>';
+	if ($ShowAds) echo '<div class="hcentered">' . Ad_728x90() . '</div>';
 ?>
 
 <p><?php echo _('<a href="https://www.langille.org/" rel="noopener noreferrer">Dan Langille</a> thought up the idea, found the data sources, bugged people to write scripts, and did the html and database work. But he certainly didn\'t do it alone.'); ?></p>

@@ -67,7 +67,7 @@
 
 <?php
   if ($ShowAds && $BannerAd) {
-    echo '<CENTER>' . Ad_728x90() . '</CENTER>';
+    echo '<div class="hcentered">' . Ad_728x90() . '</div>';
   }
 ?>
 

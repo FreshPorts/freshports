@@ -10,7 +10,7 @@
 ?>
 
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
-<table width="*" class="borderless">
+<table class="borderless">
           <tr>
             <td class="vtop">
               <INPUT TYPE="hidden" NAME="token" VALUE="<?php echo htmlentities($token ?? '') ?>">

@@ -95,13 +95,13 @@ function DBSize($db) {
 	<?php echo freshports_MainContentTable(NOBORDER); ?>
 
 <tr>
-	<?php echo freshports_PageBannerText(_("How big is it")); ?>
+	<?php echo freshports_PageBannerTitle(_("How big is it")); ?>
 </tr>
 
 <tr><td class="textcontent">
 
 <?php
-	if ($ShowAds) echo '<CENTER>' . Ad_728x90() . '</CENTER>';
+	if ($ShowAds) echo '<div class="hcentered">' . Ad_728x90() . '</div>';
 ?>
 
 <P>

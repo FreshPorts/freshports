@@ -170,8 +170,8 @@ if ($LoginFailed) {
 <td>
   <table class="fullwidth borderless cellpadding0">
   <tr class="vtop">
-   <td><img src="/images/warning.gif"></td>
-   <td WIDTH="100%">
+   <td><img src="/images/warning.gif" alt="Warning"></td>
+   <td class="fullwidth">
   <p><?php echo _('The User ID and password you supplied could not be used to login.  This could be for one of the following reasons:'); ?></p>
  <ul>
  <li><?php echo _('The login id is incorrect'); ?>
@@ -205,8 +205,8 @@ if ($error) {
 <td>
   <table class="fullwidth borderless cellpadding0">
   <tr class="vtop">
-   <td><img src="/images/warning.gif"></td>
-   <td WIDTH="100%">
+   <td><img src="/images/warning.gif" alt="Warning"></td>
+   <td class="fullwidth">
 <?php echo $error ?>
  </td>
  </tr>

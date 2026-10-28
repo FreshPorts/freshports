@@ -102,7 +102,7 @@ if (IsSet($_REQUEST['edit'])) {
                'FreeBSD, index, applications, ports');
 ?>
 
-<table class="fullwidth borderless" ALIGN="center">
+<table class="fullwidth borderless">
 <tr><td class="content">
 <?php
 
@@ -111,8 +111,8 @@ if (isset($errors)) {
 echo '
   <table class="fullwidth borderless cellpadding3">
   <tr class="vtop">
-   <td><img src="/images/warning.gif"></td>
-   <td width="100%">
+   <td><img src="/images/warning.gif" alt="Warning"></td>
+   <td class="fullwidth">
   <p>Some errors have occurred which must be corrected before your announcement can be saved.</p>';
 
 echo $errors;
@@ -124,7 +124,7 @@ echo '
 <br>';
 }
 
-echo '<table CELLSPACING="3" class="fullwidth borderless">
+echo '<table class="fullwidth borderless" style="border-spacing: 3px">
 <tr>
 <td class="accent"><big>' . $Title . '</big></td>
 </tr>

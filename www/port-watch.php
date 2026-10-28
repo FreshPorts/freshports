@@ -269,7 +269,7 @@ if ($numrows) {
 
 <?php
 } else {
-	echo '<tr><td ALIGN="center">' . "\n";
+	echo '<tr><td class="hcentered">' . "\n";
 	echo _('No ports found.  Perhaps this is an invalid category id.');
 	echo "</td></tr>\n";
 }

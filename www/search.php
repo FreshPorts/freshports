@@ -1193,7 +1193,7 @@ JOIN element_pathname EP on E.id = EP.element_id
 
 <?php echo freshports_MainContentTable(); ?>
   <tr>
-	<?php echo freshports_PageBannerText(_("The FreshPorts Search")); ?>
+	<?php echo freshports_PageBannerTitle(_("The FreshPorts Search")); ?>
   </tr>
 <tr><td>
 
@@ -1501,7 +1501,7 @@ if (file_exists(CATEGORIES_CACHE_LIST)) {
                                     break;
                             } // switch
                             if ($output_format == OUTPUT_FORMAT_HTML) {
-                                $HTML .= '<hr width="100%">';
+                                $HTML .= '<hr>';
                             }
                         } // for
 

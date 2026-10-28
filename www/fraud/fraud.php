@@ -11,9 +11,9 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 ?>
-<table class="fullwidth borderless" ALIGN="center">
+<table class="fullwidth borderless">
 <tr><td class="vtop">
-<table class="fullwidth borderless" ALIGN="left">
+<table class="fullwidth borderless">
 <tr>
 	<?php echo freshports_PageBannerText("Fraud - This is not FreshPorts.org!"); ?>
 </tr>

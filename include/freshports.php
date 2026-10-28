@@ -2102,6 +2102,12 @@ function freshports_PageBannerText($Text) {
 }
 
 
+# the banner for the page title: an <h1>, styled to look like the other banners
+function freshports_PageBannerTitle($Text) {
+	return '<td class="accent"><h1>' . htmlentities($Text) . '</h1></td>' . "\n";
+}
+
+
 function freshports_PageBannerTextWithID($Text, $ID) {
 	return freshports_PageBannerTextColSpanWithID($Text, 1, $ID);
 }
@@ -2338,9 +2344,9 @@ function freshports_SideBar() {
 		$HTML .= sprintf(_('Logged in as %s'), htmlentities($User->name)) . "<br>";
 
 		if ($User->emailbouncecount > 0) {
-			$HTML .= '<img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><br>';
+			$HTML .= '<img src="/images/warning.gif" alt="" height="32" width="32"><img src="/images/warning.gif" alt="" height="32" width="32"><img src="/images/warning.gif" alt="" height="32" width="32"><br>';
 			$HTML .= _('your email is <a href="/bouncing.php">bouncing</a>') . '<br>';
-			$HTML .= '<img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><img src="/images/warning.gif" border="0" height="32" width="32"><br>';
+			$HTML .= '<img src="/images/warning.gif" alt="" height="32" width="32"><img src="/images/warning.gif" alt="" height="32" width="32"><img src="/images/warning.gif" alt="" height="32" width="32"><br>';
 		}
 		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/customize.php', _("Your Account"), _("Your account"));
 
@@ -2523,8 +2529,8 @@ function freshports_ErrorMessage($Title, $ErrorMessage) {
 <td>
   <table class="fullwidth borderless cellpadding0">
   <tr class="vtop">
-   <td><img src="/images/warning.gif"></td>
-   <td width="100%">
+   <td><img src="/images/warning.gif" alt="Warning"></td>
+   <td class="fullwidth">
   <p>' .  "WARNING: $ErrorMessage" . '</p>
  </td>
  </tr>

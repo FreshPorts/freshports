@@ -90,11 +90,11 @@ if (IsSet($submit)) {
 						'FreeBSD, index, applications, ports');
 ?>
 
-<table class="fullwidth borderless" ALIGN="center">
+<table class="fullwidth borderless">
 <tr><td class="content">
 <table class="fullwidth borderless">
   <tr>
-    <td height="20"><?php
+    <td style="height: 20px"><?php
 
 
 if ($errors) {
@@ -108,8 +108,8 @@ echo '<table class="fullwidth borderless">
 <td>
   <table class="fullwidth borderless cellpadding3">
   <tr class="vtop">
-   <td><img src="/images/warning.gif"></td>
-   <td width="100%">
+   <td><img src="/images/warning.gif" alt="Warning"></td>
+   <td class="fullwidth">
   <p>' . _('Some errors have occurred which must be corrected before your login can be created.') . '</p>';
 
 echo $errors;

@@ -15,9 +15,9 @@
 					"FreeBSD, index, applications, ports");
 
 ?>
-<table class="fullwidth borderless" ALIGN="center">
+<table class="fullwidth borderless">
 <tr><td class="vtop">
-<table class="fullwidth borderless" ALIGN="left">
+<table class="fullwidth borderless">
 <tr>
 	<?php echo freshports_PageBannerText("Fraud"); ?>
 </tr>
@@ -95,7 +95,7 @@ domain back to the registrar.
 </table>
 
 
-<table class="fullwidth borderless" ALIGN="center">
+<table class="fullwidth borderless">
 <tr><td>
 <?php echo freshports_ShowFooter(); ?>
 </td></tr>

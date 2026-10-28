@@ -22,7 +22,7 @@
 	<?php echo freshports_MainContentTable(); ?>
 
 <tr>
-	<?php echo freshports_PageBannerText(_('Statistics - everyone loves a graph')); ?>
+	<?php echo freshports_PageBannerTitle(_('Statistics - everyone loves a graph')); ?>
 </tr>
 
 <tr><td>
@@ -38,7 +38,7 @@
 <HR>
 
 <?php
-  if ($ShowAds) echo '<CENTER>' . Ad_728x90() . '</CENTER>';
+  if ($ShowAds) echo '<div class="hcentered">' . Ad_728x90() . '</div>';
 ?>
 
 </td></tr>

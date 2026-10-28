@@ -32,7 +32,7 @@
 </P>
 
 <?php
-	if ($ShowAds) echo '<CENTER>' . Ad_728x90() . '</CENTER>';
+	if ($ShowAds) echo '<div class="hcentered">' . Ad_728x90() . '</div>';
 ?>
 
 </td></tr>

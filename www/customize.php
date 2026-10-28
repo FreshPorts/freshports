@@ -165,7 +165,7 @@ if ($errors) {
 echo '<TR><td class="accent">' . _('Access Code Failed!') . '</td></TR>
 <TR>
 <td>
-   <td class="textcontent"><p><img src="/images/warning.gif"> ' . _('Some errors have occurred which must be corrected before your login can be created.') . '</p>';
+   <td class="textcontent"><p><img src="/images/warning.gif" alt="Warning"> ' . _('Some errors have occurred which must be corrected before your login can be created.') . '</p>';
 
 echo $errors;
 

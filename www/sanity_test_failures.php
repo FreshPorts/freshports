@@ -42,9 +42,9 @@ function freshports_SummaryForDay($MinusN) {
    $File = $BaseDirectory . "/" . date("Y/m/d", $Now - 60*60*24*$MinusN) . ".inc";
 //   echo "$File<br>\n";
    if (file_exists($File)) {
-      echo '<br><table WIDTH="152" class="bordered cellpadding5">';
+      echo '<br><table style="width: 152px" class="bordered cellpadding5">';
       echo '  <tr>';
-      echo '<td class="accent" height="30">';
+      echo '<td class="accent">';
       echo freshports_i18n_date($Now - 60*60*24*$MinusN, "l j M");
       echo '</td>';
       echo '       </tr>';
@@ -113,9 +113,9 @@ if ($message_id == '') {
 <?php
 }
 	if ($ShowAds && $BannerAd) {
-		echo "<tr><td>\n<CENTER>\n";
+		echo "<tr><td>\n<div class=\"hcentered\">\n";
 		echo Ad_728x90();
-		echo "</CENTER>\n</td></tr>\n\n";
+		echo "</div>\n</td></tr>\n\n";
 	}
 ?>
 
@@ -258,9 +258,9 @@ if ($message_id == '') {
 		if ($NumberOfDays) {
 			$Today = time();
 			echo '
-<table WIDTH="155" class="bordered cellpadding5">
+<table style="width: 155px" class="bordered cellpadding5">
 	<tr>
-		<td class="accent" height="30"><B>' . _('Previous days') . '</B></td>
+		<td class="accent"><B>' . _('Previous days') . '</B></td>
 	</tr>
 	<tr><td>
 ';

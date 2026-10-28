@@ -206,6 +206,13 @@ td.content {
   font-size: larger;
 }
 
+/* the page title banner: an h1 which looks like the other banners */
+.accent > h1 {
+  font-size: larger;
+  font-weight: inherit;
+  margin: 0;
+}
+
 .icon {
   max-height: 22px;
   max-width: 22px;
@@ -960,7 +967,7 @@ a > img {
   border: 0;
 }
 
-table.fullwidth {
+table.fullwidth, td.fullwidth {
   width: 100%;
 }
 
@@ -1085,6 +1092,10 @@ table.packages {
 .hcentered { text-align: center; }
 
 .hleft { text-align: left; }
+
+.hright { text-align: right; }
+
+.red { color: red; }
 
 .vtop { vertical-align: top; }
 

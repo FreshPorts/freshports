@@ -191,7 +191,7 @@ echo '<table class="fullwidth borderless">
 </tr>
 <tr>
 <td>
-  <p><IMG SRC="/images/warning.gif"> ' . _('Some errors have occurred which must be corrected before your login can be created.') . '</p>';
+  <p><img src="/images/warning.gif" alt="Warning"> ' . _('Some errors have occurred which must be corrected before your login can be created.') . '</p>';
 
 /*
   while (list($name, $value) = each($_REQUEST)) {

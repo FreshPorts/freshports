@@ -134,7 +134,7 @@ if ($_REQUEST['wlid']) {
 <table class="borderless">
 <?php # ddlb start ?>
 <tr><td><?php echo _('Select...'); ?></td></tr>
-<tr><td align="left">
+<tr><td class="hleft">
 
 <?php
 if ($Debug) echo 'when calling freshports_WatchListDDLBForm, $wlid = \'' . $wlid . '\'';

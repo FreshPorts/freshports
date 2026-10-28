@@ -40,7 +40,7 @@
 					'FreeBSD, index, applications, ports');
 
 ?>
-<table class="fullwidth borderless" ALIGN="center">
+<table class="fullwidth borderless">
 <tr><td class="content">
 <table class="fullwidth borderless">
 

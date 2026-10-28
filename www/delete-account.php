@@ -77,11 +77,11 @@ if ($submit) {
 						'FreeBSD, index, applications, ports');
 ?>
 
-<table class="fullwidth borderless" ALIGN="center">
+<table class="fullwidth borderless">
 <tr><td class="content">
 <table class="fullwidth borderless">
   <tr>
-    <td height="20"><?php
+    <td style="height: 20px"><?php
 
 
 if ($errors) {
@@ -95,8 +95,8 @@ echo '<table class="fullwidth borderless">
 <td>
   <table class="fullwidth borderless cellpadding3">
   <tr class="vtop">
-   <td><img src="/images/warning.gif"></td>
-   <td width="100%">
+   <td><img src="/images/warning.gif" alt="Warning"></td>
+   <td class="fullwidth">
   <p>' . _('The delete failed.') . '</p>';
 
 echo $errors;
@@ -137,7 +137,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 ?>
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
-<table width="*" class="borderless">
+<table class="borderless">
           <tr>
             <td class="vtop">
                <p><?php printf(_('The account name is: %s'), htmlentities($User->name)); ?><p>

@@ -226,7 +226,7 @@ function freshports_CategoryDisplay($dbh, $category, $url_parts, $Branch = BRANC
 		GLOBAL $ShowAds, $BannerAd;
 
 		if ($ShowAds && $BannerAd) {
-			$HTML .= "<br><center>\n" . Ad_728x90() . "\n</center>\n";
+			$HTML .= "<br><div class=\"hcentered\">\n" . Ad_728x90() . "\n</div>\n";
 		}
 
 		$HTML .= '<div class="pagination">' .
@@ -302,7 +302,7 @@ function freshports_CategoryDisplay($dbh, $category, $url_parts, $Branch = BRANC
 	GLOBAL $ShowAds, $BannerAd;
 
 	if ($ShowAds && $BannerAd) {
-		echo "<br><center>\n" . Ad_728x90() . "\n</center>\n";
+		echo "<br><div class=\"hcentered\">\n" . Ad_728x90() . "\n</div>\n";
 	}
 	?>
 

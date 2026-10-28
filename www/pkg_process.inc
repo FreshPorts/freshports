@@ -209,7 +209,7 @@ function UploadDisplayStagingResultsMatches($UserID, $WatchListID, $dbh) {
 			?>
 
 			<table class="bordered">
-			<tr><td colspan="2"><B>Port name</B> <small>(<?php echo $numrows ?> port<?php if ($numrows > 1) echo 's'; ?>)</small></td><td ALIGN="center"><small>Add</small></td></tr>
+			<tr><td colspan="2"><B>Port name</B> <small>(<?php echo $numrows ?> port<?php if ($numrows > 1) echo 's'; ?>)</small></td><td class="hcentered"><small>Add</small></td></tr>
 
 			<?php
 			for ($i = 0; $i < $numrows; $i++) {
@@ -220,7 +220,7 @@ function UploadDisplayStagingResultsMatches($UserID, $WatchListID, $dbh) {
 				echo LinkToPort($row["category"], $row["port"]);
 				echo '</td>';
 
-				echo '<td ALIGN="center">';
+				echo '<td class="hcentered">';
 				if ($row["onwatchlist"]) {
 					echo 'W';
 				} else {
@@ -228,7 +228,7 @@ function UploadDisplayStagingResultsMatches($UserID, $WatchListID, $dbh) {
 				}
 				echo '</td>';
 
-				echo '<td ALIGN="center"><INPUT TYPE="checkbox" NAME="ports[]" VALUE="' . $row["element_id"] . '" CHECKED></td>';
+				echo '<td class="hcentered"><INPUT TYPE="checkbox" NAME="ports[]" VALUE="' . $row["element_id"] . '" CHECKED></td>';
 
 				echo '</tr>' . "\n";
 			}
@@ -272,8 +272,8 @@ function UploadDisplayStagingResultsMatchesNo($UserID, $dbh) {
 			for ($i = 0; $i < $numrows; $i++) {
 				$row = pg_fetch_array($result, $i);
 				echo '<tr>';
-				echo '<td><FONT COLOR="red">' . $row["category"] . '/' . $row["port"] . '</FONT></td>';
-				echo '<td ALIGN="center"><a href="/search.php?query=' . $row["port"] . '&amp;stype=name&amp;num=10&amp;method=soundex&amp;staging=1">?</a></td>';
+				echo '<td><span class="red">' . $row["category"] . '/' . $row["port"] . '</span></td>';
+				echo '<td class="hcentered"><a href="/search.php?query=' . $row["port"] . '&amp;stype=name&amp;num=10&amp;method=soundex&amp;staging=1">?</a></td>';
 				echo '</tr>';
 			}
 			echo '</table>';
@@ -310,7 +310,7 @@ function UploadDisplayStagingResultsMatchesDuplicates($UserID, $WatchListID, $db
 			?>
 
 			<table class="bordered">
-			<tr><td><B>Port name</B></td><td><B>Count</B></td><td ALIGN="center"><small>Add</small></td></tr>
+			<tr><td><B>Port name</B></td><td><B>Count</B></td><td class="hcentered"><small>Add</small></td></tr>
 
 			<?php
 			for ($i = 0; $i < $numrows; $i++) {
@@ -321,11 +321,11 @@ function UploadDisplayStagingResultsMatchesDuplicates($UserID, $WatchListID, $db
 				echo LinkToPort($row["category"], $row["port"]);
 				echo '</td>';
 
-				echo '<td ALIGN="center">';
+				echo '<td class="hcentered">';
 				echo $row["item_count"];
 				echo '</td>';
 
-				echo '<td ALIGN="center"><INPUT TYPE="checkbox" NAME="ports[]" VALUE="' . $row["element_id"] . '" CHECKED></td>';
+				echo '<td class="hcentered"><INPUT TYPE="checkbox" NAME="ports[]" VALUE="' . $row["element_id"] . '" CHECKED></td>';
 
 				echo '</tr>';
 			
@@ -372,7 +372,7 @@ function UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $dbh) {
 			?>
 
 			<table class="bordered">
-			<tr><td><B>Port name</B></td><td ALIGN="center"><small>Add</small></td></tr>
+			<tr><td><B>Port name</B></td><td class="hcentered"><small>Add</small></td></tr>
 
 			<?php
 			for ($i = 0; $i < $numrows; $i++) {
@@ -382,7 +382,7 @@ function UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $dbh) {
 				echo LinkToPort($row["category"], $row["port"]);
 				echo '</td>';
 
-				echo '<td ALIGN="center"><INPUT TYPE="checkbox" NAME="ports[]" VALUE="' . $row["element_id"] . '" CHECKED></td>';
+				echo '<td class="hcentered"><INPUT TYPE="checkbox" NAME="ports[]" VALUE="' . $row["element_id"] . '" CHECKED></td>';
 
 				echo '</tr>' . "\n";
 			}

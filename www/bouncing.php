@@ -60,7 +60,7 @@ if ($submit) {
 
 <p><?php echo _('The problem is that the email we are sending you is not getting to you.  It is bouncing back to us.  So we have stopped sending out messages to you.  If you wish to continue to receive such messages, you should update your email address on the customization page.'); ?></p>
 </td></tr>
-<tr><td HEIGHT="20">
+<tr><td style="height: 20px">
 </td></tr>
 <tr>
 <?php echo freshports_PageBannerText(_("How to fix the problem")); ?>

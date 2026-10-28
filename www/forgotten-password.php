@@ -174,7 +174,7 @@ if (IsSet($error) and $error != '') {
               <table class="fullwidth borderless cellpadding3">
               <tr class="vcentered">
                <td><img src="/images/warning.gif" ALT="warning!"></td>
-               <td WIDTH="100%">
+               <td class="fullwidth">
             <p>';
       echo $error;     
       echo '</td>
@@ -201,7 +201,7 @@ if (IsSet($error) and $error != '') {
               <table class="fullwidth borderless cellpadding3">
               <tr class="vtop">
                <td><img src="/images/warning.gif" ALT="warning!"></td>
-               <td WIDTH="100%">
+               <td class="fullwidth">
               <p>';
 
       if ($LoginFailed) {

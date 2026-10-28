@@ -92,9 +92,9 @@
 
 <?php
 		if ($ShowAds && $BannerAd) {
-			echo "</td></tr>\n<tr><td>\n<CENTER>\n";
+			echo "</td></tr>\n<tr><td>\n<div class=\"hcentered\">\n";
 			echo Ad_728x90();
-			echo "</CENTER>\n\n";
+			echo "</div>\n\n";
 		}
 ?>
 

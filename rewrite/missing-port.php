@@ -345,7 +345,7 @@ function freshports_PortDisplayNew($db, $MyPort, $category, $port, $url_args, $B
 	global $ShowAds, $BannerAd;
 
 	if ($ShowAds && $BannerAd) {
-		$HTML_For_Ad = "<hr><center>\n" . Ad_728x90PortDescription() . "\n</center>\n<hr>\n";
+		$HTML_For_Ad = "<hr><div class=\"hcentered\">\n" . Ad_728x90PortDescription() . "\n</div>\n<hr>\n";
 	} else {
 		$HTML_For_Ad = '';
 	}

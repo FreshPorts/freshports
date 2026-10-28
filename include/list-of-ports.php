@@ -32,7 +32,7 @@ function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeade
 	$HTML .= "<tr><td>\n";
 
 	if (IsSet($ShowAds)) {
-		$HTML .= "<br><center>\n" . Ad_728x90() . "\n</center>\n";
+		$HTML .= "<br><div class=\"hcentered\">\n" . Ad_728x90() . "\n</div>\n";
 	}
 
 	if ($numrows > 0 && $ShowCategoryHeaders) {

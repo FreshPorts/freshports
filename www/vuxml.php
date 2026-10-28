@@ -96,7 +96,7 @@
 
 		# $value comes straight from the request; escape it - see reflected XSS
 		$URL = VUXMLURL . rawurlencode($value) . '.html';
-		echo '<tr><td class="vtop" nowrap><a href="' . htmlspecialchars($URL) . '">' . htmlspecialchars($value) . '</a></td><td>';
+		echo '<tr><td class="vtop nowrap"><a href="' . htmlspecialchars($URL) . '">' . htmlspecialchars($value) . '</a></td><td>';
 		$VuXML->display();
 
 		echo "</td></tr>\n";

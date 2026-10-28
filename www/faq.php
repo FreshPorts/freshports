@@ -29,12 +29,12 @@
 
 
 <tr>
-	<?php echo freshports_PageBannerText(_('FAQ')); ?>
+	<?php echo freshports_PageBannerTitle(_('FAQ')); ?>
 </tr>
 <tr><td class="textcontent">
 
 <?php
-    if ($ShowAds) echo '<CENTER>' . Ad_728x90() . '</CENTER>';
+    if ($ShowAds) echo '<div class="hcentered">' . Ad_728x90() . '</div>';
 ?>
 
 <P><?php echo _('This page contains the FAQ for FreshPorts. Hopefully the questions are arranged from general to specific. The more you know, the further down you must read to find something you didn\'t already know.'); ?></P>

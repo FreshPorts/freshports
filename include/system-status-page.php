@@ -41,7 +41,11 @@
 
 		$vuxml_to_process = $status->VuXMLToProcess();
 		if (isset($vuxml_to_process)) {
-			echo '<p>' . sprintf(_('vuxml entries selected for processing: %d (this drops to 0 only when the run commits)'), $vuxml_to_process) . '</p>' . "\n";
+			echo '<p>' . sprintf(_('vuxml entries selected for processing: %d'), $vuxml_to_process);
+			if ($vuxml_to_process > 0) {
+				echo ' ' . _('(this drops to 0 only when the run commits)');
+			}
+			echo '</p>' . "\n";
 		}
 
 		exec("/usr/sbin/service fp_listen status", $fp_listen_output, $fp_listen_result);

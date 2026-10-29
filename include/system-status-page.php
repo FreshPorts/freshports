@@ -39,6 +39,11 @@
 		# highlight any service the backend reports as not running
 		echo preg_replace('/<p>(?=[^<]*is not running)/', '<p class="not-running">', file_get_contents($status_file));
 
+		$vuxml_to_process = $status->VuXMLToProcess();
+		if (isset($vuxml_to_process)) {
+			echo '<p>' . sprintf(_('vuxml entries selected for processing: %d (this drops to 0 only when the run commits)'), $vuxml_to_process) . '</p>' . "\n";
+		}
+
 		exec("/usr/sbin/service fp_listen status", $fp_listen_output, $fp_listen_result);
 		echo '<p' . ($fp_listen_result == 0 ? '' : ' class="not-running"') . '>' . htmlspecialchars(implode(' ', $fp_listen_output)) . '</p>' . "\n";
 

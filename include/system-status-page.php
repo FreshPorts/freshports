@@ -20,6 +20,7 @@
 .no-logins   { background: #e60; color: #fff; font-size: 1.25em; font-weight: bold; padding: 0.5em 1em; border: 4px solid #940; }
 .not-running { background: #fdd; color: #900; font-weight: bold; padding: 0.25em 0.5em; border-left: 6px solid #c00; }
 .stale       { background: #ffd; color: #840; font-weight: bold; padding: 0.25em 0.5em; border-left: 6px solid #e90; }
+.in-progress { background: #def; color: #036; font-weight: bold; padding: 0.25em 0.5em; border-left: 6px solid #36c; }
 </style>' . "\n";
 		echo "</head>\n<body>\n";
 

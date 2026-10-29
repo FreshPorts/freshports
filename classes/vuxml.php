@@ -81,7 +81,7 @@ class VuXML {
 	}
 
 	function display() {
-		echo $this->topic       . '<br>';
+		echo htmlspecialchars($this->topic) . '<br>';
 		echo $this->description . '<br>';
 		if (IsSet($this->date_discovery)) echo _('Discovery') . ' ' . $this->date_discovery . '<br>';
 		if (IsSet($this->date_entry))     echo _('Entry') . ' ' . $this->date_entry     . '<br>';

@@ -153,7 +153,7 @@ SELECT V.vid,
 			$NumPackages = 0;
 			$VIDs        = array();
 			echo '<table class="bordered">' . "\n";
-			echo '<th colspan="3">' . _('VuXML entries as processed by FreshPorts') . '</th>';
+			echo '<tr><th colspan="3">' . _('VuXML entries as processed by FreshPorts') . '</th></tr>';
 			echo '<tr><td><b>';
 			echo _('package');
 			echo '</b></td><td class="hcentered"><b>';
@@ -247,7 +247,7 @@ ORDER BY coalesce(V.date_modified, V.date_entry, V.date_discovery)::date desc, V
 				$NumPackages = 0;
 				$VIDs        = 0;
 				echo '<table class="bordered cellpadding5">' . "\n";
-				echo '<th colspan="3">' . _('VuXML entries as processed by FreshPorts') . '</th>';
+				echo '<tr><th colspan="3">' . _('VuXML entries as processed by FreshPorts') . '</th></tr>';
 				echo '<tr><td><b>' . _('Date') . '</b></td><td><b>';
 				echo _('Description');
 				echo '</b></td><td class="hcentered"><b>' . _('Port(s)') . '</b></td></tr>' . "\n";

@@ -1330,7 +1330,7 @@ if (file_exists(CATEGORIES_CACHE_LIST)) {
 </table>
 </form>
 
-<h3><?php echo _('Notes'); ?></h3>
+<h2><?php echo _('Notes'); ?></h2>
 <ul>
 <li><small><?php echo _('Case sensitivity is ignored for "sounds like" and output is ordered by the soundex.'); ?></small></li>
 <li><small><?php echo _("When searching on 'Message ID', the type of match is ignored."); ?></small></li>

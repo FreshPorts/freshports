@@ -33,7 +33,7 @@
 <?php echo _('If you have suggestions for graphs, please raise an issue.'); ?>
 </P>
 
-<h3><?php echo _('NOTE that many graphs are clickable and will take you to the category, port, etc.'); ?></h3>
+<h2><?php echo _('NOTE that many graphs are clickable and will take you to the category, port, etc.'); ?></h2>
 
 <HR>
 

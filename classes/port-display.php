@@ -87,6 +87,16 @@ class port_display {
 		return substr($text, 0, 1) == '[';
 	}
 
+	# a section's id and its # link, but only on the port page: a list of
+	# ports, such as search results, would repeat the same id for each port
+	function SectionID($ID) {
+		return $this->UseFullPathNames ? '' : ' id="' . htmlentities($ID) . '"';
+	}
+
+	function SectionAnchorLink($ID) {
+		return $this->UseFullPathNames ? '' : freshports_AnchorLink($ID);
+	}
+
 	function _isGitCommit($revision) {
 		return strlen($revision) >= MIN_GIT_HASH_LENGTH;
 	}
@@ -97,7 +107,7 @@ class port_display {
 		#
 		$Debug = 0;
 
-		$HTML = '<dt><b><a id="message">pkg-message:</a></b>' . freshports_AnchorLink('message') . '</dt><dd><dl>';
+		$HTML = '<dt' . $this->SectionID('message') . '><b>pkg-message:</b>' . $this->SectionAnchorLink('message') . '</dt><dd><dl>';
 		# save the pkgmessage to a temp file
 		# from https://www.php.net/manual/en/function.tmpfile.php
 		$temp = tmpfile();
@@ -1469,7 +1479,7 @@ class port_display {
 			if ($port->IsDeleted()) {
 				$HTML .= '<dt>' . _('No installation instructions:') . '</dt><dd>' . _('This port has been deleted.') . '</dd>';
 			} else {
-				$HTML .= '<dt id="add"><b>' . _('To install <a href="/faq.php#port" title="what is a port?">the port</a>:') . '</b>' . freshports_AnchorLink('add') . '</dt><dd> <kbd class="code">cd /usr/ports/'  . $port->category . '/' . $port->port . '/ && make install clean</kbd></dd>';
+				$HTML .= '<dt' . $this->SectionID('add') . '><b>' . _('To install <a href="/faq.php#port" title="what is a port?">the port</a>:') . '</b>' . $this->SectionAnchorLink('add') . '</dt><dd> <kbd class="code">cd /usr/ports/'  . $port->category . '/' . $port->port . '/ && make install clean</kbd></dd>';
 				if (IsSet($port->no_package) && $port->no_package != '') {
 					$HTML .= '<dt><b>' . _('No <a href="/faq.php#package" title="what is a package?">package</a> is available:') . '</b> ' . $port->no_package . '</dt>';
 				} else {
@@ -1868,7 +1878,7 @@ class port_display {
 			if ($port->pkgmessage) {
 				$HTML .= $this->_pkgmessage($port);
 			} else {
-				$HTML .= '<dt id="message"><b>' . _('FreshPorts was unable to extract/find any pkg message') . '</b>' . freshports_AnchorLink('message') . '<br></dt>';
+				$HTML .= '<dt' . $this->SectionID('message') . '><b>pkg-message:</b>' . $this->SectionAnchorLink('message') . '</dt><dd>' . _('FreshPorts was unable to extract/find any pkg message') . '</dd>';
 			}
 		}
 
@@ -2182,7 +2192,7 @@ class port_display {
 		$PackageFlavors = new PackageFlavors( $this->db );
 		$NumRows = $PackageFlavors->FetchInitialise( $this->port->id );
 		if ( $NumRows > 0 ) {
-			$HTML = '<dt class="flavors" id="flavors"><b>' . _('Package flavors') . '</b> (<span class="file">&lt;' . _('flavor') . '&gt;: &lt;' . _('package') . '&gt;</span>)' . freshports_AnchorLink('flavors') . '</dt>';
+			$HTML = '<dt class="flavors"' . $this->SectionID('flavors') . '><b>' . _('Package flavors') . '</b> (<span class="file">&lt;' . _('flavor') . '&gt;: &lt;' . _('package') . '&gt;</span>)' . $this->SectionAnchorLink('flavors') . '</dt>';
 			// if this is our first output, put up our standard header
 			$HTML .= '<dd><ul>';
 			for ( $i = 0; $i < $NumRows; $i++ ) {
@@ -2194,7 +2204,7 @@ class port_display {
 		}
 
 		if ( $NumRows == 0 ) {
-			$HTML .= '<dt class="flavors" id="flavors"><b>' . _('Flavors:') . '</b> ' . _('there is no flavor information for this port.') . freshports_AnchorLink('flavors') . '</dt>';
+			$HTML .= '<dt class="flavors"' . $this->SectionID('flavors') . '><b>' . _('Flavors:') . '</b>' . $this->SectionAnchorLink('flavors') . '</dt><dd>' . _('there is no flavor information for this port.') . '</dd>';
 		}
 
 		return $HTML;

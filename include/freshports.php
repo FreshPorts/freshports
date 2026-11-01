@@ -2434,7 +2434,7 @@ $HTML .= '<br>
 </table>';
 
 
-if (IsSet($visitor)) {
+if (!empty($User->id)) {
 
 
 $HTML .= '<br>

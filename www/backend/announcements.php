@@ -54,16 +54,87 @@ if (!$User->IsTaskAllowed(FRESHPORTS_TASKS_ANNOUNCEMENTS_MAINTAIN)) {
 	exit;
 }
 
+#
+# A date is either empty (no start / no end) or a full date, optionally
+# with a time: YYYY-MM-DD, YYYY-MM-DD HH:MM, or YYYY-MM-DDTHH:MM (what
+# datetime-local sends), with optional seconds.  Anything else, such as
+# a bare time, would be rejected by PostgreSQL with a raw SQL error.
+#
+function AnnouncementDateValid($value) {
+	if ($value == '') {
+		return true;
+	}
+
+	if (!preg_match('/^(\d{4})-(\d{2})-(\d{2})(?:[T ](\d{2}):(\d{2})(?::(\d{2}))?)?$/', $value, $matches)) {
+		return false;
+	}
+
+	if (!checkdate(intval($matches[2]), intval($matches[3]), intval($matches[1]))) {
+		return false;
+	}
+
+	if (isset($matches[4]) && (intval($matches[4]) > 23 || intval($matches[5]) > 59 || (isset($matches[6]) && intval($matches[6]) > 59))) {
+		return false;
+	}
+
+	return true;
+}
+
+#
+# datetime-local inputs need YYYY-MM-DDTHH:MM; the database gives us
+# something like 2026-11-01 20:51:00+00.  Keep the wall-clock time as
+# the database reported it.
+#
+function AnnouncementDateForInput($value) {
+	# DateTime would turn a rejected "20:51" into today at 20:51; don't.
+	if (!preg_match('/^\d{4}-\d{2}-\d{2}/', $value ?? '')) {
+		return '';
+	}
+
+	try {
+		$date = new DateTime($value);
+	} catch (Exception $e) {
+		return '';
+	}
+
+	return $date->format('Y-m-d\TH:i');
+}
+
+function AnnouncementDatesCheck($start_date, $end_date) {
+	$errors = '';
+
+	if (!AnnouncementDateValid($start_date)) {
+		$errors .= '<p>The start date "' . htmlspecialchars($start_date) . '" is not a valid date. Use YYYY-MM-DD HH:MM, or leave it empty.</p>' . "\n";
+	}
+
+	if (!AnnouncementDateValid($end_date)) {
+		$errors .= '<p>The end date "' . htmlspecialchars($end_date) . '" is not a valid date. Use YYYY-MM-DD HH:MM, or leave it empty.</p>' . "\n";
+	}
+
+	if ($errors == '' && $start_date != '' && $end_date != ''
+	    && str_replace('T', ' ', $end_date) < str_replace('T', ' ', $start_date)) {
+		$errors .= '<p>The end date is before the start date.</p>' . "\n";
+	}
+
+	return $errors;
+}
+
 if (IsSet($_REQUEST['add'])) {
 	$Announcement = new Announcement($db);
 
 	$Announcement->TextSet     ($_REQUEST['announcement']);
 	$Announcement->TextPlainSet($_REQUEST['announcement_plain']);
-	$Announcement->StartDateSet($_REQUEST['start_date']);
-	$Announcement->EndDateSet  ($_REQUEST['end_date']);
+	$Announcement->StartDateSet(trim($_REQUEST['start_date']));
+	$Announcement->EndDateSet  (trim($_REQUEST['end_date']));
 
-	$Announcement->Insert();
-	Unset($Announcement);
+	$DateErrors = AnnouncementDatesCheck($Announcement->StartDateGet(), $Announcement->EndDateGet());
+	if ($DateErrors != '') {
+		# keep $Announcement so the form shows what was submitted
+		$errors = $DateErrors;
+	} else {
+		$Announcement->Insert();
+		Unset($Announcement);
+	}
 }
 
 if (IsSet($_REQUEST['update'])) {
@@ -71,12 +142,18 @@ if (IsSet($_REQUEST['update'])) {
 
 	$Announcement->TextSet     ($_REQUEST['announcement']);
 	$Announcement->TextPlainSet($_REQUEST['announcement_plain']);
-	$Announcement->StartDateSet($_REQUEST['start_date']);
-	$Announcement->EndDateSet  ($_REQUEST['end_date']);
+	$Announcement->StartDateSet(trim($_REQUEST['start_date']));
+	$Announcement->EndDateSet  (trim($_REQUEST['end_date']));
 	$Announcement->IDSet       (intval($_REQUEST['id']));
 
-	$Announcement->Update();
-	Unset($Announcement);
+	$DateErrors = AnnouncementDatesCheck($Announcement->StartDateGet(), $Announcement->EndDateGet());
+	if ($DateErrors != '') {
+		# keep $Announcement so the form shows what was submitted
+		$errors = $DateErrors;
+	} else {
+		$Announcement->Update();
+		Unset($Announcement);
+	}
 }
 
 if (IsSet($_REQUEST['delete'])) {
@@ -88,8 +165,10 @@ if (IsSet($_REQUEST['delete'])) {
 	Unset($Announcement);
 }
 
-# create another new one
-$Announcement = new Announcement($db);
+# create another new one, unless we are redisplaying one which had errors
+if (!isset($errors)) {
+	$Announcement = new Announcement($db);
+}
 
 if (IsSet($_REQUEST['edit'])) {
 	$Announcement->Fetch(intval(pg_escape_string($db, $_REQUEST['edit'])));
@@ -149,11 +228,11 @@ $HTML .= '</TEXTAREA>';
 $HTML .= '</td>'  . "\n";
 
 $HTML .= '<td class="vtop">'  . "\n";
-$HTML .= '<INPUT id="start_date" name="start_date" value="' . $Announcement->StartDateGet() . '" size=25>' . "\n";
+$HTML .= '<INPUT id="start_date" name="start_date" type="datetime-local" value="' . AnnouncementDateForInput($Announcement->StartDateGet()) . '">' . "\n";
 $HTML .= '</td>'  . "\n";
 
 $HTML .= '<td class="vtop">'  . "\n";
-$HTML .= '<INPUT id="end_date"   name="end_date"   value="' . $Announcement->EndDateGet()   . '" size=25>' . "\n";
+$HTML .= '<INPUT id="end_date"   name="end_date"   type="datetime-local" value="' . AnnouncementDateForInput($Announcement->EndDateGet())   . '">' . "\n";
 $HTML .= '</td>'  . "\n";
 
 $HTML .= '</tr>'  . "\n";
@@ -168,8 +247,8 @@ $HTML .= '</td>'  . "\n";
 $HTML .= '</tr>'  . "\n";
 
 
-$ControlName  = IsSet($_REQUEST['edit']) ? 'update' : 'add';
-$ControlValue = IsSet($_REQUEST['edit']) ? 'Update' : 'Add';
+$ControlName  = $Announcement->IDGet() ? 'update' : 'add';
+$ControlValue = $Announcement->IDGet() ? 'Update' : 'Add';
 
 $HTML .= '<tr><td colspan="3">'  . "\n";
 $HTML .= '<div class="vcentered"><INPUT id="' . $ControlName . '" style="WIDTH: 85px; HEIGHT: 24px" type="submit" size="29" value="' . $ControlValue . '"';

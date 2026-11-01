@@ -43,6 +43,10 @@ function newsfeed($dbh, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $F
 	$Format      = pg_escape_string($dbh, $Format);
 	$Flavor      = pg_escape_string($dbh, $Flavor ?? '');
 
+	# the cache file keeps the requested format: an RSS 2.0 feed carries its own URL (atom:link rel="self"),
+	# so news.php and rss2.0.php cannot share one
+	$CacheFormat = $Format;
+
 	# news.php (format NEWS) fell through to RSS 0.91, but with 100 items and long descriptions
 	# it was really RSS 2.0. The same goes for watch lists, whose default format is rss0.91:
 	# serve both as RSS 2.0 rather than cut them down to the 15 items RSS 0.91 allows.
@@ -68,12 +72,12 @@ function newsfeed($dbh, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $F
 
 	# potential for exploitation here, with $WatchListID, $BranchName, $Format & $Flavor
 	if ($WatchListID) {
-		define('NEWSFEEDCACHE', NEWS_DIRECTORY . '/news.' . $WatchListID . '.'  . $Format . '.' . $BranchName . '.xml');
+		define('NEWSFEEDCACHE', NEWS_DIRECTORY . '/news.' . $WatchListID . '.'  . $CacheFormat . '.' . $BranchName . '.xml');
 	} else {
 		if (empty($Flavor)) {
-			define('NEWSFEEDCACHE', NEWS_DIRECTORY . '/news.' . $Format . '.' . $BranchName . '.xml');
+			define('NEWSFEEDCACHE', NEWS_DIRECTORY . '/news.' . $CacheFormat . '.' . $BranchName . '.xml');
 		} else {
-			define('NEWSFEEDCACHE', NEWS_DIRECTORY . '/news.' . $Format . '.' . $BranchName . '.' . $Flavor . '.xml');
+			define('NEWSFEEDCACHE', NEWS_DIRECTORY . '/news.' . $CacheFormat . '.' . $BranchName . '.' . $Flavor . '.xml');
 		}
 	}
 
@@ -116,7 +120,22 @@ function newsfeed($dbh, $Format, $WatchListID = 0, $BranchName = BRANCH_HEAD, $F
 
 	$rss->title          = 'FreshPorts news'; 
 	$rss->description    = 'The place for ports'; 
-	$rss->syndicationURL = 'https://' . $_SERVER['HTTP_HOST'] . $PHP_SELF;
+	# This feed's own URL: RSS 1.0 rdf:about, and the RSS 2.0 self link.
+	# Build it from the parameters that select the cache file, so other parameters
+	# in the first request do not end up in everyone's copy.
+	# A watch list without format= shares the cache file of its default format, so always name it.
+	$Query = array();
+	foreach (array('id', 'format', 'flavor', 'branch') as $Name) {
+		if ($Name == 'format' && $WatchListID) {
+			$Query[] = 'format=' . rawurlencode(strtolower($CacheFormat));
+		} elseif (isset($_GET[$Name]) && is_string($_GET[$Name]) && $_GET[$Name] !== '') {
+			$Query[] = $Name . '=' . rawurlencode($_GET[$Name]);
+		}
+	}
+	$SelfURL = 'https://' . $_SERVER['HTTP_HOST'] . $PHP_SELF . ($Query ? '?' . implode('&', $Query) : '');
+
+	# RSSCreator10 writes rdf:about without escaping it
+	$rss->syndicationURL = ($Format == 'RSS1.0') ? htmlspecialchars($SelfURL) : $SelfURL;
 
 	$rss->editor    = 'editor@freshports.org (The Editor)';
 	$rss->webmaster = 'webmaster@freshports.org (The Webmaster)';
@@ -457,6 +476,18 @@ ORDER BY CL.commit_date DESC, P.name;
 			$opml = preg_replace('/<opml [^>]*>/', '<opml version="1.0">', $opml, 1);
 			$opml = str_replace('<outline type="rss" ', '<outline type="link"', $opml);
 			file_put_contents(NEWSFEEDCACHE, $opml, LOCK_EX);
+		}
+	}
+
+	if ($Format == 'RSS2.0') {
+		# feed readers and the W3C feed validator want an RSS 2.0 feed to give its own URL
+		$SelfLink = '        <atom:link href="' . htmlspecialchars($SelfURL) . '" rel="self" type="application/rss+xml" />' . "\n";
+
+		$rss2 = @file_get_contents(NEWSFEEDCACHE);
+		if ($rss2 !== false) {
+			$rss2 = preg_replace('/<rss version="2.0"/', '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"', $rss2, 1);
+			$rss2 = preg_replace_callback('/<channel[^>]*>\n/', function($m) use ($SelfLink) { return $m[0] . $SelfLink; }, $rss2, 1);
+			file_put_contents(NEWSFEEDCACHE, $rss2, LOCK_EX);
 		}
 	}
 

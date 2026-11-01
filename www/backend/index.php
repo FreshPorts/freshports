@@ -31,6 +31,8 @@
 <tr><td class="content">
 <h1><?php echo _('FreshPorts News Feeds'); ?></h1>
 
+<p><b><?php echo _('Deprecated'); ?></b>: <?php echo sprintf(_('These older feeds still work, but they will be redirected to the new feeds at <a href="%s">%s</a>. Please update your subscriptions.'), '/--/feeds/', '/--/feeds/'); ?></p>
+
 <h2><?php echo _('Various RSS formats'); ?></h2>
 
         <p><?php echo _('See the next section for optional parameters for these URLs.'); ?></p>

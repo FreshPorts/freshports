@@ -62,17 +62,18 @@ function DisplayWatchListNewsFeeds($db, $UserID) {
 	if ($NumRows) {
 		for ($i = 0; $i < $NumRows; $i++) {
 			$WatchList = $WatchLists->FetchNth($i);
-			$URL = $Protocol . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . '?id=' . rawurlencode($WatchList->token) . '&format=rss2.0';
-			$HTML .= '<a href="' . htmlspecialchars($URL) . '">' . htmlspecialchars($WatchList->name) . '</a><br>';
+			# the feeds in /--/feeds/; this script still serves the old ones - re #721
+			$URL = 'https://' . $_SERVER['HTTP_HOST'] . '/--/feeds/watch-list.php?id=' . rawurlencode($WatchList->token);
+			$HTML .= '<a href="' . htmlspecialchars($URL) . '">' . htmlspecialchars($WatchList->name) . '</a>'
+			       . ' [ <a href="' . htmlspecialchars($URL . '&format=atom') . '">Atom</a> ]<br>';
 		}
 	}
 
-	# rss0.91 is still accepted, and served as RSS 2.0; see newsfeed()
 	$HTML .= "<p>" . _('You can use these formats:') . "
 
 	<ul>
-	<li>" . sprintf(_('%s (default)'), 'rss2.0') . "</li>
-	<li>rss1.0</li>
+	<li>" . sprintf(_('%s (default)'), 'RSS 2.0') . "</li>
+	<li>Atom 1.0 (format=atom)</li>
 	</ul>";
 
 	echo $HTML;	

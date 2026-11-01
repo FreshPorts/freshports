@@ -22,7 +22,7 @@
 
 	$page->addBodyContent('
 	</tr><tr><td>
-	' . _('We have five newsfeeds:') . '
+	' . _('We have these newsfeeds:') . '
 	');
 
 	$Protocol = isset($_SERVER['HTTPS']) ? 'https' : 'http';
@@ -43,7 +43,7 @@
 	<p>' . _('This RSS feed takes the following optional parameters:') . '</p>
 	<ul>
 	<li><b>flavor=new</b> : ' . _('show only new ports (ignores <b>branch</b>).') . '</li>
-	<li><b>flavor=broken</b> : ' . _('show only new ports (ignores <b>branch</b>).') . '</li>
+	<li><b>flavor=broken</b> : ' . _('show only broken ports (ignores <b>branch</b>).') . '</li>
 	<li><b>flavor=vuln</b> : ' . _('show only vuln ports (branches should work, let me know if they do not).') . '</li>
 	<li><b>branch=2018Q3</b> : ' . _('show only commits on that branch. If not specified, defaults to <b>head</b>.') . '
 	</ul>
@@ -51,15 +51,15 @@
 	' . _('Sample URLs include:') . '
 	</p>
 	<ol>
-	<li>' . $URL . 'html.php?branch=2018Q4</li>
-	<li>' . $URL . 'html.php?branch=quarterly</li>
-	<li>' . $URL . 'html.php?flavor=broken</li>
-	<li>' . $URL . 'html.php?flavor=new</li>
+	<li>' . $URL . 'rss2.0.php?branch=2018Q4</li>
+	<li>' . $URL . 'rss2.0.php?branch=quarterly</li>
+	<li>' . $URL . 'rss2.0.php?flavor=broken</li>
+	<li>' . $URL . 'rss2.0.php?flavor=new</li>
 	</ol>
 
 	</li>');
 
-	$URL  = "$Protocol://$ServerName/backend/ports-new.php";
+	$URL  = "$Protocol://$ServerName/backend/rss2.0.php?flavor=new";
 	$HREF = "<a href=\"$URL\">$URL</a>";
 
 	$page->addBodyContent('

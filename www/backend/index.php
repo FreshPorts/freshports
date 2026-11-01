@@ -66,7 +66,7 @@ $Hostname = $_SERVER['HTTP_HOST'];
 <p><?php echo _('Each of those formats have optional parameters:'); ?></p>
 <ul>
     <li><b>flavor=new</b> : <?php echo _('show only new ports (ignores <b>branch</b>).'); ?></li>
-    <li><b>flavor=broken</b> : <?php echo _('show only new ports (ignores <b>branch</b>).'); ?></li>
+    <li><b>flavor=broken</b> : <?php echo _('show only broken ports (ignores <b>branch</b>).'); ?></li>
     <li><b>flavor=vuln</b> : <?php echo _('show only vuln ports (branches should work, let me know if they do not).'); ?></li>
     <li><b>branch=2018Q3</b> : <?php echo _('show only commits on that branch. If not specified, defaults to <b>head</b>.'); ?>
 </ul>
@@ -81,10 +81,10 @@ $Hostname = $_SERVER['HTTP_HOST'];
 
     echo '
 <ol>
-    <li>' . $URL . 'html.php?branch=2018Q4</li>
-    <li>' . $URL . 'html.php?branch=quarterly</li>
-    <li>' . $URL . 'html.php?flavor=broken</li>
-    <li>' . $URL . 'html.php?flavor=new</li>';
+    <li>' . $URL . 'rss2.0.php?branch=2018Q4</li>
+    <li>' . $URL . 'rss2.0.php?branch=quarterly</li>
+    <li>' . $URL . 'rss2.0.php?flavor=broken</li>
+    <li>' . $URL . 'rss2.0.php?flavor=new</li>';
 ?>
 </ol>
 

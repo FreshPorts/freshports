@@ -27,6 +27,30 @@
 	});
 
 	use Laminas\Feed\Writer\Feed;
+	use Laminas\Feed\Writer\Writer;
+	use Laminas\Feed\Writer\ExtensionManager;
+	use Laminas\Feed\Writer\ExtensionManagerInterface;
+
+# The DublinCore entry renderer gives each RSS item a dc:creator as well as its <author>;
+# the W3C validator warns about the duplicate. That renderer does nothing else for RSS
+# (and nothing for Atom), so hide it from the extension registry.
+class FreshPortsFeedExtensions implements ExtensionManagerInterface {
+	private $Manager;
+
+	function __construct() {
+		$this->Manager = new ExtensionManager();
+	}
+
+	function has($extension) {
+		return $extension !== 'DublinCore\Renderer\Entry' && $this->Manager->has($extension);
+	}
+
+	function get($extension) {
+		return $this->Manager->get($extension);
+	}
+}
+
+	Writer::setExtensionManager(new FreshPortsFeedExtensions());
 
 # the SQL from newsfeed(), less the unused needs_refresh; that copy goes away with classes/newsfeed.php
 function freshports_FeedQuery($dbh, $WatchListID, $BranchName, $Flavor) {

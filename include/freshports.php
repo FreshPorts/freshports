@@ -1187,7 +1187,8 @@ function freshports_HEAD_main_items() {
 	return '
 	<link rel="SHORTCUT ICON" href="/favicon.ico">
 
-	<link rel="alternate" type="application/rss+xml" title="FreshPorts - The Place For Ports" href="https://' . $_SERVER['HTTP_HOST'] . '/backend/rss2.0.php">
+	<link rel="alternate" type="application/rss+xml" title="FreshPorts - The Place For Ports" href="https://' . $_SERVER['HTTP_HOST'] . '/--/feeds/commits.php">
+	<link rel="alternate" type="application/atom+xml" title="FreshPorts - The Place For Ports (Atom)" href="https://' . $_SERVER['HTTP_HOST'] . '/--/feeds/commits.php?format=atom">
 
 	<link rel="search" type="application/opensearchdescription+xml" href="https://' . $_SERVER['HTTP_HOST'] . '/opensearch.php" title="FreshPorts">
 
@@ -2286,7 +2287,7 @@ alt="powered by nginx" width="121" height="32"></a>
 ' . sprintf(_('Valid %1$s, %2$s, and %3$s.'),
 '<a href="https://validator.w3.org/check?uri=' . $URI . '" title="' . _('We like to keep our HTML valid') . '" target="_blank" rel="nofollow noopener noreferrer">HTML</a>',
 '<a href="https://jigsaw.w3.org/css-validator/validator?uri=' .  $URI . '" title="' . _('We like to have valid CSS') . '" rel="nofollow noopener noreferrer">CSS</a>',
-'<a href="https://validator.w3.org/feed/check.cgi?url=' . rawurlencode("{$URIBase}/backend/rss2.0.php") . '" title="' . _('Valid RSS is good too') . '" rel="noopener noreferrer">RSS</a>') . '
+'<a href="https://validator.w3.org/feed/check.cgi?url=' . rawurlencode("{$URIBase}/--/feeds/commits.php") . '" title="' . _('Valid RSS is good too') . '" rel="noopener noreferrer">RSS</a>') . '
 </small>
 ' . freshports_copyright() . '
 </td></tr>

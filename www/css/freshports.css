@@ -563,13 +563,13 @@ PRE.code {
   color: #461b7e;
   color: var(--code-text);
   white-space: pre-wrap;
-  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 /* UPDATING entries can contain very long lines, e.g. stack traces - see issue #674 */
 .ports-updating pre {
   white-space: pre-wrap;
-  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .port {
@@ -580,9 +580,6 @@ PRE.commit,
 dd.port-description {
 /*  color: black;*/
 /*  color: var(--code-text); */
-  white-space: pre-wrap;
-  word-break: break-word;
-
   font-family: monospace;
   white-space: pre-wrap;
   word-break: break-all;
@@ -592,9 +589,6 @@ dd.port-description {
 }
 
 dd.www-description {
-  white-space: pre-wrap;
-  word-break: break-word;
-
   white-space: pre-wrap;
   word-break: break-all;
   margin-left: 25px;
@@ -733,7 +727,7 @@ pre.description {
 /*    white-space: nowrap;*/
     /* wrap long lines, e.g. URLs, instead of overflowing - see issue #674 */
     white-space: pre-wrap;
-    word-break: break-word;
+    overflow-wrap: anywhere;
 }
 
 html {

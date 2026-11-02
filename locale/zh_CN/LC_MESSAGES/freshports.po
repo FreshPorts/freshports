@@ -6114,7 +6114,7 @@ msgstr ""
 
 #: www/watch.php:147
 #, php-format
-msgid "This page is sorted by port.  but you can sort by %1$s or %2$s"
+msgid "This page is sorted by port, but you can sort by %1$s or %2$s"
 msgstr "本页面按 Port 排序，但您也可以按 %1$s 或 %2$s 排序"
 
 #: www/watch.php:147 www/watch.php:154
@@ -6123,13 +6123,13 @@ msgstr "最后更新"
 
 #: www/watch.php:154
 #, php-format
-msgid "This page is sorted by category.  but you can sort by %1$s or %2$s"
+msgid "This page is sorted by category, but you can sort by %1$s or %2$s"
 msgstr "本页面按分类排序，但您也可以按 %1$s 或 %2$s 排序"
 
 #: www/watch.php:161
 #, php-format
 msgid ""
-"This page is sorted by last update date.  but you can sort by %1$s or %2$s"
+"This page is sorted by last update date, but you can sort by %1$s or %2$s"
 msgstr "本页面按最后更新日期排序，但您也可以按 %1$s 或 %2$s 排序"
 
 #: www/watch.php:177

@@ -144,21 +144,21 @@ $cache_file = '';
 switch ($sort) {
    case "port":
       $sort = "port";
-      echo sprintf(_('This page is sorted by port.  but you can sort by %1$s or %2$s'), '<a href="' . $_SERVER["PHP_SELF"] . '?sort=updated">' . _('last update') . '</a>', '<a href="' . $_SERVER["PHP_SELF"] . '?sort=category">' . _('category') . '</a>');
+      echo sprintf(_('This page is sorted by port, but you can sort by %1$s or %2$s'), '<a href="' . $_SERVER["PHP_SELF"] . '?sort=updated">' . _('last update') . '</a>', '<a href="' . $_SERVER["PHP_SELF"] . '?sort=category">' . _('category') . '</a>');
       $ShowCategoryHeaders = 0;
       $cache_file .= ".port";
       break;
 
    case "category":
       $sort ="category, port";
-      echo sprintf(_('This page is sorted by category.  but you can sort by %1$s or %2$s'), '<a href="' . $_SERVER["PHP_SELF"] . '?sort=updated">' . _('last update') . '</a>', '<a href="' . $_SERVER["PHP_SELF"] . '?sort=port">' . _('port') . '</a>');
+      echo sprintf(_('This page is sorted by category, but you can sort by %1$s or %2$s'), '<a href="' . $_SERVER["PHP_SELF"] . '?sort=updated">' . _('last update') . '</a>', '<a href="' . $_SERVER["PHP_SELF"] . '?sort=port">' . _('port') . '</a>');
       $ShowCategoryHeaders = 1;
       $cache_file .= ".category";
       break;
 
    default:
       $sort = "max(commit_log.commit_date) is null desc, max(commit_log.commit_date) desc, port";
-      echo sprintf(_('This page is sorted by last update date.  but you can sort by %1$s or %2$s'), '<a href="' . $_SERVER["PHP_SELF"] . '?sort=category">' . _('category') . '</a>', '<a href="' . $_SERVER["PHP_SELF"] . '?sort=port">' . _('port') . '</a>');
+      echo sprintf(_('This page is sorted by last update date, but you can sort by %1$s or %2$s'), '<a href="' . $_SERVER["PHP_SELF"] . '?sort=category">' . _('category') . '</a>', '<a href="' . $_SERVER["PHP_SELF"] . '?sort=port">' . _('port') . '</a>');
       $ShowCategoryHeaders = 0;
       $cache_file .= ".updated";
       break;

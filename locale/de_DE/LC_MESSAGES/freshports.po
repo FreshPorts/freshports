@@ -6701,10 +6701,8 @@ msgstr ""
 
 #: www/watch.php:147
 #, php-format
-msgid "This page is sorted by port.  but you can sort by %1$s or %2$s"
-msgstr ""
-"Diese Seite ist nach Ports sortiert. Aber Sie können sie auch nach %1$s oder "
-"%2$s sortieren"
+msgid "This page is sorted by port, but you can sort by %1$s or %2$s"
+msgstr "Diese Seite ist nach Ports sortiert, aber Sie können sie auch nach %1$s oder %2$s sortieren"
 
 #: www/watch.php:147 www/watch.php:154
 msgid "last update"
@@ -6712,18 +6710,13 @@ msgstr "letzte Aktualisierung"
 
 #: www/watch.php:154
 #, php-format
-msgid "This page is sorted by category.  but you can sort by %1$s or %2$s"
-msgstr ""
-"Diese Seite ist nach Kategorien sortiert. Aber Sie können sie auch nach %1$s "
-"oder %2$s sortieren"
+msgid "This page is sorted by category, but you can sort by %1$s or %2$s"
+msgstr "Diese Seite ist nach Kategorien sortiert, aber Sie können sie auch nach %1$s oder %2$s sortieren"
 
 #: www/watch.php:161
 #, php-format
-msgid ""
-"This page is sorted by last update date.  but you can sort by %1$s or %2$s"
-msgstr ""
-"Diese Seite ist nach dem Datum der letzten Änderung sortiert. Aber Sie "
-"können sie auch nach %1$s oder %2$s sortieren"
+msgid "This page is sorted by last update date, but you can sort by %1$s or %2$s"
+msgstr "Diese Seite ist nach dem Datum der letzten Änderung sortiert, aber Sie können sie auch nach %1$s oder %2$s sortieren"
 
 #: www/watch.php:177
 msgid "View watched ports + entries from <code>/usr/ports/UPDATING</code>"

@@ -6585,7 +6585,7 @@ msgstr ""
 
 #: www/watch.php:147
 #, php-format
-msgid "This page is sorted by port.  but you can sort by %1$s or %2$s"
+msgid "This page is sorted by port, but you can sort by %1$s or %2$s"
 msgstr ""
 "Эта страница отсортирована по порту. но вы можете отсортировать по %1$s или "
 "%2$s"
@@ -6596,7 +6596,7 @@ msgstr "последнему обновлению"
 
 #: www/watch.php:154
 #, php-format
-msgid "This page is sorted by category.  but you can sort by %1$s or %2$s"
+msgid "This page is sorted by category, but you can sort by %1$s or %2$s"
 msgstr ""
 "Эта страница отсортирована по категории. но вы можете отсортировать по %1$s "
 "или %2$s"
@@ -6604,7 +6604,7 @@ msgstr ""
 #: www/watch.php:161
 #, php-format
 msgid ""
-"This page is sorted by last update date.  but you can sort by %1$s or %2$s"
+"This page is sorted by last update date, but you can sort by %1$s or %2$s"
 msgstr ""
 "Эта страница отсортирована по дате последнего обновления. но вы можете "
 "отсортировать по %1$s или %2$s"

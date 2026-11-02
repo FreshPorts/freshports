@@ -138,6 +138,12 @@ function htmlify($input, $Process_PRs = false, $Use_Port = null) {
 
 		# same as url2link() and url_shorten(): NOFOLLOW, and truncate only the visible part
 		$highlighter ??= new CallbackHighlighter(function (Url $url) {
+			# without a scheme, file names such as setup.py and svn_load_dirs.pl
+			# look like hosts; link only real URLs and email addresses
+			if ($url->scheme === null && !$url->isEmail()) {
+				return htmlspecialchars($url->full, ENT_QUOTES | ENT_HTML5);
+			}
+
 			$text = $url->full;
 			if (URL2LINK_CUTOFF_LEVEL > 0 && mb_strlen($text) > URL2LINK_CUTOFF_LEVEL) {
 				$text = mb_substr($text, 0, URL2LINK_CUTOFF_LEVEL - 5) . '(...)';

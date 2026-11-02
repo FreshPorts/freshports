@@ -723,7 +723,8 @@ dt.required, p.required, dt.description, dt.www
 
 pre.description {
 /*    overflow-x: scroll; */
-    max-width: 600px;
+    /* in ch, not px, so a larger text size widens the box and keeps 72-column commit lines whole */
+    max-width: 80ch;
 /*    white-space: nowrap;*/
     /* wrap long lines, e.g. URLs, instead of overflowing - see issue #674 */
     white-space: pre-wrap;

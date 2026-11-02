@@ -7,6 +7,9 @@
 
 	require_once("htmlify.php");
 
+	# set by www/htmlify-test.php (old code) and www/htmlify-test-port.php (url-highlight 4.x)
+	$Use_Port = $Htmlify_Use_Port ?? false;
+
 define('URL2LINK_CUTOFF_LEVEL', 130);
 define('MAILTO', '&#109;&#97;&#105;&#108;&#116;&#111;');
 
@@ -98,15 +101,17 @@ EOD;
 
 <html>
 <body>
-<h2>Testing the html-ify code</h2>
+<h2>Testing the html-ify code: <?php echo $Use_Port ? 'url-highlight 4.x from www/php-url-highlight' : 'existing code, as set in constants.local.php'; ?></h2>
+
+<p>Compare with <a href="<?php echo $Use_Port ? '/htmlify-test.php' : '/htmlify-test-port.php'; ?>"><?php echo $Use_Port ? 'the existing code' : 'url-highlight 4.x'; ?></a>.</p>
 <pre>
-<?php print htmlify(htmlspecialchars($str), true); ?>
+<?php print htmlify(htmlspecialchars($str), true, $Use_Port); ?>
 </pre>
 
 <p>
 The following should not get a PR type hyperlink:
 
-<?php echo htmlify("http://www.postgresql.org/docs/8.2/static/release-8-2-2.html", false); ?>
+<?php echo htmlify("http://www.postgresql.org/docs/8.2/static/release-8-2-2.html", false, $Use_Port); ?>
 
 
 <h2>	Other links to check</h2>
@@ -119,7 +124,7 @@ The following should not get a PR type hyperlink:
 <h2>Does it htmlify the URL and the URL name?</h2>
 <ul>
 <li>Before: http://www.sql-ledger.org/cgi-bin/nav.pl?page=news.html&title=What's%20New
-<li>After: <?php echo htmlify(htmlentities("http://www.sql-ledger.org/cgi-bin/nav.pl?page=news.html&title=What's%20New")); ?>
+<li>After: <?php echo htmlify(htmlentities("http://www.sql-ledger.org/cgi-bin/nav.pl?page=news.html&title=What's%20New"), false, $Use_Port); ?>
 </ul>
 
 </body>

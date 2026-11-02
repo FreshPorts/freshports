@@ -87,15 +87,70 @@ function url_shorten($Arr) {
 # I couldn't find a conditional which would allow optional use
 require_once($_SERVER['DOCUMENT_ROOT'] .  '/../vendor/autoload.php');
 use VStelmakh\UrlHighlight\Encoder\HtmlSpecialcharsEncoder;
+use VStelmakh\UrlHighlight\Format;
+use VStelmakh\UrlHighlight\Highlighter\CallbackHighlighter;
+use VStelmakh\UrlHighlight\Url;
 use VStelmakh\UrlHighlight\UrlHighlight;
+
+#
+# url-highlight 4.x from the www/php-url-highlight port. There is no composer
+# autoloader for it, so register our own, ahead of the vendor one, which
+# would otherwise load the bundled 3.x classes of the same name.
+#
+if (!defined('URL_HIGHLIGHT_PORT_DIR')) {
+	define('URL_HIGHLIGHT_PORT_DIR', '/usr/local/share/pear/VStelmakh/UrlHighlight/');
+}
+
+function url_highlight_port_autoload() {
+	static $registered = false;
+	if ($registered) {
+		return;
+	}
+
+	spl_autoload_register(function ($class) {
+		$prefix = 'VStelmakh\\UrlHighlight\\';
+		if (str_starts_with($class, $prefix)) {
+			require URL_HIGHLIGHT_PORT_DIR . str_replace('\\', '/', substr($class, strlen($prefix))) . '.php';
+		}
+	}, true, true);
+	$registered = true;
+}
 
 require_once($_SERVER['DOCUMENT_ROOT'] .  '/../include/lib_autolink/lib_autolink.php');
 
-function htmlify($input, $Process_PRs = false) {
+#
+# $Use_Port: null follows HTMLIFY_USE_URL_HIGHLIGHT_PORT from constants.local.php;
+# true or false forces it, so the test pages can compare old and new
+#
+function htmlify($input, $Process_PRs = false, $Use_Port = null) {
+	$Use_Port ??= defined('HTMLIFY_USE_URL_HIGHLIGHT_PORT') && HTMLIFY_USE_URL_HIGHLIGHT_PORT;
+
 	#
 	# we have our old code and this new stuff: UrlHighlight
 	#
-	if (defined('HTMLIFY_USE_URL_HIGHLIGHT') && HTMLIFY_USE_URL_HIGHLIGHT) {
+	if ($Use_Port) {
+		url_highlight_port_autoload();
+
+		# built once per request; it loads the list of top-level domains
+		static $urlHighlight = null;
+		static $highlighter  = null;
+		$urlHighlight ??= new UrlHighlight();
+
+		# same as url2link() and url_shorten(): NOFOLLOW, and truncate only the visible part
+		$highlighter ??= new CallbackHighlighter(function (Url $url) {
+			$text = $url->full;
+			if (URL2LINK_CUTOFF_LEVEL > 0 && mb_strlen($text) > URL2LINK_CUTOFF_LEVEL) {
+				$text = mb_substr($text, 0, URL2LINK_CUTOFF_LEVEL - 5) . '(...)';
+			}
+
+			return '<a href="' . htmlspecialchars($url->toHref(), ENT_QUOTES | ENT_HTML5) . '"' .
+				($url->isEmail() ? '' : ' REL="NOFOLLOW"') . '>' .
+				htmlspecialchars($text, ENT_QUOTES | ENT_HTML5) . '</a>';
+		});
+
+		# callers pass text already escaped by _forDisplay(); do not escape it again
+		$htmlified = $urlHighlight->highlight($input, $highlighter, Format::HtmlEncoded);
+	} elseif (defined('HTMLIFY_USE_URL_HIGHLIGHT') && HTMLIFY_USE_URL_HIGHLIGHT) {
 		$encoder = new HtmlSpecialcharsEncoder();
 		$urlHighlight = new UrlHighlight(null, null, $encoder);
 

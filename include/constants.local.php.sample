@@ -47,6 +47,12 @@ define('UKRAINE', '1');
 define('HTMLIFY_USE_URL_HIGHLIGHT',     false);
 define('HTMLIFY_USE_LIB_AUTOLINK',      true);
 
+# url-highlight 4.x from the www/php-url-highlight package; takes
+# precedence over the two above
+define('HTMLIFY_USE_URL_HIGHLIGHT_PORT', false);
+# only if the package is installed somewhere else
+#define('URL_HIGHLIGHT_PORT_DIR', '/usr/local/share/pear/VStelmakh/UrlHighlight/');
+
 define('HTMLIFY_PROCESS_PRS', true);
 
 define('INCLUDE_GOOGLE_GTAG', false);

@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: freshports\n"
 "Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
 "POT-Creation-Date: 2026-11-02 18:30-0500\n"
-"PO-Revision-Date: 2026-10-13 15:55+0800\n"
+"PO-Revision-Date: 2026-11-04 18:39+0800\n"
 "Last-Translator: ykla <yklaxds@gmail.com>\n"
 "Language-Team: ykla <yklaxds@gmail.com>\n"
 "Language: zh_CN\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.9\n"
+"X-Generator: Poedit 3.10\n"
 "X-Poedit-Basepath: .\n"
 
 #: classes/display_commit.php:126 classes/port-display.php:1182
@@ -993,7 +993,7 @@ msgstr "原因："
 
 #: include/freshports.php:1565
 msgid "Perhaps you meant one of these:"
-msgstr ""
+msgstr "也许您指的是以下其中一项："
 
 #: include/freshports.php:1579
 msgid "All rights reserved."
@@ -1110,7 +1110,7 @@ msgstr "%s——用户注册"
 
 #: include/freshports.php:2274
 msgid "You are connected over IPv6"
-msgstr ""
+msgstr "您已接入 IPv6"
 
 #: include/freshports.php:2287
 #, php-format
@@ -1547,18 +1547,17 @@ msgstr "设置密码"
 #: include/search-gate.php:114
 msgid ""
 "To keep the search working for people, please confirm you are not a bot."
-msgstr ""
+msgstr "为了让搜索功能能继续为众人所用，请确认您不是机器人。"
 
 #: include/search-gate.php:118
-#, fuzzy
 msgid "Continue to search"
-msgstr "区分大小写搜索"
+msgstr "继续搜索"
 
 #: include/search-gate.php:120
 msgid ""
 "This sets a cookie, so you will not be asked again for a day. Logged in "
 "users are never asked."
-msgstr ""
+msgstr "我们将设置 Cookie，从而一天内不会再打扰您；已登录用户不会收到此提示。"
 
 #: include/spam-filter-information.php:9
 msgid "SPAM FILTERS:"
@@ -1619,11 +1618,11 @@ msgstr "目前任何人都无法登录。"
 #: include/system-status-page.php:44
 #, php-format
 msgid "vuxml entries selected for processing: %d"
-msgstr ""
+msgstr "待处理的 vuxml 条目：已选 %d 个"
 
 #: include/system-status-page.php:46
 msgid "(this drops to 0 only when the run commits)"
-msgstr ""
+msgstr "（仅在本次运行提交后，此值才会降为 0）"
 
 #: include/system-status-page.php:57
 #, php-format
@@ -1668,9 +1667,8 @@ msgid "FreshPorts News Feeds"
 msgstr "FreshPorts 新闻源"
 
 #: www/--/feeds/index.php:35
-#, fuzzy
 msgid "Feed formats"
-msgstr "FreeBSD 论坛"
+msgstr "订阅源格式"
 
 #: www/--/feeds/index.php:37 www/backend/index.php:38
 msgid "See the next section for optional parameters for these URLs."
@@ -1682,13 +1680,12 @@ msgid "RSS Feed validator"
 msgstr "RSS 源验证器"
 
 #: www/--/feeds/index.php:45
-#, fuzzy
 msgid ""
 "The above feeds are created using <a href=\"https://github.com/laminas/"
 "laminas-feed\">laminas-feed</a>."
 msgstr ""
-"上述源均使用 <a href=\"https://github.com/flack/"
-"UniversalFeedCreator\">UniversalFeedCreator</a> 生成。"
+"上述订阅源均使用 <a href=\"https://github.com/laminas/laminas-feed\">laminas-"
+"feed</a> 生成。"
 
 #: www/--/feeds/index.php:48 www/backend/index.php:66
 msgid "Optional parameters for the above formats"
@@ -1700,7 +1697,7 @@ msgstr "上述每种格式都有可选参数："
 
 #: www/--/feeds/index.php:52 www/backend/newsfeeds.php:44
 msgid "Atom 1.0 instead of RSS 2.0."
-msgstr ""
+msgstr "使用 Atom 1.0 代替 RSS 2.0。"
 
 #: www/--/feeds/index.php:53 www/backend/index.php:70
 #: www/backend/newsfeeds.php:45 www/backend/newsfeeds.php:93
@@ -1753,7 +1750,7 @@ msgstr ""
 #: www/--/feeds/index.php:77
 #, php-format
 msgid "The deprecated feeds are listed at <a href=\"%s\">%s</a>."
-msgstr ""
+msgstr "已弃用的订阅源见 <a href=\"%s\">%s</a>。"
 
 #: www/--/forums-gone.php:15 www/--/forums-gone.php:26
 msgid "The forums are gone"
@@ -2059,6 +2056,8 @@ msgid ""
 "These older feeds still work, but they will be redirected to the new feeds "
 "at <a href=\"%s\">%s</a>. Please update your subscriptions."
 msgstr ""
+"这些较旧的订阅源仍可使用，但会被重定向到新订阅源：<a href=\"%s\">%s</a>。请更"
+"新您的订阅。"
 
 #: www/backend/index.php:36
 msgid "Various RSS formats"
@@ -2081,14 +2080,14 @@ msgid "We have these newsfeeds:"
 msgstr "我们有以下新闻源："
 
 #: www/backend/newsfeeds.php:38
-#, fuzzy, php-format
+#, php-format
 msgid "An RSS 2.0 feed : %s"
-msgstr "RSS 源：%s"
+msgstr "RSS 2.0 订阅源：%s"
 
 #: www/backend/newsfeeds.php:39
 #, php-format
 msgid "The same feed as Atom 1.0 : %s"
-msgstr ""
+msgstr "与 Atom 1.0 相同的订阅源：%s"
 
 #: www/backend/newsfeeds.php:40 www/backend/newsfeeds.php:85
 msgid "Take your pick of different formats:"
@@ -2104,15 +2103,14 @@ msgid "An RSS feed that lists only new ports:  %s"
 msgstr "仅列出新增 Port 的 RSS 源：%s"
 
 #: www/backend/newsfeeds.php:75
-#, fuzzy
 msgid "Deprecated newsfeeds"
-msgstr "已弃用 Port"
+msgstr "已弃用的新闻订阅源"
 
 #: www/backend/newsfeeds.php:76
 msgid ""
 "These older feeds still work, but they will be redirected to the feeds "
 "above. Please update your subscriptions."
-msgstr ""
+msgstr "这些较旧的订阅源仍然可用，但会跳转到上方的订阅源。请更新您的订阅。"
 
 #: www/backend/newsfeeds.php:84
 #, php-format
@@ -4101,6 +4099,8 @@ msgid ""
 "base system is built for them, not the ports tree, so there are no packages "
 "for FreshPorts to show. Those ABIs are skipped."
 msgstr ""
+"该页面上有些 ABI 标注为 <i>（仅更新 pkgbase）</i>。这些 ABI 只构建基本系统，"
+"不构建 ports 树，因此 FreshPorts 没有可显示的包。这些 ABI 会被跳过。"
 
 #: www/faq.php:763
 #, php-format
@@ -4792,7 +4792,7 @@ msgstr "您的账户需要启用，请按我们发给您的邮件中的说明操
 msgid ""
 "To have your activation details resent to the email address you supplied, "
 "click on the resend button"
-msgstr "如需将激活信息重新发送到您提供的邮箱地址，请点击“重新发送”按钮。"
+msgstr "如需将激活信息重新发送到您提供的邮箱地址，请点击“重新发送”按钮"
 
 #: www/login.php:111
 msgid "Resend"
@@ -5771,9 +5771,8 @@ msgid "Ports I Maintain"
 msgstr "我维护的 Port"
 
 #: www/search.php:1383
-#, fuzzy
 msgid "See the suggestions at the top of this page."
-msgstr "页面顶部那个徽标出自 John Beige 之手。"
+msgstr "请参阅本页上方的建议。"
 
 #: www/search.php:1420
 #, php-format

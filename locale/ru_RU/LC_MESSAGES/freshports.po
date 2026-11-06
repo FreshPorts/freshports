@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreshPorts\n"
 "Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
-"POT-Creation-Date: 2026-11-02 18:30-0500\n"
+"POT-Creation-Date: 2026-11-06 19:56+0000\n"
 "PO-Revision-Date: 2026-10-24 00:37+0300\n"
 "Last-Translator: Vladlen Popolitov <vladlen@freebsd.org>\n"
 "Language-Team: Russian <vladlen@FreeBSD.org>\n"
@@ -1866,15 +1866,14 @@ msgstr "У нас есть несколько замечаний об этом �
 msgid "What is a port?"
 msgstr "Что такое порт?"
 
-#. TRANSLATORS: %1$s is a link whose text is 'FreeBSD Ports description'; %2$s is the command name 'make'. The <em> part quotes the FreeBSD website.
+#. TRANSLATORS: %1$s is a link whose text is 'FreeBSD Handbook'; %2$s is the command 'make install'.
 #: www/about.php:49
-#, php-format
+#, fuzzy, php-format
 msgid ""
 "A port is the term used to describe a collection of files which makes it "
-"extremely easy to install an application.  As it says in the %1$s: "
-"<em>Installing an application is as simple as downloading the port, "
-"unpacking it and typing %2$s in the port directory</em>. If you want an "
-"application, the port is the Way To Go(TM)"
+"extremely easy to install an application.  As the %1$s explains, installing "
+"an application from a port is as simple as changing to the port directory "
+"and typing %2$s. If you want an application, the port is the Way To Go(TM)"
 msgstr ""
 "Порт — это термин, используемый для описания набора файлов, который делает "
 "установку приложения чрезвычайно простой. Как сказано в %1$s: <em>Установка "
@@ -1883,8 +1882,9 @@ msgstr ""
 "(TM)"
 
 #: www/about.php:49
-msgid "FreeBSD Ports description"
-msgstr "Описание FreeBSD Ports"
+#, fuzzy
+msgid "FreeBSD Handbook"
+msgstr "Руководство по созданию портов"
 
 #: www/about.php:51
 msgid ""
@@ -6735,3 +6735,6 @@ msgid ""
 msgstr ""
 "Если вы не получите это письмо, пожалуйста, попробуйте войти, и у вас будет "
 "возможность повторно отправить уведомление."
+
+#~ msgid "FreeBSD Ports description"
+#~ msgstr "Описание FreeBSD Ports"

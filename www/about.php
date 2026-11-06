@@ -45,12 +45,12 @@
 <tr><td class="textcontent">
 
 <P><?php
-// TRANSLATORS: %1$s is a link whose text is 'FreeBSD Ports description'; %2$s is the command name 'make'. The <em> part quotes the FreeBSD website.
-echo sprintf(_('A port is the term used to describe a collection of files which makes it extremely easy to install an application.  As it says in the %1$s: <em>Installing an application is as simple as downloading the port, unpacking it and typing %2$s in the port directory</em>. If you want an application, the port is the Way To Go(TM)'), '<a href="https://www.freebsd.org/ports/">' . _('FreeBSD Ports description') . '</a>', '<b>make</b>'); ?></P>
+// TRANSLATORS: %1$s is a link whose text is 'FreeBSD Handbook'; %2$s is the command 'make install'.
+echo sprintf(_('A port is the term used to describe a collection of files which makes it extremely easy to install an application.  As the %1$s explains, installing an application from a port is as simple as changing to the port directory and typing %2$s. If you want an application, the port is the Way To Go(TM)'), '<a href="https://docs.freebsd.org/en/books/handbook/ports/">' . _('FreeBSD Handbook') . '</a>', '<b>make install</b>'); ?></P>
 
 <P><?php echo _("So off you go to the ports tree to install your favourite port.  It's quite easy. It's simple. And you love that new application.  And you want to know when the port is updated.  That's where we come in."); ?></P>
 
-<P><?php echo sprintf(_('For more information about the Ports tree, see %s.'), '<a href="https://www.freebsd.org/ports/">https://www.freebsd.org/ports/</a>'); ?></P>
+<P><?php echo sprintf(_('For more information about the Ports tree, see %s.'), '<a href="https://docs.freebsd.org/en/books/handbook/ports/">https://docs.freebsd.org/en/books/handbook/ports/</a>'); ?></P>
 
 </td></tr>
 <tr>

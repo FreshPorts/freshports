@@ -67,7 +67,7 @@ class Cache {
 			$this->_Log('Cache: FAILED Retrieve NOT FOUND ' . $CacheFileName);
 			$result = -2;
 		}
-		
+
 		return $result;
 	}
 
@@ -101,7 +101,7 @@ class Cache {
 				} else {
 					// rm $SpoolFileName
 					unlink($SpoolFileName);
-					$this->_Log('Cache: FAILED Add on move" ' . $SpoolFileName . ' to ' . $CacheFileName);
+					$this->_Log('Cache: FAILED Add on move ' . $SpoolFileName . ' to ' . $CacheFileName);
 				}
 			} else {
 				fclose($SpoolFileHandle);

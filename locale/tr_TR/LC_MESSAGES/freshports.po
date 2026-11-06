@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: FreshPorts\n"
 "Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
 "POT-Creation-Date: 2026-11-02 18:30-0500\n"
-"PO-Revision-Date: 2026-10-21 01:27+0300\n"
+"PO-Revision-Date: 2026-11-06 23:23+0300\n"
 "Last-Translator: Yusuf Yaman <nxjoseph@FreeBSD.org>\n"
 "Language-Team: Turkish\n"
 "Language: tr\n"
@@ -1030,7 +1030,7 @@ msgstr "NEDEN:"
 
 #: include/freshports.php:1565
 msgid "Perhaps you meant one of these:"
-msgstr ""
+msgstr "Belki bunlardan birini kastettiniz:"
 
 #: include/freshports.php:1579
 msgid "All rights reserved."
@@ -1152,7 +1152,7 @@ msgstr "%s - kullanıcı kaydı"
 
 #: include/freshports.php:2274
 msgid "You are connected over IPv6"
-msgstr ""
+msgstr "IPv6 üzerinden bağlanıyorsunuz"
 
 #: include/freshports.php:2287
 #, php-format
@@ -1596,18 +1596,19 @@ msgstr "Şifre ayarla"
 #: include/search-gate.php:114
 msgid ""
 "To keep the search working for people, please confirm you are not a bot."
-msgstr ""
+msgstr "Aramanın çalışabilmesi için lütfen bot olmadığınızı kanıtlayın"
 
 #: include/search-gate.php:118
-#, fuzzy
 msgid "Continue to search"
-msgstr "Harfe duyarlı arama"
+msgstr "Aramaya devam edin"
 
 #: include/search-gate.php:120
 msgid ""
 "This sets a cookie, so you will not be asked again for a day. Logged in "
 "users are never asked."
 msgstr ""
+"Bu bir kurabiye kaydeder ve bir gün boyunca bir daha size sorulmaz. Giriş "
+"yapmış kullanıcılara hiç sorulmaz."
 
 #: include/spam-filter-information.php:9
 msgid "SPAM FILTERS:"
@@ -1671,7 +1672,7 @@ msgstr "Şu an kimse giriş yapma yetkisine sahip değil."
 #: include/system-status-page.php:44
 #, php-format
 msgid "vuxml entries selected for processing: %d"
-msgstr ""
+msgstr "işlenmesi için seçilen vuxml girdileri: %d"
 
 #: include/system-status-page.php:46
 msgid "(this drops to 0 only when the run commits)"
@@ -1722,9 +1723,8 @@ msgid "FreshPorts News Feeds"
 msgstr "FreshPorts Haber Akışı"
 
 #: www/--/feeds/index.php:35
-#, fuzzy
 msgid "Feed formats"
-msgstr "FreeBSD forumu"
+msgstr "Akış formatları"
 
 #: www/--/feeds/index.php:37 www/backend/index.php:38
 msgid "See the next section for optional parameters for these URLs."
@@ -1738,13 +1738,12 @@ msgid "RSS Feed validator"
 msgstr "RSS Akışı doğrulayıcı"
 
 #: www/--/feeds/index.php:45
-#, fuzzy
 msgid ""
 "The above feeds are created using <a href=\"https://github.com/laminas/"
 "laminas-feed\">laminas-feed</a>."
 msgstr ""
-"Üstteki akışlar <a href=\"https://github.com/flack/"
-"UniversalFeedCreator\">UniversalFeedCreator</a> kullanılarak oluşturulmuştur."
+"Üstteki akışlar <a href=\"https://github.com/laminas/laminas-feed\">laminas-"
+"feed</a> kullanılarak oluşturulmuştur."
 
 #: www/--/feeds/index.php:48 www/backend/index.php:66
 msgid "Optional parameters for the above formats"
@@ -1756,7 +1755,7 @@ msgstr "Şu formatlar için opsiyonel parametreler bulunmaktadır:"
 
 #: www/--/feeds/index.php:52 www/backend/newsfeeds.php:44
 msgid "Atom 1.0 instead of RSS 2.0."
-msgstr ""
+msgstr "RSS 2.0 yerine Atom 1.0."
 
 #: www/--/feeds/index.php:53 www/backend/index.php:70
 #: www/backend/newsfeeds.php:45 www/backend/newsfeeds.php:93
@@ -1815,6 +1814,7 @@ msgstr ""
 #, php-format
 msgid "The deprecated feeds are listed at <a href=\"%s\">%s</a>."
 msgstr ""
+"Tarihi geçmiş akışlar <a href=\"%s\">%s</a> bağlantısında listelenmektedir."
 
 #: www/--/forums-gone.php:15 www/--/forums-gone.php:26
 msgid "The forums are gone"
@@ -2098,6 +2098,9 @@ msgid ""
 "These older feeds still work, but they will be redirected to the new feeds "
 "at <a href=\"%s\">%s</a>. Please update your subscriptions."
 msgstr ""
+"Bu eskimiş akışlar hala çalışabilir, ama <a href=\"%s\">%s</a> "
+"bağlantısındaki yeni akışlara yönlendirilecektir. Lütfen aboneliklerinizi "
+"güncelleyin."
 
 #: www/backend/index.php:36
 msgid "Various RSS formats"
@@ -2120,14 +2123,14 @@ msgid "We have these newsfeeds:"
 msgstr "Şu haber akışlarımız var:"
 
 #: www/backend/newsfeeds.php:38
-#, fuzzy, php-format
+#, php-format
 msgid "An RSS 2.0 feed : %s"
-msgstr "RSS akışı : %s"
+msgstr "RSS 2.0 akışı : %s"
 
 #: www/backend/newsfeeds.php:39
 #, php-format
 msgid "The same feed as Atom 1.0 : %s"
-msgstr ""
+msgstr "Atom 1.0 türündeki aynı akış: %s"
 
 #: www/backend/newsfeeds.php:40 www/backend/newsfeeds.php:85
 msgid "Take your pick of different formats:"
@@ -2143,15 +2146,16 @@ msgid "An RSS feed that lists only new ports:  %s"
 msgstr "Sadece yeni portları listeleyen RSS akışı: %s"
 
 #: www/backend/newsfeeds.php:75
-#, fuzzy
 msgid "Deprecated newsfeeds"
-msgstr "Tarihi geçmiş portlar"
+msgstr "Tarihi geçmiş akışlar"
 
 #: www/backend/newsfeeds.php:76
 msgid ""
 "These older feeds still work, but they will be redirected to the feeds "
 "above. Please update your subscriptions."
 msgstr ""
+"Bu eskimiş akışlar hala çalışabilir, ama onlar üstteki akışlara "
+"yönlendirilecektir. Lütfen aboneliklerinizi güncelleyin."
 
 #: www/backend/newsfeeds.php:84
 #, php-format
@@ -4012,6 +4016,9 @@ msgid ""
 "base system is built for them, not the ports tree, so there are no packages "
 "for FreshPorts to show. Those ABIs are skipped."
 msgstr ""
+"Bu sayfadaki bazı ABI'ler <i>(sadece pkgbase güncellenir)</i>. Onlar için "
+"sadece ana sistem derlenir, ports ağacı değil, bu yüzden FreshPorts'un "
+"gösterebileceği bir paket yok. Bu ABI'ler atlanır."
 
 #: www/faq.php:763
 #, php-format
@@ -5662,7 +5669,7 @@ msgstr "Sorumlu Olduğum Portlar"
 
 #: www/search.php:1383
 msgid "See the suggestions at the top of this page."
-msgstr ""
+msgstr "Sayfanın başındaki önerilere göz atınız."
 
 #: www/search.php:1420
 #, php-format

@@ -83,6 +83,31 @@
 	<p>
 	<?php echo _('Not all ports can have packages, often because of license restrictions that prevent binary distribution.'); ?>
 
+	<p>
+	<?php echo _('The FreeBSD Project provides:'); ?>
+	<ul>
+	<li><?php
+	// TRANSLATORS: %s is the word 'base', shown in italics.
+	echo sprintf(_('official packages for FreeBSD (the operating system, sometimes known as %s) in its entirety'), '<em>' . _('base') . '</em>'); ?></li>
+	<li><?php echo _('packages for a huge number of ports.'); ?></li>
+	</ul>
+
+	<p>
+	<?php
+	// This paragraph can be removed once FreeBSD 14 reaches end of life (issue #609).
+	// TRANSLATORS: %1$s is the repository name 'FreeBSD', %2$s is the word 'not' in bold, %3$s is 'FreeBSD ports' in italics.
+	echo sprintf(_('The repo that\'s traditionally named %1$s does %2$s provide FreeBSD (OS) packages. It\'s the repo for %3$s.'), '<em>FreeBSD</em>', '<strong>' . _('not') . '</strong>', '<em>' . _('FreeBSD ports') . '</em>'); ?>
+
+	<p>
+	<?php
+	// TRANSLATORS: %1$s is the name 'pkgbase', %2$s is the repository name 'FreeBSD-base', shown in italics.
+	echo sprintf(_('If you use %1$s (the base OS, packaged), you should have an additional repo named %2$s.'), '<span class="file">pkgbase</span>', '<em>FreeBSD-base</em>'); ?>
+
+	<p>
+	<?php
+	// TRANSLATORS: %s is the name 'pkgbase'.
+	echo sprintf(_('FreshPorts covers packages of ports, but not %s.'), '<span class="file">pkgbase</span>'); ?>
+
 	</td></tr>
 <tr id="watch-modify">
 <?php echo freshports_PageBannerText(_('How do I modify my watch list?')); ?>

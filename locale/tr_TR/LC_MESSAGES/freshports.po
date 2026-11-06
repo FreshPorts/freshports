@@ -2063,7 +2063,7 @@ msgstr "Brian Mitchell benim için bazı prototip kodlamalar yaptı."
 #: www/authors.php:78
 msgid "David Bushong did a FreshBSD site which is a freshmeat-look site."
 msgstr ""
-"David Bushong, taze et görünümüne sahip bir site olan FreshBSD'yi hazırladı."
+"David Bushong, freshmeat görünümüne sahip bir site olan FreshBSD'yi hazırladı."
 
 #: www/authors.php:80
 msgid ""
@@ -3432,7 +3432,7 @@ msgid ""
 "<b>num</b> - number of ports to show (regardless of commits so the last "
 "commit may not list fully). The valid values are 10..100."
 msgstr ""
-"<b>numara</b> - gösterilecek port sayısı (commit'lerden bağımsızdır; bu "
+"<b>num</b> - gösterilecek port sayısı (commit'lerden bağımsızdır; bu "
 "nedenle son commit tam olarak listelenmeyebilir). Geçerli değerler 10 ile "
 "100 arasındadır."
 
@@ -5094,7 +5094,7 @@ msgstr "Takip listesini güncelle"
 
 #: www/pkg_upload.php:158 www/pkg_upload.php:205
 msgid "Empty staging area"
-msgstr "Boş hazırlık alanı"
+msgstr "Hazırlık alanını boşalt"
 
 #: www/pkg_upload.php:166
 msgid "Ports found from your uploaded data."

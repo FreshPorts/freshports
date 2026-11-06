@@ -32,6 +32,9 @@
 <P>
 <?php echo _('If you have suggestions for graphs, please raise an issue.'); ?>
 </P>
+<P>
+<?php printf(_('See also: %s.'), '<a href="/category-history.php">' . _('categories over time') . '</a>'); ?>
+</P>
 
 <h2><?php echo _('NOTE that many graphs are clickable and will take you to the category, port, etc.'); ?></h2>
 

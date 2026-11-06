@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreshPorts\n"
 "Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
-"POT-Creation-Date: 2026-11-02 18:30-0500\n"
+"POT-Creation-Date: 2026-11-06 19:56+0000\n"
 "PO-Revision-Date: 2026-10-09 14:42-0400\n"
 "Last-Translator: Marc Pearson <marc.pearson@gmail.com>\n"
 "Language-Team: French (Canada)\n"
@@ -1865,15 +1865,14 @@ msgstr "Nous avons quelques notes à propos de ce site Web."
 msgid "What is a port?"
 msgstr "Qu'est-ce qu'un port ?"
 
-#. TRANSLATORS: %1$s is a link whose text is 'FreeBSD Ports description'; %2$s is the command name 'make'. The <em> part quotes the FreeBSD website.
+#. TRANSLATORS: %1$s is a link whose text is 'FreeBSD Handbook'; %2$s is the command 'make install'.
 #: www/about.php:49
-#, php-format
+#, fuzzy, php-format
 msgid ""
 "A port is the term used to describe a collection of files which makes it "
-"extremely easy to install an application.  As it says in the %1$s: "
-"<em>Installing an application is as simple as downloading the port, "
-"unpacking it and typing %2$s in the port directory</em>. If you want an "
-"application, the port is the Way To Go(TM)"
+"extremely easy to install an application.  As the %1$s explains, installing "
+"an application from a port is as simple as changing to the port directory "
+"and typing %2$s. If you want an application, the port is the Way To Go(TM)"
 msgstr ""
 "Un port est le terme utilisé pour décrire une collection de fichiers qui "
 "rend extrêmement facile l'installation d'une application. Comme il est dit "
@@ -1883,8 +1882,9 @@ msgstr ""
 "suivre(TM)"
 
 #: www/about.php:49
-msgid "FreeBSD Ports description"
-msgstr "description des FreeBSD Ports"
+#, fuzzy
+msgid "FreeBSD Handbook"
+msgstr "Porters Handbook"
 
 #: www/about.php:51
 msgid ""
@@ -6793,3 +6793,6 @@ msgid ""
 msgstr ""
 "Si vous ne recevez pas ce courriel, veuillez essayer de vous connecter et "
 "vous aurez l'occasion de renvoyer la notification."
+
+#~ msgid "FreeBSD Ports description"
+#~ msgstr "description des FreeBSD Ports"

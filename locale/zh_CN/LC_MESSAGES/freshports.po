@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: freshports\n"
 "Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
-"POT-Creation-Date: 2026-11-02 18:30-0500\n"
+"POT-Creation-Date: 2026-11-06 19:56+0000\n"
 "PO-Revision-Date: 2026-11-04 18:39+0800\n"
 "Last-Translator: ykla <yklaxds@gmail.com>\n"
 "Language-Team: ykla <yklaxds@gmail.com>\n"
@@ -1794,23 +1794,23 @@ msgstr "我们有一些关于本网站的说明。"
 msgid "What is a port?"
 msgstr "什么是 Port？"
 
-#. TRANSLATORS: %1$s is a link whose text is 'FreeBSD Ports description'; %2$s is the command name 'make'. The <em> part quotes the FreeBSD website.
+#. TRANSLATORS: %1$s is a link whose text is 'FreeBSD Handbook'; %2$s is the command 'make install'.
 #: www/about.php:49
-#, php-format
+#, fuzzy, php-format
 msgid ""
 "A port is the term used to describe a collection of files which makes it "
-"extremely easy to install an application.  As it says in the %1$s: "
-"<em>Installing an application is as simple as downloading the port, "
-"unpacking it and typing %2$s in the port directory</em>. If you want an "
-"application, the port is the Way To Go(TM)"
+"extremely easy to install an application.  As the %1$s explains, installing "
+"an application from a port is as simple as changing to the port directory "
+"and typing %2$s. If you want an application, the port is the Way To Go(TM)"
 msgstr ""
 "Port 是用来描述一组文件的术语，这组文件让安装应用程序变得极其简单。正如 %1$s "
 "中所说：<em>安装应用程序非常简单——下载 Port、解包，然后在 Port 目录中键入 "
 "%2$s 即可</em>。如果您想要某个应用程序，Port 就是您的不二之选(TM)"
 
 #: www/about.php:49
-msgid "FreeBSD Ports description"
-msgstr "FreeBSD Ports 简介"
+#, fuzzy
+msgid "FreeBSD Handbook"
+msgstr "Porter 手册"
 
 #: www/about.php:51
 msgid ""
@@ -6248,3 +6248,6 @@ msgid ""
 "If you do not receive that email, please attempt to login and you will have "
 "an opportunity to resend the notification."
 msgstr "如果您未收到那封邮件，请尝试登录，届时您可以重新发送通知。"
+
+#~ msgid "FreeBSD Ports description"
+#~ msgstr "FreeBSD Ports 简介"

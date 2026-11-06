@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreshPorts\n"
 "Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
-"POT-Creation-Date: 2026-11-02 18:30-0500\n"
+"POT-Creation-Date: 2026-11-06 19:56+0000\n"
 "PO-Revision-Date: 2026-10-21 01:27+0300\n"
 "Last-Translator: Yusuf Yaman <nxjoseph@FreeBSD.org>\n"
 "Language-Team: Turkish\n"
@@ -1860,20 +1860,20 @@ msgstr "Bu website için birkaç notumuz var."
 msgid "What is a port?"
 msgstr "Bir port nedir?"
 
-#. TRANSLATORS: %1$s is a link whose text is 'FreeBSD Ports description'; %2$s is the command name 'make'. The <em> part quotes the FreeBSD website.
+#. TRANSLATORS: %1$s is a link whose text is 'FreeBSD Handbook'; %2$s is the command 'make install'.
 #: www/about.php:49
 #, php-format
 msgid ""
 "A port is the term used to describe a collection of files which makes it "
-"extremely easy to install an application.  As it says in the %1$s: "
-"<em>Installing an application is as simple as downloading the port, "
-"unpacking it and typing %2$s in the port directory</em>. If you want an "
-"application, the port is the Way To Go(TM)"
+"extremely easy to install an application.  As the %1$s explains, installing "
+"an application from a port is as simple as changing to the port directory "
+"and typing %2$s. If you want an application, the port is the Way To Go(TM)"
 msgstr ""
 
 #: www/about.php:49
-msgid "FreeBSD Ports description"
-msgstr "FreeBSD Ports açıklaması"
+#, fuzzy
+msgid "FreeBSD Handbook"
+msgstr "Portlama El kitabı"
 
 #: www/about.php:51
 msgid ""
@@ -6127,6 +6127,9 @@ msgid ""
 msgstr ""
 "Eğer bu epostayı almıyorsanız, tekrar giriş yapmayı deneyin ve o zaman "
 "bildirimi yeniden göndermek için bir şansınız olacaktır."
+
+#~ msgid "FreeBSD Ports description"
+#~ msgstr "FreeBSD Ports açıklaması"
 
 #~ msgid "Enter Keywords:"
 #~ msgstr "Anahtar kelimeleri girin:"

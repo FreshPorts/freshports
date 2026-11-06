@@ -71,7 +71,8 @@
 
 <style>
 .category-history-chart { max-width: 800px; width: 100%; height: auto; }
-.category-history-chart text { fill: var(--body-text); font-size: 12px; }
+.category-history-chart text { fill: var(--body-text); font-size: 15px; }
+.category-history-scroll { overflow-x: auto; max-width: 100%; }
 .category-history-chart .grid { stroke: var(--quote-border); stroke-width: 1; }
 .category-history-chart .axis { stroke: var(--body-text); stroke-width: 1; }
 .category-history-chart .series { fill: none; stroke-width: 2; }
@@ -83,6 +84,8 @@
 }
 .category-history-key { font-weight: bold; }
 .category-history-changes td { vertical-align: top; }
+.category-history-changes td:first-child { white-space: nowrap; }
+.category-history-changes span a { color: inherit; }
 </style>
 
 	<?php echo freshports_MainTable(); ?>
@@ -186,6 +189,7 @@
 <?php echo _('Newest first. A new physical category is often added to VALID_CATEGORIES a commit or two before its directory, so it can appear as a virtual category for a moment.'); ?>
 </p>
 
+<div class="category-history-scroll">
 <table class="borderless category-history-changes">
 <tr><th><?php echo _('Date'); ?></th><th><?php echo _('Physical'); ?></th><th><?php echo _('Virtual'); ?></th><th><?php echo _('Added'); ?></th><th><?php echo _('Removed'); ?></th></tr>
 <?php
@@ -224,6 +228,7 @@
 		}
 ?>
 </table>
+</div>
 <?php
 	}
 ?>

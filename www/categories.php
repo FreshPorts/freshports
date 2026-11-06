@@ -232,6 +232,8 @@ $HTML .= "<td class=\"numeric-cell summary-cell\">$NumPorts</td><td colspan=\"2\
 
 $HTML .= "<tr><td colspan=\"$ColSpan\">" . _("Hmmm, I'm not so sure this port count is accurate. Dan Langille 27 April 2003") . '</td></tr>';
 
+$HTML .= "<tr><td colspan=\"$ColSpan\">" . sprintf(_('How the number of categories has changed: %s.'), '<a href="/category-history.php">' . _('categories over time') . '</a>') . '</td></tr>';
+
 $HTML .= '</table></td></tr></table>';
 
 echo $HTML;                                                   

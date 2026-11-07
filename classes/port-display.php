@@ -56,6 +56,7 @@ class port_display {
 	var $ShowPKGMessage;
 	var $ShowPortCreationDate;
 	var $ShowShortDescription;
+	var $ShowUpstream;          # a newer version found upstream by portscout, see #626
 	var $ShowUses;
 	var $ShowWatchListCount;
 	var $ShowWatchListStatus;
@@ -620,6 +621,7 @@ class port_display {
 		$this->ShowPKGMessage          = false;
 		$this->ShowPortCreationDate    = false;
 		$this->ShowShortDescription    = false;
+		$this->ShowUpstream            = false;
 		$this->ShowUses                = false;
 		$this->ShowWatchListCount      = false;
 		$this->ShowWatchListStatus     = false;
@@ -654,6 +656,7 @@ class port_display {
 		$this->ShowManPageLinks        = true;
 		$this->ShowPackageLink         = true;
 		$this->ShowShortDescription    = true;
+		$this->ShowUpstream            = true;
 		$this->ShowWatchListStatus     = true;
 		$this->ShowWatchListCount      = true;
 	}
@@ -1076,6 +1079,35 @@ class port_display {
 			$HTML .= '<span class="tooltiptext tooltip-top">' . $ToolTipText;
 			$HTML .= '</span></span>';
 		}
+
+		#
+		# a newer version found upstream by portscout.  See https://github.com/FreshPorts/freshports/issues/626
+		# Shown only when there is one; most ports are current, and saying so on
+		# every page would be noise.  Links to the maintainer's page on portscout,
+		# which did the work.
+		#
+		if (($this->ShowEverything || $this->ShowUpstream) && !$port->IsDeleted() && $port->LoadUpstream()) {
+			$Version = htmlspecialchars($port->upstream_version);
+
+			# portscout names its pages after the maintainer's address.  It comes
+			# from outside, so link only to one which looks like an address.
+			if (preg_match('/^[a-z0-9._+-]+@[a-z0-9.-]+$/', $port->upstream_maintainer)) {
+				$Version = '<a href="https://portscout.freebsd.org/' . htmlspecialchars($port->upstream_maintainer) . '.html" rel="noopener noreferrer">' . $Version . '</a>';
+			}
+
+			if (!empty($port->upstream_discovered)) {
+				$ToolTipText = sprintf(_('A newer version was found upstream by portscout, first on %1$s.  portscout last checked on %2$s.'),
+				                       $port->upstream_discovered, $port->upstream_checked);
+			} else {
+				$ToolTipText = sprintf(_('A newer version was found upstream by portscout.  portscout last checked on %s.'),
+				                       $port->upstream_checked);
+			}
+
+			$HTML .= ' <span class="tooltip">' . sprintf(_('upstream: %s'), $Version);
+			$HTML .= '<span class="tooltiptext tooltip-top">' . $ToolTipText;
+			$HTML .= '</span></span>';
+		}
+
 		if ($this->ShowEverything || $this->ShowShortDescription || $this->ShowCategory) {
 			// this dt was opened before all the icons, just before the start of the version number
 			$HTML .= '</dt>';

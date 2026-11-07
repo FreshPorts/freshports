@@ -121,6 +121,13 @@ class Port {
 	// version on current quarterly branch. see https://github.com/FreshPorts/freshports/issues/115
 	var $quarterly_revision;
 
+	// a newer version found upstream by portscout. set by LoadUpstream(). see https://github.com/FreshPorts/freshports/issues/626
+	var $upstream_version;
+	var $upstream_url;
+	var $upstream_maintainer;
+	var $upstream_discovered;
+	var $upstream_checked;
+
     var $use_rc_subr;
 
 	var $Debug = 0;
@@ -552,6 +559,59 @@ ON TEMP.wle_element_id = ports.element_id';
 		}
 
 		return pg_num_rows($result) == 1;
+	}
+
+	function LoadUpstream() {
+		# true if portscout has found a newer version of this port upstream, and
+		# sets the upstream_* properties.  See https://github.com/FreshPorts/freshports/issues/626
+		#
+		# port_upstream is filled daily from portscout, by the ingress script
+		# portscout_upstream.pl.  port_version is ports.version as it was then.
+		# Once a commit changes the version, the row no longer applies, so it is
+		# not shown, without waiting for the next load to remove it.
+		#
+		# Dates are UTC, the day only.
+
+		$this->upstream_version    = null;
+		$this->upstream_url        = null;
+		$this->upstream_maintainer = null;
+		$this->upstream_discovered = null;
+		$this->upstream_checked    = null;
+
+		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . '
+		SELECT PU.newver,
+		       PU.newurl,
+		       PU.maintainer,
+		       to_char(PU.discovered AT TIME ZONE \'UTC\', \'YYYY-MM-DD\') AS discovered,
+		       to_char(PU.checked    AT TIME ZONE \'UTC\', \'YYYY-MM-DD\') AS checked
+		  FROM port_upstream PU
+		  JOIN ports P ON P.id      = PU.port_id
+		              AND P.version = PU.port_version
+		 WHERE PU.port_id = $1';
+
+		if ($this->Debug) {
+			echo "<pre>$sql</pre>";
+		}
+
+		$result = pg_query_params($this->dbh, $sql, array($this->id));
+		if (!$result) {
+			syslog(LOG_ERR, __FILE__ . '::' . __FUNCTION__ . ' failed: ' . pg_last_error($this->dbh));
+			return false;
+		}
+
+		if (pg_num_rows($result) != 1) {
+			return false;
+		}
+
+		$myrow = pg_fetch_array($result);
+
+		$this->upstream_version    = $myrow['newver'];
+		$this->upstream_url        = $myrow['newurl'];
+		$this->upstream_maintainer = $myrow['maintainer'];
+		$this->upstream_discovered = $myrow['discovered'];
+		$this->upstream_checked    = $myrow['checked'];
+
+		return true;
 	}
 
 	function FetchByCategoryPortBranch($Category, $Port, $Branch, $UserID = 0) {

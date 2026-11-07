@@ -1095,12 +1095,13 @@ class port_display {
 				$Version = '<a href="https://portscout.freebsd.org/' . htmlspecialchars($port->upstream_maintainer) . '.html" rel="noopener noreferrer">' . $Version . '</a>';
 			}
 
+			# No "last checked" date: portscout checks every port daily, and
+			# showing it would mean clearing every one of these pages daily.
 			if (!empty($port->upstream_discovered)) {
-				$ToolTipText = sprintf(_('A newer version was found upstream by portscout, first on %1$s.  portscout last checked on %2$s.'),
-				                       $port->upstream_discovered, $port->upstream_checked);
+				$ToolTipText = sprintf(_('A newer version was found upstream by portscout, first on %s.'),
+				                       $port->upstream_discovered);
 			} else {
-				$ToolTipText = sprintf(_('A newer version was found upstream by portscout.  portscout last checked on %s.'),
-				                       $port->upstream_checked);
+				$ToolTipText = _('A newer version was found upstream by portscout.');
 			}
 
 			$HTML .= ' <span class="tooltip">' . sprintf(_('upstream: %s'), $Version);

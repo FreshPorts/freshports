@@ -123,10 +123,8 @@ class Port {
 
 	// a newer version found upstream by portscout. set by LoadUpstream(). see https://github.com/FreshPorts/freshports/issues/626
 	var $upstream_version;
-	var $upstream_url;
 	var $upstream_maintainer;
 	var $upstream_discovered;
-	var $upstream_checked;
 
     var $use_rc_subr;
 
@@ -570,20 +568,20 @@ ON TEMP.wle_element_id = ports.element_id';
 		# Once a commit changes the version, the row no longer applies, so it is
 		# not shown, without waiting for the next load to remove it.
 		#
-		# Dates are UTC, the day only.
+		# discovered is UTC, the day only.
+		#
+		# Only columns whose change makes the ingress clear this port's cached
+		# pages may be shown: port_version, newver, maintainer, discovered.
+		# newurl and checked change without clearing anything.
 
 		$this->upstream_version    = null;
-		$this->upstream_url        = null;
 		$this->upstream_maintainer = null;
 		$this->upstream_discovered = null;
-		$this->upstream_checked    = null;
 
 		$sql = "-- " . __FILE__ . '::' . __FUNCTION__ . "\n" . '
 		SELECT PU.newver,
-		       PU.newurl,
 		       PU.maintainer,
-		       to_char(PU.discovered AT TIME ZONE \'UTC\', \'YYYY-MM-DD\') AS discovered,
-		       to_char(PU.checked    AT TIME ZONE \'UTC\', \'YYYY-MM-DD\') AS checked
+		       to_char(PU.discovered AT TIME ZONE \'UTC\', \'YYYY-MM-DD\') AS discovered
 		  FROM port_upstream PU
 		  JOIN ports P ON P.id      = PU.port_id
 		              AND P.version = PU.port_version
@@ -606,10 +604,8 @@ ON TEMP.wle_element_id = ports.element_id';
 		$myrow = pg_fetch_array($result);
 
 		$this->upstream_version    = $myrow['newver'];
-		$this->upstream_url        = $myrow['newurl'];
 		$this->upstream_maintainer = $myrow['maintainer'];
 		$this->upstream_discovered = $myrow['discovered'];
-		$this->upstream_checked    = $myrow['checked'];
 
 		return true;
 	}

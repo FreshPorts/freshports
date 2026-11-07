@@ -1604,6 +1604,43 @@ function freshports_PackageVersionComment() {
 	return "\n<!-- freshports-www " . str_replace('--', '- -', htmlspecialchars($Version)) . " -->\n";
 }
 
+# Written by system_status.sh on the ingress host, one "name version" per line,
+# and mounted read-only here.  It is rewritten only when a version changes.
+define('FRESHPORTS_INGRESS_VERSIONS', '/var/db/freshports/cache/html/ingress-versions.txt');
+
+# Show which release of the ingress code and packages this site's ingress host
+# runs, in the page source only, one comment per line, e.g.
+#
+#   <!-- ingress ingress-scripts 2.3.7 -->
+#   <!-- ingress freshports-periodics 1.4 -->
+#
+# Nothing is shown if the file is missing or unreadable.
+function freshports_IngressVersionComments() {
+	$Lines = @file(FRESHPORTS_INGRESS_VERSIONS, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+	if ($Lines === false) {
+		return '';
+	}
+
+	$HTML = '';
+	foreach ($Lines as $Line) {
+		if (!preg_match('/^([A-Za-z0-9._+-]+) (\S+)$/', trim($Line), $Matches)) {
+			continue;
+		}
+
+		# '--' is not allowed inside an HTML comment
+		$HTML .= '<!-- ingress ' . str_replace('--', '- -', htmlspecialchars($Matches[1] . ' ' . $Matches[2])) . " -->\n";
+	}
+
+	return $HTML;
+}
+
+# The mtime of the ingress versions file, or 0 if there is none.
+function freshports_IngressVersionsLastModified() {
+	$Time = @filemtime(FRESHPORTS_INGRESS_VERSIONS);
+
+	return $Time === false ? 0 : $Time;
+}
+
 # Returns a Last-Modified time (unix) for a page that shows the version,
 # for use with freshports_ConditionalGetUnix().
 #

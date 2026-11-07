@@ -11,8 +11,8 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
-	# not just this file's mtime: the version shown below changes when other files do
-	freshports_ConditionalGetUnix(freshports_VersionLastModified());
+	# not just this file's mtime: the versions shown below change when other files do
+	freshports_ConditionalGetUnix(max(freshports_VersionLastModified(), freshports_IngressVersionsLastModified()));
 
 	freshports_Start(	_('Other copyrights'),
 					'',
@@ -58,6 +58,7 @@
 <?php
 echo freshports_ShowFooter();
 echo freshports_PackageVersionComment();
+echo freshports_IngressVersionComments();
 ?>
 
 </BODY>

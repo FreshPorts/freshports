@@ -5095,7 +5095,7 @@ msgstr "Takip listesini güncelle"
 
 #: www/pkg_upload.php:158 www/pkg_upload.php:205
 msgid "Empty staging area"
-msgstr "Hazırlık alanını boşalt"
+msgstr "Hazırlık alanını temizle"
 
 #: www/pkg_upload.php:166
 msgid "Ports found from your uploaded data."

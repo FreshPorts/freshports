@@ -457,23 +457,33 @@ function freshports_PortDisplayNew($db, $MyPort, $category, $port, $url_args, $B
 		$HTMLPortPackages = '';
 
 		//
-		// When processing cache, there might be race conditions where one part of the cache exists, but others do not
-		// Therefore, we read from the database only if we must.
+		// Packages belong to the port on head: the import matches each package
+		// origin to /ports/head/<category>/<port>, so a branch port has none.
+		// The packages cache key has no branch, so build this part from head
+		// whatever branch was asked for.  Before, a branch page viewed first
+		// after the cache was cleared stored "No package information" for the
+		// head page too - re #729
 		//
-		// sometimes they want to see a port on a branch, but there have been no commits against that port on that branch
-		// therefore, we display head. We display head because that's what will be on the branch by default, given no
-		// commits.
-		//
-		if (empty($MyPort)) {
-			$MyPort = _GetThatPort($db, $Debug, $category, $port, $ReadFromThisBranch, $User->id);
-			if (!$MyPort) {
+		if (!empty($MyPort) && $ReadFromThisBranch == BRANCH_HEAD) {
+			$PackagesPort = $MyPort;
+		} else {
+			$PackagesPort = _GetThatPort($db, $Debug, $category, $port, BRANCH_HEAD, $User->id);
+		}
+
+		# not on head (rare): fall back to the branch port, as before
+		if (!$PackagesPort) {
+			if (empty($MyPort)) {
+				$MyPort = _GetThatPort($db, $Debug, $category, $port, $ReadFromThisBranch, $User->id);
+			}
+			$PackagesPort = $MyPort;
+			if (!$PackagesPort) {
 				$msg = 'Fatal error: Could not fetch that port from the database on ' . __LINE__ . ' of ' . __FILE__;
 				syslog(LOG_ERR, $msg);
 				return -1;
 			}
 		}
 
-		$port_display->SetPort($MyPort, $ReadFromThisBranch);
+		$port_display->SetPort($PackagesPort, BRANCH_HEAD);
 		$port_display->SetDetailsPackages();
 
 		$HTMLPortPackages .= $port_display->Display();
@@ -487,7 +497,7 @@ function freshports_PortDisplayNew($db, $MyPort, $category, $port, $url_args, $B
 			# the short description is used in the page title.
 			#
 			$CachePackages->CacheDataSet($HTMLPortPackages);
-			$CachePackages->AddPortPackages($MyPort->category, $MyPort->port);
+			$CachePackages->AddPortPackages($PackagesPort->category, $PackagesPort->port);
 		} else {
 			if ($Debug) echo 'not saving to cache, as instructed<br>';
 		}

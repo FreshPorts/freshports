@@ -26,19 +26,19 @@ class CacheCategory extends Cache {
 		$this->PageSize = $PageSize;
 	}
 
-	function RetrieveCategory($Category, $User = 0, $PageNum = 1, $Branch = BRANCH_HEAD) {
-		$this->_Log("CacheCategory: Retrieving for $Category page $PageNum");
-		$Key = $this->_CategoryKey($Category, $User, $PageNum, $Branch);
+	function RetrieveCategory($Category, $User = 0, $PageNum = 1, $Branch = BRANCH_HEAD, $Sort = CATEGORY_SORT_NAME) {
+		$this->_Log("CacheCategory: Retrieving for $Category page $PageNum sort $Sort");
+		$Key = $this->_CategoryKey($Category, $User, $PageNum, $Branch, $Sort);
 		$result = parent::Retrieve($Key);
 
 		return $result;
 	}
 
-	function AddCategory($Category, $User, $PageNum = 1, $Branch = BRANCH_HEAD) {
-		$this->_Log("CacheCategory: Adding for $Category page $PageNum");
+	function AddCategory($Category, $User, $PageNum = 1, $Branch = BRANCH_HEAD, $Sort = CATEGORY_SORT_NAME) {
+		$this->_Log("CacheCategory: Adding for $Category page $PageNum sort $Sort");
 
 		$CacheDir = $this->CacheDir . '/' . self::CacheCategory . '/' . $Category;
-		$Key = $this->_CategoryKey($Category, $User, $PageNum, $Branch);
+		$Key = $this->_CategoryKey($Category, $User, $PageNum, $Branch, $Sort);
 		 
 		if (!is_dir($CacheDir)) {
 			$this->_Log("CacheCategory: creating directory $CacheDir");
@@ -67,15 +67,15 @@ class CacheCategory extends Cache {
 		# the wild card allows us to remove all cache entries for this category
 		# regardless of the CacheType or page number
 		#
-		$Key = $this->_CategoryKey($Category,  '*', '*', '*');
+		$Key = $this->_CategoryKey($Category,  '*', '*', '*', '*');
 		$result = parent::Remove($Key);
 
 		return $result;
 	}
 
-	function _CategoryKey($Category, $User = 0, $PageNum = 1, $Branch = BRANCH_HEAD) {
-		// might want some parameter checking here
-		$Key = self::CacheCategory . "/$Category/$Category.$User.$Branch.PageSize$this->PageSize.PageNum$PageNum.html";
+	function _CategoryKey($Category, $User = 0, $PageNum = 1, $Branch = BRANCH_HEAD, $Sort = CATEGORY_SORT_NAME) {
+		// $Sort must already be one of the CATEGORY_SORT_* values; see missing-category.php
+		$Key = self::CacheCategory . "/$Category/$Category.$User.$Branch.PageSize$this->PageSize.PageNum$PageNum.Sort$Sort.html";
 
 		$this->_Log("CacheCategory: Key created is $Key");
 

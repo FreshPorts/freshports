@@ -761,9 +761,11 @@ ON TEMP.wle_element_id = ports.element_id';
 		return $bResult;
 	}
 
-	function FetchByCategoryInitialise($CategoryName, $UserID = 0, $PageSize = 0, $PageNo = 0, $Branch = BRANCH_HEAD) {
+	function FetchByCategoryInitialise($CategoryName, $UserID = 0, $PageSize = 0, $PageNo = 0, $Branch = BRANCH_HEAD, $Sort = CATEGORY_SORT_NAME) {
 		# fetch all ports based on category
 		# e.g. id for net
+		#
+		# $Sort is one of the CATEGORY_SORT_* constants; anything else sorts by name.
 
 #		die("into " . __FUNCTION__ . 'with branch = ' . $Branch);
 
@@ -788,9 +790,31 @@ ON TEMP.wle_element_id = ports.element_id';
 		# pages, and the functions would otherwise be evaluated for every OFFSET row.
 		# ports.id breaks ties between ports with the same name, so paging is stable.
 		#
+		# sort_date is the date being sorted on (NULL when sorting by name). It is
+		# carried out of page_ports so the final ORDER BY matches the paging order.
+		# Newest first; ports without a date go last.
+		#
+		switch ($Sort) {
+			case CATEGORY_SORT_CREATED:
+				$sort_date = 'ports.date_added';
+				$sort_join = '';
+				break;
+
+			case CATEGORY_SORT_UPDATED:
+				$sort_date = 'CL.commit_date';
+				$sort_join = '
+         LEFT JOIN commit_log CL ON CL.id                = ports.last_commit_id';
+				break;
+
+			default:
+				$sort_date = 'NULL::timestamptz';
+				$sort_join = '';
+				break;
+		}
+
 		$sql_page_ports = "
 WITH page_ports AS (
-  SELECT ports.id, element.name AS port
+  SELECT ports.id, element.name AS port, $sort_date AS sort_date
     FROM ports_categories
          JOIN categories       ON categories.id          = ports_categories.category_id
                               AND categories.name        = $1
@@ -798,8 +822,8 @@ WITH page_ports AS (
          JOIN element          ON element.id             = ports.element_id
                               AND element.status         = 'A'
          JOIN element_pathname EP ON EP.element_id       = ports.element_id
-                              AND EP.pathname         like $2
-   ORDER BY element.name, ports.id";
+                              AND EP.pathname         like $2$sort_join
+   ORDER BY sort_date DESC NULLS LAST, element.name, ports.id";
 
 		if ($PageSize) {
 			$params[] = $PageSize;
@@ -906,7 +930,8 @@ SELECT ports.id,
         NULL AS onwatchlist,
         PortVersionOnQuarterlyBranch(ports.id, categories.name || '/' || page_ports.port) AS quarterly_revision, 
         use_rc_subr,
-        page_ports.port
+        page_ports.port,
+        page_ports.sort_date
 
    FROM page_ports
         JOIN ports                          ON ports.id                 = page_ports.id
@@ -929,7 +954,7 @@ LEFT OUTER JOIN
 		}
 
 		$sql .= "
- ORDER BY port, id";
+ ORDER BY sort_date DESC NULLS LAST, port, id";
 
 		if ($this->Debug) echo "<pre>$sql</pre>";
 

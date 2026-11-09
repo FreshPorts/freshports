@@ -95,6 +95,11 @@ define('DISTFILESSURVEYSHOW', 1);
 define('BRANCH_HEAD',      'head');
 define('BRANCH_QUARTERLY', 'quarterly');
 
+# sort orders for the ports on a category page: the value of ?sort=
+define('CATEGORY_SORT_NAME',    'name');
+define('CATEGORY_SORT_CREATED', 'created');
+define('CATEGORY_SORT_UPDATED', 'updated');
+
 if (!defined('PATH_TO_PORTSDIR')) define('PATH_TO_PORTSDIR', '/usr/local/');  // must have a trailing /
 
 define('PORTSDIR_PREFIX',  'PORTS-');

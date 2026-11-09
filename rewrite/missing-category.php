@@ -17,16 +17,58 @@ GLOBAL $g_NOINDEX;
 
 $g_NOINDEX = 1;  // we should not index category pages. too much clutter.
 
-function freshports_CategoryNextPreviousPage($CategoryName, $PortCount, $PageNumber, $PageSize, $Branch = BRANCH_HEAD) {
+function freshports_CategorySortOrders() {
+	# the sort orders offered on a category page, in display order: value => label
+	return array(
+		CATEGORY_SORT_NAME    => _('Name'),
+		CATEGORY_SORT_CREATED => _('Date added'),
+		CATEGORY_SORT_UPDATED => _('Last updated'),
+	);
+}
 
-	$HTML = _('Result Page:');
+function freshports_CategorySort($Sort) {
+	# The sort order is part of the cache key. Accept only the orders offered,
+	# so arbitrary values do not each create their own cache entries.
+	return array_key_exists($Sort, freshports_CategorySortOrders()) ? $Sort : CATEGORY_SORT_NAME;
+}
 
+function freshports_CategoryQueryParms($PageSize, $Branch, $Sort) {
+	# the query parameters every link on a category page carries; the default sort is left out
 	$queryParms = array();
 	if ($Branch != BRANCH_HEAD) {
 		$queryParms['branch'] = $Branch;
 	}
 
 	$queryParms['page_size'] = $PageSize;
+
+	if ($Sort != CATEGORY_SORT_NAME) {
+		$queryParms['sort'] = $Sort;
+	}
+
+	return $queryParms;
+}
+
+function freshports_CategorySortLinks($CategoryName, $PageSize, $Branch, $Sort) {
+	# "Sort by: Name | Date added | Last updated" - a new sort order starts again at page 1.
+	# nofollow, because crawlers do not need every category three times over.
+	$Links = array();
+	foreach (freshports_CategorySortOrders() as $Value => $Label) {
+		if ($Value == $Sort) {
+			$Links[] = '<b>' . $Label . '</b>';
+		} else {
+			$queryParms = freshports_CategoryQueryParms($PageSize, $Branch, $Value);
+			$Links[] = '<a href="/' . $CategoryName . '/?' . http_build_query($queryParms, '', '&amp;') . '" rel="nofollow">' . $Label . '</a>';
+		}
+	}
+
+	return _('Sort by:') . ' ' . implode(' | ', $Links);
+}
+
+function freshports_CategoryNextPreviousPage($CategoryName, $PortCount, $PageNumber, $PageSize, $Branch = BRANCH_HEAD, $Sort = CATEGORY_SORT_NAME) {
+
+	$HTML = _('Result Page:');
+
+	$queryParms = freshports_CategoryQueryParms($PageSize, $Branch, $Sort);
 
 	$NumPages = ceil($PortCount / $PageSize);
 
@@ -104,7 +146,11 @@ function freshports_CategoryDisplay($dbh, $category, $url_parts, $Branch = BRANC
 		# these are the two main things: page number, and page size
 		if (IsSet($url_args['page']))      $PageNumber = $url_args['page'];
 		if (IsSet($url_args['page_size'])) $PageSize   = $url_args['page_size'];
+		if (IsSet($url_args['sort']))      $Sort       = $url_args['sort'];
 	}
+
+	# only the offered sort orders; anything else, including an array, means by name
+	$Sort = freshports_CategorySort(is_string($Sort ?? null) ? $Sort : CATEGORY_SORT_NAME);
 
 	# if not found on the URI, or odd values, give them default values here.
 	if (!IsSet($PageNumber) || $PageNumber == '') {
@@ -143,6 +189,7 @@ function freshports_CategoryDisplay($dbh, $category, $url_parts, $Branch = BRANC
 		echo "\$Branch     = '$Branch'<br>\n";
 		echo "\$PageNumber = '$PageNumber'<br>\n";
 		echo "\$PageSize   = '$PageSize'<br>\n";
+		echo "\$Sort       = '$Sort'<br>\n";
 	}
 
 	# these two options must be the last on the line.  And as such are mutually exclusive
@@ -158,7 +205,7 @@ function freshports_CategoryDisplay($dbh, $category, $url_parts, $Branch = BRANC
 
 	$Cache = new CacheCategory();
 	$Cache->PageSize = $PageSize;
-	$result = $Cache->RetrieveCategory($category->name, $User->id, $PageNumber, $Branch);
+	$result = $Cache->RetrieveCategory($category->name, $User->id, $PageNumber, $Branch, $Sort);
 	if (!$result && !$BypassCache && !$RefreshCache) {
 		if ($Debug) echo "found something from the cache<br>\n";
 		$HTML = $Cache->CacheDataGet();
@@ -183,7 +230,7 @@ function freshports_CategoryDisplay($dbh, $category, $url_parts, $Branch = BRANC
 		$port = new Port($dbh);
 		$port->SetDebug($Debug);
 
-		$numrows = $port->FetchByCategoryInitialise($category->name, $User->id, $PageSize, $PageNumber, $Branch);
+		$numrows = $port->FetchByCategoryInitialise($category->name, $User->id, $PageSize, $PageNumber, $Branch, $Sort);
 		if ($numrows == 0) {
 			# there is nothing here
 			# Probably, someone is manually changing the page number
@@ -230,7 +277,11 @@ function freshports_CategoryDisplay($dbh, $category, $url_parts, $Branch = BRANC
 		}
 
 		$HTML .= '<div class="pagination">' .
-			freshports_CategoryNextPreviousPage($category->name, $PortCount, $PageNumber, $PageSize, $Branch)  .
+			freshports_CategorySortLinks($category->name, $PageSize, $Branch, $Sort) .
+			'</div>';
+
+		$HTML .= '<div class="pagination">' .
+			freshports_CategoryNextPreviousPage($category->name, $PortCount, $PageNumber, $PageSize, $Branch, $Sort)  .
 			'</div>';
 
 		$HTML .= '</td></tr>';
@@ -266,7 +317,7 @@ function freshports_CategoryDisplay($dbh, $category, $url_parts, $Branch = BRANC
 <tr><td>
 <div class="pagination">' .
 
-			freshports_CategoryNextPreviousPage($category->name, $PortCount, $PageNumber, $PageSize, $Branch) . '
+			freshports_CategoryNextPreviousPage($category->name, $PortCount, $PageNumber, $PageSize, $Branch, $Sort) . '
 
 </div> 
 </td></tr>
@@ -293,7 +344,7 @@ function freshports_CategoryDisplay($dbh, $category, $url_parts, $Branch = BRANC
 	# We didn't find anything in the cache, and we are not not bypassing cache
 	if ($result && !$BypassCache || $RefreshCache) {
 		$Cache->CacheDataSet($HTML);
-		$Cache->AddCategory($category->name, $User->id, $PageNumber, $Branch);
+		$Cache->AddCategory($category->name, $User->id, $PageNumber, $Branch, $Sort);
 	}
 
 	# by here, $HTML has either been fetched from cache or built.

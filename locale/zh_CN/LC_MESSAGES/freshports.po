@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: freshports\n"
 "Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
-"POT-Creation-Date: 2026-11-06 19:56+0000\n"
+"POT-Creation-Date: 2026-11-09 15:32+0000\n"
 "PO-Revision-Date: 2026-11-04 18:39+0800\n"
 "Last-Translator: ykla <yklaxds@gmail.com>\n"
 "Language-Team: ykla <yklaxds@gmail.com>\n"
@@ -15,8 +15,8 @@ msgstr ""
 "X-Generator: Poedit 3.10\n"
 "X-Poedit-Basepath: .\n"
 
-#: classes/display_commit.php:126 classes/port-display.php:1182
-#: include/freshports.php:1958
+#: classes/display_commit.php:126 classes/port-display.php:1215
+#: include/freshports.php:1995
 msgid "Author:"
 msgstr "作者："
 
@@ -67,68 +67,68 @@ msgstr "提交历史"
 msgid "select a page size"
 msgstr "选择每页条数"
 
-#: classes/port-display.php:162
+#: classes/port-display.php:163
 #, php-format
 msgid "For %s"
 msgstr "适用于 %s"
 
-#: classes/port-display.php:162
+#: classes/port-display.php:163
 msgid "or"
 msgstr "或"
 
-#: classes/port-display.php:180
+#: classes/port-display.php:181
 #, php-format
 msgid "If upgrading from &gt; %1$s and &lt; %2$s:"
 msgstr "如果从 &gt; %1$s 且 &lt; %2$s 的版本升级："
 
-#: classes/port-display.php:183
+#: classes/port-display.php:184
 #, php-format
 msgid "If upgrading from &gt; %s:"
 msgstr "如果从 &gt; %s 的版本升级："
 
-#: classes/port-display.php:186
+#: classes/port-display.php:187
 #, php-format
 msgid "If upgrading from &lt; %s:"
 msgstr "如果从 &lt; %s 的版本升级："
 
-#: classes/port-display.php:189
+#: classes/port-display.php:190
 msgid "If upgrading"
 msgstr "如果升级"
 
-#: classes/port-display.php:197
+#: classes/port-display.php:198
 msgid "If removing:"
 msgstr "如果移除："
 
-#: classes/port-display.php:346
+#: classes/port-display.php:347
 msgid "SVNWeb - no subversion history for this port"
 msgstr "SVNWeb——此 Port 没有 Subversion 历史"
 
-#: classes/port-display.php:895
+#: classes/port-display.php:898
 msgid "last time FreshPorts imported a new release of this repo"
 msgstr "FreshPorts 上次导入此仓库新版本的时间"
 
-#: classes/port-display.php:896
+#: classes/port-display.php:899
 msgid "last checked by FreshPorts"
 msgstr "FreshPorts 上次检查时间"
 
-#: classes/port-display.php:899
+#: classes/port-display.php:902
 msgid "repo not found - no repo build date"
 msgstr "未找到仓库——无仓库构建日期"
 
-#: classes/port-display.php:901 www/backend/status.php:46
+#: classes/port-display.php:904 www/backend/status.php:46
 #: www/backend/status.php:70
 msgid "repo build date"
 msgstr "仓库构建日期"
 
-#: classes/port-display.php:905 www/report-subscriptions.php:224
+#: classes/port-display.php:908 www/report-subscriptions.php:224
 msgid "nil"
 msgstr "无"
 
-#: classes/port-display.php:911
+#: classes/port-display.php:914
 msgid "never"
 msgstr "从未"
 
-#: classes/port-display.php:1000
+#: classes/port-display.php:1003
 msgid ""
 "The package version for this port includes the version of FreeBSD it is "
 "built for, so packages for other releases are named differently."
@@ -136,26 +136,26 @@ msgstr ""
 "此 Port 的软件包版本包含其构建所针对的 FreeBSD 版本，因此为其他 FreeBSD 版本"
 "构建的软件包命名有所不同。"
 
-#: classes/port-display.php:1001
+#: classes/port-display.php:1004
 #, php-format
 msgid "(package %s)"
 msgstr "（软件包 %s）"
 
-#: classes/port-display.php:1018
+#: classes/port-display.php:1021
 msgid "The category for this port"
 msgstr "此 Port 所属分类"
 
-#: classes/port-display.php:1065
+#: classes/port-display.php:1068
 msgid "Package not present on quarterly."
 msgstr "季度分支上没有该软件包。"
 
-#: classes/port-display.php:1067
+#: classes/port-display.php:1070
 msgid ""
 "This port was created during this quarter. It will be in the next quarterly "
 "branch but not the current one."
 msgstr "此 Port 创建于本季度。它将出现在下季度分支中，而非当前分支。"
 
-#: classes/port-display.php:1069
+#: classes/port-display.php:1072
 msgid ""
 "This is expected early in the quarter (because the new package repo has not "
 "been built yet.). Otherwise, this missing version is most likely a "
@@ -164,152 +164,166 @@ msgstr ""
 "这种情况在季度初属正常（因为新的软件包仓库尚未构建）。否则，缺失此版本很可能"
 "是 FreshPorts 的错误。"
 
-#: classes/port-display.php:1073
+#: classes/port-display.php:1076
 msgid "Version of this port present on the latest quarterly branch."
 msgstr "此 Port 在最新季度分支上的版本。"
 
-#: classes/port-display.php:1074
+#: classes/port-display.php:1077
 msgid "NOTE: Slave port - quarterly revision is most likely wrong."
 msgstr "注意：从属 Port——季度修订版很可能有误。"
 
-#: classes/port-display.php:1106
+#: classes/port-display.php:1101
+#, php-format
+msgid "A newer version was found upstream by portscout, first on %s."
+msgstr ""
+
+#: classes/port-display.php:1104
+msgid "A newer version was found upstream by portscout."
+msgstr ""
+
+#: classes/port-display.php:1107
+#, php-format
+msgid "upstream: %s"
+msgstr ""
+
+#: classes/port-display.php:1139
 #, php-format
 msgid "This port expired on: %s"
 msgstr "此 Port 已于以下日期到期：%s"
 
-#: classes/port-display.php:1134
+#: classes/port-display.php:1167
 msgid "There is no maintainer for this port."
 msgstr "此 Port 没有维护者。"
 
-#: classes/port-display.php:1136
+#: classes/port-display.php:1169
 msgid "email the FreeBSD Ports mailing list"
 msgstr "向 FreeBSD Ports 邮件列表发送邮件"
 
-#: classes/port-display.php:1138
+#: classes/port-display.php:1171
 #, php-format
 msgid ""
 "Any concerns regarding this port should be directed to the FreeBSD Ports "
 "mailing list via %s"
 msgstr "有关此 Port 的任何疑问，请通过 %s 发送至 FreeBSD Ports 邮件列表"
 
-#: classes/port-display.php:1142
+#: classes/port-display.php:1175
 msgid "Maintainer:"
 msgstr "维护者："
 
-#: classes/port-display.php:1143
+#: classes/port-display.php:1176
 msgid "email the maintainer"
 msgstr "向维护者发送邮件"
 
-#: classes/port-display.php:1156
+#: classes/port-display.php:1189
 msgid "last change committed by"
 msgstr "最后更改由"
 
-#: classes/port-display.php:1187
+#: classes/port-display.php:1220
 #, php-format
 msgid "on %s"
 msgstr "于 %s 提交"
 
-#: classes/port-display.php:1205
+#: classes/port-display.php:1238
 msgid "no changes recorded in FreshPorts"
 msgstr "FreshPorts 中没有记录任何更改"
 
-#: classes/port-display.php:1213
+#: classes/port-display.php:1246
 msgid "Port Added:"
 msgstr "Port 添加时间："
 
-#: classes/port-display.php:1217 classes/port-display.php:1229
+#: classes/port-display.php:1250 classes/port-display.php:1262
 msgid "unknown"
 msgstr "未知"
 
-#: classes/port-display.php:1225
+#: classes/port-display.php:1258
 msgid "Last Update:"
 msgstr "最后更新："
 
-#: classes/port-display.php:1246
+#: classes/port-display.php:1279
 msgid "Commit Hash:"
 msgstr "提交哈希："
 
-#: classes/port-display.php:1249
+#: classes/port-display.php:1282
 msgid "SVN Revision:"
 msgstr "SVN 修订版："
 
-#: classes/port-display.php:1253
+#: classes/port-display.php:1286
 msgid "UNKNOWN"
 msgstr "未知"
 
-#: classes/port-display.php:1279
+#: classes/port-display.php:1312
 msgid "Also Listed In:"
 msgstr "同时收录于："
 
-#: classes/port-display.php:1297
+#: classes/port-display.php:1330
 msgid "License:"
 msgstr "许可证："
 
-#: classes/port-display.php:1301
+#: classes/port-display.php:1334
 msgid "not specified in port"
 msgstr "Port 中未指定"
 
-#: classes/port-display.php:1319 classes/port-display.php:1333
+#: classes/port-display.php:1352 classes/port-display.php:1366
 msgid "Homepage for this port"
 msgstr "此 Port 的主页"
 
-#: classes/port-display.php:1323
+#: classes/port-display.php:1356
 msgid "Description:"
 msgstr "描述："
 
-#: classes/port-display.php:1360
+#: classes/port-display.php:1393
 msgid "Package"
 msgstr "软件包"
 
-#: classes/port-display.php:1387
+#: classes/port-display.php:1420
 msgid "Service Scripts"
 msgstr "服务脚本"
 
-#: classes/port-display.php:1388
+#: classes/port-display.php:1421
 msgid "no SUBR information found for this port"
 msgstr "未找到此 Port 的 SUBR 信息"
 
-#: classes/port-display.php:1398
+#: classes/port-display.php:1431
 msgid "Dependency lines"
 msgstr "依赖行"
 
-#: classes/port-display.php:1402 classes/port-display.php:1413
+#: classes/port-display.php:1435 classes/port-display.php:1446
 #, php-format
 msgid "For %s depends:"
 msgstr "%s 依赖："
 
-#: classes/port-display.php:1432
+#: classes/port-display.php:1465
 msgid "Conflicts:"
 msgstr "冲突："
 
-#: classes/port-display.php:1457
+#: classes/port-display.php:1490
 msgid "Conflicts Matches:"
 msgstr "冲突匹配："
 
-#: classes/port-display.php:1462
+#: classes/port-display.php:1495
 #, php-format
 msgid "conflicts with %s"
 msgstr "与 %s 冲突"
 
-#: classes/port-display.php:1466
+#: classes/port-display.php:1499
 msgid ""
 "There are no Conflicts Matches for this port.  This is usually an error."
 msgstr "此 Port 没有冲突匹配项。这通常是错误所致。"
 
-#: classes/port-display.php:1480
+#: classes/port-display.php:1513
 msgid "No installation instructions:"
 msgstr "没有安装说明："
 
-#: classes/port-display.php:1480
+#: classes/port-display.php:1513
 msgid "This port has been deleted."
 msgstr "此 Port 已删除。"
 
-#: classes/port-display.php:1482
+#: classes/port-display.php:1515
 msgid ""
 "To install <a href=\"/faq.php#port\" title=\"what is a port?\">the port</a>:"
 msgstr "安装<a href=\"/faq.php#port\" title=\"what is a port?\">该 Port</a>："
 
-#: classes/port-display.php:1484
+#: classes/port-display.php:1517
 msgid ""
 "No <a href=\"/faq.php#package\" title=\"what is a package?\">package</a> is "
 "available:"
@@ -317,7 +331,7 @@ msgstr ""
 "没有可用的<a href=\"/faq.php#package\" title=\"what is a package?\">软件包</"
 "a>："
 
-#: classes/port-display.php:1487
+#: classes/port-display.php:1520
 msgid ""
 "We doubt a <b><a href=\"/faq.php#package\" title=\"what is a package?"
 "\">package</a></b> is available for this port because we see it marked as:"
@@ -325,31 +339,31 @@ msgstr ""
 "我们怀疑此 Port 没有可用的<b><a href=\"/faq.php#package\" title=\"what is a "
 "package?\">软件包</a></b>，因为我们看到它被标记为："
 
-#: classes/port-display.php:1490 include/freshports.php:612
+#: classes/port-display.php:1523 include/freshports.php:612
 msgid "Forbidden"
 msgstr "已禁止"
 
-#: classes/port-display.php:1491 include/freshports.php:623
+#: classes/port-display.php:1524 include/freshports.php:623
 msgid "Broken"
 msgstr "已损坏"
 
-#: classes/port-display.php:1492 include/freshports.php:700
+#: classes/port-display.php:1525 include/freshports.php:700
 msgid "Ignore"
 msgstr "已忽略"
 
-#: classes/port-display.php:1493 include/freshports.php:667
+#: classes/port-display.php:1526 include/freshports.php:667
 msgid "Restricted"
 msgstr "受限"
 
-#: classes/port-display.php:1494
+#: classes/port-display.php:1527
 msgid "Package not available"
 msgstr "软件包不可用"
 
-#: classes/port-display.php:1497
+#: classes/port-display.php:1530
 msgid "Packages are normally not provided for ports that are marked as above."
 msgstr "对于被标记为上述状态的 Port，通常不提供软件包。"
 
-#: classes/port-display.php:1499
+#: classes/port-display.php:1532
 msgid ""
 "To add the <a href=\"/faq.php#package\" title=\"what is a package?"
 "\">package</a>, run one of these commands:"
@@ -357,7 +371,7 @@ msgstr ""
 "要添加<a href=\"/faq.php#package\" title=\"what is a package?\">软件包</a>，"
 "请运行以下命令之一："
 
-#: classes/port-display.php:1502
+#: classes/port-display.php:1535
 msgid ""
 "NOTE: If this package has multiple flavors (see below), then use one of them "
 "instead of the name specified above."
@@ -365,7 +379,7 @@ msgstr ""
 "注意：如果此软件包有多个 flavor（见下文），请使用其中之一，而非上面指定的名"
 "称。"
 
-#: classes/port-display.php:1505
+#: classes/port-display.php:1538
 #, php-format
 msgid ""
 "NOTE: This is a Python port. Instead of %s listed in the above command, you "
@@ -374,208 +388,208 @@ msgstr ""
 "注意：这是 Python Port。您可以从<a href=\"#packages\">软件包</a>部分列出的名"
 "称中任选一个，代替上述命令中的 %s。"
 
-#: classes/port-display.php:1515
+#: classes/port-display.php:1548
 #, php-format
 msgid "there is no package for this port: %s"
 msgstr "此 Port 没有对应的软件包：%s"
 
-#: classes/port-display.php:1548 classes/port-display.php:1893
-#: classes/port-display.php:2127 classes/port-display.php:2161
-#: include/freshports.php:1657
+#: classes/port-display.php:1581 classes/port-display.php:1926
+#: classes/port-display.php:2160 classes/port-display.php:2194
+#: include/freshports.php:1694
 #, php-format
 msgid "Expand this list (%d items)"
 msgstr "展开此列表（%d 项）"
 
-#: classes/port-display.php:1552 classes/port-display.php:1555
-#: classes/port-display.php:1895 classes/port-display.php:1903
-#: classes/port-display.php:2011 classes/port-display.php:2026
-#: classes/port-display.php:2134 classes/port-display.php:2164
-#: classes/port-display.php:2174 include/freshports.php:1667
+#: classes/port-display.php:1585 classes/port-display.php:1588
+#: classes/port-display.php:1928 classes/port-display.php:1936
+#: classes/port-display.php:2044 classes/port-display.php:2059
+#: classes/port-display.php:2167 classes/port-display.php:2197
+#: classes/port-display.php:2207 include/freshports.php:1704
 msgid "Collapse this list."
 msgstr "收起此列表。"
 
-#: classes/port-display.php:1559
+#: classes/port-display.php:1592
 msgid "There is no distinfo for this port."
 msgstr "此 Port 没有 distinfo。"
 
-#: classes/port-display.php:1612 classes/port-display.php:1688
+#: classes/port-display.php:1645 classes/port-display.php:1721
 msgid "(timestamps in pop-ups are UTC):"
 msgstr "（弹窗中的时间戳为 UTC）："
 
-#: classes/port-display.php:1612 classes/port-display.php:1688
+#: classes/port-display.php:1645 classes/port-display.php:1721
 msgid "Packages"
 msgstr "软件包"
 
-#: classes/port-display.php:1734
+#: classes/port-display.php:1767
 msgid "No package information for this port in our database"
 msgstr "我们的数据库中没有此 Port 的软件包信息"
 
-#: classes/port-display.php:1735
+#: classes/port-display.php:1768
 msgid "Sometimes this happens. Not all ports have packages."
 msgstr "有时会出现这种情况。并非所有 Port 都有软件包。"
 
-#: classes/port-display.php:1737
+#: classes/port-display.php:1770
 msgid "This is doubly so for new ports, like this one."
 msgstr "像这样的新 Port 更是如此。"
 
-#: classes/port-display.php:1739
+#: classes/port-display.php:1772
 #, php-format
 msgid "Perhaps there is a build error. Check the fallout link: %s"
 msgstr "可能出现了构建错误。请查看 fallout 链接：%s"
 
-#: classes/port-display.php:1758
+#: classes/port-display.php:1791
 msgid "Master port"
 msgstr "主 Port"
 
-#: classes/port-display.php:1769
+#: classes/port-display.php:1802
 msgid "Slave ports:"
 msgstr "从属 Port："
 
-#: classes/port-display.php:1781
+#: classes/port-display.php:1814
 msgid "Dependencies"
 msgstr "依赖"
 
-#: classes/port-display.php:1782
+#: classes/port-display.php:1815
 msgid ""
 "NOTE: FreshPorts displays only information on required and default "
 "dependencies.  Optional dependencies are not covered."
 msgstr "注意：FreshPorts 仅显示必需依赖与默认依赖的信息，可选依赖不在其列。"
 
-#: classes/port-display.php:1793
+#: classes/port-display.php:1826
 msgid "Build dependencies:"
 msgstr "构建依赖："
 
-#: classes/port-display.php:1799
+#: classes/port-display.php:1832
 msgid "Test dependencies:"
 msgstr "测试依赖："
 
-#: classes/port-display.php:1805
+#: classes/port-display.php:1838
 msgid "Runtime dependencies:"
 msgstr "运行时依赖："
 
-#: classes/port-display.php:1811
+#: classes/port-display.php:1844
 msgid "Library dependencies:"
 msgstr "库依赖："
 
-#: classes/port-display.php:1817
+#: classes/port-display.php:1850
 msgid "Fetch dependencies:"
 msgstr "获取依赖："
 
-#: classes/port-display.php:1823
+#: classes/port-display.php:1856
 msgid "Patch dependencies:"
 msgstr "补丁依赖："
 
-#: classes/port-display.php:1829
+#: classes/port-display.php:1862
 msgid "Extract dependencies:"
 msgstr "提取依赖："
 
-#: classes/port-display.php:1835
+#: classes/port-display.php:1868
 msgid "Build and run dependencies:"
 msgstr "构建与运行依赖："
 
-#: classes/port-display.php:1841
+#: classes/port-display.php:1874
 msgid "This port has no dependencies."
 msgstr "此 Port 没有任何依赖。"
 
-#: classes/port-display.php:1852
+#: classes/port-display.php:1885
 msgid "Configuration Options"
 msgstr "配置选项"
 
-#: classes/port-display.php:1856
+#: classes/port-display.php:1889
 msgid "No options to configure"
 msgstr "没有可配置的选项"
 
-#: classes/port-display.php:1860
+#: classes/port-display.php:1893
 msgid "Options name"
 msgstr "选项名称"
 
-#: classes/port-display.php:1864
+#: classes/port-display.php:1897
 msgid "N/A"
 msgstr "不适用"
 
-#: classes/port-display.php:1881
+#: classes/port-display.php:1914
 msgid "FreshPorts was unable to extract/find any pkg message"
 msgstr "FreshPorts 未能提取或找到任何 pkg 消息"
 
-#: classes/port-display.php:1886
+#: classes/port-display.php:1919
 msgid "Master Sites:"
 msgstr "主站点："
 
-#: classes/port-display.php:1906
+#: classes/port-display.php:1939
 msgid "There is no master site for this port."
 msgstr "此 Port 没有主站点。"
 
-#: classes/port-display.php:1966
+#: classes/port-display.php:1999
 msgid "Build"
 msgstr "构建"
 
-#: classes/port-display.php:1966
+#: classes/port-display.php:1999
 msgid "Build and run"
 msgstr "构建与运行"
 
-#: classes/port-display.php:1966
+#: classes/port-display.php:1999
 msgid "Extract"
 msgstr "提取"
 
-#: classes/port-display.php:1966
+#: classes/port-display.php:1999
 msgid "Fetch"
 msgstr "获取"
 
-#: classes/port-display.php:1967
+#: classes/port-display.php:2000
 msgid "Libraries"
 msgstr "库"
 
-#: classes/port-display.php:1967
+#: classes/port-display.php:2000
 msgid "Patch"
 msgstr "补丁"
 
-#: classes/port-display.php:1967
+#: classes/port-display.php:2000
 msgid "Run"
 msgstr "运行"
 
-#: classes/port-display.php:1967
+#: classes/port-display.php:2000
 msgid "Test"
 msgstr "测试"
 
-#: classes/port-display.php:1977
+#: classes/port-display.php:2010
 #, php-format
 msgid "for %s"
 msgstr "用于 %s"
 
-#: classes/port-display.php:2009
+#: classes/port-display.php:2042
 #, php-format
 msgid ""
 "Expand this list (%1$d items / %2$d hidden - sorry, this count includes any "
 "deleted ports)"
 msgstr "展开此列表（%1$d 项 / %2$d 项已隐藏——抱歉，该计数包含已删除的 Port）"
 
-#: classes/port-display.php:2045
+#: classes/port-display.php:2078
 msgid "Deleted ports which required this port:"
 msgstr "曾依赖此 Port 的已删除 Port："
 
-#: classes/port-display.php:2047
+#: classes/port-display.php:2080
 #, php-format
 msgid "Expand this list of %d deleted port"
 msgid_plural "Expand this list of %d deleted ports"
 msgstr[0] "展开这 %d 个已删除 Port 的列表"
 
-#: classes/port-display.php:2058
+#: classes/port-display.php:2091
 msgid "Collapse this list of deleted ports."
 msgstr "收起已删除 Port 列表。"
 
-#: classes/port-display.php:2070
+#: classes/port-display.php:2103
 msgid "There are no ports dependent upon this port"
 msgstr "没有依赖此 Port 的 Port"
 
-#: classes/port-display.php:2072
+#: classes/port-display.php:2105
 msgid "This port is required by:"
 msgstr "依赖此 Port 的 Port："
 
-#: classes/port-display.php:2076
+#: classes/port-display.php:2109
 msgid "NOTE: dependencies for deleted ports are notoriously suspect"
 msgstr "注意：已删除 Port 的依赖信息出了名地不可靠"
 
-#: classes/port-display.php:2080
+#: classes/port-display.php:2113
 msgid ""
 "deleted ports are only shown under the <em>This port is required by</em> "
 "section.  It was harder to do for the <em>Required</em> section.  Perhaps "
@@ -584,40 +598,40 @@ msgstr ""
 "已删除的 Port 仅显示在<em>依赖此 Port 的 Port</em>部分之下。对于<em>依赖</em>"
 "部分，实现起来更难。或许以后会做……"
 
-#: classes/port-display.php:2089
+#: classes/port-display.php:2122
 msgid "Manual pages:"
 msgstr "手册页："
 
-#: classes/port-display.php:2147
+#: classes/port-display.php:2180
 msgid "FreshPorts has no man page information for this port."
 msgstr "FreshPorts 没有此 Port 的手册页信息。"
 
-#: classes/port-display.php:2159 classes/port-display.php:2182
+#: classes/port-display.php:2192 classes/port-display.php:2215
 #, php-format
 msgid "as obtained via: %s"
 msgstr "获取方式：%s"
 
-#: classes/port-display.php:2183
+#: classes/port-display.php:2216
 msgid "There is no configure plist information for this port."
 msgstr "此 Port 没有 configure plist 信息。"
 
-#: classes/port-display.php:2195
+#: classes/port-display.php:2228
 msgid "Package flavors"
 msgstr "软件包 flavor"
 
-#: classes/port-display.php:2195
+#: classes/port-display.php:2228
 msgid "flavor"
 msgstr "flavor"
 
-#: classes/port-display.php:2195 www/vuxml.php:158
+#: classes/port-display.php:2228 www/vuxml.php:158
 msgid "package"
 msgstr "软件包"
 
-#: classes/port-display.php:2207
+#: classes/port-display.php:2240
 msgid "Flavors:"
 msgstr "Flavors："
 
-#: classes/port-display.php:2207
+#: classes/port-display.php:2240
 msgid "there is no flavor information for this port."
 msgstr "此 Port 没有 flavor 信息。"
 
@@ -939,7 +953,7 @@ msgstr "数据库服务器为 %s"
 msgid "I remember"
 msgstr "缅怀"
 
-#: include/freshports.php:1131 include/freshports.php:2392
+#: include/freshports.php:1131 include/freshports.php:2429
 msgid "Blog"
 msgstr "博客"
 
@@ -1007,41 +1021,41 @@ msgstr "版权"
 msgid "This material is copyrighted"
 msgstr "本材料受版权保护"
 
-#: include/freshports.php:1645
+#: include/freshports.php:1682
 msgid "Notes from UPDATING"
 msgstr "来自 UPDATING 的说明"
 
-#: include/freshports.php:1647
+#: include/freshports.php:1684
 #, php-format
 msgid "These upgrade notes are taken from %s"
 msgstr "这些升级说明摘自 %s"
 
-#: include/freshports.php:1690
+#: include/freshports.php:1727
 msgid ""
 "Commit History - (may be incomplete: for full details, see links to "
 "repositories near top of page)"
 msgstr "提交历史（可能不完整：完整详情请参见页面顶部附近的代码仓库链接）"
 
-#: include/freshports.php:1695
+#: include/freshports.php:1732
 #, php-format
 msgid ""
 "This is a slave port.  You may also want to view the commits to the master "
 "port: %s"
 msgstr "这是从属 Port。您可能还想查看主 Port 的提交：%s"
 
-#: include/freshports.php:1699
+#: include/freshports.php:1736
 msgid "Commit"
 msgstr "提交"
 
-#: include/freshports.php:1699
+#: include/freshports.php:1736
 msgid "Credits"
 msgstr "致谢"
 
-#: include/freshports.php:1699
+#: include/freshports.php:1736
 msgid "Log message"
 msgstr "日志消息"
 
-#: include/freshports.php:1744
+#: include/freshports.php:1781
 #, php-format
 msgid ""
 "<b>NOTE</b>: This slave port may no longer be vulnerable to issues shown "
@@ -1050,33 +1064,33 @@ msgstr ""
 "<b>注意</b>：此从属 Port 可能已不再受下方所示问题的影响，因为<a href=\"%s\">"
 "主 Port</a> 已更新。"
 
-#: include/freshports.php:1784 include/freshports.php:1785
+#: include/freshports.php:1821 include/freshports.php:1822
 #: www/sanity_test_failures.php:194 www/sanity_test_failures.php:195
 msgid "First Page"
 msgstr "首页"
 
-#: include/freshports.php:1786 include/freshports.php:1787
+#: include/freshports.php:1823 include/freshports.php:1824
 #: www/sanity_test_failures.php:196 www/sanity_test_failures.php:197
 msgid "Last Page"
 msgstr "末页"
 
-#: include/freshports.php:1811 www/sanity_test_failures.php:204
+#: include/freshports.php:1848 www/sanity_test_failures.php:204
 #, php-format
 msgid "Number of commits found: %d"
 msgstr "找到的提交数：%d"
 
-#: include/freshports.php:1820 www/sanity_test_failures.php:208
+#: include/freshports.php:1857 www/sanity_test_failures.php:208
 #: www/search.php:1405 www/search.php:1422
 #, php-format
 msgid "(showing only %d on this page)"
 msgstr "（本页仅显示 %d 条）"
 
-#: include/freshports.php:2098
+#: include/freshports.php:2135
 msgid "Link to this section"
 msgstr "链接到本节"
 
 #. TRANSLATORS: keep the line breaks short, this is a plain text email
-#: include/freshports.php:2169
+#: include/freshports.php:2206
 #, php-format
 msgid ""
 "Someone, perhaps you, supplied your email address as their\n"
@@ -1089,314 +1103,314 @@ msgstr ""
 "给您造成困扰，请将其转发至 %s\n"
 "我们会为您处理。"
 
-#: include/freshports.php:2174
+#: include/freshports.php:2211
 #, php-format
 msgid "Your token is: %s"
 msgstr "您的令牌是：%s"
 
-#: include/freshports.php:2176
+#: include/freshports.php:2213
 msgid "Please point your browser at"
 msgstr "请将浏览器指向"
 
-#: include/freshports.php:2178
+#: include/freshports.php:2215
 #, php-format
 msgid "The request came from %s"
 msgstr "请求来自 %s"
 
-#: include/freshports.php:2195
+#: include/freshports.php:2232
 #, php-format
 msgid "%s - user registration"
 msgstr "%s——用户注册"
 
-#: include/freshports.php:2274
+#: include/freshports.php:2311
 msgid "You are connected over IPv6"
 msgstr "您已接入 IPv6"
 
-#: include/freshports.php:2287
+#: include/freshports.php:2324
 #, php-format
 msgid "Valid %1$s, %2$s, and %3$s."
 msgstr "%1$s、%2$s 和 %3$s 均有效。"
 
-#: include/freshports.php:2288
+#: include/freshports.php:2325
 msgid "We like to keep our HTML valid"
 msgstr "我们希望保持 HTML 有效"
 
-#: include/freshports.php:2289
+#: include/freshports.php:2326
 msgid "We like to have valid CSS"
 msgstr "我们希望 CSS 有效"
 
-#: include/freshports.php:2290
+#: include/freshports.php:2327
 msgid "Valid RSS is good too"
 msgstr "有效的 RSS 也很好"
 
-#: include/freshports.php:2337 include/login.php:15 www/login.php:148
+#: include/freshports.php:2374 include/login.php:15 www/login.php:148
 #: www/login.php:231
 msgid "Login"
 msgstr "登录"
 
-#: include/freshports.php:2345
+#: include/freshports.php:2382
 #, php-format
 msgid "Logged in as %s"
 msgstr "已登录为 %s"
 
-#: include/freshports.php:2349
+#: include/freshports.php:2386
 msgid "your email is <a href=\"/bouncing.php\">bouncing</a>"
 msgstr "您的邮箱正在<a href=\"/bouncing.php\">退信</a>"
 
-#: include/freshports.php:2352
+#: include/freshports.php:2389
 msgid "Your Account"
 msgstr "您的账户"
 
-#: include/freshports.php:2352
+#: include/freshports.php:2389
 msgid "Your account"
 msgstr "您的账户"
 
-#: include/freshports.php:2355
+#: include/freshports.php:2392
 msgid "Committer Opt-in"
 msgstr "提交者自愿加入"
 
-#: include/freshports.php:2355
+#: include/freshports.php:2392
 msgid "Committers can receive reports of Sanity Test Failures"
 msgstr "提交者可以接收健全性测试的失败报告"
 
-#: include/freshports.php:2359
+#: include/freshports.php:2396
 msgid "Logout"
 msgstr "退出登录"
 
-#: include/freshports.php:2359
+#: include/freshports.php:2396
 msgid "Logout of the website"
 msgstr "退出网站登录"
 
-#: include/freshports.php:2360
+#: include/freshports.php:2397
 msgid "List of commits you have flagged"
 msgstr "您标记过的提交列表"
 
-#: include/freshports.php:2360
+#: include/freshports.php:2397
 msgid "My Flagged Commits"
 msgstr "我标记的提交"
 
-#: include/freshports.php:2362
+#: include/freshports.php:2399
 msgid "Login to the website"
 msgstr "登录网站"
 
-#: include/freshports.php:2362
+#: include/freshports.php:2399
 msgid "User Login"
 msgstr "用户登录"
 
-#: include/freshports.php:2363
+#: include/freshports.php:2400
 msgid "Create account"
 msgstr "创建账户"
 
-#: include/freshports.php:2363
+#: include/freshports.php:2400
 msgid "Create an account"
 msgstr "创建账户"
 
-#: include/freshports.php:2381
+#: include/freshports.php:2418
 msgid "This site"
 msgstr "本站"
 
-#: include/freshports.php:2385
+#: include/freshports.php:2422
 msgid "A bit of background on FreshPorts"
 msgstr "FreshPorts 背景简介"
 
-#: include/freshports.php:2385
+#: include/freshports.php:2422
 msgid "What is FreshPorts?"
 msgstr "FreshPorts 是什么？"
 
-#: include/freshports.php:2386 www/authors.php:26
+#: include/freshports.php:2423 www/authors.php:26
 msgid "About the authors"
 msgstr "关于作者"
 
-#: include/freshports.php:2386
+#: include/freshports.php:2423
 msgid "Who wrote this stuff?"
 msgstr "这些内容是谁写的？"
 
-#: include/freshports.php:2387
+#: include/freshports.php:2424
 msgid "Issues"
 msgstr "问题反馈"
 
-#: include/freshports.php:2387
+#: include/freshports.php:2424
 msgid "Report a website problem"
 msgstr "报告网站问题"
 
-#: include/freshports.php:2388 www/faq.php:32
+#: include/freshports.php:2425 www/faq.php:32
 msgid "FAQ"
 msgstr "常见问题"
 
-#: include/freshports.php:2388 www/faq.php:13
+#: include/freshports.php:2425 www/faq.php:13
 msgid "Frequently Asked Questions"
 msgstr "常见问题解答"
 
-#: include/freshports.php:2389 www/how-big-is-it.php:13
+#: include/freshports.php:2426 www/how-big-is-it.php:13
 msgid "How big is it?"
 msgstr "网站有多大？"
 
-#: include/freshports.php:2389
+#: include/freshports.php:2426
 msgid "How many pages are in this website?"
 msgstr "本站有多少个页面？"
 
-#: include/freshports.php:2390
+#: include/freshports.php:2427
 msgid "Are you a security researcher? Please read this."
 msgstr "您是安全研究人员吗？请阅读此文。"
 
-#: include/freshports.php:2390 www/security-policy.php:13
+#: include/freshports.php:2427 www/security-policy.php:13
 msgid "Security Policy"
 msgstr "安全政策"
 
-#: include/freshports.php:2391
+#: include/freshports.php:2428
 msgid "Our privacy statement"
 msgstr "我们的隐私声明"
 
-#: include/freshports.php:2391
+#: include/freshports.php:2428
 msgid "Privacy"
 msgstr "隐私"
 
-#: include/freshports.php:2392
+#: include/freshports.php:2429
 msgid "All the latest FreshPorts news"
 msgstr "FreshPorts 最新消息"
 
-#: include/freshports.php:2393 www/contact.php:13 www/contact.php:27
+#: include/freshports.php:2430 www/contact.php:13 www/contact.php:27
 msgid "Contact"
 msgstr "联系方式"
 
-#: include/freshports.php:2393
+#: include/freshports.php:2430
 msgid "Contact details"
 msgstr "详细联系方式"
 
-#: include/freshports.php:2403
+#: include/freshports.php:2440
 msgid "Latest Vulnerabilities"
 msgstr "最新漏洞"
 
-#: include/freshports.php:2409
+#: include/freshports.php:2446
 msgid "All vulnerabilities"
 msgstr "全部漏洞"
 
-#: include/freshports.php:2409
+#: include/freshports.php:2446
 msgid "modified, not new"
 msgstr "有修改，并非新增"
 
-#: include/freshports.php:2410
+#: include/freshports.php:2447
 msgid "Last processed:"
 msgstr "上次处理："
 
-#: include/freshports.php:2422 include/freshports.php:2452
+#: include/freshports.php:2459 include/freshports.php:2489
 msgid "Ports"
 msgstr "Port"
 
-#: include/freshports.php:2427
+#: include/freshports.php:2464
 msgid "FreshPorts Home page"
 msgstr "FreshPorts 主页"
 
-#: include/freshports.php:2427
+#: include/freshports.php:2464
 msgid "Home"
 msgstr "主页"
 
-#: include/freshports.php:2428 include/freshports.php:2450
+#: include/freshports.php:2465 include/freshports.php:2487
 #: www/categories.php:15
 msgid "Categories"
 msgstr "分类"
 
-#: include/freshports.php:2428
+#: include/freshports.php:2465
 msgid "List of all Port categories"
 msgstr "所有 Port 分类列表"
 
-#: include/freshports.php:2429
+#: include/freshports.php:2466
 msgid "All deleted ports"
 msgstr "全部已删除 Port"
 
-#: include/freshports.php:2429 www/ports-deleted.php:30
+#: include/freshports.php:2466 www/ports-deleted.php:30
 msgid "Deleted ports"
 msgstr "已删除 Port"
 
-#: include/freshports.php:2430 www/sanity_test_failures.php:30
+#: include/freshports.php:2467 www/sanity_test_failures.php:30
 #: www/sanity_test_failures.php:99
 msgid "Sanity Test Failures"
 msgstr "健全性测试失败"
 
-#: include/freshports.php:2430
+#: include/freshports.php:2467
 msgid "Things that didn't go quite right..."
 msgstr "那些不太顺利的事……"
 
-#: include/freshports.php:2431 www/backend/newsfeeds.php:21
+#: include/freshports.php:2468 www/backend/newsfeeds.php:21
 msgid "Newsfeeds"
 msgstr "新闻源"
 
-#: include/freshports.php:2431
+#: include/freshports.php:2468
 msgid "Newsfeeds for just about everything"
 msgstr "涵盖几乎所有内容的新闻源"
 
-#: include/freshports.php:2444 www/watch-list-maintenance.php:321
+#: include/freshports.php:2481 www/watch-list-maintenance.php:321
 #: www/watch-list-maintenance.php:393
 msgid "Watch Lists"
 msgstr "关注列表"
 
-#: include/freshports.php:2449 www/pkg_upload.php:92 www/pkg_upload.php:114
+#: include/freshports.php:2486 www/pkg_upload.php:92 www/pkg_upload.php:114
 #: www/pkg_upload.php:136
 msgid "Upload"
 msgstr "上传"
 
-#: include/freshports.php:2449
+#: include/freshports.php:2486
 msgid ""
 "Upload a file containing a list of ports you want to add to your watch list"
 msgstr "上传文件，内含您想加入关注列表的 Port 列表"
 
-#: include/freshports.php:2450
+#: include/freshports.php:2487
 msgid "Search through categories for ports to add to your watch list"
 msgstr "按分类搜索要加入关注列表的 Port"
 
-#: include/freshports.php:2451
+#: include/freshports.php:2488
 msgid "Maintain"
 msgstr "维护"
 
-#: include/freshports.php:2451
+#: include/freshports.php:2488
 msgid "Maintain your watch list[s]"
 msgstr "维护关注列表"
 
-#: include/freshports.php:2452
+#: include/freshports.php:2489
 msgid "Your list of watched ports"
 msgstr "您关注的 Port 列表"
 
-#: include/freshports.php:2453
+#: include/freshports.php:2490
 msgid "A list of news feeds for your watched lists"
 msgstr "关注列表的新闻源列表"
 
-#: include/freshports.php:2453
+#: include/freshports.php:2490
 msgid "Personal Newsfeeds"
 msgstr "个人新闻源"
 
-#: include/freshports.php:2454
+#: include/freshports.php:2491
 msgid "Maintain your list of subscriptions"
 msgstr "维护订阅列表"
 
-#: include/freshports.php:2454
+#: include/freshports.php:2491
 msgid "Report Subscriptions"
 msgstr "报告订阅"
 
-#: include/freshports.php:2455
+#: include/freshports.php:2492
 msgid "ABI Package Subscriptions"
 msgstr "ABI 软件包订阅"
 
-#: include/freshports.php:2455
+#: include/freshports.php:2492
 msgid "Maintain your ABI package subscriptions"
 msgstr "维护 ABI 软件包订阅"
 
-#: include/freshports.php:2480
+#: include/freshports.php:2517
 msgid "Statistics"
 msgstr "统计"
 
-#: include/freshports.php:2485 include/freshports.php:2486
+#: include/freshports.php:2522 include/freshports.php:2523
 msgid "Everyone loves statistics!"
 msgstr "人人都爱统计！"
 
-#: include/freshports.php:2485
+#: include/freshports.php:2522
 msgid "Graphs"
 msgstr "图表"
 
-#: include/freshports.php:2486
+#: include/freshports.php:2523
 msgid "NEW Graphs (Javascript)"
 msgstr "新图表（JavaScript）"
 
-#: include/freshports.php:2622
+#: include/freshports.php:2659
 msgid "People watching this port, also watch:"
 msgstr "关注此 Port 的人还关注："
 
@@ -1790,7 +1804,7 @@ msgstr "关于本站"
 msgid "We have a few notes about this website."
 msgstr "我们有一些关于本网站的说明。"
 
-#: www/about.php:41 www/faq.php:69 www/faq.php:119
+#: www/about.php:41 www/faq.php:69 www/faq.php:144
 msgid "What is a port?"
 msgstr "什么是 Port？"
 
@@ -2280,7 +2294,7 @@ msgstr "分类"
 msgid "Count"
 msgstr "数量"
 
-#: www/categories.php:158 www/categories.php:160 www/faq.php:372
+#: www/categories.php:158 www/categories.php:160 www/faq.php:397
 #: www/report-subscriptions.php:170 www/vuxml.php:84 www/vuxml.php:252
 msgid "Description"
 msgstr "描述"
@@ -2313,6 +2327,102 @@ msgstr[0] "（%d 个实际分类）"
 msgid ""
 "Hmmm, I'm not so sure this port count is accurate. Dan Langille 27 April 2003"
 msgstr "嗯……我不太确定这个 Port 数量是否准确。Dan Langille 2003 年 4 月 27 日"
+
+#: www/categories.php:235
+#, php-format
+msgid "How the number of categories has changed: %s."
+msgstr ""
+
+#: www/categories.php:235 www/graphs.php:36
+#, fuzzy
+msgid "categories over time"
+msgstr "分类"
+
+#: www/category-history.php:51
+#, fuzzy
+msgid "Categories over time"
+msgstr "分类"
+
+#: www/category-history.php:53
+msgid ""
+"The number of physical and virtual categories in the FreeBSD ports tree over "
+"time"
+msgstr ""
+
+#: www/category-history.php:103
+#, php-format
+msgid ""
+"The FreeBSD ports tree has two kinds of category. A %s category is a "
+"directory: every port lives in one. A %s category exists only in the "
+"CATEGORIES line of a port, such as %s or %s."
+msgstr ""
+
+#: www/category-history.php:104 www/category-history.php:177
+msgid "physical"
+msgstr ""
+
+#: www/category-history.php:105 www/category-history.php:179
+msgid "virtual"
+msgstr ""
+
+#: www/category-history.php:109
+#, php-format
+msgid ""
+"The physical categories are the %s entries in the top level %s. The virtual "
+"categories are %s in %s, less the physical ones; that list first appeared in "
+"August 1999. Both are read from the ports git history and updated daily."
+msgstr ""
+
+#: www/category-history.php:118
+msgid ""
+"There is no category history yet. Is the category_history periodic script "
+"enabled?"
+msgstr ""
+
+#: www/category-history.php:154
+#, php-format
+msgid ""
+"A chart of the number of categories from %s to today. Now: %d physical, %d "
+"virtual."
+msgstr ""
+
+#: www/category-history.php:187
+#, fuzzy
+msgid "Every change"
+msgstr "保存更改"
+
+#: www/category-history.php:189
+msgid ""
+"Newest first. A new physical category is often added to VALID_CATEGORIES a "
+"commit or two before its directory, so it can appear as a virtual category "
+"for a moment."
+msgstr ""
+
+#: www/category-history.php:194
+#, fuzzy
+msgid "Added"
+msgstr "Port 添加时间："
+
+#: www/category-history.php:194 www/vuxml.php:251
+msgid "Date"
+msgstr "日期"
+
+#: www/category-history.php:194
+msgid "Physical"
+msgstr ""
+
+#: www/category-history.php:194
+#, fuzzy
+msgid "Removed"
+msgstr "删除"
+
+#: www/category-history.php:194
+msgid "Virtual"
+msgstr ""
+
+#: www/category-history.php:226
+msgid "the first ports Makefile"
+msgstr ""
 
 #: www/category-maintenance.php:16
 msgid "Category maintenance"
@@ -2798,16 +2908,67 @@ msgid ""
 msgstr ""
 "并非所有 Port 都有对应的软件包，原因往往是许可证限制禁止分发二进制文件。"
 
-#: www/faq.php:88
+#: www/faq.php:87
+msgid "The FreeBSD Project provides:"
+msgstr ""
+
+#: www/faq.php:91
+msgid "base"
+msgstr ""
+
+#. TRANSLATORS: %s is the word 'base', shown in italics.
+#: www/faq.php:91
+#, php-format
+msgid ""
+"official packages for FreeBSD (the operating system, sometimes known as %s) "
+"in its entirety"
+msgstr ""
+
+#: www/faq.php:92
+msgid "packages for a huge number of ports."
+msgstr ""
+
+#: www/faq.php:99
+#, fuzzy
+msgid "FreeBSD ports"
+msgstr "FreeBSD 论坛"
+
+#. TRANSLATORS: %1$s is the repository name 'FreeBSD', %2$s is the word 'not' in bold, %3$s is 'FreeBSD ports' in italics.
+#: www/faq.php:99
+#, php-format
+msgid ""
+"The repo that's traditionally named %1$s does %2$s provide FreeBSD (OS) "
+"packages. It's the repo for %3$s."
+msgstr ""
+
+#: www/faq.php:99
+msgid "not"
+msgstr ""
+
+#. TRANSLATORS: %1$s is the name 'pkgbase', %2$s is the repository name 'FreeBSD-base', shown in italics.
+#: www/faq.php:104
+#, php-format
+msgid ""
+"If you use %1$s (the base OS, packaged), you should have an additional repo "
+"named %2$s."
+msgstr ""
+
+#. TRANSLATORS: %s is the name 'pkgbase'.
+#: www/faq.php:109
+#, fuzzy, php-format
+msgid "FreshPorts covers packages of ports, but not %s."
+msgstr "FreshPorts 覆盖 %s 上发布的所有 ABI。"
+
+#: www/faq.php:113
 msgid "How do I modify my watch list?"
 msgstr "如何修改我的关注列表？"
 
-#: www/faq.php:92
+#: www/faq.php:117
 msgid "There are three easy ways to modify your watch list:"
 msgstr "修改关注列表有三种简单方法："
 
 #. TRANSLATORS: %1$s is the 'add to watch list' icon, %2$s is the 'remove from watch list' icon.
-#: www/faq.php:96
+#: www/faq.php:121
 #, php-format
 msgid ""
 "Wherever you see a port, you can click on the Add (%1$s) / Remove (%2$s) "
@@ -2816,21 +2977,21 @@ msgstr ""
 "无论在何处看到 Port，您都可以按需点击“添加（%1$s）/移除（%2$s）”链接（即一键"
 "维护关注列表）。"
 
-#: www/faq.php:97
+#: www/faq.php:122
 msgid ""
 "The 'watch list categories' link provides you with a list of categories. "
 "Select the category, and then the ports within that category."
 msgstr ""
 "“关注列表分类”链接会为您列出各分类。请先选择分类，再选择该分类下的 Port。"
 
-#: www/faq.php:98
+#: www/faq.php:123
 msgid ""
 "Use the 'upload' link to upload your pkg_info data into your watch list "
 "staging area and then into your watch list."
 msgstr ""
 "使用“上传”链接，先将您的 pkg_info 数据上传到关注列表暂存区，再存入关注列表。"
 
-#: www/faq.php:102
+#: www/faq.php:127
 msgid ""
 "One-click watch list maintenance operates only upon your default watch "
 "lists. You can set one or more watch lists as being default."
@@ -2838,11 +2999,11 @@ msgstr ""
 "一键维护关注列表只对您的默认关注列表生效。您可以将一个或多个关注列表设为默"
 "认。"
 
-#: www/faq.php:105
+#: www/faq.php:130
 msgid "How do I empty my watch list?"
 msgstr "如何清空我的关注列表？"
 
-#: www/faq.php:109
+#: www/faq.php:134
 msgid ""
 "Via <a href=\"/watch-list-maintenance.php\">Watch List Maintenance</a>. "
 "Select the watch lists you wish to empty, and follow the instructions "
@@ -2851,11 +3012,11 @@ msgstr ""
 "前往 <a href=\"/watch-list-maintenance.php\">关注列表维护</a>页面，选择您要清"
 "空的关注列表，然后按照给出的说明操作。"
 
-#: www/faq.php:112
+#: www/faq.php:137
 msgid "How do I delete my account?"
 msgstr "如何删除我的账户？"
 
-#: www/faq.php:116
+#: www/faq.php:141
 #, php-format
 msgid ""
 "Visit %s and click on the <b>Delete my account</b> link. It's just below "
@@ -2863,7 +3024,7 @@ msgid ""
 msgstr ""
 "请访问 %s 并点击 <b>删除我的账户</b> 链接。它就在 <b>更新账户</b> 的下方。"
 
-#: www/faq.php:123
+#: www/faq.php:148
 msgid ""
 "A port is a simple easy way to install an application. A port is a "
 "collection of files. These files contain the location of the source file, "
@@ -2878,11 +3039,11 @@ msgstr ""
 "单。有关如何使用 Port 的完整细节，请参阅 <a href=\"https://www.FreeBSD.org/"
 "handbook/\">FreeBSD 手册</a> 中的官方 Port 文档。"
 
-#: www/faq.php:126
+#: www/faq.php:151
 msgid "Where do ports come from?"
 msgstr "Port 从何而来？"
 
-#: www/faq.php:129
+#: www/faq.php:154
 msgid ""
 "Ports are created by other FreeBSD volunteers, just like you and just like "
 "the creators of FreshPorts. The FreshPorts team does not create ports; we "
@@ -2893,11 +3054,11 @@ msgstr ""
 "FreshPorts 团队并不创建 Port，我们只负责告诉您最新的变更。FreeBSD Ports 团队"
 "负责 Port 的创建、维护与升级。"
 
-#: www/faq.php:132
+#: www/faq.php:157
 msgid "Who do I talk to about a port?"
 msgstr "关于 Port 的问题该找谁？"
 
-#: www/faq.php:135
+#: www/faq.php:160
 #, php-format
 msgid ""
 "The official mailing list is %s. More information about all FreeBSD mailing "
@@ -2908,11 +3069,11 @@ msgstr ""
 "href=\"https://www.FreeBSD.org/handbook/eresources.html#eresources-"
 "mail\">FreeBSD 邮件列表</a> 中获取。"
 
-#: www/faq.php:138
+#: www/faq.php:163
 msgid "How do I get these ports?"
 msgstr "如何获取这些 Port？"
 
-#: www/faq.php:141
+#: www/faq.php:166
 msgid ""
 "For full information on how to obtain the ports which appear on this "
 "website, please see <a href=\"https://www.FreeBSD.org/ports/\">FreeBSD "
@@ -2923,16 +3084,16 @@ msgstr ""
 "www.FreeBSD.org/ports/\">FreeBSD Ports</a>。获取 Port 最简单的方法是通过 "
 "<span class=\"cmd\">git</span>。简短示例如下："
 
-#: www/faq.php:148
+#: www/faq.php:173
 msgid "How is the website updated?"
 msgstr "本网站是如何更新的？"
 
-#: www/faq.php:154
+#: www/faq.php:179
 msgid "FreeBSD repository"
 msgstr "FreeBSD 仓库"
 
 #. TRANSLATORS: %s is a link whose text is 'FreeBSD repository'.
-#: www/faq.php:154
+#: www/faq.php:179
 #, php-format
 msgid ""
 "The source code for the entire FreeBSD operating system and the Ports tree "
@@ -2944,7 +3105,7 @@ msgstr ""
 "FreshPorts 的各个节点会使用 <span class=\"cmd\">git</span> 检测变更，并把新的"
 "提交载入其数据库。"
 
-#: www/faq.php:157
+#: www/faq.php:182
 msgid ""
 "In the past, FreshPorts would parse the emails sent out for each commit and "
 "then load the information into a database. In theory, it's fairly straight "
@@ -2954,11 +3115,11 @@ msgstr ""
 "过去，FreshPorts 会解析每次提交时发出的邮件，然后把其中的信息载入数据库。理论"
 "上这相当简单直接，实际上却远比乍看之下复杂得多。邮件一到，网站就会立即更新。"
 
-#: www/faq.php:160
+#: www/faq.php:185
 msgid "What does unknown mean for a revision number?"
 msgstr "修订版号显示为“unknown”是什么意思？"
 
-#: www/faq.php:163
+#: www/faq.php:188
 msgid ""
 "It means the data has been converted from an earlier version of the "
 "FreshPorts database that did not record this information."
@@ -2966,11 +3127,11 @@ msgstr ""
 "它表示这些数据是从更早版本的 FreshPorts 数据库转换而来的，而那个版本并不记录"
 "这项信息。"
 
-#: www/faq.php:166
+#: www/faq.php:191
 msgid "Can I link to your site?"
 msgstr "我可以链接到你们的网站吗？"
 
-#: www/faq.php:169
+#: www/faq.php:194
 msgid ""
 "Yes, thank you, you can. No need to ask us. Just go ahead and do it. We "
 "prefer the name FreshPorts (one word, mixed case). The following HTML is a "
@@ -2979,27 +3140,27 @@ msgstr ""
 "当然可以，谢谢您！无需向我们询问，直接链接即可。我们希望使用 FreshPorts 这个"
 "名称（一词连写，大小写混用）。下面的 HTML 可以作为起点："
 
-#: www/faq.php:175
+#: www/faq.php:200
 msgid "Here is a banner which you are free to use to link to this site:"
 msgstr "下面是可随意用来链接本站的横幅图片："
 
-#: www/faq.php:181
+#: www/faq.php:206
 msgid "Here is the HTML for that graphic."
 msgstr "下面是该图片对应的 HTML。"
 
-#: www/faq.php:188
+#: www/faq.php:213
 msgid "Please save this graphic on your website."
 msgstr "请把这张图片保存到您的网站上。"
 
-#: www/faq.php:191
+#: www/faq.php:216
 msgid "What do these symbols mean?"
 msgstr "这些图标是什么意思？"
 
-#: www/faq.php:195
+#: www/faq.php:220
 msgid "There are a few symbols you will see in this website."
 msgstr "您会在这个网站上看到一些图标。"
 
-#: www/faq.php:198
+#: www/faq.php:223
 #, php-format
 msgid ""
 "Homepage: a link to the Project Page / home page for this port. A port can "
@@ -3019,7 +3180,7 @@ msgstr ""
 "id=b7f05445c00f2625aa19b4154ebcbce5ed2daa52\">WWW 被移动</a>、从 %1$s 改为 "
 "%2$s 的时候。"
 
-#: www/faq.php:201
+#: www/faq.php:226
 msgid ""
 "Fallout: a link to search the <a href=\"https://lists.freebsd.org/archives/"
 "freebsd-pkg-fallout/\">freebsd-pkg-fallout archives</a>. If the resulting "
@@ -3030,26 +3191,26 @@ msgstr ""
 "fallout/\">freebsd-pkg-fallout 归档</a> 的链接。如果得出的 fallout 列表为空，"
 "说明该 Port 可能因相关 Port 的 fallout 而被跳过。"
 
-#: www/faq.php:204
+#: www/faq.php:229
 msgid "Repology: a link to search the Repology packaging hub for this port."
 msgstr "Repology：用于在 Repology 软件包中心搜索该 Port 的链接。"
 
-#: www/faq.php:207
+#: www/faq.php:232
 msgid ""
 "Find Bugs: a link to search for open Problem Reports (issues/bugs) for this "
 "port."
 msgstr "查找 Bug：用于搜索该 Port 未解决问题报告（issue/bug）的链接。"
 
-#: www/faq.php:210
+#: www/faq.php:235
 msgid "New Bug: a link to open a new Problem Report (issue/bug) for this port."
 msgstr "新建 Bug：用于为该 Port 提交新问题报告（issue/bug）的链接。"
 
-#: www/faq.php:213
+#: www/faq.php:238
 msgid ""
 "New: This port has been recently added. A port is marked as new for 10 days."
 msgstr "新增：该 Port 是最近添加的。Port 会被标记为“新的”，为期 10 天。"
 
-#: www/faq.php:216
+#: www/faq.php:241
 #, php-format
 msgid ""
 "Forbidden: The port is marked as forbidden. If you view the port details, "
@@ -3061,7 +3222,7 @@ msgstr ""
 "可被利用的安全漏洞。软件包集群不会为已禁止的 Port 构建软件包，因此 %s 将无法"
 "工作。"
 
-#: www/faq.php:219
+#: www/faq.php:244
 #, php-format
 msgid ""
 "Broken: The port is marked as broken. Perhaps it won't compile. Maybe it "
@@ -3073,13 +3234,13 @@ msgstr ""
 "工作。查看 Port 详情即可看到原因。软件包集群不会为已损坏的 Port 构建软件包，"
 "因此 %s 将无法工作。"
 
-#: www/faq.php:222
+#: www/faq.php:247
 msgid ""
 "Deprecated: The port is marked as deprecated. Perhaps it has exceeded its "
 "lifetime or is obsolete."
 msgstr "已弃用：该 Port 被标记为弃用。也许是它已超过使用寿命，或者已经过时。"
 
-#: www/faq.php:225
+#: www/faq.php:250
 msgid ""
 "Expiration Date: The port has an expiration date. A port may be removed from "
 "the tree after this date. Often added in conjunction with Deprecated."
@@ -3087,7 +3248,7 @@ msgstr ""
 "到期日期：该 Port 设有到期日期。超过此日期后，Port 可能会从 Ports 树中移除。"
 "此标记常与“已弃用”一同添加。"
 
-#: www/faq.php:228
+#: www/faq.php:253
 msgid ""
 "Expired: The port has passed the expiration date. A port may be removed from "
 "the tree after this date. Often added in conjunction with Deprecated."
@@ -3095,7 +3256,7 @@ msgstr ""
 "已过期：该 Port 已超过到期日期。超过此日期后，Port 可能会从 Ports 树中移除。"
 "此标记常与“已弃用”一同添加。"
 
-#: www/faq.php:231
+#: www/faq.php:256
 #, php-format
 msgid ""
 "Ignore: The port is marked as ignore. It probably does not build. Packages "
@@ -3105,26 +3266,26 @@ msgstr ""
 "已忽略：该 Port 被标记为已忽略。它很可能无法构建。软件包集群不会为被忽略的 "
 "Port 构建软件包，因此 %s 将无法工作。"
 
-#: www/faq.php:234
+#: www/faq.php:259
 msgid ""
 "Files: If you click on this graphic, you will be taken to the list of files "
 "touched by the commit in question."
 msgstr "文件：点击此图标后，您会看到此次提交所改动文件的列表。"
 
-#: www/faq.php:237
+#: www/faq.php:262
 msgid ""
 "Refresh: The system is in the process of refreshing that port by inspecting "
 "the ports tree. You should rarely see this."
 msgstr "刷新：系统正在检查 Ports 树，刷新该 Port。您很少会看到这个图标。"
 
-#: www/faq.php:238
+#: www/faq.php:263
 msgid ""
 "If you do see one, chances are that the port contains an error that prevents "
 "make(1) from running. For example:"
 msgstr ""
 "如果您确实看到了，很可能是因为该 Port 存在错误，导致 make(1) 无法运行。例如："
 
-#: www/faq.php:247
+#: www/faq.php:272
 msgid ""
 "In such circumstances, the port committer is notified (if they have opted in "
 "to the FreshPorts Sanity Check Report) and they should fix the problem as "
@@ -3136,11 +3297,11 @@ msgstr ""
 "查报告），并应尽快修复问题。一旦您看到更新的提交没有刷新图标，就说明问题已经"
 "修复。等 FreshPorts 处理完旧提交后，刷新图标就会消失，这可能需要几个小时。"
 
-#: www/faq.php:250
+#: www/faq.php:275
 msgid "Deleted: This port has been removed from the ports tree."
 msgstr "已删除：该 Port 已从 Ports 树中移除。"
 
-#: www/faq.php:253
+#: www/faq.php:278
 msgid ""
 "These icons are for older commits. At one time, FreshPorts parsed emails. "
 "This icon will appear alongside commits before the repo moved from <span "
@@ -3158,7 +3319,7 @@ msgstr ""
 "2002 年 3 月 3 日之前的提交消息不会显示此链接（FreshPorts 正是从那一天开始保"
 "存 message-id 的）。"
 
-#: www/faq.php:256
+#: www/faq.php:281
 msgid ""
 "FreshPorts commit message: This will take you to the FreshPorts commit "
 "message and allow you to see all other ports which were affected by this "
@@ -3169,13 +3330,13 @@ msgstr ""
 "交影响的所有其他 Port。2002 年 3 月 3 日之前的提交消息不会显示此链接"
 "（FreshPorts 正是从那一天开始保存 message-id 的）。"
 
-#: www/faq.php:259
+#: www/faq.php:284
 msgid ""
 "NOTE: This link has been made redundant by recent advances in the Files "
 "link. See next icon."
 msgstr "注意：随着“文件”链接近期的改进，此链接已属多余。请参见下一个图标。"
 
-#: www/faq.php:263
+#: www/faq.php:288
 msgid ""
 "Item is on one of your default watch lists: This port is on one of your "
 "default watch lists. Click this icon to remove the port from your default "
@@ -3184,7 +3345,7 @@ msgstr ""
 "条目已在您的某个默认关注列表中：该 Port 位于您的某个默认关注列表上。点击此图"
 "标可将该 Port 从您的默认关注列表中移除。此图标仅在您已登录时才会显示。"
 
-#: www/faq.php:266
+#: www/faq.php:291
 msgid ""
 "Add item to your default watch lists: This port is not on any of your "
 "default watch lists. Click this icon to add the port to your default watch "
@@ -3193,7 +3354,7 @@ msgstr ""
 "将条目添加到您的默认关注列表：该 Port 尚不在您的任何默认关注列表上。点击此图"
 "标可将该 Port 添加到您的默认关注列表。此图标仅在您已登录时才会显示。"
 
-#: www/faq.php:269
+#: www/faq.php:294
 msgid ""
 "Encoding Errors (not all of the commit message was ASCII): Some of the "
 "commit message may be altered because of character conversion problems. We "
@@ -3204,7 +3365,7 @@ msgstr ""
 "改动。我们只显示 UTF-8，并移除有问题的字符。这类错误可能出现在日志消息中，也"
 "可能出现在提交邮件的其他地方。"
 
-#: www/faq.php:272
+#: www/faq.php:297
 msgid ""
 "Watch List Count (WLC): This is the number of watch lists which are watching "
 "this port. This might give you an idea of the popularity of the port."
@@ -3212,19 +3373,19 @@ msgstr ""
 "关注列表计数（WLC）：这是关注此 Port 的关注列表数量，可以让您大致了解该 Port "
 "的受欢迎程度。"
 
-#: www/faq.php:275
+#: www/faq.php:300
 msgid ""
 "Git Repository: This link will take you to the Git Repository entry for this "
 "version of the file."
 msgstr "Git 仓库：此链接会带您前往该文件此版本在 Git 仓库中的条目。"
 
-#: www/faq.php:278
+#: www/faq.php:303
 msgid ""
 "SVN Repository: This link will take you to the Subversion Repository entry "
 "for this version of the file."
 msgstr "SVN 仓库：此链接会带您前往该文件此版本在 Subversion 仓库中的条目。"
 
-#: www/faq.php:281
+#: www/faq.php:306
 msgid ""
 "CVS Repository: Deprecated, and historical. Probably does not appear much "
 "any more. This link will take you to the CVS Repository entry for this "
@@ -3233,7 +3394,7 @@ msgstr ""
 "CVS 仓库：已弃用，属于历史遗留，现在应该很少出现了。此链接会带您前往该文件此"
 "版本在 CVS 仓库中的条目，适用于更早期的提交。"
 
-#: www/faq.php:284
+#: www/faq.php:309
 msgid ""
 "<a href=\"https://www.vuxml.org/freebsd/\">VuXML</a> vulnerability. Click "
 "icon for details."
@@ -3241,7 +3402,7 @@ msgstr ""
 "存在 <a href=\"https://www.vuxml.org/freebsd/\">VuXML</a> 漏洞。点击图标查看"
 "详情。"
 
-#: www/faq.php:287
+#: www/faq.php:312
 msgid ""
 "A past <a href=\"https://www.vuxml.org/freebsd/\">VuXML</a> vulnerability. "
 "Click icon for details. NOTE: A feature of security/vuxml is it names the "
@@ -3254,20 +3415,20 @@ msgstr ""
 "Port 更改了软件包名称，过去的漏洞将不会显示在 FreshPorts 中，因为 FreshPorts "
 "不保存历史软件包名称。"
 
-#: www/faq.php:290
+#: www/faq.php:315
 msgid "This port has some restrictions on it."
 msgstr "该 Port 受到一些限制。"
 
-#: www/faq.php:293
+#: www/faq.php:318
 msgid ""
 "This port has some restrictions with respect to being included on a CD-ROM."
 msgstr "该 Port 在收录到 CD-ROM 时存在限制。"
 
-#: www/faq.php:296
+#: www/faq.php:321
 msgid "This port will require interaction during installation."
 msgstr "该 Port 在安装过程中需要交互。"
 
-#: www/faq.php:299
+#: www/faq.php:324
 msgid ""
 "Dependency Search: Action depends on context. Click on this icon to search "
 "for ports depending on the current port, ports maintained by the current "
@@ -3276,7 +3437,7 @@ msgstr ""
 "依赖搜索：具体作用取决于上下文。点击此图标可以搜索依赖于当前 Port 的 Port、当"
 "前维护者所维护的 Port，或当前提交者的其他提交。"
 
-#: www/faq.php:302
+#: www/faq.php:327
 msgid ""
 "Revision details. Click on the Files icon in the commit history and you'll "
 "see what files in this port were touched by this commit. Click on the "
@@ -3286,7 +3447,7 @@ msgstr ""
 "修订版详情。在提交历史中点击“文件”图标，就能看到此次提交改动了该 Port 中的哪"
 "些文件。点击“修订版详情”可查看与此次提交相关联的文件修订版。"
 
-#: www/faq.php:305
+#: www/faq.php:330
 msgid ""
 "Annotate: If you click on this graphic, you will be taken to a view of the "
 "file in question, with a listing of the commits that last changed each line."
@@ -3294,7 +3455,7 @@ msgstr ""
 "注解：点击此图标后，您会看到相关文件的视图，其中列出了最后修改每一行的各次提"
 "交。"
 
-#: www/faq.php:308
+#: www/faq.php:333
 msgid ""
 "Diff. Click on the Files icon in the commit history and you'll see what "
 "files in this port were touched by this commit. Click on the Diff icon to "
@@ -3303,7 +3464,7 @@ msgstr ""
 "差异。在提交历史中点击“文件”图标，就能看到此次提交改动了该 Port 中的哪些文"
 "件。点击“差异”图标可查看该文件此修订版与上一修订版之间的差异。"
 
-#: www/faq.php:311
+#: www/faq.php:336
 msgid ""
 "Sanity Test Failures. The maintainers and committers are good. But sometimes "
 "a mistake slips through. This records the mistake to make it easier for "
@@ -3314,7 +3475,7 @@ msgstr ""
 "漏，这样即使问题未被察觉，其他人也更容易纠正。如果您在某个提交旁看到此图标，"
 "说明该提交未通过健全性测试。"
 
-#: www/faq.php:314
+#: www/faq.php:339
 msgid ""
 "Flagged Commit. This commit is on your list of flagged commits. Why would "
 "you flag a commit? Perhaps you want to review that commit. Perhaps you want "
@@ -3323,21 +3484,21 @@ msgstr ""
 "已标记的提交。该提交在您的已标记提交列表中。为什么要标记一个提交？也许您想审"
 "阅该提交，也许您想稍后进行 MFC。点击此图标可将该提交从您的标记列表中移除。"
 
-#: www/faq.php:317
+#: www/faq.php:342
 msgid "Click on this icon to add the commit to your flagged list."
 msgstr "点击此图标可将该提交添加到您的已标记列表中。"
 
-#: www/faq.php:320
+#: www/faq.php:345
 msgid ""
 "Ascending / Descending: These icons appear on particular tables and allow "
 "changing the order rows are sorted by."
 msgstr "升序 / 降序：这些图标会出现在某些表格上，用于更改行的排序顺序。"
 
-#: www/faq.php:324
+#: www/faq.php:349
 msgid "Why don't my old bookmarks work?"
 msgstr "为什么我的旧书签失效了？"
 
-#: www/faq.php:329
+#: www/faq.php:354
 #, php-format
 msgid ""
 "Many things changed between FP1 and FP2. The most major change was in the "
@@ -3354,39 +3515,39 @@ msgstr ""
 "式做了重大调整。受这些变化影响，许多内部 ID 和值已不再有效，因此像 %s 这样的 "
 "URL 已无法使用。"
 
-#: www/faq.php:332
+#: www/faq.php:357
 msgid ""
 "If it is any consolation, the new URLs are transparent and permanent. They "
 "are of the form &lt;category&gt;/&lt;port&gt;."
 msgstr ""
 "聊以慰藉的是，新的 URL 透明且永久，其形式为 &lt;category&gt;/&lt;port&gt;。"
 
-#: www/faq.php:336
+#: www/faq.php:361
 msgid "Do you have any news feeds?"
 msgstr "你们有新闻源吗？"
 
-#: www/faq.php:341
+#: www/faq.php:366
 msgid "Yes. Read <a href=\"/backend/newsfeeds.php\">all about it</a>!"
 msgstr "有。请阅读<a href=\"/backend/newsfeeds.php\">详细介绍</a>！"
 
-#: www/faq.php:345
+#: www/faq.php:370
 msgid "Can the main page load any faster?"
 msgstr "主页还能加载得更快吗？"
 
 #. TRANSLATORS: %s is a link to the FreshPorts home page URL.
-#: www/faq.php:352
+#: www/faq.php:377
 #, php-format
 msgid ""
 "%s is the main page of this website. It contains a lot of information. You "
 "can trim this information by using parameters."
 msgstr "%s 是本网站的主页，其中包含大量信息。您可以使用参数来精简这些信息。"
 
-#: www/faq.php:355
+#: www/faq.php:380
 #, php-format
 msgid "Try this URL: %s"
 msgstr "试试这个 URL：%s"
 
-#: www/faq.php:359
+#: www/faq.php:384
 msgid ""
 "<b>num</b> - number of ports to show (regardless of commits so the last "
 "commit may not list fully). The valid values are 10..100."
@@ -3394,13 +3555,13 @@ msgstr ""
 "<b>num</b>：要显示的 Port 数量（与提交数无关，因此最后一次提交可能不会完整列"
 "出）。有效取值为 10..100。"
 
-#: www/faq.php:362
+#: www/faq.php:387
 msgid ""
 "<b>days</b> - number of summary days (in the right hand column) to display. "
 "The valid values are 0..9."
 msgstr "<b>days</b>：要显示的汇总天数（显示在右栏）。有效取值为 0..9。"
 
-#: www/faq.php:365
+#: www/faq.php:390
 msgid ""
 "<b>dailysummary</b> - similar to days, but displays a summary of the days "
 "instead of a link to a page of commits for that day."
@@ -3408,44 +3569,44 @@ msgstr ""
 "<b>dailysummary</b>：与 days 类似，但显示的是各天的摘要，而不是指向当天提交页"
 "面的链接。"
 
-#: www/faq.php:368
+#: www/faq.php:393
 msgid "Here are a few examples:"
 msgstr "下面举几个例子："
 
-#: www/faq.php:373
+#: www/faq.php:398
 msgid "URL"
 msgstr "URL"
 
-#: www/faq.php:376
+#: www/faq.php:401
 msgid "The last ten ports"
 msgstr "最近的 10 个 Port"
 
-#: www/faq.php:380
+#: www/faq.php:405
 msgid "Same as above, but show only two days of previous commits"
 msgstr "与上相同，但只显示前两天的提交"
 
-#: www/faq.php:384
+#: www/faq.php:409
 msgid "Same as above, but show summaries instead of a link to another page"
 msgstr "与上相同，但显示摘要而不是指向另一页面的链接"
 
-#: www/faq.php:390
+#: www/faq.php:415
 msgid ""
 "<b>NOTE:</b> Effective 13 November 2003, these parameters are no longer "
 "available."
 msgstr "<b>注意：</b>自 2003 年 11 月 13 日起，这些参数已不再可用。"
 
-#: www/faq.php:394
+#: www/faq.php:419
 msgid "How can I view the commits for a particular day?"
 msgstr "如何查看某一天的提交？"
 
-#: www/faq.php:399
+#: www/faq.php:424
 #, php-format
 msgid ""
 "Yes, you can. %s displays all the commits for today (relative to the current "
 "server time)."
 msgstr "可以。%s 会显示今天的全部提交（以当前服务器时间为准）。"
 
-#: www/faq.php:402
+#: www/faq.php:427
 #, php-format
 msgid ""
 "You can also pass a parameter and view the commits for a given day. For "
@@ -3454,7 +3615,7 @@ msgstr ""
 "您也可以传入参数来查看指定日期的提交。例如，%s 会显示 2002 年 11 月 19 日的全"
 "部提交"
 
-#: www/faq.php:405
+#: www/faq.php:430
 msgid ""
 "The date should be of the format YYYY/MM/DD but I'm sure different formats "
 "will work. If the code has trouble figuring out what date you mean, it will "
@@ -3463,12 +3624,12 @@ msgstr ""
 "日期格式应为 YYYY/MM/DD，不过我相信其他格式也能用。如果代码无法确定您指的是哪"
 "个日期，它会自行猜测，并告知您日期已作调整。"
 
-#: www/faq.php:408
+#: www/faq.php:433
 msgid "Why can't I add a port to my watch list?"
 msgstr "为什么我无法把 Port 加入关注列表？"
 
 #. TRANSLATORS: %1$s is the 'add to watch list' icon, %2$s is the 'on your watch list' icon.
-#: www/faq.php:415
+#: www/faq.php:440
 #, php-format
 msgid ""
 "You have clicked on the %1$s icon and it doesn't change to a %2$s. Yes, I've "
@@ -3484,7 +3645,7 @@ msgstr ""
 "为默认，请先在列表中选中它，再点击“设为默认”按钮。"
 
 #. TRANSLATORS: %1$s is the 'on your watch list' icon, %2$s is the 'add to watch list' icon.
-#: www/faq.php:420
+#: www/faq.php:445
 #, php-format
 msgid ""
 "NOTE: The %1$s will only appear beside a port that is on one of your default "
@@ -3497,19 +3658,19 @@ msgstr ""
 "个非默认关注列表上，则会改为显示 %2$s 图标。如果看到的与预期不符，请尝试在<a "
 "href=\"/watch-list-maintenance.php\">关注列表设置</a>中设置默认关注列表。"
 
-#: www/faq.php:423
+#: www/faq.php:448
 msgid "Why doesn't this port appear on my watch list?"
 msgstr "为什么这个 Port 没有出现在我的关注列表上？"
 
-#: www/faq.php:428
+#: www/faq.php:453
 msgid "Please refer to the above question."
 msgstr "请参阅上面的问题。"
 
-#: www/faq.php:431
+#: www/faq.php:456
 msgid "What are Port Moves?"
 msgstr "什么是 Port Moves（Port 迁移）？"
 
-#: www/faq.php:436
+#: www/faq.php:461
 #, php-format
 msgid ""
 "Some ports (for example <a href=\"/net/\">net</a>/<a href=\"/net/gift/"
@@ -3519,11 +3680,11 @@ msgstr ""
 "有些 Port（例如 <a href=\"/net/\">net</a>/<a href=\"/net/gift/\">gift</a>）会"
 "有标题为“Port Moves”的小节。FreshPorts 从发往 %s 的提交中获取 Port 信息。"
 
-#: www/faq.php:436
+#: www/faq.php:461
 msgid "repository"
 msgstr "仓库"
 
-#: www/faq.php:438
+#: www/faq.php:463
 msgid ""
 "With <span class=\"cmd\">subversion</span>, there could be a manual change "
 "to the repository, not creating a commit email. Such moves were often "
@@ -3535,7 +3696,7 @@ msgstr ""
 "邮件。这类迁移通常被称为 <i>repo-copy</i>，可能会把某个 Port 从一个分类移动到"
 "另一个分类。之所以这样做，是为了保留 Port 的历史记录。"
 
-#: www/faq.php:440
+#: www/faq.php:465
 msgid ""
 "With <span class=\"cmd\">git</span>, <i>repo-copies</i> do not occur; the "
 "changes are accomplished via commits."
@@ -3543,7 +3704,7 @@ msgstr ""
 "使用 <span class=\"cmd\">git</span> 时则不会出现 <i>repo-copies</i>，这类变更"
 "都通过提交来完成。"
 
-#: www/faq.php:443
+#: www/faq.php:468
 msgid ""
 "Such moves/commits are documented in <a href=\"/MOVED\">/usr/ports/MOVED</"
 "a>. FreshPorts parses this file and records these changes in its database."
@@ -3551,20 +3712,20 @@ msgstr ""
 "这类迁移/提交都记录在 <a href=\"/MOVED\">/usr/ports/MOVED</a> 中。FreshPorts "
 "会解析这个文件，并将这些变更记录到自己的数据库中。"
 
-#: www/faq.php:446
+#: www/faq.php:471
 msgid "This new feature was added on 31 December 2003."
 msgstr "这项新功能于 2003 年 12 月 31 日加入。"
 
-#: www/faq.php:450
+#: www/faq.php:475
 msgid "What is /usr/ports/UPDATING?"
 msgstr "什么是 /usr/ports/UPDATING？"
 
-#: www/faq.php:455
+#: www/faq.php:480
 #, php-format
 msgid "%1$s is similar to %2$s, but for ports, not for the source tree."
 msgstr "%1$s 与 %2$s 类似，但面向的是 Port，而非源代码树。"
 
-#: www/faq.php:458
+#: www/faq.php:483
 msgid ""
 "FreshPorts parses this file and attempts to relate the entries to any ports "
 "it can find. Such relations are not always possible. We do the best we can. "
@@ -3575,11 +3736,11 @@ msgstr ""
 "联并非总能实现，我们只能尽力而为。<a href=\"/net/openldap22-client/\">net/"
 "openldap22-client</a> 这个 Port 就是很好的例子。"
 
-#: www/faq.php:462
+#: www/faq.php:487
 msgid "What are Master/Slave ports?"
 msgstr "什么是 Master/Slave Port？"
 
-#: www/faq.php:467
+#: www/faq.php:492
 #, php-format
 msgid ""
 "Some ports are so similar to another port that it makes sense to maintain "
@@ -3589,7 +3750,7 @@ msgstr ""
 "有些 Port 与另一个 Port 极为相似，因此只需维护其中一个 Port，并在另一个 Port "
 "中写明差异。这有点类似于 %1$s 与 %2$s 之间的关系。"
 
-#: www/faq.php:470
+#: www/faq.php:495
 msgid ""
 "A good example is <a href=\"/www/\">www</a>/<a href=\"/www/"
 "mod_php4\">mod_php4</a>. You can see that the <b>master port</b> for that is "
@@ -3602,11 +3763,11 @@ msgstr ""
 "a>/<a href=\"/lang/php4/\">php4</a>。反过来，<a href=\"/lang/\">lang</a>/<a "
 "href=\"/lang/php4/\">php4</a> 则列出了多个 <b>从属 Port（slave port）</b>。"
 
-#: www/faq.php:473
+#: www/faq.php:498
 msgid "The ability to add this feature is because of this patch:"
 msgstr "这项功能之所以能够加入，要归功于这个补丁："
 
-#: www/faq.php:498
+#: www/faq.php:523
 msgid ""
 "The FreeBSD tree has no defined method for handling master/slave ports. It "
 "is because of this that FreshPorts never attempted to refresh slave ports "
@@ -3617,7 +3778,7 @@ msgstr ""
 "新时，FreshPorts 从不尝试刷新从属 Port。如今我们的方法已经基本可靠，主 Port "
 "更新时，所有从属 Port 都会被刷新。"
 
-#: www/faq.php:501
+#: www/faq.php:526
 msgid ""
 "This method works for all but 40 ports which are involved in a master/slave "
 "relationship. It is hoped that those 40 are fixed soon. It is also hoped "
@@ -3626,11 +3787,11 @@ msgstr ""
 "除 40 个 Port 外，这一方法对所有存在 master/slave 关系的 Port 都有效。希望这 "
 "40 个 Port 能尽快修复，也希望上述补丁能提交到树中。"
 
-#: www/faq.php:505
+#: www/faq.php:530
 msgid "What is this \"to add the package\" stuff?"
 msgstr "这个“to add the package”（添加软件包）是怎么回事？"
 
-#: www/faq.php:510
+#: www/faq.php:535
 msgid ""
 "Included within the port description is the instruction for adding the "
 "package. This information can be important when the package name does not "
@@ -3642,14 +3803,14 @@ msgstr ""
 "可能非常重要。很好的例子是 <a href=\"/x11/\">x11</a>/<a href=\"/x11/"
 "XFree86-4-clients/\">XFree86-4-clients</a>。添加该软件包的命令是："
 
-#: www/faq.php:517
+#: www/faq.php:542
 msgid ""
 "This normally isn't a problem, but for the 1900 or so ports which are "
 "different, this information is very useful."
 msgstr ""
 "这通常不成问题，但对于那约 1900 个名称不同的 Port 来说，这条信息非常有用。"
 
-#: www/faq.php:520
+#: www/faq.php:545
 #, php-format
 msgid ""
 "If the %1$s information does not appear, you'll be told why there is no "
@@ -3658,7 +3819,7 @@ msgstr ""
 "如果没有显示 %1$s 信息，则会告诉您为什么没有相应的软件包。这由 Port 的 "
 "Makefile 中的 %2$s 变量控制。"
 
-#: www/faq.php:523
+#: www/faq.php:548
 #, php-format
 msgid ""
 "Broken, ignored, and forbidden ports are not built by the package cluster. "
@@ -3667,11 +3828,11 @@ msgstr ""
 "软件包集群不会为已损坏、被忽略和已禁止的 Port 构建软件包，因此 %s 没有软件包"
 "可用。"
 
-#: www/faq.php:526
+#: www/faq.php:551
 msgid "Why does the search page use GET and not POST?"
 msgstr "搜索页面为什么使用 GET 而不是 POST？"
 
-#: www/faq.php:531
+#: www/faq.php:556
 #, php-format
 msgid ""
 "If you visit the <a href=\"/search.php\">search</a> page, and you run a "
@@ -3680,11 +3841,11 @@ msgstr ""
 "如果您访问<a href=\"/search.php\">搜索</a>页面并执行一次搜索，就会发现 URL 变"
 "得很长。例如：%s。"
 
-#: www/faq.php:531
+#: www/faq.php:556
 msgid "this really long link"
 msgstr "这个超长链接"
 
-#: www/faq.php:533
+#: www/faq.php:558
 msgid ""
 "Long URLs occur like that because the search form uses a GET. A long URL "
 "would not occur if it was using a POST. The long URLs are useful because "
@@ -3695,7 +3856,7 @@ msgstr ""
 "URL。长 URL 很有用，因为您可以把惯用的搜索收藏为书签。这正是我们用 GET 而不"
 "用 POST 的原因。"
 
-#: www/faq.php:536
+#: www/faq.php:561
 msgid ""
 "It also makes it easier to <a href=\"https://validator.w3.org/\">validate "
 "the HTML</a> if you can provide a URL that exercises all the options that "
@@ -3704,91 +3865,91 @@ msgstr ""
 "只要提供的 URL 能覆盖所有需要测试的选项，<a href=\"https://validator.w3.org/"
 "\">验证 HTML</a> 也会更容易。"
 
-#: www/faq.php:539
+#: www/faq.php:564
 msgid "What are all those fields I can search on?"
 msgstr "那些可供搜索的字段都是什么？"
 
-#: www/faq.php:544
+#: www/faq.php:569
 msgid ""
 "For those familiar with the FreeBSD ports structure, the following fields "
 "indicate their origin:"
 msgstr "对熟悉 FreeBSD Ports 结构的用户来说，以下字段标明了各自数据的来源："
 
-#: www/faq.php:548
+#: www/faq.php:573
 msgid "Field"
 msgstr "字段"
 
-#: www/faq.php:548
+#: www/faq.php:573
 msgid "Origin"
 msgstr "来源"
 
-#: www/faq.php:549 www/search.php:1223
+#: www/faq.php:574 www/search.php:1223
 msgid "Port Name"
 msgstr "Port 名称"
 
-#: www/faq.php:550 www/search.php:1220
+#: www/faq.php:575 www/search.php:1220
 msgid "Package Name"
 msgstr "软件包名称"
 
-#: www/faq.php:551
+#: www/faq.php:576
 msgid "Latest Link"
 msgstr "最新链接"
 
-#: www/faq.php:552 www/ports-conflicts.php:42 www/search.php:1216
+#: www/faq.php:577 www/ports-conflicts.php:42 www/search.php:1216
 msgid "Maintainer"
 msgstr "维护者"
 
-#: www/faq.php:553 www/search.php:1224
+#: www/faq.php:578 www/search.php:1224
 msgid "Short Description"
 msgstr "简短描述"
 
-#: www/faq.php:554 www/search.php:1215
+#: www/faq.php:579 www/search.php:1215
 msgid "Long Description"
 msgstr "详细描述"
 
-#: www/faq.php:555 www/search.php:1209
+#: www/faq.php:580 www/search.php:1209
 msgid "Depends Build"
 msgstr "构建依赖"
 
-#: www/faq.php:556 www/search.php:1210
+#: www/faq.php:581 www/search.php:1210
 msgid "Depends Lib"
 msgstr "库依赖"
 
-#: www/faq.php:557 www/search.php:1211
+#: www/faq.php:582 www/search.php:1211
 msgid "Depends Run"
 msgstr "运行依赖"
 
-#: www/faq.php:558 www/search.php:1219
+#: www/faq.php:583 www/search.php:1219
 msgid "Message ID"
 msgstr "消息 ID"
 
-#: www/faq.php:558
+#: www/faq.php:583
 msgid "The message id in the original commit email"
 msgstr "原始提交邮件中的消息 ID"
 
-#: www/faq.php:559 www/faq.php:560
+#: www/faq.php:584 www/faq.php:585
 #, php-format
 msgid "output from %s"
 msgstr "%s 的输出"
 
-#: www/faq.php:563
+#: www/faq.php:588
 #, php-format
 msgid ""
 "For all of the above origins, you can obtain the value using %s. For example:"
 msgstr "对上述所有来源，您都可以用 %s 取得相应的值。例如："
 
-#: www/faq.php:572
+#: www/faq.php:597
 #, php-format
 msgid ""
 "This value is obtained from a file in the port directory. For example %s."
 msgstr "这个值取自 Port 目录下的某个文件。例如 %s。"
 
-#: www/faq.php:575
+#: www/faq.php:600
 msgid ""
 "Where did this \"People watching this port, also watch\" feature come from?"
 msgstr "这个“关注此 Port 的人还关注”功能是从哪儿来的？"
 
-#: www/faq.php:580
+#: www/faq.php:605
 msgid ""
 "Like many FreshPorts features, this idea came from someone else. Florent "
 "Thoumie mentioned something about extending the ports system to include "
@@ -3800,7 +3961,7 @@ msgstr ""
 "展 Ports 系统、加入维护者/提交者推荐的想法。有了这样的功能，提交者/维护者便可"
 "以建议：比如说，您装了 Firefox，最好也装上 linuxflashplugin。"
 
-#: www/faq.php:583
+#: www/faq.php:608
 msgid ""
 "It was from this concept that I came up with \"People watching this port..."
 "\". This information is obtained by:"
@@ -3808,44 +3969,44 @@ msgstr ""
 "正是从这个概念出发，我想出了“关注此 Port 的人……”这一功能。这些信息按如下方式"
 "获得："
 
-#: www/faq.php:585
+#: www/faq.php:610
 msgid "FreshPorts takes the port you are looking at"
 msgstr "FreshPorts 取出您正在查看的 Port"
 
-#: www/faq.php:586
+#: www/faq.php:611
 msgid "It finds all the watch lists that this port appears on"
 msgstr "找出包含该 Port 的所有关注列表"
 
-#: www/faq.php:587
+#: www/faq.php:612
 msgid "It finds the top 5 most popular ports on those lists"
 msgstr "在这些列表中找出最受欢迎的前 5 个 Port"
 
-#: www/faq.php:588
+#: www/faq.php:613
 msgid "FreshPorts shows you the results"
 msgstr "FreshPorts 把结果显示给您"
 
-#: www/faq.php:592
+#: www/faq.php:617
 msgid "All of this takes about 55ms."
 msgstr "这一切只需大约 55 毫秒。"
 
-#: www/faq.php:595
+#: www/faq.php:620
 msgid "What do you mean, the master port has been updated?"
 msgstr "什么叫“主 Port 已更新”？"
 
-#: www/faq.php:600
+#: www/faq.php:625
 msgid ""
 "For some slave ports, you may see a message like this, just above the "
 "<b>Commit History</b>:"
 msgstr "对于某些从属 Port，您可能会在 <b>提交历史</b> 上方看到类似这样的消息："
 
-#: www/faq.php:603
+#: www/faq.php:628
 msgid ""
 "NOTE: This slave port may no longer be vulnerable to issues shown below "
 "because the master port has been updated."
 msgstr ""
 "注意：由于主 Port 已经更新，此从属 Port 可能已不再受下方所示问题的影响。"
 
-#: www/faq.php:607
+#: www/faq.php:632
 msgid ""
 "Slave ports can be updated with a commit against the master port. A commit "
 "against the master port will affect any slave ports. If a <a href=\"https://"
@@ -3859,17 +4020,17 @@ msgstr ""
 "\">VuXML</a> 漏洞，任何修复都会应用到主 Port 上。然而，针对主 Port 的提交不会"
 "出现在从属 Port 页面之下，从而让人误以为该从属 Port 仍然存在漏洞。"
 
-#: www/faq.php:610
+#: www/faq.php:635
 msgid ""
 "The above notice serves as a reminder that the slave port may no longer be "
 "vulnerable."
 msgstr "上面这则提示是提醒您：该从属 Port 可能已不再存在漏洞。"
 
-#: www/faq.php:613
+#: www/faq.php:638
 msgid "How does FreshPorts determine the master sites?"
 msgstr "FreshPorts 是如何确定主站点的？"
 
-#: www/faq.php:618
+#: www/faq.php:643
 msgid ""
 "Each port displays the master sites from which its distfiles can be "
 "downloaded. This information is obtained from \"make master-sites-all\". "
@@ -3882,7 +4043,7 @@ msgstr ""
 "Groothuis 在这封<a href=\"https://docs.freebsd.org/cgi/mid.cgi?"
 "20041219204057.GE63708\">邮件</a>中做了解释。"
 
-#: www/faq.php:621
+#: www/faq.php:646
 msgid ""
 "In short, FreshPorts displays the list of master sites that should contain "
 "all the distfiles. That is why we use that value, and not one of the other "
@@ -3891,11 +4052,11 @@ msgstr ""
 "简而言之，FreshPorts 显示的是应当包含全部 distfiles 的那份主站点列表。这正是"
 "我们选用该值而非其他选项的原因。"
 
-#: www/faq.php:624
+#: www/faq.php:649
 msgid "Why don't you obscure email addresses?"
 msgstr "你们为什么不把电子邮件地址做模糊处理？"
 
-#: www/faq.php:629
+#: www/faq.php:654
 msgid ""
 "FreshPorts used to obscure email addresses, but we don't any more. We "
 "realised that every email address on FreshPorts is already somewhere else "
@@ -3904,19 +4065,19 @@ msgstr ""
 "FreshPorts 曾对电子邮件地址做模糊处理，但现在不这么做了。我们意识到，"
 "FreshPorts 上的每个电子邮件地址都早已出现在其他地方。例如："
 
-#: www/faq.php:632
+#: www/faq.php:657
 msgid "www/ports pages"
 msgstr "www/ports 页面"
 
-#: www/faq.php:634
+#: www/faq.php:659
 msgid "fenner's output"
 msgstr "fenner 的输出"
 
-#: www/faq.php:636
+#: www/faq.php:661
 msgid "cvsweb (now deprecated)"
 msgstr "cvsweb（现已弃用）"
 
-#: www/faq.php:637
+#: www/faq.php:662
 msgid ""
 "<span class=\"cmd\">subversion</span> (still online, but replaced by <span "
 "class=\"cmd\">git</span>)"
@@ -3924,29 +4085,29 @@ msgstr ""
 "<span class=\"cmd\">subversion</span>（仍在线，但已被 <span "
 "class=\"cmd\">git</span> 取代）"
 
-#: www/faq.php:642
+#: www/faq.php:667
 msgid ""
 "In short, it doesn't make sense to obscure that which is freely available "
 "elsewhere."
 msgstr "简而言之，把别处唾手可得的信息遮起来，实在没有意义。"
 
-#: www/faq.php:646
+#: www/faq.php:671
 msgid ""
 "Similarly, we do not entertain requests to remove information from our "
 "website. We only report upon what exists elsewhere."
 msgstr "同样，我们也不受理从本网站删除信息的请求。我们只报道别处已有的内容。"
 
-#: www/faq.php:651
+#: www/faq.php:676
 msgid ""
 "Why does the PORTVERSION at the top of page differ from that of the first "
 "commit?"
 msgstr "为什么页面顶部的 PORTVERSION 与第一条提交中的不一样？"
 
-#: www/faq.php:656
+#: www/faq.php:681
 msgid "This question refers to a port page."
 msgstr "这个问题针对的是 Port 页面。"
 
-#: www/faq.php:659
+#: www/faq.php:684
 msgid ""
 "This situation usually occurs with MASTER/SLAVE ports. The Master port is "
 "updated with a new REVISION. No commit is done against the Slave port. "
@@ -3960,19 +4121,19 @@ msgstr ""
 "当刷新从属 Port。这次刷新会更新页面顶部的 PORTVERSION。它反映的是：既然主 "
 "Port 已经升级，此时安装从属 Port 会得到的修订版。"
 
-#: www/faq.php:662
+#: www/faq.php:687
 msgid "What HTML anchors exist?"
 msgstr "有哪些 HTML 锚点？"
 
-#: www/faq.php:666
+#: www/faq.php:691
 msgid "Anchors in port pages include:"
 msgstr "Port 页面中的锚点包括："
 
-#: www/faq.php:706
+#: www/faq.php:731
 msgid "Anchors make it easier to link to sections within pages."
 msgstr "锚点让链接到页面内的各个小节变得更方便。"
 
-#: www/faq.php:709
+#: www/faq.php:734
 #, php-format
 msgid ""
 "For example, this link – note the %s at its tail – takes you to the commit "
@@ -3980,7 +4141,7 @@ msgid ""
 msgstr ""
 "例如，这个链接——注意其末尾的 %s——会带您前往 security/acme.sh 的提交历史："
 
-#: www/faq.php:715
+#: www/faq.php:740
 #, php-format
 msgid ""
 "Each of these sections has a %s link beside its heading. Click it, or copy "
@@ -3988,19 +4149,19 @@ msgid ""
 msgstr ""
 "每个小节的标题旁都有一个 %s 链接。点击或复制它，即可得到指向该小节的链接。"
 
-#: www/faq.php:718
+#: www/faq.php:743
 msgid "Enjoy. We can add more anchors upon request."
 msgstr "祝您用得开心。如有需要，我们可以应要求添加更多锚点。"
 
-#: www/faq.php:722
+#: www/faq.php:747
 msgid "Can I get alerts for new packages?"
 msgstr "我能收到新软件包的提醒吗？"
 
-#: www/faq.php:726
+#: www/faq.php:751
 msgid "Yes, yes, you can."
 msgstr "能，当然能。"
 
-#: www/faq.php:728
+#: www/faq.php:753
 msgid ""
 "Not only can FreshPorts email you when one of your watched ports is updated, "
 "it can also email you when the package is ready to install."
@@ -4008,7 +4169,7 @@ msgstr ""
 "FreshPorts 不仅能在您关注的某个 Port 更新时给您发邮件，还能在相应软件包可以安"
 "装时再给您发一封。"
 
-#: www/faq.php:730
+#: www/faq.php:755
 msgid ""
 "FreshPorts polls the available FreeBSD repo builds on an hourly basis. It "
 "uses that information to display the packages available under various ABI "
@@ -4023,11 +4184,11 @@ msgstr ""
 "您可能会在某些页面上看到 CURRENT/quarterly 的字样——比起随时追踪哪个分支是 "
 "CURRENT，这样列出更省事。"
 
-#: www/faq.php:732
+#: www/faq.php:757
 msgid "To get new package notifications, follow these steps:"
 msgstr "要接收新软件包通知，请按以下步骤操作："
 
-#: www/faq.php:735
+#: www/faq.php:760
 msgid ""
 "Click on <a href=\"/report-subscriptions.php\">Report Subscriptions</a>, "
 "under <i>Watch Lists</i> in the right hand column"
@@ -4035,15 +4196,15 @@ msgstr ""
 "点击 <a href=\"/report-subscriptions.php\">报告订阅</a>，就在右侧栏 <i>关注列"
 "表</i> 的下方"
 
-#: www/faq.php:736
+#: www/faq.php:761
 msgid "Check the <i>New Package Notification</i> box"
 msgstr "勾选 <i>新软件包通知</i> 复选框"
 
-#: www/faq.php:737
+#: www/faq.php:762
 msgid "click on Update"
 msgstr "点击“更新”"
 
-#: www/faq.php:738
+#: www/faq.php:763
 msgid ""
 "Again under <i>Watch Lists</i>, this time, click on <a href=\"/report-"
 "package-notifications.php\">ABI Package Subscriptions</a> to select the ABI "
@@ -4052,48 +4213,48 @@ msgstr ""
 "同样在 <i>关注列表</i> 下，这一次点击 <a href=\"/report-package-"
 "notifications.php\">ABI 软件包订阅</a>，选择您希望接收通知的 ABI"
 
-#: www/faq.php:739
+#: www/faq.php:764
 msgid ""
 "On this page, select one or more items from each of the first three boxes:"
 msgstr "在此页面上，从前三个框中各选择一项或多项："
 
-#: www/faq.php:741
+#: www/faq.php:766
 msgid "watch lists (first box)"
 msgstr "关注列表（第一个框）"
 
-#: www/faq.php:742
+#: www/faq.php:767
 msgid "ABI (second box)"
 msgstr "ABI（第二个框）"
 
-#: www/faq.php:743
+#: www/faq.php:768
 msgid "one or both of quarterly and latest (third box)"
 msgstr "quarterly 与 latest 中的一个或两者（第三个框）"
 
-#: www/faq.php:745
+#: www/faq.php:770
 msgid "and click on <i>Add</i>"
 msgstr "然后点击 <i>添加</i>"
 
-#: www/faq.php:749
+#: www/faq.php:774
 msgid "When the next updates arrive, you'll get an email."
 msgstr "下一批更新到来时，您就会收到电子邮件。"
 
-#: www/faq.php:753
+#: www/faq.php:778
 msgid "Why is a particular ABI not listed at FreshPorts?"
 msgstr "为什么 FreshPorts 上没有列出某个特定的 ABI？"
 
-#: www/faq.php:757
+#: www/faq.php:782
 #, php-format
 msgid "FreshPorts covers the ABIs published at %s."
 msgstr "FreshPorts 覆盖 %s 上发布的所有 ABI。"
 
-#: www/faq.php:759
+#: www/faq.php:784
 msgid ""
 "In general, the FreeBSD Project does not build quarterly branches for "
 "whatever branch is CURRENT."
 msgstr ""
 "一般而言，无论哪个分支是 CURRENT，FreeBSD 项目都不会为其构建 quarterly 分支。"
 
-#: www/faq.php:761
+#: www/faq.php:786
 msgid ""
 "Some ABIs on that page are marked <i>(only pkgbase is updated)</i>. Only the "
 "base system is built for them, not the ports tree, so there are no packages "
@@ -4102,7 +4263,7 @@ msgstr ""
 "该页面上有些 ABI 标注为 <i>（仅更新 pkgbase）</i>。这些 ABI 只构建基本系统，"
 "不构建 ports 树，因此 FreshPorts 没有可显示的包。这些 ABI 会被跳过。"
 
-#: www/faq.php:763
+#: www/faq.php:788
 #, php-format
 msgid ""
 "At the time of writing (%s), the code to extract those ABIs and the current "
@@ -4301,16 +4462,21 @@ msgid "If you have suggestions for graphs, please raise an issue."
 msgstr "如果您对这些图表有建议，请提交 issue。"
 
 #: www/graphs.php:36
+#, php-format
+msgid "See also: %s."
+msgstr ""
+
+#: www/graphs.php:39
 msgid ""
 "NOTE that many graphs are clickable and will take you to the category, port, "
 "etc."
 msgstr "注意：许多图表都可以点击，会带您前往相应的分类、Port 等页面。"
 
-#: www/graphs.php:55
+#: www/graphs.php:58
 msgid "graph goes here!"
 msgstr "图表就放这里！"
 
-#: www/graphs.php:72 www/graphs2.php:89
+#: www/graphs.php:75 www/graphs2.php:89
 msgid ""
 "Oh. This is rather embarrassing.  I have no idea how this could have "
 "happened. I do hope you will understand.  Please don't tell anyone.  But I "
@@ -4320,13 +4486,13 @@ msgstr ""
 "哦，这可真让人尴尬。我也不知道怎么会变成这样，真心希望您能理解，请千万别告诉"
 "别人。不过我没有任何数据可以给您看——您看，根本没人费心去填充 graphs 数据表。"
 
-#: www/graphs.php:75
+#: www/graphs.php:78
 msgid ""
 "There was unfortunately an error while fetching the list of graphs from the "
 "database."
 msgstr "不巧的是，从数据库获取图表列表时出了错。"
 
-#: www/graphs.php:96
+#: www/graphs.php:99
 msgid ""
 "Oh. This is rather embarrassing.  I have no idea how this could have "
 "happened. I do hope you will understand.  Please don't tell anyone.  But I "
@@ -5864,10 +6030,6 @@ msgstr "更多详情"
 #: www/vuxml.php:242
 msgid "no vulnerabilities found.  it looks as if the data is missing."
 msgstr "未发现漏洞。看起来是数据缺失了。"
-
-#: www/vuxml.php:251
-msgid "Date"
-msgstr "日期"
 
 #: www/vuxml.php:278
 #, php-format

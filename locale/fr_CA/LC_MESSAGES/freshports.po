@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: FreshPorts\n"
 "Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
 "POT-Creation-Date: 2026-11-10 20:54+0000\n"
-"PO-Revision-Date: 2026-10-09 14:42-0400\n"
+"PO-Revision-Date: 2026-11-11 16:43-0500\n"
 "Last-Translator: Marc Pearson <marc.pearson@gmail.com>\n"
 "Language-Team: French (Canada)\n"
 "Language: fr_CA\n"
@@ -17,6 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 3.10\n"
 
 #: classes/display_commit.php:126 classes/port-display.php:1215
 #: include/freshports.php:1995
@@ -41,7 +42,7 @@ msgstr "Action"
 
 #: classes/files-display.php:56
 msgid "Annotate/etc"
-msgstr "Annoter, etc."
+msgstr "Annoter, etc"
 
 #: classes/files-display.php:56
 msgid "File"
@@ -185,15 +186,16 @@ msgstr ""
 #, php-format
 msgid "A newer version was found upstream by portscout, first on %s."
 msgstr ""
+"Une nouvelle version a été trouvée en amont par portscout, d’abord sur %s."
 
 #: classes/port-display.php:1104
 msgid "A newer version was found upstream by portscout."
-msgstr ""
+msgstr "Une nouvelle version a été trouvée en amont par portscout."
 
 #: classes/port-display.php:1107
 #, php-format
 msgid "upstream: %s"
-msgstr ""
+msgstr "amount: %s"
 
 #: classes/port-display.php:1139
 #, php-format
@@ -717,21 +719,26 @@ msgstr "Je n'ai pas pu trouver les détails de vos listes de suivi... désolé"
 
 #: include/bot-gate.php:137
 msgid "Just a moment"
-msgstr ""
+msgstr "Juste un instant"
 
 #: include/bot-gate.php:226
 msgid "If you're a person, please press the button for a cookie."
 msgstr ""
+"Si vous êtes une personne, s’il vous plaît appuyer sur le bouton pour un "
+"cookie."
 
 #: include/bot-gate.php:231
 msgid "I was a person last time I checked."
-msgstr ""
+msgstr "La dernière fois que j'ai vérifié, j'étais une personne."
 
 #: include/bot-gate.php:233
 msgid ""
 "This sets a cookie, so you will not be asked again for a day. Logged in "
 "users are never asked."
 msgstr ""
+"Cela installe un cookie, de sorte que la question ne vous sera plus posée "
+"pendant une journée. Cette demande n’est jamais adressée aux utilisateurs "
+"connectés."
 
 #: include/fontsize.php:64
 msgid "Smallest"
@@ -1062,7 +1069,7 @@ msgstr "MOTIF :"
 
 #: include/freshports.php:1565
 msgid "Perhaps you meant one of these:"
-msgstr ""
+msgstr "Peut-être vouliez-vous dire l’une de ces choses :"
 
 #: include/freshports.php:1579
 msgid "All rights reserved."
@@ -1184,7 +1191,7 @@ msgstr "%s - inscription d'un utilisateur"
 
 #: include/freshports.php:2311
 msgid "You are connected over IPv6"
-msgstr ""
+msgstr "Vous êtes connecté en IPV6"
 
 #: include/freshports.php:2324
 #, php-format
@@ -1693,11 +1700,11 @@ msgstr "Personne n'est autorisé à se connecter pour le moment."
 #: include/system-status-page.php:44
 #, php-format
 msgid "vuxml entries selected for processing: %d"
-msgstr ""
+msgstr "entrées vuxml sélectionnées pour traitement: %d"
 
 #: include/system-status-page.php:46
 msgid "(this drops to 0 only when the run commits)"
-msgstr ""
+msgstr "(cela tombe à 0 uniquement lorsque l’exécution est validée)"
 
 #: include/system-status-page.php:57
 #, php-format
@@ -1743,9 +1750,8 @@ msgid "FreshPorts News Feeds"
 msgstr "Flux de nouvelles FreshPorts"
 
 #: www/--/feeds/index.php:35
-#, fuzzy
 msgid "Feed formats"
-msgstr "forums FreeBSD"
+msgstr "Formats de flux"
 
 #: www/--/feeds/index.php:37 www/backend/index.php:38
 msgid "See the next section for optional parameters for these URLs."
@@ -1757,13 +1763,12 @@ msgid "RSS Feed validator"
 msgstr "Validateur de flux RSS"
 
 #: www/--/feeds/index.php:45
-#, fuzzy
 msgid ""
 "The above feeds are created using <a href=\"https://github.com/laminas/"
 "laminas-feed\">laminas-feed</a>."
 msgstr ""
-"Les flux ci-dessus sont créés à l'aide de <a href=\"https://github.com/flack/"
-"UniversalFeedCreator\">UniversalFeedCreator</a>."
+"Les flux ci-dessus sont créés à l'aide de <a href=\"https://github.com/"
+"laminas/laminas-feed\">laminas-feed</a>."
 
 #: www/--/feeds/index.php:48 www/backend/index.php:66
 msgid "Optional parameters for the above formats"
@@ -1775,7 +1780,7 @@ msgstr "Chacun de ces formats a des paramètres optionnels :"
 
 #: www/--/feeds/index.php:52 www/backend/newsfeeds.php:44
 msgid "Atom 1.0 instead of RSS 2.0."
-msgstr ""
+msgstr "Atom 1.0 au lieu de RSS 2.0."
 
 #: www/--/feeds/index.php:53 www/backend/index.php:70
 #: www/backend/newsfeeds.php:45 www/backend/newsfeeds.php:93
@@ -1834,7 +1839,7 @@ msgstr ""
 #: www/--/feeds/index.php:77
 #, php-format
 msgid "The deprecated feeds are listed at <a href=\"%s\">%s</a>."
-msgstr ""
+msgstr "Les flux dépréciés sont listés à <a href=\"%s\">%s</a>."
 
 #: www/--/forums-gone.php:15 www/--/forums-gone.php:26
 msgid "The forums are gone"
@@ -1882,7 +1887,7 @@ msgstr "Qu'est-ce qu'un port ?"
 
 #. TRANSLATORS: %1$s is a link whose text is 'FreeBSD Handbook'; %2$s is the command 'make install'.
 #: www/about.php:49
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "A port is the term used to describe a collection of files which makes it "
 "extremely easy to install an application.  As the %1$s explains, installing "
@@ -1891,15 +1896,13 @@ msgid ""
 msgstr ""
 "Un port est le terme utilisé pour décrire une collection de fichiers qui "
 "rend extrêmement facile l'installation d'une application. Comme il est dit "
-"dans la %1$s : <em>L'installation d'une application est aussi simple que de "
-"télécharger le port, de le décompresser et de taper %2$s dans le répertoire "
-"du port</em>. Si vous voulez une application, le port est LA voie à "
-"suivre(TM)"
+"dans le %1$s : l’installation d'une application est aussi simple que d’aller "
+"dans le répertoire du port et de taper %2$s. Si vous voulez une application, "
+"le port est LA voie à suivre(TM)"
 
 #: www/about.php:49
-#, fuzzy
 msgid "FreeBSD Handbook"
-msgstr "Porters Handbook"
+msgstr "Manuel FreeBSD"
 
 #: www/about.php:51
 msgid ""
@@ -2172,6 +2175,9 @@ msgid ""
 "These older feeds still work, but they will be redirected to the new feeds "
 "at <a href=\"%s\">%s</a>. Please update your subscriptions."
 msgstr ""
+"Ces anciens flux fonctionnent toujours, mais ils seront redirigés vers les "
+"nouveaux flux à l’adresse <a href=\"%s\">%s</a>. Veuillez mettre à jour vos "
+"abonnements."
 
 #: www/backend/index.php:36
 msgid "Various RSS formats"
@@ -2194,14 +2200,14 @@ msgid "We have these newsfeeds:"
 msgstr "Nous avons ces flux de nouvelles :"
 
 #: www/backend/newsfeeds.php:38
-#, fuzzy, php-format
+#, php-format
 msgid "An RSS 2.0 feed : %s"
-msgstr "Un flux RSS : %s"
+msgstr "Un flux RSS 2.0 : %s"
 
 #: www/backend/newsfeeds.php:39
 #, php-format
 msgid "The same feed as Atom 1.0 : %s"
-msgstr ""
+msgstr "Le même flux que Atom 1.0 : %s"
 
 #: www/backend/newsfeeds.php:40 www/backend/newsfeeds.php:85
 msgid "Take your pick of different formats:"
@@ -2217,15 +2223,16 @@ msgid "An RSS feed that lists only new ports:  %s"
 msgstr "Un flux RSS qui liste seulement les nouveaux ports : %s"
 
 #: www/backend/newsfeeds.php:75
-#, fuzzy
 msgid "Deprecated newsfeeds"
-msgstr "Ports dépréciés"
+msgstr "Flux de nouvelles dépréciés"
 
 #: www/backend/newsfeeds.php:76
 msgid ""
 "These older feeds still work, but they will be redirected to the feeds "
 "above. Please update your subscriptions."
 msgstr ""
+"Ces anciens flux fonctionnent toujours, mais ils seront redirigés vers les "
+"flux indiqués ci-dessus. Veuillez mettre à jour vos abonnements."
 
 #: www/backend/newsfeeds.php:84
 #, php-format
@@ -2448,23 +2455,23 @@ msgstr ""
 #: www/categories.php:235
 #, php-format
 msgid "How the number of categories has changed: %s."
-msgstr ""
+msgstr "Évolution du nombre de catégories : %s."
 
 #: www/categories.php:235 www/graphs.php:36
-#, fuzzy
 msgid "categories over time"
-msgstr "Catégories"
+msgstr "catégories au fil du temps"
 
 #: www/category-history.php:51
-#, fuzzy
 msgid "Categories over time"
-msgstr "Catégories"
+msgstr "Catégories au fil du temps"
 
 #: www/category-history.php:53
 msgid ""
 "The number of physical and virtual categories in the FreeBSD ports tree over "
 "time"
 msgstr ""
+"Évolution, au fil du temps, du nombre de catégories physiques et virtuelles "
+"dans l'arborescence des ports FreeBSD"
 
 #: www/category-history.php:103
 #, php-format
@@ -2473,14 +2480,18 @@ msgid ""
 "directory: every port lives in one. A %s category exists only in the "
 "CATEGORIES line of a port, such as %s or %s."
 msgstr ""
+"L'arbre des ports FreeBSD comporte deux types de catégories. Une catégorie "
+"de type %s est un répertoire : chaque port y est rattaché. Une catégorie de "
+"type %s n'existe qu'au sein de la ligne CATEGORIES d'un port ; c'est le cas, "
+"par exemple, de %s ou de %s."
 
 #: www/category-history.php:104 www/category-history.php:177
 msgid "physical"
-msgstr ""
+msgstr "physique"
 
 #: www/category-history.php:105 www/category-history.php:179
 msgid "virtual"
-msgstr ""
+msgstr "virtuel"
 
 #: www/category-history.php:109
 #, php-format
@@ -2489,12 +2500,19 @@ msgid ""
 "categories are %s in %s, less the physical ones; that list first appeared in "
 "August 1999. Both are read from the ports git history and updated daily."
 msgstr ""
+"Les catégories physiques correspondent aux entrées  %s  situées au niveau "
+"supérieur de  %s . Les catégories virtuelles correspondent aux éléments  %s "
+"présents dans %s , moins les catégories physiques ; cette liste est apparue "
+"pour la première fois en août 1999. Ces deux ensembles sont extraits de "
+"l'historique Git des « ports » et mis à jour quotidiennement."
 
 #: www/category-history.php:118
 msgid ""
 "There is no category history yet. Is the category_history periodic script "
 "enabled?"
 msgstr ""
+"Il n’existe pas encore d’historique de catégorie. Le script périodique "
+"« category_history » est-il activé ?"
 
 #: www/category-history.php:154
 #, php-format
@@ -2502,11 +2520,12 @@ msgid ""
 "A chart of the number of categories from %s to today. Now: %d physical, %d "
 "virtual."
 msgstr ""
+"Un graphique du nombre de catégories, de %s à aujourd’hui. Actuellement : %d "
+"physiques, %d virtuelles."
 
 #: www/category-history.php:187
-#, fuzzy
 msgid "Every change"
-msgstr "Enregistrer les modifications"
+msgstr "Chaque modification"
 
 #: www/category-history.php:189
 msgid ""
@@ -2514,11 +2533,14 @@ msgid ""
 "commit or two before its directory, so it can appear as a virtual category "
 "for a moment."
 msgstr ""
+"Les plus récents en premier. Une nouvelle catégorie physique est souvent "
+"ajoutée à VALID_CATEGORIES un ou deux commits avant la création de son "
+"répertoire ; elle peut donc, pendant un certain temps, apparaître comme une "
+"catégorie virtuelle."
 
 #: www/category-history.php:194
-#, fuzzy
 msgid "Added"
-msgstr "Port ajouté :"
+msgstr "Ajouté"
 
 #: www/category-history.php:194 www/vuxml.php:255
 msgid "Date"
@@ -2526,20 +2548,19 @@ msgstr "Date"
 
 #: www/category-history.php:194
 msgid "Physical"
-msgstr ""
+msgstr "Physique"
 
 #: www/category-history.php:194
-#, fuzzy
 msgid "Removed"
-msgstr "suppression"
+msgstr "Supprimé"
 
 #: www/category-history.php:194
 msgid "Virtual"
-msgstr ""
+msgstr "Virtuel"
 
 #: www/category-history.php:226
 msgid "the first ports Makefile"
-msgstr ""
+msgstr "le premier ports Makefile"
 
 #: www/category-maintenance.php:16
 msgid "Category maintenance"
@@ -3072,11 +3093,11 @@ msgstr ""
 
 #: www/faq.php:87
 msgid "The FreeBSD Project provides:"
-msgstr ""
+msgstr "Le projet FreeBSD fournit:"
 
 #: www/faq.php:91
 msgid "base"
-msgstr ""
+msgstr "base"
 
 #. TRANSLATORS: %s is the word 'base', shown in italics.
 #: www/faq.php:91
@@ -3085,15 +3106,16 @@ msgid ""
 "official packages for FreeBSD (the operating system, sometimes known as %s) "
 "in its entirety"
 msgstr ""
+"paquets officiels pour FreeBSD (le système d’exploitation, parfois désigné "
+"sous le nom de %s) dans son intégralité"
 
 #: www/faq.php:92
 msgid "packages for a huge number of ports."
-msgstr ""
+msgstr "paquets pour un très grand nombre de ports."
 
 #: www/faq.php:99
-#, fuzzy
 msgid "FreeBSD ports"
-msgstr "forums FreeBSD"
+msgstr "Ports FreeBSD"
 
 #. TRANSLATORS: %1$s is the repository name 'FreeBSD', %2$s is the word 'not' in bold, %3$s is 'FreeBSD ports' in italics.
 #: www/faq.php:99
@@ -3102,10 +3124,12 @@ msgid ""
 "The repo that's traditionally named %1$s does %2$s provide FreeBSD (OS) "
 "packages. It's the repo for %3$s."
 msgstr ""
+"Le dépôt traditionnellement nommé %1$s  ne fournit %2$s les paquets pour le "
+"système d'exploitation FreeBSD. Il s'agit du dépôt dédié à %3$s."
 
 #: www/faq.php:99
 msgid "not"
-msgstr ""
+msgstr "pas"
 
 #. TRANSLATORS: %1$s is the name 'pkgbase', %2$s is the repository name 'FreeBSD-base', shown in italics.
 #: www/faq.php:104
@@ -3114,12 +3138,14 @@ msgid ""
 "If you use %1$s (the base OS, packaged), you should have an additional repo "
 "named %2$s."
 msgstr ""
+"Si vous utilisez %1$s (le système d’exploitation de base, sous forme de "
+"paquet), vous devriez disposer d’un dépôt supplémentaire nommé %2$s."
 
 #. TRANSLATORS: %s is the name 'pkgbase'.
 #: www/faq.php:109
-#, fuzzy, php-format
+#, php-format
 msgid "FreshPorts covers packages of ports, but not %s."
-msgstr "FreshPorts couvre les ABI publiées à %s."
+msgstr "FreshPorts couvre les paquets des ports, mais non %s."
 
 #: www/faq.php:113
 msgid "How do I modify my watch list?"
@@ -4581,6 +4607,10 @@ msgid ""
 "base system is built for them, not the ports tree, so there are no packages "
 "for FreshPorts to show. Those ABIs are skipped."
 msgstr ""
+"Certaines ABI sur cette page sont marquées comme suit : <i>(seul pkgbase est "
+"mis à jour)</i>. Pour ces ABI, seul le système de base est généré — et non "
+"l'arborescence des ports — ; par conséquent, il n'existe aucun paquet que "
+"FreshPorts puisse afficher. Ces ABI sont donc ignorées."
 
 #: www/faq.php:788
 #, php-format
@@ -4808,7 +4838,7 @@ msgstr ""
 #: www/graphs.php:36
 #, php-format
 msgid "See also: %s."
-msgstr ""
+msgstr "Voir aussi: %s."
 
 #: www/graphs.php:39
 msgid ""
@@ -6438,9 +6468,8 @@ msgid "Ports I Maintain"
 msgstr "Ports que j'entretiens"
 
 #: www/search.php:1383
-#, fuzzy
 msgid "See the suggestions at the top of this page."
-msgstr "John Beige a fait le logo que vous voyez en haut de la page."
+msgstr "Voir les suggestions dans le haut de la page."
 
 #: www/search.php:1420
 #, php-format

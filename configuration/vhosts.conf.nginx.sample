@@ -1,10 +1,20 @@
-# a search from someone with neither the login cookie nor the search_ok cookie
-# goes to search-gate.php, which shows the challenge without touching the
-# database - see virtualhost-common.conf and
+# The bot gate - see include/bot-gate.php, virtualhost-common.conf and
 # https://github.com/FreshPorts/freshports/issues/692
+# https://github.com/FreshPorts/freshports/issues/732
 # https://news.freshports.org/2026/10/16/deterring-bots-but-letting-people-in/
 #
-map "$cookie_visitor|$cookie_search_ok|$arg_query" $fp_search_needs_gate {
+# Someone with neither the login cookie (visitor) nor the bot gate cookie
+# (bot_gate_ok) is sent to bot-gate.php, which shows a challenge without
+# touching the database.
+
+# commit.php and vuxml.php: every request
+map "$cookie_visitor|$cookie_bot_gate_ok" $fp_bot_gate_page {
+  default      0;
+  "|"          1;
+}
+
+# search.php: only an actual search; the empty search form is fine for anyone
+map "$cookie_visitor|$cookie_bot_gate_ok|$arg_query" $fp_bot_gate_search {
   default      0;
   "~^\|\|.+"   1;
 }

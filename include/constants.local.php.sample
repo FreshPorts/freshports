@@ -59,15 +59,18 @@ define('INCLUDE_GOOGLE_GTAG', false);
 
 # re https://github.com/FreshPorts/freshports/issues/655
 define('LOGIN_TO_VIEW_COMMIT', true);
-define('LOGIN_TO_SEARCH',      true);  # ignored when SEARCH_GATE_SECRET is set - re #692
+define('LOGIN_TO_SEARCH',      true);  # ignored when BOT_GATE_SECRET is set - re #692
 define('LOGIN_TO_VIEW_VUXML',  true);
 
-# Deter bots from search.php - see include/search-gate.php and
-# https://github.com/FreshPorts/freshports/issues/692
+# Deter bots from search.php, commit.php and vuxml.php - see include/bot-gate.php,
+# https://github.com/FreshPorts/freshports/issues/692 and
+# https://github.com/FreshPorts/freshports/issues/732
+# When set, LOGIN_TO_SEARCH, LOGIN_TO_VIEW_COMMIT and LOGIN_TO_VIEW_VUXML are ignored.
+# SEARCH_GATE_SECRET, the old name, is still read when this is not defined.
 # Leave it empty, or undefined, to turn the gate off.
 # Generate a value with: openssl rand -hex 32
-# Changing it makes everyone's search_ok cookie invalid.
-#define('SEARCH_GATE_SECRET', '');
+# Changing it makes everyone's bot_gate_ok cookie invalid.
+#define('BOT_GATE_SECRET', '');
 
 # On a 404 for category/port, suggest ports the user might have meant.
 # Defaults to true. See https://github.com/FreshPorts/freshports/issues/614

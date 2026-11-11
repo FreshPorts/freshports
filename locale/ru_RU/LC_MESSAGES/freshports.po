@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreshPorts\n"
 "Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
-"POT-Creation-Date: 2026-11-09 15:32+0000\n"
+"POT-Creation-Date: 2026-11-10 20:54+0000\n"
 "PO-Revision-Date: 2026-10-24 00:37+0300\n"
 "Last-Translator: Vladlen Popolitov <vladlen@freebsd.org>\n"
 "Language-Team: Russian <vladlen@FreeBSD.org>\n"
@@ -26,7 +26,7 @@ msgid "Author:"
 msgstr "Автор:"
 
 #: classes/display_commit.php:338 classes/files-display.php:40
-#: www/commit.php:263
+#: www/commit.php:267
 msgid "Sorry, nothing found in the database...."
 msgstr "Извините, в базе данных ничего не найдено...."
 
@@ -649,7 +649,7 @@ msgstr "Флейворы пакета"
 msgid "flavor"
 msgstr "флейвор"
 
-#: classes/port-display.php:2228 www/vuxml.php:158
+#: classes/port-display.php:2228 www/vuxml.php:162
 msgid "package"
 msgstr "пакет"
 
@@ -673,7 +673,7 @@ msgstr "перейти"
 msgid "Advanced Searching options"
 msgstr "Расширенные параметры поиска"
 
-#: classes/searches.php:41 www/vuxml.php:209
+#: classes/searches.php:41 www/vuxml.php:213
 msgid "more..."
 msgstr "подробнее..."
 
@@ -713,6 +713,26 @@ msgstr ""
 #: classes/watch_list.php:90
 msgid "I couldn't find your watch list details... sorry"
 msgstr "Не удалось найти данные вашего списка отслеживания... извините"
+
+#: include/bot-gate.php:137
+msgid "Just a moment"
+msgstr ""
+
+#: include/bot-gate.php:226
+msgid "If you're a person, please press the button for a cookie."
+msgstr ""
+
+#: include/bot-gate.php:231
+msgid "I was a person last time I checked."
+msgstr ""
+
+#: include/bot-gate.php:233
+msgid ""
+"This sets a cookie, so you will not be asked again for a day. Logged in "
+"users are never asked."
+msgstr ""
+"Это установит cookie, поэтому вас не будут спрашивать снова в течение дня. "
+"Вошедшим пользователям вопрос никогда не задаётся."
 
 #: include/fontsize.php:64
 msgid "Smallest"
@@ -789,8 +809,7 @@ msgstr "По возрастанию"
 msgid "Descending Order"
 msgstr "По убыванию"
 
-#: include/freshports.php:556 include/search-gate.php:109
-#: include/search-gate.php:113 www/package.php:53 www/search.php:1141
+#: include/freshports.php:556 www/package.php:53 www/search.php:1141
 #: www/search.php:1289
 msgid "Search"
 msgstr "Поиск"
@@ -1476,7 +1495,7 @@ msgstr "категории"
 #: include/freshports_page_expiration_ports.php:76
 #: include/freshports_page_list_ports.php:411
 #: include/freshports_page_list_ports.php:423 www/ports-conflicts.php:42
-#: www/vuxml.php:123 www/watch.php:154 www/watch.php:161
+#: www/vuxml.php:127 www/watch.php:154 www/watch.php:161
 msgid "port"
 msgstr "порту"
 
@@ -1612,25 +1631,6 @@ msgstr "Подтвердите пароль:"
 #: include/password-reset-via-token.php:22
 msgid "Set password"
 msgstr "Установить пароль"
-
-#: include/search-gate.php:114
-msgid ""
-"To keep the search working for people, please confirm you are not a bot."
-msgstr ""
-"Чтобы поиск продолжал работать для людей, пожалуйста, подтвердите, что вы не "
-"бот."
-
-#: include/search-gate.php:118
-msgid "Continue to search"
-msgstr "Продолжить поиск"
-
-#: include/search-gate.php:120
-msgid ""
-"This sets a cookie, so you will not be asked again for a day. Logged in "
-"users are never asked."
-msgstr ""
-"Это установит cookie, поэтому вас не будут спрашивать снова в течение дня. "
-"Вошедшим пользователям вопрос никогда не задаётся."
 
 #: include/spam-filter-information.php:9
 msgid "SPAM FILTERS:"
@@ -2406,7 +2406,7 @@ msgid "Count"
 msgstr "Количество"
 
 #: www/categories.php:158 www/categories.php:160 www/faq.php:397
-#: www/report-subscriptions.php:170 www/vuxml.php:84 www/vuxml.php:252
+#: www/report-subscriptions.php:170 www/vuxml.php:88 www/vuxml.php:256
 msgid "Description"
 msgstr "Описание"
 
@@ -2520,7 +2520,7 @@ msgstr ""
 msgid "Added"
 msgstr "Порт добавлен:"
 
-#: www/category-history.php:194 www/vuxml.php:251
+#: www/category-history.php:194 www/vuxml.php:255
 msgid "Date"
 msgstr "Дата"
 
@@ -2545,7 +2545,7 @@ msgstr ""
 msgid "Category maintenance"
 msgstr "Обслуживание категорий"
 
-#: www/category-maintenance.php:22 www/commit.php:285
+#: www/category-maintenance.php:22 www/commit.php:289
 #, php-format
 msgid "I don't know that category: %s"
 msgstr "Я не знаю такой категории: %s"
@@ -2604,50 +2604,50 @@ msgid ""
 msgstr ""
 "Что ж, мне жаль сообщать вам, что эта страница намеренно оставлена пустой."
 
-#: www/commit.php:158
+#: www/commit.php:162
 #, php-format
 msgid "Commit found by commit id on branch %s"
 msgstr "Коммит найден по id коммита в ветке %s"
 
-#: www/commit.php:160
+#: www/commit.php:164
 msgid "Commit found by commit id"
 msgstr "Коммит найден по id коммита"
 
-#: www/commit.php:193
+#: www/commit.php:197
 msgid "We have multiple emails for that revision:"
 msgstr "У нас есть несколько писем для этой ревизии:"
 
-#: www/commit.php:261
+#: www/commit.php:265
 #, php-format
 msgid "Number of items [ports &amp; non-ports] in this commit: %d"
 msgstr "Количество элементов [порты &amp; не-порты] в этом коммите: %d"
 
-#: www/commit.php:274
+#: www/commit.php:278
 msgid "show all files"
 msgstr "показать все файлы"
 
-#: www/commit.php:276
+#: www/commit.php:280
 msgid "hide all files"
 msgstr "скрыть все файлы"
 
-#: www/commit.php:296
+#: www/commit.php:300
 msgid "I don't know that port."
 msgstr "Я не знаю такого порта."
 
-#: www/commit.php:300
+#: www/commit.php:304
 msgid "That is not a port."
 msgstr "Это не порт."
 
-#: www/commit.php:305
+#: www/commit.php:309
 #, php-format
 msgid "Showing files for just one port: %s"
 msgstr "Показаны файлы только для одного порта: %s"
 
-#: www/commit.php:357
+#: www/commit.php:361
 msgid "Database connection could not be established!"
 msgstr "Не удалось установить соединение с базой данных!"
 
-#: www/commit.php:360
+#: www/commit.php:364
 msgid "nothing supplied, nothing found!"
 msgstr "ничего не передано, ничего не найдено!"
 
@@ -6151,7 +6151,7 @@ msgstr ""
 msgid "Sanity Test Results"
 msgstr "Результаты проверки целостности"
 
-#: www/search.php:24 www/vuxml.php:24
+#: www/search.php:24 www/vuxml.php:25
 msgid "You must be logged in to use this feature."
 msgstr "Вы должны войти в систему, чтобы использовать эту функцию."
 
@@ -6410,21 +6410,21 @@ msgstr ""
 "может быть анонимным, если вы этого хотите. Я с радостью отмечу работу, "
 "которую вы делаете, и находки, которые вы представляете."
 
-#: www/vuxml.php:53
+#: www/vuxml.php:57
 #, php-format
 msgid "This page displays %s about FreeBSD Ports."
 msgstr "Эта страница отображает %s о портах FreeBSD."
 
-#: www/vuxml.php:53
+#: www/vuxml.php:57
 msgid "vulnerability information"
 msgstr "информацию об уязвимостях"
 
-#: www/vuxml.php:58
+#: www/vuxml.php:62
 #, php-format
 msgid "The VUXML data was last processed by FreshPorts on %s"
 msgstr "Данные VUXML были последний раз обработаны FreshPorts %s"
 
-#: www/vuxml.php:60
+#: www/vuxml.php:64
 msgid ""
 "We have no information on when we last processed VUXML. This should never "
 "happen."
@@ -6432,58 +6432,58 @@ msgstr ""
 "У нас нет информации о том, когда мы последний раз обрабатывали VUXML. Этого "
 "никогда не должно происходить."
 
-#: www/vuxml.php:64
+#: www/vuxml.php:68
 msgid "List all Vulnerabilities, by package"
 msgstr "Список всех уязвимостей по пакетам"
 
-#: www/vuxml.php:68
+#: www/vuxml.php:72
 msgid "List all Vulnerabilities, by date"
 msgstr "Список всех уязвимостей по дате"
 
-#: www/vuxml.php:80
+#: www/vuxml.php:84
 msgid "These are the vulnerabilities relating to the commit you have selected:"
 msgstr "Это уязвимости, относящиеся к выбранному вами коммиту:"
 
-#: www/vuxml.php:84 www/vuxml.php:209
+#: www/vuxml.php:88 www/vuxml.php:213
 msgid "VuXML ID"
 msgstr "Идентификатор VuXML"
 
-#: www/vuxml.php:156 www/vuxml.php:250
+#: www/vuxml.php:160 www/vuxml.php:254
 msgid "VuXML entries as processed by FreshPorts"
 msgstr "Записи VuXML, обработанные FreshPorts"
 
-#: www/vuxml.php:160
+#: www/vuxml.php:164
 msgid "vuln count<br>[blank means (1)]"
 msgstr "количество уязвимостей<br>[пусто означает (1)]"
 
-#: www/vuxml.php:161 www/vuxml.php:253
+#: www/vuxml.php:165 www/vuxml.php:257
 msgid "Port(s)"
 msgstr "Порт(ы)"
 
-#: www/vuxml.php:190
+#: www/vuxml.php:194
 #, php-format
 msgid "Number of packages: %d"
 msgstr "Количество пакетов: %d"
 
-#: www/vuxml.php:191 www/vuxml.php:279
+#: www/vuxml.php:195 www/vuxml.php:283
 #, php-format
 msgid "Number of vulns: %d"
 msgstr "Количество уязвимостей: %d"
 
-#: www/vuxml.php:218
+#: www/vuxml.php:222
 msgid "more detail"
 msgstr "подробнее"
 
-#: www/vuxml.php:242
+#: www/vuxml.php:246
 msgid "no vulnerabilities found.  it looks as if the data is missing."
 msgstr "уязвимостей не найдено. похоже, данные отсутствуют."
 
-#: www/vuxml.php:278
+#: www/vuxml.php:282
 #, php-format
 msgid "Number of vulns/ports: %d"
 msgstr "Количество уязвимостей/портов: %d"
 
-#: www/vuxml.php:280
+#: www/vuxml.php:284
 msgid "A date marked with <sup>*</sup> indicates an updated vuxml entry."
 msgstr "Дата, помеченная <sup>*</sup>, обозначает обновлённую запись vuxml."
 
@@ -6897,6 +6897,15 @@ msgid ""
 msgstr ""
 "Если вы не получите это письмо, пожалуйста, попробуйте войти, и у вас будет "
 "возможность повторно отправить уведомление."
+
+#~ msgid ""
+#~ "To keep the search working for people, please confirm you are not a bot."
+#~ msgstr ""
+#~ "Чтобы поиск продолжал работать для людей, пожалуйста, подтвердите, что вы "
+#~ "не бот."
+
+#~ msgid "Continue to search"
+#~ msgstr "Продолжить поиск"
 
 #~ msgid "FreeBSD Ports description"
 #~ msgstr "Описание FreeBSD Ports"

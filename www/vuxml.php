@@ -13,11 +13,12 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/freshports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/bot-gate.php');
 
 	define('VUXMLURL',     'https://www.vuxml.org/freebsd/');
 
-	# if users must be logged in, and they aren't...
-	if (LOGIN_TO_VIEW_VUXML && !$User->id) {
+	# if users must be logged in, and they aren't...  The bot gate, when configured, replaces this - re #732
+	if (LOGIN_TO_VIEW_VUXML && !freshports_bot_gate_enabled() && !$User->id) {
 	        # one message, twice invoked.
 	        $msg = 'You must be logged in to use this feature.';
 	        header('HTTP/1.1 401 ' . $msg);
@@ -25,6 +26,9 @@
 	} else {
 		checkLoadBeforeProceeding();
         }
+
+	# anyone else needs the bot gate's cookie - re #732
+	freshports_bot_gate('/vuxml.php');
 
 	if (IsSet($_REQUEST['vid'])) {
 		# no SQL escaping needed: VuXML::FetchByVID() uses pg_query_params.

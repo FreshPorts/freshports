@@ -7,7 +7,7 @@ Disallow: /login.php
 Disallow: /new-user.php
 
 Disallow: /search.php
-Disallow: /search-gate.php
+Disallow: /bot-gate.php
 
 Disallow: /login.php
 Disallow: /new-user.php
@@ -31,7 +31,7 @@ Crawl-delay: 60
 Disallow: /login.php
 Disallow: /new-user.php
 Disallow: /search.php
-Disallow: /search-gate.php
+Disallow: /bot-gate.php
 Disallow: /ports-broken.php
 Disallow: /ports-deleted.php
 Disallow: /ports-forbidden.php

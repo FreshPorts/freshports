@@ -39,21 +39,22 @@
   # the commits.php page has been retired
   rewrite ^/commits.php / permanent;
 
-  # commit.php and vuxml.php need a login, whatever LOGIN_TO_VIEW_COMMIT /
-  # LOGIN_TO_VIEW_VUXML say; refuse before PHP and the database
-  # https://news.freshports.org/2026/10/16/deterring-bots-but-letting-people-in/
+  # commit.php and vuxml.php: without a login or the bot gate cookie, show the
+  # bot gate's challenge, before the page itself and the database run.
+  # See $fp_bot_gate_page in vhosts.conf.nginx and
+  # https://github.com/FreshPorts/freshports/issues/732
   #
   location ~ ^/(commit|vuxml)\.php$ {
-    if ($cookie_visitor = "") {
-      return 401 "You must be logged in to use this feature.";
+    if ($fp_bot_gate_page) {
+      rewrite ^ /bot-gate.php last;
     }
     include /usr/local/www/freshports/configuration/php-processing.conf;
   }
 
-  # see $fp_search_needs_gate in vhosts.conf.nginx
+  # see $fp_bot_gate_search in vhosts.conf.nginx
   location = /search.php {
-    if ($fp_search_needs_gate) {
-      rewrite ^ /search-gate.php last;
+    if ($fp_bot_gate_search) {
+      rewrite ^ /bot-gate.php last;
     }
     include /usr/local/www/freshports/configuration/php-processing.conf;
   }

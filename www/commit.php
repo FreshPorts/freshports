@@ -10,9 +10,10 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/databaselogin.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/cache-commit.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/bot-gate.php');
 
-	# if users must be logged in, and they aren't...
-	if (LOGIN_TO_VIEW_COMMIT && !$User->id) {
+	# if users must be logged in, and they aren't...  The bot gate, when configured, replaces this - re #732
+	if (LOGIN_TO_VIEW_COMMIT && !freshports_bot_gate_enabled() && !$User->id) {
 	        # one message, twice invoked.
 	        $msg = 'You must be logged in to use this feature.';
 	        header('HTTP/1.1 401 ' . $msg);
@@ -20,6 +21,9 @@
 	} else {
 		checkLoadBeforeProceeding();
         }
+
+	# anyone else needs the bot gate's cookie - re #732
+	freshports_bot_gate('/commit.php');
 
 	$Debug = 0;
 

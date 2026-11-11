@@ -12,12 +12,12 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/system_branch.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/search-gate.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/bot-gate.php');
 
 	require_once('Pager/Pager.php');
 
-	# if users must be logged in, and they aren't...  The search gate, when configured, replaces this - re #692
-	if (LOGIN_TO_SEARCH && !freshports_search_gate_enabled() && !$User->id) {
+	# if users must be logged in, and they aren't...  The bot gate, when configured, replaces this - re #692, #732
+	if (LOGIN_TO_SEARCH && !freshports_bot_gate_enabled() && !$User->id) {
 	        # one message, twice invoked.
 	        $msg = 'You must be logged in to use this feature.';
 	        header('HTTP/1.1 401 ' . $msg);
@@ -28,7 +28,7 @@
 
 	# only a search costs anything; the empty search form is fine for anyone
 	if (IsSet($_REQUEST['query'])) {
-		freshports_search_gate();
+		freshports_bot_gate('/search.php');
 	}
 
 	$Debug = 0;

@@ -1,8 +1,0 @@
-AuthUserFile     /www/freshports.org/_private/passwd
-AuthGroupFile    /www/freshports.org/_private/passwd.group
-AuthName         "protectthis"
-AuthType         Basic
-
-<Limit GET POST PUT>
-require valid-user
-</Limit>

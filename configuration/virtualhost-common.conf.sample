@@ -36,6 +36,14 @@
     try_files $uri /--/forums-gone.php;
   }
 
+  # The 2007 design contest voting pages were removed in November 2026.
+  # Old blog posts and search engines still link to /DesignContestVoting/,
+  # so it, and everything below it (the A/ and B/ mock-ups), redirects
+  # permanently to the blog post which announced the contest.
+  location ^~ /DesignContestVoting {
+    return 301 https://news.freshports.org/2007/01/30/freshports-design-contest/;
+  }
+
   # the commits.php page has been retired
   rewrite ^/commits.php / permanent;
 

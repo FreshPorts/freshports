@@ -86,26 +86,33 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 #			echo freshports_ErrorMessage("Let\'s try that again!", $ErrorMessage);
 #		}
 
-		$PostURL = $_SERVER["PHP_SELF"];
+		#
+		# This page used to echo PHP_SELF, and the add/remove value, into the
+		# form below without HTML escaping, so a crafted link such as
+		# ?ask=1&add="><script>... ran script for a logged-in user.  The form
+		# posts back to this page, so name it.  The value is an element id,
+		# so make it an integer, as the add and remove paths further down do.
+		#
+		$PostURL = '/watch-list.php';
 		if (IsSet($_REQUEST["remove"])) {
 			$ButtonName = _('Update');
 			$Action     = "remove";
 			$Verb       = 'removed';
 			$FromTo     = 'from';
-			$Object     = pg_escape_string($db, $_REQUEST["remove"]);
+			$Object     = intval($_REQUEST["remove"]);
 		} else {
 			if (IsSet($_REQUEST["add"])) {
 				$ButtonName = _('Update');
 				$Action     = "add";
 				$Verb       = 'added';
 				$FromTo     = 'to';
-				$Object     = pg_escape_string($db, $_REQUEST["add"]);
+				$Object     = intval($_REQUEST["add"]);
 			} else {
 				die("I don't know whether you are removing or adding, so I'll just stop here shall I?");
 			}
 		}
 
-		if ($Object == '') {
+		if (!$Object) {
 			die('I have no idea what I\'m supposed to add or remove here...');
 		}
 		$port = new Port($db);
@@ -133,8 +140,8 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 		<br><br>
 		<INPUT id=submit style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29
 		   value="<?php echo htmlspecialchars($ButtonName); ?>" name="submit"><br>
-		<INPUT TYPE="hidden" NAME="Origin" VALUE="<?php echo $Origin?>">
-		<INPUT TYPE="hidden" NAME="Update" VALUE="<?php echo $Object?>">
+		<INPUT TYPE="hidden" NAME="Origin" VALUE="<?php echo htmlspecialchars($Origin); ?>">
+		<INPUT TYPE="hidden" NAME="Update" VALUE="<?php echo $Object; ?>">
 <?php
 		if (IsSet($WatchListID)) {
 			echo '		<INPUT TYPE="hidden" NAME="wlid" VALUE="' . $WatchListID . '">';

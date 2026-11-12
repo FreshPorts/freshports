@@ -468,6 +468,19 @@ function CopyStagingToWatchList($dbh, $UserID, $WatchListID, $Overwrite = TRUE) 
 	$UserID      = intval($UserID);
 	$WatchListID = intval($WatchListID);
 
+	#
+	# The watch list id comes from the request.  Refuse it unless it is one
+	# of this user's lists.  Without this, "replace" emptied any watch list
+	# whose id was posted: WatchListDeleteAllElements() deletes by id alone,
+	# and the ownership JOIN below guards only the INSERT, which then added
+	# nothing to the other user's list and reported success.
+	#
+	$result = pg_query_params($dbh, 'SELECT 1 FROM watch_list WHERE id = $1 AND user_id = $2', array($WatchListID, $UserID));
+	if (!$result || pg_num_rows($result) != 1) {
+		syslog(LOG_WARNING, "CopyStagingToWatchList: watch list $WatchListID does not belong to user $UserID; not changed");
+		return FALSE;
+	}
+
 	$result = pg_exec($dbh, 'BEGIN');
 	if (!$result) {
 		$ok = FALSE;

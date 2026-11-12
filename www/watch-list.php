@@ -55,7 +55,7 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 	return $result;
 }
 
-	if ($User->id == '') {
+	if (!$User->id) {
 		# OI!  you aren't logged in!
 		# just what are you doing here?
 		header("Location: $Origin");  /* Redirect browser to PHP web site */

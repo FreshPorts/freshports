@@ -1341,7 +1341,7 @@ if (file_exists(CATEGORIES_CACHE_LIST)) {
 
 <?php
 
-		if ($User->id != '') {
+		if ($User->id) {
 ?>
 <p>
 <?php echo _('Special searches:'); ?>

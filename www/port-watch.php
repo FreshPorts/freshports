@@ -106,7 +106,7 @@ if ($submit) {
       
 } else {
          
-   if ($User->id != '') {
+   if ($User->id) {
          
 	   // read the users current watch information from the database
 	

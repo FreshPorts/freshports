@@ -168,7 +168,7 @@ if ($db) {
 <?php
 	$UseCache = FALSE;
 	$FileName = "index.html.$Branch";
-	if ($User->id != '') {
+	if ($User->id) {
 	  if ($Debug) echo 'we should look for the user index page';
 	  # if the user is logged in, cache their stuff.
 	  $FileName .= '.' . $User->id;

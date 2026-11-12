@@ -128,38 +128,30 @@ if ($db) {
 </td></tr>
 <?php
 
-	$UseCache = FALSE;
+	#
+	# This used to read PAGES_DIRECTORY/commits.html for anonymous visitors,
+	# but nothing in FreshPorts writes that file any more, and the test
+	# for "anonymous" ($User->id == '') was never true under PHP 8, so the
+	# file was never read either.  Build the list every time.
+	#
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/latest_commits.php');
 
-	DEFINE('CACHEFILE', PAGES_DIRECTORY . '/commits.html');
+	$LatestCommits = new LatestCommits($db);
 
-	if ($User->id == '') {
-		if (file_exists(CACHEFILE) && is_readable(CACHEFILE)) {
-			$UseCache = TRUE;
-		}
-	}
+	$LatestCommits->Debug = $Debug;
 
-	if ($UseCache) {
-		readfile(CACHEFILE);
-	} else {
-		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/latest_commits.php');
+#	$LatestCommits->SetFilter('/ports/sysutils/%');
+#	$LatestCommits->SetFilter("(EP.pathname like '/ports/sysutils/%' or EP.pathname like '/ports/net-p2p/%')");
+	$LatestCommits->SetFilter("(EP.pathname like '/ports/lang/%')");
+#	$LatestCommits->SetFilter($User->filter);
 
-		$LatestCommits = new LatestCommits($db);
-		
-		$LatestCommits->Debug = $Debug;
-		
-#		$LatestCommits->SetFilter('/ports/sysutils/%');
-#		$LatestCommits->SetFilter("(EP.pathname like '/ports/sysutils/%' or EP.pathname like '/ports/net-p2p/%')");
-		$LatestCommits->SetFilter("(EP.pathname like '/ports/lang/%')");
-#        $LatestCommits->SetFilter($User->filter);
-		
-		$LatestCommits->SetMaxNumberOfPorts($MaxNumberOfPortsLong);
-		$LatestCommits->SetDaysMarkedAsNew ($DaysMarkedAsNew);
-		$LatestCommits->SetUserID($User->id);
-		$LatestCommits->SetWatchListAsk($User->watch_list_add_remove);
-		$LatestCommits->CreateHTML();
+	$LatestCommits->SetMaxNumberOfPorts($MaxNumberOfPortsLong);
+	$LatestCommits->SetDaysMarkedAsNew ($DaysMarkedAsNew);
+	$LatestCommits->SetUserID($User->id);
+	$LatestCommits->SetWatchListAsk($User->watch_list_add_remove);
+	$LatestCommits->CreateHTML();
 
-		echo $LatestCommits->HTML;
-	}
+	echo $LatestCommits->HTML;
 
 }
 

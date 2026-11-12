@@ -20,7 +20,7 @@
 	$Redirect = 1;
 #phpinfo();
 
-	if ($User->id == '') {
+	if (!$User->id) {
 		# OI!  you aren't logged in!
 		# just what are you doing here?
 		header("Location: $Origin");  /* Redirect browser to PHP web site */

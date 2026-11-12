@@ -91,19 +91,22 @@ if (IsSet($submit)) {
 		$numberofdays = 0;
 	}
 
-	if (isset($_POST["captcha"] ) )
-	{
-		if (IsSet($_SESSION["captcha"]) && IsSet($_POST["captcha"]) && $_SESSION["captcha"] == $_POST["captcha"] )
-		{
-			//CAPTHCA is valid; proceed the message: save to database, send by e-mail ...
-			// echo 'CAPTHCA is valid; proceed the message';
-		}
-		else
-		{
-			$errors .= _('Your CAPTCHA code is not valid') . '<br>';
-			syslog(LOG_ERR, "FreshPorts captcha failure: '" . $UserLogin . "', '" . $email . "', "  . $_SERVER['REMOTE_ADDR']);
-			$OK = 0;
-		}
+	#
+	# The CAPTCHA must be answered on every submit, and each image's answer
+	# works once.  This used to be checked only if a captcha field was
+	# posted, so a form sent without one skipped it, and the answer stayed
+	# in the session, so one solved image could be replayed for any number
+	# of sign-ups.  Compare as strings: with ==, PHP compares two numeric
+	# strings as numbers, so "1e2" would match "100".
+	#
+	$CaptchaExpected = $_SESSION['captcha'] ?? '';
+	$CaptchaGiven    = $_POST['captcha']    ?? '';
+	unset($_SESSION['captcha']);
+
+	if (!is_string($CaptchaGiven) || $CaptchaExpected === '' || !hash_equals((string) $CaptchaExpected, $CaptchaGiven)) {
+		$errors .= _('Your CAPTCHA code is not valid') . '<br>';
+		syslog(LOG_ERR, "FreshPorts captcha failure: '" . $UserLogin . "', '" . $email . "', "  . $_SERVER['REMOTE_ADDR']);
+		$OK = 0;
 	}
 
 

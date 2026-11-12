@@ -195,7 +195,7 @@ msgstr "Une nouvelle version a été trouvée en amont par portscout."
 #: classes/port-display.php:1107
 #, php-format
 msgid "upstream: %s"
-msgstr "amount: %s"
+msgstr "en amont : %s"
 
 #: classes/port-display.php:1139
 #, php-format
@@ -724,7 +724,7 @@ msgstr "Juste un instant"
 #: include/bot-gate.php:226
 msgid "If you're a person, please press the button for a cookie."
 msgstr ""
-"Si vous êtes une personne, s’il vous plaît appuyer sur le bouton pour un "
+"Si vous êtes une personne, veuillez appuyer sur le bouton pour un "
 "cookie."
 
 #: include/bot-gate.php:231
@@ -1191,7 +1191,7 @@ msgstr "%s - inscription d'un utilisateur"
 
 #: include/freshports.php:2311
 msgid "You are connected over IPv6"
-msgstr "Vous êtes connecté en IPV6"
+msgstr "Vous êtes connecté en IPv6"
 
 #: include/freshports.php:2324
 #, php-format
@@ -2207,7 +2207,7 @@ msgstr "Un flux RSS 2.0 : %s"
 #: www/backend/newsfeeds.php:39
 #, php-format
 msgid "The same feed as Atom 1.0 : %s"
-msgstr "Le même flux que Atom 1.0 : %s"
+msgstr "Le même flux en Atom 1.0 : %s"
 
 #: www/backend/newsfeeds.php:40 www/backend/newsfeeds.php:85
 msgid "Take your pick of different formats:"

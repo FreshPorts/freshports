@@ -342,14 +342,6 @@ function freshports_PortDisplayNew($db, $MyPort, $category, $port, $url_args, $B
 
 	$HTMLPortPart2 = $port_display->ReplaceWatchListToken($OnWatchList, $HTMLPortPart2, $ElementID);
 
-	global $ShowAds, $BannerAd;
-
-	if ($ShowAds && $BannerAd) {
-		$HTML_For_Ad = "<hr><div class=\"hcentered\">\n" . Ad_728x90PortDescription() . "\n</div>\n<hr>\n";
-	} else {
-		$HTML_For_Ad = '';
-	}
-
 	$PartTimes[] = $Cache->LastModifiedGet();
 
 	################################################################################################
@@ -424,8 +416,8 @@ function freshports_PortDisplayNew($db, $MyPort, $category, $port, $url_args, $B
 		}
 	}
 
-	# the ad is always in the second part
-	$HTMLPortPart3 = $port_display->ReplaceAdvertismentToken($HTMLPortPart3, $HTML_For_Ad);
+	# a port page cached before the ads were removed still has the ad placeholder
+	$HTMLPortPart3 = $port_display->RemoveAdvertismentToken($HTMLPortPart3);
 
 	$PartTimes[] = $Cache->LastModifiedGet();
 

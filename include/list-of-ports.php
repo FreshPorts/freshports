@@ -31,10 +31,6 @@ function freshports_ListOfPorts($result, $db, $ShowDateAdded, $ShowCategoryHeade
 	$HTML  = $PortCountText;
 	$HTML .= "<tr><td>\n";
 
-	if (IsSet($ShowAds)) {
-		$HTML .= "<br><div class=\"hcentered\">\n" . Ad_728x90() . "\n</div>\n";
-	}
-
 	if ($numrows > 0 && $ShowCategoryHeaders) {
 		$HTML .= '<dl>';
 	}

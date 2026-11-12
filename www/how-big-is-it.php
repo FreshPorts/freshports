@@ -101,7 +101,6 @@ function DBSize($db) {
 <tr><td class="textcontent">
 
 <?php
-	if ($ShowAds) echo '<div class="hcentered">' . Ad_728x90() . '</div>';
 ?>
 
 <P>

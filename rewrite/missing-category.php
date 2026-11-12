@@ -270,12 +270,6 @@ function freshports_CategoryDisplay($dbh, $category, $url_parts, $Branch = BRANC
 <p>
 	' . sprintf(_('Ports marked with a <sup>*</sup> actually reside within another category but have %s listed as a secondary category.'), '<strong>' . $category->name . '</strong>');
 
-		GLOBAL $ShowAds, $BannerAd;
-
-		if ($ShowAds && $BannerAd) {
-			$HTML .= "<br><div class=\"hcentered\">\n" . Ad_728x90() . "\n</div>\n";
-		}
-
 		$HTML .= '<div class="pagination">' .
 			freshports_CategorySortLinks($category->name, $PageSize, $Branch, $Sort) .
 			'</div>';
@@ -348,13 +342,6 @@ function freshports_CategoryDisplay($dbh, $category, $url_parts, $Branch = BRANC
 	}
 
 	# by here, $HTML has either been fetched from cache or built.
-
-
-	GLOBAL $ShowAds, $BannerAd;
-
-	if ($ShowAds && $BannerAd) {
-		echo "<br><div class=\"hcentered\">\n" . Ad_728x90() . "\n</div>\n";
-	}
 	?>
 
 	<?php

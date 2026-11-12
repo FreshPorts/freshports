@@ -29,7 +29,6 @@
 <tr><td>
 
 <?php
-	if ($ShowAds) echo '<div class="hcentered">' . Ad_728x90() . '</div>';
 ?>
 
 <P>All the information we

@@ -156,13 +156,6 @@ if ($db) {
 <tr><td>
 <p><?php echo EVERYTHING; ?>
 
-<?php
-	if ($ShowAds && $BannerAd) {
-		echo "</td></tr>\n<tr><td>\n<div class=\"hcentered\">\n";
-		echo Ad_728x90();
-		echo "</div>\n\n";
-	}
-?>
 
 <p>
 <?php

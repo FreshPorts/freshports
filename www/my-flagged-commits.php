@@ -90,13 +90,6 @@
 <p>
 <?php echo _('A port is marked as new for 10 days.'); ?>
 
-<?php
-		if ($ShowAds && $BannerAd) {
-			echo "</td></tr>\n<tr><td>\n<div class=\"hcentered\">\n";
-			echo Ad_728x90();
-			echo "</div>\n\n";
-		}
-?>
 
 
 

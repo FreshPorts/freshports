@@ -6,7 +6,6 @@
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.php');
-	if ($ShowAds) require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/ads.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../configuration/freshports.conf.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/i18n.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/fontsize.php');
@@ -1032,8 +1031,6 @@ function freshports_CommitterEmailLink($committer_name, $committer_email) {
 
 function freshports_Start($ArticleTitle, $Description, $Keywords, $Phorum = 0, $ExtraScript = null) {
 
-GLOBAL $ShowAds;
-GLOBAL $BannerAd;
 GLOBAL $ShowAnnouncements;
 
 	header('X-Accel-Buffering: no');
@@ -1305,41 +1302,6 @@ echo "\n" . '<BODY>';
 if (!empty($ExtraScript)) {
   echo $ExtraScript;
 }
-
-	if ($Debug) 
-	{
-		GLOBAL $ShowAds;
-		GLOBAL $BannerAd;
-		GLOBAL $BannerAdUnder;
-		GLOBAL $BurstFrontPage120x160;
-		GLOBAL $BurstFrontPage125x125;
-		GLOBAL $FrontPageAdsPayPal;
-		GLOBAL $FrontPageAdsAmazon;
-		GLOBAL $FrontPageDaemonNews;
-		GLOBAL $ShowHeaderAds;
-		GLOBAL $HeaderAdsPayPal;
-		GLOBAL $HeaderAdAmazon;
-		GLOBAL $HeaderAdsBurst125x125;
-		GLOBAL $HeaderAdsBurst120x160;
-
-		if ($BannerAd == 1) echo 'banner is on';
-
-		echo '<table class="bordered">';
-		echo '<tr><td>ShowAds</td><td>'               . $ShowAds               . '</td></tr>';
-		echo '<tr><td>BannerAd</td><td>'              . $BannerAd              . '</td></tr>';
-		echo '<tr><td>BannerAdUnder</td><td>'         . $BannerAdUnder         . '</td></tr>';
-		echo '<tr><td>BurstFrontPage120x160</td><td>' . $BurstFrontPage120x160 . '</td></tr>';
-		echo '<tr><td>BurstFrontPage125x125</td><td>' . $BurstFrontPage125x125 . '</td></tr>';
-		echo '<tr><td>FrontPageAdsPayPal</td><td>'    . $FrontPageAdsPayPal    . '</td></tr>';
-		echo '<tr><td>FrontPageAdsAmazon</td><td>'    . $FrontPageAdsAmazon    . '</td></tr>';
-		echo '<tr><td>FrontPageDaemonNews</td><td>'   . $FrontPageDaemonNews   . '</td></tr>';
-		echo '<tr><td>ShowHeaderAds</td><td>'         . $ShowHeaderAds         . '</td></tr>';
-		echo '<tr><td>HeaderAdsPayPal</td><td>'       . $HeaderAdsPayPal       . '</td></tr>';
-		echo '<tr><td>HeaderAdAmazon</td><td>'        . $HeaderAdAmazon        . '</td></tr>';
-		echo '<tr><td>HeaderAdsBurst125x125</td><td>' . $HeaderAdsBurst125x125 . '</td></tr>';
-		echo '<tr><td>HeaderAdsBurst120x160</td><td>' . $HeaderAdsBurst120x160 . '</td></tr>';
-		echo '</table>';
-	}
 }
 
 function freshports_Category_Name($CategoryID, $dbh) {
@@ -2254,17 +2216,9 @@ function freshports_UserSendToken($UserID, $dbh) {
 function freshports_ShowFooter($PhorumBottom = 0) {
 	GLOBAL $Statistics;
 	GLOBAL $ShowPoweredBy;
-	GLOBAL $ShowAds;
 
 	$HTML = '<table class="footer fullwidth borderless">
 <tr><td>';
-
-
-	if ($ShowAds) {
-		$HTML .= "<div>\n";
-		$HTML .= Ad_728x90();
-		$HTML .= "</div>\n";
-	}
 
 	$HTML .= '
 <HR>
@@ -2337,28 +2291,12 @@ alt="powered by nginx" width="121" height="32"></a>
 </table>
 ';
 
-	if ($ShowAds) {
-		$HTML .= freshports_GoogleAnalytics();
-	}
-	
 	# the version changes whenever the file does, so browsers do not keep running
 	# a cached copy that no longer matches freshports.css - see issue #636
 	$version = substr(hash_file('sha1', $_SERVER['DOCUMENT_ROOT'] . '/javascript/freshports.js'), 0, 8);
 	$HTML .= '<script src="/javascript/freshports.js?v=' . $version . '" defer></script>';
 
 	if ($Statistics) $Statistics->Save();
-
-	return $HTML;
-}
-
-function freshports_GoogleAnalytics() {
-	$HTML = '<script src="https://www.google-analytics.com/urchin.js">
-</script>
-<script>
-_uacct = "UA-408525-1";
-urchinTracker();
-</script>
-';
 
 	return $HTML;
 }
@@ -2497,18 +2435,6 @@ $HTML .= '
 </table>';
 	}
 
-
-	GLOBAL $ShowAds;
-
-	if ($ShowAds) {
-		$HTML .= '<br><table class="borderless">
-		  <tr><td class="vcentered">
-		';
-		$HTML .= Ad_160x600();
-		$HTML .= '</td></tr>
-		  </table>
-		 ';
-	}
 
 	$HTML .= '<br>
 

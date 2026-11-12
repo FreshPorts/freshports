@@ -17,19 +17,6 @@ $Statistics = new PageLoadDetail();
 # These are the default values
 
 $Debug					= 0;
-$ShowAds				= 0;
-$BannerAd				= 1;
-$BannerAdUnder			= 1;
-$BurstFrontPage120x160	= 1;
-$BurstFrontPage125x125	= 1;
-$FrontPageAdsPayPal		= 1;
-$FrontPageAdsAmazon		= 1;
-$FrontPageDaemonNews	= 1;
-
-$HeaderAdsPayPal		= 1;
-$HeaderAdAmazon			= 1;
-$HeaderAdsBurst125x125	= 1;
-$HeaderAdsBurst120x160	= 1;
 
 $DiaryConfigFile = $_SERVER["DOCUMENT_ROOT"] . "/../configuration/freshports.conf.php";
 

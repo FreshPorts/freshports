@@ -112,11 +112,6 @@ if ($message_id == '') {
 </td></tr>
 <?php
 }
-	if ($ShowAds && $BannerAd) {
-		echo "<tr><td>\n<div class=\"hcentered\">\n";
-		echo Ad_728x90();
-		echo "</div>\n</td></tr>\n\n";
-	}
 ?>
 
 <?php

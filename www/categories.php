@@ -65,12 +65,6 @@
 <?php echo _('You can sort each column by clicking on the header.  e.g. click on <strong>Category</strong> to sort by category.'); ?>
 </P>
 
-<?php
-  if ($ShowAds && $BannerAd) {
-    echo '<div class="hcentered">' . Ad_728x90() . '</div>';
-  }
-?>
-
 <table class="category-list fullwidth bordered">
 
 <?php

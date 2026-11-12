@@ -27,7 +27,6 @@
   </tr>
 <tr><td>
 <?php
-	if ($ShowAds) echo '<div class="hcentered">' . Ad_728x90() . '</div>';
 ?>
 
 <p><?php echo _('<a href="https://www.langille.org/" rel="noopener noreferrer">Dan Langille</a> thought up the idea, found the data sources, bugged people to write scripts, and did the html and database work. But he certainly didn\'t do it alone.'); ?></p>

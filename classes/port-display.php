@@ -31,7 +31,6 @@ class port_display {
 	var $ShowEverything;
 
 	var $LinkToPort;
-	var $ShowAd;
 	var $ShowBasicInfo;
 	var $ShowCategory;
 	var $ShowChangesLink;
@@ -596,7 +595,6 @@ class port_display {
 		$this->ShowEverything          = false;
 
 		$this->LinkToPort              = false;
-		$this->ShowAd                  = false;
 		$this->ShowBasicInfo           = false;
 		$this->ShowCategory            = false;
 		$this->ShowChangesLink         = false;
@@ -665,7 +663,6 @@ class port_display {
 		$this->SetDetailsNil();
 
 		$this->LinkToPort              = true;
-		$this->ShowAd                  = true;
 		$this->ShowConfig              = true;
 		$this->ShowDepends             = true;
 		$this->ShowDownloadPortLink    = true;
@@ -1338,11 +1335,6 @@ class port_display {
 		}
 
 
-		# The ad goes here, but we haven't used ads in a very long time.
-		if ($this->ShowAd || $this->ShowEverything) {
-			$HTML .= '<dt>' . port_display_AD . '</dt>';
-		}
-
 		# sometimes the description can get very wide. This causes problems on mobile.
 		if ($this->ShowDescriptionLong || $this->ShowEverything) {
 			# homepage is not always present. e.g. security/gnome-keyring
@@ -1977,12 +1969,15 @@ class port_display {
 		return $HTML;
 	}
 
-	function ReplaceAdvertismentToken($HTML, $Ad) {
-		if ($Ad) {
-			$HTML = str_replace(port_display_AD, $Ad, $HTML);
-		} else {
-			$HTML = str_replace('<dt>' . port_display_AD . '</dt>', '', $HTML);
-		}
+	#
+	# Port pages no longer carry an ad, but a port page cached before the ad
+	# code was removed still holds the ad placeholder, which would otherwise
+	# be shown as literal text.  Strip it.  Once every cached port page has
+	# been rebuilt, this, its caller in rewrite/missing-port.php and
+	# port_display_AD can go.
+	#
+	function RemoveAdvertismentToken($HTML) {
+		$HTML = str_replace('<dt>' . port_display_AD . '</dt>', '', $HTML);
 
 		return $HTML;
 	}

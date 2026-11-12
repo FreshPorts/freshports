@@ -11,45 +11,6 @@
 #
 
 
-# $ShowAds - set to 1 to show all ads. 
-#          - set to 0 to hide all ads, regardless of other settings.
-
-# $BannerAd - 1 = show top banner ad.  Overridden by $ShowAds.
-
-# $BannerAdUnder = 1 = show bottom banner ad.  Overridden by $ShowAds.
-
-# $BurstFrontPage120x160 - 1 = show add.  Overridden by $ShowAds
-
-# $BurstFrontPage125x125 - 1 = show add.  Overridden by $ShowAds
-
-# $HeaderAdsPayPal       - 1 = show add
-
-# $HeaderAdAmazon        - 1 = show add
-
-# $HeaderAdsBurst125x125 - 1 = show add
-
-# $HeaderAdsBurst120x160 - 1 = show add
-
-$PrimaryAdSource		= 'PHPPGADS'; # one of: BURST GOOGLE PHPPGADS
-$ShowAds				= 0;
-$BannerAd				= 1;
-$BannerAdUnder			= 1;
-$BurstFrontPage120x160	= 0;
-$BurstFrontPage125x125	= 1;
-$BurstShowSkyscraperAd	= 1;
-
-$FrontPageAdsPayPal		= 1;
-$FrontPageAdsAmazon		= 1;
-$FrontPageDaemonNews	= 1;
-
-$ShowHeaderAds			= 0;
-$HeaderAdsPayPal		= 1;
-$HeaderAdAmazon			= 1;
-$HeaderAdsBurst125x125	= 1;
-$HeaderAdsBurst120x160	= 1;
-
-$UsePHPAdsNew			= 0;
-
 $RejectExternalSearches	= 0;
 
 $AllowUserChanges		= 1;

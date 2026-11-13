@@ -9,6 +9,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../configuration/freshports.conf.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/i18n.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/fontsize.php');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/csrf.php');
 
 	# PHP turns name[]=x in a cookie or query string into an array. No
 	# FreshPorts cookie is an array, and branch is always a single value,
@@ -802,43 +803,49 @@ function freshports_Repology_Link($CategoryNamePortName) {
 	return $HTML;
 }
 
-function freshports_Watch_Link_Add($WatchListAsk, $WatchListCount, $ElementID, $wlid = 0) {
-	$HTML = '<small><a href="/watch-list.php?';
-	$HTML .= 'add='  . $ElementID;
+#
+# The watch-list icons.  With the user's "ask" setting, the icon is a link
+# to the watch-list.php page which asks which lists to use; that page only
+# shows a form, so a plain link is safe.  Otherwise one click adds the port
+# to, or removes it from, the default lists, which changes the database, so
+# the icon is the button of a small POST form carrying the user's CSRF
+# token (include/csrf.php).  It used to be a link for that too, and then a
+# link on any other site could change a logged-in user's watch lists.
+#
+function freshports_Watch_Link($Action, $WatchListAsk, $ElementID, $wlid, $Title, $Icon) {
+	$ElementID = intval($ElementID);
+	$wlid      = intval($wlid);
 
 	if ($WatchListAsk == 'ask') {
-		$HTML .= '&amp;ask=1';
+		$HTML  = '<small><a href="/watch-list.php?' . $Action . '=' . $ElementID . '&amp;ask=1';
+		if ($wlid) {
+			$HTML .= '&amp;wlid=' . $wlid;
+		}
+		$HTML .= '" title="' . htmlspecialchars($Title) . '">' . $Icon . '</a></small>';
+
+		return $HTML;
 	}
 
+	$HTML  = '<form class="watch-icon" action="/watch-list.php" method="post">';
+	$HTML .= '<input type="hidden" name="' . $Action . '" value="' . $ElementID . '">';
 	if ($wlid) {
-		$HTML .= '&amp;wlid=' . htmlentities($wlid);
+		$HTML .= '<input type="hidden" name="wlid" value="' . $wlid . '">';
 	}
-
-	$HTML .= '"';
-	$HTML .= ' title="' . _(CLICKTOADD) . '"';
-
-	$HTML .= '>' . freshports_Watch_Icon_Add() . '</a></small>';
+	$HTML .= freshports_CsrfField();
+	$HTML .= '<button type="submit" title="' . htmlspecialchars($Title) . '">' . $Icon . '</button>';
+	$HTML .= '</form>';
 
 	return $HTML;
 }
 
+function freshports_Watch_Link_Add($WatchListAsk, $WatchListCount, $ElementID, $wlid = 0) {
+	return freshports_Watch_Link('add', $WatchListAsk, $ElementID, $wlid, _(CLICKTOADD), freshports_Watch_Icon_Add());
+}
+
 function freshports_Watch_Link_Remove($WatchListAsk, $WatchListCount, $ElementID, $wlid = 0) {
-	$HTML = '<small><a href="/watch-list.php?';
-	$HTML .= 'remove=' . $ElementID;
-
-	if ($WatchListAsk == 'ask') {
-		$HTML .= '&amp;ask=1';
-	}
-
-	if ($wlid) {
-		$HTML .= '&amp;wlid=' . htmlentities($wlid);
-	}
-
-	$HTML .= '"';
-	$HTML .= ' title="' . sprintf(ngettext('on %d watch list', 'on %d watch lists', $WatchListCount), $WatchListCount);
-	$HTML .= '">' . freshports_Watch_Icon() . '</a></small>';
-	
-	return $HTML;
+	return freshports_Watch_Link('remove', $WatchListAsk, $ElementID, $wlid,
+		sprintf(ngettext('on %d watch list', 'on %d watch lists', $WatchListCount), $WatchListCount),
+		freshports_Watch_Icon());
 }
 
 function freshports_Email_Link($message_id) {

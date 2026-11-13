@@ -23,6 +23,16 @@
 	} else {
 		$Origin = $_SERVER["HTTP_REFERER"] ?? '/';
 	}
+	#
+	# After a change, the visitor goes back to $Origin.  Since a link from
+	# another site now lands on the form below (see $Ask), its Referer would
+	# become $Origin, and Update would send them to that site.  Only go back
+	# to a page on this site.
+	#
+	$OriginHost = parse_url((string) $Origin, PHP_URL_HOST);
+	if (!is_string($Origin) || preg_match('|^/[^/\\\\]|', $Origin) !== 1 && ($OriginHost === null || $OriginHost === false || strcasecmp($OriginHost, $_SERVER['HTTP_HOST'] ?? '') != 0)) {
+		$Origin = '/';
+	}
 	$Redirect = 1;
 #phpinfo();
 
@@ -62,7 +72,18 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 		exit;  /* Make sure that code below does not get executed when we redirect. */
 	}
 
-	if (IsSet($_REQUEST["ask"])) {
+	#
+	# Adding and removing change the database, so they happen only on a POST
+	# carrying the user's token (include/csrf.php): from the watch-list
+	# icons, or from the form below.  This page used to act on any request,
+	# so a link on another site could change a logged-in user's watch lists.
+	# Anything else - the icon link when the user has chosen to be asked, an
+	# old link or bookmark, a link from elsewhere, a form left open too long -
+	# shows the form below, and nothing changes until Update is clicked.
+	#
+	$Ask = IsSet($_REQUEST["ask"]) || !freshports_CsrfValid();
+
+	if ($Ask) {
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/watch-lists.php');
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
 
@@ -107,6 +128,13 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 				$Verb       = 'added';
 				$FromTo     = 'to';
 				$Object     = intval($_REQUEST["add"]);
+			} elseif (IsSet($_REQUEST["Update"])) {
+				# the form below, sent without a valid token: show it again
+				$ButtonName = _('Update');
+				$Action     = "remove";
+				$Verb       = 'removed';
+				$FromTo     = 'from';
+				$Object     = intval($_REQUEST["Update"]);
 			} else {
 				die("I don't know whether you are removing or adding, so I'll just stop here shall I?");
 			}
@@ -190,6 +218,7 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 		</div>
 		<INPUT TYPE="hidden" NAME="Origin" VALUE="<?php echo htmlspecialchars($Origin); ?>">
 		<INPUT TYPE="hidden" NAME="Update" VALUE="<?php echo $Object; ?>">
+		<?php echo freshports_CsrfField(); ?>
 <?php
 		if (IsSet($WatchListID)) {
 			echo '		<INPUT TYPE="hidden" NAME="wlid" VALUE="' . $WatchListID . '">';
@@ -218,12 +247,12 @@ echo freshports_ShowFooter();
 <?php
 		$Redirect = 0;
 	} else {
-		if (IsSet($_REQUEST['Update'])) {
+		if (IsSet($_POST['Update'])) {
 			pg_exec($db, 'BEGIN');
 			$Error = '';
-			$ElementID = pg_escape_string($db, intval($_REQUEST['Update']));
+			$ElementID = pg_escape_string($db, intval($_POST['Update']));
 			# the watch lists which should contain this element; none selected means none
-			$WLIDs     = isset($_REQUEST['wlid']) && is_array($_REQUEST['wlid']) ? array_map('intval', $_REQUEST['wlid']) : array();
+			$WLIDs     = isset($_POST['wlid']) && is_array($_POST['wlid']) ? array_map('intval', $_POST['wlid']) : array();
 			$WatchListElement = new WatchListElement($db);
 
 			if ($Debug) echo "userid = '$User->id' and ElementID = '$ElementID'<br>";
@@ -234,7 +263,7 @@ echo freshports_ShowFooter();
 			if ($Debug) {
 				echo "Error is '$Error'<br>";
 
-				if (IsSet($_REQUEST['wlid'])) {
+				if (IsSet($_POST['wlid'])) {
 					echo 'yes, it is set<br>';
 				} else {
 					echo 'no, there is nothing set!<br>';
@@ -257,10 +286,10 @@ echo freshports_ShowFooter();
 				die($Error);
 			}
 		} else {
-			if (IsSet($_REQUEST['add'])) {
+			if (IsSet($_POST['add'])) {
 				pg_exec($db, 'BEGIN');
 				$Error = '';
-				$ElementID = pg_escape_string($db, intval($_REQUEST['add']));
+				$ElementID = pg_escape_string($db, intval($_POST['add']));
 				if ($ElementID == '') {
 					die('The target for addition was not supplied');
 				}
@@ -273,9 +302,9 @@ echo freshports_ShowFooter();
 					die(pg_last_error($db));
 				}
 			} else {
-				if (IsSet($_REQUEST['remove'])) {
+				if (IsSet($_POST['remove'])) {
 					pg_exec($db, 'BEGIN');
-					$ElementID = pg_escape_string($db, intval($_REQUEST['remove']));
+					$ElementID = pg_escape_string($db, intval($_POST['remove']));
 					if ($ElementID == '') {
 						die('The target for removal was not supplied');
 					}

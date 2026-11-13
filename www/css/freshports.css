@@ -221,6 +221,21 @@ td.content {
   margin: 2px;
 }
 
+/* a watch-list icon is the button of a small form - see freshports_Watch_Link() */
+form.watch-icon {
+  display: inline;
+  margin: 0;
+}
+
+form.watch-icon button {
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
 /* the Sigma before a port's watch list count, replacing sum.gif - see issue #598 */
 .watchlist-count {
   font-weight: bold;

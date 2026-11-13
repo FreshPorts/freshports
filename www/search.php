@@ -628,6 +628,8 @@
 		    }
 		    if ($Debug) echo 'searching by committer for ' . htmlentities($query) . '<br>\n';
 		    $Commits->CommitterSet($query);
+		    # for the watch-list icons, as the other commit searches below
+		    $Commits->UserIDSet($User->id);
 
 		    $Commits->Debug = $Debug;
 
@@ -1438,6 +1440,13 @@ if (file_exists(CATEGORIES_CACHE_LIST)) {
 
                         if ($Debug) echo "time to display!<br>\n";
                         $DisplayCommit = new DisplayCommit($db, $Commits->LocalResult);
+                        # search results are not cached, so they may show the user's
+                        # watch-list icons.  Searches by committer return no element_id,
+                        # so they show none.
+                        if ($User->id) {
+                                $DisplayCommit->SetShowWatchListStatus(true);
+                                $DisplayCommit->SetWatchListAsk($User->watch_list_add_remove);
+                        }
                         if ($output_format !== OUTPUT_FORMAT_PLAIN_TEXT) {
                                 $links = $Pager->GetLinks();
 

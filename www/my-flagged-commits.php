@@ -68,6 +68,11 @@
 	$DisplayCommit = new DisplayCommit($db, $CommitsMyFlagged->LocalResult);
 	$DisplayCommit->Debug = $Debug;
 	$DisplayCommit->SetUserID($User->id);
+	# this page is not cached, so it may show the user's watch-list icons
+	if ($User->id) {
+		$DisplayCommit->SetShowWatchListStatus(true);
+		$DisplayCommit->SetWatchListAsk($User->watch_list_add_remove);
+	}
 	$links = $Pager->GetLinks();
 		
 

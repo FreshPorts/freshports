@@ -81,6 +81,16 @@ SELECT count(DISTINCT STF.commit_log_id) AS count
 	function CreateHTML() {
 		GLOBAL	$freshports_CommitMsgMaxNumOfLinesToShow;
 
+		#
+		# Whether each port is on the user's watch lists, for the watch-list
+		# icons; counted as on the port page.  SanityTestFailures() has a
+		# "watch" column, but it is always 0.  This page's cache is kept per
+		# user and emptied when that user changes their watch lists, see
+		# www/sanity_test_failures.php and include/cache-user.php.
+		# $1 is the user in each query below.
+		#
+		$WatchColumn = $this->UserID ? ', OnWatchList($1, S.element_id) AS onwatchlist' : '';
+
 		if (IsSet($this->Filter)) {
 			$sql = 'select * from SanityTestFailures($1, $2)';
 			$params = array($this->UserID, $this->Filter);
@@ -90,7 +100,7 @@ SELECT count(DISTINCT STF.commit_log_id) AS count
 			# to reduce the data set set, let's just pull back 1.
 			# SanityTestFailures() already joins sanity_test_failures, so we don't join it again.
 			$sql = "
-SELECT S.*, 1 as stf_message
+SELECT S.*, 1 as stf_message$WatchColumn
   FROM SanityTestFailures($1) S";
     			$params = array($this->UserID);
 		}
@@ -107,7 +117,7 @@ SELECT S.*, 1 as stf_message
 			# The PL/pgSQL version builds every failure on each call, i.e. once per commit here.
 			$params = array($this->UserID, $this->Limit, $this->Offset);
 			$sql = '
-SELECT S.*, 1 as stf_message
+SELECT S.*, 1 as stf_message' . $WatchColumn . '
   FROM (SELECT STF.commit_log_id
           FROM sanity_test_failures STF JOIN commit_log CL ON CL.id = STF.commit_log_id
          WHERE EXISTS (SELECT 1 FROM commit_log_ports CLP WHERE CLP.commit_log_id = STF.commit_log_id)
@@ -138,6 +148,7 @@ SELECT S.*, 1 as stf_message
 		$DisplayCommit->SetDaysMarkedAsNew($this->DaysMarkedAsNew);
 		$DisplayCommit->SetUserID($this->UserID);
 		$DisplayCommit->SetWatchListAsk($this->WatchListAsk);
+		$DisplayCommit->SetShowWatchListStatus($WatchColumn != '');
 		if ($this->MessageID == '') {
 			$DisplayCommit->ShowLinkToSanityTestFailure = true;
 		}

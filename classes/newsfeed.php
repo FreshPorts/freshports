@@ -465,29 +465,37 @@ ORDER BY CL.commit_date DESC, P.name;
 
 	// valid format strings are: RSS0.91, RSS1.0, RSS2.0, PIE0.1, MBOX, OPML, ATOM0.3, HTML, JS
 
-	# write the cache file without sending it, so the headers can use its time
-	$rss->saveFeed($Format, NEWSFEEDCACHE, false);
+	# Build the feed in memory, fix it up, then put it in place with a rename.
+	# This used to save the cache file and then rewrite it in place, twice for
+	# some formats.  A reader (useCached() takes no lock) could get a partly
+	# written feed, and when two requests rebuilt the same feed at once, the
+	# second fix-up ran on the first one's output, giving an RSS 2.0 feed with
+	# two xmlns:atom attributes and two self links, which is not valid XML.
+	$Feed = $rss->createFeed($Format);
 
 	if ($Format == 'OPML') {
 		# UniversalFeedCreator leaves out the version attribute OPML requires, and marks
 		# each outline as an RSS feed, though it links to a commit or port page
-		$opml = @file_get_contents(NEWSFEEDCACHE);
-		if ($opml !== false) {
-			$opml = preg_replace('/<opml [^>]*>/', '<opml version="1.0">', $opml, 1);
-			$opml = str_replace('<outline type="rss" ', '<outline type="link"', $opml);
-			file_put_contents(NEWSFEEDCACHE, $opml, LOCK_EX);
-		}
+		$Feed = preg_replace('/<opml [^>]*>/', '<opml version="1.0">', $Feed, 1);
+		$Feed = str_replace('<outline type="rss" ', '<outline type="link"', $Feed);
 	}
 
 	if ($Format == 'RSS2.0') {
 		# feed readers and the W3C feed validator want an RSS 2.0 feed to give its own URL
 		$SelfLink = '        <atom:link href="' . htmlspecialchars($SelfURL) . '" rel="self" type="application/rss+xml" />' . "\n";
 
-		$rss2 = @file_get_contents(NEWSFEEDCACHE);
-		if ($rss2 !== false) {
-			$rss2 = preg_replace('/<rss version="2.0"/', '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"', $rss2, 1);
-			$rss2 = preg_replace_callback('/<channel[^>]*>\n/', function($m) use ($SelfLink) { return $m[0] . $SelfLink; }, $rss2, 1);
-			file_put_contents(NEWSFEEDCACHE, $rss2, LOCK_EX);
+		$Feed = preg_replace('/<rss version="2.0"/', '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"', $Feed, 1);
+		$Feed = preg_replace_callback('/<channel[^>]*>\n/', function($m) use ($SelfLink) { return $m[0] . $SelfLink; }, $Feed, 1);
+	}
+
+	# the temporary file is a dotfile in the same directory, so the rename is atomic
+	$TempFile = @tempnam(dirname(NEWSFEEDCACHE), '.newsfeed-');
+	if ($TempFile !== false) {
+		# tempnam() makes it 0600; give it the mode saveFeed()'s fopen() gave
+		@chmod($TempFile, 0666 & ~umask());
+		if (@file_put_contents($TempFile, $Feed) !== strlen($Feed) || !@rename($TempFile, NEWSFEEDCACHE)) {
+			syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ': could not write ' . NEWSFEEDCACHE);
+			@unlink($TempFile);
 		}
 	}
 

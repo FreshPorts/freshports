@@ -16,6 +16,7 @@ class CacheCommit extends Cache {
 	const CacheCategory = 'commits';
 
 	var $PageSize = 100;
+	var $PageNum  = 1;
 
 	function __construct() {
 		return parent::__construct();
@@ -76,7 +77,9 @@ class CacheCommit extends Cache {
 	function _CommitKey($MessageId, $category = '', $port = '', $files = 'n') {
 		// might want some parameter checking here
 		$CleanMessageId = $this->_CleanKey($MessageId);
-		$Key = self::CacheCategory . "/$CleanMessageId/$CleanMessageId." . $this->_CleanKey($category) . '.' . $this->_CleanKey($port) . '.' . $this->_CleanKey($files) . '.html';
+		# the page size and number select which ports are shown, see commit.php
+		$Key = self::CacheCategory . "/$CleanMessageId/$CleanMessageId." . $this->_CleanKey($category) . '.' . $this->_CleanKey($port) . '.' . $this->_CleanKey($files) .
+		       '.PageSize' . intval($this->PageSize) . '.PageNum' . intval($this->PageNum) . '.html';
 
 		return $Key;
 	}

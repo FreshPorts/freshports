@@ -80,45 +80,6 @@
 	}
 
 	$HTML = '';
-	# url category=devel&port=p5-Process-Status&files=yes&message_id=202009131257.08DCv7NJ031020@repo.freebsd.org
-	$Cache = new CacheCommit();
-	# not sure paging is used on commits
-	$Cache->PageSize = $User->page_size;
-	$result = $Cache->RetrieveCommit($message_id, $clean['category'], $clean['port'], $files);
-	if ($Debug) {
-		if (!$result) {
-			if ($Debug) echo 'found something from the cache for ' . $message_id . "<br>\n";
-		} else {
-			echo "found NOTHING in cache for '" . $message_id . "'<br>\n";
-		}
-	}
-
-	if (!$result) {
-		$HTML = $Cache->CacheDataGet();
-		$cached = true;
-		#
-		# this code is similar to that around line 237 in rewrite/missing-port.php
-		# we need to know the branch of this commit
-		#
-		$EndOfFirstLine = strpos($HTML, "\n");
-		if ($EndOfFirstLine == false) {
-			die('Internal error: I was expecting a Commit Branch and found nothing');
-		}
-		# extract the Commit Branch from the cache
-		$CommitBranch = substr($HTML, 0, $EndOfFirstLine);
-		# now remove the first line
-		$HTML = substr($HTML, $EndOfFirstLine + 1);
-	} else {
-		$cached = false;
-		if ($message_id != '') {
-			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
-
-			$Commit = new Commit($db);
-			$Commit->FetchByMessageId($message_id);
-			$CommitBranch = $Commit->branch;
-		}
-	}
-
 	if (IsSet($_REQUEST['page']))      $PageNo   = intval($_REQUEST['page']);
 	if (IsSet($_REQUEST['page_size'])) $PageSize = intval($_REQUEST['page_size']);
 
@@ -154,6 +115,48 @@
 	if ($Debug) {
 		echo "\$PageNo   = '$PageNo'<br>\n";
 		echo "\$PageSize = '$PageSize'<br>\n";
+	}
+
+	# url category=devel&port=p5-Process-Status&files=yes&message_id=202009131257.08DCv7NJ031020@repo.freebsd.org
+	$Cache = new CacheCommit();
+	# page and page_size decide which ports the page lists, so they are part
+	# of the cache key; without them, ?page_size=1 on an uncached commit
+	# stored a one-port page and every later visitor got that.
+	$Cache->PageSize = $PageSize;
+	$Cache->PageNum  = $PageNo;
+	$result = $Cache->RetrieveCommit($message_id, $clean['category'], $clean['port'], $files);
+	if ($Debug) {
+		if (!$result) {
+			if ($Debug) echo 'found something from the cache for ' . $message_id . "<br>\n";
+		} else {
+			echo "found NOTHING in cache for '" . $message_id . "'<br>\n";
+		}
+	}
+
+	if (!$result) {
+		$HTML = $Cache->CacheDataGet();
+		$cached = true;
+		#
+		# this code is similar to that around line 237 in rewrite/missing-port.php
+		# we need to know the branch of this commit
+		#
+		$EndOfFirstLine = strpos($HTML, "\n");
+		if ($EndOfFirstLine == false) {
+			die('Internal error: I was expecting a Commit Branch and found nothing');
+		}
+		# extract the Commit Branch from the cache
+		$CommitBranch = substr($HTML, 0, $EndOfFirstLine);
+		# now remove the first line
+		$HTML = substr($HTML, $EndOfFirstLine + 1);
+	} else {
+		$cached = false;
+		if ($message_id != '') {
+			require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
+
+			$Commit = new Commit($db);
+			$Commit->FetchByMessageId($message_id);
+			$CommitBranch = $Commit->branch;
+		}
 	}
 
 

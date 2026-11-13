@@ -184,9 +184,13 @@
 <?php
 	echo freshports_MainContentTable(BORDER);
 
+	# the cache is shared by everyone, so it holds watch-list placeholders, not
+	# icons; see DisplayCommit::$WatchListTokens
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
+
 	if ($cached) {
 		echo '<tr>' . freshports_PageBannerText($Title) . '</tr>';
-		echo $HTML;
+		echo DisplayCommit::ReplaceWatchListTokens($db, $User, $HTML);
 	} else if ($message_id != '' || (IsSet($revision) && $revision != '')) {
 		echo '<tr>' . freshports_PageBannerText($Title) . '</tr>';
 
@@ -262,6 +266,7 @@
 							$DisplayCommit->SetShowAllPorts(true);
 							$DisplayCommit->SetShowEntireCommit(true);
 							$DisplayCommit->ShowLinkToSanityTestFailure = true;
+							$DisplayCommit->SetWatchListTokens(true);
 							$RetVal = $DisplayCommit->CreateHTML();
 
 							$HTML .= $DisplayCommit->HTML;
@@ -358,7 +363,7 @@
 				} // $HTML != ''
 			} # count($message_id_array)
 
-			echo $HTML;
+			echo DisplayCommit::ReplaceWatchListTokens($database, $User, $HTML);
 
 		} else {
 			echo '<tr><td class="content">' . _('Database connection could not be established!') . '</td></tr></table></td>';

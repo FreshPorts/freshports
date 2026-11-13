@@ -41,9 +41,23 @@ class DisplayCommit
 	# include/cache-user.php), may turn it on.  The front page does.  Pages
 	# whose cache is shared by everyone, such as commit.php and date.php, must
 	# not: everyone would see the icons of whoever built the cache entry.
+	# They use $WatchListTokens instead.
 	# The result must carry element_id and onwatchlist for the user.
 	#
 	var $ShowWatchListStatus = FALSE;
+
+	#
+	# Instead of the icon, put a placeholder holding the port's element_id,
+	# the same for every visitor, so the HTML may go in a cache shared by
+	# everyone.  Before showing the page, ReplaceWatchListTokens() swaps each
+	# placeholder for that visitor's icon.  Used by commit.php and date.php.
+	# The result needs only element_id.
+	#
+	var $WatchListTokens = FALSE;
+
+	const WATCH_LIST_TOKEN_START = '%%%$$$WATCHLIST:';
+	const WATCH_LIST_TOKEN_END   = '$$$%%%';
+	const WATCH_LIST_TOKEN_REGEX = '/%%%\$\$\$WATCHLIST:(\d+)\$\$\$%%%/';
 
 	# the message_id for all the emails which originated from subversion contain freebsd.org
 	# For git commits, we put the full has into message_id. Commits from git do not contain that value.
@@ -82,6 +96,59 @@ class DisplayCommit
 	function SetShowWatchListStatus($ShowWatchListStatus)
 	{
 		$this->ShowWatchListStatus = $ShowWatchListStatus;
+	}
+
+	function SetWatchListTokens($WatchListTokens)
+	{
+		$this->WatchListTokens = $WatchListTokens;
+	}
+
+	#
+	# Swap each watch-list placeholder in $HTML (see $WatchListTokens) for
+	# this visitor's icon: add or remove, as on the port page.  Anonymous
+	# visitors have no watch lists, so theirs are just removed.  One query
+	# for all the ports on the page.  HTML without placeholders, such as a
+	# cache entry made before they existed, comes back unchanged.
+	#
+	static function ReplaceWatchListTokens($dbh, $User, $HTML)
+	{
+		if (!preg_match_all(self::WATCH_LIST_TOKEN_REGEX, $HTML, $matches)) {
+			return $HTML;
+		}
+
+		if (empty($User->id)) {
+			return preg_replace(self::WATCH_LIST_TOKEN_REGEX, '', $HTML);
+		}
+
+		# counted as OnWatchList() does, for the port page
+		$ElementIDs = array_unique(array_map('intval', $matches[1]));
+		$sql = '
+  SELECT WLE.element_id, COUNT(WLE.watch_list_id) AS onwatchlist
+    FROM watch_list WL JOIN watch_list_element WLE ON WL.id = WLE.watch_list_id
+   WHERE WL.user_id = $1
+     AND WL.in_service
+     AND WLE.element_id = ANY ($2::integer[])
+GROUP BY WLE.element_id';
+
+		$OnWatchList = array();
+		$result = pg_query_params($dbh, $sql, array(intval($User->id), '{' . implode(',', $ElementIDs) . '}'));
+		if ($result) {
+			while ($myrow = pg_fetch_array($result)) {
+				$OnWatchList[$myrow['element_id']] = intval($myrow['onwatchlist']);
+			}
+		} else {
+			syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ': ' . pg_last_error($dbh));
+		}
+
+		return preg_replace_callback(self::WATCH_LIST_TOKEN_REGEX, function($match) use ($User, $OnWatchList) {
+			$ElementID = intval($match[1]);
+			$Count     = $OnWatchList[$ElementID] ?? 0;
+			if ($Count) {
+				return freshports_Watch_Link_Remove($User->watch_list_add_remove, $Count, $ElementID) . ' ';
+			} else {
+				return freshports_Watch_Link_Add   ($User->watch_list_add_remove, $Count, $ElementID) . ' ';
+			}
+		}, $HTML);
 	}
 
 	function SetShowAllPorts($ShowAllPorts)
@@ -169,6 +236,9 @@ class DisplayCommit
 			} else {
 				$HTML .= freshports_Watch_Link_Add   ($this->WatchListAsk, $OnWatchList, $mycommit->element_id) . ' ';
 			}
+		} elseif ($this->WatchListTokens && !empty($mycommit->category) && !empty($mycommit->element_id)) {
+			# see $WatchListTokens
+			$HTML .= self::WATCH_LIST_TOKEN_START . intval($mycommit->element_id) . self::WATCH_LIST_TOKEN_END;
 		}
 
 		# This is a non-port element...

@@ -173,6 +173,9 @@
 
 		$DisplayCommit = new DisplayCommit($db, $commits->LocalResult, $BranchName);
 		$DisplayCommit->ShowLinkToSanityTestFailure = true;
+		# the archive is shared by everyone, so it holds watch-list
+		# placeholders, not icons; see DisplayCommit::$WatchListTokens
+		$DisplayCommit->SetWatchListTokens(true);
 		$RetVal = $DisplayCommit->CreateHTML();
 
 		$HTML = $DisplayCommit->HTML;
@@ -224,7 +227,8 @@ if (ArchiveExists($Date, $BranchName)) {
   ArchiveSave($Date, $HTML, $BranchName);
 }
 
-echo $HTML;
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/display_commit.php');
+echo DisplayCommit::ReplaceWatchListTokens($db, $User, $HTML);
 
 echo '</table>';
 

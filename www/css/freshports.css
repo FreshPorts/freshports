@@ -461,6 +461,22 @@ input[type="image"], .watchlist-selector select {
   vertical-align: middle;
 }
 
+/* watch-list.php: the notes beside the list box, or under it when there is no room */
+.watch-list-choose {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 1em 2em;
+}
+
+.watch-list-notes {
+  flex: 1 1 15em;
+}
+
+.watch-list-notes ul {
+  margin-top: 0.25em;
+}
+
 IMG#fp-logo { max-width: 100%; height: auto }
 
 /* page header: logo, notices, and follow-us links - see issue #636 */

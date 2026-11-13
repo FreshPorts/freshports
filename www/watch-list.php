@@ -150,13 +150,44 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 <blockquote>
 		<form action="<?php echo $PostURL; ?>" method="POST" NAME=f>
 		<?php
+		# The list box, with Update under it, and the notes which explain its
+		# + and * marks beside it; freshports.css puts the notes under the
+		# list box when there is no room beside it, e.g. on a phone.
+		?>
+		<div class="watch-list-choose">
+		<div>
+		<?php
 		# when adding, start with the user's default lists selected, as the
 		# add icon does when it is not set to ask; Update then adds it there
 		echo freshports_WatchListDDLB($db, $User->id, '', 10, TRUE, TRUE, $Object, $Action == 'add');
 		?>
 		<br><br>
 		<INPUT id=submit style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29
-		   value="<?php echo htmlspecialchars($ButtonName); ?>" name="submit"><br>
+		   value="<?php echo htmlspecialchars($ButtonName); ?>" name="submit">
+		</div>
+		<div class="watch-list-notes">
+<?php
+		# both forms mark lists with + and *, so explain them on both;
+		# only what starts out selected differs
+?>
+<?php echo _('NOTES'); ?>
+<ul>
+<li><?php echo _("'+' indicates that the port is on this watch list."); ?>
+<li><?php echo _("'*' indicates a default watch list."); ?>
+<?php
+		if ($Action == 'remove') {
+?>
+<li><?php echo _('the watch lists which are selected are those upon which the port appears'); ?>
+<?php
+		} else {
+?>
+<li><?php echo _('the watch lists which are selected are your default watch lists, and any which already contain the port'); ?>
+<?php
+		}
+?>
+</ul>
+		</div>
+		</div>
 		<INPUT TYPE="hidden" NAME="Origin" VALUE="<?php echo htmlspecialchars($Origin); ?>">
 		<INPUT TYPE="hidden" NAME="Update" VALUE="<?php echo $Object; ?>">
 <?php
@@ -166,19 +197,6 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 ?>
 		</form>
 </blockquote>
-
-<?php
-		if ($Action == 'remove') {
-?>
-<?php echo _('NOTES'); ?>
-<ul>
-<li><?php echo _("'+' indicates that the port is on this watch list."); ?>
-<li><?php echo _("'*' indicates a default watch list."); ?>
-<li><?php echo _('the watch lists which are selected are those upon which the port appears'); ?>
-</ul>
-<?php
-		}
-?>
 </TD>
 </tr>
 </table>

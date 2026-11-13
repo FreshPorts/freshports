@@ -286,6 +286,11 @@ echo freshports_ShowFooter();
 				die($Error);
 			}
 		} else {
+			# An icon on a page showing one watch list (watch.php) sends that list's
+			# id, so the port is added to or removed from that list.  Without it,
+			# the default lists are used.  The Update form above sends an array.
+			$OneListID = isset($_POST['wlid']) && is_string($_POST['wlid']) ? intval($_POST['wlid']) : 0;
+
 			if (IsSet($_POST['add'])) {
 				pg_exec($db, 'BEGIN');
 				$Error = '';
@@ -295,7 +300,12 @@ echo freshports_ShowFooter();
 				}
 
 				$WatchListElement = new WatchListElement($db);
-				if ($WatchListElement->AddToDefault($User->id, $ElementID) == 1) {
+				if ($OneListID) {
+					$Added = $WatchListElement->Add($User->id, $OneListID, $ElementID);
+				} else {
+					$Added = $WatchListElement->AddToDefault($User->id, $ElementID);
+				}
+				if ($Added == 1) {
 					pg_exec($db, 'COMMIT');
 				} else {
 					pg_exec($db, 'ROLLBACK');
@@ -310,7 +320,12 @@ echo freshports_ShowFooter();
 					}
 
 					$WatchListElement = new WatchListElement($db);
-					if ($WatchListElement->DeleteFromDefault($User->id, $ElementID) >= 0) {
+					if ($OneListID) {
+						$Removed = $WatchListElement->Delete($User->id, $OneListID, $ElementID);
+					} else {
+						$Removed = $WatchListElement->DeleteFromDefault($User->id, $ElementID);
+					}
+					if ($Removed >= 0) {
 						pg_exec($db, 'COMMIT');
 					} else {
 						pg_exec($db, 'ROLLBACK');

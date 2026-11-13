@@ -184,7 +184,7 @@ class DisplayCommit
 		$HTML .= "</span>\n"; /* element-details*/
 
 		$HTML .= ' ';
-		$HTML .= $mycommit->short_description;
+		$HTML .= htmlspecialchars($mycommit->short_description ?? '');
 
 		if (isset($mycommit->category) && $mycommit->category != '') {
 			// indicate if this port has been removed from cvs

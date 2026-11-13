@@ -97,7 +97,11 @@ class CommitsByTreeLocation extends commits {
 			categories.name                                                                                             AS category,
 			categories.id                                                                                               AS category_id,
 			element.name                                                                                                AS port,
-			element_pathname(element.id)                                                                                AS pathname,
+			element_pathname(element.id)                                                                                AS element_pathname,
+			R.name                                                                                                      AS repo_name,
+			R.repo_hostname                                                                                             AS repo_hostname,
+			R.path_to_repo                                                                                              AS path_to_repo,
+			commit_log.svn_revision                                                                                     AS svn_revision,
 			CASE when commit_log_ports.port_version IS NULL then ports.version  else commit_log_ports.port_version  END AS version,
 			CASE when commit_log_ports.port_version is NULL then ports.revision else commit_log_ports.port_revision END AS revision,
 			CASE when commit_log_ports.port_epoch   is NULL then ports.portepoch else commit_log_ports.port_epoch   END AS epoch,
@@ -121,7 +125,7 @@ class CommitsByTreeLocation extends commits {
 		}
 
 		$sql .= "
-    FROM commit_log_ports, commit_log, categories, ports, element ";
+    FROM commit_log_ports, commit_log LEFT OUTER JOIN repo R ON R.id = commit_log.repo_id, categories, ports, element ";
 
 		if ($this->UserID) {
 			$params[] = $this->UserID;

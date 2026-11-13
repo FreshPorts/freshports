@@ -14,6 +14,7 @@
 	
 	if (IN_MAINTENANCE_MODE) {
                 header('Location: /' . MAINTENANCE_PAGE, TRUE, 307);
+                exit;
 	}
 
 	GLOBAL $User;

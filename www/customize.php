@@ -37,7 +37,8 @@ if (IsSet($submit)) {
 
 	// process form
 
-	$email         = pg_escape_string($db, $_POST['email']);
+	# passed to the database as a parameter, so not escaped here
+	$email         = (string) ($_POST['email'] ?? '');
 	$Password      = $_POST['Password'];
 	$Password1     = $_POST['Password1'];
 	$Password2     = $_POST['Password2'];
@@ -99,12 +100,16 @@ if (IsSet($submit)) {
 	if ($OK) {
 		// get the existing email in case we need to reset the bounce count
 		if (IsSet($User)) {
-			$sql = "
+			# Every value is a parameter.  The new password used to be written
+			# into the SQL text, and that text was printed on the page when the
+			# UPDATE failed.
+			$params = array($email, intval($numberofdays), intval($page_size), $set_focus_search, $visitor);
+			$sql = '
 UPDATE users
-   SET email            = '$email',
-       number_of_days   = $numberofdays,
-       page_size        = $page_size,
-       set_focus_search = $set_focus_search";
+   SET email            = $1,
+       number_of_days   = $2,
+       page_size        = $3,
+       set_focus_search = $4';
 
 			// if they are changing the email, reset the bouncecount.
 			if ($User->email != $email) {
@@ -112,17 +117,17 @@ UPDATE users
 			}
 
 			if ($Password1 != '') {
-				$sql .= ", password_hash = crypt('" . pg_escape_string($db, $Password1) . "'";
-				$sql .= ", gen_salt('" . PW_HASH_METHOD . "', " . PW_HASH_COST ."))";
+				$params[] = $Password1;
+				$sql .= ', password_hash = crypt($' . count($params) . ", gen_salt('" . PW_HASH_METHOD . "', " . intval(PW_HASH_COST) . '))';
 			}
 
-			$sql .= " where users.id = (select user_id from user_cookie where cookie = $1)";
+			$sql .= ' where users.id = (select user_id from user_cookie where cookie = $5)';
 
 			if ($Debug) {
 				echo '<pre>' . htmlentities($sql) . '</pre>';
 			}
 
-			$result = pg_query_params($db, $sql, array($visitor));
+			$result = pg_query_params($db, $sql, $params);
 			if ($result) {
 				$AccountModified = 1;
 			}
@@ -137,8 +142,8 @@ UPDATE users
 			}
 		} else {
 			$errors .= _('Something went terribly wrong there.') . '<br>';
-			$errors .= $sql . "<br>\n";
-			$errors .= pg_last_error($db);
+			# the database's error goes to the log, not the page
+			syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ': account update failed for user id ' . intval($User->id) . ': ' . pg_last_error($db));
 		}
 	}
 } else {

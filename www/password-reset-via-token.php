@@ -27,7 +27,12 @@
 if (IsSet($_REQUEST['submit'])) $submit = pg_escape_string($db,  $_REQUEST['submit'] );
 if (IsSet($_REQUEST['token']))  $token  = $_REQUEST['token'];
 
-syslog(LOG_NOTICE, "Password reset page: loaded with: " . $token);
+# Log a short hash of the token, never the token itself: until it is used,
+# a token in the log lets anyone who can read the log set that user's
+# password.  The hash still ties together the log lines of one reset.
+$TokenForLog = (isset($token) && is_string($token)) ? 'sha256:' . substr(hash('sha256', $token), 0, 12) : '(none)';
+
+syslog(LOG_NOTICE, "Password reset page: loaded with: " . $TokenForLog);
 
 if (IsSet($submit)) {
   $Debug = 0;
@@ -49,7 +54,7 @@ if (IsSet($submit)) {
 
   if ( !$Password1 || ( $Password1 != $Password2 ) ) {
     $errors .= _('The password was not confirmed.  It must be entered twice.') . '<br>';
-    syslog(LOG_NOTICE, "Password reset page: password not confirmed for " . $token);
+    syslog(LOG_NOTICE, "Password reset page: password not confirmed for " . $TokenForLog);
     $OK = 0;
   }
 
@@ -63,10 +68,10 @@ if (IsSet($submit)) {
     if ($result) {
       $myrow = pg_fetch_array ($result);
       if ($myrow['rowcount'] == 1) {
-          syslog(LOG_NOTICE, "Password reset page: Token deleted after reset: " . $token);
+          syslog(LOG_NOTICE, "Password reset page: Token deleted after reset: " . $TokenForLog);
           $PasswordReset = 1;
       } else {
-          syslog(LOG_NOTICE, "Password reset page: Token not deleted after reset: " . $token);
+          syslog(LOG_NOTICE, "Password reset page: Token not deleted after reset: " . $TokenForLog);
           $errors = _("It seems that token is no longer valid.") . "<br>";
       }
     }

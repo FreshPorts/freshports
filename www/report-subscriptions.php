@@ -12,7 +12,8 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
-	if (!IsSet($_COOKIE[USER_COOKIE_NAME])) {
+	// a cookie which matches no login leaves $User->id at 0
+	if (empty($User->id)) {
 		header('Location: /login.php');  /* Redirect browser to PHP web site */
 		exit;  /* Make sure that code below does not get executed when we redirect. */
 	}

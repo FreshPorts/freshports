@@ -14,7 +14,12 @@
                 header('Location: /' . MAINTENANCE_PAGE, TRUE, 307);
 	}
 
-	const FREEBSD_EMAIL_REGEX = '/.*@FreeBSD.org/i';
+	# The account's email address must end in @FreeBSD.org.  Unanchored, and
+	# with an unescaped dot, x@FreeBSD.org.example.com passed too.  The reports
+	# go to <login>@FreeBSD.org (see committer_opt_in.pm in ingress-modules),
+	# so that let a non-committer switch them on for a committer who never
+	# opted in.
+	const FREEBSD_EMAIL_REGEX = '/@FreeBSD\.org$/i';
 
 	$Title = _('Committer opt-in');
 	freshports_Start($Title,
@@ -136,7 +141,7 @@ if (!empty($visitor)) {
 			}
 		} else {
 			echo _('You are: not subscribed');
-			$committer = preg_replace('|^(.*)@FreeBSD\.org|i', '\\1', $User->email);
+			$committer = preg_replace('|^(.*)@FreeBSD\.org$|i', '\\1', $User->email);
 		}
 	}
 
@@ -148,7 +153,7 @@ if (!empty($visitor)) {
 
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
                <?php echo _('your freefall login:'); ?>
-               <INPUT SIZE="35" NAME="email" VALUE="<?php echo $committer ?? '' ?>"><br><br>
+               <INPUT SIZE="35" NAME="email" VALUE="<?php echo htmlspecialchars($committer ?? '') ?>"><br><br>
 <?php
 			if (IsSet($numrows) && $numrows) {
 ?>

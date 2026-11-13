@@ -251,7 +251,7 @@
 	}
 
 	if ($stype == SEARCH_FIELD_MESSAGEID) {
-		header('Location: ' . $protocol . '://' . $_SERVER['HTTP_HOST'] . "/commit.php?message_id=" . htmlentities($query));
+		header('Location: ' . $protocol . '://' . $_SERVER['HTTP_HOST'] . "/commit.php?message_id=" . urlencode($query));
 		exit;
 	}
 
@@ -286,7 +286,7 @@
 	          # bad value.
 	          # ERROR
 	          syslog(LOG_ERR, 'bad search string: ' . $stype);
-	          $type = SEARCH_FIELD_NAME;
+	          $stype = SEARCH_FIELD_NAME;
 	}
 
 	#
@@ -390,9 +390,10 @@
 				case SEARCH_FIELD_COMMITTER_EMAIL:
 				case SEARCH_FIELD_MAINTAINER:
 				case SEARCH_FIELD_NAME:
-				case SEARCH_FIELD_PACKAGE:
 					break;
 
+				# package names are matched in a WITH clause which has no
+				# 'sounds like' form, so they fall back to 'containing' too
 				default:
 					$method = 'match';
 					if ($output_format == OUTPUT_FORMAT_HTML ) {
@@ -1049,8 +1050,10 @@ JOIN element_pathname EP on E.id = EP.element_id
 				#
 				$sql = $sqlSelectFields . $sqlExtraFields . ' FROM ' . $sqlFrom . $sqlWatchListFrom . $sqlWhere;
 				if (!empty($sqlUserSpecifiedCondition)) {
-					$sql .= ' and ' . $sqlUserSpecifiedCondition . $sqlOrderBy . $sqlOffsetLimit;
+					$sql .= ' and ' . $sqlUserSpecifiedCondition;
 				}
+				# a package search including deleted ports has no condition, but still needs these
+				$sql .= $sqlOrderBy . $sqlOffsetLimit;
 
 				if ($Debug) {
                                         echo __FILE__ . '::' . __LINE__ . ' says:<br>\n';

@@ -26,7 +26,6 @@ const FRESHPORTS_WATCH_LIST_PAGES = array(
 	'port-watch.php',
 	'watch-categories.php',
 	'watch-list-maintenance.php',
-	'filter-setup.php',
 	'pkg_upload.php',
 );
 

@@ -18,7 +18,6 @@
 # * bouncing.php
 # * customize.php
 # * committer-opt-in.php
-# * filter-setup.php
 # * forgotten-password.php
 # * new-user.php
 # * password-reset-via-token.php

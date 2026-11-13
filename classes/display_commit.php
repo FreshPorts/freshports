@@ -34,6 +34,17 @@ class DisplayCommit
 
 	var $ShowLinkToSanityTestFailure = FALSE;
 
+	#
+	# Show the watch-list add/remove icon beside each port.  Off by default:
+	# the icon depends on who is looking, so only a page whose cache is kept
+	# per user, and cleared when that user changes their watch lists (see
+	# include/cache-user.php), may turn it on.  The front page does.  Pages
+	# whose cache is shared by everyone, such as commit.php and date.php, must
+	# not: everyone would see the icons of whoever built the cache entry.
+	# The result must carry element_id and onwatchlist for the user.
+	#
+	var $ShowWatchListStatus = FALSE;
+
 	# the message_id for all the emails which originated from subversion contain freebsd.org
 	# For git commits, we put the full has into message_id. Commits from git do not contain that value.
 	# This is used to decide if commits are from svn or from git.
@@ -66,6 +77,11 @@ class DisplayCommit
 	function SetWatchListAsk($WatchListAsk)
 	{
 		$this->WatchListAsk = $WatchListAsk;
+	}
+
+	function SetShowWatchListStatus($ShowWatchListStatus)
+	{
+		$this->ShowWatchListStatus = $ShowWatchListStatus;
 	}
 
 	function SetShowAllPorts($ShowAllPorts)
@@ -144,6 +160,17 @@ class DisplayCommit
 		$Max_line_length = 0; # The number of elements on this line, which becomes the number of columns in the tab.
 
 		$HTML = '';
+
+		# the watch-list icon, for ports only; see $ShowWatchListStatus
+		if ($this->ShowWatchListStatus && !empty($mycommit->category) && !empty($mycommit->element_id)) {
+			$OnWatchList = intval($mycommit->onwatchlist ?? 0);
+			if ($OnWatchList) {
+				$HTML .= freshports_Watch_Link_Remove($this->WatchListAsk, $OnWatchList, $mycommit->element_id) . ' ';
+			} else {
+				$HTML .= freshports_Watch_Link_Add   ($this->WatchListAsk, $OnWatchList, $mycommit->element_id) . ' ';
+			}
+		}
+
 		# This is a non-port element...
 		$HTML .= '<span class="element-details">';
 

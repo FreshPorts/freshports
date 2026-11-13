@@ -202,6 +202,13 @@ if ($db) {
 		$DisplayCommit = new DisplayCommit($db, $LatestCommits->LocalResult);
 		$DisplayCommit->SetBranch($Branch);
 		$DisplayCommit->ShowLinkToSanityTestFailure = true;
+		# This page's cache is kept per user (see $FileName above), emptied
+		# by each commit and when the user changes their watch lists, so it
+		# may show the user's watch-list icons.
+		if ($User->id) {
+			$DisplayCommit->SetShowWatchListStatus(true);
+			$DisplayCommit->SetWatchListAsk($User->watch_list_add_remove);
+		}
 		$RetVal = $DisplayCommit->CreateHTML();
 
 		echo $DisplayCommit->HTML;

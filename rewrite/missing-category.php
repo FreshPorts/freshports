@@ -262,7 +262,7 @@ function freshports_CategoryDisplay($dbh, $category, $url_parts, $Branch = BRANC
 
 		if ($category->IsPrimary() && $User->id) {
 			if ($WatchListCount) {
-				$HTML .= freshports_Watch_Link_Remove('', 0, $category->element_id);
+				$HTML .= freshports_Watch_Link_Remove('', intval($WatchListCount), $category->element_id);
 			} else {
 				$HTML .= freshports_Watch_Link_Add   ('', 0, $category->element_id);
 			}

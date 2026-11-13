@@ -38,8 +38,12 @@ if ($submit) {
 
    $OK = 1;
 
-   $UserID = $_REQUEST["UserID"] ?? '';
-   $eMail  = strtolower( $_REQUEST["eMail"] ?? '' );
+   # UserID[]=x or eMail[]=x would arrive as an array; treat it as blank
+   $UserID = is_string($_REQUEST['UserID'] ?? null) ? $_REQUEST['UserID'] : '';
+   $eMail  = is_string($_REQUEST['eMail']  ?? null) ? strtolower($_REQUEST['eMail']) : '';
+
+   # stays null when both fields are blank: there is nothing to look up
+   $result = null;
 
    if ($UserID) {
       $error = '';
@@ -77,7 +81,7 @@ if ($submit) {
       }
    }
 
-   if (pg_num_rows($result)) {
+   if ($result && pg_num_rows($result)) {
       // there is a result.  Let's fetch it, or rather, all of them
       while ( $myrow = pg_fetch_array ($result) ) {
 

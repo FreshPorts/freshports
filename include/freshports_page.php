@@ -41,6 +41,12 @@ class freshports_page extends HTML_Page2 {
 
 		$this->addFavicon('/favicon.ico');
 		$this->setDocType('HTML 4.01 Strict');
+
+		# HTML_Page2 says <html lang="en"> unless told otherwise; use the
+		# visitor's language, as freshports_Start() does for the other pages
+		if (defined('FRESHPORTS_LOCALE')) {
+			$this->setLang(freshports_i18n_html_lang());
+		}
 	}
 
 	function setDB($db) {

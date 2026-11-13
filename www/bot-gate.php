@@ -17,6 +17,9 @@
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/constants.local.php');
+	# the visitor's language, for the challenge page's text; it needs only
+	# the compiled translations, not the database
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/i18n.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/bot-gate.php');
 
 	# Without the gate, the gated pages require a login.  Do not redirect there:

@@ -141,7 +141,7 @@ function freshports_bot_gate_challenge($page, $return) {
 	# needs nothing else from the site: no stylesheet, no images, no script.
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo defined('FRESHPORTS_LOCALE') ? freshports_i18n_html_lang() : 'en'; ?>">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">

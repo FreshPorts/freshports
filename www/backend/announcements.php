@@ -119,50 +119,65 @@ function AnnouncementDatesCheck($start_date, $end_date) {
 	return $errors;
 }
 
-if (IsSet($_REQUEST['add'])) {
-	$Announcement = new Announcement($db);
-
-	$Announcement->TextSet     ($_REQUEST['announcement']);
-	$Announcement->TextPlainSet($_REQUEST['announcement_plain']);
-	$Announcement->StartDateSet(trim($_REQUEST['start_date']));
-	$Announcement->EndDateSet  (trim($_REQUEST['end_date']));
-
-	$DateErrors = AnnouncementDatesCheck($Announcement->StartDateGet(), $Announcement->EndDateGet());
-	if ($DateErrors != '') {
-		# keep $Announcement so the form shows what was submitted
-		$errors = $DateErrors;
+#
+# Announcements are shown on every page, as HTML.  Adding, changing or
+# deleting one used to happen on any request, GET included, so a link on
+# another site, followed by a logged-in admin, could publish HTML site wide.
+# Now they need a POST carrying the admin's token (include/csrf.php).
+# Without it, nothing changes and the form is shown empty, not with what
+# was sent, which may not be the admin's.
+#
+if (IsSet($_REQUEST['add']) || IsSet($_REQUEST['update']) || IsSet($_REQUEST['delete'])) {
+	if (!freshports_CsrfValid()) {
+		$errors       = '<p>' . htmlspecialchars(freshports_CsrfMessage()) . '</p>' . "\n";
+		$Announcement = new Announcement($db);
 	} else {
-		$Announcement->Insert();
-		Unset($Announcement);
+		if (IsSet($_POST['add'])) {
+			$Announcement = new Announcement($db);
+
+			$Announcement->TextSet     ($_POST['announcement']);
+			$Announcement->TextPlainSet($_POST['announcement_plain']);
+			$Announcement->StartDateSet(trim($_POST['start_date']));
+			$Announcement->EndDateSet  (trim($_POST['end_date']));
+
+			$DateErrors = AnnouncementDatesCheck($Announcement->StartDateGet(), $Announcement->EndDateGet());
+			if ($DateErrors != '') {
+				# keep $Announcement so the form shows what was submitted
+				$errors = $DateErrors;
+			} else {
+				$Announcement->Insert();
+				Unset($Announcement);
+			}
+		}
+
+		if (IsSet($_POST['update'])) {
+			$Announcement = new Announcement($db);
+
+			$Announcement->TextSet     ($_POST['announcement']);
+			$Announcement->TextPlainSet($_POST['announcement_plain']);
+			$Announcement->StartDateSet(trim($_POST['start_date']));
+			$Announcement->EndDateSet  (trim($_POST['end_date']));
+			$Announcement->IDSet       (intval($_POST['id']));
+
+			$DateErrors = AnnouncementDatesCheck($Announcement->StartDateGet(), $Announcement->EndDateGet());
+			if ($DateErrors != '') {
+				# keep $Announcement so the form shows what was submitted
+				$errors = $DateErrors;
+			} else {
+				$Announcement->Update();
+				Unset($Announcement);
+			}
+		}
+
+		if (IsSet($_POST['delete'])) {
+			$Announcement = new Announcement($db);
+
+			$Announcement->IDSet(intval(pg_escape_string($db, $_POST['delete'])));
+
+			$Announcement->Delete();
+			Unset($Announcement);
+		}
 	}
-}
-
-if (IsSet($_REQUEST['update'])) {
-	$Announcement = new Announcement($db);
-
-	$Announcement->TextSet     ($_REQUEST['announcement']);
-	$Announcement->TextPlainSet($_REQUEST['announcement_plain']);
-	$Announcement->StartDateSet(trim($_REQUEST['start_date']));
-	$Announcement->EndDateSet  (trim($_REQUEST['end_date']));
-	$Announcement->IDSet       (intval($_REQUEST['id']));
-
-	$DateErrors = AnnouncementDatesCheck($Announcement->StartDateGet(), $Announcement->EndDateGet());
-	if ($DateErrors != '') {
-		# keep $Announcement so the form shows what was submitted
-		$errors = $DateErrors;
-	} else {
-		$Announcement->Update();
-		Unset($Announcement);
-	}
-}
-
-if (IsSet($_REQUEST['delete'])) {
-	$Announcement = new Announcement($db);
-
-	$Announcement->IDSet(intval(pg_escape_string($db, $_REQUEST['delete'])));
-
-	$Announcement->Delete();
-	Unset($Announcement);
 }
 
 # create another new one, unless we are redisplaying one which had errors
@@ -223,7 +238,8 @@ $HTML .= '<tr>'  . "\n";
 
 $HTML .= '<td>'  . "\n";
 $HTML .= '<TEXTAREA NAME="announcement" ROWS="10" COLS="60">'          . "\n";
-$HTML .= $Announcement->TextGet();
+# escaped, so that HTML such as </textarea> in the text cannot end the box early
+$HTML .= htmlspecialchars($Announcement->TextGet() ?? '');
 $HTML .= '</TEXTAREA>';
 $HTML .= '</td>'  . "\n";
 
@@ -258,6 +274,7 @@ $HTML .= '</tr>'  . "\n";
 $HTML .= '</table>' . "\n";
 
 $HTML .= '<INPUT NAME="id" TYPE="hidden" value="' . $Announcement->IDGet(). '">' . "\n";
+$HTML .= freshports_CsrfField() . "\n";
 
 $HTML .= '</form>';
 
@@ -281,7 +298,11 @@ function MyDisplayAnnouncements($Announcement) {
 		$HTML .= '<td>' . ($Announcement->StartDateGet() != '' ? $Announcement->StartDateGet() : '&nbsp;') . '</td>';
 		$HTML .= '<td>' . ($Announcement->EndDateGet()   != '' ? $Announcement->EndDateGet()   : '&nbsp;') . '</td>';
 		$HTML .= '<td><a href="' . $_SERVER['PHP_SELF']  . '?edit='   . $Announcement->IDGet() . '">Edit</a></td>';
-		$HTML .= '<td><a href="' . $_SERVER['PHP_SELF']  . '?delete=' . $Announcement->IDGet() . '">Delete</a></td>';
+		# deleting changes data, so it is a POST with the token, not a link
+		$HTML .= '<td><form action="' . $_SERVER['PHP_SELF'] . '" method="POST">'
+		       . '<input type="hidden" name="delete" value="' . intval($Announcement->IDGet()) . '">'
+		       . freshports_CsrfField()
+		       . '<input type="submit" value="Delete"></form></td>';
       $HTML .= '</tr>' . "\n";
 	}
 	$HTML .= '</table>' . "\n";

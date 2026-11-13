@@ -59,6 +59,8 @@ if (file_exists($cache_file)) {
     $HTML = 'The required file was not found: ' . $cache_file;
 }
 
+# lang stays "en" whatever the visitor's language: nothing on this page is
+# translated, it is the English text of the cache file above
 ?>
 <!DOCTYPE html>
 <html lang="en">

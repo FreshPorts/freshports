@@ -39,7 +39,7 @@
 	}
 	echo HTML_DOCTYPE;
 ?>
-<html lang="en">
+<html lang="<?php echo defined('FRESHPORTS_LOCALE') ? freshports_i18n_html_lang() : 'en'; ?>">
 <head>
 <title>FreshPorts - VuXML</title>
 <meta name="robots" content="nofollow">

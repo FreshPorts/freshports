@@ -151,9 +151,8 @@ class Commit {
                                 
                                 
 		}
-		if ($Debug) echo 'message_id is ' . $this->message_id;
-
-		return $this->message_id;
+		# no commit has that revision, or the query failed: callers count() the result
+		return array();
 	}
 
 	protected function FetchByIDHelper($Where) {

@@ -71,6 +71,10 @@
 		$Commit = new Commit($db);
 		// Get the message IDs for this revision
 		$message_id_array = $Commit->FetchByRevision($revision);
+		if (count($message_id_array) == 0) {
+			# no commit has that revision; the page says nothing was found
+			header('HTTP/1.1 404 NOT FOUND');
+		}
 		if (count($message_id_array) == 1) {
 			header('Location: /commit.php?message_id=' . $message_id_array[0]);
 			exit;

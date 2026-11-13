@@ -7,9 +7,11 @@
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/watch_lists.php');
 
-	function freshports_WatchListDDLB($dbh, $UserID, $selected = '', $size = 0, $multiple = 0, $show_active = 1, $element_id = 0) {
+	function freshports_WatchListDDLB($dbh, $UserID, $selected = '', $size = 0, $multiple = 0, $show_active = 1, $element_id = 0, $select_defaults = false) {
 		# return the HTML which crates a dropdown list box.
 		# optionally, select the item identified by $selected.
+		# with no $selected, the lists which contain $element_id are selected,
+		# and with $select_defaults, the user's default lists as well.
 	
 		$Debug = 0;
 	
@@ -41,7 +43,7 @@
 				$WatchList = $WatchLists->FetchNth($i);
 				$HTML .= '<option value="' . htmlspecialchars(pg_escape_string($dbh, $WatchList->id)) . '"';
 				if ($selected == '') {
-					if ($element_id && $WatchList->watch_list_count > 0) {
+					if (($element_id && $WatchList->watch_list_count > 0) || ($select_defaults && $WatchList->in_service == 't')) {
 						$HTML .= ' selected';
 					}
 				} else {

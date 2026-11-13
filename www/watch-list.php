@@ -120,8 +120,23 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/port-display.php');
 
+		#
+		# Show the top of the port page only, down to the maintainer: name,
+		# short description, the whole version line, any FORBIDDEN, BROKEN,
+		# etc. notes, and the maintainer.  That keeps the watch-list form below near the top of the page.
+		# With the full port details, the form was below the fold and easy to
+		# miss: Update was never pressed, nothing changed, and the icon on the
+		# page the visitor returned to looked broken.  No watch-list icon here
+		# either: it would only link back to this page.
+		#
 		$port_display = new port_display($db, $User);
-		$port_display->SetDetailsReports();
+		$port_display->SetDetailsMinimal();
+		$port_display->ShowCategory        = true;
+		$port_display->ShowWatchListCount  = true;
+		$port_display->ShowVersionLine     = true;
+		$port_display->ShowUpstream        = true;
+		$port_display->ShowMaintainedBy    = true;
+		$port_display->ShowWatchListStatus = false;
 
 		$port_display->SetPort($port);
 
@@ -135,7 +150,9 @@ function AddElementToWatchLists($db, $UserID, $ElementID, $WatchListsIDs) {
 <blockquote>
 		<form action="<?php echo $PostURL; ?>" method="POST" NAME=f>
 		<?php
-		echo freshports_WatchListDDLB($db, $User->id, '', 10, TRUE, TRUE, $Object);
+		# when adding, start with the user's default lists selected, as the
+		# add icon does when it is not set to ask; Update then adds it there
+		echo freshports_WatchListDDLB($db, $User->id, '', 10, TRUE, TRUE, $Object, $Action == 'add');
 		?>
 		<br><br>
 		<INPUT id=submit style="WIDTH: 85px; HEIGHT: 24px" type=submit size=29

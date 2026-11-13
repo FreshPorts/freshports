@@ -32,6 +32,10 @@ class port_display {
 
 	var $LinkToPort;
 	var $ShowBasicInfo;
+	# the version line (status icons, links, quarterly version) and the
+	# FORBIDDEN, BROKEN, etc. notes below it: the parts of ShowBasicInfo
+	# shown above the maintainer.  See watch-list.php.
+	var $ShowVersionLine;
 	var $ShowCategory;
 	var $ShowChangesLink;
 	var $ShowConfig;
@@ -596,6 +600,7 @@ class port_display {
 
 		$this->LinkToPort              = false;
 		$this->ShowBasicInfo           = false;
+		$this->ShowVersionLine         = false;
 		$this->ShowCategory            = false;
 		$this->ShowChangesLink         = false;
 		$this->ShowConfig              = false;
@@ -1018,7 +1023,7 @@ class port_display {
 			$HTML .= '" title="' . _('The category for this port') . '">' . $port->category . '</a>';
 		}
 
-		if ($this->ShowEverything || $this->ShowBasicInfo) {
+		if ($this->ShowEverything || $this->ShowBasicInfo || $this->ShowVersionLine) {
 			// indicate if this port has been removed from cvs
 			if ($port->IsDeleted()) {
 				$HTML .= " " . freshports_Deleted_Icon_Link() . "\n";
@@ -1038,7 +1043,7 @@ class port_display {
 			$HTML .= ' ' . freshports_WatchListCount_Icon_Link() . '=' . $port->WatchListCount();
 		}
 
-		if ($this->ShowEverything || $this->ShowBasicInfo) {
+		if ($this->ShowEverything || $this->ShowBasicInfo || $this->ShowVersionLine) {
 			$HTML .= ' ' . freshports_Search_Depends_All($port->category . '/' . $port->port);
 
 
@@ -1112,7 +1117,7 @@ class port_display {
 		}
 
 		# if you add content to this IF statement, you may need to addition more conditions to the if
-		if (($this->ShowEverything || $this->ShowBasicInfo) && 
+		if (($this->ShowEverything || $this->ShowBasicInfo || $this->ShowVersionLine) && 
 		    ($port->forbidden || $port->broken || $port->deprecated || $port->expiration_date || $port->ignore || $port->restricted || $port->no_cdrom || $port->is_interactive)) {
 
 			# various details about this port

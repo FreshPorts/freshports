@@ -964,7 +964,7 @@ function freshports_CommitterEmailLink_Old($committer) {
 
 	$new_addr = freshportsObscureHTML($addr);
 
-	$HTML = '<a href="' . MAILTO . ':' . $new_addr . '" title="' . _('committed by this person') . '">' . $committer . '</a>';
+	$HTML = '<a href="' . MAILTO . ':' . $new_addr . '" title="' . _('committed by this person') . '">' . htmlspecialchars($committer ?? '') . '</a>';
 
 	return $HTML;
 }
@@ -985,7 +985,7 @@ function freshports_CommitterEmailLinkExtra($committer, $extrabits) {
 
 	$new_addr = freshportsObscureHTML($addr);
 
-	$HTML = "<a href=\"" . MAILTO . ":$new_addr?$extrabits\">$committer</a>";
+	$HTML = "<a href=\"" . MAILTO . ":$new_addr?$extrabits\">" . htmlspecialchars($committer ?? '') . "</a>";
 
 	return $HTML;
 }
@@ -1003,7 +1003,7 @@ function freshports_AuthorEmailLink($author_name, $author_email) {
 
 	$new_addr = freshportsObscureHTML($addr);
 
-	$HTML = '<a href="' . MAILTO . ':' . $new_addr . '" title="' . _('authored by this person') . '">' . $author_name . '</a>';
+	$HTML = '<a href="' . MAILTO . ':' . $new_addr . '" title="' . _('authored by this person') . '">' . htmlspecialchars($author_name ?? '') . '</a>';
 
 	return $HTML;
 }
@@ -1020,7 +1020,7 @@ function freshports_CommitterEmailLink($committer_name, $committer_email) {
 
 	$new_addr = freshportsObscureHTML($addr);
 
-	$HTML = '<a href="' . MAILTO . ':' . $new_addr . '" title="' . _('committed by this person') . '">' . $committer_name . '</a>';
+	$HTML = '<a href="' . MAILTO . ':' . $new_addr . '" title="' . _('committed by this person') . '">' . htmlspecialchars($committer_name ?? '') . '</a>';
 
 	return $HTML;
 }

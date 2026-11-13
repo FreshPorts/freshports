@@ -22,10 +22,17 @@
 		# avoid path manipulation e.g. ../../
 		# this will come into play when we fetch / save the cached file
 		$message_id = filter_var($message_id, FILTER_SANITIZE_EMAIL);
-		define('CACHE_NAME', "sanity_test_failures.$message_id" );
+		$CacheName = "sanity_test_failures.$message_id";
 	} else {
-		define('CACHE_NAME', 'sanity_test_failures');
+		$CacheName = 'sanity_test_failures';
 	}
+
+	# The HTML shows the visitor's own watch-list flags for each port (see
+	# SetUserID() below), so each user gets their own cache entry; user 0 is
+	# anyone not logged in.  Without this, every visitor saw the flags of
+	# whoever happened to fill the cache.  The language is added to the key
+	# by the Cache class itself.
+	define('CACHE_NAME', $CacheName . '.user' . intval($User->id ?? 0));
 
 	$Title = _('Sanity Test Failures');
 	freshports_Start($FreshPortsSlogan . " - $Title",

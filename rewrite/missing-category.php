@@ -196,8 +196,16 @@ function freshports_CategoryDisplay($dbh, $category, $url_parts, $Branch = BRANC
 	define('BYPASSCACHE',  'bypasscache=1');  # do not read the cache for display
 	define('REFRESHCACHE', 'refreshcache=1'); # refresh the cache
 
-	$BypassCache  = $url_parts[BYPASSCACHE]        ?? false;
-	$RefreshCache = $url_partssubstr[REFRESHCACHE] ?? false;
+	# For developers only, as in missing-port.php: honoured only where
+	# FRESHPORTS_LOG_CACHE_ACTIVITY is defined.  Otherwise anyone could skip
+	# the cache and make the database rebuild a category page.  (These two
+	# lines looked up keys which never exist, so the options never worked.)
+	$BypassCache  = false;
+	$RefreshCache = false;
+	if (defined('FRESHPORTS_LOG_CACHE_ACTIVITY')) {
+		$BypassCache  = str_ends_with($_SERVER['REQUEST_URI'], BYPASSCACHE);
+		$RefreshCache = str_ends_with($_SERVER['REQUEST_URI'], REFRESHCACHE);
+	}
 
 	###
 	### Check the cache

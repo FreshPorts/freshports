@@ -45,8 +45,16 @@ function freshports_NonPortDescription($dbh, $element_record) {
 	define('BYPASSCACHE',  'bypasscache=1');  # do not read the cache for display
 	define('REFRESHCACHE', 'refreshcache=1'); # refresh the cache
 
-	$BypassCache  = substr($_SERVER["REQUEST_URI"], strlen($_SERVER["REQUEST_URI"]) - strlen(BYPASSCACHE))  == BYPASSCACHE;
-	$RefreshCache = substr($_SERVER["REQUEST_URI"], strlen($_SERVER["REQUEST_URI"]) - strlen(REFRESHCACHE)) == REFRESHCACHE;
+	# For developers only, as in missing-port.php: honoured only where
+	# FRESHPORTS_LOG_CACHE_ACTIVITY is defined.  Otherwise anyone could skip
+	# the cache and make the database rebuild the page, which is expensive
+	# for files with a long history such as /Mk/bsd.port.mk.
+	$BypassCache  = false;
+	$RefreshCache = false;
+	if (defined('FRESHPORTS_LOG_CACHE_ACTIVITY')) {
+		$BypassCache  = str_ends_with($_SERVER['REQUEST_URI'], BYPASSCACHE);
+		$RefreshCache = str_ends_with($_SERVER['REQUEST_URI'], REFRESHCACHE);
+	}
 
 	$PageNumber = 1;
 	if (IsSet($_SERVER['REQUEST_URI'])) {

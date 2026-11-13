@@ -349,15 +349,18 @@ function UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $dbh) {
 	$sql = " SELECT categories.name as category, 
 	                element.name as port, 
 	                ports.element_id
-			     FROM ports, categories, watch_list_element, element
+			     FROM ports, categories, watch_list, watch_list_element, element
 			    WHERE $1      = watch_list_element.watch_list_id
+				   AND watch_list.id    = watch_list_element.watch_list_id
 				   AND ports.element_id = watch_list_element.element_id
 				   AND ports.element_id = element.id
 				   AND categories.id    = ports.category_id
+				   -- only this user's staging area: the owner of the watch list
 				   AND NOT EXISTS (
 					SELECT element_id
 					  FROM watch_list_staging
 					 WHERE watch_list_staging.element_id = watch_list_element.element_id
+					   AND watch_list_staging.user_id    = watch_list.user_id
 				)
 			  ORDER BY port, category";
 

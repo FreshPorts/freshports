@@ -178,7 +178,7 @@ class port_display {
 								case 'upgrade':
 									if (!empty($part->minimum_version) && !empty($part->maximum_version)) {
 										$HTML .= '<dt>' . sprintf(_('If upgrading from &gt; %1$s and &lt; %2$s:'), htmlspecialchars($part->minimum_version), htmlspecialchars($part->maximum_version)) . '</dt>';
-										$HTML .= '<dd class="pkg-message">' . $part->message . '</dd>';
+										$HTML .= '<dd class="pkg-message">' . htmlspecialchars($part->message) . '</dd>';
 									} elseif (!empty($part->minimum_version)) {
 										$HTML .= '<dt>' . sprintf(_('If upgrading from &gt; %s:'), htmlspecialchars($part->minimum_version)) . '</dt>';
 										$HTML .= '<dd class="pkg-message">' . htmlspecialchars($part->message) . '</dd>';

@@ -15,6 +15,13 @@
                 exit;
 	}
 
+	# Every form on this page carries the user's token, and a POST without it
+	# changes nothing: see include/csrf.php.  Before, a form on another site
+	# could post here with the user's login cookie.
+	if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
+		freshports_CsrfRequire();
+	}
+
 	# The account's email address must end in @FreeBSD.org.  Unanchored, and
 	# with an unescaped dot, x@FreeBSD.org.example.com passed too.  The reports
 	# go to <login>@FreeBSD.org (see committer_opt_in.pm in ingress-modules),
@@ -153,6 +160,7 @@ if (!empty($visitor)) {
 ?>
 
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
+<?php echo freshports_CsrfField(); ?>
                <?php echo _('your freefall login:'); ?>
                <INPUT SIZE="35" NAME="email" VALUE="<?php echo htmlspecialchars($committer ?? '') ?>"><br><br>
 <?php

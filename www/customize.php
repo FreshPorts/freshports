@@ -18,12 +18,19 @@
                 exit;
 	}
 
+	# Every form on this page carries the user's token, and a POST without it
+	# changes nothing: see include/csrf.php.  Before, a form on another site
+	# could post here with the user's login cookie.
+	if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
+		freshports_CsrfRequire();
+	}
+
 	GLOBAL $User;
 
 	$errors          = 0;
 	$AccountModified = 0;
 
-if (IsSet($_REQUEST['submit'])) $submit = $_REQUEST['submit'];
+if (IsSet($_POST['submit'])) $submit = $_POST['submit'];
 $visitor = $_COOKIE[USER_COOKIE_NAME] ?? '';
 
 // if we don't know who they are, we'll make sure they login first

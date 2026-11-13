@@ -82,6 +82,7 @@ function freshports_WatchListDDLBForm($db, $UserID, $WatchListID, $Extra = '') {
 ';
 
 	$HTML .= freshports_WatchListDDLB($db, $UserID, $WatchListID);
+	$HTML .= freshports_CsrfField();
 
 $HTML .=  '
 '  . freshports_WatchListSelectGoButton() . $Extra .  '</form>

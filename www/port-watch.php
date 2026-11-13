@@ -21,6 +21,13 @@
                 exit;
 	}
 
+	# Every form on this page carries the user's token, and a POST without it
+	# changes nothing: see include/csrf.php.  Before, a form on another site
+	# could post here with the user's login cookie.
+	if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
+		freshports_CsrfRequire();
+	}
+
 	$Debug  = 0;
 	$submit = 0;
 	$HTML   = '';
@@ -200,6 +207,7 @@ if ($numrows) {
 	$HTML .= '<table class="borderless">' . "\n" . '<tr><td>' . "\n";
 
 	$HTML .= '<form action="' . $_SERVER["PHP_SELF"] . '" method="POST">' . "\n";
+	$HTML .= freshports_CsrfField() . "\n";
    // save the number of categories for when we submit
    $HTML .= '<input type="hidden" name="NumPorts" value="' . $NumPorts . '">' . "\n";
    $HTML .= '<input type="hidden" name="category" value="' . htmlentities($category) . '">' . "\n";

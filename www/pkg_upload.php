@@ -18,6 +18,13 @@
                 exit;
 	}
 
+	# Every form on this page carries the user's token, and a POST without it
+	# changes nothing: see include/csrf.php.  Before, a form on another site
+	# could post here with the user's login cookie.
+	if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
+		freshports_CsrfRequire();
+	}
+
 	$Title = _('Uploading pkg_info');
 	freshports_Start($Title,
 					$Title,
@@ -99,6 +106,7 @@ function DisplayUploadForm($db, $UserID) {
 
 
 	<FORM ACTION="<?php echo $_SERVER["PHP_SELF"]; ?>" METHOD="post" enctype="multipart/form-data">
+<?php echo freshports_CsrfField(); ?>
 		<table>
 			<tr><td><?php echo _('The file name containing the output from step 1:'); ?></td></tr>
 			<tr><td><INPUT TYPE="file"   NAME="pkg_info" SIZE="40" ></td></tr>
@@ -121,6 +129,7 @@ echo freshports_WatchListDDLB($db, $UserID);
 	<h2><?php echo _('Copy/Paste'); ?></h2>
 
 	<FORM ACTION="<?php echo $_SERVER["PHP_SELF"]; ?>" METHOD="post" enctype="multipart/form-data">
+<?php echo freshports_CsrfField(); ?>
 		<table>
 			<tr><td><?php echo _('Paste the output of <code>pkg info -qoa</code> here:'); ?></td></tr>
 			<tr><td><textarea name="copypaste" rows="20" cols="30"></textarea></td></tr>
@@ -155,6 +164,7 @@ function DisplayStagingArea($UserID, $WatchListID, $db) {
 
 	<tr><td colspan="4">
 	<form class="pkg-upload-controls" ACTION="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST">
+<?php echo freshports_CsrfField(); ?>
 			<INPUT TYPE="submit" VALUE="<?php echo htmlspecialchars(_('Update watch list')); ?>"  NAME="update_watch_list" SIZE="40">
  			<INPUT TYPE="submit" VALUE="<?php echo htmlspecialchars(_('Empty staging area')); ?>" NAME="clear">
 			<?php echo freshports_WatchListDDLB($db, $UserID, $WatchListID); ?>
@@ -203,6 +213,7 @@ function ChooseWatchLists($UserID, $db) {
 
 	<tr><td>
 			<FORM class="pkg-upload-controls" ACTION="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST">
+<?php echo freshports_CsrfField(); ?>
  			<INPUT TYPE="submit" VALUE="<?php echo htmlspecialchars(_('Empty staging area')); ?>" NAME="clear">
 			<?php echo freshports_WatchListDDLB($db, $UserID); ?>
 			<?php echo freshports_WatchListSelectGoButton() ?>
@@ -252,7 +263,7 @@ function ChooseWatchLists($UserID, $db) {
 		#
 
 if ($Debug) echo 'at line ' . __LINE__ . '<br>';
-		if (IsSet($_REQUEST["upload"]) && $StagingInUse) {
+		if (IsSet($_POST["upload"]) && $StagingInUse) {
 if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 			if (StagingAreaClear($User->id, $db)) {
 				$StagingInUse = FALSE;
@@ -269,12 +280,12 @@ if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 		if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 			if ($Debug) echo 'staging area is in use<br>';
 			$DisplayStagingArea = TRUE;
-			if (IsSet($_REQUEST["update_watch_list"])) {
+			if (IsSet($_POST["update_watch_list"])) {
 #phpinfo();
-#				$ports = $_REQUEST["ports"];
+#				$ports = $_POST["ports"];
 				# save these things to the watch list
 				# and clear out part of the staging area.
-				$WatchListID = intval($_REQUEST['wlid']);
+				$WatchListID = intval($_POST['wlid']);
 				if (!IsSet($WatchListID) || $WatchListID === '') {
 					syslog(LOG_NOTICE, "No watch list ID was supplied.  I cannot continue.  " .
 					    __FILE__ . '::' . __LINE__ . " User id = " . $User->id);
@@ -289,7 +300,7 @@ if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 				}
 			}
 if ($Debug) echo '<br>' . __LINE__ . '<br>';
-			if (IsSet($_REQUEST["clear"])) {
+			if (IsSet($_POST["clear"])) {
 				if ($Debug) echo " you pressed clear!<br>";
 				if (StagingAreaClear($User->id, $db)) {
 					$StagingInUse		= FALSE;
@@ -298,12 +309,12 @@ if ($Debug) echo '<br>' . __LINE__ . '<br>';
 				}
 			}
 
-			if (IsSet($_REQUEST['wlid'])) {
+			if (IsSet($_POST['wlid'])) {
 if ($Debug) echo '<br>' . __LINE__ . '<br>';
 				if ($Debug) echo 'you selected a list<br>';
 				# they clicked on the GO button and we have to apply the
 				# watch staging area against the watch list.
-				$WatchListID = pg_escape_string($db, $_REQUEST['wlid']);
+				$WatchListID = pg_escape_string($db, $_POST['wlid']);
 				if ($Debug) echo "setting SetLastWatchListChosen => \$wlid='$WatchListID'";
 				$User->SetLastWatchListChosen($WatchListID);
 			} else {
@@ -341,17 +352,17 @@ if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 				if (HandleFileUpload('pkg_info', $Destination)) {
 if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 					require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/pkg_utils.inc');
-					if (IsSet($_REQUEST["upload"])) {
+					if (IsSet($_POST["upload"])) {
 if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 						StagingAreaClear($User->id, $db);
 						$PortArray = ConvertFileContentsToArray($Destination);
 						if (ProcessPackages($User->id, $PortArray, $db)) {
 if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 							# we are not using the staging list
-							$WatchListID = pg_escape_string($db, $_REQUEST['wlid']);
+							$WatchListID = pg_escape_string($db, $_POST['wlid']);
 							if ($Debug) echo ' you clicked on update_watch_list';
 
-							if ($_REQUEST['replaceappend'] == 'replace') {
+							if ($_POST['replaceappend'] == 'replace') {
 								$Overwrite = TRUE;
 							} else {
 								$Overwrite = FALSE;
@@ -395,10 +406,10 @@ if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 				unlink($Destination);
 			} else {
 			  if ($Debug) echo 'at line ' . __LINE__ . '<br>';
-			  if (IsSet($_REQUEST['staging_copypaste']) && trim($_REQUEST['copypaste']) != '') {
+			  if (IsSet($_POST['staging_copypaste']) && trim($_POST['copypaste']) != '') {
 if ($Debug) echo 'at line ' . __LINE__ . '<br>';
-if ($Debug) echo '<pre>' . $_REQUEST['copypaste'] . '</pre>';
-                $PortArray = ConvertStringToArray($_REQUEST['copypaste']);
+if ($Debug) echo '<pre>' . $_POST['copypaste'] . '</pre>';
+                $PortArray = ConvertStringToArray($_POST['copypaste']);
 				if (ProcessPackages($User->id, $PortArray, $db)) {
 					$DisplayStagingArea = TRUE;
 					$WatchListID = $User->last_watch_list_chosen;
@@ -410,12 +421,12 @@ if ($Debug) echo '<pre>' . $_REQUEST['copypaste'] . '</pre>';
 					}
 				}
 			  } else {
-			    if (IsSet($_REQUEST['upload_copypaste']) && trim($_REQUEST['copypaste']) != '') {
-                  $PortArray = ConvertStringToArray($_REQUEST['copypaste']);
+			    if (IsSet($_POST['upload_copypaste']) && trim($_POST['copypaste']) != '') {
+                  $PortArray = ConvertStringToArray($_POST['copypaste']);
                   if (ProcessPackages($User->id, $PortArray, $db)) {
 #                  if ($Debug) phpinfo();
-					$WatchListID = pg_escape_string($db, $_REQUEST['wlid']);
-					if ($_REQUEST['replaceappend'] == 'replace') {
+					$WatchListID = pg_escape_string($db, $_POST['wlid']);
+					if ($_POST['replaceappend'] == 'replace') {
 					  $Overwrite = TRUE;
 					} else {
 						$Overwrite = FALSE;

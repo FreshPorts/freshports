@@ -17,6 +17,13 @@
                 exit;
 	}
 
+	# Every form on this page carries the user's token, and a POST without it
+	# changes nothing: see include/csrf.php.  Before, a form on another site
+	# could post here with the user's login cookie.
+	if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
+		freshports_CsrfRequire();
+	}
+
 $Debug = 0;
 define('MAX_WLID_SIZE', 50);
 
@@ -318,6 +325,7 @@ $ErrorMessage .= CheckForNoDefaultAndAddToDefault($db, $User);
 ?>
 
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
+<?php echo freshports_CsrfField(); ?>
 <table class="fullwidth bordered">
 <tr><td class="element-details"><?php echo _('Watch Lists'); ?></td><td><span class="element-details"><?php echo _('Actions'); ?></span> <?php echo _('(scroll down for instructions)'); ?></td></tr>
   <tr>
@@ -369,6 +377,7 @@ $ErrorMessage .= CheckForNoDefaultAndAddToDefault($db, $User);
 <td>
 <?php echo _('When clicking on Add/Remove for a port,<br> the action should affect'); ?>
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
+<?php echo freshports_CsrfField(); ?>
 <INPUT type=radio name=addremove value=default<?php if ($User->watch_list_add_remove == 'default') echo ' checked'; ?>>&nbsp;<?php echo _('the default watch list[s]'); ?><br>
 <INPUT type=radio name=addremove value=ask<?php     if ($User->watch_list_add_remove == 'ask')     echo ' checked'; ?>>&nbsp;<?php echo _('Ask for watch list name[s] each time'); ?><br>
 <INPUT type=submit size=29 value="<?php echo htmlspecialchars($ButtonLabel['set_options']); ?>"  name=set_options>

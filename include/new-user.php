@@ -16,6 +16,7 @@
 ?>
 
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
+<?php echo freshports_CsrfField(); ?>
 <table class="borderless">
           <tr>
             <td>

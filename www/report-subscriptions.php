@@ -23,6 +23,13 @@
                 exit;
 	}
 
+	# Every form on this page carries the user's token, and a POST without it
+	# changes nothing: see include/csrf.php.  Before, a form on another site
+	# could post here with the user's login cookie.
+	if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
+		freshports_CsrfRequire();
+	}
+
 	$ArticleTitle = _('Report subscriptions');
 
 	freshports_Start(	$ArticleTitle,
@@ -168,6 +175,7 @@
 </p>
 
 <FORM ACTION="<?php echo $_SERVER["PHP_SELF"] ;?>" METHOD="POST" NAME=f>
+<?php echo freshports_CsrfField(); ?>
 	<table class="report-list bordered">
 	<tr><td class="element-details"><?php echo _('Report Name'); ?></td><td class="element-details"><?php echo _('Frequency'); ?></td><td class="element-details"><?php echo _('Description'); ?></td></tr>
 	<?php

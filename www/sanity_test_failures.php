@@ -66,32 +66,11 @@ function freshports_SummaryForDay($MinusN) {
 
 echo freshports_MainTable();
 
-$num          = $MaxNumberOfPorts;
-$days         = $NumberOfDays;
+# The number of commits and days shown are fixed; see include/getvalues.php.
+# num, days and dailysummary URL parameters were once meant to change them, but
+# were never read, and honouring them now would put a shortened list into the
+# cache for the next visitor.
 $dailysummary = 7;
-
-if (In_Array('num',          $_REQUEST)) $num		= pg_escape_string($db, intval($_REQUEST["num"]));
-if (In_Array('dailysummary', $_REQUEST)) $dailysummary	= pg_escape_string($db, intval($_REQUEST["dailysummary"]));
-if (In_Array('days',         $_REQUEST)) $days		= pg_escape_string($db, intval($_REQUEST["days"]));
-
-
-if (Is_Numeric($num)) {
-	$MaxNumberOfPorts = min($MaxNumberOfPorts, max(10, $num));
-} else {
-	$num = MaxNumberOfPorts;
-}
-
-if (Is_Numeric($days)) {
-	$NumberOfDays = min($NumberOfDays, max(0, $days));
-} else {
-	$days = $NumberOfDays;
-}
-
-if (Is_Numeric($dailysummary)) {
-	$dailysummary = min($NumberOfDays, max(0, $dailysummary));
-} else {
-	unset($dailysummary);
-}
 
 
 if ($db) {

@@ -25,6 +25,23 @@
   # Send JSON format to a log agent or Syslog endpoint handled by VictoriaLogs
   access_log    /var/log/nginx/access_json.log victorialogs_json;
 
+  # /.well-known/ (security.txt, keys, ACME challenges) stays public.  ^~
+  # stops the regex locations below, including the deny, from applying.
+  location ^~ /.well-known/ {
+    try_files $uri $uri/ =404;
+  }
+
+  # Only pages and assets are for visitors.  Anything else in the document
+  # root would be sent as a plain file: dotfiles such as .gitignore, macOS
+  # ._ files, editor backups ending in ~, and PHP include files (*.inc) as
+  # source.  Include files belong in ../include, outside the document
+  # root; this catches any which end up here.  This must come before
+  # "location ~ \.php$", or a ._name.php file is run as PHP.  404, not 403,
+  # so a probe learns nothing about what exists.
+  location ~ (/\.|\.inc$|~$) {
+    return 404;
+  }
+
   location ~ ^/(login|forgotten-password|password-reset-via-token)\.php$  {
     limit_req zone=auth_limit burst=5;
     include /usr/local/www/freshports/configuration/php-processing.conf;

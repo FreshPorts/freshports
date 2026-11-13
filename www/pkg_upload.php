@@ -48,7 +48,7 @@ function StagingAlreadyInUse($UserID, $dbh) {
 	return $Result;
 }
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/pkg_process.inc');
+	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/pkg_process.inc');
 
 function DisplayUploadForm($db, $UserID) {
 	?>
@@ -339,7 +339,7 @@ if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 #				$Destination = $_FILES["pkg_info"]['tmp_name'];
 				if (HandleFileUpload('pkg_info', $Destination)) {
 if ($Debug) echo 'at line ' . __LINE__ . '<br>';
-					require_once($_SERVER['DOCUMENT_ROOT'] . '/pkg_utils.inc');
+					require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/pkg_utils.inc');
 					if (IsSet($_REQUEST["upload"])) {
 if ($Debug) echo 'at line ' . __LINE__ . '<br>';
 						StagingAreaClear($User->id, $db);

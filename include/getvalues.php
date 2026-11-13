@@ -103,3 +103,7 @@ if (!empty($visitor)) {
 } else {
 	if ($Debug) echo "we have no \$visitor\n<br>";
 }
+
+# after a watch-list change, drop this user's cached pages, which show their watch-list icons
+require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/cache-user.php');
+freshports_CacheRemoveUserOnWatchListPage($User->id);

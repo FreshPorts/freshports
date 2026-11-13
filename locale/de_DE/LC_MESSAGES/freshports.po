@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreshPorts\n"
 "Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
-"POT-Creation-Date: 2026-11-10 20:54+0000\n"
+"POT-Creation-Date: 2026-11-13 14:07+0000\n"
 "PO-Revision-Date: 2026-10-07 15:13+0200\n"
 "Last-Translator: Stefan Esser <se@freebsd.org>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
@@ -19,13 +19,13 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.9\n"
 
-#: classes/display_commit.php:126 classes/port-display.php:1215
-#: include/freshports.php:1995
+#: classes/display_commit.php:209 classes/port-display.php:1217
+#: include/freshports.php:1957
 msgid "Author:"
 msgstr "Autor:"
 
-#: classes/display_commit.php:338 classes/files-display.php:40
-#: www/commit.php:267
+#: classes/display_commit.php:435 classes/files-display.php:40
+#: www/commit.php:275
 msgid "Sorry, nothing found in the database...."
 msgstr "Leider wurde in der Datenbank nichts gefunden …"
 
@@ -36,7 +36,7 @@ msgid_plural "%d files found"
 msgstr[0] "%d Datei gefunden"
 msgstr[1] "%d Dateien gefunden"
 
-#: classes/files-display.php:56 www/categories.php:147
+#: classes/files-display.php:56 www/categories.php:141
 msgid "Action"
 msgstr "Aktion"
 
@@ -72,70 +72,70 @@ msgstr "Commit-Verlauf"
 msgid "select a page size"
 msgstr "wähle eine Seitengröße"
 
-#: classes/port-display.php:163
+#: classes/port-display.php:166
 #, php-format
 msgid "For %s"
 msgstr "Für %s"
 
-#: classes/port-display.php:163
+#: classes/port-display.php:166
 msgid "or"
 msgstr "oder"
 
-#: classes/port-display.php:181
+#: classes/port-display.php:184
 #, php-format
 msgid "If upgrading from &gt; %1$s and &lt; %2$s:"
 msgstr "Bei Aktualisierung von &gt; %1$s und &lt; %2$s:"
 
-#: classes/port-display.php:184
+#: classes/port-display.php:187
 #, php-format
 msgid "If upgrading from &gt; %s:"
 msgstr "Bei Aktualisierung von &gt; %s:"
 
-#: classes/port-display.php:187
+#: classes/port-display.php:190
 #, php-format
 msgid "If upgrading from &lt; %s:"
 msgstr "Bei Aktualisierung von &lt; %s:"
 
-#: classes/port-display.php:190
+#: classes/port-display.php:193
 msgid "If upgrading"
 msgstr "Bei Aktualisierung"
 
-#: classes/port-display.php:198
+#: classes/port-display.php:201
 msgid "If removing:"
 msgstr "Bei Löschung:"
 
-#: classes/port-display.php:347
+#: classes/port-display.php:350
 msgid "SVNWeb - no subversion history for this port"
 msgstr "SVNWeb - keine SVN-Historie für diesen Port"
 
-#: classes/port-display.php:898
+#: classes/port-display.php:900
 msgid "last time FreshPorts imported a new release of this repo"
 msgstr ""
 "letzter Zeitpunkt zu dem FreshPort eine neue Version dieses Repositories "
 "importiert hat"
 
-#: classes/port-display.php:899
+#: classes/port-display.php:901
 msgid "last checked by FreshPorts"
 msgstr "letzte Prüfung durch FreshPorts"
 
-#: classes/port-display.php:902
+#: classes/port-display.php:904
 msgid "repo not found - no repo build date"
 msgstr "Repository nicht gefunden - keine Erzeugungszeit bekannt"
 
-#: classes/port-display.php:904 www/backend/status.php:46
+#: classes/port-display.php:906 www/backend/status.php:46
 #: www/backend/status.php:70
 msgid "repo build date"
 msgstr "Erzeugungszeitpunkt des Repository"
 
-#: classes/port-display.php:908 www/report-subscriptions.php:224
+#: classes/port-display.php:910 www/report-subscriptions.php:224
 msgid "nil"
 msgstr "nichts"
 
-#: classes/port-display.php:914
+#: classes/port-display.php:916
 msgid "never"
 msgstr "nie"
 
-#: classes/port-display.php:1003
+#: classes/port-display.php:1005
 msgid ""
 "The package version for this port includes the version of FreeBSD it is "
 "built for, so packages for other releases are named differently."
@@ -143,20 +143,20 @@ msgstr ""
 "Die Paketversion für diesen Port enthält die FreeBSD-Version, für die er "
 "erstellt wurde; daher werden Pakete für andere Releases anders benannt."
 
-#: classes/port-display.php:1004
+#: classes/port-display.php:1006
 #, php-format
 msgid "(package %s)"
 msgstr "(Paket %s)"
 
-#: classes/port-display.php:1021
+#: classes/port-display.php:1023
 msgid "The category for this port"
 msgstr "Die Kategorie dieses Ports"
 
-#: classes/port-display.php:1068
+#: classes/port-display.php:1070
 msgid "Package not present on quarterly."
 msgstr "Paket nicht im Quartals-Repository enthalten."
 
-#: classes/port-display.php:1070
+#: classes/port-display.php:1072
 msgid ""
 "This port was created during this quarter. It will be in the next quarterly "
 "branch but not the current one."
@@ -164,7 +164,7 @@ msgstr ""
 "Dieser Port wurde in diesem Quartal neu erstellt. Er wird im nächsten "
 "Quartals-Branch enthalten sein, nicht jedoch im aktuellen."
 
-#: classes/port-display.php:1072
+#: classes/port-display.php:1074
 msgid ""
 "This is expected early in the quarter (because the new package repo has not "
 "been built yet.). Otherwise, this missing version is most likely a "
@@ -174,45 +174,45 @@ msgstr ""
 "nicht erstellt wurde). Andernfalls handelt es sich bei dieser fehlenden "
 "Version wahrscheinlich um einen Fehler in FreshPorts."
 
-#: classes/port-display.php:1076
+#: classes/port-display.php:1078
 msgid "Version of this port present on the latest quarterly branch."
 msgstr ""
 "Version dieses Ports, die im aktuellen Quartals-Repository enthalten ist."
 
-#: classes/port-display.php:1077
+#: classes/port-display.php:1079
 msgid "NOTE: Slave port - quarterly revision is most likely wrong."
 msgstr ""
 "HINWEIS: Slave-Port – die Revision im Quartals-Repository ist wahrscheinlich "
 "falsch."
 
-#: classes/port-display.php:1101
+#: classes/port-display.php:1103
 #, php-format
 msgid "A newer version was found upstream by portscout, first on %s."
 msgstr ""
 
-#: classes/port-display.php:1104
+#: classes/port-display.php:1106
 msgid "A newer version was found upstream by portscout."
 msgstr ""
 
-#: classes/port-display.php:1107
+#: classes/port-display.php:1109
 #, php-format
 msgid "upstream: %s"
 msgstr ""
 
-#: classes/port-display.php:1139
+#: classes/port-display.php:1141
 #, php-format
 msgid "This port expired on: %s"
 msgstr "Dieser Port ist am %s abgelaufen"
 
-#: classes/port-display.php:1167
+#: classes/port-display.php:1169
 msgid "There is no maintainer for this port."
 msgstr "Für diesen Port gibt es keinen Betreuer."
 
-#: classes/port-display.php:1169
+#: classes/port-display.php:1171
 msgid "email the FreeBSD Ports mailing list"
 msgstr "sende E-Mail an die FreeBSD Ports-Mail-Liste"
 
-#: classes/port-display.php:1171
+#: classes/port-display.php:1173
 #, php-format
 msgid ""
 "Any concerns regarding this port should be directed to the FreeBSD Ports "
@@ -221,128 +221,128 @@ msgstr ""
 "Anfragen zu diesem Port richten Sie bitte über %s an die FreeBSD Ports-Mail-"
 "Liste"
 
-#: classes/port-display.php:1175
+#: classes/port-display.php:1177
 msgid "Maintainer:"
 msgstr "Betreuer:"
 
-#: classes/port-display.php:1176
+#: classes/port-display.php:1178
 msgid "email the maintainer"
 msgstr "sende E-Mail an den Betreuer"
 
-#: classes/port-display.php:1189
+#: classes/port-display.php:1191
 msgid "last change committed by"
 msgstr "letzte Änderung vorgenommen von"
 
-#: classes/port-display.php:1220
+#: classes/port-display.php:1222
 #, php-format
 msgid "on %s"
 msgstr "am %s"
 
-#: classes/port-display.php:1238
+#: classes/port-display.php:1240
 msgid "no changes recorded in FreshPorts"
 msgstr "keine Änderung in FreshPorts verzeichnet"
 
-#: classes/port-display.php:1246
+#: classes/port-display.php:1248
 msgid "Port Added:"
 msgstr "Port hinzugefügt:"
 
-#: classes/port-display.php:1250 classes/port-display.php:1262
+#: classes/port-display.php:1252 classes/port-display.php:1264
 msgid "unknown"
 msgstr "unbekannt"
 
-#: classes/port-display.php:1258
+#: classes/port-display.php:1260
 msgid "Last Update:"
 msgstr "Letzte Aktualisierung:"
 
-#: classes/port-display.php:1279
+#: classes/port-display.php:1281
 msgid "Commit Hash:"
 msgstr "Commit-Hash:"
 
-#: classes/port-display.php:1282
+#: classes/port-display.php:1284
 msgid "SVN Revision:"
 msgstr "SVN-Revision:"
 
-#: classes/port-display.php:1286
+#: classes/port-display.php:1288
 msgid "UNKNOWN"
 msgstr "UNBEKANNT"
 
-#: classes/port-display.php:1312
+#: classes/port-display.php:1314
 msgid "Also Listed In:"
 msgstr "Auch enthalten in:"
 
-#: classes/port-display.php:1330
+#: classes/port-display.php:1332
 msgid "License:"
 msgstr "Lizenz:"
 
-#: classes/port-display.php:1334
+#: classes/port-display.php:1336
 msgid "not specified in port"
 msgstr "im Port nicht angegeben"
 
-#: classes/port-display.php:1352 classes/port-display.php:1366
+#: classes/port-display.php:1349 classes/port-display.php:1363
 msgid "Homepage for this port"
 msgstr "Homepage für diesen Port"
 
-#: classes/port-display.php:1356
+#: classes/port-display.php:1353
 msgid "Description:"
 msgstr "Beschreibung:"
 
-#: classes/port-display.php:1393
+#: classes/port-display.php:1390
 msgid "Package"
 msgstr "Paket"
 
-#: classes/port-display.php:1420
+#: classes/port-display.php:1417
 msgid "Service Scripts"
 msgstr "Service-Skripte"
 
-#: classes/port-display.php:1421
+#: classes/port-display.php:1418
 msgid "no SUBR information found for this port"
 msgstr "keine Informationen zu Service-Skripten für diesen Port gefunden"
 
-#: classes/port-display.php:1431
+#: classes/port-display.php:1428
 msgid "Dependency lines"
 msgstr "Abhängigkeits-Zeilen"
 
-#: classes/port-display.php:1435 classes/port-display.php:1446
+#: classes/port-display.php:1432 classes/port-display.php:1443
 #, php-format
 msgid "For %s depends:"
 msgstr "Für %s-Abhängigkeiten:"
 
-#: classes/port-display.php:1465
+#: classes/port-display.php:1462
 msgid "Conflicts:"
 msgstr "Konflikte:"
 
-#: classes/port-display.php:1490
+#: classes/port-display.php:1487
 msgid "Conflicts Matches:"
 msgstr "Erkannte Konflikte:"
 
-#: classes/port-display.php:1495
+#: classes/port-display.php:1492
 #, php-format
 msgid "conflicts with %s"
 msgstr "kollidiert mit %s"
 
-#: classes/port-display.php:1499
+#: classes/port-display.php:1496
 msgid ""
 "There are no Conflicts Matches for this port.  This is usually an error."
 msgstr ""
 "Für diesen Port wurden keine übereinstimmenden Konflikte gefunden. Dies ist "
 "in der Regel ein Fehler."
 
-#: classes/port-display.php:1513
+#: classes/port-display.php:1510
 msgid "No installation instructions:"
 msgstr "Keine Installation-Anweisung:"
 
-#: classes/port-display.php:1513
+#: classes/port-display.php:1510
 msgid "This port has been deleted."
 msgstr "Der Port wurde gelöscht."
 
-#: classes/port-display.php:1515
+#: classes/port-display.php:1512
 msgid ""
 "To install <a href=\"/faq.php#port\" title=\"what is a port?\">the port</a>:"
 msgstr ""
 "Um den <a href=\"/faq.php#port\" title=\"what is a port?\">Port</a> zu "
 "installieren:"
 
-#: classes/port-display.php:1517
+#: classes/port-display.php:1514
 msgid ""
 "No <a href=\"/faq.php#package\" title=\"what is a package?\">package</a> is "
 "available:"
@@ -350,7 +350,7 @@ msgstr ""
 "Kein <a href=\"/faq.php#package\" title=\"what is a package?\">Paket</a> "
 "verfügbar:"
 
-#: classes/port-display.php:1520
+#: classes/port-display.php:1517
 msgid ""
 "We doubt a <b><a href=\"/faq.php#package\" title=\"what is a package?"
 "\">package</a></b> is available for this port because we see it marked as:"
@@ -359,33 +359,33 @@ msgstr ""
 "title=\"what is a package?\">Paket</a></b> verfügbar ist, da es wie folgt "
 "gekennzeichnet ist:"
 
-#: classes/port-display.php:1523 include/freshports.php:612
+#: classes/port-display.php:1520 include/freshports.php:611
 msgid "Forbidden"
 msgstr "Verboten"
 
-#: classes/port-display.php:1524 include/freshports.php:623
+#: classes/port-display.php:1521 include/freshports.php:622
 msgid "Broken"
 msgstr "Defekt"
 
-#: classes/port-display.php:1525 include/freshports.php:700
+#: classes/port-display.php:1522 include/freshports.php:699
 msgid "Ignore"
 msgstr "Ignoriert"
 
-#: classes/port-display.php:1526 include/freshports.php:667
+#: classes/port-display.php:1523 include/freshports.php:666
 msgid "Restricted"
 msgstr "Beschränkt"
 
-#: classes/port-display.php:1527
+#: classes/port-display.php:1524
 msgid "Package not available"
 msgstr "Paket nicht verfügbar"
 
-#: classes/port-display.php:1530
+#: classes/port-display.php:1527
 msgid "Packages are normally not provided for ports that are marked as above."
 msgstr ""
 "Es werden in der Regel keine Pakete für Ports bereit gestellt, die so "
 "markiert sind."
 
-#: classes/port-display.php:1532
+#: classes/port-display.php:1529
 msgid ""
 "To add the <a href=\"/faq.php#package\" title=\"what is a package?"
 "\">package</a>, run one of these commands:"
@@ -393,7 +393,7 @@ msgstr ""
 "Um das <a href=\"/faq.php#package\" title=\"what is a package?\">Paket</a> "
 "hinzuzufügen, führen Sie einen der folgenden Befehle aus:"
 
-#: classes/port-display.php:1535
+#: classes/port-display.php:1532
 msgid ""
 "NOTE: If this package has multiple flavors (see below), then use one of them "
 "instead of the name specified above."
@@ -401,7 +401,7 @@ msgstr ""
 "HINWEIS: Falls dieses Paket in mehreren „Flavors“ verfügbar ist (siehe "
 "unten), dann verwenden Sie eins davon anstelle des oben angegebenen Namens."
 
-#: classes/port-display.php:1538
+#: classes/port-display.php:1535
 #, php-format
 msgid ""
 "NOTE: This is a Python port. Instead of %s listed in the above command, you "
@@ -411,70 +411,70 @@ msgstr ""
 "aufgeführt ist, können Sie einen der Namen aus dem Abschnitt <a "
 "href=\"#packages\">Pakete</a> auswählen."
 
-#: classes/port-display.php:1548
+#: classes/port-display.php:1545
 #, php-format
 msgid "there is no package for this port: %s"
 msgstr "es gibt kein Paket für diesen Port: %s"
 
-#: classes/port-display.php:1581 classes/port-display.php:1926
+#: classes/port-display.php:1578 classes/port-display.php:1923
 #: classes/port-display.php:2160 classes/port-display.php:2194
-#: include/freshports.php:1694
+#: include/freshports.php:1656
 #, php-format
 msgid "Expand this list (%d items)"
 msgstr "Erweitere diese Liste (%d Elemente)"
 
-#: classes/port-display.php:1585 classes/port-display.php:1588
-#: classes/port-display.php:1928 classes/port-display.php:1936
+#: classes/port-display.php:1582 classes/port-display.php:1585
+#: classes/port-display.php:1925 classes/port-display.php:1933
 #: classes/port-display.php:2044 classes/port-display.php:2059
 #: classes/port-display.php:2167 classes/port-display.php:2197
-#: classes/port-display.php:2207 include/freshports.php:1704
+#: classes/port-display.php:2207 include/freshports.php:1666
 msgid "Collapse this list."
 msgstr "Klappe diese Liste ein."
 
-#: classes/port-display.php:1592
+#: classes/port-display.php:1589
 msgid "There is no distinfo for this port."
 msgstr "Es gibt keine „distinfo“-Datei für diesen Port."
 
-#: classes/port-display.php:1645 classes/port-display.php:1721
+#: classes/port-display.php:1642 classes/port-display.php:1718
 msgid "(timestamps in pop-ups are UTC):"
 msgstr "(Zeitstempel in Pop-Ups sind in UTC):"
 
-#: classes/port-display.php:1645 classes/port-display.php:1721
+#: classes/port-display.php:1642 classes/port-display.php:1718
 msgid "Packages"
 msgstr "Pakete"
 
-#: classes/port-display.php:1767
+#: classes/port-display.php:1764
 msgid "No package information for this port in our database"
 msgstr "Keine Paket-Informationen für diesen Port in unserer Datenbank"
 
-#: classes/port-display.php:1768
+#: classes/port-display.php:1765
 msgid "Sometimes this happens. Not all ports have packages."
 msgstr "Das passiert manchmal. Nicht für alle Ports gibt es Pakete."
 
-#: classes/port-display.php:1770
+#: classes/port-display.php:1767
 msgid "This is doubly so for new ports, like this one."
 msgstr "Das gilt umso mehr für neue Ports wie diesen hier."
 
-#: classes/port-display.php:1772
+#: classes/port-display.php:1769
 #, php-format
 msgid "Perhaps there is a build error. Check the fallout link: %s"
 msgstr ""
 "Möglicherweise liegt ein Fehler beim Erzeugen vor. Überprüfen Sie den "
 "Fallout-Link: %s"
 
-#: classes/port-display.php:1791
+#: classes/port-display.php:1788
 msgid "Master port"
 msgstr "Master-Port"
 
-#: classes/port-display.php:1802
+#: classes/port-display.php:1799
 msgid "Slave ports:"
 msgstr "Slave-Ports:"
 
-#: classes/port-display.php:1814
+#: classes/port-display.php:1811
 msgid "Dependencies"
 msgstr "Abhängigkeiten"
 
-#: classes/port-display.php:1815
+#: classes/port-display.php:1812
 msgid ""
 "NOTE: FreshPorts displays only information on required and default "
 "dependencies.  Optional dependencies are not covered."
@@ -482,67 +482,67 @@ msgstr ""
 "HINWEIS: FreshPorts zeigt nur Informationen zu erforderlichen und Standard-"
 "Abhängigkeiten an. Optionale Abhängigkeiten werden nicht behandelt."
 
-#: classes/port-display.php:1826
+#: classes/port-display.php:1823
 msgid "Build dependencies:"
 msgstr "Bau-Abhängigkeiten:"
 
-#: classes/port-display.php:1832
+#: classes/port-display.php:1829
 msgid "Test dependencies:"
 msgstr "Test-Abhängigkeiten:"
 
-#: classes/port-display.php:1838
+#: classes/port-display.php:1835
 msgid "Runtime dependencies:"
 msgstr "Laufzeit-Abhängigkeiten:"
 
-#: classes/port-display.php:1844
+#: classes/port-display.php:1841
 msgid "Library dependencies:"
 msgstr "Bibliotheks-Abhängigkeiten:"
 
-#: classes/port-display.php:1850
+#: classes/port-display.php:1847
 msgid "Fetch dependencies:"
 msgstr "Lade Abhängigkeiten herunter:"
 
-#: classes/port-display.php:1856
+#: classes/port-display.php:1853
 msgid "Patch dependencies:"
 msgstr "Patch-Abhängigkeiten:"
 
-#: classes/port-display.php:1862
+#: classes/port-display.php:1859
 msgid "Extract dependencies:"
 msgstr "Extrahierungs-Abhängigkeiten:"
 
-#: classes/port-display.php:1868
+#: classes/port-display.php:1865
 msgid "Build and run dependencies:"
 msgstr "Bau- und Laufzeit-Abhängigkeiten:"
 
-#: classes/port-display.php:1874
+#: classes/port-display.php:1871
 msgid "This port has no dependencies."
 msgstr "Dieser Port hat keine Abhängigkeiten."
 
-#: classes/port-display.php:1885
+#: classes/port-display.php:1882
 msgid "Configuration Options"
 msgstr "Konfigurations-Optionen"
 
-#: classes/port-display.php:1889
+#: classes/port-display.php:1886
 msgid "No options to configure"
 msgstr "Keine Konfigurations-Optionen"
 
-#: classes/port-display.php:1893
+#: classes/port-display.php:1890
 msgid "Options name"
 msgstr "Options-Name"
 
-#: classes/port-display.php:1897
+#: classes/port-display.php:1894
 msgid "N/A"
 msgstr "N/A"
 
-#: classes/port-display.php:1914
+#: classes/port-display.php:1911
 msgid "FreshPorts was unable to extract/find any pkg message"
 msgstr "FreshPorts konnte keine Paket-Nachricht finden oder extrahieren"
 
-#: classes/port-display.php:1919
+#: classes/port-display.php:1916
 msgid "Master Sites:"
 msgstr "Master-Sites:"
 
-#: classes/port-display.php:1939
+#: classes/port-display.php:1936
 msgid "There is no master site for this port."
 msgstr "Es gibt keine Master-Site für diesen Port."
 
@@ -770,188 +770,188 @@ msgstr ""
 msgid "Change"
 msgstr "Ändern"
 
-#: include/freshports.php:38
+#: include/freshports.php:37
 msgid "Click to add this to your default watch list[s]"
 msgstr ""
 "Klicken Sie hier, um dies zu Ihren Standard-Beobachtungslisten hinzuzufügen"
 
-#: include/freshports.php:59
+#: include/freshports.php:58
 msgid "search for ports that depend on this port"
 msgstr "suche nach Ports, die von diesem Port abhängen"
 
-#: include/freshports.php:119 include/freshports.php:145
-#: include/freshports.php:171
+#: include/freshports.php:118 include/freshports.php:144
+#: include/freshports.php:170
 #, php-format
 msgid "commit hash: %s"
 msgstr "Commit-Hash: %s"
 
-#: include/freshports.php:301
+#: include/freshports.php:300
 #, php-format
 msgid "Revision:%s"
 msgstr "Revision: %s"
 
-#: include/freshports.php:310
+#: include/freshports.php:309
 msgid "search for ports maintained by this maintainer"
 msgstr "suche nach Ports, die von diesem Betreuer gepflegt werden"
 
-#: include/freshports.php:315
+#: include/freshports.php:314
 msgid "search for other commits by this committer"
 msgstr "suche nach anderen Commits dieses Committers"
 
-#: include/freshports.php:536
+#: include/freshports.php:535
 msgid "Homepage"
 msgstr "Homepage"
 
-#: include/freshports.php:541 www/sanity_test_failures.php:101
+#: include/freshports.php:540 www/sanity_test_failures.php:108
 msgid "Sanity Test Failure"
 msgstr "Sanity-Test-Fehler"
 
-#: include/freshports.php:546
+#: include/freshports.php:545
 msgid "Ascending Order"
 msgstr "Aufsteigende Reihenfolge"
 
-#: include/freshports.php:551
+#: include/freshports.php:550
 msgid "Descending Order"
 msgstr "Absteigende Reihenfolge"
 
-#: include/freshports.php:556 www/package.php:53 www/search.php:1141
-#: www/search.php:1289
+#: include/freshports.php:555 www/package.php:53 www/search.php:1143
+#: www/search.php:1291
 msgid "Search"
 msgstr "Suche"
 
-#: include/freshports.php:561
+#: include/freshports.php:560
 msgid "Find issues related to this port"
 msgstr "Finde Probleme, die mit diesem Port zusammenhängen"
 
-#: include/freshports.php:566
+#: include/freshports.php:565
 msgid "Report an issue related to this port"
 msgstr "Melde einen Fehler im Zusammenhang mit diesem Port"
 
-#: include/freshports.php:572
+#: include/freshports.php:571
 msgid "on this many watch lists"
 msgstr "auf so vielen Beobachtungslisten"
 
-#: include/freshports.php:580
+#: include/freshports.php:579
 msgid "files touched by this commit"
 msgstr "Dateien, die von diesem Commit berührt wurden"
 
-#: include/freshports.php:584
+#: include/freshports.php:583
 msgid "Refresh"
 msgstr "Aktualisieren"
 
-#: include/freshports.php:584
+#: include/freshports.php:583
 msgid ""
 "Refresh - this port is being refreshed, or make failed to run error-free."
 msgstr ""
 "Aktualisieren – dieser Port wird aktualisiert, oder make konnte nicht "
 "fehlerfrei ausgeführt werden."
 
-#: include/freshports.php:592
+#: include/freshports.php:591
 msgid "Deleted"
 msgstr "Gelöscht"
 
-#: include/freshports.php:634 www/backend/index.php:34
+#: include/freshports.php:633 www/backend/index.php:34
 msgid "Deprecated"
 msgstr "Veraltet"
 
-#: include/freshports.php:645
+#: include/freshports.php:644
 msgid "Expired"
 msgstr "Abgelaufen"
 
-#: include/freshports.php:656
+#: include/freshports.php:655
 msgid "Expiration Date"
 msgstr "Ablaufdatum"
 
-#: include/freshports.php:678
+#: include/freshports.php:677
 msgid "Is Interactive"
 msgstr "Ist interaktiv"
 
-#: include/freshports.php:689
+#: include/freshports.php:688
 msgid "NO CDROM"
 msgstr "Keine CDROM"
 
-#: include/freshports.php:711
+#: include/freshports.php:710
 msgid "new!"
 msgstr "neu!"
 
-#: include/freshports.php:715
+#: include/freshports.php:714
 msgid "Original commit"
 msgstr "Ursprünglicher Commit"
 
-#: include/freshports.php:715
+#: include/freshports.php:714
 msgid "Original commit message"
 msgstr "Ursprüngliche Commit-Meldung"
 
-#: include/freshports.php:719
+#: include/freshports.php:718
 msgid "Commit details"
 msgstr "Commit-Details"
 
-#: include/freshports.php:719
+#: include/freshports.php:718
 msgid "FreshPorts commit message"
 msgstr "FreshPorts Commit-Meldung"
 
-#: include/freshports.php:727
+#: include/freshports.php:726
 msgid "Click to remove this from your default watch list[s]"
 msgstr ""
 "Klicken Sie hier, um dies aus Ihrer Standard-Beobachtungsliste[h] zu "
 "entfernen"
 
-#: include/freshports.php:739
+#: include/freshports.php:738
 msgid "Encoding Errors (not all of the commit message was ASCII)"
 msgstr "Kodierungsfehler (nicht alle Teile der Commit-Nachricht waren ASCII)"
 
-#: include/freshports.php:747
+#: include/freshports.php:746
 msgid "View this port on Repology."
 msgstr "Zeige diesen Port auf Repology an."
 
-#: include/freshports.php:751
+#: include/freshports.php:750
 msgid "This port version is marked as vulnerable."
 msgstr "Diese Portversion ist als unsicher gekennzeichnet."
 
-#: include/freshports.php:755
+#: include/freshports.php:754
 msgid "An older version of this port was marked as vulnerable."
 msgstr "Eine ältere Version dieses Ports wurde als unsicher gekennzeichnet."
 
-#: include/freshports.php:759
+#: include/freshports.php:758
 msgid "View revision"
 msgstr "Zeige die Revision"
 
-#: include/freshports.php:759
+#: include/freshports.php:758
 msgid "view revision"
 msgstr "zeige die Revision"
 
-#: include/freshports.php:763
+#: include/freshports.php:762
 msgid "Annotate / Blame"
 msgstr "Annotieren / Verantwortlichkeiten"
 
-#: include/freshports.php:767
+#: include/freshports.php:766
 msgid "View diff"
 msgstr "Zeige die Unterschiede"
 
-#: include/freshports.php:767
+#: include/freshports.php:766
 msgid "view diff"
 msgstr "zeige die Unterschiede"
 
-#: include/freshports.php:824
+#: include/freshports.php:823
 #, php-format
 msgid "on %d watch list"
 msgid_plural "on %d watch lists"
 msgstr[0] "auf %d Beobachtungsliste"
 msgstr[1] "auf %d Beobachtungslisten"
 
-#: include/freshports.php:848
+#: include/freshports.php:847
 msgid "Commit Flagged"
 msgstr "Commit markiert"
 
-#: include/freshports.php:853
+#: include/freshports.php:852
 msgid "Commit Not Flagged"
 msgstr "Commit nicht markiert"
 
-#: include/freshports.php:922
+#: include/freshports.php:921
 msgid "View all ports for this commit"
 msgstr "Alle Ports für diesen Commit anzeigen"
 
-#: include/freshports.php:923
+#: include/freshports.php:922
 #, php-format
 msgid ""
 "(Only the first %1$d of %2$d items in this commit are shown above. %3$s)"
@@ -959,141 +959,141 @@ msgstr ""
 "(Nur die ersten %1$d von %2$d Elementen in diesem Commit werden oben "
 "angezeigt. %3$s)"
 
-#: include/freshports.php:929
+#: include/freshports.php:928
 msgid "View all of this commit message"
 msgstr "Zeige die ganze Commit-Meldung an"
 
-#: include/freshports.php:930
+#: include/freshports.php:929
 #, php-format
 msgid "(Only the first %1$d lines of the commit message are shown above %2$s)"
 msgstr ""
 "(Nur die ersten %1$d Zeilen der Commit-Meldung werden oben angezeigt %2$s)"
 
-#: include/freshports.php:968 include/freshports.php:1024
+#: include/freshports.php:967 include/freshports.php:1023
 msgid "committed by this person"
 msgstr "von dieser Person committet"
 
-#: include/freshports.php:1007
+#: include/freshports.php:1006
 msgid "authored by this person"
 msgstr "von dieser Person verfasst"
 
-#: include/freshports.php:1099
+#: include/freshports.php:1096
 msgid "As an Amazon Associate I earn from qualifying purchases."
 msgstr "Als Amazon-Partner verdiene ich an qualifizierten Käufen."
 
-#: include/freshports.php:1099
+#: include/freshports.php:1096
 #, php-format
 msgid "Want a good read? Try %s"
 msgstr "Wollen Sie etwas Gutes lesen? Versuchen Sie %s"
 
-#: include/freshports.php:1100
+#: include/freshports.php:1097
 #, php-format
 msgid "Want a good monitor light? See my <a href=\"%s\">photos</a>"
 msgstr ""
 "Wollen Sie eine gute Monitorbeleuchtung? Sehen Sie sich meine <a "
 "href=\"%s\">Fotos</a> an"
 
-#: include/freshports.php:1104
+#: include/freshports.php:1101
 msgid "All times are UTC"
 msgstr "Alle Zeiten sind in UTC"
 
-#: include/freshports.php:1117
+#: include/freshports.php:1114
 #, php-format
 msgid "The git branch used by this host is %s"
 msgstr "Der GIT-Branch, der von diesem Host verwendet wird, ist %s"
 
-#: include/freshports.php:1118
+#: include/freshports.php:1115
 #, php-format
 msgid "The database is %s"
 msgstr "Die Datenbank ist %s"
 
-#: include/freshports.php:1119
+#: include/freshports.php:1116
 #, php-format
 msgid "The db server is %s"
 msgstr "Der Datenbank-Server ist %s"
 
-#: include/freshports.php:1126
+#: include/freshports.php:1123
 msgid "I remember"
 msgstr "Ich erinnere mich"
 
-#: include/freshports.php:1131 include/freshports.php:2429
+#: include/freshports.php:1128 include/freshports.php:2367
 msgid "Blog"
 msgstr "Blog"
 
-#: include/freshports.php:1131
+#: include/freshports.php:1128
 msgid "Follow us"
 msgstr "Folgen Sie uns"
 
-#: include/freshports.php:1131
+#: include/freshports.php:1128
 msgid "Status page"
 msgstr "Status-Seite"
 
-#: include/freshports.php:1152 include/freshports.php:1153
+#: include/freshports.php:1149 include/freshports.php:1150
 msgid "Menu"
 msgstr "Menu"
 
-#: include/freshports.php:1153
+#: include/freshports.php:1150
 msgid "Close"
 msgstr "Schließen"
 
-#: include/freshports.php:1153
+#: include/freshports.php:1150
 msgid "Close the menu"
 msgstr "Schließe das Menu"
 
-#: include/freshports.php:1153
+#: include/freshports.php:1150
 msgid "Open the menu"
 msgstr "Öffne das Menu"
 
-#: include/freshports.php:1519
+#: include/freshports.php:1481
 #, php-format
 msgid "port deleted on %s"
 msgstr "Port gelöscht am %s"
 
-#: include/freshports.php:1522
+#: include/freshports.php:1484
 #, php-format
 msgid "resurrected on %s"
 msgstr "Port wiederhergestellt am %s"
 
-#: include/freshports.php:1528
+#: include/freshports.php:1490
 #, php-format
 msgid "port moved to %1$s on %2$s"
 msgstr "Port am %2$s nach %1$s verschoben"
 
-#: include/freshports.php:1530
+#: include/freshports.php:1492
 #, php-format
 msgid "port moved here from %1$s on %2$s"
 msgstr "Port am %2$s von %1$s hierhin verschoben"
 
-#: include/freshports.php:1536
+#: include/freshports.php:1498
 msgid "REASON:"
 msgstr "GRUND:"
 
-#: include/freshports.php:1565
+#: include/freshports.php:1527
 msgid "Perhaps you meant one of these:"
 msgstr ""
 
-#: include/freshports.php:1579
+#: include/freshports.php:1541
 msgid "All rights reserved."
 msgstr "Alle Rechte reserviert."
 
-#: include/freshports.php:1579
+#: include/freshports.php:1541
 msgid "Copyright"
 msgstr "Copyright"
 
-#: include/freshports.php:1579
+#: include/freshports.php:1541
 msgid "This material is copyrighted"
 msgstr "Dieses Material ist urheberrechtlich geschützt"
 
-#: include/freshports.php:1682
+#: include/freshports.php:1644
 msgid "Notes from UPDATING"
 msgstr "Hinweise aus UPDATING"
 
-#: include/freshports.php:1684
+#: include/freshports.php:1646
 #, php-format
 msgid "These upgrade notes are taken from %s"
 msgstr "Diese Aktualisierungs-Hinweise stammen aus %s"
 
-#: include/freshports.php:1727
+#: include/freshports.php:1689
 msgid ""
 "Commit History - (may be incomplete: for full details, see links to "
 "repositories near top of page)"
@@ -1101,7 +1101,7 @@ msgstr ""
 "Commit-Historie – (kann unvollständig sein: für vollständige Details siehe "
 "Links zu den Repositories in der Nähe der Seitenoberseite)"
 
-#: include/freshports.php:1732
+#: include/freshports.php:1694
 #, php-format
 msgid ""
 "This is a slave port.  You may also want to view the commits to the master "
@@ -1110,19 +1110,19 @@ msgstr ""
 "Dies ist ein Slave-Port. Sie möchten vielleicht auch die Commits des Master-"
 "Ports ansehen: %s"
 
-#: include/freshports.php:1736
+#: include/freshports.php:1698
 msgid "Commit"
 msgstr "Commit"
 
-#: include/freshports.php:1736
+#: include/freshports.php:1698
 msgid "Credits"
 msgstr "Mitwirkende"
 
-#: include/freshports.php:1736
+#: include/freshports.php:1698
 msgid "Log message"
 msgstr "Protokollmeldung"
 
-#: include/freshports.php:1781
+#: include/freshports.php:1743
 #, php-format
 msgid ""
 "<b>NOTE</b>: This slave port may no longer be vulnerable to issues shown "
@@ -1132,33 +1132,33 @@ msgstr ""
 "die unten angegebenen Probleme, da der <a href=\"%s\">Master-Port</a> "
 "aktualisiert wurde."
 
-#: include/freshports.php:1821 include/freshports.php:1822
-#: www/sanity_test_failures.php:194 www/sanity_test_failures.php:195
+#: include/freshports.php:1783 include/freshports.php:1784
+#: www/sanity_test_failures.php:196 www/sanity_test_failures.php:197
 msgid "First Page"
 msgstr "Erste Seite"
 
-#: include/freshports.php:1823 include/freshports.php:1824
-#: www/sanity_test_failures.php:196 www/sanity_test_failures.php:197
+#: include/freshports.php:1785 include/freshports.php:1786
+#: www/sanity_test_failures.php:198 www/sanity_test_failures.php:199
 msgid "Last Page"
 msgstr "Letzte Seite"
 
-#: include/freshports.php:1848 www/sanity_test_failures.php:204
+#: include/freshports.php:1810 www/sanity_test_failures.php:206
 #, php-format
 msgid "Number of commits found: %d"
 msgstr "Anzahl der gefundenen Commits: %d"
 
-#: include/freshports.php:1857 www/sanity_test_failures.php:208
-#: www/search.php:1405 www/search.php:1422
+#: include/freshports.php:1819 www/sanity_test_failures.php:210
+#: www/search.php:1407 www/search.php:1424
 #, php-format
 msgid "(showing only %d on this page)"
 msgstr "(nur %d auf dieser Seite angezeigt)"
 
-#: include/freshports.php:2135
+#: include/freshports.php:2097
 msgid "Link to this section"
 msgstr "Verweis auf diesen Abschnitt"
 
 #. TRANSLATORS: keep the line breaks short, this is a plain text email
-#: include/freshports.php:2206
+#: include/freshports.php:2168
 #, php-format
 msgid ""
 "Someone, perhaps you, supplied your email address as their\n"
@@ -1172,318 +1172,318 @@ msgstr ""
 "Nachricht bitte an %s\n"
 " weiter und wir kümmern uns darum."
 
-#: include/freshports.php:2211
+#: include/freshports.php:2173
 #, fuzzy, php-format
 msgid "Your token is: %s"
 msgstr "Ihre Login-ID ist: %s"
 
-#: include/freshports.php:2213
+#: include/freshports.php:2175
 msgid "Please point your browser at"
 msgstr "Bitte richten Sie Ihren Browser auf"
 
-#: include/freshports.php:2215
+#: include/freshports.php:2177
 #, php-format
 msgid "The request came from %s"
 msgstr "Die Anfrage kam von %s"
 
-#: include/freshports.php:2232
+#: include/freshports.php:2194
 #, php-format
 msgid "%s - user registration"
 msgstr "%s - Benutzerregistrierung"
 
-#: include/freshports.php:2311
+#: include/freshports.php:2265
 msgid "You are connected over IPv6"
 msgstr ""
 
-#: include/freshports.php:2324
+#: include/freshports.php:2278
 #, php-format
 msgid "Valid %1$s, %2$s, and %3$s."
 msgstr "Gültiges %1$s, %2$s und %3$s."
 
-#: include/freshports.php:2325
+#: include/freshports.php:2279
 msgid "We like to keep our HTML valid"
 msgstr "Wir möchten unser HTML gültig halten"
 
-#: include/freshports.php:2326
+#: include/freshports.php:2280
 msgid "We like to have valid CSS"
 msgstr "Wir möchten gültiges CSS haben"
 
-#: include/freshports.php:2327
+#: include/freshports.php:2281
 msgid "Valid RSS is good too"
 msgstr "Gültiges RSS ist auch gut"
 
-#: include/freshports.php:2374 include/login.php:15 www/login.php:148
+#: include/freshports.php:2312 include/login.php:15 www/login.php:148
 #: www/login.php:231
 msgid "Login"
 msgstr "Anmeldung"
 
-#: include/freshports.php:2382
+#: include/freshports.php:2320
 #, php-format
 msgid "Logged in as %s"
 msgstr "Angemeldet als %s"
 
-#: include/freshports.php:2386
+#: include/freshports.php:2324
 msgid "your email is <a href=\"/bouncing.php\">bouncing</a>"
 msgstr "Ihre E-Mail-Adresse <a href=\"/bouncing.php\">ist nicht erreichbar</a>"
 
-#: include/freshports.php:2389
+#: include/freshports.php:2327
 msgid "Your Account"
 msgstr "Ihr Benutzerkonto"
 
-#: include/freshports.php:2389
+#: include/freshports.php:2327
 msgid "Your account"
 msgstr "Ihr Benutzerkonto"
 
-#: include/freshports.php:2392
+#: include/freshports.php:2330
 msgid "Committer Opt-in"
 msgstr "Committer-Opt-in"
 
-#: include/freshports.php:2392
+#: include/freshports.php:2330
 msgid "Committers can receive reports of Sanity Test Failures"
 msgstr "Committers können Berichte über fehlgeschlagene Sanity-Tests erhalten"
 
-#: include/freshports.php:2396
+#: include/freshports.php:2334
 msgid "Logout"
 msgstr "Abmelden"
 
-#: include/freshports.php:2396
+#: include/freshports.php:2334
 msgid "Logout of the website"
 msgstr "Abmelden von der Website"
 
-#: include/freshports.php:2397
+#: include/freshports.php:2335
 msgid "List of commits you have flagged"
 msgstr "Liste der Commits, die Sie markiert haben"
 
-#: include/freshports.php:2397
+#: include/freshports.php:2335
 msgid "My Flagged Commits"
 msgstr "Meine markierten Commits"
 
-#: include/freshports.php:2399
+#: include/freshports.php:2337
 msgid "Login to the website"
 msgstr "Anmeldung an der Website"
 
-#: include/freshports.php:2399
+#: include/freshports.php:2337
 msgid "User Login"
 msgstr "Benutzeranmeldung"
 
-#: include/freshports.php:2400
+#: include/freshports.php:2338
 msgid "Create account"
 msgstr "Benutzerkonto erzeugen"
 
-#: include/freshports.php:2400
+#: include/freshports.php:2338
 msgid "Create an account"
 msgstr "Erzeuge ein Benutzerkonto"
 
-#: include/freshports.php:2418
+#: include/freshports.php:2356
 msgid "This site"
 msgstr "Diese Website"
 
-#: include/freshports.php:2422
+#: include/freshports.php:2360
 msgid "A bit of background on FreshPorts"
 msgstr "Etwas Hintergrund zu FreshPorts"
 
-#: include/freshports.php:2422
+#: include/freshports.php:2360
 msgid "What is FreshPorts?"
 msgstr "Was ist FreshPorts?"
 
-#: include/freshports.php:2423 www/authors.php:26
+#: include/freshports.php:2361 www/authors.php:26
 msgid "About the authors"
 msgstr "Über die Autoren"
 
-#: include/freshports.php:2423
+#: include/freshports.php:2361
 msgid "Who wrote this stuff?"
 msgstr "Wer hat dies programmiert?"
 
-#: include/freshports.php:2424
+#: include/freshports.php:2362
 msgid "Issues"
 msgstr "Probleme"
 
-#: include/freshports.php:2424
+#: include/freshports.php:2362
 msgid "Report a website problem"
 msgstr "Melde ein Problem auf der Website"
 
-#: include/freshports.php:2425 www/faq.php:32
+#: include/freshports.php:2363 www/faq.php:32
 msgid "FAQ"
 msgstr "FAQ"
 
-#: include/freshports.php:2425 www/faq.php:13
+#: include/freshports.php:2363 www/faq.php:13
 msgid "Frequently Asked Questions"
 msgstr "Häufig gestellte Fragen"
 
-#: include/freshports.php:2426 www/how-big-is-it.php:13
+#: include/freshports.php:2364 www/how-big-is-it.php:13
 msgid "How big is it?"
 msgstr "Wie groß ist es?"
 
-#: include/freshports.php:2426
+#: include/freshports.php:2364
 msgid "How many pages are in this website?"
 msgstr "Wie viele Seiten sind auf dieser Website?"
 
-#: include/freshports.php:2427
+#: include/freshports.php:2365
 msgid "Are you a security researcher? Please read this."
 msgstr "Sine Sie ein Sicherheitsforscher? Bitte lesen Sie dies."
 
-#: include/freshports.php:2427 www/security-policy.php:13
+#: include/freshports.php:2365 www/security-policy.php:13
 msgid "Security Policy"
 msgstr "Sicherheits-Policy"
 
-#: include/freshports.php:2428
+#: include/freshports.php:2366
 msgid "Our privacy statement"
 msgstr "Unsere Datenschutzerklärung"
 
-#: include/freshports.php:2428
+#: include/freshports.php:2366
 msgid "Privacy"
 msgstr "Datenschutz"
 
-#: include/freshports.php:2429
+#: include/freshports.php:2367
 msgid "All the latest FreshPorts news"
 msgstr "Alle letzten FreshPorts-Neuigkeiten"
 
-#: include/freshports.php:2430 www/contact.php:13 www/contact.php:27
+#: include/freshports.php:2368 www/contact.php:13 www/contact.php:27
 msgid "Contact"
 msgstr "Kontakt"
 
-#: include/freshports.php:2430
+#: include/freshports.php:2368
 msgid "Contact details"
 msgstr "Kontakt-Details"
 
-#: include/freshports.php:2440
+#: include/freshports.php:2378
 msgid "Latest Vulnerabilities"
 msgstr "Neueste Sicherheitslücken"
 
-#: include/freshports.php:2446
+#: include/freshports.php:2384
 msgid "All vulnerabilities"
 msgstr "Alle Sicherheitslücken"
 
-#: include/freshports.php:2446
+#: include/freshports.php:2384
 msgid "modified, not new"
 msgstr "modifiziert, nicht neu"
 
-#: include/freshports.php:2447
+#: include/freshports.php:2385
 msgid "Last processed:"
 msgstr "Zuletzt verarbeitet:"
 
-#: include/freshports.php:2459 include/freshports.php:2489
+#: include/freshports.php:2397 include/freshports.php:2427
 msgid "Ports"
 msgstr "Ports"
 
-#: include/freshports.php:2464
+#: include/freshports.php:2402
 msgid "FreshPorts Home page"
 msgstr "FreshPorts-Startseite"
 
-#: include/freshports.php:2464
+#: include/freshports.php:2402
 msgid "Home"
 msgstr "Startseite"
 
-#: include/freshports.php:2465 include/freshports.php:2487
+#: include/freshports.php:2403 include/freshports.php:2425
 #: www/categories.php:15
 msgid "Categories"
 msgstr "Kategorien"
 
-#: include/freshports.php:2465
+#: include/freshports.php:2403
 msgid "List of all Port categories"
 msgstr "Liste aller Port-Kategorien"
 
-#: include/freshports.php:2466
+#: include/freshports.php:2404
 msgid "All deleted ports"
 msgstr "All gelöschten Ports"
 
-#: include/freshports.php:2466 www/ports-deleted.php:30
+#: include/freshports.php:2404 www/ports-deleted.php:30
 msgid "Deleted ports"
 msgstr "Gelöschte Ports"
 
-#: include/freshports.php:2467 www/sanity_test_failures.php:30
-#: www/sanity_test_failures.php:99
+#: include/freshports.php:2405 www/sanity_test_failures.php:37
+#: www/sanity_test_failures.php:106
 msgid "Sanity Test Failures"
 msgstr "Sanity-Test-Fehler"
 
-#: include/freshports.php:2467
+#: include/freshports.php:2405
 msgid "Things that didn't go quite right..."
 msgstr "Dinge, die nicht ganz richtig gelaufen sind ..."
 
-#: include/freshports.php:2468 www/backend/newsfeeds.php:21
+#: include/freshports.php:2406 www/backend/newsfeeds.php:21
 msgid "Newsfeeds"
 msgstr "Neuigkeiten-Feeds"
 
-#: include/freshports.php:2468
+#: include/freshports.php:2406
 msgid "Newsfeeds for just about everything"
 msgstr "Neuigkeiten-Feeds für so ziemlich alles"
 
-#: include/freshports.php:2481 www/watch-list-maintenance.php:321
+#: include/freshports.php:2419 www/watch-list-maintenance.php:321
 #: www/watch-list-maintenance.php:393
 msgid "Watch Lists"
 msgstr "Beobachtungs-Listen"
 
-#: include/freshports.php:2486 www/pkg_upload.php:92 www/pkg_upload.php:114
+#: include/freshports.php:2424 www/pkg_upload.php:92 www/pkg_upload.php:114
 #: www/pkg_upload.php:136
 msgid "Upload"
 msgstr "Hochladen"
 
-#: include/freshports.php:2486
+#: include/freshports.php:2424
 msgid ""
 "Upload a file containing a list of ports you want to add to your watch list"
 msgstr ""
 "Lade eine Datei hoch, die eine Liste von Ports enthält, die du zu deiner "
 "Beobachtungsliste hinzufügen möchtest"
 
-#: include/freshports.php:2487
+#: include/freshports.php:2425
 msgid "Search through categories for ports to add to your watch list"
 msgstr ""
 "Durchsuche Kategorien nach Ports, die du zu deiner Beobachtungsliste "
 "hinzufügen möchtest"
 
-#: include/freshports.php:2488
+#: include/freshports.php:2426
 msgid "Maintain"
 msgstr "Verwalten"
 
-#: include/freshports.php:2488
+#: include/freshports.php:2426
 msgid "Maintain your watch list[s]"
 msgstr "Verwalte deine Beobachtungs-Liste[n]"
 
-#: include/freshports.php:2489
+#: include/freshports.php:2427
 msgid "Your list of watched ports"
 msgstr "Deine Liste der beobachteten Ports"
 
-#: include/freshports.php:2490
+#: include/freshports.php:2428
 msgid "A list of news feeds for your watched lists"
 msgstr "Eine Liste von Neuigkeiten-Feeds für deine Beobachtungslisten"
 
-#: include/freshports.php:2490
+#: include/freshports.php:2428
 msgid "Personal Newsfeeds"
 msgstr "Persönliche Neuigkeiten-Feeds"
 
-#: include/freshports.php:2491
+#: include/freshports.php:2429
 msgid "Maintain your list of subscriptions"
 msgstr "Verwalte deine Abonnement-Liste[n]"
 
-#: include/freshports.php:2491
+#: include/freshports.php:2429
 msgid "Report Subscriptions"
 msgstr "Subskriptions-Liste"
 
-#: include/freshports.php:2492
+#: include/freshports.php:2430
 msgid "ABI Package Subscriptions"
 msgstr "ABI-Paket-Abonnements"
 
-#: include/freshports.php:2492
+#: include/freshports.php:2430
 msgid "Maintain your ABI package subscriptions"
 msgstr "Verwalte deine ABI-Paket-Abonnements"
 
-#: include/freshports.php:2517
+#: include/freshports.php:2443
 msgid "Statistics"
 msgstr "Statistiken"
 
-#: include/freshports.php:2522 include/freshports.php:2523
+#: include/freshports.php:2448 include/freshports.php:2449
 msgid "Everyone loves statistics!"
 msgstr "Jeder liebt Statistiken!"
 
-#: include/freshports.php:2522
+#: include/freshports.php:2448
 msgid "Graphs"
 msgstr "Diagramme"
 
-#: include/freshports.php:2523
+#: include/freshports.php:2449
 msgid "NEW Graphs (Javascript)"
 msgstr "NEUE Diagramme (Javascript)"
 
-#: include/freshports.php:2659
+#: include/freshports.php:2585
 msgid "People watching this port, also watch:"
 msgstr "Leute, die diesen Port beobachten, beobachten auch:"
 
@@ -1729,11 +1729,11 @@ msgstr "Diese Seite wird alle 3 Minuten automatisch neu geladen."
 msgid "The contents are generated every 3 minutes by the backend server."
 msgstr "Die Inhalte werden alle 3 Minuten vom Backend-Server generiert."
 
-#: include/watch-lists.php:21 www/report-package-notifications.php:39
+#: include/watch-lists.php:23 www/report-package-notifications.php:39
 msgid "Select a watch list"
 msgstr "Wähle eine Beobachtungsliste aus"
 
-#: include/watch-lists.php:66 www/report-package-notifications.php:67
+#: include/watch-lists.php:68 www/report-package-notifications.php:67
 msgid ""
 "You have no watch lists.  You must <a href=\"watch-list-"
 "maintenance.php\">create one</a>."
@@ -1741,11 +1741,11 @@ msgstr ""
 "Sie haben keine Beobachtungslisten. Sie müssen <a href=\"watch-list-"
 "maintenance.php\">eine erstellen</a>."
 
-#: include/watch-lists.php:73
+#: include/watch-lists.php:75
 msgid "Display the selected watch list"
 msgstr "Ausgewählte Beobachtungsliste anzeigen"
 
-#: include/watch-lists.php:73
+#: include/watch-lists.php:75
 msgid "Go"
 msgstr "Los"
 
@@ -1889,12 +1889,12 @@ msgstr "Über diese Website"
 msgid "We have a few notes about this website."
 msgstr "Wir haben ein paar Hinweise zu dieser Website."
 
-#: www/about.php:41 www/faq.php:69 www/faq.php:144
+#: www/about.php:40 www/faq.php:68 www/faq.php:143
 msgid "What is a port?"
 msgstr "Was ist ein Port?"
 
 #. TRANSLATORS: %1$s is a link whose text is 'FreeBSD Handbook'; %2$s is the command 'make install'.
-#: www/about.php:49
+#: www/about.php:48
 #, fuzzy, php-format
 msgid ""
 "A port is the term used to describe a collection of files which makes it "
@@ -1909,12 +1909,12 @@ msgstr ""
 "Verzeichnis</em>. Wenn Sie eine Anwendung wünschen, ist der Port der Weg zu "
 "gehen(TM)"
 
-#: www/about.php:49
+#: www/about.php:48
 #, fuzzy
 msgid "FreeBSD Handbook"
 msgstr "Porters-Handbuch"
 
-#: www/about.php:51
+#: www/about.php:50
 msgid ""
 "So off you go to the ports tree to install your favourite port.  It's quite "
 "easy. It's simple. And you love that new application.  And you want to know "
@@ -1924,17 +1924,17 @@ msgstr ""
 "Es ist ziemlich einfach. Und Sie lieben diese neue Anwendung. Und Sie "
 "möchten wissen, wann der Port aktualisiert wird. Hier kommen wir ins Spiel."
 
-#: www/about.php:53
+#: www/about.php:52
 #, php-format
 msgid "For more information about the Ports tree, see %s."
 msgstr "Für weitere Informationen über den Ports-Baum, siehe %s."
 
-#: www/about.php:58
+#: www/about.php:57
 #, php-format
 msgid "What is %s"
 msgstr "Was ist %s"
 
-#: www/about.php:64
+#: www/about.php:63
 #, php-format
 msgid ""
 "%1$s lists the changes made to the ports tree. If you wish, %1$s can email "
@@ -1943,7 +1943,7 @@ msgstr ""
 "%1$s listet die Änderungen am Ports-Baum auf. Wenn Sie möchten, kann Ihnen "
 "%1$s eine E-Mail senden, wenn Ihr Lieblingsport aktualisiert wurde."
 
-#: www/about.php:67
+#: www/about.php:66
 #, php-format
 msgid ""
 "%1$s is not the place to report errors or request changes.  You should do "
@@ -1956,15 +1956,15 @@ msgstr ""
 "Ports. Wir beheben Fehler in Ports nicht. Wir zeigen Ihnen nur, was Andere "
 "mit dem Ports-Baum gemacht haben."
 
-#: www/about.php:67
+#: www/about.php:66
 msgid "FreeBSD Ports mailing list"
 msgstr "FreeBSD Ports-Mailing-Liste"
 
-#: www/about.php:73
+#: www/about.php:72
 msgid "OK, whose bright idea was this?"
 msgstr "OK, wessen brillante Idee war das?"
 
-#: www/about.php:78
+#: www/about.php:77
 msgid ""
 "This site was created by Dan Langille.  His other web feats include <a "
 "href=\"https://www.freebsddiary.org/\">The FreeBSD Diary</a>, <a "
@@ -1987,7 +1987,7 @@ msgstr ""
 msgid "The Authors"
 msgstr "Die Autoren"
 
-#: www/authors.php:33
+#: www/authors.php:32
 msgid ""
 "<a href=\"https://www.langille.org/\" rel=\"noopener noreferrer\">Dan "
 "Langille</a> thought up the idea, found the data sources, bugged people to "
@@ -1999,7 +1999,7 @@ msgstr ""
 "damit sie Skripte schreiben und die HTML- und Datenbankarbeit erledigt. Aber "
 "er hat es sicherlich nicht alleine gemacht."
 
-#: www/authors.php:36
+#: www/authors.php:35
 msgid ""
 "The details of day-to-day changes, bug fixes, challenges, and new features "
 "are documented on the <a href=\"https://news.freshports.org/\" "
@@ -2009,7 +2009,7 @@ msgstr ""
 "und neuen Funktionen werden im <a href=\"https://news.freshports.org/\" "
 "rel=\"noopener noreferrer\">News-Blog</a> dokumentiert."
 
-#: www/authors.php:40
+#: www/authors.php:39
 msgid ""
 "I apologize as I have not been keeping this list up to date and therefore I "
 "fear I have missed people but I don't know who. Please let me know if you "
@@ -2020,7 +2020,7 @@ msgstr ""
 "weiß nicht, wen. Bitte lassen Sie mich wissen, wenn Sie hier erwähnt sein "
 "sollten."
 
-#: www/authors.php:43
+#: www/authors.php:42
 msgid ""
 "Adam Herzog wrote the XML DTD and the perl script which converts the raw "
 "email to XML."
@@ -2028,7 +2028,7 @@ msgstr ""
 "Adam Herzog hat das XML-DTD und das Perl-Skript geschrieben, das die Roh-E-"
 "Mail in XML konvertiert."
 
-#: www/authors.php:45
+#: www/authors.php:44
 msgid ""
 "Marcin Gryszkalis did the underlying work for the <a href=\"/"
 "graphs.php\">graphs</a>. He also helped out with the htmlifying of the log "
@@ -2039,7 +2039,7 @@ msgstr ""
 "der Log-Nachricht geholfen (damit Sie auf PR, E-Mail und URLs klicken "
 "können)."
 
-#: www/authors.php:47
+#: www/authors.php:46
 msgid ""
 "Jonathan Sage helped to reclaim some missing ports by writing some perl code "
 "to pull things out of CVS."
@@ -2047,7 +2047,7 @@ msgstr ""
 "Jonathan Sage hat geholfen, einige fehlende Ports zurückzugewinnen, indem er "
 "Perl-Code geschrieben hat, um die Daten aus CVS abzulegen."
 
-#: www/authors.php:49
+#: www/authors.php:48
 msgid ""
 "Dan Peterson showed me the wonders of <a href=\"https://cr.yp.to/"
 "daemontools.html\" rel=\"noopener noreferrer\">Daemon Tools</a> which "
@@ -2058,7 +2058,7 @@ msgstr ""
 "Verarbeitung eingehender Nachrichten und die Aktualisierung der "
 "Hauptwebseite übernehmen."
 
-#: www/authors.php:51
+#: www/authors.php:50
 msgid ""
 "Josef Karthauser for helping me through the cvs-all log format and for "
 "greatly simplifying the job of FP2."
@@ -2066,7 +2066,7 @@ msgstr ""
 "Josef Karthauser hat mir geholfen, durch das cvs-all Log-Format zu "
 "navigieren und hat die Arbeit für FP2 erheblich vereinfacht."
 
-#: www/authors.php:53
+#: www/authors.php:52
 msgid ""
 "Titus Manea again always has great ideas. His knowledge base of *nix far "
 "exceeds my own."
@@ -2074,7 +2074,7 @@ msgstr ""
 "Titus Manea hat wieder einmal großartige Ideen. Sein Wissensschatz über *nix "
 "übertrifft meinen eigenen bei weitem."
 
-#: www/authors.php:55
+#: www/authors.php:54
 msgid ""
 "Ade Lovett for grilling me about my need for daemons and leading me to "
 "discover Daemon Tools via Dan P. And for his mega-commits which prompted me "
@@ -2084,29 +2084,29 @@ msgstr ""
 "gebracht, Daemon Tools von Dan P. zu entdecken. Und für seine Mega-Commits, "
 "die mich veranlasst haben, abgekürzte Commits anzuzeigen."
 
-#: www/authors.php:60
+#: www/authors.php:59
 msgid "FreshPorts (original)"
 msgstr "FreshPorts (Original)"
 
-#: www/authors.php:64
+#: www/authors.php:63
 msgid "Olaf wrote the perl script for the log catcher."
 msgstr "Olaf hat das Perl-Skript für den Log-Catcher geschrieben."
 
-#: www/authors.php:66
+#: www/authors.php:65
 msgid "Titus Manea wrote the awk code for the log catcher and the log munger."
 msgstr ""
 "Titus Manea hat den awk-Code für den Log-Catcher und den Log-Munger "
 "geschrieben."
 
-#: www/authors.php:68
+#: www/authors.php:67
 msgid "Adriel helped me with perl syntax."
 msgstr "Adriel hat mir bei der Perl-Syntax geholfen."
 
-#: www/authors.php:70
+#: www/authors.php:69
 msgid "Will Andrews talked over data sources with me."
 msgstr "Will Andrews hat mit mir über Datenquellen gesprochen."
 
-#: www/authors.php:72
+#: www/authors.php:71
 msgid ""
 "John Polstra and Satoshi Asami provided insight into cvs and ports as well "
 "as encouragement."
@@ -2114,24 +2114,24 @@ msgstr ""
 "John Polstra und Satoshi Asami haben Einblicke in CVS und Ports sowie "
 "Ermutigung gegeben."
 
-#: www/authors.php:74
+#: www/authors.php:73
 msgid ""
 "Jeremy Shaffner hung around, criticized, and suggested security improvements."
 msgstr ""
 "Jeremy Shaffner hat vorbei geschaut, kritisiert und "
 "Sicherheitsverbesserungen vorgeschlagen."
 
-#: www/authors.php:76
+#: www/authors.php:75
 msgid "Brian Mitchell did some prototype coding for me."
 msgstr "Brian Mitchell hat einige Prototypen-Codierung für mich gemacht."
 
-#: www/authors.php:78
+#: www/authors.php:77
 msgid "David Bushong did a FreshBSD site which is a freshmeat-look site."
 msgstr ""
 "David Bushong hat eine FreshBSD-Seite erstellt, die wie eine Freshmeat-Seite "
 "aussieht."
 
-#: www/authors.php:80
+#: www/authors.php:79
 msgid ""
 "lzh on undernet #perl helped me with my perl knowledge. Some of his examples "
 "form the basis for some of the most important parts of the system. Aquitaine "
@@ -2141,11 +2141,11 @@ msgstr ""
 "seiner Beispiele bilden die Basis des Systems. Aquitaine hat mir auch die "
 "PERL dbi->quote() Funktion gezeigt."
 
-#: www/authors.php:82
+#: www/authors.php:81
 msgid "John Beige did the logo you see at the top of the page."
 msgstr "John Beige hat das Logo entworfen, das Sie oben auf der Seite sehen."
 
-#: www/authors.php:84
+#: www/authors.php:83
 msgid ""
 "Wolfram Schneider's <a href=\"https://www.freebsd.org/cgi/ports.cgi\" "
 "rel=\"noopener noreferrer\">FreeBSD Ports Changes</a> page provided much of "
@@ -2155,11 +2155,11 @@ msgstr ""
 "rel=\"noopener noreferrer\">FreeBSD Ports Changes</a> Seite lieferte die "
 "Grundlage für diese Website."
 
-#: www/authors.php:86
+#: www/authors.php:85
 msgid "Jay gave me the box on which FreshPorts runs. Thanks."
 msgstr "Jay hat mir den Server gegeben, auf dem FreshPorts läuft. Danke."
 
-#: www/authors.php:88
+#: www/authors.php:87
 #, php-format
 msgid ""
 "Will Andrews told me about %s. This eventually led to the sanity checks that "
@@ -2169,7 +2169,7 @@ msgstr ""
 "Checks, die die Ports-Committer ärgern und sicherstellen, dass Benutzer auf "
 "weniger Probleme stoßen."
 
-#: www/authors.php:90
+#: www/authors.php:89
 msgid ""
 "And various people on undernet's #nz.general and #freebsd helped me with "
 "scripts and ideas. That's not to mention that channel on efnet which I won't "
@@ -2314,8 +2314,8 @@ msgstr "Beobachtungsliste-Feeds"
 msgid "These are your news feeds"
 msgstr "Das sind Ihre Newsfeeds"
 
-#: www/bouncing.php:39 www/customize.php:139
-#: www/password-reset-via-token.php:79
+#: www/bouncing.php:39 www/customize.php:144
+#: www/password-reset-via-token.php:84
 msgid "Something went terribly wrong there."
 msgstr "Etwas ist dort schrecklich schief gelaufen."
 
@@ -2415,59 +2415,59 @@ msgstr ""
 "Sie können jede Spalte sortieren, indem Sie auf die Kopfzeile klicken. Z. B. "
 "klicken Sie auf <strong>Kategorie</strong>, um nach Kategorie zu sortieren."
 
-#: www/categories.php:140 www/categories.php:142 www/search.php:1279
+#: www/categories.php:134 www/categories.php:136 www/search.php:1281
 msgid "Category"
 msgstr "Kategorie"
 
-#: www/categories.php:152 www/categories.php:154
+#: www/categories.php:146 www/categories.php:148
 msgid "Count"
 msgstr "Anzahl"
 
-#: www/categories.php:158 www/categories.php:160 www/faq.php:397
+#: www/categories.php:152 www/categories.php:154 www/faq.php:396
 #: www/report-subscriptions.php:170 www/vuxml.php:88 www/vuxml.php:256
 msgid "Description"
 msgstr "Beschreibung"
 
-#: www/categories.php:164 www/categories.php:166 www/search.php:1280
+#: www/categories.php:158 www/categories.php:160 www/search.php:1282
 msgid "Last Update"
 msgstr "Letzte Aktualisierung"
 
-#: www/categories.php:205 www/committer-opt-in.php:155
+#: www/categories.php:199 www/committer-opt-in.php:160
 #: www/report-subscriptions.php:251
 msgid "update"
 msgstr "Aktualisieren"
 
-#: www/categories.php:222
+#: www/categories.php:216
 msgid ""
 "No categories statistics found.  I bet the refresh script is not running."
 msgstr ""
 "Keine Kategorienstatistiken gefunden. Ich wette, das Aktualisierungsskript "
 "läuft nicht."
 
-#: www/categories.php:226
+#: www/categories.php:220
 msgid "port count:"
 msgstr "Port-Anzahl:"
 
-#: www/categories.php:231
+#: www/categories.php:225
 #, php-format
 msgid "(%d real category)"
 msgid_plural "(%d real categories)"
 msgstr[0] "(%d echte Kategorie)"
 msgstr[1] "(%d echte Kategorien)"
 
-#: www/categories.php:233
+#: www/categories.php:227
 msgid ""
 "Hmmm, I'm not so sure this port count is accurate. Dan Langille 27 April 2003"
 msgstr ""
 "Hmmm, ich bin mir nicht so sicher, dass diese Port-Anzahl korrekt ist. Dan "
 "Langille 27. April 2003"
 
-#: www/categories.php:235
+#: www/categories.php:229
 #, php-format
 msgid "How the number of categories has changed: %s."
 msgstr ""
 
-#: www/categories.php:235 www/graphs.php:36
+#: www/categories.php:229 www/graphs.php:36
 #, fuzzy
 msgid "categories over time"
 msgstr "Kategorien"
@@ -2562,45 +2562,46 @@ msgstr ""
 msgid "Category maintenance"
 msgstr "Kategorie-Wartung"
 
-#: www/category-maintenance.php:22 www/commit.php:289
+#: www/category-maintenance.php:22 www/commit.php:297
 #, php-format
 msgid "I don't know that category: %s"
 msgstr "Ich kenne diese Kategorie nicht: %s"
 
-#: www/category-maintenance.php:55
+#: www/category-maintenance.php:63
 msgid ""
 "This page allows you to maintain a category, if you have permission to do so."
 msgstr ""
 "Diese Seite ermöglicht es Ihnen, eine Kategorie zu pflegen, wenn Sie die "
 "Berechtigung dazu haben."
 
-#: www/category-maintenance.php:103 www/watch-list.php:91 www/watch-list.php:98
+#: www/category-maintenance.php:111 www/watch-list.php:98
+#: www/watch-list.php:105
 msgid "Update"
 msgstr "Aktualisierung"
 
-#: www/category-maintenance.php:121
+#: www/category-maintenance.php:129
 msgid "NOTES:"
 msgstr "HINWEISE:"
 
-#: www/category-maintenance.php:124
+#: www/category-maintenance.php:132
 msgid "Porters Handbook"
 msgstr "Porters-Handbuch"
 
-#: www/category-maintenance.php:124
+#: www/category-maintenance.php:132
 #, php-format
 msgid "The official list of categories is in the %s."
 msgstr "Die offizielle Liste der Kategorien ist im %s."
 
-#: www/category-maintenance.php:125
+#: www/category-maintenance.php:133
 msgid "Primary categories are those which physically reside on disk."
 msgstr ""
 "Primäre Kategorien sind die, die physikalisch auf der Festplatte liegen."
 
-#: www/category-maintenance.php:126
+#: www/category-maintenance.php:134
 msgid "Only virtual categories need to have their description values set."
 msgstr "Nur virtuelle Kategorien müssen ihre Beschreibungsdaten gesetzt haben."
 
-#: www/category-maintenance.php:127
+#: www/category-maintenance.php:135
 msgid ""
 "FreshPorts will automatically obtain the description for physical categories "
 "from <code class=\"code\">ports/pkg/COMMENT</code>."
@@ -2608,77 +2609,77 @@ msgstr ""
 "FreshPorts wird die Beschreibung für physische Kategorien automatisch aus "
 "<code class=\"code\">ports/pkg/COMMENT</code> abrufen."
 
-#: www/category-maintenance.php:128
+#: www/category-maintenance.php:136
 msgid "See the above link for the description to use."
 msgstr "Siehe den obigen Link für die zu verwendende Beschreibung."
 
-#: www/category-maintenance.php:129
+#: www/category-maintenance.php:137
 msgid "All changes are logged."
 msgstr "All Änderungen werden protokolliert."
 
-#: www/category-maintenance.php:136
+#: www/category-maintenance.php:144
 msgid ""
 "Well, I'm sorry to advise you that this page is intentionally left blank."
 msgstr ""
 "Es tut mir leid, Ihnen mitteilen zu müssen, dass diese Seite absichtlich "
 "leer gelassen wurde."
 
-#: www/commit.php:162
+#: www/commit.php:165
 #, php-format
 msgid "Commit found by commit id on branch %s"
 msgstr "Commit gefunden durch Commit-ID auf Branch %s"
 
-#: www/commit.php:164
+#: www/commit.php:167
 msgid "Commit found by commit id"
 msgstr "Commit gefunden durch Commit-ID"
 
-#: www/commit.php:197
+#: www/commit.php:204
 msgid "We have multiple emails for that revision:"
 msgstr "Wir haben mehrere E-Mails für diese Revision:"
 
-#: www/commit.php:265
+#: www/commit.php:273
 #, php-format
 msgid "Number of items [ports &amp; non-ports] in this commit: %d"
 msgstr "Anzahl der Elemente [Ports &amp; Nicht-Ports] in diesem Commit: %d"
 
-#: www/commit.php:278
+#: www/commit.php:286
 msgid "show all files"
 msgstr "zeige alle Dateien"
 
-#: www/commit.php:280
+#: www/commit.php:288
 msgid "hide all files"
 msgstr "verstecke alle Dateien"
 
-#: www/commit.php:300
+#: www/commit.php:308
 msgid "I don't know that port."
 msgstr "Ich kenne diesen Port nicht."
 
-#: www/commit.php:304
+#: www/commit.php:312
 msgid "That is not a port."
 msgstr "Das ist kein Port."
 
-#: www/commit.php:309
+#: www/commit.php:317
 #, php-format
 msgid "Showing files for just one port: %s"
 msgstr "Anzeige aller Dateien für einen bestimmten Port: %s"
 
-#: www/commit.php:361
+#: www/commit.php:369
 msgid "Database connection could not be established!"
 msgstr "Die Verbindung zur Datenbank konnte nicht hergestellt werden!"
 
-#: www/commit.php:364
+#: www/commit.php:372
 msgid "nothing supplied, nothing found!"
 msgstr "nichts bereit gestellt, nichts geliefert!"
 
-#: www/committer-opt-in.php:19 www/committer-opt-in.php:82
+#: www/committer-opt-in.php:24 www/committer-opt-in.php:87
 msgid "Committer opt-in"
 msgstr "Committer Opt-In"
 
-#: www/committer-opt-in.php:42
+#: www/committer-opt-in.php:47
 msgid "please enter just your login, not your email address"
 msgstr "bitte geben Sie nur Ihren Login ein, nicht Ihre E-Mail-Adresse"
 
-#: www/committer-opt-in.php:90
+#: www/committer-opt-in.php:95
 msgid ""
 "This page only works if you are logged in and using a @FreeBSD.org email "
 "address."
@@ -2686,7 +2687,7 @@ msgstr ""
 "Diese Seite funktioniert nur, wenn Sie eingeloggt sind und eine @FreeBSD.org "
 "E-Mail-Adresse verwenden."
 
-#: www/committer-opt-in.php:95
+#: www/committer-opt-in.php:100
 msgid ""
 "Mistakes happen.  And when they do, they are best corrected quickly.  To "
 "that end, FreshPorts provides an opt-in service for all FreeBSD committers.  "
@@ -2701,38 +2702,38 @@ msgstr ""
 "gibt, die Sie committet haben. In der Vergangenheit waren solche Probleme "
 "auf Syntaxfehler im Makefile zurückzuführen."
 
-#: www/committer-opt-in.php:99
+#: www/committer-opt-in.php:104
 msgid ""
 "One committer referred to this service as an automated nagging mentor..."
 msgstr ""
 "Ein Committer bezeichnete diesen Service als einen automatisierten, nervigen "
 "Mentor ..."
 
-#: www/committer-opt-in.php:110
+#: www/committer-opt-in.php:115
 msgid "Your opt-in status"
 msgstr "Ihr Opt-In-Status"
 
-#: www/committer-opt-in.php:134
+#: www/committer-opt-in.php:139
 msgid "You are: subscribed"
 msgstr "Sie sind: angemeldet"
 
-#: www/committer-opt-in.php:138
+#: www/committer-opt-in.php:143
 msgid "You are: not subscribed"
 msgstr "Sie sind: nicht angemeldet"
 
-#: www/committer-opt-in.php:150
+#: www/committer-opt-in.php:155
 msgid "your freefall login:"
 msgstr "Ihr Login auf Freefall:"
 
-#: www/committer-opt-in.php:156
+#: www/committer-opt-in.php:161
 msgid "unsubscribe"
 msgstr "abmelden"
 
-#: www/committer-opt-in.php:160
+#: www/committer-opt-in.php:165
 msgid "subscribe"
 msgstr "Anmelden"
 
-#: www/committer-opt-in.php:168
+#: www/committer-opt-in.php:173
 msgid "Please do not include @FreeBSD.org in your login name."
 msgstr "Bitte nicht @FreeBSD.org im Benutzernamen angeben."
 
@@ -2809,37 +2810,37 @@ msgstr ""
 "Wenn Ihre Bedürfnisse nicht in die oben genannten Kategorien fallen, können "
 "Sie es per E-Mail versuchen: %s."
 
-#: www/customize.php:74 www/new-user.php:66
+#: www/customize.php:75 www/new-user.php:66
 msgid "That email address doesn't look right to me"
 msgstr "Die E-Mail-Adresse erscheint mir nicht korrekt zu sein"
 
-#: www/customize.php:80
+#: www/customize.php:81
 msgid ""
 "If changing your password, remember to supply your existing password first."
 msgstr ""
 "Wenn Sie Ihr Passwort ändern, denken Sie daran, zuerst Ihr bestehendes "
 "Passwort anzugeben."
 
-#: www/customize.php:85
+#: www/customize.php:86
 msgid "The new password was not confirmed.  It must be entered twice."
 msgstr ""
 "Das neue Passwort wurde nicht bestätigt. Es muss zweimal eingegeben werden."
 
-#: www/customize.php:94
+#: www/customize.php:95
 msgid "That is NOT your current password."
 msgstr "Das ist NICHT Ihr aktuelles Passwort."
 
-#: www/customize.php:154
+#: www/customize.php:159
 msgid "Customize User Account"
 msgstr "Passen Sie das Benutzerkonto an"
 
-#: www/customize.php:165 www/new-user.php:190
-#: www/password-reset-via-token.php:105
+#: www/customize.php:170 www/new-user.php:193
+#: www/password-reset-via-token.php:110
 msgid "Access Code Failed!"
 msgstr "Zugriffscodes fehlgeschlagen!"
 
-#: www/customize.php:168 www/new-user.php:194
-#: www/password-reset-via-token.php:113
+#: www/customize.php:173 www/new-user.php:197
+#: www/password-reset-via-token.php:118
 msgid ""
 "Some errors have occurred which must be corrected before your login can be "
 "created."
@@ -2847,24 +2848,24 @@ msgstr ""
 "Es sind einige Fehler aufgetreten, die behoben werden müssen, bevor Ihr "
 "Login erstellt werden kann."
 
-#: www/customize.php:172 www/delete-account.php:104 www/login.php:181
-#: www/new-user.php:203 www/password-reset-via-token.php:117
+#: www/customize.php:177 www/delete-account.php:104 www/login.php:181
+#: www/new-user.php:206 www/password-reset-via-token.php:122
 msgid "If you need help, please email postmaster@."
 msgstr "Wenn Sie Hilfe benötigen, senden Sie bitte eine E-Mail an postmaster@."
 
-#: www/customize.php:177
+#: www/customize.php:182
 msgid "Account updated!"
 msgstr "Benutzerkonto aktualisiert!"
 
-#: www/customize.php:178
+#: www/customize.php:183
 msgid "Your account details were successfully updated."
 msgstr "Ihre Benutzerkonto-Daten wurden erfolgreich aktualisiert."
 
-#: www/customize.php:183
+#: www/customize.php:188
 msgid "Customize"
 msgstr "Anpassen"
 
-#: www/customize.php:188
+#: www/customize.php:193
 msgid ""
 "If you wish to change your password, first type your existing password, then "
 "your new password twice.  Otherwise, leave them all blank."
@@ -2882,11 +2883,11 @@ msgstr "Commits für %s"
 msgid "No commits found for that date"
 msgstr "Keine Commits für dieses Datum gefunden"
 
-#: www/date.php:189
+#: www/date.php:192
 msgid "Latest commits"
 msgstr "Neueste Commits"
 
-#: www/date.php:208 www/date.php:233 www/search.php:1403
+#: www/date.php:211 www/date.php:237 www/search.php:1405
 #, php-format
 msgid "Number of commits: %d"
 msgstr "Anzahl der Commits: %d"
@@ -2959,7 +2960,7 @@ msgstr "Dies kann nicht rückgängig gemacht werden"
 msgid "FAQ (%s)"
 msgstr "FAQ (%s)"
 
-#: www/faq.php:40
+#: www/faq.php:39
 msgid ""
 "This page contains the FAQ for FreshPorts. Hopefully the questions are "
 "arranged from general to specific. The more you know, the further down you "
@@ -2969,11 +2970,11 @@ msgstr ""
 "allgemein bis spezifisch angeordnet. Je mehr Sie wissen, desto weiter unten "
 "müssen Sie lesen, um etwas zu finden, das Sie noch nicht wussten."
 
-#: www/faq.php:43
+#: www/faq.php:42
 msgid "What is this website about?"
 msgstr "Was ist der Sinn dieser Website?"
 
-#: www/faq.php:46
+#: www/faq.php:45
 msgid ""
 "This website will help you keep up with the latest releases of your favorite "
 "software. When a new version of the software is available, FreshPorts will "
@@ -2984,11 +2985,11 @@ msgstr ""
 "Software verfügbar ist, wird FreshPorts Ihnen eine E-Mail senden, die Sie "
 "über die Änderung informiert."
 
-#: www/faq.php:49
+#: www/faq.php:48
 msgid "How do I use this?"
 msgstr "Wie benutze ich dies?"
 
-#: www/faq.php:54
+#: www/faq.php:53
 msgid ""
 "Your primary FreshPorts tool is your <b>watch list</b>. This is the "
 "collection of ports which you have selected for FreshPorts to keep track of. "
@@ -2999,7 +3000,7 @@ msgstr ""
 "behält. Sie erhalten eine E-Mail, wenn eine Änderung für einen Ihrer "
 "beobachteten Ports gefunden wird."
 
-#: www/faq.php:57
+#: www/faq.php:56
 msgid ""
 "You can have more than one watch list. Most people would have one watch list "
 "for each machine they administer. I suggest giving the watch list the same "
@@ -3013,11 +3014,11 @@ msgstr ""
 "alle Filter verwenden, die Sie möglicherweise durchführen möchten (z. B. "
 "procmail)."
 
-#: www/faq.php:60
+#: www/faq.php:59
 msgid "Some definitions"
 msgstr "Einige Definitionen"
 
-#: www/faq.php:65
+#: www/faq.php:64
 msgid ""
 "You should be familiar with the <a href=\"https://www.freebsd.org/doc/"
 "en_US.ISO8859-1/books/handbook/ports.html\">Ports</a> section of <a "
@@ -3031,11 +3032,11 @@ msgstr ""
 "Handbook</a> vertraut sein.Achten Sie insbesondere auf den Unterschied "
 "zwischen einem Port und einem Paket."
 
-#: www/faq.php:67
+#: www/faq.php:66
 msgid "Definitions for the hopelessly lazy"
 msgstr "Definitionen für den hoffnungslos faulen"
 
-#: www/faq.php:71
+#: www/faq.php:70
 msgid ""
 "If you install the port, the source will be downloaded, patched if "
 "necessary, compiled and installed. You will have a chance to set any "
@@ -3050,18 +3051,18 @@ msgstr ""
 "dieser Port installiert. Nach der Installation sind Ports identisch mit "
 "Paketen."
 
-#: www/faq.php:74
+#: www/faq.php:73
 msgid ""
 "It is because of these compile time options that I prefer ports over "
 "packages."
 msgstr ""
 "Wegen dieser Kompilierungsoptionen bevorzuge ich Ports gegenüber Paketen."
 
-#: www/faq.php:76
+#: www/faq.php:75
 msgid "What is a package?"
 msgstr "Was ist ein Paket?"
 
-#: www/faq.php:78
+#: www/faq.php:77
 msgid ""
 "A package is a compiled port. It is a binary. When you install the package, "
 "you will download a binary and it will be installed."
@@ -3070,7 +3071,7 @@ msgstr ""
 "Paket installieren, laden Sie eine Binärdateiherunter und sie wird "
 "installiert."
 
-#: www/faq.php:81
+#: www/faq.php:80
 msgid ""
 "Packages often lag behind ports. That is usually because it takes time to "
 "compile the packages, etc. If you want the latest version, and the package "
@@ -3081,7 +3082,7 @@ msgstr ""
 "wünschen und das Paket nicht verfügbar ist, sollten Sie den Port "
 "installieren."
 
-#: www/faq.php:84
+#: www/faq.php:83
 msgid ""
 "Not all ports can have packages, often because of license restrictions that "
 "prevent binary distribution."
@@ -3089,45 +3090,45 @@ msgstr ""
 "Nicht alle Ports können Pakete haben, oft aufgrund von Lizenzbeschränkungen, "
 "die eine binäre Verteilung verhindern."
 
-#: www/faq.php:87
+#: www/faq.php:86
 msgid "The FreeBSD Project provides:"
 msgstr ""
 
-#: www/faq.php:91
+#: www/faq.php:90
 msgid "base"
 msgstr ""
 
 #. TRANSLATORS: %s is the word 'base', shown in italics.
-#: www/faq.php:91
+#: www/faq.php:90
 #, php-format
 msgid ""
 "official packages for FreeBSD (the operating system, sometimes known as %s) "
 "in its entirety"
 msgstr ""
 
-#: www/faq.php:92
+#: www/faq.php:91
 msgid "packages for a huge number of ports."
 msgstr ""
 
-#: www/faq.php:99
+#: www/faq.php:98
 #, fuzzy
 msgid "FreeBSD ports"
 msgstr "FreeBSD-Foren"
 
 #. TRANSLATORS: %1$s is the repository name 'FreeBSD', %2$s is the word 'not' in bold, %3$s is 'FreeBSD ports' in italics.
-#: www/faq.php:99
+#: www/faq.php:98
 #, php-format
 msgid ""
 "The repo that's traditionally named %1$s does %2$s provide FreeBSD (OS) "
 "packages. It's the repo for %3$s."
 msgstr ""
 
-#: www/faq.php:99
+#: www/faq.php:98
 msgid "not"
 msgstr ""
 
 #. TRANSLATORS: %1$s is the name 'pkgbase', %2$s is the repository name 'FreeBSD-base', shown in italics.
-#: www/faq.php:104
+#: www/faq.php:103
 #, php-format
 msgid ""
 "If you use %1$s (the base OS, packaged), you should have an additional repo "
@@ -3135,21 +3136,21 @@ msgid ""
 msgstr ""
 
 #. TRANSLATORS: %s is the name 'pkgbase'.
-#: www/faq.php:109
+#: www/faq.php:108
 #, fuzzy, php-format
 msgid "FreshPorts covers packages of ports, but not %s."
 msgstr "FreshPorts deckt die ABIs ab, die unter %s veröffentlich sind."
 
-#: www/faq.php:113
+#: www/faq.php:112
 msgid "How do I modify my watch list?"
 msgstr "Wie ändere ich meine Beobachtungsliste?"
 
-#: www/faq.php:117
+#: www/faq.php:116
 msgid "There are three easy ways to modify your watch list:"
 msgstr "Es gibt drei einfache Möglichkeiten, Ihre Beobachtungsliste zu ändern:"
 
 #. TRANSLATORS: %1$s is the 'add to watch list' icon, %2$s is the 'remove from watch list' icon.
-#: www/faq.php:121
+#: www/faq.php:120
 #, php-format
 msgid ""
 "Wherever you see a port, you can click on the Add (%1$s) / Remove (%2$s) "
@@ -3159,7 +3160,7 @@ msgstr ""
 "Entfernen (%2$s) klicken, je nach Bedarf (d. h. Anpassung der "
 "Beobachtungsliste mit einem Ein-Klick)."
 
-#: www/faq.php:122
+#: www/faq.php:121
 msgid ""
 "The 'watch list categories' link provides you with a list of categories. "
 "Select the category, and then the ports within that category."
@@ -3168,7 +3169,7 @@ msgstr ""
 "Kategorien. Wählen Sie die Kategorie und dann die Ports innerhalb dieser "
 "Kategorie aus."
 
-#: www/faq.php:123
+#: www/faq.php:122
 msgid ""
 "Use the 'upload' link to upload your pkg_info data into your watch list "
 "staging area and then into your watch list."
@@ -3177,7 +3178,7 @@ msgstr ""
 "Beobachtungslisten-Staging-Bereich und dann in Ihre Beobachtungsliste "
 "hochzuladen."
 
-#: www/faq.php:127
+#: www/faq.php:126
 msgid ""
 "One-click watch list maintenance operates only upon your default watch "
 "lists. You can set one or more watch lists as being default."
@@ -3186,11 +3187,11 @@ msgstr ""
 "Standard-Beobachtungslisten. Sie können eine oder mehrere Beobachtungslisten "
 "als Standard festlegen."
 
-#: www/faq.php:130
+#: www/faq.php:129
 msgid "How do I empty my watch list?"
 msgstr "Wie kann ich meine Beobachtungsliste leeren?"
 
-#: www/faq.php:134
+#: www/faq.php:133
 msgid ""
 "Via <a href=\"/watch-list-maintenance.php\">Watch List Maintenance</a>. "
 "Select the watch lists you wish to empty, and follow the instructions "
@@ -3199,11 +3200,11 @@ msgstr ""
 "Über <a href=\"/watch-list-maintenance.php\">Beobachtungslisten-Änderung</"
 "a>. Wählen Sie die Beobachtungslisten aus und folgen Sie den Anweisungen."
 
-#: www/faq.php:137
+#: www/faq.php:136
 msgid "How do I delete my account?"
 msgstr "Wie lösche ich mein Benutzerkonto?"
 
-#: www/faq.php:141
+#: www/faq.php:140
 #, php-format
 msgid ""
 "Visit %s and click on the <b>Delete my account</b> link. It's just below "
@@ -3212,7 +3213,7 @@ msgstr ""
 "Besuchen Sie %s und klicken Sie auf den Link <b>Mein Benutzerkonto löschen</"
 "b>. Er befindet sich direkt unter <b>Benutzerkonto aktualisieren</b>."
 
-#: www/faq.php:148
+#: www/faq.php:147
 msgid ""
 "A port is a simple easy way to install an application. A port is a "
 "collection of files. These files contain the location of the source file, "
@@ -3230,11 +3231,11 @@ msgstr ""
 "von Ports lesen Sie bitte die offiziellen Port-Dokumente im <a "
 "href=\"https://www.FreeBSD.org/handbook/\">FreeBSD-Handbuch</a>."
 
-#: www/faq.php:151
+#: www/faq.php:150
 msgid "Where do ports come from?"
 msgstr "Woher stammen die Ports?"
 
-#: www/faq.php:154
+#: www/faq.php:153
 msgid ""
 "Ports are created by other FreeBSD volunteers, just like you and just like "
 "the creators of FreshPorts. The FreshPorts team does not create ports; we "
@@ -3246,11 +3247,11 @@ msgstr ""
 "Ports; wir informieren Sie nur über die neuesten Änderungen. Das FreeBSD-"
 "Ports-Team erstellt, pflegt und aktualisiert die Ports."
 
-#: www/faq.php:157
+#: www/faq.php:156
 msgid "Who do I talk to about a port?"
 msgstr "Mit wem kann ich über einen Port sprechen?"
 
-#: www/faq.php:160
+#: www/faq.php:159
 #, php-format
 msgid ""
 "The official mailing list is %s. More information about all FreeBSD mailing "
@@ -3261,11 +3262,11 @@ msgstr ""
 "Mailinglisten finden Sie unter <a href=\"https://www.FreeBSD.org/handbook/"
 "eresources.html#eresources-mail\">FreeBSD Mailing Lists</a>."
 
-#: www/faq.php:163
+#: www/faq.php:162
 msgid "How do I get these ports?"
 msgstr "Wie bekomme ich diese Ports?"
 
-#: www/faq.php:166
+#: www/faq.php:165
 msgid ""
 "For full information on how to obtain the ports which appear on this "
 "website, please see <a href=\"https://www.FreeBSD.org/ports/\">FreeBSD "
@@ -3278,16 +3279,16 @@ msgstr ""
 "zu erhalten, ist über <span class=\"cmd\">git</span>. Ein verkürztes "
 "Beispiel ist:"
 
-#: www/faq.php:173
+#: www/faq.php:172
 msgid "How is the website updated?"
 msgstr "Wie wird die Website aktualisiert?"
 
-#: www/faq.php:179
+#: www/faq.php:178
 msgid "FreeBSD repository"
 msgstr "FreeBSD-Repository"
 
 #. TRANSLATORS: %s is a link whose text is 'FreeBSD repository'.
-#: www/faq.php:179
+#: www/faq.php:178
 #, php-format
 msgid ""
 "The source code for the entire FreeBSD operating system and the Ports tree "
@@ -3300,7 +3301,7 @@ msgstr ""
 "class=\"cmd\">git</span>, um Änderungen zu erkennen und die neuen Commits in "
 "ihre Datenbank zu laden."
 
-#: www/faq.php:182
+#: www/faq.php:181
 msgid ""
 "In the past, FreshPorts would parse the emails sent out for each commit and "
 "then load the information into a database. In theory, it's fairly straight "
@@ -3312,11 +3313,11 @@ msgstr ""
 "einfach. In Praxis gibt es viel mehr als auf den ersten Blick erkennbar. Die "
 "Website wurde erstellt, sobald eine Nachricht angekommen war."
 
-#: www/faq.php:185
+#: www/faq.php:184
 msgid "What does unknown mean for a revision number?"
 msgstr "Was bedeutet 'unbekannt' für eine Revisionsnummer?"
 
-#: www/faq.php:188
+#: www/faq.php:187
 msgid ""
 "It means the data has been converted from an earlier version of the "
 "FreshPorts database that did not record this information."
@@ -3325,11 +3326,11 @@ msgstr ""
 "Datenbank konvertiert wurden, die diese Informationen nicht aufgezeichnet "
 "hat."
 
-#: www/faq.php:191
+#: www/faq.php:190
 msgid "Can I link to your site?"
 msgstr "Kann ich zu Ihrer Website hin verlinken?"
 
-#: www/faq.php:194
+#: www/faq.php:193
 msgid ""
 "Yes, thank you, you can. No need to ask us. Just go ahead and do it. We "
 "prefer the name FreshPorts (one word, mixed case). The following HTML is a "
@@ -3340,29 +3341,29 @@ msgstr ""
 "gemischte Groß- und Kleinschreibung). Der folgende HTML-Code ist ein guter "
 "Ausgangspunkt:"
 
-#: www/faq.php:200
+#: www/faq.php:199
 msgid "Here is a banner which you are free to use to link to this site:"
 msgstr ""
 "Hier ist ein Banner, den Sie frei verwenden können, um auf diese Website zu "
 "verlinken:"
 
-#: www/faq.php:206
+#: www/faq.php:205
 msgid "Here is the HTML for that graphic."
 msgstr "Hier ist der HTML-Code für diese Grafik."
 
-#: www/faq.php:213
+#: www/faq.php:212
 msgid "Please save this graphic on your website."
 msgstr "Bitte speichern Sie diese Grafik auf Ihrer Website."
 
-#: www/faq.php:216
+#: www/faq.php:215
 msgid "What do these symbols mean?"
 msgstr "Was bedeuten diese Symbole?"
 
-#: www/faq.php:220
+#: www/faq.php:219
 msgid "There are a few symbols you will see in this website."
 msgstr "Es gibt einige Symbole, die Sie auf dieser Website sehen werden."
 
-#: www/faq.php:223
+#: www/faq.php:222
 #, php-format
 msgid ""
 "Homepage: a link to the Project Page / home page for this port. A port can "
@@ -3383,7 +3384,7 @@ msgstr ""
 "id=b7f05445c00f2625aa19b4154ebcbce5ed2daa52\">WWW verschoben</a> wurde von "
 "%1$s nach %2$s."
 
-#: www/faq.php:226
+#: www/faq.php:225
 msgid ""
 "Fallout: a link to search the <a href=\"https://lists.freebsd.org/archives/"
 "freebsd-pkg-fallout/\">freebsd-pkg-fallout archives</a>. If the resulting "
@@ -3395,12 +3396,12 @@ msgstr ""
 "resultierende Fallout-Liste leer ist: Der Port wurde möglicherweise aufgrund "
 "von Fallout eines verwandten Ports übersprungen."
 
-#: www/faq.php:229
+#: www/faq.php:228
 msgid "Repology: a link to search the Repology packaging hub for this port."
 msgstr ""
 "Repology: ein Link, um im Repology-Paket-Hub nach diesem Port zu suchen."
 
-#: www/faq.php:232
+#: www/faq.php:231
 msgid ""
 "Find Bugs: a link to search for open Problem Reports (issues/bugs) for this "
 "port."
@@ -3408,20 +3409,20 @@ msgstr ""
 "Finde Fehler: ein Link, um nach offenen Problemberichten (Issues/ Bugs) für "
 "diesen Port zu suchen."
 
-#: www/faq.php:235
+#: www/faq.php:234
 msgid "New Bug: a link to open a new Problem Report (issue/bug) for this port."
 msgstr ""
 "Neuer Fehler: ein Link, um einen neuen Problembericht (Issue/Bug) für diesen "
 "Port zu eröffnen."
 
-#: www/faq.php:238
+#: www/faq.php:237
 msgid ""
 "New: This port has been recently added. A port is marked as new for 10 days."
 msgstr ""
 "Neu: Dieser Port wurde kürzlich hinzugefügt. Ein Port ist 10 Tage lang als "
 "neu gekennzeichnet."
 
-#: www/faq.php:241
+#: www/faq.php:240
 #, php-format
 msgid ""
 "Forbidden: The port is marked as forbidden. If you view the port details, "
@@ -3434,7 +3435,7 @@ msgstr ""
 "Pakete für einen verbotenen Port werden nicht vom Paketcluster erstellt. "
 "Deshalb wird %s nicht funktionieren."
 
-#: www/faq.php:244
+#: www/faq.php:243
 #, php-format
 msgid ""
 "Broken: The port is marked as broken. Perhaps it won't compile. Maybe it "
@@ -3448,7 +3449,7 @@ msgstr ""
 "einen defekten Port werden nicht vom Paket-Cluster erstellt. Deshalb wird %s "
 "nicht funktionieren."
 
-#: www/faq.php:247
+#: www/faq.php:246
 msgid ""
 "Deprecated: The port is marked as deprecated. Perhaps it has exceeded its "
 "lifetime or is obsolete."
@@ -3456,7 +3457,7 @@ msgstr ""
 "Veraltet: Der Port ist als veraltet gekennzeichnet. Vielleicht hat er seine "
 "Lebensdauer überschritten oder ist obsolet."
 
-#: www/faq.php:250
+#: www/faq.php:249
 msgid ""
 "Expiration Date: The port has an expiration date. A port may be removed from "
 "the tree after this date. Often added in conjunction with Deprecated."
@@ -3465,7 +3466,7 @@ msgstr ""
 "Datum aus dem Baum entfernt werden. Oft in Verbindung mit Veraltet "
 "hinzugefügt."
 
-#: www/faq.php:253
+#: www/faq.php:252
 msgid ""
 "Expired: The port has passed the expiration date. A port may be removed from "
 "the tree after this date. Often added in conjunction with Deprecated."
@@ -3474,7 +3475,7 @@ msgstr ""
 "diesem Datum aus dem Baum entfernt werden. Oft in Verbindung mit Veraltet "
 "hinzugefügt."
 
-#: www/faq.php:256
+#: www/faq.php:255
 #, php-format
 msgid ""
 "Ignore: The port is marked as ignore. It probably does not build. Packages "
@@ -3485,7 +3486,7 @@ msgstr ""
 "nicht gebaut. Pakete für einen ignorierten Port werden nicht vom Paket-"
 "Cluster erstellt. Deshalb wird %s nicht funktionieren."
 
-#: www/faq.php:259
+#: www/faq.php:258
 msgid ""
 "Files: If you click on this graphic, you will be taken to the list of files "
 "touched by the commit in question."
@@ -3493,7 +3494,7 @@ msgstr ""
 "Dateien: Wenn Sie auf diese Grafik klicken, gelangen Sie zur Liste der "
 "Dateien, die von dem betreffenden Commit berührt wurden."
 
-#: www/faq.php:262
+#: www/faq.php:261
 msgid ""
 "Refresh: The system is in the process of refreshing that port by inspecting "
 "the ports tree. You should rarely see this."
@@ -3501,7 +3502,7 @@ msgstr ""
 "Aktualisieren: Das System ist dabei, diesen Port zu aktualisieren, indem es "
 "den Ports-Baum überprüft. Sie sollten dies selten sehen."
 
-#: www/faq.php:263
+#: www/faq.php:262
 msgid ""
 "If you do see one, chances are that the port contains an error that prevents "
 "make(1) from running. For example:"
@@ -3509,7 +3510,7 @@ msgstr ""
 "Wenn Sie einen sehen, ist die Wahrscheinlichkeit groß, dass der Port einen "
 "Fehler enthält, der verhindert, dass make(1) ausgeführt wird. Zum Beispiel:"
 
-#: www/faq.php:272
+#: www/faq.php:271
 msgid ""
 "In such circumstances, the port committer is notified (if they have opted in "
 "to the FreshPorts Sanity Check Report) and they should fix the problem as "
@@ -3524,11 +3525,11 @@ msgstr ""
 "verschwinden, nachdem FreshPorts die alten Commits bearbeitet hat. Dies kann "
 "einige Stunden dauern."
 
-#: www/faq.php:275
+#: www/faq.php:274
 msgid "Deleted: This port has been removed from the ports tree."
 msgstr "Deleted: Dieser Port wurde aus dem Ports-Baum entfernt."
 
-#: www/faq.php:278
+#: www/faq.php:277
 msgid ""
 "These icons are for older commits. At one time, FreshPorts parsed emails. "
 "This icon will appear alongside commits before the repo moved from <span "
@@ -3549,7 +3550,7 @@ msgstr ""
 "Dieser Link wird nicht für Commit-Nachrichten vor dem 3. März 2002 angezeigt "
 "(dem Datum seit dem FreshPorts die Message-ID speichert)."
 
-#: www/faq.php:281
+#: www/faq.php:280
 msgid ""
 "FreshPorts commit message: This will take you to the FreshPorts commit "
 "message and allow you to see all other ports which were affected by this "
@@ -3561,7 +3562,7 @@ msgstr ""
 "betroffen waren. Dieser Link wird nicht für Commit-Nachrichten vor dem 3. "
 "März 2002 angezeigt (dem Datum seit dem FreshPorts die Message-ID speichert)."
 
-#: www/faq.php:284
+#: www/faq.php:283
 msgid ""
 "NOTE: This link has been made redundant by recent advances in the Files "
 "link. See next icon."
@@ -3569,7 +3570,7 @@ msgstr ""
 "HINWEIS: Dieser Link wurde durch die jüngsten Fortschritte im Dateien-Link "
 "überflüssig gemacht. Siehe nächstes Symbol."
 
-#: www/faq.php:288
+#: www/faq.php:287
 msgid ""
 "Item is on one of your default watch lists: This port is on one of your "
 "default watch lists. Click this icon to remove the port from your default "
@@ -3581,7 +3582,7 @@ msgstr ""
 "Beobachtungslisten zu entfernen. Dieses Symbol wird nur angezeigt, wenn Sie "
 "angemeldet sind."
 
-#: www/faq.php:291
+#: www/faq.php:290
 msgid ""
 "Add item to your default watch lists: This port is not on any of your "
 "default watch lists. Click this icon to add the port to your default watch "
@@ -3592,7 +3593,7 @@ msgstr ""
 "dieses Symbol, um den Port zu Ihren Standard-Beobachtungslisten "
 "hinzuzufügen. Dieses Symbol wird nur angezeigt, wenn Sie angemeldet sind."
 
-#: www/faq.php:294
+#: www/faq.php:293
 msgid ""
 "Encoding Errors (not all of the commit message was ASCII): Some of the "
 "commit message may be altered because of character conversion problems. We "
@@ -3605,7 +3606,7 @@ msgstr ""
 "Diese Fehler können in der Protokollnachricht oder an anderer Stelle in der "
 "Commit-E-Mail auftreten."
 
-#: www/faq.php:297
+#: www/faq.php:296
 msgid ""
 "Watch List Count (WLC): This is the number of watch lists which are watching "
 "this port. This might give you an idea of the popularity of the port."
@@ -3614,7 +3615,7 @@ msgstr ""
 "diesen Port beobachten. Dies könnte Ihnen eine Vorstellung von der "
 "Beliebtheit des Ports geben."
 
-#: www/faq.php:300
+#: www/faq.php:299
 msgid ""
 "Git Repository: This link will take you to the Git Repository entry for this "
 "version of the file."
@@ -3622,7 +3623,7 @@ msgstr ""
 "Git-Repository: Dieser Link führt Sie zum Git-Repository-Eintrag für diese "
 "Version der Datei."
 
-#: www/faq.php:303
+#: www/faq.php:302
 msgid ""
 "SVN Repository: This link will take you to the Subversion Repository entry "
 "for this version of the file."
@@ -3630,7 +3631,7 @@ msgstr ""
 "SVN-Repository: Dieser Link führt Sie zum Subversion-Repository-Eintrag für "
 "diese Version der Datei."
 
-#: www/faq.php:306
+#: www/faq.php:305
 msgid ""
 "CVS Repository: Deprecated, and historical. Probably does not appear much "
 "any more. This link will take you to the CVS Repository entry for this "
@@ -3640,7 +3641,7 @@ msgstr ""
 "mehr so oft. Dieser Link führt Sie zum CVS-Repository-Eintrag für diese "
 "Version der Datei. Dies gilt nur für viel ältere Commits."
 
-#: www/faq.php:309
+#: www/faq.php:308
 msgid ""
 "<a href=\"https://www.vuxml.org/freebsd/\">VuXML</a> vulnerability. Click "
 "icon for details."
@@ -3648,7 +3649,7 @@ msgstr ""
 "<a href=\"https://www.vuxml.org/freebsd/\">VuXML</a>-Sicherheitslücke. "
 "Klicken Sie auf das Symbol für Details."
 
-#: www/faq.php:312
+#: www/faq.php:311
 msgid ""
 "A past <a href=\"https://www.vuxml.org/freebsd/\">VuXML</a> vulnerability. "
 "Click icon for details. NOTE: A feature of security/vuxml is it names the "
@@ -3663,22 +3664,22 @@ msgstr ""
 "ändert, werden vergangene Sicherheitslücken nicht in FreshPorts angezeigt. "
 "Das liegt daran, dass FreshPorts keine historischen Paketnamen speichert."
 
-#: www/faq.php:315
+#: www/faq.php:314
 msgid "This port has some restrictions on it."
 msgstr "Dieser Port hat einige Einschränkungen."
 
-#: www/faq.php:318
+#: www/faq.php:317
 msgid ""
 "This port has some restrictions with respect to being included on a CD-ROM."
 msgstr ""
 "Dieser Port hat einige Einschränkungen bezüglich der Aufnahme auf eine CD-"
 "ROM."
 
-#: www/faq.php:321
+#: www/faq.php:320
 msgid "This port will require interaction during installation."
 msgstr "Dieser Port erfordert während der Installation Interaktion."
 
-#: www/faq.php:324
+#: www/faq.php:323
 msgid ""
 "Dependency Search: Action depends on context. Click on this icon to search "
 "for ports depending on the current port, ports maintained by the current "
@@ -3689,7 +3690,7 @@ msgstr ""
 "die vom aktuellen Maintainer gepflegt werden, oder andere Commits des "
 "aktuellen Committers."
 
-#: www/faq.php:327
+#: www/faq.php:326
 msgid ""
 "Revision details. Click on the Files icon in the commit history and you'll "
 "see what files in this port were touched by this commit. Click on the "
@@ -3701,7 +3702,7 @@ msgstr ""
 "wurden. Klicken Sie auf die Revision details, um die Revision der Datei "
 "anzuzeigen, die mit diesem Commit verknüpft ist."
 
-#: www/faq.php:330
+#: www/faq.php:329
 msgid ""
 "Annotate: If you click on this graphic, you will be taken to a view of the "
 "file in question, with a listing of the commits that last changed each line."
@@ -3710,7 +3711,7 @@ msgstr ""
 "der betreffenden Datei, mit einer Auflistung der Commits, die zuletzt die "
 "jeweilige Zeile geändert haben."
 
-#: www/faq.php:333
+#: www/faq.php:332
 msgid ""
 "Diff. Click on the Files icon in the commit history and you'll see what "
 "files in this port were touched by this commit. Click on the Diff icon to "
@@ -3721,7 +3722,7 @@ msgstr ""
 "auf das Diff-Symbol, um den Unterschied zwischen dieser Revision der Datei "
 "und der vorherigen Revision anzuzeigen."
 
-#: www/faq.php:336
+#: www/faq.php:335
 msgid ""
 "Sanity Test Failures. The maintainers and committers are good. But sometimes "
 "a mistake slips through. This records the mistake to make it easier for "
@@ -3733,7 +3734,7 @@ msgstr ""
 "erleichtern, ihn zu korrigieren, falls er unbemerkt bleibt. Wenn Sie dieses "
 "Symbol neben einem Commit sehen, hat es einen Sanity-Test nicht bestanden."
 
-#: www/faq.php:339
+#: www/faq.php:338
 msgid ""
 "Flagged Commit. This commit is on your list of flagged commits. Why would "
 "you flag a commit? Perhaps you want to review that commit. Perhaps you want "
@@ -3744,13 +3745,13 @@ msgstr ""
 "diesen Commit überprüfen. Vielleicht möchten Sie ihn später MFC. Klicken Sie "
 "auf dieses Symbol, um den Commit aus Ihrer Markierungsliste zu entfernen."
 
-#: www/faq.php:342
+#: www/faq.php:341
 msgid "Click on this icon to add the commit to your flagged list."
 msgstr ""
 "Klicken Sie auf dieses Symbol, um den Commit zu Ihrer Markierungsliste "
 "hinzuzufügen."
 
-#: www/faq.php:345
+#: www/faq.php:344
 msgid ""
 "Ascending / Descending: These icons appear on particular tables and allow "
 "changing the order rows are sorted by."
@@ -3759,11 +3760,11 @@ msgstr ""
 "ermöglichen es, die Reihenfolge zu ändern, nach der die Zeilen sortiert "
 "werden."
 
-#: www/faq.php:349
+#: www/faq.php:348
 msgid "Why don't my old bookmarks work?"
 msgstr "Warum funktionieren meine alten Lesezeichen nicht?"
 
-#: www/faq.php:354
+#: www/faq.php:353
 #, php-format
 msgid ""
 "Many things changed between FP1 and FP2. The most major change was in the "
@@ -3782,7 +3783,7 @@ msgstr ""
 "grundlegend verändert. Als Ergebnis dieser Änderungen sind viele interne IDs "
 "und Werte nicht mehr gültig. Daher funktionieren URLs wie %s nicht mehr."
 
-#: www/faq.php:357
+#: www/faq.php:356
 msgid ""
 "If it is any consolation, the new URLs are transparent and permanent. They "
 "are of the form &lt;category&gt;/&lt;port&gt;."
@@ -3790,20 +3791,20 @@ msgstr ""
 "Wenn es Ihnen ein Trost ist, die neuen URLs sind transparent und dauerhaft. "
 "Sie haben die Form &lt;Kategorie&gt;/&lt;Port&gt;."
 
-#: www/faq.php:361
+#: www/faq.php:360
 msgid "Do you have any news feeds?"
 msgstr "Haben Sie Nachrichten-Feeds?"
 
-#: www/faq.php:366
+#: www/faq.php:365
 msgid "Yes. Read <a href=\"/backend/newsfeeds.php\">all about it</a>!"
 msgstr "Ja. Lesen Sie <a href=\"/backend/newsfeeds.php\">alles darüber</a>!"
 
-#: www/faq.php:370
+#: www/faq.php:369
 msgid "Can the main page load any faster?"
 msgstr "Kann die Hauptseite schneller geladen werden?"
 
 #. TRANSLATORS: %s is a link to the FreshPorts home page URL.
-#: www/faq.php:377
+#: www/faq.php:376
 #, php-format
 msgid ""
 "%s is the main page of this website. It contains a lot of information. You "
@@ -3812,12 +3813,12 @@ msgstr ""
 "%s ist die Hauptseite dieser Website. Sie enthält viele Informationen. Sie "
 "können diese Informationen mit Parametern verkürzen."
 
-#: www/faq.php:380
+#: www/faq.php:379
 #, php-format
 msgid "Try this URL: %s"
 msgstr "Versuchen Sie diese URL: %s"
 
-#: www/faq.php:384
+#: www/faq.php:383
 msgid ""
 "<b>num</b> - number of ports to show (regardless of commits so the last "
 "commit may not list fully). The valid values are 10..100."
@@ -3826,7 +3827,7 @@ msgstr ""
 "sodass der letzte Commit möglicherweise nicht vollständig angezeigt wird). "
 "Die gültigen Werte sind 10..100."
 
-#: www/faq.php:387
+#: www/faq.php:386
 msgid ""
 "<b>days</b> - number of summary days (in the right hand column) to display. "
 "The valid values are 0..9."
@@ -3834,7 +3835,7 @@ msgstr ""
 "<b>days</b> - Anzahl der zusammenfassenden Tage (in der rechten Spalte), die "
 "angezeigt werden sollen. Die gültigen Werte sind 0..9."
 
-#: www/faq.php:390
+#: www/faq.php:389
 msgid ""
 "<b>dailysummary</b> - similar to days, but displays a summary of the days "
 "instead of a link to a page of commits for that day."
@@ -3842,29 +3843,29 @@ msgstr ""
 "<b>dailysummary</b> - ähnlich wie days, zeigt jedoch eine Zusammenfassung "
 "der Tage an, anstatt einen Link zu einer Seite mit Commits für diesen Tag."
 
-#: www/faq.php:393
+#: www/faq.php:392
 msgid "Here are a few examples:"
 msgstr "Hier sind einige Beispiele:"
 
-#: www/faq.php:398
+#: www/faq.php:397
 msgid "URL"
 msgstr "URL"
 
-#: www/faq.php:401
+#: www/faq.php:400
 msgid "The last ten ports"
 msgstr "Die letzten zehn Ports"
 
-#: www/faq.php:405
+#: www/faq.php:404
 msgid "Same as above, but show only two days of previous commits"
 msgstr "Wie oben, aber zeigt nur Commits der letzten zwei Tage an"
 
-#: www/faq.php:409
+#: www/faq.php:408
 msgid "Same as above, but show summaries instead of a link to another page"
 msgstr ""
 "Wie oben, aber zeigt Zusammenfassungen anstelle eines Links zu einer anderen "
 "Seite"
 
-#: www/faq.php:415
+#: www/faq.php:414
 msgid ""
 "<b>NOTE:</b> Effective 13 November 2003, these parameters are no longer "
 "available."
@@ -3872,11 +3873,11 @@ msgstr ""
 "<b>HINWEIS:</b> Ab dem 13. November 2003 sind diese Parameter nicht mehr "
 "verfügbar."
 
-#: www/faq.php:419
+#: www/faq.php:418
 msgid "How can I view the commits for a particular day?"
 msgstr "Wie kann ich die Commits für einen bestimmten Tag anzeigen?"
 
-#: www/faq.php:424
+#: www/faq.php:423
 #, php-format
 msgid ""
 "Yes, you can. %s displays all the commits for today (relative to the current "
@@ -3885,7 +3886,7 @@ msgstr ""
 "Ja, das können Sie. %s zeigt alle Commits für heute an (bezogen auf die "
 "aktuelle Serverzeit)."
 
-#: www/faq.php:427
+#: www/faq.php:426
 #, php-format
 msgid ""
 "You can also pass a parameter and view the commits for a given day. For "
@@ -3895,7 +3896,7 @@ msgstr ""
 "bestimmten Tag anzeigen. Zum Beispiel zeigt %s alle Commits für den 19. "
 "November 2002 an"
 
-#: www/faq.php:430
+#: www/faq.php:429
 msgid ""
 "The date should be of the format YYYY/MM/DD but I'm sure different formats "
 "will work. If the code has trouble figuring out what date you mean, it will "
@@ -3906,13 +3907,13 @@ msgstr ""
 "das von Ihnen gemeinte Datum zu erkennen, wird er raten und Sie darüber "
 "informieren, dass er das Datum angepasst hat."
 
-#: www/faq.php:433
+#: www/faq.php:432
 msgid "Why can't I add a port to my watch list?"
 msgstr ""
 "Warum kann ich einen Port nicht zu meiner Beobachtungsliste hinzufügen?"
 
 #. TRANSLATORS: %1$s is the 'add to watch list' icon, %2$s is the 'on your watch list' icon.
-#: www/faq.php:440
+#: www/faq.php:439
 #, php-format
 msgid ""
 "You have clicked on the %1$s icon and it doesn't change to a %2$s. Yes, I've "
@@ -3931,7 +3932,7 @@ msgstr ""
 "und klicken Sie dann auf die Schaltfläche \"Als Standard festlegen\"."
 
 #. TRANSLATORS: %1$s is the 'on your watch list' icon, %2$s is the 'add to watch list' icon.
-#: www/faq.php:445
+#: www/faq.php:444
 #, php-format
 msgid ""
 "NOTE: The %1$s will only appear beside a port that is on one of your default "
@@ -3947,19 +3948,19 @@ msgstr ""
 "Sie, die Standard-Beobachtungslisten in Ihren <a href=\"/watch-list-"
 "maintenance.php\">Beobachtungslisten-Einstellungen</a> festzulegen."
 
-#: www/faq.php:448
+#: www/faq.php:447
 msgid "Why doesn't this port appear on my watch list?"
 msgstr "Warum erscheint dieser Port nicht auf meiner Beobachtungsliste?"
 
-#: www/faq.php:453
+#: www/faq.php:452
 msgid "Please refer to the above question."
 msgstr "Bitte beziehen Sie sich auf die obige Frage."
 
-#: www/faq.php:456
+#: www/faq.php:455
 msgid "What are Port Moves?"
 msgstr "Was sind Port Moves?"
 
-#: www/faq.php:461
+#: www/faq.php:460
 #, php-format
 msgid ""
 "Some ports (for example <a href=\"/net/\">net</a>/<a href=\"/net/gift/"
@@ -3970,11 +3971,11 @@ msgstr ""
 "\">gift</a>) haben einen Abschnitt mit dem Titel \"Port Moves\". FreshPorts "
 "ermittelt Informationen über Ports aus den Commits des %s."
 
-#: www/faq.php:461
+#: www/faq.php:460
 msgid "repository"
 msgstr "Repository"
 
-#: www/faq.php:463
+#: www/faq.php:462
 msgid ""
 "With <span class=\"cmd\">subversion</span>, there could be a manual change "
 "to the repository, not creating a commit email. Such moves were often "
@@ -3989,7 +3990,7 @@ msgstr ""
 "wurde vorgenommen, um sicherzustellen, dass die Port-Historie erhalten "
 "bleibt."
 
-#: www/faq.php:465
+#: www/faq.php:464
 msgid ""
 "With <span class=\"cmd\">git</span>, <i>repo-copies</i> do not occur; the "
 "changes are accomplished via commits."
@@ -3997,7 +3998,7 @@ msgstr ""
 "Mit <span class=\"cmd\">git</span> finden keine <i>repo-copies</i> statt; "
 "die Änderungen werden über Commits durchgeführt."
 
-#: www/faq.php:468
+#: www/faq.php:467
 msgid ""
 "Such moves/commits are documented in <a href=\"/MOVED\">/usr/ports/MOVED</"
 "a>. FreshPorts parses this file and records these changes in its database."
@@ -4006,20 +4007,20 @@ msgstr ""
 "dokumentiert. FreshPorts verarbeitet diese Datei und zeichnet die Änderungen "
 "in seiner Datenbank auf."
 
-#: www/faq.php:471
+#: www/faq.php:470
 msgid "This new feature was added on 31 December 2003."
 msgstr "Diese neue Funktion wurde am 31. Dezember 2003 hinzugefügt."
 
-#: www/faq.php:475
+#: www/faq.php:474
 msgid "What is /usr/ports/UPDATING?"
 msgstr "Was ist /usr/ports/UPDATING?"
 
-#: www/faq.php:480
+#: www/faq.php:479
 #, php-format
 msgid "%1$s is similar to %2$s, but for ports, not for the source tree."
 msgstr "%1$s ist ähnlich wie %2$s, aber für Ports, nicht für den Quellbaum."
 
-#: www/faq.php:483
+#: www/faq.php:482
 msgid ""
 "FreshPorts parses this file and attempts to relate the entries to any ports "
 "it can find. Such relations are not always possible. We do the best we can. "
@@ -4031,11 +4032,11 @@ msgstr ""
 "möglich. Wir tun unser Bestes. Der <a href=\"/net/openldap22-client/\">net/"
 "openldap22-client</a>-Port ist ein gutes Beispiel dafür, was zu erwarten ist."
 
-#: www/faq.php:487
+#: www/faq.php:486
 msgid "What are Master/Slave ports?"
 msgstr "Was sind Master/Slave-Ports?"
 
-#: www/faq.php:492
+#: www/faq.php:491
 #, php-format
 msgid ""
 "Some ports are so similar to another port that it makes sense to maintain "
@@ -4046,7 +4047,7 @@ msgstr ""
 "nur einen Port zu pflegen und die Unterschiede im anderen Port anzugeben. "
 "Das ist ähnlich wie die Beziehung zwischen %1$s und %2$s."
 
-#: www/faq.php:495
+#: www/faq.php:494
 msgid ""
 "A good example is <a href=\"/www/\">www</a>/<a href=\"/www/"
 "mod_php4\">mod_php4</a>. You can see that the <b>master port</b> for that is "
@@ -4060,13 +4061,13 @@ msgstr ""
 "listet <a href=\"/lang/\">lang</a>/<a href=\"/lang/php4/\">php4</a> mehrere "
 "<b>Slave Ports</b> auf."
 
-#: www/faq.php:498
+#: www/faq.php:497
 msgid "The ability to add this feature is because of this patch:"
 msgstr ""
 "Die Möglichkeit, diese Funktion hinzuzufügen, ist auf diesen Patch "
 "zurückzuführen:"
 
-#: www/faq.php:523
+#: www/faq.php:522
 msgid ""
 "The FreeBSD tree has no defined method for handling master/slave ports. It "
 "is because of this that FreshPorts never attempted to refresh slave ports "
@@ -4079,7 +4080,7 @@ msgstr ""
 "weitgehend zuverlässige Methode haben, werden alle Slave-Ports aktualisiert, "
 "wenn der Master-Port aktualisiert wird."
 
-#: www/faq.php:526
+#: www/faq.php:525
 msgid ""
 "This method works for all but 40 ports which are involved in a master/slave "
 "relationship. It is hoped that those 40 are fixed soon. It is also hoped "
@@ -4089,11 +4090,11 @@ msgstr ""
 "Slave-Beziehung stehen. Es wird gehofft, dass diese 40 bald behoben werden. "
 "Es wird auch gehofft, dass der obige Patch in den Baum übernommen wird."
 
-#: www/faq.php:530
+#: www/faq.php:529
 msgid "What is this \"to add the package\" stuff?"
 msgstr "Was ist dieses \"to add the package\" Zeug?"
 
-#: www/faq.php:535
+#: www/faq.php:534
 msgid ""
 "Included within the port description is the instruction for adding the "
 "package. This information can be important when the package name does not "
@@ -4107,7 +4108,7 @@ msgstr ""
 "x11/\">x11</a>/<a href=\"/x11/XFree86-4-clients/\">XFree86-4-clients</a>. "
 "Der Befehl zum Hinzufügen dieses Pakets lautet:"
 
-#: www/faq.php:542
+#: www/faq.php:541
 msgid ""
 "This normally isn't a problem, but for the 1900 or so ports which are "
 "different, this information is very useful."
@@ -4115,7 +4116,7 @@ msgstr ""
 "Das ist normalerweise kein Problem, aber für etwa 1900 Ports, die "
 "unterschiedlich sind, ist diese Informationen sehr nützlich."
 
-#: www/faq.php:545
+#: www/faq.php:544
 #, php-format
 msgid ""
 "If the %1$s information does not appear, you'll be told why there is no "
@@ -4125,7 +4126,7 @@ msgstr ""
 "warum es kein Paket gibt. Dies wird durch die %2$s Variable in der Makefile "
 "des Ports gesteuert."
 
-#: www/faq.php:548
+#: www/faq.php:547
 #, php-format
 msgid ""
 "Broken, ignored, and forbidden ports are not built by the package cluster. "
@@ -4134,11 +4135,11 @@ msgstr ""
 "Defekte, ignorierte und verbotene Ports werden nicht vom Paket-Cluster "
 "erstellt. Daher gibt es für %s kein Paket."
 
-#: www/faq.php:551
+#: www/faq.php:550
 msgid "Why does the search page use GET and not POST?"
 msgstr "Warum verwendet die Suchseite GET und nicht POST?"
 
-#: www/faq.php:556
+#: www/faq.php:555
 #, php-format
 msgid ""
 "If you visit the <a href=\"/search.php\">search</a> page, and you run a "
@@ -4148,11 +4149,11 @@ msgstr ""
 "durchführen, werden Sie feststellen, dass die URL sehr lang wird. Zum "
 "Beispiel: %s."
 
-#: www/faq.php:556
+#: www/faq.php:555
 msgid "this really long link"
 msgstr "dieser wirklich lange Link"
 
-#: www/faq.php:558
+#: www/faq.php:557
 msgid ""
 "Long URLs occur like that because the search form uses a GET. A long URL "
 "would not occur if it was using a POST. The long URLs are useful because "
@@ -4164,7 +4165,7 @@ msgstr ""
 "aber nützlich, weil sie es Ihnen ermöglichen, Ihre Lieblingssuche als "
 "Lesezeichen zu speichern. Deshalb wird ein GET anstelle eines POST verwendet."
 
-#: www/faq.php:561
+#: www/faq.php:560
 msgid ""
 "It also makes it easier to <a href=\"https://validator.w3.org/\">validate "
 "the HTML</a> if you can provide a URL that exercises all the options that "
@@ -4174,11 +4175,11 @@ msgstr ""
 "des HTML</a>, wenn man eine URL bereitstellen kann, die alle zu testenden "
 "Optionen abdeckt."
 
-#: www/faq.php:564
+#: www/faq.php:563
 msgid "What are all those fields I can search on?"
 msgstr "Was sind all diese Felder, nach denen ich suchen kann?"
 
-#: www/faq.php:569
+#: www/faq.php:568
 msgid ""
 "For those familiar with the FreeBSD ports structure, the following fields "
 "indicate their origin:"
@@ -4186,64 +4187,64 @@ msgstr ""
 "Für diejenigen, die mit der FreeBSD-Ports-Struktur vertraut sind, geben die "
 "folgenden Felder ihre Herkunft an:"
 
-#: www/faq.php:573
+#: www/faq.php:572
 msgid "Field"
 msgstr "Feld"
 
-#: www/faq.php:573
+#: www/faq.php:572
 msgid "Origin"
 msgstr "Ursprung"
 
-#: www/faq.php:574 www/search.php:1223
+#: www/faq.php:573 www/search.php:1225
 msgid "Port Name"
 msgstr "Portname"
 
-#: www/faq.php:575 www/search.php:1220
+#: www/faq.php:574 www/search.php:1222
 msgid "Package Name"
 msgstr "Paketname"
 
-#: www/faq.php:576
+#: www/faq.php:575
 msgid "Latest Link"
 msgstr "Letzter Link"
 
-#: www/faq.php:577 www/ports-conflicts.php:42 www/search.php:1216
+#: www/faq.php:576 www/ports-conflicts.php:42 www/search.php:1218
 msgid "Maintainer"
 msgstr "Betreuer"
 
-#: www/faq.php:578 www/search.php:1224
+#: www/faq.php:577 www/search.php:1226
 msgid "Short Description"
 msgstr "Kurze Beschreibung"
 
-#: www/faq.php:579 www/search.php:1215
+#: www/faq.php:578 www/search.php:1217
 msgid "Long Description"
 msgstr "Lange Beschreibung"
 
-#: www/faq.php:580 www/search.php:1209
+#: www/faq.php:579 www/search.php:1211
 msgid "Depends Build"
 msgstr "Abhängigkeiten für das Bauen"
 
-#: www/faq.php:581 www/search.php:1210
+#: www/faq.php:580 www/search.php:1212
 msgid "Depends Lib"
 msgstr "Abhängigkeiten von Bibliotheken"
 
-#: www/faq.php:582 www/search.php:1211
+#: www/faq.php:581 www/search.php:1213
 msgid "Depends Run"
 msgstr "Abhängigkeiten zur Laufzeit"
 
-#: www/faq.php:583 www/search.php:1219
+#: www/faq.php:582 www/search.php:1221
 msgid "Message ID"
 msgstr "Nachrichten-ID"
 
-#: www/faq.php:583
+#: www/faq.php:582
 msgid "The message id in the original commit email"
 msgstr "Die Nachrichten-ID in der ursprünglichen Commit-E-Mail"
 
-#: www/faq.php:584 www/faq.php:585
+#: www/faq.php:583 www/faq.php:584
 #, php-format
 msgid "output from %s"
 msgstr "Ausgabe von %s"
 
-#: www/faq.php:588
+#: www/faq.php:587
 #, php-format
 msgid ""
 "For all of the above origins, you can obtain the value using %s. For example:"
@@ -4251,7 +4252,7 @@ msgstr ""
 "Für alle oben genannten Ursprünge können Sie den Wert mit %s abrufen. Zum "
 "Beispiel:"
 
-#: www/faq.php:597
+#: www/faq.php:596
 #, php-format
 msgid ""
 "This value is obtained from a file in the port directory. For example %s."
@@ -4259,14 +4260,14 @@ msgstr ""
 "Dieser Wert wird aus einer Datei im Port-Verzeichnis abgerufen. Zum Beispiel "
 "%s."
 
-#: www/faq.php:600
+#: www/faq.php:599
 msgid ""
 "Where did this \"People watching this port, also watch\" feature come from?"
 msgstr ""
 "Woher kommt diese \"Leute, die diesen Port beobachten, beobachten auch\"-"
 "Funktion?"
 
-#: www/faq.php:605
+#: www/faq.php:604
 msgid ""
 "Like many FreshPorts features, this idea came from someone else. Florent "
 "Thoumie mentioned something about extending the ports system to include "
@@ -4281,7 +4282,7 @@ msgstr ""
 "vorzuschlagen, dass Sie, wenn Sie Firefox installieren, auch "
 "linuxflashplugin installieren."
 
-#: www/faq.php:608
+#: www/faq.php:607
 msgid ""
 "It was from this concept that I came up with \"People watching this port..."
 "\". This information is obtained by:"
@@ -4289,31 +4290,31 @@ msgstr ""
 "Es war aus diesem Konzept, dass ich auf \"Leute, die diesen Port "
 "beobachten...\" gekommen bin. Diese Informationen werden wie folgt abgerufen:"
 
-#: www/faq.php:610
+#: www/faq.php:609
 msgid "FreshPorts takes the port you are looking at"
 msgstr "FreshPorts nimmt den Port, den Sie sich anschauen"
 
-#: www/faq.php:611
+#: www/faq.php:610
 msgid "It finds all the watch lists that this port appears on"
 msgstr "Es findet alle Beobachtungslisten, auf denen dieser Port erscheint"
 
-#: www/faq.php:612
+#: www/faq.php:611
 msgid "It finds the top 5 most popular ports on those lists"
 msgstr "Es findet die 5 beliebtesten Ports auf diesen Listen"
 
-#: www/faq.php:613
+#: www/faq.php:612
 msgid "FreshPorts shows you the results"
 msgstr "FreshPorts zeigt Ihnen die Ergebnisse"
 
-#: www/faq.php:617
+#: www/faq.php:616
 msgid "All of this takes about 55ms."
 msgstr "All dies dauert etwa 55 ms."
 
-#: www/faq.php:620
+#: www/faq.php:619
 msgid "What do you mean, the master port has been updated?"
 msgstr "Was meinen Sie damit, dass der Master-Port aktualisiert wurde?"
 
-#: www/faq.php:625
+#: www/faq.php:624
 msgid ""
 "For some slave ports, you may see a message like this, just above the "
 "<b>Commit History</b>:"
@@ -4321,7 +4322,7 @@ msgstr ""
 "Für einige Slave-Ports sehen Sie möglicherweise eine Nachricht wie diese, "
 "direkt über der <b>Commit-Historie</b>:"
 
-#: www/faq.php:628
+#: www/faq.php:627
 msgid ""
 "NOTE: This slave port may no longer be vulnerable to issues shown below "
 "because the master port has been updated."
@@ -4329,7 +4330,7 @@ msgstr ""
 "HINWEIS: Dieser Slave-Port ist möglicherweise nicht mehr anfällig für die "
 "unten aufgeführten Probleme, da der Master-Port aktualisiert wurde."
 
-#: www/faq.php:632
+#: www/faq.php:631
 msgid ""
 "Slave ports can be updated with a commit against the master port. A commit "
 "against the master port will affect any slave ports. If a <a href=\"https://"
@@ -4346,7 +4347,7 @@ msgstr ""
 "jedoch nicht unter dem Slave-Port erscheinen, wodurch der falsche Eindruck "
 "entsteht, dass der Slave-Port immer noch anfällig ist."
 
-#: www/faq.php:635
+#: www/faq.php:634
 msgid ""
 "The above notice serves as a reminder that the slave port may no longer be "
 "vulnerable."
@@ -4354,11 +4355,11 @@ msgstr ""
 "Die obige Mitteilung dient als Erinnerung daran, dass der Slave-Port "
 "möglicherweise nicht mehr anfällig ist."
 
-#: www/faq.php:638
+#: www/faq.php:637
 msgid "How does FreshPorts determine the master sites?"
 msgstr "Wie bestimmt FreshPorts die Master-Sites?"
 
-#: www/faq.php:643
+#: www/faq.php:642
 msgid ""
 "Each port displays the master sites from which its distfiles can be "
 "downloaded. This information is obtained from \"make master-sites-all\". "
@@ -4373,7 +4374,7 @@ msgstr ""
 "dies in dieser <a href=\"https://docs.freebsd.org/cgi/mid.cgi?"
 "20041219204057.GE63708\">E-Mail</a>."
 
-#: www/faq.php:646
+#: www/faq.php:645
 msgid ""
 "In short, FreshPorts displays the list of master sites that should contain "
 "all the distfiles. That is why we use that value, and not one of the other "
@@ -4383,11 +4384,11 @@ msgstr ""
 "Distfiles enthalten sollten. Deshalb verwenden wir diesen Wert und nicht "
 "eine der anderen Optionen."
 
-#: www/faq.php:649
+#: www/faq.php:648
 msgid "Why don't you obscure email addresses?"
 msgstr "Warum verschleiern Sie keine E-Mail-Adressen?"
 
-#: www/faq.php:654
+#: www/faq.php:653
 msgid ""
 "FreshPorts used to obscure email addresses, but we don't any more. We "
 "realised that every email address on FreshPorts is already somewhere else "
@@ -4397,19 +4398,19 @@ msgstr ""
 "mehr. Wir haben erkannt, dass jede E-Mail-Adresse auf FreshPorts bereits "
 "vorhanden ist. Zum Beispiel:"
 
-#: www/faq.php:657
+#: www/faq.php:656
 msgid "www/ports pages"
 msgstr "www/ports-Seiten"
 
-#: www/faq.php:659
+#: www/faq.php:658
 msgid "fenner's output"
 msgstr "Fenners Ausgabe"
 
-#: www/faq.php:661
+#: www/faq.php:660
 msgid "cvsweb (now deprecated)"
 msgstr "cvsweb (jetzt veraltet)"
 
-#: www/faq.php:662
+#: www/faq.php:661
 msgid ""
 "<span class=\"cmd\">subversion</span> (still online, but replaced by <span "
 "class=\"cmd\">git</span>)"
@@ -4417,7 +4418,7 @@ msgstr ""
 "<span class=\"cmd\">subversion</span> (noch online, aber durch <span "
 "class=\"cmd\">git</span> ersetzt)"
 
-#: www/faq.php:667
+#: www/faq.php:666
 msgid ""
 "In short, it doesn't make sense to obscure that which is freely available "
 "elsewhere."
@@ -4425,7 +4426,7 @@ msgstr ""
 "Kurz gesagt, es macht keinen Sinn, das zu verschleiern, was anderswo frei "
 "verfügbar ist."
 
-#: www/faq.php:671
+#: www/faq.php:670
 msgid ""
 "Similarly, we do not entertain requests to remove information from our "
 "website. We only report upon what exists elsewhere."
@@ -4433,7 +4434,7 @@ msgstr ""
 "Ebenso gehen wir nicht auf Anfragen ein, Informationen von unserer Website "
 "zu entfernen. Wir berichten nur über das, was anderswo schon existiert."
 
-#: www/faq.php:676
+#: www/faq.php:675
 msgid ""
 "Why does the PORTVERSION at the top of page differ from that of the first "
 "commit?"
@@ -4441,11 +4442,11 @@ msgstr ""
 "Warum unterscheidet sich die PORTVERSION oben auf der Seite von der ersten "
 "Commit-Version?"
 
-#: www/faq.php:681
+#: www/faq.php:680
 msgid "This question refers to a port page."
 msgstr "Diese Frage bezieht sich auf eine Port-Seite."
 
-#: www/faq.php:684
+#: www/faq.php:683
 msgid ""
 "This situation usually occurs with MASTER/SLAVE ports. The Master port is "
 "updated with a new REVISION. No commit is done against the Slave port. "
@@ -4463,19 +4464,19 @@ msgstr ""
 "Sie den Slave-Port jetzt installieren würden, nachdem der Master "
 "aktualisiert wurde."
 
-#: www/faq.php:687
+#: www/faq.php:686
 msgid "What HTML anchors exist?"
 msgstr "Welche HTML-Anker existieren?"
 
-#: www/faq.php:691
+#: www/faq.php:690
 msgid "Anchors in port pages include:"
 msgstr "Anker in Port-Seiten umfassen:"
 
-#: www/faq.php:731
+#: www/faq.php:730
 msgid "Anchors make it easier to link to sections within pages."
 msgstr "Anker erleichtern das Verlinken zu Abschnitten innerhalb von Seiten."
 
-#: www/faq.php:734
+#: www/faq.php:733
 #, php-format
 msgid ""
 "For example, this link – note the %s at its tail – takes you to the commit "
@@ -4484,7 +4485,7 @@ msgstr ""
 "Zum Beispiel führt dieser Link – beachten Sie das %s am Ende – Sie zur "
 "Commit-Historie für security/acme.sh:"
 
-#: www/faq.php:740
+#: www/faq.php:739
 #, php-format
 msgid ""
 "Each of these sections has a %s link beside its heading. Click it, or copy "
@@ -4494,19 +4495,19 @@ msgstr ""
 "Sie darauf oder kopieren Sie ihn, um einen Link zu diesem Abschnitt zu "
 "erhalten."
 
-#: www/faq.php:743
+#: www/faq.php:742
 msgid "Enjoy. We can add more anchors upon request."
 msgstr "Viel Vergnügen. Wir können auf Anfrage weitere Anker einfügen."
 
-#: www/faq.php:747
+#: www/faq.php:746
 msgid "Can I get alerts for new packages?"
 msgstr "Kann ich über neue Pakete benachrichtigt werden?"
 
-#: www/faq.php:751
+#: www/faq.php:750
 msgid "Yes, yes, you can."
 msgstr "Ja, sicher, das geht."
 
-#: www/faq.php:753
+#: www/faq.php:752
 msgid ""
 "Not only can FreshPorts email you when one of your watched ports is updated, "
 "it can also email you when the package is ready to install."
@@ -4515,7 +4516,7 @@ msgstr ""
 "Port aktualisiert wurde, sondern auch wenn das daraus gebaute Paket zur "
 "Installation bereit steht."
 
-#: www/faq.php:755
+#: www/faq.php:754
 msgid ""
 "FreshPorts polls the available FreeBSD repo builds on an hourly basis. It "
 "uses that information to display the packages available under various ABI "
@@ -4532,14 +4533,14 @@ msgstr ""
 "Quarterly auf manchen Seiten angezeigt sehen, aber es ist einfacher das so "
 "zu machen, als nachzuverfolgen, welcher Zweig gerade CURRENT ist."
 
-#: www/faq.php:757
+#: www/faq.php:756
 msgid "To get new package notifications, follow these steps:"
 msgstr ""
 "Um Benachrichtugungen für neue Paket zu erhalten, folgen Sie diesen "
 "Schritten:"
 
 # Worte in <a></a> übersetzen?
-#: www/faq.php:760
+#: www/faq.php:759
 msgid ""
 "Click on <a href=\"/report-subscriptions.php\">Report Subscriptions</a>, "
 "under <i>Watch Lists</i> in the right hand column"
@@ -4547,16 +4548,16 @@ msgstr ""
 "Klicken Sie auf <a href=\"/report-subscriptions.php\">Subskriptions-Liste</"
 "a> unter <i>Watch Lists</i> in der rechten Spalte"
 
-#: www/faq.php:761
+#: www/faq.php:760
 msgid "Check the <i>New Package Notification</i> box"
 msgstr "Aktiviere <i>New Package Notificatin</i>"
 
 # Update übersetzen?
-#: www/faq.php:762
+#: www/faq.php:761
 msgid "click on Update"
 msgstr "Klicke auf 'Update'"
 
-#: www/faq.php:763
+#: www/faq.php:762
 msgid ""
 "Again under <i>Watch Lists</i>, this time, click on <a href=\"/report-"
 "package-notifications.php\">ABI Package Subscriptions</a> to select the ABI "
@@ -4567,43 +4568,43 @@ msgstr ""
 "für das Sie Benachrichtigungen erhalten möchten"
 
 # Boxen übersetzen?
-#: www/faq.php:764
+#: www/faq.php:763
 msgid ""
 "On this page, select one or more items from each of the first three boxes:"
 msgstr ""
 "Wählen Sie auf dieser Seite 1 bis 3 Elemente aus den ersten drei Feldern:"
 
-#: www/faq.php:766
+#: www/faq.php:765
 msgid "watch lists (first box)"
 msgstr "Beobachtungslisten (erstes Feld)"
 
-#: www/faq.php:767
+#: www/faq.php:766
 msgid "ABI (second box)"
 msgstr "ABI (zweites Feld)"
 
-#: www/faq.php:768
+#: www/faq.php:767
 msgid "one or both of quarterly and latest (third box)"
 msgstr "Eins oder beide von 'Quarterly' oder 'Latest' (drittes Feld)"
 
 # Add übersetzen?
-#: www/faq.php:770
+#: www/faq.php:769
 msgid "and click on <i>Add</i>"
 msgstr "und klicken Sie auf <i>Add</i>"
 
-#: www/faq.php:774
+#: www/faq.php:773
 msgid "When the next updates arrive, you'll get an email."
 msgstr "Sobald die nächste Aktualisierung da ist erhalten Sie eine E-Mail."
 
-#: www/faq.php:778
+#: www/faq.php:777
 msgid "Why is a particular ABI not listed at FreshPorts?"
 msgstr "Warum ist ein bestimmtes ABI nicht auf FreshPorts gelistet?"
 
-#: www/faq.php:782
+#: www/faq.php:781
 #, php-format
 msgid "FreshPorts covers the ABIs published at %s."
 msgstr "FreshPorts deckt die ABIs ab, die unter %s veröffentlich sind."
 
-#: www/faq.php:784
+#: www/faq.php:783
 msgid ""
 "In general, the FreeBSD Project does not build quarterly branches for "
 "whatever branch is CURRENT."
@@ -4611,14 +4612,14 @@ msgstr ""
 "Im allgemeinen erzeugt das FreeBSD-Projekt keine Quartals-Zweige für den "
 "aktuellen CURRENT-Zweig."
 
-#: www/faq.php:786
+#: www/faq.php:785
 msgid ""
 "Some ABIs on that page are marked <i>(only pkgbase is updated)</i>. Only the "
 "base system is built for them, not the ports tree, so there are no packages "
 "for FreshPorts to show. Those ABIs are skipped."
 msgstr ""
 
-#: www/faq.php:788
+#: www/faq.php:787
 #, php-format
 msgid ""
 "At the time of writing (%s), the code to extract those ABIs and the current "
@@ -4675,15 +4676,15 @@ msgid_plural "%d most recent commits (all timestamps are UTC)"
 msgstr[0] "%d letzter Commit (alle Zeitangaben sind in UTC)"
 msgstr[1] "%d letzte Commits (alle Zeitangaben sind in UTC)"
 
-#: www/filter.php:123 www/my-flagged-commits.php:91
+#: www/filter.php:123 www/my-flagged-commits.php:96
 msgid "A port is marked as new for 10 days."
 msgstr "Ein Port wird 10 Tage lang als 'neu' markiert."
 
-#: www/filter.php:192 www/index.php:241 www/sanity_test_failures.php:263
+#: www/filter.php:177 www/index.php:241 www/sanity_test_failures.php:265
 msgid "Previous days"
 msgstr "Vergangene Tage"
 
-#: www/filter.php:216 www/index.php:34
+#: www/filter.php:201 www/index.php:34
 msgid "Yesterday's Commits"
 msgstr "Gestern ausgeführte Commits"
 
@@ -4852,11 +4853,11 @@ msgstr ""
 "HINWEIS: viele der Diagramm bringen Sie durch einenn Klick zur Kategorie, "
 "einem Port, ..."
 
-#: www/graphs.php:58
+#: www/graphs.php:57
 msgid "graph goes here!"
 msgstr "das Diagramm kommt hierhin!"
 
-#: www/graphs.php:75 www/graphs2.php:89
+#: www/graphs.php:74 www/graphs2.php:88
 msgid ""
 "Oh. This is rather embarrassing.  I have no idea how this could have "
 "happened. I do hope you will understand.  Please don't tell anyone.  But I "
@@ -4868,7 +4869,7 @@ msgstr ""
 "ich habe keine Daten, die ich Ihnen anzeigen könnte, weil niemand sich die "
 "Mühe gemacht hat, die Tabelle für das Diagramm mit Daten zu füllen."
 
-#: www/graphs.php:78
+#: www/graphs.php:77
 msgid ""
 "There was unfortunately an error while fetching the list of graphs from the "
 "database."
@@ -4876,7 +4877,7 @@ msgstr ""
 "Unglücklicherweise ist beim Lesen der Daten für die Liste der Diagramme aus "
 "der Datenbank ein Fehler aufgetreten."
 
-#: www/graphs.php:99
+#: www/graphs.php:98
 msgid ""
 "Oh. This is rather embarrassing.  I have no idea how this could have "
 "happened. I do hope you will understand.  Please don't tell anyone.  But I "
@@ -4911,21 +4912,21 @@ msgstr ""
 msgid "issues link"
 msgstr "Link zum Problembericht"
 
-#: www/graphs2.php:48
+#: www/graphs2.php:47
 msgid "HEADS UP!"
 msgstr "Hergehört!"
 
-#: www/graphs2.php:51
+#: www/graphs2.php:50
 msgid "These graphs are broken. Help is needed to get them working again."
 msgstr ""
 "Diese Diagramme sind defekt. Hilfe wird benötigt, um sie wieder "
 "funktionsfähig zu machen."
 
-#: www/graphs2.php:54
+#: www/graphs2.php:53
 msgid "Some starting points:"
 msgstr "Einige Start-Punkte:"
 
-#: www/graphs2.php:57
+#: www/graphs2.php:56
 msgid ""
 "<a href=\"https://github.com/FreshPorts/freshports/blob/master/www/"
 "graphs2.php\">This is the source code</a> for this page."
@@ -4933,7 +4934,7 @@ msgstr ""
 "<a href=\"https://github.com/FreshPorts/freshports/blob/master/www/"
 "graphs2.php\">Dies ist der Source-Code</a> für diese Seite."
 
-#: www/graphs2.php:58
+#: www/graphs2.php:57
 msgid ""
 "<a href=\"https://github.com/FreshPorts/freshports/blob/1.40/www/"
 "graphs2.php\">This is the last working version</a> of this page."
@@ -4941,17 +4942,17 @@ msgstr ""
 "<a href=\"https://github.com/FreshPorts/freshports/blob/1.40/www/"
 "graphs2.php\">Dies ist die letzte funktionierende Version</a> dieser Seite."
 
-#: www/graphs2.php:59 www/graphs2.php:60
+#: www/graphs2.php:58 www/graphs2.php:59
 #, php-format
 msgid "%s used by the above."
 msgstr "%s vom obigen verwendet."
 
-#: www/graphs2.php:61
+#: www/graphs2.php:60
 #, php-format
 msgid "%s as relocated to /javascript/"
 msgstr "%s nach /javascript/ verschoben"
 
-#: www/graphs2.php:62
+#: www/graphs2.php:61
 msgid ""
 "<a href=\"https://github.com/FreshPorts/freshports/tree/master/www/"
 "javascript\">the javascript</a> I thought would appropriately replace "
@@ -4961,7 +4962,7 @@ msgstr ""
 "javascript\">the javascript</a> Ich dachte es wäre angemessen, "
 "jquery.flot.pack.js und jquery-1.2.6.min.js zu ersetzen"
 
-#: www/graphs2.php:65
+#: www/graphs2.php:64
 msgid "Thank you for your help."
 msgstr "Danke für Ihre Hilfe."
 
@@ -5181,7 +5182,7 @@ msgstr ""
 msgid "How big is it"
 msgstr "Wie groß ist es"
 
-#: www/how-big-is-it.php:108
+#: www/how-big-is-it.php:107
 msgid ""
 "It was a few days ago that I was thinking about search engines crawling "
 "through this website. I began to wonder just how many web pages there are "
@@ -5200,58 +5201,58 @@ msgstr ""
 "Anzahl wird nicht 100% genau sein, aber sie wird dem richtigen Wert sehr "
 "nahe kommen."
 
-#: www/how-big-is-it.php:114
+#: www/how-big-is-it.php:113
 msgid "Pages on disk"
 msgstr "Seiten auf der Festplatte"
 
-#: www/how-big-is-it.php:121
+#: www/how-big-is-it.php:120
 msgid "First, let's count the number of pages on disk:"
 msgstr "Als erstes zählen wir die Zahl der Seiten auf der Festplatte:"
 
-#: www/how-big-is-it.php:136
+#: www/how-big-is-it.php:135
 msgid "Number of categories"
 msgstr "Anzahl der Kategorien"
 
-#: www/how-big-is-it.php:143
+#: www/how-big-is-it.php:142
 msgid "There is a page for each category:"
 msgstr "Es gibt eine Seite für jede Kategorie:"
 
-#: www/how-big-is-it.php:160
+#: www/how-big-is-it.php:159
 msgid "Number of ports"
 msgstr "Anzahl der Ports"
 
-#: www/how-big-is-it.php:167
+#: www/how-big-is-it.php:166
 msgid "There are ports, and there are deleted ports. I'll show both:"
 msgstr "Es gibt Ports und es gibt gelöschte Ports. Ich zeige beide an:"
 
 # Deutsches Wort für „Ports Tree“???
-#: www/how-big-is-it.php:197
+#: www/how-big-is-it.php:196
 msgid "Number of files in the ports tree"
 msgstr "Anzahl Dateien im Ports-Baum"
 
 # Ports vs. Ports Tree?
-#: www/how-big-is-it.php:204
+#: www/how-big-is-it.php:203
 msgid "There is a page for each file in the ports tree:"
 msgstr "Es gibt eine Seite für jede Datei im Ports-Baum:"
 
-#: www/how-big-is-it.php:230
+#: www/how-big-is-it.php:229
 #, php-format
 msgid "Count last performed at %s"
 msgstr "Die letzte Zählung erfolgte am %s"
 
-#: www/how-big-is-it.php:235
+#: www/how-big-is-it.php:234
 msgid "Number of commits"
 msgstr "Anzahl der Commits"
 
-#: www/how-big-is-it.php:242
+#: www/how-big-is-it.php:241
 msgid "There is a page for each commit:"
 msgstr "Es gibt eine Seite für jeden Commit:"
 
-#: www/how-big-is-it.php:260
+#: www/how-big-is-it.php:259
 msgid "Number of ports for each commit"
 msgstr "Anzahl der Ports für jeden Commit"
 
-#: www/how-big-is-it.php:267
+#: www/how-big-is-it.php:266
 msgid ""
 "For each commit, you can view the files modified by that commit for a "
 "particular port:"
@@ -5259,11 +5260,11 @@ msgstr ""
 "Für jeden Commit können Sie die Dateien anzeigen lassen, die für einen "
 "bestimmten Port geändert wurden:"
 
-#: www/how-big-is-it.php:285
+#: www/how-big-is-it.php:284
 msgid "How many days?"
 msgstr "Wie viele Tage?"
 
-#: www/how-big-is-it.php:292
+#: www/how-big-is-it.php:291
 msgid ""
 "For each day, there is a page showing the commits for that day.  How many "
 "days do we have?"
@@ -5271,27 +5272,27 @@ msgstr ""
 "Für jeden Tag gibt es eine Seite, die die Commits dieses Tags anzeigt. Wie "
 "viele Tage haben wir?"
 
-#: www/how-big-is-it.php:310
+#: www/how-big-is-it.php:309
 msgid "How many users?"
 msgstr "Wie viele Benutzer?"
 
-#: www/how-big-is-it.php:317
+#: www/how-big-is-it.php:316
 msgid "Each user has a page:"
 msgstr "Jeder Benutzer hat eine Seite:"
 
-#: www/how-big-is-it.php:335
+#: www/how-big-is-it.php:334
 msgid "How many watch lists?"
 msgstr "Wie viele Beobachtungslisten?"
 
-#: www/how-big-is-it.php:342
+#: www/how-big-is-it.php:341
 msgid "For each watch list, there is a page:"
 msgstr "Für jede Beobachtungsliste gibt es eine Seite:"
 
-#: www/how-big-is-it.php:360
+#: www/how-big-is-it.php:359
 msgid "Estimated total"
 msgstr "Geschätzte Summe"
 
-#: www/how-big-is-it.php:368
+#: www/how-big-is-it.php:367
 #, php-format
 msgid ""
 "That gives a grand total of %1$s pages.  On my last count, that's about "
@@ -5301,32 +5302,32 @@ msgstr ""
 "etwa %2$s%% der Seiten auf %3$s"
 
 # „Notizen“ oder „Hinweise“?
-#: www/how-big-is-it.php:371 www/search.php:1333
+#: www/how-big-is-it.php:370 www/search.php:1335
 msgid "Notes"
 msgstr "Hinweise"
 
-#: www/how-big-is-it.php:373
+#: www/how-big-is-it.php:372
 msgid "These statistics are updated daily."
 msgstr "Diese Statistiken werden täglich aktualisiert."
 
-#: www/how-big-is-it.php:374
+#: www/how-big-is-it.php:373
 #, php-format
 msgid "The number of Google pages used in this calculation is %s."
 msgstr "Die Anzahl der Google-Seiten für diese Berechnung ist %s."
 
-#: www/how-big-is-it.php:381
+#: www/how-big-is-it.php:380
 msgid "How much diskspace?"
 msgstr "Wie viel Plattenplatz wird benötigt?"
 
-#: www/how-big-is-it.php:388
+#: www/how-big-is-it.php:387
 msgid "The total space used by the FreshPorts database is:"
 msgstr "Der von der FreshPorts-Datenbank insgesamt belegte Platz ist:"
 
-#: www/how-big-is-it.php:402
+#: www/how-big-is-it.php:401
 msgid "That's bytes..."
 msgstr "Das sind Bytes …"
 
-#: www/how-big-is-it.php:403
+#: www/how-big-is-it.php:402
 #, php-format
 msgid "This value might be easier to parse: %s"
 msgstr "Dieser Wert könnte leichter zu verstehen sein: %s"
@@ -5463,7 +5464,7 @@ msgid "Your browser must allow cookies for this login to work."
 msgstr ""
 "Ihr Web-Browser muss Cookies zulassen, damit die Anmeldung erfolgreich ist."
 
-#: www/my-flagged-commits.php:15 www/my-flagged-commits.php:85
+#: www/my-flagged-commits.php:15 www/my-flagged-commits.php:90
 msgid "My flagged commits"
 msgstr "Meine markierten Commits"
 
@@ -5485,7 +5486,7 @@ msgstr ""
 "Bitte benutzen Sie nur einfachen Text für Ihre E-Mail-Adresse. Dieses "
 "Ereignis ist aufgezeichnet worden."
 
-#: www/new-user.php:77 www/password-reset-via-token.php:51
+#: www/new-user.php:77 www/password-reset-via-token.php:56
 msgid "The password was not confirmed.  It must be entered twice."
 msgstr ""
 "Das Passwort ist nicht bestätigt worden. Es muss zweimal eingegeben werden."
@@ -5495,37 +5496,37 @@ msgid "A password must be supplied"
 msgstr "Ein Passwort muss eingegeben werden"
 
 # Deutscher Begriff für „CAPTCHA“?
-#: www/new-user.php:103
+#: www/new-user.php:107
 msgid "Your CAPTCHA code is not valid"
 msgstr "Ihr CAPTCHA-Wert ist ungültig"
 
-#: www/new-user.php:152
+#: www/new-user.php:155
 msgid "OUCH! I couldn't add you to the database"
 msgstr "Aua! Ich konnte Sie nicht in die Datenbank eintragen"
 
-#: www/new-user.php:156
+#: www/new-user.php:159
 msgid "OUCH! I couldn't assign you a new UserID"
 msgstr "Aua! Ich konnte Ihnen keine neue Benutzer-ID zuweisen"
 
-#: www/new-user.php:161
+#: www/new-user.php:164
 msgid "That User ID is already in use.  Please select a different User ID."
 msgstr ""
 "Dieser Benutzername wird bereits verwendet. Bitte wähle einen anderen "
 "Benutzernamen."
 
-#: www/new-user.php:176 www/welcome.php:13
+#: www/new-user.php:179 www/welcome.php:13
 msgid "New User"
 msgstr "Neuer Benutzer"
 
-#: www/new-user.php:222
+#: www/new-user.php:225
 msgid "New User Details"
 msgstr "Details des neuen Benutzers"
 
-#: www/new-user.php:227
+#: www/new-user.php:230
 msgid "Please observe the following points:"
 msgstr "Bitte beachten Sie die folgenden Punkte:"
 
-#: www/new-user.php:230
+#: www/new-user.php:233
 msgid ""
 "You must supply a valid email address. Instructions to enable your account "
 "will be emailed to you at that address."
@@ -5533,14 +5534,14 @@ msgstr ""
 "Sie müssen eine gültige E-Mail-Adresse angeben. Eine Anleitung zur Freigabe "
 "Ihres Benutzerkontos wird an diese Adresse gesendet werden."
 
-#: www/new-user.php:232
+#: www/new-user.php:235
 #, php-format
 msgid "If you have a spam filter, please allow all mail from %1$s and %2$s."
 msgstr ""
 "Wenn Sie eine SPAM-Filter verwenden, dann erlauben Sie E-Mail von %1$s und "
 "%2$s."
 
-#: www/new-user.php:234
+#: www/new-user.php:237
 msgid ""
 "Please disable any auto-responders for the above domains.  I get enough "
 "email without being told when you'll be back from holiday or who else I can "
@@ -5550,12 +5551,12 @@ msgstr ""
 "erhalte genügend E-Mail ohne dass ich erfahre, wann Sie aus dem urlaub "
 "zurück sind oder wie ich Sie erreichen kann."
 
-#: www/new-user.php:236
+#: www/new-user.php:239
 msgid "Your browser must allow cookies for the login to work."
 msgstr ""
 "Ihr Web-Browser muss Cookies erlauben, damit die Anmeldung funktioniert."
 
-#: www/new-user.php:241
+#: www/new-user.php:244
 msgid "Your cooperation with the above will make my life easier.  Thank you."
 msgstr ""
 "Ihre Kooperation in diesen Punkten wird mein Leben erleichtern. Vielen Dank."
@@ -5620,15 +5621,15 @@ msgstr "%1$s für Ports, deren Name '%2$s' enthält."
 msgid "I have no idea what I should be doing"
 msgstr "Ich habe keine Vorstellung, was ich tun sollte"
 
-#: www/password-reset-via-token.php:70
+#: www/password-reset-via-token.php:75
 msgid "It seems that token is no longer valid."
 msgstr "Es scheint, dass das Token nicht mehr gültig ist."
 
-#: www/password-reset-via-token.php:87 www/password-reset-via-token.php:140
+#: www/password-reset-via-token.php:92 www/password-reset-via-token.php:145
 msgid "Reset password via token"
 msgstr "Setze das Passwort mit dem Token zurück"
 
-#: www/password-reset-via-token.php:131
+#: www/password-reset-via-token.php:136
 msgid ""
 "SUCCESS! Your password has been updated.  Please <a href=\"/"
 "login.php\">login</a>"
@@ -5636,7 +5637,7 @@ msgstr ""
 "ERFOLG! Ihr Passwort wurde aktualisiert. Bitte <a href=\"/login.php\">melden "
 "Sie sich an</a>"
 
-#: www/password-reset-via-token.php:145
+#: www/password-reset-via-token.php:150
 msgid "Please enter your new password twice."
 msgstr "Bitte geben Sie Ihr neues Passwort zwei Mal ein."
 
@@ -6229,7 +6230,7 @@ msgstr ""
 "den Hinweisen unter <a href=\"https://lists.freshports.org/mailman/listinfo/"
 "\">FreshPorts mailing list website</a>"
 
-#: www/sanity_test_failures.php:110
+#: www/sanity_test_failures.php:117
 msgid ""
 "These are the sanity test failures found by FreshPorts.  Sanity tests have "
 "been in place for several years, but have only been saved in the database "
@@ -6241,7 +6242,7 @@ msgstr ""
 "gespeichert."
 
 # Besseres Wort als „Plausibilitätsprüfung“?
-#: www/sanity_test_failures.php:230
+#: www/sanity_test_failures.php:232
 msgid "Sanity Test Results"
 msgstr "Ergebnis des Sanity-Tests"
 
@@ -6275,16 +6276,16 @@ msgstr ""
 "<b>HINWEIS</b>: Anstelle von 'klingt wie', wurde vom Systeme 'enthält' "
 "verwendet. Siehe die Hinweise oben, warum das gmeacht wurde."
 
-#: www/search.php:717
+#: www/search.php:719
 msgid "Sorry, but you messed something up in your manually created query"
 msgstr ""
 "Entschuldigung, aber Sie haben in der Eingabe etwas durcheinander gebracht"
 
-#: www/search.php:1000 www/search.php:1063
+#: www/search.php:1002 www/search.php:1065
 msgid "something went terribly wrong.  Sorry."
 msgstr "etwas ist füchterlich schief gegangen. Entschuldigung."
 
-#: www/search.php:1097
+#: www/search.php:1099
 msgid ""
 "Please let postmaster@freshports.org know that the search log could not be "
 "opened.  This does not affect the search results."
@@ -6293,84 +6294,84 @@ msgstr ""
 "nicht geöffnet werden konnte. Die Suchergebnisse sind dadurch aber nicht "
 "beeinträchtigt."
 
-#: www/search.php:1154 www/search.php:1379
+#: www/search.php:1156 www/search.php:1381
 msgid "No results found"
 msgstr "Kein Ergebnis gefunden"
 
-#: www/search.php:1167
+#: www/search.php:1169
 msgid "Search FreshPorts using Google"
 msgstr "Durchsuche FreshPorts mit Google"
 
-#: www/search.php:1196
+#: www/search.php:1198
 msgid "The FreshPorts Search"
 msgstr "Die FreshPorts-Suche"
 
-#: www/search.php:1203
+#: www/search.php:1205
 msgid "Author Email"
 msgstr "E-Mail des Autors"
 
-#: www/search.php:1204
+#: www/search.php:1206
 msgid "Author Name"
 msgstr "Name des Autors"
 
-#: www/search.php:1205
+#: www/search.php:1207
 msgid "Commit Message"
 msgstr "Commit-Nachricht"
 
-#: www/search.php:1206
+#: www/search.php:1208
 msgid "Committer ID (email without @FreeBSD.org)"
 msgstr "Commiter-ID (E-Mail ohne @FreeBSD.org)"
 
-#: www/search.php:1207
+#: www/search.php:1209
 msgid "Committer Email"
 msgstr "Committer E-Mail"
 
-#: www/search.php:1208
+#: www/search.php:1210
 msgid "Committer Name"
 msgstr "Committer-Name"
 
-#: www/search.php:1212
+#: www/search.php:1214
 msgid "Depends Build/Lib/Run"
 msgstr "Abhängigkeiten (Bauen, Bibliotheken, Laufzeit)"
 
-#: www/search.php:1217
+#: www/search.php:1219
 msgid "Makefile (ports only)"
 msgstr "Makefile (nur für Ports)"
 
-#: www/search.php:1225
+#: www/search.php:1227
 msgid "Under a pathname"
 msgstr "Unter einem Pfadnamen"
 
-#: www/search.php:1230
+#: www/search.php:1232
 msgid "equal to"
 msgstr "gleich wie"
 
-#: www/search.php:1231
+#: www/search.php:1233
 msgid "starting with"
 msgstr "beginnt mit"
 
-#: www/search.php:1232
+#: www/search.php:1234
 msgid "containing"
 msgstr "enthält"
 
-#: www/search.php:1233
+#: www/search.php:1235
 msgid "ending with"
 msgstr "ended auf"
 
-#: www/search.php:1234
+#: www/search.php:1236
 msgid "sounds like"
 msgstr "klingt wie"
 
 # Könnte auch „Ergebnis“ sein - kommt in search.php aber nicht mehr vor
-#: www/search.php:1242
+#: www/search.php:1244
 msgid "results"
 msgstr "ergibt"
 
-#: www/search.php:1253
+#: www/search.php:1255
 msgid "Search only this category:"
 msgstr "Suche nur in dieser Kategorie:"
 
-#: www/search.php:1262
+#: www/search.php:1264
 msgid ""
 "The list of categories is not available - the cache file does not exist - "
 "This should never happen."
@@ -6378,59 +6379,59 @@ msgstr ""
 "Die Liste der Kategorien ist nicht verfügbar - die Cache-Datei existiert "
 "nicht. Das sollte nie geschehen."
 
-#: www/search.php:1271
+#: www/search.php:1273
 msgid "Include deleted ports"
 msgstr "Schließe gelöschte Ports ein"
 
-#: www/search.php:1274
+#: www/search.php:1276
 msgid "Case sensitive search"
 msgstr "Beachte Groß-/Kleinschreibung"
 
-#: www/search.php:1277
+#: www/search.php:1279
 msgid "Sort by:"
 msgstr "Sortiere nach:"
 
-#: www/search.php:1278
+#: www/search.php:1280
 msgid "Port"
 msgstr "Port"
 
-#: www/search.php:1284
+#: www/search.php:1286
 msgid "ascending"
 msgstr "ansteigend"
 
-#: www/search.php:1285
+#: www/search.php:1287
 msgid "descending"
 msgstr "abfallend"
 
-#: www/search.php:1293
+#: www/search.php:1295
 msgid "Include /src tree"
 msgstr "Schließe den /src-Baum mit ein"
 
-#: www/search.php:1297
+#: www/search.php:1299
 msgid "<b>Output format</b>:"
 msgstr "<b>Ausgabeformat</b>:"
 
-#: www/search.php:1299
+#: www/search.php:1301
 msgid "Plain Text"
 msgstr "Reiner Text"
 
-#: www/search.php:1300
+#: www/search.php:1302
 msgid "Depends (only works with <b>Port Name</b>)"
 msgstr "Abhängigkeiten (funktioniert nur mit <b>Portname</b>)"
 
-#: www/search.php:1303
+#: www/search.php:1305
 msgid "Maximum Effort"
 msgstr "Maximaler Aufwand"
 
-#: www/search.php:1306
+#: www/search.php:1308
 msgid "Minimal output"
 msgstr "Minimale Ausgabe"
 
-#: www/search.php:1311
+#: www/search.php:1313
 msgid "<b>Branch</b>:"
 msgstr "<b>Zweig</b>:"
 
-#: www/search.php:1335
+#: www/search.php:1337
 msgid ""
 "Case sensitivity is ignored for \"sounds like\" and output is ordered by the "
 "soundex."
@@ -6438,19 +6439,19 @@ msgstr ""
 "Die Groß-/Kleinschreibung wird bei 'klingt wie' ignoriert und die Ausgabe "
 "ist in 'soundex'-Reihenfolge sortiert."
 
-#: www/search.php:1336
+#: www/search.php:1338
 msgid "When searching on 'Message ID', the type of match is ignored."
 msgstr ""
 "Wenn nach einer Nachrichten-ID gesucht wird, dann wird die Art des "
 "Vergleichs ignoriert."
 
-#: www/search.php:1337
+#: www/search.php:1339
 msgid "When searching on 'Commit Message' only 'containing' is used."
 msgstr ""
 "Wenn nach einer 'Commit-Nachricht' gesucht wird, dann wird nur 'enthält' "
 "benutzt."
 
-#: www/search.php:1338
+#: www/search.php:1340
 msgid ""
 "When searching by 'Under a pathname', your path must start with something "
 "like /ports/, /doc/, or /src/. All commits under that point will be "
@@ -6461,7 +6462,7 @@ msgstr ""
 "Pfad werden angezeigt. Der Vergleichs-Typ wird ignoriert und es wird "
 "'beginnt mit' verwendet."
 
-#: www/search.php:1339
+#: www/search.php:1341
 msgid ""
 "Searching for 'sounds like' is only valid for Author Email, Author Name, "
 "Committer Email, Committer Name, Maintainer, Package Name, and Port Name - "
@@ -6471,20 +6472,20 @@ msgstr ""
 "Mail, Committer-Name, Betreuer, Paketname und Portname gültig. Aber ich bin "
 "nicht sicher, dass die Indizierung korrekt erfolgt ist. Frage Dan danach."
 
-#: www/search.php:1347
+#: www/search.php:1349
 msgid "Special searches:"
 msgstr "Besondere Suchen:"
 
-#: www/search.php:1358
+#: www/search.php:1360
 msgid "Ports I Maintain"
 msgstr "Ports, die ich verwalte"
 
-#: www/search.php:1383
+#: www/search.php:1385
 #, fuzzy
 msgid "See the suggestions at the top of this page."
 msgstr "John Beige hat das Logo entworfen, das Sie oben auf der Seite sehen."
 
-#: www/search.php:1420
+#: www/search.php:1422
 #, php-format
 msgid "Number of ports: %d"
 msgstr "Anzahl der Ports: %d"
@@ -6857,26 +6858,34 @@ msgstr ""
 "abgeschlossen werden kann). Dabei wird zwischen Groß- und Kleinschreibung "
 "unterschieden."
 
-#: www/watch-list.php:127
+#: www/watch-list.php:149
 msgid "Please select the watch lists which should contain this port:"
 msgstr ""
 "Bitte wählen Sie die Beobachtungsliste aus, die diesen Port enthalten soll:"
 
-#: www/watch-list.php:149
+#: www/watch-list.php:173
 msgid "NOTES"
 msgstr "HINWEISE"
 
-#: www/watch-list.php:151
+#: www/watch-list.php:175
 msgid "'+' indicates that the port is on this watch list."
 msgstr "'+' gibt an, dass der Port auf der Beobachtungsliste ist."
 
-#: www/watch-list.php:152
+#: www/watch-list.php:176
 msgid "'*' indicates a default watch list."
 msgstr "'*' markiert eine Standard-Beobachtungsliste."
 
-#: www/watch-list.php:153
+#: www/watch-list.php:180
 msgid ""
 "the watch lists which are selected are those upon which the port appears"
+msgstr ""
+"die ausgewählten Beobachtungslisten sind die, in denen der Port enthalten ist"
+
+#: www/watch-list.php:184
+#, fuzzy
+msgid ""
+"the watch lists which are selected are your default watch lists, and any "
+"which already contain the port"
 msgstr ""
 "die ausgewählten Beobachtungslisten sind die, in denen der Port enthalten ist"
 

@@ -200,7 +200,7 @@ if ($result === false) {
 		}
 
 		$HTML .= '<td class="numeric-cell">' . $myrow["count"] . '</td>';
-		$HTML .= '<td>' . $myrow["description"] . '</td>';
+		$HTML .= '<td>' . htmlspecialchars($myrow["description"] ?? '') . '</td>';
 		$HTML .= '<td>' . $myrow["lastupdate"] . '</td>';
 		$HTML .= "</tr>\n";
 

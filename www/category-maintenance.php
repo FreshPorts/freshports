@@ -28,8 +28,16 @@
 		$IsPrimary = 0;
 	}
 
-	if (IsSet($_REQUEST['update'])) {
-		$Category->{description} = pg_escape_string($db, $_REQUEST['description']);
+	$AllowedToEdit = $User->IsTaskAllowed(FRESHPORTS_TASKS_CATEGORY_VIRTUAL_DESCRIPTION_SET);
+
+	# Change the description only for someone allowed to, only by the form's
+	# POST, and only for a virtual category (UpdateDescription() refuses a
+	# primary one anyway).  This used to run for anyone, before the
+	# permission check further down; only two PHP errors stopped it.
+	# UpdateDescription() uses a parameterised query, so the text is not
+	# escaped for SQL here.
+	if ($AllowedToEdit && !$IsPrimary && $_SERVER['REQUEST_METHOD'] === 'POST' && IsSet($_POST['update'])) {
+		$Category->description = (string) ($_POST['description'] ?? '');
 		$Category->UpdateDescription();
 	}
 
@@ -50,7 +58,7 @@
 <tr><td>
 <p>
 <?php
-if ($User->IsTaskAllowed(FRESHPORTS_TASKS_CATEGORY_VIRTUAL_DESCRIPTION_SET)) {
+if ($AllowedToEdit) {
 ?>
 <?php echo _('This page allows you to maintain a category, if you have permission to do so.'); ?>
 
@@ -59,7 +67,7 @@ if ($User->IsTaskAllowed(FRESHPORTS_TASKS_CATEGORY_VIRTUAL_DESCRIPTION_SET)) {
 
 <?php
 if (!$IsPrimary) {
-	echo '<form action="' . $_SERVER["PHP_SELF"] . '" method="POST" NAME=f>';
+	echo '<form action="/category-maintenance.php" method="POST" NAME=f>';
 }
 ?>
 
@@ -84,12 +92,12 @@ if (IsSet($Category->element_id)) {
 }
 echo '</td>';
 
-echo '<td>' . $Category->name        . '</td>';
+echo '<td>' . htmlspecialchars($Category->name ?? '') . '</td>';
 echo '<td>';
 if ($IsPrimary) {
-	echo $Category->description;
+	echo htmlspecialchars($Category->description ?? '');
 } else {
-	echo '<INPUT id="description" name="description" value="' . $Category->description  . '" size="40">' . "\n";
+	echo '<INPUT id="description" name="description" value="' . htmlspecialchars($Category->description ?? '') . '" size="40">' . "\n";
 }
 echo '</td>';
 ?>

@@ -169,7 +169,7 @@ SELECT C.*
 
 		$sql = "UPDATE categories SET description = $1 WHERE id = $2 AND is_primary = FALSE";
 		syslog(LOG_NOTICE, 'User \'' . $User->name . '\' at '
-			. pg_escape_string($this->dbh, $_SERVER[REMOTE_ADDR]) . ' is changing category \'' 
+			. pg_escape_string($this->dbh, $_SERVER['REMOTE_ADDR']) . ' is changing category \'' 
 			. $this->name . '\' to \'' . $this->description . '\'.');
 		if ($this->Debug) echo "sql = '$sql'<br>";
 

@@ -104,7 +104,8 @@ function freshports_Parse404URI($url, $db):never {
 	}
 
 	# If not specified, branch is HEAD.
-	if (IsSet($url_args['branch'])) {
+	# branch[]=x gives an array; treat it as no branch
+	if (IsSet($url_args['branch']) && is_string($url_args['branch'])) {
 		if ($Debug) echo 'branch is defined within $url_args<br>';
 		# this might still be BRANCH_HEAD
 		$Branch = NormalizeBranch(htmlspecialchars($url_args['branch']));

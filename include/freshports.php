@@ -10,6 +10,21 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/i18n.php');
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/fontsize.php');
 
+	# PHP turns name[]=x in a cookie or query string into an array. No
+	# FreshPorts cookie is an array, and branch is always a single value,
+	# yet the code passes them straight to string functions, which throw a
+	# TypeError: a visitor[] cookie broke every page for that browser, and
+	# ?branch[]= broke the home page and the ports-* lists. Drop such
+	# values here, so the page behaves as if they were not sent.
+	foreach ($_COOKIE as $name => $value) {
+		if (!is_string($value)) unset($_COOKIE[$name]);
+	}
+	foreach (array('_GET', '_POST', '_REQUEST') as $superglobal) {
+		if (IsSet($GLOBALS[$superglobal]['branch']) && !is_string($GLOBALS[$superglobal]['branch'])) {
+			unset($GLOBALS[$superglobal]['branch']);
+		}
+	}
+
 	if (IsSet($ShowAnnouncements)) {
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/announcements.php');
 	}

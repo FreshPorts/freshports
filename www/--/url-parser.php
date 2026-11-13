@@ -86,7 +86,8 @@ switch($script) {
         require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/badges.php');
         require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/ports.php');
         
-        $category_port = pg_escape_string($db, $query_parts['port'] ?? '');
+        # port[]=x gives an array; treat it as no port
+        $category_port = pg_escape_string($db, is_string($query_parts['port'] ?? null) ? $query_parts['port'] : '');
         
         list($category, $port) = array_pad(explode('/', $category_port, 2), 2, '');
         $myPort = new Port($db);

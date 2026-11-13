@@ -2624,6 +2624,7 @@ define('LAST_MODIFIED_FORMAT', 'D, d M Y H:i:s T'); // eg Sun, 10 Jul 2005 22:49
 # sidebar and the shared header and footer, so the ETag adds:
 #   - freshports_VersionLastModified(), which changes on a deploy
 #   - the language and the user, so a login, logout or language change gets a new page
+#   - the text size chosen with the fontsize cookie, which sets the CSS in the <head>
 #   - $Extra, for anything else decided on each request rather than read from the
 #     cache, e.g. whether the port is on the user's watch list - re #716
 #   - the announcements shown at the top of the page, when $Announcements is true:
@@ -2642,6 +2643,15 @@ function freshports_ConditionalGetUnix($UnixTime, $Extra = '', $Announcements = 
 
 	if (headers_sent()) {
 		return;
+	}
+
+	# The text size is written into every page, so a visitor who changes it must
+	# get a new page, not a 304 for the copy in the old size.  The default size
+	# adds nothing, so tags for visitors who never chose one stay as they were.
+	# Going through $Extra also stops If-Modified-Since alone from giving a 304.
+	$FontSize = freshports_fontsize_choose();
+	if ($FontSize != FONTSIZE_DEFAULT) {
+		$Extra .= ($Extra === '' ? '' : '|') . 'fontsize:' . $FontSize;
 	}
 
 	$UnixTime     = empty($UnixTime) ? time() : intval($UnixTime);

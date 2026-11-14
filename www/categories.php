@@ -70,24 +70,7 @@
 <?php
 $sort = IsSet($_REQUEST['sort']) ? pg_escape_string($db, $_REQUEST['sort']) : '';
 
-switch ($sort) {
-    case 'category':
-    case 'description':
-        $sort_amended = $sort;
-        break;
-
-    case 'count':
-        $sort_amended = 'count, things,category';
-        break;
-
-    case 'lastupdate':
-        $sort_amended = 'CS.last_update, category';
-        break;
-
-    default:
-        $sort_amended = 'category';
-}
-
+# ORDER BY column numbers in the SELECT below: 2 = category, 4 = description, 8 = count
 switch ($sort) {
     case 'category':
         $sort_amended = "2";
@@ -154,7 +137,7 @@ if ($sort == "description") {
    $HTML .= '<th><a href="categories.php?sort=description">' . _('Description') . '</a></th>';
 }
 
-if ($sort == "last_update") {
+if ($sort == "lastupdate") {
    $HTML .= '<th>' . _('Last Update') . ' ' . freshports_Ascending_Icon() . '</th>';
 } else {
    $HTML .= '<th><a href="categories.php?sort=lastupdate">' . _('Last Update') . '</a></th>';
@@ -192,7 +175,7 @@ if ($result === false) {
 		}
 		$HTML .= ' ';
 
-		$HTML .=  $i . ' ' . '<a href="/' . $myrow["category"] . '/">' . $myrow["category"] . '</a>' . $Primary[$myrow["is_primary"]];
+		$HTML .=  '<a href="/' . $myrow["category"] . '/">' . $myrow["category"] . '</a>' . $Primary[$myrow["is_primary"]];
 		
 		$HTML .= '</td>';
 		if ($AllowedToEdit) {

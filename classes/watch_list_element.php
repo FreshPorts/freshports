@@ -139,15 +139,13 @@ select $1, $2
        AND watch_list_element.element_id    = $2)';
 		if ($this->Debug) echo "<pre>$sql</pre>";
 		$result = pg_query_params($this->dbh, $sql, array($WatchListID, $ElementID, $UserID));
+		# 1 when it worked, including when the port was already on the list (the
+		# NOT EXISTS above skips it, so no duplicate key error is possible);
+		# -1 when the insert failed, as Delete() and AddToDefault() do
 		if ($result) {
 			$return = 1;
 		} else {
-			# If this isn't a duplicate key error, then break
-			if (stristr(pg_last_error($this->dbh), "Cannot insert a duplicate key") == '') {
-				$return = 1;
-			} else {
-				$return = 1;
-			}
+			$return = -1;
 		}
 
 		# I found this sometimes has no value

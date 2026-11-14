@@ -94,14 +94,15 @@ if ($submit) {
       // make sure we are pointing at the start of the array.
       reset($ports);
       foreach ($ports as $key => $value) {
-      	$WatchListElement->Add($User->id, $wlid, intval($value));
+      	$result = $WatchListElement->Add($User->id, $wlid, intval($value));
 
 # Perhaps because it has no effect
 #      	# I have no idea why this works... seems to be missing the value of $sql
 #         $result = pg_exec ($db, $sql);
          ${"port_".$value} = 1;
-         if (!$result) {
-         	syslog(LOG_ERR, $_SERVER["PHP_SELF"] . ": could not clear watch list '$wlid' owned by '$User->id' of element '" . intval($value) . "' in " . __FILE__ . ':' . __LINE__);
+         # $result used to be whatever getvalues.php left behind, so a failure went unnoticed
+         if ($result == -1) {
+         	syslog(LOG_ERR, $_SERVER["PHP_SELF"] . ": could not add element '" . intval($value) . "' to watch list '$wlid' owned by '$User->id' in " . __FILE__ . ':' . __LINE__);
          	die("error clear list before saving");
          }
       }

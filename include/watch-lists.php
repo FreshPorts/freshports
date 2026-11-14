@@ -41,7 +41,7 @@
 		if ($NumRows) {
 			for ($i = 0; $i < $NumRows; $i++) {
 				$WatchList = $WatchLists->FetchNth($i);
-				$HTML .= '<option value="' . htmlspecialchars(pg_escape_string($dbh, $WatchList->id)) . '"';
+				$HTML .= '<option value="' . htmlspecialchars($WatchList->id) . '"';
 				if ($selected == '') {
 					if (($element_id && $WatchList->watch_list_count > 0) || ($select_defaults && $WatchList->in_service == 't')) {
 						$HTML .= ' selected';
@@ -51,7 +51,7 @@
 						$HTML .= ' selected';
 					}
 				}
-				$HTML .= '>' . htmlspecialchars(pg_escape_string($dbh, $WatchList->name));
+				$HTML .= '>' . htmlspecialchars($WatchList->name);
 				if ($show_active && $WatchList->in_service == 't') {
 					$HTML .= '*';
 				}

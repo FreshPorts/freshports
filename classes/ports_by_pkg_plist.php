@@ -84,13 +84,18 @@ class PortsByPkgPlist extends Port {
 
 
 		$sqlWatchListFrom = '';
-		if (IsSet($User) && $User->id) {
+		# $User is not defined in here; the caller passes the user's id.  Without a
+		# logged-in user there is no watch list, and every port shows the Add icon.
+		$UserID         = intval($UserID);
+		$sqlExtraFields = ",\n         NULL AS onwatchlist";
+		if ($UserID) {
+			$sqlExtraFields = ",\n         onwatchlist";
 			$sqlWatchListFrom .= "
       LEFT OUTER JOIN
  (SELECT element_id as wle_element_id, COUNT(watch_list_id) as onwatchlist
     FROM watch_list JOIN watch_list_element
         ON watch_list.id      = watch_list_element.watch_list_id
-       AND watch_list.user_id = $User->id
+       AND watch_list.user_id = $UserID
        AND watch_list.in_service
   GROUP BY wle_element_id) AS TEMP
        ON TEMP.wle_element_id = E.id";
@@ -108,10 +113,10 @@ class PortsByPkgPlist extends Port {
 		}
 
    		# the CTE (Common Table Expression) exists because the LIMIT would hit performance
-		$sql = "WITH t as (" . $this::WITH_CLAUSE . SEARCH_SELECT_FIELD . $sqlFrom . $sqlWatchListFrom . 
+		$sql = "WITH t as (" . $this::WITH_CLAUSE . SEARCH_SELECT_FIELD . $sqlExtraFields . $sqlFrom . $sqlWatchListFrom . 
 			$sqlWhere . ") SELECT  * from t " . $sqlOrderBy;
 
-		$sql = $this::WITH_CLAUSE . SEARCH_SELECT_FIELD . $sqlFrom . $sqlWatchListFrom . 
+		$sql = $this::WITH_CLAUSE . SEARCH_SELECT_FIELD . $sqlExtraFields . $sqlFrom . $sqlWatchListFrom . 
 			$sqlWhere . $sqlOrderBy;
 
 	

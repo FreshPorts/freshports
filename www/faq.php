@@ -457,7 +457,7 @@ echo sprintf(_('%s is the main page of this website. It contains a lot of inform
 
    <tr><td class="textcontent">
    <P>
-	<?php echo sprintf(_('Some ports (for example <a href="/net/">net</a>/<a href="/net/gift/">gift</a>) will have a section titled "Port Moves". FreshPorts obtains information about ports from the commits to the %s.'), '<a href="' . DEFAULT_GIT_REPO . '">' . _('repository') . '</a>'); ?>
+	<?php echo sprintf(_('Some ports (for example <a href="/net/">net</a>/<a href="/net/gift/">gift</a>) will have a section titled "Port Moves". FreshPorts obtains information about ports from the commits to the %s.'), '<a href="https://' . DEFAULT_GIT_REPO . '">' . _('repository') . '</a>'); ?>
 
 	<p> <?php echo _('With <span class="cmd">subversion</span>, there could be a manual change to the repository, not creating a commit email. Such moves were often referred to as a <i>repo-copy</i>, and might have moved a port from one category to another. Such a change was done to ensure the port history is retained.'); ?>
 

@@ -240,7 +240,7 @@ function UploadDisplayStagingResultsMatches($UserID, $WatchListID, $dbh) {
 			echo "Nothing you uploaded was found within our database.";
 		}
 	} else {
-		echo "<pre>$sql</pre>";
+		echo freshports_QueryFailed($dbh, $sql);
 	}
 
 }
@@ -557,7 +557,7 @@ function StagingAreaClear($UserID, $dbh) {
 	if ($result && $ok) {
 		pg_exec($dbh, "COMMIT");
 	} else {
-		echo pg_last_error($dbh) . " sql = $sql";
+		echo freshports_QueryFailed($dbh, $sql);
 		pg_exec($dbh, "ROLLBACK");
 	}
 

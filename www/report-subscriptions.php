@@ -110,7 +110,7 @@
 				$result = pg_query_params($db, $sql, $params);
 	
 				if (!$result) {
-					echo _("OUCH, that's not very nice.  something went wrong:") . ' ' . pg_last_error($db) . "  $sql";
+					echo freshports_QueryFailed($db, $sql);
 					pg_exec($db, 'rollback');
 					exit;
 				}

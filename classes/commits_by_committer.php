@@ -137,7 +137,7 @@ ORDER BY CL.commit_date DESC ";
 			if ($this->Debug) echo "That would give us $numrows rows";
 		} else {
 			$numrows = -1;
-			echo 'pg_query_params failed: ' . "<pre>$sql</pre>";
+			echo freshports_QueryFailed($this->dbh, $sql);
 		}
 
 		return $numrows;

@@ -65,7 +65,7 @@ ORDER BY date desc'
 
 			}
 		} else {
-			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
+			echo freshports_QueryFailed($this->dbh, $sql);
 		}
 
 		return $numrows;
@@ -103,7 +103,7 @@ ORDER BY date desc'
 
 			}
 		} else {
-			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
+			echo freshports_QueryFailed($this->dbh, $sql);
 		}
 
 		return $numrows;

@@ -31,12 +31,9 @@ SELECT distinct P.maintainer, C.name || '/' || E.name AS port_name, f.*
   JOIN categories      C  ON P.category_id = C.id
  WHERE coalesce(P.conflicts, P.conflicts_build, P.conflicts_install) IS NOT NULL order by 1, 2";
 
-echo "<pre>$sql</pre>";
-
 $result = pg_query_params($db, $sql, array());
 if (!$result) {
-  echo pg_last_error($db);
-  die(_('that did not work'));
+  die(freshports_QueryFailed($db, $sql));
 }
 $numrows = pg_num_rows($result);
 echo '<table><tr><th>' . _('Maintainer') . '</th><th>' . _('port') . '</th><th>' . _('conflicts with') . '</th></tr>';

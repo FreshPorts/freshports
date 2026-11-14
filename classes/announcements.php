@@ -83,7 +83,7 @@ DELETE from announcements
 
 		$this->result = pg_query_params($this->dbh, $sql, array($this->id));
 		if (!$this->result) {
-			echo pg_last_error($this->dbh) . " $sql";
+			echo freshports_QueryFailed($this->dbh, $sql);
 		}
 		$numrows = pg_affected_rows($this->result);
 
@@ -123,7 +123,7 @@ DELETE from announcements
 
 		$this->result = pg_query_params($this->dbh, $sql, $params);
 		if (!$this->result) {
-			echo pg_last_error($this->dbh) . " $sql";
+			echo freshports_QueryFailed($this->dbh, $sql);
 		}
 		$numrows = pg_affected_rows($this->result);
 
@@ -159,7 +159,7 @@ DELETE from announcements
 
 		$this->result = pg_query_params($this->dbh, $sql, $params);
 		if (!$this->result) {
-			echo pg_last_error($this->dbh) . " $sql";
+			echo freshports_QueryFailed($this->dbh, $sql);
 		}
 		$numrows = pg_affected_rows($this->result);
 
@@ -211,7 +211,7 @@ SELECT *
 #			echo "That would give us $numrows rows";
 		} else {
 			$numrows = -1;
-			echo 'pg_query_params failed: ' . $sql;
+			echo freshports_QueryFailed($this->dbh, $sql);
 		}
 
 		return $numrows;
@@ -237,7 +237,7 @@ SELECT *
 #			echo "That would give us $numrows rows";
 		} else {
 			$numrows = -1;
-			echo 'pg_query_params failed: ' . $sql;
+			echo freshports_QueryFailed($this->dbh, $sql);
 		}
 
 		return $numrows;
@@ -301,7 +301,7 @@ SELECT *
 				$Announcements .= '<p>' . $myrow['text'] . '</p>';
 			}
 		} else {
-			echo 'pg_query_params failed: ' . $sql;
+			echo freshports_QueryFailed($this->dbh, $sql);
 		}
 
 		return $Announcements;

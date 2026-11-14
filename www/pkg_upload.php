@@ -50,7 +50,7 @@ function StagingAlreadyInUse($UserID, $dbh) {
 			$Result = 0;
 		}
 	} else {
-		echo pg_last_error($dbh) . " sql = $sql";
+		echo freshports_QueryFailed($dbh, $sql);
 	}
 
 	return $Result;

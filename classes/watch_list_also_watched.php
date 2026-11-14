@@ -40,7 +40,7 @@ class WatchListAlsoWatched {
 			$numrows = pg_num_rows($this->LocalResult);
 		} else {
 			$numrows = 0;
-			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
+			echo freshports_QueryFailed($this->dbh, $sql);
 		}
 
 		return $numrows;

@@ -42,7 +42,7 @@ select CLPV.id,
 #		echo "\$sql='<pre>$sql</pre><br>\n";
 		$this->result = pg_query_params($this->dbh, $sql, array($port_id));
 		if (!$this->result) {
-			echo pg_last_error($this->dbh) . " $sql";
+			echo freshports_QueryFailed($this->dbh, $sql);
 		}
 		$numrows = pg_num_rows($this->result);
 

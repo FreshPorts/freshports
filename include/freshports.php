@@ -2903,6 +2903,18 @@ function BranchSuffix($Branch = BRANCH_HEAD) {
   return $BranchSuffix;
 }
 
+function freshports_QueryFailed($dbh, $sql = '') {
+	# A query failed. The error and the SQL go to syslog, with the caller's
+	# file and line; the visitor sees only a short message. Pages used to
+	# print both, which showed table and column names to anyone, and a
+	# URL such as /sysutils/?page=99999999999999999999 could trigger it.
+	$caller = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1)[0] ?? array();
+	$where  = basename($caller['file'] ?? '?') . ':' . ($caller['line'] ?? '?');
+	syslog(LOG_ERR, "query failed at $where: " . trim(pg_last_error($dbh)) . ' : ' . preg_replace('/\s+/', ' ', $sql));
+
+	return '<p>' . _('Sorry, a database query failed. The error has been logged.') . '</p>';
+}
+
 function getLoginDetails($dbh, $UserID, $Password) {
 
   # password_hash is '!' for an invalidated hash: the user must reset their password.

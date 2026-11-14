@@ -385,7 +385,7 @@ class Port {
 				die(__CLASS__ . ':' . __FUNCTION__ . " got $numrows rows at line " . __LINE__);
 			}
 		} else {
-			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
+			echo freshports_QueryFailed($this->dbh, $sql);
 		}
 	}
 
@@ -520,7 +520,7 @@ ON TEMP.wle_element_id = ports.element_id';
 				$result = $this->id;
 			}
 		} else {
-			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
+			echo freshports_QueryFailed($this->dbh, $sql);
 		}
 
 		return $result;
@@ -755,7 +755,7 @@ ON TEMP.wle_element_id = ports.element_id';
 				$bResult = true;
 			}
 		} else {
-			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
+			echo freshports_QueryFailed($this->dbh, $sql);
 		}
 
 		return $bResult;
@@ -970,7 +970,7 @@ LEFT OUTER JOIN
 				$this->_PopulateValues($myrow);
 			}
 		} else {
-			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
+			echo freshports_QueryFailed($this->dbh, $sql);
 		}
 
 		return $numrows;
@@ -1011,7 +1011,7 @@ LEFT OUTER JOIN
 				$result = 1;
 			}
 		} else {
-			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
+			echo freshports_QueryFailed($this->dbh, $sql);
 		}
 
 		return $result;
@@ -1043,7 +1043,7 @@ LEFT OUTER JOIN
 				echo 'that port was not found:' . $Category . '/' . $Port;
 			}
 		} else {
-			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
+			echo freshports_QueryFailed($this->dbh, $sql);
 		}
 
 		return $result;
@@ -1079,7 +1079,7 @@ LEFT OUTER JOIN
 				$PrimaryCategory = $myrow[0];
 			}
 		} else {
-			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
+			echo freshports_QueryFailed($this->dbh, $sql);
 		}
 
 		return $PrimaryCategory;
@@ -1104,7 +1104,7 @@ LEFT OUTER JOIN
 				$result = $myrow[0];
 			}
 		} else {
-			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
+			echo freshports_QueryFailed($this->dbh, $sql);
 		}
 
 		return $result;
@@ -1299,7 +1299,7 @@ LEFT OUTER JOIN
 			}
 			$this->conflicts_matches = pg_fetch_all($result);
 		} else {
-			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
+			echo freshports_QueryFailed($this->dbh, $sql);
 		}
 
 	}

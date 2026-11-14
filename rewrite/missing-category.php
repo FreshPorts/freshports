@@ -171,7 +171,10 @@ function freshports_CategoryDisplay($dbh, $category, $url_parts, $Branch = BRANC
 	SetType($PageSize,   "integer");
 
 	# this looks like more sanity testing.
-	if (!IsSet($PageNumber) || !str_is_int("$PageNumber") || $PageNumber < 1) {
+	# the upper limit keeps the OFFSET, (page - 1) * page size, an integer: a
+	# page number near PHP_INT_MAX made it a float, and the query failed.  No
+	# category has anywhere near that many pages.
+	if (!IsSet($PageNumber) || !str_is_int("$PageNumber") || $PageNumber < 1 || $PageNumber > 100000) {
 		$PageNumber = 1;
 	}
 

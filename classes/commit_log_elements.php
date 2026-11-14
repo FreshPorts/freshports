@@ -59,7 +59,7 @@ select commit_log_elements.element_id,
 
 		$this->result = pg_query_params($this->dbh, $sql, array($element_id));
 		if (!$this->result) {
-			echo pg_last_error($this->dbh) . " $sql";
+			echo freshports_QueryFailed($this->dbh, $sql);
 		}
 		$numrows = pg_num_rows($this->result);
 

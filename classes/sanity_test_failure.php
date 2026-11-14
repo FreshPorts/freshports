@@ -49,7 +49,7 @@ SELECT STF.id,
 				die(__CLASS__ . ':' . __FUNCTION__ . " got $numrows rows at line " . __LINE__);
 			}
 		} else {
-			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
+			echo freshports_QueryFailed($this->dbh, $sql);
 		}
 
 		return $id;

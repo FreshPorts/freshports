@@ -43,11 +43,11 @@ DELETE from commit_log_ports_ignore
  WHERE commit_log_id = $1
    AND port_id       = $2";
 
-		echo ("\$sql='<pre>$sql</pre><br>\n");
+		if (!empty($this->Debug)) echo '<pre>' . htmlspecialchars($sql) . "</pre>\n";
 		
 		$this->result = pg_query_params($this->dbh, $sql, array($this->commit_log_id, $this->commit_log_id));
 		if (!$this->result) {
-			echo pg_last_error($this->dbh) . " $sql";
+			echo freshports_QueryFailed($this->dbh, $sql);
 		}
 		$numrows = pg_affected_rows($this->result);
 
@@ -62,11 +62,11 @@ DELETE from commit_log_ports_ignore
 INSERT INTO commit_log_ports_ignore (commit_log_id, port_id, reason)
    values ($1, $2, $3)";
 
-		echo "\$sql='<pre>$sql</pre><br>\n";
+		if (!empty($this->Debug)) echo '<pre>' . htmlspecialchars($sql) . "</pre>\n";
 		
 		$this->result = pg_query_params($this->dbh, $sql, array($this->commit_log_id, $this->port_id, $this->reason));
 		if (!$this->result) {
-			echo pg_last_error($this->dbh) . " $sql";
+			echo freshports_QueryFailed($this->dbh, $sql);
 		}
 		$numrows = pg_affected_rows($this->result);
 

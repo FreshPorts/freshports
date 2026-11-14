@@ -54,7 +54,7 @@ ORDER BY slave_category_name, slave_port_name";
 
           $this->LocalResult = pg_query_params($this->dbh, $sql, array($MasterName));
           if (!$this->LocalResult) {
-            echo pg_last_error($this->dbh) . " $sql";
+            echo freshports_QueryFailed($this->dbh, $sql);
           }
 
           $numrows = pg_num_rows($this->LocalResult);

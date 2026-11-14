@@ -83,7 +83,7 @@ DELETE FROM watch_list
 #			echo "That would give us $numrows rows";
 		} else {
 			$numrows = -1;
-			echo 'pg_query_params failed: ' . $sql;
+			echo freshports_QueryFailed($this->dbh, $sql);
 		}
 
 		return $numrows;
@@ -147,7 +147,7 @@ DELETE FROM watch_list
 			$numrows = pg_affected_rows($result);
 		} else {
 			$numrows = -1;
-			die(pg_last_error($this->dbh) . '<pre>' . $sql . '</pre>');
+			die(freshports_QueryFailed($this->dbh, $sql));
 		}
 
 		return $numrows;
@@ -194,7 +194,7 @@ DELETE FROM watch_list
 				}
 			}
 		} else {
-			die(pg_last_error($this->dbh) . '<pre>' . $sql . '</pre>');
+			die(freshports_QueryFailed($this->dbh, $sql));
 		}
 
 		return $WatchListID;
@@ -220,7 +220,7 @@ DELETE FROM watch_list
 				$ListCount = $myrow['listcount'];
 			}
 		} else {
-			die(pg_last_error($result) . "<pre>$sql</pre>");
+			die(freshports_QueryFailed($this->dbh, $sql));
 		}
 				
 		return $ListCount;

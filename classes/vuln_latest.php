@@ -50,7 +50,7 @@ SELECT distinct PA.category, PA.name as port, coalesce(V.date_modified, V.date_e
 				$myrow = pg_fetch_array ($this->LocalResult);
 			}
 		} else {
-			echo 'pg_query_params failed: <pre>' . $sql . '</pre> : ' . pg_last_error($this->dbh);
+			echo freshports_QueryFailed($this->dbh, $sql);
 		}
 
 		return $numrows;

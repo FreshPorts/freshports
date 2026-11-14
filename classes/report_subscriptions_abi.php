@@ -71,7 +71,7 @@ DELETE FROM report_subscriptions_abi
 #			echo "That would give us $numrows rows";
 		} else {
 			$numrows = -1;
-			echo 'pg_query_params failed: ' . $sql;
+			echo freshports_QueryFailed($this->dbh, $sql);
 		}
 
 		return $numrows;

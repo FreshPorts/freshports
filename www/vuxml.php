@@ -5,6 +5,14 @@
 	# Copyright (c) 2004-2026 Dan Langille
 	#
 
+	# each of these is a single value; vid[]=x and the like would reach string
+	# functions such as explode() and throw a TypeError, so ignore them
+	foreach (array('all', 'list', 'package', 'vid', 'vuln') as $name) {
+		if (IsSet($_REQUEST[$name]) && !is_string($_REQUEST[$name])) {
+			unset($_REQUEST[$name], $_GET[$name], $_POST[$name]);
+		}
+	}
+
 	if (IsSet($_REQUEST['all']) && strlen($_REQUEST['all'])) {
 		echo "Just what do you think you're doing, Dave?";
 		exit;
@@ -113,7 +121,8 @@
 }
 	if (IsSet($_REQUEST['list']) || IsSet($_REQUEST['package']) ) {
 
-		function vuxml_name_link($VID, $Name, $Count) {
+		# ?list and ?all can be asked for together, so each listing has its own function
+		function vuxml_list_name_link($VID, $Name, $Count) {
 			$HTML = '<tr><td>';
 
 			$HTML .= '<a href="/vuxml.php?vid=' . htmlspecialchars(urlencode($VID)) . '">' . htmlspecialchars($Name) . '</a></td><td class="hcentered">';
@@ -182,13 +191,13 @@ SELECT V.vid,
 					$LastVID .= $myrow['vid'];
 					$Count += 1;
 				} else {
-					echo vuxml_name_link($LastVID, $LastName, $Count);
+					echo vuxml_list_name_link($LastVID, $LastName, $Count);
 					$LastName = $myrow['name'];
 					$LastVID  = $myrow['vid'];
 					$Count    = 1;
 				}
 			}
-			echo vuxml_name_link($LastVID, $LastName, $Count);
+			echo vuxml_list_name_link($LastVID, $LastName, $Count);
 			echo "</table>\n";
 
 			echo '<p>' . sprintf(_('Number of packages: %d'), $NumPackages) . "<br>\n";
@@ -199,7 +208,7 @@ SELECT V.vid,
 
 
 	if (IsSet($_REQUEST['all'])) {
-		function vuxml_name_link($VID, $Date, $Description, $PortArray, $IsNew) {
+		function vuxml_all_name_link($VID, $Date, $Description, $PortArray, $IsNew) {
 			$HTML = '<tr><td class="vtop nowrap">';
 
 			$HTML .= htmlspecialchars($Date);
@@ -265,7 +274,7 @@ ORDER BY coalesce(V.date_modified, V.date_entry, V.date_discovery)::date desc, V
 
 					if ($LastVID != $myrow['vid']) {
 						$VIDs++;
-						echo vuxml_name_link($LastVID, $Date, $Description, $PortArray, $IsNew);
+						echo vuxml_all_name_link($LastVID, $Date, $Description, $PortArray, $IsNew);
 						$PortArray = array();
 						$LastVID = $myrow['vid'];
 					}
@@ -276,7 +285,7 @@ ORDER BY coalesce(V.date_modified, V.date_entry, V.date_discovery)::date desc, V
 					$Date        = $myrow['date'];
 				}
 				$VIDs++;
-				echo vuxml_name_link($LastVID, $Date, $Description, $PortArray, $IsNew);
+				echo vuxml_all_name_link($LastVID, $Date, $Description, $PortArray, $IsNew);
 				echo "</table>\n";
 
 				echo '<p>' . sprintf(_('Number of vulns/ports: %d'), $numrows) . "<br>\n";

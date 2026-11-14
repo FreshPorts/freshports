@@ -134,7 +134,7 @@ SELECT S.*, 1 as stf_message' . $WatchColumn . '
 		
 		if ($this->Debug) echo "\n<p>sql=$sql</p>\n";
 
-		$result = pg_query_params($this->dbh, "set client_encoding = 'ISO-8859-15'", array()) or die('query failed ' . pg_last_error($this->dbh));
+		$result = pg_query_params($this->dbh, "set client_encoding = 'ISO-8859-15'", array()) or die(freshports_QueryFailed($this->dbh));
 
 		$result = pg_query_params($this->dbh, $sql, $params);
 		if (!$result) {

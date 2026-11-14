@@ -247,7 +247,7 @@ SELECT V.vid,
 ORDER BY coalesce(V.date_modified, V.date_entry, V.date_discovery)::date desc, V.vid, lower(VN.name)
 ";
 
-		$result = pg_query_params($db, "set client_encoding = 'ISO-8859-15'", array()) or die('query failed ' . pg_last_error($db));
+		$result = pg_query_params($db, "set client_encoding = 'ISO-8859-15'", array()) or die(freshports_QueryFailed($db));
 		$result = pg_query_params($db, $sql, array());
 		if ($result) {
 			$numrows = pg_num_rows($result);

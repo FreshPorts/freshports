@@ -60,7 +60,7 @@ ORDER BY RC.commit_date_raw DESC,
 
 	$result = pg_query_params($db, $sql, array($MaxCommits));
 	if (!$result) {
-		echo pg_last_error($db);
+		echo freshports_QueryFailed($db);
 	} else {
 		$numrows = pg_num_rows($result);
 #		echo "There are $numrows to fetch<br>\n";

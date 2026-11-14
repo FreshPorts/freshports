@@ -146,7 +146,7 @@ if ($sort == "lastupdate") {
 $HTML .= '</tr>';
 
 if ($result === false) {
-   echo "<tr><td colspan=\"$ColSpan\"" . pg_last_error($db) . "</td></tr></table></td></td></table>\n";
+   echo "<tr><td colspan=\"$ColSpan\">" . freshports_QueryFailed($db, $sql) . "</td></tr></table></td></td></table>\n";
    exit;
 } else {
 	$NumTopics	   = 0;

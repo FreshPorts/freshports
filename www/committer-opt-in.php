@@ -46,10 +46,10 @@
 
 				if ($Debug) echo "sql=$sql<br>\n";
 
-				$result = pg_query_params($db, $sql, array($User->id, $committer, 'A'))  or die("insert query failed " . pg_last_error($db));
+				$result = pg_query_params($db, $sql, array($User->id, $committer, 'A'))  or die(freshports_QueryFailed($db));
 
 			    	if (!$result) {
-		        		die("determine committer subscribe failed " . pg_last_error($db));
+		        		die(freshports_QueryFailed($db));
 	    			}
 			} else {
 				die(_('please enter just your login, not your email address'));
@@ -61,10 +61,10 @@
 
 			if ($Debug) echo "sql=$sql<br>\n";
 
-			$result = pg_query_params($db, $sql, array($User->id))  or die("delete query failed " . pg_last_error($db));
+			$result = pg_query_params($db, $sql, array($User->id))  or die(freshports_QueryFailed($db));
 
 			if (!$result) {
-				die("determine committer unsubscribe failed " . pg_last_error($db));
+				die(freshports_QueryFailed($db));
 				}
 			}
 
@@ -77,10 +77,10 @@
 
 			if ($Debug) echo "sql=$sql<br>\n";
 
-			$result = pg_query_params($db, $sql, array($committer, $User->id))  or die("update query failed " . pg_last_error($db));
+			$result = pg_query_params($db, $sql, array($committer, $User->id))  or die(freshports_QueryFailed($db));
 
 			if (!$result) {
-				die("determine committer subscribe failed " . pg_last_error($db));
+				die(freshports_QueryFailed($db));
 			}
 		}
 	}
@@ -136,7 +136,7 @@ if (!empty($visitor)) {
 		echo "sql=$sql<br>\n";
 	}
 
-	$result = pg_query_params($db, $sql, array($User->id))  or die("select query failed " . pg_last_error($db));
+	$result = pg_query_params($db, $sql, array($User->id))  or die(freshports_QueryFailed($db));
 
 	if ($result) {
 		if ($Debug) echo "we found a result there...\n<br>";

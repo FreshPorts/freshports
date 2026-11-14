@@ -232,7 +232,7 @@ class freshports_page_list_ports extends freshports_page {
 			$this->_row_count = $numrows;
 #			echo "There are $numrows to fetch<br>\n";
 		} else {
-			echo pg_last_error($this->_db);
+			echo freshports_QueryFailed($this->_db);
 		}
 		
 		return $numrows;
@@ -337,7 +337,7 @@ SELECT ports.id,
 
 		$this->_result = pg_query_params($this->_db, $this->getSQL(), array());
 		if (!$this->_result) {
-			echo pg_last_error($this->_db);
+			echo freshports_QueryFailed($this->_db);
 		} else {
 			$numrows = pg_num_rows($this->_result);
 #			echo "There are $numrows to fetch<br>\n";

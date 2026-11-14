@@ -52,7 +52,7 @@
 				pg_exec($db, 'COMMIT');
 			} else {
 				pg_exec($db, 'ROLLBACK');
-				die(pg_last_error($db));
+				die(freshports_QueryFailed($db));
 			}
 			break;
 			
@@ -67,7 +67,7 @@
 				pg_exec($db, 'COMMIT');
 			} else {
 				pg_exec($db, 'ROLLBACK');
-				die(pg_last_error($db));
+				die(freshports_QueryFailed($db));
 			}
 			break;
 				

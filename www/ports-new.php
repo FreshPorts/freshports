@@ -147,7 +147,7 @@ echo $SortText;
 echo "</td></tr>\n";
 
 if ($ListOfPorts === false) {
-    echo pg_last_error($db);
+    echo freshports_QueryFailed($db);
 } else {
     echo $ListOfPorts;
 }

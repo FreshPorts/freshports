@@ -90,7 +90,7 @@ INSERT INTO page_load_detail(page_name,
 		if ($result) {
 			$return = 1;
 		} else {
-			echo "error " . pg_last_error($this->dbh);
+			echo freshports_QueryFailed($this->dbh);
 			$return = -1;
 		}
 

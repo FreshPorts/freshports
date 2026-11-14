@@ -65,7 +65,7 @@ if (IsSet($submit)) {
       echo $sql;
     }
 
-    $result = pg_query_params($db, $sql, array( $Password1, $token )) or die('query failed ' . pg_last_error($db));
+    $result = pg_query_params($db, $sql, array( $Password1, $token )) or die(freshports_QueryFailed($db));
     if ($result) {
       $myrow = pg_fetch_array ($result);
       if ($myrow['rowcount'] == 1) {

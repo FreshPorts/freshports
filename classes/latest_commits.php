@@ -69,7 +69,7 @@ ORDER BY LC.commit_date_raw DESC, LC.category, LC.port, element_pathname";
 		
 		if ($this->Debug) echo "\n<p>sql=$sql</p>\n";
 
-		$result = pg_query_params($this->dbh, $sql, $params) or die("read from database failed: " . pg_last_error($this->dbh));
+		$result = pg_query_params($this->dbh, $sql, $params) or die(freshports_QueryFailed($this->dbh));
 		
 		$DisplayCommit = new DisplayCommit($this->dbh, $result);
 		$DisplayCommit->Debug = $this->Debug;

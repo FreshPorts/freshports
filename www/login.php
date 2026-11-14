@@ -67,7 +67,7 @@ if (IsSet($_REQUEST['LOGIN']) && IsSet($_REQUEST['UserID']) && IsSet($_REQUEST['
             echo '<pre>' . htmlentities($sql) . '<pre>';
          }
 
-         $result = pg_query_params($db, $sql, array($UserID, $Password, PW_HASH_METHOD, PW_HASH_COST)) or die('query failed ' . pg_last_error($db));
+         $result = pg_query_params($db, $sql, array($UserID, $Password, PW_HASH_METHOD, PW_HASH_COST)) or die(freshports_QueryFailed($db));
       }
    }
 
@@ -92,7 +92,7 @@ if (IsSet($_REQUEST['LOGIN']) && IsSet($_REQUEST['UserID']) && IsSet($_REQUEST['
 	         $expires_dt = $dt->format('Y-m-d H:i:s');  // output = 2012-08-15 00:00:00
 	         $sql = 'SELECT * FROM user_set_cookie($1, $2, $3)';
 	         # if we were doing this in a user object, we could retry when there was a cookie collision and we get a unique index error
-	         $result = pg_query_params($db, $sql, array($row['id'], $Cookie, $expires_dt)) or die('query failed ' . pg_last_error($db));
+	         $result = pg_query_params($db, $sql, array($row['id'], $Cookie, $expires_dt)) or die(freshports_QueryFailed($db));
 
 	         freshports_UserSetCookie($Cookie, $expires);
 
@@ -131,7 +131,7 @@ if (IsSet($_REQUEST["resend"]) && IsSet($_REQUEST["user"])) {
       echo "$sql<br>\n";
    }
 
-   $result = pg_query_params($db, $sql, array($UserLogin)) or die('query failed ' . pg_last_error($db));
+   $result = pg_query_params($db, $sql, array($UserLogin)) or die(freshports_QueryFailed($db));
 
    if (pg_num_rows($result)) {
       $row = pg_fetch_array($result,0);

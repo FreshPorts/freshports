@@ -90,8 +90,7 @@ function CleanPorts($watchID) {
 		$result = pg_query_params($database, $query, array($watchID));
 
 		if (!$result) {
-			$error = pg_last_error($database);
-			echo "$error<br>\n";
+			echo freshports_QueryFailed($database, $query);
 			$retval = false;
 		}
 	}

@@ -58,7 +58,7 @@ if ($submit) {
          echo "<pre>$sql</pre>\n";
       }
 
-      $result = pg_query_params($db, $sql, array($UserID)) or die('query failed ' . pg_last_error($db));
+      $result = pg_query_params($db, $sql, array($UserID)) or die(freshports_QueryFailed($db));
 
       if (!pg_num_rows($result)) {
          $LoginFailed = 1;
@@ -73,7 +73,7 @@ if ($submit) {
 
          if ($Debug) echo "$sql<br>\n";
 
-         $result = pg_query_params($db, $sql, array($eMail)) or die('query failed ' . pg_last_error($db));
+         $result = pg_query_params($db, $sql, array($eMail)) or die(freshports_QueryFailed($db));
 
          if (!pg_num_rows($result)) {
             $eMailFailed = 1;
@@ -102,7 +102,7 @@ if ($submit) {
 
         if ($OKToMail) {
           $sql = 'insert into user_password_reset (user_id, ip_address) values ($1, $2) returning token';
-          $token_result = pg_query_params($db, $sql, array($myrow["id"], $_SERVER['REMOTE_ADDR'])) or die('password token creation failed ' . pg_last_error($db));
+          $token_result = pg_query_params($db, $sql, array($myrow["id"], $_SERVER['REMOTE_ADDR'])) or die(freshports_QueryFailed($db));
           $token_row = pg_fetch_array ($token_result, 0);
           $token = $token_row["token"];
           

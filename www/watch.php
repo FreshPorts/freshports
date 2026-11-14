@@ -302,7 +302,7 @@ SELECT selected_ports.*,
 	$result = pg_query_params($db, $sql, array($wlid));
 
 	if (!$result) {
-		echo _('there was an error:') . ' ' . pg_last_error($db);
+		echo freshports_QueryFailed($db, $sql);
 	}
 
 	// get the list of topics, which we need to modify the order

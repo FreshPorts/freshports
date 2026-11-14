@@ -62,7 +62,8 @@ function StatsSQL($db, $Title) {
 		    $Value  = '';
 		}
 	} else {
-		$Value = pg_last_error($db);
+		freshports_QueryFailed($db);
+		$Value = '';
 	}
 
 	return $Value;
@@ -81,7 +82,8 @@ function DBSize($db) {
 			$Value = 'numrows = ' . $numrows . ' ' . $sql;;
 		}
 	} else {
-		$Value = pg_last_error($db);
+		freshports_QueryFailed($db);
+		$Value = '';
 	}
 
 	return $Value;

@@ -371,7 +371,7 @@ class Port {
 			echo "<pre>$sql</pre><br>";
 		}
 
-		$result = pg_query_params($this->dbh, "set client_encoding = 'ISO-8859-15'", array()) or die('query failed ' . pg_last_error($this->dbh));
+		$result = pg_query_params($this->dbh, "set client_encoding = 'ISO-8859-15'", array()) or die(freshports_QueryFailed($this->dbh));
 		$result = pg_query_params($this->dbh, $sql, $params);
 		if ($result) {
 			$numrows = pg_num_rows($result);
@@ -507,7 +507,7 @@ ON TEMP.wle_element_id = ports.element_id';
 			echo "<pre>$sql</pre>";
 		}
 
-		$result = pg_query_params($this->dbh, "set client_encoding = 'ISO-8859-15'", array()) or die('query failed ' . pg_last_error($this->dbh));
+		$result = pg_query_params($this->dbh, "set client_encoding = 'ISO-8859-15'", array()) or die(freshports_QueryFailed($this->dbh));
 		$result = pg_query_params($this->dbh, $sql, $params);
 		if ($result) {
 			$numrows = pg_num_rows($result);
@@ -742,7 +742,7 @@ ON TEMP.wle_element_id = ports.element_id';
 			echo "<pre>$sql</pre>";
 		}
 
-		$result = pg_query_params($this->dbh, "set client_encoding = 'ISO-8859-15'", array()) or die('query failed ' . pg_last_error($this->dbh));
+		$result = pg_query_params($this->dbh, "set client_encoding = 'ISO-8859-15'", array()) or die(freshports_QueryFailed($this->dbh));
 		$result = pg_query_params($this->dbh, $sql, $params);
 		if ($result) {
 			$numrows = pg_num_rows($result);
@@ -958,7 +958,7 @@ LEFT OUTER JOIN
 
 		if ($this->Debug) echo "<pre>$sql</pre>";
 
-		$this->LocalResult = pg_query_params($this->dbh, "set client_encoding = 'ISO-8859-15'", array()) or die('query failed ' . pg_last_error($this->dbh));
+		$this->LocalResult = pg_query_params($this->dbh, "set client_encoding = 'ISO-8859-15'", array()) or die(freshports_QueryFailed($this->dbh));
 		$this->LocalResult = pg_query_params($this->dbh, $sql, $params);
 		if ($this->LocalResult) {
 			$numrows = pg_num_rows($this->LocalResult);

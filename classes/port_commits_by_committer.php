@@ -159,7 +159,7 @@ class PortCommitsByCommitter extends CommitsByCommitter {
 
 		if ($this->Debug) echo '<pre>' . $sql . '</pre>';
 
-		$this->LocalResult = pg_query_params($this->dbh, "set client_encoding = 'ISO-8859-15'", array()) or die('query failed ' . pg_last_error($this->dbh));
+		$this->LocalResult = pg_query_params($this->dbh, "set client_encoding = 'ISO-8859-15'", array()) or die(freshports_QueryFailed($this->dbh));
 		$this->LocalResult = pg_query_params($this->dbh, $sql, $params);
 		if ($this->LocalResult) {
 			$numrows = pg_num_rows($this->LocalResult);

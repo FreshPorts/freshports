@@ -99,7 +99,7 @@ function freshports_WatchListCountDefault($dbh, $UserID) {
 
 	$result = pg_query_params($dbh, $sql, array($UserID));
 	if (!$result) {
-		echo "error " . pg_last_error($dbh);
+		echo freshports_QueryFailed($dbh);
 		exit;
 	}
 

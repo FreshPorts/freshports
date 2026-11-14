@@ -405,8 +405,20 @@ function UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $dbh) {
 function MoveStagingToWatchList($UserID, $WatchListID, $dbh) {
 	$ok  = TRUE;
 
-	$UserID      = pg_escape_string($dbh, $UserID);
-	$WatchListID = pg_escape_string($dbh, $WatchListID);
+	$UserID      = intval($UserID);
+	$WatchListID = intval($WatchListID);
+
+	#
+	# The watch list id comes from the request (the "Update watch list" button),
+	# and MigrateStagingAreaToWatchList() inserts into whatever list it is given.
+	# Refuse it unless it is one of this user's lists, as CopyStagingToWatchList()
+	# does.  (pkg_upload.php checks the list only after this has run.)
+	#
+	$result = pg_query_params($dbh, 'SELECT 1 FROM watch_list WHERE id = $1 AND user_id = $2', array($WatchListID, $UserID));
+	if (!$result || pg_num_rows($result) != 1) {
+		syslog(LOG_WARNING, "MoveStagingToWatchList: watch list $WatchListID does not belong to user $UserID; not changed");
+		return FALSE;
+	}
 
 	$Debug = 0;
 

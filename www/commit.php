@@ -160,6 +160,10 @@
 			$Commit = new Commit($db);
 			$Commit->FetchByMessageId($message_id);
 			$CommitBranch = $Commit->branch;
+			if (empty($Commit->message_id)) {
+				# no such commit; the page says nothing was found
+				header('HTTP/1.1 404 NOT FOUND');
+			}
 		}
 	}
 

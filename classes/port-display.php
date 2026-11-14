@@ -529,7 +529,7 @@ class port_display {
             }
             $link = '<a href="' . $link . '">' . freshports_Codeberg_Icon($link_title) . '</a>';
           } else {
-            $link = '<del>GitHub</del>';
+            $link = '<del>Codeberg</del>';
           }
 
           # echo 'returning ' . $link . '<br>';
@@ -1076,7 +1076,7 @@ class port_display {
 			} else {
 				$HTML .= $port->quarterly_revision;
 				$ToolTipText = _('Version of this port present on the latest quarterly branch.');
-				if ($port->IsSlavePort()) $ToolTip = ' ' . _('NOTE: Slave port - quarterly revision is most likely wrong.');
+				if ($port->IsSlavePort()) $ToolTipText .= ' ' . _('NOTE: Slave port - quarterly revision is most likely wrong.');
 			}
 			$HTML .= '<span class="tooltiptext tooltip-top">' . $ToolTipText;
 			$HTML .= '</span></span>';
@@ -2141,8 +2141,8 @@ class port_display {
 				if (preg_match('|^(share/man/man)(\d)/(\S+)(\.\d\.gz)$|', $ConfigurePlist->installed_file, $matches)) {
 					# we have a man page
 					$ManPages[] = '<li class="man"><a class="man" href="' . 
-						'https://man.freebsd.org/cgi/man.cgi?query=' . $matches[3] . '&amp;sektion=' . $matches[2] . '&amp;manpath=freebsd-ports">' .
-						$matches[3] . '(' . $matches[2] . ")</a></li>\n";
+						'https://man.freebsd.org/cgi/man.cgi?query=' . urlencode($matches[3]) . '&amp;sektion=' . $matches[2] . '&amp;manpath=freebsd-ports">' .
+						htmlspecialchars($matches[3]) . '(' . $matches[2] . ")</a></li>\n";
 				}
 			}
 

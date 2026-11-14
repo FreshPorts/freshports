@@ -381,15 +381,11 @@ function Try_Searching_Element_Case_Insensitive($db, $path_parts, $url_args, $Br
 		# XXX we should redirect, to the correct URL here
 		$new_path_parts = explode('/', trim($ElementRecord->element_pathname, '/'));
 		if ($Debug) echo '<pre>' . var_dump($new_path_parts) . '</pre>';
-		if ($Branch === BRANCH_HEAD) {
-			# "/ports/head/sysutils/anvil"
-			$Category = $new_path_parts[2];
-			$Port     = $new_path_parts[3];
-		} else {
-			# "/ports/branches/2023Q1/sysutils/anvil"
-			$Category  = $new_path_parts[3];
-			$Port      = $new_path_parts[4];
-		}
+		# The search above is always in the head tree, so this is "/ports/head/sysutils/anvil"
+		# whatever the branch; the branch stays in $url_args.  (Reading a branch layout
+		# here took the port name as the category, and the redirect failed.)
+		$Category = $new_path_parts[2];
+		$Port     = $new_path_parts[3];
 
 		RedirectIncorrectPathCase("/$Category/$Port/", $url_args);
 
@@ -399,17 +395,18 @@ function Try_Searching_Element_Case_Insensitive($db, $path_parts, $url_args, $Br
 		die($msg);
 	}
 
-	$PortsPrefix = '/ports/' . $Branch;
+	# the search above is always in the head tree, whatever the branch
+	$PortsPrefix = FRESHPORTS_PORTS_TREE_HEAD_PREFIX;
 	if ($Debug) echo 'PortsPrefix = ' . $PortsPrefix . '<br>';
 
 	# if we get here, we know it's a valid element, just the wrong case. Let's redirect to the correct page.
 	$pos = strpos($ElementRecord->element_pathname, $PortsPrefix);
 	# this should start with that string
 	if ($pos === 0) {
-		$RelocateTo = str_ireplace($PortsPrefix, '', $ElementRecord->element_pathname);
+		$RelocateTo = substr($ElementRecord->element_pathname, strlen($PortsPrefix));
 		if ($Debug) echo 'redirecting to ' . $RelocateTo . '<br>';
-		header( 'Location: ' . $RelocateTo);
-		exit;
+		# keeps ?branch= and the rest of the query string
+		RedirectIncorrectPathCase($RelocateTo, $url_args);
 	}
 
 	# this exit should never be hit

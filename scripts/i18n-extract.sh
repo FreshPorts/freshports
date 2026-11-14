@@ -9,7 +9,8 @@
 top=$(cd $(dirname $0)/.. && pwd)
 cd $top
 
-find classes include www -type f -name '*.php' | sort | \
+# rewrite/ holds the 404 handler and the category, port and file pages it shows
+find classes include rewrite www -type f -name '*.php' | sort | \
   xgettext --language=PHP --from-code=UTF-8 \
     --package-name=FreshPorts \
     --msgid-bugs-address=https://github.com/FreshPorts/freshports/issues \

@@ -64,7 +64,6 @@ if ($Debug) {
 }
 
 define('SCRIPT_BADGES', '/--/badges/');
-define('SCRIPT_API',    '/--/api/1/search/');
 define('SCRIPT_STATUS', '/--/status/');
 
 $items = explode('/', $url_path);
@@ -77,7 +76,6 @@ if ($Debug) {
 
 # Someday, change this entire file so it uses php-rest-service.  In the meantime, do this:
 $script = '';
-if (strpos($url_path, SCRIPT_API)    === 0) $script = SCRIPT_API;
 if (strpos($url_path, SCRIPT_BADGES) === 0) $script = SCRIPT_BADGES;
 if (strpos($url_path, SCRIPT_STATUS) === 0) $script = SCRIPT_STATUS;
 
@@ -109,34 +107,6 @@ switch($script) {
         require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/system-status-page.php');
 
         freshports_SystemStatusPage($db);
-        break;
-
-    case SCRIPT_API:
-        require_once($_SERVER['DOCUMENT_ROOT'] . '/../api/1/api-search.php');
-        echo '<br>api invoked</br>';
-
-		/*
-		Server::create('/--/api')
-			->addGetRoute('test', function(){
-		#    logger('test');
-		syslog(LOG_WARNING, 'testing');
-				return 'Yay!';
-			})
-			->addGetRoute('foo/(.*)', function($bar){
-				return $bar;
-			})
-		->run();
-		*/
-
-		echo '  oh oh';
-
-		#var_dump($db);
-		Server::create('/--/api/1/search', 'freshportsAPISearch\Search')
-			->setDebugMode(DEBUG)
-			->collectRoutes()
-		->run();
-
-		echo 'done';
         break;
 
     default:

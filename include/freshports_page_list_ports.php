@@ -356,34 +356,37 @@ SELECT ports.id,
 		return $HTML;
 	}
 
-	function getSort() {
-		$HTML = '';
-
-		if (IsSet( $_REQUEST["sort"])) {
-			$sort = $_REQUEST["sort"];
-		} else {
-			$sort = '';
-		}
+	function getSortKey() {
+		# the sort the visitor asked for: 'dateadded', 'port' or 'category'
+		$sort = $_REQUEST['sort'] ?? '';
 
 		switch ($sort) {
 			case 'dateadded':
-				$sort = 'ports.date_added desc, category, port';
-				break;
-
 			case 'port':
-				$sort = 'port';
-				break;
+				return $sort;
 
 			default:
-				$sort ='category, port';
+				return 'category';
 		}
+	}
 
-		return $sort;
+	function getSort() {
+		# the ORDER BY for getSortKey(); also part of the cache file name
+		switch ($this->getSortKey()) {
+			case 'dateadded':
+				return 'ports.date_added desc, category, port';
+
+			case 'port':
+				return 'port';
+
+			default:
+				return 'category, port';
+		}
 	}
 
 
 	function getShowCategoryHeaders() {
-		$sort = $this->getSort();
+		$sort = $this->getSortKey();
 
 		switch ($sort) {
 			case 'port':
@@ -402,7 +405,7 @@ SELECT ports.id,
 	function getSortedbyHTML() {
 		$HTML = '';
 
-		$sort = $this->getSort();
+		$sort = $this->getSortKey();
 
 		switch ($sort) {
 			case 'dateadded':

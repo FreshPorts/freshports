@@ -251,7 +251,7 @@ if ($UserClickedOn != '' && $ErrorMessage == '') {
 			pg_query($db, 'BEGIN');
 			$WatchList = new WatchList($db);
 			$WatchList->Debug = $Debug;
-			$NumRows = $WatchList->EmptyAllLists($User->id, pg_escape_string($db, $WatchListIDToEmpty));
+			$NumRows = $WatchList->EmptyAllLists($User->id);
 			if (!IsSet($NumRows)) {
 				die(freshports_QueryFailed($db));
 			}

@@ -177,7 +177,7 @@ DELETE FROM watch_list_element
 		#
 		# Empty all watch lists
 		#
-		unset($return);
+		$return = null;
 		$this->Debug = 0;
 
 		$query = '

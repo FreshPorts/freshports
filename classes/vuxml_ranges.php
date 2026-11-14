@@ -77,7 +77,9 @@ class VuXML_Ranges {
 #			echo "   vuxml_affected_id  = '" . $this->vuxml_affected_id[$i] . " ";
 			echo "<blockquote>" . htmlspecialchars($this->TextToMath($this->operator1[$i])) . " ";
 			echo htmlentities($this->version1[$i])          . " ";
-			echo htmlentities($this->operator2[$i] ?? '')   . " ";
+			# the second operator is often empty (a range with one bound), and TextToMath('') gives '..'
+			$operator2 = $this->operator2[$i] ?? '';
+			echo htmlspecialchars($operator2 === '' ? '' : $this->TextToMath($operator2)) . " ";
 			echo htmlentities($this->version2[$i]  ?? '')   . "</blockquote><br>\n";
 		}
 	}

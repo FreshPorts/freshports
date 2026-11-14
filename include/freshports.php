@@ -738,12 +738,16 @@ function freshports_CVS_Icon() {
 	return '<img class="icon" src="/images/cvs.png" alt="CVS log" title="CVS log" width="19" height="17">';
 }
 
-function freshports_Watch_Icon() {
-	return freshports_Themed_Icon('watch-remove', _('Click to remove this from your default watch list[s]'), 16);
+#
+# $Title replaces the default hover text.  watch.php passes one, because
+# there the icon acts on the list being shown, not on the default lists.
+#
+function freshports_Watch_Icon($Title = null) {
+	return freshports_Themed_Icon('watch-remove', $Title ?? _('Click to remove this from your default watch list[s]'), 16);
 }
 
-function freshports_Watch_Icon_Add() {
-	return freshports_Themed_Icon('watch-add', _(CLICKTOADD), 16);
+function freshports_Watch_Icon_Add($Title = null) {
+	return freshports_Themed_Icon('watch-add', $Title ?? _(CLICKTOADD), 16);
 }
 
 function freshports_Watch_Icon_Empty() {
@@ -838,11 +842,27 @@ function freshports_Watch_Link($Action, $WatchListAsk, $ElementID, $wlid, $Title
 	return $HTML;
 }
 
+#
+# With a $wlid (only watch.php, which shows one list), the icon adds to or
+# removes from that list alone (see watch-list.php), whether or not it is a
+# default list, so the hover text says "this watch list" instead of naming
+# the default lists or counting lists.
+#
 function freshports_Watch_Link_Add($WatchListAsk, $WatchListCount, $ElementID, $wlid = 0) {
+	if ($wlid) {
+		$Title = _('Click to add this to this watch list');
+		return freshports_Watch_Link('add', $WatchListAsk, $ElementID, $wlid, $Title, freshports_Watch_Icon_Add($Title));
+	}
+
 	return freshports_Watch_Link('add', $WatchListAsk, $ElementID, $wlid, _(CLICKTOADD), freshports_Watch_Icon_Add());
 }
 
 function freshports_Watch_Link_Remove($WatchListAsk, $WatchListCount, $ElementID, $wlid = 0) {
+	if ($wlid) {
+		$Title = _('Click to remove this from this watch list');
+		return freshports_Watch_Link('remove', $WatchListAsk, $ElementID, $wlid, $Title, freshports_Watch_Icon($Title));
+	}
+
 	return freshports_Watch_Link('remove', $WatchListAsk, $ElementID, $wlid,
 		sprintf(ngettext('on %d watch list', 'on %d watch lists', $WatchListCount), $WatchListCount),
 		freshports_Watch_Icon());

@@ -227,6 +227,10 @@ WITH selected_ports AS (
 	       ports.restricted,
 	       ports.no_cdrom,
 	       ports.expiration_date,
+	       -- Every port here is on the list being shown, and the watch-list
+	       -- icon on this page acts on that list (it sends its wlid), so the
+	       -- icon is always 'remove'.  Other pages count only the default
+	       -- lists, so a port on a non-default list shows 'add' there.
 	       1 as onwatchlist
 	  FROM watch_list_element, element, categories, ports
 	 WHERE ports.category_id                = categories.id 

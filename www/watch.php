@@ -367,7 +367,7 @@ SELECT selected_ports.*,
 					echo '<dt>';
 				}
 
-				echo '<span class="element-details><span><a href="/' . $Category . '/">' . $Category . '</a></span></span>';
+				echo '<span class="element-details"><span><a href="/' . $Category . '/">' . $Category . '</a></span></span>';
 				if ($ShowCategoryHeaders) {
 					echo "</dt>\n<dd>";
 				}

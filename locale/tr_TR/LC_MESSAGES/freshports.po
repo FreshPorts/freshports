@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: FreshPorts\n"
 "Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
 "POT-Creation-Date: 2026-11-14 02:18+0000\n"
-"PO-Revision-Date: 2026-11-07 00:50+0300\n"
+"PO-Revision-Date: 2026-11-15 23:53+0300\n"
 "Last-Translator: Yusuf Yaman <nxjoseph@FreeBSD.org>\n"
 "Language-Team: Turkish\n"
 "Language: tr\n"
@@ -186,10 +186,13 @@ msgstr ""
 #, php-format
 msgid "A newer version was found upstream by portscout, first on %s."
 msgstr ""
+"Portscout tarafından, ilk olarak %s üzerinde, daha yeni bir sürüm tespit "
+"edildi."
 
 #: classes/port-display.php:1106
 msgid "A newer version was found upstream by portscout."
 msgstr ""
+"Portscout tarafından, ana kaynak tarafında daha yeni bir sürüm bulundu."
 
 #: classes/port-display.php:1109
 #, php-format
@@ -717,15 +720,15 @@ msgstr "Sizin takip listenizin detaylarını bulamadım... üzgünüm"
 
 #: include/bot-gate.php:137
 msgid "Just a moment"
-msgstr ""
+msgstr "Bir saniye"
 
 #: include/bot-gate.php:226
 msgid "If you're a person, please press the button for a cookie."
-msgstr ""
+msgstr "Eğer bir insansanız, lütfen bir kurabiye almak için düğmeye basın."
 
 #: include/bot-gate.php:231
 msgid "I was a person last time I checked."
-msgstr ""
+msgstr "En son kontrol ettiğimde bir insandım."
 
 #: include/bot-gate.php:233
 msgid ""
@@ -740,12 +743,16 @@ msgid ""
 "Changes cannot be saved just now: this site is not fully configured. The "
 "problem has been logged."
 msgstr ""
+"Değişiklikler şu anda kaydedilemiyor: bu site tam olarak yapılandırılmamış "
+"durumda. Sorun günlüğe kaydedildi."
 
 #: include/csrf.php:76
 msgid ""
 "Nothing was changed: that request did not come from a FreshPorts page, or "
 "the page was too old. Please reload the page and try again."
 msgstr ""
+"Hiçbir şey değişmedi: bu istek bir FreshPorts sayfasından gelmedi ya da "
+"sayfa çok eskiydi. Lütfen sayfayı yeniden yükleyin ve tekrar deneyin."
 
 #: include/fontsize.php:64
 msgid "Smallest"
@@ -812,7 +819,7 @@ msgstr "Anasayfa"
 
 #: include/freshports.php:556 www/sanity_test_failures.php:87
 msgid "Sanity Test Failure"
-msgstr "Sanity Test Hatası"
+msgstr "Sağlamlık Testi (Sanity Test) Hatası"
 
 #: include/freshports.php:561
 msgid "Ascending Order"
@@ -1399,7 +1406,7 @@ msgstr "Silinen portlar"
 #: include/freshports.php:2427 www/sanity_test_failures.php:37
 #: www/sanity_test_failures.php:85
 msgid "Sanity Test Failures"
-msgstr "Sanity Test Hataları"
+msgstr "Sağlamlık Testi (Sanity Test) Hataları"
 
 #: include/freshports.php:2427
 msgid "Things that didn't go quite right..."
@@ -1492,6 +1499,7 @@ msgstr "Bu portu takip eden insanlar, ayrıca şunları da takip ediyor:"
 #: include/freshports.php:2915
 msgid "Sorry, a database query failed. The error has been logged."
 msgstr ""
+"Üzgünüz, bir veritabanı sorgusu başarısız oldu. Hata günlüğe kaydedildi."
 
 #: include/freshports_page_expiration_ports.php:62
 #, php-format
@@ -1750,80 +1758,75 @@ msgid "Go"
 msgstr "Git"
 
 #: rewrite/missing-category.php:23
-#, fuzzy
 msgid "Name"
 msgstr "Port Adı"
 
 #: rewrite/missing-category.php:24
-#, fuzzy
 msgid "Date added"
-msgstr "eklendiği tarih"
+msgstr "Eklendiği tarih"
 
 #: rewrite/missing-category.php:25
-#, fuzzy
 msgid "Last updated"
-msgstr "son güncelleme"
+msgstr "Son güncelleme"
 
 #: rewrite/missing-category.php:64 www/search.php:1282
 msgid "Sort by:"
 msgstr "Sırala:"
 
 #: rewrite/missing-category.php:69
-#, fuzzy
 msgid "Result Page:"
-msgstr "Son Sayfa"
+msgstr "Sonuç Sayfası:"
 
 #: rewrite/missing-category.php:88 rewrite/missing-category.php:91
 msgid "Next"
-msgstr ""
+msgstr "Sonraki"
 
 #: rewrite/missing-category.php:261
 #, php-format
 msgid "Category listing - %1$s: ports with commits on branch %2$s"
-msgstr ""
+msgstr "Kategori listesi - %1$s: %2$s dalında commit'leri bulunan portlar"
 
 #: rewrite/missing-category.php:261
-#, fuzzy, php-format
+#, php-format
 msgid "Category listing - %s"
-msgstr "Takip Listesi - %s"
+msgstr "Kategori listesi - %s"
 
 #: rewrite/missing-category.php:279
 #, php-format
 msgid "Number of ports in this category (with commits on branch %1$s): %2$d"
-msgstr ""
+msgstr "Bu kategorideki port sayısı (%1$s dalındaki commit'lerle): %2$d"
 
 #: rewrite/missing-category.php:279
-#, fuzzy, php-format
+#, php-format
 msgid "Number of ports in this category: %d"
-msgstr "Portların sayısı: %d"
+msgstr "Bu kategorideki port sayısı: %d"
 
 #: rewrite/missing-category.php:282
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "Ports marked with a <sup>*</sup> actually reside within another category but "
 "have %s listed as a secondary category."
 msgstr ""
-"başka bir kategoride yer alan ancak bu kategoriyi ikincil olarak listeleyen "
-"bir port'u belirtir."
+"<sup>*</sup> işaretiyle belirtilen portlar aslında başka bir kategoriye "
+"dahildir, ancak %s ifadesi bunlar için ikincil bir kategori olarak "
+"listelenmiştir."
 
 #: rewrite/missing-non-port.php:38
-#, fuzzy, php-format
+#, php-format
 msgid "non port: %s"
-msgstr "Bozuk portlar"
+msgstr "port-dışı: %s"
 
 #: rewrite/missing-port.php:43
-#, fuzzy
 msgid "Port Moves"
-msgstr "Port taşınması nedir?"
+msgstr "Port Taşınmaları"
 
 #: rewrite/missing-port.php:202
-#, fuzzy
 msgid "a long description could not be found for this port"
-msgstr "bu port için SUBR bilgisi bulunamadı"
+msgstr "Bu port için uzun bir açıklama bulunamadı"
 
 #: rewrite/missing-port.php:328
 msgid "A short description could not be found for this port"
-msgstr ""
+msgstr "Bu port için kısa bir açıklama bulunamadı"
 
 #: rewrite/missing-port.php:401
 #, fuzzy, php-format
@@ -1831,40 +1834,39 @@ msgid "There are no commits on branch %s for this port"
 msgstr "Bu port için sorumlu kimse yok."
 
 #: rewrite/missing-port.php:538
-#, fuzzy
 msgid "Port details"
-msgstr "daha fazla"
+msgstr "Port detayları"
 
 #: rewrite/missing-port.php:538
-#, fuzzy, php-format
+#, php-format
 msgid "Port details on branch %s"
-msgstr "port %s tarihinde silindi"
+msgstr "%s dalındaki port detayları"
 
 #: rewrite/missing.php:12
-#, fuzzy
 msgid "Document not found"
-msgstr "Hiçbir port bulunmadı."
+msgstr "Belge bulunamadı"
 
 #: rewrite/missing.php:13
 #, php-format
 msgid "%s 404 page"
-msgstr ""
+msgstr "%s 404 sayfası"
 
 #: rewrite/missing.php:14
 #, php-format
 msgid "%s - 404 page"
-msgstr ""
+msgstr "%s - 404 sayfası"
 
 #: rewrite/missing.php:34
-#, fuzzy
 msgid "Sorry, but I don't know anything about that."
-msgstr "Bu token hakkında hiçbir şey bilmiyorum."
+msgstr "Üzgünüm ama bu konuda hiçbir şey bilmiyorum."
 
 #: rewrite/missing.php:43
 msgid ""
 "Perhaps a <a href=\"/categories.php\">list of categories</a> or <a href=\"/"
 "search.php\">the search page</a> might be helpful."
 msgstr ""
+"Belki <a href=\"/categories.php\">kategoriler listesi</a> veya <a href=\"/"
+"search.php\">arama sayfası</a> işinize yarayabilir."
 
 #: www/--/feeds/index.php:14 www/--/feeds/index.php:30
 #: www/--/feeds/index.php:33 www/backend/index.php:13 www/backend/index.php:29
@@ -2012,23 +2014,22 @@ msgstr "Bir port nedir?"
 
 #. TRANSLATORS: %1$s is a link whose text is 'FreeBSD Handbook'; %2$s is the command 'make install'.
 #: www/about.php:48
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "A port is the term used to describe a collection of files which makes it "
 "extremely easy to install an application.  As the %1$s explains, installing "
 "an application from a port is as simple as changing to the port directory "
 "and typing %2$s. If you want an application, the port is the Way To Go(TM)"
 msgstr ""
-"\"Port\", bir uygulamayı kurmayı son derece kolaylaştıran bir dosya "
-"koleksiyonunu ifade etmek için kullanılan terimdir. %1$s kısmında da "
-"belirtildiği gibi: <em>Bir uygulamayı kurmak; portu indirmek, dosyalarını "
-"açmak ve port dizini içinde %2$s komutunu yazmak kadar basittir</em>. Eğer "
-"bir uygulamaya ihtiyacınız varsa, en doğru yöntem \"port\" kullanmaktır."
+"\"Port\", bir uygulamanın kurulumunu son derece kolaylaştıran bir dosya "
+"koleksiyonunu ifade etmek için kullanılan terimdir. %1$s kısmında "
+"açıklandığı üzere, bir uygulamayı \"port\" üzerinden kurmak; ilgili port "
+"dizinine gidip %2$s komutunu yazmak kadar basittir. Eğer bir uygulamaya "
+"ihtiyacınız varsa, en doğru yöntem \"port\" kullanmaktır."
 
 #: www/about.php:48
-#, fuzzy
 msgid "FreeBSD Handbook"
-msgstr "Portlama El kitabı"
+msgstr "FreeBSD El Kitabı"
 
 #: www/about.php:50
 msgid ""
@@ -2036,6 +2037,10 @@ msgid ""
 "easy. It's simple. And you love that new application.  And you want to know "
 "when the port is updated.  That's where we come in."
 msgstr ""
+"İşte, favori yazılımınızı () kurmak için \"ports\" ağacına yöneliyorsunuz. "
+"İşlem oldukça kolay ve basit. Yeni uygulamanızı çok sevdiniz; peki, bu "
+"yazılım güncellendiğinde nasıl haberdar olacaksınız? İşte tam bu noktada biz "
+"devreye giriyoruz."
 
 #: www/about.php:52
 #, php-format
@@ -2192,7 +2197,7 @@ msgstr "FreshPorts (orijinal)"
 
 #: www/authors.php:63
 msgid "Olaf wrote the perl script for the log catcher."
-msgstr ""
+msgstr "Olaf, günlük toplayıcıya yönelik Perl betiğini yazdı."
 
 #: www/authors.php:65
 msgid "Titus Manea wrote the awk code for the log catcher and the log munger."
@@ -2559,17 +2564,15 @@ msgstr ""
 #: www/categories.php:212
 #, php-format
 msgid "How the number of categories has changed: %s."
-msgstr ""
+msgstr "Kategori sayısı nasıl değişti: %s."
 
 #: www/categories.php:212 www/graphs.php:36
-#, fuzzy
 msgid "categories over time"
-msgstr "Kategoriler"
+msgstr "zaman içinde kategoriler"
 
 #: www/category-history.php:51
-#, fuzzy
 msgid "Categories over time"
-msgstr "Kategoriler"
+msgstr "Zaman içinde kategoriler"
 
 #: www/category-history.php:53
 msgid ""
@@ -2587,7 +2590,7 @@ msgstr ""
 
 #: www/category-history.php:104 www/category-history.php:177
 msgid "physical"
-msgstr ""
+msgstr "fiziksel"
 
 #: www/category-history.php:105 www/category-history.php:179
 msgid "virtual"
@@ -2613,11 +2616,12 @@ msgid ""
 "A chart of the number of categories from %s to today. Now: %d physical, %d "
 "virtual."
 msgstr ""
+"%s tarihinden bugüne kategori sayısını gösteren bir grafik. Güncel durum: %d "
+"fiziksel, %d sanal."
 
 #: www/category-history.php:187
-#, fuzzy
 msgid "Every change"
-msgstr "Değişikleri Kaydet"
+msgstr "Her değişiklik"
 
 #: www/category-history.php:189
 msgid ""
@@ -2625,11 +2629,13 @@ msgid ""
 "commit or two before its directory, so it can appear as a virtual category "
 "for a moment."
 msgstr ""
+"Önce en yeniler. Yeni bir fiziksel kategori, genellikle dizini "
+"oluşturulmadan bir veya iki commit önce VALID_CATEGORIES listesine eklenir; "
+"bu nedenle kısa bir süreliğine sanal bir kategori olarak görünebilir."
 
 #: www/category-history.php:194
-#, fuzzy
 msgid "Added"
-msgstr "Port Eklendi:"
+msgstr "Eklendi"
 
 #: www/category-history.php:194 www/vuxml.php:264
 msgid "Date"
@@ -2637,12 +2643,11 @@ msgstr "Tarih"
 
 #: www/category-history.php:194
 msgid "Physical"
-msgstr ""
+msgstr "Fiziksel"
 
 #: www/category-history.php:194
-#, fuzzy
 msgid "Removed"
-msgstr "kaldır"
+msgstr "Kaldırıldı"
 
 #: www/category-history.php:194
 msgid "Virtual"
@@ -2686,13 +2691,14 @@ msgid "The official list of categories is in the %s."
 msgstr "%s içerisindeki orijinal kategori listesi."
 
 #: www/category-maintenance.php:133
-#, fuzzy
 msgid "Primary categories are those which physically reside on disk."
-msgstr "Ana kategoriler fiziksel olarak diskte tutulur."
+msgstr ""
+"Birincil kategoriler, fiziksel olarak disk üzerinde bulunan kategorilerdir."
 
 #: www/category-maintenance.php:134
 msgid "Only virtual categories need to have their description values set."
 msgstr ""
+"Yalnızca sanal kategorilerin açıklama değerlerinin ayarlanması gerekir."
 
 #: www/category-maintenance.php:135
 msgid ""
@@ -2704,7 +2710,7 @@ msgstr ""
 
 #: www/category-maintenance.php:136
 msgid "See the above link for the description to use."
-msgstr ""
+msgstr "Kullanılacak açıklama için yukarıdaki bağlantıya bakın."
 
 #: www/category-maintenance.php:137
 msgid "All changes are logged."
@@ -3156,7 +3162,7 @@ msgstr ""
 
 #: www/faq.php:90
 msgid "base"
-msgstr ""
+msgstr "base"
 
 #. TRANSLATORS: %s is the word 'base', shown in italics.
 #: www/faq.php:90
@@ -3165,15 +3171,16 @@ msgid ""
 "official packages for FreeBSD (the operating system, sometimes known as %s) "
 "in its entirety"
 msgstr ""
+"FreeBSD (bazen %s olarak da bilinen işletim sistemi) için resmi paketlerin "
+"bütünü"
 
 #: www/faq.php:91
 msgid "packages for a huge number of ports."
-msgstr ""
+msgstr "çok sayıda port için paketler."
 
 #: www/faq.php:98
-#, fuzzy
 msgid "FreeBSD ports"
-msgstr "FreeBSD forumu"
+msgstr "FreeBSD portları"
 
 #. TRANSLATORS: %1$s is the repository name 'FreeBSD', %2$s is the word 'not' in bold, %3$s is 'FreeBSD ports' in italics.
 #: www/faq.php:98
@@ -3185,7 +3192,7 @@ msgstr ""
 
 #: www/faq.php:98
 msgid "not"
-msgstr ""
+msgstr "değil"
 
 #. TRANSLATORS: %1$s is the name 'pkgbase', %2$s is the repository name 'FreeBSD-base', shown in italics.
 #: www/faq.php:103
@@ -3194,12 +3201,14 @@ msgid ""
 "If you use %1$s (the base OS, packaged), you should have an additional repo "
 "named %2$s."
 msgstr ""
+"%1$s (paketlenmiş temel işletim sistemi) kullanıyorsanız, %2$s adında ek bir "
+"depo (repo) daha edinmiş olmanız gerekir."
 
 #. TRANSLATORS: %s is the name 'pkgbase'.
 #: www/faq.php:108
-#, fuzzy, php-format
+#, php-format
 msgid "FreshPorts covers packages of ports, but not %s."
-msgstr "FreshPorts, %s adresinde yayımlanan ABI'leri kapsar."
+msgstr "FreshPorts, port paketlerini kapsar ancak %s'i kapsamaz."
 
 #: www/faq.php:112
 msgid "How do I modify my watch list?"
@@ -3236,6 +3245,9 @@ msgid ""
 "One-click watch list maintenance operates only upon your default watch "
 "lists. You can set one or more watch lists as being default."
 msgstr ""
+"Tek tıkla izleme listesi yönetimi, yalnızca varsayılan izleme listeleriniz "
+"üzerinde işlev görür. Bir veya daha fazla izleme listesini varsayılan olarak "
+"ayarlayabilirsiniz."
 
 #: www/faq.php:129
 msgid "How do I empty my watch list?"
@@ -3435,6 +3447,8 @@ msgstr ""
 #: www/faq.php:228
 msgid "Repology: a link to search the Repology packaging hub for this port."
 msgstr ""
+"Repology: bu port için Repology paketleme merkezinde arama yapmaya yarayan "
+"bir bağlantı."
 
 #: www/faq.php:231
 msgid ""
@@ -3534,6 +3548,8 @@ msgid ""
 "Refresh: The system is in the process of refreshing that port by inspecting "
 "the ports tree. You should rarely see this."
 msgstr ""
+"Yenileme: Sistem, port ağacını inceleyerek ilgili portu yenileme "
+"sürecindedir. Bununla karşılaşma olasılığınız oldukça düşüktür."
 
 #: www/faq.php:262
 msgid ""
@@ -3715,6 +3731,10 @@ msgid ""
 "Revision details to view the revision of the file associated with this "
 "commit."
 msgstr ""
+"Revizyon ayrıntıları. Commit geçmişindeki Dosyalar simgesine tıkladığınızda, "
+"bu commit ile söz konusu portta hangi dosyaların değiştirildiğini "
+"görebilirsiniz. İlgili commit ile bağlantılı dosya revizyonunu görüntülemek "
+"için Revizyon ayrıntıları seçeneğine tıklayın."
 
 #: www/faq.php:329
 msgid ""
@@ -3743,6 +3763,11 @@ msgid ""
 "others to correct it if it goes unnoticed. If you see this icon next to a "
 "commit, it failed a Sanity Test."
 msgstr ""
+"Sanity Test Hataları. Port sorumluları ve katkıda bulunanlar işlerini iyi "
+"yapıyorlar; ancak bazen gözden kaçan hatalar olabiliyor. Bu kayıt, bir hata "
+"fark edilmeden geçtiğinde başkalarının onu düzeltmesini kolaylaştırmak "
+"amacıyla tutulur. Eğer bir commit'in yanında bu simgeyi görüyorsanız, o "
+"commit bir Sağlamlık Testi'nden geçememiş demektir."
 
 #: www/faq.php:338
 msgid ""
@@ -3865,10 +3890,13 @@ msgstr "Son 10 port"
 #: www/faq.php:404
 msgid "Same as above, but show only two days of previous commits"
 msgstr ""
+"Yukarıdakiyle aynı, ancak yalnızca önceki iki güne ait commit'leri göster"
 
 #: www/faq.php:408
 msgid "Same as above, but show summaries instead of a link to another page"
 msgstr ""
+"Yukarıdakiyle aynı; ancak başka bir sayfaya bağlantı vermek yerine özetleri "
+"gösterin"
 
 #: www/faq.php:414
 msgid ""
@@ -3957,6 +3985,9 @@ msgid ""
 "\">gift</a>) will have a section titled \"Port Moves\". FreshPorts obtains "
 "information about ports from the commits to the %s."
 msgstr ""
+"Bazı portlar (örneğin <a href=\"/net/\">net</a>/<a href=\"/net/gift/\">gift</"
+"a>), \"Port Taşınmaları\" başlıklı bir bölüme sahiptir. FreshPorts, "
+"portlarla ilgili bilgileri %s üzerindeki commit'lerden elde eder."
 
 #: www/faq.php:460
 msgid "repository"
@@ -4024,6 +4055,9 @@ msgid ""
 "just one port and specify the differences in the other port. This is "
 "slightly similar to the way %1$s is related to %2$s."
 msgstr ""
+"Bazı portlar diğerleriyle o kadar benzerdir ki, yalnızca birini koruyup "
+"diğerindeki farklılıkları ayrıca belirtmek mantıklı olabilir. Bu durum, %1$s "
+"ile %2$s arasındaki ilişkiye kısmen benzer."
 
 #: www/faq.php:494
 msgid ""
@@ -4158,7 +4192,7 @@ msgstr "Alan"
 
 #: www/faq.php:572
 msgid "Origin"
-msgstr ""
+msgstr "Köken"
 
 #: www/faq.php:573 www/search.php:1228
 msgid "Port Name"
@@ -4300,6 +4334,13 @@ msgid ""
 "to the master port would not appear under the slave port, thereby giving a "
 "false impression that the slave port was still vulnerable."
 msgstr ""
+"Türetilmiş portlar (slave ports), ana porta (master port) yapılan bir commit "
+"ile güncellenebilir. Ana porta yapılan bir commit, ona bağlı tüm bağımlı "
+"portları etkileyecektir. Eğer bir bağımlı port için <a href=\"https://"
+"www.vuxml.org/freebsd/\">VuXML</a> sisteminde bir güvenlik açığı kaydı "
+"bulunuyorsa, bu açığa yönelik düzeltme ana porta uygulanacaktır. Ancak, ana "
+"porta yapılan bu commit bağımlı portun kayıtlarında görünmeyeceğinden, "
+"bağımlı portun hâlâ savunmasız olduğu yönünde yanlış bir izlenim oluşabilir."
 
 #: www/faq.php:634
 msgid ""
@@ -4382,6 +4423,9 @@ msgid ""
 "Similarly, we do not entertain requests to remove information from our "
 "website. We only report upon what exists elsewhere."
 msgstr ""
+"Benzer şekilde, web sitemizden bilgi kaldırılmasına yönelik talepleri de "
+"dikkate almıyoruz. Biz yalnızca başka yerlerde hâlihazırda mevcut olan "
+"bilgileri aktarıyoruz."
 
 #: www/faq.php:675
 msgid ""
@@ -4509,7 +4553,7 @@ msgstr ""
 #: www/faq.php:763
 msgid ""
 "On this page, select one or more items from each of the first three boxes:"
-msgstr ""
+msgstr "Bu sayfada, ilk üç kutunun her birinden bir veya daha fazla öğe seçin:"
 
 #: www/faq.php:765
 msgid "watch lists (first box)"
@@ -4521,7 +4565,7 @@ msgstr "ABI (ikinci kutu)"
 
 #: www/faq.php:767
 msgid "one or both of quarterly and latest (third box)"
-msgstr ""
+msgstr "üç aylık ve/veya en güncel olan (üçüncü kutu)"
 
 #: www/faq.php:769
 msgid "and click on <i>Add</i>"
@@ -4743,7 +4787,7 @@ msgstr ""
 #: www/graphs.php:36
 #, php-format
 msgid "See also: %s."
-msgstr ""
+msgstr "Ayrıca bakınız: %s."
 
 #: www/graphs.php:39
 msgid ""
@@ -4764,6 +4808,10 @@ msgid ""
 "don't have any data to show you.  For you see, nobody has bothered to "
 "populate the graphs table."
 msgstr ""
+"Ah. Bu oldukça utanç verici. Bunun nasıl olmuş olabileceğine dair hiçbir "
+"fikrim yok. Umarım anlayışla karşılarsınız. Lütfen kimseye söylemeyin. Ancak "
+"size gösterebileceğim hiçbir veri elimde yok. Zira kimse grafikler tablosunu "
+"doldurma zahmetine girmemiş."
 
 #: www/graphs.php:77
 msgid ""
@@ -4778,6 +4826,10 @@ msgid ""
 "don't have any data to show you.  For you see, I know nothing about that "
 "graph id."
 msgstr ""
+"Ah. Bu oldukça utanç verici. Bunun nasıl gerçekleşmiş olabileceğine dair "
+"hiçbir fikrim yok. Umarım anlayışla karşılarsınız. Lütfen kimseye "
+"söylemeyin. Ancak size gösterebileceğim herhangi bir veri elimde yok. Zira o "
+"grafik kimliği hakkında hiçbir şey bilmiyorum."
 
 #: www/graphs2.php:13
 msgid "Statistics 2 - everyone loves a graph"
@@ -4811,7 +4863,7 @@ msgstr ""
 
 #: www/graphs2.php:53
 msgid "Some starting points:"
-msgstr ""
+msgstr "Bazı başlangıç ​​noktaları:"
 
 #: www/graphs2.php:56
 msgid ""
@@ -4868,6 +4920,10 @@ msgid ""
 "list. This is achieved using the <a href=\"/pkg_upload.php\">pkg_info upload "
 "facility</a>. This is a two stage process:"
 msgstr ""
+"FreshPorts'un en güçlü özelliklerinden biri, FreeBSD sisteminizdeki mevcut "
+"bilgilerden yararlanarak takip listenizi (watch list) düzenlemenize olanak "
+"tanımasıdır. Bu işlem, <a href=\"/pkg_upload.php\">pkg_info yükleme aracı</"
+"a> kullanılarak gerçekleştirilir. Söz konusu süreç iki aşamadan oluşur:"
 
 #: www/help.php:30
 msgid ""
@@ -4972,6 +5028,8 @@ msgid ""
 "pkg_info - The first section lists the ports found in your pkg_info upload. "
 "Those which also appear in your watch list will be marked by a 'W'."
 msgstr ""
+"pkg_info - İlk bölüm, pkg_info yüklemenizde bulunan portları listeler. "
+"İzleme listenizde de yer alan portlar 'W' harfiyle işaretlenir."
 
 #: www/help.php:100
 msgid ""
@@ -5148,6 +5206,8 @@ msgid ""
 "That gives a grand total of %1$s pages.  On my last count, that's about "
 "%2$s%% of the web pages on %3$s"
 msgstr ""
+"Bu, toplamda %1$s sayfa ediyor. Son sayımıma göre, bu da %3$s üzerindeki web "
+"sayfalarının yaklaşık %2$s%%'sine denk geliyor"
 
 #: www/how-big-is-it.php:372 www/search.php:1338
 msgid "Notes"
@@ -5590,7 +5650,7 @@ msgstr ""
 
 #: www/pkg_upload.php:179
 msgid "Ports duplicated"
-msgstr ""
+msgstr "Çoklu-kopya Port'lar"
 
 #: www/pkg_upload.php:179
 msgid ""
@@ -5901,7 +5961,7 @@ msgstr "ABI seçin"
 
 #: www/report-package-notifications.php:103
 msgid "Select the package set"
-msgstr ""
+msgstr "Paket setini seçin"
 
 #: www/report-package-notifications.php:133
 msgid ""
@@ -6013,7 +6073,7 @@ msgstr ""
 
 #: www/sanity_test_failures.php:211
 msgid "Sanity Test Results"
-msgstr "Sanity Test Sonuçları"
+msgstr "Sağlamlık Testi (Sanity Test) Sonuçları"
 
 #: www/search.php:24 www/vuxml.php:33
 msgid "You must be logged in to use this feature."
@@ -6046,7 +6106,7 @@ msgstr ""
 
 #: www/search.php:720
 msgid "Sorry, but you messed something up in your manually created query"
-msgstr ""
+msgstr "Üzgünüm, ancak manuel olarak oluşturduğunuz sorguda bir hata yaptınız"
 
 #: www/search.php:1003 www/search.php:1068
 msgid "something went terribly wrong.  Sorry."
@@ -6221,6 +6281,10 @@ msgid ""
 "Committer Email, Committer Name, Maintainer, Package Name, and Port Name - "
 "but I'm not sure it is indexed properly. Ask Dan about that."
 msgstr ""
+"'Benzer sesli' (sounds like) araması yalnızca Yazar E-postası, Yazar Adı, "
+"Gönderen (Committer) E-postası, Gönderen Adı, Sorumlu (Maintainer), Paket "
+"Adı ve Port Adı alanları için geçerlidir; ancak bunların düzgün bir şekilde "
+"indekslenip indekslenmediğinden emin değilim. Bu konuyu Dan'e sor."
 
 #: www/search.php:1352
 msgid "Special searches:"
@@ -6415,6 +6479,8 @@ msgid ""
 "Select exactly one watch list to be renamed.  I can't handle zero or more "
 "than one."
 msgstr ""
+"Yeniden adlandırılacak tam olarak bir izleme listesi seçin. Sıfır veya "
+"birden fazla seçim yapılması durumunda işlem gerçekleştiremem."
 
 #: www/watch-list-maintenance.php:287
 msgid "Hmmm, I have no idea what you asked me to do"
@@ -6515,6 +6581,8 @@ msgstr ""
 msgid ""
 "rename a new watch list.  Select the watch list and supply the new name."
 msgstr ""
+"yeni bir izleme listesini yeniden adlandırın. İzleme listesini seçin ve yeni "
+"adı girin."
 
 #: www/watch-list-maintenance.php:415
 msgid "Deletes the selected watch lists."
@@ -6536,6 +6604,8 @@ msgstr "Bütün takip listelerinizi boşaltır."
 msgid ""
 "Sets the default watch list[s].  The default watch list[s] is/are used when:"
 msgstr ""
+"Varsayılan izleme listesini/listelerini belirler. Varsayılan izleme listesi/"
+"listeleri şu durumlarda kullanılır:"
 
 #: www/watch-list-maintenance.php:425
 msgid "you click on the add/remove links"
@@ -6554,6 +6624,8 @@ msgstr ""
 #: www/watch-list-maintenance.php:433
 msgid "Set the options to be used when clicking on Add/Remove for a port."
 msgstr ""
+"Bir bağlantı noktası için Ekle/Kaldır seçeneğine tıklandığında kullanılacak "
+"ayarları yapılandırın."
 
 #: www/watch-list-maintenance.php:438
 #, php-format
@@ -6612,7 +6684,7 @@ msgstr ""
 #: www/watch.php:111
 msgid ""
 "Some of your watched ports have moved.  You are still watching the old ports."
-msgstr ""
+msgstr "İzlediğiniz bazı portlar taşındı. Hâlâ eski portları izliyorsunuz."
 
 #: www/watch.php:113
 msgid "Old Port"

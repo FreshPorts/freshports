@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: FreshPorts\n"
 "Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
 "POT-Creation-Date: 2026-11-14 02:18+0000\n"
-"PO-Revision-Date: 2026-11-16 00:29+0300\n"
+"PO-Revision-Date: 2026-11-16 00:32+0300\n"
 "Last-Translator: Yusuf Yaman <nxjoseph@FreeBSD.org>\n"
 "Language-Team: Turkish\n"
 "Language: tr\n"
@@ -3151,6 +3151,10 @@ msgid ""
 "index.html\">The FreeBSD Handbook</a>. Pay careful attention to the "
 "difference between a port and a package."
 msgstr ""
+"<a href=\"https://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/"
+"index.html\">FreeBSD El Kitabı</a>'nın <a href=\"https://www.freebsd.org/doc/"
+"en_US.ISO8859-1/books/handbook/ports.html\">Ports</a> bölümüne aşina "
+"olmalısınız. Port ve paket arasındaki farka özellikle dikkat edin."
 
 #: www/faq.php:66
 msgid "Definitions for the hopelessly lazy"
@@ -4039,6 +4043,13 @@ msgid ""
 "To mark a watch list as a default, select it in the list, then click on the "
 "Set Default button."
 msgstr ""
+"%1$s simgesine tıkladınız ancak simge %2$s olarak değişmedi. Evet, benim de "
+"başıma geldi. Yapmanız gereken şey, <a href=\"/watch-list-"
+"maintenance.php\">izleme listesi ayarlarınızı</a> kontrol etmektir. "
+"Muhtemelen, herhangi bir varsayılan izleme listeniz tanımlı olmadığı halde "
+"\"varsayılan izleme listesi\" seçeneğini işaretlemişsiniz. Bir izleme "
+"listesini varsayılan olarak ayarlamak için, listeden ilgili listeyi seçin ve "
+"ardından Varsayılan Olarak Ayarla düğmesine tıklayın."
 
 #. TRANSLATORS: %1$s is the 'on your watch list' icon, %2$s is the 'add to watch list' icon.
 #: www/faq.php:444
@@ -5201,6 +5212,7 @@ msgid ""
 "You should inspect that information carefully before saving it to your watch "
 "list."
 msgstr ""
+"Bu bilgiyi izleme listenize kaydetmeden önce dikkatlice incelemelisiniz."
 
 #: www/help.php:111
 msgid "What are these check boxes in my staging area?"
@@ -5722,7 +5734,7 @@ msgstr "Gerçekleştirmeniz gereken adımlar:"
 
 #: www/pkg_upload.php:84
 msgid "You should first issue this command on your FreeBSD computer:"
-msgstr ""
+msgstr "Öncelikle FreeBSD bilgisayarınızda şu komutu çalıştırmalısınız:"
 
 #: www/pkg_upload.php:95
 msgid ""
@@ -5862,6 +5874,8 @@ msgid ""
 "You must <a href=\"/login.php\">login</a> before you can upload your package "
 "information."
 msgstr ""
+"Paket bilgilerinizi yükleyebilmeniz için <a href=\"/login.php\">giriş "
+"yapmanız</a> gerekmektedir."
 
 #: www/pkg_upload.php:271
 msgid "I was unable to empty your staging area before proceeding."
@@ -6149,6 +6163,8 @@ msgid ""
 "You have to click at least one watch list, one ABI, and one package set. I'm "
 "stopping right now. You can click back and try again."
 msgstr ""
+"En az bir izleme listesi, bir ABI ve bir paket seti seçmelisiniz. Şu an "
+"bekliyorum. Geri dönüp tekrar deneyebilirsiniz."
 
 #: www/report-package-notifications.php:232
 msgid "Package Notifications"
@@ -6248,6 +6264,13 @@ msgid ""
 "follow the directions found on the <a href=\"https://lists.freshports.org/"
 "mailman/listinfo/\">FreshPorts mailing list website</a>"
 msgstr ""
+"Yeni FreshPorts özelliklerini test etmeme yardımcı olmak ya da sadece bu "
+"özelliklere erkenden göz atmak isteyebilirsiniz. Eğer öyleyse, sizi yeni "
+"Beta e-posta listesine katılmaya davet ediyorum. Bu, çok fazla e-posta "
+"trafiği olmayan bir liste olup, ana web sitesinde kullanıma sunulmadan önce "
+"deneyebileceğiniz yeni özelliklerle ilgili detayları paylaşacaktır. Abone "
+"olmak için <a href=\"https://lists.freshports.org/mailman/listinfo/"
+"\">FreshPorts e-posta listesi web sitesinde</a> yer alan talimatları izleyin"
 
 #: www/sanity_test_failures.php:96
 msgid ""
@@ -6265,7 +6288,7 @@ msgstr "Sağlamlık Testi (Sanity Test) Sonuçları"
 
 #: www/search.php:24 www/vuxml.php:33
 msgid "You must be logged in to use this feature."
-msgstr ""
+msgstr "Bu özelliği kullanabilmek için giriş yapmış olmalısınız."
 
 #: www/search.php:189
 msgid ""
@@ -6702,6 +6725,10 @@ msgid ""
 "the one-click method.  It is suggested that you set at least one watch list "
 "to be the default watch list."
 msgstr ""
+"Varsayılan izleme listeleriniz bulunmuyor. Varsayılan izleme listesi/"
+"listeleri üzerinde işlem yapmayı seçtiniz. Bu durumda, tek tıkla yöntemini "
+"kullanarak port ekleyemezsiniz. En az bir izleme listesini varsayılan izleme "
+"listeniz olarak ayarlamanız önerilir."
 
 #: www/watch-list-maintenance.php:323
 msgid "Let's try that again!"

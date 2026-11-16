@@ -374,6 +374,9 @@
 		$WeHaveToSearch = TRUE;
 	}
 
+	# set below if the search log cannot be opened; shown at the top of the page
+	$SearchLogWarning = '';
+
 	if ($WeHaveToSearch) {
 
 		if ($Debug) echo "into search stuff<br>\n";
@@ -1099,7 +1102,9 @@ JOIN element_pathname EP on E.id = EP.element_id
 			}
 			fclose($fp);
 		} else {
-			print _('Please let postmaster@freshports.org know that the search log could not be opened.  This does not affect the search results.') . "\n";
+			# Not printed here: nothing may be output yet, or the redirect below
+			# (one port found) and the page's own headers fail.
+			$SearchLogWarning = _('Please let postmaster@freshports.org know that the search log could not be opened.  This does not affect the search results.');
 			syslog(LOG_ERR, "FreshPorts could not open the search log file: $logfile");
 		}
 
@@ -1152,6 +1157,10 @@ JOIN element_pathname EP on E.id = EP.element_id
 ?>
 <tr><td class="content">
 <?php
+		if ($SearchLogWarning != '') {
+			echo '<p>' . htmlspecialchars($SearchLogWarning) . "</p>\n";
+		}
+
 		if ($SuggestionsHTML != '') {
 			echo freshports_MainContentTable();
 ?>

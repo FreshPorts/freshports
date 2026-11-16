@@ -38,8 +38,16 @@
   # root; this catches any which end up here.  This must come before
   # "location ~ \.php$", or a ._name.php file is run as PHP.  404, not 403,
   # so a probe learns nothing about what exists.
+  #
+  # Only refuse what is really on disk (-e, so a dot-directory such as
+  # .git/ is refused too).  Anything else is a FreshPorts URL, not a file:
+  # ports-tree files such as korean/Makefile.inc or a top-level .gitignore
+  # have pages, so they go on to the URL parser as in "location /" below.
   location ~ (/\.|\.inc$|~$) {
-    return 404;
+    if (-e $request_filename) {
+      return 404;
+    }
+    try_files $uri /--/url-parser.php;
   }
 
   location ~ ^/(login|forgotten-password|password-reset-via-token)\.php$  {

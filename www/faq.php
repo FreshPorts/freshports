@@ -86,16 +86,16 @@
 	<?php echo _('The FreeBSD Project provides:'); ?>
 	<ul>
 	<li><?php
-	// TRANSLATORS: %s is the word 'base', shown in italics.
-	echo sprintf(_('official packages for FreeBSD (the operating system, sometimes known as %s) in its entirety'), '<em>' . _('base') . '</em>'); ?></li>
+	// TRANSLATORS: %s is the name 'base', shown in italics.
+	echo sprintf(_('official packages for FreeBSD (the operating system, sometimes known as %s) in its entirety'), '<em>base</em>'); ?></li>
 	<li><?php echo _('packages for a huge number of ports.'); ?></li>
 	</ul>
 
 	<p>
 	<?php
 	// This paragraph can be removed once FreeBSD 14 reaches end of life (issue #609).
-	// TRANSLATORS: %1$s is the repository name 'FreeBSD', %2$s is the word 'not' in bold, %3$s is 'FreeBSD ports' in italics.
-	echo sprintf(_('The repo that\'s traditionally named %1$s does %2$s provide FreeBSD (OS) packages. It\'s the repo for %3$s.'), '<em>FreeBSD</em>', '<strong>' . _('not') . '</strong>', '<em>' . _('FreeBSD ports') . '</em>'); ?>
+	// TRANSLATORS: %1$s is the old repository name 'FreeBSD', %2$s is the name 'pkgbase', %3$s and %4$s are the repository names 'FreeBSD-base' and 'FreeBSD-ports'.
+	echo sprintf(_('First, a bit of history. In the past, the repo for the FreeBSD ports tree was traditionally named %1$s. To simplify the names, after %2$s arrived, the new repo was named %3$s and the existing repo was named %4$s.'), '<em>FreeBSD</em>', '<span class="file">pkgbase</span>', '<em>FreeBSD-base</em>', '<em>FreeBSD-ports</em>'); ?>
 
 	<p>
 	<?php

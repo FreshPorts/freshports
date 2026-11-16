@@ -464,7 +464,7 @@ msgstr "Ana port (master port)"
 
 #: classes/port-display.php:1799
 msgid "Slave ports:"
-msgstr "Türetilmiş portlar (slave ports):"
+msgstr "Türeme portlar (slave ports):"
 
 #: classes/port-display.php:1811
 msgid "Dependencies"
@@ -1252,7 +1252,7 @@ msgstr "Committer Onayı"
 
 #: include/freshports.php:2352
 msgid "Committers can receive reports of Sanity Test Failures"
-msgstr "Committer'ler Sanity Test hatalarının raporunu alabilir"
+msgstr "Committer'lar Sağlamlık Testi hatalarının raporunu alabilir"
 
 #: include/freshports.php:2356
 msgid "Logout"
@@ -2043,7 +2043,7 @@ msgid ""
 "easy. It's simple. And you love that new application.  And you want to know "
 "when the port is updated.  That's where we come in."
 msgstr ""
-"İşte, favori yazılımınızı () kurmak için \"ports\" ağacına yöneliyorsunuz. "
+"İşte, favori yazılımınızı kurmak için \"ports\" ağacına yöneliyorsunuz. "
 "İşlem oldukça kolay ve basit. Yeni uygulamanızı çok sevdiniz; peki, bu "
 "yazılım güncellendiğinde nasıl haberdar olacaksınız? İşte tam bu noktada biz "
 "devreye giriyoruz."
@@ -2292,7 +2292,7 @@ msgid ""
 msgstr ""
 "Will Andrews bana %s hakkında bilgi verdi. Bu durum, zamanla, Ports "
 "geliştiricilerini (committer'larını) rahatsız eden ancak kullanıcıların daha "
-"az sorunla karşılaşmasını sağlayan \"sağlıklılık kontrollerinin\" (sanity "
+"az sorunla karşılaşmasını sağlayan \"sağlamlık testlerinin\" (sanity "
 "checks) yapılmasına yol açtı."
 
 #: www/authors.php:89
@@ -2646,7 +2646,7 @@ msgid ""
 "There is no category history yet. Is the category_history periodic script "
 "enabled?"
 msgstr ""
-"Henüz kategori geçmişi bulunmuyor. `category_history` periyodik betiği "
+"Henüz kategori geçmişi bulunmuyor. category_history periyodik betiği "
 "etkinleştirilmiş durumda mı?"
 
 #: www/category-history.php:154
@@ -3216,11 +3216,7 @@ msgstr ""
 msgid "The FreeBSD Project provides:"
 msgstr "FreeBSD Projesi şunları sağlar:"
 
-#: www/faq.php:90
-msgid "base"
-msgstr "base"
-
-#. TRANSLATORS: %s is the word 'base', shown in italics.
+#. TRANSLATORS: %s is the name 'base', shown in italics.
 #: www/faq.php:90
 #, php-format
 msgid ""
@@ -3234,23 +3230,14 @@ msgstr ""
 msgid "packages for a huge number of ports."
 msgstr "çok sayıda port için paketler."
 
-#: www/faq.php:98
-msgid "FreeBSD ports"
-msgstr "FreeBSD portları"
-
-#. TRANSLATORS: %1$s is the repository name 'FreeBSD', %2$s is the word 'not' in bold, %3$s is 'FreeBSD ports' in italics.
+#. TRANSLATORS: %1$s is the old repository name 'FreeBSD', %2$s is the name 'pkgbase', %3$s and %4$s are the repository names 'FreeBSD-base' and 'FreeBSD-ports'.
 #: www/faq.php:98
 #, php-format
 msgid ""
-"The repo that's traditionally named %1$s does %2$s provide FreeBSD (OS) "
-"packages. It's the repo for %3$s."
+"First, a bit of history. In the past, the repo for the FreeBSD ports tree "
+"was traditionally named %1$s. To simplify the names, after %2$s arrived, the "
+"new repo was named %3$s and the existing repo was named %4$s."
 msgstr ""
-"Geleneksel olarak %1$s olarak adlandırılan depo, %2$s FreeBSD (İşletim "
-"Sistemi) paketleri sağlar. Bu, %3$s için depodur."
-
-#: www/faq.php:98
-msgid "not"
-msgstr "değil"
 
 #. TRANSLATORS: %1$s is the name 'pkgbase', %2$s is the repository name 'FreeBSD-base', shown in italics.
 #: www/faq.php:103
@@ -3631,7 +3618,7 @@ msgid ""
 "If you do see one, chances are that the port contains an error that prevents "
 "make(1) from running. For example:"
 msgstr ""
-"Eğer bunlardan birini görürseniz, büyük olasılıkla port, `make(1)` komutunun "
+"Eğer bunlardan birini görürseniz, büyük olasılıkla port, make(1) komutunun "
 "çalışmasını engelleyen bir hata içeriyordur. Örneğin:"
 
 #: www/faq.php:271
@@ -3852,7 +3839,7 @@ msgid ""
 "others to correct it if it goes unnoticed. If you see this icon next to a "
 "commit, it failed a Sanity Test."
 msgstr ""
-"Sanity Test Hataları. Port sorumluları ve katkıda bulunanlar işlerini iyi "
+"Sağlamlık Testi Hataları. Port sorumluları ve katkıda bulunanlar işlerini iyi "
 "yapıyorlar; ancak bazen gözden kaçan hatalar olabiliyor. Bu kayıt, bir hata "
 "fark edilmeden geçtiğinde başkalarının onu düzeltmesini kolaylaştırmak "
 "amacıyla tutulur. Eğer bir commit'in yanında bu simgeyi görüyorsanız, o "
@@ -4181,7 +4168,7 @@ msgstr ""
 "mod_php4\">mod_php4</a>'tür. Bunun için <b>ana portun</b> (master port) <a "
 "href=\"/lang/\">lang</a>/<a href=\"/lang/php4/\">php4</a> olduğunu "
 "görebilirsiniz. Buna karşılık, <a href=\"/lang/\">lang</a>/<a href=\"/lang/"
-"php4/\">php4</a> ise çeşitli <b>bağımlı portları</b> (slave ports) listeler."
+"php4/\">php4</a> ise çeşitli <b>türeme portları</b> (slave ports) listeler."
 
 #: www/faq.php:497
 msgid "The ability to add this feature is because of this patch:"
@@ -4455,20 +4442,20 @@ msgid ""
 "to the master port would not appear under the slave port, thereby giving a "
 "false impression that the slave port was still vulnerable."
 msgstr ""
-"Türetilmiş portlar (slave ports), ana porta (master port) yapılan bir commit "
-"ile güncellenebilir. Ana porta yapılan bir commit, ona bağlı tüm bağımlı "
-"portları etkileyecektir. Eğer bir bağımlı port için <a href=\"https://"
+"Türeme portlar (slave ports), ana porta (master port) yapılan bir commit "
+"ile güncellenebilir. Ana porta yapılan bir commit, ona bağlı tüm türeme "
+"portları etkileyecektir. Eğer bir türeme port için <a href=\"https://"
 "www.vuxml.org/freebsd/\">VuXML</a> sisteminde bir güvenlik açığı kaydı "
 "bulunuyorsa, bu açığa yönelik düzeltme ana porta uygulanacaktır. Ancak, ana "
-"porta yapılan bu commit bağımlı portun kayıtlarında görünmeyeceğinden, "
-"bağımlı portun hâlâ savunmasız olduğu yönünde yanlış bir izlenim oluşabilir."
+"porta yapılan bu commit türeme portun kayıtlarında görünmeyeceğinden, "
+"türeme portun hâlâ savunmasız olduğu yönünde yanlış bir izlenim oluşabilir."
 
 #: www/faq.php:634
 msgid ""
 "The above notice serves as a reminder that the slave port may no longer be "
 "vulnerable."
 msgstr ""
-"Yukarıdaki bildirim, türetilmiş port'un (slave port) artık savunmasız "
+"Yukarıdaki bildirim, türeme portun (slave port) artık savunmasız "
 "durumda olmayabileceğini hatırlatmak amacı taşımaktadır."
 
 #: www/faq.php:637
@@ -4614,7 +4601,7 @@ msgstr ""
 #: www/faq.php:742
 msgid "Enjoy. We can add more anchors upon request."
 msgstr ""
-"Keyfini çıkarın. Talep üzerine daha fazla bağlantı noktası ekleyebiliriz."
+"Keyfini çıkarın. Talep üzerine daha fazla çapa ekleyebiliriz."
 
 #: www/faq.php:746
 msgid "Can I get alerts for new packages?"
@@ -4997,7 +4984,7 @@ msgstr ""
 
 #: www/graphs2.php:53
 msgid "Some starting points:"
-msgstr "Bazı başlangıç ​​noktaları:"
+msgstr "Bazı başlangıç noktaları:"
 
 #: www/graphs2.php:56
 msgid ""
@@ -5063,7 +5050,7 @@ msgstr ""
 msgid ""
 "upload the pkg_info output from your system into your watch list staging area"
 msgstr ""
-"sisteminizden alınan `pkg_info` çıktısını, izleme listeniz için ayrılmış "
+"sisteminizden alınan pkg_info çıktısını, izleme listeniz için ayrılmış "
 "hazırlık alanına yükleyin"
 
 #: www/help.php:31
@@ -5150,7 +5137,7 @@ msgid ""
 "pkg_info output. It serves as an area in which you can compare the new and "
 "old watch lists before saving any changes."
 msgstr ""
-"İzleme listesi hazırlık alanı, karşıya yüklediğiniz `pkg_info` çıktısı için "
+"İzleme listesi hazırlık alanı, karşıya yüklediğiniz pkg_info çıktısı için "
 "geçici bir depolama alanıdır. Burası, herhangi bir değişikliği kaydetmeden "
 "önce yeni ve eski izleme listelerini karşılaştırabileceğiniz bir alan işlevi "
 "görür."
@@ -5182,9 +5169,9 @@ msgid ""
 "section contains the ports from your pkg_info output that could not be found "
 "within FreshPorts."
 msgstr ""
-"Bulunamadı - `pkg_info` çıktınızdaki portlar FreshPorts'ta bulunamayabilir. "
+"Bulunamadı - pkg_info çıktınızdaki portlar FreshPorts'ta bulunamayabilir. "
 "Zaman içinde portlar silinebilir, yeniden adlandırılabilir veya taşınabilir. "
-"Bu bölüm, `pkg_info` çıktınızda yer alan ancak FreshPorts'ta bulunamayan "
+"Bu bölüm, pkg_info çıktınızda yer alan ancak FreshPorts'ta bulunamayan "
 "portları içerir."
 
 #: www/help.php:102
@@ -5204,7 +5191,7 @@ msgid ""
 "Watch List - This section contains the ports which are on your watch list "
 "which did not appear in your pkg_info upload."
 msgstr ""
-"İzleme Listesi - Bu bölüm, izleme listenizde yer alan ancak `pkg_info` "
+"İzleme Listesi - Bu bölüm, izleme listenizde yer alan ancak pkg_info "
 "yüklemenizde görünmeyen port'ları içerir."
 
 #: www/help.php:106
@@ -6163,8 +6150,8 @@ msgid ""
 "You have to click at least one watch list, one ABI, and one package set. I'm "
 "stopping right now. You can click back and try again."
 msgstr ""
-"En az bir izleme listesi, bir ABI ve bir paket seti seçmelisiniz. Şu an "
-"bekliyorum. Geri dönüp tekrar deneyebilirsiniz."
+"En az bir izleme listesi, bir ABI ve bir paket seti seçmelisiniz. Şimdilik "
+"burada duruyorum. Geri dönüp tekrar deneyebilirsiniz."
 
 #: www/report-package-notifications.php:232
 msgid "Package Notifications"
@@ -6502,7 +6489,7 @@ msgstr ""
 "'Benzer sesli' (sounds like) araması yalnızca Yazar E-postası, Yazar Adı, "
 "Gönderen (Committer) E-postası, Gönderen Adı, Sorumlu (Maintainer), Paket "
 "Adı ve Port Adı alanları için geçerlidir; ancak bunların düzgün bir şekilde "
-"indekslenip indekslenmediğinden emin değilim. Bu konuyu Dan'e sor."
+"indekslenip indekslenmediğinden emin değilim. Bu konuyu Dan'a sorun."
 
 #: www/search.php:1352
 msgid "Special searches:"
@@ -6864,7 +6851,7 @@ msgstr "bu, diğer sayfalardaki görünümü/eylemleri etkiler"
 #: www/watch-list-maintenance.php:433
 msgid "Set the options to be used when clicking on Add/Remove for a port."
 msgstr ""
-"Bir bağlantı noktası için Ekle/Kaldır seçeneğine tıklandığında kullanılacak "
+"Bir port için Ekle/Kaldır seçeneğine tıklandığında kullanılacak "
 "ayarları yapılandırın."
 
 #: www/watch-list-maintenance.php:438

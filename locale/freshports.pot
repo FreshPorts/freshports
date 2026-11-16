@@ -2916,11 +2916,7 @@ msgstr ""
 msgid "The FreeBSD Project provides:"
 msgstr ""
 
-#: www/faq.php:90
-msgid "base"
-msgstr ""
-
-#. TRANSLATORS: %s is the word 'base', shown in italics.
+#. TRANSLATORS: %s is the name 'base', shown in italics.
 #: www/faq.php:90
 #, php-format
 msgid ""
@@ -2932,20 +2928,13 @@ msgstr ""
 msgid "packages for a huge number of ports."
 msgstr ""
 
-#: www/faq.php:98
-msgid "FreeBSD ports"
-msgstr ""
-
-#. TRANSLATORS: %1$s is the repository name 'FreeBSD', %2$s is the word 'not' in bold, %3$s is 'FreeBSD ports' in italics.
+#. TRANSLATORS: %1$s is the old repository name 'FreeBSD', %2$s is the name 'pkgbase', %3$s and %4$s are the repository names 'FreeBSD-base' and 'FreeBSD-ports'.
 #: www/faq.php:98
 #, php-format
 msgid ""
-"The repo that's traditionally named %1$s does %2$s provide FreeBSD (OS) "
-"packages. It's the repo for %3$s."
-msgstr ""
-
-#: www/faq.php:98
-msgid "not"
+"First, a bit of history. In the past, the repo for the FreeBSD ports tree "
+"was traditionally named %1$s. To simplify the names, after %2$s arrived, the "
+"new repo was named %3$s and the existing repo was named %4$s."
 msgstr ""
 
 #. TRANSLATORS: %1$s is the name 'pkgbase', %2$s is the repository name 'FreeBSD-base', shown in italics.

@@ -17,13 +17,22 @@
                 exit;
 	}
 
+	# The form on this page carries the user's token, and a POST without it
+	# changes nothing: see include/csrf.php.  Before, a form on another site
+	# could post here with the user's login cookie and delete the account.
+	if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
+		freshports_CsrfRequire();
+	}
+
 	GLOBAL $User;
 
 	$errors          = 0;
 	$AccountModified = 0;
 	$deleted         = 0;
 
-$submit = $_REQUEST['submit'] ?? '';
+# Only a POST deletes, so only a POST (which has passed the token check
+# above) may set submit.
+$submit = $_POST['submit'] ?? '';
 
 // if we don't know who they are, we'll make sure they login first
 // a cookie which matches no login leaves $User->id at 0
@@ -138,6 +147,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/getvalues.php');
 
 ?>
 <form action="<?php echo $_SERVER["PHP_SELF"] ?>" method="POST" NAME=f>
+<?php echo freshports_CsrfField(); ?>
 <table class="borderless">
           <tr>
             <td class="vtop">

@@ -115,12 +115,18 @@ SELECT S.*, 1 as stf_message$WatchColumn
 			#
 			# This needs SanityTestFailures() to be LANGUAGE sql, so the planner inlines it.
 			# The PL/pgSQL version builds every failure on each call, i.e. once per commit here.
+			#
+			# GROUP BY gives PAGE one row per commit.  A commit can have more than one
+			# sanity_test_failures row (nothing stops a second insert), and without it
+			# such a commit took two LIMIT slots and showed its ports twice, and OFFSET
+			# no longer matched Count(), which counts distinct commits.
 			$params = array($this->UserID, $this->Limit, $this->Offset);
 			$sql = '
 SELECT S.*, 1 as stf_message' . $WatchColumn . '
   FROM (SELECT STF.commit_log_id
           FROM sanity_test_failures STF JOIN commit_log CL ON CL.id = STF.commit_log_id
          WHERE EXISTS (SELECT 1 FROM commit_log_ports CLP WHERE CLP.commit_log_id = STF.commit_log_id)
+         GROUP BY STF.commit_log_id, CL.commit_date
          ORDER BY CL.commit_date DESC, STF.commit_log_id DESC
          LIMIT $2 OFFSET $3) PAGE
  CROSS JOIN LATERAL (SELECT *

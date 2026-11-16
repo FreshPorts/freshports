@@ -23,10 +23,13 @@
 	}
 
 	# The account's email address must end in @FreeBSD.org.  Unanchored, and
-	# with an unescaped dot, x@FreeBSD.org.example.com passed too.  The reports
-	# go to <login>@FreeBSD.org (see committer_opt_in.pm in ingress-modules),
-	# so that let a non-committer switch them on for a committer who never
-	# opted in.
+	# with an unescaped dot, look-alike domains such as
+	# x@FreeBSD.org.example.com passed too; the anchor stops those.  It does
+	# not prove the user is a committer: the account's address is whatever
+	# the user typed on customize.php, with no confirmation mail, and the
+	# login stored below is taken from the form.  The reports go to
+	# <login>@FreeBSD.org (see committer_opt_in.pm in ingress-modules), so
+	# they can still be switched on for a committer who never opted in.
 	const FREEBSD_EMAIL_REGEX = '/@FreeBSD\.org$/i';
 
 	$Title = _('Committer opt-in');

@@ -29,6 +29,14 @@
 	# become $Origin, and Update would send them to that site.  Only go back
 	# to a page on this site.
 	#
+	# A real URL never holds a space or control character (a Referer is
+	# percent-encoded).  Browsers drop tab and newline from a Location, so
+	# "/<tab>/evil.example" would pass the relative-path test below and
+	# then be followed as "//evil.example", another site.  Refuse those.
+	#
+	if (!is_string($Origin) || preg_match('/[\x00-\x20\x7f]/', $Origin)) {
+		$Origin = '/';
+	}
 	$OriginHost = parse_url((string) $Origin, PHP_URL_HOST);
 	if (!is_string($Origin) || preg_match('|^/[^/\\\\]|', $Origin) !== 1 && ($OriginHost === null || $OriginHost === false || strcasecmp($OriginHost, $_SERVER['HTTP_HOST'] ?? '') != 0)) {
 		$Origin = '/';

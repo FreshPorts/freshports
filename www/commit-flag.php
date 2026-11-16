@@ -17,6 +17,21 @@
 	} else {
 		$Origin = $_SERVER["HTTP_REFERER"] ?? '/';
 	}
+	#
+	# After the change, the visitor goes back to $Origin, which comes from
+	# the form or the Referer and so can name another site.  Only go back to
+	# a page on this site, as watch-list.php does.  A real URL never holds a
+	# space or control character (a Referer is percent-encoded); browsers
+	# drop tab and newline from a Location, so "/<tab>/evil.example" would
+	# pass the relative-path test and then be followed as "//evil.example".
+	#
+	if (!is_string($Origin) || preg_match('/[\x00-\x20\x7f]/', $Origin)) {
+		$Origin = '/';
+	}
+	$OriginHost = parse_url((string) $Origin, PHP_URL_HOST);
+	if (preg_match('|^/[^/\\\\]|', $Origin) !== 1 && ($OriginHost === null || $OriginHost === false || strcasecmp($OriginHost, $_SERVER['HTTP_HOST'] ?? '') != 0)) {
+		$Origin = '/';
+	}
 	$Redirect = 1;
 #phpinfo();
 

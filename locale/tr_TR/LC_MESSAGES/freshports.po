@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreshPorts\n"
 "Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
-"POT-Creation-Date: 2026-11-14 02:18+0000\n"
+"POT-Creation-Date: 2026-11-16 23:55+0000\n"
 "PO-Revision-Date: 2026-11-16 23:10+0300\n"
 "Last-Translator: Yusuf Yaman <nxjoseph@FreeBSD.org>\n"
 "Language-Team: Turkish\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Poedit 3.9\n"
 
 #: classes/display_commit.php:209 classes/port-display.php:1217
-#: include/freshports.php:1979
+#: include/freshports.php:2007
 msgid "Author:"
 msgstr "Yazar:"
 
@@ -414,7 +414,7 @@ msgstr "bu port için bir paket yok: %s"
 
 #: classes/port-display.php:1578 classes/port-display.php:1923
 #: classes/port-display.php:2160 classes/port-display.php:2194
-#: include/freshports.php:1678
+#: include/freshports.php:1706
 #, php-format
 msgid "Expand this list (%d items)"
 msgstr "Bu listeyi genişlet (%d öge)"
@@ -423,7 +423,7 @@ msgstr "Bu listeyi genişlet (%d öge)"
 #: classes/port-display.php:1925 classes/port-display.php:1933
 #: classes/port-display.php:2044 classes/port-display.php:2059
 #: classes/port-display.php:2167 classes/port-display.php:2197
-#: classes/port-display.php:2207 include/freshports.php:1688
+#: classes/port-display.php:2207 include/freshports.php:1716
 msgid "Collapse this list."
 msgstr "Bu listeyi küçült."
 
@@ -829,8 +829,8 @@ msgstr "Artan Sıralama"
 msgid "Descending Order"
 msgstr "Azalan Sıralama"
 
-#: include/freshports.php:571 www/package.php:53 www/search.php:1146
-#: www/search.php:1294
+#: include/freshports.php:571 www/package.php:53 www/search.php:1151
+#: www/search.php:1303
 msgid "Search"
 msgstr "Ara"
 
@@ -905,66 +905,78 @@ msgstr "Commit detayları"
 msgid "FreshPorts commit message"
 msgstr "FreshPorts commit mesajı"
 
-#: include/freshports.php:742
+#: include/freshports.php:746
 msgid "Click to remove this from your default watch list[s]"
 msgstr "Bunu takip listenizden çıkarmak için tıklayın."
 
-#: include/freshports.php:754
-msgid "Encoding Errors (not all of the commit message was ASCII)"
+#. TRANSLATORS: alt text and tooltip of the icon shown next to such a commit
+#: include/freshports.php:765
+#, fuzzy
+msgid "Encoding Errors (some characters in this commit were removed)"
 msgstr "Karakter Kodlama Hataları (commit mesajının hepsi ASCII değildi)"
 
-#: include/freshports.php:762
+#: include/freshports.php:774
 msgid "View this port on Repology."
 msgstr "Bu portu Repology'de görüntüle."
 
-#: include/freshports.php:766
+#: include/freshports.php:778
 msgid "This port version is marked as vulnerable."
 msgstr "Bu port versiyonu savunmasız olarak işaretlendi."
 
-#: include/freshports.php:770
+#: include/freshports.php:782
 msgid "An older version of this port was marked as vulnerable."
 msgstr "Bu portun eski bir sürümü güvenlik açığı barındırıyor."
 
-#: include/freshports.php:774
+#: include/freshports.php:786
 msgid "View revision"
 msgstr "Revizyonu görüntüle"
 
-#: include/freshports.php:774
+#: include/freshports.php:786
 msgid "view revision"
 msgstr "revizyonu görüntüle"
 
-#: include/freshports.php:778
+#: include/freshports.php:790
 msgid "Annotate / Blame"
 msgstr "Açıklama / Yazar İzleme (Blame)"
 
-#: include/freshports.php:782
+#: include/freshports.php:794
 msgid "View diff"
 msgstr "Karşılaştırmayı görüntüle"
 
-#: include/freshports.php:782
+#: include/freshports.php:794
 msgid "view diff"
 msgstr "karşılaştırmayı görüntüle"
 
-#: include/freshports.php:847
+#: include/freshports.php:861
+#, fuzzy
+msgid "Click to add this to this watch list"
+msgstr "Bunu varsayılan takip listenize eklemek için tıklayın"
+
+#: include/freshports.php:870
+#, fuzzy
+msgid "Click to remove this from this watch list"
+msgstr "Bunu takip listenizden çıkarmak için tıklayın."
+
+#: include/freshports.php:875
 #, php-format
 msgid "on %d watch list"
 msgid_plural "on %d watch lists"
 msgstr[0] "%d izleme listesinde ekli"
 msgstr[1] "%d izleme listesinde ekli"
 
-#: include/freshports.php:869
+#: include/freshports.php:897
 msgid "Commit Flagged"
 msgstr "Commit İşaretlendi"
 
-#: include/freshports.php:874
+#: include/freshports.php:902
 msgid "Commit Not Flagged"
 msgstr "Commit İşaretlenmedi"
 
-#: include/freshports.php:943
+#: include/freshports.php:971
 msgid "View all ports for this commit"
 msgstr "Bu commit'ten bütün portlara göz at"
 
-#: include/freshports.php:944
+#: include/freshports.php:972
 #, php-format
 msgid ""
 "(Only the first %1$d of %2$d items in this commit are shown above. %3$s)"
@@ -972,140 +984,140 @@ msgstr ""
 "(Bu commit'teki %2$d öğeden sadece ilk %1$d tanesi yukarıda "
 "gösterilmektedir. %3$s)"
 
-#: include/freshports.php:950
+#: include/freshports.php:978
 msgid "View all of this commit message"
 msgstr "Bu commit mesajının hepsini görüntüle"
 
-#: include/freshports.php:951
+#: include/freshports.php:979
 #, php-format
 msgid "(Only the first %1$d lines of the commit message are shown above %2$s)"
 msgstr ""
 "(Commit mesajının sadece ilk %1$d satırları yukarıda gösteriliyor %2$s)"
 
-#: include/freshports.php:989 include/freshports.php:1045
+#: include/freshports.php:1017 include/freshports.php:1073
 msgid "committed by this person"
 msgstr "tarafından commit edildi"
 
-#: include/freshports.php:1028
+#: include/freshports.php:1056
 msgid "authored by this person"
 msgstr "tarafından oluşturuldu"
 
-#: include/freshports.php:1118
+#: include/freshports.php:1146
 msgid "As an Amazon Associate I earn from qualifying purchases."
 msgstr "Amazon ile işbirliğimde satın alımlardan kazanıyorum."
 
-#: include/freshports.php:1118
+#: include/freshports.php:1146
 #, php-format
 msgid "Want a good read? Try %s"
 msgstr "Kitap önerisi ister misin? Deneyin %s"
 
-#: include/freshports.php:1119
+#: include/freshports.php:1147
 #, php-format
 msgid "Want a good monitor light? See my <a href=\"%s\">photos</a>"
 msgstr ""
 "İyi bir monitör ışığı ister misin? <a href=\"%s\">Fotoğraflar</a>a bakın"
 
-#: include/freshports.php:1123
+#: include/freshports.php:1151
 msgid "All times are UTC"
 msgstr "Bütün zaman dilimleri UTC'dir"
 
-#: include/freshports.php:1136
+#: include/freshports.php:1164
 #, php-format
 msgid "The git branch used by this host is %s"
 msgstr "Bu host tarafından kullanılan git dalı %s"
 
-#: include/freshports.php:1137
+#: include/freshports.php:1165
 #, php-format
 msgid "The database is %s"
 msgstr "Veritabanı %s"
 
-#: include/freshports.php:1138
+#: include/freshports.php:1166
 #, php-format
 msgid "The db server is %s"
 msgstr "Veritabanı sunucusu %s"
 
-#: include/freshports.php:1145
+#: include/freshports.php:1173
 msgid "I remember"
 msgstr "Hatırlıyorum"
 
-#: include/freshports.php:1150 include/freshports.php:2389
+#: include/freshports.php:1178 include/freshports.php:2417
 msgid "Blog"
 msgstr "Blog"
 
-#: include/freshports.php:1150
+#: include/freshports.php:1178
 msgid "Follow us"
 msgstr "Bizi takip et"
 
-#: include/freshports.php:1150
+#: include/freshports.php:1178
 msgid "Status page"
 msgstr "Durum sayfası"
 
-#: include/freshports.php:1171 include/freshports.php:1172
+#: include/freshports.php:1199 include/freshports.php:1200
 msgid "Menu"
 msgstr "Menü"
 
-#: include/freshports.php:1172
+#: include/freshports.php:1200
 msgid "Close"
 msgstr "Kapat"
 
-#: include/freshports.php:1172
+#: include/freshports.php:1200
 msgid "Close the menu"
 msgstr "Menüyü kapat"
 
-#: include/freshports.php:1172
+#: include/freshports.php:1200
 msgid "Open the menu"
 msgstr "Menüyü aç"
 
-#: include/freshports.php:1503
+#: include/freshports.php:1531
 #, php-format
 msgid "port deleted on %s"
 msgstr "port %s tarihinde silindi"
 
-#: include/freshports.php:1506
+#: include/freshports.php:1534
 #, php-format
 msgid "resurrected on %s"
 msgstr "%s tarihinde yeniden canlandırıldı"
 
-#: include/freshports.php:1512
+#: include/freshports.php:1540
 #, php-format
 msgid "port moved to %1$s on %2$s"
 msgstr "port %2$s tarihinde %1$s konumuna taşındı"
 
-#: include/freshports.php:1514
+#: include/freshports.php:1542
 #, php-format
 msgid "port moved here from %1$s on %2$s"
 msgstr "port %2$s tarihinde %1$s konumundan buraya taşındı"
 
-#: include/freshports.php:1520
+#: include/freshports.php:1548
 msgid "REASON:"
 msgstr "NEDEN:"
 
-#: include/freshports.php:1549
+#: include/freshports.php:1577
 msgid "Perhaps you meant one of these:"
 msgstr "Belki bunlardan birini kastettiniz:"
 
-#: include/freshports.php:1563
+#: include/freshports.php:1591
 msgid "All rights reserved."
 msgstr "Tüm hakları saklıdır."
 
-#: include/freshports.php:1563
+#: include/freshports.php:1591
 msgid "Copyright"
 msgstr "Telif Hakkı"
 
-#: include/freshports.php:1563
+#: include/freshports.php:1591
 msgid "This material is copyrighted"
 msgstr "Bu materyal telif hakkı ile korunmaktadır"
 
-#: include/freshports.php:1666
+#: include/freshports.php:1694
 msgid "Notes from UPDATING"
 msgstr "UPDATING notları"
 
-#: include/freshports.php:1668
+#: include/freshports.php:1696
 #, php-format
 msgid "These upgrade notes are taken from %s"
 msgstr "Bu yükseltme notları %s dosyasından alınmıştır"
 
-#: include/freshports.php:1711
+#: include/freshports.php:1739
 msgid ""
 "Commit History - (may be incomplete: for full details, see links to "
 "repositories near top of page)"
@@ -1113,7 +1125,7 @@ msgstr ""
 "Commit Geçmişi - (eksik olabilir: tüm ayrıntılar için sayfanın üst tarafına "
 "yakın bulunan depo bağlantılarına bakın)\""
 
-#: include/freshports.php:1716
+#: include/freshports.php:1744
 #, php-format
 msgid ""
 "This is a slave port.  You may also want to view the commits to the master "
@@ -1122,19 +1134,19 @@ msgstr ""
 "Bu bir türeme (slave) porttur. Ana (master) porta yapılan işlemeleri de "
 "incelemek isteyebilirsiniz: %s"
 
-#: include/freshports.php:1720
+#: include/freshports.php:1748
 msgid "Commit"
 msgstr "Commit"
 
-#: include/freshports.php:1720
+#: include/freshports.php:1748
 msgid "Credits"
 msgstr "Emeği Geçenler"
 
-#: include/freshports.php:1720
+#: include/freshports.php:1748
 msgid "Log message"
 msgstr "Günlük (log) mesajı"
 
-#: include/freshports.php:1765
+#: include/freshports.php:1793
 #, php-format
 msgid ""
 "<b>NOTE</b>: This slave port may no longer be vulnerable to issues shown "
@@ -1144,34 +1156,34 @@ msgstr ""
 "türeme (slave) port aşağıda gösterilen güvenlik açıklarını artık "
 "barındırmıyor olabilir."
 
-#: include/freshports.php:1805 include/freshports.php:1806
+#: include/freshports.php:1833 include/freshports.php:1834
 #: www/sanity_test_failures.php:175 www/sanity_test_failures.php:176
 msgid "First Page"
 msgstr "İlk Sayfa"
 
-#: include/freshports.php:1807 include/freshports.php:1808
+#: include/freshports.php:1835 include/freshports.php:1836
 #: www/sanity_test_failures.php:177 www/sanity_test_failures.php:178
 msgid "Last Page"
 msgstr "Son Sayfa"
 
-#: include/freshports.php:1832 rewrite/missing-non-port.php:161
+#: include/freshports.php:1860 rewrite/missing-non-port.php:161
 #: www/sanity_test_failures.php:185
 #, php-format
 msgid "Number of commits found: %d"
 msgstr "Bulunan commit sayısı: %d"
 
-#: include/freshports.php:1841 rewrite/missing-non-port.php:171
-#: www/sanity_test_failures.php:189 www/search.php:1410 www/search.php:1427
+#: include/freshports.php:1869 rewrite/missing-non-port.php:171
+#: www/sanity_test_failures.php:189 www/search.php:1419 www/search.php:1436
 #, php-format
 msgid "(showing only %d on this page)"
 msgstr "(bu sayfada %d kadarı gösteriliyor)"
 
-#: include/freshports.php:2119
+#: include/freshports.php:2147
 msgid "Link to this section"
 msgstr "Bu kısma giden bağlantı"
 
 #. TRANSLATORS: keep the line breaks short, this is a plain text email
-#: include/freshports.php:2190
+#: include/freshports.php:2218
 #, php-format
 msgid ""
 "Someone, perhaps you, supplied your email address as their\n"
@@ -1184,319 +1196,319 @@ msgstr ""
 "rahatsızlık veriyorsa, lütfen bu mesajı %s'a yönlendirin\n"
 "ve biz sizin için onunla ilgileneceğiz."
 
-#: include/freshports.php:2195
+#: include/freshports.php:2223
 #, php-format
 msgid "Your token is: %s"
 msgstr "Sizin tokeniniz: %s"
 
-#: include/freshports.php:2197
+#: include/freshports.php:2225
 msgid "Please point your browser at"
 msgstr "Lütfen tarayıcınızı şu adrese yönlendirin"
 
-#: include/freshports.php:2199
+#: include/freshports.php:2227
 #, php-format
 msgid "The request came from %s"
 msgstr "İstek şu adresten geldi %s"
 
-#: include/freshports.php:2216
+#: include/freshports.php:2244
 #, php-format
 msgid "%s - user registration"
 msgstr "%s - kullanıcı kaydı"
 
-#: include/freshports.php:2287
+#: include/freshports.php:2315
 msgid "You are connected over IPv6"
 msgstr "IPv6 üzerinden bağlanıyorsunuz"
 
-#: include/freshports.php:2300
+#: include/freshports.php:2328
 #, php-format
 msgid "Valid %1$s, %2$s, and %3$s."
 msgstr "Geçerli %1$s, %2$s, ve %3$s."
 
-#: include/freshports.php:2301
+#: include/freshports.php:2329
 msgid "We like to keep our HTML valid"
 msgstr "HTML'imizin geçerli kalmasını seviyoruz"
 
-#: include/freshports.php:2302
+#: include/freshports.php:2330
 msgid "We like to have valid CSS"
 msgstr "Geçerli CSS kullanmayı seviyoruz"
 
-#: include/freshports.php:2303
+#: include/freshports.php:2331
 msgid "Valid RSS is good too"
 msgstr "Geçerli RSS de iyidir"
 
-#: include/freshports.php:2334 include/login.php:15 www/login.php:149
+#: include/freshports.php:2362 include/login.php:15 www/login.php:149
 #: www/login.php:232
 msgid "Login"
 msgstr "Giriş"
 
-#: include/freshports.php:2342
+#: include/freshports.php:2370
 #, php-format
 msgid "Logged in as %s"
 msgstr "Şu olarak giriş yapıldı %s"
 
-#: include/freshports.php:2346
+#: include/freshports.php:2374
 msgid "your email is <a href=\"/bouncing.php\">bouncing</a>"
 msgstr "sizin epostanız <a href=\"/bouncing.php\">sıçrıyor</a>"
 
-#: include/freshports.php:2349
+#: include/freshports.php:2377
 msgid "Your Account"
 msgstr "Sizin Hesabınız"
 
-#: include/freshports.php:2349
+#: include/freshports.php:2377
 msgid "Your account"
 msgstr "Sizin hesabınız"
 
-#: include/freshports.php:2352
+#: include/freshports.php:2380
 msgid "Committer Opt-in"
 msgstr "Committer Onayı"
 
-#: include/freshports.php:2352
+#: include/freshports.php:2380
 msgid "Committers can receive reports of Sanity Test Failures"
 msgstr "Committer'lar Sağlamlık Testi hatalarının raporunu alabilir"
 
-#: include/freshports.php:2356
+#: include/freshports.php:2384
 msgid "Logout"
 msgstr "Çıkış yap"
 
-#: include/freshports.php:2356
+#: include/freshports.php:2384
 msgid "Logout of the website"
 msgstr "Siteden çıkış yap"
 
-#: include/freshports.php:2357
+#: include/freshports.php:2385
 msgid "List of commits you have flagged"
 msgstr "İşaretlediğiniz commit'lerin listesi"
 
-#: include/freshports.php:2357
+#: include/freshports.php:2385
 msgid "My Flagged Commits"
 msgstr "İşaretlediğim commit'ler"
 
-#: include/freshports.php:2359
+#: include/freshports.php:2387
 msgid "Login to the website"
 msgstr "Siteye giriş yap"
 
-#: include/freshports.php:2359
+#: include/freshports.php:2387
 msgid "User Login"
 msgstr "Kullanıcı Girişi"
 
-#: include/freshports.php:2360
+#: include/freshports.php:2388
 msgid "Create account"
 msgstr "Hesap oluştur"
 
-#: include/freshports.php:2360
+#: include/freshports.php:2388
 msgid "Create an account"
 msgstr "Bir hesap oluşturun"
 
-#: include/freshports.php:2378
+#: include/freshports.php:2406
 msgid "This site"
 msgstr "Bu site"
 
-#: include/freshports.php:2382
+#: include/freshports.php:2410
 msgid "A bit of background on FreshPorts"
 msgstr "FreshPorts'un geçmişi"
 
-#: include/freshports.php:2382
+#: include/freshports.php:2410
 msgid "What is FreshPorts?"
 msgstr "FreshPorts nedir?"
 
-#: include/freshports.php:2383 www/authors.php:26
+#: include/freshports.php:2411 www/authors.php:26
 msgid "About the authors"
 msgstr "Yazarlar hakkında"
 
-#: include/freshports.php:2383
+#: include/freshports.php:2411
 msgid "Who wrote this stuff?"
 msgstr "Bu şeyleri kim yazdı?"
 
-#: include/freshports.php:2384
+#: include/freshports.php:2412
 msgid "Issues"
 msgstr "Sorunlar"
 
-#: include/freshports.php:2384
+#: include/freshports.php:2412
 msgid "Report a website problem"
 msgstr "Bir site hatası bildirin"
 
-#: include/freshports.php:2385 www/faq.php:32
+#: include/freshports.php:2413 www/faq.php:32
 msgid "FAQ"
 msgstr "SSS"
 
-#: include/freshports.php:2385 www/faq.php:13
+#: include/freshports.php:2413 www/faq.php:13
 msgid "Frequently Asked Questions"
 msgstr "Sıklıkla Sorulan Sorular"
 
-#: include/freshports.php:2386 www/how-big-is-it.php:13
+#: include/freshports.php:2414 www/how-big-is-it.php:13
 msgid "How big is it?"
 msgstr "Ne kadar büyük?"
 
-#: include/freshports.php:2386
+#: include/freshports.php:2414
 msgid "How many pages are in this website?"
 msgstr "Sitede ne kadar sayfa var?"
 
-#: include/freshports.php:2387
+#: include/freshports.php:2415
 msgid "Are you a security researcher? Please read this."
 msgstr "Bir güvenlik araştırmacısı mısınız? Lütfen bunu okuyun."
 
-#: include/freshports.php:2387 www/security-policy.php:13
+#: include/freshports.php:2415 www/security-policy.php:13
 msgid "Security Policy"
 msgstr "Güvenlik Politikaları"
 
-#: include/freshports.php:2388
+#: include/freshports.php:2416
 msgid "Our privacy statement"
 msgstr "Gizlilik açıklamamız"
 
-#: include/freshports.php:2388
+#: include/freshports.php:2416
 msgid "Privacy"
 msgstr "Gizlilik"
 
-#: include/freshports.php:2389
+#: include/freshports.php:2417
 msgid "All the latest FreshPorts news"
 msgstr "Bütün en yeni FreshPorts haberleri"
 
-#: include/freshports.php:2390 www/contact.php:13 www/contact.php:27
+#: include/freshports.php:2418 www/contact.php:13 www/contact.php:27
 msgid "Contact"
 msgstr "İletişim"
 
-#: include/freshports.php:2390
+#: include/freshports.php:2418
 msgid "Contact details"
 msgstr "İletişim detayları"
 
-#: include/freshports.php:2400
+#: include/freshports.php:2428
 msgid "Latest Vulnerabilities"
 msgstr "En yeni güvenlik açıklıkları"
 
-#: include/freshports.php:2406
+#: include/freshports.php:2434
 msgid "All vulnerabilities"
 msgstr "Bütün güvenlik açıklıkları"
 
-#: include/freshports.php:2406
+#: include/freshports.php:2434
 msgid "modified, not new"
 msgstr "düzenlendi, yeni değil"
 
-#: include/freshports.php:2407
+#: include/freshports.php:2435
 msgid "Last processed:"
 msgstr "Son işlenilen:"
 
-#: include/freshports.php:2419 include/freshports.php:2449
+#: include/freshports.php:2447 include/freshports.php:2477
 msgid "Ports"
 msgstr "Ports"
 
-#: include/freshports.php:2424
+#: include/freshports.php:2452
 msgid "FreshPorts Home page"
 msgstr "FreshPorts  Anasayfası"
 
-#: include/freshports.php:2424
+#: include/freshports.php:2452
 msgid "Home"
 msgstr "Anasayfa"
 
-#: include/freshports.php:2425 include/freshports.php:2447
+#: include/freshports.php:2453 include/freshports.php:2475
 #: www/categories.php:15
 msgid "Categories"
 msgstr "Kategoriler"
 
-#: include/freshports.php:2425
+#: include/freshports.php:2453
 msgid "List of all Port categories"
 msgstr "Bütün Port kategorilerinin listesi"
 
-#: include/freshports.php:2426
+#: include/freshports.php:2454
 msgid "All deleted ports"
 msgstr "Bütün silinen portlar"
 
-#: include/freshports.php:2426 www/ports-deleted.php:30
+#: include/freshports.php:2454 www/ports-deleted.php:30
 msgid "Deleted ports"
 msgstr "Silinen portlar"
 
-#: include/freshports.php:2427 www/sanity_test_failures.php:37
+#: include/freshports.php:2455 www/sanity_test_failures.php:37
 #: www/sanity_test_failures.php:85
 msgid "Sanity Test Failures"
 msgstr "Sağlamlık Testi (Sanity Test) Hataları"
 
-#: include/freshports.php:2427
+#: include/freshports.php:2455
 msgid "Things that didn't go quite right..."
 msgstr "Çok da yolunda gitmeyen şeyler..."
 
-#: include/freshports.php:2428 www/backend/newsfeeds.php:21
+#: include/freshports.php:2456 www/backend/newsfeeds.php:21
 msgid "Newsfeeds"
 msgstr "Haber akışı"
 
-#: include/freshports.php:2428
+#: include/freshports.php:2456
 msgid "Newsfeeds for just about everything"
 msgstr "Her şey hakkında haber akışları"
 
-#: include/freshports.php:2441 www/watch-list-maintenance.php:330
+#: include/freshports.php:2469 www/watch-list-maintenance.php:330
 #: www/watch-list-maintenance.php:403
 msgid "Watch Lists"
 msgstr "Takip Listeleri"
 
-#: include/freshports.php:2446 www/pkg_upload.php:100 www/pkg_upload.php:123
+#: include/freshports.php:2474 www/pkg_upload.php:100 www/pkg_upload.php:123
 #: www/pkg_upload.php:146
 msgid "Upload"
 msgstr "Yükle"
 
-#: include/freshports.php:2446
+#: include/freshports.php:2474
 msgid ""
 "Upload a file containing a list of ports you want to add to your watch list"
 msgstr ""
 "Takip listene eklemek istediğin portların listesini içeren bir dosya yükle"
 
-#: include/freshports.php:2447
+#: include/freshports.php:2475
 msgid "Search through categories for ports to add to your watch list"
 msgstr "Takip listene eklemek istediğin portları kategoriler arasında ara"
 
-#: include/freshports.php:2448
+#: include/freshports.php:2476
 msgid "Maintain"
 msgstr "Düzenle"
 
-#: include/freshports.php:2448
+#: include/freshports.php:2476
 msgid "Maintain your watch list[s]"
 msgstr "Takip listeni düzenle"
 
-#: include/freshports.php:2449
+#: include/freshports.php:2477
 msgid "Your list of watched ports"
 msgstr "Takip ettiğin portlar listesi"
 
-#: include/freshports.php:2450
+#: include/freshports.php:2478
 msgid "A list of news feeds for your watched lists"
 msgstr "Takip ettiklerin için bir haber akışı"
 
-#: include/freshports.php:2450
+#: include/freshports.php:2478
 msgid "Personal Newsfeeds"
 msgstr "Kişisel Haber akışı"
 
-#: include/freshports.php:2451
+#: include/freshports.php:2479
 msgid "Maintain your list of subscriptions"
 msgstr "Abonelik listeni düzenle"
 
-#: include/freshports.php:2451
+#: include/freshports.php:2479
 msgid "Report Subscriptions"
 msgstr "Rapor Abonelikleri"
 
-#: include/freshports.php:2452
+#: include/freshports.php:2480
 msgid "ABI Package Subscriptions"
 msgstr "ABI Paket Abonelikleri"
 
-#: include/freshports.php:2452
+#: include/freshports.php:2480
 msgid "Maintain your ABI package subscriptions"
 msgstr "ABI Paket Aboneliklerini düzenle"
 
-#: include/freshports.php:2465
+#: include/freshports.php:2493
 msgid "Statistics"
 msgstr "İstatistikler"
 
-#: include/freshports.php:2470 include/freshports.php:2471
+#: include/freshports.php:2498 include/freshports.php:2499
 msgid "Everyone loves statistics!"
 msgstr "Herkes istatikleri sever!"
 
-#: include/freshports.php:2470
+#: include/freshports.php:2498
 msgid "Graphs"
 msgstr "Grafikler"
 
-#: include/freshports.php:2471
+#: include/freshports.php:2499
 msgid "NEW Graphs (Javascript)"
 msgstr "YENİ Grafikler (Javascript)"
 
-#: include/freshports.php:2607
+#: include/freshports.php:2635
 msgid "People watching this port, also watch:"
 msgstr "Bu portu takip eden insanlar, ayrıca şunları da takip ediyor:"
 
-#: include/freshports.php:2915
+#: include/freshports.php:2943
 msgid "Sorry, a database query failed. The error has been logged."
 msgstr ""
 "Üzgünüz, bir veritabanı sorgusu başarısız oldu. Hata günlüğe kaydedildi."
@@ -1775,7 +1787,7 @@ msgstr "Eklendiği tarih"
 msgid "Last updated"
 msgstr "Son güncelleme"
 
-#: rewrite/missing-category.php:64 www/search.php:1282
+#: rewrite/missing-category.php:64 www/search.php:1291
 msgid "Sort by:"
 msgstr "Sırala:"
 
@@ -2292,8 +2304,8 @@ msgid ""
 msgstr ""
 "Will Andrews bana %s hakkında bilgi verdi. Bu durum, zamanla, Ports "
 "geliştiricilerini (committer'larını) rahatsız eden ancak kullanıcıların daha "
-"az sorunla karşılaşmasını sağlayan \"sağlamlık testlerinin\" (sanity "
-"checks) yapılmasına yol açtı."
+"az sorunla karşılaşmasını sağlayan \"sağlamlık testlerinin\" (sanity checks) "
+"yapılmasına yol açtı."
 
 #: www/authors.php:89
 msgid ""
@@ -2542,7 +2554,7 @@ msgstr ""
 "Her satırı başlığa tıklayarak sıralayabilirsiniz. örn. kategoriye göre "
 "sıralamak için <strong>Kategori</strong>ye tıklayın."
 
-#: www/categories.php:117 www/categories.php:119 www/search.php:1284
+#: www/categories.php:117 www/categories.php:119 www/search.php:1293
 msgid "Category"
 msgstr "Kategori"
 
@@ -2555,11 +2567,11 @@ msgstr "Sayı"
 msgid "Description"
 msgstr "Açıklama"
 
-#: www/categories.php:141 www/categories.php:143 www/search.php:1285
+#: www/categories.php:141 www/categories.php:143 www/search.php:1294
 msgid "Last Update"
 msgstr "Son Güncelleme"
 
-#: www/categories.php:182 www/committer-opt-in.php:169
+#: www/categories.php:182 www/committer-opt-in.php:172
 #: www/report-subscriptions.php:261
 msgid "update"
 msgstr "güncelleme"
@@ -2711,8 +2723,8 @@ msgid ""
 msgstr ""
 "Bu sayfa size bir kategori düzenlemenize izin verir, eğer yetkiniz varsa."
 
-#: www/category-maintenance.php:111 www/watch-list.php:119
-#: www/watch-list.php:126 www/watch-list.php:133
+#: www/category-maintenance.php:111 www/watch-list.php:127
+#: www/watch-list.php:134 www/watch-list.php:141
 msgid "Update"
 msgstr "Güncelleme"
 
@@ -2807,22 +2819,22 @@ msgstr "Veritabanı bağlantısı kurulamadı!"
 msgid "nothing supplied, nothing found!"
 msgstr "hiçbir şey sağlanmadı, hiçbir şey bulunamadı!"
 
-#: www/committer-opt-in.php:32 www/committer-opt-in.php:95
+#: www/committer-opt-in.php:35 www/committer-opt-in.php:98
 msgid "Committer opt-in"
 msgstr "Committer katılımı"
 
-#: www/committer-opt-in.php:55
+#: www/committer-opt-in.php:58
 msgid "please enter just your login, not your email address"
 msgstr "lütfen eposta adreniz yerine sadece kullanıcı adınızı girin"
 
-#: www/committer-opt-in.php:103
+#: www/committer-opt-in.php:106
 msgid ""
 "This page only works if you are logged in and using a @FreeBSD.org email "
 "address."
 msgstr ""
 "Bu sayfa sadece @FreeBSD.org eposta adresiyle giriş yapıldığında çalışır."
 
-#: www/committer-opt-in.php:108
+#: www/committer-opt-in.php:111
 msgid ""
 "Mistakes happen.  And when they do, they are best corrected quickly.  To "
 "that end, FreshPorts provides an opt-in service for all FreeBSD committers.  "
@@ -2836,38 +2848,38 @@ msgstr ""
 "değişikliğinde karşılaştığı herhangi bir hatada sizi haberdar edecektir. "
 "Geçmişte, bazı problemler Makefile dosyasındaki syntax hatalarıyla ilgiliydi."
 
-#: www/committer-opt-in.php:112
+#: www/committer-opt-in.php:115
 msgid ""
 "One committer referred to this service as an automated nagging mentor..."
 msgstr ""
 "Bir committer bu hizmeti \"otomatik bir şekilde sürekli dırdır eden mentor "
 "(danışman) \" olarak adlandırmıştı."
 
-#: www/committer-opt-in.php:123
+#: www/committer-opt-in.php:126
 msgid "Your opt-in status"
 msgstr "Sizin katılım durumunuz"
 
-#: www/committer-opt-in.php:147
+#: www/committer-opt-in.php:150
 msgid "You are: subscribed"
 msgstr "Siz: abonesiniz"
 
-#: www/committer-opt-in.php:151
+#: www/committer-opt-in.php:154
 msgid "You are: not subscribed"
 msgstr "Siz: abone değilsiniz"
 
-#: www/committer-opt-in.php:164
+#: www/committer-opt-in.php:167
 msgid "your freefall login:"
 msgstr "sizin freefall kullanıcı adınız:"
 
-#: www/committer-opt-in.php:170
+#: www/committer-opt-in.php:173
 msgid "unsubscribe"
 msgstr "abonelikten çık"
 
-#: www/committer-opt-in.php:174
+#: www/committer-opt-in.php:177
 msgid "subscribe"
 msgstr "abone ol"
 
-#: www/committer-opt-in.php:182
+#: www/committer-opt-in.php:185
 msgid "Please do not include @FreeBSD.org in your login name."
 msgstr "Lütfen kullanıcı adınızda @FreeBSD.org kısmını dahil etmeyin."
 
@@ -2978,7 +2990,7 @@ msgid ""
 "created."
 msgstr "Hesabınızın oluşturulması için oluşan hataları düzeltmeniz gerekiyor."
 
-#: www/customize.php:185 www/delete-account.php:105 www/login.php:182
+#: www/customize.php:185 www/delete-account.php:114 www/login.php:182
 #: www/new-user.php:207 www/password-reset-via-token.php:123
 msgid "If you need help, please email postmaster@."
 msgstr ""
@@ -3017,67 +3029,67 @@ msgstr "Bu tarihe ait hiçbir commit bulunamadı"
 msgid "Latest commits"
 msgstr "En yeni commit'ler"
 
-#: www/date.php:211 www/date.php:237 www/search.php:1408
+#: www/date.php:211 www/date.php:237 www/search.php:1417
 #, php-format
 msgid "Number of commits: %d"
 msgstr "Commit sayısı: %d"
 
-#: www/delete-account.php:59
+#: www/delete-account.php:68
 msgid "I really tried to delete your account. I failed. Sorry."
 msgstr ""
 "Ben hesabınızı silmeyi gerçekten denedim fakat başarılı olamadım, üzgünüm."
 
-#: www/delete-account.php:66
+#: www/delete-account.php:75
 msgid "I could not delete that account. Sorry."
 msgstr "Ben bu hesabı silemedim. Üzgünüm."
 
-#: www/delete-account.php:70
+#: www/delete-account.php:79
 msgid "The confirmation was not correct."
 msgstr "Girdiğiniz bilgiler doğru değil."
 
-#: www/delete-account.php:76
+#: www/delete-account.php:85
 msgid "Delete User Account"
 msgstr "Hesabı Sil"
 
-#: www/delete-account.php:93
+#: www/delete-account.php:102
 msgid "Delete Failed!"
 msgstr "Silme işlemi başarısız oldu!"
 
-#: www/delete-account.php:101
+#: www/delete-account.php:110
 msgid "The delete failed."
 msgstr "Silme işlemi başarısız."
 
-#: www/delete-account.php:123
+#: www/delete-account.php:132
 msgid "Delete account"
 msgstr "Hesabı sil"
 
-#: www/delete-account.php:131
+#: www/delete-account.php:140
 msgid "Your account has been deleted."
 msgstr "Hesabınız silindi."
 
-#: www/delete-account.php:132
+#: www/delete-account.php:141
 msgid "Please click <a href=\"/\">here</a> to return to the home page."
 msgstr "Anasayfaya dönmek için lütfen <a href=\"/\">buraya</a> tıklayın."
 
-#: www/delete-account.php:135 www/delete-account.php:152
+#: www/delete-account.php:144 www/delete-account.php:162
 msgid "Delete Account"
 msgstr "Hesabı Sil"
 
-#: www/delete-account.php:135
+#: www/delete-account.php:144
 #, php-format
 msgid "To delete your account, please enter your account name and click on %s."
 msgstr "Hesabınızı silmek için, lütfen hesap adınızı girin ve %s'a tıklayın."
 
-#: www/delete-account.php:144
+#: www/delete-account.php:154
 #, php-format
 msgid "The account name is: %s"
 msgstr "Hesap adı: %s"
 
-#: www/delete-account.php:145
+#: www/delete-account.php:155
 msgid "User Name:"
 msgstr "Kullanıcı Adı:"
 
-#: www/delete-account.php:151
+#: www/delete-account.php:161
 msgid "There is no undo for this"
 msgstr "Bunu geri almak mümkün değil"
 
@@ -3240,8 +3252,8 @@ msgid ""
 msgstr ""
 "Öncelikle, biraz geçmişten bahsedelim. Eskiden, FreeBSD ports ağacına ait "
 "depo geleneksel olarak %1$s şeklinde adlandırılıyordu. İsimleri "
-"basitleştirmek amacıyla, %2$s geldikten sonra yeni depoya %3$s, mevcut depoya "
-"ise %4$s adı verildi."
+"basitleştirmek amacıyla, %2$s geldikten sonra yeni depoya %3$s, mevcut "
+"depoya ise %4$s adı verildi."
 
 #. TRANSLATORS: %1$s is the name 'pkgbase', %2$s is the repository name 'FreeBSD-base', shown in italics.
 #: www/faq.php:103
@@ -3709,16 +3721,13 @@ msgstr ""
 
 #: www/faq.php:293
 msgid ""
-"Encoding Errors (not all of the commit message was ASCII): Some of the "
-"commit message may be altered because of character conversion problems. We "
-"display only UTF-8 and remove the offending characters. These errors may "
-"occur in the log message or elsewhere in the commit email."
+"Encoding Errors (some characters in this commit were removed): Some "
+"characters in this commit could not be stored, so FreshPorts removed them. "
+"The commit message, a name or a file name shown here may differ slightly "
+"from the original. For git commits, these are control characters, such as "
+"Ctrl-Z from pasted terminal output. For older CVS commits, they were "
+"characters lost when the commit email was converted."
 msgstr ""
-"Kodlama Hataları (commit iletisinin tamamı ASCII karakterlerinden "
-"oluşmuyor): Karakter dönüştürme sorunları nedeniyle commit iletisinin bir "
-"kısmı değişmiş olabilir. Yalnızca UTF-8 karakterlerini görüntülüyor ve sorun "
-"yaratan karakterleri kaldırıyoruz. Bu tür hatalar, günlük iletisinde veya "
-"commit e-postasının başka bir yerinde ortaya çıkabilir."
 
 #: www/faq.php:296
 msgid ""
@@ -3843,9 +3852,9 @@ msgid ""
 "others to correct it if it goes unnoticed. If you see this icon next to a "
 "commit, it failed a Sanity Test."
 msgstr ""
-"Sağlamlık Testi Hataları. Port sorumluları ve katkıda bulunanlar işlerini iyi "
-"yapıyorlar; ancak bazen gözden kaçan hatalar olabiliyor. Bu kayıt, bir hata "
-"fark edilmeden geçtiğinde başkalarının onu düzeltmesini kolaylaştırmak "
+"Sağlamlık Testi Hataları. Port sorumluları ve katkıda bulunanlar işlerini "
+"iyi yapıyorlar; ancak bazen gözden kaçan hatalar olabiliyor. Bu kayıt, bir "
+"hata fark edilmeden geçtiğinde başkalarının onu düzeltmesini kolaylaştırmak "
 "amacıyla tutulur. Eğer bir commit'in yanında bu simgeyi görüyorsanız, o "
 "commit bir Sağlamlık Testi'nden geçememiş demektir."
 
@@ -4306,11 +4315,11 @@ msgstr "Alan"
 msgid "Origin"
 msgstr "Köken"
 
-#: www/faq.php:573 www/search.php:1228
+#: www/faq.php:573 www/search.php:1237
 msgid "Port Name"
 msgstr "Port Adı"
 
-#: www/faq.php:574 www/search.php:1225
+#: www/faq.php:574 www/search.php:1234
 msgid "Package Name"
 msgstr "Paket Adı"
 
@@ -4318,31 +4327,31 @@ msgstr "Paket Adı"
 msgid "Latest Link"
 msgstr "En yeni bağlantı"
 
-#: www/faq.php:576 www/ports-conflicts.php:39 www/search.php:1221
+#: www/faq.php:576 www/ports-conflicts.php:39 www/search.php:1230
 msgid "Maintainer"
 msgstr "Sorumlu"
 
-#: www/faq.php:577 www/search.php:1229
+#: www/faq.php:577 www/search.php:1238
 msgid "Short Description"
 msgstr "Kısa Açıklama"
 
-#: www/faq.php:578 www/search.php:1220
+#: www/faq.php:578 www/search.php:1229
 msgid "Long Description"
 msgstr "Uzun Açıklama"
 
-#: www/faq.php:579 www/search.php:1214
+#: www/faq.php:579 www/search.php:1223
 msgid "Depends Build"
 msgstr "Derleme Bağımlılıkları"
 
-#: www/faq.php:580 www/search.php:1215
+#: www/faq.php:580 www/search.php:1224
 msgid "Depends Lib"
 msgstr "Kütüphane Bağımlılıkları"
 
-#: www/faq.php:581 www/search.php:1216
+#: www/faq.php:581 www/search.php:1225
 msgid "Depends Run"
 msgstr "Çalıştırma Bağımlılıkları"
 
-#: www/faq.php:582 www/search.php:1224
+#: www/faq.php:582 www/search.php:1233
 msgid "Message ID"
 msgstr "Mesaj NO"
 
@@ -4446,21 +4455,21 @@ msgid ""
 "to the master port would not appear under the slave port, thereby giving a "
 "false impression that the slave port was still vulnerable."
 msgstr ""
-"Türeme portlar (slave ports), ana porta (master port) yapılan bir commit "
-"ile güncellenebilir. Ana porta yapılan bir commit, ona bağlı tüm türeme "
-"portları etkileyecektir. Eğer bir türeme port için <a href=\"https://"
-"www.vuxml.org/freebsd/\">VuXML</a> sisteminde bir güvenlik açığı kaydı "
-"bulunuyorsa, bu açığa yönelik düzeltme ana porta uygulanacaktır. Ancak, ana "
-"porta yapılan bu commit türeme portun kayıtlarında görünmeyeceğinden, "
-"türeme portun hâlâ savunmasız olduğu yönünde yanlış bir izlenim oluşabilir."
+"Türeme portlar (slave ports), ana porta (master port) yapılan bir commit ile "
+"güncellenebilir. Ana porta yapılan bir commit, ona bağlı tüm türeme portları "
+"etkileyecektir. Eğer bir türeme port için <a href=\"https://www.vuxml.org/"
+"freebsd/\">VuXML</a> sisteminde bir güvenlik açığı kaydı bulunuyorsa, bu "
+"açığa yönelik düzeltme ana porta uygulanacaktır. Ancak, ana porta yapılan bu "
+"commit türeme portun kayıtlarında görünmeyeceğinden, türeme portun hâlâ "
+"savunmasız olduğu yönünde yanlış bir izlenim oluşabilir."
 
 #: www/faq.php:634
 msgid ""
 "The above notice serves as a reminder that the slave port may no longer be "
 "vulnerable."
 msgstr ""
-"Yukarıdaki bildirim, türeme portun (slave port) artık savunmasız "
-"durumda olmayabileceğini hatırlatmak amacı taşımaktadır."
+"Yukarıdaki bildirim, türeme portun (slave port) artık savunmasız durumda "
+"olmayabileceğini hatırlatmak amacı taşımaktadır."
 
 #: www/faq.php:637
 msgid "How does FreshPorts determine the master sites?"
@@ -4604,8 +4613,7 @@ msgstr ""
 
 #: www/faq.php:742
 msgid "Enjoy. We can add more anchors upon request."
-msgstr ""
-"Keyfini çıkarın. Talep üzerine daha fazla çapa ekleyebiliriz."
+msgstr "Keyfini çıkarın. Talep üzerine daha fazla çapa ekleyebiliriz."
 
 #: www/faq.php:746
 msgid "Can I get alerts for new packages?"
@@ -5354,7 +5362,7 @@ msgstr ""
 "Bu, toplamda %1$s sayfa ediyor. Son sayımıma göre, bu da %3$s üzerindeki web "
 "sayfalarının yaklaşık %2$s%%'sine denk geliyor"
 
-#: www/how-big-is-it.php:372 www/search.php:1338
+#: www/how-big-is-it.php:372 www/search.php:1347
 msgid "Notes"
 msgstr "Notlar"
 
@@ -5909,7 +5917,7 @@ msgid_plural "%1$d ports found (%2$d primary, %3$d secondary)"
 msgstr[0] "%1$d port bulundu (%2$d ana, %3$d ikincil)"
 msgstr[1] "%1$d portlar bulundu (%2$d ana, %3$d ikincil)"
 
-#: www/port-watch.php:199 www/watch.php:321
+#: www/port-watch.php:199 www/watch.php:325
 #, php-format
 msgid "%d port found"
 msgid_plural "%d ports found"
@@ -6297,7 +6305,7 @@ msgstr ""
 "Eğer 'Çıktı biçimi' 'Bağımlılıklar' olarak ayarlanmışsa, 'Port Adı' "
 "üzerinden arama yapmalısınız. Lütfen parametreleri düzenleyip tekrar deneyin."
 
-#: www/search.php:400
+#: www/search.php:403
 msgid ""
 "<b>NOTE</b>: Instead of using 'sounds like' as instructed, the system used "
 "'containing'.  See the notes above for why this is done."
@@ -6306,15 +6314,15 @@ msgstr ""
 "yerine, sistem 'içeren' (containing) ifadesini kullanmıştır. Bunun neden "
 "yapıldığına dair açıklamalar için yukarıdaki notlara bakınız."
 
-#: www/search.php:720
+#: www/search.php:723
 msgid "Sorry, but you messed something up in your manually created query"
 msgstr "Üzgünüm, ancak manuel olarak oluşturduğunuz sorguda bir hata yaptınız"
 
-#: www/search.php:1003 www/search.php:1068
+#: www/search.php:1006 www/search.php:1071
 msgid "something went terribly wrong.  Sorry."
 msgstr "bir şeyler çok yanlış gitti. Üzgünüm."
 
-#: www/search.php:1102
+#: www/search.php:1107
 msgid ""
 "Please let postmaster@freshports.org know that the search log could not be "
 "opened.  This does not affect the search results."
@@ -6322,83 +6330,83 @@ msgstr ""
 "Lütfen arama kaydının açılamadığını postmaster@freshports.org'e mesaj atarak "
 "bildirin. Bu, arama sonuçlarını etkilemez."
 
-#: www/search.php:1159 www/search.php:1384
+#: www/search.php:1168 www/search.php:1393
 msgid "No results found"
 msgstr "Hiçbir sonuç bulunmadı"
 
-#: www/search.php:1172
+#: www/search.php:1181
 msgid "Search FreshPorts using Google"
 msgstr "Google kullanarak FreshPorts'ta arayın"
 
-#: www/search.php:1201
+#: www/search.php:1210
 msgid "The FreshPorts Search"
 msgstr "FreshPorts  Anasayfası"
 
-#: www/search.php:1208
+#: www/search.php:1217
 msgid "Author Email"
 msgstr "Yazar Epostası"
 
-#: www/search.php:1209
+#: www/search.php:1218
 msgid "Author Name"
 msgstr "Yazar İsmi"
 
-#: www/search.php:1210
+#: www/search.php:1219
 msgid "Commit Message"
 msgstr "Commit Mesajı"
 
-#: www/search.php:1211
+#: www/search.php:1220
 msgid "Committer ID (email without @FreeBSD.org)"
 msgstr "Committer Kullanıcı Adı (@FreeBSD.org'sız eposta adresi)"
 
-#: www/search.php:1212
+#: www/search.php:1221
 msgid "Committer Email"
 msgstr "Committer Epostası"
 
-#: www/search.php:1213
+#: www/search.php:1222
 msgid "Committer Name"
 msgstr "Committer İsmi"
 
-#: www/search.php:1217
+#: www/search.php:1226
 msgid "Depends Build/Lib/Run"
 msgstr "Bağımlılıklar Derleme/Kütüphane/Çalıştırma"
 
-#: www/search.php:1222
+#: www/search.php:1231
 msgid "Makefile (ports only)"
 msgstr "Makefile (sadece ports)"
 
-#: www/search.php:1230
+#: www/search.php:1239
 msgid "Under a pathname"
 msgstr "Dosya yolu altında"
 
-#: www/search.php:1235
+#: www/search.php:1244
 msgid "equal to"
 msgstr "eşittir"
 
-#: www/search.php:1236
+#: www/search.php:1245
 msgid "starting with"
 msgstr "ile başlıyor"
 
-#: www/search.php:1237
+#: www/search.php:1246
 msgid "containing"
 msgstr "içeren"
 
-#: www/search.php:1238
+#: www/search.php:1247
 msgid "ending with"
 msgstr "ile biten"
 
-#: www/search.php:1239
+#: www/search.php:1248
 msgid "sounds like"
 msgstr "şuna benzeyen"
 
-#: www/search.php:1247
+#: www/search.php:1256
 msgid "results"
 msgstr "sonuçlar"
 
-#: www/search.php:1258
+#: www/search.php:1267
 msgid "Search only this category:"
 msgstr "Sadece bu kategoride ara:"
 
-#: www/search.php:1267
+#: www/search.php:1276
 msgid ""
 "The list of categories is not available - the cache file does not exist - "
 "This should never happen."
@@ -6406,55 +6414,55 @@ msgstr ""
 "Kategorilerin listesi mevcut değil - önbellek dosyası bulunmuyor - Bu hiç "
 "olmamalıydı."
 
-#: www/search.php:1276
+#: www/search.php:1285
 msgid "Include deleted ports"
 msgstr "Silinen portları dahil et"
 
-#: www/search.php:1279
+#: www/search.php:1288
 msgid "Case sensitive search"
 msgstr "Harfe duyarlı arama"
 
-#: www/search.php:1283
+#: www/search.php:1292
 msgid "Port"
 msgstr "Port"
 
-#: www/search.php:1289
+#: www/search.php:1298
 msgid "ascending"
 msgstr "artan"
 
-#: www/search.php:1290
+#: www/search.php:1299
 msgid "descending"
 msgstr "azalan"
 
-#: www/search.php:1298
+#: www/search.php:1307
 msgid "Include /src tree"
 msgstr "/src ağacını dahil et"
 
-#: www/search.php:1302
+#: www/search.php:1311
 msgid "<b>Output format</b>:"
 msgstr "<b>Çıktı formatı</b>:"
 
-#: www/search.php:1304
+#: www/search.php:1313
 msgid "Plain Text"
 msgstr "Düz Metin"
 
-#: www/search.php:1305
+#: www/search.php:1314
 msgid "Depends (only works with <b>Port Name</b>)"
 msgstr "Bağımlılıklar (sadece <b>Port İsmi</b> ile çalışır)"
 
-#: www/search.php:1308
+#: www/search.php:1317
 msgid "Maximum Effort"
 msgstr "Maksimum Efor"
 
-#: www/search.php:1311
+#: www/search.php:1320
 msgid "Minimal output"
 msgstr "Minimal çıktı"
 
-#: www/search.php:1316
+#: www/search.php:1325
 msgid "<b>Branch</b>:"
 msgstr "<b>Dal</b>:"
 
-#: www/search.php:1340
+#: www/search.php:1349
 msgid ""
 "Case sensitivity is ignored for \"sounds like\" and output is ordered by the "
 "soundex."
@@ -6462,17 +6470,17 @@ msgstr ""
 "Harfe duyarlılık \"şuna benzeyen\" filtresi için geçerli değildir ve çıktısı "
 "fonetik algoritma ile sıralanır."
 
-#: www/search.php:1341
+#: www/search.php:1350
 msgid "When searching on 'Message ID', the type of match is ignored."
 msgstr ""
 "'Message ID' üzerinden arama yapıldığında, eşleşme türü dikkate alınmaz."
 
-#: www/search.php:1342
+#: www/search.php:1351
 msgid "When searching on 'Commit Message' only 'containing' is used."
 msgstr ""
 "'Commit Mesajı' üzerinde arama yaparken yalnızca 'içeren' ifadesi kullanılır."
 
-#: www/search.php:1343
+#: www/search.php:1352
 msgid ""
 "When searching by 'Under a pathname', your path must start with something "
 "like /ports/, /doc/, or /src/. All commits under that point will be "
@@ -6484,7 +6492,7 @@ msgstr ""
 "eşleşme türü dikkate alınmaz ve varsayılan olarak 'ile başlar' (Starts with) "
 "şeklinde kabul edilir."
 
-#: www/search.php:1344
+#: www/search.php:1353
 msgid ""
 "Searching for 'sounds like' is only valid for Author Email, Author Name, "
 "Committer Email, Committer Name, Maintainer, Package Name, and Port Name - "
@@ -6495,19 +6503,19 @@ msgstr ""
 "Adı ve Port Adı alanları için geçerlidir; ancak bunların düzgün bir şekilde "
 "indekslenip indekslenmediğinden emin değilim. Bu konuyu Dan'a sorun."
 
-#: www/search.php:1352
+#: www/search.php:1361
 msgid "Special searches:"
 msgstr "Özel aramalar:"
 
-#: www/search.php:1363
+#: www/search.php:1372
 msgid "Ports I Maintain"
 msgstr "Sorumlu Olduğum Portlar"
 
-#: www/search.php:1388
+#: www/search.php:1397
 msgid "See the suggestions at the top of this page."
 msgstr "Sayfanın başındaki önerilere göz atınız."
 
-#: www/search.php:1425
+#: www/search.php:1434
 #, php-format
 msgid "Number of ports: %d"
 msgstr "Portların sayısı: %d"
@@ -6649,7 +6657,7 @@ msgstr ""
 "içermelidir."
 
 #: www/watch-list-maintenance.php:70 www/watch-list-maintenance.php:315
-#: www/watch-list.php:90 www/watch-list.php:102
+#: www/watch-list.php:98 www/watch-list.php:110
 msgid "Watch list maintenance"
 msgstr "Takip listesi bakımı"
 
@@ -6855,8 +6863,8 @@ msgstr "bu, diğer sayfalardaki görünümü/eylemleri etkiler"
 #: www/watch-list-maintenance.php:433
 msgid "Set the options to be used when clicking on Add/Remove for a port."
 msgstr ""
-"Bir port için Ekle/Kaldır seçeneğine tıklandığında kullanılacak "
-"ayarları yapılandırın."
+"Bir port için Ekle/Kaldır seçeneğine tıklandığında kullanılacak ayarları "
+"yapılandırın."
 
 #: www/watch-list-maintenance.php:438
 #, php-format
@@ -6876,28 +6884,28 @@ msgstr ""
 "tamamlanması için yukarıdaki kutuya <b>%1$s</b> yazmalısınız). Bu işlem "
 "büyük/küçük harfe duyarlıdır."
 
-#: www/watch-list.php:177
+#: www/watch-list.php:185
 msgid "Please select the watch lists which should contain this port:"
 msgstr "Lütfen bu portu içermesini istediğiniz takip listelerini seçin:"
 
-#: www/watch-list.php:201
+#: www/watch-list.php:209
 msgid "NOTES"
 msgstr "NOTLAR"
 
-#: www/watch-list.php:203
+#: www/watch-list.php:211
 msgid "'+' indicates that the port is on this watch list."
 msgstr "'+' port'un bu takip listesinde olduğunu ifade eder."
 
-#: www/watch-list.php:204
+#: www/watch-list.php:212
 msgid "'*' indicates a default watch list."
 msgstr "'*' varsayılan takip listesini ifade eder."
 
-#: www/watch-list.php:208
+#: www/watch-list.php:216
 msgid ""
 "the watch lists which are selected are those upon which the port appears"
 msgstr "seçilmiş olan izleme listeleri, port'un yer aldığı listelerdir"
 
-#: www/watch-list.php:212
+#: www/watch-list.php:220
 msgid ""
 "the watch lists which are selected are your default watch lists, and any "
 "which already contain the port"
@@ -6999,11 +7007,11 @@ msgstr ""
 "Yalnızca <code>/usr/ports/UPDATING</code> dosyasında girdileri bulunan, "
 "izlenen portları görüntüleyin"
 
-#: www/watch.php:323
+#: www/watch.php:327
 msgid "no ports found"
 msgstr "hiçbir port bulunmadı"
 
-#: www/watch.php:334
+#: www/watch.php:338
 msgid ""
 "(on your watch list, but only showing those with entries in <code>/usr/ports/"
 "UPDATING</code>)"
@@ -7011,7 +7019,7 @@ msgstr ""
 "(takip listenizde, ama sadece <code>/usr/ports/UPDATING</code> dosyasında "
 "girdileri bulunanlar gösteriliyor)"
 
-#: www/watch.php:401
+#: www/watch.php:405
 #, php-format
 msgid "(on your watch list, but only showing %d)"
 msgid_plural "(on your watch list, but only showing %d)"
@@ -7033,6 +7041,18 @@ msgid ""
 msgstr ""
 "Eğer bu epostayı almıyorsanız, tekrar giriş yapmayı deneyin ve o zaman "
 "bildirimi yeniden göndermek için bir şansınız olacaktır."
+
+#~ msgid ""
+#~ "Encoding Errors (not all of the commit message was ASCII): Some of the "
+#~ "commit message may be altered because of character conversion problems. "
+#~ "We display only UTF-8 and remove the offending characters. These errors "
+#~ "may occur in the log message or elsewhere in the commit email."
+#~ msgstr ""
+#~ "Kodlama Hataları (commit iletisinin tamamı ASCII karakterlerinden "
+#~ "oluşmuyor): Karakter dönüştürme sorunları nedeniyle commit iletisinin bir "
+#~ "kısmı değişmiş olabilir. Yalnızca UTF-8 karakterlerini görüntülüyor ve "
+#~ "sorun yaratan karakterleri kaldırıyoruz. Bu tür hatalar, günlük "
+#~ "iletisinde veya commit e-postasının başka bir yerinde ortaya çıkabilir."
 
 #~ msgid "Watch categories"
 #~ msgstr "Kategorileri takip et"

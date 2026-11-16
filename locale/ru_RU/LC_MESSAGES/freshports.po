@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreshPorts\n"
 "Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
-"POT-Creation-Date: 2026-11-14 02:18+0000\n"
+"POT-Creation-Date: 2026-11-16 23:55+0000\n"
 "PO-Revision-Date: 2026-10-24 00:37+0300\n"
 "Last-Translator: Vladlen Popolitov <vladlen@freebsd.org>\n"
 "Language-Team: Russian <vladlen@FreeBSD.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 "X-Generator: Poedit 3.7\n"
 
 #: classes/display_commit.php:209 classes/port-display.php:1217
-#: include/freshports.php:1979
+#: include/freshports.php:2007
 msgid "Author:"
 msgstr "Автор:"
 
@@ -413,7 +413,7 @@ msgstr "для этого порта нет пакета: %s"
 
 #: classes/port-display.php:1578 classes/port-display.php:1923
 #: classes/port-display.php:2160 classes/port-display.php:2194
-#: include/freshports.php:1678
+#: include/freshports.php:1706
 #, php-format
 msgid "Expand this list (%d items)"
 msgstr "Развернуть этот список (элементов: %d)"
@@ -422,7 +422,7 @@ msgstr "Развернуть этот список (элементов: %d)"
 #: classes/port-display.php:1925 classes/port-display.php:1933
 #: classes/port-display.php:2044 classes/port-display.php:2059
 #: classes/port-display.php:2167 classes/port-display.php:2197
-#: classes/port-display.php:2207 include/freshports.php:1688
+#: classes/port-display.php:2207 include/freshports.php:1716
 msgid "Collapse this list."
 msgstr "Свернуть этот список."
 
@@ -821,8 +821,8 @@ msgstr "По возрастанию"
 msgid "Descending Order"
 msgstr "По убыванию"
 
-#: include/freshports.php:571 www/package.php:53 www/search.php:1146
-#: www/search.php:1294
+#: include/freshports.php:571 www/package.php:53 www/search.php:1151
+#: www/search.php:1303
 msgid "Search"
 msgstr "Поиск"
 
@@ -895,48 +895,61 @@ msgstr "Подробности коммита"
 msgid "FreshPorts commit message"
 msgstr "Сообщение коммита FreshPorts"
 
-#: include/freshports.php:742
+#: include/freshports.php:746
 msgid "Click to remove this from your default watch list[s]"
 msgstr ""
 "Нажмите, чтобы удалить это из своего списка(ов) отслеживания по умолчанию"
 
-#: include/freshports.php:754
-msgid "Encoding Errors (not all of the commit message was ASCII)"
+#. TRANSLATORS: alt text and tooltip of the icon shown next to such a commit
+#: include/freshports.php:765
+#, fuzzy
+msgid "Encoding Errors (some characters in this commit were removed)"
 msgstr "Ошибки кодировки (не всё сообщение коммита было в ASCII)"
 
-#: include/freshports.php:762
+#: include/freshports.php:774
 msgid "View this port on Repology."
 msgstr "Посмотреть этот порт на Repology."
 
-#: include/freshports.php:766
+#: include/freshports.php:778
 msgid "This port version is marked as vulnerable."
 msgstr "Эта версия порта помечена как уязвимая."
 
-#: include/freshports.php:770
+#: include/freshports.php:782
 msgid "An older version of this port was marked as vulnerable."
 msgstr "Более старая версия этого порта была помечена как уязвимая."
 
-#: include/freshports.php:774
+#: include/freshports.php:786
 msgid "View revision"
 msgstr "Посмотреть ревизию"
 
-#: include/freshports.php:774
+#: include/freshports.php:786
 msgid "view revision"
 msgstr "посмотреть ревизию"
 
-#: include/freshports.php:778
+#: include/freshports.php:790
 msgid "Annotate / Blame"
 msgstr "Аннотировать / авторство"
 
-#: include/freshports.php:782
+#: include/freshports.php:794
 msgid "View diff"
 msgstr "Посмотреть diff"
 
-#: include/freshports.php:782
+#: include/freshports.php:794
 msgid "view diff"
 msgstr "посмотреть diff"
 
-#: include/freshports.php:847
+#: include/freshports.php:861
+#, fuzzy
+msgid "Click to add this to this watch list"
+msgstr "Нажмите, чтобы добавить это в свой список(и) отслеживания по умолчанию"
+
+#: include/freshports.php:870
+#, fuzzy
+msgid "Click to remove this from this watch list"
+msgstr ""
+"Нажмите, чтобы удалить это из своего списка(ов) отслеживания по умолчанию"
+
+#: include/freshports.php:875
 #, php-format
 msgid "on %d watch list"
 msgid_plural "on %d watch lists"
@@ -944,158 +957,158 @@ msgstr[0] "в %d списке отслеживания"
 msgstr[1] "в %d списках отслеживания"
 msgstr[2] "в %d списках отслеживания"
 
-#: include/freshports.php:869
+#: include/freshports.php:897
 msgid "Commit Flagged"
 msgstr "Коммит помечен"
 
-#: include/freshports.php:874
+#: include/freshports.php:902
 msgid "Commit Not Flagged"
 msgstr "Коммит не помечен"
 
-#: include/freshports.php:943
+#: include/freshports.php:971
 msgid "View all ports for this commit"
 msgstr "Посмотреть все порты этого коммита"
 
-#: include/freshports.php:944
+#: include/freshports.php:972
 #, php-format
 msgid ""
 "(Only the first %1$d of %2$d items in this commit are shown above. %3$s)"
 msgstr ""
 "(Выше показаны только первые %1$d из %2$d элементов этого коммита. %3$s)"
 
-#: include/freshports.php:950
+#: include/freshports.php:978
 msgid "View all of this commit message"
 msgstr "Посмотреть всё сообщение этого коммита"
 
-#: include/freshports.php:951
+#: include/freshports.php:979
 #, php-format
 msgid "(Only the first %1$d lines of the commit message are shown above %2$s)"
 msgstr "(Выше показаны только первые %1$d строк сообщения коммита %2$s)"
 
-#: include/freshports.php:989 include/freshports.php:1045
+#: include/freshports.php:1017 include/freshports.php:1073
 msgid "committed by this person"
 msgstr "закоммичено этим человеком"
 
-#: include/freshports.php:1028
+#: include/freshports.php:1056
 msgid "authored by this person"
 msgstr "авторство этого человека"
 
-#: include/freshports.php:1118
+#: include/freshports.php:1146
 msgid "As an Amazon Associate I earn from qualifying purchases."
 msgstr "Как партнёр Amazon я получаю доход от соответствующих покупок."
 
-#: include/freshports.php:1118
+#: include/freshports.php:1146
 #, php-format
 msgid "Want a good read? Try %s"
 msgstr "Хотите хорошее чтиво? Попробуйте %s"
 
-#: include/freshports.php:1119
+#: include/freshports.php:1147
 #, php-format
 msgid "Want a good monitor light? See my <a href=\"%s\">photos</a>"
 msgstr ""
 "Хотите хороший свет для монитора? Смотрите мои <a href=\"%s\">фотографии</a>"
 
-#: include/freshports.php:1123
+#: include/freshports.php:1151
 msgid "All times are UTC"
 msgstr "Всё время указано в UTC"
 
-#: include/freshports.php:1136
+#: include/freshports.php:1164
 #, php-format
 msgid "The git branch used by this host is %s"
 msgstr "Ветка git, используемая этим хостом: %s"
 
-#: include/freshports.php:1137
+#: include/freshports.php:1165
 #, php-format
 msgid "The database is %s"
 msgstr "База данных: %s"
 
-#: include/freshports.php:1138
+#: include/freshports.php:1166
 #, php-format
 msgid "The db server is %s"
 msgstr "Сервер БД: %s"
 
-#: include/freshports.php:1145
+#: include/freshports.php:1173
 msgid "I remember"
 msgstr "Я помню"
 
-#: include/freshports.php:1150 include/freshports.php:2389
+#: include/freshports.php:1178 include/freshports.php:2417
 msgid "Blog"
 msgstr "Блог"
 
-#: include/freshports.php:1150
+#: include/freshports.php:1178
 msgid "Follow us"
 msgstr "Подписывайтесь на нас"
 
-#: include/freshports.php:1150
+#: include/freshports.php:1178
 msgid "Status page"
 msgstr "Страница состояния"
 
-#: include/freshports.php:1171 include/freshports.php:1172
+#: include/freshports.php:1199 include/freshports.php:1200
 msgid "Menu"
 msgstr "Меню"
 
-#: include/freshports.php:1172
+#: include/freshports.php:1200
 msgid "Close"
 msgstr "Закрыть"
 
-#: include/freshports.php:1172
+#: include/freshports.php:1200
 msgid "Close the menu"
 msgstr "Закрыть меню"
 
-#: include/freshports.php:1172
+#: include/freshports.php:1200
 msgid "Open the menu"
 msgstr "Открыть меню"
 
-#: include/freshports.php:1503
+#: include/freshports.php:1531
 #, php-format
 msgid "port deleted on %s"
 msgstr "порт удалён %s"
 
-#: include/freshports.php:1506
+#: include/freshports.php:1534
 #, php-format
 msgid "resurrected on %s"
 msgstr "восстановлен %s"
 
-#: include/freshports.php:1512
+#: include/freshports.php:1540
 #, php-format
 msgid "port moved to %1$s on %2$s"
 msgstr "порт перемещён в %1$s %2$s"
 
-#: include/freshports.php:1514
+#: include/freshports.php:1542
 #, php-format
 msgid "port moved here from %1$s on %2$s"
 msgstr "порт перемещён сюда из %1$s %2$s"
 
-#: include/freshports.php:1520
+#: include/freshports.php:1548
 msgid "REASON:"
 msgstr "ПРИЧИНА:"
 
-#: include/freshports.php:1549
+#: include/freshports.php:1577
 msgid "Perhaps you meant one of these:"
 msgstr "Возможно, вы имели в виду одно из этих:"
 
-#: include/freshports.php:1563
+#: include/freshports.php:1591
 msgid "All rights reserved."
 msgstr "Все права защищены."
 
-#: include/freshports.php:1563
+#: include/freshports.php:1591
 msgid "Copyright"
 msgstr "Авторское право"
 
-#: include/freshports.php:1563
+#: include/freshports.php:1591
 msgid "This material is copyrighted"
 msgstr "Этот материал защищён авторским правом"
 
-#: include/freshports.php:1666
+#: include/freshports.php:1694
 msgid "Notes from UPDATING"
 msgstr "Примечания из UPDATING"
 
-#: include/freshports.php:1668
+#: include/freshports.php:1696
 #, php-format
 msgid "These upgrade notes are taken from %s"
 msgstr "Эти примечания по обновлению взяты из %s"
 
-#: include/freshports.php:1711
+#: include/freshports.php:1739
 msgid ""
 "Commit History - (may be incomplete: for full details, see links to "
 "repositories near top of page)"
@@ -1103,7 +1116,7 @@ msgstr ""
 "История коммитов — (может быть неполной: полные сведения см. в ссылках на "
 "репозитории в верхней части страницы)"
 
-#: include/freshports.php:1716
+#: include/freshports.php:1744
 #, php-format
 msgid ""
 "This is a slave port.  You may also want to view the commits to the master "
@@ -1112,19 +1125,19 @@ msgstr ""
 "Это подчинённый порт. Возможно, вы также захотите посмотреть коммиты "
 "ведущего порта: %s"
 
-#: include/freshports.php:1720
+#: include/freshports.php:1748
 msgid "Commit"
 msgstr "Коммит"
 
-#: include/freshports.php:1720
+#: include/freshports.php:1748
 msgid "Credits"
 msgstr "Авторы"
 
-#: include/freshports.php:1720
+#: include/freshports.php:1748
 msgid "Log message"
 msgstr "Сообщение журнала"
 
-#: include/freshports.php:1765
+#: include/freshports.php:1793
 #, php-format
 msgid ""
 "<b>NOTE</b>: This slave port may no longer be vulnerable to issues shown "
@@ -1134,34 +1147,34 @@ msgstr ""
 "проблемам, показанным ниже, поскольку <a href=\"%s\">ведущий порт</a> был "
 "обновлён."
 
-#: include/freshports.php:1805 include/freshports.php:1806
+#: include/freshports.php:1833 include/freshports.php:1834
 #: www/sanity_test_failures.php:175 www/sanity_test_failures.php:176
 msgid "First Page"
 msgstr "Первая страница"
 
-#: include/freshports.php:1807 include/freshports.php:1808
+#: include/freshports.php:1835 include/freshports.php:1836
 #: www/sanity_test_failures.php:177 www/sanity_test_failures.php:178
 msgid "Last Page"
 msgstr "Последняя страница"
 
-#: include/freshports.php:1832 rewrite/missing-non-port.php:161
+#: include/freshports.php:1860 rewrite/missing-non-port.php:161
 #: www/sanity_test_failures.php:185
 #, php-format
 msgid "Number of commits found: %d"
 msgstr "Найдено коммитов: %d"
 
-#: include/freshports.php:1841 rewrite/missing-non-port.php:171
-#: www/sanity_test_failures.php:189 www/search.php:1410 www/search.php:1427
+#: include/freshports.php:1869 rewrite/missing-non-port.php:171
+#: www/sanity_test_failures.php:189 www/search.php:1419 www/search.php:1436
 #, php-format
 msgid "(showing only %d on this page)"
 msgstr "(на этой странице показано только %d)"
 
-#: include/freshports.php:2119
+#: include/freshports.php:2147
 msgid "Link to this section"
 msgstr "Ссылка на этот раздел"
 
 #. TRANSLATORS: keep the line breaks short, this is a plain text email
-#: include/freshports.php:2190
+#: include/freshports.php:2218
 #, php-format
 msgid ""
 "Someone, perhaps you, supplied your email address as their\n"
@@ -1174,321 +1187,321 @@ msgstr ""
 "помехой, пожалуйста, перешлите это сообщение на %s,\n"
 "и мы всё уладим за вас."
 
-#: include/freshports.php:2195
+#: include/freshports.php:2223
 #, php-format
 msgid "Your token is: %s"
 msgstr "Ваш токен: %s"
 
-#: include/freshports.php:2197
+#: include/freshports.php:2225
 msgid "Please point your browser at"
 msgstr "Пожалуйста, откройте в браузере"
 
-#: include/freshports.php:2199
+#: include/freshports.php:2227
 #, php-format
 msgid "The request came from %s"
 msgstr "Запрос поступил с %s"
 
-#: include/freshports.php:2216
+#: include/freshports.php:2244
 #, php-format
 msgid "%s - user registration"
 msgstr "%s — регистрация пользователя"
 
-#: include/freshports.php:2287
+#: include/freshports.php:2315
 msgid "You are connected over IPv6"
 msgstr "Вы подключены по IPv6"
 
-#: include/freshports.php:2300
+#: include/freshports.php:2328
 #, php-format
 msgid "Valid %1$s, %2$s, and %3$s."
 msgstr "Валидные %1$s, %2$s и %3$s."
 
-#: include/freshports.php:2301
+#: include/freshports.php:2329
 msgid "We like to keep our HTML valid"
 msgstr "Мы стараемся поддерживать валидность нашего HTML"
 
-#: include/freshports.php:2302
+#: include/freshports.php:2330
 msgid "We like to have valid CSS"
 msgstr "Мы стараемся поддерживать валидность нашего CSS"
 
-#: include/freshports.php:2303
+#: include/freshports.php:2331
 msgid "Valid RSS is good too"
 msgstr "Валидный RSS — это тоже хорошо"
 
-#: include/freshports.php:2334 include/login.php:15 www/login.php:149
+#: include/freshports.php:2362 include/login.php:15 www/login.php:149
 #: www/login.php:232
 msgid "Login"
 msgstr "Вход"
 
-#: include/freshports.php:2342
+#: include/freshports.php:2370
 #, php-format
 msgid "Logged in as %s"
 msgstr "Вы вошли как %s"
 
-#: include/freshports.php:2346
+#: include/freshports.php:2374
 msgid "your email is <a href=\"/bouncing.php\">bouncing</a>"
 msgstr "ваша почта <a href=\"/bouncing.php\">отскакивает</a>"
 
-#: include/freshports.php:2349
+#: include/freshports.php:2377
 msgid "Your Account"
 msgstr "Ваша учётная запись"
 
-#: include/freshports.php:2349
+#: include/freshports.php:2377
 msgid "Your account"
 msgstr "Ваша учётная запись"
 
-#: include/freshports.php:2352
+#: include/freshports.php:2380
 msgid "Committer Opt-in"
 msgstr "Подписка для коммиттеров"
 
-#: include/freshports.php:2352
+#: include/freshports.php:2380
 msgid "Committers can receive reports of Sanity Test Failures"
 msgstr "Коммиттеры могут получать отчёты о сбоях проверки целостности"
 
-#: include/freshports.php:2356
+#: include/freshports.php:2384
 msgid "Logout"
 msgstr "Выход"
 
-#: include/freshports.php:2356
+#: include/freshports.php:2384
 msgid "Logout of the website"
 msgstr "Выйти с сайта"
 
-#: include/freshports.php:2357
+#: include/freshports.php:2385
 msgid "List of commits you have flagged"
 msgstr "Список помеченных вами коммитов"
 
-#: include/freshports.php:2357
+#: include/freshports.php:2385
 msgid "My Flagged Commits"
 msgstr "Мои помеченные коммиты"
 
-#: include/freshports.php:2359
+#: include/freshports.php:2387
 msgid "Login to the website"
 msgstr "Войти на сайт"
 
-#: include/freshports.php:2359
+#: include/freshports.php:2387
 msgid "User Login"
 msgstr "Вход пользователя"
 
-#: include/freshports.php:2360
+#: include/freshports.php:2388
 msgid "Create account"
 msgstr "Создать учётную запись"
 
-#: include/freshports.php:2360
+#: include/freshports.php:2388
 msgid "Create an account"
 msgstr "Создать учётную запись"
 
-#: include/freshports.php:2378
+#: include/freshports.php:2406
 msgid "This site"
 msgstr "Этот сайт"
 
-#: include/freshports.php:2382
+#: include/freshports.php:2410
 msgid "A bit of background on FreshPorts"
 msgstr "Немного предыстории о FreshPorts"
 
-#: include/freshports.php:2382
+#: include/freshports.php:2410
 msgid "What is FreshPorts?"
 msgstr "Что такое FreshPorts?"
 
-#: include/freshports.php:2383 www/authors.php:26
+#: include/freshports.php:2411 www/authors.php:26
 msgid "About the authors"
 msgstr "Об авторах"
 
-#: include/freshports.php:2383
+#: include/freshports.php:2411
 msgid "Who wrote this stuff?"
 msgstr "Кто всё это написал?"
 
-#: include/freshports.php:2384
+#: include/freshports.php:2412
 msgid "Issues"
 msgstr "Проблемы"
 
-#: include/freshports.php:2384
+#: include/freshports.php:2412
 msgid "Report a website problem"
 msgstr "Сообщить о проблеме на сайте"
 
-#: include/freshports.php:2385 www/faq.php:32
+#: include/freshports.php:2413 www/faq.php:32
 msgid "FAQ"
 msgstr "ЧЗВ"
 
-#: include/freshports.php:2385 www/faq.php:13
+#: include/freshports.php:2413 www/faq.php:13
 msgid "Frequently Asked Questions"
 msgstr "Часто задаваемые вопросы"
 
-#: include/freshports.php:2386 www/how-big-is-it.php:13
+#: include/freshports.php:2414 www/how-big-is-it.php:13
 msgid "How big is it?"
 msgstr "Насколько он большой?"
 
-#: include/freshports.php:2386
+#: include/freshports.php:2414
 msgid "How many pages are in this website?"
 msgstr "Сколько страниц на этом сайте?"
 
-#: include/freshports.php:2387
+#: include/freshports.php:2415
 msgid "Are you a security researcher? Please read this."
 msgstr "Вы исследователь в области безопасности? Пожалуйста, прочтите это."
 
-#: include/freshports.php:2387 www/security-policy.php:13
+#: include/freshports.php:2415 www/security-policy.php:13
 msgid "Security Policy"
 msgstr "Политика безопасности"
 
-#: include/freshports.php:2388
+#: include/freshports.php:2416
 msgid "Our privacy statement"
 msgstr "Наше заявление о конфиденциальности"
 
-#: include/freshports.php:2388
+#: include/freshports.php:2416
 msgid "Privacy"
 msgstr "Конфиденциальность"
 
-#: include/freshports.php:2389
+#: include/freshports.php:2417
 msgid "All the latest FreshPorts news"
 msgstr "Все последние новости FreshPorts"
 
-#: include/freshports.php:2390 www/contact.php:13 www/contact.php:27
+#: include/freshports.php:2418 www/contact.php:13 www/contact.php:27
 msgid "Contact"
 msgstr "Контакты"
 
-#: include/freshports.php:2390
+#: include/freshports.php:2418
 msgid "Contact details"
 msgstr "Контактные данные"
 
-#: include/freshports.php:2400
+#: include/freshports.php:2428
 msgid "Latest Vulnerabilities"
 msgstr "Последние уязвимости"
 
-#: include/freshports.php:2406
+#: include/freshports.php:2434
 msgid "All vulnerabilities"
 msgstr "Все уязвимости"
 
-#: include/freshports.php:2406
+#: include/freshports.php:2434
 msgid "modified, not new"
 msgstr "изменённые, не новые"
 
-#: include/freshports.php:2407
+#: include/freshports.php:2435
 msgid "Last processed:"
 msgstr "Последняя обработка:"
 
-#: include/freshports.php:2419 include/freshports.php:2449
+#: include/freshports.php:2447 include/freshports.php:2477
 msgid "Ports"
 msgstr "Порты"
 
-#: include/freshports.php:2424
+#: include/freshports.php:2452
 msgid "FreshPorts Home page"
 msgstr "Домашняя страница FreshPorts"
 
-#: include/freshports.php:2424
+#: include/freshports.php:2452
 msgid "Home"
 msgstr "Главная"
 
-#: include/freshports.php:2425 include/freshports.php:2447
+#: include/freshports.php:2453 include/freshports.php:2475
 #: www/categories.php:15
 msgid "Categories"
 msgstr "Категории"
 
-#: include/freshports.php:2425
+#: include/freshports.php:2453
 msgid "List of all Port categories"
 msgstr "Список всех категорий портов"
 
-#: include/freshports.php:2426
+#: include/freshports.php:2454
 msgid "All deleted ports"
 msgstr "Все удалённые порты"
 
-#: include/freshports.php:2426 www/ports-deleted.php:30
+#: include/freshports.php:2454 www/ports-deleted.php:30
 msgid "Deleted ports"
 msgstr "Удалённые порты"
 
-#: include/freshports.php:2427 www/sanity_test_failures.php:37
+#: include/freshports.php:2455 www/sanity_test_failures.php:37
 #: www/sanity_test_failures.php:85
 msgid "Sanity Test Failures"
 msgstr "Сбои проверки целостности"
 
-#: include/freshports.php:2427
+#: include/freshports.php:2455
 msgid "Things that didn't go quite right..."
 msgstr "То, что пошло не совсем так..."
 
-#: include/freshports.php:2428 www/backend/newsfeeds.php:21
+#: include/freshports.php:2456 www/backend/newsfeeds.php:21
 msgid "Newsfeeds"
 msgstr "Новостные ленты"
 
-#: include/freshports.php:2428
+#: include/freshports.php:2456
 msgid "Newsfeeds for just about everything"
 msgstr "Новостные ленты почти для всего"
 
-#: include/freshports.php:2441 www/watch-list-maintenance.php:330
+#: include/freshports.php:2469 www/watch-list-maintenance.php:330
 #: www/watch-list-maintenance.php:403
 msgid "Watch Lists"
 msgstr "Списки отслеживания"
 
-#: include/freshports.php:2446 www/pkg_upload.php:100 www/pkg_upload.php:123
+#: include/freshports.php:2474 www/pkg_upload.php:100 www/pkg_upload.php:123
 #: www/pkg_upload.php:146
 msgid "Upload"
 msgstr "Загрузка"
 
-#: include/freshports.php:2446
+#: include/freshports.php:2474
 msgid ""
 "Upload a file containing a list of ports you want to add to your watch list"
 msgstr ""
 "Загрузите файл со списком портов, которые вы хотите добавить в свой список "
 "отслеживания"
 
-#: include/freshports.php:2447
+#: include/freshports.php:2475
 msgid "Search through categories for ports to add to your watch list"
 msgstr ""
 "Ищите по категориям порты, которые хотите добавить в свой список отслеживания"
 
-#: include/freshports.php:2448
+#: include/freshports.php:2476
 msgid "Maintain"
 msgstr "Управление"
 
-#: include/freshports.php:2448
+#: include/freshports.php:2476
 msgid "Maintain your watch list[s]"
 msgstr "Управляйте своим списком(ами) отслеживания"
 
-#: include/freshports.php:2449
+#: include/freshports.php:2477
 msgid "Your list of watched ports"
 msgstr "Ваш список отслеживаемых портов"
 
-#: include/freshports.php:2450
+#: include/freshports.php:2478
 msgid "A list of news feeds for your watched lists"
 msgstr "Список новостных лент для ваших списков отслеживания"
 
-#: include/freshports.php:2450
+#: include/freshports.php:2478
 msgid "Personal Newsfeeds"
 msgstr "Личные новостные ленты"
 
-#: include/freshports.php:2451
+#: include/freshports.php:2479
 msgid "Maintain your list of subscriptions"
 msgstr "Управляйте своим списком подписок"
 
-#: include/freshports.php:2451
+#: include/freshports.php:2479
 msgid "Report Subscriptions"
 msgstr "Подписки на отчёты"
 
-#: include/freshports.php:2452
+#: include/freshports.php:2480
 msgid "ABI Package Subscriptions"
 msgstr "Подписки на пакеты ABI"
 
-#: include/freshports.php:2452
+#: include/freshports.php:2480
 msgid "Maintain your ABI package subscriptions"
 msgstr "Управляйте своими подписками на пакеты ABI"
 
-#: include/freshports.php:2465
+#: include/freshports.php:2493
 msgid "Statistics"
 msgstr "Статистика"
 
-#: include/freshports.php:2470 include/freshports.php:2471
+#: include/freshports.php:2498 include/freshports.php:2499
 msgid "Everyone loves statistics!"
 msgstr "Все любят статистику!"
 
-#: include/freshports.php:2470
+#: include/freshports.php:2498
 msgid "Graphs"
 msgstr "Графики"
 
-#: include/freshports.php:2471
+#: include/freshports.php:2499
 msgid "NEW Graphs (Javascript)"
 msgstr "НОВЫЕ графики (Javascript)"
 
-#: include/freshports.php:2607
+#: include/freshports.php:2635
 msgid "People watching this port, also watch:"
 msgstr "Люди, отслеживающие этот порт, также отслеживают:"
 
-#: include/freshports.php:2915
+#: include/freshports.php:2943
 msgid "Sorry, a database query failed. The error has been logged."
 msgstr ""
 
@@ -1769,7 +1782,7 @@ msgstr "дате добавления"
 msgid "Last updated"
 msgstr "последнему обновлению"
 
-#: rewrite/missing-category.php:64 www/search.php:1282
+#: rewrite/missing-category.php:64 www/search.php:1291
 msgid "Sort by:"
 msgstr "Сортировать по:"
 
@@ -2531,7 +2544,7 @@ msgstr ""
 "Вы можете отсортировать каждый столбец, щёлкнув по заголовку. Например, "
 "щёлкните по <strong>Категория</strong>, чтобы отсортировать по категории."
 
-#: www/categories.php:117 www/categories.php:119 www/search.php:1284
+#: www/categories.php:117 www/categories.php:119 www/search.php:1293
 msgid "Category"
 msgstr "Категория"
 
@@ -2544,11 +2557,11 @@ msgstr "Количество"
 msgid "Description"
 msgstr "Описание"
 
-#: www/categories.php:141 www/categories.php:143 www/search.php:1285
+#: www/categories.php:141 www/categories.php:143 www/search.php:1294
 msgid "Last Update"
 msgstr "Последнее обновление"
 
-#: www/categories.php:182 www/committer-opt-in.php:169
+#: www/categories.php:182 www/committer-opt-in.php:172
 #: www/report-subscriptions.php:261
 msgid "update"
 msgstr "обновить"
@@ -2691,8 +2704,8 @@ msgstr ""
 "Эта страница позволяет вам обслуживать категорию, если у вас есть на это "
 "разрешение."
 
-#: www/category-maintenance.php:111 www/watch-list.php:119
-#: www/watch-list.php:126 www/watch-list.php:133
+#: www/category-maintenance.php:111 www/watch-list.php:127
+#: www/watch-list.php:134 www/watch-list.php:141
 msgid "Update"
 msgstr "Обновить"
 
@@ -2786,15 +2799,15 @@ msgstr "Не удалось установить соединение с баз�
 msgid "nothing supplied, nothing found!"
 msgstr "ничего не передано, ничего не найдено!"
 
-#: www/committer-opt-in.php:32 www/committer-opt-in.php:95
+#: www/committer-opt-in.php:35 www/committer-opt-in.php:98
 msgid "Committer opt-in"
 msgstr "Подписка для коммиттеров"
 
-#: www/committer-opt-in.php:55
+#: www/committer-opt-in.php:58
 msgid "please enter just your login, not your email address"
 msgstr "пожалуйста, введите только ваш логин, а не адрес электронной почты"
 
-#: www/committer-opt-in.php:103
+#: www/committer-opt-in.php:106
 msgid ""
 "This page only works if you are logged in and using a @FreeBSD.org email "
 "address."
@@ -2802,7 +2815,7 @@ msgstr ""
 "Эта страница работает только в том случае, если вы вошли в систему и "
 "используете адрес электронной почты @FreeBSD.org."
 
-#: www/committer-opt-in.php:108
+#: www/committer-opt-in.php:111
 msgid ""
 "Mistakes happen.  And when they do, they are best corrected quickly.  To "
 "that end, FreshPorts provides an opt-in service for all FreeBSD committers.  "
@@ -2817,37 +2830,37 @@ msgstr ""
 "закоммиченного вами. В прошлом такие проблемы были связаны с синтаксическими "
 "ошибками в Makefile."
 
-#: www/committer-opt-in.php:112
+#: www/committer-opt-in.php:115
 msgid ""
 "One committer referred to this service as an automated nagging mentor..."
 msgstr ""
 "Один коммиттер назвал эту услугу автоматическим ворчливым наставником..."
 
-#: www/committer-opt-in.php:123
+#: www/committer-opt-in.php:126
 msgid "Your opt-in status"
 msgstr "Статус вашей подписки"
 
-#: www/committer-opt-in.php:147
+#: www/committer-opt-in.php:150
 msgid "You are: subscribed"
 msgstr "Вы: подписаны"
 
-#: www/committer-opt-in.php:151
+#: www/committer-opt-in.php:154
 msgid "You are: not subscribed"
 msgstr "Вы: не подписаны"
 
-#: www/committer-opt-in.php:164
+#: www/committer-opt-in.php:167
 msgid "your freefall login:"
 msgstr "ваш логин на freefall:"
 
-#: www/committer-opt-in.php:170
+#: www/committer-opt-in.php:173
 msgid "unsubscribe"
 msgstr "отписаться"
 
-#: www/committer-opt-in.php:174
+#: www/committer-opt-in.php:177
 msgid "subscribe"
 msgstr "подписаться"
 
-#: www/committer-opt-in.php:182
+#: www/committer-opt-in.php:185
 msgid "Please do not include @FreeBSD.org in your login name."
 msgstr "Пожалуйста, не включайте @FreeBSD.org в ваше имя для входа."
 
@@ -2960,7 +2973,7 @@ msgstr ""
 "Произошли некоторые ошибки, которые необходимо исправить, прежде чем ваша "
 "учётная запись может быть создана."
 
-#: www/customize.php:185 www/delete-account.php:105 www/login.php:182
+#: www/customize.php:185 www/delete-account.php:114 www/login.php:182
 #: www/new-user.php:207 www/password-reset-via-token.php:123
 msgid "If you need help, please email postmaster@."
 msgstr "Если вам нужна помощь, пожалуйста, напишите на postmaster@."
@@ -2998,72 +3011,72 @@ msgstr "За эту дату коммитов не найдено"
 msgid "Latest commits"
 msgstr "Последние коммиты"
 
-#: www/date.php:211 www/date.php:237 www/search.php:1408
+#: www/date.php:211 www/date.php:237 www/search.php:1417
 #, php-format
 msgid "Number of commits: %d"
 msgstr "Количество коммитов: %d"
 
-#: www/delete-account.php:59
+#: www/delete-account.php:68
 msgid "I really tried to delete your account. I failed. Sorry."
 msgstr ""
 "Я действительно пытался удалить вашу учётную запись. У меня не вышло. "
 "Извините."
 
-#: www/delete-account.php:66
+#: www/delete-account.php:75
 msgid "I could not delete that account. Sorry."
 msgstr "Я не смог удалить эту учётную запись. Извините."
 
-#: www/delete-account.php:70
+#: www/delete-account.php:79
 msgid "The confirmation was not correct."
 msgstr "Подтверждение было неверным."
 
-#: www/delete-account.php:76
+#: www/delete-account.php:85
 msgid "Delete User Account"
 msgstr "Удалить учётную запись пользователя"
 
-#: www/delete-account.php:93
+#: www/delete-account.php:102
 msgid "Delete Failed!"
 msgstr "Удаление не удалось!"
 
-#: www/delete-account.php:101
+#: www/delete-account.php:110
 msgid "The delete failed."
 msgstr "Удаление не удалось."
 
-#: www/delete-account.php:123
+#: www/delete-account.php:132
 msgid "Delete account"
 msgstr "Удалить учётную запись"
 
-#: www/delete-account.php:131
+#: www/delete-account.php:140
 msgid "Your account has been deleted."
 msgstr "Ваша учётная запись была удалена."
 
-#: www/delete-account.php:132
+#: www/delete-account.php:141
 msgid "Please click <a href=\"/\">here</a> to return to the home page."
 msgstr ""
 "Пожалуйста, нажмите <a href=\"/\">здесь</a>, чтобы вернуться на главную "
 "страницу."
 
-#: www/delete-account.php:135 www/delete-account.php:152
+#: www/delete-account.php:144 www/delete-account.php:162
 msgid "Delete Account"
 msgstr "Удалить учётную запись"
 
-#: www/delete-account.php:135
+#: www/delete-account.php:144
 #, php-format
 msgid "To delete your account, please enter your account name and click on %s."
 msgstr ""
 "Чтобы удалить свою учётную запись, пожалуйста, введите имя учётной записи и "
 "нажмите %s."
 
-#: www/delete-account.php:144
+#: www/delete-account.php:154
 #, php-format
 msgid "The account name is: %s"
 msgstr "Имя учётной записи: %s"
 
-#: www/delete-account.php:145
+#: www/delete-account.php:155
 msgid "User Name:"
 msgstr "Имя пользователя:"
 
-#: www/delete-account.php:151
+#: www/delete-account.php:161
 msgid "There is no undo for this"
 msgstr "Это действие нельзя отменить"
 
@@ -3680,15 +3693,13 @@ msgstr ""
 
 #: www/faq.php:293
 msgid ""
-"Encoding Errors (not all of the commit message was ASCII): Some of the "
-"commit message may be altered because of character conversion problems. We "
-"display only UTF-8 and remove the offending characters. These errors may "
-"occur in the log message or elsewhere in the commit email."
+"Encoding Errors (some characters in this commit were removed): Some "
+"characters in this commit could not be stored, so FreshPorts removed them. "
+"The commit message, a name or a file name shown here may differ slightly "
+"from the original. For git commits, these are control characters, such as "
+"Ctrl-Z from pasted terminal output. For older CVS commits, they were "
+"characters lost when the commit email was converted."
 msgstr ""
-"Ошибки кодировки (не всё сообщение коммита было в ASCII): часть сообщения "
-"коммита может быть изменена из-за проблем с преобразованием символов. Мы "
-"отображаем только UTF-8 и удаляем проблемные символы. Эти ошибки могут "
-"возникать в сообщении журнала или в другом месте письма коммита."
 
 #: www/faq.php:296
 msgid ""
@@ -4261,11 +4272,11 @@ msgstr "Поле"
 msgid "Origin"
 msgstr "Происхождение"
 
-#: www/faq.php:573 www/search.php:1228
+#: www/faq.php:573 www/search.php:1237
 msgid "Port Name"
 msgstr "Имя порта"
 
-#: www/faq.php:574 www/search.php:1225
+#: www/faq.php:574 www/search.php:1234
 msgid "Package Name"
 msgstr "Имя пакета"
 
@@ -4273,31 +4284,31 @@ msgstr "Имя пакета"
 msgid "Latest Link"
 msgstr "Ссылка «latest»"
 
-#: www/faq.php:576 www/ports-conflicts.php:39 www/search.php:1221
+#: www/faq.php:576 www/ports-conflicts.php:39 www/search.php:1230
 msgid "Maintainer"
 msgstr "Сопровождающий"
 
-#: www/faq.php:577 www/search.php:1229
+#: www/faq.php:577 www/search.php:1238
 msgid "Short Description"
 msgstr "Краткое описание"
 
-#: www/faq.php:578 www/search.php:1220
+#: www/faq.php:578 www/search.php:1229
 msgid "Long Description"
 msgstr "Полное описание"
 
-#: www/faq.php:579 www/search.php:1214
+#: www/faq.php:579 www/search.php:1223
 msgid "Depends Build"
 msgstr "Зависимости для сборки"
 
-#: www/faq.php:580 www/search.php:1215
+#: www/faq.php:580 www/search.php:1224
 msgid "Depends Lib"
 msgstr "Зависимости библиотек"
 
-#: www/faq.php:581 www/search.php:1216
+#: www/faq.php:581 www/search.php:1225
 msgid "Depends Run"
 msgstr "Зависимости выполнения"
 
-#: www/faq.php:582 www/search.php:1224
+#: www/faq.php:582 www/search.php:1233
 msgid "Message ID"
 msgstr "Идентификатор сообщения"
 
@@ -5300,7 +5311,7 @@ msgstr ""
 "Итого получается %1$s страниц. По моему последнему подсчёту, это примерно "
 "%2$s%% веб-страниц на %3$s"
 
-#: www/how-big-is-it.php:372 www/search.php:1338
+#: www/how-big-is-it.php:372 www/search.php:1347
 msgid "Notes"
 msgstr "Примечания"
 
@@ -5863,7 +5874,7 @@ msgstr[0] "найден %1$d порт (%2$d основной, %3$d дополн�
 msgstr[1] "найдено %1$d порта (%2$d основных, %3$d дополнительных)"
 msgstr[2] "найдено %1$d портов (%2$d основных, %3$d дополнительных)"
 
-#: www/port-watch.php:199 www/watch.php:321
+#: www/port-watch.php:199 www/watch.php:325
 #, php-format
 msgid "%d port found"
 msgid_plural "%d ports found"
@@ -6255,7 +6266,7 @@ msgstr ""
 "Если 'Формат вывода' — 'Depends', то вы должны искать по 'Имени порта'. "
 "Пожалуйста, измените параметры и попробуйте снова."
 
-#: www/search.php:400
+#: www/search.php:403
 msgid ""
 "<b>NOTE</b>: Instead of using 'sounds like' as instructed, the system used "
 "'containing'.  See the notes above for why this is done."
@@ -6264,15 +6275,15 @@ msgstr ""
 "система использовала 'содержит'. См. примечания выше о том, почему это "
 "делается."
 
-#: www/search.php:720
+#: www/search.php:723
 msgid "Sorry, but you messed something up in your manually created query"
 msgstr "Извините, но вы что-то напутали в своём вручную созданном запросе"
 
-#: www/search.php:1003 www/search.php:1068
+#: www/search.php:1006 www/search.php:1071
 msgid "something went terribly wrong.  Sorry."
 msgstr "что-то пошло совсем не так. Извините."
 
-#: www/search.php:1102
+#: www/search.php:1107
 msgid ""
 "Please let postmaster@freshports.org know that the search log could not be "
 "opened.  This does not affect the search results."
@@ -6280,83 +6291,83 @@ msgstr ""
 "Пожалуйста, сообщите на postmaster@freshports.org, что журнал поиска не "
 "удалось открыть. Это не влияет на результаты поиска."
 
-#: www/search.php:1159 www/search.php:1384
+#: www/search.php:1168 www/search.php:1393
 msgid "No results found"
 msgstr "Результатов не найдено"
 
-#: www/search.php:1172
+#: www/search.php:1181
 msgid "Search FreshPorts using Google"
 msgstr "Искать FreshPorts с помощью Google"
 
-#: www/search.php:1201
+#: www/search.php:1210
 msgid "The FreshPorts Search"
 msgstr "Поиск FreshPorts"
 
-#: www/search.php:1208
+#: www/search.php:1217
 msgid "Author Email"
 msgstr "Электронная почта автора"
 
-#: www/search.php:1209
+#: www/search.php:1218
 msgid "Author Name"
 msgstr "Имя автора"
 
-#: www/search.php:1210
+#: www/search.php:1219
 msgid "Commit Message"
 msgstr "Сообщение коммита"
 
-#: www/search.php:1211
+#: www/search.php:1220
 msgid "Committer ID (email without @FreeBSD.org)"
 msgstr "Идентификатор коммиттера (почта без @FreeBSD.org)"
 
-#: www/search.php:1212
+#: www/search.php:1221
 msgid "Committer Email"
 msgstr "Электронная почта коммиттера"
 
-#: www/search.php:1213
+#: www/search.php:1222
 msgid "Committer Name"
 msgstr "Имя коммиттера"
 
-#: www/search.php:1217
+#: www/search.php:1226
 msgid "Depends Build/Lib/Run"
 msgstr "Зависимости сборки/библиотек/выполнения"
 
-#: www/search.php:1222
+#: www/search.php:1231
 msgid "Makefile (ports only)"
 msgstr "Makefile (только порты)"
 
-#: www/search.php:1230
+#: www/search.php:1239
 msgid "Under a pathname"
 msgstr "По пути"
 
-#: www/search.php:1235
+#: www/search.php:1244
 msgid "equal to"
 msgstr "равно"
 
-#: www/search.php:1236
+#: www/search.php:1245
 msgid "starting with"
 msgstr "начинается с"
 
-#: www/search.php:1237
+#: www/search.php:1246
 msgid "containing"
 msgstr "содержит"
 
-#: www/search.php:1238
+#: www/search.php:1247
 msgid "ending with"
 msgstr "заканчивается на"
 
-#: www/search.php:1239
+#: www/search.php:1248
 msgid "sounds like"
 msgstr "звучит как"
 
-#: www/search.php:1247
+#: www/search.php:1256
 msgid "results"
 msgstr "результаты"
 
-#: www/search.php:1258
+#: www/search.php:1267
 msgid "Search only this category:"
 msgstr "Искать только в этой категории:"
 
-#: www/search.php:1267
+#: www/search.php:1276
 msgid ""
 "The list of categories is not available - the cache file does not exist - "
 "This should never happen."
@@ -6364,55 +6375,55 @@ msgstr ""
 "Список категорий недоступен — файл кэша не существует — этого никогда не "
 "должно происходить."
 
-#: www/search.php:1276
+#: www/search.php:1285
 msgid "Include deleted ports"
 msgstr "Включать удалённые порты"
 
-#: www/search.php:1279
+#: www/search.php:1288
 msgid "Case sensitive search"
 msgstr "Поиск с учётом регистра"
 
-#: www/search.php:1283
+#: www/search.php:1292
 msgid "Port"
 msgstr "Порт"
 
-#: www/search.php:1289
+#: www/search.php:1298
 msgid "ascending"
 msgstr "по возрастанию"
 
-#: www/search.php:1290
+#: www/search.php:1299
 msgid "descending"
 msgstr "по убыванию"
 
-#: www/search.php:1298
+#: www/search.php:1307
 msgid "Include /src tree"
 msgstr "Включать дерево /src"
 
-#: www/search.php:1302
+#: www/search.php:1311
 msgid "<b>Output format</b>:"
 msgstr "<b>Формат вывода</b>:"
 
-#: www/search.php:1304
+#: www/search.php:1313
 msgid "Plain Text"
 msgstr "Простой текст"
 
-#: www/search.php:1305
+#: www/search.php:1314
 msgid "Depends (only works with <b>Port Name</b>)"
 msgstr "Depends (работает только с <b>Именем порта</b>)"
 
-#: www/search.php:1308
+#: www/search.php:1317
 msgid "Maximum Effort"
 msgstr "Максимальные усилия"
 
-#: www/search.php:1311
+#: www/search.php:1320
 msgid "Minimal output"
 msgstr "Минимальный вывод"
 
-#: www/search.php:1316
+#: www/search.php:1325
 msgid "<b>Branch</b>:"
 msgstr "<b>Ветка</b>:"
 
-#: www/search.php:1340
+#: www/search.php:1349
 msgid ""
 "Case sensitivity is ignored for \"sounds like\" and output is ordered by the "
 "soundex."
@@ -6420,15 +6431,15 @@ msgstr ""
 "Учёт регистра игнорируется для «звучит как», а вывод упорядочивается по "
 "soundex."
 
-#: www/search.php:1341
+#: www/search.php:1350
 msgid "When searching on 'Message ID', the type of match is ignored."
 msgstr "При поиске по «Идентификатору сообщения» тип совпадения игнорируется."
 
-#: www/search.php:1342
+#: www/search.php:1351
 msgid "When searching on 'Commit Message' only 'containing' is used."
 msgstr "При поиске по «Сообщению коммита» используется только «содержит»."
 
-#: www/search.php:1343
+#: www/search.php:1352
 msgid ""
 "When searching by 'Under a pathname', your path must start with something "
 "like /ports/, /doc/, or /src/. All commits under that point will be "
@@ -6438,7 +6449,7 @@ msgstr ""
 "doc/ или /src/. Будут возвращены все коммиты под этой точкой. Выбранный тип "
 "совпадения игнорируется и по умолчанию используется «Начинается с»."
 
-#: www/search.php:1344
+#: www/search.php:1353
 msgid ""
 "Searching for 'sounds like' is only valid for Author Email, Author Name, "
 "Committer Email, Committer Name, Maintainer, Package Name, and Port Name - "
@@ -6449,19 +6460,19 @@ msgstr ""
 "сопровождающего, имени пакета и имени порта — но я не уверен, что он "
 "правильно проиндексирован. Спросите об этом Дэна."
 
-#: www/search.php:1352
+#: www/search.php:1361
 msgid "Special searches:"
 msgstr "Специальные поиски:"
 
-#: www/search.php:1363
+#: www/search.php:1372
 msgid "Ports I Maintain"
 msgstr "Порты, которые я сопровождаю"
 
-#: www/search.php:1388
+#: www/search.php:1397
 msgid "See the suggestions at the top of this page."
 msgstr "См. предложения в верхней части этой страницы."
 
-#: www/search.php:1425
+#: www/search.php:1434
 #, php-format
 msgid "Number of ports: %d"
 msgstr "Количество портов: %d"
@@ -6599,7 +6610,7 @@ msgstr ""
 "Имена списков отслеживания должны содержать только A..Z, a..z или 0..9."
 
 #: www/watch-list-maintenance.php:70 www/watch-list-maintenance.php:315
-#: www/watch-list.php:90 www/watch-list.php:102
+#: www/watch-list.php:98 www/watch-list.php:110
 msgid "Watch list maintenance"
 msgstr "Обслуживание списка отслеживания"
 
@@ -6824,30 +6835,30 @@ msgstr ""
 "нажимаете <b>%1$s</b>, вы должны ввести <b>%1$s</b> в поле выше, чтобы "
 "действие было выполнено). Это чувствительно к регистру."
 
-#: www/watch-list.php:177
+#: www/watch-list.php:185
 msgid "Please select the watch lists which should contain this port:"
 msgstr ""
 "Пожалуйста, выберите списки отслеживания, которые должны содержать этот порт:"
 
-#: www/watch-list.php:201
+#: www/watch-list.php:209
 msgid "NOTES"
 msgstr "ПРИМЕЧАНИЯ"
 
-#: www/watch-list.php:203
+#: www/watch-list.php:211
 msgid "'+' indicates that the port is on this watch list."
 msgstr "«+» обозначает, что порт находится в этом списке отслеживания."
 
-#: www/watch-list.php:204
+#: www/watch-list.php:212
 msgid "'*' indicates a default watch list."
 msgstr "«*» обозначает список отслеживания по умолчанию."
 
-#: www/watch-list.php:208
+#: www/watch-list.php:216
 msgid ""
 "the watch lists which are selected are those upon which the port appears"
 msgstr ""
 "выбранными являются те списки отслеживания, в которых присутствует порт"
 
-#: www/watch-list.php:212
+#: www/watch-list.php:220
 #, fuzzy
 msgid ""
 "the watch lists which are selected are your default watch lists, and any "
@@ -6950,11 +6961,11 @@ msgstr ""
 "Просмотреть только отслеживаемые порты с записями в <code>/usr/ports/"
 "UPDATING</code>"
 
-#: www/watch.php:323
+#: www/watch.php:327
 msgid "no ports found"
 msgstr "порты не найдены"
 
-#: www/watch.php:334
+#: www/watch.php:338
 msgid ""
 "(on your watch list, but only showing those with entries in <code>/usr/ports/"
 "UPDATING</code>)"
@@ -6962,7 +6973,7 @@ msgstr ""
 "(в вашем списке отслеживания, но показаны только те, у которых есть записи в "
 "<code>/usr/ports/UPDATING</code>)"
 
-#: www/watch.php:401
+#: www/watch.php:405
 #, php-format
 msgid "(on your watch list, but only showing %d)"
 msgid_plural "(on your watch list, but only showing %d)"
@@ -6985,6 +6996,17 @@ msgid ""
 msgstr ""
 "Если вы не получите это письмо, пожалуйста, попробуйте войти, и у вас будет "
 "возможность повторно отправить уведомление."
+
+#~ msgid ""
+#~ "Encoding Errors (not all of the commit message was ASCII): Some of the "
+#~ "commit message may be altered because of character conversion problems. "
+#~ "We display only UTF-8 and remove the offending characters. These errors "
+#~ "may occur in the log message or elsewhere in the commit email."
+#~ msgstr ""
+#~ "Ошибки кодировки (не всё сообщение коммита было в ASCII): часть сообщения "
+#~ "коммита может быть изменена из-за проблем с преобразованием символов. Мы "
+#~ "отображаем только UTF-8 и удаляем проблемные символы. Эти ошибки могут "
+#~ "возникать в сообщении журнала или в другом месте письма коммита."
 
 #~ msgid "Watch categories"
 #~ msgstr "Отслеживаемые категории"

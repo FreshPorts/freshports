@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: freshports\n"
 "Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
-"POT-Creation-Date: 2026-11-14 02:18+0000\n"
+"POT-Creation-Date: 2026-11-16 23:55+0000\n"
 "PO-Revision-Date: 2026-11-04 18:39+0800\n"
 "Last-Translator: ykla <yklaxds@gmail.com>\n"
 "Language-Team: ykla <yklaxds@gmail.com>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 
 #: classes/display_commit.php:209 classes/port-display.php:1217
-#: include/freshports.php:1979
+#: include/freshports.php:2007
 msgid "Author:"
 msgstr "作者："
 
@@ -395,7 +395,7 @@ msgstr "此 Port 没有对应的软件包：%s"
 
 #: classes/port-display.php:1578 classes/port-display.php:1923
 #: classes/port-display.php:2160 classes/port-display.php:2194
-#: include/freshports.php:1678
+#: include/freshports.php:1706
 #, php-format
 msgid "Expand this list (%d items)"
 msgstr "展开此列表（%d 项）"
@@ -404,7 +404,7 @@ msgstr "展开此列表（%d 项）"
 #: classes/port-display.php:1925 classes/port-display.php:1933
 #: classes/port-display.php:2044 classes/port-display.php:2059
 #: classes/port-display.php:2167 classes/port-display.php:2197
-#: classes/port-display.php:2207 include/freshports.php:1688
+#: classes/port-display.php:2207 include/freshports.php:1716
 msgid "Collapse this list."
 msgstr "收起此列表。"
 
@@ -790,8 +790,8 @@ msgstr "升序"
 msgid "Descending Order"
 msgstr "降序"
 
-#: include/freshports.php:571 www/package.php:53 www/search.php:1146
-#: www/search.php:1294
+#: include/freshports.php:571 www/package.php:53 www/search.php:1151
+#: www/search.php:1303
 msgid "Search"
 msgstr "搜索"
 
@@ -864,227 +864,239 @@ msgstr "提交详情"
 msgid "FreshPorts commit message"
 msgstr "FreshPorts 提交消息"
 
-#: include/freshports.php:742
+#: include/freshports.php:746
 msgid "Click to remove this from your default watch list[s]"
 msgstr "点击将此 Port 从您的默认关注列表中移除"
 
-#: include/freshports.php:754
-msgid "Encoding Errors (not all of the commit message was ASCII)"
+#. TRANSLATORS: alt text and tooltip of the icon shown next to such a commit
+#: include/freshports.php:765
+#, fuzzy
+msgid "Encoding Errors (some characters in this commit were removed)"
 msgstr "编码错误（提交消息并非全部为 ASCII）"
 
-#: include/freshports.php:762
+#: include/freshports.php:774
 msgid "View this port on Repology."
 msgstr "在 Repology 上查看此 Port。"
 
-#: include/freshports.php:766
+#: include/freshports.php:778
 msgid "This port version is marked as vulnerable."
 msgstr "此 Port 版本被标记为存在漏洞。"
 
-#: include/freshports.php:770
+#: include/freshports.php:782
 msgid "An older version of this port was marked as vulnerable."
 msgstr "此 Port 的较旧版本曾被标记为存在漏洞。"
 
-#: include/freshports.php:774
+#: include/freshports.php:786
 msgid "View revision"
 msgstr "查看修订版"
 
-#: include/freshports.php:774
+#: include/freshports.php:786
 msgid "view revision"
 msgstr "查看修订版"
 
-#: include/freshports.php:778
+#: include/freshports.php:790
 msgid "Annotate / Blame"
 msgstr "注解 / 追溯"
 
-#: include/freshports.php:782
+#: include/freshports.php:794
 msgid "View diff"
 msgstr "查看差异"
 
-#: include/freshports.php:782
+#: include/freshports.php:794
 msgid "view diff"
 msgstr "查看差异"
 
-#: include/freshports.php:847
+#: include/freshports.php:861
+#, fuzzy
+msgid "Click to add this to this watch list"
+msgstr "点击将此 Port 添加到您的默认关注列表"
+
+#: include/freshports.php:870
+#, fuzzy
+msgid "Click to remove this from this watch list"
+msgstr "点击将此 Port 从您的默认关注列表中移除"
+
+#: include/freshports.php:875
 #, php-format
 msgid "on %d watch list"
 msgid_plural "on %d watch lists"
 msgstr[0] "被 %d 个关注列表收录"
 
-#: include/freshports.php:869
+#: include/freshports.php:897
 msgid "Commit Flagged"
 msgstr "提交已标记"
 
-#: include/freshports.php:874
+#: include/freshports.php:902
 msgid "Commit Not Flagged"
 msgstr "提交未标记"
 
-#: include/freshports.php:943
+#: include/freshports.php:971
 msgid "View all ports for this commit"
 msgstr "查看本次提交的全部 Port"
 
-#: include/freshports.php:944
+#: include/freshports.php:972
 #, php-format
 msgid ""
 "(Only the first %1$d of %2$d items in this commit are shown above. %3$s)"
 msgstr "（上面仅显示本次提交全部 %2$d 个条目中的前 %1$d 个。%3$s）"
 
-#: include/freshports.php:950
+#: include/freshports.php:978
 msgid "View all of this commit message"
 msgstr "查看完整提交消息"
 
-#: include/freshports.php:951
+#: include/freshports.php:979
 #, php-format
 msgid "(Only the first %1$d lines of the commit message are shown above %2$s)"
 msgstr "（上面仅显示提交消息的前 %1$d 行，%2$s）"
 
-#: include/freshports.php:989 include/freshports.php:1045
+#: include/freshports.php:1017 include/freshports.php:1073
 msgid "committed by this person"
 msgstr "由此人提交"
 
-#: include/freshports.php:1028
+#: include/freshports.php:1056
 msgid "authored by this person"
 msgstr "由此人编写"
 
-#: include/freshports.php:1118
+#: include/freshports.php:1146
 msgid "As an Amazon Associate I earn from qualifying purchases."
 msgstr "作为亚马逊联盟成员，我将从符合条件的购物中获得佣金。"
 
-#: include/freshports.php:1118
+#: include/freshports.php:1146
 #, php-format
 msgid "Want a good read? Try %s"
 msgstr "想读本好书？试试 %s"
 
-#: include/freshports.php:1119
+#: include/freshports.php:1147
 #, php-format
 msgid "Want a good monitor light? See my <a href=\"%s\">photos</a>"
 msgstr "想要一盏好的显示器挂灯？看看我的<a href=\"%s\">照片</a>"
 
-#: include/freshports.php:1123
+#: include/freshports.php:1151
 msgid "All times are UTC"
 msgstr "所有时间均为 UTC"
 
-#: include/freshports.php:1136
+#: include/freshports.php:1164
 #, php-format
 msgid "The git branch used by this host is %s"
 msgstr "本主机使用的 Git 分支为 %s"
 
-#: include/freshports.php:1137
+#: include/freshports.php:1165
 #, php-format
 msgid "The database is %s"
 msgstr "数据库为 %s"
 
-#: include/freshports.php:1138
+#: include/freshports.php:1166
 #, php-format
 msgid "The db server is %s"
 msgstr "数据库服务器为 %s"
 
-#: include/freshports.php:1145
+#: include/freshports.php:1173
 msgid "I remember"
 msgstr "缅怀"
 
-#: include/freshports.php:1150 include/freshports.php:2389
+#: include/freshports.php:1178 include/freshports.php:2417
 msgid "Blog"
 msgstr "博客"
 
-#: include/freshports.php:1150
+#: include/freshports.php:1178
 msgid "Follow us"
 msgstr "关注我们"
 
-#: include/freshports.php:1150
+#: include/freshports.php:1178
 msgid "Status page"
 msgstr "状态页面"
 
-#: include/freshports.php:1171 include/freshports.php:1172
+#: include/freshports.php:1199 include/freshports.php:1200
 msgid "Menu"
 msgstr "菜单"
 
-#: include/freshports.php:1172
+#: include/freshports.php:1200
 msgid "Close"
 msgstr "关闭"
 
-#: include/freshports.php:1172
+#: include/freshports.php:1200
 msgid "Close the menu"
 msgstr "关闭菜单"
 
-#: include/freshports.php:1172
+#: include/freshports.php:1200
 msgid "Open the menu"
 msgstr "打开菜单"
 
-#: include/freshports.php:1503
+#: include/freshports.php:1531
 #, php-format
 msgid "port deleted on %s"
 msgstr "Port 已于 %s 删除"
 
-#: include/freshports.php:1506
+#: include/freshports.php:1534
 #, php-format
 msgid "resurrected on %s"
 msgstr "已于 %s 复活"
 
-#: include/freshports.php:1512
+#: include/freshports.php:1540
 #, php-format
 msgid "port moved to %1$s on %2$s"
 msgstr "Port 已于 %2$s 移至 %1$s"
 
-#: include/freshports.php:1514
+#: include/freshports.php:1542
 #, php-format
 msgid "port moved here from %1$s on %2$s"
 msgstr "Port 已于 %2$s 从 %1$s 迁移至此"
 
-#: include/freshports.php:1520
+#: include/freshports.php:1548
 msgid "REASON:"
 msgstr "原因："
 
-#: include/freshports.php:1549
+#: include/freshports.php:1577
 msgid "Perhaps you meant one of these:"
 msgstr "也许您指的是以下其中一项："
 
-#: include/freshports.php:1563
+#: include/freshports.php:1591
 msgid "All rights reserved."
 msgstr "保留所有权利。"
 
-#: include/freshports.php:1563
+#: include/freshports.php:1591
 msgid "Copyright"
 msgstr "版权"
 
-#: include/freshports.php:1563
+#: include/freshports.php:1591
 msgid "This material is copyrighted"
 msgstr "本材料受版权保护"
 
-#: include/freshports.php:1666
+#: include/freshports.php:1694
 msgid "Notes from UPDATING"
 msgstr "来自 UPDATING 的说明"
 
-#: include/freshports.php:1668
+#: include/freshports.php:1696
 #, php-format
 msgid "These upgrade notes are taken from %s"
 msgstr "这些升级说明摘自 %s"
 
-#: include/freshports.php:1711
+#: include/freshports.php:1739
 msgid ""
 "Commit History - (may be incomplete: for full details, see links to "
 "repositories near top of page)"
 msgstr "提交历史（可能不完整：完整详情请参见页面顶部附近的代码仓库链接）"
 
-#: include/freshports.php:1716
+#: include/freshports.php:1744
 #, php-format
 msgid ""
 "This is a slave port.  You may also want to view the commits to the master "
 "port: %s"
 msgstr "这是从属 Port。您可能还想查看主 Port 的提交：%s"
 
-#: include/freshports.php:1720
+#: include/freshports.php:1748
 msgid "Commit"
 msgstr "提交"
 
-#: include/freshports.php:1720
+#: include/freshports.php:1748
 msgid "Credits"
 msgstr "致谢"
 
-#: include/freshports.php:1720
+#: include/freshports.php:1748
 msgid "Log message"
 msgstr "日志消息"
 
-#: include/freshports.php:1765
+#: include/freshports.php:1793
 #, php-format
 msgid ""
 "<b>NOTE</b>: This slave port may no longer be vulnerable to issues shown "
@@ -1093,34 +1105,34 @@ msgstr ""
 "<b>注意</b>：此从属 Port 可能已不再受下方所示问题的影响，因为<a href=\"%s\">"
 "主 Port</a> 已更新。"
 
-#: include/freshports.php:1805 include/freshports.php:1806
+#: include/freshports.php:1833 include/freshports.php:1834
 #: www/sanity_test_failures.php:175 www/sanity_test_failures.php:176
 msgid "First Page"
 msgstr "首页"
 
-#: include/freshports.php:1807 include/freshports.php:1808
+#: include/freshports.php:1835 include/freshports.php:1836
 #: www/sanity_test_failures.php:177 www/sanity_test_failures.php:178
 msgid "Last Page"
 msgstr "末页"
 
-#: include/freshports.php:1832 rewrite/missing-non-port.php:161
+#: include/freshports.php:1860 rewrite/missing-non-port.php:161
 #: www/sanity_test_failures.php:185
 #, php-format
 msgid "Number of commits found: %d"
 msgstr "找到的提交数：%d"
 
-#: include/freshports.php:1841 rewrite/missing-non-port.php:171
-#: www/sanity_test_failures.php:189 www/search.php:1410 www/search.php:1427
+#: include/freshports.php:1869 rewrite/missing-non-port.php:171
+#: www/sanity_test_failures.php:189 www/search.php:1419 www/search.php:1436
 #, php-format
 msgid "(showing only %d on this page)"
 msgstr "（本页仅显示 %d 条）"
 
-#: include/freshports.php:2119
+#: include/freshports.php:2147
 msgid "Link to this section"
 msgstr "链接到本节"
 
 #. TRANSLATORS: keep the line breaks short, this is a plain text email
-#: include/freshports.php:2190
+#: include/freshports.php:2218
 #, php-format
 msgid ""
 "Someone, perhaps you, supplied your email address as their\n"
@@ -1133,318 +1145,318 @@ msgstr ""
 "给您造成困扰，请将其转发至 %s\n"
 "我们会为您处理。"
 
-#: include/freshports.php:2195
+#: include/freshports.php:2223
 #, php-format
 msgid "Your token is: %s"
 msgstr "您的令牌是：%s"
 
-#: include/freshports.php:2197
+#: include/freshports.php:2225
 msgid "Please point your browser at"
 msgstr "请将浏览器指向"
 
-#: include/freshports.php:2199
+#: include/freshports.php:2227
 #, php-format
 msgid "The request came from %s"
 msgstr "请求来自 %s"
 
-#: include/freshports.php:2216
+#: include/freshports.php:2244
 #, php-format
 msgid "%s - user registration"
 msgstr "%s——用户注册"
 
-#: include/freshports.php:2287
+#: include/freshports.php:2315
 msgid "You are connected over IPv6"
 msgstr "您已接入 IPv6"
 
-#: include/freshports.php:2300
+#: include/freshports.php:2328
 #, php-format
 msgid "Valid %1$s, %2$s, and %3$s."
 msgstr "%1$s、%2$s 和 %3$s 均有效。"
 
-#: include/freshports.php:2301
+#: include/freshports.php:2329
 msgid "We like to keep our HTML valid"
 msgstr "我们希望保持 HTML 有效"
 
-#: include/freshports.php:2302
+#: include/freshports.php:2330
 msgid "We like to have valid CSS"
 msgstr "我们希望 CSS 有效"
 
-#: include/freshports.php:2303
+#: include/freshports.php:2331
 msgid "Valid RSS is good too"
 msgstr "有效的 RSS 也很好"
 
-#: include/freshports.php:2334 include/login.php:15 www/login.php:149
+#: include/freshports.php:2362 include/login.php:15 www/login.php:149
 #: www/login.php:232
 msgid "Login"
 msgstr "登录"
 
-#: include/freshports.php:2342
+#: include/freshports.php:2370
 #, php-format
 msgid "Logged in as %s"
 msgstr "已登录为 %s"
 
-#: include/freshports.php:2346
+#: include/freshports.php:2374
 msgid "your email is <a href=\"/bouncing.php\">bouncing</a>"
 msgstr "您的邮箱正在<a href=\"/bouncing.php\">退信</a>"
 
-#: include/freshports.php:2349
+#: include/freshports.php:2377
 msgid "Your Account"
 msgstr "您的账户"
 
-#: include/freshports.php:2349
+#: include/freshports.php:2377
 msgid "Your account"
 msgstr "您的账户"
 
-#: include/freshports.php:2352
+#: include/freshports.php:2380
 msgid "Committer Opt-in"
 msgstr "提交者自愿加入"
 
-#: include/freshports.php:2352
+#: include/freshports.php:2380
 msgid "Committers can receive reports of Sanity Test Failures"
 msgstr "提交者可以接收健全性测试的失败报告"
 
-#: include/freshports.php:2356
+#: include/freshports.php:2384
 msgid "Logout"
 msgstr "退出登录"
 
-#: include/freshports.php:2356
+#: include/freshports.php:2384
 msgid "Logout of the website"
 msgstr "退出网站登录"
 
-#: include/freshports.php:2357
+#: include/freshports.php:2385
 msgid "List of commits you have flagged"
 msgstr "您标记过的提交列表"
 
-#: include/freshports.php:2357
+#: include/freshports.php:2385
 msgid "My Flagged Commits"
 msgstr "我标记的提交"
 
-#: include/freshports.php:2359
+#: include/freshports.php:2387
 msgid "Login to the website"
 msgstr "登录网站"
 
-#: include/freshports.php:2359
+#: include/freshports.php:2387
 msgid "User Login"
 msgstr "用户登录"
 
-#: include/freshports.php:2360
+#: include/freshports.php:2388
 msgid "Create account"
 msgstr "创建账户"
 
-#: include/freshports.php:2360
+#: include/freshports.php:2388
 msgid "Create an account"
 msgstr "创建账户"
 
-#: include/freshports.php:2378
+#: include/freshports.php:2406
 msgid "This site"
 msgstr "本站"
 
-#: include/freshports.php:2382
+#: include/freshports.php:2410
 msgid "A bit of background on FreshPorts"
 msgstr "FreshPorts 背景简介"
 
-#: include/freshports.php:2382
+#: include/freshports.php:2410
 msgid "What is FreshPorts?"
 msgstr "FreshPorts 是什么？"
 
-#: include/freshports.php:2383 www/authors.php:26
+#: include/freshports.php:2411 www/authors.php:26
 msgid "About the authors"
 msgstr "关于作者"
 
-#: include/freshports.php:2383
+#: include/freshports.php:2411
 msgid "Who wrote this stuff?"
 msgstr "这些内容是谁写的？"
 
-#: include/freshports.php:2384
+#: include/freshports.php:2412
 msgid "Issues"
 msgstr "问题反馈"
 
-#: include/freshports.php:2384
+#: include/freshports.php:2412
 msgid "Report a website problem"
 msgstr "报告网站问题"
 
-#: include/freshports.php:2385 www/faq.php:32
+#: include/freshports.php:2413 www/faq.php:32
 msgid "FAQ"
 msgstr "常见问题"
 
-#: include/freshports.php:2385 www/faq.php:13
+#: include/freshports.php:2413 www/faq.php:13
 msgid "Frequently Asked Questions"
 msgstr "常见问题解答"
 
-#: include/freshports.php:2386 www/how-big-is-it.php:13
+#: include/freshports.php:2414 www/how-big-is-it.php:13
 msgid "How big is it?"
 msgstr "网站有多大？"
 
-#: include/freshports.php:2386
+#: include/freshports.php:2414
 msgid "How many pages are in this website?"
 msgstr "本站有多少个页面？"
 
-#: include/freshports.php:2387
+#: include/freshports.php:2415
 msgid "Are you a security researcher? Please read this."
 msgstr "您是安全研究人员吗？请阅读此文。"
 
-#: include/freshports.php:2387 www/security-policy.php:13
+#: include/freshports.php:2415 www/security-policy.php:13
 msgid "Security Policy"
 msgstr "安全政策"
 
-#: include/freshports.php:2388
+#: include/freshports.php:2416
 msgid "Our privacy statement"
 msgstr "我们的隐私声明"
 
-#: include/freshports.php:2388
+#: include/freshports.php:2416
 msgid "Privacy"
 msgstr "隐私"
 
-#: include/freshports.php:2389
+#: include/freshports.php:2417
 msgid "All the latest FreshPorts news"
 msgstr "FreshPorts 最新消息"
 
-#: include/freshports.php:2390 www/contact.php:13 www/contact.php:27
+#: include/freshports.php:2418 www/contact.php:13 www/contact.php:27
 msgid "Contact"
 msgstr "联系方式"
 
-#: include/freshports.php:2390
+#: include/freshports.php:2418
 msgid "Contact details"
 msgstr "详细联系方式"
 
-#: include/freshports.php:2400
+#: include/freshports.php:2428
 msgid "Latest Vulnerabilities"
 msgstr "最新漏洞"
 
-#: include/freshports.php:2406
+#: include/freshports.php:2434
 msgid "All vulnerabilities"
 msgstr "全部漏洞"
 
-#: include/freshports.php:2406
+#: include/freshports.php:2434
 msgid "modified, not new"
 msgstr "有修改，并非新增"
 
-#: include/freshports.php:2407
+#: include/freshports.php:2435
 msgid "Last processed:"
 msgstr "上次处理："
 
-#: include/freshports.php:2419 include/freshports.php:2449
+#: include/freshports.php:2447 include/freshports.php:2477
 msgid "Ports"
 msgstr "Port"
 
-#: include/freshports.php:2424
+#: include/freshports.php:2452
 msgid "FreshPorts Home page"
 msgstr "FreshPorts 主页"
 
-#: include/freshports.php:2424
+#: include/freshports.php:2452
 msgid "Home"
 msgstr "主页"
 
-#: include/freshports.php:2425 include/freshports.php:2447
+#: include/freshports.php:2453 include/freshports.php:2475
 #: www/categories.php:15
 msgid "Categories"
 msgstr "分类"
 
-#: include/freshports.php:2425
+#: include/freshports.php:2453
 msgid "List of all Port categories"
 msgstr "所有 Port 分类列表"
 
-#: include/freshports.php:2426
+#: include/freshports.php:2454
 msgid "All deleted ports"
 msgstr "全部已删除 Port"
 
-#: include/freshports.php:2426 www/ports-deleted.php:30
+#: include/freshports.php:2454 www/ports-deleted.php:30
 msgid "Deleted ports"
 msgstr "已删除 Port"
 
-#: include/freshports.php:2427 www/sanity_test_failures.php:37
+#: include/freshports.php:2455 www/sanity_test_failures.php:37
 #: www/sanity_test_failures.php:85
 msgid "Sanity Test Failures"
 msgstr "健全性测试失败"
 
-#: include/freshports.php:2427
+#: include/freshports.php:2455
 msgid "Things that didn't go quite right..."
 msgstr "那些不太顺利的事……"
 
-#: include/freshports.php:2428 www/backend/newsfeeds.php:21
+#: include/freshports.php:2456 www/backend/newsfeeds.php:21
 msgid "Newsfeeds"
 msgstr "新闻源"
 
-#: include/freshports.php:2428
+#: include/freshports.php:2456
 msgid "Newsfeeds for just about everything"
 msgstr "涵盖几乎所有内容的新闻源"
 
-#: include/freshports.php:2441 www/watch-list-maintenance.php:330
+#: include/freshports.php:2469 www/watch-list-maintenance.php:330
 #: www/watch-list-maintenance.php:403
 msgid "Watch Lists"
 msgstr "关注列表"
 
-#: include/freshports.php:2446 www/pkg_upload.php:100 www/pkg_upload.php:123
+#: include/freshports.php:2474 www/pkg_upload.php:100 www/pkg_upload.php:123
 #: www/pkg_upload.php:146
 msgid "Upload"
 msgstr "上传"
 
-#: include/freshports.php:2446
+#: include/freshports.php:2474
 msgid ""
 "Upload a file containing a list of ports you want to add to your watch list"
 msgstr "上传文件，内含您想加入关注列表的 Port 列表"
 
-#: include/freshports.php:2447
+#: include/freshports.php:2475
 msgid "Search through categories for ports to add to your watch list"
 msgstr "按分类搜索要加入关注列表的 Port"
 
-#: include/freshports.php:2448
+#: include/freshports.php:2476
 msgid "Maintain"
 msgstr "维护"
 
-#: include/freshports.php:2448
+#: include/freshports.php:2476
 msgid "Maintain your watch list[s]"
 msgstr "维护关注列表"
 
-#: include/freshports.php:2449
+#: include/freshports.php:2477
 msgid "Your list of watched ports"
 msgstr "您关注的 Port 列表"
 
-#: include/freshports.php:2450
+#: include/freshports.php:2478
 msgid "A list of news feeds for your watched lists"
 msgstr "关注列表的新闻源列表"
 
-#: include/freshports.php:2450
+#: include/freshports.php:2478
 msgid "Personal Newsfeeds"
 msgstr "个人新闻源"
 
-#: include/freshports.php:2451
+#: include/freshports.php:2479
 msgid "Maintain your list of subscriptions"
 msgstr "维护订阅列表"
 
-#: include/freshports.php:2451
+#: include/freshports.php:2479
 msgid "Report Subscriptions"
 msgstr "报告订阅"
 
-#: include/freshports.php:2452
+#: include/freshports.php:2480
 msgid "ABI Package Subscriptions"
 msgstr "ABI 软件包订阅"
 
-#: include/freshports.php:2452
+#: include/freshports.php:2480
 msgid "Maintain your ABI package subscriptions"
 msgstr "维护 ABI 软件包订阅"
 
-#: include/freshports.php:2465
+#: include/freshports.php:2493
 msgid "Statistics"
 msgstr "统计"
 
-#: include/freshports.php:2470 include/freshports.php:2471
+#: include/freshports.php:2498 include/freshports.php:2499
 msgid "Everyone loves statistics!"
 msgstr "人人都爱统计！"
 
-#: include/freshports.php:2470
+#: include/freshports.php:2498
 msgid "Graphs"
 msgstr "图表"
 
-#: include/freshports.php:2471
+#: include/freshports.php:2499
 msgid "NEW Graphs (Javascript)"
 msgstr "新图表（JavaScript）"
 
-#: include/freshports.php:2607
+#: include/freshports.php:2635
 msgid "People watching this port, also watch:"
 msgstr "关注此 Port 的人还关注："
 
-#: include/freshports.php:2915
+#: include/freshports.php:2943
 msgid "Sorry, a database query failed. The error has been logged."
 msgstr ""
 
@@ -1708,7 +1720,7 @@ msgstr "添加日期"
 msgid "Last updated"
 msgstr "最后更新"
 
-#: rewrite/missing-category.php:64 www/search.php:1282
+#: rewrite/missing-category.php:64 www/search.php:1291
 msgid "Sort by:"
 msgstr "排序方式："
 
@@ -2420,7 +2432,7 @@ msgid ""
 msgstr ""
 "点击列标题即可对相应列排序，例如点击 <strong>分类</strong> 即按分类排序。"
 
-#: www/categories.php:117 www/categories.php:119 www/search.php:1284
+#: www/categories.php:117 www/categories.php:119 www/search.php:1293
 msgid "Category"
 msgstr "分类"
 
@@ -2433,11 +2445,11 @@ msgstr "数量"
 msgid "Description"
 msgstr "描述"
 
-#: www/categories.php:141 www/categories.php:143 www/search.php:1285
+#: www/categories.php:141 www/categories.php:143 www/search.php:1294
 msgid "Last Update"
 msgstr "最后更新"
 
-#: www/categories.php:182 www/committer-opt-in.php:169
+#: www/categories.php:182 www/committer-opt-in.php:172
 #: www/report-subscriptions.php:261
 msgid "update"
 msgstr "更新"
@@ -2572,8 +2584,8 @@ msgid ""
 "This page allows you to maintain a category, if you have permission to do so."
 msgstr "如果您有相应权限，即可通过本页维护分类。"
 
-#: www/category-maintenance.php:111 www/watch-list.php:119
-#: www/watch-list.php:126 www/watch-list.php:133
+#: www/category-maintenance.php:111 www/watch-list.php:127
+#: www/watch-list.php:134 www/watch-list.php:141
 msgid "Update"
 msgstr "更新"
 
@@ -2666,21 +2678,21 @@ msgstr "无法建立数据库连接！"
 msgid "nothing supplied, nothing found!"
 msgstr "没提供任何内容，也就什么都找不到！"
 
-#: www/committer-opt-in.php:32 www/committer-opt-in.php:95
+#: www/committer-opt-in.php:35 www/committer-opt-in.php:98
 msgid "Committer opt-in"
 msgstr "提交者自愿加入"
 
-#: www/committer-opt-in.php:55
+#: www/committer-opt-in.php:58
 msgid "please enter just your login, not your email address"
 msgstr "请只输入您的登录名，不要输入邮箱地址"
 
-#: www/committer-opt-in.php:103
+#: www/committer-opt-in.php:106
 msgid ""
 "This page only works if you are logged in and using a @FreeBSD.org email "
 "address."
 msgstr "本页仅在您已登录并使用 @FreeBSD.org 邮箱地址时才能使用。"
 
-#: www/committer-opt-in.php:108
+#: www/committer-opt-in.php:111
 msgid ""
 "Mistakes happen.  And when they do, they are best corrected quickly.  To "
 "that end, FreshPorts provides an opt-in service for all FreeBSD committers.  "
@@ -2693,36 +2705,36 @@ msgstr ""
 "Port 变更时一旦遇到问题，就会通知您。以往这类问题多与 Makefile 中的语法错误有"
 "关。"
 
-#: www/committer-opt-in.php:112
+#: www/committer-opt-in.php:115
 msgid ""
 "One committer referred to this service as an automated nagging mentor..."
 msgstr "有位提交者将这项服务称为“自动唠叨导师”……"
 
-#: www/committer-opt-in.php:123
+#: www/committer-opt-in.php:126
 msgid "Your opt-in status"
 msgstr "您的自愿加入状态"
 
-#: www/committer-opt-in.php:147
+#: www/committer-opt-in.php:150
 msgid "You are: subscribed"
 msgstr "您的状态：已订阅"
 
-#: www/committer-opt-in.php:151
+#: www/committer-opt-in.php:154
 msgid "You are: not subscribed"
 msgstr "您的状态：未订阅"
 
-#: www/committer-opt-in.php:164
+#: www/committer-opt-in.php:167
 msgid "your freefall login:"
 msgstr "您的 freefall 登录名："
 
-#: www/committer-opt-in.php:170
+#: www/committer-opt-in.php:173
 msgid "unsubscribe"
 msgstr "取消订阅"
 
-#: www/committer-opt-in.php:174
+#: www/committer-opt-in.php:177
 msgid "subscribe"
 msgstr "订阅"
 
-#: www/committer-opt-in.php:182
+#: www/committer-opt-in.php:185
 msgid "Please do not include @FreeBSD.org in your login name."
 msgstr "请不要在登录名中包含 @FreeBSD.org。"
 
@@ -2824,7 +2836,7 @@ msgid ""
 "created."
 msgstr "出现了一些错误，必须先纠正，才能创建您的登录账户。"
 
-#: www/customize.php:185 www/delete-account.php:105 www/login.php:182
+#: www/customize.php:185 www/delete-account.php:114 www/login.php:182
 #: www/new-user.php:207 www/password-reset-via-token.php:123
 msgid "If you need help, please email postmaster@."
 msgstr "如需帮助，请发送邮件至 postmaster@。"
@@ -2862,66 +2874,66 @@ msgstr "该日期没有找到提交"
 msgid "Latest commits"
 msgstr "最新提交"
 
-#: www/date.php:211 www/date.php:237 www/search.php:1408
+#: www/date.php:211 www/date.php:237 www/search.php:1417
 #, php-format
 msgid "Number of commits: %d"
 msgstr "提交数：%d"
 
-#: www/delete-account.php:59
+#: www/delete-account.php:68
 msgid "I really tried to delete your account. I failed. Sorry."
 msgstr "我真的试着删除您的账户了，但没成功。抱歉。"
 
-#: www/delete-account.php:66
+#: www/delete-account.php:75
 msgid "I could not delete that account. Sorry."
 msgstr "我没能删除那个账户。抱歉。"
 
-#: www/delete-account.php:70
+#: www/delete-account.php:79
 msgid "The confirmation was not correct."
 msgstr "确认信息不正确。"
 
-#: www/delete-account.php:76
+#: www/delete-account.php:85
 msgid "Delete User Account"
 msgstr "删除用户账户"
 
-#: www/delete-account.php:93
+#: www/delete-account.php:102
 msgid "Delete Failed!"
 msgstr "删除失败！"
 
-#: www/delete-account.php:101
+#: www/delete-account.php:110
 msgid "The delete failed."
 msgstr "删除失败。"
 
-#: www/delete-account.php:123
+#: www/delete-account.php:132
 msgid "Delete account"
 msgstr "删除账户"
 
-#: www/delete-account.php:131
+#: www/delete-account.php:140
 msgid "Your account has been deleted."
 msgstr "您的账户已经删除。"
 
-#: www/delete-account.php:132
+#: www/delete-account.php:141
 msgid "Please click <a href=\"/\">here</a> to return to the home page."
 msgstr "请点击<a href=\"/\">此处</a>返回主页。"
 
-#: www/delete-account.php:135 www/delete-account.php:152
+#: www/delete-account.php:144 www/delete-account.php:162
 msgid "Delete Account"
 msgstr "删除账户"
 
-#: www/delete-account.php:135
+#: www/delete-account.php:144
 #, php-format
 msgid "To delete your account, please enter your account name and click on %s."
 msgstr "要删除您的账户，请输入账户名并点击 %s。"
 
-#: www/delete-account.php:144
+#: www/delete-account.php:154
 #, php-format
 msgid "The account name is: %s"
 msgstr "账户名为：%s"
 
-#: www/delete-account.php:145
+#: www/delete-account.php:155
 msgid "User Name:"
 msgstr "用户名："
 
-#: www/delete-account.php:151
+#: www/delete-account.php:161
 msgid "There is no undo for this"
 msgstr "此操作无法撤销"
 
@@ -3479,14 +3491,13 @@ msgstr ""
 
 #: www/faq.php:293
 msgid ""
-"Encoding Errors (not all of the commit message was ASCII): Some of the "
-"commit message may be altered because of character conversion problems. We "
-"display only UTF-8 and remove the offending characters. These errors may "
-"occur in the log message or elsewhere in the commit email."
+"Encoding Errors (some characters in this commit were removed): Some "
+"characters in this commit could not be stored, so FreshPorts removed them. "
+"The commit message, a name or a file name shown here may differ slightly "
+"from the original. For git commits, these are control characters, such as "
+"Ctrl-Z from pasted terminal output. For older CVS commits, they were "
+"characters lost when the commit email was converted."
 msgstr ""
-"编码错误（提交消息并非全部为 ASCII）：由于字符转换问题，部分提交消息可能有所"
-"改动。我们只显示 UTF-8，并移除有问题的字符。这类错误可能出现在日志消息中，也"
-"可能出现在提交邮件的其他地方。"
 
 #: www/faq.php:296
 msgid ""
@@ -4006,11 +4017,11 @@ msgstr "字段"
 msgid "Origin"
 msgstr "来源"
 
-#: www/faq.php:573 www/search.php:1228
+#: www/faq.php:573 www/search.php:1237
 msgid "Port Name"
 msgstr "Port 名称"
 
-#: www/faq.php:574 www/search.php:1225
+#: www/faq.php:574 www/search.php:1234
 msgid "Package Name"
 msgstr "软件包名称"
 
@@ -4018,31 +4029,31 @@ msgstr "软件包名称"
 msgid "Latest Link"
 msgstr "最新链接"
 
-#: www/faq.php:576 www/ports-conflicts.php:39 www/search.php:1221
+#: www/faq.php:576 www/ports-conflicts.php:39 www/search.php:1230
 msgid "Maintainer"
 msgstr "维护者"
 
-#: www/faq.php:577 www/search.php:1229
+#: www/faq.php:577 www/search.php:1238
 msgid "Short Description"
 msgstr "简短描述"
 
-#: www/faq.php:578 www/search.php:1220
+#: www/faq.php:578 www/search.php:1229
 msgid "Long Description"
 msgstr "详细描述"
 
-#: www/faq.php:579 www/search.php:1214
+#: www/faq.php:579 www/search.php:1223
 msgid "Depends Build"
 msgstr "构建依赖"
 
-#: www/faq.php:580 www/search.php:1215
+#: www/faq.php:580 www/search.php:1224
 msgid "Depends Lib"
 msgstr "库依赖"
 
-#: www/faq.php:581 www/search.php:1216
+#: www/faq.php:581 www/search.php:1225
 msgid "Depends Run"
 msgstr "运行依赖"
 
-#: www/faq.php:582 www/search.php:1224
+#: www/faq.php:582 www/search.php:1233
 msgid "Message ID"
 msgstr "消息 ID"
 
@@ -4958,7 +4969,7 @@ msgid ""
 msgstr ""
 "这样算下来总共有 %1$s 个页面。据我上次统计，约占 %3$s 全部网页的 %2$s%%"
 
-#: www/how-big-is-it.php:372 www/search.php:1338
+#: www/how-big-is-it.php:372 www/search.php:1347
 msgid "Notes"
 msgstr "备注"
 
@@ -5459,7 +5470,7 @@ msgid "%1$d port found (%2$d primary, %3$d secondary)"
 msgid_plural "%1$d ports found (%2$d primary, %3$d secondary)"
 msgstr[0] "找到 %1$d 个 Port（主分类 %2$d 个，次要分类 %3$d 个）"
 
-#: www/port-watch.php:199 www/watch.php:321
+#: www/port-watch.php:199 www/watch.php:325
 #, php-format
 msgid "%d port found"
 msgid_plural "%d ports found"
@@ -5823,7 +5834,7 @@ msgid ""
 "Please adjust the parameters and try again."
 msgstr "如果“输出格式”为“依赖”，则必须按“Port 名称”搜索。请调整参数后重试。"
 
-#: www/search.php:400
+#: www/search.php:403
 msgid ""
 "<b>NOTE</b>: Instead of using 'sounds like' as instructed, the system used "
 "'containing'.  See the notes above for why this is done."
@@ -5831,166 +5842,166 @@ msgstr ""
 "<b>注意</b>：系统没有按指示使用“发音相似”，而是使用了“包含”。这样做的原因请参"
 "见上方的说明。"
 
-#: www/search.php:720
+#: www/search.php:723
 msgid "Sorry, but you messed something up in your manually created query"
 msgstr "抱歉，您手动创建的查询中有地方弄错了"
 
-#: www/search.php:1003 www/search.php:1068
+#: www/search.php:1006 www/search.php:1071
 msgid "something went terribly wrong.  Sorry."
 msgstr "出了非常严重的问题。抱歉。"
 
-#: www/search.php:1102
+#: www/search.php:1107
 msgid ""
 "Please let postmaster@freshports.org know that the search log could not be "
 "opened.  This does not affect the search results."
 msgstr ""
 "请告知 postmaster@freshports.org：搜索日志无法打开。这不会影响搜索结果。"
 
-#: www/search.php:1159 www/search.php:1384
+#: www/search.php:1168 www/search.php:1393
 msgid "No results found"
 msgstr "未找到结果"
 
-#: www/search.php:1172
+#: www/search.php:1181
 msgid "Search FreshPorts using Google"
 msgstr "使用 Google 搜索 FreshPorts"
 
-#: www/search.php:1201
+#: www/search.php:1210
 msgid "The FreshPorts Search"
 msgstr "FreshPorts 搜索"
 
-#: www/search.php:1208
+#: www/search.php:1217
 msgid "Author Email"
 msgstr "作者邮箱"
 
-#: www/search.php:1209
+#: www/search.php:1218
 msgid "Author Name"
 msgstr "作者姓名"
 
-#: www/search.php:1210
+#: www/search.php:1219
 msgid "Commit Message"
 msgstr "提交消息"
 
-#: www/search.php:1211
+#: www/search.php:1220
 msgid "Committer ID (email without @FreeBSD.org)"
 msgstr "提交者 ID（不含 @FreeBSD.org 的邮箱）"
 
-#: www/search.php:1212
+#: www/search.php:1221
 msgid "Committer Email"
 msgstr "提交者邮箱"
 
-#: www/search.php:1213
+#: www/search.php:1222
 msgid "Committer Name"
 msgstr "提交者姓名"
 
-#: www/search.php:1217
+#: www/search.php:1226
 msgid "Depends Build/Lib/Run"
 msgstr "构建/库/运行依赖"
 
-#: www/search.php:1222
+#: www/search.php:1231
 msgid "Makefile (ports only)"
 msgstr "Makefile（仅限 Port）"
 
-#: www/search.php:1230
+#: www/search.php:1239
 msgid "Under a pathname"
 msgstr "在指定路径下"
 
-#: www/search.php:1235
+#: www/search.php:1244
 msgid "equal to"
 msgstr "等于"
 
-#: www/search.php:1236
+#: www/search.php:1245
 msgid "starting with"
 msgstr "以…开头"
 
-#: www/search.php:1237
+#: www/search.php:1246
 msgid "containing"
 msgstr "包含"
 
-#: www/search.php:1238
+#: www/search.php:1247
 msgid "ending with"
 msgstr "以…结尾"
 
-#: www/search.php:1239
+#: www/search.php:1248
 msgid "sounds like"
 msgstr "发音相似"
 
-#: www/search.php:1247
+#: www/search.php:1256
 msgid "results"
 msgstr "条结果"
 
-#: www/search.php:1258
+#: www/search.php:1267
 msgid "Search only this category:"
 msgstr "仅在此分类中搜索："
 
-#: www/search.php:1267
+#: www/search.php:1276
 msgid ""
 "The list of categories is not available - the cache file does not exist - "
 "This should never happen."
 msgstr "分类列表不可用——缓存文件不存在——这种情况本不应发生。"
 
-#: www/search.php:1276
+#: www/search.php:1285
 msgid "Include deleted ports"
 msgstr "包含已删除 Port"
 
-#: www/search.php:1279
+#: www/search.php:1288
 msgid "Case sensitive search"
 msgstr "区分大小写搜索"
 
-#: www/search.php:1283
+#: www/search.php:1292
 msgid "Port"
 msgstr "Port"
 
-#: www/search.php:1289
+#: www/search.php:1298
 msgid "ascending"
 msgstr "升序"
 
-#: www/search.php:1290
+#: www/search.php:1299
 msgid "descending"
 msgstr "降序"
 
-#: www/search.php:1298
+#: www/search.php:1307
 msgid "Include /src tree"
 msgstr "包含 /src 目录树"
 
-#: www/search.php:1302
+#: www/search.php:1311
 msgid "<b>Output format</b>:"
 msgstr "<b>输出格式</b>："
 
-#: www/search.php:1304
+#: www/search.php:1313
 msgid "Plain Text"
 msgstr "纯文本"
 
-#: www/search.php:1305
+#: www/search.php:1314
 msgid "Depends (only works with <b>Port Name</b>)"
 msgstr "依赖（仅支持<b>Port 名称</b>）"
 
-#: www/search.php:1308
+#: www/search.php:1317
 msgid "Maximum Effort"
 msgstr "尽力搜索"
 
-#: www/search.php:1311
+#: www/search.php:1320
 msgid "Minimal output"
 msgstr "精简输出"
 
-#: www/search.php:1316
+#: www/search.php:1325
 msgid "<b>Branch</b>:"
 msgstr "<b>分支</b>："
 
-#: www/search.php:1340
+#: www/search.php:1349
 msgid ""
 "Case sensitivity is ignored for \"sounds like\" and output is ordered by the "
 "soundex."
 msgstr "“发音相似”（sounds like）搜索不区分大小写，结果按 soundex 排序。"
 
-#: www/search.php:1341
+#: www/search.php:1350
 msgid "When searching on 'Message ID', the type of match is ignored."
 msgstr "按“消息 ID”（Message ID）搜索时，匹配类型会被忽略。"
 
-#: www/search.php:1342
+#: www/search.php:1351
 msgid "When searching on 'Commit Message' only 'containing' is used."
 msgstr "按“提交消息”（Commit Message）搜索时，仅使用“包含”这一匹配方式。"
 
-#: www/search.php:1343
+#: www/search.php:1352
 msgid ""
 "When searching by 'Under a pathname', your path must start with something "
 "like /ports/, /doc/, or /src/. All commits under that point will be "
@@ -6000,7 +6011,7 @@ msgstr ""
 "src/ 之类的前缀开头，该位置之下的所有提交都会被返回。此时所选的匹配类型将被忽"
 "略，默认按“以…开头”（Starts with）处理。"
 
-#: www/search.php:1344
+#: www/search.php:1353
 msgid ""
 "Searching for 'sounds like' is only valid for Author Email, Author Name, "
 "Committer Email, Committer Name, Maintainer, Package Name, and Port Name - "
@@ -6010,19 +6021,19 @@ msgstr ""
 "名、维护者、软件包名称和 Port 名称——不过我不确定相关索引是否正常，有问题请去"
 "问 Dan。"
 
-#: www/search.php:1352
+#: www/search.php:1361
 msgid "Special searches:"
 msgstr "特殊搜索："
 
-#: www/search.php:1363
+#: www/search.php:1372
 msgid "Ports I Maintain"
 msgstr "我维护的 Port"
 
-#: www/search.php:1388
+#: www/search.php:1397
 msgid "See the suggestions at the top of this page."
 msgstr "请参阅本页上方的建议。"
 
-#: www/search.php:1425
+#: www/search.php:1434
 #, php-format
 msgid "Number of ports: %d"
 msgstr "Port 数量：%d"
@@ -6151,7 +6162,7 @@ msgid "Watch list names must contain only A..Z, a..z, or 0..9."
 msgstr "关注列表名称只能包含 A..Z、a..z 或 0..9。"
 
 #: www/watch-list-maintenance.php:70 www/watch-list-maintenance.php:315
-#: www/watch-list.php:90 www/watch-list.php:102
+#: www/watch-list.php:98 www/watch-list.php:110
 msgid "Watch list maintenance"
 msgstr "关注列表维护"
 
@@ -6360,28 +6371,28 @@ msgstr ""
 "（比如，如果您点击了<b>%1$s</b>，就必须在上方输入框中输入<b>%1$s</b>，操作才"
 "会完成）。此项区分大小写。"
 
-#: www/watch-list.php:177
+#: www/watch-list.php:185
 msgid "Please select the watch lists which should contain this port:"
 msgstr "请选择应包含此 Port 的关注列表："
 
-#: www/watch-list.php:201
+#: www/watch-list.php:209
 msgid "NOTES"
 msgstr "备注"
 
-#: www/watch-list.php:203
+#: www/watch-list.php:211
 msgid "'+' indicates that the port is on this watch list."
 msgstr "“+”表示该 Port 在此关注列表中。"
 
-#: www/watch-list.php:204
+#: www/watch-list.php:212
 msgid "'*' indicates a default watch list."
 msgstr "“*”表示默认关注列表。"
 
-#: www/watch-list.php:208
+#: www/watch-list.php:216
 msgid ""
 "the watch lists which are selected are those upon which the port appears"
 msgstr "勾选的关注列表即为该 Port 所在的列表"
 
-#: www/watch-list.php:212
+#: www/watch-list.php:220
 #, fuzzy
 msgid ""
 "the watch lists which are selected are your default watch lists, and any "
@@ -6468,11 +6479,11 @@ msgid ""
 "View only watched ports with entries in <code>/usr/ports/UPDATING</code>"
 msgstr "仅查看在 <code>/usr/ports/UPDATING</code> 中有条目的关注 Port"
 
-#: www/watch.php:323
+#: www/watch.php:327
 msgid "no ports found"
 msgstr "未找到 Port"
 
-#: www/watch.php:334
+#: www/watch.php:338
 msgid ""
 "(on your watch list, but only showing those with entries in <code>/usr/ports/"
 "UPDATING</code>)"
@@ -6480,7 +6491,7 @@ msgstr ""
 "（在您的关注列表中，但仅显示在 <code>/usr/ports/UPDATING</code> 中有条目的那"
 "些）"
 
-#: www/watch.php:401
+#: www/watch.php:405
 #, php-format
 msgid "(on your watch list, but only showing %d)"
 msgid_plural "(on your watch list, but only showing %d)"
@@ -6499,6 +6510,16 @@ msgid ""
 "If you do not receive that email, please attempt to login and you will have "
 "an opportunity to resend the notification."
 msgstr "如果您未收到那封邮件，请尝试登录，届时您可以重新发送通知。"
+
+#~ msgid ""
+#~ "Encoding Errors (not all of the commit message was ASCII): Some of the "
+#~ "commit message may be altered because of character conversion problems. "
+#~ "We display only UTF-8 and remove the offending characters. These errors "
+#~ "may occur in the log message or elsewhere in the commit email."
+#~ msgstr ""
+#~ "编码错误（提交消息并非全部为 ASCII）：由于字符转换问题，部分提交消息可能有"
+#~ "所改动。我们只显示 UTF-8，并移除有问题的字符。这类错误可能出现在日志消息"
+#~ "中，也可能出现在提交邮件的其他地方。"
 
 #~ msgid "Watch categories"
 #~ msgstr "关注分类"

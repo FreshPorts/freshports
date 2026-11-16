@@ -754,8 +754,16 @@ function freshports_Watch_Icon_Empty() {
 	return '<img class="icon" src="/images/watch-empty.gif" alt="" title="" width="16" height="1">';
 }
 
+#
+# Shown for a commit whose commit_log.encoding_losses is true: some of its
+# characters could not be stored and were removed.  For git commits these are
+# control characters XML cannot hold (git-to-freshports-xml.py); for old CVS
+# commits, characters lost converting the commit email.  See the FAQ entry.
+#
 function freshports_Encoding_Errors() {
-	return '<img class="icon" src="/images/error.gif" alt="' . _('Encoding Errors (not all of the commit message was ASCII)') . '" title="' . _('Encoding Errors (not all of the commit message was ASCII)') . '" width="16" height="16">';
+	# TRANSLATORS: alt text and tooltip of the icon shown next to such a commit
+	$Title = htmlspecialchars(_('Encoding Errors (some characters in this commit were removed)'));
+	return '<img class="icon" src="/images/error.gif" alt="' . $Title . '" title="' . $Title . '" width="16" height="16">';
 }
 
 function freshports_Encoding_Errors_Link() {

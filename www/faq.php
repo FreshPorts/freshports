@@ -290,7 +290,7 @@ make: fatal errors encountered -- cannot continue
 		<?php echo _('Add item to your default watch lists: This port is not on any of your default watch lists. Click this icon to add the port to your default watch lists. This icon appears only if you are logged in.'); ?></P>
 
 	<P id="encodingerrors"><?php echo freshports_Encoding_Errors(); ?>
-		<?php echo _('Encoding Errors (not all of the commit message was ASCII): Some of the commit message may be altered because of character conversion problems. We display only UTF-8 and remove the offending characters. These errors may occur in the log message or elsewhere in the commit email.'); ?></P>
+		<?php echo _('Encoding Errors (some characters in this commit were removed): Some characters in this commit could not be stored, so FreshPorts removed them. The commit message, a name or a file name shown here may differ slightly from the original. For git commits, these are control characters, such as Ctrl-Z from pasted terminal output. For older CVS commits, they were characters lost when the commit email was converted.'); ?></P>
 
 	<P id="watchlistcount"><?php echo freshports_WatchListCount_Icon(); ?>
 		<?php echo _('Watch List Count (WLC): This is the number of watch lists which are watching this port. This might give you an idea of the popularity of the port.'); ?></P>

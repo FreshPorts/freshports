@@ -342,7 +342,7 @@ function UploadDisplayStagingResultsMatchesDuplicates($UserID, $WatchListID, $db
 
 }
 
-function UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $dbh) {
+function UploadDisplayWatchListItemsNotInStagingArea($UserID, $WatchListID, $dbh) {
 #	syslog(LOG_NOTICE, "UploadDisplayWatchListItemsNotInStagingArea for WatchListID: $WatchListID");
 
 	$begintime = time();
@@ -352,6 +352,9 @@ function UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $dbh) {
 			     FROM ports, categories, watch_list, watch_list_element, element
 			    WHERE $1      = watch_list_element.watch_list_id
 				   AND watch_list.id    = watch_list_element.watch_list_id
+				   -- only the user's own list: the id comes from the form, and
+				   -- another user's list id would list their ports here
+				   AND watch_list.user_id = $2
 				   AND ports.element_id = watch_list_element.element_id
 				   AND ports.element_id = element.id
 				   AND categories.id    = ports.category_id
@@ -366,7 +369,7 @@ function UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $dbh) {
 
 #	syslog(LOG_NOTICE, $sql);
 
-	$result = pg_query_params($dbh, $sql, array($WatchListID));
+	$result = pg_query_params($dbh, $sql, array($WatchListID, $UserID));
 #	syslog(LOG_NOTICE, "UploadDisplayWatchListItemsNotInStagingArea for WatchListID: $WatchListID");
 
 	if ($result) {

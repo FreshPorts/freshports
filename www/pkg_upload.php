@@ -196,7 +196,7 @@ function DisplayStagingArea($UserID, $WatchListID, $db) {
 	echo '</td>';
 
 	echo '<td>' . "\n";
-	UploadDisplayWatchListItemsNotInStagingArea($WatchListID, $db);
+	UploadDisplayWatchListItemsNotInStagingArea($UserID, $WatchListID, $db);
 	echo '</td>';
 
 	echo '</tr>';

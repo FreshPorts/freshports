@@ -2488,7 +2488,7 @@ msgid ""
 msgstr ""
 "Problem şudur ki, size gönderdiğimiz e-posta size ulaşamıyor. Bize geri dönüyor. "
 "Bu yüzden size e-posta göndermeyi bıraktık. Eğer bu tür mesajları almaya devam "
-"etmek istiyorsanız, kişiselleştirme sayfasından e- postanızı güncellemeniz gerekiyor."
+"etmek istiyorsanız, kişiselleştirme sayfasından e-postanızı güncellemeniz gerekiyor."
 
 #: www/bouncing.php:67
 msgid "How to fix the problem"

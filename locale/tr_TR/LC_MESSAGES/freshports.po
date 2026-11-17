@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: FreshPorts\n"
 "Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
 "POT-Creation-Date: 2026-11-16 23:55+0000\n"
-"PO-Revision-Date: 2026-11-16 23:10+0300\n"
+"PO-Revision-Date: 2026-11-17 12:34+0300\n"
 "Last-Translator: Yusuf Yaman <nxjoseph@FreeBSD.org>\n"
 "Language-Team: Turkish\n"
 "Language: tr\n"
@@ -911,9 +911,8 @@ msgstr "Bunu takip listenizden çıkarmak için tıklayın."
 
 #. TRANSLATORS: alt text and tooltip of the icon shown next to such a commit
 #: include/freshports.php:765
-#, fuzzy
 msgid "Encoding Errors (some characters in this commit were removed)"
-msgstr "Karakter Kodlama Hataları (commit mesajının hepsi ASCII değildi)"
+msgstr "Karakter Kodlama Hataları (bu commit'teki bazı karakterler kaldırıldı)"
 
 #: include/freshports.php:774
 msgid "View this port on Repology."
@@ -948,14 +947,12 @@ msgid "view diff"
 msgstr "karşılaştırmayı görüntüle"
 
 #: include/freshports.php:861
-#, fuzzy
 msgid "Click to add this to this watch list"
-msgstr "Bunu varsayılan takip listenize eklemek için tıklayın"
+msgstr "Bunu izleme listesine eklemek için tıklayın"
 
 #: include/freshports.php:870
-#, fuzzy
 msgid "Click to remove this from this watch list"
-msgstr "Bunu takip listenizden çıkarmak için tıklayın."
+msgstr "Bunu izleme listesinden kaldırmak için tıklayın"
 
 #: include/freshports.php:875
 #, php-format
@@ -3728,6 +3725,14 @@ msgid ""
 "Ctrl-Z from pasted terminal output. For older CVS commits, they were "
 "characters lost when the commit email was converted."
 msgstr ""
+"Karakter Kodlama Hataları (bu commit içindeki bazı karakterler kaldırıldı): "
+"Bu commit içindeki bazı karakterler depolanamadığı için FreshPorts "
+"tarafından kaldırılmıştır. Burada gösterilen commit mesajı, isim veya dosya "
+"adı, orijinalinden küçük farklılıklar gösterebilir. Git commit'leri söz "
+"konusu olduğunda bunlar, terminal çıktısından kopyalanıp yapıştırılan Ctrl-Z "
+"gibi kontrol karakterleridir. Daha eski CVS commit'lerinde ise bu "
+"karakterler, commit e-postasının dönüştürülmesi sırasında kaybolan "
+"karakterlerdir."
 
 #: www/faq.php:296
 msgid ""

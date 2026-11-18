@@ -1596,8 +1596,19 @@ function freshports_copyright() {
 # A git checkout (dev, dvl) has no VERSION; use git describe instead, e.g. 2.16.1-2-gbbee08fe.
 # The tags match the package versions, so both forms read the same way.
 function freshports_PackageVersionComment() {
-	$Root = dirname(__DIR__);
+	$Version = freshports_InstalledVersion(dirname(__DIR__));
 
+	if ($Version === '') {
+		return '';
+	}
+
+	# '--' is not allowed inside an HTML comment
+	return "\n<!-- freshports-www " . str_replace('--', '- -', htmlspecialchars($Version)) . " -->\n";
+}
+
+# The release installed in $Root: the VERSION file a package install writes,
+# or git describe for a git checkout.  '' if neither gives one.
+function freshports_InstalledVersion($Root) {
 	$Version = '';
 	if (is_readable($Root . '/VERSION')) {
 		$Version = trim(file_get_contents($Root . '/VERSION'));
@@ -1608,12 +1619,53 @@ function freshports_PackageVersionComment() {
 		$Version = trim((string) shell_exec("git -C $Root -c safe.directory=$Root describe --tags --always 2>/dev/null"));
 	}
 
-	if ($Version === '') {
-		return '';
+	return $Version;
+}
+
+# FreshSource, the sibling site, is installed on the same web server.
+define('FRESHSOURCE_ROOT', '/usr/local/www/freshsource');
+
+# The local package database; it changes whenever a package is installed,
+# upgraded or removed.
+define('FRESHPORTS_PKG_DB', '/var/db/pkg/local.sqlite');
+
+# Show which release of freshsource-www and fp-listen this web server runs,
+# in the page source only, one comment per line, e.g.
+#
+#   <!-- webserver freshsource-www 2.3.15.2_2 -->
+#   <!-- webserver fp-listen 2.1.0 -->
+#
+# freshports-versions.py, which builds the all-sites versions page, reads
+# them.  fp-listen is named without its py314- flavor prefix, so the name
+# stays the same when the default Python version changes.  A program which
+# is not installed is left out.
+function freshports_WebserverVersionComments() {
+	$Versions = array();
+
+	$Version = freshports_InstalledVersion(FRESHSOURCE_ROOT);
+	if ($Version !== '') {
+		$Versions['freshsource-www'] = $Version;
 	}
 
-	# '--' is not allowed inside an HTML comment
-	return "\n<!-- freshports-www " . str_replace('--', '- -', htmlspecialchars($Version)) . " -->\n";
+	# e.g. "2.1.0"; the glob finds it whatever the Python flavor
+	$Version = trim((string) shell_exec("/usr/sbin/pkg query -g '%v' 'py*-freshports-fp-listen' 2>/dev/null"));
+	if (preg_match('/^\S+$/', $Version)) {
+		$Versions['fp-listen'] = $Version;
+	}
+
+	$HTML = '';
+	foreach ($Versions as $Name => $Version) {
+		# '--' is not allowed inside an HTML comment
+		$HTML .= '<!-- webserver ' . str_replace('--', '- -', htmlspecialchars($Name . ' ' . $Version)) . " -->\n";
+	}
+
+	return $HTML;
+}
+
+# The newest mtime of the files the web server versions come from, or 0.
+function freshports_WebserverVersionsLastModified() {
+	return max(freshports_VersionFilesLastModified(FRESHSOURCE_ROOT),
+	           (int) @filemtime(FRESHPORTS_PKG_DB));
 }
 
 # Written by system_status.sh on the ingress host, one "name version" per line,
@@ -1664,8 +1716,14 @@ function freshports_IngressVersionsLastModified() {
 #
 # Files which do not exist are skipped.
 function freshports_VersionLastModified() {
-	$Root  = dirname(__DIR__);
-	$Files = array($_SERVER['SCRIPT_FILENAME'], $Root . '/VERSION', $Root . '/.git/index',
+	return max((int) @filemtime($_SERVER['SCRIPT_FILENAME']),
+	           freshports_VersionFilesLastModified(dirname(__DIR__)));
+}
+
+# The newest mtime of the files freshports_InstalledVersion($Root) reads,
+# or 0 if none exists.
+function freshports_VersionFilesLastModified($Root) {
+	$Files = array($Root . '/VERSION', $Root . '/.git/index',
 	               $Root . '/.git/HEAD', $Root . '/.git/packed-refs', $Root . '/.git/refs/tags');
 
 	$Latest = 0;

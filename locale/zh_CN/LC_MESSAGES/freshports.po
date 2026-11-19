@@ -1740,7 +1740,7 @@ msgstr "分类列表 - %s"
 #: rewrite/missing-category.php:279
 #, php-format
 msgid "Number of ports in this category (with commits on branch %1$s): %2$d"
-msgstr "此分类中的 Port 数量（在分支上有过提交的）%1$s): %2$d"
+msgstr "此分类中的 Port 数量（在分支 %1$s 上有过提交的）：%2$d"
 
 #: rewrite/missing-category.php:279
 #, php-format
@@ -6395,7 +6395,7 @@ msgstr "勾选的关注列表即为该 Port 所在的列表"
 msgid ""
 "the watch lists which are selected are your default watch lists, and any "
 "which already contain the port"
-msgstr "默认关注列表包括：你选中的关注列表，以及那些已包含该 Port 的关注列表"
+msgstr "勾选的关注列表为您的默认关注列表，以及已包含该 Port 的关注列表"
 
 #: www/watch.php:61
 msgid "Watch List"

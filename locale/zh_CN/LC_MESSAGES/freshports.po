@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: freshports\n"
 "Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
 "POT-Creation-Date: 2026-11-16 23:55+0000\n"
-"PO-Revision-Date: 2026-11-04 18:39+0800\n"
+"PO-Revision-Date: 2026-11-19 22:47+0800\n"
 "Last-Translator: ykla <yklaxds@gmail.com>\n"
 "Language-Team: ykla <yklaxds@gmail.com>\n"
 "Language: zh_CN\n"
@@ -23,7 +23,7 @@ msgstr "作者："
 #: classes/display_commit.php:435 classes/files-display.php:40
 #: www/commit.php:283
 msgid "Sorry, nothing found in the database...."
-msgstr "抱歉，数据库中未找到任何内容……"
+msgstr "抱歉，在数据库中找不到任何内容……"
 
 #: classes/files-display.php:48
 #, php-format
@@ -175,16 +175,16 @@ msgstr "注意：从属 Port——季度修订版很可能有误。"
 #: classes/port-display.php:1103
 #, php-format
 msgid "A newer version was found upstream by portscout, first on %s."
-msgstr ""
+msgstr "portscout 在上游发现了更新的版本，首次出现于 %s。"
 
 #: classes/port-display.php:1106
 msgid "A newer version was found upstream by portscout."
-msgstr ""
+msgstr "portscout 在上游发现了更新的版本。"
 
 #: classes/port-display.php:1109
 #, php-format
 msgid "upstream: %s"
-msgstr ""
+msgstr "上游：%s"
 
 #: classes/port-display.php:1141
 #, php-format
@@ -687,15 +687,15 @@ msgstr "没能找到您的关注列表详情……抱歉"
 
 #: include/bot-gate.php:137
 msgid "Just a moment"
-msgstr ""
+msgstr "稍等片刻"
 
 #: include/bot-gate.php:226
 msgid "If you're a person, please press the button for a cookie."
-msgstr ""
+msgstr "如果你是真人，请按下按钮领取一块饼干（cookie）。"
 
 #: include/bot-gate.php:231
 msgid "I was a person last time I checked."
-msgstr ""
+msgstr "我上次检查的时候还是真人。"
 
 #: include/bot-gate.php:233
 msgid ""
@@ -707,13 +707,14 @@ msgstr "我们将设置 Cookie，从而一天内不会再打扰您；已登录�
 msgid ""
 "Changes cannot be saved just now: this site is not fully configured. The "
 "problem has been logged."
-msgstr ""
+msgstr "暂时无法保存更改：此站点尚未配置完全。该问题已被记录。"
 
 #: include/csrf.php:76
 msgid ""
 "Nothing was changed: that request did not come from a FreshPorts page, or "
 "the page was too old. Please reload the page and try again."
 msgstr ""
+"无事发生：该请求并非来自 FreshPorts 页面，或页面过期。请刷新页面后重试。"
 
 #: include/fontsize.php:64
 msgid "Smallest"
@@ -870,9 +871,8 @@ msgstr "点击将此 Port 从您的默认关注列表中移除"
 
 #. TRANSLATORS: alt text and tooltip of the icon shown next to such a commit
 #: include/freshports.php:765
-#, fuzzy
 msgid "Encoding Errors (some characters in this commit were removed)"
-msgstr "编码错误（提交消息并非全部为 ASCII）"
+msgstr "编码错误（此提交中的部分字符已被移除）"
 
 #: include/freshports.php:774
 msgid "View this port on Repology."
@@ -907,14 +907,12 @@ msgid "view diff"
 msgstr "查看差异"
 
 #: include/freshports.php:861
-#, fuzzy
 msgid "Click to add this to this watch list"
-msgstr "点击将此 Port 添加到您的默认关注列表"
+msgstr "点击将此项添加到此关注列表"
 
 #: include/freshports.php:870
-#, fuzzy
 msgid "Click to remove this from this watch list"
-msgstr "点击将此 Port 从您的默认关注列表中移除"
+msgstr "点击将此 Port 从该关注列表中移除"
 
 #: include/freshports.php:875
 #, php-format
@@ -1458,7 +1456,7 @@ msgstr "关注此 Port 的人还关注："
 
 #: include/freshports.php:2943
 msgid "Sorry, a database query failed. The error has been logged."
-msgstr ""
+msgstr "抱歉，数据库查询失败。该错误已被记录。"
 
 #: include/freshports_page_expiration_ports.php:62
 #, php-format
@@ -1706,17 +1704,14 @@ msgid "Go"
 msgstr "前往"
 
 #: rewrite/missing-category.php:23
-#, fuzzy
 msgid "Name"
-msgstr "Port 名称"
+msgstr "名称"
 
 #: rewrite/missing-category.php:24
-#, fuzzy
 msgid "Date added"
 msgstr "添加日期"
 
 #: rewrite/missing-category.php:25
-#, fuzzy
 msgid "Last updated"
 msgstr "最后更新"
 
@@ -1725,100 +1720,97 @@ msgid "Sort by:"
 msgstr "排序方式："
 
 #: rewrite/missing-category.php:69
-#, fuzzy
 msgid "Result Page:"
-msgstr "末页"
+msgstr "结果页面："
 
 #: rewrite/missing-category.php:88 rewrite/missing-category.php:91
 msgid "Next"
-msgstr ""
+msgstr "下一个"
 
 #: rewrite/missing-category.php:261
 #, php-format
 msgid "Category listing - %1$s: ports with commits on branch %2$s"
-msgstr ""
+msgstr "分类列表 - %1$s：在分支 %2$s 上有过提交记录的 Port"
 
 #: rewrite/missing-category.php:261
-#, fuzzy, php-format
+#, php-format
 msgid "Category listing - %s"
-msgstr "关注列表——%s"
+msgstr "分类列表 - %s"
 
 #: rewrite/missing-category.php:279
 #, php-format
 msgid "Number of ports in this category (with commits on branch %1$s): %2$d"
-msgstr ""
+msgstr "此分类中的 Port 数量（在分支上有过提交的）%1$s): %2$d"
 
 #: rewrite/missing-category.php:279
-#, fuzzy, php-format
+#, php-format
 msgid "Number of ports in this category: %d"
-msgstr "Port 数量：%d"
+msgstr "此分类中的 Port 数量：%d"
 
 #: rewrite/missing-category.php:282
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "Ports marked with a <sup>*</sup> actually reside within another category but "
 "have %s listed as a secondary category."
-msgstr "表示某个 Port 位于其他分类，但将此分类列为次要分类。"
+msgstr ""
+"标有 <sup>*</sup> 的 Port 实际上位于另一个分类中，但把 %s 列为次要分类。"
 
 #: rewrite/missing-non-port.php:38
-#, fuzzy, php-format
+#, php-format
 msgid "non port: %s"
-msgstr "已损坏 Port"
+msgstr "非 Port：%s"
 
 #: rewrite/missing-port.php:43
-#, fuzzy
 msgid "Port Moves"
-msgstr "什么是 Port Moves（Port 迁移）？"
+msgstr "Port 迁移"
 
 #: rewrite/missing-port.php:202
-#, fuzzy
 msgid "a long description could not be found for this port"
-msgstr "未找到此 Port 的 SUBR 信息"
+msgstr "找不到此 Port 的详细描述"
 
 #: rewrite/missing-port.php:328
 msgid "A short description could not be found for this port"
-msgstr ""
+msgstr "找不到此 Port 的概述"
 
 #: rewrite/missing-port.php:401
-#, fuzzy, php-format
+#, php-format
 msgid "There are no commits on branch %s for this port"
-msgstr "此 Port 没有维护者。"
+msgstr "此 Port 在分支 %s 上无任何提交记录"
 
 #: rewrite/missing-port.php:538
-#, fuzzy
 msgid "Port details"
-msgstr "更多详情"
+msgstr "Port 详情"
 
 #: rewrite/missing-port.php:538
-#, fuzzy, php-format
+#, php-format
 msgid "Port details on branch %s"
-msgstr "Port 已于 %s 删除"
+msgstr "在分支 %s 上的 Port 详情"
 
 #: rewrite/missing.php:12
-#, fuzzy
 msgid "Document not found"
-msgstr "未找到的 Port。"
+msgstr "找不到文档"
 
 #: rewrite/missing.php:13
 #, php-format
 msgid "%s 404 page"
-msgstr ""
+msgstr "%s 404 页面"
 
 #: rewrite/missing.php:14
 #, php-format
 msgid "%s - 404 page"
-msgstr ""
+msgstr "%s - 404 页面"
 
 #: rewrite/missing.php:34
-#, fuzzy
 msgid "Sorry, but I don't know anything about that."
-msgstr "我对这个令牌一无所知。"
+msgstr "抱歉，对此我毫不知情。"
 
 #: rewrite/missing.php:43
 msgid ""
 "Perhaps a <a href=\"/categories.php\">list of categories</a> or <a href=\"/"
 "search.php\">the search page</a> might be helpful."
 msgstr ""
+"也许 <a href=\"/categories.php\">分类列表</a> 或 <a href=\"/search.php\">搜索"
+"页面</a> 会有所帮助。"
 
 #: www/--/feeds/index.php:14 www/--/feeds/index.php:30
 #: www/--/feeds/index.php:33 www/backend/index.php:13 www/backend/index.php:29
@@ -1956,21 +1948,20 @@ msgstr "什么是 Port？"
 
 #. TRANSLATORS: %1$s is a link whose text is 'FreeBSD Handbook'; %2$s is the command 'make install'.
 #: www/about.php:48
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "A port is the term used to describe a collection of files which makes it "
 "extremely easy to install an application.  As the %1$s explains, installing "
 "an application from a port is as simple as changing to the port directory "
 "and typing %2$s. If you want an application, the port is the Way To Go(TM)"
 msgstr ""
-"Port 是用来描述一组文件的术语，这组文件让安装应用程序变得极其简单。正如 %1$s "
-"中所说：<em>安装应用程序非常简单——下载 Port、解包，然后在 Port 目录中键入 "
-"%2$s 即可</em>。如果您想要某个应用程序，Port 就是您的不二之选(TM)"
+"Port 这一术语描述了一组文件，借助它安装应用程序极为简便。正如 %1$s 所述，从 "
+"Port 安装应用程序只需切换到 Port 目录再输入 %2$s 即可。如果你想要某个应用程"
+"序，Port 就是最佳选择™。"
 
 #: www/about.php:48
-#, fuzzy
 msgid "FreeBSD Handbook"
-msgstr "Porter 手册"
+msgstr "FreeBSD 手册"
 
 #: www/about.php:50
 msgid ""
@@ -2477,23 +2468,21 @@ msgstr "嗯……我不太确定这个 Port 数量是否准确。Dan Langille 20
 #: www/categories.php:212
 #, php-format
 msgid "How the number of categories has changed: %s."
-msgstr ""
+msgstr "分类数量的变化情况：%s。"
 
 #: www/categories.php:212 www/graphs.php:36
-#, fuzzy
 msgid "categories over time"
-msgstr "分类"
+msgstr "分类随时间的变化"
 
 #: www/category-history.php:51
-#, fuzzy
 msgid "Categories over time"
-msgstr "分类"
+msgstr "分类随时间的变化"
 
 #: www/category-history.php:53
 msgid ""
 "The number of physical and virtual categories in the FreeBSD ports tree over "
 "time"
-msgstr ""
+msgstr "FreeBSD Ports 中物理分类和虚拟分类的数量随时间的变化"
 
 #: www/category-history.php:103
 #, php-format
@@ -2502,14 +2491,16 @@ msgid ""
 "directory: every port lives in one. A %s category exists only in the "
 "CATEGORIES line of a port, such as %s or %s."
 msgstr ""
+"FreeBSD Ports 中有两种分类。%s 分类是一个目录：每个 Port 都位于其中一个目录"
+"中。%s 分类仅存在于 Port 的 CATEGORIES 行中，例如 %s 或 %s。"
 
 #: www/category-history.php:104 www/category-history.php:177
 msgid "physical"
-msgstr ""
+msgstr "物理"
 
 #: www/category-history.php:105 www/category-history.php:179
 msgid "virtual"
-msgstr ""
+msgstr "虚拟"
 
 #: www/category-history.php:109
 #, php-format
@@ -2518,24 +2509,26 @@ msgid ""
 "categories are %s in %s, less the physical ones; that list first appeared in "
 "August 1999. Both are read from the ports git history and updated daily."
 msgstr ""
+"物理分类是顶层 %2$s 中的 %1$s 条目。虚拟分类是 %4$s 中的 %3$s 去掉物理分类后"
+"的部分；该列表最早出现于 1999 年 8 月。两者均从 Ports git 历史中读取，并每日"
+"更新。"
 
 #: www/category-history.php:118
 msgid ""
 "There is no category history yet. Is the category_history periodic script "
 "enabled?"
-msgstr ""
+msgstr "目前不存在分类历史记录。是否启用了 periodic 脚本 category_history ？"
 
 #: www/category-history.php:154
 #, php-format
 msgid ""
 "A chart of the number of categories from %s to today. Now: %d physical, %d "
 "virtual."
-msgstr ""
+msgstr "一张从 %s 到今天的分类数量图表。目前：%d 个物理分类，%d 个虚拟分类。"
 
 #: www/category-history.php:187
-#, fuzzy
 msgid "Every change"
-msgstr "保存更改"
+msgstr "所有变更"
 
 #: www/category-history.php:189
 msgid ""
@@ -2543,11 +2536,12 @@ msgid ""
 "commit or two before its directory, so it can appear as a virtual category "
 "for a moment."
 msgstr ""
+"新记录在前。新增的物理分类往往比它的目录早一两次提交被加入 VALID_CATEGORIES，"
+"因此可能短暂显示为虚拟分类。"
 
 #: www/category-history.php:194
-#, fuzzy
 msgid "Added"
-msgstr "Port 添加时间："
+msgstr "已添加"
 
 #: www/category-history.php:194 www/vuxml.php:264
 msgid "Date"
@@ -2555,20 +2549,19 @@ msgstr "日期"
 
 #: www/category-history.php:194
 msgid "Physical"
-msgstr ""
+msgstr "物理"
 
 #: www/category-history.php:194
-#, fuzzy
 msgid "Removed"
-msgstr "删除"
+msgstr "已移除"
 
 #: www/category-history.php:194
 msgid "Virtual"
-msgstr ""
+msgstr "虚拟"
 
 #: www/category-history.php:226
 msgid "the first ports Makefile"
-msgstr ""
+msgstr "最早的 Ports Makefile"
 
 #: www/category-maintenance.php:16
 msgid "Category maintenance"
@@ -3057,7 +3050,7 @@ msgstr ""
 
 #: www/faq.php:86
 msgid "The FreeBSD Project provides:"
-msgstr ""
+msgstr "由 FreeBSD 项目提供："
 
 #. TRANSLATORS: %s is the name 'base', shown in italics.
 #: www/faq.php:90
@@ -3065,11 +3058,11 @@ msgstr ""
 msgid ""
 "official packages for FreeBSD (the operating system, sometimes known as %s) "
 "in its entirety"
-msgstr ""
+msgstr "为整个 FreeBSD（即操作系统，亦被称作 %s）提供的官方软件包"
 
 #: www/faq.php:91
 msgid "packages for a huge number of ports."
-msgstr ""
+msgstr "为海量的 Port 提供软件包。"
 
 #. TRANSLATORS: %1$s is the old repository name 'FreeBSD', %2$s is the name 'pkgbase', %3$s and %4$s are the repository names 'FreeBSD-base' and 'FreeBSD-ports'.
 #: www/faq.php:98
@@ -3079,6 +3072,8 @@ msgid ""
 "was traditionally named %1$s. To simplify the names, after %2$s arrived, the "
 "new repo was named %3$s and the existing repo was named %4$s."
 msgstr ""
+"首先，简单回顾一下历史。过去，FreeBSD Ports 的存储库传统上命名为 %1$s。为简化"
+"命名，在 %2$s 出现之后，新仓库被命名为 %3$s，而原有仓库被命名为 %4$s。"
 
 #. TRANSLATORS: %1$s is the name 'pkgbase', %2$s is the repository name 'FreeBSD-base', shown in italics.
 #: www/faq.php:103
@@ -3086,13 +3081,13 @@ msgstr ""
 msgid ""
 "If you use %1$s (the base OS, packaged), you should have an additional repo "
 "named %2$s."
-msgstr ""
+msgstr "如果你使用 %1$s（打包好的基本操作系统），则应额外拥有存储库 %2$s。"
 
 #. TRANSLATORS: %s is the name 'pkgbase'.
 #: www/faq.php:108
-#, fuzzy, php-format
+#, php-format
 msgid "FreshPorts covers packages of ports, but not %s."
-msgstr "FreshPorts 覆盖 %s 上发布的所有 ABI。"
+msgstr "FreshPorts 覆盖了 Ports 的软件包，但不含 %s。"
 
 #: www/faq.php:112
 msgid "How do I modify my watch list?"
@@ -3498,6 +3493,10 @@ msgid ""
 "Ctrl-Z from pasted terminal output. For older CVS commits, they were "
 "characters lost when the commit email was converted."
 msgstr ""
+"编码错误（此提交中的部分字符已被移除）：此提交中的部分字符无法存储，因此 "
+"FreshPorts 将其移除了。此处显示的提交信息、名称或文件名可能与原始内容略有不"
+"同。对于 git 提交，这些是控制字符，例如从终端输出粘贴时带来的 Ctrl-Z。对于较"
+"旧的 CVS 提交，它们是在转换提交邮件时丢失的字符。"
 
 #: www/faq.php:296
 msgid ""
@@ -4565,7 +4564,7 @@ msgstr "如果您对这些图表有建议，请提交 issue。"
 #: www/graphs.php:36
 #, php-format
 msgid "See also: %s."
-msgstr ""
+msgstr "参见：%s。"
 
 #: www/graphs.php:39
 msgid ""
@@ -6393,11 +6392,10 @@ msgid ""
 msgstr "勾选的关注列表即为该 Port 所在的列表"
 
 #: www/watch-list.php:220
-#, fuzzy
 msgid ""
 "the watch lists which are selected are your default watch lists, and any "
 "which already contain the port"
-msgstr "勾选的关注列表即为该 Port 所在的列表"
+msgstr "默认关注列表包括：你选中的关注列表，以及那些已包含该 Port 的关注列表"
 
 #: www/watch.php:61
 msgid "Watch List"
@@ -6510,54 +6508,3 @@ msgid ""
 "If you do not receive that email, please attempt to login and you will have "
 "an opportunity to resend the notification."
 msgstr "如果您未收到那封邮件，请尝试登录，届时您可以重新发送通知。"
-
-#~ msgid ""
-#~ "Encoding Errors (not all of the commit message was ASCII): Some of the "
-#~ "commit message may be altered because of character conversion problems. "
-#~ "We display only UTF-8 and remove the offending characters. These errors "
-#~ "may occur in the log message or elsewhere in the commit email."
-#~ msgstr ""
-#~ "编码错误（提交消息并非全部为 ASCII）：由于字符转换问题，部分提交消息可能有"
-#~ "所改动。我们只显示 UTF-8，并移除有问题的字符。这类错误可能出现在日志消息"
-#~ "中，也可能出现在提交邮件的其他地方。"
-
-#~ msgid "Watch categories"
-#~ msgstr "关注分类"
-
-#~ msgid ""
-#~ "This screen contains a list of the port categories. A * indicates a "
-#~ "category that contains ports which are on your watch list. When a port "
-#~ "changes in one of your watch categories, you will be notified by email if "
-#~ "you have selected a notification frequency within your <a "
-#~ "href=\"customize.php\">account settings</a>."
-#~ msgstr ""
-#~ "本页列出了所有 Port 分类。带 * 号的分类表示其中含有您关注列表上的 Port。当"
-#~ "您的关注分类中有 Port 发生变化时，只要您已在<a href=\"customize.php\">账户"
-#~ "设置</a>中选择了通知频率，就会收到电子邮件通知。"
-
-#~ msgid ""
-#~ "Virtual categories cannot be watched and their checkboxes will be "
-#~ "disabled."
-#~ msgstr "虚拟分类无法关注，其复选框将被禁用。"
-
-#~ msgid "Save changes"
-#~ msgstr "保存更改"
-
-#~ msgid "that did not work"
-#~ msgstr "操作未能成功"
-
-#~ msgid "OUCH, that's not very nice.  something went wrong:"
-#~ msgstr "哎呀，这可不太妙。出问题了："
-
-#~ msgid "there was an error:"
-#~ msgstr "出现错误："
-
-#~ msgid ""
-#~ "To keep the search working for people, please confirm you are not a bot."
-#~ msgstr "为了让搜索功能能继续为众人所用，请确认您不是机器人。"
-
-#~ msgid "Continue to search"
-#~ msgstr "继续搜索"
-
-#~ msgid "FreeBSD Ports description"
-#~ msgstr "FreeBSD Ports 简介"

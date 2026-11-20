@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreshPorts\n"
 "Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
-"POT-Creation-Date: 2026-11-16 23:55+0000\n"
+"POT-Creation-Date: 2026-11-20 12:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 #: classes/display_commit.php:209 classes/port-display.php:1217
-#: include/freshports.php:2007
+#: include/freshports.php:2065
 msgid "Author:"
 msgstr ""
 
@@ -385,7 +385,7 @@ msgstr ""
 
 #: classes/port-display.php:1578 classes/port-display.php:1923
 #: classes/port-display.php:2160 classes/port-display.php:2194
-#: include/freshports.php:1706
+#: include/freshports.php:1764
 #, php-format
 msgid "Expand this list (%d items)"
 msgstr ""
@@ -394,7 +394,7 @@ msgstr ""
 #: classes/port-display.php:1925 classes/port-display.php:1933
 #: classes/port-display.php:2044 classes/port-display.php:2059
 #: classes/port-display.php:2167 classes/port-display.php:2197
-#: classes/port-display.php:2207 include/freshports.php:1716
+#: classes/port-display.php:2207 include/freshports.php:1774
 msgid "Collapse this list."
 msgstr ""
 
@@ -673,22 +673,80 @@ msgstr ""
 msgid "I couldn't find your watch list details... sorry"
 msgstr ""
 
-#: include/bot-gate.php:137
+#: include/bot-gate.php:138
 msgid "Just a moment"
 msgstr ""
 
-#: include/bot-gate.php:226
+#: include/bot-gate.php:227
 msgid "If you're a person, please press the button for a cookie."
 msgstr ""
 
-#: include/bot-gate.php:231
+#: include/bot-gate.php:232
 msgid "I was a person last time I checked."
 msgstr ""
 
-#: include/bot-gate.php:233
+#: include/bot-gate.php:234
 msgid ""
 "This sets a cookie, so you will not be asked again for a day. Logged in "
 "users are never asked."
+msgstr ""
+
+#: include/committer-notify.php:56
+#, php-format
+msgid "Nothing changed: you are already subscribed as %s."
+msgstr ""
+
+#: include/committer-notify.php:59
+#, php-format
+msgid ""
+"A confirmation was sent to %s@FreeBSD.org less than an hour ago.  Please use "
+"the link in that message."
+msgstr ""
+
+#: include/committer-notify.php:77
+#, php-format
+msgid ""
+"Your opt-in for %s is waiting for confirmation, but the confirmation mail "
+"could not be sent.  Please try again later."
+msgstr ""
+
+#: include/committer-notify.php:80
+#, php-format
+msgid ""
+"We sent a link to %1$s@FreeBSD.org.  The opt-in starts when that link is "
+"used.  It works for %2$d days."
+msgstr ""
+
+#. TRANSLATORS: keep the line breaks short, this is a plain text email.  %1$s is a FreshPorts account name, %2$s the committer's login
+#: include/committer-notify.php:90
+#, php-format
+msgid ""
+"The FreshPorts account '%1$s' asked FreshPorts to mail\n"
+"%2$s@FreeBSD.org when FreshPorts has trouble processing\n"
+"a port change committed by %2$s."
+msgstr ""
+
+#: include/committer-notify.php:93
+msgid ""
+"Nothing will be sent unless you confirm.  To confirm, or to\n"
+"refuse, use this link:"
+msgstr ""
+
+#: include/committer-notify.php:95
+#, php-format
+msgid ""
+"The link works for %d days.  If you did not ask for this,\n"
+"you can ignore this message."
+msgstr ""
+
+#: include/committer-notify.php:96 include/freshports.php:2285
+#, php-format
+msgid "The request came from %s"
+msgstr ""
+
+#: include/committer-notify.php:111
+#, php-format
+msgid "%s - confirm committer opt-in"
 msgstr ""
 
 #: include/csrf.php:73
@@ -980,7 +1038,7 @@ msgstr ""
 msgid "I remember"
 msgstr ""
 
-#: include/freshports.php:1178 include/freshports.php:2417
+#: include/freshports.php:1178 include/freshports.php:2475
 msgid "Blog"
 msgstr ""
 
@@ -1048,75 +1106,75 @@ msgstr ""
 msgid "This material is copyrighted"
 msgstr ""
 
-#: include/freshports.php:1694
+#: include/freshports.php:1752
 msgid "Notes from UPDATING"
 msgstr ""
 
-#: include/freshports.php:1696
+#: include/freshports.php:1754
 #, php-format
 msgid "These upgrade notes are taken from %s"
 msgstr ""
 
-#: include/freshports.php:1739
+#: include/freshports.php:1797
 msgid ""
 "Commit History - (may be incomplete: for full details, see links to "
 "repositories near top of page)"
 msgstr ""
 
-#: include/freshports.php:1744
+#: include/freshports.php:1802
 #, php-format
 msgid ""
 "This is a slave port.  You may also want to view the commits to the master "
 "port: %s"
 msgstr ""
 
-#: include/freshports.php:1748
+#: include/freshports.php:1806
 msgid "Commit"
 msgstr ""
 
-#: include/freshports.php:1748
+#: include/freshports.php:1806
 msgid "Credits"
 msgstr ""
 
-#: include/freshports.php:1748
+#: include/freshports.php:1806
 msgid "Log message"
 msgstr ""
 
-#: include/freshports.php:1793
+#: include/freshports.php:1851
 #, php-format
 msgid ""
 "<b>NOTE</b>: This slave port may no longer be vulnerable to issues shown "
 "below because the <a href=\"%s\">master port</a> has been updated."
 msgstr ""
 
-#: include/freshports.php:1833 include/freshports.php:1834
+#: include/freshports.php:1891 include/freshports.php:1892
 #: www/sanity_test_failures.php:175 www/sanity_test_failures.php:176
 msgid "First Page"
 msgstr ""
 
-#: include/freshports.php:1835 include/freshports.php:1836
+#: include/freshports.php:1893 include/freshports.php:1894
 #: www/sanity_test_failures.php:177 www/sanity_test_failures.php:178
 msgid "Last Page"
 msgstr ""
 
-#: include/freshports.php:1860 rewrite/missing-non-port.php:161
+#: include/freshports.php:1918 rewrite/missing-non-port.php:161
 #: www/sanity_test_failures.php:185
 #, php-format
 msgid "Number of commits found: %d"
 msgstr ""
 
-#: include/freshports.php:1869 rewrite/missing-non-port.php:171
+#: include/freshports.php:1927 rewrite/missing-non-port.php:171
 #: www/sanity_test_failures.php:189 www/search.php:1419 www/search.php:1436
 #, php-format
 msgid "(showing only %d on this page)"
 msgstr ""
 
-#: include/freshports.php:2147
+#: include/freshports.php:2205
 msgid "Link to this section"
 msgstr ""
 
 #. TRANSLATORS: keep the line breaks short, this is a plain text email
-#: include/freshports.php:2218
+#: include/freshports.php:2276
 #, php-format
 msgid ""
 "Someone, perhaps you, supplied your email address as their\n"
@@ -1125,318 +1183,313 @@ msgid ""
 "and we will take care of it for you."
 msgstr ""
 
-#: include/freshports.php:2223
+#: include/freshports.php:2281
 #, php-format
 msgid "Your token is: %s"
 msgstr ""
 
-#: include/freshports.php:2225
+#: include/freshports.php:2283
 msgid "Please point your browser at"
 msgstr ""
 
-#: include/freshports.php:2227
-#, php-format
-msgid "The request came from %s"
-msgstr ""
-
-#: include/freshports.php:2244
+#: include/freshports.php:2302
 #, php-format
 msgid "%s - user registration"
 msgstr ""
 
-#: include/freshports.php:2315
+#: include/freshports.php:2373
 msgid "You are connected over IPv6"
 msgstr ""
 
-#: include/freshports.php:2328
+#: include/freshports.php:2386
 #, php-format
 msgid "Valid %1$s, %2$s, and %3$s."
 msgstr ""
 
-#: include/freshports.php:2329
+#: include/freshports.php:2387
 msgid "We like to keep our HTML valid"
 msgstr ""
 
-#: include/freshports.php:2330
+#: include/freshports.php:2388
 msgid "We like to have valid CSS"
 msgstr ""
 
-#: include/freshports.php:2331
+#: include/freshports.php:2389
 msgid "Valid RSS is good too"
 msgstr ""
 
-#: include/freshports.php:2362 include/login.php:15 www/login.php:149
+#: include/freshports.php:2420 include/login.php:15 www/login.php:149
 #: www/login.php:232
 msgid "Login"
 msgstr ""
 
-#: include/freshports.php:2370
+#: include/freshports.php:2428
 #, php-format
 msgid "Logged in as %s"
 msgstr ""
 
-#: include/freshports.php:2374
+#: include/freshports.php:2432
 msgid "your email is <a href=\"/bouncing.php\">bouncing</a>"
 msgstr ""
 
-#: include/freshports.php:2377
+#: include/freshports.php:2435
 msgid "Your Account"
 msgstr ""
 
-#: include/freshports.php:2377
+#: include/freshports.php:2435
 msgid "Your account"
 msgstr ""
 
-#: include/freshports.php:2380
+#: include/freshports.php:2438
 msgid "Committer Opt-in"
 msgstr ""
 
-#: include/freshports.php:2380
+#: include/freshports.php:2438
 msgid "Committers can receive reports of Sanity Test Failures"
 msgstr ""
 
-#: include/freshports.php:2384
+#: include/freshports.php:2442
 msgid "Logout"
 msgstr ""
 
-#: include/freshports.php:2384
+#: include/freshports.php:2442
 msgid "Logout of the website"
 msgstr ""
 
-#: include/freshports.php:2385
+#: include/freshports.php:2443
 msgid "List of commits you have flagged"
 msgstr ""
 
-#: include/freshports.php:2385
+#: include/freshports.php:2443
 msgid "My Flagged Commits"
 msgstr ""
 
-#: include/freshports.php:2387
+#: include/freshports.php:2445
 msgid "Login to the website"
 msgstr ""
 
-#: include/freshports.php:2387
+#: include/freshports.php:2445
 msgid "User Login"
 msgstr ""
 
-#: include/freshports.php:2388
+#: include/freshports.php:2446
 msgid "Create account"
 msgstr ""
 
-#: include/freshports.php:2388
+#: include/freshports.php:2446
 msgid "Create an account"
 msgstr ""
 
-#: include/freshports.php:2406
+#: include/freshports.php:2464
 msgid "This site"
 msgstr ""
 
-#: include/freshports.php:2410
+#: include/freshports.php:2468
 msgid "A bit of background on FreshPorts"
 msgstr ""
 
-#: include/freshports.php:2410
+#: include/freshports.php:2468
 msgid "What is FreshPorts?"
 msgstr ""
 
-#: include/freshports.php:2411 www/authors.php:26
+#: include/freshports.php:2469 www/authors.php:26
 msgid "About the authors"
 msgstr ""
 
-#: include/freshports.php:2411
+#: include/freshports.php:2469
 msgid "Who wrote this stuff?"
 msgstr ""
 
-#: include/freshports.php:2412
+#: include/freshports.php:2470
 msgid "Issues"
 msgstr ""
 
-#: include/freshports.php:2412
+#: include/freshports.php:2470
 msgid "Report a website problem"
 msgstr ""
 
-#: include/freshports.php:2413 www/faq.php:32
+#: include/freshports.php:2471 www/faq.php:32
 msgid "FAQ"
 msgstr ""
 
-#: include/freshports.php:2413 www/faq.php:13
+#: include/freshports.php:2471 www/faq.php:13
 msgid "Frequently Asked Questions"
 msgstr ""
 
-#: include/freshports.php:2414 www/how-big-is-it.php:13
+#: include/freshports.php:2472 www/how-big-is-it.php:13
 msgid "How big is it?"
 msgstr ""
 
-#: include/freshports.php:2414
+#: include/freshports.php:2472
 msgid "How many pages are in this website?"
 msgstr ""
 
-#: include/freshports.php:2415
+#: include/freshports.php:2473
 msgid "Are you a security researcher? Please read this."
 msgstr ""
 
-#: include/freshports.php:2415 www/security-policy.php:13
+#: include/freshports.php:2473 www/security-policy.php:13
 msgid "Security Policy"
 msgstr ""
 
-#: include/freshports.php:2416
+#: include/freshports.php:2474
 msgid "Our privacy statement"
 msgstr ""
 
-#: include/freshports.php:2416
+#: include/freshports.php:2474
 msgid "Privacy"
 msgstr ""
 
-#: include/freshports.php:2417
+#: include/freshports.php:2475
 msgid "All the latest FreshPorts news"
 msgstr ""
 
-#: include/freshports.php:2418 www/contact.php:13 www/contact.php:27
+#: include/freshports.php:2476 www/contact.php:13 www/contact.php:27
 msgid "Contact"
 msgstr ""
 
-#: include/freshports.php:2418
+#: include/freshports.php:2476
 msgid "Contact details"
 msgstr ""
 
-#: include/freshports.php:2428
+#: include/freshports.php:2486
 msgid "Latest Vulnerabilities"
 msgstr ""
 
-#: include/freshports.php:2434
+#: include/freshports.php:2492
 msgid "All vulnerabilities"
 msgstr ""
 
-#: include/freshports.php:2434
+#: include/freshports.php:2492
 msgid "modified, not new"
 msgstr ""
 
-#: include/freshports.php:2435
+#: include/freshports.php:2493
 msgid "Last processed:"
 msgstr ""
 
-#: include/freshports.php:2447 include/freshports.php:2477
+#: include/freshports.php:2505 include/freshports.php:2535
 msgid "Ports"
 msgstr ""
 
-#: include/freshports.php:2452
+#: include/freshports.php:2510
 msgid "FreshPorts Home page"
 msgstr ""
 
-#: include/freshports.php:2452
+#: include/freshports.php:2510
 msgid "Home"
 msgstr ""
 
-#: include/freshports.php:2453 include/freshports.php:2475
+#: include/freshports.php:2511 include/freshports.php:2533
 #: www/categories.php:15
 msgid "Categories"
 msgstr ""
 
-#: include/freshports.php:2453
+#: include/freshports.php:2511
 msgid "List of all Port categories"
 msgstr ""
 
-#: include/freshports.php:2454
+#: include/freshports.php:2512
 msgid "All deleted ports"
 msgstr ""
 
-#: include/freshports.php:2454 www/ports-deleted.php:30
+#: include/freshports.php:2512 www/ports-deleted.php:30
 msgid "Deleted ports"
 msgstr ""
 
-#: include/freshports.php:2455 www/sanity_test_failures.php:37
+#: include/freshports.php:2513 www/sanity_test_failures.php:37
 #: www/sanity_test_failures.php:85
 msgid "Sanity Test Failures"
 msgstr ""
 
-#: include/freshports.php:2455
+#: include/freshports.php:2513
 msgid "Things that didn't go quite right..."
 msgstr ""
 
-#: include/freshports.php:2456 www/backend/newsfeeds.php:21
+#: include/freshports.php:2514 www/backend/newsfeeds.php:21
 msgid "Newsfeeds"
 msgstr ""
 
-#: include/freshports.php:2456
+#: include/freshports.php:2514
 msgid "Newsfeeds for just about everything"
 msgstr ""
 
-#: include/freshports.php:2469 www/watch-list-maintenance.php:330
+#: include/freshports.php:2527 www/watch-list-maintenance.php:330
 #: www/watch-list-maintenance.php:403
 msgid "Watch Lists"
 msgstr ""
 
-#: include/freshports.php:2474 www/pkg_upload.php:100 www/pkg_upload.php:123
+#: include/freshports.php:2532 www/pkg_upload.php:100 www/pkg_upload.php:123
 #: www/pkg_upload.php:146
 msgid "Upload"
 msgstr ""
 
-#: include/freshports.php:2474
+#: include/freshports.php:2532
 msgid ""
 "Upload a file containing a list of ports you want to add to your watch list"
 msgstr ""
 
-#: include/freshports.php:2475
+#: include/freshports.php:2533
 msgid "Search through categories for ports to add to your watch list"
 msgstr ""
 
-#: include/freshports.php:2476
+#: include/freshports.php:2534
 msgid "Maintain"
 msgstr ""
 
-#: include/freshports.php:2476
+#: include/freshports.php:2534
 msgid "Maintain your watch list[s]"
 msgstr ""
 
-#: include/freshports.php:2477
+#: include/freshports.php:2535
 msgid "Your list of watched ports"
 msgstr ""
 
-#: include/freshports.php:2478
+#: include/freshports.php:2536
 msgid "A list of news feeds for your watched lists"
 msgstr ""
 
-#: include/freshports.php:2478
+#: include/freshports.php:2536
 msgid "Personal Newsfeeds"
 msgstr ""
 
-#: include/freshports.php:2479
+#: include/freshports.php:2537
 msgid "Maintain your list of subscriptions"
 msgstr ""
 
-#: include/freshports.php:2479
+#: include/freshports.php:2537
 msgid "Report Subscriptions"
 msgstr ""
 
-#: include/freshports.php:2480
+#: include/freshports.php:2538
 msgid "ABI Package Subscriptions"
 msgstr ""
 
-#: include/freshports.php:2480
+#: include/freshports.php:2538
 msgid "Maintain your ABI package subscriptions"
 msgstr ""
 
-#: include/freshports.php:2493
+#: include/freshports.php:2551
 msgid "Statistics"
 msgstr ""
 
-#: include/freshports.php:2498 include/freshports.php:2499
+#: include/freshports.php:2556 include/freshports.php:2557
 msgid "Everyone loves statistics!"
 msgstr ""
 
-#: include/freshports.php:2498
+#: include/freshports.php:2556
 msgid "Graphs"
 msgstr ""
 
-#: include/freshports.php:2499
+#: include/freshports.php:2557
 msgid "NEW Graphs (Javascript)"
 msgstr ""
 
-#: include/freshports.php:2635
+#: include/freshports.php:2693
 msgid "People watching this port, also watch:"
 msgstr ""
 
-#: include/freshports.php:2943
+#: include/freshports.php:3001
 msgid "Sorry, a database query failed. The error has been logged."
 msgstr ""
 
@@ -2354,7 +2407,7 @@ msgstr ""
 msgid "Last Update"
 msgstr ""
 
-#: www/categories.php:182 www/committer-opt-in.php:172
+#: www/categories.php:182 www/committer-opt-in.php:160
 #: www/report-subscriptions.php:261
 msgid "update"
 msgstr ""
@@ -2577,21 +2630,90 @@ msgstr ""
 msgid "nothing supplied, nothing found!"
 msgstr ""
 
-#: www/committer-opt-in.php:35 www/committer-opt-in.php:98
+#: www/committer-notify.php:51
+#, php-format
+msgid ""
+"Confirmed.  FreshPorts will now mail %s@FreeBSD.org when it has trouble "
+"processing a port change you committed."
+msgstr ""
+
+#: www/committer-notify.php:63
+#, php-format
+msgid "Done.  FreshPorts will not mail %s@FreeBSD.org about your commits."
+msgstr ""
+
+#: www/committer-notify.php:80
+msgid "Committer notifications"
+msgstr ""
+
+#: www/committer-notify.php:103
+msgid ""
+"This link is not valid any more, so there is nothing to do.  No mail is sent "
+"for it."
+msgstr ""
+
+#: www/committer-notify.php:111
+#, php-format
+msgid ""
+"A FreshPorts user asked to mail %s@FreeBSD.org when FreshPorts has trouble "
+"processing a port change committed by %s.  Nothing is sent unless you "
+"confirm."
+msgstr ""
+
+#: www/committer-notify.php:113
+msgid "Confirm"
+msgstr ""
+
+#: www/committer-notify.php:114
+msgid "Refuse"
+msgstr ""
+
+#: www/committer-notify.php:117
+#, php-format
+msgid "This confirmation link has expired.  Nothing is sent to %s@FreeBSD.org."
+msgstr ""
+
+#: www/committer-notify.php:119
+msgid "Remove the request"
+msgstr ""
+
+#: www/committer-notify.php:122
+#, php-format
+msgid ""
+"FreshPorts mails %s@FreeBSD.org when it has trouble processing a port change "
+"committed by %s."
+msgstr ""
+
+#: www/committer-notify.php:124
+msgid "Stop these messages"
+msgstr ""
+
+#: www/committer-notify.php:129
+#, php-format
+msgid ""
+"See the <a href=\"%s\">committer opt-in</a> page for what this service does."
+msgstr ""
+
+#: www/committer-opt-in.php:34 www/committer-opt-in.php:78
 msgid "Committer opt-in"
 msgstr ""
 
-#: www/committer-opt-in.php:58
+#: www/committer-opt-in.php:48
 msgid "please enter just your login, not your email address"
 msgstr ""
 
-#: www/committer-opt-in.php:106
+#: www/committer-opt-in.php:54
+msgid ""
+"That is not a FreeBSD login: use lower case letters, digits, - and _ only."
+msgstr ""
+
+#: www/committer-opt-in.php:86
 msgid ""
 "This page only works if you are logged in and using a @FreeBSD.org email "
 "address."
 msgstr ""
 
-#: www/committer-opt-in.php:111
+#: www/committer-opt-in.php:91
 msgid ""
 "Mistakes happen.  And when they do, they are best corrected quickly.  To "
 "that end, FreshPorts provides an opt-in service for all FreeBSD committers.  "
@@ -2600,36 +2722,49 @@ msgid ""
 "past, such problems are related to syntax errors in the Makefile."
 msgstr ""
 
-#: www/committer-opt-in.php:115
+#: www/committer-opt-in.php:95
 msgid ""
 "One committer referred to this service as an automated nagging mentor..."
 msgstr ""
 
-#: www/committer-opt-in.php:126
+#: www/committer-opt-in.php:99
+msgid ""
+"When you subscribe, or change your login, FreshPorts mails a link to "
+"<login>@FreeBSD.org.  The service starts when that link is used.  Every "
+"report ends with a link which stops them."
+msgstr ""
+
+#: www/committer-opt-in.php:110
 msgid "Your opt-in status"
 msgstr ""
 
-#: www/committer-opt-in.php:150
-msgid "You are: subscribed"
+#: www/committer-opt-in.php:140
+#, php-format
+msgid "You are: subscribed as %s"
 msgstr ""
 
-#: www/committer-opt-in.php:154
+#: www/committer-opt-in.php:142
+#, php-format
+msgid "You are: waiting for confirmation, sent to %s@FreeBSD.org"
+msgstr ""
+
+#: www/committer-opt-in.php:146
 msgid "You are: not subscribed"
 msgstr ""
 
-#: www/committer-opt-in.php:167
+#: www/committer-opt-in.php:155
 msgid "your freefall login:"
 msgstr ""
 
-#: www/committer-opt-in.php:173
+#: www/committer-opt-in.php:161
 msgid "unsubscribe"
 msgstr ""
 
-#: www/committer-opt-in.php:177
+#: www/committer-opt-in.php:165
 msgid "subscribe"
 msgstr ""
 
-#: www/committer-opt-in.php:185
+#: www/committer-opt-in.php:173
 msgid "Please do not include @FreeBSD.org in your login name."
 msgstr ""
 
@@ -4837,11 +4972,11 @@ msgstr[1] ""
 msgid "work in progress"
 msgstr ""
 
-#: www/other-copyrights.php:17
+#: www/other-copyrights.php:18
 msgid "Other copyrights"
 msgstr ""
 
-#: www/other-copyrights.php:28
+#: www/other-copyrights.php:29
 msgid "The copyright on the daemon you see in the website logo is as follows:"
 msgstr ""
 

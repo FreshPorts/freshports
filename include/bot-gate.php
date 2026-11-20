@@ -126,7 +126,8 @@ function freshports_bot_gate_challenge($page, $return) {
 	# crawler requests an hour, which would flood the log.  The message is
 	# unchanged so existing log watching and logcheck rules still match.
 	if ($page == '/search.php') {
-		syslog(LOG_NOTICE, 'search gate challenge: ' . $_SERVER['REMOTE_ADDR'] . ' ' . ($_SERVER['HTTP_USER_AGENT'] ?? '-'));
+		openlog('FreshPorts', LOG_PID, LOG_LOCAL3);
+		syslog(LOG_INFO, 'search gate challenge: ' . $_SERVER['REMOTE_ADDR'] . ' ' . ($_SERVER['HTTP_USER_AGENT'] ?? '-'));
 	}
 
 	header('HTTP/1.1 403 Forbidden');

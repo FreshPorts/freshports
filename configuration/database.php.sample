@@ -5,15 +5,25 @@
 	# Copyright (c) 1998-2026 Dan Langille
 	#
 
+	# The @ stops PHP writing its own warning for a failed connection; the
+	# reason from that warning goes into our single syslog line below instead.
 	$db = @pg_connect("dbname=freshports.dev host=pg02.example.org user=www_dev password=SecretPW sslmode=require");
 	if ($db) {
 #		echo 'database connected';
 	} else {
 #		echo 'database connection failed';
+		# pg_last_error() needs a connection, so take the reason (too many
+		# clients, connection refused, authentication failed, timeout, ...)
+		# from the warning pg_connect() raised. It spans several lines; keep
+		# it to one syslog line. Never shown to the client.
+		$reason = error_get_last()['message'] ?? 'no reason given';
+		$reason = preg_replace('/^pg_connect\(\): /', '', $reason);
+		$reason = preg_replace('/\s+/', ' ', trim($reason));
+
         header('HTTP/1.1 503 Service Temporarily Unavailable');
         header('Status: 503 Service Temporarily Unavailable');
         header('Retry-After: 300');//300 seconds
-        syslog(LOG_ERR, 'Database connection failure');
+        syslog(LOG_ERR, 'Database connection failure: ' . $reason);
         die('Status: 503 Service Temporarily Unavailable');
 	}
 

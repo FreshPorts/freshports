@@ -15,6 +15,27 @@
   # Send JSON format to a log agent or Syslog endpoint handled by VictoriaLogs
   access_log    /var/log/nginx/access_json.log victorialogs_json;
 
+  # Drop the Lightpanda headless browser. On 2026-11-11 it sent dev about
+  # 2,900 requests in two minutes, and on 2026-11-19 at 05:03 UTC it sent
+  # r720-02 about 8,400 requests in 40 seconds from 8,191 rotating IPs,
+  # mostly search.php and vuxml.php. Both times it used up the database
+  # connections and normal pages returned 502. It sends no referer, so
+  # only its user agent identifies it.
+  if ($http_user_agent ~* "lightpanda") { return 444; }
+
+  # Drop requests whose Referer is a bare origin ("https://host", no path, no
+  # trailing slash). Browsers always send at least "https://host/", so only a
+  # client faking its referer sends this. On 2026-11-10 a scraper used it with
+  # rotating residential IPs and faked browser user agents: about 2,400
+  # search.php requests in one minute to fresherports.org (stage) at 02:12 UTC
+  # and about 6,950 to www.freshports.org (prod) during the 07:00 UTC hour.
+  # Both exhausted the database connections and caused 502s on normal pages.
+  # UptimeRobot also sends a bare-origin referer, so it is exempted.
+  set $bare_origin 0;
+  if ($http_referer ~ "^https?://[^/]+$") { set $bare_origin 1; }
+  if ($http_user_agent ~ "UptimeRobot") { set $bare_origin 0; }
+  if ($bare_origin) { return 444; }
+
   # /.well-known/ (security.txt, keys, ACME challenges) stays public.  ^~
   # stops the regex locations below, including the deny, from applying.
   location ^~ /.well-known/ {
@@ -61,6 +82,17 @@
 
   # the commits.php page has been retired
   rewrite ^/commits.php / permanent;
+
+  # Drop a scraper whose search URL template is missing its '&' separators
+  # (sends e.g. "stype=maintainermethod=exactquery=<email>" or
+  # "stype=depends_allmethod=matchquery=<port>" instead of
+  # "stype=maintainer&method=exact&query=<email>"). It runs searches slowly
+  # from rotating AWS addresses with faked user agents and a faked
+  # http://www.freshports.org/ referer. These requests can only ever get
+  # the "bad search string" page, so close the connection without a
+  # response (444) instead of passing them to PHP and logging each one.
+  # First seen 2026-10-22 on aws-1-nginx01.
+  if ($args ~ "stype=[a-z_]+[^&]*method=") { return 444; }
 
   # commit.php and vuxml.php: without a login or the bot gate cookie, show the
   # bot gate's challenge, before the page itself and the database run.

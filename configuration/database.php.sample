@@ -5,9 +5,16 @@
 	# Copyright (c) 1998-2026 Dan Langille
 	#
 
+	# On dev hosts, dbname and dbhost will be used in include/freshports.php and
+	# displayed at the top of the page for debugging purposes.
+	# The password is deliberately not kept in a variable.
+	$dbname = "freshports.dev";
+	$dbhost = "pg02.example.org";
+	$dbuser = "www_dev";
+
 	# The @ stops PHP writing its own warning for a failed connection; the
 	# reason from that warning goes into our single syslog line below instead.
-	$db = @pg_connect("dbname=freshports.dev host=pg02.example.org user=www_dev password=SecretPW sslmode=require");
+	$db = @pg_connect("dbname=$dbname host=$dbhost user=$dbuser password=SecretPW sslmode=require");
 	if ($db) {
 #		echo 'database connected';
 	} else {
@@ -20,11 +27,11 @@
 		$reason = preg_replace('/^pg_connect\(\): /', '', $reason);
 		$reason = preg_replace('/\s+/', ' ', trim($reason));
 
-        header('HTTP/1.1 503 Service Temporarily Unavailable');
-        header('Status: 503 Service Temporarily Unavailable');
-        header('Retry-After: 300');//300 seconds
-        syslog(LOG_ERR, 'Database connection failure: ' . $reason);
-        die('Status: 503 Service Temporarily Unavailable');
+		header('HTTP/1.1 503 Service Temporarily Unavailable');
+		header('Status: 503 Service Temporarily Unavailable');
+		header('Retry-After: 300');//300 seconds
+		syslog(LOG_ERR, 'Database connection failure: ' . $reason);
+		die('Status: 503 Service Temporarily Unavailable');
 	}
 
 	$Statistics->DBSet($db);

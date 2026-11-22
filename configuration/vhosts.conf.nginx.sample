@@ -33,6 +33,24 @@ map "$cookie_visitor|$cookie_bot_gate_ok|$arg_query" $fp_bot_gate_search {
   "~^\|\|.+"   1;
 }
 
+# User agents to refuse (403) on this site.  virtualhost-common.conf checks
+# $block_user_agent in every server block, so this map must exist on every
+# site, even if it blocks nothing (keep only "default 0;").  A plain string
+# must equal the whole User-Agent header, so a crawler's name alone never
+# matches; use ~* to match part of the header, ignoring case.  These are
+# crawlers and scrapers with no benefit to FreshPorts.  Search engines and
+# feed readers are deliberately not listed.
+map $http_user_agent $block_user_agent {
+  default                 0;
+  ""                      1;  # empty user agent
+  ~*sogou                 1;
+  ~*yisouspider           1;
+  ~*bytespider            1;
+  ~*tiktokspider          1;
+  ~*baiduspider           1;
+  ~*databankmetasearch    1;
+}
+
 # the format of /var/log/nginx/access_json.log, which is read into VictoriaLogs.
 # used by virtualhost-common.conf
 

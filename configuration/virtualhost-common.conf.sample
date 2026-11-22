@@ -15,6 +15,13 @@
   # Send JSON format to a log agent or Syslog endpoint handled by VictoriaLogs
   access_log    /var/log/nginx/access_json.log victorialogs_json;
 
+  # Refuse user agents listed in the $block_user_agent map.  The map is per
+  # site, in vhosts.conf.nginx, and every site must define it (it may block
+  # nothing: just "default 0;"), or nginx -t fails with "unknown variable".
+  if ($block_user_agent) {
+    return 403;
+  }
+
   # Drop the Lightpanda headless browser. On 2026-11-11 it sent dev about
   # 2,900 requests in two minutes, and on 2026-11-19 at 05:03 UTC it sent
   # r720-02 about 8,400 requests in 40 seconds from 8,191 rotating IPs,

@@ -1,12 +1,15 @@
-# The client address.  Visitors reach this server through a front proxy, so
-# without this every request would appear to come from the proxy: the logs,
-# the rate limits below and the PHP code would all see the proxy's address.
-# Trust the proxy's header for the real client address, but only from the
-# proxy itself.  The proxy address, and which header it sends, differ per
-# site, which is why this is here and not in virtualhost-common.conf.  It is
-# in the http context, so it covers every server block below.
-set_real_ip_from  10.55.0.24/32;
-real_ip_header    X-Real-IP;
+# The client address.  Visitors reach this server through one or two front
+# proxies (proxy01 and/or the site's own proxy), so without this every request
+# would appear to come from a proxy: the logs, the rate limits below and the
+# PHP code would all see the proxy's address.  Each proxy appends to
+# X-Forwarded-For; with real_ip_recursive on, nginx walks that list from the
+# right, skipping the trusted proxies below, and uses the first address that
+# isn't one of them.  Proxy addresses differ per site, which is why this is
+# here and not in virtualhost-common.conf.  It is in the http context, so it
+# covers every server block below.
+set_real_ip_from  10.55.0.24;
+set_real_ip_from  10.140.0.180;
+real_ip_header    X-Forwarded-For;
 real_ip_recursive on;
 
 # The bot gate - see include/bot-gate.php, virtualhost-common.conf and

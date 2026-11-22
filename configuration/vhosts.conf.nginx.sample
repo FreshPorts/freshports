@@ -1,3 +1,14 @@
+# The client address.  Visitors reach this server through a front proxy, so
+# without this every request would appear to come from the proxy: the logs,
+# the rate limits below and the PHP code would all see the proxy's address.
+# Trust the proxy's header for the real client address, but only from the
+# proxy itself.  The proxy address, and which header it sends, differ per
+# site, which is why this is here and not in virtualhost-common.conf.  It is
+# in the http context, so it covers every server block below.
+set_real_ip_from  10.55.0.24/32;
+real_ip_header    X-Real-IP;
+real_ip_recursive on;
+
 # The bot gate - see include/bot-gate.php, virtualhost-common.conf and
 # https://github.com/FreshPorts/freshports/issues/692
 # https://github.com/FreshPorts/freshports/issues/732

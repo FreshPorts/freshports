@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: FreshPorts\n"
 "Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
 "POT-Creation-Date: 2026-11-20 12:30+0000\n"
-"PO-Revision-Date: 2026-11-17 19:50+0300\n"
+"PO-Revision-Date: 2026-11-23 18:53+0300\n"
 "Last-Translator: Yusuf Yaman <nxjoseph@FreeBSD.org>\n"
 "Language-Team: Turkish\n"
 "Language: tr\n"
@@ -741,7 +741,7 @@ msgstr ""
 #: include/committer-notify.php:56
 #, php-format
 msgid "Nothing changed: you are already subscribed as %s."
-msgstr ""
+msgstr "Hiçbir şey değişmedi: hâlihazırda %s olarak abonesiniz."
 
 #: include/committer-notify.php:59
 #, php-format
@@ -749,6 +749,8 @@ msgid ""
 "A confirmation was sent to %s@FreeBSD.org less than an hour ago.  Please use "
 "the link in that message."
 msgstr ""
+"%s@FreeBSD.org adresinize bir saatten kısa bir süre önce bir onay "
+"gönderildi. Lütfen söz konusu iletideki bağlantıyı kullanın."
 
 #: include/committer-notify.php:77
 #, php-format
@@ -756,6 +758,8 @@ msgid ""
 "Your opt-in for %s is waiting for confirmation, but the confirmation mail "
 "could not be sent.  Please try again later."
 msgstr ""
+"%s için yaptığınız committer katılım talebi onay bekliyor, ancak onay e-"
+"postası gönderilemedi. Lütfen daha sonra tekrar deneyin."
 
 #: include/committer-notify.php:80
 #, php-format
@@ -763,6 +767,8 @@ msgid ""
 "We sent a link to %1$s@FreeBSD.org.  The opt-in starts when that link is "
 "used.  It works for %2$d days."
 msgstr ""
+"%1$s@FreeBSD.org adresine bir bağlantı gönderdik. Katılım süreci, söz konusu "
+"bağlantı kullanıldığında başlar. Bağlantı %2$d gün boyunca geçerlidir."
 
 #. TRANSLATORS: keep the line breaks short, this is a plain text email.  %1$s is a FreshPorts account name, %2$s the committer's login
 #: include/committer-notify.php:90
@@ -772,12 +778,17 @@ msgid ""
 "%2$s@FreeBSD.org when FreshPorts has trouble processing\n"
 "a port change committed by %2$s."
 msgstr ""
+"'%1$s' adlı FreshPorts hesabı, %2$s tarafından gönderilen bir port "
+"değişikliğinin işlenmesi sırasında sorun yaşanması durumunda FreshPorts'un "
+"%2$s@FreeBSD.org adresine e-posta göndermesini talep etti."
 
 #: include/committer-notify.php:93
 msgid ""
 "Nothing will be sent unless you confirm.  To confirm, or to\n"
 "refuse, use this link:"
 msgstr ""
+"Siz onay vermediğiniz sürece hiçbir şey gönderilmeyecektir. Onaylamak veya "
+"reddetmek için bu bağlantıyı kullanın:"
 
 #: include/committer-notify.php:95
 #, php-format
@@ -785,6 +796,8 @@ msgid ""
 "The link works for %d days.  If you did not ask for this,\n"
 "you can ignore this message."
 msgstr ""
+"Bağlantı %d gün boyunca geçerlidir. Eğer bunu siz talep etmediyseniz,\n"
+"bu iletiyi görmezden gelebilirsiniz."
 
 #: include/committer-notify.php:96 include/freshports.php:2285
 #, php-format
@@ -792,9 +805,9 @@ msgid "The request came from %s"
 msgstr "İstek şu adresten geldi %s"
 
 #: include/committer-notify.php:111
-#, fuzzy, php-format
+#, php-format
 msgid "%s - confirm committer opt-in"
-msgstr "Committer katılımı"
+msgstr "%s - Committer katılımını onayla"
 
 #: include/csrf.php:73
 msgid ""
@@ -2876,22 +2889,27 @@ msgid ""
 "Confirmed.  FreshPorts will now mail %s@FreeBSD.org when it has trouble "
 "processing a port change you committed."
 msgstr ""
+"Onaylandı. FreshPorts, gönderdiğiniz bir port değişikliğini işlerken sorun "
+"yaşadığında artık %s@FreeBSD.org adresine e-posta gönderecek."
 
 #: www/committer-notify.php:63
 #, php-format
 msgid "Done.  FreshPorts will not mail %s@FreeBSD.org about your commits."
 msgstr ""
+"Tamamlandı. FreshPorts, yaptığınız commit'lerle ilgili olarak %s@FreeBSD.org "
+"adresine e-posta göndermeyecek."
 
 #: www/committer-notify.php:80
-#, fuzzy
 msgid "Committer notifications"
-msgstr "Committer katılımı"
+msgstr "Committer bildirimleri"
 
 #: www/committer-notify.php:103
 msgid ""
 "This link is not valid any more, so there is nothing to do.  No mail is sent "
 "for it."
 msgstr ""
+"Bu bağlantı artık geçerli değil, dolayısıyla yapılabilecek bir şey yok. "
+"Bununla ilgili herhangi bir e-posta gönderilmiyor."
 
 #: www/committer-notify.php:111
 #, php-format
@@ -2900,24 +2918,29 @@ msgid ""
 "processing a port change committed by %s.  Nothing is sent unless you "
 "confirm."
 msgstr ""
+"Bir FreshPorts kullanıcısı, %s tarafından gönderilen bir port değişikliğinin "
+"işlenmesi sırasında FreshPorts bir sorunla karşılaştığında %s@FreeBSD.org "
+"adresine e-posta gönderilmesini talep etti. Siz onay vermediğiniz sürece "
+"hiçbir şey gönderilmez."
 
 #: www/committer-notify.php:113
-#, fuzzy
 msgid "Confirm"
-msgstr "Doğrula:"
+msgstr "Doğrula"
 
 #: www/committer-notify.php:114
 msgid "Refuse"
-msgstr ""
+msgstr "Reddet"
 
 #: www/committer-notify.php:117
 #, php-format
 msgid "This confirmation link has expired.  Nothing is sent to %s@FreeBSD.org."
 msgstr ""
+"Bu onay bağlantısının süresi dolmuştur. %s@FreeBSD.org adresine herhangi bir "
+"şey gönderilmemiştir."
 
 #: www/committer-notify.php:119
 msgid "Remove the request"
-msgstr ""
+msgstr "İsteği kaldır"
 
 #: www/committer-notify.php:122
 #, php-format
@@ -2925,17 +2948,20 @@ msgid ""
 "FreshPorts mails %s@FreeBSD.org when it has trouble processing a port change "
 "committed by %s."
 msgstr ""
+"FreshPorts, %s tarafından gönderilen bir port değişikliğini işlerken sorun "
+"yaşadığında %s@FreeBSD.org adresine e-posta gönderir."
 
 #: www/committer-notify.php:124
-#, fuzzy
 msgid "Stop these messages"
-msgstr "Günlük (log) mesajı"
+msgstr "Bu mesajları durdurun"
 
 #: www/committer-notify.php:129
 #, php-format
 msgid ""
 "See the <a href=\"%s\">committer opt-in</a> page for what this service does."
 msgstr ""
+"Bu hizmetin ne işe yaradığını öğrenmek için <a href=\"%s\">committer "
+"katılımı</a> sayfasına bakın."
 
 #: www/committer-opt-in.php:34 www/committer-opt-in.php:78
 msgid "Committer opt-in"
@@ -2949,6 +2975,8 @@ msgstr "lütfen e-posta adresiniz yerine sadece kullanıcı adınızı girin"
 msgid ""
 "That is not a FreeBSD login: use lower case letters, digits, - and _ only."
 msgstr ""
+"Bu, geçerli bir FreeBSD kullanıcı adı değildir: yalnızca küçük harfler, "
+"rakamlar, - ve _ karakterlerini kullanın."
 
 #: www/committer-opt-in.php:86
 msgid ""
@@ -2984,20 +3012,28 @@ msgid ""
 "<login>@FreeBSD.org.  The service starts when that link is used.  Every "
 "report ends with a link which stops them."
 msgstr ""
+"Abone olduğunuzda veya giriş bilgilerinizi değiştirdiğinizde, FreshPorts "
+"tarafından <login>@FreeBSD.org adresine bir bağlantı gönderilir. Hizmet, bu "
+"bağlantı kullanıldığında başlar. Her raporun sonunda, söz konusu raporları "
+"durdurmanızı sağlayan bir bağlantı bulunur.Abone olduğunuzda veya giriş "
+"bilgilerinizi değiştirdiğinizde, FreshPorts tarafından <login>@FreeBSD.org "
+"adresine bir bağlantı gönderilir. Hizmet, bu bağlantı kullanıldığında "
+"başlar. Her raporun sonunda, söz konusu raporları durdurmanızı sağlayan bir "
+"bağlantı bulunur."
 
 #: www/committer-opt-in.php:110
 msgid "Your opt-in status"
 msgstr "Sizin katılım durumunuz"
 
 #: www/committer-opt-in.php:140
-#, fuzzy, php-format
+#, php-format
 msgid "You are: subscribed as %s"
-msgstr "Siz: abonesiniz"
+msgstr "Siz: %s olarak abonesiniz"
 
 #: www/committer-opt-in.php:142
 #, php-format
 msgid "You are: waiting for confirmation, sent to %s@FreeBSD.org"
-msgstr ""
+msgstr "Siz: onay bekliyorsunuz, %s@FreeBSD.org adresine gönderildi"
 
 #: www/committer-opt-in.php:146
 msgid "You are: not subscribed"

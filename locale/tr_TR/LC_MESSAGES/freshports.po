@@ -778,17 +778,18 @@ msgid ""
 "%2$s@FreeBSD.org when FreshPorts has trouble processing\n"
 "a port change committed by %2$s."
 msgstr ""
-"'%1$s' adlı FreshPorts hesabı, %2$s tarafından gönderilen bir port "
-"değişikliğinin işlenmesi sırasında sorun yaşanması durumunda FreshPorts'un "
-"%2$s@FreeBSD.org adresine e-posta göndermesini talep etti."
+"'%1$s' adlı FreshPorts hesabı, %2$s tarafından gönderilen\n"
+"bir port değişikliğinin işlenmesi sırasında sorun yaşanması\n"
+"durumunda FreshPorts'un %2$s@FreeBSD.org adresine e-posta\n"
+"göndermesini talep etti."
 
 #: include/committer-notify.php:93
 msgid ""
 "Nothing will be sent unless you confirm.  To confirm, or to\n"
 "refuse, use this link:"
 msgstr ""
-"Siz onay vermediğiniz sürece hiçbir şey gönderilmeyecektir. Onaylamak veya "
-"reddetmek için bu bağlantıyı kullanın:"
+"Siz onay vermediğiniz sürece hiçbir şey gönderilmeyecektir.\n"
+"Onaylamak veya reddetmek için bu bağlantıyı kullanın:"
 
 #: include/committer-notify.php:95
 #, php-format
@@ -3015,11 +3016,7 @@ msgstr ""
 "Abone olduğunuzda veya giriş bilgilerinizi değiştirdiğinizde, FreshPorts "
 "tarafından <login>@FreeBSD.org adresine bir bağlantı gönderilir. Hizmet, bu "
 "bağlantı kullanıldığında başlar. Her raporun sonunda, söz konusu raporları "
-"durdurmanızı sağlayan bir bağlantı bulunur.Abone olduğunuzda veya giriş "
-"bilgilerinizi değiştirdiğinizde, FreshPorts tarafından <login>@FreeBSD.org "
-"adresine bir bağlantı gönderilir. Hizmet, bu bağlantı kullanıldığında "
-"başlar. Her raporun sonunda, söz konusu raporları durdurmanızı sağlayan bir "
-"bağlantı bulunur."
+"durdurmanızı sağlayan bir bağlantı bulunur."
 
 #: www/committer-opt-in.php:110
 msgid "Your opt-in status"

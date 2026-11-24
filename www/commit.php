@@ -212,7 +212,7 @@
 				echo _("We have multiple emails for that revision:") . ' ';
 				$Commit->FetchNth(0);
 				$clean_revision = htmlentities($Commit->svn_revision);
-				if (!empty($Commit->commit_hash)) {
+				if (freshports_svn_commit_git_hash($Commit->commit_hash)) {
 					// the revision number, linked to its git commit (#661)
 					echo freshports_git_commit_Link_Hash($Commit->commit_hash, $clean_revision, DEFAULT_GIT_REPO, freshports_git_path_for_svn_path($Commit->path_to_repo));
 				} else {

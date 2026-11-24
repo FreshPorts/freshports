@@ -420,7 +420,7 @@ GROUP BY WLE.element_id';
 				$HTML .= freshports_git_commit_Link_github($mycommit->svn_revision, $mycommit->repo_hostname, $mycommit->path_to_repo) . '&nbsp;';
 				$HTML .= freshports_git_commit_Link_gitlab($mycommit->svn_revision, $mycommit->repo_hostname, $mycommit->path_to_repo) . '&nbsp;';
 				$HTML .= freshports_git_commit_Link_Hash($mycommit->svn_revision, $mycommit->commit_hash_short, $mycommit->repo_hostname, $mycommit->path_to_repo);
-			} elseif (!empty($mycommit->commit_hash)) {
+			} elseif (freshports_svn_commit_git_hash($mycommit->commit_hash)) {
 				# a Subversion commit whose git commit we know: git links, then the hash, then the revision
 				$HTML .= freshports_svn_commit_Links($mycommit->svn_revision, $mycommit->commit_hash, $mycommit->repo_hostname, $mycommit->path_to_repo, '&nbsp;') . '&nbsp;';
 				# rows from the SQL functions carry no commit_hash_short either; see _CommitHash()
@@ -492,7 +492,7 @@ GROUP BY WLE.element_id';
 			$mycommit = new Commit_Ports($this->dbh);
 			$mycommit->PopulateValues($myrow);
 
-			if (!array_key_exists('commit_hash', $myrow) && !empty($mycommit->svn_revision) && !$this->IsGitCommit($mycommit->message_id)) {
+			if (SVN_COMMITS_LINK_TO_GIT && !array_key_exists('commit_hash', $myrow) && !empty($mycommit->svn_revision) && !$this->IsGitCommit($mycommit->message_id)) {
 				$mycommit->commit_hash = $this->_CommitHash($mycommit->commit_log_id);
 			}
 

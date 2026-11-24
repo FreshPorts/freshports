@@ -97,7 +97,7 @@ class FilesDisplay {
             #
             $repository = $myrow['repository'];
             $git_hash   = $myrow['revision_name'];
-            if ($repository == FREEBSD_REPOSITORY_SUBVERSION && !empty($myrow['commit_hash'])) {
+            if ($repository == FREEBSD_REPOSITORY_SUBVERSION && freshports_svn_commit_git_hash($myrow['commit_hash'])) {
                 $repository            = FREEBSD_REPOSITORY_GIT;
                 $git_hash              = $myrow['commit_hash'];
                 $myrow['repo_hostname'] = DEFAULT_GIT_REPO;

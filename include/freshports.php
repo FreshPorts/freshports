@@ -331,12 +331,21 @@ function freshports_git_path_for_svn_path($path) {
 }
 
 #
+# The git commit to link a Subversion commit to, or null for none: when
+# SVN_COMMITS_LINK_TO_GIT is false, Subversion commits link only to svnweb.
+#
+function freshports_svn_commit_git_hash($commit_hash) {
+  return (SVN_COMMITS_LINK_TO_GIT && !empty($commit_hash)) ? $commit_hash : null;
+}
+
+#
 # The links for one Subversion commit.  When we know its git commit: the Subversion
 # icon and its svnweb link, as before, followed by the same four git links a git
 # commit gets (cgit, Codeberg, GitHub, GitLab).  Otherwise just the svnweb link.
 # $separator goes between the links.
 #
 function freshports_svn_commit_Links($svn_revision, $commit_hash, $hostname, $path, $separator = '') {
+  $commit_hash = freshports_svn_commit_git_hash($commit_hash);
   if (empty($commit_hash)) {
     return freshports_svnweb_ChangeSet_Link($svn_revision, $hostname);
   }

@@ -81,3 +81,9 @@ define('LOGIN_TO_VIEW_VUXML',  true);
 # On a 404 for category/port, suggest ports the user might have meant.
 # Defaults to true. See https://github.com/FreshPorts/freshports/issues/614
 #define('PORT_SUGGESTIONS_ON_404', false);
+
+# Link Subversion-era commits to their git commits as well as to svnweb.
+# Defaults to true. false shows only the svnweb links, as before.
+# The database still needs commit_log.commit_hash either way.
+# See https://github.com/FreshPorts/freshports/issues/661
+#define('SVN_COMMITS_LINK_TO_GIT', false);

@@ -1650,7 +1650,40 @@ function freshports_PackageVersionComment() {
 	}
 
 	# '--' is not allowed inside an HTML comment
-	return "\n<!-- freshports-www " . str_replace('--', '- -', htmlspecialchars($Version)) . " -->\n";
+	return "\n<!-- freshports-www " . str_replace('--', '- -', htmlspecialchars($Version)) . " -->\n"
+	     . freshports_BranchComment('freshports-www', freshports_InstalledBranch(dirname(__DIR__)));
+}
+
+# Show which branch a git checkout is on, in the page source only, e.g.
+#
+#   <!-- branch freshports-www main -->
+#   <!-- branch ingress-scripts 522-latest-commits-file -->
+#
+# freshports-versions.py, which builds the all-sites versions page, reads
+# them, so anyone can see which branch dvl and dev are testing.  A package
+# install, or a checkout with a detached HEAD, has no branch: '' is returned
+# and nothing is shown.
+function freshports_BranchComment($Name, $Branch) {
+	if ($Branch === '') {
+		return '';
+	}
+
+	# '--' is not allowed inside an HTML comment
+	return '<!-- branch ' . str_replace('--', '- -', htmlspecialchars($Name . ' ' . $Branch)) . " -->\n";
+}
+
+# The branch the git checkout in $Root is on.  '' for a package install
+# (it has VERSION) or a detached HEAD.
+function freshports_InstalledBranch($Root) {
+	if (is_readable($Root . '/VERSION') || !is_dir($Root . '/.git')) {
+		return '';
+	}
+
+	# as in freshports_InstalledVersion(): the checkout belongs to someone else
+	$Root   = escapeshellarg($Root);
+	$Branch = trim((string) shell_exec("git -C $Root -c safe.directory=$Root symbolic-ref --short -q HEAD 2>/dev/null"));
+
+	return preg_match('/^\S+$/', $Branch) ? $Branch : '';
 }
 
 # The release installed in $Root: the VERSION file a package install writes,
@@ -1706,6 +1739,9 @@ function freshports_WebserverVersionComments() {
 		$HTML .= '<!-- webserver ' . str_replace('--', '- -', htmlspecialchars($Name . ' ' . $Version)) . " -->\n";
 	}
 
+	# fp-listen is always a package; FreshSource may be a git checkout
+	$HTML .= freshports_BranchComment('freshsource-www', freshports_InstalledBranch(FRESHSOURCE_ROOT));
+
 	return $HTML;
 }
 
@@ -1717,6 +1753,7 @@ function freshports_WebserverVersionsLastModified() {
 
 # Written by system_status.sh on the ingress host, one "name version" per line,
 # and mounted read-only here.  It is rewritten only when a version changes.
+# A git checkout (dvl, dev) adds its branch: "name version branch".
 define('FRESHPORTS_INGRESS_VERSIONS', '/var/db/freshports/cache/html/ingress-versions.txt');
 
 # Show which release of the ingress code and packages this site's ingress host
@@ -1725,22 +1762,26 @@ define('FRESHPORTS_INGRESS_VERSIONS', '/var/db/freshports/cache/html/ingress-ver
 #   <!-- ingress ingress-scripts 2.3.7 -->
 #   <!-- ingress freshports-periodics 1.4 -->
 #
-# Nothing is shown if the file is missing or unreadable.
+# followed by a branch comment (see freshports_BranchComment()) for each
+# git checkout.  Nothing is shown if the file is missing or unreadable.
 function freshports_IngressVersionComments() {
 	$Lines = @file(FRESHPORTS_INGRESS_VERSIONS, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 	if ($Lines === false) {
 		return '';
 	}
 
-	$HTML = '';
+	$HTML     = '';
+	$Branches = '';
 	foreach ($Lines as $Line) {
-		if (!preg_match('/^([A-Za-z0-9._+-]+) (\S+)$/', trim($Line), $Matches)) {
+		if (!preg_match('/^([A-Za-z0-9._+-]+) (\S+)(?: (\S+))?$/', trim($Line), $Matches)) {
 			continue;
 		}
 
 		# '--' is not allowed inside an HTML comment
 		$HTML .= '<!-- ingress ' . str_replace('--', '- -', htmlspecialchars($Matches[1] . ' ' . $Matches[2])) . " -->\n";
+		$Branches .= freshports_BranchComment($Matches[1], $Matches[3] ?? '');
 	}
+	$HTML .= $Branches;
 
 	return $HTML;
 }

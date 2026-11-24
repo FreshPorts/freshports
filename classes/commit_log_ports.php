@@ -16,6 +16,7 @@ class Commit_Log_Ports {
 	var $port_id;
 	var $message_id;
 	var $commit_hash_short;
+	var $commit_hash;
 	var $commit_date;
 	var $description;
 	var $committer;
@@ -100,6 +101,7 @@ class Commit_Log_Ports {
           port_id,
           message_id,
           commit_hash_short,
+          commit_hash,
           to_char(commit_date - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS') AS commit_date,
           CL.description,
           committer,
@@ -156,6 +158,7 @@ class Commit_Log_Ports {
 		$this->port_id	          = $myrow["port_id"];
 		$this->message_id         = $myrow["message_id"];
 		$this->commit_hash_short  = $myrow["commit_hash_short"];
+		$this->commit_hash        = $myrow["commit_hash"] ?? null;
 		$this->commit_date        = $myrow["commit_date"];
 		$this->description        = $myrow["description"];
 		$this->committer          = $myrow["committer"];

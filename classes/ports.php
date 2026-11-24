@@ -91,6 +91,7 @@ class Port {
 	// so far used by ports-deleted.php and include/list-of-ports.php
 	var $message_id;
 	var $commit_hash_short;
+	var $commit_hash;
 	var $encoding_losses;
 
 	// taken from commit_log based upon ports.last_commit_id
@@ -203,6 +204,7 @@ class Port {
 		$this->update_description   = $myrow["update_description"]   ?? null;
 		$this->message_id           = $myrow["message_id"]           ?? null;
 		$this->commit_hash_short    = $myrow["commit_hash_short"]    ?? null;
+		$this->commit_hash          = $myrow["commit_hash"]          ?? null;
 		$this->encoding_losses      = $myrow["encoding_losses"]      ?? null;
 		$this->committer            = $myrow["committer"]            ?? null;
 		$this->committer_name       = $myrow["committer_name"]       ?? null;
@@ -321,6 +323,7 @@ class Port {
        commit_log.commit_date - SystemTimeAdjust() AS last_commit_date,
        commit_log.svn_revision,
        commit_log.commit_hash_short,
+       commit_log.commit_hash,
        commit_log.message_id,
        R.name          AS repo_name,
        R.repository,
@@ -454,6 +457,7 @@ class Port {
 		               commit_log.commit_date - SystemTimeAdjust() AS last_commit_date,
 		               commit_log.svn_revision,
 		               commit_log.commit_hash_short,
+		               commit_log.commit_hash,
 		               commit_log.message_id,
 		               R.repository,
 		               R.repo_hostname,
@@ -679,6 +683,7 @@ ON TEMP.wle_element_id = ports.element_id';
 		               commit_log.commit_date - SystemTimeAdjust() AS last_commit_date,
 		               commit_log.svn_revision,
 		               commit_log.commit_hash_short,
+		               commit_log.commit_hash,
 		               commit_log.message_id,
 		               R.repository,
 		               R.repo_hostname,
@@ -917,6 +922,7 @@ SELECT ports.id,
         NULL AS update_description,
         NULL AS message_id,
         NULL AS commit_hash_short,
+        NULL AS commit_hash,
         NULL AS message_id,
         NULL AS encoding_losses,
         NULL AS committer,

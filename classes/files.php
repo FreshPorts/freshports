@@ -91,6 +91,7 @@ class CommitFiles {
                CL.author_email,
 	       CL.message_id, 
 	       CL.commit_hash_short, 
+	       CL.commit_hash, 
 	       CL.encoding_losses, 
 	       CL.description, 
 	       CLE.revision_name AS revision_name,

@@ -30,6 +30,7 @@ class CommitsByDescription extends commits {
 			CL.encoding_losses                                                                                           AS encoding_losses,
 			CL.message_id                                                                                                AS message_id,
 			CL.commit_hash_short                                                                                         AS commit_hash_short,
+			CL.commit_hash                                                                                               AS commit_hash,
 			CL.committer	                                                                                             AS committer,
 			CL.committer_name                                                                                            AS committer_name,
 			CL.committer_email                                                                                           AS committer_email,

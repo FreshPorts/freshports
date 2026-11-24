@@ -90,8 +90,22 @@ class FilesDisplay {
 			$this->HTML .= '  <td>' . $myrow["revision_name"];
             $this->HTML .= "</td>";
             
+            #
+            # The links below are built per repository.  A Subversion commit whose git commit we know
+            # (commit_log.commit_hash, #661) gets the git links: cgit's host, the git repo's path, and
+            # that hash in place of the Subversion revision.  The revision is still shown above.
+            #
+            $repository = $myrow['repository'];
+            $git_hash   = $myrow['revision_name'];
+            if ($repository == FREEBSD_REPOSITORY_SUBVERSION && !empty($myrow['commit_hash'])) {
+                $repository            = FREEBSD_REPOSITORY_GIT;
+                $git_hash              = $myrow['commit_hash'];
+                $myrow['repo_hostname'] = DEFAULT_GIT_REPO;
+                $myrow['path_to_repo']  = freshports_git_path_for_svn_path($myrow['path_to_repo']);
+            }
+
             $this->HTML .= '<td>';
-            switch($myrow['repository'])
+            switch($repository)
             {
 		default:
                     $this->HTML .= freshports_cvsweb_Annotate_Link($myrow["pathname"] , $myrow["revision_name"]); 
@@ -115,7 +129,7 @@ class FilesDisplay {
                     if ($myrow['branch'] != BRANCH_HEAD ) {
                         $this->HTML .= 'h=' . $myrow['branch'] . '&';
                     }
-                    $this->HTML .= 'id=' . $myrow["revision_name"];
+                    $this->HTML .= 'id=' . $git_hash;
                     $this->HTML .= '">';
                     
                     # getting: https://cgit.freebsd.org/ports/blame/ /ports/branches/2021Q2/www/gitea/Makefile?id=5ceea227c504d2892d91c1aa8d8d81ff15b22fc3&h=
@@ -126,7 +140,7 @@ class FilesDisplay {
 
 
             if ( $Change_Type == "modify" ) {
-                switch($myrow['repository'])
+                switch($repository)
                 {
                     default:
                         $this->HTML .= ' ';
@@ -145,15 +159,15 @@ class FilesDisplay {
 
                     case FREEBSD_REPOSITORY_GIT:
                         $this->HTML .= ' ';
-			$this->HTML .= freshports_git_commit_Link_diff($myrow['message_id'], $myrow['repo_hostname'], $myrow['path_to_repo']);
+			$this->HTML .= freshports_git_commit_Link_diff($git_hash, $myrow['repo_hostname'], $myrow['path_to_repo']);
                         break;
                 }
             }
 
             $this->HTML .= '</td>';
             $this->HTML .= '  <td>';
-            
-            switch($myrow['repository'])
+
+            switch($repository)
             {
                 default:
                     $this->HTML .= freshports_cvsweb_Revision_Link($myrow["pathname"] , $myrow["revision_name"]);

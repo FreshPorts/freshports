@@ -48,6 +48,7 @@ class CommitsByCommitter extends commits {
 			commit_log.encoding_losses                         AS encoding_losses,
 			commit_log.message_id                              AS message_id,
 			commit_log.commit_hash_short                       AS commit_hash_short,
+			commit_log.commit_hash                             AS commit_hash,
 			commit_log.committer                               AS committer,
 			commit_log.committer_name                          AS committer_name,
 			commit_log.committer_email                         AS committer_email,

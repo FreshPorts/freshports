@@ -301,58 +301,6 @@ class port_display {
 	  $this->Branch = NormalizeBranch($Branch);
 	}
 
-	function link_to_repo_svn() {
-          # we want something like
-          # https://svn.freebsd.org/ports/head/x11-wm/awesome/
-          $link_title = 'SVNWeb';
-          $link = 'https://' . DEFAULT_SVN_REPO;
-
-          $link .= $this->port->element_pathname . '/';
-          if ($this->port->IsDeleted()) {
-            #
-            # If the port has been deleted, let's link to the last commit.
-            # Deleted ports don't change much.  It's easier to do this here
-            # than to do it for ALL ports.
-            #
-            require_once($_SERVER['DOCUMENT_ROOT'] . '/../classes/commit.php');
-
-            $commit = $this->_lastCommit();
-
-            if (!empty($commit->svn_revision)) {
-              if ($this->_isGitCommit($commit->svn_revision)) {
-                # no modification to the link, because we cannot use this commit
-                # the user will get Unknown location: /head/devel/py-Pint
-                # We could search for the last known subversion commit
-                # but we aren't. Yet.
-                # Instead, we show them a strikethrough.
-                $link = null;
-			  } else {
-                # For subversion, we link to the revision one less
-                # so that the user has something to see
-               $link .= '?pathrev=' . ($commit->svn_revision - 1);
-	          }
-            } else {
-              # if there is no last revision, we can't link to it.
-              $link = null;
-            }
-          }
-
-          if (!empty($link)) {
-            $link = '<a href="' . $link . '">' . freshports_Subversion_Icon($link_title) . '</a>';
-          } else {
-            $link = $this->link_to_repo_svn_greyed();
-          }
-
-          return $link;
-	}
-
-	function link_to_repo_svn_greyed() {
-          $link_title = _('SVNWeb - no subversion history for this port');
-          $link = freshports_Subversion_Icon_Greyed($link_title);
-
-          return $link;
-	}
-
 	function _link_to_repo_git_freebsd() {
           # we want something like
           # was: https://github.com/freebsd/freebsd-ports/tree/master/x11-wm/awesome
@@ -386,6 +334,9 @@ class port_display {
                 # but we aren't. Yet.
                 # Instead, we show them a strikethrough.
                 $link .= '/commit/?id=' . htmlentities($commit->commit_hash_short);
+              } elseif (!empty($commit->commit_hash)) {
+                # a Subversion commit whose git commit we know (#661)
+                $link .= '/commit/?id=' . htmlentities($commit->commit_hash);
               } else {
                 # For subversion, we link to the revision one less
                 # so that the user has something to see.
@@ -445,6 +396,9 @@ class port_display {
                 # but we aren't. Yet.
                 # Instead, we show them a strikethrough.
                 $link .= '/commit/' . htmlentities($commit->commit_hash_short);
+              } elseif (!empty($commit->commit_hash)) {
+                # a Subversion commit whose git commit we know (#661)
+                $link .= '/commit/' . htmlentities($commit->commit_hash);
               } else {
                 # For subversion, we link to the revision one less
                 # so that the user has something to see.
@@ -504,6 +458,9 @@ class port_display {
                 # but we aren't. Yet.
                 # Instead, we show them a strikethrough.
                 $link .= '/commit/' . htmlentities($commit->commit_hash_short);
+              } elseif (!empty($commit->commit_hash)) {
+                # a Subversion commit whose git commit we know (#661)
+                $link .= '/commit/' . htmlentities($commit->commit_hash);
               } else {
                 # For subversion, we link to the revision one less
                 # so that the user has something to see.
@@ -563,6 +520,9 @@ class port_display {
                 # but we aren't. Yet.
                 # Instead, we show them a strikethrough.
                 $link .= '/commit/' . htmlentities($commit->commit_hash_short);
+              } elseif (!empty($commit->commit_hash)) {
+                # a Subversion commit whose git commit we know (#661)
+                $link .= '/commit/' . htmlentities($commit->commit_hash);
               } else {
                 # For subversion, we link to the revision one less
                 # so that the user has something to see.
@@ -1282,7 +1242,10 @@ class port_display {
 					$HTML .= freshports_git_commit_Link_Hash($port->svn_revision, $port->commit_hash_short, $port->repo_hostname, $port->path_to_repo);
 				} else {
 					$HTML .= '<dt><b>' . _('SVN Revision:') . '</b> ';
-					if (isset($port->svn_revision)) {
+					if (isset($port->svn_revision) && !empty($port->commit_hash)) {
+						# the revision number, linked to its git commit (#661)
+						$HTML .= freshports_git_commit_Link_Hash($port->commit_hash, $port->svn_revision, DEFAULT_GIT_REPO, freshports_git_path_for_svn_path($port->path_to_repo));
+					} elseif (isset($port->svn_revision)) {
 						$HTML .= freshports_svnweb_ChangeSet_Link_Text($port->svn_revision, $port->repo_hostname);
 					} else {
 						$HTML .= _('UNKNOWN');
@@ -1366,8 +1329,7 @@ class port_display {
 			}
 
 			if ($this->ShowChangesLink || $this->ShowEverything) {
-				# we link to both svn and git because we can
-				# we could reduce this to just one link at some time in the future.
+				# git only: the git history includes the Subversion years, so there is no SVNWeb link (#661)
 				$HTML .= $this->_link_to_repo_git_freebsd();
 				$HTML .= ICON_SEPARATOR;
 				$HTML .= $this->_link_to_repo_git_codeberg();
@@ -1375,12 +1337,6 @@ class port_display {
 				$HTML .= $this->_link_to_repo_git_github();
 				$HTML .= ICON_SEPARATOR;
 				$HTML .= $this->_link_to_repo_git_gitlab();
-				$HTML .= ICON_SEPARATOR;
-				if (IsSet($port->{'date_added'}) && strtotime($port->{'date_added'}) < strtotime(LAST_SUBVERSION_COMMIT)) {
-					$HTML .= $this->link_to_repo_svn();
-				} else {
-					$HTML .= $this->link_to_repo_svn_greyed();
-				}
 			}
 
 			if ($port->PackageExists() && ($this->ShowPackageLink || $this->ShowEverything)) {

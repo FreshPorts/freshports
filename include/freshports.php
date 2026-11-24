@@ -320,6 +320,42 @@ function freshports_svnweb_ChangeSet_Link_Text($revision, $hostname) {
   return '<a href="https://' . htmlentities($hostname) . '/changeset/ports/' . htmlentities($revision) .  '" rel="noopener noreferrer">' . $revision . '</a>';
 }
 
+#
+# Commits made in Subversion, whose git commit we now know: commit_log.commit_hash (#660, #661).
+# Their repo_hostname and path_to_repo are svnweb's (svnweb.freebsd.org; /ports, /doc, /base).
+# Links to git need cgit's host and the git repo's path, which for src is /src, not /base.
+# svn_revision and message_id are unchanged and still shown; only the link target changes.
+#
+function freshports_git_path_for_svn_path($path) {
+  return $path == '/base' ? '/src' : $path;
+}
+
+#
+# The links for one Subversion commit: the same four git links a git commit gets
+# (cgit, Codeberg, GitHub, GitLab) when we know its git commit, otherwise the
+# svnweb link it has always had.  $separator goes between the git links.
+#
+function freshports_svn_commit_Links($svn_revision, $commit_hash, $hostname, $path, $separator = '') {
+  if (empty($commit_hash)) {
+    return freshports_svnweb_ChangeSet_Link($svn_revision, $hostname);
+  }
+
+  $git_path = freshports_git_path_for_svn_path($path);
+
+  return freshports_git_commit_Link_freebsd ($commit_hash, DEFAULT_GIT_REPO, $git_path) . $separator .
+         freshports_git_commit_Link_codeberg($commit_hash, DEFAULT_GIT_REPO, $git_path) . $separator .
+         freshports_git_commit_Link_github  ($commit_hash, DEFAULT_GIT_REPO, $git_path) . $separator .
+         freshports_git_commit_Link_gitlab  ($commit_hash, DEFAULT_GIT_REPO, $git_path);
+}
+
+#
+# A Subversion revision number shown as text beside its git links, e.g. r430140,
+# so the revision stays visible once the link goes to git.
+#
+function freshports_svn_revision_Text($svn_revision) {
+  return '<span title="' . htmlentities(sprintf(_('Revision:%s'), $svn_revision)) . '">r' . htmlentities($svn_revision) . '</span>';
+}
+
 function freshports_Search_Maintainer($Maintainer) {
 	return '<a href="/search.php?stype=maintainer&amp;method=exact&amp;query=' . urlencode($Maintainer) . '">' .
 	      freshports_Search_Icon(_('search for ports maintained by this maintainer')) . '</a>';
@@ -2003,7 +2039,7 @@ function freshports_PortCommitPrint($commit, $category, $port, $VuXMLList) {
 		$HTML .= freshports_git_commit_Link_gitlab  ($commit->message_id, $commit->repo_hostname, $commit->path_to_repo);
 	} else {
 		if (isset($commit->svn_revision)) {
-			$HTML .= freshports_svnweb_ChangeSet_Link($commit->svn_revision, $commit->repo_hostname);
+			$HTML .= freshports_svn_commit_Links($commit->svn_revision, $commit->commit_hash ?? null, $commit->repo_hostname, $commit->path_to_repo);
 	        }
 	}
 

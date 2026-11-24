@@ -331,9 +331,10 @@ function freshports_git_path_for_svn_path($path) {
 }
 
 #
-# The links for one Subversion commit: the same four git links a git commit gets
-# (cgit, Codeberg, GitHub, GitLab) when we know its git commit, otherwise the
-# svnweb link it has always had.  $separator goes between the git links.
+# The links for one Subversion commit.  When we know its git commit: the Subversion
+# icon and its svnweb link, as before, followed by the same four git links a git
+# commit gets (cgit, Codeberg, GitHub, GitLab).  Otherwise just the svnweb link.
+# $separator goes between the links.
 #
 function freshports_svn_commit_Links($svn_revision, $commit_hash, $hostname, $path, $separator = '') {
   if (empty($commit_hash)) {
@@ -342,7 +343,8 @@ function freshports_svn_commit_Links($svn_revision, $commit_hash, $hostname, $pa
 
   $git_path = freshports_git_path_for_svn_path($path);
 
-  return freshports_git_commit_Link_freebsd ($commit_hash, DEFAULT_GIT_REPO, $git_path) . $separator .
+  return freshports_svnweb_ChangeSet_Link   ($svn_revision, $hostname) . $separator .
+         freshports_git_commit_Link_freebsd ($commit_hash, DEFAULT_GIT_REPO, $git_path) . $separator .
          freshports_git_commit_Link_codeberg($commit_hash, DEFAULT_GIT_REPO, $git_path) . $separator .
          freshports_git_commit_Link_github  ($commit_hash, DEFAULT_GIT_REPO, $git_path) . $separator .
          freshports_git_commit_Link_gitlab  ($commit_hash, DEFAULT_GIT_REPO, $git_path);

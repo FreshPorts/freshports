@@ -79,14 +79,15 @@ function freshports_FeedQuery($dbh, $WatchListID, $BranchName, $Flavor) {
 		   P.id 				as id,
 	       C.name 		as category,
 	       C.id 		as category_id,
-	       P.version 		as version,
-	       P.revision 		as revision,
+	       -- the version as of this commit; the current one if the commit did not record it
+	       CASE WHEN COALESCE(CLP.port_version, \'\') = \'\' THEN P.version   ELSE CLP.port_version  END AS version,
+	       CASE WHEN COALESCE(CLP.port_version, \'\') = \'\' THEN P.revision  ELSE CLP.port_revision END AS revision,
+	       CASE WHEN COALESCE(CLP.port_version, \'\') = \'\' THEN P.portepoch ELSE CLP.port_epoch    END AS epoch,
 	       E.id 			as element_id,
            to_char(CL.commit_date - SystemTimeAdjust(), \'DD Mon\')  AS commit_date,
            to_char(CL.commit_date - SystemTimeAdjust(), \'HH24:MI\') AS commit_time,
            CL.commit_date       AS news_date,
            CL.description       AS commit_description,
-           CLP.port_epoch as epoch,
            CL.committer,
            CL.committer_name,
            CL.committer_email,
@@ -143,11 +144,11 @@ ORDER BY P.date_added DESC, E.name, category, version';
          P.broken,
          P.deprecated,
          P.element_id                     AS element_id,
-         CASE when CLP.port_version  IS NULL then P.version  else CLP.port_version  END as version,
-         CASE when CLP.port_revision IS NULL then P.revision else CLP.port_revision END AS revision,
+         CASE WHEN COALESCE(CLP.port_version, \'\') = \'\' THEN P.version   ELSE CLP.port_version  END AS version,
+         CASE WHEN COALESCE(CLP.port_version, \'\') = \'\' THEN P.revision  ELSE CLP.port_revision END AS revision,
          P.version                        AS ports_version,
          P.revision                       AS ports_revision,
-         P.portepoch                      AS epoch,
+         CASE WHEN COALESCE(CLP.port_version, \'\') = \'\' THEN P.portepoch ELSE CLP.port_epoch    END AS epoch,
          date_part(\'epoch\', P.date_added) AS date_added,
          P.short_description              AS short_description,
          P.category_id,
@@ -251,11 +252,11 @@ ORDER BY CL.commit_date DESC, P.name;
                           where clp.commit_log_id = cl.id and sb.branch_name = $1)
            order by cl.commit_date desc limit 100 ) AS CL
     JOIN LATERAL ( select CLP1.commit_log_id, P.forbidden, P.broken, P.deprecated, P.element_id,
-                          CASE when CLP1.port_version  IS NULL then P.version  else CLP1.port_version  END as version,
-                          CASE when CLP1.port_revision IS NULL then P.revision else CLP1.port_revision END AS revision,
+                          CASE WHEN COALESCE(CLP1.port_version, \'\') = \'\' THEN P.version   ELSE CLP1.port_version  END AS version,
+                          CASE WHEN COALESCE(CLP1.port_version, \'\') = \'\' THEN P.revision  ELSE CLP1.port_revision END AS revision,
                           P.version                        AS ports_version,
                           P.revision                       AS ports_revision,
-                          P.portepoch                      AS epoch,
+                          CASE WHEN COALESCE(CLP1.port_version, \'\') = \'\' THEN P.portepoch ELSE CLP1.port_epoch    END AS epoch,
                           date_part(\'epoch\', P.date_added) AS date_added,
                           P.short_description              AS short_description,
                           P.category_id,
@@ -279,10 +280,23 @@ ORDER BY CL.commit_date DESC, P.name;
 	return array($sql, $params);
 }
 
-# The feed's title, e.g. "FreshPorts broken ports (2026Q4)"
-function freshports_FeedTitle($WatchListID, $BranchName, $Flavor) {
+# The feed's title, e.g. "FreshPorts broken ports (2026Q4)" or "FreshPorts watch list: servers".
+# A watch list feed is titled with the list's name, so someone subscribed to several
+# lists can tell them apart in their feed reader.
+function freshports_FeedTitle($dbh, $WatchListID, $BranchName, $Flavor) {
 	if ($WatchListID) {
 		$Title = 'FreshPorts watch list';
+
+		$result = pg_query_params($dbh, 'SELECT name FROM watch_list WHERE id = $1', array($WatchListID));
+		if ($result && pg_num_rows($result) == 1) {
+			$Name = trim(pg_fetch_result($result, 0, 'name') ?? '');
+			if ($Name !== '') {
+				$Title .= ': ' . $Name;
+			}
+		} elseif (!$result) {
+			# not worth failing the feed for: it keeps the plain title
+			syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ' sql error ' . pg_last_error($dbh));
+		}
 	} else {
 		switch ($Flavor) {
 			case 'new':    $Title = 'FreshPorts new ports';        break;
@@ -348,7 +362,7 @@ function freshports_FeedItems($dbh, $WatchListID, $BranchName, $Flavor) {
 # Build the feed as XML. $Type is 'rss' or 'atom'; $SelfURL is the feed's own URL.
 function freshports_FeedXML($dbh, $Type, $SelfURL, $WatchListID, $BranchName, $Flavor) {
 	$Host  = 'https://' . $_SERVER['HTTP_HOST'];
-	$Title = freshports_FeedTitle($WatchListID, $BranchName, $Flavor);
+	$Title = freshports_FeedTitle($dbh, $WatchListID, $BranchName, $Flavor);
 
 	$Items = freshports_FeedItems($dbh, $WatchListID, $BranchName, $Flavor);
 	if ($Items === false) {
@@ -402,7 +416,7 @@ function freshports_FeedXML($dbh, $Type, $SelfURL, $WatchListID, $BranchName, $F
 # "&lt;br /&gt;" where a line ended; here they get the line break.
 function freshports_FeedHTML($dbh, $WatchListID, $BranchName, $Flavor) {
 	$Host  = htmlspecialchars('https://' . $_SERVER['HTTP_HOST'] . '/');
-	$Title = htmlspecialchars(freshports_FeedTitle($WatchListID, $BranchName, $Flavor));
+	$Title = htmlspecialchars(freshports_FeedTitle($dbh, $WatchListID, $BranchName, $Flavor));
 
 	$Items = freshports_FeedItems($dbh, $WatchListID, $BranchName, $Flavor);
 	if ($Items === false) {

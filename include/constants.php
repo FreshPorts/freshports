@@ -266,6 +266,13 @@ if (!defined('PW_HASH_COST'))   define('PW_HASH_COST', 14);
 # see https://github.com/FreshPorts/freshports/issues/614
 if (!defined('PORT_SUGGESTIONS_ON_404')) define('PORT_SUGGESTIONS_ON_404', true);
 
+# Link Subversion-era commits to their git commits (cgit, Codeberg, GitHub, GitLab)
+# as well as to svnweb, using commit_log.commit_hash.  Set to false in
+# constants.local.php to show only the svnweb links, as before.
+# The column must still exist: the queries select it either way.
+# see https://github.com/FreshPorts/freshports/issues/661
+if (!defined('SVN_COMMITS_LINK_TO_GIT')) define('SVN_COMMITS_LINK_TO_GIT', true);
+
 define('HTML_DOCTYPE', '<!DOCTYPE html>');
 
 define('ICON_SEPARATOR', ' &#166; ');

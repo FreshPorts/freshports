@@ -29,6 +29,8 @@ class DisplayCommit
 
 	var $FlaggedCommits;
 
+	var $CommitHashes = array();  # commit_log_id => commit_log.commit_hash, see _CommitHash()
+
 	var $ShowAllPorts = FALSE;    # by default we show only the first few ports.
 	var $ShowEntireCommit = 0;    # by default we show only the first few lines of the commit message.
 
@@ -76,6 +78,22 @@ class DisplayCommit
 	function IsGitCommit($message_id)
 	{
 		return strpos($message_id, self::MESSAGE_ID_DOMAIN) == false;
+	}
+
+	#
+	# The git commit of a Subversion commit, for rows which do not carry commit_hash.
+	# Rows from the SQL functions, e.g. freshports_commit() behind commit.php, have a fixed
+	# set of columns without it.  Rather than change those functions, look it up here,
+	# once per commit: a commit has one row per port.  NULL if we do not know it, and the
+	# commit keeps its svnweb link.
+	#
+	function _CommitHash($commit_log_id) {
+		if (!array_key_exists($commit_log_id, $this->CommitHashes)) {
+			$result = pg_query_params($this->dbh, 'SELECT commit_hash FROM commit_log WHERE id = $1', array($commit_log_id));
+			$this->CommitHashes[$commit_log_id] = ($result && pg_num_rows($result) == 1) ? pg_fetch_result($result, 0, 0) : null;
+		}
+
+		return $this->CommitHashes[$commit_log_id];
 	}
 
 	function SetDaysMarkedAsNew($DaysMarkedAsNew)
@@ -402,6 +420,12 @@ GROUP BY WLE.element_id';
 				$HTML .= freshports_git_commit_Link_github($mycommit->svn_revision, $mycommit->repo_hostname, $mycommit->path_to_repo) . '&nbsp;';
 				$HTML .= freshports_git_commit_Link_gitlab($mycommit->svn_revision, $mycommit->repo_hostname, $mycommit->path_to_repo) . '&nbsp;';
 				$HTML .= freshports_git_commit_Link_Hash($mycommit->svn_revision, $mycommit->commit_hash_short, $mycommit->repo_hostname, $mycommit->path_to_repo);
+			} elseif (freshports_svn_commit_git_hash($mycommit->commit_hash)) {
+				# a Subversion commit whose git commit we know: git links, then the hash, then the revision
+				$HTML .= freshports_svn_commit_Links($mycommit->svn_revision, $mycommit->commit_hash, $mycommit->repo_hostname, $mycommit->path_to_repo, '&nbsp;') . '&nbsp;';
+				# rows from the SQL functions carry no commit_hash_short either; see _CommitHash()
+				$HTML .= freshports_git_commit_Link_Hash($mycommit->commit_hash, $mycommit->commit_hash_short ?: substr($mycommit->commit_hash, 0, 12), DEFAULT_GIT_REPO, freshports_git_path_for_svn_path($mycommit->path_to_repo)) . '&nbsp;';
+				$HTML .= freshports_svn_revision_Text($mycommit->svn_revision);
 			} else {
 				$HTML .= freshports_svnweb_ChangeSet_Link($mycommit->svn_revision, $mycommit->repo_hostname) . '&nbsp;';
 			}
@@ -467,6 +491,10 @@ GROUP BY WLE.element_id';
 			unset($mycommit);
 			$mycommit = new Commit_Ports($this->dbh);
 			$mycommit->PopulateValues($myrow);
+
+			if (SVN_COMMITS_LINK_TO_GIT && !array_key_exists('commit_hash', $myrow) && !empty($mycommit->svn_revision) && !$this->IsGitCommit($mycommit->message_id)) {
+				$mycommit->commit_hash = $this->_CommitHash($mycommit->commit_log_id);
+			}
 
 			if ($mycommit->branch && $mycommit->branch != BRANCH_HEAD) {
 				$QueryArgs = '?branch=' . $mycommit->branch;

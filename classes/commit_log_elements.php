@@ -15,6 +15,7 @@ class Commit_Log_Elements {
 	var $element_id;
 	var $message_id;
 	var $commit_hash_short;
+	var $commit_hash;
 	var $commit_date;
 	var $description;
 	var $committer;
@@ -41,6 +42,7 @@ class Commit_Log_Elements {
 select commit_log_elements.element_id, 
        message_id,
        commit_hash_short,
+       commit_hash,
        to_char(commit_date - SystemTimeAdjust(), 'DD Mon YYYY HH24:MI:SS')  as commit_date,
        commit_log.description,
        committer,
@@ -78,6 +80,7 @@ select commit_log_elements.element_id,
 		$this->element_id         = $myrow["element_id"];
 		$this->message_id         = $myrow["message_id"];
 		$this->commit_hash_short  = $myrow["commit_hash_short"];
+		$this->commit_hash        = $myrow["commit_hash"] ?? null;
 		$this->commit_date        = $myrow["commit_date"];
 		$this->description        = $myrow["description"];
 		$this->committer          = $myrow["committer"];

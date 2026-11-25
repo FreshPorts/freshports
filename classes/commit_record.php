@@ -14,6 +14,7 @@ class CommitRecord {
 	var $message_subject;
 	var $message_id;
 	var $commit_hash_short;
+	var $commit_hash;
 	var $committer;
 	var $committer_name;
 	var $committer_email;
@@ -66,6 +67,7 @@ class CommitRecord {
 		$this->message_subject		= $myrow['message_subject'];
 		$this->message_id		= $myrow['message_id'];
 		$this->commit_hash_short	= $myrow['commit_hash_short'];
+		$this->commit_hash		= $myrow['commit_hash'] ?? null;
 		$this->committer		= $myrow['committer'];
 		$this->committer_name           = $myrow["committer_name"];
 		$this->committer_email          = $myrow["committer_email"];

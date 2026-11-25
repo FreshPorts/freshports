@@ -10,6 +10,7 @@ class Commit_Ports {
 	var $encoding_losses;
 	var $message_id;
 	var $commit_hash_short;
+	var $commit_hash;
 	var $committer;
 	var $committer_name;
 	var $committer_email;
@@ -60,6 +61,7 @@ class Commit_Ports {
 		$this->encoding_losses    = $myrow["encoding_losses"];
 		$this->message_id         = $myrow["message_id"];
 		$this->commit_hash_short  = $myrow["commit_hash_short"]  ?? null;
+		$this->commit_hash        = $myrow["commit_hash"]        ?? null;
 		$this->committer          = $myrow["committer"];
 		$this->committer_name     = $myrow["committer_name"];
 		$this->committer_email    = $myrow["committer_email"];
@@ -192,6 +194,7 @@ class Commit_Ports {
 SELECT CL.id as commit_log_id,
        message_id,
        commit_hash_short,
+       commit_hash,
        message_date,
        CL.commit_date - SystemTimeAdjust()               AS commit_date_raw,
        to_char(commit_date - SystemTimeAdjust(), 'DD Mon YYYY')  as commit_date,

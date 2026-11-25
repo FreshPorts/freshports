@@ -386,6 +386,9 @@ class port_display {
                 # but we aren't. Yet.
                 # Instead, we show them a strikethrough.
                 $link .= '/commit/?id=' . htmlentities($commit->commit_hash_short);
+              } elseif (freshports_svn_commit_git_hash($commit->commit_hash)) {
+                # a Subversion commit whose git commit we know (#661)
+                $link .= '/commit/?id=' . htmlentities($commit->commit_hash);
               } else {
                 # For subversion, we link to the revision one less
                 # so that the user has something to see.
@@ -445,6 +448,9 @@ class port_display {
                 # but we aren't. Yet.
                 # Instead, we show them a strikethrough.
                 $link .= '/commit/' . htmlentities($commit->commit_hash_short);
+              } elseif (freshports_svn_commit_git_hash($commit->commit_hash)) {
+                # a Subversion commit whose git commit we know (#661)
+                $link .= '/commit/' . htmlentities($commit->commit_hash);
               } else {
                 # For subversion, we link to the revision one less
                 # so that the user has something to see.
@@ -504,6 +510,9 @@ class port_display {
                 # but we aren't. Yet.
                 # Instead, we show them a strikethrough.
                 $link .= '/commit/' . htmlentities($commit->commit_hash_short);
+              } elseif (freshports_svn_commit_git_hash($commit->commit_hash)) {
+                # a Subversion commit whose git commit we know (#661)
+                $link .= '/commit/' . htmlentities($commit->commit_hash);
               } else {
                 # For subversion, we link to the revision one less
                 # so that the user has something to see.
@@ -563,6 +572,9 @@ class port_display {
                 # but we aren't. Yet.
                 # Instead, we show them a strikethrough.
                 $link .= '/commit/' . htmlentities($commit->commit_hash_short);
+              } elseif (freshports_svn_commit_git_hash($commit->commit_hash)) {
+                # a Subversion commit whose git commit we know (#661)
+                $link .= '/commit/' . htmlentities($commit->commit_hash);
               } else {
                 # For subversion, we link to the revision one less
                 # so that the user has something to see.
@@ -1282,7 +1294,10 @@ class port_display {
 					$HTML .= freshports_git_commit_Link_Hash($port->svn_revision, $port->commit_hash_short, $port->repo_hostname, $port->path_to_repo);
 				} else {
 					$HTML .= '<dt><b>' . _('SVN Revision:') . '</b> ';
-					if (isset($port->svn_revision)) {
+					if (isset($port->svn_revision) && freshports_svn_commit_git_hash($port->commit_hash)) {
+						# the revision number, linked to its git commit (#661)
+						$HTML .= freshports_git_commit_Link_Hash($port->commit_hash, $port->svn_revision, DEFAULT_GIT_REPO, freshports_git_path_for_svn_path($port->path_to_repo));
+					} elseif (isset($port->svn_revision)) {
 						$HTML .= freshports_svnweb_ChangeSet_Link_Text($port->svn_revision, $port->repo_hostname);
 					} else {
 						$HTML .= _('UNKNOWN');

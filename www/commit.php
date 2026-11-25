@@ -212,9 +212,15 @@
 				echo _("We have multiple emails for that revision:") . ' ';
 				$Commit->FetchNth(0);
 				$clean_revision = htmlentities($Commit->svn_revision);
-				// e.g. http://svnweb.freebsd.org/base?view=revision&revision=177821
-				echo '<a href="http://' . htmlentities($Commit->svn_hostname) . htmlentities($Commit->path_to_repo) . '?view=revision&amp;revision=' . $clean_revision .
-					'">' . $clean_revision . '</a>';
+				if (freshports_svn_commit_git_hash($Commit->commit_hash)) {
+					// the revision number, linked to its git commit (#661)
+					echo freshports_git_commit_Link_Hash($Commit->commit_hash, $clean_revision, DEFAULT_GIT_REPO, freshports_git_path_for_svn_path($Commit->path_to_repo));
+				} else {
+					// e.g. http://svnweb.freebsd.org/base?view=revision&revision=177821
+					// repo_hostname: Commit has no svn_hostname, which left this link without a host
+					echo '<a href="http://' . htmlentities($Commit->repo_hostname) . htmlentities($Commit->path_to_repo) . '?view=revision&amp;revision=' . $clean_revision .
+						'">' . $clean_revision . '</a>';
+				}
 
 				echo "<ol>\n";
 				foreach($message_id_array as $i => $message_id) {

@@ -479,8 +479,8 @@ msgid ""
 "NOTE: FreshPorts displays only information on required and default "
 "dependencies.  Optional dependencies are not covered."
 msgstr ""
-"HINWEIS: FreshPorts zeigt nur Informationen zu erforderlichen und Standard-"
-"Abhängigkeiten an. Optionale Abhängigkeiten werden nicht behandelt."
+"HINWEIS: FreshPorts zeigt nur Informationen zu den erforderlichen und den "
+"Standard-Abhängigkeiten an. Optionale Abhängigkeiten werden nicht behandelt."
 
 #: classes/port-display.php:1823
 msgid "Build dependencies:"
@@ -548,19 +548,19 @@ msgstr "Es gibt keine Master-Site für diesen Port."
 
 #: classes/port-display.php:1999
 msgid "Build"
-msgstr "Bauen"
+msgstr "das Bauen"
 
 #: classes/port-display.php:1999
 msgid "Build and run"
-msgstr "Bauen und Laufzeit"
+msgstr "das Bauen und Ausführen"
 
 #: classes/port-display.php:1999
 msgid "Extract"
-msgstr "Extrahieren"
+msgstr "das Extrahieren"
 
 #: classes/port-display.php:1999
 msgid "Fetch"
-msgstr "Herunterladen"
+msgstr "das Herunterladen"
 
 #: classes/port-display.php:2000
 msgid "Libraries"
@@ -568,15 +568,15 @@ msgstr "Bibliotheken"
 
 #: classes/port-display.php:2000
 msgid "Patch"
-msgstr "Patch"
+msgstr "das Patchen"
 
 #: classes/port-display.php:2000
 msgid "Run"
-msgstr "Ausführen"
+msgstr "das Ausführen"
 
 #: classes/port-display.php:2000
 msgid "Test"
-msgstr "Test"
+msgstr "das Testen"
 
 #: classes/port-display.php:2010
 #, php-format
@@ -1503,14 +1503,14 @@ msgstr "Hochladen"
 msgid ""
 "Upload a file containing a list of ports you want to add to your watch list"
 msgstr ""
-"Lade eine Datei hoch, die eine Liste von Ports enthält, die du zu deiner "
-"Beobachtungsliste hinzufügen möchtest"
+"Laden Sie eine Datei hoch, die eine Liste von Ports enthält, die Sie zu "
+"Ihrer Beobachtungsliste hinzufügen möchten"
 
 #: include/freshports.php:2533
 msgid "Search through categories for ports to add to your watch list"
 msgstr ""
-"Durchsuche Kategorien nach Ports, die du zu deiner Beobachtungsliste "
-"hinzufügen möchtest"
+"Durchsuchen Sie Kategorien nach Ports, die Sie zu Ihrer Beobachtungsliste "
+"hinzufügen möchten"
 
 #: include/freshports.php:2534
 msgid "Maintain"
@@ -1677,7 +1677,7 @@ msgstr "Anzahl der Tage, die in der Seitenleiste angezeigt werden:"
 
 #: include/new-user.php:57
 msgid "Set focus to search box:"
-msgstr "Setze Fokus auf Suchfeld:"
+msgstr "Setze Fokus auf das Suchfeld:"
 
 #: include/new-user.php:61
 msgid "Number of results to display per page (e.g commits per page):"
@@ -1714,7 +1714,7 @@ msgid ""
 "For your reporting needs, please visit <a href=\"/report-"
 "subscriptions.php\">Report Subscriptions</a>."
 msgstr ""
-"Für Ihre Berichtsanforderungen besuchen Sie bitte <a href=\"/report-"
+"Für Ihre Berichtsanforderungen besuchen Sie bitte die <a href=\"/report-"
 "subscriptions.php\">Subskriptions-Liste</a>."
 
 #: include/new-user.php:111
@@ -1767,10 +1767,10 @@ msgid ""
 "If your spam tools require that a confirmation be sent, you'll have to "
 "modify things as no confirmations will be sent for FreshPorts messages."
 msgstr ""
-"Aktualisieren Sie Ihre Spam-Filter, um solche eingehenden Nachrichten "
-"zuzulassen.Wenn Ihre Spam-Tools eine Bestätigung erfordern, müssen Sie die "
-"Einstellungen ändern, da keine Bestätigungen für FreshPorts-Nachrichten "
-"gesendet werden."
+"Aktualisieren Sie Ihre Spam-Filter, um eingehende Nachrichten von diesen "
+"Domains zuzulassen. Wenn Ihre Spam-Tools eine Bestätigung erfordern, müssen "
+"Sie die Einstellungen ändern, da keine Bestätigungen für FreshPorts-"
+"Nachrichten gesendet werden."
 
 #: include/system-status-page.php:28
 msgid "We are in maintenance mode."
@@ -2154,7 +2154,7 @@ msgid ""
 "tree."
 msgstr ""
 "%1$s ist nicht der Ort, um Fehler zu melden oder Änderungen anzufordern. Sie "
-"sollten das unter %2$s tun. Wir pflegen keine Ports. Wir erstellen keine "
+"sollten das über die %2$s tun. Wir pflegen keine Ports. Wir erstellen keine "
 "Ports. Wir beheben Fehler in Ports nicht. Wir zeigen Ihnen nur, was Andere "
 "mit dem Ports-Baum gemacht haben."
 
@@ -2219,7 +2219,7 @@ msgid ""
 msgstr ""
 "Ich entschuldige mich, da ich diese Liste nicht auf dem neuesten Stand "
 "gehalten habe und daher befürchte, dass ich Leute verpasst habe, aber ich "
-"weiß nicht, wen. Bitte lassen Sie mich wissen, wenn Sie hier erwähnt sein "
+"weiß nicht, wen. Bitte lassen Sie mich wissen, wenn Sie hier erwähnt werden "
 "sollten."
 
 #: www/authors.php:42
@@ -2228,7 +2228,7 @@ msgid ""
 "email to XML."
 msgstr ""
 "Adam Herzog hat das XML-DTD und das Perl-Skript geschrieben, das die Roh-E-"
-"Mail in XML konvertiert."
+"Mails in XML konvertiert."
 
 #: www/authors.php:44
 msgid ""
@@ -2238,7 +2238,7 @@ msgid ""
 msgstr ""
 "Marcin Gryszkalis hat die zugrunde liegende Arbeit für die <a href=\"/"
 "graphs.php\">Diagramme</a> geleistet. Er hat auch bei der HTML-Aufbereitung "
-"der Log-Nachricht geholfen (damit Sie auf PR, E-Mail und URLs klicken "
+"der Log-Nachricht geholfen (damit Sie auf PRs, E-Mails und URLs klicken "
 "können)."
 
 #: www/authors.php:46
@@ -2257,8 +2257,8 @@ msgid ""
 msgstr ""
 "Dan Peterson zeigte mir die Wunder von <a href=\"https://cr.yp.to/"
 "daemontools.html\" rel=\"noopener noreferrer\">Daemon Tools</a>, welche die "
-"Verarbeitung eingehender Nachrichten und die Aktualisierung der "
-"Hauptwebseite übernehmen."
+"Verarbeitung eingehender Nachrichten und die Aktualisierung der Haupt-"
+"Webseite übernehmen."
 
 #: www/authors.php:50
 msgid ""
@@ -2273,7 +2273,7 @@ msgid ""
 "Titus Manea again always has great ideas. His knowledge base of *nix far "
 "exceeds my own."
 msgstr ""
-"Titus Manea hat wieder einmal großartige Ideen. Sein Wissensschatz über *nix "
+"Titus Manea hat immer wieder großartige Ideen. Sein Wissensschatz über *nix "
 "übertrifft meinen eigenen bei weitem."
 
 #: www/authors.php:54
@@ -2325,7 +2325,7 @@ msgstr ""
 
 #: www/authors.php:75
 msgid "Brian Mitchell did some prototype coding for me."
-msgstr "Brian Mitchell hat einige Prototypen-Codierung für mich gemacht."
+msgstr "Brian Mitchell hat einige Prototypen-Codierungen für mich gemacht."
 
 #: www/authors.php:77
 msgid "David Bushong did a FreshBSD site which is a freshmeat-look site."
@@ -2339,9 +2339,9 @@ msgid ""
 "form the basis for some of the most important parts of the system. Aquitaine "
 "also showed me the PERL dbi->quote() function."
 msgstr ""
-"lzh auf undernet #perl hat mir mit meinem Perl-Wissen geholfen. Einige "
-"seiner Beispiele bilden die Basis des Systems. Aquitaine hat mir auch die "
-"PERL dbi->quote() Funktion gezeigt."
+"lzh auf undernet #perl hat mir bei meinem Perl-Wissen geholfen. Einige "
+"seiner Beispiele bilden die Basis des Systems. Aquitaine hat mir "
+"insbesondere die PERL dbi->quote() Funktion gezeigt."
 
 #: www/authors.php:81
 msgid "John Beige did the logo you see at the top of the page."
@@ -3297,9 +3297,8 @@ msgstr ""
 "Sie können mehr als eine Beobachtungsliste haben. Die meisten Leute haben "
 "eine Beobachtungsliste für jede Maschine, die sie verwalten. Ich schlage "
 "vor, der Beobachtungsliste denselben Namen wie der Maschine zu geben. E-Mail-"
-"Benachrichtigungen enthalten Header mit dem Listennamen. Sie können dies für "
-"alle Filter verwenden, die Sie möglicherweise durchführen möchten (z. B. "
-"procmail)."
+"Benachrichtigungen enthalten Header mit dem Listennamen. Sie können ihn "
+"nutzen, um die Benachrichtigungs-Mails zu filtern (z. B. mit procmail)."
 
 #: www/faq.php:59
 msgid "Some definitions"
@@ -3316,12 +3315,12 @@ msgstr ""
 "Sie sollten mit dem Abschnitt <a href=\"https://www.freebsd.org/doc/"
 "en_US.ISO8859-1/books/handbook/ports.html\">Ports</a> in <a href=\"https://"
 "www.freebsd.org/doc/en_US.ISO8859-1//books/handbook/index.html\">The FreeBSD "
-"Handbook</a> vertraut sein.Achten Sie insbesondere auf den Unterschied "
+"Handbook</a> vertraut sein. Achten Sie insbesondere auf den Unterschied "
 "zwischen einem Port und einem Paket."
 
 #: www/faq.php:66
 msgid "Definitions for the hopelessly lazy"
-msgstr "Definitionen für den hoffnungslos faulen"
+msgstr "Definitionen für den hoffnungslos Faulen"
 
 #: www/faq.php:70
 msgid ""
@@ -3333,7 +3332,7 @@ msgid ""
 msgstr ""
 "Wenn Sie den Port installieren, werden die Quellen heruntergeladen, bei "
 "Bedarf gepatcht, kompiliert und installiert. Sie haben die Möglichkeit, alle "
-"optionalen Konfigurationselemente festzulegen, die für diesen Port "
+"optionalen Konfigurations-Elemente festzulegen, die für diesen Port "
 "spezifisch sind. Wenn der Port von einem anderen Port abhängt, wird auch "
 "dieser Port installiert. Nach der Installation sind Ports identisch mit "
 "Paketen."
@@ -3343,7 +3342,7 @@ msgid ""
 "It is because of these compile time options that I prefer ports over "
 "packages."
 msgstr ""
-"Wegen dieser Kompilierungsoptionen bevorzuge ich Ports gegenüber Paketen."
+"Wegen dieser Kompilierungs-Optionen bevorzuge ich Ports gegenüber Paketen."
 
 #: www/faq.php:75
 msgid "What is a package?"
@@ -3355,8 +3354,8 @@ msgid ""
 "you will download a binary and it will be installed."
 msgstr ""
 "Ein Paket ist ein kompilierter Port. Es ist eine Binärdatei. Wenn Sie das "
-"Paket installieren, laden Sie eine Binärdateiherunter und sie wird "
-"installiert."
+"Paket installieren, laden Sie eine Binärdatei herunter, aus der die Dateien "
+"dann installiert werden."
 
 #: www/faq.php:80
 msgid ""
@@ -3374,8 +3373,8 @@ msgid ""
 "Not all ports can have packages, often because of license restrictions that "
 "prevent binary distribution."
 msgstr ""
-"Nicht alle Ports können Pakete haben, oft aufgrund von Lizenzbeschränkungen, "
-"die eine binäre Verteilung verhindern."
+"Nicht für alle Ports können Pakete angeboten werden, oft aufgrund von "
+"Lizenzbeschränkungen, die eine binäre Verteilung verhindern."
 
 #: www/faq.php:86
 msgid "The FreeBSD Project provides:"
@@ -3433,7 +3432,7 @@ msgid ""
 msgstr ""
 "Wo immer Sie einen Port sehen, können Sie auf den Link Hinzufügen (%1$s) / "
 "Entfernen (%2$s) klicken, je nach Bedarf (d. h. Anpassung der "
-"Beobachtungsliste mit einem Ein-Klick)."
+"Beobachtungsliste mit einem Klick)."
 
 #: www/faq.php:121
 msgid ""
@@ -3458,7 +3457,7 @@ msgid ""
 "One-click watch list maintenance operates only upon your default watch "
 "lists. You can set one or more watch lists as being default."
 msgstr ""
-"Ein-Klick-Änderung der Beobachtungsliste funktionieren nur auf Ihren "
+"Ein-Klick-Änderungen der Beobachtungsliste funktionieren nur auf Ihren "
 "Standard-Beobachtungslisten. Sie können eine oder mehrere Beobachtungslisten "
 "als Standard festlegen."
 
@@ -3572,7 +3571,7 @@ msgid ""
 "database."
 msgstr ""
 "Der Quellcode für das gesamte FreeBSD-Betriebssystem und den Ports-Baum wird "
-"im offiziellen %s gespeichert. Die FreshPorts-Knoten verwenden dann <span "
+"im offiziellen %s gespeichert. Die FreshPorts-Systeme verwenden dann <span "
 "class=\"cmd\">git</span>, um Änderungen zu erkennen und die neuen Commits in "
 "ihre Datenbank zu laden."
 
@@ -3584,9 +3583,9 @@ msgid ""
 "website was updated as soon as the message arrived."
 msgstr ""
 "In der Vergangenheit hat FreshPorts die E-Mails jedes Commits ausgewertet "
-"und das Ergebnis in die Datenbank geladen.In der Theorie ist das ziemlich "
-"einfach. In Praxis gibt es viel mehr als auf den ersten Blick erkennbar. Die "
-"Website wurde erstellt, sobald eine Nachricht angekommen war."
+"und das Ergebnis in die Datenbank geladen. In der Theorie ist das ziemlich "
+"einfach. In der Praxis ist es aber viel komplizierter, als auf den ersten "
+"Blick erkennbar. Die Website wurde für jede neu empfangene Mail aktualisiert."
 
 #: www/faq.php:184
 msgid "What does unknown mean for a revision number?"
@@ -3599,7 +3598,7 @@ msgid ""
 msgstr ""
 "Es bedeutet, dass die Daten aus einer früheren Version der FreshPorts-"
 "Datenbank konvertiert wurden, die diese Informationen nicht aufgezeichnet "
-"hat."
+"hatte."
 
 #: www/faq.php:190
 msgid "Can I link to your site?"
@@ -3611,10 +3610,9 @@ msgid ""
 "prefer the name FreshPorts (one word, mixed case). The following HTML is a "
 "good place to start:"
 msgstr ""
-"Ja, danke, Sie können das. Sie müssen uns nicht fragen. Machen Sie einfach "
-"weiter und tun Sie es. Wir bevorzugen den Namen FreshPorts (ein Wort, "
-"gemischte Groß- und Kleinschreibung). Der folgende HTML-Code ist ein guter "
-"Ausgangspunkt:"
+"Ja, danke, Sie können das. Sie müssen uns nicht fragen. Tun Sie es einfach. "
+"Wir bevorzugen den Namen FreshPorts (ein Wort, gemischte Groß- und "
+"Kleinschreibung). Der folgende HTML-Code ist ein guter Ausgangspunkt:"
 
 #: www/faq.php:199
 msgid "Here is a banner which you are free to use to link to this site:"
@@ -3705,10 +3703,10 @@ msgid ""
 "for a forbidden port are not built by the package cluster. Therefore, %s "
 "will not work."
 msgstr ""
-"Verboten: Der Port ist als verboten gekennzeichnet. Wenn Sie die Portdetails "
-"anzeigen, sehen Sie warum. Meistens ist es wegen eines Sicherheitsproblems. "
-"Pakete für einen verbotenen Port werden nicht vom Paketcluster erstellt. "
-"Deshalb wird %s nicht funktionieren."
+"Verboten: Der Port ist als verboten gekennzeichnet. Wenn Sie die Port-"
+"Details anzeigen, sehen Sie warum. Meistens ist es wegen eines "
+"Sicherheitsproblems. Pakete für einen verbotenen Port werden vom Paket-"
+"Cluster nicht erstellt. Deshalb wird %s nicht funktionieren."
 
 #: www/faq.php:243
 #, php-format
@@ -3782,8 +3780,9 @@ msgid ""
 "If you do see one, chances are that the port contains an error that prevents "
 "make(1) from running. For example:"
 msgstr ""
-"Wenn Sie einen sehen, ist die Wahrscheinlichkeit groß, dass der Port einen "
-"Fehler enthält, der verhindert, dass make(1) ausgeführt wird. Zum Beispiel:"
+"Wenn Sie das doch sehen, dann ist die Wahrscheinlichkeit groß, dass der Port "
+"einen Fehler enthält, der verhindert, dass make(1) ausgeführt wird. Zum "
+"Beispiel:"
 
 #: www/faq.php:271
 msgid ""
@@ -3797,8 +3796,8 @@ msgstr ""
 "FreshPorts Sanity-Check-Report angemeldet hat) und sollte das Problem so "
 "schnell wie möglich beheben. Sobald Sie einen neueren Commit ohne ein "
 "Refresh-Symbol sehen, wurde das Problem behoben. Die Refresh-Symbole "
-"verschwinden, nachdem FreshPorts die alten Commits bearbeitet hat. Dies kann "
-"einige Stunden dauern."
+"verschwinden, nachdem FreshPorts die ausstehenden Commits bearbeitet hat. "
+"Dies kann einige Stunden dauern."
 
 #: www/faq.php:274
 msgid "Deleted: This port has been removed from the ports tree."
@@ -3815,15 +3814,15 @@ msgid ""
 "This link will not appear for commit messages before 3 March 2002 (which is "
 "the date FreshPorts started to store the message-id)."
 msgstr ""
-"Diese Symbole sind für ältere Commits. Zu einem Zeitpunkt hat FreshPorts E-"
-"Mails geparst. Dieses Symbol wird neben Commits angezeigt, bevor das "
-"Repository von <span class=\"cmd\">subversion</span> zu <span "
-"class=\"cmd\">git</span> gewechselt wurde. Sie erscheinen neben der Commit-"
-"Nachricht in der Commit-Historie. Dieser Link führt Sie zur ursprünglichen "
-"Nachricht in den FreeBSD-Mailinglisten-Archiven. Beachten Sie, dass es "
-"einige Minuten dauern kann, bis die Nachricht in den Archiven erscheint. "
-"Dieser Link wird nicht für Commit-Nachrichten vor dem 3. März 2002 angezeigt "
-"(dem Datum seit dem FreshPorts die Message-ID speichert)."
+"Diese Symbole sind für ältere Commits. Zu einem früheren Zeitpunkt hat "
+"FreshPorts Commit-E-Mails ausgewertet. Dieses Symbol wird für Commits "
+"angezeigt, bevor das Repository von <span class=\"cmd\">subversion</span> zu "
+"<span class=\"cmd\">git</span> gewechselt wurde. Sie erscheinen neben der "
+"Commit-Nachricht in der Commit-Historie. Dieser Link führt Sie zur "
+"ursprünglichen Nachricht in den FreeBSD-Mailinglisten-Archiven. Beachten "
+"Sie, dass es einige Minuten dauern kann, bis die Nachricht in den Archiven "
+"erscheint. Dieser Link wird nicht für Commit-Nachrichten vor dem 3. März "
+"2002 angezeigt (dem Datum, seit dem FreshPorts die Message-ID speichert)."
 
 #: www/faq.php:280
 msgid ""
@@ -3835,7 +3834,8 @@ msgstr ""
 "FreshPorts commit message: Dies führt Sie zur FreshPorts-Commit-Nachricht "
 "und ermöglicht es Ihnen, alle anderen Ports zu sehen, die von diesem Commit "
 "betroffen waren. Dieser Link wird nicht für Commit-Nachrichten vor dem 3. "
-"März 2002 angezeigt (dem Datum seit dem FreshPorts die Message-ID speichert)."
+"März 2002 angezeigt (dem Datum, seit dem FreshPorts die Message-ID "
+"speichert)."
 
 #: www/faq.php:283
 msgid ""
@@ -3911,7 +3911,7 @@ msgid ""
 msgstr ""
 "CVS-Repository: Veraltet und historisch. Wahrscheinlich erscheint es nicht "
 "mehr so oft. Dieser Link führt Sie zum CVS-Repository-Eintrag für diese "
-"Version der Datei. Dies gilt nur für viel ältere Commits."
+"Version der Datei. Dies gilt nur für sehr frühe Commits."
 
 #: www/faq.php:308
 msgid ""
@@ -3929,7 +3929,7 @@ msgid ""
 "past vulnerabilities won't show up in FreshPorts. That's because FreshPorts "
 "does not store historical package names."
 msgstr ""
-"Eine vergangene <a href=\"https://www.vuxml.org/freebsd/\">VuXML</a>-"
+"Eine früher bestehende <a href=\"https://www.vuxml.org/freebsd/\">VuXML</a>-"
 "Sicherheitslücke. Klicken Sie auf das Symbol für Details. HINWEIS: Eine "
 "Funktion von security/vuxml ist, dass sie die Pakete benennt, die von einer "
 "bestimmten Sicherheitslücke betroffen sind. Wenn der Port seinen Paketnamen "
@@ -3949,7 +3949,7 @@ msgstr ""
 
 #: www/faq.php:320
 msgid "This port will require interaction during installation."
-msgstr "Dieser Port erfordert während der Installation Interaktion."
+msgstr "Dieser Port erfordert während der Installation eine Interaktion."
 
 #: www/faq.php:323
 msgid ""
@@ -3957,9 +3957,9 @@ msgid ""
 "for ports depending on the current port, ports maintained by the current "
 "maintainer, or other commits by the current committer."
 msgstr ""
-"Dependency Search: Die Aktion hängt vom Kontext ab. Klicken Sie auf dieses "
-"Symbol, um nach Ports zu suchen, die von dem aktuellen Port abhängen, Ports, "
-"die vom aktuellen Maintainer gepflegt werden, oder andere Commits des "
+"Abhängigkeiten-Suche: Die Aktion hängt vom Kontext ab. Klicken Sie auf "
+"dieses Symbol, um nach Ports zu suchen, die von dem aktuellen Port abhängen, "
+"Ports, die vom aktuellen Betreuer gepflegt werden oder andere Commits des "
 "aktuellen Committers."
 
 #: www/faq.php:326
@@ -3969,9 +3969,9 @@ msgid ""
 "Revision details to view the revision of the file associated with this "
 "commit."
 msgstr ""
-"Revision details. Klicken Sie auf das Files-Symbol in der Commit-Historie "
+"Revisions-Details. Klicken Sie auf das Files-Symbol in der Commit-Historie "
 "und Sie sehen, welche Dateien in diesem Port von diesem Commit berührt "
-"wurden. Klicken Sie auf die Revision details, um die Revision der Datei "
+"wurden. Klicken Sie auf die Revisions-Details, um die Revision der Datei "
 "anzuzeigen, die mit diesem Commit verknüpft ist."
 
 #: www/faq.php:329
@@ -3979,9 +3979,9 @@ msgid ""
 "Annotate: If you click on this graphic, you will be taken to a view of the "
 "file in question, with a listing of the commits that last changed each line."
 msgstr ""
-"Annotate: Wenn Sie auf diese Grafik klicken, gelangen Sie zu einer Ansicht "
-"der betreffenden Datei, mit einer Auflistung der Commits, die zuletzt die "
-"jeweilige Zeile geändert haben."
+"Von wem geändert: Wenn Sie auf diese Grafik klicken, gelangen Sie zu einer "
+"Ansicht der betreffenden Datei, mit einer Auflistung der Commits, die "
+"zuletzt die jeweilige Zeile geändert haben."
 
 #: www/faq.php:332
 msgid ""
@@ -3989,10 +3989,10 @@ msgid ""
 "files in this port were touched by this commit. Click on the Diff icon to "
 "view the diff between this revision of the file and the previous revision."
 msgstr ""
-"Diff. Klicken Sie auf das Files-Symbol in der Commit-Historie und Sie sehen, "
-"welche Dateien in diesem Port von diesem Commit berührt wurden. Klicken Sie "
-"auf das Diff-Symbol, um den Unterschied zwischen dieser Revision der Datei "
-"und der vorherigen Revision anzuzeigen."
+"Unterschiede. Klicken Sie auf das Files-Symbol in der Commit-Historie und "
+"Sie sehen, welche Dateien in diesem Port von diesem Commit berührt wurden. "
+"Klicken Sie auf das Diff-Symbol, um den Unterschied zwischen dieser Revision "
+"der Datei und der vorherigen Revision anzuzeigen."
 
 #: www/faq.php:335
 msgid ""
@@ -4012,10 +4012,11 @@ msgid ""
 "you flag a commit? Perhaps you want to review that commit. Perhaps you want "
 "to MFC it later. Click on this icon to remove the commit from your flag list."
 msgstr ""
-"Flagged Commit. Dieser Commit befindet sich auf Ihrer Liste der markierten "
-"Commits. Warum sollten Sie einen Commit markieren? Vielleicht möchten Sie "
-"diesen Commit überprüfen. Vielleicht möchten Sie ihn später MFC. Klicken Sie "
-"auf dieses Symbol, um den Commit aus Ihrer Markierungsliste zu entfernen."
+"Markierter Commit. Dieser Commit befindet sich auf Ihrer Liste der "
+"markierten Commits. Warum sollten Sie einen Commit markieren? Vielleicht "
+"möchten Sie diesen Commit überprüfen. Vielleicht möchten Sie ihn später MFC. "
+"Klicken Sie auf dieses Symbol, um den Commit aus Ihrer Markierungsliste zu "
+"entfernen."
 
 #: www/faq.php:341
 msgid "Click on this icon to add the commit to your flagged list."
@@ -4028,8 +4029,8 @@ msgid ""
 "Ascending / Descending: These icons appear on particular tables and allow "
 "changing the order rows are sorted by."
 msgstr ""
-"Ascending / Descending: Diese Symbole erscheinen in bestimmten Tabellen und "
-"ermöglichen es, die Reihenfolge zu ändern, nach der die Zeilen sortiert "
+"Aufsteigend / Absteigend: Diese Symbole erscheinen in bestimmten Tabellen "
+"und ermöglichen es, die Reihenfolge zu ändern, nach der die Zeilen sortiert "
 "werden."
 
 #: www/faq.php:348
@@ -4611,13 +4612,13 @@ msgid ""
 "to the master port would not appear under the slave port, thereby giving a "
 "false impression that the slave port was still vulnerable."
 msgstr ""
-"Slave-Ports können mit einem Commit gegen den Master-Port aktualisiert "
-"werden. Ein Commit gegen den Master-Port wirkt sich auf alle Slave-Ports "
-"aus. Wenn eine <a href=\"https://www.vuxml.org/freebsd/\">VuXML</a>-"
-"Sicherheitslücke gegen einen Slave-Port aufgezeichnet wurde, würde jede "
-"Korrektur auf den Master-Port angewendet. Der Commit zum Master-Port würde "
-"jedoch nicht unter dem Slave-Port erscheinen, wodurch der falsche Eindruck "
-"entsteht, dass der Slave-Port immer noch anfällig ist."
+"Slave-Ports können mit einem Commit des Master-Ports aktualisiert werden. "
+"Ein Commit des Master-Ports wirkt sich auf alle Slave-Ports aus. Wenn eine "
+"<a href=\"https://www.vuxml.org/freebsd/\">VuXML</a>-Sicherheitslücke gegen "
+"einen Slave-Port aufgezeichnet wurde, würde jede Korrektur auf den Master-"
+"Port angewendet. Der Commit des Master-Ports würde jedoch nicht unter dem "
+"Slave-Port erscheinen, wodurch der falsche Eindruck entsteht, dass der Slave-"
+"Port immer noch anfällig ist."
 
 #: www/faq.php:634
 msgid ""
@@ -4799,8 +4800,8 @@ msgid ""
 msgstr ""
 "FreshPorts prüft stündlich alle verfügbaren FreeBSD-Pakete und benutzt diese "
 "Information, um die unter den verschiedenen ABIs (z. B. FreeBSD:14:amd64) "
-"verfügbaren Pakete anzuzeigen. HINWEIS: wir zeigen keine Pakete aus den "
-"Quartals-Zweig für die aktuellste CURRENT von FreeBSD. Pakete werden für die "
+"verfügbaren Pakete anzuzeigen. HINWEIS: wir zeigen keine Pakete aus dem "
+"Quartals-Zweig für die aktuellste CURRENT von FreeBSD. Pakete werden für "
 "diese Kombination von ABI und Paket-Set nicht gebaut. Sie können CURRENT/"
 "Quarterly auf manchen Seiten angezeigt sehen, aber es ist einfacher das so "
 "zu machen, als nachzuverfolgen, welcher Zweig gerade CURRENT ist."
@@ -4818,16 +4819,16 @@ msgid ""
 "under <i>Watch Lists</i> in the right hand column"
 msgstr ""
 "Klicken Sie auf <a href=\"/report-subscriptions.php\">Subskriptions-Liste</"
-"a> unter <i>Watch Lists</i> in der rechten Spalte"
+"a> unter <i>Beobachtungs-Listen</i> in der rechten Spalte"
 
 #: www/faq.php:760
 msgid "Check the <i>New Package Notification</i> box"
-msgstr "Aktiviere <i>New Package Notificatin</i>"
+msgstr "Aktivieren Sie <i>Neue Paket-Meldungen</i>"
 
 # Update übersetzen?
 #: www/faq.php:761
 msgid "click on Update"
-msgstr "Klicke auf 'Update'"
+msgstr "Klicken Sie auf 'Aktualisieren'"
 
 #: www/faq.php:762
 msgid ""
@@ -4835,9 +4836,9 @@ msgid ""
 "package-notifications.php\">ABI Package Subscriptions</a> to select the ABI "
 "for which you want to receive notifications"
 msgstr ""
-"Wieder unter <i>Watch Lists</i> klicken Sie auf <a href=\"/report-package-"
-"notifications.php\">ABI Package Subscriptions</a> um das ABI auszuwählen, "
-"für das Sie Benachrichtigungen erhalten möchten"
+"Wieder unter <i>Beobachtungs-Listen</i> klicken Sie auf <a href=\"/report-"
+"package-notifications.php\">ABI-Paket-Abonnements</a> um das ABI "
+"auszuwählen, für das Sie Benachrichtigungen erhalten möchten"
 
 # Boxen übersetzen?
 #: www/faq.php:763
@@ -4856,7 +4857,7 @@ msgstr "ABI (zweites Feld)"
 
 #: www/faq.php:767
 msgid "one or both of quarterly and latest (third box)"
-msgstr "Eins oder beide von 'Quarterly' oder 'Latest' (drittes Feld)"
+msgstr "Eins oder beide von 'latest' und 'quarterly' (drittes Feld)"
 
 # Add übersetzen?
 #: www/faq.php:769
@@ -4931,7 +4932,7 @@ msgid ""
 "href=\"%s\">webmaster</a> for help if it doesn't arrive."
 msgstr ""
 "Entschuldigung, aber die vorherige Mail wurde abgewiesen, deshalb sind wir "
-"nicht sicher, ob sie Sie erreicht hat.Aber wir haben sie trotzdem gesendet. "
+"nicht sicher, ob sie Sie erreicht hat. Aber wir haben sie trotzdem gesendet. "
 "Bitte kontaktieren Sie den <a href=\"%s\">Webmaster</a> um Hilfe zu "
 "erhalten, wenn die E-Mail nicht ankommt."
 
@@ -5045,9 +5046,9 @@ msgid ""
 "FreshPorts login, not a financial transaction...."
 msgstr ""
 "Wir senden Ihnen eine E-Mail mit einem Link. Klicken Sie auf den Link um das "
-"Passwort zurück setzen zu können.Der Link ist nur wenige Stunden gültig, Das "
-"ist nicht absolut sicher, aber es geht um Ihren FreshPort-Login, nicht um "
-"eine finanzielle Transaktion ..."
+"Passwort zurück setzen zu können. Der Link ist nur wenige Stunden gültig. "
+"Das ist nicht absolut sicher, aber es geht um Ihren FreshPorts-Login, nicht "
+"um eine finanzielle Transaktion ..."
 
 #: www/forgotten-password.php:268
 msgid "email address:"
@@ -5218,7 +5219,7 @@ msgid ""
 msgstr ""
 "Eine der mächtigsten FreshPorts-Funktionen ist die Fähigkeit, die auf Ihrem "
 "FreeBSD-System vorhandenen Informationen zum Aktualisieren der "
-"Beobachtungsliste zu verwenden.Dies wird erreicht durch die <a href=\"/"
+"Beobachtungsliste zu verwenden. Dies wird erreicht durch die <a href=\"/"
 "pkg_upload.php\">Paket-Informations Hochlade-Funktion</a>. Das ist ein "
 "zweistufiger Prozess:"
 
@@ -5350,9 +5351,9 @@ msgid ""
 "within FreshPorts."
 msgstr ""
 "Nicht gefunden - Es ist möglich, dass Ports in Ihrer pkg_info-Ausgabe nicht "
-"in FreshPorts gefunden werden können. Im Laufe der Zeot werden Ports "
-"gelöscht, umbenannt oder verschoben.Dieser Abschnitt enthält die Ports aus "
-"der pkg_info-Liste, die nicht in FreshPorts gefundenn wurden."
+"in FreshPorts gefunden werden können. Im Laufe der Zeit werden Ports "
+"gelöscht, umbenannt oder verschoben. Dieser Abschnitt enthält die Ports aus "
+"der pkg_info-Liste, die nicht in FreshPorts gefunden wurden."
 
 #: www/help.php:102
 msgid ""
@@ -5363,7 +5364,7 @@ msgid ""
 msgstr ""
 "Duplikate - Manchmal installieren Sie den gleichen Port zweimal, und nicht "
 "unbedingt absichtlich. Wenn das passiert, dann werden diese Ports in diesem "
-"Abschnitt gelistet.Sie sollten diese Situation bereinigen, falls Sie nicht "
+"Abschnitt gelistet. Sie sollten diese Situation bereinigen, falls Sie nicht "
 "aus irgendeinem Grund beide Versionen dieser Ports benötigen."
 
 #: www/help.php:103
@@ -6416,7 +6417,7 @@ msgid ""
 "This page allows you to select the reports you wish to receive and the "
 "frequency of the report."
 msgstr ""
-"Diese Seite ermöglicht dir die Auswahl der Berichte und ihrer Häufigkeit."
+"Diese Seite ermöglicht Ihnen die Auswahl der Berichte und ihrer Häufigkeit."
 
 #: www/report-subscriptions.php:180
 msgid "Frequency"
@@ -6436,7 +6437,7 @@ msgid ""
 "need to <a href=\"/report-package-notifications.php\">specify ABI and watch "
 "lists</a>."
 msgstr ""
-"Wenn Sie sich zu <i>Neue Paket-Meldungen</i> angemeldet haben, müssen Sie "
+"Wenn Sie sich für <i>Neue Paket-Meldungen</i> angemeldet haben, müssen Sie "
 "auch das <a href=\"/report-package-notifications.php\">ABI und die "
 "Beobachtungsliste auswählen</a>."
 
@@ -6454,12 +6455,12 @@ msgid ""
 "mailman/listinfo/\">FreshPorts mailing list website</a>"
 msgstr ""
 "Sie möchten vielleicht helfen, neue FreshPorts-Funktionen zu testen oder nur "
-"vorab zu sehen.Wenn das zutrifft, dann empfehle ich Ihnen, sich für Beta-"
-"Mail-Liste zu registrieren.Dies ist eine Mail-Liste mit wenigen Meldungen, "
+"vorab zu sehen. Wenn das zutrifft, dann empfehle ich Ihnen, sich für Beta-"
+"Mail-Liste zu registrieren. Dies ist eine Mail-Liste mit wenigen Meldungen, "
 "die Sie über Details neuer Funktionen informiert, die Sie ausprobieren "
-"können, bevor sie allgemein freigegeben werden.Um sich anzumelden folgen Sie "
-"den Hinweisen unter <a href=\"https://lists.freshports.org/mailman/listinfo/"
-"\">FreshPorts mailing list website</a>"
+"können, bevor sie allgemein freigegeben werden. Um sich anzumelden, folgen "
+"Sie den Hinweisen unter <a href=\"https://lists.freshports.org/mailman/"
+"listinfo/\">FreshPorts mailing list website</a>"
 
 #: www/sanity_test_failures.php:96
 msgid ""
@@ -6727,7 +6728,7 @@ msgstr ""
 "Ich begrüße die Beiträge von Sicherheits-Forschern, die dieses Projekt "
 "unterstützen. Bitte beachten Sie, dass dies keine kommerzielle Website ist. "
 "Es ist mein Hobby. Es ist etwas, das ich in meiner Freizeit mache. Ich "
-"stelle als Service für die Open-Source-Community zur Verfügung."
+"stelle es als Service für die Open-Source-Community zur Verfügung."
 
 #: www/security-policy.php:33
 msgid ""
@@ -6972,7 +6973,7 @@ msgstr "die Standard-Beobachtungsliste(n)"
 
 #: www/watch-list-maintenance.php:382
 msgid "Ask for watch list name[s] each time"
-msgstr "Frage jedes Mal nach dem Namen der Beobachtungsliste(n)"
+msgstr "die jedes Mal abgefragte(n) Beobachtungsliste(n)"
 
 #: www/watch-list-maintenance.php:393
 msgid "Information"
@@ -6980,7 +6981,7 @@ msgstr "Informationen"
 
 #: www/watch-list-maintenance.php:395
 msgid "Names do not have to be unique but it is advisable."
-msgstr "Namen müssen nicht eindeutig sein, aber es wird trotzdem empfohlen."
+msgstr "Namen müssen nicht eindeutig sein, aber es ist trotzdem zu empfehlen."
 
 #: www/watch-list-maintenance.php:396
 #, php-format
@@ -7021,8 +7022,8 @@ msgstr ""
 msgid ""
 "rename a new watch list.  Select the watch list and supply the new name."
 msgstr ""
-"ändere den Namen einer neuen Beobachtungsliste. Wähle die Liste und gib "
-"einen neuen Namen ein."
+"ändere den Namen einer Beobachtungsliste. Wähle die Liste und gib einen "
+"neuen Namen ein."
 
 #: www/watch-list-maintenance.php:415
 msgid "Deletes the selected watch lists."
@@ -7049,15 +7050,15 @@ msgstr ""
 
 #: www/watch-list-maintenance.php:425
 msgid "you click on the add/remove links"
-msgstr "Klicken Sie auf die Add/Remove-Links"
+msgstr "Sie auf die Add/Remove-Links klicken"
 
 #: www/watch-list-maintenance.php:426
 msgid ""
 "when displaying a port, the add/remove link reflects whether or not that "
 "port is on this list"
 msgstr ""
-"wenn ein Port angezeigt wird, dann lassen die Add/Remove-Links erkennen, ob "
-"der Port auf dieser Liste ist"
+"wenn ein Port angezeigt wird, lassen die Add/Remove-Links erkennen, ob der "
+"Port auf dieser Liste ist oder nicht"
 
 #: www/watch-list-maintenance.php:431
 msgid "this affects the display/actions on other pages"

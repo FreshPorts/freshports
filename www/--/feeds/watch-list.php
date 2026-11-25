@@ -83,10 +83,13 @@ function freshports_WatchListFeedsPage($db, $visitor, $User) {
 
 	$WatchListID = freshports_WatchListVerifyToken($db, pg_escape_string($db, $Token));
 	if ($WatchListID == '') {
-		syslog(LOG_ERR, __FILE__ . '::' . __LINE__ .
+		# Unknown token: usually a feed reader still polling a watch list that was deleted
+		# or whose token was regenerated. 410 Gone (not 404) tells feed readers to drop the
+		# feed; many retry a 404 forever. It is the client's problem, not ours, so NOTICE.
+		syslog(LOG_NOTICE, __FILE__ . '::' . __LINE__ .
 			' watch list token requested by ' . $_SERVER['REMOTE_ADDR'] .
 			' not found ' . "'$Token'");
-		header('HTTP/1.1 404 NOT FOUND');
+		header('HTTP/1.1 410 Gone');
 		exit;
 	}
 

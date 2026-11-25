@@ -28,7 +28,7 @@
 	$Protocol = isset($_SERVER['HTTPS']) ? 'https' : 'http';
 	$ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['HTTP_HOST']);
 
-	# the feeds in /--/feeds/ are written by laminas-feed; the /backend/ ones are deprecated - re #721
+	# the feeds in /--/feeds/ are written by laminas-feed - re #721
 	$URL  = "$Protocol://$ServerName/--/feeds/commits.php";
 	$HREF = "<a href=\"$URL\">$URL</a>";
 	$ATOM = "<a href=\"$URL?format=atom\">$URL?format=atom</a>";
@@ -71,52 +71,9 @@
 
 	</ol>');
 
+	# the /backend/ feeds now redirect to those above - re #724
 	$page->addBodyContent('
-	<h2>' . _('Deprecated newsfeeds') . '</h2>
-	<p>' . _('These older feeds still work, but they will be redirected to the feeds above. Please update your subscriptions.') . '</p>');
-
-	# the page as it was before the /--/feeds/ feeds
-	$URL  = "$Protocol://$ServerName/backend/news.php";
-	$HREF = "<a href=\"$URL\">$URL</a>";
-
-	$page->addBodyContent('
-	<ol>
-	<li>' . sprintf(_('An RSS feed : %s'), $HREF) . '
-	<p>' . _('Take your pick of different formats:'));
-
-	$URL  = "$Protocol://$ServerName/backend/";
-	$HREF = "<a href=\"$URL\">$URL</a>";
-	$page->addBodyContent($HREF . '
-
-	<p>' . _('This RSS feed takes the following optional parameters:') . '</p>
-	<ul>
-	<li><b>flavor=new</b> : ' . _('show only new ports (ignores <b>branch</b>).') . '</li>
-	<li><b>flavor=broken</b> : ' . _('show only broken ports (ignores <b>branch</b>).') . '</li>
-	<li><b>flavor=vuln</b> : ' . _('show only vuln ports (branches should work, let me know if they do not).') . '</li>
-	<li><b>branch=2018Q3</b> : ' . _('show only commits on that branch. If not specified, defaults to <b>head</b>.') . '
-	</ul>
-	<p>
-	' . _('Sample URLs include:') . '
-	</p>
-	<ol>
-	<li>' . $URL . 'rss2.0.php?branch=2018Q4</li>
-	<li>' . $URL . 'rss2.0.php?branch=quarterly</li>
-	<li>' . $URL . 'rss2.0.php?flavor=broken</li>
-	<li>' . $URL . 'rss2.0.php?flavor=new</li>
-	</ol>
-
-	</li>');
-
-	$URL  = "$Protocol://$ServerName/backend/rss2.0.php?flavor=new";
-	$HREF = "<a href=\"$URL\">$URL</a>";
-
-	$page->addBodyContent('
-	<li><p>' . sprintf(_('An RSS feed that lists only new ports:  %s'), $HREF) . ' </p></li>
-
-	<li><p>' . _('A Personal News feed for each of your watch lists. Look for the link under the <code>Watch Lists</code> box after you have logged in.') . '</li>
-
-	<li><p>' . _('The blog for this website, <a href="https://news.freshports.org/">FreshPorts News</a>.') . '
-
-	</ol>');
+	<h2>' . _('Older newsfeeds') . '</h2>
+	<p>' . sprintf(_('The older feeds in %s now redirect to the feeds above. Please update your subscriptions.'), '<a href="/backend/">/backend/</a>') . '</p>');
 
 	$page->display();

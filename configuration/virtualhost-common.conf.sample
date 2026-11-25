@@ -90,6 +90,23 @@
   # the commits.php page has been retired
   rewrite ^/commits.php / permanent;
 
+  # The old /backend/ news feeds were retired in favour of /--/feeds/,
+  # where laminas-feed writes RSS 2.0 and Atom 1.0. Feed readers follow a
+  # permanent redirect and most update the subscription. The query string
+  # (branch=, flavor=, and for watch lists id= and format=) is kept: rewrite
+  # appends it, after "&" when the new URL has its own query.
+  # /backend/html.php, index.php and newsfeeds.php are still pages.
+  # See https://github.com/FreshPorts/freshports/issues/724
+  rewrite ^/backend/(rss2\.0|rss1\.0|rss0\.91|news)\.php$ /--/feeds/commits.php               permanent;
+  rewrite ^/backend/(atom0\.3|pie0\.1)\.php$              /--/feeds/commits.php?format=atom   permanent;
+  rewrite ^/backend/watch-list\.php$                      /--/feeds/watch-list.php            permanent;
+
+  # These /backend/ feeds (JavaScript, mbox, OPML) have no replacement.
+  # Only crawlers fetched them: about one request per address.
+  location ~ ^/backend/(js|mbox|opml)\.php$ {
+    return 410;
+  }
+
   # Drop a scraper whose search URL template is missing its '&' separators
   # (sends e.g. "stype=maintainermethod=exactquery=<email>" or
   # "stype=depends_allmethod=matchquery=<port>" instead of

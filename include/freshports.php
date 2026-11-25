@@ -2621,7 +2621,7 @@ $HTML .= '<br>
 		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/watch-categories.php',             _("Categories"),                _("Search through categories for ports to add to your watch list")             );
 		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/watch-list-maintenance.php',       _("Maintain"),                  _("Maintain your watch list[s]")                                               );
 		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/watch.php',                        _("Ports"),                     _("Your list of watched ports")                                                );
-		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/backend/watch-list.php',           _("Personal Newsfeeds"),        _("A list of news feeds for your watched lists")                               );
+		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/--/feeds/watch-list.php',         _("Personal Newsfeeds"),        _("A list of news feeds for your watched lists")                               );
 		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/report-subscriptions.php',         _("Report Subscriptions"),      _("Maintain your list of subscriptions")                                       );
 		$HTML .= freshports_SideBarHTML($_SERVER["PHP_SELF"], '/report-package-notifications.php', _("ABI Package Subscriptions"), _("Maintain your ABI package subscriptions")                                   );
 

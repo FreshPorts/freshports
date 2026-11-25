@@ -3,8 +3,11 @@
 	# Copyright (c) 1998-2026 Dan Langille
 	#
 	# RSS 2.0 and Atom 1.0 feeds, written by laminas-feed - re #721
-	# These are served from /--/feeds/; the old feeds in /backend/ use classes/newsfeed.php
-	# and UniversalFeedCreator until they are redirected here.
+	# These are served from /--/feeds/. The old feeds in /backend/ are redirected
+	# here by nginx (see configuration/virtualhost-common.conf.sample) - re #724
+	#
+	# Also the HTML fragment for /backend/html.php, written here without
+	# laminas-feed, which has no HTML writer - re #724
 	#
 
 	DEFINE('FEED_MAX_WATCH_LIST_ITEMS', 100);	# commits in a watch list feed
@@ -52,7 +55,7 @@ class FreshPortsFeedExtensions implements ExtensionManagerInterface {
 
 	Writer::setExtensionManager(new FreshPortsFeedExtensions());
 
-# the SQL from newsfeed(), less the unused needs_refresh; that copy goes away with classes/newsfeed.php
+# the SQL for each feed: a watch list, a flavor (new, broken, vuln), or the latest commits on a branch
 function freshports_FeedQuery($dbh, $WatchListID, $BranchName, $Flavor) {
 	if ($WatchListID) {
 	# this is for newfeeds based on personal watch lists
@@ -276,10 +279,8 @@ ORDER BY CL.commit_date DESC, P.name;
 	return array($sql, $params);
 }
 
-# Build the feed as XML. $Type is 'rss' or 'atom'; $SelfURL is the feed's own URL.
-function freshports_FeedXML($dbh, $Type, $SelfURL, $WatchListID, $BranchName, $Flavor) {
-	$Host = 'https://' . $_SERVER['HTTP_HOST'];
-
+# The feed's title, e.g. "FreshPorts broken ports (2026Q4)"
+function freshports_FeedTitle($WatchListID, $BranchName, $Flavor) {
 	if ($WatchListID) {
 		$Title = 'FreshPorts watch list';
 	} else {
@@ -294,10 +295,63 @@ function freshports_FeedXML($dbh, $Type, $SelfURL, $WatchListID, $BranchName, $F
 		}
 	}
 
+	return $Title;
+}
+
+# The feed's entries, newest first, or false if the query failed. Each one has
+# title, link, description (HTML: the text escaped, with <br /> for newlines),
+# author (null, or array of name and email) and date (Unix time).
+function freshports_FeedItems($dbh, $WatchListID, $BranchName, $Flavor) {
 	list($sql, $params) = freshports_FeedQuery($dbh, $WatchListID, $BranchName, $Flavor);
 	$result = pg_query_params($dbh, $sql, $params);
 	if (!$result) {
 		syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ' sql error ' . pg_last_error($dbh));
+		return false;
+	}
+
+	$Items = array();
+	while ($myrow = pg_fetch_array($result)) {
+		switch ($Flavor) {
+			case 'broken':
+			case 'new':
+			case 'vuln':
+				$link        = freshports_Port_URL($dbh, $myrow['category'], $myrow['port'], $BranchName);
+				$description = $myrow['short_description'];
+				$author      = null;
+				break;
+
+			default:
+				$link        = freshports_Commit_Link_Port_URL(rawurlencode($myrow['message_id']), rawurlencode($myrow['category']), rawurlencode($myrow['port']));
+				$description = $myrow['commit_description'];
+				$author      = array('name'  => $myrow['committer_name'] ?: $myrow['committer'],
+				                     'email' => $myrow['committer'] . '@FreeBSD.org');
+				break;
+		}
+
+		$Date = empty($myrow['news_date']) ? false : strtotime($myrow['news_date']);
+		if ($Date === false) {
+			$Date = time();
+		}
+
+		$Items[] = array(
+			'title'       => $myrow['category'] . '/' . $myrow['port'] . ' - ' . freshports_PackageVersion($myrow['version'], $myrow['revision'], $myrow['epoch']),
+			'link'        => $link,
+			'description' => nl2br(htmlspecialchars(trim($description ?? ''))),
+			'author'      => $author,
+			'date'        => $Date,
+		);
+	}
+
+	return $Items;
+}
+
+# Build the feed as XML. $Type is 'rss' or 'atom'; $SelfURL is the feed's own URL.
+function freshports_FeedXML($dbh, $Type, $SelfURL, $WatchListID, $BranchName, $Flavor) {
+	$Host  = 'https://' . $_SERVER['HTTP_HOST'];
+	$Title = freshports_FeedTitle($WatchListID, $BranchName, $Flavor);
+
+	$Items = freshports_FeedItems($dbh, $WatchListID, $BranchName, $Flavor);
+	if ($Items === false) {
 		return false;
 	}
 
@@ -321,39 +375,17 @@ function freshports_FeedXML($dbh, $Type, $SelfURL, $WatchListID, $BranchName, $F
 	}
 
 	$Newest = 0;
-	while ($myrow = pg_fetch_array($result)) {
-		switch ($Flavor) {
-			case 'broken':
-			case 'new':
-			case 'vuln':
-				$link        = freshports_Port_URL($dbh, $myrow['category'], $myrow['port'], $BranchName);
-				$description = $myrow['short_description'];
-				$author      = null;
-				break;
-
-			default:
-				$link        = freshports_Commit_Link_Port_URL(rawurlencode($myrow['message_id']), rawurlencode($myrow['category']), rawurlencode($myrow['port']));
-				$description = $myrow['commit_description'];
-				$author      = array('name'  => $myrow['committer_name'] ?: $myrow['committer'],
-				                     'email' => $myrow['committer'] . '@FreeBSD.org');
-				break;
-		}
-
+	foreach ($Items as $Item) {
 		$entry = $feed->createEntry();
-		$entry->setTitle($myrow['category'] . '/' . $myrow['port'] . ' - ' . freshports_PackageVersion($myrow['version'], $myrow['revision'], $myrow['epoch']));
-		$entry->setLink($link);
-		$entry->setId($link);
-		$entry->setDescription(nl2br(htmlspecialchars(trim($description ?? ''))));
-		if ($author) {
-			$entry->addAuthor($author);
+		$entry->setTitle($Item['title']);
+		$entry->setLink($Item['link']);
+		$entry->setId($Item['link']);
+		$entry->setDescription($Item['description']);
+		if ($Item['author']) {
+			$entry->addAuthor($Item['author']);
 		}
-
-		$Date = empty($myrow['news_date']) ? false : strtotime($myrow['news_date']);
-		if ($Date === false) {
-			$Date = time();
-		}
-		$entry->setDateModified($Date);
-		$Newest = max($Newest, $Date);
+		$entry->setDateModified($Item['date']);
+		$Newest = max($Newest, $Item['date']);
 
 		$feed->addEntry($entry);
 	}
@@ -363,14 +395,42 @@ function freshports_FeedXML($dbh, $Type, $SelfURL, $WatchListID, $BranchName, $F
 	return $feed->export($Type);
 }
 
+# Build the HTML fragment served by /backend/html.php, for showing in another
+# page (e.g. an iframe). The markup and class names (html_html_*) are those
+# UniversalFeedCreator's HTMLCreator wrote, so pages styling them look the same.
+# One difference: HTMLCreator escaped the descriptions twice, so readers saw
+# "&lt;br /&gt;" where a line ended; here they get the line break.
+function freshports_FeedHTML($dbh, $WatchListID, $BranchName, $Flavor) {
+	$Host  = htmlspecialchars('https://' . $_SERVER['HTTP_HOST'] . '/');
+	$Title = htmlspecialchars(freshports_FeedTitle($WatchListID, $BranchName, $Flavor));
+
+	$Items = freshports_FeedItems($dbh, $WatchListID, $BranchName, $Flavor);
+	if ($Items === false) {
+		return false;
+	}
+
+	$HTML = array();
+	$HTML[] = '<a href="' . $Host . '" class="target_blank"><img src="' . $Host . 'images/freshports_mini.jpg" border="0" alt="' . $Title . '" align="right" /></a>';
+	$HTML[] = '<div class="html_html_title"><a href="' . $Host . '" class="html_html_title target_blank">' . $Title . '</a></div>';
+	$HTML[] = '<div class="html_html_description">The place for ports</div>';
+
+	foreach ($Items as $Item) {
+		$HTML[] = '<div class="html_html_item_title"><a href="' . htmlspecialchars($Item['link']) . '" class="html_html_item_title target_blank">' . htmlspecialchars($Item['title']) . '</a></div>';
+		$HTML[] = '<div class="html_html_item_description">' . $Item['description'] . '</div>';
+	}
+
+	return implode("\r\n", $HTML);
+}
+
 # Send the feed, from the cache if it is fresh. Exits.
+# $Type is 'rss', 'atom' or 'html'; $SelfURL is not used for 'html'.
 #
 # The cache files are in NEWS_DIRECTORY, which fp-listen empties when a commit arrives.
 # The feed is held in memory and sent from there, so a cache file deleted while
-# we use it does no harm (cf. the useCached() race in newsfeed()).
+# we use it does no harm.
 function freshports_Feed($dbh, $Type, $SelfURL, $WatchListID = NO_WATCH_LIST_ID, $BranchName = BRANCH_HEAD, $Flavor = '') {
 	$Key       = implode('.', array($Type, $WatchListID, $BranchName, $Flavor));
-	$CacheFile = NEWS_DIRECTORY . '/feed.' . preg_replace('/[^A-Za-z0-9_.-]/', '_', $Key) . '.xml';
+	$CacheFile = NEWS_DIRECTORY . '/feed.' . preg_replace('/[^A-Za-z0-9_.-]/', '_', $Key) . ($Type == 'html' ? '.html' : '.xml');
 
 	$XML       = false;
 	$CacheTime = @filemtime($CacheFile);
@@ -380,7 +440,11 @@ function freshports_Feed($dbh, $Type, $SelfURL, $WatchListID = NO_WATCH_LIST_ID,
 
 	if ($XML === false || $XML === '') {
 		try {
-			$XML = freshports_FeedXML($dbh, $Type, $SelfURL, $WatchListID, $BranchName, $Flavor);
+			if ($Type == 'html') {
+				$XML = freshports_FeedHTML($dbh, $WatchListID, $BranchName, $Flavor);
+			} else {
+				$XML = freshports_FeedXML($dbh, $Type, $SelfURL, $WatchListID, $BranchName, $Flavor);
+			}
 		} catch (Laminas\Feed\Exception\ExceptionInterface $e) {
 			syslog(LOG_ERR, __FILE__ . '::' . __LINE__ . ' ' . $SelfURL . ' ' . $e->getMessage());
 			$XML = false;
@@ -404,7 +468,7 @@ function freshports_Feed($dbh, $Type, $SelfURL, $WatchListID = NO_WATCH_LIST_ID,
 
 	freshports_ConditionalGetUnix($CacheTime, '', false); # a feed has no announcements
 
-	header('Content-Type: application/' . $Type . '+xml; charset=UTF-8');
+	header('Content-Type: ' . ($Type == 'html' ? 'text/html' : 'application/' . $Type . '+xml') . '; charset=UTF-8');
 	echo $XML;
 	exit;
 }

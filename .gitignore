@@ -3,7 +3,6 @@ configuration/config.sh
 configuration/status-config.php
 configuration/vhosts.conf.nginx
 dynamic
-feedcreator
 locale/*/LC_MESSAGES/*.mo
 # written by the freshports-www port at install time
 VERSION

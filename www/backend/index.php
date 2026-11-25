@@ -31,64 +31,13 @@
 <tr><td class="content">
 <h1><?php echo _('FreshPorts News Feeds'); ?></h1>
 
-<p><b><?php echo _('Deprecated'); ?></b>: <?php echo sprintf(_('These older feeds still work, but they will be redirected to the new feeds at <a href="%s">%s</a>. Please update your subscriptions.'), '/--/feeds/', '/--/feeds/'); ?></p>
+<p><?php echo sprintf(_('The feeds which were here have moved to <a href="%s">%s</a>, and their old URLs redirect there. Please update your subscriptions.'), '/--/feeds/', '/--/feeds/'); ?></p>
 
-<h2><?php echo _('Various RSS formats'); ?></h2>
+<p><?php echo _('The JavaScript, mbox and OPML feeds have been retired.'); ?></p>
 
-        <p><?php echo _('See the next section for optional parameters for these URLs.'); ?></p>
-<?php
+<h2><?php echo _('HTML'); ?></h2>
 
-#echo phpinfo();
-#exit;
-
-$Protocol = isset($_SERVER['HTTPS']) ? 'https' : 'http';
-
-$Hostname = $_SERVER['HTTP_HOST'];
-
-?>
-
-<ol>
-<li><a href="atom0.3.php">ATOM 0.3</a>
-<li><a href="html.php">HTML</a>
-<li><a href="js.php"><?php echo _('Javascript'); ?></a>
-<li><a href="mbox.php">mbox</a>
-<li><a href="opml.php">opml</a>
-<li><a href="pie0.1.php">PIE 0.1</a>
-<li><a href="rss0.91.php">RSS 0.91</a> [ <a href="https://validator.w3.org/feed/check.cgi?url=<?php echo rawurlencode("{$Protocol}://{$Hostname}/backend/rss0.91.php"); ?>"><?php echo _('RSS Feed validator'); ?></a> ]
-<li><a href="rss1.0.php">RSS 1.0</a>   [ <a href="https://validator.w3.org/feed/check.cgi?url=<?php echo rawurlencode("{$Protocol}://{$Hostname}/backend/rss1.0.php"); ?>"><?php echo _('RSS Feed validator'); ?></a>  ]
-<li><a href="rss2.0.php">RSS 2.0</a>   [ <a href="https://validator.w3.org/feed/check.cgi?url=<?php echo rawurlencode("{$Protocol}://{$Hostname}/backend/rss2.0.php"); ?>"><?php echo _('RSS Feed validator'); ?></a>  ]
-</ol>
-
-<p>
-<?php echo _('The above feeds are created using <a href="https://github.com/flack/UniversalFeedCreator">UniversalFeedCreator</a>.'); ?>
-
-
-<h2><?php echo _('Optional parameters for the above formats'); ?></h2>
-
-<p><?php echo _('Each of those formats have optional parameters:'); ?></p>
-<ul>
-    <li><b>flavor=new</b> : <?php echo _('show only new ports (ignores <b>branch</b>).'); ?></li>
-    <li><b>flavor=broken</b> : <?php echo _('show only broken ports (ignores <b>branch</b>).'); ?></li>
-    <li><b>flavor=vuln</b> : <?php echo _('show only vuln ports (branches should work, let me know if they do not).'); ?></li>
-    <li><b>branch=2018Q3</b> : <?php echo _('show only commits on that branch. If not specified, defaults to <b>head</b>.'); ?>
-</ul>
-<p>
-    <?php echo _('Sample URLs include:'); ?>
-</p>
-<?php
-    $Protocol = isset($_SERVER['HTTPS']) ? 'https' : 'http';
-    $ServerName = str_replace('freshports', 'FreshPorts', $_SERVER['HTTP_HOST']);
-	$URL  = "$Protocol://$ServerName/backend/";
-    $HREF = "<a href=\"$URL\">$URL</a>";
-
-    echo '
-<ol>
-    <li>' . $URL . 'rss2.0.php?branch=2018Q4</li>
-    <li>' . $URL . 'rss2.0.php?branch=quarterly</li>
-    <li>' . $URL . 'rss2.0.php?flavor=broken</li>
-    <li>' . $URL . 'rss2.0.php?flavor=new</li>';
-?>
-</ol>
+<p><?php echo sprintf(_('<a href="%s">%s</a> gives the latest commits as HTML, for showing in another page. It takes the optional parameters <b>flavor</b> and <b>branch</b>, as described at <a href="%s">%s</a>.'), 'html.php', 'html.php', '/--/feeds/', '/--/feeds/'); ?></p>
 
 <h2><?php echo _('Other feeds'); ?></h2>
 <ol>

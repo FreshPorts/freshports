@@ -3,7 +3,7 @@
 	# Copyright (c) 1998-2026 Dan Langille
 	#
 	# the feeds in /--/feeds/, written by laminas-feed - re #721
-	# based on www/backend/index.php, which lists the deprecated feeds
+	# the old feeds in /backend/ redirect here - re #724
 	#
 
 	require_once($_SERVER['DOCUMENT_ROOT'] . '/../include/common.php');
@@ -74,7 +74,7 @@
 
     <li><p><?php echo _('The blog for this website, <a href="https://news.freshports.org/">FreshPorts News</a>.'); ?>
 
-    <li><p><?php echo sprintf(_('The deprecated feeds are listed at <a href="%s">%s</a>.'), '/backend/', '/backend/'); ?>
+    <li><p><?php echo sprintf(_('The latest commits as HTML, for showing in another page: <a href="%s">%s</a>.'), '/backend/html.php', '/backend/html.php'); ?>
 </ol>
 
 </table>

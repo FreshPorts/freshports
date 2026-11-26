@@ -56,6 +56,8 @@ class FilesDisplay {
 			<th>" . _('Action') . "</th><th>" . _('Revision') . "</th><th>" . _('Annotate/etc') . "</th><th>" . _('File') . "</th>
 		</tr>\n";
 
+		$svn_rows_in_git = $this->SubversionRowsInGit($NumRows);
+
 		for ($i = 0; $i < $NumRows; $i++) {
 			$myrow = pg_fetch_array($this->ResultSet, $i);
 
@@ -95,19 +97,25 @@ class FilesDisplay {
             # (commit_log.commit_hash, #661) gets the git links: cgit's host, the git repo's path, and
             # that hash in place of the Subversion revision.  The revision is still shown above.
             #
-            # Ports only: freshports_Convert_Subversion_Path_To_Git() knows only ports paths
-            # (/ports/head/, /ports/branches/<branch>/).  A src or doc file would get a broken git
-            # link (e.g. /src/blame//base/head/README), so those keep their svnweb links, which
-            # work, until that conversion learns /base/... and /doc/... paths.  No src or doc
-            # commit has a commit_hash yet; this keeps it that way on screen if one ever does.
+            # Only the rows SubversionRowsInGit() picked switch: their path converts to a git
+            # path and branch (/ports/head/, /ports/branches/<quarter>/, /base/head/,
+            # /base/stable/N/, /base/releng/N.M/, /doc/head/), on the branch the hash is on.
+            # Any other row (src projects/ or vendor/, another branch of an MFC) keeps its
+            # svnweb links, which work.
             #
             $repository = $myrow['repository'];
             $git_hash   = $myrow['revision_name'];
-            if ($repository == FREEBSD_REPOSITORY_SUBVERSION && $myrow['path_to_repo'] == REPO_PATH_SVN[REPO_PORTS] &&freshports_svn_commit_git_hash($myrow['commit_hash'])) {
+            $git_path   = null;
+            $git_branch = null;
+            if ($repository == FREEBSD_REPOSITORY_SUBVERSION && isset($svn_rows_in_git[$i])) {
                 $repository            = FREEBSD_REPOSITORY_GIT;
                 $git_hash              = $myrow['commit_hash'];
                 $myrow['repo_hostname'] = DEFAULT_GIT_REPO;
                 $myrow['path_to_repo']  = freshports_git_path_for_svn_path($myrow['path_to_repo']);
+                list($git_path, $git_branch) = $svn_rows_in_git[$i];
+            } elseif ($repository == FREEBSD_REPOSITORY_GIT) {
+                $git_path   = freshports_Convert_Subversion_Path_To_Git($myrow["pathname"], $myrow['branch']);
+                $git_branch = $myrow['branch'] == BRANCH_HEAD ? null : $myrow['branch'];
             }
 
             $this->HTML .= '<td>';
@@ -131,9 +139,9 @@ class FilesDisplay {
                     
                     # branch: https://cgit.freebsd.org/ports/blame/www/gitea/Makefile?h=2021Q2&id=3ce47d16f7eb5c00b470603c307fa52bb9ca920b
                     $this->HTML .= ' <a href="http://' . $myrow['repo_hostname'] . $myrow["path_to_repo"] . '/blame/';
-                    $this->HTML .= freshports_Convert_Subversion_Path_To_Git($myrow["pathname"], $myrow['branch']) . '?';
-                    if ($myrow['branch'] != BRANCH_HEAD ) {
-                        $this->HTML .= 'h=' . $myrow['branch'] . '&';
+                    $this->HTML .= $git_path . '?';
+                    if ($git_branch !== null) {
+                        $this->HTML .= 'h=' . $git_branch . '&';
                     }
                     $this->HTML .= 'id=' . $git_hash;
                     $this->HTML .= '">';
@@ -193,8 +201,13 @@ class FilesDisplay {
                     # https://github.com/freebsd/freebsd-ports/commits/0957c7db9bf1fc4313cdefdcdc2608a0c965dda7/sysutils/goaccess/Makefile
                     # was: https://github.com/freebsd/freebsd-ports/commits/0957c7db9bf1fc4313cdefdcdc2608a0c965dda7sysutils/goaccess/Makefile
                     # now: https://cgit.freebsd.org/ports/log/multimedia/plexmediaserver-plexpass/Makefile
-                    $url_text = freshports_Convert_Subversion_Path_To_Git($myrow["pathname"], $myrow['branch']);
-                    $this->HTML .= ' <a href="http://' . $myrow['repo_hostname'] . $myrow["path_to_repo"] . '/log/' . $url_text . '" title="' . _('Commit history') . '">';
+                    # the history on the commit's branch: without h=, cgit shows main's
+                    $url_text = $git_path;
+                    $this->HTML .= ' <a href="http://' . $myrow['repo_hostname'] . $myrow["path_to_repo"] . '/log/' . $url_text;
+                    if ($git_branch !== null) {
+                        $this->HTML .= '?h=' . $git_branch;
+                    }
+                    $this->HTML .= '" title="' . _('Commit history') . '">';
                     break;
             }
 
@@ -208,6 +221,38 @@ class FilesDisplay {
 	return $this->HTML;
 	}
 
+
+	#
+	# The Subversion rows to link to git instead of svnweb: row number => array(git path,
+	# git branch), from freshports_svn_path_to_git().  Only rows of a commit with a
+	# commit_hash (#660), and only those on the hash's branch: when the commit changed
+	# files on several branches (an MFC to stable/11 and stable/12 in one revision), the
+	# hash is the git commit on one of them, the first by freshports_svn_git_branch_compare().
+	# The other branches' files are not in that git commit, so they keep svnweb.
+	#
+	function SubversionRowsInGit($NumRows) {
+		$rows     = array();
+		$branches = array();
+		for ($i = 0; $i < $NumRows; $i++) {
+			$myrow = pg_fetch_array($this->ResultSet, $i);
+			if ($myrow['repository'] != FREEBSD_REPOSITORY_SUBVERSION || !freshports_svn_commit_git_hash($myrow['commit_hash'])) {
+				continue;
+			}
+
+			$git = freshports_svn_path_to_git($myrow['pathname']);
+			if ($git !== null) {
+				$rows[$i]     = $git;
+				$branches[]   = $git[1];
+			}
+		}
+
+		if (count(array_unique($branches, SORT_REGULAR)) > 1) {
+			usort($branches, 'freshports_svn_git_branch_compare');
+			$rows = array_filter($rows, function($git) use ($branches) { return $git[1] === $branches[0]; });
+		}
+
+		return $rows;
+	}
 
 	function GetPreviousRevision( $revision ) {
 	    // if we find a dot, decrement the bit after the last dot

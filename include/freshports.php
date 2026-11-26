@@ -112,6 +112,69 @@ function freshports_Convert_Subversion_Path_To_Git($pathname, $branch = BRANCH_H
   }
 }
 
+#
+# Where a Subversion-era file lives in git, for a Subversion commit whose git commit we
+# know (commit_log.commit_hash, #660).  Returns array(path within the git repo, git branch),
+# or null when the path has no git branch we can link to.  The branch is null for the
+# repo's default branch (Subversion head, git main), e.g.:
+#
+#   /ports/head/x11-wm/awesome/Makefile       => x11-wm/awesome/Makefile, null
+#   /ports/branches/2020Q3/www/gitea/Makefile => www/gitea/Makefile,      2020Q3
+#   /base/head/bin/ls/ls.c                    => bin/ls/ls.c,             null
+#   /base/stable/12/bin/ls/ls.c               => bin/ls/ls.c,             stable/12
+#   /base/releng/12.2/bin/ls/ls.c             => bin/ls/ls.c,             releng/12.2
+#   /doc/head/en_US.ISO8859-1/books/Makefile  => en_US.ISO8859-1/books/Makefile, null
+#
+# Anything else (src projects/, vendor/, user/, svnadmin/; doc outside head/) is not on a
+# git branch, or not at the same path, so the caller keeps its svnweb links.
+#
+function freshports_svn_path_to_git($pathname) {
+  $ports = preg_quote(REPO_PATH_SVN[REPO_PORTS], '#');
+  $src   = preg_quote(REPO_PATH_SVN[REPO_SRC],   '#');
+  $doc   = preg_quote(REPO_PATH_SVN[REPO_DOC],   '#');
+
+  if (preg_match("#^(?:$ports|$src|$doc)/head/(.+)$#", $pathname, $m)) {
+    return array($m[1], null);
+  }
+
+  if (preg_match("#^$ports/branches/(\d{4}Q[1-4])/(.+)$#", $pathname, $m)
+   || preg_match("#^$src/(stable/\d+|releng/\d+\.\d+)/(.+)$#", $pathname, $m)) {
+    return array($m[2], $m[1]);
+  }
+
+  return null;
+}
+
+#
+# A Subversion commit may change files on several branches (an MFC to stable/11 and
+# stable/12 in one revision), but its commit_hash is the git commit on one of them,
+# picked by the src/doc backfill (#660): head, else the newest stable/, else the newest
+# releng/.  This compares two git branches from freshports_svn_path_to_git() in that
+# order, for usort(): the branch to link comes first.
+#
+function freshports_svn_git_branch_compare($a, $b) {
+  $kind = function($branch) {
+    if ($branch === null)                    return 0;
+    if (strpos($branch, 'stable/') === 0)    return 1;
+    if (strpos($branch, 'releng/') === 0)    return 2;
+    return 3;
+  };
+
+  $ka = $kind($a);
+  $kb = $kind($b);
+  if ($ka != $kb) {
+    return $ka <=> $kb;
+  }
+
+  if ($ka == 1 || $ka == 2) {
+    # newest first: stable/12 before stable/11, releng/12.2 before releng/12.1
+    return version_compare(substr($b, 7), substr($a, 7));
+  }
+
+  # ports quarterly branches: newest first
+  return strcmp((string)$b, (string)$a);
+}
+
 function freshports_cvsweb_Annotate_Link($pathname, $revision_name)
 {
   $pathname = str_replace('/ports/head/', '/ports/', $pathname);

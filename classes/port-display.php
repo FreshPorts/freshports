@@ -1298,7 +1298,7 @@ class port_display {
 						# the revision number, linked to its git commit (#661)
 						$HTML .= freshports_git_commit_Link_Hash($port->commit_hash, $port->svn_revision, DEFAULT_GIT_REPO, freshports_git_path_for_svn_path($port->path_to_repo));
 					} elseif (isset($port->svn_revision)) {
-						$HTML .= freshports_svnweb_ChangeSet_Link_Text($port->svn_revision, $port->repo_hostname);
+						$HTML .= freshports_svnweb_ChangeSet_Link_Text($port->svn_revision, $port->repo_hostname, $port->path_to_repo);
 					} else {
 						$HTML .= _('UNKNOWN');
 					}

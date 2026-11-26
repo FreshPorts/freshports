@@ -65,6 +65,25 @@ define('FREEBSD_REPO_CVS', 'cvs');
 define('FREEBSD_REPOSITORY_GIT',        'git');
 define('FREEBSD_REPOSITORY_SUBVERSION', 'subversion');
 
+// the three FreeBSD repos, as in repo.name
+define('REPO_PORTS', 'ports');
+define('REPO_DOC',   'doc');
+define('REPO_SRC',   'src');
+
+// repo.path_to_repo for each repo, by repository.  The same in both except src,
+// which svnweb calls base.  e.g. REPO_PATH_SVN[REPO_PORTS] is '/ports'.
+define('REPO_PATH_SVN', [
+	REPO_PORTS => '/ports',
+	REPO_DOC   => '/doc',
+	REPO_SRC   => '/base',
+]);
+
+define('REPO_PATH_GIT', [
+	REPO_PORTS => '/ports',
+	REPO_DOC   => '/doc',
+	REPO_SRC   => '/src',
+]);
+
 // path to the ftp server
 define('FRESHPORTS_FREEBSD_FTP_URL', 'ftp://ftp.freebsd.org/pub/FreeBSD/ports/i386/packages/All/');
 

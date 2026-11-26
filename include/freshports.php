@@ -312,22 +312,38 @@ function freshports_Fallout_Link($category, $port) {
   return '<a href="https://portsfallout.com/fallout?port=' . rawurlencode($category . '/' . $port . '$') . '" rel="noopener noreferrer">' . freshports_Fallout_Icon(FALLOUT_TITLE, FALLOUT_SMALLER_ICON_SIZE) . '</a>';
 }
 
-function freshports_svnweb_ChangeSet_Link($revision, $hostname) {
-  return '<a href="https://' . htmlentities($hostname) . '/changeset/ports/' . htmlentities($revision) .  '" rel="noopener noreferrer">' . freshports_Subversion_Icon(sprintf(_('Revision:%s'), $revision)) . '</a>';
+#
+# svnweb's page for one Subversion revision: https://svnweb.freebsd.org/changeset/<repo>/<revision>.
+# ports, doc and src each number their revisions separately, so <repo> must be the commit's own:
+# repo.path_to_repo, one of REPO_PATH_SVN (/ports, /doc, or /base for src).  Before this took
+# $path, every link said /changeset/ports/, so a src or doc commit linked to an unrelated ports
+# revision with the same number.  An empty $path (no repo recorded) still gives /ports.
+#
+function freshports_svnweb_ChangeSet_URL($revision, $hostname, $path = null) {
+  if (empty($path)) {
+    $path = REPO_PATH_SVN[REPO_PORTS];
+  }
+  return 'https://' . htmlentities($hostname) . '/changeset' . htmlentities($path) . '/' . htmlentities($revision);
 }
 
-function freshports_svnweb_ChangeSet_Link_Text($revision, $hostname) {
-  return '<a href="https://' . htmlentities($hostname) . '/changeset/ports/' . htmlentities($revision) .  '" rel="noopener noreferrer">' . $revision . '</a>';
+function freshports_svnweb_ChangeSet_Link($revision, $hostname, $path = null) {
+  return '<a href="' . freshports_svnweb_ChangeSet_URL($revision, $hostname, $path) . '" rel="noopener noreferrer">' . freshports_Subversion_Icon(sprintf(_('Revision:%s'), $revision)) . '</a>';
+}
+
+function freshports_svnweb_ChangeSet_Link_Text($revision, $hostname, $path = null) {
+  return '<a href="' . freshports_svnweb_ChangeSet_URL($revision, $hostname, $path) . '" rel="noopener noreferrer">' . $revision . '</a>';
 }
 
 #
 # Commits made in Subversion, whose git commit we now know: commit_log.commit_hash (#660, #661).
-# Their repo_hostname and path_to_repo are svnweb's (svnweb.freebsd.org; /ports, /doc, /base).
-# Links to git need cgit's host and the git repo's path, which for src is /src, not /base.
+# Their repo_hostname and path_to_repo are svnweb's (svnweb.freebsd.org; REPO_PATH_SVN).
+# Links to git need cgit's host and the git repo's path (REPO_PATH_GIT), which for src is
+# /src, not /base.  A path that is not in REPO_PATH_SVN is returned as it is.
 # svn_revision and message_id are unchanged and still shown; only the link target changes.
 #
 function freshports_git_path_for_svn_path($path) {
-  return $path == '/base' ? '/src' : $path;
+  $repo = array_search($path, REPO_PATH_SVN, true);
+  return $repo === false ? $path : REPO_PATH_GIT[$repo];
 }
 
 #
@@ -347,12 +363,12 @@ function freshports_svn_commit_git_hash($commit_hash) {
 function freshports_svn_commit_Links($svn_revision, $commit_hash, $hostname, $path, $separator = '') {
   $commit_hash = freshports_svn_commit_git_hash($commit_hash);
   if (empty($commit_hash)) {
-    return freshports_svnweb_ChangeSet_Link($svn_revision, $hostname);
+    return freshports_svnweb_ChangeSet_Link($svn_revision, $hostname, $path);
   }
 
   $git_path = freshports_git_path_for_svn_path($path);
 
-  return freshports_svnweb_ChangeSet_Link   ($svn_revision, $hostname) . $separator .
+  return freshports_svnweb_ChangeSet_Link   ($svn_revision, $hostname, $path) . $separator .
          freshports_git_commit_Link_freebsd ($commit_hash, DEFAULT_GIT_REPO, $git_path) . $separator .
          freshports_git_commit_Link_codeberg($commit_hash, DEFAULT_GIT_REPO, $git_path) . $separator .
          freshports_git_commit_Link_github  ($commit_hash, DEFAULT_GIT_REPO, $git_path) . $separator .

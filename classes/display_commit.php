@@ -427,7 +427,7 @@ GROUP BY WLE.element_id';
 				$HTML .= freshports_git_commit_Link_Hash($mycommit->commit_hash, $mycommit->commit_hash_short ?: substr($mycommit->commit_hash, 0, 12), DEFAULT_GIT_REPO, freshports_git_path_for_svn_path($mycommit->path_to_repo)) . '&nbsp;';
 				$HTML .= freshports_svn_revision_Text($mycommit->svn_revision);
 			} else {
-				$HTML .= freshports_svnweb_ChangeSet_Link($mycommit->svn_revision, $mycommit->repo_hostname) . '&nbsp;';
+				$HTML .= freshports_svnweb_ChangeSet_Link($mycommit->svn_revision, $mycommit->repo_hostname, $mycommit->path_to_repo) . '&nbsp;';
 			}
 		}
 

@@ -95,9 +95,15 @@ class FilesDisplay {
             # (commit_log.commit_hash, #661) gets the git links: cgit's host, the git repo's path, and
             # that hash in place of the Subversion revision.  The revision is still shown above.
             #
+            # Ports only: freshports_Convert_Subversion_Path_To_Git() knows only ports paths
+            # (/ports/head/, /ports/branches/<branch>/).  A src or doc file would get a broken git
+            # link (e.g. /src/blame//base/head/README), so those keep their svnweb links, which
+            # work, until that conversion learns /base/... and /doc/... paths.  No src or doc
+            # commit has a commit_hash yet; this keeps it that way on screen if one ever does.
+            #
             $repository = $myrow['repository'];
             $git_hash   = $myrow['revision_name'];
-            if ($repository == FREEBSD_REPOSITORY_SUBVERSION && freshports_svn_commit_git_hash($myrow['commit_hash'])) {
+            if ($repository == FREEBSD_REPOSITORY_SUBVERSION && $myrow['path_to_repo'] == REPO_PATH_SVN[REPO_PORTS] &&freshports_svn_commit_git_hash($myrow['commit_hash'])) {
                 $repository            = FREEBSD_REPOSITORY_GIT;
                 $git_hash              = $myrow['commit_hash'];
                 $myrow['repo_hostname'] = DEFAULT_GIT_REPO;

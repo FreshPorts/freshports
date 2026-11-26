@@ -55,9 +55,6 @@ $Sequence_User_ID       = 'users_id_seq';
 // path to the CVS repository
 define('FRESHPORTS_FREEBSD_CVS_URL' , 'https://www.FreeBSD.org/cgi/cvsweb.cgi');
 
-// path to the SVN repository
-define('FRESHPORTS_FREEBSD_SVN_URL' , 'https://svnweb.FreeBSD.org');
-
 // which repo do we want?
 define('FREEBSD_REPO_SVN', 'svn');
 define('FREEBSD_REPO_CVS', 'cvs');

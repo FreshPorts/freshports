@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: FreshPorts\n"
 "Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
 "POT-Creation-Date: 2026-11-27 02:00+0000\n"
-"PO-Revision-Date: 2026-11-23 18:53+0300\n"
+"PO-Revision-Date: 2026-11-27 19:07+0300\n"
 "Last-Translator: Yusuf Yaman <nxjoseph@FreeBSD.org>\n"
 "Language-Team: Turkish\n"
 "Language: tr\n"
@@ -442,20 +442,20 @@ msgstr "Paketler"
 #: classes/port-display.php:1716
 #, php-format
 msgid "FreeBSD %s is -CURRENT, the development branch"
-msgstr ""
+msgstr "FreeBSD %s, geliştirme dalı olan -CURRENT sürümüdür"
 
 #: classes/port-display.php:1717
 msgid "CURRENT"
-msgstr ""
+msgstr "CURRENT"
 
 #: classes/port-display.php:1723
 #, php-format
 msgid "FreeBSD %s is no longer supported (end of life)"
-msgstr ""
+msgstr "FreeBSD %s artık desteklenmemektedir (ömrü sona ermiştir)"
 
 #: classes/port-display.php:1724
 msgid "EOL"
-msgstr ""
+msgstr "EOL"
 
 #: classes/port-display.php:1806
 msgid "No package information for this port in our database"
@@ -2063,6 +2063,8 @@ msgid ""
 "The latest commits as HTML, for showing in another page: <a href=\"%s\">%s</"
 "a>."
 msgstr ""
+"Başka bir sayfada gösterilmek üzere, HTML biçimindeki en güncel commitler: "
+"<a href=\"%s\">%s</a>."
 
 #: www/--/feeds/watch-list.php:26
 msgid "Watch List Feeds"
@@ -2414,22 +2416,22 @@ msgstr ""
 "oldu."
 
 #: www/backend/index.php:34
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "The feeds which were here have moved to <a href=\"%s\">%s</a>, and their old "
 "URLs redirect there. Please update your subscriptions."
 msgstr ""
-"Bu eskimiş akışlar hala çalışabilir, ama <a href=\"%s\">%s</a> "
-"bağlantısındaki yeni akışlara yönlendirilecektir. Lütfen aboneliklerinizi "
+"Burada bulunan akışlar <a href=\"%s\">%s</a> adresine taşınmıştır; eski "
+"URL'leri de bu adrese yönlendirilmektedir. Lütfen aboneliklerinizi "
 "güncelleyin."
 
 #: www/backend/index.php:36
 msgid "The JavaScript, mbox and OPML feeds have been retired."
-msgstr ""
+msgstr "JavaScript, mbox ve OPML aakışları kullanımdan kaldırıldı."
 
 #: www/backend/index.php:38
 msgid "HTML"
-msgstr ""
+msgstr "HTML"
 
 #: www/backend/index.php:40
 #, php-format
@@ -2438,6 +2440,10 @@ msgid ""
 "another page. It takes the optional parameters <b>flavor</b> and <b>branch</"
 "b>, as described at <a href=\"%s\">%s</a>."
 msgstr ""
+"<a href=\"%s\">%s</a>, başka bir sayfada gösterilmek üzere en son "
+"commit'leri HTML biçiminde sunar. <a href=\"%s\">%s</a> adresinde "
+"açıklandığı üzere, isteğe bağlı <b>flavor</b> ve <b>branch</b> "
+"parametrelerini kabul eder."
 
 #: www/backend/newsfeeds.php:25
 msgid "We have these newsfeeds:"
@@ -2467,18 +2473,17 @@ msgid "An RSS feed that lists only new ports:  %s"
 msgstr "Sadece yeni portları listeleyen RSS akışı: %s"
 
 #: www/backend/newsfeeds.php:76
-#, fuzzy
 msgid "Older newsfeeds"
-msgstr "Diğer akışlar"
+msgstr "Daha eski haber akışları"
 
 #: www/backend/newsfeeds.php:77
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "The older feeds in %s now redirect to the feeds above. Please update your "
 "subscriptions."
 msgstr ""
-"Bu eskimiş akışlar hala çalışabilir, ama onlar üstteki akışlara "
-"yönlendirilecektir. Lütfen aboneliklerinizi güncelleyin."
+"%s adresindeki eski akışlar artık yukarıdaki akışlara yönlendirilmektedir. "
+"Lütfen aboneliklerinizi güncelleyin."
 
 #: www/backend/status.php:15
 msgid "Status"

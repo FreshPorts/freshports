@@ -1550,6 +1550,25 @@ class port_display {
 						$HTML .= '<br>' . sprintf(_('NOTE: This is a Python port. Instead of %s listed in the above command, you can pick from the names under the <a href="#packages">Packages</a> section.'), '<kbd class="code">' . $port->package_name . '</kbd>');
 					}
 					$HTML .= '</dd>';
+
+					#
+					# How to download the package, and everything it depends on, as
+					# built for another FreeBSD major version or architecture, without
+					# installing it: e.g. for an offline install on another machine,
+					# or to look at a package before an OS upgrade (issue #745).
+					#
+					# Tested with pkg 2.8.4: -o ABI= changes which repository is used
+					# for this one run; -d also fetches every dependency, recursively.
+					# OSVERSION is not needed (pkg guesses it and says so). pkg
+					# replaces the host's repository catalogue with the other ABI's,
+					# but the next pkg command notices and downloads the right one.
+					# The $(...) keeps the user's own architecture; they change 15.
+					#
+					$HTML .= '<dt><b>' . _('To download the package and its dependencies for another FreeBSD version or architecture, without installing it:') . '</b></dt>';
+					$HTML .= '<dd><ul><li><kbd class="code">pkg -o ABI=FreeBSD:15:$(pkg config abi | cut -d: -f3) fetch -d -o . ' . $port->package_name . '</kbd></li></ul>';
+					$HTML .= sprintf(_('Change %1$s to the FreeBSD major version you want; the rest keeps your current architecture. The files are saved under %2$s. Copy them to the other machine and install them there with %3$s. Ignore any warning that suggests %4$s. The quarterly or latest branch comes from your own repository configuration, not from this page.'),
+						'<kbd class="code">15</kbd>', '<span class="file">./All/</span>', '<kbd class="code">pkg add</kbd>', '<kbd class="code">pkg bootstrap -f</kbd>');
+					$HTML .= '</dd>';
 				}
 			}
 

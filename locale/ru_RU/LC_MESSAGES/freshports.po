@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreshPorts\n"
 "Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
-"POT-Creation-Date: 2026-11-27 02:00+0000\n"
+"POT-Creation-Date: 2026-11-27 23:55+0000\n"
 "PO-Revision-Date: 2026-10-24 00:37+0300\n"
 "Last-Translator: Vladlen Popolitov <vladlen@freebsd.org>\n"
 "Language-Team: Russian <vladlen@FreeBSD.org>\n"
@@ -411,18 +411,18 @@ msgstr ""
 msgid "there is no package for this port: %s"
 msgstr "для этого порта нет пакета: %s"
 
-#: classes/port-display.php:1593 classes/port-display.php:1965
-#: classes/port-display.php:2202 classes/port-display.php:2236
+#: classes/port-display.php:1593 classes/port-display.php:1964
+#: classes/port-display.php:2201 classes/port-display.php:2235
 #: include/freshports.php:1931
 #, php-format
 msgid "Expand this list (%d items)"
 msgstr "Развернуть этот список (элементов: %d)"
 
 #: classes/port-display.php:1597 classes/port-display.php:1600
-#: classes/port-display.php:1967 classes/port-display.php:1975
-#: classes/port-display.php:2086 classes/port-display.php:2101
-#: classes/port-display.php:2209 classes/port-display.php:2239
-#: classes/port-display.php:2249 include/freshports.php:1941
+#: classes/port-display.php:1966 classes/port-display.php:1974
+#: classes/port-display.php:2085 classes/port-display.php:2100
+#: classes/port-display.php:2208 classes/port-display.php:2238
+#: classes/port-display.php:2248 include/freshports.php:1941
 msgid "Collapse this list."
 msgstr "Свернуть этот список."
 
@@ -430,62 +430,62 @@ msgstr "Свернуть этот список."
 msgid "There is no distinfo for this port."
 msgstr "Для этого порта нет distinfo."
 
-#: classes/port-display.php:1657 classes/port-display.php:1760
+#: classes/port-display.php:1657 classes/port-display.php:1759
 msgid "(timestamps in pop-ups are UTC):"
 msgstr "(время во всплывающих окнах — UTC):"
 
-#: classes/port-display.php:1657 classes/port-display.php:1760
+#: classes/port-display.php:1657 classes/port-display.php:1759
 msgid "Packages"
 msgstr "Пакеты"
 
-#: classes/port-display.php:1716
+#: classes/port-display.php:1715
 #, php-format
 msgid "FreeBSD %s is -CURRENT, the development branch"
 msgstr ""
 
-#: classes/port-display.php:1717
+#: classes/port-display.php:1716
 msgid "CURRENT"
 msgstr ""
 
-#: classes/port-display.php:1723
+#: classes/port-display.php:1722
 #, php-format
 msgid "FreeBSD %s is no longer supported (end of life)"
 msgstr ""
 
-#: classes/port-display.php:1724
+#: classes/port-display.php:1723
 msgid "EOL"
 msgstr ""
 
-#: classes/port-display.php:1806
+#: classes/port-display.php:1805
 msgid "No package information for this port in our database"
 msgstr "В нашей базе данных нет информации о пакете для этого порта"
 
-#: classes/port-display.php:1807
+#: classes/port-display.php:1806
 msgid "Sometimes this happens. Not all ports have packages."
 msgstr "Иногда так бывает. Не у всех портов есть пакеты."
 
-#: classes/port-display.php:1809
+#: classes/port-display.php:1808
 msgid "This is doubly so for new ports, like this one."
 msgstr "Особенно это касается новых портов, как этот."
 
-#: classes/port-display.php:1811
+#: classes/port-display.php:1810
 #, php-format
 msgid "Perhaps there is a build error. Check the fallout link: %s"
 msgstr "Возможно, произошла ошибка сборки. Проверьте ссылку fallout: %s"
 
-#: classes/port-display.php:1830
+#: classes/port-display.php:1829
 msgid "Master port"
 msgstr "Ведущий порт"
 
-#: classes/port-display.php:1841
+#: classes/port-display.php:1840
 msgid "Slave ports:"
 msgstr "Подчинённые порты:"
 
-#: classes/port-display.php:1853
+#: classes/port-display.php:1852
 msgid "Dependencies"
 msgstr "Зависимости"
 
-#: classes/port-display.php:1854
+#: classes/port-display.php:1853
 msgid ""
 "NOTE: FreshPorts displays only information on required and default "
 "dependencies.  Optional dependencies are not covered."
@@ -493,108 +493,108 @@ msgstr ""
 "ПРИМЕЧАНИЕ: FreshPorts отображает информацию только об обязательных и "
 "зависимостях по умолчанию. Необязательные зависимости не охватываются."
 
-#: classes/port-display.php:1865
+#: classes/port-display.php:1864
 msgid "Build dependencies:"
 msgstr "Зависимости для сборки:"
 
-#: classes/port-display.php:1871
+#: classes/port-display.php:1870
 msgid "Test dependencies:"
 msgstr "Зависимости для тестирования:"
 
-#: classes/port-display.php:1877
+#: classes/port-display.php:1876
 msgid "Runtime dependencies:"
 msgstr "Зависимости времени выполнения:"
 
-#: classes/port-display.php:1883
+#: classes/port-display.php:1882
 msgid "Library dependencies:"
 msgstr "Зависимости библиотек:"
 
-#: classes/port-display.php:1889
+#: classes/port-display.php:1888
 msgid "Fetch dependencies:"
 msgstr "Зависимости для загрузки:"
 
-#: classes/port-display.php:1895
+#: classes/port-display.php:1894
 msgid "Patch dependencies:"
 msgstr "Зависимости для патчей:"
 
-#: classes/port-display.php:1901
+#: classes/port-display.php:1900
 msgid "Extract dependencies:"
 msgstr "Зависимости для распаковки:"
 
-#: classes/port-display.php:1907
+#: classes/port-display.php:1906
 msgid "Build and run dependencies:"
 msgstr "Зависимости для сборки и выполнения:"
 
-#: classes/port-display.php:1913
+#: classes/port-display.php:1912
 msgid "This port has no dependencies."
 msgstr "У этого порта нет зависимостей."
 
-#: classes/port-display.php:1924
+#: classes/port-display.php:1923
 msgid "Configuration Options"
 msgstr "Параметры конфигурации"
 
-#: classes/port-display.php:1928
+#: classes/port-display.php:1927
 msgid "No options to configure"
 msgstr "Нет параметров для настройки"
 
-#: classes/port-display.php:1932
+#: classes/port-display.php:1931
 msgid "Options name"
 msgstr "Имя параметра"
 
-#: classes/port-display.php:1936
+#: classes/port-display.php:1935
 msgid "N/A"
 msgstr "Н/Д"
 
-#: classes/port-display.php:1953
+#: classes/port-display.php:1952
 msgid "FreshPorts was unable to extract/find any pkg message"
 msgstr "FreshPorts не удалось извлечь/найти сообщение pkg"
 
-#: classes/port-display.php:1958
+#: classes/port-display.php:1957
 msgid "Master Sites:"
 msgstr "Основные сайты:"
 
-#: classes/port-display.php:1978
+#: classes/port-display.php:1977
 msgid "There is no master site for this port."
 msgstr "У этого порта нет основного сайта."
 
-#: classes/port-display.php:2041
+#: classes/port-display.php:2040
 msgid "Build"
 msgstr "Сборка"
 
-#: classes/port-display.php:2041
+#: classes/port-display.php:2040
 msgid "Build and run"
 msgstr "Сборка и выполнение"
 
-#: classes/port-display.php:2041
+#: classes/port-display.php:2040
 msgid "Extract"
 msgstr "Распаковка"
 
-#: classes/port-display.php:2041
+#: classes/port-display.php:2040
 msgid "Fetch"
 msgstr "Загрузка"
 
-#: classes/port-display.php:2042
+#: classes/port-display.php:2041
 msgid "Libraries"
 msgstr "Библиотеки"
 
-#: classes/port-display.php:2042
+#: classes/port-display.php:2041
 msgid "Patch"
 msgstr "Патч"
 
-#: classes/port-display.php:2042
+#: classes/port-display.php:2041
 msgid "Run"
 msgstr "Выполнение"
 
-#: classes/port-display.php:2042
+#: classes/port-display.php:2041
 msgid "Test"
 msgstr "Тестирование"
 
-#: classes/port-display.php:2052
+#: classes/port-display.php:2051
 #, php-format
 msgid "for %s"
 msgstr "для %s"
 
-#: classes/port-display.php:2084
+#: classes/port-display.php:2083
 #, php-format
 msgid ""
 "Expand this list (%1$d items / %2$d hidden - sorry, this count includes any "
@@ -603,11 +603,11 @@ msgstr ""
 "Развернуть этот список (элементов: %1$d / скрыто: %2$d — извините, этот "
 "счётчик включает удалённые порты)"
 
-#: classes/port-display.php:2120
+#: classes/port-display.php:2119
 msgid "Deleted ports which required this port:"
 msgstr "Удалённые порты, которые требовали этот порт:"
 
-#: classes/port-display.php:2122
+#: classes/port-display.php:2121
 #, php-format
 msgid "Expand this list of %d deleted port"
 msgid_plural "Expand this list of %d deleted ports"
@@ -615,24 +615,24 @@ msgstr[0] "Развернуть этот список из %d удалённог
 msgstr[1] "Развернуть этот список из %d удалённых портов"
 msgstr[2] "Развернуть этот список из %d удалённых портов"
 
-#: classes/port-display.php:2133
+#: classes/port-display.php:2132
 msgid "Collapse this list of deleted ports."
 msgstr "Свернуть этот список удалённых портов."
 
-#: classes/port-display.php:2145
+#: classes/port-display.php:2144
 msgid "There are no ports dependent upon this port"
 msgstr "Нет портов, зависящих от этого порта"
 
-#: classes/port-display.php:2147
+#: classes/port-display.php:2146
 msgid "This port is required by:"
 msgstr "Этот порт требуется для:"
 
-#: classes/port-display.php:2151
+#: classes/port-display.php:2150
 msgid "NOTE: dependencies for deleted ports are notoriously suspect"
 msgstr ""
 "ПРИМЕЧАНИЕ: зависимости для удалённых портов, как известно, сомнительны"
 
-#: classes/port-display.php:2155
+#: classes/port-display.php:2154
 msgid ""
 "deleted ports are only shown under the <em>This port is required by</em> "
 "section.  It was harder to do for the <em>Required</em> section.  Perhaps "
@@ -642,40 +642,40 @@ msgstr ""
 "em>. Для раздела <em>Требуется</em> это было сложнее сделать. Возможно, "
 "позже..."
 
-#: classes/port-display.php:2164
+#: classes/port-display.php:2163
 msgid "Manual pages:"
 msgstr "Справочные страницы:"
 
-#: classes/port-display.php:2222
+#: classes/port-display.php:2221
 msgid "FreshPorts has no man page information for this port."
 msgstr "У FreshPorts нет информации о справочных страницах для этого порта."
 
-#: classes/port-display.php:2234 classes/port-display.php:2257
+#: classes/port-display.php:2233 classes/port-display.php:2256
 #, php-format
 msgid "as obtained via: %s"
 msgstr "получено с помощью: %s"
 
-#: classes/port-display.php:2258
+#: classes/port-display.php:2257
 msgid "There is no configure plist information for this port."
 msgstr "Для этого порта нет информации о plist конфигурации."
 
-#: classes/port-display.php:2270
+#: classes/port-display.php:2269
 msgid "Package flavors"
 msgstr "Флейворы пакета"
 
-#: classes/port-display.php:2270
+#: classes/port-display.php:2269
 msgid "flavor"
 msgstr "флейвор"
 
-#: classes/port-display.php:2270 www/vuxml.php:171
+#: classes/port-display.php:2269 www/vuxml.php:171
 msgid "package"
 msgstr "пакет"
 
-#: classes/port-display.php:2282
+#: classes/port-display.php:2281
 msgid "Flavors:"
 msgstr "Флейворы:"
 
-#: classes/port-display.php:2282
+#: classes/port-display.php:2281
 msgid "there is no flavor information for this port."
 msgstr "для этого порта нет информации о флейворах."
 
@@ -4734,13 +4734,14 @@ msgstr ""
 "установке."
 
 #: www/faq.php:754
+#, fuzzy
 msgid ""
 "FreshPorts polls the available FreeBSD repo builds on an hourly basis. It "
 "uses that information to display the packages available under various ABI "
 "(e.g. FreeBSD:14:amd64). NOTE: we do not display packages for the quarterly "
 "branch on the latest CURRENT of FreeBSD. Packages are not built for that ABI/"
-"package set combination. You may see CURRENT/quarterly listed on some pages. "
-"That is easier to do than to keep track of which branch is CURRENT."
+"package set combination. FreshPorts knows which major version is CURRENT "
+"from the list of supported FreeBSD releases."
 msgstr ""
 "FreshPorts ежечасно опрашивает доступные сборки репозитория FreeBSD. Он "
 "использует эту информацию для отображения пакетов, доступных для различных "

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreshPorts\n"
 "Report-Msgid-Bugs-To: https://github.com/FreshPorts/freshports/issues\n"
-"POT-Creation-Date: 2026-11-27 02:00+0000\n"
+"POT-Creation-Date: 2026-11-27 23:55+0000\n"
 "PO-Revision-Date: 2026-10-04 21:34-0700\n"
 "Last-Translator: Gustavo Nobrega <gustavofn@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -406,18 +406,18 @@ msgstr ""
 msgid "there is no package for this port: %s"
 msgstr "não há pacote para este port: %s"
 
-#: classes/port-display.php:1593 classes/port-display.php:1965
-#: classes/port-display.php:2202 classes/port-display.php:2236
+#: classes/port-display.php:1593 classes/port-display.php:1964
+#: classes/port-display.php:2201 classes/port-display.php:2235
 #: include/freshports.php:1931
 #, php-format
 msgid "Expand this list (%d items)"
 msgstr "Expandir esta lista (%d itens)"
 
 #: classes/port-display.php:1597 classes/port-display.php:1600
-#: classes/port-display.php:1967 classes/port-display.php:1975
-#: classes/port-display.php:2086 classes/port-display.php:2101
-#: classes/port-display.php:2209 classes/port-display.php:2239
-#: classes/port-display.php:2249 include/freshports.php:1941
+#: classes/port-display.php:1966 classes/port-display.php:1974
+#: classes/port-display.php:2085 classes/port-display.php:2100
+#: classes/port-display.php:2208 classes/port-display.php:2238
+#: classes/port-display.php:2248 include/freshports.php:1941
 msgid "Collapse this list."
 msgstr "Recolher esta lista."
 
@@ -425,62 +425,62 @@ msgstr "Recolher esta lista."
 msgid "There is no distinfo for this port."
 msgstr "Não há distinfo para este port."
 
-#: classes/port-display.php:1657 classes/port-display.php:1760
+#: classes/port-display.php:1657 classes/port-display.php:1759
 msgid "(timestamps in pop-ups are UTC):"
 msgstr "(timestamps em pop-ups estão em UTC):"
 
-#: classes/port-display.php:1657 classes/port-display.php:1760
+#: classes/port-display.php:1657 classes/port-display.php:1759
 msgid "Packages"
 msgstr "Pacotes"
 
-#: classes/port-display.php:1716
+#: classes/port-display.php:1715
 #, php-format
 msgid "FreeBSD %s is -CURRENT, the development branch"
 msgstr ""
 
-#: classes/port-display.php:1717
+#: classes/port-display.php:1716
 msgid "CURRENT"
 msgstr ""
 
-#: classes/port-display.php:1723
+#: classes/port-display.php:1722
 #, php-format
 msgid "FreeBSD %s is no longer supported (end of life)"
 msgstr ""
 
-#: classes/port-display.php:1724
+#: classes/port-display.php:1723
 msgid "EOL"
 msgstr ""
 
-#: classes/port-display.php:1806
+#: classes/port-display.php:1805
 msgid "No package information for this port in our database"
 msgstr "Nenhuma informação de pacote para este port em nosso banco de dados"
 
-#: classes/port-display.php:1807
+#: classes/port-display.php:1806
 msgid "Sometimes this happens. Not all ports have packages."
 msgstr "Às vezes isso acontece. Nem todos os ports têm pacotes."
 
-#: classes/port-display.php:1809
+#: classes/port-display.php:1808
 msgid "This is doubly so for new ports, like this one."
 msgstr "Isso é ainda mais comum para ports novos, como este."
 
-#: classes/port-display.php:1811
+#: classes/port-display.php:1810
 #, php-format
 msgid "Perhaps there is a build error. Check the fallout link: %s"
 msgstr "Talvez haja um erro de compilação. Verifique o link de fallout: %s"
 
-#: classes/port-display.php:1830
+#: classes/port-display.php:1829
 msgid "Master port"
 msgstr "Port mestre"
 
-#: classes/port-display.php:1841
+#: classes/port-display.php:1840
 msgid "Slave ports:"
 msgstr "Ports escravos:"
 
-#: classes/port-display.php:1853
+#: classes/port-display.php:1852
 msgid "Dependencies"
 msgstr "Dependências"
 
-#: classes/port-display.php:1854
+#: classes/port-display.php:1853
 msgid ""
 "NOTE: FreshPorts displays only information on required and default "
 "dependencies.  Optional dependencies are not covered."
@@ -488,110 +488,110 @@ msgstr ""
 "NOTA: O FreshPorts exibe apenas informações sobre dependências obrigatórias "
 "e padrão. Dependências opcionais não são cobertas."
 
-#: classes/port-display.php:1865
+#: classes/port-display.php:1864
 msgid "Build dependencies:"
 msgstr "Dependências de compilação:"
 
-#: classes/port-display.php:1871
+#: classes/port-display.php:1870
 msgid "Test dependencies:"
 msgstr "Dependências de teste:"
 
-#: classes/port-display.php:1877
+#: classes/port-display.php:1876
 msgid "Runtime dependencies:"
 msgstr "Dependências de execução:"
 
-#: classes/port-display.php:1883
+#: classes/port-display.php:1882
 msgid "Library dependencies:"
 msgstr "Dependências de biblioteca:"
 
-#: classes/port-display.php:1889
+#: classes/port-display.php:1888
 msgid "Fetch dependencies:"
 msgstr "Dependências de download:"
 
-#: classes/port-display.php:1895
+#: classes/port-display.php:1894
 msgid "Patch dependencies:"
 msgstr "Dependências de patch:"
 
-#: classes/port-display.php:1901
+#: classes/port-display.php:1900
 msgid "Extract dependencies:"
 msgstr "Dependências de extração:"
 
-#: classes/port-display.php:1907
+#: classes/port-display.php:1906
 msgid "Build and run dependencies:"
 msgstr "Dependências de compilação e execução:"
 
-#: classes/port-display.php:1913
+#: classes/port-display.php:1912
 msgid "This port has no dependencies."
 msgstr "Este port não possui dependências."
 
-#: classes/port-display.php:1924
+#: classes/port-display.php:1923
 msgid "Configuration Options"
 msgstr "Opções de configuração"
 
-#: classes/port-display.php:1928
+#: classes/port-display.php:1927
 msgid "No options to configure"
 msgstr "Nenhuma opção para configurar"
 
-#: classes/port-display.php:1932
+#: classes/port-display.php:1931
 msgid "Options name"
 msgstr "Nome das opções"
 
-#: classes/port-display.php:1936
+#: classes/port-display.php:1935
 msgid "N/A"
 msgstr "N/D"
 
-#: classes/port-display.php:1953
+#: classes/port-display.php:1952
 msgid "FreshPorts was unable to extract/find any pkg message"
 msgstr ""
 "O FreshPorts não conseguiu extrair/encontrar nenhuma mensagem de pacote (pkg "
 "message)"
 
-#: classes/port-display.php:1958
+#: classes/port-display.php:1957
 msgid "Master Sites:"
 msgstr "Master Sites:"
 
-#: classes/port-display.php:1978
+#: classes/port-display.php:1977
 msgid "There is no master site for this port."
 msgstr "Não há master site para este port."
 
-#: classes/port-display.php:2041
+#: classes/port-display.php:2040
 msgid "Build"
 msgstr "Compilação"
 
-#: classes/port-display.php:2041
+#: classes/port-display.php:2040
 msgid "Build and run"
 msgstr "Compilação e execução"
 
-#: classes/port-display.php:2041
+#: classes/port-display.php:2040
 msgid "Extract"
 msgstr "Extração"
 
-#: classes/port-display.php:2041
+#: classes/port-display.php:2040
 msgid "Fetch"
 msgstr "Download"
 
-#: classes/port-display.php:2042
+#: classes/port-display.php:2041
 msgid "Libraries"
 msgstr "Bibliotecas"
 
-#: classes/port-display.php:2042
+#: classes/port-display.php:2041
 msgid "Patch"
 msgstr "Patch"
 
-#: classes/port-display.php:2042
+#: classes/port-display.php:2041
 msgid "Run"
 msgstr "Execução"
 
-#: classes/port-display.php:2042
+#: classes/port-display.php:2041
 msgid "Test"
 msgstr "Teste"
 
-#: classes/port-display.php:2052
+#: classes/port-display.php:2051
 #, php-format
 msgid "for %s"
 msgstr "para %s"
 
-#: classes/port-display.php:2084
+#: classes/port-display.php:2083
 #, php-format
 msgid ""
 "Expand this list (%1$d items / %2$d hidden - sorry, this count includes any "
@@ -600,34 +600,34 @@ msgstr ""
 "Expandir esta lista (%1$d itens / %2$d ocultos - desculpe, esta contagem "
 "inclui quaisquer ports removidos)"
 
-#: classes/port-display.php:2120
+#: classes/port-display.php:2119
 msgid "Deleted ports which required this port:"
 msgstr "Ports removidos que exigiam este port:"
 
-#: classes/port-display.php:2122
+#: classes/port-display.php:2121
 #, php-format
 msgid "Expand this list of %d deleted port"
 msgid_plural "Expand this list of %d deleted ports"
 msgstr[0] "Expandir esta lista de %d port removido"
 msgstr[1] "Expandir esta lista de %d ports removidos"
 
-#: classes/port-display.php:2133
+#: classes/port-display.php:2132
 msgid "Collapse this list of deleted ports."
 msgstr "Recolher esta lista de ports removidos."
 
-#: classes/port-display.php:2145
+#: classes/port-display.php:2144
 msgid "There are no ports dependent upon this port"
 msgstr "Não há ports dependentes deste port"
 
-#: classes/port-display.php:2147
+#: classes/port-display.php:2146
 msgid "This port is required by:"
 msgstr "Este port é exigido por:"
 
-#: classes/port-display.php:2151
+#: classes/port-display.php:2150
 msgid "NOTE: dependencies for deleted ports are notoriously suspect"
 msgstr "NOTA: dependências de ports removidos são notoriamente suspeitas"
 
-#: classes/port-display.php:2155
+#: classes/port-display.php:2154
 msgid ""
 "deleted ports are only shown under the <em>This port is required by</em> "
 "section.  It was harder to do for the <em>Required</em> section.  Perhaps "
@@ -637,41 +637,41 @@ msgstr ""
 "em>. Foi mais difícil fazer isso para a seção <em>Exigido</em>. Talvez mais "
 "tarde..."
 
-#: classes/port-display.php:2164
+#: classes/port-display.php:2163
 msgid "Manual pages:"
 msgstr "Páginas de manual:"
 
-#: classes/port-display.php:2222
+#: classes/port-display.php:2221
 msgid "FreshPorts has no man page information for this port."
 msgstr ""
 "O FreshPorts não possui informações de página de manual para este port."
 
-#: classes/port-display.php:2234 classes/port-display.php:2257
+#: classes/port-display.php:2233 classes/port-display.php:2256
 #, php-format
 msgid "as obtained via: %s"
 msgstr "conforme obtido via: %s"
 
-#: classes/port-display.php:2258
+#: classes/port-display.php:2257
 msgid "There is no configure plist information for this port."
 msgstr "Não há informações de configure plist para este port."
 
-#: classes/port-display.php:2270
+#: classes/port-display.php:2269
 msgid "Package flavors"
 msgstr "Flavors do pacote"
 
-#: classes/port-display.php:2270
+#: classes/port-display.php:2269
 msgid "flavor"
 msgstr "flavor"
 
-#: classes/port-display.php:2270 www/vuxml.php:171
+#: classes/port-display.php:2269 www/vuxml.php:171
 msgid "package"
 msgstr "pacote"
 
-#: classes/port-display.php:2282
+#: classes/port-display.php:2281
 msgid "Flavors:"
 msgstr "Flavors:"
 
-#: classes/port-display.php:2282
+#: classes/port-display.php:2281
 msgid "there is no flavor information for this port."
 msgstr "não há informações de flavor para este port."
 
@@ -4723,13 +4723,14 @@ msgstr ""
 "estiver pronto para instalação."
 
 #: www/faq.php:754
+#, fuzzy
 msgid ""
 "FreshPorts polls the available FreeBSD repo builds on an hourly basis. It "
 "uses that information to display the packages available under various ABI "
 "(e.g. FreeBSD:14:amd64). NOTE: we do not display packages for the quarterly "
 "branch on the latest CURRENT of FreeBSD. Packages are not built for that ABI/"
-"package set combination. You may see CURRENT/quarterly listed on some pages. "
-"That is easier to do than to keep track of which branch is CURRENT."
+"package set combination. FreshPorts knows which major version is CURRENT "
+"from the list of supported FreeBSD releases."
 msgstr ""
 "O FreshPorts consulta as compilações de repositório do FreeBSD disponíveis a "
 "cada hora. Ele usa essa informação para exibir os pacotes disponíveis em "

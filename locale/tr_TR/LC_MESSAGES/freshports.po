@@ -2427,7 +2427,7 @@ msgstr ""
 
 #: www/backend/index.php:36
 msgid "The JavaScript, mbox and OPML feeds have been retired."
-msgstr "JavaScript, mbox ve OPML aakışları kullanımdan kaldırıldı."
+msgstr "JavaScript, mbox ve OPML akışları kullanımdan kaldırıldı."
 
 #: www/backend/index.php:38
 msgid "HTML"
